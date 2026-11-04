@@ -68,7 +68,7 @@ The archive preserves superseded and unsuccessful approaches as well as later wo
 
 The handoff indexes 57,450 original file locations. Repeated byte-identical files share stored content. It includes a searchable offline `INDEX.html`, a manifest with hashes, a research timeline, and a utility for restoring the original directory layout. Conversational transcripts and credentials are excluded.
 
-The TeX is the reviewed current manuscript; the matching 141-page PDF was rebuilt from it. The handoff preserves the first release's research history and adds subsequent sources, manuscript versions, feedback and reviews. Each release remains a dated snapshot. The [original release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04) is retained.
+The TeX is the reviewed current manuscript; the matching 141-page PDF was rebuilt from it. The handoff preserves the first release's research history and adds subsequent sources, manuscript versions, feedback and reviews. The repository offers one current release; earlier research versions remain inside the handoff archive.
 
 ## Reproducible checks
 

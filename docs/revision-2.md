@@ -10,4 +10,4 @@ The [research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/
 
 The paper compiled with no TeX errors or unresolved citations/references. The revised height pages, front page and bibliography were visually checked. Construction regeneration and finite arithmetic checks passed. The accepted Lean source snapshot is unchanged and its source/hash checks passed; the main theorem remains unproved. These packaging checks do not establish the mathematical theorem.
 
-Use [SHA256SUMS](../SHA256SUMS) to identify the exact TeX, PDF and handoff. The previous release remains available for comparison. No repository visibility, licensing, or author metadata was changed by this update.
+Use [SHA256SUMS](../SHA256SUMS) to identify the exact TeX, PDF and handoff. Earlier research versions remain inside the handoff archive; GitHub offers only the current release. No repository visibility, licensing, or author metadata was changed by this update.
