@@ -1,0 +1,63 @@
+{
+  "created_utc": "2026-11-04T23:47:53.818872+00:00",
+  "original_source_sha256": "3f0b79f3d4a074a47ca8165f1d6075f167e51f0d764b774a294cdb8c04e56aa8",
+  "final_source_sha256": "bfc4192de00ef7cfe27df586b9cdb8a9348efe3064495f566258be7152b5dec7",
+  "verdict": "No unresolved mathematical gap identified within the replacement and its reviewed geometric/numerical interfaces.",
+  "review_type": "Four separate Astra AI reviews, followed by review of integrated clarifications; not independent human peer review or formal verification.",
+  "review_scopes": [
+    "non-CM descent, oddness, modularity and compatible representations",
+    "local conductor estimates and ramification",
+    "CM branch and quantitative height transfer",
+    "end-to-end geometric and numerical interfaces"
+  ],
+  "changes": [
+    "Explicit constant coefficient convention",
+    "Berger p-adic monodromy implication and citation",
+    "Detailed weight/twist and relative-Frobenius comparison",
+    "Explicit dyadic Herbrand conversion"
+  ],
+  "unchanged": [
+    "main theorem",
+    "abstract",
+    "corollaries",
+    "height constants and exponent 24",
+    "variable, degree and coefficient bounds",
+    "polynomial construction",
+    "RC argument"
+  ],
+  "reports": [
+    {
+      "path": "descent/AUDIT.md",
+      "sha256": "712e7608b5a5d86be539ed85c0cdc60eea6a0b388fd0cdc10f96e65d19eee64e"
+    },
+    {
+      "path": "descent/ADDENDUM.md",
+      "sha256": "ce43cbfc6266106ee2371462ab73bc5a8471fb987dcde8425a68fab7ff90b598"
+    },
+    {
+      "path": "conductor/AUDIT.md",
+      "sha256": "fa8d56edee2f53e9410bd22f2536fb7a7362006ae46dd1a705529ddf6ea12e5f"
+    },
+    {
+      "path": "conductor/RECEIPT.json",
+      "sha256": "17427c073dcd2c640f617ad7fec06782f30ce4cb1a07eb6dcb7b5908b763db4d"
+    },
+    {
+      "path": "height/AUDIT.md",
+      "sha256": "d976caf43a218e32f2b481cfc1893ac4be10ca3cb28395ae9ce2bf99c3268096"
+    },
+    {
+      "path": "whole/REPORT.md",
+      "sha256": "93395e09d405c3a704f60be3f30e3dcb5a1a61e82909ec11d0589d147dc6e291"
+    },
+    {
+      "path": "whole/ADDENDUM.md",
+      "sha256": "0607e9a5cabb03ae81e1ae46304796c97e6c6a0e0a9735e1512613a7ff1d0bd9"
+    },
+    {
+      "path": "whole/arithmetic.json",
+      "sha256": "3a21a5b582ef911205c93db58f5050939d66caf6a201d6e8bd2e84d3328c1b33"
+    }
+  ],
+  "main_lean_theorem_proved": false
+}

@@ -1,0 +1,25 @@
+Independent review of the integrated clarifications
+
+Reviewed on 2026-11-04. This addendum concerns `outputs/diophantine-zq-fable-followup-2026-11-04.tex`, SHA256 `bfc4192de00ef7cfe27df586b9cdb8a9348efe3064495f566258be7152b5dec7`. I independently read `work/independent-height-review-20261104/clarifications.diff`, recomputed the current source hash, and read the integrated passage at lines 621–765. This is a review of the final text, not an assumption that the earlier proposed insertions were adopted verbatim.
+
+The clarifications resolve the omissions and convention ambiguities identified in AUDIT.md. I found no new mathematical defect in the assigned descent/modularity/compatibility scope. The conclusion remains conditional on the geometric premises listed in that report. This is not a review of the rest of the manuscript or a formal verification.
+
+1. Lines 626–629 correctly declare trivial Galois action on the added scalars while retaining the natural action on varieties and morphisms. This is precisely the convention under which normalizing the isogeny cocycle by the positive degree roots gives the stated sign cocycle.
+
+2. Lines 695–699 introduce the common number field after beta has been constructed. They contain all the required finite algebraic data, with no new degree bound or arithmetic field-of-definition assumption. The local coefficient extensions are distinct from the field L' used for the geometric comparison.
+
+3. Lines 715–717 now state the de Rham-to-potentially-semistable implication before invoking Pan. This resolves the first missing named hypothesis bridge in the frozen source. The new bibliography item has the correct author, title, journal, volume, year, page range, and DOI. Omitting a theorem number avoids version ambiguity and is mathematically sufficient. For a future pinpoint reference, the author's linked article has Theorem 0.7 and Corollary 5.22, whereas arXiv version 3 has Theorem 0.6 and Theorem 5.19. [Berger's article](https://perso.ens-lyon.fr/laurent.berger/articles/article02.pdf), [author's publication list](https://perso.ens-lyon.fr/laurent.berger/articles.php).
+
+4. Lines 720–722 now specify the C-linear extension of the Betti map. The map on varieties is antiholomorphic before composition with the holomorphic isogeny, and the induced Q-linear homology map exchanges the two complex Hodge summands when extended linearly. The ensuing oddness argument is valid.
+
+5. Lines 731–746 consistently use the Tate convention, with cyclotomic Hodge–Tate weight -1 and modular weights {0,1-k}. The character occurring in a twist is a subrepresentation of the Hom representation through the intertwining line, so the claim that it is de Rham is valid. Over Q a de Rham character with finite ramification is a finite character times an integral cyclotomic power. After removing the integral Hodge–Tate weight, finiteness on inertia at all ramified primes gives a finite ray-class character. If the cyclotomic exponent is j, comparison of {-j,1-k-j} with {0,-1}, with k at least 1, forces k=2 and j=0. The finite Dirichlet twist preserves weight two and cuspidality. Taking the primitive newform therefore yields a Tate constituent of A_f. The dual cohomological formulation and conductor statement are consistent.
+
+   The use of Pan at five remains correct: the residual proviso in Theorem 1.0.4 concerns only the prime three. [Pan, Theorem 1.0.4 together with Conjecture 1.0.1](https://arxiv.org/pdf/1901.07166v2).
+
+6. Lines 748–765 now compare the actual endomorphism obtained by composing relative p-Frobenius with the reduced conjugacy isogeny. At an unramified place, arithmetic Frobenius acts on residue coefficients by their p-th powers, so the target of relative Frobenius is the stated conjugate reduction. This works when p does not split in L. The trace being transported between coefficient primes is the trace of this endomorphism, multiplied by a fixed algebraic scalar; it is not an undefined trace of a semilinear map. Extending the chosen embeddings when C is enlarged is possible. Excluding primes dividing the modular level makes the density-one comparison explicit. Chebotarev and semisimplicity then identify the representation at three with the corresponding modular constituent.
+
+   For an optional future citation, the independence of an endomorphism's Tate-module characteristic polynomial is proved in [Milne, Abelian varieties, Proposition 10.20](https://www.jmilne.org/math/CourseNotes/AV.pdf), printed p. 50. No additional mathematical assertion is needed to make the integrated argument work.
+
+7. The final Jacobian transfer is unchanged mathematically. The clarifications do not enlarge L', alter its bound, require a bound on the coefficient-field degree, change the primitive-level target, or weaken the claimed exact height bound.
+
+The diff also adds the explicit Herbrand calculation in the local conductor paragraph. That calculation is outside this agent's assigned audit and is left to its separate reviewer. I did not run a TeX compiler or claim a successful build.

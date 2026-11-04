@@ -1,0 +1,48 @@
+{
+  "pullback_identity": true,
+  "resultants": {
+    "FG": {
+      "2": 18,
+      "3": 13,
+      "5": 10,
+      "remaining": "1"
+    },
+    "FH": {
+      "2": 54,
+      "3": 39,
+      "5": 30,
+      "remaining": "1"
+    },
+    "GH": {
+      "2": 22,
+      "3": 18,
+      "5": 12,
+      "remaining": "1"
+    }
+  },
+  "discriminants": {
+    "F": {
+      "2": 36,
+      "3": 26,
+      "5": 20,
+      "remaining": "1"
+    },
+    "G": {
+      "2": 4,
+      "3": 3,
+      "5": 2,
+      "remaining": "1"
+    },
+    "H": {
+      "2": 56,
+      "3": 51,
+      "5": 30,
+      "remaining": "1"
+    }
+  },
+  "coefficient_bound": true,
+  "theta_constant": "6710886400096",
+  "theta_constant_under_1e13": true,
+  "isogeny_coefficient": 368640,
+  "final_budget_at_min_Q": true
+}

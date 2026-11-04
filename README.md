@@ -12,14 +12,14 @@ This repository accompanies the manuscript **Z is Diophantine in Q**, dated Nove
 | Build the paper or accepted Lean modules | [Build instructions](docs/building.md) |
 | Inspect the formalization | [Accepted Lean helper snapshot](lean/README.md) |
 | Find the construction, supporting calculations, or earlier approaches | [Research guide](docs/research-guide.md) |
-| Download the saved research history | [Research handoff zip, 279 MB](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04/z-in-q-research-handoff-2026-11-04.zip) |
+| Download the saved research history | [Research handoff zip, 340 MB](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04-r2/z-in-q-research-handoff-2026-11-04-r2.zip) |
 | Check a download | [SHA-256 checksums](SHA256SUMS) and [verification instructions](docs/research-guide.md#verify-and-restore-the-archive) |
 | Report a mathematical or implementation issue | [Contribution guide](CONTRIBUTING.md) |
 | Cite the paper or archive | [BibTeX entries](CITATION.bib) |
 
-All three main files are also available from the [November 4 research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04).
+All three main files are also available from the [November 4 revised research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2).
 
-## What the paper proves
+## The manuscript's result
 
 To say that the integers are **Diophantine in the rationals** is to say that being an integer can be expressed by one polynomial equation with rational auxiliary variables. The manuscript presents a construction of a fixed polynomial with integer coefficients such that
 
@@ -58,7 +58,7 @@ The manuscript's bibliography and source-application appendices identify the oth
 
 ## Verification status
 
-The manuscript presents an unconditional proof. The saved research record includes internal mathematical reviews; these are distinct from independent human peer review and from machine verification.
+The manuscript presents an unconditional proof. Revision 2 includes the later restricted-converse and theta justifications and replaces the von Känel–Kret height dependency with a direct modularity argument and a CM argument. [Four independent AI reviews](docs/reviews/height-replacement/REPORT.md) found no unresolved gap in the replacement within their stated scopes. The final text includes their requested clarifications. These reviews are distinct from independent human peer review and machine verification. See the [revision notes](docs/revision-2.md).
 
 **The Lean formalization is incomplete.** At the November 4 handoff, the main bounded-polynomial declaration still contains `sorry`. The last accepted production snapshot is integration 31, containing 48 modules and 463 explicit public declarations. These counts include definitions and helper results; they are not a count of completed main-proof obligations. Later accepted work remains outside that integration.
 
@@ -66,9 +66,9 @@ The archive preserves superseded and unsuccessful approaches as well as later wo
 
 ## Research archive
 
-The handoff indexes 55,739 original file locations. Repeated byte-identical files share stored content. It includes a searchable offline `INDEX.html`, a manifest with hashes, a research timeline, and a utility for restoring the original directory layout. Conversational transcripts and credentials are excluded.
+The handoff indexes 57,450 original file locations. Repeated byte-identical files share stored content. It includes a searchable offline `INDEX.html`, a manifest with hashes, a research timeline, and a utility for restoring the original directory layout. Conversational transcripts and credentials are excluded.
 
-The paper files in this repository are the supplied versions, preserved byte for byte. The archive and release assets are a dated snapshot; subsequent documentation changes do not change that snapshot.
+The TeX is the reviewed current manuscript; the matching 141-page PDF was rebuilt from it. The handoff preserves the first release's research history and adds subsequent sources, manuscript versions, feedback and reviews. Each release remains a dated snapshot. The [original release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04) is retained.
 
 ## Reproducible checks
 

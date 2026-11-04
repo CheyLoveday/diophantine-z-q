@@ -2,3 +2,4 @@
 *.pdf binary
 construction/** -text
 lean/** -text
+docs/reviews/** -text

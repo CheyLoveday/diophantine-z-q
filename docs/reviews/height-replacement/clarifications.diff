@@ -1,0 +1,143 @@
+--- reviewed-before.tex
++++ diophantine-zq-fable-followup-2026-11-04.tex
+@@ -623,7 +623,11 @@
+ commutes with $B$, hence belongs to $\Q^\times$.
+ Set $a_\sigma=(\deg\mu_\sigma)^{-1/4}>0$ and
+ $\nu_\sigma=a_\sigma\mu_\sigma$ in the category with algebraic
+-coefficients. Multiplicativity of degree and
++coefficients. Throughout these coefficient extensions Galois acts on
++the varieties and morphisms and acts trivially on the added scalars;
++the induced homology maps are extended linearly. In particular, the
++$a_\sigma$ are constant coefficients in the products below.
++Multiplicativity of degree and
+ $\deg[c]=c^4$ show that
+ \[
+  \nu_\sigma{}^\sigma\nu_\tau
+@@ -688,9 +692,11 @@
+ $E_0=10(DG_0)^2$.
+ 
+ \paragraph{Modularity and a uniform conductor bound.}
+-For each coefficient prime $\ell$, enlarge the coefficient field
+-to contain all $a_\sigma$, the values of $\beta$, and a splitting
+-field of $B$. On $V_\ell(A)$ define
++Choose one number field $C$ containing all $a_\sigma$, the values of
++$\beta$, and a splitting field of $B$. For each coefficient prime
++$\ell$ choose an embedding of $C$ into $\overline{\mathbb Q}_\ell$
++and extend scalars on $V_\ell(A)$ to a finite extension containing
++its image. With the constant-coefficient convention above, define
+ \[
+  \rho_\ell(\sigma)
+    =\beta(\sigma)^{-1}a_\sigma\mu_\sigma\circ\sigma.
+@@ -706,10 +712,15 @@
+ descent of the de Rham property from the Tate module
+ \cite{faltings1988}, and its
+ two Hodge--Tate weights are those of an elliptic Tate module.
++Berger's $p$-adic monodromy theorem \cite{berger2002} makes this
++de Rham representation potentially semistable, as required by
++Pan's theorem.
+ It is odd. To see this without an assumption on a residual
+ representation, compare with Betti homology at a complex
+-embedding. Complex conjugation followed by the holomorphic
+-quasi-isogeny $\mu_c$ exchanges the two Hodge summands. Each
++embedding. Take the map on rational Betti homology induced by
++antiholomorphic conjugation followed by the holomorphic
++quasi-isogeny $\mu_c$, and extend it $\mathbb C$-linearly.
++It exchanges the two Hodge summands. Each
+ summand is a simple module for $B\otimes\mathbb C=M_2(\mathbb C)$.
+ Consequently its action on the two-dimensional multiplicity
+ space is not scalar; since $r_\ell(c)^2=1$, its eigenvalues
+@@ -717,26 +728,41 @@
+ It is unramified outside $T\cup\{\ell\}$, since there $L$ is
+ unramified, $A$ has good reduction, and $\beta$ is unramified.
+ 
+-Apply \cite[Theorem 1.0.4]{pan2022} at $\ell=5$.
+-There is no residual-image proviso at this prime. In the
+-covariant Tate-module convention, the dual representation is
+-the cohomological representation of a weight-two cuspidal
+-newform $f$, absorbing any finite-order twist into $f$;
+-the two weights exclude a nonzero Tate twist.
+-Equivalently $r_5$ is the corresponding constituent of the
+-Tate module of its modular abelian variety. This convention
+-does not change the conductor.
+-
+-The representations at $5$ and $3$ belong to this same system.
+-At a prime of good reduction outside $T\cup\{3,5\}$, the trace
+-of $\mu_\sigma$ composed with relative Frobenius is independent
+-of the coefficient prime: it is the trace of the same
+-endomorphism of the reduction of $A$. Its half, multiplied by
+-$\beta(\sigma)^{-1}a_\sigma$, is the trace of $r_\ell$.
+-Thus the $3$-adic representation agrees with the representation
+-attached to $f$ on a density-one set of Frobenius elements.
+-Chebotarev and semisimplicity identify them. We may use $r_3$
+-to compute the conductor at $5$ and $r_5$ at all other primes.
++Use the Tate convention in which the cyclotomic character has
++Hodge--Tate weight $-1$. Apply \cite[Theorem 1.0.4]{pan2022} at
++$\ell=5$; there is no residual-image proviso at this prime.
++It gives a cuspidal eigenform up to character twist. The twisting
++character is a de Rham subrepresentation of the Hom representation
++and is unramified outside finitely many primes. By class field
++theory over $\mathbb Q$, it is a finite character times an integral
++power of the cyclotomic character: removing its integral local
++Hodge--Tate weight leaves finite inertia at five and at every other
++prime, hence a finite ray-class character. Comparing $\{0,-1\}$
++with the modular weights $\{0,1-k\}$ after that power forces
++$k=2$ and power zero. Absorb the finite Dirichlet character into
++the eigenform and take its primitive newform $f$. Thus $r_5$ is
++a constituent of the Tate module of the modular abelian variety
++$A_f$, or equivalently $r_5^\vee$ is its cohomological constituent.
++This duality preserves the conductor.
++
++The representations at five and three belong to this same system.
++Enlarge $C$ to contain the coefficients of $f$, retaining the chosen
++embedding at five. For $p\notin T\cup\{3,5\}$, choose a place $v$
++of $L$ and an arithmetic Frobenius lift $\sigma$ at $v$. Since
++$L_v/\mathbb Q_p$ is unramified and $A$ has good reduction,
++relative $p$-Frobenius maps the reduction $\overline A_v$ to
++the reduction of ${}^\sigma A$ at $v$. Composing with
++$\overline\mu_\sigma$ gives an endomorphism of $\overline A_v$.
++The characteristic polynomial of an abelian-variety endomorphism
++on rational Tate modules is independent of the coefficient prime.
++Thus half its trace, multiplied by $\beta(\sigma)^{-1}a_\sigma$,
++is one element of $C$ whose images are the traces of every $r_\ell$.
++Away also from the finite set of primes dividing the level of $f$,
++the equality with its modular trace at five is an equality of
++algebraic numbers. Transporting it through an embedding at three,
++Chebotarev and semisimplicity identify $r_3$ with the corresponding
++modular Tate representation. We may therefore use $r_3$ to compute
++the conductor at five and $r_5$ at all other primes.
+ 
+ Here are uniform local bounds, including the small primes.
+ For a finite extension of $\Q_p$ of degree at most $a$, its
+@@ -767,8 +793,19 @@
+ $F$, since the $2$-primary local factor of $\chi$ has conductor
+ at most four. If $e=v_F(2)\le D$, the local logarithm gives
+ $(U_F^{e+1})^4=U_F^{3e+1}$. Thus the relative upper break of
+-$\beta$ is at most $3e$; the Herbrand change of numbering
+-puts its absolute break below $U_0$ as well.
++$\beta$ is at most $3e$. To make the change of numbering explicit,
++the same normal-closure estimate bounds the last upper break of
++$F/\mathbb Q_2$ by $4D^2$. Above it, the absolute upper group
++$G_{\mathbb Q_2}^{u}$ lies in $G_F$, and the subgroup formula is
++\[
++ G_{\mathbb Q_2}^{u}\cap G_F
++       =G_F^{\psi_{F/\mathbb Q_2}(u)},
++ \qquad \psi_{F/\mathbb Q_2}(u)\ge u\quad(u\ge0).
++\]
++Consequently $\beta$ is trivial on every absolute upper group with
++$u>\max(4D^2,3e)$, which is at most $U_0$.
++This proves the asserted absolute bound without a factor involving
++$[L':\mathbb Q]$.
+ The Artin conductor exponent of $r_\ell$ is consequently
+ at most $2+2U_0\le E_0$.
+ 
+@@ -10530,6 +10567,10 @@
+ \bibitem{linyang} Y.-H. Lin and Y. Yang, \emph{Quaternionic loci in
+ Siegel's modular threefold}, arXiv:1807.00466v1, 2018, equations (2), (14).
+ \url{https://arxiv.org/abs/1807.00466v1}.
++\bibitem{berger2002} L. Berger, \emph{Repr\'esentations $p$-adiques et
++\'equations diff\'erentielles}, Inventiones Mathematicae 148 (2002),
++219--284, $p$-adic monodromy theorem.
++\url{https://doi.org/10.1007/s002220100202}.
+ \bibitem{pan2022} L. Pan, \emph{The Fontaine--Mazur conjecture in the
+ residually reducible case}, Journal of the American Mathematical Society
+ 35 (2022), 1031--1169, Theorem 1.0.4.

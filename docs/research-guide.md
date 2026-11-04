@@ -1,6 +1,6 @@
 # Research guide
 
-This guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04). It is a map of the saved evidence, not a replacement for the paper's proofs. For current browsable sources, start with [construction](../construction/README.md), [Lean helpers](../lean/README.md), and [build instructions](building.md).
+This guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2). It is a map of the saved evidence, not a replacement for the paper's proofs. For current browsable sources, start with [construction](../construction/README.md), [Lean helpers](../lean/README.md), and [build instructions](building.md).
 
 ## Suggested reading order
 
@@ -14,13 +14,15 @@ The TeX source has stable descriptive labels such as `thm:target`, `sec:syntax`,
 
 ## Map of the argument
 
+Revision 2 adds the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for the current Section 4.
+
 The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this small Git checkout. Some files predate the final manuscript; compare their scope with the current paper and later audits.
 
 | Topic | Paper section | Archive starting points |
 | --- | --- | --- |
 | Literal polynomial specification | A finite specification of the polynomial; Literal finite-constructor specification | `outputs/ordinary-integer-definition.json`; `outputs/ordinary-integer-polynomial.js` |
 | Elliptic model and generator | The elliptic model of integer indices | `outputs/elliptic-generator-proof.txt`; `outputs/z-in-q-generator-audit.txt`; `outputs/verify-z-in-q-generator.py` |
-| Height estimates | The six-contact height estimate | `outputs/six-contact-height-proof.txt`; `outputs/explicit-noncm-height-bound.txt`; `outputs/effective-cm-height-bound.txt` |
+| Height estimates | The six-contact height estimate | `work/remove-vkk-20261104/`; `work/independent-height-review-20261104/`; earlier height alternatives remain historical |
 | Pole completeness and restricted converse | The pole predicate and its converse input; The restricted converse and its dependency order | `outputs/restricted-converse-and-pole-completeness-proof.txt`; `outputs/z-in-q-restricted-converse-assembly.txt` |
 | Arithmetic dependencies and limits | Actual classes, local conditions and central comparison; The two limits and determinant transfer | `outputs/z-in-q-global-selmer-assembly-audit.txt`; `outputs/z-in-q-common-packet-audit.txt`; `work/sol-rc-arithmetic-graph-review-001/` |
 | Computation and compilation | Exact precision computation and polynomial compilation | `outputs/integer-halting-correctness-proof.txt`; `outputs/integer-diophantine-compiler.js`; `outputs/hierarchical-integer-compiler.js` |
@@ -37,25 +39,25 @@ The archive's K215 and ZFC-related files record additional research. The current
 Download the handoff zip from the release. Its SHA-256 is:
 
 ```text
-522c61d723841a41bd3d920d1b3160f8ffbeb5fe5bb68f0dbb0c48432f88d665
+827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b
 ```
 
 On Windows PowerShell:
 
 ```powershell
-Get-FileHash -Algorithm SHA256 .\z-in-q-research-handoff-2026-11-04.zip
+Get-FileHash -Algorithm SHA256 .\z-in-q-research-handoff-2026-11-04-r2.zip
 ```
 
 On Linux:
 
 ```sh
-sha256sum z-in-q-research-handoff-2026-11-04.zip
+sha256sum z-in-q-research-handoff-2026-11-04-r2.zip
 ```
 
 On macOS:
 
 ```sh
-shasum -a 256 z-in-q-research-handoff-2026-11-04.zip
+shasum -a 256 z-in-q-research-handoff-2026-11-04-r2.zip
 ```
 
 The repository's [SHA256SUMS](../SHA256SUMS) also records the TeX and PDF hashes. Matching a hash establishes file identity, not mathematical correctness.
@@ -75,9 +77,9 @@ Or restore all indexed files:
 python restore_history.py restored-project
 ```
 
-Each destination must be new. The utility checks file hashes before writing and does not execute research code. A full restoration occupies about 2.4 GB before filesystem overhead; use a short destination path on Windows. Historical scripts may contain paths from the original Windows workspace that need adapting.
+Each destination must be new. The utility checks file hashes before writing and does not execute research code. A full restoration occupies about 2.8 GB before filesystem overhead; use a short destination path on Windows. Historical scripts may contain paths from the original Windows workspace that need adapting.
 
-All archive entries were checked for CRC and SHA-256 integrity during packaging. The 48 production-module source hashes were checked against integration 31, and a 54-file subset restoration was tested. No clean rebuild of the full research project was performed as part of packaging.
+All archive entries and manifest references were checked for CRC and SHA-256 integrity during packaging. The original release's 54-file restore check remains historical; revision 2 also tests restoration of the new independent-review records. The 48 curated production-module source hashes still match integration 31. No clean rebuild of the full historical research project was performed as part of packaging.
 
 ## Lean formalization
 

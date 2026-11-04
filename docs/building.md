@@ -26,7 +26,7 @@ python scripts/build_paper.py --tectonic /path/to/tectonic
 
 Results are written to `build/paper/`, including the compiled PDF, compiler log, TeX log, and a JSON receipt. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
 
-The checked-in PDF remains the originally supplied paper. The new PDF is a build artifact; the script does not replace the original or claim byte identity with it. Fixed engine, bundle, and timestamp inputs improve reproducibility, but this repository does not claim that PDF bytes are identical across operating systems.
+The checked-in revision-2 PDF was rebuilt from the current TeX. Its source and PDF hashes are recorded in [the release build receipt](paper-build-r2.json). Running this script creates a new build artifact without replacing the checked-in PDF. Fixed engine, bundle, and timestamp inputs improve reproducibility, but this repository does not claim that PDF bytes are identical across operating systems.
 
 ## Lean helpers
 

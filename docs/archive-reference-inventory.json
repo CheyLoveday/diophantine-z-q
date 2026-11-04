@@ -1,8 +1,17 @@
 {
-  "archive": "research-handoff-2026-11-04",
-  "archive_sha256": "522c61d723841a41bd3d920d1b3160f8ffbeb5fe5bb68f0dbb0c48432f88d665",
-  "scope": "PDF reference documents and Isabelle theory source files in the historical archive. This is a source inventory, not permission to redistribute or relicense. Other third-party excerpts may occur in text files.",
+  "archive": "research-handoff-2026-11-04-r2",
+  "archive_sha256": "827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b",
+  "scope": "PDF references, supplied review documents and Isabelle theory sources in the archive, excluding the current manuscript PDF. This is an inventory, not a redistribution license or comprehensive rights audit.",
   "sources": [
+    {
+      "sha256": "01a140a49e438565e427e177da4281165b9f7e9b004fd72134ea35b555abce93",
+      "bytes": 339817,
+      "archive_path": "history/objects/01/01a140a49e438565e427e177da4281165b9f7e9b004fd72134ea35b555abce93.pdf",
+      "original_paths": [
+        "work/fable-update-20261104-1416/audit.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
     {
       "sha256": "073fc0fc2d06386ea41f9a244626eed10cd642c1661e7f2fbaca88b6bc0dac10",
       "bytes": 3589,
@@ -44,7 +53,18 @@
       "bytes": 1030147,
       "archive_path": "references/matiyasevich-1971.pdf",
       "original_paths": [
-        "work/astra-mazur-corollary-001/primary/matiyasevich-1971.pdf"
+        "work/astra-mazur-corollary-001/primary/matiyasevich-1971.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-mazur-corollary-001/primary/matiyasevich-1971.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-mazur-corollary-001/primary/matiyasevich-1971.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "1c5542a409ef5ebfe397ec3ca885397fbe45843c9bd1f773c8383d4d8a52b48b",
+      "bytes": 1235656,
+      "archive_path": "history/objects/1c/1c5542a409ef5ebfe397ec3ca885397fbe45843c9bd1f773c8383d4d8a52b48b.pdf",
+      "original_paths": [
+        "work/fable-review-packet-20261104/revised/manuscript.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -54,7 +74,9 @@
       "archive_path": "history/objects/20/203431b551fd0ca218722583a2ba62c5959d8e72aea8c47eca975118e74f0946.txt",
       "original_paths": [
         "work/Exponentiation.thy",
-        "work/alpha-power-lean-map/context/work/Exponentiation.thy"
+        "work/alpha-power-lean-map/context/work/Exponentiation.thy",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/Exponentiation.thy",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/Exponentiation.thy"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -64,7 +86,9 @@
       "archive_path": "references/vkk-2023.pdf",
       "original_paths": [
         "work/astra-final-height-producers-001/primary/vkk-2023.pdf",
-        "work/astra-global-falsification-002/vkk-2023.pdf"
+        "work/astra-global-falsification-002/vkk-2023.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/vkk-2023.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/vkk-2023.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -73,7 +97,9 @@
       "bytes": 3725156,
       "archive_path": "references/weil-1964.pdf",
       "original_paths": [
-        "work/astra-weighted-theta-audit-001/primary/weil-1964.pdf"
+        "work/astra-weighted-theta-audit-001/primary/weil-1964.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/weil-1964.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/weil-1964.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -83,6 +109,8 @@
       "archive_path": "references/gtz-inverse-v5.pdf",
       "original_paths": [
         "work/astra-final-height-producers-001/primary/gtz-inverse-v5.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/gtz-inverse-v5.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/gtz-inverse-v5.pdf",
         "work/prime-pattern-independent/gtz-inverse-v5.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -92,7 +120,9 @@
       "bytes": 2136045,
       "archive_path": "references/milne-ADT-2006.pdf",
       "original_paths": [
-        "work/astra-arithmetic-final-composition-001/milne-ADT-2006.pdf"
+        "work/astra-arithmetic-final-composition-001/milne-ADT-2006.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-arithmetic-final-composition-001/milne-ADT-2006.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-arithmetic-final-composition-001/milne-ADT-2006.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -110,7 +140,9 @@
       "bytes": 509200,
       "archive_path": "references/poonen-stoll.pdf",
       "original_paths": [
-        "work/astra-final-pole-completeness-review-001/poonen-stoll.pdf"
+        "work/astra-final-pole-completeness-review-001/poonen-stoll.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-pole-completeness-review-001/poonen-stoll.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-pole-completeness-review-001/poonen-stoll.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -119,6 +151,8 @@
       "bytes": 18010813,
       "archive_path": "references/kato-2004.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/kato-2004.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/kato-2004.pdf",
         "work/kato-2004.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -138,7 +172,9 @@
       "archive_path": "references/cai-shu-tian-2014.pdf",
       "original_paths": [
         "work/astra-final-external-applicability-001/cst-publisher.pdf",
-        "work/cai-shu-tian-2014.pdf"
+        "work/cai-shu-tian-2014.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/cai-shu-tian-2014.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/cai-shu-tian-2014.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -152,11 +188,24 @@
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
     {
+      "sha256": "40670c064a2d80681cbbc8ad39cd55bc068488f3ccbb033cb1ebc0855f611344",
+      "bytes": 227709,
+      "archive_path": "history/objects/40/40670c064a2d80681cbbc8ad39cd55bc068488f3ccbb033cb1ebc0855f611344.pdf",
+      "original_paths": [
+        "work/fable-review-packet-20261104/baseline/fable-rc-audit.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/review/fable-audit.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/review/fable-audit.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
       "sha256": "42f1439a0ea42ca380f22bef22d53a56141ad468bf62328ace56ba9b25b09f8e",
       "bytes": 1185688,
       "archive_path": "references/lny-2015.pdf",
       "original_paths": [
-        "work/astra-final-height-producers-001/primary/lny-2015.pdf"
+        "work/astra-final-height-producers-001/primary/lny-2015.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/lny-2015.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/lny-2015.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -174,7 +223,9 @@
       "bytes": 521460,
       "archive_path": "references/pazuki-2012.pdf",
       "original_paths": [
-        "work/astra-final-height-producers-001/primary/pazuki-2012.pdf"
+        "work/astra-final-height-producers-001/primary/pazuki-2012.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/pazuki-2012.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/pazuki-2012.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -183,6 +234,8 @@
       "bytes": 308433,
       "archive_path": "references/jetchev-kane-2009.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/jetchev-kane-2009.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/jetchev-kane-2009.pdf",
         "work/jetchev-kane-2009.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -201,7 +254,9 @@
       "bytes": 231177,
       "archive_path": "references/buzzard-1996.pdf",
       "original_paths": [
-        "work/astra-final-height-producers-001/primary/buzzard-1996.pdf"
+        "work/astra-final-height-producers-001/primary/buzzard-1996.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/buzzard-1996.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/buzzard-1996.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -210,7 +265,9 @@
       "bytes": 2072714,
       "archive_path": "references/milne-cft.pdf",
       "original_paths": [
-        "work/astra-final-moving-character-audit-001/primary/milne-cft.pdf"
+        "work/astra-final-moving-character-audit-001/primary/milne-cft.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-moving-character-audit-001/primary/milne-cft.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-moving-character-audit-001/primary/milne-cft.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -220,7 +277,9 @@
       "archive_path": "history/objects/51/515093945cfd56a09622c9bb6536f61c2dcc8f6d6798af1f28efafcd42a95069.txt",
       "original_paths": [
         "work/Exponential_Relation.thy",
-        "work/alpha-power-lean-map/context/work/Exponential_Relation.thy"
+        "work/alpha-power-lean-map/context/work/Exponential_Relation.thy",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/Exponential_Relation.thy",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/Exponential_Relation.thy"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -230,7 +289,18 @@
       "archive_path": "references/green-tao-mobius.pdf",
       "original_paths": [
         "work/astra-final-height-producers-001/primary/green-tao-mobius.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/green-tao-mobius.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/green-tao-mobius.pdf",
         "work/prime-pattern-independent/green-tao-mobius.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "52aa64763d2c541c78ea64edb8ed3c4230e9a0715aa46a206818a3580b6cb646",
+      "bytes": 1248292,
+      "archive_path": "history/objects/52/52aa64763d2c541c78ea64edb8ed3c4230e9a0715aa46a206818a3580b6cb646.pdf",
+      "original_paths": [
+        "work/fable-update-20261104-1416/revised/manuscript.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -244,6 +314,26 @@
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
     {
+      "sha256": "5cdf55092fe76a26705c4d3334e2bc8ebb777443af99a87dd954b5de98073728",
+      "bytes": 1127807,
+      "archive_path": "history/objects/5c/5cdf55092fe76a26705c4d3334e2bc8ebb777443af99a87dd954b5de98073728.pdf",
+      "original_paths": [
+        "work/final-finite-arithmetic-audit-20261104/revised/manuscript.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "5ddfbee91284ef888d97106ff89c5f8f156377373b7af68942a5cf4453abd6cc",
+      "bytes": 1492562,
+      "archive_path": "history/objects/5d/5ddfbee91284ef888d97106ff89c5f8f156377373b7af68942a5cf4453abd6cc.pdf",
+      "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/fable-review-packet-20261104/primary/edixhoven-1992.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/fable-review-packet-20261104/primary/edixhoven-1992.pdf",
+        "work/fable-review-packet-20261104/primary/edixhoven-1992.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
       "sha256": "5f4d2965e88a21bee2186ab54ce64c95064ab69482ff15f3ddc80cd6fb3577f6",
       "bytes": 2689,
       "archive_path": "history/objects/5f/5f4d2965e88a21bee2186ab54ce64c95064ab69482ff15f3ddc80cd6fb3577f6.thy",
@@ -253,10 +343,21 @@
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
     {
+      "sha256": "611b0b417e978b9e1c33b1b6ab8b88fc107cfe3d55c596f743da039e7a26d962",
+      "bytes": 1244419,
+      "archive_path": "history/objects/61/611b0b417e978b9e1c33b1b6ab8b88fc107cfe3d55c596f743da039e7a26d962.pdf",
+      "original_paths": [
+        "work/astra-five-risk-audit-20261104/revised/manuscript.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
       "sha256": "61c84e5ad3252a2e520747215ac57a282addc2b58c824a3637bcd77bbe02153f",
       "bytes": 42932456,
       "archive_path": "references/nekovar-selmer-complexes-2006.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/nekovar-selmer-complexes-2006.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/nekovar-selmer-complexes-2006.pdf",
         "work/nekovar-selmer-complexes-2006.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -266,7 +367,9 @@
       "bytes": 757414,
       "archive_path": "references/lang-1956.pdf",
       "original_paths": [
-        "work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf"
+        "work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -284,7 +387,9 @@
       "bytes": 309233,
       "archive_path": "references/cornut-jetchev-author-current.pdf",
       "original_paths": [
-        "work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf"
+        "work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -293,7 +398,9 @@
       "bytes": 3658085,
       "archive_path": "references/silverman-2009.pdf",
       "original_paths": [
-        "work/astra-final-size-independent-review-001/silverman-2009.pdf"
+        "work/astra-final-size-independent-review-001/silverman-2009.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-size-independent-review-001/silverman-2009.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-size-independent-review-001/silverman-2009.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -313,6 +420,8 @@
       "original_paths": [
         "work/Alpha_Sequence.thy",
         "work/alpha-power-lean-map/context/work/Alpha_Sequence.thy",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/Alpha_Sequence.thy",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/Alpha_Sequence.thy",
         "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Alpha_Sequence.thy"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -323,7 +432,9 @@
       "archive_path": "references/lin-yang.pdf",
       "original_paths": [
         "work/astra-final-height-producers-001/primary/lin-yang.pdf",
-        "work/astra-global-falsification-002/lin-yang.pdf"
+        "work/astra-global-falsification-002/lin-yang.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/lin-yang.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/lin-yang.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -332,6 +443,8 @@
       "bytes": 147594,
       "archive_path": "references/hoffstein-luo-1997.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/hoffstein-luo-1997.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/hoffstein-luo-1997.pdf",
         "work/hoffstein-luo-1997.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -359,6 +472,8 @@
       "bytes": 4399118,
       "archive_path": "references/waldspurger-1981.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/waldspurger-1981.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/waldspurger-1981.pdf",
         "work/waldspurger-1981.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -368,6 +483,8 @@
       "bytes": 4395679,
       "archive_path": "references/gross-zagier-1986.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/gross-zagier-1986.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/gross-zagier-1986.pdf",
         "work/gross-zagier-1986.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -377,6 +494,8 @@
       "bytes": 6148034,
       "archive_path": "references/serre-1972-open-image.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/serre-1972-open-image.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/serre-1972-open-image.pdf",
         "work/serre-1972-open-image.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -386,7 +505,18 @@
       "bytes": 1552870,
       "archive_path": "references/mazur-1995.pdf",
       "original_paths": [
-        "work/astra-mazur-corollary-001/primary/mazur-1995.pdf"
+        "work/astra-mazur-corollary-001/primary/mazur-1995.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-mazur-corollary-001/primary/mazur-1995.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-mazur-corollary-001/primary/mazur-1995.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "95f050bccffa6ea66684491cade1498dd5839ddafd48bc0568f663661ae1eec8",
+      "bytes": 394911,
+      "archive_path": "history/objects/95/95f050bccffa6ea66684491cade1498dd5839ddafd48bc0568f663661ae1eec8.pdf",
+      "original_paths": [
+        "work/fable-update-20261104-1444/audit.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -395,7 +525,9 @@
       "bytes": 793148,
       "archive_path": "references/desjardins-2020.pdf",
       "original_paths": [
-        "work/astra-weighted-theta-audit-001/primary/desjardins-2020.pdf"
+        "work/astra-weighted-theta-audit-001/primary/desjardins-2020.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/desjardins-2020.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/desjardins-2020.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -405,6 +537,8 @@
       "archive_path": "references/gtz-erratum.pdf",
       "original_paths": [
         "work/astra-final-height-producers-001/primary/gtz-erratum.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/gtz-erratum.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/gtz-erratum.pdf",
         "work/prime-pattern-independent/gtz-erratum.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -442,7 +576,9 @@
       "bytes": 240177,
       "archive_path": "references/baba-granath-2005.pdf",
       "original_paths": [
-        "work/astra-final-height-producers-001/primary/baba-granath-2005.pdf"
+        "work/astra-final-height-producers-001/primary/baba-granath-2005.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/baba-granath-2005.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/baba-granath-2005.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -451,7 +587,9 @@
       "bytes": 341969,
       "archive_path": "references/dokchitser-parity-2009.pdf",
       "original_paths": [
-        "work/astra-weighted-theta-audit-001/primary/dokchitser-parity-2009.pdf"
+        "work/astra-weighted-theta-audit-001/primary/dokchitser-parity-2009.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/dokchitser-parity-2009.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/dokchitser-parity-2009.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -460,7 +598,18 @@
       "bytes": 380826,
       "archive_path": "references/kolyvagin-1990.pdf",
       "original_paths": [
-        "work/astra-weighted-theta-audit-001/primary/kolyvagin-1990.pdf"
+        "work/astra-weighted-theta-audit-001/primary/kolyvagin-1990.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/kolyvagin-1990.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-weighted-theta-audit-001/primary/kolyvagin-1990.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "bef74be29811617fc1ee969bbdf2ed1fa29066dc25c1785f6330aea348564aef",
+      "bytes": 995652,
+      "archive_path": "history/objects/be/bef74be29811617fc1ee969bbdf2ed1fa29066dc25c1785f6330aea348564aef.pdf",
+      "original_paths": [
+        "work/fable-followup-audit-20261104/revised/manuscript.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -478,6 +627,8 @@
       "bytes": 1913443,
       "archive_path": "references/waldspurger-1983.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/waldspurger-1983.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/waldspurger-1983.pdf",
         "work/waldspurger-1983.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -487,6 +638,8 @@
       "bytes": 455542,
       "archive_path": "references/ramsey-2006.pdf",
       "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/ramsey-2006.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/ramsey-2006.pdf",
         "work/ramsey-2006.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
@@ -505,7 +658,9 @@
       "bytes": 425583,
       "archive_path": "references/howard-2012v1.pdf",
       "original_paths": [
-        "work/astra-final-finite-arithmetic-audit-001/primary/howard-2012v1.pdf"
+        "work/astra-final-finite-arithmetic-audit-001/primary/howard-2012v1.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-finite-arithmetic-audit-001/primary/howard-2012v1.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-finite-arithmetic-audit-001/primary/howard-2012v1.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -514,7 +669,9 @@
       "bytes": 5887969,
       "archive_path": "references/carayol-1986.pdf",
       "original_paths": [
-        "work/astra-t3-opus-reconciliation-001/primary/carayol-1986.pdf"
+        "work/astra-t3-opus-reconciliation-001/primary/carayol-1986.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-t3-opus-reconciliation-001/primary/carayol-1986.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-t3-opus-reconciliation-001/primary/carayol-1986.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -523,7 +680,45 @@
       "bytes": 4760247,
       "archive_path": "references/bfh-1990.pdf",
       "original_paths": [
-        "work/bfh-1990.pdf"
+        "work/bfh-1990.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/bfh-1990.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/bfh-1990.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "da14bab562dafa2f05e8c6ed3d21e333ad1816e79bdd59c7fdd9a5a7b4db580d",
+      "bytes": 1353785,
+      "archive_path": "history/objects/da/da14bab562dafa2f05e8c6ed3d21e333ad1816e79bdd59c7fdd9a5a7b4db580d.pdf",
+      "original_paths": [
+        "work/astra-full-justifications-20261104/revised/manuscript.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "e0367b25a022eb27ec220e3c15b474a94fb96d70a6bb89b77f4a02c2231950fe",
+      "bytes": 23921659,
+      "archive_path": "history/objects/e0/e0367b25a022eb27ec220e3c15b474a94fb96d70a6bb89b77f4a02c2231950fe.pdf",
+      "original_paths": [
+        "work/independent-height-review-20261104/conductor/primary/serre-local-cft.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "e0fbde178c2595b86ab02e06aa396308ffd7883c3bce62525af2d63c16181fad",
+      "bytes": 501770,
+      "archive_path": "history/objects/e0/e0fbde178c2595b86ab02e06aa396308ffd7883c3bce62525af2d63c16181fad.pdf",
+      "original_paths": [
+        "work/fable-audit-e0fbde178c25/audit.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "e1bd36f92d8fe153d07eec65d2260b300010e67d06f8c9cd4220ab231623b77d",
+      "bytes": 1086543,
+      "archive_path": "history/objects/e1/e1bd36f92d8fe153d07eec65d2260b300010e67d06f8c9cd4220ab231623b77d.pdf",
+      "original_paths": [
+        "work/completion-audit-20261104/revised/manuscript.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -532,7 +727,9 @@
       "bytes": 1122139,
       "archive_path": "references/bmor-2018-v3.pdf",
       "original_paths": [
-        "work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf"
+        "work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -542,7 +739,29 @@
       "archive_path": "references/green-tao-linear.pdf",
       "original_paths": [
         "work/astra-final-height-producers-001/primary/green-tao-linear.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/green-tao-linear.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-height-producers-001/primary/green-tao-linear.pdf",
         "work/prime-pattern-independent/green-tao-linear.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "f13acec152f980adbe52b033f6bb20972a0e07ef995affb76c1f0bcbaaaa5306",
+      "bytes": 1578356,
+      "archive_path": "history/objects/f1/f13acec152f980adbe52b033f6bb20972a0e07ef995affb76c1f0bcbaaaa5306.pdf",
+      "original_paths": [
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/fable-review-packet-20261104/primary/dokchitser-dokchitser-2010.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/fable-review-packet-20261104/primary/dokchitser-dokchitser-2010.pdf",
+        "work/fable-review-packet-20261104/primary/dokchitser-dokchitser-2010.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "fc62ba1c9d1315a0c441a3dd7de46a254f379289e630c407a3336c0230d91052",
+      "bytes": 1826653,
+      "archive_path": "history/objects/fc/fc62ba1c9d1315a0c441a3dd7de46a254f379289e630c407a3336c0230d91052.pdf",
+      "original_paths": [
+        "work/independent-height-review-20261104/conductor/primary/silverberg-zarhin.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     },
@@ -551,7 +770,9 @@
       "bytes": 349879,
       "archive_path": "references/cai-chen-liu-2018.pdf",
       "original_paths": [
-        "work/astra-final-finite-arithmetic-audit-001/primary/cai-chen-liu-2018.pdf"
+        "work/astra-final-finite-arithmetic-audit-001/primary/cai-chen-liu-2018.pdf",
+        "work/fable-review-packet-20261104/extraction-check-f860987d4c08/fable-audit/sources/work/astra-final-finite-arithmetic-audit-001/primary/cai-chen-liu-2018.pdf",
+        "work/fable-review-packet-20261104/packet-f860987d4c08/fable-audit/sources/work/astra-final-finite-arithmetic-audit-001/primary/cai-chen-liu-2018.pdf"
       ],
       "license_review": "Retain original notices; no new license granted by this inventory"
     }

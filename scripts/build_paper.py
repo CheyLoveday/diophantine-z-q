@@ -1,4 +1,4 @@
-"""Build the unchanged manuscript with a pinned Tectonic engine and TeX bundle."""
+"""Build the manuscript with a pinned Tectonic engine and TeX bundle."""
 import argparse
 import hashlib
 import io
