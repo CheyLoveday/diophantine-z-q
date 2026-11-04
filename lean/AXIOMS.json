@@ -1,0 +1,4772 @@
+{
+  "status": "PASS",
+  "declarations": [
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_le_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_pow_saturate_exponent",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_mul",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_le_self",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_one",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_eq_self",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_lt_iff_of_le",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_pow_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_eq_cap",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_pow",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_zero",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_add",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_le_iff_of_le",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_le_cap",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.le_saturate_iff_of_le",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_saturate",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.mul_lt_iff_le_div_pred",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate_max",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.four_mul_pow_lt_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionArithmetic.saturate",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.conductor_dvd_smoothing_integer_sub_one",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothingInteger.eq_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.two_pow_dvd_smoothing_integer_sub_one",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothing_integer_mod_two_pow_succ",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.not_two_pow_succ_dvd_smoothing_integer_sub_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothing_square_exact_two_depth",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothingInteger",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothing_integer_coprime",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothing_integer_gt_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothing_integer_sub_one",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.odd_smoothing_integer",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.smoothing_square_multiplicity_two",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.auxiliary_dvd_smoothing_integer_sub_one",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.exists_output_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitEncoding.0.ZInQ.CircuitEncoding.Circuit.eval.match_1.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval._unsafe_rec",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.snoc.elim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.ctorElimType",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.recOn",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.constant.injEq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.input.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval.eq_2",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit._sizeOf_inst",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.eval.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.below",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.add",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.noConfusionType",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.mul.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.input.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.mul.elim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.empty.elim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate._sizeOf_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitEncoding.0.ZInQ.CircuitEncoding.Circuit.eval.match_1.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval.eq_def",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.constant",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval._sunfold",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.add.injEq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.mul.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitEncoding.0.ZInQ.CircuitEncoding.Circuit.satisfies.match_1.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies.eq_def",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.add.inj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.input",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.recOn",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval_satisfies",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.ctorElim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.ctorIdx",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.snoc.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval.eq_1",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.brecOn.eq",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitEncoding.0.ZInQ.CircuitEncoding.Circuit.satisfies.match_1.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.snoc.injEq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.add.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval._f",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.constant.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.mul.inj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.input.inj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.snoc.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.input.elim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies._sunfold",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies_iff_eq_eval",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies._f",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.empty.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.mul.injEq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.casesOn",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitEncoding.0.ZInQ.CircuitEncoding.Circuit.eval.match_1.splitter",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.brecOn",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.ctorElim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.input.injEq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.snoc.inj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.eval",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.add.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.casesOn",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.constant.inj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit._sizeOf_1",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitEncoding.0.ZInQ.CircuitEncoding.Circuit.satisfies.match_1.splitter",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.ctorElimType",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.exists_unique_satisfies",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.empty",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.snoc",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.constant.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.satisfies._unsafe_rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate._sizeOf_inst",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.ctorIdx",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.constant.elim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.noConfusionType",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.add.elim",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.mul",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.brecOn.go",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedMul",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.and_one_eq_mod_two",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.checkedCappedPower_eq",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.checkedCappedPower_zero_cap",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop.eq_1",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop._unary.eq_def",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop._unsafe_rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedMul_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPower_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop._unary",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.checkedCappedPower",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop.eq_def",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPower_le_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.shiftRight_one_eq_div_two",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPowerLoop._unary._proof_1",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PrecisionAlgorithms.cappedPower",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.eq_int_of_abs_sub_lt_inv_den",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.eq_int_of_real_abs_sub_lt_inv_of_den_le",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.den_le_exp_rational_log_height",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.abs_sub_int_lt_inv_den_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.eq_int_of_real_abs_sub_lt_exp_neg_of_height_le",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.exp_rational_log_height",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.inv_den_le_real_abs_sub_int",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.rationalLogHeight",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.inv_den_le_abs_sub_int",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau17",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_65",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.dvd_of_certificate",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.eval_square_of_certificate",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi33",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_11",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient105",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi21",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_35",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_certificate_77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.certificate_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.eval_sub_of_certificate",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.rawQuotient13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.tau77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw77",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.quotient7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.divisibility_13",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.raw_divisibility_15",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.exists_mem_det_ne_zero_of_commRing",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.det_eq_zero_of_mem_matrixUnits",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_smul_left",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_add_right",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_E00_E11",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.not_forall_set_span_eq_top_exists_det_ne_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_smul_right",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.rank_two_target",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_eq_zero_of_mem_span",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar._proof_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.exists_mem_det_ne_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolarBilin_apply",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.matrixUnits",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_zero_left",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolarBilin",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_zero_right",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.span_matrixUnits",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar.eq_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.detPolar_add_left",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "RankTwoMatrix.matrixUnits.eq_1",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorial_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstantCapped.eq_1",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedAdd.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstantCapped_le_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop._unary.eq_def",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstantCapped",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.HeightConstantAlgorithm.0.ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.match_1.splitter",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstantCapped_zero",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedAddThree",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedHeightBody_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstant",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.HeightConstantAlgorithm.0.ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.match_1.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop._unsafe_rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedHeightBody",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstant_pos",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightBody_pos",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightBody",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedAddThree.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedAdd",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.eq_2",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.eq_1",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.HeightConstantAlgorithm.0.ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.match_1.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstantCapped_eq_min",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop.eq_def",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.heightConstantCapped_eq_saturate",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorial",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop._unary",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantAlgorithm.cappedFactorialLoop._unary._proof_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula._sizeOf_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.EquationCompression.0.ZInQ.EquationCompression.holds.match_1.eq_2",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.sum_elim_comp_rightVars",
+      "axioms": [
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.falsum.elim",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.noConfusion",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.brecOn.eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.exists_int_eq_commonDenominator_mul_coeff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.verum.sizeOf_spec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds._sunfold",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.verum.elim",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.equation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.disj.noConfusion",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.conjoin.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.eval_disjoin_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.eq_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.verum",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.eq_4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.EquationCompression.0.ZInQ.EquationCompression.holds.match_1.eq_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.exists_conjunction_fresh_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.EquationCompression.0.ZInQ.EquationCompression.holds.match_1.eq_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.EquationCompression.0.ZInQ.EquationCompression.holds.match_1.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.disj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.exists_integer_multiple",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.eq_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.disjoin",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.EquationCompression.0.ZInQ.EquationCompression.holds.match_1.splitter",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile._sunfold",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile.eq_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.ctorIdx",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.leftVars",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.match_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.eval_compile_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.disj.sizeOf_spec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.sum_elim_comp_leftVars",
+      "axioms": [
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.eq_2",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile.eq_4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.brecOn.go",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.recOn",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.conj.inj",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile._unsafe_rec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile.eq_5",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.equation.injEq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.falsum",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile.eq_def",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.disj.elim",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.ctorElimType",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.disj.injEq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.conj.sizeOf_spec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.conj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.rec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.brecOn",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.commonDenominator_pos",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.below",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds.eq_def",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.conj.noConfusion",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.noConfusionType",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.leftVars.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.equation.noConfusion",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.conj.injEq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.falsum.sizeOf_spec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.equation.inj",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile._f",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.commonDenominator",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.disjoin.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.EquationCompression.0.ZInQ.EquationCompression.holds.match_1.eq_4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.exists_integer_equation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.equation.elim",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.ctorElim",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.equation.sizeOf_spec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds._unsafe_rec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.disj.inj",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.compile.eq_2",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.rightVars",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.eval_conjoin_nonneg",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula._sizeOf_inst",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.eval_conjoin_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.casesOn",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.conjoin",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.exists_disjunction_fresh_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.holds._f",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.EquationCompression.EquationFormula.conj.elim",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.r",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.max_factor_mul_product_le_main_power",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.q0",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.two_mul_c_for_degree_le_h6_for_degree",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.h6ForMax",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.c_le_h6_of_primes",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.max_le_r_for_degree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.cCmForDegree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.q0ForDegree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.rForDegree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.d0",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.two_le_g0",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.c_le_h6",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.c_for_degree_le_main_power",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.d",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.c_le_main_power",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.e0ForDegree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.bCmForDegree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.degree_le_r_for_degree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.h6_for_max_317_eq_height_constant",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.one_le_degree_from_base",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.h6ForDegree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.h6",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.bCm",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.cCm",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.c",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.two_mul_c_le_h6_of_primes",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.two_mul_c_le_h6_for_max",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.two_mul_c_le_h6",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.degreeFromBase",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.primeProduct",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.h6_for_degree_from_base_317_eq_height_body",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.prime_product_le_self_power",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.e0",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.cForDegree",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.one_le_d",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.eight_le_r_for_degree",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HeightConstantComparison.g0",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Gate.rhsPolynomial.match_1.splitter",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials._unsafe_rec",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials._sunfold",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Gate.rhsPolynomial.match_1.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.eval_rhs_polynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Gate.rhsPolynomial.match_1.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Gate.rhsPolynomial.match_1.eq_4",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Circuit.residualPolynomials.match_1.splitter",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rhsPolynomial.eq_3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rhsPolynomial.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.zeroOutputPolynomial.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rhsPolynomial.eq_4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rhsPolynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials.eq_def",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Circuit.residualPolynomials.match_1.eq_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval_residual_polynomials_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.zeroOutputPolynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Circuit.residualPolynomials.match_1.eq_2",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rhsPolynomial.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.exists_zero_output_polynomial_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials._f",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.CircuitPolynomial.0.ZInQ.CircuitEncoding.Gate.rhsPolynomial.match_1.eq_3",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials.eq_2",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Gate.rhsPolynomial.eq_2",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.eval_zero_output_polynomial_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CircuitEncoding.Circuit.residualPolynomials.match_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness._sizeOf_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.factor0_unit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.padicValRat_three_eq_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.mk",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.casesOn",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.bit",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleH",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.mk.inj",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.e",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.unit_of_eq_natCast_dvd",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleMultiplier_nonzero_and_valuation_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.factor_unit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness._sizeOf_inst",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.negative_input_pole_h_valuation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleMultiplier._proof_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleSystem_no_negative_odd_valuation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.elliptic_x_valuation_even_of_parameter_even",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleA",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.bit_eq_zero_or_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleSystem",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.z",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.unit_mul",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.r1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.recOn",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.r2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.mk.noConfusion",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.mk._flat_ctor",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.mk.sizeOf_spec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.noConfusionType",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.mk.injEq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.ctorIdx",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleMultiplier",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.PoleWitness.w",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.curve_rhs_nonzero_and_valuation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.tower_four",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.coefficient_bound_of_cutoff_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.degree_bound_of_cutoff_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.tower_add_three",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.quadruplePower_9014_lt_tower_eight",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.triplePower_9014_lt_tower_seven",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.tower_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.triplePower_pow_2048_lt_succ",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.triplePower",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.triplePower_pow_2048",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.triplePower_pow",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.triplePower_strictMono",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.succ_pow_le_of_lt",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.tower_succ",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.two_pow_lt_quadruplePower",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.tower_add_four",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.quadruplePower",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.eleven_lt_two_pow",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.quadruplePower_strictMono",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.inner_exponent_lt_succ",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NumericalTowerBounds.degree_bound_of_parameter_cutoff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair_lt_tri_succ",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop.eq_1",
+      "axioms": [
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.decode5_encode5",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.decode5",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.encode5_decode5",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.succ_mul_succ_succ",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.decode",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop.eq_def",
+      "axioms": [
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop._unsafe_rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.encode5.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.tri_succ",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop._unary.eq_def",
+      "axioms": [
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair_decode",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair_sum_eq",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.two_dvd_mul_succ",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.two_mul_tri",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop._unary",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.tri_mono",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair_inj",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.two_mul_pair",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.decode5.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.tri_le_pair",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.loop._unary._proof_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.decode_pair",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pair_loop",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.encode5",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.CantorDecoder.pairing_equation_iff",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.choose_odd_iff_land_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.mask_iff_land_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.orthogonal_iff_land_eq_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.odd_witness_iff_odd",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.mask.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.odd_witness",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.bit_and_iff_land_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.orthogonal.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.bit_and",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.orthogonal",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.mask",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.NaturalBitwiseMacros.choose_add_odd_iff_land_eq_zero",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.no_negative_odd_valuation_of_compiled_pole_root",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.compiledPolePolynomial.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial._proof_5",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ValuationObstruction.poleSystem.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial._proof_3",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.eval_polePolynomial_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.witnessOfCoordinates._proof_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.exists_compiledPolePolynomial_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.compiledPolePolynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.bitIndex",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial._proof_4",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.witnessOfCoordinates_coordinates",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial._proof_2",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.eval_polePolynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.eval_compiledPolePolynomial_eq_zero_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.witnessOfCoordinates",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.coordinates_witnessOfCoordinates",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial._proof_1",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.polePolynomial.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolePolynomial.coordinates",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.BinomialDigit.0.Nat.ofDigits.match_1.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.macro_holds_zero_column",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.BinomialDigit.0.Nat.ofDigits.match_1.splitter",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.BinomialDigit.0.Nat.ofDigits.match_1.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.choose_lt_base",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "_private.ZInQ.BinomialDigit.0.Nat.ofDigits.eq_def",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.BinomialDigit.0.Nat.ofDigits.eq_1",
+      "axioms": []
+    },
+    {
+      "declaration": "_private.ZInQ.BinomialDigit.0.Nat.ofDigits.eq_2",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.div_pow_mod_eq_choose",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.macro_holds_iff_choose",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.macro_holds_above_row",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.macro_holds_zero_row",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BinomialDigit.macroHolds",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ExplicitCutoffBounds.factorialBase",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ExplicitCutoffBounds.g0",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.ExplicitCutoffBounds.t_lt_triplePower",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ExplicitCutoffBounds.d",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ExplicitCutoffBounds.t",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_step",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ._f",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ.match_1",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_succ_strict",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_zero",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_add_two",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_ge_index",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_descent",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_one",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_cassini",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.ordered_core_iff_consecutive",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ._unsafe_rec",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_eq_rescaledChebyshev",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ._sunfold",
+      "axioms": []
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_add_succ",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_two_left",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.pow_le_alphaZ_succ",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_succ_le_pow",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.sub_two_dvd_alphaZ_sub_index",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_mod_two_eq_one_or_succ",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.exists_eq_alphaZ_of_quadratic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_emod_eq_of_mod_eq",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_dvd_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.exists_gt_two_modEq_pair",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_power_modulus_dvd",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.two_mul_alphaZ_lt_companion",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelCoordinates.tangent_coordinates",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelCoordinates.delta_identity",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelCoordinates.epsilon_inverse",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelCoordinates.point_R",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelCoordinates.coordinate_change",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelCoordinates.scale_back",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.ModelDuplication.duplication_bounds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BooleanCube.sum_eval_eq_zero_of_totalDegree_lt",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BooleanCube.exists_simultaneous_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.BooleanCube.sum_eval_eq_top_coeff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi13_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi5_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi1_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi17_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi11_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi3_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PolynomialCertificates.phi7_eq_cyclotomic",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_injective",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_disjoint_apply",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_apply_of_notMem",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_apply_of_mem",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.oneTwoExponent_apply",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_apply",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_sdiff_apply",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.squarefreeExponent_apply_le_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CoefficientAllocation.coeff_mul_at_one_two_exponent",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.PackedHistory.packed_register_decode",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.companion_dvd_alphaZ_add_two_mul",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.pow_lt_alphaZ_power_modulus",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.companion_dvd_alphaZ_add_period",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.companion_dvd_alphaZ_reflection",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.RationalGuards.rational_pos_iff_four_squares_inverse",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CyclicSignatures.pow_two_pow_eq_single_augmentation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CyclicSignatures.explicit_inverse_of_augmentation_eq_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CyclicSignatures.coeff_pow_two_pow_eq_single_augmentation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.CyclicSignatures.isUnit_iff_augmentation_eq_one",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HammingDigits.totalDegree_hammingBitPolynomial_le",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HammingDigits.hammingBitPolynomial",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HammingDigits.eval_hammingBitPolynomial_eq_choose",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HammingDigits.hammingBitPolynomial.eq_1",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.HammingDigits.eval_hammingBitPolynomial_eq_bit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.folded_alpha_signed_residue",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_consecutive_coprime",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_multiple_square_mod",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_sq_dvd_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.exists_folded_index",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.exists_large_additive_companion",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.orderedPair_positive_index",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.companion_of_additive_witness",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.exists_parameter_pair_residues",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.coprime_of_square_witness",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.eq_of_small_signed_residue",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.folded_index_recovery",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.alphaZ_large_odd_pair",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.square_divisibility_to_index",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "ZInQ.AlphaPower.square_multiple_pair",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "module_count": 48,
+  "allowed_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "main_theorem_proved": false
+}

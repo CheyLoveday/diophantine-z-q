@@ -1,2 +1,4 @@
 *.tex -text
 *.pdf binary
+construction/** -text
+lean/** -text

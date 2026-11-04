@@ -1,0 +1,559 @@
+{
+  "archive": "research-handoff-2026-11-04",
+  "archive_sha256": "522c61d723841a41bd3d920d1b3160f8ffbeb5fe5bb68f0dbb0c48432f88d665",
+  "scope": "PDF reference documents and Isabelle theory source files in the historical archive. This is a source inventory, not permission to redistribute or relicense. Other third-party excerpts may occur in text files.",
+  "sources": [
+    {
+      "sha256": "073fc0fc2d06386ea41f9a244626eed10cd642c1661e7f2fbaca88b6bc0dac10",
+      "bytes": 3589,
+      "archive_path": "history/objects/07/073fc0fc2d06386ea41f9a244626eed10cd642c1661e7f2fbaca88b6bc0dac10.thy",
+      "original_paths": [
+        "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Parametric_Polynomials.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "08f8ebfda40855d0f6d9e90e1dc352eb6576ecc44cc7c6e6ca3d448d724503b4",
+      "bytes": 4955997,
+      "archive_path": "references/ribet-1990.pdf",
+      "original_paths": [
+        "work/astra-t2-opus-reconciliation-001/primary/ribet-1990.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "0fd83611a423131e2a9de92eea4a0cadcc4b82afaf17f7d5fff53533f1186a15",
+      "bytes": 11705,
+      "archive_path": "history/objects/0f/0fd83611a423131e2a9de92eea4a0cadcc4b82afaf17f7d5fff53533f1186a15.thy",
+      "original_paths": [
+        "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Diophantine_Relations.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "111d2ccdaa8407024dd17cd05a5bb92ff36e13f11368ae6866cc3c2614dc5478",
+      "bytes": 422525,
+      "archive_path": "references/purkait-2013.pdf",
+      "original_paths": [
+        "work/purkait-2013.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "18e824c01046ad49b079f91b567b27a928e737c598eb347c8a4f42128081ec83",
+      "bytes": 1030147,
+      "archive_path": "references/matiyasevich-1971.pdf",
+      "original_paths": [
+        "work/astra-mazur-corollary-001/primary/matiyasevich-1971.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "203431b551fd0ca218722583a2ba62c5959d8e72aea8c47eca975118e74f0946",
+      "bytes": 90303,
+      "archive_path": "history/objects/20/203431b551fd0ca218722583a2ba62c5959d8e72aea8c47eca975118e74f0946.txt",
+      "original_paths": [
+        "work/Exponentiation.thy",
+        "work/alpha-power-lean-map/context/work/Exponentiation.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "21c4c14a22efb908f20b259d1bbd68d79a68e20e22dcc30af00175136d576dd0",
+      "bytes": 1425426,
+      "archive_path": "references/vkk-2023.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/vkk-2023.pdf",
+        "work/astra-global-falsification-002/vkk-2023.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "22df47cb98307aa77c46028cf5575eeb1d3524950dbdadb9c0c21890966039d2",
+      "bytes": 3725156,
+      "archive_path": "references/weil-1964.pdf",
+      "original_paths": [
+        "work/astra-weighted-theta-audit-001/primary/weil-1964.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "24b5b74b1c4f31986bfc75955f8528e81753efc0c45bd99bc23fee58171a4711",
+      "bytes": 983529,
+      "archive_path": "references/gtz-inverse-v5.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/gtz-inverse-v5.pdf",
+        "work/prime-pattern-independent/gtz-inverse-v5.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "2c6195ec76a974f3f336c77cb71cc3845b018aad2d43136716b3477a3bc5fb31",
+      "bytes": 2136045,
+      "archive_path": "references/milne-ADT-2006.pdf",
+      "original_paths": [
+        "work/astra-arithmetic-final-composition-001/milne-ADT-2006.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "379c173b9e491d7c868557274db4f48a4a1dfb9a83962e32267f9263f20fbae6",
+      "bytes": 255634,
+      "archive_path": "references/cornut-jetchev-2010.pdf",
+      "original_paths": [
+        "work/cornut-jetchev-2010.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "3b9a619423358bc877fd2123b73a759157a728ec11e0f7b0aa48bd0333d7149a",
+      "bytes": 509200,
+      "archive_path": "references/poonen-stoll.pdf",
+      "original_paths": [
+        "work/astra-final-pole-completeness-review-001/poonen-stoll.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "3c6e14b11fa60262db8aff782ce3cf4d83e9100c0be83621a7e4ce502cec605d",
+      "bytes": 18010813,
+      "archive_path": "references/kato-2004.pdf",
+      "original_paths": [
+        "work/kato-2004.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "3e11270aed5d010fd0de73bcc36b9a0398598691942f7d2a613ac18b56dff1b1",
+      "bytes": 2317,
+      "archive_path": "history/objects/3e/3e11270aed5d010fd0de73bcc36b9a0398598691942f7d2a613ac18b56dff1b1.thy",
+      "original_paths": [
+        "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Modulo_Divisibility.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "3eef3f34a03d21575bdb352acfaa0bef2fbe3701068a65798cb89a6ae84333e7",
+      "bytes": 1409076,
+      "archive_path": "references/cai-shu-tian-2014.pdf",
+      "original_paths": [
+        "work/astra-final-external-applicability-001/cst-publisher.pdf",
+        "work/cai-shu-tian-2014.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "3f5d420f4352c4bbd08361b4efd66e501e8b2139fd9dcb7089ed6c9f2066441b",
+      "bytes": 515336,
+      "archive_path": "references/kisin-integral-models.pdf",
+      "original_paths": [
+        "work/kisin-integral-models.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "42f1439a0ea42ca380f22bef22d53a56141ad468bf62328ace56ba9b25b09f8e",
+      "bytes": 1185688,
+      "archive_path": "references/lny-2015.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/lny-2015.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "4360591eb0af064ec6a035c48a309f53ace0e5d10cae2b64885de361f0c1d881",
+      "bytes": 209587,
+      "archive_path": "references/poonen-weakmw.pdf",
+      "original_paths": [
+        "work/astra-final-pole-completeness-review-001/poonen-weakmw.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "479d8157f118f6bb0df581deb57585d67a1c87fb0cec8867ca1bed30b75e7a96",
+      "bytes": 521460,
+      "archive_path": "references/pazuki-2012.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/pazuki-2012.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "481234506a2de042dc05c98348c5b005ff2cdc2deb421b0edba179c42b6fa00a",
+      "bytes": 308433,
+      "archive_path": "references/jetchev-kane-2009.pdf",
+      "original_paths": [
+        "work/jetchev-kane-2009.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "483dc18c56b2fe9cfac4e37f2e6594399625c3f0ea98a05bb69116377c67fc06",
+      "bytes": 4319206,
+      "archive_path": "references/kato-1999.pdf",
+      "original_paths": [
+        "work/astra-kato-primary-001/kato-1999.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "4854cb4adc99fec7eac47596dea86832e2e468f3c80d78726afeb98d2404b915",
+      "bytes": 231177,
+      "archive_path": "references/buzzard-1996.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/buzzard-1996.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "50d79af78250a9f1117ad9d337e0b231704a533fc707966ed1bfa52e13d498f5",
+      "bytes": 2072714,
+      "archive_path": "references/milne-cft.pdf",
+      "original_paths": [
+        "work/astra-final-moving-character-audit-001/primary/milne-cft.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "515093945cfd56a09622c9bb6536f61c2dcc8f6d6798af1f28efafcd42a95069",
+      "bytes": 8240,
+      "archive_path": "history/objects/51/515093945cfd56a09622c9bb6536f61c2dcc8f6d6798af1f28efafcd42a95069.txt",
+      "original_paths": [
+        "work/Exponential_Relation.thy",
+        "work/alpha-power-lean-map/context/work/Exponential_Relation.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "5259dbc9ee73df46edd765ca27c8b3c0ec466f6b78abafa5f54237b11d44a314",
+      "bytes": 502447,
+      "archive_path": "references/green-tao-mobius.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/green-tao-mobius.pdf",
+        "work/prime-pattern-independent/green-tao-mobius.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "5c43ea0bf4ec190b819727fe720414a80e09f9e762533d08bad5b8a0b6de7273",
+      "bytes": 1853550,
+      "archive_path": "references/milne-ft.pdf",
+      "original_paths": [
+        "work/astra-final-moving-character-audit-001/primary/milne-ft.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "5f4d2965e88a21bee2186ab54ce64c95064ab69482ff15f3ddc80cd6fb3577f6",
+      "bytes": 2689,
+      "archive_path": "history/objects/5f/5f4d2965e88a21bee2186ab54ce64c95064ab69482ff15f3ddc80cd6fb3577f6.thy",
+      "original_paths": [
+        "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Existential_Quantifier.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "61c84e5ad3252a2e520747215ac57a282addc2b58c824a3637bcd77bbe02153f",
+      "bytes": 42932456,
+      "archive_path": "references/nekovar-selmer-complexes-2006.pdf",
+      "original_paths": [
+        "work/nekovar-selmer-complexes-2006.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "665286caefaa894cf789f3b4ce3027accdf4d583836e8b13aafeab744373b44d",
+      "bytes": 757414,
+      "archive_path": "references/lang-1956.pdf",
+      "original_paths": [
+        "work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "6d62ddb8a0aa8f8b8f803d70060c6a26c7a6f2a00936b85867c830946cf3db12",
+      "bytes": 535639,
+      "archive_path": "references/gaudron-remond-polarisations.pdf",
+      "original_paths": [
+        "work/gaudron-remond-polarisations.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "7154ad8f261a625899562653d8b471d5d7dd31ddbb0afc071ef26f6e3acd93c8",
+      "bytes": 309233,
+      "archive_path": "references/cornut-jetchev-author-current.pdf",
+      "original_paths": [
+        "work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "72ee67bfa1e3fdf582ac7e4b032d7ca0b35a168ed6443ac39c121fbb788cab25",
+      "bytes": 3658085,
+      "archive_path": "references/silverman-2009.pdf",
+      "original_paths": [
+        "work/astra-final-size-independent-review-001/silverman-2009.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "7618e61b8ec287b9fcce61fb4ac7d89ea98d58ca9274fa899ed52cda670b19b5",
+      "bytes": 606549,
+      "archive_path": "references/elkik-1990.pdf",
+      "original_paths": [
+        "work/astra-t2-opus-reconciliation-001/primary/elkik-1990.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "76a9dfa6bcebaebe17492d1aef32be7b1fec241529cc3fec3378e0c6d1210c23",
+      "bytes": 3733,
+      "archive_path": "history/objects/76/76a9dfa6bcebaebe17492d1aef32be7b1fec241529cc3fec3378e0c6d1210c23.txt",
+      "original_paths": [
+        "work/Alpha_Sequence.thy",
+        "work/alpha-power-lean-map/context/work/Alpha_Sequence.thy",
+        "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Alpha_Sequence.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "773518a4a30e4f4acac650b7f7c5f19decfb1f893431e6d04f4cfd0205919038",
+      "bytes": 884274,
+      "archive_path": "references/lin-yang.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/lin-yang.pdf",
+        "work/astra-global-falsification-002/lin-yang.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "7d1d7e71edc7dfc5e17963e784a27c8bfad51eebec79f21f70fb6866f4304787",
+      "bytes": 147594,
+      "archive_path": "references/hoffstein-luo-1997.pdf",
+      "original_paths": [
+        "work/hoffstein-luo-1997.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "7f91ebae1a8f5e695800f4afb9fc06d0e2ea0b3a476751a31a7c8c3f38ad537d",
+      "bytes": 1208216,
+      "archive_path": "references/casselman-1973.pdf",
+      "original_paths": [
+        "work/astra-t3-opus-reconciliation-001/primary/casselman-1973.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "816419f70e2d828ae74b534aa2c392cf1117b9058845a6d31b61d18da1bbe567",
+      "bytes": 10677,
+      "archive_path": "history/objects/81/816419f70e2d828ae74b534aa2c392cf1117b9058845a6d31b61d18da1bbe567.thy",
+      "original_paths": [
+        "work/sol-alpha-dsl-source-inventory-001/upstream-candidate/Assignments.thy"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "86e054b65e0ca727d5dc45cb8f711abf61ff0b373dab32da461fb248e05751ff",
+      "bytes": 4399118,
+      "archive_path": "references/waldspurger-1981.pdf",
+      "original_paths": [
+        "work/waldspurger-1981.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "8afee839cdc0e2056c6dcbe348e39c0a6aa27344125d8c3b80dd735f2e6d9521",
+      "bytes": 4395679,
+      "archive_path": "references/gross-zagier-1986.pdf",
+      "original_paths": [
+        "work/gross-zagier-1986.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "93970ed93730194af8bed0f1f59d29cbed061d20f34f4bcffc079ad8aedf01d5",
+      "bytes": 6148034,
+      "archive_path": "references/serre-1972-open-image.pdf",
+      "original_paths": [
+        "work/serre-1972-open-image.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "94490a944040d9589595995389d499661a8facab8398af062d0c52e34d71aded",
+      "bytes": 1552870,
+      "archive_path": "references/mazur-1995.pdf",
+      "original_paths": [
+        "work/astra-mazur-corollary-001/primary/mazur-1995.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "9c77b1ca4721c814b3f6c8ac153a061132750fcda21249493349d11421e82533",
+      "bytes": 793148,
+      "archive_path": "references/desjardins-2020.pdf",
+      "original_paths": [
+        "work/astra-weighted-theta-audit-001/primary/desjardins-2020.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "9d66017c15fc99bbae83726ef27bcc16d73128c13166916f00714c84c8523383",
+      "bytes": 266792,
+      "archive_path": "references/gtz-erratum.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/gtz-erratum.pdf",
+        "work/prime-pattern-independent/gtz-erratum.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "a6e8462f1e76606614e5c2891b419515be408d5f11f0b82915f5c24e05c00e06",
+      "bytes": 944592,
+      "archive_path": "references/ford-sieve-2023.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/ford-sieve-2023.pdf",
+        "work/prime-pattern-independent/ford-sieve-2023.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "ae51f010a5d8247498c9c17008c3c7dc4d988620c81ac5581f0e793dee0f0cf3",
+      "bytes": 412162,
+      "archive_path": "references/BUILD1_main.pdf",
+      "original_paths": [
+        "work/astra-mazur-corollary-001/BUILD1_main.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "afb3eac671e273d15f22d612cc1777a0716fafee8ac8c4bf03b0cc351aaebddb",
+      "bytes": 556318,
+      "archive_path": "references/vkk-2019.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/vkk-2019.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "b049ce64f9b662af0e078f4faa9e5325cc7a99bf2d6ccda0a31a84719d031c32",
+      "bytes": 240177,
+      "archive_path": "references/baba-granath-2005.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/baba-granath-2005.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "b0c625d49e99cfd7af1ef95d8bd7ec729dc2eba4a762b4869838f6052b103707",
+      "bytes": 341969,
+      "archive_path": "references/dokchitser-parity-2009.pdf",
+      "original_paths": [
+        "work/astra-weighted-theta-audit-001/primary/dokchitser-parity-2009.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "bacdf23d05d5120defe923c8dcccd7c5bc525fe7b32239552b04fd6567726f2f",
+      "bytes": 380826,
+      "archive_path": "references/kolyvagin-1990.pdf",
+      "original_paths": [
+        "work/astra-weighted-theta-audit-001/primary/kolyvagin-1990.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "bfcda9821742b02801e4f1264750aebeb656141fbd53fb61b8662333e1491830",
+      "bytes": 6809729,
+      "archive_path": "references/serre-chebotarev-1981.pdf",
+      "original_paths": [
+        "work/astra-unary-chebotarev-001/primary/serre-chebotarev-1981.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "c2c4ee1cec4dbdf7d86e6a36b70476ae65858a006161c309e3347c321fada667",
+      "bytes": 1913443,
+      "archive_path": "references/waldspurger-1983.pdf",
+      "original_paths": [
+        "work/waldspurger-1983.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "c4dbde444169f075dc77dadb67a18f0348a450a9df32d16ef049e40e348ed0f4",
+      "bytes": 455542,
+      "archive_path": "references/ramsey-2006.pdf",
+      "original_paths": [
+        "work/ramsey-2006.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "cbbdc24c26cdfcbd77f0e084194643e8804a724f004eb02e431ead9d932c498d",
+      "bytes": 698482,
+      "archive_path": "references/bcdt-2001.pdf",
+      "original_paths": [
+        "work/astra-final-pole-completeness-review-001/bcdt-2001.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "d2d06e851d6aa1fdc33a932b69b5c06a8c56dc2d9e05fb10d97c0358d6d6ea9a",
+      "bytes": 425583,
+      "archive_path": "references/howard-2012v1.pdf",
+      "original_paths": [
+        "work/astra-final-finite-arithmetic-audit-001/primary/howard-2012v1.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "d4a5fb6b1cd76f944f8948e06df1c7ad5656ae5ee14b9189178ee1e8f2b0dab8",
+      "bytes": 5887969,
+      "archive_path": "references/carayol-1986.pdf",
+      "original_paths": [
+        "work/astra-t3-opus-reconciliation-001/primary/carayol-1986.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "d50ad2f11c992591de90f2cea59489ac436cce455e140e6eebf5053f49819f2c",
+      "bytes": 4760247,
+      "archive_path": "references/bfh-1990.pdf",
+      "original_paths": [
+        "work/bfh-1990.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "e51f8b8f63486c2259efe076d367504f08dda0fe9e99dc35bf36de544ffc0601",
+      "bytes": 1122139,
+      "archive_path": "references/bmor-2018-v3.pdf",
+      "original_paths": [
+        "work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "ec126f9c9e189cc0308b83fb4f9f93c29a47d11ad875391aff4ce4c42aef1001",
+      "bytes": 1213124,
+      "archive_path": "references/green-tao-linear.pdf",
+      "original_paths": [
+        "work/astra-final-height-producers-001/primary/green-tao-linear.pdf",
+        "work/prime-pattern-independent/green-tao-linear.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    },
+    {
+      "sha256": "fd19f0588bf3cee285f731812ae058dc3f8527d30d26eac7c2b6a21bfa847522",
+      "bytes": 349879,
+      "archive_path": "references/cai-chen-liu-2018.pdf",
+      "original_paths": [
+        "work/astra-final-finite-arithmetic-audit-001/primary/cai-chen-liu-2018.pdf"
+      ],
+      "license_review": "Retain original notices; no new license granted by this inventory"
+    }
+  ]
+}

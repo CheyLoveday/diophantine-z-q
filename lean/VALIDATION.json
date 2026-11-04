@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "toolchain": "Lean (version 4.35.0, x86_64-w64-windows-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "dependency_pins": [
+    {
+      "name": "mathlib",
+      "revision": "56a005855ea17e0b0958f73ec801ae140b0a1679"
+    },
+    {
+      "name": "plausible",
+      "revision": "dfa4f38190d07c37e315953e08b90fe2d95b3c24"
+    },
+    {
+      "name": "LeanSearchClient",
+      "revision": "d6b4c7be5be75ec4917c873ac50c756dc1436372"
+    },
+    {
+      "name": "importGraph",
+      "revision": "a41f0e9a4dea23188ea9cc1c41ac9f8bbafe0b93"
+    },
+    {
+      "name": "proofwidgets",
+      "revision": "df72b022e558978a1c50264cfc4d7fec86fa8e04"
+    },
+    {
+      "name": "aesop",
+      "revision": "4a174c490d8707121c4a9290800489f105d85e07"
+    },
+    {
+      "name": "Qq",
+      "revision": "dce0ad79c486cb1fb504af04f953c3466b0c6db8"
+    },
+    {
+      "name": "batteries",
+      "revision": "66e469188fe07963e5cf666c7d4433f45b8131c5"
+    },
+    {
+      "name": "Cli",
+      "revision": "c24fe6078c630e89b489bffe59b3e20ac30d12c8"
+    }
+  ],
+  "source_manifest_sha256": "343d2eb94974a9c3defb58b8349f94378fb1984cb260b53162790426d8bbff96",
+  "project_modules_freshly_compiled": 48,
+  "root_compiled": true,
+  "declarations_axiom_checked": 704,
+  "allowed_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "main_theorem_proved": false,
+  "quarantined_target_compiled": false,
+  "dependency_libraries": "Prebuilt cache at verified source revisions; not rebuilt",
+  "project_artifact_reuse": false,
+  "seconds": 241.343,
+  "validation_date": "2026-11-04",
+  "environment": "Windows x86_64; fresh release-project artifacts with existing pinned dependency libraries",
+  "evidence": {
+    "axioms_log_sha256": "b3892664b8f2b90ce18470ffb45527addf993fa1db41ce475bc433d8be423117",
+    "commands_sha256": "2073fcffbfb53d351d4dcc4077b4d0b93bb765eee3775fe7f252083d10f4b52e",
+    "checker_sha256": "51bb79df870a49300dcd9c0ff15b74ca24277bf468c53251601e3d4d39b6f9bb",
+    "audit_source_sha256": "d7657315507dc1430e0f730cc215a0e8e227bb31a98d93f96b570a16bfabd976"
+  }
+}

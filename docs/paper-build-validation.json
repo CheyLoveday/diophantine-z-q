@@ -1,0 +1,16 @@
+{
+  "engine": "Tectonic 0.17.0",
+  "bundle_url": "https://data1b.fullyjustified.net/tlextras-2022.0r0.tar",
+  "bundle_fingerprint": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c",
+  "source_sha256": "525c8c05e7a5acc83d6b1f89c1056fd1321bd7490fd227a63d1a520e941b5197",
+  "pdf_sha256": "e66173e7337aafd2fbea3b1962259cd1489e1b0fb76e0fcc6ef6dc6296c6f3c3",
+  "pdf_bytes": 425069,
+  "tex_errors": 0,
+  "unresolved_references": false,
+  "original_pdf_replaced": false,
+  "byte_identity_to_uploaded_pdf_claimed": false,
+  "checked_pages": 66,
+  "validation_environment": "Windows; isolated project input and fresh TeX bundle cache",
+  "same_environment_warm_rebuild_identical": true,
+  "visual_spot_check": "Title and contents page inspected; original supplied PDF unchanged"
+}

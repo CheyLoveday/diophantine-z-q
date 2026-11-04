@@ -1,0 +1,11 @@
+/build/
+/.tools/
+/.cache/
+**/__pycache__/
+**/.lake/
+**/.checks/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz

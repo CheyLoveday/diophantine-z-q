@@ -1,0 +1,283 @@
+{
+  "format": 1,
+  "snapshot": "integration-31",
+  "source_manifest_sha256": "0e6ea11e782b845c7d316e2c5c01427583e85511ff15146c489c540e4ce9f45b",
+  "source_archive": "research-handoff-2026-11-04",
+  "source_files_byte_identical": true,
+  "proof_status": "partial_helpers_only",
+  "main_theorem_proved": false,
+  "counts": {
+    "modules": 48,
+    "public": 463,
+    "private": 69,
+    "total": 532
+  },
+  "allowed_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "quarantined_target": "Frozen/BoundedIntegerPolynomial.lean",
+  "files": [
+    {
+      "module": "ZInQ.PrecisionArithmetic",
+      "path": "ZInQ/PrecisionArithmetic.lean",
+      "sha256": "082597f7a3014b7092bcb40dc3526ffa24cfe9134bc934faea3efb3703031e6c"
+    },
+    {
+      "module": "ZInQ.SmoothingArithmetic",
+      "path": "ZInQ/SmoothingArithmetic.lean",
+      "sha256": "cf3a35a27eba388cc7d6d2dd03b11409470eb976a3f0a60071a6fe00330fd3d5"
+    },
+    {
+      "module": "ZInQ.CircuitEncoding",
+      "path": "ZInQ/CircuitEncoding.lean",
+      "sha256": "d8a1b2f964b225674eba05f2aa8198a5549383c15d1855b82c7221929e7e9406"
+    },
+    {
+      "module": "ZInQ.PrecisionAlgorithms",
+      "path": "ZInQ/PrecisionAlgorithms.lean",
+      "sha256": "8ae1a7d2589cb76e4f9f1d029fc80e1185647199c924f2cbfa42bcb6235ab44c"
+    },
+    {
+      "module": "ZInQ.RationalSeparation",
+      "path": "ZInQ/RationalSeparation.lean",
+      "sha256": "17c4c1408b9222365063379f31fa6527bd54d2174a0caf25665a123fe7ad40d3"
+    },
+    {
+      "module": "ZInQ.PolynomialCertificates",
+      "path": "ZInQ/PolynomialCertificates.lean",
+      "sha256": "b95d60889963a9994e68b1997d2561b6803a0748789a450bf603ff825f6ed74d"
+    },
+    {
+      "module": "ZInQ.RankTwoMatrix",
+      "path": "ZInQ/RankTwoMatrix.lean",
+      "sha256": "06896135b0a9fa13eb14feca9c2ef73af7869c76c94abb56d78f4f0639f86376"
+    },
+    {
+      "module": "ZInQ.HeightConstantAlgorithm",
+      "path": "ZInQ/HeightConstantAlgorithm.lean",
+      "sha256": "757d0e1aa5b7a8658ad7dd7b8a9465ae8eb4f32627abcbcf8b8b3198b31ecd8d"
+    },
+    {
+      "module": "ZInQ.EquationCompression",
+      "path": "ZInQ/EquationCompression.lean",
+      "sha256": "fe12965fbe77e5bb872f2195e296fd10409b635fb579091787c254bf5d0b6e40"
+    },
+    {
+      "module": "ZInQ.HeightConstantComparison",
+      "path": "ZInQ/HeightConstantComparison.lean",
+      "sha256": "ee18bf22fe6db11cf96bf061f9116648675158d56c698838f4d69a83ae5ffb69"
+    },
+    {
+      "module": "ZInQ.CircuitPolynomial",
+      "path": "ZInQ/CircuitPolynomial.lean",
+      "sha256": "dde7ca2b193e0a4dd049127dedd33cc0195728f5655d6e0a7d4daedae14f9d69"
+    },
+    {
+      "module": "ZInQ.PoleValuation",
+      "path": "ZInQ/PoleValuation.lean",
+      "sha256": "594fbc800980751e59364693beec9315bf65caf9c9186edffc2e3e85fc55bf3e"
+    },
+    {
+      "module": "ZInQ.NumericalTowerBounds",
+      "path": "ZInQ/NumericalTowerBounds.lean",
+      "sha256": "a42f3a86f32cf5dd0175338d8baefb2bd5a3db28096f88f84b081e81f2272a44"
+    },
+    {
+      "module": "ZInQ.CantorDecoder",
+      "path": "ZInQ/CantorDecoder.lean",
+      "sha256": "bd066d57d7f1e4fe979d44a17c8ed264434ba458faa5de1242bff575b6c548be"
+    },
+    {
+      "module": "ZInQ.BitwiseMacros",
+      "path": "ZInQ/BitwiseMacros.lean",
+      "sha256": "580736bdc76b660440ec1098b70f1efd38b7a5f38104c7699b2e091908d41cb3"
+    },
+    {
+      "module": "ZInQ.PolePolynomial",
+      "path": "ZInQ/PolePolynomial.lean",
+      "sha256": "75071bed30f900564093bb2f696dffe2aec6f4d6d1f4d6f5666dc193fa677ff4"
+    },
+    {
+      "module": "ZInQ.BinomialDigit",
+      "path": "ZInQ/BinomialDigit.lean",
+      "sha256": "fe5d4b16780fc9a0df21ab1c83cf220bb2f261575781020729a473bdb1899a30"
+    },
+    {
+      "module": "ZInQ.ExplicitCutoffBounds",
+      "path": "ZInQ/ExplicitCutoffBounds.lean",
+      "sha256": "7bb7c646cb24749b949cd1e6bc4e12a45f670283a3c255abaa844c2e9eba7c71"
+    },
+    {
+      "module": "ZInQ.AlphaCore",
+      "path": "ZInQ/AlphaCore.lean",
+      "sha256": "df43e282ee507718d0852a4c9f28818744a044a710c69494438ed73460fbf628"
+    },
+    {
+      "module": "ZInQ.AlphaAddition",
+      "path": "ZInQ/AlphaAddition.lean",
+      "sha256": "167661731594f0a31002431385a5ea92c28fa151a87c6926d713f6581a55c79d"
+    },
+    {
+      "module": "ZInQ.AlphaPowerBounds",
+      "path": "ZInQ/AlphaPowerBounds.lean",
+      "sha256": "ff800feefd4c3173c8357d7d8c416511ccfd7d87e98b00b1c5f4286fc7f558a3"
+    },
+    {
+      "module": "ZInQ.AlphaCongruence",
+      "path": "ZInQ/AlphaCongruence.lean",
+      "sha256": "aec5807375e383695c38c9cd3a40c2ed485f3d342ebbe827ef6cfde921f2fd3f"
+    },
+    {
+      "module": "ZInQ.AlphaParity",
+      "path": "ZInQ/AlphaParity.lean",
+      "sha256": "b54a0bd0af5e323070323750e9ae1953e4dd13d0c16db3ed1366169d8a539927"
+    },
+    {
+      "module": "ZInQ.AlphaUnordered",
+      "path": "ZInQ/AlphaUnordered.lean",
+      "sha256": "6f74d4bb08b4c35ba7616d1a428c8f6c9730cf3c2c3c817239c72472d92d690c"
+    },
+    {
+      "module": "ZInQ.AlphaParameterCongruence",
+      "path": "ZInQ/AlphaParameterCongruence.lean",
+      "sha256": "99eb53b7442146c488a2a16ea4c7b165234248e46e1a63f166e66f9caf4c4ab3"
+    },
+    {
+      "module": "ZInQ.AlphaDivisibility",
+      "path": "ZInQ/AlphaDivisibility.lean",
+      "sha256": "16172537fc64ce414f0740027cfe00062f678d6123ea0e4c8b0587860cb45a25"
+    },
+    {
+      "module": "ZInQ.AlphaCRTWitness",
+      "path": "ZInQ/AlphaCRTWitness.lean",
+      "sha256": "5390241590ef5d9f3158510a9f992a6119aa565cf01cb7905be9267dc50695c7"
+    },
+    {
+      "module": "ZInQ.AlphaPowerModulus",
+      "path": "ZInQ/AlphaPowerModulus.lean",
+      "sha256": "a990c824c55eed2f50c9a356d4e57c688385487b0399857bed897d2aa03603c6"
+    },
+    {
+      "module": "ZInQ.AlphaCompanionBound",
+      "path": "ZInQ/AlphaCompanionBound.lean",
+      "sha256": "efb2db050d66cc506be3f81fafc2f3531008622159fe1c5f82455e3e0f870562"
+    },
+    {
+      "module": "ZInQ.ModelCoordinateIdentities",
+      "path": "ZInQ/ModelCoordinateIdentities.lean",
+      "sha256": "3f98a0fb597aea5efce017e6cabd6777c5f069107e6d6b91d8de6ce7304d1c4d"
+    },
+    {
+      "module": "ZInQ.ModelDuplicationBounds",
+      "path": "ZInQ/ModelDuplicationBounds.lean",
+      "sha256": "038149fcbf804a570326224a3f99a12529821b1ee1d2f448ea799cfe6fa38a15"
+    },
+    {
+      "module": "ZInQ.BooleanCube",
+      "path": "ZInQ/BooleanCube.lean",
+      "sha256": "e787f24e800cfb5db5387ac47b468b215b1a24ad949ba582588751a931de2d05"
+    },
+    {
+      "module": "ZInQ.PolynomialCertificatesCyclotomic",
+      "path": "ZInQ/PolynomialCertificatesCyclotomic.lean",
+      "sha256": "8b984269454155bb5f4cce24d679ae52aa1ba2b20d34b1c1b5ddd2415915cee3"
+    },
+    {
+      "module": "ZInQ.CoefficientAllocation",
+      "path": "ZInQ/CoefficientAllocation.lean",
+      "sha256": "99fcc578e994df15fe82ef55248cab125e553ae2ba68370e8cb7e4cab3b60dd9"
+    },
+    {
+      "module": "ZInQ.PackedRegister",
+      "path": "ZInQ/PackedRegister.lean",
+      "sha256": "690f5c2a4e6d851d9dafd90c75354817e3253841cdd69999a4d6a8ad217e3eab"
+    },
+    {
+      "module": "ZInQ.AlphaCompanionPeriod",
+      "path": "ZInQ/AlphaCompanionPeriod.lean",
+      "sha256": "a90d93f41192ca5bd43d74fc7fc3462c19156b8832dd4b257109805283f61811"
+    },
+    {
+      "module": "ZInQ.PowerBoundDraft",
+      "path": "ZInQ/PowerBoundDraft.lean",
+      "sha256": "0a1ed6b809802efa28fb501643177f8e95318b3f6220f7d62248c0f01d75c23f"
+    },
+    {
+      "module": "ZInQ.AlphaPeriodReflection",
+      "path": "ZInQ/AlphaPeriodReflection.lean",
+      "sha256": "15274850a741b6984faa214d5cf1b0f62d63b463233f0f7fff3181f242ffadd1"
+    },
+    {
+      "module": "ZInQ.RationalPositiveGuard",
+      "path": "ZInQ/RationalPositiveGuard.lean",
+      "sha256": "6efe713845a8e5ef60f572fc6160acf9ff9b1b18a66d6ef2157e1c7aaa304015"
+    },
+    {
+      "module": "ZInQ.CyclicSignatures",
+      "path": "ZInQ/CyclicSignatures.lean",
+      "sha256": "3cc959aa30fa7bcdf1651416791c74fa38af52f60faca7c074089d01f4039334"
+    },
+    {
+      "module": "ZInQ.HammingDigits",
+      "path": "ZInQ/HammingDigits.lean",
+      "sha256": "d752f577097675bf29e99450fc6950da4340a98b44c069347e254d386bf2b797"
+    },
+    {
+      "module": "ZInQ.AlphaFoldedResidue",
+      "path": "ZInQ/AlphaFoldedResidue.lean",
+      "sha256": "8a9e515120f06b32c655446d8cf61e44b5c1348d268b5a787b6d5275fa949717"
+    },
+    {
+      "module": "ZInQ.AlphaSquareDivisibilityDraft",
+      "path": "ZInQ/AlphaSquareDivisibilityDraft.lean",
+      "sha256": "246fe7ae21e2835768169b973f2a89ab320af572161467a7c9d92ece6e9f82a9"
+    },
+    {
+      "module": "ZInQ.AlphaIndexCompanion",
+      "path": "ZInQ/AlphaIndexCompanion.lean",
+      "sha256": "3d375d055e20ddb30524b490fae0f1e384e5904457ad98b0643c716174c87b8e"
+    },
+    {
+      "module": "ZInQ.AlphaWitnessTransport",
+      "path": "ZInQ/AlphaWitnessTransport.lean",
+      "sha256": "cdaa02391f292ed3e487cd83211fdaca53438613442a3b89cb05d65e0d7711b2"
+    },
+    {
+      "module": "ZInQ.AlphaSignedResidue",
+      "path": "ZInQ/AlphaSignedResidue.lean",
+      "sha256": "3a36493edb21f75dda65a5fa47d7c750e406813131ffec407213243e7e30ec38"
+    },
+    {
+      "module": "ZInQ.AlphaLargeOddPair",
+      "path": "ZInQ/AlphaLargeOddPair.lean",
+      "sha256": "7da5137995932489c337be03aa839fb91d539c206ec5d47571511cf0a1c7ec0d"
+    },
+    {
+      "module": "ZInQ.AlphaSquareBridgeDraft",
+      "path": "ZInQ/AlphaSquareBridgeDraft.lean",
+      "sha256": "e031f619718c7ffe527eaa92928e3eba8f79abbada78fcb8e49d1996a5678837"
+    },
+    {
+      "path": "ZInQ.lean",
+      "sha256": "d4cd9022452845d95ebb591f4ebd26dd4208b1550cb54f27d16a246aac431477"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c"
+    },
+    {
+      "path": "lakefile.toml",
+      "sha256": "632fda3c75f7616378b9dadd0906d9518c7b4a1199c59d7b36369121acfb3b26"
+    },
+    {
+      "path": "lake-manifest.json",
+      "sha256": "a770787f33b5824f61a0731d59e67fca3f44a531b21d1fc1a804064c6fb54e58"
+    },
+    {
+      "path": "Frozen/BoundedIntegerPolynomial.lean",
+      "sha256": "0889579ae56e75eca811af520eb4e18c9f697e163db408771b93fdbc651a95b9"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Research guide
 
-This guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04). It is a map of the saved evidence, not a replacement for the paper's proofs.
+This guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04). It is a map of the saved evidence, not a replacement for the paper's proofs. For current browsable sources, start with [construction](../construction/README.md), [Lean helpers](../lean/README.md), and [build instructions](building.md).
 
 ## Suggested reading order
 
@@ -93,16 +93,10 @@ Start with these records:
 
 The complete elliptic model, height, restricted-converse, pole-completeness, multiplication, computation, and construction/bounds groups, and their ordinary-value composition, remain open as complete formalized interfaces. Proven helper results do not by themselves close those interfaces. Integration 32's observation was interrupted and was not accepted.
 
-The archive omits dependency caches and compiled Lean binaries. Reproducing a build requires restoring the sources and installing the pinned dependencies. There is not yet a verified clean-checkout build procedure in this repository. The saved compiler receipts describe their particular checked inputs, not every file in the historical archive.
+The archive omits dependency caches and compiled Lean binaries. The current repository now includes the accepted helper snapshot and [a procedure that compiles it into fresh project artifacts](building.md#lean-helpers). The saved historical compiler receipts describe their particular checked inputs, not every file in the archive.
 
 ## Preparing the public research package
 
-The next useful additions are:
+The curated source trees, build commands, CI workflow, anonymous BibTeX citation entries, and third-party notices are now included in this repository. Remaining public-release work includes the original-work license selection, a per-source redistribution review of the historical archive, and an archival deposit when authorized. See [archiving](archiving.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
 
-- A small, browsable source tree containing the current polynomial specification, its exact dependencies, and the checks needed to reproduce it. Keep the larger historical archive as a separate snapshot.
-- A clean-checkout build procedure for the paper and accepted Lean modules, with automated checks for those specific targets.
-- Citation metadata with confirmed authorship and, if obtained, an archival DOI.
-- Licenses for the original manuscript and code, with separate attribution and licensing information for third-party material in the archive.
-- A versioned record of substantive external review findings and how each was resolved.
-
-Until these are added, use the release tag and file hashes to identify the exact materials under discussion.
+Independent external mathematical review and completion of the main Lean proof are separate from these packaging checks. Record substantive findings and their resolution by version, and continue using release tags and file hashes to identify the materials under discussion.
