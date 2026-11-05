@@ -11,3 +11,7 @@ The [research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/
 The 11/4 manuscript compiled with no TeX errors or unresolved citations/references. The revised height pages, front page and bibliography were visually checked. Construction regeneration and finite arithmetic checks passed. The accepted Lean source snapshot is unchanged and its source/hash checks passed; the main theorem remains unproved. These packaging checks do not establish the mathematical theorem.
 
 Use [SHA256SUMS](../SHA256SUMS) to identify the exact 11/4 TeX source, PDF and handoff. Earlier research versions remain inside the handoff archive; GitHub offers only the current release. No repository visibility, licensing, or author metadata was changed by this update.
+
+## November 5 AI attribution update
+
+The 11/4 manuscript's AI usage statement names Opus 5.5 and credits auditing to Fable 5.1. The mathematical text is unchanged. The rebuilt PDF remains 141 pages, with text changes confined to the final-page AI statement. The [build receipt](paper-build-ai-attribution.json) records the updated source and PDF hashes. The research handoff zip remains the dated research snapshot preceding this attribution correction.

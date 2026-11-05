@@ -81,10 +81,10 @@ The same quartic conversion also applies to the 11/4 polynomial, with additional
 
 ## Source identity
 
-The 10/11 PDF is included without modification. The files used for this comparison have the following SHA-256 hashes:
+The 10/11 PDF is included without modification. The current 11/4 files include the November 5 AI attribution update naming Fable 5.1; their mathematical text is unchanged from the revision used for this comparison. The current files have the following SHA-256 hashes:
 
 ```text
 e5752baaf5ed8bc44707a9e96be545276ea6587349ece8f8030c78006f7983d6  ZIsDiophantineInQBySohailsGPT-6.pdf
-bfc4192de00ef7cfe27df586b9cdb8a9348efe3064495f566258be7152b5dec7  ../diophantine_zq.tex
-c74c667c06b0176cee00965af1e3db1dc3fc692a227ef4b23482a3ae5aebea9c  ../diophantine_zq.pdf
+c59598ba474a1512dd03787c2bc9ff093a3c3a8a0604f96d5f8bcfa140c61693  ../diophantine_zq.tex
+3ae95226ebcd477aa3b29ecf8600cb0a47b830f761d9bf6e3388e5b76ed9f84b  ../diophantine_zq.pdf
 ```
