@@ -1,0 +1,114 @@
+[
+  {
+    "id": "scholze-erratum",
+    "url": "https://www.math.uni-bonn.de/people/scholze/pAdicHodgeErratum.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/scholze-erratum.pdf",
+    "sha256": "3cfa56b9e3875c04240d97739dccd58091e41f714c101d5470b95172f73cb235",
+    "bytes": 178436,
+    "status": "downloaded"
+  },
+  {
+    "id": "scholze2013",
+    "url": "https://people.mpim-bonn.mpg.de/scholze/pAdicHodgeTheory.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/scholze2013.pdf",
+    "sha256": "73dded06286031066e9d98b638e065d650688f1e36e877f4d711331a3508dee3",
+    "bytes": 577883,
+    "status": "downloaded"
+  },
+  {
+    "id": "brinon-conrad",
+    "url": "https://math.stanford.edu/~conrad/papers/notes.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/brinon-conrad.pdf",
+    "sha256": "f27d508bc64b3c9e2e9de5041429b2cb6a909b2cd72ff8096c20493f27b5a187",
+    "bytes": 2659899,
+    "status": "downloaded"
+  },
+  {
+    "id": "milne-ant",
+    "url": "https://www.jmilne.org/math/CourseNotes/ANTc.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/milne-ant.pdf",
+    "sha256": "de2066ee7a319c0e6e521895a7e9e9567c2804bcafc0c8e67c417e508f2bc26b",
+    "bytes": 1287434,
+    "status": "downloaded"
+  },
+  {
+    "id": "faltings1984",
+    "url": "https://link.springer.com/content/pdf/10.1007/BF01388572.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/faltings1984.pdf",
+    "sha256": "e9d9269bf52151e3bc606f3b4f3581ef8bd0c2bafbc9dbdc4864b49a534a9734",
+    "bytes": 46140,
+    "status": "downloaded"
+  },
+  {
+    "id": "faltings1988",
+    "url": "https://websites.umich.edu/~bhattb/almost_purity_2011/Faltings_-_p-adic-Hodge-theory.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/faltings1988.pdf",
+    "sha256": "00f0ec8e07290a9f4538f56889fd74f673a5a6c336f6c3359308c840d508e617",
+    "bytes": 3980749,
+    "status": "downloaded"
+  },
+  {
+    "id": "fowler",
+    "url": "https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/A72ABDB14BEB62DE7E9B47953B77DBDC/S0305004125101825a.pdf/some_uniform_effective_results_on_andreoort_for_sums_of_powers_in_mathbbcn.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/fowler.pdf",
+    "sha256": "bc676f4d5b6a2a70fa3e6bed55a4449622d6728167d4c668068b89da6b2d55ae",
+    "bytes": 391611,
+    "status": "downloaded"
+  },
+  {
+    "id": "berger2002",
+    "url": "https://perso.ens-lyon.fr/laurent.berger/articles/article02.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/berger2002.pdf",
+    "sha256": "aada448ae1e8536e370e743a2dd9ca96768ff9f3cf85e1816bb6f88e92f544df",
+    "bytes": 617453,
+    "status": "downloaded"
+  },
+  {
+    "id": "berger-arxiv-v3",
+    "url": "https://arxiv.org/pdf/math/0102179v3",
+    "path": "work/theorem-application-audit-20261105/primary/berger-arxiv-v3.pdf",
+    "sha256": "142e7948f3c2da0cba0e0e764c2543cb3f0cf039470711fae729c9c3d2f54f6c",
+    "bytes": 562200,
+    "status": "downloaded"
+  },
+  {
+    "id": "pan2022",
+    "url": "https://arxiv.org/pdf/1901.07166v2",
+    "path": "work/theorem-application-audit-20261105/primary/pan2022.pdf",
+    "sha256": "590171129d28a65749cf92b1f6099dbacaa90cc6698828f0a4dfd3da943f4824",
+    "bytes": 1552018,
+    "status": "downloaded"
+  },
+  {
+    "id": "javanpeykar",
+    "url": "https://msp.org/ant/2014/8-1/ant-v8-n1-p04-s.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/javanpeykar.pdf",
+    "sha256": "ec890fb41c58dee038ee2e06b530954f3aab85035238cd54a4c0ef081fcb8ea0",
+    "bytes": 1222544,
+    "status": "downloaded"
+  },
+  {
+    "id": "cmheight",
+    "url": "https://tylergenao.com/wp-content/uploads/2017/09/faltings-heights-of-cm-elliptic-curves-and-special-gamma-values.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/cmheight.pdf",
+    "sha256": "f91cc2017dcc82dbc55d641d397c8b2bb5fc15205b1377cdaae8bdbbd7fc14a6",
+    "bytes": 585415,
+    "status": "downloaded"
+  },
+  {
+    "id": "faltings1983",
+    "url": "https://pazuki.perso.math.cnrs.fr/index_fichiers/Faltings83.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/faltings1983.pdf",
+    "sha256": "738d6b5f716e05b8180066f665e52170576061c1ba75802d1e4f3c4cc1d69614",
+    "bytes": 2488206,
+    "status": "downloaded"
+  },
+  {
+    "id": "milne-av",
+    "url": "https://www.jmilne.org/math/CourseNotes/AV.pdf",
+    "path": "work/theorem-application-audit-20261105/primary/milne-av.pdf",
+    "sha256": "f5ca4e63e5092a4b102daad1470e4cbed5fe8f82115e3a28c8881e3f67f6aaef",
+    "bytes": 1291594,
+    "status": "downloaded"
+  }
+]

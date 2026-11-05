@@ -1,0 +1,75 @@
+Cornut-Jetchev version, orientation and reduction closure
+
+This is the bounded share agreed with the primary-coverage owner. It is a targeted follow-up to my earlier applicability audit, not independent credit for that audit. The owner freshly inspected BFH pp.543-544 and CST pp.2524-2525 and retained those checks. I took the remaining CJ author-version comparison and the exact orientation multiplicity in V4f08. No source, manuscript, Lean or production file was edited. No global RC acceptance is claimed.
+
+1. Exact coverage and source versions
+
+The external review work/astra-seven-review-wave-001/04_full_rc/RESULT.md and DATA.json explicitly leave fresh primary verification of the BFH witness application and Cornut-Jetchev orientation/reduction among their evidence limits. They do not identify a counterexample. I read that scope, current V4f07/08, raw coefficients-frozen-4eaee875.tex:283-328,488-561, and the substantive reconstruction in astra-t2-opus-reconciliation-001/REPORT.md:44-84.
+
+The CJ primary text is Cornut-Jetchev, Liftings of Reduction Maps for Quaternion Algebras. Two local primary versions are bound:
+- work/cornut-jetchev-2010.pdf, SHA256 379c173b9e491d7c868557274db4f48a4a1dfb9a83962e32267f9263f20fbae6, specifically arXiv:1012.0725v1.
+- work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf, SHA256 7154ad8f261a625899562653d8b471d5d7dd31ddbb0afc071ef26f6e3acd93c8, the author's hosted PDF. Its embedded creation date is 3 December 2010. Calling it author-current means currently hosted; it does not establish a later revised mathematical version.
+
+I freshly extracted both and rendered/read author PDF pages 4,5,8,9,10,15,16. I additionally rendered/read v1 pages4-5 to inspect characters lost in extraction. Theorem3.1/Corollary3.2 page9 has identical text after whitespace/Unicode normalization. All differences on the other six compared pages are the extraction of injection/surjection glyphs, with the source K omitted adjacent to an injection twice. The images show the same K and arrows. No hypothesis, formula, orientation condition or multiplicity difference was found. VERSION_CHECKS.json preserves the honest raw comparison results rather than marking these imperfect text extractions identical.
+
+Fresh official records identify the publication as Bulletin of the London Mathematical Society 45 (2013), no.2, 370-386, DOI10.1112/blms/bds098. The arXiv record lists only v1, submitted 3 December 2010. The web tool opened the author's complete hosted PDF. The publisher endpoints were inaccessible, and a direct filesystem HTTP retrieval of the author PDF timed out before writing. I therefore make no fresh network-byte equality claim and no publisher-PDF equality claim. Current bibliography cites the 2010 preprint; the exact applicable theorem and geometric interpretation are directly available in both inspected primary author versions.
+
+Official source links:
+https://arxiv.org/abs/1012.0725
+https://webusers.imj-prg.fr/~christophe.cornut/papers/liftings.pdf
+https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/blms/bds098
+
+2. Primary statements and actual hypotheses
+
+CJ page5, H.1-H.3 and section3.2: F is totally real; the source quaternion algebra is split at the changed finite set S; |S|+|Ram_f(B)|+[F:Q] is even; changed primes do not split in K. These give the definite target and the Galois-equivariant adelic map.
+Actual values are F=Q, B_source=M_2(Q), S={ell_0}, K=K_D=Q(sqrt(D h_*)). Thus H.1 holds, the parity is 1+0+1=2, and H.3 follows from (D/ell_0)=1 and (h_*/ell_0)=-1. This is exactly V4f08:235-256. The map is used only on this support. If (D/ell_0) differs from1, including ell_0|D, V4f08:238-239 gives zero from the Schwartz support instead of applying the inert reduction theorem.
+
+CJ page8, section3.4 and equation(14): at an inert changed prime the target has a Z/2 orientation invariant. The source fine conductors fix its value. Page9, Theorem3.1 and Corollary3.2: the lifting is kappa-to-one onto the target with that orientation, where kappa is the ring-class extension degree times the product of local N_v factors. The fiber is described by embeddings in section3.6 on the same page, retaining their residue-field orientation.
+Actual conductors are (c',c'')=(1,1). The level N is prime to ell_0. Hence the parity condition at ell_0 is 0-0=0 mod2 and the ring-class extension ratio is1. CJ Lemma2.1(ii), page4, gives N_ell_0(0,0,0)=q^0=1. Therefore kappa=1. No class-number factor, division by class number or averaging enters this bijection.
+
+CJ page15, section4.9: the geometric construction starts with T/T'=Z/NZ and keeps both lattices. It places no squarefree or oddness requirement on N. Its reduction formula is the identity through local isomorphisms away from ell_0, and at ell_0 uses the uniformizer raised to the norm valuation. Section4.10 identifies this very adelic map with geometric supersingular reduction for ell_0 inert in K. It also gives definition over F_(ell_0^2).
+Actual level powers p^e, including powers of2, are consequently retained. Here the CM elliptic curve being reduced is the one defining a point of X_0(N); it is not the fixed elliptic quotient E. Composing this reduction with the fixed integral specialization of the modular parametrization gives exactly the point used in P_M(z). The already supplied good-prime modular-curve/parametrization correspondence supplies that composition, not a new CJ assertion.
+
+CJ page10, Remark1, and page15, Corollary4.1: when c is prime to N and there is one changed inert prime, forgetting the residue-field orientation identifies embeddings conjugate under Gal(K/Q). The resulting geometric statement counts conjugate PAIRS of optimal embeddings. Page16, Remark6, explains that the pair is independent of the chosen CM identification and reduction isomorphism. Actual c=1 is prime to N ell_0. The project may use the oriented statement or this paired statement consistently, but cannot use the paired count and divide again for the same orientation.
+
+3. The exact orientation count
+
+This count also follows directly from CJ's own local and global orbit formulas, so it does not rely on a heuristic appeal to two orientations.
+
+At each p^e||N, K_D is split, both fine conductors are zero and e>0. Lemma2.1(iv), page4, gives N_p(0,0,e)=2. At every prime outside N ell_0 the relevant local factor at conductor zero and distance zero is1, whether split, inert or ramified. At the definite ramified prime ell_0, inertness gives the separate factor2 in Lemma3.4(ii), page10. The target therefore has exactly 2^(omega(N)+1) ideal-class orbits, each of size h(K_D). The source has 2^omega(N) such orbits; Theorem3.1 identifies them with the half having its fixed ell_0 orientation. Its other half is obtained by the uniformizer action at ell_0. Thus no orientation tuple has been asserted without an actual global orbit.
+
+For an elementary verification of the old-level factor including2, write the split maximal quadratic order as Z_p x Z_p. A stable lattice decomposes into the two idempotent summands. A quotient of order p^e that is cyclic has a nonzero quotient in at most one summand, since two nonzero p-primary summands would need two generators. The two possibilities give the two orientations. At2 the operator (1+x)/2 itself need not be idempotent. Its two eigenvalues differ by the odd unit root r; integral spectral projectors give the two idempotents. This is precisely V4f08:106-117, not a use of semisimple reduction in characteristic2.
+
+At norm |h_*|D, x^2=D h_*. Since this is an odd fundamental discriminant, integrality of (1+x)/2 and the other local conditions identify x with an optimal embedding O_KD into R_z. There is a bijection between such x and embeddings sending sqrt(Dh_*) to x. The centralizer stabilizer in R_z^times is O_KD^times. The fixed exclusions and |h_*|>4 give O_KD^times={+1,-1}. Each R_z^times-conjugacy orbit thus consists of |R_z^times|/2 actual vectors. Dividing by |R_z^times| in O.4 contributes exactly1/2, independently of extra supersingular automorphisms.
+
+Fix one complete orientation tuple. Its ideal-class orbit has representatives a z_0 with a in the finite ideles of K_D. Conjugation leaves the embedding vector unchanged: (a z_0)^(-1)x_0(a z_0)=z_0^(-1)x_0 z_0. The remaining norm-character factor is chi_h*(Norm a), the unramified genus character. The primary equivariance identifies the entire class sum with reduction of the SAME unaveraged P_D in O.1. There is no passage to a fixed-K, conductor-|D| ring-class point.
+
+At a level prime p^e, the normalizer exchanges the two cyclic summands. The selected root changes from r to -r, so the Schwartz weight changes by alpha_p(-1). The norm-weighted point changes by w_(p^e) chi_h*(p)^e: the first factor is the Atkin-Lehner sign after the fixed L kills cusp constants; the second is the norm of the normalizer. O.3 sets these signs equal, so their product is1. This is a project weight calculation, not a consequence of CJ alone.
+
+At ell_0 the right uniformizer induces Frobenius on the quadratic residue field, hence sends the trace-zero beta to -beta. Its local weight changes by (-1/ell_0)=-1. The point factor changes by chi_h*(ell_0) times the Frobenius eigenvalue of P_M, namely (-1)(+1)=-1. Their product is again1. Therefore every orientation orbit has the same weighted contribution. Summing 2^(omega(N)+1) of them and applying the stabilizer factor1/2 yields exactly
+ a_M(D)=c_0 2^omega(N) zeta_M(D) lambda_M(red(LP_D)) mod2^M.
+The initial phase is a product of the fixed root-character values and quadratic signs, hence a 2-power root of unity. The field of these phases and their zero valuation do not grow with D or ell_0.
+
+This proves the exact normalization in V4f08:258-272 and rawCO:518-531. Corollary4.1's quotient by conjugate pairs is the same orientation-forgetting already accounted for; it cannot add another factor1/2. No denominator involving ell_0-1 or h(K_D) occurs.
+
+4. Boundary with BFH, CST and current07
+
+The primary-coverage owner retains BFH and CST. Its fresh BFH pages are the original journal pp.543-544, stored as bfh-02.png/bfh-03.png in astra-weighted-theta-audit-001/primary. Its fresh CST pages are astra-rc-primary-coverage-002/primary/cst-004.png and cst-005.png, original printed2524-2525. I did not duplicate those fresh primary reads or award this note that coverage.
+
+Their exact consumer map is as follows. BFH is used in V4f08:17-29 after full-Selmer parity has supplied sign-1. For the weight-two trivial-character newform, clause(ii) supplies negative h_* with nonzero central value and clause(i), after adding h_* primes to the finite splitting set, supplies positive simple-zero D_w. Splitting at2 gives the odd1mod8 discriminant domain. Neither bounded prime count nor independent nonabelian prescriptions is attributed to BFH.
+
+CST Theorem1.1 is used with c=1, all level primes split in K_D, gcd(N,Dh_*)=1, units modulo signs of order1, and the fixed parametrization normalized by pi(infinity)=O. Its common level/discriminant correction has mu(N,Dh_*)=0. Its character sum is the same unaveraged P_D. Genus induction gives the full Rankin product L(E^D,s)L(E^h_*,s). Nonzero derivative at D_w gives a nontorsion point. For an admissible odd-sign D, a visible coefficient in O.7 implies a nontorsion point, hence a simple zero before any native rank-one index is used. The fixed L handles bounded-degree torsion and the fixed projections. CJ neither provides nor changes that height normalization. The owner has separately read the actual CST formula, not the adjacent BSD conjecture.
+
+V4f07:246-340 concerns the distinct even theta producer and its Waldspurger/full-space normalization. Nothing in this CJ comparison applies its correspondence to that space or changes the even producer's phase/filter. The use of a negative genus partner in08 is separate from Kato's fixed form in07. The even primary application remains assigned to its own reviewed source evidence.
+
+5. Adversarial exclusions and final disposition
+
+The tested failure modes are substantive:
+- If ell_0 splits in K_D, the inert supersingular correspondence cannot be used. The actual moving support excludes this application.
+- If ell_0 divides D, the unramified residue orientation count changes. The actual coefficient is zero there.
+- If a level prime is nonsplit, the two-orientation count need not be2. All actual level primes are split.
+- If extra quadratic units occur, the stabilizer is larger than2. They are excluded before varying D.
+- If one starts from conjugate pairs and also applies the stabilizer/orientation quotient twice, the coefficient loses a factor2. The current proof uses the oriented Theorem3.1 and counts the actual vectors once.
+- Without the fixed cusp-clearing L or the plus-Frobenius functional, the flip-sign calculation is not the stated one. Both are explicit current hypotheses and constructed upstream.
+
+No new mismatch or unproduced condition was found in this version/orientation/reduction junction. It closes the bounded CJ coverage requested by the primary-coverage owner. The absence of publisher PDF access is a version-authentication limit, not an additional mathematical hypothesis; the exact cited preprint statement has been read. This note does not reprove BFH/CST, the Weil theta transformation, Kummer-stage existence, the determinant argument, or RC globally.

@@ -13,6 +13,7 @@ This repository contains the November 4, 2026 manuscript **Z is Diophantine in Q
 | Build the 11/4 manuscript or accepted Lean modules | [Build instructions](docs/building.md) |
 | Inspect the formalization | [Accepted Lean helper snapshot](lean/README.md) |
 | Find the construction, supporting calculations, or earlier approaches | [Research guide](docs/research-guide.md) |
+| Audit the exact theorem applications and outstanding convention checks | [Theorem application inventory](docs/theorem-application-audit/README.md) |
 | Download the saved research history | [Research handoff zip, 340 MB](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04-r2/z-in-q-research-handoff-2026-11-04-r2.zip) |
 | Check a download | [SHA-256 checksums](SHA256SUMS) and [verification instructions](docs/research-guide.md#verify-and-restore-the-archive) |
 | Report a mathematical or implementation issue | [Contribution guide](CONTRIBUTING.md) |
@@ -64,6 +65,8 @@ The [10/11 manuscript](October%2011%20Manuscript/ZIsDiophantineInQBySohailsGPT-6
 The 10/11 argument is explicitly conditional on four OpenAI arithmetic inputs. The 11/4 manuscript presents an unconditional argument and gives simultaneous numerical bounds for its specified polynomial. The 10/11 manuscript does not give a numerical variable count or coefficient bound. Its degree-four conversion is also available for the 11/4 polynomial, with additional variables, so degree alone does not establish a smaller construction. See the [full comparison notes](October%2011%20Manuscript/README.md) for the interfaces, qualifications, and source references.
 
 ## Verification status
+
+The [November 5 theorem application inventory](docs/theorem-application-audit/README.md) records the external inputs, source versions, maps, hypotheses and convention changes in the 11/4 manuscript. It classifies every explicit citation and records identified uncited inputs. It also records unresolved review obligations and a [de Rham comparison citation mismatch with a proposed replacement](docs/theorem-application-audit/FINDINGS.md). The inventory is not a certificate that all applications are valid.
 
 The 11/4 manuscript presents an unconditional proof. Revision 2 of the 11/4 manuscript includes the later restricted-converse and theta justifications and replaces the von Känel–Kret height dependency with a direct modularity argument and a CM argument. [Four independent AI reviews](docs/reviews/height-replacement/REPORT.md) found no unresolved gap in the replacement within their stated scopes. The revised 11/4 text includes their requested clarifications. These reviews are distinct from independent human peer review and machine verification. See the [revision notes](docs/revision-2.md).
 

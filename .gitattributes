@@ -3,3 +3,4 @@
 construction/** -text
 lean/** -text
 docs/reviews/** -text
+docs/theorem-application-audit/** -text

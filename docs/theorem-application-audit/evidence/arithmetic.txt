@@ -1,0 +1,476 @@
+FINAL ARITHMETIC JUNCTION: ONE CORRECTED COORDINATE
+4 November 2026
+
+1. Scope and conclusion
+
+This report composes the actual Kummer/support maps, the transported
+outer duality, and the fixed-K determinant endpoint. It preserves the
+original hypothesis
+
+ corank_Z2 Sel_(2^infinity)(E_l/Q)=1,
+ E_l:y^2=x(x-l)(x+3l), l>0 squarefree, l=11 mod12.
+
+The corank is the FULL Selmer corank, including a possible divisible
+part of Sha. No finite-Sha hypothesis is made at the unknown base.
+Constants depend on this fixed E_l and the fixed original lattice,
+parametrization and local types. Fixed-K constants may also depend on
+the one final companion K. No uniformity in l is claimed or needed.
+
+There is no new premise at the arithmetic junction examined here.
+The same corrected coordinate is regular centrally, has the required
+nonzero-address upper bound, and satisfies the common clearing and
+constant-coefficient identities. The maps proving those assertions
+are given below. This is not a blanket acceptance of the whole
+manuscript or of the separately reviewed Kato-primary package.
+
+I read in full the new Kummer report (SHA7a1b9526154a91f1e125a3f9b11c111e504aea46b9ce33f03dc8efe4ef7c916c)
+and the fixed-K report (SHAd822a0c185acbeeb2dc1c2dd740bd45652afe6d83a90d7c2e624384f74ce0e78).
+Their scope qualifications are respected. In particular, this report
+supplies the unknown-base argument that neither report repeated, and
+supplies primary verification of the finite local Kummer annihilator
+left as a classical input in the Kummer report. The source pins identify
+all files; their hashes are not mathematical premises.
+
+2. The exact family and order of choices
+
+The completed source and endpoint producers choose one negative
+squarefree companion k with K=Q(sqrt k) imaginary, split at2N,
+K different from Q(i),Q(sqrt(-3)), and L(E^k,1) nonzero. This K is fixed
+before the final dimension b. The known rank-zero forward implication
+gives full Selmer corank zero for E^k. The restriction-of-scalars
+isogeny to E times E^k has a dual whose composite is multiplication
+by2. Its maps on cofinitely generated Selmer groups have kernels and
+cokernels killed by a fixed power of2, hence finite. Therefore
+
+ corank Sel(E/K)=corank Sel(E/Q)+corank Sel(E^k/Q)=1.
+
+This step uses full Selmer groups, not just Mordell-Weil ranks.
+It does not assert that Sha(E/Q) or Sha(E/K) is finite.
+
+For arbitrarily large b, the completed common-graph construction
+provides a finite set Q of good odd K-split primes and parameters
+h_x (x in F2^b), with h_0=1. Every h_x is positive, squarefree and
+locally square at every p|2N. Every x!=0 is a known simple-zero
+constituent, and the endpoint proof gives
+
+ 2j_rc(h_x,k)<=4omega(h_x)+C_J,
+ C_J=2C_o+C_(e,final)-v2 L_*(h_*)+C_(H,final).
+
+The same original L_* and point multiplier are used here. The constants
+are fixed before b. This is the exact output of ENDPOINTS.txt and
+T3 CLOSURE, consolidated in V4 09:332-358; it is not a bound assigned
+after seeing a graph. The final graph has no derivative labels.
+
+Fix one such finite graph before running its arithmetic inner limit.
+Use R=Lambda[G], Lambda=Z2[[t]], G=(Z/2)^b, and O the completion of
+Lambda_(2). The actual universal class comes from the finite map
+
+ [sigma] -> Psi_i(sigma)[epsilon(sigma)]
+
+on the unaveraged Shapiro sum, with the original target Kummer lifts,
+boundaries and comparison homotopies retained. All sign evaluations
+commute with these finite maps. A finite family is fixed throughout
+the inner limit; there is no inverse limit over growing G or Q.
+See raw RD1224-1257.
+
+3. Kummer duality applies to this universal coefficient action
+
+For v|2N and every actual sign character x,
+ x(epsilon(g))=chi_(h_x)(g)=1 for g in G_(K_v).
+The sign characters separate G, so epsilon(g)=1 as an actual element
+of G. This is proved before reduction modulo2; reduced signs would
+not separate anything. Together with Psi_i=1 there, it identifies
+the universal local representation with derived scalar extension of
+the fixed local E data. Thus one uses the same local Kummer map and
+null-homotopy throughout the family. The Kummer report's B2 supplies
+the precise graph-label argument producing the local squares.
+
+For B/F over a finite extension of Q_p, write M=B(F)^wedge_2 and
+U=M[-1]. A free resolution gives H0(U tensor^L Z/2^a)=B(F)[2^a] and
+H1=B(F)/2^a. The actual Kummer map is used in both degrees. Removing
+the finite torsion would change the quotient duality and later d_K.
+
+Primary finite-duality completion. I downloaded the author's 2006
+second edition of Milne, Arithmetic Duality Theorems, from
+https://www.jmilne.org/math/Books/ADTnot.pdf . I read I.2.3 and I.3.2-3.5
+and visually checked printed pp28,42,43 (the local PNGs record them).
+Corollary I.2.3 gives finite cup duality. The multiplication-by-n
+diagram in the proof of I.3.2 commutes with that duality, and I.3.2
+identifies B^t(F)/n with H1(F,B)[n]^dual. Exactness of its two rows
+therefore gives
+
+ annihilator(image(B(F)/n -> H1(F,B[n])))
+     = image(B^t(F)/n -> H1(F,B^t[n])).
+
+For E the principal polarization identifies the two images.
+The condition is characteristic(F)=0, so n=2^a is allowed also when
+p=2. No ordinary or good-reduction hypothesis occurs. The proof of
+I.3.2, rather than an assertion about equal group orders alone,
+identifies the pairing and the actual Kummer maps.
+
+The restricted integral cup map on U has homotopy class in
+Hom(M tensor M,Z2). Every value is divisible by every2^a by the
+finite annihilator calculation, so the map is zero. The ambiguity
+Hom_D(M tensor^L M,Z2[-1]) is zero; a finite free resolution supplies
+a null-homotopy. Reduction modulo2 identifies the quotient with the
+shifted dual: finite Kummer annihilation handles degree1, and finite
+local duality handles degree2 against the retained B(F)[2] in degree0.
+Derived Nakayama proves the integral statement.
+
+At the actual finite rings A_i and A_i[G], the Frobenius-ring argument
+in the Kummer report identifies an appropriate injective dualizing
+module with the ring itself. The coefficient-valued arithmetic trace
+is retained; the top-coefficient test for this Frobenius property is
+not substituted for that trace. The report directly checks Nekovar
+5.2.4,5.4.3,6.2.5-6.3.4 and the actual null-homotopy requirements.
+Hence these maps supply finite-stage duality before any limit. No
+fresh application of a finite-residue-field theorem to the outer
+valuation ring is being made.
+
+4. The one paired coordinate and its representations
+
+Choose an integral determinant basis of the universal finite free
+model once. The scalar models are compared through the original
+target cochains, with their comparison determinants retained.
+Let z be its actual degree-one class. The orthogonal Selmer complex
+has strict conditions opposite full conditions at active and moving
+places, the actual Kummer conditions at2N, and the prescribed plane
+conditions at derivative places. There is no assertion of integral
+self-duality for a full local condition before localization.
+
+At a graph prime the tame complex has
+ A=Phi-1, C=g-1, D=Phi-N_q(g), DC=CA,
+ d0(v)=(Av,Cv), d1(v,w)=-Cv+Dw.
+Modulo the maximal ideal of O[G], A and D are (z_q-1)I, where
+z_q=(1+t)^a_q and a_q is odd. They are invertible, and
+
+ h1(v,w)=A^-1 v, h2(u)=(0,D^-1 u)
+
+is an integral contraction: the middle identity is exactly
+CA^-1=D^-1C. At r the alternative contraction uses C^-1, with
+C=t times a unit. At a scalar height-one test away from(2), active
+inertia gives C=-2; at(t), the bounded nonzero central Frobenius
+determinants instead supply adjugate contractions. All of these
+invert the same generic comparison. Their generic inverse is unique
+in the derived category, so they represent one functional lambda,
+obtained by lifting the conjugate actual class and applying the
+retained cup pairing. They are not independently chosen dual vectors.
+See RD439-464 and V4 03a:189-216.
+
+A single exponent a makes2^a lambda integral over O[G]. Direct sums
+of the new-prime contractions introduce no factor of2 per prime;
+only the fixed original data enter a. At other tests use the separate
+representatives of this same lambda. For a rank-one generic
+constituent set
+
+ u=coordinate([z] tensor [lambda] in det^-1 C).
+
+For an acyclic constituent this specified class-dual coordinate is0.
+It is not the ordinary acyclic torsion element1. Recorded determinant
+comparisons ensure that changing a working free model computes this
+same u. A canceled-block O-unit is retained in the algebraic numerator,
+not silently used to renormalize u at the center.
+
+5. Unused-prime naturality gives the exact corrected coordinate
+
+At an unused split q, write i:P->R for the primitive-to-relaxed map
+and j:S->P^perp for strict-to-primitive on the paired side. Old
+orthogonal conditions are kept in P^perp. In particular P^perp is
+not identified integrally with P at old full-condition places.
+At q these are the actual inclusions U_ur->L and0->U_ur.
+Nekovar6.4.1-6.4.3 applies to the common pair(0,U_ur): the old
+homotopies agree, and every pulled-back q-homotopy is zero on the
+strict factor0. The second-order homotopy can thus be zero. This
+proves the pairing identity beta_R(v,i w)=beta_P(j v,w).
+
+The actual point norm, with its retained Selmer boundary, gives
+ z_R=e_q i z_P, e_q=a_q-z_q-z_q^-1.
+Let a_R be the lift of the conjugate z_R to S. Under the generic
+comparison P^perp->R^perp the image of j a_R is e_q^iota z_P^perp.
+That comparison is invertible because the q-local complex is
+acyclic generically. Consequently j a_R=e_q^iota z_P^perp.
+Since iota exchanges z_q and z_q^-1, e_q^iota=e_q. Naturality now
+forces lambda_R i=e_q lambda_P. This derives the dual factor from
+the same lift; it is not a separate unproved norm for a chosen dual.
+
+Thus the tensor contributes e_q^2. The two q-places have already
+been counted in the separate quotient determinant
+
+ delta_q=det(z_q Fr_q-q)det(z_q^-1 Fr_q-q)=q^4 l_q.
+
+The inverse-determinant convention gives
+ l_q u_R=e_q^2 epsilon_q u_P, epsilon_q in Lambda^times.
+The unit assertion is integral: the original mapping-cone bases
+give a sign; retained finite acyclic free cones and their inverses
+give unit determinants, and q^-4 is odd. Their limits remain Lambda-
+units. No arbitrary later O-unit is substituted for epsilon_q.
+
+Before characters form
+ eta=product_q(1+v_q(1+g_q)), v_q=(l_q/e_q^2-1)/2 in O[G].
+The identity modulo2 giving l_q/e_q^2=1 is valid in the group ring,
+not just after semisimplification. Each factor evaluates to the
+required ratio if q is unused and to1 if active. Therefore the one
+family coordinate
+
+ tilde_u=eta u_rel
+
+satisfies tilde_u_x=epsilon_x u_prim,x for all x, epsilon_x in
+Lambda^times. Products of many such units still have central
+valuation zero. No interpolation of independent epsilon_x is needed.
+
+Crucially, eta_x may have a pole at t=0, for example when e_q(0)=0.
+It is never specialized separately. Only the product tilde_u_x,
+identified with the regular primitive coordinate, is specialized.
+The same warning applies to an O-integral functional representative:
+central specialization uses its regular Lambda_(t) representative.
+
+6. Outer transport does not replace this primitive coordinate
+
+The outer lower-bound argument first works with the primitive
+coordinate of each admissible scalar instance. The source permits
+all admissible moving-prime deformations with the uniform trace and
+odd-exponent properties, including the primitive constituents of the
+universal construction above. It does not require choosing a new
+normalization or a new dual functional for those constituents.
+
+Normalize the finite disk contractions with h0^2=h0i0=p0h0=0.
+Transport the duality maps, their inverse maps, localization maps,
+and first/second homotopies through the same contractions. Each is
+a finite integral matrix identity; include the degree-two cocycle
+identity and the detecting-cone contractions. After residual active
+support removal the O-minimal models have bounded rank for each
+fixed derivative count. The bounded diagram includes only that
+fixed number of switch objects, not the unbounded active-place list.
+Minimal duality equivalences have unit determinants and integral
+inverses. Therefore the outer quotient preserves the inverses and
+all compatibility identities.
+
+The primary6.3.3 compatibility and exact cone then give, over the
+characteristic-zero outer field,
+ im L=ker(L^vee beta)=(im L)^perp.
+This is equality, not merely isotropy. It justifies the rank drop
+used with the genuine derivative relations. Residual rank-two
+irreducibility is neither true nor used.
+
+Every switch compares determinant exact sequences with the same
+strict factor, including its torsion. Fractional complementary
+vectors are allowed when the localization is divisible. Thus the
+recorded original determinant coordinate retains its valuation at
+each switch. The terminal identity u=+/-alpha beta/Delta gives a
+lower bound because alpha is integral,2^a beta is integral, and a
+nonzero outer minor Delta has a finite valuation on an outer-large
+set. At the other height-one tests the corresponding integral
+representatives of the same generic lambda give regularity. Hence
+
+ u_prim in Lambda[1/2], v_(2)(u_prim)>=-C(E,A)
+
+for the varying-field scope omega(k)<=A. These conclusions transfer
+to tilde_u_x through the already fixed Lambda-unit epsilon_x. There
+is no outer limit over the final binary families, and no assertion
+that their eta factors form one bounded outer list. The varying-K
+bound does not absorb h_K. It produces the earlier R inequality;
+the fixed-K count used next is separate.
+
+7. Central specialization and the unknown base
+
+At each finite stage the split norm at r_i gives the actual boundary
+
+ z_i(0)-L m_i j_i(b_h)=d v_i,
+ m_i=a_(r_i)-2chi_h(r_i), v2(m_i)<=c_E.
+
+The comparison, its local triangles and v_i are retained before the
+inner limit. Thus m has finite valuation<=c_E and the same identity
+survives. At known simple zeros, the ordinary point is nonzero, so
+this proves both central and generic rank one. The regular functional
+from section4 then specializes through the determinant line itself;
+all integral torsion remains in its central valuation.
+
+At the unknown base h=1, let C_K be the ordinary compact Kummer
+complex. Derived coefficient extension gives
+
+ 0 -> H1(C_K) tensor Q2/Z2 -> Sel_(2^infinity)(E/K)
+       -> H2(C_K)_tors ->0.
+
+All modules here arise from the actual Kummer maps, including their
+H0 terms. Finite generation and duality give rational dimensions
+(0,1,1,0), H1 torsion E(K)[2^infinity], and dual H3 torsion of the
+same length. This remains true if part or all of the free Selmer
+rank arises from a divisible Sha subgroup. The finite H2 torsion is
+the quotient by the maximal divisible subgroup, not the whole Sha.
+
+The moving-prime quotient at t=0 is a sum of two injective rank-two
+square blocks with determinant valuation<=c_E each. Its H1 is0 and
+its H2 has length<=2c_E. Hence it does not change these rational
+central dimensions. Semicontinuity makes the primitive generic
+constituent either acyclic or rank one in degrees1,2.
+
+Suppose the base Rankin derivative vanishes. The actual conductor-
+one Gross-Zagier height formula makes the primitive base point
+torsion. Its rational Kummer class is zero. Applying the retained
+boundary identity gives z_0=0 in rational central cohomology. This
+does not assert that the whole central H1 vanishes or is generated
+by that point.
+
+If the generic constituent is acyclic, u_prim,0 was defined to be0.
+Otherwise localize at(t). Both central and generic cohomology have
+rank one in degrees1,2. Over this DVR a nonunit elementary disk
+would add two central cohomology classes, contradicting equality
+of the dimensions. Thus only unit disks and the two free lines
+remain. The determinant base-change isomorphism specializes the
+same tensor [z] tensor[lambda] to [z_0] tensor[lambda_0]=0.
+This explicitly keeps the Tor_1 term in derived base change; a
+naive quotient of H1 is not substituted. Therefore u_prim,0(0)=0,
+and section5 gives tilde_u_0(0)=0. No finite-Sha conclusion was used.
+See RD892-931,1021-1072,1725-1741.
+
+For x!=0 the forward simple-zero theorem does give finite Sha.
+The integral central computation, with both active split places
+and the isogeny comparison retained, gives
+
+ v2 tilde_u_x(0)=2j_rc(h_x,k)-4omega(h_x)-s(h_x)-s(h_x k)
+                 -sum_(p|k)t_p+epsilon'_x,
+ 0<=t_p<=2, |epsilon'_x|<=C_cal.
+
+The exact active contribution is-4 because each place has quotient
+length dim E[2]^(Fr)=2. No growing local error is hidden there.
+Combining with section2 gives B=C_J+C_cal as a uniform upper bound
+at every nonzero address. This is the SAME tilde_u just specialized;
+no central rescaling by an O-unit has occurred.
+
+8. Fixed-K clearing applies to that same family tensor
+
+Put d_K=dim_F2 Sel2(E/K), t_K=length E(K)[2^infinity], and
+h_K=length H2(C_K)_tors. These are finite fixed-K quantities even
+without finite Sha at the base. The ordinary residual dimensions
+are(2,d_K,d_K,2). The two moving-prime blocks increase the middle
+dimensions by at most4 each. The actual central triangle gives
+
+ total old rank<=2d_K+12, m<=d_K+5,
+ h1<=h_K+2c_E+2t_K.
+
+Here m counts central Smith disks and h1 their total exponent.
+The full Kummer-duality proof in section3 supplies the exact H0
+and duality premises used by the fixed-K audit's calculation.
+
+At universal augmentation the actual coefficient is unramified at
+Q. Nekovar7.8.8(ii), with the old local conditions retained, identifies
+the unramified-condition complex with C_old. Enlarging to full gives
+C_old -> C_aug -> direct sum Q_q. Taking a cone of its extension map
+makes C_old an actual subcomplex of an upper triangular free model.
+Tensoring the retained contraction identities proves this even
+though augmentation is not flat. Lifting the augmented invertible
+basis changes gives a universal block differential[P Q;T B], with
+B_0=diag(A_q), T_0=0. Thus its Schur complement augments to P_0.
+
+The same prescribed odd exponents give order4 for the residual
+two-place determinant. At every character, the finite Neumann
+inverse modulo2^M has pole<=4M, independently of the block count.
+Cancel the whole graph block. Its determinant is an O[G]-unit;
+RETAIN it in the numerator of the original tensor coordinate.
+Group all central Smith disks once per degree and put
+Delta=product det A_i. Adjacent surviving maps are unchanged by
+d^2=0, so Delta has degree m in the old-rank matrix entries. The
+class, the closed functional and the determinant comparison each
+use at most one Delta denominator. Consequently for Q_* in O[G]
+
+ tilde_u_x=2^-a eta_x Q_*,x/Delta_x^3  if Delta_x!=0.
+
+The symbol Q_* is a numerator, unrelated to the set of graph primes.
+It includes the canceled-block determinant and every comparison
+needed to retain the original determinant basis. Set
+
+ f=2^a Delta^4, d=eta Delta Q_*.
+
+Then f_x tilde_u_x=d_x for all characters; if Delta_x=0 both sides
+of this cleared identity vanish. This is precisely the eta from
+section5 and the lambda from section4. There is no redefinition of
+tilde_u to make the clearing identity hold.
+
+Since T_0=0, f_0 lies in Lambda, with
+ c=v2 f_0(0)<=c_det=a+4(h_K+2c_E+2t_K).
+The pole bound is L_T(M)=16(d_K+5)M. Only f needs this bound.
+The numerator d may have complicated negative support; testing its
+constant coefficient is sufficient. The fixed-K audit reconstructs
+these estimates from the same cone, and not from matrix rank alone.
+
+9. The final coefficient comparison
+
+Choose M>max(c_det,B+2c_det,0), then b>(L_T(M)+2)(2^M-1), then the
+finite graph budget and one actual theta stage. Run the arithmetic
+inner limit for that fixed graph. There is no exchange of a growing-
+graph limit with this coefficient limit.
+
+Each coefficient of an element of O[G] has sign-value bits of
+Boolean degree at most2^(j-1) for bit j>=1, with constant low bit.
+Applying the parity argument to the L_T(M)+1 coefficients of f
+from-L_T(M) through0, and the one constant coefficient of d, yields
+a nonzero x matching augmentation modulo2^M for all those entries.
+All negative f_x coefficients are then divisible by2^M, and
+[t^0]f_x has valuation c.
+
+Because d_x=f_x tilde_u_x is integral over O, v_O(f_x)<=c implies
+v_O(tilde_u_x)>=-c. Section6 gives tilde_u_x in Lambda[1/2], so it
+has no negative t-powers and all its coefficients have valuation
+at least-c. The constant convolution therefore has error at least
+M-c and converges2-adically. At zero there is no error because f_0
+has no negative powers. The selected coefficient equalities give
+
+ v2(tilde_u_x(0)-tilde_u_0(0))>=M-2c>B.
+
+If the base derivative were zero, section7 gives tilde_u_0(0)=0,
+contradicting the nonzero-address bound for the same tilde_u_x.
+The Rankin factorization and L(E^k,1)!=0 then give L'(E,1)!=0
+(the root number is-1 from the original full-corank parity step).
+This is the arithmetic endpoint of the supplied graph and source
+producers, with no finite-Sha assumption at the unknown base.
+
+10. Exact remaining boundary
+
+No additional local condition, denominator, normalization, or base
+finiteness premise is required to compose the four interfaces above.
+The remaining whole-project dependencies are the already named
+source producers, not new assumptions introduced here: the Kato
+primary package supplying the earlier even bound, the exact theta/
+nonvanishing/graph constructions supplying section2, the classical
+conductor-one height and known simple-zero implications used in
+section7, and the separate final polynomial construction. This
+report does not grant global acceptance to another primary audit.
+
+Current frozen V4 prose still needs the additive clarifications in
+the Kummer and limits reports: actual epsilon-triviality at2N; the
+class/functional explanation of e_q^2; the fifth unramified support
+use; the full E[2] reason for length2; normalized h0 conditions;
+disc K in the rational generator support; and explicit outer
+localization/duality homotopy transport. Their mathematical content
+has been supplied and composed here. No frozen file was edited.
+11. Incoming Kato primary completion and exact interface
+
+While this report was being assembled, the dedicated K1/K3 primary
+review finished. I read it in full: work/astra-kato-primary-001/REPORT.txt,
+SHA256 2ff58fb998f36d9c46f5b0bf2c04135d62099af57e7aef85bdf19e29e8296433.
+It matches the original4.2.4/6.6/9.7 normalization, including u=v=1,
+the unaveraged character sum, both fixed period projections and the
+same retained-smoothed class. Its original1999 proof check confirms
+that the coordinate ideal belongs to that supplied Euler system; the
+additional small-level factor2 is a unit at the rational height-one
+tests. Kato13.4(iii) uses inverse arithmetic Frobenius, so w=-1 is the
+right convention here.
+
+The precise consumer restriction is essential to this composition:
+the Kato central valuation/zero comparison applies at Selmer corank
+zero; the integral family membership has its broader scope. The even
+nonzero coefficients and the rough companions used in ENDPOINTS have
+nonzero L first, so the forward rank-zero implication supplies that
+hypothesis. The stationary even transfer expressly assumes corank
+zero. None of those Kato central formulas is used at the unknown
+corank-one base treated in section7 here. At that base the Heegner
+boundary and constant-rank argument, not Kato positivity, give zero.
+
+The current main equation3.2 needs its corank-zero qualifier placed
+beside the display, and the smoothing choice should say
+e>=max(3,v2(N)). The detailed Appendix07 already restricts its central
+calculation correctly. These additional exposition changes are to be
+recorded with the corrections listed in section10. This completed
+primary check resolves the named Kato normalization/applicability
+issue for the existing producer; it does not alter the arithmetic
+junction or expand its unknown-base hypotheses.

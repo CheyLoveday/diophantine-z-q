@@ -1,0 +1,1651 @@
+[
+  {
+    "id": "C001",
+    "line": 54,
+    "locator": null,
+    "keys": [
+      "openaihtp"
+    ],
+    "paragraph_start": 51,
+    "paragraph_end": 54,
+    "paragraph": "% Begin 01-specification-model.tex\n\\section{The main theorem and proof structure}\\label{sec:main}\nThis construction builds on OpenAI's preprint\n\\emph{Hilbert's tenth problem over the rational numbers}~\\cite{openaihtp}.",
+    "paragraph_sha256": "148e024239892562b4475ad21865499192874180057eea589fdcbb2c1a98407c",
+    "application_ids": [],
+    "role": "provenance"
+  },
+  {
+    "id": "C002",
+    "line": 405,
+    "locator": null,
+    "keys": [
+      "babagranath",
+      "linyang"
+    ],
+    "paragraph_start": 390,
+    "paragraph_end": 424,
+    "paragraph": "\\begin{theorem}[Six-contact estimate]\\label{thm:height}\nFor every such $S,R$ and every $u\\in\\Q\\setminus\\Cset$,\n\\[\n h(u)\\le H_6(S;R)M_S(u)^{24}.\n\\]\n\\end{theorem}\n\\begin{proof}\nTake $B=(2,-3)$, the maximal order $\\mathcal O=\\Z[i,(1+j)/2]$, and\n$\\mu=2j+ij$. With its positive sign choice, the form\n$\\Trd(\\mu^{-1}x\\overline y)$ has matrix\n\\[\n \\begin{pmatrix}0&0&-1&1\\\\0&0&1&-2\\\\1&-1&0&0\\\\-1&2&0&0\\end{pmatrix}\n\\]\nand determinant one. This is the principal-polarization datum whose\nnormalizer quotient is $\\mathbf P^1_j$, with branch values\n$0,\\infty,-16/27$ and indices $4,6,2$ \\cite{babagranath,linyang}.\nPut $K_0=\\widehat{\\mathcal O}^{\\,*}$ and\n$K_3=\\ker(K_0\\longrightarrow(\\mathcal O/3\\mathcal O)^*)$.\nLet $N$ be the finite-adelic normalizer of $\\widehat{\\mathcal O}$.\nIt normalizes $K_3$. At a split prime the local normalizer is the\ncenter times the maximal-order units; at each of the two division\nprimes its quotient by these groups has order two. Thus\n$|N/(\\mathbb A_f^*K_0)|=4$.\nA central finite idele acts trivially on the level-three curve:\nmultiply it by a rational scalar to remove all finite valuations,\nand choose the scalar's sign so that the residue at three is one.\nThe remaining idele lies in $K_3$, and the rational central scalar\nacts trivially on the symmetric domain. Consequently the entire\nlevel-three curve $Y_3$, with all its determinant components, admits\nthe action of $N/(\\mathbb A_f^*K_3)$ with quotient $\\mathbf P^1_j$,\nand\n\\[\n \\deg(Y_3\\longrightarrow\\mathbf P^1_j)\n \\le4|(\\mathcal O/3\\mathcal O)^*|\\le4\\cdot81=324.\n\\]",
+    "paragraph_sha256": "83b7d4d16756240c19093160715b80568dc84ac043d0810071acaa440b849439",
+    "application_ids": [
+      "A001"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C003",
+    "line": 427,
+    "locator": "Theorem 2.1 and Corollary 2.3",
+    "keys": [
+      "buzzard"
+    ],
+    "paragraph_start": 426,
+    "paragraph_end": 445,
+    "paragraph": "We construct its integral model without changing this degree.\nApply \\cite[Theorem 2.1 and Corollary 2.3]{buzzard} to $V_1(5)$\nover $\\mathbb Z[1/30]$. Its determinant image is full, its level\nis maximal at the division primes, and $5\\ge4$ is prime to six.\nFirst add a full five-marking refining the $V_1(5)$-marking.\nThis gives the full-five moduli scheme, including every determinant\ncomponent, as a finite \\'{e}tale cover. Next add the finite \\'{e}tale sheaf\n\\[\n \\operatorname{Isom}_{\\mathcal O}\n       ((\\mathcal O/3\\mathcal O),A[3]).\n\\]\nThis sheaf is nonempty on every geometric fiber. Indeed $B_3$ is\na division algebra and the rational Tate module is a rank-one\nleft $B_3$-module. Every $\\mathcal O_3$-stable lattice in that module\nis principal: choose a nonzero lattice element of least division\nvaluation and divide every other element by it on the right.\nThus the Tate lattice is free of rank one over $\\mathcal O_3$.\nOne can also check this in characteristic zero and extend it to\nall fibers by local constancy of the finite \\'{e}tale $A[3]$ with its\n$\\mathcal O$-action.",
+    "paragraph_sha256": "ae9ba8eccf7a7c0a9e8cc05aec08ee2b004ef0ac135fd9f1254ebd3b8c60444f",
+    "application_ids": [
+      "A002"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C004",
+    "line": 564,
+    "locator": "Proposition 2.7",
+    "keys": [
+      "fowler"
+    ],
+    "paragraph_start": 557,
+    "paragraph_end": 569,
+    "paragraph": "\\paragraph{CM fibers.}\nSuppose $\\operatorname{End}^0(A_{\\overline\\Q})=M_2(k)$.\nAll its elements are defined over $L$. Multiples of matrix units\ntherefore give an elliptic curve $E/L$ with complex multiplication\nand an $L$-isogeny $E^2\\to A$. Let $\\Delta<0$ be the discriminant\nof the full geometric endomorphism order of $E$. The degree of\n$j(E)$ is its order class number, so $h(\\Delta)\\le d\\le D$.\nThe effective bound of \\cite[Proposition 2.7]{fowler} gives\n\\[\n \\sqrt{|\\Delta|}\\le2D^2\\exp(21000D^2).\n\\]\nThis bound includes every imaginary quadratic order and has no\nexceptional-field exclusion.",
+    "paragraph_sha256": "089f14dfce9dce1f5380eddbf8978a739e022dfb451fa8fdc2abad6737ebe7eb",
+    "application_ids": [
+      "A003"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C005",
+    "line": 581,
+    "locator": "Eq. (6.2)",
+    "keys": [
+      "cmheight"
+    ],
+    "paragraph_start": 571,
+    "paragraph_end": 606,
+    "paragraph": "Here is the height comparison with its normalization explicit.\nAfter a finite extension $E$ has everywhere good reduction, since\nits $j$-invariant is integral. This extension does not change its\nstable Faltings height. For a reduced CM period $\\tau=x+iy$ we have\n$\\sqrt3/2\\le y\\le\\sqrt{|\\Delta|}/2$. The archimedean summand in\nthe original Faltings normalization is\n\\[\n -\\log(2\\pi)+\\frac{\\pi y}{6}-\\frac12\\log y\n       -2\\sum_{n\\ge1}\\log|1-e^{2\\pi in\\tau}|,\n\\]\nby the discriminant formula \\cite[Eq. (6.2)]{cmheight}.\nFor $\\rho=e^{-2\\pi y}<1/100$, the final sum is at most\n$2\\rho/(1-\\rho)^2<200/9801$, and\n$-\\tfrac12\\log y<1/10$. Averaging and discarding the negative\n$-\\log(2\\pi)$ gives\n\\[\n h_F(E)\\le\\frac{\\pi\\sqrt{|\\Delta|}}{12}+1\n       \\le D^2 3^{21000D^2}+1=B_{\\rm cm}.\n\\]\nApply the published isogeny estimate\n\\cite[Theorem 1.4]{gr2014} over the original field $L$, with\nsource $E^2$. It gives an isogeny to $A$ of degree at most\n\\[\n \\bigl(28^{256}d\\max(h_F(E^2),\\log d,1)^2\\bigr)^{8192}.\n\\]\nThe maximum is at most $2B_{\\rm cm}$. Height variation under\nisogeny \\cite{faltings1983} and additivity give\n\\begin{align*}\n h_F(A)&\\le2B_{\\rm cm}\n   +4096\\bigl(256\\log28+\\log d+2\\log(2B_{\\rm cm})\\bigr)\\\\\n &\\le2B_{\\rm cm}+4096(1028+5D+84000D^2)=C_{\\rm cm}.\n\\end{align*}\nFor the last line use $\\log28<4$, $\\log d\\le D$, and\n$\\log(2B_{\\rm cm})\\le2+2D+42000D^2$.\nNo bound for the degree of the auxiliary good-reduction extension\nenters the isogeny estimate.",
+    "paragraph_sha256": "14bdee31bcfd916d1839b7a01b950fd62b0fa5806fea17aac5498ad90d764b77",
+    "application_ids": [
+      "A004"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C006",
+    "line": 591,
+    "locator": "Theorem 1.4",
+    "keys": [
+      "gr2014"
+    ],
+    "paragraph_start": 571,
+    "paragraph_end": 606,
+    "paragraph": "Here is the height comparison with its normalization explicit.\nAfter a finite extension $E$ has everywhere good reduction, since\nits $j$-invariant is integral. This extension does not change its\nstable Faltings height. For a reduced CM period $\\tau=x+iy$ we have\n$\\sqrt3/2\\le y\\le\\sqrt{|\\Delta|}/2$. The archimedean summand in\nthe original Faltings normalization is\n\\[\n -\\log(2\\pi)+\\frac{\\pi y}{6}-\\frac12\\log y\n       -2\\sum_{n\\ge1}\\log|1-e^{2\\pi in\\tau}|,\n\\]\nby the discriminant formula \\cite[Eq. (6.2)]{cmheight}.\nFor $\\rho=e^{-2\\pi y}<1/100$, the final sum is at most\n$2\\rho/(1-\\rho)^2<200/9801$, and\n$-\\tfrac12\\log y<1/10$. Averaging and discarding the negative\n$-\\log(2\\pi)$ gives\n\\[\n h_F(E)\\le\\frac{\\pi\\sqrt{|\\Delta|}}{12}+1\n       \\le D^2 3^{21000D^2}+1=B_{\\rm cm}.\n\\]\nApply the published isogeny estimate\n\\cite[Theorem 1.4]{gr2014} over the original field $L$, with\nsource $E^2$. It gives an isogeny to $A$ of degree at most\n\\[\n \\bigl(28^{256}d\\max(h_F(E^2),\\log d,1)^2\\bigr)^{8192}.\n\\]\nThe maximum is at most $2B_{\\rm cm}$. Height variation under\nisogeny \\cite{faltings1983} and additivity give\n\\begin{align*}\n h_F(A)&\\le2B_{\\rm cm}\n   +4096\\bigl(256\\log28+\\log d+2\\log(2B_{\\rm cm})\\bigr)\\\\\n &\\le2B_{\\rm cm}+4096(1028+5D+84000D^2)=C_{\\rm cm}.\n\\end{align*}\nFor the last line use $\\log28<4$, $\\log d\\le D$, and\n$\\log(2B_{\\rm cm})\\le2+2D+42000D^2$.\nNo bound for the degree of the auxiliary good-reduction extension\nenters the isogeny estimate.",
+    "paragraph_sha256": "14bdee31bcfd916d1839b7a01b950fd62b0fa5806fea17aac5498ad90d764b77",
+    "application_ids": [
+      "A005"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C007",
+    "line": 597,
+    "locator": null,
+    "keys": [
+      "faltings1983"
+    ],
+    "paragraph_start": 571,
+    "paragraph_end": 606,
+    "paragraph": "Here is the height comparison with its normalization explicit.\nAfter a finite extension $E$ has everywhere good reduction, since\nits $j$-invariant is integral. This extension does not change its\nstable Faltings height. For a reduced CM period $\\tau=x+iy$ we have\n$\\sqrt3/2\\le y\\le\\sqrt{|\\Delta|}/2$. The archimedean summand in\nthe original Faltings normalization is\n\\[\n -\\log(2\\pi)+\\frac{\\pi y}{6}-\\frac12\\log y\n       -2\\sum_{n\\ge1}\\log|1-e^{2\\pi in\\tau}|,\n\\]\nby the discriminant formula \\cite[Eq. (6.2)]{cmheight}.\nFor $\\rho=e^{-2\\pi y}<1/100$, the final sum is at most\n$2\\rho/(1-\\rho)^2<200/9801$, and\n$-\\tfrac12\\log y<1/10$. Averaging and discarding the negative\n$-\\log(2\\pi)$ gives\n\\[\n h_F(E)\\le\\frac{\\pi\\sqrt{|\\Delta|}}{12}+1\n       \\le D^2 3^{21000D^2}+1=B_{\\rm cm}.\n\\]\nApply the published isogeny estimate\n\\cite[Theorem 1.4]{gr2014} over the original field $L$, with\nsource $E^2$. It gives an isogeny to $A$ of degree at most\n\\[\n \\bigl(28^{256}d\\max(h_F(E^2),\\log d,1)^2\\bigr)^{8192}.\n\\]\nThe maximum is at most $2B_{\\rm cm}$. Height variation under\nisogeny \\cite{faltings1983} and additivity give\n\\begin{align*}\n h_F(A)&\\le2B_{\\rm cm}\n   +4096\\bigl(256\\log28+\\log d+2\\log(2B_{\\rm cm})\\bigr)\\\\\n &\\le2B_{\\rm cm}+4096(1028+5D+84000D^2)=C_{\\rm cm}.\n\\end{align*}\nFor the last line use $\\log28<4$, $\\log d\\le D$, and\n$\\log(2B_{\\rm cm})\\le2+2D+42000D^2$.\nNo bound for the degree of the auxiliary good-reduction extension\nenters the isogeny estimate.",
+    "paragraph_sha256": "14bdee31bcfd916d1839b7a01b950fd62b0fa5806fea17aac5498ad90d764b77",
+    "application_ids": [
+      "A006"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C008",
+    "line": 668,
+    "locator": "Chapter I",
+    "keys": [
+      "milne"
+    ],
+    "paragraph_start": 657,
+    "paragraph_end": 684,
+    "paragraph": "To check that $\\chi$ has the required square-root obstruction,\nuse the exact sequence of constant discrete Galois modules\n$1\\to\\{\\pm1\\}\\to\\mu_\\infty\\xrightarrow{z\\mapsto z^2}\n\\mu_\\infty\\to1$. By local reciprocity, a finite-order character\nof $G_{\\Q_p}$ has a character square root exactly when its value\non $-1\\in\\Q_p^\\times$ is $1$. Indeed this is the only obstruction\non the torsion part of $\\Q_p^\\times$; the valuation factor and\nthe procyclic principal-unit factors admit such roots. Hence the\nboundary of $\\chi$ and $[\\varepsilon]$ agree at every finite\nplace. Brauer reciprocity makes them agree at the real place,\nand the injective global-to-local Brauer map makes them equal\nglobally \\cite[Chapter I]{milne}.\nChoosing a continuous pointwise square root of $\\chi$ and\ncorrecting it by a sign cochain consequently gives a continuous\ncochain $\\beta:G_\\Q\\to\\mu_{2m}$ such that\n\\[\n \\beta^2=\\chi,\\qquad\n \\beta(\\sigma)\\beta(\\tau)\\beta(\\sigma\\tau)^{-1}\n        =\\varepsilon(\\sigma,\\tau).\n\\]\nIts restriction to $G_L$ is a character invariant under $G_\\Q$.\nOutside $T$, its inertia restrictions are quadratic and nontrivial\nat only finitely many primes. Twisting by the quadratic character\nof the product of those odd primes kills all these restrictions:\nat an odd prime there is a unique nontrivial quadratic character\non inertia. This introduces ramification only at those primes\nand possibly at $2\\in T$, and changes neither displayed identity.\nWe henceforth use this choice of $\\beta$.",
+    "paragraph_sha256": "6e67a3fcda70323abb84e18aed0034070fc7313d824c17627dd3c0bec297c9bd",
+    "application_ids": [
+      "A007"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C009",
+    "line": 709,
+    "locator": null,
+    "keys": [
+      "faltings1983"
+    ],
+    "paragraph_start": 694,
+    "paragraph_end": 729,
+    "paragraph": "\\paragraph{Modularity and a uniform conductor bound.}\nChoose one number field $C$ containing all $a_\\sigma$, the values of\n$\\beta$, and a splitting field of $B$. For each coefficient prime\n$\\ell$ choose an embedding of $C$ into $\\overline{\\mathbb Q}_\\ell$\nand extend scalars on $V_\\ell(A)$ to a finite extension containing\nits image. With the constant-coefficient convention above, define\n\\[\n \\rho_\\ell(\\sigma)\n   =\\beta(\\sigma)^{-1}a_\\sigma\\mu_\\sigma\\circ\\sigma.\n\\]\nThe cocycle identities make this a representation of $G_\\Q$.\nIt commutes with $B$, so matrix units give\n$\\rho_\\ell\\simeq r_\\ell\\oplus r_\\ell$ with $\\dim r_\\ell=2$.\nOn $G_{L'}$ it is the actual Tate action of $A$.\nFaltings' semisimplicity and endomorphism theorems\n\\cite{faltings1983} show that $r_\\ell|_{G_{L'}}$ is absolutely\nirreducible: after splitting $B$, its commutant is the scalars.\nThe representation is de Rham at $\\ell$, by finite-extension\ndescent of the de Rham property from the Tate module\n\\cite{faltings1988}, and its\ntwo Hodge--Tate weights are those of an elliptic Tate module.\nBerger's $p$-adic monodromy theorem \\cite{berger2002} makes this\nde Rham representation potentially semistable, as required by\nPan's theorem.\nIt is odd. To see this without an assumption on a residual\nrepresentation, compare with Betti homology at a complex\nembedding. Take the map on rational Betti homology induced by\nantiholomorphic conjugation followed by the holomorphic\nquasi-isogeny $\\mu_c$, and extend it $\\mathbb C$-linearly.\nIt exchanges the two Hodge summands. Each\nsummand is a simple module for $B\\otimes\\mathbb C=M_2(\\mathbb C)$.\nConsequently its action on the two-dimensional multiplicity\nspace is not scalar; since $r_\\ell(c)^2=1$, its eigenvalues\nare $1,-1$.\nIt is unramified outside $T\\cup\\{\\ell\\}$, since there $L$ is\nunramified, $A$ has good reduction, and $\\beta$ is unramified.",
+    "paragraph_sha256": "f8c47573fa9c50dd3abf84f43fcc2e6f8834045c4e9892e17e19832daafcf21e",
+    "application_ids": [
+      "A008"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C010",
+    "line": 713,
+    "locator": null,
+    "keys": [
+      "faltings1988"
+    ],
+    "paragraph_start": 694,
+    "paragraph_end": 729,
+    "paragraph": "\\paragraph{Modularity and a uniform conductor bound.}\nChoose one number field $C$ containing all $a_\\sigma$, the values of\n$\\beta$, and a splitting field of $B$. For each coefficient prime\n$\\ell$ choose an embedding of $C$ into $\\overline{\\mathbb Q}_\\ell$\nand extend scalars on $V_\\ell(A)$ to a finite extension containing\nits image. With the constant-coefficient convention above, define\n\\[\n \\rho_\\ell(\\sigma)\n   =\\beta(\\sigma)^{-1}a_\\sigma\\mu_\\sigma\\circ\\sigma.\n\\]\nThe cocycle identities make this a representation of $G_\\Q$.\nIt commutes with $B$, so matrix units give\n$\\rho_\\ell\\simeq r_\\ell\\oplus r_\\ell$ with $\\dim r_\\ell=2$.\nOn $G_{L'}$ it is the actual Tate action of $A$.\nFaltings' semisimplicity and endomorphism theorems\n\\cite{faltings1983} show that $r_\\ell|_{G_{L'}}$ is absolutely\nirreducible: after splitting $B$, its commutant is the scalars.\nThe representation is de Rham at $\\ell$, by finite-extension\ndescent of the de Rham property from the Tate module\n\\cite{faltings1988}, and its\ntwo Hodge--Tate weights are those of an elliptic Tate module.\nBerger's $p$-adic monodromy theorem \\cite{berger2002} makes this\nde Rham representation potentially semistable, as required by\nPan's theorem.\nIt is odd. To see this without an assumption on a residual\nrepresentation, compare with Betti homology at a complex\nembedding. Take the map on rational Betti homology induced by\nantiholomorphic conjugation followed by the holomorphic\nquasi-isogeny $\\mu_c$, and extend it $\\mathbb C$-linearly.\nIt exchanges the two Hodge summands. Each\nsummand is a simple module for $B\\otimes\\mathbb C=M_2(\\mathbb C)$.\nConsequently its action on the two-dimensional multiplicity\nspace is not scalar; since $r_\\ell(c)^2=1$, its eigenvalues\nare $1,-1$.\nIt is unramified outside $T\\cup\\{\\ell\\}$, since there $L$ is\nunramified, $A$ has good reduction, and $\\beta$ is unramified.",
+    "paragraph_sha256": "f8c47573fa9c50dd3abf84f43fcc2e6f8834045c4e9892e17e19832daafcf21e",
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C011",
+    "line": 715,
+    "locator": null,
+    "keys": [
+      "berger2002"
+    ],
+    "paragraph_start": 694,
+    "paragraph_end": 729,
+    "paragraph": "\\paragraph{Modularity and a uniform conductor bound.}\nChoose one number field $C$ containing all $a_\\sigma$, the values of\n$\\beta$, and a splitting field of $B$. For each coefficient prime\n$\\ell$ choose an embedding of $C$ into $\\overline{\\mathbb Q}_\\ell$\nand extend scalars on $V_\\ell(A)$ to a finite extension containing\nits image. With the constant-coefficient convention above, define\n\\[\n \\rho_\\ell(\\sigma)\n   =\\beta(\\sigma)^{-1}a_\\sigma\\mu_\\sigma\\circ\\sigma.\n\\]\nThe cocycle identities make this a representation of $G_\\Q$.\nIt commutes with $B$, so matrix units give\n$\\rho_\\ell\\simeq r_\\ell\\oplus r_\\ell$ with $\\dim r_\\ell=2$.\nOn $G_{L'}$ it is the actual Tate action of $A$.\nFaltings' semisimplicity and endomorphism theorems\n\\cite{faltings1983} show that $r_\\ell|_{G_{L'}}$ is absolutely\nirreducible: after splitting $B$, its commutant is the scalars.\nThe representation is de Rham at $\\ell$, by finite-extension\ndescent of the de Rham property from the Tate module\n\\cite{faltings1988}, and its\ntwo Hodge--Tate weights are those of an elliptic Tate module.\nBerger's $p$-adic monodromy theorem \\cite{berger2002} makes this\nde Rham representation potentially semistable, as required by\nPan's theorem.\nIt is odd. To see this without an assumption on a residual\nrepresentation, compare with Betti homology at a complex\nembedding. Take the map on rational Betti homology induced by\nantiholomorphic conjugation followed by the holomorphic\nquasi-isogeny $\\mu_c$, and extend it $\\mathbb C$-linearly.\nIt exchanges the two Hodge summands. Each\nsummand is a simple module for $B\\otimes\\mathbb C=M_2(\\mathbb C)$.\nConsequently its action on the two-dimensional multiplicity\nspace is not scalar; since $r_\\ell(c)^2=1$, its eigenvalues\nare $1,-1$.\nIt is unramified outside $T\\cup\\{\\ell\\}$, since there $L$ is\nunramified, $A$ has good reduction, and $\\beta$ is unramified.",
+    "paragraph_sha256": "f8c47573fa9c50dd3abf84f43fcc2e6f8834045c4e9892e17e19832daafcf21e",
+    "application_ids": [
+      "A010"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C012",
+    "line": 732,
+    "locator": "Theorem 1.0.4",
+    "keys": [
+      "pan2022"
+    ],
+    "paragraph_start": 731,
+    "paragraph_end": 746,
+    "paragraph": "Use the Tate convention in which the cyclotomic character has\nHodge--Tate weight $-1$. Apply \\cite[Theorem 1.0.4]{pan2022} at\n$\\ell=5$; there is no residual-image proviso at this prime.\nIt gives a cuspidal eigenform up to character twist. The twisting\ncharacter is a de Rham subrepresentation of the Hom representation\nand is unramified outside finitely many primes. By class field\ntheory over $\\mathbb Q$, it is a finite character times an integral\npower of the cyclotomic character: removing its integral local\nHodge--Tate weight leaves finite inertia at five and at every other\nprime, hence a finite ray-class character. Comparing $\\{0,-1\\}$\nwith the modular weights $\\{0,1-k\\}$ after that power forces\n$k=2$ and power zero. Absorb the finite Dirichlet character into\nthe eigenform and take its primitive newform $f$. Thus $r_5$ is\na constituent of the Tate module of the modular abelian variety\n$A_f$, or equivalently $r_5^\\vee$ is its cohomological constituent.\nThis duality preserves the conductor.",
+    "paragraph_sha256": "cead9a2883548a364ee95bcc474f4ac1f2acfe32581231e34b8dde3d5d4b3fc5",
+    "application_ids": [
+      "A011"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C013",
+    "line": 778,
+    "locator": "Chapter IV",
+    "keys": [
+      "serrelocal"
+    ],
+    "paragraph_start": 767,
+    "paragraph_end": 778,
+    "paragraph": "Here are uniform local bounds, including the small primes.\nFor a finite extension of $\\Q_p$ of degree at most $a$, its\nnormal closure has degree at most $a!$. For a finite Galois\nlocal extension with ramification index $e$ and different\nexponent $\\delta$, an Eisenstein polynomial over its maximal\nunramified subfield gives\n$\\delta\\le e-1+e v_p(e)$. The derivative terms have distinct\nvaluations modulo $e$, so there is no cancellation at the\nsmallest valuation. The different formula in upper numbering\nthen bounds the largest positive upper break by\n$2\\delta/e\\le2(1+\\log_2(a!))\\le4a^2$\n\\cite[Chapter IV]{serrelocal}.",
+    "paragraph_sha256": "6954ffe697a8d2e44cfffe371d9feb917876a5af5bb10642c3ff403c787e56ff",
+    "application_ids": [
+      "A012"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C014",
+    "line": 782,
+    "locator": "Theorem 3.5",
+    "keys": [
+      "silverbergzarhin"
+    ],
+    "paragraph_start": 780,
+    "paragraph_end": 810,
+    "paragraph": "At $p$, take $F=L_v$ and adjoin $A[3]$, using $A[5]$ if\n$p=3$. This extension has degree at most $DG_0$ over $\\Q_p$.\nRaynaud's criterion \\cite[Theorem 3.5]{silverbergzarhin}\ngives semistable reduction there. Its wild inertia acts\ntrivially on each $V_\\ell(A)$ with $\\ell\\ne p$.\nThe preceding break bound and the subgroup rule for upper\nnumbering therefore show that all absolute ramification\ngroups above $U_0=4(DG_0)^2$ act trivially on that Tate module.\nOn these groups $a_\\sigma\\mu_\\sigma=1$ because they lie in $G_L$.\nFor odd $p$, the character $\\beta|_{G_F}$ is trivial on wild\ninertia: its square is the tame character $\\chi|_{G_F}$, and a\npro-$p$ group has no quotient of order two. At $p=2$, local\nreciprocity and the norm map give $\\beta^4=1$ on the units of\n$F$, since the $2$-primary local factor of $\\chi$ has conductor\nat most four. If $e=v_F(2)\\le D$, the local logarithm gives\n$(U_F^{e+1})^4=U_F^{3e+1}$. Thus the relative upper break of\n$\\beta$ is at most $3e$. To make the change of numbering explicit,\nthe same normal-closure estimate bounds the last upper break of\n$F/\\mathbb Q_2$ by $4D^2$. Above it, the absolute upper group\n$G_{\\mathbb Q_2}^{u}$ lies in $G_F$, and the subgroup formula is\n\\[\n G_{\\mathbb Q_2}^{u}\\cap G_F\n       =G_F^{\\psi_{F/\\mathbb Q_2}(u)},\n \\qquad \\psi_{F/\\mathbb Q_2}(u)\\ge u\\quad(u\\ge0).\n\\]\nConsequently $\\beta$ is trivial on every absolute upper group with\n$u>\\max(4D^2,3e)$, which is at most $U_0$.\nThis proves the asserted absolute bound without a factor involving\n$[L':\\mathbb Q]$.\nThe Artin conductor exponent of $r_\\ell$ is consequently\nat most $2+2U_0\\le E_0$.",
+    "paragraph_sha256": "cd29317d6321ff1569f15b0109d8235adfd7044adba079c5f223a023abca8eca",
+    "application_ids": [
+      "A013"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C015",
+    "line": 834,
+    "locator": "Theorem 1.1.1 and Section 2.3",
+    "keys": [
+      "javanpeykar"
+    ],
+    "paragraph_start": 824,
+    "paragraph_end": 840,
+    "paragraph": "\\paragraph{Transfer from a modular Jacobian.}\nOver $L'$ the Tate modules of $A$ and $J=J_1(N)$ have a common\nconstituent. Invariants in their finite-dimensional Hom space\ncommute with extension of the coefficient field. Faltings'\nHom theorem thus gives a nonzero $L'$-homomorphism $A\\to J$.\nAbsolute simplicity and Poincar\\'e reducibility give an\n$L'$-isogeny $A\\times Z\\to J$ for an abelian variety $Z/L'$.\nIn particular $g=\\dim J\\ge2$.\nThe index of $\\Gamma_1(N)$ is at most $N^2$, so both the\ngenus and the degree of its standard Belyi map are at most\n$N^2$. By \\cite[Theorem 1.1.1 and Section 2.3]{javanpeykar},\n\\[\n h_F(J)\\le13000000N^{12}\\le Q^{13}M^{24},\\qquad\n g\\le Q^3M^4,\\qquad d'=[L':\\Q]\\le QM.\n\\]\nThe normalization in that theorem is the original stable\nFaltings height of the Jacobian.",
+    "paragraph_sha256": "e25ce3cb7c945ca2cf8d07b9cd53a3c24e6b1dae96440d540da4d74d18bb1e43",
+    "application_ids": [
+      "A014"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C016",
+    "line": 842,
+    "locator": "Theorem 1.4",
+    "keys": [
+      "gr2014"
+    ],
+    "paragraph_start": 842,
+    "paragraph_end": 869,
+    "paragraph": "Apply \\cite[Theorem 1.4]{gr2014} with source $J$ and target\n$A\\times Z$, both over $L'$. There is such an isogeny $\\varphi$\nwith\n\\[\n \\log\\deg\\varphi\\le1024g^3\n \\bigl(64g^2\\log(14g)+\\log d'\n    +2\\log\\max(h_F(J),\\log d',1)\\bigr).\n\\]\nFor $Q\\ge10^{12}$ and $M\\ge1$, the three logarithms in order\nare at most $5QM^4$, $2QM^4$, and $19QM^4$.\nThese follow from $\\log Q\\le Q$ and $\\log M\\le M^4/4$.\nIt follows that\n\\[\n \\log\\deg\\varphi\\le368640Q^{16}M^{24}\n                       \\le Q^{17}M^{24}.\n\\]\nThe general lower bound $h_F(Z)\\ge-\\tfrac32\\dim Z\\ge-2g$\nis recorded in \\cite[Section 9]{gr2014}.\nAdditivity and height variation now give\n\\[\n h_F(A)\\le Q^{13}M^{24}+\\tfrac12Q^{17}M^{24}+2Q^3M^4\n          \\le Q^{17}M^{24}.\n\\]\nThus both cases prove the exact estimate needed below:\n\\[\n \\max(1,h_F(A))\n      \\le\\max(1,C_{\\rm cm},Q_R^{17})M_S(u)^{24}.\n\\]",
+    "paragraph_sha256": "1a8c87b940c08525a0d1714d052238c7b69e13a2c92b98bf9067ee29caeda4f7",
+    "application_ids": [
+      "A015"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C017",
+    "line": 859,
+    "locator": "Section 9",
+    "keys": [
+      "gr2014"
+    ],
+    "paragraph_start": 842,
+    "paragraph_end": 869,
+    "paragraph": "Apply \\cite[Theorem 1.4]{gr2014} with source $J$ and target\n$A\\times Z$, both over $L'$. There is such an isogeny $\\varphi$\nwith\n\\[\n \\log\\deg\\varphi\\le1024g^3\n \\bigl(64g^2\\log(14g)+\\log d'\n    +2\\log\\max(h_F(J),\\log d',1)\\bigr).\n\\]\nFor $Q\\ge10^{12}$ and $M\\ge1$, the three logarithms in order\nare at most $5QM^4$, $2QM^4$, and $19QM^4$.\nThese follow from $\\log Q\\le Q$ and $\\log M\\le M^4/4$.\nIt follows that\n\\[\n \\log\\deg\\varphi\\le368640Q^{16}M^{24}\n                       \\le Q^{17}M^{24}.\n\\]\nThe general lower bound $h_F(Z)\\ge-\\tfrac32\\dim Z\\ge-2g$\nis recorded in \\cite[Section 9]{gr2014}.\nAdditivity and height variation now give\n\\[\n h_F(A)\\le Q^{13}M^{24}+\\tfrac12Q^{17}M^{24}+2Q^3M^4\n          \\le Q^{17}M^{24}.\n\\]\nThus both cases prove the exact estimate needed below:\n\\[\n \\max(1,h_F(A))\n      \\le\\max(1,C_{\\rm cm},Q_R^{17})M_S(u)^{24}.\n\\]",
+    "paragraph_sha256": "1a8c87b940c08525a0d1714d052238c7b69e13a2c92b98bf9067ee29caeda4f7",
+    "application_ids": [
+      "A016"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C018",
+    "line": 872,
+    "locator": null,
+    "keys": [
+      "linyang",
+      "lny"
+    ],
+    "paragraph_start": 872,
+    "paragraph_end": 878,
+    "paragraph": "The compatible theta normalizations in \\cite{linyang,lny} give\n\\[\n j=3779136\\frac{(\\prod z_m)^4}{(\\sum z_m^8)^5},\\qquad\n h(j)\\le40h([z_m])+22,\n\\]\nwhere the product and sum run over the ten even theta nulls.\nAdjoining the six zero odd coordinates does not change their projective height.",
+    "paragraph_sha256": "3a05f1c11d87de7171e57b773f253e7435a91ec4ead9ecb6f8f6482aee2ef3fe",
+    "application_ids": [
+      "A017"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C019",
+    "line": 880,
+    "locator": null,
+    "keys": [
+      "pazuki"
+    ],
+    "paragraph_start": 880,
+    "paragraph_end": 893,
+    "paragraph": "In \\cite{pazuki}, the level $r=2$ theta coordinates are the sixteen\nhalf-characteristic values used here; the six odd values vanish.\nThe permitted changes of theta structure permute coordinates and\nmultiply them by roots of unity. His Euclidean projective height\ndominates our supremum projective height. Put\n$X=\\max(1,h_F(A))$ and\n$X_D=\\max(1,h_F(A)+\\log\\pi)\\le3X$.\nHis Corollary~1.3(2), in the Deligne metric, gives\n\\[\n h_\\Theta(A)\\le\\tfrac12 X_D+C_2\\log(X_D+2),\n \\qquad C_2=1000\\cdot2^4(\\log(2^4))^5\\le1000\\cdot2^{24}.\n\\]\nUsing $\\log(X_D+2)\\le2X_D$ proves\n$h([z_m])\\le10000\\cdot2^{24}X$.",
+    "paragraph_sha256": "80aa7f7248e2811737cd47977354cb8df4db00f05b01ff43fafedf2f619cc888",
+    "application_ids": [
+      "A018"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C020",
+    "line": 1027,
+    "locator": null,
+    "keys": [
+      "poonenstoll"
+    ],
+    "paragraph_start": 1018,
+    "paragraph_end": 1030,
+    "paragraph": "\\begin{lemma}[Dimension three gives corank one]\\label{lem:corank}\nFor an elliptic curve with full rational two-torsion,\n$\\dim_{\\F_2}\\Sel_2=3$ implies $\\operatorname{corank}_{\\Z_2}\\Sel_{2^\\infty}=1$.\n\\end{lemma}\n\\begin{proof}\nThe finite Kummer sequence gives $r+\\dim\\Sha[2]=1$.\nWrite $\\Sha[2^\\infty]=(\\Q_2/\\Z_2)^t\\oplus F$ with $F$ finite.\nThe Cassels--Tate pairing on the quotient by the maximal divisible\nsubgroup is nondegenerate and alternating for an elliptic curve\n\\cite{poonenstoll}. Its finite primary cyclic factors are paired,\nso $\\dim F[2]$ is even. Thus $F=0$ and $r+t=1$. The restriction of\nthe pairing to $F[2]$ need not be nondegenerate and is not used.\n\\end{proof}",
+    "paragraph_sha256": "4420bb1c43297a27e84c672fc5f48b0ddac11e0546d53b24e50eb060abb1b60a",
+    "application_ids": [
+      "A019"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C021",
+    "line": 1033,
+    "locator": null,
+    "keys": [
+      "gz",
+      "kolyvagin"
+    ],
+    "paragraph_start": 1032,
+    "paragraph_end": 1042,
+    "paragraph": "Applying Theorem~\\ref{hyp:RC} to both $n$ and $n\\theta$, the forward rank-one\ntheorem \\cite{gz,kolyvagin} gives rank one and finite $\\Sha$, hence\n$\\Sha[2]=0$.\nThe Kummer class is then represented by actual rational points. Their\nabscissas have squareclass $\\beta$, by the cubic equation. Write\n$H=\\theta c^2$ and rescale the second point to $E_{nH}$. If the first\nabscissa is $Aq^2$, divide both parameters by $q^2$ and both coordinates\nby $q^2,q^3$. The abscissas become $A,Az^2$, giving precisely the\neleven witnesses, with $w=(eHz)^{-1}$. If $\\theta=1$, one can reuse\na point on the same curve. This proves Theorem~\\ref{hyp:PC}, with both\nrestricted-converse applications in their stated domain.",
+    "paragraph_sha256": "0b9314cd532e60751e24a7cc9d8640d0a4c0dedc3e56d43412d9344773706e96",
+    "application_ids": [
+      "A020"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C022",
+    "line": 1289,
+    "locator": null,
+    "keys": [
+      "greentao",
+      "moebius",
+      "gtz"
+    ],
+    "paragraph_start": 1288,
+    "paragraph_end": 1311,
+    "paragraph": "Fix $L$. For $r\\in\\mathcal R_L$ apply the finite-complexity\nprime asymptotic \\cite{greentao,moebius,gtz} to\n\\[\n n\\longmapsto\\frac{\\epsilon_\\nu F_\\nu(r+W_Ln)}{k_\\nu},\n \\qquad r+W_Ln\\in X\\Omega.\n\\]\nThese are integral affine forms with pairwise independent linear\nparts, hence of finite complexity. The all-orders inverse theorem\nis used with its corrections. At $q\\mid W_L$ the local factor is\n$(1-1/q)^{-22}$. At $q\\nmid W_L$, scaling and changing variables\npreserve the twenty-two homogeneous zero planes, so\n\\[\n 1-22/q\\le\n \\mathbb P(F_\\nu\\ne0\\text{ for all }\\nu)\n \\le1-22/q+\\binom{22}{2}q^{-2}.\n\\]\nConsequently the local factor is $1+O(q^{-2})$, and\n\\[\n \\log\\beta_q\\ge\\log(1-22/q)-22\\log(1-1/q)\n \\ge-484/q^2.\n\\]\nThe singular product is therefore bounded below by an absolute\npositive constant, uniformly in $L$ and $r$. The real factor is\n$\\operatorname{vol}(\\Omega)X^3/W_L^3$.",
+    "paragraph_sha256": "d2338ad9fdc115755b156441768ff712de7bf3637c3b2f7e6e02a8b3a5390748",
+    "application_ids": [
+      "A021"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C023",
+    "line": 1646,
+    "locator": "Theorem 1.8",
+    "keys": [
+      "dd"
+    ],
+    "paragraph_start": 1632,
+    "paragraph_end": 1655,
+    "paragraph": "The assertion needed in Theorem~\\ref{hyp:RC} is\n\\[\n \\operatorname{corank}_{\\Z_2}\\Sel_{2^\\infty}(E_\\ell/\\Q)=1\n \\quad\\Longrightarrow\\quad \\ord_{s=1}L(E_\\ell,s)=1.                 \\tag{RC}\n\\]\nWe prove this assertion in this section and the next two sections.\nAppendices~\\ref{app:even-source}--\\ref{app:endpoints} give the fixed-form,\ntheta, nonvanishing and normalization constructions used in this deduction.\nFix $E=E_\\ell$ and a modular parametrization\n$\\pi:X_0(N)\\to E$ with $\\pi(\\infty)=0$. Fix the integral Tate lattice\nand the local squareclasses allowed at the primes of $2N$.\nConstants depending on this data are chosen before any conductor,\ncompanion field or binary dimension varies. Quotienting by a rational\npoint of order two gives a rational two-isogeny. The Selmer parity\ntheorem \\cite[Theorem 1.8]{dd} therefore gives root number $-1$\nunder the left side of (RC). This application does not replace Selmer\ncorank by Mordell--Weil rank and does not assume finite $\\Sha$.\n\\begin{remark}[Why this family is the input to the converse]\\label{ex:sec7-rc-scope}\nThe congruence $\\ell\\equiv11\\pmod {12}$ comes from the pole-completeness\nconstruction. In the proof of Theorem~\\ref{hyp:PC}, the two parameters\n$n,n\\theta$ are positive squarefree numbers in this congruence class;\ntheir two-Selmer groups have dimension three. Lemma~\\ref{lem:corank}\ngives full two-primary Selmer corank one, so these are exactly the\ntwo applications required of Theorem~\\ref{hyp:RC}.",
+    "paragraph_sha256": "d657c8fa3360b30ab1e74a02ab0787cf57e175458f1fb95a4f24640d5e6c48ab",
+    "application_ids": [
+      "A022"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C024",
+    "line": 1738,
+    "locator": null,
+    "keys": [
+      "kato"
+    ],
+    "paragraph_start": 1736,
+    "paragraph_end": 1744,
+    "paragraph": "The rational divisibility input is Kato's Theorem 13.4(2),\ntogether with the nonzero-class input in 13.5(2)\n\\cite{kato}. We use the height-one primes not containing two.\nRational irreducibility is preserved on a quadratic subgroup of the\nnon-CM open image. That subgroup contains a nontrivial unipotent,\nwhich supplies the required one-dimensional fixed space. Oddness\nsupplies the two real eigenspaces, and purity supplies the common\nFrobenius weight. This application does not use residual irreducibility\nat two or the stronger hypotheses of Theorem 13.4(3).",
+    "paragraph_sha256": "7521ea4329d1f309483a580e4bdc3db1c1d7c364d3c04c70d5f4930552c92a6e",
+    "application_ids": [
+      "A023"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C025",
+    "line": 1838,
+    "locator": null,
+    "keys": [
+      "hl"
+    ],
+    "paragraph_start": 1833,
+    "paragraph_end": 1844,
+    "paragraph": "\\end{proposition}\n\\begin{proof}\\leavevmode\nHere is the reduction to the precise classical statements.\nChoose a signed prime $q_0$ in the prescribed unit classes by\nDirichlet's theorem, avoiding $S\\cup B$. Apply Hoffstein--Luo\n\\cite{hl} in the even case, or Bump--Friedberg--Hoffstein\n\\cite{bfh} in the odd case, to the actual curve $E^{(q_0)}$.\nRequire their positive discriminant $d$ to split at\n$S\\cup B\\cup\\{|q_0|\\}$ and at the conductor primes. Then $q_0d$ has\nthe prescribed original classes. Hoffstein--Luo gives at most four\nprime factors of $d$, so at most five in total.\nThe BFH clause used in the odd case is the simple-zero clause.",
+    "paragraph_sha256": "d81d017d9380d49aadc9327c8a68b0ea98bbf911f84994a6d3f4612c02d8a7a0",
+    "application_ids": [
+      "A024"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C026",
+    "line": 1839,
+    "locator": null,
+    "keys": [
+      "bfh"
+    ],
+    "paragraph_start": 1833,
+    "paragraph_end": 1844,
+    "paragraph": "\\end{proposition}\n\\begin{proof}\\leavevmode\nHere is the reduction to the precise classical statements.\nChoose a signed prime $q_0$ in the prescribed unit classes by\nDirichlet's theorem, avoiding $S\\cup B$. Apply Hoffstein--Luo\n\\cite{hl} in the even case, or Bump--Friedberg--Hoffstein\n\\cite{bfh} in the odd case, to the actual curve $E^{(q_0)}$.\nRequire their positive discriminant $d$ to split at\n$S\\cup B\\cup\\{|q_0|\\}$ and at the conductor primes. Then $q_0d$ has\nthe prescribed original classes. Hoffstein--Luo gives at most four\nprime factors of $d$, so at most five in total.\nThe BFH clause used in the odd case is the simple-zero clause.",
+    "paragraph_sha256": "d81d017d9380d49aadc9327c8a68b0ea98bbf911f84994a6d3f4612c02d8a7a0",
+    "application_ids": [
+      "A025"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C027",
+    "line": 1849,
+    "locator": "Proposition 3.3",
+    "keys": [
+      "desjardins"
+    ],
+    "paragraph_start": 1846,
+    "paragraph_end": 1856,
+    "paragraph": "The root-number check includes ramified dyadic quadratic characters.\nAt the primes in $S$ equal squareclasses give isomorphic local curves.\nAt a good odd prime newly ramified in the parameter, the root factor is\n$(-1/p)$ \\cite[Proposition 3.3]{desjardins}. Its product outside $S$\nis fixed by the real sign and the dyadic unit class. Thus unit classes\n$3$ or $7$ modulo eight are allowed; the field discriminant may be four\ntimes the parameter. We do not invoke an odd-discriminant root formula\non those parameters.\nSee also Proposition~\\ref{ex:app-five-prime} for the same\nfive-prime bound and its subsequent use in the companion construction.\n\\end{proof}",
+    "paragraph_sha256": "2ca152730236f98e39e59db4ed418b2083589e9eb7ada1df446d6d9b56d3a2dd",
+    "application_ids": [
+      "A026"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C028",
+    "line": 2280,
+    "locator": "Theorem 1.1",
+    "keys": [
+      "cst"
+    ],
+    "paragraph_start": 2270,
+    "paragraph_end": 2292,
+    "paragraph": "\\begin{proposition}[The genus bound before odd normalization]\\label{ex:sec7-genus-lower}\nUse $h_*,h,k'$ and the two native index valuations defined in the\npreceding paragraph, with $h$ a known simple-zero parameter and $k'$\nas in Proposition~\\ref{ex:sec7-rough-companion}. Then (3.4)--(3.6)\nhold. In particular their constant in (3.6) is independent of $h$.\nThe arithmetic lower estimate (3.5) holds uniformly for the admissible\ncompanions with $\\omega(k')\\le A$; it is only asserted here at these\nknown simple-zero parameters.\n\\end{proposition}\n\\begin{proof}\\leavevmode\nThe explicit height formula \\cite[Theorem 1.1]{cst} applies twice.\nAll level primes split, conductors are prime to $N$, extra-unit fields\nare excluded, and the parametrization is the same. Its conductor factor\nis $c\\sqrt{|\\operatorname{disc}K|}$ and its sum is unaveraged.\nThe two Rankin products have the common factor $L(E^{(h)},s)$.\nEach rational free line has index at most two in its native rank-one\nlattice: conjugation fixes the free class, and the norm makes twice the\nclass rational. Thus\n\\[\n 2j_{\\rm rc}(h,k')-2j_{\\rm gen}(h)\n   =v_2L_*(hk')-v_2L_*(h_*)+\\epsilon,\\qquad |\\epsilon|\\le2,        \\tag{3.4}\n\\]\nup to the one fixed initial period convention.",
+    "paragraph_sha256": "c618f8a12e6addd54519c98f2ca64c7ad8ed3a5443884545620a487ba85f1f98",
+    "application_ids": [
+      "A027"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C029",
+    "line": 2375,
+    "locator": "Theorem 3.1",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 2374,
+    "paragraph_end": 2388,
+    "paragraph": "For an admissible $D$ with $(D/\\ell_0)=1$, the oriented embedding\ncount \\cite[Theorem 3.1]{cornutjetchev}, with changed set $\\{\\ell_0\\}$, gives\n\\[\n a_{M_\\theta}(D)\n   =c_0\\,2^{\\omega(N)}\\zeta_{M_\\theta}(D)\n       \\lambda_{M_\\theta}(\\overline{LP_D^{\\rm gen}})\n       \\pmod {2^{M_\\theta}},                                    \\tag{3.8}\n\\]\nwhere $c_0\\ne0$ is fixed and $\\zeta$ is a permitted root-of-unity phase.\nFor admissible $D$ with $(D/\\ell_0)\\ne1$, including $\\ell_0\\mid D$,\nthe local Schwartz support instead gives $a_{M_\\theta}(D)=0$.\nFormula (3.8) is asserted only on the first support.\nThere is no division by a class number. Formula (3.7) makes $D_w$\nvisible with fixed upper valuation in (3.8). It remains on every\nstage's support, including the extra test $(D_w/\\ell_0)=1$.",
+    "paragraph_sha256": "d58ad4141ada8da1c0b181311939ac0b7adf2f2c6bdab0d2bfb72caec8c6f3a8",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C030",
+    "line": 2409,
+    "locator": null,
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 2405,
+    "paragraph_end": 2419,
+    "paragraph": "\\subsection{One common family and the final order of choices}\nThe even source is a fixed algebraic vector in the full good-Hecke\neigenspace. Waldspurger's Corollary 2, including its same-dyadic-squareclass\nremoval of the auxiliary condition, compares the actual squarefree\nFourier functionals \\cite{waldspurger}. Local upper-unipotent projections\nretain a nonzero initial functional; smoothness supplies lower-unipotent\ninvariance. The algebraic linear conditions choose a vector over a\nnumber field. Galois conjugation followed by the matching finite\ncharacter twist shows that each normalized coefficient ratio is a\nrational number times a two-power root of unity. This supplies the\nvaluation and nonvanishing comparison on the whole filter.\nOnly flat field extension of the algebraic model is used.\nThe comparison is proved at the original support $S_0$ before any extra\ncoprimality sieve $B$. The sieve is applied last, and every later good\nrecurrence prime avoids the full support $S_0\\cup B$.",
+    "paragraph_sha256": "25254cb150db5b8762b07717746773d9deef6b6734ac73ba059b862a2bed2c6d",
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C031",
+    "line": 2429,
+    "locator": null,
+    "keys": [
+      "carayol"
+    ],
+    "paragraph_start": 2421,
+    "paragraph_end": 2433,
+    "paragraph": "For both coefficient systems the integral operators have the required\nomission and contraction rules. At a new prime $V_p$ raises the level\nexponent only to one, with ramified quadratic character. The recurrence\nmakes the relevant differences divisible by the integer two before\nresidue reduction. Multiplying by ordinary theta, then taking a fresh\ntrace, removes the integral unary corrections. Two fresh traces vanish.\nThe matrix trace identity gives $t(gu^2)=t(g)$, hence elementary\nquadratic labels. At a new odd level prime the weight-two local\nrepresentation theorem \\cite{carayol} has one unramified and one\nramified line; its Euler factor identifies the $U_p$ eigenvalue.\nThe diagonal-matrix calculation gives the two inertia differences.\nThese identities prove omission and primary isolation for the same\noriginal form and depth, without choosing another minimum.",
+    "paragraph_sha256": "3ccab9602537409345b3ca6cecb28ec4d8b88a8bdb5bfc5ccadcd46e6e56b5c0",
+    "application_ids": [
+      "A032"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C032",
+    "line": 2733,
+    "locator": null,
+    "keys": [
+      "serre"
+    ],
+    "paragraph_start": 2721,
+    "paragraph_end": 2751,
+    "paragraph": "The unaveraged norms are (4.1). If $a\\geq m+e$ and every new\nderivative prime has $\\rho_T(\\operatorname{Fr}_\\ell)\\equiv\n\\rho_T(\\tau)\\pmod{2^{a+1}}$, the classes projected to precision\n$m$ satisfy (4.2). These assertions hold over $A[G]$ before\ncharacter evaluation. They are realized by finite continuous\ncocycles, local-condition representatives and boundary witnesses,\nwith the weighted coefficient map applied to all this data.\nThere is no multiplier depending on $K,f,I,m$, the truncation\nlength, the number of active primes or $|G|$.\n\\end{proposition}\n\\begin{proof}\\leavevmode\n\\paragraph{1. One uniform torsion annihilator.}\nBy the non-CM open-image theorem \\cite{serre}, choose $n\\ge2$ such that\n$1+2^nM_2(\\mathbf Z_2)\\subset\\rho_T(G_{\\mathbf Q})$, and choose\n$g\\in G_{\\mathbf Q}$ with $\\rho_T(g)=uI$, $u=1+2^n$.\nFor an actual complex conjugation $\\tau$ set\n\\[\n z=g^2\\tau g^2\\tau^{-1},\\qquad e=v_2(u^4-1)=n+2.       \\tag{H1}\n\\]\nThe element $g^2$ fixes every quadratic field. Its image in the\nabelian group $\\operatorname{Gal}(H_d/K)$ is inverted by $\\tau$,\nfor every $d$ and every allowed $K$. Thus $z$ fixes every such\n$H_d$, while $\\rho_T(z)=u^4I$. If $P\\in E(H_d)[2^\\infty]$,\nthen $(u^4-1)P=0$, so\n\\[\n                       2^e E(H_d)[2^\\infty]=0.          \\tag{H2}\n\\]\nThis bounds the whole invariant torsion group, with no restriction\non the number of conductor primes. It also holds for a compositum\nof the ring-class fields in a finite construction, since $z$ fixes\neach of them.",
+    "paragraph_sha256": "1e0a6dd084e3707c0ecbf0836a8ebf1a79989d13d703131fde673a90128204b0",
+    "application_ids": [
+      "A033"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C033",
+    "line": 2769,
+    "locator": null,
+    "keys": [
+      "ccl"
+    ],
+    "paragraph_start": 2765,
+    "paragraph_end": 2789,
+    "paragraph": "\\paragraph{2. Point relations with the full old conductor.}\nChoose the CM points $x_d\\in X_0(N)(H_d)$ by compatible proper\nideal lattices and the fixed orientations at $N$, and put\n$y_d=\\pi(x_d)$. The split Heegner hypothesis identifies the curve\n$X_K(N)$ in Cai--Chen--Liu, Theorem 2.15 \\cite{ccl}, with $X_0(N)$:\n$N_1=1$, and the condition $(*)$ reduces to $(d,N)=1$.\nTake their old conductor to be any $d$ currently in use and the\nnew prime outside $6dND_K$. Their factor $u_m$ is one because\n$\\mathcal O_K^\\times=\\{\\pm1\\}$. Applying the elliptic quotient\nto that theorem gives\n\\[\n \\operatorname{Tr}_{H_{d\\ell}/H_d}y_{d\\ell}=a_\\ell y_d\n       \\quad(\\ell\\text{ inert}),\\qquad\n \\operatorname{Tr}_{H_{dq}/H_d}y_{dq}\n       =(a_q-\\sigma_q-\\sigma_q^{-1})y_d\n       \\quad(q\\text{ split}).                            \\tag{4.1}\n\\]\nThe inverse Frobenius pair at a split prime follows because their\nproduct is the Artin symbol of the rational principal ideal $(q)$.\nThese are unaveraged sums. The identity $\\pi T_q=a_q\\pi$ follows\non degree-zero divisor classes; $T_q(\\infty)=(q+1)\\infty$ and\n$\\pi(\\infty)=0$ remove the cusp term. If the previously fixed CM\nconventions use additional cusp translations, let $C_\\pi$ kill\ntheir finite image in $E$ and apply every relation to $C_\\pi y_d$.\nThe cusp subgroup and its images are fixed by $N,\\pi$.",
+    "paragraph_sha256": "dcb8107192a4e2c2ff2a46480776a8502277eb7b3e1e2624660a38a6c81336af",
+    "application_ids": [
+      "A034"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C034",
+    "line": 2808,
+    "locator": null,
+    "keys": [
+      "howard2012"
+    ],
+    "paragraph_start": 2791,
+    "paragraph_end": 2810,
+    "paragraph": "At an inert new prime $\\ell$, a compatible place gives\n\\[\n                      \\overline y_{d\\ell}\n                         =F_\\ell\\overline y_d.           \\tag{H4}\n\\]\nHere $F_\\ell$ is rational arithmetic Frobenius on the reduced\nelliptic curve. This is the usual CM congruence, and it does not\nrequire the old conductor to be an inert squarefree product.\nIndeed $(d,\\ell)=1$ makes the local CM order the maximal\nunramified quadratic order. The CM elliptic curve has supersingular\nreduction at this inert prime. Each of its $\\ell+1$ cyclic raising\nisogenies specializes to the quotient by the unique subgroup of\norder $\\ell$, namely the relative Frobenius kernel. The prime-to-$\\ell$\ncyclic $N$-subgroup specializes by the same Frobenius map.\nThe resulting equality of reduced modular points passes through\n$\\pi$, which extends over the good integral models at $\\ell$.\nThis also proves (H4) after every old ideal-class translate, with\nits place transported. Howard, Section 1.7, formula (13) \\cite{howard2012}, records\nthis congruence in his conductor subfamily; his odd-prime descent\nand residual-surjectivity theorem are not used here.",
+    "paragraph_sha256": "6e1153a3bf1a34b555b0d645d6a7724cda0fc4a9d77c78fdd246079ba9cd0604",
+    "application_ids": [
+      "A035"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C035",
+    "line": 2886,
+    "locator": "Theorem~1 and its corollary",
+    "keys": [
+      "lang1956"
+    ],
+    "paragraph_start": 2876,
+    "paragraph_end": 2898,
+    "paragraph": "\\paragraph{5. Integral local descent at the old places.}\nWe record the local fact needed to put $d_a(c_{I,a})$ in the old\nKummer conditions. If $F'/F$ is a finite unramified extension of\nnonarchimedean local fields and $B/F$ is an elliptic curve, then\n\\[\n H^1(\\operatorname{Gal}(F'/F),B_0(F'))=0,\\qquad\n c_B H^1(\\operatorname{Gal}(F'/F),B(F'))=0,             \\tag{H10}\n\\]\nwhere $c_B=\\#\\Phi_B(\\overline{k}_F)$ is the geometric component\ngroup order. To prove the first assertion, reduce a cocycle to\nthe connected smooth special fiber. Lang's theorem \\cite[Theorem~1 and its corollary]{lang1956} makes its\n$H^1$ over the finite residue field zero; inflation--restriction\nthen makes its $H^1$ for the finite residue extension zero.\nLift the resulting coboundary through the smooth reduction map.\nThe remaining cocycle takes values in the formal group. For a\nuniformizer of $F$, fixed by the unramified Galois group, each\nsuccessive formal quotient is an additive copy of the residue\nfield of $F'$. A normal basis makes this an induced module, so\nits positive-degree cohomology vanishes. Correct the coboundary\nsuccessively in these quotients. The corrections converge in\n$B_1(F')$, and the group is finite, so their limit solves all\nthe cocycle equations. The component exact sequence proves the\nsecond assertion of (H10). No division by $[F':F]$ was used.",
+    "paragraph_sha256": "948d1ee359568524ab41dba4b6dc1554d44912c419d8fe4e76ba257bfe3c2874",
+    "application_ids": [
+      "A036"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C036",
+    "line": 3194,
+    "locator": "I.2.3, I.3.2--I.3.5",
+    "keys": [
+      "milne"
+    ],
+    "paragraph_start": 3194,
+    "paragraph_end": 3208,
+    "paragraph": "The local finite dualities \\cite[I.2.3, I.3.2--I.3.5]{milne} make the\nKummer map adjoint to $H^1(F,B[2^a])\\to H^1(F,B)[2^a]$.\nThe latter has Kummer image as kernel, so the Kummer image is its exact\nannihilator. To obtain the integral chain statement, write\n$M=B(F)^\\wedge_2$. The restricted cup map\n$M[-1]\\otimes^LM[-1]\\to\\Z_2[-2]$ has homotopy class determined by\n$\\operatorname{Hom}(M\\otimes M,\\Z_2)$. Finite isotropy makes every\nvalue divisible by every power of two, hence zero.\nA projective resolution therefore supplies a null-homotopy.\nThe possible ambiguity group in degree minus one vanishes.\nReduction modulo two, including the torsion in degree zero, gives the\nperfect quotient-to-dual comparison; derived Nakayama lifts it.\nThe global Selmer duality theorem\n\\cite[Sections 5.1, 5.2.4, 5.4.3 and 6.3.4]{nekovar} is applied\nto these actual local maps and homotopies.",
+    "paragraph_sha256": "5452c3474b56f9247b6ecbaede534afa5b06f42b40e02257b526c16f3c67b82d",
+    "application_ids": [
+      "A037"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C037",
+    "line": 3207,
+    "locator": "Sections 5.1, 5.2.4, 5.4.3 and 6.3.4",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 3194,
+    "paragraph_end": 3208,
+    "paragraph": "The local finite dualities \\cite[I.2.3, I.3.2--I.3.5]{milne} make the\nKummer map adjoint to $H^1(F,B[2^a])\\to H^1(F,B)[2^a]$.\nThe latter has Kummer image as kernel, so the Kummer image is its exact\nannihilator. To obtain the integral chain statement, write\n$M=B(F)^\\wedge_2$. The restricted cup map\n$M[-1]\\otimes^LM[-1]\\to\\Z_2[-2]$ has homotopy class determined by\n$\\operatorname{Hom}(M\\otimes M,\\Z_2)$. Finite isotropy makes every\nvalue divisible by every power of two, hence zero.\nA projective resolution therefore supplies a null-homotopy.\nThe possible ambiguity group in degree minus one vanishes.\nReduction modulo two, including the torsion in degree zero, gives the\nperfect quotient-to-dual comparison; derived Nakayama lifts it.\nThe global Selmer duality theorem\n\\cite[Sections 5.1, 5.2.4, 5.4.3 and 6.3.4]{nekovar} is applied\nto these actual local maps and homotopies.",
+    "paragraph_sha256": "5452c3474b56f9247b6ecbaede534afa5b06f42b40e02257b526c16f3c67b82d",
+    "application_ids": [
+      "A038"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C038",
+    "line": 3235,
+    "locator": "Proposition 7.8.8(ii)",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 3235,
+    "paragraph_end": 3250,
+    "paragraph": "The support-change theorem \\cite[Proposition 7.8.8(ii)]{nekovar}\nretains arbitrary old local conditions and puts the unramified\ncondition at new places. Its finite-module proof applies at two.\nUse it only when the actual coefficient representation is unramified\nat the removed place. There are five uses here:\nuniversal augmentation at $Q$; an unused scalar prime $q\\nmid h$;\ncharacteristic-two residual removal after $\\chi_h=1$; the moving\nprime after $t=0$; and a new good inert derivative prime outside\n$h,r_i$ and the old support. In the last case the coefficient module\nis unramified and the chosen finite local plane is the unramified\ncondition. It is not applied to an active ramified scalar prime\nor to $r_i$ before central specialization. Replacing the unramified\ncondition by the full condition then gives the singular quotient\nby a cone of Selmer cones. In particular the old complex is an actual\nsubcomplex of an upper triangular model, not just a complex with the\nsame Euler characteristic.",
+    "paragraph_sha256": "7e25c3d6f0a9d7959a49f72af159c36087edb1dd07319aeaedad9528ad4686df",
+    "application_ids": [
+      "A039"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C039",
+    "line": 3352,
+    "locator": null,
+    "keys": [
+      "serre"
+    ],
+    "paragraph_start": 3349,
+    "paragraph_end": 3385,
+    "paragraph": "We next preserve all these conditions while controlling the Tate\ntrace. Let $J=\\rho_T(G_{\\Q(\\mu_{2^\\infty})})$. The determinant is\nthe cyclotomic character, so $J$ is the determinant-one part of the\nfixed Tate image. Non-CM open image \\cite{serre} gives a fixed\n$d\\ge2$ with\n\\[\n \\Gamma_d:=\\ker\\bigl(\\operatorname{SL}_2(\\Z_2)\n             \\to\\operatorname{SL}_2(\\Z/2^d\\Z)\\bigr)\\subset J.\n\\]\nThe subgroup $J_K=\\rho_T(G_{F_\\infty})$ has index at most two in\n$J$, and therefore contains its squares. Write $U(a)$ and $V(b)$\nfor the upper and lower unipotent matrices. Then $J_K$ contains\n$U(2^{d+1}\\Z_2)$ and $V(2^{d+1}\\Z_2)$. The identity\n\\[\n U(a)V(b)U\\bigl(-a/(1+ab)\\bigr)V\\bigl(-b(1+ab)\\bigr)\n       =\\operatorname{diag}(1+ab,(1+ab)^{-1})\n\\]\nand Gaussian decomposition show that a subgroup containing\n$U(2^k\\Z_2),V(2^k\\Z_2)$ contains $\\Gamma_{2k}$.\nHence $\\Gamma_m\\subset J_K$ for $m=2d+2$.\nCommuting $\\operatorname{diag}(1+2^m,(1+2^m)^{-1})$ with the\nupper and lower unipotents of level $m$ gives all upper and lower\nunipotents of level $2m+1$, since\n$v_2((1+2^m)^2-1)=m+1$. Applying the same decomposition gives\n\\[\n \\Gamma_{4m+2}\\subset\\overline{[J_K,J_K]}.\n\\]\nEvery matrix commutator lifts to a commutator in $G_{F_\\infty}$.\nSuch lifts fix $L_\\infty$, whose Galois group over $F_\\infty$ is\nabelian. The image of the compact group $G_{L_\\infty}$ is closed.\nThus, for the fixed integer $\\nu=4m+2=8d+10$,\n\\[\n                  \\Gamma_\\nu\\subset\\rho_T(G_{L_\\infty}).       \\tag{4.4c}\n\\]\nThis is a subgroup in the image of the actual radical-fixing\nkernel. It requires no disjointness of the radical and Tate fields,\nand is independent of the number of radicands and of $K$.",
+    "paragraph_sha256": "5e40a85344ab195018178c7eb19d7a13691fdda5790a90b89b27357fef99f865",
+    "application_ids": [
+      "A033"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C040",
+    "line": 3585,
+    "locator": "Sections 6.2.5--6.2.8 and Theorem 6.3.4",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 3572,
+    "paragraph_end": 3587,
+    "paragraph": "For completeness, there is also no hidden group-order denominator in\nduality.  The coefficient pairing is the $A_i[G]$-valued Weil pairing.\nIf one checks its perfection over $A_i$, the auxiliary pairing on the\ngroup algebra is\n\\[\n (a,b)\\longmapsto[1](ab),\\qquad\n ([1](gh))_{g,h\\in G}=(\\mathbf1_{h=g^{-1}})_{g,h\\in G}.\n\\]\nIts matrix is a permutation matrix, with integral inverse.  It is not\nthe normalized trace $|G|^{-1}\\operatorname{Tr}$.  The global\ncup-product and trace maps are integral as well.  The hypotheses of\nSelmer duality here are a perfect coefficient pairing and the actual\northogonal local diagrams with their isotropy homotopies\n\\cite[Sections 6.2.5--6.2.8 and Theorem 6.3.4]{nekovar}; the old\nKummer diagrams just described supply those hypotheses.  Since $K$\nis imaginary there is no real-place Tate correction in this argument.",
+    "paragraph_sha256": "004d78bc74f844f317ab5c8239308aaddebbdc559598847b8054a91349f8098d",
+    "application_ids": [
+      "A038"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C041",
+    "line": 3773,
+    "locator": null,
+    "keys": [
+      "gz",
+      "kolyvagin"
+    ],
+    "paragraph_start": 3772,
+    "paragraph_end": 3782,
+    "paragraph": "At known simple zeros, forward Gross--Zagier and Kolyvagin\n\\cite{gz,kolyvagin} give rank one and finite $\\Sha$.\nFor restriction of scalars and the product of the two twists, the\nsum/difference isogenies are dual and compose to $[2]$.\nTheir free-lattice indices satisfy $IJ=2$, with regulator ratio\n$2/I^2$. At odd primes the differential lattices agree; at two the\npullback determinants have bounded total valuation.\nMilne's isogeny ratio \\cite[proof of I.7.3, (7.3.1)]{milne} follows\nfrom duality without assuming the BSD leading-term equality.\nIt applies here with finite $\\Sha$, canonical heights and pullback\nmeasures.",
+    "paragraph_sha256": "e4fe2dadda4174a25fd80391ec8a7f918909ec52895e069640940c4de2fa2695",
+    "application_ids": [
+      "A020"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C042",
+    "line": 3779,
+    "locator": "proof of I.7.3, (7.3.1)",
+    "keys": [
+      "milne"
+    ],
+    "paragraph_start": 3772,
+    "paragraph_end": 3782,
+    "paragraph": "At known simple zeros, forward Gross--Zagier and Kolyvagin\n\\cite{gz,kolyvagin} give rank one and finite $\\Sha$.\nFor restriction of scalars and the product of the two twists, the\nsum/difference isogenies are dual and compose to $[2]$.\nTheir free-lattice indices satisfy $IJ=2$, with regulator ratio\n$2/I^2$. At odd primes the differential lattices agree; at two the\npullback determinants have bounded total valuation.\nMilne's isogeny ratio \\cite[proof of I.7.3, (7.3.1)]{milne} follows\nfrom duality without assuming the BSD leading-term equality.\nIt applies here with finite $\\Sha$, canonical heights and pullback\nmeasures.",
+    "paragraph_sha256": "e4fe2dadda4174a25fd80391ec8a7f918909ec52895e069640940c4de2fa2695",
+    "application_ids": [
+      "A040"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C043",
+    "line": 3897,
+    "locator": "Sections 6.4.1--6.4.3",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 3832,
+    "paragraph_end": 3926,
+    "paragraph": "For clarity, orient the isogeny indices as\n\\[\n I=[\\mathcal B(\\Q)_{\\rm free}:\\phi\\mathcal A(\\Q)_{\\rm free}],\n \\qquad\n J=[\\mathcal A(\\Q)_{\\rm free}:\\psi\\mathcal B(\\Q)_{\\rm free}].\n\\]\nThen $IJ=2$ and\n$\\operatorname{Reg}_{\\mathcal B}/\\operatorname{Reg}_{\\mathcal A}\n=2/I^2$. Choose global generators $\\omega_{\\mathcal A}$ and\n$\\omega_{\\mathcal B}$ of the top cotangent lattices of their\nN\\'eron models, and use their period measures over $\\Q$ throughout.\nThe integral pullbacks\n$\\phi^*\\omega_{\\mathcal B}=a\\omega_{\\mathcal A}$ and\n$\\psi^*\\omega_{\\mathcal A}=b\\omega_{\\mathcal B}$ satisfy $ab=4$.\nThus $a,b\\in\\{\\pm1,\\pm2,\\pm4\\}$. Real change of variables gives\n\\[\n |a|\\Omega_{\\mathcal A}\n =\\frac{\\#\\ker\\phi_{\\mathbf R}}{\\#\\operatorname{coker}\\phi_{\\mathbf R}}\n   \\Omega_{\\mathcal B},\n\\]\nwhere both finite groups have order at most four. Hence the period\nratio has uniformly bounded two-adic valuation, without a separate\ndiscriminant normalization. With these differential choices the\nfinite measure factors are the products $C_{\\mathcal A},C_{\\mathcal B}$\nof component numbers. The arithmetic isogeny identity gives\n\\[\n s_{\\mathcal A}-s_{\\mathcal B}\n =2g_{\\mathcal A}-2g_{\\mathcal B}\n  +v_2\\frac{\\operatorname{Reg}_{\\mathcal B}}{\\operatorname{Reg}_{\\mathcal A}}\n  +v_2\\frac{\\Omega_{\\mathcal B}}{\\Omega_{\\mathcal A}}\n  +v_2\\frac{C_{\\mathcal B}}{C_{\\mathcal A}}.\n\\]\nThe $2g_{\\mathcal A}$ terms cancel on substitution into the\ndeterminant formula. The remaining rational torsion is uniformly\nbounded by the fixed local types at two. Component factors cancel\nat every split prime. At $p\\mid k$, good reduction makes the Weil\nrestriction's component group trivial, while the tame quadratic\ntwist has component group $E[2]$ with its Frobenius action. This\ngives $v_2(C_{\\mathcal B}/C_{\\mathcal A})=\\sum_{p\\mid k}t_p$\nand its negative sign in (4.6). In the full rational two-torsion\ncase each $t_p=2$.\n\\end{proof}\n\\begin{lemma}[Unused-prime comparison and one corrected coordinate]\\label{ex:arith-common-coordinate}\nAt an unused good split prime, use the actual primitive-to-relaxed\nmaps and the retained class and functional above. Write $z$ for\nthe scalar Frobenius value. With $e_q=a_q-z-z^{-1}$ and $l_q$\nthe two-place quotient factor,\nthey satisfy (4.7) with $\\varepsilon_q\\in\\Lambda^\\times$.\nFor a finite binary family the universal correction $\\eta$\nlies in $\\mathscr O[G]$, and its corrected coordinate\n$\\widetilde u=\\eta u_{\\rm rel}$ satisfies\n$\\widetilde u_x=\\varepsilon_xu_{{\\rm prim},x}$ at every character,\nwith $\\varepsilon_x\\in\\Lambda^\\times$.\nAt any character where the primitive coordinate is regular at\n$t=0$, this identity preserves its central valuation and vanishing.\nOnly the product is specialized; $\\eta_x$ itself may have a pole.\n\\end{lemma}\n\\begin{proof}\\leavevmode\nAt an unused prime the exact point factor is $e_q=a_q-z-z^{-1}$.\nThe second factor comes from the same closed functional, as follows.\nLet $i:C_P\\to C_R$ be the primitive-to-relaxed map, and let\n$j:C_S\\to C_{P^\\perp}$ be the paired strict-to-primitive map.\nAll old orthogonal conditions and their homotopies are retained.\nAt $q$ these are the maps from the unramified condition to the full\ncondition and from zero to the unramified condition. Naturality of\nthe cup pairing \\cite[Sections 6.4.1--6.4.3]{nekovar} gives\n\\[\n             \\beta_R(v,iw)=\\beta_P(jv,w).\n\\]\nThe actual norm identity is $z_R=e_q i(z_P)$, with its retained\nboundary. The generic paired strict lift satisfies\n$jz_S=e_q^c z_{P^\\perp}$. Conjugation sends $z$ to $z^{-1}$, so\n$e_q^c=e_q$. Consequently\n\\[\n                 \\lambda_R\\circ i=e_q\\lambda_P.\n\\]\nThus the class and its paired functional each contribute one\n$e_q$; no integral self-duality of the primitive condition is assumed.\nThe two quotient determinants satisfy\n\\[\n \\delta_q=\\det(z\\operatorname{Fr}_q-q)\n              \\det(z^{-1}\\operatorname{Fr}_q-q)=q^4l_q.\n\\]\nIn the original integral determinant bases, the support triangle\ntherefore gives\n\\[\n       l_q u_{\\rm rel}=e_q^2\\varepsilon_q u_{\\rm prim},\n             \\qquad \\varepsilon_q\\in\\Lambda^\\times.             \\tag{4.7}\n\\]\nTo see the unit assertion, retain the finite mapping-cone bases.\nTheir comparison is a sign; replacing them by the retained homotopy\nequivalent free models contributes only determinants of unit disks.\nThese are $A_i$-units. Their limits and inverse limits are\n$\\Lambda$-units, and $q^{-4}$ is one also. An arbitrary\n$\\mathscr O$-unit would not suffice.",
+    "paragraph_sha256": "d0220949ff79e578e8c6665263cdc86265723ae62605ce542a9efa9c6d6afdd1",
+    "application_ids": [
+      "A041"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C044",
+    "line": 4258,
+    "locator": "I.4.10 and I.5.1",
+    "keys": [
+      "milne"
+    ],
+    "paragraph_start": 4251,
+    "paragraph_end": 4274,
+    "paragraph": "Inflation from $G_{K,S_0}$ into $G_{K,S_T}$ is injective on $H^1$\nwith trivial coefficients. Consequently\n\\[\n h^0(G_{K,S_0},W)=2,\\qquad\n h^1(G_{K,S_0},W)\\le4s.\n\\]\nThe global Euler characteristic and cohomological-dimension statements\n\\cite[I.4.10 and I.5.1]{milne}, applied over the imaginary quadratic\nfield $K$, give\n\\[\n h^0-h^1+h^2=-2,\\quad H^{>2}=0,\\quad\n h^2=h^1-4.\n\\]\nThus the total residual cohomology dimension of the global complex\nis at most $8s-2$, and in particular at most $8s+2$.\nThe latter weaker bound can also be obtained without genus theory:\nthe maximal pro-two group over $\\Q$ unramified outside $T$ and\ninfinity has $s+1$ generators, by the squareclasses of $-1$ and\nthe primes in $T$; its subgroup for $K$ has at most $2s+1$\ngenerators by the index-two Schreier bound. The maximal pro-two\ngroup for $G_{K,S_0}$ is a quotient of this subgroup. Hence\n$h^1(G_{K,S_0},W)\\le4s+2$, giving total dimension at most $8s+2$.\nIn either computation the $H^2$ estimate is supplied by the global\nEuler characteristic, not by a generator estimate alone.",
+    "paragraph_sha256": "096653109d21c6e8bcac1a577eeca1b4e78c5fc43558a58849903d495c93611d",
+    "application_ids": [
+      "A042"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C045",
+    "line": 4279,
+    "locator": "I.2.3 and I.2.8",
+    "keys": [
+      "milne"
+    ],
+    "paragraph_start": 4276,
+    "paragraph_end": 4314,
+    "paragraph": "We next bound the local terms in the Selmer cone (4.3). For a finite\nplace $w$, put $d_w=[K_w:\\Q_2]$ if $w\\mid2$ and $d_w=0$\notherwise. Local duality and the local Euler characteristic\n\\cite[I.2.3 and I.2.8]{milne} give, for the trivial module $W$,\n\\[\n (h^0,h^1,h^2)(K_w,W)=(2,4+2d_w,2).\n\\]\nAt an old Kummer place, the derived condition has residual dimensions\n$(2,2+d_w)$ in degrees zero and one. Indeed\n$E^{(h)}(K_w)^\\wedge_2$ is the direct sum of a free\n$\\Z_2$-module of rank $d_w$ and finite two-primary torsion;\nthat torsion has two generators because $E^{(h)}[2]$ is rational.\nDerived reduction retains its two-dimensional degree-zero torsion.\nFor the other conditions at the odd moving or derivative places,\nthe following table records the sum of the dimensions of the local\ncondition and of the full local complex. Cone shifts do not change\nthis sum.\n\\[\n\\begin{array}{c|c|c}\n\\text{condition }U_w&\\sum h^a(U_w)&\n       \\sum h^a(U_w)+\\sum h^a(K_w,W)\\\\ \\hline\n\\text{old Kummer}&4+d_w&12+3d_w\\\\\n\\text{unramified, }w\\nmid2&4&12\\\\\n0,\\ w\\nmid2&0&8\\\\\n\\text{full, }w\\nmid2&8&16\\\\\n\\text{derivative strict}&2&10\\\\\n\\text{derivative finite or singular}&4&12\\\\\n\\text{derivative relaxed}&6&14\n\\end{array}\n\\]\nThe last three rows use exactly the conditions retaining $D^0$\nin Lemma~\\ref{ex:limits-derivative-switch}; the relaxed condition\ndoes not include $D^2$. There are at most two places over each\nrational prime, and $\\sum_{w\\mid2}d_w=2$. The old prime two\ntherefore costs at most $30$, any other old rational prime at most\n$24$, the moving prime at most $32$, and a derivative prime at\nmost $28$ (in fact it is inert and costs at most $14$).\nEach is bounded by $48$. Thus all finite local terms cost at most\n$48m$. No prime dividing $k$ alone is charged a local condition.",
+    "paragraph_sha256": "b8793451f5f06c95b5a32183781dd2d0d5a0fd6f9075c34110d4432f86c7dc15",
+    "application_ids": [
+      "A043"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C046",
+    "line": 4348,
+    "locator": "Proposition 7.8.8(ii)",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 4344,
+    "paragraph_end": 4363,
+    "paragraph": "It remains to transfer this estimate to the original support.\nFirst consider a scalar ring instance. Reduction modulo two kills\n$\\chi_h$, so the coefficient system is unramified at every active\nprime. The actual support comparison of\n\\cite[Proposition 7.8.8(ii)]{nekovar} therefore identifies the\nsmaller-support complex with the complex having unramified\nconditions at those primes. At an oriented active place, reduction\nof (4.4) has\n\\[\n C=0,\\qquad A=D=\\big((1+t)^e-1\\big)I_2,\n\\]\nwhere $e$ is odd; at the conjugate place the exponent is $-e$.\nBoth $((1+t)^e-1)/t$ and $((1+t)^{-e}-1)/t$ are units of\n$\\F_2[[t]]$. Thus the full, unramified and singular comparison\nblocks all become contractible after inverting $t$. For each fixed\nfinite active support retain the comparison maps and homotopies,\ntake the inner limit, and only then invert $t$. Every active\ncomparison cone is then contractible, so the original complex has\nthe same generic residual cohomology as the bounded smaller-support\nmodel. No count of active primes remains.",
+    "paragraph_sha256": "f420a9294e62c7c5b472666a15a0e75c3156ebc16e0914afe3674ba30e88799b",
+    "application_ids": [
+      "A039"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C047",
+    "line": 4628,
+    "locator": "Sections 6.3.3--6.3.4",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 4576,
+    "paragraph_end": 4630,
+    "paragraph": "Over the stated fraction or test field, suppose the actual old\nclass spans generic $H^1$ and has nonzero finite localization $v$.\nIts derivative from Proposition~\\ref{ex:arith-finite-heegner}\nhas finite coordinate zero and singular coordinate $Jv$.\nThe strict generic $H^1$ is zero, the new generic $H^1$ is spanned\nby this derivative, and the two class-functional determinant\ncoordinates have equal valuations, even when $v$ is not primitive\nin the local integral lattice.\n\\end{lemma}\n\\begin{proof}\\leavevmode\n\\paragraph{The strict and relaxed conditions at a derivative prime.}\nThe words strict and relaxed have a different local meaning at a\nderivative prime from zero and full at an active or unused split\nprime. At a derivative prime use the actual split local model\n\\[\n L_v=D^0\\oplus(F_v\\oplus S_v)[-1]\\oplus D^2[-2]\n\\]\nwith zero differential at the retained precision, and retain its\npairing and isotropy homotopies. Here $D^0$ and $D^2$ are dual,\nand $F_v,S_v$ are the finite and singular isotropic planes. Put\n\\[\n \\begin{aligned}\n U_{\\rm str}&=D^0,&\n U_{\\rm rel}&=D^0\\oplus(F_v\\oplus S_v)[-1],\\\\\n U_F&=D^0\\oplus F_v[-1],&\n U_S&=D^0\\oplus S_v[-1].\n \\end{aligned}\n\\]\nThus $U_{\\rm str}^{\\perp}=U_{\\rm rel}$ and the two plane\nconditions are self-orthogonal under the transported duality.\nAll four maps retain local degree-zero cohomology. In particular,\nthe relaxed condition here omits $D^2[-2]$ and is not the full\nlocal complex. The actual cone triangles are consequently\n\\[\n C_{\\rm str}\\longrightarrow C_F\\longrightarrow F_v[-1]\n \\longrightarrow C_{\\rm str}[1],\\qquad\n C_{\\rm str}\\longrightarrow C_S\\longrightarrow S_v[-1]\n \\longrightarrow C_{\\rm str}[1].\n\\]\nThese are the triangles used in the determinant switch. Zero/full\nconditions at the other primes retain their previously stated\nmeaning. Exact annihilator and dimension assertions in the switch\nargument are made after passage to the stated fraction or test\nfield, using these integral diagrams and their retained dualities.\nAt a new inert prime the finite and singular planes are free of rank\ntwo, with cross pairing\n$\\beta(x,y)=\\varepsilon\\langle x,Jy\\rangle$.\nSuppose the old actual class $A$ spans generic $H^1$ and has\n$f(A)=v\\ne0$. Its derivative $B$ satisfies $f(B)=0$, $s(B)=Jv$.\nThe strict $H^1$ vanishes. The transported duality and localization\nidentities identify the relaxed localization image with the kernel\nof its dual localization map, hence with its exact annihilator\n\\cite[Sections 6.3.3--6.3.4]{nekovar}. This image\ncontains $(v,0)$ and $(0,Jv)$, so these span\nit. Hence the new generic $H^1$ is spanned by $B$.",
+    "paragraph_sha256": "8be011a6c74cf67c77ec27771b92550a6b8d26c14b6e3a6e6a186b1c2388e0b1",
+    "application_ids": [
+      "A044"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C048",
+    "line": 4802,
+    "locator": "6.3.3--6.3.4",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 4787,
+    "paragraph_end": 4817,
+    "paragraph": "All old conditions are stable under this involution. Conjugate old\nKummer conditions are transported into each other; primitive ramified\nfull conditions occur at the conjugate pair; unused good conditions\nare unramified; and both $F$ and $S$ at a previous derivative prime\nare stable under the actions just computed. At the new prime let\n$C_{\\rm str}$ and $C_{\\rm rel}$ have the actual truncated conditions\n$D^0$ and $D^0\\oplus(F\\oplus S)[-1]$. Put\n\\[\n U=\\operatorname{im}\\bigl(H^1(C_{\\rm rel}\\otimes k)\\longrightarrow\n F\\oplus S\\bigr),\\qquad\n K_0=H^1(C_{\\rm str}\\otimes k).\n\\]\nThe retained localization-duality diagrams give $U=U^\\perp$.\nSpecifically, localization's connecting map is its dual under the\nstrict/relaxed duality, so its kernel is both $U$ and $U^\\perp$;\nthis is the exactness in \\cite[6.3.3--6.3.4]{nekovar} used in\nLemma~\\ref{ex:limits-derivative-switch}. Isotropy alone would not suffice.\nThe cone triangles, with $D^0$ retained, give exact sequences\n\\[\n 0\\longrightarrow K_0\\longrightarrow V\n   \\longrightarrow U\\cap F\\longrightarrow0,\n \\qquad\n 0\\longrightarrow K_0\\longrightarrow V'\n   \\longrightarrow U\\cap S\\longrightarrow0,                 \\tag{5.5a}\n\\]\nwhere $V'$ is the switched fiber cohomology. There is no preceding\nlocal degree-zero term, since the quotient conditions are\n$F[-1]$ and $S[-1]$.\nThe space $U$ is stable under signs. Each $U_\\pm\\subset H_\\pm$\nis its own annihilator in $H_\\pm$, hence is one of that plane's\ntwo isotropic axes.",
+    "paragraph_sha256": "2ce5ea74ea5112eefc4d571c4a742f2f2b6f5fb17f8c78326ca8888c411cee52",
+    "application_ids": [
+      "A044"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C049",
+    "line": 5008,
+    "locator": "5.7.1.6--5.7.1.7 and 6.3.4",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 5001,
+    "paragraph_end": 5015,
+    "paragraph": "Here are the cohomology calculations underlying the budget.\nAt finite coefficients, the local degree-zero maps are\nisomorphisms onto local invariants and the local degree-one maps\nare the Kummer injections. The Selmer cone therefore has\n$H^0=E(K)[2]$ and $H^1=\\operatorname{Sel}_2(E/K)$.\nThe Weil pairing and the exact orthogonality of the Kummer\nconditions give the finite self-duality with shift three\n\\cite[5.7.1.6--5.7.1.7 and 6.3.4]{nekovar}. Since $K$ has no\nreal places and $E[2]$ is rational of rank two, this gives\n\\[\n \\dim_{\\mathbb F_2}H^i(C_K\\otimes^{\\mathbf L}\\mathbb F_2)\n       =(2,d_K,d_K,2)\\quad(i=0,1,2,3),                         \\tag{5.7a}\n\\]\nwith zero cohomology in other degrees. In particular a minimal\nfinite free $\\mathbb Z_2$ model of $C_K$ has total rank $2d_K+4$.",
+    "paragraph_sha256": "4b04568d83e17f6a8e7d1d3d20416cba17a61670d2d7afa7d885b56646c906a9",
+    "application_ids": [
+      "A045"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C050",
+    "line": 6018,
+    "locator": "Theorem 1.2, (1.10)--(1.11), Corollary 6.17 with $A=1$",
+    "keys": [
+      "bmor"
+    ],
+    "paragraph_start": 6005,
+    "paragraph_end": 6047,
+    "paragraph": "\\begin{proposition}[Literal cutoff]\\label{prop:cutoff}\nThe fixed prescription satisfies\n\\[\n R=D,\\qquad T=(96\\cdot10^{13})^{13}D^{2210G_0^2D^3}\n            <2^{\\,2^{\\,2^{9013}}}.\n\\]\nThis is a statement about the prescribed integer, independently of its\nsemantic role in excluding false multiplication triples.\n\\end{proposition}\n\\begin{proof}\nWe give the bounds of S25. Exact small calculations give\n$10^5<W<2^{512}$ and $2^{2000}<F_0<2^{2250}$.\nFor $q\\ge10^5$, the unconditional progression estimate\n\\cite[Theorem 1.2, (1.10)--(1.11), Corollary 6.17 with $A=1$]{bmor}\napplies for $x\\ge\\exp(0.03\\sqrt q(\\log q)^3)$, including the possible\nexceptional-zero case. At $X=2^{W^3}$ its error is at most\n$X/(160\\log X)$ and the hypothesis follows from\n$0.03\\sqrt W(\\log W)^3<(\\log2)W^3$.\nHence $\\vartheta(X;W,a)>X/(2W)$, giving more than\n$X/(2W^4)>22$ primes in each unit class. No prime at most 324\nbelongs to such a class. Thus\n\\[\n H_{\\max}<X,\\quad H_{\\rm cat}\\le X^{22W},\\quad\n \\log_2N_s<2^{2054}.\n\\]\nFor every odd prime dividing $N_s$, take the actual reduction order of\n$P_0$ at each place above it, and let their product be $m_0$.\nAll preceding positive multiples stay in the dyadic formal subgroup,\nsince $P_0$ starts there and the subgroup is closed under addition.\nA nonidentity point there has negative abscissa valuation, so its\nreciprocal is defined; the constructor accepts the identity directly.\nThus every earlier search step is defined without a nontorsion premise.\nThe point has nonsingular reduction also at the bad places over seven.\nEach order is at most $p^3$ and there are at most two places, giving\n$m_0\\le N_s^6$. Multiplication by $N_s^4$ raises the formal depth enough\nthat the rational coefficients of the reciprocal abscissa are divisible\nby $N_s^4$, with denominator prime to $N_s$.\nAt two use the valuation with uniformizer $\\sqrt2$, so $v(2)=2$.\nThe initial valuations are $v(x)=-6$, $v(y)=-9$, $v(z)=3$,\nand $v([2]z)\\ge v(z)+2$ at this depth. Therefore the literal search\nsucceeds by $N_s^4m_0$ and $M_0\\le N_s^{10}$.\nThis uses actual finite orders, not numerical upper bounds incorrectly\ntreated as multiples of those orders.",
+    "paragraph_sha256": "d522e46d8313cf4a570cc56e82473ec792b257d9cf57387be1010c763b0e8f69",
+    "application_ids": [
+      "A046"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C051",
+    "line": 6175,
+    "locator": "p.~165",
+    "keys": [
+      "mazur1995"
+    ],
+    "paragraph_start": 6168,
+    "paragraph_end": 6193,
+    "paragraph": "\\begin{corollary}[Negation of Mazur's finite-component conjecture]\n\\label{cor:mazur}\nMazur's\nfinite-connected-components conjecture for the real-topological closure\nof rational points is false.\n\\end{corollary}\n\\begin{proof}\nMazur's Conjecture~3 in \\cite[p.~165]{mazur1995} asserts that the closure\nof the rational points of any variety over $\\Q$ in its real locus has\nfinitely many connected components. In that source a variety means a\nreduced scheme of finite type; irreducibility is not required.\nPut $r=292\\,890\\,231\\,904$ and\n\\[\n V=\\bigl(\\{P_*(t,w_1,\\ldots,w_r)=0\\}\\subset\\mathbf A^{r+1}_{\\Q}\\bigr)_{\\rm red},\n \\qquad C=\\overline{V(\\Q)}\\subset V(\\mathbf R).\n\\]\nReduction changes neither the rational nor the real points. Let\n$\\pi:V(\\mathbf R)\\to\\mathbf R$ be projection to $t$.\nTheorem~\\ref{thm:target} gives $\\pi(V(\\Q))=\\Z$. Since $\\Z$ is closed in $\\mathbf R$\nand $\\pi$ is continuous, $C\\subset\\pi^{-1}(\\Z)$, so $\\pi(C)\\subset\\Z$.\nEvery integer already occurs on $V(\\Q)$, hence $\\pi(C)=\\Z$.\nThe image of any connected component of $C$ is a connected subset of\n$\\Z$, therefore a singleton. Points projecting to distinct integers\nbelong to distinct components. Thus $C$ has infinitely many connected\ncomponents, contradicting the stated conjecture.\n\\end{proof}",
+    "paragraph_sha256": "14193cb632839f4ab04c39b04e539266bf3055546cbb00e42c7ed47c7f8e9e9c",
+    "application_ids": [
+      "A047"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C052",
+    "line": 6210,
+    "locator": "Basic Theorem, p.~3",
+    "keys": [
+      "matiyasevich1971"
+    ],
+    "paragraph_start": 6195,
+    "paragraph_end": 6237,
+    "paragraph": "\\begin{corollary}[A universal rational Diophantine polynomial]\n\\label{cor:rational-universal}\nThere exist $m\\ge1$ and a fixed polynomial\n$U\\in\\Z[e,n,x_1,\\ldots,x_m]$ such that, for every $e,n\\in\\N$,\n\\[\n \\exists\\mathbf x\\in\\Q^m\\ U(e,n,\\mathbf x)=0\n \\quad\\Longleftrightarrow\\quad\n \\text{machine $e$ halts on input $n$}.\n\\]\nHere $e$ and $n$ are ordinary integer parameters, with $\\N$ embedded\nin $\\Q$, and are not elliptic-curve coordinates. In particular, every\ncomputably enumerable subset of $\\N$ is represented by a suitable\nfixed value of $e$ in this one polynomial.\n\\end{corollary}\n\\begin{proof}\nFix an effective enumeration of machines. The Davis--Putnam--Robinson--Matiyasevich theorem, \\cite[Basic Theorem, p.~3]{matiyasevich1971},\napplied to the universal halting relation gives a fixed\n$D\\in\\Z[e,n,z_1,\\ldots,z_s]$, with $s\\ge1$, such that, for $e,n\\in\\N$,\n\\[\n \\text{machine $e$ halts on $n$}\n \\quad\\Longleftrightarrow\\quad\n \\exists\\mathbf z\\in\\Z^s\\ D(e,n,\\mathbf z)=0.\n\\]\nTo use integer witnesses in this statement, replace each nonnegative\nwitness by a sum of four integer squares. In the positive-integer\nconvention of the cited source, apply the theorem to the predicate\nthat machine $a-1$ halts on $b-1$, substitute $a=e+1$, $b=n+1$,\nand use one plus that sum for each witness; see also\n\\cite[p.~2]{matiyasevich1971}. A dummy witness ensures $s\\ge1$ if needed.\nFor each $z_i$ take a separate block $\\mathbf w_i$ of $r$ rational\nvariables, where $r$ is the witness count of $P_*$. Define\n\\[\n U(e,n,\\mathbf z,\\mathbf w_1,\\ldots,\\mathbf w_s)\n   =D(e,n,\\mathbf z)^2+\\sum_{i=1}^s P_*(z_i,\\mathbf w_i)^2.\n\\]\nA rational zero makes every summand zero. Theorem~\\ref{thm:target}\nthen forces every $z_i$ to be an integer and yields the displayed\nhalting condition. Conversely, integer witnesses for $D$ have separate\nrational witness blocks for $P_*$, giving a zero of $U$. All blocks\nare private and the polynomial is fixed independently of $e,n$.\nNo variable, degree or coefficient bound proved for $P_*$ is asserted\nfor this new polynomial $U$.\n\\end{proof}",
+    "paragraph_sha256": "9a27ab7b9e131c976b188aeacc4548ce37ed0f9ba0b48410fe0d226dde46680c",
+    "application_ids": [
+      "A048"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C053",
+    "line": 6223,
+    "locator": "p.~2",
+    "keys": [
+      "matiyasevich1971"
+    ],
+    "paragraph_start": 6195,
+    "paragraph_end": 6237,
+    "paragraph": "\\begin{corollary}[A universal rational Diophantine polynomial]\n\\label{cor:rational-universal}\nThere exist $m\\ge1$ and a fixed polynomial\n$U\\in\\Z[e,n,x_1,\\ldots,x_m]$ such that, for every $e,n\\in\\N$,\n\\[\n \\exists\\mathbf x\\in\\Q^m\\ U(e,n,\\mathbf x)=0\n \\quad\\Longleftrightarrow\\quad\n \\text{machine $e$ halts on input $n$}.\n\\]\nHere $e$ and $n$ are ordinary integer parameters, with $\\N$ embedded\nin $\\Q$, and are not elliptic-curve coordinates. In particular, every\ncomputably enumerable subset of $\\N$ is represented by a suitable\nfixed value of $e$ in this one polynomial.\n\\end{corollary}\n\\begin{proof}\nFix an effective enumeration of machines. The Davis--Putnam--Robinson--Matiyasevich theorem, \\cite[Basic Theorem, p.~3]{matiyasevich1971},\napplied to the universal halting relation gives a fixed\n$D\\in\\Z[e,n,z_1,\\ldots,z_s]$, with $s\\ge1$, such that, for $e,n\\in\\N$,\n\\[\n \\text{machine $e$ halts on $n$}\n \\quad\\Longleftrightarrow\\quad\n \\exists\\mathbf z\\in\\Z^s\\ D(e,n,\\mathbf z)=0.\n\\]\nTo use integer witnesses in this statement, replace each nonnegative\nwitness by a sum of four integer squares. In the positive-integer\nconvention of the cited source, apply the theorem to the predicate\nthat machine $a-1$ halts on $b-1$, substitute $a=e+1$, $b=n+1$,\nand use one plus that sum for each witness; see also\n\\cite[p.~2]{matiyasevich1971}. A dummy witness ensures $s\\ge1$ if needed.\nFor each $z_i$ take a separate block $\\mathbf w_i$ of $r$ rational\nvariables, where $r$ is the witness count of $P_*$. Define\n\\[\n U(e,n,\\mathbf z,\\mathbf w_1,\\ldots,\\mathbf w_s)\n   =D(e,n,\\mathbf z)^2+\\sum_{i=1}^s P_*(z_i,\\mathbf w_i)^2.\n\\]\nA rational zero makes every summand zero. Theorem~\\ref{thm:target}\nthen forces every $z_i$ to be an integer and yields the displayed\nhalting condition. Conversely, integer witnesses for $D$ have separate\nrational witness blocks for $P_*$, giving a zero of $U$. All blocks\nare private and the polynomial is fixed independently of $e,n$.\nNo variable, degree or coefficient bound proved for $P_*$ is asserted\nfor this new polynomial $U$.\n\\end{proof}",
+    "paragraph_sha256": "9a27ab7b9e131c976b188aeacc4548ce37ed0f9ba0b48410fe0d226dde46680c",
+    "application_ids": [
+      "A048"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C054",
+    "line": 6484,
+    "locator": null,
+    "keys": [
+      "dd"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A022"
+    ]
+  },
+  {
+    "id": "C055",
+    "line": 6486,
+    "locator": null,
+    "keys": [
+      "kato"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A023",
+      "A049",
+      "A050",
+      "A051",
+      "A082"
+    ]
+  },
+  {
+    "id": "C056",
+    "line": 6489,
+    "locator": null,
+    "keys": [
+      "bfh",
+      "hl"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A024",
+      "A025"
+    ]
+  },
+  {
+    "id": "C057",
+    "line": 6492,
+    "locator": null,
+    "keys": [
+      "waldspurger",
+      "ramsey"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A029",
+      "A030",
+      "A031"
+    ]
+  },
+  {
+    "id": "C058",
+    "line": 6495,
+    "locator": null,
+    "keys": [
+      "ccl",
+      "cst",
+      "cornutjetchev"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A027",
+      "A028",
+      "A034"
+    ]
+  },
+  {
+    "id": "C059",
+    "line": 6498,
+    "locator": null,
+    "keys": [
+      "milne",
+      "nekovar"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A007",
+      "A037",
+      "A038",
+      "A039",
+      "A040",
+      "A041",
+      "A042",
+      "A043",
+      "A044",
+      "A045",
+      "A075",
+      "A080",
+      "A081"
+    ]
+  },
+  {
+    "id": "C060",
+    "line": 6501,
+    "locator": null,
+    "keys": [
+      "gz",
+      "kolyvagin"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A020",
+      "A082"
+    ]
+  },
+  {
+    "id": "C061",
+    "line": 6503,
+    "locator": "proof of I.7.3",
+    "keys": [
+      "milne"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A007",
+      "A037",
+      "A040",
+      "A042",
+      "A043",
+      "A080",
+      "A081"
+    ]
+  },
+  {
+    "id": "C062",
+    "line": 6506,
+    "locator": null,
+    "keys": [
+      "pan2022",
+      "javanpeykar",
+      "gr2014",
+      "fowler",
+      "cmheight",
+      "pazuki"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A003",
+      "A004",
+      "A005",
+      "A011",
+      "A014",
+      "A015",
+      "A016",
+      "A018",
+      "A065"
+    ]
+  },
+  {
+    "id": "C063",
+    "line": 6510,
+    "locator": null,
+    "keys": [
+      "greentao",
+      "moebius",
+      "gtz",
+      "bmor"
+    ],
+    "paragraph_start": 6481,
+    "paragraph_end": 6517,
+    "paragraph": "\\section{Primary theorem applications}\n\\begin{longtable}{p{.26\\textwidth}p{.65\\textwidth}}\n\\toprule Input & Exact application boundary\\\\\\midrule\\endhead\nSelmer parity \\cite{dd} & Rational two-isogeny, $p=2$, full Selmer corank;\nno finite-$\\Sha$ hypothesis.\\\\\nKato \\cite{kato} & Fixed weight-two form and symbol, integral transfer and\nfixed-valuation smoothing; rational divisibility is Theorem 13.4(2),\nwith oddness, rational irreducibility and the unipotent condition.\\\\\nBFH and Hoffstein--Luo \\cite{bfh,hl} & Actual signed-prime twist with\ntrivial character and arbitrary finite splitting set. Only the\nnonvanishing clause has the four-prime bound before the extra prime.\\\\\nWaldspurger and Ramsey \\cite{waldspurger,ramsey} & Full good-Hecke\neigenspace, same dyadic squareclass, and algebraic vectors by flat\nfield extension. No arbitrary-ring base change in weight $3/2$.\\\\\nCM norms and heights \\cite{ccl,cst,cornutjetchev} & Split level,\nconductors coprime to level and the new prime, no extra units,\nunaveraged sums and one fixed parametrization.\\\\\nDuality \\cite{milne,nekovar} & Actual derived Kummer conditions and their\nhomotopies. Support change only after the coefficient representation\nis unramified at the removed place.\\\\\nForward finiteness \\cite{gz,kolyvagin} & Only at known analytic\nnonvanishing/simple zeros or a known nontorsion Heegner trace.\\\\\nIsogeny ratio \\cite[proof of I.7.3]{milne} & Finite $\\Sha$, dual\nsum/difference maps, canonical heights and pullback measures;\nno BSD leading-term assumption.\\\\\nHeight \\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki} &\nOdd irreducible de Rham representation at five; explicit conductor\nand modular-Jacobian transfer. CM order class number bounded by\nthe degree of the original Hom field.\\\\\nPrimes \\cite{greentao,moebius,gtz,bmor} & Fixed finite-complexity system\nafter fixing sieve cutoff, and the unconditional explicit progression\nestimate.\\\\\\bottomrule\n\\end{longtable}\nThe source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+    "paragraph_sha256": "2e73efdc38a3bf1c9fe1c4cce6706613a387a037e4f9063fbd392ba85f5dae51",
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A021",
+      "A046"
+    ]
+  },
+  {
+    "id": "C064",
+    "line": 6531,
+    "locator": null,
+    "keys": [
+      "kato"
+    ],
+    "paragraph_start": 6530,
+    "paragraph_end": 6531,
+    "paragraph": "\\subsection{One retained class, including discriminant \\texorpdfstring{$4h$}{4h}}\nAll numbered primary references in this subsection are to Kato~\\cite{kato}.",
+    "paragraph_sha256": "18760a7562412bb778623e610095f5a1a7861d0940900689dbd0f20159272631",
+    "application_ids": [],
+    "role": "source-scope declaration"
+  },
+  {
+    "id": "C065",
+    "line": 6593,
+    "locator": "Proposition 8.12",
+    "keys": [
+      "kato"
+    ],
+    "paragraph_start": 6543,
+    "paragraph_end": 6599,
+    "paragraph": "\\paragraph{The precise output.}\n\\begin{proposition}[One retained Kato system and its two comparisons]\n\\label{ex:app-kato-system}\nUse the fixed curve, lattice and cyclotomic convention just specified.\nFix $e\\ge\\max\\{3,v_2(N)\\}$ large enough for the fixed initial local data;\nthe smoothing choice is (K5).\nLet $G$ be a finite elementary abelian two-group, let\n$\\psi:G_{\\mathbf Q}\\to G$ be a continuous homomorphism, and let\n$\\chi_x=\\chi_0(x\\circ\\psi)$, for $x\\in\\widehat G$, be a finite\nfamily of quadratic characters with one fixed real sign and fixed\nlocal squareclasses at the primes dividing $2N$.\nSince the characters of $G$ separate\nits elements, $\\psi(c)=1$ for complex conjugation $c$, and\n$\\psi|_{G_{\\mathbf Q_v}}=1$ at every $v\\mid2N$. All varying conductor primes\nare good odd primes for $E$. Let $F$ be the squarefree least common\nmultiple of the odd parts of the primitive conductors. There is a\nsingle retained-smoothed class\n\\[\n Z_F\\in 2^{-c_E}H^1\\bigl(G_{\\mathbf Q,S},\n        T\\otimes\\Lambda[G](\\chi_0\\psi\\kappa^{-1})\\bigr),\n \\qquad S=\\operatorname{prime}(2NF),                         \\tag{K1}\n\\]\nwhere $c_E$ is fixed before $F$ and $G$.\nThere is also one $F_E\\in\\Lambda$ with $F_E(0)\\ne0$, fixed before\n$F,G$, such that at every height-one prime $\\mathfrak p$ of $A$,\n\\[\n \\ell_{A_{\\mathfrak p}}H^2(C_{S,x})_{\\mathfrak p}\n \\leq\n \\ell_{A_{\\mathfrak p}}\n \\left(H^1(C_{S,x})/A F_E(Z_F)_x\\right)_{\\mathfrak p}.       \\tag{K2}\n\\]\nHere $C_{S,x}$ is the full rational global Iwasawa complex of the\nconstituent. For an odd squarefree signed parameter $h$ giving\n$\\chi_x=\\chi_h$, central reciprocity for this same class gives\n\\[\n v_2\\exp^*\\bigl(F_E(Z_F)_x(0)\\bigr)\n =v_2L_*(h)+\\sum_{q\\mid F,\\ q\\nmid h}\n        v_2\\#E^h(\\mathbf F_q)+2e+v_2F_E(0)+\\epsilon_h,       \\tag{K3}\n\\]\nwhen the value is nonzero. The numbers $\\epsilon_h$ belong to a\nbounded set depending only on the fixed curve, period conventions\nand local types at two. A zero central $L$-value gives zero dual\nexponential. Formula (K3) does not assert that its remaining unit is\none. No part of (K1)--(K3) compares integral lattices of varying newforms.\n\\end{proposition}\n\\begin{proof}\\leavevmode\n\\paragraph{The retained route and its comparison.}\nAll classes in this subsection retain the smoothing integers of (K5).\nThe comparison used below is the exact identity (E.1), obtained by\nintegral weighted corestriction and the norm relation of\n\\cite[Proposition 8.12]{kato}. We do not divide by the smoothing\noperators, or compare a chosen generator with a separately normalized\nzeta class for the varying newform. In particular the central factor\nis $s_F$ of (K6), whose valuation is $2e$ for every $F$.\nThe use of power-series zero finiteness in paragraph~7 establishes\nnonvanishing of the supplied Euler system in both generic sign\ncomponents; it is not a comparison of two Euler systems.",
+    "paragraph_sha256": "a6b71243e231cf523a19e4edfab61bb24df9d8a48d50e8a5bed679509d430257",
+    "application_ids": [
+      "A049",
+      "A050",
+      "A051"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C066",
+    "line": 7388,
+    "locator": "5.7.1.4--5.7.1.7",
+    "keys": [
+      "nekovar"
+    ],
+    "paragraph_start": 7376,
+    "paragraph_end": 7405,
+    "paragraph": "At a finite place take the derived Kummer map from\n$E^h(\\Q_v)^\\wedge_2[-1]$. Its reduction has full local degree-zero\ncohomology and injective Kummer degree-one map. If $C_{\\rm Sel}$\ndenotes the resulting ordinary global Selmer cone, these assertions\nidentify\n\\[\n H^1(C_{\\rm Sel}\\otimes^{\\mathbf L}\\Z/2^n)\n       =\\operatorname{Sel}_{2^n}(E^h/\\Q).\n\\]\nAt corank zero the discrete Selmer group is finite, the Mordell--Weil\nrank is zero, and its order is that of $\\Sha[2^\\infty]$. The\northogonal-Kummer specialization of finite Poitou--Tate duality\n\\cite[5.7.1.4--5.7.1.7]{nekovar}, followed by the compact/discrete\nlimits, gives\n\\[\n\\begin{split}\n0\\longrightarrow L_2/J_2\n \\longrightarrow\\operatorname{Sel}_{2^\\infty}(E^h/\\Q)^\\vee\n \\longrightarrow H^2_{\\rm glob}\n \\longrightarrow \\bigoplus_{v\\in S_f}H^2(\\Q_v,T)\\oplus H^2(\\mathbf R,T)\n \\longrightarrow H^0(\\Q,D)^\\vee\\longrightarrow0 ,\n\\end{split}\n\\]\nwhere $J_2$ is the image of global $H^1$. There is no real\ndegree-one quotient: the compact real Kummer image is all of\n$H^1(\\mathbf R,T)$, and its discrete orthogonal Kummer group is zero.\nAt finite $v\\ne2$ the compact Kummer image is likewise all of local\n$H^1$, while at two its quotient is $L_2$. The real degree-two term\nis retained. The finite-level images satisfy Mittag--Leffler, and\nhigh-degree localization at the real place terminates the sequence.",
+    "paragraph_sha256": "f9b33bcf6e39bd96c52041e1fe2c8f7cb154359949a498436a4fe976fa8777cf",
+    "application_ids": [
+      "A045"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C067",
+    "line": 7524,
+    "locator": "Theorem~1 and Proposition~1",
+    "keys": [
+      "waldspurgerICM"
+    ],
+    "paragraph_start": 7513,
+    "paragraph_end": 7527,
+    "paragraph": "\\paragraph{A nonzero reference functional and its scalar local type.}\nUse the global Shimura--Waldspurger packet with underlying\n$\\operatorname{PGL}_2$ representation $E^{(\\sigma)}$ in the\nnormalization of Waldspurger's Corollary~2. The nonzero central value\nat $\\sigma D_0$ supplies the member with a nonzero $D_0$-Whittaker\nfunctional. Equivalently, take the nonzero theta lift associated with\n$E^{(\\sigma D_0)}$ and the additive character of frequency $D_0$;\nthe change of additive character identifies its underlying packet\nwith the preceding one. The nonvanishing and the local identification\nare the content of Waldspurger's global theta theorem and its\nFourier-functional calculation\n\\cite[Theorem~1 and Proposition~1]{waldspurgerICM}\nand \\cite[Proposition~18 and its proof, pp.~466--467]{waldspurger}. The positive real frequency selects the\nholomorphic member of lowest weight $3/2$. The lift is in the\nunary-orthogonal cuspidal spectrum.",
+    "paragraph_sha256": "157ef6bfcd7d1a034fcb668d73fcf34403f3674e587da31fa67fd5531b23b6dc",
+    "application_ids": [
+      "A030"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C068",
+    "line": 7525,
+    "locator": "Proposition~18 and its proof, pp.~466--467",
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 7513,
+    "paragraph_end": 7527,
+    "paragraph": "\\paragraph{A nonzero reference functional and its scalar local type.}\nUse the global Shimura--Waldspurger packet with underlying\n$\\operatorname{PGL}_2$ representation $E^{(\\sigma)}$ in the\nnormalization of Waldspurger's Corollary~2. The nonzero central value\nat $\\sigma D_0$ supplies the member with a nonzero $D_0$-Whittaker\nfunctional. Equivalently, take the nonzero theta lift associated with\n$E^{(\\sigma D_0)}$ and the additive character of frequency $D_0$;\nthe change of additive character identifies its underlying packet\nwith the preceding one. The nonvanishing and the local identification\nare the content of Waldspurger's global theta theorem and its\nFourier-functional calculation\n\\cite[Theorem~1 and Proposition~1]{waldspurgerICM}\nand \\cite[Proposition~18 and its proof, pp.~466--467]{waldspurger}. The positive real frequency selects the\nholomorphic member of lowest weight $3/2$. The lift is in the\nunary-orthogonal cuspidal spectrum.",
+    "paragraph_sha256": "157ef6bfcd7d1a034fcb668d73fcf34403f3674e587da31fa67fd5531b23b6dc",
+    "application_ids": [
+      "A030"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C069",
+    "line": 7629,
+    "locator": "Section~I.3, pp.~377--378",
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 7621,
+    "paragraph_end": 7632,
+    "paragraph": "Apply the finite additive Fourier idempotent for the prescribed\nunit-squareclass subset modulo a sufficiently high power of $p$.\nThis idempotent keeps the $D_0$ coefficient. Its support condition\nis stable under multiplication by unit squares, so it commutes\nwith the unit action and retains a scalar type, at a possibly\ndeeper level. At every prime outside $S_0$ take the spherical vector.\nThe packet there is unramified; its standard squarefree coefficient\n$c_p^0$ is $1$ at both valuations zero and one\n\\cite[Section~I.3, pp.~377--378]{waldspurger}.\nThis includes the primes dividing $D_0$. Local Whittaker uniqueness\nand the tensor-product factorization show that the resulting\nglobal reference coefficient is still nonzero.",
+    "paragraph_sha256": "0d58687dc0274f08340236ee2e16b38a39352b89fe08432e3e4d9a073faa1653",
+    "application_ids": [
+      "A030"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C070",
+    "line": 7650,
+    "locator": "Section~I.2, p.~377",
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 7649,
+    "paragraph_end": 7658,
+    "paragraph": "The nonzero space implies hypothesis (H1) by Waldspurger's\nProposition~2 \\cite[Section~I.2, p.~377]{waldspurger}. In explicit terms, at a principal-series\nplace its two inducing characters take value $1$ at $-1$.\nCorollary~2 \\cite[pp.~483--484]{waldspurger} applies to every $f\\in V$ and any\npositive squarefree pair whose ratio is a square in every\n$\\Q_p$ at a prime dividing the level. Our $D,D_0$ satisfy\nthis condition because the level has prime support $S_0$.\nThe final paragraph of that proof removes (H2) for this\nsame-$\\Q_2$-squareclass comparison. No assumption of\nnon-supercuspidality at two is required.",
+    "paragraph_sha256": "32b3b24cee4ecfb40ad2b07f391ade4b5ff030d694255d084a9746edbb93d3d2",
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C071",
+    "line": 7652,
+    "locator": "pp.~483--484",
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 7649,
+    "paragraph_end": 7658,
+    "paragraph": "The nonzero space implies hypothesis (H1) by Waldspurger's\nProposition~2 \\cite[Section~I.2, p.~377]{waldspurger}. In explicit terms, at a principal-series\nplace its two inducing characters take value $1$ at $-1$.\nCorollary~2 \\cite[pp.~483--484]{waldspurger} applies to every $f\\in V$ and any\npositive squarefree pair whose ratio is a square in every\n$\\Q_p$ at a prime dividing the level. Our $D,D_0$ satisfy\nthis condition because the level has prime support $S_0$.\nThe final paragraph of that proof removes (H2) for this\nsame-$\\Q_2$-squareclass comparison. No assumption of\nnon-supercuspidality at two is required.",
+    "paragraph_sha256": "32b3b24cee4ecfb40ad2b07f391ade4b5ff030d694255d084a9746edbb93d3d2",
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C072",
+    "line": 7663,
+    "locator": "Corollary~2, pp.~483--484",
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 7660,
+    "paragraph_end": 7679,
+    "paragraph": "\\paragraph{The printed coefficient identity and its dyadic hypothesis.}\nFor clarity, write $\\mathcal L_D=L(E^{(\\sigma D)},1)$ and let\n$N_{\\rm W}$ denote the level in Waldspurger's notation, not the\nconductor of $E$. In \\cite[Corollary~2, pp.~483--484]{waldspurger}\ntake\n\\[\n k=3,\\quad \\chi=\\psi,\\quad \\chi_0=\\psi\\chi_{-1},\\quad\n \\rho_0=\\rho_E\\otimes\\eta,\\quad n_1=D_0,\\quad n_2=D.\n\\]\nThen $\\rho_0\\otimes\\chi_0^{-1}=\\rho_E\\otimes\\chi_\\sigma$.\nThe corollary, in its printed order, is\n\\[\n a_f(D_0)^2\\mathcal L_D\\,\\psi(D/D_0)D^{1/2}\n   =a_f(D)^2\\mathcal L_{D_0}D_0^{1/2}.\n\\]\nThe passage from the automorphic central argument $1/2$ to the\nclassical argument $1$ is the same for both terms. Dividing only\nby the nonzero reference value gives (E.10). In particular this\nis a literal square identity, with neither complex conjugation\nnor an unspecified absolute-value normalization.",
+    "paragraph_sha256": "619e32245f3dc7888f6edd41a80512507a3af6f54495c3d1facde91710319d15",
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C073",
+    "line": 7702,
+    "locator": "Proposition~2, p.~377",
+    "keys": [
+      "waldspurger"
+    ],
+    "paragraph_start": 7695,
+    "paragraph_end": 7720,
+    "paragraph": "The final paragraph on p.~484 explicitly explains the use of\n(H2): it is needed in that argument only to compare Fourier\nindices in different squareclasses of $\\mathbb Q_2^\\times$.\nOur pair is in one squareclass. Hence the corollary as stated\nrequires (H1) here, but does not impose (H2), a nonsupercuspidal\ncondition at two, or a new dyadic conductor restriction. The\nnonzero scalar eigenspace supplies (H1) by\n\\cite[Proposition~2, p.~377]{waldspurger}. Moreover the proof on\np.~483 extends its linear relation to every vector in the full\neigenspace before squaring. The resulting identity therefore\napplies simultaneously to old multiplicities, and later to both\nGalois-conjugated and character-twisted vectors at a common level.\nAt that later level the same squareclass test is repeated; its\nprime support is still $S_0$.\nPutting $n_1=D_0,n_2=D$ in the corollary, with weight $3/2$, gives\n\\[\n a_f(D)^2=\n \\psi(D/D_0)\\,\n \\frac{\\sqrt D\\,L(E^{(\\sigma D)},1)}\n      {\\sqrt{D_0}\\,L(E^{(\\sigma D_0)},1)}\n a_f(D_0)^2.                                      \\tag{E.10}\n\\]\nThe period cancels, so the quotient in this formula is the quotient\nof the specified $L_*$-values. No product over the primes dividing\n$D$ or $D_0$ is missing: the unramified factors at squarefree\nvaluations are exactly those checked above.",
+    "paragraph_sha256": "22ff9eb9df489b36995d718bf6a345becfcfd63961db41ab6cb508509fbfd5cf",
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C074",
+    "line": 7734,
+    "locator": "Definition~3.1 and Theorem~4.2",
+    "keys": [
+      "ramsey"
+    ],
+    "paragraph_start": 7733,
+    "paragraph_end": 7743,
+    "paragraph": "\\paragraph{An algebraic vector and the Galois comparison.}\nRamsey's section model \\cite[Definition~3.1 and Theorem~4.2]{ramsey} realizes the half-integral-weight space as\nsections of the indicated divisor sheaf on $X_1(4N_{\\rm aux})$.\nHere $N_{\\rm aux}$ is supported on $S_0$ and includes the chosen\nlocal depths; it need not equal the conductor $N$ of $E$.\nOver characteristic-zero fields, flat field extension commutes\nwith these sections. Cuspidality, scalar character, support\nconditions and prescribed good-Hecke eigenvalues are algebraic\nlinear conditions. Although infinitely many coefficients or\nprimes can occur in their description, a finite subset cuts out\nthe same subspace, by finite dimensionality.",
+    "paragraph_sha256": "607ae4773bb989f10cc41be8015f1a26ac71c7babd3de2323e4be06cb7ac4978",
+    "application_ids": [
+      "A031"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C075",
+    "line": 7756,
+    "locator": "Remark~4.4",
+    "keys": [
+      "ramsey"
+    ],
+    "paragraph_start": 7745,
+    "paragraph_end": 7775,
+    "paragraph": "One need not impose Petersson orthogonality as an additional\ntranscendental linear condition. The elliptic good-Hecke eigenspace\nis automatically orthogonal to unary theta series: at a good prime,\nthe unary eigenvalues have absolute value $p+1$, whereas\n$|\\eta(p)a_p(E)|\\le2\\sqrt p<p+1$. The unary space and its\northogonal complement are stable under the Hecke operators and\ntheir adjoints. Thus their elliptic eigenspaces are disjoint.\nThe nonzero reference functional on the complex space is consequently\nnonzero on its algebraic model. Choose such an algebraic $g$ and\nscale it to $a(D_0)=1$.\nThis uses flat field extension only, not Ramsey's arbitrary-ring\nbase-change assertion in weight $3/2$; see \\cite[Remark~4.4]{ramsey}.\nHere the field-extension assertion can be checked without a\ncohomology-vanishing theorem. Work over a number field $K$ containing\nthe character values and the roots of unity specifying the cusps and\nthe support idempotents. A finite affine cover of the modular curve\ncomputes global sections as the kernel of the difference of restriction\nmaps to pairwise intersections. Tensoring with a field extension is\nflat and preserves that kernel. Thus the sections in Ramsey's\nDefinition~3.1 commute with $K\\subset\\overline\\Q\\subset\\mathbf C$,\nalso in weight $3/2$. Impose vanishing at the cusps, the diamond\ncharacter, the support idempotents, and the kernels of\n$T(p^2)-\\eta(p)a_p(E)$ inside this finite-dimensional space.\nThe span in its dual of all the defining linear equations has a finite\nbasis. These conditions therefore commute with the same field\nextensions. Since the reference functional is nonzero after extension\nto $\\mathbf C$, it is nonzero before extension; a vector in a $K$-basis has\nnonzero reference value and may be divided by that value.\nThis also places every coefficient of the chosen form in one number\nfield. No assertion about base change to a residue field, nor about\nvanishing of $H^1$ in weight $3/2$, is used.",
+    "paragraph_sha256": "5268f362a2d112a909798d2907ccb91c1e53ee6939273925a0986d6798ed4127",
+    "application_ids": [
+      "A031"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C076",
+    "line": 7941,
+    "locator": "Theorem 1.8",
+    "keys": [
+      "dd"
+    ],
+    "paragraph_start": 7914,
+    "paragraph_end": 7951,
+    "paragraph": "% Replace immutable baseline lines 3532--3591 inclusive.\n% Keeps (O.2). This expands the existing non-CM argument.\n\\subsection{A fixed witness and one compatible sequence}\n\\begin{proposition}[One witness and a compatible detecting sequence]\\label{ex:app-detector}\nFor the fixed $E=E_\\ell$ under the full-corank-one hypothesis of\nTheorem~\\ref{hyp:RC}, use the prepared positive unit filter containing\n$1$. There exist a negative odd fundamental discriminant $h_*$ with\n$L(E^{h_*},1)\\ne0$, a positive fundamental discriminant $D_w$ in\nthat filter with $L'(E^{D_w},1)\\ne0$, and a fixed integer $L$ such\nthat $LP_D$ belongs to the $D$-twist rational line for every\nadmissible $D$ and $Q=LP_{D_w}$ is nontorsion.\nThere is one sequence of actual stages with $M\\to\\infty$, good\nprimes $\\ell_0$, and additive maps\n\\[\n \\lambda_M:E(\\F_{\\ell_0^2})\\longrightarrow\\Z/2^M\\Z,\n \\qquad v_2\\lambda_M(\\overline Q)=c_w<M,\n\\]\nwhere $c_w$ is fixed. At these stages Frobenius squared is trivial\non $E[2^M]$, $(D_w/\\ell_0)=1$, $(h_*/\\ell_0)=-1$, and\n$\\lambda_M$ has Frobenius sign $+1$.\nAny specified finite prime exclusion is permitted. Additional\nfield prescriptions require a compatible common lift; no preservation\nof $c_w$ under arbitrary later field prescriptions is asserted.\n\\end{proposition}\n\\begin{proof}\\leavevmode\nWe use the positive unit-squareclass filter containing one, with its\nfixed support enlarged before choosing the witness. The rational\ntwo-isogeny parity theorem \\cite[Theorem 1.8]{dd} gives root number\n$-1$ for $E$ under the full-corank-one assumption. Apply clause (ii)\nof \\cite[pp.~543--544]{bfh} to its weight-two newform, with every\nold prime in the splitting set, to obtain a negative fundamental\ndiscriminant $h_*$ with $L(E^{(h_*)},1)\\ne0$. Including two makes\n$h_*$ odd and excludes the extra-unit fields. Now add the primes\nof $h_*$ to that set and apply clause (i) to obtain a positive\nfundamental discriminant $D_w$ with $L'(E^{(D_w)},1)\\ne0$.\nSplitting at every old prime puts $D_w$ in the filter containing one\nand makes it prime to $h_*$. These choices precede every detecting\nprime and every theta precision.",
+    "paragraph_sha256": "b855541f9503f7c91240065f20d23fc1e425a337096deed1963f515b254388b3",
+    "application_ids": [
+      "A022"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C077",
+    "line": 7943,
+    "locator": "pp.~543--544",
+    "keys": [
+      "bfh"
+    ],
+    "paragraph_start": 7914,
+    "paragraph_end": 7951,
+    "paragraph": "% Replace immutable baseline lines 3532--3591 inclusive.\n% Keeps (O.2). This expands the existing non-CM argument.\n\\subsection{A fixed witness and one compatible sequence}\n\\begin{proposition}[One witness and a compatible detecting sequence]\\label{ex:app-detector}\nFor the fixed $E=E_\\ell$ under the full-corank-one hypothesis of\nTheorem~\\ref{hyp:RC}, use the prepared positive unit filter containing\n$1$. There exist a negative odd fundamental discriminant $h_*$ with\n$L(E^{h_*},1)\\ne0$, a positive fundamental discriminant $D_w$ in\nthat filter with $L'(E^{D_w},1)\\ne0$, and a fixed integer $L$ such\nthat $LP_D$ belongs to the $D$-twist rational line for every\nadmissible $D$ and $Q=LP_{D_w}$ is nontorsion.\nThere is one sequence of actual stages with $M\\to\\infty$, good\nprimes $\\ell_0$, and additive maps\n\\[\n \\lambda_M:E(\\F_{\\ell_0^2})\\longrightarrow\\Z/2^M\\Z,\n \\qquad v_2\\lambda_M(\\overline Q)=c_w<M,\n\\]\nwhere $c_w$ is fixed. At these stages Frobenius squared is trivial\non $E[2^M]$, $(D_w/\\ell_0)=1$, $(h_*/\\ell_0)=-1$, and\n$\\lambda_M$ has Frobenius sign $+1$.\nAny specified finite prime exclusion is permitted. Additional\nfield prescriptions require a compatible common lift; no preservation\nof $c_w$ under arbitrary later field prescriptions is asserted.\n\\end{proposition}\n\\begin{proof}\\leavevmode\nWe use the positive unit-squareclass filter containing one, with its\nfixed support enlarged before choosing the witness. The rational\ntwo-isogeny parity theorem \\cite[Theorem 1.8]{dd} gives root number\n$-1$ for $E$ under the full-corank-one assumption. Apply clause (ii)\nof \\cite[pp.~543--544]{bfh} to its weight-two newform, with every\nold prime in the splitting set, to obtain a negative fundamental\ndiscriminant $h_*$ with $L(E^{(h_*)},1)\\ne0$. Including two makes\n$h_*$ odd and excludes the extra-unit fields. Now add the primes\nof $h_*$ to that set and apply clause (i) to obtain a positive\nfundamental discriminant $D_w$ with $L'(E^{(D_w)},1)\\ne0$.\nSplitting at every old prime puts $D_w$ in the filter containing one\nand makes it prime to $h_*$. These choices precede every detecting\nprime and every theta precision.",
+    "paragraph_sha256": "b855541f9503f7c91240065f20d23fc1e425a337096deed1963f515b254388b3",
+    "application_ids": [
+      "A025"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C078",
+    "line": 7961,
+    "locator": "Theorem 1.1",
+    "keys": [
+      "cst"
+    ],
+    "paragraph_start": 7953,
+    "paragraph_end": 7964,
+    "paragraph": "The conductor-one genus character for\n$K_D=\\Q(\\sqrt{Dh_*})$ cuts out\n$F_D=\\Q(\\sqrt D,\\sqrt{h_*})$. Thus the unaveraged sum $P_D$ in (O.1)\nbelongs to $E(F_D)$. Its rational character components are the\n$D$- and $h_*$-components. In the degenerate case $D=1$ these are\nthe trivial and $h_*$ characters of the actual quadratic group.\nThe $h_*$-component has rank zero by the forward rank-zero theorem.\nFor $D_w$, the unaveraged height formula\n\\cite[Theorem 1.1]{cst} has Rankin derivative\n$L'(E^{(D_w)},1)L(E^{(h_*)},1)\\ne0$, so $P_{D_w}$ is nontorsion.\nHere the conductor is one, all primes of $N$ split, and the\nextra-unit fields have been excluded.",
+    "paragraph_sha256": "486c6096ad912fc632012d48b61cc0734151b9e8ebfe8ad809cec00a5eaccb35",
+    "application_ids": [
+      "A027"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C079",
+    "line": 8010,
+    "locator": null,
+    "keys": [
+      "serre"
+    ],
+    "paragraph_start": 8010,
+    "paragraph_end": 8022,
+    "paragraph": "The curve $A$ is non-CM. Open image \\cite{serre} supplies both\nirreducibility of its rational Tate representation and a central\nscalar $z\\ne1$ in its Tate image. If $c_Q(H)=0$, the rational\ncocycle descends to that image. Commuting $z$ with $g$ gives\n\\[\n (z-1)c_Q(g)=(g-1)c_Q(z).\n\\]\nSince $z-1$ is invertible over $\\Q_2$, this is a coboundary.\nIt contradicts the Kummer injection\n$A(\\Q)\\otimes\\Q_2\\hookrightarrow H^1(\\Q,V_2A)$ and\nnontorsion of $Q$. Thus the translation image is nonzero.\nIrreducibility makes its rational span all of $V_2A$.\nIt consequently contains $2^{a_0}T_2A$ for some $a_0$.",
+    "paragraph_sha256": "5511af18dc7bbdb820fa7ee413718b67bd1988d279060099d62b3ad0b41ec05e",
+    "application_ids": [
+      "A033"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C080",
+    "line": 8163,
+    "locator": "Sections 1.1--1.2 and 2.5",
+    "keys": [
+      "jetchevkane"
+    ],
+    "paragraph_start": 8153,
+    "paragraph_end": 8163,
+    "paragraph": "Let $B$ be ramified at $\\ell_0$ and infinity and let $R$ be an Eichler\norder of level $N$.  Supersingular pairs are\n$X=B^\\times\\backslash\\widehat B^\\times/\\widehat R^\\times$;\ntheir automorphism groups are $R_z^\\times$ for\n$R_z=B\\cap z\\widehat Rz^{-1}$.  This description allows every\n$N$ prime to $\\ell_0$, including powers of two.  One may choose each\nunderlying supersingular curve over $\\mathbb F_{\\ell_0^2}$ with scalar\nFrobenius; its cyclic subgroups of order $N$ are then stable.  Thus\nall the corresponding coarse moduli points are defined over that\nfield.  The geometric and adelic descriptions are those of\n\\cite[Sections 1.1--1.2 and 2.5]{jetchevkane}.",
+    "paragraph_sha256": "4be84e610d76abba6df2c8523ff779fc899a9c65501337d6b414da0b2d20bc6b",
+    "application_ids": [
+      "A052"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C081",
+    "line": 8315,
+    "locator": "I.13",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8312,
+    "paragraph_end": 8352,
+    "paragraph": "\\subsection{Transformation law and recurrence}\nUse the standard global additive character, self-dual measures,\nand the Gaussian $e^{-2\\pi Q_B}$ at infinity.  Weil's operator\nformulas \\cite[I.13]{weil} give multiplication by $\\mathbf e_p(bQ_B)$ for\n$n(b)$, scaled pullback $f_p(x)\\mapsto\\gamma_{Q_B}(u)f_p(ux)$ for\n$m(u)$ with $u$ a unit, and a constant times Fourier transform\nfor the Weyl element.  The upper unipotents $n(\\mathbb Z_p)$ fix\n$f_p$, because $Q_B$ is integral on its support.  If $L'_p$ is any\nlattice of translations fixing $f_p$, its Fourier transform has\nsupport in $(L'_p)^\\vee$.  Choose $A_p$ with\n$p^{A_p}Q_B((L'_p)^\\vee)\\subseteq\\mathbb Z_p$.  Fourier conjugation\nthen proves that $n^-(p^{A_p}\\mathbb Z_p)$ fixes $f_p$.\nThis includes $p=2$. At two take $A_2\\ge2$ and use the comparison\nwith the ordinary theta multiplier given below; no splitting of\nthe metaplectic cover over all diagonal units is asserted.\nFor clarity, the local normalizations and the lower-unipotent\nargument are as follows. Take\n$\\mathbf e_\\infty(t)=e^{2\\pi it}$ and\n$\\mathbf e_p(t)=e^{-2\\pi i\\{t\\}_p}$, so that\n$\\prod_v\\mathbf e_v(r)=1$ for $r\\in\\mathbb Q$.\nFor $Q(x)=x^{\\mathsf T}Ax$ put\n$B_Q(x,y)=Q(x+y)-Q(x)-Q(y)=2x^{\\mathsf T}Ay$ and set\n\\[\n \\mathcal F_Q\\phi(y)=\\int\\phi(x)\\mathbf e_p(B_Q(x,y))\\,dx_Q,\n \\qquad dx_Q=|\\det(2A)|_p^{1/2}\\,dx.\n\\]\nHere $dx$ is the coordinate product measure with\n$\\operatorname{vol}(\\mathbb Z_p^3)=1$.\nAt the real place use the same formula\n$dx_Q=|\\det(2A)|_\\infty^{1/2}dx$ with coordinate Lebesgue measure.\nThus $\\mathcal F_Q^2\\phi(x)=\\phi(-x)$.\nIf $\\phi(x+\\lambda)=\\phi(x)$ for $\\lambda\\in L'$, translation\nin this integral shows that its Fourier transform vanishes unless\n$\\mathbf e_p(B_Q(\\lambda,y))=1$ for every $\\lambda\\in L'$.\nThis is precisely the asserted support in $(L')^\\vee$.\nSince this dual lattice is compact, an integer $A_p$ with\n$p^{A_p}Q((L')^\\vee)\\subset\\mathbb Z_p$ exists. The operator\nfor $n^-(c)$ is a Fourier conjugate of multiplication by\n$\\mathbf e_p(-cQ)$; consequently it fixes $\\phi$ whenever\n$c\\in p^{A_p}\\mathbb Z_p$. A scalar used to normalize the Weyl\noperator cancels with its inverse in this conjugation.",
+    "paragraph_sha256": "9162a32124fd1ba5e8dd4992bb30066babc592c3caef863e53be475c1c63f87d",
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C082",
+    "line": 8385,
+    "locator": "II.25 and II.28",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8377,
+    "paragraph_end": 8413,
+    "paragraph": "The diagonal factor can be computed directly.  For\n$Q_B=\\sum_{i=1}^3 a_iX_i^2$, the one-dimensional Weil-index identity\n\\[\n \\frac{\\gamma(ua_i)}{\\gamma(a_i)}\n       =\\frac{\\gamma(u)}{\\gamma(1)}(u,a_i)_p\n\\]\nand multiplication under orthogonal sums give, relative to the\nordinary theta multiplier cubed, the factor\n$(u,a_1a_2a_3)_p$.  These identities are \\cite[II.25 and II.28]{weil};\nthe latter obtains the Hilbert symbol from the four-dimensional\nquaternion norm form.  For $B=(-a,-b)$ the norm on $B^0$ is\n$aX^2+bY^2+abZ^2$, whose determinant is $(ab)^2$.\nThere is therefore no additional determinant character for $Q_B$.\n\\paragraph{The normalized diagonal factor.}\nThe Weil-index identity used here can be derived without choosing\nGauss-sum signs. The norm form of the quaternion algebra $(u,a)$\nis $\\langle1,-u,-a,ua\\rangle$. By multiplicativity under orthogonal\nsums and $\\gamma(-q)=\\gamma(q)^{-1}$, its index is\n\\[\n \\frac{\\gamma(1)\\gamma(ua)}{\\gamma(u)\\gamma(a)}.\n\\]\nFor a split quaternion algebra the norm form is hyperbolic and its\nindex is one; for the division algebra its index is minus one by\n\\cite[II.28, Proposition 4]{weil}. These are exactly the two values\nof $(u,a)_p$. Solving this equality gives\n\\[\n \\frac{\\gamma(ua)}{\\gamma(a)}\n   =\\frac{\\gamma(u)}{\\gamma(1)}(u,a)_p.\n\\]\nApplying it to three diagonal entries gives the ordinary\none-dimensional theta factor cubed times $(u,\\det Q_B)_p$.\nThis derivation includes $p=2$. A change of diagonalization changes\nthe determinant only by a square, so it changes no symbol.\nFor $Q_B/m$ the determinant becomes $m^{-3}\\det Q_B$, whose\nsquareclass is $m$. Thus the extra factor is precisely $(u,m)_p$.\nThis establishes the determinant-character contribution in (O.5)\nwith the same additive character as the original theta multiplier.",
+    "paragraph_sha256": "65822227d40472d92684fa739eec48bbd38a87469174e1a3c9b8b1f424084b94",
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C083",
+    "line": 8400,
+    "locator": "II.28, Proposition 4",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8377,
+    "paragraph_end": 8413,
+    "paragraph": "The diagonal factor can be computed directly.  For\n$Q_B=\\sum_{i=1}^3 a_iX_i^2$, the one-dimensional Weil-index identity\n\\[\n \\frac{\\gamma(ua_i)}{\\gamma(a_i)}\n       =\\frac{\\gamma(u)}{\\gamma(1)}(u,a_i)_p\n\\]\nand multiplication under orthogonal sums give, relative to the\nordinary theta multiplier cubed, the factor\n$(u,a_1a_2a_3)_p$.  These identities are \\cite[II.25 and II.28]{weil};\nthe latter obtains the Hilbert symbol from the four-dimensional\nquaternion norm form.  For $B=(-a,-b)$ the norm on $B^0$ is\n$aX^2+bY^2+abZ^2$, whose determinant is $(ab)^2$.\nThere is therefore no additional determinant character for $Q_B$.\n\\paragraph{The normalized diagonal factor.}\nThe Weil-index identity used here can be derived without choosing\nGauss-sum signs. The norm form of the quaternion algebra $(u,a)$\nis $\\langle1,-u,-a,ua\\rangle$. By multiplicativity under orthogonal\nsums and $\\gamma(-q)=\\gamma(q)^{-1}$, its index is\n\\[\n \\frac{\\gamma(1)\\gamma(ua)}{\\gamma(u)\\gamma(a)}.\n\\]\nFor a split quaternion algebra the norm form is hyperbolic and its\nindex is one; for the division algebra its index is minus one by\n\\cite[II.28, Proposition 4]{weil}. These are exactly the two values\nof $(u,a)_p$. Solving this equality gives\n\\[\n \\frac{\\gamma(ua)}{\\gamma(a)}\n   =\\frac{\\gamma(u)}{\\gamma(1)}(u,a)_p.\n\\]\nApplying it to three diagonal entries gives the ordinary\none-dimensional theta factor cubed times $(u,\\det Q_B)_p$.\nThis derivation includes $p=2$. A change of diagonalization changes\nthe determinant only by a square, so it changes no symbol.\nFor $Q_B/m$ the determinant becomes $m^{-3}\\det Q_B$, whose\nsquareclass is $m$. Thus the extra factor is precisely $(u,m)_p$.\nThis establishes the determinant-character contribution in (O.5)\nwith the same additive character as the original theta multiplier.",
+    "paragraph_sha256": "65822227d40472d92684fa739eec48bbd38a87469174e1a3c9b8b1f424084b94",
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C084",
+    "line": 8435,
+    "locator": "I.14, Theorem~2",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8435,
+    "paragraph_end": 8459,
+    "paragraph": "The Fourier formula of \\cite[I.14, Theorem~2]{weil}, or its\ncompletion-of-the-square calculation, says for $b\\ne0$ that\n\\[\n \\int_{k^3}\n \\mathbf e_k\\bigl(bQ(z)+B_Q(z,v)\\bigr)\\,dz_Q\n   =|b|_k^{-3/2}\\gamma(bQ)\\mathbf e_k(-b^{-1}Q(v)).\n\\]\nThe integral has the oscillatory meaning of that theorem.\nApplying it to a Schwartz function gives the operator identity\n\\[\n \\mathcal F_Q U_Q(b)\\mathcal F_Q\n =\\gamma(bQ)U_Q(-b^{-1})D(b^{-1})\n                   \\mathcal F_Q^{-1}U_Q(-b^{-1}).\n\\]\nThus no choice of an individual square root of a Gauss sum is\nneeded. The index identities proved above also give\n\\[\n \\gamma(Q)^2=(\\det Q,-1)_k\\gamma(1)^6,\n \\qquad \\gamma(1)^4=(-1,-1)_k,\n \\qquad r_Q(a)r_Q(b)=(a,b)_k r_Q(ab).\n\\]\nFor the middle equality apply the quaternion-norm formula to\n$\\langle1,1,1,1\\rangle$; the first follows by applying the same\nformula to $\\langle1,-a_i,1,-a_i\\rangle$ for each diagonal\nentry $a_i$ of $Q$.",
+    "paragraph_sha256": "3ff9dfc88c04eeabb4dfcbe1181c16695517d6b02400963ef6ffcf806c6cd442",
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C085",
+    "line": 8549,
+    "locator": "I.13--I.14 and II.25--II.28",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8526,
+    "paragraph_end": 8549,
+    "paragraph": "Here is the comparison on the three factors. Both upper unipotents\nact trivially on the indicated vectors. Choose $A_p$ large enough\nthat both lower unipotents do also. This is the Fourier-support\nargument above for $f_p$; for $\\phi_{0,p}$ it requires no positive\ndepth at an odd prime and depth two at two, since the bilinear dual\nof $\\mathbb Z_2^3$ for $Q_0$ is $\\tfrac12\\mathbb Z_2^3$ and\n$4Q_0(\\tfrac12\\mathbb Z_2^3)\\subset\\mathbb Z_2$.\nThe Weyl scalar cancels in conjugating an upper unipotent to a\nlower one, so it introduces no additional eigenvalue. On a\ndiagonal unit $u$, the scaling part acts by $\\alpha_p(u)$ on\n$f_p$ and by one on $\\phi_{0,p}$. The quotient of the Weil-index\nparts, by the preceding calculation, is\n\\[\n \\frac{\\gamma(uQ_B)/\\gamma(Q_B)}\n      {(\\gamma(u)/\\gamma(1))^3}\n       =(u,\\det Q_B)_p.                                      \\tag{O.5a}\n\\]\nIf the inverse Weil-index convention is used for the diagonal\noperator, both numerator and denominator are inverted; the\nquotient is unchanged because the Hilbert symbol has order two.\nThus this computation does not leave an undetermined inverse\nor a dyadic root of unity. These operator comparisons are precisely\nthe scaled pullback, Fourier conjugation and scalar relations of\n\\cite[I.13--I.14 and II.25--II.28]{weil}.",
+    "paragraph_sha256": "cbcea483b3f393d54465c55f4a9d4ef4724e9be2e5638514cb7498925ce1f692",
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C086",
+    "line": 8632,
+    "locator": "II.27",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8627,
+    "paragraph_end": 8640,
+    "paragraph": "There are no additional level primes hidden in this argument.\nOutside the prescribed support, $p$ is odd, $B_p$ is split, and\n$R_p^0=\\mathfrak{sl}_2(\\mathbb Z_p)$ is self-dual for the bilinear\nform of $Q_B=-a^2-bc$.  Its determinant is a unit.  Hence the\nFourier transform of $1_{R_p^0}$ equals itself; the unramified\nWeil constant is one, as also follows from \\cite[II.27]{weil} by integrating\nover this self-dual lattice.  Upper unipotents, diagonal units,\nand the Weyl element fix it.  These generate\n$\\operatorname{SL}_2(\\mathbb Z_p)$, so the exponent there is zero.\nAt the finitely many prescribed primes the preceding $A_p$ suffice.\nConjugation by any $z\\in\\widehat B^\\times$ is an isometry of $Q_B$,\ncommutes with the Weil representation, and preserves the\nself-dual measure.  The same level and character therefore work\nfor every summand indexed by $z$.",
+    "paragraph_sha256": "2e145b01ecd1f609daedc80eebd712a6b84f80742cdaae979f742f05cc35fc87",
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C087",
+    "line": 8642,
+    "locator": "III, Theorem 6",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8642,
+    "paragraph_end": 8655,
+    "paragraph": "\\cite[III, Theorem 6]{weil} applies to this Schwartz--Bruhat function on\n$V(\\mathbb A)$ and proves invariance of its rational theta sum.\nThe normalized archimedean expression is\n$\\sum_x f(x)e^{2\\pi i\\tau Q_B(x)}$: the factor $y^{3/4}$ in the\nWeil action is removed in passing to the classical form.\nIt has holomorphic weight $3/2$.  At a rational cusp, the slash\noperation replaces the finite Schwartz function by its finite\nWeil transform.  Its support meets $V(\\mathbb Q)$ in a finite\nunion of rational lattice cosets, with bounded denominators.\nPositive definiteness gives nonnegative rational exponents of\nbounded denominator and normal convergence for $\\Im\\tau>0$.\nThis proves holomorphy at every cusp.  Theorem 6 alone asserts\nautomorphic invariance; this last argument supplies the\nholomorphy conclusion used here.",
+    "paragraph_sha256": "ec5dad217d6a62e53aca673380a505c5545910de1a4a690ccfd7b31d76fedfd1",
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C088",
+    "line": 8690,
+    "locator": "II.30, Proposition~5",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8657,
+    "paragraph_end": 8706,
+    "paragraph": "\\paragraph{Extraction.}\nThe support at every $p\\mid m$ has $v_pQ_B=1$.  All nonzero\nindices are integral and divisible by $m$.  Repeat the preceding\nconstruction for $Q_B'=Q_B/m$ with the same finite weights and the\nGaussian for $Q_B'$.  This quadratic form is integral on the\nsupport.  Away from $m$ it differs by a unit, so the good-prime\nself-duality argument remains valid.  Its determinant squareclass\nis $m^{-3}\\equiv m$, giving the extra Dirichlet character\n$(m/\\cdot)$.  Hence\n\\[\n g_M(\\tau)=\\sum_n H_M(mn)q^n\\in\n      M_{3/2}(\\Gamma_0(K),\\psi).\n\\]\nHere $K$ has only the stated prime support, and\n\\[\n \\psi=\\eta_B(m/\\cdot),\\qquad\n \\eta=\\eta_B\\chi_{h_*},\\qquad\n \\psi/\\eta=\\chi_{-1}. \\tag{O.5}\n\\]\nThis directly constructs the extracted form without a\nhalf-integral-weight extraction operator.\nThe inverse in this classical passage can also be checked before\nany character notation is introduced. Put\n$g_\\tau=n(x)m(\\sqrt y)$ for $\\tau=x+iy$, so $g_\\tau i=\\tau$.\nFor $\\gamma\\in\\operatorname{SL}_2(\\mathbb Q)$ write\n$\\gamma g_\\tau=g_{\\gamma\\tau}k_\\infty$ with\n$k_\\infty\\in\\operatorname{SO}_2(\\mathbb R)$. In the adelic group,\n\\[\n (g_{\\gamma\\tau},1_f)\n   =\\gamma\\,(g_\\tau,\\gamma_f^{-1})(k_\\infty^{-1},1_f).\n\\]\nThis equality also holds with consistent metaplectic lifts.\nThe global rational lifts are compatible for the two forms:\n\\cite[II.30, Proposition~5]{weil} gives\n$\\prod_v\\gamma_v(Q)=\\prod_v\\gamma_v(aQ)=1$ for rational $Q,a$,\nand hence the local normalizing factors in $W_Q$ and $M_Q(a)$\nhave product one. The product formula also gives\n$\\prod_v|\\det(2A)|_v^{1/2}=1$, so the product of the stated\nself-dual measures is the measure for which the rational lattice\nhas covolume one. Apply the rational invariance of\n\\cite[III.41, Theorem~6]{weil} to the displayed adelic identity.\nThe archimedean Gaussian for either positive ternary form has\nthe same weight $3/2$; therefore its factor from $k_\\infty^{-1}$\nis the same as that for $\\theta^3$. The relative finite factor\nis evaluated at $\\gamma_f^{-1}$, whose upper-left entry is $d$.\nThus the relative classical character is\n$\\prod_p\\alpha_p(d)(d,\\det Q)_p$, over the prescribed primes.\nThis proves the inverse-idele convention directly. It compares\nthe transformation identities and does not divide by a value\nof a theta function.",
+    "paragraph_sha256": "bb580945f3b71fb3ea1612c75c03c4a3286998604239fb4656ebfe8359de8f97",
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C089",
+    "line": 8697,
+    "locator": "III.41, Theorem~6",
+    "keys": [
+      "weil"
+    ],
+    "paragraph_start": 8657,
+    "paragraph_end": 8706,
+    "paragraph": "\\paragraph{Extraction.}\nThe support at every $p\\mid m$ has $v_pQ_B=1$.  All nonzero\nindices are integral and divisible by $m$.  Repeat the preceding\nconstruction for $Q_B'=Q_B/m$ with the same finite weights and the\nGaussian for $Q_B'$.  This quadratic form is integral on the\nsupport.  Away from $m$ it differs by a unit, so the good-prime\nself-duality argument remains valid.  Its determinant squareclass\nis $m^{-3}\\equiv m$, giving the extra Dirichlet character\n$(m/\\cdot)$.  Hence\n\\[\n g_M(\\tau)=\\sum_n H_M(mn)q^n\\in\n      M_{3/2}(\\Gamma_0(K),\\psi).\n\\]\nHere $K$ has only the stated prime support, and\n\\[\n \\psi=\\eta_B(m/\\cdot),\\qquad\n \\eta=\\eta_B\\chi_{h_*},\\qquad\n \\psi/\\eta=\\chi_{-1}. \\tag{O.5}\n\\]\nThis directly constructs the extracted form without a\nhalf-integral-weight extraction operator.\nThe inverse in this classical passage can also be checked before\nany character notation is introduced. Put\n$g_\\tau=n(x)m(\\sqrt y)$ for $\\tau=x+iy$, so $g_\\tau i=\\tau$.\nFor $\\gamma\\in\\operatorname{SL}_2(\\mathbb Q)$ write\n$\\gamma g_\\tau=g_{\\gamma\\tau}k_\\infty$ with\n$k_\\infty\\in\\operatorname{SO}_2(\\mathbb R)$. In the adelic group,\n\\[\n (g_{\\gamma\\tau},1_f)\n   =\\gamma\\,(g_\\tau,\\gamma_f^{-1})(k_\\infty^{-1},1_f).\n\\]\nThis equality also holds with consistent metaplectic lifts.\nThe global rational lifts are compatible for the two forms:\n\\cite[II.30, Proposition~5]{weil} gives\n$\\prod_v\\gamma_v(Q)=\\prod_v\\gamma_v(aQ)=1$ for rational $Q,a$,\nand hence the local normalizing factors in $W_Q$ and $M_Q(a)$\nhave product one. The product formula also gives\n$\\prod_v|\\det(2A)|_v^{1/2}=1$, so the product of the stated\nself-dual measures is the measure for which the rational lattice\nhas covolume one. Apply the rational invariance of\n\\cite[III.41, Theorem~6]{weil} to the displayed adelic identity.\nThe archimedean Gaussian for either positive ternary form has\nthe same weight $3/2$; therefore its factor from $k_\\infty^{-1}$\nis the same as that for $\\theta^3$. The relative finite factor\nis evaluated at $\\gamma_f^{-1}$, whose upper-left entry is $d$.\nThus the relative classical character is\n$\\prod_p\\alpha_p(d)(d,\\det Q)_p$, over the prescribed primes.\nThis proves the inverse-idele convention directly. It compares\nthe transformation identities and does not divide by a value\nof a theta function.",
+    "paragraph_sha256": "bb580945f3b71fb3ea1612c75c03c4a3286998604239fb4656ebfe8359de8f97",
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C090",
+    "line": 8884,
+    "locator": "\\S\\S3.1--3.3",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8882,
+    "paragraph_end": 8898,
+    "paragraph": "Here is the precise specialization of the reduction theorem, including\nits orbit and orientation data. In the notation of\n\\cite[\\S\\S3.1--3.3]{cornutjetchev}, take\n\\[\n F_{\\rm CJ}=\\Q,\\quad K_{\\rm CJ}=F=\\Q(\\sqrt{Dh_*}),\\quad\n B_{\\rm CJ}=M_2(\\Q),\\quad S=\\{\\ell_0\\}.\n\\]\nThe field $F$ is imaginary because $D>0$ and $h_*<0$.\nIt embeds into $M_2(\\Q)$ by its regular representation. The source\nalgebra has no finite ramification, so H.1 holds and the integer\nin H.2 is $1+0+1=2$. Moreover $\\ell_0\\nmid Dh_*N$ and\n\\[\n  (Dh_*/\\ell_0)=(D/\\ell_0)(h_*/\\ell_0)=1\\cdot(-1)=-1\n\\]\nby the present support condition and (O.2). Thus H.3 holds in its\ninert, rather than ramified, case. The resulting target algebra is\nthe definite algebra $B$ ramified precisely at $\\ell_0$ and infinity.",
+    "paragraph_sha256": "6deac4794478c958279861afee77c2e8a56dd423cd4a7ee59e272d0eef64592d",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C091",
+    "line": 8901,
+    "locator": "\\S3.2",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8900,
+    "paragraph_end": 8910,
+    "paragraph": "Take a source Eichler order $R^{\\rm src}=R'\\cap R''$ of level $N$.\nIn \\cite[\\S3.2]{cornutjetchev} the source subgroup is\n$H=\\widehat{R^{\\rm src}}^{\\times}$ and the target subgroup is\n$H_S=\\widehat R^{\\times}$. Indeed, away from $\\ell_0$ the local\norders are transported by the fixed algebra isomorphisms. At $\\ell_0$\nthe source subgroup is $\\operatorname{GL}_2(\\Z_{\\ell_0})$,\nwhose determinant is $\\Z_{\\ell_0}^{\\times}$; its inverse image\nunder the target reduced norm is exactly the unit group of the\nmaximal division order. The target level is the prime-to-$S$ part\nof $N$, which is $N$ itself. This construction allows arbitrary\nprime-power exponents in $N$, including its exponent at two.",
+    "paragraph_sha256": "60a07371d93bc163c43b06b53093848ba1a8f56d471c960db2359e71390eabaf",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C092",
+    "line": 8913,
+    "locator": "\\S3.3",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8912,
+    "paragraph_end": 8930,
+    "paragraph": "Both fine conductors are one. To check this assertion using the\ndefinition in \\cite[\\S3.3]{cornutjetchev}, an embedding of the maximal\norder $\\mathcal O_F$ into $R'\\cap R''$ embeds it into each maximal\norder. The intersection of either maximal order with $F$ is an order\ncontaining $\\mathcal O_F$, hence is $\\mathcal O_F$. Conversely,\nif both intersections are $\\mathcal O_F$, their intersection with\n$R'\\cap R''$ is $\\mathcal O_F$. The same argument applies on the\ntarget. Thus $c'=c''=c=c_S=(1)$ in that theorem. Its parity\ncondition at $\\ell_0$ is $0-0\\equiv v_{\\ell_0}(N)=0\\pmod2$.\nThe local lattice pair there has distance zero. Since $F_{\\ell_0}$\nis the unramified quadratic extension, its maximal order fixes a\nunique vertex of the local tree. Consequently\n\\[\n N_{\\ell_0}(0,0,0)=1,\\qquad\n |\\operatorname{Gal}(F[c]/F[c_S])|=1,\n\\]\nwhich also follows directly from\n\\cite[Lemma~2.1(ii)]{cornutjetchev}. The multiplicity $\\kappa$ in\n\\cite[Theorem~3.1]{cornutjetchev} is therefore exactly one.",
+    "paragraph_sha256": "aa8c5c17e8e4931f9adede18aad2f3b8d0d8ea5108eae92905e527bb5f06ceb8",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C093",
+    "line": 8929,
+    "locator": "Lemma~2.1(ii)",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8912,
+    "paragraph_end": 8930,
+    "paragraph": "Both fine conductors are one. To check this assertion using the\ndefinition in \\cite[\\S3.3]{cornutjetchev}, an embedding of the maximal\norder $\\mathcal O_F$ into $R'\\cap R''$ embeds it into each maximal\norder. The intersection of either maximal order with $F$ is an order\ncontaining $\\mathcal O_F$, hence is $\\mathcal O_F$. Conversely,\nif both intersections are $\\mathcal O_F$, their intersection with\n$R'\\cap R''$ is $\\mathcal O_F$. The same argument applies on the\ntarget. Thus $c'=c''=c=c_S=(1)$ in that theorem. Its parity\ncondition at $\\ell_0$ is $0-0\\equiv v_{\\ell_0}(N)=0\\pmod2$.\nThe local lattice pair there has distance zero. Since $F_{\\ell_0}$\nis the unramified quadratic extension, its maximal order fixes a\nunique vertex of the local tree. Consequently\n\\[\n N_{\\ell_0}(0,0,0)=1,\\qquad\n |\\operatorname{Gal}(F[c]/F[c_S])|=1,\n\\]\nwhich also follows directly from\n\\cite[Lemma~2.1(ii)]{cornutjetchev}. The multiplicity $\\kappa$ in\n\\cite[Theorem~3.1]{cornutjetchev} is therefore exactly one.",
+    "paragraph_sha256": "aa8c5c17e8e4931f9adede18aad2f3b8d0d8ea5108eae92905e527bb5f06ceb8",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C094",
+    "line": 8930,
+    "locator": "Theorem~3.1",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8912,
+    "paragraph_end": 8930,
+    "paragraph": "Both fine conductors are one. To check this assertion using the\ndefinition in \\cite[\\S3.3]{cornutjetchev}, an embedding of the maximal\norder $\\mathcal O_F$ into $R'\\cap R''$ embeds it into each maximal\norder. The intersection of either maximal order with $F$ is an order\ncontaining $\\mathcal O_F$, hence is $\\mathcal O_F$. Conversely,\nif both intersections are $\\mathcal O_F$, their intersection with\n$R'\\cap R''$ is $\\mathcal O_F$. The same argument applies on the\ntarget. Thus $c'=c''=c=c_S=(1)$ in that theorem. Its parity\ncondition at $\\ell_0$ is $0-0\\equiv v_{\\ell_0}(N)=0\\pmod2$.\nThe local lattice pair there has distance zero. Since $F_{\\ell_0}$\nis the unramified quadratic extension, its maximal order fixes a\nunique vertex of the local tree. Consequently\n\\[\n N_{\\ell_0}(0,0,0)=1,\\qquad\n |\\operatorname{Gal}(F[c]/F[c_S])|=1,\n\\]\nwhich also follows directly from\n\\cite[Lemma~2.1(ii)]{cornutjetchev}. The multiplicity $\\kappa$ in\n\\cite[Theorem~3.1]{cornutjetchev} is therefore exactly one.",
+    "paragraph_sha256": "aa8c5c17e8e4931f9adede18aad2f3b8d0d8ea5108eae92905e527bb5f06ceb8",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C095",
+    "line": 8941,
+    "locator": "\\S3.6",
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8932,
+    "paragraph_end": 8950,
+    "paragraph": "It is essential to retain the sign fiber in that theorem. At $\\ell_0$\nthe quotient\n\\[\n F_{\\ell_0}^{\\times}\\backslash B_{\\ell_0}^{\\times}/R_{\\ell_0}^{\\times}\n       \\simeq\\Z/2\\Z\n\\]\nis measured by the valuation of the reduced norm modulo two:\nnorms from $F_{\\ell_0}^{\\times}$ have even valuation, whereas a\ndivision uniformizer has norm valuation one.\nBy \\cite[\\S3.6]{cornutjetchev} this sign is precisely the choice of\nresidue-field embedding of the unramified quadratic order, with\norigin fixed by the chosen reference embedding. Theorem~3.1 gives\na bijection onto one such sign, not onto both. Away from $\\ell_0$\nits map on local orbit data is a bijection, so we may also restrict\nto the chosen orientations at the primes of $N$. The resulting\nmap is an equivariant bijection of the source class-group torsor\nonto the target torsor for that full orientation tuple. Corollary~3.2\ngives the same bijection after fixing any supersingular pair in the\ntarget.",
+    "paragraph_sha256": "ec3b2c842ab82e4aae5de4027058cb3100f5359fbf91f9bd76ccd752a46a685d",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C096",
+    "line": 8953,
+    "locator": null,
+    "keys": [
+      "cornutjetchev"
+    ],
+    "paragraph_start": 8952,
+    "paragraph_end": 8982,
+    "paragraph": "Choose the reduction place compatibly with the place used in (O.2).\nSections~4.9--4.10 of \\cite{cornutjetchev} identify the projection\nof this adelic map with geometric reduction of the corresponding\nenhanced elliptic curve on $X_0(N)$. Their local formula is the\nidentity under the chosen identifications away from $\\ell_0$, and\nat $\\ell_0$ replaces a matrix by a division-uniformizer power\nwhose exponent is the valuation of its determinant. Thus it is\nthe same sign and the same reduction map as above. Choose $z_0$\nto be the image of the actual reference Heegner point $x_D$ in\n(O.1). Writing\n\\[\n \\chi_F([a])=\\chi_{h_*}(\\operatorname{N}_{F/\\Q}a),\\qquad\n z_a=[az_0],\n\\]\nequivariance gives the exact finite-sum identity\n\\[\n \\sum_{[a]\\in\\operatorname{Pic}(\\mathcal O_F)}\n       \\chi_F([a])P_M(z_a)\n =\\lambda_M\\!\\left(\n       \\overline{L\\sum_{[a]\\in\\operatorname{Pic}(\\mathcal O_F)}\n                         \\chi_F([a])\\pi(x_D^{[a]})}\\right)\n =\\lambda_M(\\overline{LP_D})\\quad\\text{in }\\Z/2^M\\Z.\n\\]\nHere the supersingular pairs and their parametrization values are\ndefined over $\\mathbb F_{\\ell_0^2}$, so every term is in the domain\nof the same $\\lambda_M$. Additivity, specialization, and multiplication\nby the fixed integer $L$ commute with this finite sum. If the Artin\naction is written with inverses, reindexing $[a]\\mapsto[a]^{-1}$\nleaves it unchanged since $\\chi_F$ is quadratic. Changing the\nreference point within its torsor multiplies the sum only by\n$\\chi_F$ of that reference class.",
+    "paragraph_sha256": "604e9e577f3e4a910e73b031373db0953d48d612edf16c10f15bc24ab0256e3f",
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C097",
+    "line": 9460,
+    "locator": "\\S\\S0.3--0.7, Theorem~A",
+    "keys": [
+      "carayol"
+    ],
+    "paragraph_start": 9460,
+    "paragraph_end": 9468,
+    "paragraph": "For the cuspidal constituents use \\cite[\\S\\S0.3--0.7, Theorem~A]{carayol}\nwith $F=\\Q$, weight $2$, and a place above $2$. The representations\nare cuspidal, the real weight is at least two, the degree of $F$ is\nodd, and the local prime $p$ is odd. Thus the extra finite-place\nhypothesis imposed there when $[F:\\Q]$ is even is inapplicable,\nand the coefficient characteristic differs from $p$. We use the\narithmetic-Frobenius representation, dualizing the geometric-Frobenius\nconvention of \\cite[\\S0.4]{carayol}; its good characteristic polynomial\nis $X^2-a_qX+q\\chi(q)$. This fixes the convention also at $p$.",
+    "paragraph_sha256": "acf39716cc9d43ccc35d06de63a1cde5195c41ffe37d0ab0793d465eafde416b",
+    "application_ids": [
+      "A032"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C098",
+    "line": 9467,
+    "locator": "\\S0.4",
+    "keys": [
+      "carayol"
+    ],
+    "paragraph_start": 9460,
+    "paragraph_end": 9468,
+    "paragraph": "For the cuspidal constituents use \\cite[\\S\\S0.3--0.7, Theorem~A]{carayol}\nwith $F=\\Q$, weight $2$, and a place above $2$. The representations\nare cuspidal, the real weight is at least two, the degree of $F$ is\nodd, and the local prime $p$ is odd. Thus the extra finite-place\nhypothesis imposed there when $[F:\\Q]$ is even is inapplicable,\nand the coefficient characteristic differs from $p$. We use the\narithmetic-Frobenius representation, dualizing the geometric-Frobenius\nconvention of \\cite[\\S0.4]{carayol}; its good characteristic polynomial\nis $X^2-a_qX+q\\chi(q)$. This fixes the convention also at $p$.",
+    "paragraph_sha256": "acf39716cc9d43ccc35d06de63a1cde5195c41ffe37d0ab0793d465eafde416b",
+    "application_ids": [
+      "A032"
+    ],
+    "role": "application"
+  },
+  {
+    "id": "C099",
+    "line": 9618,
+    "locator": "p.~436",
+    "keys": [
+      "hl"
+    ],
+    "paragraph_start": 9617,
+    "paragraph_end": 9621,
+    "paragraph": "\\subsection{An absolute bound of five new primes}\nThe theorem of Hoffstein--Luo \\cite[p.~436]{hl} supplies fundamental\ndiscriminants with nonzero central value and at most four prime\nfactors. Its finite splitting set is arbitrary. The bound four is\nabsolute; no uniform size threshold for those discriminants is needed.",
+    "paragraph_sha256": "cbca8474570a405754b7f1a6abef72c0a4a75612adf558fe7849fa1fc62b056f",
+    "application_ids": [
+      "A024"
+    ],
+    "role": "application"
+  }
+]

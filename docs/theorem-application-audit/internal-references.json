@@ -1,0 +1,1563 @@
+[
+  {
+    "line": 84,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 89,
+    "label": "sec:four-corollaries",
+    "target_lines": [
+      6164
+    ]
+  },
+  {
+    "line": 101,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 104,
+    "label": "sec:compiler",
+    "target_lines": [
+      5477
+    ]
+  },
+  {
+    "line": 112,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 115,
+    "label": "sec:bridge",
+    "target_lines": [
+      5820
+    ]
+  },
+  {
+    "line": 118,
+    "label": "sec:size",
+    "target_lines": [
+      5992
+    ]
+  },
+  {
+    "line": 122,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 123,
+    "label": "sec:model",
+    "target_lines": [
+      240
+    ]
+  },
+  {
+    "line": 123,
+    "label": "prop:generator",
+    "target_lines": [
+      254
+    ]
+  },
+  {
+    "line": 125,
+    "label": "thm:height",
+    "target_lines": [
+      390
+    ]
+  },
+  {
+    "line": 126,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 126,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 127,
+    "label": "app:even-source",
+    "target_lines": [
+      6523
+    ]
+  },
+  {
+    "line": 127,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 128,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 129,
+    "label": "sec:pole",
+    "target_lines": [
+      919
+    ]
+  },
+  {
+    "line": 130,
+    "label": "sec:mult",
+    "target_lines": [
+      1044
+    ]
+  },
+  {
+    "line": 133,
+    "label": "sec:compiler",
+    "target_lines": [
+      5477
+    ]
+  },
+  {
+    "line": 135,
+    "label": "sec:syntax",
+    "target_lines": [
+      141
+    ]
+  },
+  {
+    "line": 136,
+    "label": "sec:size",
+    "target_lines": [
+      5992
+    ]
+  },
+  {
+    "line": 136,
+    "label": "app:literal",
+    "target_lines": [
+      6364
+    ]
+  },
+  {
+    "line": 138,
+    "label": "lem:assembly",
+    "target_lines": [
+      110
+    ]
+  },
+  {
+    "line": 233,
+    "label": "sec:size",
+    "target_lines": [
+      5992
+    ]
+  },
+  {
+    "line": 960,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 961,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 961,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 962,
+    "label": "app:even-source",
+    "target_lines": [
+      6523
+    ]
+  },
+  {
+    "line": 962,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 963,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 1032,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 1041,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 1085,
+    "label": "lem:pole",
+    "target_lines": [
+      934
+    ]
+  },
+  {
+    "line": 1317,
+    "label": "eq:prime-density44",
+    "target_lines": [
+      1277
+    ]
+  },
+  {
+    "line": 1373,
+    "label": "eq:prime-residue-error",
+    "target_lines": [
+      1343
+    ]
+  },
+  {
+    "line": 1422,
+    "label": "eq:prime-selberg",
+    "target_lines": [
+      1376
+    ]
+  },
+  {
+    "line": 1426,
+    "label": "eq:prime-lower",
+    "target_lines": [
+      1324
+    ]
+  },
+  {
+    "line": 1478,
+    "label": "eq:prime-selberg",
+    "target_lines": [
+      1376
+    ]
+  },
+  {
+    "line": 1479,
+    "label": "eq:prime-truncated-denominator",
+    "target_lines": [
+      1399
+    ]
+  },
+  {
+    "line": 1534,
+    "label": "eq:prime-truncated-denominator",
+    "target_lines": [
+      1399
+    ]
+  },
+  {
+    "line": 1545,
+    "label": "eq:prime-bad-values",
+    "target_lines": [
+      1501
+    ]
+  },
+  {
+    "line": 1545,
+    "label": "eq:prime-fiber",
+    "target_lines": [
+      1535
+    ]
+  },
+  {
+    "line": 1560,
+    "label": "eq:prime-lower",
+    "target_lines": [
+      1324
+    ]
+  },
+  {
+    "line": 1612,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 1632,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 1638,
+    "label": "app:even-source",
+    "target_lines": [
+      6523
+    ]
+  },
+  {
+    "line": 1638,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 1651,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 1653,
+    "label": "lem:corank",
+    "target_lines": [
+      1018
+    ]
+  },
+  {
+    "line": 1655,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 1699,
+    "label": "ex:app-kato-system",
+    "target_lines": [
+      6545
+    ]
+  },
+  {
+    "line": 1699,
+    "label": "ex:app-even-scalar",
+    "target_lines": [
+      7059
+    ]
+  },
+  {
+    "line": 1700,
+    "label": "ex:app-central-calibration",
+    "target_lines": [
+      7306
+    ]
+  },
+  {
+    "line": 1759,
+    "label": "app:even-source",
+    "target_lines": [
+      6523
+    ]
+  },
+  {
+    "line": 1768,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 1808,
+    "label": "app:even-source",
+    "target_lines": [
+      6523
+    ]
+  },
+  {
+    "line": 1854,
+    "label": "ex:app-five-prime",
+    "target_lines": [
+      9623
+    ]
+  },
+  {
+    "line": 1941,
+    "label": "ex:app-even-phase",
+    "target_lines": [
+      7484
+    ]
+  },
+  {
+    "line": 1948,
+    "label": "ex:app-odd-minimum",
+    "target_lines": [
+      9774
+    ]
+  },
+  {
+    "line": 1948,
+    "label": "ex:app-odd-stabilization",
+    "target_lines": [
+      10130
+    ]
+  },
+  {
+    "line": 1979,
+    "label": "ex:sec7-typed-graph",
+    "target_lines": [
+      1867
+    ]
+  },
+  {
+    "line": 1990,
+    "label": "ex:app-coefficient-rules",
+    "target_lines": [
+      9134
+    ]
+  },
+  {
+    "line": 2024,
+    "label": "ex:sec7-coefficient-rules",
+    "target_lines": [
+      1954
+    ]
+  },
+  {
+    "line": 2076,
+    "label": "ex:sec7-coefficient-rules",
+    "target_lines": [
+      1954
+    ]
+  },
+  {
+    "line": 2094,
+    "label": "ex:sec7-coefficient-rules",
+    "target_lines": [
+      1954
+    ]
+  },
+  {
+    "line": 2113,
+    "label": "ex:app-simultaneous-address",
+    "target_lines": [
+      10176
+    ]
+  },
+  {
+    "line": 2129,
+    "label": "ex:app-odd-stabilization",
+    "target_lines": [
+      10130
+    ]
+  },
+  {
+    "line": 2131,
+    "label": "ex:sec7-realization",
+    "target_lines": [
+      2003
+    ]
+  },
+  {
+    "line": 2164,
+    "label": "ex:sec7-seed-partition",
+    "target_lines": [
+      2028
+    ]
+  },
+  {
+    "line": 2165,
+    "label": "ex:sec7-seed-certificate",
+    "target_lines": [
+      2040
+    ]
+  },
+  {
+    "line": 2172,
+    "label": "ex:sec7-one-symbol-address",
+    "target_lines": [
+      2074
+    ]
+  },
+  {
+    "line": 2180,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 2252,
+    "label": "ex:app-rough-companion",
+    "target_lines": [
+      9678
+    ]
+  },
+  {
+    "line": 2273,
+    "label": "ex:sec7-rough-companion",
+    "target_lines": [
+      2195
+    ]
+  },
+  {
+    "line": 2294,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 2306,
+    "label": "ex:limits-uniform-lower-bound",
+    "target_lines": [
+      4641
+    ]
+  },
+  {
+    "line": 2307,
+    "label": "ex:arith-central-calibration",
+    "target_lines": [
+      3739
+    ]
+  },
+  {
+    "line": 2315,
+    "label": "sec:nonvan",
+    "target_lines": [
+      1820
+    ]
+  },
+  {
+    "line": 2361,
+    "label": "app:odd-source",
+    "target_lines": [
+      7898
+    ]
+  },
+  {
+    "line": 2444,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 2486,
+    "label": "ex:app-nonempty-seeds",
+    "target_lines": [
+      9881
+    ]
+  },
+  {
+    "line": 2549,
+    "label": "ex:sec7-two-symbol-address",
+    "target_lines": [
+      2092
+    ]
+  },
+  {
+    "line": 2550,
+    "label": "ex:app-simultaneous-address",
+    "target_lines": [
+      10176
+    ]
+  },
+  {
+    "line": 2551,
+    "label": "ex:app-final-family",
+    "target_lines": [
+      10414
+    ]
+  },
+  {
+    "line": 2560,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 2584,
+    "label": "ex:arith-moving-character",
+    "target_lines": [
+      3252
+    ]
+  },
+  {
+    "line": 2596,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2570
+    ]
+  },
+  {
+    "line": 2596,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 2598,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 2609,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 2625,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 3459,
+    "label": "ex:limits-inner-limit",
+    "target_lines": [
+      4123
+    ]
+  },
+  {
+    "line": 3460,
+    "label": "ex:arith-data",
+    "target_lines": [
+      2595
+    ]
+  },
+  {
+    "line": 3474,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 3524,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 3551,
+    "label": "ex:arith-local-kummer",
+    "target_lines": [
+      3165
+    ]
+  },
+  {
+    "line": 3648,
+    "label": "ex:arith-finite-heegner",
+    "target_lines": [
+      2709
+    ]
+  },
+  {
+    "line": 3650,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3457
+    ]
+  },
+  {
+    "line": 3744,
+    "label": "ex:arith-coordinate",
+    "target_lines": [
+      3630
+    ]
+  },
+  {
+    "line": 3745,
+    "label": "ex:arith-central-specialization",
+    "target_lines": [
+      3647
+    ]
+  },
+  {
+    "line": 3967,
+    "label": "ex:app-final-family",
+    "target_lines": [
+      10414
+    ]
+  },
+  {
+    "line": 3970,
+    "label": "ex:arith-moving-character",
+    "target_lines": [
+      3252
+    ]
+  },
+  {
+    "line": 4007,
+    "label": "ex:limits-inner-limit",
+    "target_lines": [
+      4123
+    ]
+  },
+  {
+    "line": 4069,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 4076,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3457
+    ]
+  },
+  {
+    "line": 4104,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 4106,
+    "label": "ex:limits-uniform-lower-bound",
+    "target_lines": [
+      4641
+    ]
+  },
+  {
+    "line": 4115,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2570
+    ]
+  },
+  {
+    "line": 4307,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 4326,
+    "label": "ex:limits-inner-limit",
+    "target_lines": [
+      4123
+    ]
+  },
+  {
+    "line": 4397,
+    "label": "ex:limits-residual-bound",
+    "target_lines": [
+      4185
+    ]
+  },
+  {
+    "line": 4495,
+    "label": "ex:limits-uniform-lower-bound",
+    "target_lines": [
+      4641
+    ]
+  },
+  {
+    "line": 4500,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2570
+    ]
+  },
+  {
+    "line": 4578,
+    "label": "ex:arith-finite-heegner",
+    "target_lines": [
+      2709
+    ]
+  },
+  {
+    "line": 4644,
+    "label": "ex:arith-central-calibration",
+    "target_lines": [
+      3739
+    ]
+  },
+  {
+    "line": 4655,
+    "label": "ex:arith-base-zero",
+    "target_lines": [
+      4062
+    ]
+  },
+  {
+    "line": 4714,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 4716,
+    "label": "ex:limits-outer-evaluation",
+    "target_lines": [
+      4383
+    ]
+  },
+  {
+    "line": 4730,
+    "label": "ex:limits-kernel-detection",
+    "target_lines": [
+      4480
+    ]
+  },
+  {
+    "line": 4771,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 4803,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 4822,
+    "label": "ex:limits-kernel-detection",
+    "target_lines": [
+      4480
+    ]
+  },
+  {
+    "line": 4870,
+    "label": "ex:arith-finite-heegner",
+    "target_lines": [
+      2709
+    ]
+  },
+  {
+    "line": 4875,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 4895,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3457
+    ]
+  },
+  {
+    "line": 4898,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4566
+    ]
+  },
+  {
+    "line": 4912,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3457
+    ]
+  },
+  {
+    "line": 4942,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 4960,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 4974,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 5220,
+    "label": "ex:limits-fixed-field-budget",
+    "target_lines": [
+      4940
+    ]
+  },
+  {
+    "line": 5222,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3457
+    ]
+  },
+  {
+    "line": 5223,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 5242,
+    "label": "ex:limits-fixed-field-budget",
+    "target_lines": [
+      4940
+    ]
+  },
+  {
+    "line": 5381,
+    "label": "ex:limits-fixed-field-clearing",
+    "target_lines": [
+      5219
+    ]
+  },
+  {
+    "line": 5384,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 5392,
+    "label": "ex:arith-base-zero",
+    "target_lines": [
+      4062
+    ]
+  },
+  {
+    "line": 5464,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2570
+    ]
+  },
+  {
+    "line": 5469,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 5823,
+    "label": "sec:model",
+    "target_lines": [
+      240
+    ]
+  },
+  {
+    "line": 5823,
+    "label": "sec:compiler",
+    "target_lines": [
+      5477
+    ]
+  },
+  {
+    "line": 5824,
+    "label": "sec:height",
+    "target_lines": [
+      363
+    ]
+  },
+  {
+    "line": 5824,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 5892,
+    "label": "lem:pole",
+    "target_lines": [
+      934
+    ]
+  },
+  {
+    "line": 5953,
+    "label": "hyp:PC",
+    "target_lines": [
+      947
+    ]
+  },
+  {
+    "line": 5966,
+    "label": "lem:test",
+    "target_lines": [
+      5876
+    ]
+  },
+  {
+    "line": 5974,
+    "label": "eq:close-sound",
+    "target_lines": [
+      5838
+    ]
+  },
+  {
+    "line": 5975,
+    "label": "lem:test-complete",
+    "target_lines": [
+      5923
+    ]
+  },
+  {
+    "line": 5976,
+    "label": "eq:close-complete",
+    "target_lines": [
+      5840
+    ]
+  },
+  {
+    "line": 5984,
+    "label": "sec:syntax",
+    "target_lines": [
+      141
+    ]
+  },
+  {
+    "line": 5984,
+    "label": "app:literal",
+    "target_lines": [
+      6364
+    ]
+  },
+  {
+    "line": 5986,
+    "label": "lem:assembly",
+    "target_lines": [
+      110
+    ]
+  },
+  {
+    "line": 6081,
+    "label": "sec:compiler",
+    "target_lines": [
+      5477
+    ]
+  },
+  {
+    "line": 6139,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 6142,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 6148,
+    "label": "sec:model",
+    "target_lines": [
+      240
+    ]
+  },
+  {
+    "line": 6150,
+    "label": "sec:height",
+    "target_lines": [
+      363
+    ]
+  },
+  {
+    "line": 6152,
+    "label": "sec:pole",
+    "target_lines": [
+      919
+    ]
+  },
+  {
+    "line": 6154,
+    "label": "sec:mult",
+    "target_lines": [
+      1044
+    ]
+  },
+  {
+    "line": 6156,
+    "label": "sec:compiler",
+    "target_lines": [
+      5477
+    ]
+  },
+  {
+    "line": 6158,
+    "label": "sec:bridge",
+    "target_lines": [
+      5820
+    ]
+  },
+  {
+    "line": 6160,
+    "label": "sec:syntax",
+    "target_lines": [
+      141
+    ]
+  },
+  {
+    "line": 6160,
+    "label": "sec:size",
+    "target_lines": [
+      5992
+    ]
+  },
+  {
+    "line": 6160,
+    "label": "app:literal",
+    "target_lines": [
+      6364
+    ]
+  },
+  {
+    "line": 6166,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 6186,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 6230,
+    "label": "thm:target",
+    "target_lines": [
+      60
+    ]
+  },
+  {
+    "line": 6251,
+    "label": "cor:rational-universal",
+    "target_lines": [
+      6196
+    ]
+  },
+  {
+    "line": 6284,
+    "label": "cor:rational-universal",
+    "target_lines": [
+      6196
+    ]
+  },
+  {
+    "line": 6295,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 6295,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 6296,
+    "label": "app:even-source",
+    "target_lines": [
+      6523
+    ]
+  },
+  {
+    "line": 6296,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 6300,
+    "label": "sec:bridge",
+    "target_lines": [
+      5820
+    ]
+  },
+  {
+    "line": 6353,
+    "label": "sec:height",
+    "target_lines": [
+      363
+    ]
+  },
+  {
+    "line": 6395,
+    "label": "sec:size",
+    "target_lines": [
+      5992
+    ]
+  },
+  {
+    "line": 6399,
+    "label": "sec:syntax",
+    "target_lines": [
+      141
+    ]
+  },
+  {
+    "line": 6526,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 7060,
+    "label": "ex:app-kato-system",
+    "target_lines": [
+      6545
+    ]
+  },
+  {
+    "line": 7076,
+    "label": "ex:app-kato-system",
+    "target_lines": [
+      6545
+    ]
+  },
+  {
+    "line": 7308,
+    "label": "ex:app-even-scalar",
+    "target_lines": [
+      7059
+    ]
+  },
+  {
+    "line": 7875,
+    "label": "ex:app-coefficient-rules",
+    "target_lines": [
+      9134
+    ]
+  },
+  {
+    "line": 7900,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 7912,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 7919,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  },
+  {
+    "line": 8101,
+    "label": "ex:app-detector",
+    "target_lines": [
+      7917
+    ]
+  },
+  {
+    "line": 9096,
+    "label": "ex:app-theta-form",
+    "target_lines": [
+      8100
+    ]
+  },
+  {
+    "line": 9096,
+    "label": "ex:app-theta-comparison",
+    "target_lines": [
+      8793
+    ]
+  },
+  {
+    "line": 9136,
+    "label": "ex:sec7-typed-graph",
+    "target_lines": [
+      1867
+    ]
+  },
+  {
+    "line": 9136,
+    "label": "ex:sec7-symbol",
+    "target_lines": [
+      1920
+    ]
+  },
+  {
+    "line": 9137,
+    "label": "ex:app-even-phase",
+    "target_lines": [
+      7484
+    ]
+  },
+  {
+    "line": 9140,
+    "label": "ex:app-odd-minimum",
+    "target_lines": [
+      9774
+    ]
+  },
+  {
+    "line": 9147,
+    "label": "ex:sec7-coefficient-rules",
+    "target_lines": [
+      1954
+    ]
+  },
+  {
+    "line": 9171,
+    "label": "app:endpoints",
+    "target_lines": [
+      9603
+    ]
+  },
+  {
+    "line": 9606,
+    "label": "ex:app-even-phase",
+    "target_lines": [
+      7484
+    ]
+  },
+  {
+    "line": 9609,
+    "label": "ex:app-coefficient-rules",
+    "target_lines": [
+      9134
+    ]
+  },
+  {
+    "line": 9615,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 9687,
+    "label": "ex:sec7-seed-partition",
+    "target_lines": [
+      2028
+    ]
+  },
+  {
+    "line": 9697,
+    "label": "ex:sec7-one-symbol-address",
+    "target_lines": [
+      2074
+    ]
+  },
+  {
+    "line": 9698,
+    "label": "ex:app-simultaneous-address",
+    "target_lines": [
+      10176
+    ]
+  },
+  {
+    "line": 9741,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 9776,
+    "label": "ex:app-detector",
+    "target_lines": [
+      7917
+    ]
+  },
+  {
+    "line": 9778,
+    "label": "ex:app-rough-companion",
+    "target_lines": [
+      9678
+    ]
+  },
+  {
+    "line": 9785,
+    "label": "ex:app-coefficient-rules",
+    "target_lines": [
+      9134
+    ]
+  },
+  {
+    "line": 9883,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 9899,
+    "label": "sec:rc",
+    "target_lines": [
+      1621
+    ]
+  },
+  {
+    "line": 10132,
+    "label": "ex:app-odd-minimum",
+    "target_lines": [
+      9774
+    ]
+  },
+  {
+    "line": 10178,
+    "label": "ex:sec7-typed-graph",
+    "target_lines": [
+      1867
+    ]
+  },
+  {
+    "line": 10178,
+    "label": "ex:sec7-symbol",
+    "target_lines": [
+      1920
+    ]
+  },
+  {
+    "line": 10179,
+    "label": "ex:sec7-address",
+    "target_lines": [
+      2061
+    ]
+  },
+  {
+    "line": 10179,
+    "label": "ex:sec7-realization",
+    "target_lines": [
+      2003
+    ]
+  },
+  {
+    "line": 10180,
+    "label": "ex:app-coefficient-rules",
+    "target_lines": [
+      9134
+    ]
+  },
+  {
+    "line": 10392,
+    "label": "ex:app-rough-companion",
+    "target_lines": [
+      9678
+    ]
+  },
+  {
+    "line": 10408,
+    "label": "ex:sec7-realization",
+    "target_lines": [
+      2003
+    ]
+  },
+  {
+    "line": 10415,
+    "label": "ex:app-nonempty-seeds",
+    "target_lines": [
+      9881
+    ]
+  },
+  {
+    "line": 10485,
+    "label": "ex:app-final-family",
+    "target_lines": [
+      10414
+    ]
+  },
+  {
+    "line": 10486,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      3874
+    ]
+  },
+  {
+    "line": 10488,
+    "label": "ex:arith-central-calibration",
+    "target_lines": [
+      3739
+    ]
+  },
+  {
+    "line": 10490,
+    "label": "ex:limits-fixed-field-clearing",
+    "target_lines": [
+      5219
+    ]
+  },
+  {
+    "line": 10491,
+    "label": "ex:limits-coefficient-transfer",
+    "target_lines": [
+      5379
+    ]
+  },
+  {
+    "line": 10492,
+    "label": "ex:arith-base-zero",
+    "target_lines": [
+      4062
+    ]
+  },
+  {
+    "line": 10523,
+    "label": "sec:limits",
+    "target_lines": [
+      4114
+    ]
+  },
+  {
+    "line": 10549,
+    "label": "hyp:RC",
+    "target_lines": [
+      951
+    ]
+  }
+]

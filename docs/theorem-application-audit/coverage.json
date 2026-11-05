@@ -1,0 +1,33 @@
+{
+  "manuscript_path": "diophantine_zq.tex",
+  "manuscript_sha256": "c59598ba474a1512dd03787c2bc9ff093a3c3a8a0604f96d5f8bcfa140c61693",
+  "manuscript_lines": 10734,
+  "citation_occurrences": 99,
+  "citation_key_occurrences": 119,
+  "cited_works": 44,
+  "bibliography_works": 46,
+  "citation_roles": {
+    "provenance": 1,
+    "application": 87,
+    "summary": 10,
+    "source-scope declaration": 1
+  },
+  "applications": 82,
+  "uncited_application_records": 28,
+  "applications_with_open_items": 39,
+  "source_records": 57,
+  "sources_byte_pinned": 55,
+  "anchored_application_contexts": 348,
+  "fresh_source_interface_checks": 19,
+  "citation_strength_findings": [
+    "A009"
+  ],
+  "internal_reference_occurrences": 223,
+  "unresolved_internal_references": [],
+  "duplicate_labels": {},
+  "named_input_signals": 155,
+  "mechanically_complete_citation_classification": true,
+  "semantic_exhaustiveness": "NOT CERTIFIED: this is a manuscript-wide inventory of explicit citations and identified uncited substantive inputs; a lexical search cannot prove absence of further implicit uses.",
+  "application_correctness": "NOT CERTIFIED: source pinning, inventory coverage and inherited reviews do not prove the applications.",
+  "frozen_date": "2026-11-05"
+}

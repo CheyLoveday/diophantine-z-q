@@ -1,0 +1,7 @@
+{
+  "test": "append comment to a separate manuscript copy",
+  "exit_code": 1,
+  "result": "FAIL",
+  "expected_error_observed": true,
+  "does_not_establish": "mathematical correctness"
+}
