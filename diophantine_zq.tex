@@ -219,7 +219,21 @@ $f_{2m}=f_m(f_{m+2}f_{m-1}^2-f_{m-2}f_{m+1}^2)$.
 For $m\ge2$, put $L=f_{m+2}f_m^3$, $R=f_{m-1}f_{m+1}^3$, and
 $D_0=16(x^3+Ax)^2$. Then $f_{2m+1}=D_0L-R$ for even $m$ and
 $L-D_0R$ for odd $m$. Negative indices satisfy $\psi_{-n}=-\psi_n$.
-This is a terminating recursion.
+This is a terminating recursion. These are the short-Weierstrass
+normalizations of \cite[\S\S5.5--5.6, Lemmas 5.20 and 5.24, Theorem 5.21]{sutherland}.
+In its Jacobian-coordinate convention,
+$x([n]P)=\phi_n(P)/\psi_n(P)^2$ and
+$y([n]P)=\omega_n(P)/\psi_n(P)^3$.
+The numerator formula has a minus sign:
+\[
+ \omega_n=\frac{\psi_{n+2}\psi_{n-1}^2-
+                   \psi_{n-2}\psi_{n+1}^2}{4y},
+ \qquad \psi_{2n}=2\psi_n\omega_n.
+\]
+Thus the fixed-scalar ordinate equation is
+$2y([n]P)\psi_n(P)^4=\psi_{2n}(P)$.
+For $n\ne0$ and a nonidentity point in the torsion-free carrier,
+$\psi_n(P)\ne0$, so clearing these denominators is reversible.
 
 The fixed prime catalogue consists of the first 22 primes above 324 in
 each unit residue class modulo $W=4\prod_{p\le324}p$. Dirichlet's theorem
@@ -274,11 +288,11 @@ and $m+4$, with equality only at $m=2$. At $(d)$ the only odd case
 would require $u^2=-4$ in $\F_7$. Thus the second image is trivial.
 The exact two-isogeny sequence gives $[E(K_0):2E(K_0)]=8$; its possible
 extra kernel term vanishes since a nonkernel rational two-torsion point
-maps to the dual kernel. Mordell--Weil gives rank one.
+maps to the dual kernel.
 
 The good reductions at $(17,s-6)$ and $(23,s-5)$ have 20 and 24 points.
 Prime-to-residue-characteristic torsion injects, so the torsion group
-has order at most four, hence is exactly the displayed full two-torsion.
+has order at most four, hence is exactly the displayed full two-torsion. Mordell--Weil now gives rank one.
 The $x$-class of $R$ has opposite real signs, whereas all torsion classes
 have equal signs. Its free index is therefore odd.
 
@@ -400,7 +414,10 @@ $\Trd(\mu^{-1}x\overline y)$ has matrix
 \[
  \begin{pmatrix}0&0&-1&1\\0&0&1&-2\\1&-1&0&0\\-1&2&0&0\end{pmatrix}
 \]
-and determinant one. This is the principal-polarization datum whose
+and determinant one, in the ordered basis
+$(1,i,(1+j)/2,(i+ij)/2)$. The Riemann form is the convention of
+\cite[equation (3) and Lemma 3]{linyang}; its Rosati involution is
+$a\mapsto\mu^{-1}\overline a\mu$. This is the principal-polarization datum whose
 normalizer quotient is $\mathbf P^1_j$, with branch values
 $0,\infty,-16/27$ and indices $4,6,2$ \cite{babagranath,linyang}.
 Put $K_0=\widehat{\mathcal O}^{\,*}$ and
@@ -544,6 +561,13 @@ on its endomorphism lattice. Thus $L$ is unramified outside $T$.
 It defines every geometric endomorphism and every ordered
 conjugacy homomorphism of $A$.
 
+By \cite[Part I, Theorems 2.8--2.9]{milne-av}, polarizable complex
+tori are abelian varieties and their analytic homomorphisms are algebraic.
+After clearing lattice denominators, the same assertion identifies
+rational Hodge endomorphisms with algebraic quasi-endomorphisms.
+These endomorphisms are defined over $\overline{\Q}$: every automorphism
+of $\mathbb C/\overline{\Q}$ fixes their action on all torsion points, and
+torsion is Zariski dense.
 On rational homology the complex structure is right multiplication
 by an element $J\in B\otimes\mathbb R$ with $J^2=-1$. In
 $\operatorname{End}_{\mathbb Q}(B)=B\otimes B^{\mathrm{op}}$,
@@ -708,10 +732,10 @@ On $G_{L'}$ it is the actual Tate action of $A$.
 Faltings' semisimplicity and endomorphism theorems
 \cite{faltings1983} show that $r_\ell|_{G_{L'}}$ is absolutely
 irreducible: after splitting $B$, its commutant is the scalars.
-The representation is de Rham at $\ell$, by finite-extension
-descent of the de Rham property from the Tate module
-\cite{faltings1988}, and its
-two Hodge--Tate weights are those of an elliptic Tate module.
+Lemma~\ref{lem:de-rham-descent} below shows that the representation
+is de Rham at $\ell$, by proper-smooth comparison and finite descent
+\cite{scholze2013,scholze-erratum}, and that its
+two Hodge--Tate weights are $0,-1$ in the Tate convention.
 Berger's $p$-adic monodromy theorem \cite{berger2002} makes this
 de Rham representation potentially semistable, as required by
 Pan's theorem.
@@ -733,22 +757,27 @@ Hodge--Tate weight $-1$. Apply \cite[Theorem 1.0.4]{pan2022} at
 $\ell=5$; there is no residual-image proviso at this prime.
 It gives a cuspidal eigenform up to character twist. The twisting
 character is a de Rham subrepresentation of the Hom representation
-and is unramified outside finitely many primes. By class field
-theory over $\mathbb Q$, it is a finite character times an integral
+and is unramified outside finitely many primes. Local algebraicity
+\cite[Appendix B, pp.~32--33]{conrad-local-characters} and class field
+theory over $\mathbb Q$ make it a finite character times an integral
 power of the cyclotomic character: removing its integral local
 Hodge--Tate weight leaves finite inertia at five and at every other
 prime, hence a finite ray-class character. Comparing $\{0,-1\}$
 with the modular weights $\{0,1-k\}$ after that power forces
 $k=2$ and power zero. Absorb the finite Dirichlet character into
-the eigenform and take its primitive newform $f$. Thus $r_5$ is
-a constituent of the Tate module of the modular abelian variety
+the eigenform and take its primitive newform $f$. Li's Fricke formula
+\cite[p.~296, before Lemma 6]{li-newforms} makes the span of its
+coefficient conjugates Fricke-stable. Shimura's quotient construction
+and Euler-factor identity \cite[Theorem 1]{shimura-factors} therefore
+show that $r_5$ is a constituent of the Tate module of the modular abelian variety
 $A_f$, or equivalently $r_5^\vee$ is its cohomological constituent.
 This duality preserves the conductor.
 
 The representations at five and three belong to this same system.
 Enlarge $C$ to contain the coefficients of $f$, retaining the chosen
 embedding at five. For $p\notin T\cup\{3,5\}$, choose a place $v$
-of $L$ and an arithmetic Frobenius lift $\sigma$ at $v$. Since
+of $L$ and a lift $\sigma\in G_{\mathbb Q_p}$ of the residue
+field map $x\mapsto x^p$ in its decomposition group. Since
 $L_v/\mathbb Q_p$ is unramified and $A$ has good reduction,
 relative $p$-Frobenius maps the reduction $\overline A_v$ to
 the reduction of ${}^\sigma A$ at $v$. Composing with
@@ -768,14 +797,19 @@ Here are uniform local bounds, including the small primes.
 For a finite extension of $\Q_p$ of degree at most $a$, its
 normal closure has degree at most $a!$. For a finite Galois
 local extension with ramification index $e$ and different
-exponent $\delta$, an Eisenstein polynomial over its maximal
-unramified subfield gives
+exponent $\delta$, let $f$ be the Eisenstein polynomial of a
+uniformizer $\pi$ over the maximal unramified subfield. Then
 $\delta\le e-1+e v_p(e)$. The derivative terms have distinct
 valuations modulo $e$, so there is no cancellation at the
-smallest valuation. The different formula in upper numbering
-then bounds the largest positive upper break by
+smallest valuation. The identity
+$f'(\pi)=\prod_{\sigma\ne1}(\pi-\sigma\pi)$ over the inertia
+conjugates gives $\delta=\sum_{i\ge0}(|G_i|-1)$. Changing variables
+by the Herbrand function yields
+$\delta/e=1-1/e+\int_0^\infty(1-|G^u|^{-1})\,du$.
+Before the last positive upper break the integrand is at least
+$1/2$, so that break is bounded by
 $2\delta/e\le2(1+\log_2(a!))\le4a^2$
-\cite[Chapter IV]{serrelocal}.
+\cite[Sections 4.1--4.3]{serrelocal}.
 
 At $p$, take $F=L_v$ and adjoin $A[3]$, using $A[5]$ if
 $p=3$. This extension has degree at most $DG_0$ over $\Q_p$.
@@ -791,7 +825,9 @@ inertia: its square is the tame character $\chi|_{G_F}$, and a
 pro-$p$ group has no quotient of order two. At $p=2$, local
 reciprocity and the norm map give $\beta^4=1$ on the units of
 $F$, since the $2$-primary local factor of $\chi$ has conductor
-at most four. If $e=v_F(2)\le D$, the local logarithm gives
+at most four. If $e=v_F(2)\le D$, the logarithm for $\widehat{\mathbf G}_m$ identifies
+$U_F^{e+1}$ with $\mathfrak m_F^{e+1}$ since $e+1>e$
+\cite[IV.6.4, p.~132]{silverman}. Multiplication by four gives
 $(U_F^{e+1})^4=U_F^{3e+1}$. Thus the relative upper break of
 $\beta$ is at most $3e$. To make the change of numbering explicit,
 the same normal-closure estimate bounds the last upper break of
@@ -869,13 +905,31 @@ Thus both cases prove the exact estimate needed below:
 \]
 
 
-The compatible theta normalizations in \cite{linyang,lny} give
+Use the Hauptmodul normalized by the values $0,\infty,-16/27$
+at the CM points of discriminants $-4,-3,-24$.
+In a common weighted-projective representative,
+\cite[equations (2) and (14), pp.~3 and 17]{linyang} gives
 \[
- j=3779136\frac{(\prod z_m)^4}{(\sum z_m^8)^5},\qquad
- h(j)\le40h([z_m])+22,
+ J_2=12(j+1),\quad J_4=6(j^2+j+1),\quad J_{10}=j^3,
+ \qquad \psi_4=J_2^2-24J_4=144j,\quad \chi_{10}=-j^3/4.
 \]
-where the product and sum run over the ten even theta nulls.
-Adjoining the six zero odd coordinates does not change their projective height.
+The conventions of \cite[\S2.2, p.~4]{lny} are
+$\psi_4=2^{-2}\sum_{m\ {\rm even}}z_m^8$ and
+$\chi_{10}=-2^{-14}\prod_{m\ {\rm even}}z_m^2$.
+The quotient $\chi_{10}^2/\psi_4^5$ is unchanged by weighted
+rescaling. Since our $j$ is finite and nonzero, its denominator
+is nonzero, and substitution gives
+\[
+ j=16\cdot144^5\frac{\chi_{10}^2}{\psi_4^5}
+  =3779136\frac{(\prod_{m\ {\rm even}}z_m)^4}
+                 {(\sum_{m\ {\rm even}}z_m^8)^5}.
+\]
+The two homogeneous polynomials have degree $40$ and coefficient
+$\ell^1$ norms $3779136$ and $10^5$. Hence
+$h(j)\le40h([z_m])+22$.
+The product and sum use the ten even theta nulls of the same
+principally polarized surface. Adjoining the six zero odd
+coordinates does not change their projective height.
 
 In \cite{pazuki}, the level $r=2$ theta coordinates are the sixteen
 half-characteristic values used here; the six odd values vanish.
@@ -1029,8 +1083,33 @@ so $\dim F[2]$ is even. Thus $F=0$ and $r+t=1$. The restriction of
 the pairing to $F[2]$ need not be nondegenerate and is not used.
 \end{proof}
 
-Applying Theorem~\ref{hyp:RC} to both $n$ and $n\theta$, the forward rank-one
-theorem \cite{gz,kolyvagin} gives rank one and finite $\Sha$, hence
+\begin{lemma}[Forward analytic rank zero and one]\label{lem:forward-rank}
+Let $A/\Q$ be an elliptic curve. If $\ord_{s=1}L(A,s)=r\leq1$,
+then $\operatorname{rank}A(\Q)=r$ and $\Sha(A/\Q)$ is finite.
+Consequently $\operatorname{corank}_{\Z_2}\Sel_{2^\infty}(A/\Q)=r$.
+\end{lemma}
+\begin{proof}
+Modularity follows from \cite[Theorem A]{bcdt}.
+Apply \cite[Theorem 1, pp.~4--5]{kolyvagin}, whose statement
+includes both $r=0$ and $r=1$. Its Theorems 3--5 provide the
+auxiliary imaginary quadratic field, the nonzero Heegner height,
+and finiteness over that field; the restriction kernel for $\Sha$
+is contained in the finite group $\Sha(A/\Q)[2]$.
+The ordinary Kummer sequence
+\[
+0\longrightarrow A(\Q)\otimes\Q_2/\Z_2
+\longrightarrow\Sel_{2^\infty}(A/\Q)
+\longrightarrow\Sha(A/\Q)[2^\infty]\longrightarrow0
+\]
+gives the corank assertion. Independently, the $r=0$ finiteness
+assertion follows directly from \cite[Corollary 14.3]{kato},
+applied to the modular quotient $J_1(N)\twoheadrightarrow A$
+over $\Q$ and the trivial character. This result includes the
+prime two and imposes no residual irreducibility hypothesis.
+\end{proof}
+
+Applying Theorem~\ref{hyp:RC} to both $n$ and $n\theta$,
+Lemma~\ref{lem:forward-rank} gives rank one and finite $\Sha$, hence
 $\Sha[2]=0$.
 The Kummer class is then represented by actual rational points. Their
 abscissas have squareclass $\beta$, by the cubic equation. Write
@@ -1048,6 +1127,38 @@ the height certificate; they are not assumed caller preconditions.
 Thus even untyped rational inputs, if accepted, have unique indices.
 The template has 35,134 rational witnesses. Its construction is S03
 and its mathematical specification is S13.
+
+We use the following local conventions for the displayed integral
+Weierstrass equation. Put $z=-x/y$, and put $w=1/x$ with $w(O)=0$.
+This $w$ differs from the auxiliary variable $-1/y$ used in
+\cite[IV.1]{silverman}. The formal expansions give
+$w=z^2$ times an integral unit, so $v(w)=2v(z)$.
+For a complete discrete valuation with $e=v(p)$, the formal
+logarithm converges on $v(z)>0$ and is an isometry with inverse
+exponential on $v(z)>e/(p-1)$
+\cite[IV.5.5, IV.6.3--6.4, pp.~129--132]{silverman}.
+Indeed its degree-$r$ coefficient has denominator dividing $r$,
+so each relative error has valuation at least
+$(r-1)v(z)-e v_p(r)>0$ in this range.
+Thus $\log([n]Q)=n\log(Q)$ and
+$v(z([n]Q))=v(z(Q))+v(n)$ for nonzero $Q$ and $n$ there.
+These statements concern the formal neighborhood of our integral
+equation. When identifying it with the full reduction kernel of
+a minimal model, we use
+\cite[VII.2.1--2.2, pp.~188--191]{silverman}.
+
+For this particular equation the invariant differential is
+\[
+ \frac{dx}{2y}=\frac{dz}{\sqrt{1+4d^2z^4}},\qquad
+ \log(z)=\sum_{j\ge0}
+ \frac{(-1)^j\binom{2j}{j}d^{2j}}{4j+1}z^{4j+1}.
+\]
+This proves the displayed coefficients of $L$ below. At a contact
+prime $p>324$, with $v(z)\ge1$ and $v(p)=1$, every omitted
+term relative to $z$ has valuation at least
+$r-1-v_p(r)\ge28$ for $r\ge29$.
+Consequently $L(z)/16575=\log(z)(1+\epsilon_z)$ with
+$v(\epsilon_z)\ge28$.
 
 For indices $n_1,n_2,n_3$, each test group chooses $H=[h]P_0$,
 $U_i=[z_i]P_0$, and sets $V_0=H-[c_*]P_0$,
@@ -1090,9 +1201,15 @@ ratio is integral. The truncated logarithm is the full logarithm times
 a unit congruent to one in valuation at least 28. Its ratio is therefore
 integral. The difference test transfers integrality to the other truncated
 ratio, then to the other full-log ratio. Only now do the relative errors
-give absolute congruences modulo $p^{28}$. Multiplying the two ratio congruences
-by their integer denominators gives
-$n_i\equiv L(z(U_i))/L(z(H))\pmod{p^{25}}$.
+give absolute congruences modulo $p^{28}$. Write $A_i=L(z(U_i))/L(z(H))$. The difference test and the
+full-log ratios give
+\[
+ z_i-hA_i\equiv0,\qquad
+ z_i-c_*n_i-(h-c_*)A_i\equiv0\pmod{p^{25}}.
+\]
+Their difference is $c_*(n_i-A_i)\equiv0$.
+Since $p\notin S_{\rm mul}$ implies $p\nmid c_*$, this yields
+$n_i\equiv A_i\pmod{p^{25}}$.
 The product test then implies $p^{25}\mid n_1n_2-n_3$.
 
 To specify the height certificate, write the abscissa of each input as
@@ -1283,17 +1400,24 @@ that reduce to $r_0$ modulo $W_0$. Then
 Here and below a positive constant with subscript $A$ may depend
 on the choices already made, including the fixed catalogue, but
 never on $L$, $X$, or a varying fiber prime. The last inequality
-follows from $\log(1-44/q)=-44/q+O(q^{-2})$ and Mertens' theorem.
+follows from $\log(1-44/q)=-44/q+O(q^{-2})$ and Mertens' theorem \cite[Theorem 1, with modulus $2$]{williams-mertens}.
 
 Fix $L$. For $r\in\mathcal R_L$ apply the finite-complexity
-prime asymptotic \cite{greentao,moebius,gtz} to
+prime asymptotic of \cite[Main Theorem, p.~1763]{greentao},
+with its hypotheses supplied by \cite[Theorem 1.1]{moebius}
+and \cite[Theorem 1.3]{gtz}, to
 \[
  n\longmapsto\frac{\epsilon_\nu F_\nu(r+W_Ln)}{k_\nu},
  \qquad r+W_Ln\in X\Omega.
 \]
 These are integral affine forms with pairwise independent linear
-parts, hence of finite complexity. The all-orders inverse theorem
-is used with its corrections. At $q\mid W_L$ the local factor is
+parts. Singleton classes in \cite[Definition 1.5]{greentao}
+give complexity at most $20$, so the inputs $\mathrm{GI}(20)$
+and $\mathrm{MN}(20)$ suffice. The inverse theorem is read in
+arXiv version 5 together with the separate erratum, in particular
+its Proposition 3.1 and modified deduction of Proposition 7.3.
+All coefficient bounds and moduli are fixed before $X$ tends
+to infinity. At $q\mid W_L$ the local factor is
 $(1-1/q)^{-22}$. At $q\nmid W_L$, scaling and changing variables
 preserve the twenty-two homogeneous zero planes, so
 \[
@@ -1392,7 +1516,12 @@ probability $g(q)$. Hence
  \le42\log z=0.42\log Z
 \]
 for sufficiently large $z$, using
-$\sum_{q\le z}(\log q)/q=\log z+O(1)$.
+$\sum_{q\le z}(\log q)/q=\log z+O(\log\log z)$.
+Indeed, \cite[Theorem 1, with modulus $2$]{williams-mertens}
+gives $S(z):=\sum_{q\le z}q^{-1}
+=\log\log z+C+O(1/\log z)$, including the prime $2$.
+Partial summation in
+$S(z)\log z-\int_2^z S(t)\,dt/t$ gives the asserted bound.
 Markov's inequality gives probability at least $0.58$, and thus
 at least $1/2$, that $d\le Z$. Every such divisor is included in
 $G(Z)$, so
@@ -1405,7 +1534,7 @@ merely for an untruncated Euler product.
 In the first application the sieved primes are
 $q>Q_*$ with $q\equiv1\pmod4$, with at most one prime omitted,
 and $g(q)=2/q-1/q^2$. Mertens' theorem in the fixed progression
-$1\pmod4$ gives
+$1\pmod4$ \cite[Theorem 1]{williams-mertens} gives
 \[
  \log H(z)=\log\log z+O_{Q_*}(1).
 \]
@@ -1431,26 +1560,35 @@ The two reduced curves are the quadratic twists of $y^2=x^3-x$
 by these two classes. Their traces are opposite. The discriminant
 $64d^6$ is a unit at these primes, so both reductions are good.
 
-For $p\equiv1\pmod4$, the automorphism
-$(x,y)\mapsto(-x,iy)$ is defined over $\mathbb F_p$.
-Its centralizer in the rational geometric endomorphism algebra
-is $\mathbb Q(i)$. Indeed, the endomorphism algebra, after
-tensoring with $\mathbb Q_3$, injects into the endomorphisms of
-the rational $3$-adic Tate module. The polynomial $x^2+1$ is
-irreducible over $\mathbb Q_3$, and the centralizer of this
-two-dimensional action has dimension two. The rational
-centralizer therefore has dimension at most two, and already
-contains $\mathbb Q(i)$. Frobenius commutes
-with the automorphism. It is integral, so it belongs to
-$\mathbb Z[i]$ and can be written $a+bi$. The determinant and
-trace on the Tate module give
+For $p\equiv1\pmod4$, choose $i\in\F_p$ with $i^2=-1$.
+The automorphism $\iota:(x,y)\mapsto(-x,iy)$ satisfies
+$\iota^2=[-1]$ and commutes with the arithmetic $p$-power
+Frobenius $\varphi$, directly from its coordinate formula.
+The injection
 \[
- a^2+b^2=p,\qquad d_1=p+1-2a,\qquad d_2=p+1+2a
+ \operatorname{End}(\overline E)\otimes\Q_3
+ \hookrightarrow\operatorname{End}_{\Q_3}(V_3\overline E)
 \]
-after possibly interchanging the orders. In particular $a\ne0$.
+is \cite[III.7.4, pp.~89--91]{silverman}; here $p>324$.
+Since $T^2+1$ is irreducible over $\Q_3$, the centralizer of
+$\iota$ on this two-dimensional Tate space is $\Q_3(i)$.
+The rational centralizer therefore has dimension at most two
+and already contains $\Q(i)$, so it is exactly $\Q(i)$.
+The Frobenius endomorphism is integral over $\Z$ by
+\cite[V.2.3.1(b), p.~142]{silverman}. Hence it lies in $\Z[i]$;
+write it as $a+bi$ with $a,b\in\Z$.
+The trace and determinant formulas
+\cite[III.8.6, p.~99]{silverman} give
+\[
+ a^2+b^2=p,\qquad d_1=p+1-2a,\qquad d_2=p+1+2a.
+\]
+Here $d_1,d_2$ are the cardinalities of the two reduced elliptic
+curve groups; the opposite twist changes the Frobenius trace's
+sign. In particular $a\ne0$, since $p$ is not a square.
 Both orders are divisible by $4$ because all the two-torsion is
 rational. Their sum is $2(p+1)$, of $2$-adic valuation exactly
 $2$, so the $2$-part of their gcd is exactly $4$. Hasse's bound
+\cite[V.1.1, p.~138]{silverman}
 gives $0<d_i<2p$ for $p>324$, and $d_i\ne p$ since $4\mid d_i$.
 Thus $p\nmid d_1d_2$.
 
@@ -1566,7 +1704,8 @@ all the assertions.
 \end{proof}
 Apply this construction to the nine integral homogeneous quantities
 of a true triple. Each slope has at most six odd-contact primes.
-At one such prime with reduction orders $d_1,d_2$, solve
+At one such prime with reduced group cardinalities $d_1,d_2$,
+which annihilate the reduced point, solve
 \[
  h\equiv0\pmod{\operatorname{lcm}(M_0,d_1)},\qquad
  h\equiv c_*\pmod{d_2}.
@@ -1637,8 +1776,17 @@ The assertion needed in Theorem~\ref{hyp:RC} is
 We prove this assertion in this section and the next two sections.
 Appendices~\ref{app:even-source}--\ref{app:endpoints} give the fixed-form,
 theta, nonvanishing and normalization constructions used in this deduction.
-Fix $E=E_\ell$ and a modular parametrization
-$\pi:X_0(N)\to E$ with $\pi(\infty)=0$. Fix the integral Tate lattice
+By \cite[Theorem A and Introduction, conditions (1)--(6)]{bcdt},
+$E=E_\ell$ is modular. Here $N$ denotes its conductor.
+The modular realization gives a rational weight-two newform $f$
+of level $N$ and an elliptic quotient $q_f:J_0(N)\twoheadrightarrow A_f$
+in the rational isogeny class of $E$; see
+\cite[Theorem 11.19 and Remark 11.18]{milnemf}.
+Choose a $\Q$-isogeny $\alpha:A_f\to E$ and put
+$\varphi=\alpha q_f$ and $\pi(x)=\varphi([x]-[\infty])$.
+Thus $\pi(\infty)=0$ and, for $q\nmid N$,
+$\varphi T_q=[a_q(f)]\varphi$.
+Fix the integral Tate lattice
 and the local squareclasses allowed at the primes of $2N$.
 Constants depending on this data are chosen before any conductor,
 companion field or binary dimension varies. Quotienting by a rational
@@ -2425,9 +2573,10 @@ makes the relevant differences divisible by the integer two before
 residue reduction. Multiplying by ordinary theta, then taking a fresh
 trace, removes the integral unary corrections. Two fresh traces vanish.
 The matrix trace identity gives $t(gu^2)=t(g)$, hence elementary
-quadratic labels. At a new odd level prime the weight-two local
-representation theorem \cite{carayol} has one unramified and one
-ramified line; its Euler factor identifies the $U_p$ eigenvalue.
+quadratic labels. At a new odd level prime the weight-two local representation
+has one unramified and one ramified line. The normalized-induction
+and Whittaker calculation below identifies the Fourier $U_p$
+eigenvalue with arithmetic Frobenius on the unramified line.
 The diagonal-matrix calculation gives the two inertia differences.
 These identities prove omission and primary isolation for the same
 original form and depth, without choosing another minimum.
@@ -2781,12 +2930,20 @@ to that theorem gives
 \]
 The inverse Frobenius pair at a split prime follows because their
 product is the Artin symbol of the rational principal ideal $(q)$.
-These are unaveraged sums. The identity $\pi T_q=a_q\pi$ follows
-on degree-zero divisor classes; $T_q(\infty)=(q+1)\infty$ and
-$\pi(\infty)=0$ remove the cusp term. If the previously fixed CM
-conventions use additional cusp translations, let $C_\pi$ kill
-their finite image in $E$ and apply every relation to $C_\pi y_d$.
-The cusp subgroup and its images are fixed by $N,\pi$.
+These are unaveraged sums. On degree-zero divisor classes,
+$\varphi T_q=[a_q]\varphi$. Since $q\nmid N$,
+$T_q[\infty]=(q+1)[\infty]$, so the displayed norm relations
+for $y_d=\pi(x_d)$ have no cusp correction.
+For other changes of CM convention, let $\mathcal C_N$ be the
+subgroup of $J_0(N)(\overline\Q)$ generated by
+$[c]-[\infty]$ for all cusps $c$. This is a finite group by
+Manin--Drinfeld \cite[p.~59, Theorem]{elkik}.
+Fix $C_\pi\geq1$ annihilating $\varphi(\mathcal C_N)$.
+This single integer depends only on $N,\pi$.
+For an Atkin--Lehner involution $W$ acting on $f$ by $w$, the exact
+formula is $\pi(Wx)=[w]\pi(x)+\pi(W\infty)$; the final constant
+lies in $\varphi(\mathcal C_N)$ and vanishes after multiplication
+by $C_\pi$.
 
 At an inert new prime $\ell$, a compatible place gives
 \[
@@ -2846,7 +3003,8 @@ $2^a$-multiple of an $M_I$-point. The factors in (H5) commute.
 
 \paragraph{4. Descend once, before twisting.}
 Put $B=H_f$, $M=M_I$, $\Gamma=\operatorname{Gal}(M/B)$ and
-$V_a=E[2^a]$. The five-term sequence gives
+$V_a=E[2^a]$. The five-term sequence for finite discrete coefficients
+\cite[formula (4.1.4.1), p.~96]{nekovar} gives
 \[
  0\longrightarrow H^1(\Gamma,V_a^{G_M})
  \longrightarrow H^1(B,V_a)
@@ -2890,7 +3048,7 @@ Lift the resulting coboundary through the smooth reduction map.
 The remaining cocycle takes values in the formal group. For a
 uniformizer of $F$, fixed by the unramified Galois group, each
 successive formal quotient is an additive copy of the residue
-field of $F'$. A normal basis makes this an induced module, so
+field of $F'$ \cite[IV.3.2(a), p.~124]{silverman}. A normal basis makes this an induced module, so
 its positive-degree cohomology vanishes. Correct the coboundary
 successively in these quotients. The corrections converge in
 $B_1(F')$, and the group is finite, so their limit solves all
@@ -3017,7 +3175,9 @@ $2^{a+1}\mid\ell+1$. The local extension obtained by adjoining
 the conductor $\ell$ is totally ramified, of degree $\ell+1$.
 Its residue field is still $\mathbf F_{\ell^2}$. Lift the indicated
 $2^a$-division point in the residue field; the discrepancy lies
-in the formal group, where $2^a$ is invertible. This produces a
+in the formal group, where multiplication by $2^a$ has an
+integral formal inverse because $\ell$ is odd
+\cite[IV.2.3 and IV.3.2, pp.~122--124]{silverman}. This produces a
 local $2^a$-division point of $LD_\ell Y$ in the upper local
 field itself. The restricted Kummer class is therefore zero.
 Choose a Frobenius lift in that upper local Galois group.
@@ -3072,8 +3232,21 @@ identity with target action $\theta\rho_T$.
 In degree zero the formula is the weighted sum
 $\sum_\delta\theta(r_\delta)\rho_T(r_\delta)Q$; applying its
 boundary gives (H21) applied to the boundary of $Q$.
-The higher-degree Shapiro formulas use the same finite coset
-decomposition and are chain maps. No averaging factor occurs.
+More generally, put $R(g)=\theta(g)\rho_T(g)$ and, for
+$g_1,\ldots,g_n$, set $\delta_i=g_{i+1}\cdots g_n\delta$.
+The degree-$n$ map is
+\[
+ (\mathcal T_\theta c)(g_1,\ldots,g_n)
+ =\sum_{\delta\in\Delta_f}R(r_{g_1\cdots g_n\delta})
+       c\bigl(h(g_1,\delta_1),\ldots,h(g_n,\delta_n)\bigr).
+\]
+With the ordinary inhomogeneous differential, the relation for $h$
+above gives $d\mathcal T_\theta=\mathcal T_\theta d$.
+These are the integral Shapiro and transfer maps of
+\cite[Sections 8.1.1--8.1.6, pp.~189--194]{nekovar}, written
+with left cosets. Changing sections gives the integral homotopy
+in Section 8.1.4; compatible sections give strictly transitive
+transfer. No averaging factor occurs.
 
 Localizing (H21) separates the cosets into decomposition-group
 orbits: this is the local Mackey formula, a sum of the local
@@ -3120,6 +3293,81 @@ $a_q-\theta(\sigma_q)-\theta(\sigma_q)^{-1}$ on the class.
 For $I=\varnothing$, the class is precisely the Kummer image of
 the $L$-multiplied weighted point, so the same statement gives
 the central split-norm relation with that exact $L$.
+
+\paragraph{The local diagrams underlying the coefficient push.}
+At a retained derivative place put $q=\ell^2$ and choose tame
+and unramified generators $\tau_v,\phi_v$ with
+$\phi_v\tau_v\phi_v^{-1}=\tau_v^q$. The local coefficient
+character is trivial. The two-generator tame resolution is
+\[
+ [M\xrightarrow{u\mapsto((\Phi_v-1)u,0)}M\oplus M
+       \xrightarrow{(x,y)\mapsto(\Phi_v-q)y}M],
+ \qquad \Phi_v=\rho(\phi_v).
+\]
+At the retained exponent $m\le a$, (H12) makes this the
+zero-differential model $D^0\oplus(F_v\oplus S_v)[-1]
+\oplus D^2[-2]$. Moreover $q\equiv1\pmod{2^{a+2}}$.
+Represent the singular generator by a uniformizer adjusted by
+a unit so its Kummer value on the chosen $\phi_v$ is zero.
+Residue-unit Kummer characters allow this adjustment. The latter
+congruence makes its self-cup zero: $-1$ is a $2^m$-th power,
+so the adjusted uniformizer Kummer class has square zero. The finite self-cup is zero by unramified cohomological
+dimension one. Retain the transported mixed pairing and the
+$D^0,D^2$ pairing.
+
+In the derivative diagram the old ring-class fields split
+locally, and the new conductor extension is totally ramified.
+For the latter choose the lower Frobenius in the upper subgroup
+and take $\tau_{\rm upper}=\tau_{\rm lower}^e$; here $f=1$.
+For split terms $e=f=1$. Transport these choices with the Tate
+basis. With these compatible generators the local matrices, in the order
+$D^0,F_v,S_v,D^2$, are
+\[
+ \operatorname{res}=\operatorname{diag}(1,f,e,ef),\qquad
+ \operatorname{cor}=\operatorname{diag}(ef,e,f,1).
+\]
+The possible transfer shear is divisible by $(q-1)/2$ and
+vanishes at retained precision. These matrices preserve each
+of the four conditions retaining $D^0$, and satisfy the local
+cup-product adjunctions. Split Mackey terms have $e=f=1$;
+coefficient weights and reduction commute with these matrices.
+An arbitrary new Frobenius lift is not used without transporting
+the resulting finite/singular decomposition.
+
+Compare the small free resolution with the continuous bar
+resolution and choose augmentation-preserving comparison maps
+and their composite homotopies. Continuous Hom into $M$ retains
+these identities. Since the small model has zero differential,
+the composite on it is the identity; normalize the other homotopy
+to obtain a contraction. Here are its compatibility maps.
+For this retained contraction $1-i_vp_v=dh_v+h_vd$ and a full
+local cochain arrow $F$, take $F_L=p_wFi_v$ and restrict it to
+$U_v$. The inclusion square has homotopy $h_wFi_v|_{U_v}$.
+For composable arrows the transferred composition homotopy is
+$p_zGh_wFi_v$, together with the transferred original bar
+homotopy when present. Every such degree-minus-one map on
+$U_v$ lands in $D^0$, which is retained in every condition;
+thus these homotopies restrict too. For three composable maps,
+write $K(G,F)=pGhFi$ and $L(H,G,F)=pHhGhFi$, with the
+intermediate subscripts understood. Direct expansion gives
+\[
+ K(H,GF)-K(HG,F)+H_LK(G,F)-K(H,G)F_L=Ld-dL.
+\]
+The degree-minus-two map $L$ vanishes on every derivative
+condition. Transfer the original bar comparison homotopies and
+cubes as well; unrelated classwise boundaries are not substituted
+for them. For the isotropy diagrams, $U_v\otimes U'_v$ is
+free in degrees $0,1,2$, whereas the trace target is $A[-2]$.
+Its negative Hom groups vanish, so the restricted zero pairing
+has compatible null-homotopies and the requisite 2-homotopies.
+This constructs the local data required in
+\cite[8.6.2.1--8.6.2.4]{nekovar} before using 8.6.4.
+At old Kummer places use the natural restriction/norm diagrams
+of the multiplication-by-$2^m$ exact sequences, including
+local torsion, and their derived scalar extensions; at good
+unramified, full and zero places use the corresponding standard
+subcomplexes. The witnesses in (H22) are chosen in these same
+diagrams.
 
 \paragraph{8. Actual finite Selmer-cone witnesses.}
 Represent $P_{I,m}$ by a continuous global cocycle $p$.
@@ -3769,8 +4017,8 @@ torsion and gives a unimodular pairing of the free degree-one and
 degree-two parts. Thus their rational dimensions equal full Selmer
 corank, including a possible divisible part of $\Sha$.
 
-At known simple zeros, forward Gross--Zagier and Kolyvagin
-\cite{gz,kolyvagin} give rank one and finite $\Sha$.
+At known simple zeros, Lemma~\ref{lem:forward-rank}
+gives rank one and finite $\Sha$.
 For restriction of scalars and the product of the two twists, the
 sum/difference isogenies are dual and compose to $[2]$.
 Their free-lattice indices satisfy $IJ=2$, with regulator ratio
@@ -3785,10 +4033,12 @@ At every active $p\mid h$, $K$ splits, so the isogeny local factors
 cancel exactly. At either split place the full/Kummer quotient
 has length
 $\dim_{\F_2}E[2]^{\operatorname{Fr}_p}=2$, since all of $E[2]$
-is rational. The two places therefore contribute exactly $-4$. At a companion prime $p\mid k$ the
-ramified twist has component factor four, while the restriction of
-scalars has connected special fiber. Hence its error $t_p$ is at most
-two. The result is
+is rational. The two places therefore contribute exactly $-4$. At a companion prime $p\mid k$, the rational component number
+of the ramified twist is $\#E[2]^{\operatorname{Fr}_p}$, whereas
+the restriction of scalars has connected special fiber.
+Thus $t_p=\dim_{\F_2}E[2]^{\operatorname{Fr}_p}\le2$;
+in the present full rational two-torsion case it is exactly two.
+The result is
 \[
  v_2u_{\rm prim}(0)
  =2j_{\rm rc}(h,k)-4\omega(h)-s(h)-s(hk)
@@ -3864,12 +4114,30 @@ of component numbers. The arithmetic isogeny identity gives
 The $2g_{\mathcal A}$ terms cancel on substitution into the
 determinant formula. The remaining rational torsion is uniformly
 bounded by the fixed local types at two. Component factors cancel
-at every split prime. At $p\mid k$, good reduction makes the Weil
-restriction's component group trivial, while the tame quadratic
-twist has component group $E[2]$ with its Frobenius action. This
-gives $v_2(C_{\mathcal B}/C_{\mathcal A})=\sum_{p\mid k}t_p$
-and its negative sign in (4.6). In the full rational two-torsion
-case each $t_p=2$.
+at every split prime. At $p\mid k$, put $E_0=E^{(h)}$; it has good reduction, and
+$K_p/\Q_p$ is a tame ramified quadratic extension.
+By \cite[Theorem~5.3 and Remark~5.4.1, pp.~299--300]{edixhoven},
+the component group of the ramified twist is the fixed subgroup
+of the good special fiber under its descent action $[-1]$:
+\[
+ \Phi(E_0^{(k)})\simeq\widetilde E_0[2].
+\]
+This is an isomorphism of finite \'etale residue-field group
+schemes, so its rational component number is
+$\#E[2]^{\operatorname{Fr}_p}$.
+The Weil restriction of the good model has special fiber an
+extension of $\widetilde E_0$ by a vector group, and is connected.
+Thus its component number is one.
+All other component factors cancel at split primes or equal one
+at the remaining good primes. Consequently
+\[
+ v_2(C_{\mathcal B}/C_{\mathcal A})
+   =\sum_{p\mid k}t_p,\qquad
+ t_p=\dim_{\F_2}E[2]^{\operatorname{Fr}_p}.
+\]
+Substitution into the coordinate containing $-s_{\mathcal A}$
+gives the negative sign in (4.6).
+In the full rational two-torsion case each $t_p=2$.
 \end{proof}
 \begin{lemma}[Unused-prime comparison and one corrected coordinate]\label{ex:arith-common-coordinate}
 At an unused good split prime, use the actual primitive-to-relaxed
@@ -4415,11 +4683,11 @@ A cycle therefore defines an abstract crossed homomorphism of the
 product group. We do not assert that its restriction to one original
 Galois group is a continuous pointwise limit.
 
-Evaluation remains injective after field extension. Residually, take
-representatives $V$ for $H^1$ and coefficient space $W$. Evaluate
+Evaluation remains injective after field extension. At each finite
+stage take representatives $V$ for $H^1$ and coefficient space $W$. Evaluate
 $(c,w)$ by $b_c(g)-(\rho(g)-1)w$. The intersection of all kernels is
 $(0,W^\Gamma)$. A finite list of at most $\dim V+\dim W$ evaluations
-already has that intersection. The comparison to $[W\to W^d]$ is an
+already has that intersection. Choose and pad these lists at the finite stages before taking their common limit. The comparison to $[W\to W^d]$ is an
 isomorphism on $H^0$ and injective on $H^1$. Its cone has no residual
 cohomology in degrees at most zero. Cancel unit disks there so that
 the free cone starts in degree one; the same is true after every
@@ -5005,7 +5273,7 @@ are the Kummer injections. The Selmer cone therefore has
 $H^0=E(K)[2]$ and $H^1=\operatorname{Sel}_2(E/K)$.
 The Weil pairing and the exact orthogonality of the Kummer
 conditions give the finite self-duality with shift three
-\cite[5.7.1.6--5.7.1.7 and 6.3.4]{nekovar}. Since $K$ has no
+\cite[5.1.1--5.1.6 and 6.3.4]{nekovar}. Since $K$ has no
 real places and $E[2]$ is rational of rank two, this gives
 \[
  \dim_{\mathbb F_2}H^i(C_K\otimes^{\mathbf L}\mathbb F_2)
@@ -5585,6 +5853,12 @@ fits after choosing $c$ sufficiently large, and supplies all these
 masks and equations.
 
 \subsection{The literal alpha and power formulas}
+The alpha system below is \texttt{Exp\_Matrices.alpha\_equations},
+with equivalence \texttt{alpha\_equivalence}; the power system is
+\texttt{Exponential\_Relation.exp\_repr} and its polynomial expansion
+\texttt{exp\_dioph} in the pinned AFP source \cite{afp}.
+Their variables range over natural numbers. The alpha recurrence itself
+is integer-valued; the bounds below justify its natural-valued uses.
 Define $U_n=\alpha_b(n)$ by
 \[
  U_0=0,\qquad U_1=1,\qquad U_{n+2}=bU_{n+1}-U_n\quad(n\ge0).
@@ -5847,7 +6121,8 @@ cyclic subgroup into arbitrarily small neighborhoods and subtracting
 two sufficiently close multiples. If the resulting positive differences
 were bounded, a fixed nonzero multiple would be the identity; infinite
 order excludes this. Choose $l$ first to make the positive $\epsilon_l$
-small enough. Since the derivative of $[n]$ at the identity is $n$,
+small enough. Since the derivative of $[n]$ at the identity is $n$
+\cite[IV.2.3(a), p.~122]{silverman},
 $r(a,na)\to n$ along positive multiples $a$ approaching it. Choose such
 an $a$ and put $j=na$. This works for every already fixed nonzero shift
 $\kappa$, regardless of its size.
@@ -5907,12 +6182,16 @@ $H$ and $V_0$. For a nonzero point in either formal group,
 \[
  \log(Q)=z(Q)(1+e_Q),\qquad v(e_Q)\ge1.
 \]
-The invariant differential is integral, and integration loses at most
-$v_p(r)$ in degree $r$; for $r\ge2$,
-$(r-1)v(z)-v_p(r)\ge1$.
-The relation $[s_0]H=[h]U$ gives
-$\log(U)/\log(H)=s_0/h$. The fifth test makes this integral and
-congruent to $t$ modulo $p$. Likewise the sixth gives
+Here $p>324$ and $v(p)=1$. By
+\cite[IV.5.5 and IV.6.4, pp.~129--132]{silverman},
+the logarithm is an injective isometry on $v(z)\ge1$.
+The integral invariant differential gives in relative degree $r-1$
+the bound $(r-1)v(z)-v_p(r)\ge1$ for every $r\ge2$.
+Thus the guarded nonzero points $H,V_0$ have nonzero logarithms.
+The fifth test first makes $z(U)/z(H)$ integral and congruent to
+$t$; multiplication by the units $1+e_Q$ preserves that congruence.
+The relation $[s_0]H=[h]U$ then gives
+$\log(U)/\log(H)=s_0/h$. Likewise the sixth gives
 $(s_0-\kappa n)/(h-\kappa)\equiv t$.
 Multiplying by the integer denominators and subtracting yields
 $v_p(\kappa(n-t))\ge1$. Since $t\equiv c$, we get
@@ -5927,7 +6206,8 @@ $\kappa\ne0$ with $\Test(\iota(n),\iota(\kappa),n)$.
 \begin{proof}
 Choose the sign so $R_0=\eta2730^6F(n)>0$ and let $S'$ be its finite
 prime support. Each sufficiently small local formal neighborhood has
-finite index in the compact local group. A positive common multiple
+finite index in the compact local group
+\cite[VII.6.3, p.~200]{silverman}. A positive common multiple
 of the quotient orders gives $\kappa$ with $[\kappa]P_0$ in every
 chosen neighborhood. Take
 \[
@@ -6034,14 +6314,36 @@ since $P_0$ starts there and the subgroup is closed under addition.
 A nonidentity point there has negative abscissa valuation, so its
 reciprocal is defined; the constructor accepts the identity directly.
 Thus every earlier search step is defined without a nontorsion premise.
-The point has nonsingular reduction also at the bad places over seven.
-Each order is at most $p^3$ and there are at most two places, giving
-$m_0\le N_s^6$. Multiplication by $N_s^4$ raises the formal depth enough
-that the rational coefficients of the reciprocal abscissa are divisible
-by $N_s^4$, with denominator prime to $N_s$.
-At two use the valuation with uniformizer $\sqrt2$, so $v(2)=2$.
-The initial valuations are $v(x)=-6$, $v(y)=-9$, $v(z)=3$,
-and $v([2]z)\ge v(z)+2$ at this depth. Therefore the literal search
+At the bad place $s\equiv3\pmod7$, the point reduces to $(2,6)$
+on $y^2=x^3$ and is nonsingular because $2y\not\equiv0$.
+The other place $s\equiv4\pmod7$ has good reduction.
+Take the actual order of the reduced point in the nonsingular
+reduction group, using
+\cite[VII.2.1, p.~188]{silverman}.
+At a good place the residue degree is at most two, so Hasse's
+bound \cite[V.1.1, p.~138]{silverman} gives order at most
+$(p+1)^2<p^3$ for odd $p$. The singular smooth group over
+$\F_7$ has order seven. There are at most two places over each
+rational prime, so $m_0\le N_s^6$.
+If $[N_s^4m_0]P_0$ is the identity, the search has already succeeded.
+Otherwise its reciprocal coordinate is defined and the following
+estimates apply. At each odd place, $[m_0]P_0$ is formal, and multiplication by
+$N_s^4$ gives
+\[
+ v(1/x([N_s^4m_0]P_0))\ge2+8v_p(N_s).
+\]
+At two normalize $v_s(s)=1$, so $v_s(2)=2$. Initially
+$v_s(x)=-6$, $v_s(y)=-9$, and $v_s(z)=3>2$.
+The log isometry therefore gives
+$v_s(z([2]Q))=v_s(z(Q))+2$ on this subgroup, and hence
+\[
+ v_s(1/x([N_s^4m_0]P_0))\ge6+16v_2(N_s).
+\]
+Writing this reciprocal as $a+bs$, extraction of $a$ and $b$
+uses division by $2$ and $2s$ and loses at most three units of
+$v_s$. Thus both rational coefficients lie in
+$N_s^4\Z_{(N_s)}$, where denominators in $\Z_{(N_s)}$ are
+prime to $N_s$. This proves the required divisibility and guard. Therefore the literal search
 succeeds by $N_s^4m_0$ and $M_0\le N_s^{10}$.
 This uses actual finite orders, not numerical upper bounds incorrectly
 treated as multiples of those orders.
@@ -6656,8 +6958,12 @@ $M=T/2^aT$, the low-degree Leray sequence gives an injection
  H^1(X_K,j_{K,*}M)\longrightarrow H^1(K,M)
 \]
 whose image is the kernel of all inertia restrictions outside two.
-Indeed the stalks of $R^1j_{K,*}M$ at a finite place are $H^1(I_v,M)$;
-the edge map is restriction to these stalks. Kato's section~8.2,
+Indeed the higher-direct-image stalk formula and Leray sequence
+\cite[Tags 03Q9 and 03QA]{stackscohom} identify the stalks of
+$R^1j_{K,*}M$ at a finite place with $H^1(I_v,M)$;
+the edge map is restriction to these stalks. The generic-point map
+$j_K$ is affine, hence quasi-compact and quasi-separated, as required
+by the stalk formula. Kato's section~8.2,
 pp.~180--181, defines the integral groups by the inverse limit of
 these finite-coefficient groups, so this assertion applies to the
 classes (K4) before rationalization.
@@ -6769,8 +7075,10 @@ The maps $\Phi_n$ commute with the norm transition maps.
 Proposition~8.12 has no new prime when $n$ increases, so their
 images define the single class $Z_F$ in (K1).
 The finite-coefficient degree-zero groups are finite and satisfy
-Mittag--Leffler, so passage to completed cochains introduces no
-$\varprojlim^1 H^0$ obstruction to this degree-one class.
+Mittag--Leffler. The inverse-limit exact sequence
+\cite[Corollary 4.1.3, p.~96]{nekovar} therefore has zero
+$\varprojlim^1 H^0$ term, so it gives this degree-one class
+in completed cochains.
 The quotient from the full cyclotomic tower to $\Gamma$ is the
 integral quotient of group bases, equivalently corestriction to
 the real subfield. No factor $(1+\tau)/2$ occurs.
@@ -7315,8 +7623,8 @@ with one constant for the fixed local types. At such a constituent
 $u_h^{\rm ev}(0)=0$ if and only if $L_*(h)=0$.
 Consequently every admissible $h$ with $L_*(h)\ne0$ satisfies
 $v_2L_*(h)\ge2\omega(h)+s(h)-c_E-C_{\rm loc}$: the forward
-rank-zero theorem supplies the preceding corank and finiteness
-hypotheses in this case. The central saturation corrections are those
+rank-zero theorem in Lemma~\ref{lem:forward-rank} supplies the
+preceding corank and finiteness hypotheses in this case. The central saturation corrections are those
 in (E.6)--(E.7); no primitivity after inverting $t$ is assumed to
 survive central specialization.
 \end{proposition}
@@ -7469,7 +7777,7 @@ Thus
 The central rational positive complex has only rank-two $H^1$, so
 this is specialization of (E.4). Corank-zero duality also shows
 $u_h^{\rm ev}(0)=0$ if and only if $L_*(h)=0$.
-At $L_*(h)\ne0$, the forward rank-zero theorem supplies the
+At $L_*(h)\ne0$, Lemma~\ref{lem:forward-rank} supplies the
 corank-zero and finite-$\Sha$ hypotheses just used.
 Equations (E.5) and (E.8), already with $G=1$, yield
 \[
@@ -7971,9 +8279,10 @@ primes $p_1,p_2$ for $E$ and put
 For every number field of degree at most four, prime-to-$p_j$
 torsion injects into a reduction group with residue degree at most
 four. The two primes therefore show that $B$ kills its entire
-torsion subgroup. Let $B_{\rm cusp}$ kill the finitely many fixed
-cuspidal constants of the normalized parametrization
-$\pi(\infty)=0$. For $\Delta_D=\operatorname{Gal}(F_D/\Q)$,
+torsion subgroup. Put $B_{\rm cusp}=C_\pi$, where $C_\pi$
+annihilates the image of the cuspidal subgroup defined after (4.1).
+This includes every Atkin--Lehner translation $\pi(W\infty)$,
+which need not vanish merely because $\pi(\infty)=0$. For $\Delta_D=\operatorname{Gal}(F_D/\Q)$,
 the integral character operator
 \[
  4e_D=\frac4{|\Delta_D|}
@@ -8150,7 +8459,9 @@ point identifies this evaluation with the cocycle value at
 $\sigma^2$, whose $b$-value is $2^{a+1}$. Thus the visibility
 valuation is fixed as the precision grows.
 
-Let $B$ be ramified at $\ell_0$ and infinity and let $R$ be an Eichler
+By \cite[Main Theorem 14.6.1]{voight-quaternion}, there is a quaternion
+algebra $B/\mathbb Q$ ramified exactly at $\ell_0$ and infinity.
+Let $R$ be an Eichler
 order of level $N$.  Supersingular pairs are
 $X=B^\times\backslash\widehat B^\times/\widehat R^\times$;
 their automorphism groups are $R_z^\times$ for
@@ -8839,7 +9150,9 @@ Consequently there are $2^{\omega(N)+1}$ local orientation tuples.
 Fix one tuple. Choose a rational embedding
 $\iota:F\hookrightarrow B$ and write $x_0=\iota(\sqrt{Dh_*})$.
 Such an embedding exists because $F$ is a field at the two ramified
-places of $B$, namely $\ell_0$ and infinity. Choose $z_0$ realizing
+places of $B$, namely $\ell_0$ and infinity
+\cite[Proposition 14.6.7, $(v)\Rightarrow(iii)$]{voight-quaternion}.
+Choose $z_0$ realizing
 the selected integral local embeddings. The adelic representatives
 with this tuple are exactly
 \[
@@ -9457,33 +9770,98 @@ these definitions agree on coinciding summands. In particular they
 give well-defined operators on their sum. No decomposition modulo
 two, and no residual irreducibility assertion, enters this construction.
 
-For the cuspidal constituents use \cite[\S\S0.3--0.7, Theorem~A]{carayol}
-with $F=\Q$, weight $2$, and a place above $2$. The representations
-are cuspidal, the real weight is at least two, the degree of $F$ is
-odd, and the local prime $p$ is odd. Thus the extra finite-place
-hypothesis imposed there when $[F:\Q]$ is even is inapplicable,
-and the coefficient characteristic differs from $p$. We use the
-arithmetic-Frobenius representation, dualizing the geometric-Frobenius
-convention of \cite[\S0.4]{carayol}; its good characteristic polynomial
-is $X^2-a_qX+q\chi(q)$. This fixes the convention also at $p$.
+For a cuspidal eigenform $f$, let $\Pi_f$ denote its unitary
+adelic normalization: at a good prime $q$ its Satake parameters
+$\alpha_q,\beta_q$ satisfy
+$a_q=\sqrt q(\alpha_q+\beta_q)$ and
+$\alpha_q\beta_q=\chi(q)$.
+Apply \cite[\S\S0.3--0.7, Theorem~A, pp.~409--411]{carayol}
+to $\Pi_f^\vee$, and set $\rho_f=\sigma(\Pi_f^\vee)^\vee$.
+Here $F=\Q$, the real weight is $2$, and the coefficient place
+lies above $2$. The degree of $F$ is odd, so the additional
+finite discrete-series-place hypothesis for even degree does
+not apply. The local prime $p$ is odd.
+Carayol's reciprocity sends geometric Frobenius to a uniformizer,
+and his $\omega_p$ is $|\cdot|_p$.
+His normalized-induction formula is
+\[
+ \sigma(\operatorname{Ind}(\xi_1,\xi_2))
+ =\xi_1^{-1}\omega_p^{-1/2}\oplus
+   \xi_2^{-1}\omega_p^{-1/2}.
+\]
+Thus if $\Pi_{f,p}=\operatorname{Ind}(\mu_1,\mu_2)$,
+$\rho_f$ on arithmetic Frobenius has eigenvalues
+$\sqrt p\,\mu_1(p),\sqrt p\,\mu_2(p)$ whenever these
+characters are unramified. In particular its good polynomial
+is $X^2-a_qX+q\chi(q)$. Both the automorphic contragredient and
+the dual on the Galois side are part of this convention.
 
-For a block with ramified character, the local conductor is exactly
-one: it is at most the level exponent and at least the conductor of
-the determinant. A special representation has conductor one only
-when its twisting character is unramified, in which case its determinant
-is unramified; a ramified twist of a special representation has
-conductor at least two. A supercuspidal representation also has
-conductor at least two. The constituent is consequently a principal
-series with precisely one unramified character and one character of
-conductor one. On inertia the latter is the specified quadratic
-character, since the former is trivial there. Local compatibility and
-the degree-one local Euler factor identify the eigenvalue of
-$U_p^{(2)}$ with Frobenius on the unramified line. The local newvector
-space at conductor one is one-dimensional, so this operator is scalar
-on this local factor even when degeneracies at other primes produce
-a multiplicity space. For an Eisenstein constituent the same claims
-follow by taking its two character summands and their degree-one
-Euler factor; Carayol's cuspidal theorem is not applied to it.
+For a block with ramified character, its local conductor is
+exactly one: it is at most the level exponent and at least the
+conductor of its determinant.
+Casselman's newvector theorem and conductor calculation
+\cite[Theorem~1, pp.~302--306]{casselman} show that a special
+representation has conductor one only for an unramified twist;
+a ramified twist has conductor at least two. A supercuspidal
+representation has conductor at least two. Consequently
+$\Pi_{f,p}=\operatorname{Ind}(\mu_1,\mu_2)$ with $\mu_1$
+unramified and $\mu_2$ of conductor one, after interchanging
+the characters if necessary. Its newvector space is a line.
+On inertia the ramified character is the prescribed quadratic
+character.
+
+We check the Fourier normalization of the operator on this line.
+Use normalized induction, so that
+\[
+ v\left(\begin{pmatrix}a&x\\0&d\end{pmatrix}g\right)
+ =\mu_1(a)\mu_2(d)|a/d|_p^{1/2}v(g).
+\]
+Put $K_0(p)=\{g\in\mathrm{GL}_2(\Z_p):g_{21}\in p\Z_p\}$.
+Use its character $k\mapsto\mu_2(k_{22})$.
+This is the lower-right-character convention. Casselman's
+upper-left-character convention is carried to it by
+$h_p=\left(\begin{smallmatrix}0&1\\-p&0\end{smallmatrix}\right)$,
+which normalizes $K_0(p)$ and interchanges its diagonal entries
+under conjugation. We label the inducing characters so that
+$\mu_1$ is unramified, using the interchange isomorphism for
+irreducible principal series.
+Normalize Haar measure by $\operatorname{vol}(K_0(p))=1$.
+The character-weighted double-coset operator for
+$K_0(p)\operatorname{diag}(p,1)K_0(p)$, with value one at
+$\operatorname{diag}(p,1)$, is
+\[
+ H_p=\sum_{b\in\Z/p\Z}
+       \Pi_{f,p}\left(\begin{pmatrix}p&b\\0&1\end{pmatrix}\right).
+\]
+Take the newvector supported on $B K_0(p)$ with $v(1)=1$.
+Evaluating at $1$ gives
+\[
+ (H_pv)(1)=p\mu_1(p)p^{-1/2}=\sqrt p\,\mu_1(p).
+\]
+This is the Fourier operator $U_p^{(2)}$. Indeed, in the
+Whittaker model use an additive character of conductor $\Z_p$.
+Writing $a(n)=\operatorname{diag}(n,1)$ and
+$n(x)=\left(\begin{smallmatrix}1&x\\0&1\end{smallmatrix}\right)$,
+\[
+ a(n)\begin{pmatrix}p&b\\0&1\end{pmatrix}=n(nb)a(np)
+ \quad(n\in\Z_p),\qquad
+ (H_pW)(a(n))=pW(a(np)).
+\]
+Normalize the archimedean Whittaker function by
+$W_\infty(a(y))=y\exp(-2\pi y)$ for $y>0$.
+Comparison of its positive-$n$ term with $y f(iy)$ gives the
+finite Whittaker coefficient $a_n/n$. The displayed equality
+therefore sends $a_n$ to $a_{pn}$. Hence
+$U_p^{(2)}=\sqrt p\,\mu_1(p)$ on the new line, exactly the
+arithmetic-Frobenius eigenvalue on the unramified Galois line.
+This scalar is algebraic; the square roots only express the
+unitary normalization. Old multiplicities at primes other than
+$p$ carry the same scalar. Casselman's oldspace dimension formula
+\cite[Corollary, p.~306, and Theorem~4, p.~313]{casselman}
+does not introduce an additional multiplicity at this conductor-one
+prime. For Eisenstein constituents, the two Galois characters and
+the divisor-sum Fourier coefficients give the same equality directly;
+Carayol's cuspidal theorem is not applied to them.
 
 Choose an inertia element $\tau$ on which the quadratic character
 is $-1$, and a Frobenius lift $\phi$. On a ramified block, a basis
@@ -10555,8 +10933,97 @@ is the separate argument in the main text.
 % End 09-normalization-endpoints.tex
 
 
+\section{De Rham comparison and finite descent in the height argument}
+\label{app:de-rham-descent}
+
+\begin{lemma}\label{lem:de-rham-descent}
+Let $K/\mathbb Q_\ell$ and $F/K$ be finite extensions, let $A/F$
+be an abelian surface, and let $C_\ell/\mathbb Q_\ell$ be a finite
+coefficient field. Suppose a continuous representation
+$r:G_K\longrightarrow\mathrm{GL}_2(C_\ell)$ satisfies
+\[
+ V_\ell(A)\otimes_{\mathbb Q_\ell}C_\ell
+       \simeq r|_{G_F}\oplus r|_{G_F}.
+\]
+Then $r$ is de Rham. At every coefficient embedding its
+Hodge--Tate weights are $0,-1$, with
+$\mathbb Q_\ell(1)$ assigned weight $-1$.
+\end{lemma}
+
+\begin{proof}
+The smooth proper variety $A$ has a smooth proper rigid
+analytification. Apply \cite[Corollary 1.8]{scholze2013}, with the
+corrections in \cite{scholze-erratum}. The passage from algebraic
+to analytic cohomology uses \cite[Theorems 9.1 and 9.3]{scholze2013}:
+Theorem 9.1 identifies coherent cohomology, and hence the filtered
+de Rham hypercohomology, while Theorem 9.3 identifies the
+$\mathbb Z/\ell^n\mathbb Z$-cohomology, compatibly in $n$.
+Its invertibility condition holds because $F$ has characteristic
+zero. Taking inverse limits and then inverting $\ell$ identifies
+the algebraic and analytic $\ell$-adic cohomology, compatibly with
+the action of $G_F$. Thus
+$H^1_{\mathrm{et}}(A_{\overline F},\mathbb Q_\ell)$ is de Rham.
+
+The canonical, Galois-equivariant identification
+\cite[Part I, Theorem 12.1(a)]{milne-av}
+\[
+ V_\ell(A)\simeq
+ H^1_{\mathrm{et}}(A_{\overline F},\mathbb Q_\ell)^\vee
+\]
+gives the same property for the Tate module. De Rham representations
+are closed under duals and subquotients
+\cite[Theorem 5.2.1 and Proposition 6.3.3]{brinon-conrad}.
+Extension of the coefficient field is, on underlying
+$\mathbb Q_\ell$-representations, a finite direct sum.
+The displayed decomposition therefore makes $r|_{G_F}$ de Rham.
+
+Here finite-extension descent requires no semistable descent
+assertion. To see it explicitly, pass to a finite Galois extension
+$F'/K$ containing $F$, and let $W$ be the underlying
+$\mathbb Q_\ell$-representation of $r$. The vector space
+\[
+ D_{F'}=(B_{\mathrm{dR}}\otimes_{\mathbb Q_\ell}W)^{G_{F'}}
+\]
+has its natural semilinear $\mathrm{Gal}(F'/K)$-action, and its
+invariants are
+$D_K=(B_{\mathrm{dR}}\otimes_{\mathbb Q_\ell}W)^{G_K}$.
+Finite Galois descent gives $F'\otimes_K D_K\simeq D_{F'}$,
+also on each filtration step. Since $W|_{G_{F'}}$ is de Rham,
+$\dim_K D_K=\dim_{F'}D_{F'}=\dim_{\mathbb Q_\ell}W$.
+This proves the assertion over $K$; it is the finite-extension
+case of \cite[Proposition 6.3.8]{brinon-conrad}.
+
+The two Hodge numbers of $H^1_{\mathrm{dR}}(A/F)$ are $2,2$.
+Consequently the Tate module has weights $0,0,-1,-1$.
+At each coefficient embedding, its two isomorphic summands
+have the same weight multiset, so each summand has weights $0,-1$.
+The filtration-compatible descent preserves these weights.
+\end{proof}
+
+The Hodge--Tate comparison in \cite[Chapter III, Theorem 4.1]{faltings1988}
+alone would not prove the de Rham assertion. The preceding argument
+uses the de Rham comparison itself and does not infer de Rhamness
+from Hodge--Tate weights.
+
 % Begin references.tex
 \begin{thebibliography}{99}
+\bibitem{scholze2013} P. Scholze,
+\emph{$p$-adic Hodge theory for rigid-analytic varieties},
+Forum of Mathematics, Pi 1 (2013), e1, 1--77,
+Corollary 1.8 and Theorems 9.1, 9.3.
+\url{https://doi.org/10.1017/fmp.2013.1}.
+\bibitem{scholze-erratum} P. Scholze,
+\emph{$p$-adic Hodge theory for rigid-analytic varieties---corrigendum},
+Forum of Mathematics, Pi 4 (2016), e6, 1--4.
+\url{https://doi.org/10.1017/fmp.2016.4}.
+\bibitem{brinon-conrad} O. Brinon and B. Conrad,
+\emph{CMI summer school notes on $p$-adic Hodge theory},
+preliminary version, June 24, 2009,
+Theorem 5.2.1 and Propositions 6.3.3, 6.3.8.
+\url{https://math.stanford.edu/~conrad/papers/notes.pdf}.
+\bibitem{milne-av} J. S. Milne, \emph{Abelian varieties},
+version 2.00 (2008), Part I, Theorem 12.1(a).
+\url{https://www.jmilne.org/math/CourseNotes/AV.pdf}.
 \bibitem{babagranath} S. Baba and H. Granath,
 \emph{Genus 2 curves with quaternionic multiplication}, 2005 preprint,
 Sections 2.1, 3 and Proposition 10.
@@ -10572,9 +11039,22 @@ Siegel's modular threefold}, arXiv:1807.00466v1, 2018, equations (2), (14).
 219--284, $p$-adic monodromy theorem.
 \url{https://doi.org/10.1007/s002220100202}.
 \bibitem{pan2022} L. Pan, \emph{The Fontaine--Mazur conjecture in the
-residually reducible case}, Journal of the American Mathematical Society
-35 (2022), 1031--1169, Theorem 1.0.4.
-\url{https://doi.org/10.1090/jams/991}.
+residually reducible case}, arXiv:1901.07166v2,
+Theorem 1.0.4, the version used here. Published in Journal of the
+American Mathematical Society 35 (2022), 1031--1169.
+\url{https://arxiv.org/abs/1901.07166v2}.
+\bibitem{conrad-local-characters} B. Conrad,
+\emph{Lifting global representations with local properties},
+author preprint, December 11, 2011, Appendix B, pp.~32--33.
+\url{https://math.stanford.edu/~conrad/papers/locchar.pdf}.
+\bibitem{li-newforms} W.-C. W. Li,
+\emph{Newforms and functional equations}, Mathematische Annalen
+212 (1975), 285--315, p.~296.
+\bibitem{shimura-factors} G. Shimura,
+\emph{On the factors of the jacobian variety of a modular function field},
+Journal of the Mathematical Society of Japan 25 (1973), 523--544,
+Theorem 1.
+\url{https://doi.org/10.2969/jmsj/02530523}.
 \bibitem{javanpeykar} A. Javanpeykar, with an appendix by P. Bruin,
 \emph{Polynomial bounds for Arakelov invariants of Belyi curves},
 Algebra \& Number Theory 8 (2014), 89--140,
@@ -10598,8 +11078,9 @@ article 13, Section 6, equation (6.2).
 \emph{Semistable reduction and torsion subgroups of abelian varieties},
 Annales de l'Institut Fourier 45 (1995), 403--420, Theorem 3.5.
 \url{https://www.numdam.org/article/AIF_1995__45_2_403_0.pdf}.
-\bibitem{serrelocal} J.-P. Serre, \emph{Local fields},
-Graduate Texts in Mathematics 67, Springer, 1979, Chapters III--IV.
+\bibitem{serrelocal} J.-P. Serre, \emph{Local class field theory},
+in J. W. S. Cassels and A. Fr\"ohlich (eds.), \emph{Algebraic Number Theory},
+Academic Press, 1967, Chapter VI, 128--161, Sections 4.1--4.3.
 \bibitem{faltings1983} G. Faltings, \emph{Endlichkeitss\"atze f\"ur
 abelsche Variet\"aten \"uber Zahlk\"orpern}, Inventiones Mathematicae
 73 (1983), 349--366; erratum, 75 (1984), 381.
@@ -10635,25 +11116,54 @@ arXiv:1802.00085v3, Theorem 1.2.
 \bibitem{milne} J. S. Milne, \emph{Arithmetic duality theorems},
 second edition, 2006, Chapter I.
 \url{https://www.jmilne.org/math/Books/ADTnot.pdf}.
+\bibitem{stackscohom} The Stacks Project,
+\emph{Stalks of higher direct images} and \emph{The Leray spectral sequence},
+Theorem 59.53.1, Tag 03Q9, and Proposition 59.54.2, Section Tag 03QA,
+HTML snapshots of November 5, 2026.
+\url{https://stacks.math.columbia.edu/tag/03Q9};
+\url{https://stacks.math.columbia.edu/tag/03QA}.
 \bibitem{nekovar} J. Nekov\'a\v r, \emph{Selmer complexes},
 Ast\'erisque 310, 2006, Proposition 5.2.4, Theorems 6.3.4 and 7.8.8, and Sections 5.7 and 6.4.
 \url{https://www.numdam.org/item/AST_2006__310__1_0/}.
 \bibitem{afp} Archive of Formal Proofs, \emph{DPRM\_Theorem},
 \texttt{Alpha\_Sequence}, \texttt{Exponential\_Relation}, and
-\texttt{Exponentiation}. Exact source versions are pinned in the local
-corpus; current browse pages are not substitutes for those pins.
+\texttt{Exponentiation}, directory
+\texttt{thys/DPRM\_Theorem/Diophantine/}, AFP development git mirror
+revision \texttt{b4f3b892d0ae25cea27412ba4007cdb63e44b0eb}
+(May 10, 2026). The three source files match this revision byte for byte.
 \url{https://isa-afp.org/entries/DPRM_Theorem.html}.
+\bibitem{edixhoven}
+B. Edixhoven, \emph{N\'eron models and tame ramification},
+Compositio Mathematica 81 (1992), 291--306,
+Theorem~5.3 and Remark~5.4.1.
+\url{https://www.numdam.org/item/CM_1992__81_3_291_0/}.
+\bibitem{sutherland} A. V. Sutherland,
+\emph{Isogeny kernels and division polynomials}, MIT 18.783,
+Fall 2025, Lecture 5, September 18, 2025, \S\S5.5--5.6.
+\url{https://ocw.mit.edu/courses/18-783-elliptic-curves-fall-2025/mit18_783_f25_lec05.pdf}.
 \bibitem{silverman} J. H. Silverman, \emph{The arithmetic of elliptic
 curves}, second edition, Springer, 2009, Chapters IV and VII.
 \bibitem{dd} T. Dokchitser and V. Dokchitser, \emph{Root numbers and parity
 of ranks of elliptic curves}, Journal f\"ur die reine und angewandte
 Mathematik 658 (2011), 39--64, Theorem 1.8.
 \url{https://arxiv.org/abs/0906.1815v1}.
+\bibitem{bcdt} C. Breuil, B. Conrad, F. Diamond and R. Taylor,
+\emph{On the modularity of elliptic curves over $\Q$: wild 3-adic exercises},
+author manuscript, Theorem A and Introduction, conditions (1)--(6).
+\url{https://virtualmath1.stanford.edu/~conrad/papers/tswfinal.pdf}.
+Published in Journal of the American Mathematical Society 14 (2001), 843--939.
+\bibitem{milnemf} J. S. Milne, \emph{Modular functions and modular forms},
+v1.31, March 22, 2017, Remark 11.18 and Theorem 11.19.
+\url{https://www.jmilne.org/math/CourseNotes/MF.pdf}.
+\bibitem{elkik} R. Elkik, \emph{Le th\'eor\`eme de Manin--Drinfeld},
+Ast\'erisque 183 (1990), 59--67, Theorem, p.~59.
+\url{https://www.numdam.org/item/AST_1990__183__59_0.pdf}.
 \bibitem{gz} B. Gross and D. Zagier, \emph{Heegner points and derivatives
 of $L$-series}, Inventiones Mathematicae 84 (1986), 225--320.
-\bibitem{kolyvagin} V. Kolyvagin, \emph{Euler systems}, in
-\emph{The Grothendieck Festschrift}, Volume II, 1990.
-Preprint MPI/90-69, Theorems 1 and 5.
+\bibitem{kolyvagin} V. A. Kolyvagin,
+\emph{On the Mordell--Weil group and the Shafarevich--Tate group
+of modular elliptic curves}, MPIM preprint MPI/90-69 (1990),
+Theorems 1--5, pp.~4--5.
 \url{https://archive.mpim-bonn.mpg.de/id/eprint/325/1/preprint_1990_69.pdf}.
 \bibitem{kato} K. Kato, \emph{$p$-adic Hodge theory and values of zeta
 functions of modular forms}, Ast\'erisque 295 (2004), 117--290.
@@ -10688,6 +11198,10 @@ Proposition 18 and Corollary 2.
 \bibitem{ramsey} N. Ramsey, \emph{Geometric and $p$-adic modular forms
 of half-integral weight}, Annales de l'Institut Fourier 56 (2006),
 599--624. \url{https://www.numdam.org/item/10.5802/aif.2195.pdf}.
+\bibitem{casselman}
+W. Casselman, \emph{On some results of Atkin and Lehner},
+Mathematische Annalen 201 (1973), 301--314,
+Theorem~1 and its proof, pp.~302--306, and Theorem~4, p.~313.
 \bibitem{carayol} H. Carayol, \emph{Sur les repr\'esentations
 $\ell$-adiques associ\'ees aux formes modulaires de Hilbert},
 Annales Scientifiques de l'\'Ecole Normale Sup\'erieure 19 (1986), 409--468,
@@ -10719,6 +11233,17 @@ OpenAI Math Release preprint, 6 October 2026.
 Compositio Mathematica 140 (2004), 1439--1472; arXiv:1202.6340v1.
 \bibitem{lang1956} S. Lang, \emph{Algebraic groups over finite fields},
 American Journal of Mathematics 78 (1956), 555--563.
+\bibitem{williams-mertens}
+K. S. Williams, \emph{Mertens' theorem for arithmetic progressions},
+J. Number Theory \textbf{6} (1974), 353--359, Theorem 1.
+\url{https://people.math.carleton.ca/~williams/papers/pdf/057.pdf}.
+
+\bibitem{voight-quaternion}
+J. Voight, \emph{Quaternion algebras}, corrected online edition
+v1.0.7u, August 5, 2026, Main Theorem 14.6.1 and Proposition 14.6.7,
+pp. 223--224.
+\url{https://jvoight.github.io/quat-book.pdf}.
+
 \end{thebibliography}
 
 % End references.tex

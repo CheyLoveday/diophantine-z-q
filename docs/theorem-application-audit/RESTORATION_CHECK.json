@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-05",
+  "result": "PASS",
+  "source_registry_sha256": "6e8732d40657374f58e148cfdbf830b72426eafbc92fd3bd969e4e8a3f9802cf",
+  "source_manifest_sha256": "08e92910ae947c8bd68f37eb42f11b54c3acc348622926426104fff57ff15652",
+  "unique_source_files_restored": 92,
+  "source_file_entries_checked": 97,
+  "review_evidence_restored": 65,
+  "regeneration_byte_matches": {
+    "sources.json": true,
+    "applications.json": true,
+    "citations.json": true,
+    "internal-references.json": true,
+    "named-input-index.json": true,
+    "evidence.json": true,
+    "coverage.json": true,
+    "application-sites.json": true,
+    "INVENTORY.md": true,
+    "SOURCES.md": true,
+    "OPEN_ITEMS.md": true
+  },
+  "scope": "Fresh-directory restoration from the existing pinned research corpus, followed by workspace validation and inventory regeneration. This is not a fresh download or a proof check."
+}

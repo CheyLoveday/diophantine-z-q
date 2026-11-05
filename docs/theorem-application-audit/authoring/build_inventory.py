@@ -2,10 +2,21 @@
 from pathlib import Path
 import argparse, hashlib, json, re, shutil, sys
 from collections import Counter
-from application_specs import APPS
 from source_map import SOURCE_PATHS, NOTES, EVIDENCE
-from fresh_checks import apply_checks
-apply_checks(APPS)
+AUTHOR=Path(__file__).resolve().parent
+APPS=json.loads((AUTHOR/'FROZEN_APPLICATIONS.json').read_text(encoding='utf-8'))
+ROLES=json.loads((AUTHOR/'CITATION_ROLES.json').read_text(encoding='utf-8'))
+ADDITIONS=json.loads((AUTHOR/'SOURCE_ADDITIONS.json').read_text(encoding='utf-8'))
+FILE_METADATA={}
+for row in ADDITIONS:
+ key=row['id']
+ old=[] if row.get('replace_files') else SOURCE_PATHS.get(key,[])
+ SOURCE_PATHS[key]=list(dict.fromkeys(old+[f['workspace_relative_path'] for f in row['files']]))
+ note=' '.join(row['version_notes'])
+ NOTES[key]=note if row.get('replace_version_notes') else (NOTES.get(key,'')+' '+note).strip()
+ for f in row['files']:FILE_METADATA[f['workspace_relative_path']]=f
+for key,row in json.loads((AUTHOR/'EVIDENCE_ADDITIONS.json').read_text(encoding='utf-8')).items():
+ EVIDENCE[key]=row['workspace_relative_path']
 
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--workspace',type=Path,required=True)
@@ -17,7 +28,7 @@ OUT=REPO/'docs/theorem-application-audit'
 OUT.mkdir(parents=True,exist_ok=True)
 TEX=REPO/'diophantine_zq.tex'
 raw=TEX.read_bytes(); sha=hashlib.sha256(raw).hexdigest()
-EXPECTED='c59598ba474a1512dd03787c2bc9ff093a3c3a8a0604f96d5f8bcfa140c61693'
+EXPECTED='f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3'
 if sha!=EXPECTED:
  raise SystemExit('Manuscript changed: review the specifications and anchors before regenerating. Expected '+EXPECTED)
 text=raw.decode('utf-8-sig'); lines=text.splitlines()
@@ -49,6 +60,9 @@ for row in downloads:
   key='berger2002' if row['id']=='berger-arxiv-v3' else row['id']
   SOURCE_PATHS.setdefault(key,[]).append('work/theorem-application-audit-20261105/primary/'+Path(row['path']).name)
 
+# Additional publisher downloads have paths registered explicitly in source_map.
+downloads += json.loads((Path(__file__).parent/'CLOSURE_DOWNLOADS.json').read_text(encoding='utf-8'))
+
 evidence=[]
 (OUT/'evidence').mkdir(exist_ok=True)
 for id,path in EVIDENCE.items():
@@ -58,7 +72,7 @@ for id,path in EVIDENCE.items():
  shutil.copyfile(p,OUT/'evidence'/name)
  evidence.append(dict(id=id,path='evidence/'+name,sha256=digest(p.read_bytes()),
    historical_workspace_path=path,
-   scope='Historical limited review; its own source versions and exclusions govern. Not an independent check of the current whole manuscript.'))
+   scope=('Current bounded root review; listed premises remain dependencies; not an independent second review.' if id.startswith('closure-') else 'Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript.' if id.startswith('parallel-') else 'Historical limited review; its own source versions and exclusions govern. Not an independent check of the current whole manuscript.')))
 
 sources=[]
 for id in sorted(set(SOURCE_PATHS)|{b['id'] for b in bibs}):
@@ -70,19 +84,23 @@ for id in sorted(set(SOURCE_PATHS)|{b['id'] for b in bibs}):
    f=dict(workspace_relative_path=path,sha256=digest(p.read_bytes()),bytes=p.stat().st_size)
    dl=next((x for x in downloads if x.get('sha256')==f['sha256']),None)
    if dl: f['retrieval_url']=dl['url'];f['retrieved_date']='2026-11-05'
+   meta=FILE_METADATA.get(path,{})
+   if meta:
+    if meta['sha256']!=f['sha256']:raise ValueError('Reviewed source changed: '+path)
+    for field in ('retrieval_url','retrieved_date','url'):
+     if field in meta:f['retrieval_url' if field=='url' else field]=meta[field]
    files.append(f)
   else: files.append(dict(workspace_relative_path=path,status='MISSING'))
  sources.append(dict(id=id,bibliography=bib.get('citation'),urls=bib.get('urls',[]),files=files,
   version_notes=NOTES.get(id,'Exact bytes pinned below; publication/version equivalence is not inferred from the filename.'),
   source_status='bytes_pinned' if files and all('sha256' in f for f in files) else 'source_pin_missing'))
 
-summary={f'C{i:03}' for i in range(54,64)}
-special={'C001':'provenance','C064':'source-scope declaration'}
+if set(ROLES)!=set(by_cite):raise ValueError('Frozen citation roles do not cover this manuscript')
 for c in citations:
- c['application_ids']=[a['id'] for a in APPS if c['id'] in a['citations']]
- c['role']='application' if c['application_ids'] else ('summary' if c['id'] in summary else special.get(c['id'],'UNCLASSIFIED'))
- if c['role']=='summary':
-  c['summary_application_ids']=[a['id'] for a in APPS if set(a['sources'])&set(c['keys'])]
+ row=ROLES[c['id']]
+ ids=[a['id'] for a in APPS if c['id'] in a['citations']]
+ if ids!=row['application_ids']:raise ValueError('Frozen citation membership differs: '+c['id'])
+ c.update(row)
 
 applications=[]
 for a in APPS:
@@ -101,7 +119,7 @@ for a in APPS:
   anchors.append(dict(kind='context',line_start=lo,line_end=hi,excerpt=excerpt,excerpt_sha256=digest(excerpt.encode())))
  a['manuscript_anchors']=anchors
  a['manuscript_sha256']=sha
- a['hypothesis_status']='Obligations and claimed discharges recorded; not a certificate that every discharge is correct.'
+ a['hypothesis_status']='Source interface and registered translations reviewed with stated internal premises; no whole-proof certificate.'
  a['source_pin_complete']=bool(a['sources']) and all(next(s for s in sources if s['id']==id)['source_status']=='bytes_pinned' for id in a['sources'])
  applications.append(a)
 
@@ -163,7 +181,7 @@ coverage=dict(manuscript_path='diophantine_zq.tex',manuscript_sha256=sha,manuscr
  source_records=len(sources),sources_byte_pinned=sum(s['source_status']=='bytes_pinned' for s in sources),
  anchored_application_contexts=len(sites),
  fresh_source_interface_checks=sum('fresh_source_check' in a for a in applications),
- citation_strength_findings=[a['id'] for a in applications if a['status']=='citation_strength_mismatch_repair_proposed'],
+ citation_strength_findings=[a['id'] for a in applications if a['status'] in {'citation_strength_mismatch_repair_proposed','citation_repair_applied_separate_acceptance_pending'}],
  internal_reference_occurrences=len(internal),unresolved_internal_references=[r for r in internal if not r['target_lines']],
  duplicate_labels={k:v for k,v in labels.items() if len(v)>1},named_input_signals=len(named),
  mechanically_complete_citation_classification=all(c['role']!='UNCLASSIFIED' for c in citations),
@@ -177,10 +195,10 @@ dump('application-sites.json',sites)
 
 def paper_link(n):return '../../diophantine_zq.tex#L'+str(n)
 md=['# Theorem application inventory','',f'Manuscript SHA256: `{sha}`. Line numbers refer only to this frozen source.','',
- 'This document records the exact consumers and the hypotheses and translations that need verification. “Prior evidence” links bounded historical reviews, not fresh approval of the current manuscript. Open items are unresolved documentation or review obligations; they are not automatically mathematical counterexamples.','',
+ 'This document records the checked source applications, their exact consumers, and the hypotheses, translations and dependencies retained by each decision. Linked evidence includes historical reports and current bounded reviews; their stated scope and source version govern. An accepted application is not a certificate of every internal premise or the main theorem.','',
  'The JSON files preserve every citation occurrence and excerpt hash, source byte hashes, internal references, and a separate named-input search index. See [coverage](coverage.json) and [source versions](SOURCES.md).','',
  '| ID | Application | Citation occurrences | Open item |','|---|---|---|---|']
-for a in applications:md.append(f"| [{a['id']}](#{a['id'].lower()}) | {a['title']} | {', '.join(a['citations']) or 'uncited'} | {'yes' if a['open_items'] else 'none recorded; not fresh approval'} |")
+for a in applications:md.append(f"| [{a['id']}](#{a['id'].lower()}) | {a['title']} | {', '.join(a['citations']) or 'uncited'} | {'yes' if a['open_items'] else 'none within reviewed scope'} |")
 for a in applications:
  md += ['',f"<a id=\"{a['id'].lower()}\"></a>",f"## {a['id']}: {a['title']}",'',
    'Manuscript: '+', '.join(f"[L{x['line_start']}]({paper_link(x['line_start'])})" for x in a['manuscript_anchors'])+'.',
@@ -189,9 +207,16 @@ for a in applications:
    '', '**Hypotheses and claimed discharge.** '+a['hypotheses_and_discharge'],
    '', '**Conventions.** '+a['conventions'],
    '', '**Translation.** '+a['translation_justification'],
-   '', '**Prior evidence:** '+(', '.join(f'[{e}]({next(x["path"] for x in evidence if x["id"]==e)})' for e in a['prior_evidence']) or 'No bounded source/application review attached.')+'.',
+   '', '**Review evidence:** '+(', '.join(f'[{e}]({next(x["path"] for x in evidence if x["id"]==e)})' for e in a['prior_evidence']) or 'No bounded source/application review attached.')+'.',
    '', '**Status:** '+a['status']+'.',
-   '', '**Open item:** '+(a['open_items'] or 'No additional item recorded. This does not certify the hypothesis discharges or establish independent verification.')]
+   '', '**Open item:** '+(a['open_items'] or 'No unresolved item within the recorded source-application scope. Named internal premises remain dependencies; this is not a whole-proof certificate.')]
+ if a.get('independent_acceptance_reviews'):
+  for item in a['independent_acceptance_reviews']:
+   md += ['', '**Independent acceptance:** '+item['reviewer']+'. The complete decision, retained premises and baseline binding are in applications.json and the linked acceptance report.']
+ if a.get('retained_internal_premises'):
+  md += ['', '**Retained internal premises.** '+str(a['retained_internal_premises'])]
+ if a.get('dependency_phases') or a.get('dependency_clarifications'):
+  md += ['', 'See [dependency phases](DEPENDENCIES.md) and [the machine-readable distinctions](DEPENDENCY_PHASES.json); a source check does not discharge its own prerequisites.']
  if 'fresh_source_check' in a:
   md += ['', '**Source inspection on 2026-11-05:** '+a['fresh_source_check']['result'], '', a['fresh_source_check']['scope']]
 (OUT/'INVENTORY.md').write_text('\n'.join(md)+'\n',encoding='utf-8')
@@ -200,13 +225,14 @@ for s in sources:
  sm += [f'<a id="{s["id"]}"></a>',f'## {s["id"]}','',s['bibliography'] or 'Supplementary source, not a distinct current bibliography entry.','',s['version_notes'],'',f'Pin status: **{s["source_status"]}**.','']
  for f in s['files']:
   sm += ['- `'+f['workspace_relative_path']+'`', '  - SHA256: `'+f.get('sha256','MISSING')+'`']
-  if 'retrieval_url' in f:sm+=['  - [Retrieved source]('+f['retrieval_url']+') on '+f['retrieved_date']+'.']
+  if 'retrieval_url' in f:sm+=['  - [Retrieved source]('+f['retrieval_url']+') on '+f.get('retrieved_date','date not recorded')+'.']
 (OUT/'SOURCES.md').write_text('\n'.join(sm)+'\n',encoding='utf-8')
 om=['# Open review obligations','',
  'These are unresolved obligations, not automatically mathematical gaps. A closed documentation item does not certify the entire application. Each link gives the maps, hypotheses, conventions, translations, and evidence already recorded.','',
  'The concrete source-strength mismatch is recorded separately in [FINDINGS.md](FINDINGS.md).','']
+if not any(a['open_items'] for a in applications):om += ['No unresolved source-application review items remain within the 82 recorded families. Retained internal premises are documented in the inventory and dependency phases; this statement does not certify the entire proof.','']
 for a in applications:
  if a['open_items']:
   om += [f"- [ ] [{a['id']}: {a['title']}](INVENTORY.md#{a['id'].lower()}): {a['open_items']}"]
-(OUT/'OPEN_ITEMS.md').write_text('\n'.join(om)+'\n',encoding='utf-8')
+(OUT/'OPEN_ITEMS.md').write_text('\n'.join(om).rstrip()+'\n',encoding='utf-8')
 print(json.dumps(coverage,indent=2))

@@ -1,61 +1,46 @@
-# Theorem application inventory — November 5, 2026
+# Theorem application inventory, November 5, 2026
 
-This inventory records the external inputs used by the **11/4 manuscript**, the objects and maps to which they are applied, required hypotheses, convention changes, and the proposed justification for each translation. It is tied to one exact TeX file; it is not an endorsement of every recorded application.
+The inventory records 82 scoped source/application decisions. Each decision identifies the external result, the manuscript passages that use it, the relevant hypotheses and conventions, and the evidence for the recorded translation. The decisions include the repairs and dependency qualifications linked in the records.
 
-**One source-strength mismatch has been found:** the Faltings 1988 comparison cited at the de Rham step gives Hodge–Tate decomposition. A stronger comparison theorem and finite-extension descent are needed. A replacement chain is described in [the findings](FINDINGS.md#f001-the-de-rham-step-needs-a-different-comparison-reference). It has not been inserted into the frozen manuscript or independently accepted.
+This is an audit of theorem applications, not an independent proof of every internal lemma or a formal verification of the manuscript's main theorem. An accepted application may consume explicitly listed internal premises. An empty open-items field means that no unresolved item remains within that application's recorded review scope; it does not remove those premises.
+
+[DEPENDENCIES.md](DEPENDENCIES.md) explains the main dependency boundaries. The manuscript hash and anchors in the inventory identify the version reviewed. Earlier reports remain historical evidence; where a later repair supersedes an earlier finding, the record identifies that repair and its review.
 
 ## Read the audit
 
-| File | Purpose |
+| File | Contents |
 | --- | --- |
-| [INVENTORY.md](INVENTORY.md) | 82 application families, with maps, hypotheses, conventions, translations and prior review evidence |
-| [SOURCES.md](SOURCES.md) | Exact file hashes, version differences, retrieval URLs and missing source pins |
-| [FINDINGS.md](FINDINGS.md) | Concrete mismatch, proposed repair, and scope of new source checks |
-| [OPEN_ITEMS.md](OPEN_ITEMS.md) | 39 unresolved source or application-review obligations |
-| [coverage.json](coverage.json) | Counts, frozen manuscript identity, and explicit limitations |
-| [validate.py](validate.py) | Checks bindings, references, coverage and hashes; does not check proofs |
+| [Inventory](INVENTORY.md) | 82 application families with exact sources, maps, hypotheses, conventions, translations and review evidence |
+| [Findings](FINDINGS.md) | Errors found, repairs applied and limits of the audit |
+| [Sources](SOURCES.md) | 72 source records, version identities, file hashes and recorded retrieval URLs |
+| [Dependencies](DEPENDENCIES.md) | Internal premises and the order of finite-model, duality and arithmetic deductions |
+| [Open items](OPEN_ITEMS.md) | No unresolved review item within the recorded application scopes |
+| [Authoring](authoring/README.md) | Reviewed input data and reproducible generator |
+| [Build receipt](MANUSCRIPT_BUILD.json) | Matching TeX/PDF hashes, pinned toolchain and build result |
 
-The machine-readable files are [applications](applications.json), [348 anchored application contexts](application-sites.json), [all citation occurrences](citations.json), [sources](sources.json), [prior evidence](evidence.json), [internal references](internal-references.json), and a [named-input search index](named-input-index.json). A context anchor is not necessarily a separate theorem application. Nearby and repeated anchors are deliberately preserved.
+The frozen manuscript has 11,259 lines and SHA256 `f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3`. It has 147 explicit citation occurrences, comprising 134 application citations, 10 summaries, one provenance citation and two source-scope declarations. Their 163 keys refer to 62 works. The inventory contains 443 anchored contexts and all 228 internal references resolve uniquely. A context is not necessarily a distinct theorem invocation.
 
-## Coverage and verification are separate
+All 82 families have explicit scoped decisions. The final five-reviewer wave supplied 43 additional acceptance records, rather than treating an empty open-items field as approval. Earlier bounded closures cover the other 39. The machine-readable [applications](applications.json) retain these decisions, their original baseline identities and their internal premises. Sixty records also retain a separately named `fresh_source_check` field; that historical field is not the total number of acceptance decisions.
 
-| Item | Recorded coverage |
-| --- | --- |
-| Frozen manuscript | 10,734 lines; SHA256 `c59598ba474a1512dd03787c2bc9ff093a3c3a8a0604f96d5f8bcfa140c61693` |
-| Explicit citation occurrences | All 99 classified: 87 applications, 10 summary citations, 1 provenance citation, 1 source-scope declaration |
-| Citation keys | 119 occurrences across 44 cited works; bibliography contains 46 works |
-| Application families | 82, including 28 identified uncited input families |
-| Source records | 57, of which 55 have file hashes; 60 individual files checked |
-| New source-interface inspections | 19 application families; each has an explicit bounded result |
-| Internal references | All 223 resolve to a unique label |
-| Outstanding obligations | 39 application records have specific open items |
+Seventy-one source records have byte pins, covering 97 file entries. The unpinned record is the OpenAI provenance citation, from which no theorem is imported in this inventory. Sources include published articles, corrected editions, preprints and lecture notes. The audit does not assert that every input is published or that every author version equals a journal version.
 
-The two source records without a file pin are Serre's *Local Fields* and the OpenAI provenance citation. The latter is not an imported theorem in this inventory. Five application families still have no identified external source: four squares, cusp torsion/Hecke equivariance, the optional Schreier route, compactness, and tame-cover geometry. These gaps are explicit rather than filled by guessed references.
+## What was repaired
 
-The citation list is mechanically exhaustive for the frozen manuscript's `\cite` commands. **Semantic exhaustiveness is not certified:** implicit theorem uses may remain, and a resolved internal cross-reference does not establish that its theorem is applicable. The 82 families are a review organization, not 82 independently verified applications. Their 348 anchors retain the individual consumption contexts; where several uses share an interface, each still requires its own hypothesis check.
+The de Rham step now uses a sufficiently strong comparison theorem, its corrigendum, and explicit finite descent. Other repairs include the local restriction/corestriction and homotopy justification, local Hecke and Frobenius conventions, formal-logarithm precision, correct forward rank theorem citations, and previously unrecorded Mertens and quaternion-embedding inputs. [The findings](FINDINGS.md) distinguish these repairs from withdrawn criticisms and metadata corrections.
 
-Likewise, a source hash identifies bytes, not publication status or equivalence to a journal edition. Several records distinguish an author version, an erratum, and a journal citation. Prior AI reviews are copied with their hashes and original scope; they are not relabelled as fresh reviews of this entire snapshot.
+The source history remains visible. Earlier reports can describe a gap later repaired; [dependency phase metadata](DEPENDENCY_PHASES.json) records the supersession. Their line numbers refer to the stated historical baseline. [The rebind ledger](ANCHOR_REBIND.json) and [53 text edits](MANUSCRIPT_EDITS.json) connect that evidence to this manuscript.
 
-## Reproduce the structural check
+## Reproduce the checks
 
-From the repository root, using Python 3.10 or later:
+From the repository root:
 
 ```console
 python docs/theorem-application-audit/validate.py
-```
-
-To check the primary files in a restored research workspace as well:
-
-```console
 python docs/theorem-application-audit/validate.py --workspace /path/to/research-workspace
 ```
 
-`workspace_relative_path` values in `sources.json` identify their locations. New source PDFs retrieved for this audit have retrieval URLs and hashes; they are not automatically present in the older research handoff. The default repository-only check does not claim to have re-downloaded or checked those primary PDFs.
+The first command checks manuscript, excerpt and evidence hashes, citation classification, source links, and internal references. The second also verifies the primary files at the paths in [sources.json](sources.json). Neither checks mathematical proofs. The [validation receipt](VALIDATION.json) records the final workspace check.
 
-A successful run checks the manuscript hash, citation extraction and classification, excerpt hashes, application/source/evidence links, all internal reference targets, and prior-review file hashes. The optional workspace pass additionally hashes the available primary source files. **PASS means the audit data are internally consistent with the frozen inputs. It does not mean the mathematical applications pass.**
+The older research handoff is a dated snapshot and does not contain every new audit source. [SOURCE_RESTORATION.json](SOURCE_RESTORATION.json) lists the required files, hashes, recorded URLs and versions. [source_manifest.py](source_manifest.py) can verify or copy these inputs from an existing research workspace into a fresh directory. It does not download copyrighted sources or grant redistribution rights. Some exact-file retrieval URLs are unknown; an original pinned copy is needed in those cases. The [restoration check](RESTORATION_CHECK.json) records our fresh-directory verification.
 
-## Closing an item
-
-For each application, the reviewer must compare the exact source statement (and any relevant proof/erratum) with the exact consumer, check every hypothesis, identify the actual map rather than only the names of its source and target, and justify every change of coefficients, lattice, dual, normalization, local condition or quantifier order. An exact sequence is not an isomorphism unless its other terms are proved to vanish; a rational theorem is not an integral theorem merely because both sides have lattices.
-
-The open-items register must be updated with that evidence before an application is marked accepted. If the TeX changes, this snapshot must be regenerated or explicitly superseded; the validator intentionally rejects a changed manuscript hash.
+The [JSON citation list](citations.json) is mechanically exhaustive for explicit `\cite` commands in this frozen TeX. Semantic exhaustiveness is not certified: further implicit theorem uses may exist. The [named-input index](named-input-index.json) helps locate them. An accepted external application does not independently prove all its internal premises or the final theorem. Lean remains incomplete.

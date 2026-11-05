@@ -86,3 +86,29 @@ EVIDENCE = {
  'pole':'work/astra-final-pole-completeness-independent-review-001/REPORT.md',
  'primary-review':'work/root-primary-applications-final-review-001/REVIEW.txt',
 }
+
+# Closure batch source records, 2026-11-05.
+SOURCE_PATHS['scholze2013'] = ['work/theorem-application-audit-20261105/closure/primary/scholze-published.pdf']
+SOURCE_PATHS['scholze-erratum'] = ['work/theorem-application-audit-20261105/closure/primary/scholze-erratum-published.pdf']
+NOTES['scholze2013'] = 'Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum.'
+NOTES['scholze-erratum'] = 'Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately.'
+NOTES['faltings1988'] += ' The working manuscript now identifies this limitation and uses a separate de Rham comparison/descent lemma.'
+NOTES['silverman'] = 'Second edition (2009), exact PDF pinned. Direct inspection found the omega sign typo on p.105 and a^2-b instead of a^2-4b in X Proposition 4.9, p.337. The division-polynomial correction is visible in the official indexed errata but full errata retrieval remains open. The isogeny kernel calculation is derived independently in closure-batch-002.'
+EVIDENCE['closure-batch-001'] = 'work/theorem-application-audit-20261105/closure/BATCH-001.md'
+EVIDENCE['closure-batch-002'] = 'work/theorem-application-audit-20261105/closure/BATCH-002.md'
+EVIDENCE['closure-batch-003'] = 'work/theorem-application-audit-20261105/closure/BATCH-003.md'
+EVIDENCE['closure-batch-004'] = 'work/theorem-application-audit-20261105/closure/BATCH-004.md'
+EVIDENCE['closure-batch-005'] = 'work/theorem-application-audit-20261105/closure/BATCH-005.md'
+EVIDENCE['closure-batch-006'] = 'work/theorem-application-audit-20261105/closure/BATCH-006.md'
+EVIDENCE['closure-batch-007'] = 'work/theorem-application-audit-20261105/closure/BATCH-007.md'
+EVIDENCE['closure-batch-008'] = 'work/theorem-application-audit-20261105/closure/BATCH-008.md'
+SOURCE_PATHS['crainic2004'] = ['work/theorem-application-audit-20261105/closure/primary/crainic-perturbation-v1.pdf']
+SOURCE_PATHS['stacks-derived'] = ['work/theorem-application-audit-20261105/closure/primary/stacks-03T3.html']
+SOURCE_PATHS['stacks-finite-limits'] = ['work/theorem-application-audit-20261105/closure/primary/stacks-086J.html', 'work/theorem-application-audit-20261105/closure/primary/stacks-08ZY.html']
+NOTES['crainic2004'] = 'arXiv:math/0403266v1, 16 March 2004. Supplementary comparison for the standard perturbation formulas; not asserted to be a published research article. The specialized nilpotent algebra is checked directly in closure-batch-006, including reversal of the source homotopy sign. No general quasi-isomorphism argument from this preprint is imported without that calculation.'
+NOTES['stacks-derived'] = 'Exact HTML snapshot of Tag 03T3 retrieved 2026-11-05. Lemma 64.6.3(2) concerns bounded-above projective complexes. The audit also supplies the bounded finite free splitting argument; a live tag URL is not treated as an immutable edition.'
+NOTES['stacks-finite-limits'] = 'Exact HTML snapshots of Tags 086J and 08ZY retrieved 2026-11-05. These concern finite inverse limits and profinite topology, not existence of the arithmetic stages. The ultrafilter-extension proof is supplied directly in closure-batch-006.'
+
+EVIDENCE['closure-batch-009'] = 'work/theorem-application-audit-20261105/closure/BATCH-009.md'
+EVIDENCE['parallel-a009-independent'] = 'work/theorem-application-audit-20261105/closure/A009-INDEPENDENT.md'
+EVIDENCE['parallel-a068-independent'] = 'work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A068-SECOND-REVIEW.md'

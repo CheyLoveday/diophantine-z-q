@@ -1,0 +1,17 @@
+{
+  "engine": "Tectonic 0.17.0",
+  "bundle_url": "https://data1b.fullyjustified.net/tlextras-2022.0r0.tar",
+  "bundle_fingerprint": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c",
+  "source_sha256": "f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3",
+  "pdf_sha256": "571f3b0cf5861e788c098f7d55f4d75536eb857fe46b4ac55bd8335ab6d5f39a",
+  "pdf_bytes": 892654,
+  "tex_errors": 0,
+  "unresolved_references": false,
+  "original_pdf_replaced": false,
+  "byte_identity_to_uploaded_pdf_claimed": false,
+  "date": "2026-11-05",
+  "pdf_pages": 148,
+  "checked_in_pdf_matches_this_build": true,
+  "visual_review": "evidence/parallel-geometry-final-staging-review.md",
+  "scope": "Compilation and focused visual review; not mathematical verification."
+}

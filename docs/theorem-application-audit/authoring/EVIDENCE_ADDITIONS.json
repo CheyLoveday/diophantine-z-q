@@ -1,0 +1,134 @@
+{
+  "parallel-geometry-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/REPORT.md",
+    "sha256": "0f103916eb2902e5924c2530bdee819c06f85679b7522a0e9430f88961d0e7ba"
+  },
+  "parallel-galois-height-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/REPORT.md",
+    "sha256": "a1189fce26bd21a7a0c474c75c1815ad7fc3822dcfb47d3107245b7841369c0f"
+  },
+  "parallel-geometry-a011-fricke-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A011-FRICKE-REVIEW.md",
+    "sha256": "4c7408039e808411ae9b9f5771a7ee3842914f1087c17060e882c0c1b0b472ba"
+  },
+  "parallel-forward-modularity-a012-second-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/A012-SECOND-REVIEW.md",
+    "sha256": "1890b82471052e810b26c7d3cde16b0fb87f81ccea8decd4f165f01cdc14190c"
+  },
+  "parallel-sieve-bounds-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/REPORT.md",
+    "sha256": "150dcea1d29aa595b29eca5ed60f5ab2e2269da297df32c86295f42cec3f9bde"
+  },
+  "parallel-sieve-bounds-coverage-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/COVERAGE-REVIEW.md",
+    "sha256": "e1b7c9a491de575dce57bf2b983547dbdc322ff3bc23831b3f7b7ce709699d53"
+  },
+  "parallel-theta-local-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/REPORT.md",
+    "sha256": "8e96719fc2d46aa719fb408294d794c8b23fc997a9ef17cdd634127d28b1e23b"
+  },
+  "parallel-sieve-bounds-a032-second-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A032-SECOND-REVIEW.md",
+    "sha256": "c14406cb50c923125db8ec5ed7dd0578d354c1d5fb7fceb007d3f27650d477f0"
+  },
+  "parallel-theta-local-second-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/SECOND-REPORT.md",
+    "sha256": "1752188ea25a9681deba2e9e0cd25702bd9282ef0faaeaf98241f27c501aead8"
+  },
+  "parallel-geometry-staging-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/STAGING-REVIEW.md",
+    "sha256": "3c8fa7e4360c46a8789d758b4a6c08381a5f51ca804c2bee4cbf6b1488aea1e2"
+  },
+  "parallel-forward-modularity-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/REPORT.md",
+    "sha256": "d8ee6658e55b3f33dc6bb7c03b40cea1cae5286590c23001f414283cc0e86fad"
+  },
+  "parallel-theta-local-a070-second-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/A070-SECOND-REVIEW.md",
+    "sha256": "bd6ebcd94261ea84b390d0ad2189f95fd6f7c4715f050ad7f5a39747368076e2"
+  },
+  "parallel-forward-modularity-a080-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/A080-REPORT.md",
+    "sha256": "9cdd37be7b3b71a533362e0d3d008a51160bae3e25fc8758dcdb8650304d7c46"
+  },
+  "parallel-theta-local-a080-local-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/A080-LOCAL-REVIEW.md",
+    "sha256": "521bbf89e116b7f616fd20cb61c414e9493fe617a94c20b32385796166d54dd1"
+  },
+  "parallel-forward-modularity-a080-local-second-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/A080-LOCAL-SECOND-REVIEW.md",
+    "sha256": "80f887b8421adee8793cb3acdea0630d5997daa69603a66fb54ad98dd71cf527"
+  },
+  "parallel-geometry-a077-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-REPORT.md",
+    "sha256": "7fa397acc40b9fe7ad0648b22816c5636857757210f7b0f489fa0dd6599bc41d"
+  },
+  "parallel-sieve-bounds-a056-second-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A056-SECOND-REVIEW.md",
+    "sha256": "4eb0f9519150a3118bb53559dd41c7d60a32d31737e4ab3ff6ae837cc2107b6f"
+  },
+  "closure-batch-010": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/closure/BATCH-010.md",
+    "sha256": "c2a1951369bfd6b8afd987f8cc8adcd34ee6f73fbb34c38bb74a0e8237e2ffed"
+  },
+  "parallel-sieve-bounds-acceptance-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md",
+    "sha256": "2788baf6db0838c681199d69449a12a1c192be6decae6cb8b5a02f917f56b4bf"
+  },
+  "parallel-galois-height-acceptance-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/ACCEPTANCE-REPORT.md",
+    "sha256": "ec28e8bfbba4f8218bd1bce9e25357fb94a0f6f44ae24ef32221d8fc88cd5454"
+  },
+  "parallel-theta-local-acceptance-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/ACCEPTANCE-REPORT.md",
+    "sha256": "d0a8ad596dfbb9b16038b50efd7aa50402ff50015f3fef0fc5716b0f56c6b5b1"
+  },
+  "parallel-forward-modularity-acceptance-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/ACCEPTANCE-REPORT.md",
+    "sha256": "55638c74b42b279c463230ecf7569e8b40348b2ab349371fc4f39f76a50b1145"
+  },
+  "parallel-geometry-acceptance-report": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/ACCEPTANCE-REPORT.md",
+    "sha256": "8dc54da3b386b8f00ab81274a4d981e0626075a7bc5b4c62be6fc4f37d986e24"
+  },
+  "parallel-theta-local-final-dependency-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/FINAL-DEPENDENCY-REVIEW.md",
+    "sha256": "2d911d8efd7d851f53eced58fd35ba7a2c74fefb8d0c5a33f7053e646f0c0a56"
+  },
+  "parallel-forward-modularity-integration-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/INTEGRATION-REVIEW.md",
+    "sha256": "d5fc972aa47df3f9a1896fcea14e681531f2e07be88ca2b7dca03a6b76aa545a"
+  },
+  "parallel-sieve-bounds-acceptance_exact": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/acceptance_exact.py",
+    "sha256": "0b752f38a6cf2f6dbd425868f8cabe06245de95cef8fbaac07c0dfd98979e92c"
+  },
+  "parallel-sieve-bounds-acceptance-exact-receipt": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/acceptance-exact-receipt.json",
+    "sha256": "f81e8e7bb0a6db8bb94235c25d0eb50b5434c360296b6698d14ca8b932fd5520"
+  },
+  "parallel-geometry-final-staging-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/FINAL-STAGING-REVIEW.md",
+    "sha256": "463e1b34c5d758ccbe5118fad54372b1d2b2963f5ea93a1c7c1c542310cb21ef"
+  },
+  "parallel-forward-modularity-final-data-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/FINAL-DATA-REVIEW.md",
+    "sha256": "45cf8c6fd8a000354e4d83e3075ffd9233a390e1988d2ff8105e58aa4b812a09"
+  },
+  "parallel-theta-local-final-data-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/FINAL-DATA-REVIEW.md",
+    "sha256": "b8c7d565fa096d9b9d2f17f662f970c0b726993469d398a8631c09741ad39f46"
+  },
+  "parallel-galois-height-final-merge-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/FINAL-MERGE-REVIEW.md",
+    "sha256": "d64547a10c059178e22579ef98aca2a4dd78b30ca033876834b4b7505d12116e"
+  },
+  "parallel-geometry-canonical-final-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/CANONICAL-FINAL-REVIEW.md",
+    "sha256": "797ca965da8b7842aef3efbf2ff8824709e80d47191aeff612f57b26372c3431"
+  },
+  "parallel-sieve-bounds-publication-final-review": {
+    "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/PUBLICATION-FINAL-REVIEW.md",
+    "sha256": "6d51a4f9de8f16d6a6f2bd3ce0f60edb7329b34d8e4efba13defa27803006371"
+  }
+}

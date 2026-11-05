@@ -26,7 +26,7 @@ python scripts/build_paper.py --tectonic /path/to/tectonic
 
 Results are written to `build/paper/`, including the compiled PDF, compiler log, TeX log, and a JSON receipt. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
 
-The checked-in revision-2 PDF of the 11/4 manuscript, including the November 5 AI attribution update, was rebuilt from the corresponding TeX source. Its source and PDF hashes are recorded in [the current build receipt](paper-build-ai-attribution.json). Running this script creates a new build artifact without replacing the checked-in 11/4 PDF. Fixed engine, bundle, and timestamp inputs improve reproducibility, but this repository does not claim that PDF bytes are identical across operating systems.
+The checked-in revision-2 PDF of the 11/4 manuscript, including the November 5 source-application audit repairs, was rebuilt from the corresponding TeX source. Its source and PDF hashes are recorded in [the current build receipt](theorem-application-audit/MANUSCRIPT_BUILD.json). Running this script creates a new build artifact without replacing the checked-in 11/4 PDF. Fixed engine, bundle, and timestamp inputs improve reproducibility, but this repository does not claim that PDF bytes are identical across operating systems.
 
 ## Lean helpers
 
@@ -54,3 +54,11 @@ Read [the Lean README](../lean/README.md) for the trust boundary and allowed axi
 [Research checks](../.github/workflows/research-checks.yml) runs three separate jobs for construction, 11/4 manuscript compilation, and accepted Lean helpers. It runs on pushes, pull requests, and manual dispatch. GitHub Actions dependencies are pinned to commit hashes, and the elan installer and Tectonic archives are pinned by SHA-256. TeX resources are cached between runs. Each Lean job fetches the pinned upstream dependency cache directly; it does not archive the toolchain and Mathlib tree again, which can exhaust the runner's disk during cache saving. Project Lean artifacts are rebuilt in a new directory.
 
 The workflow uploads reports and logs as CI artifacts. A green run means the named checks passed on that commit. It does not certify the 11/4 manuscript's global arithmetic inputs or complete the main Lean proof.
+
+## Theorem application inventory
+
+```sh
+python docs/theorem-application-audit/validate.py
+```
+
+This structural check runs in CI. Primary-source verification additionally requires the separately restored research workspace; see the [audit instructions](theorem-application-audit/README.md). The current receipt binds the 148-page PDF to the audited TeX. Earlier build receipts are historical.

@@ -1,0 +1,26 @@
+{
+  "structural_validation": "PASS",
+  "mathematical_validation": "NOT PERFORMED BY THIS SCRIPT",
+  "source_files_checked": 0,
+  "counts": {
+    "citation_occurrences": 147,
+    "applications": 82,
+    "citation_key_occurrences": 163,
+    "cited_works": 62,
+    "source_records": 72,
+    "sources_byte_pinned": 71,
+    "uncited_application_records": 18,
+    "applications_with_open_items": 0,
+    "fresh_source_interface_checks": 60,
+    "anchored_application_contexts": 443,
+    "internal_reference_occurrences": 228,
+    "named_input_signals": 155,
+    "citation_roles": {
+      "provenance": 1,
+      "application": 134,
+      "summary": 10,
+      "source-scope declaration": 2
+    }
+  },
+  "errors": []
+}

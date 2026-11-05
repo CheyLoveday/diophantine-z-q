@@ -1,0 +1,934 @@
+{
+  "C001": {
+    "application_ids": [],
+    "role": "provenance"
+  },
+  "C004": {
+    "application_ids": [
+      "A001"
+    ],
+    "role": "application"
+  },
+  "C005": {
+    "application_ids": [
+      "A002"
+    ],
+    "role": "application"
+  },
+  "C007": {
+    "application_ids": [
+      "A003"
+    ],
+    "role": "application"
+  },
+  "C008": {
+    "application_ids": [
+      "A004"
+    ],
+    "role": "application"
+  },
+  "C009": {
+    "application_ids": [
+      "A005"
+    ],
+    "role": "application"
+  },
+  "C010": {
+    "application_ids": [
+      "A006"
+    ],
+    "role": "application"
+  },
+  "C011": {
+    "application_ids": [
+      "A007"
+    ],
+    "role": "application"
+  },
+  "C012": {
+    "application_ids": [
+      "A008"
+    ],
+    "role": "application"
+  },
+  "C013": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C014": {
+    "application_ids": [
+      "A010"
+    ],
+    "role": "application"
+  },
+  "C015": {
+    "application_ids": [
+      "A011"
+    ],
+    "role": "application"
+  },
+  "C019": {
+    "application_ids": [
+      "A012"
+    ],
+    "role": "application"
+  },
+  "C020": {
+    "application_ids": [
+      "A013"
+    ],
+    "role": "application"
+  },
+  "C022": {
+    "application_ids": [
+      "A014"
+    ],
+    "role": "application"
+  },
+  "C023": {
+    "application_ids": [
+      "A015"
+    ],
+    "role": "application"
+  },
+  "C024": {
+    "application_ids": [
+      "A016"
+    ],
+    "role": "application"
+  },
+  "C025": {
+    "application_ids": [
+      "A017"
+    ],
+    "role": "application"
+  },
+  "C027": {
+    "application_ids": [
+      "A018"
+    ],
+    "role": "application"
+  },
+  "C028": {
+    "application_ids": [
+      "A019"
+    ],
+    "role": "application"
+  },
+  "C030": {
+    "application_ids": [
+      "A020",
+      "A082"
+    ],
+    "role": "application"
+  },
+  "C036": {
+    "application_ids": [
+      "A021"
+    ],
+    "role": "application"
+  },
+  "C048": {
+    "application_ids": [
+      "A022"
+    ],
+    "role": "application"
+  },
+  "C049": {
+    "application_ids": [
+      "A023"
+    ],
+    "role": "application"
+  },
+  "C050": {
+    "application_ids": [
+      "A024"
+    ],
+    "role": "application"
+  },
+  "C051": {
+    "application_ids": [
+      "A025"
+    ],
+    "role": "application"
+  },
+  "C052": {
+    "application_ids": [
+      "A026"
+    ],
+    "role": "application"
+  },
+  "C053": {
+    "application_ids": [
+      "A027"
+    ],
+    "role": "application"
+  },
+  "C054": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C055": {
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  "C056": {
+    "application_ids": [
+      "A033"
+    ],
+    "role": "application"
+  },
+  "C057": {
+    "application_ids": [
+      "A034"
+    ],
+    "role": "application"
+  },
+  "C059": {
+    "application_ids": [
+      "A035"
+    ],
+    "role": "application"
+  },
+  "C061": {
+    "application_ids": [
+      "A036"
+    ],
+    "role": "application"
+  },
+  "C066": {
+    "application_ids": [
+      "A037"
+    ],
+    "role": "application"
+  },
+  "C067": {
+    "application_ids": [
+      "A038"
+    ],
+    "role": "application"
+  },
+  "C068": {
+    "application_ids": [
+      "A039"
+    ],
+    "role": "application"
+  },
+  "C069": {
+    "application_ids": [
+      "A033"
+    ],
+    "role": "application"
+  },
+  "C070": {
+    "application_ids": [
+      "A038"
+    ],
+    "role": "application"
+  },
+  "C071": {
+    "application_ids": [
+      "A040"
+    ],
+    "role": "application"
+  },
+  "C073": {
+    "application_ids": [
+      "A041"
+    ],
+    "role": "application"
+  },
+  "C074": {
+    "application_ids": [
+      "A042"
+    ],
+    "role": "application"
+  },
+  "C075": {
+    "application_ids": [
+      "A043"
+    ],
+    "role": "application"
+  },
+  "C076": {
+    "application_ids": [
+      "A039"
+    ],
+    "role": "application"
+  },
+  "C077": {
+    "application_ids": [
+      "A044"
+    ],
+    "role": "application"
+  },
+  "C078": {
+    "application_ids": [
+      "A044"
+    ],
+    "role": "application"
+  },
+  "C079": {
+    "application_ids": [
+      "A045"
+    ],
+    "role": "application"
+  },
+  "C084": {
+    "application_ids": [
+      "A046"
+    ],
+    "role": "application"
+  },
+  "C087": {
+    "application_ids": [
+      "A047"
+    ],
+    "role": "application"
+  },
+  "C088": {
+    "application_ids": [
+      "A048"
+    ],
+    "role": "application"
+  },
+  "C089": {
+    "application_ids": [
+      "A048"
+    ],
+    "role": "application"
+  },
+  "C090": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A022"
+    ]
+  },
+  "C091": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A023",
+      "A049",
+      "A050",
+      "A051",
+      "A081",
+      "A082"
+    ]
+  },
+  "C092": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A024",
+      "A025"
+    ]
+  },
+  "C093": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A029",
+      "A030",
+      "A031"
+    ]
+  },
+  "C094": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A027",
+      "A028",
+      "A034"
+    ]
+  },
+  "C095": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A007",
+      "A037",
+      "A038",
+      "A039",
+      "A040",
+      "A041",
+      "A042",
+      "A043",
+      "A044",
+      "A045",
+      "A075",
+      "A080",
+      "A081"
+    ]
+  },
+  "C096": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A020",
+      "A082"
+    ]
+  },
+  "C097": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A007",
+      "A037",
+      "A040",
+      "A042",
+      "A043",
+      "A075",
+      "A080",
+      "A081"
+    ]
+  },
+  "C098": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A003",
+      "A004",
+      "A005",
+      "A011",
+      "A014",
+      "A015",
+      "A016",
+      "A018",
+      "A065"
+    ]
+  },
+  "C099": {
+    "application_ids": [],
+    "role": "summary",
+    "summary_application_ids": [
+      "A021",
+      "A046"
+    ]
+  },
+  "C100": {
+    "application_ids": [],
+    "role": "source-scope declaration"
+  },
+  "C101": {
+    "application_ids": [
+      "A049",
+      "A050",
+      "A051"
+    ],
+    "role": "application"
+  },
+  "C104": {
+    "application_ids": [
+      "A045"
+    ],
+    "role": "application"
+  },
+  "C105": {
+    "application_ids": [
+      "A030"
+    ],
+    "role": "application"
+  },
+  "C106": {
+    "application_ids": [
+      "A030"
+    ],
+    "role": "application"
+  },
+  "C107": {
+    "application_ids": [
+      "A030"
+    ],
+    "role": "application"
+  },
+  "C108": {
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  "C109": {
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  "C110": {
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  "C111": {
+    "application_ids": [
+      "A029"
+    ],
+    "role": "application"
+  },
+  "C112": {
+    "application_ids": [
+      "A031"
+    ],
+    "role": "application"
+  },
+  "C113": {
+    "application_ids": [
+      "A031"
+    ],
+    "role": "application"
+  },
+  "C114": {
+    "application_ids": [
+      "A022"
+    ],
+    "role": "application"
+  },
+  "C115": {
+    "application_ids": [
+      "A025"
+    ],
+    "role": "application"
+  },
+  "C116": {
+    "application_ids": [
+      "A027"
+    ],
+    "role": "application"
+  },
+  "C117": {
+    "application_ids": [
+      "A033"
+    ],
+    "role": "application"
+  },
+  "C119": {
+    "application_ids": [
+      "A052"
+    ],
+    "role": "application"
+  },
+  "C120": {
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  "C121": {
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  "C122": {
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  "C123": {
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  "C124": {
+    "application_ids": [
+      "A053"
+    ],
+    "role": "application"
+  },
+  "C125": {
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  "C126": {
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  "C127": {
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  "C128": {
+    "application_ids": [
+      "A054"
+    ],
+    "role": "application"
+  },
+  "C130": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C131": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C132": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C133": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C134": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C135": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C136": {
+    "application_ids": [
+      "A028"
+    ],
+    "role": "application"
+  },
+  "C137": {
+    "application_ids": [
+      "A032"
+    ],
+    "role": "application"
+  },
+  "C140": {
+    "application_ids": [
+      "A024"
+    ],
+    "role": "application"
+  },
+  "C141": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C142": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C143": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C144": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C145": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C146": {
+    "application_ids": [
+      "A009"
+    ],
+    "role": "application"
+  },
+  "C147": {
+    "application_ids": [],
+    "role": "source-scope declaration"
+  },
+  "C002": {
+    "role": "application",
+    "application_ids": [
+      "A056"
+    ]
+  },
+  "C003": {
+    "role": "application",
+    "application_ids": [
+      "A001"
+    ]
+  },
+  "C006": {
+    "role": "application",
+    "application_ids": [
+      "A079"
+    ]
+  },
+  "C016": {
+    "role": "application",
+    "application_ids": [
+      "A011"
+    ]
+  },
+  "C017": {
+    "role": "application",
+    "application_ids": [
+      "A011"
+    ]
+  },
+  "C018": {
+    "role": "application",
+    "application_ids": [
+      "A011"
+    ]
+  },
+  "C021": {
+    "role": "application",
+    "application_ids": [
+      "A012",
+      "A071"
+    ]
+  },
+  "C026": {
+    "role": "application",
+    "application_ids": [
+      "A017"
+    ]
+  },
+  "C029": {
+    "role": "application",
+    "application_ids": [
+      "A020",
+      "A066",
+      "A082"
+    ]
+  },
+  "C031": {
+    "role": "application",
+    "application_ids": [
+      "A082"
+    ]
+  },
+  "C032": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C033": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C034": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C035": {
+    "role": "application",
+    "application_ids": [
+      "A021"
+    ]
+  },
+  "C037": {
+    "role": "application",
+    "application_ids": [
+      "A021"
+    ]
+  },
+  "C038": {
+    "role": "application",
+    "application_ids": [
+      "A021"
+    ]
+  },
+  "C039": {
+    "role": "application",
+    "application_ids": [
+      "A021"
+    ]
+  },
+  "C040": {
+    "role": "application",
+    "application_ids": [
+      "A021"
+    ]
+  },
+  "C041": {
+    "role": "application",
+    "application_ids": [
+      "A021"
+    ]
+  },
+  "C042": {
+    "role": "application",
+    "application_ids": [
+      "A072"
+    ]
+  },
+  "C043": {
+    "role": "application",
+    "application_ids": [
+      "A072"
+    ]
+  },
+  "C044": {
+    "role": "application",
+    "application_ids": [
+      "A072"
+    ]
+  },
+  "C045": {
+    "role": "application",
+    "application_ids": [
+      "A072"
+    ]
+  },
+  "C046": {
+    "role": "application",
+    "application_ids": [
+      "A066"
+    ]
+  },
+  "C047": {
+    "role": "application",
+    "application_ids": [
+      "A066"
+    ]
+  },
+  "C058": {
+    "role": "application",
+    "application_ids": [
+      "A070"
+    ]
+  },
+  "C060": {
+    "role": "application",
+    "application_ids": [
+      "A080"
+    ]
+  },
+  "C062": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C063": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C064": {
+    "role": "application",
+    "application_ids": [
+      "A080"
+    ]
+  },
+  "C065": {
+    "role": "application",
+    "application_ids": [
+      "A080"
+    ]
+  },
+  "C072": {
+    "role": "application",
+    "application_ids": [
+      "A069"
+    ]
+  },
+  "C080": {
+    "role": "application",
+    "application_ids": [
+      "A077"
+    ]
+  },
+  "C081": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C082": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C083": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C085": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C086": {
+    "role": "application",
+    "application_ids": [
+      "A071"
+    ]
+  },
+  "C102": {
+    "role": "application",
+    "application_ids": [
+      "A080"
+    ]
+  },
+  "C103": {
+    "role": "application",
+    "application_ids": [
+      "A080"
+    ]
+  },
+  "C118": {
+    "role": "application",
+    "application_ids": [
+      "A052"
+    ]
+  },
+  "C129": {
+    "role": "application",
+    "application_ids": [
+      "A028",
+      "A052"
+    ]
+  },
+  "C138": {
+    "role": "application",
+    "application_ids": [
+      "A032"
+    ]
+  },
+  "C139": {
+    "role": "application",
+    "application_ids": [
+      "A032"
+    ]
+  }
+}

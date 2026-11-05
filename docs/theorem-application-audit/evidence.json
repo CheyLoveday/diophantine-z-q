@@ -145,5 +145,313 @@
     "sha256": "952f6cd92f13ea941faa6ce6c3a8c5ecdf6d069ff7dcbbfe6dd2312ffe9f8a93",
     "historical_workspace_path": "work/root-primary-applications-final-review-001/REVIEW.txt",
     "scope": "Historical limited review; its own source versions and exclusions govern. Not an independent check of the current whole manuscript."
+  },
+  {
+    "id": "closure-batch-001",
+    "path": "evidence/closure-batch-001.md",
+    "sha256": "10d4c413ba7af72b476b616dcb4cce3b165911941b753bdedee568848a2dd392",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-001.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-002",
+    "path": "evidence/closure-batch-002.md",
+    "sha256": "12c9fe50f71e232c4cdf9b5d910e84b312d621d326a773390de1d64431a8ddeb",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-002.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-003",
+    "path": "evidence/closure-batch-003.md",
+    "sha256": "8092899119519d1d64ca2285ffc90f16bfbc75eb59a7925a152cc2b4a13d057b",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-003.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-004",
+    "path": "evidence/closure-batch-004.md",
+    "sha256": "3a0c52ca98f31ade65e008765e6321f257ee0e545ed8b5790c6f332e62ea236d",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-004.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-005",
+    "path": "evidence/closure-batch-005.md",
+    "sha256": "3c217d783861d53a91361ccc2fbd1eed58a499e295abb64c266be9ccad554ef0",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-005.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-006",
+    "path": "evidence/closure-batch-006.md",
+    "sha256": "f3fb07ccb900098e4b9189c0aeb644d1665af6ddc94d97c714ceb061c3ee55a9",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-006.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-007",
+    "path": "evidence/closure-batch-007.md",
+    "sha256": "2215f8d893a5823dae13efb51283181978d9117adb849b7785ffe6261ff836f7",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-007.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-008",
+    "path": "evidence/closure-batch-008.md",
+    "sha256": "40bd89103d3d55dca7ed6f500d8525b26f4de5de63700f5643ca164a32355c3f",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-008.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "closure-batch-009",
+    "path": "evidence/closure-batch-009.md",
+    "sha256": "7b94588fc609efc57ccec36816ed61f57bce51fc61d566e865484258311672c3",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-009.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "parallel-a009-independent",
+    "path": "evidence/parallel-a009-independent.md",
+    "sha256": "92f6cfc5eb12e080c2e1b60426f1b57f153a5b6ebad9358401e5420d57c79fc4",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/A009-INDEPENDENT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-a068-independent",
+    "path": "evidence/parallel-a068-independent.md",
+    "sha256": "99918c8e9d89b9835a43bfc3e27fe570a50ce62948ea2da3dcdfa36e86d0f5d1",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A068-SECOND-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-report",
+    "path": "evidence/parallel-geometry-report.md",
+    "sha256": "0f103916eb2902e5924c2530bdee819c06f85679b7522a0e9430f88961d0e7ba",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-galois-height-report",
+    "path": "evidence/parallel-galois-height-report.md",
+    "sha256": "a1189fce26bd21a7a0c474c75c1815ad7fc3822dcfb47d3107245b7841369c0f",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-a011-fricke-review",
+    "path": "evidence/parallel-geometry-a011-fricke-review.md",
+    "sha256": "4c7408039e808411ae9b9f5771a7ee3842914f1087c17060e882c0c1b0b472ba",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A011-FRICKE-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-a012-second-review",
+    "path": "evidence/parallel-forward-modularity-a012-second-review.md",
+    "sha256": "1890b82471052e810b26c7d3cde16b0fb87f81ccea8decd4f165f01cdc14190c",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/A012-SECOND-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-report",
+    "path": "evidence/parallel-sieve-bounds-report.md",
+    "sha256": "150dcea1d29aa595b29eca5ed60f5ab2e2269da297df32c86295f42cec3f9bde",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-coverage-review",
+    "path": "evidence/parallel-sieve-bounds-coverage-review.md",
+    "sha256": "e1b7c9a491de575dce57bf2b983547dbdc322ff3bc23831b3f7b7ce709699d53",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/COVERAGE-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-report",
+    "path": "evidence/parallel-theta-local-report.md",
+    "sha256": "8e96719fc2d46aa719fb408294d794c8b23fc997a9ef17cdd634127d28b1e23b",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-a032-second-review",
+    "path": "evidence/parallel-sieve-bounds-a032-second-review.md",
+    "sha256": "c14406cb50c923125db8ec5ed7dd0578d354c1d5fb7fceb007d3f27650d477f0",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A032-SECOND-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-second-report",
+    "path": "evidence/parallel-theta-local-second-report.md",
+    "sha256": "1752188ea25a9681deba2e9e0cd25702bd9282ef0faaeaf98241f27c501aead8",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/SECOND-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-staging-review",
+    "path": "evidence/parallel-geometry-staging-review.md",
+    "sha256": "3c8fa7e4360c46a8789d758b4a6c08381a5f51ca804c2bee4cbf6b1488aea1e2",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/STAGING-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-report",
+    "path": "evidence/parallel-forward-modularity-report.md",
+    "sha256": "d8ee6658e55b3f33dc6bb7c03b40cea1cae5286590c23001f414283cc0e86fad",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-a070-second-review",
+    "path": "evidence/parallel-theta-local-a070-second-review.md",
+    "sha256": "bd6ebcd94261ea84b390d0ad2189f95fd6f7c4715f050ad7f5a39747368076e2",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/A070-SECOND-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-a080-report",
+    "path": "evidence/parallel-forward-modularity-a080-report.md",
+    "sha256": "9cdd37be7b3b71a533362e0d3d008a51160bae3e25fc8758dcdb8650304d7c46",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/A080-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-a080-local-review",
+    "path": "evidence/parallel-theta-local-a080-local-review.md",
+    "sha256": "521bbf89e116b7f616fd20cb61c414e9493fe617a94c20b32385796166d54dd1",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/A080-LOCAL-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-a080-local-second-review",
+    "path": "evidence/parallel-forward-modularity-a080-local-second-review.md",
+    "sha256": "80f887b8421adee8793cb3acdea0630d5997daa69603a66fb54ad98dd71cf527",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/A080-LOCAL-SECOND-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-a077-report",
+    "path": "evidence/parallel-geometry-a077-report.md",
+    "sha256": "7fa397acc40b9fe7ad0648b22816c5636857757210f7b0f489fa0dd6599bc41d",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-a056-second-review",
+    "path": "evidence/parallel-sieve-bounds-a056-second-review.md",
+    "sha256": "4eb0f9519150a3118bb53559dd41c7d60a32d31737e4ab3ff6ae837cc2107b6f",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A056-SECOND-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "closure-batch-010",
+    "path": "evidence/closure-batch-010.md",
+    "sha256": "c2a1951369bfd6b8afd987f8cc8adcd34ee6f73fbb34c38bb74a0e8237e2ffed",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/closure/BATCH-010.md",
+    "scope": "Current bounded root review; listed premises remain dependencies; not an independent second review."
+  },
+  {
+    "id": "parallel-sieve-bounds-acceptance-report",
+    "path": "evidence/parallel-sieve-bounds-acceptance-report.md",
+    "sha256": "2788baf6db0838c681199d69449a12a1c192be6decae6cb8b5a02f917f56b4bf",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-galois-height-acceptance-report",
+    "path": "evidence/parallel-galois-height-acceptance-report.md",
+    "sha256": "ec28e8bfbba4f8218bd1bce9e25357fb94a0f6f44ae24ef32221d8fc88cd5454",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/ACCEPTANCE-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-acceptance-report",
+    "path": "evidence/parallel-theta-local-acceptance-report.md",
+    "sha256": "d0a8ad596dfbb9b16038b50efd7aa50402ff50015f3fef0fc5716b0f56c6b5b1",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/ACCEPTANCE-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-acceptance-report",
+    "path": "evidence/parallel-forward-modularity-acceptance-report.md",
+    "sha256": "55638c74b42b279c463230ecf7569e8b40348b2ab349371fc4f39f76a50b1145",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/ACCEPTANCE-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-acceptance-report",
+    "path": "evidence/parallel-geometry-acceptance-report.md",
+    "sha256": "8dc54da3b386b8f00ab81274a4d981e0626075a7bc5b4c62be6fc4f37d986e24",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/ACCEPTANCE-REPORT.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-final-dependency-review",
+    "path": "evidence/parallel-theta-local-final-dependency-review.md",
+    "sha256": "2d911d8efd7d851f53eced58fd35ba7a2c74fefb8d0c5a33f7053e646f0c0a56",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/FINAL-DEPENDENCY-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-integration-review",
+    "path": "evidence/parallel-forward-modularity-integration-review.md",
+    "sha256": "d5fc972aa47df3f9a1896fcea14e681531f2e07be88ca2b7dca03a6b76aa545a",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/INTEGRATION-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-acceptance_exact",
+    "path": "evidence/parallel-sieve-bounds-acceptance_exact.py",
+    "sha256": "0b752f38a6cf2f6dbd425868f8cabe06245de95cef8fbaac07c0dfd98979e92c",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/acceptance_exact.py",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-acceptance-exact-receipt",
+    "path": "evidence/parallel-sieve-bounds-acceptance-exact-receipt.json",
+    "sha256": "f81e8e7bb0a6db8bb94235c25d0eb50b5434c360296b6698d14ca8b932fd5520",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/acceptance-exact-receipt.json",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-final-staging-review",
+    "path": "evidence/parallel-geometry-final-staging-review.md",
+    "sha256": "463e1b34c5d758ccbe5118fad54372b1d2b2963f5ea93a1c7c1c542310cb21ef",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/FINAL-STAGING-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-forward-modularity-final-data-review",
+    "path": "evidence/parallel-forward-modularity-final-data-review.md",
+    "sha256": "45cf8c6fd8a000354e4d83e3075ffd9233a390e1988d2ff8105e58aa4b812a09",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/FINAL-DATA-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-theta-local-final-data-review",
+    "path": "evidence/parallel-theta-local-final-data-review.md",
+    "sha256": "b8c7d565fa096d9b9d2f17f662f970c0b726993469d398a8631c09741ad39f46",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/FINAL-DATA-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-galois-height-final-merge-review",
+    "path": "evidence/parallel-galois-height-final-merge-review.md",
+    "sha256": "d64547a10c059178e22579ef98aca2a4dd78b30ca033876834b4b7505d12116e",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/FINAL-MERGE-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-geometry-canonical-final-review",
+    "path": "evidence/parallel-geometry-canonical-final-review.md",
+    "sha256": "797ca965da8b7842aef3efbf2ff8824709e80d47191aeff612f57b26372c3431",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/geometry/CANONICAL-FINAL-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
+  },
+  {
+    "id": "parallel-sieve-bounds-publication-final-review",
+    "path": "evidence/parallel-sieve-bounds-publication-final-review.md",
+    "sha256": "6d51a4f9de8f16d6a6f2bd3ce0f60edb7329b34d8e4efba13defa27803006371",
+    "historical_workspace_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/PUBLICATION-FINAL-REVIEW.md",
+    "scope": "Current bounded independent agent review; listed dependencies and exclusions remain; not acceptance of the whole manuscript."
   }
 ]

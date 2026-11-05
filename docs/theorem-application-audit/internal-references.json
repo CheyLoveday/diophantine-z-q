@@ -10,21 +10,21 @@
     "line": 89,
     "label": "sec:four-corollaries",
     "target_lines": [
-      6164
+      6466
     ]
   },
   {
     "line": 101,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
     "line": 104,
     "label": "sec:compiler",
     "target_lines": [
-      5477
+      5745
     ]
   },
   {
@@ -38,14 +38,14 @@
     "line": 115,
     "label": "sec:bridge",
     "target_lines": [
-      5820
+      6094
     ]
   },
   {
     "line": 118,
     "label": "sec:size",
     "target_lines": [
-      5992
+      6272
     ]
   },
   {
@@ -59,77 +59,77 @@
     "line": 123,
     "label": "sec:model",
     "target_lines": [
-      240
+      254
     ]
   },
   {
     "line": 123,
     "label": "prop:generator",
     "target_lines": [
-      254
+      268
     ]
   },
   {
     "line": 125,
     "label": "thm:height",
     "target_lines": [
-      390
+      404
     ]
   },
   {
     "line": 126,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
     "line": 126,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
     "line": 127,
     "label": "app:even-source",
     "target_lines": [
-      6523
+      6825
     ]
   },
   {
     "line": 127,
     "label": "app:endpoints",
     "target_lines": [
-      9603
+      9981
     ]
   },
   {
     "line": 128,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
     "line": 129,
     "label": "sec:pole",
     "target_lines": [
-      919
+      973
     ]
   },
   {
     "line": 130,
     "label": "sec:mult",
     "target_lines": [
-      1044
+      1123
     ]
   },
   {
     "line": 133,
     "label": "sec:compiler",
     "target_lines": [
-      5477
+      5745
     ]
   },
   {
@@ -143,14 +143,14 @@
     "line": 136,
     "label": "sec:size",
     "target_lines": [
-      5992
+      6272
     ]
   },
   {
     "line": 136,
     "label": "app:literal",
     "target_lines": [
-      6364
+      6666
     ]
   },
   {
@@ -161,1403 +161,1438 @@
     ]
   },
   {
-    "line": 233,
+    "line": 247,
     "label": "sec:size",
     "target_lines": [
-      5992
+      6272
     ]
   },
   {
-    "line": 960,
+    "line": 735,
+    "label": "lem:de-rham-descent",
+    "target_lines": [
+      10939
+    ]
+  },
+  {
+    "line": 1014,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
-    "line": 961,
+    "line": 1015,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
-    "line": 961,
+    "line": 1015,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 962,
+    "line": 1016,
     "label": "app:even-source",
     "target_lines": [
-      6523
+      6825
     ]
   },
   {
-    "line": 962,
+    "line": 1016,
     "label": "app:endpoints",
     "target_lines": [
-      9603
+      9981
     ]
   },
   {
-    "line": 963,
+    "line": 1017,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
-    "line": 1032,
+    "line": 1111,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
-    "line": 1041,
+    "line": 1112,
+    "label": "lem:forward-rank",
+    "target_lines": [
+      1086
+    ]
+  },
+  {
+    "line": 1120,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
-    "line": 1085,
+    "line": 1196,
     "label": "lem:pole",
     "target_lines": [
-      934
+      988
     ]
   },
   {
-    "line": 1317,
+    "line": 1441,
     "label": "eq:prime-density44",
     "target_lines": [
-      1277
+      1394
     ]
   },
   {
-    "line": 1373,
+    "line": 1497,
     "label": "eq:prime-residue-error",
     "target_lines": [
-      1343
+      1467
     ]
   },
   {
-    "line": 1422,
+    "line": 1551,
     "label": "eq:prime-selberg",
     "target_lines": [
-      1376
+      1500
     ]
   },
   {
-    "line": 1426,
+    "line": 1555,
     "label": "eq:prime-lower",
     "target_lines": [
-      1324
+      1448
     ]
   },
   {
-    "line": 1478,
+    "line": 1616,
     "label": "eq:prime-selberg",
     "target_lines": [
-      1376
+      1500
     ]
   },
   {
-    "line": 1479,
+    "line": 1617,
     "label": "eq:prime-truncated-denominator",
     "target_lines": [
-      1399
+      1528
     ]
   },
   {
-    "line": 1534,
+    "line": 1672,
     "label": "eq:prime-truncated-denominator",
     "target_lines": [
-      1399
+      1528
     ]
   },
   {
-    "line": 1545,
+    "line": 1683,
     "label": "eq:prime-bad-values",
     "target_lines": [
-      1501
+      1639
     ]
   },
   {
-    "line": 1545,
+    "line": 1683,
     "label": "eq:prime-fiber",
     "target_lines": [
-      1535
+      1673
     ]
   },
   {
-    "line": 1560,
+    "line": 1698,
     "label": "eq:prime-lower",
     "target_lines": [
-      1324
+      1448
     ]
   },
   {
-    "line": 1612,
+    "line": 1751,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
-    "line": 1632,
+    "line": 1771,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
-    "line": 1638,
+    "line": 1777,
     "label": "app:even-source",
     "target_lines": [
-      6523
+      6825
     ]
   },
   {
-    "line": 1638,
+    "line": 1777,
     "label": "app:endpoints",
     "target_lines": [
-      9603
+      9981
     ]
   },
   {
-    "line": 1651,
+    "line": 1799,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
-    "line": 1653,
+    "line": 1801,
     "label": "lem:corank",
     "target_lines": [
-      1018
+      1072
     ]
   },
   {
-    "line": 1655,
+    "line": 1803,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
-    "line": 1699,
+    "line": 1847,
     "label": "ex:app-kato-system",
     "target_lines": [
-      6545
+      6847
     ]
   },
   {
-    "line": 1699,
+    "line": 1847,
     "label": "ex:app-even-scalar",
     "target_lines": [
-      7059
+      7367
     ]
   },
   {
-    "line": 1700,
+    "line": 1848,
     "label": "ex:app-central-calibration",
     "target_lines": [
-      7306
+      7614
     ]
   },
   {
-    "line": 1759,
+    "line": 1907,
     "label": "app:even-source",
     "target_lines": [
-      6523
+      6825
     ]
   },
   {
-    "line": 1768,
+    "line": 1916,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 1808,
+    "line": 1956,
     "label": "app:even-source",
     "target_lines": [
-      6523
+      6825
     ]
   },
   {
-    "line": 1854,
+    "line": 2002,
     "label": "ex:app-five-prime",
     "target_lines": [
-      9623
+      10001
     ]
   },
   {
-    "line": 1941,
+    "line": 2089,
     "label": "ex:app-even-phase",
     "target_lines": [
-      7484
+      7792
     ]
   },
   {
-    "line": 1948,
+    "line": 2096,
     "label": "ex:app-odd-minimum",
     "target_lines": [
-      9774
+      10152
     ]
   },
   {
-    "line": 1948,
+    "line": 2096,
     "label": "ex:app-odd-stabilization",
     "target_lines": [
-      10130
+      10508
     ]
   },
   {
-    "line": 1979,
+    "line": 2127,
     "label": "ex:sec7-typed-graph",
     "target_lines": [
-      1867
+      2015
     ]
   },
   {
-    "line": 1990,
+    "line": 2138,
     "label": "ex:app-coefficient-rules",
     "target_lines": [
-      9134
-    ]
-  },
-  {
-    "line": 2024,
-    "label": "ex:sec7-coefficient-rules",
-    "target_lines": [
-      1954
-    ]
-  },
-  {
-    "line": 2076,
-    "label": "ex:sec7-coefficient-rules",
-    "target_lines": [
-      1954
-    ]
-  },
-  {
-    "line": 2094,
-    "label": "ex:sec7-coefficient-rules",
-    "target_lines": [
-      1954
-    ]
-  },
-  {
-    "line": 2113,
-    "label": "ex:app-simultaneous-address",
-    "target_lines": [
-      10176
-    ]
-  },
-  {
-    "line": 2129,
-    "label": "ex:app-odd-stabilization",
-    "target_lines": [
-      10130
-    ]
-  },
-  {
-    "line": 2131,
-    "label": "ex:sec7-realization",
-    "target_lines": [
-      2003
-    ]
-  },
-  {
-    "line": 2164,
-    "label": "ex:sec7-seed-partition",
-    "target_lines": [
-      2028
-    ]
-  },
-  {
-    "line": 2165,
-    "label": "ex:sec7-seed-certificate",
-    "target_lines": [
-      2040
+      9447
     ]
   },
   {
     "line": 2172,
-    "label": "ex:sec7-one-symbol-address",
+    "label": "ex:sec7-coefficient-rules",
     "target_lines": [
-      2074
+      2102
     ]
   },
   {
-    "line": 2180,
-    "label": "sec:limits",
+    "line": 2224,
+    "label": "ex:sec7-coefficient-rules",
     "target_lines": [
-      4114
+      2102
     ]
   },
   {
-    "line": 2252,
-    "label": "ex:app-rough-companion",
+    "line": 2242,
+    "label": "ex:sec7-coefficient-rules",
     "target_lines": [
-      9678
+      2102
     ]
   },
   {
-    "line": 2273,
-    "label": "ex:sec7-rough-companion",
-    "target_lines": [
-      2195
-    ]
-  },
-  {
-    "line": 2294,
-    "label": "sec:limits",
-    "target_lines": [
-      4114
-    ]
-  },
-  {
-    "line": 2306,
-    "label": "ex:limits-uniform-lower-bound",
-    "target_lines": [
-      4641
-    ]
-  },
-  {
-    "line": 2307,
-    "label": "ex:arith-central-calibration",
-    "target_lines": [
-      3739
-    ]
-  },
-  {
-    "line": 2315,
-    "label": "sec:nonvan",
-    "target_lines": [
-      1820
-    ]
-  },
-  {
-    "line": 2361,
-    "label": "app:odd-source",
-    "target_lines": [
-      7898
-    ]
-  },
-  {
-    "line": 2444,
-    "label": "app:endpoints",
-    "target_lines": [
-      9603
-    ]
-  },
-  {
-    "line": 2486,
-    "label": "ex:app-nonempty-seeds",
-    "target_lines": [
-      9881
-    ]
-  },
-  {
-    "line": 2549,
-    "label": "ex:sec7-two-symbol-address",
-    "target_lines": [
-      2092
-    ]
-  },
-  {
-    "line": 2550,
+    "line": 2261,
     "label": "ex:app-simultaneous-address",
     "target_lines": [
-      10176
+      10554
     ]
   },
   {
-    "line": 2551,
-    "label": "ex:app-final-family",
+    "line": 2277,
+    "label": "ex:app-odd-stabilization",
     "target_lines": [
-      10414
+      10508
     ]
   },
   {
-    "line": 2560,
-    "label": "app:endpoints",
+    "line": 2279,
+    "label": "ex:sec7-realization",
     "target_lines": [
-      9603
+      2151
     ]
   },
   {
-    "line": 2584,
-    "label": "ex:arith-moving-character",
+    "line": 2312,
+    "label": "ex:sec7-seed-partition",
     "target_lines": [
-      3252
+      2176
     ]
   },
   {
-    "line": 2596,
-    "label": "sec:arithmetic",
+    "line": 2313,
+    "label": "ex:sec7-seed-certificate",
     "target_lines": [
-      2570
+      2188
     ]
   },
   {
-    "line": 2596,
+    "line": 2320,
+    "label": "ex:sec7-one-symbol-address",
+    "target_lines": [
+      2222
+    ]
+  },
+  {
+    "line": 2328,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 2598,
-    "label": "sec:rc",
+    "line": 2400,
+    "label": "ex:app-rough-companion",
     "target_lines": [
-      1621
+      10056
     ]
   },
   {
-    "line": 2609,
-    "label": "ex:limits-derivative-switch",
+    "line": 2421,
+    "label": "ex:sec7-rough-companion",
     "target_lines": [
-      4566
+      2343
     ]
   },
   {
-    "line": 2625,
-    "label": "ex:limits-derivative-switch",
+    "line": 2442,
+    "label": "sec:limits",
     "target_lines": [
-      4566
+      4382
     ]
   },
   {
-    "line": 3459,
-    "label": "ex:limits-inner-limit",
-    "target_lines": [
-      4123
-    ]
-  },
-  {
-    "line": 3460,
-    "label": "ex:arith-data",
-    "target_lines": [
-      2595
-    ]
-  },
-  {
-    "line": 3474,
-    "label": "ex:arith-common-coordinate",
-    "target_lines": [
-      3874
-    ]
-  },
-  {
-    "line": 3524,
-    "label": "ex:arith-common-coordinate",
-    "target_lines": [
-      3874
-    ]
-  },
-  {
-    "line": 3551,
-    "label": "ex:arith-local-kummer",
-    "target_lines": [
-      3165
-    ]
-  },
-  {
-    "line": 3648,
-    "label": "ex:arith-finite-heegner",
-    "target_lines": [
-      2709
-    ]
-  },
-  {
-    "line": 3650,
-    "label": "ex:arith-paired-functional",
-    "target_lines": [
-      3457
-    ]
-  },
-  {
-    "line": 3744,
-    "label": "ex:arith-coordinate",
-    "target_lines": [
-      3630
-    ]
-  },
-  {
-    "line": 3745,
-    "label": "ex:arith-central-specialization",
-    "target_lines": [
-      3647
-    ]
-  },
-  {
-    "line": 3967,
-    "label": "ex:app-final-family",
-    "target_lines": [
-      10414
-    ]
-  },
-  {
-    "line": 3970,
-    "label": "ex:arith-moving-character",
-    "target_lines": [
-      3252
-    ]
-  },
-  {
-    "line": 4007,
-    "label": "ex:limits-inner-limit",
-    "target_lines": [
-      4123
-    ]
-  },
-  {
-    "line": 4069,
-    "label": "ex:arith-common-coordinate",
-    "target_lines": [
-      3874
-    ]
-  },
-  {
-    "line": 4076,
-    "label": "ex:arith-paired-functional",
-    "target_lines": [
-      3457
-    ]
-  },
-  {
-    "line": 4104,
-    "label": "ex:arith-common-coordinate",
-    "target_lines": [
-      3874
-    ]
-  },
-  {
-    "line": 4106,
+    "line": 2454,
     "label": "ex:limits-uniform-lower-bound",
     "target_lines": [
-      4641
+      4909
     ]
   },
   {
-    "line": 4115,
-    "label": "sec:arithmetic",
-    "target_lines": [
-      2570
-    ]
-  },
-  {
-    "line": 4307,
-    "label": "ex:limits-derivative-switch",
-    "target_lines": [
-      4566
-    ]
-  },
-  {
-    "line": 4326,
-    "label": "ex:limits-inner-limit",
-    "target_lines": [
-      4123
-    ]
-  },
-  {
-    "line": 4397,
-    "label": "ex:limits-residual-bound",
-    "target_lines": [
-      4185
-    ]
-  },
-  {
-    "line": 4495,
-    "label": "ex:limits-uniform-lower-bound",
-    "target_lines": [
-      4641
-    ]
-  },
-  {
-    "line": 4500,
-    "label": "sec:arithmetic",
-    "target_lines": [
-      2570
-    ]
-  },
-  {
-    "line": 4578,
-    "label": "ex:arith-finite-heegner",
-    "target_lines": [
-      2709
-    ]
-  },
-  {
-    "line": 4644,
+    "line": 2455,
     "label": "ex:arith-central-calibration",
     "target_lines": [
-      3739
+      3987
     ]
   },
   {
-    "line": 4655,
-    "label": "ex:arith-base-zero",
+    "line": 2463,
+    "label": "sec:nonvan",
     "target_lines": [
-      4062
+      1968
     ]
   },
   {
-    "line": 4714,
+    "line": 2509,
+    "label": "app:odd-source",
+    "target_lines": [
+      8206
+    ]
+  },
+  {
+    "line": 2593,
+    "label": "app:endpoints",
+    "target_lines": [
+      9981
+    ]
+  },
+  {
+    "line": 2635,
+    "label": "ex:app-nonempty-seeds",
+    "target_lines": [
+      10259
+    ]
+  },
+  {
+    "line": 2698,
+    "label": "ex:sec7-two-symbol-address",
+    "target_lines": [
+      2240
+    ]
+  },
+  {
+    "line": 2699,
+    "label": "ex:app-simultaneous-address",
+    "target_lines": [
+      10554
+    ]
+  },
+  {
+    "line": 2700,
+    "label": "ex:app-final-family",
+    "target_lines": [
+      10792
+    ]
+  },
+  {
+    "line": 2709,
+    "label": "app:endpoints",
+    "target_lines": [
+      9981
+    ]
+  },
+  {
+    "line": 2733,
+    "label": "ex:arith-moving-character",
+    "target_lines": [
+      3500
+    ]
+  },
+  {
+    "line": 2745,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2719
+    ]
+  },
+  {
+    "line": 2745,
+    "label": "sec:limits",
+    "target_lines": [
+      4382
+    ]
+  },
+  {
+    "line": 2747,
+    "label": "sec:rc",
+    "target_lines": [
+      1760
+    ]
+  },
+  {
+    "line": 2758,
     "label": "ex:limits-derivative-switch",
     "target_lines": [
-      4566
+      4834
     ]
   },
   {
-    "line": 4716,
-    "label": "ex:limits-outer-evaluation",
-    "target_lines": [
-      4383
-    ]
-  },
-  {
-    "line": 4730,
-    "label": "ex:limits-kernel-detection",
-    "target_lines": [
-      4480
-    ]
-  },
-  {
-    "line": 4771,
+    "line": 2774,
     "label": "ex:limits-derivative-switch",
     "target_lines": [
-      4566
+      4834
     ]
   },
   {
-    "line": 4803,
-    "label": "ex:limits-derivative-switch",
+    "line": 3707,
+    "label": "ex:limits-inner-limit",
     "target_lines": [
-      4566
+      4391
     ]
   },
   {
-    "line": 4822,
-    "label": "ex:limits-kernel-detection",
+    "line": 3708,
+    "label": "ex:arith-data",
     "target_lines": [
-      4480
+      2744
     ]
   },
   {
-    "line": 4870,
+    "line": 3722,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      4142
+    ]
+  },
+  {
+    "line": 3772,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      4142
+    ]
+  },
+  {
+    "line": 3799,
+    "label": "ex:arith-local-kummer",
+    "target_lines": [
+      3413
+    ]
+  },
+  {
+    "line": 3896,
     "label": "ex:arith-finite-heegner",
     "target_lines": [
-      2709
+      2858
     ]
   },
   {
-    "line": 4875,
-    "label": "ex:limits-derivative-switch",
-    "target_lines": [
-      4566
-    ]
-  },
-  {
-    "line": 4895,
+    "line": 3898,
     "label": "ex:arith-paired-functional",
     "target_lines": [
-      3457
+      3705
     ]
   },
   {
-    "line": 4898,
+    "line": 3992,
+    "label": "ex:arith-coordinate",
+    "target_lines": [
+      3878
+    ]
+  },
+  {
+    "line": 3993,
+    "label": "ex:arith-central-specialization",
+    "target_lines": [
+      3895
+    ]
+  },
+  {
+    "line": 4020,
+    "label": "lem:forward-rank",
+    "target_lines": [
+      1086
+    ]
+  },
+  {
+    "line": 4235,
+    "label": "ex:app-final-family",
+    "target_lines": [
+      10792
+    ]
+  },
+  {
+    "line": 4238,
+    "label": "ex:arith-moving-character",
+    "target_lines": [
+      3500
+    ]
+  },
+  {
+    "line": 4275,
+    "label": "ex:limits-inner-limit",
+    "target_lines": [
+      4391
+    ]
+  },
+  {
+    "line": 4337,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      4142
+    ]
+  },
+  {
+    "line": 4344,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3705
+    ]
+  },
+  {
+    "line": 4372,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      4142
+    ]
+  },
+  {
+    "line": 4374,
+    "label": "ex:limits-uniform-lower-bound",
+    "target_lines": [
+      4909
+    ]
+  },
+  {
+    "line": 4383,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2719
+    ]
+  },
+  {
+    "line": 4575,
     "label": "ex:limits-derivative-switch",
     "target_lines": [
-      4566
+      4834
+    ]
+  },
+  {
+    "line": 4594,
+    "label": "ex:limits-inner-limit",
+    "target_lines": [
+      4391
+    ]
+  },
+  {
+    "line": 4665,
+    "label": "ex:limits-residual-bound",
+    "target_lines": [
+      4453
+    ]
+  },
+  {
+    "line": 4763,
+    "label": "ex:limits-uniform-lower-bound",
+    "target_lines": [
+      4909
+    ]
+  },
+  {
+    "line": 4768,
+    "label": "sec:arithmetic",
+    "target_lines": [
+      2719
+    ]
+  },
+  {
+    "line": 4846,
+    "label": "ex:arith-finite-heegner",
+    "target_lines": [
+      2858
     ]
   },
   {
     "line": 4912,
+    "label": "ex:arith-central-calibration",
+    "target_lines": [
+      3987
+    ]
+  },
+  {
+    "line": 4923,
+    "label": "ex:arith-base-zero",
+    "target_lines": [
+      4330
+    ]
+  },
+  {
+    "line": 4982,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4834
+    ]
+  },
+  {
+    "line": 4984,
+    "label": "ex:limits-outer-evaluation",
+    "target_lines": [
+      4651
+    ]
+  },
+  {
+    "line": 4998,
+    "label": "ex:limits-kernel-detection",
+    "target_lines": [
+      4748
+    ]
+  },
+  {
+    "line": 5039,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4834
+    ]
+  },
+  {
+    "line": 5071,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4834
+    ]
+  },
+  {
+    "line": 5090,
+    "label": "ex:limits-kernel-detection",
+    "target_lines": [
+      4748
+    ]
+  },
+  {
+    "line": 5138,
+    "label": "ex:arith-finite-heegner",
+    "target_lines": [
+      2858
+    ]
+  },
+  {
+    "line": 5143,
+    "label": "ex:limits-derivative-switch",
+    "target_lines": [
+      4834
+    ]
+  },
+  {
+    "line": 5163,
     "label": "ex:arith-paired-functional",
     "target_lines": [
-      3457
+      3705
     ]
   },
   {
-    "line": 4942,
-    "label": "sec:rc",
+    "line": 5166,
+    "label": "ex:limits-derivative-switch",
     "target_lines": [
-      1621
+      4834
     ]
   },
   {
-    "line": 4960,
-    "label": "sec:rc",
-    "target_lines": [
-      1621
-    ]
-  },
-  {
-    "line": 4974,
-    "label": "ex:arith-common-coordinate",
-    "target_lines": [
-      3874
-    ]
-  },
-  {
-    "line": 5220,
-    "label": "ex:limits-fixed-field-budget",
-    "target_lines": [
-      4940
-    ]
-  },
-  {
-    "line": 5222,
+    "line": 5180,
     "label": "ex:arith-paired-functional",
     "target_lines": [
-      3457
+      3705
     ]
   },
   {
-    "line": 5223,
-    "label": "ex:arith-common-coordinate",
+    "line": 5210,
+    "label": "sec:rc",
     "target_lines": [
-      3874
+      1760
+    ]
+  },
+  {
+    "line": 5228,
+    "label": "sec:rc",
+    "target_lines": [
+      1760
     ]
   },
   {
     "line": 5242,
-    "label": "ex:limits-fixed-field-budget",
-    "target_lines": [
-      4940
-    ]
-  },
-  {
-    "line": 5381,
-    "label": "ex:limits-fixed-field-clearing",
-    "target_lines": [
-      5219
-    ]
-  },
-  {
-    "line": 5384,
     "label": "ex:arith-common-coordinate",
     "target_lines": [
-      3874
+      4142
     ]
   },
   {
-    "line": 5392,
+    "line": 5488,
+    "label": "ex:limits-fixed-field-budget",
+    "target_lines": [
+      5208
+    ]
+  },
+  {
+    "line": 5490,
+    "label": "ex:arith-paired-functional",
+    "target_lines": [
+      3705
+    ]
+  },
+  {
+    "line": 5491,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      4142
+    ]
+  },
+  {
+    "line": 5510,
+    "label": "ex:limits-fixed-field-budget",
+    "target_lines": [
+      5208
+    ]
+  },
+  {
+    "line": 5649,
+    "label": "ex:limits-fixed-field-clearing",
+    "target_lines": [
+      5487
+    ]
+  },
+  {
+    "line": 5652,
+    "label": "ex:arith-common-coordinate",
+    "target_lines": [
+      4142
+    ]
+  },
+  {
+    "line": 5660,
     "label": "ex:arith-base-zero",
     "target_lines": [
-      4062
+      4330
     ]
   },
   {
-    "line": 5464,
+    "line": 5732,
     "label": "sec:arithmetic",
     "target_lines": [
-      2570
+      2719
     ]
   },
   {
-    "line": 5469,
+    "line": 5737,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
-    "line": 5823,
+    "line": 6097,
     "label": "sec:model",
     "target_lines": [
-      240
+      254
     ]
   },
   {
-    "line": 5823,
+    "line": 6097,
     "label": "sec:compiler",
     "target_lines": [
-      5477
+      5745
     ]
   },
   {
-    "line": 5824,
+    "line": 6098,
     "label": "sec:height",
     "target_lines": [
-      363
+      377
     ]
   },
   {
-    "line": 5824,
+    "line": 6098,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
-    "line": 5892,
+    "line": 6167,
     "label": "lem:pole",
     "target_lines": [
-      934
+      988
     ]
   },
   {
-    "line": 5953,
+    "line": 6233,
     "label": "hyp:PC",
     "target_lines": [
-      947
+      1001
     ]
   },
   {
-    "line": 5966,
+    "line": 6246,
     "label": "lem:test",
     "target_lines": [
-      5876
+      6151
     ]
   },
   {
-    "line": 5974,
+    "line": 6254,
     "label": "eq:close-sound",
     "target_lines": [
-      5838
+      6112
     ]
   },
   {
-    "line": 5975,
+    "line": 6255,
     "label": "lem:test-complete",
     "target_lines": [
-      5923
+      6202
     ]
   },
   {
-    "line": 5976,
+    "line": 6256,
     "label": "eq:close-complete",
     "target_lines": [
-      5840
+      6114
     ]
   },
   {
-    "line": 5984,
+    "line": 6264,
     "label": "sec:syntax",
     "target_lines": [
       141
     ]
   },
   {
-    "line": 5984,
+    "line": 6264,
     "label": "app:literal",
     "target_lines": [
-      6364
+      6666
     ]
   },
   {
-    "line": 5986,
+    "line": 6266,
     "label": "lem:assembly",
     "target_lines": [
       110
     ]
   },
   {
-    "line": 6081,
+    "line": 6383,
     "label": "sec:compiler",
     "target_lines": [
-      5477
+      5745
     ]
   },
   {
-    "line": 6139,
+    "line": 6441,
     "label": "thm:target",
     "target_lines": [
       60
     ]
   },
   {
-    "line": 6142,
+    "line": 6444,
     "label": "thm:target",
     "target_lines": [
       60
     ]
   },
   {
-    "line": 6148,
+    "line": 6450,
     "label": "sec:model",
     "target_lines": [
-      240
+      254
     ]
   },
   {
-    "line": 6150,
+    "line": 6452,
     "label": "sec:height",
     "target_lines": [
-      363
+      377
     ]
   },
   {
-    "line": 6152,
+    "line": 6454,
     "label": "sec:pole",
     "target_lines": [
-      919
+      973
     ]
   },
   {
-    "line": 6154,
+    "line": 6456,
     "label": "sec:mult",
     "target_lines": [
-      1044
+      1123
     ]
   },
   {
-    "line": 6156,
+    "line": 6458,
     "label": "sec:compiler",
     "target_lines": [
-      5477
+      5745
     ]
   },
   {
-    "line": 6158,
+    "line": 6460,
     "label": "sec:bridge",
     "target_lines": [
-      5820
+      6094
     ]
   },
   {
-    "line": 6160,
+    "line": 6462,
     "label": "sec:syntax",
     "target_lines": [
       141
     ]
   },
   {
-    "line": 6160,
+    "line": 6462,
     "label": "sec:size",
     "target_lines": [
-      5992
+      6272
     ]
   },
   {
-    "line": 6160,
+    "line": 6462,
     "label": "app:literal",
     "target_lines": [
-      6364
+      6666
     ]
   },
   {
-    "line": 6166,
+    "line": 6468,
     "label": "thm:target",
     "target_lines": [
       60
     ]
   },
   {
-    "line": 6186,
+    "line": 6488,
     "label": "thm:target",
     "target_lines": [
       60
     ]
   },
   {
-    "line": 6230,
+    "line": 6532,
     "label": "thm:target",
     "target_lines": [
       60
     ]
   },
   {
-    "line": 6251,
+    "line": 6553,
     "label": "cor:rational-universal",
     "target_lines": [
-      6196
+      6498
     ]
   },
   {
-    "line": 6284,
+    "line": 6586,
     "label": "cor:rational-universal",
     "target_lines": [
-      6196
+      6498
     ]
   },
   {
-    "line": 6295,
+    "line": 6597,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
-    "line": 6295,
+    "line": 6597,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 6296,
+    "line": 6598,
     "label": "app:even-source",
     "target_lines": [
-      6523
+      6825
     ]
   },
   {
-    "line": 6296,
+    "line": 6598,
     "label": "app:endpoints",
     "target_lines": [
-      9603
+      9981
     ]
   },
   {
-    "line": 6300,
+    "line": 6602,
     "label": "sec:bridge",
     "target_lines": [
-      5820
+      6094
     ]
   },
   {
-    "line": 6353,
+    "line": 6655,
     "label": "sec:height",
     "target_lines": [
-      363
+      377
     ]
   },
   {
-    "line": 6395,
+    "line": 6697,
     "label": "sec:size",
     "target_lines": [
-      5992
+      6272
     ]
   },
   {
-    "line": 6399,
+    "line": 6701,
     "label": "sec:syntax",
     "target_lines": [
       141
     ]
   },
   {
-    "line": 6526,
+    "line": 6828,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
-    "line": 7060,
+    "line": 7368,
     "label": "ex:app-kato-system",
     "target_lines": [
-      6545
+      6847
     ]
   },
   {
-    "line": 7076,
+    "line": 7384,
     "label": "ex:app-kato-system",
     "target_lines": [
-      6545
+      6847
     ]
   },
   {
-    "line": 7308,
+    "line": 7616,
     "label": "ex:app-even-scalar",
     "target_lines": [
-      7059
+      7367
     ]
   },
   {
-    "line": 7875,
+    "line": 7626,
+    "label": "lem:forward-rank",
+    "target_lines": [
+      1086
+    ]
+  },
+  {
+    "line": 7780,
+    "label": "lem:forward-rank",
+    "target_lines": [
+      1086
+    ]
+  },
+  {
+    "line": 8183,
     "label": "ex:app-coefficient-rules",
     "target_lines": [
-      9134
+      9447
     ]
   },
   {
-    "line": 7900,
+    "line": 8208,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
-    "line": 7912,
+    "line": 8220,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 7919,
+    "line": 8227,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   },
   {
-    "line": 8101,
+    "line": 8410,
     "label": "ex:app-detector",
     "target_lines": [
-      7917
+      8225
     ]
   },
   {
-    "line": 9096,
+    "line": 9409,
     "label": "ex:app-theta-form",
     "target_lines": [
-      8100
+      8409
     ]
   },
   {
-    "line": 9096,
+    "line": 9409,
     "label": "ex:app-theta-comparison",
     "target_lines": [
-      8793
+      9104
     ]
   },
   {
-    "line": 9136,
+    "line": 9449,
     "label": "ex:sec7-typed-graph",
     "target_lines": [
-      1867
+      2015
     ]
   },
   {
-    "line": 9136,
+    "line": 9449,
     "label": "ex:sec7-symbol",
     "target_lines": [
-      1920
+      2068
     ]
   },
   {
-    "line": 9137,
+    "line": 9450,
     "label": "ex:app-even-phase",
     "target_lines": [
-      7484
+      7792
     ]
   },
   {
-    "line": 9140,
+    "line": 9453,
     "label": "ex:app-odd-minimum",
     "target_lines": [
-      9774
+      10152
     ]
   },
   {
-    "line": 9147,
+    "line": 9460,
     "label": "ex:sec7-coefficient-rules",
     "target_lines": [
-      1954
+      2102
     ]
   },
   {
-    "line": 9171,
+    "line": 9484,
     "label": "app:endpoints",
     "target_lines": [
-      9603
+      9981
     ]
   },
   {
-    "line": 9606,
+    "line": 9984,
     "label": "ex:app-even-phase",
     "target_lines": [
-      7484
+      7792
     ]
   },
   {
-    "line": 9609,
+    "line": 9987,
     "label": "ex:app-coefficient-rules",
     "target_lines": [
-      9134
+      9447
     ]
   },
   {
-    "line": 9615,
+    "line": 9993,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 9687,
+    "line": 10065,
     "label": "ex:sec7-seed-partition",
     "target_lines": [
-      2028
+      2176
     ]
   },
   {
-    "line": 9697,
+    "line": 10075,
     "label": "ex:sec7-one-symbol-address",
     "target_lines": [
-      2074
+      2222
     ]
   },
   {
-    "line": 9698,
+    "line": 10076,
     "label": "ex:app-simultaneous-address",
     "target_lines": [
-      10176
+      10554
     ]
   },
   {
-    "line": 9741,
+    "line": 10119,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 9776,
+    "line": 10154,
     "label": "ex:app-detector",
     "target_lines": [
-      7917
+      8225
     ]
   },
   {
-    "line": 9778,
+    "line": 10156,
     "label": "ex:app-rough-companion",
     "target_lines": [
-      9678
+      10056
     ]
   },
   {
-    "line": 9785,
+    "line": 10163,
     "label": "ex:app-coefficient-rules",
     "target_lines": [
-      9134
+      9447
     ]
   },
   {
-    "line": 9883,
+    "line": 10261,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
-    "line": 9899,
+    "line": 10277,
     "label": "sec:rc",
     "target_lines": [
-      1621
+      1760
     ]
   },
   {
-    "line": 10132,
+    "line": 10510,
     "label": "ex:app-odd-minimum",
     "target_lines": [
-      9774
+      10152
     ]
   },
   {
-    "line": 10178,
+    "line": 10556,
     "label": "ex:sec7-typed-graph",
     "target_lines": [
-      1867
+      2015
     ]
   },
   {
-    "line": 10178,
+    "line": 10556,
     "label": "ex:sec7-symbol",
     "target_lines": [
-      1920
+      2068
     ]
   },
   {
-    "line": 10179,
+    "line": 10557,
     "label": "ex:sec7-address",
     "target_lines": [
-      2061
+      2209
     ]
   },
   {
-    "line": 10179,
+    "line": 10557,
     "label": "ex:sec7-realization",
     "target_lines": [
-      2003
+      2151
     ]
   },
   {
-    "line": 10180,
+    "line": 10558,
     "label": "ex:app-coefficient-rules",
     "target_lines": [
-      9134
+      9447
     ]
   },
   {
-    "line": 10392,
+    "line": 10770,
     "label": "ex:app-rough-companion",
     "target_lines": [
-      9678
+      10056
     ]
   },
   {
-    "line": 10408,
+    "line": 10786,
     "label": "ex:sec7-realization",
     "target_lines": [
-      2003
+      2151
     ]
   },
   {
-    "line": 10415,
+    "line": 10793,
     "label": "ex:app-nonempty-seeds",
     "target_lines": [
-      9881
+      10259
     ]
   },
   {
-    "line": 10485,
+    "line": 10863,
     "label": "ex:app-final-family",
     "target_lines": [
-      10414
+      10792
     ]
   },
   {
-    "line": 10486,
+    "line": 10864,
     "label": "ex:arith-common-coordinate",
     "target_lines": [
-      3874
+      4142
     ]
   },
   {
-    "line": 10488,
+    "line": 10866,
     "label": "ex:arith-central-calibration",
     "target_lines": [
-      3739
+      3987
     ]
   },
   {
-    "line": 10490,
+    "line": 10868,
     "label": "ex:limits-fixed-field-clearing",
     "target_lines": [
-      5219
+      5487
     ]
   },
   {
-    "line": 10491,
+    "line": 10869,
     "label": "ex:limits-coefficient-transfer",
     "target_lines": [
-      5379
+      5647
     ]
   },
   {
-    "line": 10492,
+    "line": 10870,
     "label": "ex:arith-base-zero",
     "target_lines": [
-      4062
+      4330
     ]
   },
   {
-    "line": 10523,
+    "line": 10901,
     "label": "sec:limits",
     "target_lines": [
-      4114
+      4382
     ]
   },
   {
-    "line": 10549,
+    "line": 10927,
     "label": "hyp:RC",
     "target_lines": [
-      951
+      1005
     ]
   }
 ]

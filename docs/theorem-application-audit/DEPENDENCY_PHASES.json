@@ -1,0 +1,310 @@
+{
+  "baseline_sha256": "a17e021ea3a6b90f861d87aff048f905b1dc31226e3445caf273739f7659e51e",
+  "purpose": "Dependency clarification proposals, not a new whole-proof certificate or automatic canonical mutation",
+  "phases": [
+    {
+      "key": "A075-F",
+      "application_id": "A075",
+      "name": "Construction of bounded finite free models",
+      "consumed_application_ids": [],
+      "direct_sources": [
+        "Milne ADT I.4.10(c), I.4.15–I.4.16 for bounded finite residual cohomology and positive real fiber",
+        "Milne ADT I.2.3 and I.3.3 for local finite cohomology and local point-group structure",
+        "Crainic 2.1–2.4, 3.2 with the explicitly checked manuscript sign convention",
+        "Stacks Tag 03T3 for maps up to homotopy on projective complexes"
+      ],
+      "internal_premises": [
+        {
+          "premise": "Coefficient rings are Artin local with nilpotent maximal ideal; coefficient representations are finite free",
+          "where": "baseline 2576 and 4122–4182; closure/BATCH-006.md section 1"
+        },
+        {
+          "premise": "Residual ordinary global cohomology is bounded and finite for imaginary K; at real Q use the positive fiber, with high-degree cancellation and degree-two real surjectivity",
+          "where": "closure/BATCH-006.md sections 1 and 3; baseline 7078–7094"
+        },
+        {
+          "premise": "Each Kummer source is the completion of an actual local elliptic point group, including finite torsion, and has a bounded two-term free resolution",
+          "where": "baseline 3164–3189 and 3532–3560; Milne I.3.3; theta-local/ACCEPTANCE-REPORT.md A037"
+        },
+        {
+          "premise": "Nilpotent perturbation identities hold on the lifted residual disk decomposition",
+          "where": "baseline 4122–4182; closure/BATCH-006.md section 1"
+        }
+      ],
+      "does_not_consume": [
+        "A038 global Selmer duality",
+        "A045 self-dual dimension/rank budget",
+        "A075-B arithmetic budget",
+        "A080 global exact-annihilator conclusion"
+      ],
+      "result": "Bounded finite free models and actual contractions; no assertion of arithmetic orthogonality or rank-one Selmer cohomology."
+    },
+    {
+      "key": "A075-T",
+      "application_id": "A075",
+      "name": "Transport of diagrams and specified limits",
+      "consumed_phases": [
+        "A075-F"
+      ],
+      "consumed_application_ids": [],
+      "internal_premises": [
+        {
+          "premise": "Actual chain maps, cup products, isotropy and compatibility homotopies are supplied before transport",
+          "where": "closure/BATCH-006.md section 2; for derivative local data theta-local/A080-LOCAL-REVIEW.md and its replacement"
+        },
+        {
+          "premise": "Compatible compact-coefficient tower has termwise-surjective transitions; moving-prime inner limit instead has bounded finite matrix patterns and retained finite detecting lists",
+          "where": "closure/BATCH-006.md sections 3–4; baseline 4122–4182, 4466–4470, 7078–7094"
+        },
+        {
+          "premise": "Arithmetic stage sets are nonempty where an ultrafilter selects among them",
+          "where": "A067/A068/A076 records and their later closure evidence; not the perturbation lemma"
+        }
+      ],
+      "result": "Specified maps and homotopy identities survive the stated operations. No generic exactness claim for arbitrary inverse limits or nonflat changes.",
+      "consumed_source_subclaims": [
+        "A076 elementary ultrafilter/finite-partition selection only, independent of arithmetic realizability"
+      ],
+      "conditional_application_boundary": "The transport formulas are unconditional algebra on supplied diagrams. An actual arithmetic limit additionally consumes the independently established nonempty-stage results; no claim that A075-T proves those results."
+    },
+    {
+      "key": "A075-D",
+      "application_id": "A075",
+      "name": "Use of duality on already constructed models",
+      "consumed_phases": [
+        "A075-F",
+        "A075-T"
+      ],
+      "consumed_application_ids": [
+        "A037",
+        "A038"
+      ],
+      "internal_premises": [
+        {
+          "premise": "Perfect coefficient pairing, actual local orthogonality and isotropy homotopies have already been supplied",
+          "where": "baseline 2612–2680, 3164–3208, 3532–3608; A038 and reviewed A080 local repair"
+        },
+        {
+          "premise": "The displayed local comparison cones at the specified localization are contractible",
+          "where": "baseline active/moving local calculations preceding 3532–3608; A038; transport itself does not establish this premise"
+        }
+      ],
+      "result": "Transport/inversion of the already established duality comparisons. Not the original construction of perfect complexes."
+    },
+    {
+      "key": "A075-B",
+      "application_id": "A075",
+      "name": "Arithmetic dimension and torsion budgets",
+      "consumed_phases": [
+        "A075-F",
+        "A075-T",
+        "A075-D"
+      ],
+      "consumed_application_ids": [
+        "A037",
+        "A038",
+        "A042",
+        "A043",
+        "A045",
+        "A082"
+      ],
+      "internal_premises": [
+        {
+          "premise": "Finite Selmer dimensions and integral torsion identifications follow from the actual Kummer duality",
+          "where": "baseline 4991–5045; closure/BATCH-006.md section 5; A045"
+        },
+        {
+          "premise": "Full Selmer corank one and independently chosen companion with nonzero central L-value",
+          "where": "baseline 4995–5001 and 5034–5045; A019/A025/A082 as applicable to the construction"
+        },
+        {
+          "premise": "Moving singular disks have the stated bounded nonzero determinant valuations",
+          "where": "baseline ensuing integral Kummer-budget argument; closure/BATCH-006.md section 5"
+        }
+      ],
+      "result": "Rank and torsion estimates for those arithmetic complexes. These estimates are not prerequisites of A075-F."
+    }
+  ],
+  "application_clarifications": [
+    {
+      "id": "A037",
+      "consumed_phases": [
+        "A075-F"
+      ],
+      "consumed_application_ids": [],
+      "clarification": "Replace the blanket A075 dependency by local finite-model construction only. Finite local Kummer duality supplies isotropy/annihilator before A038."
+    },
+    {
+      "id": "A038",
+      "consumed_phases": [
+        "A075-F",
+        "A075-T"
+      ],
+      "consumed_application_ids": [
+        "A037",
+        "A080"
+      ],
+      "clarification": "A080 dependency is the repaired local model and compatible maps, not a global exact-annihilator theorem. Record active/moving contractions separately."
+    },
+    {
+      "id": "A040",
+      "consumed_phases": [],
+      "consumed_application_ids": [
+        "A020",
+        "A069",
+        "A082"
+      ],
+      "clarification": "Finite Sha is supplied only at independently known analytic rank zero/one. Do not import this conclusion into the full-corank-one setting of A045."
+    },
+    {
+      "id": "A041",
+      "consumed_phases": [
+        "A075-T",
+        "A075-D"
+      ],
+      "consumed_application_ids": [
+        "A037",
+        "A038",
+        "A080"
+      ],
+      "clarification": "The norm relation, retained boundary and generic paired strict lift are internal inputs at baseline 3890–3908. The Lambda-unit conclusion additionally uses the finite cone-basis argument at 3914–3926; naturality alone does not imply it."
+    },
+    {
+      "id": "A044",
+      "consumed_phases": [
+        "A075-F",
+        "A075-T"
+      ],
+      "consumed_application_ids": [
+        "A037",
+        "A038",
+        "A080"
+      ],
+      "clarification": "Record old generic rank one and nonzero finite localization, and H19 actual derivative identity, as internal premises at baseline 4576–4583, 4611–4626, 4787–4817. Do not mark them proved by Nekovar 6.3.4."
+    },
+    {
+      "id": "A045",
+      "consumed_phases": [
+        "A075-F"
+      ],
+      "consumed_application_ids": [
+        "A037",
+        "A038",
+        "A082"
+      ],
+      "clarification": "Its output feeds A075-B. A082 supplies only forward rank zero, not the separate real-place exact-sequence construction at 7376–7425, which uses Nekovar 5.7 and the displayed limits."
+    },
+    {
+      "id": "A080",
+      "consumed_phases": [],
+      "consumed_application_ids": [
+        "A033",
+        "A034",
+        "A035",
+        "A036",
+        "A067",
+        "A068"
+      ],
+      "clarification": "Separate ordinary global functoriality, arithmetic tower/class inputs, and the repaired local compatibility construction. H12 and actual split/totally ramified tower assumptions precede the local resolution. The local proof does not consume A038/A044 global duality. Subsequent use of A075-T transports its data."
+    },
+    {
+      "id": "A081",
+      "consumed_phases": [],
+      "consumed_application_ids": [
+        "A071"
+      ],
+      "clarification": "Use local control, Kato (12.2.3) local degree range and ordinary local duality as direct source inputs. Do not depend on A023 global divisibility or on the global restricted converse. A071 contributes only the formal-logarithm torsion-free neighborhood; its later global point calculations are not inputs."
+    },
+    {
+      "id": "A011",
+      "consumed_phases": [],
+      "consumed_application_ids": [],
+      "clarification": "The reusable density/semisimple character lemma registered under A064 precedes modular-realization identification. It does not consume A064 final r_3 comparison."
+    },
+    {
+      "id": "A064",
+      "consumed_phases": [],
+      "consumed_application_ids": [
+        "A011"
+      ],
+      "clarification": "Separate the standalone character lemma from the final comparison with the modular constituent. Only the final comparison consumes A011."
+    },
+    {
+      "id": "A013",
+      "consumed_phases": [],
+      "consumed_application_ids": [
+        "A061"
+      ],
+      "clarification": "The local semistability theorem and degree estimate precede A012. Subsequent A012 ramification transport is a consumer, not a prerequisite."
+    },
+    {
+      "id": "A027",
+      "consumed_phases": [],
+      "consumed_application_ids": [
+        "A020",
+        "A066",
+        "A082"
+      ],
+      "clarification": "Forward rank inputs are needed for the later native free-line comparison, not for the prior nonzero explicit Gross–Zagier identity. Keep those subclaims separate."
+    }
+  ],
+  "supersession_notes": [
+    {
+      "earlier": "parallel-009/forward-modularity/A080-REPORT.md",
+      "earlier_claim": "Local chain-map/homotopy obligation remains after checking H19/H22",
+      "later": [
+        "parallel-009/theta-local/A080-LOCAL-REVIEW.md",
+        "parallel-009/theta-local/A080-REPLACEMENTS.json",
+        "parallel-009/forward-modularity/A080-LOCAL-SECOND-REVIEW.md"
+      ],
+      "rule": "Retain as historical discovery; close only by attaching reviewed repair and rebinding its integrated anchors. Do not claim original H19/H22 alone discharged it."
+    },
+    {
+      "earlier": "closure/BATCH-006.md A076 open language",
+      "later": "A076 canonical record and later arithmetic-realization closure evidence",
+      "rule": "Historical state only. Preserve distinction between elementary compactness and the subsequently checked nonempty arithmetic stages."
+    },
+    {
+      "earlier": "parallel-009/theta-local/ACCEPTANCE-UPDATES.json blanket A075 dependency",
+      "later": "FINAL-DEPENDENCY-CLARIFICATIONS.json phases A075-F/T/D/B",
+      "rule": "Refine dependency edges; no reversal of bounded external-application acceptance."
+    },
+    {
+      "earlier": "Uncorrected A032 ordinary Weyl normalization",
+      "later": [
+        "parallel-009/sieve-bounds/A032-SECOND-REVIEW.md",
+        "parallel-009/theta-local/REPLACEMENTS.json"
+      ],
+      "rule": "Acceptance requires the reviewed h_p Atkin–Lehner normalization in the integrated text."
+    }
+  ],
+  "coverage_additions": [
+    {
+      "id": "A021",
+      "required": "Mertens product, harmonic-sum and sufficient weighted-sum subobligations",
+      "evidence": "parallel-009/sieve-bounds/COVERAGE-REVIEW.md and COVERAGE-REPLACEMENTS.json"
+    },
+    {
+      "id": "A052",
+      "required": "Quaternion classification and rational quadratic-field embedding; A028 cross-reference",
+      "evidence": "parallel-009/sieve-bounds/COVERAGE-REVIEW.md"
+    },
+    {
+      "id": "A018",
+      "required": "Correct author-version versus published-file identity",
+      "evidence": "parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md"
+    },
+    {
+      "id": "A057",
+      "required": "Repeated consumers at 1836–1837 and 2494–2496 cross-reference",
+      "evidence": "parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md"
+    },
+    {
+      "id": "A065",
+      "required": "Repeated non-CM consumer at 1622–1628",
+      "evidence": "parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md"
+    }
+  ],
+  "newly_demonstrated_unresolved_internal_premises": [],
+  "qualification": "No new failed internal premise was demonstrated in this dependency-consistency pass. Named arithmetic premises above remain separate proof obligations whose evidence is not supplied merely by the external application acceptance. Pending repair integration is a real condition on acceptance of the final manuscript, not an assumption that the unchanged baseline already contains those repairs."
+}

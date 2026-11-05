@@ -1,0 +1,1333 @@
+{
+  "schema": "source-restoration-manifest-v1",
+  "manuscript_sha256": "f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3",
+  "source_registry_sha256": "6e8732d40657374f58e148cfdbf830b72426eafbc92fd3bd969e4e8a3f9802cf",
+  "scope": "Declared primary source files only; not an authoring-workspace archive or a license grant.",
+  "sources_without_file_pins": [
+    "openaihtp"
+  ],
+  "files": [
+    {
+      "path": "work/Alpha_Sequence.thy",
+      "sha256": "76a9dfa6bcebaebe17492d1aef32be7b1fec241529cc3fec3378e0c6d1210c23",
+      "bytes": 3733,
+      "sources": [
+        {
+          "id": "afp",
+          "version": "The three original local Isabelle files match AFP development mirror revision b4f3b892d0ae25cea27412ba4007cdb63e44b0eb, dated 2026-05-10T07:38:12Z. The additional modulo-definition dependency is pinned at the same revision. This authenticates the exact source revision; it does not infer the original retrieval date, an Isabelle release, a stable AFP release, or an Isabelle rebuild.",
+          "urls": [
+            "https://isa-afp.org/entries/DPRM_Theorem.html"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/Exponential_Relation.thy",
+      "sha256": "515093945cfd56a09622c9bb6536f61c2dcc8f6d6798af1f28efafcd42a95069",
+      "bytes": 8240,
+      "sources": [
+        {
+          "id": "afp",
+          "version": "The three original local Isabelle files match AFP development mirror revision b4f3b892d0ae25cea27412ba4007cdb63e44b0eb, dated 2026-05-10T07:38:12Z. The additional modulo-definition dependency is pinned at the same revision. This authenticates the exact source revision; it does not infer the original retrieval date, an Isabelle release, a stable AFP release, or an Isabelle rebuild.",
+          "urls": [
+            "https://isa-afp.org/entries/DPRM_Theorem.html"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/Exponentiation.thy",
+      "sha256": "203431b551fd0ca218722583a2ba62c5959d8e72aea8c47eca975118e74f0946",
+      "bytes": 90303,
+      "sources": [
+        {
+          "id": "afp",
+          "version": "The three original local Isabelle files match AFP development mirror revision b4f3b892d0ae25cea27412ba4007cdb63e44b0eb, dated 2026-05-10T07:38:12Z. The additional modulo-definition dependency is pinned at the same revision. This authenticates the exact source revision; it does not infer the original retrieval date, an Isabelle release, a stable AFP release, or an Isabelle rebuild.",
+          "urls": [
+            "https://isa-afp.org/entries/DPRM_Theorem.html"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-arithmetic-final-composition-001/milne-ADT-2006.pdf",
+      "sha256": "2c6195ec76a974f3f336c77cb71cc3845b018aad2d43136716b3477a3bc5fb31",
+      "bytes": 2136045,
+      "sources": [
+        {
+          "id": "milne",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.jmilne.org/math/Books/ADTnot.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf",
+      "sha256": "7154ad8f261a625899562653d8b471d5d7dd31ddbb0afc071ef26f6e3acd93c8",
+      "bytes": 309233,
+      "sources": [
+        {
+          "id": "cornutjetchev",
+          "version": "Two author versions are pinned. Prior comparison found the used statements equivalent; publisher PDF equivalence remains unverified. Bibliography explicitly cites 2010 preprint.",
+          "urls": [
+            "https://webusers.imj-prg.fr/~christophe.cornut/papers/liftings.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-finite-arithmetic-audit-001/primary/cai-chen-liu-2018.pdf",
+      "sha256": "fd19f0588bf3cee285f731812ae058dc3f8527d30d26eac7c2b6a21bfa847522",
+      "bytes": 349879,
+      "sources": [
+        {
+          "id": "ccl",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://archive.ymsc.tsinghua.edu.cn/pacm_download/632/12220-Heegner_points_on_modular_curves.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-finite-arithmetic-audit-001/primary/howard-2012v1.pdf",
+      "sha256": "d2d06e851d6aa1fdc33a932b69b5c06a8c56dc2d9e05fb10d97c0358d6d6ea9a",
+      "bytes": 425583,
+      "sources": [
+        {
+          "id": "howard2012",
+          "version": "arXiv:1202.6340v1 is a 2012 posting of a paper published in 2004. Only Section 1.7 formula (13) is a comparison; the broader-conductor argument is local to the manuscript.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf",
+      "sha256": "665286caefaa894cf789f3b4ce3027accdf4d583836e8b13aafeab744373b44d",
+      "bytes": 757414,
+      "sources": [
+        {
+          "id": "lang1956",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/baba-granath-2005.pdf",
+      "sha256": "b049ce64f9b662af0e078f4faa9e5325cc7a99bf2d6ccda0a31a84719d031c32",
+      "bytes": 240177,
+      "sources": [
+        {
+          "id": "babagranath",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://webdoc.sub.gwdg.de/ebook/serien/e/mpi_mathematik/2005/18.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/buzzard-1996.pdf",
+      "sha256": "4854cb4adc99fec7eac47596dea86832e2e468f3c80d78726afeb98d2404b915",
+      "bytes": 231177,
+      "sources": [
+        {
+          "id": "buzzard",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.ma.imperial.ac.uk/~buzzard/maths/research/papers/shimura.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/green-tao-linear.pdf",
+      "sha256": "ec126f9c9e189cc0308b83fb4f9f93c29a47d11ad875391aff4ce4c42aef1001",
+      "bytes": 1213124,
+      "sources": [
+        {
+          "id": "greentao",
+          "version": "Annals171 (2010), published PDF; main theorem is unnumbered.",
+          "urls": [
+            "https://annals.math.princeton.edu/2010/171-3/p08"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/green-tao-mobius.pdf",
+      "sha256": "5259dbc9ee73df46edd765ca27c8b3c0ec466f6b78abafa5f54237b11d44a314",
+      "bytes": 502447,
+      "sources": [
+        {
+          "id": "moebius",
+          "version": "Annals175 (2012), published PDF.",
+          "urls": [
+            "https://annals.math.princeton.edu/2012/175-2/p03"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/gtz-erratum.pdf",
+      "sha256": "9d66017c15fc99bbae83726ef27bcc16d73128c13166916f00714c84c8523383",
+      "bytes": 266792,
+      "sources": [
+        {
+          "id": "gtz",
+          "version": "The actual input is corrected arXiv:1009.3998v5 (23 April 2026), together with the separate author erratum. Do not describe the input as only the 2012 printed article. arXiv1009.3998v5, 23 April2026, 116pp. Repairs filtration in Lemma13.2 but retains original Proposition8.3; separate erratum still required. Not a claim that v5 alone contains every correction. Separate six-page author erratum, 2024; needed together with v5. Original Proposition8.3 is false as stated.",
+          "urls": [
+            "https://arxiv.org/abs/1009.3998v5",
+            "https://people.maths.ox.ac.uk/greenbj/papers/GI(s)-erratum.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/gtz-inverse-v5.pdf",
+      "sha256": "24b5b74b1c4f31986bfc75955f8528e81753efc0c45bd99bc23fee58171a4711",
+      "bytes": 983529,
+      "sources": [
+        {
+          "id": "gtz",
+          "version": "The actual input is corrected arXiv:1009.3998v5 (23 April 2026), together with the separate author erratum. Do not describe the input as only the 2012 printed article. arXiv1009.3998v5, 23 April2026, 116pp. Repairs filtration in Lemma13.2 but retains original Proposition8.3; separate erratum still required. Not a claim that v5 alone contains every correction. Separate six-page author erratum, 2024; needed together with v5. Original Proposition8.3 is false as stated.",
+          "urls": [
+            "https://arxiv.org/abs/1009.3998v5",
+            "https://people.maths.ox.ac.uk/greenbj/papers/GI(s)-erratum.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/lin-yang.pdf",
+      "sha256": "773518a4a30e4f4acac650b7f7c5f19decfb1f893431e6d04f4cfd0205919038",
+      "bytes": 884274,
+      "sources": [
+        {
+          "id": "linyang",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://arxiv.org/abs/1807.00466v1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/lny-2015.pdf",
+      "sha256": "42f1439a0ea42ca380f22bef22d53a56141ad468bf62328ace56ba9b25b09f8e",
+      "bytes": 1185688,
+      "sources": [
+        {
+          "id": "lny",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://people.math.wisc.edu/~tonghaiyang/2015-LNYFinal-JNT.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-height-producers-001/primary/pazuki-2012.pdf",
+      "sha256": "479d8157f118f6bb0df581deb57585d67a1c87fb0cec8867ca1bed30b75e7a96",
+      "bytes": 521460,
+      "sources": [
+        {
+          "id": "pazuki",
+          "version": "The previously pinned24-page file is an author version dated4February2012, not the33-page Numdam published file. Both bounded interfaces compared. Published Bull.Soc.Math.France140(1) (2012),19-49,33PDFpages including cover; differs from author-version bytes. Applied constants, metrics and coordinates agree; no whole-document identity claim.",
+          "urls": [
+            "https://www.numdam.org/item/10.24033/bsmf.2623.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-moving-character-audit-001/primary/milne-cft.pdf",
+      "sha256": "50d79af78250a9f1117ad9d337e0b231704a533fc707966ed1bfa52e13d498f5",
+      "bytes": 2072714,
+      "sources": [
+        {
+          "id": "milne-cft",
+          "version": "Class Field Theory v4.03, August 6, 2020, author course notes. Supplementary source not separately in the manuscript bibliography. Theorem locators specify the chapter as numbering repeats. Class Field Theory v4.03, August 6, 2020, author course notes. Supplementary source not separately in the manuscript bibliography. Theorem locators specify the chapter as numbering repeats. Author notes v4.03,6August2020.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf",
+      "sha256": "e51f8b8f63486c2259efe076d367504f08dda0fe9e99dc35bf36de544ffc0601",
+      "bytes": 1122139,
+      "sources": [
+        {
+          "id": "bmor",
+          "version": "arXiv1802.00085v3, 27 November2018, 103pp. Illinois J.Math.62 (2018),427-532,106pp. These statements/constants agree with v3; no claim of whole-document identity.",
+          "urls": [
+            "https://arxiv.org/abs/1802.00085v3"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-pole-completeness-review-001/bcdt-2001.pdf",
+      "sha256": "cbbdc24c26cdfcbd77f0e084194643e8804a724f004eb02e431ead9d932c498d",
+      "bytes": 698482,
+      "sources": [
+        {
+          "id": "bcdt",
+          "version": "Author manuscript of On the modularity of elliptic curves over Q: wild 3-adic exercises. Its date line contains placeholders (? 2000; ? January 2001). Exact bytes are pinned, but equivalence to the final 2001 JAMS article has not been independently checked. Author typeset manuscript; journal and received-date placeholders, not publisher final",
+          "urls": [
+            "https://virtualmath1.stanford.edu/~conrad/papers/tswfinal.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-pole-completeness-review-001/poonen-stoll.pdf",
+      "sha256": "3b9a619423358bc877fd2123b73a759157a728ec11e0f7b0aa48bd0333d7149a",
+      "bytes": 509200,
+      "sources": [
+        {
+          "id": "poonenstoll",
+          "version": "Author version dated November 6, 1998 with minor correction August 23, 2014; states publication in Annals of Mathematics 150 (1999), pp.1109\u20131149. Locator page numbers in this audit refer to the corrected author version, not journal pagination.",
+          "urls": [
+            "https://math.mit.edu/~poonen/papers/sha.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-final-size-independent-review-001/silverman-2009.pdf",
+      "sha256": "72ee67bfa1e3fdf582ac7e4b032d7ca0b35a168ed6443ac39c121fbb788cab25",
+      "bytes": 3658085,
+      "sources": [
+        {
+          "id": "silverman",
+          "version": "Second edition (2009), exact PDF pinned. Direct inspection found the omega sign typo on p.105 and a^2-b instead of a^2-4b in X Proposition 4.9, p.337. The full official errata file was not retrieved. A056 uses the separately pinned Sutherland lecture statement and the checked corrected recurrences; the isogeny-kernel calculation is derived independently in closure-batch-002. No application relies on an uninspected errata file.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/astra-kato-primary-001/kato-1999.pdf",
+      "sha256": "483dc18c56b2fe9cfac4e37f2e6594399625c3f0ea98a05bb69116377c67fc06",
+      "bytes": 4319206,
+      "sources": [
+        {
+          "id": "kato1999",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/astra-mazur-corollary-001/primary/matiyasevich-1971.pdf",
+      "sha256": "18e824c01046ad49b079f91b567b27a928e737c598eb347c8a4f42128081ec83",
+      "bytes": 1030147,
+      "sources": [
+        {
+          "id": "matiyasevich1971",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://doi.org/10.1070/IM1971v005n01ABEH001004"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-mazur-corollary-001/primary/mazur-1995.pdf",
+      "sha256": "94490a944040d9589595995389d499661a8facab8398af062d0c52e34d71aded",
+      "bytes": 1552870,
+      "sources": [
+        {
+          "id": "mazur1995",
+          "version": "Published Asterisque228 (1995),165-181; Numdam cover retained.",
+          "urls": [
+            "https://www.numdam.org/article/AST_1995__228__165_0.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-t3-opus-reconciliation-001/primary/carayol-1986.pdf",
+      "sha256": "d4a5fb6b1cd76f944f8948e06df1c7ad5656ae5ee14b9189178ee1e8f2b0dab8",
+      "bytes": 5887969,
+      "sources": [
+        {
+          "id": "carayol",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.numdam.org/item/ASENS_1986_4_19_3_409_0/"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-t3-opus-reconciliation-001/primary/casselman-1973.pdf",
+      "sha256": "7f91ebae1a8f5e695800f4afb9fc06d0e2ea0b3a476751a31a7c8c3f38ad537d",
+      "bytes": 1208216,
+      "sources": [
+        {
+          "id": "casselman",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/astra-weighted-theta-audit-001/primary/desjardins-2020.pdf",
+      "sha256": "9c77b1ca4721c814b3f6c8ac153a061132750fcda21249493349d11421e82533",
+      "bytes": 793148,
+      "sources": [
+        {
+          "id": "desjardins",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://jtnb.centre-mersenne.org/item/10.5802/jtnb.1112.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-weighted-theta-audit-001/primary/dokchitser-parity-2009.pdf",
+      "sha256": "b0c625d49e99cfd7af1ef95d8bd7ec729dc2eba4a762b4869838f6052b103707",
+      "bytes": 341969,
+      "sources": [
+        {
+          "id": "dd",
+          "version": "Consulted arXiv:0906.1815v1; bibliography also names 2011 journal. Exact publisher equivalence is unverified. Use Theorem 1.8, not the finite-Sha statement 1.2.",
+          "urls": [
+            "https://arxiv.org/abs/0906.1815v1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-weighted-theta-audit-001/primary/kolyvagin-1990.pdf",
+      "sha256": "bacdf23d05d5120defe923c8dcccd7c5bc525fe7b32239552b04fd6567726f2f",
+      "bytes": 380826,
+      "sources": [
+        {
+          "id": "kolyvagin",
+          "version": "Inspected MPI/90-69 (1990), On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves. Theorem 1 is printed p.4; its explanation and auxiliary-field chain continue pp.4-5. This pinned file is not the Grothendieck Festschrift chapter Euler systems; no equivalence to that different text is asserted.",
+          "urls": [
+            "https://archive.mpim-bonn.mpg.de/id/eprint/325/1/preprint_1990_69.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/astra-weighted-theta-audit-001/primary/weil-1964.pdf",
+      "sha256": "22df47cb98307aa77c46028cf5575eeb1d3524950dbdadb9c0c21890966039d2",
+      "bytes": 3725156,
+      "sources": [
+        {
+          "id": "weil",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://webhomes.maths.ed.ac.uk/~v1ranick/papers/weil2.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/bfh-1990.pdf",
+      "sha256": "d50ad2f11c992591de90f2cea59489ac436cce455e140e6eebf5053f49819f2c",
+      "bytes": 4760247,
+      "sources": [
+        {
+          "id": "bfh",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://wstein.org/papers/bib/bump-friedberg-hoffstein-nonvanishing.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/cai-shu-tian-2014.pdf",
+      "sha256": "3eef3f34a03d21575bdb352acfaa0bef2fbe3701068a65798cb89a6ae84333e7",
+      "bytes": 1409076,
+      "sources": [
+        {
+          "id": "cst",
+          "version": "Prior audit records cached PDF equality with publisher PDF, SHA256 3eef3f34a03d21575bdb352acfaa0bef2fbe3701068a65798cb89a6ae84333e7.",
+          "urls": [
+            "https://arxiv.org/abs/1408.1733"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/cornut-jetchev-2010.pdf",
+      "sha256": "379c173b9e491d7c868557274db4f48a4a1dfb9a83962e32267f9263f20fbae6",
+      "bytes": 255634,
+      "sources": [
+        {
+          "id": "cornutjetchev",
+          "version": "Two author versions are pinned. Prior comparison found the used statements equivalent; publisher PDF equivalence remains unverified. Bibliography explicitly cites 2010 preprint.",
+          "urls": [
+            "https://webusers.imj-prg.fr/~christophe.cornut/papers/liftings.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/fable-review-packet-20261104/primary/edixhoven-1992.pdf",
+      "sha256": "5ddfbee91284ef888d97106ff89c5f8f156377373b7af68942a5cf4453abd6cc",
+      "bytes": 1492562,
+      "sources": [
+        {
+          "id": "edixhoven",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.numdam.org/item/CM_1992__81_3_291_0/"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/gaudron-remond-polarisations.pdf",
+      "sha256": "6d62ddb8a0aa8f8b8f803d70060c6a26c7a6f2a00936b85867c830946cf3db12",
+      "bytes": 535639,
+      "sources": [
+        {
+          "id": "gr2014",
+          "version": "Published Duke163 (2014),2057-2108,52pages.",
+          "urls": [
+            "https://doi.org/10.1215/00127094-2782528"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/gross-zagier-1986.pdf",
+      "sha256": "8afee839cdc0e2056c6dcbe348e39c0a6aa27344125d8c3b80dd735f2e6d9521",
+      "bytes": 4395679,
+      "sources": [
+        {
+          "id": "gz",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/hoffstein-luo-1997.pdf",
+      "sha256": "7d1d7e71edc7dfc5e17963e784a27c8bfad51eebec79f21f70fb6866f4304787",
+      "bytes": 147594,
+      "sources": [
+        {
+          "id": "hl",
+          "version": "The cached PDF contains the main article pp.435\u2013442. It does not contain Rohrlich\u2019s separate appendix pp.443\u2013444; no application here is assigned to that appendix.",
+          "urls": [
+            "https://intlpress.com/site/pub/files/_fulltext/journals/mrl/1997/0004/0003/MRL-1997-0004-0003-a012.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/independent-height-review-20261104/conductor/primary/serre-local-cft.pdf",
+      "sha256": "e0367b25a022eb27ec220e3c15b474a94fb96d70a6bb89b77f4a02c2231950fe",
+      "bytes": 23921659,
+      "sources": [
+        {
+          "id": "serrelocal",
+          "version": "Inspected extract of Serre, Local class field theory, Chapter VI in Cassels-Frohlich, Algebraic Number Theory (1967), pp.128-161, followed by Tate Chapter VII. Sections 4.1-4.3, pp.155-159, supply the ramification and conductor statements. This is not Serre Local Fields (1979). Original retrieval URL of these exact extract bytes is unknown.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/independent-height-review-20261104/conductor/primary/silverberg-zarhin.pdf",
+      "sha256": "fc62ba1c9d1315a0c441a3dd7de46a254f379289e630c407a3336c0230d91052",
+      "bytes": 1826653,
+      "sources": [
+        {
+          "id": "silverbergzarhin",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.numdam.org/article/AIF_1995__45_2_403_0.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/jetchev-kane-2009.pdf",
+      "sha256": "481234506a2de042dc05c98348c5b005ff2cdc2deb421b0edba179c42b6fa00a",
+      "bytes": 308433,
+      "sources": [
+        {
+          "id": "jetchevkane",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://arxiv.org/abs/0908.3905"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/kato-2004.pdf",
+      "sha256": "3c6e14b11fa60262db8aff782ce3cf4d83e9100c0be83621a7e4ce502cec605d",
+      "bytes": 18010813,
+      "sources": [
+        {
+          "id": "kato",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.numdam.org/article/AST_2004__295__117_0.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/nekovar-selmer-complexes-2006.pdf",
+      "sha256": "61c84e5ad3252a2e520747215ac57a282addc2b58c824a3637bcd77bbe02153f",
+      "bytes": 42932456,
+      "sources": [
+        {
+          "id": "nekovar",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.numdam.org/item/AST_2006__310__1_0/"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/ramsey-2006.pdf",
+      "sha256": "c4dbde444169f075dc77dadb67a18f0348a450a9df32d16ef049e40e348ed0f4",
+      "bytes": 455542,
+      "sources": [
+        {
+          "id": "ramsey",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.numdam.org/item/10.5802/aif.2195.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/serre-1972-open-image.pdf",
+      "sha256": "93970ed93730194af8bed0f1f59d29cbed061d20f34f4bcffc079ad8aedf01d5",
+      "bytes": 6148034,
+      "sources": [
+        {
+          "id": "serre",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/crainic-perturbation-v1.pdf",
+      "sha256": "7999b34428a9193c6cf96137abb2feb58d83a9eaab403ba8f125f0e4972da96b",
+      "bytes": 203151,
+      "sources": [
+        {
+          "id": "crainic2004",
+          "version": "arXiv:math/0403266v1, 16 March 2004. Supplementary comparison for the standard perturbation formulas; not asserted to be a published research article. The specialized nilpotent algebra is checked directly in closure-batch-006, including reversal of the source homotopy sign. No general quasi-isomorphism argument from this preprint is imported without that calculation.",
+          "urls": [
+            "https://arxiv.org/pdf/math/0403266v1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/scholze-erratum-published.pdf",
+      "sha256": "3caea8d89df1e7d047d4edc89a679cd1deb2a19ec350effb450305a9c8eef3d1",
+      "bytes": 166017,
+      "sources": [
+        {
+          "id": "scholze-erratum",
+          "version": "Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately. Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately.",
+          "urls": [
+            "https://doi.org/10.1017/fmp.2016.4",
+            "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/423022854D448D337C999BCD505D8F75/S2050508616000044a.pdf/div-class-title-span-class-inlineformula-span-class-alternatives-img-class-inline-graphic-mathjax-alternative-mathjax-alt-graphic-mathjax-off-data-mimesubtype-gif-data-type-simple-src-staticdomain-binary-version-id-urn-cambridge-org-id-binary-20160920235108143-0373-s2050508616000044-s2050508616000044-inline1-gif-span-class-mathjax-tex-wrapper-data-mathjax-type-texmath-span-class-tex-math-mathjax-tex-math-mathjax-on-p-span-span-span-span-adic-hodge-theory-for-rigid-analytic-varieties-corrigendum-div.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/scholze-published.pdf",
+      "sha256": "f47a05bbcdd1ac69deb87ce4b6af5bbbc245cbbf0e99df74e8bf73b6d89227d7",
+      "bytes": 688182,
+      "sources": [
+        {
+          "id": "scholze2013",
+          "version": "Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum. Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum.",
+          "urls": [
+            "https://doi.org/10.1017/fmp.2013.1",
+            "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/9C5E8381BE3CD320ECADDDEAD2616B55/S2050508613000012a.pdf/dollarpdollar-adic-hodge-theory-for-rigid-analytic-varieties.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/stacks-03T3.html",
+      "sha256": "977535d7399dabfec8f836cf9430b5ca7797344dbda8b1a9a35aed56dcd8cc53",
+      "bytes": 20997,
+      "sources": [
+        {
+          "id": "stacks-derived",
+          "version": "Exact HTML snapshot of Tag 03T3 retrieved 2026-11-05. Lemma 64.6.3(2) concerns bounded-above projective complexes. The audit also supplies the bounded finite free splitting argument; a live tag URL is not treated as an immutable edition.",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/03T3"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/stacks-086J.html",
+      "sha256": "56d6f0aed26ff9e3b61e7c34a25ae6062b1ba1e0186ae0680f4f2678b0c03e13",
+      "bytes": 15868,
+      "sources": [
+        {
+          "id": "stacks-finite-limits",
+          "version": "Exact HTML snapshots of Tags 086J and 08ZY retrieved 2026-11-05. These concern finite inverse limits and profinite topology, not existence of the arithmetic stages. The ultrafilter-extension proof is supplied directly in closure-batch-006.",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/086J"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/stacks-08ZY.html",
+      "sha256": "8f23365f3e267a05113efd563475b685461fe60fbf23532d6c013eb235b8ad48",
+      "bytes": 16855,
+      "sources": [
+        {
+          "id": "stacks-finite-limits",
+          "version": "Exact HTML snapshots of Tags 086J and 08ZY retrieved 2026-11-05. These concern finite inverse limits and profinite topology, not existence of the arithmetic stages. The ultrafilter-extension proof is supplied directly in closure-batch-006.",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/08ZY"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/closure/primary/sutherland-2025-lecture05.pdf",
+      "sha256": "4d638ce3bbe1127ae7947a8b4deda6c6e51247912194bbacaf3920d4c9bb19d7",
+      "bytes": 556484,
+      "sources": [
+        {
+          "id": "sutherland",
+          "version": "MIT 18.783 Fall 2025 Lecture 5; September 18 2025; lecture notes, not peer-reviewed article",
+          "urls": [
+            "https://ocw.mit.edu/courses/18-783-elliptic-curves-fall-2025/mit18_783_f25_lec05.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/bcdt-author-typeset.pdf",
+      "sha256": "13043cf6e9043a69dc7988882658cd92595efc88dfd4fd2f326ac3ef3cae8e06",
+      "bytes": 685965,
+      "sources": [
+        {
+          "id": "bcdt",
+          "version": "Author manuscript of On the modularity of elliptic curves over Q: wild 3-adic exercises. Its date line contains placeholders (? 2000; ? January 2001). Exact bytes are pinned, but equivalence to the final 2001 JAMS article has not been independently checked. Author typeset manuscript; journal and received-date placeholders, not publisher final",
+          "urls": [
+            "https://virtualmath1.stanford.edu/~conrad/papers/tswfinal.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/elkik1990.pdf",
+      "sha256": "7618e61b8ec287b9fcce61fb4ac7d89ea98d58ca9274fa899ed52cda670b19b5",
+      "bytes": 606549,
+      "sources": [
+        {
+          "id": "elkik",
+          "version": "Published Asterisque 183 (1990) pp.59-67, Numdam scan",
+          "urls": [
+            "https://www.numdam.org/item/AST_1990__183__59_0.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/milne-mf.pdf",
+      "sha256": "977f06a4e838c43c77a7c9398c090789e60d67f64e013e1dcd9bcce0e0c27b8d",
+      "bytes": 1010364,
+      "sources": [
+        {
+          "id": "milnemf",
+          "version": "Author notes v1.31, March 22, 2017",
+          "urls": [
+            "https://www.jmilne.org/math/CourseNotes/MF.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/stacks-03Q9.html",
+      "sha256": "5821c51ab4e389b75768e7325758209859c56f7c9a29d589c8a6be3d7d375f48",
+      "bytes": 18979,
+      "sources": [
+        {
+          "id": "stackscohom",
+          "version": "Exact Stacks snapshots retrieved 2026-11-05 for higher direct image stalks and Leray.",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/03Q9",
+            "https://stacks.math.columbia.edu/tag/03QA"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/stacks-03QA.html",
+      "sha256": "18b9c7e277b11ffb8b921386556b24fe5131277c3f41a81aba2bdce867ddf218",
+      "bytes": 15051,
+      "sources": [
+        {
+          "id": "stackscohom",
+          "version": "Exact Stacks snapshots retrieved 2026-11-05 for higher direct image stalks and Leray.",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/03Q9",
+            "https://stacks.math.columbia.edu/tag/03QA"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/galois-height/conrad-locchar.pdf",
+      "sha256": "782fe71a3c7f26ccd67943d468f73540d384e2de5d474bf8369475b8b631d9bd",
+      "bytes": 528777,
+      "sources": [
+        {
+          "id": "conrad-local-characters",
+          "version": "Original downloaded bytes; exact retrieval recorded in downloads.json.",
+          "urls": [
+            "https://math.stanford.edu/~conrad/papers/locchar.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/galois-height/shimura1973.pdf",
+      "sha256": "6a34cc46d06c0f5d4e7d380ddcbc45ec3143b19359bfebba5b1c8f00976f3308",
+      "bytes": 1646652,
+      "sources": [
+        {
+          "id": "shimura-factors",
+          "version": "Original downloaded bytes; exact retrieval recorded in downloads.json.",
+          "urls": [
+            "https://doi.org/10.2969/jmsj/02530523"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/07S7.html",
+      "sha256": "c3e944469210e81ba1d58e07e91f76dcb64b459b91160a22849b9679aa6b8a05",
+      "bytes": 17458,
+      "sources": [
+        {
+          "id": "stacks-07S7",
+          "version": "Exact Stacks HTML snapshot, 2026-11-05; tag 07S7",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/07S7"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/0E97.html",
+      "sha256": "f222a423374c8172fce073f1a3a07ac747d20514a21bc8fe0da3398a0af8d541",
+      "bytes": 18745,
+      "sources": [
+        {
+          "id": "stacks-0E97",
+          "version": "Exact Stacks HTML snapshot, 2026-11-05; tag 0E97",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/0E97"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/0EYG.html",
+      "sha256": "a4c8f58c4c8f844bb05e5ab7f3d5f23aa497a143ade6c18c5e172e1768dbb7bd",
+      "bytes": 20775,
+      "sources": [
+        {
+          "id": "stacks-0EYG",
+          "version": "Exact Stacks HTML snapshot, 2026-11-05; tag 0EYG",
+          "urls": [
+            "https://stacks.math.columbia.edu/tag/0EYG"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/afp-b4f3b892d0ae25cea27412ba4007cdb63e44b0eb-Modulo_Divisibility.thy",
+      "sha256": "3e11270aed5d010fd0de73bcc36b9a0398598691942f7d2a613ac18b56dff1b1",
+      "bytes": 2317,
+      "sources": [
+        {
+          "id": "afp",
+          "version": "The three original local Isabelle files match AFP development mirror revision b4f3b892d0ae25cea27412ba4007cdb63e44b0eb, dated 2026-05-10T07:38:12Z. The additional modulo-definition dependency is pinned at the same revision. This authenticates the exact source revision; it does not infer the original retrieval date, an Isabelle release, a stable AFP release, or an Isabelle rebuild.",
+          "urls": [
+            "https://isa-afp.org/entries/DPRM_Theorem.html"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-293.jpg",
+      "sha256": "15c3948aac6dae70b96348462d1d7b6492b0c14efac8906d40c2d16a7cf6334b",
+      "bytes": 268845,
+      "sources": [
+        {
+          "id": "li-newforms",
+          "version": "Published 1975 article, GDZ original page scans. OCR basenames are offset by one and are not printed-page locators.",
+          "urls": [
+            "https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000293.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-302.jpg",
+      "sha256": "a207581a157559fc1a5d3f59a3d4da6e6e194b1ef9bc6a73652cd393c6b0d760",
+      "bytes": 405131,
+      "sources": [
+        {
+          "id": "li-newforms",
+          "version": "Published 1975 article, GDZ original page scans. OCR basenames are offset by one and are not printed-page locators.",
+          "urls": [
+            "https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000302.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-304.jpg",
+      "sha256": "07530575e712b4ded14ce64f877ca4f9383bbc7a020cb7dbd70fe88e6ab3ccb2",
+      "bytes": 321274,
+      "sources": [
+        {
+          "id": "li-newforms",
+          "version": "Published 1975 article, GDZ original page scans. OCR basenames are offset by one and are not printed-page locators.",
+          "urls": [
+            "https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000304.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-306.jpg",
+      "sha256": "b85999bac4388c35355775dc9fa4f59da9f010ef284a7ab45d3e48b58f857aaf",
+      "bytes": 367936,
+      "sources": [
+        {
+          "id": "li-newforms",
+          "version": "Published 1975 article, GDZ original page scans. OCR basenames are offset by one and are not printed-page locators.",
+          "urls": [
+            "https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000306.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/bmor-published.pdf",
+      "sha256": "958b0390475236b68afdec28ce006b1a1d6ac59484eea9443e0b287e9f61a541",
+      "bytes": 933725,
+      "sources": [
+        {
+          "id": "bmor",
+          "version": "arXiv1802.00085v3, 27 November2018, 103pp. Illinois J.Math.62 (2018),427-532,106pp. These statements/constants agree with v3; no claim of whole-document identity.",
+          "urls": [
+            "https://arxiv.org/abs/1802.00085v3"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/bmor-v3.pdf",
+      "sha256": "e51f8b8f63486c2259efe076d367504f08dda0fe9e99dc35bf36de544ffc0601",
+      "bytes": 1122139,
+      "sources": [
+        {
+          "id": "bmor",
+          "version": "arXiv1802.00085v3, 27 November2018, 103pp. Illinois J.Math.62 (2018),427-532,106pp. These statements/constants agree with v3; no claim of whole-document identity.",
+          "urls": [
+            "https://arxiv.org/abs/1802.00085v3"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/green-tao-linear.pdf",
+      "sha256": "ec126f9c9e189cc0308b83fb4f9f93c29a47d11ad875391aff4ce4c42aef1001",
+      "bytes": 1213124,
+      "sources": [
+        {
+          "id": "greentao",
+          "version": "Annals171 (2010), published PDF; main theorem is unnumbered.",
+          "urls": [
+            "https://annals.math.princeton.edu/2010/171-3/p08"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/green-tao-mobius.pdf",
+      "sha256": "5259dbc9ee73df46edd765ca27c8b3c0ec466f6b78abafa5f54237b11d44a314",
+      "bytes": 502447,
+      "sources": [
+        {
+          "id": "moebius",
+          "version": "Annals175 (2012), published PDF.",
+          "urls": [
+            "https://annals.math.princeton.edu/2012/175-2/p03"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/gtz-erratum.pdf",
+      "sha256": "9d66017c15fc99bbae83726ef27bcc16d73128c13166916f00714c84c8523383",
+      "bytes": 266792,
+      "sources": [
+        {
+          "id": "gtz",
+          "version": "The actual input is corrected arXiv:1009.3998v5 (23 April 2026), together with the separate author erratum. Do not describe the input as only the 2012 printed article. arXiv1009.3998v5, 23 April2026, 116pp. Repairs filtration in Lemma13.2 but retains original Proposition8.3; separate erratum still required. Not a claim that v5 alone contains every correction. Separate six-page author erratum, 2024; needed together with v5. Original Proposition8.3 is false as stated.",
+          "urls": [
+            "https://arxiv.org/abs/1009.3998v5",
+            "https://people.maths.ox.ac.uk/greenbj/papers/GI(s)-erratum.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/gtz-v5.pdf",
+      "sha256": "24b5b74b1c4f31986bfc75955f8528e81753efc0c45bd99bc23fee58171a4711",
+      "bytes": 983529,
+      "sources": [
+        {
+          "id": "gtz",
+          "version": "The actual input is corrected arXiv:1009.3998v5 (23 April 2026), together with the separate author erratum. Do not describe the input as only the 2012 printed article. arXiv1009.3998v5, 23 April2026, 116pp. Repairs filtration in Lemma13.2 but retains original Proposition8.3; separate erratum still required. Not a claim that v5 alone contains every correction. Separate six-page author erratum, 2024; needed together with v5. Original Proposition8.3 is false as stated.",
+          "urls": [
+            "https://arxiv.org/abs/1009.3998v5",
+            "https://people.maths.ox.ac.uk/greenbj/papers/GI(s)-erratum.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/pazuki-published.pdf",
+      "sha256": "9f957d234f98aee294676cc97e103a61559722ba1749c58d523bb1ca398c5206",
+      "bytes": 917619,
+      "sources": [
+        {
+          "id": "pazuki",
+          "version": "The previously pinned24-page file is an author version dated4February2012, not the33-page Numdam published file. Both bounded interfaces compared. Published Bull.Soc.Math.France140(1) (2012),19-49,33PDFpages including cover; differs from author-version bytes. Applied constants, metrics and coordinates agree; no whole-document identity claim.",
+          "urls": [
+            "https://www.numdam.org/item/10.24033/bsmf.2623.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/voight-quaternion.pdf",
+      "sha256": "a9316b834dbd500c52cd3a981c3205c9f4145b217042b213d23f696aee84b0f0",
+      "bytes": 10663776,
+      "sources": [
+        {
+          "id": "voight-quaternion",
+          "version": "v1.0.7u, August 5, 2026, corrected online edition. Corrected online edition, not printed Springer pagination.",
+          "urls": [
+            "https://jvoight.github.io/quat-book.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/williams-mertens.pdf",
+      "sha256": "9e78492d928f8af5654388db11d9d253749fe7c1e1b627effd0f20d1baafc8c0",
+      "bytes": 218607,
+      "sources": [
+        {
+          "id": "williams-mertens",
+          "version": "Published JNT 6 (1974), 353-359. Published scan inspected, including image of Theorem1.",
+          "urls": [
+            "https://people.math.carleton.ca/~williams/papers/pdf/057.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/berger-arxiv-v3.pdf",
+      "sha256": "142e7948f3c2da0cba0e0e764c2543cb3f0cf039470711fae729c9c3d2f54f6c",
+      "bytes": 562200,
+      "sources": [
+        {
+          "id": "berger2002",
+          "version": "The author article has Theorem 0.7/Corollary 5.22; arXiv v3 has Theorems 0.6/5.19. Both files are separately pinned. Do not transfer numbering.",
+          "urls": [
+            "https://arxiv.org/pdf/math/0102179v3",
+            "https://doi.org/10.1007/s002220100202"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/berger2002.pdf",
+      "sha256": "aada448ae1e8536e370e743a2dd9ca96768ff9f3cf85e1816bb6f88e92f544df",
+      "bytes": 617453,
+      "sources": [
+        {
+          "id": "berger2002",
+          "version": "The author article has Theorem 0.7/Corollary 5.22; arXiv v3 has Theorems 0.6/5.19. Both files are separately pinned. Do not transfer numbering.",
+          "urls": [
+            "https://doi.org/10.1007/s002220100202",
+            "https://perso.ens-lyon.fr/laurent.berger/articles/article02.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/brinon-conrad.pdf",
+      "sha256": "f27d508bc64b3c9e2e9de5041429b2cb6a909b2cd72ff8096c20493f27b5a187",
+      "bytes": 2659899,
+      "sources": [
+        {
+          "id": "brinon-conrad",
+          "version": "CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature. CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature.",
+          "urls": [
+            "https://math.stanford.edu/~conrad/papers/notes.pdf"
+          ]
+        },
+        {
+          "id": "brinon-conrad",
+          "version": "CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature. CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature.",
+          "urls": [
+            "https://math.stanford.edu/~conrad/papers/notes.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/cmheight.pdf",
+      "sha256": "f91cc2017dcc82dbc55d641d397c8b2bb5fc15205b1377cdaae8bdbbd7fc14a6",
+      "bytes": 585415,
+      "sources": [
+        {
+          "id": "cmheight",
+          "version": "Published Research in Number Theory3 (2017),article13,16pages.",
+          "urls": [
+            "https://doi.org/10.1007/s40993-017-0077-7",
+            "https://tylergenao.com/wp-content/uploads/2017/09/faltings-heights-of-cm-elliptic-curves-and-special-gamma-values.pdf"
+          ]
+        },
+        {
+          "id": "cmheight",
+          "version": "Published Research in Number Theory3 (2017),article13,16pages.",
+          "urls": [
+            "https://doi.org/10.1007/s40993-017-0077-7",
+            "https://tylergenao.com/wp-content/uploads/2017/09/faltings-heights-of-cm-elliptic-curves-and-special-gamma-values.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/faltings1983.pdf",
+      "sha256": "738d6b5f716e05b8180066f665e52170576061c1ba75802d1e4f3c4cc1d69614",
+      "bytes": 2488206,
+      "sources": [
+        {
+          "id": "faltings1983",
+          "version": "Inventiones 73 (1983), pp.349\u2013366. Read together with the separately pinned 1984 erratum: Satz 2 has eventual stationarity, not equality of all tower heights. The erratum states this suffices for subsequent results.",
+          "urls": [
+            "https://pazuki.perso.math.cnrs.fr/index_fichiers/Faltings83.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/faltings1984.pdf",
+      "sha256": "e9d9269bf52151e3bc606f3b4f3581ef8bd0c2bafbc9dbdc4864b49a534a9734",
+      "bytes": 46140,
+      "sources": [
+        {
+          "id": "faltings1984",
+          "version": "Inventiones 75 (1984), p.381. Publisher one-page erratum, visually read on 2026-11-05. Corrects Satz 2 of the 1983 article.",
+          "urls": [
+            "https://link.springer.com/content/pdf/10.1007/BF01388572.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/faltings1988.pdf",
+      "sha256": "00f0ec8e07290a9f4538f56889fd74f673a5a6c336f6c3359308c840d508e617",
+      "bytes": 3980749,
+      "sources": [
+        {
+          "id": "faltings1988",
+          "version": "Journal of the American Mathematical Society 1 (1988), pp.255-299; cached PDF has 46 scanned pages including cover. III Theorem 4.1, printed p.298, is Hodge-Tate comparison and does not supply de Rham comparison. The earlier de Rham attribution was superseded by the accepted comparison-and-finite-descent lemma in A009, using Scholze with its corrigendum and the stated supporting sources.",
+          "urls": [
+            "https://websites.umich.edu/~bhattb/almost_purity_2011/Faltings_-_p-adic-Hodge-theory.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/fowler.pdf",
+      "sha256": "bc676f4d5b6a2a70fa3e6bed55a4449622d6728167d4c668068b89da6b2d55ae",
+      "bytes": 391611,
+      "sources": [
+        {
+          "id": "fowler",
+          "version": "Published Mathematical Proceedings of the Cambridge Philosophical Society 180 (2026), 607-641, first online January 13, 2026. The publisher PDF was retrieved on 2026-11-05. Section 2.1 is on printed pp.612-613, PDF pp.6-7; Proposition 2.7 is on printed pp.615-616, PDF pp.9-10. These page correspondences were checked.",
+          "urls": [
+            "https://doi.org/10.1017/S0305004125101825",
+            "https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/A72ABDB14BEB62DE7E9B47953B77DBDC/S0305004125101825a.pdf/some_uniform_effective_results_on_andreoort_for_sums_of_powers_in_mathbbcn.pdf"
+          ]
+        },
+        {
+          "id": "fowler",
+          "version": "Published Mathematical Proceedings of the Cambridge Philosophical Society 180 (2026), 607-641, first online January 13, 2026. The publisher PDF was retrieved on 2026-11-05. Section 2.1 is on printed pp.612-613, PDF pp.6-7; Proposition 2.7 is on printed pp.615-616, PDF pp.9-10. These page correspondences were checked.",
+          "urls": [
+            "https://doi.org/10.1017/S0305004125101825",
+            "https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/A72ABDB14BEB62DE7E9B47953B77DBDC/S0305004125101825a.pdf/some_uniform_effective_results_on_andreoort_for_sums_of_powers_in_mathbbcn.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/javanpeykar.pdf",
+      "sha256": "ec890fb41c58dee038ee2e06b530954f3aab85035238cd54a4c0ef081fcb8ea0",
+      "bytes": 1222544,
+      "sources": [
+        {
+          "id": "javanpeykar",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://doi.org/10.2140/ant.2014.8.89",
+            "https://msp.org/ant/2014/8-1/ant-v8-n1-p04-s.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/milne-ant.pdf",
+      "sha256": "de2066ee7a319c0e6e521895a7e9e9567c2804bcafc0c8e67c417e508f2bc26b",
+      "bytes": 1287434,
+      "sources": [
+        {
+          "id": "milne-ant",
+          "version": "Algebraic Number Theory v3.08, July 19, 2020, author course notes. Supplementary source, not a manuscript bibliography entry.",
+          "urls": [
+            "https://www.jmilne.org/math/CourseNotes/ANTc.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/milne-av.pdf",
+      "sha256": "f5ca4e63e5092a4b102daad1470e4cbed5fe8f82115e3a28c8881e3f67f6aaef",
+      "bytes": 1291594,
+      "sources": [
+        {
+          "id": "milne-av",
+          "version": "Abelian Varieties v2.00. Title page says March 16, 2008; version history says March 17, 2008. Exact bytes disambiguate the file. Proposition numbers include the part/chapter.",
+          "urls": [
+            "https://www.jmilne.org/math/CourseNotes/AV.pdf"
+          ]
+        },
+        {
+          "id": "milne-av",
+          "version": "Abelian Varieties v2.00. Title page says March 16, 2008; version history says March 17, 2008. Exact bytes disambiguate the file. Proposition numbers include the part/chapter.",
+          "urls": [
+            "https://www.jmilne.org/math/CourseNotes/AV.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/pan2022.pdf",
+      "sha256": "590171129d28a65749cf92b1f6099dbacaa90cc6698828f0a4dfd3da943f4824",
+      "bytes": 1552018,
+      "sources": [
+        {
+          "id": "pan2022",
+          "version": "The application uses the pinned arXiv:1901.07166v2, Theorem 1.0.4, as explicitly identified in the revised bibliography. The bibliography also records the later JAMS publication. Publisher bytes were not retrieved, and no publisher/preprint statement equivalence is asserted.",
+          "urls": [
+            "https://arxiv.org/abs/1901.07166v2",
+            "https://arxiv.org/pdf/1901.07166v2"
+          ]
+        },
+        {
+          "id": "pan2022",
+          "version": "The application uses the pinned arXiv:1901.07166v2, Theorem 1.0.4, as explicitly identified in the revised bibliography. The bibliography also records the later JAMS publication. Publisher bytes were not retrieved, and no publisher/preprint statement equivalence is asserted.",
+          "urls": [
+            "https://arxiv.org/abs/1901.07166v2",
+            "https://arxiv.org/pdf/1901.07166v2"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/scholze-erratum.pdf",
+      "sha256": "3cfa56b9e3875c04240d97739dccd58091e41f714c101d5470b95172f73cb235",
+      "bytes": 178436,
+      "sources": [
+        {
+          "id": "scholze-erratum",
+          "version": "Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately. Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately.",
+          "urls": [
+            "https://doi.org/10.1017/fmp.2016.4",
+            "https://www.math.uni-bonn.de/people/scholze/pAdicHodgeErratum.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/theorem-application-audit-20261105/primary/scholze2013.pdf",
+      "sha256": "73dded06286031066e9d98b638e065d650688f1e36e877f4d711331a3508dee3",
+      "bytes": 577883,
+      "sources": [
+        {
+          "id": "scholze2013",
+          "version": "Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum. Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum.",
+          "urls": [
+            "https://doi.org/10.1017/fmp.2013.1",
+            "https://people.mpim-bonn.mpg.de/scholze/pAdicHodgeTheory.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "work/waldspurger-1981.pdf",
+      "sha256": "86e054b65e0ca727d5dc45cb8f711abf61ff0b373dab32da461fb248e05751ff",
+      "bytes": 4399118,
+      "sources": [
+        {
+          "id": "waldspurger",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "path": "work/waldspurger-1983.pdf",
+      "sha256": "c2c4ee1cec4dbdf7d86e6a36b70476ae65858a006161c309e3347c321fada667",
+      "bytes": 1913443,
+      "sources": [
+        {
+          "id": "waldspurgerICM",
+          "version": "Exact bytes pinned below; publication/version equivalence is not inferred from the filename.",
+          "urls": [
+            "https://www.imj-prg.fr/wp-content/uploads/2020/prix/waldspurger1983.pdf"
+          ]
+        }
+      ]
+    }
+  ]
+}

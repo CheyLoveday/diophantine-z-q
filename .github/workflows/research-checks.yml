@@ -27,6 +27,8 @@ jobs:
           node-version: '24.22.1'
       - run: python scripts/check_construction.py --report build/construction-checks.json
       - run: python scripts/check_lean.py
+      - name: Validate theorem inventory bindings and references
+        run: python docs/theorem-application-audit/validate.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

@@ -1,0 +1,4456 @@
+{
+  "ok": true,
+  "baseline_sha256": "a17e021ea3a6b90f861d87aff048f905b1dc31226e3445caf273739f7659e51e",
+  "revised_sha256": "f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3",
+  "errors": [],
+  "citation_mappings": [
+    {
+      "old_id": "C001",
+      "new_id": "C001",
+      "old_line": 54,
+      "new_line": 54,
+      "old_raw": "\\cite{openaihtp}",
+      "new_raw": "\\cite{openaihtp}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "provenance",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C002",
+      "new_id": "C004",
+      "old_line": 405,
+      "new_line": 422,
+      "old_raw": "\\cite{babagranath,linyang}",
+      "new_raw": "\\cite{babagranath,linyang}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C003",
+      "new_id": "C005",
+      "old_line": 427,
+      "new_line": 444,
+      "old_raw": "\\cite[Theorem 2.1 and Corollary 2.3]{buzzard}",
+      "new_raw": "\\cite[Theorem 2.1 and Corollary 2.3]{buzzard}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C004",
+      "new_id": "C007",
+      "old_line": 564,
+      "new_line": 588,
+      "old_raw": "\\cite[Proposition 2.7]{fowler}",
+      "new_raw": "\\cite[Proposition 2.7]{fowler}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C005",
+      "new_id": "C008",
+      "old_line": 581,
+      "new_line": 605,
+      "old_raw": "\\cite[Eq. (6.2)]{cmheight}",
+      "new_raw": "\\cite[Eq. (6.2)]{cmheight}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C006",
+      "new_id": "C009",
+      "old_line": 591,
+      "new_line": 615,
+      "old_raw": "\\cite[Theorem 1.4]{gr2014}",
+      "new_raw": "\\cite[Theorem 1.4]{gr2014}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C007",
+      "new_id": "C010",
+      "old_line": 597,
+      "new_line": 621,
+      "old_raw": "\\cite{faltings1983}",
+      "new_raw": "\\cite{faltings1983}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C008",
+      "new_id": "C011",
+      "old_line": 668,
+      "new_line": 692,
+      "old_raw": "\\cite[Chapter I]{milne}",
+      "new_raw": "\\cite[Chapter I]{milne}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C009",
+      "new_id": "C012",
+      "old_line": 709,
+      "new_line": 733,
+      "old_raw": "\\cite{faltings1983}",
+      "new_raw": "\\cite{faltings1983}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C010",
+      "new_id": "C013",
+      "old_line": 713,
+      "new_line": 737,
+      "old_raw": "\\cite{scholze2013,scholze-erratum}",
+      "new_raw": "\\cite{scholze2013,scholze-erratum}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C011",
+      "new_id": "C014",
+      "old_line": 715,
+      "new_line": 739,
+      "old_raw": "\\cite{berger2002}",
+      "new_raw": "\\cite{berger2002}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C012",
+      "new_id": "C015",
+      "old_line": 732,
+      "new_line": 756,
+      "old_raw": "\\cite[Theorem 1.0.4]{pan2022}",
+      "new_raw": "\\cite[Theorem 1.0.4]{pan2022}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C013",
+      "new_id": "C019",
+      "old_line": 778,
+      "new_line": 812,
+      "old_raw": "\\cite[Chapter IV]{serrelocal}",
+      "new_raw": "\\cite[Sections 4.1--4.3]{serrelocal}",
+      "method": "reviewed replacement/deletion",
+      "reason": "Replace the uninspected Local Fields locator with the checked Serre chapter.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C014",
+      "new_id": "C020",
+      "old_line": 782,
+      "new_line": 816,
+      "old_raw": "\\cite[Theorem 3.5]{silverbergzarhin}",
+      "new_raw": "\\cite[Theorem 3.5]{silverbergzarhin}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C015",
+      "new_id": "C022",
+      "old_line": 834,
+      "new_line": 870,
+      "old_raw": "\\cite[Theorem 1.1.1 and Section 2.3]{javanpeykar}",
+      "new_raw": "\\cite[Theorem 1.1.1 and Section 2.3]{javanpeykar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C016",
+      "new_id": "C023",
+      "old_line": 842,
+      "new_line": 878,
+      "old_raw": "\\cite[Theorem 1.4]{gr2014}",
+      "new_raw": "\\cite[Theorem 1.4]{gr2014}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C017",
+      "new_id": "C024",
+      "old_line": 859,
+      "new_line": 895,
+      "old_raw": "\\cite[Section 9]{gr2014}",
+      "new_raw": "\\cite[Section 9]{gr2014}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C018",
+      "new_id": "C025",
+      "old_line": 872,
+      "new_line": 911,
+      "old_raw": "\\cite{linyang,lny}",
+      "new_raw": "\\cite[equations (2) and (14), pp.~3 and 17]{linyang}",
+      "method": "reviewed replacement/deletion",
+      "reason": "Split the combined Igusa/theta reference; retain the Lin-Yang half and classify LNY separately.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C019",
+      "new_id": "C027",
+      "old_line": 880,
+      "new_line": 934,
+      "old_raw": "\\cite{pazuki}",
+      "new_raw": "\\cite{pazuki}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C020",
+      "new_id": "C028",
+      "old_line": 1027,
+      "new_line": 1081,
+      "old_raw": "\\cite{poonenstoll}",
+      "new_raw": "\\cite{poonenstoll}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C021",
+      "new_id": "C030",
+      "old_line": 1033,
+      "new_line": 1093,
+      "old_raw": "\\cite{gz,kolyvagin}",
+      "new_raw": "\\cite[Theorem 1, pp.~4--5]{kolyvagin}",
+      "method": "reviewed replacement/deletion",
+      "reason": "Replace compressed forward theorem citation with the explicit reusable Kolyvagin lemma and independently classify its Kato/modularity inputs.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C022",
+      "new_id": "C036",
+      "old_line": 1289,
+      "new_line": 1406,
+      "old_raw": "\\cite{greentao,moebius,gtz}",
+      "new_raw": "\\cite[Main Theorem, p.~1763]{greentao}",
+      "method": "reviewed replacement/deletion",
+      "reason": "Split the prime-asymptotic combined citation into exact theorem locations.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C023",
+      "new_id": "C048",
+      "old_line": 1646,
+      "new_line": 1794,
+      "old_raw": "\\cite[Theorem 1.8]{dd}",
+      "new_raw": "\\cite[Theorem 1.8]{dd}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C024",
+      "new_id": "C049",
+      "old_line": 1738,
+      "new_line": 1886,
+      "old_raw": "\\cite{kato}",
+      "new_raw": "\\cite{kato}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C025",
+      "new_id": "C050",
+      "old_line": 1838,
+      "new_line": 1986,
+      "old_raw": "\\cite{hl}",
+      "new_raw": "\\cite{hl}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C026",
+      "new_id": "C051",
+      "old_line": 1839,
+      "new_line": 1987,
+      "old_raw": "\\cite{bfh}",
+      "new_raw": "\\cite{bfh}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C027",
+      "new_id": "C052",
+      "old_line": 1849,
+      "new_line": 1997,
+      "old_raw": "\\cite[Proposition 3.3]{desjardins}",
+      "new_raw": "\\cite[Proposition 3.3]{desjardins}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C028",
+      "new_id": "C053",
+      "old_line": 2280,
+      "new_line": 2428,
+      "old_raw": "\\cite[Theorem 1.1]{cst}",
+      "new_raw": "\\cite[Theorem 1.1]{cst}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C029",
+      "new_id": "C054",
+      "old_line": 2375,
+      "new_line": 2523,
+      "old_raw": "\\cite[Theorem 3.1]{cornutjetchev}",
+      "new_raw": "\\cite[Theorem 3.1]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C030",
+      "new_id": "C055",
+      "old_line": 2409,
+      "new_line": 2557,
+      "old_raw": "\\cite{waldspurger}",
+      "new_raw": "\\cite{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C031",
+      "new_id": null,
+      "old_line": 2429,
+      "new_line": null,
+      "old_raw": "\\cite{carayol}",
+      "new_raw": null,
+      "method": "reviewed replacement/deletion",
+      "reason": "The short local-normalization summary now points to the detailed calculation; its explicit Carayol reference remains at the detailed A032 consumer.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C032",
+      "new_id": "C056",
+      "old_line": 2733,
+      "new_line": 2882,
+      "old_raw": "\\cite{serre}",
+      "new_raw": "\\cite{serre}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C033",
+      "new_id": "C057",
+      "old_line": 2769,
+      "new_line": 2918,
+      "old_raw": "\\cite{ccl}",
+      "new_raw": "\\cite{ccl}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C034",
+      "new_id": "C059",
+      "old_line": 2808,
+      "new_line": 2965,
+      "old_raw": "\\cite{howard2012}",
+      "new_raw": "\\cite{howard2012}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C035",
+      "new_id": "C061",
+      "old_line": 2886,
+      "new_line": 3044,
+      "old_raw": "\\cite[Theorem~1 and its corollary]{lang1956}",
+      "new_raw": "\\cite[Theorem~1 and its corollary]{lang1956}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C036",
+      "new_id": "C066",
+      "old_line": 3194,
+      "new_line": 3442,
+      "old_raw": "\\cite[I.2.3, I.3.2--I.3.5]{milne}",
+      "new_raw": "\\cite[I.2.3, I.3.2--I.3.5]{milne}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C037",
+      "new_id": "C067",
+      "old_line": 3207,
+      "new_line": 3455,
+      "old_raw": "\\cite[Sections 5.1, 5.2.4, 5.4.3 and 6.3.4]{nekovar}",
+      "new_raw": "\\cite[Sections 5.1, 5.2.4, 5.4.3 and 6.3.4]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C038",
+      "new_id": "C068",
+      "old_line": 3235,
+      "new_line": 3483,
+      "old_raw": "\\cite[Proposition 7.8.8(ii)]{nekovar}",
+      "new_raw": "\\cite[Proposition 7.8.8(ii)]{nekovar}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C039",
+      "new_id": "C069",
+      "old_line": 3352,
+      "new_line": 3600,
+      "old_raw": "\\cite{serre}",
+      "new_raw": "\\cite{serre}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C040",
+      "new_id": "C070",
+      "old_line": 3585,
+      "new_line": 3833,
+      "old_raw": "\\cite[Sections 6.2.5--6.2.8 and Theorem 6.3.4]{nekovar}",
+      "new_raw": "\\cite[Sections 6.2.5--6.2.8 and Theorem 6.3.4]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C041",
+      "new_id": null,
+      "old_line": 3773,
+      "new_line": null,
+      "old_raw": "\\cite{gz,kolyvagin}",
+      "new_raw": null,
+      "method": "reviewed replacement/deletion",
+      "reason": "This use now references the reusable forward-rank lemma rather than repeating the external citation.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C042",
+      "new_id": "C071",
+      "old_line": 3779,
+      "new_line": 4027,
+      "old_raw": "\\cite[proof of I.7.3, (7.3.1)]{milne}",
+      "new_raw": "\\cite[proof of I.7.3, (7.3.1)]{milne}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C043",
+      "new_id": "C073",
+      "old_line": 3897,
+      "new_line": 4165,
+      "old_raw": "\\cite[Sections 6.4.1--6.4.3]{nekovar}",
+      "new_raw": "\\cite[Sections 6.4.1--6.4.3]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C044",
+      "new_id": "C074",
+      "old_line": 4258,
+      "new_line": 4526,
+      "old_raw": "\\cite[I.4.10 and I.5.1]{milne}",
+      "new_raw": "\\cite[I.4.10 and I.5.1]{milne}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C045",
+      "new_id": "C075",
+      "old_line": 4279,
+      "new_line": 4547,
+      "old_raw": "\\cite[I.2.3 and I.2.8]{milne}",
+      "new_raw": "\\cite[I.2.3 and I.2.8]{milne}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C046",
+      "new_id": "C076",
+      "old_line": 4348,
+      "new_line": 4616,
+      "old_raw": "\\cite[Proposition 7.8.8(ii)]{nekovar}",
+      "new_raw": "\\cite[Proposition 7.8.8(ii)]{nekovar}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C047",
+      "new_id": "C077",
+      "old_line": 4628,
+      "new_line": 4896,
+      "old_raw": "\\cite[Sections 6.3.3--6.3.4]{nekovar}",
+      "new_raw": "\\cite[Sections 6.3.3--6.3.4]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C048",
+      "new_id": "C078",
+      "old_line": 4802,
+      "new_line": 5070,
+      "old_raw": "\\cite[6.3.3--6.3.4]{nekovar}",
+      "new_raw": "\\cite[6.3.3--6.3.4]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C049",
+      "new_id": "C079",
+      "old_line": 5008,
+      "new_line": 5276,
+      "old_raw": "\\cite[5.1.1--5.1.6 and 6.3.4]{nekovar}",
+      "new_raw": "\\cite[5.1.1--5.1.6 and 6.3.4]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C050",
+      "new_id": "C084",
+      "old_line": 6018,
+      "new_line": 6298,
+      "old_raw": "\\cite[Theorem 1.2, (1.10)--(1.11), Corollary 6.17 with $A=1$]{bmor}",
+      "new_raw": "\\cite[Theorem 1.2, (1.10)--(1.11), Corollary 6.17 with $A=1$]{bmor}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C051",
+      "new_id": "C087",
+      "old_line": 6175,
+      "new_line": 6477,
+      "old_raw": "\\cite[p.~165]{mazur1995}",
+      "new_raw": "\\cite[p.~165]{mazur1995}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C052",
+      "new_id": "C088",
+      "old_line": 6210,
+      "new_line": 6512,
+      "old_raw": "\\cite[Basic Theorem, p.~3]{matiyasevich1971}",
+      "new_raw": "\\cite[Basic Theorem, p.~3]{matiyasevich1971}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C053",
+      "new_id": "C089",
+      "old_line": 6223,
+      "new_line": 6525,
+      "old_raw": "\\cite[p.~2]{matiyasevich1971}",
+      "new_raw": "\\cite[p.~2]{matiyasevich1971}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C054",
+      "new_id": "C090",
+      "old_line": 6484,
+      "new_line": 6786,
+      "old_raw": "\\cite{dd}",
+      "new_raw": "\\cite{dd}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A022"
+      ]
+    },
+    {
+      "old_id": "C055",
+      "new_id": "C091",
+      "old_line": 6486,
+      "new_line": 6788,
+      "old_raw": "\\cite{kato}",
+      "new_raw": "\\cite{kato}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A023",
+        "A049",
+        "A050",
+        "A051",
+        "A081",
+        "A082"
+      ]
+    },
+    {
+      "old_id": "C056",
+      "new_id": "C092",
+      "old_line": 6489,
+      "new_line": 6791,
+      "old_raw": "\\cite{bfh,hl}",
+      "new_raw": "\\cite{bfh,hl}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A024",
+        "A025"
+      ]
+    },
+    {
+      "old_id": "C057",
+      "new_id": "C093",
+      "old_line": 6492,
+      "new_line": 6794,
+      "old_raw": "\\cite{waldspurger,ramsey}",
+      "new_raw": "\\cite{waldspurger,ramsey}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A029",
+        "A030",
+        "A031"
+      ]
+    },
+    {
+      "old_id": "C058",
+      "new_id": "C094",
+      "old_line": 6495,
+      "new_line": 6797,
+      "old_raw": "\\cite{ccl,cst,cornutjetchev}",
+      "new_raw": "\\cite{ccl,cst,cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A027",
+        "A028",
+        "A034"
+      ]
+    },
+    {
+      "old_id": "C059",
+      "new_id": "C095",
+      "old_line": 6498,
+      "new_line": 6800,
+      "old_raw": "\\cite{milne,nekovar}",
+      "new_raw": "\\cite{milne,nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A007",
+        "A037",
+        "A038",
+        "A039",
+        "A040",
+        "A041",
+        "A042",
+        "A043",
+        "A044",
+        "A045",
+        "A075",
+        "A080",
+        "A081"
+      ]
+    },
+    {
+      "old_id": "C060",
+      "new_id": "C096",
+      "old_line": 6501,
+      "new_line": 6803,
+      "old_raw": "\\cite{gz,kolyvagin}",
+      "new_raw": "\\cite{gz,kolyvagin}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A020",
+        "A082"
+      ]
+    },
+    {
+      "old_id": "C061",
+      "new_id": "C097",
+      "old_line": 6503,
+      "new_line": 6805,
+      "old_raw": "\\cite[proof of I.7.3]{milne}",
+      "new_raw": "\\cite[proof of I.7.3]{milne}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A007",
+        "A037",
+        "A040",
+        "A042",
+        "A043",
+        "A075",
+        "A080",
+        "A081"
+      ]
+    },
+    {
+      "old_id": "C062",
+      "new_id": "C098",
+      "old_line": 6506,
+      "new_line": 6808,
+      "old_raw": "\\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki}",
+      "new_raw": "\\cite{pan2022,javanpeykar,gr2014,fowler,cmheight,pazuki}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A003",
+        "A004",
+        "A005",
+        "A011",
+        "A014",
+        "A015",
+        "A016",
+        "A018",
+        "A065"
+      ]
+    },
+    {
+      "old_id": "C063",
+      "new_id": "C099",
+      "old_line": 6510,
+      "new_line": 6812,
+      "old_raw": "\\cite{greentao,moebius,gtz,bmor}",
+      "new_raw": "\\cite{greentao,moebius,gtz,bmor}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "summary",
+      "preserved_summary_application_ids": [
+        "A021",
+        "A046"
+      ]
+    },
+    {
+      "old_id": "C064",
+      "new_id": "C100",
+      "old_line": 6531,
+      "new_line": 6833,
+      "old_raw": "\\cite{kato}",
+      "new_raw": "\\cite{kato}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "source-scope declaration",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C065",
+      "new_id": "C101",
+      "old_line": 6593,
+      "new_line": 6895,
+      "old_raw": "\\cite[Proposition 8.12]{kato}",
+      "new_raw": "\\cite[Proposition 8.12]{kato}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C066",
+      "new_id": "C104",
+      "old_line": 7388,
+      "new_line": 7696,
+      "old_raw": "\\cite[5.7.1.4--5.7.1.7]{nekovar}",
+      "new_raw": "\\cite[5.7.1.4--5.7.1.7]{nekovar}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C067",
+      "new_id": "C105",
+      "old_line": 7524,
+      "new_line": 7832,
+      "old_raw": "\\cite[Theorem~1 and Proposition~1]{waldspurgerICM}",
+      "new_raw": "\\cite[Theorem~1 and Proposition~1]{waldspurgerICM}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C068",
+      "new_id": "C106",
+      "old_line": 7525,
+      "new_line": 7833,
+      "old_raw": "\\cite[Proposition~18 and its proof, pp.~466--467]{waldspurger}",
+      "new_raw": "\\cite[Proposition~18 and its proof, pp.~466--467]{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C069",
+      "new_id": "C107",
+      "old_line": 7629,
+      "new_line": 7937,
+      "old_raw": "\\cite[Section~I.3, pp.~377--378]{waldspurger}",
+      "new_raw": "\\cite[Section~I.3, pp.~377--378]{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C070",
+      "new_id": "C108",
+      "old_line": 7650,
+      "new_line": 7958,
+      "old_raw": "\\cite[Section~I.2, p.~377]{waldspurger}",
+      "new_raw": "\\cite[Section~I.2, p.~377]{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C071",
+      "new_id": "C109",
+      "old_line": 7652,
+      "new_line": 7960,
+      "old_raw": "\\cite[pp.~483--484]{waldspurger}",
+      "new_raw": "\\cite[pp.~483--484]{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C072",
+      "new_id": "C110",
+      "old_line": 7663,
+      "new_line": 7971,
+      "old_raw": "\\cite[Corollary~2, pp.~483--484]{waldspurger}",
+      "new_raw": "\\cite[Corollary~2, pp.~483--484]{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C073",
+      "new_id": "C111",
+      "old_line": 7702,
+      "new_line": 8010,
+      "old_raw": "\\cite[Proposition~2, p.~377]{waldspurger}",
+      "new_raw": "\\cite[Proposition~2, p.~377]{waldspurger}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C074",
+      "new_id": "C112",
+      "old_line": 7734,
+      "new_line": 8042,
+      "old_raw": "\\cite[Definition~3.1 and Theorem~4.2]{ramsey}",
+      "new_raw": "\\cite[Definition~3.1 and Theorem~4.2]{ramsey}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C075",
+      "new_id": "C113",
+      "old_line": 7756,
+      "new_line": 8064,
+      "old_raw": "\\cite[Remark~4.4]{ramsey}",
+      "new_raw": "\\cite[Remark~4.4]{ramsey}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C076",
+      "new_id": "C114",
+      "old_line": 7941,
+      "new_line": 8249,
+      "old_raw": "\\cite[Theorem 1.8]{dd}",
+      "new_raw": "\\cite[Theorem 1.8]{dd}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C077",
+      "new_id": "C115",
+      "old_line": 7943,
+      "new_line": 8251,
+      "old_raw": "\\cite[pp.~543--544]{bfh}",
+      "new_raw": "\\cite[pp.~543--544]{bfh}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C078",
+      "new_id": "C116",
+      "old_line": 7961,
+      "new_line": 8269,
+      "old_raw": "\\cite[Theorem 1.1]{cst}",
+      "new_raw": "\\cite[Theorem 1.1]{cst}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C079",
+      "new_id": "C117",
+      "old_line": 8010,
+      "new_line": 8319,
+      "old_raw": "\\cite{serre}",
+      "new_raw": "\\cite{serre}",
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C080",
+      "new_id": "C119",
+      "old_line": 8163,
+      "new_line": 8474,
+      "old_raw": "\\cite[Sections 1.1--1.2 and 2.5]{jetchevkane}",
+      "new_raw": "\\cite[Sections 1.1--1.2 and 2.5]{jetchevkane}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C081",
+      "new_id": "C120",
+      "old_line": 8315,
+      "new_line": 8626,
+      "old_raw": "\\cite[I.13]{weil}",
+      "new_raw": "\\cite[I.13]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C082",
+      "new_id": "C121",
+      "old_line": 8385,
+      "new_line": 8696,
+      "old_raw": "\\cite[II.25 and II.28]{weil}",
+      "new_raw": "\\cite[II.25 and II.28]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C083",
+      "new_id": "C122",
+      "old_line": 8400,
+      "new_line": 8711,
+      "old_raw": "\\cite[II.28, Proposition 4]{weil}",
+      "new_raw": "\\cite[II.28, Proposition 4]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C084",
+      "new_id": "C123",
+      "old_line": 8435,
+      "new_line": 8746,
+      "old_raw": "\\cite[I.14, Theorem~2]{weil}",
+      "new_raw": "\\cite[I.14, Theorem~2]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C085",
+      "new_id": "C124",
+      "old_line": 8549,
+      "new_line": 8860,
+      "old_raw": "\\cite[I.13--I.14 and II.25--II.28]{weil}",
+      "new_raw": "\\cite[I.13--I.14 and II.25--II.28]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C086",
+      "new_id": "C125",
+      "old_line": 8632,
+      "new_line": 8943,
+      "old_raw": "\\cite[II.27]{weil}",
+      "new_raw": "\\cite[II.27]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C087",
+      "new_id": "C126",
+      "old_line": 8642,
+      "new_line": 8953,
+      "old_raw": "\\cite[III, Theorem 6]{weil}",
+      "new_raw": "\\cite[III, Theorem 6]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C088",
+      "new_id": "C127",
+      "old_line": 8690,
+      "new_line": 9001,
+      "old_raw": "\\cite[II.30, Proposition~5]{weil}",
+      "new_raw": "\\cite[II.30, Proposition~5]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C089",
+      "new_id": "C128",
+      "old_line": 8697,
+      "new_line": 9008,
+      "old_raw": "\\cite[III.41, Theorem~6]{weil}",
+      "new_raw": "\\cite[III.41, Theorem~6]{weil}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C090",
+      "new_id": "C130",
+      "old_line": 8884,
+      "new_line": 9197,
+      "old_raw": "\\cite[\\S\\S3.1--3.3]{cornutjetchev}",
+      "new_raw": "\\cite[\\S\\S3.1--3.3]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C091",
+      "new_id": "C131",
+      "old_line": 8901,
+      "new_line": 9214,
+      "old_raw": "\\cite[\\S3.2]{cornutjetchev}",
+      "new_raw": "\\cite[\\S3.2]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C092",
+      "new_id": "C132",
+      "old_line": 8913,
+      "new_line": 9226,
+      "old_raw": "\\cite[\\S3.3]{cornutjetchev}",
+      "new_raw": "\\cite[\\S3.3]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C093",
+      "new_id": "C133",
+      "old_line": 8929,
+      "new_line": 9242,
+      "old_raw": "\\cite[Lemma~2.1(ii)]{cornutjetchev}",
+      "new_raw": "\\cite[Lemma~2.1(ii)]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C094",
+      "new_id": "C134",
+      "old_line": 8930,
+      "new_line": 9243,
+      "old_raw": "\\cite[Theorem~3.1]{cornutjetchev}",
+      "new_raw": "\\cite[Theorem~3.1]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C095",
+      "new_id": "C135",
+      "old_line": 8941,
+      "new_line": 9254,
+      "old_raw": "\\cite[\\S3.6]{cornutjetchev}",
+      "new_raw": "\\cite[\\S3.6]{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C096",
+      "new_id": "C136",
+      "old_line": 8953,
+      "new_line": 9266,
+      "old_raw": "\\cite{cornutjetchev}",
+      "new_raw": "\\cite{cornutjetchev}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C097",
+      "new_id": "C137",
+      "old_line": 9460,
+      "new_line": 9778,
+      "old_raw": "\\cite[\\S\\S0.3--0.7, Theorem~A]{carayol}",
+      "new_raw": "\\cite[\\S\\S0.3--0.7, Theorem~A, pp.~409--411]{carayol}",
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the detailed Carayol application with precise pages and corrected two-dual convention.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C098",
+      "new_id": null,
+      "old_line": 9467,
+      "new_line": null,
+      "old_raw": "\\cite[\\S0.4]{carayol}",
+      "new_raw": null,
+      "method": "reviewed replacement/deletion",
+      "reason": "The separate geometric-Frobenius citation is subsumed by the detailed Carayol application and its explicit convention calculation.",
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C099",
+      "new_id": "C140",
+      "old_line": 9618,
+      "new_line": 9996,
+      "old_raw": "\\cite[p.~436]{hl}",
+      "new_raw": "\\cite[p.~436]{hl}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C100",
+      "new_id": "C141",
+      "old_line": 10577,
+      "new_line": 10955,
+      "old_raw": "\\cite[Corollary 1.8]{scholze2013}",
+      "new_raw": "\\cite[Corollary 1.8]{scholze2013}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C101",
+      "new_id": "C142",
+      "old_line": 10578,
+      "new_line": 10956,
+      "old_raw": "\\cite{scholze-erratum}",
+      "new_raw": "\\cite{scholze-erratum}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C102",
+      "new_id": "C143",
+      "old_line": 10579,
+      "new_line": 10957,
+      "old_raw": "\\cite[Theorems 9.1 and 9.3]{scholze2013}",
+      "new_raw": "\\cite[Theorems 9.1 and 9.3]{scholze2013}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C103",
+      "new_id": "C144",
+      "old_line": 10590,
+      "new_line": 10968,
+      "old_raw": "\\cite[Part I, Theorem 12.1(a)]{milne-av}",
+      "new_raw": "\\cite[Part I, Theorem 12.1(a)]{milne-av}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C104",
+      "new_id": "C145",
+      "old_line": 10597,
+      "new_line": 10975,
+      "old_raw": "\\cite[Theorem 5.2.1 and Proposition 6.3.3]{brinon-conrad}",
+      "new_raw": "\\cite[Theorem 5.2.1 and Proposition 6.3.3]{brinon-conrad}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C105",
+      "new_id": "C146",
+      "old_line": 10616,
+      "new_line": 10994,
+      "old_raw": "\\cite[Proposition 6.3.8]{brinon-conrad}",
+      "new_raw": "\\cite[Proposition 6.3.8]{brinon-conrad}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "application",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": "C106",
+      "new_id": "C147",
+      "old_line": 10625,
+      "new_line": 11003,
+      "old_raw": "\\cite[Chapter III, Theorem 4.1]{faltings1988}",
+      "new_raw": "\\cite[Chapter III, Theorem 4.1]{faltings1988}",
+      "method": "unique unchanged citation",
+      "reason": null,
+      "preserved_role": "source-scope declaration",
+      "preserved_summary_application_ids": null
+    },
+    {
+      "old_id": null,
+      "new_id": "C002",
+      "old_line": null,
+      "new_line": 223,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A056. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[\\S\\S5.5--5.6, Lemmas 5.20 and 5.24, Theorem 5.21]{sutherland}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C003",
+      "old_line": null,
+      "new_line": 419,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A001. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[equation (3) and Lemma 3]{linyang}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C006",
+      "old_line": null,
+      "new_line": 564,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A079. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Part I, Theorems 2.8--2.9]{milne-av}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C016",
+      "old_line": null,
+      "new_line": 761,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A011. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Appendix B, pp.~32--33]{conrad-local-characters}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C017",
+      "old_line": null,
+      "new_line": 769,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A011. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[p.~296, before Lemma 6]{li-newforms}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C018",
+      "old_line": null,
+      "new_line": 771,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A011. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 1]{shimura-factors}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C021",
+      "old_line": null,
+      "new_line": 830,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A012, A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.6.4, p.~132]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C026",
+      "old_line": null,
+      "new_line": 916,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A017. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[\\S2.2, p.~4]{lny}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C029",
+      "old_line": null,
+      "new_line": 1092,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A020, A066, A082. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem A]{bcdt}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C031",
+      "old_line": null,
+      "new_line": 1105,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A082. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Corollary 14.3]{kato}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C032",
+      "old_line": null,
+      "new_line": 1134,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.1]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C033",
+      "old_line": null,
+      "new_line": 1139,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.5.5, IV.6.3--6.4, pp.~129--132]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C034",
+      "old_line": null,
+      "new_line": 1148,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[VII.2.1--2.2, pp.~188--191]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C035",
+      "old_line": null,
+      "new_line": 1403,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A021. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 1, with modulus $2$]{williams-mertens}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C037",
+      "old_line": null,
+      "new_line": 1407,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A021. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 1.1]{moebius}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C038",
+      "old_line": null,
+      "new_line": 1408,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A021. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 1.3]{gtz}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C039",
+      "old_line": null,
+      "new_line": 1414,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A021. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Definition 1.5]{greentao}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C040",
+      "old_line": null,
+      "new_line": 1520,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A021. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 1, with modulus $2$]{williams-mertens}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C041",
+      "old_line": null,
+      "new_line": 1537,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A021. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 1]{williams-mertens}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C042",
+      "old_line": null,
+      "new_line": 1572,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A072. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[III.7.4, pp.~89--91]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C043",
+      "old_line": null,
+      "new_line": 1578,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A072. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[V.2.3.1(b), p.~142]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C044",
+      "old_line": null,
+      "new_line": 1581,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A072. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[III.8.6, p.~99]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C045",
+      "old_line": null,
+      "new_line": 1591,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A072. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[V.1.1, p.~138]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C046",
+      "old_line": null,
+      "new_line": 1779,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A066. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem A and Introduction, conditions (1)--(6)]{bcdt}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C047",
+      "old_line": null,
+      "new_line": 1784,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A066. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem 11.19 and Remark 11.18]{milnemf}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C058",
+      "old_line": null,
+      "new_line": 2940,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A070. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[p.~59, Theorem]{elkik}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C060",
+      "old_line": null,
+      "new_line": 3007,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A080. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[formula (4.1.4.1), p.~96]{nekovar}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C062",
+      "old_line": null,
+      "new_line": 3051,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.3.2(a), p.~124]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C063",
+      "old_line": null,
+      "new_line": 3180,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.2.3 and IV.3.2, pp.~122--124]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C064",
+      "old_line": null,
+      "new_line": 3246,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A080. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Sections 8.1.1--8.1.6, pp.~189--194]{nekovar}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C065",
+      "old_line": null,
+      "new_line": 3364,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A080. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[8.6.2.1--8.6.2.4]{nekovar}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C072",
+      "old_line": null,
+      "new_line": 4119,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A069. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem~5.3 and Remark~5.4.1, pp.~299--300]{edixhoven}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C080",
+      "old_line": null,
+      "new_line": 5859,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A077. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite{afp}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C081",
+      "old_line": null,
+      "new_line": 6125,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.2.3(a), p.~122]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C082",
+      "old_line": null,
+      "new_line": 6186,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[IV.5.5 and IV.6.4, pp.~129--132]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C083",
+      "old_line": null,
+      "new_line": 6210,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[VII.6.3, p.~200]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C085",
+      "old_line": null,
+      "new_line": 6322,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[VII.2.1, p.~188]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C086",
+      "old_line": null,
+      "new_line": 6324,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A071. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[V.1.1, p.~138]{silverman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C102",
+      "old_line": null,
+      "new_line": 6962,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A080. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Tags 03Q9 and 03QA]{stackscohom}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C103",
+      "old_line": null,
+      "new_line": 7079,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A080. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Corollary 4.1.3, p.~96]{nekovar}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C118",
+      "old_line": null,
+      "new_line": 8462,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A052. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Main Theorem 14.6.1]{voight-quaternion}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C129",
+      "old_line": null,
+      "new_line": 9154,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A052, A028. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Proposition 14.6.7, $(v)\\Rightarrow(iii)$]{voight-quaternion}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C138",
+      "old_line": null,
+      "new_line": 9803,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A032. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Theorem~1, pp.~302--306]{casselman}"
+    },
+    {
+      "old_id": null,
+      "new_id": "C139",
+      "old_line": null,
+      "new_line": 9860,
+      "method": "reviewed new citation",
+      "reason": "Explicit source application added by the reviewed repair for A032. Its exact text and placement were checked against the edit ledger and source reports.",
+      "new_raw": "\\cite[Corollary, p.~306, and Theorem~4, p.~313]{casselman}"
+    }
+  ],
+  "line_mappings": [
+    {
+      "application_id": "A001",
+      "old_line": 397,
+      "new_line": 411,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Take $B=(2,-3)$, the maximal order $\\mathcal O=\\Z[i,(1+j)/2]$, and",
+      "new_text": "Take $B=(2,-3)$, the maximal order $\\mathcal O=\\Z[i,(1+j)/2]$, and"
+    },
+    {
+      "application_id": "A001",
+      "old_line": 424,
+      "new_line": 441,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A002",
+      "old_line": 426,
+      "new_line": 443,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "We construct its integral model without changing this degree.",
+      "new_text": "We construct its integral model without changing this degree."
+    },
+    {
+      "application_id": "A002",
+      "old_line": 469,
+      "new_line": 486,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "A finite-order automorphism of order prime to $p$ cannot specialize",
+      "new_text": "A finite-order automorphism of order prime to $p$ cannot specialize"
+    },
+    {
+      "application_id": "A003",
+      "old_line": 558,
+      "new_line": 582,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Suppose $\\operatorname{End}^0(A_{\\overline\\Q})=M_2(k)$.",
+      "new_text": "Suppose $\\operatorname{End}^0(A_{\\overline\\Q})=M_2(k)$."
+    },
+    {
+      "application_id": "A003",
+      "old_line": 570,
+      "new_line": 594,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A004",
+      "old_line": 572,
+      "new_line": 596,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "After a finite extension $E$ has everywhere good reduction, since",
+      "new_text": "After a finite extension $E$ has everywhere good reduction, since"
+    },
+    {
+      "application_id": "A004",
+      "old_line": 589,
+      "new_line": 613,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A005",
+      "old_line": 590,
+      "new_line": 614,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Apply the published isogeny estimate",
+      "new_text": "Apply the published isogeny estimate"
+    },
+    {
+      "application_id": "A005",
+      "old_line": 603,
+      "new_line": 627,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For the last line use $\\log28<4$, $\\log d\\le D$, and",
+      "new_text": "For the last line use $\\log28<4$, $\\log d\\le D$, and"
+    },
+    {
+      "application_id": "A006",
+      "old_line": 597,
+      "new_line": 621,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "isogeny \\cite{faltings1983} and additivity give",
+      "new_text": "isogeny \\cite{faltings1983} and additivity give"
+    },
+    {
+      "application_id": "A006",
+      "old_line": 604,
+      "new_line": 628,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\log(2B_{\\rm cm})\\le2+2D+42000D^2$.",
+      "new_text": "$\\log(2B_{\\rm cm})\\le2+2D+42000D^2$."
+    },
+    {
+      "application_id": "A006",
+      "old_line": 860,
+      "new_line": 896,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Additivity and height variation now give",
+      "new_text": "Additivity and height variation now give"
+    },
+    {
+      "application_id": "A006",
+      "old_line": 865,
+      "new_line": 901,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Thus both cases prove the exact estimate needed below:",
+      "new_text": "Thus both cases prove the exact estimate needed below:"
+    },
+    {
+      "application_id": "A007",
+      "old_line": 637,
+      "new_line": 661,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Thus $\\varepsilon$ is a normalized sign cocycle inflated from",
+      "new_text": "Thus $\\varepsilon$ is a normalized sign cocycle inflated from"
+    },
+    {
+      "application_id": "A007",
+      "old_line": 680,
+      "new_line": 704,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "of the product of those odd primes kills all these restrictions:",
+      "new_text": "of the product of those odd primes kills all these restrictions:"
+    },
+    {
+      "application_id": "A008",
+      "old_line": 690,
+      "new_line": 714,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A008",
+      "old_line": 711,
+      "new_line": 735,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Lemma~\\ref{lem:de-rham-descent} below shows that the representation",
+      "new_text": "Lemma~\\ref{lem:de-rham-descent} below shows that the representation"
+    },
+    {
+      "application_id": "A009",
+      "old_line": 711,
+      "new_line": 735,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Lemma~\\ref{lem:de-rham-descent} below shows that the representation",
+      "new_text": "Lemma~\\ref{lem:de-rham-descent} below shows that the representation"
+    },
+    {
+      "application_id": "A009",
+      "old_line": 716,
+      "new_line": 740,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "de Rham representation potentially semistable, as required by",
+      "new_text": "de Rham representation potentially semistable, as required by"
+    },
+    {
+      "application_id": "A009",
+      "old_line": 10625,
+      "new_line": 11003,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The Hodge--Tate comparison in \\cite[Chapter III, Theorem 4.1]{faltings1988}",
+      "new_text": "The Hodge--Tate comparison in \\cite[Chapter III, Theorem 4.1]{faltings1988}"
+    },
+    {
+      "application_id": "A010",
+      "old_line": 715,
+      "new_line": 739,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Berger's $p$-adic monodromy theorem \\cite{berger2002} makes this",
+      "new_text": "Berger's $p$-adic monodromy theorem \\cite{berger2002} makes this"
+    },
+    {
+      "application_id": "A010",
+      "old_line": 717,
+      "new_line": 741,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Pan's theorem.",
+      "new_text": "Pan's theorem."
+    },
+    {
+      "application_id": "A011",
+      "old_line": 731,
+      "new_line": 755,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Use the Tate convention in which the cyclotomic character has",
+      "new_text": "Use the Tate convention in which the cyclotomic character has"
+    },
+    {
+      "application_id": "A011",
+      "old_line": 745,
+      "new_line": 773,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$A_f$, or equivalently $r_5^\\vee$ is its cohomological constituent.",
+      "new_text": "$A_f$, or equivalently $r_5^\\vee$ is its cohomological constituent."
+    },
+    {
+      "application_id": "A012",
+      "old_line": 767,
+      "new_line": 796,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Here are uniform local bounds, including the small primes.",
+      "new_text": "Here are uniform local bounds, including the small primes."
+    },
+    {
+      "application_id": "A012",
+      "old_line": 812,
+      "new_line": 848,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For $p>R$, the extension $L_v/\\Q_p$ is tame, since its",
+      "new_text": "For $p>R$, the extension $L_v/\\Q_p$ is tame, since its"
+    },
+    {
+      "application_id": "A013",
+      "old_line": 780,
+      "new_line": 814,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At $p$, take $F=L_v$ and adjoin $A[3]$, using $A[5]$ if",
+      "new_text": "At $p$, take $F=L_v$ and adjoin $A[3]$, using $A[5]$ if"
+    },
+    {
+      "application_id": "A013",
+      "old_line": 811,
+      "new_line": 847,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A014",
+      "old_line": 824,
+      "new_line": 860,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Transfer from a modular Jacobian.}",
+      "new_text": "\\paragraph{Transfer from a modular Jacobian.}"
+    },
+    {
+      "application_id": "A014",
+      "old_line": 840,
+      "new_line": 876,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Faltings height of the Jacobian.",
+      "new_text": "Faltings height of the Jacobian."
+    },
+    {
+      "application_id": "A015",
+      "old_line": 842,
+      "new_line": 878,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Apply \\cite[Theorem 1.4]{gr2014} with source $J$ and target",
+      "new_text": "Apply \\cite[Theorem 1.4]{gr2014} with source $J$ and target"
+    },
+    {
+      "application_id": "A015",
+      "old_line": 857,
+      "new_line": 893,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A016",
+      "old_line": 859,
+      "new_line": 895,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "is recorded in \\cite[Section 9]{gr2014}.",
+      "new_text": "is recorded in \\cite[Section 9]{gr2014}."
+    },
+    {
+      "application_id": "A016",
+      "old_line": 865,
+      "new_line": 901,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Thus both cases prove the exact estimate needed below:",
+      "new_text": "Thus both cases prove the exact estimate needed below:"
+    },
+    {
+      "application_id": "A017",
+      "old_line": 872,
+      "new_line": 908,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "The compatible theta normalizations in \\cite{linyang,lny} give",
+      "new_text": "Use the Hauptmodul normalized by the values $0,\\infty,-16/27$"
+    },
+    {
+      "application_id": "A017",
+      "old_line": 877,
+      "new_line": 930,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "where the product and sum run over the ten even theta nulls.",
+      "new_text": "The product and sum use the ten even theta nulls of the same"
+    },
+    {
+      "application_id": "A018",
+      "old_line": 879,
+      "new_line": 941,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "",
+      "new_text": "His Corollary~1.3(2), in the Deligne metric, gives"
+    },
+    {
+      "application_id": "A018",
+      "old_line": 905,
+      "new_line": 959,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\[",
+      "new_text": "\\["
+    },
+    {
+      "application_id": "A019",
+      "old_line": 1017,
+      "new_line": 1071,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A019",
+      "old_line": 1030,
+      "new_line": 1084,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proof}",
+      "new_text": "\\end{proof}"
+    },
+    {
+      "application_id": "A020",
+      "old_line": 1031,
+      "new_line": 1086,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "",
+      "new_text": "\\begin{lemma}[Forward analytic rank zero and one]\\label{lem:forward-rank}"
+    },
+    {
+      "application_id": "A020",
+      "old_line": 1036,
+      "new_line": 1115,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "abscissas have squareclass $\\beta$, by the cubic equation. Write",
+      "new_text": "abscissas have squareclass $\\beta$, by the cubic equation. Write"
+    },
+    {
+      "application_id": "A020",
+      "old_line": 3769,
+      "new_line": 4017,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "degree-two parts. Thus their rational dimensions equal full Selmer",
+      "new_text": "degree-two parts. Thus their rational dimensions equal full Selmer"
+    },
+    {
+      "application_id": "A020",
+      "old_line": 3783,
+      "new_line": 4031,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A021",
+      "old_line": 1207,
+      "new_line": 1324,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$q^8$. On this residue each $F_\\nu$ has a fixed valuation",
+      "new_text": "$q^8$. On this residue each $F_\\nu$ has a fixed valuation"
+    },
+    {
+      "application_id": "A021",
+      "old_line": 1330,
+      "new_line": 1454,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A022",
+      "old_line": 1640,
+      "new_line": 1779,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "Fix $E=E_\\ell$ and a modular parametrization",
+      "new_text": "By \\cite[Theorem A and Introduction, conditions (1)--(6)]{bcdt},"
+    },
+    {
+      "application_id": "A022",
+      "old_line": 1649,
+      "new_line": 1797,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{remark}[Why this family is the input to the converse]\\label{ex:sec7-rc-scope}",
+      "new_text": "\\begin{remark}[Why this family is the input to the converse]\\label{ex:sec7-rc-scope}"
+    },
+    {
+      "application_id": "A022",
+      "old_line": 7937,
+      "new_line": 8245,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proposition}",
+      "new_text": "\\end{proposition}"
+    },
+    {
+      "application_id": "A022",
+      "old_line": 7946,
+      "new_line": 8254,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$h_*$ odd and excludes the extra-unit fields. Now add the primes",
+      "new_text": "$h_*$ odd and excludes the extra-unit fields. Now add the primes"
+    },
+    {
+      "application_id": "A023",
+      "old_line": 1736,
+      "new_line": 1884,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The rational divisibility input is Kato's Theorem 13.4(2),",
+      "new_text": "The rational divisibility input is Kato's Theorem 13.4(2),"
+    },
+    {
+      "application_id": "A023",
+      "old_line": 1747,
+      "new_line": 1895,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\[",
+      "new_text": "\\["
+    },
+    {
+      "application_id": "A023",
+      "old_line": 6909,
+      "new_line": 7217,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\operatorname{prime}(2Nd)$. There are infinitely many $\\rho$ of",
+      "new_text": "$\\operatorname{prime}(2Nd)$. There are infinitely many $\\rho$ of"
+    },
+    {
+      "application_id": "A023",
+      "old_line": 7038,
+      "new_line": 7346,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "by the same duality. Its determinant at $t=0$ is nonzero.",
+      "new_text": "by the same duality. Its determinant at $t=0$ is nonzero."
+    },
+    {
+      "application_id": "A024",
+      "old_line": 1834,
+      "new_line": 1982,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\begin{proof}\\leavevmode",
+      "new_text": "\\begin{proof}\\leavevmode"
+    },
+    {
+      "application_id": "A024",
+      "old_line": 1847,
+      "new_line": 1995,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At the primes in $S$ equal squareclasses give isomorphic local curves.",
+      "new_text": "At the primes in $S$ equal squareclasses give isomorphic local curves."
+    },
+    {
+      "application_id": "A024",
+      "old_line": 9610,
+      "new_line": 9988,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "address construction. In particular the proof of the rough companion",
+      "new_text": "address construction. In particular the proof of the rough companion"
+    },
+    {
+      "application_id": "A024",
+      "old_line": 9655,
+      "new_line": 10033,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proof}",
+      "new_text": "\\end{proof}"
+    },
+    {
+      "application_id": "A025",
+      "old_line": 1834,
+      "new_line": 1982,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\begin{proof}\\leavevmode",
+      "new_text": "\\begin{proof}\\leavevmode"
+    },
+    {
+      "application_id": "A025",
+      "old_line": 1847,
+      "new_line": 1995,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At the primes in $S$ equal squareclasses give isomorphic local curves.",
+      "new_text": "At the primes in $S$ equal squareclasses give isomorphic local curves."
+    },
+    {
+      "application_id": "A025",
+      "old_line": 7937,
+      "new_line": 8245,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proposition}",
+      "new_text": "\\end{proposition}"
+    },
+    {
+      "application_id": "A025",
+      "old_line": 7960,
+      "new_line": 8268,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For $D_w$, the unaveraged height formula",
+      "new_text": "For $D_w$, the unaveraged height formula"
+    },
+    {
+      "application_id": "A026",
+      "old_line": 1848,
+      "new_line": 1996,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At a good odd prime newly ramified in the parameter, the root factor is",
+      "new_text": "At a good odd prime newly ramified in the parameter, the root factor is"
+    },
+    {
+      "application_id": "A026",
+      "old_line": 1856,
+      "new_line": 2004,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proof}",
+      "new_text": "\\end{proof}"
+    },
+    {
+      "application_id": "A027",
+      "old_line": 2267,
+      "new_line": 2415,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "They are different points in different native lattices.",
+      "new_text": "They are different points in different native lattices."
+    },
+    {
+      "application_id": "A027",
+      "old_line": 2300,
+      "new_line": 2448,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Combining (3.3)--(3.5) cancels $s(hk')$ and gives",
+      "new_text": "Combining (3.3)--(3.5) cancels $s(hk')$ and gives"
+    },
+    {
+      "application_id": "A027",
+      "old_line": 7961,
+      "new_line": 8269,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\cite[Theorem 1.1]{cst} has Rankin derivative",
+      "new_text": "\\cite[Theorem 1.1]{cst} has Rankin derivative"
+    },
+    {
+      "application_id": "A027",
+      "old_line": 7997,
+      "new_line": 8306,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$E(K_D)$-rational is required.",
+      "new_text": "$E(K_D)$-rational is required."
+    },
+    {
+      "application_id": "A028",
+      "old_line": 2373,
+      "new_line": 2521,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A028",
+      "old_line": 2390,
+      "new_line": 2538,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "After phase removal, the coefficients used for valuation are integers.",
+      "new_text": "After phase removal, the coefficients used for valuation are integers."
+    },
+    {
+      "application_id": "A028",
+      "old_line": 8153,
+      "new_line": 8462,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "Let $B$ be ramified at $\\ell_0$ and infinity and let $R$ be an Eichler",
+      "new_text": "By \\cite[Main Theorem 14.6.1]{voight-quaternion}, there is a quaternion"
+    },
+    {
+      "application_id": "A028",
+      "old_line": 8839,
+      "new_line": 9150,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Fix one tuple. Choose a rational embedding",
+      "new_text": "Fix one tuple. Choose a rational embedding"
+    },
+    {
+      "application_id": "A028",
+      "old_line": 8843,
+      "new_line": 9156,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the selected integral local embeddings. The adelic representatives",
+      "new_text": "the selected integral local embeddings. The adelic representatives"
+    },
+    {
+      "application_id": "A028",
+      "old_line": 8874,
+      "new_line": 9187,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "by restricting $\\chi_{h_*}$ to $G_F$ is unramified and, under",
+      "new_text": "by restricting $\\chi_{h_*}$ to $G_F$ is unramified and, under"
+    },
+    {
+      "application_id": "A028",
+      "old_line": 9030,
+      "new_line": 9343,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At $\\ell_0$, a division-algebra uniformizer exchanges the two",
+      "new_text": "At $\\ell_0$, a division-algebra uniformizer exchanges the two"
+    },
+    {
+      "application_id": "A029",
+      "old_line": 2407,
+      "new_line": 2555,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "eigenspace. Waldspurger's Corollary 2, including its same-dyadic-squareclass",
+      "new_text": "eigenspace. Waldspurger's Corollary 2, including its same-dyadic-squareclass"
+    },
+    {
+      "application_id": "A029",
+      "old_line": 2420,
+      "new_line": 2568,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A029",
+      "old_line": 7648,
+      "new_line": 7956,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A029",
+      "old_line": 7722,
+      "new_line": 8030,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For clarity, (E.10) gives proportional coefficient functionals on",
+      "new_text": "For clarity, (E.10) gives proportional coefficient functionals on"
+    },
+    {
+      "application_id": "A030",
+      "old_line": 7510,
+      "new_line": 7818,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Fix also a finite extra exclusion set $B$ with",
+      "new_text": "Fix also a finite extra exclusion set $B$ with"
+    },
+    {
+      "application_id": "A030",
+      "old_line": 7647,
+      "new_line": 7955,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The Hecke eigenvalues in $V$ are $\\eta(p)a_p(E)$.",
+      "new_text": "The Hecke eigenvalues in $V$ are $\\eta(p)a_p(E)$."
+    },
+    {
+      "application_id": "A031",
+      "old_line": 7730,
+      "new_line": 8038,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The scalar is common to every vector. This argument does not",
+      "new_text": "The scalar is common to every vector. This argument does not"
+    },
+    {
+      "application_id": "A031",
+      "old_line": 7808,
+      "new_line": 8116,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Write the Dirichlet character as a product of its finite",
+      "new_text": "Write the Dirichlet character as a product of its finite"
+    },
+    {
+      "application_id": "A032",
+      "old_line": 2421,
+      "new_line": 2569,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For both coefficient systems the integral operators have the required",
+      "new_text": "For both coefficient systems the integral operators have the required"
+    },
+    {
+      "application_id": "A032",
+      "old_line": 2436,
+      "new_line": 2585,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "choose an actual stage carrying that value with $M_\\theta>\\delta_o$.",
+      "new_text": "choose an actual stage carrying that value with $M_\\theta>\\delta_o$."
+    },
+    {
+      "application_id": "A032",
+      "old_line": 9450,
+      "new_line": 9763,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "cuspidal newform constituents and the Eisenstein character pairs of",
+      "new_text": "cuspidal newform constituents and the Eisenstein character pairs of"
+    },
+    {
+      "application_id": "A032",
+      "old_line": 9504,
+      "new_line": 9882,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " U_p^{(2)}\\{t(g\\tau\\phi)-t(g\\phi)\\}",
+      "new_text": " U_p^{(2)}\\{t(g\\tau\\phi)-t(g\\phi)\\}"
+    },
+    {
+      "application_id": "A033",
+      "old_line": 2732,
+      "new_line": 2881,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{1. One uniform torsion annihilator.}",
+      "new_text": "\\paragraph{1. One uniform torsion annihilator.}"
+    },
+    {
+      "application_id": "A033",
+      "old_line": 2751,
+      "new_line": 2900,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "each of them.",
+      "new_text": "each of them."
+    },
+    {
+      "application_id": "A033",
+      "old_line": 3349,
+      "new_line": 3597,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "We next preserve all these conditions while controlling the Tate",
+      "new_text": "We next preserve all these conditions while controlling the Tate"
+    },
+    {
+      "application_id": "A033",
+      "old_line": 3385,
+      "new_line": 3633,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "and is independent of the number of radicands and of $K$.",
+      "new_text": "and is independent of the number of radicands and of $K$."
+    },
+    {
+      "application_id": "A033",
+      "old_line": 8000,
+      "new_line": 8309,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$2^nQ_n=Q$ and $2Q_{n+1}=Q_n$, and let",
+      "new_text": "$2^nQ_n=Q$ and $2Q_{n+1}=Q_n$, and let"
+    },
+    {
+      "application_id": "A033",
+      "old_line": 8034,
+      "new_line": 8343,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Fix actual complex conjugation $\\tau$. Since $D_w>0$, the real",
+      "new_text": "Fix actual complex conjugation $\\tau$. Since $D_w>0$, the real"
+    },
+    {
+      "application_id": "A034",
+      "old_line": 2765,
+      "new_line": 2914,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{2. Point relations with the full old conductor.}",
+      "new_text": "\\paragraph{2. Point relations with the full old conductor.}"
+    },
+    {
+      "application_id": "A034",
+      "old_line": 2794,
+      "new_line": 2951,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "                         =F_\\ell\\overline y_d.           \\tag{H4}",
+      "new_text": "                         =F_\\ell\\overline y_d.           \\tag{H4}"
+    },
+    {
+      "application_id": "A035",
+      "old_line": 2796,
+      "new_line": 2953,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Here $F_\\ell$ is rational arithmetic Frobenius on the reduced",
+      "new_text": "Here $F_\\ell$ is rational arithmetic Frobenius on the reduced"
+    },
+    {
+      "application_id": "A035",
+      "old_line": 2810,
+      "new_line": 2967,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "and residual-surjectivity theorem are not used here.",
+      "new_text": "and residual-surjectivity theorem are not used here."
+    },
+    {
+      "application_id": "A036",
+      "old_line": 2875,
+      "new_line": 3033,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A036",
+      "old_line": 2900,
+      "new_line": 3058,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "If a class $v\\in H^1(F,B[2^a])$ becomes Kummer over $F'$, its",
+      "new_text": "If a class $v\\in H^1(F,B[2^a])$ becomes Kummer over $F'$, its"
+    },
+    {
+      "application_id": "A037",
+      "old_line": 3162,
+      "new_line": 3410,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proof}",
+      "new_text": "\\end{proof}"
+    },
+    {
+      "application_id": "A037",
+      "old_line": 3206,
+      "new_line": 3454,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The global Selmer duality theorem",
+      "new_text": "The global Selmer duality theorem"
+    },
+    {
+      "application_id": "A038",
+      "old_line": 3194,
+      "new_line": 3442,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The local finite dualities \\cite[I.2.3, I.3.2--I.3.5]{milne} make the",
+      "new_text": "The local finite dualities \\cite[I.2.3, I.3.2--I.3.5]{milne} make the"
+    },
+    {
+      "application_id": "A038",
+      "old_line": 3210,
+      "new_line": 3458,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For clarity the Selmer complex is the cone",
+      "new_text": "For clarity the Selmer complex is the cone"
+    },
+    {
+      "application_id": "A038",
+      "old_line": 3567,
+      "new_line": 3815,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "identities.  The remaining good unramified conditions use the",
+      "new_text": "identities.  The remaining good unramified conditions use the"
+    },
+    {
+      "application_id": "A038",
+      "old_line": 3590,
+      "new_line": 3838,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "transported conditions and their orthogonal conditions occur at the",
+      "new_text": "transported conditions and their orthogonal conditions occur at the"
+    },
+    {
+      "application_id": "A039",
+      "old_line": 3234,
+      "new_line": 3482,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A039",
+      "old_line": 3251,
+      "new_line": 3499,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A039",
+      "old_line": 4343,
+      "new_line": 4611,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A039",
+      "old_line": 4365,
+      "new_line": 4633,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For clarity, a universal binary character is not trivial merely",
+      "new_text": "For clarity, a universal binary character is not trivial merely"
+    },
+    {
+      "application_id": "A040",
+      "old_line": 3770,
+      "new_line": 4018,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "corank, including a possible divisible part of $\\Sha$.",
+      "new_text": "corank, including a possible divisible part of $\\Sha$."
+    },
+    {
+      "application_id": "A040",
+      "old_line": 3785,
+      "new_line": 4033,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "cancel exactly. At either split place the full/Kummer quotient",
+      "new_text": "cancel exactly. At either split place the full/Kummer quotient"
+    },
+    {
+      "application_id": "A040",
+      "old_line": 3820,
+      "new_line": 4070,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " N_i=r_i+1-\\chi_h(r_i)a_{r_i}",
+      "new_text": " N_i=r_i+1-\\chi_h(r_i)a_{r_i}"
+    },
+    {
+      "application_id": "A040",
+      "old_line": 3875,
+      "new_line": 4143,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At an unused good split prime, use the actual primitive-to-relaxed",
+      "new_text": "At an unused good split prime, use the actual primitive-to-relaxed"
+    },
+    {
+      "application_id": "A041",
+      "old_line": 3878,
+      "new_line": 4146,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the two-place quotient factor,",
+      "new_text": "the two-place quotient factor,"
+    },
+    {
+      "application_id": "A041",
+      "old_line": 3940,
+      "new_line": 4208,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "ramified in a particular constituent. With",
+      "new_text": "ramified in a particular constituent. With"
+    },
+    {
+      "application_id": "A042",
+      "old_line": 4220,
+      "new_line": 4488,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\longrightarrow0.",
+      "new_text": "\\longrightarrow0."
+    },
+    {
+      "application_id": "A042",
+      "old_line": 4273,
+      "new_line": 4541,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "In either computation the $H^2$ estimate is supplied by the global",
+      "new_text": "In either computation the $H^2$ estimate is supplied by the global"
+    },
+    {
+      "application_id": "A043",
+      "old_line": 4276,
+      "new_line": 4544,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "We next bound the local terms in the Selmer cone (4.3). For a finite",
+      "new_text": "We next bound the local terms in the Selmer cone (4.3). For a finite"
+    },
+    {
+      "application_id": "A043",
+      "old_line": 4320,
+      "new_line": 4588,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "most four additional generators. Complex conjugation used to",
+      "new_text": "most four additional generators. Complex conjugation used to"
+    },
+    {
+      "application_id": "A044",
+      "old_line": 4580,
+      "new_line": 4848,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The strict generic $H^1$ is zero, the new generic $H^1$ is spanned",
+      "new_text": "The strict generic $H^1$ is zero, the new generic $H^1$ is spanned"
+    },
+    {
+      "application_id": "A044",
+      "old_line": 4645,
+      "new_line": 4913,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\omega(k)\\leq A$, the actual primitive coordinate satisfies",
+      "new_text": "$\\omega(k)\\leq A$, the actual primitive coordinate satisfies"
+    },
+    {
+      "application_id": "A044",
+      "old_line": 4788,
+      "new_line": 5056,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Kummer conditions are transported into each other; primitive ramified",
+      "new_text": "Kummer conditions are transported into each other; primitive ramified"
+    },
+    {
+      "application_id": "A044",
+      "old_line": 4830,
+      "new_line": 5098,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A045",
+      "old_line": 4993,
+      "new_line": 5261,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The finite Selmer group defines $d_K$, and perfection of $C_K$",
+      "new_text": "The finite Selmer group defines $d_K$, and perfection of $C_K$"
+    },
+    {
+      "application_id": "A045",
+      "old_line": 5020,
+      "new_line": 5288,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The exact sequence for $0\\to T\\to T\\otimes\\mathbb Q_2",
+      "new_text": "The exact sequence for $0\\to T\\to T\\otimes\\mathbb Q_2"
+    },
+    {
+      "application_id": "A045",
+      "old_line": 7364,
+      "new_line": 7672,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A045",
+      "old_line": 7400,
+      "new_line": 7708,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "degree-one quotient: the compact real Kummer image is all of",
+      "new_text": "degree-one quotient: the compact real Kummer image is all of"
+    },
+    {
+      "application_id": "A046",
+      "old_line": 6005,
+      "new_line": 6285,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{proposition}[Literal cutoff]\\label{prop:cutoff}",
+      "new_text": "\\begin{proposition}[Literal cutoff]\\label{prop:cutoff}"
+    },
+    {
+      "application_id": "A046",
+      "old_line": 6043,
+      "new_line": 6335,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "The initial valuations are $v(x)=-6$, $v(y)=-9$, $v(z)=3$,",
+      "new_text": "At two normalize $v_s(s)=1$, so $v_s(2)=2$. Initially"
+    },
+    {
+      "application_id": "A047",
+      "old_line": 6168,
+      "new_line": 6470,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{corollary}[Negation of Mazur's finite-component conjecture]",
+      "new_text": "\\begin{corollary}[Negation of Mazur's finite-component conjecture]"
+    },
+    {
+      "application_id": "A047",
+      "old_line": 6202,
+      "new_line": 6504,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " \\text{machine $e$ halts on input $n$}.",
+      "new_text": " \\text{machine $e$ halts on input $n$}."
+    },
+    {
+      "application_id": "A048",
+      "old_line": 6205,
+      "new_line": 6507,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "in $\\Q$, and are not elliptic-curve coordinates. In particular, every",
+      "new_text": "in $\\Q$, and are not elliptic-curve coordinates. In particular, every"
+    },
+    {
+      "application_id": "A048",
+      "old_line": 6269,
+      "new_line": 6571,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\operatorname{HTP}(\\Q)\\le_m0'$. Invalid polynomial codes, if present in",
+      "new_text": "$\\operatorname{HTP}(\\Q)\\le_m0'$. Invalid polynomial codes, if present in"
+    },
+    {
+      "application_id": "A049",
+      "old_line": 6599,
+      "new_line": 6901,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "components; it is not a comparison of two Euler systems.",
+      "new_text": "components; it is not a comparison of two Euler systems."
+    },
+    {
+      "application_id": "A049",
+      "old_line": 6626,
+      "new_line": 6928,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the same combination works at every $m$. Although (K4) is written",
+      "new_text": "the same combination works at every $m$. Although (K4) is written"
+    },
+    {
+      "application_id": "A050",
+      "old_line": 6628,
+      "new_line": 6930,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A050",
+      "old_line": 6650,
+      "new_line": 6952,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A050",
+      "old_line": 6810,
+      "new_line": 7118,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Theorem~9.7, p.~189, identifies the dual exponential of $z_D$ with",
+      "new_text": "Theorem~9.7, p.~189, identifies the dual exponential of $z_D$ with"
+    },
+    {
+      "application_id": "A050",
+      "old_line": 6908,
+      "new_line": 7216,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "among characters supported on the fixed finite set",
+      "new_text": "among characters supported on the fixed finite set"
+    },
+    {
+      "application_id": "A051",
+      "old_line": 6652,
+      "new_line": 6954,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For a number field $K$, let $X_K=\\operatorname{Spec}\\mathcal O_K[1/2]$",
+      "new_text": "For a number field $K$, let $X_K=\\operatorname{Spec}\\mathcal O_K[1/2]$"
+    },
+    {
+      "application_id": "A051",
+      "old_line": 6810,
+      "new_line": 7118,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Theorem~9.7, p.~189, identifies the dual exponential of $z_D$ with",
+      "new_text": "Theorem~9.7, p.~189, identifies the dual exponential of $z_D$ with"
+    },
+    {
+      "application_id": "A051",
+      "old_line": 6950,
+      "new_line": 7258,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At an odd prime put $W_q=H^1(I_q,V\\chi)$. The rational cone from",
+      "new_text": "At an odd prime put $W_q=H^1(I_q,V\\chi)$. The rational cone from"
+    },
+    {
+      "application_id": "A051",
+      "old_line": 7038,
+      "new_line": 7346,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "by the same duality. Its determinant at $t=0$ is nonzero.",
+      "new_text": "by the same duality. Its determinant at $t=0$ is nonzero."
+    },
+    {
+      "application_id": "A052",
+      "old_line": 8151,
+      "new_line": 8460,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "valuation is fixed as the precision grows.",
+      "new_text": "valuation is fixed as the precision grows."
+    },
+    {
+      "application_id": "A052",
+      "old_line": 8153,
+      "new_line": 8462,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "Let $B$ be ramified at $\\ell_0$ and infinity and let $R$ be an Eichler",
+      "new_text": "By \\cite[Main Theorem 14.6.1]{voight-quaternion}, there is a quaternion"
+    },
+    {
+      "application_id": "A052",
+      "old_line": 8178,
+      "new_line": 8489,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "constant $\\pi(W_{p^e}\\infty)$, which $L$ kills.  Frobenius acts on",
+      "new_text": "constant $\\pi(W_{p^e}\\infty)$, which $L$ kills.  Frobenius acts on"
+    },
+    {
+      "application_id": "A052",
+      "old_line": 8839,
+      "new_line": 9150,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Fix one tuple. Choose a rational embedding",
+      "new_text": "Fix one tuple. Choose a rational embedding"
+    },
+    {
+      "application_id": "A052",
+      "old_line": 8843,
+      "new_line": 9156,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the selected integral local embeddings. The adelic representatives",
+      "new_text": "the selected integral local embeddings. The adelic representatives"
+    },
+    {
+      "application_id": "A053",
+      "old_line": 8305,
+      "new_line": 8616,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "holomorphic theta series with the same level and character;",
+      "new_text": "holomorphic theta series with the same level and character;"
+    },
+    {
+      "application_id": "A053",
+      "old_line": 8560,
+      "new_line": 8871,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "also to the conductor of $u\\mapsto(u,\\det Q)_p$. The eigenvalue",
+      "new_text": "also to the conductor of $u\\mapsto(u,\\det Q)_p$. The eigenvalue"
+    },
+    {
+      "application_id": "A054",
+      "old_line": 8561,
+      "new_line": 8872,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "relative to the ordinary theta multiplier, on a matrix whose",
+      "new_text": "relative to the ordinary theta multiplier, on a matrix whose"
+    },
+    {
+      "application_id": "A054",
+      "old_line": 8708,
+      "new_line": 9019,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For the extracted form there is likewise no measure or degree",
+      "new_text": "For the extracted form there is likewise no measure or degree"
+    },
+    {
+      "application_id": "A055",
+      "old_line": 189,
+      "new_line": 189,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A055",
+      "old_line": 201,
+      "new_line": 201,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A055",
+      "old_line": 350,
+      "new_line": 364,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Its branches cover both identities, opposite points, distinct abscissas",
+      "new_text": "Its branches cover both identities, opposite points, distinct abscissas"
+    },
+    {
+      "application_id": "A055",
+      "old_line": 357,
+      "new_line": 371,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "proposition alone does not supply the natural predicate.",
+      "new_text": "proposition alone does not supply the natural predicate."
+    },
+    {
+      "application_id": "A056",
+      "old_line": 209,
+      "new_line": 209,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A056",
+      "old_line": 222,
+      "new_line": 222,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "This is a terminating recursion.",
+      "new_text": "This is a terminating recursion. These are the short-Weierstrass"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 225,
+      "new_line": 239,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "each unit residue class modulo $W=4\\prod_{p\\le324}p$. Dirichlet's theorem",
+      "new_text": "each unit residue class modulo $W=4\\prod_{p\\le324}p$. Dirichlet's theorem"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 1002,
+      "new_line": 1056,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Reciprocity, CRT and Dirichlet realize it by distinct auxiliary primes.",
+      "new_text": "Reciprocity, CRT and Dirichlet realize it by distinct auxiliary primes."
+    },
+    {
+      "application_id": "A057",
+      "old_line": 1223,
+      "new_line": 1340,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Dirichlet's theorem proves that this is the same finite catalogue as",
+      "new_text": "Dirichlet's theorem proves that this is the same finite catalogue as"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 1836,
+      "new_line": 1984,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Choose a signed prime $q_0$ in the prescribed unit classes by",
+      "new_text": "Choose a signed prime $q_0$ in the prescribed unit classes by"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 1837,
+      "new_line": 1985,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Dirichlet's theorem, avoiding $S\\cup B$. Apply Hoffstein--Luo",
+      "new_text": "Dirichlet's theorem, avoiding $S\\cup B$. Apply Hoffstein--Luo"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 2017,
+      "new_line": 2165,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "nonzero residue class there. The Chinese remainder theorem combines",
+      "new_text": "nonzero residue class there. The Chinese remainder theorem combines"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 2494,
+      "new_line": 2643,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Choose such a prime with $p\\equiv1\\pmod4$, $(\\ell/p)=-1$ and",
+      "new_text": "Choose such a prime with $p\\equiv1\\pmod4$, $(\\ell/p)=-1$ and"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 2496,
+      "new_line": 2645,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "permits these simultaneous conditions. Because $k$ is a square modulo",
+      "new_text": "permits these simultaneous conditions. Because $k$ is a square modulo"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 2521,
+      "new_line": 2670,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "one. Thus one choice works for both forms. CRT and Dirichlet realize",
+      "new_text": "one. Thus one choice works for both forms. CRT and Dirichlet realize"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 9580,
+      "new_line": 9958,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "matching incidences to both realizations. CRT and Dirichlet provide",
+      "new_text": "matching incidences to both realizations. CRT and Dirichlet provide"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 9638,
+      "new_line": 10016,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "By CRT and Dirichlet choose one signed prime $q_0$ in its classes,",
+      "new_text": "By CRT and Dirichlet choose one signed prime $q_0$ in its classes,"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 10109,
+      "new_line": 10487,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "quadratic residue classes are therefore nonempty and Dirichlet's",
+      "new_text": "quadratic residue classes are therefore nonempty and Dirichlet's"
+    },
+    {
+      "application_id": "A057",
+      "old_line": 10447,
+      "new_line": 10825,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Realize its prescribed forward residue bits by distinct primes using CRT and Dirichlet;",
+      "new_text": "Realize its prescribed forward residue bits by distinct primes using CRT and Dirichlet;"
+    },
+    {
+      "application_id": "A058",
+      "old_line": 258,
+      "new_line": 272,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "We give the argument of S05--S07, making its finite certificate explicit.",
+      "new_text": "We give the argument of S05--S07, making its finite certificate explicit."
+    },
+    {
+      "application_id": "A058",
+      "old_line": 277,
+      "new_line": 291,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "maps to the dual kernel.",
+      "new_text": "maps to the dual kernel."
+    },
+    {
+      "application_id": "A059",
+      "old_line": 276,
+      "new_line": 290,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "extra kernel term vanishes since a nonkernel rational two-torsion point",
+      "new_text": "extra kernel term vanishes since a nonkernel rational two-torsion point"
+    },
+    {
+      "application_id": "A059",
+      "old_line": 286,
+      "new_line": 300,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\[",
+      "new_text": "\\["
+    },
+    {
+      "application_id": "A060",
+      "old_line": 288,
+      "new_line": 302,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " G_2(a,b)=4ab(a^2-\\delta^2b^2).",
+      "new_text": " G_2(a,b)=4ab(a^2-\\delta^2b^2)."
+    },
+    {
+      "application_id": "A060",
+      "old_line": 332,
+      "new_line": 346,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Thus $2C(K_0)=\\Z(2R)$. The inverse coordinate change sends $2R$ to",
+      "new_text": "Thus $2C(K_0)=\\Z(2R)$. The inverse coordinate change sends $2R$ to"
+    },
+    {
+      "application_id": "A061",
+      "old_line": 505,
+      "new_line": 522,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "exactly the support specified by $M_S(u)$.",
+      "new_text": "exactly the support specified by $M_S(u)$."
+    },
+    {
+      "application_id": "A061",
+      "old_line": 545,
+      "new_line": 562,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "conjugacy homomorphism of $A$.",
+      "new_text": "conjugacy homomorphism of $A$."
+    },
+    {
+      "application_id": "A062",
+      "old_line": 608,
+      "new_line": 632,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Non-CM fibers and scalar descent.}",
+      "new_text": "\\paragraph{Non-CM fibers and scalar descent.}"
+    },
+    {
+      "application_id": "A062",
+      "old_line": 635,
+      "new_line": 659,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " \\qquad \\varepsilon(\\sigma,\\tau)\\in\\{1,-1\\}.",
+      "new_text": " \\qquad \\varepsilon(\\sigma,\\tau)\\in\\{1,-1\\}."
+    },
+    {
+      "application_id": "A063",
+      "old_line": 824,
+      "new_line": 860,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Transfer from a modular Jacobian.}",
+      "new_text": "\\paragraph{Transfer from a modular Jacobian.}"
+    },
+    {
+      "application_id": "A063",
+      "old_line": 831,
+      "new_line": 867,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "In particular $g=\\dim J\\ge2$.",
+      "new_text": "In particular $g=\\dim J\\ge2$."
+    },
+    {
+      "application_id": "A064",
+      "old_line": 747,
+      "new_line": 775,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A064",
+      "old_line": 765,
+      "new_line": 794,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the conductor at five and $r_5$ at all other primes.",
+      "new_text": "the conductor at five and $r_5$ at all other primes."
+    },
+    {
+      "application_id": "A065",
+      "old_line": 558,
+      "new_line": 582,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Suppose $\\operatorname{End}^0(A_{\\overline\\Q})=M_2(k)$.",
+      "new_text": "Suppose $\\operatorname{End}^0(A_{\\overline\\Q})=M_2(k)$."
+    },
+    {
+      "application_id": "A065",
+      "old_line": 564,
+      "new_line": 588,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The effective bound of \\cite[Proposition 2.7]{fowler} gives",
+      "new_text": "The effective bound of \\cite[Proposition 2.7]{fowler} gives"
+    },
+    {
+      "application_id": "A065",
+      "old_line": 572,
+      "new_line": 596,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "After a finite extension $E$ has everywhere good reduction, since",
+      "new_text": "After a finite extension $E$ has everywhere good reduction, since"
+    },
+    {
+      "application_id": "A065",
+      "old_line": 573,
+      "new_line": 597,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "its $j$-invariant is integral. This extension does not change its",
+      "new_text": "its $j$-invariant is integral. This extension does not change its"
+    },
+    {
+      "application_id": "A065",
+      "old_line": 957,
+      "new_line": 1011,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{theorem}",
+      "new_text": "\\end{theorem}"
+    },
+    {
+      "application_id": "A065",
+      "old_line": 960,
+      "new_line": 1014,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "different from the CM generator curve. Theorem~\\ref{hyp:RC} is proved in",
+      "new_text": "different from the CM generator curve. Theorem~\\ref{hyp:RC} is proved in"
+    },
+    {
+      "application_id": "A065",
+      "old_line": 1622,
+      "new_line": 1761,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For a positive squarefree $\\ell\\equiv11\\pmod {12}$ put",
+      "new_text": "For a positive squarefree $\\ell\\equiv11\\pmod {12}$ put"
+    },
+    {
+      "application_id": "A065",
+      "old_line": 1628,
+      "new_line": 1767,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "CM curve, since a rational CM $j$-invariant is an integer.",
+      "new_text": "CM curve, since a rational CM $j$-invariant is an integer."
+    },
+    {
+      "application_id": "A066",
+      "old_line": 1640,
+      "new_line": 1779,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "Fix $E=E_\\ell$ and a modular parametrization",
+      "new_text": "By \\cite[Theorem A and Introduction, conditions (1)--(6)]{bcdt},"
+    },
+    {
+      "application_id": "A066",
+      "old_line": 1642,
+      "new_line": 1790,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "and the local squareclasses allowed at the primes of $2N$.",
+      "new_text": "and the local squareclasses allowed at the primes of $2N$."
+    },
+    {
+      "application_id": "A066",
+      "old_line": 6533,
+      "new_line": 6835,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Fix a non-CM elliptic curve $E/\\mathbf Q$ of conductor $N$, its weight-two newform $f$,",
+      "new_text": "Fix a non-CM elliptic curve $E/\\mathbf Q$ of conductor $N$, its weight-two newform $f$,"
+    },
+    {
+      "application_id": "A066",
+      "old_line": 6538,
+      "new_line": 6840,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\kappa:G_{\\mathbf Q}\\to\\Gamma\\subset\\Lambda^\\times$ be the quotient map,",
+      "new_text": "$\\kappa:G_{\\mathbf Q}\\to\\Gamma\\subset\\Lambda^\\times$ be the quotient map,"
+    },
+    {
+      "application_id": "A066",
+      "old_line": 744,
+      "new_line": 772,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "a constituent of the Tate module of the modular abelian variety",
+      "new_text": "show that $r_5$ is a constituent of the Tate module of the modular abelian variety"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 2340,
+      "new_line": 2488,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Finite Chebotarev, with a place chosen above the resulting prime, gives",
+      "new_text": "Finite Chebotarev, with a place chosen above the resulting prime, gives"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3286,
+      "new_line": 3534,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "finite set by Chebotarev in the Hilbert class field. Set $w_j=1$ at",
+      "new_text": "finite set by Chebotarev in the Hilbert class field. Set $w_j=1$ at"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3297,
+      "new_line": 3545,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Let $F_\\infty=K(\\mu_{2^\\infty})$ and adjoin the $2^n$-th roots of",
+      "new_text": "Let $F_\\infty=K(\\mu_{2^\\infty})$ and adjoin the $2^n$-th roots of"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3303,
+      "new_line": 3551,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "These prescriptions respect every Kummer relation. Indeed, if",
+      "new_text": "These prescriptions respect every Kummer relation. Indeed, if"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3376,
+      "new_line": 3624,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Every matrix commutator lifts to a commutator in $G_{F_\\infty}$.",
+      "new_text": "Every matrix commutator lifts to a commutator in $G_{F_\\infty}$."
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3414,
+      "new_line": 3662,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Lift the prescribed Kummer automorphism to",
+      "new_text": "Lift the prescribed Kummer automorphism to"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3422,
+      "new_line": 3670,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Choose $B'\\ge\\max(B,n)$ with $B'>c_E$, and take a finite normal",
+      "new_text": "Choose $B'\\ge\\max(B,n)$ with $B'>c_E$, and take a finite normal"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 3426,
+      "new_line": 3674,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "an actual Galois element. Finite Chebotarev supplies infinitely many",
+      "new_text": "an actual Galois element. Finite Chebotarev supplies infinitely many"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 4487,
+      "new_line": 4755,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "element. Finite Chebotarev realizes the required conjugation",
+      "new_text": "element. Finite Chebotarev realizes the required conjugation"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 4541,
+      "new_line": 4809,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Chebotarev is applied at finite stages, not to the product group.",
+      "new_text": "Chebotarev is applied at finite stages, not to the product group."
+    },
+    {
+      "application_id": "A067",
+      "old_line": 4544,
+      "new_line": 4812,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the required Tate precision, ring-class and quadratic fields and old",
+      "new_text": "the required Tate precision, ring-class and quadratic fields and old"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 4550,
+      "new_line": 4818,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "This also resolves the precision issue caused by localization.",
+      "new_text": "This also resolves the precision issue caused by localization."
+    },
+    {
+      "application_id": "A067",
+      "old_line": 4840,
+      "new_line": 5108,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Finite Chebotarev and the exact matrix identity (5.4) realize this",
+      "new_text": "Finite Chebotarev and the exact matrix identity (5.4) realize this"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 7999,
+      "new_line": 8308,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Choose compatible division points $Q_n$ with",
+      "new_text": "Choose compatible division points $Q_n$ with"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 8024,
+      "new_line": 8333,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Let $F_0/\\Q$ be any fixed finite Galois auxiliary extension,",
+      "new_text": "Let $F_0/\\Q$ be any fixed finite Galois auxiliary extension,"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 8053,
+      "new_line": 8362,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For each $M>c_w$, take the finite Galois extension generated by",
+      "new_text": "For each $M>c_w$, take the finite Galois extension generated by"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 8056,
+      "new_line": 8365,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Chebotarev supplies infinitely many good rational primes $\\ell_0$",
+      "new_text": "Chebotarev supplies infinitely many good rational primes $\\ell_0$"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 9353,
+      "new_line": 9666,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Chebotarev and continuity make scalar trace and determinant",
+      "new_text": "Chebotarev and continuity make scalar trace and determinant"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 9399,
+      "new_line": 9712,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For any fixed Fourier index $n$, Chebotarev approximation lets one",
+      "new_text": "For any fixed Fourier index $n$, Chebotarev approximation lets one"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 9455,
+      "new_line": 9768,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "eigenvalues have the same trace and determinant by Chebotarev, so",
+      "new_text": "eigenvalues have the same trace and determinant by Chebotarev, so"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 9518,
+      "new_line": 9896,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "coefficient DVR. It is finite and closed. Simultaneous Chebotarev",
+      "new_text": "coefficient DVR. It is finite and closed. Simultaneous Chebotarev"
+    },
+    {
+      "application_id": "A067",
+      "old_line": 9541,
+      "new_line": 9919,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Choose fresh $q,q_\\tau,r_0,r_1$ representing respectively",
+      "new_text": "Choose fresh $q,q_\\tau,r_0,r_1$ representing respectively"
+    },
+    {
+      "application_id": "A068",
+      "old_line": 2769,
+      "new_line": 2918,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$X_K(N)$ in Cai--Chen--Liu, Theorem 2.15 \\cite{ccl}, with $X_0(N)$:",
+      "new_text": "$X_K(N)$ in Cai--Chen--Liu, Theorem 2.15 \\cite{ccl}, with $X_0(N)$:"
+    },
+    {
+      "application_id": "A068",
+      "old_line": 2829,
+      "new_line": 2986,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "with the local Artin orientation fixed. Set",
+      "new_text": "with the local Artin orientation fixed. Set"
+    },
+    {
+      "application_id": "A068",
+      "old_line": 2930,
+      "new_line": 3088,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{6. Exact finite precision for one derivative prime.}",
+      "new_text": "\\paragraph{6. Exact finite precision for one derivative prime.}"
+    },
+    {
+      "application_id": "A068",
+      "old_line": 2948,
+      "new_line": 3106,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\[",
+      "new_text": "\\["
+    },
+    {
+      "application_id": "A068",
+      "old_line": 3269,
+      "new_line": 3517,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{The simultaneous moving character.}",
+      "new_text": "\\paragraph{The simultaneous moving character.}"
+    },
+    {
+      "application_id": "A068",
+      "old_line": 3348,
+      "new_line": 3596,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A068",
+      "old_line": 3964,
+      "new_line": 4232,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Simultaneous prescriptions and local lifts.}",
+      "new_text": "\\paragraph{Simultaneous prescriptions and local lifts.}"
+    },
+    {
+      "application_id": "A068",
+      "old_line": 4060,
+      "new_line": 4328,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\end{proof}",
+      "new_text": "\\end{proof}"
+    },
+    {
+      "application_id": "A069",
+      "old_line": 3866,
+      "new_line": 4116,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "bounded by the fixed local types at two. Component factors cancel",
+      "new_text": "bounded by the fixed local types at two. Component factors cancel"
+    },
+    {
+      "application_id": "A069",
+      "old_line": 3872,
+      "new_line": 4140,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "case each $t_p=2$.",
+      "new_text": "In the full rational two-torsion case each $t_p=2$."
+    },
+    {
+      "application_id": "A070",
+      "old_line": 2784,
+      "new_line": 2933,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "These are unaveraged sums. The identity $\\pi T_q=a_q\\pi$ follows",
+      "new_text": "These are unaveraged sums. On degree-zero divisor classes,"
+    },
+    {
+      "application_id": "A070",
+      "old_line": 2793,
+      "new_line": 2950,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "                      \\overline y_{d\\ell}",
+      "new_text": "                      \\overline y_{d\\ell}"
+    },
+    {
+      "application_id": "A070",
+      "old_line": 8102,
+      "new_line": 8411,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Use $m=|h_*|$, the same $L$, the Eichler order of level $N$ in the",
+      "new_text": "Use $m=|h_*|$, the same $L$, the Eichler order of level $N$ in the"
+    },
+    {
+      "application_id": "A070",
+      "old_line": 8116,
+      "new_line": 8425,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the recurrence (O.6) holds at every integer index, with nonintegral",
+      "new_text": "the recurrence (O.6) holds at every integer index, with nonintegral"
+    },
+    {
+      "application_id": "A071",
+      "old_line": 1108,
+      "new_line": 1225,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{proposition}[Finite-box deduction]\\label{prop:box}",
+      "new_text": "\\begin{proposition}[Finite-box deduction]\\label{prop:box}"
+    },
+    {
+      "application_id": "A071",
+      "old_line": 1148,
+      "new_line": 1265,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "% and gtz bibliography keys. No fixed polynomial constant is changed.",
+      "new_text": "% and gtz bibliography keys. No fixed polynomial constant is changed."
+    },
+    {
+      "application_id": "A071",
+      "old_line": 5828,
+      "new_line": 6102,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\subsection{Approximation for every fixed shift}",
+      "new_text": "\\subsection{Approximation for every fixed shift}"
+    },
+    {
+      "application_id": "A071",
+      "old_line": 5853,
+      "new_line": 6128,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\kappa$, regardless of its size.",
+      "new_text": "$\\kappa$, regardless of its size."
+    },
+    {
+      "application_id": "A071",
+      "old_line": 5900,
+      "new_line": 6175,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "\\]",
+      "new_text": "\\]"
+    },
+    {
+      "application_id": "A071",
+      "old_line": 5920,
+      "new_line": 6199,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "product divides as asserted. No unit assumption on $\\kappa$ was used.",
+      "new_text": "product divides as asserted. No unit assumption on $\\kappa$ was used."
+    },
+    {
+      "application_id": "A071",
+      "old_line": 6034,
+      "new_line": 6314,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "A nonidentity point there has negative abscissa valuation, so its",
+      "new_text": "A nonidentity point there has negative abscissa valuation, so its"
+    },
+    {
+      "application_id": "A071",
+      "old_line": 6056,
+      "new_line": 6358,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Finally $G_0<2^{37}$, $E_0<D^3$, $\\log_2Q_D<D^5$,",
+      "new_text": "Finally $G_0<2^{37}$, $E_0<D^3$, $\\log_2Q_D<D^5$,"
+    },
+    {
+      "application_id": "A072",
+      "old_line": 1425,
+      "new_line": 1554,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{The conjugate orders.}",
+      "new_text": "\\paragraph{The conjugate orders.}"
+    },
+    {
+      "application_id": "A072",
+      "old_line": 1460,
+      "new_line": 1598,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "prime values with such an $\\ell>L$.",
+      "new_text": "prime values with such an $\\ell>L$."
+    },
+    {
+      "application_id": "A073",
+      "old_line": 4213,
+      "new_line": 4481,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "finite places of $K$ above $T$, and let $r$ be the number of finite",
+      "new_text": "finite places of $K$ above $T$, and let $r$ be the number of finite"
+    },
+    {
+      "application_id": "A073",
+      "old_line": 4252,
+      "new_line": 4520,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "with trivial coefficients. Consequently",
+      "new_text": "with trivial coefficients. Consequently"
+    },
+    {
+      "application_id": "A074",
+      "old_line": 4262,
+      "new_line": 4530,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " h^2=h^1-4.",
+      "new_text": " h^2=h^1-4."
+    },
+    {
+      "application_id": "A074",
+      "old_line": 4273,
+      "new_line": 4541,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "In either computation the $H^2$ estimate is supplied by the global",
+      "new_text": "In either computation the $H^2$ estimate is supplied by the global"
+    },
+    {
+      "application_id": "A075",
+      "old_line": 3205,
+      "new_line": 3453,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "perfect quotient-to-dual comparison; derived Nakayama lifts it.",
+      "new_text": "perfect quotient-to-dual comparison; derived Nakayama lifts it."
+    },
+    {
+      "application_id": "A075",
+      "old_line": 4122,
+      "new_line": 4390,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\subsection{Finite free models and the inner limit}",
+      "new_text": "\\subsection{Finite free models and the inner limit}"
+    },
+    {
+      "application_id": "A075",
+      "old_line": 4184,
+      "new_line": 4452,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A075",
+      "old_line": 4468,
+      "new_line": 4736,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "its residual matrices are invertible, and Nakayama applies.",
+      "new_text": "its residual matrices are invertible, and Nakayama applies."
+    },
+    {
+      "application_id": "A075",
+      "old_line": 4993,
+      "new_line": 5261,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The finite Selmer group defines $d_K$, and perfection of $C_K$",
+      "new_text": "The finite Selmer group defines $d_K$, and perfection of $C_K$"
+    },
+    {
+      "application_id": "A075",
+      "old_line": 5021,
+      "new_line": 5289,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\to E[2^\\infty]\\to0$, and the local Kummer conditions, identify",
+      "new_text": "\\to E[2^\\infty]\\to0$, and the local Kummer conditions, identify"
+    },
+    {
+      "application_id": "A075",
+      "old_line": 5143,
+      "new_line": 5411,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "invertible, by reduction modulo its maximal ideal and Nakayama.",
+      "new_text": "invertible, by reduction modulo its maximal ideal and Nakayama."
+    },
+    {
+      "application_id": "A075",
+      "old_line": 7080,
+      "new_line": 7388,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "cochains. Real $H^0$ is included. Over a finite Artin quotient,",
+      "new_text": "cochains. Real $H^0$ is included. Over a finite Artin quotient,"
+    },
+    {
+      "application_id": "A075",
+      "old_line": 7092,
+      "new_line": 7400,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "of the reduced cochains. Two such models are homotopy equivalent;",
+      "new_text": "of the reduced cochains. Two such models are homotopy equivalent;"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 1867,
+      "new_line": 2015,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{definition}[Compatible typed graphs]\\label{ex:sec7-typed-graph}",
+      "new_text": "\\begin{definition}[Compatible typed graphs]\\label{ex:sec7-typed-graph}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 1902,
+      "new_line": 2050,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Contracting two vertices replaces their type by its sum and every",
+      "new_text": "Contracting two vertices replaces their type by its sum and every"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 2003,
+      "new_line": 2151,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{lemma}[Finite realization]\\label{ex:sec7-realization}",
+      "new_text": "\\begin{lemma}[Finite realization]\\label{ex:sec7-realization}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 2446,
+      "new_line": 2595,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Fixing the final companion.}",
+      "new_text": "\\paragraph{Fixing the final companion.}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 2456,
+      "new_line": 2605,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "At any such stage, the normal closure of the old odd label extension",
+      "new_text": "At any such stage, the normal closure of the old odd label extension"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 2479,
+      "new_line": 2628,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{lemma}[The nonempty seed for the present curve]\\label{ex:sec7-ksplit-seed}",
+      "new_text": "\\begin{lemma}[The nonempty seed for the present curve]\\label{ex:sec7-ksplit-seed}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 4122,
+      "new_line": 4390,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\subsection{Finite free models and the inner limit}",
+      "new_text": "\\subsection{Finite free models and the inner limit}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 4184,
+      "new_line": 4452,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A076",
+      "old_line": 4530,
+      "new_line": 4798,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The polarization identity itself is also valid in characteristic two,",
+      "new_text": "The polarization identity itself is also valid in characteristic two,"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 4557,
+      "new_line": 4825,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Only afterward compose with the inclusion $I_j$ from an",
+      "new_text": "Only afterward compose with the inclusion $I_j$ from an"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 5839,
+      "new_line": 6113,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " \\Close(\\iota(n),\\iota(\\kappa),n)&\\quad\\text{for every }",
+      "new_text": " \\Close(\\iota(n),\\iota(\\kappa),n)&\\quad\\text{for every }"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 5853,
+      "new_line": 6128,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$\\kappa$, regardless of its size.",
+      "new_text": "$\\kappa$, regardless of its size."
+    },
+    {
+      "application_id": "A076",
+      "old_line": 9418,
+      "new_line": 9731,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": " d(u)t(v)=t(v),\\qquad",
+      "new_text": " d(u)t(v)=t(v),\\qquad"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 9881,
+      "new_line": 10259,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{proposition}[Nonempty seeds after fixing the complementary twist]\\label{ex:app-nonempty-seeds}",
+      "new_text": "\\begin{proposition}[Nonempty seeds after fixing the complementary twist]\\label{ex:app-nonempty-seeds}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10130,
+      "new_line": 10508,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{proposition}[Compatible finite graph tables on one ultrafilter]\\label{ex:app-odd-stabilization}",
+      "new_text": "\\begin{proposition}[Compatible finite graph tables on one ultrafilter]\\label{ex:app-odd-stabilization}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10175,
+      "new_line": 10553,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10210,
+      "new_line": 10588,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Total labels of the final seeds.}",
+      "new_text": "\\paragraph{Total labels of the final seeds.}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10414,
+      "new_line": 10792,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\begin{proposition}[One actual stage for the final family]\\label{ex:app-final-family}",
+      "new_text": "\\begin{proposition}[One actual stage for the final family]\\label{ex:app-final-family}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10437,
+      "new_line": 10815,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For each chosen $b$, this construction has a finite budget $W_b$.",
+      "new_text": "For each chosen $b$, this construction has a finite budget $W_b$."
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10455,
+      "new_line": 10833,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{Finite intersection and the upper bound.}",
+      "new_text": "\\paragraph{Finite intersection and the upper bound.}"
+    },
+    {
+      "application_id": "A076",
+      "old_line": 10483,
+      "new_line": 10861,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A077",
+      "old_line": 5522,
+      "new_line": 5790,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\subsection{The natural polynomial and the power interface}",
+      "new_text": "\\subsection{The natural polynomial and the power interface}"
+    },
+    {
+      "application_id": "A077",
+      "old_line": 5702,
+      "new_line": 5976,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A078",
+      "old_line": 446,
+      "new_line": 463,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A078",
+      "old_line": 515,
+      "new_line": 532,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "All conjugates of $A$ have the same geometric polarized moduli point.",
+      "new_text": "All conjugates of $A$ have the same geometric polarized moduli point."
+    },
+    {
+      "application_id": "A079",
+      "old_line": 547,
+      "new_line": 571,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "On rational homology the complex structure is right multiplication",
+      "new_text": "On rational homology the complex structure is right multiplication"
+    },
+    {
+      "application_id": "A079",
+      "old_line": 554,
+      "new_line": 578,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "We treat these two cases separately. Throughout, put",
+      "new_text": "We treat these two cases separately. Throughout, put"
+    },
+    {
+      "application_id": "A080",
+      "old_line": 2812,
+      "new_line": 2969,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{3. The relative group and invariant derivative class.}",
+      "new_text": "\\paragraph{3. The relative group and invariant derivative class.}"
+    },
+    {
+      "application_id": "A080",
+      "old_line": 2875,
+      "new_line": 3033,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A080",
+      "old_line": 3042,
+      "new_line": 3202,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{7. The actual coefficient push and its local conditions.}",
+      "new_text": "\\paragraph{7. The actual coefficient push and its local conditions.}"
+    },
+    {
+      "application_id": "A080",
+      "old_line": 3123,
+      "new_line": 3372,
+      "method": "reviewed replacement/deletion",
+      "reason": "Retain the same application context at the explicit repaired paragraph, replacing its changed or blank baseline anchor.",
+      "old_text": "",
+      "new_text": "\\paragraph{8. Actual finite Selmer-cone witnesses.}"
+    },
+    {
+      "application_id": "A080",
+      "old_line": 6652,
+      "new_line": 6954,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "For a number field $K$, let $X_K=\\operatorname{Spec}\\mathcal O_K[1/2]$",
+      "new_text": "For a number field $K$, let $X_K=\\operatorname{Spec}\\mathcal O_K[1/2]$"
+    },
+    {
+      "application_id": "A080",
+      "old_line": 6730,
+      "new_line": 7036,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "\\paragraph{5. One coefficient map produces every constituent.}",
+      "new_text": "\\paragraph{5. One coefficient map produces every constituent.}"
+    },
+    {
+      "application_id": "A081",
+      "old_line": 7025,
+      "new_line": 7333,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "$D_q=E_q(\\chi)$ at inactive good primes. It does not charge an",
+      "new_text": "$D_q=E_q(\\chi)$ at inactive good primes. It does not charge an"
+    },
+    {
+      "application_id": "A081",
+      "old_line": 7043,
+      "new_line": 7351,
+      "method": "unique exact context radius 1",
+      "reason": null,
+      "old_text": "",
+      "new_text": ""
+    },
+    {
+      "application_id": "A082",
+      "old_line": 2239,
+      "new_line": 2387,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "rank-zero theorem. Apply (3.3b), obtaining",
+      "new_text": "rank-zero theorem. Apply (3.3b), obtaining"
+    },
+    {
+      "application_id": "A082",
+      "old_line": 2467,
+      "new_line": 2616,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The forward theorem at this known nonzero central value gives",
+      "new_text": "The forward theorem at this known nonzero central value gives"
+    },
+    {
+      "application_id": "A082",
+      "old_line": 3802,
+      "new_line": 4052,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "the forward theorems give finite $\\Sha$. Put",
+      "new_text": "the forward theorems give finite $\\Sha$. Put"
+    },
+    {
+      "application_id": "A082",
+      "old_line": 4998,
+      "new_line": 5266,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "forward corank-zero theorem give full Selmer corank one for $E/K$.",
+      "new_text": "forward corank-zero theorem give full Selmer corank one for $E/K$."
+    },
+    {
+      "application_id": "A082",
+      "old_line": 7318,
+      "new_line": 7626,
+      "method": "reviewed replacement/deletion",
+      "reason": "Exact rank-zero application retained under the explicit reusable forward lemma.",
+      "old_text": "rank-zero theorem supplies the preceding corank and finiteness",
+      "new_text": "rank-zero theorem in Lemma~\\ref{lem:forward-rank} supplies the"
+    },
+    {
+      "application_id": "A082",
+      "old_line": 7472,
+      "new_line": 7780,
+      "method": "reviewed replacement/deletion",
+      "reason": "Exact rank-zero application retained under the explicit reusable forward lemma.",
+      "old_text": "At $L_*(h)\\ne0$, the forward rank-zero theorem supplies the",
+      "new_text": "At $L_*(h)\\ne0$, Lemma~\\ref{lem:forward-rank} supplies the"
+    },
+    {
+      "application_id": "A082",
+      "old_line": 7959,
+      "new_line": 8267,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "The $h_*$-component has rank zero by the forward rank-zero theorem.",
+      "new_text": "The $h_*$-component has rank zero by the forward rank-zero theorem."
+    },
+    {
+      "application_id": "A082",
+      "old_line": 9762,
+      "new_line": 10140,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "Nonvanishing gives corank zero by the forward theorem, so (F.2)",
+      "new_text": "Nonvanishing gives corank zero by the forward theorem, so (F.2)"
+    },
+    {
+      "application_id": "A082",
+      "old_line": 9901,
+      "new_line": 10279,
+      "method": "unique exact context radius 0",
+      "reason": null,
+      "old_text": "dimension. The forward theorem gives corank zero for $E^k$;",
+      "new_text": "dimension. The forward theorem gives corank zero for $E^k$;"
+    }
+  ],
+  "unclassified_new_citations": []
+}

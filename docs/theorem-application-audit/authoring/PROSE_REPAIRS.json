@@ -1,0 +1,355 @@
+{
+  "schema_version": 1,
+  "kind": "exact_prose_replacements_only_not_applied",
+  "reviewer": "/root/astra_audit_galois_height_009",
+  "inputs": [
+    {
+      "workspace_relative_path": "work/github-research-upload-20261104/repository/docs/theorem-application-audit/applications.json",
+      "sha256": "860e54c39a781ba95cfccda15156dee7da7ffd8a82beda1fade087d007752be4"
+    },
+    {
+      "workspace_relative_path": "work/github-research-upload-20261104/repository/docs/theorem-application-audit/sources.json",
+      "sha256": "eaeac7ef4b76823fcdb4a89af00a2a14525dfef065bbbae4f6b5e5a4594285b8"
+    }
+  ],
+  "coverage": {
+    "applications_scanned": 82,
+    "sources_scanned": 72
+  },
+  "replacements": [
+    {
+      "collection": "applications",
+      "id": "A001",
+      "field": "hypotheses_and_discharge",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Check maximal order, positivity of mu, determinant-one symplectic form, chosen connected/determinant components, branch indices 4,6,2 at 0,infinity,-16/27. Matrix and level index are computed in manuscript 397–424.",
+      "new_value": "The maximal order, positivity of mu, determinant-one symplectic form, connected and determinant components, and branch indices 4,6,2 at 0,infinity,-16/27 were checked in the geometry review. The manuscript computes the matrix and full-level index in its quaternionic polarization and quotient construction.",
+      "reason": "The checks are complete; the bare manuscript line range belonged to the earlier inventory baseline.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/REPORT.md",
+          "sha256": "0f103916eb2902e5924c2530bdee819c06f85679b7522a0e9430f88961d0e7ba"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A002",
+      "field": "hypotheses_and_discharge",
+      "operation": "replace_exact_field",
+      "expected_old_value": "N=5≥4, coprime to discriminant 6, maximal division-prime level and full determinant image. Freeness of the O3 Tate lattice and invertibility of 3,5 are shown at 426–465.",
+      "new_value": "N=5>=4, coprime to discriminant 6, maximal division-prime level and full determinant image. The integral-model construction verifies freeness of the O3 Tate lattice and invertibility of 3 and 5.",
+      "reason": "Remove the obsolete unlabelled manuscript line range.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/REPORT.md",
+          "sha256": "0f103916eb2902e5924c2530bdee819c06f85679b7522a0e9430f88961d0e7ba"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A002",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Use Buzzard only for the initial representable smooth model. The new finite covers, quotient freeness and degree bound must be justified separately.",
+      "new_value": "Buzzard supplies the initial representable smooth model. The geometry review separately checks the finite isomorphism-sheaf covers, the free forgetting-five quotient, the degree bound, and descent of the abelian scheme using Stacks tag 07S7.",
+      "reason": "The separate cover and descent obligations were discharged; they are not outstanding requests.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/REPORT.md",
+          "sha256": "0f103916eb2902e5924c2530bdee819c06f85679b7522a0e9430f88961d0e7ba"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A003",
+      "field": "hypotheses_and_discharge",
+      "operation": "replace_exact_field",
+      "expected_old_value": "All imaginary quadratic orders, not only maximal orders. Need CM class polynomial irreducibility to deduce h(Delta)≤D, and definition of h in source.",
+      "new_value": "The proposition applies to every imaginary quadratic order, including nonmaximal orders. The order class number is the source h(Delta). The CM class-polynomial irreducibility input recorded in A065 gives h(Delta)=[Q(j(E)):Q]<=[L:Q]<=D.",
+      "reason": "Identify the already reviewed A065 input instead of presenting it as an unresolved need.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md",
+          "sha256": "2788baf6db0838c681199d69449a12a1c192be6decae6cb8b5a02f917f56b4bf"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A004",
+      "field": "hypotheses_and_discharge",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Pass to good reduction without changing stable height; sqrt(3)/2≤y≤sqrt(|Delta|)/2. Do not impose surrounding Proposition 6.1 conditions on the general discriminant identity without checking its derivation.",
+      "new_value": "Pass to good reduction without changing stable height; sqrt(3)/2<=y<=sqrt(|Delta|)/2. The source review checks the general discriminant identity (6.2); the surrounding Proposition 6.1 Q(j)-model restriction is not a hypothesis of this identity.",
+      "reason": "The scope of the discriminant identity was explicitly checked.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md",
+          "sha256": "2788baf6db0838c681199d69449a12a1c192be6decae6cb8b5a02f917f56b4bf"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A020",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Forward GZ–Kolyvagin gives rank1 and finite Sha; combine dimSel2=3/full2-torsion to remove Sha[2]. Separate analytic-rank-zero uses must be recorded too.",
+      "new_value": "The forward analytic-rank-one result gives rank one and finite Sha; combine dim Sel_2=3 and full rational two-torsion to remove Sha[2]. The separate analytic-rank-zero application is recorded in A082 with its own independently nonzero central L-value premise.",
+      "reason": "A082 and the associated source checks now record the previously requested rank-zero use.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/forward-modularity/REPORT.md",
+          "sha256": "d8ee6658e55b3f33dc6bb7c03b40cea1cae5286590c23001f414283cc0e86fad"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A022",
+      "field": "hypotheses_and_discharge",
+      "operation": "replace_exact_field",
+      "expected_old_value": "A rational point of order2 supplies the isogeny. Source parity is p-Selmer parity, with no assumed finite Sha. Check number-field/local hypotheses in exact version.",
+      "new_value": "A rational point of order two supplies a rational degree-two isogeny over the number field. The checked Theorem 1.8 concerns the corank of the entire p-infinity Selmer group, so no finite-Sha hypothesis from Theorem 1.2 is imported. The required Selmer corank remains a separate input.",
+      "reason": "The exact parity-theorem hypotheses have been checked; retain the independent corank premise.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/ACCEPTANCE-REPORT.md",
+          "sha256": "d0a8ad596dfbb9b16038b50efd7aa50402ff50015f3fef0fc5716b0f56c6b5b1"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A030",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Nonzero lift is external; the projection/smoothness argument retaining the functional is a manuscript proof and must be checked separately.",
+      "new_value": "The nonzero lift is supplied by the stated external theorem. The geometry acceptance review separately verifies that the manuscript additive and unit-squareclass projectors preserve the reference functional, that the two dyadic neighborhoods give matching contributions, and that smoothness changes depths only within the allowed support.",
+      "reason": "The separate projector/smoothness check is complete.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/ACCEPTANCE-REPORT.md",
+          "sha256": "8dc54da3b386b8f00ab81274a4d981e0626075a7bc5b4c62be6fc4f37d986e24"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A035",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Howard is corroboration, not a theorem for arbitrary old d. The local supersingular argument at2796–2810 is the broader proof; odd-p descent/residual surjectivity are not imported.",
+      "new_value": "Howard is corroboration, not a theorem for arbitrary old d. The manuscript local supersingular argument supplies the broader-conductor proof; odd-p descent and residual-surjectivity assertions are not imported.",
+      "reason": "Remove obsolete unlabelled manuscript line numbers without changing the scope.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/ACCEPTANCE-REPORT.md",
+          "sha256": "8dc54da3b386b8f00ab81274a4d981e0626075a7bc5b4c62be6fc4f37d986e24"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A036",
+      "field": "conventions",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Lang surjectivity implies H1(k_F,B0)=0. The formal kernel still requires an argument, especially when2 divides extension degree.",
+      "new_value": "Lang surjectivity gives H1(k_F,B0)=0. The checked formal-kernel argument uses normal-basis additive filtration quotients and convergent successive corrections over the unramified extension, including when two divides its degree; it does not divide by that degree.",
+      "reason": "The formal-kernel argument is present in the acceptance review and is no longer outstanding.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/ACCEPTANCE-REPORT.md",
+          "sha256": "d0a8ad596dfbb9b16038b50efd7aa50402ff50015f3fef0fc5716b0f56c6b5b1"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A046",
+      "field": "hypotheses_and_discharge",
+      "operation": "replace_exact_field",
+      "expected_old_value": "W≥10^5; verify X≥exp(0.03sqrt(W)(log W)^3) and error≤X/(160log X); exceptional-zero case included.",
+      "new_value": "W>=10^5. The reviewed substitutions verify X>=exp(0.03*sqrt(W)*(log W)^3) and error<=X/(160*log X), including the source exceptional-zero case.",
+      "reason": "The threshold and error substitutions were checked in the completed source application.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/REPORT.md",
+          "sha256": "150dcea1d29aa595b29eca5ed60f5ab2e2269da297df32c86295f42cec3f9bde"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A046",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Positive lower theta bound yields22 primes per class, hence finite catalogue bounds. Subsequent M0 uses actual reduction orders, not their upper bounds as if divisible. The later formal-group/reduction-order bound at lines6029ff belongs to A071/A072 and is not covered by this progression check.",
+      "new_value": "The positive lower theta bound yields 22 primes per class and hence the finite catalogue bounds. Subsequent M0 uses actual reduction orders, not their upper bounds as if divisible. The later formal-group and reduction-order argument belongs to A071/A072 and is not covered by this progression application.",
+      "reason": "Remove obsolete unlabelled manuscript line numbers; retain the separate local-order dependency.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/REPORT.md",
+          "sha256": "150dcea1d29aa595b29eca5ed60f5ab2e2269da297df32c86295f42cec3f9bde"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A075",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Manuscript gives matrix lifting/elimination, but existence/perfectness of starting arithmetic complexes and exactness of limits need explicit source or proof. No automatic commutation with all inverse limits.",
+      "new_value": "The recorded dependency phases distinguish bounded finite free model construction, transport and specified limits, duality, and arithmetic budgets. Milne residual finiteness and local point-group inputs, the checked nilpotent perturbation calculation, and Stacks tag 03T3 supply the starting models. The specified limits use termwise-surjective compact towers or retained finite matrix patterns; arithmetic nonempty-stage results remain separate inputs. No claim of exactness for arbitrary inverse limits is made.",
+      "reason": "The source/proof requests have been discharged in the recorded A075 phases; their internal and arithmetic premises remain explicit.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/FINAL-DEPENDENCY-REVIEW.md",
+          "sha256": "2d911d8efd7d851f53eced58fd35ba7a2c74fefb8d0c5a33f7053e646f0c0a56"
+        },
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/theta-local/FINAL-DEPENDENCY-CLARIFICATIONS.json",
+          "sha256": "66cc0ced3a3bea66e7b0f03d2e38a1e80abbee868b324c3ba5de2648c534abe7"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A077",
+      "field": "objects_and_maps",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Natural polynomial power template, Pell-type alpha recurrence and binomial-digit encoding at5587–5702.",
+      "new_value": "Natural polynomial power template, Pell-type alpha recurrence and binomial-digit encoding in the manuscript power-template and finite-compiler construction.",
+      "reason": "Remove obsolete unlabelled manuscript line numbers.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-REPORT.md",
+          "sha256": "7fa397acc40b9fe7ad0648b22816c5636857757210f7b0f489fa0dd6599bc41d"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A077",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Manuscript includes specialized algebraic argument, while AFP is provenance/library support. Need exact definition/theorem correspondence to claim certified reuse.",
+      "new_value": "The authenticated AFP source correspondence checks Exp_Matrices.alpha_equations and alpha_equivalence, Alpha_Sequence.alpha_dioph, and Exponential_Relation.exp_repr and exp_dioph against the manuscript compiler. The review checks all fifteen alpha conditions, the three power branches, natural/integer domains, zero cases, congruences and fresh witness indices. This is source-level reuse validation; no Isabelle rebuild is claimed.",
+      "reason": "Exact source/theorem correspondence and revision authentication are complete.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-REPORT.md",
+          "sha256": "7fa397acc40b9fe7ad0648b22816c5636857757210f7b0f489fa0dd6599bc41d"
+        },
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-source-manifest.json",
+          "sha256": "bf115437d13f7fd7fe3948f170e71e538305f4a0dabbcaf4d168553ba32db50c"
+        }
+      ]
+    },
+    {
+      "collection": "applications",
+      "id": "A078",
+      "field": "translation_justification",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Local parameter argument supplies part of proof. Exact normality/smoothness/descent theorems behind global cover and abelian scheme need source identifiers.",
+      "new_value": "The geometry review uses Stacks 0E97 for unique extension of automorphisms to stable models, 07S7 for the free finite quotient and descent, and 0EYG for the tame Kummer local form. It separately checks faithful stabilizers, noncollision of fixed sections, the invariant ring R[[z^e]], and normalized pullback ramification. These supply the global model and local branch-persistence claims within the stated tame hypotheses.",
+      "reason": "The named global-model and descent source obligations are discharged.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/REPORT.md",
+          "sha256": "0f103916eb2902e5924c2530bdee819c06f85679b7522a0e9430f88961d0e7ba"
+        }
+      ]
+    },
+    {
+      "collection": "sources",
+      "id": "afp",
+      "field": "version_notes",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Three local Isabelle source files are exact-byte pins. Original AFP revision/release identity still requires authentication; a current browse URL is insufficient. Three original files match AFP development mirror b4f3b892d0ae25cea27412ba4007cdb63e44b0eb dated 2026-05-10T07:38:12Z. Additional modulo definition is pinned at the same revision; no Isabelle build or stable release is inferred.",
+      "new_value": "The three original local Isabelle files match AFP development mirror revision b4f3b892d0ae25cea27412ba4007cdb63e44b0eb, dated 2026-05-10T07:38:12Z. The additional modulo-definition dependency is pinned at the same revision. This authenticates the exact source revision; it does not infer the original retrieval date, an Isabelle release, a stable AFP release, or an Isabelle rebuild.",
+      "reason": "Remove the contradicted claim that revision authentication remains outstanding.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-source-manifest.json",
+          "sha256": "bf115437d13f7fd7fe3948f170e71e538305f4a0dabbcaf4d168553ba32db50c"
+        },
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/geometry/A077-REPORT.md",
+          "sha256": "7fa397acc40b9fe7ad0648b22816c5636857757210f7b0f489fa0dd6599bc41d"
+        }
+      ]
+    },
+    {
+      "collection": "sources",
+      "id": "faltings1988",
+      "field": "version_notes",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Journal of the American Mathematical Society 1 (1988), pp.255–299; cached PDF has 46 scanned pages including cover. III Theorem 4.1, printed p.298, is Hodge–Tate comparison. It does not supply the de Rham conclusion attributed to it at manuscript lines 711–714. The working manuscript now identifies this limitation and uses a separate de Rham comparison/descent lemma.",
+      "new_value": "Journal of the American Mathematical Society 1 (1988), pp.255-299; cached PDF has 46 scanned pages including cover. III Theorem 4.1, printed p.298, is Hodge-Tate comparison and does not supply de Rham comparison. The earlier de Rham attribution was superseded by the accepted comparison-and-finite-descent lemma in A009, using Scholze with its corrigendum and the stated supporting sources.",
+      "reason": "The old manuscript attribution and bare line range are historical, not current obligations.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/REPORT.md",
+          "sha256": "a1189fce26bd21a7a0c474c75c1815ad7fc3822dcfb47d3107245b7841369c0f"
+        }
+      ]
+    },
+    {
+      "collection": "sources",
+      "id": "fowler",
+      "field": "version_notes",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Publisher PDF retrieved 2026-11-05. Proposition 2.7; source PDF pagination may differ from final volume pagination. Published Cambridge180 (2026),607-641, first online13January2026; exact page numbers confirmed.",
+      "new_value": "Published Mathematical Proceedings of the Cambridge Philosophical Society 180 (2026), 607-641, first online January 13, 2026. The publisher PDF was retrieved on 2026-11-05. Section 2.1 is on printed pp.612-613, PDF pp.6-7; Proposition 2.7 is on printed pp.615-616, PDF pp.9-10. These page correspondences were checked.",
+      "reason": "The earlier pagination uncertainty was resolved by the acceptance review.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/ACCEPTANCE-REPORT.md",
+          "sha256": "2788baf6db0838c681199d69449a12a1c192be6decae6cb8b5a02f917f56b4bf"
+        }
+      ]
+    },
+    {
+      "collection": "sources",
+      "id": "pan2022",
+      "field": "version_notes",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Consulted arXiv:1901.07166v2. Bibliography names JAMS 2022. Publisher/preprint statement equivalence is not established by this inventory. Exact arXiv v2 checked. Publisher bytes were not retrieved; no equivalence to the published theorem is asserted.",
+      "new_value": "The application uses the pinned arXiv:1901.07166v2, Theorem 1.0.4, as explicitly identified in the revised bibliography. The bibliography also records the later JAMS publication. Publisher bytes were not retrieved, and no publisher/preprint statement equivalence is asserted.",
+      "reason": "The revised bibliography now explicitly identifies v2; preserve the genuine publisher-equivalence limitation.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/galois-height/REPORT.md",
+          "sha256": "a1189fce26bd21a7a0c474c75c1815ad7fc3822dcfb47d3107245b7841369c0f"
+        }
+      ]
+    },
+    {
+      "collection": "sources",
+      "id": "silverman",
+      "field": "version_notes",
+      "operation": "replace_exact_field",
+      "expected_old_value": "Second edition (2009), exact PDF pinned. Direct inspection found the omega sign typo on p.105 and a^2-b instead of a^2-4b in X Proposition 4.9, p.337. The division-polynomial correction is visible in the official indexed errata but full errata retrieval remains open. The isogeny kernel calculation is derived independently in closure-batch-002.",
+      "new_value": "Second edition (2009), exact PDF pinned. Direct inspection found the omega sign typo on p.105 and a^2-b instead of a^2-4b in X Proposition 4.9, p.337. The full official errata file was not retrieved. A056 uses the separately pinned Sutherland lecture statement and the checked corrected recurrences; the isogeny-kernel calculation is derived independently in closure-batch-002. No application relies on an uninspected errata file.",
+      "reason": "Preserve the retrieval limitation without calling it an outstanding obligation after the explicit source replacement.",
+      "evidence": [
+        {
+          "workspace_relative_path": "work/theorem-application-audit-20261105/parallel-009/sieve-bounds/A056-SECOND-REVIEW.md",
+          "sha256": "4eb0f9519150a3118bb53559dd41c7d60a32d31737e4ab3ff6ae837cc2107b6f"
+        }
+      ]
+    }
+  ],
+  "unchanged_by_design": [
+    "Verbatim baseline reviewer payloads, historical source excerpts and explicitly baseline-labelled dependency locators are evidence and are not rewritten.",
+    "Normative constraints and real inputs such as semisimplicity plus scalar extension, local torsion, pairing preservation, corank hypotheses and global duality remain in place.",
+    "The BCDT, Cornut-Jetchev and Dokchitser publisher-equivalence limitations remain; no unverified version equivalence is asserted.",
+    "Generic warnings that a filename alone does not authenticate an edition are not false obligations.",
+    "OpenAI preprint provenance remains a non-imported source; the audit does not claim a whole-proof certificate."
+  ]
+}

@@ -1,14 +1,14 @@
 # Inventory authoring files
 
-`application_specs.py` contains the hand-written application interfaces. `fresh_checks.py` records the bounded new source inspections and their changes to those interfaces. `source_map.py` maps source and historical-review IDs to files in the research workspace. `DOWNLOADS.json` records the primary sources retrieved for this audit.
+`FROZEN_APPLICATIONS.json` contains the reviewed interfaces, current citation IDs and line anchors. `CITATION_ROLES.json` supplies the individually reviewed citation classifications. These files supersede the original `application_specs.py`, `fresh_checks.py` and `closure_checks.py`, which are preserved as the earlier authoring history and are not executed by the generator.
 
-The generator requires a restored research workspace containing those files. From the repository root:
+`source_map.py` supplies the original source/evidence paths. `SOURCE_ADDITIONS.json` and `EVIDENCE_ADDITIONS.json` add the final pinned records and explicitly replace corrected identities. `DOWNLOADS.json` and `CLOSURE_DOWNLOADS.json` retain original retrieval metadata. Primary files are obtained separately; the generator never downloads them.
+
+From the repository root, with the listed source and evidence paths restored:
 
 ```console
 python docs/theorem-application-audit/authoring/build_inventory.py --workspace /path/to/research-workspace --repo .
 python docs/theorem-application-audit/validate.py --workspace /path/to/research-workspace
 ```
 
-The generator deliberately refuses a manuscript with a different hash. To audit a revision, first review and update the hand-written interfaces, line anchors, citation classifications, findings and overview; changing the expected hash alone is insufficient.
-
-The generator rebuilds the inventory, source register, open-items list and JSON indexes. `README.md` and `FINDINGS.md` are hand-written reports and are not generated. It does not download files, inspect mathematical statements, or establish correctness. Exact source locations that have not yet been verified remain labelled as open obligations.
+The generator refuses another manuscript hash. Review changed interfaces, anchors and classifications before updating its frozen inputs. `ANCHOR_REBIND.json` records the current rebind, and `MANUSCRIPT_EDITS.json` records the applied text repairs. The generator rebuilds the inventories, not the hand-written overview, findings or dependency discussion. It does not check mathematical proofs.

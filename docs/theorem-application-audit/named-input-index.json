@@ -1,7 +1,7 @@
 [
   {
     "signal": "Dirichlet",
-    "line": 225,
+    "line": 239,
     "text": "each unit residue class modulo $W=4\\prod_{p\\le324}p$. Dirichlet's theorem",
     "related_application_ids": [
       "A057",
@@ -11,7 +11,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 649,
+    "line": 673,
     "text": "nontrivial character modulo four. Their product is a Dirichlet",
     "related_application_ids": [
       "A057",
@@ -21,7 +21,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 742,
+    "line": 767,
     "text": "$k=2$ and power zero. Absorb the finite Dirichlet character into",
     "related_application_ids": [
       "A057",
@@ -31,7 +31,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 1002,
+    "line": 1056,
     "text": "Reciprocity, CRT and Dirichlet realize it by distinct auxiliary primes.",
     "related_application_ids": [
       "A057",
@@ -41,7 +41,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 1223,
+    "line": 1340,
     "text": "Dirichlet's theorem proves that this is the same finite catalogue as",
     "related_application_ids": [
       "A057",
@@ -51,7 +51,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 1837,
+    "line": 1985,
     "text": "Dirichlet's theorem, avoiding $S\\cup B$. Apply Hoffstein--Luo",
     "related_application_ids": [
       "A057",
@@ -61,7 +61,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 2018,
+    "line": 2166,
     "text": "these classes with the fixed type, and Dirichlet's theorem supplies",
     "related_application_ids": [
       "A057",
@@ -71,7 +71,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 2521,
+    "line": 2670,
     "text": "one. Thus one choice works for both forms. CRT and Dirichlet realize",
     "related_application_ids": [
       "A057",
@@ -81,7 +81,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 6750,
+    "line": 7056,
     "text": "All these quadratic Dirichlet characters have conductor dividing",
     "related_application_ids": [
       "A057",
@@ -91,7 +91,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 7808,
+    "line": 8116,
     "text": "Write the Dirichlet character as a product of its finite",
     "related_application_ids": [
       "A057",
@@ -101,7 +101,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 8605,
+    "line": 8916,
     "text": "even Dirichlet character. Since $h_*=-m$, division by the genus",
     "related_application_ids": [
       "A057",
@@ -111,7 +111,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 8623,
+    "line": 8934,
     "text": "Thus the classical Dirichlet character is",
     "related_application_ids": [
       "A057",
@@ -121,7 +121,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 8664,
+    "line": 8975,
     "text": "is $m^{-3}\\equiv m$, giving the extra Dirichlet character",
     "related_application_ids": [
       "A057",
@@ -131,7 +131,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 9580,
+    "line": 9958,
     "text": "matching incidences to both realizations. CRT and Dirichlet provide",
     "related_application_ids": [
       "A057",
@@ -141,7 +141,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 9638,
+    "line": 10016,
     "text": "By CRT and Dirichlet choose one signed prime $q_0$ in its classes,",
     "related_application_ids": [
       "A057",
@@ -151,7 +151,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 10109,
+    "line": 10487,
     "text": "quadratic residue classes are therefore nonempty and Dirichlet's",
     "related_application_ids": [
       "A057",
@@ -161,7 +161,7 @@
   },
   {
     "signal": "Dirichlet",
-    "line": 10447,
+    "line": 10825,
     "text": "Realize its prescribed forward residue bits by distinct primes using CRT and Dirichlet;",
     "related_application_ids": [
       "A057",
@@ -171,7 +171,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 763,
+    "line": 792,
     "text": "Chebotarev and semisimplicity identify $r_3$ with the corresponding",
     "related_application_ids": [
       "A064",
@@ -181,7 +181,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 2340,
+    "line": 2488,
     "text": "Finite Chebotarev, with a place chosen above the resulting prime, gives",
     "related_application_ids": [
       "A064",
@@ -191,7 +191,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 3286,
+    "line": 3534,
     "text": "finite set by Chebotarev in the Hilbert class field. Set $w_j=1$ at",
     "related_application_ids": [
       "A064",
@@ -201,7 +201,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 3426,
+    "line": 3674,
     "text": "an actual Galois element. Finite Chebotarev supplies infinitely many",
     "related_application_ids": [
       "A064",
@@ -211,7 +211,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 3999,
+    "line": 4267,
     "text": "changes the finite Chebotarev field, but not $c_E$.",
     "related_application_ids": [
       "A064",
@@ -221,7 +221,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 4487,
+    "line": 4755,
     "text": "element. Finite Chebotarev realizes the required conjugation",
     "related_application_ids": [
       "A064",
@@ -231,7 +231,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 4541,
+    "line": 4809,
     "text": "Chebotarev is applied at finite stages, not to the product group.",
     "related_application_ids": [
       "A064",
@@ -241,7 +241,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 4840,
+    "line": 5108,
     "text": "Finite Chebotarev and the exact matrix identity (5.4) realize this",
     "related_application_ids": [
       "A064",
@@ -251,7 +251,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 4844,
+    "line": 5112,
     "text": "irreducibility or infinite-level Chebotarev assertion is used.",
     "related_application_ids": [
       "A064",
@@ -261,7 +261,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 8056,
+    "line": 8365,
     "text": "Chebotarev supplies infinitely many good rational primes $\\ell_0$",
     "related_application_ids": [
       "A064",
@@ -271,7 +271,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 9353,
+    "line": 9666,
     "text": "Chebotarev and continuity make scalar trace and determinant",
     "related_application_ids": [
       "A064",
@@ -281,7 +281,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 9399,
+    "line": 9712,
     "text": "For any fixed Fourier index $n$, Chebotarev approximation lets one",
     "related_application_ids": [
       "A064",
@@ -291,7 +291,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 9455,
+    "line": 9768,
     "text": "eigenvalues have the same trace and determinant by Chebotarev, so",
     "related_application_ids": [
       "A064",
@@ -301,7 +301,7 @@
   },
   {
     "signal": "Chebotarev",
-    "line": 9518,
+    "line": 9896,
     "text": "coefficient DVR. It is finite and closed. Simultaneous Chebotarev",
     "related_application_ids": [
       "A064",
@@ -311,7 +311,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 574,
+    "line": 598,
     "text": "stable Faltings height. For a reduced CM period $\\tau=x+iy$ we have",
     "related_application_ids": [
       "A004",
@@ -326,7 +326,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 576,
+    "line": 600,
     "text": "the original Faltings normalization is",
     "related_application_ids": [
       "A004",
@@ -341,7 +341,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 597,
+    "line": 621,
     "text": "isogeny \\cite{faltings1983} and additivity give",
     "related_application_ids": [
       "A004",
@@ -356,7 +356,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 708,
+    "line": 732,
     "text": "Faltings' semisimplicity and endomorphism theorems",
     "related_application_ids": [
       "A004",
@@ -371,7 +371,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 709,
+    "line": 733,
     "text": "\\cite{faltings1983} show that $r_\\ell|_{G_{L'}}$ is absolutely",
     "related_application_ids": [
       "A004",
@@ -386,22 +386,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 713,
-    "text": "\\cite{faltings1988}, and its",
-    "related_application_ids": [
-      "A004",
-      "A006",
-      "A008",
-      "A009",
-      "A014",
-      "A018",
-      "A063"
-    ],
-    "classification": "lexical index; inspect context, may be definition/provenance rather than application"
-  },
-  {
-    "signal": "Faltings",
-    "line": 827,
+    "line": 863,
     "text": "commute with extension of the coefficient field. Faltings'",
     "related_application_ids": [
       "A004",
@@ -416,7 +401,7 @@
   },
   {
     "signal": "Faltings",
-    "line": 840,
+    "line": 876,
     "text": "Faltings height of the Jacobian.",
     "related_application_ids": [
       "A004",
@@ -430,8 +415,23 @@
     "classification": "lexical index; inspect context, may be definition/provenance rather than application"
   },
   {
+    "signal": "Faltings",
+    "line": 11003,
+    "text": "The Hodge--Tate comparison in \\cite[Chapter III, Theorem 4.1]{faltings1988}",
+    "related_application_ids": [
+      "A004",
+      "A006",
+      "A008",
+      "A009",
+      "A014",
+      "A018",
+      "A063"
+    ],
+    "classification": "lexical index; inspect context, may be definition/provenance rather than application"
+  },
+  {
     "signal": "Skolem-Noether",
-    "line": 614,
+    "line": 638,
     "text": "Correcting it by Skolem--Noether and clearing denominators gives",
     "related_application_ids": [
       "A062"
@@ -440,8 +440,8 @@
   },
   {
     "signal": "Mordell-Weil",
-    "line": 277,
-    "text": "maps to the dual kernel. Mordell--Weil gives rank one.",
+    "line": 295,
+    "text": "has order at most four, hence is exactly the displayed full two-torsion. Mordell--Weil now gives rank one.",
     "related_application_ids": [
       "A059"
     ],
@@ -449,7 +449,7 @@
   },
   {
     "signal": "Mordell-Weil",
-    "line": 1648,
+    "line": 1796,
     "text": "corank by Mordell--Weil rank and does not assume finite $\\Sha$.",
     "related_application_ids": [
       "A059"
@@ -458,7 +458,7 @@
   },
   {
     "signal": "Mordell-Weil",
-    "line": 3657,
+    "line": 3905,
     "text": "conjugate-dual transport. On a rank-one Mordell--Weil free lattice,",
     "related_application_ids": [
       "A059"
@@ -467,7 +467,7 @@
   },
   {
     "signal": "Mordell-Weil",
-    "line": 3728,
+    "line": 3976,
     "text": "On the integral rank-one Mordell--Weil free lattice, the central",
     "related_application_ids": [
       "A059"
@@ -476,7 +476,7 @@
   },
   {
     "signal": "Mordell-Weil",
-    "line": 7385,
+    "line": 7693,
     "text": "At corank zero the discrete Selmer group is finite, the Mordell--Weil",
     "related_application_ids": [
       "A059"
@@ -485,7 +485,7 @@
   },
   {
     "signal": "Poincare",
-    "line": 829,
+    "line": 865,
     "text": "Absolute simplicity and Poincar\\'e reducibility give an",
     "related_application_ids": [
       "A063"
@@ -494,7 +494,7 @@
   },
   {
     "signal": "Minkowski",
-    "line": 259,
+    "line": 273,
     "text": "The ring of integers $\\Z[s]$ has class number one because its Minkowski",
     "related_application_ids": [
       "A058"
@@ -503,7 +503,7 @@
   },
   {
     "signal": "Lagrange",
-    "line": 355,
+    "line": 369,
     "text": "before their squared values are added. Lagrange's theorem then gives",
     "related_application_ids": [
       "A055"
@@ -512,8 +512,17 @@
   },
   {
     "signal": "Hasse",
-    "line": 1453,
+    "line": 1590,
     "text": "$2$, so the $2$-part of their gcd is exactly $4$. Hasse's bound",
+    "related_application_ids": [
+      "A072"
+    ],
+    "classification": "lexical index; inspect context, may be definition/provenance rather than application"
+  },
+  {
+    "signal": "Hasse",
+    "line": 6323,
+    "text": "At a good place the residue degree is at most two, so Hasse's",
     "related_application_ids": [
       "A072"
     ],
@@ -530,7 +539,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 1771,
+    "line": 1919,
     "text": "in each quadratic step; the abelianization of a possible Hilbert",
     "related_application_ids": [
       "A073"
@@ -539,7 +548,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 3286,
+    "line": 3534,
     "text": "finite set by Chebotarev in the Hilbert class field. Set $w_j=1$ at",
     "related_application_ids": [
       "A073"
@@ -548,7 +557,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 4234,
+    "line": 4502,
     "text": "norms gives $N_{K/\\Q}\\alpha=1$, since this norm is positive. Hilbert",
     "related_application_ids": [
       "A073"
@@ -557,7 +566,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 7129,
+    "line": 7437,
     "text": "Hilbert two-class field of $K_n$, with the real places split.",
     "related_application_ids": [
       "A073"
@@ -566,7 +575,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 7690,
+    "line": 7998,
     "text": "factors is computed on pp.~483--484: its Hilbert-symbol product",
     "related_application_ids": [
       "A073"
@@ -575,7 +584,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 8386,
+    "line": 8697,
     "text": "the latter obtains the Hilbert symbol from the four-dimensional",
     "related_application_ids": [
       "A073"
@@ -584,7 +593,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 8545,
+    "line": 8856,
     "text": "quotient is unchanged because the Hilbert symbol has order two.",
     "related_application_ids": [
       "A073"
@@ -593,7 +602,7 @@
   },
   {
     "signal": "Hilbert90",
-    "line": 8596,
+    "line": 8907,
     "text": "Hilbert reciprocity gives",
     "related_application_ids": [
       "A073"
@@ -602,7 +611,7 @@
   },
   {
     "signal": "Poitou-Tate",
-    "line": 7387,
+    "line": 7695,
     "text": "orthogonal-Kummer specialization of finite Poitou--Tate duality",
     "related_application_ids": [
       "A045"
@@ -611,7 +620,7 @@
   },
   {
     "signal": "Nakayama",
-    "line": 3205,
+    "line": 3453,
     "text": "perfect quotient-to-dual comparison; derived Nakayama lifts it.",
     "related_application_ids": [
       "A075"
@@ -620,7 +629,7 @@
   },
   {
     "signal": "Nakayama",
-    "line": 4468,
+    "line": 4736,
     "text": "its residual matrices are invertible, and Nakayama applies.",
     "related_application_ids": [
       "A075"
@@ -629,7 +638,7 @@
   },
   {
     "signal": "Nakayama",
-    "line": 5143,
+    "line": 5411,
     "text": "invertible, by reduction modulo its maximal ideal and Nakayama.",
     "related_application_ids": [
       "A075"
@@ -638,7 +647,7 @@
   },
   {
     "signal": "Nakayama",
-    "line": 7034,
+    "line": 7342,
     "text": "local elliptic torsion is finite. Nakayama at $(t)$ therefore",
     "related_application_ids": [
       "A075"
@@ -647,7 +656,7 @@
   },
   {
     "signal": "Nakayama",
-    "line": 7087,
+    "line": 7395,
     "text": "complexes, and Nakayama applies. Lifting these matrices and comparison",
     "related_application_ids": [
       "A075"
@@ -656,8 +665,8 @@
   },
   {
     "signal": "Weil",
-    "line": 277,
-    "text": "maps to the dual kernel. Mordell--Weil gives rank one.",
+    "line": 295,
+    "text": "has order at most four, hence is exactly the displayed full two-torsion. Mordell--Weil now gives rank one.",
     "related_application_ids": [
       "A053",
       "A054",
@@ -668,7 +677,7 @@
   },
   {
     "signal": "Weil",
-    "line": 1648,
+    "line": 1796,
     "text": "corank by Mordell--Weil rank and does not assume finite $\\Sha$.",
     "related_application_ids": [
       "A053",
@@ -680,7 +689,7 @@
   },
   {
     "signal": "Weil",
-    "line": 2649,
+    "line": 2798,
     "text": "The Weil pairing gives the following $R_i$-linear perfect pairing:",
     "related_application_ids": [
       "A053",
@@ -692,7 +701,7 @@
   },
   {
     "signal": "Weil",
-    "line": 3490,
+    "line": 3738,
     "text": "preceding Weil identification to the conjugate coefficient system.",
     "related_application_ids": [
       "A053",
@@ -704,7 +713,7 @@
   },
   {
     "signal": "Weil",
-    "line": 3573,
+    "line": 3821,
     "text": "duality.  The coefficient pairing is the $A_i[G]$-valued Weil pairing.",
     "related_application_ids": [
       "A053",
@@ -716,7 +725,7 @@
   },
   {
     "signal": "Weil",
-    "line": 3657,
+    "line": 3905,
     "text": "conjugate-dual transport. On a rank-one Mordell--Weil free lattice,",
     "related_application_ids": [
       "A053",
@@ -728,7 +737,7 @@
   },
   {
     "signal": "Weil",
-    "line": 3728,
+    "line": 3976,
     "text": "On the integral rank-one Mordell--Weil free lattice, the central",
     "related_application_ids": [
       "A053",
@@ -740,8 +749,8 @@
   },
   {
     "signal": "Weil",
-    "line": 3867,
-    "text": "at every split prime. At $p\\mid k$, good reduction makes the Weil",
+    "line": 4128,
+    "text": "The Weil restriction of the good model has special fiber an",
     "related_application_ids": [
       "A053",
       "A054",
@@ -752,7 +761,7 @@
   },
   {
     "signal": "Weil",
-    "line": 5006,
+    "line": 5274,
     "text": "The Weil pairing and the exact orthogonality of the Kummer",
     "related_application_ids": [
       "A053",
@@ -764,7 +773,7 @@
   },
   {
     "signal": "Weil",
-    "line": 7385,
+    "line": 7693,
     "text": "At corank zero the discrete Selmer group is finite, the Mordell--Weil",
     "related_application_ids": [
       "A053",
@@ -776,7 +785,7 @@
   },
   {
     "signal": "Weil",
-    "line": 7538,
+    "line": 7846,
     "text": "by the Weil multiplier. Explicitly, if the chosen torus lifts have",
     "related_application_ids": [
       "A053",
@@ -788,7 +797,7 @@
   },
   {
     "signal": "Weil",
-    "line": 7610,
+    "line": 7918,
     "text": "The Weil normalization contributes only two-power roots of unity,",
     "related_application_ids": [
       "A053",
@@ -800,7 +809,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8314,
+    "line": 8625,
     "text": "and the Gaussian $e^{-2\\pi Q_B}$ at infinity.  Weil's operator",
     "related_application_ids": [
       "A053",
@@ -812,7 +821,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8315,
+    "line": 8626,
     "text": "formulas \\cite[I.13]{weil} give multiplication by $\\mathbf e_p(bQ_B)$ for",
     "related_application_ids": [
       "A053",
@@ -824,7 +833,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8378,
+    "line": 8689,
     "text": "$Q_B=\\sum_{i=1}^3 a_iX_i^2$, the one-dimensional Weil-index identity",
     "related_application_ids": [
       "A053",
@@ -836,7 +845,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8385,
+    "line": 8696,
     "text": "$(u,a_1a_2a_3)_p$.  These identities are \\cite[II.25 and II.28]{weil};",
     "related_application_ids": [
       "A053",
@@ -848,7 +857,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8391,
+    "line": 8702,
     "text": "The Weil-index identity used here can be derived without choosing",
     "related_application_ids": [
       "A053",
@@ -860,7 +869,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8400,
+    "line": 8711,
     "text": "\\cite[II.28, Proposition 4]{weil}. These are exactly the two values",
     "related_application_ids": [
       "A053",
@@ -872,7 +881,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8435,
+    "line": 8746,
     "text": "The Fourier formula of \\cite[I.14, Theorem~2]{weil}, or its",
     "related_application_ids": [
       "A053",
@@ -884,7 +893,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8487,
+    "line": 8798,
     "text": "of Weil's metaplectic operators, rather than assuming a section",
     "related_application_ids": [
       "A053",
@@ -896,7 +905,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8515,
+    "line": 8826,
     "text": "rank-three Weil representations of $Q_B$ and $Q_0$. The latter",
     "related_application_ids": [
       "A053",
@@ -908,7 +917,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8536,
+    "line": 8847,
     "text": "$f_p$ and by one on $\\phi_{0,p}$. The quotient of the Weil-index",
     "related_application_ids": [
       "A053",
@@ -920,7 +929,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8543,
+    "line": 8854,
     "text": "If the inverse Weil-index convention is used for the diagonal",
     "related_application_ids": [
       "A053",
@@ -932,7 +941,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8549,
+    "line": 8860,
     "text": "\\cite[I.13--I.14 and II.25--II.28]{weil}.",
     "related_application_ids": [
       "A053",
@@ -944,7 +953,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8612,
+    "line": 8923,
     "text": "by these local Weil operators.",
     "related_application_ids": [
       "A053",
@@ -956,7 +965,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8632,
+    "line": 8943,
     "text": "Weil constant is one, as also follows from \\cite[II.27]{weil} by integrating",
     "related_application_ids": [
       "A053",
@@ -968,7 +977,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8638,
+    "line": 8949,
     "text": "commutes with the Weil representation, and preserves the",
     "related_application_ids": [
       "A053",
@@ -980,7 +989,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8642,
+    "line": 8953,
     "text": "\\cite[III, Theorem 6]{weil} applies to this Schwartz--Bruhat function on",
     "related_application_ids": [
       "A053",
@@ -992,7 +1001,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8646,
+    "line": 8957,
     "text": "Weil action is removed in passing to the classical form.",
     "related_application_ids": [
       "A053",
@@ -1004,7 +1013,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8649,
+    "line": 8960,
     "text": "Weil transform.  Its support meets $V(\\mathbb Q)$ in a finite",
     "related_application_ids": [
       "A053",
@@ -1016,7 +1025,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8690,
+    "line": 9001,
     "text": "\\cite[II.30, Proposition~5]{weil} gives",
     "related_application_ids": [
       "A053",
@@ -1028,7 +1037,7 @@
   },
   {
     "signal": "Weil",
-    "line": 8697,
+    "line": 9008,
     "text": "\\cite[III.41, Theorem~6]{weil} to the displayed adelic identity.",
     "related_application_ids": [
       "A053",
@@ -1040,7 +1049,7 @@
   },
   {
     "signal": "Artin",
-    "line": 809,
+    "line": 845,
     "text": "The Artin conductor exponent of $r_\\ell$ is consequently",
     "related_application_ids": [
       "A068",
@@ -1051,7 +1060,7 @@
   },
   {
     "signal": "Artin",
-    "line": 2101,
+    "line": 2249,
     "text": "Then, starting with any fixed assignment of these compatible types",
     "related_application_ids": [
       "A068",
@@ -1062,7 +1071,7 @@
   },
   {
     "signal": "Artin",
-    "line": 2783,
+    "line": 2932,
     "text": "product is the Artin symbol of the rational principal ideal $(q)$.",
     "related_application_ids": [
       "A068",
@@ -1073,7 +1082,7 @@
   },
   {
     "signal": "Artin",
-    "line": 2829,
+    "line": 2986,
     "text": "with the local Artin orientation fixed. Set",
     "related_application_ids": [
       "A068",
@@ -1084,7 +1093,7 @@
   },
   {
     "signal": "Artin",
-    "line": 2946,
+    "line": 3104,
     "text": "in the ring-class Artin map. Thus its residue field is",
     "related_application_ids": [
       "A068",
@@ -1095,7 +1104,7 @@
   },
   {
     "signal": "Artin",
-    "line": 3117,
+    "line": 3290,
     "text": "horizontal Artin terms in (4.1) become $\\theta(\\sigma_q)$ and",
     "related_application_ids": [
       "A068",
@@ -1106,7 +1115,7 @@
   },
   {
     "signal": "Artin",
-    "line": 3476,
+    "line": 3724,
     "text": "localizations, not inverses of $t$ in a finite Artin ring.",
     "related_application_ids": [
       "A068",
@@ -1117,7 +1126,7 @@
   },
   {
     "signal": "Artin",
-    "line": 4124,
+    "line": 4392,
     "text": "Let $A$ be an Artin local ring with nilpotent maximal ideal, and",
     "related_application_ids": [
       "A068",
@@ -1128,7 +1137,7 @@
   },
   {
     "signal": "Artin",
-    "line": 4141,
+    "line": 4409,
     "text": "Let $A$ be an Artin local ring with nilpotent maximal ideal $\\mathfrak m$.",
     "related_application_ids": [
       "A068",
@@ -1139,7 +1148,7 @@
   },
   {
     "signal": "Artin",
-    "line": 4660,
+    "line": 4928,
     "text": "The starting generic kernel has rank one. Indeed, at a known simple",
     "related_application_ids": [
       "A068",
@@ -1150,7 +1159,7 @@
   },
   {
     "signal": "Artin",
-    "line": 5215,
+    "line": 5483,
     "text": "they do not invert $t$ in a finite Artin coefficient ring.",
     "related_application_ids": [
       "A068",
@@ -1161,7 +1170,7 @@
   },
   {
     "signal": "Artin",
-    "line": 6350,
+    "line": 6652,
     "text": "producer arguments, finite-Artin and determinant-count clarifications,",
     "related_application_ids": [
       "A068",
@@ -1172,7 +1181,7 @@
   },
   {
     "signal": "Artin",
-    "line": 7080,
+    "line": 7388,
     "text": "cochains. Real $H^0$ is included. Over a finite Artin quotient,",
     "related_application_ids": [
       "A068",
@@ -1183,7 +1192,7 @@
   },
   {
     "signal": "Artin",
-    "line": 8879,
+    "line": 9192,
     "text": "(O.1). Reversing the Artin convention has no effect because this",
     "related_application_ids": [
       "A068",
@@ -1194,7 +1203,7 @@
   },
   {
     "signal": "Artin",
-    "line": 8978,
+    "line": 9291,
     "text": "by the fixed integer $L$ commute with this finite sum. If the Artin",
     "related_application_ids": [
       "A068",
@@ -1205,7 +1214,7 @@
   },
   {
     "signal": "Artin",
-    "line": 10190,
+    "line": 10568,
     "text": "Starting from fixed compatible typed terminal and stationary",
     "related_application_ids": [
       "A068",
@@ -1216,7 +1225,7 @@
   },
   {
     "signal": "Artin",
-    "line": 10543,
+    "line": 10921,
     "text": "numerator nor a finite-Artin inverse of $t$ is asserted.",
     "related_application_ids": [
       "A068",
@@ -1227,7 +1236,7 @@
   },
   {
     "signal": "CRT",
-    "line": 1002,
+    "line": 1056,
     "text": "Reciprocity, CRT and Dirichlet realize it by distinct auxiliary primes.",
     "related_application_ids": [
       "A057"
@@ -1236,7 +1245,7 @@
   },
   {
     "signal": "CRT",
-    "line": 1239,
+    "line": 1356,
     "text": "The Chinese remainder theorem now gives one vector residue $r_0$",
     "related_application_ids": [
       "A057"
@@ -1245,7 +1254,7 @@
   },
   {
     "signal": "CRT",
-    "line": 1341,
+    "line": 1465,
     "text": "on the sieving primes. For such $d$, CRT and the elementary count",
     "related_application_ids": [
       "A057"
@@ -1254,7 +1263,7 @@
   },
   {
     "signal": "CRT",
-    "line": 1532,
+    "line": 1670,
     "text": "$k_j$ is a unit at $q>Q_*$. Discarding the CRT progression",
     "related_application_ids": [
       "A057"
@@ -1263,7 +1272,7 @@
   },
   {
     "signal": "CRT",
-    "line": 2017,
+    "line": 2165,
     "text": "nonzero residue class there. The Chinese remainder theorem combines",
     "related_application_ids": [
       "A057"
@@ -1272,7 +1281,7 @@
   },
   {
     "signal": "CRT",
-    "line": 2521,
+    "line": 2670,
     "text": "one. Thus one choice works for both forms. CRT and Dirichlet realize",
     "related_application_ids": [
       "A057"
@@ -1281,7 +1290,7 @@
   },
   {
     "signal": "CRT",
-    "line": 5665,
+    "line": 5939,
     "text": "and $2r$, hence divides both adjacent terms. CRT gives",
     "related_application_ids": [
       "A057"
@@ -1290,7 +1299,7 @@
   },
   {
     "signal": "CRT",
-    "line": 9580,
+    "line": 9958,
     "text": "matching incidences to both realizations. CRT and Dirichlet provide",
     "related_application_ids": [
       "A057"
@@ -1299,7 +1308,7 @@
   },
   {
     "signal": "CRT",
-    "line": 9638,
+    "line": 10016,
     "text": "By CRT and Dirichlet choose one signed prime $q_0$ in its classes,",
     "related_application_ids": [
       "A057"
@@ -1308,7 +1317,7 @@
   },
   {
     "signal": "CRT",
-    "line": 10447,
+    "line": 10825,
     "text": "Realize its prescribed forward residue bits by distinct primes using CRT and Dirichlet;",
     "related_application_ids": [
       "A057"
@@ -1317,7 +1326,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 2394,
+    "line": 2542,
     "text": "chosen nonprincipal ultrafilter. This set of values is nonempty by",
     "related_application_ids": [
       "A076"
@@ -1326,7 +1335,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 2397,
+    "line": 2545,
     "text": "an ultrafilter-large set, choosing a violating index and then one of",
     "related_application_ids": [
       "A076"
@@ -1335,7 +1344,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 2463,
+    "line": 2612,
     "text": "maps on the same ultrafilter. This preserves the old odd minimum.",
     "related_application_ids": [
       "A076"
@@ -1344,7 +1353,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 4135,
+    "line": 4403,
     "text": "One fixed nonprincipal ultrafilter gives a diagram over $\\Lambda$",
     "related_application_ids": [
       "A076"
@@ -1353,7 +1362,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 4176,
+    "line": 4444,
     "text": "Fix one nonprincipal ultrafilter on coefficient stages. Bounded ranks",
     "related_application_ids": [
       "A076"
@@ -1362,7 +1371,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 4177,
+    "line": 4445,
     "text": "can be fixed on a set in that ultrafilter. Each finite tuple of matrix",
     "related_application_ids": [
       "A076"
@@ -1371,7 +1380,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 4413,
+    "line": 4681,
     "text": "One fixed ultrafilter supplies these identities for all sequences.",
     "related_application_ids": [
       "A076"
@@ -1380,7 +1389,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 4553,
+    "line": 4821,
     "text": "ultrafilter gives an exact equality of $\\Lambda$-matrices",
     "related_application_ids": [
       "A076"
@@ -1389,7 +1398,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9776,
+    "line": 10154,
     "text": "Proposition~\\ref{ex:app-detector}, and one nonprincipal ultrafilter",
     "related_application_ids": [
       "A076"
@@ -1398,7 +1407,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9782,
+    "line": 10160,
     "text": "holds on a set in this same ultrafilter. For every finite operator",
     "related_application_ids": [
       "A076"
@@ -1407,7 +1416,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9812,
+    "line": 10190,
     "text": "Fix one nonprincipal ultrafilter on the actual stages with",
     "related_application_ids": [
       "A076"
@@ -1416,7 +1425,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9815,
+    "line": 10193,
     "text": "$v_2a_M(D_M)-\\omega(D_M)=r$ on a set in the ultrafilter.",
     "related_application_ids": [
       "A076"
@@ -1425,7 +1434,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9818,
+    "line": 10196,
     "text": "$\\delta_o$. For every fixed $W$, on a set in the same ultrafilter,",
     "related_application_ids": [
       "A076"
@@ -1434,7 +1443,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9826,
+    "line": 10204,
     "text": "$\\delta_o-1$ would occur on an ultrafilter-large set, a contradiction.",
     "related_application_ids": [
       "A076"
@@ -1443,7 +1452,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9834,
+    "line": 10212,
     "text": "ultrafilter-large set where (F.6) holds through weight $T$, with",
     "related_application_ids": [
       "A076"
@@ -1452,7 +1461,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 9859,
+    "line": 10237,
     "text": "stages in the same ultrafilter, (F.6) holds through $L$ and",
     "related_application_ids": [
       "A076"
@@ -1461,7 +1470,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10130,
+    "line": 10508,
     "text": "\\begin{proposition}[Compatible finite graph tables on one ultrafilter]\\label{ex:app-odd-stabilization}",
     "related_application_ids": [
       "A076"
@@ -1470,7 +1479,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10131,
+    "line": 10509,
     "text": "Use $\\delta_o$ and the ultrafilter of",
     "related_application_ids": [
       "A076"
@@ -1479,7 +1488,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10134,
+    "line": 10512,
     "text": "a set in this same ultrafilter. For every finite cutoff $W$,",
     "related_application_ids": [
       "A076"
@@ -1488,7 +1497,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10137,
+    "line": 10515,
     "text": "One table occurs on a set in that ultrafilter. These selected tables",
     "related_application_ids": [
       "A076"
@@ -1497,7 +1506,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10143,
+    "line": 10521,
     "text": "projections on the same ultrafilter, without changing $\\delta_o$.",
     "related_application_ids": [
       "A076"
@@ -1506,7 +1515,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10154,
+    "line": 10532,
     "text": "Choose their abstract type on the same ultrafilter as $\\delta_o$.",
     "related_application_ids": [
       "A076"
@@ -1515,7 +1524,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10156,
+    "line": 10534,
     "text": "ultrafilter-large set of stages where the preceding budget and",
     "related_application_ids": [
       "A076"
@@ -1524,7 +1533,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10162,
+    "line": 10540,
     "text": "tables; select the one occurring on a set in the same ultrafilter.",
     "related_application_ids": [
       "A076"
@@ -1533,7 +1542,7 @@
   },
   {
     "signal": "ultrafilter",
-    "line": 10457,
+    "line": 10835,
     "text": "program is fixed. Let $\\mathcal U$ be the chosen ultrafilter and",
     "related_application_ids": [
       "A076"
@@ -1542,16 +1551,7 @@
   },
   {
     "signal": "formal group",
-    "line": 794,
-    "text": "at most four. If $e=v_F(2)\\le D$, the local logarithm gives",
-    "related_application_ids": [
-      "A071"
-    ],
-    "classification": "lexical index; inspect context, may be definition/provenance rather than application"
-  },
-  {
-    "signal": "formal group",
-    "line": 1088,
+    "line": 1199,
     "text": "formal group. At least one of $h,h-c_*$ is a unit at the prime, so its full-log",
     "related_application_ids": [
       "A071"
@@ -1560,7 +1560,7 @@
   },
   {
     "signal": "formal group",
-    "line": 2890,
+    "line": 3048,
     "text": "The remaining cocycle takes values in the formal group. For a",
     "related_application_ids": [
       "A071"
@@ -1569,8 +1569,8 @@
   },
   {
     "signal": "formal group",
-    "line": 3020,
-    "text": "in the formal group, where $2^a$ is invertible. This produces a",
+    "line": 3178,
+    "text": "in the formal group, where multiplication by $2^a$ has an",
     "related_application_ids": [
       "A071"
     ],
@@ -1578,7 +1578,7 @@
   },
   {
     "signal": "formal group",
-    "line": 5902,
+    "line": 6177,
     "text": "The first four put $H,U$ in one formal group and $V_0,V_1$ in the",
     "related_application_ids": [
       "A071"
@@ -1587,7 +1587,7 @@
   },
   {
     "signal": "formal group",
-    "line": 5903,
+    "line": 6178,
     "text": "conjugate formal group. At the identity we set both $z(O)=0$ and",
     "related_application_ids": [
       "A071"
@@ -1596,7 +1596,7 @@
   },
   {
     "signal": "formal group",
-    "line": 5906,
+    "line": 6181,
     "text": "$H$ and $V_0$. For a nonzero point in either formal group,",
     "related_application_ids": [
       "A071"

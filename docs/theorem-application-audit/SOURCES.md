@@ -7,11 +7,13 @@ Hashes identify the files actually available for review. A hash does not identif
 
 Archive of Formal Proofs, \emph{DPRM\_Theorem},
 \texttt{Alpha\_Sequence}, \texttt{Exponential\_Relation}, and
-\texttt{Exponentiation}. Exact source versions are pinned in the local
-corpus; current browse pages are not substitutes for those pins.
+\texttt{Exponentiation}, directory
+\texttt{thys/DPRM\_Theorem/Diophantine/}, AFP development git mirror
+revision \texttt{b4f3b892d0ae25cea27412ba4007cdb63e44b0eb}
+(May 10, 2026). The three source files match this revision byte for byte.
 \url{https://isa-afp.org/entries/DPRM_Theorem.html}.
 
-Three local Isabelle source files are exact-byte pins. Original AFP revision/release identity still requires authentication; a current browse URL is insufficient.
+The three original local Isabelle files match AFP development mirror revision b4f3b892d0ae25cea27412ba4007cdb63e44b0eb, dated 2026-05-10T07:38:12Z. The additional modulo-definition dependency is pinned at the same revision. This authenticates the exact source revision; it does not infer the original retrieval date, an Isabelle release, a stable AFP release, or an Isabelle rebuild.
 
 Pin status: **bytes_pinned**.
 
@@ -21,6 +23,8 @@ Pin status: **bytes_pinned**.
   - SHA256: `515093945cfd56a09622c9bb6536f61c2dcc8f6d6798af1f28efafcd42a95069`
 - `work/Exponentiation.thy`
   - SHA256: `203431b551fd0ca218722583a2ba62c5959d8e72aea8c47eca975118e74f0946`
+- `work/theorem-application-audit-20261105/parallel-009/geometry/afp-b4f3b892d0ae25cea27412ba4007cdb63e44b0eb-Modulo_Divisibility.thy`
+  - SHA256: `3e11270aed5d010fd0de73bcc36b9a0398598691942f7d2a613ac18b56dff1b1`
 <a id="babagranath"></a>
 ## babagranath
 
@@ -38,14 +42,20 @@ Pin status: **bytes_pinned**.
 <a id="bcdt"></a>
 ## bcdt
 
-Supplementary source, not a distinct current bibliography entry.
+C. Breuil, B. Conrad, F. Diamond and R. Taylor,
+\emph{On the modularity of elliptic curves over $\Q$: wild 3-adic exercises},
+author manuscript, Theorem A and Introduction, conditions (1)--(6).
+\url{https://virtualmath1.stanford.edu/~conrad/papers/tswfinal.pdf}.
+Published in Journal of the American Mathematical Society 14 (2001), 843--939.
 
-Author manuscript of On the modularity of elliptic curves over Q: wild 3-adic exercises. Its date line contains placeholders (? 2000; ? January 2001). Exact bytes are pinned, but equivalence to the final 2001 JAMS article has not been independently checked.
+Author manuscript of On the modularity of elliptic curves over Q: wild 3-adic exercises. Its date line contains placeholders (? 2000; ? January 2001). Exact bytes are pinned, but equivalence to the final 2001 JAMS article has not been independently checked. Author typeset manuscript; journal and received-date placeholders, not publisher final
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-pole-completeness-review-001/bcdt-2001.pdf`
   - SHA256: `cbbdc24c26cdfcbd77f0e084194643e8804a724f004eb02e431ead9d932c498d`
+- `work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/bcdt-author-typeset.pdf`
+  - SHA256: `13043cf6e9043a69dc7988882658cd92595efc88dfd4fd2f326ac3ef3cae8e06`
 <a id="berger2002"></a>
 ## berger2002
 
@@ -87,21 +97,32 @@ Illinois Journal of Mathematics 62 (2018), 427--532,
 arXiv:1802.00085v3, Theorem 1.2.
 \url{https://arxiv.org/abs/1802.00085v3}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+arXiv1802.00085v3, 27 November2018, 103pp. Illinois J.Math.62 (2018),427-532,106pp. These statements/constants agree with v3; no claim of whole-document identity.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-ordinary-definition-001/primary/bmor-2018-v3.pdf`
   - SHA256: `e51f8b8f63486c2259efe076d367504f08dda0fe9e99dc35bf36de544ffc0601`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/bmor-v3.pdf`
+  - SHA256: `e51f8b8f63486c2259efe076d367504f08dda0fe9e99dc35bf36de544ffc0601`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/bmor-published.pdf`
+  - SHA256: `958b0390475236b68afdec28ce006b1a1d6ac59484eea9443e0b287e9f61a541`
 <a id="brinon-conrad"></a>
 ## brinon-conrad
 
-Supplementary source, not a distinct current bibliography entry.
+O. Brinon and B. Conrad,
+\emph{CMI summer school notes on $p$-adic Hodge theory},
+preliminary version, June 24, 2009,
+Theorem 5.2.1 and Propositions 6.3.3, 6.3.8.
+\url{https://math.stanford.edu/~conrad/papers/notes.pdf}.
 
-CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature.
+CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature. CMI Summer School Notes on p-adic Hodge Theory, preliminary version dated June 24, 2009. Supplementary exposition, not a published research article; do not classify all sources in this audit as published literature.
 
 Pin status: **bytes_pinned**.
 
+- `work/theorem-application-audit-20261105/primary/brinon-conrad.pdf`
+  - SHA256: `f27d508bc64b3c9e2e9de5041429b2cb6a909b2cd72ff8096c20493f27b5a187`
+  - [Retrieved source](https://math.stanford.edu/~conrad/papers/notes.pdf) on 2026-11-05.
 - `work/theorem-application-audit-20261105/primary/brinon-conrad.pdf`
   - SHA256: `f27d508bc64b3c9e2e9de5041429b2cb6a909b2cd72ff8096c20493f27b5a187`
   - [Retrieved source](https://math.stanford.edu/~conrad/papers/notes.pdf) on 2026-11-05.
@@ -135,7 +156,9 @@ Pin status: **bytes_pinned**.
 <a id="casselman"></a>
 ## casselman
 
-Supplementary source, not a distinct current bibliography entry.
+W. Casselman, \emph{On some results of Atkin and Lehner},
+Mathematische Annalen 201 (1973), 301--314,
+Theorem~1 and its proof, pp.~302--306, and Theorem~4, p.~313.
 
 Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
 
@@ -165,13 +188,30 @@ and special Gamma values}, Research in Number Theory 3 (2017),
 article 13, Section 6, equation (6.2).
 \url{https://doi.org/10.1007/s40993-017-0077-7}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Published Research in Number Theory3 (2017),article13,16pages.
 
 Pin status: **bytes_pinned**.
 
 - `work/theorem-application-audit-20261105/primary/cmheight.pdf`
   - SHA256: `f91cc2017dcc82dbc55d641d397c8b2bb5fc15205b1377cdaae8bdbbd7fc14a6`
   - [Retrieved source](https://tylergenao.com/wp-content/uploads/2017/09/faltings-heights-of-cm-elliptic-curves-and-special-gamma-values.pdf) on 2026-11-05.
+- `work/theorem-application-audit-20261105/primary/cmheight.pdf`
+  - SHA256: `f91cc2017dcc82dbc55d641d397c8b2bb5fc15205b1377cdaae8bdbbd7fc14a6`
+  - [Retrieved source](https://tylergenao.com/wp-content/uploads/2017/09/faltings-heights-of-cm-elliptic-curves-and-special-gamma-values.pdf) on 2026-11-05.
+<a id="conrad-local-characters"></a>
+## conrad-local-characters
+
+B. Conrad,
+\emph{Lifting global representations with local properties},
+author preprint, December 11, 2011, Appendix B, pp.~32--33.
+\url{https://math.stanford.edu/~conrad/papers/locchar.pdf}.
+
+Original downloaded bytes; exact retrieval recorded in downloads.json.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/galois-height/conrad-locchar.pdf`
+  - SHA256: `782fe71a3c7f26ccd67943d468f73540d384e2de5d474bf8369475b8b631d9bd`
 <a id="cornutjetchev"></a>
 ## cornutjetchev
 
@@ -187,6 +227,18 @@ Pin status: **bytes_pinned**.
   - SHA256: `379c173b9e491d7c868557274db4f48a4a1dfb9a83962e32267f9263f20fbae6`
 - `work/astra-final-external-applicability-001/cornut-jetchev-author-current.pdf`
   - SHA256: `7154ad8f261a625899562653d8b471d5d7dd31ddbb0afc071ef26f6e3acd93c8`
+<a id="crainic2004"></a>
+## crainic2004
+
+Supplementary source, not a distinct current bibliography entry.
+
+arXiv:math/0403266v1, 16 March 2004. Supplementary comparison for the standard perturbation formulas; not asserted to be a published research article. The specialized nilpotent algebra is checked directly in closure-batch-006, including reversal of the source homotopy sign. No general quasi-isomorphism argument from this preprint is imported without that calculation.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/closure/primary/crainic-perturbation-v1.pdf`
+  - SHA256: `7999b34428a9193c6cf96137abb2feb58d83a9eaab403ba8f125f0e4972da96b`
+  - [Retrieved source](https://arxiv.org/pdf/math/0403266v1) on 2026-11-05.
 <a id="cst"></a>
 ## cst
 
@@ -230,7 +282,10 @@ Pin status: **bytes_pinned**.
 <a id="edixhoven"></a>
 ## edixhoven
 
-Supplementary source, not a distinct current bibliography entry.
+B. Edixhoven, \emph{N\'eron models and tame ramification},
+Compositio Mathematica 81 (1992), 291--306,
+Theorem~5.3 and Remark~5.4.1.
+\url{https://www.numdam.org/item/CM_1992__81_3_291_0/}.
 
 Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
 
@@ -238,6 +293,19 @@ Pin status: **bytes_pinned**.
 
 - `work/fable-review-packet-20261104/primary/edixhoven-1992.pdf`
   - SHA256: `5ddfbee91284ef888d97106ff89c5f8f156377373b7af68942a5cf4453abd6cc`
+<a id="elkik"></a>
+## elkik
+
+R. Elkik, \emph{Le th\'eor\`eme de Manin--Drinfeld},
+Ast\'erisque 183 (1990), 59--67, Theorem, p.~59.
+\url{https://www.numdam.org/item/AST_1990__183__59_0.pdf}.
+
+Published Asterisque 183 (1990) pp.59-67, Numdam scan
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/elkik1990.pdf`
+  - SHA256: `7618e61b8ec287b9fcce61fb4ac7d89ea98d58ca9274fa899ed52cda670b19b5`
 <a id="faltings1983"></a>
 ## faltings1983
 
@@ -270,7 +338,7 @@ Pin status: **bytes_pinned**.
 G. Faltings, \emph{$p$-adic Hodge theory},
 Journal of the American Mathematical Society 1 (1988), 255--299.
 
-Journal of the American Mathematical Society 1 (1988), pp.255–299; cached PDF has 46 scanned pages including cover. III Theorem 4.1, printed p.298, is Hodge–Tate comparison. It does not supply the de Rham conclusion attributed to it at manuscript lines 711–714.
+Journal of the American Mathematical Society 1 (1988), pp.255-299; cached PDF has 46 scanned pages including cover. III Theorem 4.1, printed p.298, is Hodge-Tate comparison and does not supply de Rham comparison. The earlier de Rham attribution was superseded by the accepted comparison-and-finite-descent lemma in A009, using Scholze with its corrigendum and the stated supporting sources.
 
 Pin status: **bytes_pinned**.
 
@@ -286,10 +354,13 @@ Proceedings of the Cambridge Philosophical Society 180 (2026),
 607--641, Proposition 2.7.
 \url{https://doi.org/10.1017/S0305004125101825}.
 
-Publisher PDF retrieved 2026-11-05. Proposition 2.7; source PDF pagination may differ from final volume pagination.
+Published Mathematical Proceedings of the Cambridge Philosophical Society 180 (2026), 607-641, first online January 13, 2026. The publisher PDF was retrieved on 2026-11-05. Section 2.1 is on printed pp.612-613, PDF pp.6-7; Proposition 2.7 is on printed pp.615-616, PDF pp.9-10. These page correspondences were checked.
 
 Pin status: **bytes_pinned**.
 
+- `work/theorem-application-audit-20261105/primary/fowler.pdf`
+  - SHA256: `bc676f4d5b6a2a70fa3e6bed55a4449622d6728167d4c668068b89da6b2d55ae`
+  - [Retrieved source](https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/A72ABDB14BEB62DE7E9B47953B77DBDC/S0305004125101825a.pdf/some_uniform_effective_results_on_andreoort_for_sums_of_powers_in_mathbbcn.pdf) on 2026-11-05.
 - `work/theorem-application-audit-20261105/primary/fowler.pdf`
   - SHA256: `bc676f4d5b6a2a70fa3e6bed55a4449622d6728167d4c668068b89da6b2d55ae`
   - [Retrieved source](https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/A72ABDB14BEB62DE7E9B47953B77DBDC/S0305004125101825a.pdf/some_uniform_effective_results_on_andreoort_for_sums_of_powers_in_mathbbcn.pdf) on 2026-11-05.
@@ -301,7 +372,7 @@ Pin status: **bytes_pinned**.
 163 (2014), 2057--2108, Theorem 1.4 and Section 9.
 \url{https://doi.org/10.1215/00127094-2782528}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Published Duke163 (2014),2057-2108,52pages.
 
 Pin status: **bytes_pinned**.
 
@@ -314,11 +385,13 @@ B. Green and T. Tao, \emph{Linear equations in primes},
 Annals of Mathematics 171 (2010), 1753--1850.
 \url{https://annals.math.princeton.edu/2010/171-3/p08}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Annals171 (2010), published PDF; main theorem is unnumbered.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-height-producers-001/primary/green-tao-linear.pdf`
+  - SHA256: `ec126f9c9e189cc0308b83fb4f9f93c29a47d11ad875391aff4ce4c42aef1001`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/green-tao-linear.pdf`
   - SHA256: `ec126f9c9e189cc0308b83fb4f9f93c29a47d11ad875391aff4ce4c42aef1001`
 <a id="gtz"></a>
 ## gtz
@@ -328,13 +401,17 @@ for the Gowers $U^{s+1}[N]$-norm}, arXiv:1009.3998v5, 2026 corrected version.
 \url{https://arxiv.org/abs/1009.3998v5}; author erratum:
 \url{https://people.maths.ox.ac.uk/greenbj/papers/GI(s)-erratum.pdf}.
 
-The actual input is corrected arXiv:1009.3998v5 (23 April 2026), together with the separate author erratum. Do not describe the input as only the 2012 printed article.
+The actual input is corrected arXiv:1009.3998v5 (23 April 2026), together with the separate author erratum. Do not describe the input as only the 2012 printed article. arXiv1009.3998v5, 23 April2026, 116pp. Repairs filtration in Lemma13.2 but retains original Proposition8.3; separate erratum still required. Not a claim that v5 alone contains every correction. Separate six-page author erratum, 2024; needed together with v5. Original Proposition8.3 is false as stated.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-height-producers-001/primary/gtz-inverse-v5.pdf`
   - SHA256: `24b5b74b1c4f31986bfc75955f8528e81753efc0c45bd99bc23fee58171a4711`
 - `work/astra-final-height-producers-001/primary/gtz-erratum.pdf`
+  - SHA256: `9d66017c15fc99bbae83726ef27bcc16d73128c13166916f00714c84c8523383`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/gtz-v5.pdf`
+  - SHA256: `24b5b74b1c4f31986bfc75955f8528e81753efc0c45bd99bc23fee58171a4711`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/gtz-erratum.pdf`
   - SHA256: `9d66017c15fc99bbae83726ef27bcc16d73128c13166916f00714c84c8523383`
 <a id="gz"></a>
 ## gz
@@ -430,12 +507,13 @@ Pin status: **bytes_pinned**.
 <a id="kolyvagin"></a>
 ## kolyvagin
 
-V. Kolyvagin, \emph{Euler systems}, in
-\emph{The Grothendieck Festschrift}, Volume II, 1990.
-Preprint MPI/90-69, Theorems 1 and 5.
+V. A. Kolyvagin,
+\emph{On the Mordell--Weil group and the Shafarevich--Tate group
+of modular elliptic curves}, MPIM preprint MPI/90-69 (1990),
+Theorems 1--5, pp.~4--5.
 \url{https://archive.mpim-bonn.mpg.de/id/eprint/325/1/preprint_1990_69.pdf}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Inspected MPI/90-69 (1990), On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves. Theorem 1 is printed p.4; its explanation and auxiliary-field chain continue pp.4-5. This pinned file is not the Grothendieck Festschrift chapter Euler systems; no equivalence to that different text is asserted.
 
 Pin status: **bytes_pinned**.
 
@@ -453,6 +531,29 @@ Pin status: **bytes_pinned**.
 
 - `work/astra-final-finite-arithmetic-audit-001/primary/lang-1956.pdf`
   - SHA256: `665286caefaa894cf789f3b4ce3027accdf4d583836e8b13aafeab744373b44d`
+<a id="li-newforms"></a>
+## li-newforms
+
+W.-C. W. Li,
+\emph{Newforms and functional equations}, Mathematische Annalen
+212 (1975), 285--315, p.~296.
+
+Published 1975 article, GDZ original page scans. OCR basenames are offset by one and are not printed-page locators.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-293.jpg`
+  - SHA256: `15c3948aac6dae70b96348462d1d7b6492b0c14efac8906d40c2d16a7cf6334b`
+  - [Retrieved source](https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000293.jpg) on date not recorded.
+- `work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-302.jpg`
+  - SHA256: `a207581a157559fc1a5d3f59a3d4da6e6e194b1ef9bc6a73652cd393c6b0d760`
+  - [Retrieved source](https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000302.jpg) on date not recorded.
+- `work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-304.jpg`
+  - SHA256: `07530575e712b4ded14ce64f877ca4f9383bbc7a020cb7dbd70fe88e6ab3ccb2`
+  - [Retrieved source](https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000304.jpg) on date not recorded.
+- `work/theorem-application-audit-20261105/parallel-009/geometry/li1975-scan-306.jpg`
+  - SHA256: `b85999bac4388c35355775dc9fa4f59da9f010ef284a7ab45d3e48b58f857aaf`
+  - [Retrieved source](https://gdz.sub.uni-goettingen.de/content/PPN235181684_0212/1000/0/00000306.jpg) on date not recorded.
 <a id="linyang"></a>
 ## linyang
 
@@ -503,7 +604,7 @@ B. Mazur,
 Ast\'erisque 228 (1995), 165--181, Conjecture 3, p.~165.
 \url{https://www.numdam.org/article/AST_1995__228__165_0.pdf}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Published Asterisque228 (1995),165-181; Numdam cover retained.
 
 Pin status: **bytes_pinned**.
 
@@ -537,7 +638,9 @@ Pin status: **bytes_pinned**.
 <a id="milne-av"></a>
 ## milne-av
 
-Supplementary source, not a distinct current bibliography entry.
+J. S. Milne, \emph{Abelian varieties},
+version 2.00 (2008), Part I, Theorem 12.1(a).
+\url{https://www.jmilne.org/math/CourseNotes/AV.pdf}.
 
 Abelian Varieties v2.00. Title page says March 16, 2008; version history says March 17, 2008. Exact bytes disambiguate the file. Proposition numbers include the part/chapter.
 
@@ -546,17 +649,33 @@ Pin status: **bytes_pinned**.
 - `work/theorem-application-audit-20261105/primary/milne-av.pdf`
   - SHA256: `f5ca4e63e5092a4b102daad1470e4cbed5fe8f82115e3a28c8881e3f67f6aaef`
   - [Retrieved source](https://www.jmilne.org/math/CourseNotes/AV.pdf) on 2026-11-05.
+- `work/theorem-application-audit-20261105/primary/milne-av.pdf`
+  - SHA256: `f5ca4e63e5092a4b102daad1470e4cbed5fe8f82115e3a28c8881e3f67f6aaef`
+  - [Retrieved source](https://www.jmilne.org/math/CourseNotes/AV.pdf) on 2026-11-05.
 <a id="milne-cft"></a>
 ## milne-cft
 
 Supplementary source, not a distinct current bibliography entry.
 
-Class Field Theory v4.03, August 6, 2020, author course notes. Supplementary source not separately in the manuscript bibliography. Theorem locators specify the chapter as numbering repeats.
+Class Field Theory v4.03, August 6, 2020, author course notes. Supplementary source not separately in the manuscript bibliography. Theorem locators specify the chapter as numbering repeats. Class Field Theory v4.03, August 6, 2020, author course notes. Supplementary source not separately in the manuscript bibliography. Theorem locators specify the chapter as numbering repeats. Author notes v4.03,6August2020.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-moving-character-audit-001/primary/milne-cft.pdf`
   - SHA256: `50d79af78250a9f1117ad9d337e0b231704a533fc707966ed1bfa52e13d498f5`
+<a id="milnemf"></a>
+## milnemf
+
+J. S. Milne, \emph{Modular functions and modular forms},
+v1.31, March 22, 2017, Remark 11.18 and Theorem 11.19.
+\url{https://www.jmilne.org/math/CourseNotes/MF.pdf}.
+
+Author notes v1.31, March 22, 2017
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/milne-mf.pdf`
+  - SHA256: `977f06a4e838c43c77a7c9398c090789e60d67f64e013e1dcd9bcce0e0c27b8d`
 <a id="moebius"></a>
 ## moebius
 
@@ -564,11 +683,13 @@ B. Green and T. Tao, \emph{The M\"obius function is
 strongly orthogonal to nilsequences}, Annals of Mathematics 175 (2012).
 \url{https://annals.math.princeton.edu/2012/175-2/p03}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Annals175 (2012), published PDF.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-height-producers-001/primary/green-tao-mobius.pdf`
+  - SHA256: `5259dbc9ee73df46edd765ca27c8b3c0ec466f6b78abafa5f54237b11d44a314`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/green-tao-mobius.pdf`
   - SHA256: `5259dbc9ee73df46edd765ca27c8b3c0ec466f6b78abafa5f54237b11d44a314`
 <a id="nekovar"></a>
 ## nekovar
@@ -599,14 +720,18 @@ Pin status: **source_pin_missing**.
 ## pan2022
 
 L. Pan, \emph{The Fontaine--Mazur conjecture in the
-residually reducible case}, Journal of the American Mathematical Society
-35 (2022), 1031--1169, Theorem 1.0.4.
-\url{https://doi.org/10.1090/jams/991}.
+residually reducible case}, arXiv:1901.07166v2,
+Theorem 1.0.4, the version used here. Published in Journal of the
+American Mathematical Society 35 (2022), 1031--1169.
+\url{https://arxiv.org/abs/1901.07166v2}.
 
-Consulted arXiv:1901.07166v2. Bibliography names JAMS 2022. Publisher/preprint statement equivalence is not established by this inventory.
+The application uses the pinned arXiv:1901.07166v2, Theorem 1.0.4, as explicitly identified in the revised bibliography. The bibliography also records the later JAMS publication. Publisher bytes were not retrieved, and no publisher/preprint statement equivalence is asserted.
 
 Pin status: **bytes_pinned**.
 
+- `work/theorem-application-audit-20261105/primary/pan2022.pdf`
+  - SHA256: `590171129d28a65749cf92b1f6099dbacaa90cc6698828f0a4dfd3da943f4824`
+  - [Retrieved source](https://arxiv.org/pdf/1901.07166v2) on 2026-11-05.
 - `work/theorem-application-audit-20261105/primary/pan2022.pdf`
   - SHA256: `590171129d28a65749cf92b1f6099dbacaa90cc6698828f0a4dfd3da943f4824`
   - [Retrieved source](https://arxiv.org/pdf/1901.07166v2) on 2026-11-05.
@@ -618,12 +743,15 @@ Bulletin de la Soci\'et\'e Math\'ematique de France, 2012,
 Sections 2.2--2.3 and Corollary 1.3.
 \url{https://www.numdam.org/item/10.24033/bsmf.2623.pdf}.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+The previously pinned24-page file is an author version dated4February2012, not the33-page Numdam published file. Both bounded interfaces compared. Published Bull.Soc.Math.France140(1) (2012),19-49,33PDFpages including cover; differs from author-version bytes. Applied constants, metrics and coordinates agree; no whole-document identity claim.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-height-producers-001/primary/pazuki-2012.pdf`
   - SHA256: `479d8157f118f6bb0df581deb57585d67a1c87fb0cec8867ca1bed30b75e7a96`
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/pazuki-published.pdf`
+  - SHA256: `9f957d234f98aee294676cc97e103a61559722ba1749c58d523bb1ca398c5206`
+  - [Retrieved source](https://www.numdam.org/item/10.24033/bsmf.2623.pdf) on 2026-11-05.
 <a id="poonenstoll"></a>
 ## poonenstoll
 
@@ -653,24 +781,37 @@ Pin status: **bytes_pinned**.
 <a id="scholze-erratum"></a>
 ## scholze-erratum
 
-Supplementary source, not a distinct current bibliography entry.
+P. Scholze,
+\emph{$p$-adic Hodge theory for rigid-analytic varieties---corrigendum},
+Forum of Mathematics, Pi 4 (2016), e6, 1--4.
+\url{https://doi.org/10.1017/fmp.2016.4}.
 
-Author erratum to p-adic Hodge theory for rigid-analytic varieties, 3 pages. Corrects the pro-étale covers and period-sheaf details; states the main results remain intact with those changes. Required companion to scholze2013.
+Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately. Published Forum of Mathematics Pi 4 (2016), e6, four pages, DOI 10.1017/fmp.2016.4. Read with the 2013 article; the author version is retained separately.
 
 Pin status: **bytes_pinned**.
 
+- `work/theorem-application-audit-20261105/closure/primary/scholze-erratum-published.pdf`
+  - SHA256: `3caea8d89df1e7d047d4edc89a679cd1deb2a19ec350effb450305a9c8eef3d1`
+  - [Retrieved source](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/423022854D448D337C999BCD505D8F75/S2050508616000044a.pdf/div-class-title-span-class-inlineformula-span-class-alternatives-img-class-inline-graphic-mathjax-alternative-mathjax-alt-graphic-mathjax-off-data-mimesubtype-gif-data-type-simple-src-staticdomain-binary-version-id-urn-cambridge-org-id-binary-20160920235108143-0373-s2050508616000044-s2050508616000044-inline1-gif-span-class-mathjax-tex-wrapper-data-mathjax-type-texmath-span-class-tex-math-mathjax-tex-math-mathjax-on-p-span-span-span-span-adic-hodge-theory-for-rigid-analytic-varieties-corrigendum-div.pdf) on 2026-11-05.
 - `work/theorem-application-audit-20261105/primary/scholze-erratum.pdf`
   - SHA256: `3cfa56b9e3875c04240d97739dccd58091e41f714c101d5470b95172f73cb235`
   - [Retrieved source](https://www.math.uni-bonn.de/people/scholze/pAdicHodgeErratum.pdf) on 2026-11-05.
 <a id="scholze2013"></a>
 ## scholze2013
 
-Supplementary source, not a distinct current bibliography entry.
+P. Scholze,
+\emph{$p$-adic Hodge theory for rigid-analytic varieties},
+Forum of Mathematics, Pi 1 (2013), e1, 1--77,
+Corollary 1.8 and Theorems 9.1, 9.3.
+\url{https://doi.org/10.1017/fmp.2013.1}.
 
-Author PDF of p-adic Hodge theory for rigid-analytic varieties; Forum of Mathematics Pi 1 (2013), e1. Proposed replacement input, not yet a manuscript bibliography entry. Read Corollary 1.8 with the separately pinned corrigendum.
+Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum. Published Forum of Mathematics Pi 1 (2013), e1, 77 pages. Corollary 1.8 is on pp.5-6; Theorems 9.1 and 9.3 are on pp.74-75. The author version is also retained separately. The applied repair uses the published article with its published corrigendum.
 
 Pin status: **bytes_pinned**.
 
+- `work/theorem-application-audit-20261105/closure/primary/scholze-published.pdf`
+  - SHA256: `f47a05bbcdd1ac69deb87ce4b6af5bbbc245cbbf0e99df74e8bf73b6d89227d7`
+  - [Retrieved source](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/9C5E8381BE3CD320ECADDDEAD2616B55/S2050508613000012a.pdf/dollarpdollar-adic-hodge-theory-for-rigid-analytic-varieties.pdf) on 2026-11-05.
 - `work/theorem-application-audit-20261105/primary/scholze2013.pdf`
   - SHA256: `73dded06286031066e9d98b638e065d650688f1e36e877f4d711331a3508dee3`
   - [Retrieved source](https://people.mpim-bonn.mpg.de/scholze/pAdicHodgeTheory.pdf) on 2026-11-05.
@@ -690,13 +831,31 @@ Pin status: **bytes_pinned**.
 <a id="serrelocal"></a>
 ## serrelocal
 
-J.-P. Serre, \emph{Local fields},
-Graduate Texts in Mathematics 67, Springer, 1979, Chapters III--IV.
+J.-P. Serre, \emph{Local class field theory},
+in J. W. S. Cassels and A. Fr\"ohlich (eds.), \emph{Algebraic Number Theory},
+Academic Press, 1967, Chapter VI, 128--161, Sections 4.1--4.3.
 
-The cited 1979 book has not been byte-pinned. The cached serre-local-cft file must not be silently substituted for Local Fields.
+Inspected extract of Serre, Local class field theory, Chapter VI in Cassels-Frohlich, Algebraic Number Theory (1967), pp.128-161, followed by Tate Chapter VII. Sections 4.1-4.3, pp.155-159, supply the ramification and conductor statements. This is not Serre Local Fields (1979). Original retrieval URL of these exact extract bytes is unknown.
 
-Pin status: **source_pin_missing**.
+Pin status: **bytes_pinned**.
 
+- `work/independent-height-review-20261104/conductor/primary/serre-local-cft.pdf`
+  - SHA256: `e0367b25a022eb27ec220e3c15b474a94fb96d70a6bb89b77f4a02c2231950fe`
+<a id="shimura-factors"></a>
+## shimura-factors
+
+G. Shimura,
+\emph{On the factors of the jacobian variety of a modular function field},
+Journal of the Mathematical Society of Japan 25 (1973), 523--544,
+Theorem 1.
+\url{https://doi.org/10.2969/jmsj/02530523}.
+
+Original downloaded bytes; exact retrieval recorded in downloads.json.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/galois-height/shimura1973.pdf`
+  - SHA256: `6a34cc46d06c0f5d4e7d380ddcbc45ec3143b19359bfebba5b1c8f00976f3308`
 <a id="silverbergzarhin"></a>
 ## silverbergzarhin
 
@@ -717,12 +876,121 @@ Pin status: **bytes_pinned**.
 J. H. Silverman, \emph{The arithmetic of elliptic
 curves}, second edition, Springer, 2009, Chapters IV and VII.
 
-Exact bytes pinned below; publication/version equivalence is not inferred from the filename.
+Second edition (2009), exact PDF pinned. Direct inspection found the omega sign typo on p.105 and a^2-b instead of a^2-4b in X Proposition 4.9, p.337. The full official errata file was not retrieved. A056 uses the separately pinned Sutherland lecture statement and the checked corrected recurrences; the isogeny-kernel calculation is derived independently in closure-batch-002. No application relies on an uninspected errata file.
 
 Pin status: **bytes_pinned**.
 
 - `work/astra-final-size-independent-review-001/silverman-2009.pdf`
   - SHA256: `72ee67bfa1e3fdf582ac7e4b032d7ca0b35a168ed6443ac39c121fbb788cab25`
+<a id="stacks-07S7"></a>
+## stacks-07S7
+
+Supplementary source, not a distinct current bibliography entry.
+
+Exact Stacks HTML snapshot, 2026-11-05; tag 07S7
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/geometry/07S7.html`
+  - SHA256: `c3e944469210e81ba1d58e07e91f76dcb64b459b91160a22849b9679aa6b8a05`
+  - [Retrieved source](https://stacks.math.columbia.edu/tag/07S7) on 2026-11-05.
+<a id="stacks-0E97"></a>
+## stacks-0E97
+
+Supplementary source, not a distinct current bibliography entry.
+
+Exact Stacks HTML snapshot, 2026-11-05; tag 0E97
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/geometry/0E97.html`
+  - SHA256: `f222a423374c8172fce073f1a3a07ac747d20514a21bc8fe0da3398a0af8d541`
+  - [Retrieved source](https://stacks.math.columbia.edu/tag/0E97) on 2026-11-05.
+<a id="stacks-0EYG"></a>
+## stacks-0EYG
+
+Supplementary source, not a distinct current bibliography entry.
+
+Exact Stacks HTML snapshot, 2026-11-05; tag 0EYG
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/geometry/0EYG.html`
+  - SHA256: `a4c8f58c4c8f844bb05e5ab7f3d5f23aa497a143ade6c18c5e172e1768dbb7bd`
+  - [Retrieved source](https://stacks.math.columbia.edu/tag/0EYG) on 2026-11-05.
+<a id="stacks-derived"></a>
+## stacks-derived
+
+Supplementary source, not a distinct current bibliography entry.
+
+Exact HTML snapshot of Tag 03T3 retrieved 2026-11-05. Lemma 64.6.3(2) concerns bounded-above projective complexes. The audit also supplies the bounded finite free splitting argument; a live tag URL is not treated as an immutable edition.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/closure/primary/stacks-03T3.html`
+  - SHA256: `977535d7399dabfec8f836cf9430b5ca7797344dbda8b1a9a35aed56dcd8cc53`
+  - [Retrieved source](https://stacks.math.columbia.edu/tag/03T3) on 2026-11-05.
+<a id="stacks-finite-limits"></a>
+## stacks-finite-limits
+
+Supplementary source, not a distinct current bibliography entry.
+
+Exact HTML snapshots of Tags 086J and 08ZY retrieved 2026-11-05. These concern finite inverse limits and profinite topology, not existence of the arithmetic stages. The ultrafilter-extension proof is supplied directly in closure-batch-006.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/closure/primary/stacks-086J.html`
+  - SHA256: `56d6f0aed26ff9e3b61e7c34a25ae6062b1ba1e0186ae0680f4f2678b0c03e13`
+  - [Retrieved source](https://stacks.math.columbia.edu/tag/086J) on 2026-11-05.
+- `work/theorem-application-audit-20261105/closure/primary/stacks-08ZY.html`
+  - SHA256: `8f23365f3e267a05113efd563475b685461fe60fbf23532d6c013eb235b8ad48`
+  - [Retrieved source](https://stacks.math.columbia.edu/tag/08ZY) on 2026-11-05.
+<a id="stackscohom"></a>
+## stackscohom
+
+The Stacks Project,
+\emph{Stalks of higher direct images} and \emph{The Leray spectral sequence},
+Theorem 59.53.1, Tag 03Q9, and Proposition 59.54.2, Section Tag 03QA,
+HTML snapshots of November 5, 2026.
+\url{https://stacks.math.columbia.edu/tag/03Q9};
+\url{https://stacks.math.columbia.edu/tag/03QA}.
+
+Exact Stacks snapshots retrieved 2026-11-05 for higher direct image stalks and Leray.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/stacks-03Q9.html`
+  - SHA256: `5821c51ab4e389b75768e7325758209859c56f7c9a29d589c8a6be3d7d375f48`
+- `work/theorem-application-audit-20261105/parallel-009/forward-modularity/primary/stacks-03QA.html`
+  - SHA256: `18b9c7e277b11ffb8b921386556b24fe5131277c3f41a81aba2bdce867ddf218`
+<a id="sutherland"></a>
+## sutherland
+
+A. V. Sutherland,
+\emph{Isogeny kernels and division polynomials}, MIT 18.783,
+Fall 2025, Lecture 5, September 18, 2025, \S\S5.5--5.6.
+\url{https://ocw.mit.edu/courses/18-783-elliptic-curves-fall-2025/mit18_783_f25_lec05.pdf}.
+
+MIT 18.783 Fall 2025 Lecture 5; September 18 2025; lecture notes, not peer-reviewed article
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/closure/primary/sutherland-2025-lecture05.pdf`
+  - SHA256: `4d638ce3bbe1127ae7947a8b4deda6c6e51247912194bbacaf3920d4c9bb19d7`
+<a id="voight-quaternion"></a>
+## voight-quaternion
+
+J. Voight, \emph{Quaternion algebras}, corrected online edition
+v1.0.7u, August 5, 2026, Main Theorem 14.6.1 and Proposition 14.6.7,
+pp. 223--224.
+\url{https://jvoight.github.io/quat-book.pdf}.
+
+v1.0.7u, August 5, 2026, corrected online edition. Corrected online edition, not printed Springer pagination.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/voight-quaternion.pdf`
+  - SHA256: `a9316b834dbd500c52cd3a981c3205c9f4145b217042b213d23f696aee84b0f0`
 <a id="waldspurger"></a>
 ## waldspurger
 
@@ -764,3 +1032,16 @@ Pin status: **bytes_pinned**.
 
 - `work/astra-weighted-theta-audit-001/primary/weil-1964.pdf`
   - SHA256: `22df47cb98307aa77c46028cf5575eeb1d3524950dbdadb9c0c21890966039d2`
+<a id="williams-mertens"></a>
+## williams-mertens
+
+K. S. Williams, \emph{Mertens' theorem for arithmetic progressions},
+J. Number Theory \textbf{6} (1974), 353--359, Theorem 1.
+\url{https://people.math.carleton.ca/~williams/papers/pdf/057.pdf}.
+
+Published JNT 6 (1974), 353-359. Published scan inspected, including image of Theorem1.
+
+Pin status: **bytes_pinned**.
+
+- `work/theorem-application-audit-20261105/parallel-009/sieve-bounds/williams-mertens.pdf`
+  - SHA256: `9e78492d928f8af5654388db11d9d253749fe7c1e1b627effd0f20d1baafc8c0`
