@@ -10,13 +10,13 @@ python scripts/check_construction.py --report build/construction-checks.json
 
 This regenerates the rational expression from its pinned natural-polynomial input, checks hashes and wiring, recalculates syntactic bounds, and runs the supplied finite arithmetic checks. See [the construction README](../construction/README.md) for exactly what each check establishes. It does not prove the main mathematical theorem.
 
-## Paper
+## 11/4 manuscript
 
 ```sh
 python scripts/build_paper.py
 ```
 
-The script downloads a SHA-256-verified Tectonic 0.17.0 binary for the host platform, then builds a copy of the TeX source in an isolated temporary directory. It uses the fixed `tlextras-2022.0r0` bundle URL and checks the selected bundle's fingerprint. Tectonic fetches only the needed support files; it does not download the entire bundle archive. The first run requires network access. Later runs reuse the local resource cache.
+The script downloads a SHA-256-verified Tectonic 0.17.0 binary for the host platform, then builds a copy of the 11/4 TeX source in an isolated temporary directory. It uses the fixed `tlextras-2022.0r0` bundle URL and checks the selected bundle's fingerprint. Tectonic fetches only the needed support files; it does not download the entire bundle archive. The first run requires network access. Later runs reuse the local resource cache.
 
 If Tectonic 0.17.0 is already installed:
 
@@ -26,7 +26,7 @@ python scripts/build_paper.py --tectonic /path/to/tectonic
 
 Results are written to `build/paper/`, including the compiled PDF, compiler log, TeX log, and a JSON receipt. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
 
-The checked-in revision-2 PDF was rebuilt from the current TeX. Its source and PDF hashes are recorded in [the release build receipt](paper-build-r2.json). Running this script creates a new build artifact without replacing the checked-in PDF. Fixed engine, bundle, and timestamp inputs improve reproducibility, but this repository does not claim that PDF bytes are identical across operating systems.
+The checked-in revision-2 PDF of the 11/4 manuscript was rebuilt from the corresponding TeX source. Its source and PDF hashes are recorded in [the release build receipt](paper-build-r2.json). Running this script creates a new build artifact without replacing the checked-in 11/4 PDF. Fixed engine, bundle, and timestamp inputs improve reproducibility, but this repository does not claim that PDF bytes are identical across operating systems.
 
 ## Lean helpers
 
@@ -51,6 +51,6 @@ Read [the Lean README](../lean/README.md) for the trust boundary and allowed axi
 
 ## Continuous integration
 
-[Research checks](../.github/workflows/research-checks.yml) runs three separate jobs for construction, paper compilation, and accepted Lean helpers. It runs on pushes, pull requests, and manual dispatch. GitHub Actions dependencies are pinned to commit hashes, and the elan installer and Tectonic archives are pinned by SHA-256. TeX resources are cached between runs. Each Lean job fetches the pinned upstream dependency cache directly; it does not archive the toolchain and Mathlib tree again, which can exhaust the runner's disk during cache saving. Project Lean artifacts are rebuilt in a new directory.
+[Research checks](../.github/workflows/research-checks.yml) runs three separate jobs for construction, 11/4 manuscript compilation, and accepted Lean helpers. It runs on pushes, pull requests, and manual dispatch. GitHub Actions dependencies are pinned to commit hashes, and the elan installer and Tectonic archives are pinned by SHA-256. TeX resources are cached between runs. Each Lean job fetches the pinned upstream dependency cache directly; it does not archive the toolchain and Mathlib tree again, which can exhaust the runner's disk during cache saving. Project Lean artifacts are rebuilt in a new directory.
 
-The workflow uploads reports and logs as CI artifacts. A green run means the named checks passed on that commit. It does not certify the paper's global arithmetic inputs or complete the main Lean proof.
+The workflow uploads reports and logs as CI artifacts. A green run means the named checks passed on that commit. It does not certify the 11/4 manuscript's global arithmetic inputs or complete the main Lean proof.

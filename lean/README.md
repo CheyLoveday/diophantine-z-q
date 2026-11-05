@@ -2,7 +2,7 @@
 
 This directory contains the 48 modules accepted in integration 31. The Lean source files, root imports, dependency metadata, and frozen target are copied byte for byte from that snapshot. `SOURCE_MANIFEST.json` records their hashes and the source integration manifest hash. Historical filenames containing `Draft` are retained to preserve imports; those helper modules belong to the accepted snapshot.
 
-**This is not a formal proof of the paper's main theorem.** The snapshot contains 463 explicit public declarations and 69 private declarations, including definitions and helper results. The whole-model, height, restricted-converse, pole-completeness, multiplication, compiler, construction/bounds, and final composition obligations are not closed by this snapshot.
+**This is not a formal proof of the 11/4 manuscript's main theorem.** The snapshot contains 463 explicit public declarations and 69 private declarations, including definitions and helper results. The whole-model, height, restricted-converse, pole-completeness, multiplication, compiler, construction/bounds, and final composition obligations are not closed by this snapshot.
 
 `Frozen/BoundedIntegerPolynomial.lean` is the exact unproved main target and contains one `sorry`. It is excluded from `ZInQ.lean`, the default library, and the axiom audit. Its hash is checked so that the intended statement cannot silently change.
 
@@ -50,4 +50,4 @@ The default is two concurrent single-threaded compilers. `--jobs 1` through `--j
 
 ## Validation scope
 
-The release preparation checks are recorded in the [validation report](VALIDATION.json) and the [704-declaration axiom ledger](AXIOMS.json). They distinguish a fresh build of the project modules from a rebuild of upstream dependencies. Published dependency caches are trusted inputs; this procedure does not independently rebuild Lean or Mathlib, and an axiom audit does not replace review of a theorem's statement or its relation to the paper.
+The release preparation checks are recorded in the [validation report](VALIDATION.json) and the [704-declaration axiom ledger](AXIOMS.json). They distinguish a fresh build of the project modules from a rebuild of upstream dependencies. Published dependency caches are trusted inputs; this procedure does not independently rebuild Lean or Mathlib, and an axiom audit does not replace review of a theorem's statement or its relation to the 11/4 manuscript.

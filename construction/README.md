@@ -1,6 +1,6 @@
 # Polynomial construction and checks
 
-This directory contains a portable snapshot of the finite polynomial specification used in the manuscript. The saved expression has one free rational input and 292,890,231,904 rational witness variables. The large integer constants and finite products are represented by explicit finite constructors; their monomial expansions are not materialized.
+This directory contains a portable snapshot of the finite polynomial specification used in the 11/4 manuscript. The saved expression has one free rational input and 292,890,231,904 rational witness variables. The large integer constants and finite products are represented by explicit finite constructors; their monomial expansions are not materialized.
 
 ## Run the checks
 
@@ -25,7 +25,7 @@ The first local run took 8.5 seconds with Node.js 24.22.1 and Python 3.12.14 on 
 | [finite-polynomial-expressions.js](finite-polynomial-expressions.js) and [variable-shift-polynomial-library.js](variable-shift-polynomial-library.js) | Finite constructors, fixed constants, and ordinary-value coordinate templates. |
 | [ordinary-integer-polynomial-size-bounds.json](ordinary-integer-polynomial-size-bounds.json) | Recomputed expression heights, variable count, and symbolic size bounds. |
 | [bound-ordinary-integer-polynomial.py](bound-ordinary-integer-polynomial.py) | Computes those syntactic bounds without expanding the large constants. |
-| [integer-compiler-spec.txt](integer-compiler-spec.txt), [integer-halting-correctness-proof.txt](integer-halting-correctness-proof.txt), and [z-in-q-polynomial-size-bound-proof.txt](z-in-q-polynomial-size-bound-proof.txt) | Preserved explanatory notes. Read their historical scope statements and the corresponding sections of the current [paper](../diophantine_zq.pdf). |
+| [integer-compiler-spec.txt](integer-compiler-spec.txt), [integer-halting-correctness-proof.txt](integer-halting-correctness-proof.txt), and [z-in-q-polynomial-size-bound-proof.txt](z-in-q-polynomial-size-bound-proof.txt) | Preserved explanatory notes. Read their historical scope statements and the corresponding sections of the revised [11/4 manuscript](../diophantine_zq.pdf). |
 | [SOURCE_MANIFEST.json](SOURCE_MANIFEST.json) | Original archive paths, original and release hashes, and the exact changes made for portability. |
 
 Other JavaScript files are the local module dependencies of these entry points or the finite checkers listed below. Some reusable modules also export functions for older universal-equation workflows. Only the command documented above is supported by this curated input set; the full historical archive contains those other inputs.
@@ -41,7 +41,7 @@ Other JavaScript files are the local module dependencies of these entry points o
 | `verify-finite-polynomial-expressions.js` | Expansion identities at small fixture constants and rejection of four malformed constructor bindings. |
 | `verify-six-contact.js` | The finite algebraic identities and inequalities listed by that checker. |
 
-These computations do **not** establish that the rational zero projection equals the integers. They do not prove the global height or restricted-converse inputs, the natural precision polynomial's complete machine semantics, or the general equivalence of the alpha/power representation. Small fixtures do not evaluate or replace the actual large fixed constants. The numerical tower bounds in the paper also use the companion mathematical estimates; the script does not compute the astronomical constants numerically.
+These computations do **not** establish that the rational zero projection equals the integers. They do not prove the global height or restricted-converse inputs, the natural precision polynomial's complete machine semantics, or the general equivalence of the alpha/power representation. Small fixtures do not evaluate or replace the actual large fixed constants. The numerical tower bounds in the 11/4 manuscript also use the companion mathematical estimates; the script does not compute the astronomical constants numerically.
 
 The natural precision polynomial is an explicitly pinned input boundary. This check suite regenerates the rational expression from it, not the earlier compilation of that natural polynomial from the precision machine. The earlier machine, compiler stages, and their reviews remain available in the [research handoff](../docs/research-guide.md).
 
