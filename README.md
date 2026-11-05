@@ -8,6 +8,7 @@ This repository accompanies the manuscript **Z is Diophantine in Q**, dated Nove
 | --- | --- |
 | Read the argument | [Paper PDF](diophantine_zq.pdf) |
 | Inspect or edit the manuscript | [TeX source](diophantine_zq.tex) |
+| Read the 10/11 manuscript and compare the constructions | [October 11 Manuscript](October%2011%20Manuscript/README.md) |
 | Browse the polynomial and run its checks | [Curated construction](construction/README.md) |
 | Build the paper or accepted Lean modules | [Build instructions](docs/building.md) |
 | Inspect the formalization | [Accepted Lean helper snapshot](lean/README.md) |
@@ -56,6 +57,12 @@ The construction builds on OpenAI's preprint [*Hilbert's tenth problem over the 
 
 The manuscript's bibliography and source-application appendices identify the other mathematical inputs. The [research guide](docs/research-guide.md#map-of-the-argument) connects the main arguments to their supporting files.
 
+## Comparison with the 10/11 manuscript
+
+The [10/11 manuscript](October%2011%20Manuscript/ZIsDiophantineInQBySohailsGPT-6.pdf) and the 11/4 manuscript use the same elliptic curve and share a strategy: build arithmetic on integer labels, control the height of a candidate rational scalar, and force it to equal its labelled integer by sufficiently accurate approximation. The 10/11 manuscript uses congruence at the fixed prime $3$; the 11/4 manuscript uses real approximation with an auxiliary shift.
+
+The 10/11 argument is explicitly conditional on four OpenAI arithmetic inputs. The 11/4 manuscript presents an unconditional argument and gives simultaneous numerical bounds for its specified polynomial. The 10/11 manuscript does not give a numerical variable count or coefficient bound. Its degree-four conversion is also available for the 11/4 polynomial, with additional variables, so degree alone does not establish a smaller construction. See the [full comparison notes](October%2011%20Manuscript/README.md) for the interfaces, qualifications, and source references.
+
 ## Verification status
 
 The manuscript presents an unconditional proof. Revision 2 includes the later restricted-converse and theta justifications and replaces the von Känel–Kret height dependency with a direct modularity argument and a CM argument. [Four independent AI reviews](docs/reviews/height-replacement/REPORT.md) found no unresolved gap in the replacement within their stated scopes. The final text includes their requested clarifications. These reviews are distinct from independent human peer review and machine verification. See the [revision notes](docs/revision-2.md).
@@ -77,6 +84,8 @@ The [curated construction](construction/README.md) provides the finite expressio
 The [CI workflow](.github/workflows/research-checks.yml) checks construction regeneration and finite arithmetic cases, compiles the paper, and builds the accepted Lean modules with an axiom audit. See [build instructions](docs/building.md) for local commands and the limits of each check. A green CI run concerns those checks, not completion of the main proof.
 
 ## AI usage and attribution
+
+The October 11 Manuscript was produced by Sohail Farhangi with ChatGPT 6. The November 4 Manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1, and Opus 5.5, with auditing from Fable 5.1.
 
 The paper ends with an AI usage statement describing the contributions of OpenAI Codex and Anthropic Claude agents to the research, computations, reviews, and writing. That statement is part of the manuscript.
 
