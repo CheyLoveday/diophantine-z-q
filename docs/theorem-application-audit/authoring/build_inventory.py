@@ -28,7 +28,7 @@ OUT=REPO/'docs/theorem-application-audit'
 OUT.mkdir(parents=True,exist_ok=True)
 TEX=REPO/'diophantine_zq.tex'
 raw=TEX.read_bytes(); sha=hashlib.sha256(raw).hexdigest()
-EXPECTED='f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3'
+EXPECTED='cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b'
 if sha!=EXPECTED:
  raise SystemExit('Manuscript changed: review the specifications and anchors before regenerating. Expected '+EXPECTED)
 text=raw.decode('utf-8-sig'); lines=text.splitlines()

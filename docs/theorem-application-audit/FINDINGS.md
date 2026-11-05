@@ -1,7 +1,7 @@
 # Findings from the source application inventory
 
 This report is bound to `diophantine_zq.tex` SHA256
-`f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3`.
+`cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b`.
 It records the source inspections and integrated repairs made on November 5, 2026. Historical line and page references below identify the baseline discussed in each report; current anchors are in the inventory. All 82 recorded application families now have scoped review decisions. This does not certify the main theorem.
 
 ## F001: the de Rham step needs a different comparison reference

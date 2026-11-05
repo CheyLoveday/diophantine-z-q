@@ -1,6 +1,6 @@
 # Theorem application inventory
 
-Manuscript SHA256: `f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3`. Line numbers refer only to this frozen source.
+Manuscript SHA256: `cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b`. Line numbers refer only to this frozen source.
 
 This document records the checked source applications, their exact consumers, and the hypotheses, translations and dependencies retained by each decision. Linked evidence includes historical reports and current bounded reviews; their stated scope and source version govern. An accepted application is not a certificate of every internal premise or the main theorem.
 

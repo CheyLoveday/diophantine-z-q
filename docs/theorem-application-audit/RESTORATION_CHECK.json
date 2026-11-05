@@ -2,7 +2,7 @@
   "date": "2026-11-05",
   "result": "PASS",
   "source_registry_sha256": "6e8732d40657374f58e148cfdbf830b72426eafbc92fd3bd969e4e8a3f9802cf",
-  "source_manifest_sha256": "08e92910ae947c8bd68f37eb42f11b54c3acc348622926426104fff57ff15652",
+  "source_manifest_sha256": "7fe80289292dbe85a690adb85600ad75c2d8bea31a77aa8c73981ad48a75f52f",
   "unique_source_files_restored": 92,
   "source_file_entries_checked": 97,
   "review_evidence_restored": 65,

@@ -11,4 +11,4 @@ python docs/theorem-application-audit/authoring/build_inventory.py --workspace /
 python docs/theorem-application-audit/validate.py --workspace /path/to/research-workspace
 ```
 
-The generator refuses another manuscript hash. Review changed interfaces, anchors and classifications before updating its frozen inputs. `ANCHOR_REBIND.json` records the current rebind, and `MANUSCRIPT_EDITS.json` records the applied text repairs. The generator rebuilds the inventories, not the hand-written overview, findings or dependency discussion. It does not check mathematical proofs.
+The generator refuses another manuscript hash. Review changed interfaces, anchors and classifications before updating its frozen inputs. `ANCHOR_REBIND.json` records the mathematical-text rebind, `DATE_REBIND.json` records the later date-only update, and `MANUSCRIPT_EDITS.json` records the applied text repairs. The generator rebuilds the inventories, not the hand-written overview, findings or dependency discussion. It does not check mathematical proofs.

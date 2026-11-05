@@ -1,24 +1,24 @@
 # Research guide
 
-This guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2). It is a map of the saved evidence, not a replacement for the 11/4 manuscript's proofs. For current browsable sources, start with [construction](../construction/README.md), [Lean helpers](../lean/README.md), and [build instructions](building.md).
+This guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2). It is a map of the saved evidence, not a replacement for the 11/5 manuscript's proofs. For current browsable sources, start with [construction](../construction/README.md), [Lean helpers](../lean/README.md), and [build instructions](building.md).
 
 ## Suggested reading order
 
-1. Read **The main theorem and proof structure** in the 11/4 manuscript for the statement and the roles of the component arguments.
+1. Read **The main theorem and proof structure** in the 11/5 manuscript for the statement and the roles of the component arguments.
 2. Read **A finite specification of the polynomial**, **A variable-shift relation for ordinary values**, and **The cutoff and polynomial size** to see what is constructed and how it defines ordinary integer values.
 3. Follow the technical argument through the elliptic model, height estimate, pole predicate, multiplication, and restricted converse. The arithmetic and limit sections and source-application appendices supply the dependencies.
 4. Read **Consequences of the integer definition** for the three corollaries and their scope.
 5. Use the archive to inspect literal specifications, calculations, source checks, historical alternatives, or formalization work.
 
-The 11/4 TeX source has stable descriptive labels such as `thm:target`, `sec:syntax`, `sec:height`, `sec:rc`, `sec:limits`, `sec:compiler`, `sec:bridge`, and `sec:size`. Refer to those labels when page numbers differ between builds.
+The 11/5 TeX source has stable descriptive labels such as `thm:target`, `sec:syntax`, `sec:height`, `sec:rc`, `sec:limits`, `sec:compiler`, `sec:bridge`, and `sec:size`. Refer to those labels when page numbers differ between builds.
 
 ## Map of the argument
 
-Revision 2 of the 11/4 research handoff adds the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of the revised 11/4 manuscript.
+Revision 2 of the November 4 research handoff adds the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of the revised 11/5 manuscript.
 
-The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this small Git checkout. Some files predate the revised 11/4 manuscript; compare their scope with that revision and later audits.
+The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this small Git checkout. Some files predate the revised 11/5 manuscript; compare their scope with that revision and later audits.
 
-| Topic | 11/4 manuscript section | Archive starting points |
+| Topic | 11/5 manuscript section | Archive starting points |
 | --- | --- | --- |
 | Literal polynomial specification | A finite specification of the polynomial; Literal finite-constructor specification | `outputs/ordinary-integer-definition.json`; `outputs/ordinary-integer-polynomial.js` |
 | Elliptic model and generator | The elliptic model of integer indices | `outputs/elliptic-generator-proof.txt`; `outputs/z-in-q-generator-audit.txt`; `outputs/verify-z-in-q-generator.py` |
@@ -32,7 +32,7 @@ The paths below are **original project-relative paths recorded in the archive ma
 | Sources and dependency graphs | Bibliography and source-application appendices | `formalization/z-in-q/ProofSources/`; `work/main-proof-graph/` |
 | Earlier versions and discarded routes | Historical record | `drafts/z-in-q-candidate-preprint/`; `outputs/z-in-q-research-status.json`; archive-root `DISCARDED_APPROACHES.md` |
 
-The archive's K215 and ZFC-related files record additional research. The revised 11/4 manuscript describes the general specialization argument; it does not specify an additional explicit ZFC polynomial there. Check each historical construction's dependencies before treating it as a consequence of the 11/4 manuscript.
+The archive's K215 and ZFC-related files record additional research. The revised 11/5 manuscript describes the general specialization argument; it does not specify an additional explicit ZFC polynomial there. Check each historical construction's dependencies before treating it as a consequence of the 11/5 manuscript.
 
 ## Verify and restore the archive
 
@@ -60,7 +60,7 @@ On macOS:
 shasum -a 256 z-in-q-research-handoff-2026-11-04-r2.zip
 ```
 
-The repository's [SHA256SUMS](../SHA256SUMS) also records the 11/4 TeX and PDF hashes and the 10/11 PDF hash. Matching a hash establishes file identity, not mathematical correctness.
+The repository's [SHA256SUMS](../SHA256SUMS) also records the 11/5 TeX and PDF hashes and the 10/11 PDF hash. Matching a hash establishes file identity, not mathematical correctness.
 
 Extract the zip, then open `START_HERE.md`, `CURRENT_STATE.json`, and `INDEX.html`. The HTML index works locally without a server. Original file paths map to their stored copies through `MANIFEST.json` and `FILE_INDEX.csv`.
 

@@ -1,12 +1,12 @@
-# Comparison of the 10/11 and 11/4 manuscripts
+# Comparison of the 10/11 and 11/5 manuscripts
 
-This folder preserves the [10/11 manuscript PDF](ZIsDiophantineInQBySohailsGPT-6.pdf), *A conditional Diophantine definition of Z in Q from four arithmetic inputs*, dated October 11, 2026. The [11/4 manuscript PDF](../diophantine_zq.pdf) and [TeX source](../diophantine_zq.tex) are in the repository root.
+This folder preserves the [10/11 manuscript PDF](ZIsDiophantineInQBySohailsGPT-6.pdf), *A conditional Diophantine definition of Z in Q from four arithmetic inputs*, dated October 11, 2026. The [11/5 manuscript PDF](../diophantine_zq.pdf) and [TeX source](../diophantine_zq.tex) are in the repository root.
 
-These notes compare the statements, proof architecture, and quantitative claims of the two manuscripts. They are not a new independent proof audit. Page references below refer to the 25-page 10/11 PDF. The comparison was checked on November 5, 2026, against the 141-page revision of the 11/4 manuscript.
+These notes compare the statements, proof architecture, and quantitative claims of the two manuscripts. They are not a new independent proof audit. Page references below refer to the 25-page 10/11 PDF. The comparison was first checked against the earlier 141-page revision. The current November 5 manuscript has 148 pages and includes the later source-application audit repairs.
 
 ## Provenance
 
-The October 11 Manuscript was produced by Sohail Farhangi with ChatGPT 6. The November 4 Manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1, and Opus 5.5, with auditing from Fable 5.1.
+The October 11 Manuscript was produced by Sohail Farhangi with ChatGPT 6. The November 5 Manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1, and Opus 5.5, with auditing from Fable 5.1.
 
 ## Shared mathematical strategy
 
@@ -24,7 +24,7 @@ The scalar identification has the same broad structure in both manuscripts. Cert
 
 ## Differences in scope and construction
 
-| Aspect | 10/11 manuscript | 11/4 manuscript |
+| Aspect | 10/11 manuscript | 11/5 manuscript |
 | --- | --- | --- |
 | Arithmetic scope | Explicitly assumes four OpenAI arithmetic inputs: pole parity, rank one, a five-point height estimate, and compatible prime patterns. It does not independently verify their proofs or companion-paper dependencies. | Presents an unconditional argument, with extended justifications for its arithmetic inputs, including the restricted converse, pole completeness, and an explicit height estimate. The current revision replaces the von Känel–Kret dependency. |
 | Integer arithmetic | Constructs finite formulas for general polynomial relations on the integer labels, then specializes to multiplication. | Uses a specific multiplication construction and a concrete computation and polynomial compiler. |
@@ -33,7 +33,7 @@ The scalar identification has the same broad structure in both manuscripts. Cert
 | Final equality test | Uses variable-precision congruence at the fixed prime $3$. | Uses real approximation with an explicit precision bound depending on the integer label and $\kappa$. |
 | Quantitative specification | Uses MRDP for fixed computably enumerable relations and leaves several fixed arithmetic constants and the final formula size unspecified. | Specifies the polynomial through finite expressions and substitutions and gives simultaneous bounds on variables, degree, and coefficients. |
 
-The 10/11 manuscript states its conditional scope on pages 1–4. Its shorter length partly reflects that scope. The 11/4 manuscript's unconditional presentation should be distinguished from independent human peer review or a completed Lean verification; see the repository's [verification status](../README.md#verification-status).
+The 10/11 manuscript states its conditional scope on pages 1–4. Its shorter length partly reflects that scope. The 11/5 manuscript's unconditional presentation should be distinguished from independent human peer review or a completed Lean verification; see the repository's [verification status](../README.md#verification-status).
 
 ## The final scalar identification
 
@@ -51,7 +51,7 @@ $$
 K(n)\log 3\le h(x-n)<K(n).
 $$
 
-In the 11/4 manuscript, the final construction uses a real height-and-distance argument. Its certificates give a bound $h(x)\le B(n,\kappa)$ and require
+In the 11/5 manuscript, the final construction uses a real height-and-distance argument. Its certificates give a bound $h(x)\le B(n,\kappa)$ and require
 
 $$
 |x-n|<e^{-B(n,\kappa)}.
@@ -59,32 +59,32 @@ $$
 
 If $x=a/b$ is in lowest terms and $x\ne n$, then $|x-n|\ge1/|b|\ge e^{-h(x)}$, contradicting the required distance. The shared shift $\kappa$ connects the support certificate to the precision computation.
 
-The fixed-prime construction in the 10/11 manuscript is therefore a possible alternative to the real-approximation step in the 11/4 manuscript. Establishing that it gives a smaller or simpler fully specified polynomial would require instantiating its constants and counting the resulting formulas.
+The fixed-prime construction in the 10/11 manuscript is therefore a possible alternative to the real-approximation step in the 11/5 manuscript. Establishing that it gives a smaller or simpler fully specified polynomial would require instantiating its constants and counting the resulting formulas.
 
 ## Variable, degree, and coefficient bounds
 
 The bounds must be compared for the same polynomial, with all auxiliary variables counted.
 
-| Quantity | 10/11 manuscript | 11/4 specified polynomial |
+| Quantity | 10/11 manuscript | 11/5 specified polynomial |
 | --- | --- | --- |
 | Total ambient variables | $N+1$, with $N\ge1$ unspecified. No numerical upper bound is supplied. | $292{,}890{,}231{,}905$, including the rational input. |
 | Degree | No bound is stated for the raw final polynomial in Corollary 14.3. An equivalent polynomial of degree at most $4$ is available after introducing additional variables, as explained below. | Less than $2\uparrow\uparrow7$. |
 | Maximum absolute coefficient | No numerical upper bound is supplied. | Less than $2\uparrow\uparrow8$. |
 
-Here $2\uparrow\uparrow r$ denotes a right-associated tower of $r$ twos. The three 11/4 bounds apply simultaneously to its specified polynomial. The variable count is an ambient bound, not a claim that every variable occurs essentially.
+Here $2\uparrow\uparrow r$ denotes a right-associated tower of $r$ twos. The three 11/5 bounds apply simultaneously to its specified polynomial. The variable count is an ambient bound, not a claim that every variable occurs essentially.
 
 Section 8 of the 10/11 manuscript, on page 12, explicitly converts an intermediate reduction polynomial $Q_f$ to degree at most four. Introduce variables for arithmetic-circuit gates, write each addition or multiplication gate as an equation of degree at most two, and take the sum of the squares of those equations together with the required output equation. Over $\mathbb Q$, that sum vanishes exactly when every equation vanishes.
 
 The same conversion applies to the final defining polynomial $D$ in Corollary 14.3, preserving its free rational input. This extension is a deduction from the stated conversion, rather than a separately quantified bound in that corollary. It introduces further witness variables whose number is not given.
 
-The same quartic conversion also applies to the 11/4 polynomial, with additional variables. Consequently, the quartic bound alone does not establish a quantitative advantage for either construction. The 10/11 manuscript explicitly leaves some fixed constants unspecified on pages 4, 22, and 24; without them and a counted compilation, no numerical comparison of the final variable counts or coefficient sizes is available.
+The same quartic conversion also applies to the 11/5 polynomial, with additional variables. Consequently, the quartic bound alone does not establish a quantitative advantage for either construction. The 10/11 manuscript explicitly leaves some fixed constants unspecified on pages 4, 22, and 24; without them and a counted compilation, no numerical comparison of the final variable counts or coefficient sizes is available.
 
 ## Source identity
 
-The 10/11 PDF is included without modification. The current 11/4 files include the November 5 AI attribution update naming Fable 5.1; their mathematical text is unchanged from the revision used for this comparison. The current files have the following SHA-256 hashes:
+The 10/11 PDF is included without modification. The current 11/5 files include the source-application audit repairs and the AI attribution naming Fable 5.1. The general comparison and stated polynomial bounds are unchanged; the audit documents the intervening proof and citation repairs. The current files have the following SHA-256 hashes:
 
 ```text
 e5752baaf5ed8bc44707a9e96be545276ea6587349ece8f8030c78006f7983d6  ZIsDiophantineInQBySohailsGPT-6.pdf
-c59598ba474a1512dd03787c2bc9ff093a3c3a8a0604f96d5f8bcfa140c61693  ../diophantine_zq.tex
-3ae95226ebcd477aa3b29ecf8600cb0a47b830f761d9bf6e3388e5b76ed9f84b  ../diophantine_zq.pdf
+cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b  ../diophantine_zq.tex
+dfe8f60c88a6e7a05d0f16ee46063eb6b30163dd238670beca5147bf898abb15  ../diophantine_zq.pdf
 ```

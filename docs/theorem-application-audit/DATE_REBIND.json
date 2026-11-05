@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-05",
+  "reason": "User requested current manuscript date and repository labels change from November 4 to November 5.",
+  "previous_manuscript_sha256": "f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3",
+  "manuscript_sha256": "cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b",
+  "line": 37,
+  "old_line": "\\date{November 4, 2026}",
+  "new_line": "\\date{November 5, 2026}",
+  "only_manuscript_change_is_date": true,
+  "citation_and_context_line_numbers_unchanged": true,
+  "previous_rebind": "ANCHOR_REBIND.json",
+  "historical_evidence": "Original review dates, pinned reports, archival paths and source-version identities are preserved."
+}

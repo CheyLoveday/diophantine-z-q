@@ -18,7 +18,7 @@ This is an audit of theorem applications, not an independent proof of every inte
 | [Authoring](authoring/README.md) | Reviewed input data and reproducible generator |
 | [Build receipt](MANUSCRIPT_BUILD.json) | Matching TeX/PDF hashes, pinned toolchain and build result |
 
-The frozen manuscript has 11,259 lines and SHA256 `f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3`. It has 147 explicit citation occurrences, comprising 134 application citations, 10 summaries, one provenance citation and two source-scope declarations. Their 163 keys refer to 62 works. The inventory contains 443 anchored contexts and all 228 internal references resolve uniquely. A context is not necessarily a distinct theorem invocation.
+The frozen manuscript has 11,259 lines and SHA256 `cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b`. It has 147 explicit citation occurrences, comprising 134 application citations, 10 summaries, one provenance citation and two source-scope declarations. Their 163 keys refer to 62 works. The inventory contains 443 anchored contexts and all 228 internal references resolve uniquely. A context is not necessarily a distinct theorem invocation.
 
 All 82 families have explicit scoped decisions. The final five-reviewer wave supplied 43 additional acceptance records, rather than treating an empty open-items field as approval. Earlier bounded closures cover the other 39. The machine-readable [applications](applications.json) retain these decisions, their original baseline identities and their internal premises. Sixty records also retain a separately named `fresh_source_check` field; that historical field is not the total number of acceptance decisions.
 
@@ -28,7 +28,7 @@ Seventy-one source records have byte pins, covering 97 file entries. The unpinne
 
 The de Rham step now uses a sufficiently strong comparison theorem, its corrigendum, and explicit finite descent. Other repairs include the local restriction/corestriction and homotopy justification, local Hecke and Frobenius conventions, formal-logarithm precision, correct forward rank theorem citations, and previously unrecorded Mertens and quaternion-embedding inputs. [The findings](FINDINGS.md) distinguish these repairs from withdrawn criticisms and metadata corrections.
 
-The source history remains visible. Earlier reports can describe a gap later repaired; [dependency phase metadata](DEPENDENCY_PHASES.json) records the supersession. Their line numbers refer to the stated historical baseline. [The rebind ledger](ANCHOR_REBIND.json) and [53 text edits](MANUSCRIPT_EDITS.json) connect that evidence to this manuscript.
+The source history remains visible. Earlier reports can describe a gap later repaired; [dependency phase metadata](DEPENDENCY_PHASES.json) records the supersession. Their line numbers refer to the stated historical baseline. [The rebind ledger](ANCHOR_REBIND.json) and [53 text edits](MANUSCRIPT_EDITS.json) connect that evidence to this manuscript. The subsequent [date-only update](DATE_REBIND.json) changes the title-page date to November 5 and leaves all citation and context line numbers unchanged.
 
 ## Reproduce the checks
 

@@ -1,6 +1,6 @@
 {
   "schema": "source-restoration-manifest-v1",
-  "manuscript_sha256": "f880d559e9a76281573e4d5110852f347bc422af3f2daf0b483fbb7f01c62fb3",
+  "manuscript_sha256": "cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b",
   "source_registry_sha256": "6e8732d40657374f58e148cfdbf830b72426eafbc92fd3bd969e4e8a3f9802cf",
   "scope": "Declared primary source files only; not an authoring-workspace archive or a license grant.",
   "sources_without_file_pins": [

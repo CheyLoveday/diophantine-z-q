@@ -16,7 +16,7 @@
     {
       "path": "applications.json",
       "bytes": 604109,
-      "sha256": "41cc990d2e8136945824e748d2ae42a322e9ef032a13edbbf38914bf1c131ca7"
+      "sha256": "1d53028414eefe1eeed85db566aae47b2b00d4206f3eaffeec8625f0e3c089bb"
     },
     {
       "path": "authoring/application_specs.py",
@@ -26,7 +26,7 @@
     {
       "path": "authoring/build_inventory.py",
       "bytes": 16032,
-      "sha256": "3b706ea912c1f0af28c23f2e62ed611ea870dc23e30c3fb20415b11955dce6b2"
+      "sha256": "9fe687bc1e58ce67f6a84fe43c6e847afd69e9ea2996d7b43894753d5e2ff5c1"
     },
     {
       "path": "authoring/CITATION_ROLES.json",
@@ -70,8 +70,8 @@
     },
     {
       "path": "authoring/README.md",
-      "bytes": 1462,
-      "sha256": "109202bb521d31d5787ba695c10471a52e77ff69506de245bf48659d5ba52650"
+      "bytes": 1527,
+      "sha256": "64458c6e96d25912d7f673f36b193bb12cfee5f0a8fab6281815a009ea2d5522"
     },
     {
       "path": "authoring/SOURCE_ADDITIONS.json",
@@ -101,7 +101,12 @@
     {
       "path": "coverage.json",
       "bytes": 1273,
-      "sha256": "008503280e225f50572390011bae4073bf8a250ea9ef49550ba4e9780f3d2c19"
+      "sha256": "26676d4842380bea63f7a5bff086da4dbd903010e8881214d09b930fb0db0296"
+    },
+    {
+      "path": "DATE_REBIND.json",
+      "bytes": 710,
+      "sha256": "b8b6339895c66a1e04e9629ee7830571ec1018aefa4f4327ecaa6b3f4dfc6bed"
     },
     {
       "path": "DEPENDENCIES.md",
@@ -446,7 +451,7 @@
     {
       "path": "FINDINGS.md",
       "bytes": 12708,
-      "sha256": "36dde2c7795a35502c7d3b4ed1367fdbcc11f1f28950374526ea12a21c4d954a"
+      "sha256": "50873ab30a4fffa462f9d3de1e647b69262201149313fd6491d44229ff1a2642"
     },
     {
       "path": "internal-references.json",
@@ -456,12 +461,12 @@
     {
       "path": "INVENTORY.md",
       "bytes": 205018,
-      "sha256": "64ac5be2d9d797e2abe89352a4591cd96ab02ccda52969cdadbc63cbe5f33480"
+      "sha256": "0c95233d38b80a2cae7c4995b8925ed469f61e3672d100dfa06ca0d37e468b64"
     },
     {
       "path": "MANUSCRIPT_BUILD.json",
-      "bytes": 795,
-      "sha256": "0e13ce89dca6debbf4afef64c358f7887989cebc5017007b6e6f0bd7addf0de3"
+      "bytes": 818,
+      "sha256": "05ee62274ebc12c8573b12c7e2ae7faf52bd9bfa65ff4c3f57956fd3d395ab44"
     },
     {
       "path": "MANUSCRIPT_EDITS.json",
@@ -480,13 +485,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 5630,
-      "sha256": "645021184a692bfc470f02ea59b09b05661cdc567b6592b4ae9d3785e3d4ee75"
+      "bytes": 5784,
+      "sha256": "b2c575be96a868ffc70337a2c1e80e919456390b00ec6458993aab87a873eb90"
     },
     {
       "path": "RESTORATION_CHECK.json",
       "bytes": 926,
-      "sha256": "6051bef76c410156a53be1385b1513780b79fc96e64e7a9ed12a02b66f707036"
+      "sha256": "0e2a8c4aae598841f33d31e86e6050493c51ce582879dadb6ece703da78156f2"
     },
     {
       "path": "source_manifest.py",
@@ -496,7 +501,7 @@
     {
       "path": "SOURCE_RESTORATION.json",
       "bytes": 59333,
-      "sha256": "08e92910ae947c8bd68f37eb42f11b54c3acc348622926426104fff57ff15652"
+      "sha256": "7fe80289292dbe85a690adb85600ad75c2d8bea31a77aa8c73981ad48a75f52f"
     },
     {
       "path": "sources.json",
