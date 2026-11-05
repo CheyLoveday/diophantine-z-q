@@ -87,8 +87,6 @@ The [CI workflow](.github/workflows/research-checks.yml) checks construction reg
 
 The October 11 Manuscript was produced by Sohail Farhangi with ChatGPT 6. The November 4 Manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1, and Opus 5.5, with auditing from Fable 5.1.
 
-The 11/4 manuscript ends with an AI usage statement describing the contributions of OpenAI Codex and Anthropic Claude agents to the research, computations, reviews, and writing.
-
 [CITATION.bib](CITATION.bib) supplies citation entries for the 11/4 manuscript and research archive with the author field intentionally omitted. Identify a research artifact by the release tag and file hash as well. [Archival release notes](docs/archiving.md) explain the DOI status.
 
 Licenses for original project material are awaiting the maintainer's selection. [Third-party notices](THIRD_PARTY_NOTICES.md) identify upstream software and mathematical sources; the project's license will not relicense those materials. The historical archive needs a per-source redistribution review before public release.
