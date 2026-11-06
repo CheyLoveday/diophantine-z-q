@@ -1,17 +1,17 @@
 # Z is Diophantine in Q
 
-## Version 7
+## Version 8
 
-This repository contains *Z is Diophantine in Q*, Version 7, dated November 6, 2026. The manuscript presents three integer-coefficient polynomials whose rational zero projections it proves to be the ordinary integers. It retains the original large construction and the fully expanded Version 4 quartic, and includes the reconstructed quartic in 962 variables introduced in Version 6.
+This repository contains *Z is Diophantine in Q*, Version 8, dated November 6, 2026. The manuscript presents three integer-coefficient polynomials whose rational zero projections it proves to be the ordinary integers. It retains the original large construction and the fully expanded Version 4 quartic, and includes the reconstructed quartic in 962 variables introduced in Version 6.
 
 The project uses the collective agentic notes from Stefan Baranczuk, Jose Brox, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry.
 
 | To | Open |
 | --- | --- |
-| Read Version 7 | [Manuscript PDF](manuscripts/quartic_v7.pdf), [TeX source](manuscripts/quartic_v7.tex) |
+| Read Version 8 | [Manuscript PDF](manuscripts/quartic_v8.pdf), [TeX source](manuscripts/quartic_v8.tex) |
 | Reproduce the new 962-variable quartic | [Polynomial, source program and independent checks](docs/quartic-962/README.md) |
 | Read the fully expanded Version 4 quartic | [4,973-variable package](quartics/quartic-4973/README.md), [integer monomial table](quartics/quartic-4973/polynomial.expanded.txt) |
-| Inspect theorem applications and conventions | [Version 7 inventory](docs/quartic-962/README.md) |
+| Inspect theorem applications and conventions | [Version 7 proof inventory](docs/quartic-962/README.md), [Version 8 revision check](docs/manuscript-revisions/version8/README.md) |
 | Build the manuscript or run the checks | [Build instructions](docs/building.md) |
 | Download the Version 7 research handoffs | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-7/z-in-q-version7-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-7/z-in-q-version7-current-handoff.zip), [contents and verification](handoff/README.md) |
 | Read collaborator notes and the height replacement | [Research update](research/2026-11-06-collaborator-notes/README.md) |
@@ -20,9 +20,11 @@ The project uses the collective agentic notes from Stefan Baranczuk, Jose Brox, 
 | Inspect the partial formalization | [Accepted Lean helpers](lean/README.md) |
 | Cite the manuscript or report an issue | [BibTeX](CITATION.bib), [contribution guide](CONTRIBUTING.md) |
 
+Version 8 changes only the abstract and version number. The [revision check](docs/manuscript-revisions/version8/README.md) verifies that the proof body is unchanged from Version 7.
+
 Version 7 incorporates four further audits of the Gaussian appendix and their repairs. See the [audit summary](docs/quartic-962/gaussian-audit-20261106.md) for the changes and review limits.
 
-The full handoff includes the current public snapshot, selected research notes, and the unchanged Version 6 full handoff, which preserves the Version 5 and earlier November 4 archives. The current-only handoff omits the embedded historical archive. Neither includes a conversational transcript.
+The Version 7 full handoff includes the Version 7 public snapshot, selected research notes, and the unchanged Version 6 full handoff, which preserves the Version 5 and earlier November 4 archives. The current-only handoff omits the embedded historical archive. Neither includes a conversational transcript.
 
 ## The three polynomials
 
@@ -59,7 +61,7 @@ The Lean formalization is incomplete. The accepted snapshot contains 48 helper m
 
 ## Earlier work and provenance
 
-The October 11, 2026 manuscript, *A conditional Diophantine definition of Z in Q from four arithmetic inputs*, was produced by Sohail Farhangi with ChatGPT 6. Its PDF is preserved without modification. Its provenance and conditional scope are distinct from Version 7.
+The October 11, 2026 manuscript, *A conditional Diophantine definition of Z in Q from four arithmetic inputs*, was produced by Sohail Farhangi with ChatGPT 6. Its PDF is preserved without modification. Its provenance and conditional scope are distinct from Version 8.
 
 The November manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1, and Opus 5.5, with auditing from Fable 5.1. The [Version 5 manuscript](manuscripts/archive/quartic_1272.pdf), [Version 4 manuscript](manuscripts/archive/quartic_4973.pdf), [Version 3 manuscript](manuscripts/archive/quartic_9625.pdf) and [Version 2 manuscript](manuscripts/archive/quartic_12504.pdf) remain historical references, with their separate polynomial packages and inventories. Earlier research handoffs identify their own snapshots.
 

@@ -1,9 +1,9 @@
 # Manuscripts
 
-The current manuscript is **Version 7**, dated November 6, 2026:
+The current manuscript is **Version 8**, dated November 6, 2026:
 
-- [PDF: quartic_v7.pdf](quartic_v7.pdf)
-- [TeX: quartic_v7.tex](quartic_v7.tex)
+- [PDF: quartic_v8.pdf](quartic_v8.pdf)
+- [TeX: quartic_v8.tex](quartic_v8.tex)
 - [Four Gaussian audits and repairs](../docs/quartic-962/gaussian-audit-20261106.md)
 - [Research handoff and verification](../handoff/README.md)
 
@@ -13,6 +13,7 @@ These files are preserved byte for byte. Historical inventories retain their ori
 
 | Version | PDF | TeX |
 | --- | --- | --- |
+| 7 | [PDF](quartic_v7.pdf) | [TeX](quartic_v7.tex) |
 | 5 | [PDF](archive/quartic_1272.pdf) | [TeX](archive/quartic_1272.tex) |
 | 4 | [PDF](archive/quartic_4973.pdf) | [TeX](archive/quartic_4973.tex) |
 | 3 | [PDF](archive/quartic_9625.pdf) | [TeX](archive/quartic_9625.tex) |
