@@ -169,7 +169,14 @@ def main():
         summary['final_verification']=verify('verify-selected-final',finalchecker,reference,True)
         for case in ('wrong-source','wrong-entry','wrong-expansion'):
             bad=out/('reject-'+case);shutil.copytree(reference,bad)
-            if case=='wrong-source':(bad/'source-residuals.jsonl.gz').write_bytes(b'not the selected source')
+            if case=='wrong-source':
+                path=bad/'source-residuals.jsonl.gz'
+                # Keep the gzip and source header valid, so rejection reaches
+                # the pinned mathematical source hash instead of the decoder.
+                lines=gzip.decompress(path.read_bytes()).splitlines()
+                row=json.loads(lines[1]);row[0][0]+=1
+                lines[1]=json.dumps(row,separators=(',',':')).encode()
+                path.write_bytes(gzip.compress(b'\n'.join(lines)+b'\n',compresslevel=1,mtime=0))
             elif case=='wrong-entry':
                 path=bad/'certificate.jsonl.gz';lines=gzip.decompress(path.read_bytes()).splitlines();head=json.loads(lines[0]);head['source_entry_sha256']='0'*64;lines[0]=json.dumps(head,separators=(',',':')).encode();path.write_bytes(gzip.compress(b'\n'.join(lines)+b'\n',compresslevel=1,mtime=0))
             else:
