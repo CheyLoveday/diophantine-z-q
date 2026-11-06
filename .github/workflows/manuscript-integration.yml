@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Run all verification or render the already-built PDF'
+        description: 'Run all verification, rebuild paper, or render committed PDF'
         type: choice
-        options: [all, visual]
+        options: [all, paper, visual]
         default: all
   push:
     paths:
@@ -37,7 +37,7 @@ jobs:
           path: .cache/tectonic
           key: tectonic-${{ runner.os }}-0.17.0-6ffe055852f8faf66
       - name: Reproduce source, certificate, and full integer expansion
-        if: inputs.mode != 'visual'
+        if: inputs.mode != 'visual' && inputs.mode != 'paper'
         shell: bash
         run: |
           ulimit -v 2097152
@@ -50,14 +50,18 @@ jobs:
       - name: Compile the exact Version 2 manuscript
         if: inputs.mode != 'visual'
         run: python scripts/build_paper.py
-      - name: Render the committed manuscript for visual review
-        if: inputs.mode == 'visual'
+      - name: Render the manuscript for visual review
+        if: inputs.mode == 'visual' || inputs.mode == 'paper'
         shell: bash
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y poppler-utils
           ulimit -v 2097152
-          python scripts/render_quartic_review.py
+          if [ "${{ inputs.mode }}" = paper ]; then
+            python scripts/render_quartic_review.py --pdf build/paper/quartic_12504.pdf
+          else
+            python scripts/render_quartic_review.py
+          fi
       - name: Validate the handoff snapshot before publication
         if: inputs.mode == 'visual'
         shell: bash

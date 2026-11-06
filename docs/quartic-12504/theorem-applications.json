@@ -2,7 +2,7 @@
   "format": "quartic-theorem-applications/12504-v1",
   "scope": "Current 12,504-variable quartic and its newly justified reciprocal64/beta16 compressed arithmetic source. Historical F8 is not asserted equal to the new source.",
   "manuscript": "quartic_12504.tex",
-  "manuscript_source_sha256": "a8b3f7e2d86ef33082d22874a823bfbdf2f3ad120664ace8c4c1b1e82399c8bd",
+  "manuscript_source_sha256": "38d458ba4178083766c5ae56a894da595fe27170c1ef07f6b49750fc5edf7c37",
   "binding_status": "current labels and byte hash checked",
   "section_label": "sec:quartics",
   "new_external_theorem_applications": [],
