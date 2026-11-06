@@ -3,6 +3,7 @@ from pathlib import Path
 import json
 import re
 import subprocess
+import unicodedata
 
 ROOT = Path(__file__).resolve().parents[1]
 PDF = ROOT / 'quartic_12504.pdf'
@@ -10,7 +11,7 @@ OUT = ROOT / 'build/pdf-review'
 OUT.mkdir(parents=True, exist_ok=True)
 subprocess.run(['pdftotext', '-layout', str(PDF), str(OUT / 'paper.txt')], check=True)
 pages = (OUT / 'paper.txt').read_text(encoding='utf-8').split('\f')
-normalized = [re.sub(r'\s+', ' ', text) for text in pages]
+normalized = [re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', text)) for text in pages]
 starts = [i for i, text in enumerate(normalized) if i > 10 and 'We now give the second final polynomial' in text]
 ends = [i for i, text in enumerate(normalized) if i > 10 and 'The finite source and algebraic checks do not replace' in text]
 assert len(starts) == len(ends) == 1, (starts, ends)

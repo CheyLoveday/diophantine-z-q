@@ -58,6 +58,13 @@ jobs:
           sudo apt-get install -y poppler-utils
           ulimit -v 2097152
           python scripts/render_quartic_review.py
+      - name: Validate the handoff snapshot before publication
+        if: inputs.mode == 'visual'
+        shell: bash
+        run: |
+          ulimit -v 2097152
+          python -E -B handoff/test_handoff.py > build/handoff-tests.json
+          python -E -B handoff/prepare_handoff.py --repo . --commit "$GITHUB_SHA" --verification-receipt docs/quartic-12504/verification/REPRODUCTION.json --output build/prepublication-handoff-plan.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -67,3 +74,5 @@ jobs:
             build/quartic-inventory.json
             build/paper/
             build/pdf-review/
+            build/handoff-tests.json
+            build/prepublication-handoff-plan.json
