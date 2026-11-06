@@ -24,6 +24,14 @@ source; [PDF_VISUAL.json](PDF_VISUAL.json) records the page inspection.
 The final display-only correction changed two rendered pages, which were
 inspected again. The other reviewed page images are byte-identical.
 
+The handoff check also compares the original certificate with the included
+[regenerated certificate](regenerated-certificate.jsonl.gz). Their 1,249
+records agree after removing only the last record's elapsed-time field.
+[CERTIFICATE_COMPARISON.json](CERTIFICATE_COMPARISON.json) records an
+independent comparison. The final handoff suite has 65 negative cases;
+[HANDOFF_TESTS.json](HANDOFF_TESTS.json) and the
+[review addendum](reviews/handoff-certificate-comparison.md) cover this check.
+
 [Review records](reviews/) distinguish the arithmetic source review,
 package review, inventory review and handoff review. The finite programs
 do not prove the arithmetic source theorem or complete the separate Lean
