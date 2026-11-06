@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "scope": "Inventory hashes, exact text bridge, dependency reachability and source/artifact bindings only; no mathematical truth or fresh certificate replay asserted.",
-  "manuscript_sha256": "a8b3f7e2d86ef33082d22874a823bfbdf2f3ad120664ace8c4c1b1e82399c8bd",
+  "manuscript_sha256": "38d458ba4178083766c5ae56a894da595fe27170c1ef07f6b49750fc5edf7c37",
   "historical_application_anchors": 443,
   "unmapped_citation_paragraphs": [],
   "local_lemmas": 20,

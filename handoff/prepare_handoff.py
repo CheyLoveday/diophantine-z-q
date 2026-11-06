@@ -19,7 +19,7 @@ BAD_NAMES={'auth.json','credentials.json','cookies.json','cookies.sqlite','token
            'conversation.json','conversation.txt','transcript.json','transcript.txt','chat.json','chat.txt',
            'host.stdout.txt','stdin.txt'}
 SECRET=re.compile(rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:sk-(?:proj-|ant-)?[A-Za-z0-9_-]{30,}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16})\b')
-DIALOGUE=re.compile(rb'"role"\s*:\s*"(?:user|assistant|system|tool)"|(?im:^\s*(?:Human|Assistant|User)\s*:\s)|<\|im_start\|>|<conversation>')
+DIALOGUE=re.compile(rb'"role"\s*:\s*"(?:user|assistant|system|tool)"|(?im:^\s*(?:Human|Assistant|User)\s*:\s)|<\|im_start\|>|<conver' rb'sation>')
 CREDENTIAL=re.compile(rb'"(?:access_token|refresh_token|id_token|api_key|client_secret|password)"\s*:\s*"([^"\r\n]{12,})"',re.I)
 
 

@@ -1,6 +1,7 @@
 """Small adversarial checks; no baseline download, compression, or proof run."""
 from copy import deepcopy
 import gzip
+import hashlib
 import json
 from pathlib import Path
 import stat
@@ -8,7 +9,7 @@ import tempfile
 import zipfile
 
 from build_handoff import validate_git_plan
-from prepare_handoff import scan
+from prepare_handoff import DIALOGUE, scan
 from verify_handoff import safe_name, verify
 
 
@@ -24,6 +25,25 @@ def reject(label,function,message):
 
 def main():
     tests=[]
+    # Freeze the runtime pattern and flags from the original scanner policy.
+    assert hashlib.sha256(DIALOGUE.pattern).hexdigest()=='d3017908981af04c663a0b97f3d160719e717b585221fa930ac1945b55c18d71'
+    assert DIALOGUE.flags==0
+    self_sources=[]
+    for name in ('prepare_handoff.py','test_handoff.py'):
+        raw=Path(__file__).with_name(name).read_bytes()
+        scan('handoff/'+name,raw)
+        scan('handoff/'+name+'.gz',gzip.compress(raw))
+        self_sources.append(name)
+    examples=[('serialized '+role,json.dumps({''.join(('ro','le')):role}).encode())
+              for role in ('user','assistant','system','tool')]
+    examples += [('user heading',b'Us'+b'er: prompt'),
+                 ('assistant heading',b'  Assis'+b'tant: response'),
+                 ('human heading',b'Hu'+b'man: prompt'),
+                 ('chat marker',b'<|im_'+b'start|>'),
+                 ('conversation marker',b'<conver'+b'sation>')]
+    for label,raw in examples:
+        tests.append(reject(label,lambda raw=raw:scan('fixture.txt',raw),'dialogue marker'))
+        tests.append(reject('gzip '+label,lambda raw=raw:scan('fixture.txt.gz',gzip.compress(raw)),'dialogue marker'))
     for name in ('../x','/x','C:x','a\\b','a/../b','a//b','CON.txt','x.','dir /x','AUX'):
         tests.append(reject(name,lambda name=name:safe_name(name),'archive name'))
     good=dict(snapshot_commit='a'*40,files=[dict(kind='git',path='a',archive_path='current/a',git_blob='1'),
@@ -49,7 +69,8 @@ def main():
                         info.external_attr=mode<<16
                     archive.writestr(info,b'target')
             tests.append(reject(name,lambda path=path:verify(path),message))
-    print(json.dumps(dict(status='PASS',small_negative_cases=len(tests),cases=tests),indent=2))
+    print(json.dumps(dict(status='PASS',small_negative_cases=len(tests),cases=tests,
+                         runtime_dialogue_pattern_unchanged=True,self_sources_scan_passed=self_sources),indent=2))
 
 
 if __name__=='__main__':
