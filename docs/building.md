@@ -71,6 +71,7 @@ The following checks remain required for the historical baselines. Their older p
 
 ```sh
 python -E -B scripts/check_historical_inventory.py 5 validate --repo . --manuscript quartic_1272.tex
+python -E -B scripts/check_historical_inventory.py 5 test
 ```
 
 

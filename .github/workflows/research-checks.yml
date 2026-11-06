@@ -47,7 +47,7 @@ jobs:
           node-version: '24.22.1'
       - run: python scripts/check_quartic1272.py --out build/quartic-1272-reproduction
       - run: python -E -B scripts/check_historical_inventory.py 5 validate --repo . --manuscript quartic_1272.tex --expected-input-sha256 695769c38917efa35b6256132cd8b77807d6384ab6d27c38f250ff8947ae6c10
-      - run: python -E -B docs/quartic-1272/test_inventory.py
+      - run: python -E -B scripts/check_historical_inventory.py 5 test
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

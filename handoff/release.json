@@ -5628,8 +5628,8 @@
       "sha256": "7349174762eb13ab940272e6756441802e6647d758c4b94db25160f64ca25d66"
     },
     "scripts/check_historical_inventory.py": {
-      "bytes": 1374,
-      "sha256": "8e570c0ad21e7b4d1e7282abec30696716b4cc68f08cc54e23c6f1b09c1e51d5"
+      "bytes": 1864,
+      "sha256": "7b28459d12cb91677ffbefe8efd24a0d08f1471b850591302e63b8e3a4ef916a"
     },
     "scripts/check_quartic962.py": {
       "bytes": 13086,
