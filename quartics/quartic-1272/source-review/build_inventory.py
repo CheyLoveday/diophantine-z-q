@@ -182,5 +182,5 @@ report={
  'arithmetic_dependencies':['Pinned source cyclic group and index-height inequality','Pinned source five-contact height theorem with stated constant','Pinned source pole completeness and restricted-converse inputs','Sun simultaneous prime-pattern Theorem4.1','Unramified reciprocal-logarithm lemma for precisions16,52','Elementary Lucas growth'],
  'reported_unpublished_compilation':{'raw_base_variables':90,'raw_structural_equations':47,'arithmetic_gate_coordinates':1285,'claimed_eliminations':60,'claimed_row_additions':11,'claimed_final_variables':1315,'claimed_final_residuals':1272,'identity_reconstructed':False}
 }
-(HERE/'source_inventory.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+(HERE/'source_inventory.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
 print(json.dumps({'definitions':len(defs),'base_variables':len(variables),'structural_constraints':len(constraints),'guards':len(guards),'field_tests':len(tests)}))

@@ -15,7 +15,7 @@ import tempfile
 import time
 
 sys.dont_write_bytecode = True
-from integrity import POLYNOMIAL, POLYNOMIAL_SHA256, sha256, verify
+from integrity import POLYNOMIAL, POLYNOMIAL_SHA256, assert_serialization, sha256, verify
 
 HERE = Path(__file__).resolve().parent
 REQUIRED_CHECKS = [
@@ -44,7 +44,7 @@ def portable_receipts(root):
     for relative in ('checker/FINAL_CHECK.json', 'checker/direct-check.json', 'checker/translated-check.json'):
         path = root / relative
         value = json.loads(path.read_text(encoding='utf-8'))
-        path.write_text(json.dumps(clean(value), indent=2) + '\n', encoding='utf-8')
+        path.write_text(json.dumps(clean(value), indent=2) + '\n', encoding='utf-8', newline='\n')
 
 
 def pipeline(root, logs, node):
@@ -62,7 +62,7 @@ def pipeline(root, logs, node):
                                  text=True, encoding='utf-8', errors='replace',
                                  env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
         log = logs / (name + '.log')
-        log.write_text(process.stdout, encoding='utf-8')
+        log.write_text(process.stdout, encoding='utf-8', newline='\n')
         checks.append({'name': name, 'status': 'PASS' if process.returncode == 0 else 'FAIL',
                        'seconds': round(time.monotonic() - start, 3), 'log': 'logs/' + log.name})
         print(name + ': ' + checks[-1]['status'], flush=True)
@@ -104,6 +104,7 @@ def pipeline(root, logs, node):
     if any(not p.get('matchesExpectation', p.get('rejected', False)) for p in probes['observations']):
         raise RuntimeError('Checker review probe failed')
     portable_receipts(root)
+    assert_serialization(root)
     checks.append({'name': 'frozen_table_identity', 'status': 'PASS', 'seconds': 0,
                    'log': None, 'sha256': POLYNOMIAL_SHA256})
     return checks
@@ -142,7 +143,7 @@ def reproduce(output):
               'runtimes': {'python': sys.version.split()[0], 'node': node_version},
               'elapsedSeconds': round(time.monotonic() - start, 3),
               'scope': 'Complete finite reconstruction and coefficient verification. Source arithmetic theorems remain stated inputs; no Lean proof is asserted.'}
-    (output / 'REPRODUCTION.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+    (output / 'REPRODUCTION.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps({k: record[k] for k in ('status', 'result', 'byteIdentical', 'elapsedSeconds')}, indent=2))
     return record
 

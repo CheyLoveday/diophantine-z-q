@@ -4,7 +4,7 @@
   "inputs": {
     "sourceInventory": {
       "path": "source-review/source_inventory.json",
-      "sha256": "0bd4e47068ee174bad7a5a2da61617ce840cd14d68d980c9b29300b19fedb98c"
+      "sha256": "4e4e9b924f5d0d4705b2806f353b9e312d36389e041a86fa9abc60f36673b32b"
     },
     "rawIR": {
       "path": "builder/raw-ir.json",
@@ -678,5 +678,5 @@
     "otherChangedResiduals": [],
     "meaning": "Universal polynomial identity over Q, with S unexpanded."
   },
-  "wallSeconds": 1.625
+  "wallSeconds": 0.906
 }

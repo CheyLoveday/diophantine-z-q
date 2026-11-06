@@ -1,6 +1,6 @@
 {
   "schema": "brox-independent-check-v1",
-  "checkedAtUTC": "2026-11-06T16:59:43.600Z",
+  "checkedAtUTC": "2026-11-06T17:13:22.260Z",
   "status": "passed_exact_algebra_checks",
   "scope": "Exact gate identities recognized below, certified row operations/eliminations, SOS expansion, fixed-S integrality/support/height. No proof of inherited arithmetic or source completeness is asserted.",
   "inputSha256": "0ac8ea9ad16f4439c83e3cfa03ee8a8a4eb24adb5717c994ca19e5db47fffba3",
@@ -11,15 +11,15 @@
     },
     "compiled": {
       "file": "compiler/direct/compiled-ir.json",
-      "sha256": "ee84bb197c4f3dbb680be3501f26c8e661be4b416c311542cc23fc9798f3e5b4"
+      "sha256": "b79fdb306c25d85aa41c308ad96a1076d2b84b98a6f51c66d0682b2ae9b15b98"
     },
     "certificate": {
       "file": "compiler/direct/reduction-certificate.json",
-      "sha256": "0d30bcbf2999b45f4240acbc304d9064d51dcb417c5de3fccadeb8e6fbef520f"
+      "sha256": "130953b02693de8ce3da1996a3257a1e50a58cfdc03be73e6f05d105419cc06f"
     },
     "coordinateMap": {
       "file": "compiler/direct/coordinate-map.json",
-      "sha256": "68271e2dec96c091a0933fef71b25f6db397d0a177839b87f9e1d204e2a055d8"
+      "sha256": "a2f10e89a380c456937623f9fc6655e0c419881693fb6bea84f8e975ba413624"
     },
     "quartic": {
       "file": "compiler/direct/polynomial.json",

@@ -27,12 +27,12 @@
   "omittedFreeCoordinateIds": [],
   "normalizationNote": "Primitive over Z[S]; fixed-S content is 1 if S-independent coefficient gcd is 1.",
   "sourceGateNote": "Raw gate metadata is retained historically, not presented as final gate definitions.",
-  "elapsedSeconds": 4.234,
+  "elapsedSeconds": 2.844,
   "artifacts": {
-    "compiled-ir.json": "21fcc73e863409511bb9ba7eec532d752e66ecda79a98a39b4df9f798bf53cb4",
-    "reduction-certificate.json": "85af0cc035d258c8cc19ae2e6f105a3b00f881d36861504c13a6fc01d9dd238f",
+    "compiled-ir.json": "377cda57d18c320149f9cb47cbaeacf847ab0df1dd2a6cfd08a967f3c4af1433",
+    "reduction-certificate.json": "489287cdb314cd89f1319b6818528a90dfc444f962d20e3acfb931800a7412a3",
     "polynomial.json": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586",
-    "coordinate-map.json": "a14aaa0f44167f3f4191edb78e5f655dc6973269d20acf89e3f79a5bd0e36868",
-    "specialization-certificate.json": "12dfdc8b3a694984153a7a8e8f78dc716ea43c1050bcc3c16070d68a8c3e125b"
+    "coordinate-map.json": "02673ea95f96be7c77de80688fc57369a2e0c69fc94184c98f4d66983466fdb3",
+    "specialization-certificate.json": "73f1037dc54f3ac771bd66b97b7f266aef4ca2d4c679209b552fbefb08647d64"
   }
 }

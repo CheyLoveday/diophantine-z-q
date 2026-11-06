@@ -24,6 +24,8 @@ This table complements the earlier ordinary-coefficient artifacts. It does not r
 
 The top-level table is an exact-byte copy of the compiler output at [compiler/translated/polynomial.json](compiler/translated/polynomial.json). The integrity check requires both copies to have the pinned hash.
 
+Serialization is explicit across operating systems. Generated JSON uses UTF-8 and LF line endings, except the direct and translated polynomial tables, whose published CRLF bytes are preserved on every platform. The compiler requests those line endings explicitly. The integrity and reproduction checks validate this policy in addition to comparing exact bytes; they never normalize files before a hash comparison.
+
 ## Reproduce and check
 
 Requirements are Python 3.10 or later and Node.js 18 or later, both on `PATH`. All programs use standard libraries. No package installation, network access, Lean installation, or expansion of the giant integer is needed.
@@ -67,6 +69,6 @@ The exact anchor check verifies the invertible affine change and the identity `t
 - [sources](sources/) contains the pinned Brox and upstream manuscripts, Sun's source, and local proof supplements. [sources/SOURCES.json](sources/SOURCES.json) records their hashes.
 - [evidence](evidence/) preserves the prior source audits and historical reconstruction receipts.
 
-[PROVENANCE.json](PROVENANCE.json) records the portable path changes. The two raw systems differ from the originally reviewed files only in `source.path`; every other JSON field is identical. The builder's arithmetic, compiler, and checker remain unchanged apart from the documented source and report path adaptations. Both polynomial tables are byte-identical to the original reconstruction. Historical review hashes remain historical; the package manifest and regenerated receipts bind the portable files.
+[PROVENANCE.json](PROVENANCE.json) records the portable path and serialization changes. The two raw systems differ from the originally reviewed files only in `source.path`; every other JSON field is identical. The arithmetic of the builder, compiler, and checker is unchanged. Code adaptations concern source and report paths and explicit line endings. Both polynomial tables are byte-identical to the original reconstruction. Historical review hashes remain historical; the package manifest and regenerated receipts bind the portable files.
 
 The mathematics is attributed to the authors named in the pinned sources. The independent implementation and reviews were prepared by Astra agents under Elliot Glazer's direction. This package makes no claim of authorship over those source manuscripts.

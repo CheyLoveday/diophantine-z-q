@@ -390,7 +390,7 @@ def main():
         report['wallSeconds'] = round(time.monotonic()-started, 3)
         target = args.output or args.root/'oracle/results.json'
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(json.dumps(report, indent=2)+'\n')
+        target.write_text(json.dumps(report, indent=2)+'\n',encoding='utf-8',newline='\n')
         print(json.dumps({k:v for k,v in report.items() if k in ['status', 'error', 'wallSeconds']}))
 
 

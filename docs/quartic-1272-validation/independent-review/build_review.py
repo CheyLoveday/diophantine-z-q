@@ -15,18 +15,22 @@ def main():
     table = load(HERE/'package-check.json')
     release = load(HERE/'release-check.json')
     inventory = load(HERE/'inventory-validation.json')
-    replay_path = WORK/'package/replay-final-guarded/REPRODUCTION.json'
+    replay_path = WORK/'package/replay-crossplatform-final/REPRODUCTION.json'
     replay = load(replay_path)
+    serialization = load(HERE/'serialization-patch-check.json')
     assert table['status'] == 'PASS_FINITE_TABLE'
     assert release['status'] == 'PASS_RELEASE_BINDING'
     assert inventory['status'] == 'PASS'
     assert replay['status'] == 'PASS' and replay['byteIdentical']
     assert replay['packageManifestSha256'] == table['manifest']['sha256']
+    assert serialization['status'] == 'PASS_SERIALIZATION_PATCH'
+    assert serialization['currentManifestSha256'] == table['manifest']['sha256']
     assert inventory['inputPins']['quartic_1272.tex'] == release['manuscript']['sha256']
     assert release['manuscript']['sha256'] == '16033e0471df605093b28210a9f81718c2486b147016ec8afc75d166dff0b90f'
     paths = [HERE/x for x in ('REVIEW.md', 'check_package.py', 'package-check.json',
                               'check_release.py', 'release-check.json', 'check_inventory.py',
-                              'inventory-validation.json', 'inventory-validation.log', 'FT-local-repair.md')]
+                              'inventory-validation.json', 'inventory-validation.log', 'FT-local-repair.md',
+                              'check_serialization_patch.py', 'serialization-patch-check.json')]
     result = {
         'schema': 'quartic-v5-independent-review-v1',
         'date': '2026-11-06',
@@ -42,6 +46,13 @@ def main():
                                    'degree':4, 'primitiveContent':1, 'height':'64*3^(2^28)',
                                    'method':'Exact independent convolution of all actual final residuals; no package code imported.'},
         'inventoryValidation': {'status':'PASS', 'mode':'Read-only authored validator with independently selected input hash; files unchanged during validation.'},
+        'serializationPatch': {'status':'PASS', 'baselineCommit':serialization['baselineCommit'],
+                               'baselineManifestSha256':serialization['baselineManifestSha256'],
+                               'mathematicalModulesCompared':len(serialization['mathematicalModules']),
+                               'coreArtifactsCompared':len(serialization['coreArtifacts']),
+                               'polynomialBytesUnchanged':True,
+                               'exactByteComparisonsRetained':True,
+                               'scope':'Only explicit UTF8 and line-ending settings change mathematical Python modules. Core data are identical. Metadata changes are timestamps, runtime measurements, hashes, and provenance.'},
         'packageAuthorReplay': {**pin(replay_path), 'elapsedSeconds':replay['elapsedSeconds'],
                                 'checkCount':len(replay['checks']), 'attribution':'Separate package author replay, not the independent convolution.'},
         'limitations': [

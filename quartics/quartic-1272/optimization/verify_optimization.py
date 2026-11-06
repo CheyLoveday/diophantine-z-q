@@ -129,5 +129,5 @@ report = {
     'scope': 'Counts, exponent identities and affine-dependency exclusion only; no source arithmetic certification.'
 }
 destination = ROOT / 'optimization/optimization-check.json'
-destination.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+destination.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8', newline='\n')
 print(json.dumps(report, indent=2))

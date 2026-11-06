@@ -32,7 +32,7 @@
       "lastLine": 16577
     }
   ],
-  "packageManifestSha256": "37a5d9d0e4d1d9f51562a1ba4a004827ad5bc7c0fbdf3a7d74f031e9ddc933e3",
+  "packageManifestSha256": "aa7f04c54e8b778a419a1be8d24e0b3a9a8540c50202d41815864a156d6985c6",
   "polynomialSha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586",
   "mathematicalReview": "Reviewed the three new fragments and exact consumption of identified inherited interfaces. No unresolved mathematical objection within those inputs.",
   "independentFiniteCheck": {
@@ -48,11 +48,21 @@
     "status": "PASS",
     "mode": "Read-only authored validator with independently selected input hash; files unchanged during validation."
   },
+  "serializationPatch": {
+    "status": "PASS",
+    "baselineCommit": "81de7e45d60d458414ea0f96eb0f68ad8981a3a3",
+    "baselineManifestSha256": "37a5d9d0e4d1d9f51562a1ba4a004827ad5bc7c0fbdf3a7d74f031e9ddc933e3",
+    "mathematicalModulesCompared": 7,
+    "coreArtifactsCompared": 13,
+    "polynomialBytesUnchanged": true,
+    "exactByteComparisonsRetained": true,
+    "scope": "Only explicit UTF8 and line-ending settings change mathematical Python modules. Core data are identical. Metadata changes are timestamps, runtime measurements, hashes, and provenance."
+  },
   "packageAuthorReplay": {
-    "path": "package/replay-final-guarded/REPRODUCTION.json",
-    "sha256": "82a6ebd68c40a64844c9c8d88b59fc26faae569328771178b1bd5addec64af77",
-    "bytes": 3383,
-    "elapsedSeconds": 21.938,
+    "path": "package/replay-crossplatform-final/REPRODUCTION.json",
+    "sha256": "bd5e9aaf1a9a9c464907935f59bbd9e994a3880e7c4862dca3bc20346bbc6f2c",
+    "bytes": 3258,
+    "elapsedSeconds": 22.312,
     "checkCount": 14,
     "attribution": "Separate package author replay, not the independent convolution."
   },
@@ -67,8 +77,8 @@
   "artifacts": [
     {
       "path": "independent-review/REVIEW.md",
-      "sha256": "88737105b30f4f03a0886e508821137eded381d34c290f84a6ff7d73145990dc",
-      "bytes": 7359
+      "sha256": "18e8a2e1dfb65a2fc5711807ccfd06a5d690b16f964181b0c7cac7006034b920",
+      "bytes": 8670
     },
     {
       "path": "independent-review/check_package.py",
@@ -77,7 +87,7 @@
     },
     {
       "path": "independent-review/package-check.json",
-      "sha256": "5424ba58295f64ab51be73d791a36f2e34fef9757e80c2fbeb5c2ab0b5d32a79",
+      "sha256": "44122835a860b82954f195ee7646ea4918b177b871dc1981b8cfc096254850fb",
       "bytes": 1228
     },
     {
@@ -109,6 +119,16 @@
       "path": "independent-review/FT-local-repair.md",
       "sha256": "767348c720b10b73eef4ce5f37c32c625e635f79953a094bb007bf02d4586ff0",
       "bytes": 2373
+    },
+    {
+      "path": "independent-review/check_serialization_patch.py",
+      "sha256": "afb805e3d2ab846def25e38f1e92311edb35900a80114a09ba3dcdf2e19a6be4",
+      "bytes": 7691
+    },
+    {
+      "path": "independent-review/serialization-patch-check.json",
+      "sha256": "779ea8f0cacbd0cdeffafe282b8a157a3ded6b565d2b43e1c4321d98f0e7462f",
+      "bytes": 10890
     }
   ]
 }

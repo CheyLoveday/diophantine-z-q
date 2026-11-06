@@ -103,7 +103,7 @@ def main():
     result = search(data, args.max_combination)
     result['inputSha256'] = hashlib.sha256(raw).hexdigest()
     result['schema'] = 'brox-affine-dependency-proposals-v1'
-    args.output.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    args.output.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'candidates'}, indent=2))
 
 

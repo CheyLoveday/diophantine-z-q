@@ -157,5 +157,5 @@ def run(p,seed):
 for p in [1000003,1000033,1000037]:
     for seed in [1315,2718,3141]:reports.append(run(p,seed))
 output={'source_sha256':hashlib.sha256(PATH.read_bytes()).hexdigest(),'translated_sha256':hashlib.sha256(TRANS.read_bytes()).hexdigest(),'sample_count':len(reports),'samples':reports,'scope':'Independent exact finite-field checks of formulas and all equations. This is supplementary evidence, not a proof of rational equivalence or source arithmetic.'}
-(HERE/'builder_semantic_checks.json').write_text(json.dumps(output,indent=2)+'\n')
+(HERE/'builder_semantic_checks.json').write_text(json.dumps(output,indent=2)+'\n',encoding='utf-8',newline='\n')
 print(json.dumps({'samples':len(reports),'checks_per_sample':reports[0]},indent=2))

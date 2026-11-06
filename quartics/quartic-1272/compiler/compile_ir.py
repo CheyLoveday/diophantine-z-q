@@ -271,8 +271,9 @@ class Compiler:
         return result
 
 
-def write_json(path: Path, data):
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+def write_json(path: Path, data, *, newline: str = "\n"):
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8", newline=newline)
 
 
 def specialization_analysis(poly: Poly):
@@ -364,7 +365,8 @@ def run(source: Path, destination: Path, no_reduce=False, max_growth=400):
     write_json(destination / "polynomial.json", {"schema": "brox-sparse-polynomial-v1",
                "fixedParameter": "S = 3^(2^27)", "coordinates": compact_coordinates,
                "terms": terms(compact_sos), "sosMultiplier": "1",
-               "construction": "Exact sum of normalized residual squares, with coordinate ids compacted by coordinate-map.json"})
+               "construction": "Exact sum of normalized residual squares, with coordinate ids compacted by coordinate-map.json"},
+               newline="\r\n")  # Preserve the published polynomial bytes on every platform.
     write_json(destination / "specialization-certificate.json", specialization_analysis(compact_sos))
     # Only monomials having no other S-power give actual S-independent coefficients.
     dependent_monomials = {m for s, m in sos if s}

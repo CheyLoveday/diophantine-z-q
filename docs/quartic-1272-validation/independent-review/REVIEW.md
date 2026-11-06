@@ -26,11 +26,17 @@ The appendix's added norm-exponent repair was independently checked against Frei
 
 There are 47993 coefficients independent of the fixed integer S, seven coefficients proportional to S, and one coefficient 64*S^2. The largest S-independent coefficient has 5339 bits; the largest linear multiplier is 768. Elementary exponent comparisons establish that 64*S^2 dominates at S = 3^(2^27), so the exact coefficient height is 64*3^(2^28). The computation never materializes S or a giant coefficient.
 
-The polynomial's SHA-256 is `02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586`. The top-level table is an exact-byte alias of the translated compiler table. All 78 manifest entries were independently checked against file inventory, byte lengths, and hashes. The accepted package manifest is `37a5d9d0e4d1d9f51562a1ba4a004827ad5bc7c0fbdf3a7d74f031e9ddc933e3`.
+The polynomial's SHA-256 is `02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586`. The top-level table is an exact-byte alias of the translated compiler table. All 78 manifest entries were independently checked against file inventory, byte lengths, and hashes. After the serialization correction below, the accepted package manifest is `aa7f04c54e8b778a419a1be8d24e0b3a9a8540c50202d41815864a156d6985c6`.
 
 The earlier independent source evaluator tested the actual generated IR against manuscript expressions, including rational and finite-field checks. Those sampled identities supplement source review and exact certificate checks. They do not prove global arithmetic implications or establish the existence of rational witnesses. The anchor identity is exact: the translated residual equals sixteen times the original residual after the invertible affine substitution. The two normalized sums of squares are not asserted to be literally equal after substitution.
 
 The portable replay scripts were inspected for source paths, dependency requirements, isolation, coefficient binding, and advertised checks. The package author separately ran fresh-path complete replays. Those replay receipts are implementation evidence from that lane; they are not relabeled as this reviewer's independent convolution.
+
+## Serialization correction after Linux CI
+
+Linux CI passed the computational checks but exposed platform-dependent line endings in regenerated JSON. The repair uses explicit UTF-8 and LF for generated metadata, residuals, certificates, and coordinate maps. The direct and translated polynomial tables and top-level alias use explicit CRLF to preserve their published bytes. Integrity checks enforce this policy in addition to the existing byte hashes. No exact comparison was removed or replaced by parsed-JSON comparison.
+
+The independent patch check compares the new package with Git commit `81de7e45d60d458414ea0f96eb0f68ad8981a3a3` and the previously accepted manifest `37a5d9d0e4d1d9f51562a1ba4a004827ad5bc7c0fbdf3a7d74f031e9ddc933e3`. Seven mathematical Python modules have identical syntax trees after removing only explicit UTF-8 and newline settings. All thirteen core JSON artifacts are identical as parsed data. Both polynomial tables, their top-level alias, and the builder and independent checker programs retain their exact bytes. Other changed JSON fields are timestamps, runtime measurements, artifact hashes, and provenance. The full coefficient convolution and manifest checks passed again. `serialization-patch-check.json` records the comparisons.
 
 ## Findings and disposition
 

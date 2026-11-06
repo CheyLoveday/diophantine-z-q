@@ -122,7 +122,7 @@ def is_integer_at_fixed_s(coefficients):
 
 
 def write_json(name, data):
-    (OUT / name).write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    (OUT / name).write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 def main():
