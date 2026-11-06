@@ -5,6 +5,7 @@ import json
 from pathlib import Path, PurePosixPath
 import shutil
 import stat
+import re
 import zipfile
 from release_config import validate_release, validate_current, generated_state, generated_start
 
@@ -31,7 +32,13 @@ def stream_hash(stream):
     return dict(sha256=digest.hexdigest(),bytes=size)
 
 
-def verify(path,expected_plan_sha256=None):
+def verify(path,expected_plan_sha256=None,expected_archive_sha256=None):
+    if expected_archive_sha256 is not None:
+        if not re.fullmatch('[0-9a-f]{64}', expected_archive_sha256):
+            raise ValueError('Invalid expected archive SHA256')
+        with Path(path).open('rb') as stream:
+            if stream_hash(stream)['sha256'] != expected_archive_sha256:
+                raise ValueError('Archive differs from externally supplied SHA256')
     with zipfile.ZipFile(path) as archive:
         members=archive.infolist(); names=[safe_name(m.filename) for m in members]
         if len(names)!=len(set(names)) or len(names)!=len({n.casefold() for n in names}):
@@ -115,11 +122,12 @@ def verify(path,expected_plan_sha256=None):
                 snapshot_commit=manifest['snapshot_commit'],baseline_included=baseline['included'],
                 baseline_sha256=BASELINE_SHA,all_member_hashes_and_crc_verified=True,
                 plan_sha256=plan_sha,externally_bound_plan=expected_plan_sha256 is not None,
+                externally_bound_archive=expected_archive_sha256 is not None,
                 scope='Payload integrity and exact current proof-package closure. Authenticate the snapshot using the published archive or plan SHA256.')
 
 
-def extract_verified(path,destination,expected_plan_sha256=None):
-    report=verify(path,expected_plan_sha256)
+def extract_verified(path,destination,expected_plan_sha256=None,expected_archive_sha256=None):
+    report=verify(path,expected_plan_sha256,expected_archive_sha256)
     destination=destination.resolve()
     if destination.exists():
         raise ValueError('Extraction destination must be new')
@@ -147,8 +155,9 @@ def main():
     p.add_argument('--extract',type=Path)
     p.add_argument('--report',type=Path)
     p.add_argument('--expected-plan-sha256')
+    p.add_argument('--expected-archive-sha256')
     a=p.parse_args()
-    report=extract_verified(a.archive,a.extract,a.expected_plan_sha256) if a.extract else verify(a.archive,a.expected_plan_sha256)
+    report=extract_verified(a.archive,a.extract,a.expected_plan_sha256,a.expected_archive_sha256) if a.extract else verify(a.archive,a.expected_plan_sha256,a.expected_archive_sha256)
     text=json.dumps(report,indent=2)+'\n'
     if a.report:
         a.report.write_text(text,encoding='utf-8',newline='\n')

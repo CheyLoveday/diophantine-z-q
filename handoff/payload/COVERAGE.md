@@ -1,11 +1,17 @@
 # Included research and limits
 
-This handoff includes the exact recorded public Git snapshot, the explicit
+Version 5 includes the 1,272-coordinate quartic manuscript, complete source and coefficient tables, transformation certificates, independent checks, source reviews and dependency inventory. These files are under `current/quartics/quartic-1272/` and `current/docs/quartic-1272/`. The current source uses comparison orders 16 and 52 and scalar order 32. The release descriptor and package manifest pin the exact files and completed reproduction receipt.
+
+The Version 4 manuscript and package, earlier quartics, and original construction remain at their existing paths. The following paragraphs describe the preserved Version 4 and earlier collection, with its historical counts and qualifications.
+
+## Historical Version 4 collection
+
+The preserved collection includes the exact recorded public Git snapshot, the explicit
 Version 4 history selection, inherited selected Version 3 and Version 2 research,
 and, in the full archive, the unchanged public November 4 revision-2 baseline.
 The current-only archive supplies the baseline URL and checksum instead.
 
-The current result is the 4,973-variable quartic, with 4,972 witnesses,
+The Version 4 result is the 4,973-variable quartic, with 4,972 witnesses,
 72,925 monomials, degree four and maximum coefficient magnitude
 685783949153203534233890. The original huge polynomial is also retained in
 the manuscript. The source generation, exact polynomial, finite certificate,
@@ -38,4 +44,4 @@ The November 6 revision-2 snapshot includes twelve selected supplied mathematica
 
 ## November 6 revision 3 credits
 
-The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. The manuscript, polynomial and mathematical scope are unchanged from the November 6 revision-2 research update.
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry. The manuscript, polynomial and mathematical scope are unchanged from the November 6 revision-2 research update.

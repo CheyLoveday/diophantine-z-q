@@ -1,0 +1,111 @@
+{
+  "schema": "quartic-1272-portability-v1",
+  "origin": "Independent reconstruction dated 2026-11-06",
+  "notOriginalBrox1315": true,
+  "originalPolynomialSha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586",
+  "changes": "Source-location and report-path adaptations only. Mathematical builder operations, compiler arithmetic and verifier arithmetic are unchanged.",
+  "copiedSourceFiles": [
+    {
+      "path": "builder/build_source.cjs",
+      "originalSha256": "ecbd266ca3728a6ea298475e059ce2541ae049d1ae4e1b75a4ea7a885d3e36fd",
+      "packagedSha256": "68c553f987f88780d28fbd21d625278701ecc38d8cc92160215e5bf44a270c78",
+      "byteIdentical": false
+    },
+    {
+      "path": "compiler/compile_ir.py",
+      "originalSha256": "adf72f0e20362373be6f050b19a6859c00d9535ec49e74272cf8e58df12f0435",
+      "packagedSha256": "adf72f0e20362373be6f050b19a6859c00d9535ec49e74272cf8e58df12f0435",
+      "byteIdentical": true
+    },
+    {
+      "path": "compiler/review_checker.cjs",
+      "originalSha256": "cebc27ef53ef27f131b58db06bd39a3008090c492598cb06fbda46f66e78007c",
+      "packagedSha256": "cebc27ef53ef27f131b58db06bd39a3008090c492598cb06fbda46f66e78007c",
+      "byteIdentical": true
+    },
+    {
+      "path": "checker/checker.cjs",
+      "originalSha256": "50f9924557f0594a0ddb2664260d2e382d80762a0d607d87203fb7ddfb4e1cb1",
+      "packagedSha256": "50f9924557f0594a0ddb2664260d2e382d80762a0d607d87203fb7ddfb4e1cb1",
+      "byteIdentical": true
+    },
+    {
+      "path": "checker/mutation_tests.cjs",
+      "originalSha256": "cac920522fb3a7e188b6bee64ed61d9e4003c0458a453374e22e8490be71f70c",
+      "packagedSha256": "cac920522fb3a7e188b6bee64ed61d9e4003c0458a453374e22e8490be71f70c",
+      "byteIdentical": true
+    },
+    {
+      "path": "checker/check_anchor.cjs",
+      "originalSha256": "148287db2e1336f9660bbbcdf160c5b2ca8de88eac913bf8598be2578b11a998",
+      "packagedSha256": "148287db2e1336f9660bbbcdf160c5b2ca8de88eac913bf8598be2578b11a998",
+      "byteIdentical": true
+    },
+    {
+      "path": "checker/run_all.cjs",
+      "originalSha256": "dc156fb32ce515eea3a543186fc5a6214617e2841f192a848a6a067f751198cd",
+      "packagedSha256": "dc156fb32ce515eea3a543186fc5a6214617e2841f192a848a6a067f751198cd",
+      "byteIdentical": true
+    },
+    {
+      "path": "source-review/build_inventory.py",
+      "originalSha256": "4342ddcb99828a3d0f23c3b1a2a66d5ab66f3aec631ece4c23747cbd1dcde74b",
+      "packagedSha256": "51072fb5079331de7cf12bbce112eff92edbce4934362d96a52c6412f8aeac7c",
+      "byteIdentical": false
+    },
+    {
+      "path": "source-review/check_builder_semantics.py",
+      "originalSha256": "b1c3d6c4124ce4a39e76486522e46dd702d3b47b0b4ea751a7c39bf82ec0ab69",
+      "packagedSha256": "b1c3d6c4124ce4a39e76486522e46dd702d3b47b0b4ea751a7c39bf82ec0ab69",
+      "byteIdentical": true
+    },
+    {
+      "path": "oracle/check_oracle.py",
+      "originalSha256": "ea983541e147f3092e692332f9c8a989bd60119b533eff9495552d33c60d4497",
+      "packagedSha256": "ee05d2b6e5137a490b7a384fa0679f6fadaff311a55f900e09fb64c1c22e3861",
+      "byteIdentical": false
+    },
+    {
+      "path": "identity/check_identity.py",
+      "originalSha256": "03ccfbe5d3cfe943139dee00232c51e9aea0bc9c7726fffc3fcb1a820a8f387a",
+      "packagedSha256": "b1725c36bcb9fd6504fc774844ffc8e00bea11eea26cc20afe7dd8c6cb49c968",
+      "byteIdentical": false
+    },
+    {
+      "path": "identity/check_reconstructed_tables.py",
+      "originalSha256": "bca2820620e76098398018b0a3db62a4f05599b02602b240a91b7301a72f8eb3",
+      "packagedSha256": "50a15e266cbb6a3a18917dbb4b63b7035ed5eaed456798dc01f1b510509afec5",
+      "byteIdentical": false
+    },
+    {
+      "path": "optimization/verify_optimization.py",
+      "originalSha256": "98349dcedf10e14456d88d43c46b87eb26c721b104d8206ac353133401cce38a",
+      "packagedSha256": "98349dcedf10e14456d88d43c46b87eb26c721b104d8206ac353133401cce38a",
+      "byteIdentical": true
+    },
+    {
+      "path": "optimization/find_affine_dependencies.py",
+      "originalSha256": "b31389c01f31c48510380ef3e8b4f8981058e01fff6673a074cbab47403d3fe2",
+      "packagedSha256": "b31389c01f31c48510380ef3e8b4f8981058e01fff6673a074cbab47403d3fe2",
+      "byteIdentical": true
+    }
+  ],
+  "originalRawHashes": {
+    "raw-ir.json": "d71ded4f434476cdc4bdd1ac309a19f57cb706ed3e714439c6ed32fd1f0b1731",
+    "raw-translated-ir.json": "301e3d110d5618ecd172ca0eca45f71058d9177348c379256819f69bd89b3425"
+  },
+  "sourceReviewNote": "Historical reviews pin original raw metadata; portability validation checks equality after removing only source.path. All regenerated tables must match original bytes.",
+  "externalArithmetic": "Named source arithmetic results and Sun Theorem 4.1 remain inputs. No Lean/kernel or complete external-theorem proof is claimed.",
+  "rawIRComparison": {
+    "allowedDifference": "source.path only",
+    "allOtherFieldsExactlyEqual": true,
+    "portableRawHashes": {
+      "raw-ir.json": "0ac8ea9ad16f4439c83e3cfa03ee8a8a4eb24adb5717c994ca19e5db47fffba3",
+      "raw-translated-ir.json": "9ea55f4a3a5e54f8143a14bda7aebdd21adcd01a972c649653d9b7856a4ee69e"
+    }
+  },
+  "polynomialByteIdentity": {
+    "direct": "5acd7ebf8c09c7d95f66c16f6c5594fdbbde062a0f3204068e8f88b7fd4b54ba",
+    "translated": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586"
+  }
+}

@@ -21,7 +21,7 @@ def certificate_fixture():
             dict(kind='final',report=dict(variables=9625,seconds=0.673))]
 
 def fixtures():
-    release=json.loads(Path(__file__).with_name('release.json').read_bytes())
+    release=json.loads((Path(__file__).parent/'releases/version4/release.json').read_bytes())
     root=release['package']+'/'
     files={name:('fixture '+name).encode() for name in release['proof_pins']}
     records=certificate_fixture()

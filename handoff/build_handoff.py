@@ -80,6 +80,7 @@ def main():
         safe_name(name)
         stamp=date.fromisoformat(release['date'])
         info=zipfile.ZipInfo(name,date_time=(stamp.year,stamp.month,stamp.day,0,0,0))
+        info.create_system=3
         info.compress_type=zipfile.ZIP_STORED if stored else zipfile.ZIP_DEFLATED
         info._compresslevel=1; info.external_attr=0o100644<<16
         digest=hashlib.sha256(); size=0
@@ -126,6 +127,7 @@ def main():
             # subsequently bound by the external ZIP checksum and receipt.
             stamp=date.fromisoformat(release['date'])
             info=zipfile.ZipInfo('MANIFEST.json',date_time=(stamp.year,stamp.month,stamp.day,0,0,0))
+            info.create_system=3
             info.external_attr=0o100644<<16
             archive.writestr(info,encoded(manifest),compress_type=zipfile.ZIP_DEFLATED,compresslevel=1)
     reports=[]

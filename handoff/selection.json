@@ -323,11 +323,15 @@
       "sha256": "c66169f2a5803fece49a4792b9ca8b349094d228af2463b995c33436d1c85047"
     },
     {
-      "bytes": 2506,
+      "bytes": 2510,
+      "editorial_update": {
+        "previous_sha256": "36e4d0d25847510fc079a01648b305770fe302b633ee8d5a2beef52f3745cf71",
+        "reason": "User-requested full given name: Jennifer Park"
+      },
       "original_path": "handoff/payload/RESEARCH_NOTES.md",
       "path": "history/version3/orientation/RESEARCH_NOTES.md",
-      "scope": "Historical Version 3 selection, bytes unchanged. Version 3 handoff orientation dated November 6, 2026",
-      "sha256": "36e4d0d25847510fc079a01648b305770fe302b633ee8d5a2beef52f3745cf71"
+      "scope": "Historical Version 3 selection, bytes unchanged. Version 3 handoff orientation dated November 6, 2026; project credit uses the user-requested full given name Jennifer Park",
+      "sha256": "e6057789f5fdde1cb02165c59ad661a318fef2d3e49c7a4e71db468ea2b9d348"
     },
     {
       "bytes": 697804,
@@ -1002,18 +1006,26 @@
       "sha256": "022a0ad3e29b682a9ab0c4cd04c0aaa901d1a779d36fb139e152dcb6fa2a0c9d"
     },
     {
-      "bytes": 2928,
+      "bytes": 3679,
+      "editorial_update": {
+        "previous_sha256": "15ec39a63e9315adb4885022910dbb469e1b377626ddf94775183dea5664f85d",
+        "reason": "User-requested full given name: Jennifer Park"
+      },
       "original_path": "prepared Version 4 coverage",
       "path": "COVERAGE.md",
-      "scope": "Current research orientation with corrected November 6 revision-3 contributor credit",
-      "sha256": "ba61c45c5ccc67439b7aa86649bbb50bbde6d4571d9e0b637ddb8a72e987c753"
+      "scope": "Version 5 handoff orientation, including explicitly labelled historical Version 4 context; project credit uses the user-requested full given name Jennifer Park",
+      "sha256": "272e1f28eb679547b49bb298c767a37d440ff8b3faa438d250c94f28a51ea299"
     },
     {
-      "bytes": 2867,
+      "bytes": 4232,
+      "editorial_update": {
+        "previous_sha256": "24711266c11654f14ec258eff4dbf53aa3b83cf63674bef33cfc193b454dc486",
+        "reason": "User-requested full given name: Jennifer Park"
+      },
       "original_path": "prepared Version 4 research guide",
       "path": "RESEARCH_NOTES.md",
-      "scope": "Current research orientation with corrected November 6 revision-3 contributor credit",
-      "sha256": "8c133a81893d9196cde75e4f228ce3831a229dab94181af99326e7267eba9450"
+      "scope": "Version 5 handoff orientation, including explicitly labelled historical Version 4 context; project credit uses the user-requested full given name Jennifer Park",
+      "sha256": "2bf0ec650acc9fda459ca5d03e3011ca2da3980b1d251f9475e362e198afacda"
     }
   ],
   "format": "quartic-handoff-selection/v2"

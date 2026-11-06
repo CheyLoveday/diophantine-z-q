@@ -1,0 +1,39 @@
+{
+  "status": "PASS_FINITE_TABLE",
+  "scope": "Independent integer convolution and exact coefficient support. Not an arithmetic theorem or source-program proof.",
+  "inputs": {
+    "compiler\\translated\\polynomial.json": {
+      "sha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586",
+      "bytes": 8703440
+    },
+    "compiler\\translated\\compiled-ir.json": {
+      "sha256": "21fcc73e863409511bb9ba7eec532d752e66ecda79a98a39b4df9f798bf53cb4",
+      "bytes": 4159027
+    },
+    "compiler\\translated\\coordinate-map.json": {
+      "sha256": "a14aaa0f44167f3f4191edb78e5f655dc6973269d20acf89e3f79a5bd0e36868",
+      "bytes": 135780
+    }
+  },
+  "residuals": 1229,
+  "activeCoordinates": 1272,
+  "degree": 4,
+  "monomials": 48001,
+  "sPowerCounts": {
+    "0": 47993,
+    "2": 1,
+    "1": 7
+  },
+  "maximumSFreeCoefficientBits": 5339,
+  "maximumLinearSMultiplier": 768,
+  "maximumCoefficient": "64*S^2",
+  "primitiveIntegerContent": 1,
+  "noParameterExpansion": true,
+  "topLevelAliasPresent": true,
+  "manifest": {
+    "sha256": "37a5d9d0e4d1d9f51562a1ba4a004827ad5bc7c0fbdf3a7d74f031e9ddc933e3",
+    "files": 78,
+    "status": "PASS"
+  },
+  "wallSeconds": 1.297
+}

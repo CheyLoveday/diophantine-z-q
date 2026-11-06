@@ -1,18 +1,14 @@
 # Research guide
 
-The current manuscript is [*Z is Diophantine in Q*, Version 4](../quartic_4973.pdf), dated November 6, 2026, with [TeX source](../quartic_4973.tex), an [explicit quartic package](../quartics/quartic-4973/README.md), and [proof and review evidence](quartic-4973/README.md). The quartic has 4,973 total variables and 4,972 rational witnesses. Its finite certificate establishes exact projection equivalence to the selected source. Arithmetic dependencies and their inherited qualifications are recorded separately.
+The current manuscript is [*Z is Diophantine in Q*, Version 5](../quartic_1272.pdf), dated November 6, 2026, with [TeX source](../quartic_1272.tex). It contains the original large polynomial, the retained [4,973-variable quartic](../quartics/quartic-4973/README.md), and the reconstructed [1,272-variable quartic](../quartics/quartic-1272/README.md).
 
-The source uses 13 full, eight beta-only and 16 Lucas-only comparisons, general roots with integer doubled indices, doubled targets, direct tangents, shared field squares and first-norm fusion. See the [build instructions](building.md) for fresh source generation and exact certificate replay.
+Start with the [Version 5 theorem-application inventory](quartic-1272/README.md). It records exact source versions, hypotheses, conventions and manuscript bindings, including the new prime-pattern argument and its publication-status qualifications. The finite polynomial checks and the arithmetic proof have separate scopes. The [build instructions](building.md) explain how to reproduce the artifacts.
 
-The [Version 4 handoff guide](../handoff/README.md) identifies the full and current-only archives, their scope and verification procedure. Both contain the exact public snapshot and selected research notes. The full archive also embeds the unchanged November 4 baseline.
+The [research handoff guide](../handoff/README.md) identifies the Version 5 full and current-only archives. Both contain the public snapshot and selected research notes, with no conversational transcript. The full archive also embeds the unchanged November 4 baseline.
 
 ## November 6 research update
 
 The [organized collaborator collection](../research/2026-11-06-collaborator-notes/README.md) includes the supplied equivalence and arithmetic-input notes, selected articles from the November 5 handoff, a comparison, and an exact replacement of the von Känel–Kret height input by the existing five-contact proof. Its source pins and check script distinguish a verified substitution from the still separate parity/point-existence question.
-
-## Future work
-
-Version 5 requires at most 2,486 total variables, including the input. This is half the Version 4 count rounded down, and remains a search target.
 
 ## Historical materials
 
@@ -30,7 +26,7 @@ The archived November 5 TeX source has descriptive labels such as `thm:target`, 
 
 ## Map of the argument
 
-Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 4.
+Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 5.
 
 The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this Git checkout. Some files predate the archived November 5 manuscript; compare their scope with that revision and later audits.
 

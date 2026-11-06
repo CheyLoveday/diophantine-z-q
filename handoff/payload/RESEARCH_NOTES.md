@@ -1,4 +1,14 @@
-# Reading the Version 4 research handoff
+# Reading the Version 5 research handoff
+
+Start with `current/quartic_1272.pdf`, its TeX source, the package README at `current/quartics/quartic-1272/README.md`, and the dependency inventory at `current/docs/quartic-1272/README.md`. The selected translated quartic has 1,272 total coordinates, 1,229 quadratic residuals and 48,001 coordinate monomials.
+
+Run `python -E -B quartics/quartic-1272/reproduce.py --out NEW_DIRECTORY` from the extracted `current/` directory. Python 3.10 or later and Node.js 18 or later are required. Keep the output outside the extracted snapshot. The runner rebuilds the source and both tables, replays the certificates, checks the source with independent implementations, runs the exact identity and mutation checks, and compares the rebuilt table with the frozen table.
+
+The source arithmetic claim retains the dependencies listed in the current inventory. The reconstruction is a new exact implementation of the displayed formulas; it does not recover Brox's missing original program. Earlier manuscripts and packages remain available for comparison. The previous target of 2,486 total coordinates is exceeded by the new 1,272-coordinate construction.
+
+## Historical Version 4 guide
+
+The following guide is retained as historical context for the Version 4 package. Its counts, runtime requirements and then-future targets do not describe the selected Version 5 package.
 
 Start with `current/quartic_4973.pdf` or its TeX source. The main file contains
 the original huge polynomial and the selected quartic. Earlier polynomials in
@@ -39,4 +49,4 @@ The same collection includes the reported Fable repository audit, with its exact
 
 ## November 6 revision 3 credits
 
-The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. The manuscript, polynomial and mathematical scope are unchanged from the November 6 revision-2 research update.
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry. The manuscript, polynomial and mathematical scope are unchanged from the November 6 revision-2 research update.

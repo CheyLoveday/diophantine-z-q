@@ -14,4 +14,4 @@ The next publication threshold is fewer than 5,000 total variables, including th
 
 The current certificate proves exact rational projection equivalence between its pinned source system and the final integer quartic, and checks the complete expansion. The separate arithmetic proof identifies that projection with the integers, under its stated inherited theorem applications. These checks do not upgrade the external arithmetic assumptions or complete the separate Lean formalization.
 
-Version 3 is a collaboration using the collective agentic notes from Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, Caroline Terry. The October 11 manuscript's provenance remains distinct.
+Version 3 is a collaboration using the collective agentic notes from Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, Caroline Terry. The October 11 manuscript's provenance remains distinct.

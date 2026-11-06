@@ -8,4 +8,4 @@ The full archive contains the new public snapshot, the selected research history
 
 `SHA256SUMS`, `BUILD_RECEIPT.json` and `handoff-plan.json` bind these archives to their exact snapshot. This research revision is separate from the Version 4 manuscript release and does not overwrite its assets or tag.
 
-The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. Revision 3 adds this corrected credit to the November 6 research collection; the mathematics and polynomial are unchanged.
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry. Revision 3 adds this corrected credit to the November 6 research collection; the mathematics and polynomial are unchanged.

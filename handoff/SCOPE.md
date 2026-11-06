@@ -1,8 +1,10 @@
-# Version 4 handoff selection
+# Version 5 handoff selection
 
 Date: November 6, 2026.
 
 The current collection is the complete regular-file tree of one reviewed public commit. Plan preparation rejects forbidden paths, credentials, conversation markers, missing proof files, stale release counts or an incomplete reproduction receipt. It does not silently drop files from that commit.
+
+The Version 5 package and dependency inventory are included through that complete current snapshot. A separate file manifest binds every package file. Its fresh reproduction receipt must contain all fourteen required successful stages and an exactly matching rebuilt polynomial. Generated replay directories are kept outside the repository and archives. Frozen historical pins additionally require the earlier quartics and original construction to retain their exact bytes.
 
 The separate history selection contains project mathematical proofs, independent reviews and short machine-readable acceptance records. `selection.json` gives each original path, destination, scope, byte count and SHA-256. Existing Version 2 notes remain unchanged. New accepted-source notes and separate research use different directories and explicit scope descriptions.
 
