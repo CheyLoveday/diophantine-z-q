@@ -1002,18 +1002,18 @@
       "sha256": "022a0ad3e29b682a9ab0c4cd04c0aaa901d1a779d36fb139e152dcb6fa2a0c9d"
     },
     {
-      "bytes": 2621,
+      "bytes": 2928,
       "original_path": "prepared Version 4 coverage",
       "path": "COVERAGE.md",
-      "scope": "Current research orientation, refreshed for November 6 revision 2",
-      "sha256": "f31b9cbedb8ec72238a8bf513cf5066711bf4ecb2c420a0af3f1552cfa11cc42"
+      "scope": "Current research orientation with corrected November 6 revision-3 contributor credit",
+      "sha256": "ba61c45c5ccc67439b7aa86649bbb50bbde6d4571d9e0b637ddb8a72e987c753"
     },
     {
-      "bytes": 2560,
+      "bytes": 2867,
       "original_path": "prepared Version 4 research guide",
       "path": "RESEARCH_NOTES.md",
-      "scope": "Current research orientation, refreshed for November 6 revision 2",
-      "sha256": "54b921b71f0c724914f887d89fad9af9f8a470cc18f83c56290485e063dd3a5b"
+      "scope": "Current research orientation with corrected November 6 revision-3 contributor credit",
+      "sha256": "8c133a81893d9196cde75e4f228ce3831a229dab94181af99326e7267eba9450"
     }
   ],
   "format": "quartic-handoff-selection/v2"

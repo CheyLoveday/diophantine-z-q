@@ -4,6 +4,8 @@ Research update: November 6, 2026. The published manuscript remains Version 4 wi
 
 The supplied notes isolate a pole-parity assertion, give explicit local denominator-clearing constructions, and reformulate the paired-point problem. Their use of the von Känel–Kret height estimate can be replaced by the existing five-contact proof in Version 4. The replacement preserves exponent 24 and the five-contact structure. It inherits the source qualifications of that existing proof.
 
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. Supplied documents retain their separate printed authorship and provenance.
+
 ## Reading order
 
 1. Read [the height replacement](height-replacement.md) for the exact substitution, constants, dependency chain, and remaining arithmetic input.

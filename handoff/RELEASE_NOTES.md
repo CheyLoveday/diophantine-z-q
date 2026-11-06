@@ -8,4 +8,4 @@ The baseline retains SHA-256 `827765f17087e1794c15770221a3a2d0fefed25839566a4a9b
 
 Exact certificate checks establish rational projection equivalence to the pinned source and verify the complete integer expansion. They do not replace the arithmetic proof or upgrade its inherited theorem applications. The separate Lean formalization remains incomplete.
 
-Version 4 is a collaboration using the collective agentic notes from Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, Caroline Terry. The October 11 manuscript's provenance remains distinct.
+Version 4 is a collaboration using the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. The October 11 manuscript's provenance remains distinct.

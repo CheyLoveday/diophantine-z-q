@@ -1,6 +1,10 @@
 # Version 4 research handoffs
 
-## Newest research revision
+## Latest credit update
+
+The [November 6 revision-3 research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-06-r3) supersedes revision 2 as the newest handoff. It includes the corrected [project credit](../CREDITS.md) and otherwise retains the same mathematical research and unchanged Version 4 manuscript and polynomial. Its own release checksum and receipt identify the rebuilt archives.
+
+## November 6 revision 2
 
 The [November 6 revision-2 research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-06-r2) contains refreshed full and current-only handoffs. The manuscript and polynomial remain Version 4. The added [collaborator research collection](../research/2026-11-06-collaborator-notes/README.md) has unchanged supplied articles, the height replacement, source pins, and reproducible small checks. The original Version 4 archives below remain immutable historical snapshots.
 

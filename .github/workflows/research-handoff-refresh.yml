@@ -1,4 +1,4 @@
-name: Build November 6 research handoff revision 2
+name: Build November 6 research handoff revision 3
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: research-handoff-2026-11-06-r2
+  group: research-handoff-2026-11-06-r3
   cancel-in-progress: false
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          tag=research-handoff-2026-11-06-r2
+          tag=research-handoff-2026-11-06-r3
           if ! tag_record=$(git ls-remote --refs origin "refs/tags/$tag"); then
             printf '%s\n' 'Could not check the remote tag.' >&2
             exit 1
@@ -54,11 +54,11 @@ jobs:
             printf '%s\n' 'Research release already exists; refusing to overwrite.' >&2
             exit 1
           fi
-          gh release create "$tag" --target "$GITHUB_SHA" --draft --title 'Research handoff: November 6, revision 2' --notes-file handoff/RESEARCH_UPDATE_NOTES.md build/handoff-output/z-in-q-version4-full-handoff.zip build/handoff-output/z-in-q-version4-current-handoff.zip build/handoff-output/SHA256SUMS build/handoff-output/BUILD_RECEIPT.json build/handoff-plan.json build/research-checks.json build/extracted-research-checks.json build/handoff-tests.json build/handoff-extraction.json
+          gh release create "$tag" --target "$GITHUB_SHA" --draft --title 'Research handoff: November 6, revision 3' --notes-file handoff/RESEARCH_UPDATE_NOTES.md build/handoff-output/z-in-q-version4-full-handoff.zip build/handoff-output/z-in-q-version4-current-handoff.zip build/handoff-output/SHA256SUMS build/handoff-output/BUILD_RECEIPT.json build/handoff-plan.json build/research-checks.json build/extracted-research-checks.json build/handoff-tests.json build/handoff-extraction.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: research-handoff-r2-evidence
+          name: research-handoff-r3-evidence
           path: |
             build/*.json
             build/handoff-output/BUILD_RECEIPT.json

@@ -4,7 +4,7 @@
 
 This repository contains the manuscript *Z is Diophantine in Q*, Version 4, dated November 6, 2026, and its explicit quartic polynomial in 4,973 variables. The complete polynomial, its source system, and the certificate checks accompany the manuscript.
 
-The project uses the collective agentic notes from Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, Caroline Terry.
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry.
 
 | To | Open |
 | --- | --- |
@@ -13,14 +13,14 @@ The project uses the collective agentic notes from Gabe Conant, Sohail Farhangi,
 | Read the complete polynomial and check its certificate | [Quartic package](quartics/quartic-4973/README.md) |
 | Inspect the proof dependencies and review evidence | [Version 4 evidence](docs/quartic-4973/README.md) |
 | Build the manuscript or run the checks | [Build instructions](docs/building.md) |
-| Download the newest research handoffs, November 6 revision 2 | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-06-r2/z-in-q-version4-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-06-r2/z-in-q-version4-current-handoff.zip), [contents and verification](handoff/README.md) |
+| Download the newest research handoffs, November 6 revision 3 | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-06-r3/z-in-q-version4-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-06-r3/z-in-q-version4-current-handoff.zip), [contents and verification](handoff/README.md) |
 | Read the collaborator notes and height replacement | [Research update](research/2026-11-06-collaborator-notes/README.md) |
 | Read the October 11 manuscript | [October 11 manuscript and provenance](October%2011%20Manuscript/README.md) |
 | Find earlier constructions and research history | [Research guide](docs/research-guide.md) |
 | Inspect the partial formalization | [Accepted Lean helpers](lean/README.md) |
 | Cite the manuscript or report an issue | [BibTeX](CITATION.bib), [contribution guide](CONTRIBUTING.md) |
 
-The November 6 revision-2 research update preserves the Version 4 manuscript and polynomial. It adds the collaborator notes, an explicit height-input replacement and their source/verification records.
+The November 6 revision-3 research update preserves the Version 4 manuscript and polynomial. It adds the collaborator notes, an explicit height-input replacement and their source/verification records.
 
 The full handoff combines the current public snapshot and selected research notes with the unchanged November 4 archive. The current-only handoff omits that embedded archive. The handoff guide specifies the included collections and verification procedure.
 

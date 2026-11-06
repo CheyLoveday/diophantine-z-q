@@ -36,3 +36,7 @@ number is a future search target, not an established construction.
 Read `current/research/2026-11-06-collaborator-notes/README.md` for the new collaborator collection and `height-replacement.md` for the exact substitution removing the von Känel–Kret input. Exponent 24 and five contacts are retained. The supplied originals, comparison, existing H5 proof extract, source hashes and small-check script are included. This does not change the selected polynomial or resolve the collaborator's remaining parity assertion.
 
 The same collection includes the reported Fable repository audit, with its exact stated exclusions, and explains the frozen source label and the original-only Lean target.
+
+## November 6 revision 3 credits
+
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. The manuscript, polynomial and mathematical scope are unchanged from the November 6 revision-2 research update.

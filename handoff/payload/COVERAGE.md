@@ -35,3 +35,7 @@ original notices and filtering policy; packaging it is not a new audit of its
 content or redistribution rights.
 
 The November 6 revision-2 snapshot includes twelve selected supplied mathematical documents and ledgers under `current/research/2026-11-06-collaborator-notes/supplied/`, plus the new comparison and height replacement. `SUPPLIED_SOURCES.json` records their exact hashes. `ARCHIVE_CATALOGUE.json` identifies all entries in the original ZIP and which were selected; central-directory metadata is not a content audit. The raw ZIP, nested ZIPs, prompts and execution logs are not republished.
+
+## November 6 revision 3 credits
+
+The project uses the collective agentic notes from Stefan Baranczuk, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, and Caroline Terry. The manuscript, polynomial and mathematical scope are unchanged from the November 6 revision-2 research update.
