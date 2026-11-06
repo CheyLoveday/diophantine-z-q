@@ -76,7 +76,7 @@ def main():
     args = parser.parse_args()
     if args.dpi <= 0:
         parser.error('--dpi must be positive')
-    pdf = (args.pdf or ROOT / ('manuscripts/quartic_v8.pdf' if args.edition == 'v8' else 'manuscripts/quartic_v7.pdf' if args.edition == 'v7' else 'quartic_962.pdf' if args.edition == 'v6' else 'manuscripts/archive/quartic_1272.pdf')).resolve()
+    pdf = (args.pdf or ROOT / ('manuscripts/quartic_v8.pdf' if args.edition == 'v8' else 'manuscripts/archive/quartic_v7.pdf' if args.edition == 'v7' else 'quartic_962.pdf' if args.edition == 'v6' else 'manuscripts/archive/quartic_1272.pdf')).resolve()
     out = args.out.resolve(); out.mkdir(parents=True, exist_ok=True)
     if args.pypdf:
         from pypdf import PdfReader

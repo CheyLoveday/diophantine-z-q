@@ -13,7 +13,7 @@ These files are preserved byte for byte. Historical inventories retain their ori
 
 | Version | PDF | TeX |
 | --- | --- | --- |
-| 7 | [PDF](quartic_v7.pdf) | [TeX](quartic_v7.tex) |
+| 7 | [PDF](archive/quartic_v7.pdf) | [TeX](archive/quartic_v7.tex) |
 | 5 | [PDF](archive/quartic_1272.pdf) | [TeX](archive/quartic_1272.tex) |
 | 4 | [PDF](archive/quartic_4973.pdf) | [TeX](archive/quartic_4973.tex) |
 | 3 | [PDF](archive/quartic_9625.pdf) | [TeX](archive/quartic_9625.tex) |

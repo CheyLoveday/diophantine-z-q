@@ -42,12 +42,12 @@
     },
     "quartic_v7.pdf": {
       "bytes": 1462288,
-      "path": "manuscripts/quartic_v7.pdf",
+      "path": "manuscripts/archive/quartic_v7.pdf",
       "sha256": "6f1dd7cbd9a735c4237bd6a123855571e15b2057f0a539eb6bc07e8e1dba43cd"
     },
     "quartic_v7.tex": {
       "bytes": 912132,
-      "path": "manuscripts/quartic_v7.tex",
+      "path": "manuscripts/archive/quartic_v7.tex",
       "sha256": "5399d2fb3c3beea388ccdb5719934772f222b49d02482a05ac3abc515321419a"
     }
   },

@@ -47,6 +47,8 @@ def read(repo, path):
     # File relocation does not change any accepted manuscript byte or hash.
     if path in {'quartic_12504.tex', 'quartic_9625.tex', 'quartic_4973.tex', 'quartic_1272.tex'} and not (repo / path).exists():
         path = 'manuscripts/archive/' + path
+    if path == 'manuscripts/quartic_v7.tex' and not (repo / path).exists():
+        path = 'manuscripts/archive/quartic_v7.tex'
     target = (repo / path).resolve()
     fail(target.is_relative_to(repo.resolve()), "Path escapes repository: " + path)
     return target.read_bytes()

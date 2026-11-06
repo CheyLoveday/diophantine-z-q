@@ -68,6 +68,8 @@ python -E -B docs/quartic-962/test_inventory.py
 python -E -B scripts/check_manuscript_revision.py
 ```
 
+The Version 7 inventory keeps its frozen logical filename `manuscripts/quartic_v7.tex`; the validator reads the unchanged source from `manuscripts/archive/quartic_v7.tex`.
+
 The following checks remain required for the historical baselines. Their older publication-status records describe those versions, not the replacement proof in Version 7. The adapter resolves the original logical filenames to `manuscripts/archive/` while retaining the frozen validators and all accepted hashes.
 
 ```sh
