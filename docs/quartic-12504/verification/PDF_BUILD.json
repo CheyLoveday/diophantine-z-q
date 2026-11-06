@@ -1,0 +1,14 @@
+{
+  "engine": "Tectonic 0.17.0",
+  "bundle_url": "https://data1b.fullyjustified.net/tlextras-2022.0r0.tar",
+  "bundle_fingerprint": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c",
+  "manuscript_version": 2,
+  "pdf": "quartic_12504.pdf",
+  "source_sha256": "a8b3f7e2d86ef33082d22874a823bfbdf2f3ad120664ace8c4c1b1e82399c8bd",
+  "pdf_sha256": "f3309f8281281f0ecb61dc99f0c28804f627348a986eb55b4bd9e8b12a58cb6f",
+  "pdf_bytes": 1095045,
+  "tex_errors": 0,
+  "unresolved_references": false,
+  "original_pdf_replaced": false,
+  "byte_identity_to_uploaded_pdf_claimed": false
+}

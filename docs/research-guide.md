@@ -2,6 +2,8 @@
 
 The current manuscript is [*Z is Diophantine in Q*, Version 2](../quartic_12504.pdf), with [TeX source](../quartic_12504.tex), an [explicit quartic package](../quartics/quartic-12504/README.md), and [proof and review evidence](quartic-12504/README.md). The quartic has 12,504 total variables and 12,503 rational witnesses. Its finite certificate checks establish exact projection equivalence to the pinned source; the arithmetic dependencies are recorded separately. See the [build instructions](building.md) to reproduce the checks.
 
+Version 2 has a [full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-12504-version-2/z-in-q-version2-full-handoff.zip) and a [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-12504-version-2/z-in-q-version2-current-handoff.zip). Both include the current public snapshot under `current/` and selected research notes. The full handoff also embeds the unchanged November 4 archive; the current-only handoff identifies that archive by its public URL and hash. See the [handoff guide](../handoff/README.md) for the included collections, manifests and verification procedure.
+
 The remainder of this guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2). It preserves earlier research history and does not contain the Version 2 quartic package or all subsequent audits. Its `current/` directory means current at the archive date. The [original large construction](../construction/README.md) and [accepted Lean helpers](../lean/README.md) remain available in this checkout.
 
 ## Reading the archived manuscript
@@ -38,7 +40,7 @@ The archive's K215 and ZFC-related files record additional research. The archive
 
 ## Verify and restore the archive
 
-Download the handoff zip from the release. Its SHA-256 is:
+This section applies to the historical November 4 archive. For the Version 2 archives, use the [handoff guide](../handoff/README.md). Download the historical ZIP from its release. Its SHA-256 is:
 
 ```text
 827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b

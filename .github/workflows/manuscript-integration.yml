@@ -2,6 +2,12 @@ name: Version 2 manuscript and quartic verification
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Run all verification or render the already-built PDF'
+        type: choice
+        options: [all, visual]
+        default: all
   push:
     paths:
       - 'quartic_12504.tex'
@@ -31,16 +37,27 @@ jobs:
           path: .cache/tectonic
           key: tectonic-${{ runner.os }}-0.17.0-6ffe055852f8faf66
       - name: Reproduce source, certificate, and full integer expansion
+        if: inputs.mode != 'visual'
         shell: bash
         run: |
           ulimit -v 2097152
           python -E -B quartics/quartic-12504/reproducibility/run.py --output build/quartic-reproduction --stage-seconds 180
       - name: Check historical audit and current manuscript bindings
+        if: inputs.mode != 'visual'
         run: |
           python docs/theorem-application-audit/validate.py
           python docs/quartic-12504/validate.py
       - name: Compile the exact Version 2 manuscript
+        if: inputs.mode != 'visual'
         run: python scripts/build_paper.py
+      - name: Render the committed manuscript for visual review
+        if: inputs.mode == 'visual'
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          ulimit -v 2097152
+          python scripts/render_quartic_review.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -49,3 +66,4 @@ jobs:
             build/quartic-reproduction/
             build/quartic-inventory.json
             build/paper/
+            build/pdf-review/

@@ -1,6 +1,6 @@
 # Building and checking the research package
 
-Run these commands from the repository root. Python scripts use the standard library. The current quartic and the original large construction have separate checks.
+Run these commands from the repository root. Python scripts use the standard library. The current quartic and the original large construction have separate checks. After extracting either Version 2 handoff, run these commands from its `current/` directory. See the [handoff guide](../handoff/README.md) for the archive layout and verification procedure.
 
 ## Current quartic
 

@@ -13,10 +13,13 @@ Version 2 is a collaboration using the collective agentic notes from Gabe Conant
 | Read the complete polynomial and check its certificate | [Quartic package](quartics/quartic-12504/README.md) |
 | Inspect the proof dependencies and review evidence | [Version 2 evidence](docs/quartic-12504/README.md) |
 | Build the manuscript or run the checks | [Build instructions](docs/building.md) |
+| Download the Version 2 research handoffs | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-12504-version-2/z-in-q-version2-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-12504-version-2/z-in-q-version2-current-handoff.zip), [contents and verification](handoff/README.md) |
 | Read the October 11 manuscript | [October 11 manuscript and provenance](October%2011%20Manuscript/README.md) |
 | Find earlier constructions and research history | [Research guide](docs/research-guide.md) |
 | Inspect the partial formalization | [Accepted Lean helpers](lean/README.md) |
 | Cite the manuscript or report an issue | [BibTeX](CITATION.bib), [contribution guide](CONTRIBUTING.md) |
+
+The full handoff combines the current public snapshot and selected research notes with the unchanged November 4 archive. The current-only handoff omits that embedded archive. The handoff guide specifies the included collections and verification procedure.
 
 ## The polynomial
 
