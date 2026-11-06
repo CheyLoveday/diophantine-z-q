@@ -16,6 +16,9 @@ def within(root, rel):
     p=(root/rel).resolve()
     require(p.is_relative_to(root.resolve()), "Path escapes repository: "+rel)
     return p
+def span(value, length):
+    require(isinstance(value,list) and len(value)==2 and all(type(x) is int for x in value) and 1<=value[0]<=value[1]<=length,"Invalid excerpt range")
+    return value
 
 def validate(repo):
     docs=repo/"docs/quartic-12504"; pkg=repo/"quartics/quartic-12504"
@@ -48,6 +51,7 @@ def validate(repo):
         require(actual==pin,"Inspected source changed: "+rel)
     for name,key in [("source-audit.json","source_audit_sha256"),("construction-map.json","construction_map_sha256")]:
         require(sha(pkg/name)==entry[key],"Source audit binding: "+name)
+    require(sha(pkg/"reproducibility/source-audit/check_source.py")==entry["source_audit_checker_sha256"],"Source audit checker changed")
     require(sha(pkg/"source-residuals.jsonl.gz")==contract["source_sha256"],"Compressed source")
     require(digest(gzip.decompress((pkg/"source-residuals.jsonl.gz").read_bytes()))==contract["source_uncompressed_sha256"],"Raw source")
     receipt=load(pkg/"evidence/wave13-verification.json")
@@ -100,7 +104,7 @@ def validate(repo):
     require(len(bridge["anchors"])==len(expected_anchors) and {x["id"] for x in bridge["anchors"]}==set(expected_anchors),"Bridge anchor coverage")
     require(bridge["status"]=="PASS" and not bridge["unresolved"],"Unreviewed changed applications")
     for item in bridge["anchors"]:
-        anchor=expected_anchors[item["id"]];lo,hi=item["old_lines"];nlo,nhi=item["current_lines"]
+        anchor=expected_anchors[item["id"]];lo,hi=span(item["old_lines"],len(old));nlo,nhi=span(item["current_lines"],len(lines))
         require([lo,hi]==[anchor["line_start"],anchor["line_end"]],"Historical anchor moved")
         require(old[lo-1:hi]==lines[nlo-1:nhi],"Bridge excerpt changed: "+item["id"])
         require(digest("\n".join(lines[nlo-1:nhi]).encode())==item["excerpt_sha256"]==anchor["excerpt_sha256"],"Bridge excerpt hash")
@@ -112,11 +116,9 @@ def validate(repo):
         require(item["keys"]==original["keys"] and item["role"]==original["role"] and item["old_line"]==original["line"] and item["paragraph_sha256"]==original["paragraph_sha256"],"Citation provenance changed")
         olo,ohi=original["paragraph_start"],original["paragraph_end"]
         require(digest("\n".join(old[olo-1:ohi]).encode())==original["paragraph_sha256"],"Historical citation hash")
-        require(item["current_paragraph_lines"] is not None,"Unreviewed changed citation paragraph")
-        if item["current_paragraph_lines"]:
-            lo,hi=item["current_paragraph_lines"]
-            require(lines[lo-1:hi]==old[olo-1:ohi],"Citation text changed")
-            require(digest("\n".join(lines[lo-1:hi]).encode())==item["paragraph_sha256"],"Citation excerpt changed")
+        lo,hi=span(item["current_paragraph_lines"],len(lines))
+        require(lines[lo-1:hi]==old[olo-1:ohi],"Citation text changed")
+        require(digest("\n".join(lines[lo-1:hi]).encode())==item["paragraph_sha256"],"Citation excerpt changed")
     return {"status":"PASS","scope":"Inventory hashes, exact text bridge, dependency reachability and source/artifact bindings only; no mathematical truth or fresh certificate replay asserted.","manuscript_sha256":digest(raw),"historical_application_anchors":len(expected_anchors),"unmapped_citation_paragraphs":[x["id"] for x in bridge["citation_paragraphs"] if not x["current_paragraph_lines"]],"local_lemmas":len(ids),"inherited_families":len(fids),"evidence_files":len(checked)}
 
 def main():

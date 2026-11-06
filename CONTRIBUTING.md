@@ -25,4 +25,4 @@ For a computational certificate, distinguish how the certificate was found from 
 
 Keep changes focused. Explain the problem, the resulting behavior or mathematical statement, and the checks performed. Preserve dated release artifacts; propose a new version rather than replacing a historical snapshot. Avoid including credentials or unrelated private files in logs.
 
-The manuscript and repository README record Version 2's collaboration credit and distinguish the October 11 manuscript's provenance. If AI tools contributed to a proposed proof, computation, or review, describe that contribution and the verification performed. Acceptance depends on the argument and evidence supplied.
+The repository README records Version 2's collaboration credit and distinguishes the October 11 manuscript's provenance. If AI tools contributed to a proposed proof, computation, or review, describe that contribution and the verification performed. Acceptance depends on the argument and evidence supplied.
