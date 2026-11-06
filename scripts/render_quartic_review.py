@@ -9,15 +9,15 @@ import unicodedata
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--pdf', type=Path, default=ROOT / 'quartic_9625.pdf')
+parser.add_argument('--pdf', type=Path, default=ROOT / 'quartic_4973.pdf')
 PDF = parser.parse_args().pdf.resolve()
 OUT = ROOT / 'build/pdf-review'
 OUT.mkdir(parents=True, exist_ok=True)
 subprocess.run(['pdftotext', '-layout', str(PDF), str(OUT / 'paper.txt')], check=True)
 pages = (OUT / 'paper.txt').read_text(encoding='utf-8').split('\f')
 normalized = [re.sub(r'\s+', ' ', unicodedata.normalize('NFKC', text)) for text in pages]
-starts = [i for i, text in enumerate(normalized) if i > 10 and 'We now give the second final polynomial' in text]
-ends = [i for i, text in enumerate(normalized) if i > 10 and 'The finite source and algebraic checks do not replace' in text]
+starts = [i for i, text in enumerate(normalized) if i > 10 and 'This is the second final polynomial' in text]
+ends = [i for i, text in enumerate(normalized) if i > 10 and 'The finite checks do not replace' in text]
 assert len(starts) == len(ends) == 1, (starts, ends)
 last = max(i for i, text in enumerate(normalized) if text.strip())
 theta_pages = [i for i, text in enumerate(normalized) if 'We check every theta convolution term' in text]
