@@ -11,7 +11,7 @@ The Version 3 handoffs contain the 9,625-variable quartic and selected project r
 
 The full ZIP is self-contained for these included collections. It does not contain every private research record. The [Version 2 handoffs](releases/version2/README.md) remain historical and unchanged.
 
-Before opening or running archive contents, compare the ZIP's SHA-256 with the release's `SHA256SUMS`. `BUILD_RECEIPT.json` records the exact snapshot, archive identities and frozen-plan digest. Archive sizes and hashes are determined by the completed build, not by this guide.
+Before opening or running archive contents, compare the ZIP's SHA-256 with the release's `SHA256SUMS`. `BUILD_RECEIPT.json` records the exact snapshot, archive identities and frozen-plan digest. The [completed Version 3 release record](releases/version3/README.md) supplies the download links, sizes, hashes and build evidence.
 
 After extraction, read `START_HERE.md`, `CURRENT_STATE.json` and `COVERAGE.md`. `current/` contains every regular tracked file from the recorded public commit. `history/version3/` contains selected evidence for this release. `history/not-in-version3/` contains separate three-mode, Jacobi and other research; those notes do not define the released source or its count. The earlier selected Version 2 records preserve their original status wording.
 
