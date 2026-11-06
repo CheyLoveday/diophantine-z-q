@@ -51,13 +51,12 @@ jobs:
         if: inputs.mode != 'visual'
         run: python scripts/build_paper.py
       - name: Render the manuscript for visual review
-        if: inputs.mode == 'visual' || inputs.mode == 'paper'
         shell: bash
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y poppler-utils
           ulimit -v 2097152
-          if [ "${{ inputs.mode }}" = paper ]; then
+          if [ "${{ inputs.mode }}" != visual ]; then
             python scripts/render_quartic_review.py --pdf build/paper/quartic_9625.pdf
           else
             python scripts/render_quartic_review.py

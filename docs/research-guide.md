@@ -1,10 +1,16 @@
 # Research guide
 
-The current manuscript is [*Z is Diophantine in Q*, Version 2](../quartic_12504.pdf), with [TeX source](../quartic_12504.tex), an [explicit quartic package](../quartics/quartic-12504/README.md), and [proof and review evidence](quartic-12504/README.md). The quartic has 12,504 total variables and 12,503 rational witnesses. Its finite certificate checks establish exact projection equivalence to the pinned source; the arithmetic dependencies are recorded separately. See the [build instructions](building.md) to reproduce the checks.
+The current manuscript is [*Z is Diophantine in Q*, Version 3](../quartic_9625.pdf), dated November 6, 2026, with [TeX source](../quartic_9625.tex), an [explicit quartic package](../quartics/quartic-9625/README.md), and [proof and review evidence](quartic-9625/README.md). The quartic has 9,625 total variables and 9,624 rational witnesses. Its finite certificate checks establish exact projection equivalence to the pinned source; the arithmetic dependencies are recorded separately. The selected source has 29 full and 8 beta-only comparisons with affine difference charts. The Jacobi and three-mode proposals remain research. See the [build instructions](building.md) to reproduce the checks.
 
-Version 2 has a [full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-12504-version-2/z-in-q-version2-full-handoff.zip) and a [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-12504-version-2/z-in-q-version2-current-handoff.zip). Both include the current public snapshot under `current/` and selected research notes. The full handoff also embeds the unchanged November 4 archive; the current-only handoff identifies that archive by its public URL and hash. See the [handoff guide](../handoff/README.md) for the included collections, manifests and verification procedure.
+Version 3 has a [full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-9625-version-3/z-in-q-version3-full-handoff.zip) and a [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-9625-version-3/z-in-q-version3-current-handoff.zip). Both include the current public snapshot under `current/` and selected research notes. The full handoff also embeds the unchanged November 4 archive; the current-only handoff identifies that archive by its public URL and hash. See the [handoff guide](../handoff/README.md) for the included collections, manifests and verification procedure.
 
-The remainder of this guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2). It preserves earlier research history and does not contain the Version 2 quartic package or all subsequent audits. Its `current/` directory means current at the archive date. The [original large construction](../construction/README.md) and [accepted Lean helpers](../lean/README.md) remain available in this checkout.
+## Future work
+
+A Version 4 release will be considered only after a construction with fewer than 5,000 total variables, including the rational input, passes its arithmetic review and exact checks. This is a future release criterion, not a result claimed for Version 3.
+
+## Historical materials
+
+The [Version 2 release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/quartic-12504-version-2) and its [12,504-variable package](../quartics/quartic-12504/README.md) remain separate historical records. The remainder of this guide describes the [November 4, 2026 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2). It preserves earlier research history and does not contain either the Version 2 or Version 3 quartic package or all subsequent audits. Its `current/` directory means current at the archive date. The [original large construction](../construction/README.md) and [accepted Lean helpers](../lean/README.md) remain available in this checkout.
 
 ## Reading the archived manuscript
 
@@ -18,7 +24,7 @@ The archived November 5 TeX source has descriptive labels such as `thm:target`, 
 
 ## Map of the argument
 
-Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 2.
+Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 3.
 
 The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this Git checkout. Some files predate the archived November 5 manuscript; compare their scope with that revision and later audits.
 
@@ -40,7 +46,7 @@ The archive's K215 and ZFC-related files record additional research. The archive
 
 ## Verify and restore the archive
 
-This section applies to the historical November 4 archive. For the Version 2 archives, use the [handoff guide](../handoff/README.md). Download the historical ZIP from its release. Its SHA-256 is:
+This section applies to the historical November 4 archive. For the current Version 3 archives, use the [handoff guide](../handoff/README.md). Download the historical ZIP from its release. Its SHA-256 is:
 
 ```text
 827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b
@@ -103,6 +109,6 @@ The archive omits dependency caches and compiled Lean binaries. The current repo
 
 ## Archive scope
 
-The historical archive preserves superseded approaches and unfinished work as well as accepted results. Its inventories establish file identity and provenance; they are not a complete per-source license review or a new review of every mathematical claim. See the [archival notes](archiving.md) and [third-party notices](../THIRD_PARTY_NOTICES.md). The Version 2 source and evidence are supplied separately in this repository.
+The historical archive preserves superseded approaches and unfinished work as well as accepted results. Its inventories establish file identity and provenance; they are not a complete per-source license review or a new review of every mathematical claim. See the [archival notes](archiving.md) and [third-party notices](../THIRD_PARTY_NOTICES.md). The Version 3 source and evidence are supplied separately in this repository.
 
 Independent external mathematical review and completion of the main Lean proof are separate from these packaging checks. Record substantive findings and their resolution by version, and continue using release tags and file hashes to identify the materials under discussion.
