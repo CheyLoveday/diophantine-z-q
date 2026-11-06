@@ -400,8 +400,9 @@ def validate_release_v6(release):
         raise ValueError('Expected Version 6 or Version 7 for the 962-variable package')
     if release.get('format') != 'quartic-handoff-release/v3' or release.get('state') != 'READY':
         raise ValueError('Version 6 is not a frozen READY release descriptor')
-    required = {'version': version, 'release_tag': f'quartic-962-version-{version}', 'manuscript': 'quartic_962.tex',
-                'pdf': 'quartic_962.pdf', 'package': 'quartics/quartic-962',
+    document = 'manuscripts/quartic_v7' if version == 7 else 'quartic_962'
+    required = {'version': version, 'release_tag': f'quartic-962-version-{version}', 'manuscript': document+'.tex',
+                'pdf': document+'.pdf', 'package': 'quartics/quartic-962',
                 'inventory': 'docs/quartic-962/README.md', 'package_manifest': 'MANIFEST.json',
                 'polynomial': 'polynomial.json'}
     if any(release.get(k) != v for k, v in required.items()):

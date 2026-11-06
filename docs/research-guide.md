@@ -1,6 +1,6 @@
 # Research guide
 
-The current manuscript is [*Z is Diophantine in Q*, Version 7](../quartic_962.pdf), dated November 6, 2026, with [TeX source](../quartic_962.tex). It contains the original large polynomial, the retained [4,973-variable quartic](../quartics/quartic-4973/README.md), and the reconstructed [962-variable quartic](quartic-962/README.md).
+The current manuscript is [*Z is Diophantine in Q*, Version 7](../manuscripts/quartic_v7.pdf), dated November 6, 2026, with [TeX source](../manuscripts/quartic_v7.tex). It contains the original large polynomial, the retained [4,973-variable quartic](../quartics/quartic-4973/README.md), and the reconstructed [962-variable quartic](quartic-962/README.md).
 
 Start with the [Version 7 theorem-application inventory](quartic-962/README.md). It records exact source versions, hypotheses, conventions and manuscript bindings, including the new prime-pattern argument and its publication-status qualifications. The finite polynomial checks and the arithmetic proof have separate scopes. The [build instructions](building.md) explain how to reproduce the artifacts.
 

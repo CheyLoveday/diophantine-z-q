@@ -14,7 +14,7 @@
   "internal_results": 151,
   "manuscript": {
     "bytes": 912132,
-    "path": "quartic_962.tex",
+    "path": "manuscripts/quartic_v7.tex",
     "sha256": "5399d2fb3c3beea388ccdb5719934772f222b49d02482a05ac3abc515321419a"
   },
   "new_applications_missing_labels": [],
@@ -143,7 +143,7 @@
         "end_character": 542939,
         "first_line": 10527,
         "last_line": 11557,
-        "path": "quartic_962.tex",
+        "path": "manuscripts/quartic_v7.tex",
         "start_character": 499671,
         "text_sha256": "805bdf4b0d6ad27bac182cac4f4084935b8d9c8718808dad86a71cc8d1f94a0a"
       },
@@ -165,7 +165,7 @@
         "end_character": 551592,
         "first_line": 11561,
         "last_line": 11734,
-        "path": "quartic_962.tex",
+        "path": "manuscripts/quartic_v7.tex",
         "start_character": 542973,
         "text_sha256": "bdf85b2479ec816babf20ac4f997316c14986f68b1f5c5b6f5d1f5c135c69ee5"
       },
@@ -187,7 +187,7 @@
         "end_character": 873360,
         "first_line": 16601,
         "last_line": 18424,
-        "path": "quartic_962.tex",
+        "path": "manuscripts/quartic_v7.tex",
         "start_character": 786582,
         "text_sha256": "2cc2646dee85eb718d8585d360c3b1b95fb0814d162c14a2a90f7cca4075147a"
       },
@@ -234,7 +234,7 @@
         "end_character": 889663,
         "first_line": 16159,
         "last_line": 18787,
-        "path": "quartic_962.tex",
+        "path": "manuscripts/quartic_v7.tex",
         "start_character": 766438,
         "text_sha256": "926c9593bf9ab132fea0401edeb2d0776d0278b74fc1f4fac01a91ada0a3c8ec"
       },
@@ -281,7 +281,7 @@
         "end_character": 499669,
         "first_line": 10256,
         "last_line": 10525,
-        "path": "quartic_962.tex",
+        "path": "manuscripts/quartic_v7.tex",
         "start_character": 487894,
         "text_sha256": "b81c7f9709f2188d26cddd6bca13c2e05f5a934739925d0b1f9062b7e0a830ea"
       },

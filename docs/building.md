@@ -46,7 +46,7 @@ This portable checker writes `verification.json` in the supplied directory. Use 
 python scripts/build_paper.py
 ```
 
-The script downloads a SHA-256-verified Tectonic 0.17.0 binary for the host platform, then builds a copy of [quartic_962.tex](../quartic_962.tex) in an isolated temporary directory. It uses the fixed `tlextras-2022.0r0` bundle URL and checks the selected bundle's fingerprint. Tectonic fetches the required support files. The first run requires network access; later runs reuse the local resource cache.
+The script downloads a SHA-256-verified Tectonic 0.17.0 binary for the host platform, then builds a copy of [manuscripts/quartic_v7.tex](../manuscripts/quartic_v7.tex) in an isolated temporary directory. It uses the fixed `tlextras-2022.0r0` bundle URL and checks the selected bundle's fingerprint. Tectonic fetches the required support files. The first run requires network access; later runs reuse the local resource cache.
 
 If Tectonic 0.17.0 is already installed:
 
@@ -54,7 +54,7 @@ If Tectonic 0.17.0 is already installed:
 python scripts/build_paper.py --tectonic /path/to/tectonic
 ```
 
-Results are written to `build/paper/`, including `quartic_962.pdf`, `quartic_962.log`, `compiler.log`, and `build-report.json`. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
+Results are written to `build/paper/`, including `quartic_v7.pdf`, `quartic_v7.log`, `compiler.log`, and `build-report.json`. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
 
 The build does not replace the checked-in PDF. Fixed engine, bundle and timestamp inputs improve reproducibility, but PDF byte identity across operating systems is not claimed. The old receipts under `docs/theorem-application-audit/` describe their frozen historical manuscript, not the Version 7 build.
 
@@ -63,20 +63,20 @@ The build does not replace the checked-in PDF. Fixed engine, bundle and timestam
 The [Version 7 inventory](quartic-962/README.md) binds the current manuscript to its source applications, exact reviewed fragments, and historical predecessors:
 
 ```sh
-python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex
+python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript manuscripts/quartic_v7.tex
 python -E -B docs/quartic-962/test_inventory.py
 ```
 
-The following checks remain required for the historical baselines. Their older publication-status records describe those versions, not the replacement proof in Version 7.
+The following checks remain required for the historical baselines. Their older publication-status records describe those versions, not the replacement proof in Version 7. The adapter resolves the original logical filenames to `manuscripts/archive/` while retaining the frozen validators and all accepted hashes.
 
 ```sh
-python -E -B docs/quartic-1272/inventory.py validate --repo . --manuscript quartic_1272.tex
+python -E -B scripts/check_historical_inventory.py 5 validate --repo . --manuscript quartic_1272.tex
 ```
 
 
 ```sh
 python docs/theorem-application-audit/validate.py
-python -E -B docs/quartic-4973/inventory.py validate --repo . --docs docs/quartic-4973 --acceptance-sha256 TRUSTED_SHA256
+python -E -B scripts/check_historical_inventory.py 4 validate --repo . --docs docs/quartic-4973 --acceptance-sha256 TRUSTED_SHA256
 ```
 
 For the Pheidas attribution update, the current digest is `06dd04ceb4bdcb40875e70293bf68abba61fd17052a5e90a70ade61af649d88b`, recorded in [the update evidence](quartic-4973-validation/pheidas-20261106/UPDATE.json).

@@ -63,7 +63,7 @@ def explicit_selection(value, count):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--pdf', type=Path, help='Defaults to quartic_962.pdf for v6/v7 and quartic_1272.pdf for v5')
+    parser.add_argument('--pdf', type=Path, help='Defaults to quartic_v7.pdf for v7, quartic_962.pdf for v6 and quartic_1272.pdf for v5')
     parser.add_argument('--edition', choices=['v5', 'v6', 'v7'], default='v7')
     parser.add_argument('--expected-pages', type=int, help='Reject a PDF with a different page count')
     parser.add_argument('--out', type=Path, default=ROOT / 'build/pdf-review')
@@ -76,7 +76,7 @@ def main():
     args = parser.parse_args()
     if args.dpi <= 0:
         parser.error('--dpi must be positive')
-    pdf = (args.pdf or ROOT / ('quartic_962.pdf' if args.edition in ('v6', 'v7') else 'quartic_1272.pdf')).resolve()
+    pdf = (args.pdf or ROOT / ('manuscripts/quartic_v7.pdf' if args.edition == 'v7' else 'quartic_962.pdf' if args.edition == 'v6' else 'manuscripts/archive/quartic_1272.pdf')).resolve()
     out = args.out.resolve(); out.mkdir(parents=True, exist_ok=True)
     if args.pypdf:
         from pypdf import PdfReader

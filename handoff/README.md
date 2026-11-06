@@ -19,7 +19,7 @@ python -E -B handoff/verify_handoff.py ARCHIVE.zip --expected-archive-sha256 ARC
 
 Add `--extract NEW_DIRECTORY` to extract only after verification. The verifier checks every archive member, exact planned file coverage, the complete frozen package and research inventory, reproduction receipt, and historical preservation pins.
 
-The snapshot is under `current/`. Start with `current/quartic_962.pdf`, `current/docs/quartic-962/README.md`, and the frozen package. The portable replay entrypoint is `current/scripts/check_quartic962.py`. [replay_extracted_current.py](replay_extracted_current.py) authenticates a current-only archive and runs its checks with outputs outside the snapshot.
+The snapshot is under `current/`. Start with `current/manuscripts/quartic_v7.pdf`, `current/docs/quartic-962/README.md`, and the frozen package. The portable replay entrypoint is `current/scripts/check_quartic962.py`. [replay_extracted_current.py](replay_extracted_current.py) authenticates a current-only archive and runs its checks with outputs outside the snapshot.
 
 The unchanged Version 6 full archive has 440,334,958 bytes and SHA-256 `93b53944ea93de08dc653beb70202797c1cbbdf19602ae583940bbf137dd43bc`. Its own nested revision-2 archive, source inventory and verification tools remain intact. Each historical `current/` directory describes its own release date. Previous handoff tools and notes remain under [releases/version5](releases/version5/), with earlier records at their existing paths.
 

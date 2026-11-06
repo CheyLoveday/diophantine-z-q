@@ -5,10 +5,12 @@ from release_config import validate_current, baseline_for_release, generated_sta
 
 def fixture():
     release,objects,receipt=fixture6()
-    release.update(version=7,release_tag='quartic-962-version-7',
+    release.update(version=7,release_tag='quartic-962-version-7',manuscript='manuscripts/quartic_v7.tex',pdf='manuscripts/quartic_v7.pdf',
         assets={'full':'z-in-q-version7-full-handoff.zip','current':'z-in-q-version7-current-handoff.zip'},
         revision_manifest='handoff/V7_AUDIT_MANIFEST.json')
-    objects['quartic_962.tex']=b'Version 7'
+    objects.pop('quartic_962.tex')
+    objects['manuscripts/quartic_v7.tex']=b'Version 7'
+    objects['manuscripts/quartic_v7.pdf']=objects.pop('quartic_962.pdf')
     selected={}
     audits={}
     for group in ('tail','weights','transference','patterns'):
@@ -17,9 +19,9 @@ def fixture():
     path='research/version7/README.md';objects[path]=b'new audit guide';selected[path]=record(objects[path])
     release['revision_audits']=audits
     objects[release['revision_manifest']]=encoded({'schema':'quartic-v7-audit-selection-v1','files':selected})
-    objects[release['assembly_receipt']]=encoded({'status':'accepted_assembly_fidelity','candidate_sha256':record(objects['quartic_962.tex'])['sha256']})
+    objects[release['assembly_receipt']]=encoded({'status':'accepted_assembly_fidelity','candidate_sha256':record(objects['manuscripts/quartic_v7.tex'])['sha256']})
     review=__import__('json').loads(objects[release['review_files']['inventory']])
-    review['candidate_sha256']=record(objects['quartic_962.tex'])['sha256']
+    review['candidate_sha256']=record(objects['manuscripts/quartic_v7.tex'])['sha256']
     objects[release['review_files']['inventory']]=encoded(review)
     release['snapshot_pins']={name:record(raw) for name,raw in objects.items() if name not in ('quartic_4973.tex','handoff/release.json')}
     objects['handoff/release.json']=encoded(release)

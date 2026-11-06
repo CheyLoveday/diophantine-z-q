@@ -2,7 +2,7 @@
 
 Contributors: Stefan Baranczuk, Jose Brox, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry.
 
-Start with `current/quartic_962.pdf`, its TeX source, and `current/docs/quartic-962/README.md`. The source inventory records the current theorem applications and review scope. `current/docs/quartic-962-validation/` contains the independent release reviews.
+Start with `current/manuscripts/quartic_v7.pdf`, its TeX source, and `current/docs/quartic-962/README.md`. The source inventory records the current theorem applications and review scope. `current/docs/quartic-962-validation/` contains the independent release reviews.
 
 The exact finite construction is in `current/quartics/quartic-962/`. Its table has 962 coordinates including the input, 919 quadratic residuals before the sum of squares, and 55,409 quartic monomials. The package preserves the reviewed transformation evidence and a pinned link to the Version 5 construction. Run `python scripts/check_quartic962.py --out NEW_DIRECTORY` from `current/`, keeping the output directory outside the extracted snapshot. Python 3.10+ and Node.js 18+ are required.
 

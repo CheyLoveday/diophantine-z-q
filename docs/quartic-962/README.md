@@ -21,7 +21,7 @@ The package preserves historical metadata, including earlier pending-review stri
 The inventory identifies exact theorem versions, application hypotheses, maps, conventions, translations, source qualifications, and independent review evidence. It preserves the older application ledgers and binds changed or new text to its own reviewed fragment. Frei–Tinková is methodological provenance in Version 7, not an assumed theorem. The Gaussian replacement uses Mitsui, Green–Tao and the listed ordinary-prime transference inputs.
 
 ```sh
-python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex --expected-input-sha256 19dd5a1a1f840f180934bac95435289ede8c63795133efe92273c1f05323e659
+python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript manuscripts/quartic_v7.tex --expected-input-sha256 36646fd26f5adcaed33315605e4b1c333c1e60f5c917aeeda63976614823a0f5
 python -E -B docs/quartic-962/test_inventory.py
 ```
 
