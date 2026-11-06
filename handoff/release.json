@@ -11,6 +11,7 @@
   "pdf": "quartic_9625.pdf",
   "package": "quartics/quartic-9625",
   "verification": "evidence/stages/coordinates.json",
+  "regenerated_certificate": "docs/quartic-9625/verification/regenerated-certificate.jsonl.gz",
   "inventory": "docs/quartic-9625/README.md",
   "source_id": "selective-beta-k40-q12-a25-h19-s32-d68d86cdf995",
   "next_release": {

@@ -1,25 +1,39 @@
 """Small metadata fixtures; they are not mathematical certificate fixtures."""
 from copy import deepcopy
+import gzip
 import hashlib
 import json
 from pathlib import Path
 import tempfile
 import zipfile
 
-from release_config import validate_release, validate_current, generated_state, generated_start
+from release_config import (validate_release,validate_current,generated_state,generated_start,
+                            compare_reproduced_certificate)
 
 def encode(value):
     return json.dumps(value,sort_keys=True).encode()
+
+def certificate(records):
+    return gzip.compress(b''.join(encode(record)+b'\n' for record in records),mtime=0)
+
+def certificate_fixture():
+    return [dict(kind='initial',rows=[[[1,[0]],[-1,[1]]]],operation_count=1,seconds=12),
+            dict(kind='final',report=dict(variables=9625,seconds=0.673))]
 
 def fixtures():
     release=json.loads(Path(__file__).with_name('release.json').read_bytes())
     root=release['package']+'/'
     files={name:('fixture '+name).encode() for name in release['proof_pins']}
+    records=certificate_fixture()
+    files['certificate.jsonl.gz']=certificate(records)
+    records[-1]['report']['seconds']=0.605
+    regenerated=certificate(records)
     files['source-entry.json']=encode(dict(source_id=release['source_id'],
         source_sha256=hashlib.sha256(files['source-residuals.jsonl.gz']).hexdigest(),inspected_files_sha256={}))
     release['proof_pins']={name:hashlib.sha256(raw).hexdigest() for name,raw in files.items()}
     release['expected']['expanded_sha256']=release['proof_pins']['polynomial.expanded.txt']
     objects={root+name:raw for name,raw in files.items()}
+    objects[release['regenerated_certificate']]=regenerated
     objects['handoff/release.json']=encode(release)
     objects[release['manuscript']]=b'Version 3'
     objects[release['pdf']]=b'%PDF fixture'
@@ -32,9 +46,9 @@ def fixtures():
     receipt='fixture-reproduction.json'
     objects[receipt]=encode(dict(status='PASS: FROZEN REPLAY AND CLEAN REPRODUCTION',
         source_id=release['source_id'],source_sha256=verification['source_sha256'],
-        checker_sha256=verification['checker_sha256'],expected=release['expected'],
+        checker_sha256=verification['checker_sha256'],expected=dict(release['expected'],certificate_sha256=release['proof_pins']['certificate.jsonl.gz']),
         package_manifest_sha256=hashlib.sha256(objects[root+'reproducibility/manifest.json']).hexdigest(),
-        regenerated_certificate_sha256=release['proof_pins']['certificate.jsonl.gz']))
+        regenerated_certificate_sha256=hashlib.sha256(regenerated).hexdigest()))
     return release,objects,receipt
 
 def run_tests():
@@ -65,11 +79,33 @@ def run_tests():
     reject('wrong reproduction source',lambda r,o,p:edit(o,p,'source_id','old-source'))
     reject('failed reproduction',lambda r,o,p:edit(o,p,'status','FAIL'))
     reject('changed reproduced certificate',lambda r,o,p:edit(o,p,'regenerated_certificate_sha256','0'*64))
+    reject('missing regenerated certificate',lambda r,o,p:o.pop(r['regenerated_certificate']))
     reject('changed reproduction manifest',lambda r,o,p:edit(o,p,'package_manifest_sha256','0'*64))
     reject('stale verification count',lambda r,o,p:edit(o,r['package']+'/'+r['verification'],'variables',12504))
     def stale_receipt(r,o,p):
         data=json.loads(o[p]);data['expected']['monomials']=135721;o[p]=encode(data)
     reject('stale reproduction count',stale_receipt)
+    originals=certificate_fixture();frozen=certificate(originals)
+    timing=deepcopy(originals);timing[-1]['report']['seconds']=100.5
+    compare_reproduced_certificate(frozen,certificate(timing),hashlib.sha256(certificate(timing)).hexdigest())
+    def reject_certificate(label,change):
+        changed=deepcopy(originals);change(changed);raw=certificate(changed)
+        try:compare_reproduced_certificate(frozen,raw,hashlib.sha256(raw).hexdigest())
+        except ValueError as error:
+            assert 'outside final.report.seconds' in str(error),(label,str(error))
+            tests.append(label)
+        else:raise AssertionError('Accepted changed certificate: '+label)
+    reject_certificate('changed mathematical row',lambda rs:rs[0]['rows'][0][0].__setitem__(0,2))
+    reject_certificate('removed final non-timing field',lambda rs:rs[-1]['report'].pop('variables'))
+    reject_certificate('removed other seconds field',lambda rs:rs[0].pop('seconds'))
+    reject_certificate('changed operation integer to boolean',lambda rs:rs[0].update(operation_count=True))
+    reject_certificate('changed operation integer to float',lambda rs:rs[0].update(operation_count=1.0))
+    for label,raw_text in [('duplicate JSON key',b'{"kind":"initial","x":1,"x":2}\n{"kind":"final","report":{}}\n'),
+                           ('nonfinite JSON number',b'{"kind":"initial","x":NaN}\n{"kind":"final","report":{}}\n')]:
+        raw=gzip.compress(raw_text,mtime=0)
+        try:compare_reproduced_certificate(frozen,raw,hashlib.sha256(raw).hexdigest())
+        except ValueError:tests.append(label)
+        else:raise AssertionError('Accepted malformed certificate: '+label)
     from verify_handoff import BASELINE_BYTES, BASELINE_SHA, verify
     r,o,p=fixtures()
     helpers=('verify_handoff.py','release_config.py','legacy_verify_handoff_v2.py')

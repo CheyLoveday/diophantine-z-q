@@ -1,6 +1,8 @@
 """Validate release-specific metadata against the exact current artifact."""
 from datetime import date
+import gzip
 import hashlib
+import io
 import json
 from pathlib import PurePosixPath
 import re
@@ -34,6 +36,7 @@ def validate_release(release):
     relative(release['verification'])
     required = {'manuscript':f'quartic_{count}.tex','pdf':f'quartic_{count}.pdf',
                 'package':f'quartics/quartic-{count}','inventory':f'docs/quartic-{count}/README.md',
+                'regenerated_certificate':f'docs/quartic-{count}/verification/regenerated-certificate.jsonl.gz',
                 'release_tag':f'quartic-{count}-version-{version}'}
     for key,value in required.items():
         if release[key] != value:
@@ -59,11 +62,46 @@ def validate_release(release):
         raise ValueError('Wrong future-release threshold')
     return release
 
+def certificate_without_final_seconds(raw):
+    """Decode exactly, discarding only the final record's report.seconds slot."""
+    if len(raw)>50_000_000:
+        raise ValueError('Compressed certificate exceeds bound')
+    with gzip.GzipFile(fileobj=io.BytesIO(raw),mode='rb') as stream:
+        decoded=stream.read(150_000_001)
+    if len(decoded)>150_000_000:
+        raise ValueError('Decoded certificate exceeds bound')
+    def unique_object(pairs):
+        result={}
+        for key,value in pairs:
+            if key in result:raise ValueError('Duplicate certificate JSON key')
+            result[key]=value
+        return result
+    def bad_constant(value):
+        raise ValueError('Nonfinite certificate JSON number')
+    records=[json.loads(line,object_pairs_hook=unique_object,parse_constant=bad_constant)
+             for line in decoded.splitlines()]
+    if not records or any(not isinstance(item,dict) or not isinstance(item.get('kind'),str) for item in records):
+        raise ValueError('Invalid certificate record structure')
+    finals=[i for i,item in enumerate(records) if item['kind']=='final']
+    if finals != [len(records)-1] or not isinstance(records[-1].get('report'),dict):
+        raise ValueError('Certificate must have one final report at the end')
+    records[-1]['report'].pop('seconds',None)
+    # Canonical JSON preserves numeric types, unlike Python's True == 1 == 1.0.
+    return json.dumps(records,sort_keys=True,separators=(',',':'),allow_nan=False)
+
+def compare_reproduced_certificate(frozen,regenerated,expected_regenerated_sha):
+    if not isinstance(expected_regenerated_sha,str) or not re.fullmatch('[0-9a-f]{64}',expected_regenerated_sha):
+        raise ValueError('Invalid regenerated certificate hash')
+    if hashlib.sha256(regenerated).hexdigest()!=expected_regenerated_sha:
+        raise ValueError('Regenerated certificate bytes differ from reproduction receipt')
+    if certificate_without_final_seconds(frozen)!=certificate_without_final_seconds(regenerated):
+        raise ValueError('Certificates differ outside final.report.seconds')
+
 def validate_current(read, names, release, receipt_path):
     """read takes a repository-relative name; names is the full Git inventory."""
     validate_release(release); root = release['package']+'/'
     receipt_path = relative(receipt_path)
-    required = {release['manuscript'],release['pdf'],release['inventory'],receipt_path,
+    required = {release['manuscript'],release['pdf'],release['inventory'],receipt_path,release['regenerated_certificate'],
                 root+'reproducibility/manifest.json',root+release['verification'],'handoff/release.json'}
     if not required <= set(names):
         raise ValueError('Missing current snapshot files: '+repr(sorted(required-set(names))))
@@ -103,8 +141,10 @@ def validate_current(read, names, release, receipt_path):
     for key,value in release['expected'].items():
         if verification[key] != value or receipt['expected'][key] != value:
             raise ValueError('Stale verified count or digest: '+key)
-    if receipt['regenerated_certificate_sha256'] != release['proof_pins']['certificate.jsonl.gz']:
-        raise ValueError('Reproduction certificate differs from accepted artifact')
+    if receipt['expected']['certificate_sha256'] != release['proof_pins']['certificate.jsonl.gz']:
+        raise ValueError('Reproduction expectation differs from frozen certificate pin')
+    compare_reproduced_certificate(read(root+'certificate.jsonl.gz'),read(release['regenerated_certificate']),
+                                   receipt['regenerated_certificate_sha256'])
     if receipt['package_manifest_sha256'] != hashlib.sha256(package_raw).hexdigest():
         raise ValueError('Reproduction receipt belongs to another package manifest')
     return verification

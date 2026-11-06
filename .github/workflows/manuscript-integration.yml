@@ -6,7 +6,7 @@ on:
       mode:
         description: 'Run all verification, rebuild paper, or render committed PDF'
         type: choice
-        options: [all, paper, visual]
+        options: [all, paper, visual, handoff]
         default: all
   push:
     paths:
@@ -37,7 +37,7 @@ jobs:
           path: .cache/tectonic
           key: tectonic-${{ runner.os }}-0.17.0-6ffe055852f8faf66
       - name: Reproduce source, certificate, and full integer expansion
-        if: inputs.mode != 'visual' && inputs.mode != 'paper'
+        if: inputs.mode != 'visual' && inputs.mode != 'paper' && inputs.mode != 'handoff'
         shell: bash
         run: |
           ulimit -v 2097152
@@ -50,9 +50,10 @@ jobs:
           python docs/quartic-9625/test_inventory.py --repo . --report build/quartic-inventory-negative.json
           python handoff/test_handoff.py > build/handoff-tests.json
       - name: Compile the exact Version 3 manuscript
-        if: inputs.mode != 'visual'
+        if: inputs.mode != 'visual' && inputs.mode != 'handoff'
         run: python scripts/build_paper.py
       - name: Render the manuscript for visual review
+        if: inputs.mode != 'handoff'
         shell: bash
         run: |
           sudo apt-get update -qq
@@ -64,7 +65,7 @@ jobs:
             python scripts/render_quartic_review.py
           fi
       - name: Validate the handoff snapshot before publication
-        if: inputs.mode == 'visual'
+        if: inputs.mode == 'visual' || inputs.mode == 'handoff'
         shell: bash
         run: |
           ulimit -v 2097152
