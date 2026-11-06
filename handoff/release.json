@@ -1,44 +1,34 @@
 {
+  "assembly_receipt": "docs/quartic-962-validation/final-assembly-review/receipt.json",
   "assets": {
-    "current": "z-in-q-version5-current-handoff.zip",
-    "full": "z-in-q-version5-full-handoff.zip"
+    "current": "z-in-q-version6-current-handoff.zip",
+    "full": "z-in-q-version6-full-handoff.zip"
   },
+  "contributor_credit": "Stefan Baranczuk, Jose Brox, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry.",
   "date": "2026-11-06",
   "expected": {
     "coefficient_height": "64*3^(2^28)",
     "degree": 4,
-    "monomials": 48001,
+    "monomials": 55409,
     "primitive_content": "1",
-    "rows": 1229,
-    "variables": 1272,
-    "witnesses": 1271
+    "rows": 919,
+    "variables": 962,
+    "witnesses": 961
   },
-  "format": "quartic-handoff-release/v2",
-  "inventory": "docs/quartic-1272/README.md",
-  "manuscript": "quartic_1272.tex",
-  "package": "quartics/quartic-1272",
+  "format": "quartic-handoff-release/v3",
+  "inventory": "docs/quartic-962/README.md",
+  "inventory_input": "docs/quartic-962/new-applications.json",
+  "inventory_input_sha256": "b7a42a50809c85ef14a9380a15576ef0170bad571ef713c329e31f594f8c12cf",
+  "manuscript": "quartic_962.tex",
+  "package": "quartics/quartic-962",
   "package_manifest": "MANIFEST.json",
-  "pdf": "quartic_1272.pdf",
-  "polynomial": "compiler/translated/polynomial.json",
-  "polynomial_sha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586",
-  "preserved_commit": "5cb2c1997dde6e358f3c2fe9bbdb4b8f4c23bac6",
-  "preserved_editorial_overrides": {
-    "October 11 Manuscript/README.md": {
-      "after": {
-        "bytes": 2106,
-        "sha256": "f904b00aaebe51a31154defb01158956a47bd4b054b918380ed9934b8302382d"
-      },
-      "before": {
-        "bytes": 2102,
-        "sha256": "744d940186edf2fe810b9c8166d34b97d5a49d3be8368a902f5d8b05fce670d3"
-      },
-      "reason": "User-requested full given name in project credit; no mathematical change"
-    }
-  },
+  "pdf": "quartic_962.pdf",
+  "polynomial": "polynomial.json",
+  "polynomial_sha256": "6b798de7d00ac3c7d725ca0a69d39f1eac1ddb02fee2756cb6323770b952af32",
   "preserved_pins": {
     "October 11 Manuscript/README.md": {
-      "bytes": 2102,
-      "sha256": "744d940186edf2fe810b9c8166d34b97d5a49d3be8368a902f5d8b05fce670d3"
+      "bytes": 2106,
+      "sha256": "f904b00aaebe51a31154defb01158956a47bd4b054b918380ed9934b8302382d"
     },
     "October 11 Manuscript/ZIsDiophantineInQBySohailsGPT-6.pdf": {
       "bytes": 441413,
@@ -292,6 +282,1058 @@
       "bytes": 7851,
       "sha256": "8d48b84bb189f04d6d8970a53b272df1df7d8fb575dd8059f35ba93c504f566b"
     },
+    "docs/quartic-12504/README.md": {
+      "bytes": 2871,
+      "sha256": "f1592dc065a48100ebe7a7f14ad6b5bd5f39fe681abbeddf16e679bb311e05d3"
+    },
+    "docs/quartic-12504/baseline-bridge.json": {
+      "bytes": 245484,
+      "sha256": "101e29e3dc1f9ed830f02505f1008cc7de89625e1870a894c585b51480d8d4eb"
+    },
+    "docs/quartic-12504/dependency-closure.json": {
+      "bytes": 22569,
+      "sha256": "39d20608feced138a8bd074fd959011ef97cf4fb32bf1d0ed302a54d95c90d63"
+    },
+    "docs/quartic-12504/evidence-import-manifest.json": {
+      "bytes": 26027,
+      "sha256": "0cc83d906491ee3bbe33285690747c4b2ca074d6093860ddf2e3868f6101df05"
+    },
+    "docs/quartic-12504/inventory-spec.json": {
+      "bytes": 10428,
+      "sha256": "996b6afde455612f08a917d35e61d05b654d71e48fd5e42e08d9cf033c54dde2"
+    },
+    "docs/quartic-12504/manuscript-preservation.json": {
+      "bytes": 54351,
+      "sha256": "a81b6483d76a0f5ec9db72716746a069ae20dc4d32a8664126d496cc54589f00"
+    },
+    "docs/quartic-12504/release-checks/CERTIFICATE_TEST_REVIEW.md": {
+      "bytes": 9637,
+      "sha256": "cc988dc08228ccfff594e808ecec2d4029f8cb3cd763c4f9ae2b061ef388dc4f"
+    },
+    "docs/quartic-12504/release-checks/COMPILER_REVIEW.md": {
+      "bytes": 18195,
+      "sha256": "b7552930cdbc1f584fa39f0ef8a49fe9d830b27d1e9ed09909c8c7be56a4c188"
+    },
+    "docs/quartic-12504/release-checks/HANDOFF_REVIEW.md": {
+      "bytes": 7496,
+      "sha256": "8094c69be661f4b281afec7b1540b9abe1ae6aada343576d6f4d7989e79fef13"
+    },
+    "docs/quartic-12504/release-checks/HANDOFF_SCANNER_ADDENDUM.md": {
+      "bytes": 2610,
+      "sha256": "d2bb19f9ea5266e17943373d3339668307a51256dce726dda206c80ec9bfeefd"
+    },
+    "docs/quartic-12504/release-checks/INVENTORY_REVIEW.md": {
+      "bytes": 11458,
+      "sha256": "5cf007bbcff1be438b2ca276223e7a4b6bd12101703676ada0e32a63a790f520"
+    },
+    "docs/quartic-12504/release-checks/LAYOUT_ADDENDUM.md": {
+      "bytes": 1183,
+      "sha256": "821067443a8cb700f0233720bbdc800fcde3fe1748463f3a5c7da20fbbc72610"
+    },
+    "docs/quartic-12504/release-evidence.json": {
+      "bytes": 2813,
+      "sha256": "88ac3498829aa78af4c5ef9e0e9c34cd3463ddac0903db0ff8460772e2a02165"
+    },
+    "docs/quartic-12504/reviews/BETA16_INDEPENDENT_REVIEW.md": {
+      "bytes": 11378,
+      "sha256": "3555a3b6cefcb9de8187aa79e9881ce0b47aef66072c013a8642aab62f4ed671"
+    },
+    "docs/quartic-12504/reviews/COMPILER_REVIEW.md": {
+      "bytes": 12510,
+      "sha256": "d2abea8e364cd89860c3c9f5f4f73f40209abcee6a1c92174ee372bd30ebd222"
+    },
+    "docs/quartic-12504/reviews/INDEPENDENT_RECIPROCAL_REVIEW.md": {
+      "bytes": 13131,
+      "sha256": "13061be3b0b4f943adcf0873d903f58bc75106c2550f77f08a928bce9ebef0cb"
+    },
+    "docs/quartic-12504/reviews/RECIPROCAL_PROOF.md": {
+      "bytes": 17301,
+      "sha256": "be5b08dd9ded743606d5c6a5fc869c4e9764575da49e5d80af13aca09950a98a"
+    },
+    "docs/quartic-12504/reviews/RELEASE_ARITHMETIC_REVIEW.md": {
+      "bytes": 28994,
+      "sha256": "e56b311d5718c8c18f3fc4886c1edc71f340d434bf205cd9c0849cb101fc134e"
+    },
+    "docs/quartic-12504/reviews/RELEASE_MANUSCRIPT_REVIEW.md": {
+      "bytes": 12917,
+      "sha256": "97cc865d6f37c64b54ef83d259d3b29e677b620ad948388da48de39c30d20970"
+    },
+    "docs/quartic-12504/reviews/SOURCE_AUDIT_INDEPENDENT_REVIEW.md": {
+      "bytes": 11116,
+      "sha256": "0bfa4f057888f50fa2729399f584c376b2070513705956b9af490871e4328ee7"
+    },
+    "docs/quartic-12504/reviews/SOURCE_AUDIT_REVIEW.md": {
+      "bytes": 6969,
+      "sha256": "c2044f08f8faa4be0b1e5750636ce8e8e27f83a85775059912a2bf2f7f055b37"
+    },
+    "docs/quartic-12504/theorem-applications.json": {
+      "bytes": 28329,
+      "sha256": "ab8507d4efc538e48675857320def4ffb43c0d62fafe46c44589d2ac6f6db4e4"
+    },
+    "docs/quartic-12504/validate.py": {
+      "bytes": 10178,
+      "sha256": "0f4df4c7f451899a8874a16b4b9a025f6ae52d95897a0a50b8f71ca11b32e72c"
+    },
+    "docs/quartic-12504/verification/INVENTORY.json": {
+      "bytes": 437,
+      "sha256": "d776fbc1c5f5af0be1b4d2c5a98492e0532ea1262dfc212d6cb13458643b2b17"
+    },
+    "docs/quartic-12504/verification/PDF_BUILD.json": {
+      "bytes": 590,
+      "sha256": "a10bb56d23bf6092af3a80f4f8888f4e4b9afe9769b8d2a87faee57cefde9082"
+    },
+    "docs/quartic-12504/verification/PDF_VISUAL.json": {
+      "bytes": 548,
+      "sha256": "f1fd032f45984dc3956b63c1cf1b51fe2d32b54df261b05bb1a66cacc3443d06"
+    },
+    "docs/quartic-12504/verification/README.md": {
+      "bytes": 1746,
+      "sha256": "253943d3b48270001cee3d5d4427e671338e550abad32d5c0c29ae2a9e2bb742"
+    },
+    "docs/quartic-12504/verification/REPRODUCTION.json": {
+      "bytes": 11030,
+      "sha256": "94d9f84017a5dc724ca2f5b5e4fa3e4031c32699bb0778ce8f66fd06ea5c8acc"
+    },
+    "docs/quartic-1272-validation/README.md": {
+      "bytes": 1590,
+      "sha256": "b9cae635926d5778472852d447951ce1ebb8028c7bff7a1c6315e2d7babe2606"
+    },
+    "docs/quartic-1272-validation/REPRODUCTION.json": {
+      "bytes": 3258,
+      "sha256": "bd5e9aaf1a9a9c464907935f59bbd9e994a3880e7c4862dca3bc20346bbc6f2c"
+    },
+    "docs/quartic-1272-validation/author-REPRODUCTION.json": {
+      "bytes": 3258,
+      "sha256": "bd5e9aaf1a9a9c464907935f59bbd9e994a3880e7c4862dca3bc20346bbc6f2c"
+    },
+    "docs/quartic-1272-validation/build-report.json": {
+      "bytes": 603,
+      "sha256": "c52c357e38c8269c37e379a81fb6531ef3b29dfbf09f8313f525e55967e31144"
+    },
+    "docs/quartic-1272-validation/independent-review/FT-local-repair.md": {
+      "bytes": 2373,
+      "sha256": "767348c720b10b73eef4ce5f37c32c625e635f79953a094bb007bf02d4586ff0"
+    },
+    "docs/quartic-1272-validation/independent-review/REVIEW.json": {
+      "bytes": 5698,
+      "sha256": "dd5e7a1066ef25c28c5e4755f36616c518da9981bf87788e4e2422ca8ec3e6f3"
+    },
+    "docs/quartic-1272-validation/independent-review/REVIEW.md": {
+      "bytes": 8670,
+      "sha256": "18e8a2e1dfb65a2fc5711807ccfd06a5d690b16f964181b0c7cac7006034b920"
+    },
+    "docs/quartic-1272-validation/independent-review/build_review.py": {
+      "bytes": 5198,
+      "sha256": "caf35c013b0bad0b35582dc92f3932621f8fb0b0b4407d0af65a7ba77ab5b26f"
+    },
+    "docs/quartic-1272-validation/independent-review/check_inventory.py": {
+      "bytes": 1764,
+      "sha256": "5bc28e005bffd8d325c61355bed3e237c5fc199e1bed796d7901a0e4560d6ce1"
+    },
+    "docs/quartic-1272-validation/independent-review/check_package.py": {
+      "bytes": 5093,
+      "sha256": "f2c351fe26130c2fe1da0d7c40fd4c8b23237c569e3b7e48b4ffd47996fd05c3"
+    },
+    "docs/quartic-1272-validation/independent-review/check_release.py": {
+      "bytes": 4109,
+      "sha256": "80e69959291c1fc1dc59c82dc4d6d569760c12f2a8ba97d351ed710d93e21e5f"
+    },
+    "docs/quartic-1272-validation/independent-review/check_serialization_patch.py": {
+      "bytes": 7691,
+      "sha256": "afb805e3d2ab846def25e38f1e92311edb35900a80114a09ba3dcdf2e19a6be4"
+    },
+    "docs/quartic-1272-validation/independent-review/inventory-validation.json": {
+      "bytes": 1410,
+      "sha256": "4c53d0b5f7474e26d9de0f736e943e34d415aaa4b24cf2a27b827a06a6be86f2"
+    },
+    "docs/quartic-1272-validation/independent-review/inventory-validation.log": {
+      "bytes": 6559,
+      "sha256": "262ba3ca0c08173ced25239a9857436ecbf32677d5d513fad898c65d27aa3ad1"
+    },
+    "docs/quartic-1272-validation/independent-review/package-check.json": {
+      "bytes": 1228,
+      "sha256": "44122835a860b82954f195ee7646ea4918b177b871dc1981b8cfc096254850fb"
+    },
+    "docs/quartic-1272-validation/independent-review/release-check.json": {
+      "bytes": 1668,
+      "sha256": "cc10fe02fdffc00d2b5a74ffeb568c854083a627776c68a807f8f0e7930820bc"
+    },
+    "docs/quartic-1272-validation/independent-review/serialization-patch-check.json": {
+      "bytes": 10890,
+      "sha256": "779ea8f0cacbd0cdeffafe282b8a157a3ded6b565d2b43e1c4321d98f0e7462f"
+    },
+    "docs/quartic-1272-validation/original-construction-checks.json": {
+      "bytes": 11270,
+      "sha256": "2cf96ee12a3bef505c4dcc46810edcdeb9f2d773bd79f3fe60f96a4ef06e135a"
+    },
+    "docs/quartic-1272-validation/root-serialization-replay.json": {
+      "bytes": 3256,
+      "sha256": "5087fbb7ba7979c21851076d254bda46509748e537cfbf8960f67caaa6ee9a4b"
+    },
+    "docs/quartic-1272-validation/serialization-repair.json": {
+      "bytes": 21187,
+      "sha256": "23092f27694cc2fdf29818b47332223bb51c62ee46831c6618c700ac9e746f57"
+    },
+    "docs/quartic-1272-validation/visual-review.json": {
+      "bytes": 1473,
+      "sha256": "70bd0aeda1e5fc8e1ea4e4e1cf8890088cd44605d5586ff066ee38c413933ab2"
+    },
+    "docs/quartic-1272/README.md": {
+      "bytes": 6173,
+      "sha256": "65532475e4290394c8ee0e61e76154eb8f4c08aefebe5da7da46c0d182ca4010"
+    },
+    "docs/quartic-1272/bibliography.json": {
+      "bytes": 114470,
+      "sha256": "b4567c380a2e9c7c99a016fea272125e671671d5455ef51729a88dd5d0c45f6f"
+    },
+    "docs/quartic-1272/citations.json": {
+      "bytes": 458848,
+      "sha256": "7cc61c72de7e871f786b1f703cc95db2852cdb5d7a5b241d1ec0ad1941b02a38"
+    },
+    "docs/quartic-1272/coverage.json": {
+      "bytes": 6397,
+      "sha256": "55e7e898c36b7e7e5095eb1055e2bc1ed0132513ff63b7db8957423d7b8534d1"
+    },
+    "docs/quartic-1272/dependency-graph.json": {
+      "bytes": 265403,
+      "sha256": "97bab18d9d6988e233e7e5364eaa160dd8d37f12752a3d11d8b40f35ebbd1541"
+    },
+    "docs/quartic-1272/evidence/FT_PROOF_DEPENDENCIES.json": {
+      "bytes": 28323,
+      "sha256": "babd1de5ce283ea4876fda796850ec8535e3e8a7dbf22413298bb7764a42bcb8"
+    },
+    "docs/quartic-1272/evidence/FT_PROOF_SCOPE.md": {
+      "bytes": 9023,
+      "sha256": "5b50aac19b9bbc08d8e8d6f1461d933a66a1666a09a3f365475e6ea4ab1cf5ab"
+    },
+    "docs/quartic-1272/evidence/additional-source-byte-verification.json": {
+      "bytes": 778,
+      "sha256": "ffa3dc07ec0a849486bc83e94448e6a9bdc4a018e9bca9e29ccc1f6e24d1839b"
+    },
+    "docs/quartic-1272/evidence/arithmetic-dependency-review.json": {
+      "bytes": 27492,
+      "sha256": "f4e072f42d96f79991f09180e6d6de919603e43c85905bd57ba4cc6d08a93e79"
+    },
+    "docs/quartic-1272/evidence/arithmetic-review-receipt.json": {
+      "bytes": 4522,
+      "sha256": "0841a0a283d029fd62e4480ed1345cc25eed00ec7e97315bb9d1b350d1803993"
+    },
+    "docs/quartic-1272/evidence/arithmetic-review.md": {
+      "bytes": 11712,
+      "sha256": "e89da38f3af1fad8c082e972da14829890055439d672a4697983ca1668b1e63f"
+    },
+    "docs/quartic-1272/evidence/author-integration-notes.md": {
+      "bytes": 5439,
+      "sha256": "fc3650052f039e2ae334db789e5fb1ce7112cb8e1a8bc7b05e932277280e17e4"
+    },
+    "docs/quartic-1272/evidence/foundation-comparison.json": {
+      "bytes": 5532,
+      "sha256": "f6c900379c9ec3cdaf536641299c8aab4c655088660a9c09da9519a796b9e2ac"
+    },
+    "docs/quartic-1272/evidence/reviewed-arithmetic-bridges.tex": {
+      "bytes": 11776,
+      "sha256": "94696c3d3113c6ff23b8ff3039a17447424151d49f5ecbf1f178304aaf2d5544"
+    },
+    "docs/quartic-1272/evidence/reviewed-new1272.tex": {
+      "bytes": 36691,
+      "sha256": "506675ede05bb3d369d9882945958c86d2d39c8fbe4d6e1e393c6a4e17f00000"
+    },
+    "docs/quartic-1272/evidence/reviewed-sun-appendix.tex": {
+      "bytes": 34898,
+      "sha256": "620e2e5652048c827efd8a1d9dae78462679e65992beeb20c3f089b3115fb77b"
+    },
+    "docs/quartic-1272/evidence/sun-applications-review.json": {
+      "bytes": 32033,
+      "sha256": "de2f5e9cdb11513e91d022dcd82cb2407befbc5f8e9ae2c103dd830d7fd4f727"
+    },
+    "docs/quartic-1272/evidence/sun-consumed-statement.tex": {
+      "bytes": 892,
+      "sha256": "348c98050f778bb326b1811565deb2b37471a3104eeaf3be847bd6584c9f779e"
+    },
+    "docs/quartic-1272/evidence/sun-source-byte-verification.json": {
+      "bytes": 7885,
+      "sha256": "db4517120cc44ffdc7bc118a19eb147e8bf34dd84df7335bb54ca9d948922408"
+    },
+    "docs/quartic-1272/evidence/sun-source-hashes.json": {
+      "bytes": 4477,
+      "sha256": "7a983dd09b186e7a91548de31e9cc4a0cb09b3314bb3fab3739cfd31be301cf5"
+    },
+    "docs/quartic-1272/inherited-bridge.json": {
+      "bytes": 487543,
+      "sha256": "645efff1efbc8b093687ca7c892c45603524eed03e3bc28d0398daa3d1b335a5"
+    },
+    "docs/quartic-1272/internal-results.json": {
+      "bytes": 194372,
+      "sha256": "80491456dae002f429608c4371cc10565ef30fa98791ef19abc10a2f248b3b48"
+    },
+    "docs/quartic-1272/inventory.py": {
+      "bytes": 28710,
+      "sha256": "3fb098377dcccdcf72623ea77fc1459e5179b4d5d26f8a16b5778d181468fb96"
+    },
+    "docs/quartic-1272/new-applications.json": {
+      "bytes": 117745,
+      "sha256": "695769c38917efa35b6256132cd8b77807d6384ab6d27c38f250ff8947ae6c10"
+    },
+    "docs/quartic-1272/test_inventory.py": {
+      "bytes": 3844,
+      "sha256": "473ac203edf2a08c211140fcd5cd23d4c5ec6ba6618d12f9023f80d75b5b838f"
+    },
+    "docs/quartic-1272/theorem-applications.json": {
+      "bytes": 1251014,
+      "sha256": "62525206bb8a5af3538219a30c5004ef0b43d8236f9e19284758fee81eaaf8bd"
+    },
+    "docs/quartic-4973-validation/ALGEBRA.md": {
+      "bytes": 5831,
+      "sha256": "5ed46349c6fc96e3a1f5183b666ab8afee9c01837f7b340a60577a31541be029"
+    },
+    "docs/quartic-4973-validation/APPENDIX_INTEGRATION.diff": {
+      "bytes": 10688,
+      "sha256": "494863e03209555ad624f0b5f6d5ffcf8a7bf8915a1c36599e459d7fe152ea1a"
+    },
+    "docs/quartic-4973-validation/FINITE_HANDLER_BINDINGS.json": {
+      "bytes": 1013,
+      "sha256": "1a9bd4723141aca4b826d2f16e19b3cd8f59d3d9f47852ad66fa2699f6cafb94"
+    },
+    "docs/quartic-4973-validation/FINITE_REVIEW.md": {
+      "bytes": 3785,
+      "sha256": "022a0ad3e29b682a9ab0c4cd04c0aaa901d1a779d36fb139e152dcb6fa2a0c9d"
+    },
+    "docs/quartic-4973-validation/HANDOFF_BUILD_RECEIPT.json": {
+      "bytes": 1900,
+      "sha256": "252647ae66d3fe3d63c20e5da21278124b1a13dc6733c54790830ef990b8b55d"
+    },
+    "docs/quartic-4973-validation/HANDOFF_EXTRACTION.json": {
+      "bytes": 565,
+      "sha256": "30b099347fa7385fa2266e3e2afd779b7a4d5221257972504a853d63bcbf4946"
+    },
+    "docs/quartic-4973-validation/HANDOFF_PLAN.json": {
+      "bytes": 539537,
+      "sha256": "1eeafb3f7eb413ee882091792a19384ca557cd82c3ddf251b55b38504b81ed42"
+    },
+    "docs/quartic-4973-validation/HANDOFF_SHA256SUMS": {
+      "bytes": 367,
+      "sha256": "ad697f9768e534718debb6ca5ca3fe01d3a7211816ee6f2d866a2277a0fec423"
+    },
+    "docs/quartic-4973-validation/HANDOFF_TESTS.json": {
+      "bytes": 1976,
+      "sha256": "f09aca55964fa0959bde511621e9c3db9d36ae86faf9a04d15d0440e9cf5c56e"
+    },
+    "docs/quartic-4973-validation/INTEGRATION_REVIEW.md": {
+      "bytes": 5149,
+      "sha256": "3bbd751dbddbc7a1f9551edb4bfe6f4677b496234bc7af37a314f1c1b69bdfc7"
+    },
+    "docs/quartic-4973-validation/PAPER_BUILD.json": {
+      "bytes": 589,
+      "sha256": "39a825662e6299870c21d8fb0a603708a1ee16467d84fa001e7c45cbdfc8174b"
+    },
+    "docs/quartic-4973-validation/PARITY_PROOF.md": {
+      "bytes": 4187,
+      "sha256": "685f4aa474f2a6297415b60d1a91d2ad8c1f5c2e00671b504e88b4ad286b3f9f"
+    },
+    "docs/quartic-4973-validation/PHEIDAS_ATTRIBUTION_REVIEW.md": {
+      "bytes": 2694,
+      "sha256": "6ce511a4215dc44fbe239f3ed18899ec88ddc0edc256b806d8598e284e3c1983"
+    },
+    "docs/quartic-4973-validation/POWER_PROOF.md": {
+      "bytes": 2837,
+      "sha256": "3c54dac96c0875481f407d05436ee18efcc1e3dce1f505074e995a5c920da0ac"
+    },
+    "docs/quartic-4973-validation/RELATION_PROOF.md": {
+      "bytes": 4859,
+      "sha256": "1e4f5cb9de4359dfec3271bbf466c5dc0510e7cf5c2da2330aa6577b3d762011"
+    },
+    "docs/quartic-4973-validation/RELEASE_EVIDENCE.json": {
+      "bytes": 1406,
+      "sha256": "1dcaa826065b0c527d64bc4eda734d66d249093108e2ff4cc1b18731cec0ccd2"
+    },
+    "docs/quartic-4973-validation/RENDERED.json": {
+      "bytes": 451,
+      "sha256": "9d2f8994d25e9c175293d8185335076814d8d9d719b3411c8df9b225d3b651b6"
+    },
+    "docs/quartic-4973-validation/REPRODUCTION.json": {
+      "bytes": 14987,
+      "sha256": "bff8ba8a35149f644d398a4fc4e2dbfbc1d4ef4a047f0b18effb1e410ec8c82a"
+    },
+    "docs/quartic-4973-validation/VISUAL_REVIEW.json": {
+      "bytes": 1156,
+      "sha256": "ea1f468c1a3e0ef4c734c73146f59e3fc16270873313c1242bac83ca222555f4"
+    },
+    "docs/quartic-4973-validation/pheidas-20261106/PAPER_BUILD.json": {
+      "bytes": 589,
+      "sha256": "4258d774dee83a1f28b188738e7bdbf8433a4157ca8a995aede53fc9f4c27522"
+    },
+    "docs/quartic-4973-validation/pheidas-20261106/PAPER_COMPILER.log": {
+      "bytes": 5057,
+      "sha256": "2e784320aa5a455db2d0a315832f441c211d2f8bc56dfd6e87b290ae6c2f3494"
+    },
+    "docs/quartic-4973-validation/pheidas-20261106/README.md": {
+      "bytes": 899,
+      "sha256": "8fed34bb2bb0e8a55f8ac9afd7948c92f8cadff3a587cea382c42e701c4690ff"
+    },
+    "docs/quartic-4973-validation/pheidas-20261106/UPDATE.json": {
+      "bytes": 1175,
+      "sha256": "6e4d068dffcac766bf4146162866a4ecae9394a53f05c7864266debd4b1934d1"
+    },
+    "docs/quartic-4973-validation/pheidas-20261106/VISUAL_REVIEW.json": {
+      "bytes": 631,
+      "sha256": "e87cf7ec239cc24bceb9784354e7f147c65dc8633dd81208d4a95d14ee57e04c"
+    },
+    "docs/quartic-4973-validation/replayed-certificate.jsonl.gz": {
+      "bytes": 247584,
+      "sha256": "81ca768459a13b76dbdf4bfe81e94fbab9ab99f14a5731f6b1a1b03e28c1df2b"
+    },
+    "docs/quartic-4973/DOCUMENTS.json": {
+      "bytes": 12919,
+      "sha256": "cb17a10c705ced44736e3f93d5e84058aef1b91bb43a5954b1a280f9dcec2f86"
+    },
+    "docs/quartic-4973/README.md": {
+      "bytes": 2226,
+      "sha256": "5d3ba24230003a64d3612731d30aaa87c2a6ad28137debb9e23852ce82b86d76"
+    },
+    "docs/quartic-4973/SELECTED_APPENDIX.tex": {
+      "bytes": 38350,
+      "sha256": "3d59f71d31c894b5641b8e806e421c9aee599ff50201fc598f725b12c49832ad"
+    },
+    "docs/quartic-4973/acceptance.json": {
+      "bytes": 6934,
+      "sha256": "06dd04ceb4bdcb40875e70293bf68abba61fd17052a5e90a70ade61af649d88b"
+    },
+    "docs/quartic-4973/baseline-bridge.json": {
+      "bytes": 405757,
+      "sha256": "cede4b366755879298c257a66b13bdeab1c8283b224737c2a51c0a0a1205c807"
+    },
+    "docs/quartic-4973/context/active_source_contract.json": {
+      "bytes": 4206,
+      "sha256": "73e17ecc19a797ce442412549931ff11e43f42ebff9c48e1b2c636ff2d839a8c"
+    },
+    "docs/quartic-4973/context/consumption.json": {
+      "bytes": 5934,
+      "sha256": "e6b8e022b779223502c7303d7693fbffb85b5aad2923216b0f137e34b6defe7c"
+    },
+    "docs/quartic-4973/context/draft.tex": {
+      "bytes": 39571,
+      "sha256": "e67b256be73b41fca2e74958ebf0f9749e78f5d98f0c05c06118d3d156defc85"
+    },
+    "docs/quartic-4973/context/draft_bindings.json": {
+      "bytes": 8281,
+      "sha256": "b404299941e2e92584c5a2badecd694d170bad8e1dfa0f27564e636074038e05"
+    },
+    "docs/quartic-4973/context/draft_review.md": {
+      "bytes": 6375,
+      "sha256": "5e07d2c82212b384cf7b5c378cae081f80dfdc656a2663638751c5d5d681802f"
+    },
+    "docs/quartic-4973/context/draft_review_first.md": {
+      "bytes": 2992,
+      "sha256": "74f9394d74ef637aff48a24e9a39eefa0491c7c977945c4aefcaaa0875806d88"
+    },
+    "docs/quartic-4973/context/draft_review_second.md": {
+      "bytes": 2302,
+      "sha256": "ac13a96a185b26c7384efa6b649b2943e15c1850eae35f0dcc156f7f9e7dd32b"
+    },
+    "docs/quartic-4973/context/graph.json": {
+      "bytes": 8508,
+      "sha256": "07e1644b68a64e382fb56b8e64a1854e027a9ea3c91d400cf72dcd72743b317a"
+    },
+    "docs/quartic-4973/context/integrated_appendix.tex": {
+      "bytes": 38350,
+      "sha256": "3d59f71d31c894b5641b8e806e421c9aee599ff50201fc598f725b12c49832ad"
+    },
+    "docs/quartic-4973/context/integration_changes.diff": {
+      "bytes": 10688,
+      "sha256": "494863e03209555ad624f0b5f6d5ffcf8a7bf8915a1c36599e459d7fe152ea1a"
+    },
+    "docs/quartic-4973/context/integration_review.md": {
+      "bytes": 5149,
+      "sha256": "3bbd751dbddbc7a1f9551edb4bfe6f4677b496234bc7af37a314f1c1b69bdfc7"
+    },
+    "docs/quartic-4973/context/integration_scalar.tex": {
+      "bytes": 1146,
+      "sha256": "c50a22d7b18aeb10464ea94cfdcc039d75c42684b0fca2ac83ebf4678d0e83cb"
+    },
+    "docs/quartic-4973/context/integration_script.py": {
+      "bytes": 29653,
+      "sha256": "86f88bf9a6a0d24556681a109c658ef240fbaa682a4bde666292afa2bee92021"
+    },
+    "docs/quartic-4973/context/integration_splice_plan.md": {
+      "bytes": 14139,
+      "sha256": "9c2d96907d294aa212d63d6e6fe8cb1993b64a1b2bce13bc4e37a60640907a9d"
+    },
+    "docs/quartic-4973/context/integration_transplants.tex": {
+      "bytes": 1284,
+      "sha256": "76e7366155339fcc0e6287b6fb837166de5e29c15155b4eac0c851985afdb697"
+    },
+    "docs/quartic-4973/context/proof_pins.json": {
+      "bytes": 21994,
+      "sha256": "d971fd00f0f8efe9f40d171361de4b2e5c5a681dbcf5beef9fb94d5f7bc17664"
+    },
+    "docs/quartic-4973/context/publications.json": {
+      "bytes": 1613,
+      "sha256": "6060ed883daed4ba8c18fc39dcc94785a80ecce1e353558adbc2c90a903e1be7"
+    },
+    "docs/quartic-4973/context/source_auditor_policy.json": {
+      "bytes": 2196,
+      "sha256": "b7f33e4abc46a1250d993e519664db8d910c8f3491017807e8bc92303cd87c2c"
+    },
+    "docs/quartic-4973/context/v2_manifest.json": {
+      "bytes": 1395,
+      "sha256": "6d3f2dfd6bea4abe5db2c217a43aa3cdf1d7d8702db36dfa83e71f1d0eb9dc63"
+    },
+    "docs/quartic-4973/context/v2_review.md": {
+      "bytes": 1471,
+      "sha256": "f2bb89a5ded7c7f50b9f0cea17d7eeb3388e2b83198a5dce89f2ed36736b2d2c"
+    },
+    "docs/quartic-4973/context/v3_bridge.json": {
+      "bytes": 195753,
+      "sha256": "0f1949e8e91b95c7f8dfbb828d60881425b3d1b2ae0745fe37f4e5b776b8d6d3"
+    },
+    "docs/quartic-4973/context/v3_closure.json": {
+      "bytes": 12968,
+      "sha256": "60ddf7f190cd2a2b1c49058e4c537753ac8647a75167460a82012a4679615af9"
+    },
+    "docs/quartic-4973/context/v3_inventory.json": {
+      "bytes": 44774,
+      "sha256": "249279512a7871e97ab216067ed82ea772676dbf722cd6933976f004ff1d0e99"
+    },
+    "docs/quartic-4973/context/v3_manuscript.tex": {
+      "bytes": 697804,
+      "sha256": "dc77c88b5cc0819201343dc85d0891d4dad81d97ac3267ec1df34eb38003b552"
+    },
+    "docs/quartic-4973/dependency-closure.json": {
+      "bytes": 8390,
+      "sha256": "80ce4521e6b7894368795145279582d15ff1a211af31756f4cb5ec09293d5c44"
+    },
+    "docs/quartic-4973/evidence/anchor_proof.md": {
+      "bytes": 6575,
+      "sha256": "9d349ae5caaaa9ed4433617762ecb4b8b349af58c2082ffa4b9be08442ba18e3"
+    },
+    "docs/quartic-4973/evidence/anchor_review.md": {
+      "bytes": 4291,
+      "sha256": "7357856cbd6dd36ea56f0475b9e3e9ab3d76810002950fed82638499bbcc3f37"
+    },
+    "docs/quartic-4973/evidence/conic_proof.md": {
+      "bytes": 14125,
+      "sha256": "ef4de3f02fa3d17c18dc7c2af490960a62f35cc541eac8e4b80958d320fa8ab9"
+    },
+    "docs/quartic-4973/evidence/conic_review.md": {
+      "bytes": 10520,
+      "sha256": "3606e41ebfd9b2c426a4be55273ca71a32ea4ca710c943af7b402d910f21bf6b"
+    },
+    "docs/quartic-4973/evidence/first_norm_arithmetic_review.md": {
+      "bytes": 4566,
+      "sha256": "90a8c92390d48a3ac5ceef6328b7451a3ffc67a78090537bc24294cdce29824c"
+    },
+    "docs/quartic-4973/evidence/first_norm_helper_review.md": {
+      "bytes": 3666,
+      "sha256": "3948533b6734c159e2b0c71e79dbc7d7c0ef546ebfb3b79b5c0e0a1e50133750"
+    },
+    "docs/quartic-4973/evidence/first_norm_locator_review.md": {
+      "bytes": 3729,
+      "sha256": "96ffda2050e46b2b62f540ea107d31c9c92725857a8b15d82c0cb6ce1c714c24"
+    },
+    "docs/quartic-4973/evidence/first_norm_outer_review.md": {
+      "bytes": 5586,
+      "sha256": "97c0720e681dec3044d1912d12a7fab609f28648025e697038a644d0405eb3a3"
+    },
+    "docs/quartic-4973/evidence/first_norm_parity_review.md": {
+      "bytes": 6495,
+      "sha256": "0208bf985c72d24e83863bb8b305b552b56c5fb9c5b6e9953c0df8b32ac0ef72"
+    },
+    "docs/quartic-4973/evidence/first_norm_proof.md": {
+      "bytes": 5744,
+      "sha256": "b18b32854d4ef6e8c49495ce404f7c96566a0a1926baca6f4ee1ed4cbedcba05"
+    },
+    "docs/quartic-4973/evidence/general_root_proof.md": {
+      "bytes": 12108,
+      "sha256": "ecdbfc9acd575a8ab194f8e76c356e7898544a506c705a40f169c6686c70a80e"
+    },
+    "docs/quartic-4973/evidence/general_root_review.md": {
+      "bytes": 8719,
+      "sha256": "418becf67de2e5a3957d8e4066e4a9d3a96d70e8d3b7ba2552401f0733d08702"
+    },
+    "docs/quartic-4973/evidence/joint_arithmetic_proof.md": {
+      "bytes": 21009,
+      "sha256": "76d1ffafe8fcf1e79c462f269187ebfb168edd6f4cc3b339842dac217c9051f7"
+    },
+    "docs/quartic-4973/evidence/joint_chart_proof.md": {
+      "bytes": 6602,
+      "sha256": "947b505969ee3b6f1c8677e452703454adac6933c2bb01bbb54ab4b27b5e7451"
+    },
+    "docs/quartic-4973/evidence/joint_chart_review.md": {
+      "bytes": 9021,
+      "sha256": "ed56a09b21bddc4595de9eb6c7d3b4f64adca89d395962fe531e59029f73120c"
+    },
+    "docs/quartic-4973/evidence/linear_pole_proof.md": {
+      "bytes": 9010,
+      "sha256": "0b52a6ac4840636be12f455bf0e8b07ba02bb2308493d937afd840ea19bdb510"
+    },
+    "docs/quartic-4973/evidence/linear_pole_review.md": {
+      "bytes": 6610,
+      "sha256": "885fa0233d3e739999ba0132a9bbae33f9eac53491945250fd08100751c685a3"
+    },
+    "docs/quartic-4973/evidence/local_lucas_proof.md": {
+      "bytes": 7855,
+      "sha256": "2c4b1a1f24a485b021ff11561043a412a61186e243194ba244b6090124b83570"
+    },
+    "docs/quartic-4973/evidence/local_lucas_review.md": {
+      "bytes": 6821,
+      "sha256": "818c51743e55536c0b10da8c4153d82f45ee5ab64d6f2cb68abb6d5482c9f715"
+    },
+    "docs/quartic-4973/evidence/mixed_mode_clarification.md": {
+      "bytes": 3183,
+      "sha256": "2a1eb8ed9a7175995afa665a08035728c1714b5fa30e1ba52030b6adf7b8ba34"
+    },
+    "docs/quartic-4973/evidence/normalized_proof.md": {
+      "bytes": 10790,
+      "sha256": "e76a6361be9678369abb7d42e98255bce214dab4dd7215ff6584b029169cb811"
+    },
+    "docs/quartic-4973/evidence/normalized_review.md": {
+      "bytes": 8527,
+      "sha256": "6a9da3f66aec7e5d796fb77569100dd8ecc1791cd533871942e89c490cf9f7c9"
+    },
+    "docs/quartic-4973/evidence/parity_scale_proof.md": {
+      "bytes": 4636,
+      "sha256": "5d36002ff1b144135c5c27735c909553e1b469774cb227ae5cf36f55ebde63c4"
+    },
+    "docs/quartic-4973/evidence/parity_scale_review.md": {
+      "bytes": 2725,
+      "sha256": "7301463e102d8e7f32eb28806369da0473c20c06c743cb8c07b67943a6a1abb2"
+    },
+    "docs/quartic-4973/evidence/private_comparison_proof.md": {
+      "bytes": 11186,
+      "sha256": "8558cbfdb09bfaf12054caa2907900bc30b6de91fd6ab43c14ddc294f1cd7e9d"
+    },
+    "docs/quartic-4973/evidence/private_comparison_review.md": {
+      "bytes": 9154,
+      "sha256": "4a7cf0a7bbdf4a87f53f0cacbf38de45ae59df9899b44b9d1b0671fbc0a9fdbf"
+    },
+    "docs/quartic-4973/evidence/root_chart_proof.md": {
+      "bytes": 4469,
+      "sha256": "9a126a387cd376f988964e76193ac9ca712e363f501cd26f4f55c543c8e1011e"
+    },
+    "docs/quartic-4973/evidence/root_chart_review.md": {
+      "bytes": 3783,
+      "sha256": "483ce5869c4b11b70f6915309929da7147caf79a1f3388f7cedbefaf8718ab33"
+    },
+    "docs/quartic-4973/evidence/root_implementation_review.md": {
+      "bytes": 3727,
+      "sha256": "5be01f54ca1470f59c4cdaaef78f0d607a92b8a87e4d3477dd8c42072cdd3507"
+    },
+    "docs/quartic-4973/evidence/root_shared_source_review.md": {
+      "bytes": 6804,
+      "sha256": "97652e4425cd96a885443b7581c6620a53603a9f938f8c6d3bfb615507add04e"
+    },
+    "docs/quartic-4973/evidence/shared_square_implementation_review.md": {
+      "bytes": 4641,
+      "sha256": "406463e0e898811d0cef3aacc40f09d82efbb46107e17ddfc45ce4ea2075f5f5"
+    },
+    "docs/quartic-4973/evidence/shared_square_proof.md": {
+      "bytes": 7204,
+      "sha256": "378017d3ad813f69a0e6ee09c2de36f062fe2bd0e0b9c4c84a125eed99d84cc3"
+    },
+    "docs/quartic-4973/evidence/shared_square_review.md": {
+      "bytes": 3597,
+      "sha256": "62af17f1d6e045d06ed32824bfc42918673d757fad4eaf8781940db03e1709d6"
+    },
+    "docs/quartic-4973/evidence/tangent_outer_review.md": {
+      "bytes": 6014,
+      "sha256": "a296f27fe4c42e1ad7a8ed8a785f4a18cfea42f19f5b374ca9ba87bf485578d1"
+    },
+    "docs/quartic-4973/evidence/tangent_proof.md": {
+      "bytes": 3339,
+      "sha256": "3591709058c666a1dd2786d46039b408a04f1908b644c16c6f722a72788a50c8"
+    },
+    "docs/quartic-4973/evidence/tangent_review.md": {
+      "bytes": 4211,
+      "sha256": "7753f3c9dbdac926bdb568fafc8e1a0df0fd9b51af1beb97dae04842f80cfc5a"
+    },
+    "docs/quartic-4973/evidence/target_two_author_contract.md": {
+      "bytes": 6606,
+      "sha256": "8e42299e4d281ecab724868d39eeb21589957c971516296500b942605ac0b711"
+    },
+    "docs/quartic-4973/evidence/target_two_implementation_review.md": {
+      "bytes": 7090,
+      "sha256": "04aea447a4dd9cbae4ffe848e8b402252305014daebf1f117438a82b9ec8c9bd"
+    },
+    "docs/quartic-4973/evidence/target_two_proof.md": {
+      "bytes": 7605,
+      "sha256": "cfc62097ffdbf072fe77524f7e0448356812712689394ca22dfc4a0fd64b7feb"
+    },
+    "docs/quartic-4973/evidence/target_two_review.md": {
+      "bytes": 7700,
+      "sha256": "d5048cc8ac8944d26c8af6d9b8cfcdd672ddee1beed73efaf3d634a53b012155"
+    },
+    "docs/quartic-4973/evidence/target_two_source_review.md": {
+      "bytes": 5145,
+      "sha256": "918861e4dd7a7e5d052e17550020278fb0173cd116cacffd0af1b9c28f4581f8"
+    },
+    "docs/quartic-4973/evidence/three_mode_proof.md": {
+      "bytes": 7858,
+      "sha256": "66311fffec418e9a6aa44f7f7503057133f92e21c4f70c3468971dd04ac55659"
+    },
+    "docs/quartic-4973/evidence/three_mode_review.md": {
+      "bytes": 7564,
+      "sha256": "4572dfa3e6905b00de4c49799b7ed58ee225a1f418224a7d6b5aeedb103dbeb6"
+    },
+    "docs/quartic-4973/evidence/two_denominator_proof.md": {
+      "bytes": 6651,
+      "sha256": "d4f43b3fef411179f8c1afe7a9029fc5a3e67d42399376761e965281c79b8dc2"
+    },
+    "docs/quartic-4973/inputs.json": {
+      "bytes": 5449,
+      "sha256": "ae388dfb7f577f3240bbbb96cfae38711c9d460c866eb8701fdc2279c850d523"
+    },
+    "docs/quartic-4973/inventory.py": {
+      "bytes": 9629,
+      "sha256": "2d35af0e7f0c8f4cd86ba534e368bed6d779a6f9150bad01cb598cd31a274c31"
+    },
+    "docs/quartic-4973/inventory_core.py": {
+      "bytes": 26459,
+      "sha256": "0eb78c166e5e6440128ff8c0028f3829d5dd416ac9f1d9401a1a9ca6b8aa62dc"
+    },
+    "docs/quartic-4973/tex_subset.py": {
+      "bytes": 5877,
+      "sha256": "a5ebcff80e6bd2d3e10634bd787ce6e24af9b797b3a6341af7b2e26c4d4374ac"
+    },
+    "docs/quartic-4973/theorem-applications.json": {
+      "bytes": 45253,
+      "sha256": "793206fac8215bfe06a6016cd2a7c3e17ad0634ba7bd012f02744bce7bd0e1dc"
+    },
+    "docs/quartic-9625/README.md": {
+      "bytes": 2935,
+      "sha256": "f41b68416d584a527c9f832da056f68235cb81beffdd89cd3e486b580aa2c446"
+    },
+    "docs/quartic-9625/VALIDATION-NEGATIVE.json": {
+      "bytes": 1350,
+      "sha256": "0640837f2355b66aa84d57dea710d0f6e9e91ab662f190338d259d9a8b19ded6"
+    },
+    "docs/quartic-9625/VALIDATION.json": {
+      "bytes": 604,
+      "sha256": "6cc8b173ea307f6eb334f13aa9c8bb030cbdc6a0a54d478773f2cf53c129bf45"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_anchor_sources.json": {
+      "bytes": 5111,
+      "sha256": "2f81ceea6b525913b1790c2695da9fb3cc3c9c8b63bfbe7e16bc26d0a227e5ef"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_applications.json": {
+      "bytes": 604109,
+      "sha256": "1d53028414eefe1eeed85db566aae47b2b00d4206f3eaffeec8625f0e3c089bb"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_assumption_status.json": {
+      "bytes": 2805,
+      "sha256": "79ab37c5b822300ae0472ad391dcc02e2ff15e6020f21b4dad58986b08816101"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_current_proof.json": {
+      "bytes": 3151,
+      "sha256": "af4570f0f20c0e1895b3567f2c18a13d0cc40d939ac051047a757a3c145d753e"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_manuscript.tex": {
+      "bytes": 676695,
+      "sha256": "38d458ba4178083766c5ae56a894da595fe27170c1ef07f6b49750fc5edf7c37"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_parity.tex": {
+      "bytes": 12607,
+      "sha256": "df67c17520d942a4a5d8505b5ed1d97bf2bd3d18f8d13cbf514f758d7286075d"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_quartic_inventory.json": {
+      "bytes": 28329,
+      "sha256": "ab8507d4efc538e48675857320def4ffb43c0d62fafe46c44589d2ac6f6db4e4"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_sieve_applications.json": {
+      "bytes": 4736,
+      "sha256": "28b8f85d33be96b7148de22214dbe7fd39d221a99ab56c75534ad47edc18b062"
+    },
+    "docs/quartic-9625/arithmetic-evidence/baseline_sieve_sources.json": {
+      "bytes": 6692,
+      "sha256": "e98599849e678182edac7c825a58ec9d86604198fbdd277e64faa128eae2b125"
+    },
+    "docs/quartic-9625/arithmetic-evidence/betaonly_contract.json": {
+      "bytes": 1516,
+      "sha256": "6a45f8ccb18e4dca100f87851bf40d21f92b684dfdd347a0588f0f88aac0a1e7"
+    },
+    "docs/quartic-9625/arithmetic-evidence/betaonly_proof.md": {
+      "bytes": 9258,
+      "sha256": "ec0146e593abc7a79eaf28fb3c09ddbbcfc01d2c3da7411de0a4b81361fabc98"
+    },
+    "docs/quartic-9625/arithmetic-evidence/betaonly_review.md": {
+      "bytes": 7731,
+      "sha256": "4c67d9b076d37a36d40b2099a608cd948d1727a3081bdaea0cd6616156e75541"
+    },
+    "docs/quartic-9625/arithmetic-evidence/diagnostic_receipt.md": {
+      "bytes": 1191,
+      "sha256": "6d627138d2f8f8dcb18130dbe8a8549f2f8b9e5f29098ac7ae66a3e428cb7330"
+    },
+    "docs/quartic-9625/arithmetic-evidence/h19_height_detail.md": {
+      "bytes": 10791,
+      "sha256": "a8d5ac57dd4059bffe9035e2c7e66994aa0732eeaa335f38b0ea2aa7b004f641"
+    },
+    "docs/quartic-9625/arithmetic-evidence/h19_proof.md": {
+      "bytes": 19381,
+      "sha256": "258d07739bed4bd114580a51bbbbeac07f6b5f6441024db2f7c19ed237b7818f"
+    },
+    "docs/quartic-9625/arithmetic-evidence/h19_review.md": {
+      "bytes": 17321,
+      "sha256": "332898c1bae2be879075eb54b0be8ab27917bbffce5f96498c267e89b8745cec"
+    },
+    "docs/quartic-9625/arithmetic-evidence/rational37_proof.md": {
+      "bytes": 11881,
+      "sha256": "8db4056c90ae36f0abbe895767d69c69660a3f316dc799ee3622b4d88272e0ba"
+    },
+    "docs/quartic-9625/arithmetic-evidence/v3_manuscript_review.md": {
+      "bytes": 9984,
+      "sha256": "461a842517ad678b4bbf9212de20eb23f7992c756f638bbc87c6ee0e26e25543"
+    },
+    "docs/quartic-9625/baseline-bridge.json": {
+      "bytes": 195753,
+      "sha256": "0f1949e8e91b95c7f8dfbb828d60881425b3d1b2ae0745fe37f4e5b776b8d6d3"
+    },
+    "docs/quartic-9625/build_inventory.py": {
+      "bytes": 10228,
+      "sha256": "07a9fd9d758dc33fa588ec8e062e9974c39b850f5d8a5914704d24a21317031b"
+    },
+    "docs/quartic-9625/dependency-closure.json": {
+      "bytes": 12968,
+      "sha256": "60ddf7f190cd2a2b1c49058e4c537753ac8647a75167460a82012a4679615af9"
+    },
+    "docs/quartic-9625/inventory-spec.json": {
+      "bytes": 1778,
+      "sha256": "91e62b48d6321fd37000304cdde548b7400a2f903e684fc262844bd2c35dc396"
+    },
+    "docs/quartic-9625/layout-transform.json": {
+      "bytes": 740,
+      "sha256": "1d7fb9f3fdef372bda24de7433f1d80c6b533f3eed0db34fc77f551df50cdb6e"
+    },
+    "docs/quartic-9625/publication-additions.json": {
+      "bytes": 36706,
+      "sha256": "e06b377ecedd1bb42e0443606dd85cc54743e98a98188dfd2ddf9db4e06f29c1"
+    },
+    "docs/quartic-9625/release_contract.py": {
+      "bytes": 2620,
+      "sha256": "83afec120383118b2af9018578bfd0c0481d336ac94ec36a4997cda2eda18985"
+    },
+    "docs/quartic-9625/reviewed-arithmetic-patch.tex": {
+      "bytes": 36058,
+      "sha256": "da4d0239d33a344152481958a5e09d6737691dec40f5e78d6d654a08fd89172b"
+    },
+    "docs/quartic-9625/test_inventory.py": {
+      "bytes": 3842,
+      "sha256": "a85e8016dcb3d48df7a004bebce782a125cf78a602621a56eea2ebeae757dede"
+    },
+    "docs/quartic-9625/theorem-applications.json": {
+      "bytes": 44774,
+      "sha256": "249279512a7871e97ab216067ed82ea772676dbf722cd6933976f004ff1d0e99"
+    },
+    "docs/quartic-9625/validate.py": {
+      "bytes": 14791,
+      "sha256": "557be94153cc77abc20be350bf0d978bc8be24c989ce83f83bd836a0db2b1b98"
+    },
+    "docs/quartic-9625/verification/CERTIFICATE_COMPARISON.json": {
+      "bytes": 1255,
+      "sha256": "d031b4ee373937900b0b54c39566195d105f80043b7fc78bdd982bda0cf2e1cf"
+    },
+    "docs/quartic-9625/verification/HANDOFF_ACTUAL_CERTIFICATES.json": {
+      "bytes": 547,
+      "sha256": "4eed2560e5199e59404c94fe5bf7f52cecfa86dab1634ae6f2d06a00d29b04d6"
+    },
+    "docs/quartic-9625/verification/HANDOFF_TESTS.json": {
+      "bytes": 1985,
+      "sha256": "92701ef1a87ade5a3dc07b77d4de2f00b17a64c03c0215bb1c575c2a8ea5e084"
+    },
+    "docs/quartic-9625/verification/INVENTORY.json": {
+      "bytes": 592,
+      "sha256": "bbf9909f48a829d6d08c6cdac2c6127bd1b4c1615872885ed0b9e09289a163e1"
+    },
+    "docs/quartic-9625/verification/INVENTORY_NEGATIVE.json": {
+      "bytes": 1316,
+      "sha256": "3d9da0260f5fa19f76edbe050e25d3f7d42e5997fa8acc7d60df79d7d4d31d16"
+    },
+    "docs/quartic-9625/verification/PDF_BUILD.json": {
+      "bytes": 589,
+      "sha256": "034a7649f13157abc12176b487a8b00bb775b39873f9292875620df0c0edd26c"
+    },
+    "docs/quartic-9625/verification/PDF_VISUAL.json": {
+      "bytes": 651,
+      "sha256": "fc0bbddc38c9c6940d6044a4374db78595df35eff7393de3101f10b13155f76b"
+    },
+    "docs/quartic-9625/verification/README.md": {
+      "bytes": 2251,
+      "sha256": "dd0794e53969ec76da9be44b38405234ee1291530bab9ba141e8615c5553902b"
+    },
+    "docs/quartic-9625/verification/REGENERATED_VERIFICATION.json": {
+      "bytes": 1177,
+      "sha256": "faf7f20cc2b4aecc3486502aee47edc5d7b1b09ea28129c4996893d74108bd1f"
+    },
+    "docs/quartic-9625/verification/REPRODUCTION.json": {
+      "bytes": 10624,
+      "sha256": "a093c3eb8d62926ab86bf3afa5d4b73fde414d191142499369113f1cc54ad80a"
+    },
+    "docs/quartic-9625/verification/regenerated-certificate.jsonl.gz": {
+      "bytes": 380276,
+      "sha256": "bdf4765cd001cf36e265ce964ace7cb045f1e74885e86d4425f78bbe89467ada"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/adapter-regeneration.log": {
+      "bytes": 6145,
+      "sha256": "bff7fa7fc6924972123f30035d8b6f87b2da841ab88031c76030b34d6dbb204e"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/batch.log": {
+      "bytes": 736,
+      "sha256": "54570d4538e0fa93702099156a598aae080459187fafa4ef63ddbce0bc0dd561"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/chart-diagnostic.json": {
+      "bytes": 3938,
+      "sha256": "9cc57b4672a93657eaea9c247824d1090134fa855926a88150dd57520e0a3123"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/charts.log": {
+      "bytes": 283,
+      "sha256": "d4eaaab9f4c8ff7e185e46c2a283c34ca1d298b2163c7328b7eb0d426dc63a63"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/fresh-lift.log": {
+      "bytes": 347,
+      "sha256": "024e9a1395e94cc4a27639cd4517d43a314e77a227c932e902d0478f14584f43"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/frozen-certificate.log": {
+      "bytes": 1177,
+      "sha256": "23d8ba5211eba0f14728c66c069520b501c2b2296c73d88b986b6c63623258c1"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/frozen-named-mutations.json": {
+      "bytes": 1394,
+      "sha256": "f3cd872eb83c18faba26a3fa46a3782768987ef97b4036bbe684fae39e66ec8e"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/frozen-named-mutations.log": {
+      "bytes": 1208,
+      "sha256": "e23ab570965849f8184cdb6da0211f389a589678208996503555a368a8601b9a"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/frozen-source-audit-map.json": {
+      "bytes": 27252,
+      "sha256": "bcefd99b40537c59c422e9e44ebc6e444469ddb873909239e8a21d3e9d82f7f9"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/frozen-source-audit.json": {
+      "bytes": 3502,
+      "sha256": "9020dcfdcfab0b05a1b26d9f73713369bde40dae3fe5f179fab77bafcc5f0b40"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/frozen-source-audit.log": {
+      "bytes": 3002,
+      "sha256": "1de50ded380026aeacc48a7c3c2a9e1b66ec42ab8b721929de148c828d54ee8e"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/locator-fixtures.log": {
+      "bytes": 405,
+      "sha256": "90bc168df78727d44ad9a459e5b144f9db1f4abb5593938cea2ce13e98d255aa"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/merge-coordinates.log": {
+      "bytes": 682,
+      "sha256": "234b297588b1d059357a4f4f69c16ea5bc0a1e97712bb849c6216bfacc584d3a"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/norms.log": {
+      "bytes": 306,
+      "sha256": "55c95a37054c84b1fa29f117cef1ed6ca0ad4b86c0c299979633de42e8fd26a8"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/optimize.log": {
+      "bytes": 1456,
+      "sha256": "0586ad3a59d693e065a5695711efc9a64d66e2a60e23a01798c50664d0b27871"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/ordinates.log": {
+      "bytes": 887,
+      "sha256": "8a521e974acc915a5c9c8ffaf5fc2e02e40c99c90215d7a4c887a06f6ed728a3"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/parity.log": {
+      "bytes": 398,
+      "sha256": "901e10cb6f2822c613212e22882efa5ea424654d8c741bad14f5f57ae0a641fb"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/rebuilt-source-audit-map.json": {
+      "bytes": 27252,
+      "sha256": "bcefd99b40537c59c422e9e44ebc6e444469ddb873909239e8a21d3e9d82f7f9"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/rebuilt-source-audit.json": {
+      "bytes": 3502,
+      "sha256": "9020dcfdcfab0b05a1b26d9f73713369bde40dae3fe5f179fab77bafcc5f0b40"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/rebuilt-source-audit.log": {
+      "bytes": 3002,
+      "sha256": "1de50ded380026aeacc48a7c3c2a9e1b66ec42ab8b721929de148c828d54ee8e"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/regenerated-named-mutations.json": {
+      "bytes": 1394,
+      "sha256": "f3cd872eb83c18faba26a3fa46a3782768987ef97b4036bbe684fae39e66ec8e"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/regenerated-named-mutations.log": {
+      "bytes": 1208,
+      "sha256": "e23ab570965849f8184cdb6da0211f389a589678208996503555a368a8601b9a"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/source-mutations.json": {
+      "bytes": 1145,
+      "sha256": "d5cad775b59d72c0b18dfebde1fd27ea3e65a8a0a755976263e3ef7ab88a40e7"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/source-mutations.log": {
+      "bytes": 1019,
+      "sha256": "edc958f35784b3c782452ae4d96be2d205bf1acef1f8aa59c7aa8ee17d2a07bf"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/source-regeneration.log": {
+      "bytes": 2984,
+      "sha256": "81164127054f4a2b7b44fd2ccb46bbeb07381e89dfa6b8fb72b46915de0dc4c9"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/steps.json": {
+      "bytes": 5765,
+      "sha256": "a705153fb15c78c54c3e3c912bb00017a3f17f861b92b5d6352b7dead2792cc2"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/syntax.log": {
+      "bytes": 107,
+      "sha256": "d74177cc0622452799e8364bf8993f76c478e79f66ce3cf404455430d040ba4d"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-batch.log": {
+      "bytes": 1121,
+      "sha256": "ad84c22875ae66f1395b4262051a020c0c0f8b004ef99d39c483c9e4e989d480"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-charts.log": {
+      "bytes": 1050,
+      "sha256": "979438d79457342604dc9b181d5cd6fecec09f53223ec77b22b7746793244e15"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-fresh-lift.log": {
+      "bytes": 969,
+      "sha256": "87a2c65431cfefe153624f4e66728f2cfe3902f90a175b3949356e28bdfb93f9"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-norms.log": {
+      "bytes": 1027,
+      "sha256": "b8915b9b9298761e43f3ea0611aa145bfbdf83a82f1b52c41002f1c14b0f4390"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-optimized.log": {
+      "bytes": 1161,
+      "sha256": "8c9a02fab5b9055271b1fc6625419497c88bc2d795c1eba5c5a41466ddf427e2"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-ordinates.log": {
+      "bytes": 1074,
+      "sha256": "9b5bf5b99669759182a02ea8ac1bd82813c954e9ff13270cc20d4ae81f4a73fc"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-parity.log": {
+      "bytes": 1099,
+      "sha256": "58f758f55dd42e72d58c6ca6af4f288afc181239c60bf8fbbdc0201b5b4cc265"
+    },
+    "docs/quartic-9625/verification/reproduction-logs/verify-regenerated-endpoint.log": {
+      "bytes": 1177,
+      "sha256": "faf7f20cc2b4aecc3486502aee47edc5d7b1b09ea28129c4996893d74108bd1f"
+    },
+    "docs/quartic-9625/verification/reviews/handoff-certificate-comparison.md": {
+      "bytes": 4875,
+      "sha256": "7ceb1e33fe0e6174f2df7f6bb9064b8613cfedf69e33df51f60ad8a6fbb14117"
+    },
+    "docs/quartic-9625/verification/reviews/handoff.md": {
+      "bytes": 8565,
+      "sha256": "955a20e48023c9d02141d0c4358330aac2605f399ab44dcb0594117094b27843"
+    },
+    "docs/quartic-9625/verification/reviews/inventory.md": {
+      "bytes": 3573,
+      "sha256": "a553214f36b8d0eeca71534dd2b115c4a6c628398638221b45a0a0f768103feb"
+    },
+    "docs/quartic-9625/verification/reviews/package-readme.md": {
+      "bytes": 1611,
+      "sha256": "af35c76ff073afb7660e9d8b00e0312757b6e2b133734ffcb1f3ac151f7f71d1"
+    },
+    "docs/quartic-9625/verification/reviews/package.md": {
+      "bytes": 6102,
+      "sha256": "8dce2df67ede7b96d64b38dcba49db1aebd178d0f602714d4ba67ed745df7817"
+    },
+    "docs/quartic-9625/verification/reviews/source-and-artifact.md": {
+      "bytes": 10038,
+      "sha256": "adbb86598b6db09ebe7acd4474a2df0e405993c21a4dd2ca6c3c24c00daed1e5"
+    },
     "quartic_12504.pdf": {
       "bytes": 1095681,
       "sha256": "e747dcb58c541e5106ac6289cab660d624a7c1209b0e488aecc51ee8f54014b0"
@@ -299,6 +1341,14 @@
     "quartic_12504.tex": {
       "bytes": 676695,
       "sha256": "38d458ba4178083766c5ae56a894da595fe27170c1ef07f6b49750fc5edf7c37"
+    },
+    "quartic_1272.pdf": {
+      "bytes": 1303596,
+      "sha256": "0d2635ea6fbcac4b49519c6591fa0e84046ccc5c2114a4617994f36cf90a3b4e"
+    },
+    "quartic_1272.tex": {
+      "bytes": 807070,
+      "sha256": "16033e0471df605093b28210a9f81718c2486b147016ec8afc75d166dff0b90f"
     },
     "quartic_4973.pdf": {
       "bytes": 1164841,
@@ -587,6 +1637,322 @@
     "quartics/quartic-12504/weights.json": {
       "bytes": 23880,
       "sha256": "ae4342eaf01218bcc041aeda1960aca923b3f9089dd29cdfa62162ae3c7ba1bd"
+    },
+    "quartics/quartic-1272/.gitattributes": {
+      "bytes": 83,
+      "sha256": "1118445e5fddb972d66b31cdfe361d866fef6966f7351f894027cafa69a42fed"
+    },
+    "quartics/quartic-1272/MANIFEST.json": {
+      "bytes": 13212,
+      "sha256": "aa7f04c54e8b778a419a1be8d24e0b3a9a8540c50202d41815864a156d6985c6"
+    },
+    "quartics/quartic-1272/PROVENANCE.json": {
+      "bytes": 10697,
+      "sha256": "2d1c54597a90ae7cb01b063ef99065c16866319458e5c3587f8e3ecffba50d68"
+    },
+    "quartics/quartic-1272/README.md": {
+      "bytes": 6715,
+      "sha256": "40917e81e0c5a72e47f0da6d2d01ecc2dddfdff0d4c8a6077160fc9951138856"
+    },
+    "quartics/quartic-1272/builder/FROZEN.json": {
+      "bytes": 619,
+      "sha256": "b363bda44d244ba496df5f390f2573b974bf3d12c135436a8c838a30239cecb6"
+    },
+    "quartics/quartic-1272/builder/README.md": {
+      "bytes": 5190,
+      "sha256": "db9353ca6b0e3100f7f0c9a760960bf95408e14e0a4f57e28c4d533492ce57c8"
+    },
+    "quartics/quartic-1272/builder/SEMANTICS.md": {
+      "bytes": 5867,
+      "sha256": "3c9a0b1bdf7bd683ca58447a44c5662dc0e0d9162972e36d732688f6a409b9f0"
+    },
+    "quartics/quartic-1272/builder/build_source.cjs": {
+      "bytes": 17876,
+      "sha256": "68c553f987f88780d28fbd21d625278701ecc38d8cc92160215e5bf44a270c78"
+    },
+    "quartics/quartic-1272/builder/census.json": {
+      "bytes": 2877,
+      "sha256": "ee0e454189bf965fe643548472532e75c533fdf822f60b0420ede6d4120e57dd"
+    },
+    "quartics/quartic-1272/builder/raw-ir.json": {
+      "bytes": 3968902,
+      "sha256": "0ac8ea9ad16f4439c83e3cfa03ee8a8a4eb24adb5717c994ca19e5db47fffba3"
+    },
+    "quartics/quartic-1272/builder/raw-translated-ir.json": {
+      "bytes": 3969561,
+      "sha256": "9ea55f4a3a5e54f8143a14bda7aebdd21adcd01a972c649653d9b7856a4ee69e"
+    },
+    "quartics/quartic-1272/checker/ANCHOR_CHECK.json": {
+      "bytes": 2582,
+      "sha256": "3237000bb35aef17c8dcd9c5fd645257dec53f5a57134aed811262a4a66ef1d4"
+    },
+    "quartics/quartic-1272/checker/FINAL_CHECK.json": {
+      "bytes": 12937,
+      "sha256": "f19438e80926e7fef6647d907a71ce90d2139334143714255e97e9199c14e0b8"
+    },
+    "quartics/quartic-1272/checker/MUTATION_TESTS.json": {
+      "bytes": 5296,
+      "sha256": "5ac255f2d79d2a02ce320691177905b2af31e4dae1c63793a7db4a7260f0665a"
+    },
+    "quartics/quartic-1272/checker/README.md": {
+      "bytes": 6113,
+      "sha256": "475f3d4796eec784654e9bcab481ad62648d975832d4bbbce571b6174b394a05"
+    },
+    "quartics/quartic-1272/checker/check_anchor.cjs": {
+      "bytes": 3527,
+      "sha256": "148287db2e1336f9660bbbcdf160c5b2ca8de88eac913bf8598be2578b11a998"
+    },
+    "quartics/quartic-1272/checker/checker.cjs": {
+      "bytes": 21177,
+      "sha256": "50f9924557f0594a0ddb2664260d2e382d80762a0d607d87203fb7ddfb4e1cb1"
+    },
+    "quartics/quartic-1272/checker/direct-check.json": {
+      "bytes": 184360,
+      "sha256": "9fab9af55bda5d5fb890167a68a39a6c4a0fe8d7843480fe1c1fd8ac7c70988d"
+    },
+    "quartics/quartic-1272/checker/mutation_tests.cjs": {
+      "bytes": 7901,
+      "sha256": "cac920522fb3a7e188b6bee64ed61d9e4003c0458a453374e22e8490be71f70c"
+    },
+    "quartics/quartic-1272/checker/run_all.cjs": {
+      "bytes": 2452,
+      "sha256": "dc156fb32ce515eea3a543186fc5a6214617e2841f192a848a6a067f751198cd"
+    },
+    "quartics/quartic-1272/checker/translated-check.json": {
+      "bytes": 184047,
+      "sha256": "8e6ed348424d9f09027029f82668bf33ebd9161df148fe34de698f828c59957c"
+    },
+    "quartics/quartic-1272/compiler/CHECKER_REVIEW.md": {
+      "bytes": 6121,
+      "sha256": "7722729fcfe585edbbeea73fe2f6849fcfd6ef5d736e441a6d41e1d99a3dadf2"
+    },
+    "quartics/quartic-1272/compiler/README.md": {
+      "bytes": 5334,
+      "sha256": "a8b66bab5fc21e58c0b47d0ab9aaa5353a894337523aef3f0502f0e36f107504"
+    },
+    "quartics/quartic-1272/compiler/checker-review-probes.json": {
+      "bytes": 1482,
+      "sha256": "43ec27ba25e5386dc81050965f534ab1d307e9d75b591d924fb13c24d71f72db"
+    },
+    "quartics/quartic-1272/compiler/compile_ir.py": {
+      "bytes": 21954,
+      "sha256": "c50510a5bed8f59543b64a3a2cb251e9aff4b300d4bfc750e13642e7b00eb46f"
+    },
+    "quartics/quartic-1272/compiler/direct/compiled-ir.json": {
+      "bytes": 3947587,
+      "sha256": "b79fdb306c25d85aa41c308ad96a1076d2b84b98a6f51c66d0682b2ae9b15b98"
+    },
+    "quartics/quartic-1272/compiler/direct/compiler-report.json": {
+      "bytes": 1450,
+      "sha256": "d4de211ad768397abe112921748e7426a7308e78847165e363d84292a47556b9"
+    },
+    "quartics/quartic-1272/compiler/direct/coordinate-map.json": {
+      "bytes": 129412,
+      "sha256": "a2f10e89a380c456937623f9fc6655e0c419881693fb6bea84f8e975ba413624"
+    },
+    "quartics/quartic-1272/compiler/direct/polynomial.json": {
+      "bytes": 8701187,
+      "sha256": "5acd7ebf8c09c7d95f66c16f6c5594fdbbde062a0f3204068e8f88b7fd4b54ba"
+    },
+    "quartics/quartic-1272/compiler/direct/reduction-certificate.json": {
+      "bytes": 134588,
+      "sha256": "130953b02693de8ce3da1996a3257a1e50a58cfdc03be73e6f05d105419cc06f"
+    },
+    "quartics/quartic-1272/compiler/direct/specialization-certificate.json": {
+      "bytes": 1060,
+      "sha256": "409b54b3cd4fe3bc11e4739d8c2af622190785241bf54370812a05d6c35f7100"
+    },
+    "quartics/quartic-1272/compiler/review_checker.cjs": {
+      "bytes": 3738,
+      "sha256": "cebc27ef53ef27f131b58db06bd39a3008090c492598cb06fbda46f66e78007c"
+    },
+    "quartics/quartic-1272/compiler/translated/compiled-ir.json": {
+      "bytes": 3948240,
+      "sha256": "377cda57d18c320149f9cb47cbaeacf847ab0df1dd2a6cfd08a967f3c4af1433"
+    },
+    "quartics/quartic-1272/compiler/translated/compiler-report.json": {
+      "bytes": 1450,
+      "sha256": "177dced000077ea4349045ce345ce1c98491e5d913cf19307d9a5bf3f368f093"
+    },
+    "quartics/quartic-1272/compiler/translated/coordinate-map.json": {
+      "bytes": 129412,
+      "sha256": "02673ea95f96be7c77de80688fc57369a2e0c69fc94184c98f4d66983466fdb3"
+    },
+    "quartics/quartic-1272/compiler/translated/polynomial.json": {
+      "bytes": 8703440,
+      "sha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586"
+    },
+    "quartics/quartic-1272/compiler/translated/reduction-certificate.json": {
+      "bytes": 134588,
+      "sha256": "489287cdb314cd89f1319b6818528a90dfc444f962d20e3acfb931800a7412a3"
+    },
+    "quartics/quartic-1272/compiler/translated/specialization-certificate.json": {
+      "bytes": 726,
+      "sha256": "73f1037dc54f3ac771bd66b97b7f266aef4ca2d4c679209b552fbefb08647d64"
+    },
+    "quartics/quartic-1272/evidence/README.md": {
+      "bytes": 811,
+      "sha256": "67b783cc0933ca1c32d4cf7d4ee986bc2f5954ea43f75319893aec4fcd6d82b2"
+    },
+    "quartics/quartic-1272/evidence/original-builder-frozen.json": {
+      "bytes": 837,
+      "sha256": "67a56659ffd50e5f025c1bf4560b55f180dff050eac5fa1d57fa5a6266d6cb63"
+    },
+    "quartics/quartic-1272/evidence/original-final-status.json": {
+      "bytes": 5211,
+      "sha256": "fa149ae4f7b6ec4048f52eb369181a6a192a2e746967f9eb5961360c8e6693fb"
+    },
+    "quartics/quartic-1272/evidence/original-source-review-verdict.json": {
+      "bytes": 3838,
+      "sha256": "a00ff69967c9a1627616aa7f94e280eb617119985c661b9b11096ec3dc1fa15a"
+    },
+    "quartics/quartic-1272/evidence/source-audits/brox1315-AUDIT.md": {
+      "bytes": 16540,
+      "sha256": "1524ed4fbdaeeecc17b6e0c78655d6cd7f6e18df884715f6acc21adae7de7ab6"
+    },
+    "quartics/quartic-1272/evidence/source-audits/brox1315-CROSS_REVIEW.md": {
+      "bytes": 4863,
+      "sha256": "2406d8b15c416f9d487d479c732b870f77225b8dc9bed6a3f040154b9672ff30"
+    },
+    "quartics/quartic-1272/evidence/source-audits/brox41-AUDIT.md": {
+      "bytes": 17020,
+      "sha256": "9760a3988fd601ee93cdaa33745923a0ec739a1a2806aa3d0b72e0c220f23a29"
+    },
+    "quartics/quartic-1272/evidence/source-audits/sun41-AUDIT.md": {
+      "bytes": 20422,
+      "sha256": "8e559bb68211799768917ed18445b882a771c8540e628fa6d120db7ae5c58c2d"
+    },
+    "quartics/quartic-1272/evidence/source-audits/sun41-DEPENDENCIES.json": {
+      "bytes": 5758,
+      "sha256": "f59430ad0429fc328da955d0cd79891324f0d183785d0f7270ade0b98ba1cfc7"
+    },
+    "quartics/quartic-1272/evidence/source-audits/sun41-SOURCES.json": {
+      "bytes": 4529,
+      "sha256": "6abaee17b826524404baca3191eb861f8bab83697d434b0786873f185058fa33"
+    },
+    "quartics/quartic-1272/identity/IDENTITY_REPORT.txt": {
+      "bytes": 16190,
+      "sha256": "9ad7591609634cc9420e34dbfe024e888c88299420ed4b42902aa03e2097b675"
+    },
+    "quartics/quartic-1272/identity/anchor_certificate.json": {
+      "bytes": 22499,
+      "sha256": "7f4d4e5684617b58f3d0e46e58f3659e0ccf687eb744f0626aa3d1ea1fe53200"
+    },
+    "quartics/quartic-1272/identity/check_identity.py": {
+      "bytes": 11810,
+      "sha256": "18a63c26c24b3a8c22ff660ce1bbba263d9144f0b8f4dabeb60e5d05b6153584"
+    },
+    "quartics/quartic-1272/identity/check_reconstructed_tables.py": {
+      "bytes": 8255,
+      "sha256": "50a15e266cbb6a3a18917dbb4b63b7035ed5eaed456798dc01f1b510509afec5"
+    },
+    "quartics/quartic-1272/identity/checks.json": {
+      "bytes": 444,
+      "sha256": "8d0f70ceef290798d1c8df9f6c48efa0c940a7c725fdd082fd5e54e14c3f6f0c"
+    },
+    "quartics/quartic-1272/identity/reconstructed_table_checks.json": {
+      "bytes": 4291,
+      "sha256": "ad7fb1b48d9e8e29f2eeebd717780ca0f926a795c6dab4eac2cd5fd52c908b68"
+    },
+    "quartics/quartic-1272/identity/source_receipts.json": {
+      "bytes": 3702,
+      "sha256": "7b6e66a93d5786f594fc784cd867887e85b1c4b72c04995a240cffdf8e76f738"
+    },
+    "quartics/quartic-1272/integrity.py": {
+      "bytes": 4233,
+      "sha256": "7a6bb5cfc054c0fa3eacdf819a714e9174d60d8d5872073e894cf6881ba76aae"
+    },
+    "quartics/quartic-1272/optimization/REPORT.md": {
+      "bytes": 6103,
+      "sha256": "d99f995318db65c58f448f1a17e5968aed73d8528af871b550a67cf7c8e3d4d5"
+    },
+    "quartics/quartic-1272/optimization/find_affine_dependencies.py": {
+      "bytes": 4585,
+      "sha256": "972286adb71f3ce9faadeb3c2b68ab6f5415061a7a05ef805453552a169fdbd4"
+    },
+    "quartics/quartic-1272/optimization/optimization-check.json": {
+      "bytes": 1970,
+      "sha256": "bfeec72a59809f3cff3a2dd2a2e17ad20386efd32cd8d56744aecfa1e1a6247c"
+    },
+    "quartics/quartic-1272/optimization/verify_optimization.py": {
+      "bytes": 5787,
+      "sha256": "7b344deef95cd9d6123e36af09168a511d4ff618a15fb57a6a07babbbd51b182"
+    },
+    "quartics/quartic-1272/oracle/REPORT.md": {
+      "bytes": 4174,
+      "sha256": "99a01910bdb4c7f71843c957a281137b9c40cc55049850a26045b22f4c58535c"
+    },
+    "quartics/quartic-1272/oracle/check_oracle.py": {
+      "bytes": 20037,
+      "sha256": "8f2338bc03abe2e03a8e23fa743d27d615f10fb029a63139e6efc1924ef4c04d"
+    },
+    "quartics/quartic-1272/oracle/results.json": {
+      "bytes": 12392,
+      "sha256": "f6346015a050b9af56fe704dee41a2ec7569cf47be5e1286a89fdbdedc6a194a"
+    },
+    "quartics/quartic-1272/polynomial.json": {
+      "bytes": 8703440,
+      "sha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586"
+    },
+    "quartics/quartic-1272/reproduce.py": {
+      "bytes": 8838,
+      "sha256": "77d79e9abfdad2f451bdf595d070c6e1705ee8236730aca483a477143a337510"
+    },
+    "quartics/quartic-1272/source-review/SOURCE_REVIEW.md": {
+      "bytes": 11603,
+      "sha256": "b62f7be743bd6bc5f424cddb69af0e735d6b36ba056263fd06b989fd5204278b"
+    },
+    "quartics/quartic-1272/source-review/build_inventory.py": {
+      "bytes": 16184,
+      "sha256": "8ef9056c5610d01a928c1f5aec6bfb7b7077fea1d0e890e7819cfea39b98977f"
+    },
+    "quartics/quartic-1272/source-review/builder_semantic_checks.json": {
+      "bytes": 2338,
+      "sha256": "4f785475d34c4bf137d84ad54df6ca61a85ddbded524da668e519c3f2c779326"
+    },
+    "quartics/quartic-1272/source-review/check_builder_semantics.py": {
+      "bytes": 8498,
+      "sha256": "13f102f7801630d3c9dd280665da35bae03f51567255c8465f63f151844562a4"
+    },
+    "quartics/quartic-1272/source-review/review_verdict.json": {
+      "bytes": 4242,
+      "sha256": "f38b0ebfc3b7dc4fbf96b02f552489499a3fab0a9652a53d2db5c826cc148ba7"
+    },
+    "quartics/quartic-1272/source-review/source_inventory.json": {
+      "bytes": 190864,
+      "sha256": "4e4e9b924f5d0d4705b2806f353b9e312d36389e041a86fa9abc60f36673b32b"
+    },
+    "quartics/quartic-1272/sources/SOURCES.json": {
+      "bytes": 1653,
+      "sha256": "ea0f528dde054bd5e5904ad84226f12e0693ae7ed6cab70284b63c78f168994f"
+    },
+    "quartics/quartic-1272/sources/diophantine_optimization_20261106_v3.tex": {
+      "bytes": 448727,
+      "sha256": "fc8bc7b8fae727e24f934ddd7de0a7cff8a005e89c3d0cac1ea14e5191b910ca"
+    },
+    "quartics/quartic-1272/sources/proof-supplements/brox-local-proof-supplement.tex": {
+      "bytes": 1877,
+      "sha256": "e88ce9eba6ed7b287f7f8e3555810004a8dc8f39762be8f21037d49129739e6c"
+    },
+    "quartics/quartic-1272/sources/proof-supplements/reciprocal_unramified_repair.tex": {
+      "bytes": 4065,
+      "sha256": "7fb6119956d24749c1b8477f2cf567dc1c913e2cd55bfe168fff55367d096635"
+    },
+    "quartics/quartic-1272/sources/proof-supplements/sun-citation-repair.tex": {
+      "bytes": 1250,
+      "sha256": "bea9cb3624bbc3ea85f565462da2db5bc07b289e3d3d053e4a9fef435d10ec5a"
+    },
+    "quartics/quartic-1272/sources/proof-supplements/sun-local-repair.tex": {
+      "bytes": 1675,
+      "sha256": "6c2a1b021a7b39f3f9572e09aef3aa288ca366d43cb711714c712920bd58e747"
+    },
+    "quartics/quartic-1272/sources/sun-2610.20691v2-P103q.tex": {
+      "bytes": 129910,
+      "sha256": "b561d39ffc0e46798bd6ad5d3cfb8b543b75871780758876a8af67fb6daf15ba"
+    },
+    "quartics/quartic-1272/sources/upstream-quartic-12504-28e87b1.tex": {
+      "bytes": 676695,
+      "sha256": "38d458ba4178083766c5ae56a894da595fe27170c1ef07f6b49750fc5edf7c37"
     },
     "quartics/quartic-4973/README.md": {
       "bytes": 1379,
@@ -2463,556 +3829,1664 @@
     "quartics/quartic-9625/weights.json": {
       "bytes": 18324,
       "sha256": "279e3071ecfdc638c6eb6e9aeaefff90dc4f9c2c0fa670b878b9dcdfa975ec67"
+    },
+    "research/2026-11-06-collaborator-notes/ALGEBRA_CHECKS.json": {
+      "bytes": 474,
+      "sha256": "8daa261f401538b37f80f9233d025ed12215c064a1e3b83173821d67b2f0c1a0"
+    },
+    "research/2026-11-06-collaborator-notes/ARCHIVE_CATALOGUE.json": {
+      "bytes": 169760,
+      "sha256": "9603c90f348a5010a8aa60af402f15b17df0f81d590ab287398be36623a4049d"
+    },
+    "research/2026-11-06-collaborator-notes/CHECKS.json": {
+      "bytes": 557,
+      "sha256": "4de444bc628db5400746b9f2adbb937bef631dc32d17f1c7b2db4ef95b3506ee"
+    },
+    "research/2026-11-06-collaborator-notes/DEPENDENCIES.json": {
+      "bytes": 8907,
+      "sha256": "17d84afcc9280ffadfa6abe2bb8d5007e822af71f350541695f9c4dd6b01e2f4"
+    },
+    "research/2026-11-06-collaborator-notes/README.md": {
+      "bytes": 4670,
+      "sha256": "a3170fbbf10a1e3caee4b2582e7db30ca0caa09e81f3e87cca4662109a7ef973"
+    },
+    "research/2026-11-06-collaborator-notes/SUPPLIED_SOURCES.json": {
+      "bytes": 5342,
+      "sha256": "25db0ce3f8a2add8e6d889e68342c562101688bd487233e3a77e6e759664c9aa"
+    },
+    "research/2026-11-06-collaborator-notes/check_replacement.py": {
+      "bytes": 5005,
+      "sha256": "51e9223cab8c633e60c05b12c3c15e3860c43f32876712e9a7525c97c034c128"
+    },
+    "research/2026-11-06-collaborator-notes/comparison.md": {
+      "bytes": 5697,
+      "sha256": "1c15f57c6c853c1f04a474c8a590ca900bd8062307f4449224b34c6348fcfdc1"
+    },
+    "research/2026-11-06-collaborator-notes/existing-height-proof.tex": {
+      "bytes": 40310,
+      "sha256": "6e85a67cdc858f4fd0a491c3c1feaa9039b032ef675ac78ad75ef8a311d81b07"
+    },
+    "research/2026-11-06-collaborator-notes/fable-repository-audit.md": {
+      "bytes": 3128,
+      "sha256": "9ae6453c4feebc1f1c8511aaef430f5a6acce701ed7c5f561212303ac6383285"
+    },
+    "research/2026-11-06-collaborator-notes/height-replacement.md": {
+      "bytes": 8782,
+      "sha256": "6e2d5a10bda61d8dbdd6c0310893922a05d0103f94979fbc1aa3fcc0bd1e2560"
+    },
+    "research/2026-11-06-collaborator-notes/source-status.md": {
+      "bytes": 1452,
+      "sha256": "07f14f85e01dce0dc5cd9f7e1ff878e979ce01ff9c6fb7f3082b22c7ed7b04f7"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/COMPLEXITY.md": {
+      "bytes": 8143,
+      "sha256": "55b23466e06d760e7997d2a098f711b68246f475228c3c45e1efe938d3d0cd79"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/DEPENDENCIES.md": {
+      "bytes": 8656,
+      "sha256": "b9afcaf49a72b8a89bc38709b0094a60ea47c269e8464e486e05c377b9a388e5"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/contacts-explained.pdf": {
+      "bytes": 273472,
+      "sha256": "a401b7383a5094e7f1459a60a62e83fcee724ceb1c5e19d576309ef91761f9a4"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/contacts-explained.tex": {
+      "bytes": 8614,
+      "sha256": "4715f9fc9c2cd30a9a348450a2a23c2a0f693681c37cb3467f688966af7dfc11"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/lower-bounds-existential-integers.pdf": {
+      "bytes": 421299,
+      "sha256": "9fdc50478543705dd97fdd191a5a7ca8868cb8df622174fb2ff3213063adc02e"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/lower-bounds-existential-integers.tex": {
+      "bytes": 40425,
+      "sha256": "a0198edd31c77e0b20bdaf64126c6babfccceb11dfb781d78ae614ec08edde28"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/paper_equivalence.pdf": {
+      "bytes": 465283,
+      "sha256": "1b231f3f210fb0aeb5a2a8a31152fa904b0d98cd729a90c191c189ec0b24d044"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/proof_optimization.pdf": {
+      "bytes": 669892,
+      "sha256": "4dc6ca943848bcf743dc96f3655bef60ef22971894ed3bbaf78ae7a4719b1c4a"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/shared-definition.tex": {
+      "bytes": 27023,
+      "sha256": "97ea54d6ef709d588966a7980edc6a71b1bb330f3f72cb990a6c66dfc0be491f"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/shared-witness-definitions-ai-generated.pdf": {
+      "bytes": 486519,
+      "sha256": "a0624d9a2d66b96d2a7e401da4c708142f40ed8deda7c82a47c7075680c0050b"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/two-proofs-reduced-inputs-v3.pdf": {
+      "bytes": 481711,
+      "sha256": "fc54d13d68241291272239b292a3a2a00e1eb36c6afe8c92e91529e2c48c3dce"
+    },
+    "research/2026-11-06-collaborator-notes/supplied/two-proofs-reduced-inputs-v3.tex": {
+      "bytes": 49967,
+      "sha256": "57612ea0a05ec9695a34774c55d7aeb0583852f57078111040ce6652f15ec086"
     }
   },
-  "release_tag": "quartic-1272-version-5",
+  "release_tag": "quartic-962-version-6",
+  "research_manifest": "handoff/V6_RESEARCH_MANIFEST.json",
+  "review_files": {
+    "analytic-proof": "docs/quartic-962/evidence/analytic-assembled-receipt.json",
+    "inventory": "docs/quartic-962-validation/inventory-review.json",
+    "lower-bound": "docs/quartic-962/evidence/work--quartic-version6-preparation--lower-bound--independent-review--receipt.json",
+    "optimization": "quartics/quartic-962/evidence/dag-sharing/COMBINED_REVIEW.md"
+  },
   "snapshot_pins": {
-    "docs/quartic-1272-validation/README.md": {
-      "bytes": 1590,
-      "sha256": "b9cae635926d5778472852d447951ce1ebb8028c7bff7a1c6315e2d7babe2606"
+    "docs/quartic-962-validation/README.md": {
+      "bytes": 1034,
+      "sha256": "ef40c32fde7f47ec21c816c0034141a7d763ac8efda0143fea42b74898d7ecf7"
     },
-    "docs/quartic-1272-validation/REPRODUCTION.json": {
-      "bytes": 3258,
-      "sha256": "bd5e9aaf1a9a9c464907935f59bbd9e994a3880e7c4862dca3bc20346bbc6f2c"
+    "docs/quartic-962-validation/REPRODUCTION.json": {
+      "bytes": 4985,
+      "sha256": "9959bed854d17d0e484e2d5a3e136f91ceab8ef54a14f641dba0954a203f25d5"
     },
-    "docs/quartic-1272-validation/author-REPRODUCTION.json": {
-      "bytes": 3258,
-      "sha256": "bd5e9aaf1a9a9c464907935f59bbd9e994a3880e7c4862dca3bc20346bbc6f2c"
+    "docs/quartic-962-validation/build-report.json": {
+      "bytes": 524,
+      "sha256": "3f173fd4ca029d6f8cd797fd4c2b4b44cc867f5ffa7139bebdef97fe78bd0e9b"
     },
-    "docs/quartic-1272-validation/build-report.json": {
-      "bytes": 603,
-      "sha256": "c52c357e38c8269c37e379a81fb6531ef3b29dfbf09f8313f525e55967e31144"
+    "docs/quartic-962-validation/final-assembly-review/REVIEW.md": {
+      "bytes": 9972,
+      "sha256": "84e1af8bc66554bf8e946316473c9b6989892ce94e4ad3ed1bd0f81352a224b8"
     },
-    "docs/quartic-1272-validation/independent-review/FT-local-repair.md": {
-      "bytes": 2373,
-      "sha256": "767348c720b10b73eef4ce5f37c32c625e635f79953a094bb007bf02d4586ff0"
+    "docs/quartic-962-validation/final-assembly-review/assembly-check.json": {
+      "bytes": 12598,
+      "sha256": "434752a6786c139477db6ff0165987f2e972b694355e94970242c0c12fde4d61"
     },
-    "docs/quartic-1272-validation/independent-review/REVIEW.json": {
-      "bytes": 5698,
-      "sha256": "dd5e7a1066ef25c28c5e4755f36616c518da9981bf87788e4e2422ca8ec3e6f3"
+    "docs/quartic-962-validation/final-assembly-review/check-output.json": {
+      "bytes": 12598,
+      "sha256": "434752a6786c139477db6ff0165987f2e972b694355e94970242c0c12fde4d61"
     },
-    "docs/quartic-1272-validation/independent-review/REVIEW.md": {
-      "bytes": 8670,
-      "sha256": "18e8a2e1dfb65a2fc5711807ccfd06a5d690b16f964181b0c7cac7006034b920"
+    "docs/quartic-962-validation/final-assembly-review/check_assembly.py": {
+      "bytes": 5345,
+      "sha256": "bd83c5e6ba6f2478384d1480b7bfb5642e4f4224254a29a7ae4870d48241907d"
     },
-    "docs/quartic-1272-validation/independent-review/build_review.py": {
-      "bytes": 5198,
-      "sha256": "caf35c013b0bad0b35582dc92f3932621f8fb0b0b4407d0af65a7ba77ab5b26f"
+    "docs/quartic-962-validation/final-assembly-review/check_editorial.py": {
+      "bytes": 2378,
+      "sha256": "c9a95dc49297ced9a8bada99520efc593364ccb0843c71f5933fb37cc597bc4d"
     },
-    "docs/quartic-1272-validation/independent-review/check_inventory.py": {
-      "bytes": 1764,
-      "sha256": "5bc28e005bffd8d325c61355bed3e237c5fc199e1bed796d7901a0e4560d6ce1"
+    "docs/quartic-962-validation/final-assembly-review/check_layout.py": {
+      "bytes": 2328,
+      "sha256": "b2966d3339e13b9a14e78dd50485e31a926b2a78b0c4ba687678482e7991aee8"
     },
-    "docs/quartic-1272-validation/independent-review/check_package.py": {
-      "bytes": 5093,
-      "sha256": "f2c351fe26130c2fe1da0d7c40fd4c8b23237c569e3b7e48b4ffd47996fd05c3"
+    "docs/quartic-962-validation/final-assembly-review/editorial-check.json": {
+      "bytes": 1444,
+      "sha256": "1aafc72cbd23d0a7e0bf7f463c31883347b57225578b9dcdcc30c13cbbdca515"
     },
-    "docs/quartic-1272-validation/independent-review/check_release.py": {
-      "bytes": 4109,
-      "sha256": "80e69959291c1fc1dc59c82dc4d6d569760c12f2a8ba97d351ed710d93e21e5f"
+    "docs/quartic-962-validation/final-assembly-review/history-a00e3aca/REVIEW.md": {
+      "bytes": 8904,
+      "sha256": "faf3554aa6d43087fd6532a9bab94a335cbf0b2a38eae1276cd6ec8b764dfa3c"
     },
-    "docs/quartic-1272-validation/independent-review/check_serialization_patch.py": {
-      "bytes": 7691,
-      "sha256": "afb805e3d2ab846def25e38f1e92311edb35900a80114a09ba3dcdf2e19a6be4"
+    "docs/quartic-962-validation/final-assembly-review/history-a00e3aca/editorial-check.json": {
+      "bytes": 1444,
+      "sha256": "1aafc72cbd23d0a7e0bf7f463c31883347b57225578b9dcdcc30c13cbbdca515"
     },
-    "docs/quartic-1272-validation/independent-review/inventory-validation.json": {
-      "bytes": 1410,
-      "sha256": "4c53d0b5f7474e26d9de0f736e943e34d415aaa4b24cf2a27b827a06a6be86f2"
+    "docs/quartic-962-validation/final-assembly-review/history-a00e3aca/receipt.json": {
+      "bytes": 4303,
+      "sha256": "53abce86fe8f44543993ea4dce093d4b8ea55bd7a337e4917d511cb74735daa1"
     },
-    "docs/quartic-1272-validation/independent-review/inventory-validation.log": {
-      "bytes": 6559,
-      "sha256": "262ba3ca0c08173ced25239a9857436ecbf32677d5d513fad898c65d27aa3ad1"
+    "docs/quartic-962-validation/final-assembly-review/history-b43f096/REVIEW.md": {
+      "bytes": 7238,
+      "sha256": "bf6e6d8f40e4bbaa281b5fde5b3b08e9b6ccc7956cee249156619cd7d29d6d86"
     },
-    "docs/quartic-1272-validation/independent-review/package-check.json": {
-      "bytes": 1228,
-      "sha256": "44122835a860b82954f195ee7646ea4918b177b871dc1981b8cfc096254850fb"
+    "docs/quartic-962-validation/final-assembly-review/history-b43f096/assembly-check.json": {
+      "bytes": 12598,
+      "sha256": "434752a6786c139477db6ff0165987f2e972b694355e94970242c0c12fde4d61"
     },
-    "docs/quartic-1272-validation/independent-review/release-check.json": {
-      "bytes": 1668,
-      "sha256": "cc10fe02fdffc00d2b5a74ffeb568c854083a627776c68a807f8f0e7930820bc"
+    "docs/quartic-962-validation/final-assembly-review/history-b43f096/receipt.json": {
+      "bytes": 3028,
+      "sha256": "a67a1fbde6abf13f01eb33c2a04458bb8177ce5f0d3e9eb9d661fba33547b32e"
     },
-    "docs/quartic-1272-validation/independent-review/serialization-patch-check.json": {
-      "bytes": 10890,
-      "sha256": "779ea8f0cacbd0cdeffafe282b8a157a3ded6b565d2b43e1c4321d98f0e7462f"
+    "docs/quartic-962-validation/final-assembly-review/layout-check.json": {
+      "bytes": 1383,
+      "sha256": "90f291debf8a058bd7eb465716801dfc2eff3d1335a44bff440b446d087fdd60"
     },
-    "docs/quartic-1272-validation/original-construction-checks.json": {
-      "bytes": 11270,
-      "sha256": "2cf96ee12a3bef505c4dcc46810edcdeb9f2d773bd79f3fe60f96a4ef06e135a"
+    "docs/quartic-962-validation/final-assembly-review/receipt.json": {
+      "bytes": 4911,
+      "sha256": "1a99aaa2e367439327d7aa80f5d02b1070333fdf026589ab9458563220b37239"
     },
-    "docs/quartic-1272-validation/root-serialization-replay.json": {
-      "bytes": 3256,
-      "sha256": "5087fbb7ba7979c21851076d254bda46509748e537cfbf8960f67caaa6ee9a4b"
+    "docs/quartic-962-validation/inventory-independent-review/REVIEW.md": {
+      "bytes": 5677,
+      "sha256": "37c36cee1182339e8363fdb10c4c4548b23fff05310c6866bb8243900988f25f"
     },
-    "docs/quartic-1272-validation/serialization-repair.json": {
-      "bytes": 21187,
-      "sha256": "23092f27694cc2fdf29818b47332223bb51c62ee46831c6618c700ac9e746f57"
+    "docs/quartic-962-validation/inventory-independent-review/check-results.json": {
+      "bytes": 975,
+      "sha256": "56a7d8d6304b2959ba6aa002d768357acd8790c9b5c34c613c39ded88704a5f9"
     },
-    "docs/quartic-1272-validation/visual-review.json": {
-      "bytes": 1473,
-      "sha256": "70bd0aeda1e5fc8e1ea4e4e1cf8890088cd44605d5586ff066ee38c413933ab2"
+    "docs/quartic-962-validation/inventory-independent-review/check_inventory.py": {
+      "bytes": 3437,
+      "sha256": "f8c26d98df65c218c70120e6349e25ff1ee4c258c78a1c142593fc11bffcf14b"
     },
-    "docs/quartic-1272/README.md": {
-      "bytes": 6173,
-      "sha256": "65532475e4290394c8ee0e61e76154eb8f4c08aefebe5da7da46c0d182ca4010"
+    "docs/quartic-962-validation/inventory-review.json": {
+      "bytes": 4003,
+      "sha256": "28eed73de0d2af7a123cf41dd29b05054b8e0367cd00d893cbb7457409d02da4"
     },
-    "docs/quartic-1272/bibliography.json": {
-      "bytes": 114470,
-      "sha256": "b4567c380a2e9c7c99a016fea272125e671671d5455ef51729a88dd5d0c45f6f"
+    "docs/quartic-962-validation/inventory-review.md": {
+      "bytes": 5677,
+      "sha256": "37c36cee1182339e8363fdb10c4c4548b23fff05310c6866bb8243900988f25f"
     },
-    "docs/quartic-1272/citations.json": {
-      "bytes": 458848,
-      "sha256": "7cc61c72de7e871f786b1f703cc95db2852cdb5d7a5b241d1ec0ad1941b02a38"
+    "docs/quartic-962-validation/inventory-test-results.txt": {
+      "bytes": 3667,
+      "sha256": "285022256bb7494a80e937c5f13e678faf65ad541ba7215c4fe1a1450c8b5336"
     },
-    "docs/quartic-1272/coverage.json": {
-      "bytes": 6397,
-      "sha256": "55e7e898c36b7e7e5095eb1055e2bc1ed0132513ff63b7db8957423d7b8534d1"
+    "docs/quartic-962-validation/inventory-tooling-validation.json": {
+      "bytes": 3212,
+      "sha256": "8680ff08ff3fe59f237b9e0affeba4c3e168d46b722cd1bc8f169c021d1c4b2c"
     },
-    "docs/quartic-1272/dependency-graph.json": {
-      "bytes": 265403,
-      "sha256": "97bab18d9d6988e233e7e5364eaa160dd8d37f12752a3d11d8b40f35ebbd1541"
+    "docs/quartic-962-validation/original-construction-checks.json": {
+      "bytes": 11268,
+      "sha256": "8d741fbae7cbc794072e4a5411b971d448d67d1ef0155767c48f789fd3e43104"
     },
-    "docs/quartic-1272/evidence/FT_PROOF_DEPENDENCIES.json": {
-      "bytes": 28323,
-      "sha256": "babd1de5ce283ea4876fda796850ec8535e3e8a7dbf22413298bb7764a42bcb8"
+    "docs/quartic-962-validation/release-surface-review.json": {
+      "bytes": 2086,
+      "sha256": "b8482de11215c459d9aff912bfd50f9b92cd2024003f5ed06a67d94d06981de0"
     },
-    "docs/quartic-1272/evidence/FT_PROOF_SCOPE.md": {
-      "bytes": 9023,
-      "sha256": "5b50aac19b9bbc08d8e8d6f1461d933a66a1666a09a3f365475e6ea4ab1cf5ab"
+    "docs/quartic-962-validation/release-surface-review.md": {
+      "bytes": 4421,
+      "sha256": "41d1de15550f997a0a7ff257b05c85c0fff24c106f9be037a8dbf92736624f7f"
     },
-    "docs/quartic-1272/evidence/additional-source-byte-verification.json": {
-      "bytes": 778,
-      "sha256": "ffa3dc07ec0a849486bc83e94448e6a9bdc4a018e9bca9e29ccc1f6e24d1839b"
+    "docs/quartic-962-validation/visual-review.json": {
+      "bytes": 1432,
+      "sha256": "1ca686e26023f64ed5b31dae0c19a99bb36d0f8c4bd897093dbb39a3d2d1034a"
     },
-    "docs/quartic-1272/evidence/arithmetic-dependency-review.json": {
-      "bytes": 27492,
-      "sha256": "f4e072f42d96f79991f09180e6d6de919603e43c85905bd57ba4cc6d08a93e79"
+    "docs/quartic-962-validation/workflow-validation.json": {
+      "bytes": 4717,
+      "sha256": "596dc4d86b9bb8ab752069badb57eac303343472bed5a5190f63d04af1ae5963"
     },
-    "docs/quartic-1272/evidence/arithmetic-review-receipt.json": {
-      "bytes": 4522,
-      "sha256": "0841a0a283d029fd62e4480ed1345cc25eed00ec7e97315bb9d1b350d1803993"
+    "docs/quartic-962/README.md": {
+      "bytes": 3953,
+      "sha256": "7b01f6c6f39e9874f3635800c1a4e679c5667748359d3834dbc3aead5c857aef"
     },
-    "docs/quartic-1272/evidence/arithmetic-review.md": {
-      "bytes": 11712,
-      "sha256": "e89da38f3af1fad8c082e972da14829890055439d672a4697983ca1668b1e63f"
+    "docs/quartic-962/bibliography.json": {
+      "bytes": 117270,
+      "sha256": "37a60e3a01a62eea6a504ab55d5fd0748d5d1c41297348f410d3d79b483a7cd6"
     },
-    "docs/quartic-1272/evidence/author-integration-notes.md": {
-      "bytes": 5439,
-      "sha256": "fc3650052f039e2ae334db789e5fb1ce7112cb8e1a8bc7b05e932277280e17e4"
+    "docs/quartic-962/citations.json": {
+      "bytes": 501228,
+      "sha256": "06535d3b60b6b57fc868fb774ee22752c5c981798c10367081ed4a702480790e"
     },
-    "docs/quartic-1272/evidence/foundation-comparison.json": {
-      "bytes": 5532,
-      "sha256": "f6c900379c9ec3cdaf536641299c8aab4c655088660a9c09da9519a796b9e2ac"
+    "docs/quartic-962/coverage.json": {
+      "bytes": 13965,
+      "sha256": "410c1e0a7bcd2b6f6213ccd41a0d5c43b8e059001ff6ffa8443ea28f7f5df3f3"
     },
-    "docs/quartic-1272/evidence/reviewed-arithmetic-bridges.tex": {
-      "bytes": 11776,
-      "sha256": "94696c3d3113c6ff23b8ff3039a17447424151d49f5ecbf1f178304aaf2d5544"
+    "docs/quartic-962/dependency-graph.json": {
+      "bytes": 281917,
+      "sha256": "e40ff644696aa7bcee26215a6dd337275f9eccdee53b0ba255c830292fab9e41"
     },
-    "docs/quartic-1272/evidence/reviewed-new1272.tex": {
-      "bytes": 36691,
-      "sha256": "506675ede05bb3d369d9882945958c86d2d39c8fbe4d6e1e393c6a4e17f00000"
+    "docs/quartic-962/evidence/analytic-assembled-receipt.json": {
+      "bytes": 1788,
+      "sha256": "df84dddb85a5af6fb7362be948a519ced907f466e64f5795ae90ebb730c1f3d0"
     },
-    "docs/quartic-1272/evidence/reviewed-sun-appendix.tex": {
-      "bytes": 34898,
-      "sha256": "620e2e5652048c827efd8a1d9dae78462679e65992beeb20c3f089b3115fb77b"
+    "docs/quartic-962/evidence/assembly-review-receipt.json": {
+      "bytes": 4911,
+      "sha256": "1a99aaa2e367439327d7aa80f5d02b1070333fdf026589ab9458563220b37239"
     },
-    "docs/quartic-1272/evidence/sun-applications-review.json": {
-      "bytes": 32033,
-      "sha256": "de2f5e9cdb11513e91d022dcd82cb2407befbc5f8e9ae2c103dd830d7fd4f727"
+    "docs/quartic-962/evidence/reviewed-degree-lower-bound.tex": {
+      "bytes": 8620,
+      "sha256": "f0df47dc7c7a0de1f9c34f16ad2decc3c2684d87ec09911d45293c08c804a55c"
     },
-    "docs/quartic-1272/evidence/sun-consumed-statement.tex": {
-      "bytes": 892,
-      "sha256": "348c98050f778bb326b1811565deb2b37471a3104eeaf3be847bd6584c9f779e"
+    "docs/quartic-962/evidence/reviewed-gaussian-analytic.tex": {
+      "bytes": 82303,
+      "sha256": "d5c64b97b0141f5f72a9d69b936e6b02a4d97f7b76444e25d978bbf2c1af9af4"
     },
-    "docs/quartic-1272/evidence/sun-source-byte-verification.json": {
-      "bytes": 7885,
-      "sha256": "db4517120cc44ffdc7bc118a19eb147e8bf34dd84df7335bb54ca9d948922408"
+    "docs/quartic-962/evidence/reviewed-source962.tex": {
+      "bytes": 43269,
+      "sha256": "b45243a1f4c1ce5d635afbcc1d2bb7b7b47e9ee50b0e97dcff3cd031857183e5"
     },
-    "docs/quartic-1272/evidence/sun-source-hashes.json": {
-      "bytes": 4477,
-      "sha256": "7a983dd09b186e7a91548de31e9cc4a0cb09b3314bb3fab3739cfd31be301cf5"
+    "docs/quartic-962/evidence/reviewed-sun-completed.tex": {
+      "bytes": 114480,
+      "sha256": "e8c458ecf141252f9e0038697d17e2f146345f0d5f93bd75df49188e52ddfd33"
     },
-    "docs/quartic-1272/inherited-bridge.json": {
-      "bytes": 487543,
-      "sha256": "645efff1efbc8b093687ca7c892c45603524eed03e3bc28d0398daa3d1b335a5"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--analytic-applications.json": {
+      "bytes": 124256,
+      "sha256": "f91e58891cc7329e4ca8b428365fe43f25282fdd6c731eb2fbbc5624ac644c07"
     },
-    "docs/quartic-1272/internal-results.json": {
-      "bytes": 194372,
-      "sha256": "80491456dae002f429608c4371cc10565ef30fa98791ef19abc10a2f248b3b48"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--bridge-source-independent-review--receipt.json": {
+      "bytes": 2705,
+      "sha256": "6b88a22061509f07810cde93f799cebd8bba25834a6d665e0225fa6546cb7d1a"
     },
-    "docs/quartic-1272/inventory.py": {
-      "bytes": 28710,
-      "sha256": "3fb098377dcccdcf72623ea77fc1459e5179b4d5d26f8a16b5778d181468fb96"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--factorization-independent-review--REVIEW.md": {
+      "bytes": 9775,
+      "sha256": "633356640fd2ec8de9ad628d36d8de4c2444b266f5e8dde1d69a521fc8191a22"
     },
-    "docs/quartic-1272/new-applications.json": {
-      "bytes": 117745,
-      "sha256": "695769c38917efa35b6256132cd8b77807d6384ab6d27c38f250ff8947ae6c10"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--factorization-independent-review--TEX_FIDELITY.md": {
+      "bytes": 2418,
+      "sha256": "56eb65351504bd3d07c0fff2a45bdec6eef0ca843691446f1b6801b03105fa24"
     },
-    "docs/quartic-1272/test_inventory.py": {
-      "bytes": 3844,
-      "sha256": "473ac203edf2a08c211140fcd5cd23d4c5ec6ba6618d12f9023f80d75b5b838f"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--factorization-independent-review--receipt.json": {
+      "bytes": 1219,
+      "sha256": "a2173219a10643207b4a7b511ebd08d251092433dd260bd510d457b3e2d435b7"
     },
-    "docs/quartic-1272/theorem-applications.json": {
-      "bytes": 1251014,
-      "sha256": "62525206bb8a5af3538219a30c5004ef0b43d8236f9e19284758fee81eaaf8bd"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--factorization-independent-review--tex-fidelity-static.json": {
+      "bytes": 1362,
+      "sha256": "6eb762d78eca1ac9cf56323d26fa3d3775fe1b7f4fe50fe50a14ca2ae8885236"
     },
-    "handoff/releases/version5/REPRODUCTION.json": {
-      "bytes": 3258,
-      "sha256": "bd5e9aaf1a9a9c464907935f59bbd9e994a3880e7c4862dca3bc20346bbc6f2c"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--gowers-bridge--v6-applications.json": {
+      "bytes": 76261,
+      "sha256": "0c49e2fbb3753eaf334b399b9e41b67739ab1173a7b897d62662b78f7a51530e"
     },
-    "quartic_1272.pdf": {
-      "bytes": 1303596,
-      "sha256": "0d2635ea6fbcac4b49519c6591fa0e84046ccc5c2114a4617994f36cf90a3b4e"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--norm-independent-review--REVIEW.md": {
+      "bytes": 9852,
+      "sha256": "63994c05fa51002fc75119ab52a59096d14df7cdbb9e194a46bfbdd17940f420"
     },
-    "quartic_1272.tex": {
-      "bytes": 807070,
-      "sha256": "16033e0471df605093b28210a9f81718c2486b147016ec8afc75d166dff0b90f"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--norm-independent-review--receipt.json": {
+      "bytes": 1087,
+      "sha256": "705e5b86645356ff220f4e6dcd715133364a9d60cd8bd076a3484abd8e344ba6"
     },
-    "quartics/quartic-1272/.gitattributes": {
-      "bytes": 83,
-      "sha256": "1118445e5fddb972d66b31cdfe361d866fef6966f7351f894027cafa69a42fed"
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--published-input-audit--INTEGRATION_DEPENDENCIES.json": {
+      "bytes": 15405,
+      "sha256": "653c15532ed8fcf139df8ca73013fdb47d99d645a4f236928768589ed7ec05dd"
     },
-    "quartics/quartic-1272/MANIFEST.json": {
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--published-input-audit--INTEGRATION_REVIEW.md": {
+      "bytes": 16851,
+      "sha256": "da734643973984eb58ae8e0f40feaca714b82503e32989efbde832d8b1444c42"
+    },
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--published-input-audit--applications.json": {
+      "bytes": 5285,
+      "sha256": "f9bfb6fd3ba85e8079088ec2389bd72ee7a9e17514edf2a5280f0e3b69d71ab1"
+    },
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--sw-independent-review--REVIEW.md": {
+      "bytes": 11304,
+      "sha256": "b9e53d912c1f3ff359e4a4c2d19e17a8e1273d3c6656883a77ce266c9cd6e388"
+    },
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--sw-independent-review--receipt.json": {
+      "bytes": 1615,
+      "sha256": "2096aba892492a581c77790f914da83282545237dffea836d612b4081da39018"
+    },
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--type-i-ii--BRIDGE_REVIEW_RECEIPT.json": {
+      "bytes": 2020,
+      "sha256": "a731e38f4cdeafb0270691905820ce314bb43d5707a8f9a6f62bac1f4f180a08"
+    },
+    "docs/quartic-962/evidence/work--frei-tinkova-removal-001--type-i-ii--ROOT_REVIEW.md": {
+      "bytes": 5710,
+      "sha256": "6ae3a2ce6705860b93039268740740238be78d6e2e1852372e9cd1dfada34323"
+    },
+    "docs/quartic-962/evidence/work--quartic-sub1000-20261106--combined--frozen--PROOF.md": {
+      "bytes": 11260,
+      "sha256": "afc64705ce7c0d72163a35a4350a20b9293b259e411e99c542427c73d05d8ff2"
+    },
+    "docs/quartic-962/evidence/work--quartic-sub1000-20261106--dag-sharing--COMBINED_REVIEW.md": {
+      "bytes": 4638,
+      "sha256": "630ac4d4f82c65970898b93f49c7dcff42163434c90f095dfaad77b4516bac3c"
+    },
+    "docs/quartic-962/evidence/work--quartic-sub1000-20261106--dag-sharing--combined-integration-check.json": {
+      "bytes": 5282,
+      "sha256": "03dd5f5cd1c94410170c055ff470ef392ef7aa1b5e7cf16348c4403b1f275e37"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--final-assembly-review--REVIEW.md": {
+      "bytes": 9972,
+      "sha256": "84e1af8bc66554bf8e946316473c9b6989892ce94e4ad3ed1bd0f81352a224b8"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--final-assembly-review--editorial-check.json": {
+      "bytes": 1444,
+      "sha256": "1aafc72cbd23d0a7e0bf7f463c31883347b57225578b9dcdcc30c13cbbdca515"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--final-assembly-review--history-a00e3aca--receipt.json": {
+      "bytes": 4303,
+      "sha256": "53abce86fe8f44543993ea4dce093d4b8ea55bd7a337e4917d511cb74735daa1"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--final-assembly-review--history-b43f096--receipt.json": {
+      "bytes": 3028,
+      "sha256": "a67a1fbde6abf13f01eb33c2a04458bb8177ce5f0d3e9eb9d661fba33547b32e"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--lower-bound--independent-review--REVIEW.md": {
+      "bytes": 8616,
+      "sha256": "115399ab0279a061fc19e181e598695ec5e4eeac94bea36be0b8bed2c15edfab"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--lower-bound--independent-review--receipt.json": {
+      "bytes": 1221,
+      "sha256": "1f4b42a907aa49c25ef43bb53524f3b086080416bbb26aa21b0f974948ccc898"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--lower-bound--new-applications.json": {
+      "bytes": 4960,
+      "sha256": "f9c8144d3f4d2c0dd6ee702bd6f8bb3c00e5f36a53ff94d900edcdbc6d2941d5"
+    },
+    "docs/quartic-962/evidence/work--quartic-version6-preparation--quartic-962--application_inventory.json": {
+      "bytes": 6254,
+      "sha256": "79ab3236facc4c8bdaf0a3c8f6daa353816c7402cf7e10ae36175c4f88904d7f"
+    },
+    "docs/quartic-962/inherited-bridge.json": {
+      "bytes": 500348,
+      "sha256": "ee54cfc9d75c86bdb9e41aa1e938ca971d9c455655e56c51b44f1ad94a004ebc"
+    },
+    "docs/quartic-962/internal-results.json": {
+      "bytes": 295329,
+      "sha256": "91f93184bf48bb147d70d985c56e06df32ecbde62b4a704922c1bd2abb927b7c"
+    },
+    "docs/quartic-962/inventory.py": {
+      "bytes": 41263,
+      "sha256": "2af0969b5e9b4767f8e6b2f1b66a1cd81135c1a0c84e58fd84f772264c238a8b"
+    },
+    "docs/quartic-962/new-applications.json": {
+      "bytes": 339038,
+      "sha256": "b7a42a50809c85ef14a9380a15576ef0170bad571ef713c329e31f594f8c12cf"
+    },
+    "docs/quartic-962/test_inventory.py": {
+      "bytes": 16097,
+      "sha256": "d9bbd80089b6910abdcf74ce052dfe752559b70e682f5e3aa03c591d09ab5e83"
+    },
+    "docs/quartic-962/theorem-applications.json": {
+      "bytes": 1393943,
+      "sha256": "dc8457120dfcc836715d8ab6553f30a7d24c8a068ae659c7c0b71ffb92f6f26a"
+    },
+    "handoff/V6_RESEARCH_MANIFEST.json": {
+      "bytes": 202529,
+      "sha256": "077737d77dc59142532a3dd7a7d8eef95a4a2d34c339ea382c679080a429f952"
+    },
+    "handoff/releases/version6/CHECK_CONTRACT.json": {
+      "bytes": 1766,
+      "sha256": "04932901edaaadad0f85148614fda73ffe6d7e11fc2d425a0b6b1b9fa95b517d"
+    },
+    "handoff/releases/version6/PRESERVED_VERSION5.json": {
+      "bytes": 177556,
+      "sha256": "f2ef72645e3b86aaceab9630799d39886cc0a357d85449d6d82d699975452826"
+    },
+    "handoff/releases/version6/REPRODUCTION.json": {
+      "bytes": 4985,
+      "sha256": "39608c8171ff60fd5e2050018085b6f77c67f9c7c0602fba83c289ca9a9f80fa"
+    },
+    "handoff/releases/version6/VERSION5_ARCHIVE_MANIFEST.json": {
+      "bytes": 387421,
+      "sha256": "981dbbb27b0c9da15e5fb1ece0b1c8167a6b750c999a420948cd8e4b1044892e"
+    },
+    "handoff/releases/version6/assembly-source/README.md": {
+      "bytes": 685,
+      "sha256": "93a9ac68f345c8b9b322f433bde6860f78490525bcbb3d674ffbfe946462e423"
+    },
+    "handoff/releases/version6/assembly-source/SOURCE_MAP.json": {
+      "bytes": 73181,
+      "sha256": "7e28061aec0593773de3d1c95c16b06e3aa03267933415a7877371cb8c3fc378"
+    },
+    "handoff/releases/version6/assembly-source/assemble_analytic_candidate.py": {
+      "bytes": 12580,
+      "sha256": "6fd860620e9a94a07b419a75012db6e64b869bcdbeda7864845b57eea9fb322c"
+    },
+    "handoff/releases/version6/assembly-source/assemble_preparation.py": {
+      "bytes": 5009,
+      "sha256": "a7c72c39d6c885b76ec15a76f8ceeed5acebf90d2a4a1eb15636ac523d57fa0f"
+    },
+    "handoff/releases/version6/assembly-source/manuscript/ANALYTIC_CANDIDATE.json": {
+      "bytes": 4094,
+      "sha256": "5fad0d92a9028521bf4c8d0e20a3aabb92a60c3fb8f17af6a8090788da71eb0d"
+    },
+    "handoff/releases/version6/assembly-source/manuscript/PREPARATION.json": {
+      "bytes": 1871,
+      "sha256": "5bdb5b9c0d4d373185bd65105e0edb8258ee17541694884d85d3fc4fc76e8603"
+    },
+    "handoff/releases/version6/assembly-source/manuscript/quartic_962-preparation.tex": {
+      "bytes": 822876,
+      "sha256": "c2d24a8be893e7fb137370434352a6d54f0e3ca50bcd640bf3f9ce8f51c546e8"
+    },
+    "handoff/releases/version6/assembly-source/quartic-962/INTEGRATION.md": {
+      "bytes": 7831,
+      "sha256": "c3d48875f2aef02ffeee94423ba723d875c617ca56403933a268e886f79f67f8"
+    },
+    "handoff/releases/version6/assembly-source/quartic-962/application_inventory.json": {
+      "bytes": 6254,
+      "sha256": "79ab3236facc4c8bdaf0a3c8f6daa353816c7402cf7e10ae36175c4f88904d7f"
+    },
+    "handoff/releases/version6/assembly-source/quartic-962/construction.tex": {
+      "bytes": 15392,
+      "sha256": "529e821f776ae230d860e5efe01dfd55c05af9d2cdbb8c42bf907f9d42167769"
+    },
+    "handoff/releases/version6/research-staging-history/cd4442890b7ba00fb2b1ab95b5774f5480d50d9b7df9e0de81335f9bac4fad81/V6_RESEARCH_MANIFEST.json": {
+      "bytes": 202432,
+      "sha256": "cd4442890b7ba00fb2b1ab95b5774f5480d50d9b7df9e0de81335f9bac4fad81"
+    },
+    "handoff/releases/version6/research-staging-history/cd4442890b7ba00fb2b1ab95b5774f5480d50d9b7df9e0de81335f9bac4fad81/files/research/version6/analytic-proof/ASSESSMENT.md": {
+      "bytes": 9883,
+      "sha256": "537f554f0f5ac14de2d5949d47621a3005b194a05453d405c3f2c01f5925f20b"
+    },
+    "quartic_962.pdf": {
+      "bytes": 1448545,
+      "sha256": "80d9a1700f5be93bbaa8c01fa9fdf9c89aae413da6fefb8cef2810e6077e02e3"
+    },
+    "quartic_962.tex": {
+      "bytes": 903386,
+      "sha256": "06f98ff070139c3b6c60589c65867ceb4366b023f7960551abd52f85fa67e30c"
+    },
+    "quartics/quartic-962/MANIFEST.json": {
+      "bytes": 7254,
+      "sha256": "36fca72cb0eb126193ffa43d890ff09d5e29cbf1274561d2632ed1e227163787"
+    },
+    "quartics/quartic-962/PROOF.md": {
+      "bytes": 11260,
+      "sha256": "afc64705ce7c0d72163a35a4350a20b9293b259e411e99c542427c73d05d8ff2"
+    },
+    "quartics/quartic-962/README.md": {
+      "bytes": 1904,
+      "sha256": "01d57fc23a55aad0e93a1d6247fb8480e1f94738698f100347cd88af94536bf6"
+    },
+    "quartics/quartic-962/baseline/MANIFEST.json": {
       "bytes": 13212,
       "sha256": "aa7f04c54e8b778a419a1be8d24e0b3a9a8540c50202d41815864a156d6985c6"
     },
-    "quartics/quartic-1272/PROVENANCE.json": {
-      "bytes": 10697,
-      "sha256": "2d1c54597a90ae7cb01b063ef99065c16866319458e5c3587f8e3ecffba50d68"
-    },
-    "quartics/quartic-1272/README.md": {
-      "bytes": 6715,
-      "sha256": "40917e81e0c5a72e47f0da6d2d01ecc2dddfdff0d4c8a6077160fc9951138856"
-    },
-    "quartics/quartic-1272/builder/FROZEN.json": {
-      "bytes": 619,
-      "sha256": "b363bda44d244ba496df5f390f2573b974bf3d12c135436a8c838a30239cecb6"
-    },
-    "quartics/quartic-1272/builder/README.md": {
-      "bytes": 5190,
-      "sha256": "db9353ca6b0e3100f7f0c9a760960bf95408e14e0a4f57e28c4d533492ce57c8"
-    },
-    "quartics/quartic-1272/builder/SEMANTICS.md": {
-      "bytes": 5867,
-      "sha256": "3c9a0b1bdf7bd683ca58447a44c5662dc0e0d9162972e36d732688f6a409b9f0"
-    },
-    "quartics/quartic-1272/builder/build_source.cjs": {
+    "quartics/quartic-962/baseline/build_source.cjs": {
       "bytes": 17876,
       "sha256": "68c553f987f88780d28fbd21d625278701ecc38d8cc92160215e5bf44a270c78"
     },
-    "quartics/quartic-1272/builder/census.json": {
-      "bytes": 2877,
-      "sha256": "ee0e454189bf965fe643548472532e75c533fdf822f60b0420ede6d4120e57dd"
+    "quartics/quartic-962/build_source.cjs": {
+      "bytes": 21573,
+      "sha256": "b99b000a57a904328d167a3b3fe9e319e84dc880f03071af9b4face29bc9a570"
     },
-    "quartics/quartic-1272/builder/raw-ir.json": {
-      "bytes": 3968902,
-      "sha256": "0ac8ea9ad16f4439c83e3cfa03ee8a8a4eb24adb5717c994ca19e5db47fffba3"
-    },
-    "quartics/quartic-1272/builder/raw-translated-ir.json": {
-      "bytes": 3969561,
-      "sha256": "9ea55f4a3a5e54f8143a14bda7aebdd21adcd01a972c649653d9b7856a4ee69e"
-    },
-    "quartics/quartic-1272/checker/ANCHOR_CHECK.json": {
-      "bytes": 2582,
-      "sha256": "3237000bb35aef17c8dcd9c5fd645257dec53f5a57134aed811262a4a66ef1d4"
-    },
-    "quartics/quartic-1272/checker/FINAL_CHECK.json": {
-      "bytes": 12937,
-      "sha256": "f19438e80926e7fef6647d907a71ce90d2139334143714255e97e9199c14e0b8"
-    },
-    "quartics/quartic-1272/checker/MUTATION_TESTS.json": {
-      "bytes": 5296,
-      "sha256": "5ac255f2d79d2a02ce320691177905b2af31e4dae1c63793a7db4a7260f0665a"
-    },
-    "quartics/quartic-1272/checker/README.md": {
-      "bytes": 6113,
-      "sha256": "475f3d4796eec784654e9bcab481ad62648d975832d4bbbce571b6174b394a05"
-    },
-    "quartics/quartic-1272/checker/check_anchor.cjs": {
-      "bytes": 3527,
-      "sha256": "148287db2e1336f9660bbbcdf160c5b2ca8de88eac913bf8598be2578b11a998"
-    },
-    "quartics/quartic-1272/checker/checker.cjs": {
+    "quartics/quartic-962/checker/checker.cjs": {
       "bytes": 21177,
       "sha256": "50f9924557f0594a0ddb2664260d2e382d80762a0d607d87203fb7ddfb4e1cb1"
     },
-    "quartics/quartic-1272/checker/direct-check.json": {
-      "bytes": 184360,
-      "sha256": "9fab9af55bda5d5fb890167a68a39a6c4a0fe8d7843480fe1c1fd8ac7c70988d"
+    "quartics/quartic-962/compiled-ir.json": {
+      "bytes": 3165935,
+      "sha256": "244269ada6870d0e2447fd115216844f4ec9c878eba2ddc74303cb12d78b744a"
     },
-    "quartics/quartic-1272/checker/mutation_tests.cjs": {
-      "bytes": 7901,
-      "sha256": "cac920522fb3a7e188b6bee64ed61d9e4003c0458a453374e22e8490be71f70c"
+    "quartics/quartic-962/compiler-report.json": {
+      "bytes": 1443,
+      "sha256": "d40484cdcd26e910a79507dbbd96a3c76293453bd7a19df4a0288d9aa8c20c04"
     },
-    "quartics/quartic-1272/checker/run_all.cjs": {
-      "bytes": 2452,
-      "sha256": "dc156fb32ce515eea3a543186fc5a6214617e2841f192a848a6a067f751198cd"
-    },
-    "quartics/quartic-1272/checker/translated-check.json": {
-      "bytes": 184047,
-      "sha256": "8e6ed348424d9f09027029f82668bf33ebd9161df148fe34de698f828c59957c"
-    },
-    "quartics/quartic-1272/compiler/CHECKER_REVIEW.md": {
-      "bytes": 6121,
-      "sha256": "7722729fcfe585edbbeea73fe2f6849fcfd6ef5d736e441a6d41e1d99a3dadf2"
-    },
-    "quartics/quartic-1272/compiler/README.md": {
-      "bytes": 5334,
-      "sha256": "a8b66bab5fc21e58c0b47d0ab9aaa5353a894337523aef3f0502f0e36f107504"
-    },
-    "quartics/quartic-1272/compiler/checker-review-probes.json": {
-      "bytes": 1482,
-      "sha256": "43ec27ba25e5386dc81050965f534ab1d307e9d75b591d924fb13c24d71f72db"
-    },
-    "quartics/quartic-1272/compiler/compile_ir.py": {
+    "quartics/quartic-962/compiler/compile_ir.py": {
       "bytes": 21954,
       "sha256": "c50510a5bed8f59543b64a3a2cb251e9aff4b300d4bfc750e13642e7b00eb46f"
     },
-    "quartics/quartic-1272/compiler/direct/compiled-ir.json": {
-      "bytes": 3947587,
-      "sha256": "b79fdb306c25d85aa41c308ad96a1076d2b84b98a6f51c66d0682b2ae9b15b98"
+    "quartics/quartic-962/coordinate-map.json": {
+      "bytes": 96068,
+      "sha256": "b14ce316d326cd9cef84418322cdb8fae03a5a665b8b8964d402690479734fdf"
     },
-    "quartics/quartic-1272/compiler/direct/compiler-report.json": {
-      "bytes": 1450,
-      "sha256": "d4de211ad768397abe112921748e7426a7308e78847165e363d84292a47556b9"
+    "quartics/quartic-962/evidence/dag-sharing/COMBINED_REVIEW.md": {
+      "bytes": 4638,
+      "sha256": "630ac4d4f82c65970898b93f49c7dcff42163434c90f095dfaad77b4516bac3c"
     },
-    "quartics/quartic-1272/compiler/direct/coordinate-map.json": {
-      "bytes": 129412,
-      "sha256": "a2f10e89a380c456937623f9fc6655e0c419881693fb6bea84f8e975ba413624"
+    "quartics/quartic-962/evidence/dag-sharing/POINT_EQUIVALENCE.md": {
+      "bytes": 4184,
+      "sha256": "86af06bb711383acf129198b601e1e4d395aeb1a8bfb8dd380ac90acadaf40c7"
     },
-    "quartics/quartic-1272/compiler/direct/polynomial.json": {
-      "bytes": 8701187,
-      "sha256": "5acd7ebf8c09c7d95f66c16f6c5594fdbbde062a0f3204068e8f88b7fd4b54ba"
+    "quartics/quartic-962/evidence/dag-sharing/REPORT.md": {
+      "bytes": 4947,
+      "sha256": "31afa202d2798bdbcf5df973e3605a135a52fe07d0c88bd879afbc3c4edbf2ce"
     },
-    "quartics/quartic-1272/compiler/direct/reduction-certificate.json": {
-      "bytes": 134588,
-      "sha256": "130953b02693de8ce3da1996a3257a1e50a58cfdc03be73e6f05d105419cc06f"
+    "quartics/quartic-962/evidence/dag-sharing/combined-integration-check.json": {
+      "bytes": 5282,
+      "sha256": "03dd5f5cd1c94410170c055ff470ef392ef7aa1b5e7cf16348c4403b1f275e37"
     },
-    "quartics/quartic-1272/compiler/direct/specialization-certificate.json": {
-      "bytes": 1060,
-      "sha256": "409b54b3cd4fe3bc11e4739d8c2af622190785241bf54370812a05d6c35f7100"
+    "quartics/quartic-962/evidence/dag-sharing/log-candidate/independent-check.json": {
+      "bytes": 1199,
+      "sha256": "f8375cf78f6302893ffcdd8fcc8d67b363b71946dbbbca2b5d40c85e5a5d8d3c"
     },
-    "quartics/quartic-1272/compiler/review_checker.cjs": {
-      "bytes": 3738,
-      "sha256": "cebc27ef53ef27f131b58db06bd39a3008090c492598cb06fbda46f66e78007c"
+    "quartics/quartic-962/evidence/dag-sharing/log-replacement.cjs": {
+      "bytes": 1642,
+      "sha256": "477a36eb473f45a464e2b46192dc660259857cdc3a89caede9d9f5505e695095"
     },
-    "quartics/quartic-1272/compiler/translated/compiled-ir.json": {
-      "bytes": 3948240,
-      "sha256": "377cda57d18c320149f9cb47cbaeacf847ab0df1dd2a6cfd08a967f3c4af1433"
+    "quartics/quartic-962/evidence/dag-sharing/point-candidate/algebra-check.json": {
+      "bytes": 2476,
+      "sha256": "c8423c22e2579e16025d58a068ea8fd17b7c934947e00485eac6e2027899f759"
     },
-    "quartics/quartic-1272/compiler/translated/compiler-report.json": {
-      "bytes": 1450,
-      "sha256": "177dced000077ea4349045ce345ce1c98491e5d913cf19307d9a5bf3f368f093"
+    "quartics/quartic-962/evidence/dag-sharing/point-replacement.cjs": {
+      "bytes": 579,
+      "sha256": "01045fcb18b55bec695a73156ad6e408262e635cdcd6b3da322e958359953f3b"
     },
-    "quartics/quartic-1272/compiler/translated/coordinate-map.json": {
-      "bytes": 129412,
-      "sha256": "02673ea95f96be7c77de80688fc57369a2e0c69fc94184c98f4d66983466fdb3"
+    "quartics/quartic-962/evidence/dag-sharing/review-combined.cjs": {
+      "bytes": 3180,
+      "sha256": "a608c0823c321ba5f43703146c2e20f0028b13a85b85277fed1bd600a827b2ad"
     },
-    "quartics/quartic-1272/compiler/translated/polynomial.json": {
-      "bytes": 8703440,
-      "sha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586"
+    "quartics/quartic-962/evidence/dag-sharing/verify-point.cjs": {
+      "bytes": 3836,
+      "sha256": "6dcf97887c25343828eddf4b04c607813463ddbcc677e02c421f31e6ed96236c"
     },
-    "quartics/quartic-1272/compiler/translated/reduction-certificate.json": {
-      "bytes": 134588,
-      "sha256": "489287cdb314cd89f1319b6818528a90dfc444f962d20e3acfb931800a7412a3"
+    "quartics/quartic-962/evidence/detector-circuits/BLOCK_EVAL_PROOF.md": {
+      "bytes": 4683,
+      "sha256": "36a2e42be8e803cfdab668db168497731488332760e31ee2d65df8cc3dc25233"
     },
-    "quartics/quartic-1272/compiler/translated/specialization-certificate.json": {
-      "bytes": 726,
-      "sha256": "73f1037dc54f3ac771bd66b97b7f266aef4ca2d4c679209b552fbefb08647d64"
+    "quartics/quartic-962/evidence/detector-circuits/FROZEN_REVIEW.md": {
+      "bytes": 4710,
+      "sha256": "356e4e4ee16d7a09ed8870d25979255baea7b18eeeb33f007544d30c28a004f0"
     },
-    "quartics/quartic-1272/evidence/README.md": {
-      "bytes": 811,
-      "sha256": "67b783cc0933ca1c32d4cf7d4ee986bc2f5954ea43f75319893aec4fcd6d82b2"
+    "quartics/quartic-962/evidence/detector-circuits/README.md": {
+      "bytes": 6253,
+      "sha256": "65d5097128a43ab12f1f90784821968da1ce3c0fc3b96f533525069c10e441eb"
     },
-    "quartics/quartic-1272/evidence/original-builder-frozen.json": {
-      "bytes": 837,
-      "sha256": "67a56659ffd50e5f025c1bf4560b55f180dff050eac5fa1d57fa5a6266d6cb63"
+    "quartics/quartic-962/evidence/detector-circuits/combined-block-eval/verification.json": {
+      "bytes": 1435,
+      "sha256": "789e30e89c3aa459f190266fa73c95b5df9dbd6c78126d35d696ac9d2dadb255"
     },
-    "quartics/quartic-1272/evidence/original-final-status.json": {
-      "bytes": 5211,
-      "sha256": "fa149ae4f7b6ec4048f52eb369181a6a192a2e746967f9eb5961360c8e6693fb"
+    "quartics/quartic-962/evidence/detector-circuits/combined-weight-factor/verification.json": {
+      "bytes": 530,
+      "sha256": "0f026c4db4eda349c6935cada58688d801ceecef66add693d229eb9f8e04e8ac"
     },
-    "quartics/quartic-1272/evidence/original-source-review-verdict.json": {
-      "bytes": 3838,
-      "sha256": "a00ff69967c9a1627616aa7f94e280eb617119985c661b9b11096ec3dc1fa15a"
+    "quartics/quartic-962/evidence/detector-circuits/frozen-independent-check.json": {
+      "bytes": 142057,
+      "sha256": "92fba925b15cf08fa02c87c073886e8d77a93a1c7d349da0fb656d9423a78bea"
     },
-    "quartics/quartic-1272/evidence/source-audits/brox1315-AUDIT.md": {
-      "bytes": 16540,
-      "sha256": "1524ed4fbdaeeecc17b6e0c78655d6cd7f6e18df884715f6acc21adae7de7ab6"
+    "quartics/quartic-962/evidence/detector-circuits/frozen-local-checks.json": {
+      "bytes": 514,
+      "sha256": "ff26c18248b8e51ac68261b9b1df49b54b60f66b6f0080fd1bf2506161c506ed"
     },
-    "quartics/quartic-1272/evidence/source-audits/brox1315-CROSS_REVIEW.md": {
-      "bytes": 4863,
-      "sha256": "2406d8b15c416f9d487d479c732b870f77225b8dc9bed6a3f040154b9672ff30"
+    "quartics/quartic-962/evidence/detector-circuits/other-workers-review.json": {
+      "bytes": 1132,
+      "sha256": "194760af75d919641b63bb7683aa83448755befdabea4f95a4761ac2d20dbd30"
     },
-    "quartics/quartic-1272/evidence/source-audits/brox41-AUDIT.md": {
-      "bytes": 17020,
-      "sha256": "9760a3988fd601ee93cdaa33745923a0ec739a1a2806aa3d0b72e0c220f23a29"
+    "quartics/quartic-962/evidence/detector-circuits/patch_builder.py": {
+      "bytes": 3969,
+      "sha256": "357aad9c2140cdc45d9e94415ae100e31501b6c6d01656f5623b235e242dfeef"
     },
-    "quartics/quartic-1272/evidence/source-audits/sun41-AUDIT.md": {
-      "bytes": 20422,
-      "sha256": "8e559bb68211799768917ed18445b882a771c8540e628fa6d120db7ae5c58c2d"
+    "quartics/quartic-962/evidence/detector-circuits/patch_eval_blocks.py": {
+      "bytes": 1213,
+      "sha256": "415e67bdf3ca4cbe351fdd85fb7dbcbef030c83c666c0e07a723dc9bedfc4e79"
     },
-    "quartics/quartic-1272/evidence/source-audits/sun41-DEPENDENCIES.json": {
-      "bytes": 5758,
-      "sha256": "f59430ad0429fc328da955d0cd79891324f0d183785d0f7270ade0b98ba1cfc7"
+    "quartics/quartic-962/evidence/detector-circuits/patch_weight_factor.py": {
+      "bytes": 659,
+      "sha256": "8278cc267a26a36a590a2b38d050b45bed35e0c45e554e8493f722538ab01978"
     },
-    "quartics/quartic-1272/evidence/source-audits/sun41-SOURCES.json": {
-      "bytes": 4529,
-      "sha256": "6abaee17b826524404baca3191eb861f8bab83697d434b0786873f185058fa33"
+    "quartics/quartic-962/evidence/detector-circuits/verification.json": {
+      "bytes": 6311,
+      "sha256": "33518927fa4d713cb0e8431ef2ea6315df0a52371997025c9e82c3b843bdb3ca"
     },
-    "quartics/quartic-1272/identity/IDENTITY_REPORT.txt": {
-      "bytes": 16190,
-      "sha256": "9ad7591609634cc9420e34dbfe024e888c88299420ed4b42902aa03e2097b675"
+    "quartics/quartic-962/evidence/detector-circuits/verify_frozen_locals.py": {
+      "bytes": 3396,
+      "sha256": "123f78611f26d1c24c3df7a1056c3f1e8a45b498ec96bc86e49012cd40358e5d"
     },
-    "quartics/quartic-1272/identity/anchor_certificate.json": {
-      "bytes": 22499,
-      "sha256": "7f4d4e5684617b58f3d0e46e58f3659e0ccf687eb744f0626aa3d1ea1fe53200"
+    "quartics/quartic-962/evidence/elimination/audit_frozen.py": {
+      "bytes": 2812,
+      "sha256": "4b7eba8150f996cb52ad8c138430ab9559719071ad32fda51e15b4b57b66edd5"
     },
-    "quartics/quartic-1272/identity/check_identity.py": {
-      "bytes": 11810,
-      "sha256": "18a63c26c24b3a8c22ff660ce1bbba263d9144f0b8f4dabeb60e5d05b6153584"
+    "quartics/quartic-962/evidence/elimination/frozen-962-review.json": {
+      "bytes": 501,
+      "sha256": "ede7535a2a4dcda9db0aad6b4ccd985ba79eff1bcd981906bbb9618690b18325"
     },
-    "quartics/quartic-1272/identity/check_reconstructed_tables.py": {
-      "bytes": 8255,
-      "sha256": "50a15e266cbb6a3a18917dbb4b63b7035ed5eaed456798dc01f1b510509afec5"
+    "quartics/quartic-962/evidence/field-quotients/EQUIVALENCE.md": {
+      "bytes": 7376,
+      "sha256": "b1029c15e2e728a273ba4d6b044ba067fb0fed6a0c48a25fcc0ad453038fd5d6"
     },
-    "quartics/quartic-1272/identity/checks.json": {
-      "bytes": 444,
-      "sha256": "8d0f70ceef290798d1c8df9f6c48efa0c940a7c725fdd082fd5e54e14c3f6f0c"
+    "quartics/quartic-962/evidence/field-quotients/final-b/PROOF.md": {
+      "bytes": 1145,
+      "sha256": "639e5863280e526096995c2e2ffa02afe451316159b279e514692ef5f4b60fd4"
     },
-    "quartics/quartic-1272/identity/reconstructed_table_checks.json": {
-      "bytes": 4291,
-      "sha256": "ad7fb1b48d9e8e29f2eeebd717780ca0f926a795c6dab4eac2cd5fd52c908b68"
+    "quartics/quartic-962/evidence/field-quotients/final-b/patch.json": {
+      "bytes": 350,
+      "sha256": "17d56ca1d3e1bbd5765edff0cd54468f24bb57169ef3d7d274684f8190fa30ea"
     },
-    "quartics/quartic-1272/identity/source_receipts.json": {
-      "bytes": 3702,
-      "sha256": "7b6e66a93d5786f594fc784cd867887e85b1c4b72c04995a240cffdf8e76f738"
+    "quartics/quartic-962/evidence/field-quotients/final-b/verification.json": {
+      "bytes": 280,
+      "sha256": "c9285b81f2cf3d64433638c36b90b8ddcf4bb57c139b7627a103dbaab23a2900"
     },
-    "quartics/quartic-1272/integrity.py": {
-      "bytes": 4233,
-      "sha256": "7a6bb5cfc054c0fa3eacdf819a714e9174d60d8d5872073e894cf6881ba76aae"
+    "quartics/quartic-962/evidence/field-quotients/identity-check.json": {
+      "bytes": 708,
+      "sha256": "a736d1c5b76c497b3fd40fb51985c40e21814626f7fd0d600706e30a5856c717"
     },
-    "quartics/quartic-1272/optimization/REPORT.md": {
-      "bytes": 6103,
-      "sha256": "d99f995318db65c58f448f1a17e5968aed73d8528af871b550a67cf7c8e3d4d5"
+    "quartics/quartic-962/evidence/field-quotients/patch-certificate.json": {
+      "bytes": 3510,
+      "sha256": "78132de3bc2b6fcf1038dd13938c71135a1547414c9f1d26c17731b54cc48214"
     },
-    "quartics/quartic-1272/optimization/find_affine_dependencies.py": {
-      "bytes": 4585,
-      "sha256": "972286adb71f3ce9faadeb3c2b68ab6f5415061a7a05ef805453552a169fdbd4"
+    "quartics/quartic-962/evidence/fresh-reproduction-check.json": {
+      "bytes": 142165,
+      "sha256": "aa7e4c23082682de8bcc378ac60758601434c6e26ed53a8d702f3081e50b35b7"
     },
-    "quartics/quartic-1272/optimization/optimization-check.json": {
-      "bytes": 1970,
-      "sha256": "bfeec72a59809f3cff3a2dd2a2e17ad20386efd32cd8d56744aecfa1e1a6247c"
+    "quartics/quartic-962/evidence/source-compression/PROOF.md": {
+      "bytes": 5530,
+      "sha256": "96f116281ac3510c09e3f19fd6dfc2c48207fbef718648478c16ee8945974e47"
     },
-    "quartics/quartic-1272/optimization/verify_optimization.py": {
-      "bytes": 5787,
-      "sha256": "7b344deef95cd9d6123e36af09168a511d4ff618a15fb57a6a07babbbd51b182"
+    "quartics/quartic-962/evidence/source-compression/build_variant.py": {
+      "bytes": 2370,
+      "sha256": "8df448309bfb0c2a242b62fc06877b4b9e636d1d94e279f65e5cdaf714189252"
     },
-    "quartics/quartic-1272/oracle/REPORT.md": {
-      "bytes": 4174,
-      "sha256": "99a01910bdb4c7f71843c957a281137b9c40cc55049850a26045b22f4c58535c"
+    "quartics/quartic-962/evidence/source-compression/identity-check.json": {
+      "bytes": 328,
+      "sha256": "b91cc0e54ad935bd95d8e5d8cd7fa3a89ca691e9c02cdef451bebb5ea1b359dc"
     },
-    "quartics/quartic-1272/oracle/check_oracle.py": {
-      "bytes": 20037,
-      "sha256": "8f2338bc03abe2e03a8e23fa743d27d615f10fb029a63139e6efc1924ef4c04d"
+    "quartics/quartic-962/evidence/source-compression/measured.json": {
+      "bytes": 401,
+      "sha256": "a4841d80ab981c1afb896eb2a1fa827981bd190dcc600d6a30831b2c07709a33"
     },
-    "quartics/quartic-1272/oracle/results.json": {
-      "bytes": 12392,
-      "sha256": "f6346015a050b9af56fe704dee41a2ec7569cf47be5e1286a89fdbdedc6a194a"
+    "quartics/quartic-962/evidence/source-compression/verify_identities.py": {
+      "bytes": 2413,
+      "sha256": "a97c9dc36f023b3787abbd8924e23774f6f3ba0969011d03526ff33ed1aee13f"
     },
-    "quartics/quartic-1272/polynomial.json": {
-      "bytes": 8703440,
-      "sha256": "02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586"
+    "quartics/quartic-962/measured-census.json": {
+      "bytes": 403,
+      "sha256": "84d6b81408951275f1bb8b910bcd58751fdb0c063a3fda4ff9d461035cf202fe"
     },
-    "quartics/quartic-1272/reproduce.py": {
-      "bytes": 8838,
-      "sha256": "77d79e9abfdad2f451bdf595d070c6e1705ee8236730aca483a477143a337510"
+    "quartics/quartic-962/polynomial.json": {
+      "bytes": 9264733,
+      "sha256": "6b798de7d00ac3c7d725ca0a69d39f1eac1ddb02fee2756cb6323770b952af32"
     },
-    "quartics/quartic-1272/source-review/SOURCE_REVIEW.md": {
-      "bytes": 11603,
-      "sha256": "b62f7be743bd6bc5f424cddb69af0e735d6b36ba056263fd06b989fd5204278b"
+    "quartics/quartic-962/raw-ir.json": {
+      "bytes": 3198317,
+      "sha256": "4c39433b0d7e73a6fda1946a24b0cd705a706d2c688dea15abaeee910da3f468"
     },
-    "quartics/quartic-1272/source-review/build_inventory.py": {
-      "bytes": 16184,
-      "sha256": "8ef9056c5610d01a928c1f5aec6bfb7b7077fea1d0e890e7819cfea39b98977f"
+    "quartics/quartic-962/raw-translated-ir.json": {
+      "bytes": 3198976,
+      "sha256": "cb1295d789c5bb40bd98842b1bd2a51a05c6ff2058a526e7d1d9b177d20da3ae"
     },
-    "quartics/quartic-1272/source-review/builder_semantic_checks.json": {
-      "bytes": 2338,
-      "sha256": "4f785475d34c4bf137d84ad54df6ca61a85ddbded524da668e519c3f2c779326"
+    "quartics/quartic-962/reduction-certificate.json": {
+      "bytes": 98299,
+      "sha256": "a69f7b94d351d8b5b66601c7c2581b9ac35a0589762515da15b6b661f1af58ed"
     },
-    "quartics/quartic-1272/source-review/check_builder_semantics.py": {
-      "bytes": 8498,
-      "sha256": "13f102f7801630d3c9dd280665da35bae03f51567255c8465f63f151844562a4"
+    "quartics/quartic-962/reproduce.py": {
+      "bytes": 2754,
+      "sha256": "0f5c5b674b3944d4f949463f54c822d08ee7795122abf3eb5ef321f3da4cad7e"
     },
-    "quartics/quartic-1272/source-review/review_verdict.json": {
-      "bytes": 4242,
-      "sha256": "f38b0ebfc3b7dc4fbf96b02f552489499a3fab0a9652a53d2db5c826cc148ba7"
-    },
-    "quartics/quartic-1272/source-review/source_inventory.json": {
-      "bytes": 190864,
-      "sha256": "4e4e9b924f5d0d4705b2806f353b9e312d36389e041a86fa9abc60f36673b32b"
-    },
-    "quartics/quartic-1272/sources/SOURCES.json": {
-      "bytes": 1653,
-      "sha256": "ea0f528dde054bd5e5904ad84226f12e0693ae7ed6cab70284b63c78f168994f"
-    },
-    "quartics/quartic-1272/sources/diophantine_optimization_20261106_v3.tex": {
+    "quartics/quartic-962/sources/diophantine_optimization_20261106_v3.tex": {
       "bytes": 448727,
       "sha256": "fc8bc7b8fae727e24f934ddd7de0a7cff8a005e89c3d0cac1ea14e5191b910ca"
     },
-    "quartics/quartic-1272/sources/proof-supplements/brox-local-proof-supplement.tex": {
-      "bytes": 1877,
-      "sha256": "e88ce9eba6ed7b287f7f8e3555810004a8dc8f39762be8f21037d49129739e6c"
+    "quartics/quartic-962/specialization-certificate.json": {
+      "bytes": 726,
+      "sha256": "2c8eb9f7c4c3073019d30d3a606ad25436e92d44050c6022d48310c136793baf"
     },
-    "quartics/quartic-1272/sources/proof-supplements/reciprocal_unramified_repair.tex": {
-      "bytes": 4065,
-      "sha256": "7fb6119956d24749c1b8477f2cf567dc1c913e2cd55bfe168fff55367d096635"
+    "quartics/quartic-962/transformations.json": {
+      "bytes": 13339,
+      "sha256": "fab24f6038751134c703ca8f0b9516247f923c3a4c8af3080105033fc1559518"
     },
-    "quartics/quartic-1272/sources/proof-supplements/sun-citation-repair.tex": {
-      "bytes": 1250,
-      "sha256": "bea9cb3624bbc3ea85f565462da2db5bc07b289e3d3d053e4a9fef435d10ec5a"
+    "research/version6/README.md": {
+      "bytes": 2511,
+      "sha256": "76e1a8707a704df9709f5e2429639027ee1b289c88fed49ae4cf31626127619a"
     },
-    "quartics/quartic-1272/sources/proof-supplements/sun-local-repair.tex": {
-      "bytes": 1675,
-      "sha256": "6c2a1b021a7b39f3f9572e09aef3aa288ca366d43cb711714c712920bd58e747"
+    "research/version6/analytic-proof/ASSESSMENT.md": {
+      "bytes": 10309,
+      "sha256": "363239ba20f5bc3084098f8447edc97cf8ca9a9def8f58b94653dcd187b5b1ac"
     },
-    "quartics/quartic-1272/sources/sun-2610.20691v2-P103q.tex": {
-      "bytes": 129910,
-      "sha256": "b561d39ffc0e46798bd6ad5d3cfb8b543b75871780758876a8af67fb6daf15ba"
+    "research/version6/analytic-proof/analytic-applications.json": {
+      "bytes": 124256,
+      "sha256": "f91e58891cc7329e4ca8b428365fe43f25282fdd6c731eb2fbbc5624ac644c07"
     },
-    "quartics/quartic-1272/sources/upstream-quartic-12504-28e87b1.tex": {
-      "bytes": 676695,
-      "sha256": "38d458ba4178083766c5ae56a894da595fe27170c1ef07f6b49750fc5edf7c37"
+    "research/version6/analytic-proof/analytic-internal-results.json": {
+      "bytes": 31153,
+      "sha256": "af6c45b3abad4f69cbd3fbd8e5e8424caf11a5463b99a1fdff0d3e9ff95667af"
     },
-    "scripts/check_quartic1272.py": {
-      "bytes": 343,
-      "sha256": "e64b62af7a3c83832dcdf2eb86f1363a8ee30ef1c5917d347635d9eb6ffafb74"
+    "research/version6/analytic-proof/analytic-reviewed-fragment.tex": {
+      "bytes": 51460,
+      "sha256": "2acfcd8fdda45f14de36b703b31292053aafce951af1aa7d5e54e074d12ae218"
+    },
+    "research/version6/analytic-proof/bridge-source-independent-review/REVIEW.md": {
+      "bytes": 6069,
+      "sha256": "d559cdef24604e4d1a6d9148ee40adb4d2b9653c76169c6045857c55cac87aa1"
+    },
+    "research/version6/analytic-proof/bridge-source-independent-review/check_review.py": {
+      "bytes": 2233,
+      "sha256": "b948169be6b58a40e44a12e896dbac32ea205de320d41244263876f3b5bb5043"
+    },
+    "research/version6/analytic-proof/bridge-source-independent-review/receipt.json": {
+      "bytes": 2705,
+      "sha256": "6b88a22061509f07810cde93f799cebd8bba25834a6d665e0225fa6546cb7d1a"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/REVIEW.md": {
+      "bytes": 9775,
+      "sha256": "633356640fd2ec8de9ad628d36d8de4c2444b266f5e8dde1d69a521fc8191a22"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/TEX_FIDELITY.md": {
+      "bytes": 2418,
+      "sha256": "56eb65351504bd3d07c0fff2a45bdec6eef0ca843691446f1b6801b03105fa24"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/analytic-inventory-check.json": {
+      "bytes": 1194,
+      "sha256": "ecb5bdd45cb46dc1233d1a75192856b232e2c05d11b3c6a57c895ffaad4623d1"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/build_analytic_inventory.py": {
+      "bytes": 25679,
+      "sha256": "10e82b4c4587c5a653370bdfdccc88f5dd4c8f32afdb05edb118888fe024ef46"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/check_tex_fidelity.py": {
+      "bytes": 2006,
+      "sha256": "85168e76750380927a4ace8a8101a75df990b717fc8b3aa0320a6db507f8560b"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/receipt.json": {
+      "bytes": 1219,
+      "sha256": "a2173219a10643207b4a7b511ebd08d251092433dd260bd510d457b3e2d435b7"
+    },
+    "research/version6/analytic-proof/factorization-independent-review/tex-fidelity-static.json": {
+      "bytes": 1362,
+      "sha256": "6eb762d78eca1ac9cf56323d26fa3d3775fe1b7f4fe50fe50a14ca2ae8885236"
+    },
+    "research/version6/analytic-proof/factorization/AFFINE_PULLBACK.md": {
+      "bytes": 9143,
+      "sha256": "a7849af9a4c44af44e8bfecd4f4e94fdee58c36f5ccfef3b20dca032ee1126a1"
+    },
+    "research/version6/analytic-proof/factorization/FACTORIZATION.md": {
+      "bytes": 8961,
+      "sha256": "93eaf841621c852ae89b0447051f9773a89f3a31e44bd75dcf0e2666878cf559"
+    },
+    "research/version6/analytic-proof/factorization/STATUS.json": {
+      "bytes": 2121,
+      "sha256": "ac388df83855c35b580e26ea56309ef7eab8e50739f993b3662005b51653ccf7"
+    },
+    "research/version6/analytic-proof/factorization/TEX_CHECK.json": {
+      "bytes": 1394,
+      "sha256": "668f87084dcec6007a8d7cd148bfac5f9126d7939b182e2b0611de1bed763a14"
+    },
+    "research/version6/analytic-proof/factorization/affine_pullback.tex": {
+      "bytes": 9433,
+      "sha256": "10edb90817918605156a7f1193e42fa2777336b063406776129d4233021f2778"
+    },
+    "research/version6/analytic-proof/factorization/check_fragments.py": {
+      "bytes": 1673,
+      "sha256": "c0a2d268c853dda969936106721cc4c9fe4150e6a7a84a9188dfd404bd52c6e9"
+    },
+    "research/version6/analytic-proof/factorization/factorization.tex": {
+      "bytes": 7675,
+      "sha256": "53c1e8b15c0460c5eb4fdcac92f800605fdb846e5b04d13ea847dd7063fa7649"
+    },
+    "research/version6/analytic-proof/factorization/tex-qa/check.tex": {
+      "bytes": 745,
+      "sha256": "548d5d8fcbf7fc2d58c41e0d043b33c8b39ee2bb153aabc7b23b697f783b66be"
+    },
+    "research/version6/analytic-proof/fetch_parent_sources.py": {
+      "bytes": 1841,
+      "sha256": "9a66b2a7dd7541889f8a7e29dfd15b30ab4d7332079898c7b146040a6aafd551"
+    },
+    "research/version6/analytic-proof/gowers-bridge/BRIDGE.md": {
+      "bytes": 11980,
+      "sha256": "f10182de72af9e354a7fbcfc41e7c531af1d7ec3c9c58f3412042f2138b8a6d1"
+    },
+    "research/version6/analytic-proof/gowers-bridge/INVENTORY.json": {
+      "bytes": 8428,
+      "sha256": "ea97e49c0e3fdda228ca48e5a3107d4a0aeaf0137854b4dd2335fb8007bc0395"
+    },
+    "research/version6/analytic-proof/gowers-bridge/bridge.tex": {
+      "bytes": 18440,
+      "sha256": "b9284d40889c3d4308fd0c3d532b7d59c792f22894acc6db21c19a2422c307cd"
+    },
+    "research/version6/analytic-proof/gowers-bridge/v6-applications.json": {
+      "bytes": 76261,
+      "sha256": "0c49e2fbb3753eaf334b399b9e41b67739ab1173a7b897d62662b78f7a51530e"
+    },
+    "research/version6/analytic-proof/norm-independent-review/REVIEW.md": {
+      "bytes": 9852,
+      "sha256": "63994c05fa51002fc75119ab52a59096d14df7cdbb9e194a46bfbdd17940f420"
+    },
+    "research/version6/analytic-proof/norm-independent-review/receipt.json": {
+      "bytes": 1087,
+      "sha256": "705e5b86645356ff220f4e6dcd715133364a9d60cd8bd076a3484abd8e344ba6"
+    },
+    "research/version6/analytic-proof/progression_mainterms.tex": {
+      "bytes": 7477,
+      "sha256": "8564d37de829edff8e0864362b6185f6b44f1ac4c1f053c0a34fe6b16444a35b"
+    },
+    "research/version6/analytic-proof/published-input-audit/ASSEMBLED_RECEIPT.json": {
+      "bytes": 1788,
+      "sha256": "df84dddb85a5af6fb7362be948a519ced907f466e64f5795ae90ebb730c1f3d0"
+    },
+    "research/version6/analytic-proof/published-input-audit/FOGELS_PUBLISHED_REPAIR.md": {
+      "bytes": 8640,
+      "sha256": "ce4143b53295fd7e1db4791b312e1c8f2d395f2ebf216d3d85e71af7e8cdbabd"
+    },
+    "research/version6/analytic-proof/published-input-audit/INTEGRATION_DEPENDENCIES.json": {
+      "bytes": 15405,
+      "sha256": "653c15532ed8fcf139df8ca73013fdb47d99d645a4f236928768589ed7ec05dd"
+    },
+    "research/version6/analytic-proof/published-input-audit/INTEGRATION_REVIEW.md": {
+      "bytes": 16851,
+      "sha256": "da734643973984eb58ae8e0f40feaca714b82503e32989efbde832d8b1444c42"
+    },
+    "research/version6/analytic-proof/published-input-audit/MITSUI_SW_DERIVATION.md": {
+      "bytes": 9740,
+      "sha256": "b3a14e70ec20a0154642ad062f431e40262c009a0caf496e5afe610156d72b88"
+    },
+    "research/version6/analytic-proof/published-input-audit/PARENT_AUDIT.md": {
+      "bytes": 8988,
+      "sha256": "54282669a354b7939f69dca68a273269629371e450ac8c5ea4da6c74f2cb50e4"
+    },
+    "research/version6/analytic-proof/published-input-audit/PUBLISHED_SOURCES.json": {
+      "bytes": 1462,
+      "sha256": "7e19c57c2d3ff3756ef3b094310d96f65c746a9e9c575c4157f23cfafa65960b"
+    },
+    "research/version6/analytic-proof/published-input-audit/applications.json": {
+      "bytes": 5285,
+      "sha256": "f9bfb6fd3ba85e8079088ec2389bd72ee7a9e17514edf2a5280f0e3b69d71ab1"
+    },
+    "research/version6/analytic-proof/published-input-audit/bibliography.tex": {
+      "bytes": 178,
+      "sha256": "73bb6ad148114ae79bc204ab18ddf4337658a1b35e392f45c090a2d06c43135b"
+    },
+    "research/version6/analytic-proof/published-input-audit/bind_integration_review.py": {
+      "bytes": 9861,
+      "sha256": "59b2915ee117c300c6977ddfaac131f5a362e2b9c871fe91d5c77656724b819f"
+    },
+    "research/version6/analytic-proof/published-input-audit/check_sw.tex": {
+      "bytes": 280,
+      "sha256": "fcf49f737678ec4d19d4756c34b28a17d377800896af9a34c3d380c0d12830b4"
+    },
+    "research/version6/analytic-proof/published-input-audit/gaussian_hecke_sw.tex": {
+      "bytes": 5177,
+      "sha256": "56c7d6a62678123d2fd89bfc473f6934e75bd1da04233b292bda4cc9be77262e"
+    },
+    "research/version6/analytic-proof/quotient-audit/NORM_TRANSFER.md": {
+      "bytes": 12499,
+      "sha256": "2fda5cb7119a00dbd8815a108e9ba4cdfc06a6ab1fe10ad2d1f657522c059380"
+    },
+    "research/version6/analytic-proof/quotient-audit/STATUS.json": {
+      "bytes": 2273,
+      "sha256": "0419d534eea43336147c510b276e3ca29d579d114a477475e7d208f0f3d3f10f"
+    },
+    "research/version6/analytic-proof/quotient-audit/norm_transfer.tex": {
+      "bytes": 10431,
+      "sha256": "d2d8fa98291def5007fdd76ee4226acf7f4d77d0dd086d8ce3bc984785b13c16"
+    },
+    "research/version6/analytic-proof/sources/SOURCES.json": {
+      "bytes": 1014,
+      "sha256": "e1865649542b660a2774dd38e68294c5eeb4a4c721f98c605bab59f8f7f20d9e"
+    },
+    "research/version6/analytic-proof/sw-independent-review/REVIEW.md": {
+      "bytes": 11304,
+      "sha256": "b9e53d912c1f3ff359e4a4c2d19e17a8e1273d3c6656883a77ce266c9cd6e388"
+    },
+    "research/version6/analytic-proof/sw-independent-review/receipt.json": {
+      "bytes": 1615,
+      "sha256": "2096aba892492a581c77790f914da83282545237dffea836d612b4081da39018"
+    },
+    "research/version6/analytic-proof/type-i-ii/BRIDGE_REVIEW_RECEIPT.json": {
+      "bytes": 2020,
+      "sha256": "a731e38f4cdeafb0270691905820ce314bb43d5707a8f9a6f62bac1f4f180a08"
+    },
+    "research/version6/analytic-proof/type-i-ii/ROOT_REVIEW.md": {
+      "bytes": 5710,
+      "sha256": "6ae3a2ce6705860b93039268740740238be78d6e2e1852372e9cd1dfada34323"
+    },
+    "research/version6/analytic-proof/type-i-ii/TEX_HANDOFF.json": {
+      "bytes": 2449,
+      "sha256": "80f922d42606cdef08650500b8044cd737b5eded356e7d74a013c2fc8ee17692"
+    },
+    "research/version6/analytic-proof/type-i-ii/TYPE_I_II.md": {
+      "bytes": 21484,
+      "sha256": "c56999d354ed206d1006e98c2373b28fbdfbbf4f3a4cd826e82d5b5af1765539"
+    },
+    "research/version6/analytic-proof/type-i-ii/bind_bridge_review.py": {
+      "bytes": 2295,
+      "sha256": "76fd2b82e558c977f3c2a4f08e94aa873430dca312ed93c4658302c3599c8d58"
+    },
+    "research/version6/analytic-proof/type-i-ii/bridge-independent-review.md": {
+      "bytes": 10060,
+      "sha256": "f2f945c15e7b5ed6d69d892edb3470076517777cad58a42491b4264361c8570d"
+    },
+    "research/version6/analytic-proof/type-i-ii/check_fragment.py": {
+      "bytes": 2905,
+      "sha256": "2920b2ce894d01e7498e263377ba192f19e3640f90add11b5fe2f286b6556302"
+    },
+    "research/version6/analytic-proof/type-i-ii/check_fragment.tex": {
+      "bytes": 637,
+      "sha256": "0822bf52740a10f7ebb7f501c5a66b7888a0b6939570fdbdc36816ae5bc46487"
+    },
+    "research/version6/analytic-proof/type-i-ii/progression-independent-review.md": {
+      "bytes": 5626,
+      "sha256": "5e6f3a8abb0ffa65c84bf7224c694687c58f174ba3751e64cb4946cddd5cc919"
+    },
+    "research/version6/analytic-proof/type-i-ii/type_i_ii.tex": {
+      "bytes": 24041,
+      "sha256": "8af77dc5439c82ec79c223b0fead55b6b5fb4987f159525794d82190ed439136"
+    },
+    "research/version6/lower-bound/bibliography.tex": {
+      "bytes": 447,
+      "sha256": "a528e8788f91a448541f526c67870ca9b50b31f184bea94f9396a0de003aa0fa"
+    },
+    "research/version6/lower-bound/degree_lower_bound.tex": {
+      "bytes": 8617,
+      "sha256": "6db65ff9d69dfd1e3c5186cc3bec0ee84d2cb4120bf0a2a875469cc3a07cd71f"
+    },
+    "research/version6/lower-bound/fetch_sources.py": {
+      "bytes": 1307,
+      "sha256": "615e222330b8abfcbd0f9f15f1f4cf648655e5addf429be4956d79f8a0822101"
+    },
+    "research/version6/lower-bound/independent-review/REVIEW.md": {
+      "bytes": 8616,
+      "sha256": "115399ab0279a061fc19e181e598695ec5e4eeac94bea36be0b8bed2c15edfab"
+    },
+    "research/version6/lower-bound/independent-review/receipt.json": {
+      "bytes": 1221,
+      "sha256": "1f4b42a907aa49c25ef43bb53524f3b086080416bbb26aa21b0f974948ccc898"
+    },
+    "research/version6/lower-bound/new-applications.json": {
+      "bytes": 4960,
+      "sha256": "f9c8144d3f4d2c0dd6ee702bd6f8bb3c00e5f36a53ff94d900edcdbc6d2941d5"
+    },
+    "research/version6/lower-bound/sources/SOURCES.json": {
+      "bytes": 622,
+      "sha256": "31104a7e63ef42a784d6d6ae5108942408be3cf9b6c4de9c9a89fbc8f57332e8"
+    },
+    "research/version6/optimization/combined/PROOF.md": {
+      "bytes": 11260,
+      "sha256": "afc64705ce7c0d72163a35a4350a20b9293b259e411e99c542427c73d05d8ff2"
+    },
+    "research/version6/optimization/combined/build-log.json": {
+      "bytes": 2993,
+      "sha256": "fce762db8b03a121668d5d4c0dfed1ff8ebb9646f02cd44d152bd4cbec85fbed"
+    },
+    "research/version6/optimization/combined/build_combined.py": {
+      "bytes": 5619,
+      "sha256": "39348facdc9302d3df8d1602e3be8252f4ebbeb4ce595fb4a63f9227de35fa2b"
+    },
+    "research/version6/optimization/combined/build_source.cjs": {
+      "bytes": 21573,
+      "sha256": "b99b000a57a904328d167a3b3fe9e319e84dc880f03071af9b4face29bc9a570"
+    },
+    "research/version6/optimization/combined/census.json": {
+      "bytes": 2863,
+      "sha256": "91b6e575c26405cf07289993d2bb4bfdfb139c5ed19075f4b34fe75032aeb170"
+    },
+    "research/version6/optimization/combined/checkpoint-1025/build_source.cjs": {
+      "bytes": 20792,
+      "sha256": "f6eea289e36635b520118f45a56f0c92415b5e6f5ca01afe61f2032783bbf696"
+    },
+    "research/version6/optimization/combined/checkpoint-1025/measured-census.json": {
+      "bytes": 406,
+      "sha256": "63d33e71c4a20b5d8db75723b110df4adfa471949162657d5291017a539f7f42"
+    },
+    "research/version6/optimization/combined/checkpoint-1025/transformations.json": {
+      "bytes": 9771,
+      "sha256": "5ae62fcc718357d2fbbfe883eea1396dbf6c9a5d40abea62041771654d0539d9"
+    },
+    "research/version6/optimization/combined/compiled-ir.json": {
+      "bytes": 3333036,
+      "sha256": "d9a304d780410145f595008eb7035e5ce3061dc4e70cd0791b9f40853b3a9f68"
+    },
+    "research/version6/optimization/combined/measured-census.json": {
+      "bytes": 403,
+      "sha256": "84d6b81408951275f1bb8b910bcd58751fdb0c063a3fda4ff9d461035cf202fe"
+    },
+    "research/version6/optimization/combined/package_frozen.py": {
+      "bytes": 5432,
+      "sha256": "d1e454382f0ef2620c7d02821f4c0a21c88a78e126d83f60579feec7af075373"
+    },
+    "research/version6/optimization/combined/raw-ir.json": {
+      "bytes": 3198317,
+      "sha256": "4c39433b0d7e73a6fda1946a24b0cd705a706d2c688dea15abaeee910da3f468"
+    },
+    "research/version6/optimization/combined/raw-translated-ir.json": {
+      "bytes": 3198976,
+      "sha256": "cb1295d789c5bb40bd98842b1bd2a51a05c6ff2058a526e7d1d9b177d20da3ae"
+    },
+    "research/version6/optimization/combined/reduction-certificate.json": {
+      "bytes": 103708,
+      "sha256": "d9292a2e35ec35300c566b9522b0aabf7711892b76bfbe19145a2b0aeaafadf7"
+    },
+    "research/version6/optimization/combined/reproduce.py": {
+      "bytes": 2754,
+      "sha256": "0f5c5b674b3944d4f949463f54c822d08ee7795122abf3eb5ef321f3da4cad7e"
+    },
+    "research/version6/optimization/combined/sources/diophantine_optimization_20261106_v3.tex": {
+      "bytes": 448727,
+      "sha256": "fc8bc7b8fae727e24f934ddd7de0a7cff8a005e89c3d0cac1ea14e5191b910ca"
+    },
+    "research/version6/optimization/combined/transformations.json": {
+      "bytes": 13339,
+      "sha256": "fab24f6038751134c703ca8f0b9516247f923c3a4c8af3080105033fc1559518"
+    },
+    "research/version6/optimization/dag-sharing/COMBINED_REVIEW.md": {
+      "bytes": 4638,
+      "sha256": "630ac4d4f82c65970898b93f49c7dcff42163434c90f095dfaad77b4516bac3c"
+    },
+    "research/version6/optimization/dag-sharing/POINT_EQUIVALENCE.md": {
+      "bytes": 4184,
+      "sha256": "86af06bb711383acf129198b601e1e4d395aeb1a8bfb8dd380ac90acadaf40c7"
+    },
+    "research/version6/optimization/dag-sharing/QUOTIENT_REVIEW.md": {
+      "bytes": 2884,
+      "sha256": "b62e13c97d5dd36d076bfd22e9f2091463c7a5d53107ef91116149a83bce3401"
+    },
+    "research/version6/optimization/dag-sharing/REPORT.md": {
+      "bytes": 4947,
+      "sha256": "31afa202d2798bdbcf5df973e3605a135a52fe07d0c88bd879afbc3c4edbf2ce"
+    },
+    "research/version6/optimization/dag-sharing/build_source.cjs": {
+      "bytes": 19527,
+      "sha256": "eb74673a8246ae92ffbfe77188c5f8e7507ce993f52e8f2a475892476ab4454d"
+    },
+    "research/version6/optimization/dag-sharing/census.json": {
+      "bytes": 2874,
+      "sha256": "c42662bda50a4426c136f20a9b77b9fc7cc0ed34b60b03cdc43ac2a776f3041d"
+    },
+    "research/version6/optimization/dag-sharing/census.py": {
+      "bytes": 1090,
+      "sha256": "6e2cb5b9d97acf101ce715e7d5ec9436fbc8364fd95fa63c28b5b7b755715b53"
+    },
+    "research/version6/optimization/dag-sharing/combined-integration-check.json": {
+      "bytes": 5282,
+      "sha256": "03dd5f5cd1c94410170c055ff470ef392ef7aa1b5e7cf16348c4403b1f275e37"
+    },
+    "research/version6/optimization/dag-sharing/compiled-ir.json": {
+      "bytes": 6768358,
+      "sha256": "10d3b5fd72333a112052b9add43544d27b16cfb681737945d2288ce2ea1d0836"
+    },
+    "research/version6/optimization/dag-sharing/final-b-independent-review.json": {
+      "bytes": 232,
+      "sha256": "e232b79034dee81bba78cbaa703f82f7893a54ab68f066d0ad4edea6430d7cba"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/build_source.cjs": {
+      "bytes": 19293,
+      "sha256": "eadaf3ed4054fca3afc7ebefc79cf9bd014dd5a497cd446bb3fe50ee89c15e21"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/census.json": {
+      "bytes": 2877,
+      "sha256": "e640ba18e703e62a766f12838b8b700654b0b70397ae3d9b316720437bc98f66"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/compiled-ir.json": {
+      "bytes": 4241067,
+      "sha256": "116623628df3c37ebcef3f69c482e57ea4d64e7d3e119adbbc6700ab73f255ea"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/independent-check.json": {
+      "bytes": 1199,
+      "sha256": "f8375cf78f6302893ffcdd8fcc8d67b363b71946dbbbca2b5d40c85e5a5d8d3c"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/measured-census.json": {
+      "bytes": 407,
+      "sha256": "418bec602740f633a5b10cac4dbbb2990c8f0e6195da62fbcd2af50c09edb063"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/raw-ir.json": {
+      "bytes": 4052563,
+      "sha256": "4fffbbaca88ac088db74d70ecd22f24ff9b4772ba30013fa1f4a2d7b4346123a"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/raw-translated-ir.json": {
+      "bytes": 4053222,
+      "sha256": "58545a67e2f39b1282dde536f97ffe770580ca52a454575cc35677d633878418"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/reduction-certificate.json": {
+      "bytes": 141423,
+      "sha256": "79c402e69be23abdb44d61845044810a12901e998dafab978471480fec30fc31"
+    },
+    "research/version6/optimization/dag-sharing/log-candidate/square-completion.json": {
+      "bytes": 978,
+      "sha256": "fea11efa4aa5b4460fc81552a352304d28baa91e1d90a45a0a7d41af72a13262"
+    },
+    "research/version6/optimization/dag-sharing/log-replacement.cjs": {
+      "bytes": 1642,
+      "sha256": "477a36eb473f45a464e2b46192dc660259857cdc3a89caede9d9f5505e695095"
+    },
+    "research/version6/optimization/dag-sharing/measured-census.json": {
+      "bytes": 407,
+      "sha256": "61bb41af11813ce6b8cb374f3029c4b37b4f289b24ac8b8f83f7bdebb325246b"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/algebra-check.json": {
+      "bytes": 2476,
+      "sha256": "c8423c22e2579e16025d58a068ea8fd17b7c934947e00485eac6e2027899f759"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/build_source.cjs": {
+      "bytes": 18535,
+      "sha256": "b196cf183fc53d892b82a573d76ea8f2aaf549116f01ac7da4e6b3223f6ca5d7"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/census.json": {
+      "bytes": 2877,
+      "sha256": "ca7da6f34ff8a4b262a983abaac1c9230c06db1a46d0baeed5b61a11ae6a73ee"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/compiled-ir.json": {
+      "bytes": 3890311,
+      "sha256": "71aa0f19252384e6d0d6e9cbab001860d975ca9ef01f4c2b74761819e60442f9"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/measured-census.json": {
+      "bytes": 407,
+      "sha256": "ec0875590ddb40790a91efd501abab55eafbbc50b8768269fe7f4c695228d906"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/raw-ir.json": {
+      "bytes": 3721443,
+      "sha256": "25de61a4d9487cd7a51049c8e010efb1efa41fbcbc77dc493e6d1e2521b3b71f"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/raw-translated-ir.json": {
+      "bytes": 3722102,
+      "sha256": "6146e06222a831c97c65fa034298c11e8a063f34e23b6fcb5e62fd03d3adadc5"
+    },
+    "research/version6/optimization/dag-sharing/point-candidate/reduction-certificate.json": {
+      "bytes": 135357,
+      "sha256": "185075ad640a809846c8ec39303f0b70c089bcb86ec4e1665f19ed3be1a7adf4"
+    },
+    "research/version6/optimization/dag-sharing/point-replacement.cjs": {
+      "bytes": 579,
+      "sha256": "01045fcb18b55bec695a73156ad6e408262e635cdcd6b3da322e958359953f3b"
+    },
+    "research/version6/optimization/dag-sharing/prepare.py": {
+      "bytes": 2674,
+      "sha256": "a9c5f98dc8bbc4ae2b60eba5c916d964dd261576f8516a6e345e25c344c37e91"
+    },
+    "research/version6/optimization/dag-sharing/prepare_log.py": {
+      "bytes": 875,
+      "sha256": "bf234c10e78358d1e13af704a7812c25173acbd7a87f4a651ab762b2eb484884"
+    },
+    "research/version6/optimization/dag-sharing/prepare_point.py": {
+      "bytes": 790,
+      "sha256": "9cebf03c4871826860c8a6d54e47901d06d3b69b090693a69207a410d2a488f0"
+    },
+    "research/version6/optimization/dag-sharing/quotient-independent-review.json": {
+      "bytes": 4882,
+      "sha256": "205807d17060a3dc6ebd45d64716f13b1480dfb940431b4236f1ee61bf71ed4e"
+    },
+    "research/version6/optimization/dag-sharing/raw-ir.json": {
+      "bytes": 6459170,
+      "sha256": "21e953364612f051116ed6770b7ebf8ed4cdce63407782e3e7c6eae142e537e0"
+    },
+    "research/version6/optimization/dag-sharing/raw-translated-ir.json": {
+      "bytes": 6459829,
+      "sha256": "571e6add471223ac7b868444b8b3a4c06d10a0942cfb7cfff05440a07d253da3"
+    },
+    "research/version6/optimization/dag-sharing/reduction-certificate.json": {
+      "bytes": 140601,
+      "sha256": "63c0fb8cc85d64035dab9d0080f5be7c9ee2f797ae86f4edc6c95e2e5a16a9cd"
+    },
+    "research/version6/optimization/dag-sharing/review-combined.cjs": {
+      "bytes": 3180,
+      "sha256": "a608c0823c321ba5f43703146c2e20f0028b13a85b85277fed1bd600a827b2ad"
+    },
+    "research/version6/optimization/dag-sharing/review-final-b.cjs": {
+      "bytes": 1468,
+      "sha256": "06994901b2d5a11d8c4e25b5fb924767392d14df3ee72390400dd581adab4523"
+    },
+    "research/version6/optimization/dag-sharing/review-quotients.cjs": {
+      "bytes": 2794,
+      "sha256": "b73fe96a952efafab9d903957f40ffc141c221e0ce062b284d33bc503ae175ba"
+    },
+    "research/version6/optimization/dag-sharing/symmetric-replacement.cjs": {
+      "bytes": 1810,
+      "sha256": "029a9840e1c78cc2a9c9ac3053a7c5cb3ce3624ffdab914491fe295d46be9ade"
+    },
+    "research/version6/optimization/dag-sharing/verify-log.cjs": {
+      "bytes": 2948,
+      "sha256": "326124277672497da6b384e52d3581fc4e0b67ecc4dd4454f84e847393e42cb7"
+    },
+    "research/version6/optimization/dag-sharing/verify-point.cjs": {
+      "bytes": 3836,
+      "sha256": "6dcf97887c25343828eddf4b04c607813463ddbcc677e02c421f31e6ed96236c"
+    },
+    "research/version6/optimization/detector-circuits/BLOCK_EVAL_PROOF.md": {
+      "bytes": 4683,
+      "sha256": "36a2e42be8e803cfdab668db168497731488332760e31ee2d65df8cc3dc25233"
+    },
+    "research/version6/optimization/detector-circuits/FROZEN_REVIEW.md": {
+      "bytes": 4710,
+      "sha256": "356e4e4ee16d7a09ed8870d25979255baea7b18eeeb33f007544d30c28a004f0"
+    },
+    "research/version6/optimization/detector-circuits/README.md": {
+      "bytes": 6253,
+      "sha256": "65d5097128a43ab12f1f90784821968da1ce3c0fc3b96f533525069c10e441eb"
+    },
+    "research/version6/optimization/detector-circuits/build_candidate.cjs": {
+      "bytes": 18978,
+      "sha256": "1a4a85db908167565ecaead06543bfe55b26c6b074578daedf3966d561342bf5"
+    },
+    "research/version6/optimization/detector-circuits/census.json": {
+      "bytes": 2871,
+      "sha256": "8288ded4eabcf175bde4c24f229c139a90326f83624f21cb81becb6871980470"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/build_source.cjs": {
+      "bytes": 21419,
+      "sha256": "7b41fb11917e2ce19ecff8b304d452463701e88be81ac08d0f4afeb2c959be88"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/census.json": {
+      "bytes": 2865,
+      "sha256": "25eaf19e4987910d9654e40ffc2431b142ec506039e2893960a24bb7fcec3a02"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/raw-ir.json": {
+      "bytes": 3460692,
+      "sha256": "3ff81a238ff0dfe1cfbf09c538321b54d72d762d8422516abf1356da37b1bcbf"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/raw-translated-ir.json": {
+      "bytes": 3461351,
+      "sha256": "e161c3af245a304f05e645a8636f1c40cb4925c4e269b1b0dcf90c4b37052aa2"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/reduced-ir.json": {
+      "bytes": 3433877,
+      "sha256": "3907a74f9200539554eff20b024b2638fa8d30be3f155944331fdf0727a6e96c"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/reduction-certificate.json": {
+      "bytes": 105398,
+      "sha256": "aeeebe7336979eee9112a72eba210f3859f8c826fa07bda09b83d960e6d6760d"
+    },
+    "research/version6/optimization/detector-circuits/combined-block-eval/verification.json": {
+      "bytes": 1435,
+      "sha256": "789e30e89c3aa459f190266fa73c95b5df9dbd6c78126d35d696ac9d2dadb255"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/build_source.cjs": {
+      "bytes": 21410,
+      "sha256": "8a07c01c13fcd45e389df7a624d3d66c41c100b9d660ed1c1c948335331e0bd7"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/census.json": {
+      "bytes": 2865,
+      "sha256": "a9d9a5e81626f78f80b7caeeb2c958d6caf172624bdf66194046913c461dbae9"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/raw-ir.json": {
+      "bytes": 3448162,
+      "sha256": "81c78502b4b61fa7ceb65e3ab71330181cd8be64fc798aeca8b94cc369d2868d"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/raw-translated-ir.json": {
+      "bytes": 3448821,
+      "sha256": "fd6828f5519863ca2f0fddd6a8487a571cdfdd2388e2a5d75bd89df58c0d8cd6"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/reduced-ir.json": {
+      "bytes": 3421360,
+      "sha256": "5a988dda166a55a05cd1e353e38c9f8b1d3499c53c7a1d75dab633457b47f74d"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/reduction-certificate.json": {
+      "bytes": 104877,
+      "sha256": "cc41172d0515edc875d49d0878dbcf982a0133bd2768ac75c97258c55e659c7c"
+    },
+    "research/version6/optimization/detector-circuits/combined-weight-factor/verification.json": {
+      "bytes": 530,
+      "sha256": "0f026c4db4eda349c6935cada58688d801ceecef66add693d229eb9f8e04e8ac"
+    },
+    "research/version6/optimization/detector-circuits/frozen-independent-check.json": {
+      "bytes": 142057,
+      "sha256": "92fba925b15cf08fa02c87c073886e8d77a93a1c7d349da0fb656d9423a78bea"
+    },
+    "research/version6/optimization/detector-circuits/frozen-local-checks.json": {
+      "bytes": 514,
+      "sha256": "ff26c18248b8e51ac68261b9b1df49b54b60f66b6f0080fd1bf2506161c506ed"
+    },
+    "research/version6/optimization/detector-circuits/other-workers-review.json": {
+      "bytes": 1132,
+      "sha256": "194760af75d919641b63bb7683aa83448755befdabea4f95a4761ac2d20dbd30"
+    },
+    "research/version6/optimization/detector-circuits/patch_builder.py": {
+      "bytes": 3969,
+      "sha256": "357aad9c2140cdc45d9e94415ae100e31501b6c6d01656f5623b235e242dfeef"
+    },
+    "research/version6/optimization/detector-circuits/patch_eval_blocks.py": {
+      "bytes": 1213,
+      "sha256": "415e67bdf3ca4cbe351fdd85fb7dbcbef030c83c666c0e07a723dc9bedfc4e79"
+    },
+    "research/version6/optimization/detector-circuits/patch_weight_factor.py": {
+      "bytes": 659,
+      "sha256": "8278cc267a26a36a590a2b38d050b45bed35e0c45e554e8493f722538ab01978"
+    },
+    "research/version6/optimization/detector-circuits/patch_weights.py": {
+      "bytes": 898,
+      "sha256": "2c328f0c9d3a71c4f7e515b92cd8428254291791d4c3d2039cdeafc38c4b1e63"
+    },
+    "research/version6/optimization/detector-circuits/raw-ir.json": {
+      "bytes": 3539516,
+      "sha256": "ee059087d3f1988fc80190b218f5d361b2da184fa2551a885297d03ddbf4b8d1"
+    },
+    "research/version6/optimization/detector-circuits/raw-translated-ir.json": {
+      "bytes": 3540175,
+      "sha256": "b2d35098cdb6de1347ca732b8a5a0009d67686a503a03352d59df87ff1517238"
+    },
+    "research/version6/optimization/detector-circuits/reduced-ir.json": {
+      "bytes": 3518972,
+      "sha256": "6d1c2b093089a7c8ca0a42f6b8c5f4ce9eba425454444a057d2ffefb42c0c79b"
+    },
+    "research/version6/optimization/detector-circuits/reduction-certificate.json": {
+      "bytes": 122127,
+      "sha256": "2458cfa8cd16174be6752587fc4ed616be3264c1d52d70d359e85feb388dcd8a"
+    },
+    "research/version6/optimization/detector-circuits/review-log-check.json": {
+      "bytes": 1199,
+      "sha256": "f8375cf78f6302893ffcdd8fcc8d67b363b71946dbbbca2b5d40c85e5a5d8d3c"
+    },
+    "research/version6/optimization/detector-circuits/review-log.cjs": {
+      "bytes": 2986,
+      "sha256": "30265b3adb59acbf04140651de626672747f567cd47b04c8350acc87da1b13cc"
+    },
+    "research/version6/optimization/detector-circuits/review_other_workers.py": {
+      "bytes": 2987,
+      "sha256": "6a6f6bf2bb0136213928976bfb5a9d2b5c1486d208ab48fbc3ba9ad2b4904662"
+    },
+    "research/version6/optimization/detector-circuits/verification.json": {
+      "bytes": 6311,
+      "sha256": "33518927fa4d713cb0e8431ef2ea6315df0a52371997025c9e82c3b843bdb3ca"
+    },
+    "research/version6/optimization/detector-circuits/verify.py": {
+      "bytes": 3899,
+      "sha256": "1718538729613b424fabc8480c608cd7b1463f03f6b2915a59d482c3840765a8"
+    },
+    "research/version6/optimization/detector-circuits/verify_eval_blocks.py": {
+      "bytes": 2478,
+      "sha256": "d44d12492e26b41e9fad528fc55e518d17b6a33d8d76f6e4b5833a86cd579167"
+    },
+    "research/version6/optimization/detector-circuits/verify_frozen_locals.py": {
+      "bytes": 3396,
+      "sha256": "123f78611f26d1c24c3df7a1056c3f1e8a45b498ec96bc86e49012cd40358e5d"
+    },
+    "research/version6/optimization/detector-circuits/verify_weight_factor.py": {
+      "bytes": 2160,
+      "sha256": "3bb16efe102503b3d48eb223455980870b4c68851782786be7c3690915f0880e"
+    },
+    "research/version6/optimization/detector-circuits/weights/build_candidate.cjs": {
+      "bytes": 18995,
+      "sha256": "23693d9f88de7b8fdc61052580236e53363144be4ec3cc3d7bc71baf043f7268"
+    },
+    "research/version6/optimization/detector-circuits/weights/census.json": {
+      "bytes": 2871,
+      "sha256": "f47d504a9ec3e4737d837f62f8abb4d403c69560ff884219abe9768691e03f36"
+    },
+    "research/version6/optimization/detector-circuits/weights/raw-ir.json": {
+      "bytes": 3428793,
+      "sha256": "d65e9f52756896fddd83e699fd3eff5e69fe08c563464f50c1b022b96d512489"
+    },
+    "research/version6/optimization/detector-circuits/weights/raw-translated-ir.json": {
+      "bytes": 3429452,
+      "sha256": "5e26847aa7683649175d2fb3b45c33587c7d1fa1d79c34a36eede836c36a1cd5"
+    },
+    "research/version6/optimization/detector-circuits/weights/reduced-ir.json": {
+      "bytes": 3400700,
+      "sha256": "001dcb9b0d3995a4563de69141e21f24f0e5d10283c2bf3ce6343010046e9d83"
+    },
+    "research/version6/optimization/detector-circuits/weights/reduction-certificate.json": {
+      "bytes": 119411,
+      "sha256": "b7e5981d575d0c0840c4d7b3571a5b7aada42a2511e8a03e5d441d2db525c217"
+    },
+    "research/version6/optimization/detector-circuits/weights/verification.json": {
+      "bytes": 6350,
+      "sha256": "eddb980e2eee9f4d910da04bc0adb3e4d0059405e479b4f4be1ecd58295dea63"
+    },
+    "research/version6/optimization/elimination/REPORT.md": {
+      "bytes": 5820,
+      "sha256": "56c5db315e7fe68225bafffc31bccbcc2c97eb3618553a4604c988fa0d089d72"
+    },
+    "research/version6/optimization/elimination/affine-obstruction.json": {
+      "bytes": 18566,
+      "sha256": "3ac35811995d021f3c3bec5fc2592b9439de32df65a220c67a6a5d11f30627b7"
+    },
+    "research/version6/optimization/elimination/affine_obstruction.py": {
+      "bytes": 2036,
+      "sha256": "afb857d9b5fdbe4dd059987f0215bebe5b9a10cc6881a982ddf626e4addb3339"
+    },
+    "research/version6/optimization/elimination/affine_search.py": {
+      "bytes": 3270,
+      "sha256": "d122f8fa2628d57925397025e54463a1ea9bbf92440ff5e08779aa7f77be4682"
+    },
+    "research/version6/optimization/elimination/audit_frozen.py": {
+      "bytes": 2812,
+      "sha256": "4b7eba8150f996cb52ad8c138430ab9559719071ad32fda51e15b4b57b66edd5"
+    },
+    "research/version6/optimization/elimination/candidate-ir.json": {
+      "bytes": 2624106,
+      "sha256": "a12a57dc0fc3f1ddab8381152e757e65dbecb1114562c5837ad73508f2aabbe1"
+    },
+    "research/version6/optimization/elimination/combined-1025-source.json": {
+      "bytes": 3647839,
+      "sha256": "5198a0dccc3946f4faf2c90aa629183580b593a19e2b4ddc676cb01ae8c7bea4"
+    },
+    "research/version6/optimization/elimination/combined-run/candidate-ir.json": {
+      "bytes": 2155177,
+      "sha256": "f67426c49fa05b1ee345ad436c361376928616d24dc36522411d53196e879f99"
+    },
+    "research/version6/optimization/elimination/combined-run/integer-candidate-ir.json": {
+      "bytes": 2155177,
+      "sha256": "feb23e78d3b9942a8db95716f7a5aa161bd94f0672de1661cd47966b4f689eef"
+    },
+    "research/version6/optimization/elimination/combined-run/modulo-certificate.json": {
+      "bytes": 3663,
+      "sha256": "2c86234082a4a2af2d81e6b5bae6212ae40d06cbf5faf71d66dbe520a497a9e3"
+    },
+    "research/version6/optimization/elimination/combined-run/verification.json": {
+      "bytes": 482,
+      "sha256": "b610af62935ec11039f7769d58fc5d3dcb66cdb977c8adbb664071e2aca3bd9b"
+    },
+    "research/version6/optimization/elimination/frozen-962-review.json": {
+      "bytes": 501,
+      "sha256": "ede7535a2a4dcda9db0aad6b4ccd985ba79eff1bcd981906bbb9618690b18325"
+    },
+    "research/version6/optimization/elimination/initial-census.json": {
+      "bytes": 678,
+      "sha256": "9f517f0a72e26db15f69c8832e131b781de037ef45c7466d4ae87d37d0154119"
+    },
+    "research/version6/optimization/elimination/integer-candidate-ir.json": {
+      "bytes": 2625883,
+      "sha256": "be7b3ac65ad5e855beb77a1d97cbadd787bbff50d0dfbe7c57079b1f85c82292"
+    },
+    "research/version6/optimization/elimination/modulo-certificate.json": {
+      "bytes": 416569,
+      "sha256": "1066ec93346895d037b972f1eb8886c497f9ea5d805156b9217d6f700e9d2058"
+    },
+    "research/version6/optimization/elimination/modulo_search.py": {
+      "bytes": 4480,
+      "sha256": "63380ce9300bf8c97bda58beb62a7ae7536dd1cde61a45a00cdff772c8968d57"
+    },
+    "research/version6/optimization/elimination/run_pipeline.py": {
+      "bytes": 1109,
+      "sha256": "591def4c716d3bff456bf83ef3511840377bea02bf4e94f52017914b013c5a8c"
+    },
+    "research/version6/optimization/elimination/search.py": {
+      "bytes": 1744,
+      "sha256": "62fcc7da5f9cbee7ad25fd1bef2e18d7e8f7a7f4c3cae4f83c4031b096168dca"
+    },
+    "research/version6/optimization/elimination/verification.json": {
+      "bytes": 428,
+      "sha256": "7531331ae9fa76cd9e8d93a3186491eb518692dd6932fe03723591aca6d0c921"
+    },
+    "research/version6/optimization/elimination/verify.py": {
+      "bytes": 5487,
+      "sha256": "13c4190c50867573d470d7f4efb4e25dacf49872c3f0c9c23acf8404da840a48"
+    },
+    "research/version6/optimization/field-quotients/EQUIVALENCE.md": {
+      "bytes": 7376,
+      "sha256": "b1029c15e2e728a273ba4d6b044ba067fb0fed6a0c48a25fcc0ad453038fd5d6"
+    },
+    "research/version6/optimization/field-quotients/build_candidate.cjs": {
+      "bytes": 18301,
+      "sha256": "d74abec6e0bbe38ef7096f1f4c87b2eef2d91c6e99d8ebefb20a9157a88dfc92"
+    },
+    "research/version6/optimization/field-quotients/census.json": {
+      "bytes": 2876,
+      "sha256": "17e16ab8a3188591044d506e1afccc39132d63b93378e3c92d7c0fef523f7b98"
+    },
+    "research/version6/optimization/field-quotients/checker-report.json": {
+      "bytes": 182042,
+      "sha256": "485196aac8859598933e6857e2b092daea73f5e11fc973068c6d75093a135821"
+    },
+    "research/version6/optimization/field-quotients/compiled/compiled-ir.json": {
+      "bytes": 3875931,
+      "sha256": "7c7e192227872a31abfae044b5c28619e7b010d768214a0ce75948f552228dc2"
+    },
+    "research/version6/optimization/field-quotients/compiled/compiler-report.json": {
+      "bytes": 1450,
+      "sha256": "292df26cfeeac75d5bd25cabe6ee9b8e6e2b2aeda620144a866880c105c25400"
+    },
+    "research/version6/optimization/field-quotients/compiled/coordinate-map.json": {
+      "bytes": 123848,
+      "sha256": "ad351ba4918537be94133a5217bd1764a9d5d9ef3d2caa00f2f46a4812541592"
+    },
+    "research/version6/optimization/field-quotients/compiled/polynomial.json": {
+      "bytes": 9545281,
+      "sha256": "54b0223e109011f2bd712f335e80ca7cbabebd5d2b27f82d3db297f587dd2856"
+    },
+    "research/version6/optimization/field-quotients/compiled/reduction-certificate.json": {
+      "bytes": 125555,
+      "sha256": "90062d66e6ccd2a96e2c4efb6040720af4d78b5e9ccfdcc1b195983e25d63690"
+    },
+    "research/version6/optimization/field-quotients/compiled/specialization-certificate.json": {
+      "bytes": 1067,
+      "sha256": "1f19ea310695cdb509069db329c14c4c59be1de88d72e33846bb030e10a222dc"
+    },
+    "research/version6/optimization/field-quotients/final-b/PROOF.md": {
+      "bytes": 1145,
+      "sha256": "639e5863280e526096995c2e2ffa02afe451316159b279e514692ef5f4b60fd4"
+    },
+    "research/version6/optimization/field-quotients/final-b/build_source.cjs": {
+      "bytes": 20759,
+      "sha256": "fdea97fa21004e35610d239fbffef859703dac3c6181e21ab102198b23fd98e3"
+    },
+    "research/version6/optimization/field-quotients/final-b/census.json": {
+      "bytes": 2868,
+      "sha256": "bcd6a5710ba6cc601c8df410cef4408828bf0ea57bb66bc8cbcfd42381f3c971"
+    },
+    "research/version6/optimization/field-quotients/final-b/compiled-ir.json": {
+      "bytes": 3634718,
+      "sha256": "ea0d074c0a92196a418b4d16f4eba66e6f1269362db578d2e8c0b2b404018594"
+    },
+    "research/version6/optimization/field-quotients/final-b/measured-census.json": {
+      "bytes": 406,
+      "sha256": "679f809710b048a9b5e50f9bb0d35c15fee4c9c567c1bf5b9282f5dcc4196372"
+    },
+    "research/version6/optimization/field-quotients/final-b/patch.json": {
+      "bytes": 350,
+      "sha256": "17d56ca1d3e1bbd5765edff0cd54468f24bb57169ef3d7d274684f8190fa30ea"
+    },
+    "research/version6/optimization/field-quotients/final-b/raw-ir.json": {
+      "bytes": 3479480,
+      "sha256": "7cd42f74afeaf36afb998034c6f58c17787ef56f4b8243971d6c99b8ad2b8f95"
+    },
+    "research/version6/optimization/field-quotients/final-b/raw-translated-ir.json": {
+      "bytes": 3480139,
+      "sha256": "5dfeb3db5a87d950e4d621d48d53c1cc36fb9e126c32d47a681f86789fa0f5c5"
+    },
+    "research/version6/optimization/field-quotients/final-b/reduction-certificate.json": {
+      "bytes": 113188,
+      "sha256": "321183052e94279bcb540fda3526f3cfdf214e08da3dd8932936705388ec3520"
+    },
+    "research/version6/optimization/field-quotients/final-b/verification.json": {
+      "bytes": 280,
+      "sha256": "c9285b81f2cf3d64433638c36b90b8ddcf4bb57c139b7627a103dbaab23a2900"
+    },
+    "research/version6/optimization/field-quotients/final-b/verify.cjs": {
+      "bytes": 2017,
+      "sha256": "a5098027862adfc0e396443a418e84b70dc807873d52c5790c583ab738ae77bb"
+    },
+    "research/version6/optimization/field-quotients/fuse_final_b.py": {
+      "bytes": 821,
+      "sha256": "a116d5a15f7186e93338dc77f3b7d49792b53ab0c9b67ae39096d0d7c6630785"
+    },
+    "research/version6/optimization/field-quotients/identity-check.json": {
+      "bytes": 708,
+      "sha256": "a736d1c5b76c497b3fd40fb51985c40e21814626f7fd0d600706e30a5856c717"
+    },
+    "research/version6/optimization/field-quotients/make_candidate.py": {
+      "bytes": 3632,
+      "sha256": "50ec2d5571463ae65afe496de621ed1b9d807521f534ebc8af4e35caaad2d67e"
+    },
+    "research/version6/optimization/field-quotients/patch-certificate.json": {
+      "bytes": 3510,
+      "sha256": "78132de3bc2b6fcf1038dd13938c71135a1547414c9f1d26c17731b54cc48214"
+    },
+    "research/version6/optimization/field-quotients/raw-ir.json": {
+      "bytes": 3901280,
+      "sha256": "f76ea7a99ca2e2d9e081c19bf3b4ce4f5b50d547919856fa072fe76f890f8eb2"
+    },
+    "research/version6/optimization/field-quotients/raw-translated-ir.json": {
+      "bytes": 3901939,
+      "sha256": "cd7e7e441f5a1b79ac12f7f345fc3b0a22fd1263226a1030649462849c433b1f"
+    },
+    "research/version6/optimization/field-quotients/verify_identities.py": {
+      "bytes": 3956,
+      "sha256": "4b445a9fdcf6aa75fef1eb840218872a5863506b681dea74f901bbd9f3c4d2eb"
+    },
+    "research/version6/optimization/source-compression/PROOF.md": {
+      "bytes": 5530,
+      "sha256": "96f116281ac3510c09e3f19fd6dfc2c48207fbef718648478c16ee8945974e47"
+    },
+    "research/version6/optimization/source-compression/build-log.json": {
+      "bytes": 3007,
+      "sha256": "10d2dbd10bce25a1871b59af7f783db697e7e47de58136f46639b66e73f29133"
+    },
+    "research/version6/optimization/source-compression/build_source.cjs": {
+      "bytes": 18339,
+      "sha256": "ca8abfd90445412117cc6aee975367ea1713bb6df981384e64ac2a4d4fbfd8f8"
+    },
+    "research/version6/optimization/source-compression/build_variant.py": {
+      "bytes": 2370,
+      "sha256": "8df448309bfb0c2a242b62fc06877b4b9e636d1d94e279f65e5cdaf714189252"
+    },
+    "research/version6/optimization/source-compression/census.json": {
+      "bytes": 2877,
+      "sha256": "e8a62e36cde8a9c945641001892373564855452883935ec61871b259a338cf74"
+    },
+    "research/version6/optimization/source-compression/identity-check.json": {
+      "bytes": 328,
+      "sha256": "b91cc0e54ad935bd95d8e5d8cd7fa3a89ca691e9c02cdef451bebb5ea1b359dc"
+    },
+    "research/version6/optimization/source-compression/measure.py": {
+      "bytes": 898,
+      "sha256": "5384087d3da60cd49bad241830c28eb5d78ddfe4976ff18b7e6684b63c0af55b"
+    },
+    "research/version6/optimization/source-compression/measured.json": {
+      "bytes": 401,
+      "sha256": "a4841d80ab981c1afb896eb2a1fa827981bd190dcc600d6a30831b2c07709a33"
+    },
+    "research/version6/optimization/source-compression/raw-ir.json": {
+      "bytes": 3769535,
+      "sha256": "e49c121ac10c468534dbc4151037c41e3e8a714f1465754e44f13a6408db2cdb"
+    },
+    "research/version6/optimization/source-compression/raw-translated-ir.json": {
+      "bytes": 3770194,
+      "sha256": "4d52ce8e8f929672adcbce2dbf9c32de3f9aaaaede0e221df0da523fc4634918"
+    },
+    "research/version6/optimization/source-compression/verify_identities.py": {
+      "bytes": 2413,
+      "sha256": "a97c9dc36f023b3787abbd8924e23774f6f3ba0969011d03526ff33ed1aee13f"
+    },
+    "scripts/check_quartic962.py": {
+      "bytes": 13086,
+      "sha256": "c37e87fc0fe4c324435075c761fcb8840def11ad0214c11fb13195af058f001d"
+    },
+    "scripts/quartic962_checks.cjs": {
+      "bytes": 11995,
+      "sha256": "693bb69d23e632041acc1710e262322287dea0c202d82f47bd62ffca3462ec77"
     }
   },
   "source_contract": {
-    "construction": "Independent reconstruction of the displayed Brox direct-Lucas source",
-    "coordinate_detector_orders": [
-      1,
-      16,
-      52
+    "analytic_scope": "Fixed Gaussian ray fields over Q(i), split-prime norms and the stated conjugation-invariant class unions",
+    "construction": "Reviewed rational-projection-preserving reduction of the Version 5 source to 962 coordinates",
+    "external_source_qualifications": [
+      "Dodos-Kanellopoulos exact statement checked in author version",
+      "Kollar exact statement checked in author version",
+      "Inherited sieve-source qualifications retained"
     ],
-    "coordinate_detector_test_counts": [
-      10,
-      2,
-      4
-    ],
+    "final_manuscript_sha256": "06f98ff070139c3b6c60589c65867ceb4366b023f7960551abd52f85fa67e30c",
     "fixed_parameter": "S = 3^(2^27)",
     "fixed_parameter_is_coordinate": false,
-    "original_missing_program_recovered": false,
-    "scalar_orders": [
-      1,
-      1,
-      1,
-      1,
-      32,
-      32
-    ]
+    "frei_tinkova_theorem_assumed": false,
+    "lower_bound_scope": "Single polynomial, total degree and rational ground field",
+    "retained_methodological_attribution": true,
+    "review_limit": "Scoped source-level review and finite computation; no proof-assistant certificate or blanket closure of external proofs"
   },
-  "source_id": "brox-direct-lucas-independent-reconstruction-1272",
-  "verification_receipt": "handoff/releases/version5/REPRODUCTION.json",
-  "version": 5
+  "source_id": "version6-fixed-gaussian-962",
+  "state": "READY",
+  "support_files": [
+    "scripts/check_quartic962.py",
+    "scripts/quartic962_checks.cjs"
+  ],
+  "verification_receipt": "handoff/releases/version6/REPRODUCTION.json",
+  "version": 6
 }

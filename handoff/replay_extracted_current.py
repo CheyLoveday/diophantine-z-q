@@ -1,4 +1,4 @@
-"""Authenticate and extract a Version 5 current ZIP, then replay its quartic.
+"""Authenticate and extract a Version 5 or 6 current ZIP, then replay its quartic.
 
 All replay products stay in a separate new directory outside the extracted
 snapshot. The historical baseline is not extracted or rebuilt.
@@ -11,7 +11,7 @@ import subprocess
 import sys
 import zipfile
 
-from release_config import validate_reproduction_v5
+from release_config import validate_reproduction_v5, validate_reproduction_v6
 from verify_handoff import extract_verified
 
 
@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--extract', type=Path, required=True)
     parser.add_argument('--replay-output', type=Path, required=True)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--node', help='Node.js path for the Version 6 replay')
     args = parser.parse_args()
     destination = args.extract.resolve()
     replay = args.replay_output.resolve()
@@ -37,14 +38,20 @@ def main():
     # still performed by extract_verified before any extraction takes place.
     with zipfile.ZipFile(args.archive) as archive:
         manifest = json.loads(archive.read('MANIFEST.json'))
-        if manifest.get('baseline', {}).get('included') or 'current/quartics/quartic-1272/MANIFEST.json' not in archive.namelist():
-            raise ValueError('Use the Version 5 current-only archive for this replay')
+        release=json.loads(archive.read('current/handoff/release.json'))
+        version=release.get('version')
+        if manifest.get('baseline', {}).get('included') or version not in (5,6):
+            raise ValueError('Use a Version 5 or 6 current-only archive for this replay')
     archive_report = extract_verified(args.archive, destination, args.expected_plan_sha256, args.expected_archive_sha256)
     if archive_report['baseline_included']:
         raise ValueError('Use the current-only archive for this replay')
     current = destination/'current'
-    package = current/'quartics/quartic-1272'
-    command = [sys.executable, '-E', '-B', str(package/'reproduce.py'), '--out', str(replay)]
+    package = current/release['package']
+    entrypoint=current/'scripts/check_quartic962.py' if version==6 else package/'reproduce.py'
+    command = [sys.executable, '-E', '-B', str(entrypoint), '--out', str(replay)]
+    if args.node:
+        if version!=6:raise ValueError('--node is supported by the Version 6 wrapper only')
+        command.extend(['--node',args.node])
     args.report.parent.mkdir(parents=True, exist_ok=True)
     log = args.report.with_suffix('.log')
     with log.open('x', encoding='utf-8') as output:
@@ -54,13 +61,14 @@ def main():
     receipt_raw = (replay/'REPRODUCTION.json').read_bytes()
     receipt = json.loads(receipt_raw)
     manifest_hash = hashlib.sha256((package/'MANIFEST.json').read_bytes()).hexdigest()
-    polynomial_hash = hashlib.sha256((package/'compiler/translated/polynomial.json').read_bytes()).hexdigest()
-    validate_reproduction_v5(receipt, manifest_hash, polynomial_hash)
-    report = {'schema': 'quartic-v5-handoff-extracted-replay-v1', 'status': 'PASS',
+    polynomial_hash = hashlib.sha256((package/release['polynomial']).read_bytes()).hexdigest()
+    validator=validate_reproduction_v6 if version==6 else validate_reproduction_v5
+    validator(receipt, manifest_hash, polynomial_hash)
+    report = {'schema': f'quartic-v{version}-handoff-extracted-replay-v1', 'status': 'PASS',
               'archive': archive_report, 'reproductionReceiptSha256': hashlib.sha256(receipt_raw).hexdigest(),
               'packageManifestSha256': manifest_hash, 'polynomialSha256': polynomial_hash,
               'replayOutsideExtractedSnapshot': True, 'checks': [c['name'] for c in receipt['checks']]}
-    args.report.write_text(json.dumps(report, sort_keys=True, indent=2)+'\n', encoding='utf-8')
+    args.report.write_text(json.dumps(report, sort_keys=True, indent=2)+'\n', encoding='utf-8',newline='\n')
     print(json.dumps(report, indent=2))
 
 

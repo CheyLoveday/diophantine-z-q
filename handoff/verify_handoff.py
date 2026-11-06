@@ -7,7 +7,7 @@ import shutil
 import stat
 import re
 import zipfile
-from release_config import validate_release, validate_current, generated_state, generated_start
+from release_config import validate_release, validate_current, generated_state, generated_start, baseline_for_release
 
 BASELINE_SHA='827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b'
 BASELINE_BYTES=339860770
@@ -74,6 +74,7 @@ def verify(path,expected_plan_sha256=None,expected_archive_sha256=None):
         if plan['format']!='quartic-handoff-plan/v2' or plan['snapshot_commit']!=manifest['snapshot_commit']:
             raise ValueError('Wrong embedded snapshot plan')
         release=validate_release(plan['release'])
+        expected_baseline=baseline_for_release(release)
         planned={item['archive_path']:{key:item[key] for key in ('sha256','bytes')} for item in plan['files']}
         if len(planned)!=len(plan['files']):
             raise ValueError('Duplicate planned member')
@@ -89,10 +90,10 @@ def verify(path,expected_plan_sha256=None,expected_archive_sha256=None):
         baseline_path='baseline/'+plan['baseline']['filename']
         if baseline != dict(**plan['baseline'],included=baseline['included'],archive_path=baseline_path):
             raise ValueError('Baseline metadata differs from frozen plan')
-        if baseline['sha256']!=BASELINE_SHA or baseline['bytes']!=BASELINE_BYTES:
+        if baseline['sha256']!=expected_baseline['sha256'] or baseline['bytes']!=expected_baseline['bytes']:
             raise ValueError('Wrong historical baseline identity')
         if baseline['included']:
-            if expected[baseline['archive_path']]!={'sha256':BASELINE_SHA,'bytes':BASELINE_BYTES}:
+            if expected[baseline['archive_path']]!={key:expected_baseline[key] for key in ('sha256','bytes')}:
                 raise ValueError('Nested baseline bytes differ')
         elif baseline['archive_path'] in expected:
             raise ValueError('Unexpected nested baseline')
@@ -120,7 +121,7 @@ def verify(path,expected_plan_sha256=None,expected_archive_sha256=None):
             raise ValueError('Manifest history scope differs from frozen plan')
     return dict(status='PASS',archive_files=len(names),current_files=len(current),
                 snapshot_commit=manifest['snapshot_commit'],baseline_included=baseline['included'],
-                baseline_sha256=BASELINE_SHA,all_member_hashes_and_crc_verified=True,
+                baseline_sha256=expected_baseline['sha256'],all_member_hashes_and_crc_verified=True,
                 plan_sha256=plan_sha,externally_bound_plan=expected_plan_sha256 is not None,
                 externally_bound_archive=expected_archive_sha256 is not None,
                 scope='Payload integrity and exact current proof-package closure. Authenticate the snapshot using the published archive or plan SHA256.')

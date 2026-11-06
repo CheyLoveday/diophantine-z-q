@@ -14,7 +14,7 @@ import zipfile
 from datetime import date
 
 from verify_handoff import BASELINE_SHA, BASELINE_BYTES, safe_name, stream_hash, verify
-from release_config import validate_release, generated_state, generated_start
+from release_config import validate_release, generated_state, generated_start, baseline_for_release
 
 
 def encoded(value):
@@ -46,12 +46,14 @@ def main():
     if plan['format']!='quartic-handoff-plan/v2':
         raise ValueError('Wrong plan format')
     release=validate_release(plan['release'])
+    expected_baseline=baseline_for_release(release)
+    baseline_record={key:expected_baseline[key] for key in ('sha256','bytes')}
     if not re.fullmatch(r'[0-9a-f]{40}',plan['snapshot_commit']):
         raise ValueError('Expected a full immutable Git commit ID')
-    if plan['baseline']['sha256']!=BASELINE_SHA or plan['baseline']['bytes']!=BASELINE_BYTES:
+    if plan['baseline']['sha256']!=expected_baseline['sha256'] or plan['baseline']['bytes']!=expected_baseline['bytes']:
         raise ValueError('Wrong pinned baseline')
     with a.baseline.open('rb') as stream:
-        if stream_hash(stream)!={'sha256':BASELINE_SHA,'bytes':BASELINE_BYTES}:
+        if stream_hash(stream)!=baseline_record:
             raise ValueError('Supplied public baseline bytes differ')
     if a.output.exists():
         raise ValueError('Use a new output directory')
@@ -108,7 +110,7 @@ def main():
                 write(archive,i,item['archive_path'],io.BytesIO(raw),expected)
         baseline_path='baseline/'+plan['baseline']['filename']
         with a.baseline.open('rb') as source:
-            write(full,0,baseline_path,source,dict(sha256=BASELINE_SHA,bytes=BASELINE_BYTES),stored=True)
+            write(full,0,baseline_path,source,baseline_record,stored=True)
         current_files=sorted(wanted)
         for i,archive in enumerate(archives):
             included=i==0

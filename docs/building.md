@@ -1,8 +1,18 @@
 # Building and checking the research package
 
-Run these commands from the repository root. Python scripts use the standard library. The current quartic and the original large construction have separate checks. After extracting either Version 5 handoff, run these commands from its `current/` directory. See the [handoff guide](../handoff/README.md) for the archive layout and verification procedure.
+Run these commands from the repository root. Python scripts use the standard library. The current quartic and the original large construction have separate checks. After extracting either Version 6 handoff, run these commands from its `current/` directory. See the [handoff guide](../handoff/README.md) for the archive layout and verification procedure.
 
-## Current 1,272-variable quartic
+## Current 962-variable quartic
+
+The [Version 6 guide](quartic-962/README.md) describes the complete coefficient table, its fixed integer parameter, and the separate scopes of the finite checks and arithmetic proof. Run:
+
+```sh
+python -E -B scripts/check_quartic962.py --out build/quartic-962-reproduction
+```
+
+Use a new output directory outside the frozen package. Python 3.10 or later and Node.js 18 or later suffice; no third-party packages or network access are needed. Fourteen checks rebuild the source, replay 904 gates and 894 compiler operations, verify the rational coordinate identities, and compare seven artifacts byte for byte. They also check the 962-variable, degree-four, 55,409-monomial statistics. The program does not expand the huge fixed integer coefficients digit by digit.
+
+## Historical 1,272-variable baseline
 
 The [Version 5 package](../quartics/quartic-1272/README.md) contains its portable reproduction command and independent checks. Its complete table encodes the fixed integer coefficients using exact powers; reproduction does not expand those integers digit by digit. Use a fresh output directory as specified there.
 
@@ -30,13 +40,13 @@ python -E -B /path/to/writable-copy/verify_certificate.py /path/to/writable-copy
 
 This portable checker writes `verification.json` in the supplied directory. Use the copy to keep the released package's exact file inventory unchanged. The packaged original receipt is [evidence/final-verification.json](../quartics/quartic-4973/evidence/final-verification.json). The checker verifies exact projection-preserving equivalence to the pinned source and the complete integer expansion, including the variable count, degree and coefficient bound. These checks do not prove the source system's arithmetic characterization of the integers. The [Version 4 evidence](quartic-4973/README.md) records that separate argument and its review scope.
 
-## Version 5 manuscript
+## Version 6 manuscript
 
 ```sh
 python scripts/build_paper.py
 ```
 
-The script downloads a SHA-256-verified Tectonic 0.17.0 binary for the host platform, then builds a copy of [quartic_1272.tex](../quartic_1272.tex) in an isolated temporary directory. It uses the fixed `tlextras-2022.0r0` bundle URL and checks the selected bundle's fingerprint. Tectonic fetches the required support files. The first run requires network access; later runs reuse the local resource cache.
+The script downloads a SHA-256-verified Tectonic 0.17.0 binary for the host platform, then builds a copy of [quartic_962.tex](../quartic_962.tex) in an isolated temporary directory. It uses the fixed `tlextras-2022.0r0` bundle URL and checks the selected bundle's fingerprint. Tectonic fetches the required support files. The first run requires network access; later runs reuse the local resource cache.
 
 If Tectonic 0.17.0 is already installed:
 
@@ -44,13 +54,20 @@ If Tectonic 0.17.0 is already installed:
 python scripts/build_paper.py --tectonic /path/to/tectonic
 ```
 
-Results are written to `build/paper/`, including `quartic_1272.pdf`, `quartic_1272.log`, `compiler.log`, and `build-report.json`. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
+Results are written to `build/paper/`, including `quartic_962.pdf`, `quartic_962.log`, `compiler.log`, and `build-report.json`. The script fails on a compilation error, unresolved references or citations, or an unexpected bundle fingerprint. Typesetting warnings remain in the log.
 
-The build does not replace the checked-in PDF. Fixed engine, bundle and timestamp inputs improve reproducibility, but PDF byte identity across operating systems is not claimed. The old receipts under `docs/theorem-application-audit/` describe their frozen historical manuscript, not the Version 5 build.
+The build does not replace the checked-in PDF. Fixed engine, bundle and timestamp inputs improve reproducibility, but PDF byte identity across operating systems is not claimed. The old receipts under `docs/theorem-application-audit/` describe their frozen historical manuscript, not the Version 6 build.
 
 ## Manuscript inventories
 
-The [Version 5 inventory](quartic-1272/README.md) gives its current validation command and acceptance evidence. It adds the new theorem applications and binds retained applications to their exact Version 5 source spans. The following checks also remain required for the historical baselines.
+The [Version 6 inventory](quartic-962/README.md) binds the current manuscript to its source applications, exact reviewed fragments, and historical predecessors:
+
+```sh
+python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex
+python -E -B docs/quartic-962/test_inventory.py
+```
+
+The following checks remain required for the historical baselines. Their older publication-status records describe those versions, not the replacement proof in Version 6.
 
 ```sh
 python -E -B docs/quartic-1272/inventory.py validate --repo . --manuscript quartic_1272.tex

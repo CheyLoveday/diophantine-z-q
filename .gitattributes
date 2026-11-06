@@ -16,3 +16,7 @@ docs/quartic-1272-validation/** -text
 handoff/** -text
 research/** -text
 "October 11 Manuscript/README.md" text eol=lf
+docs/quartic-962/** -text
+docs/quartic-962-validation/** -text
+scripts/check_quartic962.py -text
+scripts/quartic962_checks.cjs -text

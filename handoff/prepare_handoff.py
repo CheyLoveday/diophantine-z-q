@@ -13,7 +13,7 @@ import re
 import subprocess
 
 from verify_handoff import safe_name, BASELINE_SHA, BASELINE_BYTES
-from release_config import validate_release, validate_current
+from release_config import validate_release, validate_current, baseline_for_release
 
 BAD_PARTS={'.git','.lake','node_modules','__pycache__','.aws','.codex','conversations','transcripts'}
 BAD_NAMES={'auth.json','credentials.json','cookies.json','cookies.sqlite','token.json','tokens.json',
@@ -97,8 +97,7 @@ def main():
         raise ValueError('Colliding current and history names')
     plan=dict(format='quartic-handoff-plan/v2',snapshot_commit=commit,files=files,release=release,
               verification_receipt=a.verification_receipt,
-              baseline=dict(filename='z-in-q-research-handoff-2026-11-04-r2.zip',sha256=BASELINE_SHA,bytes=BASELINE_BYTES,
-                            url='https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04-r2/z-in-q-research-handoff-2026-11-04-r2.zip'),
+              baseline=baseline_for_release(release),
               scope='Complete public commit plus explicitly selected project mathematical history; raw private archives and conversations are not included',
               scan='New payload bytes and gzip text checked for credential/dialogue patterns; unchanged public baseline is not rescanned')
     a.output.parent.mkdir(parents=True,exist_ok=True)

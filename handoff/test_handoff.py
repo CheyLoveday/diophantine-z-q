@@ -13,6 +13,7 @@ from prepare_handoff import DIALOGUE, scan
 from verify_handoff import safe_name, verify
 from test_release import run_tests as release_tests
 from test_release_v5 import run_tests as release_v5_tests
+from test_release_v6 import run_tests as release_v6_tests
 
 
 def reject(label,function,message):
@@ -80,6 +81,7 @@ def main():
         tests.append(reject('malformed external archive hash',lambda:verify(legacy,expected_archive_sha256='bad'),'Invalid expected archive'))
     tests.extend(release_tests())
     tests.extend(release_v5_tests())
+    tests.extend(release_v6_tests())
     print(json.dumps(dict(status='PASS',small_negative_cases=len(tests),cases=tests,
                          runtime_dialogue_pattern_unchanged=True,self_sources_scan_passed=self_sources),indent=2))
 

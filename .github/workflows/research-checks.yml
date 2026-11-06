@@ -13,6 +13,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  quartic962:
+    name: Version 6 quartic reproduction and inventory
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.14'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.22.1'
+      - run: python scripts/check_quartic962.py --out build/quartic-962-reproduction
+      - run: python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex --expected-input-sha256 b7a42a50809c85ef14a9380a15576ef0170bad571ef713c329e31f594f8c12cf
+      - run: python -E -B -m unittest discover -s docs/quartic-962 -p test_inventory.py -v
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: quartic-962-reproduction
+          path: build/quartic-962-reproduction/
   quartic1272:
     name: Reconstructed quartic and Version 5 inventory
     runs-on: ubuntu-24.04

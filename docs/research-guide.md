@@ -1,10 +1,14 @@
 # Research guide
 
-The current manuscript is [*Z is Diophantine in Q*, Version 5](../quartic_1272.pdf), dated November 6, 2026, with [TeX source](../quartic_1272.tex). It contains the original large polynomial, the retained [4,973-variable quartic](../quartics/quartic-4973/README.md), and the reconstructed [1,272-variable quartic](../quartics/quartic-1272/README.md).
+The current manuscript is [*Z is Diophantine in Q*, Version 6](../quartic_962.pdf), dated November 6, 2026, with [TeX source](../quartic_962.tex). It contains the original large polynomial, the retained [4,973-variable quartic](../quartics/quartic-4973/README.md), and the reconstructed [962-variable quartic](quartic-962/README.md).
 
-Start with the [Version 5 theorem-application inventory](quartic-1272/README.md). It records exact source versions, hypotheses, conventions and manuscript bindings, including the new prime-pattern argument and its publication-status qualifications. The finite polynomial checks and the arithmetic proof have separate scopes. The [build instructions](building.md) explain how to reproduce the artifacts.
+Start with the [Version 6 theorem-application inventory](quartic-962/README.md). It records exact source versions, hypotheses, conventions and manuscript bindings, including the new prime-pattern argument and its publication-status qualifications. The finite polynomial checks and the arithmetic proof have separate scopes. The [build instructions](building.md) explain how to reproduce the artifacts.
 
-The [research handoff guide](../handoff/README.md) identifies the Version 5 full and current-only archives. Both contain the public snapshot and selected research notes, with no conversational transcript. The full archive also embeds the unchanged November 4 baseline.
+The [research handoff guide](../handoff/README.md) identifies the Version 6 full and current-only archives. Both contain the public snapshot and selected research notes, with no conversational transcript. The full archive also embeds the unchanged Version 5 full archive, with its earlier historical baseline.
+
+## Version 6 research
+
+The [new research collection](../research/version6/README.md) preserves the quartic optimization, degree-four lower bound, Gaussian analytic replacement, independent reviews, and source inventories. The current manuscript reproduces the required Gaussian special case rather than invoking Frei–Tinková as a theorem. The degree obstruction is attributed to the agentic notes; the README supplies the collective contributor credit. The proof, finite certificates and incomplete formalization have distinct review scopes.
 
 ## November 6 research update
 
@@ -26,7 +30,7 @@ The archived November 5 TeX source has descriptive labels such as `thm:target`, 
 
 ## Map of the argument
 
-Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 5.
+Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 6.
 
 The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this Git checkout. Some files predate the archived November 5 manuscript; compare their scope with that revision and later audits.
 

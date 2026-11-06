@@ -1,11 +1,11 @@
-# Version 5 release notes
+# Version 6 handoff
 
-Version 5 provides an independently reconstructed quartic with 1,272 total rational coordinates, including the input, and 1,271 existential witnesses. Its 1,229 quadratic residuals give a degree-four polynomial with 48,001 coordinate monomials after the translated anchor. The primitive coefficient height is `64*3^(2^28)`.
+The finite construction has 962 coordinates including the input, 919 quadratic residuals, and 55,409 quartic monomials. Its primitive coefficient content is one and its coefficient height is `64*3^(2^28)`. The frozen source package includes the reviewed transformations from the Version 5 source.
 
-The package supplies the source builder, frozen source equations, complete coefficient tables, transformation certificates, independent checkers, source reviews, identity checks, an independent evaluator, a full file manifest, and a portable reproduction command. The dependency inventory distinguishes exact finite checks from the external arithmetic inputs needed for the integer-defining claim.
+The portable wrapper verifies all fourteen recorded stages, including exact source reproduction, certificate checks, local identities, coordinate and monomial counts, and equality with the frozen coefficient table. The handoff also records the lower-bound audit, optimization history, analytic proof work, source hashes and independent reviews.
 
-This is a reconstruction from Brox's displayed formulas. It does not recover his unavailable original 1,315-coordinate program or coefficient table. The Version 4 manuscript and 4,973-variable package, earlier quartics, and original construction are preserved at their existing paths.
+The source inventory and final independent reviews bind the manuscript and authored register. The archive builder requires a `READY` descriptor and an immutable source snapshot. The public tag is `quartic-962-version-6`, with separate full and current-only ZIP assets. Their final hashes and included commit are recorded in the release build receipt.
 
-The `quartic-1272-version-5` release supplies `z-in-q-version5-current-handoff.zip` and `z-in-q-version5-full-handoff.zip`. Both contain the complete recorded public snapshot and selected mathematical history. The full archive also contains the unchanged November 4 revision-2 historical baseline. Existing release assets remain unchanged.
+The analytic review accepts removal of the assumed Frei-Tinkova theorem for the stated fixed Gaussian ray-field application. The final assembly review preserves that scope through the attribution and display-layout changes. The Dodos-Kanellopoulos and Kollar author-version qualifications and the inherited sieve-source qualifications remain explicit. These scoped reviews do not certify every external proof or complete the Lean formalization.
 
-Use the accompanying checksums and frozen-plan digest to authenticate the archives. The build and extraction receipts describe the exact bytes tested. A successful coefficient replay does not discharge the stated source arithmetic assumptions or complete the Lean formalization.
+Earlier quartics, the original construction, and prior release records remain available. The full archive includes the unchanged Version 5 full handoff, which retains the earlier revision-2 baseline.

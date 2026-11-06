@@ -20,6 +20,8 @@ def relative(name):
     return name
 
 def validate_release(release):
+    if release.get('version') == 6:
+        return validate_release_v6(release)
     if release.get('version') == 5:
         return validate_release_v5(release)
     if release.get('format') != 'quartic-handoff-release/v1':
@@ -98,6 +100,8 @@ def compare_reproduced_certificate(frozen,regenerated,expected_regenerated_sha):
 
 def validate_current(read, names, release, receipt_path):
     """read takes a repository-relative name; names is the full Git inventory."""
+    if release.get('version') == 6:
+        return validate_current_v6(read, names, release, receipt_path)
     if release.get('version') == 5:
         return validate_current_v5(read, names, release, receipt_path)
     validate_release(release); root = release['package']+'/'
@@ -171,10 +175,13 @@ def generated_state(plan,included):
 def generated_start(plan,included):
     release=validate_release(plan['release']);baseline=plan['baseline']
     baseline_path='baseline/'+baseline['filename']
-    current_note = ('The selected construction is the independently reconstructed 1,272-coordinate quartic. Its complete source, certificates, reviews and manifest are included. The Version 4 manuscript and package and the original construction remain available at their historical paths.'
+    current_note = ('The selected construction is the 962-coordinate quartic. Its complete source, certificates, optimization history, lower-bound proof, analytic replacement proof and independent reviews are included. Earlier constructions remain available at their historical paths.'
+                    if release['version'] == 6 else
+                    'The selected construction is the independently reconstructed 1,272-coordinate quartic. Its complete source, certificates, reviews and manifest are included. The Version 4 manuscript and package and the original construction remain available at their historical paths.'
                     if release['version'] == 5 else
                     'The selected three-mode, target-two, tangent, shared-square and first-norm source defines Version 4. Optional scalar/J0 fusion and unadopted alternatives remain historical research.')
-    replay_path = ('README.md' if release['version'] == 5 else 'reproducibility/README.md')
+    replay_path = ('README.md' if release['version'] in (5, 6) else 'reproducibility/README.md')
+    replay_note = ('For Version 6 run `python scripts/check_quartic962.py --out NEW_DIRECTORY` from the extracted `current/` directory. Keep the output outside the extracted snapshot. The wrapper requires Python 3.10+ and Node.js 18+.\n' if release['version']==6 else '')
     return f'''# Version {release['version']} public research handoff
 
 Release date: {release['date']}.
@@ -207,7 +214,7 @@ plan digest from the independently obtained release build receipt.
 Archive integrity is separate from the mathematical and computational reviews.
 The exact quartic replay and fresh reproduction instructions are in
 `current/{release['package']}/{replay_path}`.
-The main Lean theorem remains unproved; the retained helper sources do not change that status.
+{replay_note}The main Lean theorem remains unproved; the retained helper sources do not change that status.
 '''.encode('utf-8')
 
 
@@ -357,3 +364,174 @@ def validate_reproduction_v5(receipt, manifest_hash, polynomial_hash):
             any(c.get('status') != 'PASS' for c in checks)):
         raise ValueError('Version 5 replay checks incomplete')
     return receipt
+
+
+def baseline_for_release(release):
+    if release.get('version') == 6:
+        return {'filename': 'z-in-q-version5-full-handoff.zip', 'bytes': 382435413,
+                'sha256': '8bca6f77f4721140c3d9db0d518595472a463a58f04f3efcf14173a9cf0ff236',
+                'url': 'https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-1272-version-5/z-in-q-version5-full-handoff.zip'}
+    return {'filename': 'z-in-q-research-handoff-2026-11-04-r2.zip', 'bytes': 339860770,
+            'sha256': '827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b',
+            'url': 'https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04-r2/z-in-q-research-handoff-2026-11-04-r2.zip'}
+
+
+V6_METRICS = {'variables': 962, 'witnesses': 961, 'rows': 919, 'monomials': 55409,
+              'degree': 4, 'primitive_content': '1', 'coefficient_height': '64*3^(2^28)'}
+V6_CHECKS = ['package_integrity', 'serialization_policy', 'baseline_source_bindings',
+             'accepted_equivalence_evidence', 'compiler_selftest', 'build', 'compile_translated',
+             'independent_certificate_check', 'emitted_quotient_semantics', 'point_chart_equivalence',
+             'emitted_polynomial_circuits', 'anchor_equivalence', 'frozen_artifact_identity',
+             'fixed_integer_statistics']
+V6_PACKAGE_REQUIRED = {'README.md', 'MANIFEST.json', 'reproduce.py', 'build_source.cjs',
+    'polynomial.json', 'compiled-ir.json', 'compiler-report.json', 'coordinate-map.json',
+    'raw-ir.json', 'raw-translated-ir.json', 'reduction-certificate.json', 'transformations.json',
+    'PROOF.md', 'compiler/compile_ir.py', 'checker/checker.cjs', 'baseline/MANIFEST.json',
+    'baseline/build_source.cjs'}
+
+
+def validate_release_v6(release):
+    if release.get('format') != 'quartic-handoff-release/v3' or release.get('state') != 'READY':
+        raise ValueError('Version 6 is not a frozen READY release descriptor')
+    required = {'version': 6, 'release_tag': 'quartic-962-version-6', 'manuscript': 'quartic_962.tex',
+                'pdf': 'quartic_962.pdf', 'package': 'quartics/quartic-962',
+                'inventory': 'docs/quartic-962/README.md', 'package_manifest': 'MANIFEST.json',
+                'polynomial': 'polynomial.json'}
+    if any(release.get(k) != v for k, v in required.items()):
+        raise ValueError('Wrong Version 6 release identity or paths')
+    date.fromisoformat(release['date'])
+    if release.get('expected') != V6_METRICS:
+        raise ValueError('Wrong Version 6 finite counts')
+    if release.get('assets') != {'full': 'z-in-q-version6-full-handoff.zip',
+                                  'current': 'z-in-q-version6-current-handoff.zip'}:
+        raise ValueError('Wrong Version 6 asset names')
+    if not isinstance(release.get('source_contract'), dict) or not release['source_contract']:
+        raise ValueError('Missing final Version 6 source contract')
+    if not isinstance(release.get('source_id'), str) or not release['source_id']:
+        raise ValueError('Missing Version 6 source identifier')
+    if 'PENDING_' in json.dumps([release['source_contract'],release['source_id']]):
+        raise ValueError('Unresolved Version 6 source contract')
+    if release.get('support_files') != ['scripts/check_quartic962.py','scripts/quartic962_checks.cjs']:
+        raise ValueError('Missing Version 6 portable replay entrypoints')
+    for name in ('verification_receipt', 'research_manifest','inventory_input','assembly_receipt'):
+        relative(release[name])
+    if release['inventory_input']!='docs/quartic-962/new-applications.json':
+        raise ValueError('Wrong Version 6 authored inventory path')
+    if not re.fullmatch('[0-9a-f]{64}',release.get('inventory_input_sha256','')):
+        raise ValueError('Missing Version 6 authored inventory pin')
+    if not re.fullmatch('[0-9a-f]{64}', release.get('polynomial_sha256', '')):
+        raise ValueError('Missing Version 6 polynomial pin')
+    if set(release.get('review_files', {})) != {'analytic-proof', 'lower-bound', 'optimization', 'inventory'}:
+        raise ValueError('Incomplete Version 6 review inventory')
+    for path in release['review_files'].values(): relative(path)
+    for key in ('snapshot_pins', 'preserved_pins'):
+        mapping=release.get(key)
+        if not isinstance(mapping, dict) or not mapping:
+            raise ValueError('Missing Version 6 pin map: '+key)
+        for path, record in mapping.items():
+            relative(path)
+            if (set(record) != {'bytes', 'sha256'} or type(record['bytes']) is not int or record['bytes'] < 0 or
+                not isinstance(record['sha256'], str) or not re.fullmatch('[0-9a-f]{64}', record['sha256'])):
+                raise ValueError('Invalid Version 6 file pin')
+    return release
+
+
+def validate_reproduction_v6(receipt, manifest_hash, polynomial_hash):
+    if receipt.get('schema') != 'quartic-962-reproduction-v1' or receipt.get('status') != 'PASS':
+        raise ValueError('Version 6 fresh reproduction did not pass')
+    if receipt.get('packageManifestSha256') != manifest_hash:
+        raise ValueError('Version 6 replay belongs to another package')
+    if (receipt.get('frozenPolynomialSha256') != polynomial_hash or
+            receipt.get('rebuiltPolynomialSha256') != polynomial_hash or receipt.get('byteIdentical') is not True):
+        raise ValueError('Version 6 exact table replay failed')
+    expected={'variablesIncludingInput':962, 'existentialWitnesses':961, 'degree':4,
+              'monomials':55409, 'quadraticResiduals':919, 'primitiveContent':'1', 'height':'64*3^(2^28)'}
+    if receipt.get('result') != expected:
+        raise ValueError('Version 6 replay counts differ')
+    checks=receipt.get('checks', [])
+    if ([c.get('name') for c in checks] != V6_CHECKS or
+            any(c.get('status') != 'PASS' for c in checks) or receipt.get('requiredChecks') != V6_CHECKS):
+        raise ValueError('Version 6 replay check inventory is incomplete')
+    return receipt
+
+
+def validate_current_v6(read, names, release, receipt_path):
+    validate_release_v6(release)
+    names=set(names); root=release['package']+'/'
+    if receipt_path != release['verification_receipt']:
+        raise ValueError('Wrong Version 6 replay receipt path')
+    if json.loads(read('handoff/release.json')) != release:
+        raise ValueError('Version 6 descriptor is not committed')
+    pins=release['snapshot_pins']
+    required={release['manuscript'], release['pdf'], release['inventory'], receipt_path,
+              release['inventory_input'],release['assembly_receipt'],
+              'research/version6/README.md',
+              release['research_manifest']} | set(release['review_files'].values()) | set(release['support_files'])
+    required |= {root+p for p in V6_PACKAGE_REQUIRED}
+    if not required <= set(pins) or not set(pins) <= names:
+        raise ValueError('Missing Version 6 pinned source, proof or review')
+    for prefix in (root, 'docs/quartic-962/', 'docs/quartic-962-validation/', 'research/version6/'):
+        if {n for n in names if n.startswith(prefix)} != {n for n in pins if n.startswith(prefix)}:
+            raise ValueError('Version 6 pin map is not complete for '+prefix)
+    for mapping in (pins,release['preserved_pins']):
+        for path,expected in mapping.items():
+            raw=read(path)
+            if expected != {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}:
+                raise ValueError('Version 6 current or preserved file changed: '+path)
+    if not read(release['pdf']).startswith(b'%PDF') or b'Version 6' not in read(release['manuscript']):
+        raise ValueError('Wrong Version 6 manuscript or PDF')
+    manuscript_hash=pins[release['manuscript']]['sha256']
+    inventory_hash=pins[release['inventory_input']]['sha256']
+    if inventory_hash!=release['inventory_input_sha256']:
+        raise ValueError('Wrong Version 6 authored inventory hash')
+    inventory_review=json.loads(read(release['review_files']['inventory']))
+    if (inventory_review.get('status')!='accepted_scoped_inventory_and_evidence_binding' or
+            inventory_review.get('candidate_sha256')!=manuscript_hash or
+            inventory_review.get('authored_register_sha256')!=inventory_hash or
+            inventory_review.get('checks',{}).get('status')!='passed'):
+        raise ValueError('Version 6 independent inventory review is stale or incomplete')
+    assembly=json.loads(read(release['assembly_receipt']))
+    if (assembly.get('status')!='accepted_assembly_fidelity' or
+            assembly.get('candidate_sha256')!=manuscript_hash):
+        raise ValueError('Version 6 assembly review is stale or incomplete')
+    manifest_raw=read(root+'MANIFEST.json'); manifest=json.loads(manifest_raw)
+    if manifest.get('schema') != 'quartic962-frozen-v1':
+        raise ValueError('Wrong 962 package manifest schema')
+    expected_counts={'coordinates':962,'activeCoordinates':962,'residuals':919,
+                     'ordinaryCoordinateMonomials':55409,'degree':4}
+    if any(manifest.get('counts',{}).get(k) != v for k,v in expected_counts.items()):
+        raise ValueError('Wrong frozen 962 package counts')
+    if (manifest.get('baselineManifestSha256') != 'aa7f04c54e8b778a419a1be8d24e0b3a9a8540c50202d41815864a156d6985c6' or
+            manifest.get('baselinePolynomialSha256') != '02e4771ba6e6c2abc749e33e8440cc256939f48005d5102fba7d9853489c8586'):
+        raise ValueError('Wrong 962 predecessor source pins')
+    package_names={n[len(root):] for n in names if n.startswith(root)}
+    if set(manifest['files']) != package_names-{'MANIFEST.json'}:
+        raise ValueError('Incomplete 962 package manifest')
+    for path,digest in manifest['files'].items():
+        if pins[root+relative(path)]['sha256'] != digest:
+            raise ValueError('962 package manifest disagrees with release pins')
+    polynomial_hash=pins[root+release['polynomial']]['sha256']
+    if polynomial_hash != release['polynomial_sha256']:
+        raise ValueError('Wrong 962 polynomial pin')
+    research=json.loads(read(release['research_manifest']))
+    if research.get('schema') != 'quartic-v6-research-selection-v1' or research.get('status') != 'FROZEN':
+        raise ValueError('Version 6 research selection is not frozen')
+    entries=research.get('files',[])
+    if {e['group'] for e in entries} != {'analytic-proof','lower-bound','optimization'}:
+        raise ValueError('Missing a required Version 6 research group')
+    if len({e['source'] for e in entries}) != len(entries):
+        raise ValueError('Duplicate Version 6 source entry')
+    if {e['group'] for e in entries if e['decision']=='include'} != {'analytic-proof','lower-bound','optimization'}:
+        raise ValueError('A Version 6 research group has no included evidence')
+    included={e['repositoryPath'] for e in entries if e['decision']=='include'}
+    if included | {'research/version6/README.md'} != {n for n in pins if n.startswith('research/version6/')}:
+        raise ValueError('Research selection does not match the pinned research tree')
+    for entry in entries:
+        if entry['decision'] not in {'include','covered-by-package','exclude-generated',
+                                      'exclude-replay','exclude-orchestration','external-reference'}:
+            raise ValueError('Unresolved research selection entry')
+        if entry['decision'] in {'include','covered-by-package'}:
+            path=relative(entry['repositoryPath'])
+            if pins.get(path) != {k:entry[k] for k in ('bytes','sha256')}:
+                raise ValueError('Research entry is not pinned in the current snapshot: '+path)
+    return validate_reproduction_v6(json.loads(read(receipt_path)),hashlib.sha256(manifest_raw).hexdigest(),polynomial_hash)
