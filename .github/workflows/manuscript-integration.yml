@@ -43,10 +43,12 @@ jobs:
           ulimit -v 2097152
           python -E -B quartics/quartic-9625/reproducibility/run.py --output build/quartic-reproduction --stage-seconds 180
       - name: Check historical audit and current manuscript bindings
-        if: inputs.mode != 'visual' && inputs.mode != 'paper'
+        if: inputs.mode != 'visual'
         run: |
           python docs/theorem-application-audit/validate.py
-          python docs/quartic-9625/validate.py
+          python docs/quartic-9625/validate.py --repo . --output build/quartic-inventory.json
+          python docs/quartic-9625/test_inventory.py --repo . --report build/quartic-inventory-negative.json
+          python handoff/test_handoff.py > build/handoff-tests.json
       - name: Compile the exact Version 3 manuscript
         if: inputs.mode != 'visual'
         run: python scripts/build_paper.py
@@ -75,6 +77,7 @@ jobs:
           path: |
             build/quartic-reproduction/
             build/quartic-inventory.json
+            build/quartic-inventory-negative.json
             build/paper/
             build/pdf-review/
             build/handoff-tests.json

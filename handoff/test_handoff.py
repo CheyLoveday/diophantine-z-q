@@ -11,6 +11,7 @@ import zipfile
 from build_handoff import validate_git_plan
 from prepare_handoff import DIALOGUE, scan
 from verify_handoff import safe_name, verify
+from test_release import run_tests as release_tests
 
 
 def reject(label,function,message):
@@ -24,6 +25,7 @@ def reject(label,function,message):
 
 
 def main():
+    if not __debug__:raise RuntimeError('Assertions required')
     tests=[]
     # Freeze the runtime pattern and flags from the original scanner policy.
     assert hashlib.sha256(DIALOGUE.pattern).hexdigest()=='d3017908981af04c663a0b97f3d160719e717b585221fa930ac1945b55c18d71'
@@ -69,6 +71,11 @@ def main():
                         info.external_attr=mode<<16
                     archive.writestr(info,b'target')
             tests.append(reject(name,lambda path=path:verify(path),message))
+        legacy=root/'legacy.zip'
+        with zipfile.ZipFile(legacy,'w') as archive:
+            archive.writestr('MANIFEST.json',json.dumps({'format':'quartic-12504-public-handoff/v1'}))
+        tests.append(reject('legacy plan-only authentication',lambda:verify(legacy,'0'*64),'Legacy Version 2 requires'))
+    tests.extend(release_tests())
     print(json.dumps(dict(status='PASS',small_negative_cases=len(tests),cases=tests,
                          runtime_dialogue_pattern_unchanged=True,self_sources_scan_passed=self_sources),indent=2))
 

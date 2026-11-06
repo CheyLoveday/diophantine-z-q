@@ -1,79 +1,17 @@
-# Research state at the Version 2 handoff
+# Version 3 research orientation
 
-The current result is the exact quartic in
-`current/quartics/quartic-12504/`. It has 12,504 total variables, including
-input 0, and 12,503 rational witnesses. Its 11,939 quadratic residuals have
-weight one. The expanded polynomial has 135,721 nonzero monomials, degree
-four, and maximum absolute coefficient 685783949153203534233601, below 2^80.
-The coefficient-table digest is
-`7f5aa3117af82a0b323f0a4e74a18599204f5540408106d3ce99612b5ed830ca`.
+Date: November 6, 2026.
 
-The named source is
-`reciprocal64-beta16-compressed-s1-b5e836d77643`. Its reciprocal logarithms
-use precision 64 except for the designated beta tests, which use 16.
-It retains 24 anchor squarings, scalar orders 1, 1, 1, 1, 48, 48, and 41
-root comparison calls. Compressed primary charts are part of the audited
-source. These parameters distinguish it from the unadopted experiments
-preserved below.
+Read the current manuscript and `current/docs/quartic-9625/README.md` first. The exact polynomial, source, certificate, verifier and reproduction instructions are in `current/quartics/quartic-9625/`. `CURRENT_STATE.json` records the immutable public snapshot and exact current counts.
 
-The final certificate records 205 norm-inverse replacements, 41 redundant
-inverse removals, six chart replacements, two ordinate removals, 42 parity
-replacements, one batch-absorption operation, 366 linear operations, 800
-eliminations, and four shears. The independent checker verifies every
-operation against the current equations and variable occurrences and then
-expands the full sum of squares. It preserves the rational input projection
-in both directions. The source audit and arithmetic proof reviews address
-different parts of the result and retain their own scopes.
+Version 3 releases the 9,625-variable selective-beta construction. Its arithmetic changes are height exponent 19, 37 rational-target contacts, high logarithm precision 40, beta precision 12, 25 anchor squarings and scalar orders `[1,1,1,1,32,32]`. The eight A-coordinate contacts use beta-only comparisons. The other 29 contacts retain full comparisons. This distinction does not change the root contact formulas or the common auxiliary point.
 
-The current snapshot includes the fresh full-reproduction receipt referenced
-by `CURRENT_STATE.json`. Reproduction reruns the original finite arithmetic
-checks, reciprocal checks, complete source audit, 38 malformed-source tests,
-five resource-error regressions, and 30 malformed-certificate tests. It
-regenerates the source and final quartic, with independent replay after each
-reduction stage. Read the actual receipt for the environment and timing.
+The selected combined proof and arithmetic review are in `history/version3/precision/` and `history/version3/arithmetic-audit/`. The exact source and artifact review is in `history/version3/parity/beta-source-review/`. Earlier height and contact derivations are in `history/preceding-work/`. Original notes sometimes describe their then-pending review or implementation status; the final source bindings and release records state which result is current.
 
-## Earlier work
+Three-mode and Jacobi constructions, along with tangent and anchor alternatives, are separate research in `history/not-in-version3/`. They are included to support further work. They are not part of the released source, its witness count or its certificate. Do not add savings from different experiments or substitute a differently audited source while retaining this release's artifact hashes.
 
-The nested public November 4 revision-2 archive preserves the original large
-construction, earlier manuscripts, reviews, and incomplete formalization.
-Its `current/` tree is historical. The separately selected
-`history/earlier-quartic/ALGEBRA.md` describes the later conversion from the
-old 15,671-witness source and the original sparsity search. Its source hash,
-targets, test suite and resource policy belong to that older work. It does
-not describe the current source or replace the current checks.
+The next publication threshold is fewer than 5,000 total variables, including the input. Only a result meeting that strict threshold is a candidate for Version 4. Intermediate improvements do not replace the fixed 9,625-variable Version 3 release.
 
-The selected reciprocal, chart, parity and batch notes explain intermediate
-ideas used by Version 2. They are preserved unchanged. Statements that an
-audit or run was pending describe the date of that note. Current receipts
-and source identities settle the present computational status. No older
-review is silently extended to a different source hash.
+The current certificate proves exact rational projection equivalence between its pinned source system and the final integer quartic, and checks the complete expansion. The separate arithmetic proof identifies that projection with the integers, under its stated inherited theorem applications. These checks do not upgrade the external arithmetic assumptions or complete the separate Lean formalization.
 
-## Unadopted circuit experiments
-
-`history/unadopted-lowprecision/` preserves exact finite circuits for
-precisions 12, 40, 44 and 48, their independent polynomial checker and review,
-and the recorded 44-profile check summary. These circuits are not used by
-Version 2. Their isolated target counts and coefficient bounds are not a
-measurement of a new full quartic and do not justify changing its arithmetic
-parameters.
-
-To repeat that isolated experiment, use the original builder already
-preserved in the current package:
-
-```sh
-python -E -B history/unadopted-lowprecision/probe_lowprecision.py \
-  --builder current/quartics/quartic-12504/source/compiler/archive_build.py \
-  --out NEW_PROBE_DIRECTORY
-python -E -B history/unadopted-lowprecision/check_lowprecision.py NEW_PROBE_DIRECTORY
-```
-
-Run substantive computations under an external time and memory budget.
-Proposals involving height exponent 19, scalar order 32, 37 root comparisons,
-or different anchor and logarithm parameters remain outside the released
-source. Their appearance in research discussions is not acceptance of a
-different integer-defining system. This handoff does not contain a verified
-quartic below 12,504 variables.
-
-The main Lean theorem remains unproved. The current accepted helper snapshot
-and the historical formalization record are useful inputs to further work;
-neither is a complete formal proof of the manuscript.
+Version 3 is a collaboration using the collective agentic notes from Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, Caroline Terry. The October 11 manuscript's provenance remains distinct.

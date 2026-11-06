@@ -1,0 +1,50 @@
+{
+  "format": "quartic-handoff-release/v1",
+  "version": 3,
+  "date": "2026-11-06",
+  "release_tag": "quartic-9625-version-3",
+  "assets": {
+    "full": "z-in-q-version3-full-handoff.zip",
+    "current": "z-in-q-version3-current-handoff.zip"
+  },
+  "manuscript": "quartic_9625.tex",
+  "pdf": "quartic_9625.pdf",
+  "package": "quartics/quartic-9625",
+  "verification": "evidence/stages/coordinates.json",
+  "inventory": "docs/quartic-9625/README.md",
+  "source_id": "selective-beta-k40-q12-a25-h19-s32-d68d86cdf995",
+  "next_release": {
+    "version": 4,
+    "strict_total_variable_upper_bound": 5000,
+    "total_includes_input": true,
+    "status": "Research target only; Version 3 remains the fixed 9625-variable release"
+  },
+  "expected": {
+    "variables": 9625,
+    "witnesses": 9624,
+    "rows": 9161,
+    "monomials": 82476,
+    "degree": 4,
+    "max_abs_coefficient": 685783949153203534233601,
+    "expanded_sha256": "6d67d45f3d615b7fd2242e3a9404dd9f5da570fc711a29ebe77f613e80ebbf99"
+  },
+  "source_contract": {
+    "ordinary_contacts": 37,
+    "full_comparisons": 29,
+    "beta_only_comparisons": 8,
+    "height_exponent": 19,
+    "high_precision": 40,
+    "beta_precision": 12,
+    "anchor_squarings": 25,
+    "scalar_orders": [1, 1, 1, 1, 32, 32]
+  },
+  "proof_pins": {
+    "polynomial.expanded.txt": "6d67d45f3d615b7fd2242e3a9404dd9f5da570fc711a29ebe77f613e80ebbf99",
+    "verify_certificate.py": "cf587ff9c28af5593e346eb7484d1713bd3f1ff77d28aa5ada06b2b92909d6f4",
+    "certificate.jsonl.gz": "8aaa2249eda6972c441d58b212ec64a53e1202d5e9f74ea4cbc53e7e3f71a0bd",
+    "source-residuals.jsonl.gz": "97b7bc300084afaefe9980f1feea760be8b4dedaf6eb788fcc4c3af440262579",
+    "source-entry.json": "8b45e266b0b4692320bb4f4924a2d3216d5f17fdc47a5c7fb9cdf6010a9a36f7",
+    "source-audit.json": "9020dcfdcfab0b05a1b26d9f73713369bde40dae3fe5f179fab77bafcc5f0b40",
+    "construction-map.json": "bcefd99b40537c59c422e9e44ebc6e444469ddb873909239e8a21d3e9d82f7f9"
+  }
+}

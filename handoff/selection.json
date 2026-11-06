@@ -1,145 +1,332 @@
 {
-  "format": "quartic-12504-handoff-selection/v1",
+  "format": "quartic-handoff-selection/v2",
   "files": [
     {
       "path": "history/earlier-quartic/ALGEBRA.md",
-      "original_path": "work/quartic-search-20261105/ALGEBRA.md",
-      "scope": "Historical conversion algebra; old source, not the current source",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/earlier-quartic/ALGEBRA.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Historical conversion algebra; old source, not the current source",
       "bytes": 5831,
       "sha256": "5ed46349c6fc96e3a1f5183b666ab8afee9c01837f7b340a60577a31541be029"
     },
     {
       "path": "history/reciprocal/RECIPROCAL_PROOF.md",
-      "original_path": "work/quartic-astra-search-20261105/precision-next/RECIPROCAL_PROOF.md",
-      "scope": "Reciprocal logarithm proof used in current source",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/reciprocal/RECIPROCAL_PROOF.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Reciprocal logarithm proof used in current source",
       "bytes": 17301,
       "sha256": "be5b08dd9ded743606d5c6a5fc869c4e9764575da49e5d80af13aca09950a98a"
     },
     {
       "path": "history/reciprocal/BETA16_INDEPENDENT_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/precision-next/BETA16_INDEPENDENT_REVIEW.md",
-      "scope": "Independent beta16 arithmetic review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/reciprocal/BETA16_INDEPENDENT_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Independent beta16 arithmetic review",
       "bytes": 11378,
       "sha256": "3555a3b6cefcb9de8187aa79e9881ce0b47aef66072c013a8642aab62f4ed671"
     },
     {
       "path": "history/reciprocal/INDEPENDENT_RECIPROCAL_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/precision-next/INDEPENDENT_RECIPROCAL_REVIEW.md",
-      "scope": "Independent reciprocal identity and nonvanishing review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/reciprocal/INDEPENDENT_RECIPROCAL_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Independent reciprocal identity and nonvanishing review",
       "bytes": 13131,
       "sha256": "13061be3b0b4f943adcf0873d903f58bc75106c2550f77f08a928bce9ebef0cb"
     },
     {
       "path": "history/reciprocal/COMPILER_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/precision-next/COMPILER_REVIEW.md",
-      "scope": "Source compiler review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/reciprocal/COMPILER_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Source compiler review",
       "bytes": 12510,
       "sha256": "d2abea8e364cd89860c3c9f5f4f73f40209abcee6a1c92174ee372bd30ebd222"
     },
     {
       "path": "history/source-audit/REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/reciprocal-source-audit/REVIEW.md",
-      "scope": "Source auditor proof and scope",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/source-audit/REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Source auditor proof and scope",
       "bytes": 6969,
       "sha256": "c2044f08f8faa4be0b1e5750636ce8e8e27f83a85775059912a2bf2f7f055b37"
     },
     {
       "path": "history/source-audit/INDEPENDENT_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/reciprocal-source-audit/INDEPENDENT_REVIEW.md",
-      "scope": "Independent source auditor review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/source-audit/INDEPENDENT_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Independent source auditor review",
       "bytes": 11116,
       "sha256": "0bfa4f057888f50fa2729399f584c376b2070513705956b9af490871e4328ee7"
     },
     {
       "path": "history/charts/PROOF.md",
-      "original_path": "work/quartic-astra-search-20261105/charts/PROOF.md",
-      "scope": "Exact chart and ordinate solution maps",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/charts/PROOF.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Exact chart and ordinate solution maps",
       "bytes": 6742,
       "sha256": "f122f0c3b36f78f945a912ebbd2d160e64807699e9766ab2d496fdb371430c0c"
     },
     {
       "path": "history/charts/INDEPENDENT_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/charts/INDEPENDENT_REVIEW.md",
-      "scope": "Independent chart rule review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/charts/INDEPENDENT_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Independent chart rule review",
       "bytes": 10636,
       "sha256": "531b8b74af50cf294e77c190b5cf731cc0a8f5be4f1ab9851f366494328be2ae"
     },
     {
       "path": "history/parity/PROOF.md",
-      "original_path": "work/quartic-astra-search-20261105/parity/PROOF.md",
-      "scope": "Exact parity rule proof",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/parity/PROOF.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Exact parity rule proof",
       "bytes": 4187,
       "sha256": "685f4aa474f2a6297415b60d1a91d2ad8c1f5c2e00671b504e88b4ad286b3f9f"
     },
     {
       "path": "history/batching/PROOF.md",
-      "original_path": "work/quartic-astra-search-20261105/batching/PROOF.md",
-      "scope": "Exact batch absorption solution maps",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/batching/PROOF.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Exact batch absorption solution maps",
       "bytes": 6678,
       "sha256": "60da183982c431c5a0adcaf3ad0516ae6f4b41f2927d8bbca7a68a74f0202840"
     },
     {
       "path": "history/batching/INDEPENDENT_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/batching/INDEPENDENT_REVIEW.md",
-      "scope": "Independent batch absorption review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/batching/INDEPENDENT_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. Independent batch absorption review",
       "bytes": 7731,
       "sha256": "9652aa8e858543a98b7e352cf37631fdca0b5ff1cafce6131946473c802c0ad6"
     },
     {
       "path": "history/unadopted-lowprecision/PROOF.md",
-      "original_path": "work/quartic-astra-search-20261105/lowprecision-next/PROOF.md",
-      "scope": "UNADOPTED finite circuit identities; not the Version2 source",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/unadopted-lowprecision/PROOF.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. UNADOPTED finite circuit identities; not the Version2 source",
       "bytes": 5005,
       "sha256": "6b5e6e6c42e9cc3e6f8c3e0863c42ec97a165a692d5ce13f71a8aed709169592"
     },
     {
       "path": "history/unadopted-lowprecision/INDEPENDENT_REVIEW.md",
-      "original_path": "work/quartic-astra-search-20261105/lowprecision-next/INDEPENDENT_REVIEW.md",
-      "scope": "UNADOPTED circuit checker review",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/unadopted-lowprecision/INDEPENDENT_REVIEW.md",
+      "scope": "Historical Version 2 selection, preserved unchanged. UNADOPTED circuit checker review",
       "bytes": 9831,
       "sha256": "ef88851a1699e5c5936f14042e64a1437f3fb6ed7183b9c4dbcf7e9107248d22"
     },
     {
       "path": "history/unadopted-lowprecision/lowprecision_kernel.py",
-      "original_path": "work/quartic-astra-search-20261105/lowprecision-next/lowprecision_kernel.py",
-      "scope": "UNADOPTED exact circuit producer",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/unadopted-lowprecision/lowprecision_kernel.py",
+      "scope": "Historical Version 2 selection, preserved unchanged. UNADOPTED exact circuit producer",
       "bytes": 5810,
       "sha256": "66854ff3ee24d8dd6f4b3b54fa5ca627d87b5d0da09cafa35e3d05d47d0d5c31"
     },
     {
       "path": "history/unadopted-lowprecision/probe_lowprecision.py",
-      "original_path": "work/quartic-astra-search-20261105/lowprecision-next/probe_lowprecision.py",
-      "scope": "UNADOPTED 44-profile diagnostic producer",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/unadopted-lowprecision/probe_lowprecision.py",
+      "scope": "Historical Version 2 selection, preserved unchanged. UNADOPTED 44-profile diagnostic producer",
       "bytes": 3112,
       "sha256": "8a6cecd95f140081647ca8252972300e0c801d9863d5bcb4ee4b4bb940ef51c6"
     },
     {
       "path": "history/unadopted-lowprecision/check_lowprecision.py",
-      "original_path": "work/quartic-astra-search-20261105/lowprecision-next/check_lowprecision.py",
-      "scope": "UNADOPTED independent exact circuit checker",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/unadopted-lowprecision/check_lowprecision.py",
+      "scope": "Historical Version 2 selection, preserved unchanged. UNADOPTED independent exact circuit checker",
       "bytes": 12804,
       "sha256": "7ac5156871cfc1bc797b1135e58d9e3e7e08af2a187eca50dc1eb83f481dd549"
     },
     {
       "path": "history/unadopted-lowprecision/independent-summary.json",
-      "original_path": "work/quartic-variable-search-20261105/wave13/lowprecision-probe/independent-summary.json",
-      "scope": "UNADOPTED historical44-profile finite check summary",
+      "original_path": "quartic-sub10000-release/repository/handoff/payload/history/unadopted-lowprecision/independent-summary.json",
+      "scope": "Historical Version 2 selection, preserved unchanged. UNADOPTED historical44-profile finite check summary",
       "bytes": 5520,
       "sha256": "6d5c34cabe5eb651050383c688a5bf59344487e34f0de24b835fe34b1fd5fb80"
     },
     {
-      "path": "RESEARCH_NOTES.md",
-      "original_path": "work/quartic-12504-release/handoff/payload/RESEARCH_NOTES.md",
-      "scope": "New Version2 handoff orientation; separates current and historical claims",
-      "bytes": 4196,
-      "sha256": "56364ef234e7bbcd48189f3788589fe3cdd79418148f01b42822462423402ddd"
+      "path": "history/version3/precision/PROOF.md",
+      "original_path": "quartic-sub10000-20261106/precision/PROOF.md",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 19381,
+      "sha256": "258d07739bed4bd114580a51bbbbeac07f6b5f6441024db2f7c19ed237b7818f"
+    },
+    {
+      "path": "history/version3/precision/ASYMMETRIC_CONTACTS.md",
+      "original_path": "quartic-sub10000-20261106/precision/ASYMMETRIC_CONTACTS.md",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 9258,
+      "sha256": "ec0146e593abc7a79eaf28fb3c09ddbbcfc01d2c3da7411de0a4b81361fabc98"
+    },
+    {
+      "path": "history/version3/precision/ASYMMETRIC-CONTRACT.json",
+      "original_path": "quartic-sub10000-20261106/precision/ASYMMETRIC-CONTRACT.json",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 1516,
+      "sha256": "6a45f8ccb18e4dca100f87851bf40d21f92b684dfdd347a0588f0f88aac0a1e7"
+    },
+    {
+      "path": "history/version3/arithmetic-audit/REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/REVIEW.md",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 17321,
+      "sha256": "332898c1bae2be879075eb54b0be8ab27917bbffce5f96498c267e89b8745cec"
+    },
+    {
+      "path": "history/version3/arithmetic-audit/ASYMMETRIC_REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/ASYMMETRIC_REVIEW.md",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 7731,
+      "sha256": "4c67d9b076d37a36d40b2099a608cd948d1727a3081bdaea0cd6616156e75541"
+    },
+    {
+      "path": "history/version3/arithmetic-audit/BETA_SOURCE_SPOTCHECK.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/BETA_SOURCE_SPOTCHECK.md",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 1484,
+      "sha256": "03cd08c193c32aedfe994a83059a043c53b9fb1d81149fe3f0be0a7973e3fbac"
+    },
+    {
+      "path": "history/version3/parity/beta-source-review/REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/parity/beta-source-review/REVIEW.md",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 10038,
+      "sha256": "adbb86598b6db09ebe7acd4474a2df0e405993c21a4dd2ca6c3c24c00daed1e5"
+    },
+    {
+      "path": "history/version3/parity/beta-source-review/BINDINGS.json",
+      "original_path": "quartic-sub10000-20261106/parity/beta-source-review/BINDINGS.json",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 2855,
+      "sha256": "6fdaf3a808fbc76d6efc63afc14dc9bcbdf3f646e17e85cb2ead8fddf3ca0370"
+    },
+    {
+      "path": "history/version3/parity/beta-source-review/artifact-checks.json",
+      "original_path": "quartic-sub10000-20261106/parity/beta-source-review/artifact-checks.json",
+      "scope": "Version 3 selective-beta proof or review record. Historical status wording is preserved; current acceptance is given by the release and exact artifact review.",
+      "bytes": 2471,
+      "sha256": "25b80747b3bab2f60a8f64d0d2acdaf4af15360b8fca92c79d457b9ca6f66e07"
+    },
+    {
+      "path": "history/preceding-work/contact-count-next/PROOF.md",
+      "original_path": "quartic-astra-search-20261105/contact-count-next/PROOF.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 11881,
+      "sha256": "8db4056c90ae36f0abbe895767d69c69660a3f316dc799ee3622b4d88272e0ba"
+    },
+    {
+      "path": "history/preceding-work/contact-count-next/INDEPENDENT_REVIEW.md",
+      "original_path": "quartic-astra-search-20261105/contact-count-next/INDEPENDENT_REVIEW.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 13621,
+      "sha256": "ca056065e4e48ac27c4f63ee84b8bc1c3009c754ae32bdc84fdff39248933019"
+    },
+    {
+      "path": "history/preceding-work/contact-count-next/DEPENDENCIES.md",
+      "original_path": "quartic-astra-search-20261105/contact-count-next/DEPENDENCIES.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 4839,
+      "sha256": "a7f289b20b0263756eb25970b86fee31f25059e25aa3bd575343006e60455860"
+    },
+    {
+      "path": "history/preceding-work/height-exponent-next/PROVISIONAL_EXPONENT19.md",
+      "original_path": "quartic-astra-search-20261105/height-exponent-next/PROVISIONAL_EXPONENT19.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 10791,
+      "sha256": "a8d5ac57dd4059bffe9035e2c7e66994aa0732eeaa335f38b0ea2aa7b004f641"
+    },
+    {
+      "path": "history/preceding-work/height-exponent-next/INDEPENDENT_EXPONENT19_REVIEW.md",
+      "original_path": "quartic-astra-search-20261105/height-exponent-next/INDEPENDENT_EXPONENT19_REVIEW.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 10804,
+      "sha256": "7b43e262ae0f1309d77399a40b6eb0b121e166db6856994f838b8775d293b606"
+    },
+    {
+      "path": "history/preceding-work/height-exponent-next/DOWNSTREAM_EXPONENT19.md",
+      "original_path": "quartic-astra-search-20261105/height-exponent-next/DOWNSTREAM_EXPONENT19.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 9545,
+      "sha256": "7f62c981782e788ad60ef207e2163049182d96102a30d62bd245a1d2e628dcbc"
+    },
+    {
+      "path": "history/preceding-work/height-exponent-next/DOWNSTREAM_INDEPENDENT_REVIEW.md",
+      "original_path": "quartic-astra-search-20261105/height-exponent-next/DOWNSTREAM_INDEPENDENT_REVIEW.md",
+      "scope": "Earlier derivation supporting the combined Version 3 arithmetic proof; earlier provisional language is retained as provenance.",
+      "bytes": 12611,
+      "sha256": "14fb8ce0338c209f337bd80197e3f9c2a71b3b0d7f9c39ac9cadf1ba1a33949d"
+    },
+    {
+      "path": "history/not-in-version3/precision/THREE_MODE_CONTACTS.md",
+      "original_path": "quartic-sub10000-20261106/precision/THREE_MODE_CONTACTS.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 7858,
+      "sha256": "66311fffec418e9a6aa44f7f7503057133f92e21c4f70c3468971dd04ac55659"
+    },
+    {
+      "path": "history/not-in-version3/precision/THREE-MODE-CONTRACT.json",
+      "original_path": "quartic-sub10000-20261106/precision/THREE-MODE-CONTRACT.json",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 1761,
+      "sha256": "d557c0533abdf0b750dc7c5316d5bee149c4e1e4dfdbd22da252773cb9691267"
+    },
+    {
+      "path": "history/not-in-version3/precision/THREE_MODE_JACOBI.md",
+      "original_path": "quartic-sub10000-20261106/precision/THREE_MODE_JACOBI.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 4608,
+      "sha256": "9c12ff4ae8750e158a18c48b00cd5df397ee8c7697ec769f5b17d70983e181d8"
+    },
+    {
+      "path": "history/not-in-version3/arithmetic-audit/THREE_MODE_REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/THREE_MODE_REVIEW.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 7564,
+      "sha256": "4572dfa3e6905b00de4c49799b7ed58ee225a1f418224a7d6b5aeedb103dbeb6"
+    },
+    {
+      "path": "history/not-in-version3/charts/PROOF.md",
+      "original_path": "quartic-sub10000-20261106/charts/PROOF.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 10268,
+      "sha256": "c07709254a482696dea7e71c7e7380af51bc2fb36f94371e8db64781e48468f5"
+    },
+    {
+      "path": "history/not-in-version3/arithmetic-audit/jacobi/REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/jacobi/REVIEW.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 8197,
+      "sha256": "efafb84db2e800076b6a2e03fb18c9c1ccc6847dda8891b4dc05ffb64bfea3c7"
+    },
+    {
+      "path": "history/not-in-version3/arithmetic-audit/jacobi/SQUARE_TRANSFER_REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/jacobi/SQUARE_TRANSFER_REVIEW.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 2923,
+      "sha256": "c56090e6b3bcc79b631da8f3ad50b8390dc12bc53d973510e4443a3af29f2f6d"
+    },
+    {
+      "path": "history/not-in-version3/arithmetic-audit/jacobi/DESCENT_MEMBERSHIP_REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/jacobi/DESCENT_MEMBERSHIP_REVIEW.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 4339,
+      "sha256": "d1e839f6799501fb77c5566834ba1f88dcda0feab749b9c0a82061f094a76184"
+    },
+    {
+      "path": "history/not-in-version3/parity/ANCHOR_NORM.md",
+      "original_path": "quartic-sub10000-20261106/parity/ANCHOR_NORM.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 3231,
+      "sha256": "19cb89a5acf699cdc021078d93b8b20183de61d30c915e2b20759e53daac8177"
+    },
+    {
+      "path": "history/not-in-version3/arithmetic-audit/ANCHOR_NORM_REVIEW.md",
+      "original_path": "quartic-sub10000-20261106/arithmetic-audit/ANCHOR_NORM_REVIEW.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 3208,
+      "sha256": "30e360637e0ab616b3472ff6194404f84b30d540f1904e8e0b66813c7bdc6243"
+    },
+    {
+      "path": "history/not-in-version3/parity/TANGENT_PROOF.md",
+      "original_path": "quartic-sub10000-20261106/parity/TANGENT_PROOF.md",
+      "scope": "NOT IN VERSION 3. Separate project research; any local proof or review verdict does not change the released 9,625-variable source or count.",
+      "bytes": 6175,
+      "sha256": "311b7bd840d22dcc46db9d2458242a965379929a12cf3a1486b74982c1fb0189"
     },
     {
       "path": "COVERAGE.md",
-      "original_path": "work/quartic-12504-release/handoff/payload/COVERAGE.md",
-      "scope": "New Version2 handoff orientation; separates current and historical claims",
-      "bytes": 2909,
-      "sha256": "6986a7eb41cbeeae7949107d55cec1368d62bdce26f485bddfe6f75562ae515b"
+      "scope": "Version 3 handoff orientation dated November 6, 2026",
+      "bytes": 2532,
+      "sha256": "c66169f2a5803fece49a4792b9ca8b349094d228af2463b995c33436d1c85047"
+    },
+    {
+      "path": "RESEARCH_NOTES.md",
+      "scope": "Version 3 handoff orientation dated November 6, 2026",
+      "bytes": 2506,
+      "sha256": "36e4d0d25847510fc079a01648b305770fe302b633ee8d5a2beef52f3745cf71"
     }
   ]
 }

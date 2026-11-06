@@ -1,47 +1,26 @@
-# Building the handoffs
+# Building the Version 3 handoffs
 
-Run the build on a remote worker with sufficient disk space and an external
-time and memory limit. The scripts use Python's standard library and Git.
-They do not download the baseline or publish releases.
+Date: November 6, 2026.
 
-First commit the complete public snapshot, including `quartic_12504.tex`,
-`quartic_12504.pdf`, the exact quartic package, the evidence inventory, and
-the successful full-reproduction `SUMMARY.json`. Record that immutable
-commit ID and the receipt's repository-relative path. Then run:
+Commit the complete public Version 3 snapshot first, including `quartic_9625.tex`, `quartic_9625.pdf`, `quartics/quartic-9625/`, the current dependency inventory and successful fresh reproduction receipt. `handoff/release.json` binds the exact 9,625-variable source, certificate, verifier and polynomial. The preparer checks that this descriptor is itself in the recorded commit.
+
+Run on the bounded remote worker:
 
 ```sh
 python -E -B handoff/test_handoff.py
 python -E -B handoff/prepare_handoff.py \
-  --repo . --commit SNAPSHOT_SHA \
-  --verification-receipt REPO_RELATIVE_REPRODUCTION_SUMMARY.json \
-  --output /tmp/handoff-plan.json
+  --repo . --commit SNAPSHOT_SHA --release handoff/release.json \
+  --verification-receipt docs/quartic-9625/verification/REPRODUCTION.json \
+  --output /tmp/version3-handoff-plan.json
 python -E -B handoff/build_handoff.py \
-  --repo . --plan /tmp/handoff-plan.json \
-  --baseline /tmp/baseline-r2.zip --output /tmp/version2-handoff
+  --repo . --plan /tmp/version3-handoff-plan.json \
+  --baseline /tmp/baseline-r2.zip --output /tmp/version3-handoff
 ```
 
-The baseline input is the public
-[November 4 revision-2 archive](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04-r2/z-in-q-research-handoff-2026-11-04-r2.zip).
-Its required SHA-256 is
-`827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b`,
-and its size is 339,860,770 bytes. The builder verifies these before packaging
-and stores the ZIP unchanged, without recompressing it.
+The baseline is the unchanged [November 4 revision-2 archive](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-04-r2/z-in-q-research-handoff-2026-11-04-r2.zip). Its required size is 339,860,770 bytes and SHA-256 is `827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b`. The builder streams it unchanged using ZIP_STORED. It does not download or publish anything itself.
 
-Plan preparation reads the exact Git tree, checks all new payload files for
-credential or conversation markers, verifies the current quartic package
-manifest, and requires a successful fresh reproduction receipt. Nothing is
-silently omitted from the current commit. The builder independently compares
-the plan with the complete commit tree before writing either archive.
+Plan preparation checks all current commit files and selected notes for forbidden paths and credential or conversation markers. It validates the exact artifact pins, current source closure, reproduction package manifest, and the completed reproduction receipt. Counts and source identity must agree across `release.json`, `evidence/stages/coordinates.json`, the reproduction manifest and the fresh receipt. The builder independently matches the complete Git tree before writing either ZIP.
 
-The output directory contains both ZIPs, `SHA256SUMS`, and
-`BUILD_RECEIPT.json`. Both ZIPs are checked entry by entry before a successful
-receipt is written. Preserve `/tmp/handoff-plan.json` as well. The large full
-ZIP is intended as a release asset, not a Git-tracked file. Determine the
-current-only ZIP's suitability for any other transport from its measured
-size after the build.
+The output contains both Version 3 ZIPs, `SHA256SUMS` and `BUILD_RECEIPT.json`. Both archives are verified before a successful receipt is written. Preserve the frozen plan too. Build sizes and hashes are reported only after this run. The large ZIPs belong in release assets, not Git.
 
-The release target is the same snapshot commit used by the builder. A
-manually dispatched workflow can upload these outputs to a draft release
-for review. Keep publication separate from construction and integrity
-verification. If later repository metadata records the completed archive's
-checksum, retain the earlier snapshot ID in the archive and receipt.
+The proposed workflow creates a draft at the exact snapshot commit and refuses to overwrite an existing tag. Dispatch, final inspection and publication remain separate actions. Later receipt/checksum commits do not change the snapshot already recorded inside the archives.

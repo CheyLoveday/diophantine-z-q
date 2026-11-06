@@ -1,38 +1,17 @@
-# Handoff coverage
+# Version 3 handoff coverage
 
-| Collection | Included material | Status |
-| --- | --- | --- |
-| `current/` | Every tracked regular file of the exact public commit in `CURRENT_STATE.json`, including Version 2 TeX/PDF, quartic, source, checks, evidence, inventories, public research guide and accepted Lean helpers | Current snapshot |
-| `baseline/` in the full ZIP | Complete public November 4 revision-2 ZIP, 339,860,770 bytes, unchanged | Historical; original filtering and scope retained |
-| `history/earlier-quartic/` | One standalone algebra note selected from the private-v5 inventory | Historical old-source conversion, not the current source |
-| `history/reciprocal/` | Reciprocal-log proof, beta16 review, identity/nonvanishing review and compiler review | Intermediate proof and review records used by Version 2 |
-| `history/source-audit/` | Explanation and independent review of the source auditor | Source construction and flattening scope |
-| `history/charts/`, `history/parity/`, `history/batching/` | Exact solution-map proofs and available independent reviews | Intermediate algebraic reductions |
-| `history/unadopted-lowprecision/` | Five circuit/probe/checker/proof/review files and the recorded 44-profile summary | Unadopted finite experiments, not a new source or quartic |
+Date: November 6, 2026.
 
-The current-only ZIP contains the same current snapshot and selected notes,
-but omits the large nested baseline. Its `START_HERE.md` provides the public
-baseline URL and exact checksum. The full ZIP is self-contained for these
-included collections.
+`current/` contains every regular tracked file of the exact public commit identified in `CURRENT_STATE.json` and `PLAN.json`. Nothing is silently removed from that commit. The current result is the Version 3 manuscript `quartic_9625.tex` and `quartic_9625.pdf`, with the package in `quartics/quartic-9625/`.
 
-This is not a dump of the private-v5 archive or the working directory. The
-private-v5 inventory listed 537 current files and 3,641 later history paths;
-those counts describe that private artifact, not this public handoff.
-Unpublished third-party comparison archives, private source collections,
-operational access records, API payloads, model conversations, raw event
-streams, credentials, build caches and unrelated experiments are omitted.
-No private-v5 validation receipt is presented as validation of this archive.
+`history/version3/` contains selected proofs and reviews for the released H19, high40, beta12, anchor25, scalar32 selective-beta source. It uses 29 full comparisons and eight beta-only comparisons at the 37 retained contacts. The final artifact has 9,625 total variables, 9,624 witnesses, 9,161 residuals and 82,476 monomials. Its degree is four and maximum absolute coefficient is 685783949153203534233601, below 2^80.
 
-New payload files are explicitly selected or drawn from the complete public
-commit. They are checked for credential and conversation markers. The large
-baseline is checked by its already-public whole-file SHA-256; its contents
-are not newly republished under a different license or represented as a
-freshly reviewed current source. Read the baseline's own notices and the
-current repository's `THIRD_PARTY_NOTICES.md`.
+`history/preceding-work/` preserves earlier height19 and rational-target contact derivations. Their original provisional status wording is retained. `history/not-in-version3/` holds separate three-mode, Jacobi, tangent and anchor research. These records do not define or improve the released artifact. An independent review of a local statement is not acceptance of a complete new source or its coefficient bound.
 
-The final manifest gives exact paths, sizes and SHA-256 hashes. Match the ZIP
-against the published checksum before trusting its embedded manifest or
-running its code. `verify_handoff.py --expected-plan-sha256 DIGEST` can also
-bind the archive to an independently obtained frozen-plan digest. A final
-Git commit that adds the ZIP receipt is later metadata; the archive records
-the earlier exact snapshot commit it actually contains.
+The older selected Version 2 records also remain unchanged. In particular, `history/unadopted-lowprecision/` means unadopted in Version 2. That historical label does not describe every later use of the same circuit identities. Current provenance comes from the Version 3 proof, source audit and exact artifact bindings.
+
+The full ZIP additionally contains the immutable public November 4 revision-2 baseline. Its size is 339,860,770 bytes and SHA-256 is `827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b`. The current-only ZIP supplies its URL and identity instead. The baseline keeps its original filtering and third-party notices. Its own `current/` directory refers to its historical date.
+
+This collection contains selected project mathematical records, not all private research history. It excludes raw conversations, credentials, access files, downloaded comparison collections and private full-handoff archives. Earlier notes may refer to omitted files; they are preserved research records, not a complete restoration index.
+
+The archive verifier checks member identities, paths, the exact current package and reproduction evidence. It does not prove the arithmetic theorem. Authenticate the ZIP or frozen plan with the checksum published outside the archive. An embedded manifest cannot authenticate itself.
