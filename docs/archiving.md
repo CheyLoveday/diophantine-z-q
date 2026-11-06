@@ -1,19 +1,15 @@
 # Citation and archival release
 
-Use [CITATION.bib](../CITATION.bib) for the 11/5 manuscript and the dated research handoff. The author field is intentionally omitted at the maintainer's request. The 11/5 manuscript itself also retains its blank author field.
+Use [CITATION.bib](../CITATION.bib) for *Z is Diophantine in Q*, Version 2, and for the historical research handoff. The manuscript is [quartic_12504.pdf](../quartic_12504.pdf), with [TeX source](../quartic_12504.tex). Cite the version and commit or file hash when discussing an exact artifact.
 
-There is no `CITATION.cff` because the [CFF 1.2 schema](https://github.com/citation-file-format/citation-file-format/blob/main/schema.json) requires an author record. This repository does not invent a personal or organizational author to satisfy that requirement.
+The manuscript author field is blank, and the BibTeX entries intentionally omit author fields. Collaboration credit appears in the manuscript and [README](../README.md). There is no `CITATION.cff`: the CFF 1.2 schema requires an author record, and the repository does not invent a person or organization to fill it.
+
+## Historical archive
+
+The [November 4 research handoff](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-04-r2) is a dated archive. It does not contain the Version 2 quartic package or all later review evidence. Its release tag and checksum continue to identify that historical snapshot. The current quartic and evidence are in [quartics/quartic-12504](../quartics/quartic-12504/README.md) and [docs/quartic-12504](quartic-12504/README.md).
 
 ## DOI status
 
-No DOI has been minted or claimed. The repository remains private while the research package is being completed. The release tag, commit hash, source manifests, and SHA-256 checksums currently identify the materials.
+No DOI is recorded in the repository's citation metadata. A GitHub release and a DOI deposit are separate records. Any later deposit should identify the exact manuscript, polynomial, evidence files and hashes it preserves, and should respect the blank-author convention. Add a DOI to the citation metadata only after the deposit exists and its contents have been checked.
 
-For the eventual public release:
-
-1. Complete the original-work license choice and the historical archive's third-party rights review.
-2. Select the exact repository commit and the artifacts to preserve. Identify the 10/11 manuscript, 11/5 manuscript, and curated reproducibility package explicitly in the deposit inventory; do not assume an external service will preserve linked assets automatically.
-3. Connect the maintainer's archival account, for example through [Zenodo's GitHub integration](https://help.zenodo.org/docs/github/enable-repository/), or make a manual deposit. Review how the service represents a work with no named author before supplying creator metadata.
-4. Reserve or obtain the DOI through that service, publish only when the public release is authorized, then add the actual DOI to `CITATION.bib` and the README.
-5. Verify the deposited file hashes against the local release and retain the deposition record alongside the release notes.
-
-GitHub release creation and DOI registration are separate actions. Preparing this repository does not create an archival record or connect a Zenodo account.
+See [third-party notices](../THIRD_PARTY_NOTICES.md) for the attribution and redistribution scope of the mathematical sources, software and historical archive.

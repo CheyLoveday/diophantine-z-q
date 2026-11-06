@@ -26,7 +26,7 @@ ROOT=args.workspace.resolve()
 REPO=args.repo.resolve()
 OUT=REPO/'docs/theorem-application-audit'
 OUT.mkdir(parents=True,exist_ok=True)
-TEX=REPO/'diophantine_zq.tex'
+TEX=OUT/'source/audited-baseline.tex'
 raw=TEX.read_bytes(); sha=hashlib.sha256(raw).hexdigest()
 EXPECTED='cb1148cd6c7769d2af3f1636b60ff0ada4b40431978d1e98d0c339274b3d792b'
 if sha!=EXPECTED:
@@ -172,7 +172,7 @@ for id,(pattern,apps) in patterns.items():
   if re.search(pattern,uncomment(l),re.I):
    named.append(dict(signal=id,line=i,text=l,related_application_ids=apps,classification='lexical index; inspect context, may be definition/provenance rather than application'))
 
-coverage=dict(manuscript_path='diophantine_zq.tex',manuscript_sha256=sha,manuscript_lines=len(lines),
+coverage=dict(manuscript_path='docs/theorem-application-audit/source/audited-baseline.tex',manuscript_sha256=sha,manuscript_lines=len(lines),
  citation_occurrences=len(citations),citation_key_occurrences=sum(len(c['keys']) for c in citations),
  cited_works=len({k for c in citations for k in c['keys']}),bibliography_works=len(bibs),
  citation_roles=dict(Counter(c['role'] for c in citations)),applications=len(applications),
@@ -193,7 +193,7 @@ dump('sources.json',sources);dump('applications.json',applications);dump('citati
 dump('internal-references.json',internal);dump('named-input-index.json',named);dump('evidence.json',evidence);dump('coverage.json',coverage)
 dump('application-sites.json',sites)
 
-def paper_link(n):return '../../diophantine_zq.tex#L'+str(n)
+def paper_link(n):return 'source/audited-baseline.tex#L'+str(n)
 md=['# Theorem application inventory','',f'Manuscript SHA256: `{sha}`. Line numbers refer only to this frozen source.','',
  'This document records the checked source applications, their exact consumers, and the hypotheses, translations and dependencies retained by each decision. Linked evidence includes historical reports and current bounded reviews; their stated scope and source version govern. An accepted application is not a certificate of every internal premise or the main theorem.','',
  'The JSON files preserve every citation occurrence and excerpt hash, source byte hashes, internal references, and a separate named-input search index. See [coverage](coverage.json) and [source versions](SOURCES.md).','',

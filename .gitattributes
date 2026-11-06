@@ -4,3 +4,7 @@ construction/** -text
 lean/** -text
 docs/reviews/** -text
 docs/theorem-application-audit/** -text
+quartics/** -text
+degree8-original/** -text
+docs/degree8-original/** -text
+docs/quartic-12504/** -text
