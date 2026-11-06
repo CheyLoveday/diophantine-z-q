@@ -1,7 +1,11 @@
 # Version 2 research handoffs
 
 The [Version 2 release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/quartic-12504-version-2)
-has two handoff formats:
+offers two handoff formats.
+
+The full download is 359 MB; the current-only download is 19 MB.
+[Release evidence](releases/version2/README.md) records their exact sizes,
+snapshot commit, checksums, and verification results.
 
 | Asset | Contents |
 | --- | --- |
