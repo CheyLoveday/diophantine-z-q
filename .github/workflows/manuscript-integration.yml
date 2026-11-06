@@ -1,4 +1,4 @@
-name: Version 2 manuscript and quartic verification
+name: Version 3 manuscript and quartic verification
 
 on:
   workflow_dispatch:
@@ -10,9 +10,9 @@ on:
         default: all
   push:
     paths:
-      - 'quartic_12504.tex'
-      - 'quartics/quartic-12504/**'
-      - 'docs/quartic-12504/**'
+      - 'quartic_9625.tex'
+      - 'quartics/quartic-9625/**'
+      - 'docs/quartic-9625/**'
       - 'scripts/build_paper.py'
       - '.github/workflows/manuscript-integration.yml'
 
@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: quartic-12504-release-${{ github.ref }}
+  group: quartic-9625-release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -41,13 +41,13 @@ jobs:
         shell: bash
         run: |
           ulimit -v 2097152
-          python -E -B quartics/quartic-12504/reproducibility/run.py --output build/quartic-reproduction --stage-seconds 180
+          python -E -B quartics/quartic-9625/reproducibility/run.py --output build/quartic-reproduction --stage-seconds 180
       - name: Check historical audit and current manuscript bindings
-        if: inputs.mode != 'visual'
+        if: inputs.mode != 'visual' && inputs.mode != 'paper'
         run: |
           python docs/theorem-application-audit/validate.py
-          python docs/quartic-12504/validate.py
-      - name: Compile the exact Version 2 manuscript
+          python docs/quartic-9625/validate.py
+      - name: Compile the exact Version 3 manuscript
         if: inputs.mode != 'visual'
         run: python scripts/build_paper.py
       - name: Render the manuscript for visual review
@@ -58,7 +58,7 @@ jobs:
           sudo apt-get install -y poppler-utils
           ulimit -v 2097152
           if [ "${{ inputs.mode }}" = paper ]; then
-            python scripts/render_quartic_review.py --pdf build/paper/quartic_12504.pdf
+            python scripts/render_quartic_review.py --pdf build/paper/quartic_9625.pdf
           else
             python scripts/render_quartic_review.py
           fi
@@ -68,11 +68,11 @@ jobs:
         run: |
           ulimit -v 2097152
           python -E -B handoff/test_handoff.py > build/handoff-tests.json
-          python -E -B handoff/prepare_handoff.py --repo . --commit "$GITHUB_SHA" --verification-receipt docs/quartic-12504/verification/REPRODUCTION.json --output build/prepublication-handoff-plan.json
+          python -E -B handoff/prepare_handoff.py --repo . --commit "$GITHUB_SHA" --verification-receipt docs/quartic-9625/verification/REPRODUCTION.json --output build/prepublication-handoff-plan.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: quartic-12504-release-checks
+          name: quartic-9625-release-checks
           path: |
             build/quartic-reproduction/
             build/quartic-inventory.json

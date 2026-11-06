@@ -9,7 +9,7 @@ import unicodedata
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--pdf', type=Path, default=ROOT / 'quartic_12504.pdf')
+parser.add_argument('--pdf', type=Path, default=ROOT / 'quartic_9625.pdf')
 PDF = parser.parse_args().pdf.resolve()
 OUT = ROOT / 'build/pdf-review'
 OUT.mkdir(parents=True, exist_ok=True)
