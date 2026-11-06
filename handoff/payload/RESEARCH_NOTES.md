@@ -1,17 +1,32 @@
-# Version 3 research orientation
+# Reading the Version 4 research handoff
 
-Date: November 6, 2026.
+Start with `current/quartic_4973.pdf` or its TeX source. The main file contains
+the original huge polynomial and the selected quartic. Earlier polynomials in
+separate historical packages are not additional current constructions.
 
-Read the current manuscript and `current/docs/quartic-9625/README.md` first. The exact polynomial, source, certificate, verifier and reproduction instructions are in `current/quartics/quartic-9625/`. `CURRENT_STATE.json` records the immutable public snapshot and exact current counts.
+The selected quartic is formed from the sum of squares of 4,552 quadratic
+integer residuals. A complete replay checks its 551 transformations and every
+coefficient in its expansion. This finite verification is separate from the
+arithmetic proof that the source projection is the integers.
 
-Version 3 releases the 9,625-variable selective-beta construction. Its arithmetic changes are height exponent 19, 37 rational-target contacts, high logarithm precision 40, beta precision 12, 25 anchor squarings and scalar orders `[1,1,1,1,32,32]`. The eight A-coordinate contacts use beta-only comparisons. The other 29 contacts retain full comparisons. This distinction does not change the root contact formulas or the common auxiliary point.
+The arithmetic path uses 37 contacts, divided into 13 full, eight beta-only
+and 16 Lucas-only comparisons. General roots use integer doubled indices.
+The common denominator comparison has order 12 in beta-only mode and order
+40 otherwise. The source also uses the reviewed linear ordinary pole,
+normalized Lucas equations, direct tangents, shared field squares and
+first-norm denominator change. The scalar pole is retained. H19, precisions
+40 and 12, anchor exponent 25 and scalar order 32 remain unchanged.
 
-The selected combined proof and arithmetic review are in `history/version3/precision/` and `history/version3/arithmetic-audit/`. The exact source and artifact review is in `history/version3/parity/beta-source-review/`. Earlier height and contact derivations are in `history/preceding-work/`. Original notes sometimes describe their then-pending review or implementation status; the final source bindings and release records state which result is current.
+Read the final inventory before treating an older proof note as applicable.
+It pins the selected statements, source files and independent review records,
+and retains the five inherited source-version qualifications. Hash agreement
+establishes artifact identity, not the truth of a mathematical premise.
 
-Three-mode and Jacobi constructions, along with tangent and anchor alternatives, are separate research in `history/not-in-version3/`. They are included to support further work. They are not part of the released source, its witness count or its certificate. Do not add savings from different experiments or substitute a differently audited source while retaining this release's artifact hashes.
+For computation, use the package's self-contained Linux reproduction runner.
+It requires at least 8 GiB available memory, stops below 4 GiB, caps each child
+at 2 GiB and does heavy work remotely in this campaign. Mandatory reproduction
+rebuilds the source and replays the fixed certificate. Optional heuristic
+rediscovery can choose a different search path and is reported separately.
 
-The next publication threshold is fewer than 5,000 total variables, including the input. Only a result meeting that strict threshold is a candidate for Version 4. Intermediate improvements do not replace the fixed 9,625-variable Version 3 release.
-
-The current certificate proves exact rational projection equivalence between its pinned source system and the final integer quartic, and checks the complete expansion. The separate arithmetic proof identifies that projection with the integers, under its stated inherited theorem applications. These checks do not upgrade the external arithmetic assumptions or complete the separate Lean formalization.
-
-Version 3 is a collaboration using the collective agentic notes from Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jenn Park, Caroline Terry. The October 11 manuscript's provenance remains distinct.
+Version 5 requires at most 2,486 total variables, including input zero. That
+number is a future search target, not an established construction.

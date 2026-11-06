@@ -6,7 +6,7 @@ on:
       mode:
         description: 'Validate the selected source and manuscript'
         type: choice
-        options: [all, reproduction, paper]
+        options: [all, reproduction, paper, metadata]
         default: all
 
 permissions:
@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   reproduction:
-    if: inputs.mode != 'paper'
+    if: inputs.mode == 'all' || inputs.mode == 'reproduction'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -37,7 +37,7 @@ jobs:
           name: quartic-4973-reproduction
           path: build/quartic-reproduction/
   paper:
-    if: inputs.mode != 'reproduction'
+    if: inputs.mode == 'all' || inputs.mode == 'paper'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -64,3 +64,19 @@ jobs:
           path: |
             build/paper/
             build/pdf-review/
+  metadata:
+    if: inputs.mode == 'all' || inputs.mode == 'metadata'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.14'
+      - name: Check manuscript bindings, historical inventory and archive rejection tests
+        shell: bash
+        run: |
+          ulimit -v 2097152
+          python -E -B docs/theorem-application-audit/validate.py
+          python -E -B docs/quartic-4973/inventory.py validate --repo . --docs docs/quartic-4973 --acceptance-sha256 1c804517a5d8f8ad5965f80cf22832611d1fcb409da8aded412a657ce009442d
+          python -E -B handoff/test_handoff.py

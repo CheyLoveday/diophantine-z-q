@@ -23,8 +23,8 @@ def validate_release(release):
     if release.get('format') != 'quartic-handoff-release/v1':
         raise ValueError('Wrong release metadata format')
     version = release['version']; expected = release['expected']; count = expected['variables']
-    if type(version) is not int or version != 3 or type(count) is not int or count != 9625 or release['date'] != '2026-11-06':
-        raise ValueError('This packet requires Version 3, 9625 total variables, and date 2026-11-06')
+    if type(version) is not int or version != 4 or type(count) is not int or count != 4973 or release['date'] != '2026-11-06':
+        raise ValueError('This packet requires Version 4, 4973 total variables, and date 2026-11-06')
     if set(expected) != METRICS or expected['witnesses'] != count-1 or expected['degree'] != 4:
         raise ValueError('Inconsistent release counts')
     for key in METRICS-{'expanded_sha256'}:
@@ -36,7 +36,7 @@ def validate_release(release):
     relative(release['verification'])
     required = {'manuscript':f'quartic_{count}.tex','pdf':f'quartic_{count}.pdf',
                 'package':f'quartics/quartic-{count}','inventory':f'docs/quartic-{count}/README.md',
-                'regenerated_certificate':f'docs/quartic-{count}/verification/regenerated-certificate.jsonl.gz',
+                'replayed_certificate':f'docs/quartic-{count}-validation/replayed-certificate.jsonl.gz',
                 'release_tag':f'quartic-{count}-version-{version}'}
     for key,value in required.items():
         if release[key] != value:
@@ -53,12 +53,9 @@ def validate_release(release):
     if not isinstance(release['source_id'],str) or not release['source_id']:
         raise ValueError('Missing source identifier')
     contract = release['source_contract']
-    if contract != dict(ordinary_contacts=37,full_comparisons=29,beta_only_comparisons=8,
-                        height_exponent=19,high_precision=40,beta_precision=12,anchor_squarings=25,
-                        scalar_orders=[1,1,1,1,32,32]):
-        raise ValueError('Version 3 requires the accepted selective-beta source contract')
-    if release['next_release'] != dict(version=4,strict_total_variable_upper_bound=5000,
-            total_includes_input=True,status='Research target only; Version 3 remains the fixed 9625-variable release'):
+    if contract != {'ordinary_contacts': 37, 'full_comparisons': 13, 'beta_only_comparisons': 8, 'height_exponent': 19, 'high_precision': 40, 'beta_precision': 12, 'anchor_squarings': 25, 'scalar_orders': [1, 1, 1, 1, 32, 32], 'lucas_only_comparisons': 16, 'root_carrier': 'general_E_mixed', 'comparison_target_multiplier': 2, 'direct_tangent_doublings': 4, 'first_norm_instances': 37, 'first_norm_virtual_denominator_exponent': 1, 'shared_square_fields': 37}:
+        raise ValueError('Wrong Version 4 source contract')
+    if release['next_release'] != {'version': 5, 'total_variable_upper_bound': 2486, 'total_includes_input': True, 'status': 'Research target only; Version 4 remains the fixed 4973-variable release'}:
         raise ValueError('Wrong future-release threshold')
     return release
 
@@ -101,7 +98,7 @@ def validate_current(read, names, release, receipt_path):
     """read takes a repository-relative name; names is the full Git inventory."""
     validate_release(release); root = release['package']+'/'
     receipt_path = relative(receipt_path)
-    required = {release['manuscript'],release['pdf'],release['inventory'],receipt_path,release['regenerated_certificate'],
+    required = {release['manuscript'],release['pdf'],release['inventory'],receipt_path,release['replayed_certificate'],
                 root+'reproducibility/manifest.json',root+release['verification'],'handoff/release.json'}
     if not required <= set(names):
         raise ValueError('Missing current snapshot files: '+repr(sorted(required-set(names))))
@@ -131,20 +128,27 @@ def validate_current(read, names, release, receipt_path):
             raise ValueError('Stale reproducibility expectation: '+key)
     verification = json.loads(read(root+release['verification']))
     receipt = json.loads(read(receipt_path))
-    if verification['status'] != 'PASS' or receipt['status'] != 'PASS: FROZEN REPLAY AND CLEAN REPRODUCTION':
+    if verification['status'] != 'PASS' or receipt.get('status') != 'PASS' or receipt.get('mandatory_status') != 'PASS: FRESH SOURCE AND EXACT FROZEN CERTIFICATE REPLAY':
         raise ValueError('Current verification or fresh reproduction did not pass')
-    for report in (verification,receipt):
+    if receipt['source_id'] != release['source_id']:
+        raise ValueError('Wrong reproduction source')
+    for report in (verification,receipt['final_verification']):
         if report['source_id'] != release['source_id'] or report['source_sha256'] != release['proof_pins']['source-residuals.jsonl.gz']:
             raise ValueError('Wrong verified source')
         if report['checker_sha256'] != release['proof_pins']['verify_certificate.py']:
             raise ValueError('Wrong verified checker')
-    for key,value in release['expected'].items():
-        if verification[key] != value or receipt['expected'][key] != value:
-            raise ValueError('Stale verified count or digest: '+key)
+        for key,value in release['expected'].items():
+            if report[key] != value or receipt['expected'][key] != value:
+                raise ValueError('Stale verified count or digest: '+key)
     if receipt['expected']['certificate_sha256'] != release['proof_pins']['certificate.jsonl.gz']:
         raise ValueError('Reproduction expectation differs from frozen certificate pin')
-    compare_reproduced_certificate(read(root+'certificate.jsonl.gz'),read(release['regenerated_certificate']),
-                                   receipt['regenerated_certificate_sha256'])
+    replayed=read(release['replayed_certificate'])
+    if replayed != read(root+'certificate.jsonl.gz') or hashlib.sha256(replayed).hexdigest() != receipt['final_verification']['certificate_sha256']:
+        raise ValueError('Replayed certificate differs from exact frozen certificate')
+    steps=receipt.get('steps',[])
+    if not steps or any(type(s.get('exit_code')) is not int or s.get('timeout') or s.get('memory_abort') or
+                        (s['exit_code'] <= 0 if s.get('expected_rejection') else s['exit_code'] != 0) for s in steps):
+        raise ValueError('Missing or incomplete reproduction stages')
     if receipt['package_manifest_sha256'] != hashlib.sha256(package_raw).hexdigest():
         raise ValueError('Reproduction receipt belongs to another package manifest')
     return verification
@@ -180,7 +184,7 @@ Its size is {baseline['bytes']:,} bytes and SHA-256 is `{baseline['sha256']}`.
 Download: {baseline['url']}
 The baseline's own `current/` directory means current at its historical date.
 This archive includes only the public snapshot and explicitly selected project research.
-Three-mode, Jacobi and other separately labeled research do not define Version 3.
+The selected three-mode, target-two, tangent, shared-square and first-norm source defines Version 4. Optional scalar/J0 fusion and unadopted alternatives remain historical research.
 
 Run `python verify_handoff.py PATH_TO_THIS_ZIP` to check every entry and the
 complete payload inventory. Add `--extract NEW_DIRECTORY` to verify and extract

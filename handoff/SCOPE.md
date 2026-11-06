@@ -1,4 +1,4 @@
-# Version 3 handoff selection
+# Version 4 handoff selection
 
 Date: November 6, 2026.
 
@@ -6,7 +6,7 @@ The current collection is the complete regular-file tree of one reviewed public 
 
 The separate history selection contains project mathematical proofs, independent reviews and short machine-readable acceptance records. `selection.json` gives each original path, destination, scope, byte count and SHA-256. Existing Version 2 notes remain unchanged. New accepted-source notes and separate research use different directories and explicit scope descriptions.
 
-`history/version3/` concerns the released 9,625-variable selective-beta source. `history/preceding-work/` contains earlier contact and height derivations. `history/not-in-version3/` contains three-mode, Jacobi, tangent and anchor alternatives. Their proof or review status does not change the released source, count or coefficient bound.
+`history/version4/` contains the selected three-mode, target-two, tangent, shared-square and first-norm research. Optional scalar/J0 fusion is explicitly marked unadopted. Historical Version 3 records retain their original paths and status, including alternatives which were not then adopted. The current release descriptor determines which construction is selected; a historical directory name does not determine current mathematical applicability.
 
 No raw private archive, transcript, access file, credential, unrelated project or downloaded comparison collection is selected. This is not a claim to preserve all research history. Original notes may refer to omitted context. Their older dates and provisional language remain as provenance; the current release descriptor and exact acceptance records identify the released result.
 

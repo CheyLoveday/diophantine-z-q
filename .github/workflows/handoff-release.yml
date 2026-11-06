@@ -1,4 +1,4 @@
-name: Build Version 3 research handoff
+name: Build Version 4 research handoff
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: quartic-9625-handoff
+  group: quartic-4973-handoff
   cancel-in-progress: false
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
           ulimit -v 2097152
           mkdir -p build
           python -E -B handoff/test_handoff.py > build/handoff-tests.json
-          python -E -B handoff/prepare_handoff.py --repo . --commit "$GITHUB_SHA" --verification-receipt docs/quartic-9625/verification/REPRODUCTION.json --output build/handoff-plan.json
+          python -E -B handoff/prepare_handoff.py --repo . --commit "$GITHUB_SHA" --verification-receipt docs/quartic-4973-validation/REPRODUCTION.json --output build/handoff-plan.json
       - name: Fetch unchanged historical baseline
         shell: bash
         run: |
@@ -37,14 +37,14 @@ jobs:
         run: |
           ulimit -v 2097152
           python -E -B handoff/build_handoff.py --repo . --payload handoff/payload --plan build/handoff-plan.json --baseline "$RUNNER_TEMP/baseline.zip" --output build/handoff-output
-          python -E -B handoff/verify_handoff.py build/handoff-output/z-in-q-version3-current-handoff.zip --extract "$RUNNER_TEMP/current-handoff-extracted" > build/handoff-extraction.json
-          sha256sum quartic_9625.tex quartic_9625.pdf >> build/handoff-output/SHA256SUMS
+          python -E -B handoff/verify_handoff.py build/handoff-output/z-in-q-version4-current-handoff.zip --extract "$RUNNER_TEMP/current-handoff-extracted" > build/handoff-extraction.json
+          sha256sum quartic_4973.tex quartic_4973.pdf >> build/handoff-output/SHA256SUMS
       - name: Upload a draft release for final inspection
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if ! tag_record=$(git ls-remote --refs origin refs/tags/quartic-9625-version-3); then
+          if ! tag_record=$(git ls-remote --refs origin refs/tags/quartic-4973-version-4); then
             printf '%s\n' 'Could not check the remote tag; refusing to publish.' >&2
             exit 1
           fi
@@ -52,15 +52,15 @@ jobs:
             printf '%s\n' 'Git tag already exists; refusing to overwrite it.' >&2
             exit 1
           fi
-          if gh release view quartic-9625-version-3 >/dev/null 2>&1; then
+          if gh release view quartic-4973-version-4 >/dev/null 2>&1; then
             printf '%s\n' 'Release tag already exists; refusing to overwrite it.' >&2
             exit 1
           fi
-          gh release create quartic-9625-version-3 --target "$GITHUB_SHA" --draft --title 'Version 3: the 9,625-variable quartic' --notes-file handoff/RELEASE_NOTES.md quartic_9625.tex quartic_9625.pdf build/handoff-output/z-in-q-version3-full-handoff.zip build/handoff-output/z-in-q-version3-current-handoff.zip build/handoff-output/SHA256SUMS build/handoff-output/BUILD_RECEIPT.json build/handoff-plan.json
+          gh release create quartic-4973-version-4 --target "$GITHUB_SHA" --draft --title 'Version 4: the 4,973-variable quartic' --notes-file handoff/RELEASE_NOTES.md quartic_4973.tex quartic_4973.pdf build/handoff-output/z-in-q-version4-full-handoff.zip build/handoff-output/z-in-q-version4-current-handoff.zip build/handoff-output/SHA256SUMS build/handoff-output/BUILD_RECEIPT.json build/handoff-plan.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: version3-handoff-evidence
+          name: version4-handoff-evidence
           path: |
             build/handoff-plan.json
             build/handoff-tests.json

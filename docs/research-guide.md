@@ -1,12 +1,14 @@
 # Research guide
 
-The current manuscript is [*Z is Diophantine in Q*, Version 3](../quartic_9625.pdf), dated November 6, 2026, with [TeX source](../quartic_9625.tex), an [explicit quartic package](../quartics/quartic-9625/README.md), and [proof and review evidence](quartic-9625/README.md). The quartic has 9,625 total variables and 9,624 rational witnesses. Its finite certificate checks establish exact projection equivalence to the pinned source; the arithmetic dependencies are recorded separately. The selected source has 29 full and 8 beta-only comparisons with affine difference charts. The Jacobi and three-mode proposals remain research. See the [build instructions](building.md) to reproduce the checks.
+The current manuscript is [*Z is Diophantine in Q*, Version 4](../quartic_4973.pdf), dated November 6, 2026, with [TeX source](../quartic_4973.tex), an [explicit quartic package](../quartics/quartic-4973/README.md), and [proof and review evidence](quartic-4973/README.md). The quartic has 4,973 total variables and 4,972 rational witnesses. Its finite certificate establishes exact projection equivalence to the selected source. Arithmetic dependencies and their inherited qualifications are recorded separately.
 
-Version 3 has a [full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-9625-version-3/z-in-q-version3-full-handoff.zip) and a [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-9625-version-3/z-in-q-version3-current-handoff.zip). Both include the current public snapshot under `current/` and selected research notes. The full handoff also embeds the unchanged November 4 archive; the current-only handoff identifies that archive by its public URL and hash. See the [handoff guide](../handoff/README.md) for the included collections, manifests and verification procedure.
+The source uses 13 full, eight beta-only and 16 Lucas-only comparisons, general roots with integer doubled indices, doubled targets, direct tangents, shared field squares and first-norm fusion. See the [build instructions](building.md) for fresh source generation and exact certificate replay.
+
+The [Version 4 handoff guide](../handoff/README.md) identifies the full and current-only archives, their scope and verification procedure. Both contain the exact public snapshot and selected research notes. The full archive also embeds the unchanged November 4 baseline.
 
 ## Future work
 
-A Version 4 release will be considered only after a construction with fewer than 5,000 total variables, including the rational input, passes its arithmetic review and exact checks. This is a future release criterion, not a result claimed for Version 3.
+Version 5 requires at most 2,486 total variables, including the input. This is half the Version 4 count rounded down, and remains a search target.
 
 ## Historical materials
 
@@ -24,7 +26,7 @@ The archived November 5 TeX source has descriptive labels such as `thm:target`, 
 
 ## Map of the argument
 
-Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 3.
+Revision 2 of the November 4 research handoff added the later audit campaigns and the reviewed height replacement. Start with `current/diophantine_zq.tex`, its matching PDF, and `current/height-review.md`. The old height routes do not supply extra premises for Section 4 of that archived manuscript. The archive's revision number is distinct from the current manuscript's title, Version 4.
 
 The paths below are **original project-relative paths recorded in the archive manifest**. Search for them in `INDEX.html`, or restore them with `restore_history.py`. They are not paths in this Git checkout. Some files predate the archived November 5 manuscript; compare their scope with that revision and later audits.
 

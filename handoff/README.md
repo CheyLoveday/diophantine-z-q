@@ -1,33 +1,29 @@
-# Version 3 research handoffs
+# Version 4 research handoffs
 
 Date: November 6, 2026.
 
-The Version 3 handoffs contain the 9,625-variable quartic and selected project research. The release target is [quartic-9625-version-3](https://github.com/elliotglazer/diophantine-z-q/releases/tag/quartic-9625-version-3). The build produces two assets:
+The [Version 4 release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/quartic-4973-version-4) contains two archives:
 
 | Asset | Contents |
 | --- | --- |
-| `z-in-q-version3-full-handoff.zip` | Exact public snapshot, selected proof and review notes, and the unchanged public November 4 revision-2 baseline ZIP |
-| `z-in-q-version3-current-handoff.zip` | The same current snapshot and notes, with the baseline's URL and checksum instead of the nested ZIP |
+| `z-in-q-version4-full-handoff.zip` | Exact public snapshot, selected mathematical research and reviews, and the unchanged November 4 revision-2 baseline ZIP |
+| `z-in-q-version4-current-handoff.zip` | The same current snapshot and selected notes, with the baseline URL and checksum instead of the nested ZIP |
 
-The full ZIP is self-contained for these included collections. It does not contain every private research record. The [Version 2 handoffs](releases/version2/README.md) remain historical and unchanged.
+The current manuscript is `quartic_4973.tex/pdf`, Version 4. Its selected quartic has 4,973 total variables, 72,925 monomials and degree four. Source arithmetic reviews, finite certificate replay and fresh reproduction have separate roles in the included evidence.
 
-Before opening or running archive contents, compare the ZIP's SHA-256 with the release's `SHA256SUMS`. `BUILD_RECEIPT.json` records the exact snapshot, archive identities and frozen-plan digest. The [completed Version 3 release record](releases/version3/README.md) supplies the download links, sizes, hashes and build evidence.
+Compare each archive's SHA-256 with the release's `SHA256SUMS`. `BUILD_RECEIPT.json` gives the exact snapshot and frozen-plan digest. An internal manifest does not authenticate its own origin.
 
-After extraction, read `START_HERE.md`, `CURRENT_STATE.json` and `COVERAGE.md`. `current/` contains every regular tracked file from the recorded public commit. `history/version3/` contains selected evidence for this release. `history/not-in-version3/` contains separate three-mode, Jacobi and other research; those notes do not define the released source or its count. The earlier selected Version 2 records preserve their original status wording.
+After extraction read `START_HERE.md`, `CURRENT_STATE.json`, `COVERAGE.md` and `RESEARCH_NOTES.md`. `current/` is every regular tracked file at the recorded public commit. `history/version4/` contains selected proof and review provenance; its dated pending statuses are historical. Optional scalar/J0 fusion is excluded from the selected source. Earlier version directories retain their original meaning and claims.
 
-Verify or safely extract with:
-
-```sh
+```
 python -E -B handoff/verify_handoff.py PATH_TO_HANDOFF.zip --expected-plan-sha256 DIGEST
 python -E -B handoff/verify_handoff.py PATH_TO_HANDOFF.zip --expected-plan-sha256 DIGEST --extract NEW_DIRECTORY
 ```
 
-Obtain `DIGEST` from the independently downloaded release receipt. The verifier checks every member's CRC and SHA-256, current proof-package closure, release counts and reproduction receipt. It rejects unsafe names, duplicates, case collisions and symlinks. It also rejects entries absent from the plan and binds generated guides and helpers to that plan.
+Use the plan digest from the independently obtained release receipt. The verifier checks every member, exact planned file coverage, source-package closure and the selected reproduction receipt. It rejects unsafe names, duplicate paths, case collisions and symlinks. The archived Version 3 verifier and matching helpers remain under `history/version3/tooling/` for Version 3 archives. Version 2 uses the preserved legacy verifier with its independently published whole-archive checksum.
 
-The old Version 2 format remains supported by the preserved legacy integrity checker. For those archives, first check the independently published whole-ZIP SHA-256, then run this tool without `--expected-plan-sha256`. Plan-only authentication is rejected for the historical format; its integrity check does not provide the new Version 3 exact-plan guarantees.
+Run the actual mathematical computations from `current/` using the [reproduction instructions](../quartics/quartic-4973/reproducibility/README.md). Archive integrity does not establish the arithmetic theorem. The finite checks do not upgrade the inherited theorem qualifications or complete the Lean formalization.
 
-Run the mathematical checks from the extracted `current/` directory using [the current package instructions](../quartics/quartic-9625/reproducibility/README.md). Archive integrity, exact algebraic replay and the arithmetic proof have distinct scopes.
+The unchanged historical baseline is 339,860,770 bytes, SHA-256 `827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b`. Its own `current/` directory means current at its historical date. The full archive is self-contained for the included collections, not a claim to contain every private research record. Conversational transcripts and credentials are excluded.
 
-The historical baseline is 339,860,770 bytes with SHA-256 `827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b`. Its own `current/` directory means current at its historical date. Extract it separately and retain its notices and filtering policy.
-
-See [BUILDING.md](BUILDING.md) for the remote build sequence and [SCOPE.md](SCOPE.md) for the selection rules. A later repository commit may record completed archive checksums; the archive continues to identify the earlier snapshot it actually contains.
+See [BUILDING.md](BUILDING.md) and [SCOPE.md](SCOPE.md). A later commit may record the finished archive checksums; the archive continues to identify the earlier snapshot it actually contains.

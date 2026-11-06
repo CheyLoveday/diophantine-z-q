@@ -26,29 +26,30 @@ def fixtures():
     files={name:('fixture '+name).encode() for name in release['proof_pins']}
     records=certificate_fixture()
     files['certificate.jsonl.gz']=certificate(records)
-    records[-1]['report']['seconds']=0.605
+    # V4 replays the exact selected certificate rather than rediscovering it.
     regenerated=certificate(records)
     files['source-entry.json']=encode(dict(source_id=release['source_id'],
         source_sha256=hashlib.sha256(files['source-residuals.jsonl.gz']).hexdigest(),inspected_files_sha256={}))
     release['proof_pins']={name:hashlib.sha256(raw).hexdigest() for name,raw in files.items()}
     release['expected']['expanded_sha256']=release['proof_pins']['polynomial.expanded.txt']
     objects={root+name:raw for name,raw in files.items()}
-    objects[release['regenerated_certificate']]=regenerated
+    objects[release['replayed_certificate']]=regenerated
     objects['handoff/release.json']=encode(release)
-    objects[release['manuscript']]=b'Version 3'
+    objects[release['manuscript']]=b'Version 4'
     objects[release['pdf']]=b'%PDF fixture'
     objects[release['inventory']]=b'fixture inventory'
     verification=dict(status='PASS',source_id=release['source_id'],
         source_sha256=release['proof_pins']['source-residuals.jsonl.gz'],
-        checker_sha256=release['proof_pins']['verify_certificate.py'],**release['expected'])
+        checker_sha256=release['proof_pins']['verify_certificate.py'],certificate_sha256=release['proof_pins']['certificate.jsonl.gz'],**release['expected'])
     objects[root+release['verification']]=encode(verification)
     objects[root+'reproducibility/manifest.json']=encode(dict(expected=release['expected'],files={}))
     receipt='fixture-reproduction.json'
-    objects[receipt]=encode(dict(status='PASS: FROZEN REPLAY AND CLEAN REPRODUCTION',
+    objects[receipt]=encode(dict(status='PASS',mandatory_status='PASS: FRESH SOURCE AND EXACT FROZEN CERTIFICATE REPLAY',
+        final_verification=verification,steps=[dict(step='fixture-only',exit_code=0,timeout=False,memory_abort=False,expected_rejection=False)],
         source_id=release['source_id'],source_sha256=verification['source_sha256'],
         checker_sha256=verification['checker_sha256'],expected=dict(release['expected'],certificate_sha256=release['proof_pins']['certificate.jsonl.gz']),
         package_manifest_sha256=hashlib.sha256(objects[root+'reproducibility/manifest.json']).hexdigest(),
-        regenerated_certificate_sha256=hashlib.sha256(regenerated).hexdigest()))
+        rediscovery_status='NOT REQUESTED'))
     return release,objects,receipt
 
 def run_tests():
@@ -66,7 +67,7 @@ def run_tests():
     def edit(o,name,key,value):
         data=json.loads(o[name]);data[key]=value;o[name]=encode(data)
     reject('stale manuscript name',lambda r,o,p:r.update(manuscript='quartic_12504.tex'))
-    reject('premature Version 4',lambda r,o,p:r.update(version=4))
+    reject('stale Version 3',lambda r,o,p:r.update(version=3))
     reject('wrong release date',lambda r,o,p:r.update(date='2026-11-05'))
     reject('different variable target',lambda r,o,p:r['expected'].update(variables=8777))
     reject('stale asset name',lambda r,o,p:r['assets'].update(full='z-in-q-version2-full-handoff.zip'))
@@ -78,8 +79,10 @@ def run_tests():
     reject('stale manuscript subtitle',lambda r,o,p:o.__setitem__(r['manuscript'],b'Version 2'))
     reject('wrong reproduction source',lambda r,o,p:edit(o,p,'source_id','old-source'))
     reject('failed reproduction',lambda r,o,p:edit(o,p,'status','FAIL'))
-    reject('changed reproduced certificate',lambda r,o,p:edit(o,p,'regenerated_certificate_sha256','0'*64))
-    reject('missing regenerated certificate',lambda r,o,p:o.pop(r['regenerated_certificate']))
+    reject('changed replayed certificate',lambda r,o,p:o.__setitem__(r['replayed_certificate'],b'changed'))
+    reject('incomplete mandatory reproduction',lambda r,o,p:edit(o,p,'mandatory_status','NOT COMPLETED'))
+    reject('missing reproduction stages',lambda r,o,p:edit(o,p,'steps',[]))
+    reject('missing replayed certificate',lambda r,o,p:o.pop(r['replayed_certificate']))
     reject('changed reproduction manifest',lambda r,o,p:edit(o,p,'package_manifest_sha256','0'*64))
     reject('stale verification count',lambda r,o,p:edit(o,r['package']+'/'+r['verification'],'variables',12504))
     def stale_receipt(r,o,p):
