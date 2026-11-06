@@ -6,6 +6,16 @@ The [November 6 revision-2 research release](https://github.com/elliotglazer/dio
 
 The ZIP asset names retain `version4` because that is the manuscript they contain; use the dated research-release URL to distinguish this update. The release supplies its own new `SHA256SUMS`, `BUILD_RECEIPT.json` and `handoff-plan.json`.
 
+The refreshed archives contain public snapshot `363f623014741037a19df138777e4d11ea946bab`.
+The [new build receipt](research-2026-11-06-r2/BUILD_RECEIPT.json) records successful member/hash verification of both archives. The current-only archive passed extraction and the research checks were rerun successfully from the extracted copy.
+
+| Updated archive | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `z-in-q-version4-full-handoff.zip` | 374630650 | `23fb8d7e5179f3b6a4bbcaaa764f3d58674cd2eedd8564338122c5e08e7006e0` |
+| `z-in-q-version4-current-handoff.zip` | 34769597 | `e7fd377a15f7bfef8d3c296ad7bc9c2f6511181641c71d2df15b0203007466b0` |
+
+The new [frozen plan](research-2026-11-06-r2/handoff-plan.json) has SHA-256 `43b524fdaaa4bc57f25da9b28d486c5c9805f5fa1f5855b7cd70a10b8b083cf8`. These post-build records do not alter the snapshot inside either archive.
+
 ## Original Version 4 handoffs
 
 Date: November 6, 2026.
