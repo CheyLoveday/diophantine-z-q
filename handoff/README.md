@@ -4,6 +4,16 @@
 
 The [November 6 revision-3 research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-06-r3) supersedes revision 2 as the newest handoff. It includes the corrected [project credit](../CREDITS.md) and otherwise retains the same mathematical research and unchanged Version 4 manuscript and polynomial. Its own release checksum and receipt identify the rebuilt archives.
 
+The refreshed archives contain public snapshot `098b50006d1459821daeb4d29269a37688b87e8e`.
+The [new build receipt](research-2026-11-06-r3/BUILD_RECEIPT.json) records successful member/hash verification of both archives. The current-only archive passed extraction and the research checks were rerun successfully from the extracted copy.
+
+| Updated archive | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `z-in-q-version4-full-handoff.zip` | 374769889 | `c278ff1383570cee840fbfd9cf249297546e6e13fff5c93fd0e066787fd1986d` |
+| `z-in-q-version4-current-handoff.zip` | 34908844 | `ecbbfc6b18a23ae3cdee64287a18bf863996bc8bff98486b40b2f0842a6ebcc9` |
+
+The new [frozen plan](research-2026-11-06-r3/handoff-plan.json) has SHA-256 `bbe7aa99b2a710e1f544f52efcf2e5ab8aa90fe094e27978881afb84c6a22784`. These post-build records do not alter the snapshot inside either archive.
+
 ## November 6 revision 2
 
 The [November 6 revision-2 research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-06-r2) contains refreshed full and current-only handoffs. The manuscript and polynomial remain Version 4. The added [collaborator research collection](../research/2026-11-06-collaborator-notes/README.md) has unchanged supplied articles, the height replacement, source pins, and reproducible small checks. The original Version 4 archives below remain immutable historical snapshots.
