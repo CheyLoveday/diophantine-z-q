@@ -85,3 +85,5 @@ Read the [Lean README](../lean/README.md) for the trust boundary and allowed axi
 The [manuscript workflow](../.github/workflows/manuscript-integration.yml) reproduces the quartic, validates the historical and current manuscript inventories, and compiles the current manuscript. Run it by manual dispatch; the research workflow also runs on pushes. The [research workflow](../.github/workflows/research-checks.yml) checks the original construction, the historical inventory, manuscript compilation and the accepted Lean helpers.
 
 GitHub Actions dependencies are pinned to commit hashes; the elan installer and Tectonic archives are pinned by SHA-256. Workflows upload their reports and logs. A green run means the named checks passed on that commit. It does not certify the global arithmetic inputs or complete the main Lean proof.
+
+The Version 4 acceptance digest is `1c804517a5d8f8ad5965f80cf22832611d1fcb409da8aded412a657ce009442d`, recorded in [the release evidence](quartic-4973-validation/RELEASE_EVIDENCE.json).

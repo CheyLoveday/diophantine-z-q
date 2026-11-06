@@ -27,3 +27,18 @@ Run the actual mathematical computations from `current/` using the [reproduction
 The unchanged historical baseline is 339,860,770 bytes, SHA-256 `827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b`. Its own `current/` directory means current at its historical date. The full archive is self-contained for the included collections, not a claim to contain every private research record. Conversational transcripts and credentials are excluded.
 
 See [BUILDING.md](BUILDING.md) and [SCOPE.md](SCOPE.md). A later commit may record the finished archive checksums; the archive continues to identify the earlier snapshot it actually contains.
+
+## Verified Version 4 artifacts
+
+The archives contain public snapshot `2ba2e731eba9a9886bd10a0c3535ad0a8d368a7c`.
+The [build receipt](../docs/quartic-4973-validation/HANDOFF_BUILD_RECEIPT.json)
+records complete member checks for both archives. The current-only archive also
+passed extraction. [The frozen plan](../docs/quartic-4973-validation/HANDOFF_PLAN.json)
+has SHA-256 `1eeafb3f7eb413ee882091792a19384ca557cd82c3ddf251b55b38504b81ed42`.
+
+| Archive | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `z-in-q-version4-full-handoff.zip` | 371756101 | `65b113940ea88433d34fc00fcb5f472011664d127bcbaccec7ceb5b5b672ad20` |
+| `z-in-q-version4-current-handoff.zip` | 31895055 | `b5a4ed9e0b4e58ad53c0410f3976259b696892a4883557aab5ab05e567b00086` |
+
+These post-build records were added after the archived snapshot. They do not change either ZIP.
