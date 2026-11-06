@@ -64,14 +64,14 @@
       "sha256": "022a0ad3e29b682a9ab0c4cd04c0aaa901d1a779d36fb139e152dcb6fa2a0c9d"
     },
     "integrated_manuscript_review": {
-      "bytes": 5149,
-      "path": "docs/quartic-4973-validation/INTEGRATION_REVIEW.md",
-      "sha256": "3bbd751dbddbc7a1f9551edb4bfe6f4677b496234bc7af37a314f1c1b69bdfc7"
+      "bytes": 2694,
+      "path": "docs/quartic-4973-validation/PHEIDAS_ATTRIBUTION_REVIEW.md",
+      "sha256": "6ce511a4215dc44fbe239f3ed18899ec88ddc0edc256b806d8598e284e3c1983"
     },
     "manuscript": {
-      "bytes": 719455,
+      "bytes": 720126,
       "path": "quartic_4973.tex",
-      "sha256": "2cb539bdd7039eef9a8fe489ee3b153bfa2d0e74c26006b8da3c617aa815c32b"
+      "sha256": "d1700d3450e9646422516efc0d37ca657b89b7a10734496d7fc02a2c09b12c34"
     },
     "parity_proof": {
       "bytes": 4187,
@@ -82,6 +82,11 @@
       "bytes": 2837,
       "path": "docs/quartic-4973-validation/POWER_PROOF.md",
       "sha256": "3c54dac96c0875481f407d05436ee18efcc1e3dce1f505074e995a5c920da0ac"
+    },
+    "previous_integrated_manuscript_review": {
+      "bytes": 5149,
+      "path": "docs/quartic-4973-validation/INTEGRATION_REVIEW.md",
+      "sha256": "3bbd751dbddbc7a1f9551edb4bfe6f4677b496234bc7af37a314f1c1b69bdfc7"
     },
     "relation_proof": {
       "bytes": 4859,

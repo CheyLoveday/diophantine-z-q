@@ -24,6 +24,8 @@ The November 6 revision-3 research update preserves the Version 4 manuscript and
 
 The full handoff combines the current public snapshot and selected research notes with the unchanged November 4 archive. The current-only handoff omits that embedded archive. The handoff guide specifies the included collections and verification procedure.
 
+The working TeX and PDF also include the November 6 Pheidas attribution update. The [update record](docs/quartic-4973-validation/pheidas-20261106/README.md) identifies the rebuilt PDF and current inventory hash. The release-tagged manuscripts and research ZIPs remain earlier snapshots.
+
 ## The polynomial
 
 The manuscript presents a fixed polynomial with integer coefficients such that, for every rational number $q$,

@@ -9,11 +9,11 @@
   "existing_files": [
     {
       "path": "quartic_4973.tex",
-      "sha256": "2cb539bdd7039eef9a8fe489ee3b153bfa2d0e74c26006b8da3c617aa815c32b"
+      "sha256": "d1700d3450e9646422516efc0d37ca657b89b7a10734496d7fc02a2c09b12c34"
     },
     {
       "path": "quartic_4973.pdf",
-      "sha256": "d56fd71b300136e1576af8d6dfd74b82fa47e825e6f2bade978d303a9ed8a6f6"
+      "sha256": "299e5f3342ddf42a30336aab73efd81a03c258b1012eb863397a101a74325fe7"
     },
     {
       "path": "docs/degree8-original/research/accepted-h5/review/H5_FINAL_ACCEPTANCE.md",
@@ -100,5 +100,10 @@
     "voight2021": "\\bibitem{voight2021} J. Voight, \\emph{Quaternion algebras},\nGraduate Texts in Mathematics \\textbf{288}, Springer, 2021,\nChapter 43, equations (43.1.2)--(43.1.3), p.~800, and\nMain Theorem 43.6.14, p.~819; proof pp.~822--823.\n\\url{https://doi.org/10.1007/978-3-030-56694-4_43}.",
     "vonKaenel2021": "\\bibitem{vonKaenel2021} R. von K\\\"anel,\n\\emph{The effective Shafarevich conjecture for abelian varieties of\n$\\mathrm{GL}_2$-type}, Forum of Mathematics, Sigma \\textbf{9} (2021), e39,\n1--29, equations (2.2) and (5.9), pp.~5 and 13.\n\\url{https://doi.org/10.1017/fms.2021.29}."
   },
-  "upstream_scope": "The full pinned manuscript and existing acceptance records contain the indirect geometric, de Rham, CM and representation dependencies. This list indexes direct H5 citations, not a new claim to have audited their proofs."
+  "upstream_scope": "The full pinned manuscript and existing acceptance records contain the indirect geometric, de Rham, CM and representation dependencies. This list indexes direct H5 citations, not a new claim to have audited their proofs.",
+  "editorial_rebinding": {
+    "date": "2026-11-06",
+    "reason": "Pheidas attribution and bibliography added; the pinned height-proof span is byte-identical.",
+    "record": "docs/quartic-4973-validation/pheidas-20261106/UPDATE.json"
+  }
 }

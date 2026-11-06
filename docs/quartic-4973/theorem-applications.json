@@ -7,11 +7,11 @@
       "author_proof": "anchor_proof",
       "consumer": "N5",
       "current_source": {
-        "end_character": 452466,
-        "first_line": 9487,
+        "end_character": 452735,
+        "first_line": 9492,
         "label": "lem:quartic-anchor-four",
-        "last_line": 9519,
-        "start_character": 450661,
+        "last_line": 9524,
+        "start_character": 450930,
         "text_sha256": "8908ac7be40394f421e6ad5b96271e6b20e2bb1d1cf66011465f94eb4b758ae7"
       },
       "id": "K_TRACE_23",
@@ -37,11 +37,11 @@
   "arithmetic_lemmas": [
     {
       "current_source": {
-        "end_character": 438878,
-        "first_line": 9207,
+        "end_character": 439147,
+        "first_line": 9212,
         "label": "lem:quartic-three-mode-coverage",
-        "last_line": 9223,
-        "start_character": 437872,
+        "last_line": 9228,
+        "start_character": 438141,
         "text_sha256": "5d7db3d464a72af6798e7ed83a374d31775293453d2c30d0677aa572dceef7bb"
       },
       "depends_on": [],
@@ -72,11 +72,11 @@
     },
     {
       "current_source": {
-        "end_character": 439754,
-        "first_line": 9225,
+        "end_character": 440023,
+        "first_line": 9230,
         "label": "lem:quartic-doubled-private-comparison",
-        "last_line": 9244,
-        "start_character": 438880,
+        "last_line": 9249,
+        "start_character": 439149,
         "text_sha256": "df87b6fcc18d8e19f7e26582a61c5cca9dd4da8504b01d9f62922a858d944e53"
       },
       "depends_on": [],
@@ -107,11 +107,11 @@
     },
     {
       "current_source": {
-        "end_character": 442226,
-        "first_line": 9256,
+        "end_character": 442495,
+        "first_line": 9261,
         "label": "lem:quartic-joint-chart",
-        "last_line": 9308,
-        "start_character": 440355,
+        "last_line": 9313,
+        "start_character": 440624,
         "text_sha256": "93a281b5e40bf47320134a5772c60157ffb684d4ca3b352e972612a9bb68f50d"
       },
       "depends_on": [
@@ -145,11 +145,11 @@
     },
     {
       "current_source": {
-        "end_character": 444475,
-        "first_line": 9332,
+        "end_character": 444744,
+        "first_line": 9337,
         "label": "lem:quartic-private-conic-packing",
-        "last_line": 9360,
-        "start_character": 443004,
+        "last_line": 9365,
+        "start_character": 443273,
         "text_sha256": "7b537913ac148ce3570bb0b7d0fdccd980a820128a23b3cc2d5b1011c85e5b04"
       },
       "depends_on": [],
@@ -178,11 +178,11 @@
     },
     {
       "current_source": {
-        "end_character": 444475,
-        "first_line": 9332,
+        "end_character": 444744,
+        "first_line": 9337,
         "label": "lem:quartic-private-conic-packing",
-        "last_line": 9360,
-        "start_character": 443004,
+        "last_line": 9365,
+        "start_character": 443273,
         "text_sha256": "7b537913ac148ce3570bb0b7d0fdccd980a820128a23b3cc2d5b1011c85e5b04"
       },
       "depends_on": [
@@ -217,11 +217,11 @@
     },
     {
       "current_source": {
-        "end_character": 446089,
-        "first_line": 9365,
+        "end_character": 446358,
+        "first_line": 9370,
         "label": "lem:quartic-conic-completeness",
-        "last_line": 9391,
-        "start_character": 444623,
+        "last_line": 9396,
+        "start_character": 444892,
         "text_sha256": "0e26026bf095f11d6583340d16e3ef2562c1698cab51270adca96f071f63875d"
       },
       "depends_on": [
@@ -259,11 +259,11 @@
     },
     {
       "current_source": {
-        "end_character": 452466,
-        "first_line": 9487,
+        "end_character": 452735,
+        "first_line": 9492,
         "label": "lem:quartic-anchor-four",
-        "last_line": 9519,
-        "start_character": 450661,
+        "last_line": 9524,
+        "start_character": 450930,
         "text_sha256": "8908ac7be40394f421e6ad5b96271e6b20e2bb1d1cf66011465f94eb4b758ae7"
       },
       "depends_on": [],
@@ -293,11 +293,11 @@
     },
     {
       "current_source": {
-        "end_character": 453599,
-        "first_line": 9527,
+        "end_character": 453868,
+        "first_line": 9532,
         "label": "lem:quartic-local-lucas",
-        "last_line": 9547,
-        "start_character": 452573,
+        "last_line": 9552,
+        "start_character": 452842,
         "text_sha256": "a2c1167ecb8f1772c23445a5b151711f6890696f10c46f087ae2e94c7ae70da5"
       },
       "depends_on": [
@@ -332,11 +332,11 @@
     },
     {
       "current_source": {
-        "end_character": 455713,
-        "first_line": 9549,
+        "end_character": 455982,
+        "first_line": 9554,
         "label": "lem:quartic-normalized-lucas",
-        "last_line": 9590,
-        "start_character": 453601,
+        "last_line": 9595,
+        "start_character": 453870,
         "text_sha256": "876a3b13213a6431443d3fd4f5da44dde8d9f82368462fc69a2ede2106f00c79"
       },
       "depends_on": [
@@ -368,11 +368,11 @@
     },
     {
       "current_source": {
-        "end_character": 450659,
-        "first_line": 9393,
+        "end_character": 450928,
+        "first_line": 9398,
         "label": "lem:quartic-linear-pole",
-        "last_line": 9485,
-        "start_character": 446091,
+        "last_line": 9490,
+        "start_character": 446360,
         "text_sha256": "414b693f9645c38b2e4742e1f359d4e715b31de85351480609d6acf533b1201c"
       },
       "depends_on": [
@@ -413,11 +413,11 @@
     },
     {
       "current_source": {
-        "end_character": 471845,
-        "first_line": 9117,
+        "end_character": 472114,
+        "first_line": 9122,
         "label": null,
-        "last_line": 9949,
-        "start_character": 433495,
+        "last_line": 9954,
+        "start_character": 433764,
         "text_sha256": "3d59f71d31c894b5641b8e806e421c9aee599ff50201fc598f725b12c49832ad"
       },
       "depends_on": [
@@ -444,11 +444,11 @@
     },
     {
       "current_source": {
-        "end_character": 459003,
-        "first_line": 9651,
+        "end_character": 459272,
+        "first_line": 9656,
         "label": "lem:quartic-doubled-indices",
-        "last_line": 9669,
-        "start_character": 458317,
+        "last_line": 9674,
+        "start_character": 458586,
         "text_sha256": "fbd618fe0c919f8ffb2d9652ad23b30932b04281c8169084553e5c123f3daf6b"
       },
       "depends_on": [
@@ -496,11 +496,11 @@
     },
     {
       "current_source": {
-        "end_character": 460447,
-        "first_line": 9676,
+        "end_character": 460716,
+        "first_line": 9681,
         "label": "lem:quartic-general-root-charts",
-        "last_line": 9699,
-        "start_character": 459262,
+        "last_line": 9704,
+        "start_character": 459531,
         "text_sha256": "420b4f129d6625eb70de4e531c86adf427cadd291b3fab82b996e4db6bcad787"
       },
       "depends_on": [
@@ -534,11 +534,11 @@
     },
     {
       "current_source": {
-        "end_character": 467949,
-        "first_line": 9857,
+        "end_character": 468218,
+        "first_line": 9862,
         "label": "lem:quartic-shared-field-square",
-        "last_line": 9875,
-        "start_character": 467039,
+        "last_line": 9880,
+        "start_character": 467308,
         "text_sha256": "c64054691f079b72563546c632d919c1b36be6387cb9f5adf9da4aeec452120a"
       },
       "depends_on": [
@@ -572,11 +572,11 @@
     },
     {
       "current_source": {
-        "end_character": 465148,
-        "first_line": 9753,
+        "end_character": 465417,
+        "first_line": 9758,
         "label": "lem:quartic-target-two",
-        "last_line": 9798,
-        "start_character": 462844,
+        "last_line": 9803,
+        "start_character": 463113,
         "text_sha256": "e326da7ff0eeef669fb7cb94acca4c056ebe4e334587db05bae6be69aecd5b88"
       },
       "depends_on": [
@@ -631,11 +631,11 @@
     },
     {
       "current_source": {
-        "end_character": 467033,
-        "first_line": 9828,
+        "end_character": 467302,
+        "first_line": 9833,
         "label": "lem:quartic-tangent-fusion",
-        "last_line": 9851,
-        "start_character": 466026,
+        "last_line": 9856,
+        "start_character": 466295,
         "text_sha256": "d86576384374be3fe6314561f0f4153ced967a754ee84ab178a6ab040280a91a"
       },
       "depends_on": [
@@ -670,11 +670,11 @@
     },
     {
       "current_source": {
-        "end_character": 469474,
-        "first_line": 9879,
+        "end_character": 469743,
+        "first_line": 9884,
         "label": "lem:quartic-first-norm-fusion",
-        "last_line": 9908,
-        "start_character": 467953,
+        "last_line": 9913,
+        "start_character": 468222,
         "text_sha256": "8aa0759ff5c221c0541541c3b08d699c0d4a9cef77bb25ed605b842543cbfd02"
       },
       "depends_on": [
@@ -731,11 +731,11 @@
     }
   ],
   "arithmetic_summary": {
-    "end_character": 458238,
-    "first_line": 9604,
+    "end_character": 458507,
+    "first_line": 9609,
     "label": "thm:quartic-selective-arithmetic",
-    "last_line": 9645,
-    "start_character": 456488,
+    "last_line": 9650,
+    "start_character": 456757,
     "text_sha256": "0ff90514dc3b16a98ba8a76d4ccbf10851f611e821c92029761e02077ace1588"
   },
   "endpoint": {
@@ -796,11 +796,11 @@
             8806
           ],
           "version4_location": {
-            "end_character": 419735,
-            "first_line": 8780,
+            "end_character": 420004,
+            "first_line": 8785,
             "label": null,
-            "last_line": 8791,
-            "start_character": 419082,
+            "last_line": 8796,
+            "start_character": 419351,
             "text_sha256": "0da52263918636c67b28041116fee5da12032d9457c9c242405bc9bd7a6ffa85"
           }
         }
@@ -837,11 +837,11 @@
             8819
           ],
           "version4_location": {
-            "end_character": 420282,
-            "first_line": 8793,
+            "end_character": 420551,
+            "first_line": 8798,
             "label": null,
-            "last_line": 8804,
-            "start_character": 419737,
+            "last_line": 8809,
+            "start_character": 420006,
             "text_sha256": "5c76bf57fc1f52b0ea595a9f3adaf86379374a077b126aa94997ea3fba6323a0"
           }
         },
@@ -854,11 +854,11 @@
             8834
           ],
           "version4_location": {
-            "end_character": 420952,
-            "first_line": 8806,
+            "end_character": 421221,
+            "first_line": 8811,
             "label": null,
-            "last_line": 8819,
-            "start_character": 420284,
+            "last_line": 8824,
+            "start_character": 420553,
             "text_sha256": "acf0c4f74f9796ff53b8e3a5bd185ab6138f3169827296f8ff51a420b88bbd69"
           }
         }
@@ -906,11 +906,11 @@
             8878
           ],
           "version4_location": {
-            "end_character": 422764,
-            "first_line": 8841,
+            "end_character": 423033,
+            "first_line": 8846,
             "label": null,
-            "last_line": 8863,
-            "start_character": 421881,
+            "last_line": 8868,
+            "start_character": 422150,
             "text_sha256": "365e46e47d5a9433d7e0088b277d2052614b7b272523573ac6cbd8027d904f14"
           }
         },
@@ -923,11 +923,11 @@
             8909
           ],
           "version4_location": {
-            "end_character": 423790,
-            "first_line": 8865,
+            "end_character": 424059,
+            "first_line": 8870,
             "label": null,
-            "last_line": 8894,
-            "start_character": 422766,
+            "last_line": 8899,
+            "start_character": 423035,
             "text_sha256": "fdec9388f6ae6fb408ed8453eb5b183d719fa1a1d7e2ea711b250daf952b4eb2"
           }
         }
@@ -975,11 +975,11 @@
             8909
           ],
           "version4_location": {
-            "end_character": 423790,
-            "first_line": 8865,
+            "end_character": 424059,
+            "first_line": 8870,
             "label": null,
-            "last_line": 8894,
-            "start_character": 422766,
+            "last_line": 8899,
+            "start_character": 423035,
             "text_sha256": "fdec9388f6ae6fb408ed8453eb5b183d719fa1a1d7e2ea711b250daf952b4eb2"
           }
         }
@@ -1244,26 +1244,26 @@
     }
   ],
   "main_theorem": {
-    "end_character": 416051,
-    "first_line": 8690,
+    "end_character": 416320,
+    "first_line": 8695,
     "label": "thm:quartic",
-    "last_line": 8706,
-    "start_character": 415395,
+    "last_line": 8711,
+    "start_character": 415664,
     "text_sha256": "135e52c477fbcab32c21967aec0483a5aceeec3c691d9b3f285d79d9f5b26d83"
   },
   "manuscript": {
-    "bytes": 719455,
+    "bytes": 720126,
     "path": "quartic_4973.tex",
-    "sha256": "2cb539bdd7039eef9a8fe489ee3b153bfa2d0e74c26006b8da3c617aa815c32b"
+    "sha256": "d1700d3450e9646422516efc0d37ca657b89b7a10734496d7fc02a2c09b12c34"
   },
   "schema": "quartic-v4-theorem-inventory-v1",
   "scope": "Text, dependency and exact artifact binding; arithmetic truth, source audit and replay are separate reviewed gates",
   "selected_body": {
-    "end_character": 471845,
-    "first_line": 9117,
+    "end_character": 472114,
+    "first_line": 9122,
     "label": null,
-    "last_line": 9949,
-    "start_character": 433495,
+    "last_line": 9954,
+    "start_character": 433764,
     "text_sha256": "3d59f71d31c894b5641b8e806e421c9aee599ff50201fc598f725b12c49832ad"
   },
   "selected_features": {

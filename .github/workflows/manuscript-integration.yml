@@ -78,5 +78,5 @@ jobs:
         run: |
           ulimit -v 2097152
           python -E -B docs/theorem-application-audit/validate.py
-          python -E -B docs/quartic-4973/inventory.py validate --repo . --docs docs/quartic-4973 --acceptance-sha256 1c804517a5d8f8ad5965f80cf22832611d1fcb409da8aded412a657ce009442d
+          python -E -B docs/quartic-4973/inventory.py validate --repo . --docs docs/quartic-4973 --acceptance-sha256 06dd04ceb4bdcb40875e70293bf68abba61fd17052a5e90a70ade61af649d88b
           python -E -B handoff/test_handoff.py
