@@ -1,26 +1,28 @@
 # Z is Diophantine in Q
 
-## Version 6
+## Version 7
 
-This repository contains *Z is Diophantine in Q*, Version 6, dated November 6, 2026. The manuscript presents three integer-coefficient polynomials whose rational zero projections it proves to be the ordinary integers. It retains the original large construction and the fully expanded Version 4 quartic, and adds a reconstructed quartic in 962 variables.
+This repository contains *Z is Diophantine in Q*, Version 7, dated November 6, 2026. The manuscript presents three integer-coefficient polynomials whose rational zero projections it proves to be the ordinary integers. It retains the original large construction and the fully expanded Version 4 quartic, and includes the reconstructed quartic in 962 variables introduced in Version 6.
 
 The project uses the collective agentic notes from Stefan Baranczuk, Jose Brox, Gabe Conant, Sohail Farhangi, James Freitag, Elliot Glazer, Jennifer Park, and Caroline Terry.
 
 | To | Open |
 | --- | --- |
-| Read Version 6 | [Manuscript PDF](quartic_962.pdf), [TeX source](quartic_962.tex) |
+| Read Version 7 | [Manuscript PDF](quartic_962.pdf), [TeX source](quartic_962.tex) |
 | Reproduce the new 962-variable quartic | [Polynomial, source program and independent checks](docs/quartic-962/README.md) |
 | Read the fully expanded Version 4 quartic | [4,973-variable package](quartics/quartic-4973/README.md), [integer monomial table](quartics/quartic-4973/polynomial.expanded.txt) |
-| Inspect theorem applications and conventions | [Version 6 inventory](docs/quartic-962/README.md) |
+| Inspect theorem applications and conventions | [Version 7 inventory](docs/quartic-962/README.md) |
 | Build the manuscript or run the checks | [Build instructions](docs/building.md) |
-| Download the Version 6 research handoffs | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-6/z-in-q-version6-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-6/z-in-q-version6-current-handoff.zip), [contents and verification](handoff/README.md) |
+| Download the Version 7 research handoffs | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-7/z-in-q-version7-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-7/z-in-q-version7-current-handoff.zip), [contents and verification](handoff/README.md) |
 | Read collaborator notes and the height replacement | [Research update](research/2026-11-06-collaborator-notes/README.md) |
 | Read the October 11 manuscript | [Manuscript and provenance](October%2011%20Manuscript/README.md) |
 | Find earlier constructions and research history | [Research guide](docs/research-guide.md) |
 | Inspect the partial formalization | [Accepted Lean helpers](lean/README.md) |
 | Cite the manuscript or report an issue | [BibTeX](CITATION.bib), [contribution guide](CONTRIBUTING.md) |
 
-The full handoff includes the current public snapshot, selected research notes, and the unchanged Version 5 full handoff, which preserves the earlier November 4 archive. The current-only handoff omits the embedded historical archive. Neither includes a conversational transcript.
+Version 7 incorporates four further audits of the Gaussian appendix and their repairs. See the [audit summary](docs/quartic-962/gaussian-audit-20261106.md) for the changes and review limits.
+
+The full handoff includes the current public snapshot, selected research notes, and the unchanged Version 6 full handoff, which preserves the Version 5 and earlier November 4 archives. The current-only handoff omits the embedded historical archive. Neither includes a conversational transcript.
 
 ## The three polynomials
 
@@ -47,7 +49,7 @@ The new polynomial builds on an independent reconstruction of the public [agenti
 
 The finite checks verify the source program, algebraic coordinate changes, projection-preserving eliminations, complete sum-of-squares expansion and coefficient statistics. Independent checks and rejection tests accompany the package. These checks do not prove the source system's arithmetic characterization of the integers.
 
-The manuscript supplies that arithmetic argument. The [Version 6 inventory](docs/quartic-962/README.md) records exact theorem applications, source versions, hypotheses, conventions and translations. Version 6 proves the needed Gaussian ray-field estimate within the manuscript, following the method of Frei–Tinková without assuming their theorem. The replacement uses Mitsui's published prime-ideal estimate, Green–Tao's one-parameter results, and ordinary-prime transference.
+The manuscript supplies that arithmetic argument. The [Version 7 inventory](docs/quartic-962/README.md) records exact theorem applications, source versions, hypotheses, conventions and translations. Version 6 proves the needed Gaussian ray-field estimate within the manuscript, following the method of Frei–Tinková without assuming their theorem. The replacement uses Mitsui's published prime-ideal estimate, Green–Tao's one-parameter results, and ordinary-prime transference.
 
 The inventory retains source-version qualifications. In particular, the applications of Dodos–Kanellopoulos and Kollár were checked in the stated author versions of published works; their final typeset statements were not compared. This is not a claim that every cited source's final published text has been inspected.
 
@@ -57,7 +59,7 @@ The Lean formalization is incomplete. The accepted snapshot contains 48 helper m
 
 ## Earlier work and provenance
 
-The October 11, 2026 manuscript, *A conditional Diophantine definition of Z in Q from four arithmetic inputs*, was produced by Sohail Farhangi with ChatGPT 6. Its PDF is preserved without modification. Its provenance and conditional scope are distinct from Version 6.
+The October 11, 2026 manuscript, *A conditional Diophantine definition of Z in Q from four arithmetic inputs*, was produced by Sohail Farhangi with ChatGPT 6. Its PDF is preserved without modification. Its provenance and conditional scope are distinct from Version 7.
 
 The November manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1, and Opus 5.5, with auditing from Fable 5.1. The [Version 5 manuscript](quartic_1272.pdf), [Version 4 manuscript](quartic_4973.pdf), [Version 3 manuscript](quartic_9625.pdf) and [Version 2 manuscript](quartic_12504.pdf) remain historical references, with their separate polynomial packages and inventories. Earlier research handoffs identify their own snapshots.
 

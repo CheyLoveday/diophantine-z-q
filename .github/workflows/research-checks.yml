@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: '24.22.1'
       - run: python scripts/check_quartic962.py --out build/quartic-962-reproduction
-      - run: python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex --expected-input-sha256 b7a42a50809c85ef14a9380a15576ef0170bad571ef713c329e31f594f8c12cf
+      - run: python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex --expected-input-sha256 19dd5a1a1f840f180934bac95435289ede8c63795133efe92273c1f05323e659
       - run: python -E -B -m unittest discover -s docs/quartic-962 -p test_inventory.py -v
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

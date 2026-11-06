@@ -1,4 +1,4 @@
-name: Version 6 manuscript and quartic verification
+name: Version 7 manuscript and quartic verification
 
 on:
   workflow_dispatch:
@@ -85,14 +85,14 @@ jobs:
         with:
           path: .cache/tectonic
           key: tectonic-${{ runner.os }}-0.17.0-6ffe055852f8faf66
-      - name: Compile the exact Version 6 manuscript
+      - name: Compile the exact Version 7 manuscript
         run: python scripts/build_paper.py
       - name: Render changed pages for visual review
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y poppler-utils
           ulimit -v 2097152
-          python scripts/render_quartic_review.py --pdf build/paper/quartic_962.pdf --edition v6 --expected-pages 249
+          python scripts/render_quartic_review.py --pdf build/paper/quartic_962.pdf --edition v7 --expected-pages 252
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -116,6 +116,6 @@ jobs:
           python -E -B docs/theorem-application-audit/validate.py
           python -E -B docs/quartic-4973/inventory.py validate --repo . --docs docs/quartic-4973 --acceptance-sha256 06dd04ceb4bdcb40875e70293bf68abba61fd17052a5e90a70ade61af649d88b
           python -E -B docs/quartic-1272/inventory.py validate --repo . --manuscript quartic_1272.tex --expected-input-sha256 695769c38917efa35b6256132cd8b77807d6384ab6d27c38f250ff8947ae6c10
-          python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex --expected-input-sha256 b7a42a50809c85ef14a9380a15576ef0170bad571ef713c329e31f594f8c12cf
+          python -E -B docs/quartic-962/inventory.py validate --repo . --manuscript quartic_962.tex --expected-input-sha256 19dd5a1a1f840f180934bac95435289ede8c63795133efe92273c1f05323e659
           python -E -B -m unittest discover -s docs/quartic-962 -p test_inventory.py -v
           python -E -B handoff/test_handoff.py

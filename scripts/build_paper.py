@@ -111,7 +111,7 @@ def main():
     if source.read_bytes() != source_bytes:
         raise RuntimeError("Manuscript changed during build")
     receipt = {"engine": version, "bundle_url": BUNDLE, "bundle_fingerprint": BUNDLE_DIGEST,
-               "manuscript_version": 6, "pdf": "quartic_962.pdf",
+               "manuscript_version": 7, "pdf": "quartic_962.pdf",
                "source_sha256": sha(source_bytes), "pdf_sha256": sha(pdf), "pdf_bytes": len(pdf),
                "tex_errors": 0, "unresolved_references": False,
                "original_pdf_replaced": False, "byte_identity_to_uploaded_pdf_claimed": False}

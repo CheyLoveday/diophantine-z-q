@@ -10476,206 +10476,6 @@
       "text_sha256": "133ee2b515557c94cdacb5247e1e9ab186021320041abc37412a225ee20497df"
     },
     {
-      "application_id": "V5-SUN-BHB-BOX",
-      "current": {
-        "end_character": 778352,
-        "first_line": 16391,
-        "last_line": 16410,
-        "path": "quartic_962.tex",
-        "start_character": 777248,
-        "text_sha256": "5cbd0eca8c553ddd2c14fd5bad0ce7ae18896314c930ed8ecac310d43a0b841c"
-      },
-      "historical": {
-        "end_character": 762860,
-        "first_line": 16062,
-        "label": "eq:v5-box-sieve",
-        "last_line": 16081,
-        "path": "quartic_1272.tex",
-        "start_character": 761756,
-        "text_sha256": "5cbd0eca8c553ddd2c14fd5bad0ce7ae18896314c930ed8ecac310d43a0b841c"
-      },
-      "id": "V5-SUN-BHB-BOX:v5:0",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "5cbd0eca8c553ddd2c14fd5bad0ce7ae18896314c930ed8ecac310d43a0b841c"
-    },
-    {
-      "application_id": "V5-SUN-BHB-BOX",
-      "current": {
-        "end_character": 782269,
-        "first_line": 16412,
-        "last_line": 16501,
-        "path": "quartic_962.tex",
-        "start_character": 778354,
-        "text_sha256": "69b8000b4607495db7c538fcd6a8f8cfe7dcd36fa01e3ceb66a5e74185701d25"
-      },
-      "historical": {
-        "end_character": 766777,
-        "first_line": 16083,
-        "label": "lem:v5-large-sieve",
-        "last_line": 16172,
-        "path": "quartic_1272.tex",
-        "start_character": 762862,
-        "text_sha256": "69b8000b4607495db7c538fcd6a8f8cfe7dcd36fa01e3ceb66a5e74185701d25"
-      },
-      "id": "V5-SUN-BHB-BOX:v5:1",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "69b8000b4607495db7c538fcd6a8f8cfe7dcd36fa01e3ceb66a5e74185701d25"
-    },
-    {
-      "application_id": "V5-SUN-BHB-BOX",
-      "current": {
-        "end_character": 783722,
-        "first_line": 16503,
-        "last_line": 16531,
-        "path": "quartic_962.tex",
-        "start_character": 782271,
-        "text_sha256": "83e4ffd69fd7a2f5e46b7ab8ce4d53a12687b7cad24f5ced5ab9a3bd5ff83de3"
-      },
-      "historical": {
-        "end_character": 768230,
-        "first_line": 16174,
-        "label": "prop:v5-obstruction-tail",
-        "last_line": 16202,
-        "path": "quartic_1272.tex",
-        "start_character": 766779,
-        "text_sha256": "83e4ffd69fd7a2f5e46b7ab8ce4d53a12687b7cad24f5ced5ab9a3bd5ff83de3"
-      },
-      "id": "V5-SUN-BHB-BOX:v5:2",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "83e4ffd69fd7a2f5e46b7ab8ce4d53a12687b7cad24f5ced5ab9a3bd5ff83de3"
-    },
-    {
-      "application_id": "V5-SUN-BHB-LATTICES",
-      "current": {
-        "end_character": 778352,
-        "first_line": 16391,
-        "last_line": 16410,
-        "path": "quartic_962.tex",
-        "start_character": 777248,
-        "text_sha256": "5cbd0eca8c553ddd2c14fd5bad0ce7ae18896314c930ed8ecac310d43a0b841c"
-      },
-      "historical": {
-        "end_character": 762860,
-        "first_line": 16062,
-        "label": "eq:v5-lattice-tail",
-        "last_line": 16081,
-        "path": "quartic_1272.tex",
-        "start_character": 761756,
-        "text_sha256": "5cbd0eca8c553ddd2c14fd5bad0ce7ae18896314c930ed8ecac310d43a0b841c"
-      },
-      "id": "V5-SUN-BHB-LATTICES:v5:0",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "5cbd0eca8c553ddd2c14fd5bad0ce7ae18896314c930ed8ecac310d43a0b841c"
-    },
-    {
-      "application_id": "V5-SUN-BHB-LATTICES",
-      "current": {
-        "end_character": 782269,
-        "first_line": 16412,
-        "last_line": 16501,
-        "path": "quartic_962.tex",
-        "start_character": 778354,
-        "text_sha256": "69b8000b4607495db7c538fcd6a8f8cfe7dcd36fa01e3ceb66a5e74185701d25"
-      },
-      "historical": {
-        "end_character": 766777,
-        "first_line": 16083,
-        "label": "lem:v5-large-sieve",
-        "last_line": 16172,
-        "path": "quartic_1272.tex",
-        "start_character": 762862,
-        "text_sha256": "69b8000b4607495db7c538fcd6a8f8cfe7dcd36fa01e3ceb66a5e74185701d25"
-      },
-      "id": "V5-SUN-BHB-LATTICES:v5:1",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "69b8000b4607495db7c538fcd6a8f8cfe7dcd36fa01e3ceb66a5e74185701d25"
-    },
-    {
-      "application_id": "V5-SUN-KL-RAYS",
-      "current": {
-        "end_character": 873810,
-        "first_line": 18441,
-        "last_line": 18453,
-        "path": "quartic_962.tex",
-        "start_character": 873046,
-        "text_sha256": "9ee78328d11e9d5e3afddac25c228de0b77956c68bea1e38d5471a057c06676f"
-      },
-      "historical": {
-        "end_character": 778582,
-        "first_line": 16407,
-        "label": "eq:v5-ray-group",
-        "last_line": 16419,
-        "path": "quartic_1272.tex",
-        "start_character": 777818,
-        "text_sha256": "9ee78328d11e9d5e3afddac25c228de0b77956c68bea1e38d5471a057c06676f"
-      },
-      "id": "V5-SUN-KL-RAYS:v5:0",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "9ee78328d11e9d5e3afddac25c228de0b77956c68bea1e38d5471a057c06676f"
-    },
-    {
-      "application_id": "V5-SUN-KL-RAYS",
-      "current": {
-        "end_character": 877758,
-        "first_line": 18482,
-        "last_line": 18539,
-        "path": "quartic_962.tex",
-        "start_character": 875164,
-        "text_sha256": "05d5c487a6abb3482a395475ee8573ea285ca7ef2894d7efc1ad41edd78adc7f"
-      },
-      "historical": {
-        "end_character": 782530,
-        "first_line": 16448,
-        "label": "lem:v5-ray-fibres",
-        "last_line": 16505,
-        "path": "quartic_1272.tex",
-        "start_character": 779936,
-        "text_sha256": "05d5c487a6abb3482a395475ee8573ea285ca7ef2894d7efc1ad41edd78adc7f"
-      },
-      "id": "V5-SUN-KL-RAYS:v5:1",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "05d5c487a6abb3482a395475ee8573ea285ca7ef2894d7efc1ad41edd78adc7f"
-    },
-    {
-      "application_id": "V5-SUN-KL-RAYS",
-      "current": {
-        "end_character": 877758,
-        "first_line": 18482,
-        "last_line": 18539,
-        "path": "quartic_962.tex",
-        "start_character": 875164,
-        "text_sha256": "05d5c487a6abb3482a395475ee8573ea285ca7ef2894d7efc1ad41edd78adc7f"
-      },
-      "historical": {
-        "end_character": 782530,
-        "first_line": 16448,
-        "label": "eq:v5-ray-density",
-        "last_line": 16505,
-        "path": "quartic_1272.tex",
-        "start_character": 779936,
-        "text_sha256": "05d5c487a6abb3482a395475ee8573ea285ca7ef2894d7efc1ad41edd78adc7f"
-      },
-      "id": "V5-SUN-KL-RAYS:v5:2",
-      "match_count": 1,
-      "predecessor_version": 5,
-      "status": "exact_unchanged_text",
-      "text_sha256": "05d5c487a6abb3482a395475ee8573ea285ca7ef2894d7efc1ad41edd78adc7f"
-    },
-    {
       "application_id": "V5-SUN-WILLIAMS-MERTENS",
       "current": {
         "end_character": 777182,
@@ -10703,11 +10503,11 @@
     {
       "application_id": "V5-SUN-WILLIAMS-MERTENS",
       "current": {
-        "end_character": 878914,
-        "first_line": 18541,
-        "last_line": 18565,
+        "end_character": 887643,
+        "first_line": 18717,
+        "last_line": 18741,
         "path": "quartic_962.tex",
-        "start_character": 877760,
+        "start_character": 886489,
         "text_sha256": "38d0da8cd63c825d46dbfc0a83f2fd66cf7900202882c1d31962b1c924e9eee1"
       },
       "historical": {
@@ -15481,9 +15281,9 @@
     }
   ],
   "current_manuscript": {
-    "bytes": 903386,
+    "bytes": 912132,
     "path": "quartic_962.tex",
-    "sha256": "06f98ff070139c3b6c60589c65867ceb4366b023f7960551abd52f85fa67e30c"
+    "sha256": "5399d2fb3c3beea388ccdb5719934772f222b49d02482a05ac3abc515321419a"
   },
   "old_manuscript": {
     "bytes": 720126,
