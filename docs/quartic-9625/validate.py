@@ -152,6 +152,10 @@ def validate_finite(pkg):
     for name,pin in [('source-audit.json',AUDIT_SHA),('construction-map.json',MAP_SHA),('reproducibility/pipeline/check_source.py',AUDITOR_SHA),('source-residuals.jsonl.gz',SOURCE_SHA),
                      ('certificate.jsonl.gz',EXPECTED['certificate_sha256']),('verify_certificate.py',EXPECTED['checker_sha256']),('polynomial.expanded.txt',EXPECTED['expanded_sha256'])]:
         require(sha(pkg/name)==pin,'Changed finite input '+name)
+    require(sha(pkg/'source-layout.json')==entry['source_layout_sha256'],'Changed source layout')
+    audit=load(pkg/'source-audit.json')
+    for name,pin in audit['checker_dependencies_sha256'].items():
+        require(sha(path(pkg/'reproducibility/pipeline',name))==pin,'Changed source auditor dependency '+name)
     require(digest(gzip.decompress((pkg/'source-residuals.jsonl.gz').read_bytes()))==SOURCE_RAW_SHA,'Raw source differs')
     require(digest(gzip.decompress((pkg/'polynomial.expanded.txt.gz').read_bytes()))==EXPECTED['expanded_sha256'],'Expanded gzip differs')
     for rel,pin in entry['inspected_files_sha256'].items():

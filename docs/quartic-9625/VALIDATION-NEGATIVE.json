@@ -29,6 +29,6 @@
     "unapproved layout change"
   ],
   "count": 14,
-  "validator_sha256": "ba3d91bd2543afd2d9c735b45a4da2ab513f958c3b32ec0e3b1077afe25211f5",
+  "validator_sha256": "557be94153cc77abc20be350bf0d978bc8be24c989ce83f83bd836a0db2b1b98",
   "scope": "Metadata/binding rejection tests only; source and quartic replay are separate"
 }
