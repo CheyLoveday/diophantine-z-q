@@ -33,3 +33,5 @@ refer to omitted working paths. Consult the current source package and proof
 inventory for portable dependencies. The historical baseline retains its
 original notices and filtering policy; packaging it is not a new audit of its
 content or redistribution rights.
+
+The November 6 revision-2 snapshot includes twelve selected supplied mathematical documents and ledgers under `current/research/2026-11-06-collaborator-notes/supplied/`, plus the new comparison and height replacement. `SUPPLIED_SOURCES.json` records their exact hashes. `ARCHIVE_CATALOGUE.json` identifies all entries in the original ZIP and which were selected; central-directory metadata is not a content audit. The raw ZIP, nested ZIPs, prompts and execution logs are not republished.

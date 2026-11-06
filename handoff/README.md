@@ -1,5 +1,13 @@
 # Version 4 research handoffs
 
+## Newest research revision
+
+The [November 6 revision-2 research release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/research-handoff-2026-11-06-r2) contains refreshed full and current-only handoffs. The manuscript and polynomial remain Version 4. The added [collaborator research collection](../research/2026-11-06-collaborator-notes/README.md) has unchanged supplied articles, the height replacement, source pins, and reproducible small checks. The original Version 4 archives below remain immutable historical snapshots.
+
+The ZIP asset names retain `version4` because that is the manuscript they contain; use the dated research-release URL to distinguish this update. The release supplies its own new `SHA256SUMS`, `BUILD_RECEIPT.json` and `handoff-plan.json`.
+
+## Original Version 4 handoffs
+
 Date: November 6, 2026.
 
 The [Version 4 release](https://github.com/elliotglazer/diophantine-z-q/releases/tag/quartic-4973-version-4) contains two archives:

@@ -8,7 +8,7 @@ The separate history selection contains project mathematical proofs, independent
 
 `history/version4/` contains the selected three-mode, target-two, tangent, shared-square and first-norm research. Optional scalar/J0 fusion is explicitly marked unadopted. Historical Version 3 records retain their original paths and status, including alternatives which were not then adopted. The current release descriptor determines which construction is selected; a historical directory name does not determine current mathematical applicability.
 
-No raw private archive, transcript, access file, credential, unrelated project or downloaded comparison collection is selected. This is not a claim to preserve all research history. Original notes may refer to omitted context. Their older dates and provisional language remain as provenance; the current release descriptor and exact acceptance records identify the released result.
+No raw private archive, transcript, access file, credential or unrelated project is selected. The November 6 revision-2 snapshot adds the explicitly inventoried mathematical articles under `research/2026-11-06-collaborator-notes/`; the raw downloaded comparison ZIP and its nested archives are excluded. This is not a claim to preserve all research history. Original notes may refer to omitted context. Their older dates and provisional language remain as provenance; the current release descriptor and exact acceptance records identify the released result.
 
 The full handoff preserves the already-public November 4 revision-2 baseline byte for byte. This packaging does not claim a new content audit or new redistribution rights for that historical collection. The baseline's notices and filtering remain in force.
 

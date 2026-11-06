@@ -6,6 +6,10 @@ The source uses 13 full, eight beta-only and 16 Lucas-only comparisons, general 
 
 The [Version 4 handoff guide](../handoff/README.md) identifies the full and current-only archives, their scope and verification procedure. Both contain the exact public snapshot and selected research notes. The full archive also embeds the unchanged November 4 baseline.
 
+## November 6 research update
+
+The [organized collaborator collection](../research/2026-11-06-collaborator-notes/README.md) includes the supplied equivalence and arithmetic-input notes, selected articles from the November 5 handoff, a comparison, and an exact replacement of the von Känel–Kret height input by the existing five-contact proof. Its source pins and check script distinguish a verified substitution from the still separate parity/point-existence question.
+
 ## Future work
 
 Version 5 requires at most 2,486 total variables, including the input. This is half the Version 4 count rounded down, and remains a search target.
@@ -48,7 +52,7 @@ The archive's K215 and ZFC-related files record additional research. The archive
 
 ## Verify and restore the archive
 
-This section applies to the historical November 4 archive. For the current Version 3 archives, use the [handoff guide](../handoff/README.md). Download the historical ZIP from its release. Its SHA-256 is:
+This section applies to the historical November 4 archive. For the current research archives, use the [handoff guide](../handoff/README.md). Download the historical ZIP from its release. Its SHA-256 is:
 
 ```text
 827765f17087e1794c15770221a3a2d0fefed25839566a4a9bfb3b5aaa1ed42b

@@ -13,11 +13,14 @@ The project uses the collective agentic notes from Gabe Conant, Sohail Farhangi,
 | Read the complete polynomial and check its certificate | [Quartic package](quartics/quartic-4973/README.md) |
 | Inspect the proof dependencies and review evidence | [Version 4 evidence](docs/quartic-4973/README.md) |
 | Build the manuscript or run the checks | [Build instructions](docs/building.md) |
-| Download the Version 4 research handoffs | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-4973-version-4/z-in-q-version4-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-4973-version-4/z-in-q-version4-current-handoff.zip), [contents and verification](handoff/README.md) |
+| Download the newest research handoffs, November 6 revision 2 | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-06-r2/z-in-q-version4-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/research-handoff-2026-11-06-r2/z-in-q-version4-current-handoff.zip), [contents and verification](handoff/README.md) |
+| Read the collaborator notes and height replacement | [Research update](research/2026-11-06-collaborator-notes/README.md) |
 | Read the October 11 manuscript | [October 11 manuscript and provenance](October%2011%20Manuscript/README.md) |
 | Find earlier constructions and research history | [Research guide](docs/research-guide.md) |
 | Inspect the partial formalization | [Accepted Lean helpers](lean/README.md) |
 | Cite the manuscript or report an issue | [BibTeX](CITATION.bib), [contribution guide](CONTRIBUTING.md) |
+
+The November 6 revision-2 research update preserves the Version 4 manuscript and polynomial. It adds the collaborator notes, an explicit height-input replacement and their source/verification records.
 
 The full handoff combines the current public snapshot and selected research notes with the unchanged November 4 archive. The current-only handoff omits that embedded archive. The handoff guide specifies the included collections and verification procedure.
 
@@ -47,6 +50,8 @@ The [full monomial table](quartics/quartic-4973/polynomial.expanded.txt) specifi
 ## Verification status
 
 The certificate checks establish exact projection-preserving algebraic equivalence to the pinned source system and verify the full integer expansion. They check both directions of the algebraic transformations. They do not prove the source system's arithmetic characterization of the integers.
+
+The [current source-status note](research/2026-11-06-collaborator-notes/source-status.md) explains the generator-era `EXPLORATORY SOURCE` label in the frozen source entry.
 
 The manuscript supplies that arithmetic argument. The [Version 4 evidence](docs/quartic-4973/README.md) identifies its dependencies, source changes and review scopes. Version 4 uses the reviewed three-mode source with general roots, doubled targets, direct tangent equations, shared field squares and the first-norm denominator fusion. Optional scalar/J0 fusion is not used. The inventory preserves all five inherited source-version and proof-status qualifications and distinguishes them from the finite algebraic checks. The [earlier theorem-application inventory](docs/theorem-application-audit/README.md) contains 82 scoped decisions for its own frozen manuscript. Its recorded internal premises and version boundaries remain in force. It is not a blanket audit of every later statement.
 

@@ -4,10 +4,14 @@ Project licensing applies only to original project material. It does not relicen
 
 ## Mathematical sources
 
-- Sohail Farhangi with ChatGPT 6, [*A conditional Diophantine definition of Z in Q from four arithmetic inputs*](October%2011%20Manuscript/ZIsDiophantineInQBySohailsGPT-6.pdf), October 11, 2026. The manuscript is preserved without modification alongside its [provenance and comparison notes](October%2011%20Manuscript/README.md). Its provenance is separate from the current Version 3 collaboration credit.
+- Sohail Farhangi with ChatGPT 6, [*A conditional Diophantine definition of Z in Q from four arithmetic inputs*](October%2011%20Manuscript/ZIsDiophantineInQBySohailsGPT-6.pdf), October 11, 2026. The manuscript is preserved without modification alongside its [provenance and comparison notes](October%2011%20Manuscript/README.md). Its provenance is separate from the current Version 4 collaboration credit.
 - OpenAI, [*Hilbert's tenth problem over the rational numbers*](https://github.com/openai/math/blob/main/preprints/Hilberts-tenth-problem-over-the-rational-numbers-October-6-2026/main.pdf), October 6, 2026. This is a mathematical input cited by the manuscripts in this repository, not a proof produced by this repository.
 - Jonas Bayer, Marco David, Benedikt Stock, Abhik Pal, Yuri Matiyasevich, and Dierk Schleicher, [*Diophantine Equations and the DPRM Theorem*](https://isa-afp.org/entries/DPRM_Theorem.html), Archive of Formal Proofs, June 6, 2022. The entry is distributed under the BSD license linked on its page. The alpha-sequence and exponentiation constructions are credited in the relevant project sources. The curated construction directory does not vendor the Isabelle development.
 - Other mathematical sources for [Version 3](quartic_9625.pdf) are identified in its bibliography and [dependency evidence](docs/quartic-9625/README.md). The October 11 manuscript has its own bibliography. Historical review reports preserve their particular citations and scope.
+
+## November 6 supplied research
+
+The mathematical articles and ledgers under `research/2026-11-06-collaborator-notes/supplied/` were supplied for this collaborative project. They remain unchanged and retain their printed credits and terms. The two standalone PDFs were described as notes from Sohail Farhangi's collaborator; no more specific authorship is inferred. `SUPPLIED_SOURCES.json` records every source and hash. The repository license does not relicense these documents. The comparison and height-replacement note distinguish their claims from the current manuscript's accepted inputs.
 
 ## Build and proof dependencies
 
