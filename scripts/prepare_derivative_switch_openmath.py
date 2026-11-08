@@ -31,6 +31,14 @@ PACKETS = {
         "output": "lean/.checks/openmath-boundary-scalar",
         "targets": 21,
     },
+    "scalar-ratio": {
+        "path": "research/scalar-ratio",
+        "source_commit": "3d2243ff141f9681fbd6a659ca28ffddfae9b000",
+        "manifest": "d313ec3ff5ad0e91d555d26b2beef6ad401d7e9c86cdfe77adbe119062498610",
+        "project_manifest": "117f9ca2c28c42e45198f790dd8c3f324e1bed9d3af11ea9707575363304b811",
+        "output": "lean/.checks/openmath-scalar-ratio",
+        "targets": 39,
+    },
 }
 
 
@@ -55,8 +63,8 @@ def check_manifest(manifest, base, expected):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--packet", choices=sorted(PACKETS), default="boundary-scalar",
-                        help="The combined boundary-scalar default or the original six-lemma project")
+    parser.add_argument("--packet", choices=sorted(PACKETS), default="scalar-ratio",
+                        help="The current scalar-ratio project or an explicitly selected earlier freeze")
     parser.add_argument("--output", type=Path,
                         help="New output directory, relative to repository root unless absolute")
     args = parser.parse_args()
@@ -66,10 +74,14 @@ def main():
     if output.exists():
         raise SystemExit("Output must be new; choose another --output directory")
     prerequisite_count = 0
-    if args.packet == "boundary-scalar":
+    if args.packet in {"boundary-scalar", "scalar-ratio"}:
         old = PACKETS["six-lemma"]
         prerequisite_count = check_manifest(ROOT / old["path"] / "MANIFEST.sha256", ROOT,
                                             old["manifest"])
+    if args.packet == "scalar-ratio":
+        prior = PACKETS["boundary-scalar"]
+        prerequisite_count += check_manifest(ROOT / prior["path"] / "MANIFEST.sha256", ROOT,
+                                             prior["manifest"])
     count = check_manifest(packet / "MANIFEST.sha256", ROOT, plan["manifest"])
     checkout = subprocess.check_output(
         ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()

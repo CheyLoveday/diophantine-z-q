@@ -1,106 +1,110 @@
-# Open Math: boundary-scalar repository handoff
+# Open Math: scalar-ratio repository handoff
 
 Open Math pulls this repository and performs the Lean 4.35 paranoid run in its
 cloud environment. All preparation inputs are committed here; no local ZIP,
-Mac build directory or attachment is needed.
+Mac build directory or attachment is needed. Actual arithmetic boundary–cup
+compatibility remains OPEN, independently of the formal checking outcome.
 
 | Item | Value |
 | --- | --- |
 | Repository | `https://github.com/CheyLoveday/diophantine-z-q.git` |
-| Branch to pull | `codex/derivative-switch-boundary-v13` |
-| Reviewed boundary-scalar snapshot | `7ca086adf4298e2b611b9fa0b954eab838873bf3` |
-| Selected declarations | 21: original six, thirteen principal matrix results, two typed adapter results |
-| Local preparation | [prepare_derivative_switch_openmath.py](scripts/prepare_derivative_switch_openmath.py) |
-| Proof scope and local results | [Boundary-scalar verification](research/boundary-scalar/VERIFICATION.md) |
-| Original freeze | [Preserved six-lemma packet](research/determinant-switch/FREEZE.md) |
+| Branch | `codex/derivative-switch-boundary-v13` |
+| Reviewed scalar-ratio snapshot | `3d2243ff141f9681fbd6a659ca28ffddfae9b000` |
+| Selected declarations | 39: previous 21 plus 18 raw-frame/unit/adapter results |
+| Offline preparation | [prepare_derivative_switch_openmath.py](scripts/prepare_derivative_switch_openmath.py) |
+| Scope and observed local results | [Scalar-ratio verification](research/scalar-ratio/VERIFICATION.md) |
+| Prior freezes | [Six lemmas](research/determinant-switch/FREEZE.md), [boundary-scalar](research/boundary-scalar/VERIFICATION.md) |
 
-Pull the research branch, which contains these instructions and the reviewed
-snapshot. `main` is the unchanged Version 13 baseline and does not contain the
-research packet. Record the actual checkout commit; the preparation receipt
-records it too. Use the research branch explicitly when configuring Open Math's
-repository checkout.
+Use the research branch explicitly. `main` remains the Version 13 baseline and
+excludes this research contribution. Record the actual pulled checkout commit;
+the preparation receipt records it too. A private mirror also exists at
+`CheyLoveday/diophantine-z-q-private`, with the same reviewed research branch.
+The public fork above is the active pull destination.
 
-The existing fork above is the active Open Math pull destination. A private
-working copy also exists at `CheyLoveday/diophantine-z-q-private`; it retains
-the same reviewed source and can be used if private access is preferred later.
+## Prepare from the checkout
 
-## Prepare directly from the checkout
-
-From the repository root, with Git and Python 3.9 or newer:
+From the repository root with Git and Python 3.9 or newer:
 
 ```sh
-python3 -B scripts/prepare_derivative_switch_openmath.py --packet boundary-scalar
+python3 -B scripts/prepare_derivative_switch_openmath.py
 ```
 
-This offline command verifies both frozen manifests: the original 63 entries
-and the new 65 entries. It uses the reviewed generator to create
-`lean/.checks/openmath-boundary-scalar`. It checks the 17-file generated project
-against its frozen manifest digest and records the checkout in
-`OPENMATH_PREPARATION.json`.
-It requires no Lean installation, dependency cache or untracked local input.
-For another attempt use `--output lean/.checks/openmath-boundary-scalar-2`;
-existing output directories are never overwritten.
+The default is `--packet scalar-ratio`. This offline command verifies the two
+prior frozen manifests (63 and 65 inputs) and the current 99-input
+manifest, then creates `lean/.checks/openmath-scalar-ratio`. It checks the
+25 generated input files against manifest SHA-256
+`117f9ca2c28c42e45198f790dd8c3f324e1bed9d3af11ea9707575363304b811`,
+and writes `OPENMATH_PREPARATION.json`. No Lean installation, cache, network,
+untracked local ZIP or Mac artifact is used. Existing output directories are
+never overwritten; use `--output lean/.checks/openmath-scalar-ratio-2` for a
+second preparation.
 
-The [matrix proof](lean/Research/BoundaryScalar.lean),
-[typed adapter](lean/Research/BoundaryCupAdapter.lean),
-[original module](lean/Research/DerivativeSwitchBoundary.lean),
-[separate specifications](research/boundary-scalar/verification/Challenge.lean),
-[21-name configuration](research/boundary-scalar/verification/comparator.json),
-dependency lock and toolchain are copied from this checkout. The inherited
-default `ZInQ` target excludes the research lemmas, so use the generated project.
-Its default is the solution library; its challenge is separate.
+The generated default builds seven solution modules and Solution. Challenge
+is separate, with seven specification modules preserving their paired import
+contexts. The first three specifications retain the previous 21 unchanged;
+the new four use concrete definitions and eighteen theorem signatures. There
+are no definition holes. The inherited default ZInQ target excludes this
+contribution, so run the generated project.
 
-The default is the current combined project. Use `--packet six-lemma` to
-reproduce the original target and its original output directory explicitly.
-The three specification modules preserve the exact import context of each
-paired solution module, including its elaborated coercion instances.
+Earlier projects remain explicitly reproducible with `--packet boundary-scalar`
+(21 targets, previous output directory) and `--packet six-lemma` (six targets).
+Neither earlier freeze is rewritten or silently dropped from the combined
+current inventory.
 
-## Open Math's cloud execution
+## Open Math cloud execution
 
-Open Math supplies Linux, pinned Lean 4.35.0, Git, Python, and a working
-`bubblewrap` sandbox. Keep the reviewed challenge/configuration protected by
-the pinned manifest. The cloud setup resolves the nine locked dependency
-revisions and uses the official Mathlib cache for the required imports:
+Open Math supplies Linux, the pinned Lean 4.35.0 toolchain, Git, Python and a
+working bubblewrap sandbox. Protect the challenge/configuration/manifest from
+solution control. Use the nine locked dependency revisions and trust only the
+requested official Mathlib master cache closures:
 
 ```sh
 set -eu
-cd lean/.checks/openmath-boundary-scalar
+cd lean/.checks/openmath-scalar-ratio
 sha256sum -c MANIFEST.sha256
 lean --version
 lake --version
-MATHLIB_CACHE_DIR="$PWD/.lake/mathlib-cache" lake exe cache get \
+MATHLIB_CACHE_DIR="$PWD/.lake/mathlib-cache" lake exe cache get --cache-from=master \
   Mathlib.Algebra.Module.Equiv.Basic Mathlib.Tactic.Ring \
   Mathlib.LinearAlgebra.Matrix.Adjugate Mathlib.Tactic.FieldSimp \
-  Mathlib.LinearAlgebra.BilinearForm.Properties
+  Mathlib.LinearAlgebra.BilinearForm.Properties \
+  Mathlib.LinearAlgebra.Matrix.NonsingularInverse Mathlib.Tactic.Push \
+  Mathlib.Data.Matrix.Block Mathlib.Tactic.FinCases
 sha256sum -c MANIFEST.sha256
 lake comparator --config comparator.json --paranoid
 sha256sum -c MANIFEST.sha256
 ```
 
-Run each command only if the preceding command succeeded. The cloud runner must
-capture the comparator's own exit status and complete stdout/stderr, in addition
-to the final manifest check. Preserve the preparation receipt and actual
-dependency/checker revisions or hashes with that result. Use the locked
-dependencies; do not update them or disable sandboxing to obtain a pass.
+Capture the comparator's own exit status and complete stdout/stderr in addition
+to the final hash check. Retain checkout, preparation receipt, manifests,
+actual dependency/tool/checker identities, cache provenance and OS/sandbox
+outcomes. Do not upgrade dependencies, remove a checker or disable sandboxing
+to obtain a pass.
 
-Success requires the 21 specified declarations, the unchanged concrete
-definitions, the allowed axiom policy, and acceptance by `Lean default`,
-`Lean paranoid`, `lean4lean`, `nanoda`, `con-leche`, and `con-ron`.
-The 21 challenge `sorry` warnings are specification placeholders; `sorryAx`
-is forbidden in solution proofs. Full interpretation and evidence requirements
-are in the [reviewed verification instructions](research/boundary-scalar/verification/README.md).
+Success requires exact 39-declaration/referenced-definition matching, the
+allowed axiom policy, and acceptance by Lean default, Lean paranoid, lean4lean,
+nanoda, con-leche and con-ron. A missing/refusing checker is not a pass. The 39
+intentional Challenge sorry warnings are specification placeholders;
+sorryAx is forbidden in solution proofs. Full requirements are in the
+[frozen verification instructions](research/scalar-ratio/verification/README.md).
 
-The mathematical review, native macOS compilation/axiom audit, exact models,
-and local statement/definition comparison are already complete. The cloud run
-is the next execution step. Actual arithmetic tensor compatibility remains
-open. The common-strict-to-normal-form construction and determinant-line/DVR
-interpretations are ordinary algebra in the [derivation](research/boundary-scalar/DERIVATION.md),
-not additional Lean constructions. The typed adapter assumes the actual two
-boundary--cup identities; it does not establish them for the arithmetic data.
+Local native compilation, type/axiom auditing, exact models and the direct
+structural comparison pass. That comparison exercises six rejection controls
+but provides no protected Linux isolation, export-kernel replay or external
+kernel evidence. No paranoid or cloud run was performed locally.
 
-Command semantics were checked on 8 November 2026 against the installed Lean
-4.35.0 sources (`Lake/Load/Resolve.lean`, `Lake/CLI/Check.lean`), the
-[4.35 release documentation](https://lean-lang.org/doc/reference/latest/releases/v4.35.0/),
-and the [pinned Mathlib cache documentation](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Cache/README.md).
-Local preparation checks establish checkout completeness; they do not claim
-execution of Open Math's Linux environment or paranoid kernels.
+The new raw common-strict frame construction and integral-unit equivalence are
+formalized, including zero functionals. The full boundary–cup adapter uses the
+same actual rows and keeps normalization assumptions explicit. Derived
+integral determinant functors, the additive-DVR iff, quotient construction,
+actual arithmetic maps/normalizations, localizations and retained limits remain
+separate ordinary/open obligations as described in the
+[contract](research/scalar-ratio/CONTRACT.md). A successful cloud run does not
+prove the manuscript's arithmetic determinant-switch theorem.
+
+Command semantics were checked on 8 November 2026 against installed Lean 4.35.0
+sources Lake/Load/Resolve.lean, Lake/CLI/Check.lean, Lake/Check/Compare.lean and
+Lake/Check/Axioms.lean, the [4.35 release documentation](https://lean-lang.org/doc/reference/latest/releases/v4.35.0/),
+and [pinned Mathlib cache documentation](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Cache/README.md).
+Offline preparation checks establish checkout completeness, not cloud runtime
+qualification or mathematical acceptance.
