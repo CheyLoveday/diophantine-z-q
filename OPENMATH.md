@@ -6,8 +6,8 @@ Mac build directory or attachment is needed.
 
 | Item | Value |
 | --- | --- |
-| Repository | `https://github.com/CheyLoveday/diophantine-z-q.git` |
-| Branch to pull | `codex/derivative-switch-boundary-v13` |
+| Private repository | `https://github.com/CheyLoveday/diophantine-z-q-private.git` |
+| Branch to pull (default) | `codex/derivative-switch-boundary-v13` |
 | Reviewed mathematical snapshot | `2c15940380520d6b6de72c2a1b6700ed192a7a87` |
 | Local preparation | [prepare_derivative_switch_openmath.py](scripts/prepare_derivative_switch_openmath.py) |
 | Proof scope and local results | [Six-lemma freeze report](research/determinant-switch/FREEZE.md) |
@@ -17,6 +17,11 @@ snapshot. `main` is the unchanged Version 13 baseline and does not contain the
 research packet. Record the actual checkout commit; the preparation receipt
 records it too. Use the research branch explicitly when configuring Open Math's
 repository checkout.
+
+This private working copy retains the original fork's Git history. Frozen
+review records retain their original source-repository references; the active
+Open Math pull destination is the private repository listed above. Open Math
+must have read access to that repository through its GitHub connection.
 
 ## Prepare directly from the checkout
 
@@ -49,6 +54,7 @@ the pinned manifest. The cloud setup resolves the nine locked dependency
 revisions and uses the official Mathlib cache for the two required imports:
 
 ```sh
+set -eu
 cd lean/.checks/openmath-derivative-switch
 sha256sum -c MANIFEST.sha256
 lean --version
