@@ -6,8 +6,8 @@ Mac build directory or attachment is needed.
 
 | Item | Value |
 | --- | --- |
-| Private repository | `https://github.com/CheyLoveday/diophantine-z-q-private.git` |
-| Branch to pull (default) | `codex/derivative-switch-boundary-v13` |
+| Repository | `https://github.com/CheyLoveday/diophantine-z-q.git` |
+| Branch to pull | `codex/derivative-switch-boundary-v13` |
 | Reviewed mathematical snapshot | `2c15940380520d6b6de72c2a1b6700ed192a7a87` |
 | Local preparation | [prepare_derivative_switch_openmath.py](scripts/prepare_derivative_switch_openmath.py) |
 | Proof scope and local results | [Six-lemma freeze report](research/determinant-switch/FREEZE.md) |
@@ -18,10 +18,9 @@ research packet. Record the actual checkout commit; the preparation receipt
 records it too. Use the research branch explicitly when configuring Open Math's
 repository checkout.
 
-This private working copy retains the original fork's Git history. Frozen
-review records retain their original source-repository references; the active
-Open Math pull destination is the private repository listed above. Open Math
-must have read access to that repository through its GitHub connection.
+The existing fork above is the active Open Math pull destination. A private
+working copy also exists at `CheyLoveday/diophantine-z-q-private`; it retains
+the same reviewed source and can be used if private access is preferred later.
 
 ## Prepare directly from the checkout
 
