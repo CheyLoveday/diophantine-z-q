@@ -45,11 +45,17 @@ The manuscript's relaxed self-annihilator assertion is exactly the
 for the actual nonzero old localization `v`, with derivative singular
 localization `Jv`.
 
-Consequences proved in ordinary algebra, and proposed for a separate
-Lean module:
+Consequences in ordinary algebra, with the formal coverage specified below:
 
-1. `ker dF = Lv` and `ker dS = L(Jv)`. Both generic H¹ dimensions equal
-   one. No rank reduction is asserted on this generic inner field.
+1. `ker dF = Lv` and `ker dS = L(Jv)`. To conclude that both generic
+   H¹ dimensions equal one also requires `H¹(C_str)=0`; the kernel
+   hypothesis alone does not supply this. In the source's conditional
+   setting, old `H¹(C_F)` is spanned by A with nonzero localization v
+   (`quartic_v13.tex`, lines 5030–5035 and 5076–5079). The exact triangle
+   injects `H¹(C_str)` into the kernel of this injective localization,
+   so it vanishes. The two triangles then identify the generic H¹ spaces
+   with the displayed kernel lines. No rank reduction is asserted on
+   this generic inner field.
 2. `im dF ∩ im dS = {0}`. Proof: if dF(x)=dS(y), then
    (x,-y) is in the combined kernel, forcing x in Lv and y in LJv,
    so both boundaries vanish.
@@ -63,9 +69,12 @@ Lean module:
    `area(Jv,Jx)=det(J) area(v,x)=-area(v,x)`.
    In a DVR, for `v=pi^k v0` with primitive v0, the complement x with
    unit area can be fractional; J transports it without a valuation
-   loss. The transport by an integral invertible J also induces an
-   isomorphism on `F/Rv -> S/RJv`, so the respective torsion modules
-   and Fitting ideals agree. The last quotient assertion remains an
+   loss. Here use free rank-two integral lattices `F_R,S_R`, with
+   `F=F_R tensor_R L`, `S=S_R tensor_R L`, `v in F_R`, and
+   `J:F_R ~= S_R`. Then J induces `F_R/Rv ~= S_R/RJv`, so the
+   respective finitely generated torsion submodules and their Fitting
+   ideals agree. This is a lattice statement, not a claim about the
+   non-finitely-generated R-modules `F/Rv,S/RJv`. The quotient assertion remains an
    *ordinary algebra proof*, not a declaration in the bundled Lean file.
 
 The source's *outer* rank drop is a distinct operation. A family with
@@ -96,23 +105,26 @@ theorem additionally assumes a vector outside the scalar line of `v`.
 Consequently they prove the stated kernel membership and image-intersection
 identities, not a formal dimension-one theorem or the arithmetic occurrence of
 the hypotheses. Those dimension assertions additionally use the source's
-nonzero `v`, dimension-two local planes, and actual exact triangles.
+nonzero `v`, dimension-two local planes, actual exact triangles, and the
+strict H¹ vanishing deduced from the old-class spanning assumption above.
 
 The two `Volume` theorems prove polynomial identities on pairs over an arbitrary
 commutative ring. They do not declare DVRs, fractional complements, quotient
 modules, Fitting ideals, global functionals, or determinant lines. A primitive
 DVR vector has a unit-volume complement by Bezout; scaling by `pi^k` scales
 that complement by `pi^-k` over the fraction field. The quotient isomorphism in
-item 4 follows because integral `J` and its inverse carry `Rv` and `RJv` to
-each other. These are the ordinary algebra bridges, rather than hidden Lean
+item 4 concerns `F_R/Rv` and `S_R/RJv`: integral `J` and its inverse carry
+the lattices and their respective cyclic submodules to each other. These
+are the ordinary algebra bridges, rather than hidden Lean
 coverage.
 
 ## Correct determinant comparison target
 
-The two actual triangles (not a claimed morphism between them) are
+For the integral comparison, use the free lattices `F_R,S_R` named above.
+The two actual integral triangles (not a claimed morphism between them) are
 
-    C_str -> C_F -> F[-1] -> C_str[1]
-    C_str -> C_S -> S[-1] -> C_str[1].
+    C_str -> C_F -> F_R[-1] -> C_str[1]
+    C_str -> C_S -> S_R[-1] -> C_str[1].
 
 Their determinant-line additivity, combined with `det(J)=-1`, defines
 an integral isomorphism of inverse-determinant lines
@@ -193,7 +205,7 @@ normalization; they do not establish it for the arithmetic functionals.
 Execute:
 
     python -B research/determinant-switch/check_local_model.py
-    cd lean && lake env lean Research/DerivativeSwitchBoundary.lean
+    (cd lean && lake env lean Research/DerivativeSwitchBoundary.lean)
     python -B scripts/check_audit_history.py --self-test
     python -B scripts/check_lean.py
 
@@ -215,11 +227,12 @@ guards; their passing status does not establish coverage of this new module.
 
 The supplied packet reported a Python pass but no Lean compilation in its
 preparation environment. Current results are bound in [VERIFICATION.md](VERIFICATION.md)
-and `evidence/RESULT.json`; do not inherit the earlier uncompiled status or
+and the linked frozen evidence; do not inherit the earlier uncompiled status or
 treat a supplied success claim as an observed check. Local macOS verification
 uses pinned Lean 4.35.0 **without `--paranoid`**, as requested. External checkers,
-Linux bubblewrap isolation, release-profile reproduction, and independent
-mathematical acceptance are not claimed. No finite test verifies the arithmetic
+Linux bubblewrap isolation, release-profile reproduction, and human or
+arithmetic acceptance are not claimed. The separately authored model review is
+identified in the verification report. No finite test verifies the arithmetic
 theorem.
 
 ## PR acceptance scope

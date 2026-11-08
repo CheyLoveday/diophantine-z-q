@@ -7,11 +7,14 @@ determinant compatibility remains open.**
 
 Start here:
 
+- [Freeze decision and remaining Open Math OS gate](FREEZE.md)
 - [Scope and source-to-arithmetic contract](CONTRACT.md)
 - [Verification, statement crosswalk and remaining gaps](VERIFICATION.md)
 - [Lean source](../../lean/Research/DerivativeSwitchBoundary.lean)
 - [Exact finite-model checks](check_local_model.py)
-- [Observed results](evidence/RESULT.json), [elaborated statements](evidence/statements-compact.log), and [axiom audit](evidence/axioms-and-statements.log)
+- [Fresh observed results](evidence/freeze-20261108/RESULT.json), [elaborated statements](evidence/statements-compact.log), and [axiom audit](evidence/freeze-20261108/axioms-and-statements.log)
+- [Separately authored model review](evidence/freeze-20261108/final-review.md)
+- [Generate the separate six-lemma verification project](verification/README.md)
 - [Received ZIP](inputs/derivative_switch_pr_candidate.zip), preserved for provenance, and [ingestion record](PROVENANCE.json)
 - [Prepared PR description](PR.md)
 
@@ -39,9 +42,10 @@ enabled, and prints its statements and transitive axioms. It does not build the
 unchanged 48 helper modules or claim their fresh compilation.
 
 The observed run was local macOS, **without `--paranoid`**, as requested.
-Published dependency caches are trusted inputs. External kernels, protected
-statement comparison, release assurance, hosted CI, and independent mathematical
-acceptance have not been performed by this local packet ingestion.
+Published dependency caches are trusted inputs. The separate model review and
+local export-structure probe are complete. External kernels, protected Linux
+statement comparison, release assurance, hosted CI, and human or arithmetic
+acceptance remain pending. Nothing has been pushed or dispatched.
 
 The [packet manifest](MANIFEST.sha256) binds the source, received ZIP and saved
 evidence. From the repository root, check it with:

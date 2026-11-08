@@ -12,9 +12,17 @@ now derive actual cofactor coordinates. Pinned Lean 4.35.0 compilation and
 transitive axiom auditing pass locally on macOS without `--paranoid`; all six
 theorems use only `propext` and `Quot.sound`. Exact models, the frozen 48-module
 source guard and audit-history self-tests pass. See `VERIFICATION.md` for the
-observed scope and reproducible evidence.
+observed scope and reproducible evidence. A separately authored model review
+accepted the six abstract lemmas and the corrected contract. The contract now
+states the strict-H¹ vanishing premise and names the integral quotient lattices.
+
+A separate, reproducibly generated Lake project explicitly targets these six
+lemmas, with a frozen challenge and no permitted definition replacements. Its
+local export-structure/axiom probe passes, including four rejection controls.
+Protected Linux comparison and all paranoid checkers are deferred to the later
+Open Math OS run; this packet is frozen locally and has not been pushed.
 
 This is a non-release fork research candidate. It changes no manuscript,
 inherited helper source, dependency pin, frozen target or acceptance record.
-Actual arithmetic boundary–cup naturality, normalized tensor preservation and
-non-author mathematical acceptance remain pending.
+Actual arithmetic boundary–cup naturality, normalized tensor preservation,
+human review and release acceptance remain pending.
