@@ -1,6 +1,6 @@
 # Mathematical research review protocol
 
-Version 1.1 | November 7, 2026
+Version 1.2 | November 7, 2026
 
 ## Purpose and scope
 
@@ -224,6 +224,43 @@ A GitHub issue's closed state does not establish that a later comment has been a
 
 Preserve historical releases and review evidence. Do not silently overwrite an earlier verdict, change a bound source, or present an old review as acceptance of a new proof route.
 
+## Release maintenance and research handoff
+
+Maintain a reviewed project profile that identifies the required release artifacts, their names and locations, edition and date conventions, publication destinations, reproducibility entry points, and any size or inclusion thresholds. Make these requirements specific enough to check against the actual release. A profile may require additional evidence for the project's constructions or publication process. It must preserve this protocol's proof, source-application, objection and independence requirements. Changes to the profile require an explicit review of their effect on release coverage.
+
+### Cumulative research handoff
+
+Update a cumulative research handoff for every research release. Include the current research and the relevant prior research, derivations, computational evidence and reviews needed to understand or reproduce the released work. Retain relevant negative results, rejected approaches and superseded reviews with their status and the reason for supersession. Link a corrected claim to the earlier claim and the correction. Preserve the originals so a later reader can reconstruct the reasoning and review history.
+
+The handoff must contain the actual research evidence or identify its exact versioned location. A summary cannot replace a needed derivation, certificate or review. Record known missing evidence and open work explicitly. Include the provenance of contributed research and computational artifacts, including authors, reviewers, source versions, generating tools and any stated limitations. Attribute earlier work and later repairs accurately.
+
+Keep conversational transcripts, credentials and unrelated private files out of release handoffs. Extract the relevant mathematical arguments, decisions and objections into reviewable records while preserving their meaning and attribution. Preserve any original conversation evidence needed for an audit in the appropriate restricted record, with an access limitation recorded where it affects review. A publication access restriction does not resolve a mathematical objection or excuse omission from the findings ledger.
+
+### Archive index and release manifest
+
+Maintain an archive index and a manifest for the handoff and release artifacts. Identify each release's source commit, version, date, authorship and provenance, review status, remaining assumptions and open work, reproduction entry points, and the required files with their declared hash algorithm and hashes. Identify which entries are current, historical, superseded or incomplete. Record the relationship between generated artifacts and their source inputs, commands and tool versions. State the coverage of the archive and any unavailable material.
+
+Preserve old editions and their manifests at stable versioned locations. A new release may update a current-version pointer, but it must retain the earlier edition and its review status. Avoid a manifest self-reference by recording its own digest in a separate release record or other external versioned binding. Bind final review to the completed release manifest and actual artifact bytes.
+
+### Synchronize the release
+
+Before final acceptance of each research release, compare the assembled files and verify all applicable items below.
+
+- Update the repository README and current-paper links, the current TeX or other manuscript source, the built PDF, the artifact catalog, the cumulative handoff, the source and application inventories, and the findings ledger together. Their statements about the current result, proof status, assumptions and unresolved work must agree.
+- Verify that the PDF was built from the identified source revision and declared build inputs. Compare the source edition, selected build target, output identity and release manifest. Check title, version and date agreement across the manuscript, README, archive index and release metadata. Preserve prior editions in the archive rather than relabeling them as current.
+- Describe each construction artifact by the representation actually supplied. Distinguish a full explicit expansion from a symbolic expression, compressed encoding, generator, certificate or sampled output. Ensure the artifact catalog and manuscript make the same claims about recoverability, verification and reproduction. Check the project's required artifact names and inclusion thresholds against the actual files.
+- Review citation and credit changes, including the provenance of reused research, independent reviews, computational discoveries and substantive repairs. Keep source-version references and application records synchronized with changes to citations or mathematical inputs.
+- Validate release links and their intended targets, including README links, archive entries, source locations, evidence and reproduction entry points. Check immutable identifiers where a link is used as review evidence. Distinguish a current-version navigation link from an immutable release binding, and record access restrictions or unavailable targets.
+- If the project maintains public and private mirrors, identify the intended contents and permitted differences for each. Review the selected files for publication scope, publish only with the owner's authorization, and read back each configured destination. Compare the published revision and artifact hashes with the reviewed release manifest. Record the readback results and any outstanding difference. A successful local build, push command or acceptance of one mirror does not establish the contents of the other.
+
+Record who performed these comparisons, the exact files and destinations checked, the results, and any remaining discrepancy. A discrepancy in a required artifact or its stated status prevents declaring the release-maintenance requirements complete. After a correction, recheck the affected files and obtain the corresponding reviewer-authored updated binding under the existing change rules.
+
+### Scope and automated coverage
+
+For a small non-release PR, state explicitly which release-maintenance duties do not apply and why. Identify the artifacts and claims left unaffected, and have the reviewer assess that scope. A documentation, infrastructure or metadata label does not itself establish nonapplicability. A later research release must still perform the complete applicable maintenance and handoff review.
+
+Automated checks must report their actual coverage. A path check, hash comparison, successful build or link check establishes only the property tested. It cannot establish that an archive contains all relevant prior research, that citations and credit are complete, that a representation supports its mathematical claim, or that all objections received review. Record the human or model review of these coverage questions separately from machine-check results.
+
 ## Reusable application form
 
 Copy this form for each substantive application. Replace every placeholder; do not interpret an empty field as acceptance.
@@ -281,3 +318,5 @@ What remains open:
 Use these records to make the reasoning inspectable. The standard for a mathematical conclusion remains a valid argument from its stated inputs; the standard for a review claim is evidence that the specified argument was actually reviewed.
 
 Version 1.1 makes the five completion requirements explicit and adds the final closure review. Version 1.0 remains a separate historical document.
+
+Version 1.2 adds release maintenance, cumulative research handoffs, archive and artifact synchronization, publication readback, and explicit scope and coverage records. Version 1.1 remains a separate historical document.

@@ -1,6 +1,6 @@
 # Research review for contributors
 
-Follow the [mathematical research review protocol](PROTOCOL.md), version 1.1, for mathematical claims, constructions, computations and repairs. This directory contains the complete standalone protocol. The [audit-history protocol](../audit-history/PROTOCOL.md) explains the repository's existing contracts, findings records and checks.
+Follow the [mathematical research review protocol](PROTOCOL.md), version 1.2, for mathematical claims, constructions, computations and repairs. This directory contains the complete standalone protocol. [Version 1.1](protocol-v1.1.md) is retained as historical policy. The [audit-history protocol](../audit-history/PROTOCOL.md) explains the repository's existing contracts, findings records and checks.
 
 ## Enforcement status
 
@@ -21,6 +21,16 @@ Link repository-relative evidence files and identify the exact commit and SHA-25
 5. Repeat independent review, repair and integration until the final frozen revision meets the protocol's [closure test](PROTOCOL.md#final-closure-review). Recheck changed premises, affected consumers and computations after each substantive repair. Obtain an independent review of the assembled proof, rather than inferring completion from component approvals.
 
 For a documentation-only or infrastructure PR, identify the unaffected mathematical claims and explain which obligations do not apply. A PR can report incomplete work honestly; it must not mark an unreviewed argument as accepted or a finding as resolved.
+
+## Research release maintenance
+
+For every research release, follow the protocol's [release maintenance and research handoff requirements](PROTOCOL.md#release-maintenance-and-research-handoff). Identify the reviewed project profile that defines required artifacts, names, locations, thresholds, publication destinations and reproduction entry points.
+
+- Update the cumulative handoff with current and relevant prior research and reviews. Retain negative results and superseded evidence with their status, correction links and provenance. Exclude conversational transcripts, credentials and unrelated private files from the release handoff.
+- Update the archive index and release manifest with the source commit, version, date, authorship, review status, open work, reproduction entry points and artifact hashes. Preserve prior editions and their manifests.
+- Synchronize the README, current manuscript source and built PDF, artifact catalog, handoff, source/application inventories and findings ledger. Check version and date agreement, source-to-PDF build identity, citation and credit changes, and the precise representation supplied for each construction artifact.
+- Validate links and required artifact coverage. For configured public/private mirrors, review the intended contents and permitted differences, then compare the authorized published readbacks with the reviewed release manifest.
+- Record the reviewer, exact evidence and results. For a non-release PR, explain which duties do not apply and which artifacts remain unaffected. Report machine-check coverage separately from review of completeness.
 
 ## Independent review and exact versions
 
