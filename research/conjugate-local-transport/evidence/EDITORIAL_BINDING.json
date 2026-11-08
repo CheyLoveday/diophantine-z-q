@@ -1,0 +1,12 @@
+{
+  "change": "Editorial math delimiter repair on DERIVATION lines46,49,55,162; c_tau(p), f(p), s(p) restored inside existing math spans",
+  "native_result_unchanged": "b047f06bdd83c1d02455eaaa1ee775031e67e91f51d0b03707786b7a46c94d9e",
+  "original_derivation_sha256": "11742329eea50c06759ec7361b369c540cb9a8912032fa4e7efea04381281259",
+  "retained_original_bytes": "research/conjugate-local-transport/evidence/native/DERIVATION.input.txt",
+  "reviewed_derivation_sha256": "ad679e62e29d97e2752a683e5c9de1ea9cf244002f76c57a716d9237654e10e0",
+  "compiled_proof_sources_unchanged": {
+    "lean/Research/DerivativeSwitch/ConjugateLocalTransport.lean": "8688eef27fcc89c02eb3ab270e5359534dc23ef16e11678bdb1dd3587e3f8b86",
+    "lean/Research/DerivativeSwitch/ConjugateLocalH1.lean": "078ac50ae0c90c8e609a57c51c5884a25646ad7305531f1cf531617485b9078f"
+  },
+  "proof_rebuild_after_editorial_change": "NOT_RUN; proof sources and formal statements unchanged; reviewer acknowledgement required"
+}

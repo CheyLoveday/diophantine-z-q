@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "scope": "Byte preservation only; no new frozen-packet proof run",
+  "frozen_source": "e653d6ff295ae4e0535710a7d64aa255d294d211",
+  "manifests": [
+    {
+      "manifest": "research/determinant-switch/MANIFEST.sha256",
+      "sha256": "de9e04423f3ccafa9690e6ff53c1f0bb79f5f91406ee3e4e89246ce2cf97fa12",
+      "entries_checked": 63
+    },
+    {
+      "manifest": "research/boundary-scalar/MANIFEST.sha256",
+      "sha256": "8696323b0d1bb78e68ba4daea0437f38dde4ff3be8281e3856712a5f5369dba6",
+      "entries_checked": 65
+    },
+    {
+      "manifest": "research/scalar-ratio/MANIFEST.sha256",
+      "sha256": "d313ec3ff5ad0e91d555d26b2beef6ad401d7e9c86cdfe77adbe119062498610",
+      "entries_checked": 99
+    }
+  ],
+  "frozen_modules_identical": [
+    "lean/Research/DerivativeSwitchBoundary.lean",
+    "lean/Research/BoundaryScalar.lean",
+    "lean/Research/BoundaryCupAdapter.lean",
+    "lean/Research/DerivativeSwitch/Coordinate.lean",
+    "lean/Research/DerivativeSwitch/CommonStrict.lean",
+    "lean/Research/DerivativeSwitch/UnitCriterion.lean",
+    "lean/Research/DerivativeSwitch/BoundaryCup.lean"
+  ],
+  "canonical_manuscript_sha256": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+  "existing_bridge_sha256": "2b72fc4237d45feb84973e470f0887c3ef3768cfaaedec967857a4ca01c09ef6"
+}

@@ -1,0 +1,78 @@
+{
+  "manuscripts/quartic_v13.tex": {
+    "sha256": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+    "excerpts": [
+      {
+        "id": "finite_coefficients",
+        "first_line": 2859,
+        "last_line": 2866,
+        "sha256": "119792d36caaeaef0caafe8f6e27913b16223af4996d0bc7a8a12f142d79318a"
+      },
+      {
+        "id": "conjugate_coefficients",
+        "first_line": 2898,
+        "last_line": 2967,
+        "sha256": "e00a37c281568ce1f0ad987296919f14a50165f1a40e771be94632c8064d7954"
+      },
+      {
+        "id": "H12",
+        "first_line": 3225,
+        "last_line": 3233,
+        "sha256": "d90f2091c3540337d81924175a51b5f1c999227980cc8f065e04f1d24fd6d5ae"
+      },
+      {
+        "id": "actual_classes_and_common_character",
+        "first_line": 3339,
+        "last_line": 3417,
+        "sha256": "b594d9d3e0e06eb0f4340c21a34713a9c977b0df583dbc373eb399a820bb292a"
+      },
+      {
+        "id": "tame_model",
+        "first_line": 3431,
+        "last_line": 3456,
+        "sha256": "48a68265a1f648949908bf8ad6d068d248eb894974f25a3bcdd937b62aa6bfe3"
+      },
+      {
+        "id": "H22",
+        "first_line": 3509,
+        "last_line": 3542,
+        "sha256": "1f0f828dc765ec205f123e4da17d6051e5940fc2ea1a0e5c60813d7288be37a9"
+      },
+      {
+        "id": "actual_paired_functional",
+        "first_line": 3842,
+        "last_line": 3908,
+        "sha256": "9d2292cfaa5dab74657fef7a8c228f203f520fec709a6303f4d3a5a7b69f0acc"
+      },
+      {
+        "id": "noncompatible_characters",
+        "first_line": 4456,
+        "last_line": 4464,
+        "sha256": "14f33688442866b965186a1d245798bb9724625bb65a8052798f84bc4b514172"
+      },
+      {
+        "id": "retained_inner_diagram",
+        "first_line": 4577,
+        "last_line": 4634,
+        "sha256": "098cd751ac0a4a8d4ca85aab4ae5dd08df96b4ec0f8d57353a9bdc97311e000d"
+      }
+    ]
+  },
+  "lean/Research/DerivativeSwitch/ArithmeticBridge.lean": {
+    "sha256": "2b72fc4237d45feb84973e470f0887c3ef3768cfaaedec967857a4ca01c09ef6",
+    "excerpts": [
+      {
+        "id": "old_scalar_assumption",
+        "first_line": 20,
+        "last_line": 59,
+        "sha256": "63018bffc6e08c6cf78f6da58d9f279cbeea3ba6f5aeda1f9656f15ea0e3899b"
+      },
+      {
+        "id": "consumer_interface",
+        "first_line": 146,
+        "last_line": 169,
+        "sha256": "9d1961a48752a93dc77bb2278e752f00f4eed7143fed3b5135d48bb579324db0"
+      }
+    ]
+  }
+}

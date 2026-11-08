@@ -1,0 +1,57 @@
+[
+  {
+    "label": "lean-version",
+    "command": [
+      "lean",
+      "--version"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "lake-version",
+    "command": [
+      "lake",
+      "--version"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "ConjugateLocalTransport",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "-o",
+      "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean/.checks/conjugate-local-transport-reviewed/lib/Research/DerivativeSwitch/ConjugateLocalTransport.olean",
+      "Research/DerivativeSwitch/ConjugateLocalTransport.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "ConjugateLocalH1",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "-o",
+      "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean/.checks/conjugate-local-transport-reviewed/lib/Research/DerivativeSwitch/ConjugateLocalH1.olean",
+      "Research/DerivativeSwitch/ConjugateLocalH1.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "axioms-and-statements",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean/.checks/conjugate-local-transport-reviewed/Audit.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,237 @@
+{
+  "status": "PASS",
+  "profile": "development",
+  "lean": "Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "base_commit": "3a7dce59e3d0601a3758cf924810563a6e5f0a98",
+  "modules_freshly_compiled": [
+    "ConjugateLocalTransport",
+    "ConjugateLocalH1"
+  ],
+  "targets": [
+    "Research.DerivativeSwitch.ConjugateLocalTransport.crossed_conjugation",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.crossed_pow_of_trivial",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.tate_transporter",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_transporter",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_transporter_inv",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.tate_finite",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_finite",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_inertia",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.rawConjugate_isCrossed",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugation_finite",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugation_inertia",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.rawConjugate_finite",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.rawConjugate_inertia",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.coordinates_rawConjugate",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.coordinates_rawConjugate_of_neg_one",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_conjugation_finite",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_conjugation_inertia",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.coordinates_add_coboundary",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugate_coordinates_add_coboundary",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.h1_projection_surjective",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.cocycleEvaluation_kills_kernel",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.h1Evaluation_projection",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.cocyclePullback_kills_kernel",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.h1Pullback_projection",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.h1Coordinates_projection",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugateH1Coordinates_projection",
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.h1_local_transport"
+  ],
+  "theorem_axioms": {
+    "Research.DerivativeSwitch.ConjugateLocalTransport.crossed_conjugation": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.crossed_pow_of_trivial": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.tate_transporter": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_transporter": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_transporter_inv": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.tate_finite": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_finite": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_inertia": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.rawConjugate_isCrossed": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugation_finite": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugation_inertia": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.rawConjugate_finite": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.rawConjugate_inertia": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.coordinates_rawConjugate": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.coordinates_rawConjugate_of_neg_one": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_conjugation_finite": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.twist_conjugation_inertia": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.coordinates_add_coboundary": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugate_coordinates_add_coboundary": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.h1_projection_surjective": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.cocycleEvaluation_kills_kernel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.h1Evaluation_projection": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.cocyclePullback_kills_kernel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.h1Pullback_projection": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.h1Coordinates_projection": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.conjugateH1Coordinates_projection": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.h1_local_transport": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "permitted_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "dependencies": [
+    {
+      "name": "mathlib",
+      "revision": "56a005855ea17e0b0958f73ec801ae140b0a1679"
+    },
+    {
+      "name": "plausible",
+      "revision": "dfa4f38190d07c37e315953e08b90fe2d95b3c24"
+    },
+    {
+      "name": "LeanSearchClient",
+      "revision": "d6b4c7be5be75ec4917c873ac50c756dc1436372"
+    },
+    {
+      "name": "importGraph",
+      "revision": "a41f0e9a4dea23188ea9cc1c41ac9f8bbafe0b93"
+    },
+    {
+      "name": "proofwidgets",
+      "revision": "df72b022e558978a1c50264cfc4d7fec86fa8e04"
+    },
+    {
+      "name": "aesop",
+      "revision": "4a174c490d8707121c4a9290800489f105d85e07"
+    },
+    {
+      "name": "Qq",
+      "revision": "dce0ad79c486cb1fb504af04f953c3466b0c6db8"
+    },
+    {
+      "name": "batteries",
+      "revision": "66e469188fe07963e5cf666c7d4433f45b8131c5"
+    },
+    {
+      "name": "Cli",
+      "revision": "c24fe6078c630e89b489bffe59b3e20ac30d12c8"
+    }
+  ],
+  "dependency_cache": "Pinned Mathlib master cache import closures; not source-rebuilt here",
+  "additional_cache_command": "MATHLIB_CACHE_DIR=$PWD/.lake/mathlib-cache lake exe cache get --cache-from=master Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree",
+  "input_hashes_before": {
+    "lean/Research/DerivativeSwitch/ConjugateLocalTransport.lean": "8688eef27fcc89c02eb3ab270e5359534dc23ef16e11678bdb1dd3587e3f8b86",
+    "lean/Research/DerivativeSwitch/ConjugateLocalH1.lean": "078ac50ae0c90c8e609a57c51c5884a25646ad7305531f1cf531617485b9078f",
+    "research/conjugate-local-transport/verify_native.py": "b51ba90d40ae3497019af8ea2bff65725182f99ba44d349537eaf80c74849e95",
+    "research/conjugate-local-transport/SPEC.md": "c98bcf33bda7d31fb5f7e1fb013b99a6a7e01585f75b657e7f8e3ab15d365c62",
+    "research/conjugate-local-transport/APPLICATION.md": "20b4a52e556a8a238b45a191f0f595b2f366042f0594c638c40919a6a3801b77",
+    "research/conjugate-local-transport/DERIVATION.md": "11742329eea50c06759ec7361b369c540cb9a8912032fa4e7efea04381281259",
+    "research/conjugate-local-transport/evidence/source-bindings.json": "465e067377cdb405bc11e72d78eea92ec161b799e133e753f024d2183636bd48",
+    "lean/lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+    "lean/lakefile.toml": "632fda3c75f7616378b9dadd0906d9518c7b4a1199c59d7b36369121acfb3b26",
+    "lean/lake-manifest.json": "a770787f33b5824f61a0731d59e67fca3f44a531b21d1fc1a804064c6fb54e58"
+  },
+  "input_hashes_after": {
+    "lean/Research/DerivativeSwitch/ConjugateLocalTransport.lean": "8688eef27fcc89c02eb3ab270e5359534dc23ef16e11678bdb1dd3587e3f8b86",
+    "lean/Research/DerivativeSwitch/ConjugateLocalH1.lean": "078ac50ae0c90c8e609a57c51c5884a25646ad7305531f1cf531617485b9078f",
+    "research/conjugate-local-transport/verify_native.py": "b51ba90d40ae3497019af8ea2bff65725182f99ba44d349537eaf80c74849e95",
+    "research/conjugate-local-transport/SPEC.md": "c98bcf33bda7d31fb5f7e1fb013b99a6a7e01585f75b657e7f8e3ab15d365c62",
+    "research/conjugate-local-transport/APPLICATION.md": "20b4a52e556a8a238b45a191f0f595b2f366042f0594c638c40919a6a3801b77",
+    "research/conjugate-local-transport/DERIVATION.md": "11742329eea50c06759ec7361b369c540cb9a8912032fa4e7efea04381281259",
+    "research/conjugate-local-transport/evidence/source-bindings.json": "465e067377cdb405bc11e72d78eea92ec161b799e133e753f024d2183636bd48",
+    "lean/lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+    "lean/lakefile.toml": "632fda3c75f7616378b9dadd0906d9518c7b4a1199c59d7b36369121acfb3b26",
+    "lean/lake-manifest.json": "a770787f33b5824f61a0731d59e67fca3f44a531b21d1fc1a804064c6fb54e58"
+  },
+  "artifact_hashes": {
+    "Research/DerivativeSwitch/ConjugateLocalH1.olean": "7663a450e5425be740b5296acad430cb1c26c54dc23e0bbe71c5a5e9ddd043c9",
+    "Research/DerivativeSwitch/ConjugateLocalTransport.olean": "bc4c8a6ee97ac2800b85a98bc316afc9a91a05f49c4fd68106fa52f0741a1c2c"
+  },
+  "protected_comparison": "NOT_RUN",
+  "export_replay": "NOT_RUN",
+  "external_checkers": "NOT_RUN",
+  "paranoid": "NOT_RUN",
+  "actual_group_cohomology": "Mathlib groupCohomology.H1 of the inhomogeneous cochain complex",
+  "continuous_galois_and_selmer_construction": "SOURCE_APPLICATION_ONLY_NOT_FORMALIZED",
+  "retained_inner_limit": "SOURCE_APPLICATION_ONLY_NOT_FORMALIZED"
+}
