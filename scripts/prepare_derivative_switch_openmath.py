@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare the frozen six-lemma project from a repository checkout, offline.
+"""Prepare a frozen research project from a repository checkout, offline.
 
 This does not install dependencies, invoke Lean, run --paranoid, or dispatch a
 cloud job. Open Math performs those operations after pulling the repository.
@@ -14,10 +14,24 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKET = ROOT / "research/determinant-switch"
-REVIEWED_SOURCE_COMMIT = "2c15940380520d6b6de72c2a1b6700ed192a7a87"
-PACKET_MANIFEST_SHA256 = "de9e04423f3ccafa9690e6ff53c1f0bb79f5f91406ee3e4e89246ce2cf97fa12"
-PROJECT_MANIFEST_SHA256 = "e37368316a682d30f9358d7cf1c1ebd01e622e7896c99ca020ae5f94288f6188"
+PACKETS = {
+    "six-lemma": {
+        "path": "research/determinant-switch",
+        "source_commit": "2c15940380520d6b6de72c2a1b6700ed192a7a87",
+        "manifest": "de9e04423f3ccafa9690e6ff53c1f0bb79f5f91406ee3e4e89246ce2cf97fa12",
+        "project_manifest": "e37368316a682d30f9358d7cf1c1ebd01e622e7896c99ca020ae5f94288f6188",
+        "output": "lean/.checks/openmath-derivative-switch",
+        "targets": 6,
+    },
+    "boundary-scalar": {
+        "path": "research/boundary-scalar",
+        "source_commit": "7ca086adf4298e2b611b9fa0b954eab838873bf3",
+        "manifest": "8696323b0d1bb78e68ba4daea0437f38dde4ff3be8281e3856712a5f5369dba6",
+        "project_manifest": "fa7749aa918702ddb8f3694641839a1f751e2b377784c153e3332196076fc171",
+        "output": "lean/.checks/openmath-boundary-scalar",
+        "targets": 21,
+    },
+}
 
 
 def digest(path):
@@ -41,28 +55,39 @@ def check_manifest(manifest, base, expected):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--packet", choices=sorted(PACKETS), default="boundary-scalar",
+                        help="The combined boundary-scalar default or the original six-lemma project")
     parser.add_argument("--output", type=Path,
-                        default=Path("lean/.checks/openmath-derivative-switch"),
                         help="New output directory, relative to repository root unless absolute")
     args = parser.parse_args()
-    output = (ROOT / args.output).resolve()
+    plan = PACKETS[args.packet]
+    packet = ROOT / plan["path"]
+    output = (ROOT / (args.output or plan["output"])).resolve()
     if output.exists():
         raise SystemExit("Output must be new; choose another --output directory")
-    count = check_manifest(PACKET / "MANIFEST.sha256", ROOT, PACKET_MANIFEST_SHA256)
+    prerequisite_count = 0
+    if args.packet == "boundary-scalar":
+        old = PACKETS["six-lemma"]
+        prerequisite_count = check_manifest(ROOT / old["path"] / "MANIFEST.sha256", ROOT,
+                                            old["manifest"])
+    count = check_manifest(packet / "MANIFEST.sha256", ROOT, plan["manifest"])
     checkout = subprocess.check_output(
         ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
-    generator = PACKET / "verification/prepare.py"
+    generator = packet / "verification/prepare.py"
     subprocess.run([sys.executable, "-B", str(generator), "--output", str(output)],
                    check=True, cwd=ROOT)
     generated_count = check_manifest(output / "MANIFEST.sha256", output,
-                                     PROJECT_MANIFEST_SHA256)
+                                     plan["project_manifest"])
     receipt = {
         "status": "PREPARED_FROM_REPOSITORY",
         "checkout_commit": checkout,
-        "reviewed_source_commit": REVIEWED_SOURCE_COMMIT,
-        "packet_manifest_sha256": PACKET_MANIFEST_SHA256,
+        "packet": args.packet,
+        "selected_declarations": plan["targets"],
+        "reviewed_source_commit": plan["source_commit"],
+        "prerequisite_inputs_checked": prerequisite_count,
+        "packet_manifest_sha256": plan["manifest"],
         "packet_inputs_checked": count,
-        "generated_manifest_sha256": PROJECT_MANIFEST_SHA256,
+        "generated_manifest_sha256": plan["project_manifest"],
         "generated_inputs_checked": generated_count,
         "preparation_script_sha256": digest(Path(__file__).resolve()),
         "lean_invoked": False,
