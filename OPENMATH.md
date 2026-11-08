@@ -15,9 +15,8 @@ Mac build directory or attachment is needed.
 Pull the research branch, which contains these instructions and the reviewed
 snapshot. `main` is the unchanged Version 13 baseline and does not contain the
 research packet. Record the actual checkout commit; the preparation receipt
-records it too. Publication of this local branch remains subject to the owner's
-existing push hold. The branch must be published before a cloud pull can obtain
-these commits.
+records it too. Use the research branch explicitly when configuring Open Math's
+repository checkout.
 
 ## Prepare directly from the checkout
 
