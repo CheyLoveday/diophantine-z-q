@@ -1,0 +1,143 @@
+Generated non-authoritative patch; edit manuscript-insertion.tex instead.
+Source: research/arithmetic-boundary-cup/manuscript-insertion.tex
+Generate: python -B research/arithmetic-boundary-cup/prepare_insertion.py OUTPUT.patch
+Insertion SHA-256: 236abc7bc0f7e25baca29a428e271ffe8c9a3f5dc7cb7b6c0482631d9d9da28b
+Base manuscript SHA-256: 9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd
+
+--- a/manuscripts/quartic_v13.tex
++++ b/manuscripts/quartic_v13.tex
+@@ -5083,13 +5083,127 @@
+ contains $(v,0)$ and $(0,Jv)$, so these span
+ it. Hence the new generic $H^1$ is spanned by $B$.
+ 
+-The determinant comparison is exact even if $v$ is divisible.
+-In the fraction field choose $x$ with $v\wedge x$ of unit volume,
+-and similarly $y$ with $Jv\wedge y$ of unit volume.
+-The finite and singular determinant exact sequences have the same
+-strict factor, so their class-functional coordinates have equal
+-valuations. All strict torsion remains in that common factor.
+-Requiring $x$ integral would be wrong when $v$ is divisible.
++% Authoritative editable source for the proposed V13 insertion.
++% Replace only the final determinant paragraph in ex:limits-derivative-switch.
++% Exact base, anchor and downstream scope: APPLICATION.md.
++% This file is not yet part of the canonical V13 source.
++\paragraph{The actual paired functionals and their boundary values.}
++Write $c$ for conjugate transport and $j_U$ for the retained
++orthogonal-to-conjugate comparison for condition $U$. The functionals
++used here are exactly those already constructed:
++\[
++ \lambda_A=\operatorname{PD}_F(-,j_F^{-1}c(A)),\qquad
++ \lambda_B=\operatorname{PD}_S(-,j_S^{-1}c(B)).
++\]
++At the derivative place both comparisons are the identity under the
++specified integral local maps. Their inverses elsewhere do not change
++this local cohomology class. No primitive replacement of a functional,
++or map from the functional space for $F$ to that for $S$, is used.
++
++Here is the boundary--cup calculation with its normalization retained.
++Use the cone differential
++\[
++ d(g,u,l)=(dg,du,-\operatorname{loc}g+iu-dl).
++\]
++Adjoining a local degree-one vector gives the boundary $(0,0,l)$.
++In the degree $(2,1)$ cone cup product with parameter zero, this
++boundary pairs with an orthogonal class by $l\cup i(u^\perp)$.
++All global and isotropy-homotopy terms vanish because the first global
++and local-condition entries are zero. This is the explicit product
++of \cite[Proposition 1.3.2 and Sections 6.2.2--6.2.4, 6.3.3]{nekovar}.
++Both opposite-plane boundaries therefore use the same trace and cone
++normalization.
++
++Put $Q(x,y)=\langle x,Jy\rangle$, so $Q$ is symmetric:
++$J^2=1$ and $\det J=-1$ imply this without division by two.
++Before conjugate cochain pullback, the local mixed cup is
++\[
++ \Omega((f,s),(f',s'))
++   =\varepsilon\{Q(f,s')-Q(s,f')\}.
++\]
++The coefficient $J$ is already present in $Q$.
++Conjugate cochain pullback fixes the finite generator and acts on
++tame inertia by the rational Frobenius exponent or its inverse.
++By (H12) that exponent is $-1$ at retained precision. Thus its raw
++cochain action is $(f,s)\mapsto(f,-s)$, up to one common transport unit.
++
++This calculation does not require the global character to be quadratic.
++To check the transport unit explicitly, write $r=\rho_T\alpha$, let
++$d$ be a local rational Frobenius satisfying (H12), and put
++$a=d\tau\in G_K$. A crossed cocycle $p$ satisfies
++\[
++ p(a^{-1}xa)=r(a)^{-1}
++       \bigl(p(x)+(r(x)-1)p(a)\bigr).
++\]
++On the retained local decomposition group $r(x)=1$, while
++$r(a)=\rho_T(d)J\alpha(a)=\alpha(a)I$ at that precision.
++Consequently global conjugation differs from local Frobenius pullback
++by the same unit $\alpha(a)^{-1}$ for both classes. The finite
++generator can be taken to be $d^2$: the relevant ring-class extension
++is generalized dihedral over $\mathbf Q$, so $d^2$ belongs to the
++upper subgroup, as required by the retained local transfer diagram.
++All coefficient and place changes transport the pairing as well.
++
++Let $\delta_S:S\to H^2(C_F)$ and $\delta_F:F\to H^2(C_S)$ be
++the common-strict boundaries followed into the opposite complexes.
++Writing $u=\alpha(a)^{-1}$ for the shared transport unit, the actual
++partners have raw local coordinates $(uv,0)$ and $(0,-uJv)$,
++respectively. If $\kappa_0$ denotes the common trace and cone factor,
++put $\kappa=\kappa_0u$. This combines scalars in the evaluation;
++it does not rescale either actual class. For every $s$ and $f$ we obtain
++\[
++ \lambda_A(\delta_Ss)=-\kappa\beta(v,s),\qquad
++ \lambda_B(\delta_Ff)=-\kappa\beta(f,Jv).
++\]
++The two factors are not independently chosen. If the singular
++normalizer is written with an additional minus sign, its normalizer
++is $\kappa$ and the finite one is $-\kappa$. Their relative factor is
++the integral unit $-1$. A common nonunit clearing factor would cancel
++as well. The actual classes already contain the same fixed $L$.
++
++\paragraph{Comparison through the separate determinant triangles.}
++The integral triangles identify
++\[
++ \det{}^{-1}C_F\simeq\det{}^{-1}C_{\rm str}\otimes\det F,
++ \qquad
++ \det{}^{-1}C_S\simeq\det{}^{-1}C_{\rm str}\otimes\det S.
++\]
++Identity on the strict determinant line and $\det J$ on the local
++factor give an integral line isomorphism $\Phi_{\det}$. No map
++$C_F\to C_S$ is required.
++
++Over the fraction field put $W=H^2(C_{\rm str})$ and choose any
++$x$ with $\eta=\langle v,x\rangle\ne0$. The old rank-one exact
++sequence gives $\dim W=2$. Put
++$a=\partial_Fx$ and $b=\partial_S(Jx)$ in $W$. Evaluating the rows
++after the appropriate quotient maps gives
++\[
++ q_F=\lambda_A(b)=-\kappa\varepsilon\eta,\qquad
++ q_S=\lambda_B(a)=\kappa\varepsilon\eta=-q_F.
++\]
++For the actual perfect pairing and trace this common factor is nonzero,
++so $a,b$ form a basis. In the two determinant exact sequences the
++local bases are $(v,x)$ and $(Jv,Jx)$, whereas the boundary/quotient
++bases of $W$ are $(a,b)$ and $(b,a)$. Their tensor expressions are
++\[
++ q_F\frac{v\wedge x}{a\wedge b},\qquad
++ q_S\frac{Jv\wedge Jx}{b\wedge a}
++       =-q_S\frac{Jv\wedge Jx}{a\wedge b}.
++\]
++They therefore agree under $\Phi_{\det}$ up to the common determinant
++sign convention. In any retained integral bases their coordinates
++have equal valuations.
++
++All strict torsion is retained in the same integral strict determinant
++factor. The complement $x$ may be fractional; requiring it to be
++integral when $v$ is divisible would be incorrect. The calculation is
++made for each eligible inner instance, before any outer rank drop.
++The finite local identities and cup homotopies are retained through
++the inner construction; $j_U^{-1}$ is used only at the localizations
++where the preceding functional construction supplies it. This uses
++the completed two-adic comparison and, separately, the primitive
++height-one comparisons, including their stated contractions at
++$(t)$ and $(t+2)$. No inverse of $t$ in a finite Artin ring is used.
+ \end{proof}
+ 
+ \begin{proposition}[Uniform ring lower bound and height-one regularity]\label{ex:limits-uniform-lower-bound}

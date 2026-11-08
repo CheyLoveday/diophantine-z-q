@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "canonical_source_unchanged": true,
+  "source_sha256": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+  "insertion_sha256": "236abc7bc0f7e25baca29a428e271ffe8c9a3f5dc7cb7b6c0482631d9d9da28b",
+  "patch_sha256": "14695c449798f827986123017e5222627952c0975b2a20da764ca410c2b678ee",
+  "generator_sha256": "c48abce741e97148bfb40295b8c251a15598afd18e1c856a427f35feea8d747f",
+  "fresh_generation_byte_identical": true,
+  "git_apply_check": "PASS",
+  "patch_applied": false,
+  "typesetting_or_visual_review": "NOT_RUN; source insertion only",
+  "commands": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/research/arithmetic-boundary-cup/prepare_insertion.py",
+        "/var/folders/s3/5rlf9cld41j7kggmqhwflh280000gn/T/zq-insertion-4s___612/insertion.patch"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "apply",
+        "--check",
+        "/var/folders/s3/5rlf9cld41j7kggmqhwflh280000gn/T/zq-insertion-4s___612/insertion.patch"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

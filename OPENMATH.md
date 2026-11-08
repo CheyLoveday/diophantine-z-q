@@ -2,8 +2,12 @@
 
 Open Math pulls this repository and performs the Lean 4.35 paranoid run in its
 cloud environment. All preparation inputs are committed here; no local ZIP,
-Mac build directory or attachment is needed. Actual arithmetic boundary–cup
-compatibility remains OPEN, independently of the formal checking outcome.
+Mac build directory or attachment is needed. Actual arithmetic instantiation
+remains OPEN for this frozen packet, independently of the formal checking outcome.
+
+Later work: the [arithmetic boundary–cup bridge](research/arithmetic-boundary-cup/README.md)
+contains a source-level addendum and a separate conditional Lean bridge. It is
+outside this 39-target run; the inputs, preparation and commands below are unchanged.
 
 | Item | Value |
 | --- | --- |

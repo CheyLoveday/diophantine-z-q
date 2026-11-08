@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-08",
+  "base_commit": "e653d6ff295ae4e0535710a7d64aa255d294d211",
+  "manuscript": {
+    "path": "manuscripts/quartic_v13.tex",
+    "sha256": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd"
+  },
+  "passages": [
+    {
+      "start_line": 2898,
+      "end_line": 2967,
+      "sha256": "e00a37c281568ce1f0ad987296919f14a50165f1a40e771be94632c8064d7954"
+    },
+    {
+      "start_line": 3210,
+      "end_line": 3233,
+      "sha256": "a8b9b13171e5ce96bfc2fbb4fff2de9a89fa44cf573da1713dccc15aa0fbe4a2"
+    },
+    {
+      "start_line": 3323,
+      "end_line": 3337,
+      "sha256": "22e3b16153043df891a6cf4f9e39a98318180a7fc67c56bfcbaa92dc1f7b4666"
+    },
+    {
+      "start_line": 3340,
+      "end_line": 3551,
+      "sha256": "0cd80f5dfaea7bede332b9ae994953485e9a353a7bd1e026e79ac6f8ffb47112"
+    },
+    {
+      "start_line": 3842,
+      "end_line": 4012,
+      "sha256": "f1b77a55a0504035233f27d91b2634427844720b9f8944dfc58aa4f5d314f2b0"
+    },
+    {
+      "start_line": 4562,
+      "end_line": 4637,
+      "sha256": "bb38d8ec2ddc82b7d54ce8f066f8db99e6b15dd9cc08342c578c18688c07fc25"
+    },
+    {
+      "start_line": 5021,
+      "end_line": 5093,
+      "sha256": "c9ea06e2bb70105998ce2634ae67b518c2b5bace2c789df49c3fc5834434a6e4"
+    },
+    {
+      "start_line": 5095,
+      "end_line": 5145,
+      "sha256": "e5bba1a958c183232fa96dd7aa2d94189fe342a18da3e57dae86c25104f399f7"
+    },
+    {
+      "start_line": 5193,
+      "end_line": 5243,
+      "sha256": "0e87e9b24301a0b504b60cd60466d81e82a33f52c0042b6a522fd163256d882e"
+    },
+    {
+      "start_line": 5330,
+      "end_line": 5374,
+      "sha256": "f8388364970e31fac504d82f9f9f16e401c9748ccbca174cefb022af9feae7b5"
+    }
+  ],
+  "primary_source": {
+    "title": "Jan Nekovar, Selmer complexes, Asterisque 310 (2006)",
+    "url": "https://www.numdam.org/item/AST_2006__310__R1_0.pdf",
+    "sha256": "61c84e5ad3252a2e520747215ac57a282addc2b58c824a3637bcd77bbe02153f",
+    "locators": [
+      "1.3.2, p.41",
+      "6.2.2-6.2.4, pp.138-139",
+      "6.3.3, p.142",
+      "6.4.1-6.4.4, pp.144-145"
+    ],
+    "access_date": "2026-11-08"
+  },
+  "frozen_cloud_packet": {
+    "manifest": "research/scalar-ratio/MANIFEST.sha256",
+    "manifest_sha256": "d313ec3ff5ad0e91d555d26b2beef6ad401d7e9c86cdfe77adbe119062498610",
+    "entries_checked": 99,
+    "result": "UNCHANGED"
+  },
+  "source_audits": {
+    "cochains.md": "a5d67868b08d3448a19229c998f6dd3405e03c0f0683939dec11de9d25831b7e",
+    "duality.md": "80276636d8cf3701490fdfab3b30c58d2598338896f9ca9a0537db122a9a6b8b",
+    "functionals.md": "99fb095655b5bcc567b20a3f0064c8de1e8c59843619b873fa8b34d72f80782b"
+  },
+  "formal_arithmetic_instantiation": "NOT_DONE",
+  "manuscript_incorporation": "NOT_DONE",
+  "cloud_execution": "EXTERNAL_USER_WORK_NOT_RUN_OR_OBSERVED_HERE"
+}

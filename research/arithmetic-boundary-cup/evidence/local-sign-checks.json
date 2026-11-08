@@ -1,0 +1,10 @@
+{
+  "controls": {
+    "double_J": "REJECTED",
+    "independent_nonunit_row_rescaling": "REJECTED_IN_ALL_CASES",
+    "omitted_tame_pullback": "SIGNED_IDENTITY_REJECTED"
+  },
+  "exact_cases": 675,
+  "scope": "Finite exact sign and tensor checks; no arithmetic-input or Lean certification",
+  "status": "PASS"
+}

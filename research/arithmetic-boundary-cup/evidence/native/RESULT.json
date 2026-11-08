@@ -1,0 +1,137 @@
+{
+  "status": "PASS",
+  "profile": "development",
+  "lean": "Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "base_commit": "e653d6ff295ae4e0535710a7d64aa255d294d211",
+  "modules_freshly_compiled": [
+    "Coordinate",
+    "CommonStrict",
+    "UnitCriterion",
+    "BoundaryCup",
+    "ArithmeticBridge"
+  ],
+  "targets": [
+    "Research.DerivativeSwitch.ArithmeticBridge.cocycle_conjugation",
+    "Research.DerivativeSwitch.ArithmeticBridge.cocycle_transport_shared_unit",
+    "Research.DerivativeSwitch.ArithmeticBridge.area_smul_left",
+    "Research.DerivativeSwitch.ArithmeticBridge.area_smul_right",
+    "Research.DerivativeSwitch.ArithmeticBridge.coefficient_pairing_symmetric",
+    "Research.DerivativeSwitch.ArithmeticBridge.cone_pure_boundary",
+    "Research.DerivativeSwitch.ArithmeticBridge.PairedBoundaryData.partner_local",
+    "Research.DerivativeSwitch.ArithmeticBridge.transported_boundary_cup",
+    "Research.DerivativeSwitch.ArithmeticBridge.arithmetic_unit_comparison"
+  ],
+  "theorem_axioms": {
+    "Research.DerivativeSwitch.ArithmeticBridge.cocycle_conjugation": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.cocycle_transport_shared_unit": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.area_smul_left": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.area_smul_right": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.coefficient_pairing_symmetric": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.cone_pure_boundary": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.PairedBoundaryData.partner_local": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.transported_boundary_cup": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticBridge.arithmetic_unit_comparison": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "permitted_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "dependencies": [
+    {
+      "name": "mathlib",
+      "revision": "56a005855ea17e0b0958f73ec801ae140b0a1679"
+    },
+    {
+      "name": "plausible",
+      "revision": "dfa4f38190d07c37e315953e08b90fe2d95b3c24"
+    },
+    {
+      "name": "LeanSearchClient",
+      "revision": "d6b4c7be5be75ec4917c873ac50c756dc1436372"
+    },
+    {
+      "name": "importGraph",
+      "revision": "a41f0e9a4dea23188ea9cc1c41ac9f8bbafe0b93"
+    },
+    {
+      "name": "proofwidgets",
+      "revision": "df72b022e558978a1c50264cfc4d7fec86fa8e04"
+    },
+    {
+      "name": "aesop",
+      "revision": "4a174c490d8707121c4a9290800489f105d85e07"
+    },
+    {
+      "name": "Qq",
+      "revision": "dce0ad79c486cb1fb504af04f953c3466b0c6db8"
+    },
+    {
+      "name": "batteries",
+      "revision": "66e469188fe07963e5cf666c7d4433f45b8131c5"
+    },
+    {
+      "name": "Cli",
+      "revision": "c24fe6078c630e89b489bffe59b3e20ac30d12c8"
+    }
+  ],
+  "dependency_cache": "Previously provisioned pinned Mathlib master import closures",
+  "input_hashes": {
+    "lean/Research/DerivativeSwitch/Coordinate.lean": "229e66269880b9970b15ca36fab290d2572fdfac7396383d3327e652128ade90",
+    "lean/Research/DerivativeSwitch/CommonStrict.lean": "c5770846489d7fdab0024d8f3c49e0a474eb0fa56dc428cc6a7034bc8e5605e4",
+    "lean/Research/DerivativeSwitch/UnitCriterion.lean": "efd9f4404b9760f9d7ebc2cb0874f21f517ed3868e9e23f78fd0465a2c03e45a",
+    "lean/Research/DerivativeSwitch/BoundaryCup.lean": "64750e7706f82cf0a47b76c80503bcab0577c2aa18f9703c09b4b8288be0df90",
+    "lean/Research/DerivativeSwitch/ArithmeticBridge.lean": "2b72fc4237d45feb84973e470f0887c3ef3768cfaaedec967857a4ca01c09ef6",
+    "research/arithmetic-boundary-cup/verify_native.py": "f04da6120a450a2032815a11ceedb36977b1e6ba8ca33e986db846164771470f",
+    "research/arithmetic-boundary-cup/FORMAL_SPEC.md": "e851cce863eed11ba9b713d39d3627b4c027c17cb15386c735969cdc90cc22f9",
+    "research/arithmetic-boundary-cup/APPLICATION.md": "a00a0ab8b0eaf014bba81cd44a8e683dbe7b3c63492529780354979303252102",
+    "research/arithmetic-boundary-cup/manuscript-insertion.tex": "236abc7bc0f7e25baca29a428e271ffe8c9a3f5dc7cb7b6c0482631d9d9da28b",
+    "lean/lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+    "lean/lakefile.toml": "632fda3c75f7616378b9dadd0906d9518c7b4a1199c59d7b36369121acfb3b26",
+    "lean/lake-manifest.json": "a770787f33b5824f61a0731d59e67fca3f44a531b21d1fc1a804064c6fb54e58"
+  },
+  "artifact_hashes": {
+    "Research/DerivativeSwitch/UnitCriterion.olean": "c992a4b3ae6050cffced44c47e8e3db96faa2779225d87391bb160ac3acc9445",
+    "Research/DerivativeSwitch/ArithmeticBridge.olean": "3ef7e6e7aba837f59cb94bccf26cd58928413bd3ba56e39bf3f49fff364daca2",
+    "Research/DerivativeSwitch/BoundaryCup.olean": "a9df08ffae16713d71f8c4036d1d72ee4d2e8fe91142ab95c7bc49ee8692ad43",
+    "Research/DerivativeSwitch/Coordinate.olean": "acdcbdbf23e607fb051d3d1f09d85eb01e860c307c651fcef7948f9f331ac7b3",
+    "Research/DerivativeSwitch/CommonStrict.olean": "0625a1ef4a17a5b73980e40f23bc1d699ff676790bcc4e20d1e414dedf84ccc6"
+  },
+  "protected_comparison": "NOT_RUN",
+  "export_replay": "NOT_RUN",
+  "external_checkers": "NOT_RUN",
+  "paranoid": "NOT_RUN",
+  "actual_arithmetic_selmer_construction": "NOT_FORMALIZED"
+}
