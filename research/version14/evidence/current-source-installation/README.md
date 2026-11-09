@@ -20,4 +20,4 @@ The three restored README files preserve their previous bodies exactly and prepe
 
 ## Current evidence attachment
 
-The current beta004, b005, H5 four-joins002, Carayol003, sign002, H6 and residual-ledger evidence is being attached in the separately prepared `current-reviewed-003` collection. Its exact portable index and installed-link verification are required before release closure. This installation index is not aggregate proof or release approval.
+The current beta004, b005, H5 four-joins002, Carayol003, sign002, H6 and residual-ledger evidence is recorded in the installed [current-reviewed-003 collection](../current-reviewed-003/README.md). Its [portable file index](../current-reviewed-003/FILES.json) and [direct-reference resolution record](../current-reviewed-003/DIRECT-REFERENCE-RESOLUTION.json) identify the copied evidence and the recorded verification scope. This installation index is not aggregate proof or release approval.
