@@ -10,6 +10,8 @@ import shutil
 import subprocess
 import tarfile
 import tempfile
+import time
+import urllib.error
 import urllib.request
 import zipfile
 
@@ -30,6 +32,21 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+def download_archive(request):
+    """Retry transient download failures without changing the pinned artifact."""
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                return response.read()
+        except urllib.error.HTTPError as error:
+            if error.code not in {408, 429, 500, 502, 503, 504} or attempt == 3:
+                raise
+        except (urllib.error.URLError, TimeoutError):
+            if attempt == 3:
+                raise
+        time.sleep(2 ** attempt)
+
+
 def install():
     key = (platform.system(), platform.machine().lower())
     if key not in ASSETS:
@@ -42,8 +59,7 @@ def install():
     if not archive.exists():
         url = "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40" + VERSION + "/" + name
         request = urllib.request.Request(url, headers={"User-Agent": "diophantine-z-q-paper-build"})
-        with urllib.request.urlopen(request, timeout=60) as response:
-            raw = response.read()
+        raw = download_archive(request)
         if sha(raw) != checksum:
             raise RuntimeError("Tectonic archive checksum mismatch")
         archive.write_bytes(raw)
