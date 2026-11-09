@@ -1,6 +1,6 @@
 # Version 14 artifact index
 
-These are the selected current artifact identities. They do not certify the unassembled cumulative archive or supply missing release approval.
+These are the current manuscript and research artifact identities. The cumulative archive preserves the source revision recorded in its manifest; subsequent delivery documentation and its release checks have their own revision.
 
 | Artifact | Repository path | Scope |
 | --- | --- | --- |
@@ -45,4 +45,4 @@ package        5369f80f69742958ea31f3a32b62b43e6b23b284063e6870af2dc2f0073977fb
 
 The package identity is its `PACKAGE-MANIFEST.json`. See `ARTIFACTS.json`, `ACCEPTANCE.json` and the coordinate maps for the JSON tables, exact maxima, and distinctions between accepted and rejected history. Finite checks verify these constructions and serializations; they do not replace the retained arithmetic premises.
 
-Final cumulative archive, selected source commit and authenticated gate bindings are pending. See [CUMULATIVE-HANDOFF.md](CUMULATIVE-HANDOFF.md) for their explicit binding slots.
+The [cumulative archive](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-299-version-14/z-in-q-version14-supplement.zip) is 221,978,813 bytes, with SHA-256 `6025a0af2835a239c5dcd03f4aa4f8987f16c0fb5a7deae7f49089aefaf7ec9d`. It was built from `ceb028b95dd5d485586baa824badf0eb856567cb`. See [RELEASE-RECEIPT.json](RELEASE-RECEIPT.json) and [CUMULATIVE-HANDOFF.md](CUMULATIVE-HANDOFF.md) for the archive and source-gate bindings.

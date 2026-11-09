@@ -1,19 +1,18 @@
 # Cumulative Version 14 handoff
 
-This guide describes the selected research and the intended cumulative delivery. The November 9, 2026 manuscript and standalone GI artifacts are identified in [ARTIFACT-INDEX.md](ARTIFACT-INDEX.md). The final cumulative archive has not yet been assembled, and this guide supplies no publication or gate claim.
+Download the [cumulative research ZIP](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-299-version-14/z-in-q-version14-supplement.zip). The November 9, 2026 manuscript and standalone GI artifacts are identified in [ARTIFACT-INDEX.md](ARTIFACT-INDEX.md).
 
-## Final binding slots
-
-| Binding | Current state |
+| Binding | Value |
 | --- | --- |
-| Intended cumulative archive | `research/version14/z-in-q-version14-supplement.zip`; pending assembly and SHA-256 |
-| Verified research annex | `research/version14/z-in-q-version14-research-annex.zip`; SHA-256 `54e7aec54df9c1bd9bed0b02cd22a9a41ae3fb7717d12107ff72dd0700a2cd51` |
-| Selected source commit | Pending exact final source freeze |
-| Final release source map and release-input records | Pending generation from the selected source commit |
-| Mathematical/source collection review | Accepted at snapshot `e3bac2e4887f5fda951468cd1994fffafe420a6dc5c1aeaad60ff2a99c2126d5`; review identities are in [ARTIFACT-INDEX.md](ARTIFACT-INDEX.md) |
-| Authenticated release gate | Pending actual result and separately pinned post-gate evidence |
+| Archive size | 221,978,813 bytes |
+| Archive SHA-256 | `6025a0af2835a239c5dcd03f4aa4f8987f16c0fb5a7deae7f49089aefaf7ec9d` |
+| Archive source commit | `ceb028b95dd5d485586baa824badf0eb856567cb` |
+| Build and restoration receipt | [RELEASE-RECEIPT.json](RELEASE-RECEIPT.json) |
+| Source protocol check | [Successful App check](https://github.com/elliotglazer/diophantine-z-q/runs/129408252578) |
+| Source map and final inputs | `cumulative-source-map.json` and `release-inputs.json` inside the ZIP |
+| Gate evidence | `post-gate/` and `post-gate-manifest.json` inside the ZIP |
 
-Fill these slots only from the actual final outputs. If this guide is part of the source commit, keep its post-freeze slots pending and put their resolved values in the external final-input/source-map and post-gate records. Do not amend committed source merely to make it name its own commit. The R10 design keeps post-gate observations outside the source commit they describe. They travel as a separately pinned bundle beside the restored source, not as evidence claimed to have existed before that commit. A saved JSON consistency check does not authenticate a gate result.
+The ZIP preserves source commit `ceb028b95dd5d485586baa824badf0eb856567cb` and the protocol check for that source. This guide is subsequent delivery documentation. The delivery commit requires its own release check on GitHub; the source check does not approve a later commit. The archived source documents retain the pending-delivery wording they had when frozen. The ZIP's separate final-input and post-gate records resolve those source-time placeholders.
 
 ## What is preserved
 
@@ -37,7 +36,7 @@ The readable successor narrows the mathematics as well as repairing text; it is 
 
 ## Verification and historical runners
 
-After the final archive is available, verify its recorded final digest, extract it and run `python -B restore.py NEW_DIRECTORY`, choosing a directory that does not exist. Do not restore over a working research tree. Restoration materializes the selected repository and retains the research-annex ZIP. It does not automatically expand the annex. The 1,939 rows name logical destinations in the annex manifest, whose contents use content-addressed storage. From the restored repository, the selected package's finite replay command is:
+Verify the archive against the SHA-256 above, extract it and run `python -B restore.py NEW_DIRECTORY`, choosing a directory that does not exist. Do not restore over a working research tree. Restoration materializes the selected repository and retains the research-annex ZIP. It does not automatically expand the annex. The 1,939 rows name logical destinations in the annex manifest, whose contents use content-addressed storage. From the restored repository, the selected package's finite replay command is:
 
 ```sh
 python -B quartics/quartic-299-314/verify_lineage.py

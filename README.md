@@ -20,7 +20,7 @@ The project uses the collective agentic notes from Stefan Baranczuk, Jose Brox, 
 | Inspect the nine earlier review corrections | [Version 10 response and inventory](docs/manuscript-revisions/version10/README.md) |
 | Inspect theorem applications and conventions | [Version 9 extension](docs/quartic-523-540/README.md), [inherited proof inventory](docs/quartic-962/README.md) |
 | Build the manuscript or run the checks | [Build instructions](docs/building.md) |
-| Inspect the current audit supplement | [Version 14 cumulative supplement](research/version14/README.md), [Version 13 archive](research/version13/README.md) |
+| Download the current research handoff | [Version 14 cumulative ZIP](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-299-version-14/z-in-q-version14-supplement.zip), [contents and verification](research/version14/CUMULATIVE-HANDOFF.md), [Version 13 archive](research/version13/README.md) |
 | Download the Version 7 research handoffs | [Full handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-7/z-in-q-version7-full-handoff.zip), [current-only handoff](https://github.com/elliotglazer/diophantine-z-q/releases/download/quartic-962-version-7/z-in-q-version7-current-handoff.zip), [contents and verification](handoff/README.md) |
 | Read collaborator notes and the height replacement | [Research update](research/2026-11-06-collaborator-notes/README.md) |
 | Read the October 11 manuscript | [Manuscript and provenance](October%2011%20Manuscript/README.md) |
