@@ -1,12 +1,12 @@
 {
-  "pages": 103,
-  "guide_pages": 1,
-  "sha256": "1a553926eccf7540d43589554c737c8b3c6b0d9e049f1ee71d02dfea4fc01220",
+  "pages": 106,
+  "guide_pages": 2,
+  "sha256": "c971bcad7a269f8bd4cd18102d62cd8d61b801d9c4439d729457f37721e7228a",
   "modules": [
     {
       "id": "ASSEMBLY",
-      "start_pdf_page": 2,
-      "end_pdf_page": 11,
+      "start_pdf_page": 3,
+      "end_pdf_page": 12,
       "source": {
         "path": "proof/modules/00-assembly/assembly.tex",
         "sha256": "97faa088856a29ca1c569d7c1d8641a2399f48a093625fc535b9c95d7fe19489"
@@ -18,8 +18,8 @@
     },
     {
       "id": "GI-BASE2",
-      "start_pdf_page": 12,
-      "end_pdf_page": 16,
+      "start_pdf_page": 13,
+      "end_pdf_page": 17,
       "source": {
         "path": "proof/modules/01-gi-base2/proof.tex",
         "sha256": "7cbf7e65945cc6580f2bcc235b22521e41c649ccc3fa4b4491c24e4f1c284d1c"
@@ -31,8 +31,8 @@
     },
     {
       "id": "GTZ-LP-TAUTIFICATION",
-      "start_pdf_page": 17,
-      "end_pdf_page": 20,
+      "start_pdf_page": 18,
+      "end_pdf_page": 21,
       "source": {
         "path": "proof/modules/02-gtz-lp-tautification/proof.tex",
         "sha256": "71440cafc4b83b0600cb57534b8141d8960b50101a18b933bf46419605c352c5"
@@ -44,8 +44,8 @@
     },
     {
       "id": "GTZ-LP13-MULTILINEARITY",
-      "start_pdf_page": 21,
-      "end_pdf_page": 26,
+      "start_pdf_page": 22,
+      "end_pdf_page": 27,
       "source": {
         "path": "proof/modules/03-gtz-lp13-multilinearity/proof.tex",
         "sha256": "de1074bb94992ce5fcbffb44d8fb05474f527dd7fabe78256b1bf0d009253860"
@@ -57,8 +57,8 @@
     },
     {
       "id": "GTZ-LP02-03",
-      "start_pdf_page": 27,
-      "end_pdf_page": 30,
+      "start_pdf_page": 28,
+      "end_pdf_page": 31,
       "source": {
         "path": "proof/modules/04-gtz-lp02-03/proof.tex",
         "sha256": "ab378af75276aa59917761522b3700d79a2c6da1cd61575403e3d7bdb5e4b61b"
@@ -70,8 +70,8 @@
     },
     {
       "id": "GI-DF",
-      "start_pdf_page": 31,
-      "end_pdf_page": 38,
+      "start_pdf_page": 32,
+      "end_pdf_page": 39,
       "source": {
         "path": "proof/modules/05-gi-df/proof.tex",
         "sha256": "0d59971c920c4bd9c81bb36679cc8af13f1ad5f08a26ffa14bc174bb1c44cfa6"
@@ -83,8 +83,8 @@
     },
     {
       "id": "GI-MULTIFACTOR",
-      "start_pdf_page": 39,
-      "end_pdf_page": 46,
+      "start_pdf_page": 40,
+      "end_pdf_page": 47,
       "source": {
         "path": "proof/modules/06-gi-multifactor/proof.tex",
         "sha256": "d367d70226c4e12f82447c22adb106c50d265ed07da49f4f7a233774dbdbe1b3"
@@ -96,8 +96,8 @@
     },
     {
       "id": "GI-SECTION9-11",
-      "start_pdf_page": 47,
-      "end_pdf_page": 55,
+      "start_pdf_page": 48,
+      "end_pdf_page": 56,
       "source": {
         "path": "proof/modules/07-gi-section9-11/proof.tex",
         "sha256": "aa69875973315ea45e405e565f0124c6b258e3a2b288406ef2f529843e6b808a"
@@ -109,8 +109,8 @@
     },
     {
       "id": "GTZ-LP04",
-      "start_pdf_page": 56,
-      "end_pdf_page": 64,
+      "start_pdf_page": 57,
+      "end_pdf_page": 65,
       "source": {
         "path": "proof/modules/08-gtz-lp04/proof.tex",
         "sha256": "2da9bab0631ef7d2a5853a1712396b745e71839dbc6cafe05149a6a43d05e2ec"
@@ -122,8 +122,8 @@
     },
     {
       "id": "GI-SECTION12",
-      "start_pdf_page": 65,
-      "end_pdf_page": 72,
+      "start_pdf_page": 66,
+      "end_pdf_page": 73,
       "source": {
         "path": "proof/modules/09-gi-section12/proof.tex",
         "sha256": "23f16a5fa80935d0888404ac61f1a69792a5543e265a392782fbd5558a5cecbb"
@@ -135,8 +135,8 @@
     },
     {
       "id": "GI-RANK",
-      "start_pdf_page": 73,
-      "end_pdf_page": 76,
+      "start_pdf_page": 74,
+      "end_pdf_page": 77,
       "source": {
         "path": "proof/modules/10-gi-rank/proof.tex",
         "sha256": "c20479041c503448c9ded9f37c9f14b4086386e3ffddc6e1922146d11528c948"
@@ -148,8 +148,8 @@
     },
     {
       "id": "GTZ-LP05",
-      "start_pdf_page": 77,
-      "end_pdf_page": 83,
+      "start_pdf_page": 78,
+      "end_pdf_page": 84,
       "source": {
         "path": "proof/modules/11-gtz-lp05/proof.tex",
         "sha256": "b69f434a77b8c2509d132a6a7d58e31185b1abb2639314afa4d11cadb8604ab2"
@@ -161,8 +161,8 @@
     },
     {
       "id": "GI-PLAIN-QUADRUPLES",
-      "start_pdf_page": 84,
-      "end_pdf_page": 86,
+      "start_pdf_page": 85,
+      "end_pdf_page": 87,
       "source": {
         "path": "proof/modules/12-gi-plain-quadruples/proof.tex",
         "sha256": "b6198cf55c000086c0adffa332ed3dde8ce14413088a2c58045de905c839a453"
@@ -174,8 +174,8 @@
     },
     {
       "id": "GI-SECTION13",
-      "start_pdf_page": 87,
-      "end_pdf_page": 93,
+      "start_pdf_page": 88,
+      "end_pdf_page": 94,
       "source": {
         "path": "proof/modules/13-gi-section13/proof.tex",
         "sha256": "ec7b9c4b292cc9c16358b5fb0842295c905481aa160ad5d013653b4ad956c6ce"
@@ -187,8 +187,8 @@
     },
     {
       "id": "GTZ-LP-INCREMENT-LINEARIZATION",
-      "start_pdf_page": 94,
-      "end_pdf_page": 100,
+      "start_pdf_page": 95,
+      "end_pdf_page": 101,
       "source": {
         "path": "proof/modules/14-gtz-lp-increment-linearization/proof.tex",
         "sha256": "9e4e070160785bc951d1827a80a7cf285129d1e7d2551d066f3c6aff0a60f437"
@@ -200,8 +200,8 @@
     },
     {
       "id": "GI-CONVERSE",
-      "start_pdf_page": 101,
-      "end_pdf_page": 103,
+      "start_pdf_page": 102,
+      "end_pdf_page": 104,
       "source": {
         "path": "proof/modules/15-gi-converse/proof.tex",
         "sha256": "2f3f7126534096dee4e8c8464389cbd7c2e3b1156eea3214856a3d83fb3bb96b"
@@ -209,6 +209,30 @@
       "pdf": {
         "path": "proof/modules/15-gi-converse/proof.pdf",
         "sha256": "da1db864518177147daa9da4f9cea24bd97c9de259b0a777d2663e2eb4a5fc6e"
+      }
+    }
+  ],
+  "original_pdf_page_offset": 1,
+  "original_page_map": {
+    "path": "proof/history/pre-s13-addendum/PDF-PAGE-MAP.json",
+    "sha256": "831879b7633a06f3af15820e8045e82ec91cdf0c79784d436b53d23e8381c090",
+    "bytes": 7343
+  },
+  "delivery_guide_page": 1,
+  "addenda": [
+    {
+      "id": "S13-BOUNDED-SELECTION",
+      "start_pdf_page": 105,
+      "end_pdf_page": 106,
+      "source": {
+        "path": "proof/addenda/s13/GI-S13-BOUNDED-SELECTION.md",
+        "sha256": "e245e0eb1025ab11bcbd47b3f6928bd050076969dfb07c2a9cf950e46cbcaacf",
+        "bytes": 6063
+      },
+      "review": {
+        "path": "proof/addenda/s13/S13-ADDITIVE-SOURCE-REVIEW.json",
+        "sha256": "aafedda9a1eebd0b3e89d23877df32ee24574e6552ee3593a177534536dfced0",
+        "bytes": 16249
       }
     }
   ]

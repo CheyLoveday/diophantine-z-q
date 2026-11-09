@@ -154,5 +154,22 @@
       "sha256": "9d66017c15fc99bbae83726ef27bcc16d73128c13166916f00714c84c8523383"
     }
   ],
-  "rule": "Historical GTZ draft and unpublished erratum are finding provenance, not accepted theorem premises. They are not copied into this supplement."
+  "rule": "Historical GTZ draft and unpublished erratum are finding provenance, not accepted theorem premises. They are not copied into this supplement.",
+  "local_derivations": [
+    {
+      "id": "S13-BOUNDED-SELECTION",
+      "source": {
+        "path": "proof/addenda/s13/GI-S13-BOUNDED-SELECTION.md",
+        "sha256": "e245e0eb1025ab11bcbd47b3f6928bd050076969dfb07c2a9cf950e46cbcaacf",
+        "bytes": 6063
+      },
+      "review": {
+        "path": "proof/addenda/s13/S13-ADDITIVE-SOURCE-REVIEW.json",
+        "sha256": "aafedda9a1eebd0b3e89d23877df32ee24574e6552ee3593a177534536dfced0",
+        "bytes": 16249
+      },
+      "location": "Addendum 1, PDF pages 105-106",
+      "scope": "Section 13 bounded selection from the actual pointwise lower-test correlation premise; source-level incoming premise and remaining global coverage are separately recorded."
+    }
+  ]
 }

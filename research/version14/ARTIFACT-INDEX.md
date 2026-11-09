@@ -6,7 +6,7 @@ These are the selected current artifact identities. They do not certify the unas
 | --- | --- | --- |
 | Main TeX | `manuscripts/quartic_v14.tex` | Current main003 source |
 | Main PDF | `manuscripts/quartic_v14.pdf` | 323 pages |
-| Merged GI PDF | `research/version14/proofs/local-gi-v1/GI-SUPPLEMENT.pdf` | 103 pages, one guide and sixteen modules |
+| Merged GI PDF | `research/version14/proofs/local-gi-v1/GI-SUPPLEMENT.pdf` | 106 pages: original 103, delivery guide and Section 13 addendum |
 | GI PDF alias | `manuscripts/quartic-local-gi-supplement.pdf` | Same bytes as the merged GI PDF |
 | Standalone GI archive | `research/version14/proofs/GI-PROOF-ONLY.zip` | Separate proof-only delivery, not nested in the cumulative archive |
 | Research annex | `research/version14/z-in-q-version14-research-annex.zip` | 1,939 logical records, 1,643 distinct content objects; 10,265,610 bytes |
@@ -16,9 +16,9 @@ SHA-256 identities:
 ```text
 main TeX       1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8
 main PDF       b8844030a29a9b582911a7a3dbf711bed9e9e1b14d77c29ed56e40951827fe91
-GI PDF/alias   1a553926eccf7540d43589554c737c8b3c6b0d9e049f1ee71d02dfea4fc01220
-GI archive     d4aa92224ff373410a8e63073d0f829f80f55ad81be5dda357872a88822c0ae0
-GI manifest    6bd2c5a0f632d908f94540622fe96ec378a6f79c983d3aca3e9ba26d350a8201
+GI PDF/alias   c971bcad7a269f8bd4cd18102d62cd8d61b801d9c4439d729457f37721e7228a
+GI archive     581aa968e1c54cf78a16e47b18e981012c5b29eeb6da2e0c115b56fb7276156b
+GI manifest    4b5e400758f6fc3e9ad1a07f06e2ac0a222f70a067e7726922b5857914083eb0
 research annex 54e7aec54df9c1bd9bed0b02cd22a9a41ae3fb7717d12107ff72dd0700a2cd51
 ```
 

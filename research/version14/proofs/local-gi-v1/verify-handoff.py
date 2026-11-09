@@ -1,7 +1,7 @@
 """Verify only the explicitly reduced cumulative GI directory."""
 from pathlib import Path,PurePosixPath
 import hashlib,json,sys
-EXPECTED='2a3681bc015e4f0ce73e18fc4ea62cefac31ed9ff9bf2f087841b4589f0e14ad'
+EXPECTED='daeea7bb70433bd041e4a132cfae98c2492ce6cb94e84aa0fcea1d738906fc65'
 H=lambda b:hashlib.sha256(b).hexdigest()
 def need(ok,msg):
  if not ok:raise ValueError(msg)
