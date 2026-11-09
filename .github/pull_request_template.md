@@ -8,6 +8,9 @@ Follow the [contributor review guide](https://github.com/elliotglazer/diophantin
 
 - Exact revision, file hashes, proposed edits and dependency impact:
 - Complete proof and published-source application inventory, including the nine obligations and version/convention comparisons:
+- Source-first coverage index, frozen initial and reconciled source-use tables, direct-dependency reconciliation and separate non-author coverage decision, including prior exposure and remaining gaps, or a precise non-applicability explanation:
+- Substantive transitions: exact available and needed conclusions, connecting derivations, adverse cases and non-author decisions:
+- For substantive failures: bounded related-use review, its coverage decision and consistency of repeated current assertions, or a specific non-applicability explanation:
 - Explicit construction or computational specification, certificates, reproduction commands and results:
 - Non-author review decisions with exact bindings, identities and scope:
 - All received audits and findings, reviewed resolutions and remaining objections:

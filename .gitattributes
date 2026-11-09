@@ -36,3 +36,12 @@ scripts/check_quartic394.py -text
 scripts/build_paper.py -text
 scripts/check_quartic394_portable.py -text
 scripts/quartic394_path_bootstrap.py -text
+docs/manuscript-revisions/version14/** -text
+docs/research-review/proof-sources/** -text
+
+# Preserve the exact bytes bound by the protocol adoption reviews.
+AGENTS.md -text
+README.md -text
+CONTRIBUTING.md -text
+.github/pull_request_template.md -text
+docs/research-review/** -text

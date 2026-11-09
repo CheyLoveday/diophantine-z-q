@@ -33,6 +33,8 @@ jobs:
       - run: python -B docs/manuscript-revisions/version13/portability/test_portability.py
       - run: python -B scripts/check_quartic394_portable.py
       - run: python -B docs/manuscript-revisions/version13/validate-applications.py --repo . --self-test
+      - run: python -B quartics/quartic-299-314/verify_lineage.py
+      - run: python -B docs/manuscript-revisions/version14/validate-applications.py --repo . --self-test
       - run: python -B scripts/check_audit_history.py --self-test
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

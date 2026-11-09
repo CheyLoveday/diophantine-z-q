@@ -1,0 +1,11 @@
+# Version 14 research supplement
+
+Start with the [323-page manuscript](../../manuscripts/quartic_v14.pdf), its [TeX source](../../manuscripts/quartic_v14.tex), and the [construction guide](../../docs/manuscript-revisions/version14/GUIDE.md). The [artifact index](ARTIFACT-INDEX.md) records the selected file identities. The [cumulative handoff guide](CUMULATIVE-HANDOFF.md) explains history, verification, exclusions and the remaining release bindings.
+
+The selected smaller constructions are the corrected 299-variable symbolic quartic and the 314-variable ordinary quartic. The [299/314 package](../../quartics/quartic-299-314/README.md) contains complete coefficient tables, residual systems, coordinate maps, reviews and its 28-stage finite verifier. The symbolic coefficient parameter `C = 3^(2^25)` is a fixed integer, not an additional variable. The ordinary quartic has 6,672 monomials and coefficients strictly below `2^6496` in absolute value. The original large polynomial is a separate construction.
+
+The [103-page local GI supplement](proofs/local-gi-v1/GI-SUPPLEMENT.pdf) contains one guide page and sixteen modules. The `proofs/GI-PROOF-ONLY.zip` standalone delivery includes its own manifest and verifier. See its [package guide](proofs/local-gi-v1/README.md). The standalone archive and the cumulative handoff have different inclusion rules; the standalone archive is not nested inside the cumulative archive.
+
+The final cumulative archive is intended for `research/version14/z-in-q-version14-supplement.zip`. It has not yet been assembled or assigned a final digest in this documentation revision. Its design preserves the exact Version 13 base and adds selected current files and research history. The separately verified [research annex](z-in-q-version14-research-annex.zip) records 1,939 logical file rows backed by 1,643 distinct content objects. These are research-record counts, not counts of accepted theorems. Historical rejected attempts and qualified source applications retain their original meaning.
+
+The [historical selection guide](RELEASE-HISTORY-GUIDE.md) describes an earlier preparation state. Current decisions must be read at their exact source and application hashes. The governing research protocol is [version 1.4](../../docs/research-review/PROTOCOL.md). Internal model reviews do not constitute independent human peer review.
