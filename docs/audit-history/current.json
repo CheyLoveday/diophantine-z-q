@@ -2,7 +2,7 @@
   "schema": 1,
   "manuscript": {
     "path": "manuscripts/quartic_v14.tex",
-    "sha256": "1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8"
+    "sha256": "5882a77003b9772b5b572a5ab2c2b2f8ce9fc53e1e368a3b69851c8a9b3bfcac"
   },
   "baseline": {
     "path": "manuscripts/quartic_v10.tex",
@@ -13,51 +13,81 @@
     {
       "contract": {
         "path": "docs/manuscript-revisions/version14/resume003/kato-1999-index-and-class-application.json",
-        "sha256": "231c9caf34b96dd377157d8c6d8326d56db20db8a82add26e7ceff3c3e4b771f"
+        "sha256": "379ab1c7a6cae2663e1396bf492f8d7d640eace09ff43f897b77704619964451"
       },
       "approval": {
-        "path": "docs/manuscript-revisions/version14/resume003/kato-1999-index-and-class-approval.json",
-        "sha256": "ad0ce945e611cdd88c891b8b24618d529634832bf6dd5c9fc6e72c6a19ff1d46"
+        "path": "docs/manuscript-revisions/version14/final5882-transport/kato-1999-index-and-class-approval.json",
+        "sha256": "f0c78aa40fe9d8502889fe4ab50ee2cb7953c95716bce20ddecb83481ec2a33f"
       }
     },
     {
       "contract": {
         "path": "docs/manuscript-revisions/version14/resume003/quartic-498-composition-application.json",
-        "sha256": "3178cd55dd58f5e96a471f1b1f5e7d27a1c761e77d183aa5fc331247c934f75d"
+        "sha256": "a786db77343fb53183813c12aef8282e96b6c0ee728cecbb04a0de32e2e99878"
       },
       "approval": {
-        "path": "docs/manuscript-revisions/version14/resume003/quartic-498-composition-approval.json",
-        "sha256": "7cae7ac270ead67dd572dc1ce524800ad6f276117dae728639ec9e67c4ee52de"
+        "path": "docs/manuscript-revisions/version14/final5882-transport/quartic-498-composition-approval.json",
+        "sha256": "541951f7d5457312245bfe5c5a581d2a79140ac4f7d99f6f100298a4bbfc7b01"
       }
     },
     {
       "contract": {
         "path": "docs/manuscript-revisions/version14/resume003/quartic-394-composition-application.json",
-        "sha256": "1f1095e4bf860431932ea7c90863b1a68813747b4c3c9079107cd1e17e650d2b"
+        "sha256": "eb90af94058750e1b3ba68d025dbaf13ad125edfb08f13ad20d11dc3eda60935"
       },
       "approval": {
-        "path": "docs/manuscript-revisions/version14/resume003/quartic-394-composition-approval.json",
-        "sha256": "39a7690e35fa9aada2ba7ba09e0448f0ad02119015cd74abcd9242d4409dfac9"
+        "path": "docs/manuscript-revisions/version14/final5882-transport/quartic-394-composition-approval.json",
+        "sha256": "bf53fdb0450672d1c86c0ea343d64c66253dc5b08779191602adf3c9f74fac03"
       }
     },
     {
       "contract": {
         "path": "docs/manuscript-revisions/version14/resume004/quartic-299-composition-application.json",
-        "sha256": "25cfa963ff405fd8dbb1c6aa2f1bfdc6f5b7163b0d89d49ea8fec555b0217b60"
+        "sha256": "d88c42ee08db63646a8476f4a959f742510270c3c4063f34c1e57c52ee6a1eaf"
       },
       "approval": {
-        "path": "docs/manuscript-revisions/version14/resume004/quartic-299-composition-approval.json",
-        "sha256": "7c4ef4b999d368ecb356deadffcff627f904a9b9e8c1c70edfab653e60e5624d"
+        "path": "docs/manuscript-revisions/version14/final5882-inventory-transport/approval.json",
+        "sha256": "ab3953fa896fbad35043f1ee462e7295ea25ba83eeedc4bc4c67a05286eaf232"
       }
     },
     {
       "contract": {
         "path": "docs/manuscript-revisions/version14/resume003-navigation006/assembly-application.json",
-        "sha256": "c8ddef2484b2c7601282d75a62915c83cb47b9391d66dc4c740ecb203f3fcd0d"
+        "sha256": "d0d25803271dea7a198af254aa13562b7c39f5cd3d3c823e256df8c733859e17"
       },
       "approval": {
-        "path": "docs/manuscript-revisions/version14/resume003-navigation006/assembly-approval.json",
-        "sha256": "26a5b66da1ed4d7dac79a94e8656d363a14d61a522df4237b02f20d5d1b4cffe"
+        "path": "docs/manuscript-revisions/version14/final5882-transport/navigation-approval.json",
+        "sha256": "bdd21973cba35c6174b15292ff9064de62dcb14b5d13f7fc6e72bf3b2f749854"
+      }
+    },
+    {
+      "contract": {
+        "path": "docs/manuscript-revisions/version14/resume003-grouped-source-edits/contract.json",
+        "sha256": "3721b50e2e73c91074e0aa92399646a4842ab9695af3c4697dde27e30dedcf10"
+      },
+      "approval": {
+        "path": "docs/manuscript-revisions/version14/final5882-transport/v14-grouped-source-edits-001-approval.json",
+        "sha256": "6b1d8605c383021532b814ad732a4558c9ec92ccfa97fbfa35e89bc98c60ae65"
+      }
+    },
+    {
+      "contract": {
+        "path": "docs/manuscript-revisions/version14/native-genus-current/application.json",
+        "sha256": "e67e3ff6b39c30763c5bc962a981dca8c2f5917060f944d42f675c44e353bc7b"
+      },
+      "approval": {
+        "path": "docs/manuscript-revisions/version14/native-genus-current/approval.json",
+        "sha256": "dd9daac813fd3b0eaa0b5c45a33110a383dfe0b01ab0cff3ba01783c01292bbc"
+      }
+    },
+    {
+      "contract": {
+        "path": "docs/manuscript-revisions/version14/global-cohomology-comparison-001/CONTRACT.json",
+        "sha256": "00c0b6355dca5d3018dc607342e7ccb05ccde6b02798802c2a990b3e6153662a"
+      },
+      "approval": {
+        "path": "docs/manuscript-revisions/version14/global-cohomology-comparison-001/APPROVAL.json",
+        "sha256": "0923fec98df9a130f848bc13cc2b5d4352cb6350516bfda6312f1dfbefae0fdd"
       }
     }
   ],
@@ -624,6 +654,68 @@
       "contract_id": "V14-REVIEWED-ASSEMBLY-003",
       "old": "Contemporary Mathematics \\textbf{270}, American Mathematical Society,\nProvidence, RI, 2000, 237--252.\n\\url{https://doi.org/10.1090/conm/270/04376}.\n\\end{thebibliography}\n\n% End references.tex\n",
       "new": "Contemporary Mathematics \\textbf{270}, American Mathematical Society,\nProvidence, RI, 2000, 237--252.\n\\url{https://doi.org/10.1090/conm/270/04376}.\n\\bibitem{pan-p5-sw99-project}\r\nVersioned project proof, \\emph{Prime-five auxiliary cohomology and element\r\nselection}, version 1. Authored proof, supporting sources and bounded\r\nreview records at\r\n\\href{https://github.com/elliotglazer/diophantine-z-q/blob/main/research/version14/proofs/pan-p5-sw99-v1/README.md}\r\n{\\texttt{research/version14/proofs/pan-p5-sw99-v1/}}.\r\n\r\n\\bibitem{pan-local-rings-project}\r\nVersioned project proof, \\emph{Local matrix connections for Pan at prime five},\r\nversion 1. Exact source qualifications, integral proof and bounded\r\nindependent review at\r\n\\href{https://github.com/elliotglazer/diophantine-z-q/blob/main/research/version14/proofs/pan-local-rings-v1/README.md}\r\n{\\texttt{research/version14/proofs/pan-local-rings-v1/}}.\r\n\r\n\\bibitem{pan-utility-project}\r\nVersioned project proof, \\emph{Four utility applications in Pan},\r\nversion 1. Proof, exact source qualifications and bounded review at\r\n\\href{https://github.com/elliotglazer/diophantine-z-q/blob/main/research/version14/proofs/pan-utility-p5-v1/README.md}\r\n{\\texttt{research/version14/proofs/pan-utility-p5-v1/}}.\r\n\r\n\\bibitem{cj-cm-inputs-project}\nProject proof supplement, \\emph{Retained CM inputs for the conductor-one comparison},\nversion 1, \\href{https://github.com/elliotglazer/diophantine-z-q/blob/main/research/version14/proofs/cj-cm-inputs-v1/README.md}{proof and source contracts}.\n\\bibitem{cj-good-reduction-project}\nProject proof supplement, \\emph{Good-reduction specialization}, version 1,\n\\href{https://github.com/elliotglazer/diophantine-z-q/blob/main/research/version14/proofs/cj-good-reduction-v1/README.md}{proof and independent scoped review}.\n\n\\bibitem{milne1986-abelian} J. S. Milne, \\emph{Abelian varieties},\nin \\emph{Arithmetic Geometry}, Springer, 1986, 103--150,\nProposition 12.1 and Lemma 12.2, p.~122;\nTheorem 8.2 and Remark 8.4, pp.~115--116.\n\\url{https://www.jmilne.org/math/articles/1986b.pdf}.\n\n\\bibitem{faltings1986-complements} G. Faltings,\n\\emph{Complements to Mordell}, in \\emph{Rational Points},\nsecond edition, Vieweg, 1986, Theorem 1(a)--(b), p.~204.\n\\url{https://doi.org/10.1007/978-3-663-06812-9}.\n\n\\bibitem{washington1997}\nL.~C. Washington,\n\\emph{Introduction to Cyclotomic Fields}, second edition,\nGraduate Texts in Mathematics 83, Springer, New York, 1997.\nChapter 14, Theorem 14.1, p.~321.\n\\url{https://doi.org/10.1007/978-1-4612-1934-7_14}.\n\n\\bibitem{serre-tate-good-reduction}\nJ.-P. Serre and J. Tate,\n\\emph{Good reduction of abelian varieties},\nAnn. of Math. (2) \\textbf{88} (1968), 492--517.\n\\url{https://doi.org/10.2307/1970722}.\n\n\\bibitem{carayol1987}\nH. Carayol,\n\\emph{Formes modulaires et repr\\'esentations $\\ell$-adiques},\nAst\\'erisque \\textbf{147--148} (1987), 33--47.\n\\url{https://www.numdam.org/item/AST_1987__147-148__33_0/}.\n\n\\end{thebibliography}\n\n% End references.tex\n"
+    },
+    {
+      "id": "v14-fixed-quadratic-field-proof",
+      "kind": "mathematical",
+      "contract_id": "V14-GROUPED-SOURCE-EDITS-001",
+      "old": "The ring of integers $\\Z[s]$ has class number one because its Minkowski\nbound is $\\sqrt2<2$. It has four unit squareclasses. The sign vectors\nof $-1,1+s$ are independent, so every totally positive unit is a square.\n",
+      "new": "The ring of integers $\\Z[s]$ is norm-Euclidean, hence has class number one.\nIts units are $\\{\\pm(1+s)^k:k\\in\\Z\\}$, so it has four unit squareclasses.\nThe sign vectors of $-1,1+s$ are independent, so every totally positive unit is a square.\n"
+    },
+    {
+      "id": "v14-local-differential-convention",
+      "kind": "mathematical",
+      "contract_id": "V14-GROUPED-SOURCE-EDITS-001",
+      "old": "Identifying this generator with the chosen local generator for\n$E^h$ at two has bounded valuation: odd squarefree $h$ belongs to\n",
+      "new": "Identifying this generator with a minimal invariant differential (or its dual, according to the fixed convention)\nfor $E^h$ at two has bounded valuation: odd squarefree $h$ belongs to\n"
+    },
+    {
+      "id": "native-genus-1",
+      "kind": "mathematical",
+      "old": "For a known simple-zero $h$, let $P_h^{\\rm gen}$ be the unaveraged\nconductor-one genus sum over $\\Q(\\sqrt{hh_*})$.\nLet $P_{h,k'}^{\\rm rc}$ be the unaveraged conductor-$|h|$ ring-class\nsum over $\\Q(\\sqrt{k'})$, weighted by $\\chi_h$.\nThey are different points in different native lattices.\nWrite $j_{\\rm gen}(h)$ and $j_{\\rm rc}(h,k')$ for their index valuations.",
+      "new": "For a known simple-zero $h$, let $P_h^{\\rm gen}$ be the unaveraged\nconductor-one genus sum over $\\Q(\\sqrt{hh_*})$.\nLet $P_{h,k'}^{\\rm rc}$ be the unaveraged conductor-$|h|$ ring-class\nsum over $\\Q(\\sqrt{k'})$, weighted by $\\chi_h$.\nThey are different points in different native lattices.\nWrite $j_{\\rm gen}(h)$ and $j_{\\rm rc}(h,k')$ for their index valuations.\n\n\\paragraph{The native genus lattice.}\nFor the genus point specifically, put\n$K_h=\\Q(\\sqrt{hh_*})$ and $F_h=\\Q(\\sqrt h,\\sqrt{h_*})$.\nIf $h>1$ and $\\tau$ generates $\\operatorname{Gal}(F_h/K_h)$, set\n\\[\n \\Gamma_h=\\{P\\in E(F_h):\\tau P=-P\\},\\qquad\n \\Lambda_h=\\Gamma_h/\\Gamma_{h,\\mathrm{tors}}.\n\\]\nFor $h=1$, set $\\Gamma_1=E(K_1)$ and take its torsion-free quotient.\nThe native genus index is the divisibility index of the class of\n$P_h^{\\rm gen}$ in $\\Lambda_h$, at the known simple-zero parameters\nwhere this lattice has rank one. The CM reciprocity action and\nreindexing the unaveraged genus-character sum give exact membership\n$P_h^{\\rm gen}\\in\\Gamma_h$, before multiplication by the later fixed\nmultiplier. The standard $h$-twist isomorphism identifies $\\Gamma_h$\nwith $E^{(h)}(K_h)$. The remaining involution of $K_h/\\Q$ fixes its\nfree quotient: the only other rational character component is the\n$h_*$-component, whose rank is zero by the supplied forward theorem.\nThus $Q+\\sigma Q\\in E^{(h)}(\\Q)$ represents twice the free class of\n$Q\\in E^{(h)}(K_h)$. The rational subgroup consequently contains\n$2\\Lambda_h$ and has index at most two. For $h=1$ this is ordinary\nquadratic conjugation and the same norm argument. This calculation\nuses the stated rank and CM inputs; it does not infer rank from\nnonvanishing height, nor apply to the whole group $E(F_h)$.\n",
+      "contract_id": "V14-NATIVE-GENUS-LATTICE-CLARIFICATION"
+    },
+    {
+      "id": "native-genus-2",
+      "kind": "mathematical",
+      "old": "The rational free line has index at most two in that native\nlattice, by conjugation and norm. Absorb this and the fixed\ninitial convention in $C_{\\rm det}$. The first inequality below",
+      "new": "The rational $D$-twist subgroup has index at most two in the native\ngenus lattice by the calculation preceding\nProposition~\\ref{ex:sec7-genus-lower}. Absorb this and the fixed\ninitial convention in $C_{\\rm det}$. The first inequality below",
+      "contract_id": "V14-NATIVE-GENUS-LATTICE-CLARIFICATION"
+    },
+    {
+      "id": "global-cohomology-1",
+      "kind": "mathematical",
+      "contract_id": "V14-GLOBAL-COHOMOLOGY-COMPARISON-001",
+      "old": "We also account for the difference between the two published\ncohomology conventions. Write $C_j$ for the $j_*$ Iwasawa complex of\n\\cite[Section 12.1]{kato}, and $C_S$ for full cochains on the open\nscheme with the odd support inverted, as in \\cite[Section 0.5]{kato1999}.",
+      "new": "We also account for the difference between the two published\ncohomology conventions. Write $C_j$ for the $j_*$ Iwasawa complex of\n\\cite[Sections 8.2 and 12.2]{kato}, and $C_S$ for \\emph{étale}\ncochains on the open arithmetic scheme obtained by inverting $2$\nand every odd prime in the actual ramification support $S$,\nincluding the fixed twist, as in \\cite[Sections 0.1 and 0.5]{kato1999}.\nThe support modulus called $N$ in that source is taken to contain\nthese primes; it is not merely the conductor of the untwisted curve."
+    },
+    {
+      "id": "supporting-proof-navigation",
+      "kind": "source",
+      "contract_id": "V14-REVIEWED-ASSEMBLY-003",
+      "old": "therefore hold, and Lemma~\\ref{lem:assembly} applies to the specified $P_*$.",
+      "new": "therefore hold, and Lemma~\\ref{lem:assembly} applies to the specified $P_*$. The versioned supporting arguments, their source identities and their stated hypotheses are indexed in \\href{https://github.com/elliotglazer/diophantine-z-q/blob/main/research/version14/SUPPORTING-NOTES.md}{\\texttt{research/version14/SUPPORTING-NOTES.md}}."
+    },
+    {
+      "id": "source-catalogue-navigation",
+      "kind": "source",
+      "contract_id": "V14-REVIEWED-ASSEMBLY-003",
+      "old": "The companion \\texttt{SOURCE\\_MAP.json} records exact paths, hashes and\nlocators, distinguishing mathematical and construction sources, artifacts,\nand version records. The base collection contains 83 sources; parity, construction\nand uniformity supplements are in separate addenda. The principal local\nsources are listed below; full paths\nare in the source map.",
+      "new": "The following catalogue records the base collection of 83 source\nidentifiers; parity, construction and uniformity supplements appear\nseparately. The released construction files and their exact identities\nare recorded in \\nolinkurl{construction/SOURCE_MANIFEST.json}.\nCurrent proof-source selection and versioned supporting arguments are\nindexed in \\nolinkurl{research/version14/SUPPORTING-NOTES.md}."
+    },
+    {
+      "id": "repeated-source-navigation",
+      "kind": "source",
+      "contract_id": "V14-REVIEWED-ASSEMBLY-003",
+      "old": "The source package includes the specification, natural precision polynomial\nand construction sources in \\nolinkurl{SUPPLEMENT_MANIFEST.json}.\nThe larger proof corpus is identified by hashes and stable locators in\n\\nolinkurl{SOURCE_MAP.json}. A source identity is not a proof verdict.",
+      "new": "The released specification, natural precision polynomial and construction\nfiles are identified in \\nolinkurl{construction/SOURCE_MANIFEST.json}.\nFor the selected supporting proof arguments, see\n\\nolinkurl{research/version14/SUPPORTING-NOTES.md}. A source identity is not a proof verdict."
+    },
+    {
+      "id": "release-date",
+      "kind": "administrative",
+      "old": "\\date{November 8, 2026}",
+      "new": "\\date{November 9, 2026}"
     }
   ],
   "legacy_register": {

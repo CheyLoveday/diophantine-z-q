@@ -2,7 +2,7 @@
   "id": "KATO-1999-INDEX-AND-CLASS",
   "manuscript": {
     "path": "manuscripts/quartic_v14.tex",
-    "sha256": "1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8"
+    "sha256": "5882a77003b9772b5b572a5ab2c2b2f8ce9fc53e1e368a3b69851c8a9b3bfcac"
   },
   "reviewed_edits": {
     "construction-domain": "ca92363d5784c59b784a7299b7e166081f537d952ad8d0b32603dca1dd3cb92b",
@@ -55,20 +55,20 @@
   "manuscript_spans": [
     {
       "role": "construction",
-      "start_line": 13366,
-      "end_line": 13507,
+      "start_line": 13392,
+      "end_line": 13533,
       "sha256": "07fdbb7971932cf1f4c1e2d5262fb5f9bc99bc24bd0408d89486aabe84f2619a"
     },
     {
       "role": "application",
-      "start_line": 13729,
-      "end_line": 13839,
-      "sha256": "e910d19f48c8a65541b958eb9202cb03642a1216ed033da46c6df0a7ccd1a054"
+      "start_line": 13755,
+      "end_line": 13869,
+      "sha256": "2ea9b76d8dd1d4cbfbbeef77f372c2622c7b5049d3456f9007edf0bfb7d7a147"
     },
     {
       "role": "consumer",
-      "start_line": 13678,
-      "end_line": 13728,
+      "start_line": 13704,
+      "end_line": 13754,
       "sha256": "987a09fd64b2cfb5d1c67aed88933baad1af759f64783a2035befade63015d9f"
     }
   ],

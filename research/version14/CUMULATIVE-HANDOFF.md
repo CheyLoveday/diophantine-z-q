@@ -1,6 +1,6 @@
 # Cumulative Version 14 handoff
 
-This guide describes the selected research and the intended cumulative delivery. The current manuscript and standalone GI artifacts are identified in [ARTIFACT-INDEX.md](ARTIFACT-INDEX.md). The final cumulative archive has not yet been assembled, and this guide supplies no publication or gate claim.
+This guide describes the selected research and the intended cumulative delivery. The November 9, 2026 manuscript and standalone GI artifacts are identified in [ARTIFACT-INDEX.md](ARTIFACT-INDEX.md). The final cumulative archive has not yet been assembled, and this guide supplies no publication or gate claim.
 
 ## Final binding slots
 
@@ -9,8 +9,9 @@ This guide describes the selected research and the intended cumulative delivery.
 | Intended cumulative archive | `research/version14/z-in-q-version14-supplement.zip`; pending assembly and SHA-256 |
 | Verified research annex | `research/version14/z-in-q-version14-research-annex.zip`; SHA-256 `54e7aec54df9c1bd9bed0b02cd22a9a41ae3fb7717d12107ff72dd0700a2cd51` |
 | Selected source commit | Pending exact final source freeze |
-| Final source map and release-input records | Pending generation from that freeze |
-| Authenticated gate and collection review | Pending actual result and separately pinned post-gate evidence |
+| Final release source map and release-input records | Pending generation from the selected source commit |
+| Mathematical/source collection review | Accepted at snapshot `e3bac2e4887f5fda951468cd1994fffafe420a6dc5c1aeaad60ff2a99c2126d5`; review identities are in [ARTIFACT-INDEX.md](ARTIFACT-INDEX.md) |
+| Authenticated release gate | Pending actual result and separately pinned post-gate evidence |
 
 Fill these slots only from the actual final outputs. If this guide is part of the source commit, keep its post-freeze slots pending and put their resolved values in the external final-input/source-map and post-gate records. Do not amend committed source merely to make it name its own commit. The R10 design keeps post-gate observations outside the source commit they describe. They travel as a separately pinned bundle beside the restored source, not as evidence claimed to have existed before that commit. A saved JSON consistency check does not authenticate a gate result.
 

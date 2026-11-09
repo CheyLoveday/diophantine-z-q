@@ -1,7 +1,7 @@
 # Version 14 application records
 
-This inventory preserves 39 baseline application identities and states 351
-current obligations. Each obligation binds its prior record, describes whether
+This baseline inventory preserves 39 application identities and states 351
+obligations. Each obligation binds its prior record, describes whether
 its text is preserved or replaced, explains the effect of changed dependencies,
 and identifies exact source and current manuscript spans.
 
@@ -20,3 +20,11 @@ The installer creates author records only. Current application approval,
 source-first coverage, final mathematical review and registry installation
 remain separately bound decisions. Historical component reviews retain their
 original scope and do not approve revised exposition automatically.
+
+The later final source collection records 1,120 active uses, 176 ordinary
+applications and 136 selected proof-source files. These are separate counting
+units from the baseline obligations above. The [complete source index](../../../research/version14/PROOF-SOURCE-INDEX.md)
+provides the file identities, and the [artifact index](../../../research/version14/ARTIFACT-INDEX.md)
+records the accepted collection and review hashes. The current manuscript is
+Version 14 dated November 9, 2026, with a 323-page PDF. Authenticated release
+gates, final archive verification and publication remain separate.

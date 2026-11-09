@@ -2,7 +2,7 @@
   "id": "QUARTIC-299-COMPOSITION",
   "manuscript": {
     "path": "manuscripts/quartic_v14.tex",
-    "sha256": "1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8"
+    "sha256": "5882a77003b9772b5b572a5ab2c2b2f8ce9fc53e1e368a3b69851c8a9b3bfcac"
   },
   "authors": [
     "/root",
@@ -39,7 +39,7 @@
   "evidence": {
     "application-inventory": {
       "path": "docs/manuscript-revisions/version14/APPLICATIONS.json",
-      "sha256": "b6afe631461d60dec2b23bf0fea9c492726bd6605af535497fd72beb39f9a9f1"
+      "sha256": "cd53d2db05f4d8b1dc31bff4d8e1e8a5f4da4c537c615fb6095a5d1b6d135610"
     },
     "selected-map": {
       "path": "docs/manuscript-revisions/version14/evidence/selected-application-map.json",
@@ -114,68 +114,68 @@
   "manuscript_spans": [
     {
       "role": "construction",
-      "start_line": 22827,
-      "end_line": 22999,
+      "start_line": 22858,
+      "end_line": 23030,
       "sha256": "aa28582949536f69e2dfedf5be9381a70f94fb7f6fa916659db16a4d0293e21a"
     },
     {
       "role": "construction",
-      "start_line": 23035,
-      "end_line": 23090,
+      "start_line": 23066,
+      "end_line": 23121,
       "sha256": "41b96b5f9352246cb2381adedc81f944dd6931e906c0e67b09ec326a29483f02"
     },
     {
       "role": "construction",
-      "start_line": 23148,
-      "end_line": 23276,
+      "start_line": 23179,
+      "end_line": 23307,
       "sha256": "97e33d941d9558c95fab981d566c283ba3fb6ce326230e0584409f194d7d1ac3"
     },
     {
       "role": "construction",
-      "start_line": 23439,
-      "end_line": 23457,
+      "start_line": 23470,
+      "end_line": 23488,
       "sha256": "4bedae293fb4679fb103c617dcb023837b8a42980559298cf60468a761c1bf71"
     },
     {
       "role": "construction",
-      "start_line": 23653,
-      "end_line": 23686,
+      "start_line": 23684,
+      "end_line": 23717,
       "sha256": "ded65ae1982ce63edf5bb9af36669d6a32394e90f8c4307f9386be183e34b77d"
     },
     {
       "role": "application",
-      "start_line": 23091,
-      "end_line": 23146,
+      "start_line": 23122,
+      "end_line": 23177,
       "sha256": "4ffe5fb603c0a431c6e06e3c59403acb9445b2a0afd80468f7cd58cd737687f9"
     },
     {
       "role": "application",
-      "start_line": 23292,
-      "end_line": 23437,
+      "start_line": 23323,
+      "end_line": 23468,
       "sha256": "14e8f2433bb8efff561ffdd34fa3dfdd7259807078185efe31888f8471a0e9de"
     },
     {
       "role": "application",
-      "start_line": 23458,
-      "end_line": 23542,
+      "start_line": 23489,
+      "end_line": 23573,
       "sha256": "4a0098ac0824cf3b3d3cfb85adb9b4ef8787fbec457cc1aaad53925583eb7f16"
     },
     {
       "role": "consumer",
-      "start_line": 23360,
-      "end_line": 23367,
+      "start_line": 23391,
+      "end_line": 23398,
       "sha256": "3e477f2e22567848fd6437ef5b04a9732d5516c4a3d327d19ad1733585400e10"
     },
     {
       "role": "consumer",
-      "start_line": 23554,
-      "end_line": 23587,
+      "start_line": 23585,
+      "end_line": 23618,
       "sha256": "bb097967cf6c18e0f767b82c23490ecb7cefd83fffb3ab2f2405d98e9cd89ad7"
     },
     {
       "role": "consumer",
-      "start_line": 23639,
-      "end_line": 23707,
+      "start_line": 23670,
+      "end_line": 23738,
       "sha256": "396aadf2a1eb3eb5c2ea5829fbf56ade30b1e95cbfffc711e01a460d6da2d50a"
     }
   ],

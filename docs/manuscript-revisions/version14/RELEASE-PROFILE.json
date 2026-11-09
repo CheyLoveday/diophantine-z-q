@@ -1,7 +1,7 @@
 {
   "schema": "research-release-requirements/v1",
   "version": 14,
-  "date": "2026-11-07",
+  "date": "2026-11-09",
   "subtitle": "Version 14",
   "destinations": [
     "elliotglazer/diophantine-z-q",

@@ -2,7 +2,7 @@
   "id": "QUARTIC-498-COMPOSITION",
   "manuscript": {
     "path": "manuscripts/quartic_v14.tex",
-    "sha256": "1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8"
+    "sha256": "5882a77003b9772b5b572a5ab2c2b2f8ce9fc53e1e368a3b69851c8a9b3bfcac"
   },
   "reviewed_edits": {
     "v12-abstract": "eafd46506fd096eec43639b52b60f3dadffa14b656766323b0a77b74f5053039",
@@ -136,20 +136,20 @@
   "manuscript_spans": [
     {
       "role": "construction",
-      "start_line": 20920,
-      "end_line": 21891,
+      "start_line": 20951,
+      "end_line": 21922,
       "sha256": "2138ccdfbc57f2b3095f0364f5d1bf1216c10dcec1a269be2a060c7e6d2e4617"
     },
     {
       "role": "application",
-      "start_line": 21023,
-      "end_line": 21891,
+      "start_line": 21054,
+      "end_line": 21922,
       "sha256": "a0c233232f8cd8a74f16d121042495ad8d2cd649a703c847280a02a8e0ad39e9"
     },
     {
       "role": "consumer",
-      "start_line": 20931,
-      "end_line": 20948,
+      "start_line": 20962,
+      "end_line": 20979,
       "sha256": "eff94c284b12b64ddb15bb9bd17e19cd1d69ad2f2f06a10f6633edc0e29c518b"
     }
   ],

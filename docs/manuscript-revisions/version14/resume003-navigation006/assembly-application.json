@@ -6,7 +6,7 @@
   ],
   "manuscript": {
     "path": "manuscripts/quartic_v14.tex",
-    "sha256": "1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8"
+    "sha256": "5882a77003b9772b5b572a5ab2c2b2f8ce9fc53e1e368a3b69851c8a9b3bfcac"
   },
   "reviewed_edits": {
     "current003-change-001": "53e505d749395f83e13878ed19859662597984f5effb4989a484f428a86f8d03",
@@ -71,7 +71,10 @@
     "current003-change-060": "a76256996e9fb49117dd3e1714688712e4ec89ed32034e8922001b1e4d897f6e",
     "current003-change-061": "b7ce4d297136001f1157887abbac730406092fc3c2926f1a8e167a8a71ebe611",
     "current003-change-062": "cedaf88052853e06b274ddab0e37c20b69f4415f4eb98b5e3aeeddc4eb3963db",
-    "current003-change-063": "718d136ee17edcfc5ad966be7b241d56c7b052283a47b7277ae404f2670200bb"
+    "current003-change-063": "718d136ee17edcfc5ad966be7b241d56c7b052283a47b7277ae404f2670200bb",
+    "supporting-proof-navigation": "26673c49fd82e382f69c336cceca1d01a6e4dc0598713ed4e9a7f3e7a8e2baa1",
+    "source-catalogue-navigation": "4492f0b44af753b3451e2a902178d60a1e27c77780b92beade237b01e46ebf7e",
+    "repeated-source-navigation": "1468b72e4c74522cf583275cb72f416ec19fc6fe7f0581b5afd0983c8dae9eea"
   },
   "sources": [
     {
@@ -216,8 +219,8 @@
     },
     {
       "role": "application",
-      "start_line": 8261,
-      "end_line": 8395,
+      "start_line": 8287,
+      "end_line": 8421,
       "sha256": "ed1350bea27d2ecfee7875e9ed2040682aa4455c212226ef4a101e09cf7ce4a4"
     },
     {
@@ -228,20 +231,20 @@
     },
     {
       "role": "consumer",
-      "start_line": 8396,
-      "end_line": 8460,
+      "start_line": 8422,
+      "end_line": 8486,
       "sha256": "012364dbf5bc0927193c3063ee8e7ea2f849ba0db9e39a12737b847803fc5643"
     },
     {
       "role": "construction",
-      "start_line": 19418,
-      "end_line": 19586,
+      "start_line": 19449,
+      "end_line": 19617,
       "sha256": "aca94269843d9edf2a6535b7697eaa8fb449d27767eafcc24f05b100ee0c0a55"
     },
     {
       "role": "application",
-      "start_line": 19604,
-      "end_line": 19685,
+      "start_line": 19635,
+      "end_line": 19716,
       "sha256": "44fbdb6f1b5d3fc1c4908d62edc99fccf6ed459a86667df2c345ecea15ef6bec"
     },
     {

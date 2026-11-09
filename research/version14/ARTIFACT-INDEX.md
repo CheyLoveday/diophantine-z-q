@@ -4,7 +4,7 @@ These are the selected current artifact identities. They do not certify the unas
 
 | Artifact | Repository path | Scope |
 | --- | --- | --- |
-| Main TeX | `manuscripts/quartic_v14.tex` | Current main003 source |
+| Main TeX | `manuscripts/quartic_v14.tex` | November 9, 2026 source |
 | Main PDF | `manuscripts/quartic_v14.pdf` | 323 pages |
 | Merged GI PDF | `research/version14/proofs/local-gi-v1/GI-SUPPLEMENT.pdf` | 106 pages: original 103, delivery guide and Section 13 addendum |
 | GI PDF alias | `manuscripts/quartic-local-gi-supplement.pdf` | Same bytes as the merged GI PDF |
@@ -14,13 +14,17 @@ These are the selected current artifact identities. They do not certify the unas
 SHA-256 identities:
 
 ```text
-main TeX       1f7bf748843d67c6a67d9863931ff0a15ca2548ae171ec1c1ce34b9002eb70a8
-main PDF       b8844030a29a9b582911a7a3dbf711bed9e9e1b14d77c29ed56e40951827fe91
+main TeX       5882a77003b9772b5b572a5ab2c2b2f8ce9fc53e1e368a3b69851c8a9b3bfcac
+main PDF       7107f98b3f003aac9d307c9f88c5813aff184f131fde8a0d7536b71817789650
 GI PDF/alias   c971bcad7a269f8bd4cd18102d62cd8d61b801d9c4439d729457f37721e7228a
 GI archive     581aa968e1c54cf78a16e47b18e981012c5b29eeb6da2e0c115b56fb7276156b
 GI manifest    4b5e400758f6fc3e9ad1a07f06e2ac0a222f70a067e7726922b5857914083eb0
 research annex 54e7aec54df9c1bd9bed0b02cd22a9a41ae3fb7717d12107ff72dd0700a2cd51
 ```
+
+The main PDF is 1,835,219 bytes. The [complete proof-source index](PROOF-SOURCE-INDEX.md) identifies all 136 selected proof-source files; its SHA-256 is `0b0930de27e7c460bb98a63359d6e971cbbb607c7f07f44dfef68b6d1e256dac`. The [supporting-notes guide](SUPPORTING-NOTES.md) has SHA-256 `4e85619afbf17a48f872c4a441204a73928160bf565fc56c6568b3253f0a80b1`.
+
+The accepted final source-collection snapshot has manifest SHA-256 `e3bac2e4887f5fda951468cd1994fffafe420a6dc5c1aeaad60ff2a99c2126d5`. Its seven-root mathematical review is `351f75cf54f3607150069e16c1e716f77cb5f7fbcdde23cb33e02ffef27162fd`; the separate cumulative-transport and source-representation review is `0dcb2c2eabe7a17fed695633f23a4654b55e08752f5e19da5037616fb349547c`. These are scoped source-review identities, not authenticated release-gate or publication receipts.
 
 The GI manifest is `PROOF-ONLY-MANIFEST.json` inside the standalone package. Its membership describes that package, not a smaller cumulative selection.
 

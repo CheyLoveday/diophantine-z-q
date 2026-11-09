@@ -1,6 +1,6 @@
 # Manuscripts
 
-The current manuscript is **Version 14**, dated November 8, 2026:
+The current manuscript is **Version 14**, dated November 9, 2026:
 
 - [PDF: quartic_v14.pdf](quartic_v14.pdf)
 - [TeX: quartic_v14.tex](quartic_v14.tex)
