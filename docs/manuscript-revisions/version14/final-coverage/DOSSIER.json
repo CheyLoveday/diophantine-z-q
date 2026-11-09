@@ -170329,7 +170329,21 @@
     "prior_exposure": "Assignment counts136/7 and reason former reviewer was disqualified by proof authorship; Repository policies and schema-only instructions; Separate assembly reviewer reported no assembly gap seen; Profile-listed source text itself includes author contract labels, status prose and scoped review references; these were read as authorized source content, not adopted as independent conclusions; No author coverage matrix, dossier, prior INITIAL-SOURCE-USES or earlier reconstructed use list opened. All of these exposure disclosures concern the period before the raw initial freeze. After that freeze I read the author dossier, connections and retained source-role records for comparison.",
     "limitations": "I did not author or repair any ordinary proof, application, maintenance, controller or rule file. The raw397 observations are broad source requirements, not a claim of397 atomic external invocations. Historical and optional assertions require explicit later disposition. Source coverage does not replace independent proof/application audits. All136 sources and37304 lines were read personally; truncation recoveries are recorded in READING-LOG.md. This reconstruction is not final coverage acceptance or an S-bound acknowledgment.",
     "frozen_at": "2026-11-09T11:48:34.570Z",
-    "compared_at": "2026-11-09T11:49:07.488Z"
+    "compared_at": "2026-11-09T11:49:07.488Z",
+    "continuation": {
+      "schema": "protocol-review-continuation/v1",
+      "run_ids": [
+        "01a1c014-d993-7f20-b206-1d59ae3549f0",
+        "01a1c15c-3059-7ad3-b030-28a47ccb0c15"
+      ],
+      "initial": {
+        "side": "head",
+        "path": "docs/manuscript-revisions/version14/final-coverage/INITIAL-SOURCE-USES.json",
+        "sha256": "1562201703171e50762f84abb6d94e8545f0966ac0172a0280723b92dee72475"
+      },
+      "sources_sha256": "297580b1c365575d4f0d76674b69d32978f5c955baa2610def5bc50a90c49813",
+      "attestation": "I am reviewer agent 01a1c014-d895-7ab0-82a2-fb9cfc01f15a. I personally read the full136-source scope, derived the397 initial semantic observations, and froze them at2026-11-09T11:48:34.570Z in actual run 01a1c014-d993-7f20-b206-1d59ae3549f0 before opening the author dossier. I later reconciled that reconstruction and reviewed the stated normalization/metadata successors. This distinct actual run 01a1c15c-3059-7ad3-b030-28a47ccb0c15 is a continuation by the same agent; it does not alias the original run or rewrite any earlier acknowledgment. The initial pin below and the exact sources digest bind the unchanged normalized initial inventory and all136 source pins; the original raw397 freeze and chronology remain preserved. The two listed runs are the initial and current continuation checkpoints, not a claim that no intervening turns occurred. I have not authored an ordinary proof or accepted ordinary application: later delivery preparation was unresolved schema/binding tooling only. My existing coverage judgment continues at this unchanged source scope. Any final receipt from the current run must follow my genuine exact successor-commit and target/binding check; this attestation does not approve an uncreated commit."
+    }
   },
   "reconciled_uses": [
     {
