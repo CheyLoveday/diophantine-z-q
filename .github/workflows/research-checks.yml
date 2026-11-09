@@ -208,8 +208,7 @@ jobs:
       # Fetch upstream artifacts directly. Archiving the entire toolchain and
       # Mathlib tree again can exhaust the runner's disk during cache saving.
       - name: Fetch pinned dependency cache
-        working-directory: lean
-        run: lake exe cache get
+        run: python scripts/fetch_lean_cache.py
       - name: Build every helper from fresh project artifacts and audit axioms
         run: python scripts/check_lean.py --build --output build/lean-ci
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
