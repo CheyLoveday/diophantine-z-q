@@ -4,6 +4,8 @@ Follow the [mathematical research review protocol](PROTOCOL.md), version 1.4, fo
 
 Version 1.4 governs research-review completion. The repository's [AGENTS.md](../../AGENTS.md) and [audit-history procedures](../audit-history/PROTOCOL.md) still apply to local checks, contracts and historical findings.
 
+For new projects, download the [research starter kit](starter-kit/README.md): the protocol, reusable agent instructions, and project brief together.
+
 ## Enforcement status
 
 The live [public repository ruleset](https://github.com/elliotglazer/diophantine-z-q/rules/26781429) and [private repository ruleset](https://github.com/elliotglazer/private-diophantine/rules/26781446) are authoritative for current enforcement. Before treating a merge as protocol-gated, confirm that the applicable ruleset requires `Protocol / independent agent audit` from the designated GitHub App and that it passes for the exact revision. Existing CI alone is insufficient. This document does not assert that the App requirement is already active.

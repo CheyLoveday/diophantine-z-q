@@ -15,6 +15,7 @@ The project uses the collective agentic notes from Stefan Baranczuk, Jose Brox, 
 | Reproduce the 523/540-variable quartics | [Tables, source, dependency chain and checks](docs/quartic-523-540/README.md) |
 | Read the fully expanded Version 4 quartic | [4,973-variable package](quartics/quartic-4973/README.md), [integer monomial table](quartics/quartic-4973/polynomial.expanded.txt) |
 | Follow the current mathematical research review protocol | [Protocol v1.4](docs/research-review/PROTOCOL.md), [contributor guide](docs/research-review/README.md) |
+| Reuse the protocol in another project | [Starter kit: protocol, agent instructions, and project brief](docs/research-review/starter-kit/README.md) |
 | Inspect the Version 11 repair and repository audit integration | [Version 11 source audit](docs/manuscript-revisions/version11/README.md), [audit integration protocol](docs/audit-history/PROTOCOL.md) |
 | Inspect the nine earlier review corrections | [Version 10 response and inventory](docs/manuscript-revisions/version10/README.md) |
 | Inspect theorem applications and conventions | [Version 9 extension](docs/quartic-523-540/README.md), [inherited proof inventory](docs/quartic-962/README.md) |
