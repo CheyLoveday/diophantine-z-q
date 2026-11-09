@@ -2,6 +2,8 @@
 
 Start with the [323-page manuscript](../../manuscripts/quartic_v14.pdf), its [TeX source](../../manuscripts/quartic_v14.tex), and the [construction guide](../../docs/manuscript-revisions/version14/GUIDE.md). The [artifact index](ARTIFACT-INDEX.md) records the selected file identities. The [cumulative handoff guide](CUMULATIVE-HANDOFF.md) explains history, verification, exclusions and the remaining release bindings.
 
+The [supporting-notes index](SUPPORTING-NOTES.md) links the versioned arguments used in the Heegner and Kummer portions of the manuscript, with their hypotheses and file identities.
+
 The selected smaller constructions are the corrected 299-variable symbolic quartic and the 314-variable ordinary quartic. The [299/314 package](../../quartics/quartic-299-314/README.md) contains complete coefficient tables, residual systems, coordinate maps, reviews and its 28-stage finite verifier. The symbolic coefficient parameter `C = 3^(2^25)` is a fixed integer, not an additional variable. The ordinary quartic has 6,672 monomials and coefficients strictly below `2^6496` in absolute value. The original large polynomial is a separate construction.
 
 The [106-page local GI supplement](proofs/local-gi-v1/GI-SUPPLEMENT.pdf) contains the unchanged 103-page original supplement, a delivery guide, and the separately identified two-page Section 13 addendum. The `proofs/GI-PROOF-ONLY.zip` standalone delivery includes its own manifest and verifier. See its [package guide](proofs/local-gi-v1/README.md). The standalone archive and the cumulative handoff have different inclusion rules; the standalone archive is not nested inside the cumulative archive.
