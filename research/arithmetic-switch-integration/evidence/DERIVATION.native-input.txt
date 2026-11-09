@@ -1,0 +1,128 @@
+# Connecting the three interfaces
+
+Date: 2026-11-09. Author: Codex `/root`.
+This is the integration argument for the separate proof packets. Its arithmetic
+application is relative to the retained source diagrams listed in SPEC.md.
+It does not construct continuous Galois Selmer complexes in Lean.
+
+## Lemma 1 — the partner keeps the actual derivative localization
+
+After conjugate transport, the orthogonal comparison has a common global
+cochain complex. In H22's convention, a local comparison `a` and its inclusion
+homotopy `h` induce
+
+\[
+j(g,u,q)=(g,au,q+hu).
+\]
+
+The identity `i-i'a=dh+hd` verifies the chain-map equation. In particular
+`p_global j=p_global` exactly. If k is a homotopy inverse, compose
+`jk ≃ 1` with the global projection and then with localization. This proves
+that `k c(z)` and `c(z)` have the same derivative localization on cohomology.
+The proof needs an actual localized inverse; it does not construct one over
+a finite Artin ring by inverting t. See the orthogonal-comparison packet.
+
+## Lemma 2 — the boundary product uses the global localization
+
+In the convention `d(g,u,q)=(dg,du,-loc g+iu-dq)`, a closed partner satisfies
+`iu=loc g+dq`. A pure boundary has first two components zero. The actual
+cone product therefore reduces to `l cup iu`. For `dl=0`, Leibniz gives
+
+\[
+l\cup iu=l\cup\operatorname{loc}g-d(l\cup q).
+\]
+
+The correction is the differential of a pure local entry in the common
+compact-support target. Its trace is zero. The same global trace square
+identifies the remaining trace with the local invariant. This proves the
+boundary–cup evaluation for each actual orthogonal partner, relative to the
+source's actual cup map and trace construction. See actual-boundary-cup.
+
+## Lemma 3 — compute the actual opposite evaluations
+
+Let `e` be the alternating coefficient form. In the retained local bases use
+
+\[
+\Omega((f,s),(f',s'))=
+\epsilon\{e(f,Js')-e(s,Jf')\}.
+\]
+
+The source's dyadic isotropy calculation is a premise of this formula.
+The already derived local conjugation gives the partners' coordinates
+`u(v,0)` and `u(0,-Jv)`, with the SAME coefficient unit u. J occurs once in
+the coefficient pairing. Choose x with `eta=e(v,x) != 0`. Applying Lemma 2
+to the two opposite boundaries gives
+
+\[
+q_F=-\kappa u\epsilon\eta,\qquad
+q_S=\kappa u\epsilon\eta=-q_F.
+\]
+
+Here the common kappa records the one trace/cone convention. The algebraic
+normalizer relation permits kappa to vanish. The rank argument below requires
+the actual local trace and mixed pairing to give `kappa*u*epsilon != 0`.
+This nonvanishing must be justified for the selected arithmetic constituent;
+it is not a consequence of the frozen zero-capable unit theorem.
+
+## Lemma 4 — use actual strict H² and actual closed rows
+
+The finite-side hypotheses are generic cohomology `(1,1)`, concentrated in
+degrees one and two, with A spanning H¹ and `f(A)=v != 0`. The finite strict
+triangle's long exact sequence gives `H¹(C_str)=0` and
+
+\[
+0\longrightarrow K A\longrightarrow F_K\xrightarrow{\partial_F}
+W\xrightarrow{\pi_F}H^2(C_F)\longrightarrow0,
+\qquad W=H^2(C_{\rm str}\otimes K),\quad\dim W=2.
+\]
+
+Set `a=partial_F x`, `b=partial_S(Jx)`. Then a is nonzero. The actual row
+`rF=lambda_A pi_F` kills a, and Lemma 3 gives `rF(b)=qF != 0`. Thus a,b
+are independent. The derivative B gives `partial_S(Jv)=0`, while b is
+nonzero. Hence `partial_S` has rank one and the singular triangle gives
+generic dimensions `(1,1)`, with B spanning H¹. The functional lambda_B
+already exists by its partner construction before this singular rank proof.
+
+In a single basis of W, take `AF=partial_F`, `AS=partial_S`,
+`lamF=lambda_A pi_F`, `lamS=lambda_B pi_S`. These are the actual maps and
+rows, not independently chosen generators. Exactness gives both cycle and
+closed-row equations. This is the `I=Empty` common-strict model. Its target
+determinant is nonzero by the independence just proved.
+
+## Lemma 5 — retain the strict lattice in the determinant comparison
+
+Choose a generic basis w1,w2 of W. If the retained strict integral determinant
+generator maps to `c (w1 wedge w2)*`, retain this c, which may be nonunit.
+The two integral triangles use the SAME generator and the SAME generic
+identification. In the cofactor-compatible target frame order, the bridge gives
+
+\[
+u_F^{\rm mat}=-\eta q_F/\theta,\qquad
+u_S^{\rm mat}=\det(J)\eta q_S/\theta,\qquad
+u_i^{\rm actual}=c^{-1}u_i^{\rm mat}.
+\]
+
+These equations follow from the determinant maps of the two exact sequences;
+they are not definitions of the actual tensor coordinates. A common determinant
+sign convention may multiply both by a sign. Independent retained integral
+bases introduce only explicit integral-unit factors. Strict torsion is retained
+in c. The strict-determinant-bridge packet checks the frame order and a nonunit
+torsion disk explicitly.
+
+## Conclusion and remaining application obligations
+
+From `qS=-qF` one obtains `uS_mat=det(J)*uF_mat`, hence the same equation for
+the actual coordinates in compatible triangle bases. Since `det J=-1` is an
+integral unit, retained integral bases give equal valuations. The existing
+frozen unit criterion supplies the more general common-scale cancellation,
+including zero rows. No division by the actual class or functional is used.
+
+This gives a source-relative proof route for one scalar eligible inner switch.
+Its global arithmetic use still requires the actual retained cup/trace and
+orthogonal diagrams to meet the source hypotheses through the inner limit,
+the justified inverse at the specified localization, and the actual nonzero
+local trace for a rank argument. The new Lean modules cover the displayed
+cochain correction and comparison/homology deductions, rather than those entire
+arithmetic constructions or a determinant functor. Universal group-ring descent
+cannot be obtained by treating a group ring with zero divisors as a subring of
+a field. The restricted converse and the main theorem remain outside this result.

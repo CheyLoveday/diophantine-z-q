@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "counts": {
+    "rank_one_models": 180,
+    "full_adjugate_identities": 2160,
+    "exact_triangle_formulas": 360,
+    "fractional_complements": 166,
+    "complement_changes": 1440,
+    "quotient_lift_changes": 1440,
+    "strict_nonunit_disks": 1440,
+    "generic_strict_basis_changes": 360,
+    "integral_basis_unit_changes": 180,
+    "rescaled_functional_failures": 180
+  },
+  "negative_controls": 5,
+  "result": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/research/strict-determinant-bridge/evidence/checks.json"
+}

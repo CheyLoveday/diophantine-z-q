@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "scope": "exact cochain model only; no arithmetic global construction",
+  "simplicial_torus": {
+    "vertices": 9,
+    "edges": 27,
+    "triangles": 18,
+    "differential_ranks": [
+      8,
+      17
+    ],
+    "H1_dimension": 2,
+    "trace_pairing": [
+      [
+        0,
+        9
+      ],
+      [
+        -9,
+        0
+      ]
+    ]
+  },
+  "trials": 256,
+  "nonzero_corrections": 256,
+  "negative_controls": {
+    "wrong_correction_sign": {
+      "triangle": [
+        0,
+        2,
+        3
+      ],
+      "actual": 18,
+      "wrong_plus": -24
+    },
+    "trace_not_a_chain_map": {
+      "triangle": [
+        0,
+        2,
+        3
+      ],
+      "condition_cup": 18,
+      "global_cup": -3
+    },
+    "missing_closed_direction_guard": {
+      "triangle": [
+        0,
+        1,
+        4
+      ],
+      "unaccounted_term": -48,
+      "d_l_nonzero": true
+    }
+  },
+  "script_sha256": "ad9c45851b76cdfdb4c7d360e4a4c034ca36911647f45c8770c3635674280c60"
+}

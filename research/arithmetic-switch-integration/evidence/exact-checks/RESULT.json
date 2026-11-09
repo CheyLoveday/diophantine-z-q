@@ -1,0 +1,401 @@
+{
+  "status": "PASS",
+  "checks": {
+    "cochains": {
+      "command": {
+        "command": [
+          "/Users/chey/.pyenv/versions/3.12.3/bin/python",
+          "-B",
+          "research/actual-boundary-cup/check_cochains.py"
+        ],
+        "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review",
+        "exit_code": 0
+      },
+      "result": {
+        "status": "PASS",
+        "scope": "exact cochain model only; no arithmetic global construction",
+        "simplicial_torus": {
+          "vertices": 9,
+          "edges": 27,
+          "triangles": 18,
+          "differential_ranks": [
+            8,
+            17
+          ],
+          "H1_dimension": 2,
+          "trace_pairing": [
+            [
+              0,
+              9
+            ],
+            [
+              -9,
+              0
+            ]
+          ]
+        },
+        "trials": 256,
+        "nonzero_corrections": 256,
+        "negative_controls": {
+          "wrong_correction_sign": {
+            "triangle": [
+              0,
+              2,
+              3
+            ],
+            "actual": 18,
+            "wrong_plus": -24
+          },
+          "trace_not_a_chain_map": {
+            "triangle": [
+              0,
+              2,
+              3
+            ],
+            "condition_cup": 18,
+            "global_cup": -3
+          },
+          "missing_closed_direction_guard": {
+            "triangle": [
+              0,
+              1,
+              4
+            ],
+            "unaccounted_term": -48,
+            "d_l_nonzero": true
+          }
+        },
+        "script_sha256": "ad9c45851b76cdfdb4c7d360e4a4c034ca36911647f45c8770c3635674280c60"
+      }
+    },
+    "comparison": {
+      "command": {
+        "command": [
+          "/Users/chey/.pyenv/versions/3.12.3/bin/python",
+          "-B",
+          "research/orthogonal-comparison/check_comparison.py"
+        ],
+        "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review",
+        "exit_code": 0
+      },
+      "result": {
+        "cone_cases": 6400,
+        "homotopy_class_cases": 4680,
+        "negative_controls": {
+          "arbitrary_map_without_homotopy": {
+            "class": 1,
+            "difference": 1,
+            "differential": 0,
+            "modulus": 8,
+            "purported_inverse": 2,
+            "rejected": true
+          },
+          "nilpotent_t_inverse_rejected": true
+        },
+        "scope": "Exact algebraic model checks; no actual arithmetic/Galois computation",
+        "sources": {
+          "lean/Research/DerivativeSwitch/OrthogonalComparison.lean": "bfec996b869e44c6a42fc058fbc24cc7288b1f61d0f0e7eef1f4f58f41dca1ba",
+          "manuscripts/quartic_v13.tex": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+          "research/orthogonal-comparison/check_comparison.py": "5b071db8be64a86dba569f12527ef1e3bd7bf2463927586d8cda5fe9d5643fc9"
+        },
+        "status": "PASS",
+        "wrong_cone_sign_counterexamples": 2043
+      }
+    },
+    "determinant": {
+      "command": {
+        "command": [
+          "/Users/chey/.pyenv/versions/3.12.3/bin/python",
+          "-B",
+          "research/strict-determinant-bridge/check_bridge.py"
+        ],
+        "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review",
+        "exit_code": 0
+      },
+      "result": {
+        "status": "PASS",
+        "counts": {
+          "rank_one_models": 180,
+          "full_adjugate_identities": 2160,
+          "exact_triangle_formulas": 360,
+          "fractional_complements": 166,
+          "complement_changes": 1440,
+          "quotient_lift_changes": 1440,
+          "strict_nonunit_disks": 1440,
+          "generic_strict_basis_changes": 360,
+          "integral_basis_unit_changes": 180,
+          "rescaled_functional_failures": 180
+        },
+        "negative_controls": 5,
+        "result": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/research/strict-determinant-bridge/evidence/checks.json"
+      }
+    },
+    "integration": {
+      "command": {
+        "command": [
+          "/Users/chey/.pyenv/versions/3.12.3/bin/python",
+          "-B",
+          "research/arithmetic-switch-integration/check_integration.py"
+        ],
+        "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review",
+        "exit_code": 0
+      },
+      "result": {
+        "status": "PASS",
+        "exact_model_count": 1836,
+        "all_vector_grid_checks_per_model": 32,
+        "negative_controls_detected": {
+          "one_functional_times_two_changes_v2": true,
+          "one_strict_factor_times_two_changes_v2": true,
+          "one_cone_sign_breaks_exact_opposite_evaluations": true,
+          "extra_J_destroyed_cross_value": true,
+          "zero_partner_has_no_nonzero_cross_witness": true,
+          "unit_at_t_is_not_a_dyadic_unit": true,
+          "characterwise_units_do_not_establish_integral_descent": true
+        },
+        "script_sha256": "dd9e21642f1c617ef16ab41da990c524b503c452835825ee149e28657e151a22",
+        "scope": "Exact rational finite models and adverse hypotheses; no arithmetic cohomology or universal proof is computed"
+      }
+    }
+  },
+  "script_hashes_before": {
+    "cochains": "ad9c45851b76cdfdb4c7d360e4a4c034ca36911647f45c8770c3635674280c60",
+    "comparison": "5b071db8be64a86dba569f12527ef1e3bd7bf2463927586d8cda5fe9d5643fc9",
+    "determinant": "c984916ee815f3ac88b7de51681e22566e62453954b12948da4bf708334193d8",
+    "integration": "dd9e21642f1c617ef16ab41da990c524b503c452835825ee149e28657e151a22"
+  },
+  "script_hashes_after": {
+    "cochains": "ad9c45851b76cdfdb4c7d360e4a4c034ca36911647f45c8770c3635674280c60",
+    "comparison": "5b071db8be64a86dba569f12527ef1e3bd7bf2463927586d8cda5fe9d5643fc9",
+    "determinant": "c984916ee815f3ac88b7de51681e22566e62453954b12948da4bf708334193d8",
+    "integration": "dd9e21642f1c617ef16ab41da990c524b503c452835825ee149e28657e151a22"
+  },
+  "python": "3.12.3 (main, Jul 16 2025, 08:43:28) [Clang 17.0.0 (clang-1700.0.13.3)]",
+  "runner_sha256": "a319968fdbfcabf7a2a7fe5fe37bd1e3e350957b9c7e60ea5787ce1c9890c0dc",
+  "preservation": {
+    "status": "PASS",
+    "base_commit": "fb29fe2bc6968e178a6458357c437574221b5338",
+    "old_tracked_files_checked": 3083,
+    "old_tracked_files_changed": [],
+    "frozen_files_checked": 216,
+    "frozen_sha256": {
+      "lean/Research/BoundaryCupAdapter.lean": "330699edaab6812ed68ed09a5fb682ad1d6b3af5a030a252691723066beffd7b",
+      "lean/Research/BoundaryScalar.lean": "fd1ea9ca11a417072c7be08ef477901427c57a74962559d753d62db95883f3ef",
+      "lean/Research/DerivativeSwitch/BoundaryCup.lean": "64750e7706f82cf0a47b76c80503bcab0577c2aa18f9703c09b4b8288be0df90",
+      "lean/Research/DerivativeSwitch/CommonStrict.lean": "c5770846489d7fdab0024d8f3c49e0a474eb0fa56dc428cc6a7034bc8e5605e4",
+      "lean/Research/DerivativeSwitch/Coordinate.lean": "229e66269880b9970b15ca36fab290d2572fdfac7396383d3327e652128ade90",
+      "lean/Research/DerivativeSwitch/UnitCriterion.lean": "efd9f4404b9760f9d7ebc2cb0874f21f517ed3868e9e23f78fd0465a2c03e45a",
+      "lean/Research/DerivativeSwitchBoundary.lean": "63a9215fa55568069d2d1a7b2c3a7345ec21c7ad6a82203f42c5451ee4b8bbea",
+      "research/boundary-scalar/CONTRACT.md": "74c0a7c963302202babb94ed1f5f8de9085216ac820521a57d8f04bf9215d360",
+      "research/boundary-scalar/DERIVATION.md": "1c16ce59014cc551c7b2537bd0d7be00f5343e80452464b6e1e7c2b3fd80b356",
+      "research/boundary-scalar/FINDINGS.md": "72b6d3b88837a027541ef41afaf2669362c7c2d6696d05b0e6ac36abe93f9137",
+      "research/boundary-scalar/MANIFEST.sha256": "8696323b0d1bb78e68ba4daea0437f38dde4ff3be8281e3856712a5f5369dba6",
+      "research/boundary-scalar/MANIFEST.sha256.digest": "e0909f96830a1afed88155fa5cf6f510ee889ab9a809354b327c0eefd8fa50c4",
+      "research/boundary-scalar/PROVENANCE.json": "f798709f4adcebaf15966f8b1200593267dc737335b81ca80bd28bb22c4c268b",
+      "research/boundary-scalar/README.md": "a864768be46bba2cd8503cf4e3ee079338dd673eca03612fa74ec68c6c56157e",
+      "research/boundary-scalar/VERIFICATION.md": "95a2ce3d5a5e73cebd205cd6af77e5546de7c140f7d00168c28794402b347b5f",
+      "research/boundary-scalar/check_boundary_scalar.py": "fac50661ebbd4e57e93db2dbf8bb01ba10c6fd3cd93eb5cedfd8ee8a476f87a1",
+      "research/boundary-scalar/evidence/LOCAL_HANDOFF_CHECK.json": "ff04dbefc97c5eaf211566c60e7302167634e8c4dca2006294734151f1183dd3",
+      "research/boundary-scalar/evidence/boundary-normal.log": "661d088d9f4c62b5ded36ec80202fcdbab8260fe5f10376595a30ed08ccddfff",
+      "research/boundary-scalar/evidence/boundary-optimized.log": "661d088d9f4c62b5ded36ec80202fcdbab8260fe5f10376595a30ed08ccddfff",
+      "research/boundary-scalar/evidence/final-review.md": "fa52f821a0f8509e4647e9e86990d3cc4b0eac06f74f82629bddc730adc50c8d",
+      "research/boundary-scalar/evidence/handoff/challenge-build.log": "a8e0ef0888dac538a457098c4671a4de83c016712adb12331d997254fb353b35",
+      "research/boundary-scalar/evidence/handoff/challenge-export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/boundary-scalar/evidence/handoff/commands.json": "5161b15886257127f19bf31b3870a00905f25e896b8e1501d4ba00f5d7d35f48",
+      "research/boundary-scalar/evidence/handoff/default-build.log": "037852a9d98b6869164b971d021b6f0185c65e160c318453dac4d0ba74da78f9",
+      "research/boundary-scalar/evidence/handoff/solution-export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/boundary-scalar/evidence/handoff/structure-and-axioms.log": "a59aae5c681fc214f06f8b4c74930ccac5f36459a23e2fa8d939c95a241672e9",
+      "research/boundary-scalar/evidence/history/Challenge-single-file-rejected.lean.txt": "28aafc40b6798270fa95b0235f50560e37e862e0ea8905a853bfb1e57ffce025",
+      "research/boundary-scalar/evidence/history/coercion-instance-difference.patch": "0938dc93004f347b14a941c5f9a1f59ff3ffecdfaa8e923ab14882d501613818",
+      "research/boundary-scalar/evidence/history/interrupted-first-build.log": "8f52338f44a40bdc9f58925ff6e31e6f3c09b5043531cb9620827ec73342acf3",
+      "research/boundary-scalar/evidence/history/root-only-library-rejected.toml": "aa807cceb5568978f7b0181ce3b9452ae19ad8b4f0deec5024f8abd3c64cccdc",
+      "research/boundary-scalar/evidence/history/single-file-spec-rejected.log": "a8b04e79e8cb967b5ea8462dad7d716717595bfa9aef096b4214f5b1250f3d10",
+      "research/boundary-scalar/evidence/history/unregistered-research-modules.log": "f637956b75a5bc724255158e0114a06c5ee4e927e6f1a69caeeb0e113982e11f",
+      "research/boundary-scalar/evidence/math-review.md": "2cbfef8ba00ab0e34696f93d02a50130d9b10649a19b93a5598d25052262b3c0",
+      "research/boundary-scalar/evidence/native/Axioms.lean": "5746201b6858391191ebe49ed49e33561d2db9eceb32fe4446db89265ac43c02",
+      "research/boundary-scalar/evidence/native/RESULT.json": "466e73c5cbec94d9151d2cd93127b839505d9fd685153ab1f4fa4d2f0724cb88",
+      "research/boundary-scalar/evidence/native/Solution.lean": "4dfa14193c0c7bd1a8500c17ecf144aaf25fc5c6a5a8ba19444a4aa6a72362eb",
+      "research/boundary-scalar/evidence/native/audit-history.log": "7539e0a83103f2656b233dcf98570fb769e636973f4765cd48f04b87a7d5ee0d",
+      "research/boundary-scalar/evidence/native/axioms-and-statements.log": "0090695110695aea638af358bd4276990b9885523a499f186a80db287c6af7f3",
+      "research/boundary-scalar/evidence/native/boundary-model-optimized.log": "661d088d9f4c62b5ded36ec80202fcdbab8260fe5f10376595a30ed08ccddfff",
+      "research/boundary-scalar/evidence/native/boundary-model.log": "661d088d9f4c62b5ded36ec80202fcdbab8260fe5f10376595a30ed08ccddfff",
+      "research/boundary-scalar/evidence/native/commands.json": "859012aa7adee0685ced8a5c76d70fa77138974760005ba84bf3682a788fd130",
+      "research/boundary-scalar/evidence/native/frozen-source-guard.log": "c4fefe63b92913a69eb2e7b5cdea140a185cbf9fada90b5902545983726a995a",
+      "research/boundary-scalar/evidence/native/lake-version.log": "165f92ed239a8c7db772bf5ee9d58c59357b489951582a12c86dc9d8e06b23a2",
+      "research/boundary-scalar/evidence/native/lean-version.log": "469679dd8c6cec218a7a5e9a36c7a27decc968dacfe057ab3083f0ef43600dac",
+      "research/boundary-scalar/evidence/native/original-model.log": "85832ad9baf67e6a59094ff809b59f315b995136d68a193596df291d8ebf9993",
+      "research/boundary-scalar/evidence/native/solution.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/boundary-scalar/evidence/native/target-BoundaryCupAdapter.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/boundary-scalar/evidence/native/target-BoundaryScalar.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/boundary-scalar/evidence/native/target-DerivativeSwitchBoundary.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/boundary-scalar/evidence/old-model-optimized-rejection.log": "ddd3126fd147498fa938f73a522f5d5ff51d7a21d308624136b578bdc880ae64",
+      "research/boundary-scalar/evidence/old-model-replay.log": "85832ad9baf67e6a59094ff809b59f315b995136d68a193596df291d8ebf9993",
+      "research/boundary-scalar/evidence/replay-commands.json": "a5528dabe77077034f74f1e7d68a0d57f8b8871cf61d288d1130f1fe40d29390",
+      "research/boundary-scalar/inputs/REVIEW_40d01c5-pasted.txt": "366fd6d09a467560e536b6eaae8d992c083093bf38922a1ed874869dbacc9b7e",
+      "research/boundary-scalar/inputs/diophantine_zq_complete_math_review_bundle_2026-11-08.zip": "a90ece63029cdbca8bb7db1871cc5325a6cd19b505e6ed53810ab17fb2e62bae",
+      "research/boundary-scalar/verification/Challenge.lean": "966d252297c89c83b28bcda1e21031da37ad54bd6a35712f68a680bcf281130f",
+      "research/boundary-scalar/verification/Challenge/Cup.lean": "657609e50b5b058f5e2435cced7f1efcadcd91aed076a7612742f409c12bf18e",
+      "research/boundary-scalar/verification/Challenge/Matrix.lean": "70141ae019654b59a07e1d34cead19aa5882f9a2f1b1097f021bb24653c12860",
+      "research/boundary-scalar/verification/Challenge/Original.lean": "ae5cd67b93287c345a3b1a808eeeed9744667bb73eb10f068d8b056b20b497e8",
+      "research/boundary-scalar/verification/README.md": "33fa8d30b4ff305c185976ffa290e744230537bdc558d68f2cd77d068721e5cd",
+      "research/boundary-scalar/verification/Solution.lean": "4dfa14193c0c7bd1a8500c17ecf144aaf25fc5c6a5a8ba19444a4aa6a72362eb",
+      "research/boundary-scalar/verification/comparator.json": "72047c185bbc3d5f9c5632244a014be7e9a9f35e1cc86d5cde0e0aab5411cec8",
+      "research/boundary-scalar/verification/compare_exports.lean": "a4be6356a55e6bc4c6b4767b054816d42de97251f93c112a5d404c01d09fc7d2",
+      "research/boundary-scalar/verification/lakefile.toml": "abf16baba12326d8d4cfe4fcf4ba5d4cafa25c4d551df22938ce208264f93872",
+      "research/boundary-scalar/verification/prepare.py": "bab372124454a4728227dc6630f5c0999afac6e44d104a5d0138e6910f360407",
+      "research/boundary-scalar/verify.py": "a472c291f61180992681ddfaa64f0485d54413165a26b97c3bb8f6dcab43c452",
+      "research/determinant-switch/CONTRACT.md": "01be1c4182cd5c7483ad2253b93b975ddced22396372e726aa808614d525516b",
+      "research/determinant-switch/FREEZE.md": "9a91f2b5ce01a07c0c578b813258567caa992b6b50971ce20c42260d8e843d42",
+      "research/determinant-switch/MANIFEST.sha256": "de9e04423f3ccafa9690e6ff53c1f0bb79f5f91406ee3e4e89246ce2cf97fa12",
+      "research/determinant-switch/MANIFEST.sha256.digest": "d371b54d86e713f8e078b5b6005838f6221944580101c29c4b7ce5bcc5518d22",
+      "research/determinant-switch/PR.md": "b35d2b202d9c738748dfd6aca5498ea6fd32f13a9452cb8fd63791c0c35209bb",
+      "research/determinant-switch/PROVENANCE.json": "09b4743868b2f394cece113ae8cc57097520642ef9465e5a1baaf01d51d7408b",
+      "research/determinant-switch/README.md": "779ebb536b4d16c35e70d7ae3ff4626a083dd8e6628f8f6aca9dc3e5ec9fff29",
+      "research/determinant-switch/VERIFICATION.md": "d174466488af378f4d4ca35a852040c3768755f6ce5de9f12f35fb3e2c507970",
+      "research/determinant-switch/check_local_model.py": "2bdf4fa6ead8c8e656f9b49d9d745a7274f7d3daf81915eb88727271d8988ef1",
+      "research/determinant-switch/evidence/Axioms.lean": "edebe68012cf530ef3af5f2dfcb21c91b59392dd778f688274e350c639d972d3",
+      "research/determinant-switch/evidence/RESULT.json": "42215791a7c16495bc2320dad676067ce5b31f713479d07d2ca9f33350f47032",
+      "research/determinant-switch/evidence/Statements.lean": "8efc1f9a92dea609f85f5de7ebace66e0fadbaeadf1364a036a88e20a9618985",
+      "research/determinant-switch/evidence/audit-history.log": "7539e0a83103f2656b233dcf98570fb769e636973f4765cd48f04b87a7d5ee0d",
+      "research/determinant-switch/evidence/axioms-and-statements.log": "a20ed1a8cac170b2a16fbae32b4023f0b5a39c5a60b7d7767a12c7aa001d20a8",
+      "research/determinant-switch/evidence/commands.json": "316bad46fb6fb59efd0cb4c0139aed2cf243175dc7df301d692456963cb29425",
+      "research/determinant-switch/evidence/freeze-20261108/Axioms.lean": "edebe68012cf530ef3af5f2dfcb21c91b59392dd778f688274e350c639d972d3",
+      "research/determinant-switch/evidence/freeze-20261108/HANDOFF_ARCHIVE.json": "3eceac94de4058fcc61cdc2b6a136e796cfb6f0d3826fb998ba780b454383bc3",
+      "research/determinant-switch/evidence/freeze-20261108/LOCAL_HANDOFF_CHECK.json": "8b7fdd4d9cabaa0713c63779f286fd0565ac008df6f49bd5d9e004239268f181",
+      "research/determinant-switch/evidence/freeze-20261108/RESULT.json": "7e8e1f123781a2f7f6f916de839960b01a21a85e675aad7db230a0876ebb31bf",
+      "research/determinant-switch/evidence/freeze-20261108/audit-history.log": "7539e0a83103f2656b233dcf98570fb769e636973f4765cd48f04b87a7d5ee0d",
+      "research/determinant-switch/evidence/freeze-20261108/axioms-and-statements.log": "a20ed1a8cac170b2a16fbae32b4023f0b5a39c5a60b7d7767a12c7aa001d20a8",
+      "research/determinant-switch/evidence/freeze-20261108/challenge-export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/determinant-switch/evidence/freeze-20261108/commands.json": "83862517e3142f0b19db37105d091652abf4ab230851686cf0f851ea1830375f",
+      "research/determinant-switch/evidence/freeze-20261108/export-commands.json": "12e3c4d41c49528269067b076247991dbefc565446700a619d104203d408589c",
+      "research/determinant-switch/evidence/freeze-20261108/export-structure-final.log": "1a1e703acd1bd6fca514e1f69c0eaab97b71b27a86499db99e2f256bcf112c51",
+      "research/determinant-switch/evidence/freeze-20261108/export-structure.log": "b76b910c7be0844748aac2ee853f6bcfdc34262b7923bba124dc872106ed11ba",
+      "research/determinant-switch/evidence/freeze-20261108/final-review.md": "fd9716ccfe80e15f6797bc703fd7da84e2ef50a3e0b3b3e8697aa56c96362ced",
+      "research/determinant-switch/evidence/freeze-20261108/frozen-source-guard.log": "c4fefe63b92913a69eb2e7b5cdea140a185cbf9fada90b5902545983726a995a",
+      "research/determinant-switch/evidence/freeze-20261108/lake-challenge-build.log": "35c5dc2f1725bda71f5435539d350045e12588bb7d30f67cccf42ba1857cc116",
+      "research/determinant-switch/evidence/freeze-20261108/lake-default-build.log": "f50706d38a81a75af4edd1c9be5c22fa388e1e78ed95d2d629a825929f6ab6d1",
+      "research/determinant-switch/evidence/freeze-20261108/lake-version.log": "165f92ed239a8c7db772bf5ee9d58c59357b489951582a12c86dc9d8e06b23a2",
+      "research/determinant-switch/evidence/freeze-20261108/lean-version.log": "469679dd8c6cec218a7a5e9a36c7a27decc968dacfe057ab3083f0ef43600dac",
+      "research/determinant-switch/evidence/freeze-20261108/local-model.log": "85832ad9baf67e6a59094ff809b59f315b995136d68a193596df291d8ebf9993",
+      "research/determinant-switch/evidence/freeze-20261108/math-review.md": "2ef8fa012497e738a63115f849446373990007b6d2cb0ce040707244c81a97e1",
+      "research/determinant-switch/evidence/freeze-20261108/native-final-run.log": "622a3e4ddaae76f4eb9703cc1c93c5227cf4598a332a750f8a4ca94462fa6ede",
+      "research/determinant-switch/evidence/freeze-20261108/native-freeze-run.log": "8e8b855b59a8fe4548bdf540908068e1c3f255702240316a4cca0e777ef0e5c3",
+      "research/determinant-switch/evidence/freeze-20261108/solution-export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/determinant-switch/evidence/freeze-20261108/target.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/determinant-switch/evidence/frozen-source-guard.log": "c4fefe63b92913a69eb2e7b5cdea140a185cbf9fada90b5902545983726a995a",
+      "research/determinant-switch/evidence/lake-version.log": "165f92ed239a8c7db772bf5ee9d58c59357b489951582a12c86dc9d8e06b23a2",
+      "research/determinant-switch/evidence/lean-version.log": "469679dd8c6cec218a7a5e9a36c7a27decc968dacfe057ab3083f0ef43600dac",
+      "research/determinant-switch/evidence/local-model.log": "85832ad9baf67e6a59094ff809b59f315b995136d68a193596df291d8ebf9993",
+      "research/determinant-switch/evidence/statements-command.json": "95a852813b2d3acb360ed1dd8023c120d952182a64f5278b0c06e87f25206c9e",
+      "research/determinant-switch/evidence/statements-compact.log": "905f1ff38d1853402a1304f52ea5437e8f57f064f87213469ce61d734bc59bca",
+      "research/determinant-switch/evidence/target.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/determinant-switch/history/ingest-20261108/CONTRACT.md": "33e6ff462a61dac95afc27a016efc118cb75a0d550e33a206daca66055da96cb",
+      "research/determinant-switch/history/ingest-20261108/MANIFEST.sha256": "73c855c1433cc263111948e7e162bc96ae6e7f23ea796c803ffcb935c773bbd1",
+      "research/determinant-switch/history/ingest-20261108/MANIFEST.sha256.digest": "2aa440d15c1e3db305ed4240dc1da396c206c9ddb0bd7058171a2f4045751a63",
+      "research/determinant-switch/history/ingest-20261108/PR.md": "cdbb62f16c9c420abebd7fec62cceaf87717593c01acedcd18e853d2ec05b498",
+      "research/determinant-switch/history/ingest-20261108/README-history.md": "1f80c6d0cef32f37c7299a0ecaa58ed9701491150b1d633291470a970525da72",
+      "research/determinant-switch/history/ingest-20261108/README.md": "61564eac3f34fd083fc7f091178be1a1598bdfcae35170a74d6234915806454e",
+      "research/determinant-switch/history/ingest-20261108/VERIFICATION.md": "eaf4ae005d943d64a009419bf73bcf6a680bd0c443fe6ac5d13f745e4fa8d285",
+      "research/determinant-switch/inputs/derivative_switch_pr_candidate.zip": "7242ed88ac6e93a30aed751f53b3bf252b4be332382011280e3d4f2d85afeb75",
+      "research/determinant-switch/verification/Challenge.lean": "ae5cd67b93287c345a3b1a808eeeed9744667bb73eb10f068d8b056b20b497e8",
+      "research/determinant-switch/verification/README.md": "b58d2f7dc29650ce8aba1605cdd54f2b1a9b3f7901a21ab5b9f735885661a915",
+      "research/determinant-switch/verification/comparator.json": "c91df4fe3af892aa84e5beb124b6a07ad741eec20060508fc515f44dd19f970a",
+      "research/determinant-switch/verification/compare_exports.lean": "4669da5900da840a77549ad341e766c110989fdf9e7abc511949ff6a1a700117",
+      "research/determinant-switch/verification/lakefile.toml": "5ea438b8dbe8bffa2b289bb0b99f46e8fed55f3c19237cc94c59ede0afdd0c52",
+      "research/determinant-switch/verification/prepare.py": "a813ad793c42d0cb44348cff090565942fb61aa5cfdc5e5c2f822b939da8a950",
+      "research/determinant-switch/verify.py": "31c046d81d66c42c91dcee3571bad403c6ad73f790aebc36597d888b1464b1f4",
+      "research/scalar-ratio/CONTRACT.md": "7d7d69aa9fb2cae043ba29c93a0de5099ad552d387e1f53b09f9f58909cc4aca",
+      "research/scalar-ratio/DERIVATION.md": "02fbb34ccd76ff3d3894b812416b722cf6f044322d16d35b4d0f11e39561e733",
+      "research/scalar-ratio/FINDINGS.md": "c19be41eddfdf4457c48481ee927e77c625024e9dcdac4eb59767d3696ee3e6f",
+      "research/scalar-ratio/FREEZE.md": "d4808d244b8834796ab09077c2e825e70251090493868ed8769fdd925760b6fd",
+      "research/scalar-ratio/MANIFEST.sha256": "d313ec3ff5ad0e91d555d26b2beef6ad401d7e9c86cdfe77adbe119062498610",
+      "research/scalar-ratio/PLAN.md": "fdfdcb6bac5480d41a68882ec4dc4bea7a967d16e992887ebe462264ce8b4de8",
+      "research/scalar-ratio/PROVENANCE.json": "d5e7e85cf4e9f6822991e0adddcdd37e12f6d9c36a08c52956ba849d58186aa1",
+      "research/scalar-ratio/README.md": "15d21ed9fd9f3a5c42fa802a71a427221da704fc22048b2b62d468e3ef54b302",
+      "research/scalar-ratio/VERIFICATION.md": "0d4de50533ccb31c37ce5cc6f29e2cdebb656491b80ca1debe30fca0904c715b",
+      "research/scalar-ratio/evidence/CACHE.json": "7b247f02fbd058552d7738866367eb331cc8b6a9c67d2fa0e8c78aa52d0e8187",
+      "research/scalar-ratio/evidence/LOCAL_HANDOFF_CHECK.json": "646753596be0a3501ccc12db523cfa2829d31a505dc991f94bc7d1b46389b734",
+      "research/scalar-ratio/evidence/finite/RESULT.json": "3f5543d59ad0eeaba13393bdc138c3e93381bc85b16f0fb78df52add55dc65ac",
+      "research/scalar-ratio/evidence/finite/normal.json": "e2d141099503d845ec240d1c85d7323a8d909c06b2a5540457acec92c48426e6",
+      "research/scalar-ratio/evidence/finite/optimized.json": "e2d141099503d845ec240d1c85d7323a8d909c06b2a5540457acec92c48426e6",
+      "research/scalar-ratio/evidence/handoff/BUILD_RESULT.json": "3f5feddc6516d117a66e5b725bcd27cbe96eb9d4e3374a73d818fc14e5c2cd1a",
+      "research/scalar-ratio/evidence/handoff/challenge-build.log": "8403f4f1de0a1fe6409c0b09105479c270b68659fa8114e487c1549666fa48a7",
+      "research/scalar-ratio/evidence/handoff/challenge-export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/handoff/commands.json": "d8c4837f6dfea6c513a828f6df0389b43c27ae2d4716804141e393bff52a75a7",
+      "research/scalar-ratio/evidence/handoff/default-build.log": "44c2a62cbb9e8ddce40b80c1d5c4d2aa80c26d8c8cb837ed5a3ea49e6b790024",
+      "research/scalar-ratio/evidence/handoff/solution-export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/handoff/structure-and-axioms.log": "891a06ac7b0c90a0fa1ef72e42f9b1198abec31b814397543db9b282c05ac51f",
+      "research/scalar-ratio/evidence/history/frames/REPAIRS.md": "259d3f8007791cc1e2ba7b2538e6817f49f8201dd414a709d683e5a7d9a6ec8f",
+      "research/scalar-ratio/evidence/history/frames/REPAIRS.patch": "2b2ef3bcd7f41a12e6980997e7862b6789e5da58f79d5e7dfe8f1100a259da03",
+      "research/scalar-ratio/evidence/history/frames/RESULT.json": "61ec4d0b89f63ecd80924ff73b1bb941355ce139721f3159b1c118fae201b776",
+      "research/scalar-ratio/evidence/history/frames/TransparencyProbe.lean": "627f99f169b9ac807bb4c09efa1674913dedac30462f6579d1a5d1345554e463",
+      "research/scalar-ratio/evidence/history/frames/commonstrict-03.log": "9cff6eb005898892867dd10b33ce41b1d1f1d7268dc239762bd383f379a4845b",
+      "research/scalar-ratio/evidence/history/frames/commonstrict-04.log": "a374b840b94f57764bbf7d9e9b206c0731e4fe6fd72b8dddce11b99984cbdade",
+      "research/scalar-ratio/evidence/history/frames/commonstrict-05.log": "4ffcdb7c8fed9292b2ccfda6a4b19eb4e1e48679b4eca18f014c0a860502cacd",
+      "research/scalar-ratio/evidence/history/frames/commonstrict-06.log": "78bd11b231acb056a1dd7d6af9d70dffb6c1b23e72dd65c0ebe954caaba53a80",
+      "research/scalar-ratio/evidence/history/frames/commonstrict-07.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/history/frames/coordinate-01.log": "dddd493c9881baea06bbf3b2f20275b6a4db1d7439773c4b9624b1fba2d6c311",
+      "research/scalar-ratio/evidence/history/frames/coordinate-02.log": "0b351357dc7cf749897b36d4385e156fc72bd8bf224c41758dddd80e40669fb5",
+      "research/scalar-ratio/evidence/history/frames/coordinate-03.log": "569f612981e692c19304828e1a3c52bf24f0c7a4c3271351062f657c9c22f20e",
+      "research/scalar-ratio/evidence/history/frames/transparency-probe.log": "e3b5c4e460156f183185a0a0b8373da67893422d39f9455f4d05361d7f3a9742",
+      "research/scalar-ratio/evidence/history/units/BUILD_RECORD.json": "0ca8a4aba2218e08a68eb718308ce7187d926a5e0c548538fa0bbd41df4694af",
+      "research/scalar-ratio/evidence/history/units/REPAIRS.md": "749ba9294809e58b1891edc6ce69e6afa87b52319ad03ac5abc6c07d07aeedad",
+      "research/scalar-ratio/evidence/history/units/UnitPrefix.lean": "b9851dc96fdf88d619e205871d35a8696399fb6763072d0e49b6b989cca3f7ac",
+      "research/scalar-ratio/evidence/history/units/cup-01.log": "626fdbf41220b92b7630aa7e386304ffb11199f84b54b0460b9351d4834a5f2c",
+      "research/scalar-ratio/evidence/history/units/cup-02.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/history/units/unit-01.log": "4a2925c8abf06f5e906e4fdd10603f18d7b633ec77858ed95f3be071807544f6",
+      "research/scalar-ratio/evidence/history/units/unit-02.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/history/units/unit-prefix-01.log": "04b51b537fe583d6a91e0e84d041d1aac8c46f7343d01f2268bd500a8be6e579",
+      "research/scalar-ratio/evidence/history/units/unit-prefix-02.log": "37bec044c1c3039c398826204d9a027ac34364887200b420714db4a78eac104a",
+      "research/scalar-ratio/evidence/history/units/unit-prefix-03.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/math-review-final.md": "ba1120095c6152d5a5ad9991a6c3b1b14e4dc18725b6cbb859ca415c048bf657",
+      "research/scalar-ratio/evidence/math-review-initial.md": "2d108cd56146be84f418ccac981ac91cca3124230620309327a1960396ba7c68",
+      "research/scalar-ratio/evidence/mathlib-cache-fetch.log": "fb561607d0c0d7f30544e7f145182f44fd619ffc6375926e05f4ef071c738b7f",
+      "research/scalar-ratio/evidence/native/Axioms.lean": "96cd239fca9af1c82219f545d1dcc118ac050b07cafef798884503f1dac417e2",
+      "research/scalar-ratio/evidence/native/RESULT.json": "7fee26cdfd15afaa9ab638367979481e16170503c838f7ac10666069fd575c58",
+      "research/scalar-ratio/evidence/native/Solution.lean": "7af2c393419c0d091defd9219f84d963bfc484b64633f8eee6e4f591554d671d",
+      "research/scalar-ratio/evidence/native/audit-history.log": "7539e0a83103f2656b233dcf98570fb769e636973f4765cd48f04b87a7d5ee0d",
+      "research/scalar-ratio/evidence/native/axioms-and-statements.log": "23e8819553a10a28d9f926d3ce6e64dd5aec6ad639be50de14a9dc964742968f",
+      "research/scalar-ratio/evidence/native/boundary-model-optimized.log": "e2d141099503d845ec240d1c85d7323a8d909c06b2a5540457acec92c48426e6",
+      "research/scalar-ratio/evidence/native/boundary-model.log": "e2d141099503d845ec240d1c85d7323a8d909c06b2a5540457acec92c48426e6",
+      "research/scalar-ratio/evidence/native/commands.json": "e35c661543780d87b2c4f1258969e133985463e5ab01392c68263360f3611887",
+      "research/scalar-ratio/evidence/native/frozen-source-guard.log": "c4fefe63b92913a69eb2e7b5cdea140a185cbf9fada90b5902545983726a995a",
+      "research/scalar-ratio/evidence/native/lake-version.log": "165f92ed239a8c7db772bf5ee9d58c59357b489951582a12c86dc9d8e06b23a2",
+      "research/scalar-ratio/evidence/native/lean-version.log": "469679dd8c6cec218a7a5e9a36c7a27decc968dacfe057ab3083f0ef43600dac",
+      "research/scalar-ratio/evidence/native/original-model.log": "85832ad9baf67e6a59094ff809b59f315b995136d68a193596df291d8ebf9993",
+      "research/scalar-ratio/evidence/native/solution.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/native/target-BoundaryCupAdapter.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/native/target-BoundaryScalar.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/native/target-DerivativeSwitch.BoundaryCup.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/native/target-DerivativeSwitch.CommonStrict.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/native/target-DerivativeSwitch.Coordinate.log": "569f612981e692c19304828e1a3c52bf24f0c7a4c3271351062f657c9c22f20e",
+      "research/scalar-ratio/evidence/native/target-DerivativeSwitch.UnitCriterion.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/native/target-DerivativeSwitchBoundary.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "research/scalar-ratio/evidence/tooling-inputs.json": "ce2ab9126557b4f5a72ca38f485481d69cdffbcbc64f28dbee2a5924efe85c87",
+      "research/scalar-ratio/inputs/ARITHMETIC_CONTRACT.md": "99e5dbbc3e1c5eb71e98350ca0955cd045d4cdeaab800b20c1023588144a3f9a",
+      "research/scalar-ratio/inputs/HANDOFF.md": "4bf00c2958489d5198b5faccaf387838ffdb4e934ec48df9b6b4fe55f4ab7f10",
+      "research/scalar-ratio/inputs/MATHEMATICS.md": "605cc706a743774fab96b85ff218a0e9113b91a39dd10b3b2981a73057ac4ce2",
+      "research/scalar-ratio/inputs/PINS.json": "ad52a19bda94575b76d95e99db9844821deb59c52a01d049372870785ea8a28f",
+      "research/scalar-ratio/inputs/RECEIVED_REVIEW.txt": "fd71889854c037edac9a703fbab7ee9e7d8e3814f6b12d88467c93387d96bc32",
+      "research/scalar-ratio/inputs/diophantine_zq_scalar_ratio_milestone_2026-11-08.zip": "f68a88c8c69a7a971666d399f74427dea292ddbc1653c2d40debfda8f0a65e8b",
+      "research/scalar-ratio/tests/check_milestone.py": "7bf9326d4ba799a561fdeefcdb1d9dd5b887511fa61ed56b12c9ebd9369de59a",
+      "research/scalar-ratio/tests/exact_matrix.py": "fac50661ebbd4e57e93db2dbf8bb01ba10c6fd3cd93eb5cedfd8ee8a476f87a1",
+      "research/scalar-ratio/verification/Challenge.lean": "b7e458429c13a677784af6885d1d2c8aa5e09f6a633aa112aab090547d62c84f",
+      "research/scalar-ratio/verification/Challenge/BoundaryCup.lean": "cc95c0bfa2a80fc2c967ed69b5fafb8c0defe7fc704bc2962b0d113afef8253b",
+      "research/scalar-ratio/verification/Challenge/CommonStrict.lean": "50a3a1847f96d80bddacb6146696b07d6ca06f0b73c95f45793e3ca919313af5",
+      "research/scalar-ratio/verification/Challenge/Coordinate.lean": "5d9345ec01b581faba690428fcfbc0d01196d61ba13d73e1ae6b9ae4e04bf1cc",
+      "research/scalar-ratio/verification/Challenge/Cup.lean": "657609e50b5b058f5e2435cced7f1efcadcd91aed076a7612742f409c12bf18e",
+      "research/scalar-ratio/verification/Challenge/Matrix.lean": "70141ae019654b59a07e1d34cead19aa5882f9a2f1b1097f021bb24653c12860",
+      "research/scalar-ratio/verification/Challenge/Original.lean": "ae5cd67b93287c345a3b1a808eeeed9744667bb73eb10f068d8b056b20b497e8",
+      "research/scalar-ratio/verification/Challenge/UnitCriterion.lean": "a2f864a2f353519d2c40739ed3c16f1a61498867817314df52a77215b2883b3b",
+      "research/scalar-ratio/verification/README.md": "4db77bc8aad5d3bb68573ece21f43c15273e2cb5857e618b0c8a131bfeabf17c",
+      "research/scalar-ratio/verification/Solution.lean": "7af2c393419c0d091defd9219f84d963bfc484b64633f8eee6e4f591554d671d",
+      "research/scalar-ratio/verification/comparator.json": "ae8b3b382cfc69d3aceb281c188548923855345a71f3775b813530ca059f00c8",
+      "research/scalar-ratio/verification/compare_exports.lean": "fd5c43364d6f209ce48d75eb5f3b8bf363bfd05a8549e21a54d5a39cdb02485d",
+      "research/scalar-ratio/verification/lakefile.toml": "9600bce268e5e5b0b9e0b3b255984b089b2006294c93e9264da2217ab86fead8",
+      "research/scalar-ratio/verification/prepare.py": "c884b292701340b5a09d731f95ae714dad00726705955157f3931f9ec7eb2e4f",
+      "research/scalar-ratio/verify.py": "040370d1c94f70467facbc2288414b9c414e998eb3585b4a18893fdb814a3f4e"
+    },
+    "scope": "Byte preservation, not revalidation of historical mathematical claims"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/boundary_cup_attack",
+  "type": "EDITORIAL_ONLY_REBIND",
+  "old_integration_derivation_sha256": "9983b1cd77a423e346728589bc90b9605e68eec59a794bd62638c093f8cc0fe0",
+  "new_integration_derivation_sha256": "b5e64b29ba2c5b2bcffc3d56ed4c6d512dad950d9c10c58d22ba7d62834295c4",
+  "change": "six display blocks: twelve delimiter lines changed from \\[ and \\] to $$; all other bytes identical",
+  "reverse_conversion_sha256": "9983b1cd77a423e346728589bc90b9605e68eec59a794bd62638c093f8cc0fe0",
+  "source_fidelity_check": "PASS: inverse delimiter conversion reproduces previously reviewed SHA256 exactly",
+  "mathematics_changed": false,
+  "lean_or_spec_changed": false,
+  "native_receipt_preserved": {
+    "path": "research/arithmetic-switch-integration/evidence/native/RESULT.json",
+    "sha256": "8896579f2167baaba87753882ada9655cbd5b36935451eae410fa62bc8641ad1"
+  },
+  "additional_claim_accuracy_review": {
+    "research/arithmetic-switch-integration/README.md": "2d6278534c6a2cb78c341226d161ff2ebe78ff4fb04700109bb811217c452888",
+    "research/arithmetic-switch-integration/VERIFICATION.md": "ec17b5f20cacbe94a921ca38f800c3b34ab86c5c7f1cb1c541b1c918cdcac386"
+  },
+  "outcome": "ACCEPTED bounded claims and editorial rebind; no new build or mathematical coverage inferred",
+  "rendering_check": "Source fidelity only; no target parser or visual rendering check claimed",
+  "verified_changed_native_inputs": [
+    "research/arithmetic-switch-integration/DERIVATION.md"
+  ],
+  "root_editorial_binding_sha256": "6d92cb384873c0679438ff8a617407fc6472006d7f965e398803cae359bdecb1",
+  "root_retained_original_sha256": "9983b1cd77a423e346728589bc90b9605e68eec59a794bd62638c093f8cc0fe0"
+}

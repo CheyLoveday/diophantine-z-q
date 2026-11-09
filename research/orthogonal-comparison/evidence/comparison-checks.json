@@ -1,0 +1,23 @@
+{
+  "cone_cases": 6400,
+  "homotopy_class_cases": 4680,
+  "negative_controls": {
+    "arbitrary_map_without_homotopy": {
+      "class": 1,
+      "difference": 1,
+      "differential": 0,
+      "modulus": 8,
+      "purported_inverse": 2,
+      "rejected": true
+    },
+    "nilpotent_t_inverse_rejected": true
+  },
+  "scope": "Exact algebraic model checks; no actual arithmetic/Galois computation",
+  "sources": {
+    "lean/Research/DerivativeSwitch/OrthogonalComparison.lean": "bfec996b869e44c6a42fc058fbc24cc7288b1f61d0f0e7eef1f4f58f41dca1ba",
+    "manuscripts/quartic_v13.tex": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+    "research/orthogonal-comparison/check_comparison.py": "5b071db8be64a86dba569f12527ef1e3bd7bf2463927586d8cda5fe9d5643fc9"
+  },
+  "status": "PASS",
+  "wrong_cone_sign_counterexamples": 2043
+}

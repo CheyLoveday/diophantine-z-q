@@ -1,0 +1,57 @@
+[
+  {
+    "label": "lean-version",
+    "command": [
+      "lean",
+      "--version"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "lake-version",
+    "command": [
+      "lake",
+      "--version"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "ActualBoundaryCup",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "-o",
+      "/Users/chey/Coding_Projects/diophantinezq/audit-output/2026-11-09-actual-bridge/native/lib/Research/DerivativeSwitch/ActualBoundaryCup.olean",
+      "Research/DerivativeSwitch/ActualBoundaryCup.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "OrthogonalComparison",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "-o",
+      "/Users/chey/Coding_Projects/diophantinezq/audit-output/2026-11-09-actual-bridge/native/lib/Research/DerivativeSwitch/OrthogonalComparison.olean",
+      "Research/DerivativeSwitch/OrthogonalComparison.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "axioms-and-statements",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "/Users/chey/Coding_Projects/diophantinezq/audit-output/2026-11-09-actual-bridge/native/Audit.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  }
+]

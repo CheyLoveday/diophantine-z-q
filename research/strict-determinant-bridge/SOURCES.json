@@ -1,0 +1,63 @@
+{
+  "base_commit": "fb29fe2bc6968e178a6458357c437574221b5338",
+  "sources": [
+    {
+      "path": "manuscripts/quartic_v13.tex",
+      "sha256": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+      "locators": [
+        "ex:arith-paired-functional, lines3842\u20134012",
+        "ex:arith-coordinate, lines4014\u20134029",
+        "ex:limits-inner-limit, lines4577\u20134636",
+        "ex:limits-derivative-switch, lines5021\u20135093"
+      ]
+    },
+    {
+      "path": "lean/Research/DerivativeSwitch/Coordinate.lean",
+      "sha256": "229e66269880b9970b15ca36fab290d2572fdfac7396383d3327e652128ade90",
+      "locators": [
+        "HasCoordinate",
+        "coordinate_of_closed_frame",
+        "coordinate_unique"
+      ]
+    },
+    {
+      "path": "lean/Research/DerivativeSwitch/CommonStrict.lean",
+      "sha256": "c5770846489d7fdab0024d8f3c49e0a474eb0fa56dc428cc6a7034bc8e5605e4",
+      "locators": [
+        "raw_side_coordinate",
+        "common_strict_coordinate_formula"
+      ]
+    },
+    {
+      "path": "lean/Research/DerivativeSwitch/UnitCriterion.lean",
+      "sha256": "efd9f4404b9760f9d7ebc2cb0874f21f517ed3868e9e23f78fd0465a2c03e45a",
+      "locators": [
+        "unitRelated_scale_iff",
+        "integral_unit_criterion"
+      ]
+    },
+    {
+      "path": "research/scalar-ratio/DERIVATION.md",
+      "sha256": "02fbb34ccd76ff3d3894b812416b722cf6f044322d16d35b4d0f11e39561e733",
+      "locators": [
+        "cofactor convention and generic coordinate"
+      ]
+    },
+    {
+      "path": "research/arithmetic-boundary-cup/DERIVATION.md",
+      "sha256": "007cd09ea0f50f073d9a48e6d44ffb12a53b4233b585e4753e112182ce63ecd2",
+      "locators": [
+        "section5 prior wedge argument, opposite shared sign"
+      ]
+    },
+    {
+      "path": "docs/audit-history/issue2/evidence/determinants.md",
+      "sha256": "648a83cfec26f3032dc75aa04be03870c1864173c60daed3ff082935db703bd5",
+      "locators": [
+        "prior strict torsion and determinant argument excerpts"
+      ]
+    }
+  ],
+  "status": "SOURCE-BOUND RESEARCH; NOT MANUSCRIPT INCORPORATION",
+  "external_primary_theorem": "ordinary exact-sequence determinant identity proved directly in DERIVATION; no new uninspected citation used"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "scripts/check_audit_history.py",
+    "--self-test"
+  ],
+  "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review",
+  "exit_code": 0,
+  "scope": "Structural source/acceptance bookkeeping; not mathematical proof"
+}

@@ -1,0 +1,13 @@
+{
+  "research/strict-determinant-bridge/DERIVATION.md": "f1609cb2221cb22ff45074986be0eb980a8d6c72be0a0149a63b0fda5ece1772",
+  "research/strict-determinant-bridge/APPLICATION.md": "ef86dd6995f00e7673a5c75268a3784fc751f798533913e875679969d0102f8b",
+  "research/strict-determinant-bridge/README.md": "643e6c947964636ef93709d015fafab92b1b109c95139bdbafab86b8cdbb775e",
+  "research/strict-determinant-bridge/SOURCES.json": "8d13506a1b361fc22daf14454a2921e26354f5a21875930c055889196c7ca784",
+  "research/strict-determinant-bridge/check_bridge.py": "c984916ee815f3ac88b7de51681e22566e62453954b12948da4bf708334193d8",
+  "research/strict-determinant-bridge/evidence/checks.json": "4a1d68a4ec7ee6dc5f02ca0a5c2f11da7e0eb8589c15632d1fc4f8909042fcd5",
+  "research/arithmetic-switch-integration/SPEC.md": "5213754cc19a8c541b356421867c3a9910b2f47e9a0dac6fb2dd12a54e5fd1a6",
+  "research/arithmetic-switch-integration/DERIVATION.md": "b5e64b29ba2c5b2bcffc3d56ed4c6d512dad950d9c10c58d22ba7d62834295c4",
+  "research/arithmetic-switch-integration/check_integration.py": "dd9e21642f1c617ef16ab41da990c524b503c452835825ee149e28657e151a22",
+  "research/arithmetic-switch-integration/README.md": "2d6278534c6a2cb78c341226d161ff2ebe78ff4fb04700109bb811217c452888",
+  "research/arithmetic-switch-integration/VERIFICATION.md": "ec17b5f20cacbe94a921ca38f800c3b34ab86c5c7f1cb1c541b1c918cdcac386"
+}

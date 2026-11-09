@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "scope": "Editorial source binding, not a new proof-checker run",
+  "changes": [
+    {
+      "path": "research/arithmetic-switch-integration/DERIVATION.md",
+      "native_input_sha256": "9983b1cd77a423e346728589bc90b9605e68eec59a794bd62638c093f8cc0fe0",
+      "final_sha256": "b5e64b29ba2c5b2bcffc3d56ed4c6d512dad950d9c10c58d22ba7d62834295c4"
+    }
+  ],
+  "difference": "Only six paired display delimiters changed from backslash brackets to double dollars; mathematical text identical",
+  "native_input_copy": "evidence/DERIVATION.native-input.txt",
+  "lean_sources_specification_toolchain_and_verifier_unchanged": true,
+  "nonauthor_acknowledgement": "See updated DETERMINANT_INTEGRATION_REVIEW.md and its reviewed-inputs.json"
+}

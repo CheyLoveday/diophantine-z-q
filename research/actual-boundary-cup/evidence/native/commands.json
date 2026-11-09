@@ -1,0 +1,35 @@
+[
+  {
+    "label": "lean-version",
+    "command": [
+      "lean",
+      "--version"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "ActualBoundaryCup",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "-o",
+      "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/research/actual-boundary-cup/evidence/native/lib/Research/DerivativeSwitch/ActualBoundaryCup.olean",
+      "Research/DerivativeSwitch/ActualBoundaryCup.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  },
+  {
+    "label": "axioms-and-statements",
+    "command": [
+      "lean",
+      "-j1",
+      "-Ddebug.skipKernelTC=false",
+      "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/research/actual-boundary-cup/evidence/native/Audit.lean"
+    ],
+    "cwd": "/Users/chey/Coding_Projects/diophantinezq/derivative-switch-review/lean",
+    "exit_code": 0
+  }
+]

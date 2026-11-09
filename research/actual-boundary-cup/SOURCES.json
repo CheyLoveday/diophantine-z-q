@@ -1,0 +1,29 @@
+{
+  "research_head": "fb29fe2bc6968e178a6458357c437574221b5338",
+  "sources": {
+    "manuscripts/quartic_v13.tex": "9db71bbfcefb37db56eabcf40a5f9dd85de9ed58294635da3dbf6d4f5caa8fcd",
+    "lean/Research/DerivativeSwitch/ArithmeticBridge.lean": "2b72fc4237d45feb84973e470f0887c3ef3768cfaaedec967857a4ca01c09ef6",
+    "research/arithmetic-boundary-cup/DERIVATION.md": "007cd09ea0f50f073d9a48e6d44ffb12a53b4233b585e4753e112182ce63ecd2",
+    "research/arithmetic-boundary-cup/APPLICATION.md": "a00a0ab8b0eaf014bba81cd44a8e683dbe7b3c63492529780354979303252102",
+    "lean/Research/DerivativeSwitch/ConjugateLocalH1.lean": "078ac50ae0c90c8e609a57c51c5884a25646ad7305531f1cf531617485b9078f"
+  },
+  "primary_source": {
+    "title": "Jan Nekovar, Selmer complexes, Asterisque310 (2006)",
+    "url": "https://www.numdam.org/item/AST_2006__310__R1_0/",
+    "pdf_sha256": "61c84e5ad3252a2e520747215ac57a282addc2b58c824a3637bcd77bbe02153f",
+    "locators": [
+      "1.3.1--1.3.2, p41: actual cone differential, cup product chain map",
+      "6.2.2--6.2.4, pp138--139: local cone products and boundary compatibility",
+      "6.3.1, pp140--141: target B3=0, one compact-support trace, same local-invariant square",
+      "6.3.2--6.3.3, pp141--142: cohomological pairing, boundary naturality",
+      "6.4.1--6.4.4, pp144--145: functoriality and homotopy requirements"
+    ]
+  },
+  "manuscript_locators": {
+    "H22": "3509--3542",
+    "local_cup_and_isotropy": "3431--3508",
+    "actual_functional": "3842--4012",
+    "retained_limits": "4577--4636",
+    "derivative_triangles": "5021--5093"
+  }
+}

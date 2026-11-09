@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "exact_model_count": 1836,
+  "all_vector_grid_checks_per_model": 32,
+  "negative_controls_detected": {
+    "one_functional_times_two_changes_v2": true,
+    "one_strict_factor_times_two_changes_v2": true,
+    "one_cone_sign_breaks_exact_opposite_evaluations": true,
+    "extra_J_destroyed_cross_value": true,
+    "zero_partner_has_no_nonzero_cross_witness": true,
+    "unit_at_t_is_not_a_dyadic_unit": true,
+    "characterwise_units_do_not_establish_integral_descent": true
+  },
+  "script_sha256": "dd9e21642f1c617ef16ab41da990c524b503c452835825ee149e28657e151a22",
+  "scope": "Exact rational finite models and adverse hypotheses; no arithmetic cohomology or universal proof is computed"
+}

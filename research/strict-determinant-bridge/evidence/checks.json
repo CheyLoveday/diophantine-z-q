@@ -1,0 +1,174 @@
+{
+  "status": "PASS",
+  "profile": "exact finite algebra only",
+  "seed": 20261109,
+  "counts": {
+    "rank_one_models": 180,
+    "full_adjugate_identities": 2160,
+    "exact_triangle_formulas": 360,
+    "fractional_complements": 166,
+    "complement_changes": 1440,
+    "quotient_lift_changes": 1440,
+    "strict_nonunit_disks": 1440,
+    "generic_strict_basis_changes": 360,
+    "integral_basis_unit_changes": 180,
+    "rescaled_functional_failures": 180
+  },
+  "negative_controls": {
+    "discard_common_strict_torsion": {
+      "rejected": true,
+      "disk": "2",
+      "actual": "-18/5",
+      "incorrect_without_c": "-36/5"
+    },
+    "independent_functional_rescale": {
+      "rejected": true,
+      "u_finite": "-36/5",
+      "u_singular_rescaled": "72/5",
+      "dyadic_valuation_difference": 1
+    },
+    "one_frame_sign_flip": {
+      "rejected": true,
+      "correct_u_singular": "36/5",
+      "incorrect_one_sided_sign": "-36/5"
+    },
+    "zero_localization": {
+      "rejected": true,
+      "reason": "area guard cannot hold for v=0"
+    },
+    "characterwise_universal_descent": {
+      "rejected": true,
+      "character_values": [
+        "1",
+        "1",
+        "1",
+        "3"
+      ],
+      "nonintegral_group_ring_coefficients": [
+        "3/2",
+        "-1/2",
+        "-1/2",
+        "1/2"
+      ]
+    }
+  },
+  "samples": [
+    {
+      "v": [
+        "-3",
+        "-5"
+      ],
+      "x": [
+        "0",
+        "-1/3"
+      ],
+      "a": [
+        "0",
+        "-5/4"
+      ],
+      "b": [
+        "1",
+        "-9/4"
+      ],
+      "J": [
+        [
+          "1",
+          "2"
+        ],
+        [
+          "0",
+          "-1"
+        ]
+      ],
+      "qF": "9",
+      "qS": "-9",
+      "u_mat_F": "-36/5",
+      "u_mat_S": "36/5",
+      "strict_c": "1",
+      "stored_uF": "-12",
+      "stored_uS": "-324/35"
+    },
+    {
+      "v": [
+        "-6",
+        "-6"
+      ],
+      "x": [
+        "0",
+        "-1/6"
+      ],
+      "a": [
+        "-4/5",
+        "5/2"
+      ],
+      "b": [
+        "0",
+        "1/2"
+      ],
+      "J": [
+        [
+          "1",
+          "-1"
+        ],
+        [
+          "0",
+          "-1"
+        ]
+      ],
+      "qF": "5/2",
+      "qS": "-5/2",
+      "u_mat_F": "25/4",
+      "u_mat_S": "-25/4",
+      "strict_c": "2",
+      "stored_uF": "125/24",
+      "stored_uS": "225/56"
+    },
+    {
+      "v": [
+        "-12",
+        "20"
+      ],
+      "x": [
+        "0",
+        "-1/12"
+      ],
+      "a": [
+        "5/4",
+        "6"
+      ],
+      "b": [
+        "1",
+        "-4"
+      ],
+      "J": [
+        [
+          "1",
+          "3"
+        ],
+        [
+          "0",
+          "-1"
+        ]
+      ],
+      "qF": "5/4",
+      "qS": "-5/4",
+      "u_mat_F": "5/44",
+      "u_mat_S": "-5/44",
+      "strict_c": "4",
+      "stored_uF": "25/528",
+      "stored_uS": "45/1232"
+    }
+  ],
+  "input_hashes": {
+    "research/strict-determinant-bridge/check_bridge.py": "c984916ee815f3ac88b7de51681e22566e62453954b12948da4bf708334193d8",
+    "research/strict-determinant-bridge/DERIVATION.md": "f1609cb2221cb22ff45074986be0eb980a8d6c72be0a0149a63b0fda5ece1772",
+    "research/strict-determinant-bridge/APPLICATION.md": "ef86dd6995f00e7673a5c75268a3784fc751f798533913e875679969d0102f8b"
+  },
+  "not_established": [
+    "actual global Galois cup/trace",
+    "orthogonal comparison arithmetic construction",
+    "retained-limit coherence",
+    "universal group-ring descent",
+    "Lean determinant-functor formalization"
+  ]
+}
