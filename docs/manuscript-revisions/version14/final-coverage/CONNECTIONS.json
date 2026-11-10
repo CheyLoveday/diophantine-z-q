@@ -133516,6 +133516,121 @@
         "limitations": "The original65 findings remain separate. Final authenticated Git-bound acceptance is not inferred."
       },
       "limitations": "Bounded source-coverage repair; independent final merged-record and protocol checks remain separate."
+    },
+    {
+      "finding_id": "DELIVERY-FUTURE-CHECK-WORDING",
+      "finding_sha256": "f77dd618fb52aa3f917b8b9ee2940d2e89405294e1dfd79bf1f353ecf89cf0e3",
+      "classification": "not_substantive_failure",
+      "mechanism": "Premature documentary description of a future delivery check as already attached; no change to mathematics, archive bytes, or the source-only check.",
+      "search_scope": [
+        {
+          "pin": {
+            "side": "head",
+            "path": "research/version14/CUMULATIVE-HANDOFF.md",
+            "sha256": "5f7dc1105010beca746d028b369b72895cc748acfbb49f086b661e5147dd6a1c"
+          },
+          "start_line": 15,
+          "end_line": 15,
+          "excerpt_sha256": "9d89503d7597087ddbce9648c09ca63d8b268250b482487ceccedb3740f14fea"
+        },
+        {
+          "pin": {
+            "side": "head",
+            "path": "research/version14/evidence/final-delivery/reviews/ARCHIVE-REVIEW.json",
+            "sha256": "0796c3e20f9efc6daa39d0961eeec51b9ce2ab78ada8b1b938ad8a05c48acdd2"
+          },
+          "start_line": 1,
+          "end_line": 180,
+          "excerpt_sha256": "0796c3e20f9efc6daa39d0961eeec51b9ce2ab78ada8b1b938ad8a05c48acdd2"
+        },
+        {
+          "pin": {
+            "side": "head",
+            "path": "research/version14/evidence/final-delivery/reviews/DELIVERY-DOCS-REVIEW.json",
+            "sha256": "305c5ea2959a38099583b5ed77963d9bbc5b53d1f57ed60a9b6a244f0ae8ea31"
+          },
+          "start_line": 1,
+          "end_line": 88,
+          "excerpt_sha256": "305c5ea2959a38099583b5ed77963d9bbc5b53d1f57ed60a9b6a244f0ae8ea31"
+        }
+      ],
+      "scope_reason": "Compare the canonical delivery paragraph with both exact independent delivery reviews, including the preserved original sentence and accepted replacement. This is the documentary occurrence recorded by the finding; the mathematical source scope is unchanged.",
+      "exclusions": [],
+      "occurrences": [
+        {
+          "id": "DELIVERY-FUTURE-CHECK-WORDING-O1",
+          "use_ids": [],
+          "location": {
+            "pin": {
+              "side": "head",
+              "path": "research/version14/CUMULATIVE-HANDOFF.md",
+              "sha256": "5f7dc1105010beca746d028b369b72895cc748acfbb49f086b661e5147dd6a1c"
+            },
+            "start_line": 15,
+            "end_line": 15,
+            "excerpt_sha256": "9d89503d7597087ddbce9648c09ca63d8b268250b482487ceccedb3740f14fea"
+          },
+          "inclusion_reason": "The delivery paragraph is the corrected current representation identified by the original finding.",
+          "disposition": "corrected_reviewed",
+          "evidence": [
+            {
+              "pin": {
+                "side": "head",
+                "path": "research/version14/evidence/final-delivery/reviews/ARCHIVE-REVIEW.json",
+                "sha256": "0796c3e20f9efc6daa39d0961eeec51b9ce2ab78ada8b1b938ad8a05c48acdd2"
+              },
+              "start_line": 1,
+              "end_line": 180,
+              "excerpt_sha256": "0796c3e20f9efc6daa39d0961eeec51b9ce2ab78ada8b1b938ad8a05c48acdd2"
+            },
+            {
+              "pin": {
+                "side": "head",
+                "path": "research/version14/evidence/final-delivery/reviews/DELIVERY-DOCS-REVIEW.json",
+                "sha256": "305c5ea2959a38099583b5ed77963d9bbc5b53d1f57ed60a9b6a244f0ae8ea31"
+              },
+              "start_line": 1,
+              "end_line": 88,
+              "excerpt_sha256": "305c5ea2959a38099583b5ed77963d9bbc5b53d1f57ed60a9b6a244f0ae8ea31"
+            }
+          ]
+        }
+      ],
+      "correction": {
+        "rejected_assertion": "Its own release check is attached to the delivery commit on GitHub; the source check does not approve a later commit.",
+        "current_assertion": "The delivery commit requires its own release check on GitHub; the source check does not approve a later commit.",
+        "canonical_location": {
+          "pin": {
+            "side": "head",
+            "path": "research/version14/CUMULATIVE-HANDOFF.md",
+            "sha256": "5f7dc1105010beca746d028b369b72895cc748acfbb49f086b661e5147dd6a1c"
+          },
+          "start_line": 15,
+          "end_line": 15,
+          "excerpt_sha256": "9d89503d7597087ddbce9648c09ca63d8b268250b482487ceccedb3740f14fea"
+        },
+        "representations": [
+          {
+            "id": "DELIVERY-FUTURE-CHECK-WORDING-CURRENT",
+            "location": {
+              "pin": {
+                "side": "head",
+                "path": "research/version14/CUMULATIVE-HANDOFF.md",
+                "sha256": "5f7dc1105010beca746d028b369b72895cc748acfbb49f086b661e5147dd6a1c"
+              },
+              "start_line": 15,
+              "end_line": 15,
+              "excerpt_sha256": "9d89503d7597087ddbce9648c09ca63d8b268250b482487ceccedb3740f14fea"
+            },
+            "status": "current",
+            "recorded_assertion": "The delivery commit requires its own release check on GitHub; the source check does not approve a later commit.",
+            "reason": "Exact replacement accepted by the two preserved delivery reviews; it requires a later delivery check and does not assert its outcome."
+          }
+        ],
+        "scope": "The canonical delivery paragraph and its original correction history. Archived source-time placeholders and prior reviews remain historical.",
+        "limitations": "The earlier reviews accept exact corrected wording only. They do not approve this metadata successor, its future commit, or a later release gate."
+      },
+      "limitations": "Author-proposed Protocol_D classification and correction record. Requires independent acceptance at the successor revision; no source mathematics, finding body, authorship or historical disposition is changed."
     }
   ],
   "scope": "Final Version14 seven-root argument; exact accepted source/application snapshot e3bac2e4. Source and hypothesis limits remain in each application and referenced source-role ledger.",
