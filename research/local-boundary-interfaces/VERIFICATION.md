@@ -60,7 +60,7 @@ There is no hermetic-build or independent dependency-replay claim.
 | Focused controls | [design](CHECK_DESIGN.md), [source provenance](CONTROLS_PROVENANCE.json), [results](evidence/controls.json), [command](evidence/controls-command.json). 64 nonzero cup-correction cases, 640 degreewise cone cases, 4,680 two-term homotopy cases, 128 crossed-cocycle equations and 256 coboundary-pullback checks; all designated adverse cases detected. These are finite algebraic diagnostics. |
 | Separate control rerun | [reviewer receipt](reviews/CONTROLS_REPRODUCTION.json): Python 3.13.12 reproduced all substantive JSON fields from the author's Python 3.12.3 run. Both reject optimized Python. The version difference is disclosed, not treated as new mathematical evidence. |
 | Existing protocol self-test | [receipt](evidence/protocol.json): historical and existing-application structural/adverse checks passed. This does not add a new mathematical acceptance to the historical register. |
-| Final clean-checkout reproduction | Pending the final frozen preparation checkout; this is the remaining local packaging gate, not an arithmetic theorem obligation. |
+| Final clean-checkout reproduction | [Clean receipt](evidence/clean/REPRODUCTION.json): fresh detached checkout of `0715d6bf23d63e552c68a1dced24a85d216fa9b7`, no preexisting project output, all three commands exited 0 and the tracked tree stayed clean. All 17 native receipt files and four fresh artifact hashes matched. Controls matched the independent reviewer's output byte for byte; their only difference from the author's output was Python-version metadata. |
 
 Native verification was first run with a more verbose printer that hid deep
 terms. A second fresh run used readable unelided statement printing and the
@@ -78,6 +78,34 @@ Their shared model family, workspace and dependencies permit correlated errors;
 this is neither independent human specialist acceptance nor checker diversity.
 See [FINDINGS.md](FINDINGS.md) for the dispositions and remaining inputs.
 
+The clean checkout used the same pinned dependency cache and host, without
+preexisting project outputs; it is a clean project reproduction, not operating
+system isolation or a dependency rebuild. Its receipt gives the exact snapshot,
+commands, timings, input hashes and all compared output hashes. Duplicate native
+logs are represented by byte-equality checks against the full logs already in
+`evidence/native`, rather than copied twice. Fresh local `.olean` outputs are
+retained in the clean worktree and bound by hash. The initial overly strict
+control-receipt byte comparison failed solely on interpreter metadata; the
+[comparison note](evidence/clean/COMPARISON_NOTE.md) and original error preserve
+that event and its exact resolution.
+
+To reproduce this method, create a fresh checkout of the prepared commit,
+provide only the unchanged pinned dependency packages and their compiled caches
+under `lean/.lake/packages`, then run the three commands above with no existing
+`lean/.checks/lbi-native-reviewed-20261110` directory. The reproducibility claim
+is conditional on those disclosed cache inputs. The runner refuses to reuse an
+existing project-output directory.
+
+The earlier core review records the pre-clean-checkout state at `0715d6b`.
+Its original report and bindings are preserved; later status edits do not
+retroactively change that review. [FINAL_ASSEMBLY.md](reviews/FINAL_ASSEMBLY.md)
+and its separate binding review the completed clean evidence, current status
+prose, and final [MANIFEST.sha256](MANIFEST.sha256). All mathematical sources,
+README/application, proof-root selection, runners and controls are unchanged
+from the reviewed and reproduced snapshot. Only evidence/status packaging was
+added afterward. The final Git commit additionally binds the two final-review
+attestations, which are excluded from the manifest to avoid self-reference.
+
 ## Assurance gates and missing checks
 
 | Gates | Status | Scope |
@@ -85,15 +113,15 @@ See [FINDINGS.md](FINDINGS.md) for the dispositions and remaining inputs.
 | A01 scope/snapshot; A02 specification; A03 semantic review; A04 proof mapping | PASS | Exact four sources, explicit roots, application table and bound nonauthor source/statement reviews. |
 | A05 build/lint; A06 axiom audit; A07 targeted boundaries | PASS | Native compilation without diagnostics, focused protocol self-test, transitive audit and reviewed adverse controls. No separate style linter is configured for these extracted Research modules. |
 | A08 artifact replay; A09 protected frozen-statement comparison; A10 external checker | NOT_RUN | Not part of this declared development profile. Native compilation does not substitute for these stronger checks. No paranoid run or six-checker receipt is claimed. |
-| A11 clean reproduction | NOT_RUN | Required additionally by the owner before this package is complete; retained as an explicit gate until executed. |
-| A12 nonauthor mathematical review | PASS, bounded | Distinct model agents, with the review scope and correlated-error limitations above. |
-| A13 evidence/claim discipline | PASS, bounded | Current evidence and exclusions are explicit; final reproduction and manifest binding still determine packaging completion. |
+| A11 clean reproduction | PASS | Fresh project checkout and output, exact source snapshot, shared trusted dependency caches; no hermetic dependency rebuild or independent host. |
+| A12 nonauthor mathematical review | PASS | Distinct model agents, with the review scope and correlated-error limitations above. |
+| A13 evidence/claim discipline | PASS | Final source/evidence manifest and separate assembly review bind the complete local package; exclusions and unperformed checks remain explicit. |
 
-Development checks are met at their declared scope; the owner's additional
-clean-reproduction packaging gate remains pending in this record version.
+Development profile: **MET** for the conditional interfaces and declared cache
+trust. The owner's additional clean-project-reproduction gate is also met.
 Repository-required hosted CI, including `Protocol / independent agent audit`,
 has not run for a new PR because publication has not been authorized. Local
 model reports do not create that hosted check or maintainer acceptance. If a PR
 is later authorized, keep it draft until the repository's required checks and
-review conditions are satisfied. No cloud or full arithmetic campaign is needed
-to finish this local package.
+review conditions are satisfied. The local package is complete for owner review;
+publication, hosted acceptance and the wider arithmetic programme are separate.
