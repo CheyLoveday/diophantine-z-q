@@ -4,6 +4,11 @@ Prepared locally on 10 November 2026 against upstream commit
 `009b47f84ffe484a1cdbe187a75fe2c21b3df1f8` (Version 14). This is the current
 reader entry for the combined contribution and its completed checking evidence.
 
+The [connected fork review thread](https://github.com/CheyLoveday/diophantine-z-q/pull/3#issuecomment-6767745665)
+holds the current reviewer handover and coordination. The source, specification,
+application map, checks and essential evidence are in this repository. No
+separate review pack or attachment is required.
+
 ## What this contributes
 
 Four Lean modules prove three compatibility steps used in the construction of
