@@ -1,6 +1,6 @@
 # Local conjugation and boundary interfaces: upstream submission
 
-Prepared locally on 10 November 2026 against upstream commit
+Prepared for upstream on 10 November 2026 against upstream commit
 `009b47f84ffe484a1cdbe187a75fe2c21b3df1f8` (Version 14). This is the current
 reader entry for the combined contribution and its completed checking evidence.
 
@@ -37,11 +37,13 @@ four modules and their original support, at reviewed head
 `3e01aa877cd7434fdc759fe7b6a9271de6deff2e`. It is merged in the fork.
 [Fork PR #3](https://github.com/CheyLoveday/diophantine-z-q/pull/3) supplied the
 later evidence only, at `cdb1a92c41832b1631baf9391fd5f6b9c0c57157`.
-The local upstream candidate includes both selections. Preparing it does not
-merge PR #3 or publish an upstream PR.
+It was merged into the fork at
+`1e20a76a3c8abcc21235e1914231a7dd250cf908`; remote readback confirmed the
+merged tree equals the reviewed evidence head. This submission includes both
+selections. Fork integration and upstream acceptance remain distinct.
 
 The completed evidence covers all four modules, all 41 selected roots and all
-16 printed definitions. The fresh Lean 4.35.0 build, transitive axiom audit,
+16 printed definitions. The retained Linux run's fresh Lean 4.35.0 build, transitive axiom audit,
 source-bound export and all six checkers passed. The permitted axioms were
 `propext`, `Quot.sound` and `Classical.choice`.
 
@@ -65,15 +67,36 @@ evidence linked above. No further run is waiting on those historical failures.
 ## Current base and retained source bindings
 
 The four mathematical files and all 159 files selected from the combined fork
-package are byte-identical to their source at `cdb1a92`. This entry is the sole
-additional presentation file. Source and evidence manifests, earlier review
-bindings and receipts are preserved unchanged.
+package are byte-identical to their source at `cdb1a92`. This entry and the
+three files in [submission-review/](submission-review/) are the four additional
+presentation/review files: **163 additions in total**, with no existing upstream
+file modified. Source and evidence manifests, earlier review bindings and
+receipts are preserved unchanged.
 
 The application map remains explicitly anchored to Version 13 at
 `9c0b3aba60d90fdcac82115f0582a6f52f1054f7`. Its manuscript file and the Lean
 toolchain, dependency lock and Lake configuration have unchanged bytes at the
-new upstream base. This packaging step does not rebind the V13 application
-review to the expanded Version 14 manuscript or claim review of that manuscript.
+new upstream base. The new bounded comparison checks the corresponding eleven
+V14 passages: each has identical bytes, shifted by 773 lines. This comparison
+does not rebind historical acceptance or review the entire V14 manuscript.
+
+## Source-first coverage review
+
+A distinct non-author reviewer reconstructed all 57 declarations and their
+substantive suppliers from the four proof sources before reading the declared
+inventory. The [frozen initial reconstruction](submission-review/SOURCE_USE_INITIAL.md)
+records prior exposure; the [reconciliation and separate coverage decisions](submission-review/RECONCILIATION.md)
+bind the 41 roots, 16 printed definitions, actual supplier uses and V13/V14
+consumer passages. The [validation receipt](submission-review/VALIDATION.json)
+contains the complete coverage index, passage hashes and fresh checks.
+
+The reconciliation supplements two small omissions in the frozen application
+map: the quotient-descent suppliers `LinearMap.liftOfSurjective` and
+`LinearMap.equivOfSurjective_apply`, and the heading line of the derivative-switch
+lemma. Both corrections are recorded there without editing historical files.
+The review found no new proof defect in these conditional interfaces. Its
+informal coverage and consumer-mapping decisions remain supporting evidence;
+protected Astra/controller acceptance is unestablished.
 
 This is an additive, non-release helper contribution. The current manuscript,
 PDFs, construction artifacts, accepted Lean library, release records and prior
@@ -100,5 +123,6 @@ Current upstream review is governed by
 [Astra acceptance policy](../../research-review/ASTRA-REVIEW-POLICY.md).
 The retained model reviews are supporting evidence, not an assertion of eligible
 controller acceptance for a new upstream revision. Exact-revision hosted checks,
-eligible protocol review and maintainer consideration remain submission-stage
-work. No such acceptance is manufactured by this local preparation.
+eligible Protocol_D v1.4 review and maintainer consideration remain required
+before upstream merging. The controller must assess the exact published head,
+base and merge revision using its trusted non-author Astra run records.
