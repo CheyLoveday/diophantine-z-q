@@ -36,8 +36,10 @@ detect wrong signs, nonclosed directions, non-chain traces, unsupported
 inverse/localization inference, coefficient mismatch, extra J and arbitrary
 functional rescaling. A separate reviewer reproduced the controls. Imported
 dependency caches remain trusted; no paranoid or external-checker pass is
-claimed. Final clean-checkout reproduction is the remaining local packaging
-gate in this preparation version. See [VERIFICATION.md](VERIFICATION.md).
+claimed. A fresh checkout of the frozen preparation commit reproduced the
+native receipts byte for byte and all finite-control results; the sole
+author-control receipt difference was Python-version metadata, disclosed in
+the evidence. See [VERIFICATION.md](VERIFICATION.md).
 
 The foundation PR #15 and frozen 39-target package are unchanged, unimported
 and supported by their own evidence. This is a non-release addition: it does

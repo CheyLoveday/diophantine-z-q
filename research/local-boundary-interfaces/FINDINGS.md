@@ -20,6 +20,7 @@ scope and history. No mathematical source repair was needed in this extraction.
 | F11 | Old source headers refer to research companion paths absent from the bounded diff. | Current README explains that provenance; APPLICATION provides the new map and immutable historical links. Four source blobs remain unchanged. |
 | F12 | Cache reuse, correlated model review and absent hosted checks could be mistaken for independent certification. | Verification record states exact trust, fresh-output boundary, no paranoid/external replay, shared-model limits and pending hosted requirements. |
 | F13 | A parked four-term reduction or universal descent could become an accidental merge gate. | Excluded from imports, selected diff and acceptance scope. Raw archive and research bank retained separately, with no publication authorization. |
+| F14 | Initial clean-run postprocessing required byte identity with the author's control receipt and failed on Python-version metadata. | All three executable checks passed. Exact inspection found only 3.12.3 versus 3.13.12; every substantive field matched, and the entire output matched the separate reviewer's 3.13.12 receipt. Outputs and initial failure are preserved in `evidence/clean`; no proof/control source or mathematical tolerance changed. |
 
 The claim is a useful conditional interface contribution. Actual global
 cup/trace compatibility, arithmetic comparison occurrence, stored functional
