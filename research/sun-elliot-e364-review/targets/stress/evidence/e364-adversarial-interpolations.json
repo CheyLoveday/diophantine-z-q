@@ -1,0 +1,140 @@
+{
+  "scope": "Adversarial bounded diagnostics and descriptive fits; no global E364 result",
+  "scan": {
+    "even_midpoints": 100000,
+    "limit": 200000,
+    "odd_prime_support_events": 624635,
+    "powerful_cases": [],
+    "powerful_case_count_is_bounded_evidence_only": true
+  },
+  "pairwise_coprime_countercontrol": {
+    "a": 2,
+    "b": 2,
+    "product": 4,
+    "product_has_no_exponent_one": true,
+    "factor_has_no_exponent_one": false,
+    "explanation": "v_2(4)=2 while v_2(2)=1; coprimality is needed for product-to-factor splitting"
+  },
+  "unmarked_denominator_collisions": [
+    {
+      "B2": 2,
+      "sources": [
+        [
+          2,
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        [
+          6,
+          [
+            5,
+            6,
+            7
+          ]
+        ],
+        [
+          14,
+          [
+            13,
+            14,
+            15
+          ]
+        ]
+      ]
+    },
+    {
+      "B2": 4,
+      "sources": [
+        [
+          4,
+          [
+            3,
+            1,
+            5
+          ]
+        ],
+        [
+          12,
+          [
+            11,
+            3,
+            13
+          ]
+        ],
+        [
+          20,
+          [
+            19,
+            5,
+            21
+          ]
+        ]
+      ]
+    },
+    {
+      "B2": 12,
+      "sources": [
+        [
+          8,
+          [
+            7,
+            2,
+            1
+          ]
+        ],
+        [
+          28,
+          [
+            3,
+            7,
+            29
+          ]
+        ],
+        [
+          36,
+          [
+            35,
+            1,
+            37
+          ]
+        ]
+      ]
+    }
+  ],
+  "held_out_rational_height_interpolations": {
+    "training_even_midpoints": 500,
+    "holdout_even_midpoints": 99500,
+    "x_2P": {
+      "intercept": 0.045418119585969266,
+      "log_N_coefficient": 3.9925804635866795,
+      "train": {
+        "rmse": 0.01956510543186173,
+        "r2": 0.9999747381592431,
+        "max_abs_error": 0.406011813788405
+      },
+      "holdout": {
+        "rmse": 0.03854128872161539,
+        "r2": 0.9998918126455463,
+        "max_abs_error": 0.04514528092118297
+      }
+    },
+    "y_2P": {
+      "intercept": -0.08642907975763683,
+      "log_N_coefficient": 6.014095461149273,
+      "train": {
+        "rmse": 0.030467859161494068,
+        "r2": 0.9999730008275813,
+        "max_abs_error": 0.5268761712669323
+      },
+      "holdout": {
+        "rmse": 0.07307736138317386,
+        "r2": 0.9998271349439262,
+        "max_abs_error": 0.08562114312763924
+      }
+    },
+    "warning": "log-linear fits over separate source data do not provide fixed-curve constants, common sources, or a global contradiction"
+  }
+}

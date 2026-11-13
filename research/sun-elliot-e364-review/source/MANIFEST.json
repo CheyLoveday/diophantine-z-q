@@ -1,0 +1,45 @@
+{
+  "scope": "Generated review artifacts only; linked source PDFs are not bundled.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3677,
+      "sha256": "20bc55025cb4e1cc35ee93ada6953d841e63ff362d72a86172f8c00b515cdcb3"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 11267,
+      "sha256": "95ff8042afc450863a82ee0e66e5ec15e111688ca0b769b688cbeac08614b913"
+    },
+    {
+      "path": "replay.py",
+      "bytes": 13122,
+      "sha256": "f16157fff27b17db164c2b01126f9d0228bcd44d2d169034d0242e47a5ec6f10"
+    },
+    {
+      "path": "replay.stdout.txt",
+      "bytes": 4976,
+      "sha256": "663ec3864b49038f52775a26f1c81160320277c32d93998681c763a64372485b"
+    },
+    {
+      "path": "replay_optimized.stdout.txt",
+      "bytes": 4976,
+      "sha256": "663ec3864b49038f52775a26f1c81160320277c32d93998681c763a64372485b"
+    },
+    {
+      "path": "results.json",
+      "bytes": 4976,
+      "sha256": "663ec3864b49038f52775a26f1c81160320277c32d93998681c763a64372485b"
+    },
+    {
+      "path": "results_optimized.json",
+      "bytes": 4976,
+      "sha256": "663ec3864b49038f52775a26f1c81160320277c32d93998681c763a64372485b"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 2820,
+      "sha256": "7e22181c8cc410ecffdc024ae93f7b9e5c6a4d3f2f82cdae7b88a2e9218ef34a"
+    }
+  ]
+}
