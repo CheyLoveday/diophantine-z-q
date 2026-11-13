@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-13",
+  "sun28": {
+    "arxiv": "2611.14605v1",
+    "url": "https://arxiv.org/html/2611.14605v1",
+    "source_bytes": "to be fetched and SHA256-pinned in W0"
+  },
+  "sunEarlier": {
+    "arxiv": "2610.20691v3",
+    "url": "https://arxiv.org/html/2610.20691v3",
+    "note": "comparison version; Sun28's cited 50-unknown source requires exact earlier-version mapping"
+  },
+  "elliot": {
+    "repo": "elliotglazer/diophantine-z-q",
+    "sun_import": "Version 13",
+    "comparison": "Version 16",
+    "sha": "capture exact source snapshot W0"
+  },
+  "fork": {
+    "repo": "CheyLoveday/diophantine-z-q",
+    "base_sha": "33483f751e6dcd3f91fb303969838aca33ad0458",
+    "parent_branch": "codex/derivative-switch-boundary-v13",
+    "review_branch": "review/sun28-elliot-e364-20261113"
+  },
+  "e364": {
+    "repo": "CheyLoveday/erdos-364-lab",
+    "sha": "d1815fc11077a30268515ce39f795eb42627a7d5",
+    "path": "problems/global/e364_congruent_attack_20261108.md"
+  },
+  "sprout": {
+    "repo": "CheyLoveday/erdos-code",
+    "pr": 276,
+    "head_observed": "b979fb9dce4ecfe9e5826d0eac546267a9776ab7",
+    "status": "draft; source realization open"
+  },
+  "evidence": {
+    "type": "supplementary ZIP delivered separately to user",
+    "status": "finite exact replay only"
+  }
+}
