@@ -1,0 +1,655 @@
+## Review outcome
+
+**The strongest connection between these three projects is exact preservation of arithmetic information through changes of representation.** It is not merely that they all use elliptic curves, local conditions or formal verification.
+
+The deeper review changes my initial ranking:
+
+| Interface | Assessment after this pass |
+|---|---|
+| **Finite-algebra compiler** | The separating-element and denominator-guard mechanisms withstand the algebraic checks. The remaining obligation is exhaustive coverage of the actual finite branches. |
+| **Simultaneous completeness** | The CRT application is coherent under the stated reduction-order hypotheses. The substantial dependency is the prime-pattern theorem supplying those hypotheses. |
+| **Determinant normalization** | Our later fork already contains a source-relative solution of the scalar-sign comparison. The remaining work concerns the actual retained arithmetic objects, all required localizations and universal integral descent. |
+| **Height contradictions** | The exponents have strict margins. Their effectiveness depends on transporting the precise divisibility statements without losing source identity or valuation information. |
+| **E364 transfer** | There is a literal congruent-curve, denominator and formal-depth connection. What does **not** transfer automatically is Sun’s fixed-curve global growth contradiction. |
+
+**I found no counterexample to Sun’s theorem. I did obtain exact counterexamples to weaker replacements for several of its load-bearing requirements.** Those controls make the remaining verification targets much sharper.
+
+A correction to my previous review is necessary: the later fork work already derives
+\[
+c_F=-\kappa u,\qquad c_S=\kappa u
+\]
+under its retained-duality interface. We should not describe that sign calculation as still untouched. The integration packet also supplies the common-strict determinant-coordinate bridge, while explicitly retaining the broader arithmetic application obligations.  
+
+---
+
+## 1. The connection between all three is mathematically literal
+
+### Elliot and Sun: the same elliptic model after an integral-unit change
+
+Write
+\[
+K=\mathbb Q(\sqrt2),\qquad d=3-\sqrt2,\qquad
+\varepsilon=3-2\sqrt2.
+\]
+
+Then
+\[
+N_{K/\mathbb Q}(\varepsilon)=1,\qquad
+\varepsilon^2d=75-53\sqrt2.
+\]
+
+Consequently,
+\[
+(x,y)\longmapsto(\varepsilon^2x,\varepsilon^3y)
+\]
+identifies
+\[
+E_d:\ y^2=x^3-d^2x
+\]
+with the model using \(75-53\sqrt2\). The displayed generators agree under this map; I checked those identities exactly in \(\mathbb Q(\sqrt2)\). These are the models appearing in the source constructions.  [arXiv](https://arxiv.org/html/2611.14605v1)
+
+This matters because an integral-unit change preserves finite-place valuation information. It does not introduce an unexplained prime-dependent denominator.
+
+### E364: the same curve form, but a varying arithmetic parameter
+
+For an even midpoint \(N\ge2\), write uniquely
+\[
+N(N^2-1)=Ds^2,
+\]
+with \(D>0\) squarefree and \(s>0\). Our existing E364 construction gives
+\[
+E_D:\ y^2=x^3-D^2x,\qquad
+P_N=(DN,D^2s).
+\]
+
+Here \(D\) is the **full squareclass product of the three consecutive terms**, not their radical and not an interchangeable companion-curve parameter. This distinction is already explicit in the LAB integration. 
+
+Re-deriving the tangent formula gives
+\[
+x(2P_N)=\frac{(N^2+1)^2}{4s^2},
+\]
+\[
+y(2P_N)=
+\frac{(N^2+1)(N^2-2N-1)(N^2+2N-1)}{8s^3}.
+\]
+
+For even \(N\), these fractions are reduced. Hence their square/cube denominator base is exactly
+\[
+\boxed{B_2=2s.}
+\]
+
+The powerfulness condition becomes
+\[
+\boxed{
+N-1,N,N+1\text{ powerful}
+\iff D\mid s
+\iff 2D\mid B_2.
+}
+\]
+
+Equivalently, the defect
+\[
+\mathfrak d(N)=\frac{D}{\gcd(D,s)}
+\]
+is precisely
+\[
+\mathfrak d(N)=
+\prod_{p:\,v_p(N(N^2-1))=1}p.
+\]
+
+Thus E364 asks whether this exact source defect can ever equal \(1\).
+
+There is also a direct formal-group interpretation. At an odd prime \(p\mid D\), put
+\[
+k=v_p(N(N^2-1)).
+\]
+Then
+\[
+\boxed{
+v_p\!\left(-\frac{x(2P_N)}{y(2P_N)}\right)
+=\frac{k-1}{2}.
+}
+\]
+
+An exponent-one defect gives depth zero; powerfulness forces positive depth at these odd support primes. The dyadic condition must remain separate:
+\[
+v_2\!\left(-\frac{x(2P_N)}{y(2P_N)}\right)=1+v_2(s).
+\]
+
+**This is the direct connection to Sun:** exact integer conditions become formal depths and denominator divisibilities on the same type of elliptic equation.
+
+On our square-middle leaf \(N=X^2\), the construction reduces to
+\[
+X^4-1=DY^2,\qquad s=XY,
+\]
+and
+\[
+P_N=(DX^2,D^2XY).
+\]
+That is the existing quartic-Pell-to-congruent-point bridge, not a newly invented representation. 
+
+### The marking cannot be discarded
+
+If
+\[
+N+i=b_i a_i^2,\qquad i=-1,0,1,
+\]
+the marked point retains the ordered Kummer profile
+\[
+\kappa(P_N)=
+\bigl([b_0b_+],[b_-b_+],[b_-b_0]\bigr).
+\]
+
+But \(2P_N\) has trivial class modulo \(2E_D\). **Passing only to the doubled point forgets the original Kummer marking.**
+
+Our representation must therefore retain
+\[
+(N,\ b_-,b_0,b_+,\ P_N,\ 2P_N),
+\]
+not merely the denominator of \(2P_N\). This is the E364 analogue of retaining Elliot’s actual class and actual functional rather than replacing them by convenient representatives.
+
+---
+
+## 2. The determinant bridge: what is established, and what remains load-bearing
+
+### The exact invariant is a ratio of actual cross-evaluations
+
+Our common-strict calculation starts with
+\[
+D_F=[D_0\mid A_F],\qquad D_S=[D_0\mid A_S],
+\]
+the actual cycles, and the actual closed functional rows.
+
+For a local complement \(x\), set
+\[
+\eta=\det[v,x],\qquad \delta=\det J,
+\]
+\[
+\theta=\det[D_0\mid A_Fx\mid A_SJx],
+\]
+\[
+q_F=\lambda_F(A_SJx),\qquad
+q_S=\lambda_S(A_Fx).
+\]
+
+The calculation gives
+\[
+u_F=-\frac{\eta q_F}{\theta},
+\qquad
+u_S=\frac{\delta\eta q_S}{\theta}.
+\]
+
+Therefore, where division is permitted,
+\[
+\boxed{\delta\frac{u_F}{u_S}=-\frac{q_F}{q_S}.}
+\]
+
+The division-free identity is
+\[
+q_S(\delta u_F)+q_Fu_S=0.
+\]
+
+This is why the scalar comparison was load-bearing: it identifies the **entire normalization defect**, rather than merely checking that the two sides have similar dimensions. 
+
+### What our later work already supplies
+
+Under the retained arithmetic boundary–cup and orthogonal-partner construction,
+\[
+q_S=-q_F.
+\]
+Consequently,
+\[
+\delta u_F=u_S
+\]
+in compatible cofactor frames.
+
+For arbitrary retained integral determinant bases, the coordinates differ by integral units. Numerical equality is not the invariant assertion; **equality of the relevant valuations is**.
+
+The same possibly nonunit strict determinant factor occurs on both sides. Its cancellation is justified because it is genuinely common—not because each side was independently made primitive.  
+
+This substantially advances the comparison with Sun’s earlier Appendix B. The pertinent passage there asserts preservation of the determinant valuation of the actual class and paired functional during the finite-to-singular switch. Our derivation exposes the precise conditional mechanism needed for that assertion. [arXiv](https://arxiv.org/html/2610.20691v3)
+
+### An exact adverse control
+
+The following weaker argument is false:
+
+> Equal generic ranks, primitive integral classes and functionals, and a unimodular local switch imply determinant-valuation preservation.
+
+Over a DVR with uniformizer \(\pi\), take
+\[
+D_F=\begin{pmatrix}0&\pi\\0&0\end{pmatrix},
+\qquad
+D_S=\begin{pmatrix}0&0\\0&\pi^2\end{pmatrix},
+\]
+with
+\[
+J=\operatorname{diag}(1,-1),
+\quad z_F=z_S=e_1,
+\quad\lambda_F=(0,1),\quad\lambda_S=(1,0).
+\]
+
+Then
+\[
+u_F=-\pi^{-1},\qquad u_S=\pi^{-2},
+\]
+so
+\[
+\delta u_F/u_S=\pi,
+\]
+which is not an integral unit.
+
+I replayed this control at \(\pi=2,3,5,17\). It is **not an arithmetic counterexample** to either paper. It proves why the actual boundary–cup normalization cannot be replaced by rank and primitivity checks.
+
+### The sharper remaining issue: universal integral descent
+
+There is a stronger obstruction beyond the one-prime scalar calculation.
+
+Let
+\[
+G_b=(\mathbb Z/2\mathbb Z)^b,\qquad
+e_b=2^{-b}\sum_{g\in G_b}g
+\]
+in \(\mathbb Q_2[G_b]\), and define
+\[
+u_b=1+2e_b.
+\]
+
+Every sign character sees a 2-adic unit:
+\[
+\chi(u_b)=
+\begin{cases}
+3,&\chi\text{ trivial},\\
+1,&\chi\text{ nontrivial}.
+\end{cases}
+\]
+
+Nevertheless, for \(b\ge2\),
+\[
+u_b\notin\mathbb Z_2[G_b].
+\]
+Its group-basis coefficients require denominator \(2^{b-1}\).
+
+More strongly, allowing a non-scalar clearing element does not remove the problem. For
+\[
+f\in\mathbb Z_2[G_b],
+\qquad fe_b=\operatorname{aug}(f)e_b.
+\]
+Therefore
+\[
+fu_b\in\mathbb Z_2[G_b]
+\quad\Longrightarrow\quad
+v_2(\operatorname{aug}(f))\ge b-1.
+\]
+
+**All scalar unit checks can pass while every integral clearing element has an augmentation budget growing with the binary dimension.**
+
+This precisely explains why Sun’s dimension-independent clearing bound needs a universal construction before character evaluation. Appendix B explicitly attempts such a construction using unaveraged cochain maps and common elements \(f,d\); the countercontrol does not refute that construction. It rules out replacing it by characterwise verification. [arXiv](https://arxiv.org/html/2610.20691v3)
+
+There is a second localization trap:
+\[
+\Lambda=\mathbb Z_2[[t]],\qquad
+t^{-1}\in\Lambda_{(2)}.
+\]
+An element can be integral at \((2)\) while having no value at \(t=0\). A 2-adic valuation check therefore cannot substitute for regularity on the retained \(\Lambda\)-model.
+
+**The remaining arithmetic target is now more precise:** validate the retained global cup/trace/comparison tuple, the required localized inverses, exceptional height-one branches and universal clearing construction. Our eligible inner rank-one lemma does not itself prove every dimension-lowering descent step. The fork’s current specification makes these boundaries explicit. 
+
+---
+
+## 3. Proposition 10.1: the compiler survives the main conceptual attacks
+
+The important question is not whether a generic primitive element exists. It is whether **one rational root recovers an entire accepted rational witness tuple at every specialization**.
+
+Here is an independent reconstruction of the core argument.
+
+### A uniform finite list of separators exists
+
+Suppose a specialized finite reduced algebra has at most \(D\) geometric points, represented by \(k\)-tuples. Consider
+\[
+\zeta_b=r_1+br_2+\cdots+b^{k-1}r_k.
+\]
+
+For two distinct tuples \(r,s\), the equality
+\[
+\zeta_b(r)=\zeta_b(s)
+\]
+is a nonzero polynomial equation in \(b\) of degree at most \(k-1\).
+
+Thus at most
+\[
+(k-1)\binom D2
+\]
+values can be forbidden. A fixed list of one more integer contains a separating choice.
+
+That is the crucial uniformity: **\(b\) is a finite branch choice, not another rational existential unknown.**
+
+Once separation holds, a rational projected root forces the entire tuple to be rational. Every Galois automorphism fixes the projected value; injectivity forces it to fix every coordinate.
+
+### Why separation is indispensable
+
+Take the four tuples
+\[
+(\pm\sqrt2,\pm\sqrt2).
+\]
+
+The projection \(r_1+r_2\) has the rational value \(0\), even though no tuple is rational. So a careless projection creates a false rational witness.
+
+The projection \(r_1+2r_2\) separates the four tuples and has no rational value.
+
+This control passed exactly. It isolates a real failure mechanism, but Sun’s separating-element construction addresses it.
+
+### The reciprocal guard is also doing real work
+
+For
+\[
+\Pi(T)=T^d+\sum_{j=1}^d\frac{N_j}{D_0}T^{d-j},
+\]
+define
+\[
+\Psi(W)=1+\sum_{j=1}^d
+N_jD_0^{2j-1}G^jW^j.
+\]
+
+On the guarded branch,
+\[
+\Psi(W)
+=(D_0^2GW)^d
+\Pi\!\left((D_0^2GW)^{-1}\right).
+\]
+
+If \(D_0G=0\), then \(\Psi=1\), so a vanishing denominator cannot introduce a solution. Its constant term also excludes \(W=0\). Finite shifts handle a projected root originally equal to zero. This is the mechanism used in the paper. [arXiv](https://arxiv.org/html/2611.14605v1)
+
+I checked 165 exact reciprocal identities/root substitutions and eight failed-guard cases.
+
+### Revised compiler verdict
+
+The generic rationality objection and the elementary denominator objection do **not** survive this review.
+
+The remaining application obligation is the actual finite atlas: ordinate branches, identity points, degree drops, discriminants, pivots and all guard conditions. I checked 729 generated rational ordinate pairs across the four ordinate charts, but did not generate the complete symbolic branch tree.
+
+There is also a sharp E364 limitation:
+
+> Finite-dimensional mathematics does not imply finitely many geometric witnesses.
+
+A positive-rank curve, an unrestricted integral-index family or an unbounded healer-prime family is not automatically compressible by this compiler. We first need a bounded finite-fibre statement for the auxiliary choices being eliminated.
+
+---
+
+## 4. The strongest shared issue: one witness must satisfy all constraints
+
+Sun’s ordinary local detector has the form
+\[
+W=\prod_i\left(1+R(D_i/R^{k_i})^2\right),
+\qquad
+\Theta=\operatorname{Tr}(W^{-1}),
+\qquad
+B=R/\Theta^2.
+\]
+
+Its conclusion is
+\[
+\exists\mathfrak p\mid p\quad
+\forall i:\ v_{\mathfrak p}(D_i)\ge k_i,
+\]
+not
+\[
+\forall i\quad
+\exists\mathfrak p_i\mid p:\ v_{\mathfrak p_i}(D_i)\ge k_i.
+\]
+That same-place conclusion is explicit in Lemma 4.2. [arXiv](https://arxiv.org/html/2611.14605v1)
+
+### Why the product-before-trace ordering matters
+
+At an unramified odd prime, let \(\alpha=v_p(R)\) be odd. In each factor, the nonconstant term has valuation
+\[
+2v_{\mathfrak p}(D_i)-(2k_i-1)\alpha.
+\]
+It cannot cancel with \(1\), because that valuation is odd.
+
+Suppose \(\alpha>0\), but at every place over \(p\) at least one test fails. Then at every such place
+\[
+v_{\mathfrak p}(W)\le-\alpha.
+\]
+Therefore
+\[
+v_p(\Theta)\ge\alpha,
+\qquad
+v_p(B)\le-\alpha,
+\]
+giving the forbidden negative odd valuation.
+
+The detector therefore forces one place where **all** the tests pass.
+
+### An exact split-prime countercontrol
+
+In \(\mathbb Q(\sqrt2)\), take
+\[
+p=17,\quad R=17,\quad
+D_1=\sqrt2-6,\quad D_2=\sqrt2+6,\quad k_1=k_2=1.
+\]
+
+The two expressions are small at opposite places over \(17\).
+
+Each separately formed pole input is
+\[
+B_i=\frac{440657}{12100},
+\qquad v_{17}(B_i)=1.
+\]
+
+But the joint construction gives
+\[
+W=\frac{161}{17},\qquad
+\Theta=\frac{34}{161},\qquad
+B=\frac{25921}{68},
+\]
+and hence
+\[
+v_{17}(B)=-1.
+\]
+
+Separate local tests miss the incompatibility; the joint detector exposes it. This is a local parity control, not a claim that the individual assignments satisfy the full global pole predicate.
+
+### What this means for SPROUT
+
+Our E364 constraints must concern the same original index, ordered roots, arm assignment, field orientation and permitted healer configuration.
+
+Replacing a joint relation by its marginals enlarges the candidate population. That can remain safe for an exclusion argument, but it loses strength and can leave artificial survivors. Conversely, imposing an unproved compatibility condition can discard genuine sources and make an exclusion unsound.
+
+The current SPROUT record correctly separates checked fixed-frame algebra from unresolved original-source matrix and pairing production. That distinction is mathematically essential, not just an assurance convention. 
+
+---
+
+## 5. Completeness: CRT is not the main remaining difficulty
+
+The shared comparison index must satisfy several congruence systems simultaneously. Once the promised order data are available, the compatibility argument is concrete:
+\[
+h\equiv0\pmod{L_+},\qquad
+h\equiv c_*\pmod{L_-},
+\]
+together with divisibility and exact-valuation conditions.
+
+The relevant promises include
+\[
+\gcd(L_+,L_-)=4,\quad
+v_2(L_+)=2,\quad v_2(L_-)=6,
+\]
+and the specified anchor divisibility and odd-prime avoidance. The paper checks these against the auxiliary congruences before selecting \(h\). [arXiv](https://arxiv.org/html/2611.14605v1)
+
+I constructed a compatible synthetic system retaining this structure and checked two incompatible controls. This verifies the CRT logic—not the existence of the required elliptic reduction orders.
+
+### The real issue is supplying the order data
+
+The analytic supplier has to produce prime patterns with the Gaussian congruences and **all** relevant self- and cross-order avoidance conditions.
+
+A common false shortcut would be:
+
+> Every finite collection of forbidden primes can be avoided, so all forbidden primes can be avoided.
+
+That implication is invalid without additional control.
+
+Importantly, Sun’s revised earlier paper does **not** stop there. It gives a finite-cutoff lower bound and a large-prime tail estimate, retaining all admissible ray fibres rather than one chosen residue per prime. [arxiv.org](https://arxiv.org/html/2610.20691v3)
+
+The closure mechanism can be checked independently at the level of inequalities. If the retained mass is bounded below by
+\[
+c(\log L)^{-4k}
+\]
+and the tail costs at most
+\[
+\frac{C}{L\log L},
+\]
+then, for fixed \(k\),
+\[
+\frac{C/(L\log L)}{c(\log L)^{-4k}}
+=\frac Cc\frac{(\log L)^{4k-1}}L\longrightarrow0.
+\]
+
+Choose \(L\) first; then send the counting scale to infinity. This avoids demanding a counting theorem uniform in an ever-growing ray-class field.
+
+**The order-of-limits closure is coherent.** What remains unclosed in this review is an independent derivation of the weighted polynomial-counting input and the complete large-prime tail estimate.
+
+That distinction matters for E364: finite residue tables require a genuine global closure argument, but Sun’s tail estimate belongs to his prime population. It is not automatically an estimate for our source or healer populations.
+
+There is also a provenance qualification: the 28-unknown paper cites an earlier Sun source under different title/numbering. I used the public v3 as an explicit comparison source, not silently as the identical cited snapshot. [arXiv](https://arxiv.org/html/2611.14605v1)
+
+---
+
+## 6. The other load-bearing arguments have identifiable margins
+
+### The scalar norm tree preserves every leaf condition
+
+At a node
+\[
+u^2+r_0v^2
+\]
+with \(R=v_p(r_0)\) odd, the two terms have opposite valuation parity. Therefore their valuations cannot cancel.
+
+Starting from a strict lower bound \(-cR\), the child coefficients become
+\[
+c/2,\qquad(c+1)/2.
+\]
+
+For the displayed scalar tree, starting with \(c=1/2\), the seven leaf coefficients are
+\[
+\frac1{16},\frac9{16},\frac5{16},\frac{13}{16},
+\frac38,\frac7{16},\frac{15}{16}.
+\]
+
+Every coefficient is below \(1\). Thus
+\[
+v_p(G_i/r_0^{k_i})>-R
+\]
+forces
+\[
+v_p(G_i)\ge k_i
+\]
+by integrality of the valuations.
+
+The subsequent formal-group identity
+\[
+[h]R_{\rm sc}=[s-1]H
+\]
+gives
+\[
+v_p(s-1)
+=v_p(h)+v_p\!\left(\frac{z(R_{\rm sc})}{z(H)}\right)
+\ge48.
+\]
+
+Notice that \(h\) need not be a \(p\)-adic unit: its being a nonzero integer is enough. This checks a potentially easy-to-reverse inference in the scalar argument. The source states the corresponding tree and formal-logarithm steps in Lemma 5.1. [arXiv](https://arxiv.org/html/2611.14605v1)
+
+I checked the path coefficients exactly and 50,971 sampled valuation assignments.
+
+### The three precision thresholds
+
+Let \(a=24\) denote the height-radical exponent. Reconstructing the feedback inequalities gives:
+
+| Mechanism | Strict requirement | Actual precision | Resulting comparison |
+|---|---:|---:|---|
+| Degree-four defect \(\Delta\) | \(K_\Delta>2a=48\) | \(64\) | \(B^2\) versus \(B^{3/2}\) |
+| Numerator \(J=\lvert\operatorname{num}(\beta-n)\rvert\) | \(K_J>a/2=12\) | \(16\) | \(\log B\le C+3h(\beta)\) |
+| Scalar growth | \(K_{\rm sc}>a=24\) | \(48\) | Linear Lucas growth versus square-root growth |
+
+For example,
+\[
+B^2\le C\bigl(1+|\Delta|^{a/K_\Delta}\bigr),
+\qquad |\Delta|\le C'B^4
+\]
+is contradictory for large \(B\) when
+\[
+4a/K_\Delta<2.
+\]
+
+Similarly, writing \(r=a/K_J\), the numerator argument has
+\[
+B^2\le C(B e^{h(\beta)})^r.
+\]
+When \(r<2\),
+\[
+\log B\le C+\frac r{2-r}h(\beta).
+\]
+At \(K_J=16\), \(r=3/2\), giving coefficient \(3\). These calculations use the source’s stated divisibilities and height input. [arXiv](https://arxiv.org/html/2611.14605v1)
+
+**There is genuine slack here.** But an unaccounted valuation loss can consume that slack, which is why the preceding normalization and local-precision interfaces matter.
+
+### Product height: no cancellation is the essential property
+
+The odd-index product identity is not generic height algebra. Its proof establishes compatible local valuation signs and suitable real inequalities on the particular orbit. It also explicitly uses the product in \(K\), not its norm to \(\mathbb Q\). 
+
+A useful independent diagnostic is
+\[
+\sum_i h(a_i)-h\!\left(\prod_i a_i\right)
+=
+\sum_v w_v\min(P_v,N_v),
+\]
+where
+\[
+P_v=\sum_i\max(0,\log|a_i|_v),\qquad
+N_v=\sum_i\max(0,-\log|a_i|_v).
+\]
+
+Exact additivity means no local positive/negative cancellation.
+
+For E364, any proposed shared height detector must prove this property on its actual source family—or bound the cancellation term. Taking norms is not a substitute: \(3+2\sqrt2\) has norm \(1\), but positive height.
+
+---
+
+## 7. What genuinely transfers to E364—and what still has to be proved
+
+The transferable mathematics is now specific:
+
+**From Elliot:** actual classes, actual paired functionals and retained integral bases must remain linked through every representation change.
+
+**From Sun:** aggregate local tests before projection, preserve a shared witness, and turn certified divisibility into a global growth contradiction.
+
+**From E364:** we already have a marked source point, an exact denominator defect and a formal-depth interpretation of powerfulness.
+
+What we do **not** yet obtain is Sun’s global contradiction for our varying source family.
+
+Sun’s construction uses a fixed cyclic carrier, quadratic growth of elliptic height in its integer index, a degree-four integer defect, and a separate Lucas growth inequality. Our E364 Pell coordinates can grow exponentially in their indices; \(D\) varies; and the curve rank and applicable constants need not be fixed.
+
+Therefore the missing bridge is not “apply the height theorem to the E364 curve.” It is:
+
+\[
+\boxed{
+\begin{gathered}
+\text{same original E364 source}\\
+\Downarrow\\
+\text{joint local divisibility of a specified arithmetic quantity}\\
+\Downarrow\\
+\text{a source-qualified global bound incompatible with its growth}.
+\end{gathered}}
+\]
+
+Alternatively, an exhaustive source-qualified obstruction could replace the growth comparison.
+
+The logical directions also differ. E364 can use a necessary-condition overcover and prove it empty. Sun needs an exact existential definition, including construction of witnesses for every integer. Our exclusion machinery does not need to solve his completeness problem, but it must not lose the forward map from every actual source into the population being excluded.
+
+**The highest-value remaining review target shared by Elliot and Sun is universal integral descent with its fixed clearing budget. The highest-value E364 transfer target is a joint, marked-source obstruction—not an unmarked curve invariant or independently satisfiable local tests.**
+
+## Executed evidence
+
+The packet contains the derivations, source locators, standard-library Python reproduction script and actual results. It includes the 10,000 even-midpoint E364 replay through \(20{,}000\), 56,091 odd-prime depth checks, compiler and CRT controls, determinant countermodels, scalar norm-tree checks and the group-ring descent controls.
+
+Normal and optimized Python runs produced byte-identical results. No Lean build or simultaneous-prime search was run; these diagnostics are not full-paper verification.
+
+sun_elliot_e364_review\.zip[Review and exact-arithmetic packet](sandbox:/mnt/data/sun_elliot_e364_review.zip) · REVIEW\.md[Mathematical review notes](sandbox:/mnt/data/sun_elliot_e364_review/REVIEW.md) · results.json[Executed results](sandbox:/mnt/data/sun_elliot_e364_review/results.json)

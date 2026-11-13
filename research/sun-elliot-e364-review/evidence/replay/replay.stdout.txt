@@ -1,0 +1,190 @@
+{
+  "status": "PASS",
+  "scope": "Exact bounded interface diagnostics; NOT full-paper verification.",
+  "python_dependencies": "standard library only",
+  "script_sha256": "f16157fff27b17db164c2b01126f9d0228bcd44d2d169034d0242e47a5ec6f10",
+  "results": {
+    "model_unit": {
+      "checks": 5,
+      "lambda_norm": 1
+    },
+    "joint_local_witness": {
+      "p": 17,
+      "individual_B": "440657/12100",
+      "individual_vp": 1,
+      "joint_W": "161/17",
+      "joint_theta": "34/161",
+      "joint_B": "25921/68",
+      "joint_vp": -1,
+      "scope": "Local parity control only, not full pole-predicate witnesses."
+    },
+    "ordinate_atlas": {
+      "cases": 729,
+      "chart_counts": {
+        "1": 676,
+        "2": 26,
+        "3": 26,
+        "4": 1
+      }
+    },
+    "separator": {
+      "bad_b": 1,
+      "good_b": 2,
+      "bad_projected_rational_root": 0,
+      "uniform_separator_candidate_count_bound": 3868562622766593456734208001
+    },
+    "reciprocal_guard": {
+      "identity_and_forward_cases": 165,
+      "zero_guard_cases": 8
+    },
+    "determinant_countercontrol": {
+      "models": [
+        {
+          "uniformizer": 2,
+          "uF": "-1/2",
+          "uS": "1/4",
+          "transported_ratio": 2
+        },
+        {
+          "uniformizer": 3,
+          "uF": "-1/3",
+          "uS": "1/9",
+          "transported_ratio": 3
+        },
+        {
+          "uniformizer": 5,
+          "uF": "-1/5",
+          "uS": "1/25",
+          "transported_ratio": 5
+        },
+        {
+          "uniformizer": 17,
+          "uF": "-1/17",
+          "uS": "1/289",
+          "transported_ratio": 17
+        }
+      ],
+      "scope": "Countermodels to rank/primitivity-only inference, not arithmetic counterexamples."
+    },
+    "characterwise_descent": {
+      "families": [
+        {
+          "binary_dimension": 1,
+          "characters_checked": 2,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 1
+        },
+        {
+          "binary_dimension": 2,
+          "characters_checked": 4,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 2
+        },
+        {
+          "binary_dimension": 3,
+          "characters_checked": 8,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 4
+        },
+        {
+          "binary_dimension": 4,
+          "characters_checked": 16,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 8
+        },
+        {
+          "binary_dimension": 5,
+          "characters_checked": 32,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 16
+        },
+        {
+          "binary_dimension": 6,
+          "characters_checked": 64,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 32
+        },
+        {
+          "binary_dimension": 7,
+          "characters_checked": 128,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 64
+        },
+        {
+          "binary_dimension": 8,
+          "characters_checked": 256,
+          "all_character_values_are_2_adic_units": true,
+          "group_basis_common_denominator": 128
+        }
+      ],
+      "scope": "Countercontrol to scalar-unit-to-universal-integrality inference; not an arithmetic-family counterexample."
+    },
+    "crt": {
+      "h": 3985188480,
+      "period": 4116752640,
+      "congruences": [
+        [
+          0,
+          260
+        ],
+        [
+          64,
+          11968
+        ],
+        [
+          0,
+          1344
+        ],
+        [
+          128,
+          256
+        ],
+        [
+          9,
+          27
+        ],
+        [
+          7,
+          49
+        ]
+      ],
+      "incompatible_controls_rejected": 2,
+      "scope": "Synthetic order moduli: no simultaneous prime theorem is being tested."
+    },
+    "e364": {
+      "even_midpoints": 10000,
+      "max_midpoint": 20000,
+      "odd_prime_depth_checks": 56091,
+      "odd_midpoint_denominator_control_rejected": true,
+      "scope": "Bounded exact replay; the displayed identities have separate algebraic proofs."
+    },
+    "scalar_norm_tree": {
+      "exact_path_weights": [
+        "1/16",
+        "9/16",
+        "5/16",
+        "13/16",
+        "3/8",
+        "7/16",
+        "15/16"
+      ],
+      "sampled_valuation_tuples": 50971,
+      "accepting_valuation_tuples": 448,
+      "scope": "Symbolic path arithmetic plus bounded valuation diagnostics; no global pole completeness claim."
+    },
+    "thresholds": {
+      "height_radical_exponent": 24,
+      "minimum_strict_thresholds": {
+        "K_delta_gt": 48,
+        "K_numerator_gt": 12,
+        "K_scalar_gt": 24
+      },
+      "actual_precisions": [
+        64,
+        16,
+        48
+      ],
+      "numerator_feedback_coefficient": 3
+    }
+  }
+}

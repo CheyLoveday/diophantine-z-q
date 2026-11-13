@@ -1,0 +1,69 @@
+{
+  "review_date": "2026-11-13",
+  "sources": [
+    {
+      "id": "SUN28",
+      "url": "https://arxiv.org/html/2611.14605v1",
+      "version": "v1, 10 November 2026",
+      "locations": [
+        "Proposition 10.1; sections 8-10",
+        "Proposition 6.5",
+        "Lemmas 3.1, 4.2, 5.1, 7.1-7.2; Proposition 7.3"
+      ],
+      "note": "Read HTML and inspected selected PDF pages; no local source hash claimed."
+    },
+    {
+      "id": "SUN48",
+      "url": "https://arxiv.org/html/2610.20691v3",
+      "version": "v3, 11 November 2026",
+      "locations": [
+        "Appendix B, Proposition B.1",
+        "Theorem 4.1; Propositions 4.3, 5.1, 6.2; section 6.1"
+      ],
+      "note": "A later comparison source; not silently identified with the differently titled/numbered reference cited by SUN28 v1."
+    },
+    {
+      "id": "FORK",
+      "repo": "CheyLoveday/diophantine-z-q",
+      "commit": "33483f751e6dcd3f91fb303969838aca33ad0458",
+      "branch_observed": "codex/derivative-switch-boundary-v13",
+      "paths": {
+        "research/scalar-ratio/DERIVATION.md": "9127d9a6a655c9c4ff878d8cf6d9057a852a92b2",
+        "research/arithmetic-boundary-cup/README.md": "6df59d9492a99bb6cb368ab25f023c51e2d4cc9d",
+        "research/arithmetic-switch-integration/README.md": "96ad07308e9aacd545aa86888cd0ee95be61c679",
+        "research/arithmetic-switch-integration/SPEC.md": "b2b7a86cc11cbe681b5328dd8e8ebdb0bba19831"
+      },
+      "hash_type": "Git blob SHA as returned by connector; not local file SHA-256"
+    },
+    {
+      "id": "E364",
+      "repo": "CheyLoveday/erdos-364-lab",
+      "commit": "d1815fc11077a30268515ce39f795eb42627a7d5",
+      "path": "problems/global/e364_congruent_attack_20261108.md"
+    },
+    {
+      "id": "SPROUT",
+      "repo": "CheyLoveday/erdos-code",
+      "pull_request": 276,
+      "head_observed": "b979fb9dce4ecfe9e5826d0eac546267a9776ab7",
+      "note": "PR metadata/body used for present assurance boundary, not proof of source realization."
+    },
+    {
+      "id": "ODDPRODUCT",
+      "repo": "elliotglazer/diophantine-z-q",
+      "path": "quartics/quartic-523-540/h10-odd-product-reduction.tex",
+      "git_blob_sha": "7608900f00d52dab3f54bcf3891a25d47566e182",
+      "locations": [
+        "Section 2 exact product-height identity; Section 3 odd-index chart"
+      ],
+      "note": "Older construction has exponent 19; only its product-height proof is used here, not substitution of that exponent for Sun28 exponent 24."
+    },
+    {
+      "id": "ELLIOT16",
+      "repo": "elliotglazer/diophantine-z-q",
+      "path": "research/version16/README.md",
+      "git_blob_sha": "466b7fd0ef9c3f7d5c669e9f87de7c560c22f5ea",
+      "note": "Version 16 November 11: horizontal polynomial-orbit normalization is distinct from the determinant boundary-cup normalization."
+    }
+  ]
+}

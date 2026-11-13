@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "scope": "Selected local Lab modules compiled read-only in fresh output with Lean 4.35.0; no external replay or whole-repo verification",
+  "head": "beaf02870091d86707cea4b5b26f721e831e380c",
+  "modules": [
+    {
+      "module": "Erdos364.Foundations.PowerfulPos",
+      "source_sha256": "eb8025c06b63d8d983920df6afb70f4cb6afaa907678a7eb75fcdcfbd20d6b36",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.PowerfulValuation",
+      "source_sha256": "969616d46d8ca0b12b0981313fa9b68e5b0723ceeccaa59a5a30e9febcf56daf",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.PowerfulTriple",
+      "source_sha256": "967394899f54cabe12da7484fc6804a67f60625638e3225a6d32ecec1c3b5105",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.ConsecutiveConstraints",
+      "source_sha256": "bc121339bb441f7f89d7853fb9d2d7779a77083474d0a444d709ca5cbe23c2b3",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.PowerfulNormalForm",
+      "source_sha256": "53bdeeaec2e6f2f307b1750668b7a2fd7532ce85131d11d658693c68007643f4",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.ConsecutiveKernelConstraints",
+      "source_sha256": "4cc86f1ecd9b6d87403da8bfdba66b055eeab5471771d6a968fc325dc57e6243",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.SquarefreeKernel",
+      "source_sha256": "cc663b3489e1f09e19f53bdc3b0f9e4ca5e14331abbee4b8bf872fa0f3481e1c",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.TripleNormalForm",
+      "source_sha256": "c4e51f560661474b30f320afe321e88a546d8783db6cd869f7cda4619884bf14",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.PowerfulFactorTransport",
+      "source_sha256": "5e08886db593481593122480ec4ae38e5e63b18460a6f8d7dc1e2d03baac20b8",
+      "olean_exists": true
+    },
+    {
+      "module": "Erdos364.Foundations.TraceDepth",
+      "source_sha256": "1750c2ded404ca400c7fafaf7636e2d9ab1a41de6d9730ae6f3b63acb9e42bd4",
+      "olean_exists": true
+    }
+  ],
+  "lean_version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)"
+}

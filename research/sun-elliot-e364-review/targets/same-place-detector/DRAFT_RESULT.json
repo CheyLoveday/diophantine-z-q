@@ -1,0 +1,39 @@
+{
+  "status": "SAME_PLACE_DETECTOR_G1_PROVED",
+  "scope": "All three algebraic G=1 declarations proved in Lean; actual number-field instantiation and G>1 disjunction remain for future work",
+  "proposed_owner": "Local-arithmetic workstream; next agent owns source instantiation and G>1",
+  "command": [
+    "lean",
+    "-t0",
+    "-j1",
+    "-Ddebug.skipKernelTC=false",
+    "research/sun-elliot-e364-review/targets/same-place-detector/Draft.lean"
+  ],
+  "returncode": 0,
+  "sorry_markers": 0,
+  "sorryAx_reports": 0,
+  "proved_declarations": [
+    "detectorFactor_valuation",
+    "failedEverywhere_product_bound",
+    "samePlaceDetector"
+  ],
+  "proved_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "proof_notes": [
+    "targets/same-place-detector/PROOF.md",
+    "targets/same-place-detector/PRODUCT_BOUND_PROOF.md",
+    "targets/same-place-detector/SAME_PLACE_PROOF.md"
+  ],
+  "interface_revisions": [
+    "Odd scalar valuation guard prevents factor cancellation counterexample R=-1,k=0,D=1",
+    "Each precision order is explicitly \u2265 1",
+    "trace_lower_bound uses finite integer bounds rather than WithTop infinity",
+    "val_algebraMap uses top only in its zero case",
+    "p_prime is an explicit source field"
+  ],
+  "draft_sha256": "96aa02ad994cfc53da44cd4357508c4ada886ee6b482eb4d8dfa6072898e7b4f",
+  "log": "DRAFT.log"
+}
