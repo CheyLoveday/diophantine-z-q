@@ -217,7 +217,8 @@ reflink-copied from `~/dzq-check2`, which differs from this base only in a docst
 * Review 1 (log step 8; leaves and the first glue): all OK, no false or vacuous statement, no statement-level
   bug. Applied: docstrings (`ξ'(0) = O`, use of `K ∩ 𝔞̂ = 𝔞`) and the weakening of `X0ModuliGalois` to
   algebraic points.
-* Review 2 (log step 18; `RingClassLattice`): see the log.
+* Review 2 (log step 18; `RingClassLattice`): TRUE (orientation checked against Tau Ceti's `adicOrd`; invariant
+  under principal ideles, archimedean part and units of `Ô_O`; non-vacuous; no CM inside); proof route as in §2.4.
 
 ## 5. What remains
 

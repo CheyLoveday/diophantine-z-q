@@ -189,3 +189,11 @@
   Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_t5' : ShimuraMainCM → RingClassLattice → CMModuli`.
   T5Headline: `frozenTarget_t5` takes `ShimuraMainCM`, `X0ModuliGalois`, `RingClassLattice` in place of `hS`.
 - T5Glue.out: 0 errors, 36 axiom lines all standard; T5Headline.out: 0 errors, standard axioms.
+
+## Step 18: second independent read-only model review (agent, no Lean): `RingClassLattice`
+- Verdict TRUE (orientation: TC's `adicOrd` gives a uniformizer order 1, so π_𝔭 ↦ 𝔭 and idealOf π_𝔭 = 𝔭 ∩ O;
+  invariant under principal ideles (both sides scale by k), archimedean part, and finite units of closure(O);
+  the conductor modulus is O.conductor with empty infinite part). Non-vacuous (ring-class quotient and picClass
+  surjective). No CM inside. Suggested route: Pic O ≅ Kˣ\𝔸_f^×/Ô^× via x_J, `mem_ker_ringClassIdeleQuotient_iff`,
+  `mem_ray_iff`, `ker_toFractionalIdeal`; auxiliary lemmas latHat O = O + f𝒪̂, K ∩ 𝒪̂ = 𝒪, valuation-vs-count;
+  estimate 500–1000 lines.
