@@ -20,3 +20,14 @@
 - `GenusRoute.genus_le_of_model : RiemannHurwitzQj → ∀ N > 0, IsX1Model N X → ∃ P, 2 g(K_N) + 1 ≤ N²`.
 - X0Transitive and GenusX1Field no longer used. Leaf: RiemannHurwitzQj (Stichtenoth 3.4.13 + 3.5.1,
   numbers UNVERIFIED). DimJacobianEqGenus: proved by dimjac-glue (other branch, not checked here).
+
+## Fold.lean — COMPILED (25 s, after `lake build ZInQKernel.Hypotheses.JHeight` for the upstream lean/ package),
+## no errors; axioms standard for t34Le_of_rh, javanpeykarJ1_of_le. VERIFIED.
+- Contents: GenusRoute.lean verbatim + `import ZInQKernel.OneProof.H.TailM` + namespace HDec.HSyn:
+  `DimJ1Le5` (DimJ1Le on OneProof copies), `dimJ1Le5_of_kernel`, `t34Le_of_rh : DimJacobianEqGenus →
+  RiemannHurwitzQj → DimJ1Le5`, `dimJ1Le5_of_t34`, `dim_J1_le_of5` (drop-in for TailD:236),
+  `G0Split.javanpeykarJ1_of_le (hR18) (hB) (h : DimJ1Le5) : JavanpeykarJ1` (drop-in for TailD:250);
+  `example … : javanpeykarJ1_of_le hR18 hB (dimJ1Le5_of_t34 t34) = javanpeykarJ1 hR18 hB t34 := rfl` compiles.
+## Verbatim checks (python substring test): VERIFIED True for the 6 copied CurveBij theorems and the whole
+## GenusBound namespace body (CurveSplit→GenusRoute); javanpeykarJ1_of_le differs from javanpeykarJ1 only in the
+## renamed `h'` and the line `obtain … := h N J hN hJ`.
