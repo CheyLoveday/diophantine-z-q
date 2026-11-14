@@ -69,3 +69,6 @@
   identity Σθ¹⁶ = (Σθ⁸)²/4), `QMThetaSymmetricCurve` (k = 3..9),
   `qmThetaSymmetricCore_of : ThetaEightSquare → QMThetaSymmetricCurve → QMThetaSymmetricCore`,
   `thetaPointOfFibre_of_qm_curve`. All 12 `#print axioms` = [propext, Classical.choice, Quot.sound].
+- Final state (VERIFIED, `lake env lean scratch/theta-split/ThetaUse.lean`: 0 errors, no sorryAx; 12
+  `#print axioms` lines all standard). Report docs/research/theta-split.md (§8 records two docstring
+  findings: TailE l.6521 "at a CM period matrix" is inaccurate; the Shimura 1976 citation is for CM points).
