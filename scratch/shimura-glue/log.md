@@ -49,3 +49,15 @@
   `deligneY3P : DeligneComponentsY3Printed`), `shimuraSplitLeaves_of_glue`, `rows_of_shimuraGlueLeaves`.
 - rowsglue_result.txt: 59 `#print axioms` lines, all [propext, Classical.choice, Quot.sound].
 - Deligne.lean recompiled after the change: deligne_result.txt, 0 errors, standard axioms.
+
+## Step 5: parts/MobiusNew.lean (in RowsGlue.lean, over TailK) — COMPILED, 0 errors; rowsglue_result.txt: 61
+## axiom lines, all [propext, Classical.choice, Quot.sound]
+- GLUE (named, not proved) `MobiusCompose`: for `π : ToP1 X.left` (X over ℚ) and `g ∈ GL₂(ℚ)` there is
+  `π'` with `π'.val x = g·π.val x` on ℚ̄-points (Mathlib's `OnePoint` GL₂-action).
+- `exists_mobius01`, `exists_mobiusBG` (three distinct points of P¹(ℚ) ↦ 0, ∞, −16/27), `smul_map_iff`,
+  `gJ_smul` (`j = 16(t−1)/27`).
+- LEAF `BabaGranathRational` (BG Thm 2.1 + Lemma 3.1 + §3.1 table, audit YES; no j-normalization: three
+  distinct rational CM values t₄, t₃, t₂₄, biconditional CM clauses).
+  `babaGranathX6'_of_rational : BabaGranathRational → MobiusCompose → BabaGranathX6'`.
+- LEAF `ElkiesConicT` (Elkies §3 in his coordinate t: t = 0, 1, ∞ at CM −24, −4, −3; conic model with
+  t = −X²/Z², `ConicModelT`). `elkiesConicX6_of_t : ElkiesConicT → MobiusCompose → ElkiesConicX6`.

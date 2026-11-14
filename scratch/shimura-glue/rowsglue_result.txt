@@ -57,7 +57,9 @@
 'ShimuraGlue.deligneComponentsX6_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.shimuraSplitLeaves_of_glue' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.QMSplit.Moduli.babaGranathX6'_of_rational' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.QMSplit.Moduli.elkiesConicX6_of_t' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-real	1m43.303s
-user	2m18.593s
-sys	0m3.637s
+real	1m42.319s
+user	2m16.758s
+sys	0m3.430s
