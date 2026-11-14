@@ -28,6 +28,11 @@ Contents.
    `GenusRoute`) `belyiGenusBound_of_rh : RiemannHurwitzQj → BelyiGenusBound` (the fundamental identity
    at `j = 0, 1728, ∞` is proved there from Mathlib).
 4. (new, proved) `dimJ1Le_of_rh_curve : DimJacobianEqGenus → RiemannHurwitzQj → DimJ1Le`.
+5. (new, proved; `GenusElem.lean` only) `dimJ1Le_of_localDerivation : DimJacobianEqGenus →
+   LocalDerivation → DimJ1Le`: the genus bound `g(K_N) ≤ [K_N : ℚ(j)]` from the local leaf
+   `LocalDerivation` (`d/dπ` preserves `𝒪_P` for a local parameter `π`), with no Riemann–Hurwitz:
+   holomorphic differentials are `h · dj` with `h` in an explicit space `V`, and `V` injects into
+   `OF / j·OF ≅ ℚ^d` (`OF` the integral closure of `ℚ[j]`).
 
 No `sorry`, no `axiom`. -/
 
@@ -1774,7 +1779,9 @@ open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
 section ElemLeaf
 
 /-- **Leaf: the derivative with respect to a local parameter preserves the valuation ring.**
-For `F` finite over `ℚ(j)`, a place `P` of `F/ℚ` and a local parameter `π` of `P` (`π ≠ 0`,
+For `F` finite over `ℚ(j)` with `ℚ` algebraically closed in `F` (Stichtenoth's standing
+assumption that `ℚ` is the full constant field), a place `P` of `F/ℚ` and a local parameter `π` of
+`P` (`π ≠ 0`,
 `π ∈ 𝔪_P`, every element of `𝔪_P` is `π · y` with `y ∈ 𝒪_P`), there is a derivation
 `δ = d/dπ : F → F` over `ℚ` with `δ π = 1` and `δ 𝒪_P ⊆ 𝒪_P`.
 Published: Stichtenoth, *Algebraic Function Fields and Codes*, §4.1 (the `t`-derivative `δ_t` for a
@@ -1783,8 +1790,8 @@ separating element `t`; a prime element of a place is separating, and `δ_t(𝒪
 `dπ` (`𝒪_P` is the local ring of a smooth curve over `ℚ` at a closed point: Hartshorne II.8.8 with
 II.8.7 and II.6.7, numbers UNVERIFIED), and `δ` is `dπ ↦ 1` extended to `F`. -/
 def LocalDerivation : Prop :=
-  ∀ (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F] (P : Place F)
-    (π : F), π ≠ 0 → π ∈ P.w.nonunits → (∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) →
+  ∀ (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F],
+    ConstantFieldIsQ F → ∀ (P : Place F) (π : F), π ≠ 0 → π ∈ P.w.nonunits → (∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) →
       ∃ δ : Derivation ℚ F F, δ π = 1 ∧ ∀ x ∈ P.w, δ x ∈ P.w
 
 /-- **The genus bound for Belyi functions in the weak form the proof needs**:
@@ -1955,7 +1962,7 @@ theorem sF_ne_zero : (sF : F) ≠ 0 := by
 /-- **The local conditions (proved).** If `h • ds` is regular at every place, then
 `h s (s − 1728)` lies in every place containing `s`, and `h (s − 1728) ∈ 𝔪_P` at every place not
 containing `s`. -/
-theorem local_conditions (hL : LocalDerivation) (hB : IsBelyiFunction ℚ F (tF : F)) (h : F)
+theorem local_conditions (hL : LocalDerivation) (hK : ConstantFieldIsQ F) (hB : IsBelyiFunction ℚ F (tF : F)) (h : F)
     (hω : ∀ P : Place F, h • KaehlerDifferential.D ℚ F (sF : F) ∈ regularAt F P.w) :
     (∀ P : Place F, (sF : F) ∈ P.w →
         h * ((sF : F) * ((sF : F) - algebraMap ℚ F 1728)) ∈ P.w) ∧
@@ -1975,7 +1982,7 @@ theorem local_conditions (hL : LocalDerivation) (hB : IsBelyiFunction ℚ F (tF 
     · -- over `j = 0`
       obtain ⟨π, hπ, hπu, hdvr⟩ := exists_uniformizer_all P
       obtain ⟨hπn, hπd⟩ := localParam_of P hπ hπu hdvr
-      obtain ⟨δ, hδπ, hδ⟩ := hL F P π π.ne_zero hπn hπd
+      obtain ⟨δ, hδπ, hδ⟩ := hL F hK P π π.ne_zero hπn hπd
       obtain ⟨u, m, hu, hsu⟩ := decomp_nonunit P hπ hπu hdvr sF_ne_zero h0
       obtain ⟨c, hc0, hcw, hciw, hδs⟩ := deriv_unit_pow P δ hδ hπn hδπ hu m
       have hk := key P π δ hδπ hδ
@@ -1991,7 +1998,7 @@ theorem local_conditions (hL : LocalDerivation) (hB : IsBelyiFunction ℚ F (tF 
     · -- over `j = 1728`
       obtain ⟨π, hπ, hπu, hdvr⟩ := exists_uniformizer_all P
       obtain ⟨hπn, hπd⟩ := localParam_of P hπ hπu hdvr
-      obtain ⟨δ, hδπ, hδ⟩ := hL F P π π.ne_zero hπn hπd
+      obtain ⟨δ, hδπ, hδ⟩ := hL F hK P π π.ne_zero hπn hπd
       obtain ⟨u, m, hu, hsu⟩ := decomp_nonunit P hπ hπu hdvr sF_sub_ne_zero h1
       obtain ⟨c, hc0, hcw, hciw, hδs⟩ := deriv_unit_pow P δ hδ hπn hδπ hu m
       have hk := key P π δ hδπ hδ
@@ -2025,7 +2032,7 @@ theorem local_conditions (hL : LocalDerivation) (hB : IsBelyiFunction ℚ F (tF 
         exact mul_mem_nonunits P.w (P.rat_mem _) hqI'
       have hgen := hB.2 P.w P.rat_mem ht q hqm hqi hX hX1 hqI'
       have hq0 : Polynomial.aeval (tF : F) q ≠ 0 := fun h0' => hB.1 ⟨q, hqm.ne_zero, h0'⟩
-      obtain ⟨δ, hδπ, hδ⟩ := hL F P _ hq0 hqI' hgen
+      obtain ⟨δ, hδπ, hδ⟩ := hL F hK P _ hq0 hqI' hgen
       have hk := key P _ δ hδπ hδ
       -- `δ(q(t)) = q'(t) δ t = 1`
       have hdq : Polynomial.aeval (tF : F) (Polynomial.derivative q) * δ (tF : F) = 1 := by
@@ -2053,7 +2060,7 @@ theorem local_conditions (hL : LocalDerivation) (hB : IsBelyiFunction ℚ F (tF 
     have hzw : (sF : F)⁻¹ ∈ P.w := (P.w.mem_or_inv_mem _).resolve_left hs
     obtain ⟨π, hπ, hπu, hdvr⟩ := exists_uniformizer_all P
     obtain ⟨hπn, hπd⟩ := localParam_of P hπ hπu hdvr
-    obtain ⟨δ, hδπ, hδ⟩ := hL F P π π.ne_zero hπn hπd
+    obtain ⟨δ, hδπ, hδ⟩ := hL F hK P π π.ne_zero hπn hπd
     obtain ⟨u, m, hu, hzu⟩ := decomp_nonunit P hπ hπu hdvr (inv_ne_zero sF_ne_zero) hz
     obtain ⟨c, hc0, hcw, hciw, hδz⟩ := deriv_unit_pow P δ hδ hπn hδπ hu m
     have hk := key P π δ hδπ hδ
@@ -2324,7 +2331,7 @@ theorem genus_le_finrank (hL : LocalDerivation) (hK : ConstantFieldIsQ F)
   have hsub : holoDiff F ≤ (Vspace F).map φ := by
     refine Submodule.span_le.mpr fun ω hω => ?_
     obtain ⟨h, rfl⟩ := Submodule.mem_span_singleton.mp (mem_span_D_sF ω)
-    exact ⟨h, local_conditions hL hB h (fun P => hω P.w P.rat_mem), rfl⟩
+    exact ⟨h, local_conditions hL hK hB h (fun P => hω P.w P.rat_mem), rfl⟩
   haveI : Module.Finite ℚ ((Vspace F).map φ) := Module.Finite.map _ _
   calc fieldGenus F = Module.finrank ℚ (holoDiff F) := rfl
     _ ≤ Module.finrank ℚ ((Vspace F).map φ) := Submodule.finrank_mono hsub
@@ -2354,5 +2361,10 @@ end GenusRoute
 
 end
 
+#print axioms GenusRoute.constantFieldIsQ_of_curve
+#print axioms GenusRoute.belyiGenusBound_of_rh
+#print axioms GenusRoute.fundamentalIdentityQj
+#print axioms GenusRoute.dimJ1Le_of_rh_curve
+#print axioms GenusRoute.genus_le_of_model
 #print axioms GenusRoute.genusLeDegree_of_localDerivation
 #print axioms GenusRoute.dimJ1Le_of_localDerivation

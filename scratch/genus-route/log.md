@@ -31,3 +31,18 @@
 ## Verbatim checks (python substring test): VERIFIED True for the 6 copied CurveBij theorems and the whole
 ## GenusBound namespace body (CurveSplit→GenusRoute); javanpeykarJ1_of_le differs from javanpeykarJ1 only in the
 ## renamed `h'` and the line `obtain … := h N J hN hJ`.
+
+## GenusElem.lean — COMPILED, no errors, all #print axioms standard. VERIFIED.
+- New leaf `GenusRoute.LocalDerivation`: F finite over ℚ(j), ConstantFieldIsQ F, P a place, π a local
+  parameter (π ≠ 0, π ∈ 𝔪_P, 𝔪_P = π·𝒪_P) ⇒ ∃ δ : Derivation ℚ F F, δ π = 1 ∧ δ 𝒪_P ⊆ 𝒪_P.
+  Source: Stichtenoth §4.1 (δ_t for a prime element t preserves 𝒪_P; Prop. 4.1.8, UNVERIFIED number);
+  equivalently Ω_{𝒪_P/ℚ} free on dπ (Hartshorne II.8, UNVERIFIED numbers).
+- `genusLeDegree_of_localDerivation : LocalDerivation → GenusLeDegree` (g(F) ≤ [F:ℚ(j)] for F with
+  constant field ℚ and Belyi t). Proof pieces (all compiled): mem_span_D_sF (Ω_{F/ℚ} = F·dj via
+  range_mapBaseChange + FormallyUnramified), deriv_unit_pow, decomp_nonunit, localParam_of,
+  exists_uniformizer_all (twist for ∞), lift_mem_of_regularAt, local_conditions (h·dj holomorphic ⇒ h ∈ V),
+  Vspace, mem_rat_of_all_places (Stacks 090P in Mathlib), exists_place_inf (FI at ∞), mem_OF_of_places
+  (mem_integers_of_valuation_le_one), finrank_Vspace_le (V ↪ OF/j·OF ≅ ℚ^d by a ℚ[j]-basis of OF).
+- `dimJ1Le_of_localDerivation : DimJacobianEqGenus → LocalDerivation → DimJ1Le`.
+- No Riemann–Hurwitz, no identification of fieldGenus with another genus, no X0Transitive, no GenusX1Field.
+## Fold.lean regenerated on GenusElem — COMPILED; adds `HDec.HSyn.t34Le_of_localDerivation`. VERIFIED.

@@ -7,13 +7,13 @@ import ZInQKernel.Contrib.Dim.SmoothStalk
 import ZInQKernel.Contrib.SmoothFibre.Basic
 import ZInQKernel.OneProof.H.TailM
 
-/-! # genus-route (fold form): `GenusRoute.lean` verbatim, plus drop-in replacements for the two uses of `t34`
+/-! # genus-route (fold form): `GenusElem.lean` verbatim, plus drop-in replacements for the two uses of `t34`
 
 The last section (namespace `HDec.HSyn`) restates `DimJ1Le` on the OneProof copies (`DimJ1Le5`) and gives
-`t34Le_of_rh`, `dim_J1_le_of5` and `G0Split.javanpeykarJ1_of_le`, which a fold can use at
-`TailD.lean:236` and `:250` in place of `LeafModCurves.dim_J1_le t.t34` and `javanpeykarJ1 hR18 hBelyi t.t34`.
+`t34Le_of_localDerivation`, `t34Le_of_rh`, `dim_J1_le_of5` and `G0Split.javanpeykarJ1_of_le`, which a fold can
+use at `TailD.lean:236` and `:250` in place of `LeafModCurves.dim_J1_le t.t34` and `javanpeykarJ1 hR18 hBelyi t.t34`.
 
-## `GenusRoute.lean`: `dim J₁(N) ≤ N²` without `GenusX1Field` and without `X0Transitive`
+## `GenusElem.lean`: `dim J₁(N) ≤ N²` without `GenusX1Field` and without `X0Transitive`
 
 The single proof uses T34 (`DimJ1Genus`, assembled from `DimJacobianEqGenus` and `GenusX1Field`) only
 through `LeafModCurves.dim_J1_le` (`dim J₁(N) ≤ N²`), at its two consumers (TailD E2 and
@@ -35,6 +35,11 @@ Contents.
    `GenusRoute`) `belyiGenusBound_of_rh : RiemannHurwitzQj → BelyiGenusBound` (the fundamental identity
    at `j = 0, 1728, ∞` is proved there from Mathlib).
 4. (new, proved) `dimJ1Le_of_rh_curve : DimJacobianEqGenus → RiemannHurwitzQj → DimJ1Le`.
+5. (new, proved; `GenusElem.lean` only) `dimJ1Le_of_localDerivation : DimJacobianEqGenus →
+   LocalDerivation → DimJ1Le`: the genus bound `g(K_N) ≤ [K_N : ℚ(j)]` from the local leaf
+   `LocalDerivation` (`d/dπ` preserves `𝒪_P` for a local parameter `π`), with no Riemann–Hurwitz:
+   holomorphic differentials are `h · dj` with `h` in an explicit space `V`, and `V` injects into
+   `OF / j·OF ≅ ℚ^d` (`OF` the integral closure of `ℚ[j]`).
 
 No `sorry`, no `axiom`. -/
 
@@ -1768,6 +1773,599 @@ theorem genus_le_of_model (hRH : RiemannHurwitzQj) (N : ℕ) (hN : 0 < N) (X : O
 
 end GenusRoute
 
+/-! ## An elementary genus bound: `g(F) ≤ [F : ℚ(j)]` for a Belyi function, without Riemann–Hurwitz
+
+`fieldGenus F` is bounded by an explicit injection, using only the leaf `LocalDerivation` (the
+derivative with respect to a local parameter preserves the valuation ring). No Riemann–Roch, no
+Riemann–Hurwitz, no identification of `fieldGenus` with another genus. -/
+
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section ElemLeaf
+
+/-- **Leaf: the derivative with respect to a local parameter preserves the valuation ring.**
+For `F` finite over `ℚ(j)` with `ℚ` algebraically closed in `F` (Stichtenoth's standing
+assumption that `ℚ` is the full constant field), a place `P` of `F/ℚ` and a local parameter `π` of
+`P` (`π ≠ 0`,
+`π ∈ 𝔪_P`, every element of `𝔪_P` is `π · y` with `y ∈ 𝒪_P`), there is a derivation
+`δ = d/dπ : F → F` over `ℚ` with `δ π = 1` and `δ 𝒪_P ⊆ 𝒪_P`.
+Published: Stichtenoth, *Algebraic Function Fields and Codes*, §4.1 (the `t`-derivative `δ_t` for a
+separating element `t`; a prime element of a place is separating, and `δ_t(𝒪_P) ⊆ 𝒪_P` for a
+`P`-prime element `t`), Prop. 4.1.8 (number UNVERIFIED); equivalently, `Ω_{𝒪_P/ℚ}` is free with basis
+`dπ` (`𝒪_P` is the local ring of a smooth curve over `ℚ` at a closed point: Hartshorne II.8.8 with
+II.8.7 and II.6.7, numbers UNVERIFIED), and `δ` is `dπ ↦ 1` extended to `F`. -/
+def LocalDerivation : Prop :=
+  ∀ (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F],
+    ConstantFieldIsQ F → ∀ (P : Place F) (π : F), π ≠ 0 → π ∈ P.w.nonunits → (∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) →
+      ∃ δ : Derivation ℚ F F, δ π = 1 ∧ ∀ x ∈ P.w, δ x ∈ P.w
+
+/-- **The genus bound for Belyi functions in the weak form the proof needs**:
+`g(F) ≤ [F : ℚ(j)]` (proved below from `LocalDerivation`). -/
+def GenusLeDegree : Prop :=
+  ∀ (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F],
+    ConstantFieldIsQ F → IsBelyiFunction ℚ F (algebraMap Qj F (RatFunc.X / 1728)) →
+      fieldGenus F ≤ Module.finrank Qj F
+
+end ElemLeaf
+
+section ElemVal
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F]
+
+/-- Nonzero rationals are units at every place. -/
+theorem val_rat (P : Place F) {c : ℚ} (hc : c ≠ 0) : P.w.valuation (algebraMap ℚ F c) = 1 := by
+  have h1 : P.w.valuation (algebraMap ℚ F c) ≤ 1 := (P.w.valuation_le_one_iff _).2 (P.rat_mem c)
+  have h2 : P.w.valuation (algebraMap ℚ F c⁻¹) ≤ 1 := (P.w.valuation_le_one_iff _).2 (P.rat_mem _)
+  have h3 : P.w.valuation (algebraMap ℚ F c) * P.w.valuation (algebraMap ℚ F c⁻¹) = 1 := by
+    rw [← map_mul, ← map_mul, mul_inv_cancel₀ hc, map_one, map_one]
+  refine le_antisymm h1 ?_
+  calc (1 : P.w.ValueGroup) = _ := h3.symm
+    _ ≤ P.w.valuation (algebraMap ℚ F c) * 1 := mul_le_mul_right h2 _
+    _ = _ := mul_one _
+
+/-- **Derivative of `u π^(m+1)` (proved).** For a derivation `δ` preserving `𝒪_P` with `δ π = 1`,
+`π ∈ 𝔪_P`, and a unit `u` of `𝒪_P`: `δ(u π^(m+1)) = π^m c` with `c` a unit of `𝒪_P` (in
+characteristic `0`, `c = π δu + (m+1) u`). -/
+theorem deriv_unit_pow (P : Place F) (δ : Derivation ℚ F F) (hδ : ∀ x ∈ P.w, δ x ∈ P.w) {π : F}
+    (hπ : π ∈ P.w.nonunits) (hδπ : δ π = 1) {u : F} (hu : P.w.valuation u = 1) (m : ℕ) :
+    ∃ c : F, c ≠ 0 ∧ c ∈ P.w ∧ c⁻¹ ∈ P.w ∧ δ (u * π ^ (m + 1)) = π ^ m * c := by
+  have huw : u ∈ P.w := (P.w.valuation_le_one_iff u).1 hu.le
+  set c : F := π * δ u + (algebraMap ℚ F ((m : ℚ) + 1)) * u with hc
+  have hval : P.w.valuation c = 1 := by
+    have hlt : P.w.valuation (π * δ u) < P.w.valuation (algebraMap ℚ F ((m : ℚ) + 1) * u) := by
+      rw [map_mul, map_mul, val_rat P (by positivity), hu, one_mul]
+      calc P.w.valuation π * P.w.valuation (δ u) ≤ P.w.valuation π * 1 :=
+            mul_le_mul_right ((P.w.valuation_le_one_iff _).2 (hδ u huw)) _
+        _ = P.w.valuation π := mul_one _
+        _ < 1 := P.w.mem_nonunits_iff.mp hπ
+    rw [hc, Valuation.map_add_eq_of_lt_right _ hlt, map_mul, val_rat P (by positivity), hu, one_mul]
+  have hc0 : c ≠ 0 := by
+    intro h; rw [h, map_zero] at hval; exact zero_ne_one hval
+  refine ⟨c, hc0, (P.w.valuation_le_one_iff c).1 hval.le, (P.w.valuation_le_one_iff _).1 ?_, ?_⟩
+  · rw [map_inv₀, hval, inv_one]
+  · rw [Derivation.leibniz, Derivation.leibniz_pow, hδπ, hc]
+    simp only [smul_eq_mul, nsmul_eq_mul, mul_one, Nat.add_sub_cancel, map_add, map_natCast,
+      map_one, Nat.cast_add, Nat.cast_one]
+    ring
+
+/-- **Decomposition at a uniformizer (proved).** A nonzero `z ∈ 𝔪_P` is `u π^(m+1)` with `u` a unit,
+for a uniformizer `π` in the form of `exists_uniformizer`. -/
+theorem decomp_nonunit (P : Place F) {π : Fˣ} (hπ : (π : F) ∈ P.w) (hπu : π ∉ P.w.unitGroup)
+    (hdvr : ∀ x : Fˣ, ∃ n : ℤ, x * π ^ (-n) ∈ P.w.unitGroup) {z : F} (hz0 : z ≠ 0)
+    (hz : z ∈ P.w.nonunits) :
+    ∃ (u : F) (m : ℕ), P.w.valuation u = 1 ∧ z = u * (π : F) ^ (m + 1) := by
+  have hvπ1 : P.w.valuation (π : F) ≤ 1 := (P.w.valuation_le_one_iff _).2 hπ
+  have hvπ : P.w.valuation (π : F) < 1 :=
+    lt_of_le_of_ne hvπ1 (fun h => hπu ((P.w.mem_unitGroup_iff π).2 h))
+  obtain ⟨n, hn⟩ := hdvr (Units.mk0 z hz0)
+  rw [ValuationSubring.mem_unitGroup_iff] at hn
+  have hπ0 : (π : F) ≠ 0 := π.ne_zero
+  have hvz : P.w.valuation z < 1 := P.w.mem_nonunits_iff.mp hz
+  -- `n ≥ 1`
+  have hn1 : 1 ≤ n := by
+    by_contra hlt
+    push Not at hlt
+    obtain ⟨k, hk⟩ : ∃ k : ℕ, -n = k := ⟨(-n).toNat, (Int.toNat_of_nonneg (by omega)).symm⟩
+    have hval : P.w.valuation z * P.w.valuation (π : F) ^ k = 1 := by
+      have := hn
+      simp only [Units.val_mul, Units.val_mk0, Units.val_zpow_eq_zpow_val, hk, zpow_natCast,
+        Units.val_pow_eq_pow_val, map_mul, map_pow] at this
+      exact this
+    have : P.w.valuation z * P.w.valuation (π : F) ^ k < 1 := by
+      calc P.w.valuation z * P.w.valuation (π : F) ^ k ≤ P.w.valuation z * 1 :=
+            mul_le_mul_right (pow_le_one' hvπ1 k) _
+        _ = P.w.valuation z := mul_one _
+        _ < 1 := hvz
+    rw [hval] at this
+    exact lt_irrefl _ this
+  obtain ⟨m, hm⟩ : ∃ m : ℕ, n = (m : ℤ) + 1 := ⟨(n - 1).toNat, by omega⟩
+  refine ⟨z * ((π : F) ^ (m + 1))⁻¹, m, ?_, ?_⟩
+  · have := hn
+    simp only [Units.val_mul, Units.val_mk0, Units.val_zpow_eq_zpow_val, hm] at this
+    rwa [neg_add, zpow_add₀ hπ0, zpow_neg, zpow_neg, zpow_natCast, zpow_one, ← mul_inv,
+      ← pow_succ] at this
+  · field_simp
+
+/-- The leaf's local-parameter conditions for a uniformizer in the form of `exists_uniformizer`. -/
+theorem localParam_of (P : Place F) {π : Fˣ} (hπ : (π : F) ∈ P.w) (hπu : π ∉ P.w.unitGroup)
+    (hdvr : ∀ x : Fˣ, ∃ n : ℤ, x * π ^ (-n) ∈ P.w.unitGroup) :
+    (π : F) ∈ P.w.nonunits ∧ ∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = (π : F) * y := by
+  have hvπ1 : P.w.valuation (π : F) ≤ 1 := (P.w.valuation_le_one_iff _).2 hπ
+  have hvπ : P.w.valuation (π : F) < 1 :=
+    lt_of_le_of_ne hvπ1 (fun h => hπu ((P.w.mem_unitGroup_iff π).2 h))
+  refine ⟨P.w.mem_nonunits_iff.mpr hvπ, fun x hx => ?_⟩
+  by_cases hx0 : x = 0
+  · exact ⟨0, P.w.zero_mem, by rw [hx0, mul_zero]⟩
+  obtain ⟨u, m, hu, rfl⟩ := decomp_nonunit P hπ hπu hdvr hx0 hx
+  refine ⟨u * (π : F) ^ m, Subring.mul_mem _ ((P.w.valuation_le_one_iff u).1 hu.le)
+    (Subring.pow_mem _ hπ m), by ring⟩
+
+end ElemVal
+
+section ElemMain
+
+open IsDedekindDomain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+attribute [local instance] isDedekind_intCl isFractionRing_intCl
+
+local notation "OF" => integralClosure (Polynomial ℚ) F
+
+/-- **Every place has a uniformizer (proved)**: `exists_uniformizer` at places containing `t`, and for
+the twisted structure `j ↦ 1/j` at the others. -/
+theorem exists_uniformizer_all (P : Place F) :
+    ∃ π : Fˣ, (π : F) ∈ P.w ∧ π ∉ P.w.unitGroup ∧
+      ∀ x : Fˣ, ∃ n : ℤ, x * π ^ (-n) ∈ P.w.unitGroup := by
+  by_cases ht : (tF : F) ∈ P.w
+  · exact exists_uniformizer P ht
+  · haveI := twist_finiteDimensional (F := F)
+    refine @exists_uniformizer F _ (twistAlg (F := F)) _ twist_finiteDimensional P ?_
+    have hs : (sF : F) ∉ P.w := by
+      intro hs; apply ht; rw [tF_eq_mul]; exact Subring.mul_mem _ (P.rat_mem _) hs
+    have hinv : (sF : F)⁻¹ ∈ P.w := (P.w.mem_or_inv_mem _).resolve_left hs
+    have : @tF F _ (twistAlg (F := F)) = algebraMap ℚ F (1 / 1728) * (sF : F)⁻¹ := by
+      rw [@tF_eq_mul F _ (twistAlg (F := F)), sF_twist]
+    rw [this]
+    exact Subring.mul_mem _ (P.rat_mem _) hinv
+
+omit [Algebra (Polynomial ℚ) F] [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F] in
+/-- `D_P`: a derivation preserving `𝒪_P` maps the differentials regular at `P` into `𝒪_P`. -/
+theorem lift_mem_of_regularAt (P : Place F) (δ : Derivation ℚ F F) (hδ : ∀ x ∈ P.w, δ x ∈ P.w)
+    {ω : Ω[F⁄ℚ]} (hω : ω ∈ regularAt F P.w) : δ.liftKaehlerDifferential ω ∈ P.w := by
+  induction hω using AddSubgroup.closure_induction with
+  | mem x hx =>
+    obtain ⟨a, b, ha, hb, rfl⟩ := hx
+    rw [map_smul, Derivation.liftKaehlerDifferential_comp_D, smul_eq_mul]
+    exact Subring.mul_mem _ ha (hδ b hb)
+  | zero => rw [map_zero]; exact P.w.zero_mem
+  | add x y _ _ hx hy => rw [map_add]; exact Subring.add_mem _ hx hy
+  | neg x _ hx => rw [map_neg]; exact Subring.neg_mem _ hx
+
+omit [Algebra (Polynomial ℚ) F] [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F] in
+theorem sF_eq_mul : (sF : F) = algebraMap ℚ F 1728 * (tF : F) := by
+  rw [tF_eq_mul, ← mul_assoc, ← map_mul]; norm_num
+
+omit [Algebra (Polynomial ℚ) F] [IsScalarTower (Polynomial ℚ) Qj F] in
+/-- `s − 1728 ≠ 0` in `F`. -/
+theorem sF_sub_ne_zero : (sF : F) - algebraMap ℚ F 1728 ≠ 0 := by
+  intro h
+  have h' : algebraMap Qj F (RatFunc.X - algebraMap ℚ Qj 1728) = 0 := by
+    rw [map_sub, ← RingHom.comp_apply, algebraMap_rat_comp]; exact h
+  rw [map_eq_zero_iff _ (algebraMap Qj F).injective, sub_eq_zero, map_ofNat] at h'
+  apply RatFunc.transcendental_X (K := ℚ)
+  refine ⟨Polynomial.X - Polynomial.C 1728, Polynomial.X_sub_C_ne_zero _, ?_⟩
+  simp [h']
+
+omit [Algebra (Polynomial ℚ) F] [IsScalarTower (Polynomial ℚ) Qj F] in
+theorem sF_ne_zero : (sF : F) ≠ 0 := by
+  intro h
+  rw [sF, map_eq_zero_iff _ (algebraMap Qj F).injective] at h
+  exact RatFunc.X_ne_zero h
+
+/-- **The local conditions (proved).** If `h • ds` is regular at every place, then
+`h s (s − 1728)` lies in every place containing `s`, and `h (s − 1728) ∈ 𝔪_P` at every place not
+containing `s`. -/
+theorem local_conditions (hL : LocalDerivation) (hK : ConstantFieldIsQ F) (hB : IsBelyiFunction ℚ F (tF : F)) (h : F)
+    (hω : ∀ P : Place F, h • KaehlerDifferential.D ℚ F (sF : F) ∈ regularAt F P.w) :
+    (∀ P : Place F, (sF : F) ∈ P.w →
+        h * ((sF : F) * ((sF : F) - algebraMap ℚ F 1728)) ∈ P.w) ∧
+      (∀ P : Place F, (sF : F) ∉ P.w → h * ((sF : F) - algebraMap ℚ F 1728) ∈ P.w.nonunits) := by
+  have key : ∀ (P : Place F) (π : F) (δ : Derivation ℚ F F), δ π = 1 → (∀ x ∈ P.w, δ x ∈ P.w) →
+      h * δ (sF : F) ∈ P.w := by
+    intro P π δ _ hδ
+    have := lift_mem_of_regularAt P δ hδ (hω P)
+    rwa [map_smul, Derivation.liftKaehlerDifferential_comp_D, smul_eq_mul] at this
+  have h1728 : ∀ (δ : Derivation ℚ F F), δ ((sF : F) - algebraMap ℚ F 1728) = δ (sF : F) := by
+    intro δ; rw [map_sub, Derivation.map_algebraMap, sub_zero]
+  constructor
+  · intro P hs
+    have hs1728 : (sF : F) - algebraMap ℚ F 1728 ∈ P.w := Subring.sub_mem _ hs (P.rat_mem _)
+    -- the three cases at a finite place
+    by_cases h0 : (sF : F) ∈ P.w.nonunits
+    · -- over `j = 0`
+      obtain ⟨π, hπ, hπu, hdvr⟩ := exists_uniformizer_all P
+      obtain ⟨hπn, hπd⟩ := localParam_of P hπ hπu hdvr
+      obtain ⟨δ, hδπ, hδ⟩ := hL F hK P π π.ne_zero hπn hπd
+      obtain ⟨u, m, hu, hsu⟩ := decomp_nonunit P hπ hπu hdvr sF_ne_zero h0
+      obtain ⟨c, hc0, hcw, hciw, hδs⟩ := deriv_unit_pow P δ hδ hπn hδπ hu m
+      have hk := key P π δ hδπ hδ
+      rw [hsu, hδs] at hk
+      have huw : u ∈ P.w := (P.w.valuation_le_one_iff u).1 hu.le
+      have heq : h * ((sF : F) * ((sF : F) - algebraMap ℚ F 1728)) =
+          (h * ((π : F) ^ m * c)) * ((π : F) * u * c⁻¹) * ((sF : F) - algebraMap ℚ F 1728) := by
+        rw [hsu]; field_simp; ring
+      rw [heq]
+      exact Subring.mul_mem _ (Subring.mul_mem _ hk
+        (Subring.mul_mem _ (Subring.mul_mem _ hπ huw) hciw)) hs1728
+    by_cases h1 : (sF : F) - algebraMap ℚ F 1728 ∈ P.w.nonunits
+    · -- over `j = 1728`
+      obtain ⟨π, hπ, hπu, hdvr⟩ := exists_uniformizer_all P
+      obtain ⟨hπn, hπd⟩ := localParam_of P hπ hπu hdvr
+      obtain ⟨δ, hδπ, hδ⟩ := hL F hK P π π.ne_zero hπn hπd
+      obtain ⟨u, m, hu, hsu⟩ := decomp_nonunit P hπ hπu hdvr sF_sub_ne_zero h1
+      obtain ⟨c, hc0, hcw, hciw, hδs⟩ := deriv_unit_pow P δ hδ hπn hδπ hu m
+      have hk := key P π δ hδπ hδ
+      rw [← h1728 δ, hsu, hδs] at hk
+      have huw : u ∈ P.w := (P.w.valuation_le_one_iff u).1 hu.le
+      have heq : h * ((sF : F) * ((sF : F) - algebraMap ℚ F 1728)) =
+          (h * ((π : F) ^ m * c)) * ((π : F) * u * c⁻¹) * (sF : F) := by
+        rw [hsu]; field_simp; ring
+      rw [heq]
+      exact Subring.mul_mem _ (Subring.mul_mem _ hk
+        (Subring.mul_mem _ (Subring.mul_mem _ hπ huw) hciw)) hs
+    · -- unramified: the Belyi property gives a uniformizer `q(t)`
+      have ht : (tF : F) ∈ P.w := by
+        rw [tF_eq_mul]; exact Subring.mul_mem _ (P.rat_mem _) hs
+      have hpr := polyIdeal_isPrime P ht
+      obtain ⟨q, hqm, hqi, hqI⟩ := exists_monic_irreducible_mem (polyIdeal P ht)
+        (polyIdeal_ne_bot P ht hB.1)
+      have hqI' : Polynomial.aeval (tF : F) q ∈ P.w.nonunits := hqI
+      have hX : q ≠ Polynomial.X := by
+        rintro rfl
+        rw [Polynomial.aeval_X] at hqI'
+        apply h0
+        rw [sF_eq_mul]
+        exact mul_mem_nonunits P.w (P.rat_mem _) hqI'
+      have hX1 : q ≠ Polynomial.X - 1 := by
+        rintro rfl
+        rw [map_sub, Polynomial.aeval_X, map_one] at hqI'
+        apply h1
+        rw [sF_eq_mul, show algebraMap ℚ F 1728 * (tF : F) - algebraMap ℚ F 1728 =
+          algebraMap ℚ F 1728 * ((tF : F) - 1) by ring]
+        exact mul_mem_nonunits P.w (P.rat_mem _) hqI'
+      have hgen := hB.2 P.w P.rat_mem ht q hqm hqi hX hX1 hqI'
+      have hq0 : Polynomial.aeval (tF : F) q ≠ 0 := fun h0' => hB.1 ⟨q, hqm.ne_zero, h0'⟩
+      obtain ⟨δ, hδπ, hδ⟩ := hL F hK P _ hq0 hqI' hgen
+      have hk := key P _ δ hδπ hδ
+      -- `δ(q(t)) = q'(t) δ t = 1`
+      have hdq : Polynomial.aeval (tF : F) (Polynomial.derivative q) * δ (tF : F) = 1 := by
+        rw [← hδπ, Derivation.map_aeval, smul_eq_mul]
+      have hds : δ (sF : F) = algebraMap ℚ F 1728 * δ (tF : F) := by
+        rw [sF_eq_mul, Derivation.leibniz, Derivation.map_algebraMap, smul_zero, add_zero,
+          smul_eq_mul]
+      have hq'w : Polynomial.aeval (tF : F) (Polynomial.derivative q) ∈ P.w := aeval_mem P ht _
+      have hh : h ∈ P.w := by
+        have heq : h = (h * δ (sF : F)) * (Polynomial.aeval (tF : F) (Polynomial.derivative q) *
+            algebraMap ℚ F (1 / 1728)) := by
+          rw [hds]
+          have h1728ne : algebraMap ℚ F 1728 * algebraMap ℚ F (1 / 1728) = 1 := by
+            rw [← map_mul]; norm_num
+          calc h = h * (Polynomial.aeval (tF : F) (Polynomial.derivative q) * δ (tF : F)) *
+                (algebraMap ℚ F 1728 * algebraMap ℚ F (1 / 1728)) := by rw [hdq, h1728ne]; ring
+            _ = _ := by ring
+        rw [heq]
+        exact Subring.mul_mem _ hk (Subring.mul_mem _ hq'w (P.rat_mem _))
+      exact Subring.mul_mem _ hh (Subring.mul_mem _ hs hs1728)
+  · -- at infinity: `z = 1/(sF : F) ∈ 𝔪_P`
+    intro P hs
+    have hz : (sF : F)⁻¹ ∈ P.w.nonunits :=
+      P.w.inv_mem_nonunits_iff.mpr (Or.inr hs)
+    have hzw : (sF : F)⁻¹ ∈ P.w := (P.w.mem_or_inv_mem _).resolve_left hs
+    obtain ⟨π, hπ, hπu, hdvr⟩ := exists_uniformizer_all P
+    obtain ⟨hπn, hπd⟩ := localParam_of P hπ hπu hdvr
+    obtain ⟨δ, hδπ, hδ⟩ := hL F hK P π π.ne_zero hπn hπd
+    obtain ⟨u, m, hu, hzu⟩ := decomp_nonunit P hπ hπu hdvr (inv_ne_zero sF_ne_zero) hz
+    obtain ⟨c, hc0, hcw, hciw, hδz⟩ := deriv_unit_pow P δ hδ hπn hδπ hu m
+    have hk := key P π δ hδπ hδ
+    have hs0 : (sF : F) ≠ 0 := sF_ne_zero
+    have hδs : δ (sF : F) = -((sF : F) ^ 2) * δ (sF : F)⁻¹ := by
+      rw [Derivation.leibniz_inv, smul_eq_mul]; field_simp
+    have hu0 : u ≠ 0 := by intro h0; rw [h0, map_zero] at hu; exact zero_ne_one hu
+    have hπ0 : (π : F) ≠ 0 := π.ne_zero
+    have huw : u ∈ P.w := (P.w.valuation_le_one_iff u).1 hu.le
+    have heq : h * ((sF : F) - algebraMap ℚ F 1728) =
+        (h * δ (sF : F)) * (-(π : F) * u * (1 - algebraMap ℚ F 1728 * (sF : F)⁻¹) * c⁻¹) := by
+      have hs' : (sF : F) = (u * (π : F) ^ (m + 1))⁻¹ := by rw [← hzu, inv_inv]
+      rw [hδs, hzu, hδz, hs']
+      field_simp
+      ring
+    rw [heq]
+    refine mul_mem_nonunits P.w hk ?_
+    have h' : -(π : F) * u * (1 - algebraMap ℚ F 1728 * (sF : F)⁻¹) * c⁻¹ =
+        (-(u * (1 - algebraMap ℚ F 1728 * (sF : F)⁻¹) * c⁻¹)) * (π : F) := by ring
+    rw [h']
+    refine mul_mem_nonunits P.w ?_ hπn
+    refine Subring.neg_mem _ (Subring.mul_mem _ (Subring.mul_mem _ huw ?_) hciw)
+    exact Subring.sub_mem _ P.w.one_mem (Subring.mul_mem _ (P.rat_mem _) hzw)
+
+end ElemMain
+
+end GenusRoute
+
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section ElemDiff
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F]
+
+omit [FiniteDimensional Qj F] in
+/-- `d(a) ∈ F · ds` for `a ∈ ℚ(j)` (quotient rule). -/
+theorem D_algebraMap_mem_span (a : Qj) :
+    KaehlerDifferential.D ℚ F (algebraMap Qj F a) ∈
+      Submodule.span F {KaehlerDifferential.D ℚ F (sF : F)} := by
+  obtain ⟨p, q, hq, rfl⟩ := IsFractionRing.div_surjective (A := Polynomial ℚ) a
+  have hp : ∀ r : Polynomial ℚ,
+      algebraMap Qj F (algebraMap (Polynomial ℚ) Qj r) = Polynomial.aeval (sF : F) r := by
+    intro r
+    have h2 : (algebraMap Qj F).comp (algebraMap (Polynomial ℚ) Qj) =
+        (Polynomial.aeval (sF : F)).toRingHom := by
+      refine Polynomial.ringHom_ext' (RingHom.ext_rat _ _) ?_
+      simp [RatFunc.algebraMap_X]
+    exact congrArg (fun φ : Polynomial ℚ →+* F => φ r) h2
+  rw [map_div₀, hp p, hp q, Derivation.leibniz_div, Derivation.map_aeval, Derivation.map_aeval]
+  refine Submodule.smul_mem _ _ (Submodule.sub_mem _ ?_ ?_) <;>
+    exact Submodule.smul_mem _ _ (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _))
+
+/-- **`Ω_{F/ℚ} = F · ds` (proved)**: `F/ℚ(j)` is finite separable, so `Ω_{F/ℚ(j)} = 0` and
+`F ⊗ Ω_{ℚ(j)/ℚ} → Ω_{F/ℚ}` is onto; `Ω_{ℚ(j)/ℚ}` is generated by the `d a`. -/
+theorem mem_span_D_sF (ω : Ω[F⁄ℚ]) :
+    ω ∈ Submodule.span F {KaehlerDifferential.D ℚ F (sF : F)} := by
+  haveI : Algebra.IsSeparable Qj F := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  haveI : Algebra.FormallyUnramified Qj F := Algebra.FormallyUnramified.of_isSeparable Qj F
+  have hC : ∀ c : ℚ, algebraMap Qj F (RatFunc.C c) = algebraMap ℚ F c := fun c =>
+    congrArg (fun φ : ℚ →+* F => φ c) (RingHom.ext_rat ((algebraMap Qj F).comp RatFunc.C) _)
+  haveI : IsScalarTower ℚ Qj F := ⟨fun c a x => by
+    rw [RatFunc.smul_eq_C_mul]; simp only [Algebra.smul_def, map_mul, hC, mul_assoc]⟩
+  have hker : ω ∈ LinearMap.ker (KaehlerDifferential.map ℚ Qj F F) := by
+    rw [LinearMap.mem_ker]; exact Subsingleton.elim _ _
+  rw [← KaehlerDifferential.range_mapBaseChange] at hker
+  obtain ⟨t, rfl⟩ := hker
+  induction t using TensorProduct.induction_on with
+  | zero => rw [map_zero]; exact Submodule.zero_mem _
+  | tmul f η =>
+    rw [KaehlerDifferential.mapBaseChange_tmul]
+    refine Submodule.smul_mem _ f ?_
+    have hη : η ∈ Submodule.span Qj (Set.range (KaehlerDifferential.D ℚ Qj)) := by
+      rw [KaehlerDifferential.span_range_derivation]; trivial
+    induction hη using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨a, rfl⟩ := hx
+      rw [KaehlerDifferential.map_D]; exact D_algebraMap_mem_span a
+    | zero => rw [map_zero]; exact Submodule.zero_mem _
+    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | smul c x _ hx =>
+      rw [map_smul, ← algebraMap_smul F c]
+      exact Submodule.smul_mem _ _ hx
+  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+
+end ElemDiff
+
+section ElemSpace
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F]
+
+/-- **The space `V`**: `h` with `h s (s − 1728)` in every place containing `s` and
+`h (s − 1728) ∈ 𝔪_P` at every place not containing `s` (`s = j` in `F`). -/
+def Vspace (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] : Submodule ℚ F where
+  carrier := {h | (∀ P : Place F, (sF : F) ∈ P.w →
+      h * ((sF : F) * ((sF : F) - algebraMap ℚ F 1728)) ∈ P.w) ∧
+    (∀ P : Place F, (sF : F) ∉ P.w → h * ((sF : F) - algebraMap ℚ F 1728) ∈ P.w.nonunits)}
+  add_mem' := by
+    rintro a b ⟨ha1, ha2⟩ ⟨hb1, hb2⟩
+    refine ⟨fun P hP => by rw [add_mul]; exact Subring.add_mem _ (ha1 P hP) (hb1 P hP),
+      fun P hP => ?_⟩
+    rw [add_mul, P.w.mem_nonunits_iff]
+    exact lt_of_le_of_lt (Valuation.map_add _ _ _)
+      (max_lt (P.w.mem_nonunits_iff.mp (ha2 P hP)) (P.w.mem_nonunits_iff.mp (hb2 P hP)))
+  zero_mem' := ⟨fun P _ => by rw [zero_mul]; exact P.w.zero_mem,
+    fun P _ => by rw [zero_mul, P.w.mem_nonunits_iff, map_zero]; exact zero_lt_one⟩
+  smul_mem' := by
+    rintro c h ⟨h1, h2⟩
+    refine ⟨fun P hP => ?_, fun P hP => ?_⟩
+    · rw [Algebra.smul_def, mul_assoc]; exact Subring.mul_mem _ (P.rat_mem c) (h1 P hP)
+    · rw [Algebra.smul_def, mul_assoc]; exact mul_mem_nonunits P.w (P.rat_mem c) (h2 P hP)
+
+/-- **Elements in every place are rational (proved)**, when `ℚ` is algebraically closed in `F`:
+`ℚ` is then integrally closed in `F`, and an element outside an integrally closed subring is
+outside some valuation subring containing it (Mathlib, Stacks 090P). -/
+theorem mem_rat_of_all_places (hK : ConstantFieldIsQ F) {k : F} (hk : ∀ P : Place F, k ∈ P.w) :
+    k ∈ Set.range (algebraMap ℚ F) := by
+  by_contra hnot
+  let R : Subring F := (algebraMap ℚ F).range
+  have hkR : k ∉ R := fun h => hnot (by obtain ⟨c, hc⟩ := RingHom.mem_range.mp h; exact ⟨c, hc⟩)
+  have hratHom : ratHom F = algebraMap ℚ F := RingHom.ext_rat _ _
+  haveI : IsIntegrallyClosedIn R F := by
+    rw [Subring.isIntegrallyClosedIn_iff]
+    intro x hx
+    obtain ⟨p, hpm, hp⟩ := hx
+    let e : ℚ ≃+* R := RingEquiv.ofBijective (algebraMap ℚ F).rangeRestrict
+      ⟨(algebraMap ℚ F).injective.codRestrict _, RingHom.rangeRestrict_surjective _⟩
+    have hcomp : (algebraMap R F).comp e.toRingHom = algebraMap ℚ F := RingHom.ext_rat _ _
+    have hf : p.map e.symm.toRingHom ≠ 0 :=
+      (Polynomial.map_ne_zero_iff e.symm.injective).mpr hpm.ne_zero
+    have hev : (p.map e.symm.toRingHom).eval₂ (ratHom F) x = 0 := by
+      rw [hratHom, Polynomial.eval₂_map, ← hcomp, RingHom.comp_assoc]
+      have : e.toRingHom.comp e.symm.toRingHom = RingHom.id R := by
+        ext r; simp
+      rw [this, RingHom.comp_id]; exact hp
+    obtain ⟨c, hc⟩ := hK x ⟨_, hf, hev⟩
+    rw [← hc, hratHom]; exact RingHom.mem_range_self _ _
+  obtain ⟨V, hRV, hkV⟩ := Subring.exists_le_valuationSubring_of_isIntegrallyClosedIn hkR
+  have hV : V ≠ ⊤ := fun h => hkV (h ▸ ValuationSubring.mem_top _)
+  exact hkV (hk ⟨V, hV, fun c => hRV (RingHom.mem_range_self _ c)⟩)
+
+/-- There is a place over `j = ∞` (from the fundamental identity at `∞`). -/
+theorem exists_place_inf [FiniteDimensional Qj F] : ∃ P : Place F, (sF : F) ∉ P.w := by
+  obtain ⟨hfin, hsum⟩ := fundamentalIdentityQj F {P : Place F | (tF : F) ∉ P.w} (by simp)
+  by_contra hne
+  push Not at hne
+  have hempty : hfin.toFinset = ∅ := by
+    ext P
+    simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, Finset.notMem_empty, iff_false, not_not]
+    rw [tF_eq_mul]; exact Subring.mul_mem _ (P.rat_mem _) (hne P)
+  rw [hempty, Finset.sum_empty] at hsum
+  exact (Module.finrank_pos (R := Qj) (M := F)).ne hsum
+
+end ElemSpace
+
+section ElemCount
+
+open IsDedekindDomain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+attribute [local instance] isDedekind_intCl isFractionRing_intCl
+
+local notation "OF" => integralClosure (Polynomial ℚ) F
+
+/-- **Elements in every place containing `s` are integral over `ℚ[s]` (proved)**: `OF` is a Dedekind
+domain, its height-one primes are the places containing `s`. -/
+theorem mem_OF_of_places {x : F} (hx : ∀ P : Place F, (sF : F) ∈ P.w → x ∈ P.w) : x ∈ OF := by
+  obtain ⟨r, hr⟩ := HeightOneSpectrum.mem_integers_of_valuation_le_one (R := OF) F x (fun v => by
+    have h := hx (placeOf v) (sF_mem_placeOf v)
+    change x ∈ (v.valuation F).valuationSubring at h
+    exact (Valuation.mem_valuationSubring_iff _ _).mp h)
+  rw [← hr]; exact r.2
+
+theorem algebraMap_poly_C (c : ℚ) : algebraMap (Polynomial ℚ) F (Polynomial.C c) = algebraMap ℚ F c := by
+  have : (algebraMap (Polynomial ℚ) F).comp Polynomial.C = algebraMap ℚ F := RingHom.ext_rat _ _
+  exact congrArg (fun φ : ℚ →+* F => φ c) this
+
+theorem algebraMap_poly_X : algebraMap (Polynomial ℚ) F Polynomial.X = (sF : F) := by
+  rw [IsScalarTower.algebraMap_apply (Polynomial ℚ) Qj F, RatFunc.algebraMap_X]
+
+/-- **`dim_ℚ V ≤ [F : ℚ(j)]` (proved).** `h ↦ h s (s − 1728) mod s·OF` injects `V` into
+`OF / s·OF ≅ ℚ^d` (`OF` is free of rank `d` over `ℚ[s]`): if `h s (s − 1728) = s k` with `k ∈ OF`, then
+`k = h (s − 1728)` lies in every place and in `𝔪_P` over `∞`, so `k ∈ ℚ` and `k = 0`. -/
+theorem finrank_Vspace_le (hK : ConstantFieldIsQ F) :
+    FiniteDimensional ℚ (Vspace F) ∧ Module.finrank ℚ (Vspace F) ≤ Module.finrank Qj F := by
+  haveI := isSeparable_Qj (F := F)
+  haveI : Module.IsTorsionFree (Polynomial ℚ) F := .trans_faithfulSMul (Polynomial ℚ) Qj F
+  haveI : Module.Free (Polynomial ℚ) OF := IsIntegralClosure.module_free (Polynomial ℚ) Qj F OF
+  haveI : Module.Finite (Polynomial ℚ) OF := IsIntegralClosure.finite (Polynomial ℚ) Qj F OF
+  have hrank : Module.finrank (Polynomial ℚ) OF = Module.finrank Qj F :=
+    IsIntegralClosure.rank (Polynomial ℚ) Qj F OF
+  let ι := Module.Free.ChooseBasisIndex (Polynomial ℚ) OF
+  let b := Module.Free.chooseBasis (Polynomial ℚ) OF
+  have hcard : Fintype.card ι = Module.finrank Qj F := by
+    rw [← hrank, Module.finrank_eq_card_chooseBasisIndex]
+  let x : Vspace F → OF := fun h =>
+    ⟨h.1 * ((sF : F) * ((sF : F) - algebraMap ℚ F 1728)), mem_OF_of_places h.2.1⟩
+  have hxadd : ∀ h1 h2, x (h1 + h2) = x h1 + x h2 := fun h1 h2 => Subtype.ext (by
+    simp only [x, Submodule.coe_add, Subalgebra.coe_add]; ring)
+  have hxsmul : ∀ (c : ℚ) h, x (c • h) = Polynomial.C c • x h := fun c h => Subtype.ext (by
+    rw [SetLike.val_smul]
+    simp only [x, Submodule.coe_smul, Algebra.smul_def, algebraMap_poly_C]
+    ring)
+  let Ψ : Vspace F →ₗ[ℚ] (ι → ℚ) :=
+    { toFun := fun h i => (b.repr (x h) i).eval 0
+      map_add' := fun h1 h2 => by
+        ext i; simp only [hxadd, map_add, Finsupp.add_apply, Polynomial.eval_add, Pi.add_apply]
+      map_smul' := fun c h => by
+        ext i
+        simp only [hxsmul, map_smul, Finsupp.smul_apply, smul_eq_mul, Polynomial.eval_mul,
+          Polynomial.eval_C, RingHom.id_apply, Pi.smul_apply] }
+  have hinj : Function.Injective Ψ := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro h hΨ
+    have hdvd : ∀ i, (Polynomial.X : Polynomial ℚ) ∣ b.repr (x h) i := fun i => by
+      rw [Polynomial.X_dvd_iff, Polynomial.coeff_zero_eq_eval_zero]
+      exact congrFun hΨ i
+    choose q hq using hdvd
+    let k : OF := ∑ i, q i • b i
+    have hxk : x h = (Polynomial.X : Polynomial ℚ) • k := by
+      conv_lhs => rw [← b.sum_repr (x h)]
+      simp only [k, Finset.smul_sum, smul_smul, hq]
+    have hkF : (k : F) = h.1 * ((sF : F) - algebraMap ℚ F 1728) := by
+      have h1 := congrArg (fun y : OF => (y : F)) hxk
+      simp only [SetLike.val_smul] at h1
+      simp only [x, Algebra.smul_def, algebraMap_poly_X] at h1
+      have hs0 : (sF : F) ≠ 0 := sF_ne_zero
+      refine mul_left_cancel₀ hs0 ?_
+      rw [← h1]; ring
+    have hkall : ∀ P : Place F, (k : F) ∈ P.w := by
+      intro P
+      by_cases hs : (sF : F) ∈ P.w
+      · exact intCl_mem P hs k
+      · rw [hkF]
+        exact (P.w.valuation_le_one_iff _).mp (P.w.mem_nonunits_iff.mp (h.2.2 P hs)).le
+    obtain ⟨c, hc⟩ := mem_rat_of_all_places hK hkall
+    obtain ⟨P, hP⟩ := exists_place_inf (F := F)
+    have hkP := h.2.2 P hP
+    rw [← hkF, ← hc] at hkP
+    have hc0 : c = 0 := by
+      by_contra hc0
+      rw [P.w.mem_nonunits_iff, val_rat P hc0] at hkP
+      exact lt_irrefl _ hkP
+    rw [hc0, map_zero] at hc
+    rw [← hc] at hkF
+    have : h.1 = 0 := by
+      rcases mul_eq_zero.mp hkF.symm with h0 | h0
+      · exact h0
+      · exact absurd h0 sF_sub_ne_zero
+    exact Subtype.ext this
+  haveI : FiniteDimensional ℚ (Vspace F) := Module.Finite.of_injective Ψ hinj
+  refine ⟨this, ?_⟩
+  calc Module.finrank ℚ (Vspace F) ≤ Module.finrank ℚ (ι → ℚ) :=
+        LinearMap.finrank_le_finrank_of_injective hinj
+    _ = Fintype.card ι := Module.finrank_fintype_fun_eq_card ℚ
+    _ = _ := hcard
+
+/-- **`g(F) ≤ [F : ℚ(j)]` (proved from `LocalDerivation`).** Every holomorphic differential is
+`h · ds` (`mem_span_D_sF`) with `h ∈ V` (`local_conditions`), and `dim V ≤ [F : ℚ(j)]`. -/
+theorem genus_le_finrank (hL : LocalDerivation) (hK : ConstantFieldIsQ F)
+    (hB : IsBelyiFunction ℚ F (tF : F)) : fieldGenus F ≤ Module.finrank Qj F := by
+  obtain ⟨hfd, hle⟩ := finrank_Vspace_le hK
+  let φ : F →ₗ[ℚ] Ω[F⁄ℚ] :=
+    (LinearMap.toSpanSingleton F Ω[F⁄ℚ] (KaehlerDifferential.D ℚ F (sF : F))).restrictScalars ℚ
+  have hsub : holoDiff F ≤ (Vspace F).map φ := by
+    refine Submodule.span_le.mpr fun ω hω => ?_
+    obtain ⟨h, rfl⟩ := Submodule.mem_span_singleton.mp (mem_span_D_sF ω)
+    exact ⟨h, local_conditions hL hK hB h (fun P => hω P.w P.rat_mem), rfl⟩
+  haveI : Module.Finite ℚ ((Vspace F).map φ) := Module.Finite.map _ _
+  calc fieldGenus F = Module.finrank ℚ (holoDiff F) := rfl
+    _ ≤ Module.finrank ℚ ((Vspace F).map φ) := Submodule.finrank_mono hsub
+    _ ≤ Module.finrank ℚ (Vspace F) := Submodule.finrank_map_le φ (Vspace F)
+    _ ≤ _ := hle
+
+end ElemCount
+
+/-- **`GenusLeDegree` from `LocalDerivation` (proved).** -/
+theorem genusLeDegree_of_localDerivation (hL : LocalDerivation) : GenusLeDegree := by
+  intro F _ _ _ _ hK hB
+  letI : Algebra (Polynomial ℚ) F :=
+    ((algebraMap Qj F).comp (algebraMap (Polynomial ℚ) Qj)).toAlgebra
+  haveI : IsScalarTower (Polynomial ℚ) Qj F := IsScalarTower.of_algebraMap_eq' rfl
+  exact genus_le_finrank hL hK hB
+
+/-- **`DimJ1Le` (the only use of T34) from `DimJacobianEqGenus` and `LocalDerivation` (proved).**
+No Riemann–Hurwitz, no `GenusX1Field`, no `X0Transitive`. -/
+theorem dimJ1Le_of_localDerivation (h1 : DimJacobianEqGenus) (hL : LocalDerivation) : DimJ1Le := by
+  rintro N J hN ⟨X, P₀, aj, ⟨hC, hI, P, hP, he⟩, hJ⟩
+  have hK : ConstantFieldIsQ (fieldX1 P) := constantFieldIsQ_of_curve X hC (fieldX1 P) he.some
+  obtain ⟨hBel, hdeg⟩ := ZInQ.RLeaf.belyiX1 N P hN hP
+  have hg := genusLeDegree_of_localDerivation hL (fieldX1 P) hK hBel
+  exact ⟨fieldGenus (fieldX1 P), h1 X hC P₀ J aj hJ hI (fieldX1 P) he, hg.trans hdeg⟩
+
+end GenusRoute
+
 end
 
 
@@ -1776,6 +2374,8 @@ end
 #print axioms GenusRoute.fundamentalIdentityQj
 #print axioms GenusRoute.dimJ1Le_of_rh_curve
 #print axioms GenusRoute.genus_le_of_model
+#print axioms GenusRoute.genusLeDegree_of_localDerivation
+#print axioms GenusRoute.dimJ1Le_of_localDerivation
 
 namespace HDec
 
@@ -1800,6 +2400,13 @@ dimjac-glue) and the leaf `RiemannHurwitzQj`. No `GenusX1Field`, no `X0Transitiv
 theorem t34Le_of_rh (h1 : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus)
     (hRH : GenusRoute.RiemannHurwitzQj) : DimJ1Le5 :=
   dimJ1Le5_of_kernel (GenusRoute.dimJ1Le_of_rh_curve h1 hRH)
+
+/-- **The replacement for `t34` from the local leaf (proved)**: `dim J₁(N) ≤ N²` from
+`DimJacobianEqGenus` (proved by dimjac-glue) and `GenusRoute.LocalDerivation`. No Riemann–Hurwitz,
+no `GenusX1Field`, no `X0Transitive`. -/
+theorem t34Le_of_localDerivation (h1 : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus)
+    (hL : GenusRoute.LocalDerivation) : DimJ1Le5 :=
+  dimJ1Le5_of_kernel (GenusRoute.dimJ1Le_of_localDerivation h1 hL)
 
 /-- `t34` implies `DimJ1Le5` (so the new field is weaker than the old one). -/
 theorem dimJ1Le5_of_t34 (h : LeafModCurves.DimJ1Genus) : DimJ1Le5 :=
@@ -1850,4 +2457,5 @@ end HSyn
 end HDec
 
 #print axioms HDec.HSyn.t34Le_of_rh
+#print axioms HDec.HSyn.t34Le_of_localDerivation
 #print axioms HDec.HSyn.G0Split.javanpeykarJ1_of_le
