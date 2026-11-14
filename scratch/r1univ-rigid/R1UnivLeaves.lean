@@ -585,6 +585,76 @@ def ShimuraHolFamily : Prop :=
 
 end HDec.QMSplit.Moduli
 
+/-! Verbatim from scratch/shimura-glue/parts/MobiusNew.lean (shimura-glue): `BabaGranathRational`,
+`ConicModelT`, `ElkiesConicT`. -/
+
+namespace HDec.QMSplit.Moduli
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV
+
+open scoped Classical
+
+/-- **LEAF (Baba–Granath, Canad. J. Math. 60 (2008), Thm 2.1 (p. 737) and Lemma 3.1 (pp. 739–740),
+read by the locator audit: YES; with the CM assignment read from the §3.1 elliptic-order table, p. 740),
+without the `j`-normalization.** Some coarse witness of the moduli clause lists carries `π : X₆ → P¹` with
+* the fibre clause (Thm 2.1: the polarized moduli space is `V/W`; two `ℚ̄`-points have the same value
+  iff their QM pairs are `Aut(𝒪)`-twists, i.e. `W`-conjugate), and
+* three distinct points `t₄, t₃, t₂₄ ∈ P¹(ℚ)` (Lemma 3.1: `V/W ≅ P¹_ℚ` and the three distinguished images
+  are rational) such that the CM points of discriminants `−4, −3, −24` are exactly the fibres over them.
+The last clause (each of `CM(−4)`, `CM(−3)`, `CM(−24)` is one `W`-orbit, over a distinguished point) is read
+from the §3.1 elliptic-order table; locators.md grades that table's row NO for a different claim (the
+ramification indices), and this reading is UNVERIFIED. Unlike `BabaGranathX6'` the leaf does not fix the
+coordinate's values `0, ∞, −16/27` (the normalization the audit did not locate in Thm 2.1/Lemma 3.1); that
+is the Möbius computation `babaGranathX6'_of_rational`. It is implied by `BabaGranathX6'` (take
+`t = 0, ∞, −16/27`). -/
+def BabaGranathRational : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (π : ToP1 X.left)
+    (t₄ t₃ t₂₄ : OnePoint ℚ),
+    R1fpProps Y Φ ∧ X6Props Y Φ X Ψ fY ∧ t₄ ≠ t₃ ∧ t₄ ≠ t₂₄ ∧ t₃ ≠ t₂₄ ∧
+    ∀ (x x' : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+      Ψ x = Quotient.mk _ P → Ψ x' = Quotient.mk _ Q →
+        (π.val (K := Qbar) x.left = π.val (K := Qbar) x'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM4 P.q ↔ π.val (K := Qbar) x.left = t₄.map (algebraMap ℚ Qbar)) ∧
+        (HasCM3 P.q ↔ π.val (K := Qbar) x.left = t₃.map (algebraMap ℚ Qbar)) ∧
+        (HasCM24 P.q ↔ π.val (K := Qbar) x.left = t₂₄.map (algebraMap ℚ Qbar))
+
+/-- The conic model in Elkies' coordinate `t = −X²/Z²` (`t = ∞` at the points at infinity). -/
+def ConicModelT (X : Over (Spec (CommRingCat.of ℚ))) (t : ToP1 X.left) : Prop :=
+  ∃ e : (fieldPt Qbar ⟶ X) ≃ X6Kummer.ConicPt,
+    (∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X),
+      e (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = X6Kummer.conicGal σ (e x)) ∧
+    (∀ (x : fieldPt Qbar ⟶ X) p, e x = Sum.inl p →
+      t.val (K := Qbar) x.left = OnePoint.some (-(p.1.1 ^ 2))) ∧
+    (∀ (x : fieldPt Qbar ⟶ X) b, e x = Sum.inr b → t.val (K := Qbar) x.left = OnePoint.infty)
+
+/-- **LEAF (Elkies, ANTS-III, LNCS 1423 (1998), §3, in his coordinate; locators UNVERIFIED).** Some
+witness of the moduli clause lists carries Elkies' coordinate `t : X₆ → X*(6) = X₆/W ≅ P¹` with
+* the fibre clause (`t` is a coordinate on `X₆/W`: equal values iff `W`-conjugate),
+* `t = 0, 1, ∞` at the CM points of discriminants `−24, −4, −3`, and
+* the Kummer description `X₆ = X*(6)(√−t, √(3(t − 1)))` on `ℚ̄`-points, written in the Kummer coordinates
+  `X/Z = √−t`, `Y/Z = √(3(t − 1))` (so `Y² + 3X² + 3Z² = 0` and `t = −X²/Z²`): `ConicModelT`.
+Reading (SPECULATIVE): Elkies' statement is about function fields; this is its form on the points of the
+smooth projective model. Residue fields pin `t = 1 ↔ D = −4` (the fibre over `t = 1` has residue field
+`ℚ(i)`); the assignment of `0, ∞` to `D = −24, −3` rests on Elkies' text (UNVERIFIED, no network). It does not use Baba–Granath's `j` (the relation `j = 16(t − 1)/27` is the
+Möbius computation in `elkiesConicX6_of_t`). -/
+def ElkiesConicT : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (t : ToP1 X.left),
+    R1fpProps Y Φ ∧ X6Props Y Φ X Ψ fY ∧
+    (∀ (x x' : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+      Ψ x = Quotient.mk _ P → Ψ x' = Quotient.mk _ Q →
+        (t.val (K := Qbar) x.left = t.val (K := Qbar) x'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM24 P.q → t.val (K := Qbar) x.left = OnePoint.some 0) ∧
+        (HasCM4 P.q → t.val (K := Qbar) x.left = OnePoint.some 1) ∧
+        (HasCM3 P.q → t.val (K := Qbar) x.left = OnePoint.infty)) ∧
+    ConicModelT X t
+
+end HDec.QMSplit.Moduli
+
 /-! ## §9 The transfer: every statement on `R1fpProps` is equivalent, under rigidity, to the same
 statement on `R1fpPropsAb` -/
 
@@ -826,6 +896,54 @@ def Y3ConnectedAb : Prop :=
 
 end HDec.TSHecke
 
+namespace HDec.QMSplit.Moduli
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV
+
+open scoped Classical
+
+/-- **Abelian-scheme form of `HDec.QMSplit.Moduli.BabaGranathRational`** (row shimura-glue, replaces H-151): its text with `R1fpProps`
+replaced by `R1fpPropsAb`. -/
+def BabaGranathRationalAb : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (π : ToP1 X.left)
+    (t₄ t₃ t₂₄ : OnePoint ℚ),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ X6Props Y Φ X Ψ fY ∧ t₄ ≠ t₃ ∧ t₄ ≠ t₂₄ ∧ t₃ ≠ t₂₄ ∧
+    ∀ (x x' : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+      Ψ x = Quotient.mk _ P → Ψ x' = Quotient.mk _ Q →
+        (π.val (K := Qbar) x.left = π.val (K := Qbar) x'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM4 P.q ↔ π.val (K := Qbar) x.left = t₄.map (algebraMap ℚ Qbar)) ∧
+        (HasCM3 P.q ↔ π.val (K := Qbar) x.left = t₃.map (algebraMap ℚ Qbar)) ∧
+        (HasCM24 P.q ↔ π.val (K := Qbar) x.left = t₂₄.map (algebraMap ℚ Qbar))
+
+end HDec.QMSplit.Moduli
+
+namespace HDec.QMSplit.Moduli
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV
+
+open scoped Classical
+
+/-- **Abelian-scheme form of `HDec.QMSplit.Moduli.ElkiesConicT`** (row shimura-glue, replaces H-153): its text with `R1fpProps`
+replaced by `R1fpPropsAb`. -/
+def ElkiesConicTAb : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (t : ToP1 X.left),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ X6Props Y Φ X Ψ fY ∧
+    (∀ (x x' : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+      Ψ x = Quotient.mk _ P → Ψ x' = Quotient.mk _ Q →
+        (t.val (K := Qbar) x.left = t.val (K := Qbar) x'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM24 P.q → t.val (K := Qbar) x.left = OnePoint.some 0) ∧
+        (HasCM4 P.q → t.val (K := Qbar) x.left = OnePoint.some 1) ∧
+        (HasCM3 P.q → t.val (K := Qbar) x.left = OnePoint.infty)) ∧
+    ConicModelT X t
+
+end HDec.QMSplit.Moduli
+
 /-! ## §11 (4) Each leaf on `R1fpProps` from its abelian-scheme form and rigidity -/
 
 namespace LeafQM.AV.R1UnivRigid
@@ -898,6 +1016,16 @@ theorem shimuraFamily_iff_ab (hR : MumfordRigidity) : HDec.QMSplit.Moduli.Shimur
 /-- Row y3Connected H-59: `Y3Connected` ↔ its abelian-scheme form, under `MumfordRigidity`. -/
 theorem y3Connected_iff_ab (hR : MumfordRigidity) : HDec.TSHecke.Y3Connected ↔ HDec.TSHecke.Y3ConnectedAb := by
   unfold HDec.TSHecke.Y3Connected HDec.TSHecke.Y3ConnectedAb
+  rw [r1fpProps_eq_ab hR]
+
+/-- Row shimura-glue, replaces H-151: `BabaGranathRational` ↔ its abelian-scheme form, under `MumfordRigidity`. -/
+theorem babaGranathRational_iff_ab (hR : MumfordRigidity) : HDec.QMSplit.Moduli.BabaGranathRational ↔ HDec.QMSplit.Moduli.BabaGranathRationalAb := by
+  unfold HDec.QMSplit.Moduli.BabaGranathRational HDec.QMSplit.Moduli.BabaGranathRationalAb
+  rw [r1fpProps_eq_ab hR]
+
+/-- Row shimura-glue, replaces H-153: `ElkiesConicT` ↔ its abelian-scheme form, under `MumfordRigidity`. -/
+theorem elkiesConicT_iff_ab (hR : MumfordRigidity) : HDec.QMSplit.Moduli.ElkiesConicT ↔ HDec.QMSplit.Moduli.ElkiesConicTAb := by
+  unfold HDec.QMSplit.Moduli.ElkiesConicT HDec.QMSplit.Moduli.ElkiesConicTAb
   rw [r1fpProps_eq_ab hR]
 
 end LeafQM.AV.R1UnivRigid

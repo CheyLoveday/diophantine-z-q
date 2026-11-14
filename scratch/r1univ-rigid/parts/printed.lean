@@ -205,3 +205,51 @@ def Y3ConnectedAb : Prop :=
   ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ ConnectedSpace Y.left
 
 end HDec.TSHecke
+
+namespace HDec.QMSplit.Moduli
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV
+
+open scoped Classical
+
+/-- **Abelian-scheme form of `HDec.QMSplit.Moduli.BabaGranathRational`** (row shimura-glue, replaces H-151): its text with `R1fpProps`
+replaced by `R1fpPropsAb`. -/
+def BabaGranathRationalAb : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (π : ToP1 X.left)
+    (t₄ t₃ t₂₄ : OnePoint ℚ),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ X6Props Y Φ X Ψ fY ∧ t₄ ≠ t₃ ∧ t₄ ≠ t₂₄ ∧ t₃ ≠ t₂₄ ∧
+    ∀ (x x' : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+      Ψ x = Quotient.mk _ P → Ψ x' = Quotient.mk _ Q →
+        (π.val (K := Qbar) x.left = π.val (K := Qbar) x'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM4 P.q ↔ π.val (K := Qbar) x.left = t₄.map (algebraMap ℚ Qbar)) ∧
+        (HasCM3 P.q ↔ π.val (K := Qbar) x.left = t₃.map (algebraMap ℚ Qbar)) ∧
+        (HasCM24 P.q ↔ π.val (K := Qbar) x.left = t₂₄.map (algebraMap ℚ Qbar))
+
+end HDec.QMSplit.Moduli
+
+namespace HDec.QMSplit.Moduli
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV
+
+open scoped Classical
+
+/-- **Abelian-scheme form of `HDec.QMSplit.Moduli.ElkiesConicT`** (row shimura-glue, replaces H-153): its text with `R1fpProps`
+replaced by `R1fpPropsAb`. -/
+def ElkiesConicTAb : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (t : ToP1 X.left),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ X6Props Y Φ X Ψ fY ∧
+    (∀ (x x' : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+      Ψ x = Quotient.mk _ P → Ψ x' = Quotient.mk _ Q →
+        (t.val (K := Qbar) x.left = t.val (K := Qbar) x'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM24 P.q → t.val (K := Qbar) x.left = OnePoint.some 0) ∧
+        (HasCM4 P.q → t.val (K := Qbar) x.left = OnePoint.some 1) ∧
+        (HasCM3 P.q → t.val (K := Qbar) x.left = OnePoint.infty)) ∧
+    ConicModelT X t
+
+end HDec.QMSplit.Moduli

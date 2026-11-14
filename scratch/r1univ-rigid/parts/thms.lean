@@ -73,4 +73,14 @@ theorem y3Connected_iff_ab (hR : MumfordRigidity) : HDec.TSHecke.Y3Connected ↔
   unfold HDec.TSHecke.Y3Connected HDec.TSHecke.Y3ConnectedAb
   rw [r1fpProps_eq_ab hR]
 
+/-- Row shimura-glue, replaces H-151: `BabaGranathRational` ↔ its abelian-scheme form, under `MumfordRigidity`. -/
+theorem babaGranathRational_iff_ab (hR : MumfordRigidity) : HDec.QMSplit.Moduli.BabaGranathRational ↔ HDec.QMSplit.Moduli.BabaGranathRationalAb := by
+  unfold HDec.QMSplit.Moduli.BabaGranathRational HDec.QMSplit.Moduli.BabaGranathRationalAb
+  rw [r1fpProps_eq_ab hR]
+
+/-- Row shimura-glue, replaces H-153: `ElkiesConicT` ↔ its abelian-scheme form, under `MumfordRigidity`. -/
+theorem elkiesConicT_iff_ab (hR : MumfordRigidity) : HDec.QMSplit.Moduli.ElkiesConicT ↔ HDec.QMSplit.Moduli.ElkiesConicTAb := by
+  unfold HDec.QMSplit.Moduli.ElkiesConicT HDec.QMSplit.Moduli.ElkiesConicTAb
+  rw [r1fpProps_eq_ab hR]
+
 end LeafQM.AV.R1UnivRigid
