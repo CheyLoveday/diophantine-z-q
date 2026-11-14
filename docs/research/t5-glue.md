@@ -15,29 +15,36 @@ Row T-5 of the single proof, the kernel's CM hypothesis `Shimura.ShimuraReciproc
 glue Props** (VERIFIED: compiled, 0 errors, axioms `[propext, Classical.choice, Quot.sound]`):
 
 ```lean
-theorem T5Glue.shimuraReciprocityModFn_of_t5Leaves (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
-    (hAL : ArtinLift) (hS : IdeleLatticeScale) : Shimura.ShimuraReciprocityModFn
+theorem T5Glue.shimuraReciprocityModFn_of_final (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hA : AbsArtinSurjectiveQNeg) (hS : IdeleLatticeScale) : Shimura.ShimuraReciprocityModFn
 theorem T5Glue.x0RatStructure_of_leaf (hL : X0ModuliGalois) : X0RatStructure
-theorem T5Glue.cmModuli_of_leaf (hL : ShimuraMainCM) (hAL : ArtinLift) (hS : IdeleLatticeScale) : CMModuli
+theorem T5Glue.cmModuli_of_final (hL : ShimuraMainCM) (hA : AbsArtinSurjectiveQNeg)
+    (hS : IdeleLatticeScale) : CMModuli
+-- T5Headline.lean, over the kernel's one-proof theorem:
+theorem T5Glue.frozenTarget_t5 (r t l g h11 h29) (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hA : AbsArtinSurjectiveQNeg) (hS : IdeleLatticeScale) (h33 hL2 hL3) : ZInQ.FrozenTarget
 ```
 
-`CMModuli` and `X0RatStructure` are verbatim copies of tyz-split's two glue Props
-(`scratch/tyz-split/T5.lean` §2; scratch files cannot import each other, so the copies were compared by eye);
-`ShimuraReciprocityModFn` is the kernel's own definition (imported), obtained by tyz-split's three-line
-`shimuraReciprocityModFn_of_split` (copied verbatim).
+So **`X0RatStructure` is reduced to one leaf** (the canonical model of `X₀(N)`, no CM, no glue left), and
+**`CMModuli` to one printed leaf (Shimura's Thm 5.4) plus two glue Props**: one pure class-field-theory
+statement about Tau Ceti's own objects (surjectivity of its absolute Artin map for `ℚ(√−m)`) and one adelic
+lattice computation. `CMModuli` and `X0RatStructure` are verbatim copies of tyz-split's two glue Props
+(`scratch/tyz-split/T5.lean` §2; scratch files cannot import each other, so the copies were compared by
+eye); `ShimuraReciprocityModFn` is the kernel's own definition (imported), obtained by tyz-split's
+three-line `shimuraReciprocityModFn_of_split` (copied verbatim).
 
 | Prop | kind | statement (short) | source / status |
 |---|---|---|---|
 | `ShimuraMainCM` | **LEAF** (printed form) | main theorem of CM with torsion, idelic, in Weierstrass coordinates over Mathlib's `PeriodPair`, finite adeles and Tau Ceti's `ideleClassArtinMap` | Shimura 1971, Thm 5.4; Lang, *Elliptic functions*, Ch. 10 Thm 3 (UNVERIFIED numbers) |
 | `X0ModuliGalois` | **LEAF** (consequence of the print) | canonical model of `X₀(N)`: for `g ∈ ℚ(X₀(N))` regular on `ℍ` and `σ ∈ Aut(ℂ)` carrying the algebraic point `(E_τ, ⟨1/N⟩)` to `(E_τ', ⟨k/N⟩)`, `σ(g(τ)) = g(τ')` | Shimura 1971 §6.7; Deligne–Rapoport VI–VII; Diamond–Shurman §7.5–7.7 (UNVERIFIED numbers) |
-| `ArtinLift` | GLUE (class field theory) | every `σ ∈ Aut(ℂ)` fixing `κ(K)` is `[s, K]` on `K^ab` for some idele `s` | surjectivity of `C_K → Gal(K^ab/K)`, STANDARD; not in Tau Ceti (only dense image of the absolute Artin map) |
+| `AbsArtinSurjectiveQNeg` | GLUE (class field theory, Tau Ceti objects only) | `(globalClassFormation K).absoluteArtinMap : C_K → G_K^ab` is surjective, `K = ℚ(√−m)` | STANDARD (Neukirch VI.5, UNVERIFIED number); Tau Ceti proves dense image only |
 | `IdeleLatticeScale` | GLUE (adelic lattice computation) | if the ring class of `s` is `[J ∩ O]` and `κ(J∩O)·(L', L'_N) = c·(L, L_N)`, then `κ(s⁻¹𝔞) = c'L'`, `κ(s⁻¹𝔞_N) = c'L'_N` | shimura-modfn §1; needs `ker(ringClassIdeleQuotient) = Kˣ Ô^× ℂˣ` |
 
-Proved on the way (all VERIFIED compiled, standard axioms): the five other glue Props of the first
-reduction, `AutExtends`, `FixedAlgebraic` (field theory, Steinitz), `DiscNeZero` (`Δ(ℂ/⟨1,τ⟩) ≠ 0`, from
-Mathlib's modular forms), `LatHatInter` (`K ∩ 𝔞̂ = 𝔞`), `StrongApprox` (from Tau Ceti's strong
-approximation), and `IdeleLatticeHeegner` from `IdeleLatticeScale` (the point bijection `u ↦ s⁻¹u` on
-`⟨1/N⟩ \ 0`).
+Proved on the way (all VERIFIED compiled, standard axioms): `AutExtends`, `FixedAlgebraic` (field theory,
+Steinitz), `DiscNeZero` (`Δ(ℂ/⟨1,τ⟩) ≠ 0`, from Mathlib's modular forms), `LatHatInter` (`K ∩ 𝔞̂ = 𝔞`),
+`StrongApprox` (from Tau Ceti's strong approximation), `IdeleLatticeHeegner` from `IdeleLatticeScale` (the
+point bijection `u ↦ s⁻¹u` on `⟨1/N⟩ \ 0`), and `ArtinLift` (every `σ ∈ Aut(ℂ/K)` is `[s, K]` on `K^ab`)
+from `AbsArtinSurjectiveQNeg`.
 
 No statement was changed. Neither tyz-split Prop is false, vacuous or inert; the independent review found
 no false or vacuous statement among the new Props either (§4).
@@ -93,11 +100,16 @@ which is the normalization under which the print reads `E^σ ≅ ℂ/s⁻¹𝔞`
 isomorphism `ξ' : ℂ/s⁻¹𝔞 → E^σ(ℂ)` with `ξ'(0) = O` is `(μ²℘_{P'}, μ³℘'_{P'})`; restricting to `u ∉ 𝔞` only
 weakens the print.
 
-**Glue `ArtinLift`.** Every `σ ∈ Aut(ℂ)` fixing `κ(K)` satisfies `ArtinCond σ s` for some idele `s`. True
-(surjectivity of the Artin map `C_K → Gal(K^ab/K)`: dense image plus compactness of `C_K` modulo its
-connected component; Neukirch VI §5, UNVERIFIED). Tau Ceti has finite-level surjectivity
-(`ideleClassArtinMap_surjective`) and the absolute Artin map with dense image only; the compactness step
-(finite class number + compactness of `Ô^×`) is missing.
+**`ArtinLift` (proved from the glue `AbsArtinSurjectiveQNeg`).** Every `σ ∈ Aut(ℂ)` fixing `κ(K)` satisfies
+`ArtinCond σ s` for some idele `s`. Proof (`artinLift_of_abs`): `σ` restricts through `ιC ∘ e` to
+`τ ∈ Gal(Kˢ/K)` (`exists_tau_of_sigma`: the range of `ιC ∘ e` is the set of algebraic numbers, stable under
+`σ`); `AbsArtinSurjective` gives an idele class with absolute Artin symbol `τ`; Tau Ceti's
+`globalArtinMap_eq_of_mk_eq_absoluteArtinMap` and `of_ideleClassArtinMap` turn it into the finite Artin
+symbols (`artinCond_of_abs`). **Glue `AbsArtinSurjective K`**: for every `g ∈ G_K`, the class of `g` in
+`G_K^ab` is `(globalClassFormation K).absoluteArtinMap` of an idele class. True for number fields (dense
+image, which Tau Ceti proves as `ClassFormation.denseRange_absoluteArtinMap`, plus compactness of `C_K`
+modulo its connected component: finite class number, compactness of `Ô^×`, Artin symbols trivial on the
+archimedean component; Neukirch VI §5, UNVERIFIED). The statement mentions only Tau Ceti's objects.
 
 **Glue `IdeleLatticeScale`.** Under the row hypotheses and `ringClassIdeleQuotient O [s] = picClass J`:
 `κ(s⁻¹𝔞) = c'·⟨1, τ_{Q'}⟩` and `κ(s⁻¹𝔞_N) = c'·⟨1/N, τ_{Q'}⟩`, `𝔞 = κ⁻¹⟨1, τ_Q⟩`, `𝔞_N = κ⁻¹⟨1/N, τ_Q⟩`.
@@ -142,13 +154,20 @@ form `Kˣ·Ô^×·ℂˣ` and the local description of `K ∩ x⁻¹𝔞̂` for i
 * `parts/LatHat.lean`: `intAd`, `latHat_inter_of_sandwich`, `cz`, `tK`, `kappa_tK`, `two_cz_mul_mem`,
   `latHat_inter_heegner`, `latHatInter`.
 * `parts/Strong.lean`: `strongApprox`.
+* `parts/Artin.lean`: `AbsArtinSurjective`, `AbsArtinSurjectiveQNeg`, `exists_tau_of_sigma`,
+  `artinCond_of_abs`, `artinLift_of_abs`.
 * `parts/Row.lean`, `parts/Closed.lean`: `shimuraReciprocityModFn_of_split`,
   `shimuraReciprocityModFn_of_leaves`, `autExtends`, `fixedAlgebraic`, `discNeZero`,
-  `x0RatStructure_of_leaf`, `cmModuli_of_leaf`, `shimuraReciprocityModFn_of_t5Leaves`.
+  `x0RatStructure_of_leaf`, `cmModuli_of_leaf`, `shimuraReciprocityModFn_of_t5Leaves`, `cmModuli_of_final`,
+  `shimuraReciprocityModFn_of_final`.
+* `T5Headline.lean` (same body, kernel import `ZInQKernel.OneProof.Main`, `parts/Headline.lean`):
+  `frozenTarget_t5`.
 
 Compile: `lake env lean scratch/t5-glue/T5Glue.lean` (≈31 s after the import cache; build artifacts
 reflink-copied from `~/dzq-check2`, which differs from this base only in `OneProof/TYZSplit.lean`):
-0 errors; `T5Glue.out` has 19 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`.
+0 errors; `T5Glue.out` has 24 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`.
+`lake env lean scratch/t5-glue/T5Headline.lean` (38 s, 9.3 GB): 0 errors; `frozenTarget_t5`: standard
+axioms (`T5Headline.out`).
 
 ## 4. Review
 
@@ -159,8 +178,11 @@ docstrings (`ξ'(0) = O` argument, use of `K ∩ 𝔞̂ = 𝔞`, the kernel iden
 
 ## 5. What remains
 
-* `ArtinLift`: surjectivity of `C_K → Gal(K^ab/K)` (compactness of `C_K/D_K`); with Tau Ceti's finite-level
-  surjectivity and compatibility under restriction, a compactness argument over `Fin h × Ô^×`.
+* `AbsArtinSurjectiveQNeg`: surjectivity of Tau Ceti's absolute Artin map (compactness of `C_K/D_K`): a
+  finite-intersection argument over `Fin h × Ô^×` (`h` the class number), using Tau Ceti's finite-level
+  surjectivity, the openness of norm groups (`isOpen_range_ideleClassNormMap`), compatibility in towers
+  (`globalArtinMap_comp`) and the triviality of Artin symbols on archimedean ideles; a natural target for
+  Tau Ceti itself.
 * `IdeleLatticeScale`: the ring-class kernel in the form `Kˣ Ô^× ℂˣ` and the local lattice computation.
 * The two leaves: their printed forms need, respectively, the idelic main theorem of CM (Shimura 5.4) and the
   canonical model / q-expansion principle for `X₀(N)`; neither is in Mathlib.
