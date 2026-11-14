@@ -145,3 +145,20 @@
   `CMModuli`, `X0RatStructure`, `linIndep_one_tau`, `pp`, `discL`, `jL`, `weber`, `modCoord`,
   `heegnerForm_level_pos`: IDENTICAL; same `open` list as tyz-split's file.
 - T5Glue.lean header docstring updated; recompiled: 0 errors, 24 standard axiom lines.
+
+## Step 14: parts/AbsArtin.lean — `AbsArtinSurjectiveQNeg` PROVED — COMPILED
+- `absArt K : C_K →* G_K^ab` (Tau Ceti's absolute Artin map through `globalGroundEquiv`),
+  `continuous_absArt` (preimage of an open normal subgroup is a global norm subgroup: TC
+  `exists_absoluteArtinMap_mem_iff`, `mem_globalNormSubgroup_iff`, `isOpen_globalNormSubgroup`; Mathlib
+  `ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one`; ZeroDimensionalSpace instance needs
+  synthInstance.maxHeartbeats 400000), `denseRange_absArt` (TC `denseRange_absoluteArtinMap`),
+  `absArt_eq_one_of_coord` (no real places: idele classes with trivial finite part lie in the ray subgroup of
+  every modulus, hence in every norm group `N_{E/K}C_E` via TC `isAdmissibleModulus_abelianConductor`,
+  `globalNormSubgroup_eq_range_classField`; TC `absoluteArtinMap_eq_zero_iff`), `intUnits` (Ô^×) and
+  `isCompact_intUnits` (TC `isCompact_integralAdeles`, Mathlib `Units.isClosedEmbedding_embedProduct`), `finEmb`,
+  `bigT` (finitely many ray classes mod 1 times [Ô^×]), `isCompact_bigT`, `range_absArt_eq` (range = image of
+  bigT), **`absArtinSurjective_of_noReal`** (closed + dense), `not_isReal_QNeg`, **`absArtinSurjectiveQNeg`**.
+- Final: **`shimuraReciprocityModFn_of_t5 : ShimuraMainCM → X0ModuliGalois → IdeleLatticeScale →
+  Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_t5 : ShimuraMainCM → IdeleLatticeScale → CMModuli`.
+- T5Glue.out: 0 errors, 29 axiom lines all standard. T5Headline.lean: `frozenTarget_t5` now takes
+  `ShimuraMainCM`, `X0ModuliGalois`, `IdeleLatticeScale` in place of `hS`; 0 errors, standard axioms.

@@ -25,3 +25,8 @@
 #print axioms T5Glue.artinLift_of_abs
 #print axioms T5Glue.cmModuli_of_final
 #print axioms T5Glue.shimuraReciprocityModFn_of_final
+#print axioms T5Glue.continuous_absArt
+#print axioms T5Glue.absArtinSurjective_of_noReal
+#print axioms T5Glue.absArtinSurjectiveQNeg
+#print axioms T5Glue.cmModuli_of_t5
+#print axioms T5Glue.shimuraReciprocityModFn_of_t5
