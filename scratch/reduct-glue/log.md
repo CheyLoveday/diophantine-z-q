@@ -69,3 +69,9 @@ Kernel deps built in the worktree with `lake build` (all up to date). One Lean p
   pass `Iso.isIso_hom` explicitly with `@IsIso.of_isIso_comp_right`. Axioms standard. VERIFIED.
   `reductGlue_leaves`, `ReductGlueLeaves`, `rows_of_leaves_noGlue` (all seven rows, no project glue).
 - 16:50 Assembled ReductGlue.lean compiles (46 s). VERIFIED.
+- 14:00 Combined LEAF `StrictHenselizationNeron` (existence of O^sh + Néron base change to it; avoids the generality
+  risk of `NeronBaseChangeUnramifiedDVR`), `strictHenselizationNeron_of` (from the pair), `raynaudSemistable_of_SH'`.
+  §11: `IsSHNeronExt`, LEAF candidate `StrictHenselizationPair` (EGA IV 18.8.10, Stacks 05WR, BLR §1.2 Prop. 2;
+  UNVERIFIED), **`persistsFromSH_of : StrictHenselizationPair → PersistsFromSH`** (3.3a general from SH),
+  `ReductPrintedGlue'` (4 glue), `reductLeaves_of_printed'`. Full file compiles; 42 `#print axioms` lines, all
+  `[propext, Classical.choice, Quot.sound]` (axioms.txt). VERIFIED.

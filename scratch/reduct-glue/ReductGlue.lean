@@ -3672,6 +3672,78 @@ theorem rows_of_leaves_noGlue (l : ReductLeaves) (n : ReductGlueLeaves)
 
 end Final2
 
+
+section Persists
+
+/-- `O₁ ⊇ O` is a strict henselization of `O` for the purposes here: a strictly henselian DVR over
+`O` with algebraic residue extension, along which Néron models base change. -/
+def IsSHNeronExt {K K₁ : Type} [Field K] [Field K₁] [Algebra K K₁] (O : ValuationSubring K)
+    (O₁ : ValuationSubring K₁) (hO : O₁.comap (algebraMap K K₁) = O) : Prop :=
+  IsStrictlyHenselianDVR O₁ ∧
+    (letI := (resMap hO).toAlgebra
+     Algebra.IsAlgebraic (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField O₁)) ∧
+    ∀ (A : PkgI3.AbVar K) (𝒩 : GroupModelO A O), 𝒩.IsNeronModel → (bcDVR hO 𝒩).IsNeronModel
+
+/-- **LEAF candidate `StrictHenselizationPair`** (strict henselization along a finite extension:
+EGA IV₄ 18.8.10 and 18.6.8 (`O' ⊗_O O^sh` is a finite product of strictly henselian local rings, one
+of which is `O'^sh`), Stacks Tag 05WR, with BLR §1.2 Prop. 2 for the Néron models; numbers
+UNVERIFIED). For a finite `K'/K` and a DVR `O' ⊆ K'` over a DVR `O ⊆ K` there are strict
+henselizations `P ⊆ E` of `O` and `P' ⊆ E'` of `O'` (in the sense of `IsSHNeronExt`) with `E'/E`
+finite and `P'` over `P`. -/
+def StrictHenselizationPair : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (K' : Type) [Field K'] [Algebra K K'] [FiniteDimensional K K'] (O' : ValuationSubring K')
+    [IsDiscreteValuationRing O'] (hO : O'.comap (algebraMap K K') = O),
+    ∃ (E E' : Type) (_ : Field E) (_ : Field E') (_ : Algebra K E) (_ : Algebra K' E')
+      (_ : Algebra E E') (_ : Algebra K E') (_ : IsScalarTower K E E') (_ : IsScalarTower K K' E')
+      (_ : FiniteDimensional E E') (P : ValuationSubring E) (P' : ValuationSubring E')
+      (hP : P.comap (algebraMap K E) = O) (hP' : P'.comap (algebraMap K' E') = O'),
+      IsSHNeronExt O P hP ∧ IsSHNeronExt O' P' hP' ∧ P'.comap (algebraMap E E') = P
+
+/-- **SGA 7 IX 3.3 (first assertion) over a general DVR from the strictly henselian form.** -/
+theorem persistsFromSH_of (hPair : StrictHenselizationPair) : PersistsFromSH := by
+  intro hSH K _ O _ K' _ _ _ O' _ hO A hA 𝒩' h𝒩'
+  obtain ⟨E, E', _, _, _, _, _, _, _, _, _, P, P', hP, hP', ⟨hSHP, halgP, hbcP⟩,
+    ⟨hSHP', halgP', hbcP'⟩, hPP'⟩ := hPair K O K' O' hO
+  haveI : IsDiscreteValuationRing P := hSHP.1
+  haveI : IsDiscreteValuationRing P' := hSHP'.1
+  have hAE : HasSemistableReduction (A.baseChange E) P := by
+    obtain ⟨𝒩, h𝒩, hs⟩ := hA
+    exact ⟨bcDVR hP 𝒩, hbcP A 𝒩 h𝒩, (isSemistable_bcDVR_iff hP halgP 𝒩).mp hs⟩
+  have h1 : SemistableNeronModels ((A.baseChange E).baseChange E') P' :=
+    hSH E P hSHP E' P' hPP' (A.baseChange E) hAE
+  have he : IsMonHom (bcbcIso A E E' ≪≫ (bcbcIso A K' E').symm).hom := by
+    haveI := bcbcIso_isMonHom A E E'
+    have : IsMonHom (bcbcIso A K' E').inv := by
+      haveI := bcbcIso_isMonHom A K' E'
+      infer_instance
+    exact @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ (bcbcIso_isMonHom A E E') this
+  have h2 : SemistableNeronModels ((A.baseChange K').baseChange E') P' :=
+    semistableNeronModels_transport (bcbcIso A E E' ≪≫ (bcbcIso A K' E').symm) he h1
+  rw [isSemistable_bcDVR_iff hP' halgP']
+  exact h2 _ (hbcP' (A.baseChange K') 𝒩' h𝒩')
+
+end Persists
+
+section Printed2
+
+/-- The base-change reductions that remain glue after `persistsFromSH_of` and
+`raynaudSemistable_of_SH'`. -/
+structure ReductPrintedGlue' : Prop where
+  unipotent : UnipotentFromSH
+  reduction : ReductionFromSH
+  identityComponent : IdentityComponentFromSH
+  serreTate : SerreTateFromComplete
+
+/-- **reduct-split's `ReductLeaves` from the printed-base leaves**, the strict-henselization leaves,
+and four base-change glue Props. -/
+theorem reductLeaves_of_printed' (l : ReductLeavesPrinted) (hPair : StrictHenselizationPair)
+    (g : ReductPrintedGlue') : ReductLeaves :=
+  reductLeaves_of_printed l ⟨g.unipotent, g.reduction, persistsFromSH_of hPair,
+    g.identityComponent, g.serreTate⟩
+
+end Printed2
+
 end ReductGlue
 
 #print axioms ReductGlue.fixedTorsionRational_of_mulEtale
@@ -3694,3 +3766,5 @@ end ReductGlue
 #print axioms ReductGlue.reductGlue_leaves
 #print axioms ReductGlue.rows_of_leaves_noGlue
 #print axioms ReductGlue.rows_of_printed
+#print axioms ReductGlue.persistsFromSH_of
+#print axioms ReductGlue.reductLeaves_of_printed'
