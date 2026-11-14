@@ -2872,7 +2872,6 @@ structure OpenTextbookLeaves6 : Prop where
   charPolyIndepOfEllAlgClosed : _root_.ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
   /-- T8 (I3.M3), Poincaré complete reducibility in the form used at E1, the kernel's Prop. -/
   t8 : _root_.PkgI3.PoincareReducibility
-  t10 : _root_.T10Etale.T10_TateDuality
   homLatticeCorr : _root_.ZInQ.HomUnify.HomLatticeCorr
   /-- av-b2, LEAF: T11(b) without its uniqueness clause (Conrad 2006 §3; Milne 1986 §20). -/
   t11bExists : AVB2.T11bExists
@@ -2946,7 +2945,6 @@ theorem textbookLeaves4_of_open6 (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6
   t7 := t7_of_algClosed5 t.charPolyIndepOfEllAlgClosed
   t8 := t8_ofK6 t.t8
   t9 := t9_of_leaves5 l.t09SymmIsogenyExists l.isogenyQuasiInverse
-  t10 := t10_ofK5 t.t10
   homLatticeCorr := homLatticeCorr_ofK5 t.homLatticeCorr
   t11b := t11b_of_exists5 t.t11bExists
   t23 := t.t23
@@ -3024,7 +3022,7 @@ theorem sixContactMin_of_open6_poincare (r : OpenResearchLeaves5) (t : OpenTextb
     { t3Surj := t.t3Surj, t4 := t.t4, t5 := t.t5, homFreeFiniteAlgClosed := t.homFreeFiniteAlgClosed,
       charPolyIndepOfEllAlgClosed := t.charPolyIndepOfEllAlgClosed,
       t8 := _root_.ZInQ.Contrib.AVB1.poincareReducibility_of_simpleImage t.poincareComplement g.simpleImageIsogeny,
-      t10 := t.t10, homLatticeCorr := t.homLatticeCorr, t11bExists := t.t11bExists, t23 := t.t23, t24 := t.t24,
+      homLatticeCorr := t.homLatticeCorr, t11bExists := t.t11bExists, t23 := t.t23, t24 := t.t24,
       t27 := t.t27, t33 := t.t33, dimJacobianEqGenus := t.dimJacobianEqGenus, genusX1Field := t.genusX1Field,
       t35 := t.t35, normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ,
       normalCurveSmoothQ := t.normalCurveSmoothQ, geomConnectedOfConstantFieldQ := t.geomConnectedOfConstantFieldQ,

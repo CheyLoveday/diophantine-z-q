@@ -71,13 +71,11 @@ structure OpenResearchLeaves5 : Prop where
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))
   r1rec : LeafQM.AV.R1rec
-  r3 : _root_.ZInQ.LeafPush2.R03_LinYang
   r4 : PkgI1.ThetaModularity
   r5 : LeafQM.AV.R5fp
   r5count : LeafQM.AV.R5fpCount
   r6 : _root_.PkgI2.RaynaudCriterion.{0}
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
-  r7b : _root_.PkgI2.SerreTatePotentialGood.{0}
   r8 : _root_.PkgI2.GrothendieckMonodromy.{0}
   r9a : _root_.PkgI3.FaltingsSemisimple
   r9b : _root_.PkgI3.FaltingsTate
@@ -104,13 +102,11 @@ theorem researchLeaves2_of_open5 (r : OpenResearchLeaves5) : OpenResearchLeaves2
   r1r2 := r.r1r2
   r1b := r.r1b
   r1rec := r.r1rec
-  r3 := r03LinYang_ofK5 r.r3
   r4 := r.r4
   r5 := r.r5
   r5count := r.r5count
   r6 := raynaudCriterion_ofK5 r.r6
   r7a := neronOggShafarevich_ofK5 r.r7a
-  r7b := serreTatePotentialGood_ofK5 r.r7b
   r8 := grothendieckMonodromy_ofK5 r.r8
   r9a := faltingsSemisimple_ofK5 r.r9a
   r9b := faltingsTate_ofK5 r.r9b
@@ -223,7 +219,6 @@ theorem textbookLeaves4_of_open5 (t : OpenTextbookLeaves5) (l : OpenAddedLeaves5
   t7 := t7_of_algClosed5 t.charPolyIndepOfEllAlgClosed
   t8 := t8_of_simpleImage5 t.poincareComplement g.simpleImageIsogeny
   t9 := t9_of_leaves5 l.t09SymmIsogenyExists l.isogenyQuasiInverse
-  t10 := t10_ofK5 t.t10
   homLatticeCorr := homLatticeCorr_ofK5 t.homLatticeCorr
   t11b := t11b_of_exists5 t.t11bExists
   t23 := t.t23

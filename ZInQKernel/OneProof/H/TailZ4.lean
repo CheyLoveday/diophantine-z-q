@@ -67,14 +67,12 @@ structure OpenResearchLeaves8 : Prop where
   r1r2 : LeafAdopt.R1R2fpRep
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
   r1rec : LeafQM.AV.R1rec
-  r3 : _root_.ZInQ.LeafPush2.R03_LinYang
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   igusaChi10 : QMSplit.Theta.IgusaChi10
   r5 : LeafQM.AV.R5fp
   r5count : LeafQM.AV.R5fpCount
   r6 : _root_.PkgI2.RaynaudCriterion.{0}
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
-  r7b : _root_.PkgI2.SerreTatePotentialGood.{0}
   r8 : _root_.PkgI2.GrothendieckMonodromy.{0}
   r9a : _root_.PkgI3.FaltingsSemisimple
   r9b : _root_.PkgI3.FaltingsTate
@@ -117,7 +115,6 @@ structure OpenTextbookLeaves8 : Prop where
   cartierSmooth : _root_.AVGlue.CartierSmooth
   geomConnOfRationalPoint : _root_.AVGlue.GeomConnOfRationalPoint
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
-  t10 : _root_.T10Etale.T10_TateDuality
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
@@ -183,14 +180,12 @@ theorem researchLeaves7_of_open8 (r : OpenResearchLeaves8) (t : OpenTextbookLeav
   r1r2 := r.r1r2
   shimuraFamily := r.shimuraFamily
   r1rec := r.r1rec
-  r3 := r.r3
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
   r5 := r.r5
   r5count := r.r5count
   r6 := r.r6
   r7a := r.r7a
-  r7b := r.r7b
   r8 := r.r8
   r9a := r.r9a
   r9b := r.r9b
@@ -221,7 +216,6 @@ theorem textbookLeaves7_of_open8 (t : OpenTextbookLeaves8) : OpenTextbookLeaves7
   cartierSmooth := t.cartierSmooth
   geomConnOfRationalPoint := t.geomConnOfRationalPoint
   groupSchemeEquidim := t.groupSchemeEquidim
-  t10 := t.t10
   uniformizationLeafAll := t.uniformizationLeafAll
   gagaMorphism := t.gagaMorphism
   t11bExists := t11bExists_lf8

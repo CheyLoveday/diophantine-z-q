@@ -23,7 +23,6 @@ structure OpenTextbookLeaves10 : Prop where
   cartierSmooth : _root_.AVGlue.CartierSmooth
   geomConnOfRationalPoint : _root_.AVGlue.GeomConnOfRationalPoint
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
-  t10 : _root_.T10Etale.T10_TateDuality
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
@@ -45,7 +44,6 @@ theorem textbookLeaves9_of_open10 (t : OpenTextbookLeaves10) : OpenTextbookLeave
   cartierSmooth := t.cartierSmooth
   geomConnOfRationalPoint := t.geomConnOfRationalPoint
   groupSchemeEquidim := t.groupSchemeEquidim
-  t10 := t.t10
   uniformizationLeafAll := t.uniformizationLeafAll
   gagaMorphism := t.gagaMorphism
   bdRInvariants := t.bdRInvariants

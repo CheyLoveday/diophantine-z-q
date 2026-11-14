@@ -6459,13 +6459,11 @@ structure OpenResearchLeaves2 : Prop where
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))
   r1rec : LeafQM.AV.R1rec
-  r3 : ZInQ.LeafPush2.R03_LinYang
   r4 : PkgI1.ThetaModularity
   r5 : LeafQM.AV.R5fp
   r5count : LeafQM.AV.R5fpCount
   r6 : PkgI2.RaynaudCriterion.{0}
   r7a : PkgI2.NeronOggShafarevich.{0}
-  r7b : PkgI2.SerreTatePotentialGood.{0}
   r8 : PkgI2.GrothendieckMonodromy.{0}
   r9a : PkgI3.FaltingsSemisimple
   r9b : PkgI3.FaltingsTate
@@ -6497,7 +6495,6 @@ structure OpenTextbookLeaves2 : Prop where
   t7 : PkgI3.CharPolyIndepOfEll
   t8 : PkgI3.PoincareReducibility
   t9 : LeafPush.T09_WeilPairing.{0}
-  t10 : T10Etale.T10_TateDuality
   t11a : ZInQ.LeafPush2.T11a_RiemannEnd
   t11b : ZInQ.LeafPush2.T11b_Rigidity
   t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
@@ -6571,13 +6568,11 @@ structure OpenGlue2 : Prop where
 theorem researchLeaves3_of_open2 (r : OpenResearchLeaves2) : ResearchLeaves3 where
   r1r2 := r.r1r2
   r1rec := r.r1rec
-  r3 := r.r3
   r4 := r.r4
   r5 := r.r5
   r5count := r.r5count
   r6 := r.r6
   r7a := r.r7a
-  r7b := r.r7b
   r8 := r.r8
   r9a := r.r9a
   r9b := r.r9b
@@ -6607,7 +6602,6 @@ theorem textbookLeaves_of_open2 (t : OpenTextbookLeaves2) : TextbookLeaves where
   t7 := t.t7
   t8 := t.t8
   t9 := t.t9
-  t10 := t.t10
   t11a := t.t11a
   t11b := t.t11b
   t14a := t14a_proved

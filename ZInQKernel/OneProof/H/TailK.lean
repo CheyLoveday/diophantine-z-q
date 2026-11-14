@@ -164,7 +164,6 @@ structure OpenTextbookLeaves4 : Prop where
   t7 : PkgI3.CharPolyIndepOfEll
   t8 : PkgI3.PoincareReducibility
   t9 : LeafPush.T09_WeilPairing.{0}
-  t10 : T10Etale.T10_TateDuality
   /-- hom-unify: analytic representation of homomorphisms (replaces T11(a) and `HomLinearLift`). -/
   homLatticeCorr : HomUnify.HomLatticeCorr
   t11b : ZInQ.LeafPush2.T11b_Rigidity
@@ -236,7 +235,6 @@ theorem textbookLeaves3_of_open4 (t : OpenTextbookLeaves4) : OpenTextbookLeaves3
   t7 := t.t7
   t8 := t.t8
   t9 := t.t9
-  t10 := t.t10
   homLatticeCorr := t.homLatticeCorr
   t11b := t.t11b
   t23 := t.t23

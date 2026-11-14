@@ -23,7 +23,6 @@ namespace HSyn
 structure OpenResearchLeaves10 : Prop where
   r1r2 : LeafAdopt.R1R2fpRep
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
-  r3 : _root_.ZInQ.LeafPush2.R03_LinYang
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   igusaChi10 : QMSplit.Theta.IgusaChi10
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
@@ -51,9 +50,6 @@ structure OpenResearchLeaves10 : Prop where
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces `r19`. -/
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
-  /-- reduct-split, r7b: Serre–Tate 1968 Thm 2 as printed (potential good reduction iff the image of inertia on
-  `T_ℓ A` is finite; RISK: if printed for complete `K`, a consequence). -/
-  serreTateThm2 : _root_.ReductSplit.SerreTateThm2
   /-- reduct-split, r8: SGA 7 IX Thm 3.6 over a DVR (semistable reduction after a finite extension, at every place
   above `O`). -/
   semistableReductionDVR : _root_.ReductSplit.SemistableReductionDVR
@@ -97,7 +93,6 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
     OpenResearchLeaves9 where
   r1r2 := r.r1r2
   shimuraFamily := r.shimuraFamily
-  r3 := r.r3
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
   r6 := _root_.ReductGlue.raynaudCriterion_leaves r.raynaudSemistable r.semistableUnipotent
@@ -124,7 +119,6 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
   faltingsLemma5BC := r.faltingsLemma5BC
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
-  serreTateThm2 := r.serreTateThm2
   semistableReductionDVR := r.semistableReductionDVR
   semistableUnipotent := r.semistableUnipotent
   neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR

@@ -43,8 +43,6 @@ structure ResearchLeaves3 : Prop where
   -- its concrete family form is `GluePieces3.r1bFamily` (fibre-qm-period).
   /-- R1(d), Shimura reciprocity, object form (leaf-qm-fp; premise Lemma P, rv-qm-polar). -/
   r1rec : LeafQM.AV.R1rec
-  /-- R3, Lin–Yang over `ℂ`, existential and polarization-free (leaf-push2; premise Lemma P). -/
-  r3 : ZInQ.LeafPush2.R03_LinYang
   r4 : PkgI1.ThetaModularity
   /-- R5(ii), González–Rotger Thm 5.12, fields of moduli (= rv-blueprints' R5fpStrong, Q2;
   premise Lemma P, rv-qm-polar). -/
@@ -53,7 +51,6 @@ structure ResearchLeaves3 : Prop where
   r5count : LeafQM.AV.R5fpCount
   r6 : PkgI2.RaynaudCriterion.{0}
   r7a : PkgI2.NeronOggShafarevich.{0}
-  r7b : PkgI2.SerreTatePotentialGood.{0}
   r8 : PkgI2.GrothendieckMonodromy.{0}
   r9a : PkgI3.FaltingsSemisimple
   r9b : PkgI3.FaltingsTate
@@ -93,13 +90,11 @@ theorem ResearchLeaves3.h5 (r : ResearchLeaves3) : LeafAdopt.H5 :=
 theorem researchLeaves3_of (r : ResearchLeaves) : ResearchLeaves3 :=
   { r1r2 := r.r1r2,
     r1rec := r.r1rec,
-    r3 := r.r3,
     r4 := r.r4,
     r5 := r.r5,
     r5count := r.r5count,
     r6 := r.r6,
     r7a := r.r7a,
-    r7b := r.r7b,
     r8 := r.r8,
     r9a := r.r9a,
     r9b := r.r9b,

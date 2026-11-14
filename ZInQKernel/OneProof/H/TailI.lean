@@ -130,7 +130,6 @@ structure OpenTextbookLeaves3 : Prop where
   t7 : PkgI3.CharPolyIndepOfEll
   t8 : PkgI3.PoincareReducibility
   t9 : LeafPush.T09_WeilPairing.{0}
-  t10 : T10Etale.T10_TateDuality
   /-- hom-unify: the analytic representation `Hom(A, B) → {M : MΛ_A ⊆ Λ_B}` (lifting for every
   `K`, bijective over `ℂ`); Birkenhake–Lange §1.2, Mumford §1, §3, GAGA (UNVERIFIED numbers).
   Replaces T11(a) and `HomLinearLift`. -/
@@ -209,7 +208,6 @@ theorem textbookLeaves2_of_open3 (t : OpenTextbookLeaves3) : OpenTextbookLeaves2
   t7 := t.t7
   t8 := t.t8
   t9 := t.t9
-  t10 := t.t10
   t11a := HomUnify.t11a_riemannEnd_of_corr t.homLatticeCorr
   t11b := t.t11b
   t23 := t.t23
