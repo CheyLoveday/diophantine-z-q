@@ -73,6 +73,10 @@ proved anyway) and the definition `t34 := t34_of_split5 …`, and at the consume
 | TailD.lean:236 | `LeafModCurves.dim_J1_le t.t34 N hN0 J hJ1` | `dim_J1_le_of5 t34Le N hN0 J hJ1` (same type; checked by an `example`) |
 | TailD.lean:250 | `javanpeykarJ1 hR18 hBelyi t.t34 …` | `G0Split.javanpeykarJ1_of_le hR18 hBelyi t34Le …` |
 
+Checked in context (compiled, `Fold.lean`): `HDec.HSyn.glueOutputs_of_leaves3_t34Le` is TailD's
+`glueOutputs_of_leaves3` (TailD.lean:204-257, with that file's options) with only these two lines changed;
+it has the same type and does not mention `t.t34`.
+
 `javanpeykarJ1_of_le` is `javanpeykarJ1`'s proof with one line changed (diff in the log), and
 `javanpeykarJ1_of_le hR18 hB (dimJ1Le5_of_t34 t34) = javanpeykarJ1 hR18 hB t34` holds by `rfl`
 (compiled). Since `DimJ1Le5` follows from `t34` (`dimJ1Le5_of_t34`), the change only weakens the hypotheses.

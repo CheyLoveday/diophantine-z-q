@@ -3581,3 +3581,86 @@ end HDec
 #print axioms HDec.HSyn.t34Le_of_rh
 #print axioms HDec.HSyn.t34Le_of_localDerivation
 #print axioms HDec.HSyn.G0Split.javanpeykarJ1_of_le
+
+/-! ### The consumer, refolded: TailD's `glueOutputs_of_leaves3` with `t.t34` replaced by `t34Le`
+
+Copied from `ZInQKernel/OneProof/H/TailD.lean` (lines 204-257, with that file's `maxHeartbeats` and
+`-instance` settings); the only changes are the name and the two lines at TailD.lean:236 and :250. The
+copy no longer mentions `t.t34`. -/
+
+namespace HDec
+
+set_option maxHeartbeats 1000000
+
+attribute [-instance] TauCeti.FinitePadicExtension.toAlgebra
+  TauCeti.FinitePadicExtension.ofInstances TauCeti.FinitePadicExtension.toModuleFinite
+  TauCeti.FinitePadicExtension.toValuativeExtension
+
+noncomputable section
+
+namespace HSyn
+
+open scoped MatrixGroups ModularForm
+
+open G0Split in
+theorem glueOutputs_of_leaves3_t34Le (r : ResearchLeaves3) (t : TextbookLeaves) (gp : GluePieces) :
+    GlueAssembly.GlueOutputs ZInQ.Mult.S_mul := by
+  obtain ⟨hDimF, hDim, hSimp, hPMH, hBC, hProdE, hRev, hThetaPt, hMod, hCopies⟩ := gp
+  have hBelyi : X1BelyiOnModel := x1BelyiOnModel_of_belyiX1 t.belyiX1
+  have hAdd : HeightAdditivity := heightAdditivity_of_h5neron t.t41 r.h5.2 hPMH
+  have hR18 : R18_JavanpeykarConcrete := r18Concrete_of r.r18 hCopies
+  have hR22 : R22_PazukiConcrete := r22Concrete_of r.r22 hCopies
+  -- A4: the moduli data and an object over every value
+  obtain ⟨Y, Φ, π, h1, h2, hfib⟩ :=
+    LeafQM.AV.exists_fibre_object (LeafAdopt.R1R2fp_of_rep r.r1r2)
+  intro u hu
+  obtain ⟨y, P, hP, hy⟩ := hfib (OnePoint.some (algebraMap ℚ Qbar (ZInQ.JHeight.Jmap u)))
+  -- G2-G16 (missing piece 10, `ModularConstituent`): the field `L'`, the model `A`, the level `N`, `J₁(N)`
+  obtain ⟨L, emb, A, N, J, hiso, hN0, hJ1, hNQ, hdQ, hCC⟩ := hMod Y Φ π h1 h2 u hu y P hP hy
+  have hFib : FibreOver Y Φ π u L A := ⟨emb, y, P, hP, hy, hiso⟩
+  have hA2 : A.dim = 2 := model_dim hDim emb A P.A hiso P.surface
+  -- H5: the stable height of `A` is real
+  have hfin := r.h5.1
+  have hx : ZInQ.DefFaltings.stableFaltingsHeight A = ZInQ.DefFaltings.faltingsHeight A :=
+    (ZInQ.DefFaltings.faltingsHeight_coe hfin A).symm
+  -- G19: the theta point (missing piece 9, `ThetaPointOfFibre`) and Pazuki (R22)
+  obtain ⟨K', z, hF1, hPaz⟩ := thetaPazuki hR22 hThetaPt Y Φ π h1 h2 u hu L A hFib hA2 _ hx
+  refine ⟨K', z, ZInQ.DefFaltings.faltingsHeight A, hF1, hPaz, Or.inl ?_⟩
+  -- E1: a nonzero homomorphism `A → J₁(N)_{L'}`
+  obtain ⟨f, hf⟩ := hom_of_common3 r t _ _ hCC
+  -- G5-G6 (missing piece 4, `FibreSimple`): `A` simple; T8: Poincaré
+  obtain ⟨Z, g, hisoZ⟩ := t.t8 L.K _ _ (hSimp Y Φ π h1 h2 u hu L A hFib) f hf
+  -- G17 after Poincaré (`isogenousProduct`, from missing pieces 1, 7, 8): `A × Z`, the isogeny `J₁(N)_{L'} → A × Z`
+  obtain ⟨Pr, φ, hφ, hPprod, hdims⟩ :=
+    isogenousProduct hDimF hProdE hRev L.K _ _ _ f g hisoZ
+  -- E2: `dim J₁(N) ≤ N²`
+  obtain ⟨gJ, hgJ, hgN⟩ := dim_J1_le_of5 t34Le N hN0 J hJ1
+  have hJLd : (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K).dim = (gJ : WithBot ℕ∞) :=
+    (hDim ℚ L.K ((LeafAdopt.abVarEquiv ℚ).symm J)).trans hgJ
+  have hALd : A.dim = ((2 : ℕ) : WithBot ℕ∞) := by rw [hA2]; rfl
+  obtain ⟨gZ, hZd, hsum⟩ := hdims 2 gJ hALd hJLd
+  -- heights (H5; missing pieces 5, 6; R18 with missing pieces 2, 3)
+  have hxJ : ZInQ.DefFaltings.stableFaltingsHeight
+      (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K) =
+      ZInQ.DefFaltings.faltingsHeight ((LeafAdopt.abVarEquiv ℚ).symm J) := by
+    rw [hBC ℚ L.K ((LeafAdopt.abVarEquiv ℚ).symm J)]
+    exact (ZInQ.DefFaltings.faltingsHeight_coe hfin _).symm
+  have hyP := (ZInQ.DefFaltings.faltingsHeight_coe hfin Pr).symm
+  have hzZ := (ZInQ.DefFaltings.faltingsHeight_coe hfin ((LeafAdopt.abVarEquiv L.K).symm Z)).symm
+  have hadd := hAdd L.K Pr A ((LeafAdopt.abVarEquiv L.K).symm Z) hPprod _ _ _ hx hzZ hyP
+  have hJb := javanpeykarJ1_of_le hR18 hBelyi t34Le N hN0 J hJ1 gJ hgJ (by omega) _
+    (ZInQ.DefFaltings.faltingsHeight_coe hfin _).symm
+  have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast hN0
+  have hgN' : (gJ : ℝ) ≤ (N : ℝ) ^ 2 := by exact_mod_cast hgN
+  -- E3-E4 (proved from R19-R21)
+  exact transfer_core r.r19 r.r20 r.r21 (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K) Pr A
+    ((LeafAdopt.abVarEquiv L.K).symm Z) gJ gZ hJLd hZd (by omega) (by omega) φ hφ _ _ _ _ hxJ hyP
+    hzZ hadd hN1 hNQ hJb hgN' hdQ
+
+end HSyn
+
+end
+
+end HDec
+
+#print axioms HDec.HSyn.glueOutputs_of_leaves3_t34Le

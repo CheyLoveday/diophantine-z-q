@@ -61,3 +61,7 @@
   + LocalDer.lean verbatim (True) ⇒ `GenusRoute.dimJ1Le : DimJ1Le` with NO hypothesis.
 ## Fold.lean regenerated on Closed.lean — COMPILED (30 s). `HDec.HSyn.t34Le : DimJ1Le5` (no hypothesis),
 ## drop-ins dim_J1_le_of5, G0Split.javanpeykarJ1_of_le; Closed verbatim in Fold (True). VERIFIED.
+## Fold.lean + refolded consumer — COMPILED (29 s), axioms standard. VERIFIED.
+- `HDec.HSyn.glueOutputs_of_leaves3_t34Le`: TailD.lean:204-257 copied with only the name and the two
+  lines (:236, :250) changed to `dim_J1_le_of5 t34Le …` / `javanpeykarJ1_of_le hR18 hBelyi t34Le …`;
+  no `t.t34` left (python assert). Same type as `glueOutputs_of_leaves3`.
