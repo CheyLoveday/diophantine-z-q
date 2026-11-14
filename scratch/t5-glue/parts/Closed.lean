@@ -60,3 +60,16 @@ theorem shimuraReciprocityModFn_of_t5 (hCM : ShimuraMainCM) (hX : X0ModuliGalois
   shimuraReciprocityModFn_of_split (cmModuli_of_t5 hCM hS) (x0RatStructure_of_leaf hX)
 
 end T5Glue
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZGenus.Shimura
+
+/-- **Row T-5 with `IdeleLatticeScale` split**: two printed leaves and two small glue Props
+(`RingClassLattice`: TC's ring-class quotient is the lattice class `[K ∩ s_f Ô_O]`;
+`InvertibleColon`: `J ∩ O` is invertible). -/
+theorem shimuraReciprocityModFn_of_t5' (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hA : RingClassLattice) (hB : InvertibleColon) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_t5 hCM hX (ideleLatticeScale_of hA hB)
+
+end T5Glue

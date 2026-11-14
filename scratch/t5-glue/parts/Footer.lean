@@ -30,3 +30,7 @@
 #print axioms T5Glue.absArtinSurjectiveQNeg
 #print axioms T5Glue.cmModuli_of_t5
 #print axioms T5Glue.shimuraReciprocityModFn_of_t5
+#print axioms T5Glue.sInvLat_eq_colon
+#print axioms T5Glue.latHat_inter_heegnerN
+#print axioms T5Glue.ideleLatticeScale_of
+#print axioms T5Glue.shimuraReciprocityModFn_of_t5'

@@ -168,3 +168,12 @@
   `colon 𝔞 𝔍 = {y : 𝔍y ⊆ 𝔞}`, `latHat_O_mul` (Ô_O·𝔞̂ ⊆ 𝔞̂ for O-stable 𝔞, `map_mem_closure₂`),
   `fIntAd_sub_latHatO` (f·𝒪̂ ⊆ Ô_O), `finPart_mem_closure_idealOf` (s_f ∈ closure of 𝔍_s: TC strong approximation),
   **`sInvLat_eq_colon`**: for O-stable 𝔞 with K ∩ 𝔞̂ = 𝔞, s⁻¹𝔞 = (𝔞 : 𝔍_s). 0 errors.
+
+## Step 16: parts/Scale.lean — `IdeleLatticeScale` split — COMPILED
+- GLUE `RingClassLattice` (ringClassIdeleQuotient O [s] = picClass J ⇒ ∃ k ≠ 0, 𝔍_s = k·(J ∩ O)),
+  GLUE `InvertibleColon` (κ(J∩O)L' = cL, κ(J∩O)L'_N = cL_N ⇒ c ≠ 0, κ(𝔞 : J∩O) = c⁻¹L', κ(𝔞_N : J∩O) = c⁻¹L'_N).
+- PROVED: `colon_smul`, `kappa_image_smul`, `kappa_inv`, `preimage_span_pair`, `latHat_inter_heegnerN`
+  (K ∩ 𝔞̂_N = 𝔞_N, n = 2c₀, d = 2AN), **`ideleLatticeScale_of : RingClassLattice → InvertibleColon →
+  IdeleLatticeScale`** (with `sInvLat_eq_colon`, kernel `kappa_mul_mem_lat`, `kappa_mul_mem_latN_gen`; header now
+  also imports `ZInQKernel.Contrib.TYZGenus.ShimuraMain`), `shimuraReciprocityModFn_of_t5'`.
+- T5Glue.out: 0 errors, all axiom lines standard.
