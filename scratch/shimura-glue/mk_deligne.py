@@ -23,7 +23,7 @@ open LeafQM LeafQM.AV
 '''
 _, bn = split(d+'parts/DeligneNew.lean')
 imports=[]
-for l in ['import ZInQKernel.HDecomp.QM.Leaves']+ia+iy:
+for l in ['import ZInQKernel.HDecomp.QM.Leaves','import ZInQKernel.HDecomp.QM.Polar']+ia+iy:
     if l not in imports: imports.append(l)
 out='\n'.join(imports)+'\n\n'+ba+'\n\n/-! ## Part 2: shimura-split `Y3Conn.lean`, verbatim -/\n'+by_+ \
   '\n\n/-! ## Part 3: shimura-split `DeligneComponentsX6`, verbatim -/\n\n'+x6+'\n'+bn

@@ -111,3 +111,6 @@
 - Second read-only review of `RayClassCM` + glue: OK (HasCM* ⇒ com q = 𝒪_k, optimal embedding; conductor 3
   right; k(y) = ray class field mod 3, leaf weaker; non-vacuous; degrees ℚ(ζ₁₂), ℚ(ζ₃), 12, all ⊇ ζ₃).
   Wording points applied (k_∞^× in the subgroup; B ramified at 3). RayClass.lean recompiled: standard axioms.
+- Bridges (DeligneNew.lean): `ofQ_eq_ofInt` (ofQ over ℚ = kernel `LeafQM.ofInt`), `nrdQ_eq_kernel` (rfl with
+  `RvQMPolar.nrd`), `ofInt_mem_Ohat`. Deligne.lean (now also imports QM.Polar): 0 errors, 6 standard axiom
+  lines. RowsGlue.lean: 0 errors, 73 axiom lines, all standard.

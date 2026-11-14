@@ -55,6 +55,7 @@
 'HDec.QMSplit.Moduli.rows_of_shimuraSplitLeaves' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.printed_of_deligneComponentsY3' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.printed_of_deligneComponentsX6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ShimuraGlue.ofQ_eq_ofInt' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.deligneComponentsY3_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.deligneComponentsX6_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.shimuraSplitLeaves_of_glue' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -71,6 +72,6 @@
 'ShimuraGlue.Ray.reciprocityCanonical_of_rayClass' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves3' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-real	1m48.338s
-user	2m27.918s
-sys	0m3.727s
+real	1m47.966s
+user	2m28.088s
+sys	0m3.436s

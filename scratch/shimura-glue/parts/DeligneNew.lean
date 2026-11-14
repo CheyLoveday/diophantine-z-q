@@ -109,6 +109,20 @@ theorem deligneComponentsX6_of_printed (h : DeligneComponentsX6Printed) :
     exact ⟨s pt⟩
   exact connectedSpace_of_subsingleton c.subsingleton
 
+/-! ### Bridges to the kernel's order `𝒪` and reduced norm -/
+
+/-- `ofQ` over `ℚ` is the kernel's `LeafQM.ofInt` on integer coordinates. -/
+theorem ofQ_eq_ofInt (n : Fin 4 → ℤ) : ofQ (R := ℚ) (fun i => (n i : ℚ)) = LeafQM.ofInt n := by
+  have h : half ℚ = 1 / 2 := by simp [half]
+  ext <;> simp [ofQ, LeafQM.ofInt, h] <;> ring
+
+/-- `nrdQ ℚ` is the kernel's reduced norm `RvQMPolar.nrd` (same formula). -/
+theorem nrdQ_eq_kernel (x : LeafQM.B) : nrdQ ℚ x = RvQMPolar.nrd x := rfl
+
+/-- The coordinates of an element of the kernel's `𝒪` under `B → B ⊗ 𝔸_f` lie in `ℤ̂`, so `𝒪 ⊆ 𝒪̂`. -/
+theorem ofInt_mem_Ohat (n : Fin 4 → ℤ) : ofQ (fun i => ((n i : ℤ) : Af)) ∈ Ohat :=
+  ⟨_, fun i => intCast_mem Zhat _, rfl⟩
+
 /-! ### Converses: the printed leaves are equivalent to shimura-split's leaves -/
 
 /-- An idele with the cyclotomic components of `σ` is `cycU σ`. -/
@@ -154,6 +168,7 @@ end ShimuraGlue
 
 #print axioms ShimuraGlue.printed_of_deligneComponentsY3
 #print axioms ShimuraGlue.printed_of_deligneComponentsX6
+#print axioms ShimuraGlue.ofQ_eq_ofInt
 
 
 #print axioms ShimuraGlue.deligneComponentsY3_of_printed
