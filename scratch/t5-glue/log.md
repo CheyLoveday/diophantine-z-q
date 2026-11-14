@@ -162,3 +162,9 @@
   Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_t5 : ShimuraMainCM → IdeleLatticeScale → CMModuli`.
 - T5Glue.out: 0 errors, 29 axiom lines all standard. T5Headline.lean: `frozenTarget_t5` now takes
   `ShimuraMainCM`, `X0ModuliGalois`, `IdeleLatticeScale` in place of `hS`; 0 errors, standard axioms.
+
+## Step 15: parts/Colon.lean — `s⁻¹𝔞 = (𝔞 : 𝔍_s)` PROVED — COMPILED
+- `Osub` (O as ℤ-submodule), `idealOf m f s = {j ∈ K : s_f⁻¹ j ∈ Ô_O}` (𝔍_s = K ∩ s_f·Ô_O, Ô_O = closure of O),
+  `colon 𝔞 𝔍 = {y : 𝔍y ⊆ 𝔞}`, `latHat_O_mul` (Ô_O·𝔞̂ ⊆ 𝔞̂ for O-stable 𝔞, `map_mem_closure₂`),
+  `fIntAd_sub_latHatO` (f·𝒪̂ ⊆ Ô_O), `finPart_mem_closure_idealOf` (s_f ∈ closure of 𝔍_s: TC strong approximation),
+  **`sInvLat_eq_colon`**: for O-stable 𝔞 with K ∩ 𝔞̂ = 𝔞, s⁻¹𝔞 = (𝔞 : 𝔍_s). 0 errors.
