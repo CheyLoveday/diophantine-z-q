@@ -9,6 +9,13 @@ import ZInQKernel.HDecomp.ModCurves.X1Belyi
 import ZInQKernel.Contrib.CurvesG.CurveSplit
 import ZInQKernel.Contrib.SmoothFibre.Basic
 
+/-! # genus-route: `dim J₁(N) ≤ N²` with no hypothesis
+
+Two files concatenated verbatim (minus `import` and `#print` lines): dimjac-glue's
+`scratch/dimjac-glue/DimJacGlue.lean` (branch `wip/dimjac-glue`, commit 24435c82; proves
+`ZInQ.Contrib.CurvesG.DimJacobianEqGenus`), then genus-route's `LocalDer.lean` (proves
+`DimJacobianEqGenus → DimJ1Le`). Result: `GenusRoute.dimJ1Le : DimJ1Le`. -/
+
 
 /-! # dimjac-glue: `ModularSplit.DimJac.H0DifferentialsEqHolo` is a theorem
 
@@ -712,6 +719,12 @@ Contents.
    `LocalDerivation` (`d/dπ` preserves `𝒪_P` for a local parameter `π`), with no Riemann–Hurwitz:
    holomorphic differentials are `h · dj` with `h` in an explicit space `V`, and `V` injects into
    `OF / j·OF ≅ ℚ^d` (`OF` the integral closure of `ℚ[j]`).
+6. (new, proved; `LocalDer.lean`) `localDerivation : LocalDerivation`, hence
+   `dimJ1Le_of_dimJacobianEqGenus : DimJacobianEqGenus → DimJ1Le` (no literature leaf). Proof: `d/dj`
+   exists (`Ω_{F/ℚ} = F·dj ≠ 0`, since `F/ℚ` is not formally unramified); it is bounded on `𝒪_P` (a
+   `ℚ[j]`-basis of `OF` and `𝒪_P = OF_𝔭`); the residue field `OF/𝔭` is finite over `ℚ` (Zariski) with a
+   primitive element `θ̄`; writing `x = p(θ) + π y`, `g(θ) = π z` improves the bound step by step, which
+   forces `δ_j(π) ≠ 0` and `δ_j(𝒪_P) ⊆ δ_j(π)·𝒪_P`; `δ = δ_j / δ_j(π)`. Places over `∞`: twist `j ↦ 1/j`.
 
 No `sorry`, no `axiom`. -/
 

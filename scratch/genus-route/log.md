@@ -46,3 +46,18 @@
 - `dimJ1Le_of_localDerivation : DimJacobianEqGenus → LocalDerivation → DimJ1Le`.
 - No Riemann–Hurwitz, no identification of fieldGenus with another genus, no X0Transitive, no GenusX1Field.
 ## Fold.lean regenerated on GenusElem — COMPILED; adds `HDec.HSyn.t34Le_of_localDerivation`. VERIFIED.
+
+## LocalDer.lean — COMPILED, axioms standard. VERIFIED.
+- `GenusRoute.localDerivation : LocalDerivation` PROVED (the leaf is now a theorem).
+  Pieces: isScalarTower_Q_Qj, essFiniteType_QF, sF_transcendental, nontrivial_kaehler
+  (FormallyUnramified.iff_isSeparable), D_sF_ne_zero, exists_deriv_s (Projective.exists_dual_eq_one),
+  exists_pow_mul_mem, frac_rep (𝒪_P = OF_𝔭 via valuationSubringAtPrime), inv_mem_of_not_mem_center,
+  deriv_bound (ℚ[j]-basis of OF), residue_structure (OF/𝔭 finite over ℚ by
+  finite_of_finite_type_of_isJacobsonRing; Field.exists_primitive_element; separable ⇒ g'(θ) unit),
+  localDer_fin (iteration hQ, δ_s π ≠ 0, δ = δ_s/δ_s π), localDerivation (twist j ↦ 1/j at ∞).
+- `dimJ1Le_of_dimJacobianEqGenus : DimJacobianEqGenus → DimJ1Le`, `genusLeDegree : GenusLeDegree`.
+## Closed.lean — COMPILED (30 s), axioms standard. VERIFIED.
+- dimjac-glue's DimJacGlue.lean (origin/wip/dimjac-glue 24435c82) verbatim (python substring test True)
+  + LocalDer.lean verbatim (True) ⇒ `GenusRoute.dimJ1Le : DimJ1Le` with NO hypothesis.
+## Fold.lean regenerated on Closed.lean — COMPILED (30 s). `HDec.HSyn.t34Le : DimJ1Le5` (no hypothesis),
+## drop-ins dim_J1_le_of5, G0Split.javanpeykarJ1_of_le; Closed verbatim in Fold (True). VERIFIED.

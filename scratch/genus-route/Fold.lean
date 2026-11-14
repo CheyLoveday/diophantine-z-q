@@ -1,19 +1,706 @@
 import ZInQKernel.Contrib.CurvesG.GenusSplit
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.JacobianExists
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Curve.CanonicalDegree
+import ZInQKernel.Contrib.Dim.SmoothStalk
+import ZInQKernel.Contrib.Dim.Basic
 import ZInQKernel.Contrib.RLeaf.BelyiX1
 import ZInQKernel.Contrib.RLeaf.T40
 import ZInQKernel.HDecomp.ModCurves.X1Belyi
 import ZInQKernel.Contrib.CurvesG.CurveSplit
-import ZInQKernel.Contrib.Dim.SmoothStalk
 import ZInQKernel.Contrib.SmoothFibre.Basic
 import ZInQKernel.OneProof.H.TailM
 
-/-! # genus-route (fold form): `GenusElem.lean` verbatim, plus drop-in replacements for the two uses of `t34`
+/-! # genus-route (fold form)
 
-The last section (namespace `HDec.HSyn`) restates `DimJ1Le` on the OneProof copies (`DimJ1Le5`) and gives
-`t34Le_of_localDerivation`, `t34Le_of_rh`, `dim_J1_le_of5` and `G0Split.javanpeykarJ1_of_le`, which a fold can
-use at `TailD.lean:236` and `:250` in place of `LeafModCurves.dim_J1_le t.t34` and `javanpeykarJ1 hR18 hBelyi t.t34`.
+`Closed.lean` verbatim (dimjac-glue's `DimJacGlue.lean`, then genus-route's `LocalDer.lean`), plus, in namespace
+`HDec.HSyn`, drop-in replacements for the two uses of `t34`: `t34Le : DimJ1Le5` (no hypothesis), `dim_J1_le_of5`
+(for `TailD.lean:236`) and `G0Split.javanpeykarJ1_of_le` (for `TailD.lean:250`). -/
 
-## `GenusElem.lean`: `dim J₁(N) ≤ N²` without `GenusX1Field` and without `X0Transitive`
+
+/-! # genus-route: `dim J₁(N) ≤ N²` with no hypothesis
+
+Two files concatenated verbatim (minus `import` and `#print` lines): dimjac-glue's
+`scratch/dimjac-glue/DimJacGlue.lean` (branch `wip/dimjac-glue`, commit 24435c82; proves
+`ZInQ.Contrib.CurvesG.DimJacobianEqGenus`), then genus-route's `LocalDer.lean` (proves
+`DimJacobianEqGenus → DimJ1Le`). Result: `GenusRoute.dimJ1Le : DimJ1Le`. -/
+
+
+/-! # dimjac-glue: `ModularSplit.DimJac.H0DifferentialsEqHolo` is a theorem
+
+`H0DifferentialsEqHolo` (modular-split, `scratch/modular-split/DimJac.lean`) is copied verbatim below and
+**proved** (`ModularSplit.DimJac.h0DifferentialsEqHolo`), with no hypotheses, from Mathlib, the vendored
+Jacobian library (`ZInQKernel/Contrib/CloudW07JacobiansCurves/`) and `ZInQKernel/Contrib/Dim/`. With
+modular-split's reduction (copied verbatim) this proves the bundle row
+`ZInQ.Contrib.CurvesG.DimJacobianEqGenus` (`ModularSplit.DimJac.dimJacobianEqGenus`). No sorry; axioms
+`propext, Classical.choice, Quot.sound`.
+
+Proof. Let `g : X → Spec ℚ`, `Ω = Ω¹_{X/ℚ}`, `e : K(X) ≃+* F`, `ψ_U : Γ(X, U) → F` the germ at the generic
+point followed by `e`.
+1. `Φ U : Γ(Ω, U) → Ω_{F/ℚ}` for `U` affine nonempty: the library's `kaehlerSectionsEquiv`
+   (`Ω_{Γ(U)/ℚ} ≃ Γ(Ω, U)`) followed by `KaehlerDifferential.map ℚ ℚ Γ(U) F`; `Φ U (a • d b) = ψ a • D (ψ b)`.
+2. `Φ U` is injective (`kaehlerToFractionFieldInjective`: `Ω_A` projective for `A` smooth, `Ω_K` its
+   localization, `Γ(U)` smooth over `ℚ` and `F` its fraction field) and compatible with restriction.
+3. The global `ΦG : Γ(Ω, X) → Ω_{F/ℚ}` (restrict to one affine open; independent of the choice since any two
+   nonempty opens meet in the generic point) is injective by sheaf locality.
+4. Image ⊆ `holoDiff F`: every valuation subring `w ⊇ ℚ` contains some `ψ_V(Γ(X, V))`, `V` affine
+   (`valuationCenter`, from Mathlib's valuative criterion for the proper `g`).
+5. Image ⊇ `holoDiff F`: for `V` affine and `𝔪 ⊂ Γ(V)` maximal, the point is closed (`X` Jacobson), its stalk
+   is a valuation ring (regular local of dimension one: `Contrib.Dim.finrank_cotangentSpace_of_...` and
+   Mathlib's DVR TFAE), so `ω` regular everywhere has `ψ(t) • ω ∈ im Φ V` for some `t ∉ 𝔪`; hence
+   `ω ∈ im Φ V`; the local preimages glue (sheaf condition).
+6. `H⁰ = Γ` (library `H.zeroLinearEquiv`); additive maps of `ℚ`-vector spaces are `ℚ`-linear
+   (`map_rat_smul`), so `finrankH ℚ 0 = finrank ℚ (holoDiff F) = fieldGenus F`. -/
+
+set_option linter.style.longLine false
+set_option linter.style.haveILetI false
+set_option linter.unusedSectionVars false
+noncomputable section
+open CategoryTheory AlgebraicGeometry
+
+namespace DimJacGlue
+
+variable {X : Scheme.{0}} [IsIntegral X] (g : X ⟶ Spec (CommRingCat.of ℚ))
+  {F : Type} [Field F] [Algebra ℚ F] (e : X.functionField ≃+* F)
+
+lemma generic_mem (U : X.Opens) (hU : (U : Set X).Nonempty) : genericPoint X ∈ U :=
+  ((genericPoint_spec X).mem_open_set_iff U.isOpen).mpr (by simpa using hU)
+
+/-- `Γ(X, U) → F`, the germ at the generic point followed by `e`. -/
+def ψ (U : X.Opens) (hU : (U : Set X).Nonempty) : Γ(X, U) →+* F :=
+  e.toRingHom.comp (X.presheaf.germ U (genericPoint X) (generic_mem U hU)).hom
+
+/-- `Φ_U : Γ(Ω, U) → Ω_{F/ℚ}` for an affine nonempty open `U`. -/
+def Φ (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty) :
+    Γ(g.relativeDifferentials, U) →+ Ω[F⁄ℚ] :=
+  letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+  letI : Algebra Γ(X, U) F := (ψ e U hne).toAlgebra
+  haveI : IsScalarTower ℚ Γ(X, U) F := IsScalarTower.of_algebraMap_eq (fun q =>
+    congrArg (· q) (RingHom.ext_rat (algebraMap ℚ F) ((ψ e U hne).comp (g.specStructureMap U).hom)))
+  (KaehlerDifferential.map ℚ ℚ Γ(X, U) F).toAddMonoidHom.comp
+    (g.kaehlerSectionsEquiv U rfl hU).symm.toLinearMap.toAddMonoidHom
+
+
+variable {g e}
+
+lemma kse_smul_D (U : X.Opens) (hU : IsAffineOpen U) (a b : Γ(X, U)) :
+    letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+    g.kaehlerSectionsEquiv U rfl hU (a • KaehlerDifferential.D ℚ Γ(X, U) b) = a • g.sectionsD U b := by
+  letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+  rw [LinearEquiv.map_smul, Scheme.Hom.kaehlerSectionsEquiv_D]
+
+/-- Induction principle for sections of `Ω¹` over an affine open. -/
+lemma induction_affine (U : X.Opens) (hU : IsAffineOpen U) (P : Γ(g.relativeDifferentials, U) → Prop)
+    (h0 : P 0) (hadd : ∀ x y, P x → P y → P (x + y))
+    (hgen : ∀ a b : Γ(X, U), P (a • g.sectionsD U b)) (s : Γ(g.relativeDifferentials, U)) : P s := by
+  letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+  obtain ⟨η, rfl⟩ := (g.kaehlerSectionsEquiv U rfl hU).surjective s
+  suffices H : ∀ c : Γ(X, U), P (g.kaehlerSectionsEquiv U rfl hU (c • η)) by simpa using H 1
+  have hη : η ∈ Submodule.span Γ(X, U) (Set.range (KaehlerDifferential.D ℚ Γ(X, U))) := by
+    rw [KaehlerDifferential.span_range_derivation]; trivial
+  induction hη using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨b, rfl⟩ := hx
+    intro c; rw [kse_smul_D]; exact hgen c b
+  | zero => intro c; simpa using h0
+  | add x y _ _ hx hy => intro c; rw [smul_add, map_add]; exact hadd _ _ (hx c) (hy c)
+  | smul a x _ hx => intro c; rw [smul_smul]; exact hx _
+
+lemma Φ_smul_D (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty) (a b : Γ(X, U)) :
+    Φ g e U hU hne (a • g.sectionsD U b) = ψ e U hne a • KaehlerDifferential.D ℚ F (ψ e U hne b) := by
+  letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+  letI : Algebra Γ(X, U) F := (ψ e U hne).toAlgebra
+  haveI : IsScalarTower ℚ Γ(X, U) F := IsScalarTower.of_algebraMap_eq (fun q =>
+    congrArg (· q) (RingHom.ext_rat (algebraMap ℚ F) ((ψ e U hne).comp (g.specStructureMap U).hom)))
+  have := kse_smul_D (g := g) U hU a b
+  simp only [Φ, AddMonoidHom.coe_comp, LinearMap.toAddMonoidHom_coe, Function.comp_apply,
+    LinearEquiv.coe_coe]
+  rw [← this, LinearEquiv.symm_apply_apply, LinearMap.map_smul, KaehlerDifferential.map_D]
+  rfl
+
+lemma Φ_smul (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty) (a : Γ(X, U))
+    (s : Γ(g.relativeDifferentials, U)) :
+    Φ g e U hU hne (a • s) = ψ e U hne a • Φ g e U hU hne s := by
+  induction s using induction_affine U hU with
+  | h0 => simp
+  | hadd x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | hgen c b => rw [smul_smul, Φ_smul_D, Φ_smul_D, map_mul, mul_smul]
+
+
+lemma ψ_res {U V : X.Opens} (h : V ≤ U) (hV : (V : Set X).Nonempty) (a : Γ(X, U)) :
+    ψ e V hV (X.presheaf.map (homOfLE h).op a) =
+      ψ e U (hV.mono h) a := by
+  simp only [ψ, RingHom.coe_comp, Function.comp_apply]
+  congr 1
+  exact X.presheaf.germ_res_apply (homOfLE h) _ _ a
+
+lemma Φ_res {U V : X.Opens} (h : V ≤ U) (hU : IsAffineOpen U) (hV : IsAffineOpen V)
+    (hne : (V : Set X).Nonempty) (s : Γ(g.relativeDifferentials, U)) :
+    Φ g e V hV hne (g.relativeDifferentials.presheaf.map (homOfLE h).op s) =
+      Φ g e U hU (hne.mono h) s := by
+  induction s using induction_affine U hU with
+  | h0 => simp
+  | hadd x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | hgen a b =>
+    rw [Scheme.Modules.map_smul, ← Scheme.Hom.sectionsD_map, Φ_smul_D, Φ_smul_D, ψ_res, ψ_res]
+
+
+/-- **GLUE (proved below, `kaehlerToFractionFieldInjective`).** For a domain `A` smooth over `ℚ` with fraction
+field `K`, `Ω_{A/ℚ} → Ω_{K/ℚ}` is injective (`Ω_A` is projective, hence torsion-free, and `Ω_K` is its
+localization). -/
+def KaehlerToFractionFieldInjective : Prop :=
+  ∀ (A K : Type) [CommRing A] [IsDomain A] [Algebra ℚ A] [Algebra.Smooth ℚ A] [Field K] [Algebra ℚ K]
+    [Algebra A K] [IsScalarTower ℚ A K] [IsFractionRing A K],
+    Function.Injective (KaehlerDifferential.map ℚ ℚ A K)
+
+theorem kaehlerToFractionFieldInjective : KaehlerToFractionFieldInjective := by
+  intro A K _ _ _ _ _ _ _ _ _
+  have hloc : IsLocalizedModule (nonZeroDivisors A) (KaehlerDifferential.map ℚ ℚ A K) :=
+    KaehlerDifferential.isLocalizedModule_map ℚ A K (nonZeroDivisors A)
+  rw [injective_iff_map_eq_zero]
+  intro x hx
+  obtain ⟨⟨r, hr⟩, hrx⟩ := (IsLocalizedModule.eq_zero_iff (nonZeroDivisors A) _).mp hx
+  have hreg : IsRegular r := IsRegular.of_ne_zero (nonZeroDivisors.ne_zero hr)
+  exact Module.Flat.isSMulRegular_of_isRegular (M := Ω[A⁄ℚ]) hreg (by simpa using hrx)
+
+
+omit [IsIntegral X] in
+lemma smooth_sections [Smooth g] (U : X.Opens) (hU : IsAffineOpen U) :
+    letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+    Algebra.Smooth ℚ Γ(X, U) := by
+  have h1 : RingHom.Smooth (g.appLE ⊤ U le_top).hom :=
+    HasRingHomProperty.appLE @Smooth g ‹_› ⟨⊤, isAffineOpen_top _⟩ ⟨U, hU⟩ le_top
+  have h2 : RingHom.Smooth (Scheme.ΓSpecIso (CommRingCat.of ℚ)).inv.hom :=
+    RingHom.Smooth.of_bijective (ConcreteCategory.bijective_of_isIso _)
+  have : RingHom.Smooth (g.specStructureMap U).hom := by
+    have := RingHom.Smooth.comp h2 h1
+    simpa [Scheme.Hom.specStructureMap] using this
+  exact this
+
+lemma isFractionRing_ψ (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty) :
+    letI : Algebra Γ(X, U) F := (ψ e U hne).toAlgebra
+    IsFractionRing Γ(X, U) F := by
+  letI : Algebra Γ(X, U) F := (ψ e U hne).toAlgebra
+  haveI : Nonempty U := hne.to_subtype
+  have h := functionField_isFractionRing_of_isAffineOpen X U hU
+  exact IsLocalization.isLocalization_of_algEquiv (nonZeroDivisors Γ(X, U))
+    (AlgEquiv.ofRingEquiv (f := e) (fun _ => rfl))
+
+lemma Φ_injective [Smooth g] (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty) :
+    Function.Injective (Φ g e U hU hne) := by
+  letI : Algebra ℚ Γ(X, U) := (g.specStructureMap U).hom.toAlgebra
+  letI : Algebra Γ(X, U) F := (ψ e U hne).toAlgebra
+  haveI : IsScalarTower ℚ Γ(X, U) F := IsScalarTower.of_algebraMap_eq (fun q =>
+    congrArg (· q) (RingHom.ext_rat (algebraMap ℚ F) ((ψ e U hne).comp (g.specStructureMap U).hom)))
+  haveI := smooth_sections (g := g) U hU
+  haveI := isFractionRing_ψ (e := e) U hU hne
+  haveI : IsDomain Γ(X, U) := by
+    haveI : Nonempty U := hne.to_subtype
+    infer_instance
+  exact (kaehlerToFractionFieldInjective Γ(X, U) F).comp (g.kaehlerSectionsEquiv U rfl hU).symm.injective
+
+
+omit [IsIntegral X] in
+lemma res_res {U V W : X.Opens} (h₁ : V ≤ U) (h₂ : W ≤ V) (s : Γ(g.relativeDifferentials, U)) :
+    g.relativeDifferentials.presheaf.map (homOfLE h₂).op
+        (g.relativeDifferentials.presheaf.map (homOfLE h₁).op s) =
+      g.relativeDifferentials.presheaf.map (homOfLE (h₂.trans h₁)).op s := by
+  rw [← ConcreteCategory.comp_apply, ← Functor.map_comp]
+  rfl
+
+lemma exists_affine_generic (W : X.Opens) (hW : (W : Set X).Nonempty) :
+    ∃ V : X.Opens, IsAffineOpen V ∧ genericPoint X ∈ V ∧ V ≤ W := by
+  obtain ⟨_, ⟨V, hV, rfl⟩, hηV, hVW⟩ :=
+    X.isBasis_affineOpens.exists_subset_of_mem_open (generic_mem W hW) W.2
+  exact ⟨V, hV, hηV, hVW⟩
+
+lemma univ_nonempty : (Set.univ : Set X).Nonempty := Set.univ_nonempty
+
+/-- A fixed nonempty affine open. -/
+def U₀ (X : Scheme.{0}) [IsIntegral X] : X.Opens :=
+  Classical.choose (exists_affine_generic (X := X) ⊤ (by simp))
+
+lemma U₀_spec : IsAffineOpen (U₀ X) ∧ genericPoint X ∈ U₀ X :=
+  ⟨(Classical.choose_spec (exists_affine_generic (X := X) ⊤ (by simp))).1,
+   (Classical.choose_spec (exists_affine_generic (X := X) ⊤ (by simp))).2.1⟩
+
+variable (g e) in
+/-- The global map `Φ : Γ(X, Ω¹) → Ω_{F/ℚ}`. -/
+def ΦG : Γ(g.relativeDifferentials, ⊤) →+ Ω[F⁄ℚ] :=
+  (Φ g e (U₀ X) U₀_spec.1 ⟨_, U₀_spec.2⟩).comp
+    (g.relativeDifferentials.presheaf.map (homOfLE (le_top : U₀ X ≤ ⊤)).op).hom
+
+lemma Φ_eq_of_affine {U V : X.Opens} (hU : IsAffineOpen U) (hV : IsAffineOpen V)
+    (hUne : (U : Set X).Nonempty) (hVne : (V : Set X).Nonempty) {T : X.Opens} (hUT : U ≤ T) (hVT : V ≤ T)
+    (s : Γ(g.relativeDifferentials, T)) :
+    Φ g e U hU hUne (g.relativeDifferentials.presheaf.map (homOfLE hUT).op s) =
+      Φ g e V hV hVne (g.relativeDifferentials.presheaf.map (homOfLE hVT).op s) := by
+  have hUV : ((U ⊓ V : X.Opens) : Set X).Nonempty :=
+    ⟨genericPoint X, (show genericPoint X ∈ U ⊓ V from ⟨generic_mem U hUne, generic_mem V hVne⟩)⟩
+  obtain ⟨W, hW, hηW, hWUV⟩ := exists_affine_generic (U ⊓ V) hUV
+  have hWne : (W : Set X).Nonempty := ⟨_, hηW⟩
+  rw [← Φ_res (hWUV.trans inf_le_left) hU hW hWne, ← Φ_res (hWUV.trans inf_le_right) hV hW hWne,
+    res_res, res_res]
+
+lemma ΦG_eq (V : X.Opens) (hV : IsAffineOpen V) (hne : (V : Set X).Nonempty)
+    (s : Γ(g.relativeDifferentials, ⊤)) :
+    ΦG g e s = Φ g e V hV hne (g.relativeDifferentials.presheaf.map (homOfLE (le_top : V ≤ ⊤)).op s) :=
+  Φ_eq_of_affine _ _ _ _ _ _ s
+
+
+omit [IsIntegral X] in
+/-- Locality of sections of `Ω¹` along the affine opens. -/
+lemma eq_of_affine_restrict (T : X.Opens) (s t : Γ(g.relativeDifferentials, T))
+    (h : ∀ V : X.Opens, IsAffineOpen V → (V : Set X).Nonempty → ∀ hVT : V ≤ T,
+      g.relativeDifferentials.presheaf.map (homOfLE hVT).op s =
+        g.relativeDifferentials.presheaf.map (homOfLE hVT).op t) : s = t := by
+  let ι := {V : X.Opens // IsAffineOpen V ∧ (V : Set X).Nonempty ∧ V ≤ T}
+  refine TopCat.Sheaf.eq_of_locally_eq' ⟨g.relativeDifferentials.presheaf, g.relativeDifferentials.isSheaf⟩
+    (fun i : ι => i.1) T (fun i => homOfLE i.2.2.2) ?_ s t (fun i => h i.1 i.2.1 i.2.2.1 i.2.2.2)
+  intro x hx
+  obtain ⟨_, ⟨V, hV, rfl⟩, hxV, hVT⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hx T.2
+  exact TopologicalSpace.Opens.mem_iSup.mpr ⟨⟨V, hV, ⟨x, hxV⟩, hVT⟩, hxV⟩
+
+lemma ΦG_injective [Smooth g] : Function.Injective (ΦG g e) := by
+  rw [injective_iff_map_eq_zero]
+  intro s hs
+  refine eq_of_affine_restrict ⊤ s 0 (fun V hV hne hVT => ?_)
+  rw [map_zero]
+  apply Φ_injective (e := e) V hV hne
+  rw [map_zero, ← hs, ΦG_eq V hV hne]
+
+omit [IsIntegral X] in
+/-- Gluing of sections of `Ω¹` given on the affine opens. -/
+lemma exists_glue (T : X.Opens)
+    (σ : ∀ V : X.Opens, IsAffineOpen V → (V : Set X).Nonempty → V ≤ T → Γ(g.relativeDifferentials, V))
+    (compat : ∀ (V V' W : X.Opens) (hV : IsAffineOpen V) (hV' : IsAffineOpen V') (hW : IsAffineOpen W)
+      (hVne : (V : Set X).Nonempty) (hV'ne : (V' : Set X).Nonempty) (hWne : (W : Set X).Nonempty)
+      (hVT : V ≤ T) (hV'T : V' ≤ T) (hWV : W ≤ V) (hWV' : W ≤ V'),
+      g.relativeDifferentials.presheaf.map (homOfLE hWV).op (σ V hV hVne hVT) =
+        g.relativeDifferentials.presheaf.map (homOfLE hWV').op (σ V' hV' hV'ne hV'T)) :
+    ∃ s : Γ(g.relativeDifferentials, T), ∀ (V : X.Opens) (hV : IsAffineOpen V)
+      (hne : (V : Set X).Nonempty) (hVT : V ≤ T),
+      g.relativeDifferentials.presheaf.map (homOfLE hVT).op s = σ V hV hne hVT := by
+  let ι := {V : X.Opens // IsAffineOpen V ∧ (V : Set X).Nonempty ∧ V ≤ T}
+  obtain ⟨s, hs, -⟩ := TopCat.Sheaf.existsUnique_gluing'
+    ⟨g.relativeDifferentials.presheaf, g.relativeDifferentials.isSheaf⟩
+    (fun i : ι => i.1) T (fun i => homOfLE i.2.2.2) (by
+      intro x hx
+      obtain ⟨_, ⟨V, hV, rfl⟩, hxV, hVT⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hx T.2
+      exact TopologicalSpace.Opens.mem_iSup.mpr ⟨⟨V, hV, ⟨x, hxV⟩, hVT⟩, hxV⟩)
+    (fun i => σ i.1 i.2.1 i.2.2.1 i.2.2.2) (by
+      intro i j
+      refine eq_of_affine_restrict (g := g) (i.1 ⊓ j.1) _ _ (fun W hW hWne hWij => ?_)
+      change g.relativeDifferentials.presheaf.map (homOfLE hWij).op
+          (g.relativeDifferentials.presheaf.map (homOfLE inf_le_left).op _) =
+        g.relativeDifferentials.presheaf.map (homOfLE hWij).op
+          (g.relativeDifferentials.presheaf.map (homOfLE inf_le_right).op _)
+      rw [res_res, res_res]
+      exact compat _ _ W i.2.1 j.2.1 hW i.2.2.1 j.2.2.1 hWne i.2.2.2 j.2.2.2 _ _)
+  exact ⟨s, fun V hV hne hVT => hs ⟨V, hV, hne, hVT⟩⟩
+
+
+/-- The image of `Φ_U` lies in `regularAt F w` as soon as `ψ_U(Γ(X, U)) ⊆ w`. -/
+lemma Φ_mem_regularAt (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty)
+    (w : ValuationSubring F) (hw : ∀ a, ψ e U hne a ∈ w) (s : Γ(g.relativeDifferentials, U)) :
+    Φ g e U hU hne s ∈ ZInQ.Contrib.CurvesG.regularAt F w := by
+  induction s using induction_affine U hU with
+  | h0 => rw [map_zero]; exact zero_mem _
+  | hadd x y hx hy => rw [map_add]; exact add_mem hx hy
+  | hgen a b =>
+    rw [Φ_smul_D]
+    exact AddSubgroup.subset_closure ⟨_, _, hw a, hw b, rfl⟩
+
+/-- **GLUE (proved below, `valuationCenter`): every place of the function field of a proper integral
+`ℚ`-scheme has a center.** For `X` integral and proper over `ℚ` and a valuation subring `w` of the function
+field containing `ℚ`, the coordinate ring of some affine open `V` maps into `w` (valuative criterion of
+properness, Mathlib `UniversallyClosed.eq_valuativeCriterion`; Hartshorne II.4.7, UNVERIFIED number). -/
+def ValuationCenter : Prop :=
+  ∀ (X : Scheme.{0}) [IsIntegral X] (g : X ⟶ Spec (CommRingCat.of ℚ)) [IsProper g]
+    (w : ValuationSubring X.functionField), (∀ q : ℚ, (q : X.functionField) ∈ w) →
+    ∃ (V : X.Opens) (hη : genericPoint X ∈ V), IsAffineOpen V ∧
+      ∀ a : Γ(X, V), X.presheaf.germ V (genericPoint X) hη a ∈ w
+
+theorem valuationCenter : ValuationCenter := by
+  intro X _ g _ w hw
+  have hE : ValuativeCriterion.Existence g := by
+    have hU : UniversallyClosed g := inferInstance
+    rw [UniversallyClosed.eq_valuativeCriterion] at hU
+    exact hU.1
+  let φ₀ : ℚ →+* X.functionField :=
+    (X.presheaf.germ ⊤ (genericPoint X) trivial).hom.comp (g.specStructureMap ⊤).hom
+  have hφ₀ : ∀ q, φ₀ q ∈ w.toSubring := fun q => by
+    have : φ₀ q = (q : X.functionField) := eq_ratCast φ₀ q
+    rw [this]; exact hw q
+  let φ : ℚ →+* w := φ₀.codRestrict w.toSubring hφ₀
+  let S : ValuativeCommSq g :=
+    { R := w
+      K := X.functionField
+      i₁ := X.fromSpecStalk (genericPoint X)
+      i₂ := Spec.map (CommRingCat.ofHom φ)
+      commSq := ⟨Spec.homEquiv.injective (CommRingCat.hom_ext (RingHom.ext_rat _ _))⟩ }
+  obtain ⟨⟨l, hl1₀, -⟩⟩ := hE S
+  have hl1 : Spec.map (CommRingCat.ofHom (algebraMap w X.functionField)) ≫ l =
+      X.fromSpecStalk (genericPoint X) := hl1₀
+  obtain ⟨_, ⟨V, hV, rfl⟩, hxV, -⟩ :=
+    X.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ (l (IsLocalRing.closedPoint w)))
+      isOpen_univ
+  have hlV : l ⁻¹ᵁ V = ⊤ := Scheme.preimage_eq_top_of_closedPoint_mem l hxV
+  have hη : genericPoint X ∈ V := generic_mem V ⟨_, hxV⟩
+  refine ⟨V, hη, hV, fun a => ?_⟩
+  have h2 : ∀ (f : Spec (CommRingCat.of X.functionField) ⟶ X)
+      (_ : Spec.map (CommRingCat.ofHom (algebraMap w X.functionField)) ≫ l = f) (e),
+      f.appLE V ⊤ e = l.appLE V ⊤ hlV.ge ≫
+        (Spec.map (CommRingCat.ofHom (algebraMap w X.functionField))).appTop := by
+    rintro f rfl e
+    rw [← Scheme.Hom.appLE_comp_appLE (Spec.map (CommRingCat.ofHom (algebraMap w X.functionField))) l
+      V ⊤ ⊤ hlV.ge (by simp)]
+    congr 1
+  have he : (⊤ : (Spec (CommRingCat.of X.functionField)).Opens) ≤
+      X.fromSpecStalk (genericPoint X) ⁻¹ᵁ V := by
+    rw [← hl1]
+    intro p _
+    show l _ ∈ V
+    rw [← Scheme.Hom.mem_preimage, hlV]
+    trivial
+  have h1 : (X.fromSpecStalk (genericPoint X)).appLE V ⊤ he ≫
+      (Scheme.ΓSpecIso _).hom = X.presheaf.germ V (genericPoint X) hη := by
+    have hid : ∀ (f : (Opposite.op (⊤ : (Spec (X.presheaf.stalk (genericPoint X))).Opens)) ⟶
+        Opposite.op ⊤), (Spec (X.presheaf.stalk (genericPoint X))).presheaf.map f = 𝟙 _ := fun f => by
+      rw [Subsingleton.elim f (𝟙 _), CategoryTheory.Functor.map_id]
+    rw [Scheme.Hom.appLE, Scheme.fromSpecStalk_app hη, Category.assoc, Category.assoc, Category.assoc,
+      ← Functor.map_comp_assoc, hid, Category.id_comp, Iso.inv_hom_id, Category.comp_id]
+  have key := h1
+  rw [h2 _ hl1, Category.assoc, Scheme.ΓSpecIso_naturality] at key
+  rw [← key]
+  exact Subtype.prop _
+
+lemma ΦG_mem_holo [IsProper g] (s : Γ(g.relativeDifferentials, ⊤)) :
+    ΦG g e s ∈ ZInQ.Contrib.CurvesG.holoDiff F := by
+  refine Submodule.subset_span (fun w hw => ?_)
+  obtain ⟨V, hη, hV, hw'⟩ := valuationCenter X g (w.comap e.toRingHom) (fun q => by
+    rw [ValuationSubring.mem_comap]
+    simpa [map_ratCast] using hw q)
+  have hne : (V : Set X).Nonempty := ⟨_, hη⟩
+  rw [ΦG_eq V hV hne]
+  exact Φ_mem_regularAt V hV hne w (fun a => hw' a) _
+
+/-- **Stalks at closed points of a smooth curve are valuation rings** (proved: regular local of
+dimension one, `ZInQ.Contrib.Dim.finrank_cotangentSpace_of_smoothOfRelativeDimension` and Mathlib's
+DVR TFAE). -/
+lemma valuationRing_stalk [SmoothOfRelativeDimension 1 g] (x : X) (hx : IsClosed ({x} : Set X)) :
+    ValuationRing (X.presheaf.stalk x) := by
+  have : Smooth g := SmoothOfRelativeDimension.smooth 1 g
+  have : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian g
+  have h := ZInQ.Contrib.Dim.finrank_cotangentSpace_of_smoothOfRelativeDimension g 1 x hx
+  exact ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain
+    (X.presheaf.stalk x)).out 6 2).mp h.le
+
+
+omit [Algebra ℚ F] in
+/-- The image of a valuation ring `R` in a field `F` that is a fraction field of `R` is a valuation
+subring of `F`. -/
+def imageVS {R : Type*} [CommRing R] [IsDomain R] [ValuationRing R] (f : R →+* F)
+    (hf : ∀ z : F, ∃ a b : R, f b ≠ 0 ∧ z * f b = f a) : ValuationSubring F where
+  toSubring := f.range
+  mem_or_inv_mem' z := by
+    obtain ⟨a, b, hb, hz⟩ := hf z
+    obtain ⟨c, hc | hc⟩ := ValuationRing.cond a b
+    · by_cases ha : f a = 0
+      · left
+        have : z * f b = 0 := hz.trans ha
+        rw [mul_eq_zero] at this
+        rcases this with h | h
+        · exact ⟨0, by rw [map_zero, h]⟩
+        · exact absurd h hb
+      · right
+        refine ⟨c, ?_⟩
+        have h1 : z * f a * f c = f a := by rw [mul_assoc, ← map_mul, hc, hz]
+        have h2 : z * f c = 1 := mul_left_cancel₀ ha (by linear_combination h1)
+        exact eq_inv_of_mul_eq_one_right h2
+    · left
+      refine ⟨c, ?_⟩
+      have : f b * f c = f b * z := by rw [← map_mul, hc, ← hz, mul_comm]
+      exact mul_left_cancel₀ hb this
+
+omit [IsIntegral X] in
+lemma key_identity (a b c d s u : F) (hc : c * s = a) (hd : d * u = b) :
+    (s * u * u) • (c • KaehlerDifferential.D ℚ F d) =
+      a • (u • KaehlerDifferential.D ℚ F b - b • KaehlerDifferential.D ℚ F u) := by
+  subst hc hd
+  rw [Derivation.leibniz]
+  simp only [smul_add, smul_sub, smul_smul]
+  module
+
+
+lemma Φ_range_smul (U : X.Opens) (hU : IsAffineOpen U) (hne : (U : Set X).Nonempty) (a : Γ(X, U))
+    {η : Ω[F⁄ℚ]} (h : η ∈ (Φ g e U hU hne).range) : ψ e U hne a • η ∈ (Φ g e U hU hne).range := by
+  obtain ⟨σ, rfl⟩ := h
+  exact ⟨a • σ, Φ_smul U hU hne a σ⟩
+
+/-- A maximal ideal of `Γ(X, V)` gives a closed point of `X` (`X` is Jacobson). -/
+lemma isClosed_fromSpec [SmoothOfRelativeDimension 1 g] (V : X.Opens) (hV : IsAffineOpen V)
+    (y : PrimeSpectrum Γ(X, V)) (hy : y.asIdeal.IsMaximal) : IsClosed ({hV.fromSpec y} : Set X) := by
+  have : Smooth g := SmoothOfRelativeDimension.smooth 1 g
+  haveI : JacobsonSpace X := LocallyOfFiniteType.jacobsonSpace g
+  have hyc : IsClosed ({y} : Set (PrimeSpectrum Γ(X, V))) :=
+    (PrimeSpectrum.isClosed_singleton_iff_isMaximal y).mpr hy
+  have h := hV.fromSpec.isOpenEmbedding.preimage_closedPoints
+  have hmem : y ∈ closedPoints (Spec Γ(X, V)) := hyc
+  rw [← h] at hmem
+  exact hmem
+
+/-- **Local–global step.** A differential regular at every place lies in the image of `Φ_V`. -/
+lemma mem_range_Φ_of_regular [SmoothOfRelativeDimension 1 g] (V : X.Opens) (hV : IsAffineOpen V)
+    (hne : (V : Set X).Nonempty) (ω : Ω[F⁄ℚ])
+    (hω : ∀ w : ValuationSubring F, (∀ c : ℚ, algebraMap ℚ F c ∈ w) →
+      ω ∈ ZInQ.Contrib.CurvesG.regularAt F w) :
+    ω ∈ (Φ g e V hV hne).range := by
+  classical
+  by_contra hnot
+  let I : Ideal Γ(X, V) :=
+    { carrier := {a | ψ e V hne a • ω ∈ (Φ g e V hV hne).range}
+      add_mem' := fun {a b} ha hb => by
+        simp only [Set.mem_ofPred_eq, map_add, add_smul] at *
+        exact add_mem ha hb
+      zero_mem' := by simp only [Set.mem_ofPred_eq, map_zero, zero_smul]; exact zero_mem _
+      smul_mem' := fun c a ha => by
+        simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul, mul_smul] at *
+        exact Φ_range_smul V hV hne c ha }
+  have hI : I ≠ ⊤ := fun h => hnot (by
+    have : (1 : Γ(X, V)) ∈ I := h ▸ Submodule.mem_top
+    simpa [I] using this)
+  obtain ⟨𝔪, h𝔪, hI𝔪⟩ := Ideal.exists_le_maximal I hI
+  let y : PrimeSpectrum Γ(X, V) := ⟨𝔪, h𝔪.isPrime⟩
+  have hyV : hV.fromSpec y ∈ V := hV.range_fromSpec.subset ⟨y, rfl⟩
+  have hxc := isClosed_fromSpec (g := g) V hV y h𝔪
+  haveI := valuationRing_stalk (g := g) (hV.fromSpec y) hxc
+  letI : Algebra Γ(X, V) (X.presheaf.stalk (hV.fromSpec y)) := (X.presheaf.germ V _ hyV).hom.toAlgebra
+  haveI hloc : IsLocalization y.asIdeal.primeCompl (X.presheaf.stalk (hV.fromSpec y)) :=
+    hV.isLocalization_stalk' y hyV
+  haveI : Nonempty V := hne.to_subtype
+  let f : X.presheaf.stalk (hV.fromSpec y) →+* F :=
+    e.toRingHom.comp (algebraMap (X.presheaf.stalk (hV.fromSpec y)) X.functionField)
+  have hf_germ : ∀ a, f (algebraMap Γ(X, V) (X.presheaf.stalk (hV.fromSpec y)) a) = ψ e V hne a := by
+    intro a
+    change e (algebraMap _ X.functionField (X.presheaf.germ V _ hyV a)) = _
+    rw [Scheme.algebraMap_germ_eq_germToFunctionField]
+    rfl
+  have hfrac : ∀ z : F, ∃ a b, f b ≠ 0 ∧ z * f b = f a := by
+    intro z
+    obtain ⟨a, b, hb, hab⟩ := IsFractionRing.div_surjective (A := X.presheaf.stalk (hV.fromSpec y))
+      (e.symm z)
+    refine ⟨a, b, ?_, ?_⟩
+    · exact fun h => (IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors (K := X.functionField) hb)
+        (e.injective (h.trans (map_zero e).symm))
+    · have hb' : algebraMap _ X.functionField b ≠ 0 :=
+        IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors (K := X.functionField) hb
+      have h1 : algebraMap _ X.functionField a = e.symm z * algebraMap _ X.functionField b := by
+        rw [← hab, div_mul_cancel₀ _ hb']
+      have h2 := congrArg e h1
+      rw [map_mul, RingEquiv.apply_symm_apply] at h2
+      exact h2.symm
+  let w := imageVS f hfrac
+  have hwQ : ∀ c : ℚ, algebraMap ℚ F c ∈ w := by
+    intro c
+    refine ⟨(X.presheaf.germ V _ hyV).hom ((g.specStructureMap V).hom c), ?_⟩
+    exact congrArg (· c) (RingHom.ext_rat
+      (f.comp ((X.presheaf.germ V _ hyV).hom.comp (g.specStructureMap V).hom)) (algebraMap ℚ F))
+  have key : ∀ η ∈ ZInQ.Contrib.CurvesG.regularAt F w,
+      ∃ t : Γ(X, V), t ∉ 𝔪 ∧ ψ e V hne t • η ∈ (Φ g e V hV hne).range := by
+    intro η hη
+    induction hη using AddSubgroup.closure_induction with
+    | mem η hη =>
+      obtain ⟨c, d, ⟨c', rfl⟩, ⟨d', rfl⟩, rfl⟩ := hη
+      obtain ⟨⟨a, s⟩, rfl⟩ := IsLocalization.mk'_surjective y.asIdeal.primeCompl c'
+      obtain ⟨⟨b, u⟩, rfl⟩ := IsLocalization.mk'_surjective y.asIdeal.primeCompl d'
+      have hc : f (IsLocalization.mk' _ a s) * ψ e V hne s = ψ e V hne a := by
+        rw [← hf_germ, ← hf_germ, ← map_mul, IsLocalization.mk'_spec]
+      have hd : f (IsLocalization.mk' _ b u) * ψ e V hne u = ψ e V hne b := by
+        rw [← hf_germ, ← hf_germ, ← map_mul, IsLocalization.mk'_spec]
+      refine ⟨s * u * u, ?_, ?_⟩
+      · have hs : (s : Γ(X, V)) ∉ 𝔪 := s.2
+        have hu : (u : Γ(X, V)) ∉ 𝔪 := u.2
+        intro h
+        rcases h𝔪.isPrime.mem_or_mem h with h | h
+        · rcases h𝔪.isPrime.mem_or_mem h with h | h
+          · exact hs h
+          · exact hu h
+        · exact hu h
+      · rw [map_mul, map_mul, key_identity _ _ _ _ _ _ hc hd]
+        refine ⟨a • ((u : Γ(X, V)) • g.sectionsD V b - b • g.sectionsD V (u : Γ(X, V))), ?_⟩
+        rw [Φ_smul, map_sub, Φ_smul_D, Φ_smul_D]
+    | zero => exact ⟨1, fun h => h𝔪.ne_top ((Ideal.eq_top_iff_one _).mpr h), by simp⟩
+    | add η₁ η₂ _ _ h₁ h₂ =>
+      obtain ⟨t₁, ht₁, h₁⟩ := h₁
+      obtain ⟨t₂, ht₂, h₂⟩ := h₂
+      refine ⟨t₁ * t₂, fun h => (h𝔪.isPrime.mem_or_mem h).elim ht₁ ht₂, ?_⟩
+      have e1 := Φ_range_smul V hV hne t₂ h₁
+      have e2 := Φ_range_smul V hV hne t₁ h₂
+      have : ψ e V hne (t₁ * t₂) • (η₁ + η₂) =
+          ψ e V hne t₂ • (ψ e V hne t₁ • η₁) + ψ e V hne t₁ • (ψ e V hne t₂ • η₂) := by
+        rw [map_mul, smul_add, smul_smul, smul_smul, mul_comm (ψ e V hne t₂)]
+      rw [this]
+      exact add_mem e1 e2
+    | neg η _ h =>
+      obtain ⟨t, ht, h⟩ := h
+      exact ⟨t, ht, by rw [smul_neg]; exact neg_mem h⟩
+  obtain ⟨t, ht, htω⟩ := key ω (hω w hwQ)
+  exact ht (hI𝔪 htω)
+
+
+/-- **Surjectivity onto the regular differentials**, by gluing the local preimages. -/
+lemma mem_range_ΦG_of_regular [SmoothOfRelativeDimension 1 g] (ω : Ω[F⁄ℚ])
+    (hω : ∀ w : ValuationSubring F, (∀ c : ℚ, algebraMap ℚ F c ∈ w) →
+      ω ∈ ZInQ.Contrib.CurvesG.regularAt F w) :
+    ω ∈ (ΦG g e).range := by
+  have : Smooth g := SmoothOfRelativeDimension.smooth 1 g
+  choose σ hσ using fun (V : X.Opens) (hV : IsAffineOpen V) (hne : (V : Set X).Nonempty) =>
+    mem_range_Φ_of_regular (g := g) (e := e) V hV hne ω hω
+  obtain ⟨s, hs⟩ := exists_glue (g := g) ⊤ (fun V hV hne _ => σ V hV hne) (by
+    intro V V' W hV hV' hW hVne hV'ne hWne _ _ hWV hWV'
+    apply Φ_injective (e := e) W hW hWne
+    rw [Φ_res hWV hV hW hWne, Φ_res hWV' hV' hW hWne, hσ, hσ])
+  refine ⟨s, ?_⟩
+  rw [ΦG_eq (U₀ X) U₀_spec.1 ⟨_, U₀_spec.2⟩, hs (U₀ X) U₀_spec.1 ⟨_, U₀_spec.2⟩]
+  exact hσ _ _ _
+
+end DimJacGlue
+
+namespace ModularSplit.DimJac
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open LeafModCurves ZInQ.Contrib.CurvesG
+
+/-- **GLUE (named, unproved): `H⁰(X, Ω¹_{X/ℚ})` is the space of differentials of the function field
+regular at every place.** For a smooth proper geometrically connected integral curve `X/ℚ` and a field `F`
+isomorphic to its function field, `dim_ℚ H⁰(X, Ω¹_{X/ℚ}) = g(F)` (`CurvesG.fieldGenus`, Chevalley's
+definition). Needs: `H⁰(X, M) = Γ(X, M)` for the library's sheaf cohomology; `Γ(X, Ω¹) = ⋂_x Ω_{𝒪_{X,x}/ℚ}`
+inside `Ω_{F/ℚ}` (`Ω¹` locally free of rank one, `X` integral; on affine opens `Γ(U, Ω¹) = Ω_{Γ(U)/ℚ}` is the
+library's `Scheme.Hom.kaehlerSectionsEquiv`, then localization); the image of `Ω_{𝒪_{X,x}/ℚ}` in `Ω_{F/ℚ}` is
+`CurvesG.regularAt F 𝒪_{X,x}`; every valuation subring of `F` containing `ℚ` other than `F` is a local ring
+`𝒪_{X,x}` at a closed point (`X` proper: valuative criterion; `X` normal of dimension one: `𝒪_{X,x}` is a
+DVR), and conversely. Standard (Hartshorne II.8, II.6.7, II.4.7; Stichtenoth 1.5; UNVERIFIED numbers);
+project glue, no published-theorem content beyond textbook sheaf theory. -/
+def H0DifferentialsEqHolo : Prop :=
+  ∀ (X : Over SpecQ) (_ : IsCurve X) (_ : IsIntegral X.left) (F : Type) [Field F] [Algebra ℚ F],
+    Nonempty (X.left.functionField ≃+* F) →
+    letI : X.left.Over SpecQ := ⟨X.hom⟩
+    (X.left ↘ SpecQ).relativeDifferentials.finrankH ℚ 0 = fieldGenus F
+
+open DimJacGlue in
+/-- **`H0DifferentialsEqHolo` holds** (Lean proof, no hypotheses). -/
+theorem h0DifferentialsEqHolo : H0DifferentialsEqHolo := by
+  intro X hX hI F _ _ he
+  obtain ⟨e⟩ := he
+  letI : X.left.Over SpecQ := ⟨X.hom⟩
+  have : IsProper (X.left ↘ SpecQ) := hX.proper
+  have : SmoothOfRelativeDimension 1 (X.left ↘ SpecQ) := hX.smooth
+  have : Smooth (X.left ↘ SpecQ) := SmoothOfRelativeDimension.smooth 1 _
+  let g := X.left ↘ SpecQ
+  let E1 := (Scheme.Modules.H.zeroLinearEquiv g.relativeDifferentials).toAddEquiv
+  let Ψ : g.relativeDifferentials.H 0 →+ Ω[F⁄ℚ] := (ΦG g e).comp E1.toAddMonoidHom
+  let L : g.relativeDifferentials.H 0 →ₗ[ℚ] Ω[F⁄ℚ] :=
+    { toFun := Ψ
+      map_add' := map_add Ψ
+      map_smul' := map_rat_smul Ψ }
+  have hL : Function.Injective L := (ΦG_injective (e := e)).comp E1.injective
+  have hrange : LinearMap.range L = holoDiff F := by
+    apply le_antisymm
+    · rintro _ ⟨x, rfl⟩
+      exact ΦG_mem_holo _
+    · refine Submodule.span_le.mpr (fun ω hω => ?_)
+      obtain ⟨s, hs⟩ := mem_range_ΦG_of_regular (g := g) (e := e) ω hω
+      exact ⟨E1.symm s, by simp [L, Ψ, hs]⟩
+  unfold Scheme.Modules.finrankH fieldGenus
+  rw [← hrange]
+  exact (LinearEquiv.ofInjective L hL).finrank_eq
+
+/-- **Lean, from the vendored library: a Jacobian has dimension `arithmeticGenus = dim H¹(X, 𝒪_X)`.** -/
+theorem dim_jacobian_eq_arithmeticGenus (X : Over SpecQ) (hX : IsCurve X) (P₀ : RatPt X)
+    (J : PkgI3.AbVar ℚ) (aj : X ⟶ J.X) (hJ : IsJacobian X P₀ J aj) :
+    letI : X.left.Over SpecQ := ⟨X.hom⟩
+    J.dim = ((X.left.arithmeticGenus ℚ : ℕ) : WithBot ℕ∞) := by
+  letI : X.left.Over SpecQ := ⟨X.hom⟩
+  have : IsProper X.hom := hX.proper
+  have : SmoothOfRelativeDimension 1 X.hom := hX.smooth
+  have : GeometricallyConnected X.hom := hX.geomConnected
+  have : Smooth X.hom := SmoothOfRelativeDimension.smooth 1 X.hom
+  have : GeometricallyIntegral X.hom :=
+    TauCeti.AlgebraicGeometry.Smooth.geometricallyIntegral X.hom
+  have : GeometricallyIrreducible X.hom := inferInstance
+  have : SmoothOfRelativeDimension 1 (X.left ↘ SpecQ) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 X.hom)
+  have : IsProper (X.left ↘ SpecQ) := inferInstanceAs (IsProper X.hom)
+  have : GeometricallyIntegral (X.left ↘ SpecQ) :=
+    inferInstanceAs (GeometricallyIntegral X.hom)
+  obtain ⟨variety, representation, tensorCompatible, hsm⟩ :=
+    exists_abelianVariety_picardDegreeZero (baseField := ℚ) X.left
+  let aj' : X ⟶ variety.group.X :=
+    Curve.abelJacobiMap ⟨X⟩ P₀.left (by simp) representation
+  have alb : IsAlbanese P₀ variety aj' :=
+    Curve.isAlbanese_abelJacobiMap ⟨X⟩ P₀ variety representation tensorCompatible
+  have : GeometricallyIntegral variety.group.X.hom :=
+    Smooth.geometricallyIntegral variety.group.X.hom
+  let J' : PkgI3.AbVar ℚ :=
+    { X := variety.group.X
+      grp := variety.group.grp
+      proper := variety.proper
+      smooth := variety.smooth
+      geomInt := inferInstance }
+  have hJ' : IsJacobian X P₀ J' aj' := by
+    refine ⟨alb.1, ?_⟩
+    intro A f hf
+    obtain ⟨g, hg, huniq⟩ := alb.existsUnique_schemeMap f hf
+    have pointed : η[variety.group.X] ≫ g = η[A.X] := by
+      rw [← alb.1, Category.assoc, ← hg, hf]
+    have : IsMonHom g := isMonHom_of_isProper_of_geometricallyIntegral g pointed
+    exact ⟨g, ⟨inferInstance, hg.symm⟩, fun φ hφ => huniq φ hφ.2.symm⟩
+  obtain ⟨e, -, -, -⟩ := IsJacobian.unique hJ hJ'
+  have hiso : J.X.left ≅ variety.group.X.left := (Over.forget _).mapIso e
+  have hne : Nonempty variety.group.X.left := by
+    have : Nonempty (Spec (CommRingCat.of ℚ)) := inferInstance
+    obtain ⟨x⟩ := this
+    exact ⟨(η[variety.group.X] : 𝟙_ (Over SpecQ) ⟶ variety.group.X).left.base x⟩
+  change topologicalKrullDim J.X.left = _
+  rw [ZInQ.Contrib.Dim.topologicalKrullDim_eq_of_iso hiso,
+    ZInQ.Contrib.Dim.topologicalKrullDim_eq_of_smoothOfRelativeDimension variety.group.X.hom
+      (X.left.arithmeticGenus ℚ)]
+
+/-- **Row dimJacobianEqGenus from the one glue statement `H0DifferentialsEqHolo`.** -/
+theorem dimJacobianEqGenus_of_glue (hG : H0DifferentialsEqHolo) : DimJacobianEqGenus := by
+  intro X hX P₀ J aj hJ hI F _ _ he
+  letI : X.left.Over SpecQ := ⟨X.hom⟩
+  have : IsProper X.hom := hX.proper
+  have : SmoothOfRelativeDimension 1 X.hom := hX.smooth
+  have : GeometricallyConnected X.hom := hX.geomConnected
+  have : Smooth X.hom := SmoothOfRelativeDimension.smooth 1 X.hom
+  have : GeometricallyIntegral X.hom :=
+    TauCeti.AlgebraicGeometry.Smooth.geometricallyIntegral X.hom
+  have : GeometricallyIrreducible (X.left ↘ SpecQ) :=
+    inferInstanceAs (GeometricallyIrreducible X.hom)
+  have : SmoothOfRelativeDimension 1 (X.left ↘ SpecQ) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 X.hom)
+  have : IsProper (X.left ↘ SpecQ) := inferInstanceAs (IsProper X.hom)
+  rw [dim_jacobian_eq_arithmeticGenus X hX P₀ J aj hJ,
+    ← Scheme.Modules.finrankH_relativeDifferentials_zero_eq_genus (baseField := ℚ) (source := X.left),
+    hG X hX hI F he]
+
+/-- **The row `dimJacobianEqGenus` (bundle field, `ZInQ.Contrib.CurvesG.DimJacobianEqGenus`) holds**:
+modular-split's reduction applied to `h0DifferentialsEqHolo`. -/
+theorem dimJacobianEqGenus : DimJacobianEqGenus :=
+  dimJacobianEqGenus_of_glue h0DifferentialsEqHolo
+
+end ModularSplit.DimJac
+
+example : ZInQ.Contrib.CurvesG.DimJacobianEqGenus := ModularSplit.DimJac.dimJacobianEqGenus
+
+
+
+
+
+-- genus-route (LocalDer.lean, verbatim) follows
+
+/-! # genus-route: `dim J₁(N) ≤ N²` without `GenusX1Field` and without `X0Transitive`
 
 The single proof uses T34 (`DimJ1Genus`, assembled from `DimJacobianEqGenus` and `GenusX1Field`) only
 through `LeafModCurves.dim_J1_le` (`dim J₁(N) ≤ N²`), at its two consumers (TailD E2 and
@@ -40,6 +727,12 @@ Contents.
    `LocalDerivation` (`d/dπ` preserves `𝒪_P` for a local parameter `π`), with no Riemann–Hurwitz:
    holomorphic differentials are `h · dj` with `h` in an explicit space `V`, and `V` injects into
    `OF / j·OF ≅ ℚ^d` (`OF` the integral closure of `ℚ[j]`).
+6. (new, proved; `LocalDer.lean`) `localDerivation : LocalDerivation`, hence
+   `dimJ1Le_of_dimJacobianEqGenus : DimJacobianEqGenus → DimJ1Le` (no literature leaf). Proof: `d/dj`
+   exists (`Ω_{F/ℚ} = F·dj ≠ 0`, since `F/ℚ` is not formally unramified); it is bounded on `𝒪_P` (a
+   `ℚ[j]`-basis of `OF` and `𝒪_P = OF_𝔭`); the residue field `OF/𝔭` is finite over `ℚ` (Zariski) with a
+   primitive element `θ̄`; writing `x = p(θ) + π y`, `g(θ) = π z` improves the bound step by step, which
+   forces `δ_j(π) ≠ 0` and `δ_j(𝒪_P) ⊆ δ_j(π)·𝒪_P`; `δ = δ_j / δ_j(π)`. Places over `∞`: twist `j ↦ 1/j`.
 
 No `sorry`, no `axiom`. -/
 
@@ -2366,16 +3059,440 @@ theorem dimJ1Le_of_localDerivation (h1 : DimJacobianEqGenus) (hL : LocalDerivati
 
 end GenusRoute
 
+
+/-! ## `LocalDerivation`, proved -/
+
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDBasic
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F]
+
+omit [FiniteDimensional Qj F] in
+theorem isScalarTower_Q_Qj : IsScalarTower ℚ Qj F := by
+  have hC : ∀ c : ℚ, algebraMap Qj F (RatFunc.C c) = algebraMap ℚ F c := fun c =>
+    congrArg (fun φ : ℚ →+* F => φ c) (RingHom.ext_rat ((algebraMap Qj F).comp RatFunc.C) _)
+  exact ⟨fun c a x => by
+    rw [RatFunc.smul_eq_C_mul]; simp only [Algebra.smul_def, map_mul, hC, mul_assoc]⟩
+
+/-- `F` is essentially of finite type over `ℚ`. -/
+theorem essFiniteType_QF : Algebra.EssFiniteType ℚ F := by
+  haveI := isScalarTower_Q_Qj (F := F)
+  haveI : Algebra.EssFiniteType (Polynomial ℚ) Qj :=
+    Algebra.EssFiniteType.of_isLocalization Qj (nonZeroDivisors (Polynomial ℚ))
+  haveI : Algebra.EssFiniteType ℚ Qj := Algebra.EssFiniteType.comp ℚ (Polynomial ℚ) Qj
+  exact Algebra.EssFiniteType.comp ℚ Qj F
+
+omit [FiniteDimensional Qj F] in
+/-- `s = j` is transcendental over `ℚ` in `F`. -/
+theorem sF_transcendental : Transcendental ℚ (sF : F) := by
+  rintro ⟨p, hp0, hp⟩
+  have key : ∀ φ : ℚ →+* Qj, Polynomial.eval₂ φ RatFunc.X p = 0 := by
+    intro φ
+    apply (algebraMap Qj F).injective
+    rw [map_zero, Polynomial.hom_eval₂,
+      show (algebraMap Qj F).comp φ = algebraMap ℚ F from RingHom.ext_rat _ _, ← Polynomial.aeval_def]
+    exact hp
+  exact RatFunc.transcendental_X (K := ℚ) ⟨p, hp0, key _⟩
+
+/-- `Ω_{F/ℚ} ≠ 0`: otherwise `F/ℚ` is formally unramified, hence separable algebraic. -/
+theorem nontrivial_kaehler : Nontrivial Ω[F⁄ℚ] := by
+  by_contra h
+  rw [not_nontrivial_iff_subsingleton] at h
+  haveI : Algebra.FormallyUnramified ℚ F := ⟨h⟩
+  haveI := essFiniteType_QF (F := F)
+  haveI : Algebra.IsSeparable ℚ F := (Algebra.FormallyUnramified.iff_isSeparable ℚ F).mp inferInstance
+  exact sF_transcendental (Algebra.IsAlgebraic.isAlgebraic (sF : F))
+
+theorem D_sF_ne_zero : KaehlerDifferential.D ℚ F (sF : F) ≠ 0 := by
+  intro h0
+  haveI := nontrivial_kaehler (F := F)
+  obtain ⟨ω, hω⟩ := exists_ne (0 : Ω[F⁄ℚ])
+  obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.mp (mem_span_D_sF ω)
+  rw [h0, smul_zero] at hω; exact hω rfl
+
+/-- **`d/ds` (proved).** -/
+theorem exists_deriv_s : ∃ δ : Derivation ℚ F F, δ (sF : F) = 1 := by
+  obtain ⟨f, hf⟩ := Module.Projective.exists_dual_eq_one F (D_sF_ne_zero (F := F))
+  exact ⟨f.compDer (KaehlerDifferential.D ℚ F), by simpa using hf⟩
+
+/-- Every derivation is determined by its value at `s`: `δ x = δ_s(x) · δ(s)`. -/
+theorem deriv_eq_mul (δs δ : Derivation ℚ F F) (hδs : δs (sF : F) = 1) (x : F) :
+    δ x = δs x * δ (sF : F) := by
+  obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp (mem_span_D_sF (KaehlerDifferential.D ℚ F x))
+  have h1 := congrArg δ.liftKaehlerDifferential hc
+  have h2 := congrArg δs.liftKaehlerDifferential hc
+  simp only [map_smul, Derivation.liftKaehlerDifferential_comp_D, smul_eq_mul, hδs, mul_one] at h1 h2
+  rw [← h1, h2]
+
+end LDBasic
+
+section LDPlace
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F]
+
+/-- For a uniformizer `π` (leaf form) and `π₀` (exponent form), some power of `π` brings any element
+into `𝒪_P`. -/
+theorem exists_pow_mul_mem (P : Place F) {π : F} (hπn : π ∈ P.w.nonunits)
+    (hπd : ∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) {π₀ : Fˣ} (hπ₀ : (π₀ : F) ∈ P.w)
+    (hπ₀u : π₀ ∉ P.w.unitGroup) (hdvr : ∀ x : Fˣ, ∃ n : ℤ, x * π₀ ^ (-n) ∈ P.w.unitGroup) (y : F) :
+    ∃ N : ℕ, π ^ N * y ∈ P.w := by
+  by_cases hy : y ∈ P.w
+  · exact ⟨0, by rw [pow_zero, one_mul]; exact hy⟩
+  have hy0 : y ≠ 0 := fun h => hy (h ▸ P.w.zero_mem)
+  have hyi : y⁻¹ ∈ P.w.nonunits := P.w.inv_mem_nonunits_iff.mpr (Or.inr hy)
+  obtain ⟨u, m, hu, hyu⟩ := decomp_nonunit P hπ₀ hπ₀u hdvr (inv_ne_zero hy0) hyi
+  -- `π₀ = π c`, `c ∈ 𝒪_P`
+  have hπ₀n : (π₀ : F) ∈ P.w.nonunits := (localParam_of P hπ₀ hπ₀u hdvr).1
+  obtain ⟨c, hc, hπ₀c⟩ := hπd _ hπ₀n
+  have hu0 : u ≠ 0 := by intro h0; rw [h0, map_zero] at hu; exact zero_ne_one hu
+  refine ⟨m + 1, ?_⟩
+  have hyeq : y = (u * (π₀ : F) ^ (m + 1))⁻¹ := by rw [← hyu, inv_inv]
+  -- `π^(m+1) y = π^(m+1) / (u (π c)^(m+1))`; we need `c` to be a unit: `π = π₀ c'`
+  obtain ⟨c', hc', hπc'⟩ := (localParam_of P hπ₀ hπ₀u hdvr).2 π hπn
+  have hπ0 : π ≠ 0 := by
+    intro h0; rw [h0, zero_mul] at hπ₀c; exact π₀.ne_zero hπ₀c
+  have hcc' : c * c' = 1 := by
+    have : π = π * (c * c') := by rw [← mul_assoc, ← hπ₀c, ← hπc']
+    exact (mul_eq_left₀ hπ0).mp this.symm
+  have hc0 : c ≠ 0 := left_ne_zero_of_mul_eq_one hcc'
+  have hci : c⁻¹ = c' := (eq_inv_of_mul_eq_one_right hcc').symm
+  have huinv : u⁻¹ ∈ P.w := (P.w.valuation_le_one_iff _).1 (by rw [map_inv₀, hu, inv_one])
+  have : π ^ (m + 1) * y = u⁻¹ * c' ^ (m + 1) := by
+    have hc1 : c * c⁻¹ = 1 := mul_inv_cancel₀ hc0
+    have hcm : c ^ m * c⁻¹ ^ m = 1 := by rw [← mul_pow, hc1, one_pow]
+    rw [hyeq, hπ₀c, ← hci]; field_simp
+    linear_combination (-(π * π ^ m * (c ^ m * c⁻¹ ^ m))) * hc1 + (-(π * π ^ m)) * hcm
+  rw [this]
+  exact Subring.mul_mem _ huinv (Subring.pow_mem _ hc' _)
+
+end LDPlace
+
+end GenusRoute
+
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDFin
+
+open IsDedekindDomain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+attribute [local instance] isDedekind_intCl isFractionRing_intCl
+
+local notation "OF" => integralClosure (Polynomial ℚ) F
+
+/-- Elements of `𝒪_P` are fractions `a / b` with `a, b ∈ OF`, `b` outside the center of `P`. -/
+theorem frac_rep (P : Place F) (hs : (sF : F) ∈ P.w) {x : F} (hx : x ∈ P.w) :
+    ∃ a b : OF, b ∉ (centerHS P hs).asIdeal ∧ x = (a : F) * (b : F)⁻¹ := by
+  have hw : P.w = HeightOneSpectrum.valuationSubringAtPrime F (centerHS P hs) := by
+    rw [w_eq_valuationSubring P hs, HeightOneSpectrum.valuationSubringAtPrime_eq_valuationSubring]
+  rw [hw] at hx
+  obtain ⟨a, b, hb, rfl⟩ := hx
+  exact ⟨a, b, hb, rfl⟩
+
+/-- An element of `OF` outside the center is a unit of `𝒪_P`. -/
+theorem inv_mem_of_not_mem_center (P : Place F) (hs : (sF : F) ∈ P.w) {b : OF}
+    (hb : b ∉ (centerHS P hs).asIdeal) : ((b : F))⁻¹ ∈ P.w ∧ (b : F) ≠ 0 := by
+  have hbw : (b : F) ∈ P.w := intCl_mem P hs b
+  have hbn : (b : F) ∉ P.w.nonunits := fun h => hb ((mem_centerHS P hs b).mpr h)
+  have hv1 : P.w.valuation (b : F) = 1 := by
+    refine le_antisymm ((P.w.valuation_le_one_iff _).2 hbw) ?_
+    by_contra hlt; push Not at hlt
+    exact hbn (P.w.mem_nonunits_iff.mpr hlt)
+  refine ⟨(P.w.valuation_le_one_iff _).1 (by rw [map_inv₀, hv1, inv_one]), ?_⟩
+  intro h0; rw [h0, map_zero] at hv1; exact zero_ne_one hv1
+
+/-- `δ(p(s)) = p'(s) δ(s)`. -/
+theorem deriv_algebraMap_poly (δ : Derivation ℚ F F) (c : Polynomial ℚ) :
+    δ (algebraMap (Polynomial ℚ) F c) =
+      algebraMap (Polynomial ℚ) F (Polynomial.derivative c) * δ (sF : F) := by
+  rw [algebraMap_poly_eq, algebraMap_poly_eq, Derivation.map_aeval, smul_eq_mul]
+
+/-- **The derivative `d/ds` is bounded on `𝒪_P` (proved).** -/
+theorem deriv_bound (P : Place F) (hs : (sF : F) ∈ P.w) (δs : Derivation ℚ F F)
+    (hδs : δs (sF : F) = 1) {π : F} (hπn : π ∈ P.w.nonunits)
+    (hπd : ∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) :
+    ∃ N : ℕ, ∀ x ∈ P.w, π ^ N * δs x ∈ P.w := by
+  classical
+  haveI : Algebra.IsSeparable Qj F := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  haveI : Module.IsTorsionFree (Polynomial ℚ) F := .trans_faithfulSMul (Polynomial ℚ) Qj F
+  haveI : Module.Free (Polynomial ℚ) OF := IsIntegralClosure.module_free (Polynomial ℚ) Qj F OF
+  haveI : Module.Finite (Polynomial ℚ) OF := IsIntegralClosure.finite (Polynomial ℚ) Qj F OF
+  obtain ⟨π₀, hπ₀, hπ₀u, hdvr⟩ := exists_uniformizer_all P
+  have hπw : π ∈ P.w := (P.w.valuation_le_one_iff _).1 (P.w.mem_nonunits_iff.mp hπn).le
+  let ι := Module.Free.ChooseBasisIndex (Polynomial ℚ) OF
+  let b := Module.Free.chooseBasis (Polynomial ℚ) OF
+  have hNi : ∀ i : ι, ∃ N : ℕ, π ^ N * δs (b i : F) ∈ P.w := fun i =>
+    exists_pow_mul_mem P hπn hπd hπ₀ hπ₀u hdvr _
+  choose Nf hNf using hNi
+  let N₀ := Finset.univ.sup Nf
+  have hb : ∀ i, π ^ N₀ * δs (b i : F) ∈ P.w := by
+    intro i
+    have hle : Nf i ≤ N₀ := Finset.le_sup (Finset.mem_univ i)
+    have : π ^ N₀ * δs (b i : F) = π ^ (N₀ - Nf i) * (π ^ Nf i * δs (b i : F)) := by
+      rw [← mul_assoc, ← pow_add, Nat.sub_add_cancel hle]
+    rw [this]; exact Subring.mul_mem _ (Subring.pow_mem _ hπw _) (hNf i)
+  have hOF : ∀ a : OF, π ^ N₀ * δs (a : F) ∈ P.w := by
+    intro a
+    have ha : (a : F) = ∑ i, algebraMap (Polynomial ℚ) F (b.repr a i) * (b i : F) := by
+      conv_lhs => rw [← b.sum_repr a]
+      simp only [AddSubmonoidClass.coe_finset_sum, Algebra.smul_def, Subalgebra.coe_mul,
+        Subalgebra.coe_algebraMap]
+    rw [ha, map_sum, Finset.mul_sum]
+    refine Subring.sum_mem _ fun i _ => ?_
+    rw [Derivation.leibniz, deriv_algebraMap_poly, hδs, smul_eq_mul, smul_eq_mul, mul_one]
+    have h1 : algebraMap (Polynomial ℚ) F (b.repr a i) ∈ P.w := by
+      rw [algebraMap_poly_eq]; exact aeval_mem P hs _
+    have h2 : algebraMap (Polynomial ℚ) F (Polynomial.derivative (b.repr a i)) ∈ P.w := by
+      rw [algebraMap_poly_eq]; exact aeval_mem P hs _
+    have h3 : (b i : F) ∈ P.w := intCl_mem P hs _
+    have : π ^ N₀ * (algebraMap (Polynomial ℚ) F (b.repr a i) * δs (b i : F) +
+        (b i : F) * algebraMap (Polynomial ℚ) F (Polynomial.derivative (b.repr a i))) =
+        algebraMap (Polynomial ℚ) F (b.repr a i) * (π ^ N₀ * δs (b i : F)) +
+          π ^ N₀ * ((b i : F) * algebraMap (Polynomial ℚ) F (Polynomial.derivative (b.repr a i))) := by
+      ring
+    rw [this]
+    exact Subring.add_mem _ (Subring.mul_mem _ h1 (hb i))
+      (Subring.mul_mem _ (Subring.pow_mem _ hπw _) (Subring.mul_mem _ h3 h2))
+  refine ⟨N₀, fun x hx => ?_⟩
+  obtain ⟨a, c, hc, rfl⟩ := frac_rep P hs hx
+  obtain ⟨hci, hc0⟩ := inv_mem_of_not_mem_center P hs hc
+  have haw : (a : F) ∈ P.w := intCl_mem P hs a
+  rw [Derivation.leibniz, Derivation.leibniz_inv, smul_eq_mul, smul_eq_mul, smul_eq_mul]
+  have : π ^ N₀ * ((a : F) * (-(c : F)⁻¹ ^ 2 * δs (c : F)) + (c : F)⁻¹ * δs (a : F)) =
+      (c : F)⁻¹ * (π ^ N₀ * δs (a : F)) - (a : F) * (c : F)⁻¹ * (c : F)⁻¹ * (π ^ N₀ * δs (c : F)) := by
+    ring
+  rw [this]
+  exact Subring.sub_mem _ (Subring.mul_mem _ hci (hOF a))
+    (Subring.mul_mem _ (Subring.mul_mem _ (Subring.mul_mem _ haw hci) hci) (hOF c))
+
+end LDFin
+
+end GenusRoute
+
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDRes
+
+open IsDedekindDomain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+attribute [local instance] isDedekind_intCl isFractionRing_intCl
+
+local notation "OF" => integralClosure (Polynomial ℚ) F
+
+/-- **Residue structure (proved).** At a place containing `s` there is `θ ∈ 𝒪_P` and `g ∈ ℚ[T]` with
+`g(θ) ∈ 𝔪_P`, `g'(θ)` a unit, and every `x ∈ 𝒪_P` congruent to some `p(θ)` modulo `𝔪_P`. (The residue
+field `OF/𝔭` is a finitely generated `ℚ`-algebra and a field, hence finite over `ℚ` (Zariski); take a
+primitive element and its minimal polynomial.) -/
+theorem residue_structure (P : Place F) (hs : (sF : F) ∈ P.w) :
+    ∃ θ : F, θ ∈ P.w ∧ ∃ g : Polynomial ℚ, Polynomial.aeval θ g ∈ P.w.nonunits ∧
+      (Polynomial.aeval θ (Polynomial.derivative g))⁻¹ ∈ P.w ∧
+      Polynomial.aeval θ (Polynomial.derivative g) ≠ 0 ∧
+      ∀ x ∈ P.w, ∃ p : Polynomial ℚ, x - Polynomial.aeval θ p ∈ P.w.nonunits := by
+  classical
+  haveI : Algebra.IsSeparable Qj F := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  haveI : Module.Finite (Polynomial ℚ) OF := IsIntegralClosure.finite (Polynomial ℚ) Qj F OF
+  letI : Algebra ℚ OF := ((algebraMap (Polynomial ℚ) OF).comp (algebraMap ℚ (Polynomial ℚ))).toAlgebra
+  haveI : IsScalarTower ℚ (Polynomial ℚ) OF := IsScalarTower.of_algebraMap_eq' rfl
+  haveI : Algebra.FiniteType ℚ OF :=
+    Algebra.FiniteType.trans (S := Polynomial ℚ) inferInstance inferInstance
+  set 𝔭 := centerHS P hs with h𝔭
+  haveI : 𝔭.asIdeal.IsMaximal := 𝔭.isPrime.isMaximal 𝔭.ne_bot
+  letI : Field (OF ⧸ 𝔭.asIdeal) := Ideal.Quotient.field _
+  haveI : Module.Finite ℚ (OF ⧸ 𝔭.asIdeal) := finite_of_finite_type_of_isJacobsonRing ℚ _
+  haveI : Algebra.IsSeparable ℚ (OF ⧸ 𝔭.asIdeal) := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  obtain ⟨α, hα⟩ := Field.exists_primitive_element ℚ (OF ⧸ 𝔭.asIdeal)
+  have hint : IsIntegral ℚ α := IsIntegral.of_finite ℚ α
+  have hpoly : ∀ y : OF ⧸ 𝔭.asIdeal, ∃ p : Polynomial ℚ, Polynomial.aeval α p = y := by
+    intro y
+    have hy : y ∈ (IntermediateField.adjoin ℚ {α}).toSubalgebra := by rw [hα]; trivial
+    rw [IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hint.isAlgebraic,
+      Algebra.adjoin_singleton_eq_range_aeval] at hy
+    obtain ⟨p, hp⟩ := hy
+    exact ⟨p, hp⟩
+  obtain ⟨θ, hθ⟩ := Ideal.Quotient.mk_surjective α
+  have hmk : ∀ p : Polynomial ℚ, Ideal.Quotient.mk 𝔭.asIdeal (Polynomial.aeval θ p) =
+      Polynomial.aeval α p := by
+    intro p
+    rw [← hθ]
+    exact (Polynomial.aeval_algHom_apply (Ideal.Quotient.mkₐ ℚ 𝔭.asIdeal) θ p).symm
+  have hcoe : ∀ p : Polynomial ℚ, ((Polynomial.aeval θ p : OF) : F) = Polynomial.aeval (θ : F) p := by
+    intro p
+    rw [Polynomial.aeval_def, Polynomial.aeval_def]
+    have h := Polynomial.hom_eval₂ p (algebraMap ℚ OF) (OF).val.toRingHom θ
+    rw [show (OF).val.toRingHom.comp (algebraMap ℚ OF) = algebraMap ℚ F from RingHom.ext_rat _ _] at h
+    exact h
+  set g := minpoly ℚ α with hg
+  have hg0 : Polynomial.aeval α g = 0 := minpoly.aeval ℚ α
+  have hg'0 : Polynomial.aeval α (Polynomial.derivative g) ≠ 0 :=
+    (Algebra.IsSeparable.isSeparable ℚ α).aeval_derivative_ne_zero hg0
+  refine ⟨(θ : F), intCl_mem P hs θ, g, ?_, ?_⟩
+  · rw [← hcoe, ← mem_centerHS P hs, ← Ideal.Quotient.eq_zero_iff_mem, hmk, hg0]
+  have hnot : Polynomial.aeval θ (Polynomial.derivative g) ∉ 𝔭.asIdeal := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem, hmk]; exact hg'0
+  obtain ⟨hinv, hne⟩ := inv_mem_of_not_mem_center P hs hnot
+  rw [hcoe] at hinv hne
+  refine ⟨hinv, hne, fun x hx => ?_⟩
+  obtain ⟨a, c, hc, rfl⟩ := frac_rep P hs hx
+  obtain ⟨hci, hc0⟩ := inv_mem_of_not_mem_center P hs hc
+  have hc' : Ideal.Quotient.mk 𝔭.asIdeal c ≠ 0 := by
+    rw [Ne, Ideal.Quotient.eq_zero_iff_mem]; exact hc
+  obtain ⟨p, hp⟩ := hpoly (Ideal.Quotient.mk 𝔭.asIdeal a * (Ideal.Quotient.mk 𝔭.asIdeal c)⁻¹)
+  refine ⟨p, ?_⟩
+  have hmem : a - Polynomial.aeval θ p * c ∈ 𝔭.asIdeal := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_mul, hmk, hp]
+    field_simp
+    ring
+  have hmemF := (mem_centerHS P hs _).mp hmem
+  have heq : (a : F) * (c : F)⁻¹ - Polynomial.aeval (θ : F) p =
+      (c : F)⁻¹ * ((a - Polynomial.aeval θ p * c : OF) : F) := by
+    rw [Subalgebra.coe_sub, Subalgebra.coe_mul, hcoe]
+    field_simp
+  rw [heq]
+  exact mul_mem_nonunits P.w hci hmemF
+
+end LDRes
+
+end GenusRoute
+
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDMain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+/-- **`LocalDerivation` at a place containing `s` (proved).** With `δ_s = d/ds`: (i) `δ_s` is bounded
+on `𝒪_P` (`deriv_bound`); (ii) writing `x = p(θ) + π y` and `g(θ) = π z` (`residue_structure`),
+`δ_s x ∈ 𝒪_P δ_s(π) + π (𝒪_P δ_s z + δ_s y)`; iterating, `π^N (δ_s x − a δ_s π) ∈ π^k 𝒪_P` for all `k`.
+For `x = s` this forces `δ_s π ≠ 0`, and then `δ = δ_s / δ_s(π)` maps `𝒪_P` into `𝒪_P`. -/
+theorem localDer_fin (P : Place F) (hs : (sF : F) ∈ P.w) (π : F) (hπ0 : π ≠ 0)
+    (hπn : π ∈ P.w.nonunits) (hπd : ∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) :
+    ∃ δ : Derivation ℚ F F, δ π = 1 ∧ ∀ x ∈ P.w, δ x ∈ P.w := by
+  obtain ⟨δs, hδs⟩ := exists_deriv_s (F := F)
+  obtain ⟨N, hN⟩ := deriv_bound P hs δs hδs hπn hπd
+  obtain ⟨θ, hθ, g, hg, hg'i, hg'0, hres⟩ := residue_structure P hs
+  have hπw : π ∈ P.w := (P.w.valuation_le_one_iff _).1 (P.w.mem_nonunits_iff.mp hπn).le
+  have hdec : ∀ x ∈ P.w, ∃ A ∈ P.w, ∃ B ∈ P.w, ∃ z ∈ P.w, ∃ y ∈ P.w,
+      δs x = A * δs π + π * (B * δs z + δs y) := by
+    intro x hx
+    obtain ⟨p, hp⟩ := hres x hx
+    obtain ⟨y, hy, hxy⟩ := hπd _ hp
+    obtain ⟨z, hz, hgz⟩ := hπd _ hg
+    have hθd : Polynomial.aeval θ (Polynomial.derivative g) * δs θ = π * δs z + z * δs π := by
+      rw [← smul_eq_mul, ← Derivation.map_aeval, hgz, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
+    have hθd' : δs θ = (Polynomial.aeval θ (Polynomial.derivative g))⁻¹ * (π * δs z + z * δs π) := by
+      rw [← hθd]; field_simp
+    have hx' : x = Polynomial.aeval θ p + π * y := by rw [← hxy]; ring
+    have hp'w : Polynomial.aeval θ (Polynomial.derivative p) ∈ P.w := aeval_mem P hθ _
+    refine ⟨Polynomial.aeval θ (Polynomial.derivative p) *
+        (Polynomial.aeval θ (Polynomial.derivative g))⁻¹ * z + y,
+      Subring.add_mem _ (Subring.mul_mem _ (Subring.mul_mem _ hp'w hg'i) hz) hy,
+      Polynomial.aeval θ (Polynomial.derivative p) * (Polynomial.aeval θ (Polynomial.derivative g))⁻¹,
+      Subring.mul_mem _ hp'w hg'i, z, hz, y, hy, ?_⟩
+    rw [hx', map_add, Derivation.map_aeval, Derivation.leibniz, smul_eq_mul, smul_eq_mul,
+      smul_eq_mul, hθd']
+    ring
+  have hQ : ∀ k : ℕ, ∀ x ∈ P.w, ∃ a ∈ P.w, ∃ r ∈ P.w, π ^ N * (δs x - a * δs π) = π ^ k * r := by
+    intro k
+    induction k with
+    | zero => intro x hx; exact ⟨0, P.w.zero_mem, π ^ N * δs x, hN x hx, by ring⟩
+    | succ k ih =>
+      intro x hx
+      obtain ⟨A, hA, B, hB, z, hz, y, hy, hxe⟩ := hdec x hx
+      obtain ⟨az, haz, rz, hrz, hz'⟩ := ih z hz
+      obtain ⟨ay, hay, ry, hry, hy'⟩ := ih y hy
+      refine ⟨A + π * (B * az + ay),
+        Subring.add_mem _ hA (Subring.mul_mem _ hπw (Subring.add_mem _ (Subring.mul_mem _ hB haz) hay)),
+        B * rz + ry, Subring.add_mem _ (Subring.mul_mem _ hB hrz) hry, ?_⟩
+      rw [hxe]
+      linear_combination π * B * hz' + π * hy'
+  have hδπ : δs π ≠ 0 := by
+    intro h0
+    obtain ⟨a, ha, r, hr, he⟩ := hQ (N + 1) (sF : F) hs
+    rw [h0, mul_zero, sub_zero, hδs, mul_one] at he
+    have h1 : π * r = 1 := by
+      have hπN : π ^ N ≠ 0 := pow_ne_zero _ hπ0
+      apply mul_left_cancel₀ hπN
+      calc π ^ N * (π * r) = π ^ (N + 1) * r := by ring
+        _ = π ^ N := he.symm
+        _ = π ^ N * 1 := (mul_one _).symm
+    have h2 := mul_mem_nonunits P.w hr hπn
+    rw [mul_comm, h1, P.w.mem_nonunits_iff, map_one] at h2
+    exact lt_irrefl _ h2
+  obtain ⟨π₀, hπ₀, hπ₀u, hdvr⟩ := exists_uniformizer_all P
+  obtain ⟨k, hk⟩ := exists_pow_mul_mem P hπn hπd hπ₀ hπ₀u hdvr (π ^ N * δs π)⁻¹
+  refine ⟨(δs π)⁻¹ • δs, ?_, fun x hx => ?_⟩
+  · rw [Derivation.smul_apply, smul_eq_mul, inv_mul_cancel₀ hδπ]
+  obtain ⟨a, ha, r, hr, he⟩ := hQ k x hx
+  have hπN : π ^ N ≠ 0 := pow_ne_zero _ hπ0
+  have : ((δs π)⁻¹ • δs) x = a + (π ^ k * (π ^ N * δs π)⁻¹) * r := by
+    rw [Derivation.smul_apply, smul_eq_mul]
+    have hx' : δs x = a * δs π + π ^ k * r / π ^ N := by
+      rw [← he]; field_simp; ring
+    rw [hx']
+    field_simp
+  rw [this]
+  exact Subring.add_mem _ ha (Subring.mul_mem _ hk hr)
+
+end LDMain
+
+/-- **`LocalDerivation`, proved.** At places containing `s = j` by `localDer_fin`; at the places over
+`j = ∞` by `localDer_fin` for the twisted structure `j ↦ 1/j`. -/
+theorem localDerivation : LocalDerivation := by
+  intro F _ _ _ _ _ P π hπ0 hπn hπd
+  by_cases hs : (sF : F) ∈ P.w
+  · letI : Algebra (Polynomial ℚ) F :=
+      ((algebraMap Qj F).comp (algebraMap (Polynomial ℚ) Qj)).toAlgebra
+    haveI : IsScalarTower (Polynomial ℚ) Qj F := IsScalarTower.of_algebraMap_eq' rfl
+    exact localDer_fin P hs π hπ0 hπn hπd
+  · letI : Algebra (Polynomial ℚ) F :=
+      ((@algebraMap Qj F _ _ (twistAlg (F := F))).comp (algebraMap (Polynomial ℚ) Qj)).toAlgebra
+    have htw : @IsScalarTower (Polynomial ℚ) Qj F _ (twistAlg (F := F)).toSMul _ := by
+      letI := twistAlg (F := F)
+      exact IsScalarTower.of_algebraMap_eq' rfl
+    have hs' : @sF F _ (twistAlg (F := F)) ∈ P.w := by
+      rw [sF_twist]; exact (P.w.mem_or_inv_mem _).resolve_left hs
+    exact @localDer_fin F _ (twistAlg (F := F)) _ _ htw twist_finiteDimensional P hs' π hπ0 hπn hπd
+
+/-- **The genus bound with no leaf (proved).** -/
+theorem genusLeDegree : GenusLeDegree := genusLeDegree_of_localDerivation localDerivation
+
+/-- **`DimJ1Le` (the only use of T34) from `DimJacobianEqGenus` alone (proved).** -/
+theorem dimJ1Le_of_dimJacobianEqGenus (h1 : DimJacobianEqGenus) : DimJ1Le :=
+  dimJ1Le_of_localDerivation h1 localDerivation
+
+end GenusRoute
+
 end
 
 
-#print axioms GenusRoute.constantFieldIsQ_of_curve
-#print axioms GenusRoute.belyiGenusBound_of_rh
-#print axioms GenusRoute.fundamentalIdentityQj
-#print axioms GenusRoute.dimJ1Le_of_rh_curve
-#print axioms GenusRoute.genus_le_of_model
-#print axioms GenusRoute.genusLeDegree_of_localDerivation
-#print axioms GenusRoute.dimJ1Le_of_localDerivation
+
+namespace GenusRoute
+
+/-- **`DimJ1Le` (the only use of T34) with no hypothesis (proved)**: dimjac-glue's
+`ModularSplit.DimJac.dimJacobianEqGenus` (copied verbatim above) and `dimJ1Le_of_dimJacobianEqGenus`. -/
+theorem dimJ1Le : DimJ1Le := dimJ1Le_of_dimJacobianEqGenus ModularSplit.DimJac.dimJacobianEqGenus
+
+end GenusRoute
+
+
+#print axioms ModularSplit.DimJac.dimJacobianEqGenus
+#print axioms GenusRoute.localDerivation
+#print axioms GenusRoute.dimJ1Le
 
 namespace HDec
 
@@ -2400,6 +3517,10 @@ dimjac-glue) and the leaf `RiemannHurwitzQj`. No `GenusX1Field`, no `X0Transitiv
 theorem t34Le_of_rh (h1 : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus)
     (hRH : GenusRoute.RiemannHurwitzQj) : DimJ1Le5 :=
   dimJ1Le5_of_kernel (GenusRoute.dimJ1Le_of_rh_curve h1 hRH)
+
+/-- **The replacement for `t34`, with no hypothesis (proved)**: `dim J₁(N) ≤ N²` on the OneProof copies,
+from `GenusRoute.dimJ1Le` (dimjac-glue's `dimJacobianEqGenus` and the proved `LocalDerivation`). -/
+theorem t34Le : DimJ1Le5 := dimJ1Le5_of_kernel GenusRoute.dimJ1Le
 
 /-- **The replacement for `t34` from the local leaf (proved)**: `dim J₁(N) ≤ N²` from
 `DimJacobianEqGenus` (proved by dimjac-glue) and `GenusRoute.LocalDerivation`. No Riemann–Hurwitz,
@@ -2456,6 +3577,7 @@ end HSyn
 
 end HDec
 
+#print axioms HDec.HSyn.t34Le
 #print axioms HDec.HSyn.t34Le_of_rh
 #print axioms HDec.HSyn.t34Le_of_localDerivation
 #print axioms HDec.HSyn.G0Split.javanpeykarJ1_of_le
