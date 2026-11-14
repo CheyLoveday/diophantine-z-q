@@ -32,4 +32,7 @@ explicit functions `τ ↦ θ_m(Ω(τ))`. They need no abelian variety and no po
 * Route 2: the shape (analytic: Γ*-invariance, Hauptmodul, pole orders); certified evaluation at four
   points for `QMCMNodesNumeric`; and the leaf itself (cited, locators UNVERIFIED).
 
+Also found: `ThetaRatiosAlgebraic` itself is true but stronger than its use. TailE l.6521's docstring ("at a
+CM period matrix") is inaccurate, and the Shimura 1976 citation covers CM points only (report §8).
+
 Report: `docs/research/theta-split.md`; log `scratch/theta-split/log.md`; numerics `scratch/theta-split/py/`.
