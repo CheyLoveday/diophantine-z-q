@@ -45,3 +45,9 @@
   **`cmModuli_of : ShimuraMainCM → AutExtends → FixedAlgebraic → ArtinLift → LatHatInter →
   IdeleLatticeHeegner → CMModuli`**.
 - #print axioms cmModuli_of, ringClass_of_artin: [propext, Classical.choice, Quot.sound].
+
+## Step 4: + parts/Row.lean — COMPILED, 0 errors
+- `heegnerForm_level_pos`, `shimuraReciprocityModFn_of_split` (tyz-split, verbatim, over the §3 copies),
+  **`shimuraReciprocityModFn_of_leaves : ShimuraMainCM → X0ModuliGalois → DiscNeZero → AutExtends →
+  FixedAlgebraic → ArtinLift → LatHatInter → IdeleLatticeHeegner → Shimura.ShimuraReciprocityModFn`**
+  (the kernel Prop itself, imported): standard axioms.

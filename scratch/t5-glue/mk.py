@@ -8,7 +8,7 @@ body = ell.split('\n', 1)[1]
 i = body.index('-/') + 2
 body = body[i:]
 header = open(os.path.join(here, 'parts', 'Header.lean')).read()
-parts = ['X0.lean', 'CM.lean', 'Footer.lean']
+parts = ['X0.lean', 'CM.lean', 'Row.lean', 'Footer.lean']
 out = header + '\n-- ===== Elliptic.lean body (verbatim) =====\n' + body
 for p in parts:
     fp = os.path.join(here, 'parts', p)

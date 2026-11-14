@@ -5,3 +5,4 @@
 #print axioms T5Glue.IsConjModel.adjust
 #print axioms T5Glue.cmModuli_of
 #print axioms T5Glue.ringClass_of_artin
+#print axioms T5Glue.shimuraReciprocityModFn_of_leaves
