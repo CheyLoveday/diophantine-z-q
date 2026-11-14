@@ -447,8 +447,10 @@ def tyzHeegnerPt (n : ℕ) : PtA :=
   if hn : n % 8 = 5 then heegnerPt (tyzForm n hn) else 0
 
 /-- TYZ's `z_n = f_n(P_n) = (1 − [i]) f₀(P_n)` for `n ≡ 5 (mod 8)` (test vector `f_n = f₀ − f₀∘[i]`,
-relative to the component of `P_n`; the sign of `[i]` is the one singled out numerically in
-`tyz-t1.md` §3.1, AI-derived, VERIFIED there by computation; not a printed statement). -/
+relative to the component of `P_n`). The sign of `[i]` is fixed by TYZ's text: in the proof of the
+Hecke-action proposition for `n ≡ 5` the cusps `[∞,1]`, `[0]` lie on the component of `P_n` and `α = −i`
+(arXiv:1411.4728v1, about L1564-1566), so `[i]` acts as `+i` there; Thm 3.6(1) (about L1413) holds only
+for this sign. It agrees with the numerics of `tyz-t1.md` §3.1 (statement review of tyz-split). -/
 def tyzZn (n : ℕ) : PtA := tyzHeegnerPt n - iPt (tyzHeegnerPt n)
 
 /-- The genus-point sum `Σ_{t ∈ Φ} t(z)` for a finite set `Φ` of automorphisms of `ℚ̄`
