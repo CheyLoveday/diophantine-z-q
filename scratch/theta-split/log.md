@@ -50,3 +50,12 @@
   −2401/1728 (D=−51), −5184/15625 (D=−52), −3136/729 (D=−84); D=−3 (and −12, −27) has Σθ⁸ ≈ 0
   (j = ∞). Values recognized to 1e-10 (double precision), match Elkies' rational CM points on X*(6)
   (STANDARD, Elkies, *Shimura curve computations*, ANTS 1998, UNVERIFIED table locator).
+- §6 of `ThetaUse.lean` COMPILES (standard axioms, VERIFIED): `iota_mul'`, `latVec_mul`,
+  `scalarCM_of_stable` (lattice stability ⇒ `ScalarCM (Ω(τ)) w`, via bp-analytic's
+  `map_periodLattice_Omega`), `latVec_node` (fixed point of `ι(x + y i + z j)` is
+  `τ = (y√2 + i√(3z²−2y²))/z`, eigenvalue `w = x + i√(3z²−2y²)`), `node_mul` (right multiplication
+  tables, `py/nodes_lean.py`), `scalarCM_cmTau` (four nodes, D = −4, −19, −40, −43),
+  `qmCMNodes_of_numeric : QMCMNodesNumeric → QMCMNodes`, `thetaPointOfFibre_of_qm_cm'`.
+- `py/verify_nodes.py` (80 digits, VERIFIED computed): at the Lean nodes `cmTau`,
+  |Σθ⁸| = 33.9, 12.2, 6.84, 18.1 and j_θ = 0 (|j| < 2e-315), 81/64, 1296/125, 194481/10⁶
+  (errors ≤ 1e-76). So `QMCMNodesNumeric` holds numerically.

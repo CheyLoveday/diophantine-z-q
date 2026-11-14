@@ -528,6 +528,206 @@ theorem thetaPointOfFibre_of_qm_cm (hQM : FibreQMPeriod) (hSh : QMThetaShape) (h
     (hCM : ShimuraCMThetaAlgebraic) : ThetaPointOfFibre :=
   thetaPointOfFibre_of_qm_atQM hQM (thetaRatiosAtQM_of_cm hSh hN hCM)
 
+
+/-! ## 6. The CM clause of `QMCMNodes`, proved for four explicit nodes
+
+For `μ = x + y·i + z·j ∈ 𝒪` (`z > 0`, `s² = 3z² − 2y² > 0`) the fixed point of `ι(μ)` in `ℍ` is
+`τ = (y√2 + i s)/z`, with `ι(μ)(τ, 1)ᵀ = w(τ, 1)ᵀ`, `w = x + i s`. Then `w·ι(b)(τ,1)ᵀ = ι(bμ)(τ,1)ᵀ`, so
+`w` preserves the QM lattice `ι(𝒪)(τ,1)ᵀ`, hence (through the `ℂ`-linear `F'(τ)`) the lattice
+`Ω(τ)ℤ² + ℤ²`: `ScalarCM (Ω(τ)) w`. -/
+
+theorem iota_add' (p q : BPAnalytic.QM.B) : BPAnalytic.QM.iota (p + q) = BPAnalytic.QM.iota p + BPAnalytic.QM.iota q := by
+  unfold BPAnalytic.QM.iota
+  simp only [QuaternionAlgebra.re_add, QuaternionAlgebra.imI_add, QuaternionAlgebra.imJ_add,
+    QuaternionAlgebra.imK_add, Rat.cast_add, add_smul]
+  abel
+
+theorem iota_zsmul (n : ℤ) (q : BPAnalytic.QM.B) : BPAnalytic.QM.iota ((n : ℚ) • q) = (n : ℝ) • BPAnalytic.QM.iota q := by
+  unfold BPAnalytic.QM.iota
+  simp only [QuaternionAlgebra.re_smul, QuaternionAlgebra.imI_smul, QuaternionAlgebra.imJ_smul,
+    QuaternionAlgebra.imK_smul, smul_eq_mul, Rat.cast_mul, Rat.cast_intCast, mul_smul, smul_add]
+
+theorem iota_mul' (p q : BPAnalytic.QM.B) : BPAnalytic.QM.iota (p * q) = BPAnalytic.QM.iota p * BPAnalytic.QM.iota q := by
+  unfold BPAnalytic.QM.iota
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_two, BPAnalytic.QM.Mi, BPAnalytic.QM.Mj] <;> ring_nf <;>
+    (try simp only [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]) <;> (try ring_nf)
+
+theorem latVec_add' (p q : BPAnalytic.QM.B) (τ : ℂ) : BPAnalytic.QM.latVec (p + q) τ = BPAnalytic.QM.latVec p τ + BPAnalytic.QM.latVec q τ := by
+  unfold BPAnalytic.QM.latVec
+  rw [iota_add', ← Matrix.add_mulVec]
+  congr 1
+  ext i j
+  simp
+
+theorem latVec_zsmul (n : ℤ) (q : BPAnalytic.QM.B) (τ : ℂ) : BPAnalytic.QM.latVec ((n : ℚ) • q) τ = (n : ℂ) • BPAnalytic.QM.latVec q τ := by
+  unfold BPAnalytic.QM.latVec
+  rw [iota_zsmul]
+  have : ((n : ℝ) • BPAnalytic.QM.iota q).map (fun r : ℝ => (r : ℂ)) =
+      (n : ℂ) • (BPAnalytic.QM.iota q).map (fun r : ℝ => (r : ℂ)) := by
+    ext i j; simp
+  rw [this, Matrix.smul_mulVec]
+
+theorem latVec_sum (n : Fin 4 → ℤ) (τ : ℂ) :
+    BPAnalytic.QM.latVec (∑ l, (n l : ℚ) • BPAnalytic.QM.oBasis l) τ =
+      ∑ l, (n l : ℂ) • BPAnalytic.QM.qmVec τ l := by
+  simp only [Fin.sum_univ_four, latVec_add', latVec_zsmul, BPAnalytic.QM.qmVec]
+
+theorem latVec_mul (p μ : BPAnalytic.QM.B) (τ : ℂ) :
+    BPAnalytic.QM.latVec (p * μ) τ =
+      ((BPAnalytic.QM.iota p).map (fun r : ℝ => (r : ℂ))).mulVec (BPAnalytic.QM.latVec μ τ) := by
+  unfold BPAnalytic.QM.latVec
+  rw [iota_mul', Matrix.mulVec_mulVec]
+  congr 1
+  exact Matrix.map_mul (f := Complex.ofRealHom)
+
+/-- **The lattice-stability criterion (proved).** If `w` maps each generator `ι(b_k)(τ,1)ᵀ` into the
+QM lattice, then `Ω(τ)` has scalar CM by `w`. -/
+theorem scalarCM_of_stable {τ : ℂ} (hτ : τ.im ≠ 0) (w : ℂ)
+    (hst : ∀ k, w • BPAnalytic.QM.qmVec τ k ∈ BPAnalytic.QM.qmLattice hτ) : ScalarCM (PkgI1.Omega τ) w := by
+  have hst' : ∀ z ∈ BPAnalytic.QM.qmLattice hτ, w • z ∈ BPAnalytic.QM.qmLattice hτ := by
+    intro z hz
+    rw [BPAnalytic.QM.qmLattice_eq] at hz
+    induction hz using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨k, rfl⟩ := hx
+      exact hst k
+    | zero => simp
+    | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
+    | smul a x _ hx => rw [smul_comm]; exact Submodule.smul_mem _ a hx
+  have hdet := BPAnalytic.QM.det_im_Omega_ne_zero hτ
+  intro a b
+  have hx : (BPAnalytic.QM.Omega τ).mulVec (fun i => (a i : ℂ)) + (fun i => (b i : ℂ)) ∈
+      BPAnalytic.periodLattice (BPAnalytic.QM.Omega τ) hdet :=
+    (BPAnalytic.mem_periodLattice_iff _ hdet _).mpr ⟨a, b, rfl⟩
+  have hF : ∀ y, y ∈ BPAnalytic.periodLattice (BPAnalytic.QM.Omega τ) hdet ↔ BPAnalytic.QM.FpEquiv hτ y ∈ BPAnalytic.QM.qmLattice hτ := by
+    intro y
+    rw [← BPAnalytic.QM.map_periodLattice_Omega hτ, Submodule.mem_map]
+    constructor
+    · intro hy; exact ⟨y, hy, rfl⟩
+    · rintro ⟨y', hy', he⟩
+      have : y' = y := (BPAnalytic.QM.FpEquiv hτ).injective he
+      rwa [← this]
+  have hwx := (hF _).mpr (by rw [map_smul]; exact hst' _ ((hF _).mp hx))
+  obtain ⟨c, d, hcd⟩ := (BPAnalytic.mem_periodLattice_iff _ hdet _).mp hwx
+  exact ⟨c, d, hcd⟩
+
+/-- The node `τ = (y√2 + i s)/z`, `s = √(3z² − 2y²)`. -/
+def nodeTau (y z : ℚ) : ℂ :=
+  ((y : ℂ) * (√2 : ℝ) + Complex.I * (√(3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) : ℝ)) / (z : ℂ)
+
+/-- The eigenvalue `w = x + i s`. -/
+def nodeW (x y z : ℚ) : ℂ := (x : ℂ) + Complex.I * (√(3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) : ℝ)
+
+theorem nodeTau_im {y z : ℚ} (hz : 0 < z) (hs : 0 < 3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) :
+    0 < (nodeTau y z).im := by
+  unfold nodeTau
+  have h1 : ((z : ℚ) : ℂ) = ((z : ℝ) : ℂ) := by push_cast; rfl
+  rw [h1, Complex.div_ofReal_im]
+  have : (0 : ℝ) < √(3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) := Real.sqrt_pos.mpr hs
+  have hz' : (0 : ℝ) < (z : ℝ) := by exact_mod_cast hz
+  apply div_pos _ hz'
+  simpa using this
+
+
+theorem latVec_node (x y z : ℚ) (hz : z ≠ 0) (hs : 0 ≤ 3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) :
+    BPAnalytic.QM.latVec ⟨x, y, z, 0⟩ (nodeTau y z) = nodeW x y z • ![nodeTau y z, 1] := by
+  have hr : ((√2 : ℝ) : ℂ) ^ 2 = 2 := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]; norm_num
+  have ht : ((√(3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) : ℝ) : ℂ) ^ 2 = 3 * (z : ℂ) ^ 2 - 2 * (y : ℂ) ^ 2 := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt hs]; push_cast; ring
+  have hz' : (z : ℂ) ≠ 0 := by exact_mod_cast hz
+  set r : ℂ := ((√2 : ℝ) : ℂ) with hrdef
+  set t : ℂ := ((√(3 * (z : ℝ) ^ 2 - 2 * (y : ℝ) ^ 2) : ℝ) : ℂ) with htdef
+  ext i
+  fin_cases i
+  · simp only [BPAnalytic.QM.latVec, BPAnalytic.QM.iota, BPAnalytic.QM.Mi, BPAnalytic.QM.Mj,
+      Matrix.mulVec, dotProduct, Fin.sum_univ_two, nodeTau, nodeW]
+    simp [← hrdef, ← htdef]
+    field_simp
+    have hI : I ^ 2 = -1 := Complex.I_sq
+    linear_combination (y : ℂ) ^ 2 * hr - I ^ 2 * ht + (2 * (y : ℂ) ^ 2 - 3 * (z : ℂ) ^ 2) * hI
+  · simp only [BPAnalytic.QM.latVec, BPAnalytic.QM.iota, BPAnalytic.QM.Mi, BPAnalytic.QM.Mj,
+      Matrix.mulVec, dotProduct, Fin.sum_univ_two, nodeTau, nodeW]
+    simp [← hrdef, ← htdef]
+    field_simp
+    ring
+
+
+/-- The four nodes: `μᵢ = xᵢ + yᵢ·i + zᵢ·j ∈ 𝒪` of discriminants `−4, −19, −40, −43`. -/
+def nodeX : Fin 4 → ℚ := ![0, 1/2, 0, 1/2]
+def nodeY : Fin 4 → ℚ := ![1, 1, 1, 2]
+def nodeZ : Fin 4 → ℚ := ![1, 3/2, 2, 5/2]
+
+/-- Right multiplication by `μᵢ` in N5's basis of `𝒪`: `b_k μᵢ = Σ_l nodeN i k l · b_l`
+(`py/nodes_lean.py`). -/
+def nodeN : Fin 4 → Fin 4 → Fin 4 → ℤ := ![
+  ![![-1, 1, 2, 0], ![2, -1, 0, 2], ![-2, 1, 1, -1], ![2, -2, -2, 1]],
+  ![![-1, 1, 3, 0], ![2, -1, 0, 3], ![-3, 1, 2, -1], ![2, -3, -2, 2]],
+  ![![-2, 1, 4, 0], ![2, -2, 0, 4], ![-4, 1, 2, -1], ![2, -4, -2, 2]],
+  ![![-2, 2, 5, 0], ![4, -2, 0, 5], ![-5, 2, 3, -2], ![4, -5, -4, 3]]]
+
+/-- The CM nodes `τᵢ = (yᵢ√2 + i√(3zᵢ² − 2yᵢ²))/zᵢ`: `√2 + i`, `(2√2 + i√19)/3`, `(√2 + i√10)/2`,
+`(4√2 + i√43)/5`. -/
+def cmTau (i : Fin 4) : ℂ := nodeTau (nodeY i) (nodeZ i)
+
+theorem node_mul (i k : Fin 4) :
+    BPAnalytic.QM.oBasis k * (⟨nodeX i, nodeY i, nodeZ i, 0⟩ : BPAnalytic.QM.B) =
+      ∑ l, (nodeN i k l : ℚ) • BPAnalytic.QM.oBasis l := by
+  fin_cases i <;> fin_cases k <;> ext <;>
+    simp [BPAnalytic.QM.oBasis, Fin.sum_univ_four, nodeN, nodeX, nodeY, nodeZ] <;> norm_num
+
+theorem node_pos (i : Fin 4) :
+    0 < nodeZ i ∧ 0 < 3 * ((nodeZ i : ℚ) : ℝ) ^ 2 - 2 * ((nodeY i : ℚ) : ℝ) ^ 2 := by
+  fin_cases i <;> norm_num [nodeZ, nodeY]
+
+theorem cmTau_im (i : Fin 4) : 0 < (cmTau i).im := nodeTau_im (node_pos i).1 (node_pos i).2
+
+theorem nodeW_im (i : Fin 4) : (nodeW (nodeX i) (nodeY i) (nodeZ i)).im ≠ 0 := by
+  unfold nodeW
+  have : (0 : ℝ) < √(3 * ((nodeZ i : ℚ) : ℝ) ^ 2 - 2 * ((nodeY i : ℚ) : ℝ) ^ 2) :=
+    Real.sqrt_pos.mpr (node_pos i).2
+  simpa using this.ne'
+
+/-- **Each `Ω(τᵢ)` has scalar CM by `wᵢ = xᵢ + i√(3zᵢ² − 2yᵢ²)` (proved).** -/
+theorem scalarCM_cmTau (i : Fin 4) :
+    ScalarCM (PkgI1.Omega (cmTau i)) (nodeW (nodeX i) (nodeY i) (nodeZ i)) := by
+  have hτ := (cmTau_im i).ne'
+  apply scalarCM_of_stable hτ
+  intro k
+  have h1 : nodeW (nodeX i) (nodeY i) (nodeZ i) • BPAnalytic.QM.qmVec (cmTau i) k =
+      BPAnalytic.QM.latVec (BPAnalytic.QM.oBasis k *
+        (⟨nodeX i, nodeY i, nodeZ i, 0⟩ : BPAnalytic.QM.B)) (cmTau i) := by
+    rw [latVec_mul, cmTau, latVec_node _ _ _ (node_pos i).1.ne' (node_pos i).2.le,
+      Matrix.mulVec_smul]
+    rfl
+  rw [h1, node_mul, latVec_sum]
+  refine sum_mem (fun l _ => ?_)
+  rw [BPAnalytic.QM.qmLattice_eq, Int.cast_smul_eq_zsmul ℂ]
+  exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, rfl⟩)
+
+/-- **GLUE (numerical facts at the four explicit nodes).** At `τ₁, …, τ₄` (`cmTau`):
+`Σθ_m(Ω(τᵢ))⁸ ≠ 0`, and the four values `j_θ(Ω(τᵢ))` are pairwise distinct. Numerically
+(`py/verify_nodes.py`, 80 digits): `j_θ = 0, 81/64, 1296/125, 194481/1000000` (the rational CM values of
+discriminants `−4, −19, −40, −43` on `X₆/W`, Elkies 1998, UNVERIFIED locator) and `|Σθ⁸|` bounded away
+from `0`. A closed statement about four explicit points; provable in principle by certified evaluation of
+the theta series. -/
+def QMCMNodesNumeric : Prop :=
+  (∀ i, PkgI1.thetaSum8 (PkgI1.Omega (cmTau i)) ≠ 0) ∧
+    Function.Injective (fun i =>
+      PkgI1.jNum (PkgI1.Omega (cmTau i)) / PkgI1.jDen (PkgI1.Omega (cmTau i)))
+
+/-- **`QMCMNodes` from the numerical facts (proved):** the CM clause is `scalarCM_cmTau`. -/
+theorem qmCMNodes_of_numeric (h : QMCMNodesNumeric) : QMCMNodes :=
+  ⟨cmTau, cmTau_im, fun i => ⟨_, nodeW_im i, scalarCM_cmTau i⟩, h.1, h.2⟩
+
+/-- **Route 2, final form (proved):** `ThetaPointOfFibre` from `FibreQMPeriod`, the analytic shape,
+the numerical node facts and Shimura's CM theorem. -/
+theorem thetaPointOfFibre_of_qm_cm' (hQM : FibreQMPeriod) (hSh : QMThetaShape)
+    (hN : QMCMNodesNumeric) (hCM : ShimuraCMThetaAlgebraic) : ThetaPointOfFibre :=
+  thetaPointOfFibre_of_qm_cm hQM hSh (qmCMNodes_of_numeric hN) hCM
+
 end HDec.HSyn.G0Split.ThetaPt.ThetaSplit
 
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaPointOfFibre_of_qm_atQM
@@ -537,3 +737,6 @@ end HDec.HSyn.G0Split.ThetaPt.ThetaSplit
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.qmThetaShape_of_core
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaRatiosAtQM_of_cm
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaPointOfFibre_of_qm_cm
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.scalarCM_cmTau
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.qmCMNodes_of_numeric
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaPointOfFibre_of_qm_cm'
