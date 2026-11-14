@@ -209,4 +209,30 @@ theorem thetaTerm_mul_dupMap (Ω : Matrix (Fin 2) (Fin 2) ℂ) (a b : Fin 2 → 
   rw [fin2_add_castC, fin2_add_castC]
   ring
 
+
+/-- **Duplication formula (proved).** For `Ω ∈ 𝔥₂` and any characteristic `(a, b)`:
+`θ[a;b](Ω)² = Σ_c exp(πi (c⊕a)·b) θ[c;0](2Ω) θ[c⊕a;0](2Ω)`. -/
+theorem thetaConst_sq_eq {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω)
+    (a b : Fin 2 → Fin 2) :
+    PkgI1.thetaConst (a, b) Ω ^ 2 = ∑ c : Fin 2 → Fin 2, dupSign a b c *
+      (PkgI1.thetaConst (c, 0) ((2 : ℂ) • Ω) * PkgI1.thetaConst (c + a, 0) ((2 : ℂ) • Ω)) := by
+  have h1 := summable_norm_thetaTerm (exists_qY_lower hΩ)
+  have h2 := summable_norm_thetaTerm (exists_qY_lower_two hΩ)
+  simp only [thetaConst_eq_tsum]
+  rw [sq, tsum_mul_tsum_of_summable_norm (h1 (a, b)) (h1 (a, b))]
+  have hF : Summable (fun p : (Fin 2 → ℤ) × (Fin 2 → ℤ) =>
+      thetaTerm (a, b) Ω p.1 * thetaTerm (a, b) Ω p.2) :=
+    (summable_mul_of_summable_norm (h1 (a, b)) (h1 (a, b)))
+  rw [← (dupEquiv a).tsum_eq]
+  have hG : Summable (fun x => thetaTerm (a, b) Ω (dupEquiv a x).1 *
+      thetaTerm (a, b) Ω (dupEquiv a x).2) := (dupEquiv a).summable_iff.mpr hF
+  rw [hG.tsum_prod, tsum_fintype]
+  refine Finset.sum_congr rfl fun c _ => ?_
+  have hc : ∀ y : (Fin 2 → ℤ) × (Fin 2 → ℤ), thetaTerm (a, b) Ω (dupEquiv a (c, y)).1 *
+      thetaTerm (a, b) Ω (dupEquiv a (c, y)).2 = dupSign a b c *
+        (thetaTerm (c, 0) ((2 : ℂ) • Ω) y.1 * thetaTerm (c + a, 0) ((2 : ℂ) • Ω) y.2) :=
+    fun y => thetaTerm_mul_dupMap Ω a b (c, y)
+  simp only [hc]
+  rw [tsum_mul_left, tsum_mul_tsum_of_summable_norm (h2 (c, 0)) (h2 (c + a, 0))]
+
 end HDec.ThetaGlue
