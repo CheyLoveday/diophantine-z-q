@@ -51,3 +51,15 @@
   **`shimuraReciprocityModFn_of_leaves : ShimuraMainCM → X0ModuliGalois → DiscNeZero → AutExtends →
   FixedAlgebraic → ArtinLift → LatHatInter → IdeleLatticeHeegner → Shimura.ShimuraReciprocityModFn`**
   (the kernel Prop itself, imported): standard axioms.
+
+## Step 5: Field.lean (Mathlib only) — COMPILED, 0 errors (~5 s); body included in T5Glue.lean + parts/Closed.lean
+- `exists_aut_extend` (automorphism ψ of k[T], T a transcendence basis, extends to K alg. closed; via
+  `IsTranscendenceBasis.isAlgebraic` and `IsAlgClosure.equivOfEquiv`), `exists_ringEquiv_extend`
+  (ι : k →+* K, ρ ∈ Aut k ⇒ ∃ σ ∈ Aut K, σ∘ι = ι∘ρ), `mem_range_of_isAlgebraic`, `mem_range_of_fixed`
+  (k alg. closed: Fix(Aut(K/ι k)) = ι k; ψ: X_z ↦ X_z + 1 on a transcendence basis containing z).
+- T5Glue.lean (1215 lines): `autExtends : AutExtends`, `fixedAlgebraic : FixedAlgebraic` PROVED;
+  `x0RatStructure_of' : X0ModuliGalois → DiscNeZero → X0RatStructure`,
+  `cmModuli_of' : ShimuraMainCM → ArtinLift → LatHatInter → IdeleLatticeHeegner → CMModuli`,
+  `shimuraReciprocityModFn_of_leaves' : ShimuraMainCM → X0ModuliGalois → DiscNeZero → ArtinLift →
+  LatHatInter → IdeleLatticeHeegner → Shimura.ShimuraReciprocityModFn`. All 12 #print axioms lines:
+  [propext, Classical.choice, Quot.sound]. Compile ~31 s.
