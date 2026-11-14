@@ -94,6 +94,3 @@ reduct-split a4fca6ae 2026-11-14 12:13:58 -0800
 modular-split cfcac8bc 2026-11-14 11:59:52 -0800
 w61 3c241950 2026-11-14 13:15:41 -0800 (tyz-split statement review v2: the docstring of TYZThm33)
 # chain.py's off-main revisions are r4's (above); r5 adds none.
-# r5 amendment (the unused set, read 14:29 PST): the integrator's prune scan at the commit it cited; the branch head ebe089ed
-# (its unused-all.txt, the scan on w61) lists the same eight fields for leaf-fold9's two bundles
-prune-scan 5ecb5d38 2026-11-14 14:03:59 -0800 (scratch/one-proof/PruneScan.lean)

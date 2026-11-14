@@ -31,19 +31,18 @@ becomes a strict LEAF once its derivation is compiled; the form column says wher
 ## 0. Main result
 
 **The list.** If every proof and reduction that the branches had compiled by 2026-11-14 13:20 PST is folded in
-(scenario F, §5), the open Props on the path to `ZInQ.FrozenTarget` are **82: 47 LEAF and 35 GLUE** in the strict
-count. If consequences of one theorem count as leaves, they are 60 LEAF and 22 GLUE. Three of the LEAF rows are
+(scenario F, §5), the open Props on the path to `ZInQ.FrozenTarget` are **84: 49 LEAF and 35 GLUE** in the strict
+count. If consequences of one theorem count as leaves, they are 62 LEAF and 22 GLUE. Three of the LEAF rows are
 reduct-split's `SemistableReductionDVR`, `SemistableUnipotent`, `NeronSchemeModelExistsDVR` (H-146, H-147, H-148),
 published forms pending the integrator's review of the printed base ring; if the review makes them consequences, the
-strict count is 44 LEAF and 38 GLUE (the lenient count does not change).
+strict count is 46 LEAF and 38 GLUE (the lenient count does not change).
 
-**The library theorem.** `ZInQ.OneProof.frozenTarget` on main (scenario A) has 69 hypotheses, and its proof uses 61 of
-them: **37 LEAF and 24 GLUE** in the strict count, 47 and 14 in the lenient count (leaf-fold9's forms for its fields,
-with `GonzalezRotgerCountX6` a composite, §4.8). The 8 it does not use (`r3`, `t10`, reduct-split's four leaves,
-`regularSmoothPerfect` and `igusaGL2`, §4.10) are planned for removal after leaf-fold10; counted with them, the 69 are
-43 LEAF and 26 GLUE strict, 54 and 15 lenient. Scenario F has more rows because it also applies the splits that
-leaf-fold7 to leaf-fold9 left out on purpose: each replaces one field by a leaf plus smaller statements (leaf-fold9
-§5).
+**The library theorem.** `ZInQ.OneProof.frozenTarget` on main (scenario A) has 69 hypotheses, and its proof uses 63
+of them: **39 LEAF and 24 GLUE** in the strict count, 49 and 14 in the lenient count (leaf-fold9's forms for its
+fields, with `GonzalezRotgerCountX6` a composite, §4.8). The 6 it never uses (`r3`, `t10` and reduct-split's four
+leaves, §4.10) are planned for removal after leaf-fold10; counted with them, the 69 are 43 LEAF and 26 GLUE strict,
+54 and 15 lenient. Scenario F has more rows because it also applies the splits that leaf-fold7 to leaf-fold9 left
+out on purpose: each replaces one field by a leaf plus smaller statements (leaf-fold9 §5).
 
 | premise | open Props | strict LEAF | strict GLUE | lenient LEAF | lenient GLUE | table |
 |---|---|---|---|---|---|---|
@@ -53,45 +52,41 @@ leaf-fold7 to leaf-fold9 left out on purpose: each replaces one field by a leaf 
 | H: textbook fields of r3 | 0 | 0 | 0 | 0 | 0 | §4.3 |
 | H: fields that were glue in C4 | 1 | 0 | 1 | 1 | 0 | §4.4 |
 | H: Props introduced by reductions until r3 | 6 | 5 | 1 | 5 | 1 | §4.5 |
-| H: fields of the H base introduced in r4 | 28 | 27 | 1 | 27 | 1 | §4.6 |
+| H: fields of the H base introduced in r4 | 30 | 29 | 1 | 29 | 1 | §4.6 |
 | H: Props open only in scenario F, introduced in r4 | 12 | 3 | 9 | 5 | 7 | §4.7 |
 | H: fields of leaf-fold9 introduced in r5 | 4 | 3 | 1 | 3 | 1 | §4.8 |
 | H: Props open only in scenario F, introduced in r5 | 19 | 4 | 15 | 13 | 6 | §4.9 |
-| **total** | **82** | **47** | **35** | **60** | **22** | |
+| **total** | **84** | **49** | **35** | **62** | **22** | |
 
-By form: 47 published form, 13 consequences of one theorem, 13 composites, 9 project glue: under the tame-quotient
+By form: 49 published form, 13 consequences of one theorem, 13 composites, 9 project glue: under the tame-quotient
 coordinate `CMStabObj`, `CoverModelOfHeckeN`, `P1SchemeQ` (§4.1); reduct-split's `FixedTorsionRationalImperfect`,
 `SemistableLocalGlobal`, `SemistableAlmostAll`, `SemistableNeronBaseChangeLocalGlobal`; modular-split's
 `H0DifferentialsEqHolo` and `HTDual`.
 
 **Since r4 (23 new rows; 7 LEAF and 16 GLUE strict, 16 and 7 lenient).** 1 row is proved outright:
 `DeligneSerreConseq` (H-12; modular-split, from `DSThm966`). 14 rows are split into smaller statements (§4.1), 3 leave
-the route (H-114..H-116: leaf-fold9 takes `r5count` from shimura-split's count on points), 2 are fields that the proof
-does not use (H-117 and H-118: the integrator's prune scan, §4.10), and H-143 is dropped: it was a renaming of H-43.
-The H base is leaf-fold9's `sixContactMin_of_open9` inside the library (C4''''', §1). It proves `r1rec` and `r5` from
-`r1r2` (shimura-split's bridge), `r15` from `dsThm966` (modular-split), `t33` and `normalModelOfFunctionFieldQ` (cloud
-PR #11), takes `r7b` and `r8` from reduct-split's four leaves and `r5count` from shimura-split's
-`GonzalezRotgerCountX6`, so `ZInQ.OneProof.frozenTarget` on main is scenario A as one theorem (§6). On top of it
-scenario F applies shimura-split (`r1r2`, H-43, H-59, H-139), modular-split (H-21, H-78, H-127), reduct-split (H-4,
-H-106..H-108, H-111) and, from r4, qm-split's H-44 split, mcr-glue and mcr-quot under the coordinate, and tyz-split's
-T-5 split.
+the route (H-114..H-116: leaf-fold9 takes `r5count` from shimura-split's count on points), and H-143 is dropped: it
+was a renaming of H-43. The H base is leaf-fold9's `sixContactMin_of_open9` inside the library (C4''''', §1). It
+proves `r1rec` and `r5` from `r1r2` (shimura-split's bridge), `r15` from `dsThm966` (modular-split), `t33` and
+`normalModelOfFunctionFieldQ` (cloud PR #11), takes `r7b` and `r8` from reduct-split's four leaves and `r5count` from
+shimura-split's `GonzalezRotgerCountX6`, so `ZInQ.OneProof.frozenTarget` on main is scenario A as one theorem (§6). On
+top of it scenario F applies shimura-split (`r1r2`, H-43, H-59, H-139), modular-split (H-21, H-78, H-127),
+reduct-split (H-4, H-106..H-108, H-111) and, from r4, qm-split's H-44 split, mcr-glue and mcr-quot under the
+coordinate, and tyz-split's T-5 split.
 
-**Being attempted (cloud workers W11-W15):** `TateTwistInvariants`, `AxSenTate`, `ShimuraGoodReductionNoGuard`, and
-the F-only leaf `FiniteQuotientExists`; the rows say so. `CanonicalModelY3`, also being attempted, left the list:
-shimura-split derives it (§4.1). Two more targets, `X0Transitive` (it would remove `IgusaGL2`) and
-`RegularSmoothPerfect`, are on a dead route: the proof does not use `IgusaGL2` or `RegularSmoothPerfect` (§4.10), so a
-proof of either cannot change the result.
+**Being attempted (cloud workers W11-W15):** `TateTwistInvariants`, `AxSenTate`, `X0Transitive` (it would remove
+`IgusaGL2`), `RegularSmoothPerfect`, `ShimuraGoodReductionNoGuard`, and the F-only leaf `FiniteQuotientExists`. The
+rows say so. `CanonicalModelY3`, also being attempted, left the list: shimura-split derives it (§4.1).
 
-**The 82 names** (L = LEAF in both counts; c = consequence of one theorem, LEAF only in the lenient count; all others
+**The 84 names** (L = LEAF in both counts; c = consequence of one theorem, LEAF only in the lenient count; all others
 GLUE; details in the tables):
 - GZ: `ZInQ.GZDecomp.FHNonvanishing`; `ZInQ.GZDecomp.GrossZagierHeegner`.
 - TYZ: `ZInQ.Contrib.TYZDecomp.TYZThm11Integral` (L); `ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2`; `ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33` (L); `ZInQ.Contrib.TYZGenus.TYZSplitT5.CMModuli` (c); `ZInQ.Contrib.TYZGenus.TYZSplitT5.X0RatStructure`.
-- H: `PkgI2.NeronOggShafarevich` (L); `PkgI3.FaltingsSemisimple` (L); `PkgI3.FaltingsTate` (L); `PkgI4.PanBerger`; `LeafModCurves.R16_EichlerShimuraJ1'`; `WeilPairing.T09_SymmIsogenyExists` (c); `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii` (L); `ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed` (L); `ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed` (L); `ZInQ.Contrib.AVB1.PoincareComplement` (L); `ZInQ.Contrib.NeronC.NeronSchemeExtensionExists` (L); `ZInQ.Contrib.CurvesG.GenusX1Field`; `AVGlue.CartierSmooth` (L); `AVGlue.GeomConnOfRationalPoint` (L); `AVGlue.GroupSchemeEquidim` (L); `AvSplit.T4.MulEtaleAbelianScheme` (L); `AvSplit.MumfordTorsionAlgClosed` (L); `BPAnalytic.Uniformization.UniformizationLeafAll` (L); `AvSplit.MilneIsogenyQuasiInverse` (L); `ZInQ.HomLattice.GAGAMorphism` (L); `ZInQ.HeightSplit.JavanpeykarBound` (L); `ZInQ.HeightSplit.GaudronRemondThm14` (L); `ZInQ.HeightSplit.BostLowerBound` (L); `ZInQ.HeightSplit.PazukiCor13Upper` (L); `CurveSplit.ShimuraGoodReductionNoGuard`; `ZInQ.Contrib.HodgeSplit.TateTwistInvariants` (L); `ZInQ.Contrib.HodgeSplit.AxSenTate` (L); `ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar` (L); `ZInQ.Contrib.HodgeSplit.DeRhamH1AbVarT` (L); `ZInQ.Contrib.HodgeSplit.BdRInvariants` (L); `ZInQ.Contrib.HodgeSplit.DSThm965` (L); `ZInQ.Contrib.HodgeSplit.DSThm966` (L); `HDec.QMSplit.Yu.YuThm11` (L); `HDec.QMSplit.Aut.QMCentralizerCMC` (L); `HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar` (L); `HDec.QMSplit.Theta.IgusaPsi4` (L); `HDec.QMSplit.Theta.IgusaChi10` (L); `HDec.LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq` (L); `HDec.LeafQCheck.HM.QMSplit.ShimizuCovolumeO1` (L); `HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24` (L); `MCRGlue.ProperCurveAF`; `MCRGlue.FiniteQuotientExists` (L); `MCRGlue.TameQuotientSmooth`; `MCRGlue.SmoothModelOfP1` (c); `MCRGlue.TameFixedPointsDisjoint` (c); `MCRGlue.TameInertiaCyclic`; `HDec.PropTSRed.CoverModelOfHeckeN`; `MCRQuot.P1SchemeQ`; `MCRQuot.CMStabObj`; `HDec.HSyn.G0Split.ThetaPt.QMSplitTheta.ThetaNullNonvanishing` (L); `HDec.HSyn.G0Split.ThetaPt.QMSplitTheta.ThetaFourthRatiosAlgebraic`; `HDec.QMSplit.Moduli.GonzalezRotgerX6` (L); `ShimuraSplit.GonzalezRotgerCountX6`; `ReductSplit.SemistableReductionDVR` (L); `ReductSplit.SemistableUnipotent` (L); `ReductSplit.NeronSchemeModelExistsDVR` (L); `HDec.QMSplit.Moduli.DeligneComponentsX6` (c); `HDec.QMSplit.Moduli.GeomConnOfAlgClosure` (L); `HDec.QMSplit.Moduli.BabaGranathX6'` (c); `HDec.QMSplit.Moduli.ReciprocityCanonical` (c); `HDec.QMSplit.Moduli.ElkiesConicX6` (c); `HDec.QMSplit.Moduli.ShimuraHolFamily` (c); `ShimuraSplit.DeligneComponentsY3` (c); `ModularSplit.DimJac.H0DifferentialsEqHolo`; `ModularSplit.R17.CarayolRealization` (c); `ModularSplit.EigenHT.KatoRealizationCoh` (c); `ModularSplit.EigenHT.HTDual`; `ReductSplit.RaynaudSemistable` (L); `ReductSplit.FixedTorsionRationalImperfect`; `ReductSplit.SemistablePersistsDVR` (L); `ReductSplit.SemistableLocalGlobal`; `ReductSplit.SemistableAlmostAll`; `ReductSplit.IdentityComponentBaseChangeDVR` (L); `ReductSplit.SemistableNeronBaseChangeLocalGlobal`; `ZInQ.HeightSplit.FaltingsLemma5` (c).
+- H: `PkgI2.NeronOggShafarevich` (L); `PkgI3.FaltingsSemisimple` (L); `PkgI3.FaltingsTate` (L); `PkgI4.PanBerger`; `LeafModCurves.R16_EichlerShimuraJ1'`; `WeilPairing.T09_SymmIsogenyExists` (c); `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii` (L); `ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed` (L); `ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed` (L); `ZInQ.Contrib.AVB1.PoincareComplement` (L); `ZInQ.Contrib.NeronC.NeronSchemeExtensionExists` (L); `ZInQ.Contrib.CurvesG.GenusX1Field`; `AVGlue.CartierSmooth` (L); `AVGlue.GeomConnOfRationalPoint` (L); `AVGlue.GroupSchemeEquidim` (L); `AvSplit.T4.MulEtaleAbelianScheme` (L); `AvSplit.MumfordTorsionAlgClosed` (L); `BPAnalytic.Uniformization.UniformizationLeafAll` (L); `AvSplit.MilneIsogenyQuasiInverse` (L); `ZInQ.HomLattice.GAGAMorphism` (L); `ZInQ.HeightSplit.JavanpeykarBound` (L); `ZInQ.HeightSplit.GaudronRemondThm14` (L); `ZInQ.HeightSplit.BostLowerBound` (L); `ZInQ.HeightSplit.PazukiCor13Upper` (L); `ZInQ.RLeaf.IgusaGL2` (L); `CurveSplit.RegularSmoothPerfect` (L); `CurveSplit.ShimuraGoodReductionNoGuard`; `ZInQ.Contrib.HodgeSplit.TateTwistInvariants` (L); `ZInQ.Contrib.HodgeSplit.AxSenTate` (L); `ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar` (L); `ZInQ.Contrib.HodgeSplit.DeRhamH1AbVarT` (L); `ZInQ.Contrib.HodgeSplit.BdRInvariants` (L); `ZInQ.Contrib.HodgeSplit.DSThm965` (L); `ZInQ.Contrib.HodgeSplit.DSThm966` (L); `HDec.QMSplit.Yu.YuThm11` (L); `HDec.QMSplit.Aut.QMCentralizerCMC` (L); `HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar` (L); `HDec.QMSplit.Theta.IgusaPsi4` (L); `HDec.QMSplit.Theta.IgusaChi10` (L); `HDec.LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq` (L); `HDec.LeafQCheck.HM.QMSplit.ShimizuCovolumeO1` (L); `HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24` (L); `MCRGlue.ProperCurveAF`; `MCRGlue.FiniteQuotientExists` (L); `MCRGlue.TameQuotientSmooth`; `MCRGlue.SmoothModelOfP1` (c); `MCRGlue.TameFixedPointsDisjoint` (c); `MCRGlue.TameInertiaCyclic`; `HDec.PropTSRed.CoverModelOfHeckeN`; `MCRQuot.P1SchemeQ`; `MCRQuot.CMStabObj`; `HDec.HSyn.G0Split.ThetaPt.QMSplitTheta.ThetaNullNonvanishing` (L); `HDec.HSyn.G0Split.ThetaPt.QMSplitTheta.ThetaFourthRatiosAlgebraic`; `HDec.QMSplit.Moduli.GonzalezRotgerX6` (L); `ShimuraSplit.GonzalezRotgerCountX6`; `ReductSplit.SemistableReductionDVR` (L); `ReductSplit.SemistableUnipotent` (L); `ReductSplit.NeronSchemeModelExistsDVR` (L); `HDec.QMSplit.Moduli.DeligneComponentsX6` (c); `HDec.QMSplit.Moduli.GeomConnOfAlgClosure` (L); `HDec.QMSplit.Moduli.BabaGranathX6'` (c); `HDec.QMSplit.Moduli.ReciprocityCanonical` (c); `HDec.QMSplit.Moduli.ElkiesConicX6` (c); `HDec.QMSplit.Moduli.ShimuraHolFamily` (c); `ShimuraSplit.DeligneComponentsY3` (c); `ModularSplit.DimJac.H0DifferentialsEqHolo`; `ModularSplit.R17.CarayolRealization` (c); `ModularSplit.EigenHT.KatoRealizationCoh` (c); `ModularSplit.EigenHT.HTDual`; `ReductSplit.RaynaudSemistable` (L); `ReductSplit.FixedTorsionRationalImperfect`; `ReductSplit.SemistablePersistsDVR` (L); `ReductSplit.SemistableLocalGlobal`; `ReductSplit.SemistableAlmostAll`; `ReductSplit.IdentityComponentBaseChangeDVR` (L); `ReductSplit.SemistableNeronBaseChangeLocalGlobal`; `ZInQ.HeightSplit.FaltingsLemma5` (c).
 
-Eight bundle fields are hypotheses of the compiled H assembly that its proof does not use, by the integrator's prune
-scan: R3, T10, reduct-split's four leaves, `RegularSmoothPerfect` and `IgusaGL2` (§4.10). Scenario F uses three of
-reduct-split's four (its splits of H-4, H-106 and H-108), so those three are on the list; R3, T10, `SerreTateThm2`,
-`RegularSmoothPerfect` and `IgusaGL2` are not.
+Six bundle fields are hypotheses of the compiled H assembly that its proof never projects: R3, T10 and
+reduct-split's four leaves (§4.10). Scenario F uses three of the four (reduct-split's splits of H-4, H-106 and
+H-108), so those three are on the list; R3, T10 and `SerreTateThm2` are not.
 
 **How far this is checked.**
 - **Scenario A is one compiled theorem.** `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`, on leaf-fold9's
@@ -134,10 +129,10 @@ theorem ZInQ.Frontier.frozenTarget_of_open_main (hH : ZInQ.SixContactMin)
 `newCM`/`heckeThetaNewform` show that atkin-li's proof of the GZ leaf `HeckeThetaNewform` compiles verbatim over fork
 main's modules; `TYZChain.lean` shows that tyz-cm's and cm-bridge's reductions compose.
 
-**Findings in brief** (§7): since r4, 1 row proved, 14 split, 3 off the route, 2 unused and 1 dropped; scenario A is
-one library theorem whose proof uses 61 of its 69 hypotheses (37 LEAF strict); `GonzalezRotgerCountX6` counts as a
-composite; the 9 project-glue Props are under the tame-quotient coordinate, in reduct-split's local-to-global steps
-and in two of modular-split's splits.
+**Findings in brief** (§7): since r4, 1 row proved, 14 split, 3 off the route and 1 dropped; scenario A is one
+library theorem whose proof uses 63 of its 69 hypotheses (39 LEAF strict); `GonzalezRotgerCountX6` counts as a
+composite; the 9 project-glue Props are under the tame-quotient coordinate, in reduct-split's local-to-global
+steps and in two of modular-split's splits.
 
 ## 1. The chain to `ZInQ.FrozenTarget`
 
@@ -275,8 +270,8 @@ theorems with `ConicCanonical`, which is `X6Kummer.X6ConicModel` verbatim (shimu
 route as well. Retired rows (r2, r3): H-23, H-26, H-27, H-28, H-29, H-31, H-37, H-39, H-40, H-45, H-47, H-48, H-50,
 H-55, H-58, H-62; r4: H-1, H-2, H-3, H-8, H-10, H-14..H-20, H-22, H-24, H-25, H-32, H-33, H-35, H-36, H-38,
 H-41..H-44, H-46, H-51, H-52, H-54, H-61, H-63, H-64, H-66, H-67, H-69, H-73..H-76, H-80..H-88, T-5, T-11; r5: H-4,
-H-12, H-21, H-59, H-78, H-106, H-107, H-108, H-111, H-114, H-115, H-116, H-117, H-118, H-127, H-137, H-138, H-139,
-H-140, H-141, H-143.
+H-12, H-21, H-59, H-78, H-106, H-107, H-108, H-111, H-114, H-115, H-116, H-127, H-137, H-138, H-139, H-140, H-141,
+H-143.
 Not applied: the variants each report keeps aside (r4: height-split's `r20_of_leaves` with
 `IsogenySemistableBaseChange`; curve-split's `x0Transitive_of_igusaSL2X`; qm-split's `qmHauptmodulBase3_of_shimizu`
 and `y3Connected_of`; hodge-split's `panBerger_of_templates`; r5: shimura-split's `r1r2fpRep_of_split6`, which keeps
@@ -331,7 +326,7 @@ d8c95123:docs/research/frontier.md`). Props that r5's tasks introduced and prove
 `TorsionFieldOfDefinition`, `DVRFiniteExtension`, `DVRComapFinite` and `IsogenyBaseChangeDeg`; shimura-split's
 `PairsLift` (from T5).
 
-### 4.6 Fields of the H base introduced in r4 (28: 27 LEAF, 1 GLUE strict; 27 LEAF, 1 GLUE lenient)
+### 4.6 Fields of the H base introduced in r4 (30: 29 LEAF, 1 GLUE strict; 29 LEAF, 1 GLUE lenient)
 
 Each row is a field of C4''''' (its name is in the 'last task' column; leaf-fold9 keeps leaf-fold8's fields) and the
 hypothesis of a compiled theorem in the task's file. Its form is leaf-fold9's (fields9.tsv), which keeps leaf-fold8's;
@@ -352,6 +347,8 @@ report read the source.
 | H-110 | `ZInQ.HeightSplit.GaudronRemondThm14` | `scratch/height-split/HeightSplit.lean` L773 @ main | H-15 | **LEAF**; Gaudron–Rémond's bound over the published stable height | height-split; field `gaudronRemondThm14` of leaf-fold9 | published form: Gaudron–Rémond 2014 Thm 1.4 (height-split table) |
 | H-112 | `ZInQ.HeightSplit.BostLowerBound` | `scratch/height-split/HeightSplit.lean` L429 @ main | H-17 | **LEAF**; `h_D ≥ −(g/2) log 2π` (Deligne's normalization) | height-split; field `bostLowerBound` of leaf-fold9 | published form: Bost, Sém. Bourbaki 795 (display unread; height-split §2) |
 | H-113 | `ZInQ.HeightSplit.PazukiCor13Upper` | `scratch/height-split/HeightSplit.lean` L717 @ main | H-18 | **LEAF**; the upper side of Pazuki's comparison of theta and Faltings heights | height-split; field `pazukiCor13Upper` of leaf-fold9 | published form: Pazuki 2012 Cor. 1.3(2), read off the same display (height-split §3) |
+| H-117 | `ZInQ.RLeaf.IgusaGL2` | `ZInQKernel/Contrib/RLeaf/IgusaSL2.lean` L120 @ main | H-41 | **LEAF**; Igusa's theorem: `GL₂(ℤ/N)` is the Galois image on `E_j[N]` | curve-split; field `igusaGL2` of leaf-fold9; being attempted (cloud as `X0Transitive`, which would remove this row) | published form: Igusa 1959; Shimura 1971 Thm 6.6 (curve-split §3.1) |
+| H-118 | `CurveSplit.RegularSmoothPerfect` | `scratch/curve-split/CurvesGSplit.lean` L81 @ main | H-81 | **LEAF**; a finite type algebra over a perfect field is smooth at a prime with regular local ring | curve-split; field `regularSmoothPerfect` of leaf-fold9; being attempted (cloud) | published form: Stacks 00TV, the ⇐ half (curve-split §3.3) |
 | H-119 | `CurveSplit.ShimuraGoodReductionNoGuard` | `scratch/curve-split/ShimuraGR.lean` L162 @ main | H-83 | GLUE (composite); `ShimuraGoodReduction` without its guard clause | curve-split; field `shimuraGoodReductionNoGuard` of leaf-fold9; being attempted (cloud) | composite: Morita, Carayol, Kottwitz, Buzzard; not statable in published form today (curve-split §3.6) |
 | H-120 | `ZInQ.Contrib.HodgeSplit.TateTwistInvariants` | `scratch/hodge-split/HodgeSplit.lean` L65 @ main | H-8, H-51, H-52 | **LEAF**; `ℂ_p(i)^{G_K} = 0` for `i ≠ 0` | hodge-split; field `tateTwistInvariants` of leaf-fold9; being attempted (cloud) | published form: Tate 1967 §3.3 Thm 2 (hodge-split §1) |
 | H-121 | `ZInQ.Contrib.HodgeSplit.AxSenTate` | `scratch/hodge-split/HodgeSplit.lean` L75 @ main | H-8, H-51, H-52 | **LEAF**; `ℂ_p^{G_K} ⊆ K` | hodge-split; field `axSenTate` of leaf-fold9; being attempted (cloud) | published form: Tate 1967 §3.3 Thm 1; Sen 1969; Ax 1970 (hodge-split §1) |
@@ -433,22 +430,15 @@ pointer says which.
 | H-166 | `ReductSplit.SemistableNeronBaseChangeLocalGlobal` | `ZInQKernel/OneProof/H/TailZ7.lean` L988 @ main | H-107 | GLUE (project glue); SS2 over `𝓞_L → 𝓞_{L'}` from the local SGA 7 IX 3.3 | reduct-split | project glue: carries the global content of SS2: identity components over the Dedekind base, gluing (reduct-split §2) |
 | H-167 | `ZInQ.HeightSplit.FaltingsLemma5` | `ZInQKernel/OneProof/H/TailY.lean` L560 @ main | H-111 | GLUE in the strict count (consequence of one theorem; LEAF in the lenient count); Faltings' Lemma 5 in the semistable inequality form, over the field of the Néron models | reduct-split | consequence of one theorem: Faltings 1983 Lemma 5 with Raynaud, Astérisque 127 VII Cor. 2.1.3 (reduct-split §2: still a consequence; the base change to every `L ⊇ K` is proved) |
 
-### 4.10 Bundle fields the proof does not use (not on the list)
+### 4.10 Bundle fields never projected (not on the list)
 
-r5: eight, by the integrator's Lean prune scan of `ZInQ.OneProof.frozenTarget` at w60 (REPORTED;
-`scratch/one-proof/PruneScan.lean` on wip/prune-scan 5ecb5d38): `r3 : ZInQ.LeafPush2.R03_LinYang`, `t10 :
-T10Etale.T10_TateDuality`, reduct-split's four leaves `serreTateThm2`, `semistableReductionDVR`,
-`semistableUnipotent`, `neronSchemeModelExistsDVR`, and `regularSmoothPerfect`, `igusaGL2`. In OneProof/H
-reduct-split's four are used only in `TailZ9`'s `researchLeaves8_of_open9`, as arguments of
-`serreTatePotentialGood_final` and `grothendieckMonodromy_final'`, which fill leaf-fold8's never-projected `r7b` and
-`r8`; in `TailZ5`-`TailZ9`, `r3` and `t10` occur only as `r3 := r.r3` and `t10 := t.t10` (VERIFIED, grep at main), and
-below `TailZ5` as in r4. `regularSmoothPerfect` and `igusaGL2` are projected, at `TailX` L249 into
-`normalCurveSmoothQ` and at L252 into `x0Transitive`, which enter only `t38` (`TailN` L235, `TailO` L2958) and `t40`
-(`TailK` L250) (VERIFIED, read at main); by the scan these feed only `X1Leaves`, whose route is dead: `X1ModelExists`
-comes from its own field. A grep for projections, which this report used first, misses that, so H-117 and H-118 left
-the list. Scenario F uses three of reduct-split's four (§4.8; `chain.py F` recomputes the set). The integrator plans
-to prune unused fields after leaf-fold10. `r1rec` and `r5` left the list of unused fields: leaf-fold9 proves them from
-`r1r2`.
+r5: `r3 : ZInQ.LeafPush2.R03_LinYang`, `t10 : T10Etale.T10_TateDuality` and reduct-split's four leaves
+`serreTateThm2`, `semistableReductionDVR`, `semistableUnipotent`, `neronSchemeModelExistsDVR`. In OneProof/H the four
+are used only in `TailZ9`'s `researchLeaves8_of_open9`, as arguments of `serreTatePotentialGood_final` and
+`grothendieckMonodromy_final'`, which fill leaf-fold8's never-projected `r7b` and `r8`; in `TailZ5`-`TailZ9`, `r3` and
+`t10` occur only as `r3 := r.r3` and `t10 := t.t10` (VERIFIED, grep at main), and below `TailZ5` as in r4. Scenario F
+uses three of the four (§4.8; `chain.py F` recomputes the set). The integrator has approved removing all six after
+leaf-fold10. `r1rec` and `r5` left the list of unused fields: leaf-fold9 proves them from `r1r2`.
 
 Until r4 the six were `r1rec`, `r3`, `r5`, `r7b`, `r8` and `t10`:
 `r1rec : LeafQM.AV.R1rec`, `r3 : ZInQ.LeafPush2.R03_LinYang`, `r5 : LeafQM.AV.R5fp`, `r7b : PkgI2.SerreTatePotentialGood`,
@@ -507,17 +497,17 @@ now sits in those rows, and their form column says so (`CanonicalModelY3` itself
 
 ### 5.1 Scenario A (compiled composite)
 
-`python3 scratch/frontier/chain.py A` (from the repository root): 0 signature mismatches; 69 open nodes = the 30 + 18
-+ 14 + 1 = 63 fields of C4'''''s four bundles (each expanded from the structure as read at main) plus the 6 TYZ and GZ
-hypotheses of the top: the hypothesis list of the composite of C2, T0 with T0', and C4''''', 61 of them used by its
-proof (§4.10). With leaf-fold9's forms for the fields (`GonzalezRotgerCountX6` a composite) and this report's for the
-top, the 61 used are 37 LEAF and 24 GLUE strict, 47 and 14 lenient; all 69 are 43 LEAF and 26 GLUE strict, 54 and 15
-lenient. `chain.py onep`: its hypotheses are scenario A's (the four bundles and the six top Props), and leaf-fold9's `fields9.tsv` lists the bundles' fields with the same names and types (the table abbreviates `bdRInvariants`'s binders).
+`python3 scratch/frontier/chain.py A` (from the repository root): 0 signature mismatches; 69 open nodes = the
+30 + 18 + 14 + 1 = 63 fields of C4'''''s four bundles (each expanded from the structure as read at main) plus the 6
+TYZ and GZ hypotheses of the top: the hypothesis list of the composite of C2, T0 with T0', and C4''''', 63 of them
+projected (§4.10). With leaf-fold9's forms for the fields (`GonzalezRotgerCountX6` a composite) and this report's for
+the top, the projected 63 are 39 LEAF and 24 GLUE strict, 49 and 14 lenient; all 69 are 43 LEAF and 26 GLUE strict,
+54 and 15 lenient. `chain.py onep`: its hypotheses are scenario A's (the four bundles and the six top Props), and leaf-fold9's `fields9.tsv` lists the bundles' fields with the same names and types (the table abbreviates `bdRInvariants`'s binders).
 
 ### 5.2 Scenario F (frontier)
 
 `python3 scratch/frontier/chain.py F`: 0 signature mismatches over 165 theorem edges in the file (30 followed on the
-route); 87 open nodes = the 82 of §0 + the 5 unused fields (§4.10). Where a followed edge's file is not the H base,
+route); 87 open nodes = the 84 of §0 + the 3 never-projected fields. Where a followed edge's file is not the H base,
 the check compares the Prop it proves with the one the route uses (`defcheck`):
 - `CoordinateNormalization`: identical.
 - `CoordinateFromSections`: identical (vs scratch/mcr-glue/MCRGlue.lean, which takes it).
@@ -549,7 +539,7 @@ imports `ZInQKernel/HDecomp/Objects.lean` itself. mcr-quot's and shimura-split's
 (`torsionStructure_iff`).
 
 `python3 scratch/frontier/chain.py doc` compares the rows `Z-n`, `T-n`, `H-n` with the scenario-F open set minus the
-unused fields: 82 rows with 82 distinct heads, equal to the F open set minus the unused fields.
+never-projected fields: 84 rows with 84 distinct heads, equal to the F open set minus the never-projected fields.
 
 What the script does not check: that the edges compose in one Lean environment; argument instantiation (for example
 `heckeVertWitness_of_leaves5` takes `R1R2fp`, extracted from `r1r2` by `Classical.choice`); section variables that a
@@ -589,14 +579,11 @@ folded; B6 would change its TYZ hypothesis `hS` to `CMModuli` and `X0RatStructur
 
 **Refresh r5 (2026-11-14).**
 
-1. **1 row proved, 14 split, 3 off the route, 2 unused, 1 dropped** (§0, §4.1, §4.10). The 23 new rows are 7
-   published forms, 9 consequences of one theorem, 1 composite and 6 project glue.
+1. **1 row proved, 14 split, 3 off the route, 1 dropped** (§0, §4.1). The 23 new rows are 7 published forms, 9
+   consequences of one theorem, 1 composite and 6 project glue.
 2. **Scenario A is one compiled theorem** on main, `ZInQ.OneProof.frozenTarget`, now over leaf-fold9: 69 hypotheses,
-   61 used by its proof (37 LEAF and 24 GLUE strict, 47 and 14 lenient). `chain.py onep` reads its hypotheses from
+   63 used by its proof (39 LEAF and 24 GLUE strict, 49 and 14 lenient). `chain.py onep` reads its hypotheses from
    `Main.lean` and finds scenario A's.
-   **The proof uses fewer fields than a grep shows.** The integrator's Lean prune scan finds 8 fields unused, not 6:
-   `regularSmoothPerfect` and `igusaGL2` are projected, but only into a dead route (§4.10). Their rows (H-117 and
-   H-118) left the list, and two cloud targets cannot change the result (§0).
 3. **H-43 had not been reduced in r4.** qm-glue's `ConicCanonical` is `X6Kummer.X6ConicModel` verbatim (shimura-split,
    `Iff.rfl`), so r4's F route for H-43 was a renaming; scenario F now takes H-43 from shimura-split's smaller leaf
    `ElkiesConicX6`, with `r1r2` and T5.
