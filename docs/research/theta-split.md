@@ -232,3 +232,21 @@ explicit points.
   `ZInQ.LeafPush2.thetaConst`), so it can follow TailA in the chain.
 * The leaf list gains `ShimuraCMThetaAlgebraic` (Route 2) or nothing (Route 1, where the core is glue). It
   loses `ThetaRatiosAlgebraic` and qm-split's `ThetaNullNonvanishing`/`ThetaFourthRatiosAlgebraic`.
+
+## 8. Findings on existing text
+
+* `ThetaRatiosAlgebraic` as stated (universal over abelian surfaces over number fields,
+  uniformizations and period matrices) is **true** by the model argument. The uniformization makes
+  `A(ℂ)_σ ≅ ℂ²/Λ` biholomorphically (GAGA). The principal polarization of `Ω` is then a class in
+  `NS(A_ℂ) = NS(A_ℚ̄)`, so `(ℂ²/(Ωℤ²+ℤ²), Ω)` is a ppav over `ℚ̄`, and theta-null ratios of ppav over `ℚ̄`
+  are algebraic. It is neither vacuous nor false. It is stronger than its use (§1), and it is not one
+  printed theorem.
+* The docstring of `OpenAddedLeaves2.thetaRatiosAlgebraic` (TailE l.6521) says "theta-constant ratios at a
+  CM period matrix are algebraic". That is inaccurate: the field is universal, and it is used at the
+  non-CM points `Ω(τ)` with `j_θ = J(u)`. A theorem about CM points alone does not supply the use. The
+  route through CM points (Route 2) needs the interpolation glue in addition.
+* `ThetaRatiosAlgebraic`'s docstring (TailA l.4371-4385) cites "Shimura, Duke 43 (1976)" for algebraic
+  values of Siegel modular functions at points whose ppav is defined over `ℚ̄`. That paper, *Theta functions
+  with complex multiplication*, treats CM points (recalled, UNVERIFIED). The statement for arbitrary ppav
+  over `ℚ̄` belongs to the arithmetic theory of Siegel modular functions and canonical models (Shimura, Ann.
+  of Math. 102 (1975), or Faltings–Chai Ch. V; SPECULATIVE attribution, locators UNVERIFIED).
