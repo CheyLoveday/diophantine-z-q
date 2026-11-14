@@ -262,6 +262,169 @@ theorem sec_ext {S : Scheme.{0}} [IsReduced S] (𝒜 : QMFamily S)
   obtain ⟨P, g, hpb, hι, he⟩ := hfib K t
   exact h K t P g hpb hι he
 
+
+/-- `lift` into the fibre product commutes with the fibre identification `g` (bookkeeping for the
+group laws). -/
+theorem lift_comp_φ {S : Scheme.{0}} {F : Over S} {K : Type} [Field K] {A : AbVar K}
+    {g : A.X.left ⟶ F.left} {X : Over (Spec (CommRingCat.of K))} {Z : Over S}
+    (f₁ f₂ : X ⟶ A.X) (h₁ h₂ : Z ⟶ F) (u : X.left ⟶ Z.left)
+    (φ : (A.X ⊗ A.X).left ⟶ (F ⊗ F).left)
+    (hφ₁ : φ ≫ (fst F F).left = (fst A.X A.X).left ≫ g)
+    (hφ₂ : φ ≫ (snd F F).left = (snd A.X A.X).left ≫ g)
+    (e₁ : f₁.left ≫ g = u ≫ h₁.left) (e₂ : f₂.left ≫ g = u ≫ h₂.left) :
+    (lift f₁ f₂).left ≫ φ = u ≫ (lift h₁ h₂).left := by
+  apply pullback.hom_ext
+  · simp only [Category.assoc]
+    change (lift f₁ f₂).left ≫ φ ≫ (fst F F).left = u ≫ (lift h₁ h₂).left ≫ (fst F F).left
+    rw [hφ₁, ← Category.assoc, ← Over.comp_left, lift_fst, ← Over.comp_left, lift_fst, e₁]
+  · simp only [Category.assoc]
+    change (lift f₁ f₂).left ≫ φ ≫ (snd F F).left = u ≫ (lift h₁ h₂).left ≫ (snd F F).left
+    rw [hφ₂, ← Category.assoc, ← Over.comp_left, lift_snd, ← Over.comp_left, lift_snd, e₂]
+
+/-! ## §6 A family with object fibres is an abelian scheme with `𝒪`-action (from the rigidity leaf) -/
+
+/-- **Main construction.** Over a reduced locally noetherian `S`, a `QMFamily` with reduced total
+space all of whose field fibres are objects (`QML3`) underlies a `QMAbScheme`. The group law and
+(a), (b) come from `MumfordRigidity`; the ring-homomorphism and level identities are checked on
+field points (`hom_ext_pts`). -/
+theorem exists_qmAbScheme (hR : MumfordRigidity) {S : Scheme.{0}} [IsReduced S]
+    [IsLocallyNoetherian S] (𝒜 : QMFamily S) [IsReduced 𝒜.F.left]
+    (hfib : ∀ (K : Type) [Field K] (t : Spec (CommRingCat.of K) ⟶ S), ∃ P : QML3 K,
+      IsFibreOf 𝒜 t P) :
+    ∃ 𝒜' : QMAbScheme S, 𝒜'.toQMFamily = 𝒜 := by
+  have := 𝒜.proper
+  have := 𝒜.smooth
+  have hsm : Smooth 𝒜.F.hom := SmoothOfRelativeDimension.smooth 2 _
+  have hgc := geomConn_of_fibres 𝒜 hfib
+  obtain ⟨G, hη, ha, hb⟩ := hR S 𝒜.F (𝒜.eta 0) inferInstance 𝒜.proper hsm hgc (𝒜.eta_sec 0)
+    (fun K _ s => by
+      obtain ⟨P, g, hpb, -, he⟩ := hfib K s
+      exact ⟨P.A, g, hpb, one_left_comp he⟩)
+  -- `η(0)` is fixed by every `ι(a)`
+  have hιe : ∀ a : O, 𝒜.eta 0 ≫ 𝒜.iota a = 𝒜.eta 0 := fun a => by
+    refine sec_ext 𝒜 hfib _ _ (by rw [Category.assoc, 𝒜.iota_over])
+      (fun K _ t P g hpb hι he => ?_)
+    have h0 : t ≫ 𝒜.eta 0 = (1 : P.A.Pt K).left ≫ g := (one_left_comp he).symm
+    rw [← Category.assoc t, h0]
+    erw [Category.assoc, ← hι a, ← Over.comp_left_assoc, MonObj.one_comp]
+  have hone : 𝒜.iota 1 = 𝟙 _ := F_ext 𝒜 hfib _ _ (by rw [𝒜.iota_over, Category.id_comp])
+    (fun K _ t P g hpb hι he => by
+      rw [← hι 1, map_one, Category.comp_id]
+      show (𝟙 P.A.X : P.A.X ⟶ P.A.X).left ≫ g = g
+      simp)
+  have hmul : ∀ a b : O, 𝒜.iota (a * b) = 𝒜.iota b ≫ 𝒜.iota a := fun a b =>
+    F_ext 𝒜 hfib _ _ (by rw [𝒜.iota_over, Category.assoc, 𝒜.iota_over, 𝒜.iota_over])
+      (fun K _ t P g hpb hι he => by
+        rw [← Category.assoc g (𝒜.iota b), ← hι b, Category.assoc, ← hι a, ← hι (a * b), map_mul]
+        show ((P.q.iota b).hom ≫ (P.q.iota a).hom).left ≫ g = _
+        rw [Over.comp_left, Category.assoc])
+  have hadd : ∀ a b : O, (Over.homMk (𝒜.iota (a + b)) (𝒜.iota_over _) : 𝒜.F ⟶ 𝒜.F) =
+      Over.homMk (𝒜.iota a) (𝒜.iota_over a) * Over.homMk (𝒜.iota b) (𝒜.iota_over b) :=
+    fun a b => by
+      apply Over.OverMorphism.ext
+      refine F_ext 𝒜 hfib _ _ (by rw [Over.w, Over.w])
+        (fun K _ t P g hpb hι he => ?_)
+      obtain ⟨φ, hφ₁, hφ₂, hφμ⟩ := hb K t P.A g ⟨hpb, one_left_comp he⟩
+      change g ≫ 𝒜.iota (a + b) = _
+      rw [← hι (a + b), map_add, AbVar.Hom.hom_add,
+        CategoryTheory.Hom.mul_def, CategoryTheory.Hom.mul_def, Over.comp_left, Over.comp_left,
+        Category.assoc, hφμ,
+        reassoc_of% (lift_comp_φ _ _ (Over.homMk (𝒜.iota a) (𝒜.iota_over a) : 𝒜.F ⟶ 𝒜.F)
+          (Over.homMk (𝒜.iota b) (𝒜.iota_over b)) g φ hφ₁ hφ₂ (hι a) (hι b))]
+  have headd : ∀ a b : O,
+      (Over.homMk (U := 𝟙_ (Over S)) (𝒜.eta (a + b)) (𝒜.eta_sec _) : 𝟙_ (Over S) ⟶ 𝒜.F) =
+      Over.homMk (U := 𝟙_ (Over S)) (𝒜.eta a) (𝒜.eta_sec a) *
+        Over.homMk (U := 𝟙_ (Over S)) (𝒜.eta b) (𝒜.eta_sec b) := fun a b => by
+    apply Over.OverMorphism.ext
+    refine sec_ext 𝒜 hfib _ _ (by rw [Over.w, Over.w])
+      (fun K _ t P g hpb hι he => ?_)
+    obtain ⟨φ, hφ₁, hφ₂, hφμ⟩ := hb K t P.A g ⟨hpb, one_left_comp he⟩
+    change t ≫ 𝒜.eta (a + b) = _
+    rw [← he (a + b), map_add, toMul_add,
+      CategoryTheory.Hom.mul_def, CategoryTheory.Hom.mul_def, Over.comp_left, Over.comp_left,
+      Category.assoc, hφμ,
+      reassoc_of% (lift_comp_φ _ _ (Over.homMk (U := 𝟙_ (Over S)) (𝒜.eta a) (𝒜.eta_sec a))
+        (Over.homMk (U := 𝟙_ (Over S)) (𝒜.eta b) (𝒜.eta_sec b)) t φ hφ₁ hφ₂ (he a) (he b))]
+    rfl
+  have helin : ∀ a b : O, 𝒜.eta (a * b) = 𝒜.eta b ≫ 𝒜.iota a := fun a b => by
+    refine sec_ext 𝒜 hfib _ _
+      (by rw [𝒜.eta_sec, Category.assoc, 𝒜.iota_over, 𝒜.eta_sec])
+      (fun K _ t P g hpb hι he => ?_)
+    have hl : Additive.toMul (P.e.eta (a * b)) =
+        Additive.toMul (P.e.eta b) ≫ (P.q.iota a).hom := by
+      rw [P.e.linear]; rfl
+    rw [← he (a * b), hl, Over.comp_left, Category.assoc, hι a, reassoc_of% (he b)]
+    rfl
+  have hker : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ S) (a : O),
+      s ≫ 𝒜.eta a = s ≫ 𝒜.eta 0 ↔ ∃ b : O, a = 3 * b := by
+    intro K _ s a
+    obtain ⟨P, g, hpb, hι, he⟩ := hfib K s
+    rw [← he a, ← he 0]
+    constructor
+    · intro h
+      have h' : Additive.toMul (P.e.eta a) = Additive.toMul (P.e.eta 0) := by
+        apply Over.OverMorphism.ext
+        apply hpb.hom_ext h
+        rw [Over.w, Over.w]
+      obtain ⟨c, hc⟩ := (P.e.eq_iff a 0).1 (Additive.toMul.injective h')
+      exact ⟨c, by simpa using hc⟩
+    · rintro ⟨b, rfl⟩
+      rw [(P.e.eq_iff (3 * b) 0).2 ⟨b, by simp⟩]
+  refine ⟨{ 𝒜 with
+    grp := G
+    geomConn := hgc
+    one_eq := hη
+    iota_hom := fun a => ha _ (hιe a)
+    iota_one := hone
+    iota_mul := hmul
+    iota_add := hadd
+    eta_add := headd
+    eta_linear := helin
+    eta_ker := hker }, rfl⟩
+
+/-! ## §7 `R1univProps` from rigidity and the abelian-scheme clause; the clause lists agree -/
+
+/-- Instances for a proper smooth curve `S/ℚ` and a family over it. -/
+theorem reduced_of_smooth_curve {S : Over (Spec (CommRingCat.of ℚ))}
+    (hs : SmoothOfRelativeDimension 1 S.hom) (𝒜 : QMFamily S.left) :
+    IsReduced S.left ∧ IsLocallyNoetherian S.left ∧ IsReduced 𝒜.F.left := by
+  have : Smooth S.hom := SmoothOfRelativeDimension.smooth 1 _
+  have := 𝒜.smooth
+  have : Smooth 𝒜.F.hom := SmoothOfRelativeDimension.smooth 2 _
+  exact ⟨isReduced_of_smooth S.hom, LocallyOfFiniteType.isLocallyNoetherian S.hom,
+    isReduced_of_smooth (𝒜.F.hom ≫ S.hom)⟩
+
+/-- **(3) `R1univProps` from Mumford's rigidity and the abelian-scheme clause.** -/
+theorem r1univProps_of_ab (hR : MumfordRigidity) {Y : Over (Spec (CommRingCat.of ℚ))}
+    {Φ : PtEquiv Y} (h : R1univAbProps Y Φ) : R1univProps Y Φ := by
+  intro S hp hs 𝒜' hfib
+  obtain ⟨h1, h2, h3⟩ := reduced_of_smooth_curve hs 𝒜'
+  obtain ⟨𝒜, h𝒜⟩ := exists_qmAbScheme hR 𝒜' (fun K _ t => fibre_of_fieldPt 𝒜' hfib t)
+  subst h𝒜
+  exact h S hp hs 𝒜 hfib
+
+/-- The family of `R1famProps` is an abelian scheme with `𝒪`-action (rigidity). -/
+theorem r1famAbProps_of_r1famProps (hR : MumfordRigidity) {Y : Over (Spec (CommRingCat.of ℚ))}
+    {Φ : PtEquiv Y} (hs : SmoothOfRelativeDimension 1 Y.hom) (h : R1famProps Y Φ) :
+    R1famAbProps Y Φ := by
+  obtain ⟨𝒜, h𝒜⟩ := h
+  obtain ⟨h1, h2, h3⟩ := reduced_of_smooth_curve hs 𝒜
+  have hfib : ∀ (K : Type) [Field K] [Algebra ℚ K] (s : fieldPt K ⟶ Y), ∃ P : QML3 K,
+      IsFibreOf 𝒜 s.left P := by
+    intro K _ _ s
+    obtain ⟨P, hP⟩ := Quotient.exists_rep (Φ K s)
+    exact ⟨P, h𝒜 K s P hP.symm⟩
+  obtain ⟨𝒜', rfl⟩ := exists_qmAbScheme hR 𝒜 (fun K _ t => fibre_of_fieldPt 𝒜 hfib t)
+  exact ⟨𝒜', h𝒜⟩
+
+/-- **The two clause lists agree under rigidity**: `R1fpProps Y Φ ↔ R1fpPropsAb Y Φ`. -/
+theorem r1fpProps_iff_ab (hR : MumfordRigidity) (Y : Over (Spec (CommRingCat.of ℚ)))
+    (Φ : PtEquiv Y) : R1fpProps Y Φ ↔ R1fpPropsAb Y Φ :=
+  ⟨fun ⟨h1, h2, h3, h4, h5, h6⟩ => ⟨h1, h2, h3, h4, r1famAbProps_of_r1famProps hR h2 h5,
+      r1univAbProps_of_r1univProps h6⟩,
+    fun ⟨h1, h2, h3, h4, h5, h6⟩ => ⟨h1, h2, h3, h4, r1famProps_of_r1famAbProps h5,
+      r1univProps_of_ab hR h6⟩⟩
+
 end R1UnivRigid
 
 end AV
