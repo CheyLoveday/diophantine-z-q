@@ -1,53 +1,53 @@
-# genus-route: `t34`'s two uses without `GenusX1Field` and without `X0Transitive`
+# genus-route: `t34`'s two uses closed, with no literature leaf
 
-**Main result (VERIFIED, compiled, standard axioms).** The two consumers of `t34` in the single proof
-need only `dim J₁(N) ≤ N²`. That bound follows from `DimJacobianEqGenus` (proved outright by
-dimjac-glue) and **one local leaf**, `LocalDerivation` (the derivative with respect to a local
-parameter `π` of a place `P` preserves `𝒪_P`; Stichtenoth §4.1), with no other hypothesis and **no
-Riemann–Hurwitz**:
+**Verdict (VERIFIED: compiled, `#print axioms` = `[propext, Classical.choice, Quot.sound]`).** The two
+consumers of `t34` in the single proof (TailD.lean:236 and :250) need only `dim J₁(N) ≤ N²`, and that
+bound is now a Lean theorem **with no hypothesis**:
 
 ```lean
-theorem GenusRoute.dimJ1Le_of_localDerivation (h1 : DimJacobianEqGenus) (hL : LocalDerivation) : DimJ1Le
-theorem HDec.HSyn.t34Le_of_localDerivation (h1 : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus)
-    (hL : GenusRoute.LocalDerivation) : DimJ1Le5             -- on the OneProof copies
-```
-
-The genus bound is proved by an explicit injection (section 6): every holomorphic differential of
-`K_N` is `h · dj` with `h` in an explicit `ℚ`-space `V`, and `V` injects into `OF / j·OF ≅ ℚ^d`
-(`OF` the integral closure of `ℚ[j]`, `d = [K_N : ℚ(j)] ≤ N²`), so `g(K_N) ≤ d ≤ N²`. No
-Riemann–Roch, no Riemann–Hurwitz, and no identification of `fieldGenus` with another notion of
-genus is used. A second route, from the textbook leaf Riemann–Hurwitz (`RiemannHurwitzQj`), is also
-compiled:
-
-```lean
-theorem GenusRoute.dimJ1Le_of_rh_curve (h1 : DimJacobianEqGenus) (hRH : RiemannHurwitzQj) : DimJ1Le
-theorem HDec.HSyn.t34Le_of_rh (h1 : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus)
-    (hRH : GenusRoute.RiemannHurwitzQj) : DimJ1Le5           -- the same, on the OneProof copies
-theorem HDec.HSyn.dim_J1_le_of5 (h : DimJ1Le5) ...           -- drop-in for TailD.lean:236
+theorem GenusRoute.dimJ1Le : DimJ1Le                    -- scratch/genus-route/Closed.lean
+theorem HDec.HSyn.t34Le : DimJ1Le5                       -- scratch/genus-route/Fold.lean (OneProof copies)
+theorem HDec.HSyn.dim_J1_le_of5 (h : DimJ1Le5) ...       -- drop-in for TailD.lean:236
 theorem HDec.HSyn.G0Split.javanpeykarJ1_of_le (hR18 : R18_JavanpeykarConcrete)
-    (hB : X1BelyiOnModel) (h : DimJ1Le5) : JavanpeykarJ1     -- drop-in for TailD.lean:250
+    (hB : X1BelyiOnModel) (h : DimJ1Le5) : JavanpeykarJ1  -- drop-in for TailD.lean:250
 ```
 
-`X0Transitive` was needed by curve-split's route only for the constant field of `K_N`
-(`x1ConstantField_of_x0Transitive`). The new glue theorem `GenusRoute.constantFieldIsQ_of_curve`
-reads the constant field off the model of `X₁(N)` that `IsJ1` already provides: `ℚ` is
-algebraically closed in the function field of any smooth proper geometrically connected integral
-curve over `ℚ`. `GenusX1Field` (the equality `g(K_N) = g(Γ₁(N))`, which has no Lean form) is not
-needed: only an upper bound is used.
+where `DimJ1Le := ∀ N J, 0 < N → IsJ1 N J → ∃ g : ℕ, J.dim = g ∧ g ≤ N²`. So the fold can delete the bundle
+field `genusX1Field` (and `GenusX1Field`, which has no Lean form, is never needed), and `X0Transitive` is not
+used on this route. Ingredients:
 
-Files (all compile with `lake env lean`; `#print axioms` = `[propext, Classical.choice, Quot.sound]`):
+1. `DimJacobianEqGenus` (`dim Jac X = fieldGenus K(X)`): dimjac-glue's theorem
+   `ModularSplit.DimJac.dimJacobianEqGenus` (branch `wip/dimjac-glue`, commit 24435c82), copied verbatim into
+   `Closed.lean` (python substring check: True) and compiled here.
+2. **New:** `constantFieldIsQ_of_curve` (section 4): `ℚ` is algebraically closed in the function field of a
+   smooth proper geometrically connected integral curve over `ℚ`; applied to the model of `X₁(N)` carried by
+   `IsJ1`. This is what replaced `X0Transitive` (curve-split needed it only for this).
+3. **New:** the elementary genus bound `g(K_N) ≤ [K_N : ℚ(j)]` (section 6, `genusLeDegree`): every
+   holomorphic differential is `h · dj` with `h` in an explicit `ℚ`-space `V`, and `V` injects into
+   `OF / j·OF ≅ ℚ^d` (`OF` the integral closure of `ℚ[j]`). No Riemann–Roch, no Riemann–Hurwitz, and no
+   identification of `fieldGenus` with another genus. Its one local input, `LocalDerivation` (`d/dπ`
+   preserves `𝒪_P` for a local parameter `π`; Stichtenoth §4.1), was first stated as a leaf and is now
+   **proved** (section 7, `localDerivation`).
+4. Kernel theorem `ZInQ.RLeaf.belyiX1`: `j/1728` is a Belyi function on `K_N` and `[K_N : ℚ(j)] ≤ N²`.
 
-* `scratch/genus-route/ConstField.lean` (≈410 lines): the constant-field theorem alone.
-* `scratch/genus-route/GenusRoute.lean` (≈1770 lines, 16 s): `ConstField` + curve-split's
-  `GenusBound.lean` (copied verbatim, namespace `CurveSplit` → `GenusRoute`) + `dimJ1Le_of_rh_curve`,
-  `genus_le_of_model`. Imports only kernel modules (`Contrib.CurvesG`, `Contrib.RLeaf.BelyiX1`,
-  `Contrib.RLeaf.T40`, `Contrib.Dim.SmoothStalk`, `Contrib.SmoothFibre.Basic`, `HDecomp.ModCurves.X1Belyi`).
-* `scratch/genus-route/GenusElem.lean` (≈2370 lines): `GenusRoute.lean` + the elementary genus bound
-  (`LocalDerivation`, `genusLeDegree_of_localDerivation`, `dimJ1Le_of_localDerivation`).
-* `scratch/genus-route/Fold.lean` (≈2460 lines, ≈30 s): `GenusElem.lean` verbatim +
-  `import ZInQKernel.OneProof.H.TailM` + the drop-in theorems (`t34Le_of_localDerivation`,
-  `t34Le_of_rh`, `dim_J1_le_of5`, `javanpeykarJ1_of_le`), in the namespaces of their consumers. Needs the
-  upstream `lean/` package built once (`lake build ZInQKernel.Hypotheses.JHeight`).
+Alternative routes kept (compiled): `dimJ1Le_of_rh_curve : DimJacobianEqGenus → RiemannHurwitzQj → DimJ1Le`
+(textbook leaf Riemann–Hurwitz, curve-split's reduction with `X0Transitive` removed) and
+`dimJ1Le_of_localDerivation : DimJacobianEqGenus → LocalDerivation → DimJ1Le`.
+
+Files (all compile with `lake env lean scratch/genus-route/<file>.lean`):
+
+| file | lines | time | content |
+|---|---|---|---|
+| `ConstField.lean` | 410 | 70 s cold | the constant-field theorem alone |
+| `GenusRoute.lean` | 1770 | 16 s | `ConstField` + curve-split's `GenusBound.lean` (verbatim, namespace `CurveSplit` → `GenusRoute`) + `dimJ1Le_of_rh_curve` |
+| `GenusElem.lean` | 2370 | 20 s | `GenusRoute.lean` + the elementary genus bound from `LocalDerivation` |
+| `LocalDer.lean` | 2780 | 25 s | `GenusElem.lean` + `localDerivation` (proof of the leaf) + `dimJ1Le_of_dimJacobianEqGenus` |
+| `Closed.lean` | 3470 | 30 s | dimjac-glue's `DimJacGlue.lean` + `LocalDer.lean`, verbatim; `GenusRoute.dimJ1Le` |
+| `Fold.lean` | 3570 | 30 s | `Closed.lean` verbatim + `import ZInQKernel.OneProof.H.TailM` + `t34Le`, `dim_J1_le_of5`, `javanpeykarJ1_of_le` (needs the upstream `lean/` package built once: `lake build ZInQKernel.Hypotheses.JHeight`) |
+
+Imports are kernel modules only: `Contrib.CurvesG.{GenusSplit,CurveSplit}`, `Contrib.RLeaf.{BelyiX1,T40}`,
+`Contrib.Dim.{SmoothStalk,Basic}`, `Contrib.SmoothFibre.Basic`, `Contrib.CloudW07JacobiansCurves.*` (for
+dimjac-glue), `HDecomp.ModCurves.X1Belyi` (and `OneProof.H.TailM` for `Fold.lean`).
 
 ## 1. What the consumers need from `t34` (VERIFIED by reading)
 
@@ -65,18 +65,20 @@ So both need exactly `DimJ1Le := ∀ N J, 0 < N → IsJ1 N J → ∃ g : ℕ, J.
 
 ## 2. The fold
 
-Replace the bundle field `genusX1Field : GenusX1Field` by `localDerivation : GenusRoute.LocalDerivation`
-(recommended; or `riemannHurwitzQj : GenusRoute.RiemannHurwitzQj`, or `t34Le : DimJ1Le5` directly), set
-`t34Le := t34Le_of_localDerivation t.dimJacobianEqGenus t.localDerivation`, and at the consumers:
+Delete the bundle fields `genusX1Field` and `dimJacobianEqGenus` (both unused after the change; the latter is
+proved anyway) and the definition `t34 := t34_of_split5 …`, and at the consumers use the theorem `t34Le`:
 
 | site | now | replacement |
 |---|---|---|
-| TailD.lean:236 | `LeafModCurves.dim_J1_le t.t34 N hN0 J hJ1` | `dim_J1_le_of5 t.t34Le N hN0 J hJ1` (same type; checked by an `example`) |
-| TailD.lean:250 | `javanpeykarJ1 hR18 hBelyi t.t34 …` | `G0Split.javanpeykarJ1_of_le hR18 hBelyi t.t34Le …` |
+| TailD.lean:236 | `LeafModCurves.dim_J1_le t.t34 N hN0 J hJ1` | `dim_J1_le_of5 t34Le N hN0 J hJ1` (same type; checked by an `example`) |
+| TailD.lean:250 | `javanpeykarJ1 hR18 hBelyi t.t34 …` | `G0Split.javanpeykarJ1_of_le hR18 hBelyi t34Le …` |
 
 `javanpeykarJ1_of_le` is `javanpeykarJ1`'s proof with one line changed (diff in the log), and
 `javanpeykarJ1_of_le hR18 hB (dimJ1Le5_of_t34 t34) = javanpeykarJ1 hR18 hB t34` holds by `rfl`
 (compiled). Since `DimJ1Le5` follows from `t34` (`dimJ1Le5_of_t34`), the change only weakens the hypotheses.
+
+If a fold prefers a field to an inlined theorem, `t34Le_of_localDerivation` and `t34Le_of_rh` give the
+same conclusion from the (now proved) leaf `LocalDerivation` or from `RiemannHurwitzQj`.
 
 Note (VERIFIED by grep): in the current OneProof bundles `x0Transitive` also supplies T40
 (`t40 := t40_of_x0Transitive4 t.x0Transitive`, TailK.lean:250, TailN.lean:236). This report removes only
@@ -86,10 +88,12 @@ its use in the genus route (curve-split's `dimJ1Le_of_rh`); its T40 use is outsi
 
 | item | kind | status | source |
 |---|---|---|---|
-| `LocalDerivation` (recommended route) | LEAF (textbook, local) | open | Stichtenoth §4.1: for a `P`-prime element `t`, the `t`-derivative `δ_t` maps `𝒪_P` into `𝒪_P` (Prop. 4.1.8, number UNVERIFIED); equivalently `Ω_{𝒪_P/ℚ}` is free on `dπ` (Hartshorne II.8, numbers UNVERIFIED) |
+| `GenusRoute.dimJ1Le`, `HDec.HSyn.t34Le` | GLUE | **proved, no hypothesis** | — |
+| `localDerivation` and its 11 lemmas | GLUE | proved (new, section 7) | — |
+| `LocalDerivation` (as first stated) | was LEAF (textbook, local) | now a theorem | Stichtenoth §4.1: for a `P`-prime element `t`, the `t`-derivative `δ_t` maps `𝒪_P` into `𝒪_P` (Prop. 4.1.8, number UNVERIFIED); equivalently `Ω_{𝒪_P/ℚ}` is free on `dπ` (Hartshorne II.8, numbers UNVERIFIED) |
 | `genusLeDegree_of_localDerivation` and its 14 lemmas | GLUE | proved (new) | — |
 | `RiemannHurwitzQj` (alternative route) | LEAF (textbook, composite) | open | Stichtenoth, *Algebraic Function Fields and Codes*, Thm 3.4.13 (Hurwitz genus formula) with Thm 3.5.1 (Dedekind's different theorem, `d_P = e_P − 1` in char 0) and the identification of `fieldGenus` (holomorphic Kähler differentials) with the Riemann–Roch genus (Stichtenoth §4.3; Hartshorne II.8, IV.2.4); numbers UNVERIFIED |
-| `DimJacobianEqGenus` | LEAF in the kernel, now proved | proved by dimjac-glue (`scratch/dimjac-glue/DimJacGlue.lean`, other branch; not re-checked here) | Milne 1986 |
+| `DimJacobianEqGenus` | kernel LEAF, now proved | dimjac-glue's proof copied verbatim into `Closed.lean` and compiled here | Milne 1986 |
 | `constantFieldIsQ_of_curve` | GLUE | proved (new) | — |
 | `belyiGenusBound_of_rh`, `fundamentalIdentityQj` | GLUE | proved (curve-split, copied) | — |
 | `ZInQ.RLeaf.belyiX1` | kernel theorem | proved | — |
@@ -133,8 +137,10 @@ Proof (each step a compiled lemma):
 
 ## 5. What remains
 
-* The leaf `LocalDerivation` (or, on the alternative route, `RiemannHurwitzQj`).
-* The fold itself (bundle edit in TailN/TailO/…, done after the announcement).
+* Nothing on this route: no literature leaf is needed for the two uses of `t34`.
+* The fold itself (bundle edit in TailN/TailO/TailZ9/…, done after the announcement), and the deletion of
+  `GenusX1Field` and of the `genusX1Field` fields.
+* Not checked: whether `X0Transitive` can also be dropped from its T40 use (outside this task).
 
 ## 6. The elementary genus bound (new glue, proved): `g(F) ≤ [F : ℚ(j)]`
 
@@ -184,3 +190,33 @@ compiled lemma of `GenusElem.lean`):
 4. `fieldGenus F = dim holoDiff ≤ dim V ≤ d`.
 
 With `constantFieldIsQ_of_curve` and `ZInQ.RLeaf.belyiX1` (`d ≤ N²`): `dimJ1Le_of_localDerivation`.
+
+## 7. `LocalDerivation` is a theorem (new glue, proved)
+
+```lean
+theorem GenusRoute.localDerivation : LocalDerivation
+theorem GenusRoute.genusLeDegree : GenusLeDegree
+theorem GenusRoute.dimJ1Le_of_dimJacobianEqGenus (h1 : DimJacobianEqGenus) : DimJ1Le
+```
+
+Proof (`LocalDer.lean`; `s = j`, `𝒪 = 𝒪_P`, `π` the given local parameter):
+
+1. `exists_deriv_s`: a derivation `δ_s` of `F/ℚ` with `δ_s(s) = 1`. `Ω_{F/ℚ} = F·ds` (section 6, step 1) and
+   `Ω_{F/ℚ} ≠ 0`: otherwise `F/ℚ` is formally unramified, hence separable algebraic (Mathlib
+   `FormallyUnramified.iff_isSeparable`, `F` being essentially of finite type over `ℚ`), but `s` is
+   transcendental. A functional with `ds ↦ 1` (`Projective.exists_dual_eq_one`).
+2. Places containing `s` (`localDer_fin`):
+   * `frac_rep`: `𝒪 = OF_𝔭` (`𝔭` the center of `P` in `OF`; Mathlib's `valuationSubringAtPrime` and
+     curve-split's `w_eq_valuationSubring`), so every `x ∈ 𝒪` is `a/b` with `a, b ∈ OF`, `b ∉ 𝔭`.
+   * `deriv_bound`: `∃ N, π^N δ_s(𝒪) ⊆ 𝒪` (a `ℚ[s]`-basis `b_i` of `OF`, a common bound for the `δ_s(b_i)`,
+     the quotient rule).
+   * `residue_structure`: `OF/𝔭` is a field and a finitely generated `ℚ`-algebra, hence finite over `ℚ`
+     (Mathlib `finite_of_finite_type_of_isJacobsonRing`, Zariski's lemma); a primitive element `θ̄` with
+     minimal polynomial `g` (separable, so `g'(θ)` is a unit of `𝒪`), and every `x ∈ 𝒪` is `p(θ) mod 𝔪`.
+   * Writing `x = p(θ) + π y` and `g(θ) = π z`: `δ_s x = A·δ_s(π) + π (B·δ_s z + δ_s y)` with `A, B ∈ 𝒪`.
+     By induction on `k`, `π^N (δ_s x − a δ_s π) ∈ π^k 𝒪` for some `a ∈ 𝒪`. For `x = s` and `k = N + 1` this
+     forces `δ_s(π) ≠ 0` (else `π` would be a unit), and for large `k` it gives `δ_s(x) ∈ 𝒪·δ_s(π)`. So
+     `δ = δ_s(π)⁻¹ δ_s` has `δ π = 1` and `δ 𝒪 ⊆ 𝒪`.
+3. Places not containing `s`: the same for the twisted structure `j ↦ 1/j` (curve-split's `twistAlg`).
+
+The constant-field hypothesis of `LocalDerivation` is not used in its proof.
