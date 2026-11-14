@@ -27,6 +27,33 @@ if SHIMURA:
          'Lemma QP, as for r1r2); over Mathlib\'s FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, '
          'ConnectedComponents', 'shimura-glue; folded by leaf-fold10', 'y3Connected (composite)'),
     ]
+REDUCT = 'reduct' in sys.argv[1:]
+K6 = '(2) reduct-glue (`r6` from `RaynaudSemistable`)'
+K13 = '(2) reduct-glue (`semistableReductionThm`, `semistablePersists` from `SemistablePersistsDVR`, `NeronLocalizesDVR`)'
+if REDUCT:
+    REMOVED[K6] = [('R', 'r6')]
+    REMOVED[K13] = [('R', 'semistableReductionThm'), ('R', 'semistablePersists')]
+    ADDED[K6] = [('R', 'raynaudSemistable', '_root_.ReductSplit.RaynaudSemistable',
+                  'published form (pending the base review)',
+                  'SGA 7 I Exp. IX Prop. 4.7 (Raynaud\'s criterion; Silverberg-Zarhin 1995) over a DVR: m >= 3 invertible '
+                  'in O and A[m] rational over K imply semistable reduction at O (the print may be over a strictly '
+                  'henselian base: reduct-glue proves this leaf from RaynaudSemistableSH with StrictHenselizationNeron)',
+                  'reduct-split, reduct-glue; folded by leaf-fold10',
+                  'r6 (consequence), with semistableUnipotent, neronSchemeModelExistsDVR, mumfordTorsionAlgClosed and '
+                  'mulEtaleAbelianScheme (FixedTorsionRationalImperfect proved)')]
+    ADDED[K13] = [
+        ('R', 'semistablePersistsDVR', '_root_.ReductSplit.SemistablePersistsDVR',
+         'published form (specialization; pending the base review)',
+         'SGA 7 I Exp. IX 3.3, first assertion, over a DVR, K\'/K finite (the print allows any extension of DVRs; '
+         'it may be over a strictly henselian base: reduct-glue proves it from SemistablePersistsSH with '
+         'StrictHenselizationPair)', 'reduct-split, reduct-glue; folded by leaf-fold10',
+         'semistablePersists (consequence) and, with semistableReductionDVR, semistableReductionThm (consequence)'),
+        ('R', 'neronLocalizesDVR', '_root_.ReductGlue.NeronLocalizesDVR', 'consequence of one theorem',
+         'BLR, Neron models, 1.2 Prop. 4 ("only if": a Neron model over O_L localizes to a Neron model at the closed '
+         'points), stated over every DVR of a number field L (every one is a localization: proved by reduct-glue)',
+         'reduct-glue; folded by leaf-fold10',
+         'SemistableLocalGlobal (reduct-split glue, now proved), for semistableReductionThm and semistablePersists'),
+    ]
 ORDER = list(REMOVED)
 BUNDLES = [('R', 'OpenResearchLeaves9'), ('T', 'OpenTextbookLeaves10'),
            ('A', 'OpenAddedLeaves9' if SHIMURA else 'OpenAddedLeaves8'),

@@ -1,5 +1,5 @@
-before 11123  after 11215  only before 0  only after 92  changed 1
+before 11123  after 11828  only before 0  only after 705  changed 1
    ZInQ.OneProof.frozenTarget ZInQKernel.OneProof.Main [] 4231377044 1669093711
- | ZInQKernel.OneProof.Main [] 2619178583 2715288638
+ | ZInQKernel.OneProof.Main [] 4143511909 2450114733
 
-modules of the new constants: ['ZInQKernel.OneProof.H.TailZ10', 'ZInQKernel.OneProof.H.TailZ11']
+modules of the new constants: ['ZInQKernel.OneProof.H.TailZ10', 'ZInQKernel.OneProof.H.TailZ11', 'ZInQKernel.OneProof.H.TailZ12', 'ZInQKernel.OneProof.H.TailZ13', 'ZInQKernel.OneProof.H.TailZ14', 'ZInQKernel.OneProof.H.TailZ15']

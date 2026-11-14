@@ -18,3 +18,7 @@
   Fold analysis: r6 (c) -> RaynaudSemistable (published form pending base review) + proved glue: strict -1. SS1+SS3 (2 c) -> SemistablePersistsDVR (published pending) + NeronLocalizesDVR (counted c, conservative: stated over every DVR, a consequence of BLR 1.2/4 via the proved localization identification) with SemistableAlmostAll from AbVarSpreadsOut (EGA IV: field egaIV_8_10_5_xii + W01 proofs) and Zariski (W02 proof): strict -1. SS2: +1 or more, not taken. faltingsLemma5BC: neutral, not taken.
   TailZ14 = reduct-glue Body.lean verbatim (ReductSplitBase import -> TailZ13; 24 #print dropped), 116.8 KB; builds EXIT 0 first try.
   TailZ15 = OpenResearchLeaves10 (30: -r6 -SS1 -SS3 +raynaudSemistable +semistablePersistsDVR +neronLocalizesDVR), researchLeaves9_of_open10, sixContactMin_of_open12; builds EXIT 0 first try.
+- 14:10 Main switched to sixContactMin_of_open12 (OpenResearchLeaves10, OpenTextbookLeaves10, OpenAddedLeaves9, OpenGlue7). `lake build +ZInQKernel.OneProof.Main` EXIT 0; frozenTarget standard axioms. VERIFIED.
+  Check10: closure 212917, no sorryAx; 62 fields (30+17+14+1), 15 kernel heads; all new theorems standard axioms. cmp_hashes: 0 removed, 1 changed (frozenTarget), 705 new, all in TailZ10-Z15. VERIFIED.
+  Counts (mk_fields10.py shimura reduct): 63 (42/21) -> dimjac 62 (42/20) -> shimura 62 (43/19) -> r6 62 (44/18) -> SS1+SS3 62 (45/17). Lenient 53/10 -> 54/8.
+  Shimura fold still pending shimura-glue's .fleet; TailZ12 to be regenerated from its final Deligne.lean.

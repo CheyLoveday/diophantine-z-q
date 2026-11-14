@@ -3,16 +3,16 @@ import ZInQKernel.OneProof.Main
 every field of the four bundles its head constant and the module that declares it. -/
 open Lean Elab Command Meta
 
-example : ∀ (r : HDec.HSyn.OpenResearchLeaves9) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves8)
-    (g : HDec.HSyn.OpenGlue7), _root_.ZInQ.SixContactMin := HDec.HSyn.sixContactMin_of_open10
+example : ∀ (r : HDec.HSyn.OpenResearchLeaves10) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves9)
+    (g : HDec.HSyn.OpenGlue7), _root_.ZInQ.SixContactMin := HDec.HSyn.sixContactMin_of_open12
 
-#print axioms HDec.HSyn.sixContactMin_of_open10
+#print axioms HDec.HSyn.sixContactMin_of_open12
 
 run_cmd do
   let env ← getEnv
   -- closure
   let mut seen : NameSet := {}
-  let mut todo : Array Name := #[`HDec.HSyn.sixContactMin_of_open10]
+  let mut todo : Array Name := #[`HDec.HSyn.sixContactMin_of_open12]
   while h : todo.size > 0 do
     let n := todo.back
     todo := todo.pop
@@ -26,7 +26,7 @@ run_cmd do
   let mods := env.header.moduleNames
   let mut kcount : Nat := 0
   let mut total : Nat := 0
-  for s in [`HDec.HSyn.OpenResearchLeaves9, `HDec.HSyn.OpenTextbookLeaves10, `HDec.HSyn.OpenAddedLeaves8,
+  for s in [`HDec.HSyn.OpenResearchLeaves10, `HDec.HSyn.OpenTextbookLeaves10, `HDec.HSyn.OpenAddedLeaves9,
       `HDec.HSyn.OpenGlue7] do
     let some info := getStructureInfo? env s | throwError "no structure {s}"
     let mut lines : Array String := #[]
@@ -56,3 +56,18 @@ run_cmd do
 set_option pp.fullNames true in
 #check @ModularSplit.DimJac.dimJacobianEqGenus
 example : ModularSplit.DimJac.dimJacobianEqGenus = (ModularSplit.DimJac.dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus) := rfl
+-- shimura-glue (TailZ12/13) and reduct-glue (TailZ14/15)
+#print axioms ShimuraGlue.deligneComponentsY3_of_printed
+#print axioms ShimuraSplit.y3Connected_of_deligne
+#print axioms HDec.HSyn.addedLeaves8_of_open9
+#print axioms ReductGlue.raynaudCriterion_leaves
+#print axioms ReductGlue.semistableLocalGlobal_leaf
+#print axioms ReductGlue.semistableAlmostAll_of
+#print axioms HDec.HSyn.semistableAlmostAll_of10
+#print axioms HDec.HSyn.researchLeaves9_of_open10
+set_option pp.fullNames true in
+#check @HDec.HSyn.semistableAlmostAll_of10
+set_option pp.fullNames true in
+#check @HDec.HSyn.researchLeaves9_of_open10
+set_option pp.fullNames true in
+#check @HDec.HSyn.addedLeaves8_of_open9
