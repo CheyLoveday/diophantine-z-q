@@ -29,3 +29,13 @@
   ShimuraHolFamily (H-154), DeligneComponentsY3 (H-155), DeligneComponentsY3Printed, DeligneComponentsX6Printed
   (shimura-glue), R1R2fpRep (H-1 r1r2), CanonicalModelY3, ShimuraFamily, Y3Connected. COMPILED (7 s, 8.6 GB),
   all standard axioms.
+
+## Clause (b) derived (R1UnivRigid.lean §8) — COMPILED, standard axioms
+- LEAF `MumfordRigidityCore` = MumfordRigidity without clause (b) (GIT Thm 6.14 existence + Cor 6.4 over S).
+- `isGrpFibre_of_rigidity`: for GrpObj F over S, proper smooth, IsAbVarFibre F η[F].left s A g → IsGrpFibre F A g.
+  Proof: F_s = (Over.pullback s).obj F with Mathlib `Functor.grpObjObj` is an AbVar (geom. integral via iso with A,
+  RespectsIso from `geometrically`), A ≅ F_s (isoPullback), η-compatible ⇒ IsMonHom by kernel `G0FibreSimple.rigidityHom`;
+  then μ via `Over.μ_pullback_left_fst_fst/snd`, `obj.μ_def`.
+- `mumfordRigidity_of_core : MumfordRigidityCore → MumfordRigidity`; `r1univProps_of_core_ab`, `r1fpProps_iff_ab_core`.
+- Pitfalls: `ι` is GrpObj-inverse notation (rename); `Over.pullback_map_left` only via simp (Hom.left abbrev);
+  `LaxMonoidal.ε` needs `Functor.` prefix, `ε_pullback_left` needs `Over.`.
