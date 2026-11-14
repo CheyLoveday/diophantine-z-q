@@ -85,3 +85,12 @@ av-glue 8d3c7a91 2026-11-14 03:41:01 -0800
 mcr-glue 512c3a7e 2026-11-14 03:19:43 -0800
 # revisions chain.py reads that are not on main (their branches must stay): wip/leaf-fold5 5a7e03d1, wip/ts-kummer
 # 1bbe3543, wip/t40-tate 7ed2ca99, wip/assemble-port 92a27877 (93a1e33c is its ancestor); all on off-route edges.
+
+# refresh r5: heads read at 2026-11-14 13:20 PST (merged into fork main 28b41fb3, w60, except wip/w61)
+main 28b41fb3 2026-11-14 12:53:42 -0800
+leaf-fold9 cf6914e1 2026-11-14 12:38:11 -0800
+shimura-split e80361ee 2026-11-14 12:32:50 -0800
+reduct-split a4fca6ae 2026-11-14 12:13:58 -0800
+modular-split cfcac8bc 2026-11-14 11:59:52 -0800
+w61 3c241950 2026-11-14 13:15:41 -0800 (tyz-split statement review v2: the docstring of TYZThm33)
+# chain.py's off-main revisions are r4's (above); r5 adds none.
