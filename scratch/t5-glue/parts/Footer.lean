@@ -20,3 +20,8 @@
 #print axioms T5Glue.x0RatStructure_of_leaf
 #print axioms T5Glue.cmModuli_of_leaf
 #print axioms T5Glue.shimuraReciprocityModFn_of_t5Leaves
+#print axioms T5Glue.exists_tau_of_sigma
+#print axioms T5Glue.artinCond_of_abs
+#print axioms T5Glue.artinLift_of_abs
+#print axioms T5Glue.cmModuli_of_final
+#print axioms T5Glue.shimuraReciprocityModFn_of_final

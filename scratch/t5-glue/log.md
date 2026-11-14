@@ -117,3 +117,18 @@
   IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`**; `cmModuli_of_leaf : ShimuraMainCM → ArtinLift →
   IdeleLatticeScale → CMModuli`; `x0RatStructure_of_leaf : X0ModuliGalois → X0RatStructure`.
 - T5Glue.out (1910-line source): 0 errors; 19 axiom lines, all [propext, Classical.choice, Quot.sound].
+
+## Step 11: parts/Artin.lean — `ArtinLift` reduced to Tau Ceti's absolute Artin map — COMPILED
+- GLUE `AbsArtinSurjective K` (over Tau Ceti's objects only): every g ∈ G_K = Gal(Kˢ/K) has its class in
+  G_K^ab (`TopologicalAbelianization`) equal to `(globalClassFormation K).absoluteArtinMap` of some idele
+  class. TC has dense range only (`ClassFormation.denseRange_absoluteArtinMap`). `AbsArtinSurjectiveQNeg`:
+  for K = ℚ(√−m), m squarefree.
+- PROVED: `exists_tau_of_sigma` (σ ∈ Aut(ℂ) fixing κ(K) restricts through ιC∘e to τ ∈ Gal(Kˢ/K); range of
+  ιC∘e = algebraic numbers via `mem_range_of_isAlgebraic`, Kˢ alg. closed), `artinCond_of_abs` (TC
+  `globalArtinMap_eq_of_mk_eq_absoluteArtinMap`, `of_ideleClassArtinMap`, `AlgHom.restrictNormalHom_commutes`;
+  Abelianization.of injective needs `open scoped IsMulCommutative`), `artinLift_of_abs :
+  AbsArtinSurjectiveQNeg → ArtinLift`.
+- Final: **`shimuraReciprocityModFn_of_final : ShimuraMainCM → X0ModuliGalois → AbsArtinSurjectiveQNeg →
+  IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`**; `cmModuli_of_final : ShimuraMainCM →
+  AbsArtinSurjectiveQNeg → IdeleLatticeScale → CMModuli`.
+- T5Glue.out (2047-line source): 0 errors; 24 #print axioms lines, all [propext, Classical.choice, Quot.sound].
