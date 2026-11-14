@@ -139,3 +139,9 @@
   `hS : Shimura.ShimuraReciprocityModFn` replaced by `ShimuraMainCM`, `X0ModuliGalois`, `AbsArtinSurjectiveQNeg`,
   `IdeleLatticeScale`; conclusion `ZInQ.FrozenTarget`. #print axioms: [propext, Classical.choice, Quot.sound].
 - The OneProof oleans come from ~/dzq-check2 (its `OneProof/TYZSplit.lean` differs from this base by a docstring only).
+
+## Step 13: checks
+- Verbatim copies checked mechanically (python text comparison against scratch/tyz-split/T5.lean):
+  `CMModuli`, `X0RatStructure`, `linIndep_one_tau`, `pp`, `discL`, `jL`, `weber`, `modCoord`,
+  `heegnerForm_level_pos`: IDENTICAL; same `open` list as tyz-split's file.
+- T5Glue.lean header docstring updated; recompiled: 0 errors, 24 standard axiom lines.
