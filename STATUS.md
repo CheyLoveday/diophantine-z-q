@@ -35,8 +35,8 @@ with the Mathlib library.
   literature that are still open, in nine bodies of published mathematics (Shimura curves, abelian varieties, Néron
   models and semistable reduction, Faltings heights, p-adic Hodge theory, Galois representations of modular forms,
   and others), and one glue statement, `QuotientP1Coordinate`, about a model of a Shimura curve over Z_(p) for each
-  prime p > 324, a step of the project's own argument that it must still prove. Of the 56, 38 are published
-  statements (some specialized or weakened), 10 are consequences of a single published theorem, and 8 are
+  prime p > 324, a step of the project's own argument that it must still prove. Of the 56, 37 are published
+  statements (some specialized or weakened), 10 are consequences of a single published theorem, and 9 are
   candidates: composites of published results that are not printed in this form. Its hypotheses carry six more
   leaves that the proof never uses. Statement reviews by AI models found no leaf stronger than its source, with two caveats:
   the leaf for Pazuki's height bound may state it more strongly than he prints it, by about log 4, depending on a
@@ -247,8 +247,11 @@ statements, some textbook theorems are proved, and the project's reductions add 
   several statements, some replaced by published statements from which Lean derives them), 18 textbook leaves, 14
   leaves that the project's reductions introduced, and one glue statement. But six of the 62 leaves (R3, T10 and
   the four statements that stand in for R7(b) and R8) are used only where hypotheses are repackaged, so the proof
-  does not use them. Of the 56 leaves that the proof uses, 38 are published statements, some of them specialized
-  or weakened, 10 are consequences of a single published theorem, and 8 are candidates (section 2 of the note).
+  does not use them. Of the 56 leaves that the proof uses, 37 are published statements, some of them specialized
+  or weakened, 10 are consequences of a single published theorem, and 9 are candidates. Section 2 of the note lists
+  González–Rotger's count of CM points as published; it is counted here as a candidate, because it is stated on a
+  fixed model of the Shimura curve together with its moduli data (docs/research/frontier.md, revision r5,
+  section 4.8).
   Of the 63 hypotheses, 17 are propositions
   defined in the kernel library outside `ZInQKernel/OneProof/`; the other 46 are defined in the assembly's own
   modules.
@@ -299,8 +302,8 @@ statements, some textbook theorems are proved, and the project's reductions add 
   curve's moduli problem that still needs a human, and the definition of the stable Faltings height. Twenty of the
   current leaves are flagged for a human check (section 2 of docs/research/leaf-fold7.md and of leaf-fold8.md); of the
   leaves that the latest fold added, González–Rotger's count is stated on a fixed model of the Shimura curve,
-  together with its moduli data, so a stricter reading would make it a consequence or a combination of results
-  rather than a printed statement (docs/research/leaf-fold9.md, section 1.1); and
+  together with its moduli data, so it is counted as a candidate rather than a printed statement
+  (docs/research/leaf-fold9.md, section 1.1); and
   the check of an earlier assembly's candidates found none of them false and none true only for a trivial reason. A
   review of the height leaves (docs/research/height-split.md, section 8) raised three risks. One is an open
   question: if the level-2 theta coordinates in Pazuki's paper are the second-order ones, the leaf for his bound
@@ -407,9 +410,10 @@ Among them are the complete kernel build and exact-target audit, the accepted Le
 finish and accept every mathematical change (docs/research-review/README.md upstream). The live ruleset
 (https://github.com/elliotglazer/diophantine-z-q/rules/26781429) shows what a merge currently requires; CI alone
 does not establish that an argument is correct. The open statements are grouped as upstream issues, one per topic, listed in the
-tracking issue; they follow the rows of revision r4 of docs/research/frontier.md on the fork's main, which lists the open
-statements as they would stand if every reduction compiled on the fork were folded in (its base is the previous
-assembly; section 2 of docs/research/leaf-fold9.md lists the current hypotheses of H).
+tracking issue; they follow the rows of revision r5 of docs/research/frontier.md, which is on fork branch wip/frontier-r5 until
+it reaches the fork's main (main has revision r4). It lists the open statements as they would stand if every
+reduction compiled on the fork were folded into the current assembly (section 2 of docs/research/leaf-fold9.md
+lists the current hypotheses of H).
 Section 2 of docs/research/leaf-fold9.md lists the 63 hypotheses of the canonical assembly of H, and section 3
 groups its leaves by theory. `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) takes exactly the open
 statements as hypotheses: a proof of one is folded in by replacing that hypothesis with the proof. The project's own agents record who is working on what in
