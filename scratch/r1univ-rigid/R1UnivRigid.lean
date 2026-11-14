@@ -102,10 +102,12 @@ homomorphism into the homomorphisms (`ι(ab) = ι(a) ∘ ι(b)`, `ι(a+b) = ι(a
 `Hom_S(A, A)`), and `η : 𝒪 → A(S)` is an `𝒪`-linear group homomorphism whose kernel on every field
 fibre is exactly `3𝒪`.
 
-The level clause is the relative form of the kernel's `Level3`: in characteristic 0 an `𝒪`-linear
-`η : (𝒪/3𝒪)_S → A[3]` injective on every geometric fibre is an isomorphism, both sides being finite
-étale of degree 81 (`#A_s[3] = 3⁴`, the kernel's `TorsionStructure`), and conversely (STANDARD; the
-same argument as `Structures.lean` §2 over a field). Injectivity of `ι` is not required: for `S ≠ ∅`
+The level clauses are the relative form of the kernel's `Level3`: `eta_three` says `η` kills `3𝒪`
+globally, so it is a map `(𝒪/3𝒪)_S → A[3]`; `eta_ker` says it is injective on every field fibre. In
+characteristic 0 such a map is an isomorphism, both sides being finite étale of degree 81
+(`#A_s[3] = 3⁴`, the kernel's `TorsionStructure`), and conversely (STANDARD; the same argument as
+`Structures.lean` §2 over a field). Without `eta_three` the class would be too large over a
+non-reduced `S` (independent review: `S = Spec ℚ[ε]`, `η = η₀ + ε·δ`). Injectivity of `ι` is not required: for `S ≠ ∅`
 a unital ring map `𝒪 → End_S(A)` is injective (its kernel is a two-sided ideal with torsion-free
 quotient, `B` is simple), and for `S = ∅` there is nothing to classify. The polarization of the PEL
 form is not part of the datum (Lemma P / rv-qm-polar: for the fixed `μ` it exists and is unique;
@@ -123,6 +125,7 @@ structure QMAbScheme (S : Scheme.{0}) extends QMFamily S where
     Over.homMk (U := 𝟙_ (Over S)) (eta a) (eta_sec a) *
       Over.homMk (U := 𝟙_ (Over S)) (eta b) (eta_sec b)
   eta_linear : ∀ a b : O, eta (a * b) = eta b ≫ iota a
+  eta_three : ∀ b : O, eta (3 * b) = eta 0
   eta_ker : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ S) (a : O),
     s ≫ eta a = s ≫ eta 0 ↔ ∃ b : O, a = 3 * b
 
@@ -356,6 +359,9 @@ theorem exists_qmAbScheme (hR : MumfordRigidity) {S : Scheme.{0}} [IsReduced S]
       rw [P.e.linear]; rfl
     rw [← he (a * b), hl, Over.comp_left, Category.assoc, hι a, reassoc_of% (he b)]
     rfl
+  have hthree : ∀ b : O, 𝒜.eta (3 * b) = 𝒜.eta 0 := fun b =>
+    sec_ext 𝒜 hfib _ _ (by rw [𝒜.eta_sec, 𝒜.eta_sec]) (fun K _ t P g hpb hι he => by
+      rw [← he (3 * b), ← he 0, (P.e.eq_iff (3 * b) 0).2 ⟨b, by simp⟩])
   have hker : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ S) (a : O),
       s ≫ 𝒜.eta a = s ≫ 𝒜.eta 0 ↔ ∃ b : O, a = 3 * b := by
     intro K _ s a
@@ -381,6 +387,7 @@ theorem exists_qmAbScheme (hR : MumfordRigidity) {S : Scheme.{0}} [IsReduced S]
     iota_add := hadd
     eta_add := headd
     eta_linear := helin
+    eta_three := hthree
     eta_ker := hker }, rfl⟩
 
 /-! ## §7 `R1univProps` from rigidity and the abelian-scheme clause; the clause lists agree -/

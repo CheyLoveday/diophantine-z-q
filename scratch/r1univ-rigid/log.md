@@ -39,3 +39,7 @@
 - `mumfordRigidity_of_core : MumfordRigidityCore → MumfordRigidity`; `r1univProps_of_core_ab`, `r1fpProps_iff_ab_core`.
 - Pitfalls: `ι` is GrpObj-inverse notation (rename); `Over.pullback_map_left` only via simp (Hom.left abbrev);
   `LaxMonoidal.ε` needs `Functor.` prefix, `ε_pullback_left` needs `Over.`.
+
+## Independent review (model subagent, 11-14 15:00)
+- No PROBLEM; RISK: fibrewise-only level clause too weak over non-reduced S (Spec ℚ[ε], η=η₀+εδ). FIXED: field
+  `eta_three : η(3b) = η(0)` added to QMAbScheme, proved in exists_qmAbScheme (sec_ext + Level3.eq_iff). Both files recompile.

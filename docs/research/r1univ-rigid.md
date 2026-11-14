@@ -39,7 +39,8 @@ axioms (`propext`, `Classical.choice`, `Quot.sound`).
   level-3 structure. It extends the kernel's `QMFamily S` by:
   * a `GrpObj` structure with identity `η(0)`, and geometrically connected fibres;
   * `ι : 𝒪 → End_S(A)`, a unital ring homomorphism into the homomorphisms;
-  * `η : 𝒪 → A(S)`, an `𝒪`-linear group homomorphism whose kernel on every field fibre is `3𝒪`.
+  * `η : 𝒪 → A(S)`, an `𝒪`-linear group homomorphism with `η(3𝒪) = 0` globally and kernel exactly `3𝒪` on
+    every field fibre.
 
   `R1univAbProps`, `R1famAbProps` and `R1fpPropsAb` are the kernel's three clauses with "family" read as
   "abelian scheme with `𝒪`-action and level 3".
@@ -304,6 +305,25 @@ How the rows are set up:
    `ZInQKernel/HDecomp/QM/` as it stands. `R1UnivLeaves.lean` is generated (`build_leaves.sh`) and would be
    replaced in a fold by the `L_iff_ab` lines next to each leaf.
 3. **The polarization step** (§5.3) remains with the Lemma QP caveat.
+
+## 7a. Independent review
+
+A fresh model reviewer read §1-§3 and §8 of `R1UnivRigid.lean` (not the proofs) against GIT Ch. 6 and the
+kernel's definitions:
+* **No PROBLEM.**
+* **One RISK, now fixed.** The level clause was fibrewise only. Over a non-reduced `S` that admits objects
+  the published problem does not: for `S = Spec ℚ[ε]` and `η = η₀ + ε·δ`, every field fibre has kernel
+  `3𝒪`, but `η(3) ≠ 0`.
+  * `QMAbScheme` now also has `eta_three : η(3b) = η(0)`, which only shrinks the class.
+  * It is proved in `exists_qmAbScheme` on field points, over the reduced `S`. Everything recompiles.
+* **Confirmed:**
+  * `MumfordRigidityCore`'s hypotheses are stronger than Thm. 6.14 needs.
+  * Clause (b) is proved.
+  * No universe or quantifier issue.
+  * Injectivity of `ι` and the Kottwitz condition are automatic in characteristic 0.
+  * `∃ Y Φ, R1fpPropsAb Y Φ` follows from unpolarized fine moduli plus field rigidity.
+* **Caveats it repeated,** both already on `R1fp`: Lemma P in families on the PEL route, and whether
+  Buzzard covers full level 3.
 
 ## 8. Files and checks
 
