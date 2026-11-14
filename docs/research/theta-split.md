@@ -33,13 +33,18 @@ Quot.sound]`).**
    `ThetaNullNonvanishing` is not needed either: `J(u) ≠ 0` forces all ten even theta constants at
    `Ω(τ)` to be nonzero.
 2. *Route 1: one explicit closed statement.*
-   `thetaPointOfFibre_of_qm_core : FibreQMPeriod → QMThetaSymmetricCore → ThetaPointOfFibre`.
+   `thetaPointOfFibre_of_qm_core : FibreQMPeriod → QMThetaSymmetricCore → ThetaPointOfFibre`, and the core
+   splits further: `qmThetaSymmetricCore_of : ThetaEightSquare → QMThetaSymmetricCurve →
+   QMThetaSymmetricCore`. Here `ThetaEightSquare` is the global genus-2 identity `Σθ_m¹⁶ = (Σθ_m⁸)²/4` on all
+   of `𝔥₂`, and `QMThetaSymmetricCurve` is the part `3 ≤ k ≤ 9`, which is specific to the curve (final form
+   `thetaPointOfFibre_of_qm_curve`).
    `QMThetaSymmetricCore` says that along the curve the elementary symmetric functions of the ten even
    `θ_m(Ω(τ))⁸` are explicit polynomials with rational coefficients in `j_θ(Ω(τ))`, times powers of
    `Σθ_m⁸`, for `2 ≤ k ≤ 9`. The cases `k = 0, 1, 10` are proved. The core is
    **numerically VERIFIED** (80-digit arithmetic at 30 random points, worst relative residual `7.5·10⁻⁷⁷`),
    and **`k = 3` is cross-checked against Lin–Yang's printed Igusa vector of the QM curve**: an independent
-   computation from Lin–Yang's vector and Igusa's forms predicts exactly `R_3 = 283/3888 + j/972`.
+   computation from Lin–Yang's vector and Igusa's forms predicts exactly `R_3 = 283/3888 + j/972`. Every
+   constant term `R_k(0)` is checked against the product point `diag(i, i)`, i.e. `E_i × E_i`.
    It is GLUE. It is a consequence of Igusa's theta expressions and structure theorem plus Lin–Yang's
    vector (Example 29, the manuscript's own F1 input), with the same identification of `τ ↦ Ω(τ)` with
    the QM locus that F1 uses.
@@ -71,7 +76,9 @@ stronger than the use.
 | `ThetaRatiosAlgebraicCopy` | copy | verbatim copy of the field; `Iff.rfl` with `ThetaPt.ThetaRatiosAlgebraic` | compiled |
 | `ThetaRatiosAtQM` | GLUE (use form) | `Im τ > 0`, `jNum(Ω(τ))/jDen(Ω(τ)) = q ∈ ℚ\{0}` ⇒ `∃ m₀, θ_{m₀}(Ω(τ)) ≠ 0 ∧ ∀ m, θ_m/θ_{m₀}` algebraic | reduced (routes 1, 2) |
 | `QMThetaSymmetric` | GLUE | `∃ R_k ∈ ℚ[X]`, `∀ τ` with `Σθ⁸ ≠ 0`, `∀ k ≤ 10`: `e_k(θ_m⁸) = R_k(j_θ)·(Σθ⁸)^k` | ⇐ core |
-| `QMThetaSymmetricCore` | GLUE (explicit, closed) | the same with `R_k = qmR k` (§3), `2 ≤ k ≤ 9` | numerically VERIFIED |
+| `QMThetaSymmetricCore` | GLUE (explicit, closed) | the same with `R_k = qmR k` (§3), `2 ≤ k ≤ 9` | ⇐ the next two |
+| `ThetaEightSquare` | GLUE (global Siegel identity) | `∀ Ω ∈ 𝔥₂`, `Σ_{m even} θ_m¹⁶ = (Σ_{m even} θ_m⁸)²/4` | numerically VERIFIED; derivation from `dim M₈(Sp₄(ℤ)) = 1` (Igusa 1962) |
+| `QMThetaSymmetricCurve` | GLUE (explicit, closed) | the core for `3 ≤ k ≤ 9` | numerically VERIFIED |
 | `QMThetaShape` | GLUE (analytic) | `∃ R_k ∈ ℂ[X]`, `deg ≤ 3`, the same identities | ⇐ core |
 | `ShimuraCMThetaAlgebraic` | LEAF (consequence of Shimura) | `Ω ∈ 𝔥₂`, `w ∉ ℝ`, `w(Ωℤ²+ℤ²) ⊆ Ωℤ²+ℤ²`, `θ_{m'}(Ω) ≠ 0` ⇒ `θ_m(Ω)/θ_{m'}(Ω)` algebraic | cited |
 | `QMCMNodes` | GLUE | four `τᵢ ∈ ℍ` with scalar CM, `Σθ⁸ ≠ 0`, distinct `j_θ` | ⇐ `QMCMNodesNumeric` |
@@ -88,6 +95,7 @@ Proved theorems (all compiled, standard axioms):
 | `esymm_one`, `esymm_ten` | `e_1(θ⁸) = Σθ⁸`; `e_10(θ⁸) = j_θ²(Σθ⁸)¹⁰/3779136²` (from the definitions of `jNum`, `jDen`) |
 | `qmR_identity`, `qmThetaSymmetric_of_core` | core ⇒ all `k ≤ 10` ⇒ `QMThetaSymmetric` |
 | `thetaPointOfFibre_of_qm_core` | `FibreQMPeriod → QMThetaSymmetricCore → ThetaPointOfFibre` |
+| `two_esymm_two`, `qmThetaSymmetricCore_of`, `thetaPointOfFibre_of_qm_curve` | `2e_2 = p_1² − p_2`; `ThetaEightSquare → QMThetaSymmetricCurve → QMThetaSymmetricCore`; Route 1 in final form |
 | `qmThetaShape_of_core` | `QMThetaSymmetricCore → QMThetaShape` |
 | `mem_of_esymm_mem`, `esymm_mem` | the same with algebraic coefficients (`algebraicClosure ℚ ℂ`); symmetric functions of algebraic numbers |
 | `eval_mem_of_nodes` | Lagrange interpolation: `deg R ≤ 3` and algebraic values at 4 distinct algebraic nodes ⇒ `R(q)` algebraic for algebraic `q` |
@@ -131,6 +139,17 @@ the global identity). Lin–Yang's vector on the QM curve, as restated in `scrat
 `[ψ₄ : ψ₆ : 2¹²3⁵χ₁₀ : 2¹²3⁶χ₁₂] = [j : j² : j³ : j³(j+1)]`. Together these predict
 `E_3/E_1³ = (116/27 − 8j/27 + 1081344(j+1)/2985984)/64 = 283/3888 + j/972`, which matches. So the core is
 consistent with the manuscript's own printed input, in the same theta normalization that F1 uses.
+
+**Constant terms (VERIFIED, computed, `py/check_j0.py`).** For `k = 2, …, 10`, `e_k/e_1^k` at
+`Ω = diag(i, i)` equals `R_k(0)`, with relative difference `≤ 10⁻⁷⁷`. So the `j = 0` point of the curve
+(`τ = √2 + i`) is the product `E_i × E_i` with the product polarization, up to `Sp₄(ℤ)`. There
+`θ_m⁴ ∝ (1/2, 1, 1/2) ⊗ (1/2, 1, 1/2)` (Jacobi: `θ₂(i)⁴ = θ₄(i)⁴ = θ₃(i)⁴/2`), so the constant terms are
+explained exactly by genus-1 data.
+
+**Global versus curve (VERIFIED, computed, `py/global_ids.py`).** `e_2 = (3/8)e_1²` holds at 16 random
+`Ω ∈ 𝔥₂` (`ThetaEightSquare`). `e_6, …, e_9` are not polynomials in `e_1, e_3, e_4, e_5` on `𝔥₂`, because
+the `θ⁸`-symmetric forms do not separate `ψ₆²` from `χ₁₂`. So the seven curve identities do not reduce to
+fewer curve identities through global `θ⁸`-symmetric identities.
 
 **Why the core is true (derivation; model argument, locators UNVERIFIED).**
 
@@ -196,6 +215,7 @@ explicit points.
 | `py/hp.py` | 80-digit theta constants at the Lean `Ω(τ)` (pure Python, `decimal`) | `python3` |
 | `py/fit_hp.py`, `py/verify.py` (+ `.output.txt`), `py/leanpoly.py` (+ `.output.txt`) | fit, 30-point check, Lean table check | `python3` (no numpy/mpmath needed) |
 | `py/lycheck.py` | Lin–Yang cross-check of `R_3` | `python3` |
+| `py/check_j0.py`, `py/global_ids.py` (+ `.output.txt`) | constant terms at `diag(i,i)`; global identities on `𝔥₂` | `python3` |
 | `py/cmnodes.py`, `py/nodes_lean.py`, `py/verify_nodes.py` (+ `.output.txt`) | CM points, multiplication tables, node numerics | `python3` |
 | `py/dnum.py`, `py/fit.py`, `py/linsolve.py` | double-precision exploration | `python3` |
 
@@ -203,9 +223,10 @@ explicit points.
 
 * Drop-in: in `GluePieces3` (and its copies TailD, TailE, TailI, TailK, TailO, TailZ4), replace the field
   `thetaRatiosAlgebraic : G0Split.ThetaPt.ThetaRatiosAlgebraic` by
-  `qmThetaSymmetricCore : ThetaSplit.QMThetaSymmetricCore`. Replace
-  `thetaPointOfFibre_of_qm_ratios hQM gp.thetaRatiosAlgebraic` by
-  `ThetaSplit.thetaPointOfFibre_of_qm_core hQM gp.qmThetaSymmetricCore`. For Route 2, use the three fields
+  `qmThetaSymmetricCore : ThetaSplit.QMThetaSymmetricCore`, or by the two fields `ThetaEightSquare` and
+  `QMThetaSymmetricCurve`. Replace `thetaPointOfFibre_of_qm_ratios hQM gp.thetaRatiosAlgebraic` by
+  `ThetaSplit.thetaPointOfFibre_of_qm_core hQM gp.qmThetaSymmetricCore` (respectively
+  `thetaPointOfFibre_of_qm_curve`). For Route 2, use the three fields
   `qmThetaShape`, `qmCMNodesNumeric`, `shimuraCM` and `thetaPointOfFibre_of_qm_cm'`.
 * `ThetaUse.lean` needs only TailA's names (`ThetaPt.*`, `PkgI1.*`, `BPAnalytic.QM.*`,
   `ZInQ.LeafPush2.thetaConst`), so it can follow TailA in the chain.
