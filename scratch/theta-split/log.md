@@ -39,3 +39,14 @@
   `thetaRatiosAtQM_of_symmetric : QMThetaSymmetric → ThetaRatiosAtQM`;
   `qmThetaSymmetric_of_core : QMThetaSymmetricCore → QMThetaSymmetric` (k = 0, 1, 10 proved:
   `esymm_one`, `esymm_ten`); `thetaPointOfFibre_of_qm_core`.
+- Route 2 added to `ThetaUse.lean` (COMPILES, standard axioms; VERIFIED):
+  `thetaRatiosAtQM_of_cm : QMThetaShape → QMCMNodes → ShimuraCMThetaAlgebraic → ThetaRatiosAtQM`,
+  `thetaPointOfFibre_of_qm_cm`, `qmThetaShape_of_core : QMThetaSymmetricCore → QMThetaShape`;
+  helper lemmas `mem_of_esymm_mem` (roots of monic polys with algebraic coefficients),
+  `esymm_mem`, `eval_mem_of_nodes` (Lagrange interpolation, Mathlib `Lagrange.eq_interpolate`),
+  `node_values` (j and e_k/S^k algebraic at a scalar-CM point, from the leaf).
+- CM points on the curve (`py/cmnodes.py`, double precision): fixed points of ι(μ), μ ∈ 𝒪, give
+  j_θ = 0 (D=−4, τ=√2+i), 81/64 (D=−19), −16/27 (D=−24), 1296/125 (D=−40), 194481/10⁶ (D=−43),
+  −2401/1728 (D=−51), −5184/15625 (D=−52), −3136/729 (D=−84); D=−3 (and −12, −27) has Σθ⁸ ≈ 0
+  (j = ∞). Values recognized to 1e-10 (double precision), match Elkies' rational CM points on X*(6)
+  (STANDARD, Elkies, *Shimura curve computations*, ANTS 1998, UNVERIFIED table locator).
