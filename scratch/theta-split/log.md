@@ -32,3 +32,10 @@
   `e_3(θ⁸) = (116/27)ψ₄³ − (8/27)ψ₆² + 1081344·χ₁₂` (ψ₄=E₄⊗E₄, ψ₆=E₆⊗E₆, χ₁₂=Δ⊗Δ; residual 1e-77);
   with Lin–Yang's QM vector `ψ₆²/ψ₄³ = j`, `2¹²3⁶χ₁₂/ψ₄³ = j+1` (as restated in
   scratch/h-v14/igusa_check.py) this predicts `R_3 = 283/3888 + j/972`: MATCH.
+- `ThetaUse.lean` (imports `ZInQKernel.OneProof.H.TailA`) COMPILES, no sorry, all four
+  `#print axioms` = [propext, Classical.choice, Quot.sound] (VERIFIED, `lake env lean`, ~20 s):
+  verbatim copy `ThetaRatiosAlgebraicCopy ↔ ThetaRatiosAlgebraic := Iff.rfl`;
+  `thetaPointOfFibre_of_qm_atQM : FibreQMPeriod → ThetaRatiosAtQM → ThetaPointOfFibre`;
+  `thetaRatiosAtQM_of_symmetric : QMThetaSymmetric → ThetaRatiosAtQM`;
+  `qmThetaSymmetric_of_core : QMThetaSymmetricCore → QMThetaSymmetric` (k = 0, 1, 10 proved:
+  `esymm_one`, `esymm_ten`); `thetaPointOfFibre_of_qm_core`.
