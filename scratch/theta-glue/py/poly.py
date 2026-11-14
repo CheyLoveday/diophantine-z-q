@@ -40,3 +40,17 @@ class P:
             for x, e in zip(xs, k): t = t * x**e
             tot = tot + t
         return tot
+def _subst(s, L):
+    """f(L_0, ..., L_{n-1}) for polynomials L_i (all in the same number of variables)."""
+    m = L[0].n; cache = {}
+    def pw(i, e):
+        if (i, e) not in cache: cache[(i, e)] = L[i] ** e
+        return cache[(i, e)]
+    out = P.const(0, m)
+    for k, v in s.d.items():
+        t = P.const(v, m)
+        for i, e in enumerate(k):
+            if e: t = t * pw(i, e)
+        out = out + t
+    return out
+P.subst = _subst
