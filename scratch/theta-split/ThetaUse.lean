@@ -18,10 +18,19 @@ Here:
   `θ_m(Ω(τ))⁸` are `R_k(j_θ)·(Σθ_m⁸)^k` for polynomials `R_k ∈ ℚ[X]`;
   `thetaRatiosAtQM_of_symmetric` (proved): `QMThetaSymmetric → ThetaRatiosAtQM`.
 * `QMThetaSymmetricCore`: the same with the explicit `R_k` found numerically (`qmR`, 80-digit
-  numerics, `py/fit_hp.py`), for `2 ≤ k ≤ 9` only; `k = 0, 1, 10` are proved here
-  (`esymm_zero`, `esymm_one`, `esymm_ten`). `qmThetaSymmetric_of_core` (proved).
+  numerics, `py/fit_hp.py`), for `2 ≤ k ≤ 9` only; `k = 0, 1, 10` are identities proved here
+  (`esymm_one`, `esymm_ten`). `qmThetaSymmetric_of_core` (proved).
+* §5 Route 2: `thetaRatiosAtQM_of_cm : QMThetaShape → QMCMNodes → ShimuraCMThetaAlgebraic →
+  ThetaRatiosAtQM` (Lagrange interpolation through four CM points; the LEAF is Shimura's theorem on
+  theta-nulls at CM points, restricted to scalar CM); `qmThetaShape_of_core`.
+* §6: the CM clause of `QMCMNodes` proved at four explicit nodes (`scalarCM_cmTau`), leaving the
+  numerical `QMCMNodesNumeric`; `thetaPointOfFibre_of_qm_cm'`.
+* §7: `qmThetaSymmetricCore_of : ThetaEightSquare → QMThetaSymmetricCurve → QMThetaSymmetricCore`
+  (the global identity `Σθ¹⁶ = (Σθ⁸)²/4` split off); `thetaPointOfFibre_of_qm_curve`.
 
-No `sorry`; every theorem ends with `#print axioms` = `[propext, Classical.choice, Quot.sound]`.
+Check: `lake build ZInQKernel.OneProof.H.TailA` (once), then
+`lake env lean scratch/theta-split/ThetaUse.lean`. Report: docs/research/theta-split.md.
+No `sorry`; the file ends with `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`.
 -/
 
 noncomputable section
