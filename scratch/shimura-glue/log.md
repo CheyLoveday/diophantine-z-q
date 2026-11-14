@@ -88,3 +88,17 @@
   ℚ(ζ₃), ℚ(√−6) embeds into the ray class field of conductor 3 (consequence of Shimura reciprocity).
 - `reciprocityCanonical_of_rayClass : RayClassCM → HDec.QMSplit.Moduli.ReciprocityCanonical`.
 - rayclass_result.txt: s6_sq and reciprocityCanonical_of_rayClass: [propext, Classical.choice, Quot.sound].
+- RowsGlue.lean (+ RayClassNew + Bundle3New, TC imports added): 0 errors, ~1 min 48 s, 68 axiom lines all
+  standard. `ShimuraGlueLeaves3` (RayClassCM in place of ReciprocityCanonical), `shimuraGlueLeaves2_of_3`,
+  `rows_of_shimuraGlueLeaves3`.
+
+## Step 8: independent model review (read-only agent, no Lean) of DelignePi0/printed leaves, BabaGranathRational,
+## ElkiesConicT, MobiusCompose
+- Deligne leaves: OK (level K₃ right for Level3; double coset right; Galois clause right up to sign, u exists
+  (cycU) so not vacuous; consistent with 2 geometric components of Y₃ over ℚ(ζ₃), X₆ geometrically connected).
+- BabaGranathRational: Lean statement OK (implied by old BabaGranathX6'); ISSUE in provenance text: locators.md
+  grades the §3.1 table row NO (for the ramification claim); only Thm 2.1, Lemma 3.1 are YES. The CM(D) ↔
+  distinguished-point assignment is an UNVERIFIED reading of the table. Applied to docstring and report.
+- ElkiesConicT: OK; residue fields pin t = 1 ↔ D = −4, but 0 vs ∞ for D = −24 vs −3 rests on Elkies' text
+  (UNVERIFIED). Applied to report.
+- MobiusCompose: OK. Doc nits (compare_iso gives existence, not uniqueness; §4.3 file reference) applied.

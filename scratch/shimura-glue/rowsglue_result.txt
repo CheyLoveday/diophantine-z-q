@@ -63,7 +63,10 @@
 'HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves2' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.babaGranathX6'_of_rational' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.elkiesConicX6_of_t' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ShimuraGlue.Ray.s6_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ShimuraGlue.Ray.reciprocityCanonical_of_rayClass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves3' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-real	1m45.466s
-user	2m23.692s
-sys	0m3.317s
+real	1m48.139s
+user	2m26.538s
+sys	0m3.466s
