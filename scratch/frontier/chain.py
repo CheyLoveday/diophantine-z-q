@@ -4,9 +4,10 @@ Usage: python3 scratch/frontier/chain.py [A|F]   (default: both); `doc` compares
 compares the library theorem ZInQ.OneProof.frozenTarget with scenario A
 
 Scenario A ("compiled"): only theorems that compose in one Lean world today, i.e. the top chain (r3: atkin-li's
-C2 and tyz-chain's T0, kernel modules) and the compiled H assembly: leaf-fold6's `HDec.HSyn.sixContactMin_of_open6`
-(refresh r4; r3 leaf-fold5's `sixContactMin_of_open5`, r2 leaf-fold4's `sixContactMin_of_open4`, before that
-assemble-port's `sixContactMin_of_leaves5`). Its open set is the hypothesis list of that composite.
+C2 and tyz-chain's T0, kernel modules) and the compiled H assembly: leaf-fold9's `HDec.HSyn.sixContactMin_of_open9`
+(refresh r5; r4 leaf-fold8's `sixContactMin_of_open8`, r3 leaf-fold5's `sixContactMin_of_open5`, r2 leaf-fold4's
+`sixContactMin_of_open4`, before that assemble-port's `sixContactMin_of_leaves5`). Its open set is the hypothesis list
+of that composite.
 
 Scenario F ("frontier"): A plus every proof or reduction of an open Prop found on today's branches.
 Each edge is a compiled theorem on its branch (per the branch's own log), but the edges live in different
@@ -32,10 +33,12 @@ B5 = ("93a1e33c", "scratch/cpts-transport/Bundle5.lean")
 AP = ("92a27877", "scratch/assemble-port/AssemblePort.lean")  # assemble-port final flat check (27 glue fields, 1126 s)
 LF4 = ("9dcf1ca8", "scratch/leaf-fold4/Leaves4.lean")  # leaf-fold4 final flat file (md5 6bbeb639, 1048 s, 26+19+20+1 fields)
 LF5 = ("5a7e03d1", "scratch/leaf-fold5/Leaves5.lean")  # leaf-fold5 final flat file (md5 5999e1db, flat run 2: 1570 s, 26+21+21+2)
-# r4: the H base is leaf-fold8 inside the library (ZInQKernel/OneProof/H/, kernel modules on main since w59). "OPH" is
-# read as the text of all those modules (three bundles are in TailZ4.lean, the glue bundle OpenGlue7 in TailX.lean;
-# defcheck looks for the chain's copies anywhere in them).
-OPX = (MAIN, "ZInQKernel/OneProof/H/TailZ4.lean")
+# r5: the H base is leaf-fold9 inside the library (ZInQKernel/OneProof/H/, kernel modules on main since w60; r4:
+# leaf-fold8, since w59). "OPH" is read as the text of all those modules (two bundles are in TailZ9.lean,
+# OpenAddedLeaves8 in TailZ4.lean, the glue bundle OpenGlue7 in TailX.lean; defcheck looks for the chain's copies
+# anywhere in them).
+OPX = (MAIN, "ZInQKernel/OneProof/H/TailZ9.lean")
+OPX4 = (MAIN, "ZInQKernel/OneProof/H/TailZ4.lean")
 OPX7 = (MAIN, "ZInQKernel/OneProof/H/TailX.lean")
 OPH = ("OPH", "ZInQKernel/OneProof/H/")
 # qm-split's and qm-glue's files `import TailK`: leaf-fold4's chain, whose sources are in scratch/leaf-fold4/olean/.
@@ -95,12 +98,12 @@ c.show = _show_virtual
 E = []
 
 
-def edge(concl, thm, rev, path, hyps, sc="AF", note="", deffile=None, extra=(), bound=()):
+def edge(concl, thm, rev, path, hyps, sc="AF", note="", deffile=None, extra=(), bound=(), nth=0):
     """`extra`: hypotheses that are section variables brought in by `include ... in`, so not in the signature text.
     `bound`: binder heads that the consumer quantifies over (its hypothesis is `∀ x, P x → concl x`): checked in the
-    signature, not followed."""
+    signature, not followed. `nth`: which declaration of that name in the file (0 = the first)."""
     E.append(dict(concl=concl, thm=thm, rev=rev, file=path, hyps=hyps, sc=sc, note=note, deffile=deffile,
-                  extra=list(extra), bound=list(bound)))
+                  extra=list(extra), bound=list(bound), nth=nth))
 
 
 # --- top (compiled here): scratch/frontier/TYZChain.lean, which contains tyz-cm's and cm-bridge's
@@ -121,8 +124,11 @@ edge("TYZThm35ReadingA", "tyzThm35ReadingA_of_leaves", MAIN, "ZInQKernel/Contrib
 #  cm-bridge's B1; it stays compiled there but is off the route)
 
 # --- H
-edge("SixContactMin", "sixContactMin_of_open8", *OPX,
-     ["OpenResearchLeaves8", "OpenTextbookLeaves8", "OpenAddedLeaves8", "OpenGlue7"])
+edge("SixContactMin", "sixContactMin_of_open9", *OPX,
+     ["OpenResearchLeaves9", "OpenTextbookLeaves9", "OpenAddedLeaves8", "OpenGlue7"])
+# (r4 at w59: leaf-fold8's sixContactMin_of_open8 in TailZ4.lean, bundles OpenResearchLeaves8, OpenTextbookLeaves8,
+#  OpenAddedLeaves8, OpenGlue7; leaf-fold9 proves r1rec, r5, r15, t33, normalModelOfFunctionFieldQ, splits r7b, r8
+#  into reduct-split's four leaves and replaces r5count by shimura-split's GonzalezRotgerCountX6)
 # (r4 at w58: leaf-fold7's sixContactMin_of_open7 in TailX.lean, bundles OpenResearchLeaves7, OpenTextbookLeaves7,
 #  OpenAddedLeaves7, OpenGlue7; leaf-fold8 folds the height rows, H-87, H-88, six Contrib proofs and T-11 into it)
 # (r4: leaf-fold7 in OneProof folds av-glue, av-split, curve-split, qm-split, hodge-split and mcr-glue into leaf-fold6's
@@ -290,13 +296,47 @@ LQC = (MAIN, "scratch/leafq-check/CMDescendsGlue.lean")
 edge("CMDescends", "cmDescends_of", *LQC, ["STQM", "T11b_Rigidity", "TorsionDescends", "R1R2fpRep"], "F",
      "leafq-check; T11b_Rigidity from leaf-fold5's T11bExists through av-b2's edge")
 edge("TorsionDescends", "torsionDescends_of_t5", *LQC, ["TorsionStructure"], "F", "leafq-check")
-# --- r4 (w59): coarse-factor, mcr-quot and cloud-w07. First in the list, so they win over the older edges below.
+# --- r5 (w60): the splits of shimura-split, modular-split and reduct-split that leaf-fold9 did not fold (leaf-fold9
+# §5). First in the list, so they win over the older edges below.
+SS = (MAIN, "scratch/shimura-split/Rows.lean")  # over OneProof's chain (imports ZInQKernel.OneProof.H.TailK)
+edge("R1R2fpRep", "r1r2fpRep_of_printed_t5", *SS,
+     ["DeligneComponentsX6", "GeomConnOfAlgClosure", "TorsionStructure", "BabaGranathX6'", "ReciprocityCanonical",
+      "GonzalezRotgerX6"], "F",
+     "shimura-split: coarse-factor's theorem with CanonicalModelY3, ReciprocityOfFine, PairsLift (from T5) and the "
+     "surjectivity clause of BabaGranathX6 proved")
+edge("X6ConicModel", "x6ConicModel_of_elkies_t5", *SS, ["R1R2fpRep", "ElkiesConicX6", "TorsionStructure"], "F",
+     "shimura-split: MobiusGlue from T5")
+edge("Y3Connected", "y3Connected_of_deligne", *SS, ["DeligneComponentsY3"], "F",
+     "shimura-split: the orbit computation (the second declaration of that name, in HDec.QMSplit.Moduli)", nth=1)
+edge("ShimuraFamily", "shimuraFamily_of_hol", MAIN, "scratch/shimura-split/ShimuraFam.lean", ["ShimuraHolFamily"],
+     "F", "shimura-split: the GAGA-level step")
+MS = "scratch/modular-split/"
+edge("DimJacobianEqGenus", "dimJacobianEqGenus_of_glue", MAIN, MS + "DimJac.lean", ["H0DifferentialsEqHolo"], "F",
+     "modular-split: Milne Prop. 2.1 and Serre duality proved over the vendored CloudW07 library")
+edge("CarayolR17'", "carayolR17'_of_realization", MAIN, MS + "R17.lean", ["CarayolRealization"], "F",
+     "modular-split")
+edge("EigenformHTNew", "eigenformHTNew_of_coh", MAIN, MS + "EigenHT.lean", ["KatoRealizationCoh", "HTDual"], "F",
+     "modular-split")
+RS = (MAIN, "ZInQKernel/OneProof/H/TailZ7.lean")  # reduct-split's Reduction.lean verbatim, compiled in OneProof
+edge("RaynaudCriterion", "raynaudCriterion_final'", *RS,
+     ["RaynaudSemistable", "SemistableUnipotent", "NeronSchemeModelExistsDVR", "MumfordTorsionAlgClosed",
+      "FixedTorsionRationalImperfect"], "F", "reduct-split")
+edge("SemistableReductionThm", "semistableReductionThm_final", *RS,
+     ["SemistableReductionDVR", "SemistablePersistsDVR", "NeronSchemeModelExistsDVR", "SemistableLocalGlobal",
+      "SemistableAlmostAll"], "F", "reduct-split")
+edge("SemistablePersists", "semistablePersists_final", *RS,
+     ["SemistablePersistsDVR", "NeronSchemeModelExistsDVR", "SemistableLocalGlobal"], "F", "reduct-split")
+edge("SemistableNeronBaseChange", "semistableNeronBaseChange_of_leaves", *RS,
+     ["IdentityComponentBaseChangeDVR", "SemistableLocalGlobal", "SemistableNeronBaseChangeLocalGlobal"], "F",
+     "reduct-split")
+edge("FaltingsLemma5BC", "faltingsLemma5BC_final", *RS, ["FaltingsLemma5"], "F", "reduct-split")
+# --- r4 (w59): coarse-factor, mcr-quot and cloud-w07.
 CF = (MAIN, "scratch/coarse-factor/Discharge.lean")  # over OneProof's chain (imports ZInQKernel.OneProof.H.TailK)
 edge("R1R2fpRep", "r1r2fpRep_of_canonical''", *CF,
      ["CanonicalModelY3", "CanonicalCoarseX6", "BabaGranathX6", "GonzalezRotgerX6", "ReciprocityOfFine"], "F",
      "coarse-factor: qm-glue's theorem with CoarseFactor proved from CanonicalCoarseX6 and CurveBijIso filled in")
-edge("X6ConicModel", "x6ConicModel_of_canonical''", *CF, ["R1R2fpRep", "ConicCanonical", "MobiusGlue"], "F",
-     "coarse-factor")
+# (r4 also took coarse-factor's x6ConicModel_of_canonical'' [R1R2fpRep, ConicCanonical, MobiusGlue]; r5 drops it:
+#  ConicCanonical is X6ConicModel verbatim (shimura-split, Iff.rfl), so it was a renaming, not a reduction)
 # mcr-quot: the four glue Props under the coordinate. Its file is MCRGlue.lean verbatim plus parts; its T5 is the
 # kernel's ObjBridge.TorsionStructure, which Objects.lean proves `Iff.rfl` to PkgI2.TorsionStructure.{0}.
 # CoverModelOfHeckeN has no edge here: the chain derives it only through HeckeNoVertRam, downstream of the
@@ -461,20 +501,25 @@ edge("NeronMappingAbelianSchemeSurj", "NeronMappingAbelianSchemeSurj_proof", MAI
 
 # ---------------------------------------------------------------- bundles
 STRUCTS = {
-    "OpenResearchLeaves8": (OPX, "OpenResearchLeaves8"),
-    "OpenTextbookLeaves8": (OPX, "OpenTextbookLeaves8"),
-    "OpenAddedLeaves8": (OPX, "OpenAddedLeaves8"),
+    "OpenResearchLeaves9": (OPX, "OpenResearchLeaves9"),
+    "OpenTextbookLeaves9": (OPX, "OpenTextbookLeaves9"),
+    "OpenAddedLeaves8": (OPX4, "OpenAddedLeaves8"),
     "OpenGlue7": (OPX7, "OpenGlue7"),
 }
 # fields never projected on the route (h-leaves agent, grep of the flat file; g0-assemble3 §6)
-UNUSED = {"r1rec", "r3", "r5", "r7b", "r8", "t10"}  # never projected in g0-assemble3; assemble-port, leaf-fold4 and leaf-fold5 have the same consumers
+UNUSED = {"r3", "t10", "serreTateThm2", "semistableReductionDVR", "semistableUnipotent", "neronSchemeModelExistsDVR"}
+# (r5: leaf-fold9 proves r1rec and r5 from r1r2; reduct-split's four leaves enter only TailZ9's proofs of r7b and r8,
+#  which stay unprojected; until r4: {"r1rec", "r3", "r5", "r7b", "r8", "t10"}, never projected in g0-assemble3;
+#  assemble-port, leaf-fold4 and leaf-fold5 have the same consumers)
 # (r2: in leaf-fold4's flat file r1rec, r7b, r8 occur only as `f := r.f` in three structure literals, t10 only there
 #  and in T10_groupIso_of_tateDuality)
 # (r4: in OneProof/H the six occur only as `f := r.f` / `f := t.f` (or a transport `_ofK5` of it) in the bundle
 #  conversions of TailD, TailE, TailI, TailK, TailN, TailO and TailX, and t10 in LPrefix's T10_groupIso_of_tateDuality;
 #  leaf-fold7 left the chain from LPrefix to TailO unchanged)
-# fields that become used on route F (an F edge takes them as hypotheses)
-USED_IN_F = set()
+# fields that become used on route F (an F edge takes them as hypotheses); `chain.py F` recomputes the set
+# (r5: reduct-split's raynaudCriterion_final', semistableReductionThm_final and semistablePersists_final take three of
+#  its four leaves; serreTateThm2 feeds only r7b)
+USED_IN_F = {"semistableReductionDVR", "semistableUnipotent", "neronSchemeModelExistsDVR"}
 
 # ---------------------------------------------------------------- classification of open nodes (the report's list)
 # label -> (premise, strict class)
@@ -534,7 +579,7 @@ def check_edges(sc):
             print("MISSING FILE", ex)
             bad += 1
             continue
-        sig = c.signature(txt, e["thm"])
+        sig = c.signature(txt, e["thm"], nth=e["nth"])
         if sig is None:
             print(f"MISSING THEOREM {e['thm']} in {e['rev']}:{e['file']}")
             bad += 1
@@ -686,6 +731,34 @@ def rootcheck():
     return out
 
 
+def worldcheck():
+    """r5: a followed F-only edge in a library file outside OneProof/H (shimura-split, modular-split, tyz-split: files
+    that import ZInQKernel modules, not leaf-fold4's TailK) concludes the library theorem's own constant if the file
+    has no definition of that name and the module that defines it is in both the file's import closure and that of
+    `ZInQKernel/OneProof/Main.lean`. defcheck skips these edges (no deffile)."""
+    kern = _files(MAIN, "ZInQKernel/")
+    res = lambda mod: (lambda p: p if p in kern else None)(mod.replace(".", "/") + ".lean")
+    base = set(_closure(["ZInQKernel/OneProof/Main.lean"], res))
+    out = []
+    for e in FOLLOWED:
+        if e["sc"] != "F" or not e["thm"] or e["rev"] != MAIN or e["deffile"] or e["file"].startswith(OPH[1]):
+            continue
+        txt = c.show(MAIN, e["file"])
+        if re.search(r"^import TailK\b", txt, re.M) or not re.search(r"^import ZInQKernel\.", txt, re.M):
+            continue
+        name = c.short_of(e["concl"])
+        if c.def_texts_all(txt, name):
+            out.append((name, f"CHECK: {e['file']} has its own definition"))
+            continue
+        defs = [f for f in _closure([e["file"]], res) if f != e["file"] and c.def_texts_all(_show(MAIN, f), name)]
+        if defs and all(f in base for f in defs):
+            out.append((name, f"the library's own constant: no definition in {e['file']}, which imports "
+                              f"{', '.join(defs)} (in OneProof/Main's import closure)"))
+        else:
+            out.append((name, f"CHECK: defined in {defs or 'no imported file'} ({e['file']})"))
+    return out
+
+
 def chaincheck():
     """r4: qm-split's and qm-glue's files are over leaf-fold4's chain (`import TailK`). For the Props that their
     followed edges conclude or assume, compare the definition the H base uses (OneProof/H, or a kernel module it
@@ -745,12 +818,19 @@ def main():
                 tag = "  [never projected]"
             print(f"  {n:45s} {where}{tag}")
         if sc == "F":
+            hy = {h for e in FOLLOWED for h in e["hyps"]}
+            used = {f for s, f, h in rows if f in UNUSED and h in hy}
+            print("USED_IN_F (never-projected fields that a followed F edge takes):",
+                  "equal" if used == USED_IN_F else f"DIFFERENT {sorted(used)} vs {sorted(USED_IN_F)}")
             print("def-text comparison (proved/reduced Prop vs the H base: OneProof/H or a kernel module it imports; "
                   "followed F edges only):")
             for name, r in defcheck():
                 print(f"  {name:35s} {r}")
             print("kernel constants named with `_root_` in the bundles, proved by files importing their module:")
             for name, r in rootcheck():
+                print(f"  {name:35s} {r}")
+            print("library files outside OneProof/H (followed F-only edges without a deffile): the constant they conclude:")
+            for name, r in worldcheck():
                 print(f"  {name:35s} {r}")
             print("chain-world edges (files over leaf-fold4's TailK): the H base's definition vs the chain's:")
             for name, r in chaincheck():
@@ -827,7 +907,7 @@ def doc_check(path="docs/research/frontier.md"):
     print("  in doc, not in chain:", sorted(have - want))
 
 
-FIELDS_TSV = "scratch/leaf-fold8/fields8.tsv"  # the H base's field table (bundle, field, Lean type, form, ...)
+FIELDS_TSV = "scratch/leaf-fold9/fields9.tsv"  # the H base's field table (bundle, field, Lean type, form, ...)
 
 
 def onep_check():
@@ -845,7 +925,7 @@ def onep_check():
     for ln in c.show(MAIN, FIELDS_TSV).strip().split("\n")[1:]:
         b, f, ty = ln.split("\t")[:3]
         tsv.setdefault(b, []).append((f, " ".join(ty.split())))
-    key = {"OpenResearchLeaves8": "R", "OpenTextbookLeaves8": "T", "OpenAddedLeaves8": "A", "OpenGlue7": "G"}
+    key = {"OpenResearchLeaves9": "R", "OpenTextbookLeaves9": "T", "OpenAddedLeaves8": "A", "OpenGlue7": "G"}
     for sname, ((rev, path), short) in STRUCTS.items():
         a = [(f, " ".join(t.split())) for f, t in c.structure_fields(c.show(rev, path), short)]
         b = tsv.get(key[sname], [])

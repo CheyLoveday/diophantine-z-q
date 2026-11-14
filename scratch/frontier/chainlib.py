@@ -27,15 +27,16 @@ TOP_KW = re.compile(r"^(?:@\[[^\]]*\]\s*)?(?:private |protected |noncomputable |
 #  module doc, and a line of that doc starting with a keyword could cut it before its `-/`)
 
 
-def _decl_block(text, kind_re, short):
+def _decl_block(text, kind_re, short, nth=0):
     """Return the text of the declaration `kind short` (signature + body up to the next
-    top-level command), or None."""
+    top-level command), or None. `nth`: which occurrence, for a name declared in two namespaces."""
     pat = re.compile(r"^(?:@\[[^\]]*\]\s*)?(?:private |protected |noncomputable )*(?:%s)\s+%s(?=[\s:({\[]|$)"
                      % (kind_re, re.escape(short)), re.M)
     m = None
-    for m0 in pat.finditer(text):
-        m = m0
-        break
+    for i, m0 in enumerate(pat.finditer(text)):
+        if i == nth:
+            m = m0
+            break
     if m is None:
         return None
     start = m.start()
@@ -54,9 +55,9 @@ def strip_comments(s):
     return s
 
 
-def signature(text, short, kind_re="theorem|lemma|def|abbrev"):
+def signature(text, short, kind_re="theorem|lemma|def|abbrev", nth=0):
     """Signature (between the name and the top-level `:=` / `where`) of a declaration."""
-    blk = _decl_block(text, kind_re, short)
+    blk = _decl_block(text, kind_re, short, nth)
     if blk is None:
         return None
     blk = strip_comments(blk)
@@ -198,10 +199,12 @@ def def_texts_all(text, short):
     return out
 
 
-def qualified_def(text, name, kinds="def|abbrev|structure|opaque"):
-    """(qualified name, line) of the first `def name` (or another of `kinds`) in `text`, from the namespace blocks
-    around it; (name, None) if there is none."""
+def qualified_def(text, name, kinds="def|abbrev|structure|opaque", nth=0):
+    """(qualified name, line) of the first (`nth`: the nth, from 0) `def name` (or another of `kinds`) in `text`, from
+    the namespace blocks around it; (name, None) if there is none."""
     stack = []
+    # block comments and docstrings blanked, line breaks kept (a docstring line can start with "section of ...")
+    text = re.sub(r"/-.*?-/", lambda m: "\n" * m.group(0).count("\n"), text, flags=re.S)
     for i, ln in enumerate(text.split("\n"), 1):
         m = re.match(r"^namespace\s+(\S+)", ln)
         if m:
@@ -219,6 +222,9 @@ def qualified_def(text, name, kinds="def|abbrev|structure|opaque"):
         m = re.match(r"^(?:@\[[^\]]*\]\s*)?(?:private |protected |noncomputable )*(?:%s)\s+"
                      r"((?:[\w.']+\.)?%s)(?=[\s:({\[]|$)" % (kinds, re.escape(name)), ln)
         if m:
+            if nth:
+                nth -= 1
+                continue
             ns = ".".join(n for k, n in stack if k == "ns" and n)
             return (ns + "." + m.group(1) if ns else m.group(1)), i
     return name, None
