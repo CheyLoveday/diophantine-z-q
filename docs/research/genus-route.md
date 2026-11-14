@@ -1,8 +1,23 @@
 # genus-route: `t34`'s two uses without `GenusX1Field` and without `X0Transitive`
 
 **Main result (VERIFIED, compiled, standard axioms).** The two consumers of `t34` in the single proof
-need only `dim J₁(N) ≤ N²`, and that bound follows from `DimJacobianEqGenus` (proved outright by
-dimjac-glue) and one textbook leaf, Riemann–Hurwitz (`RiemannHurwitzQj`), with no other hypothesis:
+need only `dim J₁(N) ≤ N²`. That bound follows from `DimJacobianEqGenus` (proved outright by
+dimjac-glue) and **one local leaf**, `LocalDerivation` (the derivative with respect to a local
+parameter `π` of a place `P` preserves `𝒪_P`; Stichtenoth §4.1), with no other hypothesis and **no
+Riemann–Hurwitz**:
+
+```lean
+theorem GenusRoute.dimJ1Le_of_localDerivation (h1 : DimJacobianEqGenus) (hL : LocalDerivation) : DimJ1Le
+theorem HDec.HSyn.t34Le_of_localDerivation (h1 : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus)
+    (hL : GenusRoute.LocalDerivation) : DimJ1Le5             -- on the OneProof copies
+```
+
+The genus bound is proved by an explicit injection (section 6): every holomorphic differential of
+`K_N` is `h · dj` with `h` in an explicit `ℚ`-space `V`, and `V` injects into `OF / j·OF ≅ ℚ^d`
+(`OF` the integral closure of `ℚ[j]`, `d = [K_N : ℚ(j)] ≤ N²`), so `g(K_N) ≤ d ≤ N²`. No
+Riemann–Roch, no Riemann–Hurwitz, and no identification of `fieldGenus` with another notion of
+genus is used. A second route, from the textbook leaf Riemann–Hurwitz (`RiemannHurwitzQj`), is also
+compiled:
 
 ```lean
 theorem GenusRoute.dimJ1Le_of_rh_curve (h1 : DimJacobianEqGenus) (hRH : RiemannHurwitzQj) : DimJ1Le
@@ -27,9 +42,12 @@ Files (all compile with `lake env lean`; `#print axioms` = `[propext, Classical.
   `GenusBound.lean` (copied verbatim, namespace `CurveSplit` → `GenusRoute`) + `dimJ1Le_of_rh_curve`,
   `genus_le_of_model`. Imports only kernel modules (`Contrib.CurvesG`, `Contrib.RLeaf.BelyiX1`,
   `Contrib.RLeaf.T40`, `Contrib.Dim.SmoothStalk`, `Contrib.SmoothFibre.Basic`, `HDecomp.ModCurves.X1Belyi`).
-* `scratch/genus-route/Fold.lean` (25 s): `GenusRoute.lean` verbatim + `import ZInQKernel.OneProof.H.TailM`
-  + the drop-in theorems above, in the namespaces of their consumers. Needs the upstream `lean/`
-  package built once (`lake build ZInQKernel.Hypotheses.JHeight`).
+* `scratch/genus-route/GenusElem.lean` (≈2370 lines): `GenusRoute.lean` + the elementary genus bound
+  (`LocalDerivation`, `genusLeDegree_of_localDerivation`, `dimJ1Le_of_localDerivation`).
+* `scratch/genus-route/Fold.lean` (≈2460 lines, ≈30 s): `GenusElem.lean` verbatim +
+  `import ZInQKernel.OneProof.H.TailM` + the drop-in theorems (`t34Le_of_localDerivation`,
+  `t34Le_of_rh`, `dim_J1_le_of5`, `javanpeykarJ1_of_le`), in the namespaces of their consumers. Needs the
+  upstream `lean/` package built once (`lake build ZInQKernel.Hypotheses.JHeight`).
 
 ## 1. What the consumers need from `t34` (VERIFIED by reading)
 
@@ -47,9 +65,9 @@ So both need exactly `DimJ1Le := ∀ N J, 0 < N → IsJ1 N J → ∃ g : ℕ, J.
 
 ## 2. The fold
 
-Replace the bundle field `genusX1Field : GenusX1Field` by `riemannHurwitzQj : GenusRoute.RiemannHurwitzQj`
-(or by `t34Le : DimJ1Le5` directly), set `t34Le := t34Le_of_rh t.dimJacobianEqGenus t.riemannHurwitzQj`,
-and at the consumers:
+Replace the bundle field `genusX1Field : GenusX1Field` by `localDerivation : GenusRoute.LocalDerivation`
+(recommended; or `riemannHurwitzQj : GenusRoute.RiemannHurwitzQj`, or `t34Le : DimJ1Le5` directly), set
+`t34Le := t34Le_of_localDerivation t.dimJacobianEqGenus t.localDerivation`, and at the consumers:
 
 | site | now | replacement |
 |---|---|---|
@@ -68,7 +86,9 @@ its use in the genus route (curve-split's `dimJ1Le_of_rh`); its T40 use is outsi
 
 | item | kind | status | source |
 |---|---|---|---|
-| `RiemannHurwitzQj` | LEAF (textbook, composite) | open | Stichtenoth, *Algebraic Function Fields and Codes*, Thm 3.4.13 (Hurwitz genus formula) with Thm 3.5.1 (Dedekind's different theorem, `d_P = e_P − 1` in char 0) and the identification of `fieldGenus` (holomorphic Kähler differentials) with the Riemann–Roch genus (Stichtenoth §4.3; Hartshorne II.8, IV.2.4); numbers UNVERIFIED |
+| `LocalDerivation` (recommended route) | LEAF (textbook, local) | open | Stichtenoth §4.1: for a `P`-prime element `t`, the `t`-derivative `δ_t` maps `𝒪_P` into `𝒪_P` (Prop. 4.1.8, number UNVERIFIED); equivalently `Ω_{𝒪_P/ℚ}` is free on `dπ` (Hartshorne II.8, numbers UNVERIFIED) |
+| `genusLeDegree_of_localDerivation` and its 14 lemmas | GLUE | proved (new) | — |
+| `RiemannHurwitzQj` (alternative route) | LEAF (textbook, composite) | open | Stichtenoth, *Algebraic Function Fields and Codes*, Thm 3.4.13 (Hurwitz genus formula) with Thm 3.5.1 (Dedekind's different theorem, `d_P = e_P − 1` in char 0) and the identification of `fieldGenus` (holomorphic Kähler differentials) with the Riemann–Roch genus (Stichtenoth §4.3; Hartshorne II.8, IV.2.4); numbers UNVERIFIED |
 | `DimJacobianEqGenus` | LEAF in the kernel, now proved | proved by dimjac-glue (`scratch/dimjac-glue/DimJacGlue.lean`, other branch; not re-checked here) | Milne 1986 |
 | `constantFieldIsQ_of_curve` | GLUE | proved (new) | — |
 | `belyiGenusBound_of_rh`, `fundamentalIdentityQj` | GLUE | proved (curve-split, copied) | — |
@@ -113,6 +133,54 @@ Proof (each step a compiled lemma):
 
 ## 5. What remains
 
-* The leaf `RiemannHurwitzQj` (textbook). It is a composite (Hurwitz formula + Dedekind different +
-  identification of `fieldGenus` with the genus); see section 6 for a reduction attempt to smaller leaves.
+* The leaf `LocalDerivation` (or, on the alternative route, `RiemannHurwitzQj`).
 * The fold itself (bundle edit in TailN/TailO/…, done after the announcement).
+
+## 6. The elementary genus bound (new glue, proved): `g(F) ≤ [F : ℚ(j)]`
+
+```lean
+def GenusRoute.LocalDerivation : Prop :=
+  ∀ (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F],
+    ConstantFieldIsQ F → ∀ (P : Place F) (π : F), π ≠ 0 → π ∈ P.w.nonunits →
+      (∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) →
+        ∃ δ : Derivation ℚ F F, δ π = 1 ∧ ∀ x ∈ P.w, δ x ∈ P.w
+
+def GenusRoute.GenusLeDegree : Prop :=
+  ∀ (F : Type) [Field F] [Algebra Qj F] [Algebra ℚ F] [FiniteDimensional Qj F],
+    ConstantFieldIsQ F → IsBelyiFunction ℚ F (algebraMap Qj F (RatFunc.X / 1728)) →
+      fieldGenus F ≤ Module.finrank Qj F
+
+theorem GenusRoute.genusLeDegree_of_localDerivation (hL : LocalDerivation) : GenusLeDegree
+```
+
+`Place F` (curve-split): a proper valuation subring of `F` containing `ℚ`. `LocalDerivation` is a
+statement about one place and one local parameter, over Mathlib's `Derivation` and `ValuationSubring`;
+it is true for every place of a function field over a field of characteristic `0` (the completion
+`𝒪̂_P ≅ κ(P)[[π]]`, and `d/dπ` acts coefficientwise), and the constant-field hypothesis only weakens
+it to Stichtenoth's standing assumption.
+
+Proof of `genusLeDegree_of_localDerivation` (`s = j`, `t = j/1728`, `d = [F : ℚ(j)]`; each step a
+compiled lemma of `GenusElem.lean`):
+
+1. `mem_span_D_sF`: `Ω_{F/ℚ} = F · ds`. (`F/ℚ(j)` is finite separable, hence formally unramified, so
+   `Ω_{F/ℚ(j)} = 0`; Mathlib's exact sequence `F ⊗ Ω_{ℚ(j)/ℚ} → Ω_{F/ℚ} → Ω_{F/ℚ(j)}` and the quotient
+   rule in `ℚ(j)`.) So every `ω ∈ holoDiff F` is `h · ds`.
+2. `local_conditions`: if `h · ds` is regular at every place, then `h s (s − 1728) ∈ 𝒪_P` at every
+   place with `s ∈ 𝒪_P`, and `h (s − 1728) ∈ 𝔪_P` at every place with `s ∉ 𝒪_P`. For each place take a
+   uniformizer `π` (`exists_uniformizer_all`: curve-split's `exists_uniformizer`, twisted by `j ↦ 1/j`
+   at infinity) and `δ = d/dπ` from the leaf; `δ` extends to `Ω_{F/ℚ} → F` and maps the differentials
+   regular at `P` into `𝒪_P` (`lift_mem_of_regularAt`), so `h δ(s) ∈ 𝒪_P`. Then: over `j = 0` and
+   `j = 1728`, `z = u π^(m+1)` and `δ z = π^m c` with `c` a unit (`deriv_unit_pow`, characteristic 0);
+   over `j = ∞`, the same for `z = 1/s`; elsewhere the Belyi property gives the local parameter
+   `q(t)` and `δ t = 1/q'(t)` (curve-split's `polyIdeal`, `exists_monic_irreducible_mem`).
+3. `Vspace`: the `ℚ`-space of such `h`. `finrank_Vspace_le`: `h ↦ h s (s − 1728)` lands in `OF`
+   (`mem_OF_of_places`, Mathlib's `mem_integers_of_valuation_le_one` with curve-split's `placeOf`),
+   and composing with the coordinates at `s = 0` in a `ℚ[s]`-basis of `OF` (free of rank `d`:
+   `IsIntegralClosure.module_free`, `IsIntegralClosure.rank`) gives a `ℚ`-linear map `V → ℚ^d`. It is
+   injective: if `h s (s − 1728) = s k` with `k ∈ OF`, then `k = h (s − 1728)` lies in every place and
+   in `𝔪_P` over `∞`; elements in every place are rational (`mem_rat_of_all_places`: `ℚ` is integrally
+   closed in `F` by `ConstantFieldIsQ`, and Mathlib's Stacks 090P), and a place over `∞` exists
+   (`exists_place_inf`, curve-split's fundamental identity), so `k = 0` and `h = 0`.
+4. `fieldGenus F = dim holoDiff ≤ dim V ≤ d`.
+
+With `constantFieldIsQ_of_curve` and `ZInQ.RLeaf.belyiX1` (`d ≤ N²`): `dimJ1Le_of_localDerivation`.
