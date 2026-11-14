@@ -72,4 +72,16 @@ theorem shimuraReciprocityModFn_of_t5' (hCM : ShimuraMainCM) (hX : X0ModuliGaloi
     (hA : RingClassLattice) (hB : InvertibleColon) : ShimuraReciprocityModFn :=
   shimuraReciprocityModFn_of_t5 hCM hX (ideleLatticeScale_of hA hB)
 
+/-- **`CMModuli` from the printed main theorem of CM and `RingClassLattice`.** -/
+theorem cmModuli_of_t5' (hL : ShimuraMainCM) (hA : RingClassLattice) : CMModuli :=
+  cmModuli_of_t5 hL (ideleLatticeScale_of hA invertibleColon)
+
+/-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
+(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and one
+glue Prop (`RingClassLattice`: Tau Ceti's ring-class quotient of an idele `s` is the class of the
+`O`-lattice `K ∩ s_f Ô_O`). -/
+theorem shimuraReciprocityModFn_of_t5'' (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hA : RingClassLattice) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_t5' hCM hX hA invertibleColon
+
 end T5Glue

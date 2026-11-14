@@ -34,3 +34,6 @@
 #print axioms T5Glue.latHat_inter_heegnerN
 #print axioms T5Glue.ideleLatticeScale_of
 #print axioms T5Glue.shimuraReciprocityModFn_of_t5'
+#print axioms T5Glue.invertibleColon
+#print axioms T5Glue.cmModuli_of_t5'
+#print axioms T5Glue.shimuraReciprocityModFn_of_t5''

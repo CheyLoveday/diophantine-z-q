@@ -177,3 +177,15 @@
   IdeleLatticeScale`** (with `sInvLat_eq_colon`, kernel `kappa_mul_mem_lat`, `kappa_mul_mem_latN_gen`; header now
   also imports `ZInQKernel.Contrib.TYZGenus.ShimuraMain`), `shimuraReciprocityModFn_of_t5'`.
 - T5Glue.out: 0 errors, all axiom lines standard.
+
+## Step 17: parts/Invert.lean — `InvertibleColon` PROVED — COMPILED
+- `kappa_mul_eq`, `jUnit J` (Tau Ceti's invertible fractional ideal `J ∩ O`:
+  `integralIdealsAwayConductorToInvertible (integralIdealsAwayConductorEquiv.symm J)`), `mem_jUnit_iff` (its elements
+  are `idealMeetOrder m f J`; `FractionalIdeal.mem_coeIdeal`, `Ideal.mem_map_of_equiv`, `Ideal.mem_comap`),
+  `inv_mul_jUnit` ((J∩O)⁻¹·(J∩O) = O as O-submodules of K), **`invertibleColon`** (c ≠ 0 from `Ideal.absNorm_mem`;
+  cancellation κ(J∩O)·z ⊆ cL ⇒ cz ∈ L' by `Submodule.mul_induction_on` over (J∩O)⁻¹(J∩O) = O and O-stability of L';
+  ⊇ by c, L' ⊆ κ(K)).
+- Final: **`shimuraReciprocityModFn_of_t5'' : ShimuraMainCM → X0ModuliGalois → RingClassLattice →
+  Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_t5' : ShimuraMainCM → RingClassLattice → CMModuli`.
+  T5Headline: `frozenTarget_t5` takes `ShimuraMainCM`, `X0ModuliGalois`, `RingClassLattice` in place of `hS`.
+- T5Glue.out: 0 errors, 36 axiom lines all standard; T5Headline.out: 0 errors, standard axioms.
