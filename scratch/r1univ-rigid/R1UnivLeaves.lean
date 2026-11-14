@@ -429,6 +429,35 @@ theorem r1fpProps_iff_ab (hR : MumfordRigidity) (Y : Over (Spec (CommRingCat.of 
     fun ⟨h1, h2, h3, h4, h5, h6⟩ => ⟨h1, h2, h3, h4, r1famProps_of_r1famAbProps h5,
       r1univProps_of_ab hR h6⟩⟩
 
+
+/-- **`R1fpProps = R1fpPropsAb` under rigidity** (as predicates on `(Y, Φ)`): every Prop stated on
+`R1fpProps`, in any position, is equivalent to the same text with `R1fpPropsAb`. -/
+theorem r1fpProps_eq_ab' (hR : MumfordRigidity) :
+    (R1fpProps : (Y : Over (Spec (CommRingCat.of ℚ))) → PtEquiv Y → Prop) = R1fpPropsAb :=
+  funext fun Y => funext fun Φ => propext (r1fpProps_iff_ab hR Y Φ)
+
+/-- **Abelian-scheme form of `LeafQM.AV.R1fp`** (leaf R1fp of leaf-qm-fp): its text with `R1fpProps`
+replaced by `R1fpPropsAb`. -/
+def R1fpAb : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), R1fpPropsAb Y Φ
+
+/-- **Abelian-scheme form of `LeafQM.AV.R1R2fp`**: its text with `R1fpProps` replaced by
+`R1fpPropsAb`. -/
+def R1R2fpAb : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar))
+    (fY : Y ⟶ X) (π₆ : ToP1 X.left),
+    R1fpPropsAb Y Φ ∧ R1heckeProps Y Φ ∧ X6Props Y Φ X Ψ fY ∧ R2X6Props X Ψ π₆ ∧
+      CMExists X Ψ ∧ R1recProps Y Φ ∧ X6Surj Y X fY π₆ ∧ R5ptProps X Ψ
+
+theorem r1fp_iff_ab (hR : MumfordRigidity) : R1fp ↔ R1fpAb := by
+  unfold R1fp R1fpAb
+  rw [r1fpProps_eq_ab' hR]
+
+theorem r1R2fp_iff_ab (hR : MumfordRigidity) : R1R2fp ↔ R1R2fpAb := by
+  unfold R1R2fp R1R2fpAb
+  rw [r1fpProps_eq_ab' hR]
+
 end R1UnivRigid
 
 end AV
