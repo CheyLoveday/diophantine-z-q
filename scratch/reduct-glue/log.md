@@ -59,3 +59,13 @@ Kernel deps built in the worktree with `lake build` (all up to date). One Lean p
   `ReductLeavesPrinted` (11 fields), `ReductPrintedGlue` (5), `reductLeaves_of_printed`; `reductGlue_of`
   (reduct-split's `ReductGlue` from MulEtale + NeronLocalizesDVR + AbVarSpreadsOut + ProperSmoothGenConnected +
   the SS2 glue), `rows_of_printed`. OK. VERIFIED.
+- 16:45 Body §10 (SS2): `isIso_of_openImmersion_of_iso`, `isOpenImmersion_of_neron` (two maps into a Néron
+  model with iso generic fibres differ by an automorphism), `isMonHom_of_ext` (abstract), new LEAVES
+  `IdentityComponentOL` (SGA 3 VI_B 3.10, UNVERIFIED number) and `OpenImmersionOfLocal` (EGA IV₃ 8.10.5,
+  UNVERIFIED item), `pbCompNat`, `pbCompIso_natural`; **`semistableNeronBaseChangeLocalGlobal_of :
+  IdentityComponentOL → OpenImmersionOfLocal → NeronLocalizesDVR → SemistableNeronBaseChangeLocalGlobal`**.
+  Pitfall: kernel deterministic timeout until `pbCompIso` (contains `eqToIso`) was made an `irreducible_def`
+  (memory note); also `IsIso 𝒰.gen.hom` not found by instance search under defeq-but-not-syntactic objects —
+  pass `Iso.isIso_hom` explicitly with `@IsIso.of_isIso_comp_right`. Axioms standard. VERIFIED.
+  `reductGlue_leaves`, `ReductGlueLeaves`, `rows_of_leaves_noGlue` (all seven rows, no project glue).
+- 16:50 Assembled ReductGlue.lean compiles (46 s). VERIFIED.

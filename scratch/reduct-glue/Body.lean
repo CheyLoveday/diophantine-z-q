@@ -744,7 +744,7 @@ section LocalGlobal
 open ZInQ.HeightSplit ZInQ.DefFaltings
 
 /-- `(F_f ∘ F_g)(𝒢) ≅ F_h(𝒢)` for `f ≫ g = h`, as group objects (`F_• = Over.pullback •`). -/
-noncomputable def pbCompIso {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)
+noncomputable irreducible_def pbCompIso {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)
     (hfg : f ≫ g = h) (𝒢 : Grp (Over Z)) :
     (Over.pullback f).mapGrp.obj ((Over.pullback g).mapGrp.obj 𝒢) ≅
       (Over.pullback h).mapGrp.obj 𝒢 :=
@@ -1603,5 +1603,316 @@ theorem rows_of_printed (l : ReductLeavesPrinted) (g : ReductPrintedGlue) (hL : 
   rows_of_leaves (reductLeaves_of_printed l g) (reductGlue_of l.mulEtale hL hsp hc hSS2) hF5
 
 end Final
+
+
+section SS2Lemmas
+
+variable {K : Type} [Field K]
+
+/-- An open immersion of a scheme over `K` into an abelian variety, from a scheme isomorphic to
+it, is an isomorphism (kernel's `isIso_of_openImmersion_self`, conjugated). -/
+theorem isIso_of_openImmersion_of_iso (B : PkgI3.AbVar K) {T N : Over (Spec (CommRingCat.of K))}
+    (eT : T ≅ B.X) (eN : N ≅ B.X) (f : T ⟶ N) [IsOpenImmersion f.left] : IsIso f := by
+  let h : B.X ⟶ B.X := eT.inv ≫ f ≫ eN.hom
+  haveI : IsIso eT.inv.left := Functor.map_isIso (Over.forget _) eT.inv
+  haveI : IsIso eN.hom.left := Functor.map_isIso (Over.forget _) eN.hom
+  haveI : IsOpenImmersion h.left := by
+    show IsOpenImmersion (eT.inv.left ≫ f.left ≫ eN.hom.left)
+    infer_instance
+  haveI : IsIso h := by
+    have hw : h.left ≫ B.X.hom = B.X.hom := Over.w h
+    haveI : UniversallyClosed (h.left ≫ B.X.hom) := by rw [hw]; infer_instance
+    haveI : UniversallyClosed h.left := UniversallyClosed.of_comp_of_isSeparated h.left B.X.hom
+    haveI : IrreducibleSpace B.X.left :=
+      GeometricallyIrreducible.irreducibleSpace_of_subsingleton B.X.hom
+    have hrange : Set.range h.left = Set.univ := by
+      have hc : IsClosed (Set.range h.left) := h.left.isClosedMap.isClosed_range
+      have ho : IsOpen (Set.range h.left) := h.left.isOpenEmbedding.isOpen_range
+      obtain ⟨x⟩ := (inferInstance : Nonempty B.X.left)
+      exact IsClopen.eq_univ ⟨hc, ho⟩ ⟨h.left x, x, rfl⟩
+    haveI : Surjective h.left := ⟨fun y => by
+      have : y ∈ Set.range h.left := hrange ▸ Set.mem_univ y
+      exact this⟩
+    haveI : IsIso h.left := (isIso_iff_isOpenImmersion_and_surjective h.left).mpr ⟨‹_›, ‹_›⟩
+    haveI : IsIso ((Over.forget _).map h) := inferInstanceAs (IsIso h.left)
+    exact isIso_of_reflects_iso h (Over.forget _)
+  have : f = eT.hom ≫ h ≫ eN.inv := by
+    simp only [h, Category.assoc, Iso.hom_inv_id, Category.comp_id, Iso.hom_inv_id_assoc]
+  rw [this]
+  infer_instance
+
+/-- **Two maps into a Néron model with isomorphic generic fibres differ by an automorphism**; so if
+one is an open immersion, so is the other. -/
+theorem isOpenImmersion_of_neron {B : PkgI3.AbVar K} {O : ValuationSubring K}
+    (N : GroupModelO B O) (hN : N.IsNeronModel) (T : Over (Spec (CommRingCat.of O))) [Smooth T.hom]
+    (j₁ j₂ : T ⟶ N.G) [IsOpenImmersion j₂.left] (h₁ : IsIso ((Over.pullback (jO O)).map j₁))
+    (h₂ : IsIso ((Over.pullback (jO O)).map j₂)) : IsOpenImmersion j₁.left := by
+  let F := Over.pullback (jO O)
+  let gg : F.obj N.G ⟶ F.obj N.G := inv (F.map j₂) ≫ F.map j₁
+  let gg' : F.obj N.G ⟶ F.obj N.G := inv (F.map j₁) ≫ F.map j₂
+  obtain ⟨β, hβ⟩ := (hN N.G).2 (gg ≫ N.gen.hom)
+  obtain ⟨β', hβ'⟩ := (hN N.G).2 (gg' ≫ N.gen.hom)
+  simp only at hβ hβ'
+  have hβ0 : F.map β = gg := (cancel_mono N.gen.hom).mp hβ
+  have hβ0' : F.map β' = gg' := (cancel_mono N.gen.hom).mp hβ'
+  have e1 : β ≫ β' = 𝟙 _ := (hN N.G).1 (by
+    simp only
+    rw [Functor.map_comp, CategoryTheory.Functor.map_id, Category.id_comp, hβ0, hβ0']
+    simp [gg, gg'])
+  have e2 : β' ≫ β = 𝟙 _ := (hN N.G).1 (by
+    simp only
+    rw [Functor.map_comp, CategoryTheory.Functor.map_id, Category.id_comp, hβ0, hβ0']
+    simp [gg, gg'])
+  have hj : j₁ = j₂ ≫ β := (hN T).1 (by
+    simp only
+    rw [Functor.map_comp, Category.assoc, hβ0]
+    simp [gg]
+    rfl)
+  haveI : IsIso β := ⟨⟨β', e1, e2⟩⟩
+  haveI : IsIso β.left := Functor.map_isIso (Over.forget _) β
+  rw [hj, Over.comp_left]
+  infer_instance
+
+end SS2Lemmas
+
+
+section SS2Main
+
+open ZInQ.HeightSplit ZInQ.DefFaltings
+
+/-- **A morphism into a Néron model compatible with homomorphic generic identifications is a
+homomorphism** (abstract form of the argument of `neronO_unique`). -/
+theorem isMonHom_of_ext {C D : Type*} [Category C] [CartesianMonoidalCategory C] [Category D]
+    [CartesianMonoidalCategory D] (F : C ⥤ D) [F.Monoidal] {N₁ N₂ : C} [GrpObj N₁] [GrpObj N₂]
+    {B : D} [GrpObj B] (e₁ : F.obj N₁ ⟶ B) (e₂ : F.obj N₂ ⟶ B)
+    (h₁ : letI : GrpObj (F.obj N₁) := Functor.grpObjObj; IsMonHom e₁)
+    (h₂ : letI : GrpObj (F.obj N₂) := Functor.grpObjObj; IsMonHom e₂)
+    (inj1 : Function.Injective fun f : 𝟙_ C ⟶ N₂ => F.map f ≫ e₂)
+    (inj2 : Function.Injective fun f : N₁ ⊗ N₁ ⟶ N₂ => F.map f ≫ e₂)
+    (f : N₁ ⟶ N₂) (hf : F.map f ≫ e₂ = e₁) : IsMonHom f := by
+  letI : GrpObj (F.obj N₁) := Functor.grpObjObj
+  letI : GrpObj (F.obj N₂) := Functor.grpObjObj
+  have key : ∀ {T : C} (a : T ⟶ N₁), F.map (a ≫ f) ≫ e₂ = F.map a ≫ e₁ := by
+    intro T a
+    rw [Functor.map_comp, Category.assoc, hf]
+  refine ⟨?_, ?_⟩
+  · change η[N₁] ≫ f = η[N₂]
+    rw [MonObj.one_eq_one, MonObj.one_eq_one]
+    apply inj1
+    simp only
+    rw [key, Functor.map_one, Functor.map_one, MonObj.one_comp, MonObj.one_comp]
+  · change μ[N₁] ≫ f = (f ⊗ₘ f) ≫ μ[N₂]
+    rw [MonObj.mul_eq_mul, MonObj.mul_eq_mul, MonObj.comp_mul]
+    apply inj2
+    simp only
+    rw [key, Functor.map_mul, Functor.map_mul, MonObj.mul_comp, MonObj.mul_comp]
+    simp only [tensorHom_fst, tensorHom_snd]
+    rw [key, key]
+
+/-- **LEAF `IdentityComponentOL`** (SGA 3 I, Exp. VI_B, Thm. 3.10: a smooth group scheme `G` over
+`S` has an open subgroup scheme `G⁰` whose fibres are the identity components of the fibres of
+`G`; number UNVERIFIED). Over `𝓞_L`: every group model `𝒢` has an open subgroup group model `𝒢⁰`
+whose geometric fibres at the maximal ideals are connected (`𝒢⁰` is quasi-compact since `Spec 𝓞_L`
+and `𝒢` are noetherian; its generic fibre is that of `𝒢`, `A_L` being connected). -/
+def IdentityComponentOL : Prop :=
+  ∀ (K : Type) [Field K] (A : PkgI3.AbVar K) (L : Type) [Field L] [NumberField L] [Algebra K L]
+    (𝒢 : GroupModel A L), ∃ (𝒢₀ : GroupModel A L) (i : 𝒢₀.G ⟶ 𝒢.G), IsOpenImmersion i.left ∧
+      IsMonHom i ∧ ∀ (𝔭 : Ideal (𝓞 L)) [𝔭.IsMaximal], ConnectedSpace (geomFibre 𝒢₀ 𝔭).left
+
+/-- **LEAF `OpenImmersionOfLocal`** (EGA IV₃ 8.10.5, the item for open immersions, applied to
+`Spec (𝓞_L)_𝔭 = lim U` over the open neighbourhoods of `𝔭`; numbers UNVERIFIED). A morphism of
+smooth, separated, quasi-compact (so finitely presented) `𝓞_L`-schemes that is an open immersion
+after base change to every discrete valuation ring `O = (𝓞_L)_𝔭` of `L` is an open immersion: it is
+one over a neighbourhood of every closed point, these cover `Spec 𝓞_L`, and open immersions are
+local on the target. -/
+def OpenImmersionOfLocal : Prop :=
+  ∀ (L : Type) [Field L] [NumberField L] (X Y : Over (Spec (CommRingCat.of (𝓞 L))))
+    [Smooth X.hom] [QuasiCompact X.hom] [IsSeparated X.hom] [Smooth Y.hom] [QuasiCompact Y.hom]
+    [IsSeparated Y.hom] (f : X ⟶ Y),
+    (∀ (O : ValuationSubring L) [IsDiscreteValuationRing O],
+      IsOpenImmersion ((Over.pullback (gO O)).map f).left) → IsOpenImmersion f.left
+
+end SS2Main
+
+
+section SS2Final
+
+open ZInQ.HeightSplit ZInQ.DefFaltings
+
+/-- `pbCompIso` as a natural isomorphism. -/
+noncomputable def pbCompNat {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)
+    (hfg : f ≫ g = h) :
+    (Over.pullback g).mapGrp ⋙ (Over.pullback f).mapGrp ≅ (Over.pullback h).mapGrp :=
+  Functor.mapGrpCompIso.symm ≪≫ Functor.mapGrpNatIso (Over.pullbackComp f g).symm ≪≫
+    Functor.mapGrpNatIso (eqToIso (show Over.pullback (f ≫ g) = Over.pullback h by rw [hfg]))
+
+theorem pbCompIso_eq {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z) (hfg : f ≫ g = h)
+    (𝒢 : Grp (Over Z)) : pbCompIso f g h hfg 𝒢 = (pbCompNat f g h hfg).app 𝒢 := by
+  rw [pbCompIso_def]; rfl
+
+theorem pbCompIso_natural {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)
+    (hfg : f ≫ g = h) {𝒢 𝒢' : Grp (Over Z)} (φ : 𝒢 ⟶ 𝒢') :
+    (Over.pullback f).map ((Over.pullback g).map φ.hom.hom) ≫ (isoX (pbCompIso f g h hfg 𝒢')).hom =
+      (isoX (pbCompIso f g h hfg 𝒢)).hom ≫ (Over.pullback h).map φ.hom.hom := by
+  have := congrArg (fun ψ => ψ.hom.hom) ((pbCompNat f g h hfg).hom.naturality φ)
+  simp only [pbCompIso_eq]
+  exact this
+
+theorem pbCompIso_natural' {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : X ⟶ Z)
+    (hfg : f ≫ g = h) {G G' : Over Z} [GrpObj G] [GrpObj G'] (φ : G ⟶ G') [IsMonHom φ] :
+    (Over.pullback f).map ((Over.pullback g).map φ) ≫ (isoX (pbCompIso f g h hfg (Grp.mk G'))).hom =
+      (isoX (pbCompIso f g h hfg (Grp.mk G))).hom ≫ (Over.pullback h).map φ :=
+  pbCompIso_natural f g h hfg (Grp.homMk (A := Grp.mk G) (B := Grp.mk G') φ)
+
+end SS2Final
+
+
+section SS2Theorem
+
+open ZInQ.HeightSplit ZInQ.DefFaltings
+
+/-- **GLUE `SemistableNeronBaseChangeLocalGlobal` (reduct-split), PROVED** from the leaves
+`IdentityComponentOL` (SGA 3 VI_B 3.10), `OpenImmersionOfLocal` (EGA IV₃ 8.10.5) and
+`NeronLocalizesDVR` (BLR §1.2 Prop. 4), plus reduct-split's local leaf
+`IdentityComponentBaseChangeDVR` (its hypothesis). `𝒱 = 𝒩 ×_{𝓞_L} 𝓞_{L'}`, `𝒰 = 𝒩⁰ ×_{𝓞_L} 𝓞_{L'}`,
+and `𝒰 → 𝒩'` is the extension of the generic identification; it is an open immersion after
+localization at every DVR `O'` of `L'` because it differs from the local leaf's open immersion by an
+automorphism of the Néron model (`isOpenImmersion_of_neron`). -/
+theorem semistableNeronBaseChangeLocalGlobal_of (hIC : IdentityComponentOL)
+    (hOI : OpenImmersionOfLocal) (hL : NeronLocalizesDVR) :
+    SemistableNeronBaseChangeLocalGlobal := by
+  intro h33b _ K _ _ A L _ _ _ 𝒩 h𝒩 hss L' _ _ _ _ _ 𝒩' h𝒩'
+  obtain ⟨𝒢₀, i, hoi, hmi, hconn⟩ := hIC K A L 𝒩
+  haveI : FiniteDimensional L L' := Module.Finite.of_restrictScalars_finite ℚ L L'
+  let gLL : Spec (CommRingCat.of (𝓞 L')) ⟶ Spec (CommRingCat.of (𝓞 L)) :=
+    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (𝓞 L')))
+  let 𝒱 : GroupModel A L' := ZInQ.H5Glue.GroupModel.baseChange L L' 𝒩
+  let 𝒰 : GroupModel A L' := ZInQ.H5Glue.GroupModel.baseChange L L' 𝒢₀
+  let jL' : Spec (CommRingCat.of L') ⟶ Spec (CommRingCat.of (𝓞 L')) :=
+    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L') L'))
+  letI : GrpObj ((Over.pullback jL').obj 𝒰.G) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback jL').obj 𝒩'.G) := Functor.grpObjObj
+  obtain ⟨j, hj⟩ := (h𝒩' 𝒰.G).2 𝒰.gen.hom
+  simp only at hj
+  haveI : Smooth (𝟙_ (Over (Spec (CommRingCat.of (𝓞 L'))))).hom :=
+    ZInQ.Contrib.NeronC.smooth_tensorUnit _
+  haveI : Smooth (𝒰.G ⊗ 𝒰.G).hom := ZInQ.Contrib.NeronC.smooth_tensor _ _ inferInstance inferInstance
+  have hjm : IsMonHom j :=
+    isMonHom_of_ext (Over.pullback jL') 𝒰.gen.hom 𝒩'.gen.hom 𝒰.gen_hom 𝒩'.gen_hom
+      (h𝒩' _).1 (h𝒩' _).1 j hj
+  haveI := hmi
+  letI : GrpObj ((Over.pullback gLL).obj 𝒢₀.G) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback gLL).obj 𝒩.G) := Functor.grpObjObj
+  refine ⟨𝒰, 𝒱, ⟨Iso.refl _, (inferInstance : IsMonHom (𝟙 𝒱.G))⟩, ⟨j, ?_, hjm⟩,
+    ⟨(Over.pullback gLL).map i, ZInQ.H5Glue.isOpenImmersion_pullback_map _ i,
+      (inferInstance : IsMonHom ((Over.pullback gLL).map i))⟩⟩
+  -- `j` is an open immersion: check at every DVR `O'` of `L'`
+  refine hOI L' 𝒰.G 𝒩'.G j (fun O' _ => ?_)
+  let O : ValuationSubring L := O'.comap (algebraMap L L')
+  haveI : IsDiscreteValuationRing O := dvrComapFinite L L' O' inferInstance
+  haveI := center_isMaximal O
+  have hO : O'.comap (algebraMap L L') = O := rfl
+  have hssO : HasSemistableReduction (A.baseChange L) O :=
+    (semistableLocalGlobal_leaf hL K A L 𝒩 h𝒩).mp hss O inferInstance
+  let N := toO 𝒩' O'
+  have hN : N.IsNeronModel := hL K A L' 𝒩' h𝒩' O'
+  let N' := N.transport (bcbcIso A L L') (bcbcIso_isMonHom A L L')
+  have hN' : N'.IsNeronModel := N.transport_isNeronModel _ _ hN
+  let U := (Over.pullback (gO O)).obj 𝒢₀.G
+  letI : GrpObj U := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (gO O)).obj 𝒩.G) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (gO O)).obj 𝒢₀.G) := Functor.grpObjObj
+  have hmiO : IsMonHom ((Over.pullback (gO O)).map i) := inferInstance
+  -- connected fibres of `U`
+  have hcg : ConnectedSpace ((Over.pullback (jO O)).obj U).left := by
+    let e := isoX (pbCompIso (jO O) (gO O) _ (jO_gO O) (Grp.mk 𝒢₀.G)) ≪≫ 𝒢₀.gen
+    haveI : IrreducibleSpace (A.baseChange L).X.left :=
+      GeometricallyIrreducible.irreducibleSpace_of_subsingleton (A.baseChange L).X.hom
+    exact (Scheme.homeoOfIso ((Over.forget _).mapIso e)).connectedSpace_iff.mpr
+      (inferInstanceAs (ConnectedSpace (A.baseChange L).X.left))
+  have hcs : ConnectedSpace ((Over.pullback (Spec.map (CommRingCat.ofHom
+      (algebraMap O (ResBarO O))))).obj U).left := by
+    let e := isoX (fibreIso 𝒢₀ O)
+    haveI := hconn (center O)
+    have h1 : ConnectedSpace ((Over.pullback (sσ (barIso O))).obj (geomFibre 𝒢₀ (center O))).left :=
+      (Scheme.homeoOfIso (asIso (pullback.fst (geomFibre 𝒢₀ (center O)).hom
+        (sσ (barIso O))))).connectedSpace_iff.mpr inferInstance
+    exact (Scheme.homeoOfIso ((Over.forget _).mapIso e)).connectedSpace_iff.mp h1
+  obtain ⟨j', hj'o, hj'm⟩ := h33b L O L' O' hO (A.baseChange L) hssO (toO 𝒩 O)
+    (hL K A L 𝒩 h𝒩 O) N' hN' U ((Over.pullback (gO O)).map i)
+    (ZInQ.H5Glue.isOpenImmersion_pullback_map _ i) hmiO hcg hcs
+  -- compare `T = 𝒰 ×_{𝓞_{L'}} O'` with `U ×_O O'`
+  have hsq : gO O' ≫ gLL = Spec.map (CommRingCat.ofHom (comapHom hO)) ≫ gO O := by
+    rw [← Spec.map_comp, ← Spec.map_comp]
+    rfl
+  let c := isoX (pbCompIso (gO O') gLL _ hsq (Grp.mk 𝒢₀.G)) ≪≫
+    (isoX (pbCompIso (Spec.map (CommRingCat.ofHom (comapHom hO))) (gO O) _ rfl (Grp.mk 𝒢₀.G))).symm
+  let T := (Over.pullback (gO O')).obj 𝒰.G
+  haveI : Smooth T.hom := by change Smooth (pullback.snd 𝒰.G.hom (gO O')); infer_instance
+  let j₂ : T ⟶ N.G := c.hom ≫ j'
+  haveI : IsOpenImmersion j₂.left := by
+    have h1 : IsOpenImmersion c.hom.left := by
+      haveI : IsIso c.hom.left := Functor.map_isIso (Over.forget _) c.hom
+      infer_instance
+    have h2 : IsOpenImmersion j'.left := hj'o
+    show IsOpenImmersion (c.hom.left ≫ j'.left)
+    exact @IsOpenImmersion.comp _ _ _ _ _ h1 h2
+  -- generic identification of `T`
+  let eT : (Over.pullback (jO O')).obj T ≅ (A.baseChange L').X :=
+    isoX (pbCompIso (jO O') (gO O') _ (jO_gO O') (Grp.mk 𝒰.G)) ≪≫ 𝒰.gen
+  have h₂ : IsIso ((Over.pullback (jO O')).map j₂) := by
+    haveI : IsOpenImmersion ((Over.pullback (jO O')).map j₂).left :=
+      ZInQ.H5Glue.isOpenImmersion_pullback_map _ j₂
+    exact isIso_of_openImmersion_of_iso (A.baseChange L') eT N.gen _
+  have hcomp := pbCompIso_natural' (jO O') (gO O') _ (jO_gO O') j
+  have hjL : IsIso ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L') L')))).map j) := by
+    have : IsIso ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L') L')))).map j ≫
+        𝒩'.gen.hom) := by
+      rw [hj]; exact Iso.isIso_hom 𝒰.gen
+    exact @IsIso.of_isIso_comp_right _ _ _ _ _ _ _ (Iso.isIso_hom 𝒩'.gen) this
+  have h₁ : IsIso ((Over.pullback (jO O')).map ((Over.pullback (gO O')).map j)) := by
+    have : IsIso ((Over.pullback (jO O')).map ((Over.pullback (gO O')).map j) ≫
+        (isoX (pbCompIso (jO O') (gO O') _ (jO_gO O') (Grp.mk 𝒩'.G))).hom) := by
+      rw [hcomp]
+      exact @IsIso.comp_isIso _ _ _ _ _ _ _ (Iso.isIso_hom _) hjL
+    exact @IsIso.of_isIso_comp_right _ _ _ _ _ _ _ (Iso.isIso_hom _) this
+  exact isOpenImmersion_of_neron N hN T ((Over.pullback (gO O')).map j) j₂ h₁ h₂
+
+end SS2Theorem
+
+section Final2
+
+/-- **All four glue Props of reduct-split's `ReductGlue`, proved from published leaves**:
+`MulEtaleAbelianScheme` (bundle leaf, BLR 7.3/2), `NeronLocalizesDVR` (BLR §1.2 Prop. 4),
+`IdentityComponentOL` (SGA 3 VI_B 3.10), `OpenImmersionOfLocal` (EGA IV₃ 8.10.5), and the kernel's
+`AbVarSpreadsOut` (proved in the kernel from EGA IV leaves) and leaf candidate
+`ProperSmoothGenConnected` (Zariski connectedness). -/
+theorem reductGlue_leaves (hE : AvSplit.T4.MulEtaleAbelianScheme) (hL : NeronLocalizesDVR)
+    (hIC : IdentityComponentOL) (hOI : OpenImmersionOfLocal)
+    (hsp : FrobPiecesNeron.AbVarSpreadsOut) (hc : FrobPiecesNeron.ProperSmoothGenConnected) :
+    ReductGlue :=
+  reductGlue_of hE hL hsp hc (semistableNeronBaseChangeLocalGlobal_of hIC hOI hL)
+
+/-- The new published leaves of this task (besides reduct-split's `ReductLeaves`). -/
+structure ReductGlueLeaves : Prop where
+  mulEtale : AvSplit.T4.MulEtaleAbelianScheme
+  neronLocalizes : NeronLocalizesDVR
+  identityComponent : IdentityComponentOL
+  openImmersionOfLocal : OpenImmersionOfLocal
+  spreadsOut : FrobPiecesNeron.AbVarSpreadsOut
+  properSmoothGenConnected : FrobPiecesNeron.ProperSmoothGenConnected
+
+/-- **reduct-split's seven rows with no project glue left**: from `ReductLeaves`, the new leaves and
+`HeightSplit.FaltingsLemma5` (t10 is not among the rows). -/
+theorem rows_of_leaves_noGlue (l : ReductLeaves) (n : ReductGlueLeaves)
+    (hF5 : ZInQ.HeightSplit.FaltingsLemma5) :
+    PkgI2.RaynaudCriterion.{0} ∧ PkgI2.SerreTatePotentialGood.{0} ∧
+      PkgI2.GrothendieckMonodromy.{0} ∧ ZInQ.HeightSplit.SemistableReductionThm ∧
+      ZInQ.HeightSplit.SemistableNeronBaseChange ∧ ZInQ.HeightSplit.SemistablePersists ∧
+      ZInQ.HeightSplit.FaltingsLemma5BC :=
+  rows_of_leaves l (reductGlue_leaves n.mulEtale n.neronLocalizes n.identityComponent
+    n.openImmersionOfLocal n.spreadsOut n.properSmoothGenConnected) hF5
+
+end Final2
 
 end ReductGlue
