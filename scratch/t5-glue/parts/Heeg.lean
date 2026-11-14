@@ -14,8 +14,13 @@ open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenu
 /-- **GLUE IDELE-SCALE (the lattice computation, shimura-modfn §1).** Under the hypotheses of
 `IdeleLatticeHeegner`: `κ(s⁻¹𝔞) = c'·⟨1, τ_{Q'}⟩` and `κ(s⁻¹𝔞_N) = c'·⟨1/N, τ_{Q'}⟩` for one
 `c' ≠ 0`, where `𝔞 = κ⁻¹⟨1, τ_Q⟩`, `𝔞_N = κ⁻¹⟨1/N, τ_Q⟩`. (`s = k·s_J·w`, `k ∈ Kˣ`, `w ∈ Ô^×ℂˣ`;
-both lattices are `κ(O)`-stable, so `s⁻¹(𝔞, 𝔞_N) = k⁻¹(J ∩ O)⁻¹(𝔞, 𝔞_N)`, and the hypotheses give
-`κ((J ∩ O)⁻¹𝔞) = c⁻¹⟨1, τ_{Q'}⟩`, `κ((J ∩ O)⁻¹𝔞_N) = c⁻¹⟨1/N, τ_{Q'}⟩`.) -/
+both lattices are `κ(O)`-stable (`⟨1, τ_Q⟩` has multiplier ring `O`, `Q` being primitive of
+discriminant `disc O`; `⟨1/N, τ_Q⟩ = N⁻¹⟨1, Nτ_Q⟩` comes from `[A/N, B, CN]`, possibly imprimitive,
+with multiplier ring `⊇ O`; kernel `kappa_mul_mem_lat`, `kappa_mul_mem_latN_gen`), so `w` fixes their
+closures and `s⁻¹(𝔞, 𝔞_N) = k⁻¹(J ∩ O)⁻¹(𝔞, 𝔞_N)`; localizing `κ(J ∩ O)·L' = c·L` (at `p ∤ f`,
+`(J ∩ O)_p = J_p = s_{J,p}𝒪_p`; at `p ∣ f`, `(J ∩ O)_p = O_p`) gives `κ((J ∩ O)⁻¹𝔞) = c⁻¹⟨1, τ_{Q'}⟩`,
+and likewise for `𝔞_N` with the same `c`. Needs the identity
+`ker(ringClassIdeleQuotient) = Kˣ·Ô^×·ℂˣ`, which Tau Ceti states through ray classes only.) -/
 def IdeleLatticeScale : Prop :=
   ∀ (N : ℕ), 0 < N → ∀ (m f : ℕ) [NeZero m] [NeZero f], Squarefree m →
   ∀ (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus)
@@ -151,11 +156,8 @@ theorem ideleLatticeHeegner_of (hS : IdeleLatticeScale) (hSA : StrongApprox) (hI
   -- `K ∩ 𝔞̂ = 𝔞`
   have hInt : ∀ x : QNeg m, algebraMap (QNeg m) (AfK m) x ∈ latHat m 𝔞 → x ∈ 𝔞 := by
     intro x hx
-    have := hI m (Submodule.span ℤ {(1 : QNeg m), t}) (Submodule.fg_span (Set.toFinite _))
-    rw [h𝔞span]
-    rw [← this]
-    rw [h𝔞span] at hx
-    exact hx
+    have := hI m hsq f D hD N Q
+    exact (Set.ext_iff.1 this x).1 hx
   set u : Fin (N - 1) → QNeg m := fun k => algebraMap ℚ (QNeg m) (((k : ℕ) + 1 : ℚ) / N) with hu
   have hku : ∀ k : Fin (N - 1), kappa m (u k) = (((k : ℕ) : ℂ) + 1) / N := by
     intro k; simp only [hu]; rw [kappa_rat]; push_cast; rfl

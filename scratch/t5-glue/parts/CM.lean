@@ -59,9 +59,11 @@ for an analytic isomorphism `ξ : ℂ/𝔞 → E(ℂ)` there is a unique `ξ' : 
 `ξ(u)^σ = ξ'(s⁻¹u)` for all `u ∈ K/𝔞`; Lang, *Elliptic functions*, Ch. 10, Thm. 3; Silverman,
 *Advanced topics*, GTM 151, Thm. II.8.2 (for `𝒪_K`) (theorem numbers UNVERIFIED, from memory).
 Here `E = E_P : y² = 4x³ − g₂(P)x − g₃(P)` with `ξ = (℘_P, ℘'_P)`; every analytic isomorphism
-`ℂ/s⁻¹𝔞 → E^σ(ℂ)` is `z ↦ (μ²℘_{P'}(z), μ³℘'_{P'}(z))` for some `μ ∈ ℂˣ` (an analytic group
-isomorphism of complex tori is `z ↦ αz`, and isomorphisms of short Weierstrass models are
-`(x, y) ↦ (μ²x, μ³y)`), so this is the printed statement, restricted to `u ∉ 𝔞`. Normalization:
+`ℂ/s⁻¹𝔞 → E^σ(ℂ)` is `z ↦ (μ²℘_{P'}(z), μ³℘'_{P'}(z))` for some `μ ∈ ℂˣ` (`ξ'(0) = ξ(0)^σ = O`,
+a holomorphic map of complex tori fixing `0` is `z ↦ αz`, and isomorphisms of short Weierstrass
+models are `(x, y) ↦ (μ²x, μ³y)`), so this is the printed statement, restricted to `u ∉ 𝔞` (then
+`v ∉ s⁻¹𝔞`, since `K ∩ 𝔞̂ = 𝔞`, so `℘_{P'}(v)` is a value, not the junk value at a pole); the
+conclusion holds for every representative `v` because two of them differ by an element of `s⁻¹𝔞`. Normalization:
 Shimura's `[s, K]` sends a uniformizer at `𝔭` to the arithmetic Frobenius, as Tau Ceti's Artin map
 does; then `E^{Frob_𝔭} ≅ ℂ/𝔭⁻¹𝔞`, consistent with `j(𝔞)^{Art 𝔭} = j(𝔭⁻¹𝔞)` used by the kernel's
 `MainTheoremCMj`. -/
@@ -92,12 +94,13 @@ def ArtinLift : Prop :=
   ∀ σ : ℂ ≃+* ℂ, (∀ k : QNeg m, σ (kappa m k) = kappa m k) →
     ∃ s : IdeleGroup (𝓞 (QNeg m)) (QNeg m), ArtinCond m e σ s
 
-/-- **GLUE LAT-HAT (adelic topology).** A finitely generated `ℤ`-submodule `𝔞 ⊂ K` is the set of
-elements of `K` lying in its closure `𝔞̂ ⊂ 𝔸_{K,f}`: `K ∩ 𝔞̂ = 𝔞` (Shimura 1971, §5.2; Weil,
-*Basic number theory*, V.2; UNVERIFIED numbers). -/
+/-- **LAT-HAT (adelic topology; proved in §5c, `latHatInter`).** The lattice `𝔞 = κ⁻¹⟨1, τ_Q⟩ ⊂ K`
+of a Heegner form is the set of elements of `K` lying in its closure `𝔞̂ ⊂ 𝔸_{K,f}`: `K ∩ 𝔞̂ = 𝔞`. -/
 def LatHatInter : Prop :=
-  ∀ (m : ℕ) [NeZero m] (𝔞 : Submodule ℤ (QNeg m)), 𝔞.FG →
-    {x : QNeg m | algebraMap (QNeg m) (AfK m) x ∈ latHat m (𝔞 : Set (QNeg m))} = 𝔞
+  ∀ (m : ℕ) [NeZero m], Squarefree m → ∀ (f : ℕ) [NeZero f] (D : ℤ), D = discOf m f →
+    ∀ (N : ℕ) (Q : HeegnerForm N D),
+    {x : QNeg m | algebraMap (QNeg m) (AfK m) x ∈ latHat m (kappa m ⁻¹' (Q.lat : Set ℂ))} =
+      kappa m ⁻¹' (Q.lat : Set ℂ)
 
 /-- **GLUE IDELE-LATTICE (the lattice computation, shimura-modfn §1).** Let `O = ℤ + f𝓞_K`, `J` an
 ideal of `𝓞_K` prime to `f`, `s` an idele whose ring class is the class of `J ∩ O`
@@ -314,8 +317,7 @@ theorem cmModuli_of (hL : ShimuraMainCM) (hA : AutExtends) (hF : FixedAlgebraic)
     have hfin1 : finPart (1 : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) = 1 := by
       simp only [finPart, Units.val_one, Prod.snd_one]
     have hsInv : sInvLat m 1 𝔞 = 𝔞 := by
-      have := hI m (Submodule.span ℤ {(1 : QNeg m), t}) (Submodule.fg_span (Set.toFinite _))
-      rw [← preimage_lat_eq_span hD Q ht] at this
+      have := hI m hsq f D hD N Q
       simp only [sInvLat, hfin1, one_mul]
       exact this
     obtain ⟨μ, hμ, hpts⟩ := hL m hsq e he σ₀ 1 hs1 𝔞 (pp Q.tauH) (pp Q.tauH) h𝔞

@@ -86,3 +86,23 @@
   CMModuli`; `shimuraReciprocityModFn_of_leaves'' : ShimuraMainCM → X0ModuliGalois → ArtinLift → LatHatInter →
   StrongApprox → IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`.
 - T5Glue.out (1609 lines source): 0 errors, 16 #print axioms lines, all [propext, Classical.choice, Quot.sound].
+
+## Step 8: independent read-only model review of the leaves and glue (agent, no Lean)
+- ShimuraMainCM: OK (TC uniformizer ↦ arithmetic Frobenius ⇒ s⁻¹𝔞; encoding of s⁻¹u right; ξ'(0) = O argument
+  gives the (μ²℘, μ³℘') form without assuming a group hom; hypotheses satisfiable). X0ModuliGalois: OK (true;
+  suggested weakening to algebraic points, closer to the printed Gal(ℚ̄/ℚ) form). ArtinLift, LatHatInter,
+  StrongApprox, IdeleLatticeScale: true, no CM inside. No statement-level bug in the reductions.
+- Applied: docstrings (ShimuraMainCM ξ'(0) and K ∩ 𝔞̂ = 𝔞; IdeleLatticeScale: needs ker = Kˣ Ô^× ℂˣ, O-stability);
+  X0ModuliGalois weakened by the hypothesis `∀ i < N, ∃ a : Qbar, ιC a = modCoord N τ i` (both uses supply it).
+
+## Step 9: parts/LatHat.lean — `LatHatInter` PROVED — COMPILED
+- `intAd` (n·𝒪̂), `isClosed_intAd`, `algebraMap_mem_intAd_iff` (Mathlib `mem_integers_of_valuation_le_one`,
+  `valuedAdicCompletion_eq_valuation'`, `coe_mem_adicCompletionIntegers`, `Valued.isClosed_integer`,
+  `RestrictedProduct.continuous_eval`), `latHat_inter_of_sandwich` (K ∩ 𝔞̂ = 𝔞 for 𝔞 = ℤa + ℤb with n𝓞_K ⊆ 𝔞,
+  d·a, d·b ∈ 𝓞_K: 𝔞̂ ⊆ finite union of translates of the closed set n·𝒪̂), `cz`, `tK`, `kappa_tK`,
+  `latHat_inter_heegner` (n = 2c₀, d = 2A, kernel `two_coords`), `latHatInter : LatHatInter`
+  (LatHatInter restated for the Heegner lattices κ⁻¹⟨1, τ_Q⟩, the only ones used).
+- Final: **`shimuraReciprocityModFn_of_t5Leaves : ShimuraMainCM → X0ModuliGalois → ArtinLift → StrongApprox →
+  IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_leaf : ShimuraMainCM → ArtinLift →
+  StrongApprox → IdeleLatticeScale → CMModuli`, `x0RatStructure_of_leaf : X0ModuliGalois → X0RatStructure`.
+- T5Glue.out (1838-line source): 0 errors; 18 #print axioms lines, all [propext, Classical.choice, Quot.sound].

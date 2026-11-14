@@ -40,8 +40,10 @@ def X0RatStructure : Prop :=
 
 /-- **LEAF X0-MODULI (the canonical model of `X₀(N)` over `ℚ`: `Aut(ℂ)` acts on the values of
 `ℚ(X₀(N))` through the moduli interpretation).** Let `N ≥ 1`, `g ∈ ℚ(X₀(N))` regular on `ℍ`
-(`IsRatModFn N g`), `σ ∈ Aut(ℂ)` and `τ, τ' ∈ ℍ` such that `σ` carries the point
-`(E_τ, ⟨1/N⟩)` of `Y₀(N)` to `(E_{τ'}, ⟨k/N⟩)`, in Weierstrass coordinates: for some `μ ∈ ℂˣ`,
+(`IsRatModFn N g`), `σ ∈ Aut(ℂ)` and `τ, τ' ∈ ℍ`, where the point `(E_τ, ⟨1/N⟩)` of `Y₀(N)` is
+algebraic (its moduli coordinates `modCoord N τ i`, `i < N`, i.e. `j(τ)` and the symmetric functions
+of the Weber values of `⟨1/N⟩ \ 0`, are algebraic numbers: `(E_τ, ⟨1/N⟩)` has a model over `ℚ̄`), such
+that `σ` carries `(E_τ, ⟨1/N⟩)` to `(E_{τ'}, ⟨k/N⟩)`, in Weierstrass coordinates: for some `μ ∈ ℂˣ`,
 `(x, y) ↦ (μ⁻²x, μ⁻³y)` is an isomorphism `E_τ^σ ≅ E_{τ'}`
 (`σ(g₂(τ)) = μ⁴g₂(τ')`, `σ(g₃(τ)) = μ⁶g₃(τ')`) sending `σ(P)`, `P = (℘_τ(1/N), ℘'_τ(1/N))`, to the
 point `k/N` of `E_{τ'}` for some `1 ≤ k < N` (no condition for `N = 1`). Then `σ(g(τ)) = g(τ')`.
@@ -54,6 +56,8 @@ rational `q`-expansion at `∞`, is the coarse moduli space of pairs `(E, C)` (`
 `Γ₀(N)\ℍ*`) with Thm. 6.6 (`F_N = ℚ(ζ_N)(j, f_a)`, Fricke functions = Weber values `h(E, a)`) and
 Prop. 6.9; Deligne–Rapoport, *Les schémas de modules de courbes elliptiques* (LNM 349), VI.6 and
 VII (q-expansion principle); Diamond–Shurman, *A first course in modular forms*, §7.5–7.7.
+On `ℚ̄`-points this is the printed Galois equivariance `g(x)^ρ = g(x^ρ)`, `ρ = σ|_ℚ̄` (Diamond–Shurman
+§7.7; Deligne–Rapoport VI (coarse moduli scheme over `ℚ`) and VII (q-expansion principle)).
 Relation to the print: `k/N` has exact order `N` whenever the hypothesis holds (`σ` and the
 isomorphism preserve the order of `σ(P)`), so `C^σ` is sent to `⟨k/N⟩ = C_{τ'}` and the
 hypothesis says `(E_τ, C_τ)^σ ≅ (E_{τ'}, C_{τ'})`; the conclusion is the printed equivariance.
@@ -61,6 +65,7 @@ No complex multiplication is involved. -/
 def X0ModuliGalois : Prop :=
   ∀ (N : ℕ), 0 < N → ∀ (g : UpperHalfPlane → ℂ), IsRatModFn N g →
     ∀ (σ : ℂ ≃+* ℂ) (τ τ' : UpperHalfPlane) (μ : ℂ),
+      (∀ i < N, ∃ a : Qbar, ιC a = modCoord N τ i) →
       IsConjModel (σ : ℂ →+* ℂ) (pp τ) (pp τ') μ →
       (2 ≤ N → ∃ k : ℕ, 1 ≤ k ∧ k < N ∧
         σ ((pp τ).weierstrassP (1 / N)) = μ ^ 2 * (pp τ').weierstrassP (k / N) ∧
@@ -214,13 +219,13 @@ theorem x0RatStructure_of (hL : X0ModuliGalois) (hA : AutExtends) (hF : FixedAlg
     have h : ∀ i < N, (σ₀ : ℂ →+* ℂ) (modCoord N τ i) = modCoord N τ i := fun i hi => by
       rw [← hx i hi]; exact hσ₀ (x i)
     obtain ⟨μ, hμ, hk⟩ := moduli_transport hD (σ₀ : ℂ →+* ℂ) hN h
-    exact hL N hN g hg σ₀ τ τ μ hμ hk
+    exact hL N hN g hg σ₀ τ τ μ (fun i hi => ⟨x i, hx i hi⟩) hμ hk
   obtain ⟨σ, hσ⟩ := hA ρ
   have h : ∀ i < N, (σ : ℂ →+* ℂ) (modCoord N τ i) = modCoord N τ' i := fun i hi => by
     rw [← hx i hi, ← hx' i hi]; exact hσ (x i)
   obtain ⟨μ, hμ, hk⟩ := moduli_transport hD (σ : ℂ →+* ℂ) hN h
   refine ⟨b, ρ b, hb, ?_, rfl⟩
   rw [← hσ, hb]
-  exact hL N hN g hg σ τ τ' μ hμ hk
+  exact hL N hN g hg σ τ τ' μ (fun i hi => ⟨x i, hx i hi⟩) hμ hk
 
 end T5Glue
