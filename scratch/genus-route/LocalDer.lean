@@ -2576,4 +2576,94 @@ end LDFin
 
 end GenusRoute
 
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDRes
+
+open IsDedekindDomain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+attribute [local instance] isDedekind_intCl isFractionRing_intCl
+
+local notation "OF" => integralClosure (Polynomial ℚ) F
+
+/-- **Residue structure (proved).** At a place containing `s` there is `θ ∈ 𝒪_P` and `g ∈ ℚ[T]` with
+`g(θ) ∈ 𝔪_P`, `g'(θ)` a unit, and every `x ∈ 𝒪_P` congruent to some `p(θ)` modulo `𝔪_P`. (The residue
+field `OF/𝔭` is a finitely generated `ℚ`-algebra and a field, hence finite over `ℚ` (Zariski); take a
+primitive element and its minimal polynomial.) -/
+theorem residue_structure (P : Place F) (hs : (sF : F) ∈ P.w) :
+    ∃ θ : F, θ ∈ P.w ∧ ∃ g : Polynomial ℚ, Polynomial.aeval θ g ∈ P.w.nonunits ∧
+      (Polynomial.aeval θ (Polynomial.derivative g))⁻¹ ∈ P.w ∧
+      Polynomial.aeval θ (Polynomial.derivative g) ≠ 0 ∧
+      ∀ x ∈ P.w, ∃ p : Polynomial ℚ, x - Polynomial.aeval θ p ∈ P.w.nonunits := by
+  classical
+  haveI : Algebra.IsSeparable Qj F := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  haveI : Module.Finite (Polynomial ℚ) OF := IsIntegralClosure.finite (Polynomial ℚ) Qj F OF
+  letI : Algebra ℚ OF := ((algebraMap (Polynomial ℚ) OF).comp (algebraMap ℚ (Polynomial ℚ))).toAlgebra
+  haveI : IsScalarTower ℚ (Polynomial ℚ) OF := IsScalarTower.of_algebraMap_eq' rfl
+  haveI : Algebra.FiniteType ℚ OF :=
+    Algebra.FiniteType.trans (S := Polynomial ℚ) inferInstance inferInstance
+  set 𝔭 := centerHS P hs with h𝔭
+  haveI : 𝔭.asIdeal.IsMaximal := 𝔭.isPrime.isMaximal 𝔭.ne_bot
+  letI : Field (OF ⧸ 𝔭.asIdeal) := Ideal.Quotient.field _
+  haveI : Module.Finite ℚ (OF ⧸ 𝔭.asIdeal) := finite_of_finite_type_of_isJacobsonRing ℚ _
+  haveI : Algebra.IsSeparable ℚ (OF ⧸ 𝔭.asIdeal) := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  obtain ⟨α, hα⟩ := Field.exists_primitive_element ℚ (OF ⧸ 𝔭.asIdeal)
+  have hint : IsIntegral ℚ α := IsIntegral.of_finite ℚ α
+  have hpoly : ∀ y : OF ⧸ 𝔭.asIdeal, ∃ p : Polynomial ℚ, Polynomial.aeval α p = y := by
+    intro y
+    have hy : y ∈ (IntermediateField.adjoin ℚ {α}).toSubalgebra := by rw [hα]; trivial
+    rw [IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hint.isAlgebraic,
+      Algebra.adjoin_singleton_eq_range_aeval] at hy
+    obtain ⟨p, hp⟩ := hy
+    exact ⟨p, hp⟩
+  obtain ⟨θ, hθ⟩ := Ideal.Quotient.mk_surjective α
+  have hmk : ∀ p : Polynomial ℚ, Ideal.Quotient.mk 𝔭.asIdeal (Polynomial.aeval θ p) =
+      Polynomial.aeval α p := by
+    intro p
+    rw [← hθ]
+    exact (Polynomial.aeval_algHom_apply (Ideal.Quotient.mkₐ ℚ 𝔭.asIdeal) θ p).symm
+  have hcoe : ∀ p : Polynomial ℚ, ((Polynomial.aeval θ p : OF) : F) = Polynomial.aeval (θ : F) p := by
+    intro p
+    rw [Polynomial.aeval_def, Polynomial.aeval_def]
+    have h := Polynomial.hom_eval₂ p (algebraMap ℚ OF) (OF).val.toRingHom θ
+    rw [show (OF).val.toRingHom.comp (algebraMap ℚ OF) = algebraMap ℚ F from RingHom.ext_rat _ _] at h
+    exact h
+  set g := minpoly ℚ α with hg
+  have hg0 : Polynomial.aeval α g = 0 := minpoly.aeval ℚ α
+  have hg'0 : Polynomial.aeval α (Polynomial.derivative g) ≠ 0 :=
+    (Algebra.IsSeparable.isSeparable ℚ α).aeval_derivative_ne_zero hg0
+  refine ⟨(θ : F), intCl_mem P hs θ, g, ?_, ?_⟩
+  · rw [← hcoe, ← mem_centerHS P hs, ← Ideal.Quotient.eq_zero_iff_mem, hmk, hg0]
+  have hnot : Polynomial.aeval θ (Polynomial.derivative g) ∉ 𝔭.asIdeal := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem, hmk]; exact hg'0
+  obtain ⟨hinv, hne⟩ := inv_mem_of_not_mem_center P hs hnot
+  rw [hcoe] at hinv hne
+  refine ⟨hinv, hne, fun x hx => ?_⟩
+  obtain ⟨a, c, hc, rfl⟩ := frac_rep P hs hx
+  obtain ⟨hci, hc0⟩ := inv_mem_of_not_mem_center P hs hc
+  have hc' : Ideal.Quotient.mk 𝔭.asIdeal c ≠ 0 := by
+    rw [Ne, Ideal.Quotient.eq_zero_iff_mem]; exact hc
+  obtain ⟨p, hp⟩ := hpoly (Ideal.Quotient.mk 𝔭.asIdeal a * (Ideal.Quotient.mk 𝔭.asIdeal c)⁻¹)
+  refine ⟨p, ?_⟩
+  have hmem : a - Polynomial.aeval θ p * c ∈ 𝔭.asIdeal := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_mul, hmk, hp]
+    field_simp
+    ring
+  have hmemF := (mem_centerHS P hs _).mp hmem
+  have heq : (a : F) * (c : F)⁻¹ - Polynomial.aeval (θ : F) p =
+      (c : F)⁻¹ * ((a - Polynomial.aeval θ p * c : OF) : F) := by
+    rw [Subalgebra.coe_sub, Subalgebra.coe_mul, hcoe]
+    field_simp
+  rw [heq]
+  exact mul_mem_nonunits P.w hci hmemF
+
+end LDRes
+
+end GenusRoute
+
 end
