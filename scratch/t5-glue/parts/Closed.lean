@@ -33,3 +33,24 @@ theorem shimuraReciprocityModFn_of_leaves' (hCM : ShimuraMainCM) (hX : X0ModuliG
   shimuraReciprocityModFn_of_leaves hCM hX discNeZero autExtends fixedAlgebraic hAL hI hH
 
 end T5Glue
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZGenus.Shimura
+
+/-- **`CMModuli` from the printed main theorem of CM, class field theory (`ArtinLift`) and three
+adelic facts** (`LatHatInter`, `StrongApprox`, `IdeleLatticeScale`). -/
+theorem cmModuli_of'' (hL : ShimuraMainCM) (hAL : ArtinLift) (hI : LatHatInter)
+    (hSA : StrongApprox) (hS : IdeleLatticeScale) : CMModuli :=
+  cmModuli_of' hL hAL hI (ideleLatticeHeegner_of hS hSA hI)
+
+/-- **Row T-5 (`Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
+(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and four
+glue Props (`ArtinLift`: surjectivity of the global Artin map; `LatHatInter`: `K ∩ 𝔞̂ = 𝔞`;
+`StrongApprox`; `IdeleLatticeScale`: the ring-class lattice computation). -/
+theorem shimuraReciprocityModFn_of_leaves'' (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hAL : ArtinLift) (hI : LatHatInter) (hSA : StrongApprox) (hS : IdeleLatticeScale) :
+    ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_leaves' hCM hX hAL hI (ideleLatticeHeegner_of hS hSA hI)
+
+end T5Glue

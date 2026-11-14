@@ -12,3 +12,6 @@
 #print axioms T5Glue.cmModuli_of'
 #print axioms T5Glue.shimuraReciprocityModFn_of_leaves'
 #print axioms T5Glue.discNeZero
+#print axioms T5Glue.ideleLatticeHeegner_of
+#print axioms T5Glue.cmModuli_of''
+#print axioms T5Glue.shimuraReciprocityModFn_of_leaves''

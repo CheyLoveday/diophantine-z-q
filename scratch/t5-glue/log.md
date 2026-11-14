@@ -73,3 +73,16 @@
   X0RatStructure`; `shimuraReciprocityModFn_of_leaves' : ShimuraMainCM → X0ModuliGalois → ArtinLift →
   LatHatInter → IdeleLatticeHeegner → Shimura.ShimuraReciprocityModFn`. 0 errors; T5Glue.out: 13 axiom lines,
   all [propext, Classical.choice, Quot.sound].
+
+## Step 7: parts/Heeg.lean — `IdeleLatticeHeegner` split — COMPILED, 0 errors
+- GLUE `IdeleLatticeScale` (κ(s⁻¹𝔞) = c'L', κ(s⁻¹𝔞_N) = c'L'_N under the ring-class hypothesis),
+  GLUE `StrongApprox` (∀ u ∈ K ∃ v ∈ K, s_f v − u ∈ 𝔞̂, for 𝔞 = ℤa + ℤb, a, b a ℚ-basis).
+- PROVED: `latHat_eq_closure` (𝔞̂ = topological closure of the image subgroup), `latHat_sub_mem`,
+  `latHat_add_mem`, `mem_latHat_of_mem`, `latHat_mono`, `kappaComap`, `lat_le_latN`, `mem_smul_set_sub`,
+  `eq_of_sub_div_mem`, `linIndep_one_t`, and
+  **`ideleLatticeHeegner_of : IdeleLatticeScale → StrongApprox → LatHatInter → IdeleLatticeHeegner`**
+  (the permutation π of the nonzero points of ⟨1/N⟩ built from s⁻¹ and K ∩ 𝔞̂ = 𝔞).
+- Final forms: `cmModuli_of'' : ShimuraMainCM → ArtinLift → LatHatInter → StrongApprox → IdeleLatticeScale →
+  CMModuli`; `shimuraReciprocityModFn_of_leaves'' : ShimuraMainCM → X0ModuliGalois → ArtinLift → LatHatInter →
+  StrongApprox → IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`.
+- T5Glue.out (1609 lines source): 0 errors, 16 #print axioms lines, all [propext, Classical.choice, Quot.sound].
