@@ -1261,4 +1261,234 @@ theorem isSemistable_bcDVR_iff
 
 end DVRBaseChange
 
+open ZInQ.Contrib.AbVarBC
+
+section EtaleDescent
+
+variable {K : Type} [Field K]
+
+/-- **Points of an étale `K`-scheme over a field `Ω₂` come from `Ω`** for any `K`-embedding
+`κ : Ω → Ω₂` of an algebraically closed `Ω`: the image of an affine coordinate ring is separable
+algebraic over `K`, hence lies in `κ(Ω)`. -/
+theorem exists_lift_of_etale {Ω Ω₂ : Type} [Field Ω] [IsAlgClosed Ω] [Field Ω₂] [Algebra K Ω]
+    [Algebra K Ω₂] (κ : Ω →ₐ[K] Ω₂) (X : Over (Spec (CommRingCat.of K))) [Etale X.hom]
+    (q : Spec (CommRingCat.of Ω₂) ⟶ X.left)
+    (hq : q ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap K Ω₂))) :
+    ∃ p : Spec (CommRingCat.of Ω) ⟶ X.left,
+      Spec.map (CommRingCat.ofHom (κ : Ω →+* Ω₂)) ≫ p = q ∧
+        p ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap K Ω)) := by
+  classical
+  let pt : X.left := q (IsLocalRing.closedPoint Ω₂)
+  obtain ⟨_, ⟨U, hU, rfl⟩, hpU, -⟩ :=
+    X.left.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ pt) isOpen_univ
+  change X.left.Opens at U
+  change IsAffineOpen U at hU
+  have hrange : Set.range q ⊆ Set.range U.ι := by
+    rintro _ ⟨s, rfl⟩
+    rw [Scheme.Opens.range_ι]
+    have : s = IsLocalRing.closedPoint Ω₂ :=
+      Subsingleton.elim (α := PrimeSpectrum Ω₂) _ _
+    rw [this]
+    exact hpU
+  let q' := IsOpenImmersion.lift U.ι q hrange
+  have hq' : q' ≫ U.ι = q := IsOpenImmersion.lift_fac _ _ _
+  let e := hU.isoSpec
+  let φ : Γ(X.left, U) ⟶ CommRingCat.of Ω₂ := Spec.preimage (q' ≫ e.hom)
+  let θ : CommRingCat.of K ⟶ Γ(X.left, U) := Spec.preimage (e.inv ≫ U.ι ≫ X.hom)
+  have hφ : Spec.map φ = q' ≫ e.hom := Spec.map_preimage _
+  have hθ : Spec.map θ = e.inv ≫ U.ι ≫ X.hom := Spec.map_preimage _
+  have hql : q = Spec.map φ ≫ e.inv ≫ U.ι := by
+    rw [hφ, Category.assoc, e.hom_inv_id_assoc, hq']
+  have hcomp : θ ≫ φ = CommRingCat.ofHom (algebraMap K Ω₂) := by
+    apply Spec.map_injective
+    rw [Spec.map_comp, hφ, hθ, Category.assoc, e.hom_inv_id_assoc, ← Category.assoc q', hq', hq]
+  have hθet : RingHom.Etale θ.hom := by
+    have : Etale (Spec.map θ) := by rw [hθ]; infer_instance
+    exact HasRingHomProperty.Spec_iff.mp this
+  letI : Algebra K Γ(X.left, U) := θ.hom.toAlgebra
+  have : Algebra.Etale K Γ(X.left, U) := hθet
+  let f : Γ(X.left, U) →ₐ[K] Ω₂ :=
+    { φ.hom with
+      commutes' := fun a => congrArg (fun g => CommRingCat.Hom.hom g a) hcomp }
+  have : Module.Finite K Γ(X.left, U) := Algebra.FormallyUnramified.finite_of_free K _
+  have hint : ∀ r, IsIntegral K (φ.hom r) := fun r =>
+    (Algebra.IsIntegral.isIntegral (R := K) r).map f
+  choose ψ0 hψ0 using fun r => mem_range_of_isIntegral κ (hint r)
+  have hκinj : Function.Injective (κ : Ω →+* Ω₂) := (κ : Ω →+* Ω₂).injective
+  let ψ : Γ(X.left, U) →+* Ω :=
+    { toFun := ψ0
+      map_one' := hκinj (by rw [hψ0, map_one, map_one])
+      map_mul' := fun a b => hκinj (by rw [hψ0, map_mul, map_mul, hψ0, hψ0])
+      map_zero' := hκinj (by rw [hψ0, map_zero, map_zero])
+      map_add' := fun a b => hκinj (by rw [hψ0, map_add, map_add, hψ0, hψ0]) }
+  have hψ : CommRingCat.ofHom ψ ≫ CommRingCat.ofHom (κ : Ω →+* Ω₂) = φ := by
+    ext r
+    exact hψ0 r
+  have hlift : Spec.map (CommRingCat.ofHom (κ : Ω →+* Ω₂)) ≫
+      (Spec.map (CommRingCat.ofHom ψ) ≫ e.inv ≫ U.ι) = q := by
+    rw [← Category.assoc, ← Spec.map_comp, hψ, hql]
+  refine ⟨Spec.map (CommRingCat.ofHom ψ) ≫ e.inv ≫ U.ι, hlift, ?_⟩
+  haveI := epi_spec_map_field (κ : Ω →+* Ω₂)
+  apply (cancel_epi (Spec.map (CommRingCat.ofHom (κ : Ω →+* Ω₂)))).1
+  rw [← Category.assoc, hlift, hq, ← Spec.map_comp, ← CommRingCat.ofHom_comp, κ.comp_algebraMap]
+
+end EtaleDescent
+
+
+section TorsionBC
+
+variable {K : Type} [Field K]
+
+theorem extHom_comp {Ω₀ Ω₁ Ω₂ : Type} [Field Ω₀] [Field Ω₁] [Field Ω₂] [Algebra K Ω₀] [Algebra K Ω₁]
+    [Algebra K Ω₂] (κ₁ : Ω₀ →ₐ[K] Ω₁) (κ₂ : Ω₁ →ₐ[K] Ω₂) :
+    extHom κ₂ ≫ extHom κ₁ = extHom (κ₂.comp κ₁) := by
+  apply Over.OverMorphism.ext
+  rw [Over.comp_left, extHom_left, extHom_left, extHom_left]
+  change Spec.map (CommRingCat.ofHom (κ₂ : Ω₁ →+* Ω₂)) ≫ Spec.map (CommRingCat.ofHom (κ₁ : Ω₀ →+* Ω₁)) = _
+  rw [← Spec.map_comp]
+  rfl
+
+theorem extPt_extPt (A : PkgI3.AbVar K) {Ω₀ Ω₁ Ω₂ : Type} [Field Ω₀] [Field Ω₁] [Field Ω₂]
+    [Algebra K Ω₀] [Algebra K Ω₁] [Algebra K Ω₂] (κ₁ : Ω₀ →ₐ[K] Ω₁) (κ₂ : Ω₁ →ₐ[K] Ω₂)
+    (z : A.Pt Ω₀) : extPt A κ₂ (extPt A κ₁ z) = extPt A (κ₂.comp κ₁) z := by
+  rw [extPt_apply, extPt_apply, extPt_apply, ← Category.assoc, extHom_comp]
+
+theorem bcPt_extPt (A : PkgI3.AbVar K) {L : Type} [Field L] [Algebra K L] {Ω₁ Ω₂ : Type} [Field Ω₁]
+    [Algebra L Ω₁] [Algebra K Ω₁] [IsScalarTower K L Ω₁] [Field Ω₂] [Algebra L Ω₂] [Algebra K Ω₂]
+    [IsScalarTower K L Ω₂] (κ : Ω₁ →ₐ[L] Ω₂) (y : (A.baseChange L).Pt Ω₁) :
+    bcPt A Ω₂ (extPt (A.baseChange L) κ y) = extPt A (κ.restrictScalars K) (bcPt A Ω₁ y) := by
+  show (ptMapIso Ω₂).inv ≫ ((Over.mapPullbackAdj (sK K L)).homEquiv _ _).symm (extHom κ ≫ y) =
+    extHom (κ.restrictScalars K) ≫ (ptMapIso Ω₁).inv ≫
+      ((Over.mapPullbackAdj (sK K L)).homEquiv _ _).symm y
+  have hnat := Adjunction.homEquiv_naturality_left_symm (Over.mapPullbackAdj (sK K L))
+    (extHom κ) (y : PkgI3.AbVar.ptObj Ω₁ ⟶ (Over.pullback (sK K L)).obj A.X)
+  have hsq : (ptMapIso Ω₂).inv ≫ (Over.map (sK K L)).map (extHom κ) =
+      extHom (κ.restrictScalars K) ≫ (ptMapIso Ω₁).inv := by
+    apply Over.OverMorphism.ext
+    simp [ptMapIso, extHom]
+    rfl
+  erw [hnat]
+  rw [← Category.assoc, hsq, Category.assoc]
+
+/-- **Torsion points of `A_L` over `L̄` of order prime to the characteristic come from `A(K̄)`**,
+from `[m]` étale (the bundle leaf `MulEtaleAbelianScheme`): `A[m]` is étale over `K`
+(`exists_lift_of_etale`). -/
+theorem torsion_descends_etale (hE : AvSplit.T4.MulEtaleAbelianScheme) (A : PkgI3.AbVar K)
+    {L : Type} [Field L] [Algebra K L] (κ : AlgebraicClosure K →ₐ[K] AlgebraicClosure L) (m : ℕ)
+    (hm : (m : K) ≠ 0) (q : (A.baseChange L).Pt (AlgebraicClosure L)) (hq : q ^ m = 1) :
+    ∃ p : A.Pt (AlgebraicClosure K), p ^ m = 1 ∧
+      (bcPt A (AlgebraicClosure L)).symm (extPt A κ p) = q := by
+  haveI : PkgI2.IsAbelianScheme (Grp.mk A.X) := ⟨inferInstanceAs (IsProper A.X.hom),
+    inferInstanceAs (Smooth A.X.hom), inferInstanceAs (GeometricallyConnected A.X.hom)⟩
+  have het : Etale ((𝟙 A.X ^ m : A.X ⟶ A.X).left) :=
+    hE K (Grp.mk A.X) m (isUnit_iff_ne_zero.mpr hm)
+  let M : A.X ⟶ A.X := 𝟙 A.X ^ m
+  let P : Over (Spec (CommRingCat.of K)) := Over.mk (pullback.snd M.left (η[A.X]).left)
+  haveI : Etale P.hom := by
+    change Etale (pullback.snd M.left (η[A.X]).left)
+    infer_instance
+  set q₀ := bcPt A (AlgebraicClosure L) q with hq₀
+  have h0 : q₀ ^ m = 1 := by rw [hq₀, ← map_pow, hq, map_one]
+  have hxm : q₀ ≫ M = 1 := by rw [comp_pow_one]; exact h0
+  have hw : q₀.left ≫ M.left =
+      (PkgI3.AbVar.ptObj (K := K) (AlgebraicClosure L)).hom ≫ (η[A.X]).left := by
+    have h1 := congrArg Over.Hom.left hxm
+    rw [Over.comp_left] at h1
+    rw [h1]
+    change (toUnit _ ≫ η[A.X]).left = _
+    rw [Over.comp_left]
+    congr 1
+  let z : Spec (CommRingCat.of (AlgebraicClosure L)) ⟶ P.left := pullback.lift q₀.left _ hw
+  have hz : z ≫ P.hom = Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure L))) :=
+    pullback.lift_snd _ _ _
+  obtain ⟨p0, hp0, hp0g⟩ := exists_lift_of_etale κ P z hz
+  have hpr : pullback.fst M.left (η[A.X]).left ≫ A.X.hom = P.hom := by
+    change _ = pullback.snd M.left (η[A.X]).left
+    rw [← Over.w M, ← Category.assoc, pullback.condition, Category.assoc, Over.w η[A.X]]
+    simp
+  let p : A.Pt (AlgebraicClosure K) := Over.homMk (p0 ≫ pullback.fst M.left (η[A.X]).left) (by
+    change (p0 ≫ pullback.fst M.left (η[A.X]).left) ≫ A.X.hom = _
+    rw [Category.assoc, hpr, hp0g]
+    rfl)
+  have hext : extPt A κ p = q₀ := by
+    apply Over.OverMorphism.ext
+    change Spec.map (CommRingCat.ofHom (κ : AlgebraicClosure K →+* AlgebraicClosure L)) ≫
+      p0 ≫ pullback.fst M.left (η[A.X]).left = q₀.left
+    rw [← Category.assoc, hp0]
+    exact pullback.lift_fst _ _ _
+  refine ⟨p, ?_, ?_⟩
+  · apply extPt_injective A κ
+    rw [map_pow, hext, h0, map_one]
+  · rw [hext, hq₀, MulEquiv.symm_apply_apply]
+
+end TorsionBC
+
+
+section RaynaudSH
+
+/-- **LEAF candidate `StrictHenselizationDVR`** (strict henselization of a discrete valuation ring:
+EGA IV₄ 18.8.8 and 18.8.13, Stacks Tags 04GQ, 06LJ (`O^sh` of a DVR is a DVR with the same
+uniformizer); all locators UNVERIFIED). For a DVR `O ⊆ K` there are a field `K' ⊇ K` and a
+strictly henselian DVR `O' ⊆ K'` lying over `O` (`O' = O^sh`, `K' = Frac O^sh`) such that `K'/K`
+is separable algebraic, a uniformizer of `O` stays a uniformizer of `O'` (ramification index 1),
+and `κ(O')/κ(O)` is separable (algebraic; `κ(O^sh)` is a separable closure of `κ(O)`). -/
+def StrictHenselizationDVR : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O],
+    ∃ (K' : Type) (_ : Field K') (_ : Algebra K K') (O' : ValuationSubring K')
+      (hO : O'.comap (algebraMap K K') = O),
+      IsStrictlyHenselianDVR O' ∧ Algebra.IsSeparable K K' ∧
+      (∀ ϖ : O, Irreducible ϖ → Irreducible (comapHom hO ϖ)) ∧
+      (letI := (resMap hO).toAlgebra
+       Algebra.IsSeparable (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField O'))
+
+/-- **LEAF `NeronBaseChangeUnramifiedDVR`** (Néron models commute with unramified base change with
+separable residue extension, in particular with strict henselization: Bosch–Lütkebohmert–Raynaud,
+*Néron models*, §1.2 Prop. 2 and §7.2 Thm. 1; numbers UNVERIFIED, and SPECULATIVE whether the print
+covers every such extension or only étale maps, strict henselization and completion — in the
+latter case restrict this leaf to `O' = O^sh`, which is all that is used). For an extension
+`O ⊆ O'` of DVRs with `K'/K` separable algebraic, ramification index `1` and separable residue
+extension, the base change `𝒩 ×_O O'` of a Néron model of `A` is a Néron model of `A_{K'}`. -/
+def NeronBaseChangeUnramifiedDVR : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O] (K' : Type)
+    [Field K'] [Algebra K K'] (O' : ValuationSubring K') [IsDiscreteValuationRing O']
+    (hO : O'.comap (algebraMap K K') = O), Algebra.IsSeparable K K' →
+    (∀ ϖ : O, Irreducible ϖ → Irreducible (comapHom hO ϖ)) →
+    (letI := (resMap hO).toAlgebra
+     Algebra.IsSeparable (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField O')) →
+    ∀ (A : PkgI3.AbVar K) (𝒩 : GroupModelO A O), 𝒩.IsNeronModel → (bcDVR hO 𝒩).IsNeronModel
+
+/-- **Raynaud's criterion over a general DVR from its strictly henselian (printed?) form**, by
+strict henselization: the torsion hypothesis passes to `A_{K^sh}` (`torsion_descends_etale`, from the
+bundle leaf `MulEtaleAbelianScheme`), the Néron model base changes (`NeronBaseChangeUnramifiedDVR`),
+and semistability descends (`isSemistable_bcDVR_iff`, proved). -/
+theorem raynaudSemistable_of_SH (hR : RaynaudSemistableSH) (hG1 : StrictHenselizationDVR)
+    (hG2 : NeronBaseChangeUnramifiedDVR) (hE : AvSplit.T4.MulEtaleAbelianScheme) :
+    RaynaudSemistable := by
+  intro K _ O _ A m hm3 hmu htors 𝒩 h𝒩
+  obtain ⟨K', _, _, O', hO, hSH, hsepK, hunr, hsep⟩ := hG1 K O
+  haveI : IsDiscreteValuationRing O' := hSH.1
+  have hmu' : IsUnit (m : O') := by
+    have := hmu.map (comapHom hO)
+    rwa [map_natCast] at this
+  have halg : (letI := (resMap hO).toAlgebra
+      Algebra.IsAlgebraic (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField O')) := by
+    letI := (resMap hO).toAlgebra
+    exact Algebra.IsSeparable.isAlgebraic _ _
+  rw [isSemistable_bcDVR_iff hO halg]
+  refine hR K' O' hSH (A.baseChange K') m hm3 hmu' ?_ _ (hG2 K O K' O' hO hsepK hunr hsep A 𝒩 h𝒩)
+  intro x hx
+  have hmK : (m : K) ≠ 0 := natCast_ne_zero_of_isUnit O hmu
+  let κ : AlgebraicClosure K →ₐ[K] AlgebraicClosure K' := IsAlgClosed.lift
+  obtain ⟨p, hp, hpx⟩ := torsion_descends_etale hE A κ m hmK x hx
+  obtain ⟨z, hz⟩ := htors p hp
+  refine ⟨(bcPt A K').symm (extPt A (Algebra.ofId K K') z), ?_⟩
+  rw [← hpx, ← hz]
+  apply (bcPt A (AlgebraicClosure K')).injective
+  rw [MulEquiv.apply_symm_apply, bcPt_extPt, MulEquiv.apply_symm_apply, extPt_extPt, extPt_extPt]
+  congr 1
+  ext a
+  simp
+
+end RaynaudSH
+
 end ReductGlue

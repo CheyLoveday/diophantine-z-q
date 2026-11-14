@@ -47,3 +47,10 @@ Kernel deps built in the worktree with `lake build` (all up to date). One Lean p
   `comapHom_isLocalHom`, `resMap`, `barIsoDVR` (κ̄(O) ≅ κ̄(O') for algebraic residue extension), `bcDVR` (base change
   of a `GroupModelO` along O ⊆ O'), **`isSemistable_bcDVR_iff`** (semistability invariant under such base change).
   OK. VERIFIED.
+- 15:20 Body §8: `exists_lift_of_etale` (Ω₂-points of an étale K-scheme come from any algebraically closed Ω ⊆ Ω₂;
+  étale ⇒ finite over K via `FormallyUnramified.finite_of_free`, then kernel `mem_range_of_isIntegral`),
+  `extHom_comp`, `extPt_extPt`, `bcPt_extPt` (bcPt natural in Ω), `torsion_descends_etale` (A_L(L̄)[m] comes from
+  A(K̄)[m], from `MulEtaleAbelianScheme`); new LEAF candidates `StrictHenselizationDVR` (EGA IV 18.8, Stacks;
+  UNVERIFIED tags) and `NeronBaseChangeUnramifiedDVR` (BLR §1.2 Prop. 2 / §7.2 Thm. 1, UNVERIFIED, generality
+  SPECULATIVE); **`raynaudSemistable_of_SH : RaynaudSemistableSH → StrictHenselizationDVR →
+  NeronBaseChangeUnramifiedDVR → MulEtaleAbelianScheme → RaynaudSemistable`**. Axioms standard. VERIFIED.
