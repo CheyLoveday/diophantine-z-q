@@ -2472,4 +2472,108 @@ end LDPlace
 
 end GenusRoute
 
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDFin
+
+open IsDedekindDomain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+attribute [local instance] isDedekind_intCl isFractionRing_intCl
+
+local notation "OF" => integralClosure (Polynomial ℚ) F
+
+/-- Elements of `𝒪_P` are fractions `a / b` with `a, b ∈ OF`, `b` outside the center of `P`. -/
+theorem frac_rep (P : Place F) (hs : (sF : F) ∈ P.w) {x : F} (hx : x ∈ P.w) :
+    ∃ a b : OF, b ∉ (centerHS P hs).asIdeal ∧ x = (a : F) * (b : F)⁻¹ := by
+  have hw : P.w = HeightOneSpectrum.valuationSubringAtPrime F (centerHS P hs) := by
+    rw [w_eq_valuationSubring P hs, HeightOneSpectrum.valuationSubringAtPrime_eq_valuationSubring]
+  rw [hw] at hx
+  obtain ⟨a, b, hb, rfl⟩ := hx
+  exact ⟨a, b, hb, rfl⟩
+
+/-- An element of `OF` outside the center is a unit of `𝒪_P`. -/
+theorem inv_mem_of_not_mem_center (P : Place F) (hs : (sF : F) ∈ P.w) {b : OF}
+    (hb : b ∉ (centerHS P hs).asIdeal) : ((b : F))⁻¹ ∈ P.w ∧ (b : F) ≠ 0 := by
+  have hbw : (b : F) ∈ P.w := intCl_mem P hs b
+  have hbn : (b : F) ∉ P.w.nonunits := fun h => hb ((mem_centerHS P hs b).mpr h)
+  have hv1 : P.w.valuation (b : F) = 1 := by
+    refine le_antisymm ((P.w.valuation_le_one_iff _).2 hbw) ?_
+    by_contra hlt; push Not at hlt
+    exact hbn (P.w.mem_nonunits_iff.mpr hlt)
+  refine ⟨(P.w.valuation_le_one_iff _).1 (by rw [map_inv₀, hv1, inv_one]), ?_⟩
+  intro h0; rw [h0, map_zero] at hv1; exact zero_ne_one hv1
+
+/-- `δ(p(s)) = p'(s) δ(s)`. -/
+theorem deriv_algebraMap_poly (δ : Derivation ℚ F F) (c : Polynomial ℚ) :
+    δ (algebraMap (Polynomial ℚ) F c) =
+      algebraMap (Polynomial ℚ) F (Polynomial.derivative c) * δ (sF : F) := by
+  rw [algebraMap_poly_eq, algebraMap_poly_eq, Derivation.map_aeval, smul_eq_mul]
+
+/-- **The derivative `d/ds` is bounded on `𝒪_P` (proved).** -/
+theorem deriv_bound (P : Place F) (hs : (sF : F) ∈ P.w) (δs : Derivation ℚ F F)
+    (hδs : δs (sF : F) = 1) {π : F} (hπn : π ∈ P.w.nonunits)
+    (hπd : ∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) :
+    ∃ N : ℕ, ∀ x ∈ P.w, π ^ N * δs x ∈ P.w := by
+  classical
+  haveI : Algebra.IsSeparable Qj F := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  haveI : Module.IsTorsionFree (Polynomial ℚ) F := .trans_faithfulSMul (Polynomial ℚ) Qj F
+  haveI : Module.Free (Polynomial ℚ) OF := IsIntegralClosure.module_free (Polynomial ℚ) Qj F OF
+  haveI : Module.Finite (Polynomial ℚ) OF := IsIntegralClosure.finite (Polynomial ℚ) Qj F OF
+  obtain ⟨π₀, hπ₀, hπ₀u, hdvr⟩ := exists_uniformizer_all P
+  have hπw : π ∈ P.w := (P.w.valuation_le_one_iff _).1 (P.w.mem_nonunits_iff.mp hπn).le
+  let ι := Module.Free.ChooseBasisIndex (Polynomial ℚ) OF
+  let b := Module.Free.chooseBasis (Polynomial ℚ) OF
+  have hNi : ∀ i : ι, ∃ N : ℕ, π ^ N * δs (b i : F) ∈ P.w := fun i =>
+    exists_pow_mul_mem P hπn hπd hπ₀ hπ₀u hdvr _
+  choose Nf hNf using hNi
+  let N₀ := Finset.univ.sup Nf
+  have hb : ∀ i, π ^ N₀ * δs (b i : F) ∈ P.w := by
+    intro i
+    have hle : Nf i ≤ N₀ := Finset.le_sup (Finset.mem_univ i)
+    have : π ^ N₀ * δs (b i : F) = π ^ (N₀ - Nf i) * (π ^ Nf i * δs (b i : F)) := by
+      rw [← mul_assoc, ← pow_add, Nat.sub_add_cancel hle]
+    rw [this]; exact Subring.mul_mem _ (Subring.pow_mem _ hπw _) (hNf i)
+  have hOF : ∀ a : OF, π ^ N₀ * δs (a : F) ∈ P.w := by
+    intro a
+    have ha : (a : F) = ∑ i, algebraMap (Polynomial ℚ) F (b.repr a i) * (b i : F) := by
+      conv_lhs => rw [← b.sum_repr a]
+      simp only [AddSubmonoidClass.coe_finset_sum, Algebra.smul_def, Subalgebra.coe_mul,
+        Subalgebra.coe_algebraMap]
+    rw [ha, map_sum, Finset.mul_sum]
+    refine Subring.sum_mem _ fun i _ => ?_
+    rw [Derivation.leibniz, deriv_algebraMap_poly, hδs, smul_eq_mul, smul_eq_mul, mul_one]
+    have h1 : algebraMap (Polynomial ℚ) F (b.repr a i) ∈ P.w := by
+      rw [algebraMap_poly_eq]; exact aeval_mem P hs _
+    have h2 : algebraMap (Polynomial ℚ) F (Polynomial.derivative (b.repr a i)) ∈ P.w := by
+      rw [algebraMap_poly_eq]; exact aeval_mem P hs _
+    have h3 : (b i : F) ∈ P.w := intCl_mem P hs _
+    have : π ^ N₀ * (algebraMap (Polynomial ℚ) F (b.repr a i) * δs (b i : F) +
+        (b i : F) * algebraMap (Polynomial ℚ) F (Polynomial.derivative (b.repr a i))) =
+        algebraMap (Polynomial ℚ) F (b.repr a i) * (π ^ N₀ * δs (b i : F)) +
+          π ^ N₀ * ((b i : F) * algebraMap (Polynomial ℚ) F (Polynomial.derivative (b.repr a i))) := by
+      ring
+    rw [this]
+    exact Subring.add_mem _ (Subring.mul_mem _ h1 (hb i))
+      (Subring.mul_mem _ (Subring.pow_mem _ hπw _) (Subring.mul_mem _ h3 h2))
+  refine ⟨N₀, fun x hx => ?_⟩
+  obtain ⟨a, c, hc, rfl⟩ := frac_rep P hs hx
+  obtain ⟨hci, hc0⟩ := inv_mem_of_not_mem_center P hs hc
+  have haw : (a : F) ∈ P.w := intCl_mem P hs a
+  rw [Derivation.leibniz, Derivation.leibniz_inv, smul_eq_mul, smul_eq_mul, smul_eq_mul]
+  have : π ^ N₀ * ((a : F) * (-(c : F)⁻¹ ^ 2 * δs (c : F)) + (c : F)⁻¹ * δs (a : F)) =
+      (c : F)⁻¹ * (π ^ N₀ * δs (a : F)) - (a : F) * (c : F)⁻¹ * (c : F)⁻¹ * (π ^ N₀ * δs (c : F)) := by
+    ring
+  rw [this]
+  exact Subring.sub_mem _ (Subring.mul_mem _ hci (hOF a))
+    (Subring.mul_mem _ (Subring.mul_mem _ (Subring.mul_mem _ haw hci) hci) (hOF c))
+
+end LDFin
+
+end GenusRoute
+
 end
