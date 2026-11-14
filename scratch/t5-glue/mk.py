@@ -10,9 +10,12 @@ body = body[i:]
 fld = open(os.path.join(here, 'Field.lean')).read()
 fbody = fld.split('\n', 1)[1]
 fbody = fbody[fbody.index('-/') + 2:]
+dsc = open(os.path.join(here, 'Disc.lean')).read()
+dbody = dsc.split('\n', 1)[1]
+dbody = dbody[dbody.index('-/') + 2:]
 header = open(os.path.join(here, 'parts', 'Header.lean')).read()
 parts = ['X0.lean', 'CM.lean', 'Row.lean', 'Closed.lean', 'Footer.lean']
-out = header + '\n-- ===== Elliptic.lean body (verbatim) =====\n' + body + '\n-- ===== Field.lean body (verbatim) =====\n' + fbody
+out = header + '\n-- ===== Elliptic.lean body (verbatim) =====\n' + body + '\n-- ===== Field.lean body (verbatim) =====\n' + fbody + '\n-- ===== Disc.lean body (verbatim) =====\n' + dbody
 for p in parts:
     fp = os.path.join(here, 'parts', p)
     if os.path.exists(fp):

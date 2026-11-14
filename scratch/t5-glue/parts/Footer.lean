@@ -11,3 +11,4 @@
 #print axioms T5Glue.x0RatStructure_of'
 #print axioms T5Glue.cmModuli_of'
 #print axioms T5Glue.shimuraReciprocityModFn_of_leaves'
+#print axioms T5Glue.discNeZero

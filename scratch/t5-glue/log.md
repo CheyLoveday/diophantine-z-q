@@ -63,3 +63,13 @@
   `shimuraReciprocityModFn_of_leaves' : ShimuraMainCM → X0ModuliGalois → DiscNeZero → ArtinLift →
   LatHatInter → IdeleLatticeHeegner → Shimura.ShimuraReciprocityModFn`. All 12 #print axioms lines:
   [propext, Classical.choice, Quot.sound]. Compile ~31 s.
+
+## Step 6: Disc.lean (Mathlib only) — COMPILED, 0 errors (~5 s); body included in T5Glue.lean
+- `ppD`, `latEquiv` (ℤ² ≃ ⟨1,τ⟩), `G_eq_E` (G_k(⟨1,τ⟩) = 2ζ(k)E_k(τ), k ≥ 3, from Mathlib's
+  `tsum_eisSummand_eq_riemannZeta_mul_eisensteinSeries` and `E = ½·eisensteinSeries` by rfl),
+  `bernoulli_six` (= 1/42), `riemannZeta_six` (= π⁶/945), `disc_ppD_ne_zero`
+  (g₂³ − 27g₃² = (64π¹²/27)·1728·Δ(τ), Mathlib's `discriminant_eq_E₄_cube_sub_E₆_sq`, `discriminant_ne_zero`).
+- T5Glue.lean (1314 lines): `discNeZero : DiscNeZero` PROVED; `x0RatStructure_of' : X0ModuliGalois →
+  X0RatStructure`; `shimuraReciprocityModFn_of_leaves' : ShimuraMainCM → X0ModuliGalois → ArtinLift →
+  LatHatInter → IdeleLatticeHeegner → Shimura.ShimuraReciprocityModFn`. 0 errors; T5Glue.out: 13 axiom lines,
+  all [propext, Classical.choice, Quot.sound].
