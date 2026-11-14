@@ -59,3 +59,13 @@
 - `py/verify_nodes.py` (80 digits, VERIFIED computed): at the Lean nodes `cmTau`,
   |Σθ⁸| = 33.9, 12.2, 6.84, 18.1 and j_θ = 0 (|j| < 2e-315), 81/64, 1296/125, 194481/10⁶
   (errors ≤ 1e-76). So `QMCMNodesNumeric` holds numerically.
+- `py/check_j0.py` (VERIFIED computed): `e_k/e_1^k` at the product point `diag(i,i)` equals `R_k(0)`
+  for k = 2..10 (relative diff ≤ 1e-77): the j = 0 point of the curve is the product E_i × E_i with
+  the product polarization, and the constant terms of all `R_k` are explained by genus-1 data.
+- `py/global_ids.py` (VERIFIED computed): `e_2(θ⁸) = (3/8)e_1²` at 16 random Ω ∈ 𝔥₂ (9e-78): a
+  global identity; e_6..e_9 are NOT polynomials in e_1, e_3, e_4, e_5 globally (fits fail), so the
+  curve part k = 3..9 is not reducible to fewer curve identities by θ⁸-symmetric global identities.
+- §7 of `ThetaUse.lean` COMPILES (standard axioms): `two_esymm_two`, `ThetaEightSquare` (global
+  identity Σθ¹⁶ = (Σθ⁸)²/4), `QMThetaSymmetricCurve` (k = 3..9),
+  `qmThetaSymmetricCore_of : ThetaEightSquare → QMThetaSymmetricCurve → QMThetaSymmetricCore`,
+  `thetaPointOfFibre_of_qm_curve`. All 12 `#print axioms` = [propext, Classical.choice, Quot.sound].

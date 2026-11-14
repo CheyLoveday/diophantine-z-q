@@ -728,6 +728,77 @@ theorem thetaPointOfFibre_of_qm_cm' (hQM : FibreQMPeriod) (hSh : QMThetaShape)
     (hN : QMCMNodesNumeric) (hCM : ShimuraCMThetaAlgebraic) : ThetaPointOfFibre :=
   thetaPointOfFibre_of_qm_cm hQM hSh (qmCMNodes_of_numeric hN) hCM
 
+
+/-! ## 7. Splitting off the global identity `k = 2`
+
+`e_2(θ⁸) = (3/8)(Σθ⁸)²` is the global identity `Σθ_m¹⁶ = (Σθ_m⁸)²/4` on all of `𝔥₂`; the content of the
+core that is specific to the QM curve is `3 ≤ k ≤ 9`. -/
+
+theorem esymm_one' (s : Multiset ℂ) : s.esymm 1 = s.sum := by
+  rw [Multiset.esymm, Multiset.powersetCard_one, Multiset.map_map]
+  simp
+
+theorem esymm_cons_succ (a : ℂ) (s : Multiset ℂ) (n : ℕ) :
+    (a ::ₘ s).esymm (n + 1) = s.esymm (n + 1) + a * s.esymm n := by
+  simp only [Multiset.esymm, Multiset.powersetCard_cons, Multiset.map_add, Multiset.sum_add,
+    Multiset.map_map, Function.comp_def, Multiset.prod_cons, Multiset.sum_map_mul_left]
+
+theorem two_esymm_two (s : Multiset ℂ) : 2 * s.esymm 2 = s.sum ^ 2 - (s.map (· ^ 2)).sum := by
+  induction s using Multiset.induction_on with
+  | empty => simp [Multiset.esymm, Multiset.powersetCard_zero_right]
+  | cons a s ih =>
+    rw [esymm_cons_succ, esymm_one', Multiset.sum_cons, Multiset.map_cons, Multiset.sum_cons]
+    linear_combination ih
+
+/-- **GLUE (global Siegel identity in genus 2; numerically VERIFIED).** For every `Ω ∈ 𝔥₂`,
+`Σ_{m even} θ_m(Ω)¹⁶ = (Σ_{m even} θ_m(Ω)⁸)²/4`. Derivation (locators UNVERIFIED): both sides are Siegel
+modular forms of weight 8 for `Sp₄(ℤ)` (the theta transformation formula permutes the `θ_m⁸` with the factor
+`det(CΩ+D)⁴`), the space of such forms is `ℂ·ψ₄²` (Igusa, Amer. J. Math. 84 (1962)), and the constant is `1/4`
+(as `Ω → i∞` the four `θ_{(0,b)}` tend to `1`, the others to `0`). Checked at 16 random `Ω ∈ 𝔥₂` to
+`10⁻⁷⁷` (`py/global_ids.py`). -/
+def ThetaEightSquare : Prop :=
+  ∀ Ω : Matrix (Fin 2) (Fin 2) ℂ, IsSiegel Ω →
+    ∑ m ∈ PkgI1.evenChars, PkgI1.thetaConst m Ω ^ 16 =
+      (∑ m ∈ PkgI1.evenChars, PkgI1.thetaConst m Ω ^ 8) ^ 2 / 4
+
+/-- **GLUE (the QM-curve-specific part of the core; numerically VERIFIED).** `QMThetaSymmetricCore` for
+`3 ≤ k ≤ 9`. Derivation: §3 of docs/research/theta-split.md (Igusa's theta expressions and structure theorem
+with Lin–Yang's Igusa vector on the QM curve); `k = 3` is cross-checked against Lin–Yang's vector
+(`py/lycheck.py`) and every constant term `R_k(0)` against the product point `diag(i, i)`
+(`py/check_j0.py`). -/
+def QMThetaSymmetricCurve : Prop :=
+  ∀ τ : ℂ, 0 < τ.im → PkgI1.thetaSum8 (PkgI1.Omega τ) ≠ 0 → ∀ k, 3 ≤ k → k ≤ 9 →
+    (thetaEight (PkgI1.Omega τ)).esymm k =
+      Polynomial.aeval (PkgI1.jNum (PkgI1.Omega τ) / PkgI1.jDen (PkgI1.Omega τ)) (qmR k) *
+        PkgI1.thetaSum8 (PkgI1.Omega τ) ^ k
+
+/-- **The core from the global identity and the curve part (proved).** -/
+theorem qmThetaSymmetricCore_of (h2 : ThetaEightSquare) (hC : QMThetaSymmetricCurve) :
+    QMThetaSymmetricCore := by
+  intro τ hτ hS k hk2 hk9
+  rcases Nat.lt_or_ge k 3 with h3 | h3
+  · obtain rfl : k = 2 := by omega
+    have hsq := h2 (PkgI1.Omega τ) (isSiegel_Omega hτ)
+    have h := two_esymm_two (thetaEight (PkgI1.Omega τ))
+    have hsum : (thetaEight (PkgI1.Omega τ)).sum = PkgI1.thetaSum8 (PkgI1.Omega τ) := by
+      rw [← esymm_one', esymm_one]
+    have hsq' : ((thetaEight (PkgI1.Omega τ)).map (· ^ 2)).sum =
+        ∑ m ∈ PkgI1.evenChars, PkgI1.thetaConst m (PkgI1.Omega τ) ^ 16 := by
+      rw [thetaEight, Multiset.map_map, Finset.sum_map_val]
+      exact Finset.sum_congr rfl (fun m _ => by simp only [Function.comp_apply]; ring)
+    rw [hsum, hsq', hsq] at h
+    simp only [qmR, map_div₀, Polynomial.aeval_C]
+    unfold PkgI1.thetaSum8 at h ⊢
+    simp only [eq_ratCast, Rat.cast_ofNat]
+    linear_combination h / 2
+  · exact hC τ hτ hS k h3 hk9
+
+/-- **Route 1, final form (proved):** `ThetaPointOfFibre` from `FibreQMPeriod`, the global identity and
+the curve part. -/
+theorem thetaPointOfFibre_of_qm_curve (hQM : FibreQMPeriod) (h2 : ThetaEightSquare)
+    (hC : QMThetaSymmetricCurve) : ThetaPointOfFibre :=
+  thetaPointOfFibre_of_qm_core hQM (qmThetaSymmetricCore_of h2 hC)
+
 end HDec.HSyn.G0Split.ThetaPt.ThetaSplit
 
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaPointOfFibre_of_qm_atQM
@@ -740,3 +811,5 @@ end HDec.HSyn.G0Split.ThetaPt.ThetaSplit
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.scalarCM_cmTau
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.qmCMNodes_of_numeric
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaPointOfFibre_of_qm_cm'
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.qmThetaSymmetricCore_of
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaSplit.thetaPointOfFibre_of_qm_curve
