@@ -54,3 +54,8 @@ Kernel deps built in the worktree with `lake build` (all up to date). One Lean p
   UNVERIFIED tags) and `NeronBaseChangeUnramifiedDVR` (BLR §1.2 Prop. 2 / §7.2 Thm. 1, UNVERIFIED, generality
   SPECULATIVE); **`raynaudSemistable_of_SH : RaynaudSemistableSH → StrictHenselizationDVR →
   NeronBaseChangeUnramifiedDVR → MulEtaleAbelianScheme → RaynaudSemistable`**. Axioms standard. VERIFIED.
+- 15:35 Body §9: glue Props `UnipotentFromSH`, `ReductionFromSH`, `PersistsFromSH`, `IdentityComponentFromSH`,
+  `SerreTateFromComplete` (each "printed-base leaf ⇒ general-DVR leaf", docstring says what it needs); bundles
+  `ReductLeavesPrinted` (11 fields), `ReductPrintedGlue` (5), `reductLeaves_of_printed`; `reductGlue_of`
+  (reduct-split's `ReductGlue` from MulEtale + NeronLocalizesDVR + AbVarSpreadsOut + ProperSmoothGenConnected +
+  the SS2 glue), `rows_of_printed`. OK. VERIFIED.

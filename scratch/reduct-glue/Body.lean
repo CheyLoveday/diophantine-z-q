@@ -1491,4 +1491,117 @@ theorem raynaudSemistable_of_SH (hR : RaynaudSemistableSH) (hG1 : StrictHenseliz
 
 end RaynaudSH
 
+
+section PrintedGlue
+
+/-- **GLUE `UnipotentFromSH`** (general-DVR SGA 7 IX 3.5 from the strictly henselian form). Needs:
+(i) a strict henselization of `O` *inside* `Ω` at `w`: a subfield `K^sh ⊆ Ω` with
+`w ∩ K^sh` a strictly henselian DVR, unramified over `O` with separable residue extension, and
+fixed by the inertia group of `w` (decomposition/inertia theory of valuations plus the universal
+property of `O^sh`; Raynaud, *Anneaux locaux henséliens*, or EGA IV 18.8, with Serre, *Corps
+locaux*, I §7; UNVERIFIED; not in Mathlib); (ii) the hypothesis transfers: `HasSemistableReduction
+A O → HasSemistableReduction A_{K^sh} (w ∩ K^sh)` by `NeronBaseChangeUnramifiedDVR` and
+`isSemistable_bcDVR_iff` (proved here); (iii) `T_ℓ(A_{K^sh})` over `Ω` is `T_ℓ(A)` over `Ω`
+compatibly with `σ` (the kernel's `bcPt_galAct`). -/
+def UnipotentFromSH : Prop := SemistableUnipotentSH → SemistableUnipotent
+
+/-- **GLUE `ReductionFromSH`** (general-DVR SGA 7 IX 3.6 from the strictly henselian form). Needs,
+besides the strict henselization (`StrictHenselizationDVR`) and Néron base change
+(`NeronBaseChangeUnramifiedDVR`): a finite extension `L/K^sh` making `A` semistable descends to a
+finite `K'/K` inside `K̄` with `K' K^sh ⊇ L` at every place over `O` (`K^sh` is a filtered union of
+finite étale `K`-algebras' fraction fields; Krasner's lemma for the henselian `K^sh`), and the
+places of `K'` over `O` all become places over `O^sh` after composing with `K^sh`. None of this is
+in Mathlib. -/
+def ReductionFromSH : Prop := SemistableReductionSH → SemistableReductionDVR
+
+/-- **GLUE `PersistsFromSH`** (SGA 7 IX 3.3, first assertion, from the strictly henselian form).
+Needs: functoriality of strict henselization along a finite extension `O ⊆ O'` (an embedding
+`O^sh → O'^sh` over `O → O'` with `Frac O'^sh` finite over `Frac O^sh`; EGA IV 18.8.10/18.8.13,
+UNVERIFIED), then: semistability ascends `O → O^sh` and descends `O'^sh → O'` (both
+`isSemistable_bcDVR_iff` with `NeronBaseChangeUnramifiedDVR`), and `(A_{K^sh})_{K''} ≅ (A_{K'})_{K''}`
+(as `bcbcIso`). -/
+def PersistsFromSH : Prop := SemistablePersistsSH → SemistablePersistsDVR
+
+/-- **GLUE `IdentityComponentFromSH`** (SGA 7 IX 3.3, second assertion, from the strictly
+henselian form). Needs, besides what `PersistsFromSH` needs: open immersions descend along the
+faithfully flat `O' → O'^sh` (fpqc descent of the property "open immersion", EGA IV 2.7.1,
+UNVERIFIED; Mathlib has descent of some properties along faithfully flat maps but not this one in
+`Over`-category form) and the comparison of the two extension maps by the Néron property. -/
+def IdentityComponentFromSH : Prop := IdentityComponentBaseChangeSH → IdentityComponentBaseChangeDVR
+
+/-- **GLUE `SerreTateFromComplete`** (Serre–Tate Thm. 2 over a general discrete valuation from the
+complete form). Needs: the completion `K̂` of `K` at `O` (Mathlib has `Valued.Completion` but no
+package "completion of a DVR is a complete DVR with the same residue field"), an extension of `w`
+to an algebraic closure of `K̂` and the identification of inertia groups `I_ŵ ≅ I_w` (henselian
+`K̂`; Serre, *Corps locaux*, II §3, UNVERIFIED), `T_ℓ` identification (kernel `bcPt_galAct`), and
+good reduction ascends and descends along `O ⊆ Ô` (Néron models commute with completion, BLR §7.2
+Thm. 1 / §1.2 Prop. 2, UNVERIFIED, plus the Néron criterion). -/
+def SerreTateFromComplete : Prop := SerreTateThm2Complete → SerreTateThm2
+
+/-- The leaves in printed form (strictly henselian / complete bases) and the published inputs of
+the base-change reductions. -/
+structure ReductLeavesPrinted : Prop where
+  neronDVR : NeronSchemeModelExistsDVR
+  sga7_3_5 : SemistableUnipotentSH
+  sga7_4_7 : RaynaudSemistableSH
+  sga7_3_6 : SemistableReductionSH
+  sga7_3_3a : SemistablePersistsSH
+  sga7_3_3b : IdentityComponentBaseChangeSH
+  serreTate2 : SerreTateThm2Complete
+  mumford : AvSplit.MumfordTorsionAlgClosed
+  strictHenselization : StrictHenselizationDVR
+  neronUnramifiedBC : NeronBaseChangeUnramifiedDVR
+  mulEtale : AvSplit.T4.MulEtaleAbelianScheme
+
+/-- The base-change reductions that remain glue (4.7's is proved: `raynaudSemistable_of_SH`). -/
+structure ReductPrintedGlue : Prop where
+  unipotent : UnipotentFromSH
+  reduction : ReductionFromSH
+  persists : PersistsFromSH
+  identityComponent : IdentityComponentFromSH
+  serreTate : SerreTateFromComplete
+
+/-- **reduct-split's `ReductLeaves` from the printed-base leaves.** -/
+theorem reductLeaves_of_printed (l : ReductLeavesPrinted) (g : ReductPrintedGlue) : ReductLeaves :=
+  { neronDVR := l.neronDVR
+    sga7_3_5 := g.unipotent l.sga7_3_5
+    sga7_4_7 := raynaudSemistable_of_SH l.sga7_4_7 l.strictHenselization l.neronUnramifiedBC
+      l.mulEtale
+    sga7_3_6 := g.reduction l.sga7_3_6
+    sga7_3_3a := g.persists l.sga7_3_3a
+    sga7_3_3b := g.identityComponent l.sga7_3_3b
+    serreTate2 := g.serreTate l.serreTate2
+    mumford := l.mumford }
+
+end PrintedGlue
+
+section Final
+
+/-- **reduct-split's `ReductGlue` from published leaves plus one glue.** Three of its four fields are
+proved here: `FixedTorsionRationalImperfect` from the bundle leaf `MulEtaleAbelianScheme`;
+`SemistableLocalGlobal` from the new leaf `NeronLocalizesDVR` (BLR §1.2 Prop. 4);
+`SemistableAlmostAll` from the kernel's `AbVarSpreadsOut` (proved in the kernel from the EGA IV leaves,
+`abVarSpreadsOut_of_ega4`) and the leaf candidate `ProperSmoothGenConnected`. The fourth,
+`SemistableNeronBaseChangeLocalGlobal`, is passed through (see `SS2` below). -/
+theorem reductGlue_of (hE : AvSplit.T4.MulEtaleAbelianScheme) (hL : NeronLocalizesDVR)
+    (hsp : FrobPiecesNeron.AbVarSpreadsOut) (hc : FrobPiecesNeron.ProperSmoothGenConnected)
+    (hSS2 : SemistableNeronBaseChangeLocalGlobal) : ReductGlue :=
+  { fixedTorsionImperfect := fixedTorsionRationalImperfect_of_mulEtale hE
+    localGlobal := semistableLocalGlobal_leaf hL
+    almostAll := semistableAlmostAll_of hsp hc
+    ss2LocalGlobal := hSS2 }
+
+/-- **reduct-split's seven rows from the printed-base leaves**, the new leaves, and the remaining
+glue (`ReductPrintedGlue`, `SemistableNeronBaseChangeLocalGlobal`). -/
+theorem rows_of_printed (l : ReductLeavesPrinted) (g : ReductPrintedGlue) (hL : NeronLocalizesDVR)
+    (hsp : FrobPiecesNeron.AbVarSpreadsOut) (hc : FrobPiecesNeron.ProperSmoothGenConnected)
+    (hSS2 : SemistableNeronBaseChangeLocalGlobal) (hF5 : ZInQ.HeightSplit.FaltingsLemma5) :
+    PkgI2.RaynaudCriterion.{0} ∧ PkgI2.SerreTatePotentialGood.{0} ∧
+      PkgI2.GrothendieckMonodromy.{0} ∧ ZInQ.HeightSplit.SemistableReductionThm ∧
+      ZInQ.HeightSplit.SemistableNeronBaseChange ∧ ZInQ.HeightSplit.SemistablePersists ∧
+      ZInQ.HeightSplit.FaltingsLemma5BC :=
+  rows_of_leaves (reductLeaves_of_printed l g) (reductGlue_of l.mulEtale hL hsp hc hSS2) hF5
+
+end Final
+
 end ReductGlue
