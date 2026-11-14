@@ -11,3 +11,6 @@
 - cmp_hashes: 0 removed, 1 changed (frozenTarget), 92 new, all in TailZ10/TailZ11. VERIFIED.
 - Check10: sixContactMin_of_open10 standard axioms; closure 212325 constants, no sorryAx; 62 fields (30+17+14+1), 16 kernel heads; dimJacobianEqGenus, h0DifferentialsEqHolo, textbookLeaves9_of_open10 standard axioms; type of dimJacobianEqGenus is ZInQ.Contrib.CurvesG.DimJacobianEqGenus. VERIFIED.
 - Note: build1.txt/build2.txt (partial build logs, no absolute paths) were committed by mistake in the first two commits; removed from the index, .gitignore added for build*/dump* logs.
+- 13:27 shimura-glue: report committed (3017e19f) but no .fleet yet. Prepared the fold in advance from that commit:
+  TailZ12 = scratch/shimura-glue/Deligne.lean (3017e19f) verbatim after imports (+ import TailZ11; 3 #print dropped); `lake build ZInQKernel.OneProof.H.TailZ12` EXIT 0 first try.
+  TailZ13 = OpenAddedLeaves9 (y3Connected -> deligneComponentsY3Printed), addedLeaves8_of_open9, sixContactMin_of_open11; builds EXIT 0. Main not yet switched (waiting for .fleet/shimura-glue.md).
