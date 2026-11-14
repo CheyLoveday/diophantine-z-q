@@ -40,3 +40,11 @@
 - `py/curve_check.py` (VERIFIED, 80 digits, 12 random τ on the Lean curve `Ω(τ)`): Lin–Yang's
   relations hold: `ψ₄ψ₆ = 2¹²3⁵χ₁₀` (rel. res. ≤ 9e-78) and `ψ₄³ + ψ₆² = 2¹²3⁶χ₁₂` (≤ 5e-75), and
   `j_θ = ψ₆²/ψ₄³` (≤ 3e-73).
+- `py/pk.py` (VERIFIED, exact linear algebra at random rational `U`, checked at fresh points): global
+  identities `e_k(θ_m⁸) = P_k(ψ₄, ψ₆, χ₁₀, χ₁₂)` for k = 3..9 (3-8 monomials each, e.g.
+  `e₃ = (116/27)ψ₄³ − (8/27)ψ₆² + 1081344χ₁₂`, `e₉ = 2⁴⁸χ₁₂³ − (246290604621824/27)ψ₆χ₁₀³ − (175921860444160/3)ψ₄χ₁₀²χ₁₂`);
+  substituting Lin–Yang's relations gives `E_k/E₁^k = qmR k` **exactly for all k = 3..9** (independent
+  derivation of theta-split's numerically fitted `R_k`).
+- `py/verify_pk.py` (VERIFIED, exact, full symbolic expansion in `Q[U₀..U₃]`, 1 s): all seven identities
+  hold as polynomial identities (`e_k` has 119, 249, 447, 721, 1025, 1301, 1533 terms for k = 3..9;
+  `ψ₄, ψ₆, χ₁₀, χ₁₂` have 11, 24, 48, 85 terms). Output `py/verify_pk.output.txt`.
