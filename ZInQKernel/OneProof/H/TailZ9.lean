@@ -25,7 +25,6 @@ open CategoryTheory AlgebraicGeometry Limits
 structure OpenResearchLeaves9 : Prop where
   r1r2 : LeafAdopt.R1R2fpRep
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
-  r3 : _root_.ZInQ.LeafPush2.R03_LinYang
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   igusaChi10 : QMSplit.Theta.IgusaChi10
   r6 : _root_.PkgI2.RaynaudCriterion.{0}
@@ -58,9 +57,6 @@ structure OpenResearchLeaves9 : Prop where
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces `r19`. -/
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
-  /-- reduct-split, r7b: Serre–Tate 1968 Thm 2 as printed (potential good reduction iff the image of inertia on
-  `T_ℓ A` is finite; RISK: if printed for complete `K`, a consequence). -/
-  serreTateThm2 : _root_.ReductSplit.SerreTateThm2
   /-- reduct-split, r8: SGA 7 IX Thm 3.6 over a DVR (semistable reduction after a finite extension, at every place
   above `O`). -/
   semistableReductionDVR : _root_.ReductSplit.SemistableReductionDVR
@@ -83,7 +79,6 @@ structure OpenTextbookLeaves9 : Prop where
   cartierSmooth : _root_.AVGlue.CartierSmooth
   geomConnOfRationalPoint : _root_.AVGlue.GeomConnOfRationalPoint
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
-  t10 : _root_.T10Etale.T10_TateDuality
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
@@ -101,14 +96,12 @@ theorem researchLeaves8_of_open9 (r : OpenResearchLeaves9) (t : OpenTextbookLeav
   r1r2 := r.r1r2
   shimuraFamily := r.shimuraFamily
   r1rec := r1rec_of_rep r.r1r2
-  r3 := r.r3
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
   r5 := r5fp_of_rep r.r1r2
   r5count := _root_.ShimuraSplit.r5fpCount_of_points r.gonzalezRotgerCountX6
   r6 := r.r6
   r7a := r.r7a
-  r7b := _root_.ReductSplit.serreTatePotentialGood_final r.serreTateThm2 t.mumfordTorsionAlgClosed
   r8 := _root_.ReductSplit.grothendieckMonodromy_final' r.semistableReductionDVR r.semistableUnipotent
     r.neronSchemeModelExistsDVR t.mumfordTorsionAlgClosed
   r9a := r.r9a
@@ -141,7 +134,6 @@ theorem textbookLeaves8_of_open9 (t : OpenTextbookLeaves9) : OpenTextbookLeaves8
   cartierSmooth := t.cartierSmooth
   geomConnOfRationalPoint := t.geomConnOfRationalPoint
   groupSchemeEquidim := t.groupSchemeEquidim
-  t10 := t.t10
   uniformizationLeafAll := t.uniformizationLeafAll
   gagaMorphism := t.gagaMorphism
   bdRInvariants := t.bdRInvariants

@@ -73,7 +73,6 @@ structure OpenResearchLeaves7 : Prop where
   /-- qm-split, H-20: Shimura 1967 Main Thm I on one fine witness, for every map `π : Y → P¹` (replaces `r1b`). -/
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
   r1rec : LeafQM.AV.R1rec
-  r3 : _root_.ZInQ.LeafPush2.R03_LinYang
   /-- qm-split, H-2: Igusa's `ψ₄` is a Siegel modular form of weight 4 (with `igusaChi10`, replaces `r4`). -/
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   /-- qm-split, H-2: Igusa's `χ₁₀` is a Siegel modular form of weight 10. -/
@@ -82,7 +81,6 @@ structure OpenResearchLeaves7 : Prop where
   r5count : LeafQM.AV.R5fpCount
   r6 : _root_.PkgI2.RaynaudCriterion.{0}
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
-  r7b : _root_.PkgI2.SerreTatePotentialGood.{0}
   r8 : _root_.PkgI2.GrothendieckMonodromy.{0}
   r9a : _root_.PkgI3.FaltingsSemisimple
   r9b : _root_.PkgI3.FaltingsTate
@@ -131,7 +129,6 @@ structure OpenTextbookLeaves7 : Prop where
   geomConnOfRationalPoint : _root_.AVGlue.GeomConnOfRationalPoint
   /-- av-glue: a group scheme of finite type over a field is equidimensional (SGA 3 VI_A 2.4). -/
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
-  t10 : _root_.T10Etale.T10_TateDuality
   /-- bp-analytic's AN3 leaf (kernel), Mumford §1 for `A^an` in coordinate form (with the next, replaces
   `homLatticeCorr`; with `mumfordTorsionAlgClosed`, replaces `t35`). -/
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
@@ -200,13 +197,11 @@ theorem researchLeaves5_of_open7 (r : OpenResearchLeaves7) (l : OpenAddedLeaves7
   r1r2 := r.r1r2
   r1b := QMSplit.Moduli.r1b_of' r.shimuraFamily
   r1rec := r.r1rec
-  r3 := r.r3
   r4 := QMSplit.Theta.thetaModularity_of r.igusaPsi4 r.igusaChi10
   r5 := r.r5
   r5count := r.r5count
   r6 := r.r6
   r7a := r.r7a
-  r7b := r.r7b
   r8 := r.r8
   r9a := r.r9a
   r9b := r.r9b
@@ -235,7 +230,6 @@ theorem textbookLeaves6_of_open7 (t : OpenTextbookLeaves7) (l : OpenAddedLeaves7
   charPolyIndepOfEllAlgClosed := t.charPolyIndepOfEllAlgClosed
   t8 := _root_.AVGlue.poincareReducibility_of_published' t.cartierSmooth t.poincareComplement
     (isogenyQuasiInverseAG_lf7 l.milneIsogenyQuasiInverse) t.geomConnOfRationalPoint t.groupSchemeEquidim
-  t10 := t.t10
   homLatticeCorr := _root_.AvSplit.Final.h69 t.uniformizationLeafAll t.gagaMorphism
   t11bExists := t.t11bExists
   t23 := HodgeLF7.t23 (_root_.ZInQ.Contrib.HodgeSplit.t23_all_of_bdrInvariants t.bdRInvariants)

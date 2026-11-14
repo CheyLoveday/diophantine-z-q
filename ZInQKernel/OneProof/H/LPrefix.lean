@@ -11642,12 +11642,6 @@ structure TextbookLeaves : Prop where
   t7 : PkgI3.CharPolyIndepOfEll
   t8 : PkgI3.PoincareReducibility
   t9 : LeafPush.T09_WeilPairing.{0}
-  /-- T10, Galois-equivariant Tate duality (t10-etale, leaf-adopt3; replaces the placeholder): for
-  an abelian variety `A/K` and a prime `ℓ ≠ char K`, a `ℤ_ℓ`-linear isomorphism
-  `H¹_proet(A_K̄, ℤ_ℓ) ≅ Hom_{ℤ_ℓ}(T_ℓ A, ℤ_ℓ)` intertwining the Galois action `T10Etale.galH`
-  (transport along `1 × Spec σ⁻¹`) with the contragredient action. Milne 1986 Thm 15.1(a) with the
-  pro-étale/étale comparison of Bhatt–Scholze 2015 §5.6 (UNVERIFIED numbers). -/
-  t10 : T10Etale.T10_TateDuality
   /-- T11(a), Riemann/GAGA for endomorphisms (leaf-push2). -/
   t11a : ZInQ.LeafPush2.T11a_RiemannEnd
   /-- T11(b), rigidity of homomorphisms under extension of an algebraically closed field
@@ -11742,10 +11736,6 @@ theorem TextbookLeaves.frobeniusDense (t : TextbookLeaves) : FrobeniusDense :=
 /-- T30 from T16(a) (t30-adelic). -/
 theorem TextbookLeaves.leafSqrtCrit (t : TextbookLeaves) : GlueDescent.B2Q.LeafSqrtCrit :=
   T30.leafSqrtCrit_of_t16a t.t16a
-
-/-- leaf-push2's group-isomorphism form of T10 from the Galois-equivariant field (t10-etale). -/
-theorem TextbookLeaves.t10_groupIso (t : TextbookLeaves) : ZInQ.LeafPush2.T10_groupIso :=
-  T10Etale.T10_groupIso_of_tateDuality t.t10
 
 /-- `X₁(N)` has a model over `ℚ` (leaf-modcurves' glue target, x1-belyi; from T36, T38-T40). -/
 theorem TextbookLeaves.x1ModelExists (t : TextbookLeaves) : LeafModCurves.X1ModelExists :=
@@ -13798,7 +13788,6 @@ theorem textbookLeaves_of_open (t : OpenTextbookLeaves) : TextbookLeaves where
   t7 := t.t7
   t8 := t.t8
   t9 := t.t9
-  t10 := t.t10
   t11a := t.t11a
   t11b := t.t11b
   t14a := t.t14a
@@ -14019,7 +14008,6 @@ end
 #print axioms HSyn.t21_local_proved
 #print axioms HSyn.TextbookLeaves.frobeniusDense
 #print axioms HSyn.TextbookLeaves.leafSqrtCrit
-#print axioms HSyn.TextbookLeaves.t10_groupIso
 #print axioms HSyn.TextbookLeaves.x1ModelExists
 #print axioms HSyn.TextbookLeaves.belyiX1
 #print axioms HSyn.TextbookLeaves.exists_J1
