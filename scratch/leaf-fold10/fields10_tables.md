@@ -55,7 +55,7 @@
 | `igusaGL2` | `_root_.ZInQ.RLeaf.IgusaGL2` | LEAF | published form | Igusa's theorem: the Galois image on E_j[N] over Q(j) is GL_2(Z/N) (Igusa, Amer. J. Math. 81 (1959); Lang, Elliptic functions Ch. 6 3) | t40-igusa (kernel leaf); folded by leaf-fold7 (curve-split) | x0Transitive (consequence) |
 | `neronSchemeExtensionExists` | `_root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists` | LEAF | published form (weakened) | BLR 1.4 Thm 3 | neron-c |  |
 
-### OpenAddedLeaves8 (14 fields)
+### OpenAddedLeaves9 (14 fields)
 
 | field | Lean type | strict kind | form | source | last task | replaces |
 |---|---|---|---|---|---|---|
@@ -66,13 +66,13 @@
 | `t09SymmIsogenyExists` | `WeilPairing.T09_SymmIsogenyExists` | GLUE (c) | consequence of one theorem | Mumford 6, 8, 20, 23 (not splittable, av-split 4.1) | weil-pairing |  |
 | `milneIsogenyQuasiInverse` | `_root_.AvSplit.MilneIsogenyQuasiInverse` | LEAF | published form (weakened) | fg = [d], gf = [d] as morphisms: Milne 1986 Rem. 8.4; Milne's notes Prop. 7.1; Mumford 7 | av-split; folded by leaf-fold7 | isogenyQuasiInverse (consequence) |
 | `x6ConicModel` | `X6Kummer.X6ConicModel` | GLUE (c) | consequence of one theorem | Kurihara 1979; Elkies 1998 3 | x6-kummer |  |
-| `y3Connected` | `TSHecke.Y3Connected` | GLUE (comp) | composite | Deligne, PSPM 33 2.1, 2.6.3, with an orbit computation | ts-hecke |  |
 | `shimuraTaniyamaQbar` | `G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar` | LEAF | published form (specialization) | Shimura-Taniyama 1961 12.4 Prop. 26; Milne, CM notes 7 (model over Qbar) | qm-split; folded by leaf-fold7 | stQM (consequence) |
 | `egaIV_8_10_5_xii` | `_root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii` | LEAF | published form | EGA IV_3 8.10.5 (xii) | spread-out |  |
 | `shimuraGoodReductionNoGuard` | `CurveSplitGR.ShimuraGoodReductionNoGuard` | GLUE (comp) | composite | vert-witness's ShimuraGoodReduction without the Qbar-point guard (redundant given r1r2): Kottwitz 1992 5; Buzzard 1997; Morita 1981; Carayol 1986 (not statable in published form today, curve-split 3.6) | curve-split; folded by leaf-fold7 | shimuraGoodReduction (a strictly smaller statement of the same form) |
 | `valenceFormulaCocompactEq` | `LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq` | LEAF | published form | valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16, Thm 2.20; Rankin Thm 4.1.4), over Mathlib's invariant measure on the upper half plane and a genuine fundamental domain | qm-split, qm-glue; folded by leaf-fold8 | valenceFormulaGammaStar (consequence), qmHauptmodulBase3 (composite), with the next two |
 | `shimizuCovolumeO1` | `LeafQCheck.HM.QMSplit.ShimizuCovolumeO1` | LEAF | published form | iota(O^1) is cocompact Fuchsian with covolume 2pi/3 (Shimura 1971 Prop. 9.2; Shimizu 1965; Voight Thm 39.1.13) | qm-split, qm-glue; folded by leaf-fold8 | valenceFormulaGammaStar, qmHauptmodulBase3 (GammaStarFromO1 proved by qm-glue) |
 | `igusaCMValue24` | `LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24` | LEAF | published form | Lin-Yang 2020 eqs. (2), (14) at the Baba-Granath CM value j = -16/27 (discriminant -24; Baba-Granath 2008 Thm 2.1, Elkies 1998), Lauter-Naehrig-Yang 2015 §2.2 conventions; the manuscript's citation (l.908-923); equivalent to the old glue ThetaQuotientValue24 | qm-glue; folded by leaf-fold8 | qmHauptmodulBase3 (with igusaPsi4, igusaChi10 and the previous two) |
+| `deligneComponentsY3Printed` | `_root_.ShimuraGlue.DeligneComponentsY3Printed` | LEAF | published form (specialization) | Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 (UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and Lemma QP, as for r1r2); over Mathlib's FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, ConnectedComponents | shimura-glue; folded by leaf-fold10 | y3Connected (composite) |
 
 ### OpenGlue7 (1 field)
 

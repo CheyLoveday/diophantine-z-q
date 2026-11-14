@@ -12,9 +12,24 @@ D = 'scratch/leaf-fold10/'
 REMOVED = {
     '(1) dimjac-glue (`dimJacobianEqGenus` proved, no hypotheses)': [('T', 'dimJacobianEqGenus')],
 }
+import sys
+SHIMURA = 'shimura' in sys.argv[1:]
+if SHIMURA:
+    REMOVED['(2) shimura-glue (`y3Connected` from the printed Deligne leaf on `Y3`)'] = [('A', 'y3Connected')]
 ADDED = {k: [] for k in REMOVED}
+if SHIMURA:
+    ADDED['(2) shimura-glue (`y3Connected` from the printed Deligne leaf on `Y3`)'] = [
+        ('A', 'deligneComponentsY3Printed', '_root_.ShimuraGlue.DeligneComponentsY3Printed',
+         'published form (specialization)',
+         'Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 '
+         '(UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \\ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a '
+         'fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and '
+         'Lemma QP, as for r1r2); over Mathlib\'s FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, '
+         'ConnectedComponents', 'shimura-glue; folded by leaf-fold10', 'y3Connected (composite)'),
+    ]
 ORDER = list(REMOVED)
-BUNDLES = [('R', 'OpenResearchLeaves9'), ('T', 'OpenTextbookLeaves10'), ('A', 'OpenAddedLeaves8'),
+BUNDLES = [('R', 'OpenResearchLeaves9'), ('T', 'OpenTextbookLeaves10'),
+           ('A', 'OpenAddedLeaves9' if SHIMURA else 'OpenAddedLeaves8'),
            ('G', 'OpenGlue7')]
 KEYS = ['bundle', 'field', 'type', 'form', 'source', 'task', 'replaces']
 

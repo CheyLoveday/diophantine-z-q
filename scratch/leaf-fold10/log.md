@@ -14,3 +14,7 @@
 - 13:27 shimura-glue: report committed (3017e19f) but no .fleet yet. Prepared the fold in advance from that commit:
   TailZ12 = scratch/shimura-glue/Deligne.lean (3017e19f) verbatim after imports (+ import TailZ11; 3 #print dropped); `lake build ZInQKernel.OneProof.H.TailZ12` EXIT 0 first try.
   TailZ13 = OpenAddedLeaves9 (y3Connected -> deligneComponentsY3Printed), addedLeaves8_of_open9, sixContactMin_of_open11; builds EXIT 0. Main not yet switched (waiting for .fleet/shimura-glue.md).
+- 14:00 reduct-glue reported (.fleet/reduct-glue.md); merged origin/wip/reduct-glue (scratch/docs only).
+  Fold analysis: r6 (c) -> RaynaudSemistable (published form pending base review) + proved glue: strict -1. SS1+SS3 (2 c) -> SemistablePersistsDVR (published pending) + NeronLocalizesDVR (counted c, conservative: stated over every DVR, a consequence of BLR 1.2/4 via the proved localization identification) with SemistableAlmostAll from AbVarSpreadsOut (EGA IV: field egaIV_8_10_5_xii + W01 proofs) and Zariski (W02 proof): strict -1. SS2: +1 or more, not taken. faltingsLemma5BC: neutral, not taken.
+  TailZ14 = reduct-glue Body.lean verbatim (ReductSplitBase import -> TailZ13; 24 #print dropped), 116.8 KB; builds EXIT 0 first try.
+  TailZ15 = OpenResearchLeaves10 (30: -r6 -SS1 -SS3 +raynaudSemistable +semistablePersistsDVR +neronLocalizesDVR), researchLeaves9_of_open10, sixContactMin_of_open12; builds EXIT 0 first try.
