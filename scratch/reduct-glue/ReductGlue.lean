@@ -3744,6 +3744,99 @@ theorem reductLeaves_of_printed' (l : ReductLeavesPrinted) (hPair : StrictHensel
 
 end Printed2
 
+open ZInQ.Contrib.AbVarBC
+
+section Unipotent
+
+variable {K : Type} [Field K] {Ω : Type} [Field Ω] [Algebra K Ω]
+
+/-- An automorphism of `Ω/K` fixing the intermediate field `E` pointwise, as an automorphism of
+`Ω/E`. -/
+def toE (E : IntermediateField K Ω) (σ : Ω ≃ₐ[K] Ω) (h : ∀ x ∈ E, σ x = x) : Ω ≃ₐ[E] Ω :=
+  { σ with commutes' := fun a => h a a.2 }
+
+theorem toE_restrictScalars (E : IntermediateField K Ω) (σ : Ω ≃ₐ[K] Ω) (h : ∀ x ∈ E, σ x = x) :
+    (toE E σ h).restrictScalars K = σ := by
+  ext x; rfl
+
+theorem isInertia_toE (E : IntermediateField K Ω) (w : ValuationSubring Ω) (σ : Ω ≃ₐ[K] Ω)
+    (h : ∀ x ∈ E, σ x = x) (hσ : IsInertia w σ) : IsInertia w (toE E σ h) := by
+  obtain ⟨h1, h2⟩ := hσ
+  exact ⟨h1, h2⟩
+
+
+/-- **LEAF candidate `StrictHenselizationInside`** (the strict henselization of `O` realized inside an
+algebraic closure at a place `w`: the valuation ring of `w` on the inertia field `T` of `w`; Stacks
+Tags 0BSK–0BSL / Raynaud, *Anneaux locaux henséliens*, VIII; Néron base change by BLR §1.2 Prop. 2;
+all locators UNVERIFIED). For a DVR `O ⊆ K`, an algebraic closure `Ω` and a valuation ring `w` of `Ω`
+over `O`, there is an intermediate field `E` (the inertia field) such that `w ∩ E` is a strict
+henselization of `O` (`IsSHNeronExt`) and every `σ` in the inertia group of `w` fixes `E`
+pointwise. -/
+def StrictHenselizationInside : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (w : ValuationSubring Ω),
+    w.comap (algebraMap K Ω) = O →
+    ∃ (E : IntermediateField K Ω) (hE : (w.comap (algebraMap E Ω)).comap (algebraMap K E) = O),
+      IsSHNeronExt O (w.comap (algebraMap E Ω)) hE ∧
+      ∀ σ : Ω ≃ₐ[K] Ω, IsInertia w σ → ∀ x ∈ E, σ x = x
+
+/-- **SGA 7 IX 3.5 over a general DVR from the strictly henselian form**: apply it to `A_E` over
+the inertia field `E`; `T_ℓ(A_E) ≅ T_ℓ(A)` over `Ω` compatibly with `σ` (kernel `bcPt_galAct`). -/
+theorem unipotentFromSH_of (hIn : StrictHenselizationInside) : UnipotentFromSH := by
+  intro hSH K _ O _ Ω _ _ _ w hw A hA ℓ _ hℓ σ hσ t
+  obtain ⟨E, hE, ⟨hSHP, halg, hbc⟩, hfix⟩ := hIn K O Ω w hw
+  haveI : IsDiscreteValuationRing (w.comap (algebraMap E Ω)) := hSHP.1
+  haveI : IsAlgClosure E Ω := ⟨IsAlgClosure.isAlgClosed K, Algebra.IsAlgebraic.tower_top (K := K) E⟩
+  have hAE : HasSemistableReduction (A.baseChange E) (w.comap (algebraMap E Ω)) := by
+    obtain ⟨𝒩, h𝒩, hs⟩ := hA
+    exact ⟨bcDVR hE 𝒩, hbc A 𝒩 h𝒩, (isSemistable_bcDVR_iff hE halg 𝒩).mp hs⟩
+  have hℓP : IsUnit (ℓ : w.comap (algebraMap E Ω)) := by
+    have := hℓ.map (comapHom hE)
+    rwa [map_natCast] at this
+  let σ₁ := toE E σ (hfix σ hσ)
+  have hσ₁ : IsInertia w σ₁ := isInertia_toE E w σ (hfix σ hσ) hσ
+  let φ : TΩ (A.baseChange E) Ω ℓ →ₗ[ℤ_[ℓ]] TΩ A Ω ℓ :=
+    PkgI3.Tate.map (MonoidHom.toAdditive (bcPt A Ω).toMonoidHom)
+  let ψ : TΩ A Ω ℓ →ₗ[ℤ_[ℓ]] TΩ (A.baseChange E) Ω ℓ :=
+    PkgI3.Tate.map (MonoidHom.toAdditive (bcPt A Ω).symm.toMonoidHom)
+  have hφψ : φ (ψ t) = t := by
+    apply Subtype.ext
+    funext n
+    change Additive.ofMul (bcPt A Ω ((bcPt A Ω).symm (Additive.toMul (t.1 n)))) = t.1 n
+    rw [MulEquiv.apply_symm_apply]
+    rfl
+  have hcomm : ∀ s, φ (galTΩ (A.baseChange E) ℓ σ₁ s) = galTΩ A ℓ σ (φ s) := by
+    intro s
+    apply Subtype.ext
+    funext n
+    change Additive.ofMul (bcPt A Ω ((A.baseChange E).galAct σ₁ (Additive.toMul (s.1 n)))) =
+      Additive.ofMul (A.galAct σ (bcPt A Ω (Additive.toMul (s.1 n))))
+    rw [bcPt_galAct, toE_restrictScalars]
+  have key := hSH E (w.comap (algebraMap E Ω)) hSHP Ω w rfl (A.baseChange E) hAE ℓ hℓP σ₁ hσ₁
+    (ψ t)
+  have := congrArg φ key
+  simp only [map_add, map_sub, map_nsmul, map_zero, hcomm, hφψ] at this
+  exact this
+
+end Unipotent
+
+section Printed3
+
+/-- The base-change reductions that remain glue (3.6, 3.3 second assertion, Serre–Tate). -/
+structure ReductPrintedGlue'' : Prop where
+  reduction : ReductionFromSH
+  identityComponent : IdentityComponentFromSH
+  serreTate : SerreTateFromComplete
+
+/-- **reduct-split's `ReductLeaves` from the printed-base leaves**, three strict-henselization
+leaves, and three base-change glue Props. -/
+theorem reductLeaves_of_printed'' (l : ReductLeavesPrinted) (hPair : StrictHenselizationPair)
+    (hIn : StrictHenselizationInside) (g : ReductPrintedGlue'') : ReductLeaves :=
+  reductLeaves_of_printed l ⟨unipotentFromSH_of hIn, g.reduction, persistsFromSH_of hPair,
+    g.identityComponent, g.serreTate⟩
+
+end Printed3
+
 end ReductGlue
 
 #print axioms ReductGlue.fixedTorsionRational_of_mulEtale
@@ -3768,3 +3861,5 @@ end ReductGlue
 #print axioms ReductGlue.rows_of_printed
 #print axioms ReductGlue.persistsFromSH_of
 #print axioms ReductGlue.reductLeaves_of_printed'
+#print axioms ReductGlue.unipotentFromSH_of
+#print axioms ReductGlue.reductLeaves_of_printed''

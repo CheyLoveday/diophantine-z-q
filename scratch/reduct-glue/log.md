@@ -75,3 +75,8 @@ Kernel deps built in the worktree with `lake build` (all up to date). One Lean p
   UNVERIFIED), **`persistsFromSH_of : StrictHenselizationPair → PersistsFromSH`** (3.3a general from SH),
   `ReductPrintedGlue'` (4 glue), `reductLeaves_of_printed'`. Full file compiles; 42 `#print axioms` lines, all
   `[propext, Classical.choice, Quot.sound]` (axioms.txt). VERIFIED.
+- 14:20 §12: `toE`, `isInertia_toE` (inertia over K fixing E is inertia over E: definitional), LEAF candidate
+  `StrictHenselizationInside` (O^sh as the valuation ring of w on the inertia field; Stacks 0BSK–0BSL, Raynaud
+  VIII, BLR §1.2 Prop. 2; UNVERIFIED), **`unipotentFromSH_of : StrictHenselizationInside → UnipotentFromSH`**
+  (3.5 general from SH; T_ℓ(A_E) ≅ T_ℓ(A) via `Tate.map bcPt`, kernel `bcPt_galAct`), `ReductPrintedGlue''`
+  (3 glue left: 3.6, 3.3b, Serre–Tate), `reductLeaves_of_printed''`. 44 `#print axioms` lines, all standard. VERIFIED.

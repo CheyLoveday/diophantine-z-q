@@ -40,3 +40,5 @@
 'ReductGlue.rows_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ReductGlue.persistsFromSH_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ReductGlue.reductLeaves_of_printed'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReductGlue.unipotentFromSH_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ReductGlue.reductLeaves_of_printed''' depends on axioms: [propext, Classical.choice, Quot.sound]
