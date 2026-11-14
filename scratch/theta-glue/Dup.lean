@@ -235,4 +235,91 @@ theorem thetaConst_sq_eq {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2
   simp only [hc]
   rw [tsum_mul_left, tsum_mul_tsum_of_summable_norm (h2 (c, 0)) (h2 (c + a, 0))]
 
+
+/-! ## The ten explicit squares -/
+
+theorem univ_fin2_fin2 : (Finset.univ : Finset (Fin 2 → Fin 2)) =
+    {![0, 0], ![0, 1], ![1, 0], ![1, 1]} := by decide
+
+theorem dupSign_eq (a b c : Fin 2 → Fin 2) : dupSign a b c =
+    (-1) ^ ((((c + a) 0 : Fin 2) : ℕ) * (b 0 : ℕ) + (((c + a) 1 : Fin 2) : ℕ) * (b 1 : ℕ)) := by
+  rw [dupSign, ← Complex.exp_pi_mul_I, ← Complex.exp_nat_mul]
+  congr 1; push_cast; ring
+
+/-- `U c = θ[c;0](2Ω)`, indexed `U₀ = U_{00}, U₁ = U_{01}, U₂ = U_{10}, U₃ = U_{11}`. -/
+def U2 (Ω : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 4) : ℂ :=
+  PkgI1.thetaConst (![![0, 0], ![0, 1], ![1, 0], ![1, 1]] i, 0) ((2 : ℂ) • Ω)
+
+theorem sq_expand {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω)
+    (a b : Fin 2 → Fin 2) :
+    PkgI1.thetaConst (a, b) Ω ^ 2 =
+      dupSign a b ![0, 0] * (U2 Ω 0 * PkgI1.thetaConst (![0, 0] + a, 0) ((2 : ℂ) • Ω)) +
+      dupSign a b ![0, 1] * (U2 Ω 1 * PkgI1.thetaConst (![0, 1] + a, 0) ((2 : ℂ) • Ω)) +
+      dupSign a b ![1, 0] * (U2 Ω 2 * PkgI1.thetaConst (![1, 0] + a, 0) ((2 : ℂ) • Ω)) +
+      dupSign a b ![1, 1] * (U2 Ω 3 * PkgI1.thetaConst (![1, 1] + a, 0) ((2 : ℂ) • Ω)) := by
+  rw [thetaConst_sq_eq hΩ, univ_fin2_fin2, Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp only [U2, Matrix.cons_val]; ring
+
+theorem sq0 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![0, 0], ![0, 0]) Ω ^ 2 = U2 Ω 0 ^ 2 + U2 Ω 1 ^ 2 + U2 Ω 2 ^ 2 + U2 Ω 3 ^ 2 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq1 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![0, 0], ![0, 1]) Ω ^ 2 = U2 Ω 0 ^ 2 - U2 Ω 1 ^ 2 + U2 Ω 2 ^ 2 - U2 Ω 3 ^ 2 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq2 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![0, 0], ![1, 0]) Ω ^ 2 = U2 Ω 0 ^ 2 + U2 Ω 1 ^ 2 - U2 Ω 2 ^ 2 - U2 Ω 3 ^ 2 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq3 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![0, 0], ![1, 1]) Ω ^ 2 = U2 Ω 0 ^ 2 - U2 Ω 1 ^ 2 - U2 Ω 2 ^ 2 + U2 Ω 3 ^ 2 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq4 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![0, 1], ![0, 0]) Ω ^ 2 = 2 * U2 Ω 0 * U2 Ω 1 + 2 * U2 Ω 2 * U2 Ω 3 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq5 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![0, 1], ![1, 0]) Ω ^ 2 = 2 * U2 Ω 0 * U2 Ω 1 - 2 * U2 Ω 2 * U2 Ω 3 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq6 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![1, 0], ![0, 0]) Ω ^ 2 = 2 * U2 Ω 0 * U2 Ω 2 + 2 * U2 Ω 1 * U2 Ω 3 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq7 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![1, 0], ![0, 1]) Ω ^ 2 = 2 * U2 Ω 0 * U2 Ω 2 - 2 * U2 Ω 1 * U2 Ω 3 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq8 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![1, 1], ![0, 0]) Ω ^ 2 = 2 * U2 Ω 0 * U2 Ω 3 + 2 * U2 Ω 1 * U2 Ω 2 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem sq9 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    PkgI1.thetaConst (![1, 1], ![1, 1]) Ω ^ 2 = 2 * U2 Ω 0 * U2 Ω 3 - 2 * U2 Ω 1 * U2 Ω 2 := by
+  rw [sq_expand hΩ]; simp [dupSign_eq, U2]; ring
+
+theorem evenChars_eq : PkgI1.evenChars = {(![0, 0], ![0, 0]), (![0, 0], ![0, 1]), (![0, 0], ![1, 0]), (![0, 0], ![1, 1]), (![0, 1], ![0, 0]), (![0, 1], ![1, 0]), (![1, 0], ![0, 0]), (![1, 0], ![0, 1]), (![1, 1], ![0, 0]), (![1, 1], ![1, 1])} := by decide
+
+theorem sum_evenChars (f : PkgI1.Char2 → ℂ) :
+    ∑ m ∈ PkgI1.evenChars, f m = f (![0, 0], ![0, 0]) + f (![0, 0], ![0, 1]) + f (![0, 0], ![1, 0]) + f (![0, 0], ![1, 1]) + f (![0, 1], ![0, 0]) + f (![0, 1], ![1, 0]) + f (![1, 0], ![0, 0]) + f (![1, 0], ![0, 1]) + f (![1, 1], ![0, 0]) + f (![1, 1], ![1, 1]) := by
+  rw [evenChars_eq]
+  simp (config := {decide := true}) only [Finset.sum_insert, Finset.mem_insert, Finset.mem_singleton,
+    Finset.sum_singleton, not_false_eq_true]
+  ring
+
+theorem pow16_of_sq {x q : ℂ} (h : x ^ 2 = q) : x ^ 16 = q ^ 8 := by rw [← h]; ring
+theorem pow8_of_sq {x q : ℂ} (h : x ^ 2 = q) : x ^ 8 = q ^ 4 := by rw [← h]; ring
+
+theorem thetaEightSquare' (Ω : Matrix (Fin 2) (Fin 2) ℂ) (hΩ : ZInQ.LeafPush2.IsSiegel Ω) :
+    ∑ m ∈ PkgI1.evenChars, PkgI1.thetaConst m Ω ^ 16 =
+      (∑ m ∈ PkgI1.evenChars, PkgI1.thetaConst m Ω ^ 8) ^ 2 / 4 := by
+  rw [sum_evenChars, sum_evenChars]
+  rw [pow16_of_sq (sq0 hΩ), pow8_of_sq (sq0 hΩ), pow16_of_sq (sq1 hΩ), pow8_of_sq (sq1 hΩ), pow16_of_sq (sq2 hΩ), pow8_of_sq (sq2 hΩ), pow16_of_sq (sq3 hΩ), pow8_of_sq (sq3 hΩ), pow16_of_sq (sq4 hΩ), pow8_of_sq (sq4 hΩ), pow16_of_sq (sq5 hΩ), pow8_of_sq (sq5 hΩ), pow16_of_sq (sq6 hΩ), pow8_of_sq (sq6 hΩ), pow16_of_sq (sq7 hΩ), pow8_of_sq (sq7 hΩ), pow16_of_sq (sq8 hΩ), pow8_of_sq (sq8 hΩ), pow16_of_sq (sq9 hΩ), pow8_of_sq (sq9 hΩ)]
+  ring
+
 end HDec.ThetaGlue
+#print axioms HDec.ThetaGlue.thetaEightSquare'
+#print axioms HDec.ThetaGlue.thetaConst_sq_eq
