@@ -83,6 +83,12 @@ exact computation that is compiled.** VERIFIED: compiled, standard axioms.
     * the three fields are unramified above `p ≥ 5` (Tau Ceti's cyclotomic discriminant bound, and
       `ℚ(√−6) ⊆ ℚ(ζ₂₄)` via `s6 = (2ζ₃ + 1)(ζ₈ + ζ₈⁷)`, `s6² = −6`);
     * towers (`Algebra.IsUnramifiedAt.comp`) and discriminants (`discr_dvd_discr`).
+* **Converses (VERIFIED).** Each new leaf except `RayClassCM` is implied by the shimura-split leaf it
+  replaces, given the compiled glue: `printed_of_deligneComponentsY3`, `printed_of_deligneComponentsX6`,
+  `babaGranathRational_of`, `elkiesConicT_of`. So none of them is stronger than the reviewed old leaf.
+  `RayClassCM` is stronger than `ReciprocityCanonical` and weaker than the printed reciprocity law (§5.1).
+* **Independent model reviews (§9).** Two read-only reviews found no false or vacuous leaf. One provenance
+  error was found (the §3.1 table of Baba–Granath is graded NO in locators.md) and corrected.
 * **Not changed: `ShimuraHolFamily`.** It remains a consequence of one printed theorem (§5.4). `RayClassCM`
   and `ElkiesConicT` are also consequences, but of a smaller step (§5.1, §5.2).
 * **`r3`** (`R03_LinYang`, over `ℂ`). Two definitions are missing (§6):
@@ -97,7 +103,7 @@ exact computation that is compiled.** VERIFIED: compiled, standard axioms.
 | `DeligneComponentsX6` | `DeligneComponentsX6Printed` (**printed form**, same source, level `𝒪̂^×`) | `ℚ^×_{>0}\𝔸_f^×/nrd(𝒪̂^×) = 1` and "π₀ a point ⇒ connected" (**proved**) | `ShimuraGlue.deligneComponentsX6_of_printed` |
 | `ReciprocityCanonical` | `RayClassCM` (consequence of Shimura 1967 Main Thm I / Deligne 1971 §3, ray-class form; UNVERIFIED locators; §5.1) | ray class fields unramified away from 3, the three fields unramified above `p ≥ 5`, towers and discriminants (**proved**) | `ShimuraGlue.Ray.reciprocityCanonical_of_rayClass` |
 | `ElkiesConicX6` | `ElkiesConicT` (Elkies 1998 §3 in his coordinate `t`; points form of the Kummer description; UNVERIFIED locator; §5.2) | `MobiusCompose` (**proved**: `mobiusCompose`), `j = 16(t−1)/27` (**proved**: `gJ_smul`) | `HDec.QMSplit.Moduli.elkiesConicX6_of_t'` |
-| `BabaGranathX6'` | `BabaGranathRational` (**printed form**: Baba–Granath Thm 2.1, Lemma 3.1, §3.1 table, audit YES; no `j`-normalization; §5.3) | `MobiusCompose` (**proved**), three distinct rational points ↦ `0, ∞, −16/27` (**proved**: `exists_mobiusBG`) | `HDec.QMSplit.Moduli.babaGranathX6'_of_rational'` |
+| `BabaGranathX6'` | `BabaGranathRational` (**printed form**, conditional on one reading: Baba–Granath Thm 2.1 and Lemma 3.1, audit YES; CM assignment read from the §3.1 table, UNVERIFIED; no `j`-normalization; §5.3) | `MobiusCompose` (**proved**), three distinct rational points ↦ `0, ∞, −16/27` (**proved**: `exists_mobiusBG`) | `HDec.QMSplit.Moduli.babaGranathX6'_of_rational'` |
 | `ShimuraHolFamily` | unchanged (consequence; §5.4) | — | — |
 | `r3` | not split; missing definitions in §6 | — | — |
 
@@ -363,8 +369,9 @@ Jacobian of a genus-2 curve with `[J₂:J₄:J₆:J₁₀] = [12(j+1) : 6(j²+j+
    `ℚ̄`-points.
    * Without it, "the `j` of `A`" (`π₆(Ψ_ℂ⁻¹[A, ι])`) cannot be stated for `A/ℂ`.
    * Most QM surfaces over `ℂ` have transcendental `j` and are not base changes from `ℚ̄`, so the `ℚ̄`-form plus
-     base change does not suffice. A spreading-out argument over `X₆` (the chain's glue target
-     `R03_LinYang_algClosed`) would be needed instead.
+     base change does not give the `ℂ`-form. That needs a spreading-out (Lefschetz) argument over `X₆`. The
+     chain's `R03_LinYang_algClosed` states the conclusion for every algebraically closed field of
+     characteristic 0, and contains the `ℂ` case.
 
 **The split these would allow.** With (1) and (2), `r3` would split into three leaves and coordinate glue:
 * Lin–Yang Ex. 29 on the coarse witness over `ℂ` (printed);
