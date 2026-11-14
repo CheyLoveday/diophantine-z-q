@@ -1522,7 +1522,7 @@ def intAd (m : ℕ) [NeZero m] (n : ℕ) : Set (AfK m) :=
 
 theorem isClosed_intAd (n : ℕ) : IsClosed (intAd m n) := by
   unfold intAd
-  rw [Set.setOf_forall]
+  rw [Set.ofPred_forall]
   refine isClosed_iInter fun v => ?_
   have hmul : Continuous fun y : AfK m => algebraMap (QNeg m) (AfK m) ((n : QNeg m)⁻¹) * y :=
     continuous_const.mul continuous_id

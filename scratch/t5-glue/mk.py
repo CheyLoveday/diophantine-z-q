@@ -22,3 +22,10 @@ for p in parts:
         out += '\n-- ===== parts/' + p + ' =====\n' + open(fp).read()
 open(os.path.join(here, 'T5Glue.lean'), 'w').write(out)
 print('wrote T5Glue.lean', len(out.splitlines()), 'lines')
+# Headline variant: same body over the kernel's one-proof theorem
+hh = open(os.path.join(here, 'parts', 'HeadlineHeader.lean')).read()
+hb = out.split('\n-- ===== Elliptic.lean body (verbatim) =====\n', 1)[1]
+hb = hb.split('\n-- ===== parts/Footer.lean =====\n', 1)[0]
+hout = hh + '\n-- ===== Elliptic.lean body (verbatim) =====\n' + hb + '\n-- ===== parts/Headline.lean =====\n' + open(os.path.join(here, 'parts', 'Headline.lean')).read()
+open(os.path.join(here, 'T5Headline.lean'), 'w').write(hout)
+print('wrote T5Headline.lean', len(hout.splitlines()), 'lines')
