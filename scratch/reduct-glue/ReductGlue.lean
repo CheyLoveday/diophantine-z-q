@@ -3197,6 +3197,57 @@ theorem raynaudSemistable_of_SH (hR : RaynaudSemistableSH) (hG1 : StrictHenseliz
   ext a
   simp
 
+/-- **LEAF `StrictHenselizationNeron`** (the form used; a consequence of EGA IV₄ 18.8.8/18.8.13
+(strict henselization of a DVR is a strictly henselian DVR with separably closed residue field) and
+BLR §1.2 Prop. 2 (Néron models commute with strict henselization); numbers UNVERIFIED). For a DVR
+`O ⊆ K` there are `K' ⊇ K` and a strictly henselian DVR `O' ⊆ K'` over `O` with algebraic residue
+extension, such that the base change of every Néron model over `O` is a Néron model over `O'`.
+This replaces the pair `StrictHenselizationDVR`, `NeronBaseChangeUnramifiedDVR` (whose second member
+is stated for all unramified extensions, a generality that may exceed the print). -/
+def StrictHenselizationNeron : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O],
+    ∃ (K' : Type) (_ : Field K') (_ : Algebra K K') (O' : ValuationSubring K')
+      (hO : O'.comap (algebraMap K K') = O),
+      IsStrictlyHenselianDVR O' ∧
+      (letI := (resMap hO).toAlgebra
+       Algebra.IsAlgebraic (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField O')) ∧
+      ∀ (A : PkgI3.AbVar K) (𝒩 : GroupModelO A O), 𝒩.IsNeronModel → (bcDVR hO 𝒩).IsNeronModel
+
+theorem strictHenselizationNeron_of (hG1 : StrictHenselizationDVR)
+    (hG2 : NeronBaseChangeUnramifiedDVR) : StrictHenselizationNeron := by
+  intro K _ O _
+  obtain ⟨K', _, _, O', hO, hSH, hsepK, hunr, hsep⟩ := hG1 K O
+  haveI : IsDiscreteValuationRing O' := hSH.1
+  refine ⟨K', inferInstance, inferInstance, O', hO, hSH, ?_, fun A 𝒩 h𝒩 =>
+    hG2 K O K' O' hO hsepK hunr hsep A 𝒩 h𝒩⟩
+  letI := (resMap hO).toAlgebra
+  exact Algebra.IsSeparable.isAlgebraic _ _
+
+/-- **Raynaud's criterion over a general DVR from the strictly henselian form**, with the single
+leaf `StrictHenselizationNeron`. -/
+theorem raynaudSemistable_of_SH' (hR : RaynaudSemistableSH) (hSN : StrictHenselizationNeron)
+    (hE : AvSplit.T4.MulEtaleAbelianScheme) : RaynaudSemistable := by
+  intro K _ O _ A m hm3 hmu htors 𝒩 h𝒩
+  obtain ⟨K', _, _, O', hO, hSH, halg, hbc⟩ := hSN K O
+  haveI : IsDiscreteValuationRing O' := hSH.1
+  have hmu' : IsUnit (m : O') := by
+    have := hmu.map (comapHom hO)
+    rwa [map_natCast] at this
+  rw [isSemistable_bcDVR_iff hO halg]
+  refine hR K' O' hSH (A.baseChange K') m hm3 hmu' ?_ _ (hbc A 𝒩 h𝒩)
+  intro x hx
+  have hmK : (m : K) ≠ 0 := natCast_ne_zero_of_isUnit O hmu
+  let κ : AlgebraicClosure K →ₐ[K] AlgebraicClosure K' := IsAlgClosed.lift
+  obtain ⟨p, hp, hpx⟩ := torsion_descends_etale hE A κ m hmK x hx
+  obtain ⟨z, hz⟩ := htors p hp
+  refine ⟨(bcPt A K').symm (extPt A (Algebra.ofId K K') z), ?_⟩
+  rw [← hpx, ← hz]
+  apply (bcPt A (AlgebraicClosure K')).injective
+  rw [MulEquiv.apply_symm_apply, bcPt_extPt, MulEquiv.apply_symm_apply, extPt_extPt, extPt_extPt]
+  congr 1
+  ext a
+  simp
+
 end RaynaudSH
 
 
@@ -3257,8 +3308,7 @@ structure ReductLeavesPrinted : Prop where
   sga7_3_3b : IdentityComponentBaseChangeSH
   serreTate2 : SerreTateThm2Complete
   mumford : AvSplit.MumfordTorsionAlgClosed
-  strictHenselization : StrictHenselizationDVR
-  neronUnramifiedBC : NeronBaseChangeUnramifiedDVR
+  strictHenselizationNeron : StrictHenselizationNeron
   mulEtale : AvSplit.T4.MulEtaleAbelianScheme
 
 /-- The base-change reductions that remain glue (4.7's is proved: `raynaudSemistable_of_SH`). -/
@@ -3273,8 +3323,7 @@ structure ReductPrintedGlue : Prop where
 theorem reductLeaves_of_printed (l : ReductLeavesPrinted) (g : ReductPrintedGlue) : ReductLeaves :=
   { neronDVR := l.neronDVR
     sga7_3_5 := g.unipotent l.sga7_3_5
-    sga7_4_7 := raynaudSemistable_of_SH l.sga7_4_7 l.strictHenselization l.neronUnramifiedBC
-      l.mulEtale
+    sga7_4_7 := raynaudSemistable_of_SH' l.sga7_4_7 l.strictHenselizationNeron l.mulEtale
     sga7_3_6 := g.reduction l.sga7_3_6
     sga7_3_3a := g.persists l.sga7_3_3a
     sga7_3_3b := g.identityComponent l.sga7_3_3b
@@ -3624,3 +3673,24 @@ theorem rows_of_leaves_noGlue (l : ReductLeaves) (n : ReductGlueLeaves)
 end Final2
 
 end ReductGlue
+
+#print axioms ReductGlue.fixedTorsionRational_of_mulEtale
+#print axioms ReductGlue.fixedTorsionRationalImperfect_of_mulEtale
+#print axioms ReductGlue.raynaudCriterion_leaves
+#print axioms ReductGlue.mem_iff_exists
+#print axioms ReductGlue.resIso
+#print axioms ReductGlue.semistableAlmostAll_of
+#print axioms ReductGlue.neronO_unique
+#print axioms ReductGlue.semistableLocalGlobal_of
+#print axioms ReductGlue.semiAbelianFieldIsoInvariant
+#print axioms ReductGlue.semistableLocalGlobal_leaf
+#print axioms ReductGlue.isSemistable_bcDVR_iff
+#print axioms ReductGlue.torsion_descends_etale
+#print axioms ReductGlue.raynaudSemistable_of_SH
+#print axioms ReductGlue.raynaudSemistable_of_SH'
+#print axioms ReductGlue.printed_of_general
+#print axioms ReductGlue.reductLeaves_of_printed
+#print axioms ReductGlue.semistableNeronBaseChangeLocalGlobal_of
+#print axioms ReductGlue.reductGlue_leaves
+#print axioms ReductGlue.rows_of_leaves_noGlue
+#print axioms ReductGlue.rows_of_printed
