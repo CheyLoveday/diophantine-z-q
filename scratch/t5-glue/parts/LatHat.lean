@@ -174,6 +174,28 @@ theorem natCast_mul_mk (d : ℕ) (z : QNeg m) : (d : QNeg m) * z = ⟨d * z.re, 
 theorem zsmul_mk (X : ℤ) (z : QNeg m) : X • z = ⟨X * z.re, X * z.im⟩ := by
   ext <;> simp [zsmul_eq_mul]
 
+/-- `2c₀·𝓞_K ⊆ ℤ + ℤτ_Q` (kernel `two_coords`). -/
+theorem two_cz_mul_mem (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ} (hD : D = discOf m f)
+    {N : ℕ} (Q : HeegnerForm N D) (y : 𝓞 (QNeg m)) :
+    ((2 * cz m f : ℕ) : QNeg m) * y ∈ Submodule.span ℤ {(1 : QNeg m), tK m Q (cz m f)} := by
+  have hA : (0 : ℤ) < Q.A := Q.A_pos
+  have hAq : (Q.A : ℚ) ≠ 0 := by exact_mod_cast hA.ne'
+  obtain ⟨α, β, Nn, hα, hβ, -⟩ := two_coords hsq y
+  rw [Submodule.mem_span_pair]
+  refine ⟨cz m f * α + β * Q.B, 2 * Q.A * β, ?_⟩
+  have hre : (y : QNeg m).re = α / 2 := by linarith
+  have him : (y : QNeg m).im = β / 2 := by linarith
+  rw [natCast_mul_mk, zsmul_mk, zsmul_mk]
+  ext
+  · simp only [QuadraticAlgebra.re_add, tK, QuadraticAlgebra.re_one, hre]
+    push_cast
+    field_simp
+    ring
+  · simp only [QuadraticAlgebra.im_add, tK, QuadraticAlgebra.im_one, him]
+    push_cast
+    field_simp
+    ring
+
 /-- **`K ∩ 𝔞̂ = 𝔞` for `𝔞 = κ⁻¹⟨1, τ_Q⟩`** (`n = 2c₀`, `d = 2A`). -/
 theorem latHat_inter_heegner (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ} (hD : D = discOf m f)
     {N : ℕ} (Q : HeegnerForm N D) :
@@ -188,22 +210,7 @@ theorem latHat_inter_heegner (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ}
     exact_mod_cast this
   refine latHat_inter_of_sandwich 1 (tK m Q (cz m f)) (2 * cz m f) (2 * Q.A.toNat)
     (by have := cz_pos (m := m) (f := f); omega) (by omega) ?_ ?_ ?_
-  · intro y
-    obtain ⟨α, β, Nn, hα, hβ, -⟩ := two_coords hsq y
-    rw [Submodule.mem_span_pair]
-    refine ⟨cz m f * α + β * Q.B, 2 * Q.A * β, ?_⟩
-    have hre : (y : QNeg m).re = α / 2 := by linarith
-    have him : (y : QNeg m).im = β / 2 := by linarith
-    rw [natCast_mul_mk, zsmul_mk, zsmul_mk]
-    ext
-    · simp only [QuadraticAlgebra.re_add, tK, QuadraticAlgebra.re_one, hre]
-      push_cast
-      field_simp
-      ring
-    · simp only [QuadraticAlgebra.im_add, tK, QuadraticAlgebra.im_one, him]
-      push_cast
-      field_simp
-      ring
+  · exact two_cz_mul_mem hsq hD Q
   · refine ⟨((2 * Q.A.toNat : ℕ) : 𝓞 (QNeg m)), ?_⟩
     rw [map_natCast, mul_one]
   · refine ⟨(-Q.B : 𝓞 (QNeg m)) + (cz m f : 𝓞 (QNeg m)) * sqrtNeg m, ?_⟩

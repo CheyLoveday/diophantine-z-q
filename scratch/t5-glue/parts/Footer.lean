@@ -11,6 +11,7 @@
 #print axioms T5Glue.ideleLatticeHeegner_of
 #print axioms T5Glue.latHat_inter_of_sandwich
 #print axioms T5Glue.latHatInter
+#print axioms T5Glue.strongApprox
 #print axioms T5Glue.shimuraReciprocityModFn_of_split
 #print axioms T5Glue.shimuraReciprocityModFn_of_leaves
 #print axioms T5Glue.autExtends

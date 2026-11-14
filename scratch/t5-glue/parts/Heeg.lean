@@ -34,15 +34,14 @@ def IdeleLatticeScale : Prop :=
       kappa m '' sInvLat m s (kappa m ⁻¹' (Q.lat : Set ℂ)) = c' • (Q'.lat : Set ℂ) ∧
       kappa m '' sInvLat m s (kappa m ⁻¹' (Q.latN : Set ℂ)) = c' • (Q'.latN : Set ℂ)
 
-/-- **GLUE STRONG-APPROX (adelic).** For a lattice `𝔞 = ℤa + ℤb ⊂ K` (`a, b` a `ℚ`-basis) and an idele
-`s`, every `u ∈ K` has an `s⁻¹u ∈ K/s⁻¹𝔞`: some `v ∈ K` with `s_f v − u ∈ 𝔞̂`. (Strong approximation
-for `𝔸_{K,f}`: `K + U = 𝔸_{K,f}` for the open subgroup `U = s_f⁻¹𝔞̂`; Cassels–Fröhlich Ch. II §15;
-UNVERIFIED numbers.) -/
+/-- **STRONG-APPROX (adelic; proved in §5d, `strongApprox`, from Tau Ceti's strong approximation).**
+For the lattice `𝔞 = κ⁻¹⟨1, τ_Q⟩` of a Heegner form and an idele `s`, every `u ∈ K` has an
+`s⁻¹u ∈ K/s⁻¹𝔞`: some `v ∈ K` with `s_f v − u ∈ 𝔞̂`. -/
 def StrongApprox : Prop :=
-  ∀ (m : ℕ) [NeZero m] (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) (a b : QNeg m),
-    LinearIndependent ℚ ![a, b] → ∀ u : QNeg m, ∃ v : QNeg m,
-      finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) u ∈
-        latHat m (Submodule.span ℤ {a, b} : Set (QNeg m))
+  ∀ (m : ℕ) [NeZero m], Squarefree m → ∀ (f : ℕ) [NeZero f] (D : ℤ), D = discOf m f →
+    ∀ (N : ℕ) (Q : HeegnerForm N D) (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) (u : QNeg m),
+    ∃ v : QNeg m, finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) u ∈
+      latHat m (kappa m ⁻¹' (Q.lat : Set ℂ))
 
 section Aux
 
@@ -164,9 +163,7 @@ theorem ideleLatticeHeegner_of (hS : IdeleLatticeScale) (hSA : StrongApprox) (hI
   have hv : ∀ k : Fin (N - 1), ∃ v : QNeg m,
       finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) (u k) ∈ latHat m 𝔞 := by
     intro k
-    have := hSA m s 1 t (linIndep_one_t Q ht) (u k)
-    rw [← h𝔞span] at this
-    exact this
+    exact hSA m hsq f D hD N Q s (u k)
   choose v hv using hv
   -- `v k ∈ s⁻¹𝔞_N`
   have hvN : ∀ k, v k ∈ sInvLat m s (kappa m ⁻¹' (Q.latN : Set ℂ)) := by

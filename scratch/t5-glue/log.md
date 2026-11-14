@@ -106,3 +106,14 @@
   IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_leaf : ShimuraMainCM → ArtinLift →
   StrongApprox → IdeleLatticeScale → CMModuli`, `x0RatStructure_of_leaf : X0ModuliGalois → X0RatStructure`.
 - T5Glue.out (1838-line source): 0 errors; 18 #print axioms lines, all [propext, Classical.choice, Quot.sound].
+
+## Step 10: parts/Strong.lean — `StrongApprox` PROVED — COMPILED
+- StrongApprox restated for the Heegner lattices κ⁻¹⟨1,τ_Q⟩ (the only ones used); `two_cz_mul_mem` factored out.
+- Proof: V = n·𝒪̂ (open, preimage of TC `isOpen_integralAdeles`) ⊆ 𝔞̂ (TC `closure_range_algebraMap`:
+  𝒪̂ = closure of 𝓞_K; n𝓞_K ⊆ 𝔞); W = s_f⁻¹(u + V) open nonempty; TC `denseRange_algebraMap` (strong
+  approximation) gives v ∈ K ∩ W. Pitfall: rewriting with TC's closure lemma fails (instance path of
+  `algebraMap (𝓞 K) (FiniteAdeleRing ..)` differs syntactically); use `Set.ext_iff.1 hcl _ |>.2`.
+- Final: **`shimuraReciprocityModFn_of_t5Leaves : ShimuraMainCM → X0ModuliGalois → ArtinLift →
+  IdeleLatticeScale → Shimura.ShimuraReciprocityModFn`**; `cmModuli_of_leaf : ShimuraMainCM → ArtinLift →
+  IdeleLatticeScale → CMModuli`; `x0RatStructure_of_leaf : X0ModuliGalois → X0RatStructure`.
+- T5Glue.out (1910-line source): 0 errors; 19 axiom lines, all [propext, Classical.choice, Quot.sound].

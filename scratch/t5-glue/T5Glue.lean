@@ -1264,15 +1264,14 @@ def IdeleLatticeScale : Prop :=
       kappa m '' sInvLat m s (kappa m ⁻¹' (Q.lat : Set ℂ)) = c' • (Q'.lat : Set ℂ) ∧
       kappa m '' sInvLat m s (kappa m ⁻¹' (Q.latN : Set ℂ)) = c' • (Q'.latN : Set ℂ)
 
-/-- **GLUE STRONG-APPROX (adelic).** For a lattice `𝔞 = ℤa + ℤb ⊂ K` (`a, b` a `ℚ`-basis) and an idele
-`s`, every `u ∈ K` has an `s⁻¹u ∈ K/s⁻¹𝔞`: some `v ∈ K` with `s_f v − u ∈ 𝔞̂`. (Strong approximation
-for `𝔸_{K,f}`: `K + U = 𝔸_{K,f}` for the open subgroup `U = s_f⁻¹𝔞̂`; Cassels–Fröhlich Ch. II §15;
-UNVERIFIED numbers.) -/
+/-- **STRONG-APPROX (adelic; proved in §5d, `strongApprox`, from Tau Ceti's strong approximation).**
+For the lattice `𝔞 = κ⁻¹⟨1, τ_Q⟩` of a Heegner form and an idele `s`, every `u ∈ K` has an
+`s⁻¹u ∈ K/s⁻¹𝔞`: some `v ∈ K` with `s_f v − u ∈ 𝔞̂`. -/
 def StrongApprox : Prop :=
-  ∀ (m : ℕ) [NeZero m] (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) (a b : QNeg m),
-    LinearIndependent ℚ ![a, b] → ∀ u : QNeg m, ∃ v : QNeg m,
-      finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) u ∈
-        latHat m (Submodule.span ℤ {a, b} : Set (QNeg m))
+  ∀ (m : ℕ) [NeZero m], Squarefree m → ∀ (f : ℕ) [NeZero f] (D : ℤ), D = discOf m f →
+    ∀ (N : ℕ) (Q : HeegnerForm N D) (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) (u : QNeg m),
+    ∃ v : QNeg m, finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) u ∈
+      latHat m (kappa m ⁻¹' (Q.lat : Set ℂ))
 
 section Aux
 
@@ -1394,9 +1393,7 @@ theorem ideleLatticeHeegner_of (hS : IdeleLatticeScale) (hSA : StrongApprox) (hI
   have hv : ∀ k : Fin (N - 1), ∃ v : QNeg m,
       finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) (u k) ∈ latHat m 𝔞 := by
     intro k
-    have := hSA m s 1 t (linIndep_one_t Q ht) (u k)
-    rw [← h𝔞span] at this
-    exact this
+    exact hSA m hsq f D hD N Q s (u k)
   choose v hv using hv
   -- `v k ∈ s⁻¹𝔞_N`
   have hvN : ∀ k, v k ∈ sInvLat m s (kappa m ⁻¹' (Q.latN : Set ℂ)) := by
@@ -1677,6 +1674,28 @@ theorem natCast_mul_mk (d : ℕ) (z : QNeg m) : (d : QNeg m) * z = ⟨d * z.re, 
 theorem zsmul_mk (X : ℤ) (z : QNeg m) : X • z = ⟨X * z.re, X * z.im⟩ := by
   ext <;> simp [zsmul_eq_mul]
 
+/-- `2c₀·𝓞_K ⊆ ℤ + ℤτ_Q` (kernel `two_coords`). -/
+theorem two_cz_mul_mem (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ} (hD : D = discOf m f)
+    {N : ℕ} (Q : HeegnerForm N D) (y : 𝓞 (QNeg m)) :
+    ((2 * cz m f : ℕ) : QNeg m) * y ∈ Submodule.span ℤ {(1 : QNeg m), tK m Q (cz m f)} := by
+  have hA : (0 : ℤ) < Q.A := Q.A_pos
+  have hAq : (Q.A : ℚ) ≠ 0 := by exact_mod_cast hA.ne'
+  obtain ⟨α, β, Nn, hα, hβ, -⟩ := two_coords hsq y
+  rw [Submodule.mem_span_pair]
+  refine ⟨cz m f * α + β * Q.B, 2 * Q.A * β, ?_⟩
+  have hre : (y : QNeg m).re = α / 2 := by linarith
+  have him : (y : QNeg m).im = β / 2 := by linarith
+  rw [natCast_mul_mk, zsmul_mk, zsmul_mk]
+  ext
+  · simp only [QuadraticAlgebra.re_add, tK, QuadraticAlgebra.re_one, hre]
+    push_cast
+    field_simp
+    ring
+  · simp only [QuadraticAlgebra.im_add, tK, QuadraticAlgebra.im_one, him]
+    push_cast
+    field_simp
+    ring
+
 /-- **`K ∩ 𝔞̂ = 𝔞` for `𝔞 = κ⁻¹⟨1, τ_Q⟩`** (`n = 2c₀`, `d = 2A`). -/
 theorem latHat_inter_heegner (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ} (hD : D = discOf m f)
     {N : ℕ} (Q : HeegnerForm N D) :
@@ -1691,22 +1710,7 @@ theorem latHat_inter_heegner (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ}
     exact_mod_cast this
   refine latHat_inter_of_sandwich 1 (tK m Q (cz m f)) (2 * cz m f) (2 * Q.A.toNat)
     (by have := cz_pos (m := m) (f := f); omega) (by omega) ?_ ?_ ?_
-  · intro y
-    obtain ⟨α, β, Nn, hα, hβ, -⟩ := two_coords hsq y
-    rw [Submodule.mem_span_pair]
-    refine ⟨cz m f * α + β * Q.B, 2 * Q.A * β, ?_⟩
-    have hre : (y : QNeg m).re = α / 2 := by linarith
-    have him : (y : QNeg m).im = β / 2 := by linarith
-    rw [natCast_mul_mk, zsmul_mk, zsmul_mk]
-    ext
-    · simp only [QuadraticAlgebra.re_add, tK, QuadraticAlgebra.re_one, hre]
-      push_cast
-      field_simp
-      ring
-    · simp only [QuadraticAlgebra.im_add, tK, QuadraticAlgebra.im_one, him]
-      push_cast
-      field_simp
-      ring
+  · exact two_cz_mul_mem hsq hD Q
   · refine ⟨((2 * Q.A.toNat : ℕ) : 𝓞 (QNeg m)), ?_⟩
     rw [map_natCast, mul_one]
   · refine ⟨(-Q.B : 𝓞 (QNeg m)) + (cz m f : 𝓞 (QNeg m)) * sqrtNeg m, ?_⟩
@@ -1731,6 +1735,72 @@ end Heegner
 /-- **`LatHatInter`, proved.** -/
 theorem latHatInter : LatHatInter :=
   fun _ _ hsq _ _ _ hD _ Q => latHat_inter_heegner hsq hD Q
+
+end T5Glue
+
+-- ===== parts/Strong.lean =====
+
+noncomputable section
+
+set_option maxRecDepth 20000
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
+  ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex
+  ZInQ.Contrib.TYZGenus.Shimura IsDedekindDomain Pointwise
+
+/-! ## §5d. `StrongApprox`, proved from Tau Ceti's strong approximation
+(`IsDedekindDomain.FiniteAdeleRing.denseRange_algebraMap`, `closure_range_algebraMap`,
+`isOpen_integralAdeles`) -/
+
+theorem strongApprox : StrongApprox := by
+  intro m _ hsq f _ D hD N Q s u
+  set n : ℕ := 2 * cz m f with hn
+  have hn0 : (n : QNeg m) ≠ 0 := by
+    have := cz_pos (m := m) (f := f); exact_mod_cast (show n ≠ 0 by omega)
+  set 𝔞 : Set (QNeg m) := kappa m ⁻¹' (Q.lat : Set ℂ) with h𝔞
+  have h𝔞span : 𝔞 = (Submodule.span ℤ {(1 : QNeg m), tK m Q (cz m f)} : Set (QNeg m)) :=
+    preimage_lat_eq_span hD Q (kappa_tK hD Q)
+  -- the open set `V = n·𝒪̂ ⊆ 𝔞̂`
+  set V : Set (AfK m) := (fun y => algebraMap (QNeg m) (AfK m) ((n : QNeg m)⁻¹) * y) ⁻¹'
+    (FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m) : Set (AfK m)) with hV
+  have hVo : IsOpen V :=
+    (FiniteAdeleRing.isOpen_integralAdeles (𝓞 (QNeg m)) (QNeg m)).preimage
+      (continuous_const.mul continuous_id)
+  have hVsub : V ⊆ latHat m 𝔞 := by
+    intro y hy
+    have hcl := FiniteAdeleRing.closure_range_algebraMap (𝓞 (QNeg m)) (QNeg m)
+    have hy' := (Set.ext_iff.1 hcl (algebraMap (QNeg m) (AfK m) ((n : QNeg m)⁻¹) * y)).2 hy
+    have hcont : Continuous fun z : AfK m => algebraMap (QNeg m) (AfK m) (n : QNeg m) * z :=
+      continuous_const.mul continuous_id
+    have h1 := image_closure_subset_closure_image hcont ⟨_, hy', rfl⟩
+    have hyeq : algebraMap (QNeg m) (AfK m) (n : QNeg m) *
+        (algebraMap (QNeg m) (AfK m) ((n : QNeg m)⁻¹) * y) = y := by
+      rw [← mul_assoc, ← map_mul, mul_inv_cancel₀ hn0, map_one, one_mul]
+    beta_reduce at h1
+    rw [hyeq] at h1
+    refine closure_mono ?_ h1
+    rintro _ ⟨_, ⟨r, rfl⟩, rfl⟩
+    refine ⟨(n : QNeg m) * (r : QNeg m), ?_, ?_⟩
+    · rw [h𝔞span]; exact two_cz_mul_mem hsq hD Q r
+    · rw [map_mul] <;> rfl
+  -- the open set `W = s_f⁻¹(u + V)`, nonempty
+  set W : Set (AfK m) := (fun y => finPart s * y - algebraMap (QNeg m) (AfK m) u) ⁻¹' V with hW
+  have hWo : IsOpen W := hVo.preimage ((continuous_const.mul continuous_id).sub continuous_const)
+  have hWne : W.Nonempty := by
+    refine ⟨finPart s⁻¹ * algebraMap (QNeg m) (AfK m) u, ?_⟩
+    have hinv : finPart s * finPart s⁻¹ = 1 := by
+      simp only [finPart]
+      rw [← Prod.snd_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Prod.snd_one]
+    show algebraMap (QNeg m) (AfK m) ((n : QNeg m)⁻¹) *
+      (finPart s * (finPart s⁻¹ * algebraMap (QNeg m) (AfK m) u) - algebraMap (QNeg m) (AfK m) u) ∈
+        FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m)
+    rw [← mul_assoc, hinv, one_mul, sub_self, mul_zero]
+    exact Subalgebra.zero_mem _
+  obtain ⟨v, hv⟩ := (FiniteAdeleRing.denseRange_algebraMap (𝓞 (QNeg m)) (QNeg m)).exists_mem_open
+    hWo hWne
+  exact ⟨v, hVsub hv⟩
 
 end T5Glue
 
@@ -1798,19 +1868,20 @@ theorem discNeZero : DiscNeZero := fun τ => disc_ppD_ne_zero τ
 theorem x0RatStructure_of_leaf (hL : X0ModuliGalois) : X0RatStructure :=
   x0RatStructure_of hL autExtends fixedAlgebraic discNeZero
 
-/-- **`CMModuli` from the printed main theorem of CM and three glue Props**: `ArtinLift`
-(surjectivity of the global Artin map), `StrongApprox`, `IdeleLatticeScale` (the ring-class lattice
-computation). -/
-theorem cmModuli_of_leaf (hL : ShimuraMainCM) (hAL : ArtinLift) (hSA : StrongApprox)
-    (hS : IdeleLatticeScale) : CMModuli :=
-  cmModuli_of hL autExtends fixedAlgebraic hAL latHatInter (ideleLatticeHeegner_of hS hSA latHatInter)
+/-- **`CMModuli` from the printed main theorem of CM and two glue Props**: `ArtinLift`
+(surjectivity of the global Artin map onto `Gal(K^ab/K)`) and `IdeleLatticeScale` (the ring-class
+lattice computation). -/
+theorem cmModuli_of_leaf (hL : ShimuraMainCM) (hAL : ArtinLift) (hS : IdeleLatticeScale) :
+    CMModuli :=
+  cmModuli_of hL autExtends fixedAlgebraic hAL latHatInter
+    (ideleLatticeHeegner_of hS strongApprox latHatInter)
 
 /-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
-(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and three
-glue Props (`ArtinLift`, `StrongApprox`, `IdeleLatticeScale`). -/
+(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and two
+glue Props (`ArtinLift`, `IdeleLatticeScale`). -/
 theorem shimuraReciprocityModFn_of_t5Leaves (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
-    (hAL : ArtinLift) (hSA : StrongApprox) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
-  shimuraReciprocityModFn_of_split (cmModuli_of_leaf hCM hAL hSA hS) (x0RatStructure_of_leaf hX)
+    (hAL : ArtinLift) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_split (cmModuli_of_leaf hCM hAL hS) (x0RatStructure_of_leaf hX)
 
 end T5Glue
 
@@ -1828,6 +1899,7 @@ end T5Glue
 #print axioms T5Glue.ideleLatticeHeegner_of
 #print axioms T5Glue.latHat_inter_of_sandwich
 #print axioms T5Glue.latHatInter
+#print axioms T5Glue.strongApprox
 #print axioms T5Glue.shimuraReciprocityModFn_of_split
 #print axioms T5Glue.shimuraReciprocityModFn_of_leaves
 #print axioms T5Glue.autExtends

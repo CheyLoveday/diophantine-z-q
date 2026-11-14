@@ -21,18 +21,19 @@ theorem discNeZero : DiscNeZero := fun τ => disc_ppD_ne_zero τ
 theorem x0RatStructure_of_leaf (hL : X0ModuliGalois) : X0RatStructure :=
   x0RatStructure_of hL autExtends fixedAlgebraic discNeZero
 
-/-- **`CMModuli` from the printed main theorem of CM and three glue Props**: `ArtinLift`
-(surjectivity of the global Artin map), `StrongApprox`, `IdeleLatticeScale` (the ring-class lattice
-computation). -/
-theorem cmModuli_of_leaf (hL : ShimuraMainCM) (hAL : ArtinLift) (hSA : StrongApprox)
-    (hS : IdeleLatticeScale) : CMModuli :=
-  cmModuli_of hL autExtends fixedAlgebraic hAL latHatInter (ideleLatticeHeegner_of hS hSA latHatInter)
+/-- **`CMModuli` from the printed main theorem of CM and two glue Props**: `ArtinLift`
+(surjectivity of the global Artin map onto `Gal(K^ab/K)`) and `IdeleLatticeScale` (the ring-class
+lattice computation). -/
+theorem cmModuli_of_leaf (hL : ShimuraMainCM) (hAL : ArtinLift) (hS : IdeleLatticeScale) :
+    CMModuli :=
+  cmModuli_of hL autExtends fixedAlgebraic hAL latHatInter
+    (ideleLatticeHeegner_of hS strongApprox latHatInter)
 
 /-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
-(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and three
-glue Props (`ArtinLift`, `StrongApprox`, `IdeleLatticeScale`). -/
+(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and two
+glue Props (`ArtinLift`, `IdeleLatticeScale`). -/
 theorem shimuraReciprocityModFn_of_t5Leaves (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
-    (hAL : ArtinLift) (hSA : StrongApprox) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
-  shimuraReciprocityModFn_of_split (cmModuli_of_leaf hCM hAL hSA hS) (x0RatStructure_of_leaf hX)
+    (hAL : ArtinLift) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_split (cmModuli_of_leaf hCM hAL hS) (x0RatStructure_of_leaf hX)
 
 end T5Glue
