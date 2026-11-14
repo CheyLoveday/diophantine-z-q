@@ -8,6 +8,32 @@ open NumberField
 
 open PkgI2 (IsAbelianVariety IsInertia HasGoodReduction)
 
+/-!
+# reduct-glue: reduct-split's four glue Props proved from published leaves; the leaves over their
+printed bases
+
+Task reduct-glue (2026-11-14). Everything above this point is a verbatim copy of
+`scratch/reduct-split/Reduction.lean` (namespace `ReductSplit`; statements unchanged). Below
+(namespace `ReductGlue`):
+
+* `fixedTorsionRationalImperfect_of_mulEtale`: `FixedTorsionRationalImperfect` (indeed
+  `FixedTorsionRational` for every field) from the bundle leaf `AvSplit.T4.MulEtaleAbelianScheme`.
+* `semistableAlmostAll_of`: `SemistableAlmostAll` from the kernel's `AbVarSpreadsOut` and
+  `ProperSmoothGenConnected` (and the vendored Néron mapping property of abelian schemes).
+* `semistableLocalGlobal_leaf`: `SemistableLocalGlobal` from the new leaf `NeronLocalizesDVR`
+  (BLR §1.2 Prop. 4); the transport glue `SemiAbelianFieldIsoInvariant` is proved.
+* `semistableNeronBaseChangeLocalGlobal_of`: `SemistableNeronBaseChangeLocalGlobal` from the new
+  leaves `IdentityComponentOL` (SGA 3 VI_B 3.10), `OpenImmersionOfLocal` (EGA IV₃ 8.10.5) and
+  `NeronLocalizesDVR`.
+* `rows_of_leaves_noGlue`: reduct-split's seven rows with no project glue.
+* Printed bases: `IsStrictlyHenselianDVR`, `IsCompleteDVR`, the six printed-base leaves, and the
+  reductions `raynaudSemistable_of_SH'` (4.7), `persistsFromSH_of` (3.3, first assertion),
+  `unipotentFromSH_of` (3.5) from strict-henselization leaves; three reductions remain named glue
+  (`ReductionFromSH`, `IdentityComponentFromSH`, `SerreTateFromComplete`).
+
+No `sorry`, no `axiom`; `#print axioms` lines at the end.
+-/
+
 namespace ReductGlue
 open ReductSplit
 
