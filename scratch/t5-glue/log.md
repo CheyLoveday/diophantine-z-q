@@ -28,3 +28,20 @@
   **`x0RatStructure_of : X0ModuliGalois → AutExtends → FixedAlgebraic → DiscNeZero → X0RatStructure`**.
 - #print axioms x0RatStructure_of, moduli_transport, IsScale.weber, IsConjModel.adjust:
   [propext, Classical.choice, Quot.sound].
+
+## Step 3: + parts/CM.lean — COMPILED, 0 errors (~31 s; `set_option maxRecDepth 20000` needed for
+## Tau Ceti's ring-class/Artin terms)
+- Adelic objects over Mathlib: `AfK m` (FiniteAdeleRing (𝓞 K) K), `latHat` (closure of 𝔞 in 𝔸_{K,f}),
+  `finPart` (finite component of an idele), `icl` (idele class), `sInvLat` (s⁻¹𝔞 = {x : s_f x ∈ 𝔞̂}),
+  `ArtinCond m e σ s` (σ = Tau Ceti's `ideleClassArtinMap` of [s] on every finite abelian F ⊂ Kˢ, via ιC∘e).
+- LEAF `ShimuraMainCM` (Shimura 1971 Thm 5.4 with torsion, Weierstrass form: ∃ μ, IsConjModel σ P P' μ and
+  σ(℘_P(u), ℘'_P(u)) = (μ²℘_{P'}(v), μ³℘'_{P'}(v)) whenever s_f v − u ∈ 𝔞̂, P ↔ κ𝔞, P' ↔ κ(s⁻¹𝔞)).
+- GLUE `ArtinLift` (Artin map onto Gal(K^ab/K)), `LatHatInter` (K ∩ 𝔞̂ = 𝔞 for f.g. 𝔞),
+  `IdeleLatticeHeegner` (ring-class lattice computation + K/𝔞 ≅ 𝔸_f/𝔞̂ on the level-N points).
+- PROVED: `kappa_eq_of_normalized` (ιC∘e = κ on K), `kappa_rat`, `kappa_injective`, `exists_kappa_tau`
+  (τ_Q ∈ κ(K)), `lat_subset_range`, `preimage_lat_eq_span`, `weber_add_mem`, `ppScale`, `ppScale_isScale`,
+  `range_map_fin`, `ringClass_of_artin` (ArtinCond + ρ = Art(J∩O) on e(H_O) ⇒ ringClassIdeleQuotient [s] =
+  picClass J; from TC `ringClassArtinEquiv_ringClassIdeleQuotient`),
+  **`cmModuli_of : ShimuraMainCM → AutExtends → FixedAlgebraic → ArtinLift → LatHatInter →
+  IdeleLatticeHeegner → CMModuli`**.
+- #print axioms cmModuli_of, ringClass_of_artin: [propext, Classical.choice, Quot.sound].
