@@ -10518,6 +10518,7 @@ ShimuraGlue.e0 ZInQKernel.OneProof.H.TailZ12 [] 1277591696 1519887571
 ShimuraGlue.e0.eq_1 ZInQKernel.OneProof.H.TailZ12 [] 1166920265 965981139
 ShimuraGlue.emb ZInQKernel.OneProof.H.TailZ12 [] 3528630454 972141180
 ShimuraGlue.emb_dq_mul_du ZInQKernel.OneProof.H.TailZ12 [] 37944896 1356806758
+ShimuraGlue.eq_cycU ZInQKernel.OneProof.H.TailZ12 [] 3629378089 899309753
 ShimuraGlue.ev ZInQKernel.OneProof.H.TailZ12 [] 3129143053 1613658414
 ShimuraGlue.ev._proof_1 ZInQKernel.OneProof.H.TailZ12 [] 1140386824 2006081256
 ShimuraGlue.ev._proof_2 ZInQKernel.OneProof.H.TailZ12 [] 1857515824 609428440
@@ -10544,6 +10545,7 @@ ShimuraGlue.half.eq_1 ZInQKernel.OneProof.H.TailZ12 [u_1] 1168179768 2810171675
 ShimuraGlue.hensel_simple ZInQKernel.OneProof.H.TailZ12 [] 3922896897 399577048
 ShimuraGlue.instFactPrimes ZInQKernel.OneProof.H.TailZ12 [] 3436802584 2056219287
 ShimuraGlue.instNeZeroRatCastOfNatNat_zInQKernel ZInQKernel.OneProof.H.TailZ12 [] 2826162010 2287990725
+ShimuraGlue.instNonemptyPi0Kfull ZInQKernel.OneProof.H.TailZ12 [] 1966088932 3217639
 ShimuraGlue.instSubsingletonPi0Kfull ZInQKernel.OneProof.H.TailZ12 [] 1105393036 2077873678
 ShimuraGlue.isUnit_iff_toZMod ZInQKernel.OneProof.H.TailZ12 [] 2948988127 2521762259
 ShimuraGlue.isUnit_locA ZInQKernel.OneProof.H.TailZ12 [] 1686302345 2427517598
@@ -10574,6 +10576,7 @@ ShimuraGlue.nrdQ._proof_1 ZInQKernel.OneProof.H.TailZ12 [] 3454709903 2447642895
 ShimuraGlue.nrdQ._proof_2 ZInQKernel.OneProof.H.TailZ12 [u_1] 3702708821 2877337934
 ShimuraGlue.nrdQ._proof_3 ZInQKernel.OneProof.H.TailZ12 [u_1] 3420729247 366431678
 ShimuraGlue.nrdQ_apply ZInQKernel.OneProof.H.TailZ12 [u_1] 3186221251 3930006069
+ShimuraGlue.nrdQ_eq_kernel ZInQKernel.OneProof.H.TailZ12 [] 950816159 980191276
 ShimuraGlue.nrdQ_eq_mul_star ZInQKernel.OneProof.H.TailZ12 [u_1] 2938772396 2891781468
 ShimuraGlue.nrdQ_ofQ ZInQKernel.OneProof.H.TailZ12 [u_1] 1716050304 1619810649
 ShimuraGlue.nrdQ_star ZInQKernel.OneProof.H.TailZ12 [u_1] 3851109562 2244481904
@@ -10591,11 +10594,13 @@ ShimuraGlue.nrm_mul._simp_1_2 ZInQKernel.OneProof.H.TailZ12 [] 3897250474 253075
 ShimuraGlue.nrm_one ZInQKernel.OneProof.H.TailZ12 [] 2761503361 1595842793
 ShimuraGlue.nrm_one._simp_1_2 ZInQKernel.OneProof.H.TailZ12 [] 3897250474 2530754139
 ShimuraGlue.nrm_unit ZInQKernel.OneProof.H.TailZ12 [] 28758717 1665178929
+ShimuraGlue.ofInt_mem_Ohat ZInQKernel.OneProof.H.TailZ12 [] 31802796 1872429795
 ShimuraGlue.ofQ ZInQKernel.OneProof.H.TailZ12 [u_1] 1794220622 3473101403
 ShimuraGlue.ofQ.eq_1 ZInQKernel.OneProof.H.TailZ12 [u_1] 281943878 877389801
 ShimuraGlue.ofQ_add ZInQKernel.OneProof.H.TailZ12 [u_1] 2976926083 164650202
 ShimuraGlue.ofQ_coords ZInQKernel.OneProof.H.TailZ12 [u_1] 4245508690 3098016421
 ShimuraGlue.ofQ_e0 ZInQKernel.OneProof.H.TailZ12 [u_1] 785318255 1108229385
+ShimuraGlue.ofQ_eq_ofInt ZInQKernel.OneProof.H.TailZ12 [] 1573973530 2409616909
 ShimuraGlue.ofQ_mul ZInQKernel.OneProof.H.TailZ12 [u_1] 3726901850 3937108520
 ShimuraGlue.ofQ_neg ZInQKernel.OneProof.H.TailZ12 [u_1] 3718991069 3036493354
 ShimuraGlue.ofQ_one ZInQKernel.OneProof.H.TailZ12 [u_1] 1958370275 2388293872
@@ -10614,6 +10619,8 @@ ShimuraGlue.posQ_ZhatU ZInQKernel.OneProof.H.TailZ12 [] 1769952180 44139000
 ShimuraGlue.posQ_ZhatU._proof_1_1 ZInQKernel.OneProof.H.TailZ12 [] 2607242608 4103443194
 ShimuraGlue.posQ_div ZInQKernel.OneProof.H.TailZ12 [] 2973531073 356226681
 ShimuraGlue.posRat ZInQKernel.OneProof.H.TailZ12 [] 1510848622 3765314233
+ShimuraGlue.printed_of_deligneComponentsX6 ZInQKernel.OneProof.H.TailZ12 [] 2384088918 2347198321
+ShimuraGlue.printed_of_deligneComponentsY3 ZInQKernel.OneProof.H.TailZ12 [] 2559578891 3617382692
 ShimuraGlue.r3 ZInQKernel.OneProof.H.TailZ12 [] 3278336239 98260314
 ShimuraGlue.r3._proof_1 ZInQKernel.OneProof.H.TailZ12 [] 440103055 251884367
 ShimuraGlue.r3._proof_2 ZInQKernel.OneProof.H.TailZ12 [] 3546120926 4172170290

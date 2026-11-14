@@ -22,3 +22,7 @@
   Check10: closure 212917, no sorryAx; 62 fields (30+17+14+1), 15 kernel heads; all new theorems standard axioms. cmp_hashes: 0 removed, 1 changed (frozenTarget), 705 new, all in TailZ10-Z15. VERIFIED.
   Counts (mk_fields10.py shimura reduct): 63 (42/21) -> dimjac 62 (42/20) -> shimura 62 (43/19) -> r6 62 (44/18) -> SS1+SS3 62 (45/17). Lenient 53/10 -> 54/8.
   Shimura fold still pending shimura-glue's .fleet; TailZ12 to be regenerated from its final Deligne.lean.
+- 14:06 shimura-glue reported (.fleet/shimura-glue.md); merged origin/wip/shimura-glue. Its Deligne.lean gained the converses and an import (HDecomp.QM.Polar) since 3017e19f: TailZ12 regenerated from the merged file (6 #print dropped). verbatim_check10.py: TailZ10, TailZ12, TailZ14 all verbatim. VERIFIED.
+  Other shimura-glue results (Mobius glue, BabaGranathRational, ElkiesConicT, RayClassCM -> ReciprocityCanonical): would change r1r2 (comp) and x6ConicModel (c) to published leaves + consequences RayClassCM (c), ElkiesConicT (c): strict GLUE 2 -> 2 (neutral; lenient -1). Not taken under this task's rule.
+- 14:07 final: `lake build +ZInQKernel.OneProof.Main` EXIT 0; frozenTarget [propext, Classical.choice, Quot.sound]. Check10: closure 212917, no sorryAx, 62 fields (30+17+14+1), 15 kernel heads, 12 axiom lines all standard. cmp_hashes: before 11123, after 11835, 0 removed, 1 changed (frozenTarget), 712 new in TailZ10-Z15. VERIFIED.
+  Sizes: TailZ10 37.5 KB, Z11 3.4, Z12 71.8, Z13 4.2, Z14 116.8, Z15 8.6.

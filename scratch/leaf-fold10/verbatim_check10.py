@@ -1,15 +1,29 @@
 #!/usr/bin/env python3
-"""leaf-fold10: TailZ10 contains dimjac-glue's DimJacGlue.lean after its five import lines as one block, with only the
-two `#print axioms` lines and the trailing `example` dropped (run from the repository root)."""
-src = open('scratch/dimjac-glue/DimJacGlue.lean').read().split('\n')
-assert all(l.startswith('import ') for l in src[:5]) and not src[5].startswith('import ')
-body = [l for l in src[5:] if not l.startswith('#print axioms ModularSplit.DimJac.')
-        and l != 'example : ZInQ.Contrib.CurvesG.DimJacobianEqGenus := ModularSplit.DimJac.dimJacobianEqGenus']
-body = '\n'.join(body).rstrip() + '\n'
-tz = open('ZInQKernel/OneProof/H/TailZ10.lean').read()
-imports = [l for l in tz.split('\n') if l.startswith('import ')]
-print('TailZ10 imports:', imports)
-print('source imports present:', all(l in imports for l in src[:5]))
-print('body is a suffix block of TailZ10:', tz.endswith(body))
-dropped = [l for l in src[5:] if l.startswith('#print') or l.startswith('example')]
-print('dropped lines:', dropped)
+"""leaf-fold10: each copied module contains its source after the source's import lines as one block, with only the
+listed lines dropped; the source's imports are among the module's (run from the repository root)."""
+def check(src_path, mod_path, drop, first_import_replaced=None):
+    src = open(src_path).read().split('\n')
+    n = 0
+    while src[n].startswith('import '):
+        n += 1
+    imps = src[:n]
+    body = [l for l in src[n:] if not drop(l)]
+    dropped = [l for l in src[n:] if drop(l)]
+    body = '\n'.join(body).rstrip() + '\n'
+    mod = open(mod_path).read()
+    mimps = [l for l in mod.split('\n') if l.startswith('import ')]
+    need = [l for l in imps if l != first_import_replaced]
+    print(f'{mod_path} <- {src_path}')
+    print('  imports of the module:', mimps)
+    print('  source imports present (except the replaced one):', all(l in mimps for l in need),
+          '; replaced:', first_import_replaced)
+    print('  source body is a suffix block of the module:', mod.endswith(body))
+    print('  dropped lines:', len(dropped), sorted(set(l.split()[0] + ' ' + l.split()[1] for l in dropped)))
+
+check('scratch/dimjac-glue/DimJacGlue.lean', 'ZInQKernel/OneProof/H/TailZ10.lean',
+      lambda l: l.startswith('#print axioms ModularSplit.DimJac.')
+      or l == 'example : ZInQ.Contrib.CurvesG.DimJacobianEqGenus := ModularSplit.DimJac.dimJacobianEqGenus')
+check('scratch/shimura-glue/Deligne.lean', 'ZInQKernel/OneProof/H/TailZ12.lean',
+      lambda l: l.startswith('#print axioms'))
+check('scratch/reduct-glue/Body.lean', 'ZInQKernel/OneProof/H/TailZ14.lean',
+      lambda l: l.startswith('#print axioms'), first_import_replaced='import ReductSplitBase')

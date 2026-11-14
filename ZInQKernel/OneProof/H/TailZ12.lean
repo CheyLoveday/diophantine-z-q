@@ -1,5 +1,6 @@
 import ZInQKernel.OneProof.H.TailZ11
 import ZInQKernel.HDecomp.QM.Leaves
+import ZInQKernel.HDecomp.QM.Polar
 import Mathlib.NumberTheory.Padics.Hensel
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.FieldTheory.Finite.Basic
@@ -17,7 +18,8 @@ of `TailZ11`, the current top of the chain), with only its `#print axioms` lines
 shimura-glue's `Adelic.lean` (the reduced-norm and idele computations, Mathlib only), shimura-split's `Y3Conn.lean`
 (`ShimuraSplit.y3Connected_of_deligne`), shimura-split's `HDec.QMSplit.Moduli.DeligneComponentsX6` and
 shimura-glue's `parts/DeligneNew.lean` (`ShimuraGlue.DelignePi0`, `DeligneComponentsY3Printed`,
-`deligneComponentsY3_of_printed`). The field `y3Connected` is filled from the printed leaf in `TailZ13`. -/
+`deligneComponentsY3_of_printed`, and the converses `printed_of_deligneComponentsY3`, `…X6`). The field
+`y3Connected` is filled from the printed leaf in `TailZ13`. -/
 
 
 /-! # shimura-glue, local part: `nrd(𝒪_p^×) = ℤ_p^×` and `nrd(1 + 3𝒪_3) ⊇ 1 + 3ℤ_3`
@@ -1378,5 +1380,60 @@ theorem deligneComponentsX6_of_printed (h : DeligneComponentsX6Printed) :
     obtain ⟨pt⟩ := (inferInstance : Nonempty (Spec (CommRingCat.of Qbar)))
     exact ⟨s pt⟩
   exact connectedSpace_of_subsingleton c.subsingleton
+
+/-! ### Bridges to the kernel's order `𝒪` and reduced norm -/
+
+/-- `ofQ` over `ℚ` is the kernel's `LeafQM.ofInt` on integer coordinates. -/
+theorem ofQ_eq_ofInt (n : Fin 4 → ℤ) : ofQ (R := ℚ) (fun i => (n i : ℚ)) = LeafQM.ofInt n := by
+  have h : half ℚ = 1 / 2 := by simp [half]
+  ext <;> simp [ofQ, LeafQM.ofInt, h] <;> ring
+
+/-- `nrdQ ℚ` is the kernel's reduced norm `RvQMPolar.nrd` (same formula). -/
+theorem nrdQ_eq_kernel (x : LeafQM.B) : nrdQ ℚ x = RvQMPolar.nrd x := rfl
+
+/-- The coordinates of an element of the kernel's `𝒪` under `B → B ⊗ 𝔸_f` lie in `ℤ̂`, so `𝒪 ⊆ 𝒪̂`. -/
+theorem ofInt_mem_Ohat (n : Fin 4 → ℤ) : ofQ (fun i => ((n i : ℤ) : Af)) ∈ Ohat :=
+  ⟨_, fun i => intCast_mem Zhat _, rfl⟩
+
+/-! ### Converses: the printed leaves are equivalent to shimura-split's leaves -/
+
+/-- An idele with the cyclotomic components of `σ` is `cycU σ`. -/
+theorem eq_cycU {σ : Qbar ≃ₐ[ℚ] Qbar} {u : Afˣ}
+    (hu : ∀ v : Place, (u : Af) v = (adicCompletion.padicEquiv (R := ℤ) v).symm
+      ((cyclotomicCharacter Qbar (primesEquiv v) σ.toRingEquiv : ℤ_[primesEquiv v]) :
+        ℚ_[primesEquiv v])) : u = cycU σ.toRingEquiv := by
+  apply Units.ext
+  apply FiniteAdeleRing.ext
+  intro v
+  rw [hu v, cycU_apply]
+
+/-- **Converse (Y₃)**: shimura-split's `DeligneComponentsY3` gives the printed leaf (with `ε = 1`), so the
+printed leaf is equivalent to it and not stronger. -/
+theorem printed_of_deligneComponentsY3 (h : ShimuraSplit.DeligneComponentsY3) :
+    DeligneComponentsY3Printed := by
+  obtain ⟨Y, Φ, h1, c, hc⟩ := h
+  refine ⟨Y, Φ, h1, c.trans pi0K3Equiv.symm.toEquiv, 1, fun σ u hu z => ?_⟩
+  rw [eq_cycU hu]
+  simp only [Equiv.trans_apply, MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, hc, Units.val_one,
+    zpow_one]
+  rw [map_mul]
+  congr 1
+  apply pi0K3Equiv.injective
+  rw [MulEquiv.apply_symm_apply, pi0K3Equiv_mk, chi_cycU ShimuraSplit.card_mu3]
+  rfl
+
+instance : Nonempty (Pi0 Kfull) := ⟨1⟩
+
+/-- **Converse (X₆)**: shimura-split's `DeligneComponentsX6` gives the printed leaf. -/
+theorem printed_of_deligneComponentsX6 (h : HDec.QMSplit.Moduli.DeligneComponentsX6) :
+    DeligneComponentsX6Printed := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6, hc⟩ := h
+  haveI := hc
+  haveI : Nonempty (_root_.ConnectedComponents (ShimuraSplit.baseQbar X)) :=
+    ⟨ConnectedComponents.mk (Classical.arbitrary _)⟩
+  let e : _root_.ConnectedComponents (ShimuraSplit.baseQbar X) ≃ Pi0 Kfull :=
+    ⟨fun _ => 1, fun _ => Classical.arbitrary _, fun _ => Subsingleton.elim _ _,
+      fun _ => Subsingleton.elim _ _⟩
+  exact ⟨Y, Φ, X, Ψ, fY, h1, h6, e, 1, fun σ u hu z => Subsingleton.elim _ _⟩
 
 end ShimuraGlue
