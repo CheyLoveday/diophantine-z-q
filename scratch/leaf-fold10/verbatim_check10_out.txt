@@ -13,3 +13,5 @@ ZInQKernel/OneProof/H/TailZ14.lean <- scratch/reduct-glue/Body.lean
   source imports present (except the replaced one): True ; replaced: import ReductSplitBase
   source body is a suffix block of the module: True
   dropped lines: 24 ['#print axioms']
+reduct-glue Base.lean minus imports and #print lines is a suffix block of TailZ7: True
+  same imports: True

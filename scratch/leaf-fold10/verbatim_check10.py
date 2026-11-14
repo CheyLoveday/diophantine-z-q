@@ -27,3 +27,13 @@ check('scratch/shimura-glue/Deligne.lean', 'ZInQKernel/OneProof/H/TailZ12.lean',
       lambda l: l.startswith('#print axioms'))
 check('scratch/reduct-glue/Body.lean', 'ZInQKernel/OneProof/H/TailZ14.lean',
       lambda l: l.startswith('#print axioms'), first_import_replaced='import ReductSplitBase')
+
+# reduct-glue's Base.lean (its Body's `ReductSplitBase`) is leaf-fold9's TailZ7 minus `#print` lines
+b = open('scratch/reduct-glue/Base.lean').read().split('\n')
+n = 0
+while b[n].startswith('import '):
+    n += 1
+bb = '\n'.join(l for l in b[n:] if not l.startswith('#print')).rstrip() + '\n'
+t7 = open('ZInQKernel/OneProof/H/TailZ7.lean').read()
+print('reduct-glue Base.lean minus imports and #print lines is a suffix block of TailZ7:', t7.endswith(bb))
+print('  same imports:', [l for l in b[:n]] == [l for l in t7.split('\n') if l.startswith('import ')])

@@ -26,3 +26,4 @@
   Other shimura-glue results (Mobius glue, BabaGranathRational, ElkiesConicT, RayClassCM -> ReciprocityCanonical): would change r1r2 (comp) and x6ConicModel (c) to published leaves + consequences RayClassCM (c), ElkiesConicT (c): strict GLUE 2 -> 2 (neutral; lenient -1). Not taken under this task's rule.
 - 14:07 final: `lake build +ZInQKernel.OneProof.Main` EXIT 0; frozenTarget [propext, Classical.choice, Quot.sound]. Check10: closure 212917, no sorryAx, 62 fields (30+17+14+1), 15 kernel heads, 12 axiom lines all standard. cmp_hashes: before 11123, after 11835, 0 removed, 1 changed (frozenTarget), 712 new in TailZ10-Z15. VERIFIED.
   Sizes: TailZ10 37.5 KB, Z11 3.4, Z12 71.8, Z13 4.2, Z14 116.8, Z15 8.6.
+- 14:12 report docs/research/leaf-fold10.md written (assembled from report_head.md, report_mid.md, counts10.md, fields10_tables.md). Cloud W1* PRs: none on origin/main at 14:06; not folded.

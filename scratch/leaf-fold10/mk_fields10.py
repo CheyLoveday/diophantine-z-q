@@ -55,7 +55,7 @@ if REDUCT:
          'SemistableLocalGlobal (reduct-split glue, now proved), for semistableReductionThm and semistablePersists'),
     ]
 ORDER = list(REMOVED)
-BUNDLES = [('R', 'OpenResearchLeaves9'), ('T', 'OpenTextbookLeaves10'),
+BUNDLES = [('R', 'OpenResearchLeaves10' if 'reduct' in sys.argv[1:] else 'OpenResearchLeaves9'), ('T', 'OpenTextbookLeaves10'),
            ('A', 'OpenAddedLeaves9' if SHIMURA else 'OpenAddedLeaves8'),
            ('G', 'OpenGlue7')]
 KEYS = ['bundle', 'field', 'type', 'form', 'source', 'task', 'replaces']
