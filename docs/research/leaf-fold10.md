@@ -290,6 +290,20 @@ Notes on the table.
   `gonzalezRotgerCountX6` do. shimura-glue's two model reviews found no false or vacuous leaf, and there was no human
   review.
 - `neronLocalizesDVR` is counted as a consequence (§1, fold 4).
+- **Fork main's newer ruling** (STATUS.md at 485a3dc4, after this task's base; frontier r5 §4.8, not read here).
+  The integrator counts `gonzalezRotgerCountX6` as a *candidate* rather than a printed statement, because it is
+  stated on a fixed model of the Shimura curve together with its moduli data. `deligneComponentsY3Printed` has the
+  same shape (`∃ Y Φ, R1fpProps Y Φ ∧ …`). Under that ruling:
+  - both are strict GLUE, and fold (2) is strict 0;
+  - leaf-fold9's count is 41 / 22 and this task's is **43 / 19** (SPECULATIVE recount by the same script with
+    those two forms changed).
+
+  The tables above keep leaf-fold9's forms, as the task asks.
+- STATUS.md (same commit) says that six leaves are used only where hypotheses are repackaged: R3, T10 and the four
+  reduct-split DVR leaves. After this fold, three of those four feed the proofs of the removed fields: `r6`
+  (`semistableUnipotent`, `neronSchemeModelExistsDVR`), and SS1 and SS3 (`semistableReductionDVR`,
+  `neronSchemeModelExistsDVR`). Whether those rows are themselves used downstream was not re-checked here
+  (SPECULATIVE: STATUS.md does not list them as unused).
 
 ## 3. The remaining leaves by the theory they come from
 
