@@ -28,7 +28,7 @@ open nodes: 69
   HomFreeFiniteAlgClosed                        OpenTextbookLeaves9.homFreeFiniteAlgClosed
   IgusaCMValue24                                OpenAddedLeaves8.igusaCMValue24
   IgusaChi10                                    OpenResearchLeaves9.igusaChi10
-  IgusaGL2                                      OpenTextbookLeaves9.igusaGL2
+  IgusaGL2                                      OpenTextbookLeaves9.igusaGL2  [unused]
   IgusaPsi4                                     OpenResearchLeaves9.igusaPsi4
   JavanpeykarBound                              OpenResearchLeaves9.javanpeykarBound
   MilneIsogenyQuasiInverse                      OpenAddedLeaves8.milneIsogenyQuasiInverse
@@ -36,30 +36,30 @@ open nodes: 69
   MumfordTorsionAlgClosed                       OpenTextbookLeaves9.mumfordTorsionAlgClosed
   NeronOggShafarevich                           OpenResearchLeaves9.r7a
   NeronSchemeExtensionExists                    OpenTextbookLeaves9.neronSchemeExtensionExists
-  NeronSchemeModelExistsDVR                     OpenResearchLeaves9.neronSchemeModelExistsDVR  [never projected]
+  NeronSchemeModelExistsDVR                     OpenResearchLeaves9.neronSchemeModelExistsDVR  [unused]
   PanBerger                                     OpenResearchLeaves9.r11r12
   PazukiCor13Upper                              OpenResearchLeaves9.pazukiCor13Upper
   PoincareComplement                            OpenTextbookLeaves9.poincareComplement
   QMCentralizerCMC                              OpenAddedLeaves8.qmCentralizerCMC
   QuotientP1Coordinate                          OpenGlue7.quotientP1Coordinate
-  R03_LinYang                                   OpenResearchLeaves9.r3  [never projected]
+  R03_LinYang                                   OpenResearchLeaves9.r3  [unused]
   R16_EichlerShimuraJ1'                         OpenResearchLeaves9.r16
   R1R2fpRep                                     OpenResearchLeaves9.r1r2
   RaynaudCriterion                              OpenResearchLeaves9.r6
-  RegularSmoothPerfect                          OpenTextbookLeaves9.regularSmoothPerfect
+  RegularSmoothPerfect                          OpenTextbookLeaves9.regularSmoothPerfect  [unused]
   SemistableNeronBaseChange                     OpenResearchLeaves9.semistableNeronBaseChange
   SemistablePersists                            OpenResearchLeaves9.semistablePersists
-  SemistableReductionDVR                        OpenResearchLeaves9.semistableReductionDVR  [never projected]
+  SemistableReductionDVR                        OpenResearchLeaves9.semistableReductionDVR  [unused]
   SemistableReductionThm                        OpenResearchLeaves9.semistableReductionThm
-  SemistableUnipotent                           OpenResearchLeaves9.semistableUnipotent  [never projected]
-  SerreTateThm2                                 OpenResearchLeaves9.serreTateThm2  [never projected]
+  SemistableUnipotent                           OpenResearchLeaves9.semistableUnipotent  [unused]
+  SerreTateThm2                                 OpenResearchLeaves9.serreTateThm2  [unused]
   ShimizuCovolumeO1                             OpenAddedLeaves8.shimizuCovolumeO1
   ShimuraFamily                                 OpenResearchLeaves9.shimuraFamily
   ShimuraGoodReductionNoGuard                   OpenAddedLeaves8.shimuraGoodReductionNoGuard
   ShimuraReciprocityModFn                       -
   ShimuraTaniyamaQbar                           OpenAddedLeaves8.shimuraTaniyamaQbar
   T09_SymmIsogenyExists                         OpenAddedLeaves8.t09SymmIsogenyExists
-  T10_TateDuality                               OpenTextbookLeaves9.t10  [never projected]
+  T10_TateDuality                               OpenTextbookLeaves9.t10  [unused]
   TYZLemma29Mod2                                -
   TYZThm11Integral                              -
   TYZThm33                                      -
@@ -112,7 +112,7 @@ open nodes: 87
   IdentityComponentBaseChangeDVR                -
   IgusaCMValue24                                OpenAddedLeaves8.igusaCMValue24
   IgusaChi10                                    OpenResearchLeaves9.igusaChi10
-  IgusaGL2                                      OpenTextbookLeaves9.igusaGL2
+  IgusaGL2                                      OpenTextbookLeaves9.igusaGL2  [unused]
   IgusaPsi4                                     OpenResearchLeaves9.igusaPsi4
   JavanpeykarBound                              OpenResearchLeaves9.javanpeykarBound
   KatoRealizationCoh                            -
@@ -128,25 +128,25 @@ open nodes: 87
   PoincareComplement                            OpenTextbookLeaves9.poincareComplement
   ProperCurveAF                                 -
   QMCentralizerCMC                              OpenAddedLeaves8.qmCentralizerCMC
-  R03_LinYang                                   OpenResearchLeaves9.r3  [never projected]
+  R03_LinYang                                   OpenResearchLeaves9.r3  [unused]
   R16_EichlerShimuraJ1'                         OpenResearchLeaves9.r16
   RaynaudSemistable                             -
   ReciprocityCanonical                          -
-  RegularSmoothPerfect                          OpenTextbookLeaves9.regularSmoothPerfect
+  RegularSmoothPerfect                          OpenTextbookLeaves9.regularSmoothPerfect  [unused]
   SemistableAlmostAll                           -
   SemistableLocalGlobal                         -
   SemistableNeronBaseChangeLocalGlobal          -
   SemistablePersistsDVR                         -
   SemistableReductionDVR                        OpenResearchLeaves9.semistableReductionDVR
   SemistableUnipotent                           OpenResearchLeaves9.semistableUnipotent
-  SerreTateThm2                                 OpenResearchLeaves9.serreTateThm2  [never projected]
+  SerreTateThm2                                 OpenResearchLeaves9.serreTateThm2  [unused]
   ShimizuCovolumeO1                             OpenAddedLeaves8.shimizuCovolumeO1
   ShimuraGoodReductionNoGuard                   OpenAddedLeaves8.shimuraGoodReductionNoGuard
   ShimuraHolFamily                              -
   ShimuraTaniyamaQbar                           OpenAddedLeaves8.shimuraTaniyamaQbar
   SmoothModelOfP1                               -
   T09_SymmIsogenyExists                         OpenAddedLeaves8.t09SymmIsogenyExists
-  T10_TateDuality                               OpenTextbookLeaves9.t10  [never projected]
+  T10_TateDuality                               OpenTextbookLeaves9.t10  [unused]
   TYZLemma29Mod2                                -
   TYZThm11Integral                              -
   TYZThm33                                      -
@@ -160,7 +160,7 @@ open nodes: 87
   ValenceFormulaCocompactEq                     OpenAddedLeaves8.valenceFormulaCocompactEq
   X0RatStructure                                -
   YuThm11                                       OpenTextbookLeaves9.yuThm11
-USED_IN_F (never-projected fields that a followed F edge takes): equal
+USED_IN_F (unused fields that a followed F edge takes): equal
 def-text comparison (proved/reduced Prop vs the H base: OneProof/H or a kernel module it imports; followed F edges only):
   CoordinateNormalization             identical
   CoordinateFromSections              identical (vs scratch/mcr-glue/MCRGlue.lean, which takes it)
@@ -208,6 +208,6 @@ OneProof.frozenTarget: hypotheses vs scenario A's (its bundles and the open node
   OpenTextbookLeaves9: 18 fields; fields9.tsv: 18 rows, same names and head constants (types abbreviated in the table: bdRInvariants)
   OpenAddedLeaves8: 14 fields; fields9.tsv: 14 rows, same names and types
   OpenGlue7: 1 fields; fields9.tsv: 1 rows, same names and types
-doc rows: 84 (84 distinct heads); F open minus never-projected: 84
+doc rows: 82 (82 distinct heads); F open minus unused: 82
   in chain, not in doc: []
   in doc, not in chain: []

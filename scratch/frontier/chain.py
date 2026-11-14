@@ -506,8 +506,13 @@ STRUCTS = {
     "OpenAddedLeaves8": (OPX4, "OpenAddedLeaves8"),
     "OpenGlue7": (OPX7, "OpenGlue7"),
 }
-# fields never projected on the route (h-leaves agent, grep of the flat file; g0-assemble3 §6)
-UNUSED = {"r3", "t10", "serreTateThm2", "semistableReductionDVR", "semistableUnipotent", "neronSchemeModelExistsDVR"}
+# fields the proof does not use (r5: the integrator's prune scan; until r4: never projected, by the h-leaves agent's
+# grep of the flat file, g0-assemble3 §6)
+UNUSED = {"r3", "t10", "serreTateThm2", "semistableReductionDVR", "semistableUnipotent", "neronSchemeModelExistsDVR",
+          "regularSmoothPerfect", "igusaGL2"}
+# (r5 amendment: the integrator's Lean prune scan, wip/prune-scan 5ecb5d38 scratch/one-proof/PruneScan.lean, finds these
+#  eight unused at w60. The last two are projected (TailX L249, L252, into normalCurveSmoothQ and x0Transitive, which
+#  enter only t38 and t40), but only into a dead route, so a grep for projections finds just the first six)
 # (r5: leaf-fold9 proves r1rec and r5 from r1r2; reduct-split's four leaves enter only TailZ9's proofs of r7b and r8,
 #  which stay unprojected; until r4: {"r1rec", "r3", "r5", "r7b", "r8", "t10"}, never projected in g0-assemble3;
 #  assemble-port, leaf-fold4 and leaf-fold5 have the same consumers)
@@ -815,12 +820,12 @@ def main():
             fl = [x.split('.')[-1] for x in fieldset.get(n, [])]
             tag = ""
             if fl and all(f in UNUSED for f in fl) and not (sc == "F" and any(f in USED_IN_F for f in fl)):
-                tag = "  [never projected]"
+                tag = "  [unused]"
             print(f"  {n:45s} {where}{tag}")
         if sc == "F":
             hy = {h for e in FOLLOWED for h in e["hyps"]}
             used = {f for s, f, h in rows if f in UNUSED and h in hy}
-            print("USED_IN_F (never-projected fields that a followed F edge takes):",
+            print("USED_IN_F (unused fields that a followed F edge takes):",
                   "equal" if used == USED_IN_F else f"DIFFERENT {sorted(used)} vs {sorted(USED_IN_F)}")
             print("def-text comparison (proved/reduced Prop vs the H base: OneProof/H or a kernel module it imports; "
                   "followed F edges only):")
@@ -902,7 +907,7 @@ def doc_check(path="docs/research/frontier.md"):
     never = {h for h, fl in fieldof.items() if all(f in UNUSED and f not in USED_IN_F for f in fl)}
     want = {n for n, _ in open_} - never
     have = set(names.values())
-    print(f"doc rows: {len(names)} ({len(have)} distinct heads); F open minus never-projected: {len(want)}")
+    print(f"doc rows: {len(names)} ({len(have)} distinct heads); F open minus unused: {len(want)}")
     print("  in chain, not in doc:", sorted(want - have))
     print("  in doc, not in chain:", sorted(have - want))
 
