@@ -2666,4 +2666,118 @@ end LDRes
 
 end GenusRoute
 
+namespace GenusRoute
+
+open AlgebraicGeometry CategoryTheory LeafModCurves X1Belyi ZInQ.Contrib.CurvesG
+
+section LDMain
+
+variable {F : Type} [Field F] [Algebra Qj F] [Algebra ℚ F] [Algebra (Polynomial ℚ) F]
+  [IsScalarTower (Polynomial ℚ) Qj F] [FiniteDimensional Qj F]
+
+/-- **`LocalDerivation` at a place containing `s` (proved).** With `δ_s = d/ds`: (i) `δ_s` is bounded
+on `𝒪_P` (`deriv_bound`); (ii) writing `x = p(θ) + π y` and `g(θ) = π z` (`residue_structure`),
+`δ_s x ∈ 𝒪_P δ_s(π) + π (𝒪_P δ_s z + δ_s y)`; iterating, `π^N (δ_s x − a δ_s π) ∈ π^k 𝒪_P` for all `k`.
+For `x = s` this forces `δ_s π ≠ 0`, and then `δ = δ_s / δ_s(π)` maps `𝒪_P` into `𝒪_P`. -/
+theorem localDer_fin (P : Place F) (hs : (sF : F) ∈ P.w) (π : F) (hπ0 : π ≠ 0)
+    (hπn : π ∈ P.w.nonunits) (hπd : ∀ x ∈ P.w.nonunits, ∃ y ∈ P.w, x = π * y) :
+    ∃ δ : Derivation ℚ F F, δ π = 1 ∧ ∀ x ∈ P.w, δ x ∈ P.w := by
+  obtain ⟨δs, hδs⟩ := exists_deriv_s (F := F)
+  obtain ⟨N, hN⟩ := deriv_bound P hs δs hδs hπn hπd
+  obtain ⟨θ, hθ, g, hg, hg'i, hg'0, hres⟩ := residue_structure P hs
+  have hπw : π ∈ P.w := (P.w.valuation_le_one_iff _).1 (P.w.mem_nonunits_iff.mp hπn).le
+  have hdec : ∀ x ∈ P.w, ∃ A ∈ P.w, ∃ B ∈ P.w, ∃ z ∈ P.w, ∃ y ∈ P.w,
+      δs x = A * δs π + π * (B * δs z + δs y) := by
+    intro x hx
+    obtain ⟨p, hp⟩ := hres x hx
+    obtain ⟨y, hy, hxy⟩ := hπd _ hp
+    obtain ⟨z, hz, hgz⟩ := hπd _ hg
+    have hθd : Polynomial.aeval θ (Polynomial.derivative g) * δs θ = π * δs z + z * δs π := by
+      rw [← smul_eq_mul, ← Derivation.map_aeval, hgz, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
+    have hθd' : δs θ = (Polynomial.aeval θ (Polynomial.derivative g))⁻¹ * (π * δs z + z * δs π) := by
+      rw [← hθd]; field_simp
+    have hx' : x = Polynomial.aeval θ p + π * y := by rw [← hxy]; ring
+    have hp'w : Polynomial.aeval θ (Polynomial.derivative p) ∈ P.w := aeval_mem P hθ _
+    refine ⟨Polynomial.aeval θ (Polynomial.derivative p) *
+        (Polynomial.aeval θ (Polynomial.derivative g))⁻¹ * z + y,
+      Subring.add_mem _ (Subring.mul_mem _ (Subring.mul_mem _ hp'w hg'i) hz) hy,
+      Polynomial.aeval θ (Polynomial.derivative p) * (Polynomial.aeval θ (Polynomial.derivative g))⁻¹,
+      Subring.mul_mem _ hp'w hg'i, z, hz, y, hy, ?_⟩
+    rw [hx', map_add, Derivation.map_aeval, Derivation.leibniz, smul_eq_mul, smul_eq_mul,
+      smul_eq_mul, hθd']
+    ring
+  have hQ : ∀ k : ℕ, ∀ x ∈ P.w, ∃ a ∈ P.w, ∃ r ∈ P.w, π ^ N * (δs x - a * δs π) = π ^ k * r := by
+    intro k
+    induction k with
+    | zero => intro x hx; exact ⟨0, P.w.zero_mem, π ^ N * δs x, hN x hx, by ring⟩
+    | succ k ih =>
+      intro x hx
+      obtain ⟨A, hA, B, hB, z, hz, y, hy, hxe⟩ := hdec x hx
+      obtain ⟨az, haz, rz, hrz, hz'⟩ := ih z hz
+      obtain ⟨ay, hay, ry, hry, hy'⟩ := ih y hy
+      refine ⟨A + π * (B * az + ay),
+        Subring.add_mem _ hA (Subring.mul_mem _ hπw (Subring.add_mem _ (Subring.mul_mem _ hB haz) hay)),
+        B * rz + ry, Subring.add_mem _ (Subring.mul_mem _ hB hrz) hry, ?_⟩
+      rw [hxe]
+      linear_combination π * B * hz' + π * hy'
+  have hδπ : δs π ≠ 0 := by
+    intro h0
+    obtain ⟨a, ha, r, hr, he⟩ := hQ (N + 1) (sF : F) hs
+    rw [h0, mul_zero, sub_zero, hδs, mul_one] at he
+    have h1 : π * r = 1 := by
+      have hπN : π ^ N ≠ 0 := pow_ne_zero _ hπ0
+      apply mul_left_cancel₀ hπN
+      calc π ^ N * (π * r) = π ^ (N + 1) * r := by ring
+        _ = π ^ N := he.symm
+        _ = π ^ N * 1 := (mul_one _).symm
+    have h2 := mul_mem_nonunits P.w hr hπn
+    rw [mul_comm, h1, P.w.mem_nonunits_iff, map_one] at h2
+    exact lt_irrefl _ h2
+  obtain ⟨π₀, hπ₀, hπ₀u, hdvr⟩ := exists_uniformizer_all P
+  obtain ⟨k, hk⟩ := exists_pow_mul_mem P hπn hπd hπ₀ hπ₀u hdvr (π ^ N * δs π)⁻¹
+  refine ⟨(δs π)⁻¹ • δs, ?_, fun x hx => ?_⟩
+  · rw [Derivation.smul_apply, smul_eq_mul, inv_mul_cancel₀ hδπ]
+  obtain ⟨a, ha, r, hr, he⟩ := hQ k x hx
+  have hπN : π ^ N ≠ 0 := pow_ne_zero _ hπ0
+  have : ((δs π)⁻¹ • δs) x = a + (π ^ k * (π ^ N * δs π)⁻¹) * r := by
+    rw [Derivation.smul_apply, smul_eq_mul]
+    have hx' : δs x = a * δs π + π ^ k * r / π ^ N := by
+      rw [← he]; field_simp; ring
+    rw [hx']
+    field_simp
+  rw [this]
+  exact Subring.add_mem _ ha (Subring.mul_mem _ hk hr)
+
+end LDMain
+
+/-- **`LocalDerivation`, proved.** At places containing `s = j` by `localDer_fin`; at the places over
+`j = ∞` by `localDer_fin` for the twisted structure `j ↦ 1/j`. -/
+theorem localDerivation : LocalDerivation := by
+  intro F _ _ _ _ _ P π hπ0 hπn hπd
+  by_cases hs : (sF : F) ∈ P.w
+  · letI : Algebra (Polynomial ℚ) F :=
+      ((algebraMap Qj F).comp (algebraMap (Polynomial ℚ) Qj)).toAlgebra
+    haveI : IsScalarTower (Polynomial ℚ) Qj F := IsScalarTower.of_algebraMap_eq' rfl
+    exact localDer_fin P hs π hπ0 hπn hπd
+  · letI : Algebra (Polynomial ℚ) F :=
+      ((@algebraMap Qj F _ _ (twistAlg (F := F))).comp (algebraMap (Polynomial ℚ) Qj)).toAlgebra
+    have htw : @IsScalarTower (Polynomial ℚ) Qj F _ (twistAlg (F := F)).toSMul _ := by
+      letI := twistAlg (F := F)
+      exact IsScalarTower.of_algebraMap_eq' rfl
+    have hs' : @sF F _ (twistAlg (F := F)) ∈ P.w := by
+      rw [sF_twist]; exact (P.w.mem_or_inv_mem _).resolve_left hs
+    exact @localDer_fin F _ (twistAlg (F := F)) _ _ htw twist_finiteDimensional P hs' π hπ0 hπn hπd
+
+/-- **The genus bound with no leaf (proved).** -/
+theorem genusLeDegree : GenusLeDegree := genusLeDegree_of_localDerivation localDerivation
+
+/-- **`DimJ1Le` (the only use of T34) from `DimJacobianEqGenus` alone (proved).** -/
+theorem dimJ1Le_of_dimJacobianEqGenus (h1 : DimJacobianEqGenus) : DimJ1Le :=
+  dimJ1Le_of_localDerivation h1 localDerivation
+
+end GenusRoute
+
 end
+
+#print axioms GenusRoute.localDerivation
+#print axioms GenusRoute.dimJ1Le_of_dimJacobianEqGenus
