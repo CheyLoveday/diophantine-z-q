@@ -1,7 +1,10 @@
 import ZInQKernel.HDecomp.QM.Leaves
 import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
+
 set_option linter.all false
+
 noncomputable section
+
 /-! # shimura-glue: Möbius transformations of maps to `P¹` (the glue `MobiusCompose`, proved)
 
 For `π : X → P¹` given by charts (the kernel's `ToP1`), three constructions:
@@ -411,12 +414,141 @@ theorem gval_cQ (X : Over (Spec (CommRingCat.of ℚ))) {K : Type} [Field K] [Cha
   eq_ratCast (((Scheme.SpecToEquivOfField K X.left y).2.hom.comp
     (X.left.evaluation ⊤ (Scheme.SpecToEquivOfField K X.left y).1 trivial).hom).comp (cQ X)) q
 
+/-- `!![a, b; c, d]` as an element of `GL₂(ℚ)`. -/
+noncomputable def gl2 (a b c d : ℚ) (h : a * d - b * c ≠ 0) : GL (Fin 2) ℚ :=
+  Matrix.GeneralLinearGroup.mkOfDetNeZero !![a, b; c, d] (by rwa [Matrix.det_fin_two_of])
+
+theorem gl2_apply (a b c d : ℚ) (h : a * d - b * c ≠ 0) (i j : Fin 2) :
+    (gl2 a b c d h) i j = !![a, b; c, d] i j := rfl
+
+theorem gl2_smul_some (a b c d : ℚ) (h : a * d - b * c ≠ 0) (k : ℚ) :
+    gl2 a b c d h • (k : OnePoint ℚ) =
+      if c * k + d = 0 then OnePoint.infty else ((a * k + b) / (c * k + d) : ℚ) := by
+  rw [OnePoint.smul_some_eq_ite]; simp [gl2_apply]
+
+theorem gl2_smul_infty (a b c d : ℚ) (h : a * d - b * c ≠ 0) :
+    gl2 a b c d h • (OnePoint.infty : OnePoint ℚ) =
+      if c = 0 then OnePoint.infty else ((a / c : ℚ) : OnePoint ℚ) := by
+  rw [OnePoint.smul_infty_eq_ite]; simp [gl2_apply]
+
 /-- `g` is realized on every `ToP1` of every `ℚ`-scheme. -/
 def Good (g : GL (Fin 2) ℚ) : Prop :=
   ∀ (X : Over (Spec (CommRingCat.of ℚ))) (π : ToP1 X.left),
     ∃ π' : ToP1 X.left, ∀ x : fieldPt Qbar ⟶ X,
       π'.val (K := Qbar) x.left =
-        Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) g •
-          π.val (K := Qbar) x.left
+        Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) g • π.val (K := Qbar) x.left
+
+theorem good_mul {g h : GL (Fin 2) ℚ} (hg : Good g) (hh : Good h) : Good (g * h) := by
+  intro X π
+  obtain ⟨π₁, h₁⟩ := hh X π
+  obtain ⟨π₂, h₂⟩ := hg X π₁
+  exact ⟨π₂, fun x => by rw [h₂, h₁, ← mul_smul, ← map_mul]⟩
+
+/-- The action of the image of `gl2 a b c d` on `P¹(ℚ̄)`. -/
+theorem map_gl2_smul (a b c d : ℚ) (h : a * d - b * c ≠ 0) (s : OnePoint Qbar) :
+    Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) (gl2 a b c d h) • s =
+      match s with
+      | OnePoint.infty => if (c : Qbar) = 0 then OnePoint.infty else (((a : Qbar) / c : Qbar) : OnePoint Qbar)
+      | OnePoint.some k => if (c : Qbar) * k + d = 0 then OnePoint.infty
+          else (((a : Qbar) * k + b) / ((c : Qbar) * k + d) : Qbar) := by
+  induction s using OnePoint.rec with
+  | infty =>
+    rw [OnePoint.smul_infty_eq_ite]
+    simp [Matrix.GeneralLinearGroup.map_apply, gl2_apply, eq_ratCast]
+  | coe k =>
+    rw [OnePoint.smul_some_eq_ite]
+    simp [Matrix.GeneralLinearGroup.map_apply, gl2_apply, eq_ratCast]
+
+theorem good_T (q : ℚ) : Good (gl2 1 q 0 1 (by norm_num)) := by
+  intro X π
+  refine ⟨ToP1.translate π (cQ X q), fun x => ?_⟩
+  refine (val_translate (K := Qbar) π x.left (cQ X q)).trans ?_
+  have hq : gval (K := Qbar) x.left (cQ X q) = (q : Qbar) := gval_cQ X x.left q
+  rw [hq, map_gl2_smul]
+  induction π.val (K := Qbar) x.left using OnePoint.rec with
+  | infty => simp
+  | coe k => simp
+
+theorem good_D (a : ℚ) (ha : a ≠ 0) : Good (gl2 a 0 0 1 (by simpa using ha)) := by
+  intro X π
+  refine ⟨ToP1.scale π (Units.map (cQ X).toMonoidHom (Units.mk0 a ha)), fun x => ?_⟩
+  refine (val_scale (K := Qbar) π x.left _).trans ?_
+  have : gval (K := Qbar) x.left ((Units.map (cQ X).toMonoidHom (Units.mk0 a ha) : Γ(X.left, ⊤)ˣ) :
+      Γ(X.left, ⊤)) = (a : Qbar) := gval_cQ X x.left a
+  rw [this, map_gl2_smul]
+  induction π.val (K := Qbar) x.left using OnePoint.rec with
+  | infty => simp
+  | coe k => simp
+
+theorem good_W : Good (gl2 0 1 1 0 (by norm_num)) := by
+  intro X π
+  refine ⟨ToP1.swap π, fun x => ?_⟩
+  refine (val_swap (K := Qbar) π x.left).trans ?_
+  rw [map_gl2_smul]
+  induction π.val (K := Qbar) x.left using OnePoint.rec with
+  | infty => simp [invP1]
+  | coe k =>
+    simp only [invP1]
+    split_ifs with hk <;> simp_all
+
+theorem good_Sc (d : ℚ) (hd : d ≠ 0) : Good (gl2 d 0 0 d (by simpa using hd)) := by
+  intro X π
+  refine ⟨π, fun x => ?_⟩
+  rw [map_gl2_smul]
+  have hd' : (d : Qbar) ≠ 0 := by exact_mod_cast hd
+  induction π.val (K := Qbar) x.left using OnePoint.rec with
+  | infty => simp
+  | coe k => simp [hd']; try field_simp
+
+/-- **Every `g ∈ GL₂(ℚ)` is realized** (`g = d·T(b/d)·D(a/d)` if `c = 0`, and
+`g = T(a/c)·D(−det/c)·W·T(d)·D(c)` otherwise). -/
+theorem good_all (g : GL (Fin 2) ℚ) : Good g := by
+  have hdet := g.det_ne_zero
+  rw [Matrix.det_fin_two] at hdet
+  by_cases hc : g 1 0 = 0
+  · rw [hc, mul_zero, sub_zero] at hdet
+    have ha : g 0 0 ≠ 0 := left_ne_zero_of_mul hdet
+    have hd : g 1 1 ≠ 0 := right_ne_zero_of_mul hdet
+    have e : g = gl2 (g 1 1) 0 0 (g 1 1) (by simpa using hd) * gl2 1 (g 0 1 / g 1 1) 0 1 (by norm_num) *
+        gl2 (g 0 0 / g 1 1) 0 0 1 (by simpa using div_ne_zero ha hd) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Matrix.mul_apply, Fin.sum_univ_two, gl2_apply, hc] <;> field_simp
+    rw [e]
+    exact good_mul (good_mul (good_Sc _ hd) (good_T _)) (good_D _ (div_ne_zero ha hd))
+  · set dt := g 0 0 * g 1 1 - g 0 1 * g 1 0
+    have e : g = gl2 1 (g 0 0 / g 1 0) 0 1 (by norm_num) *
+        gl2 (-dt / g 1 0) 0 0 1 (by simpa using div_ne_zero (neg_ne_zero.2 hdet) hc) *
+        gl2 0 1 1 0 (by norm_num) * gl2 1 (g 1 1) 0 1 (by norm_num) *
+        gl2 (g 1 0) 0 0 1 (by simpa using hc) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Matrix.mul_apply, Fin.sum_univ_two, gl2_apply, dt] <;> field_simp <;> ring
+    rw [e]
+    exact good_mul (good_mul (good_mul (good_mul (good_T _)
+      (good_D _ (div_ne_zero (neg_ne_zero.2 hdet) hc))) good_W) (good_T _)) (good_D _ hc)
 
 end ShimuraGlue.Mob
+
+namespace HDec.QMSplit.Moduli
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV
+
+open scoped Classical
+
+/-- **GLUE (now proved, `mobiusCompose`): postcomposing a morphism `X → P¹` with a Möbius
+transformation over `ℚ`.** For a `ℚ`-scheme `X`, `π : X → P¹` (by charts) and `g ∈ GL₂(ℚ)` there is
+`π' = g ∘ π : X → P¹`, with `π'(x) = g·π(x)` on `ℚ̄`-points (Mathlib's `GL₂`-action on `OnePoint`). -/
+def MobiusCompose : Prop :=
+  ∀ (X : Over (Spec (CommRingCat.of ℚ))) (π : ToP1 X.left) (g : GL (Fin 2) ℚ),
+    ∃ π' : ToP1 X.left, ∀ x : fieldPt Qbar ⟶ X,
+      π'.val (K := Qbar) x.left =
+        Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) g • π.val (K := Qbar) x.left
+
+/-- **`MobiusCompose` is a theorem** (`ShimuraGlue.Mob.good_all`). -/
+theorem mobiusCompose : MobiusCompose := fun X π g => ShimuraGlue.Mob.good_all g X π
+
+end HDec.QMSplit.Moduli
+
+#print axioms HDec.QMSplit.Moduli.mobiusCompose

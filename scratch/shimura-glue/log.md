@@ -61,3 +61,17 @@
   `babaGranathX6'_of_rational : BabaGranathRational → MobiusCompose → BabaGranathX6'`.
 - LEAF `ElkiesConicT` (Elkies §3 in his coordinate t: t = 0, 1, ∞ at CM −24, −4, −3; conic model with
   t = −X²/Z², `ConicModelT`). `elkiesConicX6_of_t : ElkiesConicT → MobiusCompose → ElkiesConicX6`.
+
+## Step 6: parts/MobiusProof.lean — `MobiusCompose` PROVED (Mobius.lean, kernel import QM.Leaves; and in RowsGlue)
+- `ToP1.translate π b` (t ↦ t + b, b ∈ Γ(X,⊤); new chart V' = {f+b unit} ∪ {1+bg unit}, 1/(t+b) glued from
+  (f+b)⁻¹ and g(1+bg)⁻¹ by `TopCat.Sheaf.objSupIsoProdEqLocus`), `ToP1.scale π a` (a ∈ Γ(X,⊤)ˣ),
+  `ToP1.swap π` (t ↦ 1/t); value lemmas `val_translate`, `val_scale`, `val_swap` on K-points.
+- `cQ X : ℚ →+* Γ(X,⊤)` (constants of a ℚ-scheme), `gval_cQ` (value of a constant = the rational, by
+  uniqueness of ring homs out of ℚ).
+- `Good g`, `good_mul`, `good_T`, `good_D`, `good_W`, `good_Sc`, `good_all` (g = d·T(b/d)·D(a/d) if c = 0,
+  g = T(a/c)·D(−det/c)·W·T(d)·D(c) otherwise), `HDec.QMSplit.Moduli.mobiusCompose : MobiusCompose`.
+- Mobius.lean: 0 errors, ~8 s, `mobiusCompose` standard axioms (mobius_result.txt).
+- RowsGlue.lean (now + MobiusProof + MobiusNew): 0 errors, ~1 min 45 s, 65 axiom lines all standard.
+  New: `babaGranathX6'_of_rational' : BabaGranathRational → BabaGranathX6'`,
+  `elkiesConicX6_of_t' : ElkiesConicT → ElkiesConicX6`, bundle `ShimuraGlueLeaves2` (printed Deligne,
+  BabaGranathRational, ElkiesConicT), `rows_of_shimuraGlueLeaves2`.

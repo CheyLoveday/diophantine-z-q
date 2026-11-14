@@ -6,33 +6,7 @@ open CategoryTheory AlgebraicGeometry Limits
 open LeafQM LeafQM.AV
 
 open scoped Classical
-
-/-- **GLUE (standard; not proved here): postcomposing a morphism `X → P¹` with a Möbius
-transformation over `ℚ`.** For a `ℚ`-scheme `X`, `π : X → P¹` (by charts) and `g ∈ GL₂(ℚ)` there is
-`π' = g ∘ π : X → P¹`, with `π'(x) = g·π(x)` on `ℚ̄`-points (`OnePoint`'s `GL₂`-action from Mathlib).
-(The composition of morphisms of schemes `X → P¹_ℚ → P¹_ℚ`; for `ToP1` it needs new charts, glued
-along `U ∩ V` for a translation `t ↦ t + b`.) -/
-def MobiusCompose : Prop :=
-  ∀ (X : Over (Spec (CommRingCat.of ℚ))) (π : ToP1 X.left) (g : GL (Fin 2) ℚ),
-    ∃ π' : ToP1 X.left, ∀ x : fieldPt Qbar ⟶ X,
-      π'.val (K := Qbar) x.left =
-        Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) g • π.val (K := Qbar) x.left
-
-/-- `!![a, b; c, d]` as an element of `GL₂(ℚ)`. -/
-noncomputable def gl2 (a b c d : ℚ) (h : a * d - b * c ≠ 0) : GL (Fin 2) ℚ :=
-  Matrix.GeneralLinearGroup.mkOfDetNeZero !![a, b; c, d] (by rwa [Matrix.det_fin_two_of])
-
-theorem gl2_apply (a b c d : ℚ) (h : a * d - b * c ≠ 0) (i j : Fin 2) :
-    (gl2 a b c d h) i j = !![a, b; c, d] i j := rfl
-
-theorem gl2_smul_some (a b c d : ℚ) (h : a * d - b * c ≠ 0) (k : ℚ) :
-    gl2 a b c d h • (k : OnePoint ℚ) =
-      if c * k + d = 0 then OnePoint.infty else ((a * k + b) / (c * k + d) : ℚ) := by
-  rw [OnePoint.smul_some_eq_ite]; simp [gl2_apply]
-
-theorem gl2_smul_infty (a b c d : ℚ) (h : a * d - b * c ≠ 0) :
-    gl2 a b c d h • (OnePoint.infty : OnePoint ℚ) = if c = 0 then OnePoint.infty else ((a / c : ℚ) : OnePoint ℚ) := by
-  rw [OnePoint.smul_infty_eq_ite]; simp [gl2_apply]
+open ShimuraGlue.Mob (gl2 gl2_apply gl2_smul_some gl2_smul_infty)
 
 /-- **A Möbius transformation over `ℚ` sends three distinct points of `P¹(ℚ)` to `0, ∞, 1`.** -/
 theorem exists_mobius01 (a b c : OnePoint ℚ) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
@@ -209,7 +183,48 @@ theorem elkiesConicX6_of_t (h : ElkiesConicT) (hM : MobiusCompose) : ElkiesConic
   · rw [hπ', gJ_smul, hp x p hx]; simp; try ring
   · rw [hπ', gJ_smul, hi x b hx]; rfl
 
+/-- **`BabaGranathX6'` from `BabaGranathRational` alone** (the Möbius glue is proved:
+`mobiusCompose`). -/
+theorem babaGranathX6'_of_rational' (h : BabaGranathRational) : BabaGranathX6' :=
+  babaGranathX6'_of_rational h mobiusCompose
+
+/-- **`ElkiesConicX6` from `ElkiesConicT` alone.** -/
+theorem elkiesConicX6_of_t' (h : ElkiesConicT) : ElkiesConicX6 :=
+  elkiesConicX6_of_t h mobiusCompose
+
+/-- **The bundle with the printed Deligne leaves, Baba–Granath without the `j`-normalization and
+Elkies in his coordinate.** -/
+structure ShimuraGlueLeaves2 : Prop where
+  deligneX6P : ShimuraGlue.DeligneComponentsX6Printed
+  geomConn : GeomConnOfAlgClosure
+  t5 : PkgI2.TorsionStructure.{0}
+  babaGranathR : BabaGranathRational
+  reciprocity : ReciprocityCanonical
+  gonzalezRotger : GonzalezRotgerX6
+  gonzalezRotgerCount : ShimuraSplit.GonzalezRotgerCountX6
+  deligneY3P : ShimuraGlue.DeligneComponentsY3Printed
+  elkiesT : ElkiesConicT
+
+theorem shimuraGlueLeaves_of_2 (L : ShimuraGlueLeaves2) : ShimuraGlueLeaves :=
+  ⟨L.deligneX6P, L.geomConn, L.t5, babaGranathX6'_of_rational' L.babaGranathR, L.reciprocity,
+    L.gonzalezRotger, L.gonzalezRotgerCount, L.deligneY3P, elkiesConicX6_of_t' L.elkiesT⟩
+
+/-- **Rows `r1r2`, `r1rec`, `r5`, `r5count`, `y3Connected`, `x6ConicModel` from `ShimuraGlueLeaves2`.** -/
+theorem rows_of_shimuraGlueLeaves2 (L : ShimuraGlueLeaves2) :
+    LeafAdopt.R1R2fpRep ∧ LeafQM.AV.R1rec ∧ LeafQM.AV.R5fp ∧ LeafQM.AV.R5fpCount ∧
+      TSHecke.Y3Connected ∧ X6Kummer.X6ConicModel :=
+  rows_of_shimuraGlueLeaves (shimuraGlueLeaves_of_2 L)
+
 end HDec.QMSplit.Moduli
+
+#print axioms HDec.QMSplit.Moduli.babaGranathX6'_of_rational'
+#print axioms HDec.QMSplit.Moduli.elkiesConicX6_of_t'
+#print axioms HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves2
+
+example : HDec.QMSplit.Moduli.ShimuraGlueLeaves2 →
+    HDec.LeafAdopt.R1R2fpRep ∧ _root_.LeafQM.AV.R1rec ∧ _root_.LeafQM.AV.R5fp ∧
+      _root_.LeafQM.AV.R5fpCount ∧ HDec.TSHecke.Y3Connected ∧ HDec.X6Kummer.X6ConicModel :=
+  HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves2
 
 #print axioms HDec.QMSplit.Moduli.babaGranathX6'_of_rational
 #print axioms HDec.QMSplit.Moduli.elkiesConicX6_of_t

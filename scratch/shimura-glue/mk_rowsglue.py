@@ -11,10 +11,11 @@ ir, br = split('scratch/shimura-split/Rows.lean')
 ia, ba = split(d+'Adelic.lean')
 _, bn = split(d+'parts/DeligneNew.lean')
 _, bb = split(d+'parts/BundleNew.lean')
+_, bp = split(d+'parts/MobiusProof.lean')
 _, bm = split(d+'parts/MobiusNew.lean')
 imports=[]
-for l in ir+ia:
+for l in ir+ia+['import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine']:
     if l not in imports: imports.append(l)
-out='\n'.join(imports)+'\n'+br+'\n\n/-! # shimura-glue Part A: Adelic.lean -/\n'+ba+'\n\n/-! # shimura-glue Part B: parts/DeligneNew.lean -/\n'+bn+'\n\n/-! # shimura-glue Part C: parts/BundleNew.lean -/\n'+bb+'\n\n/-! # shimura-glue Part D: parts/MobiusNew.lean -/\n'+bm+'\n'
+out='\n'.join(imports)+'\n'+br+'\n\n/-! # shimura-glue Part A: Adelic.lean -/\n'+ba+'\n\n/-! # shimura-glue Part B: parts/DeligneNew.lean -/\n'+bn+'\n\n/-! # shimura-glue Part C: parts/BundleNew.lean -/\n'+bb+'\n\n/-! # shimura-glue Part D: parts/MobiusProof.lean -/\n'+bp+'\n\n/-! # shimura-glue Part E: parts/MobiusNew.lean -/\n'+bm+'\n'
 open(d+'RowsGlue.lean','w').write(out)
 print('ok', out.count('\n'))
