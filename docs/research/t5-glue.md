@@ -84,7 +84,7 @@ leaf the `ℚ̄`-point form; both uses supply it).
 * algebraicity of `g(τ)`: the leaf at `τ' = τ` for every `σ` fixing `ιC(ℚ̄)`, and `fixedAlgebraic` (proved:
   `mem_range_of_fixed`, extension of `X_z ↦ X_z + 1` on a transcendence basis through `z`).
 
-## 2. The CM part: `CMModuli ⇐ ShimuraMainCM + ArtinLift + IdeleLatticeScale`
+## 2. The CM part: `CMModuli ⇐ ShimuraMainCM + AbsArtinSurjectiveQNeg + IdeleLatticeScale`
 
 **Leaf `ShimuraMainCM` (Shimura 1971, Thm 5.4, printed form).** Let `K = ℚ(√−m) ⊂ ℂ` (through `κ`),
 `e : Kˢ → ℚ̄` normalized, `σ ∈ Aut(ℂ)`, `s ∈ 𝔸_K^×` (Mathlib's `IdeleGroup`) with `σ = [s, K]` on `K^ab`
