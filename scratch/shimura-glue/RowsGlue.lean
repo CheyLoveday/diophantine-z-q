@@ -6325,16 +6325,19 @@ theorem smul_map_iff (g : GL (Fin 2) ℚ) (t : OnePoint ℚ) (s : OnePoint Qbar)
   rw [OnePoint.map_smul]
   exact (MulAction.injective _).eq_iff
 
-/-- **LEAF (Baba–Granath, Canad. J. Math. 60 (2008), Thm 2.1 (p. 737), Lemma 3.1 (pp. 739–740) and the
-§3.1 elliptic-order table (p. 740); read by the locator audit: YES), without the `j`-normalization.**
-Some coarse witness of the moduli clause lists carries `π : X₆ → P¹` with
+/-- **LEAF (Baba–Granath, Canad. J. Math. 60 (2008), Thm 2.1 (p. 737) and Lemma 3.1 (pp. 739–740),
+read by the locator audit: YES; with the CM assignment read from the §3.1 elliptic-order table, p. 740),
+without the `j`-normalization.** Some coarse witness of the moduli clause lists carries `π : X₆ → P¹` with
 * the fibre clause (Thm 2.1: the polarized moduli space is `V/W`; two `ℚ̄`-points have the same value
   iff their QM pairs are `Aut(𝒪)`-twists, i.e. `W`-conjugate), and
 * three distinct points `t₄, t₃, t₂₄ ∈ P¹(ℚ)` (Lemma 3.1: `V/W ≅ P¹_ℚ` and the three distinguished images
-  are rational) such that the CM points of discriminants `−4, −3, −24` are exactly the fibres over them
-  (the §3.1 table: each of `CM(−4)`, `CM(−3)`, `CM(−24)` is one `W`-orbit).
-Unlike `BabaGranathX6'` it does not fix the coordinate's values `0, ∞, −16/27` (the normalization the
-audit did not locate in Thm 2.1/Lemma 3.1); that is the Möbius computation `babaGranathX6'_of_rational`. -/
+  are rational) such that the CM points of discriminants `−4, −3, −24` are exactly the fibres over them.
+The last clause (each of `CM(−4)`, `CM(−3)`, `CM(−24)` is one `W`-orbit, over a distinguished point) is read
+from the §3.1 elliptic-order table; locators.md grades that table's row NO for a different claim (the
+ramification indices), and this reading is UNVERIFIED. Unlike `BabaGranathX6'` the leaf does not fix the
+coordinate's values `0, ∞, −16/27` (the normalization the audit did not locate in Thm 2.1/Lemma 3.1); that
+is the Möbius computation `babaGranathX6'_of_rational`. It is implied by `BabaGranathX6'` (take
+`t = 0, ∞, −16/27`). -/
 def BabaGranathRational : Prop :=
   ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X) (π : ToP1 X.left)
@@ -6382,7 +6385,8 @@ witness of the moduli clause lists carries Elkies' coordinate `t : X₆ → X*(6
 * the Kummer description `X₆ = X*(6)(√−t, √(3(t − 1)))` on `ℚ̄`-points, written in the Kummer coordinates
   `X/Z = √−t`, `Y/Z = √(3(t − 1))` (so `Y² + 3X² + 3Z² = 0` and `t = −X²/Z²`): `ConicModelT`.
 Reading (SPECULATIVE): Elkies' statement is about function fields; this is its form on the points of the
-smooth projective model. It does not use Baba–Granath's `j` (the relation `j = 16(t − 1)/27` is the
+smooth projective model. Residue fields pin `t = 1 ↔ D = −4` (the fibre over `t = 1` has residue field
+`ℚ(i)`); the assignment of `0, ∞` to `D = −24, −3` rests on Elkies' text (UNVERIFIED, no network). It does not use Baba–Granath's `j` (the relation `j = 16(t − 1)/27` is the
 Möbius computation in `elkiesConicX6_of_t`). -/
 def ElkiesConicT : Prop :=
   ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
