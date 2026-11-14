@@ -53,6 +53,8 @@
 'HDec.QMSplit.Moduli.pairsLift_of_t5' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.r1r2fpRep_of_printed_t5' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.rows_of_shimuraSplitLeaves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ShimuraGlue.printed_of_deligneComponentsY3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ShimuraGlue.printed_of_deligneComponentsX6' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.deligneComponentsY3_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.deligneComponentsX6_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.shimuraSplitLeaves_of_glue' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -61,12 +63,14 @@
 'HDec.QMSplit.Moduli.babaGranathX6'_of_rational'' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.elkiesConicX6_of_t'' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.QMSplit.Moduli.babaGranathRational_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.QMSplit.Moduli.elkiesConicT_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.babaGranathX6'_of_rational' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.elkiesConicX6_of_t' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.Ray.s6_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShimuraGlue.Ray.reciprocityCanonical_of_rayClass' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves3' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-real	1m48.312s
-user	2m27.438s
-sys	0m3.470s
+real	1m48.338s
+user	2m27.918s
+sys	0m3.727s

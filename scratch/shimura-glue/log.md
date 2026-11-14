@@ -102,3 +102,12 @@
 - ElkiesConicT: OK; residue fields pin t = 1 ↔ D = −4, but 0 vs ∞ for D = −24 vs −3 rests on Elkies' text
   (UNVERIFIED). Applied to report.
 - MobiusCompose: OK. Doc nits (compare_iso gives existence, not uniqueness; §4.3 file reference) applied.
+
+## Step 9: converses and second review
+- Deligne.lean: `printed_of_deligneComponentsY3` (ε = 1), `printed_of_deligneComponentsX6` — COMPILED, standard
+  axioms (deligne_result.txt: 5 axiom lines). The printed leaves are equivalent to shimura-split's leaves.
+- RowsGlue.lean: `babaGranathRational_of : BabaGranathX6' → BabaGranathRational`, `gT_smul` (t = 27j/16 + 1),
+  `elkiesConicT_of : ElkiesConicX6 → ElkiesConicT` — COMPILED (72 axiom lines, all standard).
+- Second read-only review of `RayClassCM` + glue: OK (HasCM* ⇒ com q = 𝒪_k, optimal embedding; conductor 3
+  right; k(y) = ray class field mod 3, leaf weaker; non-vacuous; degrees ℚ(ζ₁₂), ℚ(ζ₃), 12, all ⊇ ζ₃).
+  Wording points applied (k_∞^× in the subgroup; B ramified at 3). RayClass.lean recompiled: standard axioms.

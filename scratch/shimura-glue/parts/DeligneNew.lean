@@ -109,7 +109,52 @@ theorem deligneComponentsX6_of_printed (h : DeligneComponentsX6Printed) :
     exact ⟨s pt⟩
   exact connectedSpace_of_subsingleton c.subsingleton
 
+/-! ### Converses: the printed leaves are equivalent to shimura-split's leaves -/
+
+/-- An idele with the cyclotomic components of `σ` is `cycU σ`. -/
+theorem eq_cycU {σ : Qbar ≃ₐ[ℚ] Qbar} {u : Afˣ}
+    (hu : ∀ v : Place, (u : Af) v = (adicCompletion.padicEquiv (R := ℤ) v).symm
+      ((cyclotomicCharacter Qbar (primesEquiv v) σ.toRingEquiv : ℤ_[primesEquiv v]) :
+        ℚ_[primesEquiv v])) : u = cycU σ.toRingEquiv := by
+  apply Units.ext
+  apply FiniteAdeleRing.ext
+  intro v
+  rw [hu v, cycU_apply]
+
+/-- **Converse (Y₃)**: shimura-split's `DeligneComponentsY3` gives the printed leaf (with `ε = 1`), so the
+printed leaf is equivalent to it and not stronger. -/
+theorem printed_of_deligneComponentsY3 (h : ShimuraSplit.DeligneComponentsY3) :
+    DeligneComponentsY3Printed := by
+  obtain ⟨Y, Φ, h1, c, hc⟩ := h
+  refine ⟨Y, Φ, h1, c.trans pi0K3Equiv.symm.toEquiv, 1, fun σ u hu z => ?_⟩
+  rw [eq_cycU hu]
+  simp only [Equiv.trans_apply, MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, hc, Units.val_one,
+    zpow_one]
+  rw [map_mul]
+  congr 1
+  apply pi0K3Equiv.injective
+  rw [MulEquiv.apply_symm_apply, pi0K3Equiv_mk, chi_cycU ShimuraSplit.card_mu3]
+  rfl
+
+instance : Nonempty (Pi0 Kfull) := ⟨1⟩
+
+/-- **Converse (X₆)**: shimura-split's `DeligneComponentsX6` gives the printed leaf. -/
+theorem printed_of_deligneComponentsX6 (h : HDec.QMSplit.Moduli.DeligneComponentsX6) :
+    DeligneComponentsX6Printed := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6, hc⟩ := h
+  haveI := hc
+  haveI : Nonempty (_root_.ConnectedComponents (ShimuraSplit.baseQbar X)) :=
+    ⟨ConnectedComponents.mk (Classical.arbitrary _)⟩
+  let e : _root_.ConnectedComponents (ShimuraSplit.baseQbar X) ≃ Pi0 Kfull :=
+    ⟨fun _ => 1, fun _ => Classical.arbitrary _, fun _ => Subsingleton.elim _ _,
+      fun _ => Subsingleton.elim _ _⟩
+  exact ⟨Y, Φ, X, Ψ, fY, h1, h6, e, 1, fun σ u hu z => Subsingleton.elim _ _⟩
+
 end ShimuraGlue
+
+#print axioms ShimuraGlue.printed_of_deligneComponentsY3
+#print axioms ShimuraGlue.printed_of_deligneComponentsX6
+
 
 #print axioms ShimuraGlue.deligneComponentsY3_of_printed
 #print axioms ShimuraGlue.deligneComponentsX6_of_printed

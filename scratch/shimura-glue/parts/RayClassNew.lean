@@ -146,8 +146,10 @@ embeds into the ray class field of `k` of conductor `3·𝒪_k` (Tau Ceti's `ray
 *Published statement*: Shimura reciprocity at CM points of the canonical model (Shimura, Ann. of Math. 85
 (1967), Main Thm I; Deligne, Sém. Bourbaki 389 (1971), §3; Milne, *Introduction to Shimura varieties*
 (2005), §12-13; locators UNVERIFIED): for a CM point `x = [h_k, g]` of `Sh_K`, `k(x)` is the class field of
-`k` attached to `k^× · {s ∈ 𝔸_{k,f}^× : ι(s) ∈ gKg⁻¹}`. For `K = K₃` and an optimal embedding of the
-maximal order, `ι(1 + 3𝒪̂_k) ⊆ g(1 + 3𝒪̂)g⁻¹`, so this subgroup contains the ray subgroup of conductor 3 and
+`k` attached to `k^× k_∞^× · {s ∈ 𝔸_{k,f}^× : ι(s) ∈ gKg⁻¹}`. For `K = K₃` and an optimal embedding of the
+maximal order (`HasCM*` means `End` contains `𝒪_k`, which is maximal), `ι(1 + 3𝒪̂_k) ⊆ g(1 + 3𝒪̂)g⁻¹` (at 2
+and 3, where `B` ramifies, `𝒪_p` is the unique maximal order of the division algebra and `K₃` at 3 is
+`1 + 3𝒪₃`), so this subgroup contains the ray subgroup of conductor 3 and
 `k(x) ⊆` the ray class field of conductor 3; `ℚ(x) ⊆ k(x)`. *Form*: a **consequence** (the class field is
 bounded by the ray class field, and only the embedding of `ℚ(x)` is kept). Lemma QP as for `R1fp`. -/
 def RayClassCM : Prop :=

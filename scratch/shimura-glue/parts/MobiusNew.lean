@@ -187,6 +187,48 @@ theorem elkiesConicX6_of_t (h : ElkiesConicT) (hM : MobiusCompose) : ElkiesConic
   · rw [hπ', gJ_smul, hp x p hx]; simp; try ring
   · rw [hπ', gJ_smul, hi x b hx]; rfl
 
+/-! ### Converses: the new leaves follow from the old ones (so they are not stronger) -/
+
+/-- `BabaGranathRational` from `BabaGranathX6'` (take `t = 0, ∞, −16/27`). -/
+theorem babaGranathRational_of (h : BabaGranathX6') : BabaGranathRational := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6, π₆, h2⟩ := h
+  refine ⟨Y, Φ, X, Ψ, fY, π₆, ((0 : ℚ) : OnePoint ℚ), OnePoint.infty, ((-16 / 27 : ℚ) : OnePoint ℚ),
+    h1, h6, OnePoint.coe_ne_infty _, ?_, (OnePoint.coe_ne_infty _).symm, fun x x' P Q hP hQ => ?_⟩
+  · intro e; have := OnePoint.coe_injective e; norm_num at this
+  · obtain ⟨hf, h4, h3, h24⟩ := h2 x x' P Q hP hQ
+    refine ⟨hf, ?_, ?_, ?_⟩
+    · rw [h4]; simp
+    · rw [h3]; rfl
+    · rw [h24]; simp
+
+/-- `t = 27 j/16 + 1`. -/
+noncomputable def gT : GL (Fin 2) ℚ := gl2 (27 / 16) 1 0 1 (by norm_num)
+
+theorem gT_smul (s : OnePoint Qbar) :
+    Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) gT • s =
+      s.map (fun z : Qbar => 27 * z / 16 + 1) := by
+  induction s using OnePoint.rec with
+  | infty => rw [OnePoint.smul_infty_eq_ite]; simp [Matrix.GeneralLinearGroup.map_apply, gT, gl2_apply]
+  | coe z =>
+    rw [OnePoint.smul_some_eq_ite]
+    simp [Matrix.GeneralLinearGroup.map_apply, gT, gl2_apply]
+    ring
+
+/-- `ElkiesConicT` from `ElkiesConicX6` (`t = 27 j/16 + 1`). -/
+theorem elkiesConicT_of (h : ElkiesConicX6) : ElkiesConicT := by
+  obtain ⟨Y, Φ, X, Ψ, fY, π₆, h1, h6, h2, e, he, hp, hi⟩ := h
+  obtain ⟨t, ht⟩ := mobiusCompose X π₆ gT
+  refine ⟨Y, Φ, X, Ψ, fY, t, h1, h6, fun x x' P Q hP hQ => ?_, e, he, fun x p hx => ?_,
+    fun x b hx => ?_⟩
+  · obtain ⟨hf, h4, h3, h24⟩ := h2 x x' P Q hP hQ
+    refine ⟨?_, fun c => ?_, fun c => ?_, fun c => ?_⟩
+    · rw [ht, ht, (MulAction.injective _).eq_iff]; exact hf
+    · rw [ht, gT_smul, h24 c]; simp; try ring
+    · rw [ht, gT_smul, h4 c]; simp
+    · rw [ht, gT_smul, h3 c]; rfl
+  · rw [ht, gT_smul, hp x p hx]; simp; try ring
+  · rw [ht, gT_smul, hi x b hx]; rfl
+
 /-- **`BabaGranathX6'` from `BabaGranathRational` alone** (the Möbius glue is proved:
 `mobiusCompose`). -/
 theorem babaGranathX6'_of_rational' (h : BabaGranathRational) : BabaGranathX6' :=
@@ -224,6 +266,8 @@ end HDec.QMSplit.Moduli
 #print axioms HDec.QMSplit.Moduli.babaGranathX6'_of_rational'
 #print axioms HDec.QMSplit.Moduli.elkiesConicX6_of_t'
 #print axioms HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves2
+#print axioms HDec.QMSplit.Moduli.babaGranathRational_of
+#print axioms HDec.QMSplit.Moduli.elkiesConicT_of
 
 example : HDec.QMSplit.Moduli.ShimuraGlueLeaves2 →
     HDec.LeafAdopt.R1R2fpRep ∧ _root_.LeafQM.AV.R1rec ∧ _root_.LeafQM.AV.R5fp ∧

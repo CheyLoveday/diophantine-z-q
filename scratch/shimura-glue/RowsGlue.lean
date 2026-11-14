@@ -5644,7 +5644,52 @@ theorem deligneComponentsX6_of_printed (h : DeligneComponentsX6Printed) :
     exact ⟨s pt⟩
   exact connectedSpace_of_subsingleton c.subsingleton
 
+/-! ### Converses: the printed leaves are equivalent to shimura-split's leaves -/
+
+/-- An idele with the cyclotomic components of `σ` is `cycU σ`. -/
+theorem eq_cycU {σ : Qbar ≃ₐ[ℚ] Qbar} {u : Afˣ}
+    (hu : ∀ v : Place, (u : Af) v = (adicCompletion.padicEquiv (R := ℤ) v).symm
+      ((cyclotomicCharacter Qbar (primesEquiv v) σ.toRingEquiv : ℤ_[primesEquiv v]) :
+        ℚ_[primesEquiv v])) : u = cycU σ.toRingEquiv := by
+  apply Units.ext
+  apply FiniteAdeleRing.ext
+  intro v
+  rw [hu v, cycU_apply]
+
+/-- **Converse (Y₃)**: shimura-split's `DeligneComponentsY3` gives the printed leaf (with `ε = 1`), so the
+printed leaf is equivalent to it and not stronger. -/
+theorem printed_of_deligneComponentsY3 (h : ShimuraSplit.DeligneComponentsY3) :
+    DeligneComponentsY3Printed := by
+  obtain ⟨Y, Φ, h1, c, hc⟩ := h
+  refine ⟨Y, Φ, h1, c.trans pi0K3Equiv.symm.toEquiv, 1, fun σ u hu z => ?_⟩
+  rw [eq_cycU hu]
+  simp only [Equiv.trans_apply, MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, hc, Units.val_one,
+    zpow_one]
+  rw [map_mul]
+  congr 1
+  apply pi0K3Equiv.injective
+  rw [MulEquiv.apply_symm_apply, pi0K3Equiv_mk, chi_cycU ShimuraSplit.card_mu3]
+  rfl
+
+instance : Nonempty (Pi0 Kfull) := ⟨1⟩
+
+/-- **Converse (X₆)**: shimura-split's `DeligneComponentsX6` gives the printed leaf. -/
+theorem printed_of_deligneComponentsX6 (h : HDec.QMSplit.Moduli.DeligneComponentsX6) :
+    DeligneComponentsX6Printed := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6, hc⟩ := h
+  haveI := hc
+  haveI : Nonempty (_root_.ConnectedComponents (ShimuraSplit.baseQbar X)) :=
+    ⟨ConnectedComponents.mk (Classical.arbitrary _)⟩
+  let e : _root_.ConnectedComponents (ShimuraSplit.baseQbar X) ≃ Pi0 Kfull :=
+    ⟨fun _ => 1, fun _ => Classical.arbitrary _, fun _ => Subsingleton.elim _ _,
+      fun _ => Subsingleton.elim _ _⟩
+  exact ⟨Y, Φ, X, Ψ, fY, h1, h6, e, 1, fun σ u hu z => Subsingleton.elim _ _⟩
+
 end ShimuraGlue
+
+#print axioms ShimuraGlue.printed_of_deligneComponentsY3
+#print axioms ShimuraGlue.printed_of_deligneComponentsX6
+
 
 #print axioms ShimuraGlue.deligneComponentsY3_of_printed
 #print axioms ShimuraGlue.deligneComponentsX6_of_printed
@@ -6430,6 +6475,48 @@ theorem elkiesConicX6_of_t (h : ElkiesConicT) (hM : MobiusCompose) : ElkiesConic
   · rw [hπ', gJ_smul, hp x p hx]; simp; try ring
   · rw [hπ', gJ_smul, hi x b hx]; rfl
 
+/-! ### Converses: the new leaves follow from the old ones (so they are not stronger) -/
+
+/-- `BabaGranathRational` from `BabaGranathX6'` (take `t = 0, ∞, −16/27`). -/
+theorem babaGranathRational_of (h : BabaGranathX6') : BabaGranathRational := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6, π₆, h2⟩ := h
+  refine ⟨Y, Φ, X, Ψ, fY, π₆, ((0 : ℚ) : OnePoint ℚ), OnePoint.infty, ((-16 / 27 : ℚ) : OnePoint ℚ),
+    h1, h6, OnePoint.coe_ne_infty _, ?_, (OnePoint.coe_ne_infty _).symm, fun x x' P Q hP hQ => ?_⟩
+  · intro e; have := OnePoint.coe_injective e; norm_num at this
+  · obtain ⟨hf, h4, h3, h24⟩ := h2 x x' P Q hP hQ
+    refine ⟨hf, ?_, ?_, ?_⟩
+    · rw [h4]; simp
+    · rw [h3]; rfl
+    · rw [h24]; simp
+
+/-- `t = 27 j/16 + 1`. -/
+noncomputable def gT : GL (Fin 2) ℚ := gl2 (27 / 16) 1 0 1 (by norm_num)
+
+theorem gT_smul (s : OnePoint Qbar) :
+    Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar) gT • s =
+      s.map (fun z : Qbar => 27 * z / 16 + 1) := by
+  induction s using OnePoint.rec with
+  | infty => rw [OnePoint.smul_infty_eq_ite]; simp [Matrix.GeneralLinearGroup.map_apply, gT, gl2_apply]
+  | coe z =>
+    rw [OnePoint.smul_some_eq_ite]
+    simp [Matrix.GeneralLinearGroup.map_apply, gT, gl2_apply]
+    ring
+
+/-- `ElkiesConicT` from `ElkiesConicX6` (`t = 27 j/16 + 1`). -/
+theorem elkiesConicT_of (h : ElkiesConicX6) : ElkiesConicT := by
+  obtain ⟨Y, Φ, X, Ψ, fY, π₆, h1, h6, h2, e, he, hp, hi⟩ := h
+  obtain ⟨t, ht⟩ := mobiusCompose X π₆ gT
+  refine ⟨Y, Φ, X, Ψ, fY, t, h1, h6, fun x x' P Q hP hQ => ?_, e, he, fun x p hx => ?_,
+    fun x b hx => ?_⟩
+  · obtain ⟨hf, h4, h3, h24⟩ := h2 x x' P Q hP hQ
+    refine ⟨?_, fun c => ?_, fun c => ?_, fun c => ?_⟩
+    · rw [ht, ht, (MulAction.injective _).eq_iff]; exact hf
+    · rw [ht, gT_smul, h24 c]; simp; try ring
+    · rw [ht, gT_smul, h4 c]; simp
+    · rw [ht, gT_smul, h3 c]; rfl
+  · rw [ht, gT_smul, hp x p hx]; simp; try ring
+  · rw [ht, gT_smul, hi x b hx]; rfl
+
 /-- **`BabaGranathX6'` from `BabaGranathRational` alone** (the Möbius glue is proved:
 `mobiusCompose`). -/
 theorem babaGranathX6'_of_rational' (h : BabaGranathRational) : BabaGranathX6' :=
@@ -6467,6 +6554,8 @@ end HDec.QMSplit.Moduli
 #print axioms HDec.QMSplit.Moduli.babaGranathX6'_of_rational'
 #print axioms HDec.QMSplit.Moduli.elkiesConicX6_of_t'
 #print axioms HDec.QMSplit.Moduli.rows_of_shimuraGlueLeaves2
+#print axioms HDec.QMSplit.Moduli.babaGranathRational_of
+#print axioms HDec.QMSplit.Moduli.elkiesConicT_of
 
 example : HDec.QMSplit.Moduli.ShimuraGlueLeaves2 →
     HDec.LeafAdopt.R1R2fpRep ∧ _root_.LeafQM.AV.R1rec ∧ _root_.LeafQM.AV.R5fp ∧
@@ -6625,8 +6714,10 @@ embeds into the ray class field of `k` of conductor `3·𝒪_k` (Tau Ceti's `ray
 *Published statement*: Shimura reciprocity at CM points of the canonical model (Shimura, Ann. of Math. 85
 (1967), Main Thm I; Deligne, Sém. Bourbaki 389 (1971), §3; Milne, *Introduction to Shimura varieties*
 (2005), §12-13; locators UNVERIFIED): for a CM point `x = [h_k, g]` of `Sh_K`, `k(x)` is the class field of
-`k` attached to `k^× · {s ∈ 𝔸_{k,f}^× : ι(s) ∈ gKg⁻¹}`. For `K = K₃` and an optimal embedding of the
-maximal order, `ι(1 + 3𝒪̂_k) ⊆ g(1 + 3𝒪̂)g⁻¹`, so this subgroup contains the ray subgroup of conductor 3 and
+`k` attached to `k^× k_∞^× · {s ∈ 𝔸_{k,f}^× : ι(s) ∈ gKg⁻¹}`. For `K = K₃` and an optimal embedding of the
+maximal order (`HasCM*` means `End` contains `𝒪_k`, which is maximal), `ι(1 + 3𝒪̂_k) ⊆ g(1 + 3𝒪̂)g⁻¹` (at 2
+and 3, where `B` ramifies, `𝒪_p` is the unique maximal order of the division algebra and `K₃` at 3 is
+`1 + 3𝒪₃`), so this subgroup contains the ray subgroup of conductor 3 and
 `k(x) ⊆` the ray class field of conductor 3; `ℚ(x) ⊆ k(x)`. *Form*: a **consequence** (the class field is
 bounded by the ray class field, and only the embedding of `ℚ(x)` is kept). Lemma QP as for `R1fp`. -/
 def RayClassCM : Prop :=
