@@ -8,7 +8,12 @@ in Lean, or reduce to theorems in their printed form, leaves the list.
 
 ## What to contribute
 
-Pick a hypothesis in [OPEN.md](OPEN.md) whose status is open (or coordinate on the linked issue). Then either:
+Pick a hypothesis in [OPEN.md](OPEN.md) whose status is open, and claim it before you start: comment
+`Claiming <field> at <commit>` on [issue #14](https://github.com/Deicyde/diophantine-z-q/issues/14), with the
+field name exactly as OPEN.md shows it and the commit you start from, or open a draft pull request that links
+#14 with that line in its body. Hold one claim at a time to begin with; if you stop, comment
+`Releasing <field>: <what blocked you>`. The full claim rule, including lapses, is in the root
+[CONTRIBUTING.md](../../CONTRIBUTING.md#choose-and-claim-one-statement). Then either:
 
 1. **Prove it.** Write a theorem whose type is exactly the hypothesis's statement:
 
@@ -18,26 +23,29 @@ Pick a hypothesis in [OPEN.md](OPEN.md) whose status is open (or coordinate on t
    ```
 
 2. **Reduce it to published theorems.** State each theorem you use as a `def … : Prop` in its printed form,
-   over genuine definitions (Mathlib's, or the repository's), with a docstring giving the exact source, and
-   prove the hypothesis from them:
+   over genuine definitions (Mathlib's, or the repository's), with a docstring giving the edition, page and
+   display you read (or UNVERIFIED if nobody has read it), and prove the hypothesis from them:
 
    ```lean
-   /-- Bosch–Lütkebohmert–Raynaud, *Néron models*, §1.2 Prop. 4 (printed form). -/
+   /-- Bosch–Lütkebohmert–Raynaud, *Néron models* (Springer, 1990), p. <page>, §1.2 Prop. 4
+   (printed form). -/
    def BLR_1_2_4 : Prop := ...
 
    theorem neronLocalizesDVR_of_printed (h : BLR_1_2_4) : ReductGlue.NeronLocalizesDVR := ...
    ```
 
    This helps when the hypothesis is GLUE (a consequence, a composite, or project glue) and the new statements
-   are published leaves: the strict count in OPEN.md then drops. A new statement must be the published theorem
-   or a consequence of it, never stronger, and never over a structure invented for the purpose.
+   are published leaves. Each new printed leaf enters OPEN.md with a pending-reading flag, and the strict count
+   drops once a statement check ([STATEMENT-CHECKS.md](STATEMENT-CHECKS.md)) clears it. A new statement must be
+   the published theorem or a consequence of it, never stronger, and never over a structure invented for the
+   purpose.
 
 Never change a hypothesis's statement. If you find one false, vacuous, or stronger than its source, report it
 (with a corrected statement) on the issue: that is a valid and useful result.
 
 ## Where it goes
 
-A new file `ZInQKernel/Contrib/OneProof/<Name>.lean`, importing `ZInQKernel.OneProof.Main` (or the module that
+A new file `ZInQKernel/Contrib/OneProof/<StatementName>.lean`, importing `ZInQKernel.OneProof.Main` (or the module that
 defines the statement you prove) and whatever else you need. Proofs only in new files: do not edit existing
 modules. Keep a file under about 150 KB. Open a pull request against this fork's `main`.
 
@@ -48,41 +56,88 @@ Build, then run `#discharges` from a scratch file:
 ```lean
 import ZInQKernel.OneProof.Main
 import ZInQKernel.OneProof.Discharges
-import ZInQKernel.Contrib.OneProof.<Name>
+import ZInQKernel.Contrib.OneProof.<StatementName>
 
 #discharges
 ```
 
 ```
-lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.<Name>
+lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.<StatementName>
 lake env lean <scratch file>
 ```
 
 For every theorem in your file it prints which open hypotheses it proves, the hypotheses it still assumes
 (your new leaves), and its axioms. A statement change does not match. A proof using `sorry` is flagged.
 
-The bar for merging is that the Lean compiles with only the standard axioms and `#discharges` shows the
-hypothesis proved. The maintainers then fold it into the single proof: a new bundle generation without that
-hypothesis (and with your leaves, if any), `frozenTarget` switched to it, the build re-checked, and OPEN.md
-regenerated.
+You may not have to run it yourself. For a pull request that only adds files under
+`ZInQKernel/Contrib/OneProof/`, the project runs the same check on its head commit, in a sandbox with no secrets
+and no access to project machines (`scripts/one_proof/sandbox/README.md`), and posts the result on the pull
+request. A pull request that changes anything else is out of scope for the automatic check. The automatic check
+is being set up: until the project has posted its first check, include your own `#discharges` output in the
+pull request. The repository's default `lake build` does not compile `ZInQKernel/Contrib/OneProof`, so a green
+CI check alone says nothing about a contribution.
+
+The automatic result is advisory, and a person reads every file before it is merged. If your file has code that
+runs at build time (`#eval`, `run_cmd`, `initialize`, new `syntax`, `notation`, macros or elaborators), the
+automatic result does not count until a person has read the file, since such code could print a forged result;
+say in the pull request why it is needed.
+
+The bar for merging:
+
+* the Lean compiles with only the standard axioms, and the discharge check on the pull request's head commit
+  shows the hypothesis proved;
+* a person has read the file for code that runs at build time;
+* each new printed leaf has a row in [`docs/research/locators.md`](../research/locators.md) and enters
+  kinds.tsv with a pending-reading flag;
+* Jack merges.
+
+Merges into this fork carry no Protocol B review (the original repository's review protocol); a result is
+reviewed again when it moves to the original repository. The integrator then folds it into the single proof: a
+new bundle generation without that hypothesis (and with your leaves, if any), `frozenTarget` switched to it, the
+build re-checked, and OPEN.md regenerated.
+
+## What it costs to build
+
+You do not need to build anything to contribute. If you want to, these are the measured figures so far.
+`lake exe cache get` fetches only Mathlib's compiled files; nothing of this project is cached, so its own files
+build from source.
+
+| what was built | cold or partial | commit | measured |
+| --- | --- | --- | --- |
+| `lake build +ZInQKernel.OneProof.Main` on the project's build machines | not recorded | `1e30d4b2` | 11,655 Lake jobs in 20 minutes |
+| `lake build +ZInQKernel.OneProof.Main` on the project's build machines | not recorded | `4c1cc906` | 11,813 Lake jobs |
+| `lake build +ZInQKernel.OneProof.Main` on the project's build machines | not recorded | `053cbad0` | 12.5 minutes |
+| `lake build +ZInQKernel.OneProof.Main` on the project's build machines, for leaf-fold4 ([`docs/research/leaf-fold4.md`](../research/leaf-fold4.md)) | not recorded | not recorded | 26 minutes |
+| `lake build +ZInQKernel.OneProof.Main` at w66, the x6 fold ([`docs/research/x6-fold.md`](../research/x6-fold.md)) | partial rebuild | `ecdb5d846` | 12,916 Lake jobs in 8.5 minutes |
+| the contributions and OneProof at w63 | not recorded | `b5ff0474` | 12,913 Lake jobs |
+| the Tau Ceti dependency tree | cold | not recorded | 6,846 Lake jobs in 8 minutes 4 seconds; 3.4 GB |
+| one large file compiled against an already built `ZInQKernel.OneProof.Main` | partial (that file only) | not recorded | about 8 to 9 GB of memory |
+| upstream's kernel job on a GitHub-hosted runner | not recorded | not recorded | needed a 180-minute timeout and 8 GiB of extra swap |
+
+A cold measurement of `lake build +ZInQKernel.OneProof.Main` on a GitHub-hosted runner will be added to this
+table. On a laptop a full build is a bigger investment. A measured row from your machine (commit, cold or partial,
+cores, memory cap, peak memory, disk, Lake jobs, wall-clock) is welcome and credited.
 
 ## A worked example
 
 `scratch/contrib-kit/DischargesTest.lean` runs `#discharges` on three theorems, against the current open
-hypotheses:
+hypotheses. Its output (generated from `scratch/contrib-kit/DischargesTest-output.txt`):
 
+<!-- worked-example:begin -->
 ```
-DISCHARGES [OpenAddedLeaves11.x6ConicModel] by t1
-  still assumes: [HDec.X6Kummer.X6ConicModel]
+scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
+DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
+  still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves10.bdRInvariants] by t3 (uses sorry: not a proof)
+DISCHARGES [OpenResearchLeaves14.r9a] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 67 open hypotheses, 3 theorems checked, 2 discharge one
+#discharges: 74 open hypotheses, 3 theorems checked, 2 discharge one
 ```
+<!-- worked-example:end -->
 
-`t1` assumes the hypothesis it proves, so it reduces nothing; `t3` matches a statement with its own binders
-(`∀ p [Fact p.Prime], …`) but uses `sorry`; `t2 : True` matches nothing.
+`t1` assumes the hypothesis it proves (`quotientP1Coordinate`), so it reduces nothing; `t2 : True` matches
+nothing; `t3` matches an open hypothesis but uses `sorry`, so it is flagged.
 
 A real contribution in this shape: cm24-value (`docs/research/cm24-value.md`) proved
 `IgusaCMValue24`, Lin–Yang's Igusa vector at the CM point of discriminant −24, from Mathlib's Jacobi theta
@@ -98,8 +153,33 @@ hypothesis left the list.
   `scripts/one_proof/OpenStatements.lean`.
 * [kinds.tsv](kinds.tsv): the classification of each hypothesis (LEAF or GLUE, kind, flag, source, review). The
   counts in OPEN.md and in the fold reports come from it.
-* [claims.tsv](claims.tsv): who is working on what. To claim a hypothesis, say so on the linked issue or open a
-  draft pull request; the maintainers update claims.tsv.
+* [claims.tsv](claims.tsv): who holds what. To claim a hypothesis, comment `Claiming <field> at <commit>` on
+  [issue #14](https://github.com/Deicyde/diophantine-z-q/issues/14) or open a draft pull request that links #14;
+  claims.tsv is regenerated from the claim lines (`scripts/claims/`).
+* [reviews.tsv](reviews.tsv): statement checks against the printed sources, with verdicts and rulings.
+* [credits.tsv](credits.tsv): who contributed what (proofs, reductions, statement checks and fixes, reviews,
+  setup), and in which fold.
+* [fold-queue.tsv](fold-queue.tsv): merged contributions waiting for the next fold.
+* [frontier-crosswalk.tsv](frontier-crosswalk.tsv): frontier IDs (H-101, T-3, Z-1) mapped to field names.
+* [pages-wanted.md](pages-wanted.md): printed pages that someone needs to read (generated from the flags).
+* [STATEMENT-CHECKS.md](STATEMENT-CHECKS.md): checking a statement against its printed source, no Lean needed.
 * `scripts/one_proof/render_open.py`: regenerates OPEN.md (`--check` fails if a fold changed the hypotheses
   without updating kinds.tsv).
+* `scripts/one_proof/sandbox/`: the isolated discharge check the project runs on pull requests.
+* `scripts/claims/`: reads the claim lines and regenerates claims.tsv.
 * `docs/research/leaf-fold*.md`: the fold reports, with what each fold removed and added.
+
+## After a fold (for the integrator)
+
+1. Regenerate `open-statements.json` (`scripts/one_proof/OpenStatements.lean`).
+2. Run `scratch/contrib-kit/DischargesTest.lean` and save its output to `scratch/contrib-kit/DischargesTest-output.txt`.
+3. Fill the new kinds.tsv columns (packet, label, tier, flag_class, area_issue) for the new rows; each new
+   printed leaf gets flag class pending-reading.
+4. Update the ledgers: the folded rows' status in fold-queue.tsv, a credits.tsv row (with fold and commit) for
+   each folded contribution, and any recorded readings in reviews.tsv.
+5. Run `scripts/one_proof/render_open.py`, then `scripts/one_proof/render_open.py --check`.
+
+## Who answers
+
+Replies, reviews and posted checks from the project may be written by AI agents that the project runs; each one
+carries a note saying so. Jack McCarthy is accountable for them.
