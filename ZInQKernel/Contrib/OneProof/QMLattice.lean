@@ -523,5 +523,67 @@ theorem end0_equiv {M C : Type} [Ring M] [Ring C] [Algebra ℚ C] (Ψ : M →+* 
       | tmul t n =>
         rw [Algebra.TensorProduct.tmul_mul_tmul, he, he, he, map_mul, smul_mul_smul_comm]
 
+open HSyn.G0Split.FibreQM in
+/-- **The analytic representation, normalized** (from the same inputs as `com_embed`): a ring embedding
+`ρ : End(A) → End_ℂ(ℂ²)` with `ρ(ι(a)) = ι(a)` and image exactly the maps preserving
+`Λ_τ = ι(𝒪)(τ, 1)ᵀ`. -/
+theorem unif_conj (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (A : PkgI3.AbVar ℂ) (hA : A.dim = 2) (q : LeafQM.AV.QMStr A) :
+    ∃ (τ : ℂ) (_ : 0 < τ.im) (ρ : PkgI3.AbVar.End A →+* Module.End ℂ (Fin 2 → ℂ)),
+      Function.Injective ρ ∧ (∀ a z, ρ (q.iota a) z = act (a : B) z) ∧
+      ∀ N : Module.End ℂ (Fin 2 → ℂ),
+        (∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) ↔ ∃ e, ρ e = N := by
+  have hE : UniformizationExistsT35 := AvSplit.Final.h38 hU hM
+  have hR : T11aRiemannEnd := ZInQ.HomUnify.t11a_riemannEnd_of_corr (AvSplit.Final.h69 hU hG)
+  have hL : QMLatticeAlgebra :=
+    qmLatticeAlgebra_of_free (qmLatticeFree_of qmSkolemNoetherC_proof QMSplit.CNO.qmClassNumberOne_proof)
+  obtain ⟨Λ, Φu, hd, hlat, hΦ⟩ := hE ℂ A (RingHom.id ℂ) 2 hA
+  haveI := hd
+  obtain ⟨ρ, hρ, hpres⟩ := unif_ring_hom hR A hA Λ Φu hΦ
+  obtain ⟨τ, hτ, Fl, hF, hFρ⟩ := hL Λ hlat (ρ.comp q.iota) (fun a z hz => hpres (q.iota a) z hz)
+  have hΛ : ∀ z, z ∈ Λ ↔ Fl z ∈ FibreQMNorm.qmOrbit ![τ, 1] := by
+    intro z
+    rw [← FibreQMNorm.qmLattice_eq_orbit hτ.ne', ← hF]
+    constructor
+    · intro h; exact ⟨z, h, rfl⟩
+    · rintro ⟨w, hw, he⟩
+      have : w = z := Fl.injective he
+      rw [← this]; exact hw
+  have hT11 := hR A 2 Λ Φu hA hΦ
+  have hρinj : Function.Injective ρ := fun e e' h =>
+    (hT11.1 (ρ e) (hpres e)).unique (hρ e) (fun z => by rw [h]; exact hρ e' z)
+  have hρsurj : ∀ N : Module.End ℂ (Fin 2 → ℂ), (∀ z ∈ Λ, N z ∈ Λ) → ∃ e, ρ e = N := by
+    intro N hN
+    obtain ⟨f, hf, -⟩ := hT11.1 N hN
+    exact ⟨f, lift_unique hΦ (fun z => by rw [hρ, hf])⟩
+  let ρ' : PkgI3.AbVar.End A →+* Module.End ℂ (Fin 2 → ℂ) :=
+    { toFun := fun e => Fl.toLinearMap ∘ₗ ρ e ∘ₗ Fl.symm.toLinearMap
+      map_one' := LinearMap.ext fun z => by simp
+      map_mul' := fun e e' => LinearMap.ext fun z => by simp [map_mul]
+      map_zero' := LinearMap.ext fun z => by simp
+      map_add' := fun e e' => LinearMap.ext fun z => by simp [map_add] }
+  have hρ' : ∀ e z, ρ' e z = Fl (ρ e (Fl.symm z)) := fun e z => rfl
+  refine ⟨τ, hτ, ρ', fun e e' h => hρinj ?_, fun a z => ?_, fun N => ⟨fun hN => ?_, ?_⟩⟩
+  · refine LinearMap.ext fun w => ?_
+    have := congrArg (fun T : Module.End ℂ (Fin 2 → ℂ) => Fl.symm (T (Fl w))) h
+    simpa [hρ'] using this
+  · rw [hρ']
+    have := hFρ a (Fl.symm z)
+    rw [LinearEquiv.apply_symm_apply] at this
+    exact this
+  · obtain ⟨e, he⟩ := hρsurj (Fl.symm.toLinearMap ∘ₗ N ∘ₗ Fl.toLinearMap) (fun z hz => by
+      rw [hΛ]
+      simpa using hN _ ((hΛ z).1 hz))
+    refine ⟨e, LinearMap.ext fun z => ?_⟩
+    rw [hρ', he]
+    simp
+  · rintro ⟨e, rfl⟩ z hz
+    rw [hρ']
+    rw [← hΛ]
+    apply hpres
+    rw [hΛ]
+    simpa using hz
+
 end HDec.QMLattice
 
