@@ -481,4 +481,107 @@ theorem exists_vt {n M d : ℕ} (hn : 0 < n) (hn2 : 2 ∣ n) (hM2 : 2 ∣ M) (hd
 
 end Transport
 
+/-! ## Part 5. Weierstrass values: scaling, periodicity, the two orbits of points -/
+
+/-- `(cω₁, cω₂)`. -/
+def ppMul (c : ℂ) (hc : c ≠ 0) (P : PeriodPair) : PeriodPair :=
+  ⟨c * P.ω₁, c * P.ω₂, by
+    rw [LinearIndependent.pair_iff]
+    intro s t h
+    have h1 : c * (s • P.ω₁ + t • P.ω₂) = 0 := by
+      simp only [Complex.real_smul] at h ⊢; linear_combination h
+    have h2 : s • P.ω₁ + t • P.ω₂ = 0 := by
+      rcases mul_eq_zero.1 h1 with h' | h'
+      · exact absurd h' hc
+      · exact h'
+    exact (LinearIndependent.pair_iff.1 P.indep) s t h2⟩
+
+theorem ppMul_isScale (c : ℂ) (hc : c ≠ 0) (P : PeriodPair) : IsScale (ppMul c hc P) P c := by
+  refine ⟨hc, ?_⟩
+  ext x
+  simp only [SetLike.mem_coe, PeriodPair.mem_lattice, Set.mem_smul_set, smul_eq_mul, ppMul]
+  constructor
+  · rintro ⟨a, b, rfl⟩
+    exact ⟨a * P.ω₁ + b * P.ω₂, ⟨a, b, rfl⟩, by ring⟩
+  · rintro ⟨y, ⟨a, b, rfl⟩, rfl⟩
+    exact ⟨a, b, by ring⟩
+
+theorem wp_congr (P : PeriodPair) {z z' : ℂ} (a b : ℤ) (h : z = z' + (a * P.ω₁ + b * P.ω₂)) :
+    P.weierstrassP z = P.weierstrassP z' := by
+  rw [h, P.weierstrassP_add_coe z' ⟨a * P.ω₁ + b * P.ω₂, PeriodPair.mem_lattice.2 ⟨a, b, rfl⟩⟩]
+
+theorem wp_congr_neg (P : PeriodPair) {z z' : ℂ} (a b : ℤ) (h : z = -z' + (a * P.ω₁ + b * P.ω₂)) :
+    P.weierstrassP z = P.weierstrassP z' := by
+  rw [wp_congr P a b h, PeriodPair.weierstrassP_neg]
+
+theorem odd_mod_eight {q : ℤ} (hq : Odd q) :
+    q = 8 * (q / 8) + 1 ∨ q = 8 * (q / 8) + 3 ∨ q = 8 * (q / 8) + 5 ∨ q = 8 * (q / 8) + 7 := by
+  obtain ⟨k, rfl⟩ := hq
+  omega
+
+/-- **The orbit of `(τ/8, 3τ/8, 1/32 + τ/8)` in `⟨1/16, τ⟩`** under `τ/8 ↦ qτ/8`, `q` odd. -/
+theorem wp16_cases (τ : UpperHalfPlane) {q : ℤ} (hq : Odd q) :
+    let P := ppM 16 (by norm_num) τ
+    (P.weierstrassP (q * τ / 8) = P.weierstrassP (τ / 8) ∧
+      P.weierstrassP (3 * q * τ / 8) = P.weierstrassP (3 * τ / 8) ∧
+      P.weierstrassP (1 / 32 + q * τ / 8) = P.weierstrassP (1 / 32 + τ / 8)) ∨
+    (P.weierstrassP (q * τ / 8) = P.weierstrassP (3 * τ / 8) ∧
+      P.weierstrassP (3 * q * τ / 8) = P.weierstrassP (τ / 8) ∧
+      P.weierstrassP (1 / 32 + q * τ / 8) = P.weierstrassP (1 / 32 + 3 * τ / 8)) := by
+  intro P
+  set k := q / 8
+  have hω : P.ω₁ = 1 / 16 ∧ P.ω₂ = τ := ⟨by simp [P, ppM], rfl⟩
+  rcases odd_mod_eight hq with h | h | h | h
+  · left
+    have hc : (q : ℂ) = 8 * k + 1 := by exact_mod_cast h
+    refine ⟨wp_congr P 0 k ?_, wp_congr P 0 (3 * k) ?_, wp_congr P 0 k ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+  · right
+    have hc : (q : ℂ) = 8 * k + 3 := by exact_mod_cast h
+    refine ⟨wp_congr P 0 k ?_, wp_congr P 0 (3 * k + 1) ?_, wp_congr P 0 k ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+  · right
+    have hc : (q : ℂ) = 8 * k + 5 := by exact_mod_cast h
+    refine ⟨wp_congr_neg P 0 (k + 1) ?_, wp_congr_neg P 0 (3 * k + 2) ?_, wp_congr_neg P 1 (k + 1) ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+  · left
+    have hc : (q : ℂ) = 8 * k + 7 := by exact_mod_cast h
+    refine ⟨wp_congr_neg P 0 (k + 1) ?_, wp_congr_neg P 0 (3 * k + 3) ?_, wp_congr_neg P 1 (k + 1) ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+
+/-- **The orbit of `(1/16, 3/16, τ/2 + 1/16)` in `⟨1/2, τ⟩`** under `1/16 ↦ p/16`, `p` odd. -/
+theorem wp2_cases (τ : UpperHalfPlane) {p : ℤ} (hp : Odd p) :
+    let P := ppM 2 (by norm_num) τ
+    (P.weierstrassP (p / 16) = P.weierstrassP (1 / 16) ∧
+      P.weierstrassP (3 * p / 16) = P.weierstrassP (3 / 16) ∧
+      P.weierstrassP (τ / 2 + p / 16) = P.weierstrassP (τ / 2 + 1 / 16)) ∨
+    (P.weierstrassP (p / 16) = P.weierstrassP (3 / 16) ∧
+      P.weierstrassP (3 * p / 16) = P.weierstrassP (1 / 16) ∧
+      P.weierstrassP (τ / 2 + p / 16) = P.weierstrassP (τ / 2 + 3 / 16)) := by
+  intro P
+  set k := p / 8
+  have hω : P.ω₁ = 1 / 2 ∧ P.ω₂ = τ := ⟨by simp [P, ppM], rfl⟩
+  rcases odd_mod_eight hp with h | h | h | h
+  · left
+    have hc : (p : ℂ) = 8 * k + 1 := by exact_mod_cast h
+    refine ⟨wp_congr P k 0 ?_, wp_congr P (3 * k) 0 ?_, wp_congr P k 0 ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+  · right
+    have hc : (p : ℂ) = 8 * k + 3 := by exact_mod_cast h
+    refine ⟨wp_congr P k 0 ?_, wp_congr P (3 * k + 1) 0 ?_, wp_congr P k 0 ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+  · right
+    have hc : (p : ℂ) = 8 * k + 5 := by exact_mod_cast h
+    refine ⟨wp_congr_neg P (k + 1) 0 ?_, wp_congr_neg P (3 * k + 2) 0 ?_, wp_congr_neg P (k + 1) 1 ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+  · left
+    have hc : (p : ℂ) = 8 * k + 7 := by exact_mod_cast h
+    refine ⟨wp_congr_neg P (k + 1) 0 ?_, wp_congr_neg P (3 * k + 3) 0 ?_, wp_congr_neg P (k + 1) 1 ?_⟩ <;>
+      (rw [hω.1, hω.2, hc]; push_cast; ring)
+
+/-- Ratios of differences are invariant under a common scaling. -/
+theorem ratio_conj (σ : ℂ →+* ℂ) {a b c a' b' c' k : ℂ} (hk : k ≠ 0) (ha : σ a = k * a')
+    (hb : σ b = k * b') (hc : σ c = k * c') : σ ((a - c) / (b - c)) = (a' - c') / (b' - c') := by
+  rw [map_div₀, map_sub, map_sub, ha, hb, hc, ← mul_sub, ← mul_sub, mul_div_mul_left _ _ hk]
+
 end X0EtaRoute
