@@ -647,4 +647,179 @@ theorem card_cmSet_le (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
   obtain ⟨F, hF⟩ := exists_injective_optEmb hU hG hM k hk R hR hc
   exact ⟨Finite.of_injective F hF, Nat.card_le_card_of_injective F hF⟩
 
+/-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
+
+/-- **`R5fpCountLe` (GLUE; the upper half of `LeafQM.AV.R5fpCount`, the only half the chain uses).** For an order
+`R` of conductor prime to `6` in an imaginary quadratic field `k` with `h(R) ≠ 0`, the CM points by `R` on `X₆`
+(isomorphism classes of QM pairs over `ℚ̄` with `End_𝒪(A) ≅ R`) are finitely many and at most
+`2^{inertCount6 k} · h(R)`. Implied by `R5fpCount` (`r5fpCountLe_of_r5fpCount`) and so by the field
+`gonzalezRotgerProp56X6` with any witness; proved from Eichler's count `GRCountX6.EichlerOptEmbCount6` and the
+textbook fields (`r5fpCountLe_of_eichler`). -/
+def R5fpCountLe : Prop :=
+  ∀ (k : Type) [Field k] [NumberField k] [NumberField.IsTotallyComplex k],
+    Module.finrank ℚ k = 2 →
+    ∀ R : Subring k, R ≤ (integralClosure ℤ k).toSubring → Nat.Coprime (conductor R) 6 →
+      Nat.card (CommRing.Pic R) ≠ 0 →
+        Finite {c : Quotient (pairSetoid Qbar) //
+            ∃ P : QMPair Qbar, Quotient.mk _ P = c ∧ Nonempty (com P.q ≃+* R)} ∧
+        Nat.card {c : Quotient (pairSetoid Qbar) //
+            ∃ P : QMPair Qbar, Quotient.mk _ P = c ∧ Nonempty (com P.q ≃+* R)} ≤
+          2 ^ inertCount6 k * Nat.card (CommRing.Pic R)
+
+/-- `R5fpCountLe` is weaker than the kernel's `R5fpCount` (hence than the field with any witness). -/
+theorem r5fpCountLe_of_r5fpCount (h : R5fpCount) : R5fpCountLe := by
+  intro k _ _ _ hk R hR hc hh
+  by_cases hne : Nonempty (CMSet R)
+  · obtain ⟨⟨c, P, hP, hθ⟩⟩ := hne
+    have hcard := h k hk R hR hc ⟨P, hθ⟩
+    have hpos : Nat.card (CMSet R) ≠ 0 := by
+      rw [hcard]; exact Nat.mul_ne_zero (pow_ne_zero _ two_ne_zero) hh
+    exact ⟨Nat.finite_of_card_ne_zero hpos, hcard.le⟩
+  · rw [not_nonempty_iff] at hne
+    refine ⟨inferInstance, ?_⟩
+    rw [Nat.card_of_isEmpty]
+    exact Nat.zero_le _
+
+/-- `∏_{p ∣ 6} (1 − (k/p)) ≤ 2^{inertCount6 k}`. -/
+theorem eichlerFactor6_le (k : Type) [Field k] [NumberField k] :
+    GRCountX6.eichlerFactor6 k ≤ 2 ^ inertCount6 k := by
+  unfold GRCountX6.eichlerFactor6 GRCountX6.eichlerLocal inertCount6
+  split_ifs <;> norm_num
+
+/-- **`R5fpCountLe` from Eichler's optimal-embedding count and the textbook fields.** -/
+theorem r5fpCountLe_of_eichler (hE : GRCountX6.EichlerOptEmbCount6)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R5fpCountLe := by
+  intro k _ _ _ hk R hR hc _
+  obtain ⟨hfin, hcard⟩ := hE k hk R hR hc
+  obtain ⟨hf, hle⟩ := card_cmSet_le hU hG hM k hk R hR hc hfin
+  refine ⟨hf, hle.trans ?_⟩
+  rw [hcard, mul_comm]
+  exact Nat.mul_le_mul_right _ (eichlerFactor6_le k)
+
 end GR56
+
+/-! ## §10 The chain's consumer of the count, rerouted to `R5fpCountLe`
+
+`HDec.FS5NoCM.nocm_on_witness` (TailC L1371) uses `R5fpCount` only to bound `#CM(R) ≤ 2`. Below: the same
+proof with `GR56.R5fpCountLe` (copied from TailC L1371-1452 with the count step changed), and the four wrappers
+up to `fibreComTrivialFull_of_leaves''` (TailC L1458, L1480, L2071, L2289), verbatim but for the hypothesis. -/
+
+namespace HDec
+
+namespace FS5NoCM
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM.AV LeafQM.AV.Pin _root_.ZInQ ZInQ ZInQ.JHeight PkgI3
+
+set_option maxHeartbeats 1000000 in
+/-- `nocm_on_witness` (TailC L1371) with `R5fpCountLe` in place of `R5fpCount`. -/
+theorem nocm_on_witness_le (hA : ComIntOrQuadOrder) (hB : CMConductorCoprime6)
+    (hK : X6KummerFibre) (hC : _root_.GR56.R5fpCountLe)
+    {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {X : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)}
+    {fY : Y ⟶ X} {π₆ : ToP1 X.left} (hW : R1R2fpFullProps Y Φ X Ψ fY π₆)
+    (u : ℚ) (hu : u ∉ contactSet) (y : fieldPt Qbar ⟶ Y) (P : QML3 Qbar)
+    (hP : Φ Qbar y = M3.mk P)
+    (hv : (π₆.comp fY.left).val (K := Qbar) y.left =
+      OnePoint.some (algebraMap ℚ Qbar (Jmap u))) :
+    ∀ φ ∈ com P.q, ∃ n : ℤ, φ = (n : AbVar.End P.A) := by
+  obtain ⟨h1, hh, hX, h2, hE, hrec, hS, h5⟩ := hW
+  have hx : Ψ (y ≫ fY) = Quotient.mk _ P.forget := hX.2.2.2.2.2 y P hP
+  have hv' : π₆.val (K := Qbar) (y ≫ fY).left =
+      OnePoint.some (algebraMap ℚ Qbar (Jmap u)) := by
+    exact (ToP1.val_comp_right π₆ fY.left y.left).symm.trans hv
+  rcases hA P.forget with hZ | ⟨k, _, _, _, hk2, R, hR, hc0, ⟨e⟩⟩
+  · exact hZ
+  exfalso
+  have hcop : Nat.Coprime (conductor R) 6 := hB P.forget k hk2 R hR hc0 ⟨e⟩
+  obtain ⟨hdeg, hemb⟩ := h5 k hk2 R hR hcop (y ≫ fY) P.forget hx ⟨e⟩
+  -- the fibre over `J(u)` (N2) and its residue field `ℚ(i)`
+  obtain ⟨hres, f, hf, hfv⟩ := hK Y Φ X Ψ fY π₆ ⟨h1, hh, hX, h2, hE, hrec, hS, h5⟩ (Jmap u)
+    (GlueRepo.PR.J_ne_zero hu) (GlueRepo.PR.J_ne_branch u)
+  obtain ⟨i, hi⟩ := IsAlgClosed.exists_pow_nat_eq (-1 : Qbar) two_pos
+  obtain ⟨ha, hb⟩ := elkies_sq u i hi
+  have hresEq : residueImage (X := X.left) (y ≫ fY).left = IntermediateField.adjoin ℚ {i} := by
+    rw [hres _ hv' _ _ ha hb]
+    exact adjoin_pair_eq i _ _ (GlueRepo.PR.h₁_ne_zero u)
+  have hfin : Module.finrank ℚ (residueImage (X := X.left) (y ≫ fY).left) = 2 := by
+    rw [hresEq]; exact finrank_adjoin_sqrt_neg_one i hi
+  rw [hfin] at hdeg
+  -- four distinct classes with CM by `R`
+  have hmemS : ∀ j : Fin 4, ∃ P' : QMPair Qbar, Quotient.mk _ P' = Ψ (f j) ∧
+      Nonempty (com P'.q ≃+* R) := by
+    intro j
+    refine ⟨Quotient.out (Ψ (f j)), Quotient.out_eq _, ?_⟩
+    have hQ : Ψ (f j) = Quotient.mk _ (Quotient.out (Ψ (f j))) := (Quotient.out_eq _).symm
+    obtain ⟨α, ⟨g⟩⟩ := ((h2 (y ≫ fY) (f j) P.forget _ hx hQ).1).1 (hv'.trans (hfv j).symm)
+    exact ⟨((comEquiv g).symm.trans (RingEquiv.subringCongr (com_twist P.forget.q α))).trans e⟩
+  let F : Fin 4 → {c : Quotient (pairSetoid Qbar) //
+      ∃ P' : QMPair Qbar, Quotient.mk _ P' = c ∧ Nonempty (com P'.q ≃+* R)} :=
+    fun j => ⟨Ψ (f j), hmemS j⟩
+  have hFinj : Function.Injective F := fun a b hab =>
+    hf (Ψ.injective (congrArg Subtype.val hab))
+  -- `2^{b(k)} h(R) = 2`
+  have hval : 2 ^ inertCount6 k * Nat.card (CommRing.Pic R) = 2 := by
+    by_cases hb0 : inertCount6 k = 0
+    · simp only [hb0, ↓reduceIte] at hdeg
+      rw [hb0]; omega
+    · simp only [hb0, ↓reduceIte] at hdeg
+      have hh1 : Nat.card (CommRing.Pic R) = 1 := by omega
+      obtain ⟨e'⟩ := hemb hb0
+      have hik : i ∈ residueImage (X := X.left) (y ≫ fY).left := by
+        rw [hresEq]; exact IntermediateField.mem_adjoin_simple_self ℚ i
+      have : FiniteDimensional ℚ (residueImage (X := X.left) (y ≫ fY).left) :=
+        Module.finite_of_finrank_pos (by rw [hfin]; norm_num)
+      have hsurj : Function.Surjective e'.toLinearMap := by
+        rw [← LinearMap.injective_iff_surjective_of_finrank_eq_finrank (by rw [hk2, hfin])]
+        exact e'.toRingHom.injective
+      obtain ⟨ι, hι⟩ := hsurj ⟨i, hik⟩
+      have hι2 : ι ^ 2 = -1 := by
+        apply e'.toRingHom.injective
+        change e' (ι ^ 2) = e' (-1)
+        rw [map_pow, map_neg, map_one]
+        have : e' ι = ⟨i, hik⟩ := hι
+        rw [this]
+        apply Subtype.ext
+        simp [hi]
+      have h2n := two_not_prime_of_sqrt_neg_one ι hι2
+      have hb1 : inertCount6 k = 1 := by
+        have : inertCount6 k ≤ 1 := by
+          unfold inertCount6
+          simp only [h2n, ↓reduceIte]
+          split_ifs <;> omega
+        omega
+      rw [hb1, hh1]; norm_num
+  have hh0 : Nat.card (CommRing.Pic R) ≠ 0 := by
+    intro h0; rw [h0, mul_zero] at hval; exact absurd hval (by norm_num)
+  obtain ⟨hfinS, hle⟩ := hC k hk2 R hR hcop hh0
+  have := Nat.card_le_card_of_injective F hFinj
+  rw [Nat.card_eq_fintype_card, Fintype.card_fin] at this
+  omega
+
+/-- `fibreComTrivialOwn_of` (TailC L1458) with `R5fpCountLe`. -/
+theorem fibreComTrivialOwn_of_le (hA : ComIntOrQuadOrder) (hB : CMConductorCoprime6)
+    (hK : X6KummerFibre) (hC : _root_.GR56.R5fpCountLe) : FibreComTrivialOwn :=
+  fun _ _ _ _ _ _ hW u hu y P hP hv => nocm_on_witness_le hA hB hK hC hW u hu y P hP hv
+
+/-- `fibreComTrivialFull_of` (TailC L1480) with `R5fpCountLe`. -/
+theorem fibreComTrivialFull_of_le (hL : R1R2fpFull) (hM : MobiusGlue) (hA : ComIntOrQuadOrder)
+    (hB : CMConductorCoprime6) (hK : X6KummerFibre) (hC : _root_.GR56.R5fpCountLe) :
+    FibreComTrivialFull :=
+  fibreComTrivialFull_of_own hL hM (fibreComTrivialOwn_of_le hA hB hK hC)
+
+/-- `fibreComTrivialFull_of_leaves'` (TailC L2071) with `R5fpCountLe`. -/
+theorem fibreComTrivialFull_of_leaves'_le (hL : R1R2fpFull) (hM : MobiusGlue)
+    (hYu : QMLattice.YuB6Alg) (t6 : PkgI3.HomFreeFinite) (hB : CMConductorCoprime6)
+    (hK : X6KummerFibre) (hC : _root_.GR56.R5fpCountLe) : FibreComTrivialFull :=
+  fibreComTrivialFull_of_le hL hM (comIntOrQuadOrder_of_leaves hYu t6) hB hK hC
+
+/-- `fibreComTrivialFull_of_leaves''` (TailC L2289) with `R5fpCountLe`. -/
+theorem fibreComTrivialFull_of_leaves''_le (hL : R1R2fpFull) (hM : LeafQM.AV.Pin.MobiusGlue)
+    (hYu : QMLattice.YuB6Alg) (t6 : PkgI3.HomFreeFinite) (hE : CMOptimalEmbedding)
+    (hK : X6KummerFibre) (hC : _root_.GR56.R5fpCountLe) : FibreComTrivialFull :=
+  fibreComTrivialFull_of_leaves'_le hL hM hYu t6 (cmConductorCoprime6_of hE) hK hC
+
+end FS5NoCM
+
+end HDec
