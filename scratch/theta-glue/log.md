@@ -88,3 +88,7 @@
   `qmThetaSymmetricCurve_of_alg59 : LinYangThetaCurve → (∀ k, 5 ≤ k → k ≤ 9 → IgusaAlg k) → QMThetaSymmetricCurve`.
   The separate files `Alg3.lean`, `Alg4.lean` (TailA import) are the versions that compiled
   (1 min 36 s / 4 min 21 s).
+- FINAL `ThetaGlue.lean` (with §7) COMPILES (VERIFIED, `lake env lean`): 6 min 23 s, peak 23.5 GB, no sorry;
+  `#print axioms` = [propext, Classical.choice, Quot.sound] for `thetaConst_sq_eq`, `thetaEightSquare`,
+  `qmThetaSymmetricCurve_of`, `igusaThetaSymmetric_of_alg`, `qmThetaSymmetricCurve_of_alg`, `igusaAlg3`,
+  `igusaAlg4`, `qmThetaSymmetricCurve_of_alg59`.
