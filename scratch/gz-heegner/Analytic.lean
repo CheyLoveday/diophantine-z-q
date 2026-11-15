@@ -10,7 +10,7 @@ open ZInQ.Contrib.TYZGenus.CM (HeegnerForm cmPoint)
 open scoped MatrixGroups
 open ZInQ.Contrib.TYZGenus.Shimura ZInQ.Contrib.TYZGenus.CM HeckeRing.GL2 WeierstrassCurve
   ZInQ.Contrib.TYZDecomp.CurveA
-open scoped WeierstrassCurve.Affine Manifold
+open scoped WeierstrassCurve.Affine Manifold ModularForm
 
 namespace ZInQ.GZHeegner
 
@@ -435,5 +435,73 @@ theorem D_eichler : Derivative.normalizedDerivOfComplex (ZInQ.GZHL3.eichler f) =
   field_simp
 
 end EichlerDeriv
+
+/-! ## The Eichler integral at the other cusps -/
+
+section Cusp
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+theorem conj_T_mem_Gamma1 (γ : SL(2, ℤ)) :
+    γ * ModularGroup.T ^ (N : ℤ) * γ⁻¹ ∈ CongruenceSubgroup.Gamma1 N := by
+  have hT : ModularGroup.T ^ (N : ℤ) ∈ CongruenceSubgroup.Gamma N := by
+    simp only [CongruenceSubgroup.Gamma_mem, ModularGroup.coe_T_zpow]
+    simp
+  have h := (CongruenceSubgroup.Gamma_normal (N := N)).conj_mem _ hT γ
+  rw [CongruenceSubgroup.Gamma_mem] at h
+  rw [CongruenceSubgroup.Gamma1_mem]
+  exact ⟨h.1, h.2.2.2, h.2.2.1⟩
+
+/-- `f|₂γ`. -/
+def fSlash (γ : SL(2, ℤ)) : UpperHalfPlane → ℂ := (⇑f.toCuspForm) ∣[(2 : ℤ)] γ
+
+theorem fSlash_T (γ : SL(2, ℤ)) :
+    fSlash f γ ∣[(2 : ℤ)] (ModularGroup.T ^ (N : ℤ)) = fSlash f γ := by
+  unfold fSlash
+  rw [← SlashAction.slash_mul]
+  have e : γ * ModularGroup.T ^ (N : ℤ) = (γ * ModularGroup.T ^ (N : ℤ) * γ⁻¹) * γ := by group
+  rw [e, SlashAction.slash_mul]
+  congr 1
+  rw [ModularForm.SL_slash]
+  exact f.toCuspForm.slash_action_eq' _ (Subgroup.mem_map_of_mem _ (conj_T_mem_Gamma1 γ))
+
+theorem fSlash_periodic (γ : SL(2, ℤ)) :
+    Function.Periodic (fSlash f γ ∘ UpperHalfPlane.ofComplex) (N : ℝ) := by
+  intro w
+  by_cases hw : 0 < w.im
+  · have hw' : 0 < (w + ((N : ℝ) : ℂ)).im := by simpa using hw
+    simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply_of_im_pos hw,
+      UpperHalfPlane.ofComplex_apply_of_im_pos hw']
+    have h := congrFun (fSlash_T f γ) ⟨w, hw⟩
+    rw [ModularForm.SL_slash_apply] at h
+    have h10 : ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 0) = 0 := by
+      rw [show ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 0) = (ModularGroup.T ^ (N : ℤ)).1 1 0 from rfl,
+        ModularGroup.coe_T_zpow]; simp
+    have h11 : ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 1) = 1 := by
+      rw [show ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 1) = (ModularGroup.T ^ (N : ℤ)).1 1 1 from rfl,
+        ModularGroup.coe_T_zpow]; simp
+    have hd : UpperHalfPlane.denom (ModularGroup.T ^ (N : ℤ) : SL(2, ℤ))
+        (⟨w, hw⟩ : UpperHalfPlane) = 1 := by
+      rw [ModularGroup.denom_apply, h10, h11]; simp
+    rw [hd, one_zpow, mul_one] at h
+    rw [← h]
+    congr 1
+    apply UpperHalfPlane.ext
+    rw [UpperHalfPlane.modular_T_zpow_smul]
+    simp [add_comm]
+  · have hw' : ¬ 0 < (w + ((N : ℝ) : ℂ)).im := by simpa using hw
+    simp only [Function.comp_apply]
+    rw [UpperHalfPlane.ofComplex_apply_of_im_nonpos (not_lt.1 hw),
+      UpperHalfPlane.ofComplex_apply_of_im_nonpos (not_lt.1 hw')]
+
+theorem fSlash_mdiff (γ : SL(2, ℤ)) : MDiff (fSlash f γ) := by
+  unfold fSlash
+  rw [ModularForm.SL_slash]
+  exact (ModularFormClass.holo f.toCuspForm).slash _ _
+
+theorem fSlash_zero (γ : SL(2, ℤ)) : UpperHalfPlane.IsZeroAtImInfty (fSlash f γ) :=
+  CuspFormClass.zero_at_infty_slash f.toCuspForm γ
+
+end Cusp
 
 end ZInQ.GZHeegner
