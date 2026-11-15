@@ -73,15 +73,18 @@ COPIES = {'library-print', 'author-copy', 'scan'}
 EVIDENCE = {'HUMAN-READ', 'AI-READ'}
 CREDIT_KINDS = {'proof', 'reduction', 'statement-check', 'statement-fix', 'review', 'referee', 'setup'}
 ISSUE_REF = re.compile(r'[\w.-]+/[\w.-]+#\d+')
-# text that must not appear in generated, contributor-facing or table files
+# text that must not appear in generated, contributor-facing or table files. Site-specific patterns
+# (session, user, host and worker names) stay out of the repository: put them in a file of
+# `regex<TAB>label` lines named by $ONE_PROOF_HYGIENE_FILE.
 HYGIENE = [
-    (re.compile(r'\bcove-[0-9a-f]{2}\b'), 'a session name'),
-    (re.compile(r'jackmccarthy'), 'a local user name'),
-    (re.compile(r'\bdevvm\d+|\.dkl0\b|hs_paper\d|dioph_zq\d+|one_proof\d|dioph_gaps\d'), 'a host name'),
     (re.compile(r'<!--\s*zinq'), 'an HTML worker marker'),
-    (re.compile(r'\bcloud W\d+|\bworker \d+\b|\bW1[0-9]\b|\bW[1-9]\b(?=[ :,)])|agentcloud', re.I), 'a worker label'),
     (re.compile(r'/Users/|/home/(?!runner/)\w+/|\.swarm-worktrees'), 'a local path'),
 ]
+if os.environ.get('ONE_PROOF_HYGIENE_FILE'):
+    for row in open(os.environ['ONE_PROOF_HYGIENE_FILE']).read().splitlines():
+        if row.strip() and not row.startswith('#'):
+            rx, what = row.split('\t', 1)
+            HYGIENE.append((re.compile(rx), what))
 PUBLIC_DOCS = ['CONTRIBUTING.md', D + 'CONTRIBUTING.md', D + 'STATEMENT-CHECKS.md']
 TABLES = [D + 'kinds.tsv', D + 'claims.tsv', D + 'reviews.tsv', D + 'credits.tsv', D + 'fold-queue.tsv']
 
