@@ -429,6 +429,28 @@ theorem t09SymmIsogenyExists_of_leaves (h1 : PicRepresentableAbVar) (h2 : PicZer
              rw [HDec.WeilPairing.weil_apply]
              exact halt L hL lam hlam n hn hnK x }⟩
 
+/-! ## §5. Non-vacuity of `IsAmple` -/
+
+/-- Over an algebraically closed field every abelian variety has an ample class in the sense of
+`IsAmple` (from the vendored `GrpObj.hasAmpleFamily_of_smooth_of_irreducibleSpace`, `n = 1`). A check
+that `IsAmple` is not inert, so `VeryAmpleIsAmple` is not refuted by the definition. -/
+theorem exists_isAmple_of_isAlgClosed [IsAlgClosed K] (A : AbVar K) : ∃ L, IsAmple A.X.left L := by
+  haveI : IsIntegral A.X.left := GeometricallyIntegral.isIntegral_of_subsingleton A.X.hom
+  obtain ⟨M, hM, I, hI, s, haff, hcov⟩ :=
+    GrpObj.hasAmpleFamily_of_smooth_of_irreducibleSpace (baseField := K) A.X
+  letI := hM
+  haveI : CompactSpace A.X.left := QuasiCompact.compactSpace_of_compactSpace A.X.hom
+  let N := (fromSkeleton A.X.left.Modules).obj (Scheme.Pic.mk M).val
+  let e : M ≅ N.tensorPow 1 := (Scheme.Pic.mkIso M).symm ≪≫ (ρ_ N).symm
+  refine ⟨Scheme.Pic.mk M, inferInstance, fun x => ?_⟩
+  have hx : x ∈ ⨆ i, (Scheme.Modules.Hom.zeroLocus (s i)).support.compl := by
+    rw [hcov]; trivial
+  obtain ⟨i, hi⟩ := TopologicalSpace.Opens.mem_iSup.mp hx
+  have hz : Scheme.Modules.Hom.zeroLocus (s i ≫ e.hom) = Scheme.Modules.Hom.zeroLocus (s i) :=
+    Scheme.Modules.Hom.zeroLocus_eq_of_arrowIso (s i ≫ e.hom) (s i)
+      (Arrow.isoMk (Iso.refl _) e.symm (by simp))
+  exact ⟨1, one_pos, s i ≫ e.hom, by rw [hz]; exact hi, by rw [hz]; exact haff i⟩
+
 /-- **Main result, printed form.** `t09SymmIsogenyExists` from the five printed leaves
 L0 (very ample ⇒ ample), L1 (Picard representability), L2 (`Pic⁰` is an abelian variety),
 L3 (`φ_L` isogeny for ample `L`), L4 (Mumford's `ē_n` with the genuine `f^∨`). -/
@@ -441,6 +463,7 @@ theorem t09SymmIsogenyExists_of_printed (h0 : VeryAmpleIsAmple) (h1 : PicReprese
 end T09Pic
 
 #print axioms T09Pic.exists_dual_on_picZero
+#print axioms T09Pic.exists_isAmple_of_isAlgClosed
 #print axioms T09Pic.t09SymmIsogenyExists_of_printed
 #print axioms T09Pic.exists_isVeryAmple
 #print axioms T09Pic.eta_comp_phiL

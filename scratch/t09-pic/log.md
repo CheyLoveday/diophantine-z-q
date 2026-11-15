@@ -32,3 +32,4 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
   `VeryAmpleIsAmple`, L3 printed `PhiAmpleIsogeny`, L4 printed `WeilPairingPicZeroPrinted` (genuine `dualP`);
   glue `phiVeryAmpleIsogeny_of_printed`, `weilPairingPicZero_of_printed`;
   `t09SymmIsogenyExists_of_printed : L0 → L1 → L2 → L3 → L4printed → T09`: 0 errors, axioms standard. VERIFIED.
+- 2026-11-14 19:20 Pic.lean v7: `exists_isAmple_of_isAlgClosed` (non-vacuity of IsAmple over K̄, from vendored HasAmpleFamily): 0 errors, axioms standard. VERIFIED.
