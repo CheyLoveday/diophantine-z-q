@@ -232,12 +232,6 @@
    "docstring":
    "**Leaf: regular points are smooth over a perfect field** (published).\nLet `k` be a perfect field, `S` a finite type `k`-algebra and `q` a prime of `S`. If `S_q` is a\nregular local ring, then `S` is smooth at `q` over `k`: there is `g ∉ q` with `S_g` smooth over\n`k`. Source: Stacks Project, Tag 00TV (Algebra, Lemma 10.140.5 in the numbering of 2024;\nUNVERIFIED, no network), \"Let k be a perfect field. Let S be a finite type k-algebra. Let q be a\nprime of S. Then S is smooth at q over k iff S_q is a regular local ring\" (paraphrase); the\ndefinition of \"smooth at q\" is Stacks Tag 00T6/00TB (some `g ∉ q` with `S_g` smooth). The `⇐`\ndirection, with `k`, `S` in `Type`. `IsRegularLocalRing` is Mathlib's (Stacks 00KU), `Algebra.Smooth`\nMathlib's (equivalent to Stacks' smoothness, Stacks 00T7 / 00TA). ",
    "bundle": "OpenTextbookLeaves11"},
-  {"type": "ZInQ.RLeaf.IgusaGL2",
-   "statement": "ZInQ.RLeaf.IgusaGL2",
-   "field": "igusaGL2",
-   "docstring":
-   "**Igusa's theorem** (published), as usually stated: the Galois representation of\n`Gal(\\overline{ℚ(j)}/ℚ(j))` on `E_j[N]` is surjective onto `GL₂(ℤ/N)`, in every basis.\n\nSource: Igusa, Amer. J. Math. 81 (1959); Lang, *Elliptic functions*, Ch. 6, §3; for any model of\nthe generic curve over `ℚ(j)` (numbers UNVERIFIED). The geometric image is `SL₂(ℤ/N)` for every\nmodel, because the monodromy of a family over the `j`-line maps onto `PSL₂(ℤ)` and `PSL₂(ℤ)` does\nnot lift to `SL₂(ℤ)`; the determinant is the cyclotomic character, onto `(ℤ/N)^×` over `ℚ(j)`. ",
-   "bundle": "OpenTextbookLeaves11"},
   {"type": "ZInQ.Contrib.NeronC.NeronSchemeExtensionExists",
    "statement": "ZInQ.Contrib.NeronC.NeronSchemeExtensionExists",
    "field": "neronSchemeExtensionExists",
@@ -378,4 +372,4 @@
    "docstring":
    "**(L3) Gross–Zagier with Gross's conjugation relation, in the form that can be stated today.**\nLet `E/ℚ` be an elliptic curve whose L-series is that of a weight-2 newform `f` of level `N` and\ntrivial nebentypus (`aₙ(f) = aₙ(E)` for all `n ≥ 1`). Let `D < −4` be an odd fundamental\ndiscriminant with the Heegner hypothesis for `N`, and suppose `L(f, s)` has a simple zero at\n`s = 1` while `L(f ⊗ χ_D, 1) ≠ 0` (so `L'(E/K, 1) = L'(f, 1) L(f ⊗ χ_D, 1) ≠ 0`). Then for every\nfield `K ≅ ℚ(√D)` the group `E(K)` has a point `y` of infinite order (the Heegner point `y_K`)\nwith `σ y − y` torsion for every `σ ∈ Aut(K/ℚ)` (`ȳ_K = −ε y_K` up to torsion, `ε = −1`).\n\nLiterature: B. Gross, D. Zagier, Invent. Math. 84 (1986), 225-320, Theorem I.6.3 and its\ncorollaries in Ch. V (UNVERIFIED numbers): `L'(E/K, 1) = c ĥ(y_K)` with `c ≠ 0`; B. Gross,\n*Heegner points on X₀(N)*, Modular forms (Durham 1983), 1984, for `ȳ_K = −ε y_K` mod torsion\n(UNVERIFIED). Folded in, because the modular curve `X₀(N)`, the parametrization and the Heegner\npoint cannot be stated in Lean today: the modular parametrization `X₀(N) → E` (Eichler–Shimura\nconstruction of the strong Weil curve `E_f`, Shimura 1971, Thm 7.14-7.15, UNVERIFIED, plus\nFaltings 1983 Korollar 2 (`L(E) = L(E_f)` ⇒ `E ∼ E_f`), or for CM curves Shimura, Nagoya Math. J.\n43 (1971)); and nondegeneracy of `ĥ` on `E(K)` (proved in Tau Ceti:\n`Affine.Point.canonicalHeight_eq_zero_iff_isOfFinAddOrder`). ",
    "bundle": "frozenTarget"}],
- "count": 63}
+ "count": 62}

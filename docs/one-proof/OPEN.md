@@ -11,13 +11,13 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**56 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves23`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**55 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves23`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 46 published / 10 glue** (the strictest flagged reading; 47/9 without the one strictest-reading flag).
+* **Strict count: 45 published / 10 glue** (the strictest flagged reading; 46/9 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 4, consequence 3, project glue 1, published 48.
+* By kind: composite 4, consequence 3, project glue 1, published 47.
 
 ## How to help
 
@@ -56,7 +56,6 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`uniformizationLeafAll`](#uniformizationleafall) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
 | [`gagaMorphism`](#gagamorphism) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
 | [`regularSmoothPerfect`](#regularsmoothperfect) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) | 2026-11-15 |
-| [`igusaGL2`](#igusagl2) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) | 2026-11-15 |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289)) | 2026-11-14 |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg)) | 2026-11-14 |
 | [`tateTwistInvariants`](#tatetwistinvariants) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335)) | 2026-11-15 |
@@ -202,7 +201,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`geomConnOfRationalPoint`](#geomconnofrationalpoint) | textbook | published | LEAF |  |  | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`groupSchemeEquidim`](#groupschemeequidim) | textbook | published | LEAF |  |  | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
-| [`igusaGL2`](#igusagl2) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289)) |
 | [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
@@ -1070,26 +1068,6 @@ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed
 > `ℤ`-module of finite rank `≤ 4 dim X dim Y`, and for `ℓ ≠ char k` the natural map
 > `ℤ_ℓ ⊗ Hom(X, Y) → Hom_{ℤ_ℓ}(T_ℓ X, T_ℓ Y)` is injective. This is `PkgI3.HomFreeFinite` with
 > `[IsAlgClosed k]` added.
-
-### igusaGL2
-
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.igusaGL2`; kind **published**, strict **LEAF**.
-* Source: Igusa's theorem: the Galois image on E_j[N] over Q(j) is GL_2(Z/N) (Igusa, Amer. J. Math. 81 (1959); Lang, Elliptic functions Ch. 6 3)
-* tier T2-T3 (model triage, unreviewed); discussion: [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)).
-
-```lean
-ZInQ.RLeaf.IgusaGL2
-```
-
-> **Igusa's theorem** (published), as usually stated: the Galois representation of
-> `Gal(\overline{ℚ(j)}/ℚ(j))` on `E_j[N]` is surjective onto `GL₂(ℤ/N)`, in every basis.
-> 
-> Source: Igusa, Amer. J. Math. 81 (1959); Lang, *Elliptic functions*, Ch. 6, §3; for any model of
-> the generic curve over `ℚ(j)` (numbers UNVERIFIED). The geometric image is `SL₂(ℤ/N)` for every
-> model, because the monodromy of a family over the `j`-line maps onto `PSL₂(ℤ)` and `PSL₂(ℤ)` does
-> not lift to `SL₂(ℤ)`; the determinant is the cyclotomic character, onto `(ℤ/N)^×` over `ℚ(j)`.
 
 ### mumfordTorsionAlgClosed
 

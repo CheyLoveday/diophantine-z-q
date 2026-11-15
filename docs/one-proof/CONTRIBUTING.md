@@ -167,7 +167,7 @@ DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
 DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1901 theorems checked, 8 discharge one
+#discharges: 62 open hypotheses, 1904 theorems checked, 8 discharge one
 ```
 <!-- worked-example:end -->
 
