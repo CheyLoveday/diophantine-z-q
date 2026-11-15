@@ -14,3 +14,16 @@ integrality: ι(w)c kills A[n] (A[p] ≅ 𝒪/p𝒪, decide mod p) and divisibil
 - `GapST.exists_qbar_factor`: `y : fieldPt ℂ ⟶ Y`, `h : Y ⟶ Y`, `y ≫ h = y`, some ℚ̄-point `s` with `s ≫ h ≠ s`
   ⇒ `∃ ιe y₀, fieldMap ιe.toRatAlgHom ≫ y₀ = y` (Y proper, smooth rel. dim 1, irreducible, over ℚ).
   Note: lean/.lake/build had to be copied from ~/dzq (same commit 9a100aa7).
+
+## Parts A–H — VERIFIED (compiled, ZInQKernel/Contrib/OneProof/STQM.lean, 06:00)
+- A: 𝒪 mod p finite checks d1 (p=2,w₀=i; p=3,w₀=j), d2 ((2,i)=(2,ij) mod 2, (3,j), (3,ij)) by decide +kernel (~10 s).
+- B: A[p] free rank 1 over 𝒪/p𝒪 for QM A/ℂ (gen2, gen3); ι(w)c kills A[p] (kills_of).
+- C: dvd_of_kills, eq_zero_of_natCast_mul (T35 + HomLatticeCorr).
+- D: qmIso_twist (ψ = ι(w)c/n), fixed_class (Level3.torsor + exists_unit_congr).
+- F: twist_of_cm for CM4 (i,1+φ,2), CM3 (j,2φ−1,3), CM24 (ij,φ,6). noncomm_ring fails on literal numerals in End A;
+  used abel/norm_num instead.
+- G: cm_point; H: bc_iso (descend_main comparison), exists_level3, stQM_of, cmDescends_of.
+- #print axioms of all main theorems: [propext, Classical.choice, Quot.sound].
+- #discharges: 63 open, 5 discharge one (none ours; STQM is not a field). discharges.txt.
+- FoldCheck.lean: replacement term at TailX L261 compiles (addedLeaves6_of_open7_st, standard axioms).
+- Counts (kinds.tsv H rows): strict 46/10 → 45/10 (56 → 55 fields); strictest 45/11 → 44/11.
