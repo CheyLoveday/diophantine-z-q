@@ -114,6 +114,17 @@ theorem zAlt_eq_iPt (n : ℕ) : zAlt n = iPt (tyzZn n) := by
   simp only [zAlt, tyzZn, T321.iPt_sub, iPt_iPt]
   abel
 
+/-- **Normalization of the kernel's `[i]`**: on `A(ℂ)` it is `(x, y) ↦ (−x, I·y)` (`ιC i = I`), which
+pulls the invariant differential `dx/2y` back to `I·dx/2y`; so it is complex multiplication by `+I` in
+the normalized sense `[α]^*ω = αω`, i.e. `τ(Iu) = [i]τ(u)` for TYZ's `ℂ`-linear uniformization `τ`
+(L1381–1385). Pointwise form: if `(x(t), y(t))` is a path with `y ≠ 0`, then
+`(−x)'/(2·(I·y)) = I·(x'/(2y))`. -/
+theorem iPt_pullback_differential (x' y : ℂ) (hy : y ≠ 0) :
+    (-x') / (2 * (Complex.I * y)) = Complex.I * (x' / (2 * y)) := by
+  field_simp
+  rw [Complex.I_sq]
+  ring
+
 /-- `τ(1) = tauG 2 = (0, 0)`. -/
 theorem tauG_two : tauG 2 = pt00 := by
   rw [← one_add_one_eq_two, map_add, tauG_apply, one_smul, ptT_add_self]
@@ -231,7 +242,7 @@ theorem tyzThm33With_imp {z z' : ℕ → PtA}
       · -- `z' n = z n` and `z' n = −z n`: then `z n` is 2-torsion-free-irrelevant; `P_χ = −P_χ`
         have ezz : z' n = z n := by
           by_contra hne
-          simp only [s, hne, if_false] at hsn
+          simp only [s, hne, ite_false] at hsn
           have := congrArg Zsqrtd.re hsn
           norm_num at this
         have hP : PchiGWith z n φ χ = -PchiGWith z n φ χ := by

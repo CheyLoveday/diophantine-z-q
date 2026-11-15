@@ -36,3 +36,19 @@ pending-review flag: the sign of `[i]` in `tyzZn` (z_n for n ≡ 5 mod 8). Sourc
 - MAIN `tyzThm33With_iff_of_reading (hA : CMAlgebraic) zT h5 h36 h7 : TYZThm33With zT ↔ TYZThm33`
   for any zT of TYZ's shape (±(P∓[i]P) for n≡5, ±f₀(P_n) for n≡7) satisfying TYZ Thm 3.6(1) conj part.
 - `basePt_reading`: the kernel's basePt satisfies the hypotheses (non-vacuity).
+- Recompiled after adding `iPt_pullback_differential` ((−x)'/(2·I·y) = I·x'/(2y): kernel [i] is CM by +I in the
+  normalized sense) and replacing deprecated `if_false`: 0 errors, 0 warnings (Sign.out). VERIFIED.
+
+## Exact q-expansion checks: qexp.py → qexp.out (PARI, exact rational series, O(q^~295)) — VERIFIED computed
+- (E) y² − x³ − 4x = 0; (a) x(t+1/4) + x(t) = 0, y(t+1/4) − I·y(t) = 0; (a−) y(t+1/4) + I·y(t) ≠ 0 (val −3);
+  (b) Fricke: (x(Wt), y(Wt)) = (2,−4) − (x(t), y(t)) with the eta forms of xC_fricke/yC_fricke.
+  These are independent re-checks of identities the kernel proves in Lean (T321.xC_add_quarter,
+  yC_add_quarter, Shimura.etaModelFricke).
+
+## Numerics: cm.py → cm.out (200 digits, sample of 20 n ≡ 5 mod 8 squarefree, n ≤ 181) — VERIFIED computed
+- (1) TYZ Prop 3.5(2) on the identity component, φ(τ/(1−8τ)) = [i]φ(τ) + τ((1−i)/2), τ((1−i)/2) = (2i,0):
+  holds with [i] = +I at 5 random τ, fails with [i] = −I (5/5).
+- (2) z̄ + z = (0,0) for z = P − [I]P (kernel tyzZn): 20/20; for z = P + [I]P: 0/20, and z̄ − z = (0,0) 20/20.
+- (3) elliptic-log lattice coordinates of tyzZn are ≥ 5e-10 from every rational with denominator ≤ 10^4
+  (torsion would give ~1e-190): z_n numerically non-torsion for all 20 n (TYZ's torsion lemma bounds
+  A(ℍ'_n)_tors ⊂ A[4], so order ≤ 4 would suffice).
