@@ -268,4 +268,93 @@ theorem th1_odd (τ : ℂ) : th1 τ (1 / 2) (1 / 2) = 0 := by
   have : (2 : ℂ) * th1 τ (1 / 2) (1 / 2) = 0 := by linear_combination h
   simpa using this
 
+
+/-! ## The explicit matrices: `Ω₂₄`, its partial inversion, and `W = −Ω₂₄⁻¹` -/
+
+abbrev r6 : ℝ := √6
+theorem r6_sq : r6 ^ 2 = 6 := Real.sq_sqrt (by norm_num)
+theorem r6_pos : 0 < r6 := Real.sqrt_pos.2 (by norm_num)
+
+/-- `Ω₂₄ = [[α0, β0], [β0, γ0]]`. -/
+def α0 : ℂ := ⟨-2 / 7, 3 * r6 / 14⟩
+def β0 : ℂ := ⟨-1 / 7, -r6 / 7⟩
+def γ0 : ℂ := ⟨-4 / 7, 3 * r6 / 7⟩
+/-- The partial inversion `[[−1/α0, β0/α0], [β0/α0, γ0 − β0²/α0]]`. -/
+def α1 : ℂ := ⟨4 / 5, 3 * r6 / 5⟩
+def β1 : ℂ := ⟨-2 / 5, r6 / 5⟩
+def γ1 : ℂ := ⟨-4 / 5, 2 * r6 / 5⟩
+/-- `W = −Ω₂₄⁻¹ = [[wa, wb], [wb, wc]] = [[1 + i√6/2, 1/2], [1/2, 1/2 + i√6/4]]`. -/
+def wa : ℂ := ⟨1, r6 / 2⟩
+def wb : ℂ := ⟨1 / 2, 0⟩
+def wc : ℂ := ⟨1 / 2, r6 / 4⟩
+
+theorem α0_ne : α0 ≠ 0 := fun h => by
+  have := congrArg Complex.im h; simp [α0] at this <;> linarith [r6_pos]
+theorem γ1_ne : γ1 ≠ 0 := fun h => by
+  have := congrArg Complex.im h; simp [γ1] at this <;> linarith [r6_pos]
+
+theorem eqA1 : -1 / α0 = α1 := by
+  rw [div_eq_iff α0_ne]; apply Complex.ext <;> simp [α0, α1] <;> nlinarith [r6_sq]
+theorem eqB1 : β0 / α0 = β1 := by
+  rw [div_eq_iff α0_ne]; apply Complex.ext <;> simp [α0, β0, β1] <;> nlinarith [r6_sq]
+theorem eqC1 : γ0 - β0 ^ 2 / α0 = γ1 := by
+  rw [sub_eq_iff_eq_add, ← sub_eq_iff_eq_add', eq_div_iff α0_ne]
+  apply Complex.ext <;> simp [α0, β0, γ0, γ1, pow_two] <;> nlinarith [r6_sq]
+theorem eqA2 : -1 / γ1 = wc := by
+  rw [div_eq_iff γ1_ne]; apply Complex.ext <;> simp [γ1, wc] <;> nlinarith [r6_sq]
+theorem eqB2 : β1 / γ1 = wb := by
+  rw [div_eq_iff γ1_ne]; apply Complex.ext <;> simp [γ1, β1, wb] <;> nlinarith [r6_sq]
+theorem eqC2 : α1 - β1 ^ 2 / γ1 = wa := by
+  rw [sub_eq_iff_eq_add, ← sub_eq_iff_eq_add', eq_div_iff γ1_ne]
+  apply Complex.ext <;> simp [α1, β1, γ1, wa, pow_two] <;> nlinarith [r6_sq]
+
+theorem pos0 : ∀ x y : ℝ, r6 / 7 * (x ^ 2 + y ^ 2) ≤
+    α0.im * x ^ 2 + 2 * β0.im * x * y + γ0.im * y ^ 2 := by
+  intro x y; simp only [α0, β0, γ0]
+  nlinarith [mul_nonneg r6_pos.le (sq_nonneg (x - 2 * y))]
+theorem pos1 : ∀ x y : ℝ, r6 / 5 * (x ^ 2 + y ^ 2) ≤
+    α1.im * x ^ 2 + 2 * β1.im * x * y + γ1.im * y ^ 2 := by
+  intro x y; simp only [α1, β1, γ1]
+  nlinarith [mul_nonneg r6_pos.le (sq_nonneg x), mul_nonneg r6_pos.le (sq_nonneg (x + y))]
+theorem pos1s : ∀ x y : ℝ, r6 / 5 * (x ^ 2 + y ^ 2) ≤
+    γ1.im * x ^ 2 + 2 * β1.im * x * y + α1.im * y ^ 2 := by
+  intro x y; simp only [α1, β1, γ1]
+  nlinarith [mul_nonneg r6_pos.le (sq_nonneg y), mul_nonneg r6_pos.le (sq_nonneg (x + y))]
+theorem posW : ∀ x y : ℝ, r6 / 4 * (x ^ 2 + y ^ 2) ≤
+    wa.im * x ^ 2 + 2 * wb.im * x * y + wc.im * y ^ 2 := by
+  intro x y; simp only [wa, wb, wc]
+  nlinarith [mul_nonneg r6_pos.le (sq_nonneg x)]
+theorem posW2 : ∀ x y : ℝ, r6 / 2 * (x ^ 2 + y ^ 2) ≤
+    (2 * wa).im * x ^ 2 + 2 * (2 * wb).im * x * y + (2 * wc).im * y ^ 2 := by
+  intro x y; simp [wa, wb, wc]
+  nlinarith [mul_nonneg r6_pos.le (sq_nonneg x)]
+theorem posWs : ∀ x y : ℝ, r6 / 4 * (x ^ 2 + y ^ 2) ≤
+    wc.im * x ^ 2 + 2 * wb.im * x * y + wa.im * y ^ 2 := by
+  intro x y; simp only [wa, wb, wc]
+  nlinarith [mul_nonneg r6_pos.le (sq_nonneg y)]
+
+theorem d0pos : (0 : ℝ) < r6 / 7 := div_pos r6_pos (by norm_num)
+theorem d1pos : (0 : ℝ) < r6 / 5 := div_pos r6_pos (by norm_num)
+theorem d2pos : (0 : ℝ) < r6 / 4 := div_pos r6_pos (by norm_num)
+theorem d3pos : (0 : ℝ) < r6 / 2 := div_pos r6_pos (by norm_num)
+
+/-- **The inversion `Ω₂₄ ↦ W`** on theta constants with characteristics: two partial inversions
+(each Mathlib's one-variable functional equation) and two coordinate swaps. -/
+theorem invert (a0 a1 : ℝ) (b0 b1 : ℤ) :
+    Th2 α0 β0 γ0 (a0 / 2) (a1 / 2) ((b0 : ℝ) / 2) ((b1 : ℝ) / 2) =
+      1 / (-I * α0) ^ (1 / 2 : ℂ) * cexp (2 * π * I * (a0 / 2 : ℝ) * ((b0 : ℝ) / 2 : ℝ)) *
+      (1 / (-I * γ1) ^ (1 / 2 : ℂ) * cexp (2 * π * I * (a1 / 2 : ℝ) * ((b1 : ℝ) / 2 : ℝ))) *
+      Th2 wa wb wc ((b0 : ℝ) / 2) ((b1 : ℝ) / 2) (a0 / 2) (a1 / 2) := by
+  have hα : 0 < α0.im := by simp [α0] <;> exact r6_pos
+  have hγ : 0 < γ1.im := by simp [γ1] <;> exact r6_pos
+  rw [pi0 hα _ _ _ _ (summable_term2 d0pos pos0 _ _ _ _)
+    (by rw [eqA1, eqB1, eqC1]; exact summable_term2 d1pos pos1 _ _ _ _), eqA1, eqB1, eqC1,
+    th2_swap, pi0 hγ _ _ _ _ (summable_term2 d1pos pos1s _ _ _ _)
+    (by rw [eqA2, eqB2, eqC2]; exact summable_term2 d2pos posWs _ _ _ _), eqA2, eqB2, eqC2,
+    th2_swap]
+  have e0 : ((b0 : ℝ) / 2) = -((b0 : ℝ) / 2) + (b0 : ℤ) := by ring
+  have e1 : ((b1 : ℝ) / 2) = -((b1 : ℝ) / 2) + (b1 : ℤ) := by ring
+  conv_rhs => rw [e0, e1, th2_shift_c]
+  ring
+
 end CM24
