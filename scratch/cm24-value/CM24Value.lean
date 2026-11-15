@@ -884,6 +884,36 @@ theorem U11 : U (1 / 2) (1 / 2) = 0 := by
 
 end CM24
 
+namespace CM24Alg
+
+/-- The minimal polynomial of `k₆ = (2−√3)(√3−√2)`. -/
+def mpoly (k : ℂ) : ℂ := k ^ 4 + 12 * k ^ 3 + 2 * k ^ 2 - 12 * k + 1
+
+/-- `S/4` in `x, y, Z₂ = z²`. -/
+def Sp (x y Z2 : ℂ) : ℂ := 4 * (Z2 ^ 2 + 14 * Z2 * x ^ 2 + 14 * Z2 * y ^ 2 + x ^ 4 + 14 * x ^ 2 * y ^ 2 + y ^ 4)
+/-- `P²` in `x, y, Z₂`. -/
+def Pp (x y Z2 : ℂ) : ℂ :=
+  4096 * x ^ 4 * y ^ 4 * Z2 ^ 2 * ((x ^ 2 - 2 * x * y + y ^ 2 - Z2) * (x ^ 2 + 2 * x * y + y ^ 2 - Z2)) ^ 2
+
+theorem core (k : ℂ) (hm : mpoly k = 0) :
+    3779136 * Pp (1 - k) (-k * (1 + k)) (-4 * k * (1 - k ^ 2)) =
+      -16 / 27 * Sp (1 - k) (-k * (1 + k)) (-4 * k * (1 - k ^ 2)) ^ 5 := by
+  unfold mpoly at hm; unfold Pp Sp
+  linear_combination (16384*k^36/27 + 524288*k^35/3 + 60588032*k^34/3 + 1175977984*k^33 + 105139945472*k^32/3 + 1394766512128*k^31/3 + 18405419909120*k^30/9 + 20264252342272*k^29/3 + 19946604396544*k^28/3 - 13769320169472*k^27 - 146141425565696*k^26/3 - 119603788251136*k^25/3 + 720511197446144*k^24/9 + 507636047937536*k^23/3 - 71685357961216*k^22/3 - 283984371122176*k^21 - 260222024187904*k^20/3 + 985619954139136*k^19/3 + 3810450640928768*k^18/27 - 985619954139136*k^17/3 - 260222024187904*k^16/3 + 283984371122176*k^15 - 71685357961216*k^14/3 - 507636047937536*k^13/3 + 720511197446144*k^12/9 + 119603788251136*k^11/3 - 146141425565696*k^10/3 + 13769320169472*k^9 + 19946604396544*k^8/3 - 20264252342272*k^7/3 + 18405419909120*k^6/9 - 1394766512128*k^5/3 + 105139945472*k^4/3 - 1175977984*k^3 + 60588032*k^2/3 - 524288*k/3 + 16384/27) * hm
+
+theorem core_ne (k : ℂ) (hm : mpoly k = 0) : Sp (1 - k) (-k * (1 + k)) (-4 * k * (1 - k ^ 2)) ≠ 0 := by
+  unfold mpoly at hm
+  have h : (5*k^3/768 + 271*k^2/3456 + 37*k/2304 - 191/2304) * Sp (1 - k) (-k * (1 + k)) (-4 * k * (1 - k ^ 2)) = 1 := by
+    unfold Sp; linear_combination -(-5*k^7/192 - 1351*k^6/864 - 251*k^5/64 - 2815*k^4/1728 + 1453*k^3/192 + 943*k^2/432 - 2293*k/576 + 767/576) * hm
+  exact right_ne_zero_of_mul_eq_one h
+
+/-- `k₆ = (2−√3)(√3−√2)` is a root of `mpoly`. -/
+theorem mpoly_k6 (a b : ℂ) (ha : a ^ 2 = 2) (hb : b ^ 2 = 3) : mpoly ((2 - b) * (b - a)) = 0 := by
+  unfold mpoly
+  linear_combination (a^2*b^4 - 8*a^2*b^3 + 24*a^2*b^2 - 32*a^2*b + 16*a^2 - 4*a*b^5 + 32*a*b^4 - 84*a*b^3 + 56*a*b^2 + 80*a*b - 96*a + 6*b^6 - 48*b^5 + 110*b^4 + 8*b^3 - 286*b^2 + 216*b + 40) * ha + (-4*a*b^5 + 32*a*b^4 - 80*a*b^3 + 72*a*b^2 - 44*a*b + 56*a + b^6 - 8*b^5 + 27*b^4 - 80*b^3 + 175*b^2 - 136*b - 27) * hb
+
+end CM24Alg
+
 namespace CM24
 open HDec.LeafQCheck.HM.QMSplit.Value24
 
@@ -1081,4 +1111,133 @@ theorem jacobi {τ : ℂ} (hτ : 0 < τ.im) :
 
 theorem h2τ3 : 2 * τ3 = τ6 := by apply Complex.ext <;> simp [τ3, τ6] <;> ring
 
+/-! ## The leaf: the singular modulus `k₆` -/
+
 end CM24
+
+/-- **LEAF (the singular modulus `k₆`; Weber, Ramanujan; disc `−24`).** With Mathlib's `jacobiTheta₂`,
+`θ₃(τ) = jacobiTheta₂ 0 τ = Σ exp(πin²τ)` and `θ₂(τ) = exp(πiτ/4)·jacobiTheta₂ (τ/2) τ = Σ exp(πi(n+½)²τ)`,
+at `τ = i√6` (nome `q = e^{−π√6}`): `θ₃(i√6) ≠ 0` and `k₆ = θ₂(i√6)²/θ₃(i√6)² = (2−√3)(√3−√2)`.
+
+Published form: the singular modulus `k_n = λ*(n)` of the elliptic integral (`K'(k_n)/K(k_n) = √n`, and
+`k = θ₂²/θ₃²` with `q = e^{−π√n}`, Jacobi) at `n = 6`: `λ*(6) = (2−√3)(√3−√2)`. Sources (locators
+UNVERIFIED, from memory): J. M. Borwein and P. B. Borwein, *Pi and the AGM* (Wiley 1987), Table 4.6 (singular
+values `λ*(n)`) and Thm 2.3/§2.6 for `k = θ₂²/θ₃²`; B. C. Berndt, *Ramanujan's Notebooks Part V*, Ch. 34
+(class invariants `g₆`, `G₆` and the modulus); H. Weber, *Lehrbuch der Algebra* III (1908), §§ 125-127 and the
+table of class invariants. Numerically VERIFIED (`py/split.py`, 30 digits). -/
+def SingularModulus6 : Prop :=
+  jacobiTheta₂ 0 (I * ((√6 : ℝ) : ℂ)) ≠ 0 ∧
+    (cexp (π * I * (I * ((√6 : ℝ) : ℂ)) / 4) * jacobiTheta₂ (I * ((√6 : ℝ) : ℂ) / 2) (I * ((√6 : ℝ) : ℂ))) ^ 2 =
+      (((2 - √3) * (√3 - √2) : ℝ) : ℂ) * jacobiTheta₂ 0 (I * ((√6 : ℝ) : ℂ)) ^ 2
+
+namespace CM24
+open HDec.LeafQCheck.HM.QMSplit.Value24
+
+theorem τ6_eq : τ6 = I * ((√6 : ℝ) : ℂ) := by apply Complex.ext <;> simp [τ6]
+
+theorem A0_eq : th1 τ6 0 0 = jacobiTheta₂ 0 (I * ((√6 : ℝ) : ℂ)) := by
+  rw [th1_eq, τ6_eq]; simp
+
+theorem A2_eq : th1 τ6 (1 / 2) 0 =
+    cexp (π * I * (I * ((√6 : ℝ) : ℂ)) / 4) * jacobiTheta₂ (I * ((√6 : ℝ) : ℂ) / 2) (I * ((√6 : ℝ) : ℂ)) := by
+  rw [th1_eq, τ6_eq]
+  congr 1
+  · congr 1; push_cast; ring
+  · congr 1; push_cast; ring
+
+
+/-! ## Final assembly -/
+
+theorem evenChars_eq : HDec.PkgI1.evenChars =
+    {(![0, 0], ![0, 0]), (![0, 1], ![0, 0]), (![1, 0], ![0, 0]), (![1, 1], ![0, 0]), (![0, 0], ![1, 0]),
+     (![0, 1], ![1, 0]), (![0, 0], ![0, 1]), (![1, 0], ![0, 1]), (![0, 0], ![1, 1]), (![1, 1], ![1, 1])} := by
+  decide
+
+theorem Ecal_ne : Ecal ≠ 0 := by
+  unfold Ecal
+  have h1 : -I * α0 ≠ 0 := mul_ne_zero (by simp) α0_ne
+  have h2 : -I * γ1 ≠ 0 := mul_ne_zero (by simp) γ1_ne
+  exact mul_ne_zero (one_div_ne_zero h1) (one_div_ne_zero h2)
+
+theorem zeta_sq : cexp (π * I / 4) ^ 2 = I := by
+  rw [← Complex.exp_nat_mul, show ((2 : ℕ) : ℂ) * (π * I / 4) = π / 2 * I by push_cast; ring, Complex.exp_mul_I]
+  have h1 : Complex.cos (π / 2) = 0 := by exact_mod_cast Real.cos_pi_div_two
+  have h2 : Complex.sin (π / 2) = 1 := by exact_mod_cast Real.sin_pi_div_two
+  rw [h1, h2]; ring
+
+theorem sum8 : HDec.PkgI1.thetaSum8 Om24 = Ecal ^ 4 *
+    CM24Alg.Sp (U 0 0 ^ 2) (U (1 / 2) 0 ^ 2) ((U 0 (1 / 2) ^ 2) ^ 2) := by
+  rw [HDec.PkgI1.thetaSum8, evenChars_eq]
+  simp (disch := decide) only [Finset.sum_insert, Finset.sum_singleton]
+  simp only [show ∀ x : ℂ, x ^ 8 = (x ^ 2) ^ 4 from fun x => by ring, sqc0, sqc1, sqc2, sqc3, sqc4, sqc5,
+    sqc6, sqc7, sqc8, sqc9]
+  unfold CM24Alg.Sp; ring
+
+theorem prod2 : HDec.PkgI1.thetaProd2 Om24 ^ 2 = Ecal ^ 20 *
+    CM24Alg.Pp (U 0 0 ^ 2) (U (1 / 2) 0 ^ 2) ((U 0 (1 / 2) ^ 2) ^ 2) := by
+  rw [HDec.PkgI1.thetaProd2, evenChars_eq]
+  simp (disch := decide) only [Finset.prod_insert, Finset.prod_singleton]
+  simp only [sqc0, sqc1, sqc2, sqc3, sqc4, sqc5, sqc6, sqc7, sqc8, sqc9]
+  unfold CM24Alg.Pp; ring
+
+/-- **Main theorem: the closed numeric statement from the singular modulus `k₆`.** -/
+theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaValueAtOmega24 := by
+  obtain ⟨hA0', hk'⟩ := h
+  rw [← A0_eq] at hA0' hk'
+  rw [← A2_eq] at hk'
+  set A0 := th1 τ6 0 0
+  set A1 := th1 τ6 0 (1 / 2)
+  set A2 := th1 τ6 (1 / 2) 0
+  set B0 := th1 τ3 0 0
+  set B1 := th1 τ3 0 (1 / 2)
+  set B2 := th1 τ3 (1 / 2) 0
+  set k : ℂ := (((2 - √3) * (√3 - √2) : ℝ) : ℂ) with hkdef
+  have hm : CM24Alg.mpoly k = 0 := by
+    have ha : ((√2 : ℝ) : ℂ) ^ 2 = 2 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+    have hb : ((√3 : ℝ) : ℂ) ^ 2 = 3 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+    have := CM24Alg.mpoly_k6 _ _ ha hb
+    rw [hkdef]; push_cast; exact this
+  have rB0 : B0 ^ 2 = A0 ^ 2 + A2 ^ 2 := by have := dupA τ3_im; rw [h2τ3] at this; exact this
+  have rB1 : B1 ^ 2 = A0 ^ 2 - A2 ^ 2 := by have := dupB τ3_im; rw [h2τ3] at this; exact this
+  have rB2 : B2 ^ 2 = 2 * A0 * A2 := by have := dupC τ3_im; rw [h2τ3] at this; exact this
+  have rJ : A0 ^ 4 = A1 ^ 4 + A2 ^ 4 := jacobi τ6_im
+  have hk : A2 ^ 2 = k * A0 ^ 2 := hk'
+  have hζ := zeta_sq
+  set ζ := cexp (π * I / 4)
+  have hx : U 0 0 ^ 2 = A0 ^ 4 * (1 - k) := by
+    rw [U00]; linear_combination A0 ^ 2 * rB1 - A0 ^ 2 * hk
+  have hy : U (1 / 2) 0 ^ 2 = A0 ^ 4 * (-k * (1 + k)) := by
+    rw [U10]; linear_combination (A2 ^ 2 * B0 ^ 2) * I_sq - A2 ^ 2 * rB0 - (A0 ^ 2 + A2 ^ 2 + k * A0 ^ 2) * hk
+  have hz : (U 0 (1 / 2) ^ 2) ^ 2 = A0 ^ 8 * (-4 * k * (1 - k ^ 2)) := by
+    rw [U01]
+    linear_combination (ζ ^ 2 + I) * A1 ^ 4 * B2 ^ 4 * hζ + A1 ^ 4 * B2 ^ 4 * I_sq
+      - A1 ^ 4 * (B2 ^ 2 + 2 * A0 * A2) * rB2 + 4 * A0 ^ 2 * A2 ^ 2 * rJ
+      + (-4 * A0 ^ 6 + 4 * A0 ^ 2 * (A2 ^ 4 + k * A0 ^ 2 * A2 ^ 2 + k ^ 2 * A0 ^ 4)) * hk
+  have hS : HDec.PkgI1.thetaSum8 Om24 = Ecal ^ 4 * A0 ^ 16 *
+      CM24Alg.Sp (1 - k) (-k * (1 + k)) (-4 * k * (1 - k ^ 2)) := by
+    rw [sum8, hx, hy, hz]; unfold CM24Alg.Sp; ring
+  have hP : HDec.PkgI1.thetaProd2 Om24 ^ 2 = Ecal ^ 20 * A0 ^ 80 *
+      CM24Alg.Pp (1 - k) (-k * (1 + k)) (-4 * k * (1 - k ^ 2)) := by
+    rw [prod2, hx, hy, hz]; unfold CM24Alg.Pp; ring
+  have hS0 : HDec.PkgI1.thetaSum8 Om24 ≠ 0 := by
+    rw [hS]
+    exact mul_ne_zero (mul_ne_zero (pow_ne_zero _ Ecal_ne) (pow_ne_zero _ hA0')) (CM24Alg.core_ne k hm)
+  have hD : HDec.PkgI1.jDen Om24 ≠ 0 := pow_ne_zero _ hS0
+  refine ⟨hD, ?_⟩
+  rw [div_eq_iff hD, HDec.PkgI1.jNum, HDec.PkgI1.jDen, hP, hS]
+  have := CM24Alg.core k hm
+  linear_combination (Ecal ^ 20 * A0 ^ 80) * this
+
+/-- **The field `igusaCMValue24` from the singular modulus `k₆`.** -/
+theorem igusaCMValue24_of_singularModulus6 (h : SingularModulus6) : IgusaCMValue24 :=
+  igusa_of_thetaQuotientValue24 (thetaQuotientValue24_iff.2 (thetaValueAtOmega24_of_singularModulus6 h))
+
+/-- The glue `ThetaQuotientValue24` from the singular modulus `k₆`. -/
+theorem thetaQuotientValue24_of_singularModulus6 (h : SingularModulus6) :
+    HDec.LeafQCheck.HM.QMSplit.ThetaQuotientValue24 :=
+  thetaQuotientValue24_iff.2 (thetaValueAtOmega24_of_singularModulus6 h)
+
+end CM24
+
+#print axioms CM24.thetaValueAtOmega24_of_singularModulus6
+#print axioms CM24.igusaCMValue24_of_singularModulus6
