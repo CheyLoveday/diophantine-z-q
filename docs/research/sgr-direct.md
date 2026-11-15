@@ -207,6 +207,23 @@ strict count goes 56 → 55 (GLUE −1).
      `b` then force `I_𝔓 = I_{Q_b}`, and `I_q ⊆ I_𝔓`.
 
    A self-contained target for a commutative-algebra contributor.
+
+   A variant of the last step needs no strict henselization (SPECULATIVE; paper only):
+   - Let `A` be the localization of `ℤ_(p)[X]` at `(p, X − b)`, and `A₁ = A[u, w]/(u^m − (X − b), w^m − p)`.
+   - Let `B₁` be the normalization of `A₁` in the compositum `E₁`. It is étale over `A₁` (T2 and purity), so the
+     inertia `I(𝔓₁ | A₁)` at a closed point is trivial.
+   - Hence `I(𝔓₁ | A)` embeds in `Gal(Frac A₁ / Frac A) = μ_m × μ_m`.
+   - The inertia groups of the vertical prime, of the prime over `X = b`, and of the residue field over `b` at `p` all
+     lie in `I(𝔓₁ | A)`. Their images in `G` satisfy `I_𝔓 = ⟨I_{Q_b}, I_q⟩`, and `I_𝔓 / I_{Q_b}` is the inertia of the
+     residue field over `b`.
+   - That residue field is unramified, so `I_q ⊆ I_𝔓 = I_{Q_b}`.
+
+   Equivalently, a contributor may prove the converse of the chain's `SpecNonMeeting`:
+   - **Statement.** For `E/ℚ(X)` Galois of degree `< p`, one unramified non-meeting fibre forces `NoVerticalRam`.
+   - **Application.** Apply it over the subfield `ℚ(s)`, `s = √(a(27X + 16))`. Over it `s = 0` is not a branch point,
+     because `e_{−16/27} ∣ 2`.
+   - **What it bypasses.** `NVLocalInertia`, `RamifiedSqrtInertia` and the inertia argument altogether.
+   - **Cost.** A change of base field that is not compiled here.
 2. **The deep fold** (§5).
 
 sir-printed's alternative, the weaker leaf `ShimuraIntegralModelUsed` (wip/sir-printed), keeps the integral model:
