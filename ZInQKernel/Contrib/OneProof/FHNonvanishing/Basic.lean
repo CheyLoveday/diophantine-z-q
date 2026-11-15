@@ -24,8 +24,11 @@ Ceti's proved functional equation, `GZDecomp.coeff`, `GZDecomp.twistCoeff`, Math
   then gives `D` with `D / D₀` a square in `ℚ_p` for every `p ∣ 2N` and `D < 0`; reduction of
   `ℤ_p` modulo `p` (resp. `8`) turns this into the Heegner hypothesis.
 
-Task gz-fh; report `docs/research/gz-fh.md`. The proof of `ZInQ.GZDecomp.FHNonvanishing` is
-`ZInQ.GZFH.fhNonvanishing_of_printed`.
+Task gz-fh; report `docs/research/gz-fh.md`. This file gives the variant reduction
+`ZInQ.GZFH.fhNonvanishing_of_printed` (two printed leaves) and the arithmetic glue shared with the
+recommended one, `ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE`
+(`Contrib/OneProof/FHNonvanishing.lean`: one printed leaf, the twisted root number proved in
+`FHNonvanishing/TwistFE.lean`).
 -/
 
 open HeckeRing.GL2
