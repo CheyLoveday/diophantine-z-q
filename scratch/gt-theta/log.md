@@ -36,3 +36,14 @@
   images of `S, T, T⁻¹` under the three homomorphisms `iota1, iota2, rot : SL(2,ℤ) →* Mat4` and `Tm(±[[0,1],[1,0]])`.
   Proof: explicit reduction (Bezout in SL2(Z) on (a2,c2), (a1,c1), (a1,a2); sign; the stabilizer of e1 is
   `Tm [[q−st, s],[s,0]] · rot(T^{−t}) · iota2 γ`) plus Mathlib's `SpecialLinearGroup.SL2Z_generators`.
+
+## 11-14 21:55 IgusaPsi4 / IgusaChi10 on all of Sp4(Z) (VERIFIED, compiled)
+- Part II appended to ZInQKernel/Contrib/OneProof/ThetaModularityM46.lean (from scratch/gt-theta/Full.lean):
+  `sp_comp` (cocycle), `goodSub`, `good_Tm` (6 decide instances), `good_rotS/T/Tinv`, `good_J1/J2`, `good_sp`,
+  `igusaPsi4_proof : HDec.QMSplit.Theta.IgusaPsi4`, `igusaChi10_proof : HDec.QMSplit.Theta.IgusaChi10`,
+  `thetaModularity_proof : HDec.PkgI1.ThetaModularity`.
+- lake build (+Main +Discharges +contribution): success, module 38 s. File 1481 lines, 81 KB.
+- #discharges: "DISCHARGES [OpenResearchLeaves14.igusaChi10] by GapTheta.igusaChi10_proof / still assumes: [] /
+  axioms: [propext, Classical.choice, Quot.sound]", same for igusaPsi4; "72 open hypotheses, 204 theorems checked,
+  2 discharge one".
+- Report: docs/research/gt-theta.md.
