@@ -2,6 +2,7 @@ import Mathlib.NumberTheory.Padics.Hensel
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.NumberTheory.LegendreSymbol.QuadraticReciprocity
 import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.Analysis.Real.Sqrt
 
 namespace ZInQ.FHPrinted
 
@@ -29,6 +30,11 @@ theorem IsLocalNorm.sq_mul {x : K} (c : K) (h : IsLocalNorm K d x) :
 theorem isLocalNorm_sq (c : K) : IsLocalNorm K d (c ^ 2) := ⟨c, 0, by ring⟩
 
 theorem isLocalNorm_neg_self : IsLocalNorm K d (-(d : K)) := ⟨0, 1, by ring⟩
+
+theorem isLocalNorm_of_mul_eq_sq {u r W : K} (hr0 : r ≠ 0) (h : u * r = W ^ 2)
+    (hr : IsLocalNorm K d r) : IsLocalNorm K d u := by
+  have e : u = (W / r) ^ 2 * r := by field_simp; linear_combination h
+  rw [e]; exact hr.sq_mul _
 
 theorem isLocalNorm_of_eq_sq (h2 : (2 : K) ≠ 0) {w : K} (hw0 : w ≠ 0) (hw : (d : K) = w ^ 2)
     (x : K) : IsLocalNorm K d x :=
@@ -245,5 +251,299 @@ theorem not_isLocalNorm_of_ramified {d u : ℤ} (hpd : (p : ℤ) ∣ d) (hpd2 : 
     · exact pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h4
 
 end Descent
+
+section Two
+
+theorem intCast_zmod8 {d : ℤ} {r : ℕ} (h : d % 8 = r) : (d : ZMod (2 ^ 3)) = r := by
+  have e : d = 8 * (d / 8) + r := by omega
+  rw [e]; push_cast
+  have : (8 : ZMod (2 ^ 3)) = 0 := by decide
+  rw [this]; ring
+
+theorem two_dvd_of_four_mul {Y : ℤ_[2]} (h : 4 * toZModPow 3 Y = 0) : ((2 : ℕ) : ℤ_[2]) ∣ Y := by
+  have h1 : (4 * Y) ∈ Ideal.span {((2 : ℕ) : ℤ_[2]) ^ 3} := by
+    rw [← ker_toZModPow, RingHom.mem_ker, map_mul, map_ofNat]; exact h
+  obtain ⟨W, hW⟩ := Ideal.mem_span_singleton.mp h1
+  refine ⟨W, ?_⟩
+  have h4 : (4 : ℤ_[2]) ≠ 0 := by norm_num
+  apply mul_left_cancel₀ h4
+  rw [hW]; push_cast; ring
+
+/-- Descent at `2`, modulo `8`. -/
+theorem not_isLocalNorm_two {d : ℤ} {x : ℤ_[2]} {r : ZMod (2 ^ 3)} (hd : (d : ZMod (2 ^ 3)) = r)
+    (h0 : ∀ a b : ZMod (2 ^ 3), toZModPow 3 x ≠ a ^ 2 - r * b ^ 2)
+    (hstep : ∀ c a b : ZMod (2 ^ 3), 4 * c * toZModPow 3 x = a ^ 2 - r * b ^ 2 →
+      4 * a = 0 ∧ 4 * b = 0) :
+    ¬ IsLocalNorm ℚ_[2] d (x : ℚ_[2]) := by
+  apply not_isLocalNorm_of_descent
+  · intro Y Z h
+    apply h0 (toZModPow 3 Y) (toZModPow 3 Z)
+    have := congrArg (toZModPow 3) h
+    simpa [hd] using this
+  · intro k Y Z h
+    have e : ((2 : ℕ) : ℤ_[2]) ^ (2 * (k + 1)) = 4 * ((2 : ℕ) : ℤ_[2]) ^ (2 * k) := by
+      push_cast; ring
+    rw [e] at h
+    have := congrArg (toZModPow 3) h
+    simp only [map_mul, map_sub, map_pow, map_intCast, map_ofNat, hd] at this
+    obtain ⟨ha, hb⟩ := hstep _ _ _ this
+    exact ⟨two_dvd_of_four_mul ha, two_dvd_of_four_mul hb⟩
+
+/-- `2` is not a norm from `ℚ_2(√d)` for `d ≡ 5 (mod 8)` (the unramified quadratic extension). -/
+theorem not_isLocalNorm_two_of_five {d : ℤ} (hd : d % 8 = 5) :
+    ¬ IsLocalNorm ℚ_[2] d (2 : ℚ_[2]) := by
+  have e : ((2 : ℤ_[2]) : ℚ_[2]) = 2 := by norm_cast
+  rw [← e]
+  refine not_isLocalNorm_two (r := 5) (by rw [intCast_zmod8 hd]; rfl) ?_ ?_
+  · simp only [map_ofNat]; decide
+  · simp only [map_ofNat]; decide
+
+/-- `−1` is not a norm from `ℚ_2(√d)` for `d ≡ 3 (mod 4)`. -/
+theorem not_isLocalNorm_neg_one_of_three {d : ℤ} (hd : d % 4 = 3) :
+    ¬ IsLocalNorm ℚ_[2] d (-1 : ℚ_[2]) := by
+  have e : ((-1 : ℤ_[2]) : ℚ_[2]) = -1 := by norm_cast
+  rw [← e]
+  rcases (by omega : d % 8 = 3 ∨ d % 8 = 7) with h | h
+  · refine not_isLocalNorm_two (r := 3) (by rw [intCast_zmod8 h]; rfl) ?_ ?_
+    · simp only [map_neg, map_one]; decide
+    · simp only [map_neg, map_one]; decide
+  · refine not_isLocalNorm_two (r := 7) (by rw [intCast_zmod8 h]; rfl) ?_ ?_
+    · simp only [map_neg, map_one]; decide
+    · simp only [map_neg, map_one]; decide
+
+/-- `5` is not a norm from `ℚ_2(√d)` for `d ≡ 2 (mod 4)`. -/
+theorem not_isLocalNorm_five_of_two {d : ℤ} (hd : d % 4 = 2) :
+    ¬ IsLocalNorm ℚ_[2] d (5 : ℚ_[2]) := by
+  have e : ((5 : ℤ_[2]) : ℚ_[2]) = 5 := by norm_cast
+  rw [← e]
+  rcases (by omega : d % 8 = 2 ∨ d % 8 = 6) with h | h
+  · refine not_isLocalNorm_two (r := 2) (by rw [intCast_zmod8 h]; rfl) ?_ ?_
+    · simp only [map_ofNat]; decide
+    · simp only [map_ofNat]; decide
+  · refine not_isLocalNorm_two (r := 6) (by rw [intCast_zmod8 h]; rfl) ?_ ?_
+    · simp only [map_ofNat]; decide
+    · simp only [map_ofNat]; decide
+
+/-- For `d ≡ 1 (mod 8)`, `d` is a square in `ℚ_2` and every element is a norm. -/
+theorem isLocalNorm_two_of_one {d : ℤ} (hd : d % 8 = 1) (x : ℚ_[2]) : IsLocalNorm ℚ_[2] d x := by
+  obtain ⟨w, hw0, hw⟩ := exists_sq_of_int_two hd
+  exact isLocalNorm_of_eq_sq (by norm_num) hw0 hw x
+
+theorem isLocalNorm_two_five {d : ℤ} (hd : d % 4 = 1) : IsLocalNorm ℚ_[2] d 5 := by
+  obtain ⟨w, -, hw⟩ := exists_sq_of_int_two (a := 5 + 4 * d) (by omega)
+  refine ⟨w, 2, ?_⟩
+  push_cast at hw
+  linear_combination hw
+
+theorem isLocalNorm_two_neg_one {d : ℤ} (hd : d % 4 = 1) : IsLocalNorm ℚ_[2] d (-1) := by
+  rcases (by omega : d % 8 = 1 ∨ d % 8 = 5) with h | h
+  · exact isLocalNorm_two_of_one h _
+  obtain ⟨w, hw0, hw⟩ := exists_sq_of_int_two (a := d - 4) (by omega)
+  refine ⟨2 / w, 1 / w, ?_⟩
+  push_cast at hw
+  field_simp
+  linear_combination hw
+
+/-- Every unit of `ℤ_2` is a norm from `ℚ_2(√d)` for `d ≡ 1 (mod 4)` (unramified). -/
+theorem isLocalNorm_two_unit {d : ℤ} (hd : d % 4 = 1) {u : ℤ_[2]} (hu : IsUnit u) :
+    IsLocalNorm ℚ_[2] d (u : ℚ_[2]) := by
+  have hu8 : toZModPow 3 u * toZModPow 3 ((hu.unit⁻¹ : ℤ_[2]ˣ) : ℤ_[2]) = 1 := by
+    rw [← map_mul, IsUnit.mul_val_inv, map_one]
+  have hodd : ∀ a b : ZMod (2 ^ 3), a * b = 1 → a = 1 ∨ a = 3 ∨ a = 5 ∨ a = 7 := by decide
+  have hm1 := isLocalNorm_two_neg_one hd
+  have h5 := isLocalNorm_two_five hd
+  have key : ∀ r : ℤ, IsLocalNorm ℚ_[2] d (r : ℚ_[2]) → toZModPow 3 (u * (r : ℤ_[2])) = 1 →
+      IsLocalNorm ℚ_[2] d (u : ℚ_[2]) := by
+    intro r hr h1
+    have hr0 : (r : ℚ_[2]) ≠ 0 := by
+      intro h0
+      have : r = 0 := by exact_mod_cast h0
+      subst this
+      simp at h1
+      exact absurd h1 (by decide)
+    obtain ⟨W, hW⟩ := isSquare_of_toZModPow_three h1
+    refine isLocalNorm_of_mul_eq_sq hr0 (W := (W : ℚ_[2])) ?_ hr
+    have := congrArg (fun t : ℤ_[2] => (t : ℚ_[2])) hW
+    simp only [PadicInt.coe_mul, PadicInt.coe_intCast] at this
+    rw [this]; ring
+  rcases hodd _ _ hu8 with h | h | h | h
+  · exact key 1 (by simpa using isLocalNorm_sq (d := d) (1 : ℚ_[2])) (by simp [h])
+  · refine key (-5) (by push_cast; simpa using hm1.mul h5) ?_
+    rw [map_mul, h, map_intCast]; decide
+  · refine key 5 (by exact_mod_cast h5) ?_
+    rw [map_mul, h, map_intCast]; decide
+  · refine key (-1) (by push_cast; exact hm1) ?_
+    rw [map_mul, h, map_intCast]; decide
+
+end Two
+
+section Infinity
+
+theorem real_isLocalNorm_of_pos {d : ℤ} (hd : 0 < d) (x : ℝ) : IsLocalNorm ℝ d x := by
+  have hd' : (0 : ℝ) < d := by exact_mod_cast hd
+  exact isLocalNorm_of_eq_sq two_ne_zero (w := Real.sqrt d) (Real.sqrt_ne_zero'.mpr hd')
+    (Real.sq_sqrt hd'.le).symm x
+
+theorem real_not_isLocalNorm_neg_one {d : ℤ} (hd : d < 0) : ¬ IsLocalNorm ℝ d (-1) := by
+  rintro ⟨y, z, h⟩
+  have : (d : ℝ) < 0 := by exact_mod_cast hd
+  nlinarith [sq_nonneg y, sq_nonneg z, mul_nonneg (neg_nonneg.mpr this.le) (sq_nonneg z)]
+
+/-- **The local condition at `∞`**: `χ_{d,∞}(−1) = χ_{D,∞}(−1)` forces `d D > 0`. -/
+theorem pos_mul_of_real_iff {d D : ℤ} (hd : d ≠ 0) (hD : D ≠ 0)
+    (h : IsLocalNorm ℝ d (-1) ↔ IsLocalNorm ℝ D (-1)) : 0 < d * D := by
+  rcases lt_or_gt_of_ne hd with hd' | hd' <;> rcases lt_or_gt_of_ne hD with hD' | hD'
+  · nlinarith
+  · exact absurd (h.mpr (real_isLocalNorm_of_pos hD' _)) (real_not_isLocalNorm_neg_one hd')
+  · exact absurd (h.mp (real_isLocalNorm_of_pos hd' _)) (real_not_isLocalNorm_neg_one hD')
+  · nlinarith
+
+end Infinity
+
+section OddUnits
+
+variable {p : ℕ} [hp : Fact p.Prime]
+
+theorem intCast_ne_zero_of_not_dvd {d : ℤ} (hd : ¬ (p : ℤ) ∣ d) : (d : ZMod p) ≠ 0 :=
+  fun h => hd ((ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp h)
+
+theorem padic_intCast_ne_zero_of_not_dvd {d : ℤ} (hd : ¬ (p : ℤ) ∣ d) : (d : ℚ_[p]) ≠ 0 := by
+  intro h; apply hd; rw [Int.cast_eq_zero.mp h]; exact dvd_zero _
+
+/-- **Every unit is a norm from an unramified quadratic extension** (`p` odd, `p ∤ d`): solve
+`a² − d b² ≡ u (mod p)` (Chevalley–Warning for two quadrics, Mathlib) and lift by Hensel. -/
+theorem isLocalNorm_unit (hp2 : p ≠ 2) {d : ℤ} (hd : ¬ (p : ℤ) ∣ d) {u : ℤ_[p]}
+    (hu : toZMod u ≠ 0) : IsLocalNorm ℚ_[p] d (u : ℚ_[p]) := by
+  have hd0 := intCast_ne_zero_of_not_dvd hd
+  have hdQ := padic_intCast_ne_zero_of_not_dvd hd
+  have hcard : Fintype.card (ZMod p) % 2 = 1 := by
+    rw [ZMod.card]; exact Nat.odd_iff.mp (hp.out.odd_of_ne_two hp2)
+  have hdeg : (C (-(d : ZMod p)) * X ^ 2 + C (-toZMod u)).degree = 2 := by
+    rw [degree_add_C (by rw [degree_C_mul_X_pow 2 (neg_ne_zero.mpr hd0)]; norm_num),
+      degree_C_mul_X_pow 2 (neg_ne_zero.mpr hd0)]
+    rfl
+  obtain ⟨a, b, hab⟩ := FiniteField.exists_root_sum_quadratic (R := ZMod p)
+    (f := X ^ 2) (g := C (-(d : ZMod p)) * X ^ 2 + C (-toZMod u)) (by simp) hdeg hcard
+  simp only [eval_pow, eval_X, eval_add, eval_mul, eval_C] at hab
+  set B : ℤ_[p] := ((b.val : ℕ) : ℤ_[p])
+  have hB : toZMod B = b := by simp [B]
+  by_cases ha : a = 0
+  · rw [ha] at hab
+    have hb : b ≠ 0 := by
+      rintro rfl; apply hu; linear_combination -hab
+    obtain ⟨W, hW⟩ := isSquare_of_toZMod hp2 (c := (d : ZMod p) * b) (mul_ne_zero hd0 hb)
+      (u := -(u * d)) (by
+        simp only [map_neg, map_mul, map_intCast]
+        linear_combination (d : ZMod p) * hab)
+    refine ⟨0, (W : ℚ_[p]) / d, ?_⟩
+    have := congrArg (fun t : ℤ_[p] => (t : ℚ_[p])) hW
+    simp only [PadicInt.coe_mul, PadicInt.coe_neg, PadicInt.coe_intCast] at this
+    field_simp
+    linear_combination -this
+  · obtain ⟨W, hW⟩ := isSquare_of_toZMod hp2 (c := a) ha (u := u + d * B ^ 2)
+      (by simp only [map_add, map_mul, map_pow, map_intCast, hB]; linear_combination -hab)
+    refine ⟨W, B, ?_⟩
+    have := congrArg (fun t : ℤ_[p] => (t : ℚ_[p])) hW
+    simp only [PadicInt.coe_mul, PadicInt.coe_add, PadicInt.coe_pow, PadicInt.coe_intCast] at this
+    linear_combination this
+
+theorem isLocalNorm_intCast_unit (hp2 : p ≠ 2) {d u : ℤ} (hd : ¬ (p : ℤ) ∣ d)
+    (hu : ¬ (p : ℤ) ∣ u) : IsLocalNorm ℚ_[p] d (u : ℚ_[p]) := by
+  have := isLocalNorm_unit hp2 hd (u := (u : ℤ_[p]))
+    (by rw [map_intCast]; exact intCast_ne_zero_of_not_dvd hu)
+  simpa using this
+
+theorem not_sq_dvd_of_squarefree {D : ℤ} (hD : Squarefree D) : ¬ (p : ℤ) ^ 2 ∣ D := by
+  intro h
+  have hu := hD (p : ℤ) (by simpa [sq] using h)
+  have h1 := Int.isUnit_iff_natAbs_eq.mp hu
+  simp only [Int.natAbs_natCast] at h1
+  exact hp.out.one_lt.ne' h1
+
+end OddUnits
+
+section LocalConditions
+
+variable {p : ℕ} [hp : Fact p.Prime]
+
+/-- **The local condition at an odd prime.** If `χ_{D,p} = χ_{D₀,p}` (same norm groups in
+`ℚ_p^×`), `p ∤ D₀` and `D` squarefree, then `D / D₀` is a square in `ℚ_p`. -/
+theorem isSquare_div_of_localNorm_iff (hp2 : p ≠ 2) {D D₀ : ℤ} (hD : Squarefree D)
+    (hD₀ : ¬ (p : ℤ) ∣ D₀)
+    (h : ∀ x : ℚ_[p], x ≠ 0 → (IsLocalNorm ℚ_[p] D x ↔ IsLocalNorm ℚ_[p] D₀ x)) :
+    IsSquare ((D : ℚ_[p]) / (D₀ : ℚ_[p])) := by
+  have hD₀Q := padic_intCast_ne_zero_of_not_dvd hD₀
+  by_cases hpD : (p : ℤ) ∣ D
+  · exfalso
+    obtain ⟨a, ha⟩ := FiniteField.exists_nonsquare (F := ZMod p) (by rw [ZMod.ringChar_zmod_n]; exact hp2)
+    have ha0 : a ≠ 0 := by rintro rfl; exact ha ⟨0, by ring⟩
+    set u : ℤ := ((a.val : ℕ) : ℤ)
+    have hu : (u : ZMod p) = a := by simp [u]
+    have hpu : ¬ (p : ℤ) ∣ u := fun h' => ha0 (by rw [← hu]; exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mpr h')
+    have hn := not_isLocalNorm_of_ramified hpD (not_sq_dvd_of_squarefree hD) (u := u) (by rw [hu]; exact ha)
+    exact hn ((h _ (padic_intCast_ne_zero_of_not_dvd hpu)).mpr (isLocalNorm_intCast_unit hp2 hD₀ hpu))
+  have hDQ := padic_intCast_ne_zero_of_not_dvd hpD
+  have hpDD : ¬ (p : ℤ) ∣ D * D₀ := by
+    intro h'
+    rcases (Int.Prime.dvd_mul' hp.out h') with h1 | h1
+    · exact hpD h1
+    · exact hD₀ h1
+  by_cases hsq : IsSquare ((D * D₀ : ℤ) : ZMod p)
+  · obtain ⟨w, -, hw⟩ := exists_sq_of_int hp2 hpDD hsq
+    refine ⟨w / D₀, ?_⟩
+    push_cast at hw
+    field_simp
+    linear_combination hw
+  · exfalso
+    have hl := (legendreSym.eq_neg_one_iff (p := p)).mpr hsq
+    rw [legendreSym.mul] at hl
+    have h1 := legendreSym.eq_one_or_neg_one (p := p) (intCast_ne_zero_of_not_dvd hpD)
+    have h2 := legendreSym.eq_one_or_neg_one (p := p) (intCast_ne_zero_of_not_dvd hD₀)
+    have hpQ : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast hp.out.ne_zero
+    rcases h1 with h1 | h1 <;> rcases h2 with h2 | h2
+    · rw [h1, h2] at hl; norm_num at hl
+    · -- `D` square, `D₀` not
+      obtain ⟨w, hw0, hw⟩ := exists_sq_of_int hp2 hpD
+        ((legendreSym.eq_one_iff p (intCast_ne_zero_of_not_dvd hpD)).mp h1)
+      exact not_isLocalNorm_p ((legendreSym.eq_neg_one_iff p).mp h2)
+        ((h _ hpQ).mp (isLocalNorm_of_eq_sq (by norm_num) hw0 hw _))
+    · obtain ⟨w, hw0, hw⟩ := exists_sq_of_int hp2 hD₀
+        ((legendreSym.eq_one_iff p (intCast_ne_zero_of_not_dvd hD₀)).mp h2)
+      exact not_isLocalNorm_p ((legendreSym.eq_neg_one_iff p).mp h1)
+        ((h _ hpQ).mpr (isLocalNorm_of_eq_sq (by norm_num) hw0 hw _))
+    · rw [h1, h2] at hl; norm_num at hl
+
+/-- **The local condition at `2`.** If `χ_{D,2} = χ_{D₀,2}` with `D₀ ≡ 1 (mod 4)` and `D`
+squarefree, then `D ≡ 1 (mod 4)` (`χ_D` is unramified at `2`) and `D / D₀` is a square in `ℚ_2`. -/
+theorem isSquare_div_two_of_localNorm_iff {D D₀ : ℤ} (hD : Squarefree D) (hD₀ : D₀ % 4 = 1)
+    (h : ∀ x : ℚ_[2], x ≠ 0 → (IsLocalNorm ℚ_[2] D x ↔ IsLocalNorm ℚ_[2] D₀ x)) :
+    D % 4 = 1 ∧ IsSquare ((D : ℚ_[2]) / (D₀ : ℚ_[2])) := by
+  have h4 : D % 4 ≠ 0 := by
+    intro h0
+    have := not_sq_dvd_of_squarefree (p := 2) hD
+    exact this (by push_cast; omega)
+  have hD₀Q : (D₀ : ℚ_[2]) ≠ 0 := by
+    intro h0; have := Int.cast_eq_zero.mp h0; omega
+  have hD4 : D % 4 = 1 := by
+    rcases (by omega : D % 4 = 1 ∨ D % 4 = 2 ∨ D % 4 = 3) with h1 | h1 | h1
+    · exact h1
+    · exact absurd ((h 5 (by norm_num)).mpr (isLocalNorm_two_five hD₀))
+        (not_isLocalNorm_five_of_two h1)
+    · exact absurd ((h (-1) (by norm_num)).mpr (isLocalNorm_two_neg_one hD₀))
+        (not_isLocalNorm_neg_one_of_three h1)
+  refine ⟨hD4, ?_⟩
+  have h2 : (2 : ℚ_[2]) ≠ 0 := by norm_num
+  rcases (by omega : D % 8 = 1 ∨ D % 8 = 5) with h1 | h1 <;>
+    rcases (by omega : D₀ % 8 = 1 ∨ D₀ % 8 = 5) with h0 | h0
+  · obtain ⟨w, -, hw⟩ := exists_sq_of_int_two (a := D * D₀) (by rw [Int.mul_emod, h1, h0]; rfl)
+    refine ⟨w / D₀, ?_⟩
+    push_cast at hw; field_simp; linear_combination hw
+  · exact absurd ((h 2 h2).mp (isLocalNorm_two_of_one h1 _)) (not_isLocalNorm_two_of_five h0)
+  · exact absurd ((h 2 h2).mpr (isLocalNorm_two_of_one h0 _)) (not_isLocalNorm_two_of_five h1)
+  · obtain ⟨w, -, hw⟩ := exists_sq_of_int_two (a := D * D₀) (by rw [Int.mul_emod, h1, h0]; rfl)
+    refine ⟨w / D₀, ?_⟩
+    push_cast at hw; field_simp; linear_combination hw
+
+end LocalConditions
 
 end ZInQ.FHPrinted
