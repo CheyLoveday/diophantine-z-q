@@ -128,3 +128,64 @@ theorem exists_irred_nbhd (X : Scheme.{0}) [IsLocallyNoetherian X]
 end Sch
 
 end SGA3IdComp
+
+/-! ## Part 3: smooth schemes over a field -/
+
+namespace SGA3IdComp
+
+open MonoidalCategory CartesianMonoidalCategory MonObj
+
+/-- A scheme smooth over a field has open, compact, irreducible neighbourhoods. -/
+theorem exists_irred_nbhd_of_smooth {k : Type} [Field k] {X : Scheme.{0}}
+    (f : X ⟶ Spec (CommRingCat.of k)) [Smooth f] (x : X) :
+    ∃ V : Set X, IsOpen V ∧ IsCompact V ∧ IsIrreducible V ∧ x ∈ V := by
+  have : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
+  exact exists_irred_nbhd X (fun y => by
+    have := Smooth.isRegularLocalRing_stalk f y
+    infer_instance) x
+
+/-- In a scheme smooth over a field, two points of one connected component lie in a common open,
+compact, irreducible set. -/
+theorem exists_irred_of_smooth {k : Type} [Field k] {X : Scheme.{0}}
+    (f : X ⟶ Spec (CommRingCat.of k)) [Smooth f] {x y : X} (hy : y ∈ connectedComponent x) :
+    ∃ V : Set X, IsOpen V ∧ IsCompact V ∧ IsIrreducible V ∧ x ∈ V ∧ y ∈ V :=
+  exists_irred_of_mem_connectedComponent (exists_irred_nbhd_of_smooth f) hy
+
+/-- Three points of one connected component lie in a common open, compact, irreducible set. -/
+theorem exists_irred3_of_smooth {k : Type} [Field k] {X : Scheme.{0}}
+    (f : X ⟶ Spec (CommRingCat.of k)) [Smooth f] {x y z : X} (hy : y ∈ connectedComponent x)
+    (hz : z ∈ connectedComponent x) :
+    ∃ V : Set X, IsOpen V ∧ IsCompact V ∧ IsIrreducible V ∧ x ∈ V ∧ y ∈ V ∧ z ∈ V := by
+  obtain ⟨V₁, h1o, h1c, h1i, hx1, hy1⟩ := exists_irred_of_smooth f hy
+  obtain ⟨V₂, h2o, h2c, h2i, hx2, hz2⟩ := exists_irred_of_smooth f hz
+  exact ⟨V₁ ∪ V₂, h1o.union h2o, h1c.union h2c,
+    isIrreducible_union_of_open h1i h2i h1o h2o ⟨x, hx1, hx2⟩, Or.inl hx1, Or.inl hy1, Or.inr hz2⟩
+
+/-- A morphism from a compact scheme to the spectrum of a field is quasi-compact. -/
+theorem quasiCompact_to_field {k : Type} [Field k] {X : Scheme.{0}} [CompactSpace X]
+    (f : X ⟶ Spec (CommRingCat.of k)) : QuasiCompact f := by
+  rw [quasiCompact_iff_forall_isAffineOpen]
+  intro U _
+  rcases Set.eq_empty_or_nonempty (U : Set (Spec (CommRingCat.of k))) with h | ⟨y, hy⟩
+  · have : (f ⁻¹ᵁ U : Set X) = ∅ := by
+      ext z; simp only [Scheme.Hom.coe_preimage, Set.mem_preimage, Set.mem_empty_iff_false,
+        iff_false]; intro hz; rw [h] at hz; exact hz
+    rw [this]; exact isCompact_empty
+  · have : (f ⁻¹ᵁ U : Set X) = Set.univ := by
+      ext z; simp only [Scheme.Hom.coe_preimage, Set.mem_preimage, Set.mem_univ, iff_true]
+      rwa [Subsingleton.elim (f z) y]
+    rw [this]; exact isCompact_univ
+
+/-- **Geometric connectedness of an open irreducible piece of a smooth scheme with a rational point**
+(from the bundle leaf `AVGlue.GeomConnOfRationalPoint`, Stacks 04KV). -/
+theorem geomConn_open (hG : AVGlue.GeomConnOfRationalPoint) {k : Type} [Field k] {X : Scheme.{0}}
+    (f : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType f] (V : X.Opens) (hVc : IsCompact (V : Set X))
+    (hVi : IsIrreducible (V : Set X)) (s : Spec (CommRingCat.of k) ⟶ X) (hs : s ≫ f = 𝟙 _)
+    (hsV : Set.range s ⊆ V) : GeometricallyConnected (V.ι ≫ f) := by
+  have : CompactSpace V := isCompact_iff_compactSpace.mp hVc
+  have : ConnectedSpace V := Subtype.connectedSpace hVi.isConnected
+  refine hG k V (V.ι ≫ f) (IsOpenImmersion.lift V.ι s (by rwa [Scheme.Opens.range_ι])) ?_
+    inferInstance (quasiCompact_to_field _) ‹_›
+  rw [← Category.assoc, IsOpenImmersion.lift_fac, hs]
+
+end SGA3IdComp
