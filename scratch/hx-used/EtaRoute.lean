@@ -699,6 +699,89 @@ theorem transport16 (hCM : ShimuraMainCM) (e : SeparableClosure (QNeg m) →ₐ[
   · right
     exact ratio_conj σ hk0 e1 (by rw [e3', h3]) (by rw [e4, h4])
 
+/-- **Transport of the `⟨1/2, τ⟩`-ratio** of (IxW). -/
+theorem transport2 (hCM : ShimuraMainCM) (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
+    (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+      I * (Real.sqrt m : ℂ))
+    (σ : ℂ ≃+* ℂ) (hs : ArtinCond m e σ T.s) :
+    let P := ppM 2 (by norm_num) T.Q.tauH
+    let R := ppM 2 (by norm_num) T.Q'.tauH
+    let τ : ℂ := T.Q.tauH
+    let τ' : ℂ := T.Q'.tauH
+    σ (wpRatio P (τ / 2) (3 / 16) (τ / 2 + 1 / 16)) = wpRatio R (τ' / 2) (3 / 16) (τ' / 2 + 1 / 16) ∨
+    σ (wpRatio P (τ / 2) (3 / 16) (τ / 2 + 1 / 16)) = wpRatio R (τ' / 2) (1 / 16) (τ' / 2 + 3 / 16) := by
+  intro P R τ τ'
+  obtain ⟨μ, hμ, hpt⟩ := cm_point T (d := 16) (by norm_num) hCM e he σ hs (by norm_num : (2 : ℕ) ≠ 0)
+  obtain ⟨v1, p1, q1, hv1, hk1, hp1⟩ := exists_v1 T
+  obtain ⟨v2, p2, q2, hv2, hk2, hq2⟩ := exists_vt T (n := 2) (M := 2) (d := 16) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num)
+  obtain ⟨b2, hb2⟩ := hq2
+  have hk0 : μ ^ 2 * (T.c ^ 2)⁻¹ ≠ 0 := mul_ne_zero (pow_ne_zero 2 hμ) (inv_ne_zero (pow_ne_zero 2 T.hc))
+  have hωR : R.ω₁ = 1 / 2 ∧ R.ω₂ = τ' := ⟨by simp [R, ppM], rfl⟩
+  have hωP : P.ω₁ = 1 / 2 ∧ P.ω₂ = τ := ⟨by simp [P, ppM], rfl⟩
+  have htau : T.Q.tau = τ := rfl
+  have htau' : T.Q'.tau = τ' := rfl
+  have hu2 := kappa_tn (m := m) T.hD T.Q 2
+  rw [htau] at hu2
+  push_cast at hu2
+  push_cast at hk2
+  set alg := algebraMap (QNeg m) (AfK m)
+  have hsub : ∀ {x y : AfK m}, x ∈ latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) →
+      y ∈ latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) → x + y ∈ latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) := by
+    intro x y hx hy
+    rw [← (coe_KL (m := m))] at hx hy ⊢; exact latHat_add_mem _ hx hy
+  have hzs : ∀ (n : ℤ) {x : AfK m}, x ∈ latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) →
+      n • x ∈ latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) := by
+    intro n x hx
+    rw [← (coe_KL (m := m))] at hx ⊢; exact latHat_zsmul_mem _ n hx
+  have hzs1 : ∀ n : ℤ, finPart T.s * alg (n • v1) - alg (n • u1 m) ∈
+      latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) := by
+    intro n
+    have := hzs n hv1
+    convert this using 1
+    rw [map_zsmul, map_zsmul, mul_smul_comm, smul_sub]
+  have e1 := hpt (tn m T.Q f 2) v2 (p2 / 2 + q2 * τ' / 2)
+    (by
+      rw [hu2]
+      exact notMem_of_coeffs P 0 (1 / 2) (Or.inr (by norm_num)) (by rw [hωP.2]; push_cast; ring))
+    hv2 (by rw [hk2, htau'])
+  have e2 := hpt ((6 : ℤ) • u1 m) ((6 : ℤ) • v1) (6 * p1 / 32 + 6 * q1 * τ')
+    (by
+      rw [zsmul_eq_mul, kappa_intCast_mul, kappa_u1]
+      exact notMem_of_coeffs P (3 / 8) 0 (Or.inl (by norm_num)) (by rw [hωP.1]; push_cast; ring))
+    (hzs1 6) (by rw [zsmul_eq_mul, kappa_intCast_mul, hk1, htau']; push_cast; ring)
+  have e3 := hpt (tn m T.Q f 2 + (2 : ℤ) • u1 m) (v2 + (2 : ℤ) • v1)
+    ((p2 / 2 + q2 * τ' / 2) + (2 * p1 / 32 + 2 * q1 * τ'))
+    (by
+      rw [kappa_add, zsmul_eq_mul, kappa_intCast_mul, kappa_u1, hu2]
+      exact notMem_of_coeffs P (1 / 8) (1 / 2) (Or.inl (by norm_num))
+        (by rw [hωP.1, hωP.2]; push_cast; ring))
+    (by
+      have := hsub hv2 (hzs1 2)
+      convert this using 1
+      rw [map_add, map_add, mul_add]; abel)
+    (by rw [kappa_add, zsmul_eq_mul, kappa_intCast_mul, hk1, hk2, htau']; push_cast; ring)
+  rw [hu2] at e1
+  rw [zsmul_eq_mul, kappa_intCast_mul, kappa_u1] at e2
+  rw [kappa_add, zsmul_eq_mul, kappa_intCast_mul, kappa_u1, hu2] at e3
+  have r1 : R.weierstrassP (p2 / 2 + q2 * τ' / 2) = R.weierstrassP (τ' / 2) :=
+    wp_congr R p2 b2 (by rw [hωR.1, hωR.2, hb2]; push_cast; ring)
+  have r2 : R.weierstrassP (6 * p1 / 32 + 6 * q1 * τ') = R.weierstrassP (3 * p1 / 16) :=
+    wp_congr R 0 (6 * q1) (by rw [hωR.1, hωR.2]; push_cast; ring)
+  have r3 : R.weierstrassP ((p2 / 2 + q2 * τ' / 2) + (2 * p1 / 32 + 2 * q1 * τ')) =
+      R.weierstrassP (τ' / 2 + p1 / 16) :=
+    wp_congr R p2 (b2 + 2 * q1) (by rw [hωR.1, hωR.2, hb2]; push_cast; ring)
+  rw [r1] at e1; rw [r2] at e2; rw [r3] at e3
+  have e2' : σ (P.weierstrassP (3 / 16)) = μ ^ 2 * (T.c ^ 2)⁻¹ * R.weierstrassP (3 * p1 / 16) := by
+    convert e2 using 3; push_cast; ring
+  have e3' : σ (P.weierstrassP (τ / 2 + 1 / 16)) = μ ^ 2 * (T.c ^ 2)⁻¹ * R.weierstrassP (τ' / 2 + p1 / 16) := by
+    convert e3 using 3; push_cast; ring
+  rcases wp2_cases T.Q'.tauH hp1 with ⟨-, h3, h4⟩ | ⟨-, h3, h4⟩
+  · left
+    exact ratio_conj σ hk0 e1 (by rw [e2', h3]) (by rw [e3', h4])
+  · right
+    exact ratio_conj σ hk0 e1 (by rw [e2', h3]) (by rw [e3', h4])
+
 end Transport2
 
 end X0EtaRoute
