@@ -27,3 +27,4 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
   `mumfordBundle_restrict_zero` (Λ(L)|_{A×0} = 1, uses Pic(Spec K) = 1), `eta_comp_phiL` (φ_L(0)=0),
   `exists_hom_comp_eq_phiL` (A connected ⇒ φ_L lands in the identity component; lift through the open immersion;
   homomorphism by `MulRigidity.isMonHom_of_geometricallyIntegral`).
+- 2026-11-14 18:55 Pic.lean v5: genuine dual `picPresheafMap`, `dualSheafMap`, `dualP` (f^∨ on the Picard scheme by Yoneda), `eta_comp_dualP`, `exists_dual_on_picZero` (f^∨ restricts to Pic⁰ as an End): 0 errors. VERIFIED.

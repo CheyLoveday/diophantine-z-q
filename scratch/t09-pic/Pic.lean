@@ -175,6 +175,112 @@ theorem exists_hom_comp_eq_phiL {A : AbVar K} {P : Over (Spec (CommRingCat.of K)
   exact ⟨Hom.mk' lam, hlam⟩
 
 
+/-! ## §2b. The dual morphism `f^∨` on the Picard scheme and on `Pic⁰` (genuine, proved) -/
+
+/-- `f × id_T : A ×_K T → A' ×_K T`. -/
+abbrev famMap {A A' : AbVar K} (f : A.X ⟶ A'.X) (T : Over (Spec (CommRingCat.of K))) :
+    pullback A.X.hom T.hom ⟶ pullback A'.X.hom T.hom :=
+  pullback.map _ _ _ _ f.left (𝟙 _) (𝟙 _) (by simp) (by simp)
+
+/-- Pull-back of families along `f × id`: `Pic(A'_T) → Pic(A_T)`, natural in `T`. -/
+def picPresheafMap {A A' : AbVar K} (f : A.X ⟶ A'.X) :
+    picardPresheaf A'.X.hom ⟶ picardPresheaf A.X.hom where
+  app T := TypeCat.ofHom (Scheme.Pic.map (famMap f T.unop))
+  naturality T T' φ := by
+    ext c
+    change Scheme.Pic.map (famMap f T'.unop)
+        (Scheme.Pic.map (JacobianChallenge.baseChangeMap A'.X.hom φ.unop) c) =
+      Scheme.Pic.map (JacobianChallenge.baseChangeMap A.X.hom φ.unop)
+        (Scheme.Pic.map (famMap f T.unop) c)
+    have e : famMap f T'.unop ≫ JacobianChallenge.baseChangeMap A'.X.hom φ.unop =
+        JacobianChallenge.baseChangeMap A.X.hom φ.unop ≫ famMap f T.unop := by
+      apply pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+    exact (Scheme.Pic.map_comp _ _ (show (pullback A'.X.hom T.unop.hom).Pic from c)).symm.trans
+      ((congrArg (fun g => Scheme.Pic.map g (show (pullback A'.X.hom T.unop.hom).Pic from c)) e).trans
+        (Scheme.Pic.map_comp _ _ _))
+
+/-- The sheafified pull-back `f^* : Pic_{A/K} → Pic_{A/K}`. -/
+def dualSheafMap {A : AbVar K} (f : A.X ⟶ A.X) :
+    (picardFunctor A.X.hom).obj ⟶ (picardFunctor A.X.hom).obj :=
+  sheafifyMap (Scheme.fppfTopology.over (Spec (CommRingCat.of K))) (picPresheafMap f)
+
+lemma toPicardFunctor_comp_dualSheafMap {A : AbVar K} (f : A.X ⟶ A.X) :
+    toPicardFunctor A.X.hom ≫ dualSheafMap f = picPresheafMap f ≫ toPicardFunctor A.X.hom :=
+  (toSheafify_naturality (Scheme.fppfTopology.over (Spec (CommRingCat.of K))) (picPresheafMap f)).symm
+
+/-- **The dual morphism on the Picard scheme**, `f^∨ : P → P` for `f : A → A` (Yoneda applied to
+`f^* : Pic_{A/K} → Pic_{A/K}`, the sheafified pull-back of families; Mumford §8). -/
+def dualP {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (f : A.X ⟶ A.X) : P ⟶ P :=
+  rep.homEquiv.symm ((dualSheafMap f).app (op P) (rep.homEquiv (𝟙 P)))
+
+lemma comp_dualP {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (f : A.X ⟶ A.X)
+    {T : Over (Spec (CommRingCat.of K))} (g : T ⟶ P) :
+    g ≫ dualP rep f = rep.homEquiv.symm ((dualSheafMap f).app (op T) (rep.homEquiv g)) := by
+  rw [dualP, rep.comp_homEquiv_symm]
+  congr 1
+  rw [← NatTrans.naturality_apply, ← rep.homEquiv_comp, Category.comp_id]
+
+/-- `f^∨(0) = 0`. -/
+lemma eta_comp_dualP {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (f : A.X ⟶ A.X) :
+    letI := picardFunctorCommGrpObj A.X.hom rep
+    η[P] ≫ dualP rep f = η[P] := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  have h := (picardClassifyingHom A.X.hom rep (𝟙_ _)).map_one
+  rw [picardClassifyingHom_apply,
+    show (1 : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ P) = CartesianMonoidalCategory.toUnit _ ≫ η
+      from rfl] at h
+  simp only [CartesianMonoidalCategory.toUnit_unique (CartesianMonoidalCategory.toUnit _) (𝟙 _),
+    Category.id_comp] at h
+  rw [comp_dualP, ← h, Equiv.apply_symm_apply]
+  congr 1
+  have := congrArg (fun τ => τ.app (op (𝟙_ (Over (Spec (CommRingCat.of K)))))
+    (1 : (pullback A.X.hom (𝟙_ (Over (Spec (CommRingCat.of K)))).hom).Pic))
+    (toPicardFunctor_comp_dualSheafMap f)
+  simp only [NatTrans.comp_app] at this
+  exact this.trans (congrArg _ (Scheme.Pic.map_one _))
+
+/-- **The dual endomorphism on `Pic⁰`**: `f^∨` restricts to `B = Pic⁰` (B is connected and
+`f^∨(0) = 0`), as a homomorphism (rigidity). -/
+theorem exists_dual_on_picZero {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) {B : AbVar K} {j : B.X ⟶ P}
+    (hj : IsPicZero rep B j) (f : A.X ⟶ A.X) :
+    ∃ fv : End B, fv.hom ≫ j = j ≫ dualP rep f := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  obtain ⟨hopen, hrange, hmon⟩ := hj
+  have h0 := eta_comp_dualP rep f
+  haveI : IsIntegral B.X.left := GeometricallyIntegral.isIntegral_of_subsingleton B.X.hom
+  have hjη : η[B.X] ≫ j = η[P] := IsMonHom.one_hom j
+  have h2 : η[B.X] ≫ j ≫ dualP rep f = η[P] := by rw [← Category.assoc, hjη, h0]
+  have hsub : Set.range (j ≫ dualP rep f).left ⊆ Set.range j.left := by
+    rw [hrange]
+    rintro _ ⟨b, rfl⟩
+    refine ⟨B.X.hom b, ?_⟩
+    have he : η[P].left (B.X.hom b) = (j ≫ dualP rep f).left (η[B.X].left (B.X.hom b)) := by
+      rw [← h2]; rfl
+    rw [he]
+    exact (isPreconnected_range (j ≫ dualP rep f).left.continuous).subset_connectedComponent
+      ⟨_, rfl⟩ ⟨b, rfl⟩
+  let l : B.X.left ⟶ B.X.left := IsOpenImmersion.lift j.left (j ≫ dualP rep f).left hsub
+  have hl : l ≫ j.left = (j ≫ dualP rep f).left := IsOpenImmersion.lift_fac _ _ _
+  have hw : l ≫ B.X.hom = B.X.hom :=
+    calc l ≫ B.X.hom = l ≫ j.left ≫ P.hom := by rw [Over.w j]
+      _ = (j ≫ dualP rep f).left ≫ P.hom := by rw [← Category.assoc, hl]
+      _ = B.X.hom := Over.w _
+  let fv : B.X ⟶ B.X := Over.homMk l hw
+  have hfv : fv ≫ j = j ≫ dualP rep f := Over.OverMorphism.ext hl
+  have hη : η[B.X] ≫ fv = η[B.X] := by
+    apply Over.OverMorphism.ext
+    apply (cancel_mono j.left).1
+    rw [Over.comp_left, Category.assoc]
+    change η[B.X].left ≫ fv.left ≫ j.left = η[B.X].left ≫ j.left
+    rw [← Over.comp_left, hfv, ← Over.comp_left, ← Category.assoc, hjη, h0,
+      ← Over.comp_left _ _ _ η[B.X] j, hjη]
+  have : IsMonHom fv := MulRigidity.isMonHom_of_geometricallyIntegral B.X B.X fv hη
+  exact ⟨Hom.mk' fv, hfv⟩
+
 /-! ## §3. Leaves (printed statements over the genuine objects of §1) -/
 
 section Leaves
