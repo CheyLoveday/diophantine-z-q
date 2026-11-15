@@ -20,7 +20,7 @@ Agent claims are SPECULATIVE unless I re-checked them. Section 3 lists what I re
 1. **`bdRInvariants` is used only syntactically** (VERIFIED by reading). The field becomes `t23` (TailX L235). `t23`
    reaches only `g8_g11`/`g8_g12` (TailA L2203–2250; TailD L138, L172), where it is passed on only as `h9g hR10 hT23 …`.
    Every proof of `G9Glue` on the chain (TailK L330, TailD L591) goes through `ZInQ.Contrib.G9.g9Glue_of_fieldEmb`
-   (`Contrib/G9/Reduction.lean` L128). That proof starts `intro hR10 _hT23 …` and never uses its T23 argument.
+   (`Contrib/G9/Reduction.lean` L128; the copy actually in the closure is `HDec.ZInQ.Contrib.G9.g9Glue_of_fieldEmb`, TailC L14082). Both start `intro hR10 _hT23 …` and never use the T23 argument. A closure probe (`ClosureProbe.lean`, compiled) shows that the only `t23` consumers in the closure of `sixContactMin_of_open12` are `g8_g11`, `g8_g12`, `g8_g12_of_leaves3` and `afterG7_of3`.
    PruneScan cannot see this, because the projection is present in the term. Plumbing removes the field (A1).
 2. **On w63, `raynaudKernelBound` is also used only syntactically** (VERIFIED by reading).
    - `transfer_core` (LPrefix L12153) uses R20 only as `(abs_le.mp hvar).1`, i.e. h(P) ≤ h(J) + ½ log deg ψ.
@@ -553,6 +553,8 @@ Status counts (base, from the tsv):
   `lake build ZInQKernel.OneProof.Main` exited 0):
   - `GlueProbe.lean`: finding 3, the `rfl`, the theorem and its axioms; the P¹ `#check`s.
   - `VerifyProbe.lean`: 24 `#check`s of the Mathlib, vendored and chain declarations cited above.
+  - `ClosureProbe.lean`: membership of the `t23` consumers and of the glue-route constants in the closure of
+    `HDec.HSyn.sixContactMin_of_open12` (212 392 constants).
   - The GZStatements module is not in that build, so its statements were read instead (`Weak.lean` L46–145).
 - **Read by me:** findings 1, 2, 5, 6, 7 and 8 (GZ, R1pi0Props).
   - The `hT` uses of `ThetaModularity`.
