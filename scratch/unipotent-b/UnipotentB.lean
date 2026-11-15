@@ -573,7 +573,7 @@ theorem torsion_from_sepClosure (hE : AvSplit.T4.MulEtaleAbelianScheme) (Ω : Ty
 
 /-- **`TorsionFromSepClosure` from the bundle leaf `MulEtaleAbelianScheme`.** -/
 theorem torsionFromSepClosure_of (hE : AvSplit.T4.MulEtaleAbelianScheme) : TorsionFromSepClosure :=
-  fun K _ Ω _ _ _ A m hm x hx => torsion_from_sepClosure hE Ω A m hm x hx
+  fun _ _ Ω _ _ _ A m hm x hx => torsion_from_sepClosure hE Ω A m hm x hx
 
 end SepClosure
 
@@ -665,6 +665,42 @@ theorem semistableUnipotentSH_of_printedGen (hP : SemistableUnipotentPrintedGen)
   semistableUnipotentSH_of_gen hP hD
     (sepClosureTateRestrict_of inertiaRestrictSepClosure (torsionFromSepClosure_of hE))
 
+
+/-- **Variant `SemistableUnipotentPrintedGeom`**: `SemistableUnipotentPrintedGen` with semistability
+read over `κ̄` (`HasSemistableReduction`, the geometric special fibre). It is a LEAF only if SGA 7 IX
+defines semistable reduction through the geometric special fibre (UNVERIFIED; then
+`SemiAbelianDescendsSepClosed` is not needed); otherwise it is `SemistableUnipotentPrintedGen` plus
+`SemiAbelianDescendsSepClosed` and its converse. -/
+def SemistableUnipotentPrintedGeom : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O],
+    IsStrictlyHenselianDVR O →
+    ∀ (Ω : Type) [Field Ω] [Algebra K Ω] [IsSepClosure K Ω] (w : ValuationSubring Ω),
+    w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K,
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], IsUnit (ℓ : O) →
+      (HasSemistableReduction A O ↔ InertiaUnipotent A w ℓ) ∧
+      (HasSemistableReduction A O → ∀ σ τ : Ω ≃ₐ[K] Ω, IsInertia w σ → IsInertia w τ →
+        (galTΩ A ℓ σ - 1) * (galTΩ A ℓ τ - 1) = 0)
+
+/-- **The field (unchanged statement) from the geometric variant, `StrictHenselizationInside` and the
+bundle leaf `MulEtaleAbelianScheme`; no glue.** -/
+theorem semistableUnipotent_of_printedGeom (hP : SemistableUnipotentPrintedGeom)
+    (hE : AvSplit.T4.MulEtaleAbelianScheme) (hIn : StrictHenselizationInside) :
+    ReductSplit.SemistableUnipotent := by
+  refine unipotentFromSH_of hIn ?_
+  intro K _ O _ hO Ω _ _ _ w hw A hA ℓ _ hℓ σ hσ t
+  haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed K
+  have hℓK : (ℓ : K) ≠ 0 := natCast_ne_zero_of_isUnit O hℓ
+  obtain ⟨σs, hσs, φ, hφ, hcomm⟩ := sepClosureTateRestrict_of inertiaRestrictSepClosure
+    (torsionFromSepClosure_of hE) K Ω w A ℓ hℓK σ hσ
+  have hws : (w.comap (algebraMap (separableClosure K Ω) Ω)).comap
+      (algebraMap K (separableClosure K Ω)) = O := by
+    rw [ValuationSubring.comap_comap, ← IsScalarTower.algebraMap_eq, hw]
+  have key := (hP K O hO (separableClosure K Ω) _ hws A ℓ hℓ).2 hA σs σs hσs hσs
+  obtain ⟨s, rfl⟩ := hφ t
+  have h2 := congrArg φ (sq_form _ key s)
+  simp only [map_add, map_sub, map_nsmul, map_zero, hcomm] at h2
+  exact h2
+
 end UnipotentB
 
 #print axioms UnipotentB.isSemistableRes_iff
@@ -684,3 +720,4 @@ end UnipotentB
 #print axioms UnipotentB.inertiaRestrictSepClosure
 #print axioms UnipotentB.semistableUnipotent_of_printedGen
 #print axioms UnipotentB.semistableUnipotentSH_of_printedGen
+#print axioms UnipotentB.semistableUnipotent_of_printedGeom
