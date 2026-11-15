@@ -16,7 +16,9 @@ not changed; it is neither false nor vacuous (it is EGA IV₃ 8.10.5 for open im
 `QuasiCompact Yi.hom`, `QuasiSeparated Yi.hom`, `QuasiCompact Xi.hom`, `QuasiSeparated Xi.hom` and
 `LocallyOfFinitePresentation Xi.hom`, `Yi.hom` are all used).
 
-FOLD: see section 4 (status of the autofold and the checks).
+**Folded** (VERIFIED): `ZInQKernel/OneProof/H/TailZ25.lean` (`OpenResearchLeaves15` without the field,
+`HDec.HSyn.sixContactMin_of_open19`), `frozenTarget` switched; open hypotheses 72 → 71 (H bundle fields
+66 → 65; strict count 51/15 → 50/15, strictest 49/17 → 48/17).
 
 ## 1. Statement (verbatim, TailZ19 L281)
 
@@ -73,8 +75,8 @@ applies, which needs the second descent (step 2).
 
 ## 3. Files
 
-- `ZInQKernel/Contrib/OneProof/EGAOpenImm.lean`: the contribution (imports `ZInQKernel.OneProof.Main` and two
-  CloudW01Spread modules).
+- `ZInQKernel/Contrib/OneProof/EGAOpenImm.lean`: the contribution (imports `ZInQKernel.OneProof.H.TailZ19`, which
+  defines the statement, and two CloudW01Spread modules; see the finding in section 4).
 - `scratch/gt-ega/Scratch.lean`: the same proof against a verbatim copy of the statement, minimal imports.
 - `scratch/gt-ega/Discharges.lean`: the `#discharges` check.
 - `scratch/gt-ega/autofold.json`: the fold spec.
@@ -82,4 +84,35 @@ applies, which needs the second descent (step 2).
 
 ## 4. Checks and fold
 
-(filled in below as each check ran)
+All VERIFIED (run in this worktree; outputs in `scratch/gt-ega/log.md`).
+
+1. `#discharges` (`scratch/gt-ega/Discharges.lean`, before the fold, contribution importing `Main`):
+   ```
+   DISCHARGES [OpenResearchLeaves14.egaIV_8_10_5_openImm] by ZInQ.Contrib.EGAOpenImm.egaIV_8_10_5_openImm_proof
+     still assumes: []
+     axioms: [propext, Classical.choice, Quot.sound]
+   #discharges: 72 open hypotheses, 2 theorems checked, 1 discharge one
+   ```
+   (the other checked theorem is the general lemma `exists_isOpenImmersion_baseChange`).
+2. `python3 scripts/one_proof/autofold.py scratch/gt-ega/autofold.json`: wrote `TailZ25.lean`, `Main.lean`,
+   `kinds.tsv` (one row removed; `claims.tsv` had no row for the field).
+3. **Finding (build cycle).** With the contribution importing `ZInQKernel.OneProof.Main`, as CONTRIBUTING.md suggests
+   first, the folded tree has the cycle `Main → TailZ25 → EGAOpenImm → Main` (lake: "build cycle detected").
+   autofold.py does not detect it. Fixed by importing the defining module `ZInQKernel.OneProof.H.TailZ19`
+   (CONTRIBUTING's alternative). Recommendation for the kit: a contribution to be folded must import the module
+   defining its statement, never `Main`; autofold.py could refuse a spec whose imports reach `Main`.
+4. `lake build +ZInQKernel.OneProof.Main`: success; `HDec.HSyn.sixContactMin_of_open19` and
+   `ZInQ.OneProof.frozenTarget` depend on axioms `[propext, Classical.choice, Quot.sound]`.
+5. Hash guard (`scratch/gt-ega/DumpCompact.lean`, `cmp_hashes.py`: copies of `scratch/one-proof/`'s writing into
+   `scratch/gt-ega/`): before 13393, after 13434, only before 0, only after 41 (`OpenResearchLeaves15` with its
+   projections and recursors, `openResearchLeaves14_of_OpenResearchLeaves15`, `sixContactMin_of_open19`),
+   changed 1: `ZInQ.OneProof.frozenTarget`.
+6. `lake env lean scripts/one_proof/OpenStatements.lean`: 71 open hypotheses; `render_open.py --check`: "ok: 65
+   bundle fields, all classified"; `render_open.py`: "65 H hypotheses, strictest 48/17, 6 others".
+   `egaIV_8_10_5_openImm` no longer appears in OPEN.md or open-statements.json.
+
+## 5. What remains
+
+Nothing for this target. The general lemma `exists_isOpenImmersion_baseChange` (any small cofiltered index
+category, any universe) may serve `OpenImmersionLocalization` (the glue consuming this leaf in
+`CToPrinted`, TailZ19), which is already discharged in the chain; no other use was looked for.
