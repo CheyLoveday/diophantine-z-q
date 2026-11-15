@@ -509,6 +509,27 @@ def constK (A : AbVar K) : AlgebraicClosure K →+* Γ(pullback A.X.hom (ptK K).
   (pullback.snd A.X.hom (ptK K).hom).appTop.hom.comp
     (Scheme.ΓSpecIso (CommRingCat.of (AlgebraicClosure K))).inv.hom
 
+/-- **`n_A ∘ t_x = n_A` for `x ∈ A[n](K̄)`** (proved): the first condition in `weilScalar` holds on
+`n`-torsion. -/
+theorem transl_comp_mulN {A : AbVar K} {n : ℕ} (x : A.Pt (AlgebraicClosure K)) (hx : x ^ n = 1) :
+    transl x ≫ mulN A n = mulN A n := by
+  apply CartesianMonoidalCategory.hom_ext
+  · simp only [transl, mulN, Category.assoc, CartesianMonoidalCategory.whiskerRight_fst,
+      CartesianMonoidalCategory.lift_fst_assoc]
+    simp only [MonObj.comp_pow, Category.comp_id]
+    rw [← CategoryTheory.Hom.mul_def, mul_pow, ← MonObj.comp_pow, hx, MonObj.comp_one, mul_one]
+  · simp [transl, mulN]
+
+/-- The same on the underlying schemes `A_K̄`, for `x ∈ A[n]`. -/
+theorem transl_left_comp_mulN_left {A : AbVar K} {n : ℕ} (x : HDec.WeilPairing.tors A n) :
+    (transl (Additive.toMul (x : HDec.WeilPairing.P A))).left ≫ (mulN A n).left =
+      (mulN A n).left := by
+  rw [← Over.comp_left, transl_comp_mulN]
+  have := x.2
+  change n • (x : HDec.WeilPairing.P A) = 0 at this
+  rw [← toMul_nsmul, this]
+  rfl
+
 section LeafMumford
 
 open HDec.WeilPairing
@@ -565,6 +586,7 @@ theorem t09SymmIsogenyExists_of_printed (h0 : VeryAmpleIsAmple) (h1 : PicReprese
 end T09Pic
 
 #print axioms T09Pic.exists_dual_on_picZero
+#print axioms T09Pic.transl_left_comp_mulN_left
 #print axioms T09Pic.t09SymmIsogenyExists_of_mumford
 #print axioms T09Pic.exists_isAmple_of_isAlgClosed
 #print axioms T09Pic.t09SymmIsogenyExists_of_printed

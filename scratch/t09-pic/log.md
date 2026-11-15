@@ -34,3 +34,4 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
   `t09SymmIsogenyExists_of_printed : L0 → L1 → L2 → L3 → L4printed → T09`: 0 errors, axioms standard. VERIFIED.
 - 2026-11-14 19:20 Pic.lean v7: `exists_isAmple_of_isAlgClosed` (non-vacuity of IsAmple over K̄, from vendored HasAmpleFamily): 0 errors, axioms standard. VERIFIED.
 - 2026-11-14 19:50 Pic.lean v8: §6 genuine Mumford pairing: `ptK`, `transl` (t_x on A_K̄), `mulN` (n_A), `picClass` (class of y ∈ Pic⁰(K̄) by choice), `weilScalar` (t_x^*ψ∘ψ⁻¹ ∈ Γ(A_K̄,𝒪)), `constK`; leaf `WeilPairingMumford` (L4 pinned to weilScalar); `t09SymmIsogenyExists_of_mumford`: 0 errors, axioms standard. VERIFIED.
+- 2026-11-14 20:05 Pic.lean v9: `transl_comp_mulN` (n_A ∘ t_x = n_A for x^n = 1) and `transl_left_comp_mulN_left` (for x ∈ A[n]): the first dite condition of weilScalar holds on torsion: 0 errors, axioms standard. VERIFIED.
