@@ -263,6 +263,28 @@ def esPoly {F : Type} [Field F] [Algebra ℚ F] (a d : F) : Polynomial (ℚ_[ℓ
   Polynomial.X ^ 2 - Polynomial.C ((1 : ℚ_[ℓ]) ⊗ₜ[ℚ] a) * Polynomial.X +
     Polynomial.C ((1 : ℚ_[ℓ]) ⊗ₜ[ℚ] d)
 
+/-- R16's `ι`-eigenfunctionals in the form of §2. -/
+theorem mem_eigenFun_iff (A : AbVar ℚ) {F : Type} [Field F] (θ : F →+* A.End0)
+    (emb : F →+* PadicAlgCl ℓ) (φ : A.V ℓ →ₗ[ℚ_[ℓ]] PadicAlgCl ℓ) :
+    φ ∈ eigenFun ℓ A θ emb ↔ ∀ a, φ ∘ₗ R16Split.rhoV ℓ A θ a = emb a • φ := Iff.rfl
+
+/-- **The `ι`-component from a `ℚ_ℓ ⊗ F`-basis (glue, proved).** If `V_ℓ(A)` is free of rank 2
+over `ℚ_ℓ ⊗_ℚ F` (basis `b`), then for every `ι : F → ℚ̄_ℓ` the `ι`-eigenfunctionals form a
+space of dimension 2, and `σ ∈ G_ℚ` acts on them with trace `ι_R(tr M_σ)` and determinant
+`ι_R(det M_σ)`, where `M_σ` is the matrix of `σ` in `b` and `ι_R(x ⊗ a) = x ι(a)`. -/
+theorem iota_component (A : AbVar ℚ) {F : Type} [Field F] [Algebra ℚ F] (θ : F →+* A.End0)
+    (b : letI := tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) :
+    Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) = 2 ∧
+      ∀ σ : PkgI4.GQ,
+        LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) =
+            liftHom emb (frobMat ℓ A θ b σ).trace ∧
+          LinearMap.det (frobOn ℓ A θ emb σ) = liftHom emb (frobMat ℓ A θ b σ).det := by
+  have hE := mem_eigenFun_iff ℓ A θ emb
+  refine ⟨finrank_eq_two (R16Split.rhoV ℓ A θ) emb _ hE b, fun σ => ?_⟩
+  exact trace_det_of_basis (R16Split.rhoV ℓ A θ) emb _ hE b (A.galRep ℓ σ)
+    (frobOn ℓ A θ emb σ) (fun φ => rfl)
+
 section Statement
 
 open scoped MatrixGroups ModularForm
@@ -274,7 +296,7 @@ def AfTateCharPoly : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (J : AbVar ℚ),
     0 < N → IsNewform f χ → IsJ1 N J →
     ∃ (A : AbVar ℚ) (π : Hom J A) (θ : coeffField f →+* A.End0),
-      Function.Surjective π.hom.left ∧
+      AlgebraicGeometry.Surjective π.hom.left ∧
       ∀ (ℓ : ℕ) [Fact ℓ.Prime],
         ∃ b : (letI := tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] coeffField f) (A.V ℓ)),
           ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
@@ -282,6 +304,69 @@ def AfTateCharPoly : Prop :=
               (frobMat ℓ A θ b σ).charpoly =
                 esPoly ℓ (⟨coeff f p, coeff_mem_coeffField f p⟩ : coeffField f) (c * (p : coeffField f))
 
+
+/-- `[F : ℚ] < ∞` from a `ℚ_ℓ ⊗ F`-basis of a finite-dimensional `V`. -/
+theorem finiteDimensional_of_basis {k F V : Type*} [Field k] [Algebra ℚ k] [Field F]
+    [Algebra ℚ F] [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (ρ : F →+* Module.End k V) (b : letI := tModule ρ; Module.Basis (Fin 2) (k ⊗[ℚ] F) V) :
+    FiniteDimensional ℚ F := by
+  letI := tModule ρ
+  let L : (k ⊗[ℚ] F) →ₗ[k] V :=
+    { toFun := fun r => r • b 0
+      map_add' := fun r s => add_smul r s (b 0)
+      map_smul' := fun x r => by
+        rw [RingHom.id_apply, Algebra.smul_def, mul_smul, Algebra.TensorProduct.algebraMap_apply,
+          Algebra.algebraMap_self, RingHom.id_apply, tsmul_left] }
+  have hL : Function.Injective L := by
+    intro r s hrs
+    have h := congrArg (fun v => b.repr v 0) hrs
+    simp only [L, LinearMap.coe_mk, AddHom.coe_mk, LinearEquiv.map_smul, Module.Basis.repr_self,
+      Finsupp.smul_apply, Finsupp.single_eq_same, smul_eq_mul, mul_one] at h
+    exact h
+  haveI : Module.Finite k (k ⊗[ℚ] F) := Module.Finite.of_injective L hL
+  exact Module.Finite.of_finite_tensorProduct_of_faithfullyFlat k
+
+/-- **R16 from the printed existence form and `T_ℓ(A)` free of rank `2 dim A` (glue, proved).** -/
+theorem r16_of_afTate (h : AfTateCharPoly) (hT : PkgI3.TateModuleFree) :
+    LeafModCurves.R16_EichlerShimuraJ1' := by
+  intro N χ f J hN hf hJ
+  obtain ⟨A, π, θ, hπ, hb⟩ := h N χ f J hN hf hJ
+  have hfin : FiniteDimensional ℚ (coeffField f) := by
+    obtain ⟨b, -⟩ := hb 2
+    obtain ⟨hfree, hfinT, -⟩ := hT ℚ A 2 (by norm_num)
+    haveI := hfree; haveI := hfinT
+    exact finiteDimensional_of_basis (R16Split.rhoV 2 A θ) b
+  have key : ∀ (ℓ : ℕ) [Fact ℓ.Prime] (emb : coeffField f →+* PadicAlgCl ℓ),
+      Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) = 2 ∧
+        ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p →
+          (∀ a : coeffField f, (a : ℂ) = PkgI4.coeff f p →
+              LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) = emb a) ∧
+          (∀ c : coeffField f, (c : ℂ) = χ (p : ZMod N) →
+              LinearMap.det (frobOn ℓ A θ emb σ) = emb c * p) := by
+    intro ℓ _ emb
+    obtain ⟨b, hcp⟩ := hb ℓ
+    obtain ⟨h2, htd⟩ := iota_component ℓ A θ b emb
+    refine ⟨h2, fun p hp hpN σ hσ => ?_⟩
+    obtain ⟨c, hc, hchar⟩ := hcp p hp hpN σ hσ
+    obtain ⟨htr, hdet⟩ := trace_det_of_charpoly _ _ _ hchar
+    obtain ⟨htr', hdet'⟩ := htd σ
+    refine ⟨fun a ha => ?_, fun c' hc' => ?_⟩
+    · have : a = ⟨PkgI4.coeff f p, coeff_mem_coeffField f p⟩ := Subtype.ext ha
+      rw [htr', htr, liftHom_one_tmul, this]
+    · have : c' = c := Subtype.ext (hc'.trans hc.symm)
+      rw [hdet', hdet, liftHom_one_tmul, this, map_mul, map_natCast]
+  refine ⟨hfin, A, π, θ, hπ, ?_, key⟩
+  exact R16Split.dim_eq_of_rank_two hT A θ (fun emb => (key 2 emb).1)
+
+/-- **The field `r16CoreY` from the printed existence form and the bundle's
+`mumfordTorsionAlgClosed`** (which gives `T_ℓ(A)` free of rank `2 dim A`). -/
+theorem r16CoreY_of_printed (h : AfTateCharPoly) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    R16Split.R16CoreY :=
+  R16Split.coreY_of_r16 (r16_of_afTate h
+    (T5Torsion.TateFree.tateModuleFree_of_torsionStructure (AvSplit.torsionStructure_of_mumford hM)))
+
 end Statement
 
 end R16Used
+
+#print axioms R16Used.r16CoreY_of_printed
