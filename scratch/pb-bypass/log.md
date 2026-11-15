@@ -43,3 +43,16 @@ Weil-restriction glue (h-decomposition §1). So the field stays a research input
 - Sanity: `isSemistableOver_trivial` (trivial 1-dim rep semistable over every K, via D_st ≅ B_st^{G_K}),
   `isPst_trivial` (VERIFIED, compiles). Not proved (as for pkg-I4's IsDeRham): B_st^{G_K} = K_0, B_cris ≠ 0,
   group-action property.
+
+## Step 5. Checks (VERIFIED, 11-15 06:00-06:20)
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.PanBerger`:
+  success, 12986 jobs (build copied from h33-sign by reflink, partial rebuild); frozenTarget axioms standard.
+- `lake env lean scratch/pb-bypass/Discharges.lean` (scratch/pb-bypass/discharges-output.txt):
+  `DISCHARGES [OpenResearchLeaves21.r11r12] by HDec.PkgI4.PanBergerSplit.panBerger_of_printed`,
+  still assumes `[PanPrinted, BergerPrinted]`, axioms `[propext, Classical.choice, Quot.sound]`
+  (the other five lines are contributions already in the tree).
+- `autofold.py scratch/pb-bypass/autofold.json --dry-run`: "strict count: 46/10 on 56 -> 48/9 on 57; strictest
+  45/11 -> 47/10"; the printed TailZ35 (scratch/pb-bypass/FoldDryRun.lean, line 1 stripped) compiles in 6 s,
+  `sixContactMin_of_open29` standard axioms.
+- scratch/pb-bypass/Weakest.lean: `PanBerger5`, `panBerger5_of_panBerger`, `g12_of_panBerger5` (g12 verbatim with
+  hPB : PanBerger5) compile; axioms standard.

@@ -70,7 +70,8 @@ def pdGen : Set (AinfP p) :=
 
 /-- **`A_cris^0`**: the divided power envelope of `(A_inf, ker θ)` (compatible with the divided
 powers of `p`), i.e. the subring `A_inf[x^n/n! : x ∈ ker θ, n ≥ 0]` of `A_inf[1/p]`
-(Fontaine, Astérisque 223 (1994), Exp. II §2.3; Brinon–Conrad, CMI notes, §9.1). -/
+(Fontaine, Astérisque 223 (1994), Exp. II §2.3; Brinon–Conrad, CMI notes, §9.1; numbers
+UNVERIFIED). -/
 def Acris0 : Subring (AinfP p) := Subring.closure (pdGen p)
 
 /-- **`A_cris`**: the `p`-adic completion of `A_cris^0`. -/
@@ -182,8 +183,8 @@ instance : Algebra (BcrisPlus p) (Bcris p) :=
 instance : IsLocalization (tMonoid p) (Bcris p) :=
   inferInstanceAs (IsLocalization (tMonoid p) (Localization (tMonoid p)))
 
-/-- **`B_st = B_cris[X]`** (Fontaine, Exp. II §3: `B_st = B_cris[u]`, `u` an indeterminate
-standing for `log [p♭]`). -/
+/-- **`B_st = B_cris[X]`** (Fontaine, Exp. II §3, UNVERIFIED: `B_st = B_cris[u]`, `u` an
+indeterminate standing for `log [p♭]`). -/
 abbrev Bst := Polynomial (Bcris p)
 
 /-! ### The action of `G_{ℚ_p}` -/
@@ -440,7 +441,7 @@ def bstInv (K : IntermediateField ℚ_[p] (PadicAlgCl p)) : Submodule ℚ_[p] (B
 /-- **`ρ|_{G_K}` is semistable** (Fontaine): `dim_{K_0} D_st,K = dim_{ℚ_p} V`, i.e.
 `dim_{ℚ_p} D_st,K = [K_0 : ℚ_p] · dim_{ℚ_p} V` with `K_0 = B_st^{G_K}`. Stated for `V^∨`, as
 `IsDeRham` (equivalent for the predicate `IsPst` below: `V` is pst iff `V^∨` is; Fontaine,
-Astérisque 223, Exp. VIII). -/
+Astérisque 223, Exp. VIII; number UNVERIFIED). -/
 def IsSemistableOver (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (ρ : GQp p →* GL (Fin n) E) :
     Prop :=
   Module.finrank ℚ_[p] (dstSpace p K ρ) =

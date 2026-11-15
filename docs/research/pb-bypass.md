@@ -28,9 +28,11 @@ theorem HDec.PkgI4.PanBergerSplit.panBerger_of_printed
 
 `lake env lean ZInQKernel/Contrib/OneProof/PanBerger.lean` compiles with no error and no warning; the axioms
 of `panBerger_of_printed` and of the sanity theorem `isPst_trivial` are `propext`, `Classical.choice`,
-`Quot.sound` (VERIFIED). `#discharges` output: §5. Counts if folded (autofold spec in
-`scratch/pb-bypass/autofold.json`): the composite GLUE row `r11r12` leaves, two published rows enter
-flagged unread (strict GLUE −1, LEAF +2).
+`Quot.sound` (VERIFIED). `#discharges` reports `DISCHARGES [OpenResearchLeaves21.r11r12] by
+HDec.PkgI4.PanBergerSplit.panBerger_of_printed`, still assuming exactly the two leaves (§5). Counts if folded
+(autofold spec `scratch/pb-bypass/autofold.json`, dry run VERIFIED: its TailZ35 compiles): strict
+**46/10 → 48/9**, strictest **45/11 → 47/10** (the composite GLUE row `r11r12` leaves; two published rows
+enter, flagged unread).
 
 **The field cannot be removed by other fields (§3), and its only consumer uses it at `p = 5` (§2).**
 
@@ -48,7 +50,7 @@ flagged unread (strict GLUE −1, LEAF +2).
   G11 (finitely ramified), G9 (`LocalIsDeRham`, Hodge–Tate weights `{0, −1}`) and G10 (odd).
 * **Weakest needed form:** `G0Galois.PanBerger5` (scratch/pb-bypass/Weakest.lean), `PanBerger` at `p = 5`;
   `g12_of_panBerger5` is `g12` verbatim with `hPB : PanBerger5`, and `panBerger5_of_panBerger` is the
-  restriction (compile status in the log). Pan's theorem has no residual proviso at `p = 5`. The weaker form is
+  restriction (both compile, standard axioms; VERIFIED). Pan's theorem has no residual proviso at `p = 5`. The weaker form is
   not used in the fold: the split proves the field as stated, which keeps the fold mechanical (autofold) and the
   leaves in their printed generality (`p ≥ 5`).
 
@@ -107,14 +109,22 @@ Two choices are made with `Classical.epsilon`: `p♭` and `u_σ`. Both exist (`�
 
 Both are flagged "unread: new printed leaf over pb-bypass's B_cris/B_st definitions".
 
-`#discharges` (see §6 for the command): recorded in `scratch/pb-bypass/discharges-output.txt`.
+`#discharges` (VERIFIED, `scratch/pb-bypass/discharges-output.txt`; the other five lines it prints are
+contributions already in the tree):
+
+```
+DISCHARGES [OpenResearchLeaves21.r11r12] by HDec.PkgI4.PanBergerSplit.panBerger_of_printed
+  still assumes: [HDec.PkgI4.PanBergerSplit.PanPrinted, HDec.PkgI4.PanBergerSplit.BergerPrinted]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 63 open hypotheses, 1716 theorems checked, 6 discharge one
+```
 
 ## 6. Reproduce
 
 ```
 lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.PanBerger
 lake env lean scratch/pb-bypass/Discharges.lean
-python3 scripts/one_proof/autofold.py scratch/pb-bypass/autofold.json --dry-run
+python3 scripts/one_proof/autofold.py scratch/pb-bypass/autofold.json --dry-run   # strip line 1, lake env lean it
 ```
 
 ## 7. What remains
