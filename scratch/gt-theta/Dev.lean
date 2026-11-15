@@ -376,4 +376,169 @@ theorem thetaM4 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
   rw [spFactor_M4 (pdq_of_siegel hΩ).1, Even.neg_pow (by decide), Even.neg_pow (by decide)]
   exact h
 
+
+/-! ## The specialized target of gap-triage A2 -/
+
+open HDec.QMSplit.Theta (psi4 chi10)
+
+/-- **`ThetaModularityM46`** (gap-triage A2, verbatim up to name qualification): Igusa's `ψ₄`, `χ₁₀`
+transform with weights 4 and 10 under the two symplectic matrices `M4`, `M6` at the period matrices
+`Ω(z)`, the only instances every consumer of `IgusaPsi4`/`IgusaChi10` uses. -/
+def ThetaModularityM46 : Prop :=
+  ∀ M ∈ ({M4, M6} : Set (Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ)), ∀ z : ℂ, 0 < z.im →
+    psi4 (spAct M (HDec.PkgI1.Omega z)) = spFactor M (HDec.PkgI1.Omega z) ^ 4 * psi4 (HDec.PkgI1.Omega z) ∧
+    chi10 (spAct M (HDec.PkgI1.Omega z)) = spFactor M (HDec.PkgI1.Omega z) ^ 10 * chi10 (HDec.PkgI1.Omega z)
+
+/-- The same at every point of the Siegel space (stronger; what is proved). -/
+def ThetaModularityM46Siegel : Prop :=
+  ∀ M ∈ ({M4, M6} : Set (Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ)), ∀ Ω ∈ SiegelH2,
+    psi4 (spAct M Ω) = spFactor M Ω ^ 4 * psi4 Ω ∧ chi10 (spAct M Ω) = spFactor M Ω ^ 10 * chi10 Ω
+
+theorem thetaModularityM46Siegel : ThetaModularityM46Siegel := by
+  intro M hM Ω hΩ
+  have h : thetaSum8 (spAct M Ω) = spFactor M Ω ^ 4 * thetaSum8 Ω ∧
+      thetaProd2 (spAct M Ω) = spFactor M Ω ^ 10 * thetaProd2 Ω := by
+    rcases hM with rfl | rfl
+    · exact thetaM4 hΩ
+    · exact thetaM6 hΩ
+  simp only [psi4, chi10]
+  exact ⟨by rw [h.1]; ring, by rw [h.2]; ring⟩
+
+/-- **`ThetaModularityM46` (proved, no hypotheses).** -/
+theorem thetaModularityM46 : ThetaModularityM46 := fun M hM z hz =>
+  thetaModularityM46Siegel M hM _ (HDec.HSyn.G0Split.FibreQM.PeriodMap.omegaSiegel_proof z hz)
+
+/-! ## Consumer forms: `S8WeightExact` and the weight-20 automorphy without `ThetaModularity` -/
+
+section Consumers
+open HDec.HSyn.G0Split.FibreQM HDec.HSyn.G0Split.FibreQM.PeriodMap HDec.HSyn.G0Split.FibreQM.PeriodGlue
+open UpperHalfPlane (num denom coe_smul_of_det_pos denom_ne_zero)
+
+theorem thetaSum8_M (hT : ThetaModularityM46) {M : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ}
+    (hM : M ∈ ({M4, M6} : Set (Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ))) (z : ℂ) (hz : 0 < z.im) :
+    thetaSum8 (spAct M (HDec.PkgI1.Omega z)) =
+      spFactor M (HDec.PkgI1.Omega z) ^ 4 * thetaSum8 (HDec.PkgI1.Omega z) := by
+  have h := (hT M hM z hz).1
+  simp only [psi4] at h
+  linear_combination 4 * h
+
+theorem thetaProd2_M (hT : ThetaModularityM46) {M : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ}
+    (hM : M ∈ ({M4, M6} : Set (Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ))) (z : ℂ) (hz : 0 < z.im) :
+    thetaProd2 (spAct M (HDec.PkgI1.Omega z)) =
+      spFactor M (HDec.PkgI1.Omega z) ^ 10 * thetaProd2 (HDec.PkgI1.Omega z) := by
+  have h := (hT M hM z hz).2
+  simp only [chi10] at h
+  linear_combination (-(2 : ℂ) ^ 14) * h
+
+/-- `g8Auto_of_sp` with the modularity at the one matrix `M` in place of `ThetaModularity`. -/
+theorem g8Auto_of_sp' (g : GL (Fin 2) ℝ)
+    (hdet : 0 < (g : Matrix (Fin 2) (Fin 2) ℝ).det)
+    (M : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ)
+    (hT : ∀ z : ℂ, 0 < z.im → thetaSum8 (spAct M (HDec.PkgI1.Omega z)) =
+      spFactor M (HDec.PkgI1.Omega z) ^ 4 * thetaSum8 (HDec.PkgI1.Omega z))
+    (hrel : ∀ z : ℂ, 0 < z.im →
+      HDec.PkgI1.spAct M (HDec.PkgI1.Omega z) = HDec.PkgI1.Omega (num g z / denom g z))
+    (ε : ℂ) (hε : ε ^ 4 = 1)
+    (hfac : ∀ z : ℂ, 0 < z.im →
+      HDec.PkgI1.spFactor M (HDec.PkgI1.Omega z) * ((g : Matrix (Fin 2) (Fin 2) ℝ).det : ℂ) *
+        ((z - 3) * (z + 1)) =
+      ε * denom g z ^ 2 * ((num g z / denom g z - 3) * (num g z / denom g z + 1))) :
+    G8Auto g := by
+  refine ⟨hdet, fun z => ?_⟩
+  have hw : ((g • z : UpperHalfPlane) : ℂ) = num g z / denom g z :=
+    coe_smul_of_det_pos (by rwa [detv]) z
+  have hwim : 0 < (num g z / denom g z).im := by rw [← hw]; exact (g • z).im_pos
+  have hmod := hT z z.im_pos
+  rw [hrel z z.im_pos] at hmod
+  have hf := hfac z z.im_pos
+  unfold G8
+  rw [hw, hmod]
+  have hf4 : (HDec.PkgI1.spFactor M (HDec.PkgI1.Omega z) * ((g : Matrix (Fin 2) (Fin 2) ℝ).det : ℂ) *
+      ((z - 3) * (z + 1))) ^ 4 =
+      (denom g z ^ 2 * ((num g z / denom g z - 3) * (num g z / denom g z + 1))) ^ 4 := by
+    rw [hf, mul_assoc, mul_pow, hε, one_mul]
+  obtain ⟨h3, h4⟩ := sub3_add1_ne z.im_pos
+  obtain ⟨h5, h6⟩ := sub3_add1_ne hwim
+  have hD : denom g z ≠ 0 := denom_ne_zero g z
+  generalize num g z / denom g z = w at *
+  field_simp
+  linear_combination (HDec.PkgI1.thetaSum8 (HDec.PkgI1.Omega z)) * hf4
+
+/-- `g8Auto_gen` with the modularity at `M` in place of `ThetaModularity`. -/
+theorem g8Auto_gen' (g : GL (Fin 2) ℝ)
+    (hdet : 0 < (g : Matrix (Fin 2) (Fin 2) ℝ).det)
+    (M : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ)
+    (hT : ∀ z : ℂ, 0 < z.im → thetaSum8 (spAct M (HDec.PkgI1.Omega z)) =
+      spFactor M (HDec.PkgI1.Omega z) ^ 4 * thetaSum8 (HDec.PkgI1.Omega z))
+    (A B C D : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.map (Int.cast : ℤ → ℂ) = Matrix.fromBlocks A B C D)
+    (hI1 : ∀ z : ℂ, dFh (num g z) (denom g z) • (A * Nf z + dF z • B) =
+      Nfh (num g z) (denom g z) * (C * Nf z + dF z • D))
+    (hI2 : ∀ z : ℂ, (C * Nf z + dF z • D).det * ((g : Matrix (Fin 2) (Fin 2) ℝ).det : ℂ) *
+      ((z - 3) * (z + 1)) = -1 * dF z ^ 2 * ((num g z - 3 * denom g z) * (num g z + denom g z))) :
+    G8Auto g := by
+  have hw : ∀ z : ℂ, 0 < z.im → 0 < (num g z / denom g z).im := fun z hz => by
+    have := (g • (⟨z, hz⟩ : UpperHalfPlane)).im_pos
+    rwa [← UpperHalfPlane.coe_im, coe_smul_of_det_pos (by rwa [detv])] at this
+  have hV : ∀ z : ℂ, 0 < z.im → denom g z ≠ 0 := fun z hz =>
+    UpperHalfPlane.denom_ne_zero_of_im g hz.ne'
+  have hP : ∀ z : ℂ, 0 < z.im → (C * Nf z + dF z • D).det ≠ 0 := fun z hz h0 => by
+    have e := hI2 z
+    rw [h0, zero_mul, zero_mul] at e
+    obtain ⟨h5, h6⟩ := sub3_add1_ne (hw z hz)
+    have h7 : num g z - 3 * denom g z ≠ 0 := fun h => h5 (by
+      rw [show num g z = 3 * denom g z by linear_combination h, mul_div_assoc,
+        div_self (hV z hz)]; ring)
+    have h8 : num g z + denom g z ≠ 0 := fun h => h6 (by
+      rw [show num g z = -denom g z by linear_combination h, neg_div, div_self (hV z hz)]; ring)
+    have := dF_ne hz
+    have : -1 * dF z ^ 2 * ((num g z - 3 * denom g z) * (num g z + denom g z)) ≠ 0 := by
+      apply mul_ne_zero (mul_ne_zero (by norm_num) (pow_ne_zero _ this)) (mul_ne_zero h7 h8)
+    exact this e.symm
+  refine g8Auto_of_sp' g hdet M hT (fun z hz => ?_) (-1) (by norm_num) (fun z hz => ?_)
+  · exact spAct_of_poly M A B C D hM z _ _ (hV z hz) (dF_ne hz) (dF_ne (hw z hz)) (hP z hz) (hI1 z)
+  · exact spFactor_of_poly M A B C D hM z _ _ _ (hV z hz) (dF_ne hz) (hI2 z)
+
+theorem g8Auto_g4' (hT : ThetaModularityM46) {g : GL (Fin 2) ℝ}
+    (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = HDec.PkgI1.iota HDec.HSyn.G0Split.FibreQM.PeriodGlue.x4) : G8Auto g := by
+  rw [iota_x4] at hg
+  have hdet : (g : Matrix (Fin 2) (Fin 2) ℝ).det = 2 := by
+    rw [hg, Matrix.det_fin_two_of]; linear_combination (-1 : ℝ) * sqrt2_sq'
+  have hnum : ∀ z : ℂ, num g z = (√2 : ℂ) * z + z - 3 := fun z => by
+    simp only [UpperHalfPlane.num, hg]; simp; ring
+  have hden : ∀ z : ℂ, denom g z = -(√2 : ℂ) + z + 1 := fun z => by
+    simp only [UpperHalfPlane.denom, hg]; simp; ring
+  refine g8Auto_gen' g (by rw [hdet]; norm_num) M4 (thetaSum8_M hT (Or.inl rfl)) A4 B4 C4 D4 M4_map
+    (fun z => by rw [hnum, hden]; exact I1_g4 z) (fun z => ?_)
+  rw [hnum, hden, hdet]; push_cast; exact I2_g4 z
+
+theorem g8Auto_g6' (hT : ThetaModularityM46) {g : GL (Fin 2) ℝ}
+    (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = HDec.PkgI1.iota HDec.HSyn.G0Split.FibreQM.PeriodGlue.x6) : G8Auto g := by
+  rw [iota_x6] at hg
+  have hdet : (g : Matrix (Fin 2) (Fin 2) ℝ).det = 3 := by
+    rw [hg, Matrix.det_fin_two_of]; norm_num
+  have hnum : ∀ z : ℂ, num g z = -3 * z / 2 - 3 / 2 := fun z => by
+    simp only [UpperHalfPlane.num, hg]; simp; ring
+  have hden : ∀ z : ℂ, denom g z = z / 2 - 3 / 2 := fun z => by
+    simp only [UpperHalfPlane.denom, hg]; simp; ring
+  refine g8Auto_gen' g (by rw [hdet]; norm_num) M6 (thetaSum8_M hT (Or.inr rfl)) A6 B6 C6 D6 M6_map
+    (fun z => by rw [hnum, hden]; exact I1_g6 z) (fun z => ?_)
+  rw [hnum, hden, hdet]; push_cast; exact I2_g6 z
+
+/-- **`S8WeightExact` from `ThetaModularityM46` and `GammaStarGen`** (gap-triage A2's consumer form). -/
+theorem s8WeightExact_of' (hT : ThetaModularityM46) (hG : GammaStarGen) : S8WeightExact := by
+  intro γ hγ z
+  have hmem : γ ∈ G8AutoSubgroup := by
+    refine (Subgroup.closure_le (K := G8AutoSubgroup)).mpr ?_ (hG γ hγ)
+    rintro g ((hg | hg) | ⟨q, hq, hg⟩)
+    · exact g8Auto_g4' hT hg
+    · exact g8Auto_g6' hT hg
+    · exact g8Auto_scalar q hq hg
+  exact hmem.2 z
+
+/-- **`S8WeightExact` from `GammaStarGen` alone.** -/
+theorem s8WeightExact_of_gen (hG : GammaStarGen) : S8WeightExact :=
+  s8WeightExact_of' thetaModularityM46 hG
+
+end Consumers
+
 end GapTheta
