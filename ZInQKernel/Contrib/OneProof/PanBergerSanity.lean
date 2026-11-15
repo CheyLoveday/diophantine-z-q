@@ -21,7 +21,8 @@ if the definitions are not degenerate. This file proves, with no `sorry` (only `
   homomorphism); every `σ` acts on `B_st` by a ring automorphism (`stEquiv`), `1` acts trivially
   (`stAct_one`); the group law on `B_st` is equivalent to the cocycle identity for `log [u_σ]`
   (`stAct_mul_iff`) and follows from the additivity of `log` on `{ε : ε^♯ = 1}` (`LogAdditive`,
-  stated, not proved here; `stAct_mul`).
+  stated, not proved here; `stAct_mul`). The monodromy variable is genuine: some `σ` moves `p♭`,
+  so `σ(u) = u + c(σ)t ≠ u` and `u ∉ B_st^{G_{ℚ_p}}` (`exists_stAct_X_ne`, `X_not_mem_bstInv_bot`).
 * **`K_0 ⊆ B_st^{G_K}`.** `A_inf → B_st` is injective and equivariant (`embW_injective`,
   `stAct_embW`); for a root of unity `μ ∈ K` of order prime to `p`, the Teichmüller lift `[μ♭]`
   lies in `B_st^{G_K}` and `1, [μ♭], …, [μ♭]^{d-1}` (`d = [ℚ_p(μ) : ℚ_p]`) are `ℚ_p`-linearly
@@ -30,7 +31,10 @@ if the definitions are not degenerate. This file proves, with no `sorry` (only `
 * **Semistable representations.** A representation trivial on `G_K` is semistable over `K`
   (`isSemistableOver_of_trivial`, any `K`), so representations with finite image on a finite `K`,
   the trivial `n`-dimensional representation (`localIsPst_one`) and the quadratic characters
-  `σ ↦ σ(α)/α` (`isPst_quadChar`) are potentially semistable.
+  `σ ↦ σ(α)/α` (`isPst_quadChar`) are potentially semistable. A character with a unit period in
+  `B_st` is semistable (`isSemistableOver_of_period`); so the quadratic character of a root of
+  unity `β` of order prime to `p` with `β² ∈ ℚ_p` (for `p` odd and `β` of order `2(p − 1)`, the
+  unramified quadratic character) is semistable over `ℚ_p` itself (`isSemistableOver_quadChar_teich`).
 
 Not proved (see `docs/research/pb-sanity.md`): `B_st^{G_K} ⊆ K_0` (in particular the finite
 dimensionality of `B_st^{G_K}`, which `IsSemistableOver` needs to mean Fontaine's condition),
