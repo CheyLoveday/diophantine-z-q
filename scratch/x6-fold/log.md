@@ -21,3 +21,22 @@
   isDedekindDomain_sections, has different section variables in TailR (IsAlgClosed) and is kept).
 - Result x6body.lean: 240 declarations kept, 3434 lines, 167 KB. Test1.lean (TailZ19 + X6Glue's imports + body):
   0 errors, 1 min; r1r2_of_published, x6ConicModel_of_published axioms standard. VERIFIED.
+
+## Step 2 (18:40): modules, bundles, build, checks
+- mk_modules.py splits x6body.lean into H/TailZ20.lean (104.5 KB: qm-glue coarse comparison, coarse-factor,
+  shimura-split Bridge/BG/PairsLift/additions) and H/TailZ21.lean (71.5 KB: shimura-glue Möbius and ray-class,
+  x6-glue's four parts); shimura-glue Parts A-C (empty after trimming; in TailZ12) dropped.
+  `lake build ZInQKernel.OneProof.H.TailZ21`: passes (1.5 min). VERIFIED.
+- mk_tailz22.py writes H/TailZ22.lean (21 KB): Ab forms (text with R1fpProps → R1fpPropsAb, as route-a-fold) of
+  DeligneComponentsX6Printed, RayClassCM, GonzalezRotgerX6, ElkiesEquationsX6, BabaGranathRational with `_iff_ab`
+  by `rw [r1fpProps_eq_ab' hR]`; OpenResearchLeaves13 (35), OpenAddedLeaves12 (14); x6Rows_of_open13,
+  researchLeaves12_of_open13, addedLeaves11_of_open12, sixContactMin_of_open16. T5 from the textbook field
+  mumfordTorsionAlgClosed (AvSplit.torsionStructure_of_mumford). Built first try, axioms standard. VERIFIED.
+- Main.lean switched to open16. `lake build +ZInQKernel.OneProof.Main`: exit 0, 12916 jobs, 8.5 min (rebuilt the
+  two stale non-OneProof modules and their dependents TopChain, TYZSplit; no H module rebuilt);
+  `#print axioms ZInQ.OneProof.frozenTarget` = [propext, Classical.choice, Quot.sound]. VERIFIED.
+- Hash guard (DumpBase.lean over TailZ19 + Main's other imports, DumpNew.lean over Main; op-compact's
+  DumpCompact): 12767 → 13226 constants, 0 deleted, 0 changed; new: 111 TailZ20, 255 TailZ21, 92 TailZ22, 1 Main
+  (frozenTarget, excluded from the base dump; its statement changes). VERIFIED (cmp_hashes_out.txt).
+- PruneScan (genus-fold's, copied): OpenResearchLeaves13 35, OpenTextbookLeaves10 15, OpenAddedLeaves12 14,
+  OpenGlue7 1 = 65 fields, 0 unused. VERIFIED.
