@@ -2,6 +2,7 @@ import ZInQKernel.Contrib.OneProof.RingClassLattice
 import ZInQKernel.Contrib.TYZGenus.ShimuraFricke
 import ZInQKernel.Contrib.TYZGenus.ShimuraTheta
 import ZInQKernel.Contrib.TYZGenus.ShimuraThetaDup
+import ZInQKernel.Contrib.TYZGenus.ShimuraZn
 
 /-! hx-used, scratch: the eta route (hCM + one explicit identity ⇒ the level-32 instances of
 `ShimuraReciprocityModFn`). Part 1: the lattices `⟨1/M, τ_Q⟩` in `K`. -/
@@ -783,5 +784,100 @@ theorem transport2 (hCM : ShimuraMainCM) (e : SeparableClosure (QNeg m) →ₐ[�
     exact ratio_conj σ hk0 e1 (by rw [e2', h3]) (by rw [e3', h4])
 
 end Transport2
+
+/-! ## Part 7. The identity (Ix), its Fricke transform, and `y` from `x` -/
+
+/-- **GLUE X-ETA-WP (an identity of explicit functions on `ℍ`).** x0-32's eta quotient
+`x = η(2τ)²η(16τ)/(η(4τ)η(32τ)²) + 2` is a weight-0 ratio of Weierstrass values of the lattice
+`⟨1/16, τ⟩` at three of its torsion points, in two ways:
+`x(τ) = 2 − 4(℘(1/32) − ℘(1/32 + τ/8))/(℘(3τ/8) − ℘(1/32 + τ/8))`
+`     = 2 − 4(℘(1/32) − ℘(1/32 + 3τ/8))/(℘(τ/8) − ℘(1/32 + 3τ/8))`, `℘ = ℘_{⟨1/16, τ⟩}`.
+Found by a search over the points of `E[8]` and checked at 12 random points of `ℍ` to 36 digits
+(`scratch/hx-used/num/search_x.py`, `check_xy.py`). Classical in nature (Jacobi's theta/`℘`
+relations; `x = 2θ₀₀(16τ)/θ₁₀(16τ)` is the kernel's `Shimura.xC_theta`), no printed source located. -/
+def XEtaWeierstrass : Prop :=
+  ∀ τ : UpperHalfPlane,
+    ZInQ.Contrib.TYZGenus.X0.xC τ = 2 - 4 * wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (3 * τ / 8) (1 / 32 + τ / 8) ∧
+    ZInQ.Contrib.TYZGenus.X0.xC τ = 2 - 4 * wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (τ / 8) (1 / 32 + 3 * τ / 8)
+
+theorem wpRatio_scale {P Q : PeriodPair} {c : ℂ} (h : IsScale P Q c) (a b d : ℂ) :
+    wpRatio P (c * a) (c * b) (c * d) = wpRatio Q a b d := by
+  simp only [wpRatio, h.weierstrassP]
+  have hc : ((c ^ 2)⁻¹ : ℂ) ≠ 0 := inv_ne_zero (pow_ne_zero 2 h.1)
+  rw [← mul_sub, ← mul_sub, mul_div_mul_left _ _ hc]
+
+/-- `⟨1/16, −1/(32τ)⟩ = (−1/(16τ))·⟨1/2, τ⟩`. -/
+theorem isScale_fricke (τ : UpperHalfPlane) :
+    IsScale (ppM 16 (by norm_num) (frickeH τ)) (ppM 2 (by norm_num) τ) (-1 / (16 * (τ : ℂ))) := by
+  have hτ : (τ : ℂ) ≠ 0 := UpperHalfPlane.ne_zero τ
+  refine ⟨by simp [hτ], ?_⟩
+  ext x
+  simp only [SetLike.mem_coe, PeriodPair.mem_lattice, Set.mem_smul_set, smul_eq_mul, ppM, frickeH]
+  constructor
+  · rintro ⟨a, b, rfl⟩
+    refine ⟨b * (1 / 2) + (-a : ℤ) * τ, ⟨b, -a, rfl⟩, ?_⟩
+    push_cast; field_simp; ring
+  · rintro ⟨y, ⟨a, b, rfl⟩, rfl⟩
+    refine ⟨-b, a, ?_⟩
+    push_cast; field_simp; ring
+
+/-- **(IxW)**: the Fricke transform of (Ix), `x(−1/(32τ))` through `℘_{⟨1/2, τ⟩}`. -/
+theorem xC_fricke_wp (hX : XEtaWeierstrass) (τ : UpperHalfPlane) :
+    ZInQ.Contrib.TYZGenus.X0.xC (frickeH τ) = 2 - 4 * wpRatio (ppM 2 (by norm_num) τ) (τ / 2) (3 / 16) (τ / 2 + 1 / 16) ∧
+    ZInQ.Contrib.TYZGenus.X0.xC (frickeH τ) = 2 - 4 * wpRatio (ppM 2 (by norm_num) τ) (τ / 2) (1 / 16) (τ / 2 + 3 / 16) := by
+  have hτ : (τ : ℂ) ≠ 0 := UpperHalfPlane.ne_zero τ
+  have hs := isScale_fricke τ
+  set P := ppM 2 (by norm_num) τ
+  have hω : P.ω₁ = 1 / 2 ∧ P.ω₂ = τ := ⟨by simp [P, ppM], rfl⟩
+  have hf : ((frickeH τ : UpperHalfPlane) : ℂ) = -1 / (32 * (τ : ℂ)) := rfl
+  obtain ⟨h1, h2⟩ := hX (frickeH τ)
+  have n1 : P.weierstrassP (-(τ : ℂ) / 2) = P.weierstrassP (τ / 2) :=
+    wp_congr_neg P 0 0 (by ring)
+  have n2 : ∀ z : ℂ, P.weierstrassP (-(τ : ℂ) / 2 + z) = P.weierstrassP (τ / 2 + z) := fun z =>
+    wp_congr P 0 (-1) (by rw [hω.2]; push_cast; ring)
+  constructor
+  · rw [h1]
+    have e : wpRatio (ppM 16 (by norm_num) (frickeH τ)) (1 / 32) (3 * (frickeH τ : ℂ) / 8)
+        (1 / 32 + (frickeH τ : ℂ) / 8) =
+        wpRatio (ppM 16 (by norm_num) (frickeH τ)) ((-1 / (16 * (τ : ℂ))) * (-(τ : ℂ) / 2)) ((-1 / (16 * (τ : ℂ))) * (3 / 16))
+        ((-1 / (16 * (τ : ℂ))) * (-(τ : ℂ) / 2 + 1 / 16)) := by
+      congr 1 <;> (try rw [hf]) <;> field_simp <;> ring
+    rw [e, wpRatio_scale hs]
+    simp only [wpRatio, n1, n2]
+  · rw [h2]
+    have e : wpRatio (ppM 16 (by norm_num) (frickeH τ)) (1 / 32) ((frickeH τ : ℂ) / 8)
+        (1 / 32 + 3 * (frickeH τ : ℂ) / 8) =
+        wpRatio (ppM 16 (by norm_num) (frickeH τ)) ((-1 / (16 * (τ : ℂ))) * (-(τ : ℂ) / 2)) ((-1 / (16 * (τ : ℂ))) * (1 / 16))
+        ((-1 / (16 * (τ : ℂ))) * (-(τ : ℂ) / 2 + 3 / 16)) := by
+      congr 1 <;> (try rw [hf]) <;> field_simp <;> ring
+    rw [e, wpRatio_scale hs]
+    simp only [wpRatio, n1, n2]
+
+open WeierstrassCurve.Affine in
+/-- **`y` from `x` and `x∘W₃₂`** (the proved Fricke relation `φ(−1/(32τ)) = T − φ(τ)`, `T = (2, −4)`):
+`8y = x³ + 4x + 16 − (x − 2)²(x(−1/(32τ)) + x + 2)`. -/
+theorem yC_formula (τ : UpperHalfPlane) :
+    ZInQ.Contrib.TYZGenus.X0.yC τ = (ZInQ.Contrib.TYZGenus.X0.xC τ ^ 3 + 4 * ZInQ.Contrib.TYZGenus.X0.xC τ + 16 -
+      (ZInQ.Contrib.TYZGenus.X0.xC τ - 2) ^ 2 * (ZInQ.Contrib.TYZGenus.X0.xC (frickeH τ) + ZInQ.Contrib.TYZGenus.X0.xC τ + 2)) / 8 := by
+  have hF := etaModelFricke τ (frickeH τ) rfl
+  obtain ⟨h, hP⟩ := ZInQ.Contrib.TYZGenus.X0.phiC_eq_some etaModelEquation τ
+  obtain ⟨h', hP'⟩ := ZInQ.Contrib.TYZGenus.X0.phiC_eq_some etaModelEquation (frickeH τ)
+  have hx2 := xC_sub_two_ne_zero τ
+  have hne : (2 : ℂ) ≠ ZInQ.Contrib.TYZGenus.X0.xC τ := fun h0 => hx2 (by rw [← h0]; ring)
+  have key : ZInQ.Contrib.TYZGenus.X0.phiC (frickeH τ) = ZInQ.Contrib.TYZGenus.X0.ptTC + -ZInQ.Contrib.TYZGenus.X0.phiC τ := by
+    rw [← hF]; abel
+  rw [hP, hP', Point.neg_some, ZInQ.Contrib.TYZGenus.X0.ptTC, Point.add_of_X_ne hne] at key
+  simp only [Point.some.injEq] at key
+  obtain ⟨kx, -⟩ := key
+  rw [negY_AC, slope_of_X_ne hne] at kx
+  simp only [addX, curveAC_a₁, curveAC_a₂, zero_mul, add_zero, sub_zero] at kx
+  have heq := etaModelEquation τ
+  have h2x : (2 : ℂ) - ZInQ.Contrib.TYZGenus.X0.xC τ ≠ 0 := sub_ne_zero.2 hne
+  have hsq : (ZInQ.Contrib.TYZGenus.X0.xC τ - 2) ^ 2 *
+      (ZInQ.Contrib.TYZGenus.X0.xC (frickeH τ) + ZInQ.Contrib.TYZGenus.X0.xC τ + 2) =
+      (ZInQ.Contrib.TYZGenus.X0.yC τ - 4) ^ 2 := by
+    rw [kx]; field_simp; ring
+  rw [hsq]
+  linear_combination (1 / 8 : ℂ) * heq
 
 end X0EtaRoute
