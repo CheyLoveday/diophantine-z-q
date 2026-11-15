@@ -189,3 +189,168 @@ theorem geomConn_open (hG : AVGlue.GeomConnOfRationalPoint) {k : Type} [Field k]
   rw [← Category.assoc, IsOpenImmersion.lift_fac, hs]
 
 end SGA3IdComp
+
+/-! ## Part 4: the identity component through fibres -/
+
+namespace SGA3IdComp
+
+open MonoidalCategory CartesianMonoidalCategory MonObj CToPrinted
+
+section Grp
+
+variable {S : Scheme.{0}} (G : Over S) [GrpObj G]
+
+theorem e_comp : (η[G] : 𝟙_ (Over S) ⟶ G).left ≫ G.hom = 𝟙 S := Over.w (η[G] : 𝟙_ (Over S) ⟶ G)
+
+theorem hom_e (s : S) : G.hom ((η[G] : 𝟙_ (Over S) ⟶ G).left s) = s := by
+  rw [← Scheme.Hom.comp_apply, e_comp]; rfl
+
+/-- The unit section of the fibre `G_t`. -/
+noncomputable def eF (t : S) : Spec (S.residueField t) ⟶ G.hom.fiber t :=
+  pullback.lift (S.fromSpecResidueField t ≫ (η[G] : 𝟙_ (Over S) ⟶ G).left) (𝟙 _)
+    (by rw [Category.assoc, e_comp, Category.comp_id, Category.id_comp])
+
+theorem eF_fiberι (t : S) : eF G t ≫ G.hom.fiberι t =
+    S.fromSpecResidueField t ≫ (η[G] : 𝟙_ (Over S) ⟶ G).left := pullback.lift_fst _ _ _
+
+theorem eF_fac (t : S) : eF G t ≫ G.hom.fiberToSpecResidueField t = 𝟙 _ := pullback.lift_snd _ _ _
+
+theorem fiberι_eF (t : S) (p : Spec (S.residueField t)) :
+    G.hom.fiberι t (eF G t p) = (η[G] : 𝟙_ (Over S) ⟶ G).left t := by
+  rw [← Scheme.Hom.comp_apply, eF_fiberι, Scheme.Hom.comp_apply, Scheme.fromSpecResidueField_apply]
+
+/-- A point of `G⁰` over `t` lies, in the fibre `G_t`, in the connected component of the unit. -/
+theorem mem_cc_of_mem_idCompSet (x : G.left) (hx : x ∈ idCompSet G) (t : S) (ht : G.hom x = t)
+    (x' : G.hom.fiber t) (hx' : G.hom.fiberι t x' = x) (p : Spec (S.residueField t)) :
+    x' ∈ connectedComponent (eF G t p) := by
+  subst ht
+  let t := G.hom x
+  let φ := G.hom.fiberHomeo t
+  have het : (η[G] : 𝟙_ (Over S) ⟶ G).left t ∈ G.hom ⁻¹' {t} := hom_e G t
+  have hx2 : x ∈ connectedComponentIn (G.hom ⁻¹' {t}) ((η[G] : 𝟙_ (Over S) ⟶ G).left t) := hx
+  rw [connectedComponentIn_eq_image het] at hx2
+  obtain ⟨y, hy, hyx⟩ := hx2
+  have hφx : φ x' = y := Subtype.ext (by rw [Scheme.Hom.fiberHomeo_apply, hx', hyx])
+  have hφe : φ (eF G t p) = ⟨_, het⟩ := Subtype.ext (by rw [Scheme.Hom.fiberHomeo_apply, fiberι_eF])
+  have hC : _root_.IsConnected (φ ⁻¹' connectedComponent (⟨_, het⟩ : G.hom ⁻¹' {t})) :=
+    φ.isConnected_preimage.mpr isConnected_connectedComponent
+  refine hC.isPreconnected.subset_connectedComponent ?_ ?_
+  · rw [Set.mem_preimage, hφe]; exact mem_connectedComponent
+  · rw [Set.mem_preimage, hφx]; exact hy
+
+/-- A preconnected set inside the fibre over `t` containing `e(t)` lies in `G⁰`. -/
+theorem subset_idCompSet (C : Set G.left) (hC : _root_.IsPreconnected C) (t : S)
+    (hsub : C ⊆ G.hom ⁻¹' {t}) (he : (η[G] : 𝟙_ (Over S) ⟶ G).left t ∈ C) : C ⊆ idCompSet G := by
+  intro y hy
+  have h1 := hC.subset_connectedComponentIn he hsub hy
+  have h2 : G.hom y = t := hsub hy
+  show y ∈ connectedComponentIn (G.hom ⁻¹' {G.hom y}) ((η[G] : 𝟙_ (Over S) ⟶ G).left (G.hom y))
+  rw [h2]; exact h1
+
+theorem lift_one_one_mul : (lift (η[G] : 𝟙_ (Over S) ⟶ G) η[G] ≫ μ[G] : 𝟙_ (Over S) ⟶ G) = η[G] := by
+  have h1 : (1 : 𝟙_ (Over S) ⟶ G) = η[G] := by
+    rw [Hom.one_def, toUnit_unique (toUnit _) (𝟙 _), Category.id_comp]
+  rw [← h1, ← Hom.mul_def, _root_.mul_one]
+
+/-- The point `(e(t), e(t))` of `G ×_S G`. -/
+theorem fst_lift_one_one (t : S) :
+    pullback.fst G.hom G.hom ((lift (η[G] : 𝟙_ (Over S) ⟶ G) η[G]).left t) =
+      (η[G] : 𝟙_ (Over S) ⟶ G).left t := by
+  rw [← Scheme.Hom.comp_apply]
+  exact congrArg (fun h => h.left t) (lift_fst (η[G] : 𝟙_ (Over S) ⟶ G) η[G])
+
+theorem snd_lift_one_one (t : S) :
+    pullback.snd G.hom G.hom ((lift (η[G] : 𝟙_ (Over S) ⟶ G) η[G]).left t) =
+      (η[G] : 𝟙_ (Over S) ⟶ G).left t := by
+  rw [← Scheme.Hom.comp_apply]
+  exact congrArg (fun h => h.left t) (lift_snd (η[G] : 𝟙_ (Over S) ⟶ G) η[G])
+
+theorem mu_lift_one_one (t : S) :
+    (μ[G] : G ⊗ G ⟶ G).left ((lift (η[G] : 𝟙_ (Over S) ⟶ G) η[G]).left t) =
+      (η[G] : 𝟙_ (Over S) ⟶ G).left t := by
+  rw [← Scheme.Hom.comp_apply]
+  exact congrArg (fun h => h.left t) (lift_one_one_mul G)
+
+theorem hom_mu (w : (G ⊗ G).left) :
+    G.hom ((μ[G] : G ⊗ G ⟶ G).left w) = G.hom (pullback.fst G.hom G.hom w) := by
+  rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply]
+  exact congrArg (fun h => h w) (congrArg (fun k => k.base) (Over.w (μ[G] : G ⊗ G ⟶ G)))
+
+omit [GrpObj G] in
+theorem fiberι_mem (t : S) (y : G.hom.fiber t) : G.hom (G.hom.fiberι t y) = t := by
+  have : G.hom.fiberι t y ∈ Set.range (G.hom.fiberι t) := ⟨y, rfl⟩
+  rw [Scheme.Hom.range_fiberι] at this
+  exact this
+
+omit [GrpObj G] in
+theorem exists_fiber_pt (t : S) (x : G.left) (hx : G.hom x = t) :
+    ∃ x' : G.hom.fiber t, G.hom.fiberι t x' = x := by
+  have : x ∈ Set.range (G.hom.fiberι t) := by rw [Scheme.Hom.range_fiberι]; exact hx
+  exact this
+
+/-- **Step 2: `G⁰` is closed under the group law** (for any base `S`; from the bundle leaf
+`AVGlue.GeomConnOfRationalPoint`). -/
+theorem mul_mem (hG : AVGlue.GeomConnOfRationalPoint) [Smooth G.hom] (z : (G ⊗ G).left)
+    (h1 : (fst G G).left z ∈ idCompSet G) (h2 : (snd G G).left z ∈ idCompSet G) :
+    (μ[G] : G ⊗ G ⟶ G).left z ∈ idCompSet G := by
+  let a := (fst G G).left z
+  let b := (snd G G).left z
+  let t := G.hom a
+  have hb : G.hom b = t := by
+    show G.hom (pullback.snd G.hom G.hom z) = G.hom (pullback.fst G.hom G.hom z)
+    rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, pullback.condition]
+  obtain ⟨a', ha'⟩ := exists_fiber_pt G t a rfl
+  obtain ⟨b', hb'⟩ := exists_fiber_pt G t b hb
+  let p : Spec (S.residueField t) := IsLocalRing.closedPoint _
+  have ha'c := mem_cc_of_mem_idCompSet G a h1 t rfl a' ha' p
+  have hb'c := mem_cc_of_mem_idCompSet G b h2 t hb b' hb' p
+  let φF := G.hom.fiberToSpecResidueField t
+  have hsm : Smooth φF := show Smooth (pullback.snd G.hom (S.fromSpecResidueField t)) from inferInstance
+  have hlft : LocallyOfFiniteType φF :=
+    show LocallyOfFiniteType (pullback.snd G.hom (S.fromSpecResidueField t)) from inferInstance
+  obtain ⟨V, hVo, hVc, hVi, heV, haV, hbV⟩ := @exists_irred3_of_smooth _ _ _ φF hsm _ _ _ ha'c hb'c
+  let Q : (G.hom.fiber t).Opens := ⟨V, hVo⟩
+  let q := Q.ι ≫ φF
+  have hsV : Set.range (eF G t) ⊆ (Q : Set (G.hom.fiber t)) := by
+    rintro _ ⟨p', rfl⟩; rw [Subsingleton.elim p' p]; exact heV
+  have hq : GeometricallyConnected q := @geomConn_open hG _ _ _ φF hlft Q hVc hVi (eF G t) (eF_fac G t) hsV
+  have : ConnectedSpace Q := Subtype.connectedSpace hVi.isConnected
+  have : ConnectedSpace ↥(pullback q q) := inferInstance
+  let ι' := Q.ι ≫ G.hom.fiberι t
+  have hι' : q ≫ S.fromSpecResidueField t = ι' ≫ G.hom := by
+    simp only [q, ι', φF, Category.assoc, Scheme.Hom.fiber_fac]
+  let j : pullback q q ⟶ pullback G.hom G.hom :=
+    pullback.map q q G.hom G.hom ι' ι' (S.fromSpecResidueField t) hι' hι'
+  have hrange : Set.range j = pullback.fst G.hom G.hom ⁻¹' Set.range ι' ∩
+      pullback.snd G.hom G.hom ⁻¹' Set.range ι' := Scheme.Pullback.range_map _ _ _ _ _ _ _ _ _
+  have hQr : ∀ y' ∈ V, G.hom.fiberι t y' ∈ Set.range ι' := fun y' hy' => ⟨⟨y', hy'⟩, rfl⟩
+  let C := (μ[G] : G ⊗ G ⟶ G).left '' Set.range j
+  have hCc : _root_.IsPreconnected C :=
+    (isPreconnected_range j.continuous).image _ (μ[G] : G ⊗ G ⟶ G).left.continuous.continuousOn
+  have hCsub : C ⊆ G.hom ⁻¹' {t} := by
+    rintro _ ⟨w, hw, rfl⟩
+    rw [hrange] at hw
+    obtain ⟨y, hy⟩ := hw.1
+    show G.hom ((μ[G] : G ⊗ G ⟶ G).left w) = t
+    rw [hom_mu, ← hy]
+    exact fiberι_mem G t _
+  have heC : (η[G] : 𝟙_ (Over S) ⟶ G).left t ∈ C := by
+    refine ⟨(lift (η[G] : 𝟙_ (Over S) ⟶ G) η[G]).left t, ?_, mu_lift_one_one G t⟩
+    rw [hrange]
+    have : (η[G] : 𝟙_ (Over S) ⟶ G).left t ∈ Set.range ι' := by
+      rw [← fiberι_eF G t p]; exact hQr _ heV
+    exact ⟨by rw [Set.mem_preimage, fst_lift_one_one]; exact this,
+      by rw [Set.mem_preimage, snd_lift_one_one]; exact this⟩
+  have hzC : (μ[G] : G ⊗ G ⟶ G).left z ∈ C := by
+    refine ⟨z, ?_, rfl⟩
+    rw [hrange]
+    have h1 := hQr _ haV
+    have h2 := hQr _ hbV
+    rw [ha'] at h1
+    rw [hb'] at h2
+    exact ⟨h1, h2⟩
+  exact subset_idCompSet G C hCc t hCsub heC hzC
+
+end Grp
+
+end SGA3IdComp
