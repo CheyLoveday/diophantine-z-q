@@ -1500,6 +1500,132 @@ theorem isSemistableOver_of_period (K : IntermediateField ℚ_[p] (PadicAlgCl p)
 
 end Period
 
+section QuadPeriod
+
+variable {μ : PadicAlgCl p} {m : ℕ}
+
+theorem iterate_frob_symm_mul (n : ℕ) (x y : PreTilt O p) :
+    ((frobeniusEquiv (PreTilt O p) p).symm^[n]) (x * y) =
+      ((frobeniusEquiv (PreTilt O p) p).symm^[n]) x *
+        ((frobeniusEquiv (PreTilt O p) p).symm^[n]) y := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply', Function.iterate_succ_apply',
+      Function.iterate_succ_apply', ih, map_mul]
+
+theorem iterate_frob_symm_one (n : ℕ) :
+    ((frobeniusEquiv (PreTilt O p) p).symm^[n]) (1 : PreTilt O p) = 1 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply', ih, map_one]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_mul (x y : PreTilt O p) (n : ℕ) : root (x * y) n = root x n * root y n := by
+  rw [root, root, root, iterate_frob_symm_mul, map_mul]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_pow' (x : PreTilt O p) (k n : ℕ) : root (x ^ k) n = root x n ^ k := by
+  induction k with
+  | zero => rw [pow_zero, pow_zero, root, iterate_frob_symm_one, map_one]
+  | succ k ih => rw [pow_succ, root_mul, ih, pow_succ]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+/-- **Uniqueness of Teichmüller representatives**: two `m`-th roots of unity of `𝓞_ℂ_p♭` (`p ∤ m`)
+with the same `♯` are equal. -/
+theorem eq_of_pow_eq_one_of_untilt (hm0 : 0 < m) (hcop : p.Coprime m) {x y : PreTilt O p}
+    (hx : x ^ m = 1) (hy : y ^ m = 1) (h : PreTilt.untilt x = PreTilt.untilt y) : x = y := by
+  set z := x * y ^ (m - 1) with hz
+  have hym : y ^ (m - 1) * y = 1 := by rw [← pow_succ, Nat.sub_add_cancel hm0, hy]
+  have hzm : z ^ m = 1 := by rw [hz, mul_pow, hx, one_mul, ← pow_mul, mul_comm, pow_mul, hy, one_pow]
+  have hzu : PreTilt.untilt z = 1 := by
+    rw [hz, map_mul, h, ← map_mul, mul_comm, hym, map_one]
+  have hz1 : z = 1 := by
+    apply Perfection.ext
+    intro n
+    change PreTilt.coeff n z = PreTilt.coeff n 1
+    rw [← mk_root, map_one]
+    have h1 : root z n ^ p ^ n = 1 := by rw [root_pow, hzu]
+    have h2 : root z n ^ m = 1 := by
+      rw [← root_pow', hzm, root, iterate_frob_symm_one, map_one]
+    have h3 : root z n ^ (Nat.gcd (p ^ n) m) = 1 := pow_gcd_eq_one.mpr ⟨h1, h2⟩
+    rw [Nat.Coprime.pow_left n hcop, pow_one] at h3
+    rw [h3, map_one]
+  calc x = z * y := by rw [hz, mul_assoc, hym, mul_one]
+    _ = y := by rw [hz1, one_mul]
+
+theorem muFlat_pow_eq_one (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    muFlat p hm0 hμ hcop ^ m = 1 := by
+  apply Perfection.ext
+  intro n
+  change PreTilt.coeff n (muFlat p hm0 hμ hcop ^ m) = PreTilt.coeff n 1
+  rw [map_pow, map_one]
+  change (Ideal.Quotient.mk _ (_ ^ _)) ^ m = 1
+  rw [← map_pow, ← pow_mul, mul_comm, pow_mul]
+  have : (⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ : O) ^ m = 1 := by
+    apply Subtype.ext
+    simp only [SubmonoidClass.coe_pow, OneMemClass.coe_one]
+    rw [PadicComplex.coe_eq, ← map_pow, hμ, map_one]
+  rw [this, one_pow, map_one]
+
+theorem isUnit_teichB (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    IsUnit (teichB p hm0 hμ hcop) := by
+  refine IsUnit.of_pow_eq_one (n := m) ?_ hm0.ne'
+  rw [teichB, ← map_pow, ← map_pow, muFlat_pow_eq_one, map_one, map_one]
+
+/-- **The quadratic character of a root of unity of order prime to `p` is semistable over `ℚ_p`**
+(crystalline), with period `[β♭]`. For `p` odd and `β` a primitive `2(p−1)`-th root of unity this is
+the unramified quadratic character (STANDARD; not needed here). -/
+theorem isSemistableOver_quadChar_teich (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m)
+    {c : ℚ_[p]} (hc : μ ^ 2 = algebraMap ℚ_[p] _ c) (h0 : μ ≠ 0) :
+    IsSemistableOver p ⊥ (quadChar p hc h0) := by
+  classical
+  refine isSemistableOver_of_period p ⊥ _ (teichB p hm0 hμ hcop) (isUnit_teichB p hm0 hμ hcop)
+    fun σ _ => ?_
+  rcases gqp_apply_sq_root hc σ with hσ | hσ
+  · have hχ : ((quadChar p hc h0 σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) = 1 := by
+      simp [quadChar, hσ]
+    rw [hχ, one_smul, teichB, stAct_embW, WittVector.map_teichmuller,
+      flatAct_muFlat p hm0 hμ hcop σ hσ]
+  · have hne : -μ ≠ μ := fun h => h0 (by
+      have : (2 : PadicAlgCl p) * μ = 0 := by linear_combination -h
+      exact (mul_eq_zero.mp this).resolve_left two_ne_zero)
+    have hχ : ((quadChar p hc h0 σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) = -1 := by
+      simp [quadChar, hσ, hne]
+    rw [hχ, neg_one_smul, teichB, stAct_embW, WittVector.map_teichmuller]
+    set x := muFlat p hm0 hμ hcop with hx
+    -- `μ²` is fixed, so `(σ♭ x)² = x²`
+    have hμ2 : (μ ^ 2) ^ m = 1 := by rw [← pow_mul, mul_comm, pow_mul, hμ, one_pow]
+    have hsq : x ^ 2 = muFlat p hm0 hμ2 hcop := by
+      apply eq_of_pow_eq_one_of_untilt p hm0 hcop
+      · rw [← pow_mul, mul_comm, pow_mul, muFlat_pow_eq_one, one_pow]
+      · exact muFlat_pow_eq_one p hm0 hμ2 hcop
+      · rw [map_pow, hx, untilt_muFlat, untilt_muFlat]
+        apply Subtype.ext
+        simp only [SubmonoidClass.coe_pow]
+        rw [PadicComplex.coe_eq, PadicComplex.coe_eq, ← map_pow]
+    have hfix2 : flatAct p σ (x ^ 2) = x ^ 2 := by
+      rw [hsq, flatAct_muFlat p hm0 hμ2 hcop σ (by rw [hc, AlgEquiv.commutes])]
+    have hW : (WittVector.teichmuller p (flatAct p σ x)) ^ 2 =
+        (WittVector.teichmuller p x) ^ 2 := by
+      rw [← map_pow, ← map_pow, ← map_pow, hfix2]
+    have hsplit : (WittVector.teichmuller p (flatAct p σ x) - WittVector.teichmuller p x) *
+        (WittVector.teichmuller p (flatAct p σ x) + WittVector.teichmuller p x) = 0 := by
+      linear_combination hW
+    rcases mul_eq_zero.mp hsplit with h1 | h1
+    · exfalso
+      have h2 : flatAct p σ x = x := by
+        have := congrArg (fun w => WittVector.coeff w 0) (sub_eq_zero.mp h1)
+        simpa [WittVector.teichmuller_coeff_zero] using this
+      have h3 := congrArg PreTilt.untilt h2
+      rw [DR.untilt_preTiltMap, hx, untilt_muFlat] at h3
+      have h4 := congrArg Subtype.val h3
+      change cpAct p σ (μ : ℂ_[p]) = (μ : ℂ_[p]) at h4
+      rw [cpAct_coe, hσ] at h4
+      exact hne ((algebraMap (PadicAlgCl p) ℂ_[p]).injective h4)
+    · rw [eq_neg_of_add_eq_zero_left h1, map_neg]
+
+end QuadPeriod
+
 /-! ### Summary -/
 
 /-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/

@@ -1351,6 +1351,315 @@ theorem natDegree_minpoly_le_finrank_bstInv (hm0 : 0 < m) (hμ : μ ^ m = 1) (hc
 end K0
 
 
+/-! ### `u = log [p♭]` is not `G_{ℚ_p}`-invariant -/
+
+section UNotInvariant
+
+theorem preTiltMap_frobeniusEquiv_symm (f : 𝓞_ℂ_[p] →+* 𝓞_ℂ_[p]) (y : PreTilt 𝓞_ℂ_[p] p) :
+    DR.preTiltMap p f ((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm y) =
+      (frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm (DR.preTiltMap p f y) := by
+  apply (frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).injective
+  rw [RingEquiv.apply_symm_apply, frobeniusEquiv_apply, frobenius_def, ← map_pow, ← frobenius_def,
+    ← frobeniusEquiv_apply, RingEquiv.apply_symm_apply]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_preTiltMap (f : 𝓞_ℂ_[p] →+* 𝓞_ℂ_[p]) (x : PreTilt 𝓞_ℂ_[p] p) (n : ℕ) :
+    root (DR.preTiltMap p f x) n = f (root x n) := by
+  rw [root, root, ← DR.untilt_preTiltMap]
+  congr 1
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih,
+      preTiltMap_frobeniusEquiv_symm]
+
+/-- A `p`-th root of `p` in `ℚ̄_p` is not in `ℚ_p`. -/
+theorem not_mem_range_of_pow_eq_p {a : PadicAlgCl p} (ha : a ^ p = (p : PadicAlgCl p)) :
+    a ∉ Set.range (algebraMap ℚ_[p] (PadicAlgCl p)) := by
+  rintro ⟨c, rfl⟩
+  have hc : c ^ p = (p : ℚ_[p]) := by
+    apply (algebraMap ℚ_[p] (PadicAlgCl p)).injective
+    rw [map_pow, ha, map_natCast]
+  have hv := congrArg Padic.valuation hc
+  rw [Padic.valuation_pow, Padic.valuation_p] at hv
+  have h2 := (Fact.out : p.Prime).two_le
+  have : (p : ℤ) * c.valuation = 1 := hv
+  have h3 : (2 : ℤ) ≤ p := by exact_mod_cast h2
+  rcases lt_trichotomy c.valuation 0 with h | h | h <;> nlinarith
+
+/-- **Some `σ ∈ G_{ℚ_p}` moves `p♭`**, i.e. `u_σ ≠ 1`. -/
+theorem exists_uSigma_ne_one : ∃ σ : GQp p, uSigma p σ ≠ 1 := by
+  set r := ZInQ.Contrib.G9.BdrKer.Cp.root (pFlat p) 1 with hr
+  have hrp : r ^ p = (p : 𝓞_ℂ_[p]) := by
+    have := ZInQ.Contrib.G9.BdrKer.Cp.root_pow (pFlat p) 1
+    rw [pow_one, pFlat_untilt] at this
+    exact this
+  -- `r` comes from `ℚ̄_p`
+  set f : Polynomial (PadicAlgCl p) := Polynomial.X ^ p - Polynomial.C (p : PadicAlgCl p) with hf
+  have hf0 : f ≠ 0 := Polynomial.X_pow_sub_C_ne_zero (Fact.out : p.Prime).pos _
+  have hroot : (f.map (algebraMap (PadicAlgCl p) ℂ_[p])).IsRoot (r : ℂ_[p]) := by
+    simp only [hf, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
+      Polynomial.IsRoot, Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X,
+      map_natCast]
+    have := congrArg (fun z : 𝓞_ℂ_[p] => (z : ℂ_[p])) hrp
+    simp only [SubmonoidClass.coe_pow] at this
+    rw [this]
+    simp
+  obtain ⟨a, ha⟩ := (IsAlgClosed.splits f).mem_range_of_isRoot hf0 hroot
+  have hap : a ^ p = (p : PadicAlgCl p) := by
+    apply (algebraMap (PadicAlgCl p) ℂ_[p]).injective
+    rw [map_pow, ha, map_natCast]
+    have := congrArg (fun z : 𝓞_ℂ_[p] => (z : ℂ_[p])) hrp
+    simpa using this
+  -- some `σ` moves `a`
+  obtain ⟨σ, hσ⟩ : ∃ σ : GQp p, σ a ≠ a := by
+    by_contra hcon
+    push Not at hcon
+    exact not_mem_range_of_pow_eq_p p hap
+      ((InfiniteGalois.mem_range_algebraMap_iff_fixed a).mpr hcon)
+  refine ⟨σ, fun h1 => hσ ?_⟩
+  have h2 : flatAct p σ (pFlat p) = pFlat p := by
+    rw [← uSigma_spec, h1, one_mul]
+  have h3 := root_preTiltMap p (oAct p σ) (pFlat p) 1
+  change ZInQ.Contrib.G9.BdrKer.Cp.root (flatAct p σ (pFlat p)) 1 = _ at h3
+  rw [h2, ← hr] at h3
+  have h4 := congrArg (fun z : 𝓞_ℂ_[p] => (z : ℂ_[p])) h3
+  change (r : ℂ_[p]) = cpAct p σ (r : ℂ_[p]) at h4
+  rw [← ha] at h4
+  have h5 : ((σ a : PadicAlgCl p) : ℂ_[p]) = (a : ℂ_[p]) :=
+    (cpAct_coe p σ a).symm.trans h4.symm
+  exact (algebraMap (PadicAlgCl p) ℂ_[p]).injective h5
+
+/-- **`u` is not `G_{ℚ_p}`-invariant**: some `σ` has `σ(u) = u + c(σ)t` with `c(σ)t ≠ 0`. So the
+monodromy part of `B_st` is genuine (with a trivial action on `u`, `B_st^{G_K}` would contain
+`B_cris^{G_K}[u]` and be infinite-dimensional, which would make `IsSemistableOver` degenerate). -/
+theorem exists_stAct_X_ne : ∃ σ : GQp p, stAct p σ Polynomial.X ≠ Polynomial.X := by
+  obtain ⟨σ, hσ⟩ := exists_uSigma_ne_one p
+  refine ⟨σ, fun h => ?_⟩
+  rw [stAct_X, add_eq_left, Polynomial.C_eq_zero, logU_eq] at h
+  exact logOf_bcris_ne_zero p ⟨uSigma p σ, untilt_uSigma p σ, hσ⟩ h
+
+theorem X_not_mem_bstInv_bot : (Polynomial.X : Bst p) ∉ bstInv p ⊥ := by
+  intro h
+  obtain ⟨σ, hσ⟩ := exists_stAct_X_ne p
+  exact hσ (h σ (fun x => by
+    obtain ⟨c, hc⟩ := IntermediateField.mem_bot.mp x.2
+    change σ x.1 = x.1
+    rw [← hc, AlgEquiv.commutes]))
+
+end UNotInvariant
+
+/-! ### A character with a unit period is semistable; the unramified quadratic character -/
+
+section Period
+
+/-- **A one-dimensional representation with a unit period is semistable over `K`**: if `b ∈ B_st` is
+a unit with `σ(b) = χ(σ) b` for `σ ∈ G_K`, then `D_st,K(χ) ≅ B_st^{G_K}` (`φ ↦ φ(1) b⁻¹`). -/
+theorem isSemistableOver_of_period (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    (χ : GQp p →* GL (Fin 1) ℚ_[p]) (b : Bst p) (hbu : IsUnit b)
+    (hb : ∀ σ ∈ K.fixingSubgroup,
+      stAct p σ b = ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) • b) :
+    IsSemistableOver p K χ := by
+  obtain ⟨u, rfl⟩ := hbu
+  let e : Fin 1 → ℚ_[p] := fun _ => 1
+  have hv : ∀ v : Fin 1 → ℚ_[p], v = v 0 • e := fun v => by ext k; fin_cases k; simp [e]
+  have hmv : ∀ (σ : GQp p) (v : Fin 1 → ℚ_[p]),
+      Matrix.mulVec (χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) v =
+        ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) • v := fun σ v => by
+    ext k; fin_cases k; simp [Matrix.mulVec, dotProduct]
+  have hinvu : ∀ σ ∈ K.fixingSubgroup, stAct p σ (u⁻¹ : (Bst p)ˣ) =
+      ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0)⁻¹ • ((u⁻¹ : (Bst p)ˣ) : Bst p) := by
+    intro σ hσ
+    have hc0 : ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) ≠ 0 := by
+      intro h0
+      have := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℚ_[p] => M 0 0) (χ σ).mul_inv
+      simp only [Matrix.mul_apply, Fin.sum_univ_one, h0, zero_mul, Matrix.one_apply_eq] at this
+      exact zero_ne_one this
+    have h1 : stAct p σ (u : Bst p) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p) = 1 := by
+      rw [← map_mul, Units.mul_inv, map_one]
+    rw [hb σ hσ, smul_mul_assoc] at h1
+    set c := ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0)
+    have h2 : (u : Bst p) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p) = c⁻¹ • (1 : Bst p) := by
+      have := congrArg (c⁻¹ • ·) h1
+      simp only [smul_smul, inv_mul_cancel₀ hc0, one_smul] at this
+      exact this
+    calc stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p)
+        = (((u⁻¹ : (Bst p)ˣ) : Bst p) * u) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p) := by
+          rw [Units.inv_mul, one_mul]
+      _ = ((u⁻¹ : (Bst p)ˣ) : Bst p) * ((u : Bst p) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p)) :=
+          mul_assoc _ _ _
+      _ = c⁻¹ • ((u⁻¹ : (Bst p)ˣ) : Bst p) := by rw [h2, mul_smul_comm, mul_one]
+  let F : dstSpace p K χ →ₗ[ℚ_[p]] bstInv p K :=
+    { toFun := fun φ => ⟨(φ : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * ((u⁻¹ : (Bst p)ˣ) : Bst p),
+        fun σ hσ => by
+          have h := φ.2 σ hσ e
+          rw [hmv, map_smul] at h
+          rw [map_mul, ← h, hinvu σ hσ, smul_mul_smul_comm]
+          have hc0 : ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) ≠ 0 := by
+            intro h0
+            have := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℚ_[p] => M 0 0) (χ σ).mul_inv
+            simp only [Matrix.mul_apply, Fin.sum_univ_one, h0, zero_mul,
+              Matrix.one_apply_eq] at this
+            exact zero_ne_one this
+          rw [mul_inv_cancel₀ hc0, one_smul]⟩
+      map_add' := fun φ ψ => Subtype.ext (by
+        change ((φ + ψ : dstSpace p K χ) : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * _ = _ * _ + _ * _
+        rw [Submodule.coe_add, LinearMap.add_apply, add_mul])
+      map_smul' := fun c φ => Subtype.ext (by
+        change ((c • φ : dstSpace p K χ) : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * _ = c • (_ * _)
+        rw [Submodule.coe_smul, LinearMap.smul_apply, smul_mul_assoc]) }
+  let G : bstInv p K →ₗ[ℚ_[p]] dstSpace p K χ :=
+    { toFun := fun c => ⟨(LinearMap.proj (R := ℚ_[p]) (φ := fun _ : Fin 1 => ℚ_[p]) 0).smulRight
+          ((c : Bst p) * (u : Bst p)), fun σ hσ v => by
+        simp only [LinearMap.smulRight_apply, LinearMap.proj_apply, hmv, Pi.smul_apply,
+          smul_eq_mul, stAct_smul, map_mul, c.2 σ hσ, hb σ hσ, mul_smul_comm, smul_smul,
+          mul_comm (v 0)]⟩
+      map_add' := fun a b => Subtype.ext (LinearMap.ext fun v => by
+        change v 0 • (((a + b : bstInv p K) : Bst p) * (u : Bst p)) =
+          v 0 • ((a : Bst p) * u) + v 0 • ((b : Bst p) * u)
+        rw [Submodule.coe_add, add_mul, smul_add])
+      map_smul' := fun c a => Subtype.ext (LinearMap.ext fun v => by
+        change v 0 • (((c • a : bstInv p K) : Bst p) * (u : Bst p)) = c • (v 0 • ((a : Bst p) * u))
+        rw [Submodule.coe_smul, smul_mul_assoc, smul_comm]) }
+  let L : dstSpace p K χ ≃ₗ[ℚ_[p]] bstInv p K :=
+    LinearEquiv.ofLinearMap F G
+      (LinearMap.ext fun c => Subtype.ext (by
+        change ((1 : ℚ_[p]) • ((c : Bst p) * u)) * ((u⁻¹ : (Bst p)ˣ) : Bst p) = c
+        rw [one_smul, mul_assoc, Units.mul_inv, mul_one]))
+      (LinearMap.ext fun φ => Subtype.ext (LinearMap.ext fun v => by
+        change v 0 • ((φ : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * ((u⁻¹ : (Bst p)ˣ) : Bst p) *
+          (u : Bst p)) = (φ : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) v
+        rw [mul_assoc, Units.inv_mul, mul_one, ← map_smul, ← hv v]))
+  rw [IsSemistableOver, L.finrank_eq, Module.finrank_self, mul_one, mul_one]
+
+end Period
+
+section QuadPeriod
+
+variable {μ : PadicAlgCl p} {m : ℕ}
+
+theorem iterate_frob_symm_mul (n : ℕ) (x y : PreTilt 𝓞_ℂ_[p] p) :
+    ((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm^[n]) (x * y) =
+      ((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm^[n]) x *
+        ((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm^[n]) y := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply', Function.iterate_succ_apply',
+      Function.iterate_succ_apply', ih, map_mul]
+
+theorem iterate_frob_symm_one (n : ℕ) :
+    ((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm^[n]) (1 : PreTilt 𝓞_ℂ_[p] p) = 1 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => rw [Function.iterate_succ_apply', ih, map_one]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_mul (x y : PreTilt 𝓞_ℂ_[p] p) (n : ℕ) : root (x * y) n = root x n * root y n := by
+  rw [root, root, root, iterate_frob_symm_mul, map_mul]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_pow' (x : PreTilt 𝓞_ℂ_[p] p) (k n : ℕ) : root (x ^ k) n = root x n ^ k := by
+  induction k with
+  | zero => rw [pow_zero, pow_zero, root, iterate_frob_symm_one, map_one]
+  | succ k ih => rw [pow_succ, root_mul, ih, pow_succ]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+/-- **Uniqueness of Teichmüller representatives**: two `m`-th roots of unity of `𝓞_ℂ_p♭` (`p ∤ m`)
+with the same `♯` are equal. -/
+theorem eq_of_pow_eq_one_of_untilt (hm0 : 0 < m) (hcop : p.Coprime m) {x y : PreTilt 𝓞_ℂ_[p] p}
+    (hx : x ^ m = 1) (hy : y ^ m = 1) (h : PreTilt.untilt x = PreTilt.untilt y) : x = y := by
+  set z := x * y ^ (m - 1) with hz
+  have hym : y ^ (m - 1) * y = 1 := by rw [← pow_succ, Nat.sub_add_cancel hm0, hy]
+  have hzm : z ^ m = 1 := by rw [hz, mul_pow, hx, one_mul, ← pow_mul, mul_comm, pow_mul, hy, one_pow]
+  have hzu : PreTilt.untilt z = 1 := by
+    rw [hz, map_mul, h, ← map_mul, mul_comm, hym, map_one]
+  have hz1 : z = 1 := by
+    apply Perfection.ext
+    intro n
+    change PreTilt.coeff n z = PreTilt.coeff n 1
+    rw [← mk_root, map_one]
+    have h1 : root z n ^ p ^ n = 1 := by rw [root_pow, hzu]
+    have h2 : root z n ^ m = 1 := by
+      rw [← root_pow', hzm, root, iterate_frob_symm_one, map_one]
+    have h3 : root z n ^ (Nat.gcd (p ^ n) m) = 1 := pow_gcd_eq_one.mpr ⟨h1, h2⟩
+    rw [Nat.Coprime.pow_left n hcop, pow_one] at h3
+    rw [h3, map_one]
+  calc x = z * y := by rw [hz, mul_assoc, hym, mul_one]
+    _ = y := by rw [hz1, one_mul]
+
+theorem muFlat_pow_eq_one (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    muFlat p hm0 hμ hcop ^ m = 1 := by
+  apply Perfection.ext
+  intro n
+  change PreTilt.coeff n (muFlat p hm0 hμ hcop ^ m) = PreTilt.coeff n 1
+  rw [map_pow, map_one]
+  change (Ideal.Quotient.mk _ (_ ^ _)) ^ m = 1
+  rw [← map_pow, ← pow_mul, mul_comm, pow_mul]
+  have : (⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ : 𝓞_ℂ_[p]) ^ m = 1 := by
+    apply Subtype.ext
+    simp only [SubmonoidClass.coe_pow, OneMemClass.coe_one]
+    rw [PadicComplex.coe_eq, ← map_pow, hμ, map_one]
+  rw [this, one_pow, map_one]
+
+theorem isUnit_teichB (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    IsUnit (teichB p hm0 hμ hcop) := by
+  refine IsUnit.of_pow_eq_one (n := m) ?_ hm0.ne'
+  rw [teichB, ← map_pow, ← map_pow, muFlat_pow_eq_one, map_one, map_one]
+
+/-- **The quadratic character of a root of unity of order prime to `p` is semistable over `ℚ_p`**
+(crystalline), with period `[β♭]`. For `p` odd and `β` a primitive `2(p−1)`-th root of unity this is
+the unramified quadratic character (STANDARD; not needed here). -/
+theorem isSemistableOver_quadChar_teich (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m)
+    {c : ℚ_[p]} (hc : μ ^ 2 = algebraMap ℚ_[p] _ c) (h0 : μ ≠ 0) :
+    IsSemistableOver p ⊥ (quadChar p hc h0) := by
+  classical
+  refine isSemistableOver_of_period p ⊥ _ (teichB p hm0 hμ hcop) (isUnit_teichB p hm0 hμ hcop)
+    fun σ _ => ?_
+  rcases gqp_apply_sq_root hc σ with hσ | hσ
+  · have hχ : ((quadChar p hc h0 σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) = 1 := by
+      simp [quadChar, hσ]
+    rw [hχ, one_smul, teichB, stAct_embW, WittVector.map_teichmuller,
+      flatAct_muFlat p hm0 hμ hcop σ hσ]
+  · have hne : -μ ≠ μ := fun h => h0 (by
+      have : (2 : PadicAlgCl p) * μ = 0 := by linear_combination -h
+      exact (mul_eq_zero.mp this).resolve_left two_ne_zero)
+    have hχ : ((quadChar p hc h0 σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) = -1 := by
+      simp [quadChar, hσ, hne]
+    rw [hχ, neg_one_smul, teichB, stAct_embW, WittVector.map_teichmuller]
+    set x := muFlat p hm0 hμ hcop with hx
+    -- `μ²` is fixed, so `(σ♭ x)² = x²`
+    have hμ2 : (μ ^ 2) ^ m = 1 := by rw [← pow_mul, mul_comm, pow_mul, hμ, one_pow]
+    have hsq : x ^ 2 = muFlat p hm0 hμ2 hcop := by
+      apply eq_of_pow_eq_one_of_untilt p hm0 hcop
+      · rw [← pow_mul, mul_comm, pow_mul, muFlat_pow_eq_one, one_pow]
+      · exact muFlat_pow_eq_one p hm0 hμ2 hcop
+      · rw [map_pow, hx, untilt_muFlat, untilt_muFlat]
+        apply Subtype.ext
+        simp only [SubmonoidClass.coe_pow]
+        rw [PadicComplex.coe_eq, PadicComplex.coe_eq, ← map_pow]
+    have hfix2 : flatAct p σ (x ^ 2) = x ^ 2 := by
+      rw [hsq, flatAct_muFlat p hm0 hμ2 hcop σ (by rw [hc, AlgEquiv.commutes])]
+    have hW : (WittVector.teichmuller p (flatAct p σ x)) ^ 2 =
+        (WittVector.teichmuller p x) ^ 2 := by
+      rw [← map_pow, ← map_pow, ← map_pow, hfix2]
+    have hsplit : (WittVector.teichmuller p (flatAct p σ x) - WittVector.teichmuller p x) *
+        (WittVector.teichmuller p (flatAct p σ x) + WittVector.teichmuller p x) = 0 := by
+      linear_combination hW
+    rcases mul_eq_zero.mp hsplit with h1 | h1
+    · exfalso
+      have h2 : flatAct p σ x = x := by
+        have := congrArg (fun w => WittVector.coeff w 0) (sub_eq_zero.mp h1)
+        simpa [WittVector.teichmuller_coeff_zero] using this
+      have h3 := congrArg PreTilt.untilt h2
+      rw [DR.untilt_preTiltMap, hx, untilt_muFlat] at h3
+      have h4 := congrArg Subtype.val h3
+      change cpAct p σ (μ : ℂ_[p]) = (μ : ℂ_[p]) at h4
+      rw [cpAct_coe, hσ] at h4
+      exact hne ((algebraMap (PadicAlgCl p) ℂ_[p]).injective h4)
+    · rw [eq_neg_of_add_eq_zero_left h1, map_neg]
+
+end QuadPeriod
+
 /-! ### Summary -/
 
 /-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/

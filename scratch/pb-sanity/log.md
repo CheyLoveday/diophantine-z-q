@@ -72,3 +72,12 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
   `exists_uSigma_ne_one` (some σ moves p♭: the p-th root of p is in ℚ̄_p (Splits.mem_range_of_isRoot) and
   is moved by some σ (InfiniteGalois.mem_range_algebraMap_iff_fixed)),
   `exists_stAct_X_ne` (σ(u) ≠ u: log[u_σ] is a unit ≠ 0 of B_cris), `X_not_mem_bstInv_bot`.
+
+## Step 7: semistable over ℚ_p (Sanity1.lean, sections Period, QuadPeriod) — COMPILES (VERIFIED)
+- `isSemistableOver_of_period`: a 1-dim ℚ_p-rep χ with a unit b ∈ B_st, σ(b) = χ(σ) b on G_K, is
+  semistable over K (D_st,K ≅ B_st^{G_K}).
+- `eq_of_pow_eq_one_of_untilt` (Teichmüller uniqueness for prime-to-p roots of unity in O♭),
+  `muFlat_pow_eq_one`, `isUnit_teichB`.
+- `isSemistableOver_quadChar_teich`: for β a root of unity of order prime to p with β² ∈ ℚ_p, the
+  quadratic character σ ↦ σ(β)/β is semistable over ℚ_p (period [β♭]); for p odd and β a primitive
+  2(p−1)-th root of unity this is the unramified quadratic character (STANDARD, not proved here).
