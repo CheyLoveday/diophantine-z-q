@@ -340,4 +340,46 @@ theorem jacobiChar_isPrimitive {d : ℕ} [NeZero d] (hodd : Odd d) (hsq : Square
   rw [ZMod.coe_unitOfCoprime, jacobiChar_natCast, hneg] at h2
   norm_num at h2
 
+theorem jacobiChar_inv_apply (d : ℕ) [NeZero d] (x : ZMod d) :
+    (jacobiChar d)⁻¹ x = jacobiChar d x := by
+  rw [MulChar.inv_apply_eq_inv', ZInQ.GZTheta.jacobiChar_apply]
+  rcases jacobiSym.trichotomy ((x.val : ℕ) : ℤ) d with h | h | h <;> rw [h] <;> norm_num
+
+theorem jacobiChar_neg_one {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) : jacobiChar d (-1) = 1 := by
+  have hodd : Odd d := Nat.odd_iff.mpr (by omega)
+  have h : (-1 : ZMod d) = (((d - 1 : ℕ) : ℤ) : ZMod d) := by
+    have h1 : 1 ≤ d := Nat.one_le_iff_ne_zero.mpr (NeZero.ne d)
+    push_cast [Nat.cast_sub h1, ZMod.natCast_self]
+    ring
+  rw [h, Int.cast_natCast, jacobiChar_natCast]
+  have : jacobiSym ((d - 1 : ℕ) : ℤ) d = jacobiSym (-1) d := by
+    apply jacobiSym.mod_left'
+    have h1 : 1 ≤ d := Nat.one_le_iff_ne_zero.mpr (NeZero.ne d)
+    push_cast [Nat.cast_sub h1]
+    rw [show (d : ℤ) - 1 = -1 + d * 1 by ring, Int.add_mul_emod_self_left]
+  rw [this, jacobiSym.at_neg_one hodd, ZMod.χ₄_nat_one_mod_four hd4]
+  simp
+
+/-- The Gauss sum `g = Σ_a (a/d) e(a/d)` of `χ_d`. -/
+def gaussD (d : ℕ) [NeZero d] : ℂ := gaussSum (jacobiChar d) ZMod.stdAddChar
+
+/-- `𝓕χ_d = g · χ_d` (`χ_d` primitive, real and even). -/
+theorem dft_jacobiChar {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squarefree d) (a : ZMod d) :
+    𝓕 (jacobiChar d) a = jacobiChar d a * gaussD d := by
+  have hodd : Odd d := Nat.odd_iff.mpr (by omega)
+  rw [(jacobiChar_isPrimitive hodd hsq).fourierTransform_eq_inv_mul_gaussSum, jacobiChar_inv_apply,
+    neg_eq_neg_one_mul, map_mul, jacobiChar_neg_one hd4, one_mul, gaussD]
+
+/-- **`g² = d`** for squarefree `d ≡ 1 (mod 4)`. -/
+theorem gaussD_sq {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squarefree d) :
+    gaussD d ^ 2 = d := by
+  have h := congrFun (ZMod.dft_dft (⇑(jacobiChar d))) 1
+  have hf : 𝓕 (⇑(jacobiChar d)) = fun a => jacobiChar d a * gaussD d :=
+    funext (dft_jacobiChar hd4 hsq)
+  rw [hf, ZMod.dft_mul_const] at h
+  dsimp only at h
+  rw [dft_jacobiChar hd4 hsq, smul_eq_mul,
+    neg_eq_neg_one_mul, map_mul, jacobiChar_neg_one hd4, one_mul, map_one] at h
+  linear_combination h
+
 end ZInQ.GZWeil
