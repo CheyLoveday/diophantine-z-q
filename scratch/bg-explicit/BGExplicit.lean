@@ -10,8 +10,8 @@ namespace BGExplicit
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM LeafQM.AV
 
-local notation "rep" => HDec.LeafQM.AV.Pin.Exact.rep
-local notation "xr" => HDec.HeckeRest.xr
+open HDec.LeafQM.AV.Pin.Exact (rep)
+open HDec.HeckeRest (xr)
 
 /-- Two equal Atkin–Lehner twists give a fixed point of a nontrivial one. -/
 theorem fixed_of_twist_iso (P : QMPair Qbar) (a b : Fin 4)
@@ -99,6 +99,7 @@ theorem fibre_zero (x : fieldPt Qbar ⟶ X) (hx : t.val (K := Qbar) x.left = One
     rw [hx] at this
     exact absurd this (OnePoint.coe_ne_infty _)
 
+omit hi in
 theorem fibre_infty (x : fieldPt Qbar ⟶ X) (hx : t.val (K := Qbar) x.left = OnePoint.infty) :
     ∃ b, e x = Sum.inr b := by
   rcases h : e x with p | b
@@ -188,10 +189,10 @@ theorem babaGranathRationalAb_of_AL (h : HDec.QMSplit.Moduli.ElkiesX6Star.Elkies
     rw [t₂]
     refine sep_of_sq (fun y => t.val (K := Qbar) y.left = OnePoint.infty) (fun y => cB (e y)) R
       (fun y hy => ?_) (fun y z hy hz hyz => ?_)
-    · obtain ⟨b, hbe⟩ := fibre_infty e hp hi y hy
+    · obtain ⟨b, hbe⟩ := fibre_infty e hp y hy
       simp only [hbe, cB, Sum.elim_inr]; rw [b.2, hR2]
-    · obtain ⟨b, hbe⟩ := fibre_infty e hp hi y hy
-      obtain ⟨b', hbe'⟩ := fibre_infty e hp hi z hz
+    · obtain ⟨b, hbe⟩ := fibre_infty e hp y hy
+      obtain ⟨b', hbe'⟩ := fibre_infty e hp z hz
       simp only [hbe, hbe', cB, Sum.elim_inr] at hyz
       apply e.injective
       rw [hbe, hbe']
