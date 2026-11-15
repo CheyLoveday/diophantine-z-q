@@ -18,6 +18,17 @@ with the Mathlib library.
   source and who is working on it
 - Blueprint, with every statement, its dependencies and its Lean declaration: https://deicyde.github.io/diophantine-z-q/
 
+The open statements of the current proof (generated from docs/one-proof/OPEN.md; counts elsewhere in this file
+describe the fork main they name):
+
+<!-- open-count:begin -->
+**58 hypotheses of the H part** (in the bundles `OpenAddedLeaves16`, `OpenGlue7`, `OpenResearchLeaves19`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
+
+* **Strict count: 44 published / 14 glue** (the strictest flagged reading; 45/13 without the one strictest-reading flag).
+* By kind: composite 4, consequence 7, project glue 1, published 46.
+* Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
+<!-- open-count:end -->
+
 ## Status in three lines
 
 - **Proved in Lean, with no gaps:** the manuscript's Theorem 1.1, in exactly the form frozen upstream, follows
@@ -412,15 +423,17 @@ statements, some textbook theorems are proved, and the project's reductions add 
 
 ## How to help
 
-Start at https://github.com/Deicyde/diophantine-z-q/issues/14, which a coding agent can follow as written: pick an
-open statement nobody has claimed, claim it, prove exactly that Lean statement and open a pull request against the
-fork's main, where the proof is folded into `ZInQ.OneProof.frozenTarget`. docs/one-proof/OPEN.md lists every open
+Start at https://github.com/Deicyde/diophantine-z-q/issues/14, which a coding agent can follow as written to prove
+exactly the Lean statement of an open hypothesis and open a pull request against the fork's main, where the proof
+is folded into `ZInQ.OneProof.frozenTarget`. docs/one-proof/OPEN.md lists every open
 hypothesis of that theorem with its exact Lean statement, its kind, its source and who is working on it;
 CONTRIBUTING.md is the guide for contributors, and docs/one-proof/CONTRIBUTING.md the short contract for a proof,
 which `#discharges` checks.
-Claim a subgoal before starting: the tracking issue https://github.com/elliotglazer/diophantine-z-q/issues/37
-lists the open-target issues (one per topic), the definitions to build, the leaves, the open glue, and the pull
-requests that already prove some of the targets.
+Claim a statement before starting, in one place: comment `Claiming <field> at <commit>` on
+https://github.com/Deicyde/diophantine-z-q/issues/14 (older claims on the upstream topic issues stay valid). To check a
+statement against its printed source without Lean, see docs/one-proof/STATEMENT-CHECKS.md. The tracking issue
+https://github.com/elliotglazer/diophantine-z-q/issues/37 lists the open-target issues (one per topic), the
+definitions to build, the leaves, the open glue, and the pull requests that already prove some of the targets.
 Of upstream's five registered targets, two have proofs on the fork (`ZInQ.Contrib.heckeContinuation`,
 `ZInQ.Contrib.functionalEquation5`), proposed upstream in pull request #64, and three are open:
 `ZInQ.Contrib.sixContactMin` (H), `ZInQ.Contrib.tyzThm35ReadingA` and `ZInQ.Contrib.grossZagier`.
@@ -435,8 +448,8 @@ tracking issue; they follow the rows of revision r5 of docs/research/frontier.md
 have stood at fork main 28b41fb3 if every reduction then compiled on the fork were folded in; several of those
 reductions are now folded in, and https://github.com/Deicyde/diophantine-z-q/issues/14 has the current list.
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) takes exactly the open
-statements as hypotheses: a proof of one is folded in by replacing that hypothesis with the proof. The project's own agents record who is working on what in
-https://github.com/Deicyde/diophantine-z-q/issues/3. To build and check: `lake exe cache get`, then
+statements as hypotheses: a proof of one is folded in by replacing that hypothesis with the proof. The status column of docs/one-proof/OPEN.md shows who
+holds each statement. To build and check: `lake exe cache get`, then
 `lake build ZInQKernel`; then `lake env lean scripts/print_axioms.lean` (every declaration listed must depend only on
 the three standard axioms) and `python3 scripts/check_target.py`.
 

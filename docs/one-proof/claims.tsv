@@ -1,31 +1,27 @@
-field	task	status	since	issue
-rayClassCMAb	rayclass-cft	in progress: RayClassCM from Shimura Main Thm I (Deligne adelic form)	2026-11-14	
-shimuraFamilyAb	shimura-cft	proved from Shimura Main Thm I in Deligne adelic form; awaiting a rating, then a fold	2026-11-14	
-semistableUnipotent	unipotent-b	in progress: printed strictly henselian form of SGA 7 IX 3.5	2026-11-14	
-semistableReductionDVR	reduct-b	in progress	2026-11-14	
-raynaudSemistable	reduct-b	in progress	2026-11-14	
-semistablePersistsDVR	reduct-b	in progress	2026-11-14	
-t09SymmIsogenyExists	t09-pic	in progress: Pic0, phi_L, ample bundles, e_n	2026-11-14	
-thetaRatiosAlgebraic	igusa-alg	in progress: theta-glue reduced it to one leaf and five polynomial identities	2026-11-14	
-quotientP1Coordinate	fleet	in progress	2026-11-14	
-mumfordTorsionAlgClosed	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
-mulEtaleAbelianScheme	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
-cartierSmooth	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
-geomConnOfRationalPoint	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
-groupSchemeEquidim	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
-tateTwistInvariants	cloud W11	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#84
-axSenTate	cloud W11	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#84
-igusaGL2	cloud W14	briefed (via X0Transitive), not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#83
-regularSmoothPerfect	cloud W15	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#83
-shimuraGoodReductionNoGuard	cloud W13	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#79
-uniformizationLeafAll	cloud W17	briefed behind a feasibility check	2026-11-14	elliotglazer/diophantine-z-q#82
-gagaMorphism	cloud W17	briefed behind a feasibility check	2026-11-14	elliotglazer/diophantine-z-q#82
-milneIsogenyQuasiInverse	cloud W17	briefed (CharZero form), after the two above	2026-11-14	elliotglazer/diophantine-z-q#81
-egaIV_8_10_5_xii	cloud round 2	in progress: repairing round 1's vendored port (H-65)	2026-11-14	elliotglazer/diophantine-z-q#80
-homFreeFiniteAlgClosed	cloud round 2	in progress (H-70)	2026-11-14	elliotglazer/diophantine-z-q#81
-charPolyIndepOfEllAlgClosed	cloud round 2	in progress (H-71); supplier PR Deicyde/diophantine-z-q#13 held until it lands	2026-11-14	elliotglazer/diophantine-z-q#81
-poincareComplement	cloud round 2	in progress (H-72)	2026-11-14	elliotglazer/diophantine-z-q#81
-neronSchemeExtensionExists	cloud round 2	in progress (H-77)	2026-11-14	elliotglazer/diophantine-z-q#85
-r7a	cloud round 2	in progress (H-5, Néron–Ogg–Shafarevich)	2026-11-14	elliotglazer/diophantine-z-q#37
-h11	cloud round 2	in progress (T-1); new base case TYZLcalOne proved	2026-11-14	elliotglazer/diophantine-z-q#74
-h29	cloud round 2	in progress (T-3)	2026-11-14	elliotglazer/diophantine-z-q#74
+field	task	status	since	issue	holder_kind	public_holder	claim_url	hold
+rayClassCMAb	rayclass-cft	in progress: RayClassCM from Shimura Main Thm I (Deligne adelic form)	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft	held
+shimuraFamilyAb	shimura-cft	proved from Shimura Main Thm I in Deligne adelic form; awaiting a rating, then a fold	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/shimura-cft	held
+semistableUnipotent	unipotent-b	in progress: printed strictly henselian form of SGA 7 IX 3.5	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/unipotent-b	held
+thetaRatiosAlgebraic	igusa-alg	in progress: theta-glue reduced it to one leaf and five polynomial identities	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg	held
+quotientP1Coordinate	mcr-quot	in progress	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot	held
+mumfordTorsionAlgClosed	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
+cartierSmooth	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
+geomConnOfRationalPoint	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
+groupSchemeEquidim	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
+tateTwistInvariants	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#84	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335	held
+axSenTate	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#84	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335	held
+igusaGL2	flt-cqj	in progress on a project host: finishing the port of FLT bijOn_cyclicQuotientJ from fork branch work/cloud-b2-w14 (cdd05f1c, which reduces X0Transitive to CyclicQuotientJBijOn); delivers cyclicQuotientJBijOn_proof	2026-11-15	elliotglazer/diophantine-z-q#83	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638	held
+regularSmoothPerfect	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#83	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638	held
+shimuraGoodReductionNoGuard	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#79	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/79#issuecomment-6887798479	held
+uniformizationLeafAll	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#82	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149	held
+gagaMorphism	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#82	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149	held
+milneIsogenyQuasiInverse	cloud batch 2	briefed (characteristic-zero form); the batch-2 comment of 2026-11-15 02:14Z mentions it only as a possible follow-on	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
+egaIV_8_10_5_xii	cloud round 2	in progress: repairing round 1's vendored port (H-65)	2026-11-14	elliotglazer/diophantine-z-q#80	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942	held
+homFreeFiniteAlgClosed	cloud round 2	in progress (H-70)	2026-11-14	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564	held
+charPolyIndepOfEllAlgClosed	cloud round 2	in progress (H-71); supplier PR Deicyde/diophantine-z-q#13 held until it lands	2026-11-14	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564	held
+poincareComplement	cloud round 2	in progress (H-72)	2026-11-14	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564	held
+neronSchemeExtensionExists	cloud round 2	in progress (H-77)	2026-11-14	elliotglazer/diophantine-z-q#85	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289	held
+r7a	cloud round 2	in progress (H-5, Néron–Ogg–Shafarevich)	2026-11-14	elliotglazer/diophantine-z-q#37	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130	held
+h11	cloud round 2	in progress (T-1); new base case TYZLcalOne proved	2026-11-14	elliotglazer/diophantine-z-q#74	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859	held
+h29	cloud round 2	in progress (T-3)	2026-11-14	elliotglazer/diophantine-z-q#74	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859	held
+geomConnOfAlgClosure	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#86	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957	held

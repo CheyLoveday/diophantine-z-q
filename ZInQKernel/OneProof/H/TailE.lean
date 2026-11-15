@@ -6389,6 +6389,11 @@ theorem g9Glue_of_deRhamComparisonHT (h : PkgI4.DeRhamComparisonHT) : G0Galois.G
   ZInQ.Contrib.G9.g9Glue_of_abVarBaseChange g9AbVarBaseChange_proved
     (PkgI4.deRhamComparisonHT_iff.mp h).2
 
+/-- **`G9GlueNoT23` from the amended R10** (sem-prune; the proof of `g9Glue_of_deRhamComparisonHT`). -/
+theorem g9GlueNoT23_of_deRhamComparisonHT (h : PkgI4.DeRhamComparisonHT) : G0Galois.G9GlueNoT23 :=
+  ZInQ.Contrib.G9.g9GlueNoT23_of_abVarBaseChange g9AbVarBaseChange_proved
+    (PkgI4.deRhamComparisonHT_iff.mp h).2
+
 /-! ### Kernel-field and conj-twist glue closed (their later commits; parts a75, b05) -/
 
 /-- **`OMaximal` proved** (kernel-field, `G0ModField.KernelField.oMaximal`, pure algebra). -/
@@ -6479,7 +6484,6 @@ structure OpenResearchLeaves2 : Prop where
   r17 : LadicCond.CarayolR17'
   r18 : ZInQ.LeafPush2.R18_Javanpeykar
   r19 : ZInQ.DefFaltings.R19_GaudronRemond
-  r20 : ZInQ.DefFaltings.R20_FaltingsLemma5
   r21 : ZInQ.DefFaltings.R21_Bost
   r22 : ZInQ.LeafPush2.R22_Pazuki
   /-- H5's finiteness half (its `NeronModelMinimal` half is proved, h5-glue). -/
@@ -6497,7 +6501,6 @@ structure OpenTextbookLeaves2 : Prop where
   t9 : LeafPush.T09_WeilPairing.{0}
   t11a : ZInQ.LeafPush2.T11a_RiemannEnd
   t11b : ZInQ.LeafPush2.T11b_Rigidity
-  t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
   t24 : EigenformTwist
   t26 : PkgI3.TateModuleFree
   t27 : PkgI3.QMDichotomyYu
@@ -6583,7 +6586,6 @@ theorem researchLeaves3_of_open2 (r : OpenResearchLeaves2) : ResearchLeaves3 whe
   r16 := r.r16
   r18 := r.r18
   r19 := r.r19
-  r20 := r.r20
   r21 := r.r21
   r22 := r.r22
   h5fin := r.h5fin
@@ -6609,7 +6611,6 @@ theorem textbookLeaves_of_open2 (t : OpenTextbookLeaves2) : TextbookLeaves where
   t16a := t16a_proved
   t17 := t17_proved
   t18 := t18_proved
-  t23 := t.t23
   t24 := t.t24
   t25 := t25_proved
   t26 := t.t26
@@ -6667,6 +6668,7 @@ theorem gluePieces_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
           G0Galois.detTate_of_leaves l.t09SymmIsogenyExists l.isogenyQuasiInverse
             l.divisiblePoints t.t26,
           G0AssembleMod.resQFiniteIndex⟩
+        (g9GlueNoT23_of_deRhamComparisonHT r.r10)
         (G0ModNewform.dirichletOfFinite_of_t17 t17_proved) r.r17
         Swan.swanIndependent_proved Swan.swanIntegral_proved
         Swan.adaptedExists_proved
@@ -6674,19 +6676,6 @@ theorem gluePieces_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
           (G0AssembleMod.modelNoncomm_of_mulIsogeny mulIsogeny_proved) g.modelG3)
         (G0AssembleMod.linkedTateData_of_local t.t7 g.linkedTateLocal))
     heightCopies := G0HeightCopies.heightCopiesAgree }
-
-/-- **G0 with only the open leaves and the open glue** (leaf-fold2; no `sorry`, standard axioms).
-`ZInQ.SixContactMin` follows from
-* `OpenResearchLeaves2`: 26 research-level fields (R1(b), R10, R14, R17 in concrete or corrected
-  form; no `opaque` placeholder);
-* `OpenTextbookLeaves2`: 18 textbook fields;
-* `OpenAddedLeaves2`: 13 leaves (9 LEAF, 4 LEAF?) introduced by the wave 26-27 reductions and x6-kummer;
-* `OpenGlue2`: 9 glue Props.
-The table of every field, its kind and source is `docs/research/leaf-fold2.md`. -/
-theorem sixContactMin_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
-    (l : OpenAddedLeaves2) (g : OpenGlue2) : ZInQ.SixContactMin :=
-  sixContactMin_of_leavesR3 (researchLeaves3_of_open2 r) (textbookLeaves_of_open2 t)
-    (gluePieces_of_open2 r t l g)
 
 end HSyn
 
@@ -6718,7 +6707,6 @@ end
 #print axioms HSyn.researchLeaves3_of_open2
 #print axioms HSyn.textbookLeaves_of_open2
 #print axioms HSyn.gluePieces_of_open2
-#print axioms HSyn.sixContactMin_of_open2
 
 end G0A2_b20_fold
 
