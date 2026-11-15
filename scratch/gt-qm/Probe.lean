@@ -1,8 +1,21 @@
 import ZInQKernel.OneProof.H.TailZ26
 open HDec
-set_option pp.coercions false
-#print FibreQMNorm.qmMatB
-example (x : LeafQM.B) (w : Fin 2 → ℂ) : QMSplit.CNO.act x w 1 = 0 := by
-  simp only [QMSplit.CNO.act, FibreQMNorm.qmMatB, BPAnalytic.QM.iota, Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.map_apply, Matrix.add_apply]
-  trace_state
-  sorry
+#check @LinearEquiv.algConj
+#check @LinearEquiv.algConj_apply
+#check @IsAlgClosed.lift
+#check @HDec.G0ModField.KernelField.endBC
+#check @HDec.G0ModField.KernelField.endBC_injective
+#check @IsBaseChange.equiv
+#check @IsBaseChange.equiv_tmul
+#check @isLocalizedModule_iff_isBaseChange
+#check @AlgEquiv.ofLinearEquiv
+#check @AlgEquiv.mapMatrix
+#check @RingEquiv.mapMatrix
+#check @Matrix.toLin'
+#check @LinearMap.toMatrix
+#check @AdjoinRoot.liftHom
+#check @PkgI3.AbVar.dim_baseChange
+#check @IsLocalizedModule.mk
+#print LeafQM.AV.QMStr
+#print HDec.QMSplit.Yu.YuThm11
+example : (ℍ[ℚ, 2, -3]) = LeafQM.B := rfl

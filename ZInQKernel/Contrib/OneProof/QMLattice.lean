@@ -467,6 +467,61 @@ theorem qmCentralizerCMC_of (hU : BPAnalytic.Uniformization.UniformizationLeafAl
   obtain ⟨τ, hτ, F, hF, hR⟩ := com_embed hU hG hM A hA q
   exact alg_core hτ F hF hR
 
+/-! ## §5 Toward `YuThm11` (gap-triage A9): generic lemmas -/
+
+/-- Lifting a ring hom through an injective ring hom containing its range. -/
+theorem exists_lift {X Y Z : Type} [Ring X] [Ring Y] [Ring Z] (g : X →+* Z) (θ : Y →+* Z)
+    (hθ : Function.Injective θ) (h : ∀ x, g x ∈ Set.range θ) : ∃ Ψ : X →+* Y, ∀ x, θ (Ψ x) = g x := by
+  let e : Y ≃+* θ.range := RingEquiv.ofBijective θ.rangeRestrict
+    ⟨fun a b hab => hθ (congrArg Subtype.val hab), θ.rangeRestrict_surjective⟩
+  refine ⟨e.symm.toRingHom.comp (g.codRestrict θ.range (fun x => h x)), fun x => ?_⟩
+  have : θ.rangeRestrict (e.symm (g.codRestrict θ.range (fun x => h x) x)) =
+      g.codRestrict θ.range (fun x => h x) x := e.apply_symm_apply _
+  exact congrArg Subtype.val this
+
+/-- **`ℚ ⊗_ℤ M ≅ C`** for a ring embedding `Ψ : M → C` into a `ℚ`-algebra whose image spans `C` up to
+denominators. -/
+theorem end0_equiv {M C : Type} [Ring M] [Ring C] [Algebra ℚ C] (Ψ : M →+* C)
+    (hinj : Function.Injective Ψ)
+    (hspan : ∀ c : C, ∃ n : ℕ, n ≠ 0 ∧ (n : ℚ) • c ∈ Set.range Ψ) :
+    Nonempty (TensorProduct ℤ ℚ M ≃ₐ[ℚ] C) := by
+  let f : M →ₗ[ℤ] C := Ψ.toAddMonoidHom.toIntLinearMap
+  have hf : ∀ m, f m = Ψ m := fun m => rfl
+  have hloc : IsLocalizedModule (nonZeroDivisors ℤ) f := by
+    refine ⟨fun x => ?_, fun c => ?_, fun {x₁ x₂} h => ⟨1, by simpa using hinj h⟩⟩
+    · have hx : (x : ℤ) ≠ 0 := nonZeroDivisors.coe_ne_zero x
+      have hxq : ((x : ℤ) : ℚ) ≠ 0 := by exact_mod_cast hx
+      rw [Module.End.isUnit_iff]
+      constructor
+      · intro a b hab
+        simp only [Module.algebraMap_end_apply] at hab
+        rw [← Int.cast_smul_eq_zsmul ℚ, ← Int.cast_smul_eq_zsmul ℚ] at hab
+        exact smul_right_injective C hxq hab
+      · intro c
+        refine ⟨(((x : ℤ) : ℚ)⁻¹) • c, ?_⟩
+        simp only [Module.algebraMap_end_apply]
+        rw [← Int.cast_smul_eq_zsmul ℚ, smul_smul, mul_inv_cancel₀ hxq, one_smul]
+    · obtain ⟨n, hn, m, hm⟩ := hspan c
+      refine ⟨(m, ⟨(n : ℤ), mem_nonZeroDivisors_of_ne_zero (by exact_mod_cast hn)⟩), ?_⟩
+      show ((n : ℤ)) • c = f m
+      rw [hf, hm, ← Int.cast_smul_eq_zsmul ℚ]
+      simp
+  have hbc : IsBaseChange ℚ f := (isLocalizedModule_iff_isBaseChange (nonZeroDivisors ℤ) ℚ f).mp hloc
+  let e := hbc.equiv
+  have he : ∀ (s : ℚ) (m : M), e (s ⊗ₜ m) = s • Ψ m := fun s m => hbc.equiv_tmul s m
+  refine ⟨AlgEquiv.ofLinearEquiv e ?_ ?_⟩
+  · show e (1 ⊗ₜ 1) = 1
+    rw [he, map_one, one_smul]
+  · intro x y
+    induction x using TensorProduct.induction_on with
+    | zero => simp
+    | add a b ha hb => rw [add_mul, map_add, ha, hb, map_add, add_mul]
+    | tmul s m =>
+      induction y using TensorProduct.induction_on with
+      | zero => simp
+      | add a b ha hb => rw [mul_add, map_add, ha, hb, map_add, mul_add]
+      | tmul t n =>
+        rw [Algebra.TensorProduct.tmul_mul_tmul, he, he, he, map_mul, smul_mul_smul_comm]
+
 end HDec.QMLattice
 
-#print axioms HDec.QMLattice.qmCentralizerCMC_of
