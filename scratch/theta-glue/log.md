@@ -57,3 +57,7 @@
   for every k = 3..9 the substitution reproduces `qmR k`, `interval_cases k; simp; field_simp; ring`);
   `IgusaAlg k` (closed polynomial identity in `u : {0,1}² → ℂ`), `igusaThetaSymmetric_of_alg` (PROVED via
   the duplication formula), `qmThetaSymmetricCurve_of_alg` (final form).
+- `IgusaAlg 3` PROVED by `ring` (VERIFIED, `lake env lean`, 1 min 36 s, peak ~14 GB): unfold the
+  multiset as an explicit list (`evenChars_val` by `decide`, `esymm_coe` to a recursive `esymmL`), the ten
+  `Sq` as explicit quadratics (`Sq0..Sq9`), `sum_evenChars`/`prod_evenChars`, then `ring`. Files
+  `scratch/theta-glue/Alg3.lean` .. `Alg9.lean` (same proof, one `k` each; prefix `gen/alg_prefix.lean`).

@@ -239,7 +239,7 @@ theorem prod_evenChars (f : PkgI1.Char2 → ℂ) :
   ring
 
 set_option maxHeartbeats 0 in
-theorem igusaAlg3 : IgusaAlg 3 := by
+theorem igusaAlg4 : IgusaAlg 4 := by
   intro u
   rw [evenChars_val, Multiset.map_coe, esymm_coe]
   simp only [psi4T, chi10T, psi6T, chi12T, igusaP, sum_evenChars, prod_evenChars, List.map, esymmL]
@@ -251,3 +251,5 @@ theorem igusaAlg3 : IgusaAlg 3 := by
   ring
 
 end HDec.HSyn.G0Split.ThetaPt.ThetaGlue
+
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaAlg4
