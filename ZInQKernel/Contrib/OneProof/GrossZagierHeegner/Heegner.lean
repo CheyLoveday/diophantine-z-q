@@ -9,25 +9,33 @@ Task gz-heegner (2026-11-15). Report: `docs/research/gz-heegner.md`; scratch and
 
 gz-hl3 (`GrossZagierHeegner.lean`) proved `hL3` from six leaves, one of them the composite
 `GZHL3.HeegnerPointRational` (the Heegner point `Σ_{Q ∈ S} φ(τ_Q)` is the image of a point of `E(K)`).
-This file proves it from
+This file proves it from two printed leaves and nothing else:
 
 * `T5Glue.ShimuraMainCM` (Shimura 1971 Thm 5.4; already the hypothesis `hCM` of `frozenTarget`),
 * `X0ModuliGaloisMero` (§2): the canonical model of `X₀(N)` in its printed form, for every
   `g ∈ ℚ(X₀(N))` regular at the two points. The kernel's `T5Glue.X0ModuliGalois` (hypothesis `hX`)
-  is its special case for `g` regular on all of `ℍ` (`x0ModuliGalois_of_mero`, §7). The weakening is
-  needed: the coordinates `x∘φ`, `y∘φ` of a modular parametrization have poles in `ℍ`;
-* one analytic glue Prop on the coordinates of `φ = weierPt E L (c φ_f)` (§3): `ParamQExpansion`
-  (rational `q`-expansion at `∞`). The other two, `ParamRegular` (meromorphy and regularity) and
-  `ParamCuspGrowth` (moderate growth at every cusp), are proved in §8.
+  is its special case for `g` regular on all of `ℍ` (`x0ModuliGalois_of_mero`, §7), so a fold can
+  replace `hX` by it. The weakening of the regularity hypothesis is needed: the coordinates `x∘φ`,
+  `y∘φ` of a modular parametrization have poles in `ℍ` (at the non-cuspidal points of `φ⁻¹(O)`).
 
-Proved here: the Dirichlet composition `J·⟨1, τ_{Q'}⟩ = ⟨1, τ_Q⟩` (`exists_compose`), homothety of
-lattice pairs ⇔ `Γ₀(N)`-equivalence (`pairHom_of_equiv`, `equiv_of_pairHom`), every ideal class of
-`ℚ(√−m)` contains `⟨a, (−b + √D)/2⟩` with `a` prime to `M` (`heegnerClassJ`, Tau Ceti's Chebotarev
-theorem), the restriction `Aut(ℂ) → Gal(ℚ̄/ℚ)` and the fixed field of `Aut(ℂ/κ(K))`, the Galois
-transport of the points `φ(τ_Q)` (poles handled through `1/(x∘φ − t)`), and the permutation of the
-Heegner points (`heegnerC_fixed`), and (§8) the analysis of `φ`: `D φ_f = f`, `φ_f(γτ) = K₀ + G(q_N)` at
-every cusp (`exists_const_eichler`), meromorphy of `℘`, `℘'`, `1/(℘ − c₀)`. Main theorem:
-`heegnerPointRational_of_printed`.
+Everything else is proved here:
+
+* lattice algebra: the Dirichlet composition `J·⟨1, τ_{Q'}⟩ = ⟨1, τ_Q⟩` (`exists_compose`) and
+  homothety of lattice pairs ⇔ `Γ₀(N)`-equivalence (`pairHom_of_equiv`, `equiv_of_pairHom`);
+* class field theory: every ideal class of `ℚ(√−m)` contains `⟨a, (−b + √D)/2⟩` with `a` prime to
+  `M` (`heegnerClassJ`, from Tau Ceti's Chebotarev theorem);
+* Galois theory of `ℂ`: the restriction `Aut(ℂ) → Gal(ℚ̄/ℚ)`, the fixed fields of `Aut(ℂ/κ(K))` and of
+  `Aut(ℂ)` (`mem_kappa_of_fixed`, `rat_of_fixed`);
+* the Galois transport of the points `φ(τ_Q)` (poles handled through `1/(x∘φ − t)`) and the
+  permutation of the Heegner points (`heegnerC_fixed`);
+* the analysis of `φ = weierPt E L (c φ_f)` (§8, §9): the coordinates lie in `ℚ(X₀(N))`:
+  meromorphy (`paramRegular`), moderate growth at every cusp (`paramCuspGrowth`: `D φ_f = f` and
+  `φ_f(γτ) = K₀ + G(q_N)` from the `q_N`-expansion of `f|₂γ`), and rational `q`-expansions at `∞`
+  (`paramQExpansion`: `w²x(φ)` satisfies the Weierstrass equation in `w = q`, whose formal solution
+  with constant term `1/c²` is unique, hence fixed by `Aut(ℂ)`, hence rational).
+
+Main theorem: `heegnerPointRational_of_printed (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) :
+GZHL3.HeegnerPointRational`.
 
 No `sorry`, no `axiom`.
 -/
@@ -567,7 +575,7 @@ def HasRatQExp (g : UpperHalfPlane → ℂ) : Prop :=
     HasSum (fun n : ℕ => (a n : ℂ) * Complex.exp (2 * Real.pi * Complex.I * τ) ^ n)
       (Complex.exp (2 * Real.pi * Complex.I * τ) ^ k * g τ)
 
-/-- **(GLUE, analysis) Rational `q`-expansions of the coordinates of `φ`.** Near `∞`,
+/-- **(GLUE, analysis; proved: `paramQExpansion`) Rational `q`-expansions of the coordinates of `φ`.** Near `∞`,
 `c φ_f(τ) = c q + …` has rational coefficients (`aₙ(f) = aₙ(E) ∈ ℤ`, `c ∈ ℚ`), and the Laurent
 expansion of `℘_L` at `0` has coefficients in `ℚ[g₂, g₃] = ℚ` (`g₂ = c₄/12`, `g₃ = c₆/216`), so
 `x∘φ = c⁻²q⁻² + …`, `y∘φ`, `1/(x∘φ − t)` are Laurent series in `q` with rational coefficients. -/
@@ -1907,24 +1915,722 @@ theorem paramCuspGrowth : ParamCuspGrowth := by
 
 end AnalyticGlue
 
+/-! ## §9. The analytic glue `ParamQExpansion`, proved -/
+
+section QExpansionGlue
+
+open scoped Manifold ModularForm
+
+/-! ## Taylor series at `0` as power series; the Weierstrass equation in `q` -/
+
+section Taylor
+
+open PowerSeries Nat
+
+/-- The Taylor series of `f` at `0`. -/
+def tay (f : ℂ → ℂ) : PowerSeries ℂ := PowerSeries.mk fun n => ((n ! : ℂ))⁻¹ * iteratedDeriv n f 0
+
+theorem coeff_tay (f : ℂ → ℂ) (n : ℕ) :
+    PowerSeries.coeff n (tay f) = ((n ! : ℂ))⁻¹ * iteratedDeriv n f 0 := by
+  simp [tay]
+
+theorem tay_congr {f g : ℂ → ℂ} (h : f =ᶠ[nhds 0] g) : tay f = tay g := by
+  ext n; rw [coeff_tay, coeff_tay, h.iteratedDeriv_eq n]
+
+theorem tay_add {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
+    tay (fun w => f w + g w) = tay f + tay g := by
+  ext n
+  rw [coeff_tay, map_add, coeff_tay, coeff_tay,
+    iteratedDeriv_fun_add hf.contDiffAt hg.contDiffAt]
+  ring
+
+theorem tay_sub {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
+    tay (fun w => f w - g w) = tay f - tay g := by
+  ext n
+  rw [coeff_tay, map_sub, coeff_tay, coeff_tay,
+    iteratedDeriv_fun_sub hf.contDiffAt hg.contDiffAt]
+  ring
+
+theorem tay_mul {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
+    tay (fun w => f w * g w) = tay f * tay g := by
+  ext n
+  rw [coeff_tay, iteratedDeriv_fun_mul hf.contDiffAt hg.contDiffAt, PowerSeries.coeff_mul,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun k hk => ?_
+  rw [Finset.mem_range] at hk
+  rw [coeff_tay, coeff_tay]
+  have hkn : k ≤ n := Nat.lt_succ_iff.1 hk
+  have h := Nat.choose_mul_factorial_mul_factorial hkn
+  have h1 : ((n ! : ℂ)) = (n.choose k : ℂ) * (k ! : ℂ) * ((n - k) ! : ℂ) := by exact_mod_cast h.symm
+  have hk0 : ((k ! : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+  have hnk0 : (((n - k) ! : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (n - k)
+  have hc0 : ((n.choose k : ℕ) : ℂ) ≠ 0 := by exact_mod_cast (Nat.choose_pos hkn).ne'
+  rw [h1]
+  field_simp
+
+theorem tay_const (c : ℂ) : tay (fun _ => c) = PowerSeries.C c := by
+  ext n
+  rw [coeff_tay, iteratedDeriv_const, PowerSeries.coeff_C]
+  split_ifs <;> simp_all
+
+theorem tay_id : tay (fun w => w) = PowerSeries.X := by
+  ext n
+  rw [coeff_tay, iteratedDeriv_fun_id_zero, PowerSeries.coeff_X]
+  split_ifs with h <;> simp [h]
+
+theorem tay_deriv {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) : tay (deriv f) = d⁄dX (tay f) := by
+  ext n
+  rw [coeff_tay, PowerSeries.coeff_derivative, coeff_tay, ← iteratedDeriv_succ']
+  rw [Nat.factorial_succ]
+  push_cast
+  have : ((n ! : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
+  have h2 : ((n : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
+  field_simp
+
+/-- The Weierstrass equation for `Y = w²(℘(Z(w)) − b)` as a formal power series identity:
+`(wY' − 2Y)² = (4(Y + bw²)³ − g₂w⁴(Y + bw²) − g₃w⁶)·A`. -/
+def odePhi (A : ℂ⟦X⟧) (b g₂ g₃ : ℂ) (S : ℂ⟦X⟧) : ℂ⟦X⟧ :=
+  (X * d⁄dX S - 2 * S) ^ 2 -
+    (4 * (S + C b * X ^ 2) ^ 3 - C g₂ * X ^ 4 * (S + C b * X ^ 2) - C g₃ * X ^ 6) * A
+
+theorem X_mul_derivative_X_pow_mul (n : ℕ) (ε : ℂ⟦X⟧) :
+    X * d⁄dX (X ^ n * ε) = X ^ n * (C (n : ℂ) * ε + X * d⁄dX ε) := by
+  rw [Derivation.leibniz, PowerSeries.derivative_pow, PowerSeries.derivative_X, smul_eq_mul,
+    smul_eq_mul]
+  rcases n with _ | n
+  · simp
+  · simp only [Nat.add_sub_cancel, pow_succ, map_natCast]
+    push_cast
+    ring
+
+/-- **Uniqueness of the formal solution with given constant term.** -/
+theorem odePhi_unique (A : ℂ⟦X⟧) (b g₂ g₃ : ℂ) {S T : ℂ⟦X⟧} (hS : odePhi A b g₂ g₃ S = 0)
+    (hT : odePhi A b g₂ g₃ T = 0) (h0 : constantCoeff S = constantCoeff T)
+    (hne : constantCoeff S ≠ 0) (hA : constantCoeff A * constantCoeff S = 1) : S = T := by
+  suffices h : ∀ n, ∀ m < n, PowerSeries.coeff m S = PowerSeries.coeff m T by
+    ext m; exact h (m + 1) m (Nat.lt_succ_self m)
+  intro n
+  induction n with
+  | zero => intro m hm; exact absurd hm (Nat.not_lt_zero m)
+  | succ n ih =>
+    intro m hm
+    rcases Nat.lt_succ_iff_lt_or_eq.1 hm with hm | rfl
+    · exact ih m hm
+    obtain ⟨ε, hε⟩ : X ^ m ∣ S - T := by
+      rw [PowerSeries.X_pow_dvd_iff]
+      intro k hk; rw [map_sub, ih k hk, sub_self]
+    have hSe : S = T + X ^ m * ε := by rw [← hε]; ring
+    have hdS : X * d⁄dX S = X * d⁄dX T + X ^ m * (C (m : ℂ) * ε + X * d⁄dX ε) := by
+      rw [hSe, map_add, mul_add, X_mul_derivative_X_pow_mul]
+    have key : odePhi A b g₂ g₃ S - odePhi A b g₂ g₃ T = X ^ m *
+        ((X * d⁄dX T + X ^ m * (C (m : ℂ) * ε + X * d⁄dX ε) - 2 * S + (X * d⁄dX T - 2 * T)) *
+          (C (m : ℂ) * ε + X * d⁄dX ε - 2 * ε) -
+        A * (4 * ((S + C b * X ^ 2) ^ 2 + (S + C b * X ^ 2) * (T + C b * X ^ 2) +
+          (T + C b * X ^ 2) ^ 2) - C g₂ * X ^ 4) * ε) := by
+      unfold odePhi
+      rw [hdS, hSe]
+      ring
+    set B := (X * d⁄dX T + X ^ m * (C (m : ℂ) * ε + X * d⁄dX ε) - 2 * S + (X * d⁄dX T - 2 * T)) *
+          (C (m : ℂ) * ε + X * d⁄dX ε - 2 * ε) -
+        A * (4 * ((S + C b * X ^ 2) ^ 2 + (S + C b * X ^ 2) * (T + C b * X ^ 2) +
+          (T + C b * X ^ 2) ^ 2) - C g₂ * X ^ 4) * ε with hBdef
+    rw [hS, hT, sub_zero] at key
+    have hB : B = 0 := (mul_eq_zero.1 key.symm).resolve_left (pow_ne_zero _ PowerSeries.X_ne_zero)
+    have hc := congrArg constantCoeff hB
+    have hX0 : constantCoeff (X : ℂ⟦X⟧) = 0 := PowerSeries.constantCoeff_X
+    simp only [hBdef, map_sub, map_add, map_mul, map_pow, hX0, PowerSeries.constantCoeff_C,
+      map_ofNat, zero_mul, mul_zero, zero_pow (two_ne_zero), zero_add, add_zero, sub_zero,
+      map_zero] at hc
+    rw [← h0] at hc
+    set s₀ := constantCoeff S
+    set e₀ := constantCoeff ε
+    have hz : (0 : ℂ) ^ m * (m : ℂ) = 0 := by rcases m with _ | m <;> simp
+    have hc' : -4 * s₀ * e₀ * ((m : ℂ) - 2 + 3 * (constantCoeff A * s₀)) = 0 := by
+      linear_combination hc + e₀ ^ 2 * (2 - (m : ℂ)) * hz
+    rw [hA] at hc'
+    have hm1 : ((m : ℂ) - 2 + 3 * 1) ≠ 0 := by
+      have : ((m : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero m
+      convert this using 1; ring
+    have he : e₀ = 0 := by
+      rcases mul_eq_zero.1 hc' with h | h
+      · rcases mul_eq_zero.1 h with h | h
+        · exfalso; apply hne; have : (-4 : ℂ) ≠ 0 := by norm_num
+          exact (mul_eq_zero.1 h).resolve_left this
+        · exact h
+      · exact absurd h hm1
+    have : PowerSeries.coeff m (S - T) = 0 := by
+      rw [hε, PowerSeries.coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self,
+        PowerSeries.coeff_zero_eq_constantCoeff_apply]
+      exact he
+    rw [map_sub, sub_eq_zero] at this
+    exact this
+
+theorem map_derivative (σ : ℂ →+* ℂ) (S : ℂ⟦X⟧) :
+    PowerSeries.map σ (d⁄dX S) = d⁄dX (PowerSeries.map σ S) := by
+  ext n
+  rw [PowerSeries.coeff_map, PowerSeries.coeff_derivative, PowerSeries.coeff_derivative,
+    PowerSeries.coeff_map, map_mul]
+  simp
+
+theorem map_odePhi (σ : ℂ →+* ℂ) (A : ℂ⟦X⟧) (b g₂ g₃ : ℂ) (S : ℂ⟦X⟧) :
+    PowerSeries.map σ (odePhi A b g₂ g₃ S) =
+      odePhi (PowerSeries.map σ A) (σ b) (σ g₂) (σ g₃) (PowerSeries.map σ S) := by
+  simp only [odePhi, map_sub, map_mul, map_pow, map_add, PowerSeries.map_X, PowerSeries.map_C,
+    map_derivative, map_ofNat]
+
+/-- **The fixed field of `Aut(ℂ)` is `ℚ`.** -/
+theorem rat_of_fixed (z : ℂ) (hz : ∀ σ : ℂ ≃+* ℂ, σ z = z) : ∃ q : ℚ, (q : ℂ) = z := by
+  obtain ⟨a, ha⟩ := T5Glue.fixedAlgebraic z (fun σ _ => hz σ)
+  have hfix : ∀ ρ : Qbar ≃ₐ[ℚ] Qbar, ρ a = a := by
+    intro ρ
+    obtain ⟨σ, hσ⟩ := T5Glue.autExtends ρ
+    apply ιC.injective
+    rw [← hσ, ha, hz]
+  obtain ⟨q, hq⟩ := (InfiniteGalois.mem_range_algebraMap_iff_fixed a).2 hfix
+  exact ⟨q, by rw [← ha, ← hq]; simp⟩
+
+end Taylor
+
+/-! ## The `q`-expansion of `x∘φ` at `∞` -/
+
+section QExp
+
+open PowerSeries
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+/-- `V(w) = Σ e_{n+1} wⁿ`, so that `φ_f = q·V(q)`. -/
+def vSeries : FormalMultilinearSeries ℂ ℂ ℂ :=
+  FormalMultilinearSeries.ofScalars ℂ (fun n => eCoeff f (n + 1))
+
+def vFun : ℂ → ℂ := (vSeries f).sum
+
+theorem vCoeff_summable (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun n => eCoeff f (n + 1) * q ^ n) := by
+  have h := (summable_nat_add_iff 1).2 (eCoeff_summable f q hq)
+  by_cases h0 : q = 0
+  · subst h0; exact summable_of_ne_finset_zero (s := {0}) (fun n hn => by
+      simp at hn; simp [hn])
+  · refine (h.mul_left q⁻¹).congr fun n => ?_
+    rw [pow_succ]; field_simp
+
+theorem vSeries_le_radius (r : NNReal) (hr : (r : ℝ) < 1) : (r : ENNReal) ≤ (vSeries f).radius := by
+  apply (vSeries f).le_radius_of_tendsto (l := 0)
+  have hr' : ‖((r : ℝ) : ℂ)‖ < 1 := by simpa using hr
+  have ht := (vCoeff_summable f ((r : ℝ) : ℂ) hr').tendsto_atTop_zero.norm
+  simp only [norm_zero] at ht
+  refine ht.congr fun n => ?_
+  simp [vSeries, FormalMultilinearSeries.ofScalars_norm, norm_mul, norm_pow]
+
+theorem vSeries_mem_ball {w : ℂ} (hw : ‖w‖ < 1) : w ∈ Metric.eball (0 : ℂ) (vSeries f).radius := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hw
+  have hr0 : 0 ≤ r := le_trans (norm_nonneg _) hr1.le
+  set r' : NNReal := ⟨r, hr0⟩
+  rw [Metric.mem_eball, edist_zero_right]
+  calc (‖w‖₊ : ENNReal) < (r' : ENNReal) := by rw [ENNReal.coe_lt_coe]; exact_mod_cast hr1
+    _ ≤ _ := vSeries_le_radius f r' hr2
+
+theorem vSeries_radius_pos : 0 < (vSeries f).radius := by
+  have := vSeries_mem_ball f (w := 0) (by simp)
+  rw [Metric.mem_eball] at this; exact lt_of_le_of_lt bot_le this
+
+theorem vFun_hasFPS : HasFPowerSeriesOnBall (vFun f) (vSeries f) 0 (vSeries f).radius :=
+  (vSeries f).hasFPowerSeriesOnBall (vSeries_radius_pos f)
+
+theorem analyticAt_vFun : AnalyticAt ℂ (vFun f) 0 := (vFun_hasFPS f).analyticAt
+
+theorem vFun_eq (q : ℂ) (hq : ‖q‖ < 1) : vFun f q = ∑' n, eCoeff f (n + 1) * q ^ n := by
+  have hs := (vSeries f).hasSum (vSeries_mem_ball f hq)
+  simp only [vSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] at hs
+  exact hs.tsum_eq.symm
+
+theorem eSum_eq_mul_vFun (q : ℂ) (hq : ‖q‖ < 1) : (eSeries f).sum q = q * vFun f q := by
+  rw [eSum_eq_tsum, vFun_eq f q hq, ← tsum_mul_left,
+    (eCoeff_summable f q hq).tsum_eq_zero_add]
+  have h0 : eCoeff f 0 = 0 := by simp [eCoeff]
+  rw [h0, zero_mul, zero_add]
+  congr 1; funext n; rw [pow_succ]; ring
+
+theorem eCoeff_one : eCoeff f 1 = 1 := by
+  simp only [eCoeff, one_ne_zero, if_false, Nat.cast_one, div_one]
+  exact f.isNorm
+
+theorem vFun_zero : vFun f 0 = 1 := by
+  rw [vFun_eq f 0 (by simp), tsum_eq_single 0 (fun n hn => by simp [hn])]
+  simp [eCoeff_one]
+
+theorem coeff_tay_vFun (n : ℕ) : PowerSeries.coeff n (tay (vFun f)) = eCoeff f (n + 1) := by
+  rw [coeff_tay]
+  have h := (vFun_hasFPS f).factorial_smul 1 n
+  rw [iteratedDeriv_eq_iteratedFDeriv, ← h]
+  simp only [vSeries, FormalMultilinearSeries.ofScalars_apply_eq, one_pow, smul_eq_mul, mul_one,
+    nsmul_eq_mul]
+  have : ((n.factorial : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
+  field_simp
+
+variable (L : PeriodPair)
+
+/-- `Z(w) = c·w·V(w)` (`= c φ_f` at `w = q`). -/
+def zF (c : ℂ) (w : ℂ) : ℂ := c * w * vFun f w
+
+/-- `Ŷ(w) = w²℘_{L−0}(Z(w)) + (c²V(w)²)⁻¹ − b w²` (`= w²(℘(Z(w)) − b)` for `w ≠ 0`). -/
+def yF (c b : ℂ) (w : ℂ) : ℂ :=
+  w ^ 2 * L.weierstrassPExcept 0 (zF f c w) + (c ^ 2 * vFun f w ^ 2)⁻¹ - b * w ^ 2
+
+theorem analyticAt_vFun_of {w : ℂ} (hw : ‖w‖ < 1) : AnalyticAt ℂ (vFun f) w :=
+  (vFun_hasFPS f).analyticAt_of_mem (vSeries_mem_ball f hw)
+
+theorem analyticAt_zF (c : ℂ) {w : ℂ} (hw : ‖w‖ < 1) : AnalyticAt ℂ (zF f c) w := by
+  have := analyticAt_vFun_of f hw
+  unfold zF; fun_prop
+
+theorem zF_zero (c : ℂ) : zF f c 0 = 0 := by simp [zF]
+
+theorem analyticAt_yF {c : ℂ} (hc : c ≠ 0) (b : ℂ) : AnalyticAt ℂ (yF f L c b) 0 := by
+  have hV := analyticAt_vFun f
+  have hE : AnalyticAt ℂ (fun w => L.weierstrassPExcept 0 (zF f c w)) 0 := by
+    exact (L.analyticAt_weierstrassPExcept 0).comp_of_eq (analyticAt_zF f c (by simp))
+      (zF_zero f c)
+  have hden : AnalyticAt ℂ (fun w => c ^ 2 * vFun f w ^ 2) 0 := by fun_prop
+  have hne : c ^ 2 * vFun f 0 ^ 2 ≠ 0 := by rw [vFun_zero]; simpa using hc
+  unfold yF
+  exact ((analyticAt_id.pow 2).mul hE).add (hden.inv hne) |>.sub (analyticAt_const.mul
+    (analyticAt_id.pow 2))
+
+theorem yF_zero (c b : ℂ) : yF f L c b 0 = (c ^ 2)⁻¹ := by simp [yF, vFun_zero]
+
+/-- A punctured ball around `0` on which `V ≠ 0` and `Z(w) ∉ L`. -/
+theorem exists_good_ball {c : ℂ} (hc : c ≠ 0) :
+    ∃ ε > 0, ε ≤ 1 / 2 ∧ ∀ w : ℂ, ‖w‖ < ε → vFun f w ≠ 0 ∧ (w ≠ 0 → zF f c w ∉ L.lattice) := by
+  obtain ⟨δ, hδ, hδb⟩ := Metric.continuousAt_iff.1 (analyticAt_vFun f).continuousAt (1 / 2)
+    (by norm_num)
+  obtain ⟨r, hr, hrb⟩ := Metric.mem_nhds_iff.1 (L.compl_lattice_sdiff_singleton_mem_nhds 0)
+  have hc0 : 0 < ‖c‖ := norm_pos_iff.2 hc
+  refine ⟨min (min δ (r / (2 * ‖c‖))) (1 / 2), by positivity, min_le_right _ _, fun w hw => ?_⟩
+  have hw1 : ‖w‖ < δ := lt_of_lt_of_le hw ((min_le_left _ _).trans (min_le_left _ _))
+  have hw2 : ‖w‖ < r / (2 * ‖c‖) := lt_of_lt_of_le hw ((min_le_left _ _).trans (min_le_right _ _))
+  have hV := hδb (x := w) (by rwa [dist_zero_right])
+  rw [dist_eq_norm, vFun_zero] at hV
+  have hVne : vFun f w ≠ 0 := by
+    intro h0; rw [h0, zero_sub, norm_neg, norm_one] at hV; norm_num at hV
+  have hVle : ‖vFun f w‖ < 3 / 2 := by
+    have := norm_le_norm_sub_add (vFun f w) 1
+    rw [norm_one] at this; linarith
+  refine ⟨hVne, fun hw0 hzL => ?_⟩
+  have hz0 : zF f c w ≠ 0 := by
+    unfold zF; exact mul_ne_zero (mul_ne_zero hc hw0) hVne
+  have hzr : zF f c w ∈ Metric.ball (0 : ℂ) r := by
+    rw [Metric.mem_ball, dist_zero_right, zF, norm_mul, norm_mul]
+    calc ‖c‖ * ‖w‖ * ‖vFun f w‖ ≤ ‖c‖ * ‖w‖ * (3 / 2) := by gcongr
+      _ < ‖c‖ * (r / (2 * ‖c‖)) * (3 / 2) := by gcongr
+      _ = 3 / 4 * r := by field_simp; ring
+      _ < r := by linarith
+  exact hrb hzr ⟨hzL, hz0⟩
+
+theorem yF_eq {c : ℂ} (hc : c ≠ 0) (b : ℂ) {w : ℂ} (hV : vFun f w ≠ 0) (hw : w ≠ 0) :
+    yF f L c b w = w ^ 2 * (L.weierstrassP (zF f c w) - b) := by
+  have h := L.weierstrassPExcept_add ⟨0, L.lattice.zero_mem⟩ (zF f c w)
+  simp only [sub_zero, div_zero, one_div, zero_pow two_ne_zero, inv_zero] at h
+  unfold yF
+  rw [← h]
+  simp only [zF]
+  field_simp
+
+theorem hasDerivAt_wp {z : ℂ} (hz : z ∉ L.lattice) :
+    HasDerivAt L.weierstrassP (L.derivWeierstrassP z) z := by
+  have hd := (analyticAt_wp L hz).differentiableAt.hasDerivAt
+  rwa [L.deriv_weierstrassP] at hd
+
+theorem constantCoeff_tay (f : ℂ → ℂ) : PowerSeries.constantCoeff (tay f) = f 0 := by
+  rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, coeff_tay]; simp
+
+theorem tay_pow {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (n : ℕ) :
+    tay (fun w => f w ^ n) = (tay f) ^ n := by
+  induction n with
+  | zero => simp only [pow_zero]; rw [tay_const]; rfl
+  | succ n ih =>
+    have e : (fun w => f w ^ (n + 1)) = fun w => f w ^ n * f w := by funext w; ring
+    have h := tay_mul (f := fun w => f w ^ n) (g := f) (hf.pow n) hf
+    beta_reduce at h
+    rw [e, h, ih, pow_succ]
+
+theorem tay_cmul (c : ℂ) {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) :
+    tay (fun w => c * f w) = PowerSeries.C c * tay f := by
+  rw [tay_mul analyticAt_const hf, tay_const]
+
+theorem tay_X_pow (n : ℕ) : tay (fun w => w ^ n) = PowerSeries.X ^ n := by
+  have := tay_pow (f := fun w => w) analyticAt_id n
+  simpa [tay_id] using this
+
+/-- On the punctured good ball: `wŶ' − 2Ŷ = w³ ℘'(Z(w)) Z'(w)`. -/
+theorem yF_deriv_eq {c : ℂ} (hc : c ≠ 0) (b : ℂ) {ε : ℝ} (hε1 : ε ≤ 1 / 2)
+    (hgood : ∀ w : ℂ, ‖w‖ < ε → vFun f w ≠ 0 ∧ (w ≠ 0 → zF f c w ∉ L.lattice)) {w : ℂ}
+    (hw : ‖w‖ < ε) (hw0 : w ≠ 0) :
+    w * deriv (yF f L c b) w - 2 * yF f L c b w =
+      w ^ 3 * L.derivWeierstrassP (zF f c w) * deriv (zF f c) w := by
+  obtain ⟨hV, hZL⟩ := hgood w hw
+  have hzL := hZL hw0
+  have hopen : IsOpen {v : ℂ | v ≠ 0 ∧ ‖v‖ < ε} :=
+    isOpen_ne.inter (isOpen_lt continuous_norm continuous_const)
+  have hev : yF f L c b =ᶠ[nhds w] fun v => v ^ 2 * (L.weierstrassP (zF f c v) - b) := by
+    filter_upwards [hopen.mem_nhds ⟨hw0, hw⟩] with v hv
+    exact yF_eq f L hc b (hgood v hv.2).1 hv.1
+  have hZw : HasDerivAt (zF f c) (deriv (zF f c) w) w :=
+    (analyticAt_zF f c (by linarith : ‖w‖ < 1)).differentiableAt.hasDerivAt
+  have h1 : HasDerivAt (fun v : ℂ => v ^ 2) (2 * w) w := by
+    simpa using hasDerivAt_pow 2 w
+  have hd : HasDerivAt (fun v => v ^ 2 * (L.weierstrassP (zF f c v) - b))
+      (2 * w * (L.weierstrassP (zF f c w) - b) +
+        w ^ 2 * (L.derivWeierstrassP (zF f c w) * deriv (zF f c) w)) w :=
+    h1.mul (((hasDerivAt_wp L hzL).comp w hZw).sub_const b)
+  rw [hev.deriv_eq, hd.deriv, yF_eq f L hc b hV hw0]
+  ring
+
+/-- **The Weierstrass equation in the variable `w`**, near `0`. -/
+theorem yF_ode {c : ℂ} (hc : c ≠ 0) (b : ℂ) :
+    (fun w => (w * deriv (yF f L c b) w - 2 * yF f L c b w) ^ 2) =ᶠ[nhds 0]
+      fun w => (4 * (yF f L c b w + b * w ^ 2) ^ 3 - L.g₂ * w ^ 4 * (yF f L c b w + b * w ^ 2) -
+        L.g₃ * w ^ 6) * deriv (zF f c) w ^ 2 := by
+  obtain ⟨ε, hε, hε1, hgood⟩ := exists_good_ball f L hc
+  have hY := analyticAt_yF f L hc b
+  have hZ := analyticAt_zF f c (w := 0) (by simp)
+  refine (AnalyticAt.frequently_eq_iff_eventually_eq (by fun_prop) (by
+    have := hY.deriv; have := hZ.deriv; fun_prop)).1 ?_
+  refine Filter.Eventually.frequently ?_
+  have hball : Metric.ball (0 : ℂ) ε ∈ nhds (0 : ℂ) := Metric.ball_mem_nhds 0 hε
+  filter_upwards [nhdsWithin_le_nhds hball, self_mem_nhdsWithin] with w hw hw0
+  rw [Metric.mem_ball, dist_zero_right] at hw
+  have hw0' : w ≠ 0 := hw0
+  obtain ⟨hV, hZL⟩ := hgood w hw
+  have hzL := hZL hw0'
+  -- `Ŷ = w²(℘∘Z − b)` near `w`
+  have hopen : IsOpen {v : ℂ | v ≠ 0 ∧ ‖v‖ < ε} :=
+    isOpen_ne.inter (isOpen_lt continuous_norm continuous_const)
+  have hev : yF f L c b =ᶠ[nhds w] fun v => v ^ 2 * (L.weierstrassP (zF f c v) - b) := by
+    filter_upwards [hopen.mem_nhds ⟨hw0', hw⟩] with v hv
+    exact yF_eq f L hc b (hgood v hv.2).1 hv.1
+  have hZw : HasDerivAt (zF f c) (deriv (zF f c) w) w :=
+    (analyticAt_zF f c (by linarith : ‖w‖ < 1)).differentiableAt.hasDerivAt
+  have hd : HasDerivAt (fun v => v ^ 2 * (L.weierstrassP (zF f c v) - b))
+      (2 * w * (L.weierstrassP (zF f c w) - b) +
+        w ^ 2 * (L.derivWeierstrassP (zF f c w) * deriv (zF f c) w)) w := by
+    have h1 : HasDerivAt (fun v : ℂ => v ^ 2) (2 * w) w := by
+      simpa using hasDerivAt_pow 2 w
+    have h2 := ((hasDerivAt_wp L hzL).comp w hZw).sub_const b
+    exact h1.mul h2
+  rw [hev.deriv_eq, hd.deriv, yF_eq f L hc b hV hw0']
+  have hsq := L.derivWeierstrassP_sq _ hzL
+  set P := L.weierstrassP (zF f c w)
+  set P' := L.derivWeierstrassP (zF f c w)
+  set Z' := deriv (zF f c) w
+  have e1 : w * (2 * w * (P - b) + w ^ 2 * (P' * Z')) - 2 * (w ^ 2 * (P - b)) = w ^ 3 * P' * Z' := by
+    ring
+  rw [e1]
+  linear_combination (w ^ 6 * Z' ^ 2) * hsq
+
+theorem C_two : (PowerSeries.C (2 : ℂ) : ℂ⟦X⟧) = 2 := map_ofNat _ 2
+theorem C_four : (PowerSeries.C (4 : ℂ) : ℂ⟦X⟧) = 4 := map_ofNat _ 4
+
+/-- **The formal Weierstrass equation for the Taylor series of `Ŷ`.** -/
+theorem tay_yF_ode {c : ℂ} (hc : c ≠ 0) (b : ℂ) :
+    odePhi (d⁄dX (tay (zF f c)) ^ 2) b L.g₂ L.g₃ (tay (yF f L c b)) = 0 := by
+  set Y := yF f L c b with hYdef
+  set Z := zF f c with hZdef
+  have hY : AnalyticAt ℂ Y 0 := analyticAt_yF f L hc b
+  have hdY := hY.deriv
+  have hZ : AnalyticAt ℂ Z 0 := analyticAt_zF f c (w := 0) (by simp)
+  have hdZ := hZ.deriv
+  have h := tay_congr (yF_ode f L hc b)
+  -- left side
+  have l1 := tay_pow (f := fun w => w * deriv Y w - 2 * Y w) (by fun_prop) 2
+  have l2 := tay_sub (f := fun w => w * deriv Y w) (g := fun w => 2 * Y w) (by fun_prop)
+    (by fun_prop)
+  have l3 := tay_mul (f := fun w => w) (g := deriv Y) analyticAt_id hdY
+  have l4 := tay_cmul 2 hY
+  beta_reduce at l1 l2 l3 l4
+  -- right side
+  set U := fun w => Y w + b * w ^ 2 with hUdef
+  have hU : AnalyticAt ℂ U 0 := by fun_prop
+  have r1 := tay_mul (f := fun w => 4 * U w ^ 3 - L.g₂ * w ^ 4 * U w - L.g₃ * w ^ 6)
+    (g := fun w => deriv Z w ^ 2) (by fun_prop) (by fun_prop)
+  have r2 := tay_pow (f := deriv Z) hdZ 2
+  have r3 := tay_sub (f := fun w => 4 * U w ^ 3 - L.g₂ * w ^ 4 * U w) (g := fun w => L.g₃ * w ^ 6)
+    (by fun_prop) (by fun_prop)
+  have r4 := tay_sub (f := fun w => 4 * U w ^ 3) (g := fun w => L.g₂ * w ^ 4 * U w)
+    (by fun_prop) (by fun_prop)
+  have r5 := tay_cmul 4 (f := fun w => U w ^ 3) (by fun_prop)
+  have r6 := tay_pow hU 3
+  have r7 := tay_mul (f := fun w => L.g₂ * w ^ 4) (g := U) (by fun_prop) hU
+  have r8 := tay_cmul L.g₂ (f := fun w => w ^ 4) (by fun_prop)
+  have r9 := tay_cmul L.g₃ (f := fun w => w ^ 6) (by fun_prop)
+  have r10 := tay_add (f := Y) (g := fun w => b * w ^ 2) hY (by fun_prop)
+  have r11 := tay_cmul b (f := fun w => w ^ 2) (by fun_prop)
+  beta_reduce at r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11
+  have hUt : tay U = tay Y + PowerSeries.C b * X ^ 2 := by
+    rw [hUdef, r10, r11, tay_X_pow]
+  rw [l1, l2, l3, l4, tay_id, tay_deriv hY, C_two] at h
+  rw [r1, r2, r3, r4, r5, r6, r7, r8, r9, tay_X_pow, tay_X_pow, tay_deriv hZ, hUt, C_four] at h
+  unfold odePhi
+  rw [h, sub_self]
+
+/-- `tay Z = c·X·tay V`. -/
+theorem tay_zF (c : ℂ) : tay (zF f c) = C c * X * tay (vFun f) := by
+  have hV := analyticAt_vFun f
+  have e : zF f c = fun w => c * w * vFun f w := rfl
+  have h1 := tay_mul (f := fun w => c * w) (g := vFun f) (by fun_prop) hV
+  have h2 := tay_cmul c (f := fun w => w) analyticAt_id
+  beta_reduce at h1 h2
+  rw [e, h1, h2, tay_id]
+
+theorem map_tay_vFun (hV : ∀ n, ∃ q : ℚ, eCoeff f n = q) (σ : ℂ →+* ℂ) :
+    PowerSeries.map σ (tay (vFun f)) = tay (vFun f) := by
+  ext n
+  rw [PowerSeries.coeff_map, coeff_tay_vFun]
+  obtain ⟨q, hq⟩ := hV (n + 1)
+  rw [hq, map_ratCast]
+
+theorem map_tay_zF (hV : ∀ n, ∃ q : ℚ, eCoeff f n = q) (c : ℚ) (σ : ℂ →+* ℂ) :
+    PowerSeries.map σ (tay (zF f c)) = tay (zF f c) := by
+  rw [tay_zF, map_mul, map_mul, PowerSeries.map_C, PowerSeries.map_X, map_tay_vFun f hV σ,
+    map_ratCast]
+
+/-- **The Taylor series of `Ŷ` is fixed by `Aut(ℂ)`** (all data rational; uniqueness of the formal
+solution). -/
+theorem map_tay_yF (hV : ∀ n, ∃ q : ℚ, eCoeff f n = q) {c : ℚ} (hc : c ≠ 0) (b : ℚ) {g₂ g₃ : ℚ}
+    (hg₂ : L.g₂ = g₂) (hg₃ : L.g₃ = g₃) (σ : ℂ →+* ℂ) :
+    PowerSeries.map σ (tay (yF f L c b)) = tay (yF f L c b) := by
+  have hc' : (c : ℂ) ≠ 0 := by exact_mod_cast hc
+  have hode := tay_yF_ode f L hc' b
+  rw [hg₂, hg₃] at hode
+  set A := d⁄dX (tay (zF f c)) ^ 2 with hAdef
+  have hAfix : PowerSeries.map σ A = A := by
+    rw [hAdef, map_pow, map_derivative, map_tay_zF f hV c σ]
+  have hS : odePhi A b g₂ g₃ (PowerSeries.map σ (tay (yF f L c b))) = 0 := by
+    have := congrArg (PowerSeries.map σ) hode
+    rw [map_odePhi, map_zero, hAfix, map_ratCast, map_ratCast, map_ratCast] at this
+    exact this
+  refine (odePhi_unique A b g₂ g₃ hode hS ?_ ?_ ?_).symm
+  · rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, ← PowerSeries.coeff_zero_eq_constantCoeff_apply,
+      PowerSeries.coeff_map, PowerSeries.coeff_zero_eq_constantCoeff_apply, constantCoeff_tay, yF_zero]
+    rw [show ((c : ℂ) ^ 2)⁻¹ = (((c ^ 2)⁻¹ : ℚ) : ℂ) by push_cast; rfl, map_ratCast]
+  · rw [constantCoeff_tay, yF_zero]; simpa using hc'
+  · rw [hAdef, map_pow, ← PowerSeries.coeff_zero_eq_constantCoeff_apply,
+      PowerSeries.coeff_derivative, tay_zF, constantCoeff_tay, yF_zero,
+      show (C (c : ℂ) * X * tay (vFun f)) = C (c : ℂ) * (X * tay (vFun f)) by ring]
+    simp only [zero_add, Nat.cast_zero, PowerSeries.coeff_C_mul, mul_one]
+    rw [show (1 : ℕ) = 0 + 1 from rfl, PowerSeries.coeff_succ_X_mul,
+      PowerSeries.coeff_zero_eq_constantCoeff_apply, constantCoeff_tay, vFun_zero]
+    field_simp
+
+/-- **A rational `q`-expansion from a Taylor series fixed by `Aut(ℂ)`.** -/
+theorem hasRatQExp_of_tay (g : UpperHalfPlane → ℂ) (W : ℂ → ℂ) (hW : AnalyticAt ℂ W 0)
+    (hfix : ∀ σ : ℂ ≃+* ℂ, PowerSeries.map (σ : ℂ →+* ℂ) (tay W) = tay W) (k : ℕ) {ε : ℝ}
+    (hε : 0 < ε) (hg : ∀ τ : UpperHalfPlane, ‖qC τ‖ < ε → qC τ ^ k * g τ = W (qC τ)) :
+    HasRatQExp g := by
+  have hrat : ∀ n, ∃ a : ℚ, (a : ℂ) = PowerSeries.coeff n (tay W) := fun n =>
+    rat_of_fixed _ fun σ => by
+      have := congrArg (PowerSeries.coeff n) (hfix σ)
+      rwa [PowerSeries.coeff_map] at this
+  choose a ha using hrat
+  obtain ⟨r, hr, hAn⟩ := hW.exists_ball_analyticOnNhd
+  set ρ := min ε r
+  have hρ : 0 < ρ := lt_min hε hr
+  refine ⟨k, a, |Real.log ρ| / (2 * Real.pi) + 1, fun τ hτ => ?_⟩
+  have hq : ‖qC τ‖ < ρ := by
+    rw [qC, Complex.norm_exp]
+    have hre : (2 * Real.pi * Complex.I * τ).re = -(2 * Real.pi * τ.im) := by
+      simp [Complex.mul_re, Complex.mul_im]
+    rw [hre]
+    have hπ := Real.pi_pos
+    have h1 : -(2 * Real.pi * τ.im) < Real.log ρ := by
+      have hA : |Real.log ρ| / (2 * Real.pi) < τ.im := by linarith
+      rw [div_lt_iff₀ (by positivity)] at hA
+      linarith [neg_abs_le (Real.log ρ)]
+    calc Real.exp (-(2 * Real.pi * τ.im)) < Real.exp (Real.log ρ) := Real.exp_lt_exp.2 h1
+      _ = ρ := Real.exp_log hρ
+  have hqε : ‖qC τ‖ < ε := lt_of_lt_of_le hq (min_le_left _ _)
+  have hqr : qC τ ∈ Metric.ball (0 : ℂ) r := by
+    rw [Metric.mem_ball, dist_zero_right]; exact lt_of_lt_of_le hq (min_le_right _ _)
+  have hs := Complex.hasSum_taylorSeries_on_ball (hAn.differentiableOn) hqr
+  rw [show Complex.exp (2 * Real.pi * Complex.I * τ) = qC τ from rfl, hg τ hqε]
+  convert hs using 1
+  funext n
+  rw [ha n, coeff_tay, sub_zero, smul_eq_mul, smul_eq_mul]
+  ring
+
+/-- The fixed-by-`Aut(ℂ)` property is inherited through a product with a fixed series. -/
+theorem fixed_of_mul {T U R : ℂ⟦X⟧} (hU : U ≠ 0) (h : T * U = R) (σ : ℂ →+* ℂ)
+    (hUf : PowerSeries.map σ U = U) (hRf : PowerSeries.map σ R = R) :
+    PowerSeries.map σ T = T := by
+  have := congrArg (PowerSeries.map σ) h
+  rw [map_mul, hUf, hRf, ← h] at this
+  exact mul_right_cancel₀ hU this
+
+theorem hasDerivAt_zF_zero (c : ℂ) : HasDerivAt (zF f c) c 0 := by
+  have hV := (analyticAt_vFun f).differentiableAt.hasDerivAt
+  have h := ((hasDerivAt_id (0 : ℂ)).const_mul c).mul hV
+  convert h using 1
+  · funext w; simp [zF]
+  · simp [vFun_zero]
+
+theorem eCoeff_rat (E : WeierstrassCurve ℚ)
+    (hcoeff : ∀ n : ℕ, n ≠ 0 → ZInQ.GZDecomp.coeff f n = (E.LFunction n : ℂ)) (n : ℕ) :
+    ∃ q : ℚ, eCoeff f n = q := by
+  unfold eCoeff
+  split_ifs with hn
+  · exact ⟨0, by simp⟩
+  · exact ⟨((E.LFunction n : ℤ) : ℚ) / n, by rw [hcoeff n hn]; push_cast; ring⟩
+
+/-- **`ParamQExpansion`, proved.** -/
+theorem paramQExpansion : ParamQExpansion := by
+  intro E _ N _ f L c hs
+  obtain ⟨-, hcoeff, hL, hc, -⟩ := hs
+  have hV := eCoeff_rat f E hcoeff
+  have hc' : (c : ℂ) ≠ 0 := by exact_mod_cast hc
+  -- rational constants
+  set bq : ℚ := E.b₂ / 12
+  have hb : (E⁄ℂ).b₂ / 12 = (bq : ℂ) := by
+    simp [bq, WeierstrassCurve.baseChange, WeierstrassCurve.map_b₂]
+  have hg₂ : L.g₂ = ((E.c₄ / 12 : ℚ) : ℂ) := by
+    rw [hL.1]; simp [WeierstrassCurve.baseChange, WeierstrassCurve.map_c₄]
+  have hg₃ : L.g₃ = ((E.c₆ / 216 : ℚ) : ℂ) := by
+    rw [hL.2]; simp [WeierstrassCurve.baseChange, WeierstrassCurve.map_c₆]
+  have ha₁ : (E⁄ℂ).a₁ = ((E.a₁ : ℚ) : ℂ) := by simp [WeierstrassCurve.baseChange]
+  have ha₃ : (E⁄ℂ).a₃ = ((E.a₃ : ℚ) : ℂ) := by simp [WeierstrassCurve.baseChange]
+  set Y := yF f L c bq with hYdef
+  set Z := zF f c with hZdef
+  have hY : AnalyticAt ℂ Y 0 := analyticAt_yF f L hc' _
+  have hdY := hY.deriv
+  have hZ : AnalyticAt ℂ Z 0 := analyticAt_zF f c (w := 0) (by simp)
+  have hdZ := hZ.deriv
+  have hYfix : ∀ σ : ℂ →+* ℂ, PowerSeries.map σ (tay Y) = tay Y := fun σ =>
+    map_tay_yF f L hV hc bq hg₂ hg₃ σ
+  have hZfix : ∀ σ : ℂ →+* ℂ, PowerSeries.map σ (tay Z) = tay Z := fun σ => map_tay_zF f hV c σ
+  obtain ⟨ε, hε, hε1, hgood⟩ := exists_good_ball f L hc'
+  -- `zPar = Z(q)`
+  have hz : ∀ τ : UpperHalfPlane, zPar f c τ = Z (qC τ) := by
+    intro τ
+    rw [zPar, eichler_eq, eSum_eq_mul_vFun f _ (norm_qC_lt_one τ.im_pos)]
+    simp only [hZdef, zF]; ring
+  have hx : ∀ τ : UpperHalfPlane, ‖qC τ‖ < ε → qC τ ^ 2 * xPar E L f c τ = Y (qC τ) := by
+    intro τ hτ
+    have hq0 : qC τ ≠ 0 := Complex.exp_ne_zero _
+    rw [xPar, hz, hb, hYdef, yF_eq f L hc' _ (hgood _ hτ).1 hq0]
+  have hY0 : Y 0 = ((c : ℂ) ^ 2)⁻¹ := yF_zero f L _ _
+  refine ⟨hasRatQExp_of_tay _ Y hY (fun σ => hYfix σ) 2 hε hx, ?_, fun t => ?_⟩
+  · -- `y∘φ`
+    set W : ℂ → ℂ := fun w => ((w * deriv Y w - 2 * Y w) * (deriv Z w)⁻¹ -
+      (E.a₁ : ℂ) * w * Y w - (E.a₃ : ℂ) * w ^ 3) / 2 with hWdef
+    have hdZ0 : deriv Z 0 ≠ 0 := by rw [(hasDerivAt_zF_zero f c).deriv]; exact hc'
+    have hW : AnalyticAt ℂ W 0 := by
+      have := hdZ.inv hdZ0
+      rw [hWdef]; fun_prop
+    have hev : (fun w => W w * (2 * deriv Z w)) =ᶠ[nhds 0]
+        fun w => (w * deriv Y w - 2 * Y w) - ((E.a₁ : ℂ) * w * Y w + (E.a₃ : ℂ) * w ^ 3) *
+          deriv Z w := by
+      filter_upwards [hdZ.continuousAt.eventually_ne hdZ0] with w hw
+      rw [hWdef]; field_simp; ring
+    have ht := tay_congr hev
+    have l1 := tay_mul (f := W) (g := fun w => 2 * deriv Z w) hW (by fun_prop)
+    have l2 := tay_cmul 2 hdZ
+    have r1 := tay_sub (f := fun w => w * deriv Y w - 2 * Y w)
+      (g := fun w => ((E.a₁ : ℂ) * w * Y w + (E.a₃ : ℂ) * w ^ 3) * deriv Z w)
+      (by fun_prop) (by fun_prop)
+    have r2 := tay_sub (f := fun w => w * deriv Y w) (g := fun w => 2 * Y w) (by fun_prop)
+      (by fun_prop)
+    have r3 := tay_mul (f := fun w => w) (g := deriv Y) analyticAt_id hdY
+    have r4 := tay_cmul 2 hY
+    have r5 := tay_mul (f := fun w => (E.a₁ : ℂ) * w * Y w + (E.a₃ : ℂ) * w ^ 3) (g := deriv Z)
+      (by fun_prop) hdZ
+    have r6 := tay_add (f := fun w => (E.a₁ : ℂ) * w * Y w) (g := fun w => (E.a₃ : ℂ) * w ^ 3)
+      (by fun_prop) (by fun_prop)
+    have r7 := tay_mul (f := fun w => (E.a₁ : ℂ) * w) (g := Y) (by fun_prop) hY
+    have r8 := tay_cmul (E.a₁ : ℂ) (f := fun w => w) analyticAt_id
+    have r9 := tay_cmul (E.a₃ : ℂ) (f := fun w => w ^ 3) (by fun_prop)
+    beta_reduce at l1 l2 r1 r2 r3 r4 r5 r6 r7 r8 r9
+    rw [l1, l2, r1, r2, r3, r4, r5, r6, r7, r8, r9, tay_id, tay_X_pow, tay_deriv hY,
+      tay_deriv hZ] at ht
+    obtain ⟨δ, hδ, hδb⟩ := Metric.eventually_nhds_iff.1 (hdZ.continuousAt.eventually_ne hdZ0)
+    refine hasRatQExp_of_tay _ W hW (fun σ => fixed_of_mul ?_ ht σ ?_ ?_) 3 (lt_min hε hδ) ?_
+    · intro h0
+      have := congrArg PowerSeries.constantCoeff h0
+      have h1 : PowerSeries.constantCoeff (d⁄dX (tay Z)) = deriv Z 0 := by
+        rw [← tay_deriv hZ, constantCoeff_tay]
+      rw [map_mul, PowerSeries.constantCoeff_C, h1, map_zero] at this
+      exact hdZ0 ((mul_eq_zero.1 this).resolve_left two_ne_zero)
+    · rw [map_mul, PowerSeries.map_C, map_derivative, hZfix, map_ofNat]
+    · simp only [map_sub, map_mul, map_add, map_pow, PowerSeries.map_X, PowerSeries.map_C,
+        map_derivative, hYfix, hZfix, map_ofNat, map_ratCast]
+    · intro τ hτ
+      have hτε : ‖qC τ‖ < ε := lt_of_lt_of_le hτ (min_le_left _ _)
+      have hq0 : qC τ ≠ 0 := Complex.exp_ne_zero _
+      have hdZq : deriv Z (qC τ) ≠ 0 :=
+        hδb (by rw [dist_zero_right]; exact lt_of_lt_of_le hτ (min_le_right _ _))
+      have hderiv := yF_deriv_eq f L hc' bq hε1 hgood hτε hq0
+      have hxq := hx τ hτε
+      rw [yPar, hWdef]
+      simp only
+      rw [hderiv, ha₁, ha₃, hz τ, ← hxq]
+      field_simp
+      ring
+  · -- `1/(x∘φ − t)`
+    set W : ℂ → ℂ := fun w => w ^ 2 * (Y w - t * w ^ 2)⁻¹ with hWdef
+    have hU0 : Y 0 - t * 0 ^ 2 ≠ 0 := by rw [hY0]; simpa using hc'
+    have hUa : AnalyticAt ℂ (fun w => Y w - t * w ^ 2) 0 := by fun_prop
+    have hW : AnalyticAt ℂ W 0 := by
+      have := hUa.inv hU0
+      rw [hWdef]; fun_prop
+    have hev : (fun w => W w * (Y w - t * w ^ 2)) =ᶠ[nhds 0] fun w => w ^ 2 := by
+      filter_upwards [hUa.continuousAt.eventually_ne hU0] with w hw
+      rw [hWdef]; simp only; rw [mul_assoc, inv_mul_cancel₀ hw, mul_one]
+    have ht := tay_congr hev
+    have l1 := tay_mul (f := W) (g := fun w => Y w - t * w ^ 2) hW hUa
+    have l2 := tay_sub (f := Y) (g := fun w => (t : ℂ) * w ^ 2) hY (by fun_prop)
+    have l3 := tay_cmul (t : ℂ) (f := fun w => w ^ 2) (by fun_prop)
+    beta_reduce at l1 l2 l3
+    rw [l1, l2, l3, tay_X_pow] at ht
+    refine hasRatQExp_of_tay _ W hW (fun σ => fixed_of_mul ?_ ht σ ?_ ?_) 0 hε ?_
+    · intro h0
+      have := congrArg PowerSeries.constantCoeff h0
+      rw [map_sub, map_mul, map_pow, PowerSeries.constantCoeff_C, PowerSeries.constantCoeff_X,
+        constantCoeff_tay, map_zero] at this
+      exact hU0 (by simpa using this)
+    · rw [map_sub, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, hYfix, map_ratCast]
+    · rw [map_pow, PowerSeries.map_X]
+    · intro τ hτ
+      have hq0 : qC τ ≠ 0 := Complex.exp_ne_zero _
+      have hxq := hx τ hτ
+      have hzL : zPar f c τ ∉ L.lattice := by rw [hz τ]; exact (hgood _ hτ).2 hq0
+      rw [pow_zero, one_mul, gPar, if_neg hzL, hWdef]
+      simp only
+      rw [← hxq]
+      have hq2 : qC τ ^ 2 ≠ 0 := pow_ne_zero 2 hq0
+      rw [show qC τ ^ 2 * xPar E L f c τ - t * qC τ ^ 2 = qC τ ^ 2 * (xPar E L f c τ - t) by ring,
+        mul_inv, ← mul_assoc, mul_inv_cancel₀ hq2, one_mul]
+
+end QExp
+
+end QExpansionGlue
+
 end ZInQ.GZHeegner
 
 namespace ZInQ.GZHeegner
 
-/-- **`HeegnerPointRational` from the two printed CM / modular-curve leaves and one analytic glue
-Prop** (`HeegnerClassJ`, `ParamRegular`, `ParamCuspGrowth` are proved). -/
-theorem heegnerPointRational_of_printed (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero)
-    (hQ : ParamQExpansion) : ZInQ.GZHL3.HeegnerPointRational :=
-  heegnerPointRational_of hCM hX paramRegular paramCuspGrowth hQ heegnerClassJ
+/-- **`HeegnerPointRational` from the main theorem of complex multiplication and the canonical model
+of `X₀(N)` (printed form)**, everything else proved: `HeegnerClassJ` (`heegnerClassJ`),
+`ParamRegular` (`paramRegular`), `ParamCuspGrowth` (`paramCuspGrowth`), `ParamQExpansion`
+(`paramQExpansion`). -/
+theorem heegnerPointRational_of_printed (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) :
+    ZInQ.GZHL3.HeegnerPointRational :=
+  heegnerPointRational_of hCM hX paramRegular paramCuspGrowth paramQExpansion heegnerClassJ
 
 /-- **gz-hl3's `hL3` with `HeegnerPointRational` replaced**: `GrossZagierHeegner` from gz-hl3's five
-other leaves, `ShimuraMainCM`, `X0ModuliGaloisMero` and `ParamQExpansion`. -/
+other leaves, `ShimuraMainCM` and `X0ModuliGaloisMero`. -/
 theorem grossZagierHeegner_of_printed (hU : ZInQ.GZHL3.WeierstrassUniformization)
     (hSW : ZInQ.GZHL3.StrongWeilCurve) (hI : ZInQ.GZHL3.IsogenyLattice)
     (hGZ : ZInQ.GZHL3.GrossZagierFormula) (hGC : ZInQ.GZHL3.GrossConjugation)
-    (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) (hQ : ParamQExpansion) :
-    ZInQ.GZDecomp.GrossZagierHeegner :=
-  ZInQ.GZHL3.grossZagierHeegner_of_leaves hU hSW hI (heegnerPointRational_of_printed hCM hX hQ)
+    (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) : ZInQ.GZDecomp.GrossZagierHeegner :=
+  ZInQ.GZHL3.grossZagierHeegner_of_leaves hU hSW hI (heegnerPointRational_of_printed hCM hX)
     hGZ hGC
 
 end ZInQ.GZHeegner

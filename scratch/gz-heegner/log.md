@@ -53,3 +53,8 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
   maps solutions to solutions (all data rational), so the Taylor coefficients are fixed by Aut(ℂ), hence rational
   (`rat_of_fixed`); `y∘φ`, `1/(x∘φ − t)` by cancellation (`fixed_of_mul`). HasSum from `hasSum_taylorSeries_on_ball`.
 - RESULT: all four glue Props proved; `HeegnerPointRational` follows from `ShimuraMainCM` and `X0ModuliGaloisMero` only.
+- VERIFIED (lake build; `Check.lean` → `out_check.txt`; `Discharges.lean` → `discharges-output.txt`):
+  `ZInQ.GZHeegner.heegnerPointRational_of_printed : T5Glue.ShimuraMainCM → X0ModuliGaloisMero →
+   ZInQ.GZHL3.HeegnerPointRational`, axioms [propext, Classical.choice, Quot.sound];
+  `#discharges`: `[hL3] by grossZagierHeegner_of_printed` (assumes gz-hl3's 5 other leaves, ShimuraMainCM,
+  X0ModuliGaloisMero); `[hX] by x0ModuliGalois_of_mero`. Contributor file 137 KB.
