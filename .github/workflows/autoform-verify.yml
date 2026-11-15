@@ -96,16 +96,24 @@ jobs:
           lake clean "$root_package"
           lake build
 
-      # The default root target does not import the GaussFE and HeckeAll
+      # The default root target does not import the GaussFE, HeckeAll and PSide
       # provider modules that blueprint lean: names point to, so the audit would
       # find those declarations missing from the build. Build them by module
       # name (a leading + selects a module target) before `lake pack` archives
       # the build. Headline brings in FunctionalEquation5 and the HeckeFE modules
       # it imports; Provider brings in HeckeAll.Continuation and its imports.
+      # PSide.Convergence brings in PSide.Hasse, which imports PSide.APZero and
+      # PSide.Coeff; PSide.Supersingular (on Hasse) and PSide.BadPrimes are not
+      # imported by Convergence, so they are named too.
       - name: Build blueprint provider modules
         run: |
           set -euo pipefail
-          lake build +ZInQKernel.Contrib.GaussFE.Headline +ZInQKernel.Contrib.HeckeAll.Provider
+          lake build \
+            +ZInQKernel.Contrib.GaussFE.Headline \
+            +ZInQKernel.Contrib.HeckeAll.Provider \
+            +ZInQKernel.Contrib.PSide.Convergence \
+            +ZInQKernel.Contrib.PSide.Supersingular \
+            +ZInQKernel.Contrib.PSide.BadPrimes
 
       - name: Audit every root-package declaration
         run: |

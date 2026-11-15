@@ -6,8 +6,11 @@ audit keeps its stages (now with elapsed-time markers), and that the critical
 guards stay as they are. Standard library only: the workflow is read with a
 small parser for the YAML subset it uses, and each run script is split into
 logical shell commands, so checks address one step and one command at a time.
-Nothing here needs Git history, a network or a Lean toolchain; the one check
-that needs the Lean sources skips when they are not checked out.
+A scoped import-closure check reads only the `import` header of the PSide
+provider modules, to show which PSide modules the named targets build.
+Nothing here needs Git history, a network or a Lean toolchain; the checks that
+need the Lean sources skip only when no ZInQKernel tree is checked out at all,
+and fail when the tree is present but a provider source is missing.
 """
 
 from __future__ import annotations
@@ -21,15 +24,34 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from typing import Callable, Iterable
 
 GITHUB_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = GITHUB_DIR.parent
 WORKFLOW = GITHUB_DIR / "workflows" / "autoform-verify.yml"
 
+PSIDE_PREFIX = "ZInQKernel.Contrib.PSide."
+PSIDE_TARGETS = (
+    "ZInQKernel.Contrib.PSide.Convergence",
+    "ZInQKernel.Contrib.PSide.Supersingular",
+    "ZInQKernel.Contrib.PSide.BadPrimes",
+)
+# The six PSide modules that declare the 49 PSide names the blueprint audit
+# reported missing (Convergence 8, Hasse 10, Coeff 15, APZero 7, BadPrimes 6,
+# Supersingular 3). Listed on its own, not derived from PSIDE_TARGETS, so
+# dropping a target from both the workflow and that tuple still fails.
+PSIDE_BUILT = frozenset({
+    "ZInQKernel.Contrib.PSide.Convergence",
+    "ZInQKernel.Contrib.PSide.Hasse",
+    "ZInQKernel.Contrib.PSide.Coeff",
+    "ZInQKernel.Contrib.PSide.APZero",
+    "ZInQKernel.Contrib.PSide.BadPrimes",
+    "ZInQKernel.Contrib.PSide.Supersingular",
+})
 PROVIDER_MODULES = (
     "ZInQKernel.Contrib.GaussFE.Headline",
     "ZInQKernel.Contrib.HeckeAll.Provider",
-)
+) + PSIDE_TARGETS
 MODULE_SELECTOR = re.compile(r"^\+ZInQKernel(\.[A-Z][A-Za-z0-9_]*)+$")
 
 CHECKOUT = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
@@ -199,6 +221,68 @@ def is_lake_build(command: str) -> bool:
     return words(command)[:2] == ["lake", "build"]
 
 
+# --- A scoped reader for Lean module import headers --------------------------
+
+_IMPORT_MODIFIERS = {"public", "private", "meta", "all"}
+
+
+def header_imports(text: str) -> list[str]:
+    """Modules named by the `import` lines of a Lean file's header.
+
+    Reading stops at the first line that is not blank, a comment, `module`,
+    `prelude` or an import, so text later in the file is never read as one."""
+    imports: list[str] = []
+    depth = 0
+    for raw in text.splitlines():
+        line = raw.strip()
+        while line:
+            if depth:
+                opened, closed = line.find("/-"), line.find("-/")
+                if closed < 0 and opened < 0:
+                    line = ""
+                elif opened >= 0 and (closed < 0 or opened < closed):
+                    depth, line = depth + 1, line[opened + 2:]
+                else:
+                    depth, line = depth - 1, line[closed + 2:].strip()
+            elif line.startswith("/-"):
+                depth, line = 1, line[2:]
+            else:
+                break
+        if depth or not line or line.startswith("--"):
+            continue
+        tokens = line.split("--", 1)[0].split()
+        if tokens in (["module"], ["prelude"]):
+            continue
+        while tokens and tokens[0] in _IMPORT_MODIFIERS - {"all"}:
+            tokens = tokens[1:]
+        if not tokens or tokens[0] != "import":
+            break
+        imports.extend(token for token in tokens[1:] if token not in _IMPORT_MODIFIERS)
+    return imports
+
+
+def import_closure(roots: Iterable[str], read_imports: Callable[[str], list[str]], prefix: str) -> set[str]:
+    """Modules under `prefix` reachable from `roots` through imports. A module
+    whose source cannot be read raises instead of being dropped."""
+    seen: set[str] = set()
+    pending = [root for root in roots if root.startswith(prefix)]
+    while pending:
+        module = pending.pop()
+        if module in seen:
+            continue
+        seen.add(module)
+        pending.extend(name for name in read_imports(module) if name.startswith(prefix))
+    return seen
+
+
+def module_source(module: str) -> Path:
+    return REPO_ROOT.joinpath(*module.split(".")).with_suffix(".lean")
+
+
+def read_module_imports(module: str) -> list[str]:
+    return header_imports(module_source(module).read_text(encoding="utf-8"))
+
+
 # --- Fixtures ----------------------------------------------------------------
 
 
@@ -310,14 +394,27 @@ class ProviderBuildTest(WorkflowTestCase):
         self.assertEqual(len(builds), 1)
         return words(builds[0])
 
-    def test_builds_both_provider_modules_by_module_selector(self) -> None:
+    def test_builds_every_provider_module_by_module_selector(self) -> None:
         targets = self.provider_command()[2:]
+        self.assertEqual(len(targets), len(set(targets)), "a provider target is named twice")
         self.assertEqual(sorted(targets), sorted("+" + module for module in PROVIDER_MODULES))
         for target in targets:
             self.assertRegex(target, MODULE_SELECTOR)
             # Module paths start at the ZInQKernel source root, not at the
             # ZInQ declaration namespace.
             self.assertFalse(target.startswith("+ZInQ."), target)
+
+    def test_pside_targets_are_built_before_pack(self) -> None:
+        targets = self.provider_command()[2:]
+        for module in PSIDE_TARGETS:
+            self.assertIn("+" + module, targets)
+        self.assertLess(self.index(self.NAME), self.index("Audit every root-package declaration"))
+        # No other step builds a named module, so the selection lives in one place.
+        for step in self.steps:
+            if step.get("name") != self.NAME:
+                for command in logical_commands(step.get("run") or ""):
+                    if is_lake_build(command):
+                        self.assertEqual(words(command), ["lake", "build"], step.get("name"))
 
     def test_step_fails_fast(self) -> None:
         run = self.step(self.NAME)["run"]
@@ -343,9 +440,64 @@ class ProviderBuildTest(WorkflowTestCase):
     def test_provider_module_sources_exist(self) -> None:
         if not (REPO_ROOT / "ZInQKernel").is_dir():
             self.skipTest("Lean sources are not checked out here")
-        for module in PROVIDER_MODULES:
-            path = REPO_ROOT.joinpath(*module.split(".")).with_suffix(".lean")
+        for module in sorted(set(PROVIDER_MODULES) | PSIDE_BUILT):
+            path = module_source(module)
             self.assertTrue(path.is_file(), f"{module} has no source file {path}")
+
+    def test_pside_targets_build_the_pside_provider_modules(self) -> None:
+        if not (REPO_ROOT / "ZInQKernel").is_dir():
+            self.skipTest("Lean sources are not checked out here")
+        selected = [target[1:] for target in self.provider_command()[2:] if target.startswith("+" + PSIDE_PREFIX)]
+        # A missing source raises here, so it fails rather than shrinking the closure.
+        closure = import_closure(selected, read_module_imports, PSIDE_PREFIX)
+        self.assertEqual(closure, set(PSIDE_BUILT))
+
+
+class HeaderImportsTest(unittest.TestCase):
+    def test_reads_only_the_header(self) -> None:
+        text = (
+            "/- Copyright notice\n"
+            "   /- nested -/ still a comment\n"
+            "   import Not.This -/\n"
+            "-- a line comment\n"
+            "module\n"
+            "\n"
+            "import A.B\n"
+            "public import C.D  -- trailing comment\n"
+            "import all E.F\n"
+            "import G.H I.J\n"
+            "\n"
+            "/-! Module docs mention\n"
+            "import K.L\n"
+            "-/\n"
+            "namespace X\n"
+            "import M.N\n"
+        )
+        self.assertEqual(header_imports(text), ["A.B", "C.D", "E.F", "G.H", "I.J"])
+
+    def test_no_header(self) -> None:
+        self.assertEqual(header_imports("theorem t : True := trivial\nimport A\n"), [])
+
+    def test_closure_follows_prefix_and_terminates_on_cycles(self) -> None:
+        graph = {
+            "P.Top": ["P.Mid", "Q.Outside"],
+            "P.Mid": ["P.LeafA", "P.LeafB", "P.Top"],
+            "P.LeafA": [],
+            "P.LeafB": ["Mathlib.X"],
+            "P.Unused": ["P.LeafA"],
+        }
+        self.assertEqual(import_closure(["P.Top"], graph.__getitem__, "P."),
+                         {"P.Top", "P.Mid", "P.LeafA", "P.LeafB"})
+        self.assertEqual(import_closure(["Q.Outside"], graph.__getitem__, "P."), set())
+
+    def test_closure_reports_missing_sources(self) -> None:
+        graph = {"P.Top": ["P.Gone"]}
+        with self.assertRaises(KeyError):
+            import_closure(["P.Top"], graph.__getitem__, "P.")
+
+    def test_missing_module_file_raises(self) -> None:
+        with self.assertRaises(FileNotFoundError):
+            read_module_imports("ZInQKernel.Contrib.PSide.DoesNotExist")
 
 
 class AuditStagesTest(WorkflowTestCase):
