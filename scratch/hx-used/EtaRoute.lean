@@ -411,6 +411,74 @@ theorem sInv_latM {M d : ℕ} (hdM : d * M = 32) :
       rw [hinvM]
       linear_combination (T.c * a * d / 32) * this
 
+/-- `t/n ∈ K` with `κ(t) = τ_Q`. -/
+abbrev tn (m : ℕ) [NeZero m] (Q : HeegnerForm 32 D) (f n : ℕ) : QNeg m :=
+  algebraMap ℚ (QNeg m) (1 / (n : ℚ)) * tK m Q (cz m f)
+
+theorem kappa_tn (hD : D = discOf m f) (Q : HeegnerForm 32 D) (n : ℕ) :
+    kappa m (tn m Q f n) = Q.tau / n := by
+  rw [tn, kappa_mul_eq, kappa_rat, kappa_tK hD Q]; push_cast; ring
+
+/-- **`s⁻¹(τ/n)`** for `n = 2n'`, `M = 2M'`, `dM = 32`: some `v` with `s_f v − τ/n ∈ 𝔞̂` and
+`κ(v) = c'(p/n + qτ'/n)`, `q` odd. -/
+theorem exists_vt {n M d : ℕ} (hn : 0 < n) (hn2 : 2 ∣ n) (hM2 : 2 ∣ M) (hdM : d * M = 32) :
+    ∃ (v : QNeg m) (p q : ℤ),
+      finPart T.s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) (tn m T.Q f n) ∈
+        latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) ∧
+      kappa m v = T.c * (p / n + q * T.Q'.tau / n) ∧ Odd q := by
+  obtain ⟨v, hv⟩ := strongApprox m T.hsq f D T.hD 32 T.Q T.s (tn m T.Q f n)
+  have hnC : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hM0 : 0 < M := Nat.pos_of_ne_zero (by rintro rfl; simp at hdM)
+  -- `n v ∈ s⁻¹𝔞`
+  have hnv : (n : ℤ) • v ∈ sInvLat m T.s (kappa m ⁻¹' (T.Q.lat : Set ℂ)) := by
+    rw [mem_sInvLat_iff, ← (coe_KL (m := m))]
+    have h1 := latHat_zsmul_mem _ (n : ℤ) (by rw [(coe_KL (m := m))]; exact hv)
+    have h2 : algebraMap (QNeg m) (AfK m) ((n : ℤ) • tn m T.Q f n) ∈
+        latHat m ((KL m T.Q.lat : Submodule ℤ (QNeg m)) : Set (QNeg m)) := by
+      apply mem_latHat_of_mem
+      rw [(coe_KL (m := m)), Set.mem_preimage, zsmul_eq_mul, kappa_intCast_mul, kappa_tn T.hD]
+      have : ((n : ℤ) : ℂ) * (T.Q.tau / n) = T.Q.tau := by push_cast; field_simp
+      rw [this]; exact Submodule.subset_span (by simp)
+    have := latHat_add_mem _ h1 h2
+    convert this using 1
+    rw [map_zsmul, map_zsmul, mul_smul_comm, smul_sub]; abel
+  rw [mem_sInv_iff T.hlat, HeegnerForm.lat, mem_smul_span_pair] at hnv
+  obtain ⟨p, q, hpq⟩ := hnv
+  have hk : kappa m v = T.c * (p / n + q * T.Q'.tau / n) := by
+    rw [zsmul_eq_mul, kappa_intCast_mul] at hpq
+    have : kappa m v = (((n : ℤ) : ℂ))⁻¹ * (T.c * (p * 1 + q * T.Q'.tau)) := by
+      rw [← hpq]; push_cast; field_simp
+    rw [this]; push_cast; field_simp
+  refine ⟨v, p, q, hv, hk, ?_⟩
+  by_contra hq
+  rw [Int.not_odd_iff_even] at hq
+  obtain ⟨r, rfl⟩ := hq
+  obtain ⟨n', rfl⟩ := hn2
+  obtain ⟨M', rfl⟩ := hM2
+  have hn'C : (n' : ℂ) ≠ 0 := by
+    have : n' ≠ 0 := by rintro rfl; simp at hn
+    exact_mod_cast this
+  have hM'C : (M' : ℂ) ≠ 0 := by
+    have : M' ≠ 0 := by rintro rfl; simp at hM0
+    exact_mod_cast this
+  -- `n' v ∈ s⁻¹𝔟_M`
+  have hv' : (n' : ℤ) • v ∈ sInvLat m T.s (kappa m ⁻¹' (latM T.Q (2 * M') : Set ℂ)) := by
+    rw [mem_sInv_iff (sInv_latM T hdM), latM, mem_smul_span_pair]
+    refine ⟨p * M', r, ?_⟩
+    rw [zsmul_eq_mul, kappa_intCast_mul, hk]; push_cast; field_simp; ring
+  rw [mem_sInvLat_iff, ← (coe_KL (m := m))] at hv'
+  have h3 := latHat_sub_mem _ hv' (latHat_zsmul_mem _ (n' : ℤ)
+    (by rw [(coe_KL (m := m))]; exact latHat_lat_sub T.Q (lat_le_latM T.Q hM0) hv))
+  rw [map_zsmul, smul_sub, mul_smul_comm, sub_sub_cancel, ← map_zsmul, (coe_KL (m := m))] at h3
+  have h4 := (Set.ext_iff.1 (latHat_inter_latM T.hsq T.hD T.Q hM0) _).1 h3
+  rw [Set.mem_preimage, zsmul_eq_mul, kappa_intCast_mul, kappa_tn T.hD] at h4
+  have hM00 : 2 * M' ≠ 0 := hM0.ne'
+  rw [← ppM_lattice T.Q (2 * M') hM00] at h4
+  apply notMem_of_coeffs (ppM (2 * M') hM00 T.Q.tauH) 0 (1 / 2) (Or.inr (by norm_num)) _ h4
+  simp only [ppM]; push_cast; field_simp
+  show T.Q.tau * ↑M' = 0 + ↑M' * T.Q.tau
+  ring
+
 end Transport
 
 end X0EtaRoute
