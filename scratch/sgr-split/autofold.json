@@ -1,0 +1,19 @@
+{"name": "sgr-split",
+ "imports": ["ZInQKernel.Contrib.OneProof.ShimuraGoodReductionNoGuard"],
+ "discharges": [
+   {"field": "shimuraGoodReductionNoGuard",
+    "proof": "_root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed {n}.shimuraIntegralModelRep {n}.abVarSurfaceRelDim {n}.qmAbFieldFibre",
+    "leaves": [
+      {"name": "shimuraIntegralModelRep", "type": "_root_.SGRSplit.ShimuraIntegralModelRep",
+       "doc": "Representability over Z_(p), p > 324, of the moduli problem of QM abelian surfaces (disc 6) with full level 3, by a proper smooth curve (printed form on QMAbScheme): Kottwitz, J. AMS 5 (1992) 5; Buzzard, Duke 87 (1997) 1-4; Morita, Hokkaido 10 (1981); locators UNVERIFIED",
+       "kind": "published",
+       "flag": "pending reading: level 3 at 3 | D in Buzzard/Morita, and the polarization-free form versus Kottwitz's PEL form (relative Lemma P); locator UNVERIFIED",
+       "source": "Kottwitz, J. AMS 5 (1992) section 5; Buzzard, Duke Math. J. 87 (1997) sections 1-4; Morita, Hokkaido Math. J. 10 (1981); Carayol, Compositio 59 (1986) secondary (locators UNVERIFIED)"},
+      {"name": "abVarSurfaceRelDim", "type": "_root_.SGRSplit.AbVarSurfaceRelDim",
+       "doc": "An abelian variety of Krull dimension 2 is smooth of relative dimension 2 (dimension theory of smooth varieties; Stacks, Varieties; Hartshorne II.8.15; locators UNVERIFIED)",
+       "kind": "published", "flag": "",
+       "source": "Stacks Project, Varieties, smooth varieties (dim X = rank of Omega); Hartshorne II.8.15 (locators UNVERIFIED)"},
+      {"name": "qmAbFieldFibre", "type": "_root_.SGRSplit.QMAbFieldFibre",
+       "doc": "Glue: the fibre of a QM abelian scheme at a characteristic-0 field point is an object QML3 (base change, geometric integrality of a smooth geometrically connected group scheme, dimension 2, restriction of iota and eta)",
+       "kind": "project glue", "flag": "",
+       "source": "sgr-split G1 (project glue; outline in the docstring)"}]}]}
