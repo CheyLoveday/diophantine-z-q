@@ -16,3 +16,23 @@ theorem numbers from memory UNVERIFIED.
 - So the true need is `HeckeRestNV.HeckeVertWitness` (TailG l.10216): for the Hecke cover E/Q(X) (any E carrying the
   normalization chart of the R1fp/R2fp curve), every p > 324 has an unramified vertical prime; equivalently (Galois,
   compiled `heckeNoVertRam_of_witness`) `HeckeNoVertRam`. A statement about function fields: no abelian scheme.
+
+## 2. Route analysis (summary; details in docs/research/sgr-direct.md)
+
+- The consumer need is NoVerticalRam of the Hecke cover (a function-field statement). Good reduction of the QM surfaces at
+  the points used (NOS r7a, Raynaud, SGA 7 IX, Neron, Serre-Tate CM) does not by itself give it: an inertia element at
+  the Gauss prime (or at p above a point over t = J(u)) acts through 𝒪-linear automorphisms of the reduced surface,
+  and excluding those needs either the integral model (the field), char-p moduli (End of the reduction), or the local
+  tame-cover analysis of h-b1 Lemma NV (Abhyankar + Zariski-Nagata purity at (p, X - b)). SPECULATIVE-but-argued.
+- Route NV uses existing fields only through hCM (branch fibres are CM points) and Elkies' model (elkiesX6StarPrinted);
+  its local algebra uses purity in dim 2 (proved in the chain: PropTSGlue.PurityGlobalDim2 / t-purity3) and T2.
+- Simplification found here: only ONE branch point (-16/27, e | 2) and ONE square root (sqrt(-(27X+16)) in Q(X6)) are
+  needed for NV step 4 (h-b1 used two branch points and the W-group). VERIFIED (compiled, §3).
+
+## 3. Lean (scratch/sgr-direct/NV.lean) — compiled, standard axioms (VERIFIED, lake env lean, 2026-11-15)
+
+- `SGRDirect.heckeVertWitness_of_nv : R1R2fp → TorsionStructure → QMAutCard → SerreRigidity3 → ALFixedPoints →
+  NVLocalInertia → RamifiedSqrtInertia → VertInertiaTrivial → HeckeBranchFibreUnram → HeckeSqrtBranch →
+  HDec.HeckeRestNV.HeckeVertWitness`. `#print axioms`: propext, Classical.choice, Quot.sound.
+- helpers proved: gal_fix, gal_sq, conj_fix, algebraMap_int_injective, exists_vertPrime, vert_fix,
+  vertUnramWitness_of_nv.
