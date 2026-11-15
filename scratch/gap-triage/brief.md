@@ -1,6 +1,6 @@
 # Brief for gap-triage reading agents
 
-Repository root: /home/jackmccarthy/dzq-wt/gap-triage (git worktree, branch wip/gap-triage, base e38375b3 = fork main w62).
+Repository root: the task worktree (git worktree, branch wip/gap-triage, base e38375b3 = fork main w62).
 Project: Lean 4.35 / Mathlib v4.35 formalization of "Z is Diophantine in Q". The single proof is
 `ZInQ.OneProof.frozenTarget` (ZInQKernel/OneProof/Main.lean). Its hypotheses are four bundles of open statements
 (fields) plus six top statements. The H chain is ZInQKernel/OneProof/H/ (LPrefix, TailA ... TailZ15); each newer
