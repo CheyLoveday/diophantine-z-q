@@ -93,3 +93,11 @@ of the e38375b3 build). One Lean process at a time.
   e(y) (fiberHomeo, IsInducing.isPreconnected_image); rational point from e; IsPullback.of_right; then
   GeometricallyConnected.geometrically_connectedSpace. `semistableNeronBaseChange_of_printed_final''`
   (4 printed leaves + bundle leaf GeomConnOfRationalPoint + 3 topological glue) COMPILES, standard axioms.
+- `geomConnected_idComp` (W = G⁰ → S geometrically connected, from 04KV at every fibre) and
+  `connectedSpace_pullback_idComp` refactored; `unit_bc_fst` (unit of a base change).
+- `idCompBaseChangeDVR_of : SGA3_VIB_3_10 → GeomConnOfRationalPoint → IdCompBaseChangeDVR` PROVED
+  (IdCompBaseChangeDVR now also assumes [QuasiCompact G.hom]; weaker, used only for Néron models).
+- `idCompSubgroup_of : SGA3_VIB_3_10 → GeomConnOfRationalPoint → IdCompSubgroup` PROVED (IdCompSubgroup now assumes
+  [IsNoetherian S] [QuasiCompact G.hom]; W ×_S W → S geometrically connected via GeometricallyConnected.comp).
+- `semistableNeronBaseChange_of_printed_best` (4 printed leaves + bundle leaf GeomConnOfRationalPoint + one glue
+  `OpenSubgroupIsIdComp`) COMPILES, standard axioms.
