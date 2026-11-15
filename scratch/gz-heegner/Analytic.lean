@@ -633,6 +633,128 @@ theorem exists_const_eichler (γ : SL(2, ℤ)) :
   simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply] at this
   rw [← this]; simp [hH]
 
+/-- The antiderivative as a power series sum (analytic at `q = 0`). -/
+def Gser (γ : SL(2, ℤ)) : FormalMultilinearSeries ℂ ℂ ℂ :=
+  FormalMultilinearSeries.ofScalars ℂ (betaC f γ)
+
+theorem Gser_radius (γ : SL(2, ℤ)) : 0 < (Gser f γ).radius := by
+  have h := (Gser f γ).le_radius_of_summable_norm (r := (1 / 2 : NNReal)) (by
+    have := betaC_summable_norm f γ (q := (1 / 2 : ℂ)) (by norm_num)
+    refine this.congr fun m => ?_
+    rw [Gser, FormalMultilinearSeries.ofScalars_norm]
+    norm_num)
+  exact lt_of_lt_of_le (by norm_num) h
+
+theorem Gq_eq (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    Gq f γ τ = (Gser f γ).sum (Function.Periodic.qParam (N : ℝ) τ) := by
+  rw [Gser, ← FormalMultilinearSeries.ofScalarsSum, FormalMultilinearSeries.ofScalarsSum_eq_tsum]
+  simp [Gq]
+
+theorem analyticAt_Gser (γ : SL(2, ℤ)) : AnalyticAt ℂ (Gser f γ).sum 0 :=
+  ((Gser f γ).hasFPowerSeriesOnBall (Gser_radius f γ)).analyticAt_of_mem
+    (by rw [Metric.mem_eball, edist_self]; exact Gser_radius f γ)
+
 end Cusp
 
+/-- **Moderate growth from meromorphy at the cusp.** If `F(τ) = M(q_N(τ))` with `M` meromorphic at
+`q = 0`, then `F(τ) = O(e^{2πk Im τ})` as `Im τ → ∞`. -/
+theorem growth_of_meromorphicAt {N : ℕ} [NeZero N] {M : ℂ → ℂ} (hM : MeromorphicAt M 0)
+    (F : UpperHalfPlane → ℂ) (hF : ∀ τ, F τ = M (Function.Periodic.qParam (N : ℝ) τ)) :
+    ∃ k : ℕ, F =O[UpperHalfPlane.atImInfty] fun τ => Real.exp (2 * Real.pi * k * τ.im) := by
+  obtain ⟨n, hn⟩ := hM
+  obtain ⟨δ, hδ, hδb⟩ := Metric.continuousAt_iff.1 hn.continuousAt 1 one_pos
+  set C : ℝ := ‖(fun z => (z - 0) ^ n • M z) 0‖ + 1
+  have hNpos' : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+  refine ⟨n, Asymptotics.IsBigO.of_bound C ?_⟩
+  rw [Filter.eventually_iff, UpperHalfPlane.atImInfty_mem]
+  refine ⟨N * |Real.log δ| / (2 * Real.pi) + 1, fun τ hτ => ?_⟩
+  simp only [Set.mem_setOf_eq]
+  set q := Function.Periodic.qParam (N : ℝ) (τ : ℂ)
+  have hq0 : q ≠ 0 := Complex.exp_ne_zero _
+  have hqn : ‖q‖ = Real.exp (-2 * Real.pi * τ.im / N) := by
+    rw [Function.Periodic.norm_qParam (N : ℝ) (τ : ℂ)]; rfl
+  have hqδ : ‖q‖ < δ := by
+    rw [hqn]
+    have hπ := Real.pi_pos
+    have h1 : -2 * Real.pi * τ.im / N < Real.log δ := by
+      have hA : N * |Real.log δ| / (2 * Real.pi) < τ.im := by linarith [hτ]
+      rw [div_lt_iff₀ (by positivity) ] at hA
+      have : -2 * Real.pi * τ.im / N < -|Real.log δ| := by
+        rw [div_lt_iff₀ hNpos']; nlinarith
+      linarith [neg_abs_le (Real.log δ)]
+    calc Real.exp (-2 * Real.pi * τ.im / N) < Real.exp (Real.log δ) := Real.exp_lt_exp.2 h1
+      _ = δ := Real.exp_log hδ
+  have hb := hδb (x := q) (by rw [dist_zero_right]; exact hqδ)
+  rw [dist_eq_norm] at hb
+  have hb' : ‖(q - 0) ^ n • M q‖ ≤ C := by
+    have := norm_sub_norm_le ((fun z => (z - 0) ^ n • M z) q) ((fun z => (z - 0) ^ n • M z) 0)
+    simp only at this; linarith
+  rw [sub_zero, norm_smul, norm_pow] at hb'
+  have hqpos : 0 < ‖q‖ := norm_pos_iff.2 hq0
+  rw [hF τ, Real.norm_of_nonneg (Real.exp_pos _).le]
+  have hM' : ‖M q‖ ≤ C / ‖q‖ ^ n := by
+    rw [le_div_iff₀ (pow_pos hqpos n)]; linarith [mul_comm (‖q‖ ^ n) ‖M q‖]
+  refine hM'.trans ?_
+  rw [div_le_iff₀ (pow_pos hqpos n), hqn, ← Real.exp_nat_mul, mul_assoc, ← Real.exp_add]
+  have hC : 0 ≤ C := by positivity
+  have h2 : 2 * Real.pi * n * τ.im + n * (-2 * Real.pi * τ.im / N) ≥ 0 := by
+    have hτ0 : 0 < τ.im := τ.im_pos
+    have h3 : n * (2 * Real.pi * τ.im / N) ≤ n * (2 * Real.pi * τ.im) := by
+      apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg n)
+      rw [div_le_iff₀ hNpos']
+      have : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (NeZero.ne N)
+      nlinarith [mul_nonneg (mul_nonneg (by positivity : (0 : ℝ) ≤ 2 * Real.pi) hτ0.le)
+        (sub_nonneg.2 this)]
+    have : n * (-2 * Real.pi * τ.im / N) = -(n * (2 * Real.pi * τ.im / N)) := by ring
+    rw [this]; nlinarith
+  calc C = C * 1 := (mul_one C).symm
+    _ ≤ C * Real.exp (2 * Real.pi * n * τ.im + n * (-2 * Real.pi * τ.im / N)) := by
+        gcongr; exact Real.one_le_exp h2
+
+
+/-- **(GLUE, analysis; proved: `paramCuspGrowth`) Moderate growth of the coordinates of `φ` at every
+cusp.** For `γ ∈ SL₂(ℤ)`, each of `x(φ(γτ))`, `y(φ(γτ))`, `1/(x(φ(γτ)) − t)` is `O(e^{2πk Im τ})` as
+`Im τ → ∞`, for some `k`. -/
+def ParamCuspGrowth : Prop :=
+  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (N : ℕ) [NeZero N] (f : Newform N 2)
+    (L : PeriodPair) (c : ℚ), ParamSetting E f L c → ∀ γ : SL(2, ℤ),
+    (∃ k : ℕ, (fun τ : UpperHalfPlane => xPar E L f c (γ • τ)) =O[UpperHalfPlane.atImInfty]
+        (fun τ => Real.exp (2 * Real.pi * k * τ.im))) ∧
+    (∃ k : ℕ, (fun τ : UpperHalfPlane => yPar E L f c (γ • τ)) =O[UpperHalfPlane.atImInfty]
+        (fun τ => Real.exp (2 * Real.pi * k * τ.im))) ∧
+    ∀ t : ℚ, ∃ k : ℕ, (fun τ : UpperHalfPlane => gPar E L f c t (γ • τ)) =O[UpperHalfPlane.atImInfty]
+        (fun τ => Real.exp (2 * Real.pi * k * τ.im))
+
+theorem meromorphicAt_wpb (L : PeriodPair) (b z₀ : ℂ) :
+    MeromorphicAt (fun z => L.weierstrassP z - b) z₀ :=
+  (meromorphicAt_wp L z₀).sub (MeromorphicAt.const _ _)
+
+theorem meromorphicAt_psi (L : PeriodPair) (a₁ a₃ b z₀ : ℂ) :
+    MeromorphicAt (fun z => (L.derivWeierstrassP z - a₁ * (L.weierstrassP z - b) - a₃) / 2) z₀ :=
+  (((meromorphicAt_dwp L z₀).sub ((MeromorphicAt.const _ _).mul (meromorphicAt_wpb L b z₀))).sub
+    (MeromorphicAt.const _ _)).div (MeromorphicAt.const _ _)
+
+/-- **`ParamCuspGrowth`, proved.** -/
+theorem paramCuspGrowth : ParamCuspGrowth := by
+  intro E _ N _ f L c _ γ
+  obtain ⟨K₀, hK⟩ := exists_const_eichler f γ
+  set Z : ℂ → ℂ := fun q => (c : ℂ) * K₀ + (c : ℂ) * (Gser f γ).sum q with hZdef
+  have hZ : AnalyticAt ℂ Z 0 := analyticAt_const.add (analyticAt_const.mul (analyticAt_Gser f γ))
+  have hz : ∀ τ : UpperHalfPlane, zPar f c (γ • τ) = Z (Function.Periodic.qParam (N : ℝ) τ) := by
+    intro τ; simp only [zPar, hK, Gq_eq, hZdef]; ring
+  set b : ℂ := (E⁄ℂ).b₂ / 12 with hb
+  refine ⟨growth_of_meromorphicAt (N := N) ((meromorphicAt_wpb L b _).comp_analyticAt hZ) _
+      (fun τ => by simp only [xPar, hz, Function.comp_apply, hb]),
+    growth_of_meromorphicAt (N := N)
+      ((meromorphicAt_psi L (E⁄ℂ).a₁ (E⁄ℂ).a₃ b _).comp_analyticAt hZ) _
+      (fun τ => by simp only [yPar, xPar, hz, Function.comp_apply, hb]),
+    fun t => growth_of_meromorphicAt (N := N) ((meromorphicAt_phiT L (b + t) _).comp_analyticAt hZ)
+      _ (fun τ => by
+        show gPar E L f c t (γ • τ) = phiT L (b + t) (Z (Function.Periodic.qParam (N : ℝ) τ))
+        unfold gPar phiT xPar
+        rw [hz τ, sub_sub])⟩
+
 end ZInQ.GZHeegner
+
+#print axioms ZInQ.GZHeegner.paramCuspGrowth
+#print axioms ZInQ.GZHeegner.paramRegular

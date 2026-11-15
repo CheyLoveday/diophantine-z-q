@@ -39,3 +39,9 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
 - VERIFIED (compiled, scratch `Analytic.lean`): `paramRegular : ParamRegular` (℘, ℘' meromorphic everywhere via
   `weierstrassPExcept`; `1/(℘ − c₀)` analytic at lattice points (value 0); φ_f = Σ aₙ/n qⁿ with radius ≥ 1 from the
   q-expansion of f converging on |q| < 1 (Mathlib `hasSum_qExpansion`, Tau Ceti `one_mem_strictPeriods_Gamma1_map`)).
+- VERIFIED (compiled, `Analytic.lean`): `paramCuspGrowth : ParamCuspGrowth` (restated: one exponent `k` per function;
+  this is what `IsRatModFnMero` needs). Route: `D φ_f = f` (termwise derivative), Mathlib
+  `normalizedDerivOfComplex_SL_slash` gives `D(φ_f∘γ) = f|₂γ`; `f|₂γ` is `N`-periodic (γTᴺγ⁻¹ ∈ Γ(N) ⊆ Γ₁(N)),
+  holomorphic, zero at ∞, so it has a `q_N`-expansion with `b₀ = 0`; its termwise antiderivative `G` has `D G = f|₂γ`,
+  hence `φ_f(γτ) = K₀ + G(q_N)` (`exists_const_eichler`); then `x∘φ∘γ = (℘ − b)∘(cK₀ + cG)` is meromorphic in `q_N` at 0
+  and `growth_of_meromorphicAt` gives the bound.
