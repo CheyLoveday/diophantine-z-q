@@ -1,0 +1,20 @@
+# jacobi-lambda results log
+
+Target: `ZInQ.GZWeil.JacobiLambdaDeriv` (ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilTheta.lean, gz-weil f4a06a48):
+`∀ t, 0 < t.im → HasDerivAt (fun s => thetaTwo s ^ 4 / thetaThree s ^ 4) (π * I * (thetaTwo t ^ 4 / thetaThree t ^ 4) * thetaFour t ^ 4) t`.
+
+## Survey (VERIFIED, read)
+- Mathlib v4.35.0: `jacobiTheta₂` (TwoVariable.lean) with `jacobiTheta₂_add_left`, `_add_left'`, `_neg_left`,
+  `hasFDerivAt_jacobiTheta₂`, functional equation; `jacobiTheta` bounds `norm_jacobiTheta_sub_one_le`.
+  No theta-constant identities (no Jacobi quartic, no Landen), no modular forms for Γ(2), dimension formula only level one.
+- Kernel: gz-theta triple product `jacobiTheta₂_eq_jtpP`; gz-weil product forms at 16τ.
+
+## Route chosen
+Landen recursion: with h = θ₂/θ₃, F = h'/h − (πi/4)θ₄⁴ satisfies F(τ) = (θ₄²/θ₃²)(τ) F(2τ) (from Landen + Jacobi quartic),
+and F(σ) = O(e^{−π Im σ}); iterate to get F = 0.
+
+## Compile outcomes
+- 05:25 `Dev.lean`: duplication formula `jacobiTheta₂_mul_jacobiTheta₂`
+  θ(z,τ)θ(w,τ) = θ(z+w,2τ)θ(z−w,2τ) + e^{2πiz+πiτ}θ(z+w+τ,2τ)θ(z−w+τ,2τ): VERIFIED (compiled; numerically checked dup_check.py).
+- 05:35 Landen identities `landen_three`, `landen_four`, `landen_two`, `landen_three_four` and `jacobi_quartic`
+  (θ₃⁴ = θ₂⁴ + θ₄⁴): VERIFIED compiled, axioms [propext, Classical.choice, Quot.sound].
