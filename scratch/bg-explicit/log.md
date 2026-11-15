@@ -17,3 +17,12 @@ Base 43513d87 (leaf-fold25). Field: `OpenResearchLeaves22.babaGranathRationalAb 
 ## Compile log
 - scratch/bg-explicit/BGExplicit.lean: first full draft compiled (no errors) 2026-11-15 ~06:10.
   (Needed lean/.lake copied from ~/dzq-wt/cm-stab, same lean/ZInQ tree 02e27597.)
+- ZInQKernel/Contrib/OneProof/BabaGranathRationalAb.lean: `lake build ZInQKernel.Contrib.OneProof.BabaGranathRationalAb` OK.
+  `#print axioms` (scratch draft): both theorems [propext, Classical.choice, Quot.sound]. VERIFIED.
+  (`local notation` replaced by selective `open ... (rep)`, `open ... (xr)`: kit forbids new notation.)
+- #discharges (scratch/bg-explicit/discharges.txt): `DISCHARGES [OpenResearchLeaves22.babaGranathRationalAb]` by
+  `babaGranathRationalAb_of_AL` and `babaGranathRationalAb_of_printed`; the latter assumes only open fields
+  (elkiesX6StarPrinted, uniformizationLeafAll, gagaMorphism, mumfordTorsionAlgClosed); standard axioms. VERIFIED.
+- autofold dry-run: strict 46/10 on 56 -> 45/10 on 55; strictest 45/11 -> 44/11. Generated module
+  (FoldDryRun.lean) compiles, sixContactMin_of_open30 standard axioms. VERIFIED.
+- New leaves: none.
