@@ -13,3 +13,19 @@ Notation: ϑ(z) = jacobiTheta₂ z w, s(z) = ϑ(z + (1+w)/2) (zeros exactly Λ =
 - (P3, series split) θ₃(w) − θ₂(w) = θ₄(w/4), i.e. ϑ(0) − e^{πiw/4}ϑ(w/2) = jacobiTheta₂ (1/2) (w/4).
 - (P2+P4, triple product, Q = e^{πiw/8}) θ₃/θ₂ = 1 − 2R reduces to products ∏(1 ± Q^{16n+k}) and
   the even/odd product split.
+
+## Compile results (all VERIFIED, `lake env lean` / `lake build`, Lean 4.35.0, Mathlib v4.35.0)
+- scratch/theta-wp8/ThetaZeros.lean (dev file, 870 lines): compiles; `ThetaWP8.core` axioms [propext, Classical.choice, Quot.sound].
+  - Part A: `sF_add_one`, `sF_add_w`, `sF_eq_factor` (s = (1 − e(−y))·G), `hasDerivAt_sF_zero` (s'(0) = 2πi A³),
+    `sF_ne_zero` (zeros ⊆ ℤ+ℤw, triple product), `sF_add_lat`, `sF_lat`, `sF_simple`.
+  - Part B: `reg`, `reg_eventuallyEq`, `reg_analyticAt`, `reg_add_period`, `isBounded_range_of_periodic`.
+  - Part C: `hF_add_one`, `hF_add_w`, `hF_local` (4 cases), `hF_const` (∃ K ≠ 0, h ≡ K off singular set).
+  - Part D: `theta_gp` (triple product at base Q = e^{πiw/8}), `gp_shift`, `gp_split`, `gp_pm`, `euler16`,
+    `theta4_quarter` (θ₄(w/4) = θ₃ − θ₂ by even/odd series split), `val_t0/t2/t4/u/f4`, `prod_identity`.
+  - Part E: `core` (any PeriodPair with ω₁ = 1, ω₂ = w).
+- ZInQKernel/Contrib/OneProof/ThetaWeierstrass8.lean (new, imports X0ModuliUsed): `lake build` OK (12995 jobs).
+  `ThetaWP8.thetaWeierstrass8 : X0EtaRoute.ThetaWeierstrass8` (exact statement), `xEtaWeierstrass`,
+  `tyzThm35ReadingA_noHX`, `frozenTarget_noHX` (binders of `ZInQ.OneProof.frozenTarget` minus `hX`).
+- #discharges (scratch/theta-wp8/Discharges.lean → discharges-output.txt): 63 open hypotheses, 2103 theorems,
+  7 discharge one (the same 7 pre-existing ones; `hX` is a plain argument of frozenTarget, not a bundle field).
+  All five new theorems and `ZInQ.OneProof.frozenTarget`: standard axioms.
