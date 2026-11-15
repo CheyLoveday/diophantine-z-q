@@ -23,3 +23,7 @@
 - 11-14 19:13 hash guard (DumpBase over TailZ22 + Main's other imports; DumpNew over Main): 13225 before, 13414
   after, 0 deleted, 0 changed, 189 new (91 TailZ23, 97 TailZ24, frozenTarget). The before dump equals x6-fold's
   after dump minus frozenTarget (0/0/0), so the initial rebuild changed nothing. VERIFIED.
+- 11-14 19:20 Uses.lean (BFS from sixContactMin_of_open18, 6 min): closure 73179 constants. Every Prop the new leaves
+  feed has non-bundle consumers in the closure: SS1 (r19/r21_of_leaves, stableHeightFinite_of), SS3
+  (r20_of_leaves'), r6 (goodReduction_of_QM_rational3, kernelFieldExists_*), T09 (t9_of_leaves5, detTate_of_leaves4,
+  tatePairingZl_of_leaves4). uses_out.txt. (Membership in the closure; live paths not traced further.)
