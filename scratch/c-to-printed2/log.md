@@ -15,3 +15,17 @@ Base e38375b3. Compile command: `lake env lean scratch/c-to-printed2/<file>.lean
     `finrank_Ysp_dual_eq`; hodge-split's `htMult_eq_finrank_Ysp`.
   - Consequence: modular-split's glue `HTDual` is closed by two existing bundle LEAF fields (`tateTwistInvariants`,
     `axSenTate`).
+- Build note: the worktree lacked the upstream helper package build (`lean/.lake`), so `import ...TailZ15` failed
+  with "unknown module prefix 'ZInQ'"; copied `~/dzq-wt/leaf-fold10/lean/.lake` (sources `diff -rq` identical).
+- `CToPrinted2.lean` (imports `OneProof.H.TailZ15`): **VERIFIED** compiles, 0 errors, 7 `#print axioms` lines all
+  `[propext, Classical.choice, Quot.sound]` (output `CToPrinted2_out.txt`, about 20 s).
+  - §0: the three fields copied verbatim; `rfl` against `LadicCond.CarayolR17'`,
+    `ZInQ.Contrib.HodgeSplit.EigenformHTNew`, `HDec.WeilPairing.T09_SymmIsogenyExists`; projections from
+    `OpenResearchLeaves10` / `OpenAddedLeaves9` typecheck at these types.
+  - §1–5 = `HTDual.lean`; under the TailZ15 import `IsGalois.mk` hit the synthInstance limit (instance drift);
+    fixed with `set_option synthInstance.maxHeartbeats 400000 in` on `htDual_proof`.
+  - §6: `eigenformHTNew_of_printed : KatoRealizationCoh → TateTwistInvariants → AxSenTate → EigenformHTNew`;
+    `katoRealization_iff_field : DSThm965 → DSThm966 → (KatoRealization ↔ EigenformHTNew)`.
+  - §7: `carayolR17'_of_realization` (modular-split, verbatim);
+    `carayolRealization_iff_field : DSThm965 → DSThm966 → (CarayolRealization ↔ CarayolR17')`.
+  - §9: `fields_of_printed (hK : KatoRealizationCoh) (hC : CarayolRealization) (l : OpenAddedLeaves9)`.
