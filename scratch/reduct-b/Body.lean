@@ -435,6 +435,151 @@ theorem semistablePersists_of_leaves_nf (h33 : SemistablePersistsDVRnf)
   exact hasSemistableReduction_of hN O' _
     (semistableNeronModels_transport (bcbcIso A L L') (bcbcIso_isMonHom A L L') h1)
 
+
+/-- `SemistableReductionDVR` at number fields (the generality of its use in SS1; its other use, r8,
+is over every field). -/
+def SemistableReductionDVRnf : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (A : PkgI3.AbVar K),
+    ∃ K' : IntermediateField K (AlgebraicClosure K), FiniteDimensional K K' ∧
+      ∀ O' : ValuationSubring K', IsDiscreteValuationRing O' →
+        O'.comap (algebraMap K K') = O → SemistableNeronModels (A.baseChange K') O'
+
+theorem reductionNF_of_general (h : SemistableReductionDVR) : SemistableReductionDVRnf :=
+  fun K _ _ O _ A => h K O A
+
+/-- **K1 at number fields from the restricted 4.7** (`RaynaudSemistableCP`): the proof of
+`semistableReductionDVR_of_raynaud`, with `K'` a number field, so `κ(O')` is finite. -/
+theorem semistableReductionDVRnf_of_raynaudCP (hR : RaynaudSemistableCP)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hE : AvSplit.T4.MulEtaleAbelianScheme) :
+    SemistableReductionDVRnf := by
+  intro K _ _ O _ A
+  obtain ⟨m, hm3, hmu⟩ := exists_three_le_isUnit (R := O)
+  have hmK : (m : K) ≠ 0 := natCast_ne_zero_of_isUnit O hmu
+  obtain ⟨K', hfin, hfix⟩ :=
+    torsionFieldOfDefinition_of (AvSplit.torsionStructure_of_mumford hM) K A m hmK
+  refine ⟨K', hfin, fun O' hO'dvr hO => ?_⟩
+  haveI := hO'dvr
+  haveI : NumberField K' := NumberField.of_module_finite K K'
+  haveI := perfectField_residue_nf O'
+  have hmu' : IsUnit (m : O') := by
+    have := hmu.map (comapHom hO)
+    rwa [map_natCast] at this
+  refine hR K' O' (A.baseChange K') m hm3 hmu' ?_
+  intro x hx
+  haveI : Algebra.IsAlgebraic K' (AlgebraicClosure K) := Algebra.IsAlgebraic.tower_top (K := K) K'
+  haveI : Module.IsTorsionFree K' (AlgebraicClosure K') :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr (algebraMap K' (AlgebraicClosure K')).injective
+  haveI : Module.IsTorsionFree K' (AlgebraicClosure K) :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr (algebraMap K' (AlgebraicClosure K)).injective
+  let κ' : AlgebraicClosure K →ₐ[K'] AlgebraicClosure K' := IsAlgClosed.lift
+  let κ : AlgebraicClosure K →ₐ[K] AlgebraicClosure K' := κ'.restrictScalars K
+  obtain ⟨p, hp, hpx⟩ := torsion_descends_etale hE A κ m hmK x hx
+  obtain ⟨z, hz⟩ := fixedTorsionRational_inter hE K' A m hmK p hp (fun σ hσ => hfix σ hσ p hp)
+  refine ⟨(bcPt A K').symm z, ?_⟩
+  rw [← hpx, ← hz]
+  apply (bcPt A (AlgebraicClosure K')).injective
+  rw [MulEquiv.apply_symm_apply, bcPt_extPt, MulEquiv.apply_symm_apply, extPt_extPt]
+  have hκ : AlgHom.restrictScalars K (Algebra.ofId K' (AlgebraicClosure K')) = κ.comp K'.val := by
+    refine AlgHom.ext fun a => ?_
+    exact (κ'.commutes a).symm
+  rw [hκ]
+
+/-- **SS1** (`HeightSplit.SemistableReductionThm`) from 3.6 and the number-field form of 3.3a:
+reduct-split's `semistableReductionThm_of_leaves` with `h33` retyped; the only addition is the
+`NumberField (F O)` instance at the one use of `h33` over `F O`. -/
+theorem semistableReductionThm_of_leaves_nf (h36 : SemistableReductionDVRnf)
+    (h33 : SemistablePersistsDVRnf) (hN : NeronSchemeModelExistsDVR) (hLG : SemistableLocalGlobal)
+    (hAA : SemistableAlmostAll) (hDown : DVRComapFinite) :
+    ZInQ.HeightSplit.SemistableReductionThm := by
+  classical
+  intro K _ _ A
+  set S := {O : ValuationSubring K | IsDiscreteValuationRing O ∧ ¬ HasSemistableReduction A O}
+  have hS : S.Finite := hAA K A
+  have hch : ∀ O : ValuationSubring K, ∃ K' : IntermediateField K (AlgebraicClosure K),
+      FiniteDimensional K K' ∧ (IsDiscreteValuationRing O →
+        ∀ O' : ValuationSubring K', IsDiscreteValuationRing O' →
+          O'.comap (algebraMap K K') = O → SemistableNeronModels (A.baseChange K') O') := by
+    intro O
+    by_cases hO : IsDiscreteValuationRing O
+    · obtain ⟨K', h1, h2⟩ := h36 K O A
+      exact ⟨K', h1, fun _ => h2⟩
+    · exact ⟨⊥, inferInstance, fun h => absurd h hO⟩
+  choose F hFfin hF using hch
+  let L₀ : IntermediateField K (AlgebraicClosure K) := ⨆ O ∈ hS.toFinset, F O
+  haveI : FiniteDimensional K L₀ :=
+    IntermediateField.finiteDimensional_iSup_of_finset' (fun O _ => hFfin O)
+  haveI : NumberField L₀ := NumberField.of_module_finite K L₀
+  refine ⟨L₀, inferInstance, inferInstance, inferInstance, fun 𝒩 h𝒩 => ?_⟩
+  rw [hLG K A L₀ 𝒩 h𝒩]
+  intro O'' hO''
+  haveI := hO''
+  haveI hO : IsDiscreteValuationRing (O''.comap (algebraMap K L₀)) := hDown K L₀ O'' hO''
+  by_cases hOS : O''.comap (algebraMap K L₀) ∈ S
+  · -- a place of bad reduction: go through `F O ≤ L₀`
+    set O := O''.comap (algebraMap K L₀) with hOdef
+    have hle : F O ≤ L₀ := le_iSup₂ (f := fun O _ => F O) O (hS.mem_toFinset.mpr hOS)
+    letI : Algebra (F O) L₀ := (IntermediateField.inclusion hle).toRingHom.toAlgebra
+    haveI : IsScalarTower K (F O) L₀ := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+    haveI : FiniteDimensional (F O) L₀ := by
+      haveI := hFfin O
+      exact FiniteDimensional.right K (F O) L₀
+    haveI : NumberField (F O) := by
+      haveI := hFfin O
+      exact NumberField.of_module_finite K (F O)
+    haveI hOi : IsDiscreteValuationRing (O''.comap (algebraMap (F O) L₀)) :=
+      hDown (F O) L₀ O'' hO''
+    have hc : (O''.comap (algebraMap (F O) L₀)).comap (algebraMap K (F O)) = O := by
+      rw [ValuationSubring.comap_comap, ← IsScalarTower.algebraMap_eq]
+    have h1 : SemistableNeronModels (A.baseChange (F O)) (O''.comap (algebraMap (F O) L₀)) :=
+      hF O hO _ hOi hc
+    have h2 := hasSemistableReduction_of hN _ _ h1
+    have h3 := h33 (F O) (O''.comap (algebraMap (F O) L₀)) L₀ O'' rfl (A.baseChange (F O)) h2
+    exact hasSemistableReduction_of hN O'' _
+      (semistableNeronModels_transport (bcbcIso A (F O) L₀) (bcbcIso_isMonHom A (F O) L₀) h3)
+  · -- a place of semistable reduction of `A`
+    have hgood : HasSemistableReduction A (O''.comap (algebraMap K L₀)) := by
+      by_contra hc
+      exact hOS ⟨hO, hc⟩
+    exact hasSemistableReduction_of hN O'' _ (h33 K _ L₀ O'' rfl A hgood)
+
+/-- **SS3** from the number-field form of 3.3a, `DVRComapFinite` discharged (as
+`semistablePersists_final`). -/
+theorem semistablePersists_final_nf (h33 : SemistablePersistsDVRnf)
+    (hN : NeronSchemeModelExistsDVR) (hLG : SemistableLocalGlobal) :
+    ZInQ.HeightSplit.SemistablePersists :=
+  semistablePersists_of_leaves_nf h33 hN hLG dvrComapFinite
+
+/-- **SS1** from 3.6 and the number-field form of 3.3a, `DVRComapFinite` discharged (as
+`semistableReductionThm_final`). -/
+theorem semistableReductionThm_final_nf (h36 : SemistableReductionDVRnf)
+    (h33 : SemistablePersistsDVRnf) (hN : NeronSchemeModelExistsDVR) (hLG : SemistableLocalGlobal)
+    (hAA : SemistableAlmostAll) : ZInQ.HeightSplit.SemistableReductionThm :=
+  semistableReductionThm_of_leaves_nf h36 h33 hN hLG hAA dvrComapFinite
+
+/-- The two uses of 3.3a (SS1 and SS3, as in `TailZ15`) from the restricted printed leaf
+`SemistablePersistsSHcp` and `StrictHenselizationPair`. -/
+theorem ss1_ss3_of_cp (hSH : SemistablePersistsSHcp) (hPair : StrictHenselizationPair)
+    (h36 : SemistableReductionDVR) (hN : NeronSchemeModelExistsDVR) (hLG : SemistableLocalGlobal)
+    (hAA : SemistableAlmostAll) :
+    ZInQ.HeightSplit.SemistableReductionThm ∧ ZInQ.HeightSplit.SemistablePersists :=
+  ⟨semistableReductionThm_final_nf (reductionNF_of_general h36) (persistsNF_of_cp (semistablePersistsDVRcp_of_SH hSH hPair))
+      hN hLG hAA,
+    semistablePersists_final_nf (persistsNF_of_cp (semistablePersistsDVRcp_of_SH hSH hPair)) hN hLG⟩
+
+/-- **SS1 and SS3 from the restricted printed leaves only** (no general-field SGA 7 leaf):
+`RaynaudSemistableSHcp`, `SemistablePersistsSHcp`, `StrictHenselizationPair`, Mumford and `[m]` étale.
+(r6 and r8, the other uses of 4.7 and 3.6, are over every field and are not covered.) -/
+theorem ss1_ss3_of_cp_full (hR : RaynaudSemistableSHcp) (hSH : SemistablePersistsSHcp)
+    (hPair : StrictHenselizationPair) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (hE : AvSplit.T4.MulEtaleAbelianScheme) (hN : NeronSchemeModelExistsDVR)
+    (hLG : SemistableLocalGlobal) (hAA : SemistableAlmostAll) :
+    ZInQ.HeightSplit.SemistableReductionThm ∧ ZInQ.HeightSplit.SemistablePersists :=
+  ⟨semistableReductionThm_final_nf
+      (semistableReductionDVRnf_of_raynaudCP (raynaudSemistableCP_of_SH hR hPair hE) hM hE)
+      (persistsNF_of_cp (semistablePersistsDVRcp_of_SH hSH hPair)) hN hLG hAA,
+    semistablePersists_final_nf (persistsNF_of_cp (semistablePersistsDVRcp_of_SH hSH hPair)) hN hLG⟩
+
 end RouteBCP
 
 end ReductB
@@ -445,3 +590,6 @@ end ReductB
 #print axioms ReductB.raynaudSemistableCP_of_SH
 #print axioms ReductB.semistablePersistsDVRcp_of_SH
 #print axioms ReductB.semistablePersists_of_leaves_nf
+#print axioms ReductB.ss1_ss3_of_cp
+#print axioms ReductB.semistableReductionDVRnf_of_raynaudCP
+#print axioms ReductB.ss1_ss3_of_cp_full
