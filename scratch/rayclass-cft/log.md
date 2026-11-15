@@ -29,3 +29,18 @@ RayClassCM ⇐ ShimuraMainThmIDeligneY3AbU (leaf 1 above folded into the Deligne
   `ι(β)(τ,1)ᵀ = λ(τ,1)ᵀ`.
 Everything else (Tau Ceti kernel of the Artin map = ray subgroup, Galois descent of residue fields,
 extension of automorphisms of `ℚ̄` to `ℂ`, DCRel manipulations) to be proved.
+
+## Step 1 (11-14, 21:xx): the reduction compiles (VERIFIED)
+Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the previous):
+`Base.lean` (shimura-cft verbatim) → `RayDefs.lean` (x6-glue's Ray section verbatim, lines 6587-6745)
+→ `RayProof1..5.lean`. All compile with 0 errors.
+- `RayClassCFT.rayClassCM_of (hL : ShimuraMainThmIDeligneY3AbU) (hMR : MumfordRigidityCore)
+  (hCN : ClassNumberOneB) (hI4 hI3 hI24 : QHatIntegral _) (hB : CMBaseChange) (hA : CMAnalytic)
+  (hO4 hO3 hO24 : RingOfIntegersGen _ _) : RayClassCM` — axioms [propext, Classical.choice, Quot.sound].
+- `RayClassCFT.embed_core` (one field) — standard axioms.
+- Proved on the way: `iota_mul/add/smul/algebraMap`, `det_iota` (det ι(x) = nrd x), `det_pos_of_eig`,
+  `smul_eq_of_eig` (Möbius fixed point), `exists_lift_ringHom`, `fieldMap_ιC_inj`, `galPt_fieldMap`,
+  `residueImage_le` (Galois descent via InfiniteGalois.fixedField_fixingSubgroup), `exists_pos_decomp`,
+  `conj_mem_K3Q`, `dcRel_of_decomp`, `dcRel_fix`, `qHatU_unitEmbedding`, `nrd_pos_of_cm`, `obj_at`,
+  `cm_data`, `isTotallyComplex_of_root`, `finrank_K4/K3/K24`, Tau Ceti kernel of the Artin map =
+  ray subgroup (`ker_ideleClassArtinMap`, `range_ideleClassNormMap_rayClassField`, `mk_mem_raySubgroup_iff`).
