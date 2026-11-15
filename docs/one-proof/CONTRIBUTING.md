@@ -158,13 +158,16 @@ DISCHARGES [OpenResearchLeaves21.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_S
 DISCHARGES [OpenResearchLeaves21.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves21.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
+  still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
   still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1618 theorems checked, 7 discharge one
+#discharges: 63 open hypotheses, 1645 theorems checked, 8 discharge one
 ```
 <!-- worked-example:end -->
 

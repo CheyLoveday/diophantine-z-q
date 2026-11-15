@@ -44,7 +44,6 @@ ping, and is released if there is no reply within 7 days of the ping.
 | --- | --- | --- |
 | [`r7a`](#r7a) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) | 2026-11-14 |
 | [`r16`](#r16) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/r16-split)) | 2026-11-15 |
-| [`mumfordRigidityCore`](#mumfordrigiditycore) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)) | 2026-11-15 |
 | [`elkiesX6StarPrinted`](#elkiesx6starprinted) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/elkies-coord)) | 2026-11-15 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
@@ -88,7 +87,7 @@ Reduction block: SGA 7 I Exp. IX, BLR 1.2 Prop. 4, Serre-Tate 1968. Claim it on 
 Unread locators: SGA 3, EGA IV, Faltings 1983 Lemma 5, GIT, BLR 1.4, 7.2, 7.3. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
 * [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) (LEAF): BLR, Neron models, 1.4 Thm 3 over a DVR, scheme form (no group law)
-* [`mumfordRigidityCore`](#mumfordrigiditycore) (LEAF; unverified-locator): Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED)
+* [`mumfordGroupLaw`](#mumfordgrouplaw) (LEAF; pending-review): Mumford-Fogarty-Kirwan, Geometric Invariant Theory, Thm 6.14 (S connected locally noetherian, F -> S smooth proper with a section e, a fibre an abelian variety: F is an abelian scheme with identity e), on each connected component; numbers UNVERIFIED
 * [`faltingsLemma5Printed`](#faltingslemma5printed) (LEAF; unread, unverified-locator): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read)
 * [`sga3_VIB_3_10`](#sga3_vib_3_10) (LEAF; unverified-locator): SGA 3 VI_B 3.10 (number UNVERIFIED)
 * [`neronSchemeExtensionExists`](#neronschemeextensionexists) (LEAF): BLR 1.4 Thm 3
@@ -184,7 +183,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`gonzalezRotgerX6Ab`](#gonzalezrotgerx6ab) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`hodgeTateDecompAbVar`](#hodgetatedecompabvar) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`javanpeykarBound`](#javanpeykarbound) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF | unverified-locator | bigger | T3 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)) |
+| [`mumfordGroupLaw`](#mumfordgrouplaw) | research | published | LEAF | pending-review | bigger | T3 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | project interest, free to claim |
 | [`neronBaseChangeStrictHenselization`](#neronbasechangestricthenselization) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | project interest, free to claim |
 | [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | narrowing | T1-T2 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -794,22 +793,23 @@ ZInQ.HeightSplit.JavanpeykarBound
 > height-split, H-14: Javanpeykar 2014 Thm 1.1.1 for curves over `K` with a `K`-rational Belyi function,
 > replaces `r18`.
 
-### mumfordRigidityCore
+### mumfordGroupLaw
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves21.mumfordRigidityCore`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED (see the source).
-* Source: Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED)
+* Bundle field `HDec.HSyn.OpenResearchLeaves21.mumfordGroupLaw`; kind **published**, strict **LEAF**; flag: pending review (statement review of MumfordGroupLaw as the print); locator UNVERIFIED (GIT Thm 6.14 on each connected component of S).
+* Source: Mumford-Fogarty-Kirwan, Geometric Invariant Theory, Thm 6.14 (S connected locally noetherian, F -> S smooth proper with a section e, a fibre an abelian variety: F is an abelian scheme with identity e), on each connected component; numbers UNVERIFIED
 * packet [R2](#packet-r2); label bigger (a bigger investment); tier T3 (model triage, unreviewed); discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)).
+* Status: project interest, free to claim.
 
 ```lean
-LeafQM.AV.R1UnivRigid.MumfordRigidityCore
+ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw
 ```
 
-> r1univ-rigid: **Mumford's rigidity over a base, printed core** (GIT Thm 6.14 on each connected component and
-> Cor. 6.4 over `S`; numbers UNVERIFIED): a proper smooth geometrically connected family over a locally noetherian
-> `S` with a section `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in
-> `Over S` with identity `e`, and every `S`-endomorphism fixing `e` is a homomorphism.
+> gt-rigidity, rigid-prune (leaf-fold23): **Mumford's GIT Thm 6.14 over a base** (on each connected component;
+> numbers UNVERIFIED): a proper smooth geometrically connected family over a locally noetherian `S` with a section
+> `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
+> identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
+> `ι(a)` is a homomorphism from the field points).
 
 ### neronBaseChangeStrictHenselization
 
