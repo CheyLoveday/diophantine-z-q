@@ -32,3 +32,10 @@
   cmp_hashes.py 31: removed 16 (9 pruned projections + 5 dead readers + 2 aux `_proof_N`), new 2
   (YuB6Emb._proof_1/2), changed 189 (cmp_hashes_out31.txt). YuB6Alg: same type and value hash, module QMLattice ->
   TailA; yuB6Alg_of, yuB6Alg_of', yuB6Alg_of_yuThm11 unchanged.
+- 03:25 base worktree (git worktree at c2ad4181, outside this repo dir; build copied from gt-qm) built Main:
+  DumpCompact 13761 constants (hashes_before.txt), PruneScan 0 unused of 58.
+- 03:35 cmp_hashes.py (Main level): removed 17, new 2, changed 198; classify.py sorts them (classify_out.txt).
+  CanonHash.lean in both trees: the 41 unexpected value changes are auxiliary `_proof_N` sharing/renumbering
+  (canonical hashes equal).
+- 03:40 DischargesTest: same discharges/controls, 64 open hypotheses (was 65). OpenStatements: 64; render_open:
+  57 H, strictest 43/14; --check ok.

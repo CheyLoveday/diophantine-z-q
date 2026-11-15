@@ -11,13 +11,13 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**58 hypotheses of the H part** (in the bundles `OpenAddedLeaves16`, `OpenGlue7`, `OpenResearchLeaves19`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**57 hypotheses of the H part** (in the bundles `OpenAddedLeaves16`, `OpenGlue7`, `OpenResearchLeaves19`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 44 published / 14 glue** (the strictest flagged reading; 45/13 without the one strictest-reading flag).
+* **Strict count: 43 published / 14 glue** (the strictest flagged reading; 44/13 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 4, consequence 7, project glue 1, published 46.
+* By kind: composite 4, consequence 7, project glue 1, published 45.
 
 ## How to help
 
@@ -208,7 +208,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
 | [`regularSmoothPerfect`](#regularsmoothperfect) | textbook | published | LEAF |  |  | T2 | [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) |
 | [`uniformizationLeafAll`](#uniformizationleafall) | textbook | published | LEAF |  |  | T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
-| [`yuThm11`](#yuthm11) | textbook | published | LEAF |  | narrowing | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`h29`](#h29) | frozenTarget | composite | GLUE |  |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`hCM`](#hcm) | frozenTarget | published | LEAF | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
@@ -1228,31 +1227,6 @@ BPAnalytic.Uniformization.UniformizationLeafAll
 ```
 
 > The leaf for every complex abelian variety.
-
-### yuThm11
-
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.yuThm11`; kind **published**, strict **LEAF**.
-* Source: Chia-Fu Yu, J. Pure Appl. Algebra 217 (2013) Thm 1.1 (with its splitting clause; case labels dropped)
-* label narrowing (pending narrowing: a narrower restatement is planned, so it is not offered as stated); tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
-* Human readings recorded: none.
-* Status: pending narrowing: a narrower restatement is planned, so it is not offered as stated.
-
-```lean
-HDec.QMSplit.Yu.YuThm11
-```
-
-> **LEAF (Chia-Fu Yu, *Endomorphism algebras of QM abelian surfaces*, J. Pure Appl. Algebra 217 (2013),
-> Thm 1.1, journal p. 907; arXiv:1210.1125 Thm 1.1; the journal first page was read by the locator audit,
-> `docs/research/locators.md` row T27; volume number UNVERIFIED).** Let `A` be an abelian surface over an
-> algebraically closed field `k` of characteristic `0`, and `B = (a, b)_ℚ` an indefinite quaternion division
-> algebra with a `ℚ`-algebra embedding `B → End⁰(A)`. Then `End⁰(A) ≅ B`, or `End⁰(A) ≅ M₂(K)` for an
-> imaginary quadratic field `K = ℚ(√d)`, `d < 0`, that splits `B` (`K ⊗_ℚ B ≅ M₂(K)` as `K`-algebras).
-> 
-> Form: the printed statement in characteristic `0`, except that the attribution of the two cases (simple
-> `A` in the first, non-simple `A` in the second, as the audit reads the theorem) is dropped (a weaker
-> conclusion). `End⁰(A) = ℚ ⊗_ℤ End(A)` (`PkgI3.AbVar.End0`) over the kernel's abelian varieties
-> `PkgI3.AbVar`; the division hypothesis is "every nonzero element is a unit"; indefinite is
-> `QuatIndefinite a b` (`0 < a ∨ 0 < b`), the same hypotheses as the row.
 
 ## Tian–Yuan–Zhang and Gross–Zagier hypotheses
 
