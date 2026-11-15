@@ -1095,6 +1095,98 @@ theorem idCompGenericFibre : IdCompGenericFibre := by
     exact hx
   exact hR.subset_connectedComponentIn he hsub (hmem x hx)
 
+open ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- **The glue `IdCompGeomFibres`, PROVED from the bundle leaf `AVGlue.GeomConnOfRationalPoint`** (Stacks
+04KV). For `g : Spec κ̄(𝔭) → Spec 𝓞_L`, with image point `y` and `g = Spec φ ≫ (Spec κ(y) → S)`: the fibre of
+`W = 𝒢⁰` over `y` is homeomorphic (`fiberHomeo`) to the connected component of `e(y)` in `𝒢_y`, so it is
+connected; it has the rational point `e(y)` and is of finite type, so it is geometrically connected; the
+geometric fibre is its base change along `Spec φ` (`IsPullback.of_right`). -/
+theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibres := by
+  intro K _ A L _ _ _ 𝒢 W hW 𝔭 _
+  let S := Spec (CommRingCat.of (𝓞 L))
+  let g : Spec (CommRingCat.of (ResBar 𝔭)) ⟶ S :=
+    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (ResBar 𝔭)))
+  let y : S := (Scheme.SpecToEquivOfField (ResBar 𝔭) S g).1
+  let φ := (Scheme.SpecToEquivOfField (ResBar 𝔭) S g).2
+  have hg : Spec.map φ ≫ S.fromSpecResidueField y = g :=
+    (Scheme.SpecToEquivOfField (ResBar 𝔭) S).left_inv g
+  let f0 : W.toScheme ⟶ S := W.ι ≫ 𝒢.G.hom
+  -- finiteness of `f0`
+  haveI : IsLocallyNoetherian 𝒢.G.left := LocallyOfFiniteType.isLocallyNoetherian 𝒢.G.hom
+  haveI : CompactSpace 𝒢.G.left := QuasiCompact.compactSpace_of_compactSpace 𝒢.G.hom
+  haveI : IsNoetherian 𝒢.G.left := {}
+  haveI : QuasiCompact f0 := inferInstance
+  haveI : LocallyOfFiniteType f0 := inferInstance
+  -- the fibre of `f0` over `y` is connected
+  have hT : _root_.IsConnected (f0 ⁻¹' {y}) := by
+    let C := connectedComponentIn (𝒢.G.hom ⁻¹' {y})
+      ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left y)
+    have hey : (η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left y ∈ 𝒢.G.hom ⁻¹' {y} := by
+      show 𝒢.G.hom ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left y) = y
+      rw [← Scheme.Hom.comp_apply, Over.w]
+      rfl
+    have hC : _root_.IsConnected C := isConnected_connectedComponentIn_iff.mpr hey
+    have himg : W.ι '' (f0 ⁻¹' {y}) = C := by
+      ext x
+      constructor
+      · rintro ⟨w, hw, rfl⟩
+        have hw' : 𝒢.G.hom (W.ι w) = y := hw
+        have hmem : W.ι w ∈ idCompSet 𝒢.G := by
+          rw [← hW]
+          have : W.ι w ∈ Set.range W.ι := ⟨w, rfl⟩
+          rwa [Scheme.Opens.range_ι] at this
+        have h2 : W.ι w ∈ connectedComponentIn (𝒢.G.hom ⁻¹' {𝒢.G.hom (W.ι w)})
+            ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left (𝒢.G.hom (W.ι w))) := hmem
+        rw [hw'] at h2
+        exact h2
+      · intro hx
+        have hxy : 𝒢.G.hom x = y := connectedComponentIn_subset (𝒢.G.hom ⁻¹' {y}) _ hx
+        have hmem : x ∈ idCompSet 𝒢.G := by
+          show x ∈ connectedComponentIn (𝒢.G.hom ⁻¹' {𝒢.G.hom x})
+            ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left (𝒢.G.hom x))
+          rw [hxy]
+          exact hx
+        have hxW : x ∈ Set.range W.ι := by rw [Scheme.Opens.range_ι, hW]; exact hmem
+        obtain ⟨w, rfl⟩ := hxW
+        exact ⟨w, hxy, rfl⟩
+    rw [← himg] at hC
+    exact ⟨hC.1.of_image, (W.ι.isOpenEmbedding.isInducing.isPreconnected_image).mp hC.2⟩
+  haveI : ConnectedSpace (f0 ⁻¹' {y}) := isConnected_iff_connectedSpace.mp hT
+  haveI hconn : ConnectedSpace (f0.fiber y) := (f0.fiberHomeo y).connectedSpace_iff.mpr inferInstance
+  -- the rational point
+  have hη : Set.range (η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left ⊆ Set.range W.ι := by
+    rintro _ ⟨s, rfl⟩
+    rw [Scheme.Opens.range_ι, hW]
+    exact idCompSet_one 𝒢.G s
+  let eW : S ⟶ W.toScheme := IsOpenImmersion.lift W.ι (η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left hη
+  have heW : eW ≫ f0 = 𝟙 S := by
+    show eW ≫ W.ι ≫ 𝒢.G.hom = 𝟙 S
+    rw [← Category.assoc, IsOpenImmersion.lift_fac, Over.w]
+    rfl
+  let sec : Spec (S.residueField y) ⟶ f0.fiber y :=
+    pullback.lift (S.fromSpecResidueField y ≫ eW) (𝟙 _) (by
+      rw [Category.assoc, heW, Category.comp_id, Category.id_comp])
+  have hsec : sec ≫ f0.fiberToSpecResidueField y = 𝟙 _ := pullback.lift_snd _ _ _
+  have hGC : GeometricallyConnected (f0.fiberToSpecResidueField y) :=
+    hG (S.residueField y) (f0.fiber y) (f0.fiberToSpecResidueField y) sec hsec
+      (show LocallyOfFiniteType (pullback.snd f0 (S.fromSpecResidueField y)) from inferInstance)
+      (show QuasiCompact (pullback.snd f0 (S.fromSpecResidueField y)) from inferInstance) hconn
+  -- the geometric fibre is the base change of the fibre along `Spec φ`
+  have hbig : IsPullback (pullback.fst f0 g) (pullback.snd f0 g) f0
+      (Spec.map φ ≫ S.fromSpecResidueField y) := by
+    rw [hg]; exact IsPullback.of_hasPullback f0 g
+  have hright : IsPullback (f0.fiberι y) (f0.fiberToSpecResidueField y) f0
+      (S.fromSpecResidueField y) := IsPullback.of_hasPullback f0 (S.fromSpecResidueField y)
+  let a : pullback f0 g ⟶ f0.fiber y :=
+    pullback.lift (pullback.fst f0 g) (pullback.snd f0 g ≫ Spec.map φ) (by
+      rw [Category.assoc, hg, pullback.condition])
+  have ha : a ≫ f0.fiberι y = pullback.fst f0 g := pullback.lift_fst _ _ _
+  have hsq : a ≫ f0.fiberToSpecResidueField y = pullback.snd f0 g ≫ Spec.map φ :=
+    pullback.lift_snd _ _ _
+  have hleft : IsPullback a (pullback.snd f0 g) (f0.fiberToSpecResidueField y) (Spec.map φ) :=
+    IsPullback.of_right (by rw [ha]; exact hbig) hsq hright
+  exact hGC.geometrically_connectedSpace (Spec.map φ) a (pullback.snd f0 g) hleft
+
 /-- `IdentityComponentOL` (reduct-glue's SGA 3 leaf) from the printed SGA 3 VI_B 3.10 and the three
 topological glue Props. -/
 theorem identityComponentOL_of_printed' (h3 : SGA3_VIB_3_10) (gc : IdCompSubgroup)
@@ -1118,6 +1210,14 @@ theorem semistableNeronBaseChange_of_printed_final' (hB : BLR_1_2_4) (h3 : SGA3_
     ZInQ.HeightSplit.SemistableNeronBaseChange :=
   semistableNeronBaseChange_of_printed_final hB h3 h7 hE gc idCompGenericFibre gf ga gb
 
+/-- **SS2 from four printed-form leaves, the bundle leaf `AVGlue.GeomConnOfRationalPoint` (Stacks 04KV) and
+three topological glue Props** (compiled): `IdCompSubgroup`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`. -/
+theorem semistableNeronBaseChange_of_printed_final'' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+    (h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (hG : AVGlue.GeomConnOfRationalPoint)
+    (gc : IdCompSubgroup) (ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) :
+    ZInQ.HeightSplit.SemistableNeronBaseChange :=
+  semistableNeronBaseChange_of_printed_final' hB h3 h7 hE gc (idCompGeomFibres hG) ga gb
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
@@ -1129,3 +1229,4 @@ end CToPrinted
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed''
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_final
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_final'
+#print axioms CToPrinted.semistableNeronBaseChange_of_printed_final''

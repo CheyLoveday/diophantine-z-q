@@ -88,3 +88,8 @@ of the e38375b3 build). One Lean process at a time.
 - `idCompGenericFibre : IdCompGenericFibre` PROVED (generic fibre ≅ A_L connected; its image = points over η by
   range_fst; IsPreconnected.subset_connectedComponentIn). `semistableNeronBaseChange_of_printed_final'`
   (4 printed leaves + 4 topological glue) COMPILES, standard axioms.
+- `idCompGeomFibres : AVGlue.GeomConnOfRationalPoint → IdCompGeomFibres` PROVED (bundle leaf, Stacks 04KV):
+  g = Spec φ ≫ fromSpecResidueField y via SpecToEquivOfField.left_inv; fibre of W over y ≃ₜ connected component of
+  e(y) (fiberHomeo, IsInducing.isPreconnected_image); rational point from e; IsPullback.of_right; then
+  GeometricallyConnected.geometrically_connectedSpace. `semistableNeronBaseChange_of_printed_final''`
+  (4 printed leaves + bundle leaf GeomConnOfRationalPoint + 3 topological glue) COMPILES, standard axioms.
