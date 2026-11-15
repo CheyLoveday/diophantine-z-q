@@ -41,7 +41,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`shimuraFamilyAb`](#shimurafamilyab) | research | consequence | GLUE |  | shimura-cft |
 | [`axSenTate`](#axsentate) | added | published | LEAF |  | cloud W11 |
 | [`deligneComponentsY3PrintedAb`](#delignecomponentsy3printedab) | added | published | LEAF |  | open |
-| [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | open |
+| [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | cloud round 2 |
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | added | published | LEAF |  | cloud W17 |
 | [`qmCentralizerCMC`](#qmcentralizercmc) | added | published | LEAF |  | open |
 | [`shimizuCovolumeO1`](#shimizucovolumeo1) | added | published | LEAF |  | open |
@@ -62,23 +62,23 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF |  | open |
 | [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | open |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | published | LEAF |  | open |
-| [`r7a`](#r7a) | research | published | LEAF |  | open |
+| [`r7a`](#r7a) | research | published | LEAF |  | cloud round 2 |
 | [`r9a`](#r9a) | research | published | LEAF |  | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | open |
 | [`raynaudKernelBound`](#raynaudkernelbound) | research | published | LEAF |  | open |
 | [`sga3_VIB_3_10`](#sga3_vib_3_10) | research | published | LEAF |  | open |
 | [`bdRInvariants`](#bdrinvariants) | textbook | published | LEAF |  | open |
 | [`cartierSmooth`](#cartiersmooth) | textbook | published | LEAF |  | cloud W16 |
-| [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  | open |
+| [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  | cloud round 2 |
 | [`gagaMorphism`](#gagamorphism) | textbook | published | LEAF |  | cloud W17 |
 | [`geomConnOfRationalPoint`](#geomconnofrationalpoint) | textbook | published | LEAF |  | cloud W16 |
 | [`groupSchemeEquidim`](#groupschemeequidim) | textbook | published | LEAF |  | cloud W16 |
-| [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | textbook | published | LEAF |  | open |
+| [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | textbook | published | LEAF |  | cloud round 2 |
 | [`igusaGL2`](#igusagl2) | textbook | published | LEAF |  | cloud W14 |
 | [`mulEtaleAbelianScheme`](#muletaleabelianscheme) | textbook | published | LEAF |  | cloud W16 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  | cloud W16 |
-| [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  | open |
-| [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  | open |
+| [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  | cloud round 2 |
+| [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  | cloud round 2 |
 | [`regularSmoothPerfect`](#regularsmoothperfect) | textbook | published | LEAF |  | cloud W15 |
 | [`uniformizationLeafAll`](#uniformizationleafall) | textbook | published | LEAF |  | cloud W17 |
 | [`yuThm11`](#yuthm11) | textbook | published | LEAF |  | open |
@@ -417,7 +417,7 @@ ShimuraGlue.DeligneComponentsY3PrintedAb
 
 * Bundle field `HDec.HSyn.OpenAddedLeaves11.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
 * Source: EGA IV_3 8.10.5 (xii)
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress: repairing round 1's vendored port (H-65) (since 2026-11-14) [issue #80](https://github.com/elliotglazer/diophantine-z-q/issues/80).
 
 ```lean
 ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
@@ -752,7 +752,7 @@ ZInQ.HeightSplit.PazukiCor13Upper
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves12.r7a`; kind **published**, strict **LEAF**.
 * Source: Serre-Tate 1968 Thm 1
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-5, Néron–Ogg–Shafarevich) (since 2026-11-14) [issue #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 
 ```lean
 PkgI2.NeronOggShafarevich
@@ -849,7 +849,7 @@ AVGlue.CartierSmooth
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 4 (specialization)
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-71); supplier PR Deicyde/diophantine-z-q#13 held until it lands (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
 ```lean
 ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
@@ -915,7 +915,7 @@ AVGlue.GroupSchemeEquidim
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.homFreeFiniteAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 3
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-70) (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
 ```lean
 ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed
@@ -987,7 +987,7 @@ AvSplit.MumfordTorsionAlgClosed
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.neronSchemeExtensionExists`; kind **published**, strict **LEAF**.
 * Source: BLR 1.4 Thm 3
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-77) (since 2026-11-14) [issue #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 
 ```lean
 ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
@@ -1004,7 +1004,7 @@ ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.poincareComplement`; kind **published**, strict **LEAF**.
 * Source: Poincare's complete reducibility, complement form: Milne 1986 Prop. 12.1; Mumford 19 Thm 1
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-72) (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
 ```lean
 ZInQ.Contrib.AVB1.PoincareComplement
