@@ -20,3 +20,12 @@ Target: `LeafQM.AV.R1UnivRigid.MumfordRigidityCore` (ZInQKernel/OneProof/H/TailZ
     still assumes: [MumfordGroupLaw, RigidityLemma]; axioms: [propext, Classical.choice, Quot.sound]
   (67 open hypotheses, 514 theorems checked, 1 discharge one)
 - `mumfordGroupLaw_of_core : MumfordRigidityCore → MumfordGroupLaw` compiled (the existence leaf is strictly weaker).
+
+## Step 3 (11-15 ~00:30): second route — VERIFIED
+- New leaf `PushforwardStructureSheaf`: p proper, smooth, geometrically connected over locally noetherian S ⇒ `Function.Bijective (p.app U)` for all opens U (EGA III 7.8.6 / Stacks 0E0L / Mumford AV §5; numbers UNVERIFIED).
+- Proved: `eq_of_pushforward` (local rigidity: f' over p with section j, f'(X_t) a point for every t ⇒ f' = p ≫ j ≫ f'), `fibre_point_of_field` (defect constant on every fibre of pr₂, via base change to the residue field and `MulRigidity.isMonHom_of_geometricallyIntegral`), `defect_eq_one_of_pushforward`, `isMonHom_of_pushforward`, `geometricallyIntegral_of_isAbVarFibre`, `mumfordRigidityCore_of_pushforward : MumfordGroupLaw → PushforwardStructureSheaf → MumfordRigidityCore`.
+- Merged into ZInQKernel/Contrib/OneProof/MumfordRigidity.lean (545 lines). Build OK, no warnings from the file.
+- #discharges: 2 theorems discharge `OpenResearchLeaves16.mumfordRigidityCore`:
+  - `mumfordRigidityCore_of_printed` still assumes [MumfordGroupLaw, RigidityLemma]
+  - `mumfordRigidityCore_of_pushforward` still assumes [MumfordGroupLaw, PushforwardStructureSheaf]
+  both axioms [propext, Classical.choice, Quot.sound]; "67 open hypotheses, 521 theorems checked, 2 discharge one".
