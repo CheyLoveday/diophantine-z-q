@@ -395,6 +395,71 @@ theorem local_ext {X : Over (Spec (CommRingCat.of R))} (hX : IsNeronModelOver R 
   exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ ej a) Hφ'.w).trans
     ((Category.assoc _ _ _).trans (congrArg (v ≫ ·) (toP_ej R𝔭 a))))
 
+/-- **Existence and uniqueness of extensions** for an arbitrary smooth `R_𝔭`-scheme `Y` (local existence on
+the affine cover, glued by `uq`). -/
+theorem glue_ext {X : Over (Spec (CommRingCat.of R))} [IsSeparated X.hom] (hX : IsNeronModelOver R K X)
+    (Y : Scheme.{0}) (y : Y ⟶ Spec (CommRingCat.of R𝔭)) [Smooth y]
+    (b : pullback y (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ⟶ X.left)
+    (hb : b ≫ X.hom = pullback.snd y (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R K))) :
+    ∃ g : Y ⟶ X.left, g ≫ X.hom = y ≫ Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)) ∧
+      pullback.fst y (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ≫ g = b := by
+  let kK := Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))
+  let 𝒰 := Y.affineCover
+  let m : ∀ i, pullback (𝒰.f i ≫ y) kK ⟶ pullback y kK := fun i =>
+    pullback.lift (pullback.fst _ _ ≫ 𝒰.f i) (pullback.snd _ _)
+      (by rw [Category.assoc]; exact pullback.condition)
+  have hm : ∀ i, (m i ≫ b) ≫ X.hom = pullback.snd (𝒰.f i ≫ y) kK ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R K)) := fun i => by
+    rw [Category.assoc, hb, ← Category.assoc, pullback.lift_snd]
+  have hloc := fun i => local_ext (𝔭 := 𝔭) R𝔭 hX (𝒰.X i) (𝒰.f i ≫ y) (m i ≫ b) (hm i)
+  choose g hg1 hg2 using hloc
+  have compat : ∀ i j, pullback.fst (𝒰.f i) (𝒰.f j) ≫ g i = pullback.snd (𝒰.f i) (𝒰.f j) ≫ g j := by
+    intro i j
+    let w := pullback.fst (𝒰.f i) (𝒰.f j) ≫ 𝒰.f i ≫ y
+    have hw' : pullback.snd (𝒰.f i) (𝒰.f j) ≫ 𝒰.f j ≫ y = w := by
+      simp only [w, ← Category.assoc, pullback.condition]
+    let n : pullback w kK ⟶ pullback (𝒰.f i ≫ y) kK :=
+      pullback.lift (pullback.fst w kK ≫ pullback.fst (𝒰.f i) (𝒰.f j)) (pullback.snd w kK)
+        (by rw [Category.assoc]; exact pullback.condition)
+    let n' : pullback w kK ⟶ pullback (𝒰.f j ≫ y) kK :=
+      pullback.lift (pullback.fst w kK ≫ pullback.snd (𝒰.f i) (𝒰.f j)) (pullback.snd w kK)
+        (by rw [Category.assoc, hw']; exact pullback.condition)
+    have hnn : n ≫ m i = n' ≫ m j := by
+      apply pullback.hom_ext
+      · simp only [n, n', m, Category.assoc, pullback.lift_fst, pullback.lift_fst_assoc]
+        rw [pullback.condition]
+      · simp only [n, n', m, Category.assoc, pullback.lift_snd]
+    refine uq (𝔭 := 𝔭) R𝔭 X w (pullback.fst w kK) (pullback.snd w kK)
+      (IsPullback.of_hasPullback _ _) _ _ ?_ ?_ ?_
+    · rw [Category.assoc, hg1 i]
+      simp only [w, Category.assoc]
+    · rw [Category.assoc, hg1 j, ← hw']
+      simp only [Category.assoc]
+    · have e1 : pullback.fst w kK ≫ pullback.fst (𝒰.f i) (𝒰.f j) ≫ g i = n ≫ m i ≫ b := by
+        rw [← hg2 i, ← Category.assoc, ← Category.assoc, pullback.lift_fst, Category.assoc]
+      have e2 : pullback.fst w kK ≫ pullback.snd (𝒰.f i) (𝒰.f j) ≫ g j = n' ≫ m j ≫ b := by
+        rw [← hg2 j, ← Category.assoc, ← Category.assoc, pullback.lift_fst, Category.assoc]
+      rw [e1, e2, ← Category.assoc, hnn, Category.assoc]
+  refine ⟨𝒰.glueMorphisms g compat, ?_, ?_⟩
+  · refine Scheme.Cover.hom_ext 𝒰 _ _ (fun i => ?_)
+    rw [← Category.assoc, Scheme.Cover.ι_glueMorphisms, hg1 i, Category.assoc]
+  · refine Scheme.Cover.hom_ext (𝒰.pullback₁ (pullback.fst y kK)) _ _ (fun (i : 𝒰.I₀) => ?_)
+    let F1 := pullback.fst (pullback.fst y kK) (𝒰.f i)
+    let F2 := pullback.snd (pullback.fst y kK) (𝒰.f i)
+    have hF : F1 ≫ pullback.fst y kK = F2 ≫ 𝒰.f i := pullback.condition
+    let ψ : pullback (pullback.fst y kK) (𝒰.f i) ⟶ pullback (𝒰.f i ≫ y) kK :=
+      pullback.lift F2 (F1 ≫ pullback.snd y kK)
+        (by rw [← Category.assoc, ← hF, Category.assoc, pullback.condition, Category.assoc])
+    have hψ : ψ ≫ m i = F1 := by
+      apply pullback.hom_ext
+      · simp only [ψ, m, Category.assoc, pullback.lift_fst, pullback.lift_fst_assoc]
+        exact hF.symm
+      · simp only [ψ, m, Category.assoc, pullback.lift_snd]
+    show F1 ≫ pullback.fst y kK ≫ 𝒰.glueMorphisms g compat = F1 ≫ b
+    rw [← Category.assoc, hF, Category.assoc, Scheme.Cover.ι_glueMorphisms, ← hψ, Category.assoc,
+      ← hg2 i, ← Category.assoc, pullback.lift_fst]
+
 end Main
 
 end GapBLR
