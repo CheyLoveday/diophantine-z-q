@@ -17,3 +17,24 @@ Base e38375b3 (wip/w62). One Lean process at a time (`lake env lean`).
 - scratch/x6-glue/DeligneX6.lean = scratch/shimura-glue/Deligne.lean verbatim. `lake env lean`: 0 errors,
   1 min 29 s; all 6 `#print axioms` lines `[propext, Classical.choice, Quot.sound]` (incl.
   `ShimuraGlue.deligneComponentsX6_of_printed`, `printed_of_deligneComponentsX6`). VERIFIED.
+
+## Step 2: values of sections at field points of an affine open (parts/EvalAffine.lean, Mathlib + kernel `ToP1` lemma)
+- `ev U y h : Γ(X,U) →+* K` (the recipe of the kernel's `ToP1.val`); `eq_specMap_psi` (a point in an affine
+  open is `Spec.map ψ ≫ fromSpec`), `ev_eq_psi`, `ev_injective`, `ev_surjective` (K-points in an affine `U`
+  ↔ ring homs `Γ(U) → K`), `ev_comp` (naturality), `specQ_hom_ext` (maps `Spec K → Spec ℚ` are unique).
+  COMPILED (T1.lean dev file over `ZInQKernel.HDecomp.QM.Leaves`), 0 errors.
+
+## Step 3: Elkies' equations in chart form and the conic model (parts/Charts.lean, parts/ConicProof.lean)
+- `ElkiesRing = ℚ[t,s,r]/(s² + t, r² − 3(t − 1))`; `ElkiesCharts X t`: `t.U`, `t.V` affine,
+  `Γ(t.U) ≃+* ElkiesRing` with `t ↦ t.f`, `Γ(t.V) ≃+* ElkiesRing` with `u ↦ t.g`, gluing `s·a = 1`,
+  `r·a = b` on `t.U ∩ t.V`.
+- `X6Glue.conicModelT_of_charts : ElkiesCharts X t → ConicModelT X t` (shimura-glue's points form).
+  COMPILED in T1.lean (dev copies of `ConicPt`, `conicGal`, `ConicModelT`, verbatim), axioms
+  `[propext, Classical.choice, Quot.sound]`.
+- Chart algebra (by hand, VERIFIED): on `U ∩ V`, `a = 1/s`, `b = r/s`, `u = 1/t` give `a² + u = 0`,
+  `b² − 3(u − 1) = 0` from `s² = −t`, `r² = 3(t − 1)`.
+
+## Step 4: assembly X6Glue.lean (mk_x6glue.py = shimura-glue RowsGlue.lean verbatim + parts)
+- Build note: `lean/.lake` (upstream ZInQ package build) was missing in this worktree; reflink-copied from
+  ~/dzq-prune (identical `lean/ZInQ` sources, `diff -rq` empty).
+- First run: `X6Kummer.ConicPt` must be written `HDec.X6Kummer.ConicPt` outside namespace HDec (fixed).

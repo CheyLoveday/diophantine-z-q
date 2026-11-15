@@ -1,6 +1,6 @@
 import ZInQKernel.HDecomp.QM.Leaves
-/-! dev copy of `X6Kummer.ConicPt`, `conicGal` (TailE, verbatim) and shimura-glue's `ConicModelT` -/
-namespace X6Kummer
+/-! dev copy of `HDec.X6Kummer.ConicPt`, `conicGal` (TailE, verbatim) and shimura-glue's `ConicModelT` -/
+namespace HDec.X6Kummer
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM LeafQM.AV
 abbrev ConicPt : Type :=
@@ -14,14 +14,14 @@ def conicGal (σ : Qbar ≃ₐ[ℚ] Qbar) : ConicPt → ConicPt
       have h := congrArg σ b.2
       simp only [map_pow, map_neg, map_ofNat] at h
       exact h⟩
-end X6Kummer
+end HDec.X6Kummer
 namespace HDec.QMSplit.Moduli
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM LeafQM.AV
 def ConicModelT (X : Over (Spec (CommRingCat.of ℚ))) (t : ToP1 X.left) : Prop :=
-  ∃ e : (fieldPt Qbar ⟶ X) ≃ X6Kummer.ConicPt,
+  ∃ e : (fieldPt Qbar ⟶ X) ≃ HDec.X6Kummer.ConicPt,
     (∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X),
-      e (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = X6Kummer.conicGal σ (e x)) ∧
+      e (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = HDec.X6Kummer.conicGal σ (e x)) ∧
     (∀ (x : fieldPt Qbar ⟶ X) p, e x = Sum.inl p →
       t.val (K := Qbar) x.left = OnePoint.some (-(p.1.1 ^ 2))) ∧
     (∀ (x : fieldPt Qbar ⟶ X) b, e x = Sum.inr b → t.val (K := Qbar) x.left = OnePoint.infty)
@@ -308,7 +308,7 @@ theorem psiV_T (y : Spec (CommRingCat.of Qbar) ⟶ X.left) (h : ¬ (pt y) ∈ t.
 
 open Classical in
 /-- The map `X(ℚ̄) → C(ℚ̄)`: `(s, r)` on `t.U`, and `b` (with `[X : Y : Z] = [1 : b : 0]`) off `t.U`. -/
-noncomputable def conicMapL (y : Spec (CommRingCat.of Qbar) ⟶ X.left) : X6Kummer.ConicPt :=
+noncomputable def conicMapL (y : Spec (CommRingCat.of Qbar) ⟶ X.left) : HDec.X6Kummer.ConicPt :=
   if h : (pt y) ∈ t.U then
     Sum.inl ⟨(psiU φU y h eS, psiU φU y h eR), conic_rel _⟩
   else
@@ -328,12 +328,12 @@ theorem psiV_comp (σ : Qbar →+* Qbar) (y : Spec (CommRingCat.of Qbar) ⟶ X.l
 /-- **Galois equivariance.** -/
 theorem conicMapL_comp (σ : Qbar ≃ₐ[ℚ] Qbar) (y : Spec (CommRingCat.of Qbar) ⟶ X.left) :
     conicMapL φU φV hTg (Spec.map (CommRingCat.ofHom ((σ : Qbar →ₐ[ℚ] Qbar) : Qbar →+* Qbar)) ≫ y) =
-      X6Kummer.conicGal σ (conicMapL φU φV hTg y) := by
+      HDec.X6Kummer.conicGal σ (conicMapL φU φV hTg y) := by
   by_cases h : pt y ∈ t.U
   · have h' : pt (Spec.map (CommRingCat.ofHom ((σ : Qbar →ₐ[ℚ] Qbar) : Qbar →+* Qbar)) ≫ y) ∈ t.U :=
       (mem_comp_iff _ _ _).mpr h
     rw [conicMapL, dif_pos h', conicMapL, dif_pos h]
-    simp only [X6Kummer.conicGal]
+    simp only [HDec.X6Kummer.conicGal]
     congr 1
     apply Subtype.ext
     simp only
@@ -342,7 +342,7 @@ theorem conicMapL_comp (σ : Qbar ≃ₐ[ℚ] Qbar) (y : Spec (CommRingCat.of Qb
   · have h' : ¬ pt (Spec.map (CommRingCat.ofHom ((σ : Qbar →ₐ[ℚ] Qbar) : Qbar →+* Qbar)) ≫ y) ∈ t.U :=
       fun hh => h ((mem_comp_iff _ _ _).mp hh)
     rw [conicMapL, dif_neg h', conicMapL, dif_neg h]
-    simp only [X6Kummer.conicGal]
+    simp only [HDec.X6Kummer.conicGal]
     congr 1
     apply Subtype.ext
     simp only
@@ -412,7 +412,7 @@ theorem conicMapL_injective (hU : IsAffineOpen t.U) (hV : IsAffineOpen t.V)
 
 omit hT in
 theorem conicMapL_surjective (hU : IsAffineOpen t.U) (hV : IsAffineOpen t.V)
-    (c : X6Kummer.ConicPt) : ∃ y, conicMapL φU φV hTg y = c := by
+    (c : HDec.X6Kummer.ConicPt) : ∃ y, conicMapL φU φV hTg y = c := by
   rcases c with ⟨⟨a, b⟩, hab⟩ | ⟨b, hb⟩
   · let ψ := elkiesLift (K := Qbar) (-(a ^ 2)) a b (by ring) (by simp only at hab; linear_combination hab)
     obtain ⟨y, h, hy⟩ := ev_surjective t.U hU (ψ.comp (φU.symm : Γ(X.left, t.U) →+* ElkiesRing))
@@ -445,7 +445,7 @@ points form, from the chart form `ElkiesCharts X t`). -/
 theorem conicModelT_of_charts {X : Over (Spec (CommRingCat.of ℚ))} {t : ToP1 X.left}
     (h : ElkiesCharts X t) : HDec.QMSplit.Moduli.ConicModelT X t := by
   obtain ⟨hU, hV, φU, φV, hT, hTg, -, -⟩ := h
-  let F : (fieldPt Qbar ⟶ X) → X6Kummer.ConicPt := fun x => conicMapL φU φV hTg x.left
+  let F : (fieldPt Qbar ⟶ X) → HDec.X6Kummer.ConicPt := fun x => conicMapL φU φV hTg x.left
   have hinj : Function.Injective F := fun x₁ x₂ e =>
     Over.OverMorphism.ext (conicMapL_injective φU φV hTg hU hV _ _ e)
   have hsurj : Function.Surjective F := fun c => by

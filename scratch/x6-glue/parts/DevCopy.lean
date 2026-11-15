@@ -1,5 +1,5 @@
-/-! dev copy of `X6Kummer.ConicPt`, `conicGal` (TailE, verbatim) and shimura-glue's `ConicModelT` -/
-namespace X6Kummer
+/-! dev copy of `HDec.X6Kummer.ConicPt`, `conicGal` (TailE, verbatim) and shimura-glue's `ConicModelT` -/
+namespace HDec.X6Kummer
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM LeafQM.AV
 abbrev ConicPt : Type :=
@@ -13,14 +13,14 @@ def conicGal (σ : Qbar ≃ₐ[ℚ] Qbar) : ConicPt → ConicPt
       have h := congrArg σ b.2
       simp only [map_pow, map_neg, map_ofNat] at h
       exact h⟩
-end X6Kummer
+end HDec.X6Kummer
 namespace HDec.QMSplit.Moduli
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM LeafQM.AV
 def ConicModelT (X : Over (Spec (CommRingCat.of ℚ))) (t : ToP1 X.left) : Prop :=
-  ∃ e : (fieldPt Qbar ⟶ X) ≃ X6Kummer.ConicPt,
+  ∃ e : (fieldPt Qbar ⟶ X) ≃ HDec.X6Kummer.ConicPt,
     (∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X),
-      e (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = X6Kummer.conicGal σ (e x)) ∧
+      e (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = HDec.X6Kummer.conicGal σ (e x)) ∧
     (∀ (x : fieldPt Qbar ⟶ X) p, e x = Sum.inl p →
       t.val (K := Qbar) x.left = OnePoint.some (-(p.1.1 ^ 2))) ∧
     (∀ (x : fieldPt Qbar ⟶ X) b, e x = Sum.inr b → t.val (K := Qbar) x.left = OnePoint.infty)
