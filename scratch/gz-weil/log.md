@@ -95,3 +95,10 @@ Task: make gz-hl3's split of `hL3` net negative by turning `StrongWeilCurve` and
 - `lake build …WeilLattice` success (11343 jobs); out_check.txt 31 theorems standard axioms;
   MainEdit `frozenTarget_gzweil_three` (hL3 → HeegnerPointRationalCd, GrossZagierFormulaCd, GrossConjugationCd)
   standard axioms; #discharges 65 open, 1618 checked, 6 discharge one.
+
+## Final state (05:50 PST 2026-11-15)
+- Contributor files: GrossZagierHeegner/{Weil, WeilParam, WeilTheta, WeilJacobi, WeilLattice}.lean, all built.
+- hL3 (C_d form, gz-statements' GrossZagierHeegnerCd) ⇐ HeegnerPointRationalCd, GrossZagierFormulaCd,
+  GrossConjugationCd (gz-hl3's leaves); StrongWeilCurve, IsogenyLattice, WeierstrassUniformization not needed on
+  this route (parametrization `shimuraCMParamCd_proved`, lattice `exists_isPeriodLattice_cd`).
+- Report docs/research/gz-weil.md; fleet .fleet/gz-weil.md.
