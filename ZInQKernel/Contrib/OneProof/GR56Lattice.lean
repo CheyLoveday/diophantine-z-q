@@ -191,4 +191,162 @@ theorem qmIso_of_scalar (hC : ZInQ.HomUnify.HomLatticeCorr) {A A' : PkgI3.AbVar 
     rw [hcomm])
   exact congrArg PkgI3.AbVar.Hom.hom (e1.trans e2.symm)
 
+/-! ## §3 Base change `ℚ̄ → ℂ` and descent of isomorphisms (T11(b), proved in the chain) -/
+
+/-- The fixed embedding `ℚ̄ → ℂ` (the one of `CMStab.lat_model` and `QMLattice.yuB6Alg_of`). -/
+def σQ : Qbar →+* ℂ := (IsAlgClosed.lift : AlgebraicClosure ℚ →ₐ[ℚ] ℂ).toRingHom
+
+/-- `ℂ` as a `ℚ̄`-algebra through `σQ` (local instance of this file). -/
+abbrev algQC : Algebra Qbar ℂ := σQ.toAlgebra
+
+attribute [local instance] algQC
+
+/-- The base change of a QM pair along `σQ`, with `ι_ℂ = endBC ∘ ι`. -/
+def bcQ (P : QMPair Qbar) : QMPair ℂ where
+  A := P.A.baseChange ℂ
+  surface := by rw [PkgI3.AbVar.dim_baseChange]; exact P.surface
+  q := ⟨(HDec.G0ModField.KernelField.endBC P.A ℂ).comp P.q.iota,
+    (HDec.G0ModField.KernelField.endBC_injective P.A ℂ).comp P.q.injective⟩
+
+theorem bcQ_iota_hom (P : QMPair Qbar) (a : O) :
+    ((bcQ P).q.iota a).hom =
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map (P.q.iota a).hom := rfl
+
+theorem t11b : ZInQ.LeafPush2.T11b_Rigidity := HDec.AVB2.t11b_of_exists HDec.HSyn.t11bExists_lf8
+
+theorem pb_map_inj {A A' : PkgI3.AbVar Qbar} {a b : A.X ⟶ A'.X}
+    (h : (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map a =
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map b) : a = b :=
+  (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map_injective h
+
+/-- **Isomorphisms of base changes descend** (T11(b): every homomorphism `A_ℂ → B_ℂ` descends). -/
+theorem qmIso_descend (P Q : QMPair Qbar) (f : QMIso (bcQ P).q (bcQ Q).q) : Nonempty (QMIso P.q Q.q) := by
+  obtain ⟨φ, ⟨hφ, hφe⟩, -⟩ := t11b Qbar ℂ P.A Q.A f.φ.hom (Additive.toMul f.φ).2
+  obtain ⟨ψ, ⟨hψ, hψe⟩, -⟩ := t11b Qbar ℂ Q.A P.A f.ψ.hom (Additive.toMul f.ψ).2
+  refine ⟨⟨PkgI3.AbVar.Hom.mk' φ, PkgI3.AbVar.Hom.mk' ψ, ?_, ?_, fun a => ?_⟩⟩
+  · apply pb_map_inj
+    rw [PkgI3.AbVar.Hom.hom_mk', PkgI3.AbVar.Hom.hom_mk', CategoryTheory.Functor.map_comp,
+      CategoryTheory.Functor.map_id, hφe, hψe]
+    exact f.left
+  · apply pb_map_inj
+    rw [PkgI3.AbVar.Hom.hom_mk', PkgI3.AbVar.Hom.hom_mk', CategoryTheory.Functor.map_comp,
+      CategoryTheory.Functor.map_id, hφe, hψe]
+    exact f.right
+  · apply pb_map_inj
+    rw [PkgI3.AbVar.Hom.hom_mk', CategoryTheory.Functor.map_comp, CategoryTheory.Functor.map_comp, hφe,
+      ← bcQ_iota_hom,
+      ← bcQ_iota_hom]
+    exact f.equivariant a
+
+theorem endBC_bijective (A : PkgI3.AbVar Qbar) :
+    Function.Bijective (HDec.G0ModField.KernelField.endBC A ℂ) := by
+  refine ⟨HDec.G0ModField.KernelField.endBC_injective A ℂ, fun g => ?_⟩
+  obtain ⟨φ, ⟨hφ, hφe⟩, -⟩ := t11b Qbar ℂ A A g.hom (Additive.toMul g).2
+  exact ⟨PkgI3.AbVar.Hom.mk' φ, PkgI3.AbVar.Hom.ext' hφe⟩
+
+/-- **`End_𝒪` is unchanged by base change to `ℂ`.** -/
+theorem com_bcQ (P : QMPair Qbar) : Nonempty (com P.q ≃+* com (bcQ P).q) := by
+  let e := HDec.G0ModField.KernelField.endBC P.A ℂ
+  have he := endBC_bijective P.A
+  have hmem : ∀ x, x ∈ com P.q ↔ e x ∈ com (bcQ P).q := by
+    intro x
+    simp only [com, Subring.mem_centralizer_iff]
+    constructor
+    · rintro hx _ ⟨a, rfl⟩
+      change e (P.q.iota a) * e x = e x * e (P.q.iota a)
+      rw [← map_mul, ← map_mul, hx _ ⟨a, rfl⟩]
+    · rintro hx _ ⟨a, rfl⟩
+      apply he.1
+      rw [map_mul, map_mul]
+      exact hx _ ⟨a, rfl⟩
+  let F : com P.q →+* com (bcQ P).q :=
+    (e.comp (com P.q).subtype).codRestrict _ (fun x => (hmem x).1 x.2)
+  refine ⟨RingEquiv.ofBijective F ⟨fun x y h => Subtype.ext (he.1 (congrArg Subtype.val h)), ?_⟩⟩
+  rintro ⟨g, hg⟩
+  obtain ⟨x, rfl⟩ := he.2 g
+  exact ⟨⟨x, (hmem x).2 hg⟩, rfl⟩
+
+/-! ## §4 `End_𝒪(A)` acts by scalars (gt-qm's `com_embed`, with the data fixed) -/
+
+namespace LatData
+
+variable {A : PkgI3.AbVar ℂ} {q : QMStr A} (D : LatData A q)
+
+theorem ρn_comm (e : com q) (x : B) (hx : x ∈ O) (z : Fin 2 → ℂ) :
+    D.ρn e (act x z) = act x (D.ρn e z) := by
+  have hcm : q.iota ⟨x, hx⟩ * e = e * q.iota ⟨x, hx⟩ := by
+    exact (Subring.mem_centralizer_iff.mp e.2) _ ⟨⟨x, hx⟩, rfl⟩
+  have h1 : act x z = D.ρn (q.iota ⟨x, hx⟩) z := (D.ρn_iota ⟨x, hx⟩ z).symm
+  have h2 : act x (D.ρn e z) = D.ρn (q.iota ⟨x, hx⟩) (D.ρn e z) := (D.ρn_iota ⟨x, hx⟩ _).symm
+  rw [h1, h2, ← Module.End.mul_apply, ← map_mul, ← hcm, map_mul, Module.End.mul_apply]
+
+/-- The scalar by which `e ∈ End_𝒪(A)` acts. -/
+def scal (e : com q) : ℂ := D.ρn e D.v 1
+
+theorem scal_spec (e : com q) (w : Fin 2 → ℂ) : D.ρn e w = D.scal e • w := by
+  obtain ⟨c0, h0⟩ := HDec.QMLattice.commutant (D.ρn e) (fun x hx z => D.ρn_comm e x hx z)
+  have : D.scal e = c0 := by
+    show D.ρn e ![D.τ, 1] 1 = c0
+    rw [h0]; simp
+  rw [this, h0]
+
+theorem smul_v_inj {a b : ℂ} (h : a • D.v = b • D.v) : a = b := smul_left_injective ℂ D.v_ne h
+
+/-- `scal` as a ring homomorphism. -/
+def scalHom : com q →+* ℂ where
+  toFun := D.scal
+  map_one' := D.smul_v_inj (by rw [← D.scal_spec, OneMemClass.coe_one, map_one, one_smul]; rfl)
+  map_mul' e e' := D.smul_v_inj (by
+    rw [← D.scal_spec, MulMemClass.coe_mul, map_mul, Module.End.mul_apply, D.scal_spec e',
+      map_smul, D.scal_spec e, smul_smul, mul_comm])
+  map_zero' := D.smul_v_inj (by rw [← D.scal_spec, ZeroMemClass.coe_zero, map_zero, zero_smul]; rfl)
+  map_add' e e' := D.smul_v_inj (by
+    rw [← D.scal_spec, AddMemClass.coe_add, map_add, LinearMap.add_apply, D.scal_spec e,
+      D.scal_spec e', add_smul])
+
+theorem scalHom_apply (e : com q) : D.scalHom e = D.scal e := rfl
+
+theorem v_mem : D.v ∈ L D.v := by
+  rw [mem_qmOrbit_iff]; exact ⟨1, LeafQM.O.one_mem, (act_one _).symm⟩
+
+theorem exists_O (hC : ZInQ.HomUnify.HomLatticeCorr) (hA : A.dim = 2) (e : com q) :
+    ∃ x ∈ O, act x D.v = D.scal e • D.v := by
+  have h2 := (D.ρn_range hC hA (D.ρn e)).2 ⟨e, rfl⟩ _ D.v_mem
+  rw [D.scal_spec, mem_qmOrbit_iff] at h2
+  obtain ⟨x, hx, hxe⟩ := h2
+  exact ⟨x, hx, hxe.symm⟩
+
+theorem exists_com (hC : ZInQ.HomUnify.HomLatticeCorr) (hA : A.dim = 2) {x : B} (hxO : x ∈ O) {c0 : ℂ}
+    (hc0 : act x D.v = c0 • D.v) : ∃ e : com q, D.scal e = c0 := by
+  let N : Module.End ℂ (Fin 2 → ℂ) := c0 • LinearMap.id
+  have hN : ∀ z ∈ L D.v, N z ∈ L D.v := by
+    intro z hz
+    rw [mem_qmOrbit_iff] at hz ⊢
+    obtain ⟨y, hy, rfl⟩ := hz
+    refine ⟨y * x, LeafQM.O.mul_mem hy hxO, ?_⟩
+    show c0 • act y D.v = _
+    rw [act_mul, hc0, HDec.QMLattice.act_smul_vec]
+  obtain ⟨e0, he0⟩ := (D.ρn_range hC hA N).1 hN
+  have he0com : e0 ∈ com q := by
+    rw [com, Subring.mem_centralizer_iff]
+    rintro _ ⟨a, rfl⟩
+    apply D.ρn_injective hC hA
+    rw [map_mul, map_mul, he0]
+    refine LinearMap.ext fun w => ?_
+    simp [N]
+  refine ⟨⟨e0, he0com⟩, D.smul_v_inj ?_⟩
+  rw [← D.scal_spec]
+  show D.ρn e0 D.v = _
+  rw [he0]; rfl
+
+theorem scal_injective (hC : ZInQ.HomUnify.HomLatticeCorr) (hA : A.dim = 2) :
+    Function.Injective D.scal := by
+  intro e e' h
+  apply Subtype.ext
+  apply D.ρn_injective hC hA
+  refine LinearMap.ext fun w => ?_
+  rw [D.scal_spec, D.scal_spec, h]
+
+end LatData
+
 end GR56
