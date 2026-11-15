@@ -132,6 +132,13 @@ theorem printedTwistCoeff_eq {N : ℕ} [NeZero N] (f : Newform N 2) {d : ℤ} (h
     {n : ℕ} (hn : n ≠ 0) : printedTwistCoeff f d n = twistCoeff f d n := by
   rw [printedTwistCoeff, twistCoeff, chiD, idelicChar_eq_jacobiSym hd.2.1 hd.2.2 n hn]
 
+/-- The L-value clause is not vacuous: for `d` an odd fundamental discriminant the twisted series
+has an entire continuation (gz-decomp G6), unique by `IsEntireCont.eq`. -/
+theorem exists_isEntireCont_printedTwistCoeff {N : ℕ} [NeZero N] (f : Newform N 2) {d : ℤ}
+    (hd : IsOddFundDisc d) : ∃ G : ℂ → ℂ, IsEntireCont (printedTwistCoeff f d) 2 G := by
+  obtain ⟨G, hG⟩ := exists_isEntireCont_twist f (by have := hd.2.1; omega : d ≠ 0)
+  exact ⟨G, isEntireCont_congr (fun n hn => (printedTwistCoeff_eq f hd hn).symm) hG⟩
+
 theorem exists_natAbs_gt_of_infinite {s : Set ℤ} (hs : s.Infinite) (B : ℕ) :
     ∃ d ∈ s, B < d.natAbs := by
   obtain ⟨d, hd, hdB⟩ := hs.exists_notMem_finset (Finset.Icc (-(B : ℤ)) B)
