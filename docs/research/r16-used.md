@@ -53,7 +53,8 @@ leaf is kind `published`, flag unread (DS Lemma 9.5.3 + Thm 9.5.4 at one object,
 Shimura 1973 Thm 1 (the dimension clause) is no longer cited, because `dim A_f = [K_f:ℚ]` is proved from the
 freeness. If a statement check finds that DS 9.5.4 prints only the annihilating relation `x² − a_p x + χ(p)p
 = 0` and not the characteristic polynomial, the flag becomes "pending reading" and the fold no longer changes
-the count. The content is the same as today's, with three sources replaced by one.
+the count. The content is the same as today's, with two cited sources (Shimura 1973 Thm 1 and DS 9.5.4) replaced by one (DS §9.5).
+The autofold dry run gives `strict count: 46/10 on 56 -> 47/9 on 56; strictest 45/11 -> 46/10` (LEAF/GLUE).
 
 ## 1. Where `r16` / `r16CoreY` is used (VERIFIED: grep and reading)
 
@@ -206,6 +207,14 @@ and its characteristic polynomial does not depend on `b`.
 | leaf | Lean | printed form? | kind / flag | reason |
 |---|---|---|---|---|
 | `afTateCharPoly` | `R16Used.AfTateCharPoly` | **yes (existence form)**, unread | published, unread | It is Diamond–Shurman's Lemma 9.5.3 (`V_ℓ(A_f)` free of rank 2 over `K_f ⊗ ℚ_ℓ`, which defines `ρ_{A_f,ℓ}`) and Theorem 9.5.4 (characteristic polynomial of `ρ_{A_f,ℓ}(Frob_𝔭)` is `x² − a_p x + χ(p)p` for `p ∤ ℓN`), at the abelian variety of their Definition 6.6.3. All numbers are UNVERIFIED, recalled from memory with no network. The only repackaging is that `A_f` (with its `K_f`-action and its surjection from `J₁(N)`) is replaced by an existential, as the published leaf `dsThm965` does for `ρ_{f,λ}`. `A_f` has no Lean definition: there are no Hecke correspondences on `X₁(N)` and no `S₂ ≅ H⁰(Ω¹)` comparison. It is **not stronger** than the print. It covers newforms only (the print covers normalized eigenforms), and it drops the unramifiedness clause. The witness `A_f` satisfies every clause. `χ(p) ∈ K_f` holds because `χ(p)p = a_p² − a_{p²}` (STANDARD); the print states the polynomial over `K_f ⊗ ℚ_ℓ`. The remaining convention steps are those of r16's docstring: (a) the print is for Shimura's model of `X₁(N)`, and the statement quantifies over every `IsJ1` Jacobian, which are `ℚ`-isomorphic (leaf MC9 of bp-modcurves); (b) a convention that gives `ā_p` is absorbed by `θ ↦ θ ∘ c`, which the existential allows. |
+
+**Not proved in Lean: the converse.** `AfTateCharPoly` is not derived back from `r16` plus glue. That would
+need freeness over the étale algebra `ℚ_ℓ ⊗ K_f` from the ranks of its `ι`-components, and the characteristic
+polynomial over `ℚ_ℓ ⊗ K_f` from its images under all `ι_R`. Both are true: `ℚ_ℓ ⊗ K_f = ∏_λ K_{f,λ}`, the
+`λ`-part of `V` has `K_{f,λ}`-dimension equal to the rank of any `ι`-component over `λ`, and the `ι_R` are
+jointly injective. Formalizing this was judged not worth the time against the deadline. So "not stronger than
+`r16`" rests on this argument (STANDARD linear algebra), together with the fact that the leaf is a consequence
+of the print.
 
 **What a statement check must confirm** (pages wanted):
 1. DS Lemma 9.5.3 states freeness of rank 2 over `K_f ⊗ ℚ_ℓ`, for all primes `ℓ`.
