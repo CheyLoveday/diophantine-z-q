@@ -5,8 +5,8 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Preimmersion
 public import Mathlib.AlgebraicGeometry.PullbackCarrier
 public import Mathlib.AlgebraicGeometry.Stalk
 public import Mathlib.RingTheory.Flat.Localization
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.EgaSgaAttribute
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.EgaSgaAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 
 -- Exact source: https://github.com/AxiomMath/Stacks/blob/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/AlgebraicGeometry/Pullback/StalkFromSpecStalk.lean
 -- Original source SHA256: 7926e7b5ab61868e698958462c20045c7b7f862aecd754fca9ae5c33e070fbf5

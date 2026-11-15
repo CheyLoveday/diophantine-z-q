@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.AlgebraicGeometry.PullbackCarrier
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 
 /-!
 # Points of a fibre product of schemes

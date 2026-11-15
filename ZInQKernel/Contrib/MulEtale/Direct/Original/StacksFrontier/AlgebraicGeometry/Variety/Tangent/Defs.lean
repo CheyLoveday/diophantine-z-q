@@ -5,7 +5,7 @@ public import Mathlib.Algebra.Module.TransferInstance
 public import Mathlib.AlgebraicGeometry.ResidueField
 public import Mathlib.RingTheory.Derivation.Basic
 public import Mathlib.RingTheory.DualNumber
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 
 /-!
 # The vector space of tangent arrows
