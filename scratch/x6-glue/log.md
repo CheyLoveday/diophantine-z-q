@@ -38,3 +38,11 @@ Base e38375b3 (wip/w62). One Lean process at a time (`lake env lean`).
 - Build note: `lean/.lake` (upstream ZInQ package build) was missing in this worktree; reflink-copied from
   ~/dzq-prune (identical `lean/ZInQ` sources, `diff -rq` empty).
 - First run: `X6Kummer.ConicPt` must be written `HDec.X6Kummer.ConicPt` outside namespace HDec (fixed).
+- Second run: X6Glue.lean (7362 lines) `lake env lean`: **0 errors**, 2 min 4 s; x6glue_result.txt has 82
+  `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`. New ones: `X6Glue.ev_injective`,
+  `ev_surjective`, `conicModelT_of_charts`, `HDec.QMSplit.Moduli.elkiesConicT_of_equations`,
+  `elkiesConicX6_of_equations`, `r1r2_of_published`, `x6ConicModel_of_published`, `x6Rows_of_leaves`,
+  `rows_of_shimuraGlueLeaves4`; the fully qualified `example : X6Leaves → R1R2fpRep ∧ X6ConicModel` compiles.
+  VERIFIED.
+- ConicDev.lean (= former T1.lean: dev copies + EvalAffine + Charts + ConicProof over
+  `ZInQKernel.HDecomp.QM.Leaves` only): 0 errors, standard axioms.
