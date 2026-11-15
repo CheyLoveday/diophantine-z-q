@@ -1,9 +1,10 @@
-import ZInQKernel.Contrib.OneProof.RayClassShimura
-open IsDedekindDomain NumberField
-#check @HDec.ModelGlue.exists_qbarPt
-#check @NumberField.IdeleGroup.ofFiniteIdele
-#check @NumberField.IdeleGroup.toFiniteIdele_ofFiniteIdele
-#check @FiniteAdeleRing.ext
-#check @RayClassCFT.y4_rel
-#check @ShimuraCFT.recip_hyp_nonempty
-example : NumberField ShimuraGlue.Ray.K4 := inferInstance
+import ZInQKernel.OneProof.H.TailZ35
+#check @TSHecke.Y3Connected
+#check @ShimuraGlue.pi0K3Equiv
+#check @ShimuraGlue.cycU_apply
+#check @ShimuraGlue.chi_cycU
+#check @ShimuraGlue.zmod3_zpow
+#check @ShimuraGlue.pi0K3Equiv_mk
+#check @LeafQM.AV.R1UnivRigid.r1fpProps_eq_ab_gl
+#check @LeafQM.AV.R1UnivRigid.QMFamilyGroupLaw
+#check @DCY3Used.y3ConnectedAb_of_U
