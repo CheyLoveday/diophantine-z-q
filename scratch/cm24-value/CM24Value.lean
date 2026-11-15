@@ -1418,6 +1418,64 @@ theorem mpoly_A (A0 A1 A2 B0 B1 B2 : ℂ) (hA0 : A0 ≠ 0)
   field_simp
   linear_combination hmh
 
+/-- **`ThetaValueAtOmega24`, proved (no leaf).** -/
+theorem thetaValueAtOmega24 : ThetaValueAtOmega24 := by
+  set A0 := th1 τ6 0 0
+  set A1 := th1 τ6 0 (1 / 2)
+  set A2 := th1 τ6 (1 / 2) 0
+  set B0 := th1 τ3 0 0
+  set B1 := th1 τ3 0 (1 / 2)
+  set B2 := th1 τ3 (1 / 2) 0
+  set K := 1 / (-I * τ3) ^ (1 / 2 : ℂ)
+  -- real positive values on the imaginary axis
+  set a0 := ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 0) ^ 2)
+  set a2 := ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 1 / 2) ^ 2)
+  set p1 := ∑' n : ℤ, Real.exp (-π * (r6 / 3) * ((n : ℝ) + 1 / 2) ^ 2)
+  set kr := 1 / (r6 / 2) ^ (1 / 2 : ℝ)
+  have ha0 : 0 < a0 := th1_imag_pos r6_pos 0
+  have hp1 : 0 < p1 := th1_imag_pos (div_pos r6_pos (by norm_num)) _
+  have hA0 : A0 = (a0 : ℂ) := by simp only [A0, a0]; rw [τ6_eq', th1_imag]
+  have hA2 : A2 = (a2 : ℂ) := by simp only [A2, a2]; rw [τ6_eq', th1_imag]
+  have hA0ne : A0 ≠ 0 := by rw [hA0]; exact_mod_cast ha0.ne'
+  -- `S`: the theta constants at `τ₃` from those at `τ' = −1/τ₃`
+  have hB0 : B0 = K * th1 τp 0 0 := by simp only [B0, K]; rw [sA, τp_eq]
+  have hB1 : B1 = K * th1 τp (1 / 2) 0 := by simp only [B1, K]; rw [sB τ3_ne, τp_eq]
+  have hB2 : B2 = K * th1 τp 0 (1 / 2) := by simp only [B2, K]; rw [sC τ3_ne, τp_eq]
+  have hB1r : B1 = ((kr * p1 : ℝ) : ℂ) := by
+    rw [hB1, show K = (kr : ℂ) from K_real, τp, th1_imag, Complex.ofReal_mul]
+  -- Landen at `τ₃` and Jacobi at `τ₆`
+  have R1 : B0 ^ 2 = A0 ^ 2 + A2 ^ 2 := by have := dupA τ3_im; rw [h2τ3] at this; exact this
+  have R2 : B1 ^ 2 = A0 ^ 2 - A2 ^ 2 := by have := dupB τ3_im; rw [h2τ3] at this; exact this
+  have R3 : B2 ^ 2 = 2 * A0 * A2 := by have := dupC τ3_im; rw [h2τ3] at this; exact this
+  have rJ : A0 ^ 4 = A1 ^ 4 + A2 ^ 4 := jacobi τ6_im
+  -- the cubic modular equation at `τ'` (`3τ' = τ₆`)
+  have hc := cubic τp_im
+  rw [h3τp] at hc
+  have R5 : A0 * B0 = A2 * B1 + A1 * B2 := by
+    rw [hB0, hB1, hB2]; linear_combination K * hc
+  -- `0 < θ₁₀(i√6)² < θ₀₀(i√6)²` excludes the spurious factor
+  have hlt : a2 ^ 2 < a0 ^ 2 := by
+    have h := R2
+    rw [hB1r, hA0, hA2] at h
+    have h' : (kr * p1) ^ 2 = a0 ^ 2 - a2 ^ 2 := by exact_mod_cast h
+    have : 0 < (kr * p1) ^ 2 := by have := K_pos; positivity
+    linarith
+  have hne : A2 ^ 4 - 2 * A0 ^ 2 * A2 ^ 2 - A0 ^ 4 ≠ 0 := by
+    rw [hA0, hA2]
+    have : a2 ^ 4 - 2 * a0 ^ 2 * a2 ^ 2 - a0 ^ 4 < 0 := by nlinarith [sq_nonneg a2, sq_nonneg a0]
+    exact_mod_cast this.ne
+  have hm := mpoly_A A0 A1 A2 B0 B1 B2 hA0ne R1 R2 R3 rJ R5 hne
+  exact thetaValueAtOmega24_of_mpoly (A2 ^ 2 / A0 ^ 2) hA0ne
+    (div_mul_cancel₀ (A2 ^ 2) (pow_ne_zero 2 hA0ne)).symm hm
+
+/-- **The field `igusaCMValue24`, proved.** -/
+theorem igusaCMValue24 : IgusaCMValue24 :=
+  igusa_of_thetaQuotientValue24 (thetaQuotientValue24_iff.2 thetaValueAtOmega24)
+
+/-- **The glue `ThetaQuotientValue24`, proved.** -/
+theorem thetaQuotientValue24 : HDec.LeafQCheck.HM.QMSplit.ThetaQuotientValue24 :=
+  thetaQuotientValue24_iff.2 thetaValueAtOmega24
+
 /-- **The field `igusaCMValue24` from the singular modulus `k₆`.** -/
 theorem igusaCMValue24_of_singularModulus6 (h : SingularModulus6) : IgusaCMValue24 :=
   igusa_of_thetaQuotientValue24 (thetaQuotientValue24_iff.2 (thetaValueAtOmega24_of_singularModulus6 h))
@@ -1431,3 +1489,6 @@ end CM24
 
 #print axioms CM24.thetaValueAtOmega24_of_singularModulus6
 #print axioms CM24.igusaCMValue24_of_singularModulus6
+#print axioms CM24.thetaValueAtOmega24
+#print axioms CM24.igusaCMValue24
+#print axioms CM24.thetaQuotientValue24
