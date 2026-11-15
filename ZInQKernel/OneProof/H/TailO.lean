@@ -2598,12 +2598,6 @@ theorem openAddedLeaves4_of_Q5 (l : OpenAddedLeavesQ5) : OpenAddedLeaves4 :=
     LeafQCheck.gammaStarGen_proof, l.valenceBoundGammaStar, l.egaIV_8_8_2_ii, l.egaIV_8_10_5_xii,
     l.egaIV_17_7_8_ii⟩
 
-/-- **`SixContactMin` from 26 + 19 + 19 leaves and one glue Prop** (leaf-fold4's 66 fields minus
-`gammaStarGen`). -/
-theorem sixContactMin_of_openQ5 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeavesQ5) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_open4 r t (openAddedLeaves4_of_Q5 l) g
-
 /-- `OpenAddedLeavesQ5` with `valenceBoundGammaStar` (LEAF?) replaced by the published valence formula
 `ValenceFormulaGammaStar` (LEAF; `e_P ≤ 6` is proved, `LeafQCheck.VB.ellipticOrderLe6_proof`). -/
 structure OpenAddedLeavesQ6 : Prop where
@@ -2634,12 +2628,6 @@ theorem openAddedLeavesQ5_of_Q6 (l : OpenAddedLeavesQ6) : OpenAddedLeavesQ5 :=
     LeafQCheck.VB.valenceBound_of_formula l.valenceFormulaGammaStar, l.egaIV_8_8_2_ii,
     l.egaIV_8_10_5_xii, l.egaIV_17_7_8_ii⟩
 
-/-- **`SixContactMin` from 26 + 19 + 19 leaves and one glue Prop, with the valence formula in its
-published form.** -/
-theorem sixContactMin_of_openQ6 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeavesQ6) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_openQ5 r t (openAddedLeavesQ5_of_Q6 l) g
-
 
 /-- `OpenAddedLeavesQ6` with `cmDescends` (LEAF?) replaced by `STQM` (LEAF, Shimura–Taniyama);
 the glue uses the bundle leaves `r1r2`, `t11b`, `t5` (`PeriodMapH.LeafQCheck.cmDescends_of`,
@@ -2665,18 +2653,6 @@ structure OpenAddedLeavesQ7 : Prop where
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   egaIV_17_7_8_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii
 
-/-- **`SixContactMin` from 26 + 19 + 19 leaves and one glue Prop, with `CMDescends` replaced by the
-published Shimura–Taniyama statement `STQM`.** -/
-theorem sixContactMin_of_openQ7 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeavesQ7) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_openQ6 r t
-    ⟨l.cmOptimalEmbedding, l.thetaRatiosAlgebraic, l.qmHauptmodul, l.qmClassNumberOne, l.senTwist,
-      l.finiteImageHT, l.t09SymmIsogenyExists, l.isogenyQuasiInverse, l.x6ConicModel, l.y3Connected,
-      l.qmAutCard, l.serreRigidity3, l.alFixedPoints, l.zariskiConnectedness,
-      G0Split.FibreQM.PeriodMapH.LeafQCheck.cmDescends_of l.stQM t.t11b
-        (G0Split.FibreQM.PeriodMapH.LeafQCheck.torsionDescends_of_t5 t.t5) r.r1r2,
-      l.valenceFormulaGammaStar, l.egaIV_8_8_2_ii, l.egaIV_8_10_5_xii, l.egaIV_17_7_8_ii⟩ g
-
 
 /-- `OpenAddedLeavesQ7` with `qmHauptmodul` (LEAF?) replaced by the narrowed `QMHauptmodulBase` (its CM
 clauses at one point each; `LeafQCheck.HM.qmHauptmodul_of_base`). -/
@@ -2700,18 +2676,6 @@ structure OpenAddedLeavesQ8 : Prop where
   egaIV_8_8_2_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_8_2_ii
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   egaIV_17_7_8_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii
-
-/-- **`SixContactMin` from 26 + 19 + 19 leaves and one glue Prop** (leafq-check's final form: no
-`gammaStarGen`; the valence formula, Shimura–Taniyama and the narrowed Hauptmodul in place of three
-LEAF? fields). -/
-theorem sixContactMin_of_openQ8 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeavesQ8) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_openQ7 r t
-    ⟨l.cmOptimalEmbedding, l.thetaRatiosAlgebraic,
-      LeafQCheck.HM.qmHauptmodul_of_base l.qmHauptmodulBase, l.qmClassNumberOne, l.senTwist,
-      l.finiteImageHT, l.t09SymmIsogenyExists, l.isogenyQuasiInverse, l.x6ConicModel, l.y3Connected,
-      l.qmAutCard, l.serreRigidity3, l.alFixedPoints, l.zariskiConnectedness, l.stQM,
-      l.valenceFormulaGammaStar, l.egaIV_8_8_2_ii, l.egaIV_8_10_5_xii, l.egaIV_17_7_8_ii⟩ g
 
 
 /-- `OpenAddedLeavesQ8` with `qmHauptmodulBase` replaced by `QMHauptmodulBase2` (no disc −4 clause:
@@ -2737,16 +2701,6 @@ structure OpenAddedLeavesQ9 : Prop where
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   egaIV_17_7_8_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii
 
-/-- **`SixContactMin` from 26 + 19 + 19 leaves and one glue Prop** (leafq-check's final form). -/
-theorem sixContactMin_of_openQ9 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeavesQ9) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_openQ8 r t
-    ⟨l.cmOptimalEmbedding, l.thetaRatiosAlgebraic,
-      LeafQCheck.HM.base_of_base2 l.qmHauptmodulBase2, l.qmClassNumberOne, l.senTwist,
-      l.finiteImageHT, l.t09SymmIsogenyExists, l.isogenyQuasiInverse, l.x6ConicModel, l.y3Connected,
-      l.qmAutCard, l.serreRigidity3, l.alFixedPoints, l.zariskiConnectedness, l.stQM,
-      l.valenceFormulaGammaStar, l.egaIV_8_8_2_ii, l.egaIV_8_10_5_xii, l.egaIV_17_7_8_ii⟩ g
-
 
 /-- `OpenAddedLeavesQ9` with `qmHauptmodulBase2` replaced by `QMHauptmodulBase3` (no disc −3 clause: the
 pole at `i√3` follows from R4, `GammaStarGen` and the valence bound, `LeafQCheck.HM.base2_of_base3`). -/
@@ -2771,51 +2725,13 @@ structure OpenAddedLeavesQ10 : Prop where
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   egaIV_17_7_8_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii
 
-/-- **`SixContactMin` from 26 + 19 + 19 leaves and one glue Prop** (leafq-check's final form). -/
-theorem sixContactMin_of_openQ10 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeavesQ10) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_openQ9 r t
-    ⟨l.cmOptimalEmbedding, l.thetaRatiosAlgebraic,
-      LeafQCheck.HM.base2_of_base3 r.r4 LeafQCheck.gammaStarGen_proof
-        (LeafQCheck.VB.valenceBound_of_formula l.valenceFormulaGammaStar) l.qmHauptmodulBase3,
-      l.qmClassNumberOne, l.senTwist,
-      l.finiteImageHT, l.t09SymmIsogenyExists, l.isogenyQuasiInverse, l.x6ConicModel, l.y3Connected,
-      l.qmAutCard, l.serreRigidity3, l.alFixedPoints, l.zariskiConnectedness, l.stQM,
-      l.valenceFormulaGammaStar, l.egaIV_8_8_2_ii, l.egaIV_8_10_5_xii, l.egaIV_17_7_8_ii⟩ g
-
 end HDec.HSyn
-
-example : ∀ (_ : HDec.HSyn.OpenResearchLeaves2) (_ : HDec.HSyn.OpenTextbookLeaves4)
-    (_ : HDec.HSyn.OpenAddedLeavesQ5) (_ : HDec.HSyn.OpenGlue4), _root_.ZInQ.SixContactMin :=
-  HDec.HSyn.sixContactMin_of_openQ5
-
-example : ∀ (_ : HDec.HSyn.OpenResearchLeaves2) (_ : HDec.HSyn.OpenTextbookLeaves4)
-    (_ : HDec.HSyn.OpenAddedLeavesQ7) (_ : HDec.HSyn.OpenGlue4), _root_.ZInQ.SixContactMin :=
-  HDec.HSyn.sixContactMin_of_openQ7
-
-example : ∀ (_ : HDec.HSyn.OpenResearchLeaves2) (_ : HDec.HSyn.OpenTextbookLeaves4)
-    (_ : HDec.HSyn.OpenAddedLeavesQ8) (_ : HDec.HSyn.OpenGlue4), _root_.ZInQ.SixContactMin :=
-  HDec.HSyn.sixContactMin_of_openQ8
-
-example : ∀ (_ : HDec.HSyn.OpenResearchLeaves2) (_ : HDec.HSyn.OpenTextbookLeaves4)
-    (_ : HDec.HSyn.OpenAddedLeavesQ9) (_ : HDec.HSyn.OpenGlue4), _root_.ZInQ.SixContactMin :=
-  HDec.HSyn.sixContactMin_of_openQ9
-
-example : ∀ (_ : HDec.HSyn.OpenResearchLeaves2) (_ : HDec.HSyn.OpenTextbookLeaves4)
-    (_ : HDec.HSyn.OpenAddedLeavesQ10) (_ : HDec.HSyn.OpenGlue4), _root_.ZInQ.SixContactMin :=
-  HDec.HSyn.sixContactMin_of_openQ10
 
 #print axioms HDec.LeafQCheck.gammaStarGen_proof
 #print axioms HDec.HSyn.G0Split.FibreQM.PeriodMapH.LeafQCheck.cmDescends_of
-#print axioms HDec.HSyn.sixContactMin_of_openQ5
 #print axioms HDec.LeafQCheck.VB.ellipticOrderLe6_proof
-#print axioms HDec.HSyn.sixContactMin_of_openQ6
-#print axioms HDec.HSyn.sixContactMin_of_openQ7
 #print axioms HDec.LeafQCheck.HM.qmHauptmodul_of_base
-#print axioms HDec.HSyn.sixContactMin_of_openQ8
-#print axioms HDec.HSyn.sixContactMin_of_openQ9
 #print axioms HDec.LeafQCheck.HM.base2_of_base3
-#print axioms HDec.HSyn.sixContactMin_of_openQ10
 
 /-! ## leaf-fold6, part f20: leaf-fold5's statement with leafq-check's four reductions, T8 kept as a leaf
 
@@ -2875,7 +2791,6 @@ structure OpenTextbookLeaves6 : Prop where
   homLatticeCorr : _root_.ZInQ.HomUnify.HomLatticeCorr
   /-- av-b2, LEAF: T11(b) without its uniqueness clause (Conrad 2006 §3; Milne 1986 §20). -/
   t11bExists : AVB2.T11bExists
-  t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
   t24 : _root_.PkgI4.EigenformTwist
   t27 : _root_.PkgI3.QMDichotomyYu
   t33 : _root_.LeafModCurves.JacobianExists ℚ
@@ -2945,7 +2860,6 @@ theorem textbookLeaves4_of_open6 (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6
   t9 := t9_of_leaves5 l.t09SymmIsogenyExists l.isogenyQuasiInverse
   homLatticeCorr := homLatticeCorr_ofK5 t.homLatticeCorr
   t11b := t11b_of_exists5 t.t11bExists
-  t23 := t.t23
   t24 := eigenformTwist_ofK5 t.t24
   t27 := qmDichotomyYu_ofK5 t.t27
   t33 := jacobianExists_ofK5 t.t33
@@ -3006,25 +2920,9 @@ theorem glue4_of_open6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6) (l : 
 * `OpenGlue6`: 1 glue Prop (`ModelCoordinateResidue`).
 The table of every field is `docs/research/leaf-fold6.md` §2. -/
 theorem sixContactMin_of_open6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6)
-    (l : OpenAddedLeaves6) (g : OpenGlue6) : ZInQ.SixContactMin :=
+    (l : OpenAddedLeaves6) (g : OpenGlue6) (h20 : G0Split.R20Lower) : ZInQ.SixContactMin :=
   sixContactMin_of_open4 (researchLeaves2_of_open5 r) (textbookLeaves4_of_open6 t l) (addedLeaves4_of_open6 r t l)
-    (glue4_of_open6 r t l g)
-
-/-- **The other choice for T8** (goal (b)): leaf-fold5's textbook bundle (with `poincareComplement`) and leaf-fold5's
-glue bundle (with `simpleImageIsogeny`): 26 + 21 + 20 + 2 = 69 fields, glue 2. T8 is the kernel's
-`ZInQ.Contrib.AVB1.poincareReducibility_of_simpleImage`. -/
-theorem sixContactMin_of_open6_poincare (r : OpenResearchLeaves5) (t : OpenTextbookLeaves5)
-    (l : OpenAddedLeaves6) (g : OpenGlue5) : ZInQ.SixContactMin :=
-  sixContactMin_of_open6 r
-    { t3Surj := t.t3Surj, t4 := t.t4, t5 := t.t5, homFreeFiniteAlgClosed := t.homFreeFiniteAlgClosed,
-      charPolyIndepOfEllAlgClosed := t.charPolyIndepOfEllAlgClosed,
-      t8 := _root_.ZInQ.Contrib.AVB1.poincareReducibility_of_simpleImage t.poincareComplement g.simpleImageIsogeny,
-      homLatticeCorr := t.homLatticeCorr, t11bExists := t.t11bExists, t23 := t.t23, t24 := t.t24,
-      t27 := t.t27, t33 := t.t33, dimJacobianEqGenus := t.dimJacobianEqGenus,
-      t35 := t.t35, normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ,
-      normalCurveSmoothQ := t.normalCurveSmoothQ, geomConnectedOfConstantFieldQ := t.geomConnectedOfConstantFieldQ,
-      x0Transitive := t.x0Transitive, neronSchemeExtensionExists := t.neronSchemeExtensionExists }
-    l ⟨g.modelCoordinateResidue⟩
+    (glue4_of_open6 r t l g) h20
 
 /-- leaf-fold5's added-leaves bundle from leaf-fold6's: the four fields leafq-check replaced are theorems from the
 new fields (and `r4`, `r1r2`, T5, T11(b)); the other 17 are the same fields. -/
@@ -3057,12 +2955,9 @@ end HDec.HSyn
 end
 
 example : ∀ (_ : HDec.HSyn.OpenResearchLeaves5) (_ : HDec.HSyn.OpenTextbookLeaves6)
-    (_ : HDec.HSyn.OpenAddedLeaves6) (_ : HDec.HSyn.OpenGlue6), _root_.ZInQ.SixContactMin :=
+    (_ : HDec.HSyn.OpenAddedLeaves6) (_ : HDec.HSyn.OpenGlue6) (_ : HDec.HSyn.G0Split.R20Lower),
+    _root_.ZInQ.SixContactMin :=
   HDec.HSyn.sixContactMin_of_open6
-
-example : ∀ (_ : HDec.HSyn.OpenResearchLeaves5) (_ : HDec.HSyn.OpenTextbookLeaves5)
-    (_ : HDec.HSyn.OpenAddedLeaves6) (_ : HDec.HSyn.OpenGlue5), _root_.ZInQ.SixContactMin :=
-  HDec.HSyn.sixContactMin_of_open6_poincare
 
 #print axioms HDec.HSyn.t8_ofK6
 #print axioms HDec.HSyn.cmDescends_of6
@@ -3072,4 +2967,3 @@ example : ∀ (_ : HDec.HSyn.OpenResearchLeaves5) (_ : HDec.HSyn.OpenTextbookLea
 #print axioms HDec.HSyn.glue4_of_open6
 #print axioms HDec.HSyn.addedLeaves5_of_open6
 #print axioms HDec.HSyn.sixContactMin_of_open6
-#print axioms HDec.HSyn.sixContactMin_of_open6_poincare

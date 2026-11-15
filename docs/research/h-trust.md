@@ -59,6 +59,9 @@ Marks:
   (`docs/theorem-application-audit/evidence/`) reports reading the page scan at that place; no
   copy of the source was available in this repository (mark of rv-h-a9c9). Like ASTRA-READ, a
   model's reading, not a human's.
+- **HUMAN-READ** (after a locator): a person checked the printed statement at that place under
+  the rules of `docs/one-proof/STATEMENT-CHECKS.md`, recorded in `docs/one-proof/reviews.tsv`
+  with evidence HUMAN-READ. Unlike ASTRA-READ and AUDIT-READ, this is a human reading.
 - **UNVERIFIED** (after a locator): no one in this repository, model or human, has read the
   source at that place. The text says where to check it.
 - **SPECULATIVE**: an assessment.

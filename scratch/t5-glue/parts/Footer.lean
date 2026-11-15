@@ -25,3 +25,15 @@
 #print axioms T5Glue.artinLift_of_abs
 #print axioms T5Glue.cmModuli_of_final
 #print axioms T5Glue.shimuraReciprocityModFn_of_final
+#print axioms T5Glue.continuous_absArt
+#print axioms T5Glue.absArtinSurjective_of_noReal
+#print axioms T5Glue.absArtinSurjectiveQNeg
+#print axioms T5Glue.cmModuli_of_t5
+#print axioms T5Glue.shimuraReciprocityModFn_of_t5
+#print axioms T5Glue.sInvLat_eq_colon
+#print axioms T5Glue.latHat_inter_heegnerN
+#print axioms T5Glue.ideleLatticeScale_of
+#print axioms T5Glue.shimuraReciprocityModFn_of_t5'
+#print axioms T5Glue.invertibleColon
+#print axioms T5Glue.cmModuli_of_t5'
+#print axioms T5Glue.shimuraReciprocityModFn_of_t5''

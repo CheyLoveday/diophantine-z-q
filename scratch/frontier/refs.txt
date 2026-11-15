@@ -94,3 +94,29 @@ reduct-split a4fca6ae 2026-11-14 12:13:58 -0800
 modular-split cfcac8bc 2026-11-14 11:59:52 -0800
 w61 3c241950 2026-11-14 13:15:41 -0800 (tyz-split statement review v2: the docstring of TYZThm33)
 # chain.py's off-main revisions are r4's (above); r5 adds none.
+
+# refresh r6: heads read at 2026-11-14 18:41 PST (fork main b5ff0474, w63; branch heads where marked)
+main b5ff0474 2026-11-14 17:28:07 -0800 (w63)
+leaf-fold11 b73da969 2026-11-14 17:27:22 -0800 (merged in w63, with leaf-fold12)
+genus-fold d5df7c4d 2026-11-14 17:01:57 -0800 (merged in w63)
+route-a-fold 6f939b14 2026-11-14 16:15:33 -0800 (merged in w63)
+cm24-value d8d1363a 2026-11-14 16:57:54 -0800 (copied into TailZ18 by leaf-fold12)
+c-to-printed ba24fa83 2026-11-14 17:02:05 -0800 (copied into TailZ19 by leaf-fold12)
+prune 0218a662 2026-11-14 15:34:53 -0800 (merged in w62)
+leaf-fold10 a5df68fe 2026-11-14 14:12:08 -0800 (merged in w61)
+shimura-glue 2e698102 2026-11-14 14:00:59 -0800 (merged in w61)
+reduct-glue 221ba4e7 2026-11-14 13:57:45 -0800 (merged in w61)
+dimjac-glue 24435c82 2026-11-14 12:49:53 -0800 (merged in w61)
+theta-split b285cb60 2026-11-14 14:58:31 -0800 (merged in w62)
+r1univ-rigid b40823ba 2026-11-14 14:59:38 -0800 (merged in w62)
+genus-route 4be3bdae 2026-11-14 15:20:53 -0800 (merged in w62)
+prune-scan e3045e7d 2026-11-14 15:26:33 -0800 (the fixed scan)
+x6-glue 685a56e1 2026-11-14 17:31:15 -0800 (branch head, after its report)
+c-to-printed2 dbeaecf7 2026-11-14 17:40:13 -0800 (branch head, after its report)
+t5-glue 405763f6 2026-11-14 15:51:31 -0800 (branch head, after its report)
+theta-glue 336ec1fd 2026-11-14 17:55:13 -0800 (running)
+# in flight at the snapshot, not used: reduct-b 85495b37, unipotent-b 24c44f3d, sh-route 89c75e42, shimura-cft
+# c1f76fc2, t09-pic a3759092, igusa-alg 620ff92d, gap-triage f25c301d
+# revisions chain.py reads that are not on main (their branches must stay): r4's (above), and wip/x6-glue 685a56e1,
+# wip/c-to-printed2 dbeaecf7, wip/theta-glue 336ec1fd, wip/t5-glue 405763f6 (on the route); wip/cm24-value d8d1363a
+# (off the route).

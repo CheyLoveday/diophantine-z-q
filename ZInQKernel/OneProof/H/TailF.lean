@@ -2508,31 +2508,6 @@ theorem linkedTateData_of (hM : PkgI3.CharPolyIndepOfEll) (hC : LinkedTateCore) 
 
 /-! ### §7 `AfterG7` with the two joint Props replaced (proved) -/
 
-/-- **`AfterG7` (G8-G16)** from g0-assemble's inputs of `afterG7_of` with `ModelG3G6` replaced by
-`FibreSimple` and `QMModelG3`, and `LinkedTateData` by `LinkedTateCore` (T7 is `t.t7`). -/
-theorem afterG7_of_linked (r : HSyn.ResearchLeaves) (t : HSyn.TextbookLeaves)
-    (m : G0Galois.GaloisPieces) (hDF : G0ModNewform.DirichletOfFinite)
-    (hCar : LadicCond.CarayolR17')
-    (hSw : ∀ (p : ℕ) [Fact p.Prime], LadicCond.SwanIndependent (p := p))
-    (hL8 : LadicCond.SwanIntegral)
-    (hAd : ∀ (p : ℕ) [Fact p.Prime], LadicCond.AdaptedExists (p := p))
-    (hFS : HSyn.G0Split.FibreSimple) (hG3 : QMModelG3) (hC : LinkedTateCore) : AfterG7 :=
-  HSyn.G0AssembleMod.afterG7_of r t m hDF hCar hSw hL8 hAd (modelG3G6_of hFS hG3)
-    (linkedTateData_of t.t7 hC)
-
-/-- **`AfterG7` with G3 reduced to the bundle's R6, R7a, T5 and `GoodRedG3Bridge`, and
-`LinkedTateCore` to `QMEndRank` and `LinkedTateCoreDR`.** -/
-theorem afterG7_of_linked' (r : HSyn.ResearchLeaves) (t : HSyn.TextbookLeaves)
-    (m : G0Galois.GaloisPieces) (hDF : G0ModNewform.DirichletOfFinite)
-    (hCar : LadicCond.CarayolR17')
-    (hSw : ∀ (p : ℕ) [Fact p.Prime], LadicCond.SwanIndependent (p := p))
-    (hL8 : LadicCond.SwanIntegral)
-    (hAd : ∀ (p : ℕ) [Fact p.Prime], LadicCond.AdaptedExists (p := p))
-    (hFS : HSyn.G0Split.FibreSimple) (hB : GoodRedG3Bridge) (hR : QMEndRank)
-    (hDR : LinkedTateCoreDR) : AfterG7 :=
-  afterG7_of_linked r t m hDF hCar hSw hL8 hAd hFS (qmModelG3_of r.r7a r.r6 t.t5 hB)
-    (linkedTateCore_of hFS hR hDR)
-
 end HSyn.LinkedTate
 
 end
@@ -2985,25 +2960,6 @@ theorem HSyn.LinkedTate.linkedTateData_of_frobRam (hM : PkgI3.CharPolyIndepOfEll
     HSyn.G0AssembleMod.LinkedTateData :=
   HSyn.LinkedTate.linkedTateData_of hM
     (HSyn.LinkedTate.linkedTateCore_of hFS hR (UnramTate.linkedTateCoreDR_of hT hFR))
-
-/-- **`AfterG7` (G8-G16) with both joint Props of g0-assemble reduced** (proved): g0-assemble's
-inputs of `afterG7_of` (leaf bundles, `GaloisPieces`, `DirichletOfFinite`, `CarayolR17'`, the
-three LadicCond glue Props) with `ModelG3G6` and `LinkedTateData` replaced by the glue Props
-`FibreSimple` (already a `GluePieces` field), `GoodRedG3Bridge`, `QMEndRank`, `LinkedFrob`,
-`LinkedRam`; the leaves used are the bundles' R6, R7a, T5 (G3), T7 (G14) and T26 = I3.M0. -/
-theorem HSyn.LinkedTate.afterG7_of_final (r : HSyn.ResearchLeaves) (t : HSyn.TextbookLeaves)
-    (m : G0Galois.GaloisPieces) (hDF : G0ModNewform.DirichletOfFinite)
-    (hCar : LadicCond.CarayolR17')
-    (hSw : ∀ (p : ℕ) [Fact p.Prime], LadicCond.SwanIndependent (p := p))
-    (hL8 : LadicCond.SwanIntegral)
-    (hAd : ∀ (p : ℕ) [Fact p.Prime], LadicCond.AdaptedExists (p := p))
-    (hFS : HSyn.G0Split.FibreSimple) (hB : HSyn.LinkedTate.GoodRedG3Bridge)
-    (hR : HSyn.LinkedTate.QMEndRank) (hF : UnramTate.LinkedFrob) (hRam : UnramTate.LinkedRam) :
-    G0ModField.AfterG7 :=
-  HSyn.G0AssembleMod.afterG7_of r t m hDF hCar hSw hL8 hAd
-    (HSyn.LinkedTate.modelG3G6_of hFS (HSyn.LinkedTate.qmModelG3_of r.r7a r.r6 t.t5 hB))
-    (HSyn.LinkedTate.linkedTateData_of_frobRam t.t7 t.t26 hFS hR
-      (UnramTate.linkedFrobRam_of hF hRam))
 
 end
 

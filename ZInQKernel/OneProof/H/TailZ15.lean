@@ -5,8 +5,10 @@ import ZInQKernel.OneProof.H.TailZ14
 The research fields `r6` (`PkgI2.RaynaudCriterion`), `semistableReductionThm` and `semistablePersists` (SS1, SS3;
 height-split), all three consequences of one theorem, are proved from reduct-glue's work (`TailZ14`) and replaced
 by three leaves: `ReductSplit.RaynaudSemistable` (SGA 7 IX 4.7 over a DVR), `ReductSplit.SemistablePersistsDVR`
-(SGA 7 IX 3.3 over a DVR) and `ReductGlue.NeronLocalizesDVR` (BLR §1.2 Prop. 4). The glue that reduct-split left
-for these rows is proved: `FixedTorsionRationalImperfect` from the textbook field `mulEtaleAbelianScheme`,
+(SGA 7 IX 3.3 over a DVR) and `ReductGlue.NeronLocalizesDVR` (BLR §1.2 Prop. 4). SS1 also uses the field
+`semistableReductionDVR` (`ReductSplit.SemistableReductionDVR`, SGA 7 IX Thm 3.6 over a DVR), already in
+leaf-fold9's bundle. The glue that reduct-split left for these rows is proved:
+`FixedTorsionRationalImperfect` from the textbook field `mulEtaleAbelianScheme`,
 `SemistableLocalGlobal` from `NeronLocalizesDVR`, and `SemistableAlmostAll` from the kernel's `AbVarSpreadsOut`
 (from the EGA IV leaves: the added field `egaIV_8_10_5_xii` and cloud worker W01's two proofs) and Zariski's
 connectedness theorem (cloud worker W02's proof). docs/research/leaf-fold10.md lists every field. -/
@@ -116,7 +118,6 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
     r.neronSchemeModelExistsDVR (semistableLocalGlobal_of10 r)
   bostLowerBound := r.bostLowerBound
   javanpeykarBound := r.javanpeykarBound
-  faltingsLemma5BC := r.faltingsLemma5BC
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
   semistableReductionDVR := r.semistableReductionDVR
@@ -131,6 +132,7 @@ and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every fie
 theorem sixContactMin_of_open12 (r : OpenResearchLeaves10) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves9)
     (g : OpenGlue7) : ZInQ.SixContactMin :=
   sixContactMin_of_open11 (researchLeaves9_of_open10 r t l) t l g
+    (_root_.ZInQ.HeightSplit.faltingsLemma5BCLower_of_BC r.faltingsLemma5BC)
 
 end HSyn
 

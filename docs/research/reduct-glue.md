@@ -16,12 +16,16 @@ SGA 3, SGA 7, EGA, Stacks and Serre–Tate could not be consulted, and every loc
 
 **All four glue Props are proved.** reduct-split left `FixedTorsionRationalImperfect`, `SemistableLocalGlobal`,
 `SemistableAlmostAll` and `SemistableNeronBaseChangeLocalGlobal` (its `ReductGlue`). Each is now a Lean theorem
-from published leaves. reduct-split's seven rows (r6, r7b, r8, SS1, SS2, SS3, faltingsLemma5BC) follow from:
+from leaves (qualified below). reduct-split's seven rows (r6, r7b, r8, SS1, SS2, SS3, faltingsLemma5BC) follow from:
 - its `ReductLeaves`;
 - six further leaves (`ReductGlueLeaves`);
 - `HeightSplit.FaltingsLemma5`, as before.
 
-No project glue is left: `rows_of_leaves_noGlue`, VERIFIED.
+No named glue Prop is left on the general route: `rows_of_leaves_noGlue`, VERIFIED (the Lean fact only). This
+holds only relative to reduct-split's `ReductLeaves`, whose six SGA 7 and Serre–Tate fields count as (b) under the
+strict rule (reduct-glue review v2, §4). On the printed route three named glue Props remain (§4), and the
+strict-henselization leaves combine two prints each (EGA IV 18.8 and BLR §1.2), so none of them is a single
+published statement.
 
 | reduct-split glue | Lean proof | what it rests on |
 |---|---|---|
@@ -46,7 +50,11 @@ named glue Props, each with a docstring that says what it needs (§4).
 
 No statement was found false or vacuous.
 
-## 2. The new leaves (published, cited; each a consequence of the print, never stronger)
+## 2. The new leaves (cited; each a consequence of the print, never stronger)
+
+These are not all single published statements: the three strict-henselization leaves each combine two prints
+(EGA IV 18.8 with BLR §1.2), and under the strict rule every leaf in this table counts (b) (reduct-glue review v2,
+§2).
 
 | leaf | Lean statement (short) | source (UNVERIFIED locators) | why it is a consequence |
 |---|---|---|---|
@@ -130,12 +138,31 @@ printed-base leaf is a specialization of reduct-split's leaf, so none of them is
 | `sga7_3_6` | `SemistableReductionSH` | glue `ReductionFromSH`: descend a finite `L/K^sh` to a finite `K'/K` (`K^sh` is a filtered union of fraction fields of étale `O`-algebras; Krasner); places of `K'` versus places over `O^sh`. Not in Mathlib. |
 | `sga7_3_3a` | `SemistablePersistsSH` | **proved**: `persistsFromSH_of : StrictHenselizationPair → PersistsFromSH` |
 | `sga7_3_3b` | `IdentityComponentBaseChangeSH` | glue `IdentityComponentFromSH`: besides the pair, fpqc descent of "open immersion" along `O' → O'^sh` (EGA IV 2.7.1), and the fact that the generic fibre of the given open subgroup `U` is all of `A_K` (an open subgroup of a connected group is closed) |
-| `serreTate2` | `SerreTateThm2Complete` | glue `SerreTateFromComplete`: the completion of a DVR as a complete DVR with the same residue field (Mathlib has `Valued.Completion`, no package), identification of the inertia groups (Serre, *Corps locaux* II §3), Néron models and completion |
+| `serreTate2` | `SerreTateThm2Complete` | glue `SerreTateFromComplete`: the completion of a DVR as a complete DVR with the same residue field (Mathlib has `Valued.Completion`, no package), identification of the inertia groups (Serre, *Corps locaux* II §3), Néron models and completion; also the descent of a finite extension `K''` of `K̂` to `K` (Krasner or density), the identification of completions, the choice of an embedding `ι` of `K̄` into an algebraic closure of `K̂`, the bijection on `A[ℓ^n]`, and, in characteristic `p`, the inseparable case, which needs Serre–Tate Thm 1 (r7a) |
 | `mumford` | over an algebraically closed field (printed) | no change needed |
 
 `reductLeaves_of_printed'' : ReductLeavesPrinted → StrictHenselizationPair → StrictHenselizationInside →
 ReductPrintedGlue'' → ReductLeaves`, where `ReductPrintedGlue''` holds the three remaining reductions. The
 `ReductLeavesPrinted` bundle also contains `StrictHenselizationNeron` and `MulEtaleAbelianScheme`.
+
+**Each remaining glue Prop is as strong as the general leaf, given its printed leaf.** `ReductionFromSH`,
+`IdentityComponentFromSH` and `SerreTateFromComplete` are bare implications `P_printed → P_general`, and the converse
+`P_general → P_printed` is proved (`printed_of_general`). So each is equivalent to `P_printed ↔ P_general`: given its
+printed leaf it is as strong as the general leaf, and it is strictly weaker only when that leaf is not given.
+
+**Open readings besides the base** (all UNVERIFIED). The printed-base versions settle only the base; these readings
+stay open:
+- `SemistableUnipotentSH`, `SemistablePersistsSH`, `IdentityComponentBaseChangeSH`: SGA 7 may define semistability
+  over `k(s)` rather than on the geometric special fibre, as `HasSemistableReduction` does (this matters for imperfect
+  `k`);
+- `SemistablePersistsSH`, `IdentityComponentBaseChangeSH`: the print may require `S'` finite over `S`;
+- `SemistableUnipotentSH`: the 3.5 display may include the echelon clause;
+- `RaynaudSemistableSH`: the print may state a Galois-form conclusion, and may require `n > 3` (the leaf allows
+  `m = 3`);
+- `SerreTateThm2Complete`: Serre–Tate may build `T_ℓ` over a separable closure `K_s`; in characteristic `p` the leaf
+  (over an algebraic closure) can then be stronger than the print.
+
+So confirming the strictly henselian base alone does not make 3.3a or 3.3b (a).
 
 ## 5. Statement review
 
@@ -152,6 +179,9 @@ ReductPrintedGlue'' → ReductLeaves`, where `ReductPrintedGlue''` holds the thr
     `StrictHenselizationInside`-type results, but that derivation is not in Lean.
   - `OpenImmersionOfLocal` assumes that EGA IV 8.10.5 has an open-immersion item. If it does not, the leaf is the
     standard corollary for immersions together with flatness (UNVERIFIED).
+  - The printed-base leaves of §4 settle only the base. The other open readings (semistability over `k(s)`, `S'`
+    finite, the echelon clause, the Galois form and `n > 3` for 4.7, `K_s` in characteristic `p` for Serre–Tate)
+    are listed at the end of §4.
 - **Lean pitfalls found:**
   - A kernel deterministic timeout in the SS2 proof disappeared once `pbCompIso`, which contains an `eqToIso`, was
     made an `irreducible_def`.

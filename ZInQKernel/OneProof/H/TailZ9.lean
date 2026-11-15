@@ -50,9 +50,6 @@ structure OpenResearchLeaves9 : Prop where
   /-- height-split, H-14: Javanpeykar 2014 Thm 1.1.1 for curves over `K` with a `K`-rational Belyi function,
   replaces `r18`. -/
   javanpeykarBound : _root_.ZInQ.HeightSplit.JavanpeykarBound
-  /-- height-split, H-16: Faltings 1983 Lemma 5 (semistable form) over every number field `L ⊇ K`, replaces
-  `r20`. -/
-  faltingsLemma5BC : _root_.ZInQ.HeightSplit.FaltingsLemma5BC
   /-- height-split, H-18: the upper half of Pazuki 2012 Cor. 1.3(2), replaces `r22`. -/
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces `r19`. -/
@@ -81,7 +78,6 @@ structure OpenTextbookLeaves9 : Prop where
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
-  bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
   yuThm11 : QMSplit.Yu.YuThm11
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
@@ -119,7 +115,6 @@ theorem researchLeaves8_of_open9 (r : OpenResearchLeaves9) (t : OpenTextbookLeav
   semistablePersists := r.semistablePersists
   bostLowerBound := r.bostLowerBound
   javanpeykarBound := r.javanpeykarBound
-  faltingsLemma5BC := r.faltingsLemma5BC
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
 
@@ -135,7 +130,6 @@ theorem textbookLeaves8_of_open9 (t : OpenTextbookLeaves9) : OpenTextbookLeaves8
   groupSchemeEquidim := t.groupSchemeEquidim
   uniformizationLeafAll := t.uniformizationLeafAll
   gagaMorphism := t.gagaMorphism
-  bdRInvariants := t.bdRInvariants
   yuThm11 := t.yuThm11
   t33 := _root_.ZInQ.Contrib.CloudW07JacobiansCurves.JacobianExists_proof
   dimJacobianEqGenus := t.dimJacobianEqGenus
@@ -149,8 +143,8 @@ theorem textbookLeaves8_of_open9 (t : OpenTextbookLeaves9) : OpenTextbookLeaves8
 `OpenAddedLeaves8` (14) and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
 `docs/research/leaf-fold9.md` §2. -/
 theorem sixContactMin_of_open9 (r : OpenResearchLeaves9) (t : OpenTextbookLeaves9) (l : OpenAddedLeaves8)
-    (g : OpenGlue7) : ZInQ.SixContactMin :=
-  sixContactMin_of_open8 (researchLeaves8_of_open9 r t) (textbookLeaves8_of_open9 t) l g
+    (g : OpenGlue7) (hF5 : _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower) : ZInQ.SixContactMin :=
+  sixContactMin_of_open8 (researchLeaves8_of_open9 r t) (textbookLeaves8_of_open9 t) l g hF5
 
 end HSyn
 
