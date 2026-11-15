@@ -35,6 +35,13 @@ Q = {m: '(' + q + ')' for m, q in zip(chars, quads)}
 Qp = {m: S[m] for m in chars}
 def ptxt(p):
     if p.iszero(): return '0'
+    items = []
+    for e, c in sorted(p.d.items(), reverse=True):
+        c = F(c); assert c.denominator == 1
+        items.append('(%d, %d, %d, %d, %d)' % ((c.numerator,) + tuple(e)))
+    return 'pe [' + ', '.join(items) + '] x0 x1 x2 x3'
+def ptxt_old(p):
+    if p.iszero(): return '0'
     out = []
     for e, c in sorted(p.d.items(), reverse=True):
         mon = ' * '.join(('x%d ^ %d' % (i, n)) if n > 1 else 'x%d' % i for i, n in enumerate(e) if n > 0)
@@ -73,6 +80,10 @@ theorem esymmL_eq_G (l : List ℂ) (j : ℕ) : esymmL l j = esymmG l j := by
     | zero => rfl
     | succ j => simp only [esymmL, esymmG, ih]
 
+/-- A polynomial in `x₀..x₃` from its list of (coefficient, exponents). -/
+def pe (l : List (ℤ × ℕ × ℕ × ℕ × ℕ)) (x0 x1 x2 x3 : ℂ) : ℂ :=
+  (l.map fun t => (t.1 : ℂ) * x0 ^ t.2.1 * x1 ^ t.2.2.1 * x2 ^ t.2.2.2.1 * x3 ^ t.2.2.2.2).sum
+
 theorem esymmG_eq_zero_of_lt {R : Type*} [CommRing R] :
     ∀ (l : List R) (j : ℕ), l.length < j → esymmG l j = 0
   | [], 0, h => absurd h (by simp)
@@ -104,65 +115,69 @@ theorem esymmG_append {R : Type*} [CommRing R] (l₁ l₂ : List R) (k : ℕ) :
         Finset.mul_sum, mul_assoc]
       ring
 ''']
-# hpsi lemmas (no ring: syntactic after simp)
+# definitions of the four theta-expression polynomials and the two half-lists (elaborated once)
 U = lambda t: t.replace('x0', 'u ![0, 0]').replace('x1', 'u ![0, 1]').replace('x2', 'u ![1, 0]').replace('x3', 'u ![1, 1]')
 SQ = 'Sq0, Sq1, Sq2, Sq3, Sq4, Sq5, Sq6, Sq7, Sq8, Sq9'
-L.append('''set_option maxHeartbeats 0 in
+XU = "(u ![0, 0]) (u ![0, 1]) (u ![1, 0]) (u ![1, 1])"
+D = lambda name, typ, body: "set_option maxHeartbeats 0 in\nset_option maxRecDepth 100000 in\ndef %s (x0 x1 x2 x3 : ℂ) : %s :=\n  %s\n" % (name, typ, body)
+L.append(D('S4x', 'ℂ', S4t)); L.append(D('S6x', 'ℂ', S6t)); L.append(D('Px', 'ℂ', Pt)); L.append(D('S12x', 'ℂ', S12t))
+L.append(D('YA', 'List ℂ', '[' + ', '.join(Yt[:5]) + ']')); L.append(D('YB', 'List ℂ', '[' + ', '.join(Yt[5:]) + ']'))
+HP = """set_option maxHeartbeats 0 in
 set_option maxRecDepth 100000 in
-theorem hpsi4 (u : (Fin 2 → Fin 2) → ℂ) : psi4T (fun m => Sq m u) = (%s) / 4 := by
-  simp only [psi4T, sum_evenChars, %s]
-
-set_option maxHeartbeats 0 in
+theorem %s (u : (Fin 2 → Fin 2) → ℂ) : %s (fun m => Sq m u) = %s := by
+  simp only [%s, %s]
+"""
+L.append(HP % ('hpsi4', 'psi4T', 'S4x %s / 4' % XU, 'psi4T, sum_evenChars, S4x', SQ))
+L.append(HP % ('hpsi6', 'psi6T', '(1 / 4) * S6x %s' % XU, 'psi6T, S6x', SQ))
+L.append(HP % ('hchi10', 'chi10T', '-Px %s / 2 ^ 14' % XU, 'chi10T, prod_evenChars, Px', SQ))
+L.append(HP % ('hchi12', 'chi12T', '(1 / (2 ^ 17 * 3)) * S12x %s' % XU, 'chi12T, S12x', SQ))
+L.append("""set_option maxHeartbeats 0 in
 set_option maxRecDepth 100000 in
-theorem hpsi6 (u : (Fin 2 → Fin 2) → ℂ) : psi6T (fun m => Sq m u) = (1 / 4) * (%s) := by
-  simp only [psi6T, %s]
-
-set_option maxHeartbeats 0 in
-set_option maxRecDepth 100000 in
-theorem hchi10 (u : (Fin 2 → Fin 2) → ℂ) : chi10T (fun m => Sq m u) = -(%s) / 2 ^ 14 := by
-  simp only [chi10T, prod_evenChars, %s]
-
-set_option maxHeartbeats 0 in
-set_option maxRecDepth 100000 in
-theorem hchi12 (u : (Fin 2 → Fin 2) → ℂ) : chi12T (fun m => Sq m u) = (1 / (2 ^ 17 * 3)) * (%s) := by
-  simp only [chi12T, %s]
-''' % (U(S4t), SQ, U(S6t), SQ, U(Pt), SQ, U(S12t), SQ))
-def nf_lemma(name, lhs, p):
-    return '''set_option maxHeartbeats 0 in
+theorem hY (u : (Fin 2 → Fin 2) → ℂ) :
+    List.map (fun m => Sq m u ^ 4) [(![0, 0], ![0, 0]), (![0, 0], ![0, 1]), (![0, 0], ![1, 0]),
+      (![0, 0], ![1, 1]), (![0, 1], ![0, 0]), (![0, 1], ![1, 0]), (![1, 0], ![0, 0]),
+      (![1, 0], ![0, 1]), (![1, 1], ![0, 0]), (![1, 1], ![1, 1])] = YA %s ++ YB %s := by
+  simp only [List.map, YA, YB, List.cons_append, List.nil_append, %s]
+""" % (XU, XU, SQ))
+def nf_lemma(name, lhs, p, unf):
+    return """set_option maxHeartbeats 0 in
 set_option maxRecDepth 100000 in
 theorem %s (x0 x1 x2 x3 : ℂ) : %s =
     %s := by
-  ring
-''' % (name, lhs, ptxt(p))
-L.append(nf_lemma('NS4', S4t, S4p)); L.append(nf_lemma('NS6', S6t, S6p))
-L.append(nf_lemma('NP', Pt, Pp)); L.append(nf_lemma('NS12', S12t, S12p))
-lA = '[' + ', '.join(Yt[:5]) + ']'; lB = '[' + ', '.join(Yt[5:]) + ']'
+  simp only [%s, pe, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil]
+  push_cast
+  all_goals ring
+""" % (name, lhs, ptxt(p), unf)
+X = 'x0 x1 x2 x3'
+L.append(nf_lemma('NS4', 'S4x ' + X, S4p, 'S4x')); L.append(nf_lemma('NS6', 'S6x ' + X, S6p, 'S6x'))
+L.append(nf_lemma('NP', 'Px ' + X, Pp, 'Px')); L.append(nf_lemma('NS12', 'S12x ' + X, S12p, 'S12x'))
 for a in range(0, min(k, 5) + 1):
-    L.append(nf_lemma('EA%d' % a, 'esymmG %s %d' % (lA, a), EA[a]).replace('  ring\n', '  simp only [esymmG]\n  try ring\n'))
-    L.append(nf_lemma('EB%d' % a, 'esymmG %s %d' % (lB, a), EB[a]).replace('  ring\n', '  simp only [esymmG]\n  try ring\n'))
+    L.append(nf_lemma('EA%d' % a, 'esymmG (YA %s) %d' % (X, a), EA[a], 'YA, esymmG'))
+    L.append(nf_lemma('EB%d' % a, 'esymmG (YB %s) %d' % (X, a), EB[a], 'YB, esymmG'))
 zs = []
 for a in range(0, k + 1):
-    if a > 5: zs.append('esymmG_eq_zero_of_lt %s %d (by simp)' % (lA, a))
-    if k - a > 5: zs.append('esymmG_eq_zero_of_lt %s %d (by simp)' % (lB, k - a))
+    if a > 5: zs.append('esymmG_eq_zero_of_lt (YA %s) %d (by simp [YA])' % (X, a))
+    if k - a > 5: zs.append('esymmG_eq_zero_of_lt (YB %s) %d (by simp [YB])' % (X, k - a))
 zline = ('  rw [%s]\n' % ', '.join(zs)) if zs else ''
 ea = ', '.join('EA%d, EB%d' % (a, a) for a in range(0, min(k, 5) + 1))
-L.append('''set_option maxHeartbeats 0 in
+L.append("""set_option maxHeartbeats 0 in
 set_option maxRecDepth 200000 in
 theorem igusaAlg%d : IgusaAlg %d := by
   intro u
-  rw [evenChars_val, Multiset.map_coe, esymm_coe, esymmL_eq_G, hpsi4, hpsi6, hchi10, hchi12]
-  simp only [List.map, %s]
+  rw [evenChars_val, Multiset.map_coe, esymm_coe, esymmL_eq_G, hY, esymmG_append, hpsi4, hpsi6,
+    hchi10, hchi12]
   generalize u ![0, 0] = x0
   generalize u ![0, 1] = x1
   generalize u ![1, 0] = x2
   generalize u ![1, 1] = x3
-  rw [show [%s] = %s ++ %s from rfl, esymmG_append]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, Nat.reduceSub]
 %s  simp only [%s, NS4, NS6, NP, NS12, igusaP]
+  simp only [pe, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil]
+  push_cast
   ring
 
 end ThetaGlueAlg
 
 #print axioms ThetaGlueAlg.igusaAlg%d
-''' % (k, k, SQ, ', '.join(Yt), lA, lB, zline, ea, k))
+""" % (k, k, zline, ea, k))
 open(out, 'w').write(pre + '\n'.join(L))
