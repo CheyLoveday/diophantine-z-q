@@ -604,4 +604,97 @@ theorem theta4_quarter (hw : 0 < w.im) :
 
 end Products
 
+section Values
+
+variable (hw : 0 < w.im)
+include hw
+
+omit hw in
+theorem gp_c_eq {k m m' : ℕ} {c d : ℂ} (h : c * Qw w ^ m = d * Qw w ^ m') :
+    gp (Qw w) c k m = gp (Qw w) d k m' := gp_shift h
+
+include hw
+
+theorem val_t0 : jacobiTheta₂ 0 w = gp (Qw w) (-1) 16 16 * gp (Qw w) 1 16 8 ^ 2 := by
+  rw [theta_gp hw, neg_zero]; simp [eJ, sq, mul_assoc]
+
+theorem val_t4 : jacobiTheta₂ (w / 4) w =
+    gp (Qw w) (-1) 16 16 * gp (Qw w) 1 16 12 * gp (Qw w) 1 16 4 := by
+  have hQ := Qw_ne_zero w
+  have e1 : eJ (w / 4) = Qw w ^ 4 := by
+    have := eJ_lin (w := w) 0 2; rw [show (0 : ℂ) + (2 : ℕ) * w / 8 = w / 4 by push_cast; ring] at this
+    rw [this]; simp [eJ]
+  rw [theta_gp hw, eJ_neg, e1, gp_c_eq (c := Qw w ^ 4) (m := 8) (m' := 12) (d := 1) (by ring),
+    gp_c_eq (c := (Qw w ^ 4)⁻¹) (m := 8) (m' := 4) (d := 1) (by field_simp)]
+
+theorem val_u (k : ℕ) (hk : k ≤ 3) : jacobiTheta₂ (1 / 2 + k * w / 8) w =
+    gp (Qw w) (-1) 16 16 * gp (Qw w) (-1) 16 (8 + 2 * k) * gp (Qw w) (-1) 16 (8 - 2 * k) := by
+  have hQ := Qw_ne_zero w
+  have e1 : eJ (1 / 2 + k * w / 8) = -Qw w ^ (2 * k) := by rw [eJ_lin, eJ_half]; ring
+  rw [theta_gp hw, eJ_neg, e1, gp_c_eq (c := -Qw w ^ (2 * k)) (m := 8) (m' := 8 + 2 * k) (d := -1)
+    (by ring), gp_c_eq (c := (-Qw w ^ (2 * k))⁻¹) (m := 8) (m' := 8 - 2 * k) (d := -1) ?_]
+  have : Qw w ^ 8 = Qw w ^ (2 * k) * Qw w ^ (8 - 2 * k) := by rw [← pow_add]; congr 1; omega
+  rw [this]; field_simp
+
+theorem val_t2 : jacobiTheta₂ (w / 2) w = 2 * gp (Qw w) (-1) 16 16 * gp (Qw w) 1 16 16 ^ 2 := by
+  have hQ := Qw_ne_zero w
+  have e1 : eJ (w / 2) = Qw w ^ 8 := by
+    have := eJ_lin (w := w) 0 4; rw [show (0 : ℂ) + (4 : ℕ) * w / 8 = w / 2 by push_cast; ring] at this
+    rw [this]; simp [eJ]
+  rw [theta_gp hw, eJ_neg, e1, gp_c_eq (c := Qw w ^ 8) (m := 8) (m' := 16) (d := 1) (by ring),
+    gp_c_eq (c := (Qw w ^ 8)⁻¹) (m := 8) (m' := 0) (d := 1) (by field_simp), gp_split (norm_Qw_lt_one hw) 1 (by norm_num) 0]
+  norm_num; ring
+
+theorem val_f4 : jacobiTheta₂ (1 / 2) (w / 4) =
+    (gp (Qw w) (-1) 16 4 * gp (Qw w) (-1) 16 12 * gp (Qw w) (-1) 16 8 * gp (Qw w) (-1) 16 16) *
+    (gp (Qw w) (-1) 16 2 * gp (Qw w) (-1) 16 10 * gp (Qw w) (-1) 16 6 * gp (Qw w) (-1) 16 14) ^ 2 := by
+  have hQ := norm_Qw_lt_one hw
+  have hw4 : 0 < (w / 4).im := by simp; linarith
+  rw [jacobiTheta₂_eq_jtpP hw4]
+  unfold jtpP
+  have eh : eJ (-(1 / 2)) = -1 := by rw [eJ_neg, eJ_half]; norm_num
+  rw [jtpA_eq_gp, jtpB_eq_gp, jtpB_eq_gp, eJ_half, eh, qJ_quarter, gp_pow, gp_pow]
+  have a1 := gp_even_mul_odd hQ (-1) 4 4 (by norm_num)
+  have a2 := gp_even_mul_odd hQ (-1) 8 4 (by norm_num)
+  have a3 := gp_even_mul_odd hQ (-1) 8 8 (by norm_num)
+  have b1 := gp_even_mul_odd hQ (-1) 4 2 (by norm_num)
+  have b2 := gp_even_mul_odd hQ (-1) 8 2 (by norm_num)
+  have b3 := gp_even_mul_odd hQ (-1) 8 6 (by norm_num)
+  norm_num at a1 a2 a3 b1 b2 b3 ⊢
+  rw [← a1, ← a2, ← a3, ← b1, ← b2, ← b3]
+  ring
+
+/-- **The product identity** `θ₂ · θ(w/4) · θ₃ · θ₄(w/4) = 2 θ(1/2 + 3w/8)² θ(1/2 + w/8)²`. -/
+theorem prod_identity :
+    jacobiTheta₂ (w / 2) w * jacobiTheta₂ (w / 4) w * jacobiTheta₂ 0 w * jacobiTheta₂ (1 / 2) (w / 4) =
+      2 * jacobiTheta₂ (1 / 2 + (3 : ℕ) * w / 8) w ^ 2 * jacobiTheta₂ (1 / 2 + (1 : ℕ) * w / 8) w ^ 2 := by
+  have hQ := norm_Qw_lt_one hw
+  rw [val_t2 hw, val_t4 hw, val_t0 hw, val_f4 hw, val_u hw 3 (by norm_num), val_u hw 1 (by norm_num)]
+  norm_num
+  have r1 := gp_pm hQ (k := 16) (by norm_num) 4
+  have r2 := gp_pm hQ (k := 16) (by norm_num) 12
+  have r3 := gp_pm hQ (k := 16) (by norm_num) 8
+  have r4 := gp_even_mul_odd hQ (-1) 16 8 (by norm_num)
+  have r5 := euler16 hQ
+  norm_num at r1 r2 r3 r4
+  set A := gp (Qw w) (-1) 16 16
+  set P16 := gp (Qw w) 1 16 16
+  set P12 := gp (Qw w) 1 16 12
+  set P8 := gp (Qw w) 1 16 8
+  set P4 := gp (Qw w) 1 16 4
+  set M4 := gp (Qw w) (-1) 16 4
+  set M8 := gp (Qw w) (-1) 16 8
+  set M12 := gp (Qw w) (-1) 16 12
+  set g8 := gp (Qw w) (-1) 32 8
+  set g16 := gp (Qw w) (-1) 32 16
+  set g24 := gp (Qw w) (-1) 32 24
+  set M := gp (Qw w) (-1) 16 2 * gp (Qw w) (-1) 16 10 * gp (Qw w) (-1) 16 6 * gp (Qw w) (-1) 16 14
+  -- bracket `P16² P12 P4 P8² M4 M12 M8 = 1`
+  have hb : P16 ^ 2 * (P12 * M12) * (P4 * M4) * P8 ^ 2 * M8 = 1 := by
+    rw [r1, r2, mul_assoc (P16 ^ 2), mul_comm g24 g8, r4]
+    linear_combination (P16 * g16 + 1) * r5 + P16 ^ 2 * (P8 * M8 + g16) * r3
+  linear_combination 2 * A ^ 4 * M ^ 2 * hb
+
+end Values
+
 end ThetaWP8
