@@ -260,4 +260,168 @@ theorem exists_compose (hsq : Squarefree D) (ha : 0 < a) (hab : 4 * a ∣ b ^ 2 
 
 end Compose
 
+/-! ### Homothety of lattice pairs versus `Γ₀(N)`-equivalence -/
+
+/-- `(⟨1, τ_Q⟩, ⟨1/N, τ_Q⟩) = j·(⟨1, τ_{Q'}⟩, ⟨1/N, τ_{Q'}⟩)`. -/
+def PairHom {N : ℕ} {D : ℤ} (Q Q' : HeegnerForm N D) (j : ℂ) : Prop :=
+  Q.lat = Q'.lat.map (LinearMap.mulLeft ℤ j) ∧ Q.latN = Q'.latN.map (LinearMap.mulLeft ℤ j)
+
+theorem map_mulLeft_span_pair (j u v : ℂ) :
+    (Submodule.span ℤ {u, v}).map (LinearMap.mulLeft ℤ j) = Submodule.span ℤ {j * u, j * v} := by
+  rw [Submodule.map_span, Set.image_pair]; rfl
+
+theorem span_pair_eq {u₁ u₂ v₁ v₂ : ℂ} (h1 : u₁ ∈ Submodule.span ℤ {v₁, v₂})
+    (h2 : u₂ ∈ Submodule.span ℤ {v₁, v₂}) (h3 : v₁ ∈ Submodule.span ℤ {u₁, u₂})
+    (h4 : v₂ ∈ Submodule.span ℤ {u₁, u₂}) :
+    Submodule.span ℤ {u₁, u₂} = Submodule.span ℤ {v₁, v₂} := by
+  apply le_antisymm
+  · rw [Submodule.span_le]; rintro _ (rfl | h)
+    · exact h1
+    · rw [Set.mem_singleton_iff] at h; subst h; exact h2
+  · rw [Submodule.span_le]; rintro _ (rfl | h)
+    · exact h3
+    · rw [Set.mem_singleton_iff] at h; subst h; exact h4
+
+theorem gamma0_dvd {N : ℕ} {γ : SL(2, ℤ)} (hγ : γ ∈ CongruenceSubgroup.Gamma0 N) :
+    (N : ℤ) ∣ γ 1 0 := (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hγ
+
+theorem N_ne_zero {N : ℕ} {D : ℤ} (Q : HeegnerForm N D) : (N : ℂ) ≠ 0 := by
+  have : (N : ℤ) ≠ 0 := by
+    intro h0; obtain ⟨x, hx⟩ := Q.N_dvd; rw [h0, zero_mul] at hx; exact Q.A_pos.ne' hx
+  exact_mod_cast this
+
+/-- **`Γ₀(N)`-equivalent Heegner forms have homothetic lattice pairs.** -/
+theorem pairHom_of_equiv {N : ℕ} {D : ℤ} {Q Q' : HeegnerForm N D}
+    (h : ZInQ.GZHL3.Gamma0Equiv Q Q') : ∃ j : ℂ, j ≠ 0 ∧ PairHom Q Q' j := by
+  obtain ⟨γ, hγ, e⟩ := h
+  obtain ⟨c₁, hc₁⟩ := gamma0_dvd hγ
+  have hdet : ((γ 0 0 : ℤ) : ℂ) * (γ 1 1 : ℤ) - (γ 0 1 : ℤ) * (γ 1 0 : ℤ) = 1 := by
+    exact_mod_cast ZInQ.GZHL3.Reps.det_SL γ
+  set τ : ℂ := (Q.tauH : ℂ)
+  set w : ℂ := ((γ 1 0 : ℤ) : ℂ) * τ + (γ 1 1 : ℤ) with hwdef
+  have hw : w ≠ 0 := by
+    have := UpperHalfPlane.denom_ne_zero γ Q.tauH
+    simpa [UpperHalfPlane.denom, w, τ] using this
+  have hzw : (Q'.tau : ℂ) * w = ((γ 0 0 : ℤ) : ℂ) * τ + (γ 0 1 : ℤ) := by
+    have : (Q'.tau : ℂ) = ((γ • Q.tauH : ℍ) : ℂ) := by rw [e]; rfl
+    rw [this, UpperHalfPlane.coe_specialLinearGroup_apply]
+    simp only [algebraMap_int_eq, eq_intCast, Complex.ofReal_intCast]
+    exact div_mul_cancel₀ _ hw
+  have hc : ((γ 1 0 : ℤ) : ℂ) = N * c₁ := by exact_mod_cast hc₁
+  have hN := N_ne_zero Q
+  have hτ : Q.tau = τ := rfl
+  have hdet' : ((γ 0 0 : ℤ) : ℂ) * (γ 1 1 : ℤ) - (γ 0 1 : ℤ) * (γ 1 0 : ℤ) - 1 = 0 := by
+    rw [hdet]; ring
+  set iN : ℂ := 1 / (N : ℂ) with hiNdef
+  have hiN : (N : ℂ) * iN - 1 = 0 := by rw [hiNdef]; field_simp; ring
+  have hc' : ((γ 1 0 : ℤ) : ℂ) - N * c₁ = 0 := by rw [hc]; ring
+  refine ⟨w, hw, ?_, ?_⟩
+  · rw [HeegnerForm.lat, HeegnerForm.lat, map_mulLeft_span_pair, mul_one, hτ]
+    apply span_pair_eq
+    · exact mem_span_pair_of (γ 0 0) (-(γ 1 0)) (by
+        rw [mul_comm w Q'.tau, hzw, hwdef]; push_cast; linear_combination -hdet)
+    · exact mem_span_pair_of (-(γ 0 1)) (γ 1 1) (by
+        rw [mul_comm w Q'.tau, hzw, hwdef]; push_cast; linear_combination -τ * hdet)
+    · exact mem_span_pair_of (γ 1 1) (γ 1 0) (by rw [hwdef]; ring)
+    · exact mem_span_pair_of (γ 0 1) (γ 0 0) (by rw [mul_comm w Q'.tau, hzw]; ring)
+  · rw [HeegnerForm.latN, HeegnerForm.latN, map_mulLeft_span_pair, ← hiNdef, hτ]
+    apply span_pair_eq
+    · exact mem_span_pair_of (γ 0 0) (-c₁) (by
+        rw [mul_comm w Q'.tau, hzw, hwdef]; push_cast
+        linear_combination (-iN) * hdet' - ((γ 0 1 : ℤ) + (γ 0 0 : ℤ) * τ) * iN * hc' -
+          ((γ 0 1 : ℤ) + (γ 0 0 : ℤ) * τ) * c₁ * hiN)
+    · exact mem_span_pair_of (-(γ 0 1 * N)) (γ 1 1) (by
+        rw [mul_comm w Q'.tau, hzw, hwdef]; push_cast
+        linear_combination (-τ) * hdet' +
+          ((γ 0 1 : ℤ) * (((γ 1 0 : ℤ) : ℂ) * τ + (γ 1 1 : ℤ))) * hiN)
+    · exact mem_span_pair_of (γ 1 1) c₁ (by
+        rw [hwdef]; linear_combination (τ * iN) * hc' + (c₁ * τ) * hiN)
+    · exact mem_span_pair_of (γ 0 1 * N) (γ 0 0) (by
+        rw [mul_comm w Q'.tau, hzw]; push_cast; linear_combination (-((γ 0 1 : ℤ) : ℂ)) * hiN)
+
+theorem int_indep {τ : ℂ} (hτ : 0 < τ.im) {x y : ℤ} (h : (x : ℂ) + y * τ = 0) : x = 0 ∧ y = 0 := by
+  have him := congrArg Complex.im h
+  simp at him
+  rcases him with h1 | h1
+  · subst h1; simp at h; exact ⟨by exact_mod_cast h, rfl⟩
+  · exact absurd h1 hτ.ne'
+
+theorem exists_coords {u v z : ℂ} (h : z ∈ Submodule.span ℤ {u, v}) :
+    ∃ c d : ℤ, z = c * u + d * v := by
+  obtain ⟨c, d, hcd⟩ := Submodule.mem_span_pair.1 h
+  exact ⟨c, d, by rw [← hcd]; simp [zsmul_eq_mul]⟩
+
+/-- **Homothetic lattice pairs come from `Γ₀(N)`-equivalent Heegner forms.** -/
+theorem equiv_of_pairHom {N : ℕ} {D : ℤ} {Q Q' : HeegnerForm N D} {j : ℂ} (h : PairHom Q Q' j) :
+    ZInQ.GZHL3.Gamma0Equiv Q Q' := by
+  obtain ⟨hL, hLN⟩ := h
+  rw [HeegnerForm.lat, HeegnerForm.lat, map_mulLeft_span_pair, mul_one] at hL
+  rw [HeegnerForm.latN, HeegnerForm.latN, map_mulLeft_span_pair] at hLN
+  have hτ1 : 0 < Q.tau.im := Q.tauH.im_pos
+  have hτ2 : 0 < Q'.tau.im := Q'.tauH.im_pos
+  have hN := N_ne_zero Q
+  -- `j = t + r τ`, `j τ' = q + p τ`
+  obtain ⟨t, r, htr⟩ := exists_coords (z := j) (by rw [hL]; exact Submodule.subset_span (by simp))
+  obtain ⟨q, p, hqp⟩ := exists_coords (z := j * Q'.tau)
+    (by rw [hL]; exact Submodule.subset_span (by simp))
+  obtain ⟨x, y, hxy⟩ := exists_coords (z := 1) (by rw [← hL]; exact Submodule.subset_span (by simp))
+  obtain ⟨u, v, huv⟩ := exists_coords (z := Q.tau) (by
+    rw [← hL]; exact Submodule.subset_span (by simp))
+  obtain ⟨α, β, hαβ⟩ := exists_coords (z := j * (1 / N)) (by
+    rw [hLN]; exact Submodule.subset_span (by simp))
+  have e1 : ((x * t + y * q - 1 : ℤ) : ℂ) + ((x * r + y * p : ℤ) : ℂ) * Q.tau = 0 := by
+    push_cast; linear_combination -hxy - x * htr - y * hqp
+  have e2 : ((u * t + v * q : ℤ) : ℂ) + ((u * r + v * p - 1 : ℤ) : ℂ) * Q.tau = 0 := by
+    push_cast; linear_combination -huv - u * htr - v * hqp
+  have e3 : ((t - α : ℤ) : ℂ) + ((r - N * β : ℤ) : ℂ) * Q.tau = 0 := by
+    push_cast
+    have : j = α + N * β * Q.tau := by
+      have h' := hαβ; field_simp at h'; linear_combination h'
+    linear_combination this - htr
+  obtain ⟨i1, i2⟩ := int_indep hτ1 e1
+  obtain ⟨i3, i4⟩ := int_indep hτ1 e2
+  obtain ⟨-, i6⟩ := int_indep hτ1 e3
+  have hdet1 : (x * v - y * u) * (t * p - q * r) = 1 := by
+    linear_combination (u * r + v * p) * i1 + i4 - (u * t + v * q) * i2
+  have hj : j ≠ 0 := by
+    rintro rfl; simp at hxy
+  -- the determinant is positive
+  have him : (((t * p - q * r : ℤ) : ℝ)) * Q.tau.im = Complex.normSq j * Q'.tau.im := by
+    have h1 : (starRingEnd ℂ) j * (j * Q'.tau) = (Complex.normSq j : ℂ) * Q'.tau := by
+      rw [← mul_assoc, ← Complex.normSq_eq_conj_mul_self]
+    have h2 := congrArg Complex.im h1
+    rw [hqp] at h2
+    conv_lhs at h2 => rw [htr]
+    simp only [map_add, map_mul, map_intCast, map_one, Complex.mul_im, Complex.add_im,
+      Complex.add_re, Complex.mul_re, Complex.conj_re, Complex.conj_im, Complex.intCast_re,
+      Complex.intCast_im, Complex.ofReal_re, Complex.ofReal_im, Complex.one_re,
+      Complex.one_im] at h2
+    push_cast
+    linear_combination h2
+  have hpos : 0 < t * p - q * r := by
+    have h3 : 0 < Complex.normSq j * Q'.tau.im := mul_pos (Complex.normSq_pos.2 hj) hτ2
+    rw [← him] at h3
+    have h4 : (0 : ℝ) < ((t * p - q * r : ℤ) : ℝ) := pos_of_mul_pos_left h3 hτ1.le
+    exact_mod_cast h4
+  have hdet : t * p - q * r = 1 := by
+    rcases Int.eq_one_or_neg_one_of_mul_eq_one' (by linarith [hdet1] : (t * p - q * r) * (x * v - y * u) = 1) with h | h
+    · exact h.1
+    · omega
+  have hr : r = N * β := by linarith
+  let γ : SL(2, ℤ) := ⟨!![p, q; r, t], by simp [Matrix.det_fin_two]; linarith⟩
+  refine ⟨γ, ?_, ?_⟩
+  · show ((γ 1 0 : ℤ) : ZMod N) = 0
+    simp [γ, hr]
+  · apply UpperHalfPlane.ext
+    rw [UpperHalfPlane.coe_specialLinearGroup_apply]
+    simp only [γ, algebraMap_int_eq, eq_intCast, Complex.ofReal_intCast]
+    simp only [Matrix.SpecialLinearGroup.coe_mk, Matrix.of_apply, Matrix.cons_val',
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one,
+      Matrix.head_cons, Matrix.head_fin_const]
+    have hτ' : (Q'.tauH : ℂ) = Q'.tau := rfl
+    have hτq : (Q.tauH : ℂ) = Q.tau := rfl
+    have hden : (r : ℂ) * Q.tau + t = j := by rw [htr]; ring
+    rw [hτ', hτq, div_eq_iff (by rw [hden]; exact hj), hden]
+    linear_combination -hqp
+
 end ZInQ.GZHeegner
