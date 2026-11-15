@@ -58,3 +58,11 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
   independent in B_st; `natDegree_minpoly_le_finrank_bstInv`: if B_st^{G_K} is finite-dimensional
   then dim ≥ [ℚ_p(μ):ℚ_p]. (K_0 = ℚ_p(μ) for μ of order p^f − 1: Serre, Local Fields IV §4,
   UNVERIFIED locator; standard.)
+
+## Step 5: deliverables (VERIFIED ~12:10)
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` OK; `scratch/pb-sanity/Discharges.lean`
+  output in discharges-output.txt: no new discharge from PanBergerSanity (expected: sanity file);
+  r11r12 by panBerger_of_printed; "63 open hypotheses, 2048 theorems checked, 8 discharge one".
+- autofold.json (pb-bypass spec, flags updated): dry run "strict count: 46/10 on 56 -> 48/9 on 57;
+  strictest 45/11 -> 47/10"; the dry-run module (FoldDryRun.lean) compiles with no error.
+- docs/research/pb-sanity.md drafted: verdict printed form for both leaves.
