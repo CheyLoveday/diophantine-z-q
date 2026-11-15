@@ -139,4 +139,66 @@ theorem th2_sq_red (α β γ : ℂ) {c0 c1 d0 d1 : ℝ} (x0 x1 y0 y1 : ℤ) (h0 
     exact exp_int_mul_two_pi_mul_I _
   rw [this, one_mul]
 
+
+/-! ## Siegel space, characteristics, assembly -/
+
+open HDec.PkgI1 (SiegelH2 thetaConst evenChars thetaSum8 thetaProd2 spAct spFactor Char2 card_evenChars)
+
+theorem pdq_of_siegel {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    Ω 1 0 = Ω 0 1 ∧ PDq (Ω 0 0) (Ω 0 1) (Ω 1 1) := by
+  obtain ⟨hT, hP⟩ := hΩ
+  have hs : Ω 1 0 = Ω 0 1 := by
+    have := congrFun (congrFun hT 0) 1; simpa [Matrix.transpose_apply] using this
+  refine ⟨hs, ?_, ?_⟩
+  · have := hP.diag_pos (i := 0); simpa using this
+  · have := hP.det_pos
+    rw [Matrix.det_fin_two] at this
+    simp only [Matrix.map_apply, hs] at this
+    nlinarith
+
+theorem PDq.add {α β γ : ℂ} (h : PDq α β γ) (s00 s01 s11 : ℤ) :
+    PDq (α + s00) (β + s01) (γ + s11) := by
+  simpa [PDq] using h
+
+/-- The residue of an integer mod 2 as an element of `Fin 2`. -/
+def fin2 (x : ℤ) : Fin 2 := ⟨(x % 2).toNat, by omega⟩
+
+theorem fin2_cast (x : ℤ) : (((fin2 x : Fin 2) : ℕ) : ℝ) = ((x % 2 : ℤ) : ℝ) := by
+  have h : (((x % 2).toNat : ℕ) : ℤ) = x % 2 := Int.toNat_of_nonneg (Int.emod_nonneg x (by norm_num))
+  rw [fin2, Fin.val_mk, ← h]; norm_cast
+
+theorem exp_quarter_pow4 (N : ℤ) (h : N % 2 = 0) : cexp (π * I * (N : ℂ) / 4) ^ 4 = 1 := by
+  rw [← Complex.exp_nat_mul]
+  obtain ⟨k, hk⟩ : ∃ k, N = 2 * k := ⟨N / 2, by omega⟩
+  rw [show ((4 : ℕ) : ℂ) * (π * I * (N : ℂ) / 4) = (k : ℂ) * (2 * π * I) by rw [hk]; push_cast; ring]
+  exact exp_int_mul_two_pi_mul_I k
+
+/-- **Assembly.** A permutation of the even characteristics with quarter-root phases gives both
+transformation laws. -/
+theorem assemble {Ω Ω' : Matrix (Fin 2) (Fin 2) ℂ} (D : ℂ) (σ : Char2 → Char2) (N : Char2 → ℤ)
+    (h : ∀ m ∈ evenChars, thetaConst m Ω' ^ 2 = -D * cexp (π * I * (N m : ℂ) / 4) * thetaConst (σ m) Ω ^ 2)
+    (himg : evenChars.image σ = evenChars)
+    (hinj : ∀ a ∈ evenChars, ∀ b ∈ evenChars, σ a = σ b → a = b)
+    (hev : ∀ m ∈ evenChars, N m % 2 = 0) (hsum : (∑ m ∈ evenChars, N m) % 8 = 0) :
+    thetaSum8 Ω' = D ^ 4 * thetaSum8 Ω ∧ thetaProd2 Ω' = D ^ 10 * thetaProd2 Ω := by
+  have hinj' : Set.InjOn σ (evenChars : Set Char2) := fun a ha b hb e => hinj a ha b hb e
+  have e8 : ∑ m ∈ evenChars, thetaConst m Ω ^ 8 = ∑ m ∈ evenChars, thetaConst (σ m) Ω ^ 8 := by
+    rw [← Finset.sum_image (f := fun m => thetaConst m Ω ^ 8) hinj', himg]
+  have e2 : ∏ m ∈ evenChars, thetaConst m Ω ^ 2 = ∏ m ∈ evenChars, thetaConst (σ m) Ω ^ 2 := by
+    rw [← Finset.prod_image (f := fun m => thetaConst m Ω ^ 2) hinj', himg]
+  constructor
+  · rw [thetaSum8, thetaSum8, e8, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun m hm => ?_
+    rw [show thetaConst m Ω' ^ 8 = (thetaConst m Ω' ^ 2) ^ 4 by ring, h m hm, mul_pow, mul_pow,
+      exp_quarter_pow4 _ (hev m hm)]
+    ring
+  · rw [thetaProd2, thetaProd2, e2, Finset.prod_congr rfl h,
+      Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, card_evenChars,
+      ← Complex.exp_sum]
+    obtain ⟨k, hk⟩ : ∃ k, ∑ m ∈ evenChars, N m = 8 * k := ⟨(∑ m ∈ evenChars, N m) / 8, by omega⟩
+    have : ∑ m ∈ evenChars, π * I * (N m : ℂ) / 4 = (k : ℂ) * (2 * π * I) := by
+      rw [← Finset.sum_div, ← Finset.mul_sum, ← Int.cast_sum, hk]; push_cast; ring
+    rw [this, exp_int_mul_two_pi_mul_I]
+    ring
+
 end GapTheta
