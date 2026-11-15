@@ -21,7 +21,7 @@ verbatim copy of the field with an `example : copy = kernel constant := rfl` che
 |---|---|---|---|
 | `neronLocalizesDVR` (`ReductGlue.NeronLocalizesDVR`) | `CToPrinted.neronLocalizesDVR_of_printed` | `BLR_1_2_4`: BLR 1.2 Prop. 4, the full "iff", over every Dedekind domain and every smooth separated `R`-scheme of finite type | **none** (all glue proved) |
 | `faltingsLemma5BC` (`ZInQ.HeightSplit.FaltingsLemma5BC`) | `CToPrinted.faltingsLemma5BC_of_printed` | `FaltingsLemma5Printed`: Faltings 1983 Lemma 5, the identity with the correction term `[K:ℚ]⁻¹ log #s*Ω¹_{G/S}`; `RaynaudKernelBound`: Raynaud, Ast. 127 VII 2.1.3 | **none** (all glue proved) |
-| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed_final'` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 4 small glue Props on the topology of the identity component (`IdCompSubgroup`, `IdCompGeomFibres`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`). Proved: reduct-glue's leaf `OpenImmersionOfLocal` from EGA IV 8.10.5; the group-model construction on `𝒢⁰`; the step from SGA 7 IX 3.3 to reduct-split's form; `IdCompGenericFibre` |
+| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed_final'` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 3 small glue Props on the topology of the identity component (`IdCompSubgroup`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`), plus the existing bundle leaf `geomConnOfRationalPoint`. Proved here: reduct-glue's leaf `OpenImmersionOfLocal` from EGA IV 8.10.5; the group-model construction on `𝒢⁰`; the step from SGA 7 IX 3.3 to reduct-split's form; `IdCompGenericFibre`; `IdCompGeomFibres` |
 | `shimuraFamily` (`HDec.QMSplit.Moduli.ShimuraFamily`) | `CToPrinted.Shimura.shimuraFamily_of_mainThmI` | `ShimuraMainThmIY3`: Shimura 1967 Main Thm I with the moduli interpretation, **without the reciprocity law** | none, but the leaf is a consequence of the print rather than the print (§5): the reciprocity law needs global class field theory, which Mathlib lacks |
 
 Also compiled: `semistableNeronBaseChange_of_printedBLR`. It derives SS2 from reduct-glue's three other leaves
@@ -31,8 +31,8 @@ by the printed BLR 1.2/4.
 **Net effect on the strict count** (SPECULATIVE until the integrator rules):
 - `neronLocalizesDVR` and `faltingsLemma5BC` become theorems from published-form leaves, with no glue. That is
   1 GLUE (c) → 1 LEAF, and 1 GLUE (c) → 2 LEAVES.
-- `semistableNeronBaseChange` becomes four printed-form leaves plus four small glue Props about the topology of the
-  identity component. One of the four leaves, BLR 1.2/4, is shared with `neronLocalizesDVR`. Of reduct-glue's
+- `semistableNeronBaseChange` becomes four printed-form leaves, the existing bundle leaf
+  `geomConnOfRationalPoint`, and three small glue Props about the topology of the identity component. One of the four leaves, BLR 1.2/4, is shared with `neronLocalizesDVR`. Of reduct-glue's
   four leaves:
   - two are now Lean theorems from printed leaves (`NeronLocalizesDVR` from BLR 1.2/4, `OpenImmersionOfLocal`
     from EGA IV 8.10.5);
@@ -125,9 +125,10 @@ Now:
 - The other two are reduced to their printed forms plus four small glue Props about the topology of the identity
   component, and one more such Prop is proved.
 
-**Final theorem:** `semistableNeronBaseChange_of_printed_final' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
-(h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (gc : IdCompSubgroup) (gf : IdCompGeomFibres)
+**Final theorem:** `semistableNeronBaseChange_of_printed_final'' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+(h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (hG : AVGlue.GeomConnOfRationalPoint) (gc : IdCompSubgroup)
 (ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) : SemistableNeronBaseChange` (compiled, standard axioms).
+`hG` is a leaf already in the bundles (Stacks 04KV, `geomConnOfRationalPoint`), so no new leaf is added.
 
 **Definition** `idCompSet G` is the identity component `G⁰` of a group scheme `G → S`, as a set: `x` belongs to it
 if `x` lies in the connected component of `e(f x)` in the fibre `f⁻¹{f x}`. The fibre carries the subspace topology,
@@ -178,24 +179,28 @@ Three remarks on the Lean form of SGA 7 IX 3.3:
      `quasiCompact_of_noetherianSpace_source`).
    - Generic fibre: the inclusion is an open immersion that is surjective on generic fibres
      (`isIso_iff_isOpenImmersion_and_surjective`).
-4. **`IdCompGenericFibre`, PROVED** (`idCompGenericFibre`).
+4. **`IdCompGeomFibres`, PROVED from the bundle leaf `geomConnOfRationalPoint`** (`idCompGeomFibres`).
+   - `Spec κ̄(𝔭) → S` factors as `Spec φ ≫ (Spec κ(y) → S)` (`SpecToEquivOfField`).
+   - The fibre of `W = 𝒢⁰` over `y` is homeomorphic (`fiberHomeo`) to the connected component of `e(y)` in
+     `𝒢_y`, so it is connected.
+   - It has the rational point `e(y)` and is of finite type, so Stacks 04KV makes it geometrically connected.
+   - The geometric fibre is its base change along `Spec φ` (`IsPullback.of_right`).
+5. **`IdCompGenericFibre`, PROVED** (`idCompGenericFibre`).
    - The generic fibre `𝒢_L ≅ A_L` is connected.
    - Its image in `𝒢` is the set of points over the generic point.
    - That image is a connected set containing `e(η)` (`IsPreconnected.subset_connectedComponentIn`).
 
 ### 4.3 Glue left
 
-There are four named Props, all true, each with a docstring saying what it needs. All are about the topology of
-the identity component of a smooth group scheme, and all reduce to two standard facts: an open subgroup of a group
-scheme over a field is closed, and `(G_s)⁰` is geometrically connected (Stacks 04KV, the bundle leaf
-`geomConnOfRationalPoint`). The missing tool is the fibrewise identification `(G ×_S G)_s = G_s ×_{κ(s)} G_s` on
-underlying spaces.
+Three named Props remain. All are true, and each docstring says what it needs. All concern the topology of the
+identity component of a smooth group scheme, and they reduce to two standard facts:
+- an open subgroup of a group scheme over a field is closed;
+- `(G_s)⁰` is geometrically connected (Stacks 04KV).
 
 | glue | statement |
 |---|---|
 | `IdCompSubgroup` | `G⁰` is closed under `μ` and the inverse (SGA 3 VI_A 2.3 fibrewise) |
-| `IdCompGeomFibres` | the geometric fibres of the open subscheme `𝒢⁰ ⊆ 𝒢` at maximal ideals are connected |
-| `OpenSubgroupIsIdComp` | an open subgroup of a group model over a DVR with connected generic and geometric special fibres has image `idCompSet` |
+| `OpenSubgroupIsIdComp` | an open subgroup of a group model over a DVR whose generic and geometric special fibres are connected has image `idCompSet` |
 | `IdCompBaseChangeDVR` | `fst⁻¹(G⁰) = (G ×_O O')⁰` for a smooth group scheme over a DVR |
 
 The successive coarser forms remain in the file and compile:
@@ -261,5 +266,5 @@ No analytification is needed.
 
 `scratch/c-to-printed/run.sh FILE` runs `lean` with `LEAN_PATH` on a copy of the e38375b3 build (`~/ctp-lib`). It
 was run one Lean process at a time:
-- `CToPrinted.lean`: about 15 s, no errors, 9 `#print axioms` lines, all standard (VERIFIED).
+- `CToPrinted.lean`: about 15 s, no errors, 10 `#print axioms` lines, all standard (VERIFIED).
 - `Shimura.lean`: about 6 s, no errors, 3 `#print axioms` lines, all standard (VERIFIED).
