@@ -224,7 +224,30 @@ poly. of Frob_p over K_f⊗ℚ_ℓ; check it is the characteristic polynomial, n
 
 ## 5. Compile status, `#discharges` and the fold check
 
-See `scratch/r16-used/log.md` for the commands and outputs (filled in below once run).
+All runs on this host, 2026-11-15, one Lean process at a time (VERIFIED).
+
+| what | command | outcome |
+| --- | --- | --- |
+| contribution | `lake env lean ZInQKernel/Contrib/OneProof/R16Used.lean` | no errors, no warnings |
+| build | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.R16Used` | success, 12995 jobs, 9 min (partial rebuild; `scratch/r16-used/build-output.txt`) |
+| discharge check | `lake env lean scratch/r16-used/Discharges.lean` | see below (`Discharges-output.txt`) |
+| bypass | `lake env lean scratch/r16-used/Bypass.lean` | `HDec.G0ModNewform.g13_trace`, `g13_via_trace`: `[propext, Classical.choice, Quot.sound]` |
+| fold | `python3 scripts/one_proof/autofold.py scratch/r16-used/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/r16-used/FoldDryRun.lean` | `strict count: 46/10 on 56 -> 47/9 on 56; strictest 45/11 -> 46/10`; `HDec.HSyn.sixContactMin_of_open30` has standard axioms |
+
+`#discharges` (the entry for this contribution; the others are the already-folded contributions and
+r16-split's converse `coreY_of_r16`):
+
+```
+DISCHARGES [OpenResearchLeaves22.r16CoreY] by R16Used.r16CoreY_of_printed
+  still assumes: [R16Used.AfTateCharPoly, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 63 open hypotheses, 1865 theorems checked, 8 discharge one
+```
+
+`mumfordTorsionAlgClosed` is already a published LEAF field of `OpenTextbookLeaves11`, so the only new
+hypothesis is `AfTateCharPoly`. The fold was not applied: `Main.lean`, `kinds.tsv` and `claims.tsv` are
+unchanged, because folding is the integrator's step. The autofold count (LEAF/GLUE) drops by one GLUE in both the strict and
+the strictest columns.
 
 ## 6. Files
 

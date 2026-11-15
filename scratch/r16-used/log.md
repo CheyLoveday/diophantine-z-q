@@ -24,3 +24,18 @@ Base 43513d87 (leaf-fold25). Field on the route: `r16CoreY : R16Split.R16CoreY` 
   dim A = [K_f:ℚ] from rank two (`R16Split.dim_eq_of_rank_two`).
 - `R16Used.r16CoreY_of_printed : AfTateCharPoly → AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY`.
 - `#print axioms R16Used.r16CoreY_of_printed`: [propext, Classical.choice, Quot.sound].
+
+## Contribution, discharges, bypass, fold (VERIFIED, 2026-11-15 07:15-07:45)
+- `lake env lean ZInQKernel/Contrib/OneProof/R16Used.lean`: no errors, no warnings.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.R16Used`:
+  success, 12995 jobs, 9 min (build dir copied from wip/r17-bypass; partial rebuild). `build-output.txt`.
+- `lake env lean scratch/r16-used/Discharges.lean` (`Discharges-output.txt`):
+  `DISCHARGES [OpenResearchLeaves22.r16CoreY] by R16Used.r16CoreY_of_printed
+     still assumes: [R16Used.AfTateCharPoly, AvSplit.MumfordTorsionAlgClosed]
+     axioms: [propext, Classical.choice, Quot.sound]`; `#discharges: 63 open hypotheses, 1865 theorems checked, 8 discharge one`.
+- `lake env lean scratch/r16-used/Bypass.lean`: `HDec.G0ModNewform.g13_trace` (g13 from `R16Trace`) and
+  `g13_via_trace`: standard axioms (`Bypass-output.txt`).
+- `python3 scripts/one_proof/autofold.py scratch/r16-used/autofold.json --dry-run`:
+  `strict count: 46/10 on 56 -> 47/9 on 56; strictest 45/11 -> 46/10` (LEAF/GLUE: −1 GLUE in both columns).
+  Line 1 stripped -> `FoldDryRun.lean`; `lake env lean` -> `HDec.HSyn.sixContactMin_of_open30` standard axioms.
+  Not applied (Main.lean, kinds.tsv, claims.tsv unchanged).
