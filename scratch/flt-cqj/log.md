@@ -74,3 +74,6 @@
   PARI's `ellisogeny(E, P, 1)`, and for prime N checks Φ_N(j_lean, j(E)) = 0 with `polmodular(N)`.
   Result: 30/30 agree (output: velu_check-output.txt). The replica's fidelity to the Lean text is by reading
   (not machine-checked); the check rules out a mis-stated Vélu step in the definitions the leaf is stated over.
+
+## 06:20 — Statement.lean: verbatim copies of CyclicQuotientJBijOn and X0Transitive checked by Iff.rfl; the chain
+  CyclicQuotientJBijOn → ModularEquationGeneric → X0Transitive type-checks. Compiles. VERIFIED.
