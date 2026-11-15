@@ -606,4 +606,140 @@ def ElkiesX6StarFF : Prop :=
         (HasCM3 P.q → t.val (K := Qbar) x.left = OnePoint.infty)) ∧
     X6Glue.ElkiesCharts X t
 
+/-! ## The fibre clause from the function-field form -/
+
+section Main
+
+open X6Glue
+
+variable {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y} {X : Over (Spec (CommRingCat.of ℚ))}
+  {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X}
+
+/-- **`ℚ(X₆)^W = ℚ(t)` and Elkies' charts give the `ℚ̄`-point form**: the fibres of `t` on `X₆(ℚ̄)` are the
+`W`-orbits. -/
+theorem fibre_of_ff (h6 : X6Props Y Φ X Ψ fY) [IsIntegral X.left] {t : ToP1 X.left}
+    (hη : genericPoint X.left ∈ t.U)
+    (hfix : fixedByW Ψ = (Subfield.closure {X.left.presheaf.germ t.U _ hη t.f} : Set X.left.functionField))
+    (hc : ElkiesCharts X t) (x x' : fieldPt Qbar ⟶ X) :
+    t.val (K := Qbar) x.left = t.val (K := Qbar) x'.left ↔
+      ∃ g ∈ ElkiesX6Star.atkinLehnerW X Ψ, x ≫ g.hom = x' := by
+  obtain ⟨hU, hV, φU, φV, hT, hTg, hg1, hg2⟩ := hc
+  -- the generic point lies in `t.V`
+  obtain ⟨b, hb⟩ := exists_sq_eq (-3)
+  obtain ⟨y0, hy0⟩ := conicMapL_surjective φU φV hTg hU hV (Sum.inr ⟨b, hb⟩)
+  have hy0U : ¬ pt (X := X) y0 ∈ t.U := by
+    intro h
+    rw [conicMapL, dif_pos h] at hy0
+    exact absurd hy0 (by simp)
+  have hηV : genericPoint X.left ∈ t.V :=
+    ((genericPoint_spec X.left).mem_open_set_iff t.V.isOpen).mpr
+      ⟨_, trivial, memV_of_not_memU (X := X) (t := t) y0 hy0U⟩
+  -- notation
+  set W := ElkiesX6Star.atkinLehnerW X Ψ with hW
+  let σ : (X ≅ X) → X.left.functionField →+* X.left.functionField :=
+    fun g => ffPullback (Z := X.left) ((Over.forget _).mapIso g)
+  set τ := jU φU hη eT with hτdef
+  set S := jU φU hη eS with hSdef
+  set R := jU φU hη eR with hRdef
+  have hgerm : X.left.presheaf.germ t.U _ hη t.f = τ := by simp [τ, hT]
+  rw [hgerm] at hfix
+  have hfix' : {φ | ∀ g ∈ W, σ g φ = φ} = (Subfield.closure {τ} : Set X.left.functionField) := hfix
+  have hτ : ∀ g ∈ W, σ g τ = τ := by
+    have hm : τ ∈ {φ | ∀ g ∈ W, σ g φ = φ} := by
+      rw [hfix']
+      exact Subfield.subset_closure rfl
+    exact hm
+  -- relations
+  have r1 : S ^ 2 = -τ := by
+    have := congrArg (jU φU hη) rel1
+    simp only [map_add, map_pow, map_zero] at this
+    linear_combination this
+  have r2 : R ^ 2 = 3 * (τ - 1) := by
+    have := congrArg (jU φU hη) rel2
+    simp only [map_sub, map_pow, map_mul, map_ofNat, map_one, map_zero] at this
+    linear_combination this
+  have hSpm : ∀ g ∈ W, σ g S = S ∨ σ g S = -S := fun g hg =>
+    sq_pm (σ g) _ _ (by rw [map_neg, hτ g hg]) r1
+  have hRpm : ∀ g ∈ W, σ g R = R ∨ σ g R = -R := fun g hg =>
+    sq_pm (σ g) _ _ (by rw [map_mul, map_sub, map_ofNat, map_one, hτ g hg]) r2
+  have hSRpm : ∀ g ∈ W, σ g (S * R) = S * R ∨ σ g (S * R) = -(S * R) := by
+    intro g hg
+    rw [map_mul]
+    rcases hSpm g hg with h | h <;> rcases hRpm g hg with h' | h' <;> rw [h, h'] <;>
+      first | (left; ring1) | (right; ring1)
+  -- nonvanishing
+  have hinj := jU_injective φU hη
+  have hS0 : S ≠ 0 := (map_ne_zero_iff _ hinj).mpr eS_ne_zero
+  have hR0 : R ≠ 0 := (map_ne_zero_iff _ hinj).mpr eR_ne_zero
+  have h2 : (2 : X.left.functionField) ≠ 0 := by
+    have := (map_ne_zero_iff _ hinj).mpr two_ne_zero'
+    rwa [map_ofNat] at this
+  -- the sign automorphisms of `ℚ(X)`
+  have hθsτ : thetaOf φU hU hη negS τ = τ := by rw [hτdef, thetaOf_jU, negS_T]
+  have hθsS : thetaOf φU hU hη negS S = -S := by rw [hSdef, thetaOf_jU, negS_S, map_neg]
+  have hθsR : thetaOf φU hU hη negS R = R := by rw [hRdef, thetaOf_jU, negS_R]
+  have hθrτ : thetaOf φU hU hη negR τ = τ := by rw [hτdef, thetaOf_jU, negR_T]
+  have hθrR : thetaOf φU hU hη negR R = -R := by rw [hRdef, thetaOf_jU, negR_R, map_neg]
+  have hθsSR : thetaOf φU hU hη negS (S * R) = -(S * R) := by rw [map_mul, hθsS, hθsR]; ring
+  obtain ⟨g1, hg1W, hg1S⟩ := exists_neg W σ τ S hfix' hSpm _ hθsτ hθsS hS0 h2
+  obtain ⟨g2, hg2W, hg2R⟩ := exists_neg W σ τ R hfix' hRpm _ hθrτ hθrR hR0 h2
+  obtain ⟨g3, hg3W, hg3SR⟩ := exists_neg W σ τ (S * R) hfix' hSRpm _ hθsτ hθsSR
+    (mul_ne_zero hS0 hR0) h2
+  -- the action of `W` on `ℚ̄`-points
+  let F : (fieldPt Qbar ⟶ X) → HDec.X6Kummer.ConicPt := fun x => conicMapL φU φV hTg x.left
+  have act : ∀ g ∈ W, ∀ c d : ℤˣ, σ g S = ((c : ℤ) : X.left.functionField) * S →
+      σ g R = ((d : ℤ) : X.left.functionField) * R → ∀ x, F (x ≫ g.hom) = signAct c d (F x) :=
+    fun g hg c d hS hR x =>
+      conicMapL_comp_of_signs hη hηV hT hTg hg1 hg2 ((Over.forget _).mapIso g) c d (hτ g hg) hS hR x.left
+  have Finj : ∀ x x', F x = F x' → x = x' := fun x x' e =>
+    Over.OverMorphism.ext (conicMapL_injective φU φV hTg hU hV _ _ e)
+  have Fsurj : ∀ c, ∃ x, F x = c := fun c => by
+    obtain ⟨y, hy⟩ := conicMapL_surjective φU φV hTg hU hV c
+    exact ⟨Over.homMk y (specQ_hom_ext _ _), hy⟩
+  -- every sign pair is realized by the orbit relation
+  let P : ℤˣ → ℤˣ → Prop := fun c d =>
+    ∀ x x', F x' = signAct c d (F x) → ∃ g ∈ W, x ≫ g.hom = x'
+  have hPg : ∀ g ∈ W, ∀ c d : ℤˣ, σ g S = ((c : ℤ) : X.left.functionField) * S →
+      σ g R = ((d : ℤ) : X.left.functionField) * R → P c d :=
+    fun g hg c d hS hR x x' e => ⟨g, hg, Finj _ _ (by rw [act g hg c d hS hR x, e])⟩
+  have hmul : ∀ c d c' d', P c d → P c' d' → P (c * c') (d * d') := by
+    intro c d c' d' p p' x x' e
+    obtain ⟨x₁, hx₁⟩ := Fsurj (signAct c d (F x))
+    exact orbit_trans h6 (p x x₁ hx₁) (p' x₁ x' (by rw [e, hx₁, signAct_signAct]))
+  have hall : ∀ c d, P c d := by
+    apply all_signs P hmul
+    · obtain ⟨d, hd⟩ := pm_unit _ _ (hRpm g1 hg1W)
+      exact ⟨d, hPg g1 hg1W (-1) d (by rw [hg1S]; simp) hd⟩
+    · obtain ⟨c, hc⟩ := pm_unit _ _ (hSpm g2 hg2W)
+      exact ⟨c, hPg g2 hg2W c (-1) hc (by rw [hg2R]; simp)⟩
+    · obtain ⟨c, hc⟩ := pm_unit _ _ (hSpm g3 hg3W)
+      obtain ⟨d, hd⟩ := pm_unit _ _ (hRpm g3 hg3W)
+      refine ⟨c, d, ?_, hPg g3 hg3W c d hc hd⟩
+      rcases Int.units_eq_one_or (c * d) with h | h
+      · exfalso
+        have e : σ g3 (S * R) = S * R := by
+          rw [map_mul, hc, hd]
+          have : ((c : ℤ) : X.left.functionField) * ((d : ℤ) : X.left.functionField) = 1 := by
+            rw [← Int.cast_mul, ← Units.val_mul, h]; simp
+          linear_combination (S * R) * this
+        rw [hg3SR] at e
+        have : (2 : X.left.functionField) * (S * R) = 0 := by linear_combination -e
+        exact mul_ne_zero h2 (mul_ne_zero hS0 hR0) this
+      · exact h
+  constructor
+  · intro hval
+    obtain ⟨c, d, hcd⟩ := signAct_of_val hT hTg x.left x'.left hval
+    exact hall c d x x' hcd
+  · rintro ⟨g, hg, rfl⟩
+    obtain ⟨c, hc⟩ := pm_unit _ _ (hSpm g hg)
+    obtain ⟨d, hd⟩ := pm_unit _ _ (hRpm g hg)
+    exact val_eq_of_signAct hT hTg x.left (x ≫ g.hom).left c d (act g hg c d hc hd x)
+
+end Main
+
+/-- **`ElkiesX6StarPrinted` from Elkies' function-field form.** -/
+theorem elkiesX6StarPrinted_of_ff (h : ElkiesX6StarFF) : ElkiesX6Star.ElkiesX6StarPrinted := by
+  obtain ⟨Y, Φ, X, Ψ, fY, t, h1, h6, ⟨hI, hη, hfix⟩, hcm, hc⟩ := h
+  exact ⟨Y, Φ, X, Ψ, fY, t, h1, h6, fun x x' => fibre_of_ff h6 hη hfix hc x x', hcm, hc⟩
+
 end HDec.QMSplit.Moduli.ElkiesCoord
