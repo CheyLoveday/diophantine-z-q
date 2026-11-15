@@ -4,9 +4,10 @@
 claims.tsv. Do not edit by hand: edit kinds.tsv or claims.tsv, or regenerate the JSON after a fold. -->
 
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) is a Lean theorem, checked by the kernel with no
-`sorry` and only the standard axioms, that proves the frozen target `ZInQ.FrozenTarget` of Glazer's "Z is
-Diophantine in Q" from the hypotheses below. Everything else is proved. Each hypothesis is a Lean `Prop`; proving
-one in Lean, or reducing it to statements printed in the literature, removes it. See
+`sorry` and only the standard axioms, that proves the frozen target `ZInQ.FrozenTarget`, the theorem that Z is
+Diophantine in Q (the 11/5 manuscript, Theorem 1.1), from the hypotheses below. Everything else is proved.
+Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to statements printed in the literature,
+removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
 **68 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.

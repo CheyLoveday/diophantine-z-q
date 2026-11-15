@@ -145,3 +145,55 @@
   `CMModuli`, `X0RatStructure`, `linIndep_one_tau`, `pp`, `discL`, `jL`, `weber`, `modCoord`,
   `heegnerForm_level_pos`: IDENTICAL; same `open` list as tyz-split's file.
 - T5Glue.lean header docstring updated; recompiled: 0 errors, 24 standard axiom lines.
+
+## Step 14: parts/AbsArtin.lean — `AbsArtinSurjectiveQNeg` PROVED — COMPILED
+- `absArt K : C_K →* G_K^ab` (Tau Ceti's absolute Artin map through `globalGroundEquiv`),
+  `continuous_absArt` (preimage of an open normal subgroup is a global norm subgroup: TC
+  `exists_absoluteArtinMap_mem_iff`, `mem_globalNormSubgroup_iff`, `isOpen_globalNormSubgroup`; Mathlib
+  `ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one`; ZeroDimensionalSpace instance needs
+  synthInstance.maxHeartbeats 400000), `denseRange_absArt` (TC `denseRange_absoluteArtinMap`),
+  `absArt_eq_one_of_coord` (no real places: idele classes with trivial finite part lie in the ray subgroup of
+  every modulus, hence in every norm group `N_{E/K}C_E` via TC `isAdmissibleModulus_abelianConductor`,
+  `globalNormSubgroup_eq_range_classField`; TC `absoluteArtinMap_eq_zero_iff`), `intUnits` (Ô^×) and
+  `isCompact_intUnits` (TC `isCompact_integralAdeles`, Mathlib `Units.isClosedEmbedding_embedProduct`), `finEmb`,
+  `bigT` (finitely many ray classes mod 1 times [Ô^×]), `isCompact_bigT`, `range_absArt_eq` (range = image of
+  bigT), **`absArtinSurjective_of_noReal`** (closed + dense), `not_isReal_QNeg`, **`absArtinSurjectiveQNeg`**.
+- Final: **`shimuraReciprocityModFn_of_t5 : ShimuraMainCM → X0ModuliGalois → IdeleLatticeScale →
+  Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_t5 : ShimuraMainCM → IdeleLatticeScale → CMModuli`.
+- T5Glue.out: 0 errors, 29 axiom lines all standard. T5Headline.lean: `frozenTarget_t5` now takes
+  `ShimuraMainCM`, `X0ModuliGalois`, `IdeleLatticeScale` in place of `hS`; 0 errors, standard axioms.
+
+## Step 15: parts/Colon.lean — `s⁻¹𝔞 = (𝔞 : 𝔍_s)` PROVED — COMPILED
+- `Osub` (O as ℤ-submodule), `idealOf m f s = {j ∈ K : s_f⁻¹ j ∈ Ô_O}` (𝔍_s = K ∩ s_f·Ô_O, Ô_O = closure of O),
+  `colon 𝔞 𝔍 = {y : 𝔍y ⊆ 𝔞}`, `latHat_O_mul` (Ô_O·𝔞̂ ⊆ 𝔞̂ for O-stable 𝔞, `map_mem_closure₂`),
+  `fIntAd_sub_latHatO` (f·𝒪̂ ⊆ Ô_O), `finPart_mem_closure_idealOf` (s_f ∈ closure of 𝔍_s: TC strong approximation),
+  **`sInvLat_eq_colon`**: for O-stable 𝔞 with K ∩ 𝔞̂ = 𝔞, s⁻¹𝔞 = (𝔞 : 𝔍_s). 0 errors.
+
+## Step 16: parts/Scale.lean — `IdeleLatticeScale` split — COMPILED
+- GLUE `RingClassLattice` (ringClassIdeleQuotient O [s] = picClass J ⇒ ∃ k ≠ 0, 𝔍_s = k·(J ∩ O)),
+  GLUE `InvertibleColon` (κ(J∩O)L' = cL, κ(J∩O)L'_N = cL_N ⇒ c ≠ 0, κ(𝔞 : J∩O) = c⁻¹L', κ(𝔞_N : J∩O) = c⁻¹L'_N).
+- PROVED: `colon_smul`, `kappa_image_smul`, `kappa_inv`, `preimage_span_pair`, `latHat_inter_heegnerN`
+  (K ∩ 𝔞̂_N = 𝔞_N, n = 2c₀, d = 2AN), **`ideleLatticeScale_of : RingClassLattice → InvertibleColon →
+  IdeleLatticeScale`** (with `sInvLat_eq_colon`, kernel `kappa_mul_mem_lat`, `kappa_mul_mem_latN_gen`; header now
+  also imports `ZInQKernel.Contrib.TYZGenus.ShimuraMain`), `shimuraReciprocityModFn_of_t5'`.
+- T5Glue.out: 0 errors, all axiom lines standard.
+
+## Step 17: parts/Invert.lean — `InvertibleColon` PROVED — COMPILED
+- `kappa_mul_eq`, `jUnit J` (Tau Ceti's invertible fractional ideal `J ∩ O`:
+  `integralIdealsAwayConductorToInvertible (integralIdealsAwayConductorEquiv.symm J)`), `mem_jUnit_iff` (its elements
+  are `idealMeetOrder m f J`; `FractionalIdeal.mem_coeIdeal`, `Ideal.mem_map_of_equiv`, `Ideal.mem_comap`),
+  `inv_mul_jUnit` ((J∩O)⁻¹·(J∩O) = O as O-submodules of K), **`invertibleColon`** (c ≠ 0 from `Ideal.absNorm_mem`;
+  cancellation κ(J∩O)·z ⊆ cL ⇒ cz ∈ L' by `Submodule.mul_induction_on` over (J∩O)⁻¹(J∩O) = O and O-stability of L';
+  ⊇ by c, L' ⊆ κ(K)).
+- Final: **`shimuraReciprocityModFn_of_t5'' : ShimuraMainCM → X0ModuliGalois → RingClassLattice →
+  Shimura.ShimuraReciprocityModFn`**, `cmModuli_of_t5' : ShimuraMainCM → RingClassLattice → CMModuli`.
+  T5Headline: `frozenTarget_t5` takes `ShimuraMainCM`, `X0ModuliGalois`, `RingClassLattice` in place of `hS`.
+- T5Glue.out: 0 errors, 36 axiom lines all standard; T5Headline.out: 0 errors, standard axioms.
+
+## Step 18: second independent read-only model review (agent, no Lean): `RingClassLattice`
+- Verdict TRUE (orientation: TC's `adicOrd` gives a uniformizer order 1, so π_𝔭 ↦ 𝔭 and idealOf π_𝔭 = 𝔭 ∩ O;
+  invariant under principal ideles (both sides scale by k), archimedean part, and finite units of closure(O);
+  the conductor modulus is O.conductor with empty infinite part). Non-vacuous (ring-class quotient and picClass
+  surjective). No CM inside. Suggested route: Pic O ≅ Kˣ\𝔸_f^×/Ô^× via x_J, `mem_ker_ringClassIdeleQuotient_iff`,
+  `mem_ray_iff`, `ker_toFractionalIdeal`; auxiliary lemmas latHat O = O + f𝒪̂, K ∩ 𝒪̂ = 𝒪, valuation-vs-count;
+  estimate 500–1000 lines.
