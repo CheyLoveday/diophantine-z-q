@@ -630,6 +630,317 @@ theorem exists_t : ∃ e : TEps p, logOf p e ≠ 0 ∧
   obtain ⟨e⟩ := nonempty_tEps p
   exact ⟨e, logOf_ne_zero p e, logOf_not_isNilpotent p e⟩
 
+/-! ### The action of `G_{ℚ_p}`: a group action by ring automorphisms on `B_cris` -/
+
+section Action
+
+theorem cpAct_mul (σ τ : GQp p) (x : ℂ_[p]) : cpAct p (σ * τ) x = cpAct p σ (cpAct p τ x) := by
+  induction x using UniformSpace.Completion.induction_on with
+  | hp =>
+    exact isClosed_eq (continuous_cpAct p _) ((continuous_cpAct p σ).comp (continuous_cpAct p τ))
+  | ih a => rw [cpAct_coe, cpAct_coe, cpAct_coe, AlgEquiv.mul_apply]
+
+theorem cpAct_one (x : ℂ_[p]) : cpAct p 1 x = x := by
+  induction x using UniformSpace.Completion.induction_on with
+  | hp => exact isClosed_eq (continuous_cpAct p _) continuous_id
+  | ih a => rw [cpAct_coe, AlgEquiv.one_apply]
+
+theorem oAct_mul (σ τ : GQp p) : oAct p (σ * τ) = (oAct p σ).comp (oAct p τ) :=
+  RingHom.ext fun x => Subtype.ext (cpAct_mul p σ τ x)
+
+theorem oAct_one : oAct p 1 = RingHom.id _ :=
+  RingHom.ext fun x => Subtype.ext (cpAct_one p x)
+
+theorem flatAct_mul (σ τ : GQp p) (x : PreTilt O p) :
+    flatAct p (σ * τ) x = flatAct p σ (flatAct p τ x) := by
+  apply Perfection.ext
+  intro n
+  rw [DR.coeff_preTiltMap, DR.coeff_preTiltMap, DR.coeff_preTiltMap]
+  obtain ⟨y, hy⟩ := Ideal.Quotient.mk_surjective (Perfection.coeff _ p n x)
+  rw [← hy]
+  change Ideal.Quotient.mk _ (oAct p (σ * τ) y) = Ideal.Quotient.mk _ (oAct p σ (oAct p τ y))
+  rw [oAct_mul]
+  rfl
+
+theorem flatAct_one (x : PreTilt O p) : flatAct p 1 x = x := by
+  apply Perfection.ext
+  intro n
+  rw [DR.coeff_preTiltMap]
+  obtain ⟨y, hy⟩ := Ideal.Quotient.mk_surjective (Perfection.coeff _ p n x)
+  rw [← hy]
+  change Ideal.Quotient.mk _ (oAct p 1 y) = Ideal.Quotient.mk _ y
+  rw [oAct_one]
+  rfl
+
+theorem wittMap_flatAct_mul (σ τ : GQp p) (w : Ainf p) :
+    WittVector.map (flatAct p (σ * τ)) w =
+      WittVector.map (flatAct p σ) (WittVector.map (flatAct p τ) w) := by
+  ext n
+  rw [WittVector.map_coeff, WittVector.map_coeff, WittVector.map_coeff, flatAct_mul]
+
+theorem wittMap_flatAct_one (w : Ainf p) : WittVector.map (flatAct p 1) w = w := by
+  ext n
+  rw [WittVector.map_coeff, flatAct_one]
+
+theorem locAct_mul (σ τ : GQp p) : locAct p (σ * τ) = (locAct p σ).comp (locAct p τ) := by
+  apply IsLocalization.ringHom_ext (Submonoid.powers (p : Ainf p))
+  ext w
+  simp only [RingHom.comp_apply, locAct_algebraMap, wittMap_flatAct_mul]
+
+theorem locAct_one : locAct p 1 = RingHom.id _ := by
+  apply IsLocalization.ringHom_ext (Submonoid.powers (p : Ainf p))
+  ext w
+  simp only [RingHom.comp_apply, locAct_algebraMap, wittMap_flatAct_one, RingHom.id_apply]
+
+theorem acris0Act_mul (σ τ : GQp p) (x : Acris0 p) :
+    acris0Act p (σ * τ) x = acris0Act p σ (acris0Act p τ x) :=
+  Subtype.ext (by
+    change locAct p (σ * τ) x = locAct p σ (locAct p τ x)
+    rw [locAct_mul]; rfl)
+
+theorem acris0Act_one (x : Acris0 p) : acris0Act p 1 x = x :=
+  Subtype.ext (by
+    change locAct p 1 x = x
+    rw [locAct_one]; rfl)
+
+theorem adicMap_comp' {A : Type*} [CommRing A] (J : Ideal A) (g g' g'' : A →+* A)
+    (hg : J ≤ J.comap g) (hg' : J ≤ J.comap g') (hg'' : J ≤ J.comap g'')
+    (h : ∀ a, g'' a = g' (g a)) (x : AdicCompletion J A) :
+    DR.adicMap J J g'' hg'' x = DR.adicMap J J g' hg' (DR.adicMap J J g hg x) := by
+  refine AdicCompletion.ext_evalₐ fun n => ?_
+  rw [DR.adicMap_evalₐ, DR.adicMap_evalₐ]
+  simp only [DR.adicMapAux, RingHom.comp_apply]
+  erw [DR.adicMap_evalₐ]
+  simp only [DR.adicMapAux, RingHom.comp_apply]
+  obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ J n x)
+  erw [← ha]
+  rw [Ideal.quotientMap_mk, Ideal.quotientMap_mk, Ideal.quotientMap_mk, h]
+
+theorem adicMap_id' {A : Type*} [CommRing A] (J : Ideal A) (g : A →+* A)
+    (hg : J ≤ J.comap g) (h : ∀ a, g a = a) (x : AdicCompletion J A) :
+    DR.adicMap J J g hg x = x := by
+  refine AdicCompletion.ext_evalₐ fun n => ?_
+  rw [DR.adicMap_evalₐ]
+  simp only [DR.adicMapAux, RingHom.comp_apply]
+  obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ J n x)
+  erw [← ha]
+  rw [Ideal.quotientMap_mk, h]
+
+theorem acrisAct_mul (σ τ : GQp p) (x : Acris p) :
+    acrisAct p (σ * τ) x = acrisAct p σ (acrisAct p τ x) :=
+  adicMap_comp' _ _ _ _ _ _ _ (acris0Act_mul p σ τ) x
+
+theorem acrisAct_one (x : Acris p) : acrisAct p 1 x = x :=
+  adicMap_id' _ _ _ (acris0Act_one p) x
+
+theorem bcrisPlusAct_mul (σ τ : GQp p) :
+    bcrisPlusAct p (σ * τ) = (bcrisPlusAct p σ).comp (bcrisPlusAct p τ) := by
+  apply IsLocalization.ringHom_ext (Submonoid.powers (p : Acris p))
+  ext a
+  simp only [RingHom.comp_apply, bcrisPlusAct_algebraMap, acrisAct_mul]
+
+theorem bcrisPlusAct_one : bcrisPlusAct p 1 = RingHom.id _ := by
+  apply IsLocalization.ringHom_ext (Submonoid.powers (p : Acris p))
+  ext a
+  simp only [RingHom.comp_apply, bcrisPlusAct_algebraMap, acrisAct_one, RingHom.id_apply]
+
+theorem bcrisAct_mul (σ τ : GQp p) :
+    bcrisAct p (σ * τ) = (bcrisAct p σ).comp (bcrisAct p τ) := by
+  apply IsLocalization.ringHom_ext (tMonoid p)
+  ext a
+  simp only [RingHom.comp_apply, bcrisAct_algebraMap, bcrisPlusAct_mul]
+
+theorem bcrisAct_one : bcrisAct p 1 = RingHom.id _ := by
+  apply IsLocalization.ringHom_ext (tMonoid p)
+  ext a
+  simp only [RingHom.comp_apply, bcrisAct_algebraMap, bcrisPlusAct_one, RingHom.id_apply]
+
+theorem bcrisAct_mul_apply (σ τ : GQp p) (x : Bcris p) :
+    bcrisAct p (σ * τ) x = bcrisAct p σ (bcrisAct p τ x) := by
+  rw [bcrisAct_mul]; rfl
+
+theorem bcrisAct_inv_apply (σ : GQp p) (x : Bcris p) : bcrisAct p σ⁻¹ (bcrisAct p σ x) = x := by
+  rw [← bcrisAct_mul_apply, inv_mul_cancel, bcrisAct_one]; rfl
+
+theorem bcrisAct_apply_inv (σ : GQp p) (x : Bcris p) : bcrisAct p σ (bcrisAct p σ⁻¹ x) = x := by
+  rw [← bcrisAct_mul_apply, mul_inv_cancel, bcrisAct_one]; rfl
+
+/-- **`G_{ℚ_p}` acts on `B_cris` by ring automorphisms** (a group homomorphism into
+`Aut(B_cris)`), fixing `ℚ_p`. -/
+def bcrisAut : GQp p →* (Bcris p ≃+* Bcris p) where
+  toFun σ := RingEquiv.ofRingHom (bcrisAct p σ) (bcrisAct p σ⁻¹)
+    (RingHom.ext fun x => bcrisAct_apply_inv p σ x) (RingHom.ext fun x => bcrisAct_inv_apply p σ x)
+  map_one' := RingEquiv.ext fun x => by
+    change bcrisAct p 1 x = x
+    rw [bcrisAct_one]; rfl
+  map_mul' σ τ := RingEquiv.ext fun x => bcrisAct_mul_apply p σ τ x
+
+theorem bcrisAut_apply (σ : GQp p) (x : Bcris p) : bcrisAut p σ x = bcrisAct p σ x := rfl
+
+/-! ### The action on `B_st = B_cris[u]` -/
+
+theorem stAct_X (σ : GQp p) :
+    stAct p σ Polynomial.X = Polynomial.X + Polynomial.C (logU p σ) :=
+  Polynomial.eval₂_X _ _
+
+/-- The inverse of `stAct σ`. -/
+def stActInv (σ : GQp p) : Bst p →+* Bst p :=
+  Polynomial.eval₂RingHom (Polynomial.C.comp (bcrisAct p σ⁻¹))
+    (Polynomial.X - Polynomial.C (bcrisAct p σ⁻¹ (logU p σ)))
+
+theorem stActInv_comp (σ : GQp p) : (stActInv p σ).comp (stAct p σ) = RingHom.id _ := by
+  apply Polynomial.ringHom_ext
+  · intro b
+    simp only [RingHom.comp_apply, stAct_C, stActInv, Polynomial.coe_eval₂RingHom,
+      Polynomial.eval₂_C, bcrisAct_inv_apply, RingHom.id_apply]
+  · simp only [RingHom.comp_apply, stAct_X, stActInv, Polynomial.coe_eval₂RingHom,
+      Polynomial.eval₂_add, Polynomial.eval₂_X, Polynomial.eval₂_C, RingHom.id_apply]
+    ring
+
+theorem stAct_comp_inv (σ : GQp p) : (stAct p σ).comp (stActInv p σ) = RingHom.id _ := by
+  apply Polynomial.ringHom_ext
+  · intro b
+    simp only [RingHom.comp_apply, stActInv, Polynomial.coe_eval₂RingHom,
+      Polynomial.eval₂_C, stAct_C, bcrisAct_apply_inv, RingHom.id_apply]
+  · simp only [RingHom.comp_apply, stActInv, Polynomial.coe_eval₂RingHom,
+      Polynomial.eval₂_X, map_sub, stAct_X, stAct_C,
+      bcrisAct_apply_inv, RingHom.id_apply]
+    ring
+
+/-- **Each `σ ∈ G_{ℚ_p}` acts on `B_st` by a ring automorphism** (unconditionally). -/
+def stEquiv (σ : GQp p) : Bst p ≃+* Bst p :=
+  RingEquiv.ofRingHom (stAct p σ) (stActInv p σ) (stAct_comp_inv p σ) (stActInv_comp p σ)
+
+theorem stEquiv_apply (σ : GQp p) (x : Bst p) : stEquiv p σ x = stAct p σ x := rfl
+
+theorem stAct_bijective (σ : GQp p) : Function.Bijective (stAct p σ) :=
+  (stEquiv p σ).bijective
+
+/-- `log [ε] = 0` when `[ε] - 1 = 0`, i.e. `log [1] = 0`. -/
+theorem logT_of_eq_zero {x : Ainf p} (hx : theta p x = 0) (h0 : x = 0) : logT p hx = 0 := by
+  subst h0
+  refine AdicCompletion.ext_evalₐ fun n => ?_
+  rw [evalₐ_logT, map_zero]
+  have : logPartial p hx (p ^ n) = 0 := by
+    apply Subtype.ext
+    change logPartialVal p 0 (p ^ n) = 0
+    rw [logPartialVal]
+    apply Finset.sum_eq_zero
+    intro j hj
+    rw [Finset.mem_Ico] at hj
+    simp only [logTerm, dpow, map_zero, zero_pow (show j ≠ 0 by omega), mul_zero]
+  rw [this, map_zero]
+
+theorem pFlat_untilt : PreTilt.untilt (pFlat p) = (p : O) :=
+  Classical.epsilon_spec (p := fun x : PreTilt O p => PreTilt.untilt x = (p : O))
+    ⟨ZInQ.Contrib.G9.BdrKer.Cp.pFlat p, ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat p⟩
+
+theorem untilt_zero' : PreTilt.untilt (0 : PreTilt O p) = 0 :=
+  untilt_eq_of_coeff p (fun _ => 0) (fun _ => zero_pow (Fact.out : p.Prime).ne_zero) 0
+    (fun m => by rw [map_zero, map_zero])
+
+theorem pFlat_ne_zero : pFlat p ≠ 0 := by
+  intro h
+  have := pFlat_untilt p
+  rw [h, untilt_zero'] at this
+  exact ZInQ.Contrib.G9.BdrKer.Cp.p_ne_zero p this.symm
+
+theorem uSigma_spec (σ : GQp p) : uSigma p σ * pFlat p = flatAct p σ (pFlat p) := by
+  apply Classical.epsilon_spec (p := fun u => u * pFlat p = flatAct p σ (pFlat p))
+  -- existence: `σ♭(p♭)/p♭`, via `𝓞_ℂ_p♭` being a valuation-type domain: use `dvd_of_coeff_zero`
+  have hu : PreTilt.untilt (flatAct p σ (pFlat p)) = (p : O) := by
+    rw [DR.untilt_preTiltMap, pFlat_untilt, map_natCast]
+  obtain ⟨d, hd⟩ := ZInQ.Contrib.G9.BdrKer.Cp.dvd_of_coeff_zero p (pFlat p) (pFlat_untilt p)
+    (flatAct p σ (pFlat p)) (by
+      rw [← PreTilt.mk_untilt_eq_coeff_zero, hu, Ideal.Quotient.eq_zero_iff_mem]
+      exact Ideal.mem_span_singleton_self _)
+  exact ⟨d, by rw [hd, mul_comm]⟩
+
+theorem untilt_uSigma (σ : GQp p) : PreTilt.untilt (uSigma p σ) = 1 := by
+  have h := congrArg PreTilt.untilt (uSigma_spec p σ)
+  rw [map_mul, DR.untilt_preTiltMap, pFlat_untilt, map_natCast] at h
+  have hp := ZInQ.Contrib.G9.BdrKer.Cp.p_ne_zero p
+  exact mul_right_cancel₀ hp (by rw [h, one_mul])
+
+theorem uSigma_one : uSigma p 1 = 1 := by
+  have h := uSigma_spec p 1
+  rw [flatAct_one] at h
+  exact mul_right_cancel₀ (pFlat_ne_zero p) (by rw [h, one_mul])
+
+theorem uSigma_mul (σ τ : GQp p) : uSigma p (σ * τ) = flatAct p σ (uSigma p τ) * uSigma p σ := by
+  apply mul_right_cancel₀ (pFlat_ne_zero p)
+  rw [uSigma_spec, flatAct_mul, ← uSigma_spec p τ, map_mul, ← uSigma_spec p σ]
+  ring
+
+/-- `logU σ` is the image of `log [u_σ]` (the `else` branch never occurs). -/
+theorem logU_eq (σ : GQp p) : logU p σ = algebraMap (BcrisPlus p) (Bcris p)
+    (algebraMap (Acris p) (BcrisPlus p) (logT p (theta_teich_sub_one p (untilt_uSigma p σ)))) := by
+  rw [logU, dite_eq_left_of_eq_true (eq_true (untilt_uSigma p σ))]
+
+theorem logU_one : logU p 1 = 0 := by
+  rw [logU_eq, logT_of_eq_zero p _ (by rw [uSigma_one, map_one, sub_self]), map_zero, map_zero]
+
+/-- **`1 ∈ G_{ℚ_p}` acts trivially on `B_st`.** -/
+theorem stAct_one : stAct p 1 = RingHom.id _ := by
+  apply Polynomial.ringHom_ext
+  · intro b; rw [stAct_C, bcrisAct_one]; rfl
+  · rw [stAct_X, logU_one, map_zero, add_zero]; rfl
+
+/-- **The group law on `B_st` is exactly the cocycle identity for `σ ↦ log [u_σ]`.** -/
+theorem stAct_mul_iff (σ τ : GQp p) :
+    stAct p (σ * τ) = (stAct p σ).comp (stAct p τ) ↔
+      logU p (σ * τ) = logU p σ + bcrisAct p σ (logU p τ) := by
+  constructor
+  · intro h
+    have hX := congrArg (fun φ : Bst p →+* Bst p => φ Polynomial.X) h
+    simp only [RingHom.comp_apply, stAct_X, map_add, stAct_C] at hX
+    have := congrArg (Polynomial.coeff · 0) hX
+    simpa [add_comm] using this
+  · intro h
+    apply Polynomial.ringHom_ext
+    · intro b
+      simp only [RingHom.comp_apply, stAct_C, bcrisAct_mul_apply]
+    · simp only [RingHom.comp_apply, stAct_X, map_add, stAct_C, h]
+      ring
+
+/-- **`log` is additive on `{ε : ε^♯ = 1}`** (Fontaine; `log [xy] = log [x] + log [y]` in
+`A_cris`). Standard (the formal identity `log((1+a)(1+b)) = log(1+a) + log(1+b)` with divided
+powers); not proved here. It is the only missing input for the group law of `stAct`. -/
+def LogAdditive : Prop :=
+  ∀ (x y : PreTilt O p) (hx : PreTilt.untilt x = 1) (hy : PreTilt.untilt y = 1)
+    (hxy : PreTilt.untilt (x * y) = 1),
+    logT p (theta_teich_sub_one p hxy) =
+      logT p (theta_teich_sub_one p hx) + logT p (theta_teich_sub_one p hy)
+
+theorem logT_congr {x y : Ainf p} (hx : theta p x = 0) (hy : theta p y = 0) (h : x = y) :
+    logT p hx = logT p hy := by
+  subst h; rfl
+
+theorem logU_mul (hL : LogAdditive p) (σ τ : GQp p) :
+    logU p (σ * τ) = logU p σ + bcrisAct p σ (logU p τ) := by
+  have h1 : PreTilt.untilt (flatAct p σ (uSigma p τ)) = 1 := by
+    rw [DR.untilt_preTiltMap, untilt_uSigma, map_one]
+  have h2 : PreTilt.untilt (flatAct p σ (uSigma p τ) * uSigma p σ) = 1 := by
+    rw [map_mul, h1, untilt_uSigma, one_mul]
+  rw [logU_eq, logU_eq, logU_eq, bcrisAct_algebraMap, bcrisPlusAct_algebraMap,
+    acrisAct_logT p σ _ (by rw [theta_wittMap, theta_teich_sub_one p (untilt_uSigma p τ),
+      map_zero])]
+  have e1 : logT p (theta_teich_sub_one p (untilt_uSigma p (σ * τ))) =
+      logT p (theta_teich_sub_one p h2) :=
+    logT_congr p _ _ (by rw [uSigma_mul])
+  have e2 : logT p (by rw [theta_wittMap, theta_teich_sub_one p (untilt_uSigma p τ), map_zero] :
+        theta p (WittVector.map (flatAct p σ) (WittVector.teichmuller p (uSigma p τ) - 1)) = 0) =
+      logT p (theta_teich_sub_one p h1) :=
+    logT_congr p _ _ (by rw [map_sub, map_one, WittVector.map_teichmuller])
+  rw [e1, e2, hL _ _ h1 (untilt_uSigma p σ) h2, RingHom.map_add, RingHom.map_add, add_comm]
+
+/-- **Given `LogAdditive`, `G_{ℚ_p}` acts on `B_st` by ring automorphisms** (group law). -/
+theorem stAct_mul (hL : LogAdditive p) (σ τ : GQp p) :
+    stAct p (σ * τ) = (stAct p σ).comp (stAct p τ) :=
+  (stAct_mul_iff p σ τ).mpr (logU_mul p hL σ τ)
+
+end Action
+
 end PanBergerSplit
 end PkgI4
 end HDec

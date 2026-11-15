@@ -28,3 +28,15 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
 - `zero_notMem_tMonoid`; instances `nontrivial_bcrisPlus`, `nontrivial_bcris`, `nontrivial_bst`;
   `algebraMap_qp_bst_injective`; `logOf_not_isNilpotent`, `logOf_ne_zero`, `isUnit_logOf_bcris`.
 - `nonempty_tEps` (ε = (1, ζ_p, ζ_{p²}, …) has ε^♯ = 1, ε ≠ 1), `exists_t`.
+
+## Step 2: Galois action (Sanity1.lean, section Action) — COMPILES (VERIFIED ~09:00)
+- `bcrisAct_mul`, `bcrisAct_one`, `bcrisAut : GQp p →* (Bcris p ≃+* Bcris p)`: G_Qp acts on
+  B_cris by ring automorphisms (group homomorphism), via functoriality of oAct, flatAct, W(·),
+  locAct, adicMap (`adicMap_comp'`, `adicMap_id'`), bcrisPlusAct.
+- `stEquiv σ : Bst p ≃+* Bst p` (each stAct σ is a ring automorphism; unconditional),
+  `stAct_one` (logU 1 = 0; via uSigma 1 = 1, log[1] = 0).
+- `uSigma_spec` (existence of u_σ via KerTheta.dvd_of_coeff_zero), `untilt_uSigma` (u_σ^♯ = 1, so
+  the `else 0` branch of logU never occurs: `logU_eq`), `uSigma_mul` (u_{στ} = σ♭(u_τ)·u_σ).
+- `stAct_mul_iff`: group law on B_st ⇔ cocycle logU(στ) = logU σ + σ(logU τ).
+- `LogAdditive` (Prop: log[xy] = log[x] + log[y] in A_cris for x^♯ = y^♯ = 1) — NOT proved;
+  `stAct_mul (hL : LogAdditive p)`: group law given it.
