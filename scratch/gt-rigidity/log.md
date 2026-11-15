@@ -12,3 +12,11 @@ Target: `LeafQM.AV.R1UnivRigid.MumfordRigidityCore` (ZInQKernel/OneProof/H/TailZ
 ## Step 1 (11-14 23:20): reduction compiled — VERIFIED
 - scratch/gt-rigidity/MR.lean (imports TailZ16): `mumfordRigidityCore_of_printed : MumfordGroupLaw → RigidityLemma → MumfordRigidityCore`; `#print axioms` = [propext, Classical.choice, Quot.sound].
 - Glue proved on the way: noetherian space ⇒ connected components open; locally noetherian scheme ⇒ connected components open; `eq_of_rigidity` (rigidity on each connected component, via restriction to the open component and `Scheme.hom_ext_of_forall`); `isPullback_jr` (x ↦ (x,1) is the base change of η along snd); `fibre_value`; `defect_eq_one`; `isMonHom_of_rigidity` (GIT Cor. 6.4 for endomorphisms of a group object proper smooth geometrically connected over a locally noetherian base).
+
+## Step 2 (11-14 23:40): contribution file — VERIFIED
+- ZInQKernel/Contrib/OneProof/MumfordRigidity.lean (imports TailZ16 only). `lake build +Main +Discharges +MumfordRigidity`: success.
+- #discharges (scratch/gt-rigidity/Discharges.lean; output in discharges-output.txt):
+  DISCHARGES [OpenResearchLeaves16.mumfordRigidityCore] by ZInQ.Contrib.MumfordRigidity.mumfordRigidityCore_of_printed
+    still assumes: [MumfordGroupLaw, RigidityLemma]; axioms: [propext, Classical.choice, Quot.sound]
+  (67 open hypotheses, 514 theorems checked, 1 discharge one)
+- `mumfordGroupLaw_of_core : MumfordRigidityCore → MumfordGroupLaw` compiled (the existence leaf is strictly weaker).
