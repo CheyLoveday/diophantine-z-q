@@ -750,4 +750,169 @@ theorem point_transport (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQE
     simp only [Affine.Point.some.injEq]
     exact ⟨hx, hy⟩
 
+/-! ## §6. `HeegnerPointRational` -/
+
+theorem squarefree_neg_iff {x : ℤ} : Squarefree (-x) ↔ Squarefree x :=
+  ⟨fun h y hy => h y (dvd_neg.2 hy), fun h y hy => h y (dvd_neg.1 hy)⟩
+
+theorem mul_map_mulLeft (P M : Submodule ℤ ℂ) (j : ℂ) :
+    P * M.map (LinearMap.mulLeft ℤ j) = (P * M).map (LinearMap.mulLeft ℤ j) := by
+  apply le_antisymm
+  · rw [Submodule.mul_le]
+    rintro p hp _ ⟨y, hy, rfl⟩
+    refine ⟨p * y, Submodule.mul_mem_mul hp hy, ?_⟩
+    simp only [LinearMap.mulLeft_apply]; ring
+  · rw [Submodule.map_le_iff_le_comap, Submodule.mul_le]
+    intro p hp y hy
+    rw [Submodule.mem_comap, LinearMap.mulLeft_apply,
+      show j * (p * y) = p * (j * y) by ring]
+    exact Submodule.mul_mem_mul hp ⟨y, hy, rfl⟩
+
+theorem map_mulLeft_one (M : Submodule ℤ ℂ) : M.map (LinearMap.mulLeft ℤ (1 : ℂ)) = M := by
+  rw [LinearMap.mulLeft_one, Submodule.map_id]
+
+/-- **The Heegner sum is fixed by `Aut(ℂ/κ(K))`.** Every `σ` fixing `K = ℚ(√−m)` permutes the
+points `φ(τ_Q)`, `Q ∈ S`: `σ` acts on the Hilbert class field as `Art([J])`
+(`J = ⟨a, (−b + √D)/2⟩`, `HeegnerClassJ`), the main theorem of CM (`ShimuraMainCM`, through the
+kernel's `CMModuli`) and the canonical model (`X0ModuliGaloisMero`) give `σ(φ(τ_Q)) = φ(τ_{Q'})`
+for the Dirichlet composite `Q'` of `Q` with `J̄` (`exists_compose`), and `Q ↦ [Q']` is injective on
+`Γ₀(N)`-classes (`pairHom_of_equiv`, `equiv_of_pairHom`). -/
+theorem heegnerC_fixed (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero)
+    (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQExpansion) (hJ : HeegnerClassJ)
+    (E : WeierstrassCurve ℚ) [E.IsElliptic] {N : ℕ} [NeZero N] (f : Newform N 2) (L : PeriodPair)
+    (c : ℚ) (hs : ParamSetting E f L c) {m : ℕ} [NeZero m] (hsq : Squarefree m) (hm3 : m % 4 = 3)
+    {β : ℤ} (S : Finset (HeegnerForm N (-(m : ℤ))))
+    (hS : ZInQ.GZHL3.IsHeegnerReps N (-(m : ℤ)) β S)
+    (σ : ℂ ≃+* ℂ) (hσK : ∀ k : QNeg m, σ (kappa m k) = kappa m k) :
+    Affine.Point.map (sigA σ) (ZInQ.GZHL3.heegnerC E L f c S) =
+      ZInQ.GZHL3.heegnerC E L f c S := by
+  classical
+  have hN : 0 < N := Nat.pos_of_ne_zero (NeZero.ne N)
+  obtain ⟨e, he⟩ := exists_normalized_embed_any m
+  obtain ⟨τg, hτg⟩ := T5Glue.exists_tau_of_sigma e he σ hσK
+  obtain ⟨ρ, hρ⟩ := exists_galQ_of_sigma σ
+  have hρe : ∀ x, ρ (e x) = e (τg x) := fun x => ιC.injective (by rw [← hρ, hτg])
+  set O := conductorOrder (QNeg m) 1 with hO
+  set cl : Pic O := (ringClassArtinEquiv O).symm
+    (AlgEquiv.restrictNormalHom (ringClassField O) τg) with hcl
+  set M : ℤ := ∏ Q ∈ S, Q.A with hMdef
+  have hM : M ≠ 0 := Finset.prod_ne_zero_iff.2 fun Q _ => Q.A_pos.ne'
+  obtain ⟨J, a, b, hJc, ha, hab, hcop, hJlat⟩ := hJ m hsq hm3 M hM cl
+  have hArt : ∀ x : ringClassField O,
+      ρ (e x) = e (ringClassArtinEquiv O (O.picClass J) x) := by
+    intro x
+    rw [hJc, hρe, hcl, MulEquiv.apply_symm_apply]
+    congr 1
+    exact (AlgEquiv.restrictNormalHom_apply _ τg x).symm
+  have hsqD : Squarefree (-(m : ℤ)) := squarefree_neg_iff.2 (Int.squarefree_natCast.2 hsq)
+  have hdisc : -(m : ℤ) = discOf m 1 := by simp [discOf, hm3]
+  have hCMM := T5Glue.cmModuli_of_t5 hCM
+    (T5Glue.ideleLatticeScale_of T5Glue.ringClassLattice T5Glue.invertibleColon)
+  -- per-form data
+  have step : ∀ Q ∈ S, ∃ Q' : HeegnerForm N (-(m : ℤ)), ZInQ.GZHL3.HasResidue β Q' ∧
+      jLat (-(m : ℤ)) a b * Q'.lat = Q.lat ∧ jLat (-(m : ℤ)) a b * Q'.latN = Q.latN ∧
+      Affine.Point.map (sigA σ) (ZInQ.GZHL3.weierPt E L (zPar f c Q.tauH)) =
+        ZInQ.GZHL3.weierPt E L (zPar f c Q'.tauH) := by
+    intro Q hQS
+    have hcopQ : IsCoprime a Q.A :=
+      IsCoprime.of_isCoprime_of_dvd_right hcop (Finset.dvd_prod_of_mem _ hQS)
+    obtain ⟨Q', hBB, hlat, hlatN⟩ := exists_compose Q hsqD ha hab hcopQ
+    have hres : ZInQ.GZHL3.HasResidue β Q' := by
+      have h1 := hS.1 Q hQS
+      obtain ⟨A₁, hA₁⟩ := Q.N_dvd
+      show (2 * N : ℤ) ∣ Q'.B - β
+      have : Q'.B - β = (Q'.B - Q.B) + (Q.B - β) := by ring
+      rw [this]
+      exact dvd_add (dvd_trans ⟨A₁, by rw [hA₁]; ring⟩ hBB) h1
+    refine ⟨Q', hres, hlat, hlatN, ?_⟩
+    obtain ⟨x, hx, hx'⟩ := hCMM N hN m 1 hsq e he J ρ hArt (-(m : ℤ)) hdisc Q Q' 1
+      (by rw [map_mulLeft_one, hJlat]; exact hlat) (by rw [map_mulLeft_one, hJlat]; exact hlatN)
+    have hmod : ∀ i < N, (σ : ℂ →+* ℂ) (T5Glue.modCoord N Q.tauH i) =
+        T5Glue.modCoord N Q'.tauH i := by
+      intro i hi; rw [← hx i hi, ← hx' i hi]; exact hρ (x i)
+    obtain ⟨μ, hμ, hk⟩ := T5Glue.moduli_transport T5Glue.discNeZero (σ : ℂ →+* ℂ) hN hmod
+    exact point_transport hR hG hQ E f L c hs σ Q.tauH Q'.tauH fun g hg h1 h2 =>
+      hX N hN g hg σ Q.tauH Q'.tauH μ h1 h2 (fun i hi => ⟨x i, hx i hi⟩) hμ hk
+  choose! Q' hQ'res hQ'lat hQ'latN hQ'pt using step
+  -- the representative in `S`
+  have hrep : ∀ Q ∈ S, ∃ R ∈ S, ZInQ.GZHL3.Gamma0Equiv (Q' Q) R := fun Q hQ => by
+    obtain ⟨R, ⟨hR, hE⟩, -⟩ := hS.2 (Q' Q) (hQ'res Q hQ)
+    exact ⟨R, hR, hE⟩
+  choose! π hπS hπE using hrep
+  have hπpt : ∀ Q ∈ S, Affine.Point.map (sigA σ) (ZInQ.GZHL3.weierPt E L (zPar f c Q.tauH)) =
+      ZInQ.GZHL3.weierPt E L (zPar f c (π Q).tauH) := by
+    intro Q hQ
+    rw [hQ'pt Q hQ]
+    obtain ⟨γ, hγ, hγe⟩ := hπE Q hQ
+    rw [← hγe, weierPt_smul hs.2.2.1 hs.2.2.2.2 hγ]
+  have hπinj : ∀ Q₁ ∈ S, ∀ Q₂ ∈ S, π Q₁ = π Q₂ → Q₁ = Q₂ := by
+    intro Q₁ h1 Q₂ h2 hπ
+    have hE : ZInQ.GZHL3.Gamma0Equiv (Q' Q₁) (Q' Q₂) :=
+      ZInQ.GZHL3.Reps.equiv_trans (hπE Q₁ h1)
+        (by rw [hπ]; exact ZInQ.GZHL3.Reps.equiv_symm (hπE Q₂ h2))
+    obtain ⟨j, -, hjL, hjN⟩ := pairHom_of_equiv hE
+    have hP : PairHom Q₁ Q₂ j := by
+      constructor
+      · rw [← hQ'lat Q₁ h1, ← hQ'lat Q₂ h2, hjL, mul_map_mulLeft]
+      · rw [← hQ'latN Q₁ h1, ← hQ'latN Q₂ h2, hjN, mul_map_mulLeft]
+    have hE' := equiv_of_pairHom hP
+    obtain ⟨R, -, huniq⟩ := hS.2 Q₁ (hS.1 Q₁ h1)
+    exact (huniq Q₁ ⟨h1, ZInQ.GZHL3.Reps.equiv_refl Q₁⟩).trans (huniq Q₂ ⟨h2, hE'⟩).symm
+  unfold ZInQ.GZHL3.heegnerC
+  rw [map_sum]
+  refine Finset.sum_bij (fun Q _ => π Q) hπS (fun Q₁ h1 Q₂ h2 h => hπinj Q₁ h1 Q₂ h2 h) ?_ ?_
+  · intro R hR
+    obtain ⟨Q, hQ, h⟩ := Finset.surj_on_of_inj_on_of_card_le (fun Q _ => π Q) hπS
+      (fun a₁ a₂ ha₁ ha₂ h => hπinj a₁ ha₁ a₂ ha₂ h) le_rfl R hR
+    exact ⟨Q, hQ, h.symm⟩
+  · intro Q hQ; exact hπpt Q hQ
+
+/-- **`HeegnerPointRational` (gz-hl3's leaf) from the main theorem of complex multiplication, the
+canonical model of `X₀(N)` in printed (meromorphic) form, and glue.** -/
+theorem heegnerPointRational_of (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero)
+    (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQExpansion) (hJ : HeegnerClassJ) :
+    ZInQ.GZHL3.HeegnerPointRational := by
+  intro E _ N _ f hχ hcoeff D β hDf hD4 hHH hβ S hS L c hL hc hPer K _ _ _ hK2 δ hδ ι hι
+  obtain ⟨hD0, hD1, hDsq⟩ := hDf
+  obtain ⟨m, rfl⟩ : ∃ m : ℕ, D = -(m : ℤ) := ⟨D.natAbs, by omega⟩
+  have hm0 : m ≠ 0 := by omega
+  have : NeZero m := ⟨hm0⟩
+  have hsq : Squarefree m := Int.squarefree_natCast.1 (squarefree_neg_iff.1 hDsq)
+  have hm3 : m % 4 = 3 := by omega
+  have hs : ParamSetting E f L c := ⟨hχ, hcoeff, hL, hc, hPer⟩
+  have hfix := heegnerC_fixed hCM hX hR hG hQ hJ E f L c hs hsq hm3 S hS
+  -- `θ : ℚ(√−m) → K`, `√−m ↦ δ`, with `ι ∘ θ = κ`
+  have hδ' : δ * δ = (-(m : ℚ)) • (1 : K) + (0 : ℚ) • δ := by
+    rw [← sq, hδ]; simp [Rat.smul_def]
+  let θ : QNeg m →ₐ[ℚ] K := QuadraticAlgebra.lift ⟨δ, hδ'⟩
+  have hιθ : ∀ k : QNeg m, ι (θ k) = kappa m k := by
+    have h : ι.comp θ = kappaAlg m := by
+      apply QuadraticAlgebra.algHom_ext
+      rw [kappaAlg_apply, T5Glue.kappa_omega, AlgHom.comp_apply]
+      have : θ QuadraticAlgebra.omega = δ := by simp [θ]
+      rw [this, hι]
+      push_cast; simp
+    intro k
+    rw [← kappaAlg_apply, ← h]; rfl
+  rcases hZ : ZInQ.GZHL3.heegnerC E L f (c : ℂ) S with _ | ⟨x, y, hxy⟩
+  · exact ⟨0, by rw [map_zero]; rfl⟩
+  · have hfx : ∀ σ : ℂ ≃+* ℂ, (∀ k : QNeg m, σ (kappa m k) = kappa m k) → σ x = x ∧ σ y = y := by
+      intro σ hσ
+      have h := hfix σ hσ
+      rw [hZ, Affine.Point.map_some] at h
+      simp only [Affine.Point.some.injEq] at h
+      exact h
+    obtain ⟨k₁, hk₁⟩ := mem_kappa_of_fixed x (fun σ hσ => (hfx σ hσ).1)
+    obtain ⟨k₂, hk₂⟩ := mem_kappa_of_fixed y (fun σ hσ => (hfx σ hσ).2)
+    have hns : (E⁄K).Nonsingular (θ k₁) (θ k₂) := by
+      rw [← WeierstrassCurve.Affine.baseChange_nonsingular (W := E) (f := ι) ι.injective,
+        hιθ, hιθ, hk₁, hk₂]
+      exact hxy
+    refine ⟨.some _ _ hns, ?_⟩
+    rw [Affine.Point.map_some]
+    simp only [Affine.Point.some.injEq]
+    exact ⟨(hιθ k₁).trans hk₁, (hιθ k₂).trans hk₂⟩
+
 end ZInQ.GZHeegner
+
+#print axioms ZInQ.GZHeegner.heegnerPointRational_of

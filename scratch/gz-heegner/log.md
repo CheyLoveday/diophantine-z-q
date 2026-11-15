@@ -13,3 +13,12 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
   the algebraic theory of `X₀(N)_ℚ`. Plan: state the printed form of the canonical-model theorem for every
   `g ∈ ℚ(X₀(N))` regular at the two points (`X0ModuliGaloisMero`), derive `X0ModuliGalois` from it, and derive
   `HeegnerPointRational` from it and `ShimuraMainCM` (via kernel `CMModuli`).
+- VERIFIED (compiled, `lake env lean scratch/gz-heegner/Heegner.lean`, axioms [propext, Classical.choice, Quot.sound]):
+  `ZInQ.GZHeegner.heegnerPointRational_of (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero)
+   (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQExpansion) (hJ : HeegnerClassJ) : ZInQ.GZHL3.HeegnerPointRational`.
+  Proved glue in the file: `exists_compose` (Dirichlet composition `J·Q'.lat = Q.lat`, `J·Q'.latN = Q.latN`, residue kept;
+  sympy check 401/401 for the sign `B' ≡ −b (mod 2a)`, `py/compose.py`; the other sign fails 285/401),
+  `pairHom_of_equiv` / `equiv_of_pairHom` (homothetic lattice pairs ⇔ Γ₀(N)-equivalent), `exists_galQ_of_sigma`,
+  `mem_kappa_of_fixed` (fixed field of Aut(ℂ/κK) is κK), `weierPt_add`, `point_transport` (poles handled with
+  `1/(x∘φ − t)`), `heegnerC_fixed` (σ permutes the Heegner points; injectivity on classes).
+  Open glue Props: `ParamRegular`, `ParamCuspGrowth`, `ParamQExpansion` (analysis of x∘φ), `HeegnerClassJ` (class group).
