@@ -7,11 +7,11 @@ hypotheses are unchanged. The build `lake build +ZInQKernel.OneProof.Main` passe
 `#print axioms ZInQ.OneProof.frozenTarget` is `[propext, Classical.choice, Quot.sound]`.
 
 **Counting convention (strict).** A leaf whose published form is still pending a reading counts as GLUE. Per
-cove-bc's reduct-glue review v2 (K6, §4) this applies to the SGA 7 IX leaves on a general DVR, `raynaudSemistable`,
+the reduct-glue review v2 (K6, §4) this applies to the SGA 7 IX leaves on a general DVR, `raynaudSemistable`,
 `semistablePersistsDVR`, `semistableReductionDVR` and `semistableUnipotent` (SGA 7 IX may be stated over a strictly
 henselian trait, while every use is at a non-henselian number-field DVR), and to `serreTateThm2` (K2). c-to-printed's
 `sga7_IX_3_3` has the same base question and counts as GLUE (c) too, and so does its `blr_1_2_4` (BLR 1.2 Prop. 4
-may be printed in the strictly henselian form; cove-bc's v1 rated `NeronLocalizesDVR` "depends"). Faltings' Lemma 5
+may be printed in the strictly henselian form; the review's v1 rated `NeronLocalizesDVR` "depends"). Faltings' Lemma 5
 (`faltingsLemma5Printed`) stays LEAF, flagged unread: being unread is not a weaker reading. An earlier version of this note counted these
 as LEAF (50/11 here, 44/15 after the prune).
 
@@ -59,7 +59,7 @@ fields' projections and the dead readers listed above; new constants are in `One
 `TailZ16`-`TailZ19`; changed constants are the edited bundle structures with their generated auxiliaries, the
 conversions, TailD's `glueOutputs_of_leaves3`, `frozenTarget`, and the group below.
 
-**Accepted by the lead (cove-f4, 11-14):** 82 constants in TailE–TailZ2 change with no source change (80 proof
+**Accepted by the lead maintainer (11-14):** 82 constants in TailE–TailZ2 change with no source change (80 proof
 terms, 2 types), because TailD's new import brings Mathlib instances such as `CommSemiring.toHopfAlgebra` into
 instance search. The 2 type changes are kernel-checked `rfl`-equal to the base types
 (`scratch/genus-fold/diag/DefEqCheck.lean`), the axioms are standard, and `frozenTarget`'s type is still pinned to
@@ -67,7 +67,7 @@ instance search. The 2 type changes are kernel-checked `rfl`-equal to the base t
 
 ## 4. Checks
 
-All VERIFIED on one_proof1 at the branch head:
+All VERIFIED on a project build host at the branch head:
 
 * `lake build +ZInQKernel.OneProof.Main`: passes (12913 jobs); `frozenTarget` axioms standard.
 * `scratch/one-proof/PruneScan.lean`: 0 unused fields. Top bundles `OpenResearchLeaves12` (32),
@@ -79,7 +79,7 @@ All VERIFIED on one_proof1 at the branch head:
 
 ## 5. Remaining strict GLUE (17)
 
-Per leaf-fold10's table less the fields above, with the pending DVR leaves of §0 (`raynaudSemistable`, `semistablePersistsDVR`, `semistableReductionDVR`, `semistableUnipotent`, `sga7_IX_3_3`, `blr_1_2_4`; reduct-b on hs_paper2 and unipotent-b work on the first four). Among the others, running or queued: x6-glue (`r1r2Ab`, `x6ConicModel`, to use the
+Per leaf-fold10's table less the fields above, with the pending DVR leaves of §0 (`raynaudSemistable`, `semistablePersistsDVR`, `semistableReductionDVR`, `semistableUnipotent`, `sga7_IX_3_3`, `blr_1_2_4`; reduct-b and unipotent-b work on the first four). Among the others, running or queued: x6-glue (`r1r2Ab`, `x6ConicModel`, to use the
 `LAb` forms of `scratch/r1univ-rigid/R1UnivLeaves.lean`), c-to-printed2 (`r17`, `t09SymmIsogenyExists`,
-`eigenformHTNew`), theta-glue (`thetaRatiosAlgebraic`), `QuotientP1Coordinate` (cove-85), `shimuraFamilyAb`
+`eigenformHTNew`), theta-glue (`thetaRatiosAlgebraic`), `QuotientP1Coordinate`, `shimuraFamilyAb`
 (needs global class field theory). Not splittable over Mathlib's present definitions: `r11r12` (no `B_st`), `r16`.

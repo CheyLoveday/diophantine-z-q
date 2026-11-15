@@ -1,0 +1,24 @@
+field	task	status	since	issue
+r1r2Ab	x6-fold	fold in progress: x6-glue proves it from published-form leaves plus RayClassCM	2026-11-14	
+x6ConicModel	x6-fold	fold in progress (x6-glue)	2026-11-14	
+shimuraFamilyAb	shimura-cft	proved from Shimura Main Thm I in Deligne adelic form; awaiting a rating, then a fold	2026-11-14	
+semistableUnipotent	unipotent-b	in progress: printed strictly henselian form of SGA 7 IX 3.5	2026-11-14	
+semistableReductionDVR	reduct-b	in progress	2026-11-14	
+raynaudSemistable	reduct-b	in progress	2026-11-14	
+semistablePersistsDVR	reduct-b	in progress	2026-11-14	
+t09SymmIsogenyExists	t09-pic	in progress: Pic0, phi_L, ample bundles, e_n	2026-11-14	
+thetaRatiosAlgebraic	igusa-alg	in progress: theta-glue reduced it to one leaf and five polynomial identities	2026-11-14	
+quotientP1Coordinate	fleet	in progress	2026-11-14	
+mumfordTorsionAlgClosed	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
+mulEtaleAbelianScheme	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
+cartierSmooth	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
+geomConnOfRationalPoint	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
+groupSchemeEquidim	cloud W16	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#81
+tateTwistInvariants	cloud W11	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#84
+axSenTate	cloud W11	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#84
+igusaGL2	cloud W14	briefed (via X0Transitive), not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#83
+regularSmoothPerfect	cloud W15	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#83
+shimuraGoodReductionNoGuard	cloud W13	briefed, not yet claimed on the issue	2026-11-14	elliotglazer/diophantine-z-q#79
+uniformizationLeafAll	cloud W17	briefed behind a feasibility check	2026-11-14	elliotglazer/diophantine-z-q#82
+gagaMorphism	cloud W17	briefed behind a feasibility check	2026-11-14	elliotglazer/diophantine-z-q#82
+milneIsogenyQuasiInverse	cloud W17	briefed (CharZero form), after the two above	2026-11-14	elliotglazer/diophantine-z-q#81

@@ -6,6 +6,12 @@ Browse every statement of the formal proof there: its informal statement and pro
 statements it depends on, its Lean declarations with links into the source, and whether it is
 proved. The site is rebuilt from `main` after each passing verification run.
 
+**Contribute to the single proof: [docs/one-proof/OPEN.md](docs/one-proof/OPEN.md)** lists every open
+hypothesis of `ZInQ.OneProof.frozenTarget`, the one Lean theorem that proves the frozen target, with its exact
+Lean statement, its kind (published theorem or glue), its source and who is working on it.
+[docs/one-proof/CONTRIBUTING.md](docs/one-proof/CONTRIBUTING.md) explains how to prove one, where the file goes,
+and how to check it with `#discharges`.
+
 > **This fork** proves the 11/5 manuscript's Theorem 1.1 in Lean from five explicit hypotheses,
 > stated as `Prop`s, not axioms. The first is the six-contact height estimate (the manuscript's
 > Theorem 4.1), in the one instance `SixContactMin` from which both of the proof's uses follow. Its
