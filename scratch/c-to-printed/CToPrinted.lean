@@ -1051,6 +1051,50 @@ theorem identityComponentGroupModel_of (gc : IdCompSubgroup) (ge : IdCompGeneric
 
 end IdCompGM
 
+open ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- **The glue `IdCompGenericFibre`, PROVED.** The generic fibre `𝒢 ×_{𝓞_L} L ≅ A_L` is connected, its image in
+`𝒢` is the set of points over the generic point (`range_fst`), and that image is a connected set containing
+`e(η)`, so it lies in the connected component of `e(η)` in the fibre. -/
+theorem idCompGenericFibre : IdCompGenericFibre := by
+  intro K _ A L _ _ _ 𝒢 x hx
+  let jL := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L))
+  have hbot : ∀ p : Spec (CommRingCat.of L), (jL p).asIdeal = ⊥ := by
+    intro p
+    have hp : p.asIdeal = ⊥ := (Ideal.eq_bot_or_top p.asIdeal).resolve_right p.isPrime.ne_top
+    show Ideal.comap (algebraMap (𝓞 L) L) p.asIdeal = ⊥
+    rw [hp]
+    exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective (𝓞 L) L)
+  -- the generic fibre is connected
+  haveI : IrreducibleSpace (A.baseChange L).X.left :=
+    GeometricallyIrreducible.irreducibleSpace_of_subsingleton (A.baseChange L).X.hom
+  haveI hc : ConnectedSpace (genericFibre L 𝒢.G).left :=
+    (Scheme.homeoOfIso ((Over.forget _).mapIso 𝒢.gen)).connectedSpace_iff.mpr
+      (inferInstanceAs (ConnectedSpace (A.baseChange L).X.left))
+  have hc' : ConnectedSpace ↥(pullback 𝒢.G.hom jL : Scheme.{0}) := hc
+  -- its image
+  set R := Set.range (pullback.fst 𝒢.G.hom jL)
+  have hR : _root_.IsPreconnected R := (isConnected_range (pullback.fst 𝒢.G.hom jL).continuous).isPreconnected
+  have hsub : R ⊆ 𝒢.G.hom ⁻¹' {𝒢.G.hom x} := by
+    rintro _ ⟨z, rfl⟩
+    show 𝒢.G.hom (pullback.fst 𝒢.G.hom jL z) = 𝒢.G.hom x
+    rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+    exact PrimeSpectrum.ext ((hbot _).trans hx.symm)
+  have hmem : ∀ y : 𝒢.G.left, (𝒢.G.hom y).asIdeal = ⊥ → y ∈ R := by
+    intro y hy
+    show y ∈ Set.range (pullback.fst 𝒢.G.hom jL)
+    rw [Scheme.Pullback.range_fst]
+    refine ⟨⟨⊥, Ideal.isPrime_bot⟩, ?_⟩
+    exact PrimeSpectrum.ext ((hbot _).trans hy.symm)
+  have he : (η[𝒢.G] : 𝟙_ (Over (Spec (CommRingCat.of (𝓞 L)))) ⟶ 𝒢.G).left (𝒢.G.hom x) ∈ R := by
+    apply hmem
+    have h : 𝒢.G.hom ((η[𝒢.G] : 𝟙_ (Over (Spec (CommRingCat.of (𝓞 L)))) ⟶ 𝒢.G).left
+        (𝒢.G.hom x)) = 𝒢.G.hom x := by
+      rw [← Scheme.Hom.comp_apply, Over.w]
+      rfl
+    rw [h]
+    exact hx
+  exact hR.subset_connectedComponentIn he hsub (hmem x hx)
+
 /-- `IdentityComponentOL` (reduct-glue's SGA 3 leaf) from the printed SGA 3 VI_B 3.10 and the three
 topological glue Props. -/
 theorem identityComponentOL_of_printed' (h3 : SGA3_VIB_3_10) (gc : IdCompSubgroup)
@@ -1066,6 +1110,14 @@ theorem semistableNeronBaseChange_of_printed_final (hB : BLR_1_2_4) (h3 : SGA3_V
     ZInQ.HeightSplit.SemistableNeronBaseChange :=
   semistableNeronBaseChange_of_printed'' hB h3 h7 hE (identityComponentGroupModel_of gc ge gf) ga gb
 
+/-- **SS2 from four printed-form leaves and four topological glue Props** (compiled; `IdCompGenericFibre` is
+proved). -/
+theorem semistableNeronBaseChange_of_printed_final' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+    (h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (gc : IdCompSubgroup) (gf : IdCompGeomFibres)
+    (ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) :
+    ZInQ.HeightSplit.SemistableNeronBaseChange :=
+  semistableNeronBaseChange_of_printed_final hB h3 h7 hE gc idCompGenericFibre gf ga gb
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
@@ -1076,3 +1128,4 @@ end CToPrinted
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed'
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed''
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_final
+#print axioms CToPrinted.semistableNeronBaseChange_of_printed_final'

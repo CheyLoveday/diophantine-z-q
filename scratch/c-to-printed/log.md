@@ -85,3 +85,6 @@ of the e38375b3 build). One Lean process at a time.
   quasiCompact_of_noetherianSpace_source; generic fibre iso via isIso_iff_isOpenImmersion_and_surjective and
   Scheme.Pullback.range_map.
 - `semistableNeronBaseChange_of_printed_final` (4 printed leaves + 5 topological glue) COMPILES, standard axioms.
+- `idCompGenericFibre : IdCompGenericFibre` PROVED (generic fibre ≅ A_L connected; its image = points over η by
+  range_fst; IsPreconnected.subset_connectedComponentIn). `semistableNeronBaseChange_of_printed_final'`
+  (4 printed leaves + 4 topological glue) COMPILES, standard axioms.
