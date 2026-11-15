@@ -67,7 +67,7 @@ for fn, name, text in copied:
         sys.exit('unhandled igusaGL2 in ' + name)
     out.append('-- copied from %s.lean: %s\n%s' % (fn, name, t))
 
-hdr = '''import ZInQKernel.OneProof.H.TailZ32
+hdr = '''import ZInQKernel.OneProof.Main
 import ZInQKernel.Contrib.CloudB2X0Transitive.Reduction
 
 /-! # flt-cqj: the H chain with Igusa's theorem replaced by the cyclic-quotient bijection (bypass fold check)
@@ -95,7 +95,29 @@ end HSyn
 
 end HDec
 
+namespace ZInQ.Contrib.TYZChain
+
+open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
+
+/-- **Theorem 1.1, from every statement still open, with `igusaGL2` replaced by `cyclicQuotientJBijOn`**
+(`ZInQ.OneProof.frozenTarget`'s body with `sixContactMin_of_open26_cqj`). -/
+theorem frozenTarget_cqj
+    (r : HDec.HSyn.OpenResearchLeaves19) (t : HDec.HSyn.OpenTextbookLeaves11Cqj) (l : HDec.HSyn.OpenAddedLeaves16)
+    (g : HDec.HSyn.OpenGlue7)
+    (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
+    (hCM : _root_.T5Glue.ShimuraMainCM) (hX : _root_.T5Glue.X0ModuliGalois)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
+    (hL2 : ZInQ.GZDecomp.FHNonvanishing) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+    ZInQ.FrozenTarget :=
+  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+    (HDec.HSyn.sixContactMin_of_open26_cqj r t l g)
+    (tyzThm35ReadingA_of_leaves h11 h29 (_root_.T5Glue.shimuraReciprocityModFn_of_printed hCM hX) (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33))
+    ZInQ.GZTheta.Frontier.heckeThetaNewform hL2 hL3
+
+end ZInQ.Contrib.TYZChain
+
 #print axioms HDec.HSyn.sixContactMin_of_open26_cqj
+#print axioms ZInQ.Contrib.TYZChain.frozenTarget_cqj
 '''
 open(sys.argv[1], 'w').write(hdr + '\n\n'.join(out) + ftr)
 print(len(copied), 'declarations copied:', ' '.join(n for _, n, _ in copied))
