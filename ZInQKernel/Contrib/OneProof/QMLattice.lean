@@ -785,5 +785,159 @@ theorem case_triv {τ : ℂ} (hτ : 0 < τ.im) {M : Type} [Ring M] (g0 : M →+*
   rw [hΨ, hm, actHom_smul]
   push_cast; rfl
 
+/-- **Case `S_{(τ,1)} ≠ ℚ`: `ℚ ⊗ End ≅ M₂(ℚ(√d))`, `d = y₀² < 0`.** `θ : ℚ(√d) → ℂ` sends `√d` to the
+eigenvalue `c₀` of `y₀`; `ι(B)(τ, 1)ᵀ = θ(k)v ⊕ θ(k)w` (dimension count), so in the basis `(v, w)` the maps
+preserving `ι(B)(τ, 1)ᵀ` are exactly the matrices over `θ(k)`. -/
+theorem case_quad {τ : ℂ} (hτ : 0 < τ.im) {M : Type} [Ring M] (g0 : M →+* Module.End ℂ (Fin 2 → ℂ))
+    (hg0 : Function.Injective g0)
+    (hrange : ∀ N : Module.End ℂ (Fin 2 → ℂ),
+      (∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) ↔ ∃ m, g0 m = N)
+    {y0 : B} (hy0re : y0.re = 0) (hy0S : y0 ∈ S ![τ, 1])
+    (hy0nz : ¬ (y0.imI = 0 ∧ y0.imJ = 0 ∧ y0.imK = 0)) :
+    Nonempty (TensorProduct ℤ ℚ M ≃ₐ[ℚ]
+      Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (sqForm y0)))) := by
+  have hτ' : τ.im ≠ 0 := hτ.ne'
+  have hv : (![τ, 1] : Fin 2 → ℂ) ≠ 0 := fun h => by simpa using congrFun h 1
+  have hdneg : sqForm y0 < 0 := sqForm_neg hτ' hy0re hy0S hy0nz
+  obtain ⟨c0, hc0⟩ := hy0S
+  have hc0sq : c0 ^ 2 = ((sqForm y0 : ℚ) : ℂ) := by
+    have hsq : act (y0 * y0) ![τ, 1] = (c0 * c0) • ![τ, 1] := by
+      rw [act_mul, hc0, act_smul_vec, hc0, smul_smul]
+    rw [pure_sq hy0re, act_algebraMap] at hsq
+    have h1 := congrFun hsq 1
+    simp at h1
+    rw [pow_two, ← h1]
+  set f : Polynomial ℚ := Polynomial.X ^ 2 - Polynomial.C (sqForm y0) with hf
+  have hf0 : f ≠ 0 := Polynomial.X_pow_sub_C_ne_zero (by norm_num) _
+  have hfdeg : f.natDegree = 2 := Polynomial.natDegree_X_pow_sub_C
+  let θ : AdjoinRoot f →ₐ[ℚ] ℂ :=
+    AdjoinRoot.liftAlgHom f (Algebra.ofId ℚ ℂ) c0 (by simp [f, hc0sq])
+  have hθmk : ∀ p, θ (AdjoinRoot.mk f p) = Polynomial.aeval c0 p := fun p => by
+    simp [θ, Polynomial.aeval_def]
+  have hθinj : Function.Injective θ := by
+    haveI : Fact (Irreducible f) := ⟨Polynomial.irreducible_of_degree_le_three_of_not_isRoot
+      (by rw [hfdeg]; decide) (fun x hx => by
+        simp [f] at hx
+        nlinarith [sq_nonneg x])⟩
+    exact θ.toRingHom.injective
+  have act_pow : ∀ i : ℕ, act (y0 ^ i) ![τ, 1] = c0 ^ i • ![τ, 1] := by
+    intro i
+    induction i with
+    | zero => rw [pow_zero, pow_zero, one_smul, act_one]
+    | succ i ih => rw [pow_succ, act_mul, hc0, act_smul_vec, ih, smul_smul, pow_succ, mul_comm]
+  have act_aeval : ∀ p : Polynomial ℚ,
+      act (Polynomial.aeval y0 p) ![τ, 1] = Polynomial.aeval c0 p • ![τ, 1] := by
+    intro p
+    rw [Polynomial.aeval_eq_sum_range, Polynomial.aeval_eq_sum_range]
+    change actV ![τ, 1] _ = _
+    rw [map_sum, Finset.sum_smul]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [map_smul]
+    change p.coeff i • act (y0 ^ i) ![τ, 1] = _
+    rw [act_pow, smul_assoc]
+  have hP3a : ∀ a : AdjoinRoot f, ∃ x : B, act x ![τ, 1] = θ a • ![τ, 1] := by
+    intro a
+    induction a using AdjoinRoot.induction_on with
+    | ih p => exact ⟨Polynomial.aeval y0 p, by rw [act_aeval, hθmk]⟩
+  have hP3 : ∀ a a' : AdjoinRoot f, ∃ x : B, θ a • ![τ, 1] + θ a' • wvec τ = act x ![τ, 1] := by
+    intro a a'
+    obtain ⟨x1, h1⟩ := hP3a a
+    obtain ⟨x2, h2⟩ := hP3a a'
+    refine ⟨x1 + BPAnalytic.QM.oBasis 1 * x2, ?_⟩
+    rw [act_add, act_mul, h2, act_smul_vec, h1]
+    rfl
+  haveI : Module.Finite ℚ (AdjoinRoot f) := (AdjoinRoot.powerBasis hf0).finite
+  have hfrAR : Module.finrank ℚ (AdjoinRoot f) = 2 := by
+    rw [(AdjoinRoot.powerBasis hf0).finrank, AdjoinRoot.powerBasis_dim, hfdeg]
+  let L : (AdjoinRoot f × AdjoinRoot f) →ₗ[ℚ] (Fin 2 → ℂ) :=
+    (θ.toLinearMap.smulRight ![τ, 1]).coprod (θ.toLinearMap.smulRight (wvec τ))
+  have hL : ∀ a a', L (a, a') = θ a • ![τ, 1] + θ a' • wvec τ := fun a a' => rfl
+  have hLinj : Function.Injective L := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    rintro ⟨a, a'⟩ hab
+    rw [hL] at hab
+    have := LinearIndependent.pair_iff.mp (vw_li hτ') (θ a) (θ a') hab
+    simp only [Prod.mk_eq_zero]
+    exact ⟨hθinj (by rw [this.1, map_zero]), hθinj (by rw [this.2, map_zero])⟩
+  have hactinj : Function.Injective (actV ![τ, 1]) := fun x y h => act_inj hv h
+  have hrangeEq : LinearMap.range L = LinearMap.range (actV ![τ, 1]) := by
+    apply Submodule.eq_of_le_of_finrank_eq
+    · rintro _ ⟨⟨a, a'⟩, rfl⟩
+      obtain ⟨x, hx⟩ := hP3 a a'
+      exact ⟨x, by rw [hL, hx]; rfl⟩
+    · rw [LinearMap.finrank_range_of_inj hLinj, LinearMap.finrank_range_of_inj hactinj,
+        Module.finrank_prod, hfrAR, QuaternionAlgebra.finrank_eq_four]
+  have hVB : ∀ x : B, ∃ a a' : AdjoinRoot f, act x ![τ, 1] = θ a • ![τ, 1] + θ a' • wvec τ := by
+    intro x
+    have : act x ![τ, 1] ∈ LinearMap.range L := by rw [hrangeEq]; exact ⟨x, rfl⟩
+    obtain ⟨⟨a, a'⟩, hab⟩ := this
+    exact ⟨a, a', by rw [← hL, hab]⟩
+  let TM := LinearMap.toMatrixAlgEquiv (bvw hτ')
+  let θM : Matrix (Fin 2) (Fin 2) (AdjoinRoot f) →+* Matrix (Fin 2) (Fin 2) ℂ :=
+    θ.toRingHom.mapMatrix
+  have hθM : ∀ (X : Matrix (Fin 2) (Fin 2) (AdjoinRoot f)) i j, θM X i j = θ (X i j) := fun X i j => rfl
+  have hθMinj : Function.Injective θM := fun X Y h => Matrix.ext fun i j => hθinj (by
+    rw [← hθM, ← hθM, h])
+  have hcoord : ∀ x : B, ∀ i, ∃ r : AdjoinRoot f, θ r = (bvw hτ').repr (act x ![τ, 1]) i := by
+    intro x i
+    obtain ⟨a, a', h⟩ := hVB x
+    have := repr_comb hτ' (θ a) (θ a')
+    fin_cases i
+    · exact ⟨a, by rw [h]; exact this.1.symm⟩
+    · exact ⟨a', by rw [h]; exact this.2.symm⟩
+  have hbj : ∀ j : Fin 2, ∃ x : B, bvw hτ' j = act x ![τ, 1] := by
+    intro j
+    fin_cases j
+    · exact ⟨1, by rw [act_one]; exact bvw_zero hτ'⟩
+    · exact ⟨BPAnalytic.QM.oBasis 1, bvw_one hτ'⟩
+  obtain ⟨Ψ, hΨ⟩ := exists_lift (TM.toRingEquiv.toRingHom.comp g0) θM hθMinj (fun m => by
+    have hpres := presB_of_lattice ((hrange (g0 m)).2 ⟨m, rfl⟩)
+    have : ∀ i j, ∃ r, θ r = TM (g0 m) i j := by
+      intro i j
+      obtain ⟨x, hx⟩ := hbj j
+      obtain ⟨y, hy⟩ := hpres x
+      obtain ⟨r, hr⟩ := hcoord y i
+      refine ⟨r, ?_⟩
+      rw [hr]
+      show _ = (LinearMap.toMatrixAlgEquiv (bvw hτ')) (g0 m) i j
+      rw [LinearMap.toMatrixAlgEquiv_apply, hx, hy]
+    choose R hR using this
+    exact ⟨Matrix.of R, Matrix.ext fun i j => by rw [hθM]; exact hR i j⟩)
+  refine end0_equiv Ψ (fun a a' h => hg0 (TM.injective ?_)) (fun Nm => ?_)
+  · have h1 := hΨ a
+    have h2 := hΨ a'
+    rw [h] at h1
+    exact h1.symm.trans h2
+  · let Ml := TM.symm (θM Nm)
+    have hMl : ∀ i j, (bvw hτ').repr (Ml (bvw hτ' j)) i = θ (Nm i j) := by
+      intro i j
+      rw [← LinearMap.toMatrixAlgEquiv_apply]
+      show TM Ml i j = _
+      rw [TM.apply_symm_apply, hθM]
+    have hMlb : ∀ j, Ml (bvw hτ' j) = θ (Nm 0 j) • ![τ, 1] + θ (Nm 1 j) • wvec τ := by
+      intro j
+      rw [decomp hτ' (Ml (bvw hτ' j)), hMl, hMl]
+    have e0 : Ml ![τ, 1] = θ (Nm 0 0) • ![τ, 1] + θ (Nm 1 0) • wvec τ := by
+      rw [← hMlb 0, bvw_zero hτ']
+    have e1 : Ml (wvec τ) = θ (Nm 0 1) • ![τ, 1] + θ (Nm 1 1) • wvec τ := by
+      rw [← hMlb 1, bvw_one hτ']
+    have hpres : ∀ x : B, ∃ y : B, Ml (act x ![τ, 1]) = act y ![τ, 1] := by
+      intro x
+      obtain ⟨a, a', h⟩ := hVB x
+      obtain ⟨y, hy⟩ := hP3 (a * Nm 0 0 + a' * Nm 0 1) (a * Nm 1 0 + a' * Nm 1 1)
+      refine ⟨y, ?_⟩
+      rw [h, ← hy, map_add, map_smul, map_smul, e0, e1]
+      simp only [map_add, map_mul]
+      module
+    obtain ⟨n, hn, hnM⟩ := denom hpres
+    obtain ⟨m, hm⟩ := (hrange _).1 hnM
+    refine ⟨n, hn, m, hθMinj ?_⟩
+    rw [hΨ]
+    show TM (g0 m) = θM ((n : ℚ) • Nm)
+    rw [hm, map_smul, TM.apply_symm_apply]
+    ext i j
+    rw [hθM, Matrix.smul_apply, Matrix.smul_apply, hθM, map_smul]
+    simp [Rat.smul_def]
+
 end HDec.QMLattice
 
