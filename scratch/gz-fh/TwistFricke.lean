@@ -227,6 +227,28 @@ theorem upperRightHom_mul_frickeGL (N r : ℕ) [NeZero N] [NeZero r] [NeZero (N 
     | linear_combination (r : ℝ) * hR
     | linear_combination hR
 
+theorem det_mapGL_pos (γ : SL(2, ℤ)) :
+    0 < ((mapGL ℝ γ : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ).det := by
+  rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix, Matrix.SpecialLinearGroup.det_coe]
+  norm_num
+
+theorem det_upperRightHom_pos (x : ℝ) :
+    0 < ((upperRightHom x : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ).det := by
+  simp [Matrix.GeneralLinearGroup.upperRightHom_apply, Matrix.det_fin_two]
+
+/-- **One term of the twist under `W_{N r²}`.** -/
+theorem slash_twist_term (f : Newform N 2) (hχ : f.χ = 1) (r : ℕ) [NeZero r]
+    [NeZero (N * r * r)] (a b d₀ : ℤ) (h : (r : ℤ) * d₀ - N * a * b = 1) :
+    (⇑f.toCuspForm ∣[(2 : ℤ)] (upperRightHom ((a : ℝ) / r) : GL (Fin 2) ℝ)) ∣[(2 : ℤ)]
+        TauCeti.frickeGL ℝ (N * r * r) =
+      f.frickeSign hχ • (⇑f.toCuspForm ∣[(2 : ℤ)] (upperRightHom ((b : ℝ) / r) : GL (Fin 2) ℝ)) := by
+  rw [← SlashAction.slash_mul, upperRightHom_mul_frickeGL N r a b d₀ h, SlashAction.slash_mul,
+    SlashAction.slash_mul, SlashAction.slash_mul, ModularForm.slash_scalar]
+  rw [show ((2 : ℤ) - 2) = 0 by norm_num, zpow_zero, one_smul, slash_frickeGL_newform f hχ,
+    ModularForm.smul_slash_of_det_pos _ (det_mapGL_pos _),
+    slash_gamma0_newform f hχ _ (twistGamma_mem N r a b d₀ h),
+    ModularForm.smul_slash_of_det_pos _ (det_upperRightHom_pos _)]
+
 end Slash
 
 end ZInQ.GZFH
