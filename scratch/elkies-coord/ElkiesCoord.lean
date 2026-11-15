@@ -374,6 +374,220 @@ theorem conicMapL_comp_of_signs (hT : φU eT = t.f) (hTg : φV eT = t.g)
 
 end Charts
 
+/-! ## Sign changes from `ℚ(X)^W = ℚ(t)` -/
+
+section Fixed
+
+theorem not_mem_closure {F : Type*} [Field F] (θ : F ≃+* F) (τ x : F) (hθτ : θ τ = τ)
+    (hx : θ x = -x) (hx0 : x ≠ 0) (h2 : (2 : F) ≠ 0) : x ∉ Subfield.closure {τ} := by
+  intro hmem
+  have hle : Subfield.closure {τ} ≤ RingHom.eqLocusField (θ : F →+* F) (RingHom.id F) := by
+    rw [Subfield.closure_le, Set.singleton_subset_iff]
+    exact hθτ
+  have h' : θ x = x := hle hmem
+  rw [hx] at h'
+  have : (2 : F) * x = 0 := by linear_combination -h'
+  exact hx0 ((mul_eq_zero.mp this).resolve_left h2)
+
+/-- If the fixed field of a family of field endomorphisms is `closure {τ}` and an automorphism `θ`
+fixing `τ` negates `x ≠ 0`, while each member of the family sends `x` to `±x`, then some member
+sends `x` to `−x`. -/
+theorem exists_neg {F : Type*} [Field F] {ι : Type*} (W : Set ι) (σ : ι → F →+* F) (τ x : F)
+    (hfix : {φ : F | ∀ g ∈ W, σ g φ = φ} = Subfield.closure {τ})
+    (hpm : ∀ g ∈ W, σ g x = x ∨ σ g x = -x) (θ : F ≃+* F) (hθτ : θ τ = τ) (hx : θ x = -x)
+    (hx0 : x ≠ 0) (h2 : (2 : F) ≠ 0) : ∃ g ∈ W, σ g x = -x := by
+  by_contra hne
+  simp only [not_exists, not_and] at hne
+  have hm : x ∈ {φ : F | ∀ g ∈ W, σ g φ = φ} := fun g hg => (hpm g hg).resolve_right (hne g hg)
+  rw [hfix] at hm
+  exact not_mem_closure θ τ x hθτ hx hx0 h2 hm
+
+theorem sq_pm {F : Type*} [Field F] (σ : F →+* F) (x y : F) (hy : σ y = y) (h : x ^ 2 = y) :
+    σ x = x ∨ σ x = -x := by
+  have : (σ x) ^ 2 = x ^ 2 := by rw [← map_pow, h, hy]
+  exact sq_eq_sq_iff_eq_or_eq_neg.mp this
+
+theorem pm_unit {F : Type*} [Field F] (a b : F) (h : a = b ∨ a = -b) :
+    ∃ c : ℤˣ, a = ((c : ℤ) : F) * b := by
+  rcases h with h | h
+  · exact ⟨1, by simp [h]⟩
+  · exact ⟨-1, by simp [h]⟩
+
+/-- The four sign pairs from three generators, in a set closed under products. -/
+theorem all_signs (P : ℤˣ → ℤˣ → Prop) (hmul : ∀ c d c' d', P c d → P c' d' → P (c * c') (d * d'))
+    (h1 : ∃ d, P (-1) d) (h2 : ∃ c, P c (-1)) (h3 : ∃ c d, c * d = -1 ∧ P c d) : ∀ c d, P c d := by
+  obtain ⟨d1, p1⟩ := h1
+  obtain ⟨c2, p2⟩ := h2
+  obtain ⟨c3, d3, hcd, p3⟩ := h3
+  have key : P (-1) 1 ∧ P 1 (-1) := by
+    rcases Int.units_eq_one_or c3 with rfl | rfl <;> rcases Int.units_eq_one_or d3 with rfl | rfl
+    · exact absurd hcd (by decide)
+    · refine ⟨?_, p3⟩
+      rcases Int.units_eq_one_or d1 with rfl | rfl
+      · exact p1
+      · simpa using hmul _ _ _ _ p1 p3
+    · refine ⟨p3, ?_⟩
+      rcases Int.units_eq_one_or c2 with rfl | rfl
+      · exact p2
+      · simpa using hmul _ _ _ _ p2 p3
+    · exact absurd hcd (by decide)
+  obtain ⟨pa, pb⟩ := key
+  intro c d
+  rcases Int.units_eq_one_or c with rfl | rfl <;> rcases Int.units_eq_one_or d with rfl | rfl
+  · simpa using hmul _ _ _ _ pa pa
+  · exact pb
+  · exact pa
+  · simpa using hmul _ _ _ _ pa pb
+
+theorem signAct_signAct (c d c' d' : ℤˣ) (p : HDec.X6Kummer.ConicPt) :
+    signAct c' d' (signAct c d p) = signAct (c * c') (d * d') p := by
+  rcases p with p | b
+  · simp only [signAct]
+    congr 1
+    apply Subtype.ext
+    simp only [Units.val_mul, Int.cast_mul]
+    ext <;> simp only <;> ring
+  · simp only [signAct]
+    congr 1
+    apply Subtype.ext
+    simp only [Units.val_mul, Int.cast_mul]
+    ring
+
+end Fixed
+
+/-! ## The automorphism of `ℚ(X)` induced by a sign automorphism of Elkies' ring -/
+
+section Theta
+
+open X6Glue
+
+variable {X : Over (Spec (CommRingCat.of ℚ))} {t : ToP1 X.left} [IsIntegral X.left]
+  (φU : ElkiesRing ≃+* Γ(X.left, t.U)) (hU : IsAffineOpen t.U) (hηU : genericPoint X.left ∈ t.U)
+
+/-- The automorphism of `ℚ(X) = Frac Γ(t.U)` induced by an automorphism of `Γ(t.U) ≅ ElkiesRing`. -/
+noncomputable def thetaOf (e : ElkiesRing ≃+* ElkiesRing) :
+    X.left.functionField ≃+* X.left.functionField :=
+  haveI : Nonempty t.U := ⟨⟨_, hηU⟩⟩
+  haveI := functionField_isFractionRing_of_isAffineOpen X.left t.U hU
+  IsFractionRing.ringEquivOfRingEquiv (A := Γ(X.left, t.U)) (B := Γ(X.left, t.U))
+    (φU.symm.trans (e.trans φU))
+
+theorem thetaOf_jU (e : ElkiesRing ≃+* ElkiesRing) (a : ElkiesRing) :
+    thetaOf φU hU hηU e (jU φU hηU a) = jU φU hηU (e a) := by
+  have : Nonempty t.U := ⟨⟨_, hηU⟩⟩
+  have := functionField_isFractionRing_of_isAffineOpen X.left t.U hU
+  have := IsFractionRing.ringEquivOfRingEquiv_algebraMap (K := X.left.functionField)
+    (L := X.left.functionField) (φU.symm.trans (e.trans φU)) (φU a)
+  have h2 : (φU.symm.trans (e.trans φU)) (φU a) = φU (e a) := by simp
+  rw [h2] at this
+  exact this
+
+end Theta
+
+/-! ## Values of `t` and sign changes -/
+
+section Values
+
+open X6Glue
+
+variable {X : Over (Spec (CommRingCat.of ℚ))} {t : ToP1 X.left}
+  {φU : ElkiesRing ≃+* Γ(X.left, t.U)} {φV : ElkiesRing ≃+* Γ(X.left, t.V)}
+
+theorem val_eq_of_signAct (hT : φU eT = t.f) (hTg : φV eT = t.g) (y y' : Spec (CommRingCat.of Qbar) ⟶ X.left)
+    (c d : ℤˣ) (h : conicMapL φU φV hTg y' = signAct c d (conicMapL φU φV hTg y)) :
+    t.val y = t.val y' := by
+  rcases hy : conicMapL φU φV hTg y with p | b
+  · rw [hy] at h
+    simp only [signAct] at h
+    rw [val_of_inl φU φV hTg hT y p hy, val_of_inl φU φV hTg hT y' _ h]
+    congr 1
+    simp only
+    have hc := unit_cast_sq (R := Qbar) c
+    linear_combination (p.1.1 ^ 2) * hc
+  · rw [hy] at h
+    simp only [signAct] at h
+    rw [val_of_inr φU φV hTg y b hy, val_of_inr φU φV hTg y' _ h]
+
+theorem signAct_of_val (hT : φU eT = t.f) (hTg : φV eT = t.g) (y y' : Spec (CommRingCat.of Qbar) ⟶ X.left)
+    (h : t.val y = t.val y') :
+    ∃ c d : ℤˣ, conicMapL φU φV hTg y' = signAct c d (conicMapL φU φV hTg y) := by
+  rcases hy : conicMapL φU φV hTg y with p | b <;> rcases hy' : conicMapL φU φV hTg y' with p' | b'
+  · rw [val_of_inl φU φV hTg hT y p hy, val_of_inl φU φV hTg hT y' p' hy'] at h
+    have h1 : p'.1.1 ^ 2 = p.1.1 ^ 2 := by
+      have := Option.some_injective _ h
+      linear_combination this
+    have h2 : p'.1.2 ^ 2 = p.1.2 ^ 2 := by
+      linear_combination p'.2 - p.2 - 3 * h1
+    obtain ⟨c, hc⟩ := pm_unit _ _ (sq_eq_sq_iff_eq_or_eq_neg.mp h1)
+    obtain ⟨d, hd⟩ := pm_unit _ _ (sq_eq_sq_iff_eq_or_eq_neg.mp h2)
+    refine ⟨c, d, ?_⟩
+    simp only [signAct]
+    congr 1
+    apply Subtype.ext
+    ext
+    · exact hc
+    · exact hd
+  · rw [val_of_inl φU φV hTg hT y p hy, val_of_inr φU φV hTg y' b' hy'] at h
+    exact absurd h (OnePoint.coe_ne_infty _)
+  · rw [val_of_inr φU φV hTg y b hy, val_of_inl φU φV hTg hT y' p' hy'] at h
+    exact absurd h.symm (OnePoint.coe_ne_infty _)
+  · have h1 : b'.1 ^ 2 = b.1 ^ 2 := by rw [b.2, b'.2]
+    obtain ⟨d, hd⟩ := pm_unit _ _ (sq_eq_sq_iff_eq_or_eq_neg.mp h1)
+    refine ⟨1, d, ?_⟩
+    simp only [signAct]
+    congr 1
+    apply Subtype.ext
+    simpa using hd
+
+end Values
+
+/-! ## Twists compose -/
+
+section Twist
+
+variable {K : Type} [Field K]
+
+/-- Twisting both sides of an isomorphism of QM pairs by the same `β`. -/
+def twistIso {A A' : PkgI3.AbVar K} {q : QMStr A} {q' : QMStr A'} (e : QMIso q q')
+    (β : _root_.LeafQM.O ≃+* _root_.LeafQM.O) : QMIso (q.twist β) (q'.twist β) where
+  φ := e.φ
+  ψ := e.ψ
+  left := e.left
+  right := e.right
+  equivariant a := e.equivariant (β a)
+
+/-- `(ι ∘ α) ∘ β = ι ∘ (α ∘ β)`. -/
+def twistComp {A A' : PkgI3.AbVar K} {q : QMStr A} {q' : QMStr A'}
+    (α β : _root_.LeafQM.O ≃+* _root_.LeafQM.O) (e : QMIso ((q.twist α).twist β) q') :
+    QMIso (q.twist (β.trans α)) q' where
+  φ := e.φ
+  ψ := e.ψ
+  left := e.left
+  right := e.right
+  equivariant a := e.equivariant a
+
+end Twist
+
+section Orbit
+
+variable {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y} {X : Over (Spec (CommRingCat.of ℚ))}
+  {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X}
+
+/-- The `W`-orbit relation on `X₆(ℚ̄)` is transitive (through the moduli step `orbit_iff_twist`). -/
+theorem orbit_trans (h6 : X6Props Y Φ X Ψ fY) {x x₁ x₂ : fieldPt Qbar ⟶ X}
+    (h01 : ∃ g ∈ ElkiesX6Star.atkinLehnerW X Ψ, x ≫ g.hom = x₁)
+    (h12 : ∃ g ∈ ElkiesX6Star.atkinLehnerW X Ψ, x₁ ≫ g.hom = x₂) :
+    ∃ g ∈ ElkiesX6Star.atkinLehnerW X Ψ, x ≫ g.hom = x₂ := by
+  have hP : Ψ x = Quotient.mk _ (Ψ x).out := (Quotient.out_eq _).symm
+  have hQ1 : Ψ x₁ = Quotient.mk _ (Ψ x₁).out := (Quotient.out_eq _).symm
+  have hQ2 : Ψ x₂ = Quotient.mk _ (Ψ x₂).out := (Quotient.out_eq _).symm
+  obtain ⟨α, ⟨e1⟩⟩ := (ElkiesX6Star.orbit_iff_twist h6 x x₁ _ _ hP hQ1).mp h01
+  obtain ⟨β, ⟨e2⟩⟩ := (ElkiesX6Star.orbit_iff_twist h6 x₁ x₂ _ _ hQ1 hQ2).mp h12
+  exact (ElkiesX6Star.orbit_iff_twist h6 x x₂ _ _ hP hQ2).mpr
+    ⟨β.trans α, ⟨twistComp α β ((twistIso e1 β).trans e2)⟩⟩
+
+end Orbit
+
 /-- `ℚ(X₆)^W`: the rational functions on `X₆` fixed by every `g ∈ W` (`g^*φ = φ`). -/
 def fixedByW {X : Over (Spec (CommRingCat.of ℚ))} [IsIntegral X.left]
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) : Set X.left.functionField :=
