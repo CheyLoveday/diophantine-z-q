@@ -424,4 +424,201 @@ theorem Fq_rec {τ : ℂ} (hτ : 0 < τ.im) :
   field_simp
   ring
 
+/-! ## `F = O(e^{−π Im σ})` -/
+
+lemma logDeriv_hq {σ : ℂ} (hσ : 0 < σ.im) :
+    deriv hq σ / hq σ = π * I / 4 + deriv thT σ / thT σ - deriv thetaThree σ / thetaThree σ := by
+  have hT := thT_ne_zero hσ
+  have h3 := thetaThree_ne_zero hσ
+  have hE0 := Complex.exp_ne_zero (π * I * σ / 4)
+  have hE : HasDerivAt (fun s : ℂ => cexp (π * I * s / 4))
+      (cexp (π * I * σ / 4) * (π * I * 1 / 4)) σ :=
+    (((hasDerivAt_id σ).const_mul (π * I : ℂ)).div_const 4).cexp
+  have hd := (hE.mul (differentiableAt_thT hσ).hasDerivAt).div
+    (differentiableAt_thetaThree' hσ).hasDerivAt h3
+  have : deriv hq σ = _ := hd.deriv
+  simp only [Pi.mul_apply] at this
+  rw [this]
+  simp only [hq, thetaTwo_eq]
+  field_simp
+
+lemma norm_one_sub_pow_four_le {x : ℂ} (hx : ‖x - 1‖ ≤ 1) : ‖1 - x ^ 4‖ ≤ 15 * ‖x - 1‖ := by
+  have hx2 : ‖x‖ ≤ 2 := by
+    calc ‖x‖ = ‖(x - 1) + 1‖ := by ring_nf
+      _ ≤ ‖x - 1‖ + ‖(1 : ℂ)‖ := norm_add_le _ _
+      _ ≤ 2 := by rw [norm_one]; linarith
+  have e3 : ‖x ^ 3‖ ≤ 8 := by
+    rw [norm_pow]
+    calc ‖x‖ ^ 3 ≤ 2 ^ 3 := pow_le_pow_left₀ (norm_nonneg _) hx2 3
+      _ = 8 := by norm_num
+  have e2 : ‖x ^ 2‖ ≤ 4 := by
+    rw [norm_pow]
+    calc ‖x‖ ^ 2 ≤ 2 ^ 2 := pow_le_pow_left₀ (norm_nonneg _) hx2 2
+      _ = 4 := by norm_num
+  have hp : ‖x ^ 3 + x ^ 2 + x + 1‖ ≤ 15 := by
+    linarith [norm_add_le (x ^ 3 + x ^ 2 + x) 1, norm_add_le (x ^ 3 + x ^ 2) x,
+      norm_add_le (x ^ 3) (x ^ 2), norm_one (α := ℂ)]
+  rw [show 1 - x ^ 4 = -((x - 1) * (x ^ 3 + x ^ 2 + x + 1)) by ring, norm_neg, norm_mul]
+  calc ‖x - 1‖ * ‖x ^ 3 + x ^ 2 + x + 1‖ ≤ ‖x - 1‖ * 15 :=
+        mul_le_mul_of_nonneg_left hp (norm_nonneg _)
+    _ = 15 * ‖x - 1‖ := mul_comm _ _
+
+lemma one_le_norm_thT {σ : ℂ} (hσ : 1 ≤ σ.im) : 1 ≤ ‖thT σ‖ := by
+  have h := norm_thT_sub_two_le hσ
+  have hq := exp_neg_pi_le_quarter hσ
+  have : ‖(2 : ℂ)‖ ≤ ‖thT σ‖ + ‖thT σ - 2‖ := by
+    calc ‖(2 : ℂ)‖ = ‖thT σ - (thT σ - 2)‖ := by ring_nf
+      _ ≤ _ := norm_sub_le _ _
+  rw [Complex.norm_two] at this
+  linarith
+
+lemma quarter_le_norm_thetaThree {σ : ℂ} (hσ : 1 ≤ σ.im) : 1 / 4 ≤ ‖thetaThree σ‖ := by
+  have h := norm_thetaThree_sub_one_le hσ
+  have hq := exp_neg_pi_le_quarter hσ
+  have : ‖(1 : ℂ)‖ ≤ ‖thetaThree σ‖ + ‖thetaThree σ - 1‖ := by
+    calc ‖(1 : ℂ)‖ = ‖thetaThree σ - (thetaThree σ - 1)‖ := by ring_nf
+      _ ≤ _ := norm_sub_le _ _
+  rw [norm_one] at this
+  linarith
+
+lemma norm_thetaFour_le {σ : ℂ} (hσ : 1 ≤ σ.im) : ‖thetaFour σ‖ ≤ 7 / 4 := by
+  have h := norm_thetaFour_sub_one_le hσ
+  have hq := exp_neg_pi_le_quarter hσ
+  have : ‖thetaFour σ‖ ≤ ‖thetaFour σ - 1‖ + ‖(1 : ℂ)‖ := by
+    calc ‖thetaFour σ‖ = ‖(thetaFour σ - 1) + 1‖ := by ring_nf
+      _ ≤ _ := norm_add_le _ _
+  rw [norm_one] at this
+  linarith
+
+/-- The constant in `‖F σ‖ ≤ C e^{−π Im σ}`. -/
+def Cq : ℝ := 15 * rexp π + 12 * π
+
+theorem norm_Fq_le {σ : ℂ} (hσ : 2 ≤ σ.im) : ‖Fq σ‖ ≤ Cq * rexp (-π * σ.im) := by
+  have hσ0 : 0 < σ.im := by linarith
+  have hσ1 : 1 ≤ σ.im := by linarith
+  have hr0 : 0 ≤ rexp (-π * σ.im) := (Real.exp_pos _).le
+  have hrq : rexp (-π * σ.im) ≤ 1 / 4 := exp_neg_pi_le_quarter hσ1
+  have h4 := norm_thetaFour_sub_one_le hσ1
+  have dT := norm_deriv_le_of_bound (fun z hz => differentiableAt_thT hz)
+    (fun z hz => norm_thT_sub_two_le hz) hσ
+  have d3 := norm_deriv_le_of_bound (fun z hz => differentiableAt_thetaThree' hz)
+    (fun z hz => norm_thetaThree_sub_one_le hz) hσ
+  have lT := one_le_norm_thT hσ1
+  have l3 := quarter_le_norm_thetaThree hσ1
+  have q4 := norm_one_sub_pow_four_le (by linarith : ‖thetaFour σ - 1‖ ≤ 1)
+  have hπ := Real.pi_pos
+  have heπ := Real.exp_pos π
+  rw [Fq, logDeriv_hq hσ0]
+  have eq : π * I / 4 + deriv thT σ / thT σ - deriv thetaThree σ / thetaThree σ -
+      π * I / 4 * thetaFour σ ^ 4 = deriv thT σ / thT σ - deriv thetaThree σ / thetaThree σ +
+      π * I / 4 * (1 - thetaFour σ ^ 4) := by ring
+  rw [eq]
+  have n1 : ‖deriv thT σ / thT σ‖ ≤ 3 * rexp π * rexp (-π * σ.im) := by
+    rw [norm_div]
+    calc ‖deriv thT σ‖ / ‖thT σ‖ ≤ ‖deriv thT σ‖ / 1 :=
+          div_le_div_of_nonneg_left (norm_nonneg _) one_pos lT
+      _ ≤ _ := by rw [div_one]; exact dT
+  have n2 : ‖deriv thetaThree σ / thetaThree σ‖ ≤ 4 * (3 * rexp π * rexp (-π * σ.im)) := by
+    rw [norm_div]
+    calc ‖deriv thetaThree σ‖ / ‖thetaThree σ‖ ≤ ‖deriv thetaThree σ‖ / (1 / 4) :=
+          div_le_div_of_nonneg_left (norm_nonneg _) (by norm_num) l3
+      _ = 4 * ‖deriv thetaThree σ‖ := by ring
+      _ ≤ _ := by linarith
+  have n3 : ‖π * I / 4 * (1 - thetaFour σ ^ 4)‖ ≤ π / 4 * (15 * (3 * rexp (-π * σ.im))) := by
+    rw [norm_mul]
+    have : ‖(π : ℂ) * I / 4‖ = π / 4 := by
+      rw [norm_div, norm_mul, Complex.norm_I, mul_one, Complex.norm_real,
+        Real.norm_of_nonneg hπ.le]
+      norm_num
+    rw [this]
+    gcongr
+    linarith
+  have ns := norm_sub_le (deriv thT σ / thT σ) (deriv thetaThree σ / thetaThree σ)
+  calc ‖deriv thT σ / thT σ - deriv thetaThree σ / thetaThree σ +
+        π * I / 4 * (1 - thetaFour σ ^ 4)‖
+      ≤ ‖deriv thT σ / thT σ‖ + ‖deriv thetaThree σ / thetaThree σ‖ +
+        ‖π * I / 4 * (1 - thetaFour σ ^ 4)‖ :=
+        (norm_add_le _ _).trans (by linarith)
+    _ ≤ 3 * rexp π * rexp (-π * σ.im) + 4 * (3 * rexp π * rexp (-π * σ.im)) +
+        π / 4 * (15 * (3 * rexp (-π * σ.im))) := by linarith
+    _ ≤ Cq * rexp (-π * σ.im) := by
+        unfold Cq
+        nlinarith [mul_nonneg hπ.le hr0]
+
+/-! ## `F = 0` -/
+
+lemma exp_neg_pi_le_small {t : ℝ} (ht : 43 ≤ t) : rexp (-π * t) ≤ 1 / 128 := by
+  have h3 := Real.pi_gt_three
+  have h1 : 128 ≤ rexp (π * t) := by
+    nlinarith [Real.add_one_le_exp (π * t), mul_le_mul h3.le ht (by norm_num) Real.pi_pos.le]
+  rw [show -π * t = -(π * t) by ring, Real.exp_neg, one_div]
+  exact inv_anti₀ (by norm_num) h1
+
+lemma norm_rho_le {σ : ℂ} (hσ : 1 ≤ σ.im) : ‖thetaFour σ ^ 2 / thetaThree σ ^ 2‖ ≤ 64 := by
+  have a := pow_le_pow_left₀ (norm_nonneg _) (norm_thetaFour_le hσ) 2
+  have b := pow_le_pow_left₀ (by norm_num) (quarter_le_norm_thetaThree hσ) 2
+  have hb : 0 < ‖thetaThree σ‖ ^ 2 := lt_of_lt_of_le (by norm_num) b
+  rw [norm_div, norm_pow, norm_pow, div_le_iff₀ hb]
+  nlinarith
+
+theorem Fq_eq_zero_of_large {σ : ℂ} (hσ : 43 ≤ σ.im) : Fq σ = 0 := by
+  have hC : 0 ≤ Cq := by unfold Cq; positivity
+  have claim : ∀ k : ℕ, ∀ s : ℂ, 43 ≤ s.im →
+      ‖Fq s‖ ≤ Cq * rexp (-π * s.im) * (1 / 2) ^ k := by
+    intro k
+    induction k with
+    | zero => intro s hs; simpa using norm_Fq_le (by linarith : 2 ≤ s.im)
+    | succ k ih =>
+      intro s hs
+      have hs0 : 0 < s.im := by linarith
+      have him : (2 * s).im = 2 * s.im := by simp
+      have h2s : 43 ≤ (2 * s).im := by rw [him]; linarith
+      have := ih _ h2s
+      rw [Fq_rec hs0, norm_mul]
+      have hρ := norm_rho_le (by linarith : 1 ≤ s.im)
+      rw [him, show -π * (2 * s.im) = -π * s.im + -π * s.im by ring, Real.exp_add] at this
+      have hsm := exp_neg_pi_le_small hs
+      have hr0 := (Real.exp_pos (-π * s.im)).le
+      have hp : 0 ≤ Cq * rexp (-π * s.im) * (1 / 2) ^ k := by positivity
+      calc ‖thetaFour s ^ 2 / thetaThree s ^ 2‖ * ‖Fq (2 * s)‖
+          ≤ 64 * (Cq * (rexp (-π * s.im) * rexp (-π * s.im)) * (1 / 2) ^ k) :=
+            mul_le_mul hρ this (norm_nonneg _) (by norm_num)
+        _ = (64 * rexp (-π * s.im)) * (Cq * rexp (-π * s.im) * (1 / 2) ^ k) := by ring
+        _ ≤ (1 / 2) * (Cq * rexp (-π * s.im) * (1 / 2) ^ k) :=
+            mul_le_mul_of_nonneg_right (by linarith) hp
+        _ = Cq * rexp (-π * s.im) * (1 / 2) ^ (k + 1) := by ring
+  have ht : Tendsto (fun k : ℕ => Cq * rexp (-π * σ.im) * (1 / 2) ^ k) atTop (𝓝 0) := by
+    have := (tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num : (0 : ℝ) ≤ 1 / 2)
+      (by norm_num)).const_mul (Cq * rexp (-π * σ.im))
+    rwa [mul_zero] at this
+  exact norm_le_zero_iff.mp (ge_of_tendsto' ht (fun k => claim k σ hσ))
+
+theorem Fq_eq_zero {τ : ℂ} (hτ : 0 < τ.im) : Fq τ = 0 := by
+  by_contra hne
+  exact not_of_iterate (P := fun s => Fq s ≠ 0)
+    (fun s hs h h2 => h (by rw [Fq_rec hs, h2, mul_zero])) 43
+    (fun s hs h => h (Fq_eq_zero_of_large hs)) hτ hne
+
+/-- **Jacobi's derivative formula** `dλ/dt = πi λ θ₄⁴`, `λ = θ₂⁴/θ₃⁴` (statement of
+`ZInQ.GZWeil.JacobiLambdaDeriv`). -/
+theorem jacobiLambdaDeriv' : ∀ t : ℂ, 0 < t.im → HasDerivAt
+    (fun s => thetaTwo s ^ 4 / thetaThree s ^ 4)
+    (π * I * (thetaTwo t ^ 4 / thetaThree t ^ 4) * thetaFour t ^ 4) t := by
+  intro t ht
+  have hF := Fq_eq_zero ht
+  have hs0 := hq_ne_zero ht
+  have ha : deriv hq t = π * I / 4 * hq t * thetaFour t ^ 4 := by
+    have h1 := sub_eq_zero.mp hF
+    rw [div_eq_iff hs0] at h1
+    rw [h1]; ring
+  have hfun : (fun s => thetaTwo s ^ 4 / thetaThree s ^ 4) = fun s => hq s ^ 4 :=
+    funext fun s => (div_pow _ _ _).symm
+  rw [hfun]
+  have := (differentiableAt_hq ht).hasDerivAt.pow 4
+  convert this using 1
+  rw [ha]
+  simp only [hq]
+  push_cast
+  ring
+
 end ZInQ.JacobiLambda
