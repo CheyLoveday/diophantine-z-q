@@ -698,5 +698,73 @@ theorem eq_act_of_trivial {τ : ℂ} (hτ : τ.im ≠ 0)
     rw [QuaternionAlgebra.finrank_eq_four] at this
     omega
 
+/-- `ι` as a ring hom `B → End_ℂ(ℂ²)`. -/
+def actHom : B →+* Module.End ℂ (Fin 2 → ℂ) where
+  toFun x := Matrix.toLin' (FibreQMNorm.qmMatB x)
+  map_one' := by rw [QMSplit.CNO.qmMatB_one, Matrix.toLin'_one]; rfl
+  map_mul' x y := by rw [QMSplit.CNO.qmMatB_mul, Matrix.toLin'_mul]; rfl
+  map_zero' := by rw [QMSplit.CNO.qmMatB_zero, map_zero]
+  map_add' x y := by rw [QMSplit.CNO.qmMatB_add, map_add]
+
+theorem actHom_apply (x : B) (z : Fin 2 → ℂ) : actHom x z = act x z := by
+  simp [actHom, act, Matrix.toLin'_apply]
+
+theorem actHom_inj : Function.Injective actHom := fun x y h =>
+  act_inj (v := ![1, 0]) (fun h0 => by simpa using congrFun h0 0)
+    (by rw [← actHom_apply, ← actHom_apply, h])
+
+theorem actHom_smul (r : ℚ) (x : B) : actHom (r • x) = ((r : ℂ)) • actHom x :=
+  LinearMap.ext fun z => by rw [actHom_apply, act_smul, LinearMap.smul_apply, actHom_apply]
+
+/-- A map preserving `Λ_τ` preserves `ι(B)(τ, 1)ᵀ`. -/
+theorem presB_of_lattice {τ : ℂ} {N : Module.End ℂ (Fin 2 → ℂ)}
+    (hN : ∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) :
+    ∀ x : B, ∃ y : B, N (act x ![τ, 1]) = act y ![τ, 1] := by
+  intro x
+  obtain ⟨d, hd, hdx⟩ := QMSplit.Aut.O_spans (x := x)
+  have h1 : act ((d : ℚ) • x) ![τ, 1] ∈ FibreQMNorm.qmOrbit ![τ, 1] :=
+    (mem_qmOrbit_iff _ _).2 ⟨_, hdx, rfl⟩
+  obtain ⟨o, ho, hoe⟩ := (mem_qmOrbit_iff _ _).1 (hN _ h1)
+  refine ⟨((d : ℚ)⁻¹) • o, ?_⟩
+  rw [act_smul, map_smul] at hoe
+  have hdC : (((d : ℚ)) : ℂ) ≠ 0 := by exact_mod_cast hd
+  rw [act_smul, ← hoe, smul_smul]
+  push_cast
+  rw [inv_mul_cancel₀ (by exact_mod_cast hd), one_smul]
+
+/-- **Clearing denominators**: a map preserving `ι(B)(τ, 1)ᵀ` has a positive multiple preserving
+`Λ_τ = ι(𝒪)(τ, 1)ᵀ`. -/
+theorem denom {τ : ℂ} {N : Module.End ℂ (Fin 2 → ℂ)}
+    (hN : ∀ x : B, ∃ y : B, N (act x ![τ, 1]) = act y ![τ, 1]) :
+    ∃ n : ℕ, n ≠ 0 ∧ ∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1],
+      ((n : ℂ) • N) z ∈ FibreQMNorm.qmOrbit ![τ, 1] := by
+  choose y hy using fun k : Fin 4 => hN (BPAnalytic.QM.oBasis k)
+  choose d hd hdy using fun k : Fin 4 => QMSplit.Aut.O_spans (x := y k)
+  refine ⟨∏ k, d k, Finset.prod_ne_zero_iff.mpr (fun k _ => hd k), ?_⟩
+  have hgen : ∀ k, ((∏ k, d k : ℕ) : ℂ) • N (act (BPAnalytic.QM.oBasis k) ![τ, 1]) ∈
+      FibreQMNorm.qmOrbit ![τ, 1] := by
+    intro k
+    obtain ⟨m, hm⟩ : d k ∣ ∏ j, d j := Finset.dvd_prod_of_mem _ (Finset.mem_univ k)
+    rw [hy k, hm]
+    apply (mem_qmOrbit_iff _ _).2
+    refine ⟨((m : ℤ) : B) * ((d k : ℚ) • y k), LeafQM.O.mul_mem (intCast_mem LeafQM.O m) (hdy k), ?_⟩
+    rw [act_mul, act_smul]
+    have : act ((m : ℤ) : B) (((d k : ℚ) : ℂ) • act (y k) ![τ, 1]) =
+        ((m : ℂ)) • (((d k : ℚ) : ℂ) • act (y k) ![τ, 1]) := by
+      rw [show ((m : ℤ) : B) = algebraMap ℚ B (m : ℚ) by simp, act_algebraMap]
+      push_cast; rfl
+    rw [this, smul_smul]
+    push_cast
+    ring_nf
+  intro z hz
+  unfold FibreQMNorm.qmOrbit at hz ⊢
+  induction hz using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨k, rfl⟩ := hx
+    exact hgen k
+  | zero => simp
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | smul a x _ hx => rw [map_zsmul]; exact Submodule.smul_mem _ a hx
+
 end HDec.QMLattice
 
