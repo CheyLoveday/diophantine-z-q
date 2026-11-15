@@ -42158,3 +42158,22 @@ info: ZInQKernel/OneProof/H/TailZ25.lean:143:0: 'HDec.HSyn.sixContactMin_of_open
 ✔ [12973/12983] Built ZInQKernel.Contrib.OneProof.ThetaModularityM46 (29s)
 ℹ [12974/12983] Built ZInQKernel.OneProof.H.TailZ26 (5.5s)
 info: ZInQKernel/OneProof/H/TailZ26.lean:199:0: 'HDec.HSyn.sixContactMin_of_open20' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12975/12983] Built ZInQKernel.OneProof.H.TailZ27 (4.8s)
+info: ZInQKernel/OneProof/H/TailZ27.lean:131:0: 'HDec.HSyn.sixContactMin_of_open21' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [12976/12983] Built ZInQKernel.Contrib.OneProof.QMLattice (8.0s)
+ℹ [12977/12983] Built ZInQKernel.OneProof.H.TailZ28 (4.8s)
+info: ZInQKernel/OneProof/H/TailZ28.lean:130:0: 'HDec.HSyn.sixContactMin_of_open22' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12978/12983] Built ZInQKernel.OneProof.H.TailZ29 (4.8s)
+info: ZInQKernel/OneProof/H/TailZ29.lean:127:0: 'HDec.HSyn.sixContactMin_of_open23' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12979/12983] Built ZInQKernel.OneProof.H.TailZ30 (4.9s)
+info: ZInQKernel/OneProof/H/TailZ30.lean:80:0: 'HDec.HSyn.sixContactMin_of_open24' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12980/12983] Built ZInQKernel.OneProof.H.TailZ31 (4.6s)
+info: ZInQKernel/OneProof/H/TailZ31.lean:76:0: 'HDec.HSyn.sixContactMin_of_open25' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12981/12983] Built ZInQKernel.OneProof.H.TailZ32 (4.8s)
+info: ZInQKernel/OneProof/H/TailZ32.lean:54:0: 'HDec.HSyn.sixContactMin_of_open26' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12982/12983] Built ZInQKernel.OneProof.H.TailZ33 (4.8s)
+info: ZInQKernel/OneProof/H/TailZ33.lean:128:0: 'HDec.HSyn.sixContactMin_of_open27' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12983/12983] Built ZInQKernel.OneProof.Main (7.2s)
+info: ZInQKernel/OneProof/Main.lean:72:0: 'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (12983 jobs).
+EXIT 0

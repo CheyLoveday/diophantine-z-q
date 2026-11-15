@@ -18,16 +18,22 @@ consequence (from "`t` generates `ℚ(X₆)^W`" to "the fibres of `t` on `X₆(�
 VERIFIED: compiled, standard axioms only.
 
 ```
-DISCHARGES [OpenResearchLeaves<k>.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.ElkiesCoord.elkiesX6StarPrinted_of_functionField
+DISCHARGES [OpenResearchLeaves20.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.ElkiesCoord.elkiesX6StarPrinted_of_functionField
   still assumes: [HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField]
   axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 65 open hypotheses, 1322 theorems checked, 6 discharge one
 ```
 
-(`scratch/elkies-coord/Discharges.lean`, output `scratch/elkies-coord/discharges.txt`; see §6 for the build.)
+(`scratch/elkies-coord/Discharges.lean`, output `scratch/elkies-coord/discharges.txt`. It was run after
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.ElkiesX6StarPrinted`
+(12983 jobs, success; `frozenTarget` uses standard axioms). The other five DISCHARGES lines come from
+contributions already in the tree.)
 
 The autofold dry-run (`scratch/elkies-coord/autofold.json`) reports
 `strict count: 47/11 on 58 -> 48/10 on 58; strictest 46/12 -> 47/11`: one GLUE field fewer in both columns (the old
-row was kind `consequence`, GLUE/GLUE; the new leaf is kind `published`, flag `locator UNVERIFIED`).
+row was kind `consequence`, GLUE/GLUE; the new leaf is kind `published`, flag `locator UNVERIFIED`). The generated
+module (`scratch/elkies-coord/FoldDryRun.lean`: `OpenResearchLeaves21`, `sixContactMin_of_open28`) compiles, and
+`#print axioms HDec.HSyn.sixContactMin_of_open28` gives the standard three. VERIFIED.
 
 ## 2. The Lean statements (namespace `HDec.QMSplit.Moduli.ElkiesCoord`)
 
