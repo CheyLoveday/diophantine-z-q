@@ -56,3 +56,20 @@ All points in (Ix), (IxW) are canonical for `(E_τ, ⟨1/32⟩)`: 1/32 generates
   `frozenTarget_of_used`, `ZInQ.OneProof.frozenTarget`: axioms [propext, Classical.choice, Quot.sound].
 * autofold: not applicable (`hX` is a plain argument of `frozenTarget`, not a bundle field; x0-moduli recorded
   `autofold: not a field of the current bundles: ['hX']`).
+
+## 5. Eta route (VERIFIED: `scratch/hx-used/EtaRoute.lean` compiles, `lake env lean`, ~1 min)
+
+`X0EtaRoute.srAt_x (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) : ShimuraReciprocityModFnAt 32 (fun τ => X0.xC τ)`
+`X0EtaRoute.srAt_y (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) : ShimuraReciprocityModFnAt 32 (fun τ => X0.yC τ)`
+axioms [propext, Classical.choice, Quot.sound]. So the consumers' needs follow from `hCM` and the explicit identity
+(Ix) (glue `XEtaWeierstrass`, two forms), with no canonical-model input. Steps (all compiled):
+* `latHat_inter_latM`: K ∩ 𝔟̂ = 𝔟 for 𝔟 = κ⁻¹⟨1/M, τ_Q⟩ (via the kernel's `latHat_inter_of_sandwich`).
+* `exists_v1`: s⁻¹(1/32) ≡ c'(p₁/32 + q₁τ'), p₁ odd. `exists_vt`: s⁻¹(τ/n) ≡ c'(p/n + qτ'/n), q odd (n = 8, M = 16; n = 2, M = 2).
+* `sInv_latM`: κ(s⁻¹⟨1/M, τ_Q⟩) = c'⟨1/M, τ_{Q'}⟩ for dM = 32 (from the kernel's `IdeleLatticeScale` at N = 32).
+* `cm_point`: `ShimuraMainCM` at the lattice ⟨1/M, τ_Q⟩ with P' = c'·⟨1/M, τ_{Q'}⟩.
+* `wp16_cases`, `wp2_cases`: the orbits of the torsion points under q odd (mod 8).
+* `transport16`, `transport2`: σ maps the ℘-ratio of (Ix) at τ_Q to one of the two forms at τ_{Q'}.
+* `xC_fricke_wp` (IxW from Ix by the scaling ⟨1/16, −1/(32τ)⟩ = (−1/(16τ))⟨1/2, τ⟩), `yC_formula`
+  (8y = x³ + 4x + 16 − (x−2)²(x∘W + x + 2), from the proved `Shimura.etaModelFricke`).
+* `x_conj`, `xW_conj`, `y_conj`, `srAt_of_conj` (algebraicity with s = 1; main case: AutExtends, ArtinLift
+  (`artinLift_of_abs absArtinSurjectiveQNeg`), `ringClass_of_artin`, `ideleLatticeScale_of ringClassLattice invertibleColon`).

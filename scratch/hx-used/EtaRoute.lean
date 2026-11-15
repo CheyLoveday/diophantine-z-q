@@ -880,4 +880,123 @@ theorem yC_formula (τ : UpperHalfPlane) :
   rw [hsq]
   linear_combination (1 / 8 : ℂ) * heq
 
+/-! ## Part 8. Assembly: the level-32 instances of `ShimuraReciprocityModFn` from `hCM` and (Ix) -/
+
+theorem conj_two_sub_four {σ : ℂ ≃+* ℂ} {r r' : ℂ} (h : σ r = r') :
+    σ (2 - 4 * r) = 2 - 4 * r' := by
+  rw [map_sub, map_mul, h, map_ofNat, map_ofNat]
+
+section Assembly
+
+variable {f : ℕ} [NeZero f] {D : ℤ}
+
+theorem x_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
+    (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
+    (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+      I * (Real.sqrt m : ℂ))
+    (σ : ℂ ≃+* ℂ) (hs : ArtinCond m e σ T.s) :
+    σ (ZInQ.Contrib.TYZGenus.X0.xC T.Q.tauH) = ZInQ.Contrib.TYZGenus.X0.xC T.Q'.tauH := by
+  have h := transport16 T hCM e he σ hs
+  simp only at h
+  rcases h with h | h
+  · rw [(hX T.Q.tauH).1, (hX T.Q'.tauH).1]; exact conj_two_sub_four h
+  · rw [(hX T.Q.tauH).1, (hX T.Q'.tauH).2]; exact conj_two_sub_four h
+
+theorem xW_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
+    (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
+    (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+      I * (Real.sqrt m : ℂ))
+    (σ : ℂ ≃+* ℂ) (hs : ArtinCond m e σ T.s) :
+    σ (ZInQ.Contrib.TYZGenus.X0.xC (frickeH T.Q.tauH)) = ZInQ.Contrib.TYZGenus.X0.xC (frickeH T.Q'.tauH) := by
+  have h := transport2 T hCM e he σ hs
+  simp only at h
+  rcases h with h | h
+  · rw [(xC_fricke_wp hX T.Q.tauH).1, (xC_fricke_wp hX T.Q'.tauH).1]; exact conj_two_sub_four h
+  · rw [(xC_fricke_wp hX T.Q.tauH).1, (xC_fricke_wp hX T.Q'.tauH).2]; exact conj_two_sub_four h
+
+theorem y_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
+    (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
+    (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+      I * (Real.sqrt m : ℂ))
+    (σ : ℂ ≃+* ℂ) (hs : ArtinCond m e σ T.s) :
+    σ (ZInQ.Contrib.TYZGenus.X0.yC T.Q.tauH) = ZInQ.Contrib.TYZGenus.X0.yC T.Q'.tauH := by
+  rw [yC_formula T.Q.tauH, yC_formula T.Q'.tauH]
+  simp only [map_div₀, map_sub, map_add, map_mul, map_pow, map_ofNat]
+  rw [x_conj hX hCM T e he σ hs, xW_conj hX hCM T e he σ hs]
+
+end Assembly
+
+/-- The conclusion of `Shimura.ShimuraReciprocityModFn` for one `(N, g)` (verbatim body of
+`ZInQKernel/Contrib/TYZGenus/ShimuraModFn.lean:76` with `N`, `g` fixed). -/
+def _root_.X0ModuliUsed.ShimuraReciprocityModFnAt (N : ℕ) (g : UpperHalfPlane → ℂ) : Prop :=
+  ∀ (m f : ℕ) [NeZero m] [NeZero f], Squarefree m →
+    ∀ (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar),
+      ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+        I * (Real.sqrt m : ℂ) →
+    ∀ (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus) (ρ : GalQ),
+      (∀ x : ringClassField (conductorOrder (QNeg m) f),
+        ρ (e x) = e (ringClassArtinEquiv (conductorOrder (QNeg m) f)
+          ((conductorOrder (QNeg m) f).picClass J) x)) →
+    ∀ (D : ℤ), D = discOf m f → ∀ (Q Q' : HeegnerForm N D) (c : ℂ),
+      idealLat m f J * Q'.lat = Q.lat.map (LinearMap.mulLeft ℤ c) →
+      idealLat m f J * Q'.latN = Q.latN.map (LinearMap.mulLeft ℤ c) →
+      ∃ a a' : Qbar, ιC a = g Q.tauH ∧ ιC a' = g Q'.tauH ∧ ρ a = a'
+
+/-- **`ShimuraReciprocityModFnAt 32 g`** for any `g` that every transport conjugates correctly. -/
+theorem srAt_of_conj (g : UpperHalfPlane → ℂ)
+    (hconj : ∀ {m f : ℕ} [NeZero m] [NeZero f] {D : ℤ} (T : TData m f D)
+      (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar),
+      ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+        I * (Real.sqrt m : ℂ) →
+      ∀ (σ : ℂ ≃+* ℂ), ArtinCond m e σ T.s → σ (g T.Q.tauH) = g T.Q'.tauH) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 g := by
+  intro m f _ _ hsq e he J ρ hρ D hD Q Q' c hL hLN
+  have hfin1 : finPart (1 : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) = 1 := by
+    simp only [finPart, Units.val_one, Prod.snd_one]
+  have hsInv : ∀ X : Set (QNeg m), {x : QNeg m | algebraMap (QNeg m) (AfK m) x ∈ latHat m X} = X →
+      sInvLat m 1 X = X := by
+    intro X hX
+    simp only [sInvLat, hfin1, one_mul]
+    exact hX
+  have hlat1 : kappa m '' sInvLat m 1 (kappa m ⁻¹' (Q.lat : Set ℂ)) = (1 : ℂ) • (Q.lat : Set ℂ) := by
+    rw [hsInv _ (latHatInter m hsq f D hD 32 Q), one_smul]
+    exact Set.image_preimage_eq_of_subset (lat_subset_range hD Q)
+  have hlatN1 : kappa m '' sInvLat m 1 (kappa m ⁻¹' (Q.latN : Set ℂ)) = (1 : ℂ) • (Q.latN : Set ℂ) := by
+    rw [← latM_N, hsInv _ (latHat_inter_latM hsq hD Q (by norm_num)), one_smul]
+    exact Set.image_preimage_eq_of_subset (latM_subset_range hD Q 32)
+  obtain ⟨b, hb⟩ := T5Glue.fixedAlgebraic (g Q.tauH) fun σ₀ hσ₀ => by
+    have hs1 : ArtinCond m e σ₀ 1 := by
+      intro F _ _ _ x
+      rw [show icl (1 : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) = 1 from QuotientGroup.mk_one _, map_one,
+        AlgEquiv.one_apply]
+      exact hσ₀ _
+    exact hconj ⟨hsq, hD, Q, Q, 1, 1, one_ne_zero, hlat1, hlatN1⟩ e he σ₀ hs1
+  obtain ⟨σ, hσ⟩ := T5Glue.autExtends ρ
+  have hσK : ∀ k : QNeg m, σ (kappa m k) = kappa m k := by
+    intro k
+    rw [← kappa_eq_of_normalized e he k, hσ]
+    have h1 := hρ (algebraMap (QNeg m) (ringClassField (conductorOrder (QNeg m) f)) k)
+    rw [AlgEquiv.commutes] at h1
+    exact congrArg ιC h1
+  obtain ⟨s, hs⟩ := T5Glue.artinLift_of_abs T5Glue.absArtinSurjectiveQNeg m hsq e he σ hσK
+  have hcl := ringClass_of_artin (m := m) (f := f) e σ s hs ρ hσ J hρ
+  obtain ⟨c', hc', hlat, hlatN⟩ := T5Glue.ideleLatticeScale_of T5Glue.ringClassLattice
+    T5Glue.invertibleColon 32 (by norm_num) m f hsq J s hcl D hD Q Q' c hL hLN
+  refine ⟨b, ρ b, hb, ?_, rfl⟩
+  rw [← hσ, hb]
+  exact hconj ⟨hsq, hD, Q, Q', s, c', hc', hlat, hlatN⟩ e he σ hs
+
+/-- **`ShimuraReciprocityModFn` at level 32 for x0-32's `x`**, from `ShimuraMainCM` and (Ix). -/
+theorem srAt_x (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.xC τ) :=
+  srAt_of_conj _ fun T e he σ hs => x_conj hX hCM T e he σ hs
+
+/-- **`ShimuraReciprocityModFn` at level 32 for x0-32's `y`**, from `ShimuraMainCM` and (Ix). -/
+theorem srAt_y (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.yC τ) :=
+  srAt_of_conj _ fun T e he σ hs => y_conj hX hCM T e he σ hs
+
+#print axioms srAt_x
+#print axioms srAt_y
+
 end X0EtaRoute
