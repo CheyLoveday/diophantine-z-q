@@ -1,5 +1,6 @@
 import ZInQKernel.OneProof.H.TailZ25
 import ZInQKernel.Contrib.OneProof.BLRLocalizes
+import ZInQKernel.Contrib.OneProof.NeronDVR
 import ZInQKernel.Contrib.OneProof.GammaStarArea
 import ZInQKernel.Contrib.OneProof.ThetaModularityM46
 
@@ -188,9 +189,32 @@ theorem openAddedLeaves13_of_OpenAddedLeaves14 (n : OpenAddedLeaves14) : OpenAdd
   phiAmpleIsogeny := n.phiAmpleIsogeny
   weilPairingMumford := n.weilPairingMumford
 
-/-- **G0 with only the open leaves and the open glue** (leaf-fold16; generated). -/
+/-- **r6 at number fields** (r6-nf) from leaf-fold14's bundles: neron-dvr's `GapNeron.raynaudCriterion_leavesNF`
+with the Néron field at number fields proved from the textbook field N1 (`GapNeron.neronSchemeModelExistsNF`),
+replacing `ReductGlue.raynaudCriterion_leaves … r.neronSchemeModelExistsDVR …` (BLR 1.4/3 over every DVR). -/
+theorem raynaudCriterionNF_of14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) :
+    PkgI2.RaynaudCriterionNF.{0} :=
+  _root_.GapNeron.raynaudCriterion_leavesNF (raynaudSemistable_of14 r t) r.semistableUnipotent
+    (_root_.GapNeron.neronSchemeModelExistsNF t.neronSchemeExtensionExists) t.mumfordTorsionAlgClosed
+    t.mulEtaleAbelianScheme
+
+/-- **SS1 and SS3** (r6-nf; the reroute of `ss1_ss3_of14`, docs/research/neron-dvr.md §3.2): neron-dvr's
+`GapNeron.ss1_ss3_of_cpNF`, with the Néron field at number fields from N1. -/
+theorem ss1_ss3_of14NF (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
+    _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists :=
+  _root_.GapNeron.ss1_ss3_of_cpNF r.semistablePersistsSHcp r.strictHenselizationPair (semistableReductionDVR_of14 r t)
+    (_root_.GapNeron.neronSchemeModelExistsNF t.neronSchemeExtensionExists)
+    (_root_.ReductGlue.semistableLocalGlobal_leaf (_root_.CToPrinted.neronLocalizesDVR_of_printed r.blr_1_2_4))
+    (semistableAlmostAll_of10 (addedLeaves9_of_open14 r t l))
+
+/-- **G0 with only the open leaves and the open glue** (leaf-fold16; generated; r6-nf: supplies r6 at number fields
+and SS1/SS3 to `sixContactMin_of_open19`). -/
 theorem sixContactMin_of_open20 (r : OpenResearchLeaves16) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves14) (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
   sixContactMin_of_open19 (openResearchLeaves15_of_OpenResearchLeaves16 r) t (openAddedLeaves13_of_OpenAddedLeaves14 l) g hYu
+    (raynaudCriterionNF_of14
+      (openResearchLeaves14_of_OpenResearchLeaves15 (openResearchLeaves15_of_OpenResearchLeaves16 r)) t)
+    (ss1_ss3_of14NF (openResearchLeaves14_of_OpenResearchLeaves15 (openResearchLeaves15_of_OpenResearchLeaves16 r)) t
+      (addedLeaves12_of_open13 (openAddedLeaves13_of_OpenAddedLeaves14 l)))
 
 end HSyn
 

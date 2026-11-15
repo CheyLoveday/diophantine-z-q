@@ -50,7 +50,7 @@ structure ResearchLeaves3 : Prop where
   r5 : LeafQM.AV.R5fp
   /-- R5(i), González–Rotger Prop. 5.6, `#CM(R) = 2^b h(R)` (premise Lemma P, rv-qm-polar). -/
   r5count : LeafQM.AV.R5fpCount
-  r6 : PkgI2.RaynaudCriterion.{0}
+  r6 : PkgI2.RaynaudCriterionNF.{0}
   r7a : PkgI2.NeronOggShafarevich.{0}
   r9a : PkgI3.FaltingsSemisimple
   r9b : PkgI3.FaltingsTate
@@ -92,7 +92,7 @@ theorem researchLeaves3_of (r : ResearchLeaves) : ResearchLeaves3 :=
     r4 := r.r4,
     r5 := r.r5,
     r5count := r.r5count,
-    r6 := r.r6,
+    r6 := PkgI2.raynaudCriterionNF_of_general r.r6,
     r7a := r.r7a,
     r9a := r.r9a,
     r9b := r.r9b,

@@ -770,15 +770,16 @@ theorem ss1_ss3_of14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : 
 /-- leaf-fold9's research bundle from leaf-fold14's (the composite of `researchLeaves12_of_open13`,
 `researchLeaves11_of_open12`, `researchLeaves10_of_open11` and `researchLeaves9_of_open10`, with the three reduct
 fields replaced by reduct-b's theorems and SS1, SS3 by `ss1_ss3_of14`). -/
-theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
+theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12)
+    (h6 : PkgI2.RaynaudCriterionNF.{0})
+    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
     OpenResearchLeaves9 where
   r1r2 := (x6Rows_of_open14 r t l).1
   shimuraFamily := (_root_.LeafQM.AV.R1UnivRigid.shimuraFamily_iff_ab (mumfordRigidity_of14 r)).mpr
     r.shimuraFamilyAb
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
-  r6 := _root_.ReductGlue.raynaudCriterion_leaves (raynaudSemistable_of14 r t) r.semistableUnipotent
-    r.neronSchemeModelExistsDVR t.mumfordTorsionAlgClosed t.mulEtaleAbelianScheme
+  r6 := h6
   r7a := r.r7a
   r9a := r.r9a
   r9b := r.r9b
@@ -790,10 +791,10 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
   dsThm966 := r.dsThm966
   r16 := r.r16
   r17 := r.r17
-  semistableReductionThm := (ss1_ss3_of14 r t l).1
+  semistableReductionThm := hSS.1
   semistableNeronBaseChange := _root_.CToPrinted.semistableNeronBaseChange_of_printed_full r.blr_1_2_4
     r.sga3_VIB_3_10 r.sga7_IX_3_3 r.egaIV_8_10_5_openImm t.geomConnOfRationalPoint
-  semistablePersists := (ss1_ss3_of14 r t l).2
+  semistablePersists := hSS.2
   bostLowerBound := r.bostLowerBound
   javanpeykarBound := r.javanpeykarBound
   pazukiCor13Upper := r.pazukiCor13Upper
@@ -806,8 +807,10 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
 `ZInQ.SixContactMin` from `OpenResearchLeaves14` (35), `OpenTextbookLeaves10` (15), `OpenAddedLeaves12` (14) and
 `OpenGlue7` (1). -/
 theorem sixContactMin_of_open17 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12)
-    (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
-  sixContactMin_of_open11 (researchLeaves9_of_open14 r t l) t (addedLeaves9_of_open14 r t l) g
+    (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) (h6 : PkgI2.RaynaudCriterionNF.{0})
+    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
+    ZInQ.SixContactMin :=
+  sixContactMin_of_open11 (researchLeaves9_of_open14 r t l h6 hSS) t (addedLeaves9_of_open14 r t l) g
     (_root_.CToPrinted.faltingsLemma5BCLower_of_printed r.faltingsLemma5Printed) hYu
 
 end HSyn

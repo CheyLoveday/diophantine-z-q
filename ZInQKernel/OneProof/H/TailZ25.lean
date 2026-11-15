@@ -133,8 +133,11 @@ theorem openResearchLeaves14_of_OpenResearchLeaves15 (n : OpenResearchLeaves15) 
   strictHenselizationPair := n.strictHenselizationPair
 
 /-- **G0 with only the open leaves and the open glue** (gt-ega; generated). -/
-theorem sixContactMin_of_open19 (r : OpenResearchLeaves15) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves13) (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
-  sixContactMin_of_open18 (openResearchLeaves14_of_OpenResearchLeaves15 r) t l g hYu
+theorem sixContactMin_of_open19 (r : OpenResearchLeaves15) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves13) (g : OpenGlue7) (hYu : QMLattice.YuB6Alg)
+    (h6 : PkgI2.RaynaudCriterionNF.{0})
+    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
+    ZInQ.SixContactMin :=
+  sixContactMin_of_open18 (openResearchLeaves14_of_OpenResearchLeaves15 r) t l g hYu h6 hSS
 
 end HSyn
 
