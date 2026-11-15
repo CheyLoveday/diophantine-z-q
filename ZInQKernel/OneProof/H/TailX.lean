@@ -142,7 +142,6 @@ structure OpenTextbookLeaves7 : Prop where
   yuThm11 : QMSplit.Yu.YuThm11
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
-  genusX1Field : _root_.ZInQ.Contrib.CurvesG.GenusX1Field
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
   /-- curve-split, H-81: Stacks 00TV (regular ⇒ smooth over a perfect field; replaces `normalCurveSmoothQ`). -/
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
@@ -237,7 +236,6 @@ theorem textbookLeaves6_of_open7 (t : OpenTextbookLeaves7) (l : OpenAddedLeaves7
   t27 := QMSplit.Yu.qmDichotomyYu_of_yu t.yuThm11
   t33 := t.t33
   dimJacobianEqGenus := t.dimJacobianEqGenus
-  genusX1Field := t.genusX1Field
   t35 := _root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed
   normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ
   normalCurveSmoothQ := _root_.CurveSplit.normalCurveSmoothQ_of_regularSmooth t.regularSmoothPerfect

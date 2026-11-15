@@ -11682,9 +11682,6 @@ structure TextbookLeaves : Prop where
   -- leaf-adopt: T32 is glue (`HSyn.t32a_glue`, `HSyn.t32b_glue`), no longer a field.
   /-- T33 (new, leaf-modcurves): existence of the Jacobian of a pointed curve (Weil; Milne 1986). -/
   t33 : LeafModCurves.JacobianExists ℚ
-  /-- T34 (new, leaf-modcurves): `dim J₁(N)` is the genus of `Γ₁(N)` (Shimura 1971 Prop. 1.40 with
-  §6.7 and `dim Jac = genus`). -/
-  t34 : LeafModCurves.DimJ1Genus
   /-- T35 (new, leaf-push2): analytic uniformization of `A(ℂ)_σ` by `ℂ^{dim A}` with a full
   lattice (Mumford §1 with GAGA; AN3 for abelian varieties). -/
   t35 : ZInQ.LeafPush2.UniformizationExists
@@ -11751,11 +11748,6 @@ T36, T38-T40 (x1-belyi). -/
 theorem TextbookLeaves.exists_J1 (t : TextbookLeaves) (N : ℕ) (hN : 0 < N) :
     ∃ J : PkgI3.AbVar ℚ, LeafModCurves.IsJ1 N J :=
   X1Belyi.exists_J1_of_leaves t.x1 t.t33 N hN
-
-/-- leaf-modcurves' bundle `ModCurveLeaves` from the two bundles (x1-belyi). -/
-theorem modCurveLeaves_of_bundles (r : ResearchLeaves) (t : TextbookLeaves) :
-    LeafModCurves.ModCurveLeaves :=
-  X1Belyi.modCurveLeaves_of t.x1 t.t33 r.r16 t.t34
 
 
 /-! ## §3′. g0-split: the glue G1-G17, G19 split into named pieces (task g0-split, 2026-11-12;
@@ -12504,69 +12496,6 @@ structure GluePieces : Prop where
   /-- 11. The two textual copies of the stable Faltings height agree (leaf-adopt2's target). -/
   heightCopies : HeightCopiesAgree
 
-open G0Split in
-/-- **The glue G1-G17 and G19 (non-Arakelov part), split (g0-split).** The leaves and the ten
-missing glue pieces (each a `def … : Prop` in `G0Split` whose docstring names its glue step) give
-glue-assembly's interface `GlueOutputs` at `S = Mult.S_mul`. Applied proved pieces: A4
-(`LeafQM.AV.exists_fibre_object`, from R1-R2), `model_dim`, H5's finiteness
-(`faltingsHeight_coe`), E1 (`hom_of_common`: R9, T26, glue-ssbc), T8 (Poincaré, a leaf), E2's
-`dim J₁(N) ≤ N²` (`LeafModCurves.dim_J1_le`, from T34), `javanpeykarJ1` (concrete R18),
-`thetaPazuki` (concrete R22), `isogenousProduct`, and the E3-E4 numerics (`transfer_core`, from
-R19-R21). The non-CM disjunct is used (G6, NoCM). -/
-theorem glueOutputs_of_leaves (r : ResearchLeaves) (t : TextbookLeaves) (gp : GluePieces) :
-    GlueAssembly.GlueOutputs ZInQ.Mult.S_mul := by
-  obtain ⟨hDimF, hDim, hSimp, hPMH, hBC, hProdE, hRev, hThetaPt, hMod, hCopies⟩ := gp
-  have hBelyi : X1BelyiOnModel := x1BelyiOnModel_of_belyiX1 t.belyiX1
-  have hAdd : HeightAdditivity := heightAdditivity_of_h5neron t.t41 r.h5.2 hPMH
-  have hR18 : R18_JavanpeykarConcrete := r18Concrete_of r.r18 hCopies
-  have hR22 : R22_PazukiConcrete := r22Concrete_of r.r22 hCopies
-  -- A4: the moduli data and an object over every value
-  obtain ⟨Y, Φ, π, h1, h2, hfib⟩ :=
-    LeafQM.AV.exists_fibre_object (LeafAdopt.R1R2fp_of_rep r.r1r2)
-  intro u hu
-  obtain ⟨y, P, hP, hy⟩ := hfib (OnePoint.some (algebraMap ℚ Qbar (ZInQ.JHeight.Jmap u)))
-  -- G2-G16 (missing piece 10, `ModularConstituent`): the field `L'`, the model `A`, the level `N`, `J₁(N)`
-  obtain ⟨L, emb, A, N, J, hiso, hN0, hJ1, hNQ, hdQ, hCC⟩ := hMod Y Φ π h1 h2 u hu y P hP hy
-  have hFib : FibreOver Y Φ π u L A := ⟨emb, y, P, hP, hy, hiso⟩
-  have hA2 : A.dim = 2 := model_dim hDim emb A P.A hiso P.surface
-  -- H5: the stable height of `A` is real
-  have hfin := r.h5.1
-  have hx : ZInQ.DefFaltings.stableFaltingsHeight A = ZInQ.DefFaltings.faltingsHeight A :=
-    (ZInQ.DefFaltings.faltingsHeight_coe hfin A).symm
-  -- G19: the theta point (missing piece 9, `ThetaPointOfFibre`) and Pazuki (R22)
-  obtain ⟨K', z, hF1, hPaz⟩ := thetaPazuki hR22 hThetaPt Y Φ π h1 h2 u hu L A hFib hA2 _ hx
-  refine ⟨K', z, ZInQ.DefFaltings.faltingsHeight A, hF1, hPaz, Or.inl ?_⟩
-  -- E1: a nonzero homomorphism `A → J₁(N)_{L'}`
-  obtain ⟨f, hf⟩ := hom_of_common r t _ _ hCC
-  -- G5-G6 (missing piece 4, `FibreSimple`): `A` simple; T8: Poincaré
-  obtain ⟨Z, g, hisoZ⟩ := t.t8 L.K _ _ (hSimp Y Φ π h1 h2 u hu L A hFib) f hf
-  -- G17 after Poincaré (`isogenousProduct`, from missing pieces 1, 7, 8): `A × Z`, the isogeny `J₁(N)_{L'} → A × Z`
-  obtain ⟨Pr, φ, hφ, hPprod, hdims⟩ :=
-    isogenousProduct hDimF hProdE hRev L.K _ _ _ f g hisoZ
-  -- E2: `dim J₁(N) ≤ N²`
-  obtain ⟨gJ, hgJ, hgN⟩ := LeafModCurves.dim_J1_le t.t34 N hN0 J hJ1
-  have hJLd : (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K).dim = (gJ : WithBot ℕ∞) :=
-    (hDim ℚ L.K ((LeafAdopt.abVarEquiv ℚ).symm J)).trans hgJ
-  have hALd : A.dim = ((2 : ℕ) : WithBot ℕ∞) := by rw [hA2]; rfl
-  obtain ⟨gZ, hZd, hsum⟩ := hdims 2 gJ hALd hJLd
-  -- heights (H5; missing pieces 5, 6; R18 with missing pieces 2, 3)
-  have hxJ : ZInQ.DefFaltings.stableFaltingsHeight
-      (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K) =
-      ZInQ.DefFaltings.faltingsHeight ((LeafAdopt.abVarEquiv ℚ).symm J) := by
-    rw [hBC ℚ L.K ((LeafAdopt.abVarEquiv ℚ).symm J)]
-    exact (ZInQ.DefFaltings.faltingsHeight_coe hfin _).symm
-  have hyP := (ZInQ.DefFaltings.faltingsHeight_coe hfin Pr).symm
-  have hzZ := (ZInQ.DefFaltings.faltingsHeight_coe hfin ((LeafAdopt.abVarEquiv L.K).symm Z)).symm
-  have hadd := hAdd L.K Pr A ((LeafAdopt.abVarEquiv L.K).symm Z) hPprod _ _ _ hx hzZ hyP
-  have hJb := javanpeykarJ1 hR18 hBelyi t.t34 N hN0 J hJ1 gJ hgJ (by omega) _
-    (ZInQ.DefFaltings.faltingsHeight_coe hfin _).symm
-  have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast hN0
-  have hgN' : (gJ : ℝ) ≤ (N : ℝ) ^ 2 := by exact_mod_cast hgN
-  -- E3-E4 (proved from R19-R21)
-  exact transfer_core r.r19 r.r20 r.r21 (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K) Pr A
-    ((LeafAdopt.abVarEquiv L.K).symm Z) gJ gZ hJLd hZd (by omega) (by omega) φ hφ _ _ _ _ hxJ hyP
-    hzZ hadd hN1 hNQ hJb hgN' hdQ
-
 /-- **G18-G20, proved** (glue-assembly): `GlueOutputs Mult.S_mul → SixContactMin`, through F2
 over Mathlib's Weil heights, the E2-E4 and F3 arithmetic, the final constant, and F4.
 `GlueAssembly.SixContactMinAt Mult.S_mul` is `ZInQ.SixContactMin` by definition. -/
@@ -12578,12 +12507,6 @@ theorem sixContactMin_of_glueOutputs (h : GlueAssembly.GlueOutputs ZInQ.Mult.S_m
 theorem jHeightBound_copy_iff :
     GlueAssembly.JHeightBound ZInQ.Mult.S_mul ↔ ZInQ.JHeight.JHeightBound ZInQ.Mult.S_mul :=
   Iff.rfl
-
-/-- **G0. The leaves and the glue pieces imply `SixContactMin`** (no `sorry`). Hypotheses: exactly
-the three bundles `ResearchLeaves`, `TextbookLeaves`, `GluePieces`. -/
-theorem sixContactMin_of_leaves (r : ResearchLeaves) (t : TextbookLeaves) (gp : GluePieces) :
-    ZInQ.SixContactMin :=
-  sixContactMin_of_glueOutputs (glueOutputs_of_leaves r t gp)
 
 /-- **The glue pieces, one-triple form** (task pin-apply, after qm-pin): `GluePieces` with the
 three QM pieces 4, 9, 10 stated for some triple satisfying the repaired clause lists
@@ -12617,11 +12540,6 @@ theorem gluePiecesPin_of (r : ResearchLeaves) (gp : GluePieces) (hM : LeafQM.AV.
   obtain ⟨a, b, c, d, e, f, g, h, i, j⟩ := gp
   obtain ⟨h4, h9, h10⟩ := G0Split.qmPieces_iff_w hM (LeafAdopt.R1R2fp_of_rep r.r1r2)
   exact ⟨a, b, h4.1 c, d, e, f, g, h9.1 h, h10.1 i, j, hM⟩
-
-/-- **G0, one-triple form** (no `sorry`): the leaves and `GluePiecesPin` imply `SixContactMin`. -/
-theorem sixContactMin_of_leaves_pin (r : ResearchLeaves) (t : TextbookLeaves)
-    (gp : GluePiecesPin) : ZInQ.SixContactMin :=
-  sixContactMin_of_leaves r t (gluePieces_of_pin r gp)
 
 /-- **G20 alone** (the existing proof in `ZInQKernel`), for reference. -/
 example (h : ZInQ.JHeight.JHeightBound ZInQ.Mult.S_mul) : ZInQ.SixContactMin :=
@@ -13803,30 +13721,9 @@ theorem textbookLeaves_of_open (t : OpenTextbookLeaves) : TextbookLeaves where
   t27 := t.t27
   t31 := t31_proved
   t33 := t.t33
-  t34 := t.t34
   t35 := t.t35
   x1 := t.x1
   t41 := t.t41
-
-/-- **G0 with only the open leaves** (leaf-fold, 2026-11-13; no `sorry`, standard axioms).
-`SixContactMin` follows from the open leaves and the ten glue pieces.
-
-Open research-level leaves (all 23 of the note's R1-R22 and H5, in 26 fields; none is proved):
-R1(a,c,d)+R2+R5-on-`X₆` (`r1r2`), R1(b) (`r1an`, opaque), R1(d) reciprocity (`r1rec`), R3, R4,
-R5(ii) (`r5`), R5(i) (`r5count`), R6, R7(a), R7(b), R8, R9(a), R9(b), **R10 corrected**
-(`PkgI4.DeRhamComparisonHT`), R11+R12 (`r11r12`), R13, **R14 corrected** (`G0Galois.R14Det`), R15,
-R16, R17 (opaque), R18, R19, R20, R21, R22, H5.
-
-Open textbook leaves (26 fields; `x1` bundles T36-T40): T1, T3, T4, T5, T6, T7, T8,
-T9, T10, T11(a), T11(b), T14(a′), T14(b′), T16(b), T23, T24, T26, T27, T28, T29(a), T29(b), T33,
-T34, T35, T36-T40 (`x1`), T41.
-
-Proved (no longer hypotheses): T2 (`t2_proved`), T13, T15 (`t15_proved`), T16(a)
-(`t16a_proved`), T17 (`t17_proved`), T18 (`t18_proved`), T19, T20 and T21 in global form
-(`t20_proved`, `t21_proved`), T22, T25 (`t25_proved`), T30, T31 (`t31_proved`). -/
-theorem sixContactMin_of_open (r : OpenResearchLeaves) (t : OpenTextbookLeaves)
-    (gp : GluePieces) : ZInQ.SixContactMin :=
-  sixContactMin_of_leaves (researchLeaves_of_open r) (textbookLeaves_of_open t) gp
 
 end HSyn
 
@@ -13873,7 +13770,6 @@ end
 #print axioms GlueRepo.PR.inertia_orders_eq_one_iff
 #print axioms GlueRepo.PR.fibre_free
 #print axioms HSyn.sq_principalUnits_proved
-#print axioms HSyn.sixContactMin_of_leaves
 -- hsyn-fix: theorems adopted from rv-a6-route, glue-I6-rest and glue-I3-linalg
 #print axioms PkgI2.goodReduction_of_QM_rational3
 #print axioms PkgI6.artinConductor_le_of_upper
@@ -13989,7 +13885,6 @@ end
 #print axioms ZInQ.LeafPush2.R18_Javanpeykar
 #print axioms HSyn.isComplexConj_leafPush2_iff
 -- leaf-adopt3: g0-split's proof of glueOutputs_of_leaves
-#print axioms HSyn.glueOutputs_of_leaves
 #print axioms HSyn.G0Split.transfer_core
 #print axioms HSyn.G0Split.javanpeykarJ1
 #print axioms HSyn.G0Split.thetaPazuki
@@ -14011,7 +13906,6 @@ end
 #print axioms HSyn.TextbookLeaves.x1ModelExists
 #print axioms HSyn.TextbookLeaves.belyiX1
 #print axioms HSyn.TextbookLeaves.exists_J1
-#print axioms HSyn.modCurveLeaves_of_bundles
 #print axioms TSkolemKW.glueDescent_leafSkolemNoether
 #print axioms TSkolemKW.pkgI6_brauerNesbittChar0
 #print axioms TSkolemKW.hsyn_dirichletCharacter_of_kroneckerWeberCyclic
@@ -14048,7 +13942,6 @@ end
 #print axioms HSyn.G0Split.qmPieces_iff_w
 #print axioms HSyn.gluePieces_of_pin
 #print axioms HSyn.gluePiecesPin_of
-#print axioms HSyn.sixContactMin_of_leaves_pin
 
 -- leaf-fold: the closed leaves, the repairs and the open bundles
 #print axioms HDec.TBrauerPurity.abhyankarDVR
@@ -14070,6 +13963,5 @@ end
 #print axioms PkgI4.deRhamComparisonHT_iff
 #print axioms HSyn.researchLeaves_of_open
 #print axioms HSyn.textbookLeaves_of_open
-#print axioms HSyn.sixContactMin_of_open
 
 end HDec
