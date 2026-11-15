@@ -565,4 +565,189 @@ def HeegnerClassJ : Prop :=
       (conductorOrder (QNeg m) 1).picClass J = cl ∧ 0 < a ∧ 4 * a ∣ b ^ 2 - (-(m : ℤ)) ∧
       IsCoprime a M ∧ idealLat m 1 J = jLat (-(m : ℤ)) a b
 
+/-! ## §5. Glue: Galois theory of `ℂ`, periodicity, the coordinates in `ℚ(X₀(N))` -/
+
+/-- **`σ ∈ Aut(ℂ)` restricts to `ℚ̄`** (through `ιC`). -/
+theorem exists_galQ_of_sigma (σ : ℂ ≃+* ℂ) : ∃ ρ : GalQ, ∀ a : Qbar, σ (ιC a) = ιC (ρ a) := by
+  letI : Algebra Qbar ℂ := ιC.toAlgebra
+  have hst : IsScalarTower ℚ Qbar ℂ := IsScalarTower.of_algebraMap_eq fun q => by
+    simp [RingHom.algebraMap_toAlgebra]
+  have hrange : ∀ z : ℂ, IsAlgebraic ℚ z → ∃ y : Qbar, ιC y = z := by
+    intro z hz
+    have hz' : IsAlgebraic Qbar z := hz.extendScalars (algebraMap ℚ Qbar).injective
+    obtain ⟨y, hy⟩ := T5Glue.mem_range_of_isAlgebraic hz'
+    exact ⟨y, hy⟩
+  have halg : ∀ (φ : ℂ ≃+* ℂ) (x : Qbar), IsAlgebraic ℚ (φ (ιC x)) := by
+    intro φ x
+    have h1 : IsAlgebraic ℚ (ιCA x) := (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) x).algHom ιCA
+    exact h1.algHom ((φ : ℂ →+* ℂ).toRatAlgHom)
+  choose ρf hρf using fun x => hrange (σ (ιC x)) (halg σ x)
+  choose ρi hρi using fun x => hrange (σ.symm (ιC x)) (halg σ.symm x)
+  have hinj : Function.Injective ιC := ιC.injective
+  let ρh : Qbar →+* Qbar :=
+    { toFun := ρf
+      map_one' := hinj (by rw [hρf]; simp)
+      map_mul' := fun x y => hinj (by rw [hρf, map_mul, map_mul, map_mul, hρf, hρf])
+      map_zero' := hinj (by rw [hρf]; simp)
+      map_add' := fun x y => hinj (by rw [hρf, map_add, map_add, map_add, hρf, hρf]) }
+  have hbij : Function.Bijective ρh := by
+    refine ⟨fun x y hxy => ?_, fun y => ⟨ρi y, ?_⟩⟩
+    · have h := congrArg ιC hxy
+      change ιC (ρf x) = ιC (ρf y) at h
+      rw [hρf, hρf] at h
+      exact hinj (σ.injective h)
+    · apply hinj
+      change ιC (ρf (ρi y)) = ιC y
+      rw [hρf, hρi, RingEquiv.apply_symm_apply]
+  exact ⟨AlgEquiv.ofBijective ρh.toRatAlgHom hbij, fun x => (hρf x).symm⟩
+
+/-- **The fixed field of `Aut(ℂ/κ(K))` is `κ(K)`**, `K = ℚ(√−m)`. -/
+theorem mem_kappa_of_fixed {m : ℕ} [NeZero m] (z : ℂ)
+    (hz : ∀ σ : ℂ ≃+* ℂ, (∀ k : QNeg m, σ (kappa m k) = kappa m k) → σ z = z) :
+    ∃ k : QNeg m, kappa m k = z := by
+  obtain ⟨e, he⟩ := exists_normalized_embed_any m
+  let ε : SeparableClosure (QNeg m) →+* ℂ := ιC.comp e.toRingHom
+  have hK : ∀ k : QNeg m, ε (algebraMap (QNeg m) (SeparableClosure (QNeg m)) k) = kappa m k :=
+    fun k => T5Glue.kappa_eq_of_normalized e he k
+  obtain ⟨a, ha⟩ := T5Glue.fixedAlgebraic z (fun σ hσ => hz σ (fun k => by
+    rw [← hK k]; exact hσ _))
+  letI : Algebra (SeparableClosure (QNeg m)) ℂ := ε.toAlgebra
+  have hst : IsScalarTower ℚ (SeparableClosure (QNeg m)) ℂ :=
+    IsScalarTower.of_algebraMap_eq fun q => by simp [RingHom.algebraMap_toAlgebra]
+  have hzalg : IsAlgebraic ℚ z := by
+    rw [← ha]; exact (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) a).algHom ιCA
+  obtain ⟨b, hb⟩ := T5Glue.mem_range_of_isAlgebraic
+    (hzalg.extendScalars (algebraMap ℚ (SeparableClosure (QNeg m))).injective)
+  have hb' : ε b = z := hb
+  have hfix : ∀ τ : SeparableClosure (QNeg m) ≃ₐ[QNeg m] SeparableClosure (QNeg m), τ b = b := by
+    intro τ
+    obtain ⟨σ, hσ⟩ := T5Glue.exists_ringEquiv_extend ε τ.toRingEquiv
+    have hσK : ∀ k : QNeg m, σ (kappa m k) = kappa m k := fun k => by
+      rw [← hK k, hσ]; simp
+    have h1 := hz σ hσK
+    rw [← hb', hσ] at h1
+    exact ε.injective h1
+  obtain ⟨k, hk⟩ := (InfiniteGalois.mem_range_algebraMap_iff_fixed b).2 hfix
+  exact ⟨k, by rw [← hK, hk, hb']⟩
+
+theorem weierPt_eq_zero (E : WeierstrassCurve ℚ) (L : PeriodPair) {z : ℂ} (hz : z ∈ L.lattice) :
+    ZInQ.GZHL3.weierPt E L z = 0 := by
+  unfold ZInQ.GZHL3.weierPt
+  rw [dif_neg (fun h => h.1 hz)]
+
+theorem weierPt_eq_some (E : WeierstrassCurve ℚ) [E.IsElliptic] {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice E L) {z : ℂ} (hz : z ∉ L.lattice) :
+    ZInQ.GZHL3.weierPt E L z = .some _ _ (ZInQ.GZHL3.weierPt_some E hL hz) := by
+  unfold ZInQ.GZHL3.weierPt
+  rw [dif_pos ⟨hz, ZInQ.GZHL3.weierPt_some E hL hz⟩]
+
+/-- `weierPt E L` is `L`-periodic. -/
+theorem weierPt_add (E : WeierstrassCurve ℚ) [E.IsElliptic] {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice E L) (z : ℂ) {l : ℂ}
+    (hl : l ∈ L.lattice) : ZInQ.GZHL3.weierPt E L (z + l) = ZInQ.GZHL3.weierPt E L z := by
+  have h1 : L.weierstrassP (z + l) = L.weierstrassP z := L.weierstrassP_add_coe z ⟨l, hl⟩
+  have h2 : L.derivWeierstrassP (z + l) = L.derivWeierstrassP z :=
+    L.derivWeierstrassP_add_coe z ⟨l, hl⟩
+  by_cases hz : z ∈ L.lattice
+  · rw [weierPt_eq_zero E L hz, weierPt_eq_zero E L (L.lattice.add_mem hz hl)]
+  · have hzl : z + l ∉ L.lattice := fun h => hz (by simpa using L.lattice.sub_mem h hl)
+    rw [weierPt_eq_some E hL hz, weierPt_eq_some E hL hzl]
+    simp only [Affine.Point.some.injEq, h1, h2, and_self]
+
+section Inv
+
+variable {E : WeierstrassCurve ℚ} {L : PeriodPair} {N : ℕ} [NeZero N] {f : Newform N 2} {c : ℚ}
+
+theorem zPar_smul (hP : ZInQ.GZHL3.PeriodsIn f c L) {γ : SL(2, ℤ)}
+    (hγ : γ ∈ CongruenceSubgroup.Gamma0 N) (τ : UpperHalfPlane) :
+    ∃ l ∈ L.lattice, zPar f c (γ • τ) = zPar f c τ + l :=
+  ⟨_, hP γ hγ τ, by simp only [zPar]; ring⟩
+
+theorem xPar_smul (hP : ZInQ.GZHL3.PeriodsIn f c L) {γ : SL(2, ℤ)}
+    (hγ : γ ∈ CongruenceSubgroup.Gamma0 N) (τ : UpperHalfPlane) :
+    xPar E L f c (γ • τ) = xPar E L f c τ := by
+  obtain ⟨l, hl, e⟩ := zPar_smul hP hγ τ
+  simp only [xPar, e, L.weierstrassP_add_coe _ ⟨l, hl⟩]
+
+theorem yPar_smul (hP : ZInQ.GZHL3.PeriodsIn f c L) {γ : SL(2, ℤ)}
+    (hγ : γ ∈ CongruenceSubgroup.Gamma0 N) (τ : UpperHalfPlane) :
+    yPar E L f c (γ • τ) = yPar E L f c τ := by
+  obtain ⟨l, hl, e⟩ := zPar_smul hP hγ τ
+  simp only [yPar, xPar_smul hP hγ τ, e, L.derivWeierstrassP_add_coe _ ⟨l, hl⟩]
+
+theorem gPar_smul (hP : ZInQ.GZHL3.PeriodsIn f c L) {γ : SL(2, ℤ)}
+    (hγ : γ ∈ CongruenceSubgroup.Gamma0 N) (t : ℚ) (τ : UpperHalfPlane) :
+    gPar E L f c t (γ • τ) = gPar E L f c t τ := by
+  obtain ⟨l, hl, e⟩ := zPar_smul hP hγ τ
+  have h3 : zPar f c τ + l ∈ L.lattice ↔ zPar f c τ ∈ L.lattice :=
+    ⟨fun h => by simpa using L.lattice.sub_mem h hl, fun h => L.lattice.add_mem h hl⟩
+  unfold gPar
+  rw [xPar_smul hP hγ τ]
+  by_cases h : zPar f c τ ∈ L.lattice
+  · rw [if_pos (by rw [e]; exact h3.2 h), if_pos h]
+  · rw [if_neg (by rw [e]; exact fun h' => h (h3.1 h')), if_neg h]
+
+theorem weierPt_smul [E.IsElliptic] (hL : ZInQ.GZHL3.IsPeriodLattice E L)
+    (hP : ZInQ.GZHL3.PeriodsIn f c L) {γ : SL(2, ℤ)}
+    (hγ : γ ∈ CongruenceSubgroup.Gamma0 N) (τ : UpperHalfPlane) :
+    ZInQ.GZHL3.weierPt E L (zPar f c (γ • τ)) = ZInQ.GZHL3.weierPt E L (zPar f c τ) := by
+  obtain ⟨l, hl, e⟩ := zPar_smul hP hγ τ
+  rw [e, weierPt_add E hL _ hl]
+
+end Inv
+
+/-- **The coordinates of `φ` lie in `ℚ(X₀(N))`** (from the three analytic glue Props; the
+`Γ₀(N)`-invariance is proved here from `c Λ_f ⊆ L`). -/
+theorem isRatModFnMero_coords (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQExpansion)
+    (E : WeierstrassCurve ℚ) [E.IsElliptic] {N : ℕ} [NeZero N] (f : Newform N 2) (L : PeriodPair)
+    (c : ℚ) (hs : ParamSetting E f L c) :
+    IsRatModFnMero N (xPar E L f c) ∧ IsRatModFnMero N (yPar E L f c) ∧
+      ∀ t : ℚ, IsRatModFnMero N (gPar E L f c t) := by
+  obtain ⟨hmer, -, -⟩ := hR E N f L c hs
+  obtain ⟨qx, qy, qg⟩ := hQ E N f L c hs
+  have hP := hs.2.2.2.2
+  refine ⟨⟨fun γ hγ τ => xPar_smul hP hγ τ, fun τ => (hmer τ).1, fun γ => ?_, qx⟩,
+    ⟨fun γ hγ τ => yPar_smul hP hγ τ, fun τ => (hmer τ).2.1, fun γ => ?_, qy⟩,
+    fun t => ⟨fun γ hγ τ => gPar_smul hP hγ t τ, fun τ => (hmer τ).2.2 t, fun γ => ?_, qg t⟩⟩
+  · obtain ⟨k, hk, -, -⟩ := hG E N f L c hs γ; exact ⟨k, hk⟩
+  · obtain ⟨k, -, hk, -⟩ := hG E N f L c hs γ; exact ⟨k, hk⟩
+  · obtain ⟨k, -, -, hk⟩ := hG E N f L c hs γ; exact ⟨k, hk t⟩
+
+/-- `σ` as a `ℚ`-algebra map. -/
+abbrev sigA (σ : ℂ ≃+* ℂ) : ℂ →ₐ[ℚ] ℂ := (σ : ℂ →+* ℂ).toRatAlgHom
+
+/-- **Galois transport of a point of the modular parametrization.** If `σ(g(τ)) = g(τ')` for every
+`g ∈ ℚ(X₀(N))` regular at `τ` and `τ'`, then `σ(φ(τ)) = φ(τ')` in `E(ℂ)`. -/
+theorem point_transport (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQExpansion)
+    (E : WeierstrassCurve ℚ) [E.IsElliptic] {N : ℕ} [NeZero N] (f : Newform N 2) (L : PeriodPair)
+    (c : ℚ) (hs : ParamSetting E f L c) (σ : ℂ ≃+* ℂ) (τ τ' : UpperHalfPlane)
+    (hσ : ∀ g, IsRatModFnMero N g → RegularAt g τ → RegularAt g τ' → σ (g τ) = g τ') :
+    Affine.Point.map (sigA σ) (ZInQ.GZHL3.weierPt E L (zPar f c τ)) =
+      ZInQ.GZHL3.weierPt E L (zPar f c τ') := by
+  obtain ⟨-, hreg, hgreg⟩ := hR E N f L c hs
+  obtain ⟨mx, my, mg⟩ := isRatModFnMero_coords hR hG hQ E f L c hs
+  have hL := hs.2.2.1
+  -- a value `t ∈ {0, 1}` avoiding a given complex number
+  have avoid : ∀ w : ℂ, ∃ t : ℚ, w ≠ t := fun w => by
+    by_cases h : w = ((0 : ℚ) : ℂ)
+    · exact ⟨1, by rw [h]; norm_num⟩
+    · exact ⟨0, h⟩
+  by_cases hz : zPar f c τ ∈ L.lattice <;> by_cases hz' : zPar f c τ' ∈ L.lattice
+  · rw [weierPt_eq_zero E L hz, weierPt_eq_zero E L hz', map_zero]
+  · exfalso
+    obtain ⟨t, ht⟩ := avoid (xPar E L f c τ')
+    have h := hσ _ (mg t) (hgreg t τ (Or.inl hz)) (hgreg t τ' (Or.inr ht))
+    simp only [gPar, hz, hz', ite_true, ite_false, map_zero] at h
+    exact inv_ne_zero (sub_ne_zero.2 ht) h.symm
+  · exfalso
+    obtain ⟨t, ht⟩ := avoid (xPar E L f c τ)
+    have h := hσ _ (mg t) (hgreg t τ (Or.inr ht)) (hgreg t τ' (Or.inl hz'))
+    simp only [gPar, hz, hz', ite_true, ite_false, map_eq_zero_iff _ σ.injective] at h
+    exact inv_ne_zero (sub_ne_zero.2 ht) h
+  · have hx := hσ _ mx (hreg τ hz).1 (hreg τ' hz').1
+    have hy := hσ _ my (hreg τ hz).2 (hreg τ' hz').2
+    rw [weierPt_eq_some E hL hz, weierPt_eq_some E hL hz', Affine.Point.map_some]
+    simp only [Affine.Point.some.injEq]
+    exact ⟨hx, hy⟩
+
 end ZInQ.GZHeegner
