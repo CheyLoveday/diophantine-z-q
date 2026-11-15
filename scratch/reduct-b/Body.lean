@@ -582,6 +582,38 @@ theorem ss1_ss3_of_cp_full (hR : RaynaudSemistableSHcp) (hSH : SemistablePersist
 
 end RouteBCP
 
+
+/-! ## Fold check: the consumers in `TailZ15` / `TailZ9` with the three fields replaced -/
+
+section FoldCheck
+
+/-- The four consumers of the three fields in the OneProof chain, written with the same terms as
+`TailZ15.researchLeaves9_of_open10` (r6, SS1, SS3) and `TailZ9` (r8), the three fields replaced by
+the Route B theorems. New inputs: `RaynaudSemistableSH`, `SemistablePersistsSH`,
+`StrictHenselizationPair`; the others are bundle fields already present. -/
+theorem fold_uses (hRSH : RaynaudSemistableSH) (hPSH : SemistablePersistsSH)
+    (hPair : StrictHenselizationPair) (hU : SemistableUnipotent) (hN : NeronSchemeModelExistsDVR)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hE : AvSplit.T4.MulEtaleAbelianScheme)
+    (hLG : SemistableLocalGlobal) (hAA : SemistableAlmostAll) :
+    PkgI2.RaynaudCriterion.{0} ∧ PkgI2.GrothendieckMonodromy.{0} ∧
+      ZInQ.HeightSplit.SemistableReductionThm ∧ ZInQ.HeightSplit.SemistablePersists :=
+  ⟨raynaudCriterion_leaves (raynaudSemistable_of_SH_pair hRSH hPair hE) hU hN hM hE,
+   grothendieckMonodromy_final' (semistableReductionDVR_of_SH_pair hRSH hPair hM hE) hU hN hM,
+   semistableReductionThm_final (semistableReductionDVR_of_SH_pair hRSH hPair hM hE)
+     (semistablePersistsDVR_of_SH_pair hPSH hPair) hN hLG hAA,
+   semistablePersists_final (semistablePersistsDVR_of_SH_pair hPSH hPair) hN hLG⟩
+
+/-- K1 alone (no Route B): the consumers with only `semistableReductionDVR` replaced. -/
+theorem fold_uses_K1 (hR : RaynaudSemistable) (hP : SemistablePersistsDVR)
+    (hU : SemistableUnipotent) (hN : NeronSchemeModelExistsDVR)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hE : AvSplit.T4.MulEtaleAbelianScheme)
+    (hLG : SemistableLocalGlobal) (hAA : SemistableAlmostAll) :
+    PkgI2.GrothendieckMonodromy.{0} ∧ ZInQ.HeightSplit.SemistableReductionThm :=
+  ⟨grothendieckMonodromy_final' (semistableReductionDVR_of_raynaud hR hM hE) hU hN hM,
+   semistableReductionThm_final (semistableReductionDVR_of_raynaud hR hM hE) hP hN hLG hAA⟩
+
+end FoldCheck
+
 end ReductB
 
 #print axioms ReductB.semistableReductionDVR_of_raynaud
@@ -593,3 +625,5 @@ end ReductB
 #print axioms ReductB.ss1_ss3_of_cp
 #print axioms ReductB.semistableReductionDVRnf_of_raynaudCP
 #print axioms ReductB.ss1_ss3_of_cp_full
+#print axioms ReductB.fold_uses
+#print axioms ReductB.fold_uses_K1
