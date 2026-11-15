@@ -32,5 +32,8 @@ loses one leaf.
 Both are assembled by `mk.py` / `mk_kernel.py` from `T1.lean`, `Alg.lean` and `P3.lean`; run them with `chk.sh`.
 Every step is also checked numerically in `py/`. Report: `docs/research/cm24-value.md`.
 
-**What remains.** Nothing for this field. Optional, not needed by the field: the exact radical value
-`k = (2−√3)(√3−√2)`. `CM24Kernel.lean` is ready to become a `ZInQKernel/Contrib/` module.
+**Bonus.** The classical singular modulus `λ*(6) = θ₂(i√6)²/θ₃(i√6)² = (2−√3)(√3−√2)` is also proved
+(`CM24.singularModulus6`), stated with Mathlib's `jacobiTheta₂`.
+
+**What remains.** Nothing for this field, and no leaf was introduced. `CM24Kernel.lean` is ready to become a
+`ZInQKernel/Contrib/` module.

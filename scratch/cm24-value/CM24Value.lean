@@ -1215,7 +1215,8 @@ theorem h2τ3 : 2 * τ3 = τ6 := by apply Complex.ext <;> simp [τ3, τ6] <;> ri
 
 end CM24
 
-/-- **LEAF (the singular modulus `k₆`; Weber, Ramanujan; disc `−24`).** With Mathlib's `jacobiTheta₂`,
+/-- **The singular modulus `k₆`** (Weber, Ramanujan; disc `−24`; first used here as an intermediate leaf,
+now PROVED below as `CM24.singularModulus6`, so it is not needed). With Mathlib's `jacobiTheta₂`,
 `θ₃(τ) = jacobiTheta₂ 0 τ = Σ exp(πin²τ)` and `θ₂(τ) = exp(πiτ/4)·jacobiTheta₂ (τ/2) τ = Σ exp(πi(n+½)²τ)`,
 at `τ = i√6` (nome `q = e^{−π√6}`): `θ₃(i√6) ≠ 0` and `k₆ = θ₂(i√6)²/θ₃(i√6)² = (2−√3)(√3−√2)`.
 

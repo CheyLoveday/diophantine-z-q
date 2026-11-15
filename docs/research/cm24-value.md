@@ -17,6 +17,7 @@ Marks: **VERIFIED** = compiled, computed, or read in a file. **STANDARD** = publ
 | `CM24.igusaCMValue24_field` | `HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24` (the field `igusaCMValue24`) |
 | `CM24.thetaQuotientValue24_field` | `HDec.LeafQCheck.HM.QMSplit.ThetaQuotientValue24` (qm-split's glue) |
 | `CM24.thetaValueAtOmega24_field` | `…Value24.ThetaValueAtOmega24`: `jDen Ω₂₄ ≠ 0 ∧ jNum Ω₂₄ / jDen Ω₂₄ = −16/27` |
+| `CM24.singularModulus6` (bonus) | `SingularModulus6`: `θ₃(i√6) ≠ 0 ∧ θ₂(i√6)² = (2−√3)(√3−√2)·θ₃(i√6)²` (the classical `λ*(6)`, Mathlib's `jacobiTheta₂`) |
 
 Two files contain the proof, and both compile:
 
@@ -90,13 +91,18 @@ PkgI1's `thetaConst (a,b) Ω` is `θ[a/2; b/2](Ω)` (`thetaConst_eq`).
 |---|---|
 | `T1.lean` | `Th2`/`term2` (genus 2, real characteristics); summability; partial inversion `pi0`; swap and shift lemmas; `dup2`; genus-1 `th1`, Mathlib bridge `th1_eq`, `dup1`, `th2_diag`, `th1_odd`; explicit matrices `α0…wc` and `invert`; translation `U00…U11`; cubic modular equation `cubic` |
 | `Alg.lean` | `CM24Alg.core`, `core_ne` (identities modulo `m(k)`), `mpoly_k6` (`m((2−√3)(√3−√2)) = 0`) |
-| `P3.lean` | bridge `thetaConst_eq`; `sq_inv`, `sqW`, `sqc0…sqc9`; Landen and Jacobi; leaf variant `SingularModulus6` with `igusaCMValue24_of_singularModulus6`; S-transforms, positivity, elimination `mpoly_A`; final `thetaValueAtOmega24`, `igusaCMValue24`, `thetaQuotientValue24` and the `_field` forms |
+| `P3.lean` | bridge `thetaConst_eq`; `sq_inv`, `sqW`, `sqc0…sqc9`; Landen and Jacobi; `SingularModulus6` with `igusaCMValue24_of_singularModulus6`; S-transforms, positivity, elimination `mpoly_A`, `mpoly_theta`; final `thetaValueAtOmega24`, `igusaCMValue24`, `thetaQuotientValue24` and the `_field` forms; bonus `a0_ge_one`, `a2_le`, `a2_lt`, `root_select`, `singularModulus6` |
 | `mk.py`, `mk_kernel.py` | assemble `CM24Value.lean` (qm-glue copy + T1 + Alg + P3) and `CM24Kernel.lean` (import TailZ3 + T1 + Alg + P3) |
 | `py/` | `endo.py` (End and stabilizer), `w.py` (W), `split.py`/`check2.py`/`conv.py` (numerical checks of every step, 30-50 digits), `exact2.py`, `kpoly.py`, `cert.py`, `bezout.py`, `elim.py` (exact certificates) |
 
-The intermediate leaf `SingularModulus6` is kept as a corollary but is unused. It is the classical singular modulus
-`λ*(6) = (2−√3)(√3−√2)`, stated with Mathlib's `jacobiTheta₂`. Published form: Borwein–Borwein, *Pi and the AGM*,
-the table of `λ*(n)` (locator UNVERIFIED).
+`SingularModulus6` is the classical singular modulus `λ*(6) = (2−√3)(√3−√2)`, stated with Mathlib's
+`jacobiTheta₂`. Published form: Borwein–Borwein, *Pi and the AGM*, the table of `λ*(n)` (locator UNVERIFIED). It
+was first an intermediate leaf (`igusaCMValue24_of_singularModulus6`). It is now **proved** as a bonus
+(`CM24.singularModulus6`); the field does not use it. The proof:
+* `mpoly_theta` gives `m(k) = 0`.
+* Crude bounds give `θ₀₀(i√6) ≥ 1` (`a0_ge_one`) and `θ₁₀(i√6) < 7/10` (`a2_le`, `a2_lt`: Gaussian tail against a
+  geometric series, `e^x ≥ 1 + x`, `π > 3`, `√6 > 12/5`). So `0 < k < 1/2`.
+* `m` factors over `ℚ(√2, √3)` into four linear factors, and only one root lies in `(0, 1/2)` (`root_select`).
 
 ## 4. Integration notes
 
@@ -110,5 +116,4 @@ the table of `λ*(n)` (locator UNVERIFIED).
 
 ## 5. What remains
 
-Nothing for this field. Not done: the exact radical value `k = (2−√3)(√3−√2)` (choosing between the two roots of
-`m` in `(0,1)` needs a numerical bound such as `θ₁₀(i√6) < θ₀₀(i√6)/√2`). The field does not need it.
+Nothing for this field, and nothing for the bonus value `λ*(6)`. No leaf was introduced.

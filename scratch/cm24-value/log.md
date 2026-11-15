@@ -44,3 +44,5 @@ Target: `IgusaCMValue24` (field `igusaCMValue24`), equivalently (qm-glue `thetaQ
   whose 527 closure sources are byte-identical to this base): `CM24.igusaCMValue24_field :
   HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24` (the build's own field type), standard axioms.
 * VERIFIED (diff): TailZ3.lean l.894-1142 = qm-glue ThetaValue24.lean l.199-447.
+* 2026-11-14 16:57 COMPILED (both files, standard axioms): bonus `CM24.singularModulus6 : SingularModulus6`
+  (λ*(6) = (2−√3)(√3−√2)) via `a0_ge_one`, `a2_le`, `a2_lt` (θ₁₀(i√6) < 7/10), `root_select`.
