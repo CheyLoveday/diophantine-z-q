@@ -69,6 +69,7 @@ theorem vertInertiaTrivial' : VertInertiaTrivial' := by
   haveI := vertPrime_isPrime p hp
   -- the DVR `R₀ = ℤ[X]_{(p)}`
   set R₀ := Localization.AtPrime (vertPrime p) with hR₀def
+  letI : CommRing R₀ := inferInstanceAs (CommRing (Localization.AtPrime (vertPrime p)))
   have hunit : ∀ y : (vertPrime p).primeCompl, IsUnit (algebraMap ℤ[X] (RatFunc ℚ) y) := by
     intro y
     rw [isUnit_iff_ne_zero, Ne, map_eq_zero_iff _ (IsFractionRing.injective ℤ[X] (RatFunc ℚ))]
@@ -216,6 +217,93 @@ theorem vertInertiaTrivial' : VertInertiaTrivial' := by
   -- `|I(q₂)| = e(q₂)`
   have hcard := Ideal.card_inertia_eq_ramificationIdxIn (G := Gal(E/RatFunc ℚ)) m₀ q₂
   rw [Ideal.ramificationIdxIn_eq_ramificationIdx m₀ q₂ Gal(E/RatFunc ℚ)] at hcard
-  sorry
+  -- the inclusion `B_ℤ → S₀` and the vertical prime `q₀ = q₂ ∩ B_ℤ`
+  let ι : integralClosure ℤ[X] E →+* integralClosure R₀ E :=
+    { toFun := fun x => ⟨(x : E), IsIntegral.tower_top (A := R₀) x.2⟩
+      map_one' := rfl
+      map_mul' := fun _ _ => rfl
+      map_zero' := rfl
+      map_add' := fun _ _ => rfl }
+  have hιE : ∀ x, ((ι x : integralClosure R₀ E) : E) = (x : E) := fun _ => rfl
+  set q₀ := q₂.comap ι with hq₀def
+  haveI hq₀ : q₀.IsPrime := Ideal.comap_isPrime _ _
+  have hcomp : ι.comp (algebraMap ℤ[X] (integralClosure ℤ[X] E)) =
+      (algebraMap R₀ (integralClosure R₀ E)).comp (algebraMap ℤ[X] R₀) := by
+    refine RingHom.ext fun x => Subtype.ext ?_
+    show algebraMap ℤ[X] E x = algebraMap R₀ E (algebraMap ℤ[X] R₀ x)
+    rw [← IsScalarTower.algebraMap_apply]
+  have hq₀u : q₀.under ℤ[X] = vertPrime p := by
+    rw [Ideal.under_def, hq₀def, Ideal.comap_comap, hcomp, ← Ideal.comap_comap]
+    show Ideal.comap (algebraMap ℤ[X] R₀) (q₂.under R₀) = vertPrime p
+    rw [hq₂u, hm₀]
+    exact Localization.AtPrime.under_maximalIdeal
+  -- the inertia of `q₂` is trivial
+  have hItriv : Ideal.inertia Gal(E/RatFunc ℚ) q₂ = ⊥ := by
+    rw [eq_bot_iff]
+    intro σ hσ
+    rw [Subgroup.mem_bot]
+    apply hI q₀ hq₀ hq₀u σ
+    intro b
+    refine ⟨⟨σ (b : E), ?_⟩, rfl, ?_⟩
+    · exact (b.2).map ((σ : E ≃ₐ[RatFunc ℚ] E).toAlgHom.restrictScalars ℤ[X])
+    · show ι (_ - b) ∈ q₂
+      have h := hσ (ι b)
+      convert h using 1
+  have he1 : q₂.ramificationIdx R₀ = 1 := by
+    rw [← hcard, hItriv, Subgroup.card_bot]
+  -- `p` generates the maximal ideal of the local ring `S₀_{q₂}`
+  letI : CommRing (Localization.AtPrime q₂) := inferInstance
+  have hm : (q₂.under R₀).map (algebraMap R₀ (Localization.AtPrime q₂)) =
+      IsLocalRing.maximalIdeal (Localization.AtPrime q₂) := by
+    have h := he1
+    rw [Ideal.ramificationIdx_def, ENat.toNat_eq_iff_eq_natCast, Nat.cast_one,
+      Module.length_eq_one_iff, isSimpleModule_iff_isCoatom, ← Ideal.isMaximal_def,
+      IsLocalRing.isMaximal_iff] at h
+    exact h
+  set x : Localization.AtPrime q₂ :=
+    algebraMap R₀ (Localization.AtPrime q₂) (algebraMap ℤ[X] R₀ (C (p : ℤ))) with hxdef
+  have hm₀span : m₀ = Ideal.span {algebraMap ℤ[X] R₀ (C (p : ℤ))} := by
+    have hv : vertPrime p = Ideal.span {C (p : ℤ)} := by
+      unfold vertPrime
+      rw [Ideal.map_span, Set.image_singleton]
+    have hmap : Ideal.map (algebraMap ℤ[X] R₀) (vertPrime p) =
+        Ideal.map (algebraMap ℤ[X] R₀) (Ideal.span {C (p : ℤ)}) := congrArg _ hv
+    rw [hm₀, ← Localization.AtPrime.map_eq_maximalIdeal, hmap, Ideal.map_span, Set.image_singleton]
+  have hmx : IsLocalRing.maximalIdeal (Localization.AtPrime q₂) = Ideal.span {x} := by
+    rw [← hm, hq₂u, hm₀span, Ideal.map_span, Set.image_singleton]
+  have hinjL : Function.Injective (algebraMap (integralClosure R₀ E) (Localization.AtPrime q₂)) :=
+    haveI := IsLocalization.AtPrime.faithfulSMul (Localization.AtPrime q₂) (integralClosure R₀ E) q₂
+    FaithfulSMul.algebraMap_injective _ _
+  have hx0 : x ≠ 0 := by
+    rw [hxdef, IsScalarTower.algebraMap_apply R₀ (integralClosure R₀ E) (Localization.AtPrime q₂)]
+    intro h
+    apply hp0
+    apply hR₀S
+    apply hinjL
+    rw [h, map_zero, map_zero]
+  have hxm2 : x ∉ (IsLocalRing.maximalIdeal (Localization.AtPrime q₂)) ^ 2 := by
+    rw [hmx, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+    rintro ⟨r, hr⟩
+    have h1 : x * ((1 : Localization.AtPrime q₂) - x * r) = 0 := by
+      linear_combination hr
+    rcases mul_eq_zero.mp h1 with h | h
+    · exact hx0 h
+    · have hu : IsUnit x := IsUnit.of_mul_eq_one (b := r) (by linear_combination -h)
+      have hxm : x ∈ IsLocalRing.maximalIdeal (Localization.AtPrime q₂) := by
+        rw [hmx]; exact Ideal.mem_span_singleton_self x
+      exact (IsLocalRing.mem_maximalIdeal x).mp hxm hu
+  -- the local-ring witness
+  refine vertUnramWitness_of_local E p hp ⟨q₀, Localization.AtPrime q₂, inferInstance, inferInstance,
+    (algebraMap (integralClosure R₀ E) (Localization.AtPrime q₂)).comp ι, ?_, hq₀u, ?_⟩
+  · rw [hq₀def, ← Ideal.comap_comap]
+    congr 1
+    exact (Localization.AtPrime.under_maximalIdeal).symm
+  · have hψ : ((algebraMap (integralClosure R₀ E) (Localization.AtPrime q₂)).comp ι)
+        (algebraMap ℤ[X] (integralClosure ℤ[X] E) (C (p : ℤ))) = x := by
+      rw [RingHom.comp_apply, ← RingHom.comp_apply ι, hcomp, RingHom.comp_apply,
+        ← IsScalarTower.algebraMap_apply]
+    rw [hψ]
+    exact hxm2
 
 end SGRDirect
+#print axioms SGRDirect.vertInertiaTrivial'
