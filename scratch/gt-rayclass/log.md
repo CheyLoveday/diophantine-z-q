@@ -19,3 +19,12 @@
 - Pitfall: `Algebra (𝓞 ℚ) (v.adicCompletion ℚ)`: Mathlib's lemmas use `instAlgebraAdicCompletion`; a bare
   `algebraMap` elaborates another instance (not defeq for `mul_mem`): `attribute [local instance 2000]
   instAlgebraAdicCompletion` (as in TailZ12).
+
+## Step 2 (03:35): autofold spec and dry run (VERIFIED, no Lean)
+- `scratch/gt-rayclass/autofold-spec.json`: discharges `rayClassCMAb` (by `rayClassCMAb_of_leaves
+  {n}.shimuraMainThmIDeligneY3AbU {t}.uniformizationLeafAll {t}.gagaMorphism`) and `shimuraFamilyAb` (by
+  `shimuraFamilyAb_of_U {n}.shimuraMainThmIDeligneY3AbU`); adds one leaf `shimuraMainThmIDeligneY3AbU`, kind
+  `composite` (the shimura-cft review's rating of the underlying Deligne leaf; see report §3).
+- `python3 scripts/one_proof/autofold.py scratch/gt-rayclass/autofold-spec.json --dry-run`:
+  `strict count: 45/13 on 58 -> 45/12 on 57; strictest 44/14 -> 44/13` (no file changed).
+  Generated module saved (line 1 stripped) as `scratch/gt-rayclass/FoldCheck.lean`.
