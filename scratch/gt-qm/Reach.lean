@@ -37,4 +37,18 @@ elab "#reachQM " root:ident : command => do
   logInfo m!"carriers ({carriers.size}): {carriers.qsort (·.toString < ·.toString)}"
   logInfo m!"users of qmDichotomy_B6: {users}"
 
+elab "#reachProj " root:ident : command => do
+  let s ← reach root.getId
+  let env ← getEnv
+  let projs : List Name := [`HDec.HSyn.OpenTextbookLeaves2.t27, `HDec.HSyn.OpenTextbookLeaves3.t27,
+    `HDec.HSyn.OpenTextbookLeaves4.t27, `HDec.HSyn.OpenTextbookLeaves6.t27, `HDec.HSyn.TextbookLeaves.t27,
+    `HDec.QMSplit.Yu.qmDichotomyYu_of_yu]
+  for n in s.toArray do
+    let some ci := env.find? n | continue
+    if let some v := ci.value? (allowOpaque := true) then
+      let u := v.getUsedConstants
+      let hits := projs.filter u.contains
+      if !hits.isEmpty then logInfo m!"{n} uses {hits}"
+
 #reachQM HDec.HSyn.sixContactMin_of_open20
+#reachProj HDec.HSyn.sixContactMin_of_open20
