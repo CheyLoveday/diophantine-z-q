@@ -103,6 +103,6 @@ Note: This linter can be disabled with `set_option linter.style.haveILetI false`
 'T09Pic.t09SymmIsogenyExists_of_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.HSyn.sixContactMin_of_open15_t09pic' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-real	0m22.717s
-user	0m23.210s
-sys	0m3.042s
+real	0m22.627s
+user	0m23.396s
+sys	0m3.024s

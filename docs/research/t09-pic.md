@@ -27,7 +27,7 @@ theorem T09Pic.t09SymmIsogenyExists_of_four (h1 : PicRepresentableAbVar) (h2 : P
 ```
 
 **Compile status.**
-- `scratch/t09-pic/Pic.lean` compiles with 0 errors. Every one of its 12 `#print axioms` lines is
+- `scratch/t09-pic/Pic.lean` compiles with 0 errors. Every one of its 13 `#print axioms` lines is
   `[propext, Classical.choice, Quot.sound]`; see `Pic_out.txt`. VERIFIED.
 - The fold check also compiles, with standard axioms:
   `HDec.HSyn.sixContactMin_of_open15_t09pic : OpenResearchLeaves12 → OpenTextbookLeaves10 → OpenAddedLeaves11T09Pic →
@@ -89,6 +89,22 @@ components are unique up to unique isomorphism, and `ι` is a monomorphism.
   - `weilScalar_spec` proves that under L6 the value is `t_x^*ψ ∘ ψ⁻¹`.
 - L5 and L6 are statable now and stated, but not used by the main theorem.
 
+**L4 split into one printed property per leaf.** `IsMumfordPairing rep ι e` says that the values of `e` are
+`weilScalar` for `n` invertible; since `constK` is injective, this pins `e`. Each of the following is stated for every
+`e` satisfying it:
+
+| leaf | property | printed source |
+|---|---|---|
+| L4a `WeilPairingExists` | such an `e` exists (`ē_n` is bilinear and `μ_n`-valued) | Mumford §20 |
+| L4b `WeilPairingPerfect` | perfect | Mumford §20 |
+| L4c `WeilPairingGalois` | `G_K`-equivariant | Milne 1986 §16 |
+| L4d `WeilPairingCompat` | `ē_{mn}(x, y) = ē_n(mx, y)` | Mumford §20 |
+| L4e `WeilPairingDual` | `ē_n(x, f^∨y) = ē_n(fx, y)` | Mumford §20 (5); Milne Lemma 16.2(c) |
+| L4f `WeilPairingAlternating` | `e^L_n(x, x) = 1` for ample `L` | Mumford §23 |
+
+`weilPairingMumford_of_split` combines them, and `t09SymmIsogenyExists_of_split` proves the field from the nine leaves
+L1, L2, L3, L4a–f. VERIFIED.
+
 **Weaker variants, also compiled.** `WeilPairingPicZeroPrinted` is L4 without the `weilScalar` clause, and
 `WeilPairingPicZero` is the same with an existential `f^∨` and very ample `L`. Each is implied by the one before it
 (`weilPairingPicZeroPrinted_of_mumford`, `weilPairingPicZero_of_printed`). The corresponding main theorems are
@@ -130,8 +146,8 @@ of the square, Mumford's §20 duality). That is the crowdsourcing target.
 **Caveats.**
 - All locators are UNVERIFIED: Mumford numbering, Kleiman 9.2.5/9.4.8/9.5.x, EGA II 4.5.10, Milne 16.2(c), SGA 3 VI_A
   2.4, Stacks 01PS/0B7R.
-- L4 bundles Mumford §20 and §23 into one leaf. The pairing is now genuine (`weilScalar`), so a finer split into one
-  Prop per property is possible. It was not done.
+- The fold can use the four-leaf form (L4 bundled) or the nine-leaf form (L4a–f, one printed property per leaf). Both
+  are compiled.
 
 ## 6. Fold recipe
 
