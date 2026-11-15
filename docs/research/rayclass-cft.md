@@ -174,6 +174,28 @@ The CM hypothesis of `embed_core` comes from the object (`obj_at`, `cm_data`, `r
     `ι_P(a)` to `ι_Q(a)` (`bc_iota`, from the `ι`-clause and `pullback.hom_ext`), so it carries `End_𝒪(P)` into
     `End_𝒪(Q)` (`com_map`) and preserves the three polynomial identities.
 
+## 4b. Independent statement review (model, read-only, one pass)
+
+No PROBLEM. One RISK, on sourcing only: `L_g = B ∩ 𝒪̂g⁻¹` is a standard derivation from the PEL description of the
+moduli, not a line quoted from a source, and all locators are UNVERIFIED.
+
+The reviewer checked:
+* **The copies.** `DeligneBodyAt` is the body of `ShimuraDeligneBody` character for character.
+  `RayDefs.lean` is `X6Glue.lean` lines 6587-6745, apart from the placement of the `namespace`/`end` lines.
+* **`ModuliAtUnits`.**
+  * It is clause 3's moduli conjunct with `Ψ τ u` in place of `Ψ τ 1`, and the level structure is left free.
+  * Its convention agrees with clause 1, since `L_{γgk}γ = L_g`.
+  * `L_u = 𝒪` under every convention.
+  * No convention makes it false while clause 3 holds.
+  * It is consistent with clause 4.
+  * It adds information exactly on the second geometric component.
+* **`ClassNumberOneB`.**
+  * It is Eichler's theorem in adelic form.
+  * `B` is indefinite, ramified at `{2, 3}`.
+  * The order `1, i, (1+j)/2, (i+k)/2` is maximal (reduced discriminant 6).
+  * `OhatQ` is `𝒪 ⊗ ℤ̂`.
+* **No vacuity, and no hidden conclusion.** No new Prop mentions `rayClassField` or `residueImage`.
+
 ## 5. Files and checks (VERIFIED: one Lean process at a time)
 
 | file | content | check |

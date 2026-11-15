@@ -79,3 +79,6 @@ Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the pre
   lines, all [propext, Classical.choice, Quot.sound] (`RayClassCFT_result.txt`).
 - Pitfall: `(A.baseChange L).X.left` vs `pullback A.X.hom f` are defeq but `rw` fails on mixed terms; state the
   goal with `show` in pure pullback terms (`hpb.isoPullback.hom`, `pullback.lift`) and use `pullback.hom_ext`.
+
+## Step 5: independent statement review (model, read-only): no PROBLEM; one sourcing RISK (locators UNVERIFIED).
+Report and .fleet/rayclass-cft.md written.
