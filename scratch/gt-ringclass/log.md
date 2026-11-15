@@ -17,3 +17,19 @@ under hS = `Shimura.ShimuraReciprocityModFn` of `frozenTarget` (with `shimuraRec
   `exists_mem_conductor_of_algebraMap_mem_fHat` (Tau Ceti `mem_finitePart_of_forall_mem_pow_exponent`),
   `mem_fHat_of_fIntAd` (`f𝒪̂ ⊆ 𝔣̂`), **`mem_latHat_O_iff`**: `z ∈ closure(O) ↔ ∃ a : ℤ, z − a ∈ 𝔣̂`
   (⊆: closed subgroup containing `O = ℤ + f𝓞_K`; ⊇: density of `K` modulo `f𝒪̂`, `K ∩ 𝔣̂ = 𝔣 ⊆ O`).
+
+## Step 2: local computation — COMPILED
+- **`setOf_mul_mem_latHat_eq`**: for `y ∈ 𝔸_{K,f}`, an ideal `J`, integers `a, a'` with (D1) `y·j ∈ 𝒪̂ ↔ j ∈ J`
+  (`j ∈ K`), (D2) `|y_v − a|_v ≤ exp(−e_v)` at `v ∣ 𝔣`, (D3) `a a' − 1 ∈ 𝔣`: `{j ∈ K : y j ∈ Ô_O} = J ∩ O`
+  (`idealMeetOrder m f J`). Componentwise valuation estimates (`af_*_apply` are `rfl`).
+
+## Step 3: `ringClassLattice : RingClassLattice` — PROVED, COMPILED (Dev.lean)
+- `#print axioms T5Glue.ringClassLattice`: `[propext, Classical.choice, Quot.sound]`. VERIFIED.
+- Route (as gap-triage A7 / t5-glue §2.4): `t = α s ∈ ideleCongrOneSubgroup 𝔣` (TC
+  `exists_unitEmbedding_mul_mem_ideleCongrOneSubgroup`); `rayClassQuotient [t] = rayClassMk (I_t)`
+  (`rayClassQuotient_mk_of_mem`); hypothesis + `mem_ker_rayClassToPic` give `J' = (β)`, `β ∈ O`; `mem_ray_iff` gives
+  `γ` with `IsCongrOne 𝔣 γ` and `I_t = (γ)(β)J`; `k = α⁻¹γβ`, `y = s_f⁻¹k` (finite idele with ideal `J⁻¹`:
+  D1 via TC `toFractionalIdeal_le_one_iff`); D2 from the congruences of `t⁻¹`, `γ` and `β = a + f y₁`; D3 from
+  `(β) + 𝔣 = 1` and finiteness of `𝓞_K/𝔣` (`a' = a^{ord−1}`). The hypothesis `Squarefree m` is not used.
+- Helper lemmas: `inv_mul_le_one_iff`, `mul_mem_intAdeles_iff`, `exists_int_inv_mod_conductor`,
+  `icl_unitEmbedding_mul`, `finPart_mul`, `finPart_unitEmbedding`, `coe_toFiniteIdele`.

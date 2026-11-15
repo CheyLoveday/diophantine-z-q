@@ -452,6 +452,228 @@ theorem setOf_mul_mem_latHat_eq {f : ℕ} [NeZero f] (y : AfK m) (J : Ideal (�
       refine Valuation.map_sub_le _ ((mem_intAdeles_iff _).1 hint v) ?_
       rw [val_algebraMap_apply]; exact valuation_intCast_le_one v _
 
+/-! ### The ideal-theoretic side -/
+
+open scoped nonZeroDivisors
+
+theorem finPart_mul (s t : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    finPart (s * t) = finPart s * finPart t := rfl
+
+theorem finPart_unitEmbedding (α : (QNeg m)ˣ) :
+    finPart (IdeleGroup.unitEmbedding (𝓞 (QNeg m)) (QNeg m) α) =
+      algebraMap (QNeg m) (AfK m) (α : QNeg m) := rfl
+
+theorem coe_toFiniteIdele (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    ((IdeleGroup.toFiniteIdele (𝓞 (QNeg m)) (QNeg m) s : (AfK m)ˣ) : AfK m) = finPart s :=
+  IdeleGroup.coe_toFiniteIdele _ _ s
+
+/-- For an invertible fractional ideal `U`: `U⁻¹P ≤ 1 ↔ P ≤ U`. -/
+theorem inv_mul_le_one_iff (U : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ)
+    (P : FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m)) :
+    ((U⁻¹ : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ) : FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m)) *
+        P ≤ 1 ↔ P ≤ U := by
+  constructor
+  · intro h
+    have h2 := mul_le_mul_right h (U : FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))
+    rwa [← mul_assoc, Units.mul_inv, one_mul, mul_one] at h2
+  · intro h
+    have h2 := mul_le_mul_right h
+      ((U⁻¹ : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ) : FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))
+    rwa [Units.inv_mul] at h2
+
+/-- From the ideal of a finite idele to the integrality condition `hD1`. -/
+theorem mul_mem_intAdeles_iff (yU : (AfK m)ˣ) (J : Ideal (𝓞 (QNeg m)))
+    (UJ : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ)
+    (hUJ : (UJ : FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m)) = J)
+    (hy : FiniteAdeleRing.toFractionalIdeal yU = UJ⁻¹) (j : QNeg m) :
+    (yU : AfK m) * algebraMap (QNeg m) (AfK m) j ∈ 𝒪̂ ↔ ∃ r ∈ J, (r : QNeg m) = j := by
+  by_cases hj : j = 0
+  · subst hj
+    simp only [map_zero, mul_zero]
+    exact ⟨fun _ => ⟨0, J.zero_mem, by simp⟩, fun _ => Subalgebra.zero_mem _⟩
+  · set ju : (QNeg m)ˣ := Units.mk0 j hj
+    have e : (yU : AfK m) * algebraMap (QNeg m) (AfK m) j =
+        ((yU * FiniteAdeleRing.unitEmbedding (𝓞 (QNeg m)) (QNeg m) ju : (AfK m)ˣ) : AfK m) := by
+      rw [Units.val_mul, FiniteAdeleRing.unitEmbedding_apply]
+      rfl
+    rw [e, ← FiniteAdeleRing.toFractionalIdeal_le_one_iff, map_mul,
+      FiniteAdeleRing.toFractionalIdeal_unitEmbedding, hy, Units.val_mul, inv_mul_le_one_iff,
+      coe_toPrincipalIdeal, hUJ, FractionalIdeal.spanSingleton_le_iff_mem,
+      FractionalIdeal.mem_coeIdeal]
+    rfl
+
+/-- `a a' ≡ 1 (mod 𝔣)` for an integer `a` prime to `𝔣`. -/
+theorem exists_int_inv_mod_conductor {f : ℕ} [NeZero f] (a : ℤ) (u w : 𝓞 (QNeg m))
+    (hw : w ∈ (conductorOrder (QNeg m) f).conductor) (h : (a : 𝓞 (QNeg m)) * u + w = 1) :
+    ∃ a' : ℤ, ((a * a' - 1 : ℤ) : 𝓞 (QNeg m)) ∈ (conductorOrder (QNeg m) f).conductor := by
+  set 𝔣 := (conductorOrder (QNeg m) f).conductor
+  have : Finite (𝓞 (QNeg m) ⧸ 𝔣) :=
+    Ideal.finiteQuotientOfFreeOfNeBot _ (conductorOrder (QNeg m) f).conductor_ne_bot
+  have hu : Ideal.Quotient.mk 𝔣 (a : 𝓞 (QNeg m)) * Ideal.Quotient.mk 𝔣 u = 1 := by
+    rw [← map_mul, ← map_one (Ideal.Quotient.mk 𝔣), Ideal.Quotient.eq]
+    have : (a : 𝓞 (QNeg m)) * u - 1 = -w := by rw [← h]; ring
+    rw [this]
+    exact 𝔣.neg_mem hw
+  set U : (𝓞 (QNeg m) ⧸ 𝔣)ˣ := ⟨_, _, hu, by rw [mul_comm]; exact hu⟩
+  have hn : 0 < orderOf U := orderOf_pos U
+  refine ⟨a ^ (orderOf U - 1), ?_⟩
+  rw [← Ideal.Quotient.eq_zero_iff_mem]
+  have hU : (U : 𝓞 (QNeg m) ⧸ 𝔣) ^ orderOf U = 1 := by
+    rw [← Units.val_pow_eq_pow_val, pow_orderOf_eq_one, Units.val_one]
+  have e : ((a * a ^ (orderOf U - 1) - 1 : ℤ) : 𝓞 (QNeg m)) = (a : 𝓞 (QNeg m)) ^ orderOf U - 1 := by
+    rw [← pow_succ', Nat.sub_add_cancel hn]; push_cast; ring
+  rw [e, map_sub, map_pow, map_one]
+  exact sub_eq_zero.2 hU
+
+/-- `t = α·s` has the same idele class as `s`. -/
+theorem icl_unitEmbedding_mul (α : (QNeg m)ˣ) (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    icl (IdeleGroup.unitEmbedding (𝓞 (QNeg m)) (QNeg m) α * s) = icl s := by
+  simp only [icl]
+  rw [mul_comm, QuotientGroup.mk_mul_of_mem s (MonoidHom.mem_range.mpr ⟨α, rfl⟩)]
+
+/-- **`RingClassLattice` (proved).** -/
+theorem ringClassLattice : RingClassLattice := by
+  intro m f _ _ _ J s hs
+  -- 1. move `s` into the congruence subgroup of the conductor
+  obtain ⟨α, hα⟩ := exists_unitEmbedding_mul_mem_ideleCongrOneSubgroup (conductorOrder (QNeg m) f).conductorModulus s
+  set t := IdeleGroup.unitEmbedding (𝓞 (QNeg m)) (QNeg m) α * s with ht
+  -- 2. its ray class is that of its fractional ideal
+  set It : idealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus := ⟨FiniteAdeleRing.toFractionalIdeal
+      (IdeleGroup.toFiniteIdele (𝓞 (QNeg m)) (QNeg m) t),
+    toFractionalIdeal_toFiniteIdele_mem_idealsPrimeTo hα⟩ with hIt
+  have hray : rayClassQuotient (conductorOrder (QNeg m) f).conductorModulus (icl s) = rayClassMk (conductorOrder (QNeg m) f).conductorModulus It := by
+    rw [← icl_unitEmbedding_mul α s]
+    exact rayClassQuotient_mk_of_mem hα
+  -- 3. the hypothesis: `rayClassMk It · [J]⁻¹` lies in the kernel of `rayClassToPic`
+  have h2 : rayClassMk (conductorOrder (QNeg m) f).conductorModulus It * (idealClass (conductorOrder (QNeg m) f).conductorModulus J)⁻¹ ∈ (conductorOrder (QNeg m) f).rayClassToPic.ker := by
+    rw [MonoidHom.mem_ker, map_mul, map_inv, ← hray, ← ringClassIdeleQuotient_apply, hs,
+      NumberFieldOrder.rayClassToPic_idealClass, mul_inv_cancel]
+  obtain ⟨J', hJ'c, β, hβO, hJ'β⟩ := (conductorOrder (QNeg m) f).mem_ker_rayClassToPic.mp h2
+  -- 4. `It = (γ)·(β)·J` with `γ ≡ 1 mod* 𝔣`
+  set hom := TauCeti.NumberFieldArithmetic.integralIdealsAwayHom (QNeg m) (conductorOrder (QNeg m) f).conductorModulus.support
+  have h3 : rayClassMk (conductorOrder (QNeg m) f).conductorModulus (It * (hom J' * hom J)⁻¹) = 1 := by
+    rw [map_mul, map_inv, map_mul, ← idealClass_apply, ← idealClass_apply, hJ'c]
+    group
+  obtain ⟨γ, hγ, hγI⟩ := mem_ray_iff.mp (rayClassMk_eq_one_iff.mp h3)
+  have hJ'ne : (J' : Ideal (𝓞 (QNeg m))) ≠ ⊥ :=
+    (((conductorOrder (QNeg m) f).mem_integralIdealsPrimeTo_conductorModulus_iff).mp J'.2).1
+  have hβ0 : (β : QNeg m) ≠ 0 := by
+    intro h
+    apply hJ'ne
+    rw [hJ'β, Ideal.span_singleton_eq_bot]
+    exact_mod_cast h
+  set βu : (QNeg m)ˣ := Units.mk0 (β : QNeg m) hβ0
+  have hβu : toPrincipalIdeal (𝓞 (QNeg m)) (QNeg m) βu =
+      ((hom J' : TauCeti.NumberFieldArithmetic.idealsAway (QNeg m) (conductorOrder (QNeg m) f).conductorModulus.support) : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ) := by
+    apply Units.ext
+    rw [coe_toPrincipalIdeal, TauCeti.NumberFieldArithmetic.coe_integralIdealsAwayHom, hJ'β,
+      FractionalIdeal.coeIdeal_span_singleton]
+    rfl
+  set UJ : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ :=
+    ((hom J : TauCeti.NumberFieldArithmetic.idealsAway (QNeg m) (conductorOrder (QNeg m) f).conductorModulus.support) : (FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m))ˣ)
+  have hUJ : (UJ : FractionalIdeal (𝓞 (QNeg m))⁰ (QNeg m)) = (J : Ideal (𝓞 (QNeg m))) :=
+    TauCeti.NumberFieldArithmetic.coe_integralIdealsAwayHom (K := QNeg m) _ J
+  have hγI' : toPrincipalIdeal (𝓞 (QNeg m)) (QNeg m) γ =
+      FiniteAdeleRing.toFractionalIdeal (IdeleGroup.toFiniteIdele (𝓞 (QNeg m)) (QNeg m) t) *
+        (toPrincipalIdeal (𝓞 (QNeg m)) (QNeg m) βu * UJ)⁻¹ := by
+    rw [hγI, hβu]
+    rfl
+  -- 5. the element `k = α⁻¹γβ` and the finite idele `y = s_f⁻¹·k`
+  set k : (QNeg m)ˣ := α⁻¹ * (γ * βu) with hk
+  set yU : (AfK m)ˣ := IdeleGroup.toFiniteIdele (𝓞 (QNeg m)) (QNeg m) s⁻¹ *
+    FiniteAdeleRing.unitEmbedding (𝓞 (QNeg m)) (QNeg m) k with hyU
+  have hyU_coe : (yU : AfK m) = finPart s⁻¹ * algebraMap (QNeg m) (AfK m) (k : QNeg m) := by
+    rw [hyU, Units.val_mul, coe_toFiniteIdele, FiniteAdeleRing.unitEmbedding_apply]
+  have hyU_ideal : FiniteAdeleRing.toFractionalIdeal yU = UJ⁻¹ := by
+    have htf : IdeleGroup.toFiniteIdele (𝓞 (QNeg m)) (QNeg m) t =
+        FiniteAdeleRing.unitEmbedding (𝓞 (QNeg m)) (QNeg m) α *
+          IdeleGroup.toFiniteIdele (𝓞 (QNeg m)) (QNeg m) s := by
+      rw [ht, map_mul, IdeleGroup.toFiniteIdele_unitEmbedding]
+    rw [htf, map_mul, FiniteAdeleRing.toFractionalIdeal_unitEmbedding] at hγI'
+    rw [hyU, hk]
+    simp only [map_mul, map_inv, FiniteAdeleRing.toFractionalIdeal_unitEmbedding]
+    rw [hγI']
+    apply Additive.ofMul.injective
+    simp only [ofMul_mul, ofMul_inv]
+    abel
+  -- 6. `β = a + f y₁` and `a a' ≡ 1 mod 𝔣`
+  have hβO' : (β : QNeg m) ∈ (conductorOrder (QNeg m) f).toSubalgebra := (conductorOrder (QNeg m) f).mem_toRingOfIntegers.1 hβO
+  obtain ⟨a, y₁, hβa⟩ := (mem_conductorOrderSubalgebra (QNeg m)).1 hβO'
+  have hβa' : β = (a : 𝓞 (QNeg m)) + (f : 𝓞 (QNeg m)) * y₁ := by
+    apply RingOfIntegers.ext
+    rw [hβa]
+    simp
+  have hD3 : ∃ a' : ℤ, ((a * a' - 1 : ℤ) : 𝓞 (QNeg m)) ∈ (conductorOrder (QNeg m) f).conductor := by
+    have htop := (((conductorOrder (QNeg m) f).mem_integralIdealsPrimeTo_conductorModulus_iff).mp J'.2).2
+    rw [Ideal.eq_top_iff_one, Submodule.mem_sup] at htop
+    obtain ⟨x, hx, w, hw, hxw⟩ := htop
+    rw [hJ'β, Ideal.mem_span_singleton] at hx
+    obtain ⟨u, rfl⟩ := hx
+    refine exists_int_inv_mod_conductor a u ((f : 𝓞 (QNeg m)) * y₁ * u + w)
+      ((conductorOrder (QNeg m) f).conductor.add_mem ((conductorOrder (QNeg m) f).conductor.mul_mem_right u (natCast_mul_mem_conductor (QNeg m) f y₁))
+        hw) ?_
+    rw [← hxw, hβa']
+    ring
+  obtain ⟨a', ha'⟩ := hD3
+  -- 7. the local congruence at the primes of the conductor
+  have hD2 : ∀ v : HeightOneSpectrum (𝓞 (QNeg m)), v.asIdeal ∣ (conductorOrder (QNeg m) f).conductorModulus.finitePart →
+      Valued.v (((yU : AfK m) - algebraMap (QNeg m) (AfK m) (a : QNeg m)) v) ≤ cBound m f v := by
+    intro v hv
+    have hti : t⁻¹ ∈ ideleCongrOneSubgroup (conductorOrder (QNeg m) f).conductorModulus := (ideleCongrOneSubgroup (conductorOrder (QNeg m) f).conductorModulus).inv_mem hα
+    have hc := (mem_ideleCongrOneSubgroup_iff.mp hti).1 v hv
+    have hyt : (yU : AfK m) = finPart t⁻¹ * (algebraMap (QNeg m) (AfK m) (γ : QNeg m) *
+        algebraMap (QNeg m) (AfK m) (β : QNeg m)) := by
+      rw [hyU_coe, ht, mul_inv_rev, finPart_mul, ← map_inv, finPart_unitEmbedding, hk]
+      simp only [Units.val_mul, Units.val_inv_eq_inv_val, map_mul, map_inv₀, βu, Units.val_mk0]
+      ring
+    have e : (yU : AfK m) - algebraMap (QNeg m) (AfK m) (a : QNeg m) =
+        (finPart t⁻¹ - 1) * (algebraMap (QNeg m) (AfK m) (γ : QNeg m) *
+            algebraMap (QNeg m) (AfK m) (β : QNeg m)) +
+          algebraMap (QNeg m) (AfK m) ((γ : QNeg m) - 1) * algebraMap (QNeg m) (AfK m) (β : QNeg m) +
+          algebraMap (QNeg m) (AfK m) ((((f : 𝓞 (QNeg m)) * y₁ : 𝓞 (QNeg m))) : QNeg m) := by
+      have e2 : (((f : 𝓞 (QNeg m)) * y₁ : 𝓞 (QNeg m)) : QNeg m) = (β : QNeg m) - a := by
+        rw [hβa]; simp
+      rw [hyt, e2]
+      simp only [map_sub, map_one]
+      ring
+    have hβ1 : Valued.v ((algebraMap (QNeg m) (AfK m) (β : QNeg m)) v) ≤ 1 := by
+      rw [val_algebraMap_apply]; exact valuation_int_le_one v β
+    have hγ1 : Valued.v ((algebraMap (QNeg m) (AfK m) (γ : QNeg m)) v) = 1 := by
+      rw [val_algebraMap_apply]; exact hγ.valuation_eq_one hv
+    rw [e, af_add_apply, af_add_apply, af_mul_apply, af_mul_apply, af_mul_apply]
+    refine Valuation.map_add_le _ (Valuation.map_add_le _ ?_ ?_) ?_
+    · refine valued_mul_le ?_ (valued_mul_le hγ1.le hβ1)
+      rw [af_sub_apply]
+      have e3 : (finPart t⁻¹) v = (v.ideleFiniteCoord t⁻¹ : v.adicCompletion (QNeg m)) :=
+        (HeightOneSpectrum.coe_ideleFiniteCoord v t⁻¹).symm
+      rw [e3]
+      exact hc
+    · refine valued_mul_le ?_ hβ1
+      rw [val_algebraMap_apply]
+      exact hγ.valuation_sub_one_le hv
+    · rw [val_algebraMap_apply]
+      exact valuation_le_cBound_of_mem_conductor v (natCast_mul_mem_conductor (QNeg m) f y₁)
+  -- 8. the local computation
+  have hcore := setOf_mul_mem_latHat_eq (f := f) (yU : AfK m) (J : Ideal (𝓞 (QNeg m))) a a'
+    (mul_mem_intAdeles_iff yU J UJ hUJ hyU_ideal) hD2 ha'
+  refine ⟨(k : QNeg m), k.ne_zero, ?_⟩
+  rw [← hcore]
+  ext j
+  constructor
+  · intro hj
+    refine ⟨(k : QNeg m)⁻¹ * j, ?_, by field_simp⟩
+    show (yU : AfK m) * algebraMap (QNeg m) (AfK m) ((k : QNeg m)⁻¹ * j) ∈
+      latHat m (Osub m f : Set (QNeg m))
+    rw [hyU_coe, mul_assoc, ← map_mul, ← mul_assoc, mul_inv_cancel₀ k.ne_zero, one_mul]
+    exact hj
+  · rintro ⟨j', hj', rfl⟩
+    show finPart s⁻¹ * algebraMap (QNeg m) (AfK m) ((k : QNeg m) * j') ∈
+      latHat m (Osub m f : Set (QNeg m))
+    rw [map_mul, ← mul_assoc, ← hyU_coe]
+    exact hj'
+
 end RCL
 
 end T5Glue
+
+#print axioms T5Glue.ringClassLattice
