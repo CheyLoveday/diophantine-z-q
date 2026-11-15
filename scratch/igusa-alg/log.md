@@ -27,3 +27,22 @@
   `igusaAlg3` … `igusaAlg9 : IgusaAlg k`, no sorry, axioms [propext, Classical.choice, Quot.sound];
   1 min 55 s, peak 11.2 GB. Bridge: `esymmL_blocks` (pairing), `blocks_eval`, `psi4T_eq`, `psi6T_eq`,
   `chi10T_eq`, `chi12T_eq` (ring, degree ≤ 24 in U), `rhsK_eq` (ring over atoms), `igusaAlg_of_data`.
+- TailA olean: copied .lake/build from worktree rayclass-cft (same ZInQKernel sources as b5ff0474,
+  `git diff --stat` empty), `lake build ZInQKernel.OneProof.H.TailA` replayed (no rebuild).
+- IgusaAlg.lean (final, imports TailA; generator py/gen_final.py) COMPILES (VERIFIED, `lake env lean`):
+  0 errors, no sorry, 3 min 19 s, peak 12.1 GB; output IgusaAlg.out. Contents: Core + data
+  (namespace IgusaAlgEval); theta-split's ThetaUse.lean body verbatim (checked by substring test);
+  theta-glue's ThetaGlue.lean body verbatim except the two `ring` proofs of igusaAlg3/4, replaced by
+  section IgusaAlgKron (igusaAlg3 … igusaAlg9). All 23 `#print axioms` lines = [propext,
+  Classical.choice, Quot.sound], including:
+  `ThetaGlue.igusaAlg5..9 : IgusaAlg k` (the task's five identities, verbatim statement);
+  `IgusaAlgFinal.igusaAlg_all : ∀ k, 3 ≤ k → k ≤ 9 → IgusaAlg k`;
+  `qmThetaSymmetricCurve_of_linYang : LinYangThetaCurve → ThetaSplit.QMThetaSymmetricCurve`;
+  `qmThetaSymmetricCore_of_linYang : LinYangThetaCurve → ThetaSplit.QMThetaSymmetricCore`;
+  `thetaRatiosAtQM_of_linYang : LinYangThetaCurve → ThetaSplit.ThetaRatiosAtQM`;
+  `thetaPointOfFibre_of_linYang : FibreQMPeriod → LinYangThetaCurve → ThetaPointOfFibre`.
+  `ThetaGlue.QMThetaSymmetricCurve ↔ ThetaSplit.QMThetaSymmetricCurve` and the same for
+  `ThetaEightSquare` hold by `Iff.rfl` (VERIFIED).
+- Not derived: the universal field `ThetaRatiosAlgebraic` (∀ number field K, abelian surface A, …);
+  Route 1 gives only its use form `ThetaRatiosAtQM` (theta-split §1: the universal form is stronger
+  than the use). This is the form the consumer needs (`thetaPointOfFibre_of_qm_atQM`).
