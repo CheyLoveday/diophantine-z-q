@@ -97,13 +97,18 @@ theorem ratFuncToFunctionField_algebraMap (p : F[X]) :
       = algebraMap F[X] W.FunctionField p :=
   IsFractionRing.lift_algebraMap algebraMap_polynomial_injective p
 
-instance : Algebra (RatFunc F) W.FunctionField :=
+-- [port] explicit name = the name Lean v4.33 generated (downstream files refer to it)
+instance instAlgebraRatFuncFunctionField_definitions : Algebra (RatFunc F) W.FunctionField :=
   (ratFuncToFunctionField W).toAlgebra
 
-instance : IsScalarTower F[X] (RatFunc F) W.FunctionField :=
+-- [port] explicit name = the name Lean v4.33 generated (downstream files refer to it)
+instance instIsScalarTowerPolynomialRatFuncFunctionField_definitions :
+    IsScalarTower F[X] (RatFunc F) W.FunctionField :=
   IsScalarTower.of_algebraMap_eq fun p => (ratFuncToFunctionField_algebraMap p).symm
 
-instance : IsScalarTower F (RatFunc F) W.FunctionField := by
+-- [port] explicit name = the name Lean v4.33 generated (downstream files refer to it)
+instance instIsScalarTowerRatFuncFunctionField_definitions :
+    IsScalarTower F (RatFunc F) W.FunctionField := by
   refine IsScalarTower.of_algebraMap_eq fun c => ?_
   rw [IsScalarTower.algebraMap_apply F F[X] (RatFunc F) c,
     ← IsScalarTower.algebraMap_apply F[X] (RatFunc F) W.FunctionField,

@@ -185,12 +185,12 @@ lemma isMaximal_of_isPrime_of_ne_bot (P : Ideal W.CoordinateRing) [P.IsPrime] (h
 
 theorem isDedekindDomain_of_isAlgClosed' [IsAlgClosed F] [W.IsElliptic] :
     IsDedekindDomain W.CoordinateRing := by
-  have : IsDedekindDomainDvr W.CoordinateRing := by
-    refine ⟨fun P hP hPp => ?_⟩
-    have hmax : P.IsMaximal := isMaximal_of_isPrime_of_ne_bot P hP
-    obtain ⟨x, y, hxy, rfl⟩ := (isMaximal_iff_exists_eq_XYIdeal' P).mp hmax
-    exact isDiscreteValuationRing_localization_XYIdeal' (equation_iff_nonsingular.mp hxy)
-  infer_instance
+  -- [port] Mathlib v4.35 removed `IsDedekindDomainDvr`; use its characterisation
+  -- `isDedekindDomain_iff_isDiscreteValuationRing_atPrime` instead
+  refine isDedekindDomain_iff_isDiscreteValuationRing_atPrime.mpr ⟨inferInstance, fun P hP hPp => ?_⟩
+  have hmax : P.IsMaximal := isMaximal_of_isPrime_of_ne_bot P hP
+  obtain ⟨x, y, hxy, rfl⟩ := (isMaximal_iff_exists_eq_XYIdeal' P).mp hmax
+  exact isDiscreteValuationRing_localization_XYIdeal' (equation_iff_nonsingular.mp hxy)
 
 end WeierstrassCurve.Affine.CoordinateRing.DetInfra
 p2m_reactivate "P2MW.S_WeierstrassCurve_Affine_CoordinateRing_isDedekindDomain.WeierstrassCurve P2MW.S_WeierstrassCurve_Affine_CoordinateRing_isDedekindDomain.WeierstrassCurve.Affine P2MW.S_WeierstrassCurve_Affine_CoordinateRing_isDedekindDomain.WeierstrassCurve.Affine.CoordinateRing P2MW.S_WeierstrassCurve_Affine_CoordinateRing_isDedekindDomain.WeierstrassCurve.Affine.CoordinateRing.DetInfra"

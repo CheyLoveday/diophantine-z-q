@@ -885,7 +885,8 @@ theorem kw_functionFieldTensorFracHomGeneral_bijective :
   have hT_sub : ∀ t : (W⁄F).FunctionField ⊗[F] F',
       algebraMap ((W⁄F).FunctionField ⊗[F] F') (FractionRing _) t ∈ ψ.toRingHom.fieldRange := by
     intro t
-    induction t with
+    -- [port] Mathlib v4.35's tensor-product `induction_eliminator` has no `zero` case; use the old eliminator
+    induction t using TensorProduct.induction_on with
     | zero => simp only [_root_.map_zero]; exact zero_mem _
     | add _ _ hx hy => simp only [map_add]; exact add_mem hx hy
     | tmul a c =>
