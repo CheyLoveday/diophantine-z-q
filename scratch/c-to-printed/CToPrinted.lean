@@ -1200,50 +1200,51 @@ theorem unit_bc_fst {S S' : Scheme.{0}} (g : S' ⟶ S) (G : Over S) [GrpObj G] :
   erw [hw]
   exact congrArg (· ≫ _) (Category.id_comp g)
 
-/-- **The glue `IdCompBaseChangeDVR`, PROVED** from the printed SGA 3 VI_B 3.10 (openness of `G⁰`) and the
-bundle leaf `AVGlue.GeomConnOfRationalPoint` (Stacks 04KV). For `s' ∈ Spec O'`, the set
-`P = {w : fst w ∈ G⁰, w over s'}` is the image of `G⁰ ×_O Spec κ(s')`, which is connected
-(`connectedSpace_pullback_idComp`), so `P ⊆ (G ×_O O')⁰`; conversely the image under `fst` of the component of
+/-- **The identity component commutes with base change** (SGA 3 VI_B 3.3; PROVED here from the printed
+SGA 3 VI_B 3.10 and the bundle leaf `AVGlue.GeomConnOfRationalPoint`, Stacks 04KV), for a smooth quasi-compact
+group scheme over a noetherian scheme and any base change `g : S' → S`. For `s' ∈ S'`, the set
+`P = {w : fst w ∈ G⁰, w over s'}` is the image of `G⁰ ×_S Spec κ(s')`, which is connected
+(`connectedSpace_pullback_idComp`), so `P ⊆ (G ×_S S')⁰`; conversely the image under `fst` of the component of
 `e'(s')` is a connected subset of `G_{g(s')}` containing `e(g(s'))`. -/
-theorem idCompBaseChangeDVR_of (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRationalPoint) :
-    IdCompBaseChangeDVR := by
-  intro K _ O _ K' _ _ _ O' _ hO G _ _ _
-  letI : GrpObj (bcO hO G) := Functor.grpObjObj
-  let g : Spec (CommRingCat.of O') ⟶ Spec (CommRingCat.of O) :=
-    Spec.map (CommRingCat.ofHom (ReductSplit.comapHom hO))
-  let W : G.left.Opens := ⟨idCompSet G, h3 _ G⟩
+theorem idComp_baseChange (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRationalPoint)
+    {S S' : Scheme.{0}} [IsNoetherian S] (g : S' ⟶ S) (G : Over S) [GrpObj G] [Smooth G.hom]
+    [QuasiCompact G.hom] :
+    letI : GrpObj ((Over.pullback g).obj G) := Functor.grpObjObj
+    pullback.fst G.hom g ⁻¹' idCompSet G = idCompSet ((Over.pullback g).obj G) := by
+  letI : GrpObj ((Over.pullback g).obj G) := Functor.grpObjObj
+  let W : G.left.Opens := ⟨idCompSet G, h3 S G⟩
   have hW : (W : Set G.left) = idCompSet G := rfl
   haveI : IsLocallyNoetherian G.left := LocallyOfFiniteType.isLocallyNoetherian G.hom
   haveI : CompactSpace G.left := QuasiCompact.compactSpace_of_compactSpace G.hom
   haveI : IsNoetherian G.left := {}
-  let e' := (η[bcO hO G] : 𝟙_ (Over (Spec (CommRingCat.of O'))) ⟶ _).left
-  let e := (η[G] : 𝟙_ (Over (Spec (CommRingCat.of O))) ⟶ G).left
+  let e' := (η[(Over.pullback g).obj G] : 𝟙_ (Over S') ⟶ _).left
+  let e := (η[G] : 𝟙_ (Over (S)) ⟶ G).left
   have hu1 : ∀ s', pullback.fst G.hom g (e' s') = e (g s') := by
     intro s'
     rw [← Scheme.Hom.comp_apply, unit_bc_fst g G, Scheme.Hom.comp_apply]
   have hu2 : ∀ s', pullback.snd G.hom g (e' s') = s' := by
     intro s'
-    show (bcO hO G).hom (e' s') = s'
+    show ((Over.pullback g).obj G).hom (e' s') = s'
     rw [← Scheme.Hom.comp_apply, Over.w]
     rfl
-  have hfib : ∀ w : (bcO hO G).left, G.hom (pullback.fst G.hom g w) = g (pullback.snd G.hom g w) := by
+  have hfib : ∀ w : ((Over.pullback g).obj G).left, G.hom (pullback.fst G.hom g w) = g (pullback.snd G.hom g w) := by
     intro w
     rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
   -- the sets `P s'` are preconnected
-  have hP : ∀ s' : Spec (CommRingCat.of O'), _root_.IsPreconnected
-      {w : (bcO hO G).left | pullback.fst G.hom g w ∈ W ∧ pullback.snd G.hom g w = s'} := by
+  have hP : ∀ s' : S', _root_.IsPreconnected
+      {w : ((Over.pullback g).obj G).left | pullback.fst G.hom g w ∈ W ∧ pullback.snd G.hom g w = s'} := by
     intro s'
     let f0 := W.ι ≫ G.hom
     let m2 := pullback.map f0 g G.hom g W.ι (𝟙 _) (𝟙 _) (by simp [f0]) (by simp)
-    let r := (Spec (CommRingCat.of O')).fromSpecResidueField s'
+    let r := (S').fromSpecResidueField s'
     let m1 := pullback.fst (pullback.snd f0 g) r
     haveI hc : ConnectedSpace ↥(pullback f0 (r ≫ g)) :=
       connectedSpace_pullback_idComp hG G W hW
-        (↑((Spec (CommRingCat.of O')).residueField s')) (r ≫ g)
+        (↑((S').residueField s')) (r ≫ g)
     haveI : ConnectedSpace ↥(pullback (pullback.snd f0 g) r) :=
       (Scheme.homeoOfIso (pullbackLeftPullbackSndIso f0 g r)).connectedSpace_iff.mpr hc
     have hrange : Set.range (m1 ≫ m2) =
-        {w : (bcO hO G).left | pullback.fst G.hom g w ∈ W ∧ pullback.snd G.hom g w = s'} := by
+        {w : ((Over.pullback g).obj G).left | pullback.fst G.hom g w ∈ W ∧ pullback.snd G.hom g w = s'} := by
       ext w
       constructor
       · rintro ⟨u, rfl⟩
@@ -1280,7 +1281,7 @@ theorem idCompBaseChangeDVR_of (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRatio
   constructor
   · intro hz
     let s' := pullback.snd G.hom g z
-    show z ∈ connectedComponentIn ((bcO hO G).hom ⁻¹' {(bcO hO G).hom z}) (e' ((bcO hO G).hom z))
+    show z ∈ connectedComponentIn (((Over.pullback g).obj G).hom ⁻¹' {((Over.pullback g).obj G).hom z}) (e' (((Over.pullback g).obj G).hom z))
     refine (hP s').subset_connectedComponentIn ⟨?_, hu2 s'⟩ ?_ ⟨hz, rfl⟩
     · rw [hu1]
       exact idCompSet_one G (g s')
@@ -1304,6 +1305,12 @@ theorem idCompBaseChangeDVR_of (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRatio
       (e (G.hom (pullback.fst G.hom g z)))
     rw [hfib]
     exact this
+
+/-- **The glue `IdCompBaseChangeDVR`, PROVED** (`idComp_baseChange` at `Spec O' → Spec O`). -/
+theorem idCompBaseChangeDVR_of (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRationalPoint) :
+    IdCompBaseChangeDVR := by
+  intro K _ O _ K' _ _ _ O' _ hO G _ _ _
+  exact idComp_baseChange h3 hG (Spec.map (CommRingCat.ofHom (ReductSplit.comapHom hO))) G
 
 /-- **The glue `IdCompSubgroup`, PROVED** from the printed SGA 3 VI_B 3.10 and the bundle leaf
 `AVGlue.GeomConnOfRationalPoint`. `W = G⁰ → S` is geometrically connected (`geomConnected_idComp`), hence so is
