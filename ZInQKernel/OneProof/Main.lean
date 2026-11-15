@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ17
+import ZInQKernel.OneProof.H.TailZ18
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
@@ -9,8 +9,8 @@ import ZInQKernel.Contrib.TYZChain.Main
 `ZInQ.OneProof.frozenTarget` derives the frozen target `ZInQ.FrozenTarget` from every statement that is still open on
 the development fork, and from nothing else. It composes three compiled chains:
 
-* H: `HDec.HSyn.sixContactMin_of_open13` (`OneProof/H/`) proves `ZInQ.SixContactMin` from the open research leaves
-  (`OpenResearchLeaves11`), textbook leaves (`OpenTextbookLeaves10`), added leaves (`OpenAddedLeaves10`) and glue
+* H: `HDec.HSyn.sixContactMin_of_open14` (`OneProof/H/`) proves `ZInQ.SixContactMin` from the open research leaves
+  (`OpenResearchLeaves11`), textbook leaves (`OpenTextbookLeaves10`), added leaves (`OpenAddedLeaves11`) and glue
   (`OpenGlue7`). The modules up to `TailK` are leaf-fold4's chain moved onto the kernel's declarations (op-dedupe,
   op-compact); `TailL`-`TailN` are leaf-fold5's and `TailO` is leaf-fold6's, copied from their olean chains;
   `TailP`-`TailX` are leaf-fold7's (the split tasks av-glue, av-split, curve-split, hodge-split, qm-split, mcr-glue
@@ -23,7 +23,8 @@ the development fork, and from nothing else. It composes three compiled chains:
   and `semistablePersists` from published-form leaves (reduct-glue); docs/research/leaf-fold10.md); `TailZ16`-`TailZ17`
   are route-a-fold's (r1univ-rigid's Mumford rigidity: the moduli leaves `r1r2`, `shimuraFamily`,
   `gonzalezRotgerCountX6`, `deligneComponentsY3Printed` restated on abelian schemes, as printed, plus the leaf
-  `mumfordRigidityCore`; docs/research/route-a-fold.md).
+  `mumfordRigidityCore`; docs/research/route-a-fold.md); `TailZ18` is leaf-fold12's (cm24-value's proof of
+  `igusaCMValue24`).
 * TYZ: `ZInQ.Contrib.TYZChain.tyzThm35ReadingA_of_leaves` proves reading A of Tian–Yuan–Zhang from four leaves; the
   fourth, tyz-35's pinned form of TYZ Theorem 3.3, is derived from TYZ Theorem 3.3 in its printed form
   (`ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33`, `OneProof/TYZSplit.lean`, task tyz-split).
@@ -42,14 +43,14 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 
 /-- **Theorem 1.1, from every statement still open.** -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves11) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves10)
+    (r : HDec.HSyn.OpenResearchLeaves11) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves11)
     (g : HDec.HSyn.OpenGlue7)
     (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2) (hS : Shimura.ShimuraReciprocityModFn)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hL2 : ZInQ.GZDecomp.FHNonvanishing) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
     ZInQ.FrozenTarget :=
   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
-    (HDec.HSyn.sixContactMin_of_open13 r t l g)
+    (HDec.HSyn.sixContactMin_of_open14 r t l g)
     (tyzThm35ReadingA_of_leaves h11 h29 hS (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33))
     ZInQ.GZTheta.Frontier.heckeThetaNewform hL2 hL3
 
