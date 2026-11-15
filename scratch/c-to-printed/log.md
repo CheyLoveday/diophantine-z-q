@@ -53,3 +53,12 @@ of the e38375b3 build). One Lean process at a time.
   ℚ(ζ₃) + Deligne's comparison).
 - `shimuraFamily_of_mainThmI : ShimuraMainThmIY3 → HDec.QMSplit.Moduli.ShimuraFamily` COMPILES, standard axioms
   (VERIFIED); verbatim copy check `example : ShimuraFamily = HDec.QMSplit.Moduli.ShimuraFamily := rfl` passes.
+
+## Part S, glue `OpenImmersionLocalization` PROVED (CToPrinted.lean, section OIL)
+- `isOpenImmersion_pb_pb_iff` (base change along u then v ~ along u ≫ v, via Over.pullbackComp).
+- Index `Idx 𝔭 = 𝔭.primeCompl` preordered by divisibility (directed, nonempty); `ringDiagP`, `specDiagP`;
+  `ringCoconeOIsColimit` (O = colim_{a∉𝔭} 𝓞_L[1/a], via IsLocalization + mem_iff_exists), `specConeOIsLimit`.
+- `exists_away_of_dvr`: EGA IV 8.10.5 at one DVR gives s ∉ 𝔭_O with base change to 𝓞_L[1/s] an open immersion.
+- `openImmersionLocalization : EGAIV_8_10_5_openImm → ReductGlue.OpenImmersionOfLocal` COMPILES (open cover of
+  Y by Y ×_S D(s_𝔭) via Cover.mkOfCovers; IsZariskiLocalAtTarget.of_openCover; pullbackRightPullbackFstIso).
+- `semistableNeronBaseChange_of_printed'` (4 printed leaves + 2 glue) COMPILES. All 7 #print axioms standard.

@@ -12,6 +12,7 @@ open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalC
 open NumberField
 
 set_option linter.style.haveILetI false
+set_option linter.unusedSectionVars false
 
 namespace CToPrinted
 
@@ -438,9 +439,287 @@ theorem faltingsLemma5BC_of_printed (hF : FaltingsLemma5Printed) (hR : RaynaudKe
 
 end Faltings
 
+/-! # Part S, continued: the glue `OpenImmersionLocalization` proved
+
+`Spec O = lim_{s ∉ 𝔭} Spec 𝓞_L[1/s]` for a DVR `O` of `L` with center `𝔭` (`specConeIsLimitO`, the pattern
+of the kernel's `ZInQ.Contrib.SpreadOut.NF.specConeIsLimit`); EGA IV 8.10.5 then gives `s_𝔭 ∉ 𝔭` with the
+base change to `𝓞_L[1/s_𝔭]` an open immersion; these opens cover `Spec 𝓞_L`, and open immersions are local
+on the target (`IsZariskiLocalAtTarget.of_openCover`). -/
+
+section OIL
+
+/-- Base change along `u` then `v` is conjugate to base change along `u ≫ v` (for open immersions). -/
+theorem isOpenImmersion_pb_pb_iff {S₁ S₂ S₃ : Scheme.{0}} (u : S₁ ⟶ S₂) (v : S₂ ⟶ S₃) (w : S₁ ⟶ S₃)
+    (h : u ≫ v = w) {X Y : Over S₃} (f : X ⟶ Y) :
+    IsOpenImmersion ((Over.pullback u).map ((Over.pullback v).map f)).left ↔
+      IsOpenImmersion ((Over.pullback w).map f).left := by
+  subst h
+  have hn := congrArg CommaMorphism.left ((Over.pullbackComp u v).hom.naturality f)
+  simp only [Over.comp_left, Functor.comp_map] at hn
+  haveI : IsIso ((Over.pullbackComp u v).hom.app X).left :=
+    Functor.map_isIso (Over.forget _) ((Over.pullbackComp u v).hom.app X)
+  haveI : IsIso ((Over.pullbackComp u v).hom.app Y).left :=
+    Functor.map_isIso (Over.forget _) ((Over.pullbackComp u v).hom.app Y)
+  rw [← MorphismProperty.cancel_left_of_respectsIso @IsOpenImmersion
+    ((Over.pullbackComp u v).hom.app X).left, ← hn,
+    MorphismProperty.cancel_right_of_respectsIso @IsOpenImmersion]
+
+variable {L : Type} [Field L] [NumberField L]
+
+/-- The index set `𝓞_L ∖ 𝔭`, preordered by divisibility. -/
+abbrev Idx (P : Ideal (𝓞 L)) [P.IsPrime] : Type := P.primeCompl
+
+instance (P : Ideal (𝓞 L)) [P.IsPrime] : Preorder (Idx P) where
+  le a b := (a.1 : 𝓞 L) ∣ b.1
+  le_refl _ := dvd_refl _
+  le_trans _ _ _ h1 h2 := dvd_trans h1 h2
+
+instance (P : Ideal (𝓞 L)) [P.IsPrime] : IsDirected (Idx P) (· ≤ ·) :=
+  ⟨fun a b => ⟨⟨a.1 * b.1, P.primeCompl.mul_mem a.2 b.2⟩, dvd_mul_right _ _, dvd_mul_left _ _⟩⟩
+
+instance (P : Ideal (𝓞 L)) [P.IsPrime] : Nonempty (Idx P) := ⟨⟨1, P.primeCompl.one_mem⟩⟩
+
+variable (P : Ideal (𝓞 L)) [P.IsPrime]
+
+/-- The stage `𝓞_L[1/a]`. -/
+abbrev RgP (a : Idx P) : Type := Localization.Away (a.1 : 𝓞 L)
+
+theorem ne_zero_idx (a : Idx P) : (a.1 : 𝓞 L) ≠ 0 := fun h => a.2 (h ▸ P.zero_mem)
+
+theorem isUnit_trP {a b : Idx P} (h : a ≤ b) : IsUnit (algebraMap (𝓞 L) (RgP P b) a.1) :=
+  isUnit_of_dvd_unit (map_dvd _ h) (IsLocalization.Away.algebraMap_isUnit b.1)
+
+/-- `𝓞_L[1/a] → 𝓞_L[1/b]` for `a ∣ b`. -/
+noncomputable def trP {a b : Idx P} (h : a ≤ b) : RgP P a →+* RgP P b :=
+  IsLocalization.Away.lift a.1 (isUnit_trP P h)
+
+theorem trP_alg {a b : Idx P} (h : a ≤ b) (x : 𝓞 L) :
+    trP P h (algebraMap (𝓞 L) (RgP P a) x) = algebraMap (𝓞 L) (RgP P b) x :=
+  IsLocalization.Away.lift_eq _ _ _
+
+theorem homP_ext {a : Idx P} {T : Type*} [CommRing T] {f g : RgP P a →+* T}
+    (h : ∀ x : 𝓞 L, f (algebraMap _ _ x) = g (algebraMap _ _ x)) : f = g :=
+  IsLocalization.ringHom_ext (Submonoid.powers a.1) (RingHom.ext h)
+
+/-- The diagram `a ↦ 𝓞_L[1/a]`. -/
+noncomputable def ringDiagP : Idx P ⥤ CommRingCat.{0} where
+  obj a := CommRingCat.of (RgP P a)
+  map f := CommRingCat.ofHom (trP P (leOfHom f))
+  map_id a := by
+    apply CommRingCat.hom_ext
+    exact homP_ext P (fun x => by simp [trP_alg])
+  map_comp f g := by
+    apply CommRingCat.hom_ext
+    exact homP_ext P (fun x => by simp [trP_alg])
+
+theorem trP_trP {a b c : Idx P} (h₁ : a ≤ b) (h₂ : b ≤ c) :
+    (trP P h₂).comp (trP P h₁) = trP P (h₁.trans h₂) :=
+  homP_ext P (fun x => by simp [trP_alg])
+
+theorem trP_refl (a : Idx P) : trP P (le_refl a) = RingHom.id _ :=
+  homP_ext P (fun x => by simp [trP_alg])
+
+/-- The diagram `a ↦ Spec 𝓞_L[1/a]`. -/
+noncomputable def specDiagP : (Idx P)ᵒᵖ ⥤ Scheme.{0} where
+  obj a := Spec (CommRingCat.of (RgP P a.unop))
+  map f := Spec.map (CommRingCat.ofHom (trP P (leOfHom f.unop)))
+  map_id a := by
+    rw [show leOfHom (𝟙 a).unop = le_refl a.unop from rfl, trP_refl, CommRingCat.ofHom_id,
+      Spec.map_id]
+  map_comp f g := by
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, trP_trP]
+
+instance specDiagP_isAffineHom {i j : (Idx P)ᵒᵖ} (f : i ⟶ j) : IsAffineHom ((specDiagP P).map f) :=
+  show IsAffineHom (Spec.map _) from inferInstance
+
+instance specDiagP_compactSpace (i : (Idx P)ᵒᵖ) : CompactSpace ((specDiagP P).obj i) :=
+  show CompactSpace (Spec _) from inferInstance
+
+instance specDiagP_quasiSeparatedSpace (i : (Idx P)ᵒᵖ) : QuasiSeparatedSpace ((specDiagP P).obj i) :=
+  show QuasiSeparatedSpace (Spec _) from inferInstance
+
+variable (O : ValuationSubring L) [IsDiscreteValuationRing O]
+
+/-- `𝓞_L[1/a] → O` for `a ∉ 𝔭_O`. -/
+noncomputable def toOP (a : Idx (ReductGlue.center O)) : RgP (ReductGlue.center O) a →+* O :=
+  IsLocalization.Away.lift a.1 (g := ReductGlue.toOL O) (ReductGlue.isUnit_toOL O a.2)
+
+theorem toOP_alg (a : Idx (ReductGlue.center O)) (x : 𝓞 L) :
+    toOP O a (algebraMap (𝓞 L) _ x) = ReductGlue.toOL O x :=
+  IsLocalization.Away.lift_eq _ _ _
+
+theorem toOL_injective : Function.Injective (ReductGlue.toOL O) := by
+  intro a b h
+  have h' : ((ReductGlue.toOL O a : O) : L) = ((ReductGlue.toOL O b : O) : L) := by rw [h]
+  exact RingOfIntegers.ext h'
+
+theorem toOP_injective (a : Idx (ReductGlue.center O)) : Function.Injective (toOP O a) := by
+  unfold toOP IsLocalization.Away.lift
+  rw [IsLocalization.lift_injective_iff]
+  intro x y
+  constructor
+  · intro h
+    rw [IsLocalization.injective (RgP _ a)
+      (powers_le_nonZeroDivisors_of_noZeroDivisors (ne_zero_idx _ a)) h]
+  · intro h
+    rw [toOL_injective O h]
+
+/-- `O` as a cocone over `a ↦ 𝓞_L[1/a]`. -/
+noncomputable def ringCoconeO : Cocone (ringDiagP (ReductGlue.center O)) :=
+  Cocone.mk (CommRingCat.of O)
+    { app := fun a => CommRingCat.ofHom (toOP O a)
+      naturality := fun a b f => by
+        apply CommRingCat.hom_ext
+        exact homP_ext _ (fun x => by simp [ringDiagP, trP_alg, toOP_alg]) }
+
+/-- **`O = colim_{a ∉ 𝔭} 𝓞_L[1/a]`.** -/
+noncomputable def ringCoconeOIsColimit : IsColimit (ringCoconeO O) := by
+  haveI : ReflectsColimit (ringDiagP (ReductGlue.center O)) (forget CommRingCat) :=
+    reflectsColimit_of_reflectsIsomorphisms _ _
+  refine isColimitOfReflects (forget CommRingCat) (Types.FilteredColimit.isColimitOf' _ _ ?_ ?_)
+  · intro (x : O)
+    obtain ⟨r, s, hs, h⟩ := (ReductGlue.mem_iff_exists O (x : L)).mp x.2
+    let j : Idx (ReductGlue.center O) := ⟨s, hs⟩
+    refine ⟨j, (IsLocalization.mk' (RgP _ j) r (⟨s, Submonoid.mem_powers s⟩ : Submonoid.powers s) :
+      RgP _ j), ?_⟩
+    show x = toOP O j _
+    unfold toOP IsLocalization.Away.lift
+    symm
+    rw [IsLocalization.lift_mk'_spec]
+    apply Subtype.ext
+    change (r : L) = (s : L) * (x : L)
+    rw [← h, mul_comm]
+  · intro j x y h
+    have h' : toOP O j x = toOP O j y := h
+    exact ⟨j, 𝟙 j, by rw [toOP_injective O j h']⟩
+
+theorem toOP_trP {a b : Idx (ReductGlue.center O)} (h : a ≤ b) :
+    (toOP O b).comp (trP _ h) = toOP O a :=
+  homP_ext _ (fun x => by simp [trP_alg, toOP_alg])
+
+/-- `Spec O` as a cone over `a ↦ Spec 𝓞_L[1/a]`. -/
+noncomputable def specConeO : Cone (specDiagP (ReductGlue.center O)) :=
+  Cone.mk (Spec (CommRingCat.of O))
+    { app := fun a => Spec.map (CommRingCat.ofHom (toOP O a.unop))
+      naturality := fun a b f => by
+        simp only [Functor.const_obj_obj, Functor.const_obj_map, Category.id_comp, specDiagP]
+        rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, toOP_trP] }
+
+/-- **`Spec O = lim_{a ∉ 𝔭} Spec 𝓞_L[1/a]`.** -/
+noncomputable def specConeOIsLimit : IsLimit (specConeO O) := by
+  have h := isLimitOfPreserves Scheme.Spec (ringCoconeOIsColimit O).op
+  refine (IsLimit.equivOfNatIsoOfIso (NatIso.ofComponents (fun _ => Iso.refl _) ?_) _ _
+    (Cone.ext (Iso.refl _) ?_)) h
+  · intro m n f
+    simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]
+  · intro n
+    simp only [Iso.refl_hom, Category.id_comp]
+
+/-- From EGA IV 8.10.5 at one DVR `O`: some `s ∉ 𝔭_O` with the base change to `𝓞_L[1/s]` an open
+immersion. -/
+theorem exists_away_of_dvr (hE : EGAIV_8_10_5_openImm) {X Y : Over (Spec (CommRingCat.of (𝓞 L)))}
+    [Smooth X.hom] [QuasiCompact X.hom] [IsSeparated X.hom] [Smooth Y.hom] [QuasiCompact Y.hom]
+    [IsSeparated Y.hom] (f : X ⟶ Y)
+    (h : IsOpenImmersion ((Over.pullback (ReductGlue.gO O)).map f).left) :
+    ∃ s : 𝓞 L, s ∉ ReductGlue.center O ∧ IsOpenImmersion ((Over.pullback (Spec.map
+      (CommRingCat.ofHom (algebraMap (𝓞 L) (Localization.Away s))))).map f).left := by
+  let P := ReductGlue.center O
+  let i0 : (Idx P)ᵒᵖ := Opposite.op ⟨1, P.primeCompl.one_mem⟩
+  let g1 := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (RgP P i0.unop)))
+  have hc : (specConeO O).π.app i0 ≫ g1 = ReductGlue.gO O := by
+    show Spec.map (CommRingCat.ofHom (toOP O i0.unop)) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (RgP P i0.unop))) =
+      Spec.map (CommRingCat.ofHom (ReductGlue.toOL O))
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    congr 2
+    exact RingHom.ext (toOP_alg O i0.unop)
+  have h1 : IsOpenImmersion ((Over.pullback ((specConeO O).π.app i0)).map
+      ((Over.pullback g1).map f)).left :=
+    (isOpenImmersion_pb_pb_iff _ _ _ hc f).mpr h
+  obtain ⟨j, a, hj⟩ := hE (Idx P) (specDiagP P) (specConeO O) (specConeOIsLimit O) i0
+    ((Over.pullback g1).obj X) ((Over.pullback g1).obj Y) (ZInQ.Contrib.SpreadOut.lfp_pb g1 X)
+    (ZInQ.Contrib.SpreadOut.qc_pb g1 X) (ZInQ.Contrib.SpreadOut.qs_pb g1 X)
+    (ZInQ.Contrib.SpreadOut.lfp_pb g1 Y) (ZInQ.Contrib.SpreadOut.qc_pb g1 Y)
+    (ZInQ.Contrib.SpreadOut.qs_pb g1 Y) ((Over.pullback g1).map f) h1
+  refine ⟨j.unop.1, j.unop.2, ?_⟩
+  have hc2 : (specDiagP P).map a ≫ g1 =
+      Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (Localization.Away (j.unop.1 : 𝓞 L)))) := by
+    show Spec.map (CommRingCat.ofHom (trP P (leOfHom a.unop))) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (RgP P i0.unop))) = _
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    congr 2
+    exact RingHom.ext (trP_alg P (leOfHom a.unop))
+  exact (isOpenImmersion_pb_pb_iff _ _ _ hc2 f).mp hj
+
+end OIL
+
+/-- **The glue `OpenImmersionLocalization`, PROVED**: reduct-glue's `OpenImmersionOfLocal` from the
+printed EGA IV 8.10.5 (open immersions). -/
+theorem openImmersionLocalization : OpenImmersionLocalization := by
+  intro hE L _ _ X Y _ _ _ _ _ _ f hloc
+  have key : ∀ t : {𝔭 : Ideal (𝓞 L) // 𝔭.IsMaximal}, ∃ s : 𝓞 L, s ∉ t.1 ∧
+      IsOpenImmersion ((Over.pullback (Spec.map
+        (CommRingCat.ofHom (algebraMap (𝓞 L) (Localization.Away s))))).map f).left := by
+    rintro ⟨𝔭, h𝔭⟩
+    obtain ⟨s, hs, h⟩ := exists_away_of_dvr (ReductGlue.dvrAt 𝔭) hE f (hloc _)
+    rw [ReductGlue.center_dvrAt] at hs
+    exact ⟨s, hs, h⟩
+  choose s hs hsO using key
+  let gs : ∀ t : {𝔭 : Ideal (𝓞 L) // 𝔭.IsMaximal}, Spec (CommRingCat.of (Localization.Away (s t))) ⟶
+      Spec (CommRingCat.of (𝓞 L)) := fun t =>
+    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (Localization.Away (s t))))
+  have hcov : ∀ y : Y.left, ∃ t z, (pullback.fst Y.hom (gs t)) z = y := by
+    intro y
+    let q : PrimeSpectrum (𝓞 L) := Y.hom y
+    have hq : ∃ t, s t ∉ q.asIdeal := by
+      by_cases hq : q.asIdeal = ⊥
+      · obtain ⟨𝔭, h𝔭⟩ := Ideal.exists_maximal (𝓞 L)
+        refine ⟨⟨𝔭, h𝔭⟩, ?_⟩
+        rw [hq, Ideal.mem_bot]
+        intro h0
+        exact hs ⟨𝔭, h𝔭⟩ (h0 ▸ 𝔭.zero_mem)
+      · exact ⟨⟨q.asIdeal, Ideal.IsPrime.isMaximal q.isPrime hq⟩,
+          hs ⟨q.asIdeal, Ideal.IsPrime.isMaximal q.isPrime hq⟩⟩
+    obtain ⟨t, ht⟩ := hq
+    have hr : y ∈ Set.range (pullback.fst Y.hom (gs t)) := by
+      rw [Scheme.Pullback.range_fst]
+      have h1 : Y.hom y ∈ ((gs t).opensRange : Set (Spec (CommRingCat.of (𝓞 L)))) := by
+        rw [Scheme.Hom.opensRange_localizationAway (R := CommRingCat.of (𝓞 L)) (s t)]
+        exact ht
+      exact h1
+    obtain ⟨z, hz⟩ := hr
+    exact ⟨t, z, hz⟩
+  let 𝒰 : Y.left.OpenCover := Scheme.Cover.mkOfCovers {𝔭 : Ideal (𝓞 L) // 𝔭.IsMaximal}
+    (fun t => pullback Y.hom (gs t)) (fun t => pullback.fst Y.hom (gs t)) hcov
+    (fun t => inferInstance)
+  refine IsZariskiLocalAtTarget.of_openCover 𝒰 (fun t => ?_)
+  show IsOpenImmersion (pullback.snd f.left (pullback.fst Y.hom (gs t)))
+  have heq : pullback.snd f.left (pullback.fst Y.hom (gs t)) =
+      (pullbackRightPullbackFstIso Y.hom (gs t) f.left ≪≫
+        pullback.congrHom (Over.w f) rfl).hom ≫ ((Over.pullback (gs t)).map f).left := by
+    apply pullback.hom_ext
+    · simp [Over.pullback_map_left, pullbackRightPullbackFstIso_hom_fst_assoc, pullback.condition]
+    · simp [Over.pullback_map_left]
+  rw [heq]
+  haveI := hsO t
+  infer_instance
+
+/-- reduct-glue's leaf `OpenImmersionOfLocal` is a theorem from the printed EGA IV 8.10.5. -/
+theorem openImmersionOfLocal_of_printed (hE : EGAIV_8_10_5_openImm) :
+    ReductGlue.OpenImmersionOfLocal :=
+  openImmersionLocalization hE
+
+/-- **SS2 from four printed-form leaves and two named glue Props** (compiled). -/
+theorem semistableNeronBaseChange_of_printed' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+    (h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (g1 : IdentityComponentGroupModel)
+    (g2 : IdentityComponentFromPrinted) : ZInQ.HeightSplit.SemistableNeronBaseChange :=
+  semistableNeronBaseChange_of_printed hB h3 h7 hE g1 g2 openImmersionLocalization
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
 #print axioms CToPrinted.semistableNeronBaseChange_of_printedBLR
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed
 #print axioms CToPrinted.faltingsLemma5BC_of_printed
+#print axioms CToPrinted.openImmersionLocalization
+#print axioms CToPrinted.semistableNeronBaseChange_of_printed'
