@@ -1418,8 +1418,8 @@ theorem mpoly_A (A0 A1 A2 B0 B1 B2 : ℂ) (hA0 : A0 ≠ 0)
   field_simp
   linear_combination hmh
 
-/-- **`ThetaValueAtOmega24`, proved (no leaf).** -/
-theorem thetaValueAtOmega24 : ThetaValueAtOmega24 := by
+/-- **`mpoly(θ₁₀(i√6)²/θ₀₀(i√6)²) = 0`, proved (no leaf).** -/
+theorem mpoly_theta : th1 τ6 0 0 ≠ 0 ∧ CM24Alg.mpoly (th1 τ6 (1 / 2) 0 ^ 2 / th1 τ6 0 0 ^ 2) = 0 := by
   set A0 := th1 τ6 0 0
   set A1 := th1 τ6 0 (1 / 2)
   set A2 := th1 τ6 (1 / 2) 0
@@ -1464,9 +1464,132 @@ theorem thetaValueAtOmega24 : ThetaValueAtOmega24 := by
     rw [hA0, hA2]
     have : a2 ^ 4 - 2 * a0 ^ 2 * a2 ^ 2 - a0 ^ 4 < 0 := by nlinarith [sq_nonneg a2, sq_nonneg a0]
     exact_mod_cast this.ne
-  have hm := mpoly_A A0 A1 A2 B0 B1 B2 hA0ne R1 R2 R3 rJ R5 hne
-  exact thetaValueAtOmega24_of_mpoly (A2 ^ 2 / A0 ^ 2) hA0ne
-    (div_mul_cancel₀ (A2 ^ 2) (pow_ne_zero 2 hA0ne)).symm hm
+  exact ⟨hA0ne, mpoly_A A0 A1 A2 B0 B1 B2 hA0ne R1 R2 R3 rJ R5 hne⟩
+
+/-- **`ThetaValueAtOmega24`, proved (no leaf).** -/
+theorem thetaValueAtOmega24 : ThetaValueAtOmega24 :=
+  thetaValueAtOmega24_of_mpoly _ mpoly_theta.1
+    (div_mul_cancel₀ (th1 τ6 (1 / 2) 0 ^ 2) (pow_ne_zero 2 mpoly_theta.1)).symm mpoly_theta.2
+
+/-! ## Bonus: the classical singular modulus `λ*(6) = (2−√3)(√3−√2)`, proved -/
+
+theorem a0_ge_one : 1 ≤ ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 0) ^ 2) := by
+  have := (summable_gauss r6_pos 0).le_tsum 0 (fun j _ => (Real.exp_pos _).le)
+  simpa using this
+
+theorem a2_le : ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 1 / 2) ^ 2) ≤
+    2 * (Real.exp (-(π * r6) / 4) * (1 - Real.exp (-(π * r6)))⁻¹) := by
+  set c := π * r6 with hcdef
+  have hc : 0 < c := mul_pos Real.pi_pos r6_pos
+  have hs := summable_gauss r6_pos (1 / 2)
+  have hinj : Function.Injective (fun n : ℕ => -((n : ℤ) + 1)) := by
+    intro x y h; simp only [neg_inj, add_left_inj, Nat.cast_inj] at h; exact h
+  have h1 : Summable (fun n : ℕ => Real.exp (-π * r6 * (((n : ℤ) : ℝ) + 1 / 2) ^ 2)) :=
+    hs.comp_injective Nat.cast_injective
+  have h2 : Summable (fun n : ℕ => Real.exp (-π * r6 * (((-((n : ℤ) + 1) : ℤ) : ℝ) + 1 / 2) ^ 2)) :=
+    hs.comp_injective hinj
+  rw [tsum_of_nat_of_neg_add_one (f := fun n : ℤ => Real.exp (-π * r6 * ((n : ℝ) + 1 / 2) ^ 2)) h1 h2]
+  have hr0 : 0 ≤ Real.exp (-c) := (Real.exp_pos _).le
+  have hr1 : Real.exp (-c) < 1 := Real.exp_lt_one_iff.2 (by linarith)
+  have hg : Summable (fun n : ℕ => Real.exp (-c / 4) * Real.exp (-c) ^ n) :=
+    (summable_geometric_of_lt_one hr0 hr1).mul_left _
+  have hgs : ∑' n : ℕ, Real.exp (-c / 4) * Real.exp (-c) ^ n = Real.exp (-c / 4) * (1 - Real.exp (-c))⁻¹ := by
+    rw [tsum_mul_left, tsum_geometric_of_lt_one hr0 hr1]
+  have b1 : ∀ n : ℕ, Real.exp (-π * r6 * (((n : ℤ) : ℝ) + 1 / 2) ^ 2) ≤ Real.exp (-c / 4) * Real.exp (-c) ^ n := by
+    intro n
+    rw [← Real.exp_nat_mul, ← Real.exp_add]
+    apply Real.exp_le_exp.2
+    have : (0 : ℝ) ≤ (n : ℝ) := n.cast_nonneg
+    push_cast
+    nlinarith [mul_nonneg hc.le (sq_nonneg (n : ℝ))]
+  have b2 : ∀ n : ℕ, Real.exp (-π * r6 * (((-((n : ℤ) + 1) : ℤ) : ℝ) + 1 / 2) ^ 2) ≤
+      Real.exp (-c / 4) * Real.exp (-c) ^ n := by
+    intro n
+    rw [← Real.exp_nat_mul, ← Real.exp_add]
+    apply Real.exp_le_exp.2
+    have : (0 : ℝ) ≤ (n : ℝ) := n.cast_nonneg
+    push_cast
+    nlinarith [mul_nonneg hc.le (sq_nonneg (n : ℝ))]
+  have t1 := h1.tsum_le_tsum b1 hg
+  have t2 := h2.tsum_le_tsum b2 hg
+  rw [hgs] at t1 t2
+  linarith
+
+theorem a2_lt : ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 1 / 2) ^ 2) < 7 / 10 := by
+  refine lt_of_le_of_lt a2_le ?_
+  have hpi := Real.pi_gt_three
+  have hr6 : 12 / 5 < r6 := by nlinarith [r6_sq, r6_pos]
+  have hc : 36 / 5 < π * r6 := by nlinarith
+  have e8 : 1 + π * r6 / 8 ≤ Real.exp (π * r6 / 8) := by linarith [Real.add_one_le_exp (π * r6 / 8)]
+  have e4 : Real.exp (π * r6 / 4) = Real.exp (π * r6 / 8) ^ 2 := by rw [← Real.exp_nat_mul]; congr 1; push_cast; ring
+  have e1 : 1 + π * r6 ≤ Real.exp (π * r6) := by linarith [Real.add_one_le_exp (π * r6)]
+  have q1 : Real.exp (-(π * r6) / 4) = (Real.exp (π * r6 / 4))⁻¹ := by rw [← Real.exp_neg]; congr 1; ring
+  have q2 : Real.exp (-(π * r6)) = (Real.exp (π * r6))⁻¹ := by rw [← Real.exp_neg]
+  have hE4 : 361 / 100 ≤ Real.exp (π * r6 / 4) := by rw [e4]; nlinarith
+  have hE1 : 41 / 5 ≤ Real.exp (π * r6) := by linarith
+  rw [q1, q2]
+  have p4 : 0 < Real.exp (π * r6 / 4) := Real.exp_pos _
+  have p1 : 0 < Real.exp (π * r6) := Real.exp_pos _
+  have i4 : (Real.exp (π * r6 / 4))⁻¹ ≤ 100 / 361 := by
+    rw [inv_le_comm₀ p4 (by norm_num)]; linarith
+  have i1 : (Real.exp (π * r6))⁻¹ ≤ 5 / 41 := by
+    rw [inv_le_comm₀ p1 (by norm_num)]; linarith
+  have i1' : 36 / 41 ≤ 1 - (Real.exp (π * r6))⁻¹ := by linarith
+  have i2 : (1 - (Real.exp (π * r6))⁻¹)⁻¹ ≤ 41 / 36 := by
+    rw [inv_le_comm₀ (by linarith) (by norm_num)]; linarith
+  have : 0 ≤ (Real.exp (π * r6 / 4))⁻¹ := inv_nonneg.2 p4.le
+  have : 0 ≤ (1 - (Real.exp (π * r6))⁻¹)⁻¹ := inv_nonneg.2 (by linarith)
+  nlinarith
+
+/-- The four roots of `mpoly`: only `(2−√3)(√3−√2)` lies in `(0, 1/2)`. -/
+theorem root_select (k : ℝ) (hm : k ^ 4 + 12 * k ^ 3 + 2 * k ^ 2 - 12 * k + 1 = 0) (h0 : 0 < k) (h1 : k < 1 / 2) :
+    k = (2 - √3) * (√3 - √2) := by
+  set a := √2 with ha'
+  set b := √3 with hb'
+  have ha : a ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hb : b ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have a0 : 0 < a := Real.sqrt_pos.2 (by norm_num)
+  have b0 : 0 < b := Real.sqrt_pos.2 (by norm_num)
+  have hfac : (k - (2 - b) * (b - a)) * (k + (2 + b) * (b - a)) * (k - (2 - b) * (b + a)) * (k + (2 + b) * (b + a)) =
+      k ^ 4 + 12 * k ^ 3 + 2 * k ^ 2 - 12 * k + 1 := by
+    linear_combination (a^2*b^4 - 8*a^2*b^2 + 16*a^2 - 2*b^6 + b^4*(18 - 4*k) + b^2*(-2*k^2 + 16*k - 48) - 8*k^2 + 32) * ha + (b^6 + b^4*(4*k - 9) + b^2*(6*k^2 - 12*k + 25) + 4*k^3 + 6*k^2 - 4*k - 21) * hb
+  rw [hm] at hfac
+  have hba : a < b := by nlinarith
+  have hb2 : b < 7 / 4 := by nlinarith
+  have hab : 3 < a + b := by nlinarith
+  have f2 : 0 < k + (2 + b) * (b - a) := by nlinarith
+  have f3 : k - (2 - b) * (b + a) < 0 := by nlinarith
+  have f4 : 0 < k + (2 + b) * (b + a) := by nlinarith
+  have hne : (k + (2 + b) * (b - a)) * (k - (2 - b) * (b + a)) * (k + (2 + b) * (b + a)) ≠ 0 :=
+    mul_ne_zero (mul_ne_zero f2.ne' f3.ne) f4.ne'
+  have : (k - (2 - b) * (b - a)) * ((k + (2 + b) * (b - a)) * (k - (2 - b) * (b + a)) * (k + (2 + b) * (b + a))) = 0 := by
+    linear_combination hfac
+  have := (mul_eq_zero.1 this).resolve_right hne
+  linarith
+
+/-- **The singular modulus `k₆`, proved**: the leaf variant `SingularModulus6` is a theorem. -/
+theorem singularModulus6 : SingularModulus6 := by
+  obtain ⟨hA0ne, hm⟩ := mpoly_theta
+  set a0 := ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 0) ^ 2)
+  set a2 := ∑' n : ℤ, Real.exp (-π * r6 * ((n : ℝ) + 1 / 2) ^ 2)
+  have hA0 : th1 τ6 0 0 = (a0 : ℂ) := by rw [τ6_eq', th1_imag]
+  have hA2 : th1 τ6 (1 / 2) 0 = (a2 : ℂ) := by rw [τ6_eq', th1_imag]
+  have ha0 : 1 ≤ a0 := a0_ge_one
+  have ha2 : 0 < a2 := th1_imag_pos r6_pos _
+  have ha2' : a2 < 7 / 10 := a2_lt
+  rw [hA0, hA2] at hm
+  have hmr : (a2 ^ 2 / a0 ^ 2) ^ 4 + 12 * (a2 ^ 2 / a0 ^ 2) ^ 3 + 2 * (a2 ^ 2 / a0 ^ 2) ^ 2
+      - 12 * (a2 ^ 2 / a0 ^ 2) + 1 = 0 := by
+    unfold CM24Alg.mpoly at hm; exact_mod_cast hm
+  have hk0 : 0 < a2 ^ 2 / a0 ^ 2 := by positivity
+  have hk1 : a2 ^ 2 / a0 ^ 2 < 1 / 2 := by
+    rw [div_lt_iff₀ (by positivity)]; nlinarith
+  have hk := root_select _ hmr hk0 hk1
+  refine ⟨by rw [← A0_eq, hA0]; exact_mod_cast (by linarith : (0 : ℝ) < a0).ne', ?_⟩
+  rw [← A0_eq, ← A2_eq, hA0, hA2, ← hk]
+  have : (a0 : ℂ) ≠ 0 := by exact_mod_cast (by linarith : (0 : ℝ) < a0).ne'
+  push_cast
+  field_simp
 
 /-- **The field `igusaCMValue24`, proved.** -/
 theorem igusaCMValue24 : IgusaCMValue24 :=
@@ -1497,6 +1620,7 @@ theorem CM24.thetaValueAtOmega24_field : HDec.LeafQCheck.HM.QMSplit.Value24.Thet
   CM24.thetaValueAtOmega24
 
 #print axioms CM24.igusaCMValue24_field
+#print axioms CM24.singularModulus6
 #print axioms CM24.thetaQuotientValue24_field
 #print axioms CM24.thetaValueAtOmega24_of_singularModulus6
 #print axioms CM24.igusaCMValue24_of_singularModulus6
