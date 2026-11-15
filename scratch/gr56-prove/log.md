@@ -34,3 +34,11 @@ Base 43513d87 (leaf-fold25). Target: research field `gonzalezRotgerProp56X6` (`G
   `GR56.r5fpCountLe_of_eichler : EichlerOptEmbCount6 → hU → hG → hM → R5fpCountLe`
 - `HDec.FS5NoCM.nocm_on_witness_le`, `fibreComTrivialOwn_of_le`, `fibreComTrivialFull_of_le`,
   `fibreComTrivialFull_of_leaves'_le`, `fibreComTrivialFull_of_leaves''_le` (consumer chain with R5fpCountLe).
+- §8b-§8f compile (VERIFIED): `conj_of_iso`, `qmIsoBC`, `exists_eigvec`, `latData_of_torus`, `com_equiv_of_eig`,
+  `cmMap`, `cmMap_injective`, `cmMap_surjective`, `cmPointsOptEmb6_of`, `r5fpCount_of_leaves`,
+  `gonzalezRotgerProp56X6_of_leaves`; `#print axioms`: standard three.
+- `#discharges` rerun (VERIFIED, discharges.txt): `DISCHARGES [OpenResearchLeaves22.gonzalezRotgerProp56X6] by
+  GR56.gonzalezRotgerProp56X6_of_leaves still assumes [GRCountX6.EichlerOptEmbCount6, GR56.QMTorusAbelian,
+  GR56.CMPairDescendsQbar, UniformizationLeafAll, GAGAMorphism, MumfordTorsionAlgClosed]`; 63 open, 1956 checked, 8 discharge one.
+- autofold.json (3 new leaves) `--dry-run`: strict 46/10 on 56 -> 48/10 on 58; strictest 45/11 -> 47/11 (VERIFIED);
+  generated module (FoldCheck.lean, dry-run output minus line 1) compiles, `sixContactMin_of_open30` standard axioms.
