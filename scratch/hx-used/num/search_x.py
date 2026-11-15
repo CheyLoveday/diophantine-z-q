@@ -3,6 +3,8 @@
 import itertools
 from mpmath import mp, mpf, mpc, exp, pi, jtheta, nprod, inf
 mp.dps = 40
+import sys
+MM = int(sys.argv[1]) if len(sys.argv) > 1 else 4
 I = mpc(0, 1)
 
 def eta(t):
@@ -43,16 +45,22 @@ taus = [mpc('0.1', '1.3'), mpc('-0.23', '0.71'), mpc('0.31', '0.9')]
 res = {}
 for t in taus:
     pts = {}
-    for a in range(4):
-        for b in range(4):
+    for a in range(MM):
+        for b in range(MM):
             if (a, b) == (0, 0):
                 continue
-            pts[(a, b)] = wp16(mpf(a)/64 + b*t/4, t)
+            pts[(a, b)] = wp16(mpf(a)/(16*MM) + b*t/MM, t)
     x, y = xC(t), yC(t)
     print('curve eq residual', abs(y**2 - x**3 - 4*x))
     res[t] = (x, y, pts)
 
-keys = list(res[taus[0]][2].keys())
+def neg(k):
+    return ((-k[0]) % MM, (-k[1]) % MM)
+keys = []
+for k in res[taus[0]][2].keys():
+    if neg(k) not in keys:
+        keys.append(k)
+print('points mod +-:', keys)
 for target in ['x', 'x/2', 'x-2', 'y']:
     for p1, p2, p3 in itertools.permutations(keys, 3):
         vals = []
@@ -61,5 +69,5 @@ for target in ['x', 'x/2', 'x-2', 'y']:
             r = (pts[p1] - pts[p2])/(pts[p3] - pts[p2])
             tv = {'x': x, 'x/2': x/2, 'x-2': x-2, 'y': y}[target]
             vals.append(r / tv)
-        if all(abs(v - vals[0]) < mpf(10)**-25 for v in vals):
+        if abs(vals[0]) > mpf(10)**-10 and all(abs(v - vals[0]) < mpf(10)**-25 for v in vals):
             print(target, '= c *', (p1, p2, p3), 'c =', mp.nstr(vals[0], 15))
