@@ -41,6 +41,27 @@ theorem isLocalNorm_of_eq_sq (h2 : (2 : K) ≠ 0) {w : K} (hw0 : w ≠ 0) (hw : 
     (x : K) : IsLocalNorm K d x :=
   ⟨(x + 1) / 2, (x - 1) / (2 * w), by rw [hw]; field_simp; ring⟩
 
+/-- Equal square classes give equal norm groups: if `d = D c²` with `c ≠ 0`, then `K(√d)` and
+`K(√D)` have the same norms. -/
+theorem isLocalNorm_iff_of_eq_mul_sq {D : ℤ} {c : K} (hc : c ≠ 0) (h : (d : K) = D * c ^ 2)
+    (x : K) : IsLocalNorm K d x ↔ IsLocalNorm K D x := by
+  constructor
+  · rintro ⟨y, z, rfl⟩; exact ⟨y, c * z, by rw [h]; ring⟩
+  · rintro ⟨y, z, rfl⟩; exact ⟨y, z / c, by rw [h]; field_simp⟩
+
+theorem isLocalNorm_iff_of_isSquare_div {D : ℤ} (hd : (d : K) ≠ 0) (hD : (D : K) ≠ 0)
+    (h : IsSquare ((d : K) / D)) (x : K) : IsLocalNorm K d x ↔ IsLocalNorm K D x := by
+  obtain ⟨c, hc⟩ := h
+  have hc0 : c ≠ 0 := by
+    rintro rfl
+    rw [mul_zero, div_eq_zero_iff] at hc
+    rcases hc with h0 | h0
+    · exact hd h0
+    · exact hD h0
+  refine isLocalNorm_iff_of_eq_mul_sq hc0 ?_ x
+  rw [div_eq_iff hD] at hc
+  rw [hc]; ring
+
 end General
 
 section Hensel
@@ -398,6 +419,16 @@ theorem pos_mul_of_real_iff {d D : ℤ} (hd : d ≠ 0) (hD : D ≠ 0)
   · exact absurd (h.mpr (real_isLocalNorm_of_pos hD' _)) (real_not_isLocalNorm_neg_one hd')
   · exact absurd (h.mp (real_isLocalNorm_of_pos hd' _)) (real_not_isLocalNorm_neg_one hD')
   · nlinarith
+
+theorem real_isSquare_div_of_pos_mul {d D : ℤ} (h : 0 < d * D) : IsSquare ((d : ℝ) / D) := by
+  have hD : (D : ℝ) ≠ 0 := by
+    intro h0; have : D = 0 := by exact_mod_cast h0
+    subst this; simp at h
+  have hpos : (0 : ℝ) < (d : ℝ) / D := by
+    have h' : (0 : ℝ) < (d : ℝ) * D := by exact_mod_cast h
+    have : (d : ℝ) / D = ((d : ℝ) * D) / ((D : ℝ) * D) := by field_simp
+    rw [this]; exact div_pos h' (mul_self_pos.mpr hD)
+  exact ⟨Real.sqrt ((d : ℝ) / D), (Real.mul_self_sqrt hpos.le).symm⟩
 
 end Infinity
 
