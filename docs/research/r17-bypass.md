@@ -35,7 +35,9 @@ reading: the fold changes nothing in either count now (strict 46/10 unchanged), 
 print states it, the leaf stays a consequence of Carayol (A) + Casselman, like `r17` today, with the
 transport step removed from it.
 
-COMPILE STATUS: see §5.
+**Compiles** (VERIFIED, 2026-11-15, Lean 4.35.0 / Mathlib v4.35.0): the contribution, the bypass
+file, `#discharges` (r17 discharged, still assumes only the new leaf, standard axioms) and the
+autofold dry-run fold (`sixContactMin_of_open29`, standard axioms). Details in §5.
 
 ## 1. Where `r17` is used (VERIFIED: grep and reading)
 
@@ -133,4 +135,40 @@ UNVERIFIED | conductor of ρ_{f,λ} equals N away from ℓ; check whether printe
 
 ## 5. Compile status and `#discharges`
 
-(filled in below after the runs)
+All runs at base 9a100aa7 on the host, one Lean process at a time.
+
+| what | command | outcome |
+| --- | --- | --- |
+| contribution | `lake build ZInQKernel.Contrib.OneProof.CarayolLevel` | success, 17 s, no warning in the file (VERIFIED) |
+| bypass | `lake env lean scratch/r17-bypass/Bypass.lean` | success, 11 s; only lint warnings of TailA's style (ambiguous `open`, `haveI`, `push_neg`); `afterG7_of3_levelLe` and `carayolR17'_of_newformRepConductor`: `[propext, Classical.choice, Quot.sound]` (`scratch/r17-bypass/Bypass-output.txt`) |
+| discharge check | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.CarayolLevel`, then `lake env lean scratch/r17-bypass/DischargesCheck.lean` | see below (`scratch/r17-bypass/DischargesCheck-output.txt`) |
+| fold | `python3 scripts/one_proof/autofold.py scratch/r17-bypass/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/r17-bypass/FoldDryRun.lean` | `strict count: 46/10 on 56 -> 46/10 on 56; strictest 45/11 -> 45/11`; `sixContactMin_of_open29` compiles with standard axioms (71 s) |
+
+`#discharges` (first entry; the other five are the already-folded contributions, as in the kit's
+worked example):
+
+```
+DISCHARGES [OpenResearchLeaves21.r17] by CarayolLevel.carayolR17'_of_newformRepConductor
+  still assumes: [CarayolLevel.NewformRepConductor]
+  axioms: [propext, Classical.choice, Quot.sound]
+...
+#discharges: 63 open hypotheses, 1630 theorems checked, 6 discharge one
+```
+
+The autofold spec `scratch/r17-bypass/autofold.json` replaces `r17` by the leaf `newformRepConductor`
+(kind `published`, flag `pending reading: …`, so it counts GLUE until read; the dry run confirms no
+count change). The contribution imports kernel modules only, so the fold has no import cycle.
+
+## 6. What remains
+
+* A reading of the conductor packaging (Darmon–Diamond–Taylor 1997 §3.1, Carayol 1986 §0 for
+  `F = ℚ`, or another survey) to clear the flag: then `newformRepConductor` is LEAF and the strict
+  GLUE count drops by one. If no print states it, re-flag it as a consequence.
+* The fold itself (integrator): `autofold.py scratch/r17-bypass/autofold.json`, the build, the hash
+  guard and OPEN.md, as for every fold. Not done here (this task edits nothing outside
+  `ZInQKernel/Contrib/OneProof/`).
+* Not recommended: a bypass fold to `CarayolLevelLe` (no count change; would need the G0 term of
+  `TailK.lean` restated).
+* Side benefit: `condExp_eq_of_intertwine` and `iso_of_attached` are the transport step that the
+  `eigenformHTNew` row also names ("transported to any semisimple attached rho"); the same pattern
+  could give that field an existence form too (not attempted).

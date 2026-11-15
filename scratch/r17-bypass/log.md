@@ -34,3 +34,26 @@ turns "ρ_f unramified at p" into "A_f good reduction at p", but "A_f (new) has 
 is Deligne–Rapoport/Carayol, not in any bundle; Faltings (r9a/b), de Rham (r10), Raynaud (r6), the
 Tate-module and CM leaves concern A, not f. The consumer cannot avoid the level: G16Out needs a
 bounded N with A a constituent of J₁(N), and Pan's theorem gives no level.
+
+## 4. Lean (all VERIFIED: compiled at base 9a100aa7)
+
+* Build tree: copied p1-quot2's .lake/build and lean/.lake/build (same base plus Contrib files), then
+  `lake build ZInQKernel.OneProof.H.TailZ34`: success, 31 min 53 s (rebuilt LPrefix … TailZ34).
+* `ZInQKernel/Contrib/OneProof/CarayolLevel.lean`: `lake build ZInQKernel.Contrib.OneProof.CarayolLevel`
+  success (17 s); after replacing deprecated `dif_pos`/`dif_neg` by `dite_eq_left`/`dite_eq_right`, no
+  warning in the file. Declarations: `condExp_eq_of_intertwine` (no SwanIndependent), `iso_of_attached`,
+  `NewformRepConductor` (new leaf), `carayolR17'_of_newformRepConductor : NewformRepConductor →
+  LadicCond.CarayolR17'`, `newformRepConductor_of_R17'`, `CarayolLevelLe`, `carayolLevelLe_of_R17'`.
+* `scratch/r17-bypass/Bypass.lean`: compiles (11 s), lint warnings only; `afterG7_of3_levelLe` standard axioms.
+* `#discharges` (scratch/r17-bypass/DischargesCheck.lean): `DISCHARGES [OpenResearchLeaves21.r17] by
+  CarayolLevel.carayolR17'_of_newformRepConductor; still assumes: [CarayolLevel.NewformRepConductor];
+  axioms: [propext, Classical.choice, Quot.sound]`; 63 open hypotheses, 1630 theorems checked.
+* autofold dry run: `strict count: 46/10 on 56 -> 46/10 on 56; strictest 45/11 -> 45/11`;
+  FoldDryRun.lean (`sixContactMin_of_open29`) compiles, standard axioms (71 s).
+
+## 5. Ratings
+
+* `NewformRepConductor`: published form pending reading (conductor packaging of ρ_{f,λ}; DDT 1997 §3.1,
+  Carayol 1986 §0, UNVERIFIED); equivalent to r17 modulo proved glue (both directions in Lean, the
+  converse with R14's existence). Counts GLUE until read; −1 strict GLUE if a reading confirms.
+* `CarayolLevelLe` (weakest needed form): consequence, not printed as such; not used by the fold.
