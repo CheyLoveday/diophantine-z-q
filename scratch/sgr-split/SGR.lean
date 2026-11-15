@@ -348,6 +348,33 @@ theorem fibreClassUnique : FibreClassUnique := by
 def AbVarSurfaceRelDim : Prop :=
   ∀ (K : Type) [Field K] (A : _root_.PkgI3.AbVar K), A.dim = 2 → SmoothOfRelativeDimension 2 A.X.hom
 
+/-- **`AbVarSurfaceRelDim` holds** (proved from the kernel's smooth dimension theory,
+`ZInQKernel/Contrib/Dim/SmoothStalk.lean`): take a standard smooth chart at `x` (Mathlib's
+`Smooth.exists_isStandardSmooth`) of relative dimension `d`, and a closed point `z` of the chart (`A` is
+Jacobson); then `d = dim 𝒪_{A,z} = dim A = 2` (`ringKrullDim_stalk_of_chart`,
+`topologicalKrullDim_eq_ringKrullDim_stalk_of_smooth`, `A` irreducible). -/
+theorem abVarSurfaceRelDim : AbVarSurfaceRelDim := by
+  intro K _ A hA
+  have : IrreducibleSpace A.X.left :=
+    GeometricallyIrreducible.irreducibleSpace_of_subsingleton A.X.hom
+  have : JacobsonSpace A.X.left := LocallyOfFiniteType.jacobsonSpace A.X.hom
+  constructor
+  intro x
+  obtain ⟨U, hU, V, hV, hxV, e, h⟩ := Smooth.exists_isStandardSmooth A.X.hom x
+  let _ := (A.X.hom.appLE U V e).hom.toAlgebra
+  have h' : Algebra.IsStandardSmooth Γ(Spec (CommRingCat.of K), U) Γ(A.X.left, V) := h
+  obtain ⟨ι, σ, _, _, ⟨P⟩⟩ := h'.out
+  have hP := P.isStandardSmoothOfRelativeDimension rfl
+  obtain ⟨z, hzV, hzc⟩ := nonempty_inter_closedPoints (Z := (V : Set A.X.left)) ⟨x, hxV⟩
+    V.isOpen.isLocallyClosed
+  have h1 := (ZInQ.Contrib.Dim.ringKrullDim_stalk_of_chart A.X.hom hV e P.dimension hP z hzV hzc).1
+  have h2 := (ZInQ.Contrib.Dim.topologicalKrullDim_eq_ringKrullDim_stalk_of_smooth A.X.hom z hzc).1
+  have hd : P.dimension = 2 := by
+    have : ((P.dimension : ℕ) : WithBot ℕ∞) = ((2 : ℕ) : WithBot ℕ∞) := by
+      rw [← h1, ← h2]; exact hA
+    exact_mod_cast this
+  exact ⟨U, hU, V, hV, hxV, e, hd ▸ hP⟩
+
 open MonoidalCategory CartesianMonoidalCategory MonObj _root_.PkgI3 in
 theorem ptObj_hom_self (K : Type) [Field K] : (AbVar.ptObj (K := K) K).hom = 𝟙 _ := by
   simp [AbVar.ptObj, Algebra.algebraMap_self]

@@ -18,13 +18,13 @@ The kernel now has them: r1univ-rigid's `LeafQM.AV.R1UnivRigid.QMAbScheme S` (an
 * `fibreClassUnique : FibreClassUnique` (proved: the pullback isomorphism of two fibres is a homomorphism by
   the kernel's `G0FibreSimple.rigidityHom`);
 * `qml3AsQMAb_of : AbVarSurfaceRelDim → QML3AsQMAb` (proved: an object over a field is a `QMAbScheme` over
-  `Spec K` with the same data);
-* `shimuraGoodReductionNoGuard_of_printed : ShimuraIntegralModelRep → AbVarSurfaceRelDim → QMAbFieldFibre →
+  `Spec K` with the same data) and `abVarSurfaceRelDim : AbVarSurfaceRelDim` (proved from the kernel's smooth
+  dimension theory: an abelian surface is smooth of relative dimension 2);
+* `shimuraGoodReductionNoGuard_of_printed : ShimuraIntegralModelRep → QMAbFieldFibre →
   ShimuraGoodReductionNoGuard`, the discharge.
 
-New hypotheses: the printed leaf `ShimuraIntegralModelRep` (Kottwitz/Buzzard/Morita), the textbook leaf
-`AbVarSurfaceRelDim` (dimension theory of smooth varieties), and the glue `QMAbFieldFibre` (fibres of a
-`QMAbScheme` at field points are objects). Report: docs/research/sgr-split.md.
+New hypotheses: the printed leaf `ShimuraIntegralModelRep` (Kottwitz/Buzzard/Morita) and the glue
+`QMAbFieldFibre` (fibres of a `QMAbScheme` at field points are objects). Report: docs/research/sgr-split.md.
 -/
 
 noncomputable section
@@ -411,14 +411,39 @@ theorem fibreClassUnique : FibreClassUnique := by
 
 /-! ## G2 from the dimension glue -/
 
-/-- **LEAF (textbook; unread): an abelian surface is smooth of relative dimension 2.** For an abelian variety
-`A/K` (the kernel's `PkgI3.AbVar`: proper, smooth, geometrically integral group scheme) whose underlying space
-has Krull dimension 2, the structure morphism is smooth of relative dimension 2. Printed: for `X` smooth over a
-field and irreducible, `Ω_{X/K}` is locally free of rank `dim X` and `X → Spec K` is smooth of relative dimension
-`dim X` (Stacks Project, the chapter Varieties, section on smooth varieties; Hartshorne II.8.15 for `K` algebraically
-closed; all locators UNVERIFIED). Mathlib v4.35 lacks `dim = tr.deg` for varieties, which this needs. -/
+/-- **An abelian surface is smooth of relative dimension 2**: for an abelian variety `A/K` (the kernel's
+`PkgI3.AbVar`) whose underlying space has Krull dimension 2, the structure morphism is smooth of relative
+dimension 2. (`QML3` records `A.dim = 2`; `QMAbScheme` asks for `SmoothOfRelativeDimension 2`.) Proved below
+(`abVarSurfaceRelDim`). -/
 def AbVarSurfaceRelDim : Prop :=
   ∀ (K : Type) [Field K] (A : PkgI3.AbVar K), A.dim = 2 → SmoothOfRelativeDimension 2 A.X.hom
+
+/-- **`AbVarSurfaceRelDim` holds** (proved from the kernel's smooth dimension theory,
+`ZInQKernel/Contrib/Dim/SmoothStalk.lean`): take a standard smooth chart at `x` (Mathlib's
+`Smooth.exists_isStandardSmooth`) of relative dimension `d`, and a closed point `z` of the chart (`A` is
+Jacobson); then `d = dim 𝒪_{A,z} = dim A = 2` (`ringKrullDim_stalk_of_chart`,
+`topologicalKrullDim_eq_ringKrullDim_stalk_of_smooth`, `A` irreducible). -/
+theorem abVarSurfaceRelDim : AbVarSurfaceRelDim := by
+  intro K _ A hA
+  have : IrreducibleSpace A.X.left :=
+    GeometricallyIrreducible.irreducibleSpace_of_subsingleton A.X.hom
+  have : JacobsonSpace A.X.left := LocallyOfFiniteType.jacobsonSpace A.X.hom
+  constructor
+  intro x
+  obtain ⟨U, hU, V, hV, hxV, e, h⟩ := Smooth.exists_isStandardSmooth A.X.hom x
+  let _ := (A.X.hom.appLE U V e).hom.toAlgebra
+  have h' : Algebra.IsStandardSmooth Γ(Spec (CommRingCat.of K), U) Γ(A.X.left, V) := h
+  obtain ⟨ι, σ, _, _, ⟨P⟩⟩ := h'.out
+  have hP := P.isStandardSmoothOfRelativeDimension rfl
+  obtain ⟨z, hzV, hzc⟩ := nonempty_inter_closedPoints (Z := (V : Set A.X.left)) ⟨x, hxV⟩
+    V.isOpen.isLocallyClosed
+  have h1 := (ZInQ.Contrib.Dim.ringKrullDim_stalk_of_chart A.X.hom hV e P.dimension hP z hzV hzc).1
+  have h2 := (ZInQ.Contrib.Dim.topologicalKrullDim_eq_ringKrullDim_stalk_of_smooth A.X.hom z hzc).1
+  have hd : P.dimension = 2 := by
+    have : ((P.dimension : ℕ) : WithBot ℕ∞) = ((2 : ℕ) : WithBot ℕ∞) := by
+      rw [← h1, ← h2]; exact hA
+    exact_mod_cast this
+  exact ⟨U, hU, V, hV, hxV, e, hd ▸ hP⟩
 
 open MonoidalCategory CartesianMonoidalCategory MonObj PkgI3 in
 theorem ptObj_hom_self (K : Type) [Field K] : (AbVar.ptObj (K := K) K).hom = 𝟙 _ := by
@@ -496,10 +521,10 @@ theorem qml3AsQMAb_of (hD : AbVarSurfaceRelDim) : QML3AsQMAb := by
 
 /-! ## The discharge -/
 
-/-- **`ShimuraGoodReductionNoGuard` from the printed integral model, the textbook dimension leaf and the
-fibre glue G1** (compiled; standard axioms). -/
+/-- **`ShimuraGoodReductionNoGuard` from the printed integral model and the fibre glue G1** (compiled;
+standard axioms). -/
 theorem shimuraGoodReductionNoGuard_of_printed (hRep : ShimuraIntegralModelRep)
-    (hD : AbVarSurfaceRelDim) (g1 : QMAbFieldFibre) : ShimuraGoodReductionNoGuard :=
-  shimuraGoodReductionNoGuard_of_rep hRep g1 (qml3AsQMAb_of hD) fibreClassUnique
+    (g1 : QMAbFieldFibre) : ShimuraGoodReductionNoGuard :=
+  shimuraGoodReductionNoGuard_of_rep hRep g1 (qml3AsQMAb_of abVarSurfaceRelDim) fibreClassUnique
 
 end SGRSplit
