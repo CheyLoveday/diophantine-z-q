@@ -143,8 +143,14 @@ hypotheses. Its output (generated from `scratch/contrib-kit/DischargesTest-outpu
 <!-- worked-example:begin -->
 ```
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
-DISCHARGES [OpenResearchLeaves17.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+DISCHARGES [OpenResearchLeaves19.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves19.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
+  still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves19.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.ElkiesX6Star.elkiesX6StarPrinted_of_ab
+  still assumes: [HDec.QMSplit.Moduli.ElkiesEquationsX6Ab]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
   still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
@@ -152,7 +158,7 @@ DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
 DISCHARGES [OpenTextbookLeaves10.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 68 open hypotheses, 862 theorems checked, 3 discharge one
+#discharges: 66 open hypotheses, 1202 theorems checked, 5 discharge one
 ```
 <!-- worked-example:end -->
 
@@ -202,7 +208,8 @@ hypothesis left the list.
 4. Update the ledgers: the folded rows' status in fold-queue.tsv, a credits.tsv row (with fold and commit) for
    each folded contribution, and any recorded readings in reviews.tsv.
 5. Run `scripts/one_proof/render_open.py`, then `scripts/one_proof/render_open.py --check` with
-   `RENDER_OPEN_PRIVATE_PATTERNS` naming the private pattern file (see the script's docstring).
+   `ONE_PROOF_HYGIENE_FILE` naming the file of site-specific patterns (see the comment above `HYGIENE` in the
+   script).
 
 ## Who answers
 
