@@ -657,4 +657,125 @@ theorem Rsym_eq_zero {t : ℂ} (ht : 0 < t.im) : Rsym t = 0 := by
 
 end CuspForms
 
+
+/-! ## J8. `E₁ = E₂ = E₃ = 0`, hence Jacobi's derivative formula -/
+
+/-- If `f g = 0` on `ℍ` for analytic `f, g`, then `f = 0` or `g = 0` on `ℍ`. -/
+theorem eq_zero_or_eq_zero_of_mul {f g : ℂ → ℂ}
+    (hf : AnalyticOnNhd ℂ f {w : ℂ | 0 < w.im}) (hg : AnalyticOnNhd ℂ g {w : ℂ | 0 < w.im})
+    (hfg : ∀ t : ℂ, 0 < t.im → f t * g t = 0) :
+    (∀ t : ℂ, 0 < t.im → f t = 0) ∨ (∀ t : ℂ, 0 < t.im → g t = 0) := by
+  have hU : IsPreconnected {w : ℂ | 0 < w.im} := (convex_halfSpace_im_gt 0).isPreconnected
+  have hI : (0 : ℝ) < (I : ℂ).im := by simp
+  rcases (hf I hI).eventually_eq_zero_or_eventually_ne_zero with h | h
+  · left
+    intro t ht
+    exact hf.eqOn_zero_of_preconnected_of_eventuallyEq_zero hU hI h ht
+  · right
+    have hg0 : ∀ᶠ z in 𝓝 I, g z = 0 := by
+      rw [← (hg I hI).frequently_zero_iff_eventually_zero]
+      have hpos : ∀ᶠ z in 𝓝[≠] I, 0 < z.im := nhdsWithin_le_nhds (U_isOpen.mem_nhds hI)
+      refine ((h.and hpos).mono fun z hz => ?_).frequently
+      exact (mul_eq_zero.mp (hfg z hz.2)).resolve_left hz.1
+    intro t ht
+    exact hg.eqOn_zero_of_preconnected_of_eventuallyEq_zero hU hI hg0 ht
+
+/-- A primitive cube root of unity. -/
+def omega3 : ℂ := (-1 + Real.sqrt 3 * I) / 2
+
+theorem omega3_sq_add : omega3 ^ 2 + omega3 + 1 = 0 := by
+  have h3 : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]; push_cast; ring
+  simp only [omega3]
+  ring_nf
+  rw [Complex.I_sq, h3]
+  ring
+
+theorem omega3_ne_one : omega3 ≠ 1 := by
+  intro h
+  have := congrArg Complex.im h
+  simp [omega3] at this
+
+theorem omega3_sq_ne_one : omega3 ^ 2 ≠ 1 := by
+  intro h
+  have h2 := omega3_sq_add
+  rw [h] at h2
+  have : omega3 = -2 := by linear_combination h2
+  have := congrArg Complex.re this
+  simp [omega3] at this
+  norm_num at this
+
+theorem E_eq_zero {t : ℂ} (ht : 0 < t.im) : E1 t = 0 := by
+  -- `a = E₁², b = E₂²`: `a² + ab + b² = 0` on `ℍ`
+  have hab : ∀ s : ℂ, 0 < s.im →
+      (E1 s ^ 2 - omega3 * E2 s ^ 2) * (E1 s ^ 2 - omega3 ^ 2 * E2 s ^ 2) = 0 := by
+    intro s hs
+    have hP := Psym_eq_zero hs
+    have hR := Rsym_eq_zero hs
+    simp only [Psym, Rsym] at hP hR
+    have hc : E3 s ^ 2 = -(E1 s ^ 2) - E2 s ^ 2 := by linear_combination hP
+    rw [hc] at hR
+    have hw := omega3_sq_add
+    linear_combination (-1 : ℂ) * hR + (-(E1 s ^ 2 * E2 s ^ 2) + (omega3 - 1) * E2 s ^ 4) * hw
+  have ha1 : AnalyticOnNhd ℂ (fun s => E1 s ^ 2 - omega3 * E2 s ^ 2) {w : ℂ | 0 < w.im} :=
+    fun s hs => ((analyticAt_E1 hs).pow 2).sub (analyticAt_const.mul ((analyticAt_E2 hs).pow 2))
+  have ha2 : AnalyticOnNhd ℂ (fun s => E1 s ^ 2 - omega3 ^ 2 * E2 s ^ 2) {w : ℂ | 0 < w.im} :=
+    fun s hs => ((analyticAt_E1 hs).pow 2).sub (analyticAt_const.mul ((analyticAt_E2 hs).pow 2))
+  have ht' := im_neg_inv_pos ht
+  have hτ := ne_zero_of_im_pos ht
+  have ht4 : t ^ 4 ≠ 0 := pow_ne_zero 4 hτ
+  rcases eq_zero_or_eq_zero_of_mul ha1 ha2 hab with h | h
+  · -- `E₁² = ω E₂²` on `ℍ`; at `−1/t`: `E₂² = ω E₁²`
+    have h1 := h t ht
+    have h2 := h (-1 / t) ht'
+    rw [E1_S ht, E2_S ht] at h2
+    have h2' : E2 t ^ 2 = omega3 * E1 t ^ 2 := by
+      apply mul_left_cancel₀ ht4
+      linear_combination h2
+    have hb : (1 - omega3 ^ 2) * E2 t ^ 2 = 0 := by linear_combination h2' + omega3 * h1
+    have hb0 : E2 t ^ 2 = 0 :=
+      (mul_eq_zero.mp hb).resolve_left (sub_ne_zero.mpr omega3_sq_ne_one.symm)
+    have : E1 t ^ 2 = 0 := by linear_combination h1 + omega3 * hb0
+    exact pow_eq_zero_iff (two_ne_zero) |>.mp this
+  · have h1 := h t ht
+    have h2 := h (-1 / t) ht'
+    rw [E1_S ht, E2_S ht] at h2
+    have h2' : E2 t ^ 2 = omega3 ^ 2 * E1 t ^ 2 := by
+      apply mul_left_cancel₀ ht4
+      linear_combination h2
+    have hw := omega3_sq_add
+    -- `E₂² = ω⁴ E₂² = ω E₂²`
+    have hw3 : omega3 ^ 3 = 1 := by linear_combination (omega3 - 1) * hw
+    have hb : (1 - omega3) * E2 t ^ 2 = 0 := by
+      linear_combination h2' + omega3 ^ 2 * h1 + omega3 * E2 t ^ 2 * hw3
+    have hb0 : E2 t ^ 2 = 0 :=
+      (mul_eq_zero.mp hb).resolve_left (sub_ne_zero.mpr omega3_ne_one.symm)
+    have : E1 t ^ 2 = 0 := by linear_combination h1 + omega3 ^ 2 * hb0
+    exact pow_eq_zero_iff (two_ne_zero) |>.mp this
+
+/-- **Jacobi's derivative formula, proved**: `dλ/dt = πi λ θ₄⁴` for `λ = θ₂⁴/θ₃⁴`. -/
+theorem jacobiLambdaDeriv : JacobiLambdaDeriv := by
+  intro t ht
+  have h2 := thetaTwo_ne_zero ht
+  have h3 := thetaThree_ne_zero ht
+  have hd := ((differentiableAt_thetaTwo ht).hasDerivAt.pow 4).div
+    ((differentiableAt_thetaThree ht).hasDerivAt.pow 4) (pow_ne_zero 4 h3)
+  have key : (fun s => thetaTwo s ^ 4 / thetaThree s ^ 4) = thetaTwo ^ 4 / thetaThree ^ 4 := by
+    funext s; simp
+  rw [key]
+  convert hd using 1
+  have hE := E_eq_zero ht
+  simp only [E1, LB, LA] at hE
+  have hq : deriv thetaTwo t / thetaTwo t =
+      deriv thetaThree t / thetaThree t + π * I / 4 * thetaFour t ^ 4 := by
+    linear_combination -hE
+  rw [div_eq_iff h2] at hq
+  simp only [Pi.pow_apply]
+  rw [hq]
+  norm_num
+  field_simp
+  ring
+
 end ZInQ.GZWeil
+
+#print axioms ZInQ.GZWeil.jacobiLambdaDeriv
