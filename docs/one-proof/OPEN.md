@@ -11,13 +11,13 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**59 hypotheses of the H part** (in the bundles `OpenAddedLeaves16`, `OpenGlue7`, `OpenResearchLeaves19`, `OpenTextbookLeaves10`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**58 hypotheses of the H part** (in the bundles `OpenAddedLeaves16`, `OpenGlue7`, `OpenResearchLeaves19`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 45 published / 14 glue** (the strictest flagged reading; 46/13 without the one strictest-reading flag).
+* **Strict count: 44 published / 14 glue** (the strictest flagged reading; 45/13 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 4, consequence 7, project glue 1, published 47.
+* By kind: composite 4, consequence 7, project glue 1, published 46.
 
 ## How to help
 
@@ -45,7 +45,6 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`r7a`](#r7a) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) | 2026-11-14 |
 | [`semistableUnipotent`](#semistableunipotent) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/unipotent-b)) | 2026-11-14 |
 | [`rayClassCMAb`](#rayclasscmab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft)) | 2026-11-14 |
-| [`mulEtaleAbelianScheme`](#muletaleabelianscheme) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994)) | 2026-11-14 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
@@ -91,7 +90,6 @@ Unread locators: SGA 3, EGA IV, Faltings 1983 Lemma 5, GIT, BLR 1.4, 7.2, 7.3. C
 * [`mumfordRigidityCore`](#mumfordrigiditycore) (LEAF; unverified-locator): Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED)
 * [`faltingsLemma5Printed`](#faltingslemma5printed) (LEAF; unread, unverified-locator): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read)
 * [`sga3_VIB_3_10`](#sga3_vib_3_10) (LEAF; unverified-locator): SGA 3 VI_B 3.10 (number UNVERIFIED)
-* [`mulEtaleAbelianScheme`](#muletaleabelianscheme) (LEAF): [m] on an abelian scheme over Spec O is etale when m is a unit in O: BLR 7.3 Lemma 2; Mumford GIT 6
 * [`neronSchemeExtensionExists`](#neronschemeextensionexists) (LEAF): BLR 1.4 Thm 3
 
 ### Packet R3
@@ -205,7 +203,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`groupSchemeEquidim`](#groupschemeequidim) | textbook | published | LEAF |  |  | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
 | [`igusaGL2`](#igusagl2) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) |
-| [`mulEtaleAbelianScheme`](#muletaleabelianscheme) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #80](https://github.com/elliotglazer/diophantine-z-q/issues/80) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994)) |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289)) |
 | [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
@@ -1003,7 +1000,7 @@ CToPrinted.SGA3_VIB_3_10
 
 ### cartierSmooth
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.cartierSmooth`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.cartierSmooth`; kind **published**, strict **LEAF**.
 * Source: Cartier 1962; Oort 1966; Mumford 11 Thm 1; Milne, Algebraic Groups Thm 3.23; Stacks 047N
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1025,7 +1022,7 @@ AVGlue.CartierSmooth
 
 ### charPolyIndepOfEllAlgClosed
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.charPolyIndepOfEllAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 4 (specialization)
 * tier T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1044,7 +1041,7 @@ ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
 
 ### gagaMorphism
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.gagaMorphism`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.gagaMorphism`; kind **published**, strict **LEAF**.
 * Source: Serre, GAGA (1956), for homomorphisms of complex abelian varieties (homlattice 3.2)
 * tier T3-T4 (model triage, unreviewed); discussion: [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82).
 * Human readings recorded: none.
@@ -1062,7 +1059,7 @@ ZInQ.HomLattice.GAGAMorphism
 
 ### geomConnOfRationalPoint
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.geomConnOfRationalPoint`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.geomConnOfRationalPoint`; kind **published**, strict **LEAF**.
 * Source: Stacks 04KV (Varieties 33.7.14), with finite type and a rational point added
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1080,7 +1077,7 @@ AVGlue.GeomConnOfRationalPoint
 
 ### groupSchemeEquidim
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.groupSchemeEquidim`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.groupSchemeEquidim`; kind **published**, strict **LEAF**.
 * Source: Stacks, groupoid schemes, properties of group schemes over a field; SGA 3 VI_A 2.4 (finite type)
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1099,7 +1096,7 @@ AVGlue.GroupSchemeEquidim
 
 ### homFreeFiniteAlgClosed
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.homFreeFiniteAlgClosed`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.homFreeFiniteAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 3
 * tier T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1118,7 +1115,7 @@ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed
 
 ### igusaGL2
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.igusaGL2`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.igusaGL2`; kind **published**, strict **LEAF**.
 * Source: Igusa's theorem: the Galois image on E_j[N] over Q(j) is GL_2(Z/N) (Igusa, Amer. J. Math. 81 (1959); Lang, Elliptic functions Ch. 6 3)
 * tier T2-T3 (model triage, unreviewed); discussion: [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83).
 * Human readings recorded: none.
@@ -1136,30 +1133,9 @@ ZInQ.RLeaf.IgusaGL2
 > model, because the monodromy of a family over the `j`-line maps onto `PSL₂(ℤ)` and `PSL₂(ℤ)` does
 > not lift to `SL₂(ℤ)`; the determinant is the cyclotomic character, onto `(ℤ/N)^×` over `ℚ(j)`.
 
-### mulEtaleAbelianScheme
-
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.mulEtaleAbelianScheme`; kind **published**, strict **LEAF**.
-* Source: [m] on an abelian scheme over Spec O is etale when m is a unit in O: BLR 7.3 Lemma 2; Mumford GIT 6
-* packet [R2](#packet-r2); tier T2-T3 (model triage, unreviewed); discussion: [elliotglazer #80](https://github.com/elliotglazer/diophantine-z-q/issues/80).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994)).
-
-```lean
-AvSplit.T4.MulEtaleAbelianScheme
-```
-
-> **LEAF (H-24, a): multiplication by `m` on an abelian scheme is étale for `m` invertible on
-> the base.** Bosch–Lütkebohmert–Raynaud, *Néron models* (1990), §7.3, Lemma 2 (b) (UNVERIFIED
-> locator: for a smooth commutative group scheme `G` over `S` with connected fibres, `[n]_G` is étale
-> if `n` is invertible on `S`; for an abelian scheme it is moreover finite and flat); also Mumford,
-> *Geometric invariant theory* (3rd ed. 1994), §6.1 and Mumford, *Abelian varieties*, §6 Application
-> 2 over a field (UNVERIFIED). Stated over an affine base `Spec O`, `[m] = (𝟙 𝒜)^m` in the group
-> `Hom(𝒜, 𝒜)`, and an abelian scheme as in `PkgI2.IsAbelianScheme` (proper, smooth, geometrically
-> connected fibres; Mumford GIT Def. 6.1).
-
 ### mumfordTorsionAlgClosed
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.mumfordTorsionAlgClosed`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.mumfordTorsionAlgClosed`; kind **published**, strict **LEAF**.
 * Source: A(k)[n] = (Z/n)^{2g} over k algebraically closed, char k not dividing n: Mumford, Abelian varieties 4, Application 2 (iv)
 * tier T2-T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1179,7 +1155,7 @@ AvSplit.MumfordTorsionAlgClosed
 
 ### neronSchemeExtensionExists
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.neronSchemeExtensionExists`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.neronSchemeExtensionExists`; kind **published**, strict **LEAF**.
 * Source: BLR 1.4 Thm 3
 * packet [R2](#packet-r2); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
@@ -1198,7 +1174,7 @@ ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 ### poincareComplement
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.poincareComplement`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.poincareComplement`; kind **published**, strict **LEAF**.
 * Source: Poincare's complete reducibility, complement form: Milne 1986 Prop. 12.1; Mumford 19 Thm 1
 * tier T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1219,7 +1195,7 @@ ZInQ.Contrib.AVB1.PoincareComplement
 
 ### regularSmoothPerfect
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.regularSmoothPerfect`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.regularSmoothPerfect`; kind **published**, strict **LEAF**.
 * Source: Stacks 00TV (S_q regular implies S smooth at q over a perfect field)
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83).
 * Human readings recorded: none.
@@ -1241,7 +1217,7 @@ CurveSplit.RegularSmoothPerfect
 
 ### uniformizationLeafAll
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.uniformizationLeafAll`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.uniformizationLeafAll`; kind **published**, strict **LEAF**.
 * Source: Mumford, Abelian varieties 1 (A^an = C^g/Lambda), in bp-analytic's coordinate form (kernel leaf AN3)
 * tier T4 (model triage, unreviewed); discussion: [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82).
 * Human readings recorded: none.
@@ -1255,7 +1231,7 @@ BPAnalytic.Uniformization.UniformizationLeafAll
 
 ### yuThm11
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.yuThm11`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves11.yuThm11`; kind **published**, strict **LEAF**.
 * Source: Chia-Fu Yu, J. Pure Appl. Algebra 217 (2013) Thm 1.1 (with its splitting clause; case labels dropped)
 * label narrowing (pending narrowing: a narrower restatement is planned, so it is not offered as stated); tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.

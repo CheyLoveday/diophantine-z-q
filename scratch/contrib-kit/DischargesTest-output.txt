@@ -11,7 +11,7 @@ DISCHARGES [OpenResearchLeaves19.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.Elk
 DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
   still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves10.cartierSmooth] by t3 (uses sorry: not a proof)
+DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 66 open hypotheses, 1202 theorems checked, 5 discharge one
+#discharges: 65 open hypotheses, 1203 theorems checked, 5 discharge one
