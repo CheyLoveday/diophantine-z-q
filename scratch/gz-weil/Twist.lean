@@ -518,4 +518,73 @@ theorem periods_cd (h : ModularParamC1) {d : ℕ} [NeZero d] (hd4 : d % 4 = 1)
   have := Submodule.smul_mem L.lattice (jacobiSym ((a.val : ℕ) : ℤ) d) (hmL a)
   rwa [zsmul_eq_mul] at this
 
+/-! ## §7. `ShimuraCMParamCd` (gz-hl3) from the level-32 leaf -/
+
+/-- For a newform `f` of `C_d` the Eichler integral is `Φ_d`. -/
+theorem eichler_eq_eichlerCd {d : ℕ} (hd4 : d % 4 = 1) (hsq : Squarefree d) {N : ℕ} [NeZero N]
+    (f : HeckeRing.GL2.Newform N 2)
+    (hf : ∀ n : ℕ, n ≠ 0 → coeff f n = ((shortCurve (-(d : ℚ) ^ 2)).LFunction n : ℂ))
+    (τ : ℍ) : ZInQ.GZHL3.eichler f τ = eichlerCd d (τ : ℂ) := by
+  unfold ZInQ.GZHL3.eichler eichlerCd
+  congr 1
+  funext n
+  rw [hf (n + 1) (Nat.succ_ne_zero n),
+    ZInQ.GZStatements.LFunction_cd_eq_heckeCoeff hd4 hsq (Nat.succ_ne_zero n)]
+
+/-- **The analytic modular parametrization of `C_d`** (`d ≡ 1 mod 4` squarefree) from the
+level-32 leaf: the newform has level `32 d²` (`GZStatements.level_eq_of_coeff_cd`), its Eichler
+integral is `Φ_d` (Deuring, proved), and `periods_cd`. -/
+theorem eichlerShimuraParamAt_cd (h : ModularParamC1) {d : ℕ} (hd4 : d % 4 = 1)
+    (hsq : Squarefree d) : ZInQ.GZHL3.EichlerShimuraParamAt (shortCurve (-(d : ℚ) ^ 2)) := by
+  intro N _ f hχ hf L hL
+  have : NeZero d := ⟨by omega⟩
+  have hN := ZInQ.GZStatements.level_eq_of_coeff_cd hd4 hsq f hχ hf
+  subst hN
+  obtain ⟨c, hc, hper⟩ := periods_cd h hd4 hsq L hL
+  refine ⟨c, hc, fun γ hγ τ => ?_⟩
+  rw [eichler_eq_eichlerCd hd4 hsq f hf, eichler_eq_eichlerCd hd4 hsq f hf]
+  exact hper γ hγ τ
+
+/-- **gz-hl3's `ShimuraCMParamCd` from the single level-32 leaf `ModularParamC1`.** -/
+theorem shimuraCMParamCd_of_modularParamC1 (h : ModularParamC1) :
+    ZInQ.GZHL3.ShimuraCMParamCd := fun d hd hsq =>
+  eichlerShimuraParamAt_cd h (by omega) hsq
+
+/-! ## §8. `ModularParamC1` is no stronger than gz-hl3's leaves -/
+
+/-- `ModularParamC1` is `EichlerShimuraParamAt C₁` at the level-32 newform. -/
+theorem modularParamC1_of_eichlerShimuraParamAt
+    (h : ZInQ.GZHL3.EichlerShimuraParamAt curveC1) : ModularParamC1 := by
+  intro L hL
+  obtain ⟨_, g, hgχ, hg⟩ := ZInQ.GZStatements.exists_newform_level32 (d := 1) (by norm_num)
+    squarefree_one
+  have hgf : ∀ n : ℕ, n ≠ 0 → coeff g n = (curveC1.LFunction n : ℂ) := fun n hn => by
+    rw [hg n hn, ← ZInQ.GZStatements.LFunction_cd_eq_heckeCoeff (d := 1) (by norm_num)
+      squarefree_one hn]
+  obtain ⟨c, hc, hcL⟩ := h (32 * 1 ^ 2) g hgχ hgf L hL
+  refine ⟨c, hc, fun γ hγ τ => ?_⟩
+  have hγ' : γ ∈ Gamma0 (32 * 1 ^ 2) := by simpa using hγ
+  have := hcL γ hγ' τ
+  rwa [eichler_eq_eichlerCd (d := 1) (by norm_num) squarefree_one g hgf,
+    eichler_eq_eichlerCd (d := 1) (by norm_num) squarefree_one g hgf] at this
+
+/-- **`ModularParamC1` follows from gz-hl3's leaves** (so it is no stronger than them). -/
+theorem modularParamC1_of_leaves (hU : ZInQ.GZHL3.WeierstrassUniformization)
+    (hSW : ZInQ.GZHL3.StrongWeilCurve) (hI : ZInQ.GZHL3.IsogenyLattice) : ModularParamC1 := by
+  have : curveC1.IsElliptic := shortCurve_cd_isElliptic (by norm_num)
+  exact modularParamC1_of_eichlerShimuraParamAt
+    (ZInQ.GZHL3.eichlerShimuraParamAt_of_leaves hU hSW hI curveC1)
+
+/-- **`GZStatements.GrossZagierHeegnerCd` from the level-32 leaf and the four Heegner-point
+leaves** (no `StrongWeilCurve`, no `IsogenyLattice`). -/
+theorem grossZagierHeegnerCd_of_leaves (hU : ZInQ.GZHL3.WeierstrassUniformization)
+    (hP : ModularParamC1) (hHP : ZInQ.GZHL3.HeegnerPointRationalCd)
+    (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd) (hGC : ZInQ.GZHL3.GrossConjugationCd) :
+    ZInQ.GZStatements.GrossZagierHeegnerCd :=
+  ZInQ.GZHL3.grossZagierHeegnerCd_of_leaves hU (shimuraCMParamCd_of_modularParamC1 hP) hHP hGZ hGC
+
 end ZInQ.GZWeil
+
+#print axioms ZInQ.GZWeil.shimuraCMParamCd_of_modularParamC1
+#print axioms ZInQ.GZWeil.modularParamC1_of_leaves
+#print axioms ZInQ.GZWeil.grossZagierHeegnerCd_of_leaves
