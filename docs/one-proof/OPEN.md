@@ -9,13 +9,13 @@ Diophantine in Q" from the hypotheses below. Everything else is proved. Each hyp
 one in Lean, or reducing it to statements printed in the literature, removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**61 hypotheses of the H part** (in the bundles `OpenAddedLeaves11`, `OpenGlue7`, `OpenResearchLeaves12`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**65 hypotheses of the H part** (in the bundles `OpenAddedLeaves12`, `OpenGlue7`, `OpenResearchLeaves13`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 43 published / 18 glue** (the strictest flagged reading; 44/17 without the one strictest-reading flag).
+* **Strict count: 47 published / 18 glue** (the strictest flagged reading; 48/17 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 5, consequence 11, project glue 1, published 44.
+* By kind: composite 4, consequence 11, project glue 1, published 49.
 
 ## Index
 
@@ -24,15 +24,15 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`shimuraGoodReductionNoGuard`](#shimuragoodreductionnoguard) | added | composite | GLUE |  | cloud W13 |
 | [`t09SymmIsogenyExists`](#t09symmisogenyexists) | added | consequence | GLUE |  | t09-pic |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | added | composite | GLUE |  | igusa-alg |
-| [`x6ConicModel`](#x6conicmodel) | added | consequence | GLUE |  | x6-fold |
 | [`quotientP1Coordinate`](#quotientp1coordinate) | glue | project glue | GLUE |  | fleet |
 | [`blr_1_2_4`](#blr_1_2_4) | research | consequence | GLUE | pending reading: may be printed in the strictly henselian form | open |
 | [`eigenformHTNew`](#eigenformhtnew) | research | consequence | GLUE |  | open |
+| [`elkiesEquationsX6Ab`](#elkiesequationsx6ab) | research | published | GLUE | pending reading: the fibre clause combines Elkies with the moduli meaning of W (composite under the strict reading) | open |
 | [`gonzalezRotgerCountX6Ab`](#gonzalezrotgercountx6ab) | research | published | GLUE | strictest reading: composite (frontier r5 4.8) | open |
 | [`r11r12`](#r11r12) | research | composite | GLUE |  | open |
 | [`r16`](#r16) | research | composite | GLUE |  | open |
 | [`r17`](#r17) | research | consequence | GLUE |  | open |
-| [`r1r2Ab`](#r1r2ab) | research | composite | GLUE |  | x6-fold |
+| [`rayClassCMAb`](#rayclasscmab) | research | consequence | GLUE |  | rayclass-cft |
 | [`raynaudSemistable`](#raynaudsemistable) | research | consequence | GLUE | pending reading: base (strictly henselian trait vs number-field DVR) | reduct-b |
 | [`semistablePersistsDVR`](#semistablepersistsdvr) | research | consequence | GLUE | pending reading: base (strictly henselian trait vs number-field DVR) | reduct-b |
 | [`semistableReductionDVR`](#semistablereductiondvr) | research | consequence | GLUE | pending reading: base (strictly henselian trait vs number-field DVR) | reduct-b |
@@ -40,14 +40,17 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`sga7_IX_3_3`](#sga7_ix_3_3) | research | consequence | GLUE | pending reading: base | open |
 | [`shimuraFamilyAb`](#shimurafamilyab) | research | consequence | GLUE |  | shimura-cft |
 | [`axSenTate`](#axsentate) | added | published | LEAF |  | cloud W11 |
+| [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) | added | published | LEAF |  | open |
 | [`deligneComponentsY3PrintedAb`](#delignecomponentsy3printedab) | added | published | LEAF |  | open |
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | open |
+| [`geomConnOfAlgClosure`](#geomconnofalgclosure) | added | published | LEAF | weakened form | open |
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | added | published | LEAF |  | cloud W17 |
 | [`qmCentralizerCMC`](#qmcentralizercmc) | added | published | LEAF |  | open |
 | [`shimizuCovolumeO1`](#shimizucovolumeo1) | added | published | LEAF |  | open |
 | [`shimuraTaniyamaQbar`](#shimurataniyamaqbar) | added | published | LEAF |  | open |
 | [`tateTwistInvariants`](#tatetwistinvariants) | added | published | LEAF |  | cloud W11 |
 | [`valenceFormulaCocompactEq`](#valenceformulacocompacteq) | added | published | LEAF |  | open |
+| [`babaGranathRationalAb`](#babagranathrationalab) | research | published | LEAF | one table reading (CM assignment, section 3.1) UNVERIFIED | open |
 | [`bostLowerBound`](#bostlowerbound) | research | published | LEAF |  | open |
 | [`deRhamH1AbVarT`](#derhamh1abvart) | research | published | LEAF |  | open |
 | [`dsThm965`](#dsthm965) | research | published | LEAF |  | open |
@@ -55,6 +58,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`egaIV_8_10_5_openImm`](#egaiv_8_10_5_openimm) | research | published | LEAF |  | open |
 | [`faltingsLemma5Printed`](#faltingslemma5printed) | research | published | LEAF | unread | open |
 | [`gaudronRemondThm14`](#gaudronremondthm14) | research | published | LEAF |  | open |
+| [`gonzalezRotgerX6Ab`](#gonzalezrotgerx6ab) | research | published | LEAF |  | open |
 | [`hodgeTateDecompAbVar`](#hodgetatedecompabvar) | research | published | LEAF |  | open |
 | [`igusaChi10`](#igusachi10) | research | published | LEAF |  | open |
 | [`igusaPsi4`](#igusapsi4) | research | published | LEAF |  | open |
@@ -87,7 +91,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 
 ### shimuraGoodReductionNoGuard
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.shimuraGoodReductionNoGuard`; kind **composite**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.shimuraGoodReductionNoGuard`; kind **composite**, strict **GLUE**.
 * Source: vert-witness's ShimuraGoodReduction without the Qbar-point guard (redundant given r1r2): Kottwitz 1992 5; Buzzard 1997; Morita 1981; Carayol 1986 (not statable in published form today, curve-split 3.6)
 * Status: cloud W13: briefed, not yet claimed on the issue (since 2026-11-14) [issue #79](https://github.com/elliotglazer/diophantine-z-q/issues/79).
 
@@ -99,7 +103,7 @@ HDec.CurveSplitGR.ShimuraGoodReductionNoGuard
 
 ### t09SymmIsogenyExists
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.t09SymmIsogenyExists`; kind **consequence**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.t09SymmIsogenyExists`; kind **consequence**, strict **GLUE**.
 * Source: Mumford 6, 8, 20, 23 (not splittable, av-split 4.1)
 * Status: t09-pic: in progress: Pic0, phi_L, ample bundles, e_n (since 2026-11-14).
 
@@ -118,7 +122,7 @@ HDec.WeilPairing.T09_SymmIsogenyExists
 
 ### thetaRatiosAlgebraic
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.thetaRatiosAlgebraic`; kind **composite**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.thetaRatiosAlgebraic`; kind **composite**, strict **GLUE**.
 * Source: Shimura 1976; Mumford Tata II IIIa 8; Igusa (qm-split: ThetaNullNonvanishing + glue, not folded)
 * Status: igusa-alg: in progress: theta-glue reduced it to one leaf and five polynomial identities (since 2026-11-14).
 
@@ -138,36 +142,6 @@ HDec.HSyn.G0Split.ThetaPt.ThetaRatiosAlgebraic
 > elliptic curves; UNVERIFIED locator: Igusa 1962/1967). `ThetaNullAlgebraic` follows
 > (`thetaNullAlgebraic_of_ratios`, proved).
 
-### x6ConicModel
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.x6ConicModel`; kind **consequence**, strict **GLUE**.
-* Source: Kurihara 1979; Elkies 1998 3
-* Status: x6-fold: fold in progress (x6-glue) (since 2026-11-14).
-
-```lean
-HDec.X6Kummer.X6ConicModel
-```
-
-> **N2-L′ (leaf, new; the global form of `X6KummerModel`): `X₆ = X₀(6,1)` is the conic
-> `Y² + 3X² + 3Z² = 0` with `π₆ = −16(X² + Z²)/(27 Z²)`, on `ℚ̄`-points of one witness.**
-> 
-> *Published statement* (Kurihara, J. Fac. Sci. Univ. Tokyo 25 (1979): `X₀(6,1) : x² + y² + 3 = 0`;
-> Elkies, ANTS-III, LNCS 1423 (1998), §3: `X*(6) = X₆/W` with coordinate `t`, `t = 0, 1, ∞` at the
-> CM points of discriminants `−24, −4, −3`, and `X₆ = X*(6)(√−t, √(3(t − 1)))`; locators
-> UNVERIFIED, no network). Put `X = √−t`, `Y = √(3(t−1))`, `Z = 1`: then `Y² + 3X² + 3 = 0`,
-> `t = −X²/Z²`, `W` acts by the sign changes, and `j = 16(t − 1)/27 = −16(X² + Z²)/(27 Z²)` is the
-> coordinate of R2fp (`j = 0, ∞, −16/27` at `−4, −3, −24`; a Möbius map is fixed by three values).
-> An isomorphism of `ℚ`-schemes `X₆ ≅ C` gives a bijection on `ℚ̄`-points commuting with
-> `Aut(ℚ̄/ℚ)`, compatible with the maps to `P¹`. Consistency checks (VERIFIED by computation in
-> `scratch/x6-kummer/conic_check.py`): the involutions `X ↦ −X`, `Y ↦ −Y`, `(X,Y) ↦ (−X,−Y)` fix
-> exactly the two points over `j = −16/27`, `0`, `∞` respectively (Riemann–Hurwitz for a
-> `(ℤ/2)²`-cover of `P¹` by a genus-0 curve); the residue fields there are `ℚ(√−3)`, `ℚ(i)`,
-> `ℚ(√−3)`, as González–Rotger Thm 5.12 (the bundle's `R5ptProps`) requires for `ℤ[√−6]` (`b = 0`,
-> `h = 2`), `ℤ[i]` (`b = 1`, `h = 1`, contains `ℚ(i)`), `ℤ[ζ₃]` (`b = 1`, `h = 1`, contains
-> `ℚ(√−3)`); `C` and Kurihara's conic both correspond to `(−1, −3)_ℚ`, ramified at `{3, ∞}`. The
-> fibre fields `ℚ(√−t, √(3(t−1)))` were checked against González–Rotger Thm 5.12 on all 24 rational
-> CM points of Elkies' table by rv-nocm §1.3 Part B.
-
 ### quotientP1Coordinate
 
 * Bundle field `HDec.HSyn.OpenGlue7.quotientP1Coordinate`; kind **project glue**, strict **GLUE**.
@@ -183,7 +157,7 @@ HDec.MCRGlue.QuotientP1Coordinate
 
 ### blr_1_2_4
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.blr_1_2_4`; kind **consequence**, strict **GLUE**; flag: pending reading: may be printed in the strictly henselian form.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.blr_1_2_4`; kind **consequence**, strict **GLUE**; flag: pending reading: may be printed in the strictly henselian form.
 * Source: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 4 (locator UNVERIFIED)
 * Status: open: no one is on it.
 
@@ -197,7 +171,7 @@ CToPrinted.BLR_1_2_4
 
 ### eigenformHTNew
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.eigenformHTNew`; kind **consequence**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.eigenformHTNew`; kind **consequence**, strict **GLUE**.
 * Source: Kato 2004 9.2-9.4 for newforms, transported to any semisimple attached rho and dualized (Kato's V_f not definable in Mathlib)
 * Status: open: no one is on it.
 
@@ -212,9 +186,24 @@ ZInQ.Contrib.HodgeSplit.EigenformHTNew
 > (Chebotarev and Brauer–Nesbitt), and the negation of Hodge–Tate weights under duals. Not a leaf:
 > `V_{F_λ}(f)` is not definable in Mathlib today.
 
+### elkiesEquationsX6Ab
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.elkiesEquationsX6Ab`; kind **published**, strict **GLUE**; flag: pending reading: the fibre clause combines Elkies with the moduli meaning of W (composite under the strict reading).
+* Source: Elkies 1998, equations of X*(6) as scheme charts over the t-line (display, section and 0/infinity orientation UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+HDec.QMSplit.Moduli.ElkiesEquationsX6Ab
+```
+
+> x6-glue, printed form (on abelian schemes): Elkies, *Shimura curve computations*, ANTS-III, LNCS 1423 (1998),
+> §3 (display, section number and the `0`/`∞` orientation UNVERIFIED): `X₆` over the `t`-line is
+> `s² = −t, r² = 3(t − 1)` (`X6Glue.ElkiesCharts`), with `t` a coordinate on `X₆/W` and `t = 0, 1, ∞` at the CM
+> points of discriminants `−24, −4, −3`.
+
 ### gonzalezRotgerCountX6Ab
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.gonzalezRotgerCountX6Ab`; kind **published**, strict **GLUE**; flag: strictest reading: composite (frontier r5 4.8).
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.gonzalezRotgerCountX6Ab`; kind **published**, strict **GLUE**; flag: strictest reading: composite (frontier r5 4.8).
 * Source: Gonzalez-Rotger, J. Math. Soc. Japan 58 (2006) Prop. 5.6 (read by the audit) at (D,N) = (6,1), on the points of one canonical coarse witness X6 (with the R1fp/X6 clause lists and Lemma QP, as for r1r2)
 * Status: open: no one is on it.
 
@@ -228,7 +217,7 @@ ShimuraSplit.GonzalezRotgerCountX6Ab
 
 ### r11r12
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r11r12`; kind **composite**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.r11r12`; kind **composite**, strict **GLUE**.
 * Source: Pan 2022 Thm 1.0.4 with Berger 2002 Thm 0.7 (not splittable: no B_st in Mathlib, hodge-split)
 * Status: open: no one is on it.
 
@@ -244,7 +233,7 @@ HDec.PkgI4.PanBerger
 
 ### r16
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r16`; kind **composite**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.r16`; kind **composite**, strict **GLUE**.
 * Source: Shimura 1973 Thm 1; Shimura 1971 Thm 7.9; Diamond-Shurman
 * Status: open: no one is on it.
 
@@ -281,7 +270,7 @@ LeafModCurves.R16_EichlerShimuraJ1'
 
 ### r17
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r17`; kind **consequence**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.r17`; kind **consequence**, strict **GLUE**.
 * Source: Carayol 1986 Theoreme (A) (read by the audit)
 * Status: open: no one is on it.
 
@@ -294,22 +283,23 @@ LadicCond.CarayolR17'
 > the locator audit, adopted 2026-11-12 by loc-fix). `condExp` is the Serre–Tate conductor, which
 > does not change under duals, so the Tate normalization of `AttachedTo` is harmless.
 
-### r1r2Ab
+### rayClassCMAb
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r1r2Ab`; kind **composite**, strict **GLUE**.
-* Source: R1(a,c,d), R2, R5 on one Y3, X6: Shimura 1967 Main Thms I-II; Deligne 1971 Thm 4.21, Cor. 5.7, Ex. 5.8; Baba-Granath 2008 Thm 2.1; Gonzalez-Rotger 2006 Prop. 5.6, Thm 5.12; Lemma QP
-* Status: x6-fold: fold in progress: x6-glue proves it from published-form leaves plus RayClassCM (since 2026-11-14).
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.rayClassCMAb`; kind **consequence**, strict **GLUE**.
+* Source: Shimura reciprocity at CM points in ray-class form (a consequence of Shimura 1967 Main Thm I)
+* Status: rayclass-cft: in progress: RayClassCM from Shimura Main Thm I (Deligne adelic form) (since 2026-11-14).
 
 ```lean
-HDec.LeafAdopt.R1R2fpRepAb
+ShimuraGlue.Ray.RayClassCMAb
 ```
 
-> H-1 (`r1r2`), printed form: the fine moduli scheme `Y` of abelian schemes with `𝒪`-action and level 3
-> (`R1fpPropsAb`) with the coarse `X₆`, the Hecke, recognition and `π₀` clauses of `R1R2fpRep`. Replaces `r1r2`.
+> x6-glue, **consequence** (on abelian schemes): Shimura reciprocity at CM points of the canonical model
+> (Shimura, Ann. of Math. 85 (1967) Main Thm I; Deligne 1971 §3; locators UNVERIFIED) in ray-class form: the
+> residue field of a CM point by `ℚ(i)`, `ℚ(ζ₃)`, `ℚ(√−6)` embeds into the ray class field of conductor `3`.
 
 ### raynaudSemistable
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.raynaudSemistable`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.raynaudSemistable`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
 * Source: SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion; Silverberg-Zarhin 1995) over a DVR: m >= 3 invertible in O and A[m] rational over K imply semistable reduction at O (the print may be over a strictly henselian base: reduct-glue proves this leaf from RaynaudSemistableSH with StrictHenselizationNeron)
 * Status: reduct-b: in progress (since 2026-11-14).
 
@@ -322,7 +312,7 @@ ReductSplit.RaynaudSemistable
 
 ### semistablePersistsDVR
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.semistablePersistsDVR`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.semistablePersistsDVR`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
 * Source: SGA 7 I Exp. IX 3.3, first assertion, over a DVR, K'/K finite (the print allows any extension of DVRs; it may be over a strictly henselian base: reduct-glue proves it from SemistablePersistsSH with StrictHenselizationPair)
 * Status: reduct-b: in progress (since 2026-11-14).
 
@@ -335,7 +325,7 @@ ReductSplit.SemistablePersistsDVR
 
 ### semistableReductionDVR
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.semistableReductionDVR`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.semistableReductionDVR`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
 * Source: SGA 7 I Exp. IX Thm 3.6 over a DVR: A_K' semistable at every place above O for a finite K' (print: finite separable)
 * Status: reduct-b: in progress (since 2026-11-14).
 
@@ -348,7 +338,7 @@ ReductSplit.SemistableReductionDVR
 
 ### semistableUnipotent
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.semistableUnipotent`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.semistableUnipotent`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
 * Source: SGA 7 I Exp. IX Prop. 3.5, semistable => (sigma-1)^2 = 0 on T_l for sigma in inertia, one sigma at a time
 * Status: unipotent-b: in progress: printed strictly henselian form of SGA 7 IX 3.5 (since 2026-11-14).
 
@@ -360,7 +350,7 @@ ReductSplit.SemistableUnipotent
 
 ### sga7_IX_3_3
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.sga7_IX_3_3`; kind **consequence**, strict **GLUE**; flag: pending reading: base.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.sga7_IX_3_3`; kind **consequence**, strict **GLUE**; flag: pending reading: base.
 * Source: SGA 7 IX 3.3 (may be stated over a strictly henselian trait; used at number-field DVRs)
 * Status: open: no one is on it.
 
@@ -372,7 +362,7 @@ CToPrinted.SGA7_IX_3_3
 
 ### shimuraFamilyAb
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.shimuraFamilyAb`; kind **consequence**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.shimuraFamilyAb`; kind **consequence**, strict **GLUE**.
 * Source: Shimura 1967 Main Thm I (holomorphic family over the upper half plane) on one fine witness, composed with every algebraic pi : Y -> P1 (GAGA-level step, flagged by qm-split)
 * Status: shimura-cft: proved from Shimura Main Thm I in Deligne adelic form; awaiting a rating, then a fold (since 2026-11-14).
 
@@ -385,7 +375,7 @@ HDec.QMSplit.Moduli.ShimuraFamilyAb
 
 ### axSenTate
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.axSenTate`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.axSenTate`; kind **published**, strict **LEAF**.
 * Source: C_p^{G_K} = K: Tate 1967 3.3 Thm 1; Sen 1969; Ax 1970
 * Status: cloud W11: briefed, not yet claimed on the issue (since 2026-11-14) [issue #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 
@@ -399,9 +389,23 @@ ZInQ.Contrib.HodgeSplit.AxSenTate
 > `K` finite over `ℚ_p` inside `ℚ̄_p`; the inclusion `K ⊆ ℂ_p^{G_K}` is trivial, the published
 > content is `ℂ_p^{G_K} ⊆ K`.
 
+### deligneComponentsX6PrintedAb
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.deligneComponentsX6PrintedAb`; kind **published**, strict **LEAF**.
+* Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and section 3; PSPM 33 (1979) 2.1.3, 2.6.3, at level O-hat^x on X6 (locators UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+ShimuraGlue.DeligneComponentsX6PrintedAb
+```
+
+> x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
+> Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
+> `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean).
+
 ### deligneComponentsY3PrintedAb
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.deligneComponentsY3PrintedAb`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.deligneComponentsY3PrintedAb`; kind **published**, strict **LEAF**.
 * Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 (UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and Lemma QP, as for r1r2); over Mathlib's FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, ConnectedComponents
 * Status: open: no one is on it.
 
@@ -415,7 +419,7 @@ ShimuraGlue.DeligneComponentsY3PrintedAb
 
 ### egaIV_8_10_5_xii
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
 * Source: EGA IV_3 8.10.5 (xii)
 * Status: open: no one is on it.
 
@@ -428,9 +432,22 @@ ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
 > presentation over `Dᵢ`.  If the base change of `Xᵢ` to `lim D` is proper, then the base change
 > of `Xᵢ` to some `Dⱼ` (`j → i`) is proper.
 
+### geomConnOfAlgClosure
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.geomConnOfAlgClosure`; kind **published**, strict **LEAF**; flag: weakened form.
+* Source: textbook: geometric connectedness from connectedness over the algebraic closure (weakened)
+* Status: open: no one is on it.
+
+```lean
+HDec.QMSplit.Moduli.GeomConnOfAlgClosure
+```
+
+> x6-glue (shimura-split), textbook, weakened: for a proper `X → Spec k`, `char k = 0`, connectedness of
+> `X ×_k k̄` gives geometric connectedness (EGA IV 4.5; Stacks 0389; locators UNVERIFIED).
+
 ### milneIsogenyQuasiInverse
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.milneIsogenyQuasiInverse`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.milneIsogenyQuasiInverse`; kind **published**, strict **LEAF**.
 * Source: fg = [d], gf = [d] as morphisms: Milne 1986 Rem. 8.4; Milne's notes Prop. 7.1; Mumford 7
 * Status: cloud W17: briefed (CharZero form), after the two above (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
@@ -451,7 +468,7 @@ AvSplit.MilneIsogenyQuasiInverse
 
 ### qmCentralizerCMC
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.qmCentralizerCMC`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.qmCentralizerCMC`; kind **published**, strict **LEAF**.
 * Source: End_O(A) of a QM surface over C is Z or an optimally embedded order Phi^-1(O) of an imaginary quadratic k: Shimura 1967 1-3; Jordan 1981 3; Gonzalez-Rotger 2006 5
 * Status: open: no one is on it.
 
@@ -465,7 +482,7 @@ HDec.QMSplit.Aut.QMCentralizerCMC
 
 ### shimizuCovolumeO1
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.shimizuCovolumeO1`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.shimizuCovolumeO1`; kind **published**, strict **LEAF**.
 * Source: iota(O^1) is cocompact Fuchsian with covolume 2pi/3 (Shimura 1971 Prop. 9.2; Shimizu 1965; Voight Thm 39.1.13)
 * Status: open: no one is on it.
 
@@ -478,7 +495,7 @@ HDec.LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
 
 ### shimuraTaniyamaQbar
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.shimuraTaniyamaQbar`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.shimuraTaniyamaQbar`; kind **published**, strict **LEAF**.
 * Source: Shimura-Taniyama 1961 12.4 Prop. 26; Milne, CM notes 7 (model over Qbar)
 * Status: open: no one is on it.
 
@@ -501,7 +518,7 @@ HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
 
 ### tateTwistInvariants
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.tateTwistInvariants`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.tateTwistInvariants`; kind **published**, strict **LEAF**.
 * Source: C_p(i)^{G_K} = 0 for i != 0, K finite over Q_p in Qbar_p: Tate, p-divisible groups (1967) 3.3 Thm 2
 * Status: cloud W11: briefed, not yet claimed on the issue (since 2026-11-14) [issue #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 
@@ -518,7 +535,7 @@ ZInQ.Contrib.HodgeSplit.TateTwistInvariants
 
 ### valenceFormulaCocompactEq
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves11.valenceFormulaCocompactEq`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.valenceFormulaCocompactEq`; kind **published**, strict **LEAF**.
 * Source: valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16, Thm 2.20; Rankin Thm 4.1.4), over Mathlib's invariant measure on the upper half plane and a genuine fundamental domain
 * Status: open: no one is on it.
 
@@ -529,9 +546,24 @@ HDec.LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq
 > qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
 > Thm 2.20; Rankin Thm 4.1.4).
 
+### babaGranathRationalAb
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.babaGranathRationalAb`; kind **published**, strict **LEAF**; flag: one table reading (CM assignment, section 3.1) UNVERIFIED.
+* Source: Baba-Granath 2008, rationality of the genus-2 curves with QM by the order of discriminant 6 (locator UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+HDec.QMSplit.Moduli.BabaGranathRationalAb
+```
+
+> x6-glue, printed form (on abelian schemes): Baba–Granath, Canad. J. Math. 60 (2008), Thm 2.1 and Lemma 3.1
+> (read by the locator audit), on one canonical coarse witness `X₆`: a coordinate `π : X₆ → P¹` whose fibres are the
+> `Aut(𝒪)`-twist classes, with three distinct rational values at the CM points of discriminants `−4, −3, −24` (the
+> CM assignment read from the §3.1 table, UNVERIFIED).
+
 ### bostLowerBound
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.bostLowerBound`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.bostLowerBound`; kind **published**, strict **LEAF**.
 * Source: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996): h_D(A) >= -(g/2) log 2pi, Deligne normalization (display UNVERIFIED, height-split §2)
 * Status: open: no one is on it.
 
@@ -543,7 +575,7 @@ ZInQ.HeightSplit.BostLowerBound
 
 ### deRhamH1AbVarT
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.deRhamH1AbVarT`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.deRhamH1AbVarT`; kind **published**, strict **LEAF**.
 * Source: H^1_et(A_Fbar, Q_p), written Hom(V_p A, Q_p), is de Rham with the printed D_dR (Faltings 1989; Tsuji 1999; Scholze 2013 Cor. 1.8, wording read by h-leaves)
 * Status: open: no one is on it.
 
@@ -559,7 +591,7 @@ ZInQ.Contrib.HodgeSplit.DeRhamH1AbVarT
 
 ### dsThm965
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.dsThm965`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.dsThm965`; kind **published**, strict **LEAF**.
 * Source: Diamond-Shurman, GTM 228, Thm 9.6.5 (Deligne 1971; Shimura 1971 Thm 7.14 for k = 2), coefficients extended along iota_L o iota_C^-1
 * Status: open: no one is on it.
 
@@ -580,7 +612,7 @@ ZInQ.Contrib.HodgeSplit.DSThm965
 
 ### dsThm966
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.dsThm966`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.dsThm966`; kind **published**, strict **LEAF**.
 * Source: Deligne-Serre 1974 Thm 4.1; Diamond-Shurman Thm 9.6.6 (k = 1, continuous, finite image)
 * Status: open: no one is on it.
 
@@ -598,7 +630,7 @@ ZInQ.Contrib.HodgeSplit.DSThm966
 
 ### egaIV_8_10_5_openImm
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.egaIV_8_10_5_openImm`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.egaIV_8_10_5_openImm`; kind **published**, strict **LEAF**.
 * Source: EGA IV 8.10.5 (locator UNVERIFIED)
 * Status: open: no one is on it.
 
@@ -610,7 +642,7 @@ CToPrinted.EGAIV_8_10_5_openImm
 
 ### faltingsLemma5Printed
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.faltingsLemma5Printed`; kind **published**, strict **LEAF**; flag: unread.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.faltingsLemma5Printed`; kind **published**, strict **LEAF**; flag: unread.
 * Source: Faltings 1983, Lemma 5 (locator UNVERIFIED; not read)
 * Status: open: no one is on it.
 
@@ -623,7 +655,7 @@ CToPrinted.FaltingsLemma5Printed
 
 ### gaudronRemondThm14
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.gaudronRemondThm14`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.gaudronRemondThm14`; kind **published**, strict **LEAF**.
 * Source: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the audit), over the published stable height
 * Status: open: no one is on it.
 
@@ -633,9 +665,22 @@ ZInQ.HeightSplit.GaudronRemondThm14
 
 > height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces `r19`.
 
+### gonzalezRotgerX6Ab
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.gonzalezRotgerX6Ab`; kind **published**, strict **LEAF**.
+* Source: Gonzalez-Rotger 2006 on X6 (printed form; locator UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+HDec.QMSplit.Moduli.GonzalezRotgerX6Ab
+```
+
+> x6-glue, printed form (on abelian schemes): González–Rotger, J. Math. Soc. Japan 58 (2006), Thm 5.12 (read by
+> the locator audit), residue fields of CM points, on one canonical coarse witness `X₆`.
+
 ### hodgeTateDecompAbVar
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.hodgeTateDecompAbVar`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.hodgeTateDecompAbVar`; kind **published**, strict **LEAF**.
 * Source: C_p (x) V_p(A) = C_p(1)^g + C_p^g, G_F-equivariant (Fontaine, Invent. Math. 65 (1982); Tate 1967 4; Faltings 1988), bases of the two g-dimensional spaces chosen
 * Status: open: no one is on it.
 
@@ -657,7 +702,7 @@ ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar
 
 ### igusaChi10
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.igusaChi10`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.igusaChi10`; kind **published**, strict **LEAF**.
 * Source: Igusa 1962, 1967: chi10 = -2^-14 prod theta_m^2 is a Siegel cusp form of weight 10
 * Status: open: no one is on it.
 
@@ -674,7 +719,7 @@ HDec.QMSplit.Theta.IgusaChi10
 
 ### igusaPsi4
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.igusaPsi4`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.igusaPsi4`; kind **published**, strict **LEAF**.
 * Source: Igusa, Amer. J. Math. 84 (1962), 86 (1964), 89 (1967): psi4 = 2^-2 sum theta_m^8 is a Siegel modular form of weight 4 (flag: Igusa defines psi4 as an Eisenstein series and prints the theta expression as a theorem)
 * Status: open: no one is on it.
 
@@ -698,7 +743,7 @@ HDec.QMSplit.Theta.IgusaPsi4
 
 ### javanpeykarBound
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.javanpeykarBound`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.javanpeykarBound`; kind **published**, strict **LEAF**.
 * Source: Javanpeykar, Algebra Number Theory 8 (2014) Thm 1.1.1 (read by the audit), for curves over K with a K-rational Belyi function, over the published stable height
 * Status: open: no one is on it.
 
@@ -711,7 +756,7 @@ ZInQ.HeightSplit.JavanpeykarBound
 
 ### mumfordRigidityCore
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.mumfordRigidityCore`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.mumfordRigidityCore`; kind **published**, strict **LEAF**.
 * Source: Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED)
 * Status: open: no one is on it.
 
@@ -726,7 +771,7 @@ LeafQM.AV.R1UnivRigid.MumfordRigidityCore
 
 ### neronSchemeModelExistsDVR
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.neronSchemeModelExistsDVR`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.neronSchemeModelExistsDVR`; kind **published**, strict **LEAF**.
 * Source: BLR, Neron models, 1.4 Thm 3 over a DVR, scheme form (no group law)
 * Status: open: no one is on it.
 
@@ -738,7 +783,7 @@ ReductSplit.NeronSchemeModelExistsDVR
 
 ### pazukiCor13Upper
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.pazukiCor13Upper`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.pazukiCor13Upper`; kind **published**, strict **LEAF**.
 * Source: Pazuki, Bull. SMF 140 (2012) Cor. 1.3(2), upper half (read by the audit; RISK: Pazuki's level-2 coordinates, height-split §8)
 * Status: open: no one is on it.
 
@@ -750,7 +795,7 @@ ZInQ.HeightSplit.PazukiCor13Upper
 
 ### r7a
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r7a`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.r7a`; kind **published**, strict **LEAF**.
 * Source: Serre-Tate 1968 Thm 1
 * Status: open: no one is on it.
 
@@ -765,7 +810,7 @@ PkgI2.NeronOggShafarevich
 
 ### r9a
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r9a`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.r9a`; kind **published**, strict **LEAF**.
 * Source: Faltings 1983 Satz 3
 * Status: open: no one is on it.
 
@@ -778,7 +823,7 @@ PkgI3.FaltingsSemisimple
 
 ### r9b
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.r9b`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.r9b`; kind **published**, strict **LEAF**.
 * Source: Faltings 1983 Satz 4, Kor. 1
 * Status: open: no one is on it.
 
@@ -792,7 +837,7 @@ PkgI3.FaltingsTate
 
 ### raynaudKernelBound
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.raynaudKernelBound`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.raynaudKernelBound`; kind **published**, strict **LEAF**.
 * Source: Raynaud's bound on the kernel term in Faltings' Lemma 5 (number UNVERIFIED)
 * Status: open: no one is on it.
 
@@ -804,7 +849,7 @@ CToPrinted.RaynaudKernelBound
 
 ### sga3_VIB_3_10
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves12.sga3_VIB_3_10`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenResearchLeaves13.sga3_VIB_3_10`; kind **published**, strict **LEAF**.
 * Source: SGA 3 VI_B 3.10 (number UNVERIFIED)
 * Status: open: no one is on it.
 
