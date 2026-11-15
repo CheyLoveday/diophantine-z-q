@@ -1325,7 +1325,65 @@ theorem bc_comp_iso (α : Qbar →+* Qbar) (ιe : Qbar →+* ℂ) (hα : σQ.com
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, hα]
   exact G0StableBC.exists_pbPaste _ _ _ sq A₀.X
 
+/-- **`CMPairDescendsQbar` from the bundle's LEAF `shimuraTaniyamaQbar`** (Shimura–Taniyama, model over `ℚ̄` of a
+CM abelian variety; field of `OpenAddedLeaves17`). The CM element `ψ`, `ψ² = d < 0`, and `ι(i)` give
+`ℚ(√2, √d) ⊂ End⁰(A)` of degree 4 (`QMSplitSTQM.embed_Ed`), so `A ≅ A₀ ×_{ℚ̄, ιe} ℂ`; writing `ιe = σQ ∘ α`
+(`exists_alpha`), `A ≅ (A₀ ×_α ℚ̄) ×_{σQ} ℂ` (`bc_comp_iso`), and `ι` descends by T11(b) (`endBC_bijective`). -/
+theorem cmPairDescendsQbar_of_st
+    (hST : HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar) : CMPairDescendsQbar := by
+  intro A hA q hcm
+  obtain ⟨d, hd, ψ, hψ, hψψ⟩ := hcm
+  haveI : Fact (Irreducible (Polynomial.X ^ 2 - Polynomial.C (algebraMap ℚ
+      HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.K1 (d : ℚ)))) :=
+    ⟨HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.irr_d d (by exact_mod_cast hd)⟩
+  obtain ⟨f, hf⟩ := HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.embed_Ed q d hd ψ hψ hψψ
+  obtain ⟨ιe, A₀, e, e', h1, h2⟩ := hST A hA (HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.Ed (d : ℚ))
+    (HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.Ed_finrank (d : ℚ)) ⟨f, hf⟩
+  obtain ⟨α, hα⟩ := exists_alpha ιe
+  obtain ⟨I, hI⟩ := bc_comp_iso α ιe hα A₀
+  let F : ((bcα α A₀).baseChange ℂ).X ≅ A.X := I ≪≫ ⟨e.hom, e'.hom, h1, h2⟩
+  have hF1 : IsMonHom F.hom := (inferInstance : IsMonHom (I.hom ≫ e.hom))
+  have hF2 : IsMonHom F.inv := inferInstance
+  have hdim : (bcα α A₀).dim = 2 := by
+    rw [← PkgI3.AbVar.dim_baseChange (bcα α A₀) ℂ]
+    have he : topologicalKrullDim ((bcα α A₀).baseChange ℂ).X.left = topologicalKrullDim A.X.left :=
+      IsHomeomorph.topologicalKrullDim_eq _ (Scheme.homeoOfIso ((Over.forget _).mapIso F)).isHomeomorph
+    exact he.trans hA
+  let qC : LeafQM.O →+* PkgI3.AbVar.End ((bcα α A₀).baseChange ℂ) := (conjEnd F hF1 hF2).comp q.iota
+  have hqC : Function.Injective qC := by
+    intro a b hab
+    apply q.injective
+    apply PkgI3.AbVar.Hom.ext'
+    have := congrArg PkgI3.AbVar.Hom.hom hab
+    simp only [qC, RingHom.comp_apply, conjEnd_hom] at this
+    simpa using this
+  let eBC := RingEquiv.ofBijective _ (endBC_bijective (bcα α A₀))
+  let q₀ : QMStr (bcα α A₀) := ⟨eBC.symm.toRingHom.comp qC, eBC.symm.injective.comp hqC⟩
+  have hq₀ : ∀ a, HDec.G0ModField.KernelField.endBC (bcα α A₀) ℂ (q₀.iota a) = qC a := fun a =>
+    eBC.apply_symm_apply (qC a)
+  refine ⟨⟨bcα α A₀, hdim, q₀⟩, ⟨⟨@PkgI3.AbVar.Hom.mk' ℂ _ _ _ F.hom hF1,
+    @PkgI3.AbVar.Hom.mk' ℂ _ _ _ F.inv hF2, F.hom_inv_id, F.inv_hom_id, fun a => ?_⟩⟩⟩
+  change (HDec.G0ModField.KernelField.endBC (bcα α A₀) ℂ (q₀.iota a)).hom ≫ F.hom = F.hom ≫ (q.iota a).hom
+  rw [hq₀]
+  change (F.hom ≫ (q.iota a).hom ≫ F.inv) ≫ F.hom = F.hom ≫ (q.iota a).hom
+  simp
+
 end STQ
+
+/-- **The field `gonzalezRotgerProp56X6` from Eichler's count, `QMTorusAbelian`, the bundle's LEAF
+`shimuraTaniyamaQbar` and the textbook fields.** The form for the fold: one new leaf besides Eichler's. -/
+theorem gonzalezRotgerProp56X6_of_st (hE : GRCountX6.EichlerOptEmbCount6) (hE1 : QMTorusAbelian)
+    (hST : HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : GRCountX6.GonzalezRotgerProp56X6 :=
+  gonzalezRotgerProp56X6_of_leaves hE hE1 (cmPairDescendsQbar_of_st hST) hU hG hM
+
+/-- `CMPointsOptEmb6` from `QMTorusAbelian`, `shimuraTaniyamaQbar` and the textbook fields. -/
+theorem cmPointsOptEmb6_of_st (hE1 : QMTorusAbelian)
+    (hST : HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : GRCountX6.CMPointsOptEmb6 :=
+  cmPointsOptEmb6_of hE1 (cmPairDescendsQbar_of_st hST) hU hG hM
 
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 

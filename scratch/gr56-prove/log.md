@@ -42,3 +42,13 @@ Base 43513d87 (leaf-fold25). Target: research field `gonzalezRotgerProp56X6` (`G
   GR56.CMPairDescendsQbar, UniformizationLeafAll, GAGAMorphism, MumfordTorsionAlgClosed]`; 63 open, 1956 checked, 8 discharge one.
 - autofold.json (3 new leaves) `--dry-run`: strict 46/10 on 56 -> 48/10 on 58; strictest 45/11 -> 47/11 (VERIFIED);
   generated module (FoldCheck.lean, dry-run output minus line 1) compiles, `sixContactMin_of_open30` standard axioms.
+- §8g (VERIFIED, compiles): `exists_alpha` (two embeddings Qbar -> C differ by an endomorphism of Qbar),
+  `bc_comp_iso` (via `G0StableBC.exists_pbPaste`; a direct proof hit a kernel deterministic timeout),
+  `cmPairDescendsQbar_of_st : ShimuraTaniyamaQbar → CMPairDescendsQbar` (uses `QMSplitSTQM.embed_Ed`, `irr_d`,
+  `Ed_finrank`), `gonzalezRotgerProp56X6_of_st`, `cmPointsOptEmb6_of_st`. `CMPairDescendsQbar` restated in the
+  STQM d-form (CM element with negative integer square) before any fold.
+- `#discharges` rerun: field discharged by `GR56.gonzalezRotgerProp56X6_of_st` still assuming
+  [EichlerOptEmbCount6, QMTorusAbelian, ShimuraTaniyamaQbar (existing added-bundle LEAF), the three textbook fields];
+  63 open, 1973 checked, 9 discharge one.
+- autofold.json now: leaves `eichlerOptEmbCount6`, `qmTorusAbelian`; proof uses `{l}.shimuraTaniyamaQbar`.
+  `--dry-run`: strict 46/10 on 56 -> 47/10 on 57; strictest 45/11 -> 46/11. FoldCheck.lean compiles, standard axioms.
