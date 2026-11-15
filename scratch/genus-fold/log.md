@@ -38,3 +38,23 @@
   TailO's sixContactMin_of_open6_poincare literal, the 6 dead readers and their `#print axioms` lines.
   Output: prune_edit_out.txt. 11 files, 134 deletions, 1 line changed (the inline literal).
 - `lake build +ZInQKernel.OneProof.Main`: success (16 min), frozenTarget axioms [propext, Classical.choice, Quot.sound].
+
+## Checks after step 3 (11-14 18:10) — VERIFIED
+- PruneScan: 0 unused top-level fields (R 28, T 15, A 14, G 1 = 58); prune set empty.
+- DumpCompact after: 12125 constants (hashes_after.txt, dumpcompact_after_out.txt; frozenTarget axioms standard).
+- cmp_hashes.py (scratch/genus-fold/): removed 19 (9 fields, 6 dead readers + 3 `_proof` auxiliaries of
+  glueOutputs_of_leaves, and `topologicalKrullDim.eq_1`, which is still in TailR (diag/EqLemma.lean) but no longer
+  enumerated in map₁: a realized equation lemma); new 333, all in Genus/* (Bridge 5, DimJac 67, GenusBound 177,
+  LocalDer 84); changed 174, by cause in changed_constants.md:
+  80 bundle auxiliaries, 11 conversions, TailD's glueOutputs_of_leaves3, 2 type changes, 80 proof-only changes.
+- The 2 type changes (abVarBaseChange_of_torsionDescends, abVarBaseChangeK_of_torsionDescends, TailE) and the 80
+  proof-only changes (TailE-TailZ2, all theorems) come from the import: Genus's Mathlib imports (via the vendored
+  Jacobian library) add instances such as CommSemiring.toHopfAlgebra, Coalgebra.IsFrobenius.*, so typeclass search
+  finds other proofs of Prop-valued instances (IsLocalRing for FaithfulSMul: base via IsRegularLocalRing, now via
+  HenselianLocalRing/IsArtinian/HopfAlgebra; diag/typeconsts_{base,after}.txt).
+  Base tree for this: `git archive e38375b3` into a directory outside the worktree with a reflink copy of
+  .lake/build, `lake build ZInQKernel.OneProof.H.TailE` (8 min).
+  diag/DefEqCheck.lean (this tree): the base types, printed with pp.all in the base tree (diag/base_type_*.txt), are
+  `rfl`-equal to the new types; compiles with no error, so the kernel accepts both equalities.
+- diag/Classify.lean: of the 174 changed, the only data definitions are bundle casesOn/recOn; everything else is a
+  theorem, constructor/recursor of a bundle, or a proof.

@@ -43,7 +43,6 @@ USED   uniformizationLeafAll : BPAnalytic.Uniformization.UniformizationLeafAll
 USED   gagaMorphism : ZInQ.HomLattice.GAGAMorphism
 USED   bdRInvariants : HDec.HSyn.OpenTextbookLeaves10 → ∀ (p : ℕ) [inst : Fact (Nat.Prime p)], ZInQ.Contrib.HodgeSplit.BdRInvariants p
 USED   yuThm11 : HDec.QMSplit.Yu.YuThm11
-UNUSED genusX1Field : ZInQ.Contrib.CurvesG.GenusX1Field
 USED   regularSmoothPerfect : CurveSplit.RegularSmoothPerfect
 USED   igusaGL2 : ZInQ.RLeaf.IgusaGL2
 USED   neronSchemeExtensionExists : ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
