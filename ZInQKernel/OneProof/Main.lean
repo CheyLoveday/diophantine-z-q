@@ -4,6 +4,7 @@ import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
 import ZInQKernel.Contrib.OneProof.RingClassLattice
 import ZInQKernel.Contrib.OneProof.FHNonvanishing
+import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
 
 /-!
 # The whole proof in one theorem
@@ -39,10 +40,10 @@ the development fork, and from nothing else. It composes three compiled chains:
 * TYZ: `ZInQ.Contrib.TYZChain.tyzThm35ReadingA_of_leaves` proves reading A of Tian–Yuan–Zhang from four leaves; the
   fourth, tyz-35's pinned form of TYZ Theorem 3.3, is derived from TYZ Theorem 3.3 in its printed form
   (`ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33`, `OneProof/TYZSplit.lean`, task tyz-split), and the
-  third, Shimura reciprocity for modular functions, from the two printed leaves `T5Glue.ShimuraMainCM` (Shimura 1971
-  Thm 5.4) and `T5Glue.X0ModuliGalois` (the canonical model of X0(N)) by
-  `T5Glue.shimuraReciprocityModFn_of_printed` (`Contrib/OneProof/RingClassLattice.lean`, tasks t5-glue and
-  gt-ringclass, leaf-fold17).
+  third, Shimura reciprocity for modular functions, from `T5Glue.ShimuraMainCM` alone: every use is at level 32 for
+  the coordinates x, y of the eta-quotient model of X0(N), where the eta route with the proved identity
+  `ThetaWeierstrass8` replaces the canonical-model hypothesis on X0(N) (`ThetaWP8.tyzThm35ReadingA_noHX`,
+  `Contrib/OneProof/ThetaWeierstrass8.lean`, tasks hx-used and theta-wp8).
 * GZ and assembly: `ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves` proves `ZInQ.FrozenTarget`
   from H, reading A and the two open Gross–Zagier statements, with `HeckeThetaNewform` proved
   (`OneProof/TopChain.lean`) and Hecke's continuation and the functional equation proved
@@ -61,13 +62,13 @@ theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves22) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves17)
     (g : HDec.HSyn.OpenGlue7)
     (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
-    (hCM : _root_.T5Glue.ShimuraMainCM) (hX : _root_.T5Glue.X0ModuliGalois)
+    (hCM : _root_.T5Glue.ShimuraMainCM)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
     ZInQ.FrozenTarget :=
   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
     (HDec.HSyn.sixContactMin_of_open29 r t l g)
-    (tyzThm35ReadingA_of_leaves h11 h29 (_root_.T5Glue.shimuraReciprocityModFn_of_printed hCM hX) (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33))
+    (ThetaWP8.tyzThm35ReadingA_noHX h11 h29 hCM h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
 
 end ZInQ.Contrib.TYZChain

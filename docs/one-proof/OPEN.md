@@ -11,7 +11,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**56 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves22`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**56 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves22`, `OpenTextbookLeaves11`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
 * **Strict count: 45 published / 11 glue** (the strictest flagged reading; 46/10 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
@@ -101,7 +101,6 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 * [`h11`](#h11) (LEAF; unverified-locator): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
 * [`h29`](#h29) (GLUE): Tian-Yuan-Zhang, Lemma 2.9 with Prop. 2.3, modulo 2 (L1062-1066, L580-586)
 * [`hCM`](#hcm) (LEAF; unread, unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
-* [`hX`](#hx) (GLUE; unread, unverified-locator): the canonical model of X0(N) over Q and the Galois action on its points (Shimura 1971 section 6.7; Deligne-Rapoport VI-VII; numbers UNVERIFIED)
 * [`h33`](#h33) (LEAF): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hFH`](#hfh) (LEAF; pending-review, unread): Friedberg-Hoffstein, Ann. of Math. 142 (1995), Thm B, specialized to weight-2 newforms of trivial nebentypus and chi_0 = chi_D0 unramified at S containing the primes dividing 2N (gz-fh; locator UNVERIFIED)
 * [`hL3`](#hl3) (GLUE): Gross-Zagier, Invent. Math. 84 (1986), Thm I.6.3 and Ch. V, with Gross's conjugation relation (Gross 1984, section 5)
@@ -212,7 +211,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`h29`](#h29) | frozenTarget | composite | GLUE |  |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`hCM`](#hcm) | frozenTarget | published | LEAF | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
-| [`hX`](#hx) | frozenTarget | consequence | GLUE | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | project interest, free to claim |
 | [`h33`](#h33) | frozenTarget | published | LEAF | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hFH`](#hfh) | frozenTarget | published | LEAF | pending-review, unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 | [`hL3`](#hl3) | frozenTarget | composite | GLUE |  | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-hl3)) |
@@ -1262,45 +1260,6 @@ T5Glue.ShimuraMainCM
 > `MainTheoremCMj` (Tau Ceti: `globalArtinMap_isArithFrobAt`, `isArithFrobAt_of_globalArtinMap_ofAdicCompletion_eq`;
 > re-check this direction if the Artin map is ever replaced). The Weierstrass-coordinate form is a standard consequence
 > of Thm. 5.4; Silverman's II.8.2 covers only `𝒪_K`, while this leaf quantifies over lattices of every order.
-
-### hX
-
-* Argument `hX` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: unread; locator UNVERIFIED (numbers).
-* Source: the canonical model of X0(N) over Q and the Galois action on its points (Shimura 1971 section 6.7; Deligne-Rapoport VI-VII; numbers UNVERIFIED)
-* packet [R3](#packet-r3); tier T2 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: project interest, free to claim.
-
-```lean
-T5Glue.X0ModuliGalois
-```
-
-> **X0-MODULI, a standard consequence (the canonical model of `X₀(N)` over `ℚ`: `Aut(ℂ)` acts on the values of
-> `ℚ(X₀(N))` through the moduli interpretation).** Not one printed statement: it glues the coarse moduli space
-> over `ℚ`, the `q`-expansion principle and the analytic map `τ ↦ (ℂ/⟨1, τ⟩, ⟨1/N⟩)` (statement review,
-> 2026-11-14; the algebraicity hypothesis is equivalent to `j(τ)` algebraic and only weakens the statement). Let `N ≥ 1`, `g ∈ ℚ(X₀(N))` regular on `ℍ`
-> (`IsRatModFn N g`), `σ ∈ Aut(ℂ)` and `τ, τ' ∈ ℍ`, where the point `(E_τ, ⟨1/N⟩)` of `Y₀(N)` is
-> algebraic (its moduli coordinates `modCoord N τ i`, `i < N`, i.e. `j(τ)` and the symmetric functions
-> of the Weber values of `⟨1/N⟩ \ 0`, are algebraic numbers: `(E_τ, ⟨1/N⟩)` has a model over `ℚ̄`), such
-> that `σ` carries `(E_τ, ⟨1/N⟩)` to `(E_{τ'}, ⟨k/N⟩)`, in Weierstrass coordinates: for some `μ ∈ ℂˣ`,
-> `(x, y) ↦ (μ⁻²x, μ⁻³y)` is an isomorphism `E_τ^σ ≅ E_{τ'}`
-> (`σ(g₂(τ)) = μ⁴g₂(τ')`, `σ(g₃(τ)) = μ⁶g₃(τ')`) sending `σ(P)`, `P = (℘_τ(1/N), ℘'_τ(1/N))`, to the
-> point `k/N` of `E_{τ'}` for some `1 ≤ k < N` (no condition for `N = 1`). Then `σ(g(τ)) = g(τ')`.
-> 
-> Content: `X₀(N)_ℚ`, the model of `Γ₀(N)\ℍ*` whose function field is the field of functions with
-> rational `q`-expansion at `∞`, is the coarse moduli space of pairs `(E, C)` (`C` cyclic of order
-> `N`), compatibly with `Aut(ℂ)`: `g(x)^σ = g(x^σ)` for `g ∈ ℚ(X₀(N))` regular at `x`, where
-> `x^σ = (E^σ, C^σ)`. Sources (theorem numbers UNVERIFIED, from memory; no network): Shimura 1971,
-> *Introduction to the arithmetic theory of automorphic functions*, §6.7 (canonical models of
-> `Γ₀(N)\ℍ*`), Prop. 6.9 and Thm. 6.23, as in `IsRatModFn`'s docstring (`F_N = ℚ(ζ_N)(j, f_a)`, Fricke
-> functions = Weber values `h(E, a)`); Deligne–Rapoport, *Les schémas de modules de courbes elliptiques* (LNM 349), VI.6 and
-> VII (q-expansion principle); Diamond–Shurman, *A first course in modular forms*, §7.5–7.7.
-> On `ℚ̄`-points this is the printed Galois equivariance `g(x)^ρ = g(x^ρ)`, `ρ = σ|_ℚ̄` (Diamond–Shurman
-> §7.7; Deligne–Rapoport VI (coarse moduli scheme over `ℚ`) and VII (q-expansion principle)).
-> Relation to the print: `k/N` has exact order `N` whenever the hypothesis holds (`σ` and the
-> isomorphism preserve the order of `σ(P)`), so `C^σ` is sent to `⟨k/N⟩ = C_{τ'}` and the
-> hypothesis says `(E_τ, C_τ)^σ ≅ (E_{τ'}, C_{τ'})`; the conclusion is the printed equivariance.
-> No complex multiplication is involved.
 
 ### h33
 
