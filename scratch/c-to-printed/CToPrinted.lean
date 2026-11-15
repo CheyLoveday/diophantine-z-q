@@ -1095,34 +1095,26 @@ theorem idCompGenericFibre : IdCompGenericFibre := by
     exact hx
   exact hR.subset_connectedComponentIn he hsub (hmem x hx)
 
-open ZInQ.HeightSplit ZInQ.DefFaltings in
-/-- **The glue `IdCompGeomFibres`, PROVED from the bundle leaf `AVGlue.GeomConnOfRationalPoint`** (Stacks
-04KV). For `g : Spec κ̄(𝔭) → Spec 𝓞_L`, with image point `y` and `g = Spec φ ≫ (Spec κ(y) → S)`: the fibre of
-`W = 𝒢⁰` over `y` is homeomorphic (`fiberHomeo`) to the connected component of `e(y)` in `𝒢_y`, so it is
-connected; it has the rational point `e(y)` and is of finite type, so it is geometrically connected; the
-geometric fibre is its base change along `Spec φ` (`IsPullback.of_right`). -/
-theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibres := by
-  intro K _ A L _ _ _ 𝒢 W hW 𝔭 _
-  let S := Spec (CommRingCat.of (𝓞 L))
-  let g : Spec (CommRingCat.of (ResBar 𝔭)) ⟶ S :=
-    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (ResBar 𝔭)))
-  let y : S := (Scheme.SpecToEquivOfField (ResBar 𝔭) S g).1
-  let φ := (Scheme.SpecToEquivOfField (ResBar 𝔭) S g).2
+/-- **The base change of `G⁰` to a field is connected** (from the bundle leaf `AVGlue.GeomConnOfRationalPoint`,
+Stacks 04KV). `G` a group scheme over `S`, `W = G⁰` open, `h : Spec K → S` with image point `y` and
+`h = Spec φ ≫ (Spec κ(y) → S)`: the fibre of `W` over `y` is homeomorphic (`fiberHomeo`) to the connected
+component of `e(y)` in `G_y`, so it is connected; it has the rational point `e(y)` and is of finite type, so it
+is geometrically connected; `W ×_S Spec K` is its base change along `Spec φ` (`IsPullback.of_right`). -/
+theorem connectedSpace_pullback_idComp (hG : AVGlue.GeomConnOfRationalPoint) {S : Scheme.{0}}
+    (G : Over S) [GrpObj G] (W : G.left.Opens) (hW : (W : Set G.left) = idCompSet G)
+    [LocallyOfFiniteType (W.ι ≫ G.hom)] [QuasiCompact (W.ι ≫ G.hom)] (K : Type) [Field K]
+    (g : Spec (CommRingCat.of K) ⟶ S) : ConnectedSpace ↥(pullback (W.ι ≫ G.hom) g) := by
+  let y : S := (Scheme.SpecToEquivOfField K S g).1
+  let φ := (Scheme.SpecToEquivOfField K S g).2
   have hg : Spec.map φ ≫ S.fromSpecResidueField y = g :=
-    (Scheme.SpecToEquivOfField (ResBar 𝔭) S).left_inv g
-  let f0 : W.toScheme ⟶ S := W.ι ≫ 𝒢.G.hom
-  -- finiteness of `f0`
-  haveI : IsLocallyNoetherian 𝒢.G.left := LocallyOfFiniteType.isLocallyNoetherian 𝒢.G.hom
-  haveI : CompactSpace 𝒢.G.left := QuasiCompact.compactSpace_of_compactSpace 𝒢.G.hom
-  haveI : IsNoetherian 𝒢.G.left := {}
-  haveI : QuasiCompact f0 := inferInstance
-  haveI : LocallyOfFiniteType f0 := inferInstance
+    (Scheme.SpecToEquivOfField K S).left_inv g
+  let f0 : W.toScheme ⟶ S := W.ι ≫ G.hom
   -- the fibre of `f0` over `y` is connected
   have hT : _root_.IsConnected (f0 ⁻¹' {y}) := by
-    let C := connectedComponentIn (𝒢.G.hom ⁻¹' {y})
-      ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left y)
-    have hey : (η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left y ∈ 𝒢.G.hom ⁻¹' {y} := by
-      show 𝒢.G.hom ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left y) = y
+    let C := connectedComponentIn (G.hom ⁻¹' {y})
+      ((η[G] : 𝟙_ (Over S) ⟶ G).left y)
+    have hey : (η[G] : 𝟙_ (Over S) ⟶ G).left y ∈ G.hom ⁻¹' {y} := by
+      show G.hom ((η[G] : 𝟙_ (Over S) ⟶ G).left y) = y
       rw [← Scheme.Hom.comp_apply, Over.w]
       rfl
     have hC : _root_.IsConnected C := isConnected_connectedComponentIn_iff.mpr hey
@@ -1130,20 +1122,20 @@ theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibre
       ext x
       constructor
       · rintro ⟨w, hw, rfl⟩
-        have hw' : 𝒢.G.hom (W.ι w) = y := hw
-        have hmem : W.ι w ∈ idCompSet 𝒢.G := by
+        have hw' : G.hom (W.ι w) = y := hw
+        have hmem : W.ι w ∈ idCompSet G := by
           rw [← hW]
           have : W.ι w ∈ Set.range W.ι := ⟨w, rfl⟩
           rwa [Scheme.Opens.range_ι] at this
-        have h2 : W.ι w ∈ connectedComponentIn (𝒢.G.hom ⁻¹' {𝒢.G.hom (W.ι w)})
-            ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left (𝒢.G.hom (W.ι w))) := hmem
+        have h2 : W.ι w ∈ connectedComponentIn (G.hom ⁻¹' {G.hom (W.ι w)})
+            ((η[G] : 𝟙_ (Over S) ⟶ G).left (G.hom (W.ι w))) := hmem
         rw [hw'] at h2
         exact h2
       · intro hx
-        have hxy : 𝒢.G.hom x = y := connectedComponentIn_subset (𝒢.G.hom ⁻¹' {y}) _ hx
-        have hmem : x ∈ idCompSet 𝒢.G := by
-          show x ∈ connectedComponentIn (𝒢.G.hom ⁻¹' {𝒢.G.hom x})
-            ((η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left (𝒢.G.hom x))
+        have hxy : G.hom x = y := connectedComponentIn_subset (G.hom ⁻¹' {y}) _ hx
+        have hmem : x ∈ idCompSet G := by
+          show x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom x})
+            ((η[G] : 𝟙_ (Over S) ⟶ G).left (G.hom x))
           rw [hxy]
           exact hx
         have hxW : x ∈ Set.range W.ι := by rw [Scheme.Opens.range_ι, hW]; exact hmem
@@ -1154,13 +1146,13 @@ theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibre
   haveI : ConnectedSpace (f0 ⁻¹' {y}) := isConnected_iff_connectedSpace.mp hT
   haveI hconn : ConnectedSpace (f0.fiber y) := (f0.fiberHomeo y).connectedSpace_iff.mpr inferInstance
   -- the rational point
-  have hη : Set.range (η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left ⊆ Set.range W.ι := by
+  have hη : Set.range (η[G] : 𝟙_ (Over S) ⟶ G).left ⊆ Set.range W.ι := by
     rintro _ ⟨s, rfl⟩
     rw [Scheme.Opens.range_ι, hW]
-    exact idCompSet_one 𝒢.G s
-  let eW : S ⟶ W.toScheme := IsOpenImmersion.lift W.ι (η[𝒢.G] : 𝟙_ (Over S) ⟶ 𝒢.G).left hη
+    exact idCompSet_one G s
+  let eW : S ⟶ W.toScheme := IsOpenImmersion.lift W.ι (η[G] : 𝟙_ (Over S) ⟶ G).left hη
   have heW : eW ≫ f0 = 𝟙 S := by
-    show eW ≫ W.ι ≫ 𝒢.G.hom = 𝟙 S
+    show eW ≫ W.ι ≫ G.hom = 𝟙 S
     rw [← Category.assoc, IsOpenImmersion.lift_fac, Over.w]
     rfl
   let sec : Spec (S.residueField y) ⟶ f0.fiber y :=
@@ -1186,6 +1178,17 @@ theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibre
   have hleft : IsPullback a (pullback.snd f0 g) (f0.fiberToSpecResidueField y) (Spec.map φ) :=
     IsPullback.of_right (by rw [ha]; exact hbig) hsq hright
   exact hGC.geometrically_connectedSpace (Spec.map φ) a (pullback.snd f0 g) hleft
+
+open ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- **The glue `IdCompGeomFibres`, PROVED from the bundle leaf `AVGlue.GeomConnOfRationalPoint`** (Stacks
+04KV), by `connectedSpace_pullback_idComp` at `Spec κ̄(𝔭) → Spec 𝓞_L`. -/
+theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibres := by
+  intro K _ A L _ _ _ 𝒢 W hW 𝔭 _
+  haveI : IsLocallyNoetherian 𝒢.G.left := LocallyOfFiniteType.isLocallyNoetherian 𝒢.G.hom
+  haveI : CompactSpace 𝒢.G.left := QuasiCompact.compactSpace_of_compactSpace 𝒢.G.hom
+  haveI : IsNoetherian 𝒢.G.left := {}
+  exact connectedSpace_pullback_idComp hG 𝒢.G W hW (ResBar 𝔭)
+    (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (ResBar 𝔭))))
 
 /-- `IdentityComponentOL` (reduct-glue's SGA 3 leaf) from the printed SGA 3 VI_B 3.10 and the three
 topological glue Props. -/
