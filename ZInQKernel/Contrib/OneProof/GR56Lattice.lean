@@ -774,6 +774,147 @@ def qmIsoBC {P Q : QMPair Qbar} (f : QMIso P.q Q.q) : QMIso (bcQ P).q (bcQ Q).q 
       (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map (Q.q.iota a).hom
     rw [← CategoryTheory.Functor.map_comp, ← CategoryTheory.Functor.map_comp, f.equivariant a]
 
+/-! ## §8c Eigenvectors of optimal embeddings -/
+
+section Eig
+
+variable {k : Type} [Field k] [NumberField k]
+
+/-- `k = ℚ ⊕ ℚ a₁` for `a₁ ∉ ℚ`. -/
+theorem decomp (hk : Module.finrank ℚ k = 2) {a1 : k} (ha1 : ∀ r : ℚ, a1 ≠ algebraMap ℚ k r) (a : k) :
+    ∃ s t : ℚ, a = algebraMap ℚ k s + t • a1 := by
+  have hli : LinearIndependent ℚ ![(1 : k), a1] := by
+    rw [LinearIndependent.pair_iff' one_ne_zero]
+    intro r h
+    apply ha1 r
+    rw [← h, Algebra.smul_def, mul_one]
+  have hspan := hli.span_eq_top_of_card_eq_finrank (by simp [hk])
+  have hmem : a ∈ Submodule.span ℚ (Set.range ![(1 : k), a1]) := hspan ▸ Submodule.mem_top
+  rw [Submodule.mem_span_range_iff_exists_fun] at hmem
+  obtain ⟨c, hc⟩ := hmem
+  refine ⟨c 0, c 1, ?_⟩
+  rw [← hc]
+  simp [Fin.sum_univ_two, Algebra.algebraMap_eq_smul_one]
+
+theorem sqrt2_sq : ((√2 : ℝ) : ℂ) * ((√2 : ℝ) : ℂ) = 2 := by
+  rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]; norm_num
+
+/-- **An optimal embedding has an eigenvector `(τ, 1)ᵀ` with `Im τ ≠ 0`**: `ι(Φ(a))(τ, 1)ᵀ = ψ(a)(τ, 1)ᵀ`
+for all `a ∈ k` (`k` totally complex, so `ψ(a₁)` is not real for `a₁ ∉ ℚ`). -/
+theorem exists_eigvec [NumberField.IsTotallyComplex k] (hk : Module.finrank ℚ k = 2) (Φ : k →ₐ[ℚ] B)
+    (ψ : k →+* ℂ) : ∃ τ : ℂ, τ.im ≠ 0 ∧ ∀ a : k, act (Φ a) ![τ, 1] = ψ a • ![τ, 1] := by
+  obtain ⟨a0, ha0⟩ := exists_not_rat hk
+  set r := (Φ a0).re with hrdef
+  set a1 := a0 - algebraMap ℚ k r with ha1def
+  have ha1 : ∀ s : ℚ, a1 ≠ algebraMap ℚ k s := by
+    intro s h
+    apply ha0 (s + r)
+    rw [map_add, ← h, ha1def]; ring
+  set y0 := Φ a1 with hy0def
+  have hy0 : y0 = Φ a0 - algebraMap ℚ B r := by rw [hy0def, ha1def, map_sub, AlgHom.commutes]
+  have hre : y0.re = 0 := by
+    rw [hy0, QuaternionAlgebra.algebraMap_eq]; simp [hrdef]
+  set d := HDec.QMLattice.sqForm y0 with hddef
+  have hsq : a1 * a1 = algebraMap ℚ k d := by
+    apply Φ.toRingHom.injective
+    change Φ (a1 * a1) = Φ (algebraMap ℚ k d)
+    rw [map_mul, AlgHom.commutes, ← hy0def]
+    exact HDec.QMLattice.pure_sq hre
+  set c := ψ a1 with hcdef
+  have hc2 : c * c = (d : ℂ) := by
+    have := congrArg ψ hsq
+    rwa [map_mul, eq_ratCast (algebraMap ℚ k) d, map_ratCast] at this
+  have hcim : c.im ≠ 0 := by
+    intro h0
+    apply NumberField.IsTotallyComplex.complexEmbedding_not_isReal ψ
+    rw [NumberField.ComplexEmbedding.isReal_iff]
+    refine RingHom.ext fun a => ?_
+    obtain ⟨s, t, rfl⟩ := decomp hk ha1 a
+    rw [NumberField.ComplexEmbedding.conjugate_coe_eq, Complex.conj_eq_iff_im]
+    rw [map_add, eq_ratCast (algebraMap ℚ k) s, map_ratCast, Algebra.smul_def, map_mul,
+      eq_ratCast (algebraMap ℚ k) t, map_ratCast, ← hcdef]
+    simp [h0]
+  have hcre : c.re = 0 := by
+    have h := congrArg Complex.im hc2
+    rw [Complex.mul_im, Complex.ratCast_im] at h
+    have h' : c.re * c.im = 0 := by linarith
+    rcases mul_eq_zero.1 h' with h1 | h1
+    · exact h1
+    · exact absurd h1 hcim
+  -- the explicit matrix entries
+  set A : ℂ := (y0.imI : ℂ) * ((√2 : ℝ) : ℂ) with hAdef
+  set Bc : ℂ := -3 * (y0.imJ : ℂ) - 3 * ((√2 : ℝ) : ℂ) * (y0.imK : ℂ) with hBdef
+  set C : ℂ := (y0.imJ : ℂ) - ((√2 : ℝ) : ℂ) * (y0.imK : ℂ) with hCdef
+  have hid : A * A + Bc * C = (d : ℂ) := by
+    rw [hAdef, hBdef, hCdef, hddef, HDec.QMLattice.sqForm]
+    push_cast
+    linear_combination ((y0.imI : ℂ) ^ 2 + 3 * (y0.imK : ℂ) ^ 2) * sqrt2_sq
+  have hAim : A.im = 0 := by simp [hAdef]
+  have hBim : Bc.im = 0 := by simp [hBdef]
+  have hcA : c - A ≠ 0 := by
+    intro h0
+    apply hcim
+    have := congrArg Complex.im h0
+    simpa [hAim] using this
+  have hB0 : Bc ≠ 0 := by
+    intro h0
+    rw [h0, zero_mul, add_zero] at hid
+    have hA2 : (A * A).re ≥ 0 := by
+      have : A = (A.re : ℂ) := Complex.ext rfl (by simpa using hAim)
+      rw [this, ← Complex.ofReal_mul, Complex.ofReal_re]; exact mul_self_nonneg _
+    have hc2re : (c * c).re < 0 := by
+      have : (c * c).re = -(c.im * c.im) := by rw [Complex.mul_re, hcre]; ring
+      rw [this]; exact neg_neg_of_pos (mul_self_pos.mpr hcim)
+    rw [hid, ← hc2] at hA2
+    linarith
+  set τ := Bc / (c - A) with hτdef
+  have hτB : τ * (c - A) = Bc := by rw [hτdef]; field_simp
+  have hτim : τ.im ≠ 0 := by
+    intro h0
+    have hτr : τ = (τ.re : ℂ) := Complex.ext rfl (by simpa using h0)
+    have hτ0 : τ ≠ 0 := by intro h; rw [h, zero_mul] at hτB; exact hB0 hτB.symm
+    have : c - A = Bc / τ := by rw [eq_div_iff hτ0, mul_comm]; exact hτB
+    apply hcim
+    have him := congrArg Complex.im this
+    rw [hτr] at him
+    have hBr : Bc = (Bc.re : ℂ) := Complex.ext rfl (by simpa using hBim)
+    rw [hBr, ← Complex.ofReal_div] at him
+    simpa [hAim] using him
+  have heig : act y0 ![τ, 1] = c • ![τ, 1] := by
+    have e0 : act y0 ![τ, 1] 0 = (c • ![τ, 1]) 0 := by
+      rw [HDec.QMLattice.act_apply0]
+      simp only [hre, Matrix.cons_val_zero, Matrix.cons_val_one, Pi.smul_apply,
+        smul_eq_mul, Rat.cast_zero, zero_add, mul_one]
+      rw [← hAdef]
+      have : -3 * (y0.imJ : ℂ) - 3 * ((√2 : ℝ) : ℂ) * (y0.imK : ℂ) = Bc := hBdef.symm
+      rw [this]
+      linear_combination -hτB
+    have e1 : act y0 ![τ, 1] 1 = (c • ![τ, 1]) 1 := by
+      rw [HDec.QMLattice.act_apply1]
+      simp only [hre, Matrix.cons_val_zero, Matrix.cons_val_one, Pi.smul_apply,
+        smul_eq_mul, Rat.cast_zero, zero_sub, mul_one]
+      have hC' : (y0.imJ : ℂ) - ((√2 : ℝ) : ℂ) * (y0.imK : ℂ) = C := hCdef.symm
+      have hA' : (y0.imI : ℂ) * ((√2 : ℝ) : ℂ) = A := hAdef.symm
+      rw [hC', hA']
+      have hd' : (d : ℂ) = 2 * (y0.imI : ℂ) ^ 2 - 3 * (y0.imJ : ℂ) ^ 2 + 6 * (y0.imK : ℂ) ^ 2 := by
+        rw [hddef, HDec.QMLattice.sqForm]; push_cast; ring
+      rw [hτdef]
+      field_simp
+      linear_combination ((y0.imI : ℂ) ^ 2 + 3 * (y0.imK : ℂ) ^ 2) * sqrt2_sq - hc2 - hd'
+    funext i
+    fin_cases i
+    · exact e0
+    · exact e1
+  refine ⟨τ, hτim, fun a => ?_⟩
+  obtain ⟨s, t, rfl⟩ := decomp hk ha1 a
+  have hψa : ψ (algebraMap ℚ k s + t • a1) = (s : ℂ) + (t : ℂ) * c := by
+    rw [map_add, Algebra.smul_def, map_mul, eq_ratCast (algebraMap ℚ k) s, map_ratCast,
+      eq_ratCast (algebraMap ℚ k) t, map_ratCast]
+  rw [map_add, AlgHom.commutes, map_smul, act_add, HDec.QMLattice.act_algebraMap, act_smul, ← hy0def, heig,
+    hψa, add_smul, mul_smul]
+
+end Eig
+
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
 /-- **`R5fpCountLe` (GLUE; the upper half of `LeafQM.AV.R5fpCount`, the only half the chain uses).** For an order
