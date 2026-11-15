@@ -182,4 +182,90 @@ theorem dup2 {α β γ : ℂ} (c0 c1 d0 d1 : ℝ)
   simp only [term2, ← Complex.exp_add]
   congr 1; push_cast; ring
 
+
+/-! ## Genus one -/
+
+/-- Genus-1 theta term with real characteristic: `exp(πiτ(n+c)² + 2πi(n+c)d)`. -/
+def term1 (τ : ℂ) (c d : ℝ) (n : ℤ) : ℂ :=
+  cexp (π * I * τ * (((n : ℝ) + c : ℝ) : ℂ) ^ 2 + 2 * π * I * (((n : ℝ) + c : ℝ) : ℂ) * d)
+
+def th1 (τ : ℂ) (c d : ℝ) : ℂ := ∑' n : ℤ, term1 τ c d n
+
+theorem term1_eq (τ : ℂ) (c d : ℝ) (n : ℤ) :
+    term1 τ c d n = cexp (π * I * τ * (c : ℂ) ^ 2 + 2 * π * I * c * d) *
+      jacobiTheta₂_term n (c * τ + d) τ := by
+  rw [term1, jacobiTheta₂_term, ← Complex.exp_add]
+  congr 1; push_cast; ring
+
+/-- The bridge to Mathlib: `th1 τ c d = exp(πiτc² + 2πicd)·jacobiTheta₂(cτ + d, τ)`. -/
+theorem th1_eq (τ : ℂ) (c d : ℝ) :
+    th1 τ c d = cexp (π * I * τ * (c : ℂ) ^ 2 + 2 * π * I * c * d) * jacobiTheta₂ (c * τ + d) τ := by
+  rw [th1, jacobiTheta₂, ← tsum_mul_left]
+  exact tsum_congr fun n => term1_eq τ c d n
+
+theorem summable_norm_term1 {τ : ℂ} (hτ : 0 < τ.im) (c d : ℝ) :
+    Summable (fun n => ‖term1 τ c d n‖) := by
+  have h := ((summable_jacobiTheta₂_term_iff (c * τ + d) τ).2 hτ).norm.mul_left
+    ‖cexp (π * I * τ * (c : ℂ) ^ 2 + 2 * π * I * c * d)‖
+  refine h.congr fun n => ?_
+  rw [term1_eq, norm_mul]
+
+theorem th1_shift_c (τ : ℂ) (c d : ℝ) (k : ℤ) : th1 τ (c + k) d = th1 τ c d := by
+  rw [th1, th1]
+  conv_rhs => rw [← (Equiv.addRight k).tsum_eq]
+  congr 1; funext n
+  simp only [term1, Equiv.coe_addRight]
+  congr 1; push_cast; ring
+
+theorem th1_shift_d (τ : ℂ) (c d : ℝ) (k : ℤ) :
+    th1 τ c (d + k) = cexp (2 * π * I * c * k) * th1 τ c d := by
+  rw [th1, th1, ← tsum_mul_left]
+  congr 1; funext n
+  have h : cexp (((-(n * k)) : ℤ) * (2 * π * I)) = 1 := exp_int_mul_two_pi_mul_I _
+  rw [term1, term1, ← mul_one (cexp (_ + _)), ← h, ← Complex.exp_add, ← Complex.exp_add]
+  congr 1; push_cast; ring
+
+theorem dup1 {τ : ℂ} (hτ : 0 < τ.im) (c d : ℝ) :
+    th1 τ c d ^ 2 = ∑ σ : Fin 2,
+      th1 (2 * τ) (((σ : ℕ) : ℝ) / 2 + c) (2 * d) * th1 (2 * τ) (((σ : ℕ) : ℝ) / 2) 0 := by
+  have hs := summable_norm_term1 hτ c d
+  have hτ2 : 0 < (2 * τ).im := by simpa using hτ
+  have hprod := summable_mul_of_summable_norm hs hs
+  have h2 : Summable (fun c' => term1 τ c d (dupE1 c').1 * term1 τ c d (dupE1 c').2) :=
+    dupE1.summable_iff.2 hprod
+  rw [sq, th1, tsum_mul_tsum_of_summable_norm hs hs, ← dupE1.tsum_eq, h2.tsum_prod, tsum_fintype]
+  congr 1; funext σ
+  rw [th1, th1, tsum_mul_tsum_of_summable_norm (summable_norm_term1 hτ2 _ _)
+    (summable_norm_term1 hτ2 _ _)]
+  congr 1; funext w
+  obtain ⟨p, q⟩ := w
+  simp only [dupE1, Equiv.coe_fn_mk, term1, ← Complex.exp_add]
+  congr 1; push_cast; ring
+
+/-- Diagonal period matrices: the genus-2 theta factors. -/
+theorem th2_diag {τ0 τ1 : ℂ} (h0 : 0 < τ0.im) (h1 : 0 < τ1.im) (c0 c1 d0 d1 : ℝ) :
+    Th2 τ0 0 τ1 c0 c1 d0 d1 = th1 τ0 c0 d0 * th1 τ1 c1 d1 := by
+  rw [th1, th1, tsum_mul_tsum_of_summable_norm (summable_norm_term1 h0 _ _)
+    (summable_norm_term1 h1 _ _), Th2]
+  congr 1; funext n
+  simp only [term2, term1, ← Complex.exp_add]
+  congr 1; ring
+
+/-- The odd genus-1 theta constant vanishes. -/
+theorem th1_odd (τ : ℂ) : th1 τ (1 / 2) (1 / 2) = 0 := by
+  have h : th1 τ (1 / 2) (1 / 2) = -th1 τ (1 / 2) (1 / 2) := by
+    conv_lhs => rw [th1, ← (Equiv.neg ℤ).tsum_eq, ← (Equiv.addRight (1 : ℤ)).tsum_eq]
+    rw [th1, ← tsum_neg]
+    congr 1; funext n
+    simp only [term1, Equiv.coe_addRight, Equiv.neg_apply]
+    have : π * I * τ * (((((-(n + 1) : ℤ) : ℝ) + 1 / 2 : ℝ)) : ℂ) ^ 2
+        + 2 * π * I * (((((-(n + 1) : ℤ) : ℝ) + 1 / 2 : ℝ)) : ℂ) * ((1 / 2 : ℝ) : ℂ) =
+        (π * I * τ * (((n : ℝ) + 1 / 2 : ℝ) : ℂ) ^ 2 + 2 * π * I * (((n : ℝ) + 1 / 2 : ℝ) : ℂ) * ((1 / 2 : ℝ) : ℂ))
+          + ((-n - 1 : ℤ) : ℂ) * (2 * π * I) + π * I := by
+      push_cast; ring
+    rw [this, Complex.exp_add, Complex.exp_add, exp_int_mul_two_pi_mul_I, Complex.exp_pi_mul_I]
+    ring
+  have : (2 : ℂ) * th1 τ (1 / 2) (1 / 2) = 0 := by linear_combination h
+  simpa using this
+
 end CM24
