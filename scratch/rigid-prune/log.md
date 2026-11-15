@@ -24,3 +24,15 @@
   re-version the on-chain conversions (TailZ23) through QMFamilyGroupLaw, so no mumfordRigidity_of_core remains on
   the chain and the chain's use of the field is exactly GIT 6.14 on QM families.
 - TailZ40.lean compiles (lake env lean): isMonHom_of_fibres, exists_qmAbScheme_gl, qmFamilyGroupLaw_of_groupLaw (MumfordGroupLaw alone, no Cor 6.4), qmFamilyGroupLaw_of_core, r1fpProps_iff_ab_gl, nine *_iff_ab_gl; standard axioms.
+- TailZ23 rewired: imports TailZ40; `mumfordRigidity_of14` deleted; `x6Rows_of_open14`, `addedLeaves9_of_open14`,
+  `researchLeaves9_of_open14` use `*_iff_ab_gl (qmFamilyGroupLaw_of_core r.mumfordRigidityCore)`.
+- `lake build +ZInQKernel.OneProof.Main` OK (2m53). ClosureCheck: mumfordRigidity_of_core, MumfordRigidity,
+  exists_qmAbScheme, r1univProps_of_ab, r1fpProps_eq_ab' NOT in frozenTarget's closure; MumfordRigidityCore,
+  QMFamilyGroupLaw, qmFamilyGroupLaw_of_core, MumfordGroupLaw, mumfordGroupLaw_of_core are.
+- DumpCompact after: 13694 constants, frozenTarget standard axioms. cmp_hashes: removed 1 (mumfordRigidity_of14),
+  new 20 (TailZ40), changed 3 (value only: x6Rows_of_open14, addedLeaves9_of_open14, researchLeaves9_of_open14).
+  frozenTarget, every bundle and every sixContactMin_of_open* unchanged.
+- PruneScan: 30 + 13 + 14 + 1 = 58 fields, 0 unused, prune set empty (mumfordRigidityCore still used).
+- OpenStatements: 65 open hypotheses; render_open.py: 58 H, strictest 44/14; --check ok; no generated file changed.
+- DischargesTest: the 5 earlier discharges and both controls (t1, t3 sorry) unchanged; 2 more, gt-rigidity's
+  mumfordRigidityCore_of_printed / _of_pushforward (its Contrib module is now imported by the chain). Saved.

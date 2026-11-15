@@ -8,10 +8,16 @@ DISCHARGES [OpenResearchLeaves19.neronBaseChangeStrictHenselization] by GapSHPai
 DISCHARGES [OpenResearchLeaves19.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.ElkiesX6Star.elkiesX6StarPrinted_of_ab
   still assumes: [HDec.QMSplit.Moduli.ElkiesEquationsX6Ab]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves19.mumfordRigidityCore] by ZInQ.Contrib.MumfordRigidity.mumfordRigidityCore_of_printed
+  still assumes: [ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw, ZInQ.Contrib.MumfordRigidity.RigidityLemma]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves19.mumfordRigidityCore] by ZInQ.Contrib.MumfordRigidity.mumfordRigidityCore_of_pushforward
+  still assumes: [ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw, ZInQ.Contrib.MumfordRigidity.PushforwardStructureSheaf]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
   still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 65 open hypotheses, 1203 theorems checked, 5 discharge one
+#discharges: 65 open hypotheses, 1230 theorems checked, 7 discharge one

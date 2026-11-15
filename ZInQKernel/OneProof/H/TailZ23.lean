@@ -1,4 +1,5 @@
 import ZInQKernel.OneProof.H.TailZ22
+import ZInQKernel.OneProof.H.TailZ40
 
 /-! # OneProof H, leaf-fold14 (1/2): the reduct fold, `OpenResearchLeaves14` and `sixContactMin_of_open17`
 
@@ -704,23 +705,19 @@ The terms are those of `researchLeaves12_of_open13`, `addedLeaves11_of_open12` (
 `addedLeaves9_of_open10` (`TailZ17`) and `researchLeaves9_of_open10` (`TailZ15`), composed; only the three reduct
 fields change. -/
 
-/-- Mumford's rigidity from the field `mumfordRigidityCore` (as `mumfordRigidity_of11`). -/
-theorem mumfordRigidity_of14 (r : OpenResearchLeaves14) : _root_.LeafQM.AV.R1UnivRigid.MumfordRigidity :=
-  _root_.LeafQM.AV.R1UnivRigid.mumfordRigidity_of_core r.mumfordRigidityCore
-
 /-- **The two `X₆` rows from the new bundles** (the term of `x6Rows_of_open13`). -/
 theorem x6Rows_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
     LeafAdopt.R1R2fpRep ∧ X6Kummer.X6ConicModel :=
-  have hR := _root_.LeafQM.AV.R1UnivRigid.mumfordRigidity_of_core r.mumfordRigidityCore
+  have hR := _root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore
   QMSplit.Moduli.x6Rows_of_leaves
-    { deligneX6P := (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsX6Printed_iff_ab hR).mpr
+    { deligneX6P := (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsX6Printed_iff_ab_gl hR).mpr
         l.deligneComponentsX6PrintedAb
       geomConn := l.geomConnOfAlgClosure
       t5 := _root_.AvSplit.torsionStructure_of_mumford t.mumfordTorsionAlgClosed
-      babaGranathR := (_root_.LeafQM.AV.R1UnivRigid.babaGranathRational_iff_ab hR).mpr r.babaGranathRationalAb
-      rayClass := (_root_.LeafQM.AV.R1UnivRigid.rayClassCM_iff_ab hR).mpr r.rayClassCMAb
-      gonzalezRotger := (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerX6_iff_ab hR).mpr r.gonzalezRotgerX6Ab
-      elkiesEq := (_root_.LeafQM.AV.R1UnivRigid.elkiesEquationsX6_iff_ab hR).mpr r.elkiesEquationsX6Ab }
+      babaGranathR := (_root_.LeafQM.AV.R1UnivRigid.babaGranathRational_iff_ab_gl hR).mpr r.babaGranathRationalAb
+      rayClass := (_root_.LeafQM.AV.R1UnivRigid.rayClassCM_iff_ab_gl hR).mpr r.rayClassCMAb
+      gonzalezRotger := (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerX6_iff_ab_gl hR).mpr r.gonzalezRotgerX6Ab
+      elkiesEq := (_root_.LeafQM.AV.R1UnivRigid.elkiesEquationsX6_iff_ab_gl hR).mpr r.elkiesEquationsX6Ab }
 
 /-- **SGA 7 IX 4.7 over a DVR** (the old field `raynaudSemistable`) from the strictly henselian printed leaf, the
 pair and the textbook field `mulEtaleAbelianScheme` (reduct-b, Route B). -/
@@ -754,7 +751,8 @@ theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeave
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   igusaCMValue24 := _root_.CM24.igusaCMValue24_field
   deligneComponentsY3Printed :=
-    (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab (mumfordRigidity_of14 r)).mpr
+    (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab_gl
+      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore)).mpr
       l.deligneComponentsY3PrintedAb
 
 /-- **SS1 and SS3** (`semistableReductionThm`, `semistablePersists`) from the restricted printed leaf
@@ -773,7 +771,8 @@ fields replaced by reduct-b's theorems and SS1, SS3 by `ss1_ss3_of14`). -/
 theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
     OpenResearchLeaves9 where
   r1r2 := (x6Rows_of_open14 r t l).1
-  shimuraFamily := (_root_.LeafQM.AV.R1UnivRigid.shimuraFamily_iff_ab (mumfordRigidity_of14 r)).mpr
+  shimuraFamily := (_root_.LeafQM.AV.R1UnivRigid.shimuraFamily_iff_ab_gl
+      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore)).mpr
     r.shimuraFamilyAb
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
@@ -802,7 +801,8 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
   semistableUnipotent := r.semistableUnipotent
   neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6 :=
-    (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerCountX6_iff_ab (mumfordRigidity_of14 r)).mpr
+    (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerCountX6_iff_ab_gl
+      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore)).mpr
       r.gonzalezRotgerCountX6Ab
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold14, reduct fold; no `sorry`, standard axioms).
