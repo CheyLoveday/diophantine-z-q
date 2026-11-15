@@ -278,7 +278,7 @@ def twistInv {r : ℕ} (Nu : (ZMod r)ˣ) (u : (ZMod r)ˣ) : (ZMod r)ˣ := -(Nu *
 theorem twistInv_involutive {r : ℕ} (Nu : (ZMod r)ˣ) : Function.Involutive (twistInv Nu) := by
   intro u
   simp only [twistInv, mul_neg, inv_neg, neg_neg, _root_.mul_inv_rev, inv_inv]
-  simp [mul_assoc, mul_left_comm]
+  simp [mul_assoc]
 
 /-- **One translate of the twist under `W_{N r²}`**, at a unit `u`. -/
 theorem slash_twist_unit (f : Newform N 2) (hχ : f.χ = 1) (r : ℕ) [NeZero r]
@@ -318,6 +318,69 @@ theorem slash_twist_unit (f : Newform N 2) (hχ : f.χ = 1) (r : ℕ) [NeZero r]
     rw [this]; field_simp
   push_cast at e
   rw [e, slash_upperRightHom_add_intCast f.toCuspForm]
+
+omit [NeZero N] in
+theorem dft_twistInv {D : ℤ} [NeZero D.natAbs] (hcop : Nat.Coprime N D.natAbs)
+    (u : (ZMod D.natAbs)ˣ) :
+    𝓕 (chiDMod D) u = (jacobiSym (-(N : ℤ)) D.natAbs : ℂ) *
+      𝓕 (chiDMod D) (twistInv (ZMod.unitOfCoprime N hcop) u : (ZMod D.natAbs)ˣ) := by
+  rw [dft_chiDMod_unit u, dft_chiDMod_unit (twistInv (ZMod.unitOfCoprime N hcop) u), ← mul_assoc,
+    ← chiDMod_intCast, ← chiDMod_mul]
+  congr 1
+  have e : ((-(N : ℤ) : ℤ) : ZMod D.natAbs) *
+      ((twistInv (ZMod.unitOfCoprime N hcop) u : (ZMod D.natAbs)ˣ) : ZMod D.natAbs) =
+      ((u⁻¹ : (ZMod D.natAbs)ˣ) : ZMod D.natAbs) := by
+    have h1 : ((N : ℕ) : ZMod D.natAbs) = ((ZMod.unitOfCoprime N hcop : (ZMod D.natAbs)ˣ) :
+        ZMod D.natAbs) := (ZMod.coe_unitOfCoprime N hcop).symm
+    simp only [twistInv, Units.val_neg]
+    push_cast
+    rw [h1, neg_mul_neg, ← Units.val_mul, _root_.mul_inv_rev, ← mul_assoc, mul_comm _ u⁻¹,
+      mul_assoc, mul_inv_cancel, mul_one]
+  rw [e, chiDMod_inv]
+
+/-- **The twist `f ⊗ χ_D` is an eigenvector of `W_{N D²}` with eigenvalue `χ_D(−N) ε_N(f)`.** -/
+theorem slash_frickeGL_twist (f : Newform N 2) (hχ : f.χ = 1) {D : ℤ} (hD : IsOddFundDisc D)
+    (hcop : Nat.Coprime N D.natAbs) [NeZero D.natAbs] [NeZero (N * D.natAbs * D.natAbs)] :
+    (⇑(CuspForm.twist (chiDMod D) (L := N * D.natAbs * D.natAbs) (dvd_mul_right _ _)
+        ⟨N, by ring⟩ f.toCuspForm)) ∣[(2 : ℤ)] TauCeti.frickeGL ℝ (N * D.natAbs * D.natAbs) =
+      ((jacobiSym (-(N : ℤ)) D.natAbs : ℂ) * f.frickeSign hχ) •
+        ⇑(CuspForm.twist (chiDMod D) (L := N * D.natAbs * D.natAbs) (dvd_mul_right _ _)
+          ⟨N, by ring⟩ f.toCuspForm) := by
+  have hW : 0 < ((TauCeti.frickeGL ℝ (N * D.natAbs * D.natAbs) : GL (Fin 2) ℝ) :
+      Matrix (Fin 2) (Fin 2) ℝ).det := by
+    have := TauCeti.val_det_frickeGL_pos (K := ℝ) (N := N * D.natAbs * D.natAbs)
+    rwa [Matrix.GeneralLinearGroup.val_det_apply] at this
+  set h : ZMod D.natAbs → (ℍ → ℂ) := fun a =>
+    ⇑f.toCuspForm ∣[(2 : ℤ)] (upperRightHom ((a.val : ℝ) / D.natAbs) : GL (Fin 2) ℝ) with hh
+  have hF : ⇑(CuspForm.twist (chiDMod D) (L := N * D.natAbs * D.natAbs) (dvd_mul_right _ _)
+        ⟨N, by ring⟩ f.toCuspForm) =
+      (D.natAbs : ℂ)⁻¹ • ∑ a : ZMod D.natAbs, 𝓕 (chiDMod D) a • h a := by
+    funext τ
+    simp only [CuspForm.twist_apply, hh, Pi.smul_apply, Finset.sum_apply, smul_eq_mul,
+      TauCeti.ModularForm.slash_upperRightHom_apply]
+  set Nu := ZMod.unitOfCoprime N hcop with hNu
+  set c : ℂ := (jacobiSym (-(N : ℤ)) D.natAbs : ℂ) with hc
+  set ε := f.frickeSign hχ with hε
+  have hvan : ∀ (g : ZMod D.natAbs → ℍ → ℂ) (a : ZMod D.natAbs), ¬ IsUnit a →
+      𝓕 (chiDMod D) a • g a = 0 := fun g a ha => by
+    rw [dft_chiDMod_nonunit hD a ha, zero_smul]
+  have hterm : ∀ u : (ZMod D.natAbs)ˣ, 𝓕 (chiDMod D) u • (h u ∣[(2 : ℤ)]
+      TauCeti.frickeGL ℝ (N * D.natAbs * D.natAbs)) =
+      (c * ε) • (𝓕 (chiDMod D) (twistInv Nu u : (ZMod D.natAbs)ˣ) • h (twistInv Nu u)) := by
+    intro u
+    rw [hh]
+    simp only
+    rw [slash_twist_unit f hχ D.natAbs hcop u, dft_twistInv hcop u, smul_smul, smul_smul]
+    congr 1
+    ring
+  rw [hF, ModularForm.smul_slash_of_det_pos _ hW, SlashAction.sum_slash]
+  simp_rw [ModularForm.smul_slash_of_det_pos _ hW]
+  rw [sum_eq_sum_units _ (hvan _), sum_eq_sum_units _ (hvan h)]
+  rw [Finset.sum_congr rfl (fun u _ => hterm u), ← Finset.smul_sum]
+  have hperm := Equiv.sum_comp (twistInv_involutive Nu).toPerm
+    (fun u : (ZMod D.natAbs)ˣ => 𝓕 (chiDMod D) (u : ZMod D.natAbs) • h u)
+  simp only [Function.Involutive.coe_toPerm] at hperm
+  rw [hperm, smul_comm]
 
 end Eigen
 
