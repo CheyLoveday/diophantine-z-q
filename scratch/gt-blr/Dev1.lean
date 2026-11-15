@@ -460,6 +460,69 @@ theorem glue_ext {X : Over (Spec (CommRingCat.of R))} [IsSeparated X.hom] (hX : 
     rw [← Category.assoc, hF, Category.assoc, Scheme.Cover.ι_glueMorphisms, ← hψ, Category.assoc,
       ← hg2 i, ← Category.assoc, pullback.lift_fst]
 
+/-- **A Néron model over `R` stays a Néron model over `R_𝔭`** (any ring `R` with fraction field `K`, any prime
+`𝔭`). -/
+theorem isNeronModelOver_localization {X : Over (Spec (CommRingCat.of R))} (hX : IsNeronModelOver R K X) :
+    IsNeronModelOver R𝔭 K ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)))).obj X) := by
+  have hX' := hX
+  obtain ⟨hsm, hsep, hlft, hqc, -⟩ := hX'
+  let jR := Spec.map (CommRingCat.ofHom (algebraMap R R𝔭))
+  let kK := Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))
+  have hk : kK ≫ jR = Spec.map (CommRingCat.ofHom (algebraMap R K)) := by
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]
+  refine ⟨show Smooth (pullback.snd X.hom jR) from inferInstance,
+    show IsSeparated (pullback.snd X.hom jR) from inferInstance,
+    show LocallyOfFiniteType (pullback.snd X.hom jR) from inferInstance,
+    show QuasiCompact (pullback.snd X.hom jR) from inferInstance, fun Y _ => ⟨?_, ?_⟩⟩
+  · intro f₁ f₂ h
+    have w₁ : f₁.left ≫ pullback.snd X.hom jR = Y.hom := Over.w f₁
+    have w₂ : f₂.left ≫ pullback.snd X.hom jR = Y.hom := Over.w f₂
+    have key : f₁.left ≫ pullback.fst X.hom jR = f₂.left ≫ pullback.fst X.hom jR := by
+      refine uq (𝔭 := 𝔭) R𝔭 X Y.hom (pullback.fst Y.hom kK) (pullback.snd Y.hom kK)
+        (IsPullback.of_hasPullback _ _) _ _ ?_ ?_ ?_
+      · rw [Category.assoc, pullback.condition, ← Category.assoc, w₁]
+      · rw [Category.assoc, pullback.condition, ← Category.assoc, w₂]
+      · have h1 := congrArg (fun t => t.left ≫ pullback.fst _ _ ≫ pullback.fst _ _) h
+        simpa only [Over.pullback_map_left, pullback.lift_fst_assoc, Category.assoc] using h1
+    apply Over.OverMorphism.ext
+    exact pullback.hom_ext key (w₁.trans w₂.symm)
+  · intro h
+    have hw : h.left ≫ pullback.snd (pullback.snd X.hom jR) kK = pullback.snd Y.hom kK := Over.w h
+    let a := h.left ≫ pullback.fst (pullback.snd X.hom jR) kK ≫ pullback.fst X.hom jR
+    have ha : a ≫ X.hom = pullback.snd Y.hom kK ≫ Spec.map (CommRingCat.ofHom (algebraMap R K)) := by
+      simp only [a, Category.assoc]
+      rw [pullback.condition, pullback.condition_assoc, ← Category.assoc, hw, hk]
+    obtain ⟨g, hg1, hg2⟩ := glue_ext (𝔭 := 𝔭) R𝔭 hX Y.left Y.hom a ha
+    refine ⟨Over.homMk (pullback.lift g Y.hom hg1) (pullback.lift_snd _ _ _), ?_⟩
+    apply Over.OverMorphism.ext
+    apply pullback.hom_ext
+    · apply pullback.hom_ext
+      · simp only [Over.pullback_map_left, Over.homMk_left, Category.assoc, pullback.lift_fst]
+        exact hg2
+      · simp only [Over.pullback_map_left, Over.homMk_left, Category.assoc, pullback.lift_fst,
+          pullback.lift_snd]
+        exact pullback.condition.trans ((congrArg (· ≫ kK) hw).symm.trans ((Category.assoc _ _ _).trans
+          (congrArg (h.left ≫ ·) pullback.condition.symm)))
+    · simp only [Over.pullback_map_left, Over.homMk_left, pullback.lift_snd]
+      exact hw.symm
+
 end Main
+
+/-! ## The `.mp` half of BLR 1.2/4 -/
+
+/-- **The `.mp` half of `CToPrinted.BLR_1_2_4`** (BLR, *Néron models*, §1.2 Prop. 4, "only if"), stated with the
+same binders. -/
+def BLR_1_2_4_MP : Prop :=
+  ∀ (R K : Type) [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
+    (X : Over (Spec (CommRingCat.of R))) [Smooth X.hom] [IsSeparated X.hom] [QuasiCompact X.hom],
+    IsNeronModelOver R K X →
+      ∀ (𝔭 : Ideal R) [𝔭.IsMaximal] (R𝔭 : Type) [CommRing R𝔭] [Algebra R R𝔭]
+        [IsLocalization.AtPrime R𝔭 𝔭] [Algebra R𝔭 K] [IsScalarTower R R𝔭 K],
+        IsNeronModelOver R𝔭 K ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)))).obj X)
+
+/-- **`BLR_1_2_4_MP`, proved.** -/
+theorem blr_1_2_4_mp : BLR_1_2_4_MP := by
+  intro R K _ _ _ _ _ X _ _ _ hX 𝔭 _ R𝔭 _ _ _ _ _
+  exact isNeronModelOver_localization (𝔭 := 𝔭) R𝔭 hX
 
 end GapBLR
