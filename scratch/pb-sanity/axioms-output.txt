@@ -9,3 +9,9 @@
 'HDec.PkgI4.PanBergerSplit.isPst_quadChar' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.isSemistableOver_of_trivial' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.nonempty_tEps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.embW_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.linearIndependent_teichB' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.natDegree_minpoly_le_finrank_bstInv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.PkgI4.PanBergerSplit.pow_mul_prod_logOf_mul_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]

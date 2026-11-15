@@ -19,12 +19,17 @@ if the definitions are not degenerate. This file proves, with no `sorry` (only `
   (`stAct_one`); the group law on `B_st` is equivalent to the cocycle identity for `log [u_σ]`
   (`stAct_mul_iff`) and follows from the additivity of `log` on `{ε : ε^♯ = 1}` (`LogAdditive`,
   stated, not proved here; `stAct_mul`).
+* **`K_0 ⊆ B_st^{G_K}`.** `A_inf → B_st` is injective and equivariant (`embW_injective`,
+  `stAct_embW`); for a root of unity `μ ∈ K` of order prime to `p`, the Teichmüller lift `[μ♭]`
+  lies in `B_st^{G_K}` and `1, [μ♭], …, [μ♭]^{d-1}` (`d = [ℚ_p(μ) : ℚ_p]`) are `ℚ_p`-linearly
+  independent (`teichB_pow_mem_bstInv`, `linearIndependent_teichB`), so a finite-dimensional
+  `B_st^{G_K}` has dimension `≥ [ℚ_p(μ) : ℚ_p]` (`natDegree_minpoly_le_finrank_bstInv`).
 * **Semistable representations.** A representation trivial on `G_K` is semistable over `K`
   (`isSemistableOver_of_trivial`, any `K`), so representations with finite image on a finite `K`,
   the trivial `n`-dimensional representation (`localIsPst_one`) and the quadratic characters
   `σ ↦ σ(α)/α` (`isPst_quadChar`) are potentially semistable.
 
-Not proved (see `docs/research/pb-sanity.md`): `B_st^{G_K} = K_0` (in particular its finite
-dimensionality, which `IsSemistableOver` needs to mean Fontaine's condition), `LogAdditive`, and a
-representation that fails `LocalIsPst`.
+Not proved (see `docs/research/pb-sanity.md`): `B_st^{G_K} ⊆ K_0` (in particular the finite
+dimensionality of `B_st^{G_K}`, which `IsSemistableOver` needs to mean Fontaine's condition),
+`LogAdditive`, and a representation that fails `LocalIsPst`.
 -/

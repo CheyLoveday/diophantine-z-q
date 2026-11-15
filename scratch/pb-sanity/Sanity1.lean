@@ -597,7 +597,7 @@ theorem logOf_bcris_ne_zero (e : TEps p) :
     algebraMap (BcrisPlus p) (Bcris p) (algebraMap (Acris p) (BcrisPlus p) (logOf p e)) ≠ 0 :=
   (isUnit_logOf_bcris p e).ne_zero
 
-/-! ### There is an `ε` with `ε^♯ = 1`, `ε ≠ 1` (so `t` exists and `B_cris ≠ B_cris^+[1/1]`) -/
+/-! ### There is an `ε` with `ε^♯ = 1`, `ε ≠ 1` (so `t` exists) -/
 
 open ZInQ.Contrib.G9.BdrKer.Cp in
 /-- If the components of `x ∈ 𝓞_ℂ_p♭` are the classes of a compatible system `c` of `p`-th
