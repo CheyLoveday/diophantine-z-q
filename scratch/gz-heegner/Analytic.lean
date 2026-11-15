@@ -502,6 +502,137 @@ theorem fSlash_mdiff (γ : SL(2, ℤ)) : MDiff (fSlash f γ) := by
 theorem fSlash_zero (γ : SL(2, ℤ)) : UpperHalfPlane.IsZeroAtImInfty (fSlash f γ) :=
   CuspFormClass.zero_at_infty_slash f.toCuspForm γ
 
+theorem hNpos : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+
+/-- The `q_N`-expansion coefficients of `f|₂γ`. -/
+def bCoeff (γ : SL(2, ℤ)) (m : ℕ) : ℂ := (UpperHalfPlane.qExpansion (N : ℝ) (fSlash f γ)).coeff m
+
+theorem hasSum_fSlash (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    HasSum (fun m => bCoeff f γ m * Function.Periodic.qParam (N : ℝ) τ ^ m) (fSlash f γ τ) := by
+  simpa [smul_eq_mul, bCoeff] using UpperHalfPlane.hasSum_qExpansion (hNpos (N := N))
+    (fSlash_periodic f γ) (fSlash_mdiff f γ) (fSlash_zero f γ).isBoundedAtImInfty τ
+
+theorem bCoeff_summable (γ : SL(2, ℤ)) (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun m => bCoeff f γ m * q ^ m) := by
+  simpa [smul_eq_mul, bCoeff] using (UpperHalfPlane.hasSum_qExpansion_of_norm_lt (hNpos (N := N))
+    (fSlash_periodic f γ) (fSlash_mdiff f γ) (fSlash_zero f γ).isBoundedAtImInfty hq).summable
+
+theorem bCoeff_zero (γ : SL(2, ℤ)) : bCoeff f γ 0 = 0 := by
+  rw [bCoeff, UpperHalfPlane.qExpansion_coeff_zero (hNpos (N := N))
+    (UpperHalfPlane.analyticAt_cuspFunction_zero (hNpos (N := N)) (fSlash_periodic f γ)
+      (fSlash_mdiff f γ) (fSlash_zero f γ).isBoundedAtImInfty) (fSlash_periodic f γ)]
+  exact (fSlash_zero f γ).valueAtInfty_eq_zero
+
+/-- The coefficients of the antiderivative `Σ_{m ≥ 1} b_m (N/m) q_N^m`. -/
+def betaC (γ : SL(2, ℤ)) (m : ℕ) : ℂ := if m = 0 then 0 else bCoeff f γ m * N / m
+
+theorem betaC_norm (γ : SL(2, ℤ)) (m : ℕ) : ‖betaC f γ m‖ ≤ N * (m : ℝ) ^ 0 * ‖bCoeff f γ m‖ := by
+  unfold betaC
+  split_ifs with hm
+  · simp only [norm_zero, pow_zero, mul_one]; positivity
+  · rw [norm_div, norm_mul, Complex.norm_natCast, Complex.norm_natCast, pow_zero, mul_one]
+    have h1 : (1 : ℝ) ≤ m := by exact_mod_cast Nat.one_le_iff_ne_zero.2 hm
+    rw [div_le_iff₀ (by linarith)]
+    have := mul_le_mul_of_nonneg_left h1 (by positivity : (0 : ℝ) ≤ N * ‖bCoeff f γ m‖)
+    linarith
+
+theorem betaC_summable_norm (γ : SL(2, ℤ)) {q : ℂ} (hq : ‖q‖ < 1) :
+    Summable (fun m => ‖betaC f γ m‖ * ‖q‖ ^ m) :=
+  pseries_summable_norm (bCoeff f γ) (betaC f γ) (bCoeff_summable f γ) N (by positivity) 0
+    (betaC_norm f γ) hq
+
+theorem betaC_summable (γ : SL(2, ℤ)) (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun m => betaC f γ m * q ^ m) :=
+  Summable.of_norm ((betaC_summable_norm f γ hq).congr fun m => by rw [norm_mul, norm_pow])
+
+/-- `G(τ) = Σ_{m ≥ 1} b_m (N/m) q_N(τ)^m`. -/
+def Gq (γ : SL(2, ℤ)) (τ : UpperHalfPlane) : ℂ :=
+  ∑' m, betaC f γ m * Function.Periodic.qParam (N : ℝ) τ ^ m
+
+theorem hasDerivAt_qParamN (w : ℂ) :
+    HasDerivAt (fun w => Function.Periodic.qParam (N : ℝ) w)
+      (2 * Real.pi * Complex.I / N * Function.Periodic.qParam (N : ℝ) w) w := by
+  have := ((hasDerivAt_id w).const_mul (2 * Real.pi * Complex.I / (N : ℂ))).cexp
+  convert this using 1
+  · funext z; simp [Function.Periodic.qParam]; ring_nf
+  · simp [Function.Periodic.qParam]; ring_nf
+
+theorem hasDerivAt_Gq (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    HasDerivAt (Gq f γ ∘ UpperHalfPlane.ofComplex)
+      (2 * Real.pi * Complex.I * fSlash f γ τ) τ := by
+  have hq : ‖Function.Periodic.qParam (N : ℝ) (τ : ℂ)‖ < 1 :=
+    Function.Periodic.norm_qParam_lt_one (hNpos (N := N)) τ.im_pos
+  have h1 := (hasDerivAt_pseries (betaC f γ) (betaC_summable f γ) hq).comp (τ : ℂ)
+    (hasDerivAt_qParamN (N := N) τ)
+  have hev : (Gq f γ ∘ UpperHalfPlane.ofComplex) =ᶠ[nhds (τ : ℂ)]
+      ((fun w => ∑' m, betaC f γ m * w ^ m) ∘ fun w => Function.Periodic.qParam (N : ℝ) w) := by
+    filter_upwards [UpperHalfPlane.isOpen_upperHalfPlaneSet.mem_nhds τ.im_pos] with w hw
+    simp only [Function.comp_apply, Gq, UpperHalfPlane.ofComplex_apply_of_im_pos hw]
+  refine HasDerivAt.congr_of_eventuallyEq ?_ hev
+  convert h1 using 1
+  set q := Function.Periodic.qParam (N : ℝ) (τ : ℂ)
+  have hN0 : (N : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne N
+  have key : ∀ m : ℕ, betaC f γ m * ((m : ℂ) * q ^ (m - 1)) * (2 * Real.pi * Complex.I / N * q) =
+      2 * Real.pi * Complex.I * (bCoeff f γ m * q ^ m) := by
+    intro m
+    rcases m with _ | m
+    · simp [betaC, bCoeff_zero]
+    · simp only [betaC, if_neg (Nat.succ_ne_zero m), Nat.add_sub_cancel]
+      have hm : ((m + 1 : ℕ) : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero m
+      rw [pow_succ]
+      field_simp
+  show _ = (∑' m, betaC f γ m * ((m : ℂ) * q ^ (m - 1))) * (2 * Real.pi * Complex.I / N * q)
+  rw [← tsum_mul_right, funext key, tsum_mul_left, (hasSum_fSlash f γ τ).tsum_eq]
+
+theorem mdiff_Gq (γ : SL(2, ℤ)) : MDiff (Gq f γ) := fun τ =>
+  UpperHalfPlane.mdifferentiableAt_iff.2 (hasDerivAt_Gq f γ τ).differentiableAt
+
+theorem D_Gq (γ : SL(2, ℤ)) : Derivative.normalizedDerivOfComplex (Gq f γ) = fSlash f γ := by
+  funext τ
+  rw [Derivative.normalizedDerivOfComplex, (hasDerivAt_Gq f γ τ).deriv]
+  field_simp
+
+theorem eichler_slash (γ : SL(2, ℤ)) :
+    (ZInQ.GZHL3.eichler f ∣[(0 : ℤ)] γ) = fun τ => ZInQ.GZHL3.eichler f (γ • τ) := by
+  funext τ
+  rw [ModularForm.SL_slash_apply]
+  simp
+
+theorem D_eichler_slash (γ : SL(2, ℤ)) :
+    Derivative.normalizedDerivOfComplex (fun τ => ZInQ.GZHL3.eichler f (γ • τ)) = fSlash f γ := by
+  rw [← eichler_slash, Derivative.normalizedDerivOfComplex_SL_slash (mdiff_eichler f), D_eichler]
+  funext τ
+  simp [fSlash]
+
+theorem mdiff_eichler_slash (γ : SL(2, ℤ)) : MDiff (fun τ => ZInQ.GZHL3.eichler f (γ • τ)) := by
+  rw [← eichler_slash, ModularForm.SL_slash]
+  exact (mdiff_eichler f).slash _ _
+
+/-- **`φ_f(γτ) = K₀ + Σ_{m ≥ 1} b_m (N/m) q_N^m`**: the Eichler integral is holomorphic at every
+cusp. -/
+theorem exists_const_eichler (γ : SL(2, ℤ)) :
+    ∃ K₀ : ℂ, ∀ τ : UpperHalfPlane, ZInQ.GZHL3.eichler f (γ • τ) = K₀ + Gq f γ τ := by
+  set H : UpperHalfPlane → ℂ := fun τ => ZInQ.GZHL3.eichler f (γ • τ) - Gq f γ τ with hH
+  have hmd : MDiff H := (mdiff_eichler_slash f γ).sub (mdiff_Gq f γ)
+  have hD : Derivative.normalizedDerivOfComplex H = 0 := by
+    rw [hH, show (fun τ => ZInQ.GZHL3.eichler f (γ • τ) - Gq f γ τ) =
+      (fun τ => ZInQ.GZHL3.eichler f (γ • τ)) - Gq f γ from rfl,
+      Derivative.normalizedDerivOfComplex_sub _ _ (mdiff_eichler_slash f γ) (mdiff_Gq f γ),
+      D_eichler_slash, D_Gq, sub_self]
+  have hderiv : Set.EqOn (deriv (H ∘ UpperHalfPlane.ofComplex)) 0 {z : ℂ | 0 < z.im} := by
+    intro w hw
+    have h := congrFun hD ⟨w, hw⟩
+    simp only [Derivative.normalizedDerivOfComplex, Pi.zero_apply] at h
+    have h2 : (2 * (Real.pi : ℂ) * Complex.I)⁻¹ ≠ 0 := by
+      simp [Real.pi_ne_zero, Complex.I_ne_zero]
+    exact (mul_eq_zero.1 h).resolve_left h2
+  obtain ⟨a, ha⟩ := UpperHalfPlane.isOpen_upperHalfPlaneSet.exists_is_const_of_deriv_eq_zero
+    (convex_halfSpace_im_gt 0).isPreconnected (UpperHalfPlane.mdifferentiable_iff.1 hmd) hderiv
+  refine ⟨a, fun τ => ?_⟩
+  have := ha τ τ.im_pos
+  simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply] at this
+  rw [← this]; simp [hH]
+
 end Cusp
 
 end ZInQ.GZHeegner
