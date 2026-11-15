@@ -81,3 +81,11 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
 - `isSemistableOver_quadChar_teich`: for β a root of unity of order prime to p with β² ∈ ℚ_p, the
   quadratic character σ ↦ σ(β)/β is semistable over ℚ_p (period [β♭]); for p odd and β a primitive
   2(p−1)-th root of unity this is the unramified quadratic character (STANDARD, not proved here).
+
+## Step 8: LogAdditive PROVED; G_Qp acts on B_st by ring automorphisms (Sanity1.lean) — COMPILES (0 errors)
+- Polynomial part (namespace PBLogPoly, ℚ[B][A]): `key_identity` ((1+A)·∂_A F_M = (−A)^M − (−c)^M),
+  `dvd_coeff_FM`/`coeff_FM_eq_zero` (coefficients of A^i B^s vanish for i+s ≤ M), `IsDPInt` (divided-power
+  integrality, closed under +, ·), `isDPInt_dpow_cA` (c^j/j! integral), `coeff_cA_pow_eq_zero` (support),
+  `FM_coeff_dvd` (for M ≥ 2N+1 all divided-power coefficients of F_M are divisible by N).
+- A_inf[1/p] part: `evS` (A ↦ [x]−1, B ↦ [y]−1), `evS_FM`, `evS_pMul`, `logPartialVal_sub_pMul`.
+- `logAdditive : LogAdditive p`; `stAut : GQp p →* (Bst p ≃+* Bst p)`.
