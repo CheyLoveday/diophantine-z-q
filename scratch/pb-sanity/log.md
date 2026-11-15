@@ -95,3 +95,10 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
   `pow_dvd_natDegree_minpoly` (a^{p^n} = p ⇒ p^n ∣ [ℚ_p(a):ℚ_p], valuations),
   `exists_mem_fixingSubgroup_uSigma_ne_one` (some σ ∈ G_K moves p♭, InfiniteGalois.fixedField_fixingSubgroup),
   `X_not_mem_bstInv` (K finite), `quadChar_ne_one` (α ∉ ℚ_p ⇒ χ_α ≠ 1).
+
+## Final state (VERIFIED 2026-11-15 ~09:00 PST)
+- `lake build +ZInQKernel.Contrib.OneProof.PanBergerSanity`: success, no warnings; 22 key theorems print only
+  propext, Classical.choice, Quot.sound (axioms-output.txt); scan_contrib: 0 hits; file 114 KB.
+- #discharges: no new discharge (sanity file); r11r12 still by panBerger_of_printed.
+- Verdict: panPrinted, bergerPrinted rated printed form; only B_st^{G_K} ⊆ K_0 (Fontaine) not in Lean;
+  no non-pst example (needs it plus Sen theory).
