@@ -1,4 +1,4 @@
-lake env lean scratch/rayclass-cft/RayClassCFT.lean: exit 0, 0 errors, 34 s wall, 9.0 GB max RSS (Sat Nov 14 07:03:40 PM PST 2026)
+lake env lean scratch/rayclass-cft/RayClassCFT.lean (11 parts, incl. RayGlueB): exit 0, 0 errors, 1 min 17 s wall, 14.8 GB max RSS (Sat Nov 14 07:16:32 PM PST 2026)
 'ShimuraSplit.holP1_of_isHolFamily' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.QMSplit.Moduli.shimuraFamily_of_hol' depends on axioms: [propext, Classical.choice, Quot.sound]
 'CToPrinted.Shimura.shimuraFamily_of_mainThmI' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -19,3 +19,5 @@ lake env lean scratch/rayclass-cft/RayClassCFT.lean: exit 0, 0 errors, 34 s wall
 'RayClassCFT.rayClassCM_of3' depends on axioms: [propext, Classical.choice, Quot.sound]
 'RayClassCFT.cmAnalytic_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'RayClassCFT.rayClassCM_of4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RayClassCFT.cmBaseChange' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RayClassCFT.rayClassCM_of_leaves' depends on axioms: [propext, Classical.choice, Quot.sound]

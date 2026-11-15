@@ -68,3 +68,14 @@ Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the pre
   All `#print axioms`: [propext, Classical.choice, Quot.sound].
 - `HomLinearLift` is hom-unify's leaf (ZInQKernel/Contrib/HomUnify/Corr.lean), the first clause of the bundle
   leaf `HomLatticeCorr` (`homLinearLift_of_corr`).
+
+## Step 4 (19:14): `CMBaseChange` proved; `RayClassCM` from four leaves (VERIFIED)
+- `RayGlueB.lean`: `one_pt_left`, `eta_compat` (η-clause at `a = 0`), `bcIso` (`Q.A ≅ (P.A)_L` from
+  `IsPullback.isoPullback`), `eta_bc_fst/snd`, `bcIso_eta`, `bcIso_isMonHom`/`_inv_` (kernel's proved
+  `G0FibreSimple.rigidityHom`), `conjEnd`, `bc_iota`, `exists_bc_ringHom`, `com_map`, **`cmBaseChange`**, and
+  **`rayClassCM_of_leaves (hL : ShimuraMainThmIDeligneY3AbU) (hMR : MumfordRigidityCore)
+  (hCN : ClassNumberOneB) (hHL : HomLinearLift) : RayClassCM`**.
+- One-file check `RayClassCFT.lean` (11 parts): exit 0, 0 errors, 1 min 17 s, 14.8 GB; 22 `#print axioms`
+  lines, all [propext, Classical.choice, Quot.sound] (`RayClassCFT_result.txt`).
+- Pitfall: `(A.baseChange L).X.left` vs `pullback A.X.hom f` are defeq but `rw` fails on mixed terms; state the
+  goal with `show` in pure pullback terms (`hpb.isoPullback.hom`, `pullback.lift`) and use `pullback.hom_ext`.
