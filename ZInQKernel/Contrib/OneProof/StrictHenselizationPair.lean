@@ -1507,7 +1507,9 @@ open ReductSplit ReductGlue
 /-- `O₁ ⊇ O` is an unramified strictly henselian extension with `K₁/K` separable: `O₁` is a
 strictly henselian DVR, `K₁/K` is separable algebraic, a uniformizer of `O` stays a uniformizer of
 `O₁` (ramification index 1), and `κ(O₁)/κ(O)` is separable. In every characteristic these conditions
-characterize `O → O₁` as the strict henselization of `O` up to isomorphism over `O` (report §3). -/
+characterize `O → O₁` as the strict henselization of `O` up to isomorphism over `O` (report §2; no excellence
+hypothesis is needed, since a finite separable extension of a henselian discretely valued field is defectless:
+`O^sh` is noetherian and normal, so the integral closure is finite free and `[L : K^sh] = e f = 1`). -/
 def IsSHSep {K K₁ : Type} [Field K] [Field K₁] [Algebra K K₁] (O : ValuationSubring K)
     (O₁ : ValuationSubring K₁) (hO : O₁.comap (algebraMap K K₁) = O) : Prop :=
   IsStrictlyHenselianDVR O₁ ∧ Algebra.IsSeparable K K₁ ∧
@@ -1519,7 +1521,7 @@ def IsSHSep {K K₁ : Type} [Field K] [Field K₁] [Algebra K K₁] (O : Valuati
 henselization: Bosch–Lütkebohmert–Raynaud, *Néron models*, §1.2 Prop. 2 (and §7.2 Thm. 1);
 numbers UNVERIFIED). `O ⊆ K` a DVR (any characteristic, any residue field) and `O₁ ⊇ O` an
 unramified strictly henselian extension with `K₁/K` separable (`IsSHSep`, which pins `O₁` as the
-strict henselization `O^sh` up to isomorphism over `O`, report §3); then the base change of a Néron
+strict henselization `O^sh` up to isomorphism over `O`, report §2); then the base change of a Néron
 model of `A` over `O` is a Néron model of `A_{K₁}` over `O₁`. It is a specialization of the chain's
 `ReductGlue.NeronBaseChangeUnramifiedDVR` (`neronBaseChangeStrictHenselization_of_unramified`). -/
 def NeronBaseChangeStrictHenselization : Prop :=
