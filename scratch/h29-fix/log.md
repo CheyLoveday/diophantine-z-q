@@ -27,3 +27,25 @@ Base: origin/wip/h29-split 14503253. Contributor file under revision: copy of
   integers <= 10^6 not represented are exactly n = 3 (4), 6 (8), 12 (16), 4^a(8k+7). VERIFIED (exhaustive).
 * Mathlib 4.35 has no three-square theorem (grep for three_sq / sum_three / three squares in
   .lake/packages/mathlib/Mathlib: only Nat.sum_four_squares). VERIFIED.
+
+## Step 2. Revised contribution (scratch/h29-fix/TYZLemma29Mod2.lean), compiled 2026-11-15
+
+Changes against ZInQKernel/Contrib/OneProof/TYZLemma29Mod2.lean (h29-split):
+* `wK m := if m = 3 then 3 else 1`; `Lemma29Printed`/`Lemma29At`: `wK m * Σ ε ℓℓ = Q m` (disjunction removed).
+* `Prop23Cong`, `Prop23Odd`, `TYZTestVectorExists`, `TYZProp23Printed`: `1 < n` added (weakening; n = 1 unused).
+* `InPiZ`: Hecke pin (apE, hurwitzNorm, quatOf: removed) replaced by TYZ's printed description of pi^U = A_0^U:
+  sums over the 8 Lemma-2.5 representatives `twoRep v t = ιAt v (1 + 2x)`, x = a i + b j + c ζ, of f and of
+  (-1)^c f vanish (`twoRepQ`, `twoRep`, `chi0Rep`). New `exists_isPlaceTwo` (the place 2 exists).
+* `TYZTestVectorExists`: `∃ f, IsTestVector n τ f ∧ ∃ x : ℍ[AQ]ˣ, f x ≠ 0`.
+* New glue: `wK_cast`, `tv_eq_of_toClassGroup_eq` (f ∘ τ̂ constant on classes), `genusPeriodTV_eq_of_section`;
+  `odd_on_sqClasses` reproved through it.
+* `LegendreJonesPall` now proved (`legendreJonesPall_of`) from `LegendreThreeSquares` and `JonesPallX2Y2Z16`;
+  new top theorem `tyzLemma29Mod2_of_printedLeaves_legendre`.
+
+Compile: `lake env lean scratch/h29-fix/TYZLemma29Mod2.lean`: no errors (warnings: deprecated dif_pos, as before).
+`check.sh` → `DischargesH29Fix-output.txt` (VERIFIED):
+  DISCHARGES [h29] by ...tyzLemma29Mod2_of_printedLeaves_legendre
+    still assumes: [LegendreThreeSquares, JonesPallX2Y2Z16, TYZTestVectorExists, TYZLemma29Printed, TYZProp23Printed]
+    axioms: [propext, Classical.choice, Quot.sound]
+  `h29fix_frozenTarget` (Theorem 1.1 with h29 replaced by the five): axioms [propext, Classical.choice, Quot.sound].
+  #discharges: 66 open hypotheses, 1289 theorems checked, 6 discharge one.
