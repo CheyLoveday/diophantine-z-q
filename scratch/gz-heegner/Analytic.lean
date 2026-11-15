@@ -1074,6 +1074,27 @@ theorem hasDerivAt_wp {z : ℂ} (hz : z ∉ L.lattice) :
   have hd := (analyticAt_wp L hz).differentiableAt.hasDerivAt
   rwa [L.deriv_weierstrassP] at hd
 
+theorem constantCoeff_tay (f : ℂ → ℂ) : PowerSeries.constantCoeff (tay f) = f 0 := by
+  rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, coeff_tay]; simp
+
+theorem tay_pow {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (n : ℕ) :
+    tay (fun w => f w ^ n) = (tay f) ^ n := by
+  induction n with
+  | zero => simp only [pow_zero]; rw [tay_const]; rfl
+  | succ n ih =>
+    have e : (fun w => f w ^ (n + 1)) = fun w => f w ^ n * f w := by funext w; ring
+    have h := tay_mul (f := fun w => f w ^ n) (g := f) (hf.pow n) hf
+    beta_reduce at h
+    rw [e, h, ih, pow_succ]
+
+theorem tay_cmul (c : ℂ) {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) :
+    tay (fun w => c * f w) = PowerSeries.C c * tay f := by
+  rw [tay_mul analyticAt_const hf, tay_const]
+
+theorem tay_X_pow (n : ℕ) : tay (fun w => w ^ n) = PowerSeries.X ^ n := by
+  have := tay_pow (f := fun w => w) analyticAt_id n
+  simpa [tay_id] using this
+
 /-- **The Weierstrass equation in the variable `w`**, near `0`. -/
 theorem yF_ode {c : ℂ} (hc : c ≠ 0) (b : ℂ) :
     (fun w => (w * deriv (yF f L c b) w - 2 * yF f L c b w) ^ 2) =ᶠ[nhds 0]
@@ -1115,6 +1136,100 @@ theorem yF_ode {c : ℂ} (hc : c ≠ 0) (b : ℂ) :
     ring
   rw [e1]
   linear_combination (w ^ 6 * Z' ^ 2) * hsq
+
+theorem C_two : (PowerSeries.C (2 : ℂ) : ℂ⟦X⟧) = 2 := map_ofNat _ 2
+theorem C_four : (PowerSeries.C (4 : ℂ) : ℂ⟦X⟧) = 4 := map_ofNat _ 4
+
+/-- **The formal Weierstrass equation for the Taylor series of `Ŷ`.** -/
+theorem tay_yF_ode {c : ℂ} (hc : c ≠ 0) (b : ℂ) :
+    odePhi (d⁄dX (tay (zF f c)) ^ 2) b L.g₂ L.g₃ (tay (yF f L c b)) = 0 := by
+  set Y := yF f L c b with hYdef
+  set Z := zF f c with hZdef
+  have hY : AnalyticAt ℂ Y 0 := analyticAt_yF f L hc b
+  have hdY := hY.deriv
+  have hZ : AnalyticAt ℂ Z 0 := analyticAt_zF f c (w := 0) (by simp)
+  have hdZ := hZ.deriv
+  have h := tay_congr (yF_ode f L hc b)
+  -- left side
+  have l1 := tay_pow (f := fun w => w * deriv Y w - 2 * Y w) (by fun_prop) 2
+  have l2 := tay_sub (f := fun w => w * deriv Y w) (g := fun w => 2 * Y w) (by fun_prop)
+    (by fun_prop)
+  have l3 := tay_mul (f := fun w => w) (g := deriv Y) analyticAt_id hdY
+  have l4 := tay_cmul 2 hY
+  beta_reduce at l1 l2 l3 l4
+  -- right side
+  set U := fun w => Y w + b * w ^ 2 with hUdef
+  have hU : AnalyticAt ℂ U 0 := by fun_prop
+  have r1 := tay_mul (f := fun w => 4 * U w ^ 3 - L.g₂ * w ^ 4 * U w - L.g₃ * w ^ 6)
+    (g := fun w => deriv Z w ^ 2) (by fun_prop) (by fun_prop)
+  have r2 := tay_pow (f := deriv Z) hdZ 2
+  have r3 := tay_sub (f := fun w => 4 * U w ^ 3 - L.g₂ * w ^ 4 * U w) (g := fun w => L.g₃ * w ^ 6)
+    (by fun_prop) (by fun_prop)
+  have r4 := tay_sub (f := fun w => 4 * U w ^ 3) (g := fun w => L.g₂ * w ^ 4 * U w)
+    (by fun_prop) (by fun_prop)
+  have r5 := tay_cmul 4 (f := fun w => U w ^ 3) (by fun_prop)
+  have r6 := tay_pow hU 3
+  have r7 := tay_mul (f := fun w => L.g₂ * w ^ 4) (g := U) (by fun_prop) hU
+  have r8 := tay_cmul L.g₂ (f := fun w => w ^ 4) (by fun_prop)
+  have r9 := tay_cmul L.g₃ (f := fun w => w ^ 6) (by fun_prop)
+  have r10 := tay_add (f := Y) (g := fun w => b * w ^ 2) hY (by fun_prop)
+  have r11 := tay_cmul b (f := fun w => w ^ 2) (by fun_prop)
+  beta_reduce at r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11
+  have hUt : tay U = tay Y + PowerSeries.C b * X ^ 2 := by
+    rw [hUdef, r10, r11, tay_X_pow]
+  rw [l1, l2, l3, l4, tay_id, tay_deriv hY, C_two] at h
+  rw [r1, r2, r3, r4, r5, r6, r7, r8, r9, tay_X_pow, tay_X_pow, tay_deriv hZ, hUt, C_four] at h
+  unfold odePhi
+  rw [h, sub_self]
+
+/-- `tay Z = c·X·tay V`. -/
+theorem tay_zF (c : ℂ) : tay (zF f c) = C c * X * tay (vFun f) := by
+  have hV := analyticAt_vFun f
+  have e : zF f c = fun w => c * w * vFun f w := rfl
+  have h1 := tay_mul (f := fun w => c * w) (g := vFun f) (by fun_prop) hV
+  have h2 := tay_cmul c (f := fun w => w) analyticAt_id
+  beta_reduce at h1 h2
+  rw [e, h1, h2, tay_id]
+
+theorem map_tay_vFun (hV : ∀ n, ∃ q : ℚ, eCoeff f n = q) (σ : ℂ →+* ℂ) :
+    PowerSeries.map σ (tay (vFun f)) = tay (vFun f) := by
+  ext n
+  rw [PowerSeries.coeff_map, coeff_tay_vFun]
+  obtain ⟨q, hq⟩ := hV (n + 1)
+  rw [hq, map_ratCast]
+
+theorem map_tay_zF (hV : ∀ n, ∃ q : ℚ, eCoeff f n = q) (c : ℚ) (σ : ℂ →+* ℂ) :
+    PowerSeries.map σ (tay (zF f c)) = tay (zF f c) := by
+  rw [tay_zF, map_mul, map_mul, PowerSeries.map_C, PowerSeries.map_X, map_tay_vFun f hV σ,
+    map_ratCast]
+
+/-- **The Taylor series of `Ŷ` is fixed by `Aut(ℂ)`** (all data rational; uniqueness of the formal
+solution). -/
+theorem map_tay_yF (hV : ∀ n, ∃ q : ℚ, eCoeff f n = q) {c : ℚ} (hc : c ≠ 0) (b : ℚ) {g₂ g₃ : ℚ}
+    (hg₂ : L.g₂ = g₂) (hg₃ : L.g₃ = g₃) (σ : ℂ →+* ℂ) :
+    PowerSeries.map σ (tay (yF f L c b)) = tay (yF f L c b) := by
+  have hc' : (c : ℂ) ≠ 0 := by exact_mod_cast hc
+  have hode := tay_yF_ode f L hc' b
+  rw [hg₂, hg₃] at hode
+  set A := d⁄dX (tay (zF f c)) ^ 2 with hAdef
+  have hAfix : PowerSeries.map σ A = A := by
+    rw [hAdef, map_pow, map_derivative, map_tay_zF f hV c σ]
+  have hS : odePhi A b g₂ g₃ (PowerSeries.map σ (tay (yF f L c b))) = 0 := by
+    have := congrArg (PowerSeries.map σ) hode
+    rw [map_odePhi, map_zero, hAfix, map_ratCast, map_ratCast, map_ratCast] at this
+    exact this
+  refine (odePhi_unique A b g₂ g₃ hode hS ?_ ?_ ?_).symm
+  · rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, ← PowerSeries.coeff_zero_eq_constantCoeff_apply,
+      PowerSeries.coeff_map, PowerSeries.coeff_zero_eq_constantCoeff_apply, constantCoeff_tay, yF_zero]
+    rw [show ((c : ℂ) ^ 2)⁻¹ = (((c ^ 2)⁻¹ : ℚ) : ℂ) by push_cast; rfl, map_ratCast]
+  · rw [constantCoeff_tay, yF_zero]; simpa using hc'
+  · rw [hAdef, map_pow, ← PowerSeries.coeff_zero_eq_constantCoeff_apply,
+      PowerSeries.coeff_derivative, tay_zF, constantCoeff_tay, yF_zero,
+      show (C (c : ℂ) * X * tay (vFun f)) = C (c : ℂ) * (X * tay (vFun f)) by ring]
+    simp only [zero_add, Nat.cast_zero, PowerSeries.coeff_C_mul, mul_one]
+    rw [show (1 : ℕ) = 0 + 1 from rfl, PowerSeries.coeff_succ_X_mul,
+      PowerSeries.coeff_zero_eq_constantCoeff_apply, constantCoeff_tay, vFun_zero]
+    field_simp
 
 end QExp
 
