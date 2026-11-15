@@ -34,3 +34,22 @@ bundle field `HDec.HSyn.OpenResearchLeaves20.r16`.
   succeeded (9122 jobs, 31 s). VERIFIED.
 - autofold `--dry-run` on `scratch/r16-split/autofold.json`: exit 0, "strict count: 47/11 on 58 -> 47/11 on 58;
   strictest 46/12 -> 46/12"; output saved as `scratch/r16-split/FoldDryRun.lean`. VERIFIED (python; compile pending).
+
+## #discharges
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` (partial rebuild of the copied tree): success,
+  12982 jobs, `frozenTarget` standard axioms. VERIFIED.
+- `lake env lean scratch/r16-split/Discharges.lean` (full output `Discharges-output.txt`). VERIFIED:
+```
+DISCHARGES [OpenResearchLeaves20.r16] by R16Split.r16_of_coreX
+  still assumes: [R16Split.R16CoreX, PkgI3.TateModuleFree]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves20.r16] by R16Split.r16_of_coreY
+  still assumes: [R16Split.R16CoreY, PkgI3.TateModuleFree, PkgI3.CharPolyIndepOfEll]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves20.r16] by R16Split.r16_of_printed
+  still assumes: [R16Split.R16CoreY, AvSplit.MumfordTorsionAlgClosed, ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 65 open hypotheses, 1310 theorems checked, 8 discharge one
+```
+- `lake env lean scratch/r16-split/FoldDryRun.lean` (autofold --dry-run output, line 1 stripped):
+  `'HDec.HSyn.sixContactMin_of_open28' depends on axioms: [propext, Classical.choice, Quot.sound]`. VERIFIED.

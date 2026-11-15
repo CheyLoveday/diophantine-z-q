@@ -169,11 +169,31 @@ These are SPECULATIVE judgements, from reading the statement:
 - **The rank-two and dimension clauses are not independent.** Given `TateModuleFree` and Mumford §19 Thm 4, each
   implies the other (§3). That is a redundancy in the statement, not an error.
 
-## 6. `#discharges` and the fold check
+## 6. `#discharges` and the fold check (VERIFIED)
 
-See `scratch/r16-split/log.md` (section "#discharges") for the recorded output of
-`scratch/r16-split/Discharges.lean`: `import ZInQKernel.OneProof.Main`, `ZInQKernel.OneProof.Discharges`,
-`ZInQKernel.Contrib.OneProof.R16Split`, then `#discharges`.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: success (12982 jobs; `frozenTarget`
+  has standard axioms).
+- `lake env lean scratch/r16-split/Discharges.lean`, which runs `#discharges`; the full output is in
+  `scratch/r16-split/Discharges-output.txt`:
+
+```
+DISCHARGES [OpenResearchLeaves20.r16] by R16Split.r16_of_coreX
+  still assumes: [R16Split.R16CoreX, PkgI3.TateModuleFree]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves20.r16] by R16Split.r16_of_coreY
+  still assumes: [R16Split.R16CoreY, PkgI3.TateModuleFree, PkgI3.CharPolyIndepOfEll]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves20.r16] by R16Split.r16_of_printed
+  still assumes: [R16Split.R16CoreY, AvSplit.MumfordTorsionAlgClosed, ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 65 open hypotheses, 1310 theorems checked, 8 discharge one
+```
+
+- `r16_of_printed` is the theorem to fold. Its other two hypotheses are existing LEAF fields of
+  `OpenTextbookLeaves11`.
+- The autofold `--dry-run` module (`scratch/r16-split/FoldDryRun.lean`) compiles:
+  `HDec.HSyn.sixContactMin_of_open28` has standard axioms. It was not applied: `Main.lean`, `kinds.tsv` and
+  `claims.tsv` are unchanged, because folding is the integrator's step.
 
 ## 7. Files
 
