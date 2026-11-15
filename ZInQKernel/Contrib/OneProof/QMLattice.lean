@@ -1026,5 +1026,11 @@ theorem isAlgebraic_algebraicClosure (L : Type) [Field L] [CharZero L] [FiniteDi
   haveI : Algebra.IsAlgebraic ℚ L := Algebra.IsAlgebraic.of_finite ℚ L
   exact Algebra.IsAlgebraic.trans ℚ L (AlgebraicClosure L)
 
+/-- **`YuB6Alg` from the three textbook fields alone**: T11(b) is proved in the chain
+(`AVB2.t11b_of_exists` with the cloud worker's `HSyn.t11bExists_lf8`). -/
+theorem yuB6Alg_of' (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) : YuB6Alg :=
+  yuB6Alg_of hU hG hM (AVB2.t11b_of_exists HSyn.t11bExists_lf8)
+
 end HDec.QMLattice
 
