@@ -73,7 +73,6 @@ structure OpenResearchLeaves8 : Prop where
   r5count : LeafQM.AV.R5fpCount
   r6 : _root_.PkgI2.RaynaudCriterion.{0}
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
-  r8 : _root_.PkgI2.GrothendieckMonodromy.{0}
   r9a : _root_.PkgI3.FaltingsSemisimple
   r9b : _root_.PkgI3.FaltingsTate
   hodgeTateDecompAbVar : _root_.ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar
@@ -188,7 +187,6 @@ theorem researchLeaves7_of_open8 (r : OpenResearchLeaves8) (t : OpenTextbookLeav
   r5count := r.r5count
   r6 := r.r6
   r7a := r.r7a
-  r8 := r.r8
   r9a := r.r9a
   r9b := r.r9b
   hodgeTateDecompAbVar := r.hodgeTateDecompAbVar

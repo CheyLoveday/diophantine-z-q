@@ -120,9 +120,6 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
   javanpeykarBound := r.javanpeykarBound
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
-  semistableReductionDVR := r.semistableReductionDVR
-  semistableUnipotent := r.semistableUnipotent
-  neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6 := r.gonzalezRotgerCountX6
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold10; no `sorry`, standard axioms).

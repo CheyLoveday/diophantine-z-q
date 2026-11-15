@@ -798,9 +798,6 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
   javanpeykarBound := r.javanpeykarBound
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
-  semistableReductionDVR := semistableReductionDVR_of14 r t
-  semistableUnipotent := r.semistableUnipotent
-  neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6 :=
     (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerCountX6_iff_ab (mumfordRigidity_of14 r)).mpr
       r.gonzalezRotgerCountX6Ab

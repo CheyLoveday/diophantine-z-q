@@ -52,7 +52,6 @@ structure ResearchLeaves3 : Prop where
   r5count : LeafQM.AV.R5fpCount
   r6 : PkgI2.RaynaudCriterion.{0}
   r7a : PkgI2.NeronOggShafarevich.{0}
-  r8 : PkgI2.GrothendieckMonodromy.{0}
   r9a : PkgI3.FaltingsSemisimple
   r9b : PkgI3.FaltingsTate
   r10 : PkgI4.DeRhamComparison
@@ -95,7 +94,6 @@ theorem researchLeaves3_of (r : ResearchLeaves) : ResearchLeaves3 :=
     r5count := r.r5count,
     r6 := r.r6,
     r7a := r.r7a,
-    r8 := r.r8,
     r9a := r.r9a,
     r9b := r.r9b,
     r10 := r.r10,

@@ -54,13 +54,6 @@ structure OpenResearchLeaves9 : Prop where
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces `r19`. -/
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
-  /-- reduct-split, r8: SGA 7 IX Thm 3.6 over a DVR (semistable reduction after a finite extension, at every place
-  above `O`). -/
-  semistableReductionDVR : _root_.ReductSplit.SemistableReductionDVR
-  /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest reading). -/
-  semistableUnipotent : _root_.ReductSplit.SemistableUnipotent
-  /-- reduct-split, r8: BLR §1.4 Thm 3 over a DVR (scheme form). -/
-  neronSchemeModelExistsDVR : _root_.ReductSplit.NeronSchemeModelExistsDVR
   /-- shimura-split, r5count: González–Rotger 2006 Prop. 5.6 at `(D, N) = (6, 1)` on the points of one canonical
   coarse witness `X₆` (`#CM(R) = 2^{b(k)} h(R)`; the audit read Prop. 5.6). -/
   gonzalezRotgerCountX6 : _root_.ShimuraSplit.GonzalezRotgerCountX6
@@ -96,8 +89,6 @@ theorem researchLeaves8_of_open9 (r : OpenResearchLeaves9) (t : OpenTextbookLeav
   r5count := _root_.ShimuraSplit.r5fpCount_of_points r.gonzalezRotgerCountX6
   r6 := r.r6
   r7a := r.r7a
-  r8 := _root_.ReductSplit.grothendieckMonodromy_final' r.semistableReductionDVR r.semistableUnipotent
-    r.neronSchemeModelExistsDVR t.mumfordTorsionAlgClosed
   r9a := r.r9a
   r9b := r.r9b
   hodgeTateDecompAbVar := r.hodgeTateDecompAbVar
