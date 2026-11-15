@@ -1,4 +1,4 @@
-# gt-gamma: `Γ*` is cocompact Fuchsian with covolume `π/6`, proved with no hypotheses
+# gt-gamma: `Γ*` is cocompact Fuchsian with covolume `π/6`, and Shimizu's `2π/3` for `𝒪¹`, proved with no hypotheses
 
 ## 1. Result
 
@@ -27,9 +27,20 @@ def Tset : Set UpperHalfPlane := {w | Xq w ≤ Uq w ∧ -Xq w ≤ Uq w ∧ Uq w 
 -- Uq w = |w|² − 3,  Xq w = 6 Re w
 ```
 
-The same file also proves the open leaf itself (section 5): `shimizuCovolumeO1_proof :
-HDec.LeafQCheck.HM.QMSplit.ShimizuCovolumeO1`, the fundamental domain of `Γ¹ = ι(𝒪¹)` being the four translates
-`⋃ᵢ rᵢ⁻¹ T` (area `4 · π/6 = 2π/3`). See section 4 for its status.
+**The same file proves the open leaf itself**, so `shimizuCovolumeO1` leaves the open list
+(`#discharges`, VERIFIED, section 6):
+
+```lean
+theorem HDec.GammaStarArea.shimizuCovolumeO1_proof : HDec.LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
+```
+
+The fundamental domain of `Γ¹ = ι(𝒪¹)` is `S1 = ⋃ᵢ rᵢ⁻¹ T` (`rᵢ = 1, x₄, x₆, x₄x₆`, the chain's coset
+representatives `g4`): it covers since every `γ ∈ Γ*` is `rᵢ h` with `h ∈ Γ¹` (`cover_mob`); the pieces
+`rᵢ⁻¹T ∩ h⁻¹ r_j⁻¹ T` are translates of `T ∩ (r_j h rᵢ⁻¹)⁻¹ T`, null unless `r_j h rᵢ⁻¹` acts trivially, which
+by the chain's `coset_eq` forces `i = j` and `h` trivial; the four translates are a.e. disjoint (same argument with
+`h = 1`) and each has area `π/6`, so `vol S1 = 2π/3`. Proper discontinuity of `Γ¹` is inherited from `Γ* ⊇ Γ¹`.
+This is Shimizu's volume formula `(π/3)∏_{p|6}(p − 1)` for this one order, proved by the explicit domain rather
+than by the zeta-function argument of the source.
 
 ## 2. The proof (all steps compiled)
 
@@ -93,7 +104,11 @@ integral elements" became the vertex inequality `intV` plus the stabilizer list.
 * `lake env lean ZInQKernel/Contrib/OneProof/GammaStarArea.lean`: no errors (VERIFIED, 11-14 21:55).
 * `#print axioms HDec.GammaStarArea.gammaStarCocompactArea_proof`: `[propext, Classical.choice, Quot.sound]`
   (VERIFIED, in `scratch/gt-gamma/GS.lean`).
-* `lake build` and `#discharges`: see section 6 (filled in after the run).
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.GammaStarArea`:
+  `Build completed successfully` (VERIFIED, 11-14; the first run rebuilt the 82 modules of `Main`'s closure that
+  import the upstream `lean/` package, as in the sibling worktrees; `frozenTarget` unchanged, standard axioms).
+* `#print axioms HDec.GammaStarArea.shimizuCovolumeO1_proof`: `[propext, Classical.choice, Quot.sound]`
+  (VERIFIED, `scratch/gt-gamma/Shimizu.lean`).
 
 ## 5. The fold: consumer sites
 
@@ -114,6 +129,23 @@ TailZ24 L783/827) only pass the field down. With `shimizuCovolumeO1_proof` (sect
 the fold fills the field (`shimizuCovolumeO1 := HDec.GammaStarArea.shimizuCovolumeO1_proof`) in the next generation
 of `OpenAddedLeaves13`, which `autofold.py` does mechanically.
 
-## 6. `lake build` and `#discharges`
+## 6. `#discharges`
 
-(pending)
+`scratch/gt-gamma/Discharges.lean` (imports `Main`, `Discharges`, the module), output
+(`scratch/gt-gamma/discharges-output.txt`, VERIFIED):
+
+```
+DISCHARGES [OpenAddedLeaves13.shimizuCovolumeO1] by HDec.GammaStarArea.shimizuCovolumeO1_proof
+  still assumes: []
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 72 open hypotheses, 204 theorems checked, 1 discharge one
+```
+
+`gammaStarCocompactArea_proof` is not itself an open hypothesis (it is glue under the field), so it matches
+nothing; the field it makes redundant is discharged directly.
+
+## 7. What remains
+
+Nothing for these two statements. For the integration lead: fold `shimizuCovolumeO1` (strict LEAF, kind
+published) with `autofold.py` (discharged field, no new leaves), giving 71 open hypotheses. The headline's other
+inputs at this node (`valenceFormulaCocompactEq`, `igusaCMValue24`, the theta modularity) are untouched.

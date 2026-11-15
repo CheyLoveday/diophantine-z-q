@@ -26,3 +26,9 @@ Target: `HDec.LeafQCheck.HM.QMSplit.GammaStarCocompactArea` (TailZ2 L93), no hyp
   (TYZGenus.Package, RingClassGalois, PoleValuationsAux, LocalCongruence, Size.Majorants.Bound); restarted the
   full `lake build +Main +Discharges +GammaStarArea` (sibling worktrees gt-blr/gt-ega did the same rebuild).
 - statement.lean: verbatim copies of GammaStarCocompactArea (TailZ2 L46-95) and ShimizuCovolumeO1 (L1007-1020).
+- 11-14 22:40 lake build +Main +Discharges +GammaStarArea: Build completed successfully (12920 jobs), exit 0 (VERIFIED).
+- 11-14 22:45 Shimizu.lean: `shimizuCovolumeO1_proof : HM.QMSplit.ShimizuCovolumeO1` compiles, standard axioms
+  (VERIFIED); appended to the contribution file; module rebuilt (lake build, success).
+- 11-14 22:47 #discharges (scratch/gt-gamma/Discharges.lean): "DISCHARGES [OpenAddedLeaves13.shimizuCovolumeO1] by
+  HDec.GammaStarArea.shimizuCovolumeO1_proof; still assumes: []; axioms: [propext, Classical.choice, Quot.sound];
+  72 open hypotheses, 204 theorems checked, 1 discharge one" (VERIFIED).
