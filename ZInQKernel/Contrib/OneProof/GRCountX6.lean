@@ -45,7 +45,7 @@ open LeafQM LeafQM.AV
 
 /-! ## 1. The printed count, model-free, and the field from it -/
 
-/-- **LEAF (González–Rotger, J. Math. Soc. Japan 58 (2006), Prop. 5.6, p. 943 (read by the locator audit), at
+/-- **LEAF (González–Rotger, J. Math. Soc. Japan 58 (2006), Prop. 5.6, p. 943, at
 `(D, N) = (6, 1)`, on `X₀(6,1)`; printed form, without the existence of the model).**
 
 *Published statement*: for an order `R` of conductor prime to `DN` in an imaginary quadratic field `k` that embeds
@@ -61,8 +61,14 @@ by `R` on `X₀(D,N)` is `#CM(R) = 2^{#{p ∣ D(R)N(R)}} h(R)`. At `D = 6`, `N =
 *Why faithful, not stronger*: it is `ShimuraSplit.GonzalezRotgerCountX6Ab` with the existential over the witness
 replaced by a universal: it asserts nothing about the existence of the model, only the printed count on it. It
 follows outright from the kernel's model-free form `LeafQM.AV.R5fpCount` (`prop56X6_of_r5fpCount`), the count of
-CM points read through the moduli interpretation of `X₀(6,1)`. Hypotheses "conductor prime to 6" and "`R` occurs"
-are the printed ones (optimal embedding). -/
+CM points read through the moduli interpretation of `X₀(6,1)`. The occurrence hypothesis ("`R` occurs as some
+`End_𝒪(A)`") is the moduli form of the printed optimal-embedding hypothesis (Shimura 1967), and excludes the orders
+where some `p ∣ 6` splits; conductor prime to 6 then follows. Given any witness, the statement is equivalent to
+`R5fpCount` (`prop56X6_of_r5fpCount`, `r5fpCount_of_prop56X6`); it carries no information about the model, which
+comes from the field `gonzalezRotgerX6Ab`. The passage from the printed points over `ℂ` to classes of
+polarization-free QM pairs over `ℚ̄` (the type-`μ` polarization lemma, then descent of CM pairs) is standard glue.
+Prop. 5.6's wording and locator (p. 943, `D(R)N(R)`) are unchecked against the paper: confirm that `D(R)` is the
+product of the `p ∣ D` with `(R/p) = −1`. Statement review 2026-11-14 (two lenses, AI, from memory): faithful. -/
 def GonzalezRotgerProp56X6 : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X),
