@@ -36,3 +36,6 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
 - Count (kinds.tsv convention: strict GLUE = kind not `published`): HeegnerPointRational (composite) −1;
   hX → X0ModuliGaloisMero (both consequence) 0; ParamRegular/CuspGrowth/QExpansion (glue) +3 while unproved.
   So the analytic glue must be proved for a net decrease. Next: prove them.
+- VERIFIED (compiled, scratch `Analytic.lean`): `paramRegular : ParamRegular` (℘, ℘' meromorphic everywhere via
+  `weierstrassPExcept`; `1/(℘ − c₀)` analytic at lattice points (value 0); φ_f = Σ aₙ/n qⁿ with radius ≥ 1 from the
+  q-expansion of f converging on |q| < 1 (Mathlib `hasSum_qExpansion`, Tau Ceti `one_mem_strictPeriods_Gamma1_map`)).
