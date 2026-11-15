@@ -20,3 +20,17 @@ Base 43513d87 (leaf-fold25). Target: research field `gonzalezRotgerProp56X6` (`G
 ## Compile log
 - Probe1.lean: names checked (VERIFIED).
 - GR56Lattice.lean §1-§2 (LatData, exists_latData, ρn, realize, qmIso_of_scalar): compiles after cancel fix.
+- GR56Lattice.lean §3-§10 compile (VERIFIED, `lake env lean`, 0 errors); `#print axioms` of
+  `GR56.exists_injective_optEmb`, `GR56.card_cmSet_le`, `GR56.emb_opt`, `GR56.qmIso_descend`:
+  [propext, Classical.choice, Quot.sound].
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.GR56Lattice`:
+  OK (12995 jobs). `#discharges` (scratch/gr56-prove/discharges.txt): 63 open hypotheses, 1899 theorems checked,
+  7 discharge one, none from GR56 (expected: R5fpCountLe is weaker than the field; manual fold).
+
+## Statements proved (GR56Lattice.lean)
+- `GR56.exists_injective_optEmb hU hG hM k hk R hR hc : ∃ F : CMSet R → Quot (GRCountX6.ConjRel R), Injective F`
+- `GR56.card_cmSet_le … (hfin : Finite (Quot (ConjRel R))) : Finite (CMSet R) ∧ card (CMSet R) ≤ card (Quot …)`
+- `GR56.R5fpCountLe` (def), `GR56.r5fpCountLe_of_r5fpCount : R5fpCount → R5fpCountLe`,
+  `GR56.r5fpCountLe_of_eichler : EichlerOptEmbCount6 → hU → hG → hM → R5fpCountLe`
+- `HDec.FS5NoCM.nocm_on_witness_le`, `fibreComTrivialOwn_of_le`, `fibreComTrivialFull_of_le`,
+  `fibreComTrivialFull_of_leaves'_le`, `fibreComTrivialFull_of_leaves''_le` (consumer chain with R5fpCountLe).
