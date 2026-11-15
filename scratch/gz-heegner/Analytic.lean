@@ -10,7 +10,7 @@ open ZInQ.Contrib.TYZGenus.CM (HeegnerForm cmPoint)
 open scoped MatrixGroups
 open ZInQ.Contrib.TYZGenus.Shimura ZInQ.Contrib.TYZGenus.CM HeckeRing.GL2 WeierstrassCurve
   ZInQ.Contrib.TYZDecomp.CurveA
-open scoped WeierstrassCurve.Affine
+open scoped WeierstrassCurve.Affine Manifold
 
 namespace ZInQ.GZHeegner
 
@@ -323,6 +323,117 @@ theorem paramRegular : ParamRegular := by
         intro he; apply h; simp only [xPar, ← hb, he]; ring
 
 
-end ZInQ.GZHeegner
+/-! ## Power series converging on the unit disc -/
 
-#print axioms ZInQ.GZHeegner.paramRegular
+section PSeries
+
+/-- A power series converging on the unit disc has `‖cₙ‖ rⁿ` bounded for each `r < 1`. -/
+theorem pseries_bound (c : ℕ → ℂ) (hc : ∀ q : ℂ, ‖q‖ < 1 → Summable (fun n => c n * q ^ n))
+    {r : ℝ} (hr0 : 0 ≤ r) (hr1 : r < 1) : ∃ C, ∀ n, ‖c n‖ * r ^ n ≤ C := by
+  have hs := (hc (r : ℂ) (by rw [Complex.norm_real, Real.norm_of_nonneg hr0]; exact hr1))
+  have ht := hs.tendsto_atTop_zero.norm
+  simp only [norm_zero] at ht
+  obtain ⟨C, hC⟩ := ht.bddAbove_range
+  refine ⟨C, fun n => ?_⟩
+  have := hC ⟨n, rfl⟩
+  simpa [norm_mul, norm_pow, Complex.norm_real, Real.norm_of_nonneg hr0] using this
+
+/-- Absolute convergence of a dominated power series inside the unit disc. -/
+theorem pseries_summable_norm (c d : ℕ → ℂ) (hc : ∀ q : ℂ, ‖q‖ < 1 → Summable (fun n => c n * q ^ n))
+    (K : ℝ) (hK : 0 ≤ K) (k : ℕ) (hd : ∀ n, ‖d n‖ ≤ K * (n : ℝ) ^ k * ‖c n‖) {q : ℂ}
+    (hq : ‖q‖ < 1) : Summable (fun n => ‖d n‖ * ‖q‖ ^ n) := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hq
+  have hr0 : 0 < r := lt_of_le_of_lt (norm_nonneg _) hr1
+  obtain ⟨C, hC⟩ := pseries_bound c hc hr0.le hr2
+  have hρ : ‖‖q‖ / r‖ < 1 := by
+    rw [Real.norm_of_nonneg (div_nonneg (norm_nonneg _) hr0.le), div_lt_one hr0]; exact hr1
+  have hgeo := (summable_pow_mul_geometric_of_norm_lt_one k hρ).mul_left (K * C)
+  refine Summable.of_nonneg_of_le (fun n => by positivity) (fun n => ?_) hgeo
+  have h1 : ‖c n‖ * ‖q‖ ^ n ≤ C * (‖q‖ / r) ^ n := by
+    rw [div_pow, mul_div_assoc', le_div_iff₀ (pow_pos hr0 n)]
+    calc ‖c n‖ * ‖q‖ ^ n * r ^ n = (‖c n‖ * r ^ n) * ‖q‖ ^ n := by ring
+      _ ≤ C * ‖q‖ ^ n := by gcongr; exact hC n
+  calc ‖d n‖ * ‖q‖ ^ n ≤ (K * (n : ℝ) ^ k * ‖c n‖) * ‖q‖ ^ n := by gcongr; exact hd n
+    _ = K * (n : ℝ) ^ k * (‖c n‖ * ‖q‖ ^ n) := by ring
+    _ ≤ K * (n : ℝ) ^ k * (C * (‖q‖ / r) ^ n) := by gcongr
+    _ = K * C * ((n : ℝ) ^ k * (‖q‖ / r) ^ n) := by ring
+
+/-- **Termwise differentiation** of a power series converging on the unit disc. -/
+theorem hasDerivAt_pseries (c : ℕ → ℂ) (hc : ∀ q : ℂ, ‖q‖ < 1 → Summable (fun n => c n * q ^ n))
+    {z : ℂ} (hz : ‖z‖ < 1) :
+    HasDerivAt (fun w => ∑' n, c n * w ^ n) (∑' n, c n * ((n : ℂ) * z ^ (n - 1))) z := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hz
+  have hr0 : 0 < r := lt_of_le_of_lt (norm_nonneg _) hr1
+  have hrr : ‖(r : ℂ)‖ < 1 := by rw [Complex.norm_real, Real.norm_of_nonneg hr0.le]; exact hr2
+  have hs := pseries_summable_norm c (fun n => (n : ℂ) * c n) hc 1 zero_le_one 1
+    (fun n => by simp [norm_mul]) hrr
+  have hu : Summable (fun n => ‖c n‖ * (n : ℝ) * r ^ (n - 1)) := by
+    refine (hs.mul_left r⁻¹).congr fun n => ?_
+    rw [Complex.norm_real, Real.norm_of_nonneg hr0.le, norm_mul, Complex.norm_natCast]
+    rcases n with _ | n
+    · simp
+    · rw [pow_succ]; field_simp; simp
+  refine hasDerivAt_tsum_of_isPreconnected (g := fun n w => c n * w ^ n)
+    (g' := fun n w => c n * ((n : ℂ) * w ^ (n - 1))) hu Metric.isOpen_ball
+    (convex_ball (0 : ℂ) r).isPreconnected (fun n y _ => (hasDerivAt_pow n y).const_mul (c n))
+    (fun n y hy => ?_) (Metric.mem_ball_self hr0) (hc 0 (by simp)) (by simpa using hr1)
+  rw [Metric.mem_ball, dist_zero_right] at hy
+  rw [norm_mul, norm_mul, Complex.norm_natCast, norm_pow, ← mul_assoc]
+  gcongr
+
+end PSeries
+
+/-! ## The derivative of the Eichler integral -/
+
+section EichlerDeriv
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+theorem eCoeff_summable (q : ℂ) (hq : ‖q‖ < 1) : Summable (fun n => eCoeff f n * q ^ n) := by
+  have hs := (eSeries f).hasSum (eSeries_mem_ball f hq)
+  simp only [eSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] at hs
+  exact hs.summable
+
+theorem eSum_eq_tsum (q : ℂ) : (eSeries f).sum q = ∑' n, eCoeff f n * q ^ n := by
+  rw [eSeries, ← FormalMultilinearSeries.ofScalarsSum, FormalMultilinearSeries.ofScalarsSum_eq_tsum]
+  simp
+
+theorem hasDerivAt_qC (w : ℂ) : HasDerivAt qC (2 * Real.pi * Complex.I * qC w) w := by
+  unfold qC
+  have := ((hasDerivAt_id w).const_mul (2 * Real.pi * Complex.I)).cexp
+  simpa [mul_comm] using this
+
+theorem hasDerivAt_eichler (τ : UpperHalfPlane) :
+    HasDerivAt (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex)
+      (2 * Real.pi * Complex.I * f.toCuspForm τ) τ := by
+  have hq := norm_qC_lt_one τ.im_pos
+  have h1 := (hasDerivAt_pseries (eCoeff f) (eCoeff_summable f) hq).comp (τ : ℂ) (hasDerivAt_qC τ)
+  have hev : (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex) =ᶠ[nhds (τ : ℂ)]
+      ((fun w => ∑' n, eCoeff f n * w ^ n) ∘ qC) := by
+    filter_upwards [eichler_ofComplex_eventuallyEq f τ] with w hw
+    rw [hw, Function.comp_apply, eSum_eq_tsum]
+  refine HasDerivAt.congr_of_eventuallyEq ?_ hev
+  convert h1 using 1
+  have key : ∀ n : ℕ, eCoeff f n * ((n : ℂ) * qC τ ^ (n - 1)) * (2 * Real.pi * Complex.I * qC τ) =
+      2 * Real.pi * Complex.I * (ZInQ.GZDecomp.coeff f n * qC τ ^ n) := by
+    intro n
+    rcases n with _ | n
+    · simp [eCoeff, coeff_zero_newform]
+    · simp only [eCoeff, if_neg (Nat.succ_ne_zero n), Nat.add_sub_cancel]
+      have hn : ((n + 1 : ℕ) : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
+      rw [pow_succ]
+      field_simp
+  show _ = (∑' n, eCoeff f n * ((n : ℂ) * qC τ ^ (n - 1))) * (2 * Real.pi * Complex.I * qC τ)
+  rw [← tsum_mul_right, funext key, tsum_mul_left, (hasSum_newform f τ).tsum_eq]
+
+theorem mdiff_eichler : MDiff (ZInQ.GZHL3.eichler f) := fun τ =>
+  UpperHalfPlane.mdifferentiableAt_iff.2 (hasDerivAt_eichler f τ).differentiableAt
+
+theorem D_eichler : Derivative.normalizedDerivOfComplex (ZInQ.GZHL3.eichler f) = ⇑f.toCuspForm := by
+  funext τ
+  rw [Derivative.normalizedDerivOfComplex, (hasDerivAt_eichler f τ).deriv]
+  field_simp
+
+end EichlerDeriv
+
+end ZInQ.GZHeegner
