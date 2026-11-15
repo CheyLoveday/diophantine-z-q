@@ -470,6 +470,166 @@ theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
     Ideal.mem_span_singleton, ha']
   exact dvd_mul_right _ _
 
+/-! ### Consequences: `B_cris^+`, `B_cris`, `B_st` are not zero; `t` is not nilpotent -/
+
+/-- Every element of `tMonoid` is the image of a finite product of `log [ε_i]`. -/
+theorem exists_list_of_mem_tMonoid {y : BcrisPlus p} (hy : y ∈ tMonoid p) :
+    ∃ l : List (TEps p), y = algebraMap (Acris p) (BcrisPlus p) (l.map (logOf p)).prod := by
+  induction hy using Submonoid.closure_induction with
+  | mem x hx =>
+    obtain ⟨ε, h, hne, rfl⟩ := hx
+    exact ⟨[⟨ε, h, hne⟩], by rw [List.map_singleton, List.prod_singleton]; rfl⟩
+  | one => exact ⟨[], by rw [List.map_nil, List.prod_nil, map_one]⟩
+  | mul x y _ _ hx hy =>
+    obtain ⟨l₁, rfl⟩ := hx
+    obtain ⟨l₂, rfl⟩ := hy
+    exact ⟨l₁ ++ l₂, by rw [List.map_append, List.prod_append, map_mul]⟩
+
+theorem algebraMap_prod_logOf_ne_zero (l : List (TEps p)) :
+    algebraMap (Acris p) (BcrisPlus p) (l.map (logOf p)).prod ≠ 0 := by
+  intro h
+  obtain ⟨⟨_, k, rfl⟩, hk⟩ :=
+    (IsLocalization.map_eq_zero_iff (Submonoid.powers (p : Acris p)) (BcrisPlus p) _).mp h
+  exact pow_mul_prod_logOf_ne_zero p l k hk
+
+/-- **`0 ∉ tMonoid`**: no product of the `log [ε]` is zero in `B_cris^+`. -/
+theorem zero_notMem_tMonoid : (0 : BcrisPlus p) ∉ tMonoid p := fun h => by
+  obtain ⟨l, hl⟩ := exists_list_of_mem_tMonoid p h
+  exact algebraMap_prod_logOf_ne_zero p l hl.symm
+
+/-- **`B_cris^+ ≠ 0`.** -/
+instance nontrivial_bcrisPlus : Nontrivial (BcrisPlus p) :=
+  nontrivial_of_ne 1 0 (by simpa using algebraMap_prod_logOf_ne_zero p [])
+
+/-- **`B_cris ≠ 0`.** -/
+instance nontrivial_bcris : Nontrivial (Bcris p) := by
+  refine nontrivial_of_ne 1 0 fun h => ?_
+  have h' : algebraMap (BcrisPlus p) (Bcris p) 1 = 0 := by rw [map_one]; exact h
+  obtain ⟨⟨m, hm⟩, hm1⟩ := (IsLocalization.map_eq_zero_iff (tMonoid p) (Bcris p) _).mp h'
+  rw [mul_one] at hm1
+  exact zero_notMem_tMonoid p (hm1 ▸ hm)
+
+/-- **`B_st ≠ 0`.** -/
+instance nontrivial_bst : Nontrivial (Bst p) := inferInstance
+
+/-- `ℚ_p → B_st` is injective (so `ℚ_p ⊆ B_st^{G_K}` is a genuine subspace). -/
+theorem algebraMap_qp_bst_injective : Function.Injective (algebraMap ℚ_[p] (Bst p)) :=
+  (algebraMap ℚ_[p] (Bst p)).injective
+
+/-- **`log [ε]` is not nilpotent in `B_cris^+`** (for `ε^♯ = 1`, `ε ≠ 1`). -/
+theorem logOf_not_isNilpotent (e : TEps p) :
+    ¬ IsNilpotent (algebraMap (Acris p) (BcrisPlus p) (logOf p e)) := by
+  rintro ⟨k, hk⟩
+  apply algebraMap_prod_logOf_ne_zero p (List.replicate k e)
+  rw [List.map_replicate, List.prod_replicate, map_pow, hk]
+
+/-- `log [ε] ≠ 0` in `A_cris`. -/
+theorem logOf_ne_zero (e : TEps p) : logOf p e ≠ 0 := by
+  have := pow_mul_prod_logOf_ne_zero p [e] 0
+  simpa using this
+
+/-- The image of `log [ε]` in `B_cris` is a unit, and `B_cris ≠ 0`, so it is non-zero. -/
+theorem isUnit_logOf_bcris (e : TEps p) :
+    IsUnit (algebraMap (BcrisPlus p) (Bcris p) (algebraMap (Acris p) (BcrisPlus p) (logOf p e))) :=
+  IsLocalization.map_units (Bcris p)
+    (⟨_, Submonoid.subset_closure ⟨e.1, e.2.1, e.2.2, rfl⟩⟩ : tMonoid p)
+
+theorem logOf_bcris_ne_zero (e : TEps p) :
+    algebraMap (BcrisPlus p) (Bcris p) (algebraMap (Acris p) (BcrisPlus p) (logOf p e)) ≠ 0 :=
+  (isUnit_logOf_bcris p e).ne_zero
+
+/-! ### There is an `ε` with `ε^♯ = 1`, `ε ≠ 1` (so `t` exists and `B_cris ≠ B_cris^+[1/1]`) -/
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+/-- If the components of `x ∈ 𝓞_ℂ_p♭` are the classes of a compatible system `c` of `p`-th
+power roots, then `x^♯ = c 0`. -/
+theorem untilt_eq_of_coeff (c : ℕ → O) (hc : ∀ m, c (m + 1) ^ p = c m) (x : PreTilt O p)
+    (hx : ∀ m, PreTilt.coeff m x = Ideal.Quotient.mk _ (c m)) : x.untilt = c 0 := by
+  have hpow : ∀ k, c k ^ p ^ k = c 0 := by
+    intro k
+    induction k with
+    | zero => simp
+    | succ k ih => rw [pow_succ', pow_mul, hc, ih]
+  rw [IsHausdorff.eq_iff_smodEq (I := span {(p : O)})]
+  intro n
+  rw [SModEq.sub_mem, ZInQ.Contrib.G9.BdrKer.mem_span_pow_iff']
+  have h1 : root x n - c n ∈ span {(p : O)} := by
+    rw [← Ideal.Quotient.eq, mk_root, hx]
+  have h2 := dvd_sub_pow_of_dvd_sub (Ideal.mem_span_singleton.mp h1) n
+  rw [root_pow, hpow] at h2
+  obtain ⟨d, hd⟩ := h2
+  exact ⟨p * d, by rw [hd]; ring⟩
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_eq_of_coeff (c : ℕ → O) (hc : ∀ m, c (m + 1) ^ p = c m) (x : PreTilt O p)
+    (hx : ∀ m, PreTilt.coeff m x = Ideal.Quotient.mk _ (c m)) (n : ℕ) : root x n = c n := by
+  have := untilt_eq_of_coeff p (fun m => c (m + n)) (fun m => by
+    simpa [Nat.add_right_comm] using hc (m + n)) (((frobeniusEquiv (PreTilt O p) p).symm^[n]) x)
+    (fun m => by rw [PreTilt.coeff_iterate_frobeniusEquiv_symm, hx])
+  simpa [ZInQ.Contrib.G9.BdrKer.Cp.root] using this
+
+/-- A compatible system `1, ζ_p, ζ_{p²}, …` of `p`-power roots of unity in `ℂ_p`. -/
+noncomputable def zetaSeq (ζ : ℂ_[p]) : ℕ → ℂ_[p]
+  | 0 => 1
+  | 1 => ζ
+  | n + 2 => Classical.choose (IsAlgClosed.exists_pow_nat_eq (zetaSeq ζ (n + 1))
+      (Fact.out : p.Prime).pos)
+
+theorem zetaSeq_succ_pow (ζ : ℂ_[p]) (hζ : ζ ^ p = 1) (n : ℕ) :
+    zetaSeq p ζ (n + 1) ^ p = zetaSeq p ζ n := by
+  rcases n with _ | n
+  · simpa [zetaSeq] using hζ
+  · exact Classical.choose_spec (IsAlgClosed.exists_pow_nat_eq (zetaSeq p ζ (n + 1))
+      (Fact.out : p.Prime).pos)
+
+theorem zetaSeq_pow (ζ : ℂ_[p]) (hζ : ζ ^ p = 1) (n : ℕ) : zetaSeq p ζ n ^ p ^ n = 1 := by
+  induction n with
+  | zero => simp [zetaSeq]
+  | succ n ih => rw [pow_succ', pow_mul, zetaSeq_succ_pow p ζ hζ, ih]
+
+theorem norm_zetaSeq_le (ζ : ℂ_[p]) (hζ : ζ ^ p = 1) (n : ℕ) : ‖zetaSeq p ζ n‖ ≤ 1 := by
+  have h := congrArg norm (zetaSeq_pow p ζ hζ n)
+  rw [norm_pow, norm_one] at h
+  exact ((pow_eq_one_iff_of_nonneg (norm_nonneg _) (pow_ne_zero _
+    (Fact.out : p.Prime).ne_zero)).mp h).le
+
+/-- **There is `ε ∈ 𝓞_ℂ_p♭` with `ε^♯ = 1` and `ε ≠ 1`**: `ε = (1, ζ_p, ζ_{p²}, …)`. -/
+theorem nonempty_tEps : Nonempty (TEps p) := by
+  have hdeg : (Polynomial.cyclotomic p ℂ_[p]).degree ≠ 0 := by
+    rw [Polynomial.degree_cyclotomic, Nat.totient_prime (Fact.out : p.Prime)]
+    have := (Fact.out : p.Prime).two_le
+    exact_mod_cast (show p - 1 ≠ 0 by omega)
+  obtain ⟨ζ, hroot⟩ := IsAlgClosed.exists_root _ hdeg
+  have hprim : IsPrimitiveRoot ζ p :=
+    (Polynomial.isRoot_cyclotomic_iff_charZero (Fact.out : p.Prime).pos).mp hroot
+  have hζ : ζ ^ p = 1 := hprim.pow_eq_one
+  have hζ1 : ζ ≠ 1 := hprim.ne_one (Fact.out : p.Prime).one_lt
+  let c : ℕ → O := fun n => ⟨zetaSeq p ζ n,
+    (ZInQ.Contrib.G9.PkgI4.Cp.mem_O_iff p _).mpr (norm_zetaSeq_le p ζ hζ n)⟩
+  have hc : ∀ m, c (m + 1) ^ p = c m := fun m =>
+    Subtype.ext (by simpa [c] using zetaSeq_succ_pow p ζ hζ m)
+  let ε : PreTilt O p := ⟨fun n => Ideal.Quotient.mk _ (c n), fun n => by
+    rw [← map_pow, hc]⟩
+  have hx : ∀ m, PreTilt.coeff m ε = Ideal.Quotient.mk _ (c m) := fun m => rfl
+  refine ⟨⟨ε, ?_, ?_⟩⟩
+  · rw [untilt_eq_of_coeff p c hc ε hx]
+    exact Subtype.ext (by simp [c, zetaSeq])
+  · intro h1
+    have h2 := root_eq_of_coeff p c hc ε hx 1
+    rw [h1] at h2
+    apply hζ1
+    have h3 : ZInQ.Contrib.G9.BdrKer.Cp.root (1 : PreTilt O p) 1 = 1 := by
+      simp [ZInQ.Contrib.G9.BdrKer.Cp.root]
+    rw [h3] at h2
+    have := congrArg Subtype.val h2
+    simpa [c, zetaSeq] using this.symm
+
+/-- So `tMonoid` contains a non-unit generator and `B_cris^+ → B_cris` inverts `t ≠ 0`. -/
+theorem exists_t : ∃ e : TEps p, logOf p e ≠ 0 ∧
+    ¬ IsNilpotent (algebraMap (Acris p) (BcrisPlus p) (logOf p e)) := by
+  obtain ⟨e⟩ := nonempty_tEps p
+  exact ⟨e, logOf_ne_zero p e, logOf_not_isNilpotent p e⟩
+
 end PanBergerSplit
 end PkgI4
 end HDec
