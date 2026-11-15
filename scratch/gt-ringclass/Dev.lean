@@ -328,6 +328,130 @@ theorem mem_latHat_O_iff {f : ℕ} [NeZero f] (z : AfK m) :
     rw [e]
     exact latHat_add_mem _ (mem_latHat_of_mem hrO) (fIntAd_sub_latHatO hx)
 
+theorem valued_mul_le {v : HeightOneSpectrum (𝓞 (QNeg m))} {x y : v.adicCompletion (QNeg m)}
+    {E : WithZero (Multiplicative ℤ)} (hx : Valued.v x ≤ E) (hy : Valued.v y ≤ 1) :
+    Valued.v (x * y) ≤ E := by
+  rw [map_mul]
+  calc Valued.v x * Valued.v y ≤ E * 1 := mul_le_mul' hx hy
+    _ = E := mul_one E
+
+theorem valuation_intCast_le_one (v : HeightOneSpectrum (𝓞 (QNeg m))) (a : ℤ) :
+    v.valuation (QNeg m) (a : QNeg m) ≤ 1 := by
+  simpa using valuation_int_le_one v (a : 𝓞 (QNeg m))
+
+theorem cBound_le_one (f : ℕ) [NeZero f] (v : HeightOneSpectrum (𝓞 (QNeg m))) :
+    cBound m f v ≤ 1 := exp_neg_nat_le_one _
+
+theorem cBound_eq_one_of_not_dvd {f : ℕ} [NeZero f] {v : HeightOneSpectrum (𝓞 (QNeg m))}
+    (hv : ¬ v.asIdeal ∣ (conductorOrder (QNeg m) f).conductorModulus.finitePart) :
+    cBound m f v = 1 := by
+  have h : (conductorOrder (QNeg m) f).conductorModulus.exponent v = 0 := by
+    by_contra h
+    exact hv (((conductorOrder (QNeg m) f).conductorModulus.mem_support_iff v).1
+      (((conductorOrder (QNeg m) f).conductorModulus.mem_support_iff_exponent_ne_zero v).2 h))
+  simp [cBound, h]
+
+theorem mem_intAdeles_of_mem_oHat {f : ℕ} [NeZero f] {z : AfK m} {b : ℤ}
+    (hb : z - algebraMap (QNeg m) (AfK m) (b : QNeg m) ∈ fHat m f) : z ∈ 𝒪̂ := by
+  rw [mem_intAdeles_iff]
+  intro v
+  have e : z v = (z - algebraMap (QNeg m) (AfK m) (b : QNeg m)) v +
+      (algebraMap (QNeg m) (AfK m) (b : QNeg m)) v := by
+    rw [← af_add_apply, sub_add_cancel]
+  rw [e]
+  refine Valuation.map_add_le _ ((hb v).trans (cBound_le_one f v)) ?_
+  rw [val_algebraMap_apply]
+  exact valuation_intCast_le_one v b
+
+/-- **The local computation.** Let `y ∈ 𝔸_{K,f}` with `K ∩ y⁻¹𝒪̂ = J` (`J` an ideal of `𝓞_K`),
+`y_v ≡ a (mod 𝔭_v^{e_v})` at the primes of the conductor, and `a a' ≡ 1 (mod 𝔣)`. Then
+`K ∩ y⁻¹Ô_O = J ∩ O`. -/
+theorem setOf_mul_mem_latHat_eq {f : ℕ} [NeZero f] (y : AfK m) (J : Ideal (𝓞 (QNeg m)))
+    (a a' : ℤ)
+    (hD1 : ∀ j : QNeg m, y * algebraMap (QNeg m) (AfK m) j ∈ 𝒪̂ ↔ ∃ r ∈ J, (r : QNeg m) = j)
+    (hD2 : ∀ v : HeightOneSpectrum (𝓞 (QNeg m)),
+      v.asIdeal ∣ (conductorOrder (QNeg m) f).conductorModulus.finitePart →
+      Valued.v ((y - algebraMap (QNeg m) (AfK m) (a : QNeg m)) v) ≤ cBound m f v)
+    (hD3 : ((a * a' - 1 : ℤ) : 𝓞 (QNeg m)) ∈ (conductorOrder (QNeg m) f).conductor) :
+    {j : QNeg m | y * algebraMap (QNeg m) (AfK m) j ∈ latHat m (Osub m f : Set (QNeg m))} =
+      idealMeetOrder m f J := by
+  ext j
+  constructor
+  · intro hj
+    rw [Set.mem_setOf_eq, mem_latHat_O_iff] at hj
+    obtain ⟨b, hb⟩ := hj
+    obtain ⟨r, hrJ, rfl⟩ := (hD1 j).1 (mem_intAdeles_of_mem_oHat hb)
+    refine ⟨?_, r, hrJ, rfl⟩
+    have hF : algebraMap (QNeg m) (AfK m) ((r : QNeg m) - ((a' * b : ℤ) : QNeg m)) ∈ fHat m f := by
+      intro v
+      by_cases hv : v.asIdeal ∣ (conductorOrder (QNeg m) f).conductorModulus.finitePart
+      · have e : algebraMap (QNeg m) (AfK m) ((r : QNeg m) - ((a' * b : ℤ) : QNeg m)) =
+            -(algebraMap (QNeg m) (AfK m) (((a * a' - 1 : ℤ) : 𝓞 (QNeg m)) : QNeg m) *
+                algebraMap (QNeg m) (AfK m) (r : QNeg m)) -
+              algebraMap (QNeg m) (AfK m) (a' : QNeg m) *
+                ((y - algebraMap (QNeg m) (AfK m) (a : QNeg m)) *
+                  algebraMap (QNeg m) (AfK m) (r : QNeg m)) +
+              algebraMap (QNeg m) (AfK m) (a' : QNeg m) *
+                (y * algebraMap (QNeg m) (AfK m) (r : QNeg m) -
+                  algebraMap (QNeg m) (AfK m) (b : QNeg m)) := by
+          have e1 : (((a * a' - 1 : ℤ) : 𝓞 (QNeg m)) : QNeg m) = (a : QNeg m) * a' - 1 := by simp
+          rw [e1]
+          simp only [map_sub, map_mul, map_one, Int.cast_mul]
+          ring
+        rw [e, af_add_apply, af_sub_apply, af_neg_apply]
+        have hr1 : Valued.v ((algebraMap (QNeg m) (AfK m) (r : QNeg m)) v) ≤ 1 := by
+          rw [val_algebraMap_apply]; exact valuation_int_le_one v r
+        have ha1 : Valued.v ((algebraMap (QNeg m) (AfK m) (a' : QNeg m)) v) ≤ 1 := by
+          rw [val_algebraMap_apply]; exact valuation_intCast_le_one v a'
+        refine Valuation.map_add_le _ (Valuation.map_sub_le _ ?_ ?_) ?_
+        · rw [Valuation.map_neg, af_mul_apply]
+          refine valued_mul_le ?_ hr1
+          rw [val_algebraMap_apply]
+          exact valuation_le_cBound_of_mem_conductor v hD3
+        · rw [af_mul_apply, mul_comm, af_mul_apply]
+          refine valued_mul_le ?_ ha1
+          exact valued_mul_le (hD2 v hv) hr1
+        · rw [af_mul_apply, mul_comm]
+          exact valued_mul_le (hb v) ha1
+      · rw [cBound_eq_one_of_not_dvd hv, val_algebraMap_apply]
+        have e : (r : QNeg m) - ((a' * b : ℤ) : QNeg m) =
+            ((r - ((a' * b : ℤ) : 𝓞 (QNeg m)) : 𝓞 (QNeg m)) : QNeg m) := by simp
+        rw [e]
+        exact valuation_int_le_one v _
+    obtain ⟨c, hc, hce⟩ := exists_mem_conductor_of_algebraMap_mem_fHat hF
+    have e : (r : QNeg m) = ((a' * b : ℤ) : QNeg m) + (c : QNeg m) := by rw [hce]; ring
+    rw [e]
+    exact Subalgebra.add_mem _ (Subalgebra.intCast_mem _ _)
+      ((conductorOrder (QNeg m) f).mem_toRingOfIntegers.1
+        ((conductorOrder (QNeg m) f).conductor_le_toRingOfIntegers hc))
+  · rintro ⟨hjO, r, hrJ, hrj⟩
+    obtain ⟨b, y0, hj⟩ := (mem_conductorOrderSubalgebra (QNeg m)).1 hjO
+    have hint : y * algebraMap (QNeg m) (AfK m) j ∈ 𝒪̂ := (hD1 j).2 ⟨r, hrJ, hrj⟩
+    rw [Set.mem_setOf_eq, mem_latHat_O_iff]
+    refine ⟨a * b, fun v => ?_⟩
+    by_cases hv : v.asIdeal ∣ (conductorOrder (QNeg m) f).conductorModulus.finitePart
+    · have e : y * algebraMap (QNeg m) (AfK m) j - algebraMap (QNeg m) (AfK m) ((a * b : ℤ) : QNeg m) =
+          (y - algebraMap (QNeg m) (AfK m) (a : QNeg m)) * algebraMap (QNeg m) (AfK m) j +
+            algebraMap (QNeg m) (AfK m) (a : QNeg m) *
+              algebraMap (QNeg m) (AfK m) ((((f : 𝓞 (QNeg m)) * y0 : 𝓞 (QNeg m))) : QNeg m) := by
+        have e2 : (((f : 𝓞 (QNeg m)) * y0 : 𝓞 (QNeg m)) : QNeg m) = (f : QNeg m) * (y0 : QNeg m) := by
+          simp
+        rw [e2, hj]
+        simp only [map_sub, map_mul, map_add, Int.cast_mul]
+        ring
+      rw [e, af_add_apply, af_mul_apply, af_mul_apply]
+      refine Valuation.map_add_le _ ?_ ?_
+      · refine valued_mul_le (hD2 v hv) ?_
+        rw [val_algebraMap_apply, ← hrj]; exact valuation_int_le_one v r
+      · rw [mul_comm]
+        refine valued_mul_le ?_ ?_
+        · rw [val_algebraMap_apply]
+          exact valuation_le_cBound_of_mem_conductor v (natCast_mul_mem_conductor (QNeg m) f y0)
+        · rw [val_algebraMap_apply]; exact valuation_intCast_le_one v a
+    · rw [cBound_eq_one_of_not_dvd hv, af_sub_apply]
+      refine Valuation.map_sub_le _ ((mem_intAdeles_iff _).1 hint v) ?_
+      rw [val_algebraMap_apply]; exact valuation_intCast_le_one v _
+
 end RCL
 
 end T5Glue
