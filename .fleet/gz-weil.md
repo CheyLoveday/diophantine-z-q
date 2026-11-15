@@ -41,3 +41,5 @@ is unchanged.
 **What remains.**
 - `HeegnerPointRationalCd` (and the two printed Gross–Zagier/Gross leaves, which are unread).
 - Report: `docs/research/gz-weil.md`.
+
+_Final commit 2026-11-15 05:50 PST; all Lean listed above compiled in this worktree (standard axioms only)._
