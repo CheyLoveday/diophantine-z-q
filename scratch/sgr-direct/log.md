@@ -36,3 +36,22 @@ theorem numbers from memory UNVERIFIED.
   HDec.HeckeRestNV.HeckeVertWitness`. `#print axioms`: propext, Classical.choice, Quot.sound.
 - helpers proved: gal_fix, gal_sq, conj_fix, algebraMap_int_injective, exists_vertPrime, vert_fix,
   vertUnramWitness_of_nv.
+
+## 4. Proofs of three of the five route-NV Props (VERIFIED: compiled, standard axioms)
+
+- `SGRDirect.ramifiedSqrtInertia : RamifiedSqrtInertia` (scratch/sgr-direct/Ram.lean, now in the Contrib file):
+  fixing group H' of the integers A' of the fixed field of σ (IsGaloisGroup.of_isScalarTower), Mathlib
+  `card_inertia_eq_ramificationIdxIn` over A' (Dedekind), `ramificationIdx_tower`, and `ramificationIdx'` sSup argument.
+- `SGRDirect.vertInertiaTrivial : VertInertiaTrivial` (restated: trivial vertical inertia at every vertical prime and
+  degree < p ⇒ `VertUnramWitness`; Vert.lean): R₀ = ℤ[X]_(p) is a DVR (TFAE), S₀ its integral closure, separable
+  residue fields from degree < p (`isSeparable_of_finrank_lt`, new lemma), card formula, chain's
+  `vertUnramWitness_of_local`. Pitfall: `set R₀ := Localization.AtPrime _` hides `CommRing R₀` from instance search
+  (needs `letI : CommRing R₀ := inferInstanceAs _`); `IsIntegralClosure.isFractionRing_of_finite_extension` loops
+  there (use `integralClosure.isFractionRing_of_algebraic` + `IsFractionRing.comap_isAlgebraic_iff`).
+- `SGRDirect.heckeBranchFibreUnram (hRR : R1R2fp) (hT : TorsionStructure) : HeckeBranchFibreUnram` (Branch.lean): the
+  kernel's `residue_unramified_over_branch` on the witness, `sameTripleMor_of_mobius` + `residueImage_comp_eq_of_pt`
+  to transfer, `GlueB3Unram.unramifiedAt_of_not_dvd_discr`.
+- Composite `SGRDirect.heckeVertWitness_of_nvSqrt : R1R2fp → TorsionStructure → QMAutCard → SerreRigidity3 →
+  ALFixedPoints → NVLocalInertia → HeckeSqrtBranch → HeckeVertWitness`. Remaining named Props: NVLocalInertia
+  (local algebra, h-b1 step 3), HeckeSqrtBranch (sqrt of a(27X+16) in E, from Elkies' charts).
+- `#discharges` (Discharges-output.txt): 63 open, 1853 checked, 7 discharge one (none from this file, as expected).
