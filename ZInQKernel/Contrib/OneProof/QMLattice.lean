@@ -25,6 +25,8 @@ noncomputable section
 
 namespace HDec.QMLattice
 
+open scoped Quaternion
+
 open HDec.QMSplit.CNO (act act_add act_mul act_one act_smul act_eq_zero act_sub act_zero act_neg
   mem_qmOrbit_iff oBasis_mem)
 
@@ -938,6 +940,75 @@ theorem case_quad {τ : ℂ} (hτ : 0 < τ.im) {M : Type} [Ring M] (g0 : M →+*
     ext i j
     rw [hθM, Matrix.smul_apply, Matrix.smul_apply, hθM, map_smul]
     simp [Rat.smul_def]
+
+/-! ## §7 Yu's dichotomy at `B = (2, −3)` for QM by `𝒪` -/
+
+/-- **The dichotomy over `ℂ`** (for any ring `M` with a bijection onto `End(A)`). -/
+theorem yu_core (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (A : PkgI3.AbVar ℂ) (hA : A.dim = 2) (q : LeafQM.AV.QMStr A)
+    {M : Type} [Ring M] (j : M →+* PkgI3.AbVar.End A) (hj : Function.Bijective j) :
+    Nonempty (TensorProduct ℤ ℚ M ≃ₐ[ℚ] ℍ[ℚ, 2, -3]) ∨
+      ∃ d : ℚ, d < 0 ∧ Nonempty (TensorProduct ℤ ℚ M ≃ₐ[ℚ]
+        Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d))) := by
+  obtain ⟨τ, hτ, ρ, hρinj, -, hρrange⟩ := unif_conj hU hG hM A hA q
+  have hg0 : Function.Injective (ρ.comp j) := hρinj.comp hj.1
+  have hrange : ∀ N : Module.End ℂ (Fin 2 → ℂ),
+      (∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) ↔
+        ∃ m, (ρ.comp j) m = N := by
+    intro N
+    rw [hρrange N]
+    constructor
+    · rintro ⟨e, he⟩
+      obtain ⟨m, hm⟩ := hj.2 e
+      exact ⟨m, by rw [RingHom.comp_apply, hm, he]⟩
+    · rintro ⟨m, hm⟩
+      exact ⟨j m, hm⟩
+  by_cases hall : ∀ x ∈ S ![τ, 1], x.imI = 0 ∧ x.imJ = 0 ∧ x.imK = 0
+  · exact Or.inl (case_triv hτ (ρ.comp j) hg0 hrange hall)
+  · right
+    obtain ⟨x0, hx0S, hx0⟩ : ∃ x ∈ S ![τ, 1], ¬ (x.imI = 0 ∧ x.imJ = 0 ∧ x.imK = 0) := by
+      by_contra hc
+      exact hall (fun x hx => by
+        by_contra h
+        exact hc ⟨x, hx, h⟩)
+    set y0 := x0 - algebraMap ℚ B x0.re with hy0def
+    have hy0re : y0.re = 0 := by simp [y0, Algebra.algebraMap_eq_smul_one]
+    have hy0S : y0 ∈ S ![τ, 1] := (S _).sub_mem hx0S (algebraMap_mem_S _ _)
+    have hy0nz : ¬ (y0.imI = 0 ∧ y0.imJ = 0 ∧ y0.imK = 0) := by
+      simpa [y0, Algebra.algebraMap_eq_smul_one] using hx0
+    exact ⟨sqForm y0, sqForm_neg hτ.ne' hy0re hy0S hy0nz,
+      case_quad hτ (ρ.comp j) hg0 hrange hy0re hy0S hy0nz⟩
+
+/-- **Yu's theorem (Thm 1.1) at `B = (2, −3)`, for the embedding `B → End⁰(A)` coming from a QM structure
+by the maximal order `𝒪`, over an algebraically closed field algebraic over `ℚ`** (gap-triage's `YuB6Alg`).
+A consequence of `YuThm11` (`yuB6Alg_of_yuThm11`), and exactly what the chain's four applications of
+`PkgI3.QMDichotomyYu` use (k = `AlgebraicClosure ℚ`, or `AlgebraicClosure L'` with `L'` finite over `ℚ`;
+`(a, b) = (2, −3)`; the embedding `qm_embeds_end0 P.q` / `quatEmbed A'' φ''` of a QM structure). -/
+def YuB6Alg : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] [CharZero k] [Algebra.IsAlgebraic ℚ k] (A : PkgI3.AbVar k),
+    A.dim = 2 → ∀ q : LeafQM.AV.QMStr A,
+      Nonempty (PkgI3.AbVar.End0 A ≃ₐ[ℚ] ℍ[ℚ, 2, -3]) ∨
+        ∃ d : ℚ, d < 0 ∧ Nonempty (PkgI3.AbVar.End0 A ≃ₐ[ℚ]
+          Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d)))
+
+/-- **`YuB6Alg` proved** from the textbook fields `uniformizationLeafAll`, `gagaMorphism`,
+`mumfordTorsionAlgClosed` and T11(b) (`T11b_Rigidity`, from the bundle's `t11bExists`): transport to `ℂ` by
+an embedding `k → ℂ` and T11(b) (`End(A) = End(A_ℂ)`), then `yu_core`. -/
+theorem yuB6Alg_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (hR : ZInQ.LeafPush2.T11b_Rigidity) : YuB6Alg := by
+  intro k _ _ _ _ A hA q
+  let ιe : k →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  letI : Algebra k ℂ := ιe.toRingHom.toAlgebra
+  let e := HDec.G0ModField.KernelField.endBC A ℂ
+  have he : Function.Bijective e := by
+    refine ⟨HDec.G0ModField.KernelField.endBC_injective A ℂ, fun g => ?_⟩
+    obtain ⟨φ, ⟨hφ, hφe⟩, -⟩ := hR k ℂ A A g.hom inferInstance
+    exact ⟨PkgI3.AbVar.Hom.mk' φ, PkgI3.AbVar.Hom.ext' hφe⟩
+  let qC : LeafQM.AV.QMStr (A.baseChange ℂ) := ⟨e.comp q.iota, he.1.comp q.injective⟩
+  have hdim : (A.baseChange ℂ).dim = 2 := by rw [PkgI3.AbVar.dim_baseChange]; exact hA
+  exact yu_core hU hG hM (A.baseChange ℂ) hdim qC e he
 
 end HDec.QMLattice
 
