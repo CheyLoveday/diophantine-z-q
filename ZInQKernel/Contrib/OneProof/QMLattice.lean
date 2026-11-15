@@ -1010,5 +1010,21 @@ theorem yuB6Alg_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
   have hdim : (A.baseChange ℂ).dim = 2 := by rw [PkgI3.AbVar.dim_baseChange]; exact hA
   exact yu_core hU hG hM (A.baseChange ℂ) hdim qC e he
 
+/-- **`YuB6Alg` is a consequence of the bundle's `YuThm11`** (so it is never stronger than the published
+statement): take `(a, b) = (2, −3)` and the embedding `B → End⁰(A)` of the QM structure; drop the splitting
+clause. -/
+theorem yuB6Alg_of_yuThm11 (h : QMSplit.Yu.YuThm11) : YuB6Alg := by
+  intro k _ _ _ _ A hA q
+  rcases h k A hA 2 (-3) PkgI3.quatIndefinite_two_neg_three G0FibreSimple.B6_isUnit
+      (G0FibreSimple.qm_embeds_end0 q) with h1 | ⟨d, hd, h2, -⟩
+  · exact Or.inl h1
+  · exact Or.inr ⟨d, hd, h2⟩
+
+/-- For the consumer `LTGoodRed.QM.qmEndRank_of` (`k = AlgebraicClosure L'`, `L'` finite over `ℚ`). -/
+theorem isAlgebraic_algebraicClosure (L : Type) [Field L] [CharZero L] [FiniteDimensional ℚ L] :
+    Algebra.IsAlgebraic ℚ (AlgebraicClosure L) := by
+  haveI : Algebra.IsAlgebraic ℚ L := Algebra.IsAlgebraic.of_finite ℚ L
+  exact Algebra.IsAlgebraic.trans ℚ L (AlgebraicClosure L)
+
 end HDec.QMLattice
 
