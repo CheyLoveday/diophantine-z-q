@@ -38,3 +38,5 @@ Both directions hold for any commutative ring `R` with fraction field `K`; `IsDe
 consumer needs rerouting, because the field is matched by exact type. The consumer sites are TailZ22 L308 and
 TailZ23 L767 and L794. The BLR locators are as recalled (UNVERIFIED), but the proof does not depend on them.
 Report: `docs/research/gt-blr.md`.
+
+(Written 2026-11-14 22:05 PST; this file is the task's last commit.)
