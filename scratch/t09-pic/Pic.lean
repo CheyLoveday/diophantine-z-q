@@ -349,7 +349,63 @@ def WeilPairingPicZero : Prop :=
       (∀ L : A.X.left.Pic, IsVeryAmple A L → ∀ lam : Hom A B, lam.hom ≫ j = phiL rep L →
         ∀ n : ℕ, 0 < n → (n : K) ≠ 0 → ∀ x : tors A n, e n x (torsMap lam n x) = 0)
 
+/-- **Ample** (Stacks, *Properties of schemes*, Def. 28.26.1, Tag 01PS; EGA II 4.5.3; UNVERIFIED
+numbering): `X` is quasi-compact and every point lies in an affine `X_s = {s ≠ 0}` for some global
+section `s` of some `L^{⊗n}`, `n ≥ 1` (`X_s` = complement of the support of the zero locus of `s`,
+vendored `Scheme.Modules.Hom.zeroLocus`). -/
+def IsAmple (X : Scheme.{0}) (L : X.Pic) : Prop :=
+  CompactSpace X ∧ ∀ x : X, ∃ (n : ℕ) (_ : 0 < n)
+    (s : 𝟙_ X.Modules ⟶ ((fromSkeleton X.Modules).obj L.val).tensorPow n),
+    x ∈ (Scheme.Modules.Hom.zeroLocus s).support.compl ∧
+      IsAffineOpen (Scheme.Modules.Hom.zeroLocus s).support.compl
+
+/-- **LEAF L0 (very ample ⇒ ample).** Hartshorne, *Algebraic Geometry*, II Thm 7.6 (with II §5 for
+`X` proper over a field); EGA II 4.5.10; Stacks Tag 01VM-01VS (UNVERIFIED numbering). -/
+def VeryAmpleIsAmple : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (L : A.X.left.Pic), IsVeryAmple A L → IsAmple A.X.left L
+
+/-- **LEAF L3, printed form (`φ_L` is an isogeny for ample `L`).** As `PhiVeryAmpleIsogeny`, for every
+ample `L` (Mumford §6 Application 1 and §8 Thm 1; UNVERIFIED numbering). -/
+def PhiAmpleIsogeny : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P),
+    IsPicZero rep B j → ∀ L : A.X.left.Pic, IsAmple A.X.left L →
+      ∀ lam : A.X ⟶ B.X, lam ≫ j = phiL rep L → IsIsogenyMor lam
+
+/-- **LEAF L4, printed form.** As `WeilPairingPicZero`, with the *genuine* dual `f^∨` (any lift
+`fv : Pic⁰ → Pic⁰` of `dualP rep f`; it exists by `exists_dual_on_picZero` and is unique since `ι` is
+a monomorphism) in `ē_n(x, f^∨ y) = ē_n(f x, y)` (Mumford §20, (5)), and `ē_n(x, φ_L(x)) = 1` for
+every ample `L` (Mumford §23). UNVERIFIED numbering. -/
+def WeilPairingPicZeroPrinted : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P),
+    IsPicZero rep B j →
+    ∃ e : ∀ n : ℕ, Pairing A B n,
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → IsPerfect (e n)) ∧
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → HDec.WeilPairing.IsGalEquivariant (e n)) ∧
+      (∀ m n : ℕ, 0 < m → 0 < n → ((m * n : ℕ) : K) ≠ 0 →
+        ∀ (x : tors A (m * n)) (y : tors B n),
+          (e (m * n) x (torsIncl B (dvd_mul_left n m) y)).val = (e n (torsSmul A m n x) y).val) ∧
+      (∀ (f : End A) (fv : End B), fv.hom ≫ j = j ≫ dualP rep f.hom → ∀ n : ℕ, 0 < n →
+        (n : K) ≠ 0 → ∀ x y, e n x (torsMap fv n y) = e n (torsMap f n x) y) ∧
+      (∀ L : A.X.left.Pic, IsAmple A.X.left L → ∀ lam : Hom A B, lam.hom ≫ j = phiL rep L →
+        ∀ n : ℕ, 0 < n → (n : K) ≠ 0 → ∀ x : tors A n, e n x (torsMap lam n x) = 0)
+
 end Leaves
+
+/-- Glue: the printed L3 and L0 give L3 for very ample classes. -/
+theorem phiVeryAmpleIsogeny_of_printed (h0 : VeryAmpleIsAmple) (h3 : PhiAmpleIsogeny) :
+    PhiVeryAmpleIsogeny := fun K _ A P rep B j hj L hL lam hlam =>
+  h3 K A P rep B j hj L (h0 K A L hL) lam hlam
+
+/-- Glue: the printed L4 (genuine `f^∨`, ample `L`) and L0 give L4. -/
+theorem weilPairingPicZero_of_printed (h0 : VeryAmpleIsAmple) (h4 : WeilPairingPicZeroPrinted) :
+    WeilPairingPicZero := by
+  intro K _ A P rep B j hj
+  obtain ⟨e, hperf, hgal, hcompat, hdual, halt⟩ := h4 K A P rep B j hj
+  refine ⟨e, hperf, hgal, hcompat, fun f => ?_, fun L hL => halt L (h0 K A L hL)⟩
+  obtain ⟨fv, hfv⟩ := exists_dual_on_picZero rep hj f.hom
+  exact ⟨fv, hdual f fv hfv⟩
 
 /-! ## §4. `t09SymmIsogenyExists` from the four leaves -/
 
@@ -373,8 +429,19 @@ theorem t09SymmIsogenyExists_of_leaves (h1 : PicRepresentableAbVar) (h2 : PicZer
              rw [HDec.WeilPairing.weil_apply]
              exact halt L hL lam hlam n hn hnK x }⟩
 
+/-- **Main result, printed form.** `t09SymmIsogenyExists` from the five printed leaves
+L0 (very ample ⇒ ample), L1 (Picard representability), L2 (`Pic⁰` is an abelian variety),
+L3 (`φ_L` isogeny for ample `L`), L4 (Mumford's `ē_n` with the genuine `f^∨`). -/
+theorem t09SymmIsogenyExists_of_printed (h0 : VeryAmpleIsAmple) (h1 : PicRepresentableAbVar)
+    (h2 : PicZeroAbVar) (h3 : PhiAmpleIsogeny) (h4 : WeilPairingPicZeroPrinted) :
+    HDec.WeilPairing.T09_SymmIsogenyExists :=
+  t09SymmIsogenyExists_of_leaves h1 h2 (phiVeryAmpleIsogeny_of_printed h0 h3)
+    (weilPairingPicZero_of_printed h0 h4)
+
 end T09Pic
 
+#print axioms T09Pic.exists_dual_on_picZero
+#print axioms T09Pic.t09SymmIsogenyExists_of_printed
 #print axioms T09Pic.exists_isVeryAmple
 #print axioms T09Pic.eta_comp_phiL
 #print axioms T09Pic.exists_hom_comp_eq_phiL

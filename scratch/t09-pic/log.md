@@ -28,3 +28,7 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
   `exists_hom_comp_eq_phiL` (A connected ⇒ φ_L lands in the identity component; lift through the open immersion;
   homomorphism by `MulRigidity.isMonHom_of_geometricallyIntegral`).
 - 2026-11-14 18:55 Pic.lean v5: genuine dual `picPresheafMap`, `dualSheafMap`, `dualP` (f^∨ on the Picard scheme by Yoneda), `eta_comp_dualP`, `exists_dual_on_picZero` (f^∨ restricts to Pic⁰ as an End): 0 errors. VERIFIED.
+- 2026-11-14 19:05 Pic.lean v6: `IsAmple` (Stacks 01PS form over vendored zeroLocus/tensorPow), leaves L0
+  `VeryAmpleIsAmple`, L3 printed `PhiAmpleIsogeny`, L4 printed `WeilPairingPicZeroPrinted` (genuine `dualP`);
+  glue `phiVeryAmpleIsogeny_of_printed`, `weilPairingPicZero_of_printed`;
+  `t09SymmIsogenyExists_of_printed : L0 → L1 → L2 → L3 → L4printed → T09`: 0 errors, axioms standard. VERIFIED.
