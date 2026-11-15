@@ -915,6 +915,126 @@ theorem exists_eigvec [NumberField.IsTotallyComplex k] (hk : Module.finrank ℚ 
 
 end Eig
 
+/-! ## §8d The two existence statements (new LEAFs) and the lattice model they give -/
+
+/-- **LEAF (QM complex tori are abelian surfaces).** For every `τ` in the upper half plane, the complex torus
+`ℂ²/ι(𝒪)(τ, 1)ᵀ` with its `𝒪`-action is the analytic space of an abelian surface with QM by `𝒪`: there are an
+abelian surface `A/ℂ`, `ι : 𝒪 ↪ End(A)` and an analytic uniformization `Φ : ℂ² → A(ℂ)` with kernel
+`Λ_τ = ι(𝒪)(τ, 1)ᵀ` such that `ι(a) ∘ Φ = Φ ∘ ι(a)`.
+*Published statement*: Shimura, *On analytic families of polarized abelian varieties and automorphic functions*,
+Ann. of Math. 78 (1963), §§2-4 (every QM torus `ℂ²/𝒪v` by a maximal order of an indefinite quaternion algebra
+over `ℚ` carries a polarization, of the form `E(x, y) = tr(μ x̄ y)`); with Riemann's theorem and GAGA (Serre 1956)
+the polarized torus is the analytic space of an abelian surface and `ι` is algebraic. See also Birkenhake–Lange,
+*Complex abelian varieties*, 2nd ed. (2004), Ch. 9 (abelian varieties with endomorphism structure).
+Theorem numbers UNVERIFIED. A consequence of the published statements (it asserts nothing about polarizations). -/
+def QMTorusAbelian : Prop :=
+  ∀ (τ : ℂ) (hτ : 0 < τ.im), ∃ (A : PkgI3.AbVar ℂ) (_ : A.dim = 2) (q : QMStr A)
+    (Φ : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts A (RingHom.id ℂ)),
+    ZInQ.LeafPush2.IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice hτ.ne') Φ ∧
+    ∀ (a : LeafQM.O) (z : Fin 2 → ℂ),
+      Φ ((HDec.HSyn.G0Split.FibreQM.qmMat a).mulVec z) = Φ z ≫ (q.iota a).hom
+
+/-- **LEAF (CM points are algebraic).** A QM abelian surface `(A, ι)` over `ℂ` with complex multiplication
+(`End_𝒪(A) ≠ ℤ`) is the base change, along the fixed embedding `σQ : ℚ̄ → ℂ`, of a QM pair over `ℚ̄`.
+*Published statement*: Shimura, *Construction of class fields and zeta functions of algebraic curves*, Ann. of
+Math. 85 (1967), §§1-3, and Shimura–Taniyama (1961): an abelian variety with complex multiplication is defined
+over a number field (the CM points of the Shimura curve are algebraic). Since `σQ(ℚ̄)` is the algebraic closure of
+`ℚ` in `ℂ`, a model over a number field inside `ℂ` gives one over `ℚ̄`, and `ι` descends by T11(b) (proved in the
+chain). Theorem numbers UNVERIFIED. A consequence of the published statement. -/
+def CMPairDescendsQbar : Prop :=
+  ∀ (A : PkgI3.AbVar ℂ) (_ : A.dim = 2) (q : QMStr A),
+    (∃ e ∈ com q, ∀ n : ℤ, e ≠ (n : PkgI3.AbVar.End A)) →
+      ∃ P : QMPair Qbar, Nonempty (QMIso (bcQ P).q q)
+
+/-- The lattice data given by `QMTorusAbelian` (with `Fl = id`). -/
+theorem latData_of_torus (hC : ZInQ.HomUnify.HomLatticeCorr) {A : PkgI3.AbVar ℂ} (hA : A.dim = 2)
+    {q : QMStr A} {τ : ℂ} (hτ : 0 < τ.im) (Φ : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts A (RingHom.id ℂ))
+    (hΦ : ZInQ.LeafPush2.IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice hτ.ne') Φ)
+    (hι : ∀ (a : LeafQM.O) (z : Fin 2 → ℂ),
+      Φ ((HDec.HSyn.G0Split.FibreQM.qmMat a).mulVec z) = Φ z ≫ (q.iota a).hom) :
+    ∃ D : LatData A q, D.τ = τ := by
+  have hR : HDec.HSyn.G0Split.FibreQM.T11aRiemannEnd := ZInQ.HomUnify.t11a_riemannEnd_of_corr hC
+  obtain ⟨ρ, hρ, hpres⟩ := HDec.HSyn.G0Split.FibreQM.unif_ring_hom hR A hA _ Φ hΦ
+  have hFρ : ∀ (a : O) z, ρ (q.iota a) z = act (a : B) z := by
+    intro a z
+    have := HDec.HSyn.G0Split.FibreQM.lift_unique hΦ (M := ρ (q.iota a))
+      (M' := HDec.QMLattice.actHom (a : B)) (fun z => by
+        rw [hρ, HDec.QMLattice.actHom_apply, ← hι a z]; rfl)
+    rw [this, HDec.QMLattice.actHom_apply]
+  refine ⟨⟨BPAnalytic.QM.qmLattice hτ.ne', inferInstance, Φ, hΦ, ρ, hρ, hpres, LinearEquiv.refl ℂ _, τ, hτ,
+    fun z => ?_, fun a z => ?_⟩, rfl⟩
+  · rw [HDec.FibreQMNorm.qmLattice_eq_orbit hτ.ne']; rfl
+  · exact hFρ a z
+
+/-- **`End_𝒪(A) ≅ R` on the lattice model of an optimal embedding.** If `ι(Φ(a))v = ψ(a)v` for an optimal
+embedding `Φ` of `R`, then the scalars of `End_𝒪(A)` are exactly `ψ(R)`, so `End_𝒪(A) ≅ R`, and `A` has CM. -/
+theorem com_equiv_of_eig (hC : ZInQ.HomUnify.HomLatticeCorr) {A : PkgI3.AbVar ℂ} (hA : A.dim = 2)
+    {q : QMStr A} (D : LatData A q) {k : Type} [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2)
+    {R : Subring k} (hc : Nat.Coprime (conductor R) 6) (Φ : GRCountX6.OptEmb k R) (ψ : k →+* ℂ)
+    (heig : ∀ a, act (Φ.1 a) D.v = ψ a • D.v) :
+    Nonempty (com q ≃+* R) ∧ ∃ e ∈ com q, ∀ n : ℤ, e ≠ (n : PkgI3.AbVar.End A) := by
+  have hmemO : ∀ a : k, Φ.1 a ∈ LeafQM.O ↔ a ∈ R := by
+    intro a
+    have h := Φ.2
+    constructor
+    · intro ha; rw [← h]; exact ha
+    · intro ha; rw [← h] at ha; exact ha
+  have hψ : ∀ r : R, ∃ e : com q, D.scal e = ψ r := fun r =>
+    D.exists_com hC hA ((hmemO r).2 r.2) (heig r)
+  obtain ⟨a0, ha0⟩ := exists_not_rat hk
+  set y0 := Φ.1 a0 - algebraMap ℚ B (Φ.1 a0).re with hy0def
+  have hy0 : y0 = Φ.1 (a0 - algebraMap ℚ k (Φ.1 a0).re) := by rw [map_sub, AlgHom.commutes]
+  have hre : y0.re = 0 := by rw [hy0def, QuaternionAlgebra.algebraMap_eq]; simp
+  have hy0ne : ¬ (y0.imI = 0 ∧ y0.imJ = 0 ∧ y0.imK = 0) := by
+    rintro ⟨h1, h2, h3⟩
+    have hz : y0 = 0 := by ext <;> simp [hre, h1, h2, h3]
+    have hz' : Φ.1 (a0 - algebraMap ℚ k (Φ.1 a0).re) = Φ.1 0 := by rw [← hy0, hz, map_zero]
+    exact ha0 _ (sub_eq_zero.1 (Φ.1.toRingHom.injective hz'))
+  have hy0S : y0 ∈ HDec.QMLattice.S D.v := by
+    rw [hy0]; exact ⟨_, heig _⟩
+  have hψ' : ∀ e : com q, ∃ r : R, ψ r = D.scal e := by
+    intro e
+    obtain ⟨x, hx, hxe⟩ := D.exists_O hC hA e
+    have hxS : x ∈ HDec.QMLattice.S D.v := ⟨_, hxe⟩
+    obtain ⟨α, β, hαβ⟩ := HDec.QMLattice.comm_span hre hy0ne
+      (HDec.QMLattice.S_comm D.v_ne hxS hy0S)
+    set a := algebraMap ℚ k α + β • (a0 - algebraMap ℚ k (Φ.1 a0).re) with hadef
+    have hΦa : Φ.1 a = x := by rw [hadef, map_add, AlgHom.commutes, map_smul, ← hy0, hαβ]
+    have haR : a ∈ R := (hmemO a).1 (hΦa ▸ hx)
+    refine ⟨⟨a, haR⟩, D.smul_v_inj ?_⟩
+    rw [← heig, hΦa, hxe]
+  -- the ring isomorphism
+  obtain ⟨Ψ, hΨ⟩ := HDec.QMLattice.exists_lift D.scalHom (ψ.comp R.subtype)
+    (ψ.injective.comp Subtype.val_injective) (fun e => by
+      obtain ⟨r, hr⟩ := hψ' e; exact ⟨r, hr⟩)
+  have hΨinj : Function.Injective Ψ := by
+    intro e e' h
+    apply D.scal_injective hC hA
+    rw [← LatData.scalHom_apply, ← LatData.scalHom_apply, ← hΨ, ← hΨ, h]
+  have hΨsurj : Function.Surjective Ψ := by
+    intro r
+    obtain ⟨e, he⟩ := hψ r
+    refine ⟨e, Subtype.val_injective (ψ.injective ?_)⟩
+    have := hΨ e
+    simp only [RingHom.comp_apply, Subring.coe_subtype, LatData.scalHom_apply] at this
+    rw [this, he]
+  refine ⟨⟨RingEquiv.ofBijective Ψ ⟨hΨinj, hΨsurj⟩⟩, ?_⟩
+  -- a non-integral element of `End_𝒪(A)`
+  obtain ⟨n, hn, hna⟩ := exists_nat_mul_mem R hc a0
+  obtain ⟨e, he⟩ := hψ ⟨_, hna⟩
+  refine ⟨e, e.2, fun m hm => ?_⟩
+  have hem : e = ((m : com q)) := Subtype.ext (by rw [hm]; push_cast; rfl)
+  have hsc : D.scal e = (m : ℂ) := by
+    rw [← LatData.scalHom_apply, hem, map_intCast]
+  rw [hsc] at he
+  have h1 : ψ ((n : k) * a0) = ψ (m : k) := by rw [map_intCast]; exact he.symm
+  have h2 := ψ.injective h1
+  apply ha0 ((m : ℚ) / n)
+  have hn' : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
+  rw [map_div₀, map_intCast, map_natCast]
+  field_simp
+  rw [mul_comm]; exact h2
+
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
 /-- **`R5fpCountLe` (GLUE; the upper half of `LeafQM.AV.R5fpCount`, the only half the chain uses).** For an order
