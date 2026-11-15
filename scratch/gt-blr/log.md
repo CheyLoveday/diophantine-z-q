@@ -28,3 +28,18 @@
   `isScalarTower_OL`, `isLocalization_center`, `isNeronModelOver_of`, `ZInQ.Contrib.SpreadOut.EGAIV_8_8_2_ii_proof`,
   `EGAIV_17_7_8_ii_proof`, `smooth_of_iso`. New (not in chain): limit diagram `Spec R_𝔭 = lim Spec R[1/s]` for general
   R (TailZ19 has only the 𝓞_L / valuation-subring instance `specConeOIsLimit`).
+
+## 2026-11-14 22:00 full iff proved
+- `GapBLR.blr_1_2_4 : CToPrinted.BLR_1_2_4` (both directions) PROVED, VERIFIED: BLRLocalizes.lean rebuilt
+  (lake build +BLRLocalizes: success, no warnings under `lake env lean`), axioms [propext, Classical.choice, Quot.sound].
+- `.mpr` = `GapBLR.isNeronModelOver_of_local` (any CommRing R with IsFractionRing R K): local existence `local_pt`
+  via `V ⊗ R_𝔭 = lim V ⊗ R[1/s]` (`bcConeIsLimit`) + Mathlib `Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation`
+  (Stacks 01ZC); glue over the point cover with `glue_cover`; uniqueness `uqA` over A = R.
+- #discharges (scratch/gt-blr/Discharges.lean), VERIFIED:
+  `DISCHARGES [OpenResearchLeaves14.blr_1_2_4] by GapBLR.blr_1_2_4 / still assumes: [] / axioms: [propext, Classical.choice, Quot.sound]`
+  `#discharges: 72 open hypotheses, 84 theorems checked, 1 discharge one`.
+- `neronLocalizesDVR_proved := CToPrinted.neronLocalizesDVR_of_printed blr_1_2_4` (no copied proof).
+- Fold check, VERIFIED: `autofold.py scratch/gt-blr/autofold-spec.json --dry-run` → scratch/gt-blr/FoldCheck.lean
+  (OpenResearchLeaves15 without blr_1_2_4, sixContactMin_of_open19, and a frozenTarget copy over it) compiles,
+  standard axioms; strict count 51/15 on 66 -> 51/14 on 65.
+- Dev files Dev1.lean / Converse.lean removed (superseded by the contrib file; Converse.lean would now clash with it).
