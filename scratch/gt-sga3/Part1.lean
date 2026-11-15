@@ -351,6 +351,158 @@ theorem mul_mem (hG : AVGlue.GeomConnOfRationalPoint) [Smooth G.hom] (z : (G ⊗
     exact ⟨h1, h2⟩
   exact subset_idCompSet G C hCc t hCsub heC hzC
 
+/-- The division map `(a, b) ↦ a b⁻¹` of `G`. -/
+noncomputable abbrev divG : G ⊗ G ⟶ G := fst G G * (snd G G)⁻¹
+
+/-- `(a, a) ↦ e`: for a point `a : T → G`, `lift a a ≫ divG = e`. -/
+theorem lift_self_divG {T : Scheme.{0}} (a : T ⟶ G.left) :
+    pullback.lift a a rfl ≫ (divG G).left = a ≫ G.hom ≫ (η[G] : 𝟙_ (Over S) ⟶ G).left := by
+  let A : Over.mk (a ≫ G.hom) ⟶ G := Over.homMk a rfl
+  have h : lift A A ≫ divG G = toUnit _ ≫ η[G] := by
+    rw [MonObj.comp_mul, GrpObj.comp_inv, lift_fst, lift_snd, _root_.mul_inv_cancel, Hom.one_def]
+  have h2 := congrArg (fun k => k.left) h
+  simp only [Over.comp_left, Over.lift_left, Over.toUnit_left] at h2
+  simpa [A, Category.assoc] using h2
+
+/-- `(a b⁻¹) b = a`. -/
+theorem lift_divG_snd_mul : lift (divG G) (snd G G) ≫ μ[G] = fst G G := by
+  rw [← Hom.mul_def, divG, inv_mul_cancel_right]
+
+/-- **Step 3** (the translation argument in the fibre over `κ(x)`): for an open `U ∋ e(s)` (all `s`) and
+`x ∈ G⁰`, there is a point `w` of `G ×_S G` with first coordinate `x`, second coordinate in `U`, and
+`w₁ w₂⁻¹ ∈ U`. -/
+theorem exists_point (hG : AVGlue.GeomConnOfRationalPoint) [Smooth G.hom] (U : Set G.left)
+    (hUo : IsOpen U) (heU : ∀ s, (η[G] : 𝟙_ (Over S) ⟶ G).left s ∈ U) (x : G.left)
+    (hx : x ∈ idCompSet G) :
+    ∃ w : (G ⊗ G).left, (fst G G).left w = x ∧ (snd G G).left w ∈ U ∧ (divG G).left w ∈ U := by
+  let t := G.hom x
+  obtain ⟨x', hx'⟩ := exists_fiber_pt G t x rfl
+  let p : Spec (S.residueField t) := IsLocalRing.closedPoint _
+  have hx'c := mem_cc_of_mem_idCompSet G x hx t rfl x' hx' p
+  let φF := G.hom.fiberToSpecResidueField t
+  have hsm : Smooth φF := show Smooth (pullback.snd G.hom (S.fromSpecResidueField t)) from inferInstance
+  have hlft : LocallyOfFiniteType φF :=
+    show LocallyOfFiniteType (pullback.snd G.hom (S.fromSpecResidueField t)) from inferInstance
+  obtain ⟨V, hVo, hVc, hVi, heV, hxV⟩ := @exists_irred_of_smooth _ _ _ φF hsm _ _ hx'c
+  let Q : (G.hom.fiber t).Opens := ⟨V, hVo⟩
+  let q := Q.ι ≫ φF
+  have hsV : Set.range (eF G t) ⊆ (Q : Set (G.hom.fiber t)) := by
+    rintro _ ⟨p', rfl⟩; rw [Subsingleton.elim p' p]; exact heV
+  have hq : GeometricallyConnected q :=
+    @geomConn_open hG _ _ _ φF hlft Q hVc hVi (eF G t) (eF_fac G t) hsV
+  let ι' := Q.ι ≫ G.hom.fiberι t
+  have hι' : q ≫ S.fromSpecResidueField t = ι' ≫ G.hom := by
+    simp only [q, ι', φF, Category.assoc, Scheme.Hom.fiber_fac]
+  have hQr : ∀ y' ∈ V, G.hom.fiberι t y' ∈ Set.range ι' := fun y' hy' => ⟨⟨y', hy'⟩, rfl⟩
+  -- the field `K = κ(x')` and the point `x̃ : Spec K → G`
+  let xF := (G.hom.fiber t).fromSpecResidueField x'
+  let xt := xF ≫ G.hom.fiberι t
+  let c := xF ≫ φF
+  have hc : c ≫ S.fromSpecResidueField t = 𝟙 _ ≫ xt ≫ G.hom := by
+    simp only [c, xt, φF, Category.assoc, Scheme.Hom.fiber_fac, Category.id_comp]
+  have hxt : ∀ r, xt r = x := by
+    intro r
+    have : xF r = x' := (G.hom.fiber t).fromSpecResidueField_apply x' r
+    simp only [xt, Scheme.Hom.comp_apply, this, hx']
+  let pK : Spec ((G.hom.fiber t).residueField x') := IsLocalRing.closedPoint _
+  -- `H = G ×_S Spec K`, smooth over `Spec K`
+  let gH := pullback.snd G.hom (xt ≫ G.hom)
+  have hsmH : Smooth gH := inferInstance
+  let eH : Spec ((G.hom.fiber t).residueField x') ⟶ pullback G.hom (xt ≫ G.hom) :=
+    pullback.lift (xt ≫ G.hom ≫ (η[G] : 𝟙_ (Over S) ⟶ G).left) (𝟙 _)
+      (by simp only [Category.assoc, e_comp, Category.comp_id, Category.id_comp])
+  let δ : Spec ((G.hom.fiber t).residueField x') ⟶ pullback G.hom (xt ≫ G.hom) :=
+    pullback.lift xt (𝟙 _) (by rw [Category.id_comp])
+  have hfst_eH : pullback.fst G.hom (xt ≫ G.hom) (eH pK) = (η[G] : 𝟙_ (Over S) ⟶ G).left t := by
+    rw [← Scheme.Hom.comp_apply, pullback.lift_fst, Scheme.Hom.comp_apply, Scheme.Hom.comp_apply,
+      hxt]
+  have hfst_δ : pullback.fst G.hom (xt ≫ G.hom) (δ pK) = x := by
+    rw [← Scheme.Hom.comp_apply, pullback.lift_fst, hxt]
+  -- `eH` and `δ` lie in one connected component of `H`
+  have hconn : δ pK ∈ connectedComponent (eH pK) := by
+    have : ConnectedSpace ↥(pullback q c) := inferInstance
+    let jH : pullback q c ⟶ pullback G.hom (xt ≫ G.hom) :=
+      pullback.map q c G.hom (xt ≫ G.hom) ι' (𝟙 _) (S.fromSpecResidueField t) hι' hc
+    have hrange : Set.range jH = pullback.fst G.hom (xt ≫ G.hom) ⁻¹' Set.range ι' ∩
+        pullback.snd G.hom (xt ≫ G.hom) ⁻¹' Set.range (𝟙 (Spec ((G.hom.fiber t).residueField x'))) :=
+      Scheme.Pullback.range_map q c G.hom (xt ≫ G.hom) ι' (𝟙 _) (S.fromSpecResidueField t) hι' hc
+    refine (isPreconnected_range jH.continuous).subset_connectedComponent ?_ ?_
+    · rw [hrange]
+      refine ⟨?_, ⟨_, rfl⟩⟩
+      rw [Set.mem_preimage, hfst_eH, ← fiberι_eF G t p]
+      exact hQr _ heV
+    · rw [hrange]
+      refine ⟨?_, ⟨_, rfl⟩⟩
+      rw [Set.mem_preimage, hfst_δ, ← hx']
+      exact hQr _ hxV
+  obtain ⟨W, hWo, -, hWi, heW, hδW⟩ := @exists_irred_of_smooth _ _ _ gH hsmH _ _ hconn
+  -- the map `H → G ×_S G`, `(g, ·) ↦ (x, g)`
+  let φ : pullback G.hom (xt ≫ G.hom) ⟶ pullback G.hom G.hom :=
+    pullback.lift (pullback.snd _ _ ≫ xt) (pullback.fst _ _)
+      ((Category.assoc _ _ _).trans pullback.condition.symm)
+  let A := pullback.fst G.hom (xt ≫ G.hom) ⁻¹' U
+  let B := (φ ≫ (divG G).left) ⁻¹' U
+  have hA : IsOpen A := hUo.preimage (pullback.fst G.hom (xt ≫ G.hom)).continuous
+  have hB : IsOpen B := hUo.preimage (φ ≫ (divG G).left).continuous
+  have heA : eH pK ∈ A := by
+    show pullback.fst G.hom (xt ≫ G.hom) (eH pK) ∈ U
+    rw [hfst_eH]; exact heU t
+  have hδB : δ pK ∈ B := by
+    show (φ ≫ (divG G).left) (δ pK) ∈ U
+    have h1 : δ ≫ φ = pullback.lift xt xt rfl := by
+      apply pullback.hom_ext
+      · simp [φ, δ]
+      · simp [φ, δ]
+    rw [← Scheme.Hom.comp_apply, ← Category.assoc, h1, lift_self_divG]
+    simp only [Scheme.Hom.comp_apply]
+    exact heU _
+  obtain ⟨h, hhW, hhA, hhB⟩ := hWi.2 A B hA hB ⟨eH pK, heW, heA⟩ ⟨δ pK, hδW, hδB⟩
+  refine ⟨φ h, ?_, ?_, hhB⟩
+  swap
+  · show pullback.snd G.hom G.hom (φ h) ∈ U
+    rw [← Scheme.Hom.comp_apply, pullback.lift_snd]
+    exact hhA
+  show pullback.fst G.hom G.hom (φ h) = x
+  rw [← Scheme.Hom.comp_apply, pullback.lift_fst, Scheme.Hom.comp_apply, hxt]
+
 end Grp
 
 end SGA3IdComp
+
+namespace SGA3IdComp
+
+open MonoidalCategory CartesianMonoidalCategory MonObj CToPrinted
+
+/-- **LEAF `SGA3_VIB_3_10_Nbhd`** (SGA 3 I, Exp. VI_B, Thm. 3.10; EGA IV₃ 15.6.5; numbers UNVERIFIED; a
+consequence of the printed theorem, weaker): for a smooth group scheme `G → S` and `s ∈ S`, the union `G⁰`
+of the identity components of the fibres contains an open neighbourhood of `e(s)`. -/
+def SGA3_VIB_3_10_Nbhd : Prop :=
+  ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [Smooth G.hom] (s : S),
+    ∃ U : Set G.left, IsOpen U ∧ (η[G] : 𝟙_ (Over S) ⟶ G).left s ∈ U ∧ U ⊆ idCompSet G
+
+/-- **SGA 3 VI_B 3.10 from its neighbourhood form** and the bundle leaf `AVGlue.GeomConnOfRationalPoint`
+(Stacks 04KV). -/
+theorem sga3_VIB_3_10_of_nbhd (hN : SGA3_VIB_3_10_Nbhd) (hG : AVGlue.GeomConnOfRationalPoint) :
+    SGA3_VIB_3_10 := by
+  intro S G _ _
+  choose U hUo heU hUs using hN S G
+  let U0 := ⋃ s, U s
+  have hU0o : IsOpen U0 := isOpen_iUnion hUo
+  have heU0 : ∀ s, (η[G] : 𝟙_ (Over S) ⟶ G).left s ∈ U0 := fun s => Set.mem_iUnion.mpr ⟨s, heU s⟩
+  have hU0s : U0 ⊆ idCompSet G := Set.iUnion_subset hUs
+  rw [isOpen_iff_forall_mem_open]
+  intro x hx
+  obtain ⟨w, hw1, hw2, hw3⟩ := exists_point G hG U0 hU0o heU0 x hx
+  refine ⟨(fst G G).left '' ((snd G G).left ⁻¹' U0 ∩ (divG G).left ⁻¹' U0), ?_, ?_,
+    ⟨w, ⟨hw2, hw3⟩, hw1⟩⟩
+  · rintro _ ⟨w', ⟨h2, h3⟩, rfl⟩
+    have hm := mul_mem G hG ((lift (divG G) (snd G G)).left w')
+      (by rw [← Scheme.Hom.comp_apply, ← Over.comp_left, lift_fst]; exact hU0s h3)
+      (by rw [← Scheme.Hom.comp_apply, ← Over.comp_left, lift_snd]; exact hU0s h2)
+    rwa [← Scheme.Hom.comp_apply, ← Over.comp_left, lift_divG_snd_mul] at hm
+  · have hopen : IsOpenMap (pullback.fst G.hom G.hom) := (pullback.fst G.hom G.hom).isOpenMap
+    exact hopen _ ((hU0o.preimage (snd G G).left.continuous).inter
+      (hU0o.preimage (divG G).left.continuous))
+
+end SGA3IdComp
+#print axioms SGA3IdComp.sga3_VIB_3_10_of_nbhd
