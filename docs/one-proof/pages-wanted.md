@@ -8,7 +8,6 @@ Printed statements that a reader with the book or paper can check against the Le
 ## pending-reading
 
 * [`semistableUnipotent`](OPEN.md#semistableunipotent) (packet R1): SGA 7 I Exp. IX Prop. 3.5, semistable => (sigma-1)^2 = 0 on T_l for sigma in inertia, one sigma at a time. Flag: pending reading: base (strictly henselian trait vs number-field DVR)
-* [`blr_1_2_4`](OPEN.md#blr_1_2_4) (packet R1): Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 4 (locator UNVERIFIED). Flag: pending reading: may be printed in the strictly henselian form
 * [`sga7_IX_3_3`](OPEN.md#sga7_ix_3_3) (packet R1): SGA 7 IX 3.3 (may be stated over a strictly henselian trait; used at number-field DVRs). Flag: pending reading: base
 * [`elkiesEquationsX6Ab`](OPEN.md#elkiesequationsx6ab) (packet R4): Elkies 1998, equations of X*(6) as scheme charts over the t-line (display, section and 0/infinity orientation UNVERIFIED). Flag: pending reading: the fibre clause combines Elkies with the moduli meaning of W (composite under the strict reading)
 * [`deligneComponentsY3PrintedAb`](OPEN.md#delignecomponentsy3printedab) (packet R4): Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 (UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and Lemma QP, as for r1r2); over Mathlib's FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, ConnectedComponents. Flag: pending reading: depends (medium), whether one display states that the PEL moduli scheme with its uniformization is the canonical model at B = (2,-3|Q), level K3 (Deligne 389 section 5, Milne 2005 section 14)
@@ -29,7 +28,6 @@ Printed statements that a reader with the book or paper can check against the Le
 
 * [`bostLowerBound`](OPEN.md#bostlowerbound) (packet R5): Bost, Sem. Bourbaki 795 (Asterisque 237, 1996): h_D(A) >= -(g/2) log 2pi, Deligne normalization (display UNVERIFIED, height-split §2). Flag: locator UNVERIFIED (see the source)
 * [`mumfordRigidityCore`](OPEN.md#mumfordrigiditycore) (packet R2): Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED). Flag: locator UNVERIFIED (see the source)
-* [`blr_1_2_4`](OPEN.md#blr_1_2_4) (packet R1): Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 4 (locator UNVERIFIED). Flag: pending reading: may be printed in the strictly henselian form
 * [`faltingsLemma5Printed`](OPEN.md#faltingslemma5printed) (packet R2): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read). Flag: unread
 * [`sga3_VIB_3_10`](OPEN.md#sga3_vib_3_10) (packet R2): SGA 3 VI_B 3.10 (number UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`babaGranathRationalAb`](OPEN.md#babagranathrationalab) (packet R4): Baba-Granath 2008, rationality of the genus-2 curves with QM by the order of discriminant 6 (locator UNVERIFIED). Flag: one table reading (CM assignment, section 3.1) UNVERIFIED
