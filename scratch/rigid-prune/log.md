@@ -37,3 +37,4 @@
 - DischargesTest: the 5 earlier discharges and both controls (t1, t3 sorry) unchanged; 2 more, gt-rigidity's
   mumfordRigidityCore_of_printed / _of_pushforward (its Contrib module is now imported by the chain). Saved.
 - scratch/rigid-prune/Sites.lean compiles: phi_part_ab (comparisons of abelian-scheme witnesses need no rigidity), ShimuraModelGenericAb + exists_genFib_to_Y_ab + shimuraModelGenericAb_of_gl (site N2 is an instance of QMFamilyGroupLaw), r1fpProps_of_ab_gl and the unfolded statement of QuotientP1Coordinate (site N1); standard axioms (sites_out.txt).
+- docs/research/rigid-prune.md and .fleet/rigid-prune.md written; Main.lean comment updated; rebuild OK; hashes unchanged (13694, removed 1, new 20, changed 3).
