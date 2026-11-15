@@ -56,6 +56,11 @@ What is new compared with the composite `hL3`:
   - `ĥ = 0` on torsion, the sign of a simple zero (the kernel's `signOfSimpleZero`) and `β² ≡ D (mod 4N)` (the
     kernel's Hensel lemma).
 
+**Gross–Zagier's Chapter V consequences are proved from the leaves** (VERIFIED, compiled).
+`heegnerPoint_infinite_iff` says that `y_K` has infinite order iff `L'(E/K, 1) ≠ 0`. `exists_rat_point_of_leaves`
+says that if the analytic rank is 1 and there is a Heegner `D` with `L(E^D, 1) ≠ 0`, then `E(ℚ)` has a point of
+infinite order.
+
 **Verdict on the statements.** No leaf is stronger than its source as far as I can check without the papers (§4).
 None is vacuous: the glue applies all of them at the instances `hL3` supplies. Three leaves are in printed form,
 or printed form with a constant forgotten. Three are composites of textbook theorems (§1).
@@ -138,6 +143,8 @@ Checks of the definitions:
 | `exists_embedding`, `algEquiv_eq_one_of_fix` | `ι : ℚ(√D) → ℂ` with `√D ↦ i√|D|`; `σ(√D) = √D ⇒ σ = 1`. |
 | `deriv_ne_zero_of_order_one`, `deriv_mul_ne_zero` | `ord_{s=1} F = 1` and `G(1) ≠ 0` give `(FG)'(1) = F'(1)G(1) ≠ 0`. |
 | `eichlerShimuraParamAt_of_leaves` | Compose: `c Λ_f ⊆ L(E_f)` and `m L(E_f) ⊆ L(E)` give `mc Λ_f ⊆ L(E)`. |
+| `heegnerPoint_infinite_iff` | **GZ Ch. V consequence**: in the Heegner setting, `y_K` has infinite order iff `L'(E/K, 1) ≠ 0` (from `GrossZagierFormulaAt` and Tau Ceti's `canonicalHeight_eq_zero_iff_isOfFinAddOrder`, with Mathlib's Northcott property of number fields). |
+| `exists_rat_point_of_leaves` | **GZ Ch. V rank consequence**: a simple zero of `L(E, s)` at `1` and a Heegner `D < −4` with `L(E^D, 1) ≠ 0` give a point of infinite order in `E(ℚ)`. |
 | `heegner_at`, `grossZagierHeegner_of_leaves` | `hL3` for one curve, and for all curves. |
 | `Cd.lean`: `grossZagierHeegnerCd_of_leaves`, `shimuraCMParamCd_of_leaves`, `…Cd_of` | The `C_d` form, and each restricted leaf implied by the general one. |
 
