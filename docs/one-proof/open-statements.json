@@ -232,12 +232,6 @@
    "docstring":
    "**GAGA for maps of complex abelian varieties (textbook leaf candidate; Serre, GAGA (1956);\nSGA 1 XII 4.4: `Hom(X, Y) → Hom(X^an, Y^an)` is bijective for `X` proper over `ℂ`; locators\nUNVERIFIED).** Let `φ : ℂ^g ⧸ Λ ≃ A(ℂ)` be a strong uniformization (so `φ` presents `A^an`), and\n`ψ : ℂ^g → B(ℂ)` an analytic homomorphism killing `Λ` (= a holomorphic homomorphism\n`A^an → B^an`). Then `ψ` comes from an algebraic morphism `f : A → B`. ",
    "bundle": "OpenTextbookLeaves11"},
-  {"type": "HDec.QMSplit.Yu.YuThm11",
-   "statement": "HDec.QMSplit.Yu.YuThm11",
-   "field": "yuThm11",
-   "docstring":
-   "**LEAF (Chia-Fu Yu, *Endomorphism algebras of QM abelian surfaces*, J. Pure Appl. Algebra 217 (2013),\nThm 1.1, journal p. 907; arXiv:1210.1125 Thm 1.1; the journal first page was read by the locator audit,\n`docs/research/locators.md` row T27; volume number UNVERIFIED).** Let `A` be an abelian surface over an\nalgebraically closed field `k` of characteristic `0`, and `B = (a, b)_ℚ` an indefinite quaternion division\nalgebra with a `ℚ`-algebra embedding `B → End⁰(A)`. Then `End⁰(A) ≅ B`, or `End⁰(A) ≅ M₂(K)` for an\nimaginary quadratic field `K = ℚ(√d)`, `d < 0`, that splits `B` (`K ⊗_ℚ B ≅ M₂(K)` as `K`-algebras).\n\nForm: the printed statement in characteristic `0`, except that the attribution of the two cases (simple\n`A` in the first, non-simple `A` in the second, as the audit reads the theorem) is dropped (a weaker\nconclusion). `End⁰(A) = ℚ ⊗_ℤ End(A)` (`PkgI3.AbVar.End0`) over the kernel's abelian varieties\n`PkgI3.AbVar`; the division hypothesis is \"every nonzero element is a unit\"; indefinite is\n`QuatIndefinite a b` (`0 < a ∨ 0 < b`), the same hypotheses as the row. ",
-   "bundle": "OpenTextbookLeaves11"},
   {"type": "CurveSplit.RegularSmoothPerfect",
    "statement": "CurveSplit.RegularSmoothPerfect",
    "field": "regularSmoothPerfect",
@@ -389,4 +383,4 @@
    "docstring":
    "**(L3) Gross–Zagier with Gross's conjugation relation, in the form that can be stated today.**\nLet `E/ℚ` be an elliptic curve whose L-series is that of a weight-2 newform `f` of level `N` and\ntrivial nebentypus (`aₙ(f) = aₙ(E)` for all `n ≥ 1`). Let `D < −4` be an odd fundamental\ndiscriminant with the Heegner hypothesis for `N`, and suppose `L(f, s)` has a simple zero at\n`s = 1` while `L(f ⊗ χ_D, 1) ≠ 0` (so `L'(E/K, 1) = L'(f, 1) L(f ⊗ χ_D, 1) ≠ 0`). Then for every\nfield `K ≅ ℚ(√D)` the group `E(K)` has a point `y` of infinite order (the Heegner point `y_K`)\nwith `σ y − y` torsion for every `σ ∈ Aut(K/ℚ)` (`ȳ_K = −ε y_K` up to torsion, `ε = −1`).\n\nLiterature: B. Gross, D. Zagier, Invent. Math. 84 (1986), 225-320, Theorem I.6.3 and its\ncorollaries in Ch. V (UNVERIFIED numbers): `L'(E/K, 1) = c ĥ(y_K)` with `c ≠ 0`; B. Gross,\n*Heegner points on X₀(N)*, Modular forms (Durham 1983), 1984, for `ȳ_K = −ε y_K` mod torsion\n(UNVERIFIED). Folded in, because the modular curve `X₀(N)`, the parametrization and the Heegner\npoint cannot be stated in Lean today: the modular parametrization `X₀(N) → E` (Eichler–Shimura\nconstruction of the strong Weil curve `E_f`, Shimura 1971, Thm 7.14-7.15, UNVERIFIED, plus\nFaltings 1983 Korollar 2 (`L(E) = L(E_f)` ⇒ `E ∼ E_f`), or for CM curves Shimura, Nagoya Math. J.\n43 (1971)); and nondegeneracy of `ĥ` on `E(K)` (proved in Tau Ceti:\n`Affine.Point.canonicalHeight_eq_zero_iff_isOfFinAddOrder`). ",
    "bundle": "frozenTarget"}],
- "count": 65}
+ "count": 64}
