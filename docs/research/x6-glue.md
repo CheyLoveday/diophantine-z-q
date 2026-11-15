@@ -125,8 +125,8 @@ The kernel's `ToP1` forces `t.U = {t ≠ ∞}` and `t.V = {t ≠ 0}`: a point of
 * The affine curve `s² = −t, r² = 3(t − 1)` is `r² + 3s² + 3 = 0` after eliminating `t = −s²`, and it is smooth.
   So it is the normalization of the `t`-line in that field, and the two charts are the smooth projective model:
   the conic `Y² + 3X² + 3Z² = 0`, with `t.U = {Z ≠ 0}` and `t.V = {X ≠ 0}`.
-* A smooth projective curve is determined by its function field (Hartshorne I.6.12, II.6.7; UNVERIFIED
-  numbers). So `ElkiesCharts` is the printed statement in the language of schemes, and not stronger than it.
+* A smooth projective curve is determined by its function field (Hartshorne I.6.12, and II.6.8 for the finiteness of `t`;
+  UNVERIFIED numbers). So `ElkiesCharts` is the printed statement in the language of schemes, and not stronger than it.
 * Chart algebra, checked by hand: on the overlap, `a = 1/s`, `b = r/s`, `u = 1/t` satisfy `a² + u = 0` and
   `b² − 3(u − 1) = 0`.
 
@@ -228,7 +228,7 @@ Not attempted.
 
 No Lean model of the conic was built. Mathematically, the conic `Y² + 3X² + 3Z² = 0` with `t = −X²/Z²` satisfies
 `ElkiesCharts`: its standard affine charts `{Z ≠ 0}` and `{X ≠ 0}` have exactly these coordinate rings (§3.2).
-The review (§7) checked this.
+The independent review (§7) checked this.
 
 ## 6. Files and checks (VERIFIED: `lake env lean`, one Lean process at a time)
 
@@ -252,3 +252,40 @@ empty).
   `ZInQKernel.HDecomp.QM.Leaves` plus the definitions `ConicPt`, `conicGal` and `ConicModelT`. They could move to
   `ZInQKernel/Contrib/` once `ConicModelT` has a home.
 * `X6New.lean` sits on top of shimura-glue's `RowsGlue.lean`, over `TailK`.
+
+## 7. Independent statement review (model, read-only, no Lean; no human review)
+
+A separate model review read `Charts.lean`, `ConicProof.lean`, `EvalAffine.lean`, `X6New.lean`, the kernel's
+`ToP1`, `ConicPt` and `ConicModel`, and shimura-glue's `ConicModelT` and `ElkiesConicT`. It found no false,
+vacuous or too-strong statement.
+
+1. **`ElkiesCharts` holds for the genuine conic.**
+   * `t = [−X² : Z²]` is a morphism.
+   * `ToP1` pins `U = {Z ≠ 0}` and `V = {X ≠ 0}`.
+   * The `U`-chart ring is `ℚ[s,r]/(r² + 3s² + 3) ≅ ElkiesRing`; the `V`-chart has `a = Z/X`, `b = Y/X`.
+   * The gluing relations hold, and both opens are affine.
+2. **Not stronger than Elkies' function-field statement, and not vacuous.**
+   * The affine curve is smooth, hence normal and integral over `ℚ[t]`. So it is the integral closure of
+     `ℚ[t]` in `ℚ(t)(√−t, √(3(t−1)))`, and likewise over `ℚ[1/t]`.
+   * There is no universe or encoding trap: a ring iso is automatically `ℚ`-linear.
+   * By Riemann–Hurwitz and the residue fields `ℚ(i)` at `t = 1` and `ℚ(√−3)` at `t = 0`, the constants
+     `−1` and `3` are forced.
+   * The leaf's truth does not depend on Elkies' `0`/`∞` orientation. The field is invariant under `t ↦ 1/t`,
+     with charts swapped. Only the CM labels depend on it, and they are marked UNVERIFIED.
+3. **`ConicProof.lean` is sound as an argument.**
+   * Points off `U` lie in `V` with `1/t = 0`.
+   * Points of an affine open correspond to ring homs.
+   * Off `U`: `T = 0 ⇒ S = 0`, `R² = −3`, which is `[1 : b : 0]` with `b = Y/X`, matching `ConicPt`.
+   * Galois equivariance holds.
+   * The over-`ℚ` condition is automatic.
+4. **No clause mismatch.** The fibre and CM clauses are identical to `ElkiesConicT`'s. The residue-field check
+   (`t = 1 ↔ D = −4`; `0` and `∞` both give `ℚ(√−3)`) and `j = 16(t − 1)/27 ↦ −16/27, 0, ∞` agree with
+   `R2X6Props`.
+
+**Points raised:**
+* (a) The two gluing conjuncts are not used by `conicModelT_of_charts`. They are true and fix `a = 1/s`,
+  `b = r/s`, and they are kept so that the leaf is the full model statement.
+* (b) The Hartshorne locator was changed to I.6.12 / II.6.8 (UNVERIFIED).
+* (c) The reviewer recalls (UNVERIFIED) Elkies' `X*(6)` as signature `(0; 2, 4, 6)` with the elliptic points
+  at discriminants `−24, −4, −3`, at `t = 0, 1, ∞`, and `X(6) = X*(6)(√−t, √(3(t−1)))`. This agrees with the
+  leaf. The display, section number and orientation remain unchecked against the paper.

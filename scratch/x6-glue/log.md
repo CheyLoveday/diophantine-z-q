@@ -46,3 +46,10 @@ Base e38375b3 (wip/w62). One Lean process at a time (`lake env lean`).
   VERIFIED.
 - ConicDev.lean (= former T1.lean: dev copies + EvalAffine + Charts + ConicProof over
   `ZInQKernel.HDecomp.QM.Leaves` only): 0 errors, standard axioms.
+
+## Step 5: independent model review (read-only agent, no Lean) of ElkiesCharts / ElkiesEquationsX6 / ConicProof
+- OK on all four points: the genuine conic satisfies ElkiesCharts (U = {Z≠0}, V = {X≠0}, rings, gluing,
+  affine); not stronger than Elkies' function-field statement (smooth ⇒ integral closure); not vacuous; proof
+  logic sound; fibre/CM clauses verbatim those of ElkiesConicT; residue fields consistent.
+- Notes: gluing conjuncts unused by the proof (kept for faithfulness); Hartshorne locator → I.6.12/II.6.8
+  (UNVERIFIED, applied); leaf truth independent of Elkies' 0/∞ orientation (t ↦ 1/t symmetry).
