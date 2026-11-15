@@ -878,10 +878,12 @@ def QMTorusAbelian : Prop :=
 Math. 85 (1967), §§1-3, and Shimura–Taniyama (1961): an abelian variety with complex multiplication is defined
 over a number field (the CM points of the Shimura curve are algebraic). Since `σQ(ℚ̄)` is the algebraic closure of
 `ℚ` in `ℂ`, a model over a number field inside `ℂ` gives one over `ℚ̄`, and `ι` descends by T11(b) (proved in the
-chain). Theorem numbers UNVERIFIED. A consequence of the published statement. -/
+chain). Theorem numbers UNVERIFIED. A consequence of the published statement; **proved below** from the bundle's
+existing LEAF `shimuraTaniyamaQbar` (`cmPairDescendsQbar_of_st`), so it is not a new leaf. CM is given as an
+element `ψ ∈ End_𝒪(A)` with `ψ² = d < 0`, `d ∈ ℤ` (then `ℚ(√2, √d) ⊂ End⁰(A)` has degree `4 = 2 dim A`). -/
 def CMPairDescendsQbar : Prop :=
   ∀ (A : PkgI3.AbVar ℂ) (_ : A.dim = 2) (q : QMStr A),
-    (∃ e ∈ com q, ∀ n : ℤ, e ≠ (n : PkgI3.AbVar.End A)) →
+    (∃ d : ℤ, d < 0 ∧ ∃ ψ ∈ com q, ψ * ψ = (d : PkgI3.AbVar.End A)) →
       ∃ P : QMPair Qbar, Nonempty (QMIso (bcQ P).q q)
 
 /-- The lattice data given by `QMTorusAbelian` (with `Fl = id`). -/
@@ -910,7 +912,7 @@ theorem com_equiv_of_eig (hC : ZInQ.HomUnify.HomLatticeCorr) {A : PkgI3.AbVar �
     {q : QMStr A} (D : LatData A q) {k : Type} [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2)
     {R : Subring k} (hc : Nat.Coprime (conductor R) 6) (Φ : GRCountX6.OptEmb k R) (ψ : k →+* ℂ)
     (heig : ∀ a, act (Φ.1 a) D.v = ψ a • D.v) :
-    Nonempty (com q ≃+* R) ∧ ∃ e ∈ com q, ∀ n : ℤ, e ≠ (n : PkgI3.AbVar.End A) := by
+    Nonempty (com q ≃+* R) ∧ ∃ d : ℤ, d < 0 ∧ ∃ ψ ∈ com q, ψ * ψ = (d : PkgI3.AbVar.End A) := by
   have hmemO : ∀ a : k, Φ.1 a ∈ LeafQM.O ↔ a ∈ R := by
     intro a
     have h := Φ.2
@@ -957,21 +959,45 @@ theorem com_equiv_of_eig (hC : ZInQ.HomUnify.HomLatticeCorr) {A : PkgI3.AbVar �
     simp only [RingHom.comp_apply, Subring.coe_subtype, LatData.scalHom_apply] at this
     rw [this, he]
   refine ⟨⟨RingEquiv.ofBijective Ψ ⟨hΨinj, hΨsurj⟩⟩, ?_⟩
-  -- a non-integral element of `End_𝒪(A)`
-  obtain ⟨n, hn, hna⟩ := exists_nat_mul_mem R hc a0
-  obtain ⟨e, he⟩ := hψ ⟨_, hna⟩
-  refine ⟨e, e.2, fun m hm => ?_⟩
-  have hem : e = ((m : com q)) := Subtype.ext (by rw [hm]; push_cast; rfl)
-  have hsc : D.scal e = (m : ℂ) := by
-    rw [← LatData.scalHom_apply, hem, map_intCast]
-  rw [hsc] at he
-  have h1 : ψ ((n : k) * a0) = ψ (m : k) := by rw [map_intCast]; exact he.symm
-  have h2 := ψ.injective h1
-  apply ha0 ((m : ℚ) / n)
-  have hn' : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
-  rw [map_div₀, map_intCast, map_natCast]
-  field_simp
-  rw [mul_comm]; exact h2
+  -- an element of `End_𝒪(A)` with square a negative integer
+  obtain ⟨n, hn, hna⟩ := exists_nat_mul_mem R hc (a0 - algebraMap ℚ k (Φ.1 a0).re)
+  set y := Φ.1 ((n : k) * (a0 - algebraMap ℚ k (Φ.1 a0).re)) with hydef
+  have hy : y = (n : ℚ) • y0 := by
+    rw [hydef, map_mul, map_natCast, ← hy0, Algebra.smul_def, map_natCast]
+  have hyO : y ∈ LeafQM.O := (hmemO _).2 hna
+  have hyre : y.re = 0 := by rw [hy]; simp [hre]
+  have hn0 : (n : ℚ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hyne : ¬ (y.imI = 0 ∧ y.imJ = 0 ∧ y.imK = 0) := by
+    rintro ⟨h1, h2, h3⟩
+    apply hy0ne
+    rw [hy] at h1 h2 h3
+    simp only [QuaternionAlgebra.imI_smul, QuaternionAlgebra.imJ_smul, QuaternionAlgebra.imK_smul, smul_eq_mul,
+      mul_eq_zero, hn0, false_or] at h1 h2 h3
+    exact ⟨h1, h2, h3⟩
+  have hyS : y ∈ HDec.QMLattice.S D.v := ⟨_, heig _⟩
+  have hneg := HDec.QMLattice.sqForm_neg D.hτ.ne' hyre hyS hyne
+  have hyy := HDec.QMLattice.pure_sq hyre
+  obtain ⟨m, hm⟩ := HDec.QMLattice.int_of_O (LeafQM.O.mul_mem hyO hyO)
+    (by rw [hyy]; simp [QuaternionAlgebra.algebraMap_eq])
+    (by rw [hyy]; simp [QuaternionAlgebra.algebraMap_eq])
+    (by rw [hyy]; simp [QuaternionAlgebra.algebraMap_eq])
+  have hmd : (m : ℚ) = HDec.QMLattice.sqForm y := by
+    have := congrArg QuaternionAlgebra.re (hyy.symm.trans hm)
+    simpa [QuaternionAlgebra.algebraMap_eq] using this.symm
+  obtain ⟨c, hc'⟩ := hyS
+  obtain ⟨e, he⟩ := D.exists_com hC hA hyO hc'
+  refine ⟨m, by exact_mod_cast (hmd ▸ hneg), e, e.2, ?_⟩
+  have hee : e * e = ((m : com q)) := by
+    apply D.scal_injective hC hA
+    rw [← LatData.scalHom_apply, ← LatData.scalHom_apply, map_mul, map_intCast, LatData.scalHom_apply, he]
+    apply D.smul_v_inj
+    have h1 : act (y * y) D.v = (c * c) • D.v := by
+      rw [act_mul, hc', HDec.QMLattice.act_smul_vec, hc', smul_smul]
+    have h2 : act (y * y) D.v = (m : ℂ) • D.v := by
+      rw [hm, show ((m : B)) = algebraMap ℚ B (m : ℚ) by simp, HDec.QMLattice.act_algebraMap]; push_cast; rfl
+    rw [← h1, h2]
+  have := congrArg Subtype.val hee
+  simpa using this
 
 /-! ## §8e The CM-point map and its bijectivity -/
 
@@ -1190,8 +1216,8 @@ theorem cmMap_surjective [NumberField.IsTotallyComplex k] (hE1 : QMTorusAbelian)
     obtain ⟨D', hD'⟩ := latData_of_torus hC hA hτ Φu hΦu hι
     have heig' : ∀ a, act (Φ.1 a) D'.v = ψk k a • D'.v := by
       intro a; rw [LatData.v, hD']; exact heig a
-    obtain ⟨⟨θ⟩, e, he, hne⟩ := com_equiv_of_eig hC hA D' hk hc Φ (ψk k) heig'
-    obtain ⟨Q, ⟨g⟩⟩ := hE2 A hA q ⟨e, he, hne⟩
+    obtain ⟨⟨θ⟩, hd⟩ := com_equiv_of_eig hC hA D' hk hc Φ (ψk k) heig'
+    obtain ⟨Q, ⟨g⟩⟩ := hE2 A hA q hd
     let θQ : com Q.q ≃+* R := ((com_bcQ Q).some.trans (comEquiv g)).trans θ
     let c : CMSet R := ⟨Quotient.mk _ Q, Q, rfl, ⟨θQ⟩⟩
     refine ⟨c, ?_⟩
