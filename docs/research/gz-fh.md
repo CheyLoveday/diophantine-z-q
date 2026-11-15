@@ -2,8 +2,10 @@
 
 Status: research note (task gz-fh, 2026-11-15). Branch `wip/gz-fh` (base `wip/w72` 24f97774).
 Lean: `ZInQKernel/Contrib/OneProof/FHNonvanishing.lean` (new file, the deliverable),
-`scratch/gz-fh/FH.lean` (the same content as a scratch check), `scratch/gz-fh/Discharges.lean`
-(the `#discharges` run). Results log: `scratch/gz-fh/log.md`.
+`ZInQKernel/Contrib/OneProof/FHNonvanishing/FE.lean` (helper: a functional-equation variant),
+`scratch/gz-fh/FH.lean` (copy of the deliverable with `#print axioms`), `scratch/gz-fh/Discharges.lean`
+(the `#discharges` run, the proposed `Main.lean` edit and the `C_d` corollary; output
+`scratch/gz-fh/Discharges-output.txt`). Results log: `scratch/gz-fh/log.md`.
 
 Marks. **VERIFIED**: read in a source named here, computed, or compiled. **STANDARD**: a published
 theorem with its reference. **SPECULATIVE**: an assessment. No copy of Friedberg–Hoffstein,
@@ -19,7 +21,7 @@ memory.
 in Lean.** `ZInQKernel/Contrib/OneProof/FHNonvanishing.lean` builds
 (`lake build +ZInQKernel.Contrib.OneProof.FHNonvanishing`, VERIFIED), and
 `#print axioms ZInQ.GZFH.fhNonvanishing_of_printed` gives `[propext, Classical.choice, Quot.sound]`
-(VERIFIED, `scratch/gz-fh/FH.lean`). The `#discharges` output is in §4.
+(VERIFIED, `scratch/gz-fh/FH.lean`), and `#discharges` reports `DISCHARGES [hL2]` (§4).
 
 ```lean
 theorem ZInQ.GZFH.fhNonvanishing_of_printed
@@ -34,6 +36,7 @@ two printed leaves over genuine definitions, and everything else is proved:
 | --- | --- | --- | --- |
 | `FriedbergHoffsteinB` | LEAF (research) | Friedberg–Hoffstein, Ann. of Math. (2) 142 (1995) 385–423, Theorem B | specialization of the printed theorem (`F = ℚ`, `π = π_f` weight 2 trivial central character, `χ₀` unramified at the finite places of `S`, `S ∋ 2`), with the local conditions `χ_v = χ₀,v` written as `D/D₀ ∈ (ℚ_v^×)²` (Mathlib's `ℚ_[p]`) and `ε(½, π ⊗ χ₀) = 1` written as Tau Ceti's root number of the twisted newform. Not literal: the idelic language is translated by a standard dictionary (§2). Flag: unread. |
 | `TwistNewformRootNumber` | LEAF (textbook) | Iwaniec–Kowalski, *Analytic Number Theory* (2004), Prop. 14.20; Atkin–Li, Invent. Math. 48 (1978) 221–243, Thm 3.1; Shimura 1971 Prop. 3.64 | consequence of the printed proposition: specialized to `k = 2`, trivial nebentypus, `χ = χ_D` with `D` odd fundamental, and the Gauss sum evaluated (`τ(χ_D)² = χ_D(−1)|D|`). Flag: unread. |
+| `TwistFunctionalEquation` (FE route, §4b) | GLUE, open | textbook computation (twisted Fricke relation), implied by `TwistNewformRootNumber` in Lean | — |
 | `fhNonvanishing_of_printed` and helpers | GLUE, proved | Dirichlet's theorem (Mathlib), gz-statements' `heegnerHyp_iff_split`, `jacobiSym_neg_level`, `coprime_of_heegnerHyp`, reduction `ℤ_p → ℤ/p`, `ℤ_2 → ℤ/8` | — |
 
 The root-number computation the proof needs is proved in Lean: for the auxiliary discriminant
@@ -57,7 +60,7 @@ def FriedbergHoffsteinB : Prop :=
   ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
   ∀ S : Finset ℕ, (∀ p : ℕ, p.Prime → p ∣ 2 * N → p ∈ S) →
   ∀ D₀ : ℤ, IsOddFundDisc D₀ → (∀ p ∈ S, ¬ (p : ℤ) ∣ D₀) →
-    (∃ (M : ℕ) (_ : NeZero M) (g : Newform M 2) (hg : g.χ = 1),
+    (∃ (M : ℕ) (_ : NeZero M) (g : Newform M 2) (hg : g.χ = 1), M = N * D₀.natAbs ^ 2 ∧
         (∀ n : ℕ, n ≠ 0 → coeff g n = twistCoeff f D₀ n) ∧ rootNumber g hg = 1) →
     ∀ B : ℕ, ∃ D : ℤ, B < D.natAbs ∧ IsOddFundDisc D ∧ 0 < D * D₀ ∧
       (∀ (p : ℕ) [Fact p.Prime], p ∈ S → IsSquare ((D : ℚ_[p]) / (D₀ : ℚ_[p]))) ∧
@@ -100,7 +103,7 @@ remembered (gz-statements §2.2); the task brief and gz-decomp say B.
 | `f : Newform N 2`, `f.χ = 1` | `π` cuspidal, trivial central character | specialization |
 | `S ⊇ {p ∣ 2N}` (with `∞` implicit) | `S` contains `∞`, the ramified places, (places above 2) | specialization (`2 ∈ S` imposed even if the print does not need it) |
 | `IsOddFundDisc D₀`, `p ∤ D₀` for `p ∈ S` | `χ₀` quadratic; here unramified at the finite places of `S` | specialization; quadratic characters of `ℚ` ↔ fundamental discriminants (STANDARD), and `χ₀,2` unramified ↔ `D₀` odd |
-| `∃ g, coeff g = twistCoeff f D₀, rootNumber g = 1` | `ε(½, π ⊗ χ₀) = 1` | the hypothesis implies the printed one: such a `g` has `π_g ≅ π_f ⊗ χ₀` (strong multiplicity one), and `rootNumber g` is `ε(½, π_g)` (the sign of the proved functional equation of `Λ(g, s)`, which is `≢ 0`). Stronger hypothesis ⇒ weaker leaf. |
+| `∃ g` of level `N D₀²`, `coeff g = twistCoeff f D₀`, `rootNumber g = 1` | `ε(½, π ⊗ χ₀) = 1` | the hypothesis implies the printed one: such a `g` has `π_g ≅ π_f ⊗ χ₀` (strong multiplicity one), and `rootNumber g` is `ε(½, π_g)` (the sign of the proved functional equation of `Λ(g, s)`, which is `≢ 0`). Stronger hypothesis ⇒ weaker leaf. |
 | `∀ B, ∃ D, B < |D|` | infinitely many `χ` | `χ = χ_D`, finitely many `D` per bound |
 | `IsOddFundDisc D` | `χ` quadratic, `χ_2 = χ₀,2` unramified | `D` fundamental and odd |
 | `0 < D * D₀` | `χ_∞ = χ₀,∞` | `χ_{D,∞} = sgn^{[D<0]}` |
@@ -159,7 +162,30 @@ Proof of `fhNonvanishing_of_printed` (all VERIFIED by compilation):
    `ℤ_2 → ℤ/8`, `D ≡ ȳ²`, and `5` is not a square mod 8, so `D ≡ 1 mod 8`). Then
    `heegnerHyp_iff_split` gives `HeegnerHyp N D`.
 
-DISCHARGES_PLACEHOLDER
+`#discharges` (`scratch/gz-fh/Discharges.lean`, run against the built `ZInQKernel.OneProof.Main` of
+this base; full output `scratch/gz-fh/Discharges-output.txt`, VERIFIED). The other five DISCHARGES
+lines of the output are the already-known contributions of the base (as in the contributor kit's
+worked example); the lines for this task:
+
+```
+DISCHARGES [hL2] by ZInQ.GZFH.fhNonvanishing_of_printed
+  still assumes: [ZInQ.GZFH.FriedbergHoffsteinB, ZInQ.GZFH.TwistNewformRootNumber]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [hL2] by ZInQ.GZFH.fhNonvanishing_of_printed_fe
+  still assumes: [ZInQ.GZFH.FriedbergHoffsteinB_FE, ZInQ.GZFH.TwistFunctionalEquation]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 65 open hypotheses, 1292 theorems checked, 7 discharge one
+'gzfh_frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'gzfh_fhNonvanishingCd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZFH.fhNonvanishing_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZFH.fhNonvanishing_of_printed_fe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZFH.twistFunctionalEquation_of_twistNewformRootNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZFH.friedbergHoffsteinB_of_fe' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+`gzfh_frozenTarget` is `ZInQ.OneProof.frozenTarget` with `hL2` replaced by
+`fhNonvanishing_of_printed hFH hTw`, i.e. the proposed `Main.lean` edit, checked without editing
+`Main.lean`.
 
 **Main.lean edit (for the integrator; not made here).** `hL2` is a top-level hypothesis of
 `ZInQ.OneProof.frozenTarget`, not a bundle field, so autofold does not cover it. The edit: replace
@@ -172,6 +198,62 @@ composite row for `FHNonvanishing`; add `FriedbergHoffsteinB` (LEAF, research, u
 1995 Thm B (label and page unread; checks H1 (a)-(f) of gz-statements §6), Iwaniec–Kowalski
 Prop. 14.20 / Atkin–Li 1978 Thm 3.1 (number unread; check H2). The GLUE count does not rise: one
 composite is replaced by two leaves and proved glue.
+
+## 4b. Variant: the root number as the sign of the functional equation
+
+`ZInQKernel/Contrib/OneProof/FHNonvanishing/FE.lean` (compiles, standard axioms, VERIFIED) states
+the same theorem with `ε(½, π ⊗ χ₀) = 1` written as what it is by definition, the sign of the
+functional equation of the completed twisted L-function:
+
+```lean
+def FriedbergHoffsteinB_FE : Prop :=   -- as FriedbergHoffsteinB, with the hypothesis
+    (∃ G : ℂ → ℂ, IsEntireCont (twistCoeff f D₀) 2 G ∧
+      ∀ s : ℂ, 0 < s.re → s.re < 2 →
+        ZInQ.Literature.completedL (N * D₀.natAbs ^ 2) G (2 - s) =
+          ZInQ.Literature.completedL (N * D₀.natAbs ^ 2) G s) → ...
+
+def TwistFunctionalEquation : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2) (hχ : f.χ = 1),
+  ∀ D : ℤ, IsOddFundDisc D → Nat.Coprime D.natAbs N →
+    ∀ G : ℂ → ℂ, IsEntireCont (twistCoeff f D) 2 G →
+      ∀ s : ℂ, 0 < s.re → s.re < 2 →
+        ZInQ.Literature.completedL (N * D.natAbs ^ 2) G (2 - s) =
+          (jacobiSym (-(N : ℤ)) D.natAbs : ℂ) * rootNumber f hχ *
+            ZInQ.Literature.completedL (N * D.natAbs ^ 2) G s
+```
+
+(`completedL M G s = M^{s/2} (2π)^{−s} Γ(s) G(s)`, the kernel's definition from
+`CR3Literature.lean`; the strip avoids Mathlib's junk values of `Γ` at its poles, as in
+`FunctionalEquation5`.) Proved:
+
+```lean
+theorem fhNonvanishing_of_printed_fe :
+    FriedbergHoffsteinB_FE → TwistFunctionalEquation → FHNonvanishing
+theorem twistFunctionalEquation_of_twistNewformRootNumber :
+    TwistNewformRootNumber → TwistFunctionalEquation
+theorem friedbergHoffsteinB_of_fe : FriedbergHoffsteinB_FE → FriedbergHoffsteinB
+theorem completedL_eq_frickeCompletedL   -- completedL M G = Tau Ceti's frickeCompletedL g M on Re s > 0
+```
+
+`TwistFunctionalEquation` is classified **GLUE** (a textbook computation that needs no newform
+theory): it is the functional equation of the cusp form `f ⊗ χ_D` of level `N D²`, which follows
+from Tau Ceti's Fricke-eigenvector functional equation
+(`CuspForm.frickeCompletedL_sub_eq_of_normalizedFrickeOperatorCusp_eq_smul`, VERIFIED read) once
+`W_{N D²}(f ⊗ χ_D) = χ_D(−N) ε_N(f) · (f ⊗ χ_D)` is proved by conjugating the Fricke matrix
+through the twist (Gauss sums; Iwaniec, *Topics*, §7.3, UNVERIFIED). It is not proved here.
+`FriedbergHoffsteinB_FE` is equally a specialization of the printed theorem (for `(D₀, N) = 1` the
+conductor of `π_f ⊗ χ₀` is `N D₀²` and `Λ ≢ 0` on the strip, so the hypothesis is
+`ε(½, π ⊗ χ₀) = 1`); it implies `FriedbergHoffsteinB` in Lean.
+
+So hL2 has two proved reductions:
+
+| Route | Inputs | Kinds |
+| --- | --- | --- |
+| newform (recommended for the fold) | `FriedbergHoffsteinB`, `TwistNewformRootNumber` | two printed leaves, no glue |
+| functional equation | `FriedbergHoffsteinB_FE`, `TwistFunctionalEquation` | one printed leaf, one GLUE target provable from Tau Ceti |
+
+The second route is the one to take if the project proves the twisted Fricke relation: the
+literature input for hL2 is then Friedberg–Hoffstein alone.
 
 ## 5. Would the `C_d` form (`FHNonvanishingCd`) make the split easier?
 
@@ -201,4 +283,6 @@ worth choosing if the project wants to prove the twisted root number rather than
 
 * Human statement checks: FH Theorem B (gz-statements §6 H1 (a)-(f)), Iwaniec–Kowalski Prop. 14.20
   / Atkin–Li (H2). No locator here was read.
+* `TwistFunctionalEquation` (glue, FE route): unproved; it would make Friedberg–Hoffstein the only
+  literature input of hL2.
 * The Main.lean edit and kinds.tsv/locators.md rows (§4), for the integrator.
