@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `Coeff` → `Coeff_aflt`, `addXYZ_smulEval` → `addXYZ_smulEval_aflt`, `cusp` → `cusp_aflt`, `dblXYZ_smulEval` → `dblXYZ_smulEval_aflt`, `invar` → `invar_aflt`, `map_invar` → `map_invar_aflt`, `map_specialize` → `map_specialize_aflt`, `map_ψc` → `map_ψc_aflt`, `normEDS_mul_complEDS` → `normEDS_mul_complEDS_aflt`, `normEDS_mul_complEDS_div` → `normEDS_mul_complEDS_div_aflt`, `preΨ₄_add_Ψ₂Sq_sq` → `preΨ₄_add_Ψ₂Sq_sq_aflt`, `preΨ₄_add_ψ₂_pow_four` → `preΨ₄_add_ψ₂_pow_four_aflt`, `smulEval` → `smulEval_aflt`, `specialize` → `specialize_aflt`, `universalNormEDS_ne_zero` → `universalNormEDS_ne_zero_aflt`, `φ_mul_ψ` → `φ_mul_ψ_aflt`, `ψc` → `ψc_aflt`, `ψc_neg` → `ψc_neg_aflt`.
 -/
 import Mathlib.NumberTheory.EllipticDivisibilitySequence
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Definitions.Def_Compat_Mathlib430
@@ -560,7 +561,7 @@ protected lemma net (p q r s : ℤ) : net W p q r s = 0 := by
   simp_rw [HaveSameParity₄, Int.negOnePow_add, Int.negOnePow_two_mul, one_mul, true_and]
 include ell in
 include one two in
-lemma invar (s m n : ℤ) : invarNum W s m * invarDenom W s n = invarNum W s n * invarDenom W s m :=
+lemma invar_aflt (s m n : ℤ) : invarNum W s m * invarDenom W s n = invarNum W s n * invarDenom W s m :=
   invar_of_net _ (ell.net one two) _ _ _
 end IsEllSequence'
 
@@ -774,7 +775,7 @@ lemma compl₂EDS_two_three_two (n : ℤ) : compl₂EDS (2 : ℤ) 3 2 n = 2 := b
     rwa [normEDS_two_three_two, id_eq, id_eq, mul_comm,
       mul_cancel_right_mem_nonZeroDivisors (mem_nonZeroDivisors_of_ne_zero hn)] at this
 
-lemma universalNormEDS_ne_zero {n : ℤ} (hn : n ≠ 0) : universalNormEDS n ≠ 0 := by
+lemma universalNormEDS_ne_zero_aflt {n : ℤ} (hn : n ≠ 0) : universalNormEDS n ≠ 0 := by
   intro h
   refine hn ?_
   apply_fun aeval (Param.rec (2 : ℤ) 3 2) at h
@@ -782,7 +783,7 @@ lemma universalNormEDS_ne_zero {n : ℤ} (hn : n ≠ 0) : universalNormEDS n ≠
 
 lemma universalNormEDS_mem_nonZeroDivisors {n : ℤ} (hn : n ≠ 0) :
     universalNormEDS n ∈ (MvPolynomial Param ℤ)⁰ :=
-  mem_nonZeroDivisors_of_ne_zero (universalNormEDS_ne_zero hn)
+  mem_nonZeroDivisors_of_ne_zero (universalNormEDS_ne_zero_aflt hn)
 
 section Divisibility
 
@@ -837,7 +838,7 @@ lemma IsEllSequence'.mul_compl_eq_apply_mul_of_mem_nonZeroDivisors (mem : W m �
     rw [Nat.cast_mul]; ring_nf
   | neg hn n => rw [neg_mul, ellW.neg one two, compl_neg, mul_neg, hn]
 
-lemma normEDS_mul_complEDS (m n : ℤ) :
+lemma normEDS_mul_complEDS_aflt (m n : ℤ) :
     normEDS b c d m * EllSequence.complEDS b c d m n = normEDS b c d (n * m) := by
   obtain rfl|hm := eq_or_ne m 0
   · simp
@@ -846,10 +847,10 @@ lemma normEDS_mul_complEDS (m n : ℤ) :
   exact IsEllSequence'.normEDS.mul_compl_eq_apply_mul_of_mem_nonZeroDivisors (this one_ne_zero)
     (this two_ne_zero) _ _ (fun _ ↦ by simp) (fun _ ↦ normEDS_mul_compl₂EDS _ _ _ _) _ _ (this hm)
 
-lemma normEDS_mul_complEDS_div (hm : m ≠ 0) (n : ℤ) (dvd : m ∣ n) :
+lemma normEDS_mul_complEDS_div_aflt (hm : m ≠ 0) (n : ℤ) (dvd : m ∣ n) :
     normEDS b c d m * EllSequence.complEDS b c d m (n / m) = normEDS b c d n := by
   obtain ⟨n, rfl⟩ := dvd
-  rw [Int.mul_ediv_cancel_left _ hm, normEDS_mul_complEDS, mul_comm]
+  rw [Int.mul_ediv_cancel_left _ hm, normEDS_mul_complEDS_aflt, mul_comm]
 
 namespace EllSequence
 
@@ -890,7 +891,7 @@ lemma invarDenom_eq_redInvarDenom_mul :
   have dvd_sub {a b c : ℤ} (h : a % b = c) : b ∣ a - c := by
     rw [← h, Int.emod_def, sub_sub_cancel]
     exact dvd_mul_right _ _
-  have mul_eq := @normEDS_mul_complEDS_div _ _ b c d
+  have mul_eq := @normEDS_mul_complEDS_div_aflt _ _ b c d
   rw [invarDenom, redInvarDenom]; split_ifs with h h h h h h
   · rw [← mul_eq _ h6 _ (Int.dvd_of_emod_eq_zero h), normEDS_six_eq_mul]; ring
   · rw [← mul_eq _ h6 _ (dvd_sub h), normEDS_six_eq_mul]; ring
@@ -940,7 +941,7 @@ end Complement
 
 protected theorem IsDivSequence'.normEDS : IsDivSequence' (normEDS b c d) := by
   rintro m _ ⟨n, rfl⟩
-  rw [Nat.cast_mul, mul_comm (m : ℤ), ← normEDS_mul_complEDS]
+  rw [Nat.cast_mul, mul_comm (m : ℤ), ← normEDS_mul_complEDS_aflt]
   exact dvd_mul_right _ _
 
 protected theorem IsEllDivSequence'.normEDS : IsEllDivSequence' (normEDS b c d) :=
@@ -1019,7 +1020,7 @@ open scoped Polynomial.Bivariate
 
 namespace WeierstrassCurve
 
-inductive Coeff : Type | A₁ : Coeff | A₂ : Coeff | A₃ : Coeff | A₄ : Coeff | A₆ : Coeff
+inductive Coeff_aflt : Type | A₁ : Coeff_aflt | A₂ : Coeff_aflt | A₃ : Coeff_aflt | A₄ : Coeff_aflt | A₆ : Coeff_aflt
 
 namespace Affine.CoordinateRing
 
@@ -1037,19 +1038,19 @@ end Affine.CoordinateRing
 namespace Univ
 
 open scoped Polynomial Polynomial.Bivariate
-open Coeff
+open Coeff_aflt
 
 open MvPolynomial (X) in
 
-def curve : Affine (MvPolynomial Coeff ℤ) :=
+def curve : Affine (MvPolynomial Coeff_aflt ℤ) :=
   { a₁ := X A₁, a₂ := X A₂, a₃ := X A₃, a₄ := X A₄, a₆ := X A₆ }
 
 lemma Δ_curve_ne_zero : curve.Δ ≠ 0 := fun h ↦ by
   simp_rw [Δ, b₂, b₄, b₆, b₈, curve] at h
-  apply_fun MvPolynomial.eval (Coeff.rec 0 0 0 0 1) at h
+  apply_fun MvPolynomial.eval (Coeff_aflt.rec 0 0 0 0 1) at h
   simp at h
 
-abbrev Poly : Type := (MvPolynomial Coeff ℤ)[X][Y]
+abbrev Poly : Type := (MvPolynomial Coeff_aflt ℤ)[X][Y]
 
 protected abbrev Ring : Type := curve.CoordinateRing
 
@@ -1067,17 +1068,17 @@ lemma polyToField_apply (p : Poly) :
     polyToField p = algebraMap Univ.Ring _ (AdjoinRoot.mk _ p) := rfl
 
 lemma algebraMap_field_eq_comp :
-    algebraMap (MvPolynomial Coeff ℤ) Univ.Field = polyToField.comp (algebraMap _ _) := rfl
+    algebraMap (MvPolynomial Coeff_aflt ℤ) Univ.Field = polyToField.comp (algebraMap _ _) := rfl
 
 lemma algebraMap_ring_eq_comp :
-    algebraMap (MvPolynomial Coeff ℤ) Univ.Ring = (AdjoinRoot.mk _).comp (algebraMap _ _) :=
+    algebraMap (MvPolynomial Coeff_aflt ℤ) Univ.Ring = (AdjoinRoot.mk _).comp (algebraMap _ _) :=
   rfl
 
 @[simp] lemma polyToField_polynomial : polyToField curve.polynomial = 0 := by
   rw [polyToField_apply, AdjoinRoot.mk_self, map_zero]
 
 lemma algebraMap_field_injective :
-    Function.Injective (algebraMap (MvPolynomial Coeff ℤ) Univ.Field) :=
+    Function.Injective (algebraMap (MvPolynomial Coeff_aflt ℤ) Univ.Field) :=
   (IsFractionRing.injective Univ.Ring Univ.Field).comp
     (Affine.CoordinateRing.algebraMap_injective' _)
 
@@ -1127,19 +1128,19 @@ lemma curveField_eq : curveField = pointedCurve := rfl
 
 end Univ
 
-def cusp : Affine ℤ := { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := 0, a₆ := 0 }
+def cusp_aflt : Affine ℤ := { a₁ := 0, a₂ := 0, a₃ := 0, a₄ := 0, a₆ := 0 }
 
-lemma cusp_equation_one_one : cusp.Equation 1 1 := by
-  simp [Affine.Equation, Affine.polynomial, cusp, Polynomial.evalEval]
+lemma cusp_equation_one_one : cusp_aflt.Equation 1 1 := by
+  simp [Affine.Equation, Affine.polynomial, cusp_aflt, Polynomial.evalEval]
 
 open Univ
 variable {R} [CommRing R] (W : WeierstrassCurve R)
 
-def specialize : MvPolynomial Coeff ℤ →+* R :=
-  (MvPolynomial.aeval <| Coeff.rec W.a₁ W.a₂ W.a₃ W.a₄ W.a₆).toRingHom
+def specialize_aflt : MvPolynomial Coeff_aflt ℤ →+* R :=
+  (MvPolynomial.aeval <| Coeff_aflt.rec W.a₁ W.a₂ W.a₃ W.a₄ W.a₆).toRingHom
 
-lemma map_specialize : WeierstrassCurve.map Univ.curve W.specialize = W := by
-  simp [specialize, curve, map]
+lemma map_specialize_aflt : WeierstrassCurve.map Univ.curve W.specialize_aflt = W := by
+  simp [specialize_aflt, curve, map]
 
 namespace Univ
 
@@ -1147,11 +1148,11 @@ variable (x y : R)
 
 open Polynomial (eval₂RingHom) in
 
-def polyEval : Poly →+* R := eval₂RingHom (eval₂RingHom W.specialize x) y
+def polyEval : Poly →+* R := eval₂RingHom (eval₂RingHom W.specialize_aflt x) y
 
 open Polynomial in
 lemma polyEval_apply (p : Poly) :
-    polyEval W x y p = (p.map <| mapRingHom W.specialize).evalEval x y :=
+    polyEval W x y p = (p.map <| mapRingHom W.specialize_aflt).evalEval x y :=
   eval₂_eval₂RingHom_apply _ _ _ _
 
 variable {W x y} (eqn : Affine.Equation W x y)
@@ -1159,11 +1160,11 @@ variable {W x y} (eqn : Affine.Equation W x y)
 open Polynomial in
 
 def ringEval : Univ.Ring →+* R :=
-  AdjoinRoot.lift (eval₂RingHom W.specialize x) y <| by
+  AdjoinRoot.lift (eval₂RingHom W.specialize_aflt x) y <| by
     simp_rw [← coe_eval₂RingHom, eval₂RingHom_eval₂RingHom, RingHom.comp_apply, coe_mapRingHom]
 
     rw [← Affine.map_polynomial]
-    simpa only [Affine.map, map_specialize, Affine.Equation, evalEval, coe_evalRingHom] using eqn
+    simpa only [Affine.map, map_specialize_aflt, Affine.Equation, evalEval, coe_evalRingHom] using eqn
 
 lemma ringEval_mk (p : Poly) : ringEval eqn (AdjoinRoot.mk _ p) = polyEval W x y p :=
   AdjoinRoot.lift_mk _ p
@@ -1171,10 +1172,10 @@ lemma ringEval_mk (p : Poly) : ringEval eqn (AdjoinRoot.mk _ p) = polyEval W x y
 lemma ringEval_comp_mk : (ringEval eqn).comp (AdjoinRoot.mk _) = polyEval W x y :=
   RingHom.ext (ringEval_mk eqn)
 
-lemma polyEval_comp_eq_specialize : (polyEval W x y).comp (algebraMap _ _) = W.specialize := by
+lemma polyEval_comp_eq_specialize : (polyEval W x y).comp (algebraMap _ _) = W.specialize_aflt := by
   ext <;> simp [polyEval]
 
-lemma ringEval_comp_eq_specialize : (ringEval eqn).comp (algebraMap _ _) = W.specialize := by
+lemma ringEval_comp_eq_specialize : (ringEval eqn).comp (algebraMap _ _) = W.specialize_aflt := by
   rw [algebraMap_ring_eq_comp, ← RingHom.comp_assoc, ringEval_comp_mk, polyEval_comp_eq_specialize]
 
 protected lemma Field.two_ne_zero : (2 : Univ.Field) ≠ 0 := by
@@ -1183,7 +1184,7 @@ protected lemma Field.two_ne_zero : (2 : Univ.Field) ≠ 0 := by
   rw [map_ofNat, map_zero] at h; cases h
 
 lemma curveRing_map_ringEval : curveRing.map (ringEval eqn) = W := by
-  rw [curveRing, WeierstrassCurve.baseChange, map_map, ringEval_comp_eq_specialize, map_specialize]
+  rw [curveRing, WeierstrassCurve.baseChange, map_map, ringEval_comp_eq_specialize, map_specialize_aflt]
 
 end Univ
 
@@ -1207,9 +1208,9 @@ variable {R : Type*} {S : Type*} [CommRing R] [CommRing S] (W : WeierstrassCurve
 
 noncomputable section
 
-def invar : R[X] := 6 * X ^ 2 + C W.b₂ * X + C W.b₄
+def invar_aflt : R[X] := 6 * X ^ 2 + C W.b₂ * X + C W.b₄
 
-def ψc : ℤ → R[X][Y] := compl₂EDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄)
+def ψc_aflt : ℤ → R[X][Y] := compl₂EDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄)
 
 open Affine (polynomial polynomialX polynomialY negPolynomial)
 open EllSequence
@@ -1219,16 +1220,16 @@ lemma C_Ψ₃_eq :
       + CC W.a₁ * W.ψ₂ * polynomialX W - CC W.a₁ ^ 2 * polynomial W := by
   simp_rw [Ψ₃, Ψ₂Sq, polynomial, polynomialX, ψ₂, polynomialY, b₂, b₄, b₆, b₈, CC]; C_simp; ring
 
-lemma preΨ₄_add_Ψ₂Sq_sq : W.preΨ₄ + W.Ψ₂Sq ^ 2 = W.invar * W.Ψ₃ := by
-  rw [preΨ₄, Ψ₂Sq, invar, Ψ₃]
+lemma preΨ₄_add_Ψ₂Sq_sq_aflt : W.preΨ₄ + W.Ψ₂Sq ^ 2 = W.invar_aflt * W.Ψ₃ := by
+  rw [preΨ₄, Ψ₂Sq, invar_aflt, Ψ₃]
   linear_combination (norm := (C_simp; ring_nf)) congr(C $W.b_relation) * (@X R _) ^ 2
 
-lemma preΨ₄_add_ψ₂_pow_four : C W.preΨ₄ + W.ψ₂ ^ 4 =
-    C (W.invar * W.Ψ₃) + 8 * polynomial W * (2 * polynomial W + C W.Ψ₂Sq) := by
+lemma preΨ₄_add_ψ₂_pow_four_aflt : C W.preΨ₄ + W.ψ₂ ^ 4 =
+    C (W.invar_aflt * W.Ψ₃) + 8 * polynomial W * (2 * polynomial W + C W.Ψ₂Sq) := by
   simp_rw [show 4 = 2 * 2 by rfl, pow_mul, ψ₂_sq, add_sq,
-    ← add_assoc, ← C_pow, ← C_add, preΨ₄_add_Ψ₂Sq_sq]; C_simp; ring
+    ← add_assoc, ← C_pow, ← C_add, preΨ₄_add_Ψ₂Sq_sq_aflt]; C_simp; ring
 
-lemma φ_mul_ψ (n : ℤ) : W.φ n * W.ψ n = C X * W.ψ n ^ 3 - invarDenom W.ψ 1 n := by
+lemma φ_mul_ψ_aflt (n : ℤ) : W.φ n * W.ψ n = C X * W.ψ n ^ 3 - invarDenom W.ψ 1 n := by
   rw [WeierstrassCurve.φ, invarDenom]; ring
 
 protected def ωe (n : ℤ) : R[X][Y] :=
@@ -1238,24 +1239,24 @@ protected def ωe (n : ℤ) : R[X][Y] :=
   - compl₂EDSAux W.ψ₂ (C W.Ψ₃) (C W.preΨ₄) n + negPolynomial W * W.ψ n ^ 3
 
 lemma ωe_spec (n : ℤ) :
-    2 * W.ωe n + CC W.a₁ * W.φ n * W.ψ n + CC W.a₃ * W.ψ n ^ 3 = W.ψc n := by
+    2 * W.ωe n + CC W.a₁ * W.φ n * W.ψ n + CC W.a₃ * W.ψ n ^ 3 = W.ψc_aflt n := by
   have hψ : W.ψ = normEDS W.ψ₂ (C W.Ψ₃) (C W.preΨ₄) := rfl
-  rw [ψc, compl₂EDS_eq_redInvarNum_sub, redInvar_normEDS, preΨ₄_add_ψ₂_pow_four,
-    mul_assoc (C _), φ_mul_ψ, hψ, invarDenom_eq_redInvarDenom_mul, WeierstrassCurve.ωe, ← hψ,
-    invar, b₂, b₄, ψ₂, Affine.polynomialY, Affine.polynomialX, Affine.negPolynomial]
+  rw [ψc_aflt, compl₂EDS_eq_redInvarNum_sub, redInvar_normEDS, preΨ₄_add_ψ₂_pow_four_aflt,
+    mul_assoc (C _), φ_mul_ψ_aflt, hψ, invarDenom_eq_redInvarDenom_mul, WeierstrassCurve.ωe, ← hψ,
+    invar_aflt, b₂, b₄, ψ₂, Affine.polynomialY, Affine.polynomialX, Affine.negPolynomial]
   C_simp; ring
 
 lemma two_mul_ωe (n : ℤ) :
-    2 * W.ωe n = W.ψc n - CC W.a₁ * W.φ n * W.ψ n - CC W.a₃ * W.ψ n ^ 3 := by
+    2 * W.ωe n = W.ψc_aflt n - CC W.a₁ * W.φ n * W.ψ n - CC W.a₃ * W.ψ n ^ 3 := by
   rw [← ωe_spec]; abel
 
-lemma ψc_spec (n : ℤ) : W.ψ n * W.ψc n = W.ψ (2 * n) := normEDS_mul_compl₂EDS _ _ _ _
+lemma ψc_spec (n : ℤ) : W.ψ n * W.ψc_aflt n = W.ψ (2 * n) := normEDS_mul_compl₂EDS _ _ _ _
 
 @[simp] lemma ωe_zero : W.ωe 0 = 1 := by simp [WeierstrassCurve.ωe]
 
 @[simp] lemma ωe_one : W.ωe 1 = Y := by simp [WeierstrassCurve.ωe, ψ₂, ← Affine.Y_sub_polynomialY]
 
-@[simp] lemma ψc_neg (n : ℤ) : W.ψc (-n) = W.ψc n := by simp [ψc]
+@[simp] lemma ψc_neg_aflt (n : ℤ) : W.ψc_aflt (-n) = W.ψc_aflt n := by simp [ψc_aflt]
 
 end
 
@@ -1263,12 +1264,12 @@ section Map
 
 variable (f : R →+* S)
 
-lemma map_ψc (n : ℤ) : (W.map f).ψc n = (W.ψc n).map (mapRingHom f) := by
-  simp only [ψc, ← coe_mapRingHom, map_compl₂EDS, map_ψ₂, map_Ψ₃, map_preΨ₄]
+lemma map_ψc_aflt (n : ℤ) : (W.map f).ψc_aflt n = (W.ψc_aflt n).map (mapRingHom f) := by
+  simp only [ψc_aflt, ← coe_mapRingHom, map_compl₂EDS, map_ψ₂, map_Ψ₃, map_preΨ₄]
   simp only [coe_mapRingHom, map_C]
 
-lemma map_invar : (W.map f).invar = W.invar.map f := by
-  simp only [invar, map_b₂, map_b₄]
+lemma map_invar_aflt : (W.map f).invar_aflt = W.invar_aflt.map f := by
+  simp only [invar_aflt, map_b₂, map_b₄]
   simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_pow, Polynomial.map_ofNat,
     map_C, map_X]
 
@@ -1301,49 +1302,49 @@ variable {x y : R}
 namespace Univ
 
 lemma evalEval_ψ₂ : W.ψ₂.evalEval x y = polyEval W x y curve.ψ₂ := by
-  simp_rw [polyEval_apply, ← map_ψ₂, map_specialize]
+  simp_rw [polyEval_apply, ← map_ψ₂, map_specialize_aflt]
 
 lemma evalEval_Ψ₃ : (C W.Ψ₃).evalEval x y = polyEval W x y (C curve.Ψ₃) := by
-  simp_rw [polyEval_apply, map_C, coe_mapRingHom, ← map_Ψ₃, map_specialize]
+  simp_rw [polyEval_apply, map_C, coe_mapRingHom, ← map_Ψ₃, map_specialize_aflt]
 
 lemma evalEval_preΨ₄ : (C W.preΨ₄).evalEval x y = polyEval W x y (C curve.preΨ₄) := by
-  simp_rw [polyEval_apply, map_C, coe_mapRingHom, ← map_preΨ₄, map_specialize]
+  simp_rw [polyEval_apply, map_C, coe_mapRingHom, ← map_preΨ₄, map_specialize_aflt]
 
 variable {m n : ℤ}
 
 lemma evalEval_ψ : (W.ψ n).evalEval x y = polyEval W x y (curve.ψ n) := by
-  simp_rw [polyEval_apply, ← map_ψ, map_specialize]
+  simp_rw [polyEval_apply, ← map_ψ, map_specialize_aflt]
 
 lemma evalEval_φ : (W.φ n).evalEval x y = polyEval W x y (curve.φ n) := by
-  simp_rw [polyEval_apply, ← map_φ, map_specialize]
+  simp_rw [polyEval_apply, ← map_φ, map_specialize_aflt]
 
 lemma evalEval_ωe : (W.ωe n).evalEval x y =  polyEval W x y (curve.ωe n) := by
-  simp_rw [polyEval_apply, ← map_ωe, map_specialize]
+  simp_rw [polyEval_apply, ← map_ωe, map_specialize_aflt]
 
 open WeierstrassCurve (ψ φ ωe)
 
-lemma cusp_ψ₂ : cusp.ψ₂ = 2 * Y := by
-  simp [cusp, ψ₂, Affine.polynomialY, map_ofNat]
+lemma cusp_ψ₂ : cusp_aflt.ψ₂ = 2 * Y := by
+  simp [cusp_aflt, ψ₂, Affine.polynomialY, map_ofNat]
 
-lemma cusp_Ψ₃ : cusp.Ψ₃ = 3 * X ^ 4 := by simp [cusp, Ψ₃, b₂, b₄, b₆, b₈]
-lemma cusp_preΨ₄ : cusp.preΨ₄ = 2 * X ^ 6 := by simp [cusp, preΨ₄, b₂, b₄, b₆, b₈]
+lemma cusp_Ψ₃ : cusp_aflt.Ψ₃ = 3 * X ^ 4 := by simp [cusp_aflt, Ψ₃, b₂, b₄, b₆, b₈]
+lemma cusp_preΨ₄ : cusp_aflt.preΨ₄ = 2 * X ^ 6 := by simp [cusp_aflt, preΨ₄, b₂, b₄, b₆, b₈]
 
-lemma polyEval_cusp_ψ : polyEval cusp 1 1 (curve.ψ n) = n := by
+lemma polyEval_cusp_ψ : polyEval cusp_aflt 1 1 (curve.ψ n) = n := by
   rw [ψ, map_normEDS, ← evalEval_ψ₂, ← evalEval_Ψ₃, ← evalEval_preΨ₄, cusp_ψ₂, cusp_Ψ₃, cusp_preΨ₄]
   simp [evalEval, normEDS_two_three_two]
 
-lemma polyEval_cusp_φ : polyEval cusp 1 1 (curve.φ n) = 1 := by
+lemma polyEval_cusp_φ : polyEval cusp_aflt 1 1 (curve.φ n) = 1 := by
   simp_rw [φ, map_sub, map_mul, map_pow, polyEval_cusp_ψ, polyEval]
   simp only [coe_eval₂RingHom, eval₂_C, eval₂_X]; ring
 
-lemma polyEval_cusp_ψc : polyEval cusp 1 1 (curve.ψc n) = 2 := by
-  rw [ψc, map_compl₂EDS, ← evalEval_ψ₂, ← evalEval_Ψ₃, ← evalEval_preΨ₄]
+lemma polyEval_cusp_ψc : polyEval cusp_aflt 1 1 (curve.ψc_aflt n) = 2 := by
+  rw [ψc_aflt, map_compl₂EDS, ← evalEval_ψ₂, ← evalEval_Ψ₃, ← evalEval_preΨ₄]
   simp [cusp_ψ₂, cusp_Ψ₃, cusp_preΨ₄, evalEval, compl₂EDS_two_three_two]
 
-lemma polyEval_cusp_ωe : polyEval cusp 1 1 (curve.ωe n) = 1 := by
-  have := congr(polyEval cusp 1 1 $(curve.two_mul_ωe n))
+lemma polyEval_cusp_ωe : polyEval cusp_aflt 1 1 (curve.ωe n) = 1 := by
+  have := congr(polyEval cusp_aflt 1 1 $(curve.two_mul_ωe n))
   simp_rw [map_sub, map_mul, map_ofNat, polyEval_cusp_ψc] at this
-  simpa [cusp, polyEval, specialize, curve] using this
+  simpa [cusp_aflt, polyEval, specialize_aflt, curve] using this
 
 abbrev ψᵤ (n : ℤ) : Univ.Field := polyToField (curve.ψ n)
 
@@ -1488,7 +1489,7 @@ open Polynomial (CC) in
 lemma ωe_neg' : curve.ωe (-n) =
     curve.ωe n + CC curve.a₁ * curve.φ n * curve.ψ n + CC curve.a₃ * curve.ψ n ^ 3 := by
   rw [← mul_cancel_left_mem_nonZeroDivisors (mem_nonZeroDivisors_of_ne_zero Poly.two_ne_zero)]
-  simp_rw [left_distrib, two_mul_ωe, ψc_neg, ψ_neg, φ_neg]; ring
+  simp_rw [left_distrib, two_mul_ωe, ψc_neg_aflt, ψ_neg, φ_neg]; ring
 
 lemma smulY_neg (h0 : n ≠ 0) :
     smulY (-n) = pointedCurve.toAffine.negY (smulX n) (smulY n) := by
@@ -1533,7 +1534,8 @@ lemma smulY_add_sub_negY (hm : m ≠ 0) (hn : n ≠ 0) (add_ne : n + m ≠ 0) (s
 open Affine.Point
 
 open WeierstrassCurve.Affine in
-instance : AddGroup (curve⟮Univ.Field⟯) := inferInstance
+-- [port] named: the clash rename `Coeff` → `Coeff_aflt` changed its auto-generated name
+instance instAddGroupPointFieldBaseChangeMvPolynomialCoeffIntCurve : AddGroup (curve⟮Univ.Field⟯) := inferInstance
 
 theorem zsmul_point_eq_smulX_smulY : n ≠ 0 →
     ∃ h : Affine.Nonsingular curveField (smulX n) (smulY n),
@@ -1733,15 +1735,15 @@ end Univ
 
 variable (x y) in
 
-abbrev smulEval (n : ℤ) : Fin 3 → R := evalEval x y ∘ ![W.φ n, W.ωe n, W.ψ n]
+abbrev smulEval_aflt (n : ℤ) : Fin 3 → R := evalEval x y ∘ ![W.φ n, W.ωe n, W.ψ n]
 
 variable {W} (eqn : W.toAffine.Equation x y)
 
 open Univ Jacobian
 
-lemma ringEval_comp_smulRing (n : ℤ) : ringEval eqn ∘ smulRing n = smulEval W x y n := by
+lemma ringEval_comp_smulRing (n : ℤ) : ringEval eqn ∘ smulRing n = smulEval_aflt W x y n := by
 
-  conv_rhs => rw [smulEval, ← W.map_specialize, map_φ, map_ωe, map_ψ, ← coe_mapRingHom,
+  conv_rhs => rw [smulEval_aflt, ← W.map_specialize_aflt, map_φ, map_ωe, map_ψ, ← coe_mapRingHom,
     ← Jacobian.comp_fin3, ← Function.comp_assoc, ← smulPoly, ← coe_evalEvalRingHom,
     ← RingHom.coe_comp, ← eval₂RingHom_eval₂RingHom]
   rw [smulRing, ← Function.comp_assoc, ← RingHom.coe_comp, ringEval_comp_mk, polyEval]
@@ -1751,13 +1753,13 @@ lemma ringEval_ψ (n : ℤ) :
   congr_fun (ringEval_comp_smulRing eqn n) 2
 
 include eqn in
-lemma dblXYZ_smulEval (n : ℤ) : dblXYZ W (smulEval W x y n) = smulEval W x y (2 * n) := by
+lemma dblXYZ_smulEval_aflt (n : ℤ) : dblXYZ W (smulEval_aflt W x y n) = smulEval_aflt W x y (2 * n) := by
   simp_rw [← ringEval_comp_smulRing eqn, ← dblXYZ_smulRing, ← map_dblXYZ, curveRing_map_ringEval]
 
 include eqn in
-lemma addXYZ_smulEval (m n : ℤ) :
-    addXYZ W (smulEval W x y m) (smulEval W x y n) =
-      evalEval x y (W.ψ (n - m)) • smulEval W x y (n + m) := by
+lemma addXYZ_smulEval_aflt (m n : ℤ) :
+    addXYZ W (smulEval_aflt W x y m) (smulEval_aflt W x y n) =
+      evalEval x y (W.ψ (n - m)) • smulEval_aflt W x y (n + m) := by
 
   simp_rw [← ringEval_comp_smulRing eqn, ← ringEval_ψ eqn]
   rw [← Jacobian.comp_smul, ← addXYZ_smulRing, ← map_addXYZ]
@@ -1766,7 +1768,7 @@ lemma addXYZ_smulEval (m n : ℤ) :
 
 include eqn in
 lemma addXYZ_smulEval₁ (n : ℤ) :
-    addXYZ W (smulEval W x y n) (smulEval W x y (n + 1)) = smulEval W x y (2 * n + 1) := by
+    addXYZ W (smulEval_aflt W x y n) (smulEval_aflt W x y (n + 1)) = smulEval_aflt W x y (2 * n + 1) := by
   simp_rw [← ringEval_comp_smulRing eqn, ← addXYZ_smulRing₁, ← map_addXYZ, curveRing_map_ringEval]
 
 variable {F : Type*} [Field F] (W : WeierstrassCurve F)
@@ -1774,7 +1776,7 @@ variable {F : Type*} [Field F] (W : WeierstrassCurve F)
 open Univ
 
 theorem zsmul_eq_smulEval {x y : F} (h : Affine.Nonsingular W x y) (n : ℤ) :
-    (n • Point.fromAffine (Affine.Point.some x y h)).point = ⟦smulEval W x y n⟧ := by
+    (n • Point.fromAffine (Affine.Point.some x y h)).point = ⟦smulEval_aflt W x y n⟧ := by
 
   have add_point_eq : ∀ (P Q : Jacobian.Point W) (P' Q' : Fin 3 → F),
       P.point = ⟦P'⟧ → Q.point = ⟦Q'⟧ → (P + Q).point = ⟦Jacobian.add W P' Q'⟧ := by
@@ -1793,11 +1795,11 @@ theorem zsmul_eq_smulEval {x y : F} (h : Affine.Nonsingular W x y) (n : ℤ) :
   | nat n =>
     refine n.strong_induction_on fun n ih ↦ ?_
     obtain _|_|n := n
-    · rw [Nat.cast_zero, zero_smul, smulEval, comp_fin3]; congrm(⟦?_⟧); simp [evalEval]
-    · rw [Nat.cast_one, one_smul, smulEval, comp_fin3]; congrm(⟦?_⟧); simp [evalEval]
+    · rw [Nat.cast_zero, zero_smul, smulEval_aflt, comp_fin3]; congrm(⟦?_⟧); simp [evalEval]
+    · rw [Nat.cast_one, one_smul, smulEval_aflt, comp_fin3]; congrm(⟦?_⟧); simp [evalEval]
     obtain ⟨n, rfl|rfl⟩ := n.even_or_odd'
     · rw [add_assoc, ← two_mul, ← left_distrib, Nat.cast_mul, mul_smul, natCast_zsmul,
-        two_zsmul_point _ _ (ih _ <| by omega), dblXYZ_smulEval h.1]; rfl
+        two_zsmul_point _ _ (ih _ <| by omega), dblXYZ_smulEval_aflt h.1]; rfl
     · rw [show 2 * n + 1 + 1 + 1 = (n + 1) + (n + 1 + 1) by omega, Nat.cast_add, add_smul,
         add_point_of_ne _ _ _ _ (ih _ <| by omega) (ih _ <| by omega), Nat.cast_add (n + 1),
         Nat.cast_one, addXYZ_smulEval₁ h.1, ← add_assoc, two_mul]
@@ -1864,18 +1866,18 @@ theorem smul_eq_zero_iff_evalEval_ψ {x y : F} (h : W.toAffine.Nonsingular x y) 
         (Jacobian.Point.toAffineAddEquiv W).symm 0 := (AddEquiv.injective _).eq_iff.symm
     _ ↔ n • Jacobian.Point.fromAffine (Affine.Point.some x y h) = 0 := by
         rw [map_zsmul, map_zero, Jacobian.Point.toAffineAddEquiv_symm_apply]
-    _ ↔ (⟦smulEval W x y n⟧ : Jacobian.PointClass F) = ⟦![1, 1, 0]⟧ := by
+    _ ↔ (⟦smulEval_aflt W x y n⟧ : Jacobian.PointClass F) = ⟦![1, 1, 0]⟧ := by
         rw [Jacobian.Point.ext_iff, key, Jacobian.Point.zero_point]
     _ ↔ (W.ψ n).evalEval x y = 0 := by
         constructor
         · intro heq
           have hz := (Jacobian.Z_eq_zero_of_equiv (Quotient.eq.mp heq)).mpr rfl
-          simpa only [smulEval, Function.comp_apply, Matrix.cons_val_two, Matrix.tail_cons,
+          simpa only [smulEval_aflt, Function.comp_apply, Matrix.cons_val_two, Matrix.tail_cons,
             Matrix.head_cons] using hz
         · intro hz
           refine Quotient.eq.mpr (Jacobian.equiv_zero_of_Z_eq_zero
             ((Jacobian.nonsingularLift_iff _).mp hQns) ?_)
-          simpa only [smulEval, Function.comp_apply, Matrix.cons_val_two, Matrix.tail_cons,
+          simpa only [smulEval_aflt, Function.comp_apply, Matrix.cons_val_two, Matrix.tail_cons,
             Matrix.head_cons] using hz
 
 end WeierstrassCurve

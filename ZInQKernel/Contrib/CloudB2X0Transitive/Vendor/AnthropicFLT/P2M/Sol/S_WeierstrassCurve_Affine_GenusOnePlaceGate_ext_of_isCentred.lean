@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `XYIdeal_isMaximal` → `XYIdeal_isMaximal_aflt`, `XYIdeal_ne_bot` → `XYIdeal_ne_bot_aflt`.
 -/
 import Mathlib
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Definitions.Def_WeierstrassCurve_GenusOnePic0
@@ -42,8 +43,8 @@ theorem solution
       ∃ w : IsDedekindDomain.HeightOneSpectrum W.CoordinateRing,
         w.asIdeal = CoordinateRing.XYIdeal W x (Polynomial.C y) := fun {x y} h =>
     ⟨⟨CoordinateRing.XYIdeal W x (Polynomial.C y),
-        (CoordinateRing.XYIdeal_isMaximal h.left).isPrime,
-        CoordinateRing.XYIdeal_ne_bot x (Polynomial.C y)⟩, rfl⟩
+        (CoordinateRing.XYIdeal_isMaximal_aflt h.left).isPrime,
+        CoordinateRing.XYIdeal_ne_bot_aflt x (Polynomial.C y)⟩, rfl⟩
 
   have hsome : ∀ {x y : F} (h : W.Nonsingular x y),
       g₁.pointEquivPlace (Point.some x y h) = g₂.pointEquivPlace (Point.some x y h) := by

@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `XYIdeal_isMaximal` → `XYIdeal_isMaximal_aflt`, `XYIdeal_ne_bot` → `XYIdeal_ne_bot_aflt`, `genericPoint` → `genericPoint_aflt`.
 -/
 import Mathlib
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Definitions.Def_WeierstrassCurve_VeluPointMap
@@ -1906,13 +1907,13 @@ theorem algebraMap_eq_mk_C_C (a : F) :
     Algebra.algebraMap_self_apply]
   rfl
 
-theorem XYIdeal_isMaximal {x y : F} (h : W.Equation x y) :
+theorem XYIdeal_isMaximal_aflt {x y : F} (h : W.Equation x y) :
     (XYIdeal W x (C y)).IsMaximal :=
   Ideal.Quotient.maximal_of_isField _
     ((quotientXYIdealEquiv (W' := W) (x := x) (y := C y) h).toMulEquiv.isField
       (Field.toIsField F))
 
-theorem XYIdeal_ne_bot (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := by
+theorem XYIdeal_ne_bot_aflt (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := by
   intro hbot
   have hX : XClass W x ∈ XYIdeal W x y := Ideal.subset_span (Set.mem_insert _ _)
   rw [hbot, Ideal.mem_bot] at hX
@@ -1921,8 +1922,8 @@ theorem XYIdeal_ne_bot (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := by
 def heightOneSpectrumOfEquation {x y : F} (h : W.Equation x y) :
     HeightOneSpectrum W.CoordinateRing where
   asIdeal := XYIdeal W x (C y)
-  isPrime := (XYIdeal_isMaximal h).isPrime
-  ne_bot := XYIdeal_ne_bot x (C y)
+  isPrime := (XYIdeal_isMaximal_aflt h).isPrime
+  ne_bot := XYIdeal_ne_bot_aflt x (C y)
 
 @[scoped simp]
 theorem heightOneSpectrumOfEquation_asIdeal {x y : F} (h : W.Equation x y) :
@@ -6650,7 +6651,7 @@ theorem nonsingular_map_polyToFunctionField_yGen (hΔ : W.Δ ≠ 0) :
   (Affine.equation_iff_nonsingular_of_Δ_ne_zero (map_functionField_Δ_ne_zero hΔ)).mp
     equation_map_polyToFunctionField_yGen
 
-def genericPoint (hΔ : W.Δ ≠ 0) : (W.map ι).toAffine.Point :=
+def genericPoint_aflt (hΔ : W.Δ ≠ 0) : (W.map ι).toAffine.Point :=
   Affine.Point.some (polyToFunctionField W X) (yGen W)
     (nonsingular_map_polyToFunctionField_yGen hΔ)
 
@@ -6667,7 +6668,7 @@ theorem nonsingular_map_addFun (hΔ : W.Δ ≠ 0) {a b : F} (hA : W.Equation a b
     (equation_map_addFun W hA)
 
 theorem genericPoint_add_map (hΔ : W.Δ ≠ 0) {a b : F} (hA : W.Equation a b) :
-    genericPoint hΔ + mapPoint hΔ hA
+    genericPoint_aflt hΔ + mapPoint hΔ hA
       = Affine.Point.some (W.addXFun a b) (W.addYFun a b) (nonsingular_map_addFun hΔ hA) :=
   Affine.Point.add_of_X_ne (polyToFunctionField_X_ne_algebraMap a)
 
@@ -6680,7 +6681,7 @@ theorem addFun_ne_mapPoint (hΔ : W.Δ ≠ 0) {a b : F} (hA : W.Equation a b) :
   have heq : Affine.Point.some _ _ (nonsingular_map_addFun hΔ hA) = mapPoint hΔ hA := by
     show Affine.Point.some _ _ _ = Affine.Point.some _ _ _
     simp only [Affine.Point.some.injEq]; exact ⟨hX, hY⟩
-  have h0 : genericPoint hΔ + mapPoint hΔ hA = 0 + mapPoint hΔ hA := by
+  have h0 : genericPoint_aflt hΔ + mapPoint hΔ hA = 0 + mapPoint hΔ hA := by
     rw [zero_add]; exact (genericPoint_add_map hΔ hA).trans heq
   exact Affine.Point.some_ne_zero _ (add_right_cancel h0)
 
@@ -6714,7 +6715,7 @@ theorem addFun_neg_cancel (hΔ : W.Δ ≠ 0) {a b : F} (hA : W.Equation a b) :
     rw [neg_mapPoint_eq hΔ hA]
     exact Affine.Point.add_some (addFun_neg_mapPoint_hxy hΔ hA)
 
-  have hcancel : Affine.Point.some _ _ hns₂ = genericPoint hΔ := by
+  have hcancel : Affine.Point.some _ _ hns₂ = genericPoint_aflt hΔ := by
     rw [← hsum, ← genericPoint_add_map hΔ hA, add_neg_cancel_right]
   exact Affine.Point.some.inj hcancel
 
@@ -10207,7 +10208,7 @@ variable {W : Affine F} (hΔ : W.Δ ≠ 0)
 local notation "ι" => algebraMap F W.FunctionField
 
 theorem genericPoint_add_mapPoint_coordsOrZero {a b : F} (hA : W.Equation a b) :
-    (Affine.genericPoint hΔ + Affine.mapPoint hΔ hA).coordsOrZero
+    (Affine.genericPoint_aflt hΔ + Affine.mapPoint hΔ hA).coordsOrZero
       = (W.addXFun a b, W.addYFun a b) := by
   rw [Affine.genericPoint_add_map hΔ hA, Point.coordsOrZero_some]
 
@@ -10291,26 +10292,26 @@ theorem translationAlgEquivOf_veluDeficitFun (S : Finset (F × F)) :
 theorem translationAlgEquivOf_veluDeficitFun_eq_coordsOrZero (S : Finset (F × F)) :
     Affine.translationAlgEquivOf hΔ hA (W.veluDeficitFun S)
       = (W.map ι).veluDeficit (W.liftSummingSet S)
-          (Affine.genericPoint hΔ + Affine.mapPoint hΔ hA).coordsOrZero.1
-          (Affine.genericPoint hΔ + Affine.mapPoint hΔ hA).coordsOrZero.2 := by
+          (Affine.genericPoint_aflt hΔ + Affine.mapPoint hΔ hA).coordsOrZero.1
+          (Affine.genericPoint_aflt hΔ + Affine.mapPoint hΔ hA).coordsOrZero.2 := by
   rw [translationAlgEquivOf_veluDeficitFun hΔ hA S,
     genericPoint_add_mapPoint_coordsOrZero hΔ hA]
 
 theorem veluDeficitFun_eq_coordsOrZero_genericPoint (S : Finset (F × F)) :
     W.veluDeficitFun S
       = (W.map ι).veluDeficit (W.liftSummingSet S)
-          (Affine.genericPoint hΔ).coordsOrZero.1
-          (Affine.genericPoint hΔ).coordsOrZero.2 :=
+          (Affine.genericPoint_aflt hΔ).coordsOrZero.1
+          (Affine.genericPoint_aflt hΔ).coordsOrZero.2 :=
   rfl
 
 theorem translationAlgEquivOf_veluDeficitFun_eq_iff (S : Finset (F × F)) :
     Affine.translationAlgEquivOf hΔ hA (W.veluDeficitFun S) = W.veluDeficitFun S
       ↔ (W.map ι).veluDeficit (W.liftSummingSet S)
-            (Affine.genericPoint hΔ + Affine.mapPoint hΔ hA).coordsOrZero.1
-            (Affine.genericPoint hΔ + Affine.mapPoint hΔ hA).coordsOrZero.2
+            (Affine.genericPoint_aflt hΔ + Affine.mapPoint hΔ hA).coordsOrZero.1
+            (Affine.genericPoint_aflt hΔ + Affine.mapPoint hΔ hA).coordsOrZero.2
           = (W.map ι).veluDeficit (W.liftSummingSet S)
-            (Affine.genericPoint hΔ).coordsOrZero.1
-            (Affine.genericPoint hΔ).coordsOrZero.2 := by
+            (Affine.genericPoint_aflt hΔ).coordsOrZero.1
+            (Affine.genericPoint_aflt hΔ).coordsOrZero.2 := by
   rw [translationAlgEquivOf_veluDeficitFun_eq_coordsOrZero hΔ hA S,
     veluDeficitFun_eq_coordsOrZero_genericPoint hΔ S]
 
@@ -10325,11 +10326,11 @@ local notation "ι" => algebraMap F W.FunctionField
 
 theorem genericPoint_ne_some_algebraMap (c d : F)
     (hns : (W.map ι).Nonsingular (ι c) (ι d)) :
-    Affine.genericPoint hΔ ≠ Affine.Point.some (ι c) (ι d) hns := by
+    Affine.genericPoint_aflt hΔ ≠ Affine.Point.some (ι c) (ι d) hns := by
   intro h
   exact polyToFunctionField_X_ne_algebraMap c (Affine.Point.some.inj h).1
 
-theorem genericPoint_ne_zero : Affine.genericPoint hΔ ≠ 0 :=
+theorem genericPoint_ne_zero : Affine.genericPoint_aflt hΔ ≠ 0 :=
   Affine.Point.some_ne_zero _
 
 end GenericNotConstant
@@ -11271,14 +11272,14 @@ local notation "ι" => algebraMap F W.FunctionField
 variable [DecidableEq W.FunctionField]
 
 theorem genericPoint_notMem_range_ratPointHom :
-    Affine.genericPoint hΔ ∉ (ratPointHom (W₀ := W) ι).range := by
+    Affine.genericPoint_aflt hΔ ∉ (ratPointHom (W₀ := W) ι).range := by
   rintro ⟨P, hP⟩
   rcases P with _ | ⟨c, d, h⟩
   · exact genericPoint_ne_zero hΔ hP.symm
   · exact genericPoint_ne_some_algebraMap hΔ c d _ hP.symm
 
 theorem genericPoint_notMem_zmultiples_ratPointHom (Q : W.toAffine.Point) :
-    Affine.genericPoint hΔ ∉ AddSubgroup.zmultiples (ratPointHom (W₀ := W) ι Q) := by
+    Affine.genericPoint_aflt hΔ ∉ AddSubgroup.zmultiples (ratPointHom (W₀ := W) ι Q) := by
   intro hmem
   obtain ⟨n, hn⟩ := AddSubgroup.mem_zmultiples_iff.mp hmem
   refine genericPoint_notMem_range_ratPointHom hΔ ⟨n • Q, ?_⟩
@@ -11740,13 +11741,13 @@ theorem kw_veluDeficitFunKernelTranslationFixesAt_odd {p : ℕ} (hp3 : 3 ≤ p) 
     W.toAffine.liftSummingSet_oddOrderSummingSet Q ((p - 1) / 2)]
   have hord' : addOrderOf Q' = p :=
     (addOrderOf_injective (ratPointHom (W₀ := W) ι) (ratPointMap_injective ι) Q).trans hord
-  have hPmem : Affine.genericPoint hΔ ∉ AddSubgroup.zmultiples Q' :=
+  have hPmem : Affine.genericPoint_aflt hΔ ∉ AddSubgroup.zmultiples Q' :=
     genericPoint_notMem_zmultiples_ratPointHom hΔ Q
   have hab' : W.toAffine.Nonsingular a b :=
     (Affine.equation_iff_nonsingular_of_Δ_ne_zero hΔ).mp hab
   have hAmem : Affine.Point.some a b hab' ∈ AddSubgroup.zmultiples Q :=
     kw_mem_zmultiples_of_abscissa_mem_oddOrderSummingSet_odd hp3 hpodd hord hab' hA
-  have hdiff : Affine.genericPoint hΔ + Affine.mapPoint hΔ hab - Affine.genericPoint hΔ
+  have hdiff : Affine.genericPoint_aflt hΔ + Affine.mapPoint hΔ hab - Affine.genericPoint_aflt hΔ
       ∈ AddSubgroup.zmultiples Q' := by
     rw [add_sub_cancel_left]
     obtain ⟨n, hn⟩ := AddSubgroup.mem_zmultiples_iff.mp hAmem

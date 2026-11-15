@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `XYIdeal_isMaximal` → `XYIdeal_isMaximal_aflt`, `XYIdeal_ne_bot` → `XYIdeal_ne_bot_aflt`.
 -/
 import Mathlib
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Definitions.Def_AlgebraicCurve_DivisorClassGroup
@@ -726,13 +727,13 @@ theorem algebraMap_eq_mk_C_C (a : F) :
     Algebra.algebraMap_self_apply]
   rfl
 
-theorem XYIdeal_isMaximal {x y : F} (h : W.Equation x y) :
+theorem XYIdeal_isMaximal_aflt {x y : F} (h : W.Equation x y) :
     (XYIdeal W x (C y)).IsMaximal :=
   Ideal.Quotient.maximal_of_isField _
     ((quotientXYIdealEquiv (W' := W) (x := x) (y := C y) h).toMulEquiv.isField
       (Field.toIsField F))
 
-theorem XYIdeal_ne_bot (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := by
+theorem XYIdeal_ne_bot_aflt (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := by
   intro hbot
   have hX : XClass W x ∈ XYIdeal W x y := Ideal.subset_span (Set.mem_insert _ _)
   rw [hbot, Ideal.mem_bot] at hX
@@ -740,7 +741,7 @@ theorem XYIdeal_ne_bot (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := by
 
 theorem eq_of_XYIdeal_eq {x₁ y₁ x₂ y₂ : F} (h₂ : W.Equation x₂ y₂)
     (h : XYIdeal W x₁ (C y₁) = XYIdeal W x₂ (C y₂)) : x₁ = x₂ ∧ y₁ = y₂ := by
-  have hne : XYIdeal W x₂ (C y₂) ≠ ⊤ := (XYIdeal_isMaximal h₂).ne_top
+  have hne : XYIdeal W x₂ (C y₂) ≠ ⊤ := (XYIdeal_isMaximal_aflt h₂).ne_top
   have hX₁ : XClass W x₁ ∈ XYIdeal W x₂ (C y₂) :=
     h ▸ Ideal.subset_span (Set.mem_insert _ _)
   have hX₂ : XClass W x₂ ∈ XYIdeal W x₂ (C y₂) := Ideal.subset_span (Set.mem_insert _ _)
@@ -779,8 +780,8 @@ theorem eq_of_XYIdeal_eq {x₁ y₁ x₂ y₂ : F} (h₂ : W.Equation x₂ y₂)
 def heightOneSpectrumOfEquation {x y : F} (h : W.Equation x y) :
     HeightOneSpectrum W.CoordinateRing where
   asIdeal := XYIdeal W x (C y)
-  isPrime := (XYIdeal_isMaximal h).isPrime
-  ne_bot := XYIdeal_ne_bot x (C y)
+  isPrime := (XYIdeal_isMaximal_aflt h).isPrime
+  ne_bot := XYIdeal_ne_bot_aflt x (C y)
 
 @[scoped simp]
 theorem heightOneSpectrumOfEquation_asIdeal {x y : F} (h : W.Equation x y) :

@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `XYIdeal_ne_bot` → `XYIdeal_ne_bot_aflt`.
 -/
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.RingTheory.DedekindDomain.Dvr
@@ -67,7 +68,7 @@ lemma isMaximal_XYIdeal' {x y : F} (h : W.Equation x y) : (XYIdeal W x (C y)).Is
   Ideal.Quotient.maximal_of_isField _ <|
     MulEquiv.isField (Field.toIsField F) (quotientXYIdealEquiv (W' := W) h).toMulEquiv
 
-lemma XYIdeal_ne_bot (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := fun h0 =>
+lemma XYIdeal_ne_bot_aflt (x : F) (y : F[X]) : XYIdeal W x y ≠ ⊥ := fun h0 =>
   XClass_ne_zero (W' := W) x <| by
     have : XClass W x ∈ XYIdeal W x y := Ideal.subset_span (by simp)
     rwa [h0, Ideal.mem_bot] at this
@@ -167,7 +168,7 @@ theorem isPrincipal_maximalIdeal_localization {x y : F} (h : W.Nonsingular x y)
 theorem isDiscreteValuationRing_localization_XYIdeal' {x y : F} (h : W.Nonsingular x y)
     [(XYIdeal W x (C y)).IsPrime] :
     IsDiscreteValuationRing (Localization.AtPrime (XYIdeal W x (C y))) := by
-  have hnf := IsLocalization.AtPrime.not_isField W.CoordinateRing (XYIdeal_ne_bot x (C y))
+  have hnf := IsLocalization.AtPrime.not_isField W.CoordinateRing (XYIdeal_ne_bot_aflt x (C y))
     (Localization.AtPrime (XYIdeal W x (C y)))
   haveI : IsNoetherianRing (Localization.AtPrime (XYIdeal W x (C y))) :=
     IsLocalization.isNoetherianRing (XYIdeal W x (C y)).primeCompl _ inferInstance

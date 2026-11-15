@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `XYIdeal_isMaximal` → `XYIdeal_isMaximal_aflt`.
 -/
 import Mathlib
 import ZInQKernel.Contrib.CloudW02Connectedness.Vendor.AnthropicFLT.P2M.Util
@@ -19,5 +20,5 @@ set_option autoImplicit false
 
 open Polynomial WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.CoordinateRing
 open scoped Polynomial.Bivariate
-theorem P2M.Dup.WeierstrassCurve.Affine.CoordinateRing.XYIdeal_isMaximal {K : Type*} [Field K] {W : Affine K} {a b : K} (h : W.Equation a b) : (XYIdeal W a (C b)).IsMaximal := by p2m_exact_reverting @_root_.P2MW.S_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_isMaximal.solution
-#p2m_type_eq_warn P2M.Dup.WeierstrassCurve.Affine.CoordinateRing.XYIdeal_isMaximal WeierstrassCurve.Affine.CoordinateRing.XYIdeal_isMaximal
+theorem P2M.Dup.WeierstrassCurve.Affine.CoordinateRing.XYIdeal_isMaximal_aflt {K : Type*} [Field K] {W : Affine K} {a b : K} (h : W.Equation a b) : (XYIdeal W a (C b)).IsMaximal := by p2m_exact_reverting @_root_.P2MW.S_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_isMaximal.solution
+#p2m_type_eq_warn P2M.Dup.WeierstrassCurve.Affine.CoordinateRing.XYIdeal_isMaximal_aflt WeierstrassCurve.Affine.CoordinateRing.XYIdeal_isMaximal_aflt

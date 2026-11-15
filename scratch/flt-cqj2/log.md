@@ -35,3 +35,18 @@
   11. tensor-product `induction_eliminator` lost its `zero` case: `induction t using TensorProduct.induction_on with` (5 files).
   12. `continuous_add_right` → `continuous_add_const` (S_PeriodPair_exists_differentiable_toPoint_...).
   No statement of any declaration changed (all changes inside proofs, imports, or instance names).
+
+## 2026-11-15 04:08-04:20 Tau Ceti clash
+- `lake build ZInQKernel.Contrib.OneProof.ModularEquationGeneric` (new file: cyclicQuotientJBijOn_proof, modularEquationGeneric_proof,
+  x0Transitive_proof) failed: `import ...Def_WeierstrassCurve_EDSEngine failed, environment already contains
+  'WeierstrassCurve.Coeff.ctorIdx' from ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Universal` (build5.log). VERIFIED.
+  (ModularEquation.lean imports RLeaf.T36Torsion, which imports Tau Ceti.)
+- clash/DumpFLT.lean, clash/DumpMain.lean (Main + ModularEquation): 70 constants of the new vendored modules are also in Main's closure
+  (clash/clashes.txt), all from Tau Ceti; 24 user-level names (the rest: constructors/recursors of `WeierstrassCurve.Coeff`, and two
+  `congr_simp` lemmas `QuotientAddGroup.map.congr_simp`, `WeierstrassCurve.Jacobian.Point.fromAffine.congr_simp`). VERIFIED.
+  Defining modules: Def_WeierstrassCurve_EDSEngine (19 names, an FLT copy of Tau Ceti's EDS / universal-curve code),
+  Def_EllipticCurve_FunctionFieldPullback (5), Thm_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_ne_bot (1).
+- tools/rename_clash.py: token rename `t` → `t_aflt` of the 24 last components in the 414 new files (75 files changed; header line
+  `[port] Tau Ceti name clash: renamed ...` in each). A wrong rename cannot change meaning silently (fresh names fail to elaborate).
+- One follow-on: the auto-generated instance name `WeierstrassCurve.Univ.Affine.instAddGroupPointFieldBaseChangeMvPolynomialCoeffIntCurve`
+  (referenced by name downstream) changed with `Coeff`; given its old name explicitly (`-- [port]`, EDSEngine) (build6.log).

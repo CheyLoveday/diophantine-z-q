@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `smulEval` → `smulEval_aflt`.
 -/
 import Mathlib.NumberTheory.EllipticDivisibilitySequence
 import Mathlib.Algebra.Ring.NegOnePow
@@ -162,14 +163,14 @@ theorem smul_formula_or_zero [W.IsElliptic] {n : ℕ} (_hn : 0 < n) {x₀ y₀ :
       intro h0
       exact hΨ (by rw [← hψsq, h0]; exact zero_pow two_ne_zero)
     have key := zsmul_eq_smulEval (W.baseChange K) h (n : ℤ)
-    have hVz : smulEval (W.baseChange K) x₀ y₀ (n : ℤ) 2 ≠ 0 := hψ
+    have hVz : smulEval_aflt (W.baseChange K) x₀ y₀ (n : ℤ) 2 ≠ 0 := hψ
     have hV := key ▸ ((n : ℤ) • Jacobian.Point.fromAffine (Point.some x₀ y₀ h)).nonsingular
     have hQeq : ((n : ℤ) • Jacobian.Point.fromAffine (Point.some x₀ y₀ h)) =
         Jacobian.Point.mk hV := Jacobian.Point.ext key
-    refine ⟨smulEval (W.baseChange K) x₀ y₀ (n : ℤ) 0 /
-        smulEval (W.baseChange K) x₀ y₀ (n : ℤ) 2 ^ 2,
-      smulEval (W.baseChange K) x₀ y₀ (n : ℤ) 1 /
-        smulEval (W.baseChange K) x₀ y₀ (n : ℤ) 2 ^ 3,
+    refine ⟨smulEval_aflt (W.baseChange K) x₀ y₀ (n : ℤ) 0 /
+        smulEval_aflt (W.baseChange K) x₀ y₀ (n : ℤ) 2 ^ 2,
+      smulEval_aflt (W.baseChange K) x₀ y₀ (n : ℤ) 1 /
+        smulEval_aflt (W.baseChange K) x₀ y₀ (n : ℤ) 2 ^ 3,
       (Jacobian.nonsingular_of_Z_ne_zero hVz).mp hV, ?_, ?_⟩
     · calc n • (Point.some x₀ y₀ h : W.toAffine⟮K⟯)
           = Jacobian.Point.toAffineAddEquiv (W.baseChange K)

@@ -6,6 +6,7 @@ Modified for the Z-in-Q kernel (2026-11-15, task flt-cqj2): local import paths a
 as `set_option` lines after the imports; any other change is marked `-- [port]`.
 Original copyright/attribution notices: Vendor/AnthropicFLT/NOTICE.upstream and
 Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENSE.
+[port] Tau Ceti name clash: renamed `XYIdeal_ne_bot` → `XYIdeal_ne_bot_aflt`.
 -/
 import Mathlib
 import ZInQKernel.Contrib.CloudW02Connectedness.Vendor.AnthropicFLT.P2M.Util
@@ -18,4 +19,4 @@ set_option autoImplicit false
 
 open Polynomial WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.CoordinateRing
 open scoped Polynomial.Bivariate
-theorem WeierstrassCurve.Affine.CoordinateRing.XYIdeal_ne_bot {R : Type*} [CommRing R] [Nontrivial R] {W : Affine R} (x : R) (y : R[X]) : XYIdeal W x y ≠ ⊥ := by p2m_exact_reverting @_root_.P2MW.S_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_ne_bot.solution
+theorem WeierstrassCurve.Affine.CoordinateRing.XYIdeal_ne_bot_aflt {R : Type*} [CommRing R] [Nontrivial R] {W : Affine R} (x : R) (y : R[X]) : XYIdeal W x y ≠ ⊥ := by p2m_exact_reverting @_root_.P2MW.S_WeierstrassCurve_Affine_CoordinateRing_XYIdeal_ne_bot.solution
