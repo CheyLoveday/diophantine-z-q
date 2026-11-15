@@ -355,3 +355,14 @@ theorem semistableUnipotent_of_gen (hP : SemistableUnipotentPrintedGen)
   unipotentFromSH_of hIn (semistableUnipotentSH_of_gen hP hD hT)
 
 end UnipotentB
+
+#print axioms UnipotentB.isSemistableRes_iff
+#print axioms UnipotentB.echelon_of_printed
+#print axioms UnipotentB.semistableUnipotentSH0_of
+#print axioms UnipotentB.semistableUnipotent0_of
+#print axioms UnipotentB.semistableUnipotent0_of_printed
+#print axioms UnipotentB.semistableUnipotent0_of_old
+#print axioms UnipotentB.printed_of_printedGen
+#print axioms UnipotentB.semiAbelianDescends_of_perfect
+#print axioms UnipotentB.semistableUnipotentSH_of_gen
+#print axioms UnipotentB.semistableUnipotent_of_gen
