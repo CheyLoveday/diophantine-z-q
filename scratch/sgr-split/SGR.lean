@@ -341,4 +341,87 @@ theorem fibreClassUnique : FibreClassUnique := by
         (Additive.toMul (P'.e.eta a)).left ≫ P'.A.X.hom
       rw [eh, Over.w, Over.w]
 
+
+/-! ## G2 from the dimension glue -/
+
+/-- Glue G2a (dimension theory). -/
+def AbVarSurfaceRelDim : Prop :=
+  ∀ (K : Type) [Field K] (A : _root_.PkgI3.AbVar K), A.dim = 2 → SmoothOfRelativeDimension 2 A.X.hom
+
+open MonoidalCategory CartesianMonoidalCategory MonObj _root_.PkgI3 in
+theorem ptObj_hom_self (K : Type) [Field K] : (AbVar.ptObj (K := K) K).hom = 𝟙 _ := by
+  simp [AbVar.ptObj, Algebra.algebraMap_self]
+
+/-- A morphism `Spec K' → Spec K` of spectra of fields is an epimorphism. -/
+theorem epi_spec_field {K K' : Type} [Field K] [Field K']
+    (s : Spec (CommRingCat.of K') ⟶ Spec (CommRingCat.of K)) : Epi s := by
+  let _ : Algebra K K' := (Spec.preimage s).hom.toAlgebra
+  have hs : s = Spec.map (CommRingCat.ofHom (algebraMap K K')) := (Spec.map_preimage s).symm
+  rw [hs]
+  exact Flat.epi_of_flat_of_surjective _
+
+open MonoidalCategory CartesianMonoidalCategory MonObj _root_.PkgI3 in
+/-- **G2 from G2a** (proved). -/
+theorem qml3AsQMAb_of (hD : AbVarSurfaceRelDim) : QML3AsQMAb := by
+  intro K _ _ P
+  have hsec : ∀ x : P.A.Pt K, x.left ≫ P.A.X.hom = 𝟙 _ := fun x => by
+    rw [Over.w x, ptObj_hom_self]
+  let c : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ AbVar.ptObj (K := K) K :=
+    Over.homMk (𝟙 _) (by rw [ptObj_hom_self]; rfl)
+  have hc : ∀ x : P.A.Pt K, (Over.homMk (U := 𝟙_ (Over (Spec (CommRingCat.of K)))) x.left (hsec x) :
+      𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ P.A.X) = c ≫ x := fun x => by
+    apply Over.OverMorphism.ext
+    exact (Category.id_comp _).symm
+  have hio : ∀ f : P.A.X ⟶ P.A.X, (Over.homMk f.left (Over.w f) : P.A.X ⟶ P.A.X) = f := fun f => by
+    apply Over.OverMorphism.ext; simp
+  let 𝒜' : QMAbScheme (Spec (CommRingCat.of K)) :=
+    { F := P.A.X
+      proper := inferInstance
+      smooth := hD K P.A P.surface
+      iota := fun a => (P.q.iota a).hom.left
+      iota_over := fun a => Over.w _
+      eta := fun a => (Additive.toMul (P.e.eta a)).left
+      eta_sec := fun a => hsec _
+      grp := P.A.grp
+      geomConn := ⟨fun K' _ y Z fst snd h => by
+        have : IrreducibleSpace Z :=
+          GeometricallyIrreducible.geometrically_irreducibleSpace (f := P.A.X.hom) y fst snd h
+        infer_instance⟩
+      one_eq := by
+        change η[P.A.X].left = (Additive.toMul (P.e.eta 0)).left
+        rw [map_zero, toMul_zero]
+        change _ = ((toUnit (AbVar.ptObj (K := K) K)) ≫ η[P.A.X]).left
+        rw [Over.comp_left, Over.toUnit_left, ptObj_hom_self]; exact (Category.id_comp _).symm
+      iota_hom := fun a => by
+        rw [hio]; infer_instance
+      iota_one := by
+        change (P.q.iota 1).hom.left = 𝟙 _
+        rw [map_one]; rfl
+      iota_mul := fun a b => by
+        change (P.q.iota (a * b)).hom.left = (P.q.iota b).hom.left ≫ (P.q.iota a).hom.left
+        rw [map_mul]; rfl
+      iota_add := fun a b => by
+        rw [hio, hio, hio, map_add]; rfl
+      eta_add := fun a b => by
+        rw [hc, hc, hc, map_add, toMul_add, MonObj.comp_mul]
+      eta_linear := fun a b => by
+        change (Additive.toMul (P.e.eta (a * b))).left =
+          (Additive.toMul (P.e.eta b)).left ≫ (P.q.iota a).hom.left
+        rw [P.e.linear]; rfl
+      eta_three := fun b => by
+        change (Additive.toMul (P.e.eta (3 * b))).left = (Additive.toMul (P.e.eta 0)).left
+        rw [(P.e.ker _).mpr ⟨b, rfl⟩, (P.e.ker 0).mpr ⟨0, by simp⟩]
+      eta_ker := fun K' _ s a => by
+        change s ≫ (Additive.toMul (P.e.eta a)).left = s ≫ (Additive.toMul (P.e.eta 0)).left ↔ _
+        rw [← P.e.ker a, show P.e.eta 0 = 0 from map_zero _]
+        constructor
+        · intro h
+          have := epi_spec_field s
+          have h2 := cancel_epi s |>.mp h
+          have h3 : Additive.toMul (P.e.eta a) = Additive.toMul (0 : Additive (P.A.Pt K)) :=
+            Over.OverMorphism.ext h2
+          exact Additive.toMul.injective h3
+        · intro h; rw [h] }
+  exact ⟨𝒜', fun T 𝒜 y => Iff.rfl⟩
+
 end HDec.SGRSplit
