@@ -45,3 +45,11 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
   holomorphic, zero at ∞, so it has a `q_N`-expansion with `b₀ = 0`; its termwise antiderivative `G` has `D G = f|₂γ`,
   hence `φ_f(γτ) = K₀ + G(q_N)` (`exists_const_eichler`); then `x∘φ∘γ = (℘ − b)∘(cK₀ + cG)` is meromorphic in `q_N` at 0
   and `growth_of_meromorphicAt` gives the bound.
+- VERIFIED (compiled, `Analytic.lean`): `paramQExpansion : ParamQExpansion`. Route: `φ_f = q·V(q)` (V(0) = a₁ = 1),
+  `Ŷ(w) = w²℘_{L−0}(cwV) + (c²V²)⁻¹ − bw²` analytic at 0 with `Ŷ(q) = q²x(φ)`; `Ŷ` satisfies
+  `(wŶ' − 2Ŷ)² = (4(Ŷ+bw²)³ − g₂w⁴(Ŷ+bw²) − g₃w⁶)·Z'²` near 0 (from `℘'² = 4℘³ − g₂℘ − g₃`, identity theorem);
+  Taylor series at 0 is a ring hom commuting with d/dw (`tay_*`, Leibniz `iteratedDeriv_mul`); the formal ODE has a
+  unique solution with constant term 1/c² (`odePhi_unique`: coefficient of the top term is −4(n+1)/c²); σ ∈ Aut(ℂ)
+  maps solutions to solutions (all data rational), so the Taylor coefficients are fixed by Aut(ℂ), hence rational
+  (`rat_of_fixed`); `y∘φ`, `1/(x∘φ − t)` by cancellation (`fixed_of_mul`). HasSum from `hasSum_taylorSeries_on_ball`.
+- RESULT: all four glue Props proved; `HeegnerPointRational` follows from `ShimuraMainCM` and `X0ModuliGaloisMero` only.
