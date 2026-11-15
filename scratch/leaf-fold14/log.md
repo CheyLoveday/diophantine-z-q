@@ -11,3 +11,8 @@
 - unipotent-b: both routes need StrictHenselizationInside (not in the bundles, not derivable from
   StrictHenselizationPair; a composite like the pair, strict GLUE). Gen route: -1 GLUE +2 GLUE (descends, inside);
   geometric route: -1 GLUE +1 GLUE (inside) + PrintedGeom (pending reading). Neither lowers the strict count: not taken.
+- 11-14 19:08 TailZ23 (reduct fold) compiles (lake build, ~15 s); Main switched to sixContactMin_of_open17;
+  frozenTarget axioms [propext, Classical.choice, Quot.sound] (VERIFIED). kinds.tsv: 3 rows removed, 3 added.
+  Count after fold 1: strict 49/16 (was 47/18, GLUE -2), strictest 47/18 (was 46/19; raynaudSemistableSH flagged
+  GLUE at the strictest reading). claims.tsv: the three reduct-b claim rows of the removed fields deleted
+  (render_open.py exits otherwise). JSON + OPEN.md regenerated.
