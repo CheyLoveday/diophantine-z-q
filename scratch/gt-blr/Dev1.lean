@@ -195,6 +195,10 @@ theorem π_ej (a : (Idx 𝔭)ᵒᵖ) : (specCone 𝔭 R𝔭).π.app a ≫ ej a =
   ext x
   exact toP_alg R𝔭 a.unop x
 
+theorem toP_ej (a : (Idx 𝔭)ᵒᵖ) : Spec.map (CommRingCat.ofHom (toP R𝔭 a.unop)) ≫ ej a =
+    Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)) :=
+  π_ej R𝔭 a
+
 /-! ## Spreading out a smooth affine `R_𝔭`-scheme -/
 
 open ZInQ.Contrib.SpreadOut in
@@ -351,6 +355,45 @@ theorem neron_ext {X : Over (Spec (CommRingCat.of R))} (hX : IsNeronModelOver R 
   have h2 := congrArg (fun t => H.isoPullback.hom ≫ t) h1
   simp only [IsPullback.isoPullback_hom_fst_assoc, Iso.hom_inv_id_assoc] at h2
   exact h2
+
+/-- **Local existence.** For a smooth affine `R_𝔭`-scheme `V`, an `R`-morphism `V_K → X` extends to `V`. -/
+theorem local_ext {X : Over (Spec (CommRingCat.of R))} (hX : IsNeronModelOver R K X)
+    (V : Scheme.{0}) [IsAffine V] (v : V ⟶ Spec (CommRingCat.of R𝔭)) [Smooth v]
+    (b : pullback v (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ⟶ X.left)
+    (hb : b ≫ X.hom = pullback.snd v (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R K))) :
+    ∃ g : V ⟶ X.left, g ≫ X.hom = v ≫ Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)) ∧
+      pullback.fst v (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ≫ g = b := by
+  obtain ⟨a, W, φ, hW, Hφ⟩ := exists_spread (𝔭 := 𝔭) R𝔭 V v
+  haveI := hW
+  have Hφ' : IsPullback φ v W.hom (Spec.map (CommRingCat.ofHom (toP R𝔭 a.unop))) := Hφ
+  let V0 : Over (Spec (CommRingCat.of R)) := Over.mk (W.hom ≫ ej a)
+  haveI : Smooth V0.hom := show Smooth (W.hom ≫ ej a) from inferInstance
+  have hk : Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K)) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)) = Spec.map (CommRingCat.ofHom (algebraMap R K)) := by
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]
+  have H1 := IsPullback.of_hasPullback v (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K)))
+  have H2 := H1.paste_horiz Hφ'
+  have H3 : IsPullback (𝟙 W.left) W.hom (W.hom ≫ ej a) (ej a) :=
+    IsPullback.of_horiz_isIso_mono ⟨by rw [Category.id_comp]⟩
+  have H4 := H2.paste_horiz H3
+  have H5 : IsPullback (pullback.fst v (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) ≫ φ)
+      (pullback.snd v (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K)))) V0.hom
+      (Spec.map (CommRingCat.ofHom (algebraMap R K))) := by
+    have e1 : (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K)) ≫
+        Spec.map (CommRingCat.ofHom (toP R𝔭 a.unop))) ≫ ej a =
+        Spec.map (CommRingCat.ofHom (algebraMap R K)) :=
+      (Category.assoc _ _ _).trans ((congrArg (fun t => Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K)) ≫ t)
+        (toP_ej R𝔭 a)).trans hk)
+    rw [Category.comp_id] at H4
+    rw [← e1]
+    exact H4
+  obtain ⟨f0, hf0, hpf⟩ := neron_ext (𝔭 := 𝔭) hX V0 _ _ H5 b hb
+  refine ⟨φ ≫ f0, ?_, by rw [← Category.assoc]; exact hpf⟩
+  rw [Category.assoc, hf0]
+  show φ ≫ W.hom ≫ ej a = _
+  exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ ej a) Hφ'.w).trans
+    ((Category.assoc _ _ _).trans (congrArg (v ≫ ·) (toP_ej R𝔭 a))))
 
 end Main
 
