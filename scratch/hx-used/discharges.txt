@@ -19,9 +19,13 @@ DISCHARGES [OpenResearchLeaves22.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1845 theorems checked, 7 discharge one
+#discharges: 63 open hypotheses, 1975 theorems checked, 7 discharge one
 'X0ModuliUsed.x0ModuliGaloisX0_32_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'X0ModuliUsed.tyzThm35ReadingA_of_used' depends on axioms: [propext, Classical.choice, Quot.sound]
 'X0ModuliUsed.frozenTarget_of_used' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X0EtaRoute.srAt_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X0EtaRoute.srAt_y' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X0ModuliUsed.tyzThm35ReadingA_of_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X0ModuliUsed.frozenTarget_of_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
 EXIT 0

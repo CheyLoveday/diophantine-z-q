@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.RingClassLattice
+import ZInQKernel.Contrib.OneProof.X0ModuliUsed.EtaRoute
 import ZInQKernel.Contrib.TYZChain.Main
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.H.TailZ35
@@ -6,26 +7,29 @@ import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.OneProof.FHNonvanishing
 
 /-!
-# hx-used: the top hypothesis `hX = T5Glue.X0ModuliGalois` replaced by the form its consumers use
+# hx-used: the top hypothesis `hX = T5Glue.X0ModuliGalois`: its used form, and its removal (eta route)
 
 Task hx-used (2026-11-15). Report: `docs/research/hx-used.md`; log: `scratch/hx-used/log.md`.
 
 `hX : T5Glue.X0ModuliGalois` (the canonical model of `X₀(N)` over `ℚ`, for every level `N` and every `g ∈ ℚ(X₀(N))`
 regular on `ℍ`) enters `ZInQ.OneProof.frozenTarget` only through `T5Glue.shimuraReciprocityModFn_of_printed hCM hX`,
 and the consumers of the resulting `Shimura.ShimuraReciprocityModFn` evaluate it only at level `32` and at x0-32's two
-coordinate functions `ZInQ.Contrib.TYZGenus.X0.xC`, `ZInQ.Contrib.TYZGenus.X0.yC` (see the report for file and line of every instance). Through
+coordinate functions `X0.xC`, `X0.yC` (see the report for file and line of every instance). Through
 `T5Glue.x0RatStructure_of` the canonical model is applied only at Heegner points `τ_Q`, `τ_{Q'}` of level `32` and the
-same discriminant. This file
+same discriminant. This file gives two replacements of `hX`.
 
-* states that used form, `X0ModuliGaloisX0_32` (the canonical model of `X₀(32)` for `x` and `y` at Heegner points);
-* proves it from `hX` (`x0ModuliGaloisX0_32_of`), so it is never stronger than the field it replaces;
-* proves the TYZ side from it and `hCM` (`tyzThm35ReadingA_of_used`), re-proving the consumers of
-  `ShimuraReciprocityModFn` with the restricted statement;
-* proves `ZInQ.FrozenTarget` with `hX` replaced by the used form (`frozenTarget_of_used`), which is the manual fold.
+**Used form (§1–§4).** `X0ModuliGaloisX0_32` (the canonical model of `X₀(32)` for `x` and `y` at Heegner points),
+implied by `hX` (`x0ModuliGaloisX0_32_of`); the TYZ side from it and `hCM` (`tyzThm35ReadingA_of_used`, re-proving the
+consumers of `ShimuraReciprocityModFn` with the restricted statement); `ZInQ.FrozenTarget` with `hX` replaced by it
+(`frozenTarget_of_used`).
+
+**Eta route (§5, helper `X0ModuliUsed/EtaRoute.lean`).** The consumers' needs follow from `hCM` and the explicit
+identity `X0EtaRoute.XEtaWeierstrass` (x0-32's `x` as a weight-0 ratio of Weierstrass values of `⟨1/16, τ⟩` at
+torsion points; glue, numerically verified), with no canonical-model input: `X0EtaRoute.srAt_x`, `srAt_y`,
+`tyzThm35ReadingA_of_eta`, and `ZInQ.FrozenTarget` with `hX` replaced by `XEtaWeierstrass` (`frozenTarget_of_eta`).
 
 No `sorry`, no `axiom`.
 -/
-
 noncomputable section
 
 set_option maxRecDepth 20000
@@ -108,21 +112,7 @@ theorem x0RatStructureAt_of {N : ℕ} {g : UpperHalfPlane → ℂ} (hL : X0Modul
   rw [← hσ, hb]
   exact hL σ D Q Q' μ (fun i hi => ⟨x i, hx i hi⟩) hμ hk
 
-/-- The conclusion of `Shimura.ShimuraReciprocityModFn` for one `(N, g)` (verbatim body,
-`ZInQKernel/Contrib/TYZGenus/ShimuraModFn.lean:76`, with `N`, `g` fixed). -/
-def ShimuraReciprocityModFnAt (N : ℕ) (g : UpperHalfPlane → ℂ) : Prop :=
-  ∀ (m f : ℕ) [NeZero m] [NeZero f], Squarefree m →
-    ∀ (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar),
-      ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
-        I * (Real.sqrt m : ℂ) →
-    ∀ (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus) (ρ : GalQ),
-      (∀ x : ringClassField (conductorOrder (QNeg m) f),
-        ρ (e x) = e (ringClassArtinEquiv (conductorOrder (QNeg m) f)
-          ((conductorOrder (QNeg m) f).picClass J) x)) →
-    ∀ (D : ℤ), D = discOf m f → ∀ (Q Q' : HeegnerForm N D) (c : ℂ),
-      idealLat m f J * Q'.lat = Q.lat.map (LinearMap.mulLeft ℤ c) →
-      idealLat m f J * Q'.latN = Q.latN.map (LinearMap.mulLeft ℤ c) →
-      ∃ a a' : Qbar, ιC a = g Q.tauH ∧ ιC a' = g Q'.tauH ∧ ρ a = a'
+-- `ShimuraReciprocityModFnAt` is defined in `X0ModuliUsed/EtaRoute.lean` (same namespace).
 
 /-- `ShimuraReciprocityModFn` is `ShimuraReciprocityModFnAt` for all `(N, g)` with `IsRatModFn N g`. -/
 theorem shimuraReciprocityModFn_iff :
@@ -342,8 +332,41 @@ theorem frozenTarget_of_used
     (tyzThm35ReadingA_of_used h11 h29 hCM hXU h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
 
+/-! ## §5. The eta route: `hX` removed, the consumers' needs from `hCM` and one explicit identity -/
+
+open ZInQ.Contrib.TYZDecomp in
+/-- **TYZ reading A without `hX`**: from the three `𝓛`-leaves, the printed main theorem of CM `hCM`, the explicit
+identity `X0EtaRoute.XEtaWeierstrass` (glue) and TYZ Theorem 3.3. -/
+theorem tyzThm35ReadingA_of_eta (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
+    (hCM : T5Glue.ShimuraMainCM) (hXE : X0EtaRoute.XEtaWeierstrass)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33) : ZInQ.Literature.TYZThm35ReadingA :=
+  tyzThm35ReadingA_of_cmInputs h11 h29
+    (cmInputs_of (X0EtaRoute.srAt_x hXE hCM) (X0EtaRoute.srAt_y hXE hCM))
+    (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33)
+
+/-- **Theorem 1.1 with `hX` replaced by the explicit identity `X0EtaRoute.XEtaWeierstrass`** (the manual fold of
+the eta route): the term of `ZInQ.OneProof.frozenTarget` with `tyzThm35ReadingA_of_leaves h11 h29
+(shimuraReciprocityModFn_of_printed hCM hX) (tyzThm33Pinned_of_tyzThm33 h33)` replaced by
+`tyzThm35ReadingA_of_eta h11 h29 hCM hXE h33`. -/
+theorem frozenTarget_of_eta
+    (r : HDec.HSyn.OpenResearchLeaves22) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves17)
+    (g : HDec.HSyn.OpenGlue7)
+    (h11 : ZInQ.Contrib.TYZDecomp.TYZThm11Integral) (h29 : ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2)
+    (hCM : _root_.T5Glue.ShimuraMainCM) (hXE : X0EtaRoute.XEtaWeierstrass)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
+    (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+    ZInQ.FrozenTarget :=
+  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+    (HDec.HSyn.sixContactMin_of_open29 r t l g)
+    (tyzThm35ReadingA_of_eta h11 h29 hCM hXE h33)
+    ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
+
 end X0ModuliUsed
 
 #print axioms X0ModuliUsed.x0ModuliGaloisX0_32_of
 #print axioms X0ModuliUsed.tyzThm35ReadingA_of_used
 #print axioms X0ModuliUsed.frozenTarget_of_used
+#print axioms X0EtaRoute.srAt_x
+#print axioms X0EtaRoute.srAt_y
+#print axioms X0ModuliUsed.tyzThm35ReadingA_of_eta
+#print axioms X0ModuliUsed.frozenTarget_of_eta
