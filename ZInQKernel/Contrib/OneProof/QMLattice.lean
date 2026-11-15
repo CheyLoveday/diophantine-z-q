@@ -155,4 +155,70 @@ theorem pure_zero_of_real {τ : ℂ} (hτ : τ.im ≠ 0) {y : B} (hy : y.re = 0)
   have b0 : (y.imJ : ℝ) = 0 := by rw [c0] at e1'; simpa using e1'
   exact ⟨by exact_mod_cast a0, by exact_mod_cast b0, by exact_mod_cast c0⟩
 
+/-- The square of a pure quaternion of `(2, −3)`. -/
+def sqForm (y : B) : ℚ := 2 * y.imI ^ 2 - 3 * y.imJ ^ 2 + 6 * y.imK ^ 2
+
+theorem pure_sq {y : B} (hy : y.re = 0) : y * y = algebraMap ℚ B (sqForm y) := by
+  ext <;> simp [sqForm, hy, Algebra.algebraMap_eq_smul_one] <;> ring
+
+/-- **A nonzero pure quaternion in `S_{(τ,1)}` squares to a negative rational**: its eigenvalue `c`
+satisfies `c² = y²`, and `c` is not real (`pure_zero_of_real`). -/
+theorem sqForm_neg {τ : ℂ} (hτ : τ.im ≠ 0) {y : B} (hy : y.re = 0) (hyS : y ∈ S ![τ, 1])
+    (hy0 : ¬ (y.imI = 0 ∧ y.imJ = 0 ∧ y.imK = 0)) : sqForm y < 0 := by
+  obtain ⟨c, hc⟩ := hyS
+  have hsq : act (y * y) ![τ, 1] = (c * c) • ![τ, 1] := by
+    rw [act_mul, hc, act_smul_vec, hc, smul_smul]
+  rw [pure_sq hy, act_algebraMap] at hsq
+  have h1 := congrFun hsq 1
+  simp at h1
+  -- h1 : (sqForm y : ℂ) = c * c
+  by_contra hn
+  push Not at hn
+  apply hy0
+  refine pure_zero_of_real hτ hy ?_ hc
+  have hr := congrArg Complex.re h1
+  have hi := congrArg Complex.im h1
+  simp at hr hi
+  have hn' : (0 : ℝ) ≤ (sqForm y : ℝ) := by exact_mod_cast hn
+  by_contra hci
+  have hre : c.re = 0 := by
+    rcases mul_eq_zero.mp (show c.re * c.im = 0 by linarith) with h | h
+    · exact h
+    · exact absurd h hci
+  have : c.im * c.im ≤ 0 := by nlinarith
+  exact hci (by nlinarith [mul_self_nonneg c.im])
+
+/-- **The centralizer of a nonzero pure quaternion `y₀` is `ℚ + ℚy₀`** (in `(2, −3)`; the commutator
+of pure parts is a twisted cross product). -/
+theorem comm_span {y0 y : B} (h0 : y0.re = 0) (hy0 : ¬ (y0.imI = 0 ∧ y0.imJ = 0 ∧ y0.imK = 0))
+    (h : y * y0 = y0 * y) : ∃ α β : ℚ, y = algebraMap ℚ B α + β • y0 := by
+  have e1 := congrArg QuaternionAlgebra.imI h
+  have e2 := congrArg QuaternionAlgebra.imJ h
+  have e3 := congrArg QuaternionAlgebra.imK h
+  simp [h0] at e1 e2 e3
+  have E1 : y.imJ * y0.imK = y.imK * y0.imJ := by linarith
+  have E2 : y.imI * y0.imK = y.imK * y0.imI := by linarith
+  have E3 : y.imI * y0.imJ = y.imJ * y0.imI := by linarith
+  have key : ∃ β : ℚ, y.imI = β * y0.imI ∧ y.imJ = β * y0.imJ ∧ y.imK = β * y0.imK := by
+    by_cases a1 : y0.imI = 0
+    · by_cases a2 : y0.imJ = 0
+      · have a3 : y0.imK ≠ 0 := fun a3 => hy0 ⟨a1, a2, a3⟩
+        rw [a1] at E2; rw [a2] at E1
+        refine ⟨y.imK / y0.imK, ?_, ?_, ?_⟩
+        · rw [a1, mul_zero]; simpa [a3] using E2
+        · rw [a2, mul_zero]; simpa [a3] using E1
+        · field_simp
+      · rw [a1] at E3
+        refine ⟨y.imJ / y0.imJ, ?_, ?_, ?_⟩
+        · rw [a1, mul_zero]; simpa [a2] using E3
+        · field_simp
+        · rw [div_mul_eq_mul_div, eq_div_iff a2]; linarith
+    · refine ⟨y.imI / y0.imI, ?_, ?_, ?_⟩
+      · field_simp
+      · rw [div_mul_eq_mul_div, eq_div_iff a1]; linarith
+      · rw [div_mul_eq_mul_div, eq_div_iff a1]; linarith
+  obtain ⟨β, b1, b2, b3⟩ := key
+  refine ⟨y.re, β, ?_⟩
+  ext <;> simp [h0, Algebra.algebraMap_eq_smul_one, b1, b2, b3]
+
 end HDec.QMLattice
