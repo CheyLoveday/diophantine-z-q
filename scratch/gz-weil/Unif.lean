@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.TYZGenus.ShimuraThetaDup
 import ZInQKernel.Contrib.GZTheta.EtaForm32
 import ZInQKernel.Contrib.GZTheta.EtaTheta
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner
 
 noncomputable section
 
@@ -665,4 +666,105 @@ theorem period_mem (hD : X0.EtaModelDifferential) {γ : SL(2, ℤ)} (hγ : γ �
 
 end Param
 
+/-! ## C8. Copies from `Twist.lean` (scaling) and the two-lattice trick -/
+
+def scalePP (L : PeriodPair) (g : ℂ) (hg : g ≠ 0) : PeriodPair where
+  ω₁ := g * L.ω₁
+  ω₂ := g * L.ω₂
+  indep := by
+    have hinj : Function.Injective (LinearMap.mulLeft ℝ g : ℂ →ₗ[ℝ] ℂ) := fun x y h => by
+      simpa [hg] using h
+    have := L.indep.map' (LinearMap.mulLeft ℝ g) (LinearMap.ker_eq_bot.mpr hinj)
+    convert this using 1
+    ext i
+    fin_cases i <;> simp
+
+theorem mem_scalePP {L : PeriodPair} {g : ℂ} (hg : g ≠ 0) {x : ℂ} :
+    x ∈ (scalePP L g hg).lattice ↔ ∃ y ∈ L.lattice, x = g * y := by
+  simp only [PeriodPair.mem_lattice, scalePP]
+  constructor
+  · rintro ⟨m, n, rfl⟩
+    exact ⟨m * L.ω₁ + n * L.ω₂, ⟨m, n, rfl⟩, by ring⟩
+  · rintro ⟨y, ⟨m, n, rfl⟩, rfl⟩
+    exact ⟨m, n, by ring⟩
+
+theorem G_scalePP (L : PeriodPair) {g : ℂ} (hg : g ≠ 0) (n : ℕ) :
+    (scalePP L g hg).G n = (g ^ n)⁻¹ * L.G n := by
+  let e : L.lattice ≃ (scalePP L g hg).lattice :=
+    { toFun := fun l => ⟨g * l, (mem_scalePP hg).mpr ⟨l, l.2, rfl⟩⟩
+      invFun := fun l => ⟨g⁻¹ * l, by
+        obtain ⟨y, hy, hl⟩ := (mem_scalePP hg).mp l.2
+        rw [hl, ← mul_assoc, inv_mul_cancel₀ hg, one_mul]; exact hy⟩
+      left_inv := fun l => by ext; simp [hg]
+      right_inv := fun l => by ext; simp [hg] }
+  rw [PeriodPair.G, PeriodPair.G, ← e.tsum_eq, ← tsum_mul_left]
+  congr 1
+  funext l
+  simp only [e, Equiv.coe_fn_mk]
+  rw [mul_pow, mul_inv]
+
+theorem g₂_scalePP (L : PeriodPair) {g : ℂ} (hg : g ≠ 0) :
+    (scalePP L g hg).g₂ = (g ^ 4)⁻¹ * L.g₂ := by
+  rw [PeriodPair.g₂, PeriodPair.g₂, G_scalePP]; ring
+
+theorem g₃_scalePP (L : PeriodPair) {g : ℂ} (hg : g ≠ 0) :
+    (scalePP L g hg).g₃ = (g ^ 6)⁻¹ * L.g₃ := by
+  rw [PeriodPair.g₃, PeriodPair.g₃, G_scalePP]; ring
+
+theorem isPeriodLattice_cd_iff (d : ℕ) (L : PeriodPair) :
+    ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L ↔
+      L.g₂ = 4 * (d : ℂ) ^ 2 ∧ L.g₃ = 0 := by
+  simp only [ZInQ.GZHL3.IsPeriodLattice, WeierstrassCurve.c₄, WeierstrassCurve.c₆,
+    WeierstrassCurve.b₂, WeierstrassCurve.b₄, WeierstrassCurve.b₆, WeierstrassCurve.baseChange,
+    WeierstrassCurve.map, shortCurve]
+  push_cast
+  constructor <;> rintro ⟨h1, h2⟩ <;> refine ⟨?_, ?_⟩ <;> [rw [h1]; rw [h2]; rw [h1]; rw [h2]] <;>
+    ring
+
+abbrev curveC1 : WeierstrassCurve ℚ := shortCurve (-((1 : ℕ) : ℚ) ^ 2)
+
+def ModularParamC1 : Prop :=
+  ∀ L : PeriodPair, ZInQ.GZHL3.IsPeriodLattice curveC1 L → ∃ c : ℚ, c ≠ 0 ∧
+    ∀ γ ∈ Gamma0 32, ∀ τ : ℍ, (c : ℂ) * (eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) ∈
+      L.lattice
+
+/-- **`ModularParamC1` from x0-32's differential identity** (`X0.EtaModelDifferential`:
+`dx/2y = 2πi f₁ dτ` on the eta-quotient model `y² = x³ + 4x` of `X₀(32)`), with `c = 2`: the
+lattices `((1 ± i)/2) L` of `32a1` both contain the periods of `Φ₁` (`period_mem`). -/
+theorem modularParamC1_of_etaModelDifferential (hD : ZInQ.Contrib.TYZGenus.X0.EtaModelDifferential) :
+    ModularParamC1 := by
+  intro L hL
+  obtain ⟨h2, h3⟩ := (isPeriodLattice_cd_iff 1 L).mp hL
+  have hl1 : (1 + Complex.I) / 2 ≠ 0 := by
+    intro h; have := congrArg Complex.re h; simp at this
+  have hl2 : (1 - Complex.I) / 2 ≠ 0 := by
+    intro h; have := congrArg Complex.re h; simp at this
+  have hp1 : ((1 + Complex.I) / 2) ^ 4 = -1 / 4 := by
+    ring_nf; rw [show Complex.I ^ 4 = 1 by rw [show (4 : ℕ) = 2 * 2 by rfl, pow_mul]; simp,
+      Complex.I_sq, show Complex.I ^ 3 = -Complex.I by rw [pow_succ, Complex.I_sq]; ring]; ring
+  have hp2 : ((1 - Complex.I) / 2) ^ 4 = -1 / 4 := by
+    ring_nf; rw [show Complex.I ^ 4 = 1 by rw [show (4 : ℕ) = 2 * 2 by rfl, pow_mul]; simp,
+      Complex.I_sq, show Complex.I ^ 3 = -Complex.I by rw [pow_succ, Complex.I_sq]; ring]; ring
+  have hL1 : (scalePP L _ hl1).g₂ = -16 := by rw [g₂_scalePP, h2, hp1]; push_cast; norm_num
+  have hL1' : (scalePP L _ hl1).g₃ = 0 := by rw [g₃_scalePP, h3, mul_zero]
+  have hL2 : (scalePP L _ hl2).g₂ = -16 := by rw [g₂_scalePP, h2, hp2]; push_cast; norm_num
+  have hL2' : (scalePP L _ hl2).g₃ = 0 := by rw [g₃_scalePP, h3, mul_zero]
+  refine ⟨2, two_ne_zero, fun γ hγ τ => ?_⟩
+  obtain ⟨a, ha, hωa⟩ := (mem_scalePP hl1).mp (period_mem _ hL1 hL1' hD hγ τ)
+  obtain ⟨b, hb, hωb⟩ := (mem_scalePP hl2).mp (period_mem _ hL2 hL2' hD hγ τ)
+  have : ((2 : ℚ) : ℂ) * (eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) = a + b := by
+    have e : ((2 : ℚ) : ℂ) * (eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) =
+        (1 - Complex.I) * (eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) +
+          (1 + Complex.I) * (eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) := by
+      push_cast; ring
+    rw [e]
+    nth_rewrite 1 [hωa]
+    rw [hωb]
+    have hI : Complex.I ^ 2 = -1 := Complex.I_sq
+    linear_combination (a / 2 + b / 2) * (-hI)
+  rw [this]
+  exact add_mem ha hb
+
 end ZInQ.GZWeil
+
+#print axioms ZInQ.GZWeil.modularParamC1_of_etaModelDifferential
