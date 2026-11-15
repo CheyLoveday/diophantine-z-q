@@ -1,7 +1,6 @@
 import ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower.CotTan
 
-/-! faltings5-lower, part 11: `IsogCotBijective` from Milne's quasi-inverse
-(`AvSplit.MilneIsogenyQuasiInverse`, bundle field `OpenAddedLeaves17.milneIsogenyQuasiInverse`). -/
+/-! faltings5-lower, part 11: `IsogCotBijective`. -/
 
 set_option linter.style.haveILetI false
 
@@ -18,8 +17,8 @@ theorem dCls_congr (𝒢 : GroupModel A K) {x y : maximalIdeal 𝒢.genStalk}
     (h : (x : 𝒢.genStalk) = y) : 𝒢.dCls x = 𝒢.dCls y := by
   rw [Subtype.ext h]
 
-/-- **`f^*` is onto** (given Milne's quasi-inverse). -/
-theorem cotMapK_surjective (hM : AvSplit.MilneIsogenyQuasiInverse) (φ : A.X ⟶ B.X)
+/-- **`f^*` is onto.** -/
+theorem cotMapK_surjective (φ : A.X ⟶ B.X)
     (hφ : IsIsogeny φ) (𝒩A : GroupModel A K) (𝒩B : GroupModel B K) (f : 𝒩A.G ⟶ 𝒩B.G)
     [IsMonHom f] (he : CToPrinted.ExtendsIsogeny φ 𝒩A 𝒩B f) :
     Function.Surjective (cotMapK 𝒩A 𝒩B f) := by
@@ -84,7 +83,7 @@ theorem cotMapK_surjective (hM : AvSplit.MilneIsogenyQuasiInverse) (φ : A.X ⟶
       simp only [he1, hj, ← genMap_jA 𝒩A 𝒩B f, map_sub]
     rw [h1]
     exact LinearMap.mem_ker.mp (hl ⟨𝒩B.dCls ⟨_, hb⟩, rfl⟩)
-  have hD0 := derivation_eq_zero hM φ hφ 𝒩A 𝒩B f he D hadd hmul hs hg
+  have hD0 := derivation_eq_zero φ hφ 𝒩A 𝒩B f he D hadd hmul hs hg
   apply hl0
   ext z
   obtain ⟨m, rfl⟩ := Ideal.toCotangent_surjective I z
@@ -132,8 +131,8 @@ theorem finrank_cotK (𝒢 : GroupModel A K) (g : ℕ) (hg : A.dim = g) :
     td] at hrank
   exact ⟨Module.finrank_eq_of_rank_eq hrank, Module.finite_of_rank_eq_nat hrank⟩
 
-/-- **`IsogCotBijective`, from Milne's quasi-inverse.** -/
-theorem isogCotBijective (hM : AvSplit.MilneIsogenyQuasiInverse) : IsogCotBijective := by
+/-- **`IsogCotBijective`, proved.** -/
+theorem isogCotBijective : IsogCotBijective := by
   intro K _ _ A B φ hφ 𝒩A 𝒩B f _ he
   haveI := hφ.2.1
   haveI := hφ.2.2
@@ -145,7 +144,7 @@ theorem isogCotBijective (hM : AvSplit.MilneIsogenyQuasiInverse) : IsogCotBiject
     exact (ZInQ.Contrib.Dim.topologicalKrullDim_eq_of_finite_surjective φ.left).symm
   obtain ⟨hA1, hA2⟩ := finrank_cotK 𝒩A g hgA
   obtain ⟨hB1, hB2⟩ := finrank_cotK 𝒩B g hgB
-  have hs := cotMapK_surjective hM φ hφ 𝒩A 𝒩B f he
+  have hs := cotMapK_surjective φ hφ 𝒩A 𝒩B f he
   have hi := (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (hB1.trans hA1.symm)).mpr hs
   exact ⟨hi, hs⟩
 

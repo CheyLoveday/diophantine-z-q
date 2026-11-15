@@ -5,24 +5,20 @@ Task faltings5-lower, 2026-11-15, base fork main `9a100aa7` (leaf-fold22b), bran
 ## Result
 
 Contributor file `ZInQKernel/Contrib/OneProof/FaltingsLemma5Lower.lean` (namespace `GapHeight`), helpers in
-`ZInQKernel/Contrib/OneProof/FaltingsLemma5Lower/` (11 files, 91 KB in all, largest 16 KB). Built with
+`ZInQKernel/Contrib/OneProof/FaltingsLemma5Lower/` (13 files, about 110 KB in all, largest 16 KB). Built with
 `lake build ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower` (VERIFIED, compiled; no `sorry`).
 
 ```lean
-theorem GapHeight.faltingsLemma5Lower (hM : AvSplit.MilneIsogenyQuasiInverse) :
-    ZInQ.HeightSplit.FaltingsLemma5Lower
+theorem GapHeight.faltingsLemma5Lower : ZInQ.HeightSplit.FaltingsLemma5Lower
 ```
 ```
 'GapHeight.faltingsLemma5Lower' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
-The only hypothesis is an existing bundle field, `HDec.HSyn.OpenAddedLeaves17.milneIsogenyQuasiInverse`
-(kind published, strict LEAF; `AvSplit.MilneIsogenyQuasiInverse`, `ZInQKernel/OneProof/H/TailQ.lean` L1207: Milne,
-*Abelian varieties*, Cornell–Silverman 1986, Rem. 8.4, number UNVERIFIED: for an isogeny `f : A → B` there are
-`d ≥ 1` and `g : B → A` with `f ≫ g = [d]_A`, `g ≫ f = [d]_B`). The field is already on the live chain
-(VERIFIED: it is in the dependency closure of `ZInQ.OneProof.frozenTarget`), so using it adds nothing. The
-semistability hypotheses of `FaltingsLemma5Lower` are not used, and the Néron property is used only for `𝒩_B`,
-through the proved `CToPrinted.exists_extension`.
+**No hypotheses.** The semistability hypotheses of `FaltingsLemma5Lower` are not used, and the Néron property is
+used only for `𝒩_B`, through the proved `CToPrinted.exists_extension`. (A first version used the bundle field
+`milneIsogenyQuasiInverse` for the étaleness of `φ` at the origin; it was replaced by a proof of Cartier's argument,
+`GapHeight.tangent_trivial` below.)
 
 The statement (`ZInQKernel/OneProof/H/TailY.lean` L644, verbatim):
 ```lean
@@ -45,8 +41,13 @@ theorem GapHeight.faltingsLemma5Lower_of_cotBijective (h : IsogCotBijective) :
 -- the three glue statements, proved
 theorem GapHeight.isogPtsSurjective : IsogPtsSurjective          -- Surj.lean
 theorem GapHeight.isogKerCard : IsogKerCard                      -- Ker.lean
-theorem GapHeight.isogCotBijective (hM : AvSplit.MilneIsogenyQuasiInverse) : IsogCotBijective  -- CotFinal.lean
+theorem GapHeight.isogCotBijective : IsogCotBijective             -- CotFinal.lean
+-- TanFinite.lean: characteristic 0, tangent vectors killed by a finite homomorphism are trivial
+theorem GapHeight.tangent_trivial {K : Type} [Field K] {A B : PkgI3.AbVar K} (φ : A.X ⟶ B.X)
+    [IsMonHom φ] [IsFinite φ.left] [CharZero K] (v : ptR (K := K) (TrivSqZeroExt K K) ⟶ A.X)
+    (hv : AtOrigin A v) (hvφ : v ≫ φ = 1) : v = 1
 ```
+(`ptR`, `AtOrigin` are `ZInQ.Contrib.AbVarBC.Tangent`'s.)
 with (Reduction.lean)
 ```lean
 def IsogCotBijective : Prop :=
@@ -83,7 +84,7 @@ theorem GapHeight.height_le_of_metrized {g : ℕ} (M : MetrizedModel A L g) (�
 ```
 DISCHARGES [OpenResearchLeaves21.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   ... (the five discharges of contributions already in the tree, unchanged)
-#discharges: 63 open hypotheses, 1765 theorems checked, 5 discharge one
+#discharges: 63 open hypotheses, 1806 theorems checked, 5 discharge one
 ```
 As expected nothing new matches: `FaltingsLemma5Lower` is weaker than the field `faltingsLemma5Printed`
 (`CToPrinted.FaltingsLemma5Printed`, the full identity), so this is a rerouting fold, not an autofold. No autofold
@@ -115,10 +116,9 @@ contains neither `faltingsLemma5BC_of_printed` (TailZ19 L1898) nor `faltingsLemm
 ```
 by
 ```lean
-    (_root_.ReductSplit.faltingsLemma5BCLower_final
-      (_root_.GapHeight.faltingsLemma5Lower l.milneIsogenyQuasiInverse)) hYu
+    (_root_.ReductSplit.faltingsLemma5BCLower_final _root_.GapHeight.faltingsLemma5Lower) hYu
 ```
-(`OpenAddedLeaves12` has the field `milneIsogenyQuasiInverse`, cf. TailZ23 L748). The module needs
+The module needs
 `import ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower`; that module imports only Mathlib, `TailY`, `TailZ19` (through
 `Gen.lean`) and `ZInQKernel.Contrib.AbVarBC.KerUnit`, so no cycle with `TailZ20`+.
 
@@ -137,7 +137,7 @@ sem-prune/yu-prune.
 **Counts** (OPEN.md at base: 56 H hypotheses; strict 45 published / 11 glue, 46/10 without the strictest flag;
 kinds.tsv row 9: `faltingsLemma5Printed` published, LEAF in both columns). After the fold: 55 H hypotheses;
 **strict 44 published / 11 glue (strictest), 45 / 10 without the strictest flag**; by kind published 47 → 46. No new
-hypothesis (Milne's field was already live), so neither GLUE count rises.
+hypothesis, so neither GLUE count rises.
 
 ## Method
 
@@ -181,19 +181,22 @@ for a lattice vector `w` of `𝒩_B` and `Hw` of `𝒩_A`, summed over the `[L:�
   With the section `K → 𝒪_{𝒢,ξ}` extending the structure map, `f^*` is `K`-linear (`cotMapK`). If it were not onto,
   a nonzero functional vanishing on its image gives a derivation `D` at the origin killing `𝓞_K` and `f^*`; the
   point `ptAt (r ↦ ε r + D r ε)` is a tangent vector over `𝓞_K`, and `theta` turns it into a tangent vector `v` of `A`
-  (`AtOrigin`) with `v ≫ φ = 1`. Milne's `ψ` gives `v ≫ [d] = v ≫ φ ≫ ψ = 1`, so `v = 1` in characteristic `0`
-  (`ZInQ.Contrib.AbVarBC.Tangent.eq_one_of_comp_intCast`), so `D = 0`, a contradiction. Both cotangent spaces have
-  `K`-dimension `dim A = dim B` (the kernel's `TangentDim`, from `tangentDim_of_regular`, `regularOrigin_of`,
-  `dimOrigin_of`, `originStalkIso_of genericFibreStalkIso` and the proved `ZInQ.Contrib.Dim` facts; `dim A = dim B`
-  by `topologicalKrullDim_eq_of_finite_surjective`), so `f^*` is bijective.
+  (`AtOrigin`) with `v ≫ φ = 1`. Then `v = 1` (`tangent_trivial`), so `D = 0`, a contradiction. Both cotangent
+  spaces have `K`-dimension `dim A = dim B` (the kernel's `TangentDim`, from `tangentDim_of_regular`,
+  `regularOrigin_of`, `dimOrigin_of`, `originStalkIso_of genericFibreStalkIso` and the proved `ZInQ.Contrib.Dim`
+  facts; `dim A = dim B` by `topologicalKrullDim_eq_of_finite_surjective`), so `f^*` is bijective.
+* *`tangent_trivial`* (`KerRing.lean`, `TanFinite.lean`; Cartier's argument, STANDARD: Mumford, *Abelian
+  varieties*, §11, UNVERIFIED locator). Points of the kernel `G` with values in any `K`-algebra `Λ` are the
+  `K`-algebra maps out of `R = Γ(G)` (`ringOf`, `ptOf`, natural in `Λ`). The tangent vector `v` is
+  `ρ = e + εD : R → K[ε]`. The product `w = u'·v'` of the universal point `u ∈ G(R)` and `v`, both moved to
+  `R[ε]`, is a ring map `ψ : R → R[ε]` with `fst ∘ ψ = id` (specialize along `ε ↦ 0`: `u·1`) and
+  `liftTsze e ∘ ψ = ρ` (specialize along `e`: `1·v`), so `D̃ = snd ∘ ψ` is a derivation of `R` with `e ∘ D̃ = D`.
+  For `x ∈ ker e`, the Artinian ring `R` (`IsArtinian.exists_pow_succ_smul_dvd`) gives `(1 - xy) x^N = 0`; applying
+  `D̃` to `t x^{n+1} = 0` gives `t²(n+1) D̃(x) x^n = 0` with `e(t²(n+1)D̃ x) = e(t)²(n+1)D(x)`, nonzero in
+  characteristic `0` if `D(x) ≠ 0`; descending to `n = 0` is a contradiction. So `D = 0` and `v = 1`.
 
 ## Remarks
 
-* The Milne hypothesis is avoidable in principle (STANDARD: tangent vectors of a finite group scheme over a field of
-  characteristic `0` vanish, by the invariant-derivation argument `D̃(x^n) = n x^{n-1} D̃(x)` on its Artinian ring of
-  sections, Mumford, *Abelian varieties*, §11, UNVERIFIED locator); formalizing it needs points with values in
-  non-local rings (`R[ε]`) of the kernel scheme and was not attempted, since the field is already live and removing
-  it would not change any count.
 * The upper half (`h(A) ≤ h(B) + ½ log deg φ`) is not on the chain since sem-prune and was not attempted.
 * Kernel facts used and re-checked: `GroupModel.height` (Height.lean L235), `HodgeData.modelHeight_eq`,
   `torusMetricSq Λ c = ‖c‖² covol Λ` (HodgeData.lean L268), H5Glue's `secIndex_le_of_map`, `baseChange_map_bijective`,

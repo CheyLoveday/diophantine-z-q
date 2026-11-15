@@ -54,3 +54,12 @@ Remaining: `IsogCotBijective` (étaleness at the origin). Plan: Milne quasi-inve
 - FoldCheck.lean (VERIFIED, compiled): open17' (replacement term) .. open28', frozenTarget' with standard axioms; its
   closure lacks faltingsLemma5Lower_of_printed / faltingsLemma5BCLower_of_printed / OpenResearchLeaves14 projection.
 - Report docs/research/faltings5-lower.md, .fleet/faltings5-lower.md written.
+
+## 07:00 Milne hypothesis removed (VERIFIED, compiled)
+- KerRing.lean: kernel points over any K-algebra Λ ↔ ring maps Γ(ker) → Λ (ringOf/ptOf, natural).
+- TanFinite.lean: `tangent_trivial` (char 0, finite φ): Cartier's argument (universal point × tangent vector in
+  G(R[ε]) gives derivation D̃ of R with e∘D̃ = D; Artinian R via IsArtinian.exists_pow_succ_smul_dvd; descending
+  induction). Axioms standard.
+- `GapHeight.faltingsLemma5Lower : ZInQ.HeightSplit.FaltingsLemma5Lower` now with no hypotheses; module builds.
+- #discharges rerun: 63 open, 1806 checked, 5 discharge one. FoldCheck rerun with replacement
+  `ReductSplit.faltingsLemma5BCLower_final GapHeight.faltingsLemma5Lower`: frozenTarget' standard axioms.

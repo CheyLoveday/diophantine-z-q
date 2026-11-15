@@ -1,8 +1,9 @@
 import ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower.Cot
+import ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower.TanFinite
 
 /-! faltings5-lower, part 10: a derivation of `𝒪_{𝒢,ξ}` at the origin killing `𝓞_K` and
-`f^*(𝒪_{𝒩,ξ})` vanishes (tangent vectors of `A` killed by an isogeny are trivial: Milne's
-quasi-inverse and `ZInQ.Contrib.AbVarBC.Tangent.eq_one_of_comp_intCast`). -/
+`f^*(𝒪_{𝒩,ξ})` vanishes (tangent vectors of `A` killed by an isogeny are trivial: `tangent_trivial`,
+`TanFinite.lean`). -/
 
 set_option linter.style.haveILetI false
 
@@ -30,7 +31,7 @@ theorem isLocalHom_algebraMap_tsze :
   simpa [algebraMap_eq_inl] using ha
 
 /-- **A derivation at the origin killing `𝓞_K` and `f^*` vanishes.** -/
-theorem derivation_eq_zero (hM : AvSplit.MilneIsogenyQuasiInverse) (φ : A.X ⟶ B.X)
+theorem derivation_eq_zero (φ : A.X ⟶ B.X)
     (hφ : IsIsogeny φ) (𝒩A : GroupModel A K) (𝒩B : GroupModel B K) (f : 𝒩A.G ⟶ 𝒩B.G)
     [IsMonHom f] (he : CToPrinted.ExtendsIsogeny φ 𝒩A 𝒩B f) (D : 𝒩A.genStalk → K)
     (hadd : ∀ a b, D (a + b) = D a + D b)
@@ -92,14 +93,10 @@ theorem derivation_eq_zero (hM : AvSplit.MilneIsogenyQuasiInverse) (φ : A.X ⟶
       rw [hρ_apply, hg, ← genMap_εMap 𝒩A 𝒩B f, algebraMap_eq_inl, inr_zero, add_zero]
       rfl
     rw [h1, theta_one]
-  -- Milne's quasi-inverse
+  -- tangent vectors killed by the finite `φ` are trivial (characteristic `0`)
   haveI := hφ.1
-  obtain ⟨d, hd, ψ, h1, -⟩ := hM K A B (PkgI3.AbVar.Hom.mk' φ) ⟨hφ.2.1, hφ.2.2⟩
-  have hv3 : v ≫ (((d : ℤ) : PkgI3.AbVar.End A)).hom = 1 := by
-    rw [← h1, PkgI3.AbVar.Hom.hom_mk', ← Category.assoc, hv2, MonObj.one_comp]
-  obtain ⟨_, ⟨U, hU, rfl⟩, hxU, -⟩ := A.X.left.isBasis_affineOpens.exists_subset_of_mem_open
-    (Set.mem_univ (orig A (IsLocalRing.closedPoint K))) isOpen_univ
-  have hv : v = 1 := eq_one_of_comp_intCast A hxU hU hv1 d (by exact_mod_cast hd.ne') hv3
+  haveI := hφ.2.1
+  have hv : v = 1 := tangent_trivial φ v hv1 hv2
   have hvN : vN = 1 := (theta 𝒩A T).injective (hv.trans (theta_one 𝒩A T).symm)
   have hρε : ρ = εMap 𝒩A ≫ α := by
     apply ptAt_injective 𝒩A

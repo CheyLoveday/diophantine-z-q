@@ -16,7 +16,7 @@ theorem sixContactMin_of_open17' (r : OpenResearchLeaves14) (t : OpenTextbookLea
     (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
   sixContactMin_of_open11 (researchLeaves9_of_open14 r t l) t (addedLeaves9_of_open14 r t l) g
     (_root_.ReductSplit.faltingsLemma5BCLower_final
-      (_root_.GapHeight.faltingsLemma5Lower l.milneIsogenyQuasiInverse)) hYu
+      _root_.GapHeight.faltingsLemma5Lower) hYu
 
 theorem sixContactMin_of_open18' (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves13)
     (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
