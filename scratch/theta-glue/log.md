@@ -75,3 +75,7 @@
   lemma `esymmG_append`, proved generically), explicit normal forms `EA a`, `EB b`, `NS4`, `NS6`, `NP`,
   `NS12` (texts computed in Python, each its own `ring`), then one final `ring`. `IgusaAlg 3` PROVED this
   way (7 min 54 s, 12.6 GB; trivial "no goals" errors in `EA0`/`EB0` fixed by `try ring`).
+- Split proof for `IgusaAlg 5`: exceeded 24 GB (26.5 GB at 3 min), killed by me. Profiling `IgusaAlg 3`
+  showed most time in elaborating long polynomial texts (typeclass inference ~400 s of 470 s) and in
+  `ring` proof terms; `ring` itself is ~15 s. Next approach: proof by reflection (verified list-based
+  polynomial arithmetic over ℤ, evaluated by `decide +kernel`).
