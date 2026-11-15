@@ -33,6 +33,32 @@ theorem eq_zero_of_forall_ringHom_qbar {B : Type} [CommRing B] [IsDomain B] [Alg
   have h0 : Ideal.Quotient.mk P x = 0 := (map_eq_zero_iff _ (φ : B ⧸ P →+* Qbar).injective).mp h1
   exact Ideal.Quotient.eq_zero_iff_mem.mp h0
 
+/-- Every maximal ideal of a ring of finite type over `ℚ` is the kernel of a ring map to `ℚ̄`. -/
+theorem exists_ringHom_ker_eq {B : Type} [CommRing B] [Algebra ℚ B] [Algebra.FiniteType ℚ B]
+    (P : Ideal B) [P.IsMaximal] : ∃ ψ : B →+* Qbar, RingHom.ker ψ = P := by
+  letI : Field (B ⧸ P) := Ideal.Quotient.field P
+  haveI : Module.Finite ℚ (B ⧸ P) := finite_of_finite_type_of_isJacobsonRing ℚ (B ⧸ P)
+  haveI : Algebra.IsAlgebraic ℚ (B ⧸ P) := Algebra.IsAlgebraic.of_finite ℚ _
+  let φ : (B ⧸ P) →ₐ[ℚ] Qbar := IsAlgClosed.lift
+  refine ⟨(φ : B ⧸ P →+* Qbar).comp (Ideal.Quotient.mk P), ?_⟩
+  ext x
+  rw [RingHom.mem_ker, RingHom.comp_apply, map_eq_zero_iff _ (φ : B ⧸ P →+* Qbar).injective,
+    Ideal.Quotient.eq_zero_iff_mem]
+
+open scoped Classical in
+/-- Inverting `t ↦ 16 (t − 1)/27` on `P¹(ℚ̄)`. -/
+theorem gl2_inv_val (s : OnePoint Qbar) (z : Qbar)
+    (h : Matrix.GeneralLinearGroup.map (algebraMap ℚ Qbar)
+      (ShimuraGlue.Mob.gl2 (16 / 27) (-16 / 27) 0 1 (by norm_num)) • s = OnePoint.some z) :
+    s = OnePoint.some (1 + 27 * z / 16) := by
+  rw [ShimuraGlue.Mob.map_gl2_smul] at h
+  induction s using OnePoint.rec with
+  | infty => simp at h
+  | coe k =>
+    simp at h
+    congr 1
+    linear_combination (27 / 16 : Qbar) * h
+
 open scoped Classical in
 open CategoryTheory AlgebraicGeometry QMSplit.Moduli.ElkiesX6Star in
 /-- **The coordinate comparison on every triple** (from `elkiesX6StarPrinted`, `R1R2fp`, T5): for a triple with R1fp
@@ -112,5 +138,75 @@ theorem elkies_coordinate (hRR : R1R2fp) (hT : ObjBridge.TorsionStructure) (hEl 
   have e2 : (y ≫ G ≫ fYE).left = y.left ≫ G.left ≫ fYE.left := by simp [Over.comp_left]
   rw [e2] at e1
   exact e1
+
+open CategoryTheory AlgebraicGeometry QMSplit.Moduli.ElkiesX6Star Pin Pin.ImagePlane in
+/-- **`HeckeSqrtBranchAny` is a theorem** from `elkiesX6StarPrinted`, `R1R2fp` and T5: Elkies' chart section
+`s = φ_U(eS)` (`s² = −t_E`) pulled back to the normalization chart `Spec B` (where `t_E = 1 + 27X/16` on `ℚ̄`-points,
+`elkies_coordinate`) is an element `s₀ ∈ B` with `s₀² = −(1 + 27X/16)` (density of `ℚ̄`-points), so `(4 s₀)² =
+−(27X + 16)`. -/
+theorem heckeSqrtBranchAny_of_elkies (hRR : R1R2fp) (hT : ObjBridge.TorsionStructure)
+    (hEl : ElkiesX6StarPrinted) : HeckeSqrtBranchAny := by
+  intro Y Φ π h1 hh h2 E _ _ _ _ _ _ hN
+  obtain ⟨XE, tE, m₀, hch, hrel⟩ := elkies_coordinate hRR hT hEl h1 h2
+  obtain ⟨h, hO, -, hval⟩ := hN
+  set m : Spec (CommRingCat.of (integralClosure ℚ[X] E)) ⟶ XE.left := h ≫ m₀ with hmdef
+  -- `t_E = 1 + 27X/16` at every `ℚ̄`-point of `Spec (integralClosure ℚ[X] E)`
+  have hT' : ∀ ψ : (integralClosure ℚ[X] E) →+* Qbar, tE.val (K := Qbar) (Spec.map (CommRingCat.ofHom ψ) ≫ m) =
+      OnePoint.some (1 + 27 * ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) X) / 16) := by
+    intro ψ
+    let y : fieldPt Qbar ⟶ Y :=
+      Over.homMk (Spec.map (CommRingCat.ofHom ψ) ≫ h) (PropTSRed.spec_to_specQ_eq _ _)
+    have e := hrel y
+    have hy : π.val (K := Qbar) y.left = OnePoint.some (ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) X)) :=
+      hval ψ
+    rw [hy] at e
+    have e' := gl2_inv_val _ _ e
+    rw [← e', hmdef, ← Category.assoc]
+    rfl
+  -- the chart section `s = φ_U(eS)` with `s² = −t`
+  obtain ⟨-, -, φU, -, hφUT, -, -, -⟩ := hch
+  set sE : Γ(XE.left, tE.U) := φU X6Glue.eS with hsEdef
+  have hsE : sE ^ 2 = -tE.f := by
+    have := congrArg φU X6Glue.rel1
+    rw [map_add, map_pow, map_zero, hφUT] at this
+    linear_combination this
+  have hmem : ∀ ψ : integralClosure ℚ[X] E →+* Qbar,
+      ptOf (Spec.map (CommRingCat.ofHom ψ) ≫ m) ∈ tE.U := by
+    intro ψ
+    by_contra hn
+    have := val_of_not_mem tE _ hn
+    rw [hT' ψ] at this
+    exact OnePoint.coe_ne_infty _ this
+  have hev : ∀ (ψ : integralClosure ℚ[X] E →+* Qbar) (hx : ptOf (Spec.map (CommRingCat.ofHom ψ) ≫ m) ∈ tE.U),
+      ev _ hx tE.f = 1 + 27 * ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) X) / 16 := by
+    intro ψ hx
+    have := val_of_mem tE _ hx
+    rw [hT' ψ] at this
+    exact (OnePoint.coe_injective this).symm
+  -- `B` is of finite type over `ℚ`
+  haveI hinjE : Module.IsTorsionFree ℚ[X] E := by
+    rw [Module.isTorsionFree_iff_algebraMap_injective, IsScalarTower.algebraMap_eq ℚ[X] (RatFunc ℚ) E]
+    exact (algebraMap (RatFunc ℚ) E).injective.comp (IsFractionRing.injective ℚ[X] (RatFunc ℚ))
+  haveI : Module.Finite ℚ[X] (integralClosure ℚ[X] E) :=
+    IsIntegralClosure.finite ℚ[X] (RatFunc ℚ) E (integralClosure ℚ[X] E)
+  letI : Algebra ℚ (integralClosure ℚ[X] E) :=
+    ((algebraMap ℚ[X] (integralClosure ℚ[X] E)).comp Polynomial.C).toAlgebra
+  haveI : IsScalarTower ℚ ℚ[X] (integralClosure ℚ[X] E) := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  haveI : Algebra.FiniteType ℚ (integralClosure ℚ[X] E) :=
+    Algebra.FiniteType.trans (S := ℚ[X]) inferInstance inferInstance
+  -- `m⁻¹(t ≠ ∞)` is everything
+  have hV : m ⁻¹ᵁ tE.U = ⊤ := by
+    rw [eq_top_iff]
+    intro P _
+    obtain ⟨M, hM, hPM⟩ := Ideal.exists_le_maximal P.asIdeal P.isPrime.ne_top
+    obtain ⟨ψ, hψ⟩ := exists_ringHom_ker_eq M
+    have hpt : ptOf (Spec.map (CommRingCat.ofHom ψ)) = (⟨M, hM.isPrime⟩ : PrimeSpectrum _) :=
+      PrimeSpectrum.ext (by rw [ptOf_spec_asIdeal]; exact hψ)
+    have hMV : (⟨M, hM.isPrime⟩ : PrimeSpectrum (integralClosure ℚ[X] E)) ∈ m ⁻¹ᵁ tE.U := by
+      have := hmem ψ
+      rw [ptOf_comp, hpt] at this
+      exact this
+    exact ((PrimeSpectrum.le_iff_specializes P ⟨M, hM.isPrime⟩).mp hPM).mem_open (m ⁻¹ᵁ tE.U).isOpen hMV
+  sorry
 
 end SGRDirect
