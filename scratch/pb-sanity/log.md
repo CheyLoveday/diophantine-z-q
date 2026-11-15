@@ -66,3 +66,9 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
 - autofold.json (pb-bypass spec, flags updated): dry run "strict count: 46/10 on 56 -> 48/9 on 57;
   strictest 45/11 -> 47/10"; the dry-run module (FoldDryRun.lean) compiles with no error.
 - docs/research/pb-sanity.md drafted: verdict printed form for both leaves.
+
+## Step 6: u is not G_Qp-invariant (Sanity1.lean, section UNotInvariant) — COMPILES (VERIFIED ~12:40)
+- `root_preTiltMap` (root(σ♭ x) n = σ(root x n)), `not_mem_range_of_pow_eq_p` (p^{1/p} ∉ ℚ_p, valuation),
+  `exists_uSigma_ne_one` (some σ moves p♭: the p-th root of p is in ℚ̄_p (Splits.mem_range_of_isRoot) and
+  is moved by some σ (InfiniteGalois.mem_range_algebraMap_iff_fixed)),
+  `exists_stAct_X_ne` (σ(u) ≠ u: log[u_σ] is a unit ≠ 0 of B_cris), `X_not_mem_bstInv_bot`.

@@ -1317,6 +1317,104 @@ theorem natDegree_minpoly_le_finrank_bstInv (hm0 : 0 < m) (hμ : μ ^ m = 1) (hc
 end K0
 
 
+/-! ### `u = log [p♭]` is not `G_{ℚ_p}`-invariant -/
+
+section UNotInvariant
+
+theorem preTiltMap_frobeniusEquiv_symm (f : O →+* O) (y : PreTilt O p) :
+    DR.preTiltMap p f ((frobeniusEquiv (PreTilt O p) p).symm y) =
+      (frobeniusEquiv (PreTilt O p) p).symm (DR.preTiltMap p f y) := by
+  apply (frobeniusEquiv (PreTilt O p) p).injective
+  rw [RingEquiv.apply_symm_apply, frobeniusEquiv_apply, frobenius_def, ← map_pow, ← frobenius_def,
+    ← frobeniusEquiv_apply, RingEquiv.apply_symm_apply]
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_preTiltMap (f : O →+* O) (x : PreTilt O p) (n : ℕ) :
+    root (DR.preTiltMap p f x) n = f (root x n) := by
+  rw [root, root, ← DR.untilt_preTiltMap]
+  congr 1
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih,
+      preTiltMap_frobeniusEquiv_symm]
+
+/-- A `p`-th root of `p` in `ℚ̄_p` is not in `ℚ_p`. -/
+theorem not_mem_range_of_pow_eq_p {a : PadicAlgCl p} (ha : a ^ p = (p : PadicAlgCl p)) :
+    a ∉ Set.range (algebraMap ℚ_[p] (PadicAlgCl p)) := by
+  rintro ⟨c, rfl⟩
+  have hc : c ^ p = (p : ℚ_[p]) := by
+    apply (algebraMap ℚ_[p] (PadicAlgCl p)).injective
+    rw [map_pow, ha, map_natCast]
+  have hv := congrArg Padic.valuation hc
+  rw [Padic.valuation_pow, Padic.valuation_p] at hv
+  have h2 := (Fact.out : p.Prime).two_le
+  have : (p : ℤ) * c.valuation = 1 := hv
+  have h3 : (2 : ℤ) ≤ p := by exact_mod_cast h2
+  rcases lt_trichotomy c.valuation 0 with h | h | h <;> nlinarith
+
+/-- **Some `σ ∈ G_{ℚ_p}` moves `p♭`**, i.e. `u_σ ≠ 1`. -/
+theorem exists_uSigma_ne_one : ∃ σ : GQp p, uSigma p σ ≠ 1 := by
+  set r := ZInQ.Contrib.G9.BdrKer.Cp.root (pFlat p) 1 with hr
+  have hrp : r ^ p = (p : O) := by
+    have := ZInQ.Contrib.G9.BdrKer.Cp.root_pow (pFlat p) 1
+    rw [pow_one, pFlat_untilt] at this
+    exact this
+  -- `r` comes from `ℚ̄_p`
+  set f : Polynomial (PadicAlgCl p) := Polynomial.X ^ p - Polynomial.C (p : PadicAlgCl p) with hf
+  have hf0 : f ≠ 0 := Polynomial.X_pow_sub_C_ne_zero (Fact.out : p.Prime).pos _
+  have hroot : (f.map (algebraMap (PadicAlgCl p) ℂ_[p])).IsRoot (r : ℂ_[p]) := by
+    simp only [hf, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
+      Polynomial.IsRoot, Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X,
+      map_natCast]
+    have := congrArg (fun z : O => (z : ℂ_[p])) hrp
+    simp only [SubmonoidClass.coe_pow] at this
+    rw [this]
+    simp
+  obtain ⟨a, ha⟩ := (IsAlgClosed.splits f).mem_range_of_isRoot hf0 hroot
+  have hap : a ^ p = (p : PadicAlgCl p) := by
+    apply (algebraMap (PadicAlgCl p) ℂ_[p]).injective
+    rw [map_pow, ha, map_natCast]
+    have := congrArg (fun z : O => (z : ℂ_[p])) hrp
+    simpa using this
+  -- some `σ` moves `a`
+  obtain ⟨σ, hσ⟩ : ∃ σ : GQp p, σ a ≠ a := by
+    by_contra hcon
+    push Not at hcon
+    exact not_mem_range_of_pow_eq_p p hap
+      ((InfiniteGalois.mem_range_algebraMap_iff_fixed a).mpr hcon)
+  refine ⟨σ, fun h1 => hσ ?_⟩
+  have h2 : flatAct p σ (pFlat p) = pFlat p := by
+    rw [← uSigma_spec, h1, one_mul]
+  have h3 := root_preTiltMap p (oAct p σ) (pFlat p) 1
+  change ZInQ.Contrib.G9.BdrKer.Cp.root (flatAct p σ (pFlat p)) 1 = _ at h3
+  rw [h2, ← hr] at h3
+  have h4 := congrArg (fun z : O => (z : ℂ_[p])) h3
+  change (r : ℂ_[p]) = cpAct p σ (r : ℂ_[p]) at h4
+  rw [← ha] at h4
+  have h5 : ((σ a : PadicAlgCl p) : ℂ_[p]) = (a : ℂ_[p]) :=
+    (cpAct_coe p σ a).symm.trans h4.symm
+  exact (algebraMap (PadicAlgCl p) ℂ_[p]).injective h5
+
+/-- **`u` is not `G_{ℚ_p}`-invariant**: some `σ` has `σ(u) = u + c(σ)t` with `c(σ)t ≠ 0`. So the
+monodromy part of `B_st` is genuine (with a trivial action on `u`, `B_st^{G_K}` would contain
+`B_cris^{G_K}[u]` and be infinite-dimensional, which would make `IsSemistableOver` degenerate). -/
+theorem exists_stAct_X_ne : ∃ σ : GQp p, stAct p σ Polynomial.X ≠ Polynomial.X := by
+  obtain ⟨σ, hσ⟩ := exists_uSigma_ne_one p
+  refine ⟨σ, fun h => ?_⟩
+  rw [stAct_X, add_eq_left, Polynomial.C_eq_zero, logU_eq] at h
+  exact logOf_bcris_ne_zero p ⟨uSigma p σ, untilt_uSigma p σ, hσ⟩ h
+
+theorem X_not_mem_bstInv_bot : (Polynomial.X : Bst p) ∉ bstInv p ⊥ := by
+  intro h
+  obtain ⟨σ, hσ⟩ := exists_stAct_X_ne p
+  exact hσ (h σ (fun x => by
+    obtain ⟨c, hc⟩ := IntermediateField.mem_bot.mp x.2
+    change σ x.1 = x.1
+    rw [← hc, AlgEquiv.commutes]))
+
+end UNotInvariant
+
 /-! ### Summary -/
 
 /-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/
