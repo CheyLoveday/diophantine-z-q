@@ -78,7 +78,7 @@ The definitions behind the new leaf (`Heegner.lean` §2):
 
   This is `ℚ(X₀(N))` as a set of functions on `ℍ`, with junk values at poles. It is the kernel's `IsRatModFn` with
   "the `q`-expansion holds on all of `ℍ`" replaced by "near `∞`" and "meromorphic". The growth clause is needed: without
-  it, `exp(t)` for a Hauptmodul `t` would be a counterexample.
+  it, `exp(t)` for a Hauptmodul `t` would plausibly be a counterexample (SPECULATIVE example).
 * **`RegularAt g τ`**: `AnalyticAt ℂ (g ∘ ofComplex) τ`. This includes the requirement that `g τ` is the value of the
   analytic function there.
 * The moduli hypotheses (algebraic `modCoord`, `IsConjModel`, the `k/N` condition) are verbatim from `hX`.
