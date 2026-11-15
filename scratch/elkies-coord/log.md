@@ -22,3 +22,11 @@ ZInQKernel/Contrib/OneProof/ElkiesX6Star.lean:67) from Elkies' printed form `ℚ
   axioms. VERIFIED
 - [x] autofold dry-run (autofold.json): strict 47/11 on 58 -> 48/10 on 58; strictest 46/12 -> 47/11.
   FoldDryRun.lean (dry-run output minus line 1) compiles; sixContactMin_of_open28 standard axioms. VERIFIED
+- [x] Integrality from the charts (compiled; developed in scratch/elkies-coord/Integral.lean, commit "X6 integral
+  and t regular...", then merged into ElkiesCoord.lean): `elkiesRing_isDomain` (ElkiesRing ↪ AdjoinRoot of
+  r² + 3(s²+1) over ℚ[s], prime since monic quadratic without root: lc(b)² = −3 impossible), `isIntegral_of_charts`,
+  `genericPoint_mem_of_charts`. The leaf's function-field clause is now `∀ (_ : IsIntegral X.left) (hη), ...`
+  (conditional, weaker than the earlier `∃` form). VERIFIED
+- [x] Rebuilt contribution (12123 jobs ok); #discharges rerun: same DISCHARGES line, 1344 theorems checked, standard
+  axioms, no sorry; autofold dry-run unchanged (47/11 -> 48/10; strictest 46/12 -> 47/11); FoldDryRun.lean compiles,
+  sixContactMin_of_open28 standard axioms. VERIFIED

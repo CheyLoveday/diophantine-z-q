@@ -16,4 +16,4 @@ DISCHARGES [OpenResearchLeaves20.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_S
 DISCHARGES [OpenResearchLeaves20.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 65 open hypotheses, 1322 theorems checked, 6 discharge one
+#discharges: 65 open hypotheses, 1344 theorems checked, 6 discharge one
