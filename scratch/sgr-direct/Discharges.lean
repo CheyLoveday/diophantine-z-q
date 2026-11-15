@@ -11,3 +11,5 @@ import ZInQKernel.Contrib.OneProof.SGRDirectNV
 #print axioms SGRDirect.heckeVertWitness_of_nvLocal
 #print axioms SGRDirect.heckeBranchFibreUnram
 #print axioms SGRDirect.heckeVertWitness_of_nvSqrt
+#print axioms SGRDirect.exists_good_sqrt
+#print axioms SGRDirect.heckeVertWitness_of_nvSqrtAny

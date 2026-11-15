@@ -19,7 +19,7 @@ DISCHARGES [OpenResearchLeaves22.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1853 theorems checked, 7 discharge one
+#discharges: 63 open hypotheses, 1863 theorems checked, 7 discharge one
 'SGRDirect.heckeVertWitness_of_nv' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.vertUnramWitness_of_nv' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.ramifiedSqrtInertia' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -27,3 +27,5 @@ DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidit
 'SGRDirect.heckeVertWitness_of_nvLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.heckeBranchFibreUnram' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.heckeVertWitness_of_nvSqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.exists_good_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.heckeVertWitness_of_nvSqrtAny' depends on axioms: [propext, Classical.choice, Quot.sound]

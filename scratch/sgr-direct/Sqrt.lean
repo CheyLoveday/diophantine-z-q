@@ -146,6 +146,116 @@ theorem even_padicValRat_of_sq_mem (L : IntermediateField ℚ Qbar) [FiniteDimen
     · exact hden (by exact_mod_cast h2)
     · exact hnum h2
 
+open CategoryTheory AlgebraicGeometry in
+/-- **A point over `0` with unramified residue field**, on every triple (from `R1R2fp` and T5). -/
+theorem exists_point_zero_unram (hRR : R1R2fp) (hT : ObjBridge.TorsionStructure)
+    {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y} {π : ToP1 Y.left}
+    (h1 : R1fpProps Y Φ) (h2 : R2fpProps Y Φ π) :
+    ∃ y : fieldPt Qbar ⟶ Y, π.val (K := Qbar) y.left = OnePoint.some 0 ∧
+      UnramifiedAbove5 (residueImage (X := Y.left) y.left) := by
+  have hM := CurveGlue.mobiusGlue_of_T5 hT
+  have hCM := Pin.cm_objects_of_R1R2fp hRR
+  obtain ⟨Y₁, Φ₁, π₁, h11, h21, hfib⟩ := exists_fibre_object hRR
+  obtain ⟨y₁, P₁, -, hy₁⟩ := hfib (OnePoint.some 0)
+  obtain ⟨g₁, hΦ₁, hπ₁⟩ := Pin.sameTripleMor_of_mobius hM hCM h11 h21 h1 h2
+  set y := (Φ Qbar).symm (Φ₁ Qbar y₁) with hydef
+  have hyg : y ≫ g₁ = y₁ := (Φ₁ Qbar).injective (by rw [← hΦ₁, hydef, Equiv.apply_symm_apply])
+  have hπy : π.val (K := Qbar) y.left = OnePoint.some 0 := by rw [hπ₁ y, hyg, hy₁]
+  obtain ⟨Y₀, Φ₀, π₀, h10, h20, hbr⟩ := residue_unramified_over_branch hRR
+  obtain ⟨g₀, hΦ₀, hπ₀⟩ := Pin.sameTripleMor_of_mobius hM hCM h10 h20 h1 h2
+  have h0 := hbr (y ≫ g₀) (Or.inl (by rw [← hπ₀ y]; exact hπy))
+  rw [PropTSRed.residueImage_comp_eq_of_pt g₀ hΦ₀ y] at h0
+  exact ⟨y, hπy, h0⟩
+
+open CategoryTheory AlgebraicGeometry in
+/-- **From any square root of `c (27X + 16)` in `E` to one with constant prime to `p`** (`p ≥ 5`): the residue
+fields over `0` are unramified at `p` (`exists_point_zero_unram`) and contain `√c`, so `v_p(c)` is even. -/
+theorem exists_good_sqrt (hRR : R1R2fp) (hT : ObjBridge.TorsionStructure)
+    {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y} {π : ToP1 Y.left}
+    (h1 : R1fpProps Y Φ) (h2 : R2fpProps Y Φ π)
+    (E : Type) [Field E] [Algebra (RatFunc ℚ) E] [Algebra ℚ[X] E]
+    [IsScalarTower ℚ[X] (RatFunc ℚ) E] (hN : NormalizationModel Y π E)
+    (p : ℕ) (hp : p.Prime) (hp5 : 5 ≤ p) (c : ℚ) (hc : c ≠ 0) (s : E)
+    (hs : s ^ 2 = algebraMap ℚ[X] E (C c * (C 27 * X + C 16))) :
+    ∃ (a : ℤ) (s' : E), ¬ (p : ℤ) ∣ a ∧
+      s' ^ 2 = algebraMap ℚ[X] E (C (a : ℚ) * (C 27 * X + C 16)) := by
+  haveI : Fact p.Prime := ⟨hp⟩
+  obtain ⟨y, hπy, hun⟩ := exists_point_zero_unram hRR hT h1 h2
+  obtain ⟨h, hO, himg, hval⟩ := hN
+  obtain ⟨y', hy'⟩ := himg y.left (by rw [hπy]; exact OnePoint.coe_ne_infty _)
+  set ψ := (Spec.preimage y').hom with hψ
+  have hy'' : y' = Spec.map (CommRingCat.ofHom ψ) := by
+    rw [hψ, CommRingCat.ofHom_hom, Spec.map_preimage]
+  have hψX : ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) X) = 0 := by
+    have := hval ψ
+    rw [← hy'', ← hy', hπy] at this
+    exact (OnePoint.coe_injective this).symm
+  have hψC : ∀ r : ℚ, ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) (C r)) = algebraMap ℚ Qbar r := by
+    intro r
+    have hsub : ((ψ.comp (algebraMap ℚ[X] (integralClosure ℚ[X] E))).comp C : ℚ →+* Qbar) =
+        algebraMap ℚ Qbar := Subsingleton.elim _ _
+    exact congrArg (fun f : ℚ →+* Qbar => f r) hsub
+  have hres : residueImage (X := Y.left) y.left = IntermediateField.adjoin ℚ (Set.range ψ) := by
+    rw [hy', PropTSRed.residueImage_comp_openImmersion h y', hy'', PropTSRed.residueImage_specMap]
+  -- `s` is integral over `ℚ[X]`
+  have hintE : IsIntegral ℚ[X] s := by
+    refine ⟨X ^ 2 - Polynomial.C (C c * (C 27 * X + C 16)), monic_X_pow_sub_C _ (by norm_num), ?_⟩
+    rw [eval₂_sub, eval₂_X_pow, eval₂_C, hs, sub_self]
+  set sB : integralClosure ℚ[X] E := ⟨s, hintE⟩ with hsB
+  have hsBsq : sB ^ 2 = algebraMap ℚ[X] (integralClosure ℚ[X] E) (C c * (C 27 * X + C 16)) :=
+    Subtype.ext (by
+      show s ^ 2 = algebraMap ℚ[X] E _
+      exact hs)
+  have hψs : ψ sB ^ 2 = algebraMap ℚ Qbar (16 * c) := by
+    rw [← map_pow, hsBsq]
+    simp only [map_mul, map_add, hψX, hψC, mul_zero, zero_add]
+    rw [mul_comm]
+  set β : Qbar := ψ sB / 4 with hβdef
+  have hβL : β ∈ IntermediateField.adjoin ℚ (Set.range ψ) :=
+    IntermediateField.div_mem _ (IntermediateField.subset_adjoin ℚ _ ⟨sB, rfl⟩)
+      (IntermediateField.algebraMap_mem _ (4 : ℚ))
+  have hβsq : β ^ 2 = algebraMap ℚ Qbar c := by
+    rw [hβdef, div_pow, hψs, map_mul]
+    norm_num
+  rw [hres] at hun
+  obtain ⟨hfin, hdisc⟩ := hun
+  letI : NumberField (IntermediateField.adjoin ℚ (Set.range ψ)) := @NumberField.mk _ _ _ hfin
+  have hU := GlueB3Unram.unramifiedAt_of_not_dvd_discr _ p hp (hdisc p hp hp5)
+  obtain ⟨k, hk⟩ := even_padicValRat_of_sq_mem _ p hp hU c hc β hβL hβsq
+  -- `c = p^{2k} u` with `u` a `p`-adic unit
+  have hp0 : (p : ℚ) ≠ 0 := by exact_mod_cast hp.ne_zero
+  set u : ℚ := c * (p : ℚ) ^ (-(k + k)) with hu
+  have hu0 : u ≠ 0 := mul_ne_zero hc (zpow_ne_zero _ hp0)
+  have hvu : padicValRat p u = 0 := by
+    rw [hu, padicValRat.mul hc (zpow_ne_zero _ hp0), padicValRat.zpow _ (k := -(k + k)),
+      padicValRat.self hp.one_lt, hk]
+    ring
+  obtain ⟨hnum, hden⟩ := not_dvd_num_den_of_padicValRat_eq_zero p hu0 hvu
+  set ι : ℚ →+* E := (algebraMap ℚ[X] E).comp C with hι
+  refine ⟨u.den * u.num, ι u.den * s * ι ((p : ℚ) ^ (-k)), ?_, ?_⟩
+  · intro hdvd
+    rcases (Nat.prime_iff_prime_int.mp hp).dvd_or_dvd hdvd with h2 | h2
+    · exact hden (by exact_mod_cast h2)
+    · exact hnum h2
+  · have hq : (u.den : ℚ) ^ 2 * c * ((p : ℚ) ^ (-k)) ^ 2 = ((u.den * u.num : ℤ) : ℚ) := by
+      have hud : u * u.den = u.num := Rat.mul_den_eq_num u
+      have hc' : c = u * (p : ℚ) ^ (k + k) := by
+        rw [hu, mul_assoc, ← zpow_add₀ hp0]; simp
+      rw [hc', ← zpow_natCast ((p : ℚ) ^ (-k)) 2, ← zpow_mul]
+      push_cast
+      have e : (u.den : ℚ) ^ 2 * (u * (p : ℚ) ^ (k + k)) * (p : ℚ) ^ (-k * 2) =
+          (u * u.den) * u.den * ((p : ℚ) ^ (k + k) * (p : ℚ) ^ (-k * 2)) := by ring
+      rw [e, hud, ← zpow_add₀ hp0]
+      have e2 : k + k + -k * 2 = 0 := by ring
+      rw [e2, zpow_zero]
+      ring
+    rw [mul_pow, mul_pow, hs, map_mul, map_mul]
+    have : algebraMap ℚ[X] E (C (((u.den * u.num : ℤ) : ℚ))) = ι (((u.den * u.num : ℤ) : ℚ)) := rfl
+    rw [this, ← hq, map_mul, map_mul, map_pow, map_pow]
+    have : algebraMap ℚ[X] E (C c) = ι c := rfl
+    rw [this]
+    ring
+
 end SGRDirect
 
-#print axioms SGRDirect.even_padicValRat_of_sq_mem
+#print axioms SGRDirect.exists_good_sqrt
