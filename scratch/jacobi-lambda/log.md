@@ -20,3 +20,6 @@ and F(σ) = O(e^{−π Im σ}); iterate to get F = 0.
   (θ₃⁴ = θ₂⁴ + θ₄⁴): VERIFIED compiled, axioms [propext, Classical.choice, Quot.sound].
 - 05:55 exponential bounds for Im s ≥ 1: ‖T(s) − 2‖, ‖θ₃(s) − 1‖, ‖θ₄(s) − 1‖ ≤ 3e^{−π Im s}
   (T(s) = jacobiTheta₂ (s/2) s, θ₂ = e^{πis/4}T): VERIFIED compiled.
+- 06:15 Cauchy estimate `norm_deriv_le_of_bound`, nonvanishing `thetaFour_ne_zero`, `thetaThree_ne_zero`, `thT_ne_zero`,
+  `thetaTwo_ne_zero` on ℍ (by iterating Landen up to Im ≥ 1; no products), and the recursion
+  `Fq_rec : F τ = (θ₄(τ)²/θ₃(τ)²) F(2τ)` with h = θ₂/θ₃, F = h'/h − (πi/4)θ₄⁴: VERIFIED compiled, standard axioms.

@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.GZTheta.TripleProduct
 import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.Complex.Liouville
 
 open Complex Filter Topology Metric
 open scoped Real
@@ -242,5 +243,185 @@ theorem norm_thetaFour_sub_one_le {s : ℂ} (hs : 1 ≤ s.im) :
   have e : 2 / (1 - rexp (-π * s.im)) * rexp (-π * s.im) =
       2 * (rexp (-π * s.im) / (1 - rexp (-π * s.im))) := by ring
   linarith
+
+/-! ## Differentiability and Cauchy estimates -/
+
+lemma im_ge_of_mem_closedBall {σ z : ℂ} (hz : z ∈ closedBall σ 1) : σ.im - 1 ≤ z.im := by
+  have h := Complex.abs_im_le_norm (z - σ)
+  rw [mem_closedBall, dist_eq_norm] at hz
+  rw [Complex.sub_im] at h
+  have := (abs_le.mp (h.trans hz)).1
+  linarith
+
+lemma differentiableAt_thT {s : ℂ} (hs : 0 < s.im) : DifferentiableAt ℂ thT s := by
+  have h1 : DifferentiableAt ℂ (fun s : ℂ => (s / 2, s)) s :=
+    (differentiableAt_id.div_const 2).prodMk differentiableAt_id
+  have h2 := (hasFDerivAt_jacobiTheta₂ (s / 2) hs).differentiableAt
+  exact DifferentiableAt.comp (f := fun s : ℂ => (s / 2, s))
+      (g := fun p : ℂ × ℂ => jacobiTheta₂ p.1 p.2) s h2 h1
+
+lemma differentiableAt_thetaThree' {s : ℂ} (hs : 0 < s.im) :
+    DifferentiableAt ℂ thetaThree s :=
+  differentiableAt_jacobiTheta₂_snd 0 hs
+
+lemma differentiableAt_thetaTwo' {s : ℂ} (hs : 0 < s.im) : DifferentiableAt ℂ thetaTwo s := by
+  have h4 : DifferentiableAt ℂ (fun s : ℂ => cexp (π * I * s / 4)) s :=
+    ((differentiableAt_id.const_mul (π * I : ℂ)).div_const 4).cexp
+  exact h4.mul (differentiableAt_thT hs)
+
+/-- Cauchy's estimate on the unit circle around `σ`, `Im σ ≥ 2`. -/
+lemma norm_deriv_le_of_bound {f : ℂ → ℂ} {c : ℂ}
+    (hf : ∀ z : ℂ, 0 < z.im → DifferentiableAt ℂ f z)
+    (hb : ∀ z : ℂ, 1 ≤ z.im → ‖f z - c‖ ≤ 3 * rexp (-π * z.im)) {σ : ℂ} (hσ : 2 ≤ σ.im) :
+    ‖deriv f σ‖ ≤ 3 * rexp π * rexp (-π * σ.im) := by
+  have hd : DiffContOnCl ℂ (fun z => f z - c) (ball σ 1) := by
+    apply DifferentiableOn.diffContOnCl
+    rw [closure_ball σ one_ne_zero]
+    intro z hz
+    have := im_ge_of_mem_closedBall hz
+    exact ((hf z (by linarith)).sub_const c).differentiableWithinAt
+  have h := Complex.norm_deriv_le_of_forall_mem_sphere_norm_le one_pos hd
+    (C := 3 * rexp π * rexp (-π * σ.im)) (fun z hz => by
+      have hz' := im_ge_of_mem_closedBall (sphere_subset_closedBall hz)
+      refine (hb z (by linarith)).trans ?_
+      rw [mul_assoc, ← Real.exp_add]
+      gcongr
+      nlinarith [Real.pi_pos])
+  rw [deriv_sub_const, div_one] at h
+  exact h
+
+/-! ## Nonvanishing -/
+
+lemma im_two_pow_mul (k : ℕ) (σ : ℂ) : ((2 : ℂ) ^ k * σ).im = 2 ^ k * σ.im := by
+  have : (2 : ℂ) ^ k = ((2 ^ k : ℝ) : ℂ) := by push_cast; rfl
+  rw [this, Complex.im_ofReal_mul]
+
+lemma not_of_iterate {P : ℂ → Prop} (hstep : ∀ σ : ℂ, 0 < σ.im → P σ → P (2 * σ)) (y : ℝ)
+    (hbig : ∀ σ : ℂ, y ≤ σ.im → ¬ P σ) {σ : ℂ} (hσ : 0 < σ.im) : ¬ P σ := by
+  intro hP
+  have key : ∀ k : ℕ, P ((2 : ℂ) ^ k * σ) := by
+    intro k
+    induction k with
+    | zero => simpa using hP
+    | succ k ih =>
+      have hk : 0 < ((2 : ℂ) ^ k * σ).im := by rw [im_two_pow_mul]; positivity
+      have := hstep _ hk ih
+      rw [pow_succ, mul_comm ((2 : ℂ) ^ k) 2, mul_assoc]
+      exact this
+  obtain ⟨k, hk⟩ := pow_unbounded_of_one_lt (y / σ.im) (one_lt_two : (1 : ℝ) < 2)
+  apply hbig _ _ (key k)
+  rw [im_two_pow_mul]
+  rw [div_lt_iff₀ hσ] at hk
+  linarith
+
+lemma two_mul_im_pos {s : ℂ} (hs : 0 < s.im) : 0 < (2 * s).im := by simp; linarith
+
+theorem thetaFour_ne_zero {σ : ℂ} (hσ : 0 < σ.im) : thetaFour σ ≠ 0 := by
+  refine not_of_iterate (P := fun s => thetaFour s = 0) (fun s hs h0 => ?_) 1
+    (fun s hs h0 => ?_) hσ
+  · have := landen_three_four hs
+    rw [h0, mul_zero] at this
+    exact (pow_eq_zero_iff two_ne_zero).mp this.symm
+  · have := norm_thetaFour_sub_one_le hs
+    rw [h0, zero_sub, norm_neg, norm_one] at this
+    linarith [exp_neg_pi_le_quarter hs]
+
+theorem thetaThree_ne_zero {σ : ℂ} (hσ : 0 < σ.im) : thetaThree σ ≠ 0 := by
+  intro h0
+  have := landen_three_four hσ
+  rw [h0, zero_mul] at this
+  exact thetaFour_ne_zero (two_mul_im_pos hσ) ((pow_eq_zero_iff two_ne_zero).mp this.symm)
+
+theorem thT_ne_zero {σ : ℂ} (hσ : 0 < σ.im) : thT σ ≠ 0 := by
+  refine not_of_iterate (P := fun s => thT s = 0) (fun s hs h0 => ?_) 1
+    (fun s hs h0 => ?_) hσ
+  · have := landen_two hs
+    rw [thetaTwo_eq s, h0, mul_zero, zero_pow two_ne_zero] at this
+    have h3 := thetaThree_ne_zero (two_mul_im_pos hs)
+    have : thetaTwo (2 * s) = 0 := by
+      rcases mul_eq_zero.mp this.symm with h | h
+      · rcases mul_eq_zero.mp h with h' | h'
+        · norm_num at h'
+        · exact h'
+      · exact absurd h h3
+    rw [thetaTwo_eq] at this
+    exact (mul_eq_zero.mp this).resolve_left (Complex.exp_ne_zero _)
+  · have := norm_thT_sub_two_le hs
+    rw [h0, zero_sub, norm_neg, Complex.norm_two] at this
+    linarith [exp_neg_pi_le_quarter hs]
+
+theorem thetaTwo_ne_zero {σ : ℂ} (hσ : 0 < σ.im) : thetaTwo σ ≠ 0 :=
+  mul_ne_zero (Complex.exp_ne_zero _) (thT_ne_zero hσ)
+
+/-! ## The Landen recursion for `F = h'/h − (πi/4) θ₄⁴` -/
+
+/-- `h = θ₂/θ₃`. -/
+def hq (s : ℂ) : ℂ := thetaTwo s / thetaThree s
+
+/-- `F = h'/h − (πi/4) θ₄⁴`; Jacobi's formula is `F = 0`. -/
+def Fq (s : ℂ) : ℂ := deriv hq s / hq s - π * I / 4 * thetaFour s ^ 4
+
+lemma differentiableAt_hq {s : ℂ} (hs : 0 < s.im) : DifferentiableAt ℂ hq s :=
+  (differentiableAt_thetaTwo' hs).div (differentiableAt_thetaThree' hs) (thetaThree_ne_zero hs)
+
+lemma hq_ne_zero {s : ℂ} (hs : 0 < s.im) : hq s ≠ 0 :=
+  div_ne_zero (thetaTwo_ne_zero hs) (thetaThree_ne_zero hs)
+
+lemma hq_rel {s : ℂ} (hs : 0 < s.im) : hq s ^ 2 * (1 + hq (2 * s) ^ 2) = 2 * hq (2 * s) := by
+  have hA := thetaThree_ne_zero (two_mul_im_pos hs)
+  have hS := thetaThree_ne_zero hs
+  have L1 := landen_three hs
+  have L3 := landen_two hs
+  have hsum : thetaThree (2 * s) ^ 2 + thetaTwo (2 * s) ^ 2 ≠ 0 := by
+    rw [← L1]; exact pow_ne_zero 2 hS
+  simp only [hq, div_pow]
+  rw [L3, L1]
+  field_simp
+
+theorem Fq_rec {τ : ℂ} (hτ : 0 < τ.im) :
+    Fq τ = thetaFour τ ^ 2 / thetaThree τ ^ 2 * Fq (2 * τ) := by
+  have h2 := two_mul_im_pos hτ
+  have hd1 := (differentiableAt_hq hτ).hasDerivAt
+  have hd2 : HasDerivAt (fun s => hq (2 * s)) (deriv hq (2 * τ) * 2) τ := by
+    have := (differentiableAt_hq h2).hasDerivAt.comp τ ((hasDerivAt_id τ).const_mul (2 : ℂ))
+    rw [mul_one] at this
+    exact this
+  have hφ := ((hd1.mul hd1).mul ((hd2.mul hd2).const_add 1)).sub (hd2.const_mul 2)
+  have h0 : HasDerivAt (fun s => hq s * hq s * (1 + hq (2 * s) * hq (2 * s)) - 2 * hq (2 * s))
+      0 τ := by
+    apply (hasDerivAt_const τ (0 : ℂ)).congr_of_eventuallyEq
+    filter_upwards [(isOpen_lt continuous_const Complex.continuous_im).mem_nhds hτ] with s hs
+    have := hq_rel hs
+    linear_combination this
+  have key := hφ.unique h0
+  simp only [Pi.mul_apply] at key
+  have R := hq_rel hτ
+  have hs0 := hq_ne_zero hτ
+  have hr0 := hq_ne_zero h2
+  have h1r : 1 + hq (2 * τ) ^ 2 ≠ 0 := by
+    intro h
+    rw [h, mul_zero] at R
+    exact hr0 (by linear_combination -R / 2)
+  have K : 2 * hq τ * deriv hq τ * (1 + hq (2 * τ) ^ 2) + 4 * hq τ ^ 2 * hq (2 * τ) *
+      deriv hq (2 * τ) - 4 * deriv hq (2 * τ) = 0 := by linear_combination key
+  have e1 : deriv hq τ / hq τ = deriv hq (2 * τ) * (1 - hq (2 * τ) ^ 2) /
+      (hq (2 * τ) * (1 + hq (2 * τ) ^ 2)) := by
+    rw [div_eq_div_iff hs0 (mul_ne_zero hr0 h1r)]
+    linear_combination (hq τ * (1 + hq (2 * τ) ^ 2) / 4) * K -
+      (deriv hq τ * (1 + hq (2 * τ) ^ 2) / 2 + hq τ * hq (2 * τ) * deriv hq (2 * τ)) * R
+  have L1 := landen_three hτ
+  have L2 := landen_four hτ
+  have Q := jacobi_quartic h2
+  have hA := thetaThree_ne_zero h2
+  have hB := thetaTwo_ne_zero h2
+  have hsum : thetaThree (2 * τ) ^ 2 + thetaTwo (2 * τ) ^ 2 ≠ 0 := by
+    rw [← L1]; exact pow_ne_zero 2 (thetaThree_ne_zero hτ)
+  unfold Fq
+  rw [e1, show thetaFour τ ^ 4 = (thetaFour τ ^ 2) ^ 2 by ring, L2, L1,
+    show thetaFour (2 * τ) ^ 4 = thetaThree (2 * τ) ^ 4 - thetaTwo (2 * τ) ^ 4 by
+      linear_combination -Q]
+  simp only [hq]
+  field_simp
+  ring
 
 end ZInQ.JacobiLambda
