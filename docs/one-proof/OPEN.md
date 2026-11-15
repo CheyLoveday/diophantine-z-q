@@ -11,13 +11,13 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**56 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves21`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**55 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves21`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 45 published / 11 glue** (the strictest flagged reading; 46/10 without the one strictest-reading flag).
+* **Strict count: 44 published / 11 glue** (the strictest flagged reading; 45/10 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 4, consequence 4, project glue 1, published 47.
+* By kind: composite 4, consequence 4, project glue 1, published 46.
 
 ## How to help
 
@@ -87,7 +87,6 @@ Reduction block: SGA 7 I Exp. IX, BLR 1.2 Prop. 4, Serre-Tate 1968. Claim it on 
 
 Unread locators: SGA 3, EGA IV, Faltings 1983 Lemma 5, GIT, BLR 1.4, 7.2, 7.3. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
-* [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) (LEAF): BLR, Neron models, 1.4 Thm 3 over a DVR, scheme form (no group law)
 * [`mumfordRigidityCore`](#mumfordrigiditycore) (LEAF; unverified-locator): Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED)
 * [`faltingsLemma5Printed`](#faltingslemma5printed) (LEAF; unread, unverified-locator): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read)
 * [`sga3_VIB_3_10`](#sga3_vib_3_10) (LEAF; unverified-locator): SGA 3 VI_B 3.10 (number UNVERIFIED)
@@ -186,7 +185,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`javanpeykarBound`](#javanpeykarbound) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF | unverified-locator | bigger | T3 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)) |
 | [`neronBaseChangeStrictHenselization`](#neronbasechangestricthenselization) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | project interest, free to claim |
-| [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | narrowing | T1-T2 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`r7a`](#r7a) | research | published | LEAF |  |  | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) |
 | [`r9a`](#r9a) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
@@ -824,20 +822,6 @@ GapSHPair.NeronBaseChangeStrictHenselization
 ```
 
 > gt-shpair, printed form: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 2 (Neron models commute with strict henselization), for unramified strictly henselian extensions with separable residue extension, which pin the base to O^sh (locator UNVERIFIED). Replaces strictHenselizationPair; the commutative algebra (GapSHPair.shPair) is proved.
-
-### neronSchemeModelExistsDVR
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves21.neronSchemeModelExistsDVR`; kind **published**, strict **LEAF**.
-* Source: BLR, Neron models, 1.4 Thm 3 over a DVR, scheme form (no group law)
-* packet [R2](#packet-r2); label narrowing (pending narrowing: a narrower restatement is planned, so it is not offered as stated); tier T1-T2 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
-* Human readings recorded: none.
-* Status: pending narrowing: a narrower restatement is planned, so it is not offered as stated.
-
-```lean
-ReductSplit.NeronSchemeModelExistsDVR
-```
-
-> reduct-split, r8: BLR §1.4 Thm 3 over a DVR (scheme form).
 
 ### pazukiCor13Upper
 

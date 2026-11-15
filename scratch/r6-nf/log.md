@@ -25,3 +25,14 @@
   OpenResearchLeaves14-21 (8 FIELD lines, no constants; prune-set-step2.txt). unused-all: r8 rows and the
   OpenResearchLeaves9 r8-only fields gone. DeadCascade: ss1_ss3_of14 (+ generated casesOn/recOn).
 - step 3b (scratch/r6-nf/prune_neron.py, prune_neron_out.txt): deleted the 8 fields, 7 assignments, ss1_ss3_of14.
+- 06:3x build after step 3b: `lake build +ZInQKernel.OneProof.Main` OK (12985 jobs); frozenTarget axioms standard;
+  frozenTarget's type prints identically (frozenTarget_before.txt vs frozenTarget_after.txt).
+- PruneScan after: OpenResearchLeaves21 28, OpenTextbookLeaves11 12, OpenAddedLeaves17 14, OpenGlue7 1 = 55 fields,
+  0 unused, prune set empty (prunescan-after-out.txt, used-fields.txt).
+- DumpCompact after: 15668 constants (hashes_after.txt); cmp_hashes.py -> cmp_hashes_out.txt: removed 18, new 40,
+  changed 327. Removed = 16 pruned projections + ss1_ss3_of14 +
+  R08_GrothendieckMonodromy._proof_3 (aux-proof sharing: HDec.PkgI2.RaynaudCriterionNF._proof_1 has exactly its old
+  type and value hashes; R08_GrothendieckMonodromy changes in value only). New = 35 NeronDVR (now in Main's closure via
+  the TailZ26 import) + LPrefix 3 (RaynaudCriterionNF, its _proof_1, raynaudCriterionNF_of_general) + TailZ26 2
+  (raynaudCriterionNF_of14, ss1_ss3_of14NF).
+- DischargesTest: same 7 discharges and controls; 62 open hypotheses (was 63).
