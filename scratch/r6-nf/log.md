@@ -21,3 +21,7 @@
 - step 1 (scratch/r6-nf/prune_r8.py, output prune_r8_out.txt): deleted r8 from ResearchLeaves3, OpenResearchLeaves2/5/7/8,
   the three r8-only fields of OpenResearchLeaves9, and their 12 assignments. Not compiled yet (compiled with step 2).
 - 05:43 build after steps 1-2 (+ reroute/threading): `lake build +ZInQKernel.OneProof.Main` OK first try (12985 jobs); frozenTarget axioms standard.
+- 05:50 PruneScan after step 2: exactly OpenResearchLeaves21.neronSchemeModelExistsDVR unused; prune set = the field in
+  OpenResearchLeaves14-21 (8 FIELD lines, no constants; prune-set-step2.txt). unused-all: r8 rows and the
+  OpenResearchLeaves9 r8-only fields gone. DeadCascade: ss1_ss3_of14 (+ generated casesOn/recOn).
+- step 3b (scratch/r6-nf/prune_neron.py, prune_neron_out.txt): deleted the 8 fields, 7 assignments, ss1_ss3_of14.

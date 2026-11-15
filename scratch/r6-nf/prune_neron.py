@@ -17,5 +17,9 @@ for f, h in [('TailZ25', 'theorem openResearchLeaves14_of_OpenResearchLeaves15 '
              ('TailZ33', 'theorem openResearchLeaves19_of_OpenResearchLeaves20 '),
              ('TailZ34', 'theorem openResearchLeaves20_of_OpenResearchLeaves21 ')]:
     P.drop_assign(f, h, FLD, f'  {FLD} := n.{FLD}')
-for f, n in DEAD if 'DEAD' in globals() else []:
+for f, n in [('TailZ23', 'ss1_ss3_of14')]:   # dead-cascade.txt minus generated casesOn/recOn
     P.drop_decl(f, n)
+for f, ls in P.files.items():
+    open(P.H + f + '.lean', 'w').write('\n'.join(l for l in ls if l is not None))
+for d in sorted(P.deleted):
+    print(f'{d[0]}:{d[1]}  [{d[2]}]  {d[3]}')

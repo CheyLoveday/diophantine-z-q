@@ -39,8 +39,6 @@ structure OpenResearchLeaves15 : Prop where
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
   /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest reading). -/
   semistableUnipotent : _root_.ReductSplit.SemistableUnipotent
-  /-- reduct-split, r8: BLR §1.4 Thm 3 over a DVR (scheme form). -/
-  neronSchemeModelExistsDVR : _root_.ReductSplit.NeronSchemeModelExistsDVR
   /-- shimura-split, r5count, printed form: González–Rotger 2006 Prop. 5.6 at `(D, N) = (6, 1)` on the points of
   one canonical coarse witness `X₆` of the fine moduli scheme of abelian schemes. Replaces
   `gonzalezRotgerCountX6`. -/
@@ -116,7 +114,6 @@ theorem openResearchLeaves14_of_OpenResearchLeaves15 (n : OpenResearchLeaves15) 
   pazukiCor13Upper := n.pazukiCor13Upper
   gaudronRemondThm14 := n.gaudronRemondThm14
   semistableUnipotent := n.semistableUnipotent
-  neronSchemeModelExistsDVR := n.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6Ab := n.gonzalezRotgerCountX6Ab
   mumfordRigidityCore := n.mumfordRigidityCore
   blr_1_2_4 := n.blr_1_2_4

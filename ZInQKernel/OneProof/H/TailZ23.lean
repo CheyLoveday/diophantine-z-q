@@ -639,8 +639,6 @@ structure OpenResearchLeaves14 : Prop where
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
   /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest reading). -/
   semistableUnipotent : _root_.ReductSplit.SemistableUnipotent
-  /-- reduct-split, r8: BLR §1.4 Thm 3 over a DVR (scheme form). -/
-  neronSchemeModelExistsDVR : _root_.ReductSplit.NeronSchemeModelExistsDVR
   /-- shimura-split, r5count, printed form: González–Rotger 2006 Prop. 5.6 at `(D, N) = (6, 1)` on the points of
   one canonical coarse witness `X₆` of the fine moduli scheme of abelian schemes. Replaces
   `gonzalezRotgerCountX6`. -/
@@ -757,19 +755,11 @@ theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeave
     (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab (mumfordRigidity_of14 r)).mpr
       l.deligneComponentsY3PrintedAb
 
-/-- **SS1 and SS3** (`semistableReductionThm`, `semistablePersists`) from the restricted printed leaf
-`semistablePersistsSHcp`, the pair, 3.6 (K1), BLR 1.4/3 and the glue of `TailZ15` (`semistableLocalGlobal` from
-`blr_1_2_4` through c-to-printed's `neronLocalizesDVR_of_printed`; `semistableAlmostAll_of10`). -/
-theorem ss1_ss3_of14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
-    _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists :=
-  _root_.ReductB.ss1_ss3_of_cp r.semistablePersistsSHcp r.strictHenselizationPair (semistableReductionDVR_of14 r t)
-    r.neronSchemeModelExistsDVR
-    (_root_.ReductGlue.semistableLocalGlobal_leaf (_root_.CToPrinted.neronLocalizesDVR_of_printed r.blr_1_2_4))
-    (semistableAlmostAll_of10 (addedLeaves9_of_open14 r t l))
-
 /-- leaf-fold9's research bundle from leaf-fold14's (the composite of `researchLeaves12_of_open13`,
 `researchLeaves11_of_open12`, `researchLeaves10_of_open11` and `researchLeaves9_of_open10`, with the three reduct
-fields replaced by reduct-b's theorems and SS1, SS3 by `ss1_ss3_of14`). -/
+fields replaced by reduct-b's theorems). r6-nf: r6 (at number fields) and SS1, SS3 are arguments, supplied in
+`sixContactMin_of_open20` (TailZ26) by `raynaudCriterionNF_of14` and `ss1_ss3_of14NF` from neron-dvr's
+number-field Néron theorem (N1 alone), which replaced BLR 1.4/3 over every DVR. -/
 theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12)
     (h6 : PkgI2.RaynaudCriterionNF.{0})
     (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :

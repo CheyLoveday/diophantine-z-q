@@ -16,7 +16,7 @@ USED   bostLowerBound : ZInQ.HeightSplit.BostLowerBound
 USED   javanpeykarBound : ZInQ.HeightSplit.JavanpeykarBound
 USED   pazukiCor13Upper : ZInQ.HeightSplit.PazukiCor13Upper
 USED   gaudronRemondThm14 : ZInQ.HeightSplit.GaudronRemondThm14
-USED   neronSchemeModelExistsDVR : ReductSplit.NeronSchemeModelExistsDVR
+UNUSED neronSchemeModelExistsDVR : ReductSplit.NeronSchemeModelExistsDVR
 USED   mumfordRigidityCore : LeafQM.AV.R1UnivRigid.MumfordRigidityCore
 USED   faltingsLemma5Printed : CToPrinted.FaltingsLemma5Printed
 USED   sga3_VIB_3_10 : CToPrinted.SGA3_VIB_3_10
