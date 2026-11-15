@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.Main
+import ZInQKernel.OneProof.H.TailZ24
 
 /-!
 # gt-blr: BLR §1.2 Prop. 4 (Néron models localize), proved

@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.Main
+import ZInQKernel.OneProof.H.TailZ24
 
 /-! # `Γ*` is a cocompact Fuchsian group of covolume `π/6` (task gt-gamma)
 

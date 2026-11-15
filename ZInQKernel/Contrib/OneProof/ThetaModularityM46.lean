@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.Main
+import ZInQKernel.OneProof.H.TailZ24
 
 /-!
 # gt-theta: Igusa's `ψ₄`, `χ₁₀` at the two symplectic matrices `M4`, `M6`, proved
