@@ -42,3 +42,9 @@
   (GrossConjugationCd) : GZStatements.GrossZagierHeegnerCd` compiled.
 - `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges` started 03:5x (copied tree was mid-rebuild
   in ~/dzq-check2; lake rebuilds TailC.. chain). Output scratch/gz-hl3/build_main.txt.
+
+## 04:10 Ch. V corollaries compiled
+- `heegnerPoint_infinite_iff` (y_K infinite order ↔ (FG)'(1) ≠ 0, from GrossZagierFormulaAt + Tau Ceti
+  canonicalHeight_eq_zero_iff_isOfFinAddOrder with Mathlib Northcott for number fields) and
+  `exists_rat_point_of_leaves` (rank ≥ 1): `lake build …GrossZagierHeegner.Cd` → success.
+- First Main build killed by the 10-min background limit at TailZ17 (no error); restarted with long timeout.
