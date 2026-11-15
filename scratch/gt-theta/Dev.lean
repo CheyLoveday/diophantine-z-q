@@ -274,4 +274,106 @@ theorem sq6 (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2
   push_cast
   ring
 
+
+theorem σ6_img : evenChars.image σ6 = evenChars := by decide
+theorem σ6_inj : ∀ a ∈ evenChars, ∀ b ∈ evenChars, σ6 a = σ6 b → a = b := by decide
+theorem N6_even : ∀ m ∈ evenChars, N6 m % 2 = 0 := by decide
+theorem N6_sum : (∑ m ∈ evenChars, N6 m) % 8 = 0 := by decide
+
+/-- **`M6` on the Siegel space.** -/
+theorem thetaM6 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaSum8 (spAct M6 Ω) = spFactor M6 Ω ^ 4 * thetaSum8 Ω ∧
+      thetaProd2 (spAct M6 Ω) = spFactor M6 Ω ^ 10 * thetaProd2 Ω := by
+  rw [spFactor_M6 (pdq_of_siegel hΩ).1]
+  exact assemble _ σ6 N6 (fun m _ => sq6 m hΩ) σ6_img σ6_inj N6_even N6_sum
+
+/-! ## `M4` -/
+
+theorem spAct_M4 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1)
+    (hΔ : (Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2 ≠ 0) :
+    spAct M4 Ω = !![-(Ω 0 0 + 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2),
+      (Ω 0 1 - 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2) + 1;
+      (Ω 0 1 - 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2) + 1,
+      -(Ω 1 1 + 2) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2)] := by
+  unfold spAct
+  simp only [M4_map, Matrix.toBlocks_fromBlocks₁₁, Matrix.toBlocks_fromBlocks₁₂,
+    Matrix.toBlocks_fromBlocks₂₁, Matrix.toBlocks_fromBlocks₂₂]
+  have hdet : (C4 * Ω + D4).det = -((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2) := by
+    rw [Matrix.det_fin_two]
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [C4, D4, hs]
+    ring
+  letI := Matrix.invertibleOfIsUnitDet (C4 * Ω + D4) (isUnit_iff_ne_zero.mpr (hdet ▸ neg_ne_zero.2 hΔ))
+  rw [Matrix.mul_inv_eq_iff_eq_mul_of_invertible]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    simp [A4, B4, C4, D4, hs] <;> field_simp <;> ring
+
+theorem spFactor_M4 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) :
+    spFactor M4 Ω = -((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2) := by
+  unfold spFactor
+  simp only [M4_map, Matrix.toBlocks_fromBlocks₂₁, Matrix.toBlocks_fromBlocks₂₂]
+  rw [Matrix.det_fin_two]
+  simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+  simp [C4, D4, hs]
+  ring
+
+/-- The characteristic permutation of `M4`. -/
+def σ4 (m : Char2) : Char2 :=
+  (![fin2 (((m.1 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ)), fin2 (((m.1 1 : ℕ) : ℤ) + ((m.2 0 : ℕ) : ℤ))],
+   ![fin2 (((m.1 0 : ℕ) : ℤ) - 2 * ((m.1 1 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ) - ((m.2 0 : ℕ) : ℤ) + 1),
+     fin2 (-2 * ((m.1 0 : ℕ) : ℤ) + 2 * ((m.1 1 : ℕ) : ℤ) + 2 * ((m.2 0 : ℕ) : ℤ) - ((m.2 1 : ℕ) : ℤ) + 2)])
+
+/-- The phase exponent of `M4` (in units of `πi/4`). -/
+def N4 (m : Char2) : ℤ :=
+  4 * ((m.1 0 : ℕ) : ℤ) * ((m.1 1 : ℕ) : ℤ) + 4 * ((m.1 1 : ℕ) : ℤ) * ((m.2 1 : ℕ) : ℤ)
+    + 4 * ((m.1 0 : ℕ) : ℤ) * ((m.2 0 : ℕ) : ℤ)
+    - 2 * (((m.1 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ)) ^ 2 - 4 * (((m.1 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ))
+    - 4 * (((m.1 1 : ℕ) : ℤ) + ((m.2 0 : ℕ) : ℤ)) ^ 2 - 8 * (((m.1 1 : ℕ) : ℤ) + ((m.2 0 : ℕ) : ℤ))
+    + 4 * (((m.1 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ)) * (((m.1 1 : ℕ) : ℤ) + ((m.2 0 : ℕ) : ℤ))
+
+theorem sq4 (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (spAct M4 Ω) ^ 2 =
+      -((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2) * cexp (π * I * (N4 m : ℂ) / 4) *
+        thetaConst (σ4 m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  have hpd1 : PDq (Ω 0 0 + 1) (Ω 0 1 - 1) (Ω 1 1 + 2) := by simpa [PDq] using hpd
+  rw [spAct_M4 hs hpd1.det_ne, thetaConst_eq _ _ (by simp), thetaConst_eq _ _ hs]
+  simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [th2_trans (α := -(Ω 0 0 + 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2))
+      (β := (Ω 0 1 - 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2))
+      (γ := -(Ω 1 1 + 2) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2)) 0 1 0
+      (by push_cast; ring) (by push_cast; ring) (by push_cast; ring),
+    mul_pow, th2_swap, inv_sq' hpd1,
+    th2_trans (α := Ω 0 0) (β := Ω 0 1) (γ := Ω 1 1) 1 (-1) 2 (by push_cast; ring) (by push_cast; ring)
+      (by push_cast; ring), mul_pow]
+  rw [th2_sq_red _ _ _ (((m.1 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ)) (((m.1 1 : ℕ) : ℤ) + ((m.2 0 : ℕ) : ℤ))
+    (((m.1 0 : ℕ) : ℤ) - 2 * ((m.1 1 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ) - ((m.2 0 : ℕ) : ℤ) + 1)
+    (-2 * ((m.1 0 : ℕ) : ℤ) + 2 * ((m.1 1 : ℕ) : ℤ) + 2 * ((m.2 0 : ℕ) : ℤ) - ((m.2 1 : ℕ) : ℤ) + 2)
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σ4, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast]
+  rw [show ∀ (D e0 e1 e2 T : ℂ), e0 ^ 2 * (-D * e1 * (e2 ^ 2 * T)) = -D * (e0 ^ 2 * e1 * e2 ^ 2) * T from
+    fun _ _ _ _ _ => by ring]
+  congr 2
+  rw [← Complex.exp_nat_mul, ← Complex.exp_nat_mul, ← Complex.exp_add, ← Complex.exp_add]
+  congr 1
+  simp only [N4]
+  push_cast
+  ring
+
+theorem σ4_img : evenChars.image σ4 = evenChars := by decide
+theorem σ4_inj : ∀ a ∈ evenChars, ∀ b ∈ evenChars, σ4 a = σ4 b → a = b := by decide
+theorem N4_even : ∀ m ∈ evenChars, N4 m % 2 = 0 := by decide
+theorem N4_sum : (∑ m ∈ evenChars, N4 m) % 8 = 0 := by decide
+
+/-- **`M4` on the Siegel space.** -/
+theorem thetaM4 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaSum8 (spAct M4 Ω) = spFactor M4 Ω ^ 4 * thetaSum8 Ω ∧
+      thetaProd2 (spAct M4 Ω) = spFactor M4 Ω ^ 10 * thetaProd2 Ω := by
+  have h := assemble _ σ4 N4 (fun m _ => sq4 m hΩ) σ4_img σ4_inj N4_even N4_sum
+  rw [spFactor_M4 (pdq_of_siegel hΩ).1, Even.neg_pow (by decide), Even.neg_pow (by decide)]
+  exact h
+
 end GapTheta
