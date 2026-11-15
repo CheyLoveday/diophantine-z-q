@@ -1,22 +1,32 @@
 import ZInQKernel.OneProof.H.TailZ26
 
-/-! # gt-qm: `QMCentralizerCMC` by the complex lattice
+/-! # gt-qm: `QMCentralizerCMC` and Yu's dichotomy at `(2, −3)` by the complex lattice
 
-Task gt-qm (docs/research/gt-qm.md; gap-triage A5). The added-bundle field
-`HDec.QMSplit.Aut.QMCentralizerCMC` (TailU, the centralizer `End_𝒪(A)` of the QM of an abelian surface over
-`ℂ` is `ℤ` or `Φ⁻¹(𝒪)` for an imaginary quadratic `k` and `Φ : k → B`) is proved here from three textbook
-fields of the bundle (`uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed`) and the chain's
-proved glue (`qmLatticeFree_of`, `qmSkolemNoetherC_proof`, `qmClassNumberOne_proof`, `unif_ring_hom`,
-`lift_unique`).
+Task gt-qm (docs/research/gt-qm.md; gap-triage A5 and A9).
 
-* §1 (pure algebra in `B = (2, −3)`): the commutant of `ι(𝒪)` in `End_ℂ(ℂ²)` is `ℂ`; the eigen-subring
-  `S_v = {x ∈ B : ι(x)v ∈ ℂv}` is commutative and closed under inverses; for `v = (τ, 1)ᵀ`, `Im τ ≠ 0`, a
-  pure quaternion in `S_v` is zero or squares to a negative rational, and `S_v ⊆ ℚ + ℚy₀`.
-* §2 (`alg_core`): a ring `R` embedded in `B` with image `𝒪 ∩ S_v` is `ℤ` or `Φ⁻¹(𝒪)` with `k = S_v`
-  imaginary quadratic.
-* §3 (`com_embed`): by the uniformization `A(ℂ) = ℂ²/ι(𝒪)(τ, 1)ᵀ` (T35 + T11a + `QMLatticeAlgebra`),
-  `End_𝒪(A)` embeds in `B` with image `𝒪 ∩ S_{(τ,1)}`.
-* §4 the theorem `qmCentralizerCMC_of`.
+**A5.** The added-bundle field `HDec.QMSplit.Aut.QMCentralizerCMC` (TailU: the centralizer `End_𝒪(A)` of the
+QM of an abelian surface over `ℂ` is `ℤ` or `Φ⁻¹(𝒪)` for an imaginary quadratic `k` and `Φ : k → B`) is
+proved (`qmCentralizerCMC_of`) from three textbook fields of the bundle (`uniformizationLeafAll`,
+`gagaMorphism`, `mumfordTorsionAlgClosed`) and the chain's proved glue (`qmLatticeFree_of`,
+`qmSkolemNoetherC_proof`, `qmClassNumberOne_proof`, `unif_ring_hom`, `lift_unique`, `AvSplit.Final.h38/h69`).
+
+**A9.** `YuThm11` (textbook field `yuThm11`) is used by the chain only at `(a, b) = (2, −3)`, for the embedding
+of a QM structure by `𝒪`, over `AlgebraicClosure ℚ` or `AlgebraicClosure L'` (`L'` finite over `ℚ`). That
+form, `YuB6Alg`, is proved (`yuB6Alg_of'`, from the same three fields; T11(b) is proved in the chain) and is
+implied by `YuThm11` (`yuB6Alg_of_yuThm11`). `YuThm11` itself (every algebraically closed `k` of
+characteristic `0`, every indefinite division `(a, b)`) is not proved here.
+
+* §1 pure algebra in `B = (2, −3)`: the commutant of `ι(𝒪)` in `End_ℂ(ℂ²)` is `ℂ`; the eigen-subring
+  `S_v = {x ∈ B : ι(x)v ∈ ℂv}`; for `v = (τ, 1)ᵀ`, `Im τ ≠ 0`, a nonzero pure quaternion of `S_v` squares to a
+  negative rational, and the centralizer of such an element is `ℚ + ℚy₀`.
+* §2 `alg_core`: a ring embedded in `B` with image `𝒪 ∩ S_{(τ,1)}` is `ℤ` or `Φ⁻¹(𝒪)` with `k = S_{(τ,1)}`.
+* §3 `unif_conj`: `End(A)` is the ring of `ℂ`-linear maps preserving `Λ_τ = ι(𝒪)(τ, 1)ᵀ`, `ι`-compatibly
+  (T35 + T11a + `QMLatticeAlgebra`); `com_embed`: `End_𝒪(A) ≅ 𝒪 ∩ S_{(τ,1)}`.
+* §4 `qmCentralizerCMC_of`.
+* §5 `exists_lift`, `end0_equiv` (`ℚ ⊗_ℤ M ≅ C` for a lattice `M` in a `ℚ`-algebra `C`).
+* §6 the `ℂ`-basis `(v, w)`, clearing denominators, and the two cases: `S_{(τ,1)} = ℚ` gives
+  `End⁰(A) ≅ B` (`case_triv`), otherwise `End⁰(A) ≅ M₂(ℚ(√d))`, `d = y₀² < 0` (`case_quad`).
+* §7 `yu_core` (over `ℂ`), `YuB6Alg`, `yuB6Alg_of`, `yuB6Alg_of'`, `yuB6Alg_of_yuThm11`.
 -/
 
 set_option linter.all false
@@ -338,17 +348,16 @@ theorem alg_core {R : Type} [Ring R] {τ : ℂ} (hτ : 0 < τ.im) (F : R →+* B
 /-! ## §3 The centralizer through the uniformization `A(ℂ) = ℂ²/ι(𝒪)(τ, 1)ᵀ` -/
 
 open HSyn.G0Split.FibreQM in
-/-- **`End_𝒪(A)` embeds in `B` with image `𝒪 ∩ S_{(τ,1)}`.** By T35 (`h38`), T11a (`h69`) and the proved
-`QMLatticeAlgebra`, `A(ℂ) = ℂ²/Λ` with `Λ` carried by `F` onto `ι(𝒪)(τ, 1)ᵀ`, `ι`-compatibly. An element `e` of
-the centralizer acts on `ℂ²` by a map commuting with `ι(𝒪)`, hence by a scalar `c(e)` (`commutant`); since
-`c(e)(τ, 1)ᵀ ∈ ι(𝒪)(τ, 1)ᵀ`, `c(e)(τ, 1)ᵀ = ι(x)(τ, 1)ᵀ` for a unique `x ∈ 𝒪`; `e ↦ x` is the embedding.
-Conversely each such `x` gives the scalar `c`, which preserves `Λ` and so comes from an endomorphism (T11a),
-central because `ρ` is injective. -/
-theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+/-- **The analytic representation, normalized** (from the same inputs as `com_embed`): a ring embedding
+`ρ : End(A) → End_ℂ(ℂ²)` with `ρ(ι(a)) = ι(a)` and image exactly the maps preserving
+`Λ_τ = ι(𝒪)(τ, 1)ᵀ`. -/
+theorem unif_conj (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
     (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
     (A : PkgI3.AbVar ℂ) (hA : A.dim = 2) (q : LeafQM.AV.QMStr A) :
-    ∃ (τ : ℂ) (_ : 0 < τ.im) (F : LeafQM.AV.com q →+* B), Function.Injective F ∧
-      ∀ x : B, x ∈ Set.range F ↔ (x ∈ LeafQM.O ∧ x ∈ S ![τ, 1]) := by
+    ∃ (τ : ℂ) (_ : 0 < τ.im) (ρ : PkgI3.AbVar.End A →+* Module.End ℂ (Fin 2 → ℂ)),
+      Function.Injective ρ ∧ (∀ a z, ρ (q.iota a) z = act (a : B) z) ∧
+      ∀ N : Module.End ℂ (Fin 2 → ℂ),
+        (∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) ↔ ∃ e, ρ e = N := by
   have hE : UniformizationExistsT35 := AvSplit.Final.h38 hU hM
   have hR : T11aRiemannEnd := ZInQ.HomUnify.t11a_riemannEnd_of_corr (AvSplit.Final.h69 hU hG)
   have hL : QMLatticeAlgebra :=
@@ -357,9 +366,7 @@ theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
   haveI := hd
   obtain ⟨ρ, hρ, hpres⟩ := unif_ring_hom hR A hA Λ Φu hΦ
   obtain ⟨τ, hτ, Fl, hF, hFρ⟩ := hL Λ hlat (ρ.comp q.iota) (fun a z hz => hpres (q.iota a) z hz)
-  set v : Fin 2 → ℂ := ![τ, 1] with hvdef
-  have hv : v ≠ 0 := fun h => by simpa [v] using congrFun h 1
-  have hΛ : ∀ z, z ∈ Λ ↔ Fl z ∈ FibreQMNorm.qmOrbit v := by
+  have hΛ : ∀ z, z ∈ Λ ↔ Fl z ∈ FibreQMNorm.qmOrbit ![τ, 1] := by
     intro z
     rw [← FibreQMNorm.qmLattice_eq_orbit hτ.ne', ← hF]
     constructor
@@ -367,7 +374,6 @@ theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
     · rintro ⟨w, hw, he⟩
       have : w = z := Fl.injective he
       rw [← this]; exact hw
-  have hι : ∀ (a : LeafQM.O) z, Fl (ρ (q.iota a) z) = act (a : B) (Fl z) := fun a z => hFρ a z
   have hT11 := hR A 2 Λ Φu hA hΦ
   have hρinj : Function.Injective ρ := fun e e' h =>
     (hT11.1 (ρ e) (hpres e)).unique (hρ e) (fun z => by rw [h]; exact hρ e' z)
@@ -375,32 +381,68 @@ theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
     intro N hN
     obtain ⟨f, hf, -⟩ := hT11.1 N hN
     exact ⟨f, lift_unique hΦ (fun z => by rw [hρ, hf])⟩
+  let ρ' : PkgI3.AbVar.End A →+* Module.End ℂ (Fin 2 → ℂ) :=
+    { toFun := fun e => Fl.toLinearMap ∘ₗ ρ e ∘ₗ Fl.symm.toLinearMap
+      map_one' := LinearMap.ext fun z => by simp
+      map_mul' := fun e e' => LinearMap.ext fun z => by simp [map_mul]
+      map_zero' := LinearMap.ext fun z => by simp
+      map_add' := fun e e' => LinearMap.ext fun z => by simp [map_add] }
+  have hρ' : ∀ e z, ρ' e z = Fl (ρ e (Fl.symm z)) := fun e z => rfl
+  refine ⟨τ, hτ, ρ', fun e e' h => hρinj ?_, fun a z => ?_, fun N => ⟨fun hN => ?_, ?_⟩⟩
+  · refine LinearMap.ext fun w => ?_
+    have := congrArg (fun T : Module.End ℂ (Fin 2 → ℂ) => Fl.symm (T (Fl w))) h
+    simpa [hρ'] using this
+  · rw [hρ']
+    have := hFρ a (Fl.symm z)
+    rw [LinearEquiv.apply_symm_apply] at this
+    exact this
+  · obtain ⟨e, he⟩ := hρsurj (Fl.symm.toLinearMap ∘ₗ N ∘ₗ Fl.toLinearMap) (fun z hz => by
+      rw [hΛ]
+      simpa using hN _ ((hΛ z).1 hz))
+    refine ⟨e, LinearMap.ext fun z => ?_⟩
+    rw [hρ', he]
+    simp
+  · rintro ⟨e, rfl⟩ z hz
+    rw [hρ']
+    rw [← hΛ]
+    apply hpres
+    rw [hΛ]
+    simpa using hz
+
+/-- **`End_𝒪(A)` embeds in `B` with image `𝒪 ∩ S_{(τ,1)}`.** By `unif_conj`, `End(A)` is the ring of
+`ℂ`-linear maps preserving `Λ_τ = ι(𝒪)(τ, 1)ᵀ`, `ι`-compatibly. An element `e` of the centralizer acts by a
+map commuting with `ι(𝒪)`, hence by a scalar `c(e)` (`commutant`); since `c(e)(τ, 1)ᵀ ∈ Λ_τ`,
+`c(e)(τ, 1)ᵀ = ι(x)(τ, 1)ᵀ` for a unique `x ∈ 𝒪`; `e ↦ x` is the embedding. Conversely each such `x` gives
+the scalar `c`, which preserves `Λ_τ` and so comes from an endomorphism, central because `ρ` is
+injective. -/
+theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (A : PkgI3.AbVar ℂ) (hA : A.dim = 2) (q : LeafQM.AV.QMStr A) :
+    ∃ (τ : ℂ) (_ : 0 < τ.im) (F : LeafQM.AV.com q →+* B), Function.Injective F ∧
+      ∀ x : B, x ∈ Set.range F ↔ (x ∈ LeafQM.O ∧ x ∈ S ![τ, 1]) := by
+  obtain ⟨τ, hτ, ρ, hρinj, hρι, hρrange⟩ := unif_conj hU hG hM A hA q
+  have hv : (![τ, 1] : Fin 2 → ℂ) ≠ 0 := fun h => by simpa using congrFun h 1
   -- elements of the centralizer act by scalars
   have hcomm : ∀ e ∈ LeafQM.AV.com q, ∃ c : ℂ, ∀ w, ρ e w = c • w := by
     intro e he
-    obtain ⟨c, hc⟩ := commutant (Fl.toLinearMap ∘ₗ ρ e ∘ₗ Fl.symm.toLinearMap) (fun x hx z => by
-      have hcm : q.iota ⟨x, hx⟩ * e = e * q.iota ⟨x, hx⟩ := by
-        rw [LeafQM.AV.com, Subring.mem_centralizer_iff] at he
-        exact he _ ⟨⟨x, hx⟩, rfl⟩
-      have h1 : Fl.symm (act x z) = ρ (q.iota ⟨x, hx⟩) (Fl.symm z) := by
-        rw [LinearEquiv.symm_apply_eq, hι, LinearEquiv.apply_symm_apply]
-      simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
-      rw [h1, ← Module.End.mul_apply, ← map_mul, ← hcm, map_mul, Module.End.mul_apply, hι])
-    refine ⟨c, fun w => ?_⟩
-    have := hc (Fl w)
-    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply] at this
-    rw [← Fl.symm_apply_apply (ρ e w), this, map_smul, LinearEquiv.symm_apply_apply]
-  let w0 : Fin 2 → ℂ := Fl.symm v
-  have hw0 : w0 ≠ 0 := fun h => hv (by rw [← Fl.apply_symm_apply v]; show Fl w0 = 0; rw [h, map_zero])
-  have hcinj : ∀ a b : ℂ, a • w0 = b • w0 → a = b := fun a b h => smul_left_injective ℂ hw0 h
-  let c : LeafQM.AV.com q → ℂ := fun e => Fl (ρ e w0) 1
+    apply commutant (ρ e)
+    intro x hx z
+    have hcm : q.iota ⟨x, hx⟩ * e = e * q.iota ⟨x, hx⟩ := by
+      rw [LeafQM.AV.com, Subring.mem_centralizer_iff] at he
+      exact he _ ⟨⟨x, hx⟩, rfl⟩
+    have h1 : act x z = ρ (q.iota ⟨x, hx⟩) z := (hρι ⟨x, hx⟩ z).symm
+    have h2 : act x (ρ e z) = ρ (q.iota ⟨x, hx⟩) (ρ e z) := (hρι ⟨x, hx⟩ (ρ e z)).symm
+    rw [h1, h2, ← Module.End.mul_apply, ← map_mul, ← hcm, map_mul, Module.End.mul_apply]
+  have hcinj : ∀ a b : ℂ, a • (![τ, 1] : Fin 2 → ℂ) = b • ![τ, 1] → a = b :=
+    fun a b h => smul_left_injective ℂ hv h
+  let c : LeafQM.AV.com q → ℂ := fun e => ρ e ![τ, 1] 1
   have hscal : ∀ e : LeafQM.AV.com q, ∀ w, ρ e w = c e • w := by
     intro e w
     obtain ⟨c0, h0⟩ := hcomm e e.2
     have : c e = c0 := by
-      show Fl (ρ e w0) 1 = c0
-      rw [h0, map_smul, LinearEquiv.apply_symm_apply]
-      simp [v]
+      show ρ e ![τ, 1] 1 = c0
+      rw [h0]
+      simp
     rw [this, h0]
   have c_one : c 1 = 1 := hcinj _ _ (by rw [← hscal, OneMemClass.coe_one, map_one, one_smul]; rfl)
   have c_zero : c 0 = 0 := hcinj _ _ (by rw [← hscal, ZeroMemClass.coe_zero, map_zero, zero_smul]; rfl)
@@ -409,14 +451,13 @@ theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
       smul_smul, mul_comm])
   have c_add : ∀ e e', c (e + e') = c e + c e' := fun e e' => hcinj _ _ (by
     rw [← hscal, AddMemClass.coe_add, map_add, LinearMap.add_apply, hscal e, hscal e', add_smul])
-  have hvO : ∀ e : LeafQM.AV.com q, ∃ x ∈ LeafQM.O, act x v = c e • v := by
+  have hvO : ∀ e : LeafQM.AV.com q, ∃ x ∈ LeafQM.O, act x ![τ, 1] = c e • ![τ, 1] := by
     intro e
-    have h1 : w0 ∈ Λ := (hΛ w0).2 (by
-      show Fl (Fl.symm v) ∈ _
-      rw [LinearEquiv.apply_symm_apply, mem_qmOrbit_iff]
-      exact ⟨1, LeafQM.O.one_mem, (act_one v).symm⟩)
-    have h2 := (hΛ _).1 (hpres e w0 h1)
-    rw [hscal, map_smul, LinearEquiv.apply_symm_apply, mem_qmOrbit_iff] at h2
+    have h1 : (![τ, 1] : Fin 2 → ℂ) ∈ FibreQMNorm.qmOrbit ![τ, 1] := by
+      rw [mem_qmOrbit_iff]
+      exact ⟨1, LeafQM.O.one_mem, (act_one _).symm⟩
+    have h2 := (hρrange (ρ e)).2 ⟨e, rfl⟩ _ h1
+    rw [hscal, mem_qmOrbit_iff] at h2
     obtain ⟨x, hx, hxe⟩ := h2
     exact ⟨x, hx, hxe.symm⟩
   choose X hXO hX using hvO
@@ -429,27 +470,24 @@ theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
       map_add' := fun e e' => act_inj hv (by rw [hX, act_add, hX, hX, c_add, add_smul]) }
   have hFX : ∀ e, F e = X e := fun e => rfl
   refine ⟨τ, hτ, F, fun e e' h => ?_, fun x => ⟨?_, ?_⟩⟩
-  · have h1 : c e • v = c e' • v := by rw [← hX, ← hX]; exact congrArg (fun y => act y v) h
-    have h2 : c e = c e' := smul_left_injective ℂ hv h1
+  · have h1 : c e • (![τ, 1] : Fin 2 → ℂ) = c e' • ![τ, 1] := by
+      rw [← hX, ← hX]; exact congrArg (fun y => act y ![τ, 1]) h
     apply Subtype.ext
     apply hρinj
     refine LinearMap.ext fun w => ?_
-    rw [hscal e, hscal e', h2]
+    rw [hscal e, hscal e', hcinj _ _ h1]
   · rintro ⟨e, rfl⟩
     exact ⟨hXO e, c e, hX e⟩
   · rintro ⟨hxO, c0, hc0⟩
     let N : Module.End ℂ (Fin 2 → ℂ) := c0 • LinearMap.id
-    have hN : ∀ z ∈ Λ, N z ∈ Λ := by
+    have hN : ∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1] := by
       intro z hz
-      have h1 := (hΛ z).1 hz
-      rw [mem_qmOrbit_iff] at h1
-      obtain ⟨y, hy, hyz⟩ := h1
-      apply (hΛ _).2
-      rw [mem_qmOrbit_iff]
+      rw [mem_qmOrbit_iff] at hz ⊢
+      obtain ⟨y, hy, rfl⟩ := hz
       refine ⟨y * x, LeafQM.O.mul_mem hy hxO, ?_⟩
-      show Fl (c0 • z) = _
-      rw [map_smul, hyz, act_mul, hc0, act_smul_vec]
-    obtain ⟨e0, he0⟩ := hρsurj N hN
+      show c0 • act y ![τ, 1] = _
+      rw [act_mul, hc0, act_smul_vec]
+    obtain ⟨e0, he0⟩ := (hρrange N).1 hN
     have he0com : e0 ∈ LeafQM.AV.com q := by
       rw [LeafQM.AV.com, Subring.mem_centralizer_iff]
       rintro _ ⟨a, rfl⟩
@@ -457,7 +495,7 @@ theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
       rw [map_mul, map_mul, he0]
       refine LinearMap.ext fun w => ?_
       simp [N]
-    have hce : c ⟨e0, he0com⟩ = c0 := hcinj _ _ (by rw [← hscal]; show ρ e0 w0 = _; rw [he0]; rfl)
+    have hce : c ⟨e0, he0com⟩ = c0 := hcinj _ _ (by rw [← hscal]; show ρ e0 _ = _; rw [he0]; rfl)
     refine ⟨⟨e0, he0com⟩, act_inj hv ?_⟩
     rw [hFX, hX, hce, hc0]
 
@@ -527,68 +565,6 @@ theorem end0_equiv {M C : Type} [Ring M] [Ring C] [Algebra ℚ C] (Ψ : M →+* 
       | add a b ha hb => rw [mul_add, map_add, ha, hb, map_add, mul_add]
       | tmul t n =>
         rw [Algebra.TensorProduct.tmul_mul_tmul, he, he, he, map_mul, smul_mul_smul_comm]
-
-open HSyn.G0Split.FibreQM in
-/-- **The analytic representation, normalized** (from the same inputs as `com_embed`): a ring embedding
-`ρ : End(A) → End_ℂ(ℂ²)` with `ρ(ι(a)) = ι(a)` and image exactly the maps preserving
-`Λ_τ = ι(𝒪)(τ, 1)ᵀ`. -/
-theorem unif_conj (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
-    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
-    (A : PkgI3.AbVar ℂ) (hA : A.dim = 2) (q : LeafQM.AV.QMStr A) :
-    ∃ (τ : ℂ) (_ : 0 < τ.im) (ρ : PkgI3.AbVar.End A →+* Module.End ℂ (Fin 2 → ℂ)),
-      Function.Injective ρ ∧ (∀ a z, ρ (q.iota a) z = act (a : B) z) ∧
-      ∀ N : Module.End ℂ (Fin 2 → ℂ),
-        (∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) ↔ ∃ e, ρ e = N := by
-  have hE : UniformizationExistsT35 := AvSplit.Final.h38 hU hM
-  have hR : T11aRiemannEnd := ZInQ.HomUnify.t11a_riemannEnd_of_corr (AvSplit.Final.h69 hU hG)
-  have hL : QMLatticeAlgebra :=
-    qmLatticeAlgebra_of_free (qmLatticeFree_of qmSkolemNoetherC_proof QMSplit.CNO.qmClassNumberOne_proof)
-  obtain ⟨Λ, Φu, hd, hlat, hΦ⟩ := hE ℂ A (RingHom.id ℂ) 2 hA
-  haveI := hd
-  obtain ⟨ρ, hρ, hpres⟩ := unif_ring_hom hR A hA Λ Φu hΦ
-  obtain ⟨τ, hτ, Fl, hF, hFρ⟩ := hL Λ hlat (ρ.comp q.iota) (fun a z hz => hpres (q.iota a) z hz)
-  have hΛ : ∀ z, z ∈ Λ ↔ Fl z ∈ FibreQMNorm.qmOrbit ![τ, 1] := by
-    intro z
-    rw [← FibreQMNorm.qmLattice_eq_orbit hτ.ne', ← hF]
-    constructor
-    · intro h; exact ⟨z, h, rfl⟩
-    · rintro ⟨w, hw, he⟩
-      have : w = z := Fl.injective he
-      rw [← this]; exact hw
-  have hT11 := hR A 2 Λ Φu hA hΦ
-  have hρinj : Function.Injective ρ := fun e e' h =>
-    (hT11.1 (ρ e) (hpres e)).unique (hρ e) (fun z => by rw [h]; exact hρ e' z)
-  have hρsurj : ∀ N : Module.End ℂ (Fin 2 → ℂ), (∀ z ∈ Λ, N z ∈ Λ) → ∃ e, ρ e = N := by
-    intro N hN
-    obtain ⟨f, hf, -⟩ := hT11.1 N hN
-    exact ⟨f, lift_unique hΦ (fun z => by rw [hρ, hf])⟩
-  let ρ' : PkgI3.AbVar.End A →+* Module.End ℂ (Fin 2 → ℂ) :=
-    { toFun := fun e => Fl.toLinearMap ∘ₗ ρ e ∘ₗ Fl.symm.toLinearMap
-      map_one' := LinearMap.ext fun z => by simp
-      map_mul' := fun e e' => LinearMap.ext fun z => by simp [map_mul]
-      map_zero' := LinearMap.ext fun z => by simp
-      map_add' := fun e e' => LinearMap.ext fun z => by simp [map_add] }
-  have hρ' : ∀ e z, ρ' e z = Fl (ρ e (Fl.symm z)) := fun e z => rfl
-  refine ⟨τ, hτ, ρ', fun e e' h => hρinj ?_, fun a z => ?_, fun N => ⟨fun hN => ?_, ?_⟩⟩
-  · refine LinearMap.ext fun w => ?_
-    have := congrArg (fun T : Module.End ℂ (Fin 2 → ℂ) => Fl.symm (T (Fl w))) h
-    simpa [hρ'] using this
-  · rw [hρ']
-    have := hFρ a (Fl.symm z)
-    rw [LinearEquiv.apply_symm_apply] at this
-    exact this
-  · obtain ⟨e, he⟩ := hρsurj (Fl.symm.toLinearMap ∘ₗ N ∘ₗ Fl.toLinearMap) (fun z hz => by
-      rw [hΛ]
-      simpa using hN _ ((hΛ z).1 hz))
-    refine ⟨e, LinearMap.ext fun z => ?_⟩
-    rw [hρ', he]
-    simp
-  · rintro ⟨e, rfl⟩ z hz
-    rw [hρ']
-    rw [← hΛ]
-    apply hpres
-    rw [hΛ]
-    simpa using hz
 
 /-! ## §6 The lattice algebra of `ℂ²/Λ_τ` -/
 
