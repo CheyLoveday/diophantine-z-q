@@ -807,7 +807,7 @@ types, and `frozenTarget_cqj2` has the binders of `ZInQ.OneProof.frozenTarget` w
 open Lean Meta Elab Command in
 run_cmd liftTermElabM do
   let env ← getEnv
-  for k in [7, 8, 9, 10, 11] do
+  for k in ([7, 8, 9, 10, 11] : List Nat) do
     let o := Name.mkStr (`HDec.HSyn) s!"OpenTextbookLeaves{k}"
     let c := Name.mkStr (`HDec.HSyn) s!"OpenTextbookLeaves{k}Cqj"
     let fo := getStructureFieldsFlattened env o (includeSubobjectFields := false)
@@ -815,11 +815,14 @@ run_cmd liftTermElabM do
     let expect := fo.filter (· != `igusaGL2)
     unless fc == expect do throwError "fields differ for {k}: {fc} vs {expect}"
     for f in fc do
-      let to ← inferType (mkConst (o ++ f))
-      let tc ← inferType (mkConst (c ++ f))
-      let ro ← forallTelescope to fun _ b => pure b
-      let rc ← forallTelescope tc fun _ b => pure b
+      let tyO ← inferType (mkConst (o ++ f))
+      let tyC ← inferType (mkConst (c ++ f))
+      let ro ← forallTelescope tyO fun _ b => pure b
+      let rc ← forallTelescope tyC fun _ b => pure b
       -- field types may mention the bundle only through the projection's argument; compare result types
       unless (← isDefEq ro rc) || (toString (← ppExpr ro) == toString (← ppExpr rc)) do
         throwError "field type differs {k}.{f}: {ro} vs {rc}"
     logInfo m!"OpenTextbookLeaves{k}Cqj: {fc.size} fields = original {fo.size} minus igusaGL2 (types checked)"
+
+#check @ZInQ.OneProof.frozenTarget
+#check @ZInQ.Contrib.TYZChain.frozenTarget_cqj2
