@@ -1461,6 +1461,266 @@ theorem semistableNeronBaseChange_of_printed_best (hB : BLR_1_2_4) (h3 : SGA3_VI
   semistableNeronBaseChange_of_printed_final'' hB h3 h7 hE hG (idCompSubgroup_of h3 hG) ga
     (idCompBaseChangeDVR_of h3 hG)
 
+/-! # Part S, final: SS2 from published-form leaves only
+
+`OpenSubgroupIsIdComp` is avoided: the identity component group model `𝒢₀` built here has image exactly `𝒢⁰`
+(`IdentityComponentOLRange`), the local SGA 7 IX 3.3 step is used in the form "open subgroup with image `𝒩⁰`"
+(`IdentityComponentBaseChangeDVRRange`), and the image of `𝒢₀ ×_{𝓞_L} O` is `(𝒩 ×_{𝓞_L} O)⁰` by
+`idComp_baseChange`. The global argument is reduct-glue's `semistableNeronBaseChangeLocalGlobal_of`, copied with
+these two changes. -/
+
+open ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- reduct-glue's `IdentityComponentOL` with the image of `𝒢₀` pinned down: `Set.range i = 𝒢⁰`. -/
+def IdentityComponentOLRange : Prop :=
+  ∀ (K : Type) [Field K] (A : PkgI3.AbVar K) (L : Type) [Field L] [NumberField L] [Algebra K L]
+    (𝒢 : GroupModel A L), ∃ (𝒢₀ : GroupModel A L) (i : 𝒢₀.G ⟶ 𝒢.G), IsOpenImmersion i.left ∧
+      IsMonHom i ∧ Set.range i.left = idCompSet 𝒢.G
+
+open ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- **`IdentityComponentOLRange`, PROVED** from SGA 3 VI_B 3.10 and the bundle leaf
+`AVGlue.GeomConnOfRationalPoint` (the construction of `identityComponentGroupModel_of`). -/
+theorem identityComponentOLRange_of (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRationalPoint) :
+    IdentityComponentOLRange := by
+  intro K _ A L _ _ _ 𝒢
+  have hO : IsOpen (idCompSet 𝒢.G) := h3 _ 𝒢.G
+  have gc := idCompSubgroup_of h3 hG
+  have ge := idCompGenericFibre
+  let W : 𝒢.G.left.Opens := ⟨idCompSet 𝒢.G, hO⟩
+  have hW : OpenSub.IsSubgroupOpen 𝒢.G W :=
+    { one := fun s => idCompSet_one 𝒢.G s
+      mul := (gc _ 𝒢.G).1
+      inv := (gc _ 𝒢.G).2 }
+  letI : GrpObj (OpenSub.G0 W) := OpenSub.grpG0 hW
+  have hmon : IsMonHom (OpenSub.incl W) := OpenSub.isMonHom_incl hW
+  haveI : Smooth (OpenSub.G0 W).hom := show Smooth (W.ι ≫ 𝒢.G.hom) from inferInstance
+  haveI : IsSeparated (OpenSub.G0 W).hom := show IsSeparated (W.ι ≫ 𝒢.G.hom) from inferInstance
+  haveI : QuasiCompact (OpenSub.G0 W).hom := by
+    haveI : IsLocallyNoetherian 𝒢.G.left := LocallyOfFiniteType.isLocallyNoetherian 𝒢.G.hom
+    haveI : CompactSpace 𝒢.G.left := QuasiCompact.compactSpace_of_compactSpace 𝒢.G.hom
+    haveI : IsNoetherian 𝒢.G.left := {}
+    show QuasiCompact (W.ι ≫ 𝒢.G.hom)
+    infer_instance
+  let jL := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L))
+  have hmap : ((Over.pullback jL).map (OpenSub.incl W)).left =
+      pullback.map (W.ι ≫ 𝒢.G.hom) jL 𝒢.G.hom jL W.ι (𝟙 _) (𝟙 _) (by simp) (by simp) := by
+    apply pullback.hom_ext <;> simp [Over.pullback_map_left]
+  haveI : IsOpenImmersion (OpenSub.incl W).left := show IsOpenImmersion W.ι from inferInstance
+  have hiso : IsIso ((Over.pullback jL).map (OpenSub.incl W)).left := by
+    rw [isIso_iff_isOpenImmersion_and_surjective]
+    refine ⟨ZInQ.H5Glue.isOpenImmersion_pullback_map _ _, ⟨fun z => ?_⟩⟩
+    have hz : z ∈ Set.range ((Over.pullback jL).map (OpenSub.incl W)).left := by
+      rw [hmap, Scheme.Pullback.range_map]
+      refine ⟨?_, ⟨pullback.snd 𝒢.G.hom jL z, rfl⟩⟩
+      show pullback.fst 𝒢.G.hom jL z ∈ Set.range W.ι
+      rw [Scheme.Opens.range_ι]
+      apply ge K A L 𝒢
+      have h1 : 𝒢.G.hom (pullback.fst 𝒢.G.hom jL z) = jL (pullback.snd 𝒢.G.hom jL z) := by
+        rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+      rw [h1]
+      set p := pullback.snd 𝒢.G.hom jL z
+      have hp : p.asIdeal = ⊥ :=
+        (Ideal.eq_bot_or_top p.asIdeal).resolve_right p.isPrime.ne_top
+      show Ideal.comap (algebraMap (𝓞 L) L) p.asIdeal = ⊥
+      rw [hp]
+      exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective (𝓞 L) L)
+    exact hz
+  haveI : IsIso ((Over.forget _).map ((Over.pullback jL).map (OpenSub.incl W))) := hiso
+  haveI : IsIso ((Over.pullback jL).map (OpenSub.incl W)) :=
+    isIso_of_reflects_iso _ (Over.forget _)
+  let e := asIso ((Over.pullback jL).map (OpenSub.incl W))
+  haveI := hmon
+  let 𝒢₀ : GroupModel A L :=
+    { G := OpenSub.G0 W
+      gen := e ≪≫ 𝒢.gen
+      gen_hom := by
+        letI : GrpObj (genericFibre L (OpenSub.G0 W)) := Functor.grpObjObj
+        letI : GrpObj (genericFibre L 𝒢.G) := Functor.grpObjObj
+        letI : GrpObj ((Over.pullback jL).obj (OpenSub.G0 W)) := Functor.grpObjObj
+        letI : GrpObj ((Over.pullback jL).obj 𝒢.G) := Functor.grpObjObj
+        have h1 : IsMonHom ((Over.pullback jL).map (OpenSub.incl W)) := inferInstance
+        exact @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ h1 𝒢.gen_hom }
+  exact ⟨𝒢₀, OpenSub.incl W, inferInstanceAs (IsOpenImmersion W.ι), hmon, Scheme.Opens.range_ι W⟩
+
+
+open ReductSplit in
+/-- reduct-split's local `IdentityComponentBaseChangeDVR` with the connectedness hypotheses on `U` replaced
+by `Set.range i = 𝒩⁰` (the form in which it is used below). -/
+def IdentityComponentBaseChangeDVRRange : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (K' : Type) [Field K'] [Algebra K K'] [FiniteDimensional K K'] (O' : ValuationSubring K')
+    [IsDiscreteValuationRing O'] (hO : O'.comap (algebraMap K K') = O) (A : PkgI3.AbVar K),
+    HasSemistableReduction A O →
+    ∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel →
+    ∀ 𝒩' : GroupModelO (A.baseChange K') O', 𝒩'.IsNeronModel →
+    ∀ (U : Over (Spec (CommRingCat.of O))) [GrpObj U] (i : U ⟶ 𝒩.G), IsOpenImmersion i.left →
+      IsMonHom i → Set.range i.left = idCompSet 𝒩.G →
+      ∃ j : (Over.pullback (Spec.map (CommRingCat.ofHom (comapHom hO)))).obj U ⟶ 𝒩'.G,
+        IsOpenImmersion j.left ∧
+        (letI : GrpObj ((Over.pullback (Spec.map (CommRingCat.ofHom (comapHom hO)))).obj U) :=
+          Functor.grpObjObj
+         IsMonHom j)
+
+open ReductSplit in
+/-- **`IdentityComponentBaseChangeDVRRange`, PROVED** from the printed SGA 3 VI_B 3.10, SGA 7 IX 3.3 and the
+bundle leaf `AVGlue.GeomConnOfRationalPoint` (the argument of `identityComponentFromPrinted_of`). -/
+theorem identityComponentBaseChangeDVRRange_of (h3 : SGA3_VIB_3_10) (h7 : SGA7_IX_3_3)
+    (hG : AVGlue.GeomConnOfRationalPoint) : IdentityComponentBaseChangeDVRRange := by
+  intro K _ O _ K' _ _ _ O' _ hO A hss 𝒩 h𝒩 𝒩' h𝒩' U _ i hoi hmi hri
+  have gb := idCompBaseChangeDVR_of h3 hG
+  let N := ReductGlue.bcDVR hO 𝒩
+  haveI : Smooth (𝟙_ (Over (Spec (CommRingCat.of O')))).hom :=
+    ZInQ.Contrib.NeronC.smooth_tensorUnit _
+  haveI : Smooth (N.G ⊗ N.G).hom := ZInQ.Contrib.NeronC.smooth_tensor _ _ inferInstance inferInstance
+  obtain ⟨c, hc⟩ := (h𝒩' N.G).2 N.gen.hom
+  simp only at hc
+  have hcm : IsMonHom c :=
+    ReductGlue.isMonHom_of_ext (Over.pullback (jO O')) N.gen.hom 𝒩'.gen.hom N.gen_hom 𝒩'.gen_hom
+      (h𝒩' _).1 (h𝒩' _).1 c hc
+  have hciso : IsIso ((Over.pullback (jO O')).map c) := by
+    have : IsIso ((Over.pullback (jO O')).map c ≫ 𝒩'.gen.hom) := by
+      rw [hc]; exact Iso.isIso_hom N.gen
+    exact @IsIso.of_isIso_comp_right _ _ _ _ _ _ _ (Iso.isIso_hom 𝒩'.gen) this
+  letI : GrpObj (bcO hO 𝒩.G) := Functor.grpObjObj
+  have hW : IsOpen (idCompSet (bcO hO 𝒩.G)) := h3 _ (bcO hO 𝒩.G)
+  let W : (bcO hO 𝒩.G).left.Opens := ⟨idCompSet (bcO hO 𝒩.G), hW⟩
+  obtain ⟨hWo, -⟩ := h7 K O K' O' hO A hss 𝒩 h𝒩 𝒩' h𝒩' c hcm hciso W rfl
+  let g := Spec.map (CommRingCat.ofHom (comapHom hO))
+  let k := (Over.pullback g).map i
+  haveI : IsOpenImmersion i.left := hoi
+  haveI : IsOpenImmersion k.left := ZInQ.H5Glue.isOpenImmersion_pullback_map _ i
+  have hkmap : k.left = pullback.map U.hom g 𝒩.G.hom g i.left (𝟙 _) (𝟙 _) (by simp) (by simp) := by
+    apply pullback.hom_ext <;> simp [k, Over.pullback_map_left]
+  have hrk : Set.range k.left = Set.range W.ι := by
+    rw [Scheme.Opens.range_ι, hkmap, Scheme.Pullback.range_map]
+    have hga := hri
+    have hgb := gb K O K' O' hO 𝒩.G
+    have hid : Set.range ((𝟙 (Spec (CommRingCat.of O')) : Spec (CommRingCat.of O') ⟶ _) :
+        Spec (CommRingCat.of O') → Spec (CommRingCat.of O')) = Set.univ :=
+      Set.range_eq_univ.mpr (fun x => ⟨x, rfl⟩)
+    rw [hid, Set.preimage_univ, Set.inter_univ, hga]
+    exact hgb
+  refine ⟨k ≫ c, ?_, ?_⟩
+  · show IsOpenImmersion (k.left ≫ c.left)
+    have hfac := IsOpenImmersion.isoOfRangeEq_hom_fac k.left W.ι hrk
+    generalize IsOpenImmersion.isoOfRangeEq k.left W.ι hrk = eW at hfac
+    have e : k.left ≫ c.left = eW.hom ≫ (W.ι ≫ c.left) := by
+      rw [← hfac]
+      exact Category.assoc _ _ _
+    rw [e]
+    haveI := hWo
+    infer_instance
+  · letI : GrpObj ((Over.pullback g).obj U) := Functor.grpObjObj
+    have hk : IsMonHom k := inferInstance
+    exact @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ hk hcm
+
+
+open ReductSplit ReductGlue ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- **The field `semistableNeronBaseChange` (SS2) from published-form leaves alone** (compiled): BLR 1.2/4,
+SGA 3 VI_B 3.10, SGA 7 IX 3.3, EGA IV 8.10.5 (open immersions) and the bundle leaf
+`AVGlue.GeomConnOfRationalPoint` (Stacks 04KV). No glue Prop is left. -/
+theorem semistableNeronBaseChange_of_printed_full (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+    (h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (hG : AVGlue.GeomConnOfRationalPoint) :
+    ZInQ.HeightSplit.SemistableNeronBaseChange := by
+  have hIC := identityComponentOLRange_of h3 hG
+  have h33 := identityComponentBaseChangeDVRRange_of h3 h7 hG
+  have hOI := openImmersionLocalization hE
+  have hL := neronLocalizesDVR_of_printed hB
+  intro K _ _ A L _ _ _ 𝒩 h𝒩 hss L' _ _ _ _ _ 𝒩' h𝒩'
+  obtain ⟨𝒢₀, i, hoi, hmi, hri⟩ := hIC K A L 𝒩
+  haveI : FiniteDimensional L L' := Module.Finite.of_restrictScalars_finite ℚ L L'
+  let gLL : Spec (CommRingCat.of (𝓞 L')) ⟶ Spec (CommRingCat.of (𝓞 L)) :=
+    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (𝓞 L')))
+  let 𝒱 : GroupModel A L' := ZInQ.H5Glue.GroupModel.baseChange L L' 𝒩
+  let 𝒰 : GroupModel A L' := ZInQ.H5Glue.GroupModel.baseChange L L' 𝒢₀
+  let jL' : Spec (CommRingCat.of L') ⟶ Spec (CommRingCat.of (𝓞 L')) :=
+    Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L') L'))
+  letI : GrpObj ((Over.pullback jL').obj 𝒰.G) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback jL').obj 𝒩'.G) := Functor.grpObjObj
+  obtain ⟨j, hj⟩ := (h𝒩' 𝒰.G).2 𝒰.gen.hom
+  simp only at hj
+  haveI : Smooth (𝟙_ (Over (Spec (CommRingCat.of (𝓞 L'))))).hom :=
+    ZInQ.Contrib.NeronC.smooth_tensorUnit _
+  haveI : Smooth (𝒰.G ⊗ 𝒰.G).hom := ZInQ.Contrib.NeronC.smooth_tensor _ _ inferInstance inferInstance
+  have hjm : IsMonHom j :=
+    isMonHom_of_ext (Over.pullback jL') 𝒰.gen.hom 𝒩'.gen.hom 𝒰.gen_hom 𝒩'.gen_hom
+      (h𝒩' _).1 (h𝒩' _).1 j hj
+  haveI := hmi
+  letI : GrpObj ((Over.pullback gLL).obj 𝒢₀.G) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback gLL).obj 𝒩.G) := Functor.grpObjObj
+  refine ⟨𝒰, 𝒱, ⟨Iso.refl _, (inferInstance : IsMonHom (𝟙 𝒱.G))⟩, ⟨j, ?_, hjm⟩,
+    ⟨(Over.pullback gLL).map i, ZInQ.H5Glue.isOpenImmersion_pullback_map _ i,
+      (inferInstance : IsMonHom ((Over.pullback gLL).map i))⟩⟩
+  -- `j` is an open immersion: check at every DVR `O'` of `L'`
+  refine hOI L' 𝒰.G 𝒩'.G j (fun O' _ => ?_)
+  let O : ValuationSubring L := O'.comap (algebraMap L L')
+  haveI : IsDiscreteValuationRing O := dvrComapFinite L L' O' inferInstance
+  haveI := center_isMaximal O
+  have hO : O'.comap (algebraMap L L') = O := rfl
+  have hssO : HasSemistableReduction (A.baseChange L) O :=
+    (semistableLocalGlobal_leaf hL K A L 𝒩 h𝒩).mp hss O inferInstance
+  let N := toO 𝒩' O'
+  have hN : N.IsNeronModel := hL K A L' 𝒩' h𝒩' O'
+  let N' := N.transport (bcbcIso A L L') (bcbcIso_isMonHom A L L')
+  have hN' : N'.IsNeronModel := N.transport_isNeronModel _ _ hN
+  let U := (Over.pullback (gO O)).obj 𝒢₀.G
+  letI : GrpObj U := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (gO O)).obj 𝒩.G) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (gO O)).obj 𝒢₀.G) := Functor.grpObjObj
+  have hmiO : IsMonHom ((Over.pullback (gO O)).map i) := inferInstance
+  -- the image of `U` is the identity component of `𝒩 ×_{𝓞_L} O`
+  have hrange : Set.range ((Over.pullback (gO O)).map i).left =
+      CToPrinted.idCompSet ((Over.pullback (gO O)).obj 𝒩.G) := by
+    haveI : IsOpenImmersion i.left := hoi
+    have hkmap : ((Over.pullback (gO O)).map i).left = pullback.map 𝒢₀.G.hom (gO O) 𝒩.G.hom (gO O)
+        i.left (𝟙 _) (𝟙 _) (by simp) (by simp) := by
+      apply pullback.hom_ext <;> simp [Over.pullback_map_left]
+    rw [hkmap, Scheme.Pullback.range_map]
+    have hid : Set.range ((𝟙 (Spec (CommRingCat.of O)) : Spec (CommRingCat.of O) ⟶ _) :
+        Spec (CommRingCat.of O) → Spec (CommRingCat.of O)) = Set.univ :=
+      Set.range_eq_univ.mpr (fun x => ⟨x, rfl⟩)
+    rw [hid, Set.preimage_univ, Set.inter_univ, hri]
+    exact CToPrinted.idComp_baseChange h3 hG (gO O) 𝒩.G
+  obtain ⟨j', hj'o, hj'm⟩ := h33 L O L' O' hO (A.baseChange L) hssO (toO 𝒩 O)
+    (hL K A L 𝒩 h𝒩 O) N' hN' U ((Over.pullback (gO O)).map i)
+    (ZInQ.H5Glue.isOpenImmersion_pullback_map _ i) hmiO hrange
+  -- compare `T = 𝒰 ×_{𝓞_{L'}} O'` with `U ×_O O'`
+  have hsq : gO O' ≫ gLL = Spec.map (CommRingCat.ofHom (comapHom hO)) ≫ gO O := by
+    rw [← Spec.map_comp, ← Spec.map_comp]
+    rfl
+  let c := isoX (pbCompIso (gO O') gLL _ hsq (Grp.mk 𝒢₀.G)) ≪≫
+    (isoX (pbCompIso (Spec.map (CommRingCat.ofHom (comapHom hO))) (gO O) _ rfl (Grp.mk 𝒢₀.G))).symm
+  let T := (Over.pullback (gO O')).obj 𝒰.G
+  haveI : Smooth T.hom := by change Smooth (pullback.snd 𝒰.G.hom (gO O')); infer_instance
+  let j₂ : T ⟶ N.G := c.hom ≫ j'
+  haveI : IsOpenImmersion j₂.left := by
+    have h1 : IsOpenImmersion c.hom.left := by
+      haveI : IsIso c.hom.left := Functor.map_isIso (Over.forget _) c.hom
+      infer_instance
+    have h2 : IsOpenImmersion j'.left := hj'o
+    show IsOpenImmersion (c.hom.left ≫ j'.left)
+    exact @IsOpenImmersion.comp _ _ _ _ _ h1 h2
+  -- generic identification of `T`
+  let eT : (Over.pullback (jO O')).obj T ≅ (A.baseChange L').X :=
+    isoX (pbCompIso (jO O') (gO O') _ (jO_gO O') (Grp.mk 𝒰.G)) ≪≫ 𝒰.gen
+  have h₂ : IsIso ((Over.pullback (jO O')).map j₂) := by
+    haveI : IsOpenImmersion ((Over.pullback (jO O')).map j₂).left :=
+      ZInQ.H5Glue.isOpenImmersion_pullback_map _ j₂
+    exact isIso_of_openImmersion_of_iso (A.baseChange L') eT N.gen _
+  have hcomp := pbCompIso_natural' (jO O') (gO O') _ (jO_gO O') j
+  have hjL : IsIso ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L') L')))).map j) := by
+    have : IsIso ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L') L')))).map j ≫
+        𝒩'.gen.hom) := by
+      rw [hj]; exact Iso.isIso_hom 𝒰.gen
+    exact @IsIso.of_isIso_comp_right _ _ _ _ _ _ _ (Iso.isIso_hom 𝒩'.gen) this
+  have h₁ : IsIso ((Over.pullback (jO O')).map ((Over.pullback (gO O')).map j)) := by
+    have : IsIso ((Over.pullback (jO O')).map ((Over.pullback (gO O')).map j) ≫
+        (isoX (pbCompIso (jO O') (gO O') _ (jO_gO O') (Grp.mk 𝒩'.G))).hom) := by
+      rw [hcomp]
+      exact @IsIso.comp_isIso _ _ _ _ _ _ _ (Iso.isIso_hom _) hjL
+    exact @IsIso.of_isIso_comp_right _ _ _ _ _ _ _ (Iso.isIso_hom _) this
+  exact isOpenImmersion_of_neron N hN T ((Over.pullback (gO O')).map j) j₂ h₁ h₂
+
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
@@ -1474,3 +1734,4 @@ end CToPrinted
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_final'
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_final''
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_best
+#print axioms CToPrinted.semistableNeronBaseChange_of_printed_full

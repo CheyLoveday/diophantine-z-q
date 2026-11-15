@@ -101,3 +101,15 @@ of the e38375b3 build). One Lean process at a time.
   [IsNoetherian S] [QuasiCompact G.hom]; W ×_S W → S geometrically connected via GeometricallyConnected.comp).
 - `semistableNeronBaseChange_of_printed_best` (4 printed leaves + bundle leaf GeomConnOfRationalPoint + one glue
   `OpenSubgroupIsIdComp`) COMPILES, standard axioms.
+
+## Part S, FINAL: SS2 from published-form leaves only (no glue)
+- `idComp_baseChange` (identity component commutes with any base change S' → S, S noetherian, G smooth qc) PROVED
+  from SGA3_VIB_3_10 + GeomConnOfRationalPoint.
+- `IdentityComponentOLRange` (𝒢₀ with range i = 𝒢⁰) PROVED: `identityComponentOLRange_of h3 hG`.
+- `IdentityComponentBaseChangeDVRRange` (reduct-split's local form with `range i = 𝒩⁰` instead of connectedness)
+  PROVED: `identityComponentBaseChangeDVRRange_of h3 h7 hG`.
+- `semistableNeronBaseChange_of_printed_full : BLR_1_2_4 → SGA3_VIB_3_10 → SGA7_IX_3_3 → EGAIV_8_10_5_openImm →
+  AVGlue.GeomConnOfRationalPoint → ZInQ.HeightSplit.SemistableNeronBaseChange` COMPILES, axioms
+  [propext, Classical.choice, Quot.sound] (VERIFIED). Proof = reduct-glue's semistableNeronBaseChangeLocalGlobal_of
+  copied with the two forms above; OpenSubgroupIsIdComp no longer needed.
+- No sorry, no axiom in scratch/c-to-printed/*.lean (VERIFIED by grep).
