@@ -140,4 +140,53 @@ theorem dft_chiDMod_nonunit (hD : IsOddFundDisc D) [NeZero D.natAbs] (a : ZMod D
 
 end Character
 
+/-! ## Slash-action lemmas for a newform of trivial nebentypus -/
+
+section Slash
+
+open Matrix Matrix.SpecialLinearGroup UpperHalfPlane
+open Matrix.GeneralLinearGroup (upperRightHom)
+open scoped MatrixGroups ModularForm
+
+variable {N : ℕ} [NeZero N]
+
+theorem upperRightHom_intCast (m : ℤ) :
+    (upperRightHom (m : ℝ) : GL (Fin 2) ℝ) = mapGL ℝ (ModularGroup.T ^ m) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.GeneralLinearGroup.upperRightHom_apply]
+
+omit [NeZero N] in
+/-- A cusp form of level `Γ₁(N)` is invariant under `τ ↦ τ + m`, `m ∈ ℤ`. -/
+theorem slash_upperRightHom_add_intCast {k : ℤ} (F : CuspForm ((Gamma1 N).map (mapGL ℝ)) k)
+    (x : ℝ) (m : ℤ) :
+    (⇑F ∣[k] (upperRightHom (x + m) : GL (Fin 2) ℝ)) = ⇑F ∣[k] (upperRightHom x : GL (Fin 2) ℝ) := by
+  rw [add_comm, AddChar.map_add_eq_mul, SlashAction.slash_mul, upperRightHom_intCast,
+    SlashInvariantForm.slash_action_eqn F]
+  refine ⟨ModularGroup.T ^ m, ?_, rfl⟩
+  show ModularGroup.T ^ m ∈ Gamma1 N
+  rw [Gamma1_mem]
+  simp [ModularGroup.coe_T_zpow]
+
+/-- The Fricke involution acts on a newform of trivial nebentypus (weight 2) by its sign. -/
+theorem slash_frickeGL_newform (f : Newform N 2) (hχ : f.χ = 1) :
+    (⇑f.toCuspForm ∣[(2 : ℤ)] TauCeti.frickeGL ℝ N) = f.frickeSign hχ • ⇑f.toCuspForm := by
+  have h := congrArg (fun F : CuspForm _ 2 => (⇑F : ℍ → ℂ))
+    (f.normalizedFrickeOperatorCusp_eq_frickeSign_smul hχ)
+  simp only [TauCeti.coe_normalizedFrickeOperatorCusp] at h
+  have h1 : TauCeti.atkinLehnerNormalizer N 2 = 1 := by
+    simp [TauCeti.atkinLehnerNormalizer]
+  rw [h1, one_smul] at h
+  rw [h, FunLike.coe_smul]
+
+/-- A newform of trivial nebentypus is invariant under `Γ₀(N)`. -/
+theorem slash_gamma0_newform (f : Newform N 2) (hχ : f.χ = 1) (γ : SL(2, ℤ))
+    (hγ : γ ∈ Gamma0 N) : (⇑f.toCuspForm ∣[(2 : ℤ)] (mapGL ℝ γ : GL (Fin 2) ℝ)) = ⇑f.toCuspForm := by
+  have h := (mem_cuspFormCharSpace_iff_nebentypus 2 f.χ f.toCuspForm).mp
+    f.mem_charSpace ⟨γ, hγ⟩
+  rw [hχ] at h
+  simpa using h
+
+end Slash
+
 end ZInQ.GZFH
