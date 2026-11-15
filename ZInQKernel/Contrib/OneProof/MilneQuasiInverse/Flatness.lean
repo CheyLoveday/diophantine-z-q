@@ -90,6 +90,17 @@ theorem kernelPair_fst_props_of_isPullback {φ : X ⟶ Y} {φ' : X' ⟶ Y'} {b :
   rw [Scheme.Hom.finrank_of_isPullback _ _ _ _ sq x]
   exact hN _
 
+-- The two `backward.isDefEq` options below are the ones Mathlib itself sets for this pattern at
+-- this pin: `Morphisms/Flat.lean` (the `IsZariskiLocalAtTarget.restrict` instance for `Flat` sets
+-- `respectTransparency.types false`; the low-priority `Flat` instance using
+-- `cancel_right_of_respectsIso @Flat` sets `respectTransparency false`) and
+-- `Morphisms/FlatRank.lean` (`Scheme.Hom.one_le_finrank_iff_surjective`, whose
+-- `wlog`/`iff_of_openCover`/`cancel_left_of_respectsIso` structure this proof follows). Without
+-- them, synthesis of `IsZariskiLocalAtTarget @Flat` and `MorphismProperty.RespectsIso @Flat`
+-- through the generic `HasRingHomProperty` instances fails. They only affect elaboration-time
+-- unification; the kernel checks the resulting term as usual.
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
 /-- **Flatness from the kernel pair.** A finite surjective morphism `φ : X ⟶ Y` onto a reduced
 scheme is flat as soon as the first projection of its kernel pair is finite and flat of constant
 rank. -/
@@ -126,18 +137,19 @@ theorem flat_of_kernelPair (φ : X ⟶ Y) [IsFinite φ] [Surjective φ]
   rw [MorphismProperty.cancel_left_of_respectsIso @IsFinite] at hfin
   haveI := hfl
   haveI := hfin
-  simp only [Scheme.Hom.finrank_comp_left_of_isIso] at hN
+  rw [Scheme.Hom.finrank_comp_left_of_isIso] at hN
   haveI : Module.Flat S (S ⊗[R] S) := by
     rw [Flat.SpecMap_iff, CommRingCat.hom_ofHom, RingHom.flat_algebraMap_iff] at hfl
     exact hfl
   haveI : Module.Finite R S := (IsFinite.SpecMap_iff ψ).mp inferInstance
   haveI : _root_.IsReduced R := (affine_isReduced_iff R).mp inferInstance
   have hsurj : Function.Surjective (PrimeSpectrum.comap (algebraMap R S)) :=
-    (surjective_iff (Spec.map ψ)).mp inferInstance
+    (AlgebraicGeometry.surjective_iff (Spec.map ψ)).mp inferInstance
   have hrk : ∀ q : PrimeSpectrum S, Module.rankAtStalk (R := S) (S ⊗[R] S) q = N := fun q =>
     (Scheme.Hom.finrank_SpecMap_algebraMap S (S ⊗[R] S) q).symm.trans (hN q)
+  have hflatRS : Module.Flat R S := RingFlatness.flat_of_rankAtStalk_tensor_self hsurj hrk
   rw [Flat.SpecMap_iff]
-  exact RingHom.flat_algebraMap_iff.mpr (RingFlatness.flat_of_rankAtStalk_tensor_self hsurj hrk)
+  exact (RingHom.flat_algebraMap_iff (R := R) (S := S)).mpr hflatRS
 
 end KernelPair
 
@@ -183,15 +195,12 @@ theorem isPullback_shear {A B : PkgI3.AbVar K} (f : PkgI3.AbVar.Hom A B) :
     (fun s => pullback.lift s.snd (s.snd * (s.fst ≫ pullback.fst f.hom η[B.X]))
       (by rw [MonObj.mul_comp, kerOver_condition f s.fst, mul_one]))
     (fun s => ?_) (fun s => ?_) (fun s m h₁ h₂ => ?_))
-  · try dsimp only
-    apply pullback.hom_ext
+  · apply pullback.hom_ext
     · rw [Category.assoc, shearMap_fst, MonObj.comp_mul, GrpObj.comp_inv, pullback.lift_fst,
         pullback.lift_snd, inv_mul_cancel_left]
     · exact toUnit_unique _ _
-  · try dsimp only
-    exact pullback.lift_fst _ _ _
-  · try dsimp only
-    apply pullback.hom_ext
+  · exact pullback.lift_fst _ _ _
+  · apply pullback.hom_ext
     · rw [pullback.lift_fst, h₂]
     · rw [pullback.lift_snd, ← h₂, ← h₁, Category.assoc, shearMap_fst, MonObj.comp_mul,
         GrpObj.comp_inv, mul_inv_cancel_left]
