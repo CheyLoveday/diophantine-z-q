@@ -738,15 +738,16 @@ def OpenSubgroupIsIdComp : Prop :=
     Set.range i.left = idCompSet 𝒩.G
 
 /-- **GLUE `IdCompBaseChangeDVR`** (the identity component commutes with base change; SGA 3 VI_B 3.3,
-UNVERIFIED). For a smooth group scheme `G` over a DVR `O` and `O ⊆ O'`, the preimage of `G⁰` in `G ×_O O'`
-is `(G ×_O O')⁰`. Needs: `(G_s)⁰` has a rational point, so it is geometrically connected (bundle leaf
+UNVERIFIED). For a smooth quasi-compact group scheme `G` over a DVR `O` and `O ⊆ O'`, the preimage of `G⁰` in
+`G ×_O O'` is `(G ×_O O')⁰`. (Proved below, `idCompBaseChangeDVR_of`, from SGA 3 VI_B 3.10 and the bundle leaf
+`geomConnOfRationalPoint`.) Needs: `(G_s)⁰` has a rational point, so it is geometrically connected (bundle leaf
 `geomConnOfRationalPoint`, Stacks 04KV), so `(G_s)⁰ ×_{κ(s)} κ(s')` is connected, open and closed in `G_{s'}`
 and contains `e`; and the fibre of `G ×_O O'` over `s'` is `G_s ×_{κ(s)} κ(s')`. Not in Lean. -/
 def IdCompBaseChangeDVR : Prop :=
   ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (K' : Type) [Field K'] [Algebra K K'] [FiniteDimensional K K'] (O' : ValuationSubring K')
     [IsDiscreteValuationRing O'] (hO : O'.comap (algebraMap K K') = O)
-    (G : Over (Spec (CommRingCat.of O))) [GrpObj G] [Smooth G.hom],
+    (G : Over (Spec (CommRingCat.of O))) [GrpObj G] [Smooth G.hom] [QuasiCompact G.hom],
     letI : GrpObj (bcO hO G) := Functor.grpObjObj
     pullback.fst G.hom (Spec.map (CommRingCat.ofHom (comapHom hO))) ⁻¹' idCompSet G =
       idCompSet (bcO hO G)
@@ -1189,6 +1190,129 @@ theorem idCompGeomFibres (hG : AVGlue.GeomConnOfRationalPoint) : IdCompGeomFibre
   haveI : IsNoetherian 𝒢.G.left := {}
   exact connectedSpace_pullback_idComp hG 𝒢.G W hW (ResBar 𝔭)
     (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (ResBar 𝔭))))
+
+/-- The unit of a base change of a group scheme, followed by the projection, is the unit composed with the
+base change map. -/
+theorem unit_bc_fst {S S' : Scheme.{0}} (g : S' ⟶ S) (G : Over S) [GrpObj G] :
+    letI : GrpObj ((Over.pullback g).obj G) := Functor.grpObjObj
+    (η[(Over.pullback g).obj G] : 𝟙_ (Over S') ⟶ _).left ≫ pullback.fst G.hom g =
+      g ≫ (η[G] : 𝟙_ (Over S) ⟶ G).left := by
+  letI : GrpObj ((Over.pullback g).obj G) := Functor.grpObjObj
+  have h1 : (η[(Over.pullback g).obj G] : 𝟙_ (Over S') ⟶ _) =
+      Functor.LaxMonoidal.ε (Over.pullback g) ≫ (Over.pullback g).map η[G] := rfl
+  rw [h1, Over.comp_left, Category.assoc]
+  simp only [Over.pullback_map_left, pullback.lift_fst]
+  have hw := Over.w (Functor.LaxMonoidal.ε (Over.pullback g))
+  have hc : pullback.fst (𝟙_ (Over S)).hom g = pullback.snd (𝟙_ (Over S)).hom g ≫ g := by
+    rw [← pullback.condition]; exact (Category.comp_id _).symm
+  rw [← Category.assoc, hc, ← Category.assoc]
+  erw [hw]
+  exact congrArg (· ≫ _) (Category.id_comp g)
+
+/-- **The glue `IdCompBaseChangeDVR`, PROVED** from the printed SGA 3 VI_B 3.10 (openness of `G⁰`) and the
+bundle leaf `AVGlue.GeomConnOfRationalPoint` (Stacks 04KV). For `s' ∈ Spec O'`, the set
+`P = {w : fst w ∈ G⁰, w over s'}` is the image of `G⁰ ×_O Spec κ(s')`, which is connected
+(`connectedSpace_pullback_idComp`), so `P ⊆ (G ×_O O')⁰`; conversely the image under `fst` of the component of
+`e'(s')` is a connected subset of `G_{g(s')}` containing `e(g(s'))`. -/
+theorem idCompBaseChangeDVR_of (h3 : SGA3_VIB_3_10) (hG : AVGlue.GeomConnOfRationalPoint) :
+    IdCompBaseChangeDVR := by
+  intro K _ O _ K' _ _ _ O' _ hO G _ _ _
+  letI : GrpObj (bcO hO G) := Functor.grpObjObj
+  let g : Spec (CommRingCat.of O') ⟶ Spec (CommRingCat.of O) :=
+    Spec.map (CommRingCat.ofHom (ReductSplit.comapHom hO))
+  let W : G.left.Opens := ⟨idCompSet G, h3 _ G⟩
+  have hW : (W : Set G.left) = idCompSet G := rfl
+  haveI : IsLocallyNoetherian G.left := LocallyOfFiniteType.isLocallyNoetherian G.hom
+  haveI : CompactSpace G.left := QuasiCompact.compactSpace_of_compactSpace G.hom
+  haveI : IsNoetherian G.left := {}
+  let e' := (η[bcO hO G] : 𝟙_ (Over (Spec (CommRingCat.of O'))) ⟶ _).left
+  let e := (η[G] : 𝟙_ (Over (Spec (CommRingCat.of O))) ⟶ G).left
+  have hu1 : ∀ s', pullback.fst G.hom g (e' s') = e (g s') := by
+    intro s'
+    rw [← Scheme.Hom.comp_apply, unit_bc_fst g G, Scheme.Hom.comp_apply]
+  have hu2 : ∀ s', pullback.snd G.hom g (e' s') = s' := by
+    intro s'
+    show (bcO hO G).hom (e' s') = s'
+    rw [← Scheme.Hom.comp_apply, Over.w]
+    rfl
+  have hfib : ∀ w : (bcO hO G).left, G.hom (pullback.fst G.hom g w) = g (pullback.snd G.hom g w) := by
+    intro w
+    rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+  -- the sets `P s'` are preconnected
+  have hP : ∀ s' : Spec (CommRingCat.of O'), _root_.IsPreconnected
+      {w : (bcO hO G).left | pullback.fst G.hom g w ∈ W ∧ pullback.snd G.hom g w = s'} := by
+    intro s'
+    let f0 := W.ι ≫ G.hom
+    let m2 := pullback.map f0 g G.hom g W.ι (𝟙 _) (𝟙 _) (by simp [f0]) (by simp)
+    let r := (Spec (CommRingCat.of O')).fromSpecResidueField s'
+    let m1 := pullback.fst (pullback.snd f0 g) r
+    haveI hc : ConnectedSpace ↥(pullback f0 (r ≫ g)) :=
+      connectedSpace_pullback_idComp hG G W hW
+        (↑((Spec (CommRingCat.of O')).residueField s')) (r ≫ g)
+    haveI : ConnectedSpace ↥(pullback (pullback.snd f0 g) r) :=
+      (Scheme.homeoOfIso (pullbackLeftPullbackSndIso f0 g r)).connectedSpace_iff.mpr hc
+    have hrange : Set.range (m1 ≫ m2) =
+        {w : (bcO hO G).left | pullback.fst G.hom g w ∈ W ∧ pullback.snd G.hom g w = s'} := by
+      ext w
+      constructor
+      · rintro ⟨u, rfl⟩
+        constructor
+        · rw [← Scheme.Hom.comp_apply, Category.assoc, pullback.lift_fst, ← Category.assoc,
+            Scheme.Hom.comp_apply]
+          have : W.ι ((m1 ≫ pullback.fst f0 g) u) ∈ Set.range W.ι := ⟨_, rfl⟩
+          rwa [Scheme.Opens.range_ι] at this
+        · rw [← Scheme.Hom.comp_apply, Category.assoc, pullback.lift_snd, Category.comp_id,
+            pullback.condition, Scheme.Hom.comp_apply]
+          have : r (pullback.snd (pullback.snd f0 g) r u) ∈ Set.range r := ⟨_, rfl⟩
+          rwa [Scheme.range_fromSpecResidueField] at this
+      · rintro ⟨h1, h2⟩
+        have hw : w ∈ Set.range m2 := by
+          rw [Scheme.Pullback.range_map]
+          refine ⟨?_, ⟨pullback.snd G.hom g w, rfl⟩⟩
+          show pullback.fst G.hom g w ∈ Set.range W.ι
+          rw [Scheme.Opens.range_ι]
+          exact h1
+        obtain ⟨v, rfl⟩ := hw
+        have hv : pullback.snd f0 g v ∈ Set.range r := by
+          rw [Scheme.range_fromSpecResidueField]
+          have : (m2 ≫ pullback.snd G.hom g) v = s' := h2
+          rw [pullback.lift_snd, Category.comp_id] at this
+          exact this
+        have hv' : v ∈ Set.range m1 := by
+          rw [Scheme.Pullback.range_fst]
+          exact hv
+        obtain ⟨u, rfl⟩ := hv'
+        exact ⟨u, rfl⟩
+    rw [← hrange]
+    exact (isConnected_range (m1 ≫ m2).continuous).isPreconnected
+  ext z
+  constructor
+  · intro hz
+    let s' := pullback.snd G.hom g z
+    show z ∈ connectedComponentIn ((bcO hO G).hom ⁻¹' {(bcO hO G).hom z}) (e' ((bcO hO G).hom z))
+    refine (hP s').subset_connectedComponentIn ⟨?_, hu2 s'⟩ ?_ ⟨hz, rfl⟩
+    · rw [hu1]
+      exact idCompSet_one G (g s')
+    · rintro w ⟨-, hw⟩
+      exact hw
+  · intro hz
+    let s' := pullback.snd G.hom g z
+    have hz' : z ∈ connectedComponentIn (pullback.snd G.hom g ⁻¹' {s'}) (e' s') := hz
+    set C := connectedComponentIn (pullback.snd G.hom g ⁻¹' {s'}) (e' s')
+    have hC : _root_.IsPreconnected (pullback.fst G.hom g '' C) :=
+      isPreconnected_connectedComponentIn.image _ (pullback.fst G.hom g).continuous.continuousOn
+    have hsub : pullback.fst G.hom g '' C ⊆ G.hom ⁻¹' {g s'} := by
+      rintro _ ⟨w, hw, rfl⟩
+      show G.hom (pullback.fst G.hom g w) = g s'
+      rw [hfib]
+      exact congrArg g (connectedComponentIn_subset (pullback.snd G.hom g ⁻¹' {s'}) _ hw)
+    have hmem : e (g s') ∈ pullback.fst G.hom g '' C :=
+      ⟨e' s', mem_connectedComponentIn (hu2 s'), hu1 s'⟩
+    have := hC.subset_connectedComponentIn hmem hsub ⟨z, hz', rfl⟩
+    show pullback.fst G.hom g z ∈ connectedComponentIn (G.hom ⁻¹' {G.hom (pullback.fst G.hom g z)})
+      (e (G.hom (pullback.fst G.hom g z)))
+    rw [hfib]
+    exact this
 
 /-- `IdentityComponentOL` (reduct-glue's SGA 3 leaf) from the printed SGA 3 VI_B 3.10 and the three
 topological glue Props. -/
