@@ -49,3 +49,75 @@
   `exists_printedF_iff : (∃ f, Lemma29Printed (genusPeriod f) ∧ Prop23Odd f) ↔ TYZLemma29Mod2`.
 - §4 `thm11Mod2_iff (h11 : TYZThm11Integral) : TYZThm11Mod2 ↔ TYZLemma29Mod2`.
 - Axioms of all five: [propext, Classical.choice, Quot.sound] (VERIFIED).
+
+## Run 2 (2026-11-15 02:38 PST): source now present, genuine definitions
+- `~/tyz-src/Period7.tex` now exists (3357 lines, read-only, dated 11-14 06:37). All checks below are
+  re-done against it: **VERIFIED (read in the source)**. Nothing copied into the repository.
+- Build: the run-1 build tree is gone; copied `~/dzq-check-w49/.lake/build` (78b9171f, ancestor of the base; only 4
+  ZInQKernel files differ, none imported here), built `TYZChain.Lcal` (54 s). For `#discharges`, copied
+  `~/dzq-wt/yu-prune-base/.lake/build` (c2ad4181 = base + TailZ32/Main change only) and built Main.
+
+### Numbering (VERIFIED: `\newtheorem{thm}{Theorem}[section]`, lem/prop/cor/defn share the counter, L244–252)
+- Section 2 environments: Thm 2.1 L554 (`thm2.1`), Thm 2.2 L571 (`LQ`), **Prop 2.3 L580** (`odd`), Thm 2.4 L613,
+  Lemma 2.5 L646, **Thm 2.6 L809** (label `thm2.3`), Def 2.7 L842, **Lemma 2.8 L1009** (label `lem2.6`, symmetry),
+  **Lemma 2.9 L1062** (unlabelled). No remark/example environments in L496–1163.
+
+### Statement checks (each VERIFIED by reading the line range)
+- S0 setting (L498): §2 assumes `n ≡ 1, 2, 3 (mod 8)` positive squarefree. Leaves restrict to `1, 3`: weaker. OK.
+- S1 Lemma 2.9 (L1062–1066): `Σ ε(d₁,d₂)𝓛(d₁)𝓛(d₂) = Q(n)`, `ε = ±1`, non-ordered `n = d₁d₂`, `d₁, d₂ > 0`,
+  `d₂ ≡ 1 (mod 8)`. Matches `Lemma29At` / `pairIdx` (C3, C4 of run 1 rechecked). OK.
+- S2 the factor `w_K` (B1): proof of Lemma 2.9 (L1068–1077): non-ordered form of (PQ) is
+  `Σ P = 2^{h₂−δ}Q`, `δ = 1` iff `n ≡ 1 (8)`; Thm 2.1 (L554–560): `P = ±2^{k−a} w_K 𝓛𝓛`, `a = 1` for odd `n`,
+  `2w_K = #μ(K)`. With `h₂ + 1 = #(primes | disc)` (L996): `n ≡ 1 (8)`: disc `−4n`, `h₂ = k`, `2^{k−1}w_KΣ = 2^{k−1}Q`;
+  `n ≡ 3 (8)`: disc `−n`, `h₂ = k − 1`, `2^{k−1}w_KΣ = 2^{k−1}Q`. So the proof gives `w_K Σ ε𝓛𝓛 = Q(n)`;
+  `w_K = 3` for `ℚ(√−3)`, `1` for odd `n > 3` (and `2` for `n = 1`, excluded). B1 CONFIRMED. The leaf admits
+  `w ∈ {1; 3 at n = 3}`: implied by the print and by the corrected statement. OK.
+- S3 Prop 2.3 (L580–586): `f_n((B̂^×)²) ⊂ 1 + 2ℤ`; "Therefore" `Q(n) ≡ g(n) (mod 2)`. Leaf
+  `TYZProp23Printed` = first assertion (all `h ∈ B̂^×`), restricted to `n ≡ 1, 3`. OK. The "therefore" is glue
+  (`genusPeriod_mod_two` + `odd_on_sqClasses`), proved.
+- S4 `Q(n)` (L577–579): `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)`, "well-defined up to signs". `genusPeriodTV`: sum over
+  `sqClasses n` (= `2Cl_n`, written multiplicatively) of `f(τ̂(x_t))`, `x_t` a finite idele of class `t`. Independent
+  of `x_t` by the invariances (that is `odd_on_sqClasses`'s argument). Leaves quantify over every generator `f`
+  (both signs). OK.
+- S5 `B`, `O_B` (L507–514): `B` ramified at `2, ∞` = Hamilton `ℚ + ℚi + ℚj + ℚk`, `i² = j² = −1`, `ij = k = −ji`
+  (= Mathlib `ℍ[ℚ] = ℍ[ℚ,−1,0,−1]`); `O_B = O_B' + ℤζ`, `ζ = (−1+i+j+k)/2` (= `IsHurwitz`). OK.
+- S6 `τ` (L515–523): `τ(O_{K_n}) ⊂ O_B`; for `n ≡ 1 (8)`, `τ(√−n) = ai + bj + ck`, `n = a²+b²+c²`, `a,b,c ∈ ℤ`,
+  `4 | c`; Legendre, [JP, Thm 5] = Jones–Pall, Acta Math. 70 (1939) 165–191 (bib L3290–3292). `AdmissibleTau`
+  matches; leaves are `∀ τ` admissible (TYZ: "Fix an embedding"), which is the printed content. OK.
+- S7 `π`, `π_ℤ`, `U_n`, `R_n`, `f_n` (L525–563): `π` = JL of `f_E ∈ S₂(Γ₀(32))`, in `C^∞(B^×\B̂^×/Q̂^×)`;
+  `π_ℤ` = integer-valued elements; `U_n = R̂_n^× · K_{n,2}^×`, `R_n = O_{K_n} + 4O_B` (conductor 32);
+  `π_ℤ^{U_n}` free of rank 1 "as the special case χ = 1 in Theorem 2.6"; `f_n` a `ℤ`-generator, up to `±1`.
+  `InPiZ`: left `B^×`, right `U_n` (generated subgroup) and `𝔸ᶠ_ℚ^×` invariance, integer values, and `π` pinned
+  by `T_p`-eigenvalues `a_p(E)` at odd `p` (identification STANDARD: strong multiplicity one for GL₂ + JL
+  injectivity + multiplicity one for `B^×`; one-dimensional constituents have eigenvalue `p + 1 ≠ a_p`).
+- S8 Thm 2.6 (L809–840) at `χ = 1`: hypotheses root number `+1` of `L(E_K, s) = L(E,s)L(E_n,s)` (true for
+  `n ≡ 1,2,3`), `O_K ⊂ O_B`; `π^{U,χ₂}` one-dimensional, `π_ℤ^{U,χ₂} = ℤf`. With `U₂ = ℤ₂^×(1+4O_{B,2})` (L603–605):
+  `R_{n,2}^× = O_{K,2}^×(1+4O_{B,2})`, so `U_n = U·K₂^×` and `π^{U_n} = π^{U,1}`. Cases: `n ≡ 3`: `K₂ = ℚ₂(√−3)`;
+  `n ≡ 1`: `K₂ = ℚ₂(√−1)`, `χ₂(ϖ) = 1`. `TYZTestVectorExists` (existence of a generator) is a consequence. OK.
+- S9 Hecke normalization (computed, `checks.py`): `#hurwitzNorm p = 24(p+1)` for `p = 3, 5, 7, 11, 13`
+  (VERIFIED); every norm-`p` Hurwitz `α` lies in `O_{B,p}^× ϖ O_{B,p}^×`; `α, α'` give the same right coset iff
+  `α' ∈ αO_B^×` (`|O_B^×| = 24`, L668), so the sum is `24·T_p`. `apE p = p + 1 − #E(𝔽_p)` for `p ≤ 13`
+  (VERIFIED; `a₅ = −2`, `a₁₃ = 6`).
+- S10 Remark (not used): Thm 2.1's "P ≠ 0 only if d₂ ≡ 1 (mod 8)" read literally for `n ≡ 3 (8)` with
+  `(d₁, d₂) ≡ (1, 3)` contradicts `χ_{d₁,d₂} = χ_{d₂,d₁}` (L998–999); its proof (L983–984) only shows the case
+  `d₂ ≡ −1`. Lemma 2.9's sum (one factor `≡ 1`) is unaffected. Recorded, not pursued.
+- S11 Prop 2.3's proof (L1134–1160) uses `χ₀(g) = 1` from Lemma 2.8's proof (needs `4 | c`): included in
+  `AdmissibleTau`. OK.
+
+### Lean (run 2)
+- `scratch/h29-split/H29Split.lean` §5 (compiled 02:54, 0 errors): `qι`, `IsHurwitz`, `hurwitzHat`, `sqrtNeg`,
+  `AdmissibleTau`, `tauHat` (+ `tauHat_algebraMap`), `tauHatU`, `RnHat`, `RnUnits`, `IsPlaceTwo`, `K2Units`, `Un`,
+  `eAt`, `ιAt`, `apE`, `hurwitzNorm`, `quatOf`, `InPiZ`, `IsTestVector`, `clLift`, `genusPeriodTV`; leaves
+  `TYZTauExists`, `TYZTestVectorExists`, `TYZLemma29Printed`, `TYZProp23Printed`; glue `tauHatU_mem_Un`,
+  `odd_on_sqClasses`, `tvFun`, **`tyzLemma29Mod2_of_printedLeaves`**: axioms [propext, Classical.choice, Quot.sound].
+- `ZInQKernel/Contrib/OneProof/TYZLemma29Mod2.lean` (§1, §2, §5 of the scratch file; compiled 02:56, 0 errors).
+- Build for the discharge check: `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges
+  ZInQKernel.Contrib.OneProof.TYZLemma29Mod2` on the copied tree: success (12937 jobs; TailZ27–TailZ31, Main built);
+  `ZInQ.OneProof.frozenTarget` axioms [propext, Classical.choice, Quot.sound].
+- `#discharges` (`scratch/h29-split/DischargesH29.lean`, output `DischargesH29-output.txt`, VERIFIED 02:58):
+  `DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves`, still assumes
+  `[TYZTauExists, TYZTestVectorExists, TYZLemma29Printed, TYZProp23Printed]`, axioms [propext, Classical.choice,
+  Quot.sound]; `66 open hypotheses, 1255 theorems checked, 4 discharge one` (the other three are folded contributions).
+- autofold: `scratch/h29-split/autofold.json` written; `autofold.py --dry-run` answers `not a field of the current
+  bundles: ['h29']` (VERIFIED): autofold.py folds bundle fields only, and `h29` is a plain argument of
+  `frozenTarget` (kinds.tsv row `frozenTarget h29 composite`). The fold is by hand (see the report).
