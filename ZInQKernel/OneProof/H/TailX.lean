@@ -103,7 +103,6 @@ structure OpenResearchLeaves7 : Prop where
   r17 : _root_.LadicCond.CarayolR17'
   r18 : ZInQ.LeafPush2.R18_Javanpeykar
   r19 : ZInQ.DefFaltings.R19_GaudronRemond
-  r20 : ZInQ.DefFaltings.R20_FaltingsLemma5
   r21 : ZInQ.DefFaltings.R21_Bost
   r22 : ZInQ.LeafPush2.R22_Pazuki
   h5fin : ZInQ.DefFaltings.StableHeightFinite
@@ -135,8 +134,6 @@ structure OpenTextbookLeaves7 : Prop where
   /-- homlattice, via av-split, H-69: GAGA for homomorphisms of complex abelian varieties. -/
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   t11bExists : AVB2.T11bExists
-  /-- hodge-split, H-32: `B_dR^{G_{ℚ_p}} = ℚ_p` (Fontaine, Astérisque 223 Exp. II; replaces `t23`). -/
-  bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
   t24 : _root_.PkgI4.EigenformTwist
   /-- qm-split, H-35: Yu 2013 Thm 1.1 with its splitting clause (replaces `t27`). -/
   yuThm11 : QMSplit.Yu.YuThm11
@@ -215,7 +212,6 @@ theorem researchLeaves5_of_open7 (r : OpenResearchLeaves7) (l : OpenAddedLeaves7
   r17 := r.r17
   r18 := r.r18
   r19 := r.r19
-  r20 := r.r20
   r21 := r.r21
   r22 := r.r22
   h5fin := r.h5fin
@@ -231,7 +227,6 @@ theorem textbookLeaves6_of_open7 (t : OpenTextbookLeaves7) (l : OpenAddedLeaves7
     (isogenyQuasiInverseAG_lf7 l.milneIsogenyQuasiInverse) t.geomConnOfRationalPoint t.groupSchemeEquidim
   homLatticeCorr := _root_.AvSplit.Final.h69 t.uniformizationLeafAll t.gagaMorphism
   t11bExists := t.t11bExists
-  t23 := HodgeLF7.t23 (_root_.ZInQ.Contrib.HodgeSplit.t23_all_of_bdrInvariants t.bdRInvariants)
   t24 := t.t24
   t27 := QMSplit.Yu.qmDichotomyYu_of_yu t.yuThm11
   t33 := t.t33

@@ -96,9 +96,6 @@ structure OpenResearchLeaves8 : Prop where
   /-- height-split, H-14: Javanpeykar 2014 Thm 1.1.1 for curves over `K` with a `K`-rational Belyi function,
   replaces `r18`. -/
   javanpeykarBound : _root_.ZInQ.HeightSplit.JavanpeykarBound
-  /-- height-split, H-16: Faltings 1983 Lemma 5 (semistable form) over every number field `L ⊇ K`, replaces
-  `r20`. -/
-  faltingsLemma5BC : _root_.ZInQ.HeightSplit.FaltingsLemma5BC
   /-- height-split, H-18: the upper half of Pazuki 2012 Cor. 1.3(2), replaces `r22`. -/
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces `r19`. -/
@@ -117,7 +114,6 @@ structure OpenTextbookLeaves8 : Prop where
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
-  bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
   yuThm11 : QMSplit.Yu.YuThm11
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
@@ -152,27 +148,6 @@ structure OpenAddedLeaves8 : Prop where
   igusaCMValue24 : LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24
 
 /-! ## From the new bundles to leaf-fold7's -/
-
-/-- Height-split's leaf bundle from the new research fields and N1 (from `neronSchemeExtensionExists`). -/
-theorem heightLeaves_of8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8) :
-    _root_.ZInQ.HeightSplit.HeightLeaves where
-  n1 := _root_.ZInQ.Contrib.NeronC.neronModelExists_of_extension t.neronSchemeExtensionExists
-  ss1 := r.semistableReductionThm
-  ss2 := r.semistableNeronBaseChange
-  ss3 := r.semistablePersists
-  bost := r.bostLowerBound
-  javanpeykar := r.javanpeykarBound
-  faltings5 := r.faltingsLemma5BC
-  pazuki := r.pazukiCor13Upper
-  gaudronRemond := r.gaudronRemondThm14
-
-/-- The six height rows from height-split's leaves and T35 (av-split's `h38` from the textbook fields). -/
-theorem heightRows_of8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8) :
-    _root_.ZInQ.LeafPush2.R18_Javanpeykar ∧ _root_.ZInQ.DefFaltings.R19_GaudronRemond ∧
-      _root_.ZInQ.DefFaltings.R20_FaltingsLemma5 ∧ _root_.ZInQ.DefFaltings.R21_Bost ∧
-      _root_.ZInQ.LeafPush2.R22_Pazuki ∧ _root_.ZInQ.DefFaltings.StableHeightFinite :=
-  _root_.ZInQ.HeightGlue.heightRows_of_t35 (heightLeaves_of8 r t)
-    (_root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed)
 
 /-- **The five height rows other than R20** (sem-prune), from the fields `heightRows_of8` reads except
 `faltingsLemma5BC`: the proofs of `ZInQ.HeightSplit.heightRows_of`'s other components. -/
@@ -228,7 +203,6 @@ theorem researchLeaves7_of_open8 (r : OpenResearchLeaves8) (t : OpenTextbookLeav
   r17 := r.r17
   r18 := r18_lf8 (heightRowsNo20_of8 r t).1
   r19 := (heightRowsNo20_of8 r t).2.1
-  r20 := (heightRows_of8 r t).2.2.1
   r21 := (heightRowsNo20_of8 r t).2.2.1
   r22 := r22_lf8 (heightRowsNo20_of8 r t).2.2.2.1
   h5fin := (heightRowsNo20_of8 r t).2.2.2.2
@@ -247,7 +221,6 @@ theorem textbookLeaves7_of_open8 (t : OpenTextbookLeaves8) : OpenTextbookLeaves7
   uniformizationLeafAll := t.uniformizationLeafAll
   gagaMorphism := t.gagaMorphism
   t11bExists := t11bExists_lf8
-  bdRInvariants := t.bdRInvariants
   t24 := _root_.ZInQ.Contrib.CloudW08EigenformTwists.EigenformTwist_proof
   yuThm11 := t.yuThm11
   t33 := t.t33

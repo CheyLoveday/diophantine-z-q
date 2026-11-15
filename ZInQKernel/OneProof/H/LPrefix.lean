@@ -11669,7 +11669,6 @@ structure TextbookLeaves : Prop where
   -- leaf-adopt3: T20, T21 in local form are proved (t-different: `PkgI6.hilbertDifferentFormula`,
   -- `PkgI6.differentBound`); the global forms above remain leaves. T22 (both parts) is proved
   -- (`PkgI6.herbrandQuotient`, `PkgI6.herbrandTransitivity`), no longer a field.
-  t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
   t24 : EigenformTwist
   t25 : PkgI4.NewformOfEigenform
   t26 : PkgI3.TateModuleFree
@@ -12148,10 +12147,6 @@ def R20Lower : Prop :=
     ∀ x y : ℝ, _root_.ZInQ.DefFaltings.stableFaltingsHeight A = x →
       _root_.ZInQ.DefFaltings.stableFaltingsHeight B = y →
       -((1 / 2) * Real.log (_root_.ZInQ.DefFaltings.isogDeg φ)) ≤ x - y
-
-/-- R20 gives its lower half (for the callers off the chain that still hold R20). -/
-theorem r20Lower_of_r20 (h : _root_.ZInQ.DefFaltings.R20_FaltingsLemma5) : R20Lower :=
-  fun K _ _ A B φ hφ x y hx hy => (abs_le.mp (h K A B φ hφ x y hx hy)).1
 
 /-- **E3-E4 numerics on concrete objects (proved from R19, R20, R21).** Over a number field `L`,
 for `J` of dimension `g ≥ 2` with an isogeny `J → P`, `h_F(A) + h_F(Z) ≤ h_F(P)`, `dim Z ≤ g`,
@@ -13728,7 +13723,6 @@ theorem textbookLeaves_of_open (t : OpenTextbookLeaves) : TextbookLeaves where
   t16a := t16a_proved
   t17 := t17_proved
   t18 := t18_proved
-  t23 := t.t23
   t24 := t.t24
   t25 := t25_proved
   t26 := t.t26

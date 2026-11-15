@@ -4,7 +4,7 @@ import Lean
 /-!
 # Dead cascade of the prune
 
-Run after `PruneScan.lean` has written `scratch/sem-prune/prune-set.txt`:
+Run after `PruneScan.lean` has written `scratch/sem-prune/prune-set-applied.txt`:
 
     lake env lean scratch/sem-prune/DeadCascade.lean
 
@@ -49,7 +49,7 @@ end DeadCascade
 open DeadCascade in
 run_cmd do
   let env ← getEnv
-  let txt ← IO.FS.readFile "scratch/sem-prune/prune-set.txt"
+  let txt ← IO.FS.readFile "scratch/sem-prune/prune-set-applied.txt"
   -- dead fields: (structure, field name), and their projection functions
   let mut dead : Std.HashSet (Name × Name) := {}
   let mut deadProj : NameSet := {}

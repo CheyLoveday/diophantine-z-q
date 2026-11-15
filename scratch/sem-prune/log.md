@@ -20,3 +20,12 @@
   then `ReductSplit.faltingsLemma5BCLower_final`, TailZ7 copy of faltingsLemma5BC_of_base). researchLeaves7_of_open8
   takes r18, r19, r21, r22, h5fin from `heightRowsNo20_of8` (no faltingsLemma5BC). Off-chain callers use
   `r20Lower_of_r20 r.r20` / `faltingsLemma5BCLower_of_BC r.faltingsLemma5BC`.
+- PruneScan after plumbing: OpenResearchLeaves14.raynaudKernelBound and OpenTextbookLeaves10.bdRInvariants UNUSED;
+  prune set 20 entries (prune-set-scan.txt): 17 fields + 3 constants. HeightLeaves.faltings5 (TailY, height-split's
+  leaf structure, not a bundle generation) is not deleted (prune-set-applied.txt = scan minus that line).
+  DeadCascade (on prune-set-applied): 21 dead readers (+ generated casesOn/recOn). heightLeaves_of8 and heightRows_of8
+  (TailZ4) also deleted: in the closure only through the deleted r20 assignment, they read the deleted
+  OpenResearchLeaves8.faltingsLemma5BC (DeadCascade skips closure constants). One assignment the first draft missed
+  (TailZ15 researchLeaves9_of_open10 faltingsLemma5BC) added to prune_edit.py. The two off-chain conversions
+  g9GlueNoT23_of_g9Glue and r20Lower_of_r20 lost all users and were removed.
+- Step 2 (prune) compiles: `lake build +ZInQKernel.OneProof.Main` OK, frozenTarget: propext, Classical.choice, Quot.sound.

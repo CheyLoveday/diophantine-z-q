@@ -25,7 +25,6 @@ structure OpenTextbookLeaves10 : Prop where
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
-  bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
   yuThm11 : QMSplit.Yu.YuThm11
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
   igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
@@ -45,7 +44,6 @@ theorem textbookLeaves9_of_open10 (t : OpenTextbookLeaves10) : OpenTextbookLeave
   groupSchemeEquidim := t.groupSchemeEquidim
   uniformizationLeafAll := t.uniformizationLeafAll
   gagaMorphism := t.gagaMorphism
-  bdRInvariants := t.bdRInvariants
   yuThm11 := t.yuThm11
   dimJacobianEqGenus := _root_.ModularSplit.DimJac.dimJacobianEqGenus
   regularSmoothPerfect := t.regularSmoothPerfect

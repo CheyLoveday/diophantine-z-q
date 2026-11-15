@@ -91,7 +91,6 @@ structure OpenResearchLeaves5 : Prop where
   r17 : _root_.LadicCond.CarayolR17'
   r18 : ZInQ.LeafPush2.R18_Javanpeykar
   r19 : ZInQ.DefFaltings.R19_GaudronRemond
-  r20 : ZInQ.DefFaltings.R20_FaltingsLemma5
   r21 : ZInQ.DefFaltings.R21_Bost
   r22 : ZInQ.LeafPush2.R22_Pazuki
   /-- H5's finiteness half (its `NeronModelMinimal` half is proved, h5-glue). -/
@@ -119,7 +118,6 @@ theorem researchLeaves2_of_open5 (r : OpenResearchLeaves5) : OpenResearchLeaves2
   r17 := carayolR17_ofK5 r.r17
   r18 := r.r18
   r19 := r.r19
-  r20 := r.r20
   r21 := r.r21
   r22 := r.r22
   h5fin := r.h5fin
@@ -221,7 +219,6 @@ theorem textbookLeaves4_of_open5 (t : OpenTextbookLeaves5) (l : OpenAddedLeaves5
   t9 := t9_of_leaves5 l.t09SymmIsogenyExists l.isogenyQuasiInverse
   homLatticeCorr := homLatticeCorr_ofK5 t.homLatticeCorr
   t11b := t11b_of_exists5 t.t11bExists
-  t23 := t.t23
   t24 := eigenformTwist_ofK5 t.t24
   t27 := qmDichotomyYu_ofK5 t.t27
   t33 := jacobianExists_ofK5 t.t33
@@ -259,18 +256,6 @@ theorem glue4_of_open5 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves5) (l : 
   heckeVertWitness := heckeVertWitness_of_leaves5 l.shimuraGoodReduction r.r1r2 (torsionStructure_ofK5 t.t5)
     g.modelCoordinateResidue l.curveBijIso
 
-/-- **G0 with only the open leaves and the open glue** (leaf-fold5; no `sorry`, standard axioms).
-`ZInQ.SixContactMin` follows from
-* `OpenResearchLeaves5`: 26 research-level fields (nine restated over the kernel's Props);
-* `OpenTextbookLeaves5`: 21 textbook fields;
-* `OpenAddedLeaves5`: 21 added leaves;
-* `OpenGlue5`: 2 glue Props (`ModelCoordinateResidue`, `SimpleImageIsogeny`).
-The table of every field is `docs/research/leaf-fold5.md` §2. -/
-theorem sixContactMin_of_open5 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves5)
-    (l : OpenAddedLeaves5) (g : OpenGlue5) : ZInQ.SixContactMin :=
-  sixContactMin_of_open4 (researchLeaves2_of_open5 r) (textbookLeaves4_of_open5 t l g) (addedLeaves4_of_open5 t l)
-    (glue4_of_open5 r t l g) (G0Split.r20Lower_of_r20 r.r20)
-
 end HSyn
 
 end
@@ -290,7 +275,6 @@ end
 #print axioms HSyn.textbookLeaves4_of_open5
 #print axioms HSyn.addedLeaves4_of_open5
 #print axioms HSyn.glue4_of_open5
-#print axioms HSyn.sixContactMin_of_open5
 
 end G0A2_e90_fold5
 

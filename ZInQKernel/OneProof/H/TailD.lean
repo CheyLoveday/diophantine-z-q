@@ -74,7 +74,6 @@ structure ResearchLeaves3 : Prop where
   they say something only together with `h5` (`StableHeightFinite`), which is where a defect of
   the definition would surface, as a false leaf (rv-leaves48, `RvLeaves48D`). -/
   r19 : ZInQ.DefFaltings.R19_GaudronRemond
-  r20 : ZInQ.DefFaltings.R20_FaltingsLemma5
   r21 : ZInQ.DefFaltings.R21_Bost
   /-- R22, Pazuki's upper half, over all uniformizations and period matrices (leaf-push2). -/
   r22 : ZInQ.LeafPush2.R22_Pazuki
@@ -107,7 +106,6 @@ theorem researchLeaves3_of (r : ResearchLeaves) : ResearchLeaves3 :=
     r16 := r.r16,
     r18 := r.r18,
     r19 := r.r19,
-    r20 := r.r20,
     r21 := r.r21,
     r22 := r.r22,
     h5fin := r.h5.1 }
@@ -608,24 +606,11 @@ theorem gluePieces_of_gluePieces3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp
       (G0AssembleMod.linkedTateData_of_local t.t7 gp.linkedTateLocal))
   heightCopies := G0HeightCopies.heightCopiesAgree
 
-/-- **G0 after waves 26-27** (g0-assemble2): the leaf bundles (`ResearchLeaves3`: no `opaque`
-placeholder) and `GluePieces3` imply `ZInQ.SixContactMin`. -/
-theorem sixContactMin_of_leaves3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp : GluePieces3) :
-    ZInQ.SixContactMin :=
-  sixContactMin_of_leavesR3 r t (gluePieces_of_gluePieces3 r t gp) (G0Split.r20Lower_of_r20 r.r20)
-
-/-- The same with Leaves.lean's `ResearchLeaves` (which implies `ResearchLeaves3`). -/
-theorem sixContactMin_of_leaves3' (r : ResearchLeaves) (t : TextbookLeaves) (gp : GluePieces3) :
-    ZInQ.SixContactMin :=
-  sixContactMin_of_leaves3 (researchLeaves3_of r) t gp
-
 end HSyn
 
 end
 
 #print axioms HSyn.gluePieces_of_gluePieces3
-#print axioms HSyn.sixContactMin_of_leaves3
-#print axioms HSyn.sixContactMin_of_leaves3'
 #print axioms HSyn.researchLeaves3_of
 
 end G0A2_z90_bundle3

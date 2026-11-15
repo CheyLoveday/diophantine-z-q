@@ -657,8 +657,6 @@ structure OpenResearchLeaves14 : Prop where
   /-- c-to-printed, printed form: Faltings 1983, Lemma 5 (the change of the Faltings height under an isogeny
   through `log #s*Ω¹` of its kernel; locator UNVERIFIED). With `raynaudKernelBound` replaces `faltingsLemma5BC`. -/
   faltingsLemma5Printed : _root_.CToPrinted.FaltingsLemma5Printed
-  /-- c-to-printed, printed form: Raynaud's bound on the kernel term in Faltings' Lemma 5 (locator UNVERIFIED). -/
-  raynaudKernelBound : _root_.CToPrinted.RaynaudKernelBound
   /-- c-to-printed, printed form: SGA 3 VI_B 3.10 (the identity component `G⁰` of a smooth group scheme is open;
   number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
   sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
@@ -798,7 +796,6 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
   semistablePersists := (ss1_ss3_of14 r t l).2
   bostLowerBound := r.bostLowerBound
   javanpeykarBound := r.javanpeykarBound
-  faltingsLemma5BC := _root_.CToPrinted.faltingsLemma5BC_of_printed r.faltingsLemma5Printed r.raynaudKernelBound
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
   semistableReductionDVR := semistableReductionDVR_of14 r t

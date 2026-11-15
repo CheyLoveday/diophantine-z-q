@@ -118,7 +118,6 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
     r.neronSchemeModelExistsDVR (semistableLocalGlobal_of10 r)
   bostLowerBound := r.bostLowerBound
   javanpeykarBound := r.javanpeykarBound
-  faltingsLemma5BC := r.faltingsLemma5BC
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
   semistableReductionDVR := r.semistableReductionDVR

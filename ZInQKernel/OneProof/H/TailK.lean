@@ -167,7 +167,6 @@ structure OpenTextbookLeaves4 : Prop where
   /-- hom-unify: analytic representation of homomorphisms (replaces T11(a) and `HomLinearLift`). -/
   homLatticeCorr : HomUnify.HomLatticeCorr
   t11b : ZInQ.LeafPush2.T11b_Rigidity
-  t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
   t24 : EigenformTwist
   t27 : PkgI3.QMDichotomyYu
   t33 : LeafModCurves.JacobianExists ℚ
@@ -236,7 +235,6 @@ theorem textbookLeaves3_of_open4 (t : OpenTextbookLeaves4) : OpenTextbookLeaves3
   t9 := t.t9
   homLatticeCorr := t.homLatticeCorr
   t11b := t.t11b
-  t23 := t.t23
   t24 := t.t24
   t26 := tateModuleFree_of_t5' t.t5
   t27 := t.t27
