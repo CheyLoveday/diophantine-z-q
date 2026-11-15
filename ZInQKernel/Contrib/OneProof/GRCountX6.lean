@@ -45,7 +45,7 @@ open LeafQM LeafQM.AV
 
 /-! ## 1. The printed count, model-free, and the field from it -/
 
-/-- **LEAF (González–Rotger, J. Math. Soc. Japan 58 (2006), Prop. 5.6, p. 943, at
+/-- **LEAF (González–Rotger, J. Math. Soc. Japan 58 (2006), Prop. 5.6, p. 943 (read by the locator audit), at
 `(D, N) = (6, 1)`, on `X₀(6,1)`; printed form, without the existence of the model).**
 
 *Published statement*: for an order `R` of conductor prime to `DN` in an imaginary quadratic field `k` that embeds
@@ -67,8 +67,8 @@ where some `p ∣ 6` splits; conductor prime to 6 then follows. Given any witnes
 `R5fpCount` (`prop56X6_of_r5fpCount`, `r5fpCount_of_prop56X6`); it carries no information about the model, which
 comes from the field `gonzalezRotgerX6Ab`. The passage from the printed points over `ℂ` to classes of
 polarization-free QM pairs over `ℚ̄` (the type-`μ` polarization lemma, then descent of CM pairs) is standard glue.
-Prop. 5.6's wording and locator (p. 943, `D(R)N(R)`) are unchecked against the paper: confirm that `D(R)` is the
-product of the `p ∣ D` with `(R/p) = −1`. Statement review 2026-11-14 (two lenses, AI, from memory): faithful. -/
+The statement review could not check Prop. 5.6's wording against the paper (the locator audit read it): a reader
+with the paper should confirm that `D(R)` is the product of the `p ∣ D` with `(R/p) = −1`. Statement review 2026-11-14 (two lenses, AI, from memory): faithful. -/
 def GonzalezRotgerProp56X6 : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X),
