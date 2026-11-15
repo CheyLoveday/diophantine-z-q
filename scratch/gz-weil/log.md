@@ -67,3 +67,21 @@ Task: make gz-hl3's split of `hL3` net negative by turning `StrongWeilCurve` and
 - MainEdit: `frozenTarget_gzweil` (hL3 → WU, JacobiLambdaDeriv, HPR_Cd, GZF_Cd, GC_Cd) and
   `frozenTarget_gzweil'` (with EtaModelDifferential): both compile, standard axioms.
 - #discharges rerun (with WeilTheta): 65 open, 1434 theorems checked, 6 discharge one (unchanged; expected).
+
+## Step 5: Jacobi's derivative formula PROVED (VERIFIED, compiled, 05:25 PST)
+- dev file `scratch/gz-weil/JacobiProof.lean` → `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilJacobi.lean`.
+- J1 theta T-laws (termwise), squared S-laws from Mathlib `jacobiTheta₂_functional_equation`;
+  J2 nonvanishing (triple product; θ₂ via S-law), log-derivative S-laws (`log_deriv_S`, derivative of the
+  squared identity, no cpow derivative);
+  J3 E₁,E₂,E₃ laws: S: E₁↦t²E₂, E₂↦t²E₁, E₃↦−t²E₃; T: E₁↦−E₃, E₂↦−E₂, E₃↦−E₁; P = ΣEᵢ², R = ΣEᵢ²Eⱼ²;
+  J4 slash invariance via Mathlib `slash_action_generators_SL2Z`;
+  J5 analyticity; J6 limits at i∞ (`norm_uTheta_sub_two_le`: ‖θ(t/2;t) − 2‖ ≤ 2r/(1−r); Cauchy estimate
+  `tendsto_deriv_zero`); J7 `PForm : CuspForm 𝒮ℒ 4`, `RForm : CuspForm 𝒮ℒ 8` ⇒ 0
+  (`CuspForm.rank_eq_zero_of_weight_lt_twelve`); J8 E₁² = ω^{±1}E₂² (identity theorem) and S ⇒ E₁ = 0.
+- Numerical sanity check of the S/T laws of θ₂'/θ₂, θ₃'/θ₃, θ₄'/θ₄ and of E₁=E₂=E₃=0
+  (`scratch/gz-weil/abc_check.py`): agreement to 1e-10 (VERIFIED).
+- `jacobiLambdaDeriv`, `etaModelDifferential`, `modularParamC1`, `shimuraCMParamCd_proved`,
+  `grossZagierHeegnerCd_of_heegnerLeaves`: all [propext, Classical.choice, Quot.sound].
+- `lake build …WeilJacobi` success (11342 jobs); out_check.txt 26 theorems standard axioms;
+  MainEdit `frozenTarget_gzweil_final` (hL3 → WU, HPR_Cd, GZF_Cd, GC_Cd) standard axioms;
+  #discharges: 65 open, 1606 theorems checked, 6 discharge one (unchanged).
