@@ -647,6 +647,133 @@ theorem card_cmSet_le (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
   obtain ⟨F, hF⟩ := exists_injective_optEmb hU hG hM k hk R hR hc
   exact ⟨Finite.of_injective F hF, Nat.card_le_card_of_injective F hF⟩
 
+/-! ## §8b Comparison of two lattice models along an isomorphism -/
+
+/-- **Two lattice models of isomorphic QM pairs differ by a unit of `𝒪`**: if `g : (A, ι) ≅ (A', ι')` and
+`Φ₁, Φ₂` are embeddings with `ι(Φ₁ a)v = ψ(a)v` and `ι(Φ₂ a)v' = ψ(a)v'`, then `Φ₂ = u Φ₁ u⁻¹` with `u ∈ 𝒪^×`.
+(The lift of `g` to `ℂ²` commutes with `ι(𝒪)`, so it is a scalar `s` with `s·ι(𝒪)v = ι(𝒪)v'`.) -/
+theorem conj_of_iso (hC : ZInQ.HomUnify.HomLatticeCorr) {A A' : PkgI3.AbVar ℂ} (hA : A.dim = 2)
+    (hA' : A'.dim = 2) {q : QMStr A} {q' : QMStr A'} (D : LatData A q) (D' : LatData A' q')
+    (g : QMIso q q') {k : Type} [Field k] [NumberField k] {R : Subring k} (ψ : k →+* ℂ)
+    (Φ₁ Φ₂ : GRCountX6.OptEmb k R) (h₁ : ∀ a, act (Φ₁.1 a) D.v = ψ a • D.v)
+    (h₂ : ∀ a, act (Φ₂.1 a) D'.v = ψ a • D'.v) : GRCountX6.ConjRel R Φ₁ Φ₂ := by
+  haveI := D.disc
+  haveI := D'.disc
+  obtain ⟨M, hM⟩ := hC.1 ℂ A A' (RingHom.id ℂ) 2 2 D.Λ D'.Λ D.Φ D'.Φ hA hA' D.hΦ D'.hΦ g.φ
+  obtain ⟨M', hM'⟩ := hC.1 ℂ A' A (RingHom.id ℂ) 2 2 D'.Λ D.Λ D'.Φ D.Φ hA' hA D'.hΦ D.hΦ g.ψ
+  -- normalized lifts
+  let N : Module.End ℂ (Fin 2 → ℂ) := D'.Fl.toLinearMap ∘ₗ M ∘ₗ D.Fl.symm.toLinearMap
+  let N' : Module.End ℂ (Fin 2 → ℂ) := D.Fl.toLinearMap ∘ₗ M' ∘ₗ D'.Fl.symm.toLinearMap
+  have hNapp : ∀ z, N z = D'.Fl (M (D.Fl.symm z)) := fun z => rfl
+  have hN'app : ∀ z, N' z = D.Fl (M' (D'.Fl.symm z)) := fun z => rfl
+  -- `M` intertwines `ρ(ι a)`
+  have hMι : ∀ (a : O) z, M (D.ρ (q.iota a) z) = D'.ρ (q'.iota a) (M z) := by
+    intro a z
+    have := HDec.HSyn.G0Split.FibreQM.lift_unique D'.hΦ
+      (M := M ∘ₗ D.ρ (q.iota a)) (M' := D'.ρ (q'.iota a) ∘ₗ M) (fun z => by
+        simp only [LinearMap.comp_apply]
+        rw [hM, D.hρ, D'.hρ, hM, Category.assoc, Category.assoc, g.equivariant a])
+    exact congrArg (fun T => T z) this
+  have hM'ι : ∀ (a : O) z, M' (D'.ρ (q'.iota a) z) = D.ρ (q.iota a) (M' z) := by
+    intro a z
+    have := HDec.HSyn.G0Split.FibreQM.lift_unique D.hΦ
+      (M := M' ∘ₗ D'.ρ (q'.iota a)) (M' := D.ρ (q.iota a) ∘ₗ M') (fun z => by
+        simp only [LinearMap.comp_apply]
+        rw [hM', D'.hρ, D.hρ, hM', Category.assoc, Category.assoc]
+        exact congrArg (D'.Φ z ≫ ·) (g.symm.equivariant a))
+    exact congrArg (fun T => T z) this
+  have hNc : ∀ x ∈ O, ∀ z, N (act x z) = act x (N z) := by
+    intro x hx z
+    have e1 : act x z = D.Fl (D.ρ (q.iota ⟨x, hx⟩) (D.Fl.symm z)) := by
+      rw [D.hFρ, LinearEquiv.apply_symm_apply]
+    rw [hNapp, e1, LinearEquiv.symm_apply_apply, hMι, D'.hFρ, hNapp]
+  have hN'c : ∀ x ∈ O, ∀ z, N' (act x z) = act x (N' z) := by
+    intro x hx z
+    have e1 : act x z = D'.Fl (D'.ρ (q'.iota ⟨x, hx⟩) (D'.Fl.symm z)) := by
+      rw [D'.hFρ, LinearEquiv.apply_symm_apply]
+    rw [hN'app, e1, LinearEquiv.symm_apply_apply, hM'ι, D.hFρ, hN'app]
+  obtain ⟨s, hs⟩ := HDec.QMLattice.commutant N hNc
+  obtain ⟨s', hs'⟩ := HDec.QMLattice.commutant N' hN'c
+  -- `M' ∘ M = id`
+  have hMM : ∀ z, M' (M z) = z := by
+    intro z
+    have := HDec.HSyn.G0Split.FibreQM.lift_unique D.hΦ (M := M' ∘ₗ M) (M' := LinearMap.id) (fun z => by
+      simp only [LinearMap.comp_apply, LinearMap.id_apply]
+      rw [hM', hM, Category.assoc, g.left, Category.comp_id])
+    exact congrArg (fun T => T z) this
+  have hMM' : ∀ z, M (M' z) = z := by
+    intro z
+    have := HDec.HSyn.G0Split.FibreQM.lift_unique D'.hΦ (M := M ∘ₗ M') (M' := LinearMap.id) (fun z => by
+      simp only [LinearMap.comp_apply, LinearMap.id_apply]
+      rw [hM, hM', Category.assoc, g.right, Category.comp_id])
+    exact congrArg (fun T => T z) this
+  have hss : s' * s = 1 := by
+    have e : N' (N D.v) = D.v := by rw [hNapp, hN'app]; simp [hMM]
+    rw [hs, hs', smul_smul] at e
+    exact D.smul_v_inj (e.trans (one_smul ℂ _).symm)
+  -- lattices
+  have hNL : ∀ w ∈ L D.v, N w ∈ L D'.v := by
+    intro w hw
+    rw [hNapp, ← D'.hΛ]
+    have hz : D.Fl.symm w ∈ D.Λ := by rw [D.hΛ, LinearEquiv.apply_symm_apply]; exact hw
+    rw [← D'.hΦ.2.1, hM, (D.hΦ.2.1 _).2 hz]
+    exact MonObj.one_comp _
+  have hN'L : ∀ w ∈ L D'.v, N' w ∈ L D.v := by
+    intro w hw
+    rw [hN'app, ← D.hΛ]
+    have hz : D'.Fl.symm w ∈ D'.Λ := by rw [D'.hΛ, LinearEquiv.apply_symm_apply]; exact hw
+    rw [← D.hΦ.2.1, hM', (D'.hΦ.2.1 _).2 hz]
+    exact MonObj.one_comp _
+  obtain ⟨x, hx, hxe⟩ := (mem_qmOrbit_iff _ _).1 (hNL _ D.v_mem)
+  obtain ⟨y, hy, hye⟩ := (mem_qmOrbit_iff _ _).1 (hN'L _ D'.v_mem)
+  rw [hs] at hxe
+  rw [hs'] at hye
+  -- `x y = 1 = y x`
+  have hxy : x * y = 1 := by
+    apply HDec.QMLattice.act_inj D.v_ne
+    rw [act_mul, ← hye, HDec.QMLattice.act_smul_vec, ← hxe, smul_smul, hss, one_smul, act_one]
+  have hss' : s * s' = 1 := by rw [mul_comm]; exact hss
+  have hyx : y * x = 1 := by
+    apply HDec.QMLattice.act_inj D'.v_ne
+    rw [act_mul, ← hxe, HDec.QMLattice.act_smul_vec, ← hye, smul_smul, hss', one_smul, act_one]
+  let u : (↥LeafQM.O)ˣ := ⟨⟨y, hy⟩, ⟨x, hx⟩, Subtype.ext hyx, Subtype.ext hxy⟩
+  refine ⟨u, fun a => ?_⟩
+  -- `D'.v = s • ι(y) D.v`
+  have hv' : D'.v = s • act y D.v := by
+    rw [← hye, smul_smul, hss', one_smul]
+  apply HDec.QMLattice.act_inj D'.v_ne
+  rw [h₂]
+  show ψ a • D'.v = act (y * Φ₁.1 a * x) D'.v
+  rw [hv', HDec.QMLattice.act_smul_vec, act_mul, act_mul, ← act_mul x y, hxy, act_one, h₁,
+    HDec.QMLattice.act_smul_vec, smul_comm]
+
+/-- Base change of an isomorphism of QM pairs along `σQ`. -/
+def qmIsoBC {P Q : QMPair Qbar} (f : QMIso P.q Q.q) : QMIso (bcQ P).q (bcQ Q).q where
+  φ := @PkgI3.AbVar.Hom.mk' ℂ _ (bcQ P).A (bcQ Q).A
+    ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.φ.hom)
+    (Functor.map.instIsMonHom (F := Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ))))
+      (f := f.φ.hom))
+  ψ := @PkgI3.AbVar.Hom.mk' ℂ _ (bcQ Q).A (bcQ P).A
+    ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.ψ.hom)
+    (Functor.map.instIsMonHom (F := Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ))))
+      (f := f.ψ.hom))
+  left := by
+    change (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.φ.hom ≫
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.ψ.hom =
+      𝟙 ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).obj P.A.X)
+    rw [← CategoryTheory.Functor.map_comp, f.left, CategoryTheory.Functor.map_id]
+  right := by
+    change (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.ψ.hom ≫
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.φ.hom =
+      𝟙 ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).obj Q.A.X)
+    rw [← CategoryTheory.Functor.map_comp, f.right, CategoryTheory.Functor.map_id]
+  equivariant a := by
+    change (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map (P.q.iota a).hom ≫
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.φ.hom =
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map f.φ.hom ≫
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Qbar ℂ)))).map (Q.q.iota a).hom
+    rw [← CategoryTheory.Functor.map_comp, ← CategoryTheory.Functor.map_comp, f.equivariant a]
+
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
 /-- **`R5fpCountLe` (GLUE; the upper half of `LeafQM.AV.R5fpCount`, the only half the chain uses).** For an order
