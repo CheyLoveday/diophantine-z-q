@@ -292,4 +292,181 @@ theorem exists_min (z : UpperHalfPlane) :
   · exact hmin _ ⟨γ, hγ, rfl, hγz⟩
   · push Not at hγz; exact hd₀.trans hγz.le
 
+
+/-! ## The stabilizer of `p` acts on `(X, U)` linearly -/
+
+theorem coe_smul_eq {g : GL (Fin 2) ℝ} (hdet : 0 < g.det.val) (w : UpperHalfPlane) :
+    ((g • w : UpperHalfPlane) : ℂ) = num g w / denom g w :=
+  UpperHalfPlane.coe_smul_of_det_pos hdet w
+
+/-- For `y = a₀ + a₂ j`: `|cw+d|² U(ι(y)w) = αU − 2βX`, `|cw+d|² X(ι(y)w) = αX + 6βU`, `α = a₀² − 3a₂²`,
+`β = a₀a₂`. -/
+theorem cone_smul {g : GL (Fin 2) ℝ} {y : B} (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = iota y)
+    (hn : 0 < nrd y) (hI : y.imI = 0) (hK : y.imK = 0) (w : UpperHalfPlane) :
+    Complex.normSq (denom g w) * Uq (g • w) =
+        ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * Uq w - 2 * ((y.re : ℝ) * y.imJ) * Xq w ∧
+      Complex.normSq (denom g w) * Xq (g • w) =
+        ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * Xq w + 6 * ((y.re : ℝ) * y.imJ) * Uq w := by
+  have hdet := det_pos_of hg hn
+  have hD := denom_ne_zero g w
+  have hDn : Complex.normSq (denom g w) ≠ 0 := by rwa [Ne, Complex.normSq_eq_zero]
+  have e00 : (g : Matrix (Fin 2) (Fin 2) ℝ) 0 0 = (y.re : ℝ) := by rw [hg, iota_apply]; simp [hI]
+  have e01 : (g : Matrix (Fin 2) (Fin 2) ℝ) 0 1 = -3 * (y.imJ : ℝ) := by rw [hg, iota_apply]; simp [hK]
+  have e10 : (g : Matrix (Fin 2) (Fin 2) ℝ) 1 0 = (y.imJ : ℝ) := by rw [hg, iota_apply]; simp [hK]
+  have e11 : (g : Matrix (Fin 2) (Fin 2) ℝ) 1 1 = (y.re : ℝ) := by rw [hg, iota_apply]; simp [hI]
+  have hU : Uq (g • w) = Complex.normSq (num g w) / Complex.normSq (denom g w) - 3 := by
+    rw [Uq, coe_smul_eq hdet, Complex.normSq_div]
+  have hX : Xq (g • w) = 6 * (((num g w).re * (denom g w).re + (num g w).im * (denom g w).im) /
+      Complex.normSq (denom g w)) := by
+    rw [Xq, ← UpperHalfPlane.coe_re, coe_smul_eq hdet, Complex.div_re]; ring
+  rw [hU, hX]
+  constructor
+  · field_simp
+    simp only [num, denom, Uq, Xq, Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.mul_re,
+      Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, UpperHalfPlane.coe_re, UpperHalfPlane.coe_im,
+      e00, e01, e10, e11]
+    ring
+  · field_simp
+    simp only [num, denom, Uq, Xq, Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.mul_re,
+      Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, UpperHalfPlane.coe_re, UpperHalfPlane.coe_im,
+      e00, e01, e10, e11]
+    ring
+
+theorem Phi_stab {y : B} (hI : y.imI = 0) (hK : y.imK = 0) (w : UpperHalfPlane) : Phi y w = 0 := by
+  simp [Phi, Pq, Rq, Sq, hI, hK]
+
+theorem dist_stab {g : GL (Fin 2) ℝ} {y : B} (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = iota y)
+    (hn : 0 < nrd y) (hI : y.imI = 0) (hK : y.imK = 0) (w : UpperHalfPlane) :
+    dist (g • w) p0 = dist w p0 := by
+  rw [dist_eq_iff, Fp_smul hg hn, Phi_stab hI hK]; simp
+
+/-- The cone step for one stabilizer element. -/
+theorem cone_of {g : GL (Fin 2) ℝ} {y : B} (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = iota y)
+    (hn : 0 < nrd y) (hI : y.imI = 0) (hK : y.imK = 0) (w : UpperHalfPlane)
+    (h1 : ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * Xq w + 6 * ((y.re : ℝ) * y.imJ) * Uq w ≤
+      ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * Uq w - 2 * ((y.re : ℝ) * y.imJ) * Xq w)
+    (h2 : -(((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * Xq w + 6 * ((y.re : ℝ) * y.imJ) * Uq w) ≤
+      ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * Uq w - 2 * ((y.re : ℝ) * y.imJ) * Xq w) :
+    Xq (g • w) ≤ Uq (g • w) ∧ -Xq (g • w) ≤ Uq (g • w) ∧ dist (g • w) p0 = dist w p0 := by
+  obtain ⟨hu, hx⟩ := cone_smul hg hn hI hK w
+  have hm : 0 < Complex.normSq (denom g w) := Complex.normSq_pos.2 (denom_ne_zero g w)
+  refine ⟨?_, ?_, dist_stab hg hn hI hK w⟩
+  · by_contra h; push Not at h
+    have := mul_lt_mul_of_pos_left h hm
+    linarith
+  · by_contra h; push Not at h
+    have := mul_lt_mul_of_pos_left h hm
+    linarith
+
+/-! ### Six elements of the stabilizer of `p` in `Γ*` -/
+
+/-- `u₊ = (1 + j)/2`, `u₋ = (1 − j)/2` (norm one). -/
+def uP : B := ⟨1 / 2, 0, 1 / 2, 0⟩
+def uM : B := ⟨1 / 2, 0, -1 / 2, 0⟩
+
+theorem nrd_uP : nrd uP = 1 := by norm_num [nrd, uP]
+theorem nrd_uM : nrd uM = 1 := by norm_num [nrd, uM]
+theorem inO_uP : InO uP := (inO_iff _).2 ⟨0, 0, 1, 0, by ext <;> norm_num [uP]⟩
+theorem inO_uM : InO uM := (inO_iff _).2 ⟨1, 0, -1, 0, by ext <;> norm_num [uM]⟩
+
+/-- A norm-one element of `𝒪` gives an element of `Γ*`. -/
+theorem mem_of_norm_one {u : B} (hu : InO u) (hn : nrd u = 1) :
+    glOf u (by rw [hn]; norm_num) ∈ Γs :=
+  gamma1_sub (gamma1_iff.2 ⟨u, hu, coe_glOf _ _, hn⟩)
+
+theorem x6_uM : x6 * uM = (⟨0, 0, 1, 0⟩ : B) := by
+  ext <;> norm_num [x6, uM]
+
+theorem rep2 : rep 2 = x6 := by simp [rep]
+theorem repi2 : repi 2 = x6i := by simp [repi]
+
+theorem cone_step (w : UpperHalfPlane) : ∃ γ ∈ Γs,
+    Xq (γ • w) ≤ Uq (γ • w) ∧ -Xq (γ • w) ≤ Uq (γ • w) ∧ dist (γ • w) p0 = dist w p0 := by
+  set U := Uq w
+  set X := Xq w
+  have h6 : (0 : ℚ) < nrd x6 := by norm_num [nrd, x6]
+  have h6i : (0 : ℚ) < nrd x6i := by norm_num [nrd, x6i]
+  have hx6 : ((g4 2 : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ) = iota x6 := by rw [g4_coe, rep2]
+  have hx6i : (((g4 2)⁻¹ : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ) = iota x6i := by
+    rw [inv_coe (g4_coe 2) (rep_repi 2), repi2]
+  rcases le_total X U with hXU | hUX <;> rcases le_total (-X) U with hXU' | hUX'
+  · -- cone A
+    exact ⟨1, gs_one, by simpa using hXU, by simpa using hXU', by simp⟩
+  · -- `U ≤ -X`, `X ≤ U`: split by the sign of `U`
+    rcases le_total 0 U with hU | hU
+    · -- cone B: `x₆⁻¹`
+      refine ⟨(g4 2)⁻¹, gs_inv (g4_mem 2), cone_of hx6i h6i (by simp [x6i]) (by simp [x6i]) w ?_ ?_⟩ <;>
+        norm_num [x6i] <;> linarith
+    · -- cone C: `u₊`
+      refine ⟨_, mem_of_norm_one inO_uP nrd_uP,
+        cone_of (coe_glOf _ _) (by rw [nrd_uP]; norm_num) (by simp [uP]) (by simp [uP]) w ?_ ?_⟩ <;>
+        norm_num [uP] <;> linarith
+  · rcases le_total 0 U with hU | hU
+    · -- cone F: `x₆`
+      refine ⟨g4 2, g4_mem 2, cone_of hx6 h6 (by simp [x6]) (by simp [x6]) w ?_ ?_⟩ <;>
+        norm_num [x6] <;> linarith
+    · -- cone E: `u₋`
+      refine ⟨_, mem_of_norm_one inO_uM nrd_uM,
+        cone_of (coe_glOf _ _) (by rw [nrd_uM]; norm_num) (by simp [uM]) (by simp [uM]) w ?_ ?_⟩ <;>
+        norm_num [uM] <;> linarith
+  · -- cone D: `j = x₆ u₋`
+    have hj : ((g4 2 * glOf uM (by rw [nrd_uM]; norm_num) : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ) =
+        iota (⟨0, 0, 1, 0⟩ : B) := by
+      rw [Units.val_mul, hx6, coe_glOf, ← iota_mul, x6_uM]
+    refine ⟨_, gs_mul (g4_mem 2) (mem_of_norm_one inO_uM nrd_uM),
+      cone_of hj (by norm_num [nrd]) rfl rfl w ?_ ?_⟩ <;> norm_num <;> linarith
+
+/-! ## `ι(μ)`, `μ = 2j + ij`, lies in `Γ*` -/
+
+theorem muInv_mul_mu : PkgI1.muInv * PkgI1.mu = 1 := by
+  ext <;> simp [PkgI1.mu, PkgI1.muInv] <;> norm_num
+
+theorem conj_mu : ∀ w, InO w → InO (PkgI1.mu * w * PkgI1.muInv) ∧ InO (PkgI1.muInv * w * PkgI1.mu) := by
+  intro w hw
+  obtain ⟨n0, n1, n2, n3, rfl⟩ := (inO_iff w).1 hw
+  constructor
+  · refine (inO_iff _).2 ⟨n0 - n2 + 2 * n3, -n1 - n2 + n3, 3 * n2 - 4 * n3, 2 * n2 - 3 * n3, ?_⟩
+    ext <;> simp [PkgI1.mu, PkgI1.muInv] <;> ring
+  · refine (inO_iff _).2 ⟨n0 - n2 + 2 * n3, -n1 - n2 + n3, 3 * n2 - 4 * n3, 2 * n2 - 3 * n3, ?_⟩
+    ext <;> simp [PkgI1.mu, PkgI1.muInv] <;> ring
+
+theorem nrd_mu : nrd PkgI1.mu = 6 := by norm_num [nrd, PkgI1.mu]
+
+/-- `σ = ι(μ)`: the half-turn about `i√(9 + 6√2)`. -/
+def sigma : GL (Fin 2) ℝ := glOf PkgI1.mu (by rw [nrd_mu]; norm_num)
+
+theorem sigma_mem : sigma ∈ Γs :=
+  ⟨PkgI1.mu, ⟨PkgI1.muInv, PkgI1.mu_mul_muInv, muInv_mul_mu, conj_mu⟩, coe_glOf _ _, by
+    rw [sigma, coe_glOf, det_iota_eq, nrd_mu]; norm_num⟩
+
+/-! ## The fundamental triangle and the covering -/
+
+/-- The triangle `T` with vertices `i√3`, `±(1+√2) + i(2+√2)`. -/
+def Tset : Set UpperHalfPlane := {w | Xq w ≤ Uq w ∧ -Xq w ≤ Uq w ∧ Uq w ≤ 6 + 6 * √2}
+
+theorem cover_T (z : UpperHalfPlane) : ∃ γ ∈ Γs, γ • z ∈ Tset := by
+  obtain ⟨γ₀, hγ₀, hmin⟩ := exists_min z
+  obtain ⟨g, hg, h1, h2, hd⟩ := cone_step (γ₀ • z)
+  refine ⟨g * γ₀, gs_mul hg hγ₀, ?_⟩
+  set w := (g * γ₀) • z with hw
+  have hw' : w = g • γ₀ • z := mul_smul _ _ _
+  rw [← hw'] at h1 h2 hd
+  refine ⟨h1, h2, ?_⟩
+  have hle : dist w p0 ≤ dist (sigma • w) p0 := by
+    rw [hd, hw, ← mul_smul]
+    exact hmin _ (gs_mul sigma_mem (gs_mul hg hγ₀))
+  rw [dist_le_iff, Fp_smul (g := sigma) (y := PkgI1.mu) (coe_glOf _ _) (by rw [nrd_mu]; norm_num)] at hle
+  have hpos : 0 < ((nrd PkgI1.mu : ℚ) : ℝ) * w.im := by
+    rw [nrd_mu]; have := w.im_pos; positivity
+  have hPhi : 0 ≤ Phi PkgI1.mu w := by
+    by_contra h; push Not at h
+    have := div_neg_of_neg_of_pos h hpos
+    linarith
+  simp only [Phi, Pq, Rq, Sq, PkgI1.mu] at hPhi
+  norm_num at hPhi
+  have hs : √2 * √2 = 2 := Real.mul_self_sqrt (by norm_num)
+  have hs1 : 1 < √2 := by
+    rw [show (1 : ℝ) = √1 by simp]; exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  nlinarith
+
 end HDec.GammaStarArea
