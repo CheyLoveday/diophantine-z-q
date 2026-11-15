@@ -192,8 +192,12 @@ heckeVertWitness := SGRDirect.heckeVertWitness_of_nvElkies (LeafAdopt.R1R2fp_of_
   r.elkiesX6StarPrinted
 ```
 
-The field names are those of the then-current bundles; `elkiesX6StarPrinted` is in the research bundle today. The
-strict count goes 56 → 55 (GLUE −1).
+The field names are those of the regenerated bundles.
+- `r.r1r2` and `t.t5` are already available at generation 5.
+- `elkiesX6StarPrinted` is a field of today's top research bundle, but not of generation 5. The regenerated
+  generations have to carry it down, together with `nvLocalInertia`. Alternatively, the integrator can build
+  `HeckeSqrtBranchAny` at the top (`heckeSqrtBranchAny_of_elkies`) and carry that Prop down instead.
+- The strict count goes 56 → 55 (GLUE −1).
 
 ## 6. What remains
 
