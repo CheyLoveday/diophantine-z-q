@@ -10,10 +10,14 @@ without its `import` lines, and runs `lake env lean .sandbox/Report.lean`.
 
 `#discharges_json` repeats the matching of `#discharges` (`ZInQKernel/OneProof/Discharges.lean`): for each
 candidate theorem, the whole type, then the type with its non-dependent `Prop` hypotheses peeled one by one,
-against each open hypothesis, with `isDefEq` under `withReducible`. It prints one line per theorem that
-discharges an open hypothesis,
+against each open hypothesis, with `isDefEq` under `withReducible`. Each peeled hypothesis is matched against
+the open hypotheses the same way, so that a theorem assuming the hypothesis it proves is visible. It prints one
+line per theorem that discharges an open hypothesis,
 
-    DISCHARGE-JSON <nonce> {"theorem": ..., "hits": [...], "assumes": [...], "axioms": [...], "sorry": ...}
+    DISCHARGE-JSON <nonce> {"theorem": ..., "hits": [...], "assumes": [...], "assumes_open": [...],
+      "axioms": [...], "sorry": ...}
+
+where `assumes_open` lists the open hypotheses that the peeled hypotheses match,
 
 and a final `DISCHARGE-JSON <nonce> {"summary": {"open_hypotheses": N, "theorems_checked": M,
 "discharging": K}}`. The objects are written with `Lean.Json`, so no name can break a line. The nonce is the
@@ -50,14 +54,19 @@ elab "#discharges_json" : command => do
             t := b
           else break
         | _ => break
+      let mut assumedOpen : Array String := #[]
+      for d in assumed do
+        for h in hyps do
+          if d == h.type then assumedOpen := assumedOpen.push h.label
+          else if ← withReducible (isDefEq d h.type) then assumedOpen := assumedOpen.push h.label
       let assumes ← assumed.mapM fun d => toString <$> ppExpr d
-      return (hits, assumes)
-    let (hits, assumes) := res
+      return (hits, assumes, assumedOpen)
+    let (hits, assumes, assumedOpen) := res
     if hits.isEmpty then continue
     found := found + 1
     let axs ← collectAxioms c
     let obj := Json.mkObj [("theorem", toJson (toString c)), ("hits", toJson hits),
-      ("assumes", toJson assumes), ("axioms", toJson (axs.map toString)),
+      ("assumes", toJson assumes), ("assumes_open", toJson assumedOpen), ("axioms", toJson (axs.map toString)),
       ("sorry", toJson (axs.contains ``sorryAx))]
     IO.println s!"DISCHARGE-JSON {nonce} {obj.compress}"
   let summary := Json.mkObj [("open_hypotheses", toJson hyps.size),

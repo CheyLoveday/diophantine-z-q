@@ -5,8 +5,9 @@ Inputs (run from the repository root):
   (the open hypotheses of ZInQ.OneProof.frozenTarget, read off the Lean build);
 * docs/one-proof/kinds.tsv, the classification of each hypothesis (the source of truth for counts, packets,
   labels, tiers, flag classes and area issues);
-* docs/one-proof/claims.tsv, who holds what (only public claims, pushed branches and draft pull requests hold a
-  hypothesis; a project brief is shown as project interest, free to claim; a released claim shows as open);
+* docs/one-proof/claims.tsv, who holds what (only a public claim line, on the claims issue or in a draft pull
+  request that links it, holds a hypothesis, and the project's own holds may point at a pushed branch; a project
+  brief is shown as project interest, free to claim; a released claim shows as open);
 * docs/one-proof/reviews.tsv and credits.tsv, the ledgers of statement checks and credit;
 * docs/one-proof/issues.json, the claim issue, the statement-checks issue and the packet issues;
 * scratch/contrib-kit/DischargesTest-output.txt, the saved output of scratch/contrib-kit/DischargesTest.lean.
@@ -135,6 +136,33 @@ def load():
     )
 
 
+def kinds_row_problems(r, open_fields, held):
+    """Problems of one kinds.tsv row (also used by autofold.py on the rows it adds)."""
+    problems, f = [], r['field']
+    classes = [x for x in r['flag_class'].split(',') if x]
+    if bool(r['flag'].strip()) != bool(classes):
+        problems.append(f'kinds.tsv: {f}: a flag needs a flag_class and a flag_class needs a flag')
+    bad = [x for x in classes if x not in FLAG_CLASSES]
+    if bad:
+        problems.append(f'kinds.tsv: {f}: unknown flag_class {bad}')
+    if ('strictest' in classes) != (r['strict'] != r['strictest']):
+        problems.append(f"kinds.tsv: {f}: flag_class 'strictest' must be set exactly when strict and "
+                        'strictest differ')
+    if r['label'] and r['label'] not in LABELS:
+        problems.append(f"kinds.tsv: {f}: unknown label {r['label']!r}")
+    if r['packet'] and r['packet'] not in PACKETS:
+        problems.append(f"kinds.tsv: {f}: unknown packet {r['packet']!r}")
+    if r['tier'] and r['tier'] not in TIERS:
+        problems.append(f"kinds.tsv: {f}: unknown tier {r['tier']!r}")
+    if r['area_issue'] and not ISSUE_REF.fullmatch(r['area_issue']):
+        problems.append(f'kinds.tsv: {f}: area_issue must look like owner/repo#123')
+    if not r['area_issue'] and f in open_fields and f not in held:
+        problems.append(f'kinds.tsv: {f} is not held and has no area_issue')
+    if r['strict'] not in ('LEAF', 'GLUE') or r['strictest'] not in ('LEAF', 'GLUE'):
+        problems.append(f'kinds.tsv: {f}: strict and strictest must be LEAF or GLUE')
+    return problems
+
+
 def validate(m):
     """Consistency problems of the tables (each a string)."""
     problems = []
@@ -174,28 +202,7 @@ def validate(m):
         if kind in ('outside', 'maintainer') and not re.fullmatch(r'[A-Za-z0-9-]+', c['public_holder']):
             problems.append(f'claims.tsv: {f}: public_holder must be a GitHub login')
     for r in m['kinds_rows']:
-        f = r['field']
-        classes = [x for x in r['flag_class'].split(',') if x]
-        if bool(r['flag'].strip()) != bool(classes):
-            problems.append(f'kinds.tsv: {f}: a flag needs a flag_class and a flag_class needs a flag')
-        bad = [x for x in classes if x not in FLAG_CLASSES]
-        if bad:
-            problems.append(f'kinds.tsv: {f}: unknown flag_class {bad}')
-        if ('strictest' in classes) != (r['strict'] != r['strictest']):
-            problems.append(f"kinds.tsv: {f}: flag_class 'strictest' must be set exactly when strict and "
-                            'strictest differ')
-        if r['label'] and r['label'] not in LABELS:
-            problems.append(f"kinds.tsv: {f}: unknown label {r['label']!r}")
-        if r['packet'] and r['packet'] not in PACKETS:
-            problems.append(f"kinds.tsv: {f}: unknown packet {r['packet']!r}")
-        if r['tier'] and r['tier'] not in TIERS:
-            problems.append(f"kinds.tsv: {f}: unknown tier {r['tier']!r}")
-        if r['area_issue'] and not ISSUE_REF.fullmatch(r['area_issue']):
-            problems.append(f'kinds.tsv: {f}: area_issue must look like owner/repo#123')
-        if not r['area_issue'] and f in open_fields and f not in held:
-            problems.append(f'kinds.tsv: {f} is not held and has no area_issue')
-        if r['strict'] not in ('LEAF', 'GLUE') or r['strictest'] not in ('LEAF', 'GLUE'):
-            problems.append(f'kinds.tsv: {f}: strict and strictest must be LEAF or GLUE')
+        problems += kinds_row_problems(r, open_fields, held)
     for r in m['reviews']:
         f = r['field']
         if f not in kinds:
@@ -337,8 +344,9 @@ def render(m):
 
     w('## Held')
     w('')
-    w('A hypothesis is held only by a public claim, a pushed branch or a draft pull request. A claim with no public')
-    w('activity for 14 days gets one ping, and is released if there is no reply within 7 days of the ping.')
+    w('A hypothesis is held only by a public claim line, on the claims issue or in a draft pull request that links it')
+    w("(the project's own holds may point at a pushed branch). A claim with no public activity for 14 days gets one")
+    w('ping, and is released if there is no reply within 7 days of the ping.')
     w('')
     held = [f for f in h_fields + tops if f in claims and claims[f]['hold'] == 'held']
     if held:

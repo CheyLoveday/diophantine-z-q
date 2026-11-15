@@ -25,8 +25,10 @@ def jline(obj, nonce=NONCE):
     return 'DISCHARGE-JSON %s %s' % (nonce, json.dumps(obj, ensure_ascii=False, separators=(',', ':')))
 
 
-def record(theorem, hits, assumes=(), axioms=('propext', 'Classical.choice', 'Quot.sound'), sorry=False):
-    return {'theorem': theorem, 'hits': list(hits), 'assumes': list(assumes), 'axioms': list(axioms),
+def record(theorem, hits, assumes=(), axioms=('propext', 'Classical.choice', 'Quot.sound'), sorry=False,
+           assumes_open=()):
+    return {'theorem': theorem, 'hits': list(hits), 'assumes': list(assumes), 'assumes_open': list(assumes_open),
+            'axioms': list(axioms),
             'sorry': sorry}
 
 
@@ -48,10 +50,12 @@ AXIOM_REPORT = report(record('Contrib.both', ['OpenGlue7.a', 'OpenGlue7.b'],
                              axioms=['propext', 'Classical.choice', 'Quot.sound', 'Contrib.myAxiom',
                                      'Lean.ofReduceBool']), summary(67, 2, 1))
 EMPTY_REPORT = report(summary(67, 2, 0))
-# DischargesJson.lean's real output (Lean 4.35, `lake env lean`) on scratch/contrib-kit/DischargesTest.lean at w68.
-REAL_REPORT = '''DISCHARGE-JSON n0nce42 {"assumes":["HDec.MCRGlue.QuotientP1Coordinate"],"axioms":["propext","Classical.choice","Quot.sound"],"hits":["OpenGlue7.quotientP1Coordinate"],"sorry":false,"theorem":"t1"}
-DISCHARGE-JSON n0nce42 {"assumes":[],"axioms":["propext","sorryAx","Classical.choice","Quot.sound"],"hits":["OpenResearchLeaves14.r9a"],"sorry":true,"theorem":"t3"}
-DISCHARGE-JSON n0nce42 {"summary":{"discharging":2,"open_hypotheses":74,"theorems_checked":3}}
+# DischargesJson.lean's real output (Lean 4.35, `lake env lean`) at cb80af83b, on the worked example's theorems
+# (t1 assumes what it proves, t2 matches nothing, t3 uses sorry).
+REAL_REPORT = '''scratch/contrib-kit/ReportTest2.lean:8:8: warning: declaration uses `sorry`
+DISCHARGE-JSON n0nce42 {"assumes":["HDec.MCRGlue.QuotientP1Coordinate"],"assumes_open":["OpenGlue7.quotientP1Coordinate"],"axioms":["propext","Classical.choice","Quot.sound"],"hits":["OpenGlue7.quotientP1Coordinate"],"sorry":false,"theorem":"t1"}
+DISCHARGE-JSON n0nce42 {"assumes":[],"assumes_open":[],"axioms":["propext","sorryAx","Classical.choice","Quot.sound"],"hits":["OpenTextbookLeaves10.cartierSmooth"],"sorry":true,"theorem":"t3"}
+DISCHARGE-JSON n0nce42 {"summary":{"discharging":2,"open_hypotheses":71,"theorems_checked":5}}
 '''
 
 # The text output of #discharges (display only).
@@ -113,10 +117,32 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(p['rejected'], [])
         self.assertEqual([d['theorem'] for d in p['discharges']], ['t1', 't3'])
         self.assertEqual(p['discharges'][0]['still_assumes'], ['HDec.MCRGlue.QuotientP1Coordinate'])
+        self.assertEqual(p['discharges'][0]['proved'], [])
         self.assertTrue(p['discharges'][0]['clean'])
+        self.assertEqual(p['discharges'][1]['proved'], ['OpenTextbookLeaves10.cartierSmooth'])
         self.assertTrue(p['discharges'][1]['uses_sorry'])
-        self.assertEqual(p['summary'], {'open_hypotheses': 74, 'theorems_checked': 3, 'discharging': 2})
-        self.assertEqual(discharges_log.evaluate(p), (False, ['t3 uses sorry']))
+        self.assertEqual(p['summary'], {'open_hypotheses': 71, 'theorems_checked': 5, 'discharging': 2})
+        self.assertEqual(discharges_log.evaluate(p), (False, [
+            't1 assumes the hypothesis it proves', 't3 uses sorry', 'no theorem discharges an open hypothesis']))
+
+    def test_assuming_what_it_proves(self):
+        p = parse(report(record('t', ['OpenGlue7.a'], ['HDec.A'], assumes_open=['OpenGlue7.a']), summary(5, 1, 1)))
+        self.assertEqual(discharges_log.evaluate(p), (False, [
+            't assumes the hypothesis it proves', 'no theorem discharges an open hypothesis']))
+        # a reduction to another open hypothesis proves the first one
+        p = parse(report(record('t', ['OpenGlue7.a'], ['HDec.B'], assumes_open=['OpenGlue7.b']), summary(5, 1, 1)))
+        self.assertEqual(p['discharges'][0]['proved'], ['OpenGlue7.a'])
+        self.assertEqual(discharges_log.evaluate(p), (True, []))
+        p = parse(report(record('t', ['OpenGlue7.a', 'OpenGlue7.b'], assumes_open=['OpenGlue7.b']), summary(5, 1, 1)))
+        self.assertEqual(p['discharges'][0]['proved'], ['OpenGlue7.a'])
+        self.assertEqual(discharges_log.evaluate(p), (True, []))
+
+    def test_record_without_assumes_open_is_rejected(self):
+        obj = record('t', ['A.b'])
+        del obj['assumes_open']
+        p = parse(report(obj, summary(1, 1, 1)))
+        self.assertEqual(p['discharges'], [])
+        self.assertIn('keys', p['rejected'][0])
 
     def test_sorry_axiom_without_flag(self):
         p = parse(report(record('t', ['A.b'], axioms=['sorryAx']), summary(1, 1, 1)))

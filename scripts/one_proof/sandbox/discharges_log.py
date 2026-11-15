@@ -3,12 +3,14 @@
 The verdict comes only from DischargesJson.lean (this directory, from BASE), run with `lake env lean` after
 the build. It prints one line per theorem that discharges an open hypothesis of frozenTarget,
 
-    DISCHARGE-JSON <nonce> {"theorem": str, "hits": [str], "assumes": [str], "axioms": [str], "sorry": bool}
+    DISCHARGE-JSON <nonce> {"theorem": str, "hits": [str], "assumes": [str], "assumes_open": [str],
+      "axioms": [str], "sorry": bool}
 
-and finally `DISCHARGE-JSON <nonce> {"summary": {"open_hypotheses": N, "theorems_checked": M,
+(`assumes_open`: the open hypotheses its own hypotheses match) and finally `DISCHARGE-JSON <nonce> {"summary": {"open_hypotheses": N, "theorems_checked": M,
 "discharging": K}}`. Only lines that start with `DISCHARGE-JSON ` and this run's nonce count; every other
 line is ignored. A counted line whose JSON or field types are wrong, or whose names hold a control character,
-is rejected, and a rejected line fails the check. The build log is read for errors and for Lean's sorry
+is rejected, and a rejected line fails the check. A hit that is also in `assumes_open` proves nothing (the
+theorem assumes what it proves), so it does not count. The build log is read for errors and for Lean's sorry
 warning on the added files (Lean 4.35 writes "declaration uses `sorry`").
 
 The text output of `#discharges` (`DISCHARGES [...] by <theorem>`, `still assumes: [...]`, `axioms: [...]`)
@@ -35,7 +37,7 @@ import unicodedata
 
 STANDARD_AXIOMS = ('propext', 'Classical.choice', 'Quot.sound')
 TAG = 'DISCHARGE-JSON'
-RECORD_KEYS = {'theorem', 'hits', 'assumes', 'axioms', 'sorry'}
+RECORD_KEYS = {'theorem', 'hits', 'assumes', 'assumes_open', 'axioms', 'sorry'}
 SUMMARY_KEYS = ('open_hypotheses', 'theorems_checked', 'discharging')
 NONCE_RE = re.compile(r'[A-Za-z0-9]+\Z')
 SORRY_RE = re.compile(r"declaration uses [`']sorry[`']")
@@ -80,7 +82,7 @@ def check_record(obj):
         return 'the theorem name is not a non-empty string'
     if has_control(t):
         return 'the theorem name %s contains a control character' % json.dumps(t)
-    for key in ('hits', 'axioms'):
+    for key in ('hits', 'axioms', 'assumes_open'):
         v = obj[key]
         if not isinstance(v, list) or not all(isinstance(x, str) and x and not has_control(x) for x in v):
             return '%s of %s is not a list of plain names' % (key, json.dumps(t))
@@ -126,9 +128,10 @@ def parse_json(text, nonce):
             continue
         uses_sorry = obj['sorry'] or 'sorryAx' in obj['axioms']
         nonstandard = [a for a in obj['axioms'] if a not in STANDARD_AXIOMS and a != 'sorryAx']
+        proved = [h for h in obj['hits'] if h not in obj['assumes_open']]
         discharges.append({'theorem': obj['theorem'], 'hypotheses': obj['hits'], 'still_assumes': obj['assumes'],
-                           'axioms': obj['axioms'], 'uses_sorry': uses_sorry, 'nonstandard_axioms': nonstandard,
-                           'clean': not uses_sorry and not nonstandard})
+                           'proved': proved, 'axioms': obj['axioms'], 'uses_sorry': uses_sorry,
+                           'nonstandard_axioms': nonstandard, 'clean': not uses_sorry and not nonstandard})
     return {'discharges': discharges, 'summary': summary, 'rejected': rejected}
 
 
@@ -268,12 +271,14 @@ def evaluate(parsed, build_status=0, lean_status=0, build_log='', added=(), lean
         reasons.append('the reporter summary counts %d discharging theorems but printed %d records'
                        % (s['discharging'], len(parsed['discharges'])))
     for d in parsed['discharges']:
+        if not d['proved']:
+            reasons.append('%s assumes the hypothesis it proves' % d['theorem'])
         if d['uses_sorry']:
             reasons.append('%s uses sorry' % d['theorem'])
         if d['nonstandard_axioms']:
             reasons.append('%s uses axioms beyond propext, Classical.choice and Quot.sound: %s'
                            % (d['theorem'], ', '.join(d['nonstandard_axioms'])))
-    if ran and not any(d['clean'] for d in parsed['discharges']):
+    if ran and not any(d['clean'] and d['proved'] for d in parsed['discharges']):
         reasons.append('no theorem discharges an open hypothesis')
     return not reasons, reasons
 

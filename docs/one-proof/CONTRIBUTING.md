@@ -35,8 +35,9 @@ field name exactly as OPEN.md shows it and the commit you start from, or open a 
    ```
 
    This helps when the hypothesis is GLUE (a consequence, a composite, or project glue) and the new statements
-   are published leaves. Each new printed leaf enters OPEN.md with a pending-reading flag, and the strict count
-   drops once a statement check ([STATEMENT-CHECKS.md](STATEMENT-CHECKS.md)) clears it. A new statement must be
+   are published leaves. Each new printed leaf enters OPEN.md flagged unread: it counts as published, and a
+   statement check ([STATEMENT-CHECKS.md](STATEMENT-CHECKS.md)) compares it with the print. A leaf whose print may
+   say something weaker is flagged pending reading and counts as glue until a check clears it. A new statement must be
    the published theorem or a consequence of it, never stronger, and never over a structure invented for the
    purpose.
 
@@ -45,8 +46,10 @@ Never change a hypothesis's statement. If you find one false, vacuous, or strong
 
 ## Where it goes
 
-A new file `ZInQKernel/Contrib/OneProof/<StatementName>.lean`, importing the module that defines the statement
-you prove (OPEN.md's `type` names it; for example `ZInQKernel.OneProof.H.TailZ19`) and whatever else you need.
+A new file `ZInQKernel/Contrib/OneProof/<StatementName>.lean`, importing the module that declares the statement
+you prove and whatever else you need. OPEN.md gives the statement's Lean constant, for example
+`CToPrinted.SGA7_IX_3_3`; searching the tree for its declaration (`git grep -n "def SGA7_IX_3_3"`) finds the file,
+here `ZInQKernel/OneProof/H/TailZ19.lean`, so the import is `ZInQKernel.OneProof.H.TailZ19`.
 Do not import `ZInQKernel.OneProof.Main`: once your file is folded, `Main` imports it, and the import would be
 a cycle. Proofs only in new files: do not edit existing
 modules. Keep a file under about 150 KB. Open a pull request against this fork's `main`.
@@ -72,7 +75,8 @@ For every theorem in your file it prints which open hypotheses it proves, the hy
 (your new leaves), and its axioms. A statement change does not match. A proof using `sorry` is flagged.
 
 You may not have to run it yourself. For a pull request that only adds files under
-`ZInQKernel/Contrib/OneProof/`, the project runs the same check on its head commit, in a sandbox with no secrets
+`ZInQKernel/Contrib/OneProof/`, the project runs the same check on the files it adds, built on top of the current
+`main` (not on the rest of your branch), in a sandbox with no secrets
 and no access to project machines (`scripts/one_proof/sandbox/README.md`), and posts the result on the pull
 request. A pull request that changes anything else is out of scope for the automatic check. The automatic check
 is being set up: until the project has posted its first check, include your own `#discharges` output in the
@@ -86,11 +90,11 @@ say in the pull request why it is needed.
 
 The bar for merging:
 
-* the Lean compiles with only the standard axioms, and the discharge check on the pull request's head commit
-  shows the hypothesis proved;
+* the Lean compiles with only the standard axioms, and the discharge check shows the hypothesis proved (until
+  the project has posted its first automatic check: your own `#discharges` output, read by a person);
 * a person has read the file for code that runs at build time;
 * each new printed leaf has a row in [`docs/research/locators.md`](../research/locators.md) and enters
-  kinds.tsv with a pending-reading flag;
+  kinds.tsv flagged unread (or pending reading, if its print may say something weaker);
 * Jack merges.
 
 Merges into this fork carry no Protocol B review (the original repository's review protocol); a result is
@@ -120,16 +124,16 @@ A cold measurement of `lake build +ZInQKernel.OneProof.Main` on a GitHub-hosted 
 table. On a laptop a full build is a bigger investment. A measured row from your machine (commit, cold or partial,
 cores, memory cap, peak memory, disk, Lake jobs, wall-clock) is welcome and credited.
 
-## For maintainers: folding a contribution
+## For the integrator: folding a contribution
 
 `scripts/one_proof/autofold.py SPEC.json` writes the fold of a checked contribution: a new module
 `ZInQKernel/OneProof/H/TailZ<k+1>.lean` with the next generation of each affected bundle (the discharged fields
 removed, the new leaves added), a theorem filling each discharged field with its proof, and the next top theorem;
-it switches `Main.lean` to it and updates `kinds.tsv` and `claims.tsv`. It refuses a fold that raises the strict
-GLUE count. The spec format is in the script's docstring; `scratch/contrib-kit/autofold-test.json` exercises the
+it switches `Main.lean` to it and updates `kinds.tsv` and `claims.tsv`. It refuses a fold that raises either GLUE
+count (the strict or the strictest column) unless given `--allow-rise`. The spec format is in the script's docstring; `scratch/contrib-kit/autofold-test.json` exercises the
 mechanics (with `sorry`, so it is a test, not a fold). Then build, check the axioms, compare hashes with
 `scratch/one-proof/DumpCompact.lean` and `cmp_hashes.py` (no existing constant may change except `frozenTarget`),
-and regenerate OPEN.md (`scripts/one_proof/OpenStatements.lean`, `render_open.py --check`, `render_open.py`).
+and regenerate OPEN.md (`scripts/one_proof/OpenStatements.lean`, then `render_open.py`, then `render_open.py --check`).
 
 ## A worked example
 
@@ -189,8 +193,8 @@ hypothesis left the list.
 
 1. Regenerate `open-statements.json` (`scripts/one_proof/OpenStatements.lean`).
 2. Run `scratch/contrib-kit/DischargesTest.lean` and save its output to `scratch/contrib-kit/DischargesTest-output.txt`.
-3. Fill the new kinds.tsv columns (packet, label, tier, flag_class, area_issue) for the new rows; each new
-   printed leaf gets flag class pending-reading.
+3. Check the new kinds.tsv rows: autofold.py gives each new leaf a flag_class and the area_issue of the field it
+   replaces, and flags a published leaf with no flag as unread; add packet, label and tier where they apply.
 4. Update the ledgers: the folded rows' status in fold-queue.tsv, a credits.tsv row (with fold and commit) for
    each folded contribution, and any recorded readings in reviews.tsv.
 5. Run `scripts/one_proof/render_open.py`, then `scripts/one_proof/render_open.py --check`.
