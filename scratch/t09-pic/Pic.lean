@@ -451,6 +451,108 @@ theorem exists_isAmple_of_isAlgClosed [IsAlgClosed K] (A : AbVar K) : ∃ L, IsA
       (Arrow.isoMk (Iso.refl _) e.symm (by simp))
   exact ⟨1, one_pos, s i ≫ e.hom, by rw [hz]; exact hi, by rw [hz]; exact haff i⟩
 
+/-! ## §6. Mumford's `ē_n` as a genuine definition, and the leaf in fully genuine form -/
+
+/-- `Spec K̄` as a `K`-scheme. -/
+abbrev ptK (K : Type) [Field K] : Over (Spec (CommRingCat.of K)) :=
+  ptObj (K := K) (AlgebraicClosure K)
+
+/-- **Translation by `x ∈ A(K̄)` on `A_K̄`**, as a `K`-morphism `A ×_K K̄ → A ×_K K̄`,
+`(a, s) ↦ (a + x(s), s)` (`t_x`, Mumford §2). -/
+def transl {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) : A.X ⊗ ptK K ⟶ A.X ⊗ ptK K :=
+  CartesianMonoidalCategory.lift
+    (CartesianMonoidalCategory.lift (CartesianMonoidalCategory.fst _ _)
+      (CartesianMonoidalCategory.snd _ _ ≫ x) ≫ μ[A.X])
+    (CartesianMonoidalCategory.snd _ _)
+
+/-- **Multiplication by `n` on `A_K̄`** (`n_A = id^n` in the group of `K`-endomorphisms of the
+scheme, base-changed to `K̄`). -/
+def mulN (A : AbVar K) (n : ℕ) : A.X ⊗ ptK K ⟶ A.X ⊗ ptK K :=
+  ((𝟙 A.X) ^ n) ▷ ptK K
+
+/-- **The class `M_y ∈ Pic(A_K̄)` of a point `y ∈ Pic⁰(K̄)`**: a class whose image in
+`Pic_{A/K}(K̄)` is the point `y ≫ ι` (exists by Kleiman Thm 9.2.5, `A` having a section; unique since
+`Pic(K̄) = 1`). Defined by choice (`1` if no such class existed). -/
+def picClass {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) {B : AbVar K} (j : B.X ⟶ P)
+    (y : B.Pt (AlgebraicClosure K)) : (pullback A.X.hom (ptK K).hom).Pic := by
+  classical
+  exact if h : ∃ c, (toPicardFunctor A.X.hom).app (op (ptK K)) c = rep.homEquiv (y ≫ j)
+    then h.choose else 1
+
+/-- **Mumford's `ē_n(x, y)`, genuine** (Mumford §20 via the descent description of §§12, 15;
+UNVERIFIED numbering): for `y ∈ Pic⁰[n](K̄)` with class `M`, choose `ψ : 𝒪 ≅ n_A^*M` (exists: Mumford
+§8 (iv)); for `x ∈ A[n](K̄)`, `n_A ∘ t_x = n_A`, so `t_x^*ψ` is a second trivialization and
+`t_x^*ψ ∘ ψ⁻¹ ∈ Aut(𝒪_{A_K̄}) = Γ(A_K̄, 𝒪)^× = K̄^×` is the value (independent of the choices). Defined
+by choice; `1` if a condition fails (it never does for `x ∈ A[n]`, `y ∈ Pic⁰[n]`). -/
+def weilScalar {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) {B : AbVar K} (j : B.X ⟶ P) (n : ℕ)
+    (x : A.Pt (AlgebraicClosure K)) (y : B.Pt (AlgebraicClosure K)) :
+    Γ(pullback A.X.hom (ptK K).hom, ⊤) := by
+  classical
+  let X := pullback A.X.hom (ptK K).hom
+  let t : X ⟶ X := (transl x).left
+  let m : X ⟶ X := (mulN A n).left
+  let M : X.Modules := (fromSkeleton X.Modules).obj (picClass rep j y).val
+  exact if h : t ≫ m = m then
+    if hψ : Nonempty (Scheme.Modules.unit X ≅ (Scheme.Modules.pullback m).obj M) then
+      Scheme.Modules.unitHomAddEquiv (Scheme.Modules.unit X)
+        ((Scheme.Modules.pullbackObjUnitIso t).inv ≫ (Scheme.Modules.pullback t).map hψ.some.hom ≫
+          (Scheme.Modules.pullbackComp t m).hom.app M ≫
+            (Scheme.Modules.pullbackCongr h).hom.app M ≫ hψ.some.inv)
+    else 1
+  else 1
+
+/-- `K̄ → Γ(A_K̄, 𝒪)` (constants; a bijection, vendored
+`bijective_appTop_of_isProper_of_geometricallyIntegral`). -/
+def constK (A : AbVar K) : AlgebraicClosure K →+* Γ(pullback A.X.hom (ptK K).hom, ⊤) :=
+  (pullback.snd A.X.hom (ptK K).hom).appTop.hom.comp
+    (Scheme.ΓSpecIso (CommRingCat.of (AlgebraicClosure K))).inv.hom
+
+section LeafMumford
+
+open HDec.WeilPairing
+
+/-- **LEAF L4, fully genuine form (Mumford's `ē_n`).** As `WeilPairingPicZeroPrinted`, with the
+pairing pinned to Mumford's genuine `ē_n` (`weilScalar`): its values, as constants of
+`Γ(A_K̄, 𝒪)`, are `weilScalar`. Published: Mumford §20 and §23 (the properties), Kleiman Thm 9.2.5
+(points of `Pic⁰` over `K̄` are line bundles on `A_K̄`), Mumford §8 (iv) (`n_A^*M ≅ 𝒪` for
+`M ∈ Pic⁰[n]`), `Γ(A_K̄, 𝒪) = K̄`; UNVERIFIED numbering. Every clause is invariant under
+`e ↦ -e`, so the leaf holds whichever sign convention for `ē_n` (`t_x^*ψ ψ⁻¹` or its inverse). -/
+def WeilPairingMumford : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P),
+    IsPicZero rep B j →
+    ∃ e : ∀ n : ℕ, Pairing A B n,
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → IsPerfect (e n)) ∧
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → HDec.WeilPairing.IsGalEquivariant (e n)) ∧
+      (∀ m n : ℕ, 0 < m → 0 < n → ((m * n : ℕ) : K) ≠ 0 →
+        ∀ (x : tors A (m * n)) (y : tors B n),
+          (e (m * n) x (torsIncl B (dvd_mul_left n m) y)).val = (e n (torsSmul A m n x) y).val) ∧
+      (∀ (f : End A) (fv : End B), fv.hom ≫ j = j ≫ dualP rep f.hom → ∀ n : ℕ, 0 < n →
+        (n : K) ≠ 0 → ∀ x y, e n x (torsMap fv n y) = e n (torsMap f n x) y) ∧
+      (∀ L : A.X.left.Pic, IsAmple A.X.left L → ∀ lam : Hom A B, lam.hom ≫ j = phiL rep L →
+        ∀ n : ℕ, 0 < n → (n : K) ≠ 0 → ∀ x : tors A n, e n x (torsMap lam n x) = 0) ∧
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → ∀ (x : tors A n) (y : tors B n),
+        constK A ((e n x y).val : AlgebraicClosure K) =
+          weilScalar rep j n (Additive.toMul (x : HDec.WeilPairing.P A))
+            (Additive.toMul (y : HDec.WeilPairing.P B)))
+
+end LeafMumford
+
+/-- The fully genuine L4 implies the printed L4 (forget the identification with `weilScalar`). -/
+theorem weilPairingPicZeroPrinted_of_mumford (h : WeilPairingMumford) : WeilPairingPicZeroPrinted := by
+  intro K _ A P rep B j hj
+  obtain ⟨e, h1, h2, h3, h4, h5, -⟩ := h K A P rep B j hj
+  exact ⟨e, h1, h2, h3, h4, h5⟩
+
+/-- **Main result, fully genuine form.** -/
+theorem t09SymmIsogenyExists_of_mumford (h0 : VeryAmpleIsAmple) (h1 : PicRepresentableAbVar)
+    (h2 : PicZeroAbVar) (h3 : PhiAmpleIsogeny) (h4 : WeilPairingMumford) :
+    HDec.WeilPairing.T09_SymmIsogenyExists :=
+  t09SymmIsogenyExists_of_leaves h1 h2 (phiVeryAmpleIsogeny_of_printed h0 h3)
+    (weilPairingPicZero_of_printed h0 (weilPairingPicZeroPrinted_of_mumford h4))
+
 /-- **Main result, printed form.** `t09SymmIsogenyExists` from the five printed leaves
 L0 (very ample ⇒ ample), L1 (Picard representability), L2 (`Pic⁰` is an abelian variety),
 L3 (`φ_L` isogeny for ample `L`), L4 (Mumford's `ē_n` with the genuine `f^∨`). -/
@@ -463,6 +565,7 @@ theorem t09SymmIsogenyExists_of_printed (h0 : VeryAmpleIsAmple) (h1 : PicReprese
 end T09Pic
 
 #print axioms T09Pic.exists_dual_on_picZero
+#print axioms T09Pic.t09SymmIsogenyExists_of_mumford
 #print axioms T09Pic.exists_isAmple_of_isAlgClosed
 #print axioms T09Pic.t09SymmIsogenyExists_of_printed
 #print axioms T09Pic.exists_isVeryAmple
