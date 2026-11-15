@@ -25,3 +25,8 @@ Target: `CToPrinted.SGA3_VIB_3_10` (ZInQKernel/OneProof/H/TailZ19.lean L199):
   (CloudW07 `IsRegularLocalRing.isDomain`); `geomConn_open` from the leaf): compiles.
 - Part 4 (`mem_cc_of_mem_idCompSet`, `subset_idCompSet`, `mul_mem`: G⁰ closed under μ over any S, from
   `GeomConnOfRationalPoint`): compiles.
+- Part 5 (`exists_point`: translation through κ(x); `sga3_VIB_3_10_of_nbhd`): compiles; `#print axioms
+  SGA3IdComp.sga3_VIB_3_10_of_nbhd` = [propext, Classical.choice, Quot.sound] (VERIFIED, scratch/gt-sga3/Part1.lean).
+- Contribution file ZInQKernel/Contrib/OneProof/SGA3IdComp.lean = Part1.lean + header (imports TailZ19, CloudW07
+  SmoothSourceDescent and RegularLocalRing.Domain).
+- Note: fresh worktree lacked lean/.lake ("unknown module prefix ZInQ"); copied from ../gt-blr (identical lean/ZInQ).
