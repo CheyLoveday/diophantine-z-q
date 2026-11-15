@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.QMLattice
 import ZInQKernel.Contrib.OneProof.GRCountX6
+import ZInQKernel.Contrib.HeightBC.G0StableBC
 
 /-!
 # gr56-prove: CM points on `X₆` inject into optimal embeddings (the lattice model)
@@ -1260,6 +1261,71 @@ theorem gonzalezRotgerProp56X6_of_leaves (hE : GRCountX6.EichlerOptEmbCount6) (h
     (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) :
     GRCountX6.GonzalezRotgerProp56X6 :=
   GRCountX6.prop56X6_of_r5fpCount (r5fpCount_of_leaves hE hE1 hE2 hU hG hM)
+
+/-! ## §8g `CMPairDescendsQbar` from the bundle's LEAF `shimuraTaniyamaQbar` -/
+
+/-- Two embeddings `ℚ̄ → ℂ` differ by an endomorphism of `ℚ̄`: both land in the algebraic closure `E` of `ℚ` in
+`ℂ`, and `σQ : ℚ̄ → E` is bijective (`E` is integral over the algebraically closed `ℚ̄`). -/
+theorem exists_alpha (ιe : Qbar →+* ℂ) : ∃ α : Qbar →+* Qbar, σQ.comp α = ιe := by
+  let E : IntermediateField ℚ ℂ := algebraicClosure ℚ ℂ
+  have hmem : ∀ (g : Qbar →+* ℂ) (x : Qbar), g x ∈ E := fun g x => by
+    rw [mem_algebraicClosure_iff]
+    exact (Algebra.IsAlgebraic.isAlgebraic x).algHom g.toRatAlgHom
+  let fσ : Qbar →+* E := σQ.codRestrict E (hmem σQ)
+  have hint : fσ.IsIntegral := by
+    intro z
+    have hz : IsIntegral ℚ z := (IntermediateField.isIntegral_iff (S := E)).2
+      ((mem_algebraicClosure_iff' (F := ℚ) (E := ℂ)).1 z.2)
+    have hcomp : fσ.comp (algebraMap ℚ Qbar) = algebraMap ℚ E := Subsingleton.elim _ _
+    apply RingHom.isIntegralElem.of_comp (algebraMap ℚ Qbar) fσ
+    rw [hcomp]; exact hz
+  have hbij : Function.Bijective fσ := IsAlgClosed.ringHom_bijective_of_isIntegral fσ hint
+  let e := RingEquiv.ofBijective fσ hbij
+  refine ⟨e.symm.toRingHom.comp (ιe.codRestrict E (hmem ιe)), RingHom.ext fun x => ?_⟩
+  have h1 : fσ (e.symm ⟨ιe x, hmem ιe x⟩) = ⟨ιe x, hmem ιe x⟩ := e.apply_symm_apply _
+  exact congrArg Subtype.val h1
+
+section STQ
+
+open MonoidalCategory CartesianMonoidalCategory MonObj
+open scoped CategoryTheory.Obj
+
+/-- `f ↦ e⁻¹ ∘ f ∘ e`, `End B → End A`, for an isomorphism of group objects `e : A ≅ B` (copied from
+`RayClassCFT.conjEnd`, `ZInQKernel/Contrib/OneProof/RayClassShimura.lean` L2526). -/
+def conjEnd {L : Type} [Field L] {A B : PkgI3.AbVar L} (e : A.X ≅ B.X) (h1 : IsMonHom e.hom)
+    (h2 : IsMonHom e.inv) : PkgI3.AbVar.End B →+* PkgI3.AbVar.End A where
+  toFun f := @PkgI3.AbVar.Hom.mk' L _ A A (e.hom ≫ f.hom ≫ e.inv) inferInstance
+  map_one' := PkgI3.AbVar.Hom.ext' (by
+    change e.hom ≫ 𝟙 _ ≫ e.inv = 𝟙 _
+    simp)
+  map_mul' f g := PkgI3.AbVar.Hom.ext' (by
+    change e.hom ≫ (g.hom ≫ f.hom) ≫ e.inv = (e.hom ≫ g.hom ≫ e.inv) ≫ (e.hom ≫ f.hom ≫ e.inv)
+    simp)
+  map_zero' := PkgI3.AbVar.Hom.ext' (by
+    change e.hom ≫ (1 : B.X ⟶ B.X) ≫ e.inv = 1
+    rw [MonObj.one_comp, MonObj.comp_one])
+  map_add' f g := PkgI3.AbVar.Hom.ext' (by
+    change e.hom ≫ (f.hom * g.hom) ≫ e.inv = (e.hom ≫ f.hom ≫ e.inv) * (e.hom ≫ g.hom ≫ e.inv)
+    rw [MonObj.mul_comp, MonObj.comp_mul])
+
+theorem conjEnd_hom {L : Type} [Field L] {A B : PkgI3.AbVar L} (e : A.X ≅ B.X) (h1 : IsMonHom e.hom)
+    (h2 : IsMonHom e.inv) (f : PkgI3.AbVar.End B) : (conjEnd e h1 h2 f).hom = e.hom ≫ f.hom ≫ e.inv := rfl
+
+/-- `A₀ ×_{ℚ̄, α} ℚ̄`. -/
+abbrev bcα (α : Qbar →+* Qbar) (A₀ : PkgI3.AbVar Qbar) : PkgI3.AbVar Qbar :=
+  @PkgI3.AbVar.baseChange Qbar _ A₀ Qbar _ α.toAlgebra
+
+/-- **Base change along `σQ ∘ α` is base change along `α`, then along `σQ`** (as group objects; G0StableBC's
+pasting lemma `exists_pbPaste`, which avoids the kernel timeout of a direct proof). -/
+theorem bc_comp_iso (α : Qbar →+* Qbar) (ιe : Qbar →+* ℂ) (hα : σQ.comp α = ιe) (A₀ : PkgI3.AbVar Qbar) :
+    ∃ I : ((bcα α A₀).baseChange ℂ).X ≅ (HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.bcC ιe A₀).X,
+      IsMonHom I.hom := by
+  have sq : Spec.map (CommRingCat.ofHom σQ) ≫ Spec.map (CommRingCat.ofHom α) =
+      Spec.map (CommRingCat.ofHom ιe) := by
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, hα]
+  exact G0StableBC.exists_pbPaste _ _ _ sq A₀.X
+
+end STQ
 
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
