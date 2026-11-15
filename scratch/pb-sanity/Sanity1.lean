@@ -357,27 +357,100 @@ theorem prod_logPartialVal_decomp (l : List (TEps p)) (s : TEps p → ℕ) (w : 
     simp only [map_mul, map_pow, pow_add]
     ring
 
-/-- **Main lemma.** For every finite family of `ε_i` with `ε_i^♯ = 1`, `ε_i ≠ 1`, and every
-`m`, `p^m · ∏ log [ε_i] ≠ 0` in `A_cris`. -/
-theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
-    (p : Acris p) ^ m * (l.map (logOf p)).prod ≠ 0 := by
+/-- `A_inf → A_cris^0`. -/
+def ainfToAcris0 : Ainf p →+* Acris0 p :=
+  (algebraMap (Ainf p) (AinfP p)).codRestrict (Acris0 p) (algebraMap_mem p)
+
+theorem coe_ainfToAcris0 (y : Ainf p) :
+    (ainfToAcris0 p y : AinfP p) = algebraMap (Ainf p) (AinfP p) y := rfl
+
+/-- The image of `y ∈ A_inf` in `A_cris`. -/
+def ofAinf (y : Ainf p) : Acris p :=
+  algebraMap (Acris0 p) (Acris p) (ainfToAcris0 p y)
+
+theorem ofAinf_eq (y : Ainf p) : ofAinf p y = AdicCompletion.of (Ideal.span {(p : Acris0 p)})
+    (Acris0 p) (ainfToAcris0 p y) := by
+  rw [ofAinf]
+  erw [AdicCompletion.algebraMap_apply]
+
+theorem evalₐ_ofAinf (y : Ainf p) (n : ℕ) :
+    AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n (ofAinf p y) =
+      Ideal.Quotient.mk _ (ainfToAcris0 p y) := by
+  rw [ofAinf_eq, AdicCompletion.evalₐ_of]
+
+theorem ofAinf_one : ofAinf p 1 = 1 := by
+  rw [ofAinf, map_one, map_one]
+
+/-- Level `n` of a relation `p^m · ∏ log [ε_i] · y = 0` in `A_cris`. -/
+theorem exists_of_eval_eq_zero (l : List (TEps p)) (m : ℕ) (y : Ainf p) (n : ℕ)
+    (hP : (p : Acris p) ^ m * (l.map (logOf p)).prod * ofAinf p y = 0) :
+    ∃ z : Acris0 p, (z : AinfP p) * (p : AinfP p) ^ n = (p : AinfP p) ^ m *
+        (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod *
+        algebraMap (Ainf p) (AinfP p) y := by
+  rw [← Nat.cast_pow] at hP
+  have hev := congrArg (AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n) hP
+  rw [map_zero, map_mul, map_mul, map_natCast, map_list_prod, List.map_map,
+    evalₐ_ofAinf] at hev
+  have hfac : (AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n) ∘ logOf p =
+      fun e => Ideal.Quotient.mk _ (logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)) :=
+    funext fun e => evalₐ_logT p _ n
+  rw [hfac] at hev
+  have hP' : Ideal.Quotient.mk ((span {(p : Acris0 p)}) ^ n)
+      (l.map fun e => logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)).prod =
+      (l.map fun e => Ideal.Quotient.mk ((span {(p : Acris0 p)}) ^ n)
+        (logPartial p (theta_teich_sub_one p e.2.1) (p ^ n))).prod := by
+    rw [map_list_prod, List.map_map]
+    rfl
+  have hPv : ((l.map fun e => logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)).prod :
+      AinfP p) = (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod := by
+    rw [← (Acris0 p).coe_subtype, map_list_prod, List.map_map]
+    rfl
+  rw [← hP'] at hev
+  generalize hyA : ainfToAcris0 p y = yA at hev
+  have hyv : (yA : AinfP p) = algebraMap (Ainf p) (AinfP p) y := by rw [← hyA]; rfl
+  have hmem : (((p ^ m : ℕ) : Acris0 p) *
+      (l.map fun e => logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)).prod * yA) ∈
+      (span {(p : Acris0 p)}) ^ n := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_mul, map_mul, map_natCast]
+    exact hev
+  rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton'] at hmem
+  obtain ⟨z, hz⟩ := hmem
+  refine ⟨z, ?_⟩
+  have := congrArg (fun x : Acris0 p => (x : AinfP p)) hz
+  simp only [Subring.coe_mul, Subring.coe_pow] at this
+  rw [hPv, hyv, show ((((p ^ m : ℕ) : Acris0 p)) : AinfP p) = (p : AinfP p) ^ m by simp] at this
+  exact this
+
+/-- **Main lemma.** For every finite family of `ε_i` with `ε_i^♯ = 1`, `ε_i ≠ 1`, every `m` and
+every `y ≠ 0` in `A_inf`, `p^m · ∏ log [ε_i] · y ≠ 0` in `A_cris`. -/
+theorem pow_mul_prod_logOf_mul_ne_zero (l : List (TEps p)) (m : ℕ) (y : Ainf p) (hy : y ≠ 0) :
+    (p : Acris p) ^ m * (l.map (logOf p)).prod * ofAinf p y ≠ 0 := by
   classical
   have hdec : ∀ e : TEps p, ∃ (s : ℕ) (w : Ainf p),
       WittVector.teichmuller p e.1 - 1 = ξ ^ s * w ∧ theta p w ≠ 0 :=
     fun e => eq_xi_pow_mul p _ (teich_sub_one_ne_zero p e.2.2)
   choose s w hsw hw using hdec
+  obtain ⟨s0, wy, hy0, hwy⟩ := eq_xi_pow_mul p y hy
   set X := algebraMap (Ainf p) (AinfP p) ξ with hX
   have hX0 : X ≠ 0 := ZInQ.Contrib.G9.BdrKer.Cp.xi'_ne_zero p
-  set S := (l.map s).sum with hS
+  set S := s0 + (l.map s).sum with hS
   set N := S + 1 with hN
-  have hdecomp : ∀ M : ℕ, (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) M).prod
-      = X ^ S * algebraMap (Ainf p) (AinfP p) (l.map w).prod *
-        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) M).prod :=
-    fun M => prod_logPartialVal_decomp p l s w hsw M
-  set c : O := (N.factorial : O) * (p : O) ^ m * (l.map fun e => theta p (w e)).prod with hc
+  set Wt := wy * (l.map w).prod with hWt
+  have hdecomp : ∀ M : ℕ,
+      (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) M).prod *
+        algebraMap (Ainf p) (AinfP p) y
+      = X ^ S * algebraMap (Ainf p) (AinfP p) Wt *
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) M).prod := by
+    intro M
+    rw [prod_logPartialVal_decomp p l s w hsw M, hy0, hS, hWt]
+    simp only [map_mul, map_pow, pow_add]
+    ring
+  set c : O := (N.factorial : O) * (p : O) ^ m * theta p Wt with hc
   have hc0 : c ≠ 0 := by
     refine mul_ne_zero (mul_ne_zero (natCast_O_ne_zero p (Nat.factorial_ne_zero N))
       (pow_ne_zero _ (ZInQ.Contrib.G9.BdrKer.Cp.p_ne_zero p))) ?_
+    rw [hWt, map_mul, map_list_prod, List.map_map]
+    refine mul_ne_zero hwy ?_
     intro h0
     rw [List.prod_eq_zero_iff] at h0
     obtain ⟨e, _, he⟩ := List.mem_map.mp h0
@@ -385,25 +458,7 @@ theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
   intro hP
   have key : ∀ n : ℕ, ∃ a' : Ainf p, c = (p : O) ^ n * theta p a' := by
     intro n
-    have hev := congrArg (AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n) hP
-    rw [map_zero, map_mul, map_pow, map_natCast, map_list_prod, List.map_map] at hev
-    have hfac : (AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n) ∘ logOf p =
-        fun e => Ideal.Quotient.mk _ (logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)) :=
-      funext fun e => evalₐ_logT p _ n
-    rw [hfac] at hev
-    have hmem : ((p : Acris0 p) ^ m *
-        (l.map fun e => logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)).prod) ∈
-        (span {(p : Acris0 p)}) ^ n := by
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_mul, map_pow, map_natCast, map_list_prod,
-        List.map_map]
-      exact hev
-    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton'] at hmem
-    obtain ⟨z, hz⟩ := hmem
-    have hzAP : (z : AinfP p) * (p : AinfP p) ^ n = (p : AinfP p) ^ m *
-        (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod := by
-      have := congrArg (Acris0 p).subtype hz
-      rw [map_mul, map_mul, map_pow, map_pow, map_natCast, map_list_prod, List.map_map] at this
-      exact this
+    obtain ⟨z, hzAP⟩ := exists_of_eval_eq_zero p l m y n hP
     -- the lattice
     obtain ⟨a, ha⟩ := latG_bound p N (acris0_le_latSub p N z.2)
     rw [algebraMap_Qn, ← map_natCast (Ideal.Quotient.mk (xiIdeal p N)), ← map_mul,
@@ -411,10 +466,11 @@ theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
     obtain ⟨w0, hw0⟩ := ha
     -- the main identity in `A_inf[1/p]`
     have hmain : (N.factorial : AinfP p) * (p : AinfP p) ^ m * X ^ S *
-        algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        algebraMap (Ainf p) (AinfP p) Wt *
         (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod =
         (p : AinfP p) ^ n * (algebraMap (Ainf p) (AinfP p) a + w0 * X ^ N) := by
       have h1 := congrArg (fun y => (N.factorial : AinfP p) * y) hzAP
+      simp only [mul_assoc] at h1
       rw [hdecomp] at h1
       have h2 : (N.factorial : AinfP p) * (z : AinfP p) =
           algebraMap (Ainf p) (AinfP p) a + w0 * X ^ N := by
@@ -427,20 +483,21 @@ theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
       apply mem_xi_pow_of_algebraMap
       rw [Ideal.mem_span_singleton']
       refine ⟨(N.factorial : AinfP p) * (p : AinfP p) ^ m *
-        algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        algebraMap (Ainf p) (AinfP p) Wt *
         (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod -
         (p : AinfP p) ^ n * w0 * X, ?_⟩
-      rw [map_mul, map_pow, map_natCast]
+      simp only [map_mul, map_pow, map_natCast]
       rw [hN, pow_succ] at hmain
       linear_combination hmain
     obtain ⟨a', rfl⟩ := Ideal.mem_span_singleton'.mp haS
     refine ⟨a', ?_⟩
     have hcancel : (N.factorial : AinfP p) * (p : AinfP p) ^ m *
-        algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        algebraMap (Ainf p) (AinfP p) Wt *
         (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod =
         (p : AinfP p) ^ n * (algebraMap (Ainf p) (AinfP p) a' + w0 * X) := by
       apply mul_left_cancel₀ (pow_ne_zero S hX0)
-      rw [hN, pow_succ, map_mul, map_pow] at hmain
+      rw [hN, pow_succ] at hmain
+      simp only [map_mul, map_pow] at hmain ⊢
       linear_combination hmain
     have hθ := congrArg (fontaineThetaInvertP O p) hcancel
     have hV : fontaineThetaInvertP O p
@@ -455,9 +512,9 @@ theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
     simp only [map_mul, map_add, map_pow, map_natCast, hV, hXθ, thetaP_algebraMap, mul_zero,
       add_zero, mul_one] at hθ
     apply algebraMap_O_injective p
-    rw [hc, map_mul, map_mul, map_mul, map_pow, map_natCast, map_natCast, map_pow, map_natCast]
-    rw [map_list_prod, List.map_map] at hθ
-    exact hθ
+    rw [hc]
+    simp only [map_mul, map_pow, map_natCast] at hθ ⊢
+    linear_combination hθ
   apply hc0
   apply IsHausdorff.haus' (I := span {(p : O)})
   intro n
@@ -465,6 +522,12 @@ theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
   rw [SModEq.sub_mem, sub_zero, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow,
     Ideal.mem_span_singleton, ha']
   exact dvd_mul_right _ _
+
+/-- **Main lemma**, `y = 1`: `p^m · ∏ log [ε_i] ≠ 0` in `A_cris`. -/
+theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
+    (p : Acris p) ^ m * (l.map (logOf p)).prod ≠ 0 := by
+  have := pow_mul_prod_logOf_mul_ne_zero p l m 1 one_ne_zero
+  rwa [ofAinf_one, mul_one] at this
 
 /-! ### Consequences: `B_cris^+`, `B_cris`, `B_st` are not zero; `t` is not nilpotent -/
 
