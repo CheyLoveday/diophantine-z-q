@@ -1,5 +1,7 @@
 import ZInQKernel.Contrib.TYZDecomp.Leaves
 import ZInQKernel.Contrib.TYZChain.Lcal
+import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.Global.Adeles.FiniteBaseChange
+import ZInQKernel.Contrib.TauCeti.RingTheory.DedekindDomain.FiniteAdeleRing.ClassGroup
 
 /-!
 # h29-split: `TYZLemma29Mod2` against TYZ Lemma 2.9 and Proposition 2.3 in printed form
@@ -75,6 +77,13 @@ def Lemma29Printed (Q : ℕ → ℤ) : Prop :=
   ∀ ℓ : ℕ → ℤ, IsLcalSign ℓ → ∀ m : ℕ, Squarefree m → 1 < m → (m % 8 = 1 ∨ m % 8 = 3) →
     ∃ ε : ℕ → ℤ, (∀ d, ε d = 1 ∨ ε d = -1) ∧ ∃ w : ℤ, (w = 1 ∨ (m = 3 ∧ w = 3)) ∧
       w * ∑ d ∈ pairIdx m, ε d * (ℓ (m / d) * ℓ d) = Q m
+
+/-- The conclusion of TYZ Lemma 2.9 at one `m`, for the value `Qm` of the genus period (the body of
+`Lemma29Printed`, with `ℓ` quantified first). -/
+def Lemma29At (m : ℕ) (Qm : ℤ) : Prop :=
+  ∀ ℓ : ℕ → ℤ, IsLcalSign ℓ →
+    ∃ ε : ℕ → ℤ, (∀ d, ε d = 1 ∨ ε d = -1) ∧ ∃ w : ℤ, (w = 1 ∨ (m = 3 ∧ w = 3)) ∧
+      w * ∑ d ∈ pairIdx m, ε d * (ℓ (m / d) * ℓ d) = Qm
 
 /-- **TYZ Proposition 2.3 (L580–586), conclusion, odd classes, with `Q` as a parameter**:
 `Q(m) ≡ g(m) (mod 2)`, `g(m) = #2Cl(ℚ(√−m))` (`gNat`, TYZ L363). -/
@@ -346,6 +355,275 @@ theorem thm11Mod2_iff (h11 : TYZThm11Integral) : TYZThm11Mod2 ↔ TYZLemma29Mod2
 theorem tyzLemma29Mod2_of_thm11Mod2 (h : TYZThm11Mod2) : TYZLemma29Mod2 :=
   lemma29Mod2_of_thm11Mod2 h
 
+
+/-! ## §5. TYZ's objects over genuine definitions
+
+TYZ §2.1 (L496–586) and §2.2 (L588–620), read in the source by this task (see the log). The
+quaternion algebra `B` ramified at `2, ∞` is Hamilton's `ℍ[ℚ]` (`i² = j² = −1`, `ij = k = −ji`, TYZ
+L508–511); `B̂ = B ⊗ 𝔸ᶠ_ℚ` is `ℍ[𝔸ᶠ_ℚ]`; `K̂_n = 𝔸ᶠ_{K_n}` maps to `B̂` through Tau Ceti's base change
+`𝔸ᶠ_{K_n} ≅ 𝔸ᶠ_ℚ ⊗_ℚ K_n` and `τ`; `Cl_n = K_n^× \ K̂_n^× / Ô_{K_n}^×` through Tau Ceti's
+`FiniteAdeleRing.toClassGroup`. TYZ's `π_ℤ^{U_n}` is pinned by its Hecke eigenvalues `a_p(E)` at the
+odd primes (see `InPiZ`). -/
+
+section Genuine
+
+open IsDedekindDomain
+open scoped Quaternion TensorProduct FiniteAdeleExtension
+
+/-- `𝔸ᶠ_ℚ`, the finite adeles of `ℚ`. -/
+abbrev AQ : Type := FiniteAdeleRing (𝓞 ℚ) ℚ
+
+/-- `B → B̂`: `ℍ[ℚ] → ℍ[𝔸ᶠ_ℚ]`, coordinatewise. -/
+def qι : ℍ[ℚ] →ₐ[ℚ] ℍ[AQ] where
+  toFun q := ⟨algebraMap ℚ AQ q.re, algebraMap ℚ AQ q.imI, algebraMap ℚ AQ q.imJ,
+    algebraMap ℚ AQ q.imK⟩
+  map_one' := by apply Quaternion.ext <;> simp
+  map_mul' a b := by
+    apply Quaternion.ext <;>
+      simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul, Quaternion.imK_mul,
+        map_mul, map_add, map_sub]
+  map_zero' := by apply Quaternion.ext <;> simp
+  map_add' a b := by apply Quaternion.ext <;> simp
+  commutes' r := by apply Quaternion.ext <;> simp [Algebra.algebraMap_eq_smul_one]
+
+/-- **TYZ's maximal order `O_B = O_B' + ℤζ`**, `O_B' = ℤ + ℤi + ℤj + ℤk`, `ζ = (−1 + i + j + k)/2`
+(TYZ L512–514): membership. -/
+def IsHurwitz (q : ℍ[ℚ]) : Prop :=
+  ∃ a b c d e : ℤ, q = ⟨a - e / 2, b + e / 2, c + e / 2, d + e / 2⟩
+
+/-- `Ô_B = O_B ⊗ Ẑ ⊂ B̂`: `a + bi + cj + dk + eζ` with `a, …, e ∈ Ẑ`. -/
+def hurwitzHat : Set ℍ[AQ] :=
+  {x | ∃ a b c d e : AQ, a ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ ∧
+    b ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ ∧ c ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ ∧
+    d ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ ∧ e ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ ∧
+    x = ⟨a - e * algebraMap ℚ AQ (1 / 2), b + e * algebraMap ℚ AQ (1 / 2),
+      c + e * algebraMap ℚ AQ (1 / 2), d + e * algebraMap ℚ AQ (1 / 2)⟩}
+
+/-- `√−n ∈ K_n = ℚ(√−n)`: Mathlib's `QuadraticAlgebra.omega`, with `ω² = −n`. -/
+abbrev sqrtNeg (n : ℕ) : QNeg n := QuadraticAlgebra.omega
+
+/-- **TYZ's embedding `τ : K_n → B`** (L515–523): `τ(O_{K_n}) ⊂ O_B`, and for `n ≡ 1 (mod 8)`,
+`τ(√−n) = ai + bj + ck` with `n = a² + b² + c²`, `a, b, c ∈ ℤ`, `4 ∣ c`. -/
+def AdmissibleTau (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Prop :=
+  (∀ x : 𝓞 (QNeg n), IsHurwitz (τ (x : QNeg n))) ∧
+    (n % 8 = 1 → ∃ a b c : ℤ, (n : ℤ) = a ^ 2 + b ^ 2 + c ^ 2 ∧ 4 ∣ c ∧
+      τ (sqrtNeg n) = ⟨0, (a : ℚ), (b : ℚ), (c : ℚ)⟩)
+
+/-- `τ̂ : K̂_n = 𝔸ᶠ_{K_n} → B̂`: Tau Ceti's base change `𝔸ᶠ_{K_n} ≅ 𝔸ᶠ_ℚ ⊗_ℚ K_n`, then
+`a ⊗ x ↦ a · τ(x)`. -/
+def tauHat (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) :
+    FiniteAdeleRing (𝓞 (QNeg n)) (QNeg n) →+* ℍ[AQ] :=
+  (AlgHom.liftEquiv ℚ AQ (QNeg n) ℍ[AQ] ((qι).comp τ)).toRingHom.comp
+    (TauCeti.GlobalNumberFields.finiteAdeleBaseChangeAlgEquiv ℚ (QNeg n)).symm.toRingHom
+
+theorem tauHat_algebraMap (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (k : QNeg n) :
+    tauHat n τ (algebraMap (QNeg n) _ k) = qι (τ k) := by
+  simp [tauHat]
+
+/-- `τ̂` on units: `K̂_n^× → B̂^×`. -/
+def tauHatU (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) :
+    (FiniteAdeleRing (𝓞 (QNeg n)) (QNeg n))ˣ →* ℍ[AQ]ˣ :=
+  Units.map (tauHat n τ).toMonoidHom
+
+/-- `R̂_n = R_n ⊗ Ẑ = τ̂(Ô_{K_n}) + 4Ô_B` for TYZ's order `R_n = O_{K_n} + 4O_B` (L558–559). -/
+def RnHat (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : AddSubgroup ℍ[AQ] :=
+  AddSubgroup.closure
+    (tauHat n τ '' (FiniteAdeleRing.integralAdeles (𝓞 (QNeg n)) (QNeg n) : Set _) ∪
+      (fun y => 4 * y) '' hurwitzHat)
+
+/-- `R̂_n^×`. -/
+def RnUnits (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Set ℍ[AQ]ˣ :=
+  {u | (u : ℍ[AQ]) ∈ RnHat n τ ∧ ((u⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) ∈ RnHat n τ}
+
+/-- The finite place `2` of `ℚ`. -/
+def IsPlaceTwo (v : HeightOneSpectrum (𝓞 ℚ)) : Prop := (2 : 𝓞 ℚ) ∈ v.asIdeal
+
+/-- `K_{n,2}^× ⊂ B̂^×`: the units of `B̂` with component `1` away from `2` whose component at `2`
+lies in `τ(K_n) ⊗ ℚ₂`, i.e. commutes with `τ(√−n)` (the centralizer of `τ(K_n)` in `B ⊗ ℚ₂`). -/
+def K2Units (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Set ℍ[AQ]ˣ :=
+  {x | Commute (x : ℍ[AQ]) (qι (τ (sqrtNeg n))) ∧ ∀ v, ¬ IsPlaceTwo v →
+    (x : ℍ[AQ]).re v = 1 ∧ (x : ℍ[AQ]).imI v = 0 ∧ (x : ℍ[AQ]).imJ v = 0 ∧
+      (x : ℍ[AQ]).imK v = 0}
+
+/-- **TYZ's `U_n = R̂_n^× · K_{n,2}^×`** (L557), as the subgroup of `B̂^×` it generates (invariance
+under a set and under the subgroup it generates are the same). -/
+def Un (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Subgroup ℍ[AQ]ˣ :=
+  Subgroup.closure (RnUnits n τ ∪ K2Units n τ)
+
+open Classical in
+/-- The idempotent of `𝔸ᶠ_ℚ` supported at the place `v`. -/
+def eAt (v : HeightOneSpectrum (𝓞 ℚ)) : AQ :=
+  ⟨fun w => if w = v then 1 else 0, Filter.Eventually.of_forall fun w => by
+    dsimp only; split_ifs
+    · exact one_mem _
+    · exact zero_mem _⟩
+
+/-- `B → B̂` at the place `v` only: `α` at `v`, `1` elsewhere. -/
+def ιAt (v : HeightOneSpectrum (𝓞 ℚ)) (α : ℍ[ℚ]) : ℍ[AQ] :=
+  algebraMap AQ ℍ[AQ] (eAt v) * qι α + algebraMap AQ ℍ[AQ] (1 - eAt v)
+
+/-- `a_p(E)` for TYZ's `E : y² = x³ − x` (L534): `a_p = p + 1 − #E(𝔽_p) = −Σ_x ((x³ − x)/p)`. -/
+def apE (p : ℕ) : ℤ := -∑ x ∈ Finset.range p, jacobiSym ((x : ℤ) ^ 3 - x) p
+
+/-- The Hurwitz quaternions of reduced norm `p`, as `2α = (a, b, c, d)` with `a ≡ b ≡ c ≡ d (mod 2)`
+and `a² + b² + c² + d² = 4p`. -/
+def hurwitzNorm (p : ℕ) : Finset (ℤ × ℤ × ℤ × ℤ) :=
+  ((Finset.Icc (-(2 * p : ℤ)) (2 * p)) ×ˢ (Finset.Icc (-(2 * p : ℤ)) (2 * p)) ×ˢ
+      (Finset.Icc (-(2 * p : ℤ)) (2 * p)) ×ˢ (Finset.Icc (-(2 * p : ℤ)) (2 * p))).filter
+    (fun t => (t.1 - t.2.1) % 2 = 0 ∧ (t.1 - t.2.2.1) % 2 = 0 ∧ (t.1 - t.2.2.2) % 2 = 0 ∧
+      t.1 ^ 2 + t.2.1 ^ 2 + t.2.2.1 ^ 2 + t.2.2.2 ^ 2 = 4 * p)
+
+/-- `(a, b, c, d) ↦ (a + bi + cj + dk)/2`. -/
+def quatOf (t : ℤ × ℤ × ℤ × ℤ) : ℍ[ℚ] :=
+  ⟨(t.1 : ℚ) / 2, (t.2.1 : ℚ) / 2, (t.2.2.1 : ℚ) / 2, (t.2.2.2 : ℚ) / 2⟩
+
+/-- **TYZ's `π_ℤ^{U_n}`** (L545–561): the integer-valued functions on `B̂^×` (values off `B̂^×` are
+not used) that are left `B^×`-invariant, right `U_n`- and `𝔸ᶠ_ℚ^×`-invariant, and lie in `π`, the
+Jacquet–Langlands transfer of the newform of `E` (level 32). Membership in `π` is imposed through the
+Hecke eigenvalues: for every odd prime `p` (where `U_{n,p} = O_{B,p}^×`), the sum over the `24(p + 1)`
+Hurwitz quaternions `α` of norm `p` of `f(x · α_p)` is `24 a_p(E) f(x)` (each of the `p + 1` cosets of
+`T_p` is met by `|O_B^×| = 24` of them). By strong multiplicity one for `GL₂`, the injectivity of
+Jacquet–Langlands and multiplicity one for `B^×`, the `U_n`-invariant forms with these eigenvalues are
+exactly `π^{U_n}` (the one-dimensional representations have eigenvalue `p + 1 ≠ a_p`). -/
+def InPiZ (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] → ℤ) : Prop :=
+  (∀ γ : ℍ[ℚ], γ ≠ 0 → ∀ x : ℍ[AQ]ˣ, f (qι γ * x) = f x) ∧
+    (∀ x : ℍ[AQ]ˣ, ∀ u ∈ Un n τ, f ((x : ℍ[AQ]) * u) = f x) ∧
+    (∀ x : ℍ[AQ]ˣ, ∀ z : AQˣ, f ((x : ℍ[AQ]) * algebraMap AQ ℍ[AQ] z) = f x) ∧
+    (∀ p : ℕ, p.Prime → p ≠ 2 → ∀ v : HeightOneSpectrum (𝓞 ℚ), (p : 𝓞 ℚ) ∈ v.asIdeal →
+      ∀ x : ℍ[AQ]ˣ, ∑ t ∈ hurwitzNorm p, f ((x : ℍ[AQ]) * ιAt v (quatOf t)) = 24 * apE p * f x)
+
+/-- **TYZ's test vector `f_n`** (L561–563): a `ℤ`-generator of `π_ℤ^{U_n}`. -/
+def IsTestVector (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] → ℤ) : Prop :=
+  InPiZ n τ f ∧ ∀ g, InPiZ n τ g → ∃ c : ℤ, ∀ x : ℍ[AQ]ˣ, g x = c * f x
+
+/-- A finite idele of `K_n` in a given ideal class (Tau Ceti's `toClassGroup` is onto). -/
+def clLift (n : ℕ) [NeZero n] (t : ClassGroup (𝓞 (QNeg n))) :
+    (FiniteAdeleRing (𝓞 (QNeg n)) (QNeg n))ˣ :=
+  (FiniteAdeleRing.toClassGroup_surjective (R := 𝓞 (QNeg n)) (K := QNeg n) t).choose
+
+theorem toClassGroup_clLift (n : ℕ) [NeZero n] (t : ClassGroup (𝓞 (QNeg n))) :
+    FiniteAdeleRing.toClassGroup (𝓞 (QNeg n)) (QNeg n) (clLift n t) = t :=
+  (FiniteAdeleRing.toClassGroup_surjective (R := 𝓞 (QNeg n)) (K := QNeg n) t).choose_spec
+
+/-- **TYZ's genus period** `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L577–579), for the test vector `f` and the
+embedding `τ`: `t` is read in `B̂^×` as `τ̂` of a finite idele in the class `t`. -/
+def genusPeriodTV (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] → ℤ) : ℤ :=
+  ∑ t ∈ sqClasses n, f ((tauHatU n τ (clLift n t) : ℍ[AQ]ˣ) : ℍ[AQ])
+
+/-! ### The printed leaves -/
+
+/-- **TYZ §2.1, L515–523 (existence of `τ`)**: for squarefree `n ≡ 1, 3 (mod 8)` there is an
+embedding `τ : K_n → B` with `τ(O_{K_n}) ⊂ O_B` and, for `n ≡ 1 (mod 8)`, `τ(√−n) = ai + bj + ck`,
+`n = a² + b² + c²`, `4 ∣ c`. TYZ cite Legendre's three-square theorem and Jones–Pall [JP, Theorem 5]
+for the `4 ∣ c` refinement. -/
+def TYZTauExists : Prop :=
+  ∀ (n : ℕ) [NeZero n], Squarefree n → (n % 8 = 1 ∨ n % 8 = 3) →
+    ∃ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ
+
+/-- **TYZ §2.1, L555–563, with Theorem 2.6 at `χ = 1`**: `π_ℤ^{U_n}` is free of rank one over `ℤ`;
+here only the existence of a generator `f_n` (a consequence) is stated. -/
+def TYZTestVectorExists : Prop :=
+  ∀ (n : ℕ) [NeZero n], Squarefree n → (n % 8 = 1 ∨ n % 8 = 3) →
+    ∀ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ → ∃ f : ℍ[AQ] → ℤ, IsTestVector n τ f
+
+/-- **TYZ Lemma 2.9 (L1062–1066), printed form, for squarefree `1 < n ≡ 1, 3 (mod 8)`**: for every
+admissible `τ` and test vector `f_n`, `Σ ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)` with `ε = ±1`, over the
+non-ordered decompositions `n = d₁d₂`, `d₁, d₂ > 0`, `d₂ ≡ 1 (mod 8)`, with the factor `w = w_K` at
+`n = 3` admitted (`Lemma29At`; rv-nt-tyz B1, rechecked against TYZ's proof by this task). -/
+def TYZLemma29Printed : Prop :=
+  ∀ (n : ℕ) [NeZero n], Squarefree n → 1 < n → (n % 8 = 1 ∨ n % 8 = 3) →
+    ∀ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ → ∀ f : ℍ[AQ] → ℤ, IsTestVector n τ f →
+      Lemma29At n (genusPeriodTV n τ f)
+
+/-- **TYZ Proposition 2.3 (L580–586), first assertion, for squarefree `n ≡ 1, 3 (mod 8)`**:
+`f_n((B̂^×)²) ⊂ 1 + 2ℤ`. -/
+def TYZProp23Printed : Prop :=
+  ∀ (n : ℕ) [NeZero n], Squarefree n → (n % 8 = 1 ∨ n % 8 = 3) →
+    ∀ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ → ∀ f : ℍ[AQ] → ℤ, IsTestVector n τ f →
+      ∀ h : ℍ[AQ]ˣ, Odd (f ((h * h : ℍ[AQ]ˣ) : ℍ[AQ]))
+
+/-! ### Glue (proved) -/
+
+theorem tauHatU_coe (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ])
+    (x : (FiniteAdeleRing (𝓞 (QNeg n)) (QNeg n))ˣ) :
+    ((tauHatU n τ x : ℍ[AQ]ˣ) : ℍ[AQ]) = tauHat n τ x := rfl
+
+theorem tauHatU_unitEmbedding (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (k : (QNeg n)ˣ) :
+    ((tauHatU n τ (FiniteAdeleRing.unitEmbedding (𝓞 (QNeg n)) (QNeg n) k) : ℍ[AQ]ˣ) : ℍ[AQ]) =
+      qι (τ k) := by
+  rw [tauHatU_coe, FiniteAdeleRing.unitEmbedding_apply, tauHat_algebraMap]
+
+/-- `τ̂(Ô_{K_n}^×) ⊂ R̂_n^× ⊂ U_n`. -/
+theorem tauHatU_mem_Un (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ])
+    {a : (FiniteAdeleRing (𝓞 (QNeg n)) (QNeg n))ˣ}
+    (ha : a ∈ FiniteAdeleRing.integralUnits (𝓞 (QNeg n)) (QNeg n)) : tauHatU n τ a ∈ Un n τ := by
+  apply Subgroup.subset_closure
+  left
+  rw [FiniteAdeleRing.integralUnits_eq_units_integralAdeles, Submonoid.mem_units_iff] at ha
+  refine ⟨AddSubgroup.subset_closure (Or.inl ⟨_, ha.1, rfl⟩), ?_⟩
+  rw [← map_inv]
+  exact AddSubgroup.subset_closure (Or.inl ⟨_, ha.2, rfl⟩)
+
+/-- **The class-group step of Proposition 2.3's "therefore"**: a test-vector-type `f` that is odd on
+squares of `B̂^×` is odd at every class of `2Cl_n` (read through `τ̂`). Uses that the kernel of
+`K̂^× → Cl_n` is `Ô_K^× K^×` (Tau Ceti's `ker_toClassGroup`). -/
+theorem odd_on_sqClasses {n : ℕ} [NeZero n] {τ : QNeg n →ₐ[ℚ] ℍ[ℚ]} {f : ℍ[AQ] → ℤ}
+    (hf : InPiZ n τ f) (h23 : ∀ h : ℍ[AQ]ˣ, Odd (f ((h * h : ℍ[AQ]ˣ) : ℍ[AQ])))
+    {t : ClassGroup (𝓞 (QNeg n))} (ht : t ∈ sqClasses n) :
+    Odd (f ((tauHatU n τ (clLift n t) : ℍ[AQ]ˣ) : ℍ[AQ])) := by
+  obtain ⟨s, hs⟩ := MonoidHom.mem_range.mp (mem_sqClasses.mp ht)
+  have hker : clLift n t * (clLift n s * clLift n s)⁻¹ ∈
+      (FiniteAdeleRing.toClassGroup (𝓞 (QNeg n)) (QNeg n)).ker := by
+    rw [MonoidHom.mem_ker, map_mul, map_inv, map_mul, toClassGroup_clLift, toClassGroup_clLift,
+      ← hs, powMonoidHom_apply, pow_two, mul_inv_cancel]
+  rw [FiniteAdeleRing.ker_toClassGroup, Subgroup.mem_sup] at hker
+  obtain ⟨a, ha, b, ⟨k, rfl⟩, hab⟩ := hker
+  rw [eq_mul_inv_iff_mul_eq] at hab
+  have hX : clLift n t = FiniteAdeleRing.unitEmbedding (𝓞 (QNeg n)) (QNeg n) k *
+      ((clLift n s * clLift n s) * a) := by
+    rw [← hab]; ac_rfl
+  have himg : ((tauHatU n τ (clLift n t) : ℍ[AQ]ˣ) : ℍ[AQ]) =
+      qι (τ k) * (((tauHatU n τ (clLift n s) * tauHatU n τ (clLift n s)) * tauHatU n τ a :
+        ℍ[AQ]ˣ) : ℍ[AQ]) := by
+    rw [hX, map_mul, Units.val_mul, tauHatU_unitEmbedding, map_mul, map_mul]
+  have hγ : τ (k : QNeg n) ≠ 0 := (map_ne_zero τ).mpr k.ne_zero
+  rw [himg, hf.1 _ hγ, Units.val_mul, hf.2.1 _ _ (tauHatU_mem_Un n τ ha)]
+  exact h23 _
+
+open Classical in
+/-- The class-group function of the chosen `τ` and `f_n` (any value off the classes `1, 3 (mod 8)`). -/
+def tvFun (hτ : TYZTauExists) (hfx : TYZTestVectorExists) : ClFun := fun n _ t =>
+  if h : Squarefree n ∧ (n % 8 = 1 ∨ n % 8 = 3) then
+    (hfx n h.1 h.2 _ (hτ n h.1 h.2).choose_spec).choose
+      ((tauHatU n (hτ n h.1 h.2).choose (clLift n t) : ℍ[AQ]ˣ) : ℍ[AQ])
+  else 1
+
+/-- **`h29` from the printed leaves**: TYZ Lemma 2.9 and Proposition 2.3 in printed form over TYZ's
+genuine `B̂`, `U_n`, `π_ℤ^{U_n}`, `f_n`, `Q(n)`, with the existence of `τ` and of `f_n`, give
+`TYZLemma29Mod2`. -/
+theorem tyzLemma29Mod2_of_printedLeaves (hτ : TYZTauExists) (hfx : TYZTestVectorExists)
+    (h29 : TYZLemma29Printed) (h23 : TYZProp23Printed) : TYZLemma29Mod2 := by
+  refine tyzLemma29Mod2_of_printedF (f := tvFun hτ hfx) ?_ ?_
+  · intro ℓ hℓ m hsq h1 hcl
+    have : NeZero m := ⟨hsq.ne_zero⟩
+    have hm : Squarefree m ∧ (m % 8 = 1 ∨ m % 8 = 3) := ⟨hsq, hcl⟩
+    have key := h29 m hsq h1 hcl _ (hτ m hsq hcl).choose_spec _
+      (hfx m hsq hcl _ (hτ m hsq hcl).choose_spec).choose_spec ℓ hℓ
+    have hQ : genusPeriod (tvFun hτ hfx) m = genusPeriodTV m (hτ m hsq hcl).choose
+        (hfx m hsq hcl _ (hτ m hsq hcl).choose_spec).choose := by
+      rw [genusPeriod_of_ne]
+      refine Finset.sum_congr rfl fun t _ => ?_
+      simp only [tvFun, dif_pos hm]
+    rw [hQ]
+    exact key
+  · intro n _ hsq hcl t ht
+    have hm : Squarefree n ∧ (n % 8 = 1 ∨ n % 8 = 3) := ⟨hsq, hcl⟩
+    simp only [tvFun, dif_pos hm]
+    have hf := (hfx n hsq hcl _ (hτ n hsq hcl).choose_spec).choose_spec
+    exact odd_on_sqClasses hf.1 (h23 n hsq hcl _ (hτ n hsq hcl).choose_spec _ hf) ht
+
+end Genuine
+
 end ZInQ.Contrib.TYZDecomp.H29Split
 
 #print axioms ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printed
@@ -353,3 +631,4 @@ end ZInQ.Contrib.TYZDecomp.H29Split
 #print axioms ZInQ.Contrib.TYZDecomp.H29Split.exists_printedQ_iff
 #print axioms ZInQ.Contrib.TYZDecomp.H29Split.exists_printedF_iff
 #print axioms ZInQ.Contrib.TYZDecomp.H29Split.thm11Mod2_iff
+#print axioms ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves
