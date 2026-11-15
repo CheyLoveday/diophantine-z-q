@@ -10,3 +10,4 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
 ## Compile outcomes
 - 2026-11-14 17:58 Pic.lean v1 (§0 verbatim copy + rfl; mumfordBundle, phiL, identityComponent, IsPicZero,
   IsVeryAmple; `exists_isVeryAmple` proved): 0 errors. VERIFIED.
+- 2026-11-14 18:10 Pic.lean v2: `comp_classify`, `mumfordBundle_restrict_zero`, `eta_comp_phiL` (φ_L(0)=0 for the Picard group law) proved: 0 errors. VERIFIED.

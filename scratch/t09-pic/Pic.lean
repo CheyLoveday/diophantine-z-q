@@ -66,7 +66,7 @@ def phiL {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
 /-- **The identity component** of a group scheme `G` over `K`: the connected component of the
 identity point (the image of the unit section `Spec K → G`). -/
 def identityComponent (G : Over (Spec (CommRingCat.of K))) [GrpObj G] : Set G.left :=
-  {x | ∃ s : (𝟙_ (Over (Spec (CommRingCat.of K)))).left, x ∈ connectedComponent (η[G].left.base s)}
+  {x | ∃ s : (𝟙_ (Over (Spec (CommRingCat.of K)))).left, x ∈ connectedComponent (η[G].left s)}
 
 /-- **`(B, ι)` is the identity component `Pic⁰` of the Picard scheme `P`** (`P` represents the Picard
 functor of `A` through `rep`, with its group law `picardFunctorCommGrpObj`): `ι : B → P` is an open
@@ -75,7 +75,7 @@ isomorphism. -/
 def IsPicZero {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
     (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P) : Prop :=
   letI := picardFunctorCommGrpObj A.X.hom rep
-  IsOpenImmersion j.left ∧ Set.range j.left.base = identityComponent P ∧ IsMonHom j
+  IsOpenImmersion j.left ∧ Set.range j.left = identityComponent P ∧ IsMonHom j
 
 /-- **Very ample** (relative to `K`, finitely many coordinates): `L ≅ i^*𝒪(1)` for an immersion
 `i : A → ℙ^N_K` over `K` (EGA II 4.4.2, Hartshorne II §7; UNVERIFIED numbering). Very ample implies
@@ -93,5 +93,48 @@ theorem exists_isVeryAmple (A : AbVar K) : ∃ L, IsVeryAmple A L := by
   obtain ⟨N, hN, i, hi, hover⟩ :=
     GrpObj.exists_isImmersion_projectiveSpace_of_smooth_of_geometricallyIntegral A.X
   exact ⟨_, N, hN, i, hi, hover, rfl⟩
+
+
+/-- Precomposition with `f : T' ⟶ T` classifies the pulled-back class (Yoneda + naturality of the
+sheafification map). -/
+lemma comp_classify {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) {T T' : Over (Spec (CommRingCat.of K))}
+    (f : T' ⟶ T) (c : (pullback A.X.hom T.hom).Pic) :
+    f ≫ rep.homEquiv.symm ((toPicardFunctor A.X.hom).app (op T) c) =
+      rep.homEquiv.symm ((toPicardFunctor A.X.hom).app (op T')
+        (Scheme.Pic.map (JacobianChallenge.baseChangeMap A.X.hom f) c)) := by
+  rw [rep.comp_homEquiv_symm]
+  congr 1
+  exact ((toPicardFunctor A.X.hom).naturality_apply f.op c).symm
+
+/-- `Λ(L)` restricted to `A × {0}` is trivial. -/
+lemma mumfordBundle_restrict_zero (A : AbVar K) (L : A.X.left.Pic) :
+    Scheme.Pic.map (JacobianChallenge.baseChangeMap A.X.hom η[A.X]) (mumfordBundle A L) = 1 := by
+  have h1 : JacobianChallenge.baseChangeMap A.X.hom η[A.X] = (A.X ◁ η[A.X]).left := by
+    apply pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+  have hμ : JacobianChallenge.baseChangeMap A.X.hom η[A.X] ≫ (μ[A.X]).left =
+      JacobianChallenge.baseChangeMap A.X.hom η[A.X] ≫ pullback.fst A.X.hom A.X.hom := by
+    rw [h1, ← Over.comp_left, MonObj.mul_one]
+    simp
+  have hsnd : JacobianChallenge.baseChangeMap A.X.hom η[A.X] ≫ pullback.snd A.X.hom A.X.hom =
+      pullback.snd _ _ ≫ η[A.X].left := pullback.lift_snd _ _ _
+  have hS : Scheme.Pic.map η[A.X].left L = 1 :=
+    Subsingleton.elim (α := (Spec (CommRingCat.of K)).Pic) _ _
+  rw [mumfordBundle, ← Scheme.Pic.mapHom_apply]
+  simp only [map_mul, map_inv, Scheme.Pic.mapHom_apply, ← Scheme.Pic.map_comp, hμ, hsnd]
+  rw [Scheme.Pic.map_comp (pullback.snd _ _) η[A.X].left, hS, Scheme.Pic.map_one]
+  simp
+
+/-- **`φ_L(0) = 0`**: `η_A ≫ φ_L = η_P` for the group law of the Picard scheme. -/
+lemma eta_comp_phiL {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (L : A.X.left.Pic) :
+    letI := picardFunctorCommGrpObj A.X.hom rep
+    η[A.X] ≫ phiL rep L = η[P] := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  rw [phiL, comp_classify, mumfordBundle_restrict_zero]
+  have h := (picardClassifyingHom A.X.hom rep (𝟙_ _)).map_one
+  rw [picardClassifyingHom_apply] at h
+  rw [h, show (1 : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ P) = CartesianMonoidalCategory.toUnit _ ≫ η from rfl]
+  simp
 
 end T09Pic
