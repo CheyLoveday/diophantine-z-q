@@ -9,13 +9,13 @@ Diophantine in Q" from the hypotheses below. Everything else is proved. Each hyp
 one in Lean, or reducing it to statements printed in the literature, removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**65 hypotheses of the H part** (in the bundles `OpenAddedLeaves12`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**68 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 47 published / 18 glue** (the strictest flagged reading; 49/16 without the one strictest-reading flag).
+* **Strict count: 50 published / 18 glue** (the strictest flagged reading; 53/15 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 5, consequence 8, project glue 1, published 51.
+* By kind: composite 5, consequence 7, project glue 1, published 55.
 
 ## Index
 
@@ -23,8 +23,8 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | --- | --- | --- | --- | --- | --- |
 | [`deligneComponentsY3PrintedAb`](#delignecomponentsy3printedab) | added | published | GLUE | pending reading: depends (medium), whether one display states that the PEL moduli scheme with its uniformization is the canonical model at B = (2,-3|Q), level K3 (Deligne 389 section 5, Milne 2005 section 14) | open |
 | [`shimuraGoodReductionNoGuard`](#shimuragoodreductionnoguard) | added | composite | GLUE |  | cloud W13 |
-| [`t09SymmIsogenyExists`](#t09symmisogenyexists) | added | consequence | GLUE |  | t09-pic |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | added | composite | GLUE |  | igusa-alg |
+| [`weilPairingMumford`](#weilpairingmumford) | added | published | GLUE | strictest reading: composite (one leaf bundling several printed properties of e_n: perfect, Galois, compatible, dual-adjoint, alternating on lambda_L, with values pinned to weilScalar via Kleiman 9.2.5 and Mumford 8 (iv)); sign convention immaterial; pending review (one model review, no errors) | open |
 | [`quotientP1Coordinate`](#quotientp1coordinate) | glue | project glue | GLUE |  | fleet |
 | [`blr_1_2_4`](#blr_1_2_4) | research | consequence | GLUE | pending reading: may be printed in the strictly henselian form | open |
 | [`eigenformHTNew`](#eigenformhtnew) | research | consequence | GLUE |  | open |
@@ -44,6 +44,9 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | cloud round 2 |
 | [`geomConnOfAlgClosure`](#geomconnofalgclosure) | added | published | LEAF | weakened form | open |
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | added | published | LEAF |  | cloud W17 |
+| [`phiAmpleIsogeny`](#phiampleisogeny) | added | published | LEAF | finiteness over a non-closed K descends from Kbar (fpqc descent); Mumford's Application 1 is stated for effective D (general ample L via L^m); pending review (one model review, no errors) | open |
+| [`picRepresentableAbVar`](#picrepresentableabvar) | added | published | LEAF | pending review (one model review, no errors) | open |
+| [`picZeroAbVar`](#piczeroabvar) | added | published | LEAF | combines Mumford 13 (over Kbar) with descent to K (Kleiman 9.5.1) and geometric connectedness of the identity component (SGA 3 VI_A 2.4); pending review (one model review, no errors) | open |
 | [`qmCentralizerCMC`](#qmcentralizercmc) | added | published | LEAF |  | open |
 | [`shimizuCovolumeO1`](#shimizucovolumeo1) | added | published | LEAF |  | open |
 | [`shimuraTaniyamaQbar`](#shimurataniyamaqbar) | added | published | LEAF |  | open |
@@ -91,7 +94,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 
 ### deligneComponentsY3PrintedAb
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.deligneComponentsY3PrintedAb`; kind **published**, strict **GLUE**; flag: pending reading: depends (medium), whether one display states that the PEL moduli scheme with its uniformization is the canonical model at B = (2,-3|Q), level K3 (Deligne 389 section 5, Milne 2005 section 14).
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.deligneComponentsY3PrintedAb`; kind **published**, strict **GLUE**; flag: pending reading: depends (medium), whether one display states that the PEL moduli scheme with its uniformization is the canonical model at B = (2,-3|Q), level K3 (Deligne 389 section 5, Milne 2005 section 14).
 * Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 (UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and Lemma QP, as for r1r2); over Mathlib's FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, ConnectedComponents
 * Status: open: no one is on it.
 
@@ -105,7 +108,7 @@ ShimuraGlue.DeligneComponentsY3PrintedAb
 
 ### shimuraGoodReductionNoGuard
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.shimuraGoodReductionNoGuard`; kind **composite**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.shimuraGoodReductionNoGuard`; kind **composite**, strict **GLUE**.
 * Source: vert-witness's ShimuraGoodReduction without the Qbar-point guard (redundant given r1r2): Kottwitz 1992 5; Buzzard 1997; Morita 1981; Carayol 1986 (not statable in published form today, curve-split 3.6)
 * Status: cloud W13: briefed, not yet claimed on the issue (since 2026-11-14) [issue #79](https://github.com/elliotglazer/diophantine-z-q/issues/79).
 
@@ -115,28 +118,9 @@ HDec.CurveSplitGR.ShimuraGoodReductionNoGuard
 
 > `ShimuraGoodReduction` without the guard clause.
 
-### t09SymmIsogenyExists
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.t09SymmIsogenyExists`; kind **consequence**, strict **GLUE**.
-* Source: Mumford 6, 8, 20, 23 (not splittable, av-split 4.1)
-* Status: t09-pic: in progress: Pic0, phi_L, ample bundles, e_n (since 2026-11-14).
-
-```lean
-HDec.WeilPairing.T09_SymmIsogenyExists
-```
-
-> **T9 (restated over the definitions of §3).** Every abelian variety over a field carries a
-> symmetric isogeny `λ : A → Â` to its dual, with Galois-equivariant perfect compatible Weil
-> pairings. Published: Mumford §6 (Application 1: `A` is projective, so an ample `L` exists over
-> `K`), §8 (`Â`), §13, §20 (the pairing `e_n`: bilinear, perfect, Galois-equivariant,
-> `e_{mn}(x, y) = e_n(m x, y)`), §23 (`e^L_n(x, x) = 1`, so `λ = φ_L` is symmetric), and `φ_L` is an
-> isogeny for ample `L` (§6, Application 1); Milne, *Abelian varieties* (Cornell–Silverman 1986)
-> §§8-13, 16 (UNVERIFIED numbering). Take `D = (Pic⁰, e_n)`, `λ = φ_L`. Existential in `D`, hence a
-> consequence, never stronger.
-
 ### thetaRatiosAlgebraic
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.thetaRatiosAlgebraic`; kind **composite**, strict **GLUE**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.thetaRatiosAlgebraic`; kind **composite**, strict **GLUE**.
 * Source: Shimura 1976; Mumford Tata II IIIa 8; Igusa (qm-split: ThetaNullNonvanishing + glue, not folded)
 * Status: igusa-alg: in progress: theta-glue reduced it to one leaf and five polynomial identities (since 2026-11-14).
 
@@ -155,6 +139,21 @@ HDec.HSyn.G0Split.ThetaPt.ThetaRatiosAlgebraic
 > at most one of the ten even `θ_m(0, Ω)` vanishes in genus 2 (it vanishes exactly on products of
 > elliptic curves; UNVERIFIED locator: Igusa 1962/1967). `ThetaNullAlgebraic` follows
 > (`thetaNullAlgebraic_of_ratios`, proved).
+
+### weilPairingMumford
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.weilPairingMumford`; kind **published**, strict **GLUE**; flag: strictest reading: composite (one leaf bundling several printed properties of e_n: perfect, Galois, compatible, dual-adjoint, alternating on lambda_L, with values pinned to weilScalar via Kleiman 9.2.5 and Mumford 8 (iv)); sign convention immaterial; pending review (one model review, no errors).
+* Source: Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+T09Pic.WeilPairingMumford
+```
+
+> t09-pic, L4, printed form (single leaf): there is a pairing `A[n] × Pic⁰[n] → μ_n`, `n` invertible in `K`, with
+> the values of Mumford's `ē_n` (`weilScalar`), perfect, Galois-equivariant, compatible in `n`, adjoint for the
+> genuine dual `f^∨`, and trivial on `(x, λ_L x)` for ample `L` (Mumford §20 and §23; Milne 1986 §16; locators
+> UNVERIFIED).
 
 ### quotientP1Coordinate
 
@@ -380,7 +379,7 @@ ReductGlue.StrictHenselizationPair
 
 ### axSenTate
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.axSenTate`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.axSenTate`; kind **published**, strict **LEAF**.
 * Source: C_p^{G_K} = K: Tate 1967 3.3 Thm 1; Sen 1969; Ax 1970
 * Status: cloud W11: briefed, not yet claimed on the issue (since 2026-11-14) [issue #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 
@@ -396,7 +395,7 @@ ZInQ.Contrib.HodgeSplit.AxSenTate
 
 ### deligneComponentsX6PrintedAb
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.deligneComponentsX6PrintedAb`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.deligneComponentsX6PrintedAb`; kind **published**, strict **LEAF**.
 * Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and section 3; PSPM 33 (1979) 2.1.3, 2.6.3, at level O-hat^x on X6 (locators UNVERIFIED)
 * Status: open: no one is on it.
 
@@ -410,7 +409,7 @@ ShimuraGlue.DeligneComponentsX6PrintedAb
 
 ### egaIV_8_10_5_xii
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
 * Source: EGA IV_3 8.10.5 (xii)
 * Status: cloud round 2: in progress: repairing round 1's vendored port (H-65) (since 2026-11-14) [issue #80](https://github.com/elliotglazer/diophantine-z-q/issues/80).
 
@@ -425,7 +424,7 @@ ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
 
 ### geomConnOfAlgClosure
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.geomConnOfAlgClosure`; kind **published**, strict **LEAF**; flag: weakened form.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.geomConnOfAlgClosure`; kind **published**, strict **LEAF**; flag: weakened form.
 * Source: textbook: geometric connectedness from connectedness over the algebraic closure (weakened)
 * Status: open: no one is on it.
 
@@ -438,7 +437,7 @@ HDec.QMSplit.Moduli.GeomConnOfAlgClosure
 
 ### milneIsogenyQuasiInverse
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.milneIsogenyQuasiInverse`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.milneIsogenyQuasiInverse`; kind **published**, strict **LEAF**.
 * Source: fg = [d], gf = [d] as morphisms: Milne 1986 Rem. 8.4; Milne's notes Prop. 7.1; Mumford 7
 * Status: cloud W17: briefed (CharZero form), after the two above (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
@@ -457,9 +456,50 @@ AvSplit.MilneIsogenyQuasiInverse
 > `d`-fold sum of the identity in `Hom(A, A)`. Over an algebraically closed field this is also
 > Mumford, *Abelian varieties* (1970), §7, Remark after Thm 4 (UNVERIFIED).
 
+### phiAmpleIsogeny
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.phiAmpleIsogeny`; kind **published**, strict **LEAF**; flag: finiteness over a non-closed K descends from Kbar (fpqc descent); Mumford's Application 1 is stated for effective D (general ample L via L^m); pending review (one model review, no errors).
+* Source: Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+T09Pic.PhiAmpleIsogeny
+```
+
+> t09-pic, L3, printed form: for ample `L`, the lift `λ_L : A → Pic⁰` of `φ_L` is an isogeny (Mumford §6
+> Application 1 and §8 Thm 1; locators UNVERIFIED).
+
+### picRepresentableAbVar
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
+* Source: Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+T09Pic.PicRepresentableAbVar
+```
+
+> t09-pic, L1, printed form: the relative Picard fppf sheaf of an abelian variety over a field is representable
+> (Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, *The Picard scheme*, Thm 9.4.8 with 9.2.5; locators
+> UNVERIFIED). With the next three replaces `t09SymmIsogenyExists`.
+
+### picZeroAbVar
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.picZeroAbVar`; kind **published**, strict **LEAF**; flag: combines Mumford 13 (over Kbar) with descent to K (Kleiman 9.5.1) and geometric connectedness of the identity component (SGA 3 VI_A 2.4); pending review (one model review, no errors).
+* Source: Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
+* Status: open: no one is on it.
+
+```lean
+T09Pic.PicZeroAbVar
+```
+
+> t09-pic, L2, printed form: for every representation of `Pic_{A/K}`, its identity component with the induced
+> group law is an abelian variety (`IsPicZero`; Mumford §13, Kleiman 9.5.1 and 9.5.3, SGA 3 VI_A 2.4; locators
+> UNVERIFIED).
+
 ### qmCentralizerCMC
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.qmCentralizerCMC`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.qmCentralizerCMC`; kind **published**, strict **LEAF**.
 * Source: End_O(A) of a QM surface over C is Z or an optimally embedded order Phi^-1(O) of an imaginary quadratic k: Shimura 1967 1-3; Jordan 1981 3; Gonzalez-Rotger 2006 5
 * Status: open: no one is on it.
 
@@ -473,7 +513,7 @@ HDec.QMSplit.Aut.QMCentralizerCMC
 
 ### shimizuCovolumeO1
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.shimizuCovolumeO1`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.shimizuCovolumeO1`; kind **published**, strict **LEAF**.
 * Source: iota(O^1) is cocompact Fuchsian with covolume 2pi/3 (Shimura 1971 Prop. 9.2; Shimizu 1965; Voight Thm 39.1.13)
 * Status: open: no one is on it.
 
@@ -486,7 +526,7 @@ HDec.LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
 
 ### shimuraTaniyamaQbar
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.shimuraTaniyamaQbar`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.shimuraTaniyamaQbar`; kind **published**, strict **LEAF**.
 * Source: Shimura-Taniyama 1961 12.4 Prop. 26; Milne, CM notes 7 (model over Qbar)
 * Status: open: no one is on it.
 
@@ -509,7 +549,7 @@ HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
 
 ### tateTwistInvariants
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.tateTwistInvariants`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.tateTwistInvariants`; kind **published**, strict **LEAF**.
 * Source: C_p(i)^{G_K} = 0 for i != 0, K finite over Q_p in Qbar_p: Tate, p-divisible groups (1967) 3.3 Thm 2
 * Status: cloud W11: briefed, not yet claimed on the issue (since 2026-11-14) [issue #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 
@@ -526,7 +566,7 @@ ZInQ.Contrib.HodgeSplit.TateTwistInvariants
 
 ### valenceFormulaCocompactEq
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.valenceFormulaCocompactEq`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenAddedLeaves13.valenceFormulaCocompactEq`; kind **published**, strict **LEAF**.
 * Source: valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16, Thm 2.20; Rankin Thm 4.1.4), over Mathlib's invariant measure on the upper half plane and a genuine fundamental domain
 * Status: open: no one is on it.
 

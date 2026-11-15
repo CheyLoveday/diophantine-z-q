@@ -16,3 +16,7 @@
   Count after fold 1: strict 49/16 (was 47/18, GLUE -2), strictest 47/18 (was 46/19; raynaudSemistableSH flagged
   GLUE at the strictest reading). claims.tsv: the three reduct-b claim rows of the removed fields deleted
   (render_open.py exits otherwise). JSON + OPEN.md regenerated.
+- 11-14 19:12 TailZ24 (t09-pic fold) compiles (~25 s); Main switched to sixContactMin_of_open18; frozenTarget axioms
+  standard (VERIFIED). kinds.tsv: t09SymmIsogenyExists removed, four t09-pic leaves added (weilPairingMumford flagged
+  composite at the strictest reading). Count after fold 2: 68 fields, strict 53/15 (GLUE -1), strictest 50/18.
+  claims.tsv: t09-pic's claim row of the removed field deleted. JSON + OPEN.md regenerated.
