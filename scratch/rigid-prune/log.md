@@ -23,3 +23,4 @@
   QMAbScheme) from gt-rigidity's MumfordGroupLaw alone (GIT Thm 6.14 without Cor. 6.4: iota_hom proved fibrewise);
   re-version the on-chain conversions (TailZ23) through QMFamilyGroupLaw, so no mumfordRigidity_of_core remains on
   the chain and the chain's use of the field is exactly GIT 6.14 on QM families.
+- TailZ40.lean compiles (lake env lean): isMonHom_of_fibres, exists_qmAbScheme_gl, qmFamilyGroupLaw_of_groupLaw (MumfordGroupLaw alone, no Cor 6.4), qmFamilyGroupLaw_of_core, r1fpProps_iff_ab_gl, nine *_iff_ab_gl; standard axioms.
