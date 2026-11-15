@@ -38764,3 +38764,3711 @@ Note: This linter can be disabled with `set_option linter.constructorNameAsVaria
 warning: ZInQKernel/Compiler/NodeCheck/Fast.lean:297:6: Local variable 'zero' resembles constructor 'Nat.zero' - write '.zero' (with a dot) or 'Nat.zero' to use the constructor.
 
 Note: This linter can be disabled with `set_option linter.constructorNameAsVariable false`
+✔ [12847/12995] Built ZInQKernel.Compiler.NodeCheck.Reduced (4.4s)
+⚠ [12848/12995] Built ZInQKernel.Compiler.Universal.Specialize (11s)
+warning: ZInQKernel/Compiler/Universal/Specialize.lean: imports `ZInQ.CantorDecoder` from package `z_in_q`, which is designed for use with the module system; consider adding `module` to the start of this file
+ℹ [12849/12995] Built ZInQKernel.OneProof.H.TailZ30 (5.2s)
+info: ZInQKernel/OneProof/H/TailZ30.lean:81:0: 'HDec.HSyn.sixContactMin_of_open24' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [12850/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.Genus (5.6s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:46:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.sum_powerset_card_one`:
+  [Fintype ι]
+  [DecidableEq ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] [DecidableEq ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:54:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.sum_powerset_card_eq`:
+  [Fintype ι]
+  [DecidableEq ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] [DecidableEq ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:97:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:103:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:104:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:112:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:117:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:118:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:120:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.sum_offDiag_eq`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:146:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.sum_offDiag_eq_erase`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:161:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:162:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:163:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:222:80: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:221:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.w7_eq_zero`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:225:80: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:224:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.w3_eq_zero`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:228:80: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:227:0: automatically included section variable(s) unused in theorem `ZInQ.RouteK.Rank5b.Sec3.w1_eq_zero`:
+  [Fintype ι]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype ι] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:242:15: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:246:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:246:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:250:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:250:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:282:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:283:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:284:16: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:293:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:293:55: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:298:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [12851/12995] Built ZInQKernel.Compiler.NodeBound.OfCheck (4.2s)
+ℹ [12852/12995] Built ZInQKernel.OneProof.H.TailZ31 (5.3s)
+info: ZInQKernel/OneProof/H/TailZ31.lean:76:0: 'HDec.HSyn.sixContactMin_of_open25' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [12853/12995] Built ZInQKernel.Compiler.NodeBound.Macros (9.6s)
+✔ [12854/12995] Built ZInQKernel.Compiler.Universal.SpecializeShape (7.8s)
+⚠ [12855/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.Thm36 (5.5s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:64:24: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:65:38: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:158:33: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:158:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:164:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:164:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:175:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:191:63: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:200:64: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:201:66: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:221:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:222:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:226:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:226:22: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:227:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:231:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:231:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:232:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:253:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:258:63: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:260:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:158:15: This simp argument is unused:
+  eq_self_iff_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [if_true, if_neg hne, hP7, hP3, Finset.card_singleton, Finset.sum_singleton, Finset.prod_singleton]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:291:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:310:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:340:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:340:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:342:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:342:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:355:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:356:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [12856/12995] Built ZInQKernel.Syntax.Recipes.PowerValue (64s)
+ℹ [12857/12995] Built ZInQKernel.OneProof.H.TailZ32 (5.2s)
+info: ZInQKernel/OneProof/H/TailZ32.lean:52:0: 'HDec.HSyn.sixContactMin_of_open26' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [12858/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.TYZ (4.4s)
+⚠ [12859/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.Props (5.5s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:110:20: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:168:15: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:180:43: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:240:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:240:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:241:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:241:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:259:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:261:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:261:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:262:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:262:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:263:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:263:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:306:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:306:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:307:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:307:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:310:39: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:331:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:331:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:332:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:332:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:335:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:352:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [12860/12995] Built ZInQKernel.Compiler.NodeBound.Items (7.0s)
+✔ [12861/12995] Built ZInQKernel.Compiler.Translation.PowerValue (4.6s)
+✔ [12862/12995] Built ZInQKernel.Compiler.Universal.PrecisionCircuit (7.9s)
+ℹ [12863/12995] Built ZInQKernel.OneProof.H.TailZ33 (5.1s)
+info: ZInQKernel/OneProof/H/TailZ33.lean:129:0: 'HDec.HSyn.sixContactMin_of_open27' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [12864/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.Check (4.2s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Check.lean:35:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [12865/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.RedeiStatement (4.3s)
+⚠ [12866/12995] Built ZInQKernel.RouteK.Rank5b.Sec3.Prop34 (4.6s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:40:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:41:16: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:47:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:57:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:62:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:98:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:98:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:105:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:105:59: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:106:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:106:59: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:109:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:109:19: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:146:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:146:54: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:151:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:151:55: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:168:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:196:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:197:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:220:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:221:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:221:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [12867/12995] Built ZInQKernel.Compiler.NodeBound.Encode (4.6s)
+✔ [12868/12995] Built ZInQKernel.Compiler.Universal.WrapperCode (4.6s)
+✔ [12869/12995] Built ZInQKernel.RouteK.Rank.Statements (4.3s)
+✔ [12870/12995] Built ZInQKernel.RouteK.Redei.Field (5.0s)
+✔ [12871/12995] Built ZInQKernel.Compiler.NodeBound.Items67 (4.9s)
+✔ [12872/12995] Built ZInQKernel.Compiler.Universal (4.3s)
+✔ [12873/12995] Built ZInQKernel.RouteK.Rank (4.2s)
+⚠ [12874/12995] Built ZInQKernel.Hypotheses.CR3Literature (4.6s)
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.AlgebraicGeometry.EllipticCurve.LFunction` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.Analysis.Analytic.Order` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.Analysis.Analytic.Uniqueness` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.Analysis.Complex.CauchyIntegral` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [12875/12995] Built ZInQKernel.Compiler.Translation.PrecisionScope (7.9s)
+✔ [12876/12995] Built ZInQKernel.RouteK.Redei.Primes (6.4s)
+✔ [12877/12995] Built ZInQKernel.Compiler.NodeBound.Program67 (5.2s)
+⚠ [12878/12995] Built ZInQKernel.Hypotheses.TYZInputs (4.3s)
+warning: ZInQKernel/Hypotheses/TYZInputs.lean: imports `Mathlib.NumberTheory.Zsqrtd.GaussianInt` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [12879/12995] Built ZInQKernel.RouteK.Redei.Entry (4.4s)
+✔ [12880/12995] Built ZInQKernel.Compiler.NodeBound.Top (5.8s)
+✔ [12881/12995] Built ZInQKernel.RouteK.Redei.Ambiguous (6.4s)
+⚠ [12882/12995] Built ZInQKernel.Contrib.HeckeFE.Basic (11s)
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.NumberTheory.LSeries.HurwitzZetaEven` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.NumberTheory.LSeries.HurwitzZetaOdd` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.NumberTheory.LSeries.MellinEqDirichlet` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean:2552:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.HeckeFE.norm_piZ`:
+  hp
+  hp1
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hp hp1 in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean:2555:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.HeckeFE.norm_conj_piZ`:
+  hp
+  hp1
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hp hp1 in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [12883/12995] Built ZInQKernel.RouteK.Redei.Bridge (4.9s)
+✔ [12884/12995] Built ZInQKernel.RouteK.Redei.Genus (5.7s)
+⚠ [12885/12995] Built ZInQKernel.RouteK.PropN (10s)
+warning: ZInQKernel/RouteK/PropN.lean: imports `Mathlib.NumberTheory.Zsqrtd.GaussianInt` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/RouteK/PropN.lean:1097:59: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [12886/12995] Built ZInQKernel.Contrib.GaussFE.FunctionalEquation5 (4.8s)
+✔ [12887/12995] Built ZInQKernel.Contrib.HeckeAll.Continuation (4.0s)
+⚠ [12888/12995] Built ZInQKernel.Contrib.GZTheta.HeckeComb (5.1s)
+warning: ZInQKernel/Contrib/GZTheta/HeckeComb.lean:164:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/HeckeComb.lean:169:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [12889/12995] Built ZInQKernel.RouteK.Redei.Dirichlet (4.9s)
+✔ [12890/12995] Built ZInQKernel.Syntax.Recipes.Precision (33s)
+✔ [12891/12995] Built ZInQKernel.Contrib.PSide.TYZInputsIff (4.3s)
+✔ [12892/12995] Built ZInQKernel.Contrib.HeckeAll.Provider (3.9s)
+✔ [12893/12995] Built ZInQKernel.RouteK.Redei.FourRank (5.3s)
+⚠ [12894/12995] Built ZInQKernel.Contrib.TYZDecomp.Leaves (4.6s)
+warning: ZInQKernel/Contrib/TYZDecomp/Leaves.lean: imports `Mathlib.Analysis.SpecialFunctions.ImproperIntegrals` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZDecomp/Leaves.lean: imports `Mathlib.Analysis.SpecialFunctions.Integrability.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [12895/12995] Built ZInQKernel.Compiler.NodeBound.Check (26s)
+⚠ [12896/12995] Built ZInQKernel.Contrib.TYZChain.Lcal (12s)
+warning: ZInQKernel/Contrib/TYZChain/Lcal.lean: imports `Mathlib.NumberTheory.NumberField.Cyclotomic.PID` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [12897/12995] Built ZInQKernel.Compiler.NodeBound (6.7s)
+✔ [12898/12995] Built ZInQKernel.Compiler.Translation.Rational (34s)
+✔ [12899/12995] Built ZInQKernel.Syntax.Recipes.Accounting (40s)
+✔ [12900/12995] Built ZInQKernel.Syntax.Recipes.Polynomial (5.6s)
+⚠ [12901/12995] Built ZInQKernel.Assembly.Values.Outer (6.1s)
+warning: ZInQKernel/Assembly/Values/Outer.lean:220:162: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ (List.ofFn K ++ [t])).length = (closeRecipe w).parameterCount by simp; rfl),
+    ofFn_eleven (show (closeRecipe w).parameterCount = 11 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:221:4: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ (List.ofFn K ++ [t])).length = (closeRecipe w).parameterCount by simp; rfl),
+    ofFn_eleven (show (closeRecipe w).parameterCount = 11 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:274:51: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (mainRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (mainRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:274:66: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (mainRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (mainRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:322:51: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueUnionRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueUnionRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:322:66: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueUnionRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueUnionRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:358:51: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:358:66: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [12902/12995] Built ZInQKernel.Multiplication.Certificate.Spec (4.0s)
+✔ [12903/12995] Built ZInQKernel.Syntax.Recipes.Literal (4.2s)
+✔ [12904/12995] Built ZInQKernel.Assembly.Values (3.9s)
+⚠ [12905/12995] Built ZInQKernel.Contrib.TYZGenus.RingClass (48s)
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:78:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.RingClass.conductorOrderSubalgebra_le_integralClosure`:
+  [NumberField K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NumberField K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:421:42: This simp argument is unused:
+  map_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_one, QuadraticAlgebra.re_neg]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:421:60: This simp argument is unused:
+  QuadraticAlgebra.re_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_neg, map_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:422:42: This simp argument is unused:
+  map_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_one, QuadraticAlgebra.im_neg, neg_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:422:60: This simp argument is unused:
+  QuadraticAlgebra.im_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_neg, map_one, neg_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:422:85: This simp argument is unused:
+  neg_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_neg, map_one, QuadraticAlgebra.im_neg]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:425:85: This simp argument is unused:
+  neg_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_neg, map_one, QuadraticAlgebra.im_neg]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:592:23: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:611:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:612:40: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:615:18: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:699:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClass.lean:695:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.RingClass.restrictNormalHom_inclusion_apply`:
+  [NumberField K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NumberField K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [12906/12995] Built ZInQKernel.Multiplication.Certificate (3.8s)
+✔ [12907/12995] Built ZInQKernel.Syntax.Recipes (3.9s)
+✔ [12908/12995] Built ZInQKernel.Assembly.Close.Relation (4.0s)
+✔ [12909/12995] Built ZInQKernel.Multiplication.Soundness.CommonGroup (5.2s)
+✔ [12910/12995] Built ZInQKernel.Size.Majorants.RecipeHeights (4.9s)
+✔ [12911/12995] Built ZInQKernel.Assembly.Top.Spec (4.1s)
+⚠ [12912/12995] Built ZInQKernel.Assembly.Close.Soundness (4.6s)
+warning: ZInQKernel/Assembly/Close/Soundness.lean: imports `Mathlib.Analysis.Complex.ExponentialBounds` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [12913/12995] Built ZInQKernel.Assembly.Close.Completeness (5.9s)
+✔ [12914/12995] Built ZInQKernel.Contrib.TYZGenus.Package (8.8s)
+✔ [12915/12995] Built ZInQKernel.Size.Majorants.Cutoff (4.1s)
+✔ [12916/12995] Built ZInQKernel.Multiplication.Soundness.TestsToCongruence (5.1s)
+✔ [12917/12995] Built ZInQKernel.Assembly.Close (3.8s)
+✔ [12918/12995] Built ZInQKernel.Size.Majorants.Bound (3.9s)
+✔ [12919/12995] Built ZInQKernel.Multiplication.Soundness.LocalCongruence (3.9s)
+✔ [12920/12995] Built ZInQKernel.Multiplication.Completeness.PoleValuationsAux (4.2s)
+✔ [12921/12995] Built ZInQKernel.Multiplication.Soundness.ContactSupport (4.1s)
+✔ [12922/12995] Built ZInQKernel.Multiplication.Completeness.TestsLocal (4.5s)
+✔ [12923/12995] Built ZInQKernel.Multiplication.Completeness.TwoSlope (5.4s)
+✔ [12924/12995] Built ZInQKernel.Multiplication.Completeness.SelectedReduction (4.3s)
+✔ [12925/12995] Built ZInQKernel.Multiplication.Completeness.SbIntegrality (4.7s)
+✔ [12926/12995] Built ZInQKernel.Multiplication.Completeness.PoleValuations (9.8s)
+✔ [12927/12995] Built ZInQKernel.Multiplication.Soundness.FiniteBox (6.2s)
+✔ [12928/12995] Built ZInQKernel.Multiplication.Completeness.AP.LemmaP (5.1s)
+✔ [12929/12995] Built ZInQKernel.Multiplication.Soundness.MultiplySound (4.1s)
+⚠ [12930/12995] Built ZInQKernel.Contrib.TYZGenus.RingClassGalois (29s)
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:95:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.RingClass.splitSet_congr`:
+  [NumberField K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NumberField K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:398:42: `AlgEquiv.toRingEquiv_eq_coe` has been deprecated: Now a syntactic equality
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:398:71: `AlgEquiv.coe_ringEquiv` has been deprecated: Use `AlgEquiv.coe_toRingEquiv` instead
+
+Hint: Replace the deprecated name:
+  AlgEquiv.coe_r̵t̲o̲R̲ingEquiv
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:398:42: This simp argument is unused:
+  AlgEquiv.toRingEquiv_eq_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [RingEquiv.trans_apply, AlgEquiv.coe_ringEquiv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:414:89: `Subgroup.normal_of_comm` has been deprecated: Use `Subgroup.normal_of_isMulCommutative` instead
+
+Hint: Replace the deprecated name:
+  S̵u̵b̵g̵r̵o̵u̵p̵.̵n̵o̵r̵m̵a̵l̵_̵o̵f̵_̵c̵o̵m̵m̵S̲u̲b̲g̲r̲o̲u̲p̲.̲n̲o̲r̲m̲a̲l̲_̲o̲f̲_̲i̲s̲M̲u̲l̲C̲o̲m̲m̲u̲t̲a̲t̲i̲v̲e̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:608:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:610:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:619:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:621:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:660:15: `AlgEquiv.coe_algHom` has been deprecated: Use `AlgEquiv.coe_toAlgHom` instead
+
+Hint: Replace the deprecated name:
+  A̵l̵g̵E̵q̵u̵i̵v̵.̵c̵o̵e̵_̵a̵l̵g̵H̵o̵m̵A̲l̲g̲E̲q̲u̲i̲v̲.̲c̲o̲e̲_̲t̲o̲A̲l̲g̲H̲o̲m̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:662:15: `AlgEquiv.coe_algHom` has been deprecated: Use `AlgEquiv.coe_toAlgHom` instead
+
+Hint: Replace the deprecated name:
+  A̵l̵g̵E̵q̵u̵i̵v̵.̵c̵o̵e̵_̵a̵l̵g̵H̵o̵m̵A̲l̲g̲E̲q̲u̲i̲v̲.̲c̲o̲e̲_̲t̲o̲A̲l̲g̲H̲o̲m̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:678:13: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_pow, map_neg, map_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:727:8: `AlgEquiv.coe_algHom_injective` has been deprecated: Use `AlgEquiv.coe_toAlgHom_injective` instead
+
+Hint: Replace the deprecated name:
+  AlgEquiv.coe_a̵t̲o̲A̲lgHom_injective
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:756:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:757:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:758:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:890:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:902:27: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:904:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:905:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:907:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:914:28: `Nat.sq_mul_squarefree` has been deprecated: Use `exists_sq_mul_squarefree` instead, which binds the witnesses in the order in which they appear.
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:917:3: `Nat.sq_mul_squarefree` has been deprecated: Use `exists_sq_mul_squarefree` instead, which binds the witnesses in the order in which they appear.
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:952:25: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:954:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:996:24: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:999:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1018:37: `AlgEquiv.toAlgHom_eq_coe` has been deprecated: Now a syntactic equality
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1018:63: `AlgHom.coe_coe` has been deprecated: Use `AlgHom.coe_ofClass` instead
+
+Note: `AlgHom.coe_ofClass` is protected. References to this constant must include its prefix `AlgHom` even when inside its namespace.
+
+Hint: Replace the deprecated name:
+  A̵l̵g̵H̵o̵m̵.̵c̵o̵e̵_̵c̵o̵e̵A̲l̲g̲H̲o̲m̲.̲c̲o̲e̲_̲o̲f̲C̲l̲a̲s̲s̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1018:37: This simp argument is unused:
+  AlgEquiv.toAlgHom_eq_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [ρ, AlgHom.comp_apply, AlgHom.coe_coe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1018:63: This simp argument is unused:
+  AlgHom.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [ρ, AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1029:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1038:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGalois.lean:1045:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [12931/12995] Built ZInQKernel.Multiplication.Completeness.AP.GoodSlope (4.1s)
+✔ [12932/12995] Built ZInQKernel.Multiplication.Completeness.SelectedPrecision (6.5s)
+✔ [12933/12995] Built ZInQKernel.Multiplication.Completeness.SlopeCompleteness (5.3s)
+✔ [12934/12995] Built ZInQKernel.Multiplication.Completeness.AP.PoleValuations (7.7s)
+✔ [12935/12995] Built ZInQKernel.Multiplication.Completeness.Core (3.9s)
+⚠ [12936/12995] Built ZInQKernel.Contrib.TYZGenus.RingClassTwo (11s)
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean: imports `Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.GaussSum` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:77:13: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_pow, map_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:159:10: `AlgEquiv.coe_algHom_injective` has been deprecated: Use `AlgEquiv.coe_toAlgHom_injective` instead
+
+Hint: Replace the deprecated name:
+  AlgEquiv.coe_a̵t̲o̲A̲lgHom_injective
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:193:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:194:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:195:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:297:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:298:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:299:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:390:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:391:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:435:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:436:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassTwo.lean:437:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [12937/12995] Built ZInQKernel.Multiplication.Completeness.AP.SlopeCompleteness (5.6s)
+✔ [12938/12995] Built ZInQKernel.Multiplication.Completeness.Template (4.5s)
+✔ [12939/12995] Built ZInQKernel.Multiplication.Top.Exact (3.8s)
+✔ [12940/12995] Built ZInQKernel.Multiplication.Top (3.7s)
+✔ [12941/12995] Built ZInQKernel.Assembly.Top.ValueRelation (3.9s)
+✔ [12942/12995] Built ZInQKernel.Assembly.Top.Assembly (3.0s)
+✔ [12943/12995] Built ZInQKernel.Assembly.Top (3.8s)
+✔ [12944/12995] Built ZInQKernel.Multiplication.Completeness.AP.Completeness (4.7s)
+✔ [12945/12995] Built ZInQKernel.Multiplication.Completeness.AP.PropAP (5.0s)
+⚠ [12946/12995] Built ZInQKernel.Contrib.TYZGenus.RingClassGenus (34s)
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:199:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:200:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:201:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:211:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:215:38: This simp argument is unused:
+  Int.cast_natCast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Int.cast_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:279:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:316:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:322:24: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:324:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:334:66: `Subgroup.normal_of_comm` has been deprecated: Use `Subgroup.normal_of_isMulCommutative` instead
+
+Hint: Replace the deprecated name:
+  S̵u̵b̵g̵r̵o̵u̵p̵.̵n̵o̵r̵m̵a̵l̵_̵o̵f̵_̵c̵o̵m̵m̵S̲u̲b̲g̲r̲o̲u̲p̲.̲n̲o̲r̲m̲a̲l̲_̲o̲f̲_̲i̲s̲M̲u̲l̲C̲o̲m̲m̲u̲t̲a̲t̲i̲v̲e̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:352:43: This simp argument is unused:
+  AlgEquiv.autCongr_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [artinPrime, MulEquiv.trans_apply, QuotientGroup.congr_mk, IsGalois.normalAutEquivQuotient_apply,
+    AlgEquiv.trans_apply, AlgEquiv.restrictNormalHom_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:352:68: This simp argument is unused:
+  AlgEquiv.trans_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [artinPrime, MulEquiv.trans_apply, QuotientGroup.congr_mk, IsGalois.normalAutEquivQuotient_apply,
+    AlgEquiv.autCongr_apply, AlgEquiv.restrictNormalHom_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:353:4: This simp argument is unused:
+  AlgEquiv.restrictNormalHom_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [artinPrime, MulEquiv.trans_apply, QuotientGroup.congr_mk, IsGalois.normalAutEquivQuotient_apply,
+    AlgEquiv.autCongr_apply, AlgEquiv.trans_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:408:11: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:409:12: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:410:11: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:410:13: Variable name `y` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _y
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:411:11: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:411:13: Variable name `y` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _y
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:450:53: This simp argument is unused:
+  RingOfIntegers.map_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [RingOfIntegers.mapRingEquiv_symm_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:465:47: This simp argument is unused:
+  RingHom.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Ideal.under_def, Ideal.mem_comap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:485:64: This simp argument is unused:
+  RingHom.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [MulSemiringAction.toAlgHom_apply, Ideal.mem_comap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [12947/12995] Built ZInQKernel.Multiplication.Completeness.AP (3.8s)
+✔ [12948/12995] Built ZInQKernel.Main (3.8s)
+✔ [12949/12995] Built ZInQKernel.Contrib.TYZGenus.RingClassBridge (6.3s)
+✔ [12950/12995] Built ZInQKernel.RouteK.Rank5b (3.9s)
+✔ [12951/12995] Built ZInQKernel.MainGreenTao (4.7s)
+✔ [12952/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraRecip (4.6s)
+✔ [12953/12995] Built ZInQKernel.RouteK.Rank5bSec3 (3.0s)
+✔ [12954/12995] Built ZInQKernel.RouteK.RankVariants (3.0s)
+✔ [12955/12995] Built ZInQKernel.MainLiterature (3.9s)
+✔ [12956/12995] Built ZInQKernel.Contrib.GaussFE.Headline (4.0s)
+⚠ [12957/12995] Built ZInQKernel.Contrib.TYZChain.Lemma318 (22s)
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean: imports `Mathlib.NumberTheory.LSeries.PrimesInAP` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean: imports `Mathlib.FieldTheory.Finite.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean: imports `Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean: imports `Mathlib.Algebra.Algebra.ZMod` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:153:51: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp at hι
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:152:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T318SS.ι_ne_zero`:
+  [DecidableEq k]
+  ha₁
+  ha₂
+  ha₃
+  ha₆
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq k] ha₁ ha₂ ha₃ ha₆ in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:283:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:316:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:326:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T318SS.Ek_a₁`:
+  [DecidableEq k]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq k] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:327:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T318SS.Ek_a₂`:
+  [DecidableEq k]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq k] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:328:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T318SS.Ek_a₃`:
+  [DecidableEq k]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq k] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:329:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T318SS.Ek_a₆`:
+  [DecidableEq k]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq k] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:411:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:412:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:641:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:646:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:692:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:747:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:778:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:808:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:809:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:835:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:865:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:874:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:875:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:876:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:921:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:922:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:948:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:978:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:987:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:988:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:989:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1149:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1150:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1151:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1152:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1153:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1167:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1287:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1302:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1303:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1306:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1307:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1344:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1352:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1374:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1399:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1404:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1405:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1407:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1500:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1541:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1607:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1613:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Lemma318.lean:1665:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [12958/12995] Built ZInQKernel.Contrib.GZDecomp.Scope (4.1s)
+✔ [12959/12995] Built ZInQKernel.Contrib.GZDecomp.Decomp (6.2s)
+✔ [12960/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraZn (27s)
+⚠ [12961/12995] Built ZInQKernel.Contrib.GZStatements.Compat (4.4s)
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:78:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:83:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:85:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:161:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:163:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:163:29: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:164:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:164:29: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [12962/12995] Built ZInQKernel.Contrib.GZTheta.Basic (4.7s)
+✔ [12963/12995] Built ZInQKernel.Contrib.GZTheta.BadCoeff (4.4s)
+⚠ [12964/12995] Built ZInQKernel.Contrib.OneProof.FHNonvanishing.Basic (5.1s)
+warning: ZInQKernel/Contrib/OneProof/FHNonvanishing/Basic.lean: imports `Mathlib.NumberTheory.LSeries.PrimesInAP` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/FHNonvanishing/Basic.lean: imports `Mathlib.NumberTheory.Padics.RingHoms` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [12965/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraField (6.6s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:173:34: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:215:34: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:233:52: Unused tactic linter: `push_cast` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:361:81: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [12966/12995] Built ZInQKernel.Contrib.GZTheta.Main (4.1s)
+✔ [12967/12995] Built ZInQKernel.Contrib.OneProof.FHNonvanishing.FE (4.5s)
+✔ [12968/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraModFn (5.7s)
+⚠ [12969/12995] Built ZInQKernel.Contrib.TYZChain.Sqrt2Glue (23s)
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:147:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:148:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:214:15: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:240:23: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:241:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:242:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:246:23: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:247:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:248:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:252:23: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:253:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:254:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:259:23: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:260:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:261:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:307:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:341:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:342:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:343:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:416:33: Variable name `hQ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hQ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:564:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:565:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:566:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:577:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:603:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:607:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:608:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:609:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:612:25: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:629:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:631:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:641:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:643:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:661:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:672:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:673:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:674:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:676:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:677:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:678:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:682:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:683:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:684:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:685:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:686:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:689:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:701:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:712:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:789:28: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:879:27: `Prime.dvd_finset_prod_iff` has been deprecated: Use `Prime.dvd_finsetProd_iff` instead
+
+Hint: Replace the deprecated name:
+  Prime.dvd_finset_̵p̵P̲rod_iff
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:982:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:984:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1103:26: Variable name `p` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _p
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1112:44: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1235:8: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1237:24: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1286:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1259:32: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1259:49: Variable name `hsq` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hsq
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1300:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1301:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1304:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1305:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1307:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1318:19: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1418:23: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1379:77: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_mul, map_neg, map_pow, map_natCast, map_zero, zero_mul, add_zero, zero_smul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Sqrt2Glue.lean:1380:8: This simp argument is unused:
+  zero_smul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_mul, map_neg, map_pow, map_natCast, map_zero, zero_mul, mul_zero, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [12970/12995] Built ZInQKernel.Contrib.GZTheta.EtaTheta (5.3s)
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:46:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [mem_Fib] at hp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:47:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Soe, Finset.mem_filter, mem_normFiber]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:50:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Soe, Finset.mem_filter, mem_normFiber] at hp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:51:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [mem_Fib]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:59:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Soe, Finset.mem_filter] at hp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:57:17: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:66:4: Unused tactic linter: `push_cast` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:57:17: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [12971/12995] Built ZInQKernel.Contrib.OneProof.FHNonvanishing.TwistFE (6.3s)
+⚠ [12972/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraQExp (5.2s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraQExp.lean:187:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraQExp.lean:187:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [12973/12995] Built ZInQKernel.Contrib.GZTheta.Final (4.2s)
+✔ [12974/12995] Built ZInQKernel.Contrib.OneProof.FHNonvanishing (4.1s)
+✔ [12975/12995] Built ZInQKernel.Contrib.GZTheta.Split (4.2s)
+⚠ [12976/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraCusp (6.8s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:107:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:135:19: This simp argument is unused:
+  Matrix.SpecialLinearGroup.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [γ', Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, algebraMap_int_eq, eq_intCast, Int.cast_id]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:137:37: This simp argument is unused:
+  Int.cast_id
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [γ', Matrix.SpecialLinearGroup.coe_mk, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, algebraMap_int_eq, eq_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:200:8: This simp argument is unused:
+  Complex.div_re
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Complex.mul_re, Complex.mul_im]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:230:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:301:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [12977/12995] Built ZInQKernel.Contrib.GZTheta.New32 (5.3s)
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:62:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:73:28: `CuspForm.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵u̵s̵p̵F̵o̵r̵m̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:139:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:142:67: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:166:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [12978/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraMain (6.8s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraMain.lean:152:81: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [12979/12995] Built ZInQKernel.Contrib.GZTheta.TwistFricke (5.0s)
+⚠ [12980/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraEtaInv (7.6s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraEtaInv.lean:126:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraEtaInv.lean:147:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraEtaInv.lean:166:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+⚠ [12981/12995] Built ZInQKernel.Contrib.GZTheta.NewCMProof (7.9s)
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:42:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:113:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.bAr_mult`:
+  [NeZero d]
+  hMN
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero d] hMN in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:129:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:129:66: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:118:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.coeff_good_pow`:
+  [NeZero d]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero d] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:161:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:165:19: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hpM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:166:19: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hpM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:177:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.two_le_factorization_level`:
+  hd4
+  hsq
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hd4 hsq in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:213:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:215:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:218:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:230:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:236:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:264:51: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:265:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:260:13: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [qParam_mul_nat, ← pow_mul] at hG
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:277:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.pos_of_mem_divisors'`:
+  [NeZero d]
+  hd4
+  hsq
+  hMN
+  hχ
+  hgood
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero d] hd4 hsq hMN hχ hgood in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:331:15: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:339:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.level_pos_div`:
+  hd4
+  hsq
+  hχ
+  hgood
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hd4 hsq hχ hgood in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:372:13: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:372:31: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:379:17: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:400:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.kappa_ne_zero`:
+  hsq
+  hMN
+  hχ
+  hgood
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hsq hMN hχ hgood in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:439:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:542:37: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:581:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:581:29: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:583:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:588:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:616:34: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:631:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:650:36: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:651:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:651:31: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:654:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:683:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:542:82: This simp argument is unused:
+  one_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [pow_zero, heckeCoeff_one, mul_one, zero_add, Finset.range_one, Finset.sum_singleton, one_dvd,
+    if_true, Nat.div_one, Nat.cast_one, one_pow, Nat.div_self Nat.one_pos, hb1] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [12982/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraTheta (5.7s)
+✔ [12983/12995] Built ZInQKernel.OneProof.TopChain (5.0s)
+ℹ [12984/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraThetaDup (5.3s)
+info: ZInQKernel/Contrib/TYZGenus/ShimuraThetaDup.lean:176:2: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+✔ [12985/12995] Built ZInQKernel.Contrib.TYZGenus.ShimuraFricke (6.4s)
+⚠ [12986/12995] Built ZInQKernel.Contrib.OneProof.RingClassLattice (41s)
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.Analysis.Complex.Polynomial.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.NumberField.AdeleRing` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.RingTheory.Polynomial.Vieta` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.FieldTheory.IsAlgClosed.Classification` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.RingTheory.AlgebraicIndependent.Transcendental` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.FieldTheory.Minpoly.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.ModularForms.LevelOne.GradedRing` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.LSeries.HurwitzZetaValues` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.Bernoulli` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1015:0: automatically included section variable(s) unused in theorem `T5Glue.exists_kappa_tau`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1043:46: Variable name `hD` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hD
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1324:0: automatically included section variable(s) unused in theorem `T5Glue.coe_kappaComap`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1328:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_sub`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1536:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1653:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_tK`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1662:0: automatically included section variable(s) unused in theorem `T5Glue.cz_pos`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1670:0: automatically included section variable(s) unused in theorem `T5Glue.zsmul_mk`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1674:72: Variable name `hD` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hD
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1783:19: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1783:19: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1843:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2194:17: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2194:17: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2322:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_image_smul`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2399:66: This simp argument is unused:
+  QuadraticAlgebra.im_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2400:8: This simp argument is unused:
+  QuadraticAlgebra.im_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add, QuadraticAlgebra.im_mul, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2400:33: This simp argument is unused:
+  QuadraticAlgebra.im_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2400:58: This simp argument is unused:
+  QuadraticAlgebra.im_intCast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2406:66: This simp argument is unused:
+  QuadraticAlgebra.re_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul, QuadraticAlgebra.re_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2407:8: This simp argument is unused:
+  QuadraticAlgebra.re_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add, QuadraticAlgebra.re_mul, QuadraticAlgebra.re_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2407:33: This simp argument is unused:
+  QuadraticAlgebra.re_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2407:58: This simp argument is unused:
+  QuadraticAlgebra.re_intCast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2481:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_mul_eq`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:3284:67: This simp argument is unused:
+  map_inv₀
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Units.val_mul, Units.val_inv_eq_inv_val, map_mul, βu, Units.val_mk0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [12987/12995] Built ZInQKernel.Contrib.TYZChain.Bridge (61s)
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:666:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:675:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:786:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:787:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:788:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:833:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:955:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:996:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1122:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1182:12: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1190:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1263:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1268:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1323:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1344:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1345:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1346:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1364:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1490:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1503:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1504:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1505:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1621:19: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1623:21: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1627:19: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1629:21: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1633:19: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1635:21: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1639:19: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1641:21: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1681:31: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1723:6: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1734:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1734:30: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1736:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1736:43: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1677:18: This simp argument is unused:
+  hlt
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [h2, h8, NeZero.ne n]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1710:26: This simp argument is unused:
+  r
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1763:68: `Subgroup.normal_of_comm` has been deprecated: Use `Subgroup.normal_of_isMulCommutative` instead
+
+Hint: Replace the deprecated name:
+  S̵u̵b̵g̵r̵o̵u̵p̵.̵n̵o̵r̵m̵a̵l̵_̵o̵f̵_̵c̵o̵m̵m̵S̲u̲b̲g̲r̲o̲u̲p̲.̲n̲o̲r̲m̲a̲l̲_̲o̲f̲_̲i̲s̲M̲u̲l̲C̲o̲m̲m̲u̲t̲a̲t̲i̲v̲e̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1809:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1810:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1811:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1894:11: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1912:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1985:30: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [u, θ, map_sub, algebraMap_thetaO, theta_eq, map_natCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:1988:31: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [ub, θ, map_sub, algebraMap_thetaO, theta_eq, map_natCast, map_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2120:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.kappa_oneN32`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2123:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.lat_eq_map'`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2254:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.tyzForm7_tau`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2259:6: Unused tactic linter: `ring` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2261:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.tyzForm7_conj_tau`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2266:6: Unused tactic linter: `ring` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2268:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.tyzForm7'_tau`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2274:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.tyzForm7'_conj_tau`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2282:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.ubK_mul_tK`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2288:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.CMBridge.neg_uK_mul_tbK`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2342:25: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2342:25: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2357:43: This simp argument is unused:
+  QuadraticAlgebra.re_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ubK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.im_ofNat, QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2357:68: This simp argument is unused:
+  QuadraticAlgebra.im_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ubK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.im_ofNat, QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2358:4: This simp argument is unused:
+  QuadraticAlgebra.re_ofNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ubK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one, QuadraticAlgebra.im_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2358:31: This simp argument is unused:
+  QuadraticAlgebra.im_ofNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ubK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2371:4: This simp argument is unused:
+  QuadraticAlgebra.re_ofNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [uK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one, QuadraticAlgebra.im_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2371:31: This simp argument is unused:
+  QuadraticAlgebra.im_ofNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [uK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2382:43: This simp argument is unused:
+  QuadraticAlgebra.re_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ubK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.im_ofNat, QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2382:68: This simp argument is unused:
+  QuadraticAlgebra.im_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ubK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.im_ofNat, QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2414:6: Unused tactic linter: `linear_combination (-t / 128 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2415:6: Unused tactic linter: `linear_combination (t / 256 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2416:6: Unused tactic linter: `linear_combination (-t / 256 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2417:6: Unused tactic linter: `linear_combination (t / 64 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2418:6: Unused tactic linter: `linear_combination (-t / 64 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2414:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2415:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2416:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2417:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2418:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2441:42: This simp argument is unused:
+  QuadraticAlgebra.re_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [uK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat, QuadraticAlgebra.im_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2441:67: This simp argument is unused:
+  QuadraticAlgebra.im_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [uK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.re_ofNat, QuadraticAlgebra.im_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2442:4: This simp argument is unused:
+  QuadraticAlgebra.re_ofNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [uK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one, QuadraticAlgebra.im_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2442:31: This simp argument is unused:
+  QuadraticAlgebra.im_ofNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [uK, hs, ht, zsmul_eq_mul, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one, QuadraticAlgebra.re_ofNat,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2447:6: Unused tactic linter: `linear_combination (-t / 128 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2448:6: Unused tactic linter: `linear_combination (t / 256 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2449:6: Unused tactic linter: `linear_combination (-t / 256 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2450:6: Unused tactic linter: `linear_combination (t / 64 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2451:6: Unused tactic linter: `linear_combination (-t / 64 : ℚ) * h` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2447:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2448:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2449:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2450:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2451:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2472:20: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2472:20: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2530:19: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_add, map_mul, map_intCast, alg_uO hn, alg_ubO hn, alg32]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2576:19: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_add, map_mul, map_intCast, alg_uO hn, alg_ubO hn, alg32]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2606:19: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_add, map_mul, map_sub, map_neg, map_intCast, alg_uO hn, alg_ubO hn, alg32]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2657:19: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_add, map_mul, map_sub, map_neg, map_intCast, alg_uO hn, alg_ubO hn, alg32]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2854:24: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2854:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2870:24: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Bridge.lean:2870:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [12988/12995] Built ZInQKernel.Contrib.TYZChain.Thm35 (8.8s)
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:138:14: Variable name `P` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _P
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:226:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:262:29: `Prime.dvd_finset_prod_iff` has been deprecated: Use `Prime.dvd_finsetProd_iff` instead
+
+Hint: Replace the deprecated name:
+  Prime.dvd_finset_̵p̵P̲rod_iff
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:255:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.TYZ35.divSet_prod`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:267:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.TYZ35.prod_divSet`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:304:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.TYZ35.divSet_div`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:341:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.TYZ35.odd_of_mem_divisors`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:361:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.TYZ35.div_mul_of_mem`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:456:6: Unused tactic linter: `(rw [gsmul_def]; simp)` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:456:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:493:20: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:499:56: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:502:42: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:519:38: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:537:23: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:569:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:578:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:599:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:599:46: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:601:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:601:44: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:542:5: Variable name `hm` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hm
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZChain/Thm35.lean:637:6: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [12989/12995] Built ZInQKernel.Contrib.OneProof.RayClassShimura (75s)
+⚠ [12990/12995] Built ZInQKernel.Contrib.TYZChain.L321 (35s)
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:68:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:72:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:102:33: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:149:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:270:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:272:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:311:37: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:313:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:661:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:662:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:675:8: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:676:8: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:754:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:787:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T321.hW0_re`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:788:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T321.hW0_im`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:789:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T321.hW1_re`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:790:8: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T321.hW1_im`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:792:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.T321.natCast_m`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:834:21: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1203:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1204:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1205:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1291:11: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1309:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1424:37: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1426:33: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1427:4: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1437:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1442:4: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1442:42: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1501:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1551:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1551:64: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1552:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1552:77: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1626:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1626:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1630:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1630:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1820:2: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [elt]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1828:12: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1828:16: Unused tactic linter: `simp [e]` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1828:16: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1865:30: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1865:30: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1880:30: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1880:30: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:1981:30: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZChain/L321.lean:2109:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [12991/12995] Built ZInQKernel.Contrib.TYZChain.Main (5.7s)
+ℹ [12992/12995] Built ZInQKernel.OneProof.H.TailZ34 (10s)
+info: ZInQKernel/OneProof/H/TailZ34.lean:179:0: 'HDec.HSyn.sixContactMin_of_open28' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [12993/12995] Built ZInQKernel.OneProof.H.TailZ35 (5.1s)
+info: ZInQKernel/OneProof/H/TailZ35.lean:123:0: 'HDec.HSyn.sixContactMin_of_open29' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [12994/12995] Built ZInQKernel.OneProof.TYZSplit (27s)
+warning: ZInQKernel/OneProof/TYZSplit.lean:282:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.TYZGenus.TYZSplit.pstar_ne_zero`:
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/OneProof/TYZSplit.lean:358:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:363:4: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:371:54: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/OneProof/TYZSplit.lean:392:60: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:394:50: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:397:62: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:401:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:402:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:404:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:404:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:405:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:438:20: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/OneProof/TYZSplit.lean:484:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:484:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:485:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:485:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:486:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:486:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:487:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/OneProof/TYZSplit.lean:487:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+ℹ [12995/12995] Built ZInQKernel.OneProof.Main (6.5s)
+info: ZInQKernel/OneProof/Main.lean:75:0: 'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (12995 jobs).
+
+real	9m2.910s
+user	41m54.433s
+sys	7m34.390s
