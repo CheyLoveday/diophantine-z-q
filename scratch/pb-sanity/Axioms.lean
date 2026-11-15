@@ -18,3 +18,6 @@ open HDec.PkgI4.PanBergerSplit in
 #print axioms HDec.PkgI4.PanBergerSplit.X_not_mem_bstInv_bot
 #print axioms HDec.PkgI4.PanBergerSplit.isSemistableOver_of_period
 #print axioms HDec.PkgI4.PanBergerSplit.isSemistableOver_quadChar_teich
+#print axioms HDec.PkgI4.PanBergerSplit.logAdditive
+#print axioms HDec.PkgI4.PanBergerSplit.stAut
+#print axioms PBLogPoly.FM_coeff_dvd

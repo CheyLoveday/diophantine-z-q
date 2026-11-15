@@ -218,40 +218,40 @@ theorem isDPInt_one : IsDPInt 1 := by
 theorem isDPInt_dpowA (r : ℕ) : IsDPInt (C (C ((r.factorial : ℚ)⁻¹)) * X ^ r) := by
   intro i s
   rw [coeff_C_mul_X_pow]
-  by_cases hi : i = r
+  split_ifs with hi
   · subst hi
-    rw [if_pos rfl, coeff_C]
-    by_cases hs : s = 0
+    rw [coeff_C]
+    split_ifs with hs
     · subst hs
       exact ⟨1, by
-        rw [if_pos rfl, Nat.factorial_zero, Nat.cast_one, mul_one,
+        rw [Nat.factorial_zero, Nat.cast_one, mul_one,
           inv_mul_cancel₀ (by exact_mod_cast Nat.factorial_ne_zero i)]; simp⟩
-    · exact ⟨0, by rw [if_neg hs]; simp⟩
-  · exact ⟨0, by rw [if_neg hi]; simp⟩
+    · exact ⟨0, by simp⟩
+  · exact ⟨0, by simp⟩
 
 /-- `γ_k(B) = B^k / k!`. -/
 theorem isDPInt_dpowB (k : ℕ) : IsDPInt (C (C ((k.factorial : ℚ)⁻¹) * X ^ k)) := by
   intro i s
   rw [coeff_C]
-  by_cases hi : i = 0
+  split_ifs with hi
   · subst hi
-    rw [if_pos rfl, coeff_C_mul_X_pow]
-    by_cases hs : s = k
+    rw [coeff_C_mul_X_pow]
+    split_ifs with hs
     · subst hs
       exact ⟨1, by
-        rw [if_pos rfl, Nat.factorial_zero, Nat.cast_one, mul_one,
+        rw [Nat.factorial_zero, Nat.cast_one, mul_one,
           inv_mul_cancel₀ (by exact_mod_cast Nat.factorial_ne_zero s)]; simp⟩
-    · exact ⟨0, by rw [if_neg hs]; simp⟩
-  · exact ⟨0, by rw [if_neg hi]; simp⟩
+    · exact ⟨0, by simp⟩
+  · exact ⟨0, by simp⟩
 
 theorem isDPInt_C_one_add_X_pow (r : ℕ) : IsDPInt (C ((1 + X : R) ^ r)) := by
   intro i s
   rw [coeff_C]
-  by_cases hi : i = 0
+  split_ifs with hi
   · subst hi
-    rw [if_pos rfl, add_comm, coeff_X_add_one_pow]
+    rw [add_comm, coeff_X_add_one_pow]
     exact ⟨(r.choose s * s.factorial : ℕ), by push_cast; ring⟩
-  · exact ⟨0, by rw [if_neg hi]; simp⟩
+  · exact ⟨0, by simp⟩
 
 /-- Divided binomial theorem: `(u + v)^j / j! = Σ_r u^r/r! · v^{j-r}/(j-r)!`. -/
 theorem dpow_add_S (j : ℕ) (u v : S) :
@@ -2200,10 +2200,13 @@ theorem panBerger_definitions_nondegenerate :
       Function.Injective (algebraMap ℚ_[p] (Bst p)) ∧
       (∀ σ : GQp p, Function.Bijective (stAct p σ)) ∧ stAct p 1 = RingHom.id _ ∧
       (∀ σ τ : GQp p, bcrisAct p (σ * τ) = (bcrisAct p σ).comp (bcrisAct p τ)) ∧
+      LogAdditive p ∧
+      (∀ σ τ : GQp p, stAct p (σ * τ) = (stAct p σ).comp (stAct p τ)) ∧
+      (∃ σ : GQp p, stAct p σ Polynomial.X ≠ Polynomial.X) ∧
       (∀ n : ℕ, LocalIsPst p n 1) :=
   ⟨inferInstance, inferInstance, inferInstance, zero_notMem_tMonoid p, exists_t p,
     algebraMap_qp_bst_injective p, stAct_bijective p, stAct_one p, bcrisAct_mul p,
-    localIsPst_one p⟩
+    logAdditive p, stAct_mul p (logAdditive p), exists_stAct_X_ne p, localIsPst_one p⟩
 
 end PanBergerSplit
 end PkgI4

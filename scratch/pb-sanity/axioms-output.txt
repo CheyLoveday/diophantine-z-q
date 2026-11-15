@@ -19,3 +19,6 @@
 'HDec.PkgI4.PanBergerSplit.X_not_mem_bstInv_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.isSemistableOver_of_period' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.isSemistableOver_quadChar_teich' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.logAdditive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.stAut' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PBLogPoly.FM_coeff_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
