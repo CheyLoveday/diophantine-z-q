@@ -143,7 +143,7 @@ neither is proposed as a LEAF.
   |---|---|---|---|
   | `ℚ(X)(√(pX))` | residue field over `0` is `ℚ`; `I_V = I_{Q_0} = ℤ/2` | true | — |
   | `ℚ(√p)(X)` | residue fields over `b` ramified at `p` | hypothesis fails | — |
-  | h-b1's F1, `y² = p·j(27j+16)` | residue fields over `0` and `−16/27` are `ℚ`; vertical inertia `ℤ/2` (rv-h-b1 R5) | only asserts `I_V ⊆ I_{Q_0}`: true | F1 fails `HeckeSqrtBranch` (its only quadratic subfield has constant `p`), so the composite does not wrongly prove F1 unramified |
+  | h-b1's F1, `y² = p·j(27j+16)` | residue fields over `0` and `−16/27` are `ℚ`; vertical inertia `ℤ/2` (rv-h-b1 R5) | only asserts `I_V ⊆ I_{Q_0}`: true | F1 fails `HeckeSqrtBranchAny`: its only quadratic subfield is `√(p·j(27j+16))`, which is ramified at `0` as well. The variant `ℚ(j)(√(p(27j+16)))` does contain some `√(c(27j+16))` (`c = p`). But there its residue field over `0` is `ℚ(√p)`, ramified at `p`. So `exists_good_sqrt`'s hypothesis fails, and the composite proves neither unramified |
 
 **The compiled composite** (`vertUnramWitness_of_nv`, `heckeVertWitness_of_nv`; the final `heckeVertWitness_of_nvSqrtAny`
 first turns `√(c(27X + 16))` into `√(a(27X + 16))` with `p ∤ a` by `exists_good_sqrt`):
