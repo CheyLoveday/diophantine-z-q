@@ -49,4 +49,4 @@ end GapTriage
 #check @AlgebraicGeometry.ProjectiveLine.normalized
 #check @AlgebraicGeometry.ProjectiveLine.normalized_eq_of_mul_eq_one
 #check @AlgebraicGeometry.ProjectiveLine.relativeChartCoordinate_mul
-#check @AlgebraicGeometry.Scheme.OpenCover.glueMorphisms
+#check @AlgebraicGeometry.Scheme.Cover.glueMorphisms
