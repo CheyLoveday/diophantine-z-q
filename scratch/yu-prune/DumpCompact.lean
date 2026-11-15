@@ -15,7 +15,7 @@ run_cmd do
   for (n, ci) in env.constants.map₁.toList do
     if let some idx := env.getModuleIdxFor? n then
       let m := mods[idx.toNat]!
-      if (`ZInQKernel.OneProof).isPrefixOf m then
+      if (`ZInQKernel.OneProof).isPrefixOf m || m == `ZInQKernel.Contrib.OneProof.QMLattice then
         let vh := match ci.value? (allowOpaque := true) with | some v => v.hash | none => 0
         out := out.push s!"{n} {m} {ci.levelParams} {ci.type.hash} {vh}"
   out := out.qsort (· < ·)

@@ -32,8 +32,7 @@ USED   gonzalezRotgerProp56X6 : GRCountX6.GonzalezRotgerProp56X6
 USED   neronBaseChangeStrictHenselization : GapSHPair.NeronBaseChangeStrictHenselization
 USED   elkiesX6StarPrinted : HDec.QMSplit.Moduli.ElkiesX6Star.ElkiesX6StarPrinted
 
-## HDec.HSyn.OpenTextbookLeaves10
-USED   mulEtaleAbelianScheme : AvSplit.T4.MulEtaleAbelianScheme
+## HDec.HSyn.OpenTextbookLeaves11
 USED   mumfordTorsionAlgClosed : AvSplit.MumfordTorsionAlgClosed
 USED   homFreeFiniteAlgClosed : ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed
 USED   charPolyIndepOfEllAlgClosed : ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
@@ -43,7 +42,6 @@ USED   geomConnOfRationalPoint : AVGlue.GeomConnOfRationalPoint
 USED   groupSchemeEquidim : AVGlue.GroupSchemeEquidim
 USED   uniformizationLeafAll : BPAnalytic.Uniformization.UniformizationLeafAll
 USED   gagaMorphism : ZInQ.HomLattice.GAGAMorphism
-UNUSED yuThm11 : HDec.QMSplit.Yu.YuThm11
 USED   regularSmoothPerfect : CurveSplit.RegularSmoothPerfect
 USED   igusaGL2 : ZInQ.RLeaf.IgusaGL2
 USED   neronSchemeExtensionExists : ZInQ.Contrib.NeronC.NeronSchemeExtensionExists

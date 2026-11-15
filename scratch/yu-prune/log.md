@@ -22,3 +22,13 @@
   (prune-set-step1.txt). Plus OpenTextbookLeaves11.yuThm11 (TailZ32), which the open25 root cannot see.
 - 02:43 DeadCascade31: dead readers fibreComTrivial_of_gp3, fibreSimple_of_gp3, gluePieces_of_gluePieces3 (TailD),
   gluePieces_of_open2 (TailE), gluePieces_of_open3 (TailI) + generated casesOn/recOn (dead-cascade.txt).
+- 02:50 merged origin/wip/leaf-fold19 (c2ad4181): 495ca918 fixes the TailZ32 import clash (the vendored StacksCore
+  attribute modules import CloudW01Spread's). No OneProof/H change in the merge.
+- 03:05 step 2 build: TailZ31 OK; then `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` OK
+  (12979 jobs); `#print axioms ZInQ.OneProof.frozenTarget` = [propext, Classical.choice, Quot.sound].
+- 03:08 PruneScan (Main root): OpenResearchLeaves19 30, OpenTextbookLeaves11 12, OpenAddedLeaves16 14, OpenGlue7 1
+  = 57 fields, 0 unused, prune set empty.
+- 03:09 DumpCompact (Main, + QMLattice) 13746 constants -> hashes_after.txt; DumpCompact31 13585 -> hashes_after31.txt;
+  cmp_hashes.py 31: removed 16 (9 pruned projections + 5 dead readers + 2 aux `_proof_N`), new 2
+  (YuB6Emb._proof_1/2), changed 189 (cmp_hashes_out31.txt). YuB6Alg: same type and value hash, module QMLattice ->
+  TailA; yuB6Alg_of, yuB6Alg_of', yuB6Alg_of_yuThm11 unchanged.
