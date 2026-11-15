@@ -3,21 +3,20 @@
 ## 1. Result
 
 The added field `shimuraGoodReductionNoGuard` (`HDec.CurveSplitGR.ShimuraGoodReductionNoGuard`,
-`ZInQKernel/OneProof/H/TailW.lean` line 739; kind composite, strict GLUE) is now proved in Lean from three
+`ZInQKernel/OneProof/H/TailW.lean` line 739; kind composite, strict GLUE) is now proved in Lean from two
 statements (compiled, standard axioms):
 
 ```lean
 theorem SGRSplit.shimuraGoodReductionNoGuard_of_printed (hRep : ShimuraIntegralModelRep)
-    (hD : AbVarSurfaceRelDim) (g1 : QMAbFieldFibre) : HDec.CurveSplitGR.ShimuraGoodReductionNoGuard
+    (g1 : QMAbFieldFibre) : HDec.CurveSplitGR.ShimuraGoodReductionNoGuard
 ```
 
 (`ZInQKernel/Contrib/OneProof/ShimuraGoodReductionNoGuard.lean`, the one file this task adds under
-`ZInQKernel/`). The three statements are:
+`ZInQKernel/`). The two statements are:
 
 | new hypothesis | what it says | kind | strict |
 |---|---|---|---|
 | `SGRSplit.ShimuraIntegralModelRep` | for every prime `p > 324`, the moduli problem of QM abelian surfaces (order `𝒪` of discriminant 6) with full level-3 structure on locally noetherian `ℤ_(p)`-schemes is representable by a proper smooth curve over `ℤ_(p)` (Kottwitz 1992 §5; Buzzard 1997; Morita 1981) | published, flagged **pending reading** | GLUE until read |
-| `SGRSplit.AbVarSurfaceRelDim` | an abelian variety (`PkgI3.AbVar`) of Krull dimension 2 is smooth of relative dimension 2 (dimension theory of smooth varieties) | published (textbook), unread | LEAF |
 | `SGRSplit.QMAbFieldFibre` | the fibre of a `QMAbScheme` at a characteristic-0 field point is an object `QML3` | project glue | GLUE |
 
 **Verdict on curve-split §3.6** ("not statable in published form today"): no longer true. The printed
@@ -38,8 +37,13 @@ composite by a larger one. Representability is the printed statement (and is how
 prove good reduction: from the moduli interpretation). SPECULATIVE in its last clause; the first two are
 VERIFIED by reading the Lean statements (`ZInQKernel/HDecomp/Objects.lean` lines 861 and 1377).
 
+Everything else the reduction needs is proved here: the clause-by-clause glue (`shimuraGoodReductionNoGuard_of_rep`),
+uniqueness of fibres up to isomorphism (`fibreClassUnique`), objects over a field as abelian schemes over
+`Spec K` (`qml3AsQMAb_of`), and the relative dimension of an abelian surface (`abVarSurfaceRelDim`, from the
+kernel's smooth dimension theory).
+
 The fold that discharges the field (autofold spec `scratch/sgr-split/autofold.json`) moves the strict counts
-from 46 LEAF / 13 GLUE on 59 fields to 47 / 14 on 61 (strictest 45/14 to 46/15): the composite GLUE row is
+from 46 LEAF / 13 GLUE on 59 fields to 46 / 14 on 60 (strictest 45/14 to 45/15): the composite GLUE row is
 replaced by the printed leaf, which counts GLUE while it is flagged pending reading, and the glue G1. So
 `autofold.py` needs `--allow-rise`. If a reading clears the flag on `shimuraIntegralModelRep` (§2.2), the strict
 GLUE count returns to 13; if G1 is also proved (§4), it drops to 12.
@@ -140,27 +144,38 @@ All in `ZInQKernel/Contrib/OneProof/ShimuraGoodReductionNoGuard.lean` (namespace
 * `qml3AsQMAb_of : AbVarSurfaceRelDim → QML3AsQMAb` (G2, proved): `P.A.X` with `ι`, `η` is a `QMAbScheme` over
   `Spec K`; `GeometricallyConnected` from `GeometricallyIrreducible`; the ring and level identities from
   `QMStr`, `Level3`; `eta_ker` at an arbitrary field point `Spec K' → Spec K` because that map is an
-  epimorphism (`epi_spec_field`, from Mathlib's `Flat.epi_of_flat_of_surjective`). The only input not in
-  Mathlib or the kernel is the relative dimension (`AbVarSurfaceRelDim`): `QML3` records `A.dim = 2` (Krull
-  dimension), `QMAbScheme` needs `SmoothOfRelativeDimension 2`.
-* `shimuraGoodReductionNoGuard_of_printed`, the discharge: `_of_rep` with G2 from `qml3AsQMAb_of hD` and G3
-  from `fibreClassUnique`.
+  epimorphism (`epi_spec_field`, from Mathlib's `Flat.epi_of_flat_of_surjective`); the relative dimension from
+  `AbVarSurfaceRelDim` (`QML3` records `A.dim = 2`, the Krull dimension; `QMAbScheme` needs
+  `SmoothOfRelativeDimension 2`).
+* `abVarSurfaceRelDim : AbVarSurfaceRelDim` (proved): at `x`, Mathlib's `Smooth.exists_isStandardSmooth` gives a
+  standard smooth chart of some relative dimension `d`; the chart has a closed point `z` (`A` is Jacobson);
+  `d = dim 𝒪_{A,z}` (`ZInQ.Contrib.Dim.ringKrullDim_stalk_of_chart`) `= dim A`
+  (`topologicalKrullDim_eq_ringKrullDim_stalk_of_smooth`, `A` irreducible) `= 2`.
+* `shimuraGoodReductionNoGuard_of_printed`, the discharge: `_of_rep` with G2 from
+  `qml3AsQMAb_of abVarSurfaceRelDim` and G3 from `fibreClassUnique`.
 
 ### What remains
 
-* **G1 `QMAbFieldFibre`** (project glue, not compiled). Outline: the base change `A_y` is a group object
-  (Mathlib's `Functor.grpObjObj`, as in `isGrpFibre_of_rigidity`), proper and smooth of relative dimension 2;
-  it is geometrically integral because a smooth, geometrically connected scheme over a field is geometrically
-  integral (smooth ⇒ geometrically normal; connected + normal + noetherian ⇒ integral; Stacks, UNVERIFIED tag;
-  not in Mathlib v4.35); `dim A_y = 2` from the kernel's `ZInQKernel/Contrib/Dim/SmoothStalk.lean`
-  (`topologicalKrullDim_eq_ringKrullDim_stalk_of_smooth` with `ringKrullDim_stalk_of_smoothOfRelativeDimension`);
-  `ι` restricts to a unital ring map `𝒪 → End_K(A_y)` (base change is a monoidal functor), injective as
-  `A_y ≠ 0` and `B` is simple (needs torsion-freeness of `End`); `η` restricts to `𝒪 → A_y(K)` with kernel
-  `3𝒪` by `eta_ker` at `y`. The smallest faithful split would be one printed leaf (smooth + geometrically
-  connected over a field ⇒ geometrically integral) plus Lean transport.
-* **`AbVarSurfaceRelDim`** could likely be proved from the kernel's `SmoothStalk.lean` (closed points of an
-  irreducible smooth `K`-scheme all have local dimension `dim X`; Mathlib's standard smooth charts then have
-  relative dimension `dim X`), not attempted.
+* **G1 `QMAbFieldFibre`** (project glue, not compiled). Outline: the base change `A_y = (Over.pullback y).obj A`
+  is a group object (Mathlib's `Functor.grpObjObj`, as in r1univ-rigid's `isGrpFibre_of_rigidity`), proper and
+  smooth of relative dimension 2 over `K` (base change); `dim A_y = 2` by the argument of `abVarSurfaceRelDim`
+  read backwards (`ringKrullDim_stalk_of_smoothOfRelativeDimension` at a closed point); `ι` restricts to a unital
+  ring map `𝒪 → End_K(A_y)` (`Over.pullback y` is monoidal, so it maps `IsMonHom` maps, products and `1` to the
+  same); `η` restricts to `𝒪 → A_y(K)` with kernel `3𝒪` (`eta_ker` at `y`); `IsFibreOf` with `pullback.fst`.
+  Two inputs are not in Mathlib v4.35 or the kernel:
+  1. *geometric integrality*: a smooth, geometrically connected scheme over a field is geometrically integral
+     (smooth ⇒ normal; connected + normal + locally noetherian ⇒ integral; Stacks, tags UNVERIFIED). The kernel
+     has most of it: `ZInQ.Contrib.Dim.isRegularLocalRing_stalk_of_smooth` (regular at closed points),
+     `LeafQM.AV.R1UnivRigid.isReduced_of_smooth`, and Tau Ceti's
+     `irreducibleSpace_of_connected_of_isDomain_stalk` (`ZInQKernel/Contrib/TauCeti/AlgebraicGeometry/
+     IrreducibleOfConnectedDomainStalk.lean`); missing is the passage from closed points to all points
+     (stalks at non-closed points are localizations of stalks at closed specializations);
+  2. *injectivity of `ι` on the fibre* (`QMStr.injective`): the kernel of `𝒪 → End(A_y)` is a two-sided ideal;
+     a nonzero one contains a nonzero integer `n` (reduced norm), and `[n] ≠ 0` on `A_y ≠ 0` needs `End(A_y)`
+     torsion-free, i.e. `[n]` an isogeny (Mumford, *Abelian varieties*, §4 (iv); UNVERIFIED), which the kernel
+     does not prove. The level structure alone does not give it.
+  So the smallest faithful split of G1 is two textbook leaves (1 and `[n]` surjective) plus Lean transport
+  (about 300 lines by the estimate of this task; not attempted for lack of time).
 * The reading flagged in §2.2.
 
 ## 5. What compiles (all VERIFIED by compiling)
@@ -177,7 +192,7 @@ All in `ZInQKernel/Contrib/OneProof/ShimuraGoodReductionNoGuard.lean` (namespace
 
 ```
 DISCHARGES [OpenAddedLeaves16.shimuraGoodReductionNoGuard] by SGRSplit.shimuraGoodReductionNoGuard_of_printed
-  still assumes: [SGRSplit.ShimuraIntegralModelRep, SGRSplit.AbVarSurfaceRelDim, SGRSplit.QMAbFieldFibre]
+  still assumes: [SGRSplit.ShimuraIntegralModelRep, SGRSplit.QMAbFieldFibre]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves16.shimuraGoodReductionNoGuard] by SGRSplit.shimuraGoodReductionNoGuard_of_rep
   still assumes: [SGRSplit.ShimuraIntegralModelRep,
@@ -185,15 +200,15 @@ DISCHARGES [OpenAddedLeaves16.shimuraGoodReductionNoGuard] by SGRSplit.shimuraGo
  SGRSplit.QML3AsQMAb,
  SGRSplit.FibreClassUnique]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 66 open hypotheses, 1244 theorems checked, 5 discharge one
+#discharges: 66 open hypotheses, 1245 theorems checked, 5 discharge one
 ```
 
 Autofold: `scratch/sgr-split/autofold.json` discharges `shimuraGoodReductionNoGuard` with proof
-`_root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed {n}.shimuraIntegralModelRep {n}.abVarSurfaceRelDim
-{n}.qmAbFieldFibre` and three new rows: `shimuraIntegralModelRep` (published, flag "pending reading: ..."),
-`abVarSurfaceRelDim` (published, unread), `qmAbFieldFibre` (project glue). `--dry-run` reports
-`strict count: 46/13 on 59 -> 47/14 on 61; strictest 45/14 -> 46/15` and refuses without `--allow-rise`.
+`_root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed {n}.shimuraIntegralModelRep {n}.qmAbFieldFibre` and two
+new rows: `shimuraIntegralModelRep` (published, flag "pending reading: ..."), `qmAbFieldFibre` (project glue).
+`--dry-run` reports `strict count: 46/13 on 59 -> 46/14 on 60; strictest 45/14 -> 45/15` and refuses without
+`--allow-rise`.
 
 Build note: the worktree reused the prebuilt tree of `~/dzq-check2` (same commit `6edf020d`), then built
 `ZInQKernel.OneProof.Main`, `ZInQKernel.OneProof.Discharges` (up to date except `TailZ28`–`TailZ31`, `Main`)
-and the new module (86 s).
+and the new module (59 to 86 s).
