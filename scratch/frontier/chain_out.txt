@@ -1,167 +1,166 @@
 ===== scenario A
 edge check mismatches: 0
-open nodes: 69
-  AxSenTate                                     OpenAddedLeaves8.axSenTate
-  BdRInvariants                                 OpenTextbookLeaves9.bdRInvariants
-  BostLowerBound                                OpenResearchLeaves9.bostLowerBound
-  CarayolR17'                                   OpenResearchLeaves9.r17
-  CartierSmooth                                 OpenTextbookLeaves9.cartierSmooth
-  CharPolyIndepOfEllAlgClosed                   OpenTextbookLeaves9.charPolyIndepOfEllAlgClosed
-  DSThm965                                      OpenResearchLeaves9.dsThm965
-  DSThm966                                      OpenResearchLeaves9.dsThm966
-  DeRhamH1AbVarT                                OpenResearchLeaves9.deRhamH1AbVarT
-  DimJacobianEqGenus                            OpenTextbookLeaves9.dimJacobianEqGenus
-  EGAIV_8_10_5_xii                              OpenAddedLeaves8.egaIV_8_10_5_xii
-  EigenformHTNew                                OpenResearchLeaves9.eigenformHTNew
+open nodes: 67
+  AxSenTate                                     OpenAddedLeaves11.axSenTate
+  BLR_1_2_4                                     OpenResearchLeaves12.blr_1_2_4
+  BdRInvariants                                 OpenTextbookLeaves10.bdRInvariants
+  BostLowerBound                                OpenResearchLeaves12.bostLowerBound
+  CarayolR17'                                   OpenResearchLeaves12.r17
+  CartierSmooth                                 OpenTextbookLeaves10.cartierSmooth
+  CharPolyIndepOfEllAlgClosed                   OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed
+  DSThm965                                      OpenResearchLeaves12.dsThm965
+  DSThm966                                      OpenResearchLeaves12.dsThm966
+  DeRhamH1AbVarT                                OpenResearchLeaves12.deRhamH1AbVarT
+  DeligneComponentsY3PrintedAb                  OpenAddedLeaves11.deligneComponentsY3PrintedAb
+  EGAIV_8_10_5_openImm                          OpenResearchLeaves12.egaIV_8_10_5_openImm
+  EGAIV_8_10_5_xii                              OpenAddedLeaves11.egaIV_8_10_5_xii
+  EigenformHTNew                                OpenResearchLeaves12.eigenformHTNew
   FHNonvanishing                                -
-  FaltingsLemma5BC                              OpenResearchLeaves9.faltingsLemma5BC
-  FaltingsSemisimple                            OpenResearchLeaves9.r9a
-  FaltingsTate                                  OpenResearchLeaves9.r9b
-  GAGAMorphism                                  OpenTextbookLeaves9.gagaMorphism
-  GaudronRemondThm14                            OpenResearchLeaves9.gaudronRemondThm14
-  GenusX1Field                                  OpenTextbookLeaves9.genusX1Field
-  GeomConnOfRationalPoint                       OpenTextbookLeaves9.geomConnOfRationalPoint
-  GonzalezRotgerCountX6                         OpenResearchLeaves9.gonzalezRotgerCountX6
+  FaltingsLemma5Printed                         OpenResearchLeaves12.faltingsLemma5Printed
+  FaltingsSemisimple                            OpenResearchLeaves12.r9a
+  FaltingsTate                                  OpenResearchLeaves12.r9b
+  GAGAMorphism                                  OpenTextbookLeaves10.gagaMorphism
+  GaudronRemondThm14                            OpenResearchLeaves12.gaudronRemondThm14
+  GeomConnOfRationalPoint                       OpenTextbookLeaves10.geomConnOfRationalPoint
+  GonzalezRotgerCountX6Ab                       OpenResearchLeaves12.gonzalezRotgerCountX6Ab
   GrossZagierHeegner                            -
-  GroupSchemeEquidim                            OpenTextbookLeaves9.groupSchemeEquidim
-  HodgeTateDecompAbVar                          OpenResearchLeaves9.hodgeTateDecompAbVar
-  HomFreeFiniteAlgClosed                        OpenTextbookLeaves9.homFreeFiniteAlgClosed
-  IgusaCMValue24                                OpenAddedLeaves8.igusaCMValue24
-  IgusaChi10                                    OpenResearchLeaves9.igusaChi10
-  IgusaGL2                                      OpenTextbookLeaves9.igusaGL2
-  IgusaPsi4                                     OpenResearchLeaves9.igusaPsi4
-  JavanpeykarBound                              OpenResearchLeaves9.javanpeykarBound
-  MilneIsogenyQuasiInverse                      OpenAddedLeaves8.milneIsogenyQuasiInverse
-  MulEtaleAbelianScheme                         OpenTextbookLeaves9.mulEtaleAbelianScheme
-  MumfordTorsionAlgClosed                       OpenTextbookLeaves9.mumfordTorsionAlgClosed
-  NeronOggShafarevich                           OpenResearchLeaves9.r7a
-  NeronSchemeExtensionExists                    OpenTextbookLeaves9.neronSchemeExtensionExists
-  NeronSchemeModelExistsDVR                     OpenResearchLeaves9.neronSchemeModelExistsDVR  [never projected]
-  PanBerger                                     OpenResearchLeaves9.r11r12
-  PazukiCor13Upper                              OpenResearchLeaves9.pazukiCor13Upper
-  PoincareComplement                            OpenTextbookLeaves9.poincareComplement
-  QMCentralizerCMC                              OpenAddedLeaves8.qmCentralizerCMC
+  GroupSchemeEquidim                            OpenTextbookLeaves10.groupSchemeEquidim
+  HodgeTateDecompAbVar                          OpenResearchLeaves12.hodgeTateDecompAbVar
+  HomFreeFiniteAlgClosed                        OpenTextbookLeaves10.homFreeFiniteAlgClosed
+  IgusaChi10                                    OpenResearchLeaves12.igusaChi10
+  IgusaGL2                                      OpenTextbookLeaves10.igusaGL2
+  IgusaPsi4                                     OpenResearchLeaves12.igusaPsi4
+  JavanpeykarBound                              OpenResearchLeaves12.javanpeykarBound
+  MilneIsogenyQuasiInverse                      OpenAddedLeaves11.milneIsogenyQuasiInverse
+  MulEtaleAbelianScheme                         OpenTextbookLeaves10.mulEtaleAbelianScheme
+  MumfordRigidityCore                           OpenResearchLeaves12.mumfordRigidityCore
+  MumfordTorsionAlgClosed                       OpenTextbookLeaves10.mumfordTorsionAlgClosed
+  NeronOggShafarevich                           OpenResearchLeaves12.r7a
+  NeronSchemeExtensionExists                    OpenTextbookLeaves10.neronSchemeExtensionExists
+  NeronSchemeModelExistsDVR                     OpenResearchLeaves12.neronSchemeModelExistsDVR
+  PanBerger                                     OpenResearchLeaves12.r11r12
+  PazukiCor13Upper                              OpenResearchLeaves12.pazukiCor13Upper
+  PoincareComplement                            OpenTextbookLeaves10.poincareComplement
+  QMCentralizerCMC                              OpenAddedLeaves11.qmCentralizerCMC
   QuotientP1Coordinate                          OpenGlue7.quotientP1Coordinate
-  R03_LinYang                                   OpenResearchLeaves9.r3  [never projected]
-  R16_EichlerShimuraJ1'                         OpenResearchLeaves9.r16
-  R1R2fpRep                                     OpenResearchLeaves9.r1r2
-  RaynaudCriterion                              OpenResearchLeaves9.r6
-  RegularSmoothPerfect                          OpenTextbookLeaves9.regularSmoothPerfect
-  SemistableNeronBaseChange                     OpenResearchLeaves9.semistableNeronBaseChange
-  SemistablePersists                            OpenResearchLeaves9.semistablePersists
-  SemistableReductionDVR                        OpenResearchLeaves9.semistableReductionDVR  [never projected]
-  SemistableReductionThm                        OpenResearchLeaves9.semistableReductionThm
-  SemistableUnipotent                           OpenResearchLeaves9.semistableUnipotent  [never projected]
-  SerreTateThm2                                 OpenResearchLeaves9.serreTateThm2  [never projected]
-  ShimizuCovolumeO1                             OpenAddedLeaves8.shimizuCovolumeO1
-  ShimuraFamily                                 OpenResearchLeaves9.shimuraFamily
-  ShimuraGoodReductionNoGuard                   OpenAddedLeaves8.shimuraGoodReductionNoGuard
+  R16_EichlerShimuraJ1'                         OpenResearchLeaves12.r16
+  R1R2fpRepAb                                   OpenResearchLeaves12.r1r2Ab
+  RaynaudKernelBound                            OpenResearchLeaves12.raynaudKernelBound
+  RaynaudSemistable                             OpenResearchLeaves12.raynaudSemistable
+  RegularSmoothPerfect                          OpenTextbookLeaves10.regularSmoothPerfect
+  SGA3_VIB_3_10                                 OpenResearchLeaves12.sga3_VIB_3_10
+  SGA7_IX_3_3                                   OpenResearchLeaves12.sga7_IX_3_3
+  SemistablePersistsDVR                         OpenResearchLeaves12.semistablePersistsDVR
+  SemistableReductionDVR                        OpenResearchLeaves12.semistableReductionDVR
+  SemistableUnipotent                           OpenResearchLeaves12.semistableUnipotent
+  ShimizuCovolumeO1                             OpenAddedLeaves11.shimizuCovolumeO1
+  ShimuraFamilyAb                               OpenResearchLeaves12.shimuraFamilyAb
+  ShimuraGoodReductionNoGuard                   OpenAddedLeaves11.shimuraGoodReductionNoGuard
   ShimuraReciprocityModFn                       -
-  ShimuraTaniyamaQbar                           OpenAddedLeaves8.shimuraTaniyamaQbar
-  T09_SymmIsogenyExists                         OpenAddedLeaves8.t09SymmIsogenyExists
-  T10_TateDuality                               OpenTextbookLeaves9.t10  [never projected]
+  ShimuraTaniyamaQbar                           OpenAddedLeaves11.shimuraTaniyamaQbar
+  T09_SymmIsogenyExists                         OpenAddedLeaves11.t09SymmIsogenyExists
   TYZLemma29Mod2                                -
   TYZThm11Integral                              -
   TYZThm33                                      -
-  TateTwistInvariants                           OpenAddedLeaves8.tateTwistInvariants
-  ThetaRatiosAlgebraic                          OpenAddedLeaves8.thetaRatiosAlgebraic
-  UniformizationLeafAll                         OpenTextbookLeaves9.uniformizationLeafAll
-  ValenceFormulaCocompactEq                     OpenAddedLeaves8.valenceFormulaCocompactEq
-  X6ConicModel                                  OpenAddedLeaves8.x6ConicModel
-  Y3Connected                                   OpenAddedLeaves8.y3Connected
-  YuThm11                                       OpenTextbookLeaves9.yuThm11
+  TateTwistInvariants                           OpenAddedLeaves11.tateTwistInvariants
+  ThetaRatiosAlgebraic                          OpenAddedLeaves11.thetaRatiosAlgebraic
+  UniformizationLeafAll                         OpenTextbookLeaves10.uniformizationLeafAll
+  ValenceFormulaCocompactEq                     OpenAddedLeaves11.valenceFormulaCocompactEq
+  X6ConicModel                                  OpenAddedLeaves11.x6ConicModel
+  YuThm11                                       OpenTextbookLeaves10.yuThm11
 ===== scenario F
 edge check mismatches: 0
-open nodes: 87
-  AxSenTate                                     OpenAddedLeaves8.axSenTate
-  BabaGranathX6'                                -
-  BdRInvariants                                 OpenTextbookLeaves9.bdRInvariants
-  BostLowerBound                                OpenResearchLeaves9.bostLowerBound
-  CMModuli                                      -
+open nodes: 86
+  AxSenTate                                     OpenAddedLeaves11.axSenTate
+  BLR_1_2_4                                     OpenResearchLeaves12.blr_1_2_4
+  BabaGranathRational                           -
+  BdRInvariants                                 OpenTextbookLeaves10.bdRInvariants
+  BostLowerBound                                OpenResearchLeaves12.bostLowerBound
   CMStabObj                                     -
   CarayolRealization                            -
-  CartierSmooth                                 OpenTextbookLeaves9.cartierSmooth
-  CharPolyIndepOfEllAlgClosed                   OpenTextbookLeaves9.charPolyIndepOfEllAlgClosed
+  CartierSmooth                                 OpenTextbookLeaves10.cartierSmooth
+  CharPolyIndepOfEllAlgClosed                   OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed
   CoverModelOfHeckeN                            -
-  DSThm965                                      OpenResearchLeaves9.dsThm965
-  DSThm966                                      OpenResearchLeaves9.dsThm966
-  DeRhamH1AbVarT                                OpenResearchLeaves9.deRhamH1AbVarT
-  DeligneComponentsX6                           -
-  DeligneComponentsY3                           -
-  EGAIV_8_10_5_xii                              OpenAddedLeaves8.egaIV_8_10_5_xii
-  ElkiesConicX6                                 -
+  DSThm965                                      OpenResearchLeaves12.dsThm965
+  DSThm966                                      OpenResearchLeaves12.dsThm966
+  DeRhamH1AbVarT                                OpenResearchLeaves12.deRhamH1AbVarT
+  DeligneComponentsX6Printed                    -
+  DeligneComponentsY3PrintedAb                  OpenAddedLeaves11.deligneComponentsY3PrintedAb
+  EGAIV_8_10_5_openImm                          OpenResearchLeaves12.egaIV_8_10_5_openImm
+  EGAIV_8_10_5_xii                              OpenAddedLeaves11.egaIV_8_10_5_xii
+  ElkiesEquationsX6                             -
   FHNonvanishing                                -
-  FaltingsLemma5                                -
-  FaltingsSemisimple                            OpenResearchLeaves9.r9a
-  FaltingsTate                                  OpenResearchLeaves9.r9b
+  FaltingsLemma5Printed                         OpenResearchLeaves12.faltingsLemma5Printed
+  FaltingsSemisimple                            OpenResearchLeaves12.r9a
+  FaltingsTate                                  OpenResearchLeaves12.r9b
   FiniteQuotientExists                          -
-  FixedTorsionRationalImperfect                 -
-  GAGAMorphism                                  OpenTextbookLeaves9.gagaMorphism
-  GaudronRemondThm14                            OpenResearchLeaves9.gaudronRemondThm14
-  GenusX1Field                                  OpenTextbookLeaves9.genusX1Field
+  GAGAMorphism                                  OpenTextbookLeaves10.gagaMorphism
+  GaudronRemondThm14                            OpenResearchLeaves12.gaudronRemondThm14
   GeomConnOfAlgClosure                          -
-  GeomConnOfRationalPoint                       OpenTextbookLeaves9.geomConnOfRationalPoint
-  GonzalezRotgerCountX6                         OpenResearchLeaves9.gonzalezRotgerCountX6
+  GeomConnOfRationalPoint                       OpenTextbookLeaves10.geomConnOfRationalPoint
+  GonzalezRotgerCountX6Ab                       OpenResearchLeaves12.gonzalezRotgerCountX6Ab
   GonzalezRotgerX6                              -
   GrossZagierHeegner                            -
-  GroupSchemeEquidim                            OpenTextbookLeaves9.groupSchemeEquidim
-  H0DifferentialsEqHolo                         -
-  HTDual                                        -
-  HodgeTateDecompAbVar                          OpenResearchLeaves9.hodgeTateDecompAbVar
-  HomFreeFiniteAlgClosed                        OpenTextbookLeaves9.homFreeFiniteAlgClosed
-  IdentityComponentBaseChangeDVR                -
-  IgusaCMValue24                                OpenAddedLeaves8.igusaCMValue24
-  IgusaChi10                                    OpenResearchLeaves9.igusaChi10
-  IgusaGL2                                      OpenTextbookLeaves9.igusaGL2
-  IgusaPsi4                                     OpenResearchLeaves9.igusaPsi4
-  JavanpeykarBound                              OpenResearchLeaves9.javanpeykarBound
-  KatoRealizationCoh                            -
-  MilneIsogenyQuasiInverse                      OpenAddedLeaves8.milneIsogenyQuasiInverse
-  MulEtaleAbelianScheme                         OpenTextbookLeaves9.mulEtaleAbelianScheme
-  MumfordTorsionAlgClosed                       OpenTextbookLeaves9.mumfordTorsionAlgClosed
-  NeronOggShafarevich                           OpenResearchLeaves9.r7a
-  NeronSchemeExtensionExists                    OpenTextbookLeaves9.neronSchemeExtensionExists
-  NeronSchemeModelExistsDVR                     OpenResearchLeaves9.neronSchemeModelExistsDVR
+  GroupSchemeEquidim                            OpenTextbookLeaves10.groupSchemeEquidim
+  HodgeTateDecompAbVar                          OpenResearchLeaves12.hodgeTateDecompAbVar
+  HomFreeFiniteAlgClosed                        OpenTextbookLeaves10.homFreeFiniteAlgClosed
+  IgusaAlg                                      -
+  IgusaChi10                                    OpenResearchLeaves12.igusaChi10
+  IgusaGL2                                      OpenTextbookLeaves10.igusaGL2
+  IgusaPsi4                                     OpenResearchLeaves12.igusaPsi4
+  JavanpeykarBound                              OpenResearchLeaves12.javanpeykarBound
+  KatoRealizationCohSS                          -
+  LinYangThetaCurve                             -
+  MilneIsogenyQuasiInverse                      OpenAddedLeaves11.milneIsogenyQuasiInverse
+  MulEtaleAbelianScheme                         OpenTextbookLeaves10.mulEtaleAbelianScheme
+  MumfordRigidityCore                           OpenResearchLeaves12.mumfordRigidityCore
+  MumfordTorsionAlgClosed                       OpenTextbookLeaves10.mumfordTorsionAlgClosed
+  NeronOggShafarevich                           OpenResearchLeaves12.r7a
+  NeronSchemeExtensionExists                    OpenTextbookLeaves10.neronSchemeExtensionExists
+  NeronSchemeModelExistsDVR                     OpenResearchLeaves12.neronSchemeModelExistsDVR
   P1SchemeQ                                     -
-  PanBerger                                     OpenResearchLeaves9.r11r12
-  PazukiCor13Upper                              OpenResearchLeaves9.pazukiCor13Upper
-  PoincareComplement                            OpenTextbookLeaves9.poincareComplement
+  PanBerger                                     OpenResearchLeaves12.r11r12
+  PazukiCor13Upper                              OpenResearchLeaves12.pazukiCor13Upper
+  PoincareComplement                            OpenTextbookLeaves10.poincareComplement
   ProperCurveAF                                 -
-  QMCentralizerCMC                              OpenAddedLeaves8.qmCentralizerCMC
-  R03_LinYang                                   OpenResearchLeaves9.r3  [never projected]
-  R16_EichlerShimuraJ1'                         OpenResearchLeaves9.r16
-  RaynaudSemistable                             -
-  ReciprocityCanonical                          -
-  RegularSmoothPerfect                          OpenTextbookLeaves9.regularSmoothPerfect
-  SemistableAlmostAll                           -
-  SemistableLocalGlobal                         -
-  SemistableNeronBaseChangeLocalGlobal          -
-  SemistablePersistsDVR                         -
-  SemistableReductionDVR                        OpenResearchLeaves9.semistableReductionDVR
-  SemistableUnipotent                           OpenResearchLeaves9.semistableUnipotent
-  SerreTateThm2                                 OpenResearchLeaves9.serreTateThm2  [never projected]
-  ShimizuCovolumeO1                             OpenAddedLeaves8.shimizuCovolumeO1
-  ShimuraGoodReductionNoGuard                   OpenAddedLeaves8.shimuraGoodReductionNoGuard
+  QMCentralizerCMC                              OpenAddedLeaves11.qmCentralizerCMC
+  R16_EichlerShimuraJ1'                         OpenResearchLeaves12.r16
+  RayClassCM                                    -
+  RaynaudKernelBound                            OpenResearchLeaves12.raynaudKernelBound
+  RaynaudSemistableSH                           -
+  ReductionFromSH                               -
+  RegularSmoothPerfect                          OpenTextbookLeaves10.regularSmoothPerfect
+  RingClassLattice                              -
+  SGA3_VIB_3_10                                 OpenResearchLeaves12.sga3_VIB_3_10
+  SGA7_IX_3_3                                   OpenResearchLeaves12.sga7_IX_3_3
+  SemistablePersistsSH                          -
+  SemistableReductionSH                         -
+  SemistableUnipotentSH                         -
+  ShimizuCovolumeO1                             OpenAddedLeaves11.shimizuCovolumeO1
+  ShimuraGoodReductionNoGuard                   OpenAddedLeaves11.shimuraGoodReductionNoGuard
   ShimuraHolFamily                              -
-  ShimuraTaniyamaQbar                           OpenAddedLeaves8.shimuraTaniyamaQbar
+  ShimuraMainCM                                 -
+  ShimuraTaniyamaQbar                           OpenAddedLeaves11.shimuraTaniyamaQbar
   SmoothModelOfP1                               -
-  T09_SymmIsogenyExists                         OpenAddedLeaves8.t09SymmIsogenyExists
-  T10_TateDuality                               OpenTextbookLeaves9.t10  [never projected]
+  StrictHenselizationInside                     -
+  StrictHenselizationNeron                      -
+  StrictHenselizationPair                       -
+  T09_SymmIsogenyExists                         OpenAddedLeaves11.t09SymmIsogenyExists
   TYZLemma29Mod2                                -
   TYZThm11Integral                              -
   TYZThm33                                      -
   TameFixedPointsDisjoint                       -
   TameInertiaCyclic                             -
   TameQuotientSmooth                            -
-  TateTwistInvariants                           OpenAddedLeaves8.tateTwistInvariants
-  ThetaFourthRatiosAlgebraic                    -
-  ThetaNullNonvanishing                         -
-  UniformizationLeafAll                         OpenTextbookLeaves9.uniformizationLeafAll
-  ValenceFormulaCocompactEq                     OpenAddedLeaves8.valenceFormulaCocompactEq
-  X0RatStructure                                -
-  YuThm11                                       OpenTextbookLeaves9.yuThm11
+  TateTwistInvariants                           OpenAddedLeaves11.tateTwistInvariants
+  UniformizationLeafAll                         OpenTextbookLeaves10.uniformizationLeafAll
+  ValenceFormulaCocompactEq                     OpenAddedLeaves11.valenceFormulaCocompactEq
+  X0ModuliGalois                                -
+  YuThm11                                       OpenTextbookLeaves10.yuThm11
 USED_IN_F (never-projected fields that a followed F edge takes): equal
 def-text comparison (proved/reduced Prop vs the H base: OneProof/H or a kernel module it imports; followed F edges only):
+  X0RatStructure                      identical (vs scratch/tyz-split/T5.lean, which takes it)
+  CMModuli                            identical (vs scratch/tyz-split/T5.lean, which takes it)
   CoordinateNormalization             identical
   CoordinateFromSections              identical (vs scratch/mcr-glue/MCRGlue.lean, which takes it)
   TorsionStructure                    the kernel's own constant (ZInQKernel/HDecomp/Objects.lean), which OneProof/H imports
@@ -169,18 +168,19 @@ def-text comparison (proved/reduced Prop vs the H base: OneProof/H or a kernel m
   CurveBijIso                         identical
   CMSectionsDisjoint                  identical (vs scratch/mcr-glue/MCRGlue.lean, which takes it)
   GenericQuotientP1                   identical
+  QMThetaSymmetricCurve               identical (vs scratch/theta-split/ThetaUse.lean, which takes it)
+  ThetaEightSquare                    identical (vs scratch/theta-split/ThetaUse.lean, which takes it)
 kernel constants named with `_root_` in the bundles, proved by files importing their module:
 library files outside OneProof/H (followed F-only edges without a deffile): the constant they conclude:
   ShimuraReciprocityModFn             the library's own constant: no definition in scratch/tyz-split/T5.lean, which imports ZInQKernel/Contrib/TYZGenus/ShimuraModFn.lean (in OneProof/Main's import closure)
-  Y3Connected                         the library's own constant: no definition in scratch/shimura-split/Rows.lean, which imports ZInQKernel/OneProof/H/TailG.lean (in OneProof/Main's import closure)
-  X6ConicModel                        the library's own constant: no definition in scratch/shimura-split/Rows.lean, which imports ZInQKernel/OneProof/H/TailE.lean (in OneProof/Main's import closure)
-  R1R2fpRep                           the library's own constant: no definition in scratch/shimura-split/Rows.lean, which imports ZInQKernel/OneProof/H/LPrefix.lean (in OneProof/Main's import closure)
-  DimJacobianEqGenus                  the library's own constant: no definition in scratch/modular-split/DimJac.lean, which imports ZInQKernel/Contrib/CurvesG/GenusSplit.lean (in OneProof/Main's import closure)
+  X6ConicModel                        the library's own constant: at 685a56e1, no definition in scratch/x6-glue/X6Glue.lean, which imports ZInQKernel/OneProof/H/TailE.lean (in OneProof/Main's import closure); the definition there is the same at 685a56e1 and at main
   CarayolR17'                         the library's own constant: no definition in scratch/modular-split/R17.lean, which imports ZInQKernel/HDecomp/Conductor/LadicCond.lean (in OneProof/Main's import closure)
-  EigenformHTNew                      the library's own constant: no definition in scratch/modular-split/EigenHT.lean, which imports ZInQKernel/OneProof/H/TailS.lean (in OneProof/Main's import closure)
+  EigenformHTNew                      the library's own constant: at dbeaecf7, only a `Verbatim` copy (for an `rfl` check) in scratch/c-to-printed2/CToPrinted2.lean, which imports ZInQKernel/OneProof/H/TailS.lean (in OneProof/Main's import closure); the definition there is the same at dbeaecf7 and at main
   ShimuraFamily                       the library's own constant: no definition in scratch/shimura-split/ShimuraFam.lean, which imports ZInQKernel/OneProof/H/TailU.lean (in OneProof/Main's import closure)
+  R1R2fpRep                           the library's own constant: at 685a56e1, no definition in scratch/x6-glue/X6Glue.lean, which imports ZInQKernel/OneProof/H/LPrefix.lean (in OneProof/Main's import closure); the definition there is the same at 685a56e1 and at main
 chain-world edges (files over leaf-fold4's TailK): the H base's definition vs the chain's:
-  ThetaRatiosAlgebraic                identical (OneProof/H vs leaf-fold4's chain)
+fields replaced at their consumer, and form leaves (signatures; uses of the field in OneProof/H):
+  ThetaRatiosAlgebraic                ok; ok
 route T inputs and kernel leaf copies (def text vs the H base, and pairwise):
   LinkedTateLocal      3d1b90b5:scratch/lt-local/LtLocal4.lean: identical
   G7Data               3d1b90b5:scratch/lt-local/LtLocal4.lean: identical
@@ -204,10 +204,10 @@ route T inputs and kernel leaf copies (def text vs the H base, and pairwise):
   ShimuraReciprocityModFn HEAD:ZInQKernel/Contrib/TYZGenus/ShimuraModFn.lean vs HEAD:scratch/frontier/TYZChain.lean: identical
   Thm35First           a8101726:scratch/tyz-35/Thm35.lean vs HEAD:scratch/frontier/TYZChain.lean: identical
 OneProof.frozenTarget: hypotheses vs scenario A's (its bundles and the open nodes outside them): equal ; conclusion FrozenTarget
-  OpenResearchLeaves9: 30 fields; fields9.tsv: 30 rows, same names and types
-  OpenTextbookLeaves9: 18 fields; fields9.tsv: 18 rows, same names and head constants (types abbreviated in the table: bdRInvariants)
-  OpenAddedLeaves8: 14 fields; fields9.tsv: 14 rows, same names and types
-  OpenGlue7: 1 fields; fields9.tsv: 1 rows, same names and types
-doc rows: 84 (84 distinct heads); F open minus never-projected: 84
+  OpenResearchLeaves12: 32 fields; fields11.tsv: 32 rows, same names and types
+  OpenTextbookLeaves10: 15 fields; fields11.tsv: 15 rows, same names and types
+  OpenAddedLeaves11: 13 fields; fields11.tsv: 13 rows, same names and types
+  OpenGlue7: 1 fields; fields11.tsv: 1 rows, same names and types
+doc rows: 86 (86 distinct heads); F open minus never-projected: 86
   in chain, not in doc: []
   in doc, not in chain: []
