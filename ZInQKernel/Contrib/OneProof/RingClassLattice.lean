@@ -644,8 +644,10 @@ def X0RatStructure : Prop :=
 
 /-! ## §4. The modular-curve part `X0RatStructure` -/
 
-/-- **LEAF X0-MODULI (the canonical model of `X₀(N)` over `ℚ`: `Aut(ℂ)` acts on the values of
-`ℚ(X₀(N))` through the moduli interpretation).** Let `N ≥ 1`, `g ∈ ℚ(X₀(N))` regular on `ℍ`
+/-- **X0-MODULI, a standard consequence (the canonical model of `X₀(N)` over `ℚ`: `Aut(ℂ)` acts on the values of
+`ℚ(X₀(N))` through the moduli interpretation).** Not one printed statement: it glues the coarse moduli space
+over `ℚ`, the `q`-expansion principle and the analytic map `τ ↦ (ℂ/⟨1, τ⟩, ⟨1/N⟩)` (statement review,
+2026-11-14; the algebraicity hypothesis is equivalent to `j(τ)` algebraic and only weakens the statement). Let `N ≥ 1`, `g ∈ ℚ(X₀(N))` regular on `ℍ`
 (`IsRatModFn N g`), `σ ∈ Aut(ℂ)` and `τ, τ' ∈ ℍ`, where the point `(E_τ, ⟨1/N⟩)` of `Y₀(N)` is
 algebraic (its moduli coordinates `modCoord N τ i`, `i < N`, i.e. `j(τ)` and the symmetric functions
 of the Weber values of `⟨1/N⟩ \ 0`, are algebraic numbers: `(E_τ, ⟨1/N⟩)` has a model over `ℚ̄`), such
@@ -659,8 +661,8 @@ rational `q`-expansion at `∞`, is the coarse moduli space of pairs `(E, C)` (`
 `N`), compatibly with `Aut(ℂ)`: `g(x)^σ = g(x^σ)` for `g ∈ ℚ(X₀(N))` regular at `x`, where
 `x^σ = (E^σ, C^σ)`. Sources (theorem numbers UNVERIFIED, from memory; no network): Shimura 1971,
 *Introduction to the arithmetic theory of automorphic functions*, §6.7 (canonical models of
-`Γ₀(N)\ℍ*`) with Thm. 6.6 (`F_N = ℚ(ζ_N)(j, f_a)`, Fricke functions = Weber values `h(E, a)`) and
-Prop. 6.9; Deligne–Rapoport, *Les schémas de modules de courbes elliptiques* (LNM 349), VI.6 and
+`Γ₀(N)\ℍ*`), Prop. 6.9 and Thm. 6.23, as in `IsRatModFn`'s docstring (`F_N = ℚ(ζ_N)(j, f_a)`, Fricke
+functions = Weber values `h(E, a)`); Deligne–Rapoport, *Les schémas de modules de courbes elliptiques* (LNM 349), VI.6 and
 VII (q-expansion principle); Diamond–Shurman, *A first course in modular forms*, §7.5–7.7.
 On `ℚ̄`-points this is the printed Galois equivariance `g(x)^ρ = g(x^ρ)`, `ρ = σ|_ℚ̄` (Diamond–Shurman
 §7.7; Deligne–Rapoport VI (coarse moduli scheme over `ℚ`) and VII (q-expansion principle)).
@@ -873,8 +875,9 @@ def sInvLat (m : ℕ) [NeZero m] (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) (𝔞
 
 /-- **`σ = [s, K]` on `K^ab`** (through the embedding `ιC ∘ e : Kˢ → ℂ`): for every finite abelian
 extension `F/K` inside `Kˢ`, `σ` acts on `ιC(e(F))` as Tau Ceti's global Artin symbol of the idele
-class of `s` (which sends a uniformizer at `𝔭` to the arithmetic Frobenius,
-`rayClassQuotient_ofAdicCompletion_of_isUniformizer`). -/
+class of `s` (which sends a uniformizer at `𝔭` to the arithmetic Frobenius: `globalArtinMap_isArithFrobAt` and
+`isArithFrobAt_of_globalArtinMap_ofAdicCompletion_eq`; `rayClassQuotient_ofAdicCompletion_of_isUniformizer` gives only
+the ray class). -/
 def ArtinCond (m : ℕ) [NeZero m] (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar) (σ : ℂ ≃+* ℂ)
     (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) : Prop :=
   ∀ (F : IntermediateField (QNeg m) (SeparableClosure (QNeg m))) [FiniteDimensional (QNeg m) F]
@@ -902,7 +905,9 @@ models are `(x, y) ↦ (μ²x, μ³y)`), so this is the printed statement, restr
 conclusion holds for every representative `v` because two of them differ by an element of `s⁻¹𝔞`. Normalization:
 Shimura's `[s, K]` sends a uniformizer at `𝔭` to the arithmetic Frobenius, as Tau Ceti's Artin map
 does; then `E^{Frob_𝔭} ≅ ℂ/𝔭⁻¹𝔞`, consistent with `j(𝔞)^{Art 𝔭} = j(𝔭⁻¹𝔞)` used by the kernel's
-`MainTheoremCMj`. -/
+`MainTheoremCMj` (Tau Ceti: `globalArtinMap_isArithFrobAt`, `isArithFrobAt_of_globalArtinMap_ofAdicCompletion_eq`;
+re-check this direction if the Artin map is ever replaced). The Weierstrass-coordinate form is a standard consequence
+of Thm. 5.4; Silverman's II.8.2 covers only `𝒪_K`, while this leaf quantifies over lattices of every order. -/
 def ShimuraMainCM : Prop :=
   ∀ (m : ℕ) [NeZero m], Squarefree m →
   ∀ (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar),
