@@ -6633,10 +6633,10 @@ theorem gluePieces_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
   have hMob : LeafQM.AV.Pin.MobiusGlue := mobiusGlue_of_t5' t.t5
   have hFS5 : G0FibreSimple.FibreComTrivial :=
     fibreComTrivial_of_full (FS5NoCM.fibreComTrivialFull_of_leaves'' (r1r2fpFull_of r3)
-      hMob t.t27 t.t6 l.cmOptimalEmbedding (X6Kummer.x6KummerFibre_of_conic hMob l.x6ConicModel)
+      hMob (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27) t.t6 l.cmOptimalEmbedding (X6Kummer.x6KummerFibre_of_conic hMob l.x6ConicModel)
       r.r5count)
   have hFS : G0Split.FibreSimple :=
-    G0FibreSimple.fibreSimple_of_leaves t3 mulIsogeny_proved G0FibreSimple.rigidityHom
+    G0FibreSimple.fibreSimple_of_leaves t3 (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t3.t27) mulIsogeny_proved G0FibreSimple.rigidityHom
       ⟨G0FibreSimple.finiteDescends_proof, hFS5⟩
   { dimFinite := G0Split.dimFinite
     dimBaseChange := G0Split.dimBaseChange
@@ -6656,7 +6656,7 @@ theorem gluePieces_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
       l.thetaRatiosAlgebraic
     modularConstituent := modularConstituent_of_field t3
       (G0ModField.fibreCoverExists_of_propTSAll' t.t5 g.propTSAll unramifiedConjugates_proved)
-      (G0ModField.KernelField.kernelFieldExists_of_split'' t.t6 r.r7a r.r6 t.t5 t.t27
+      (G0ModField.KernelField.kernelFieldExists_of_split'' t.t6 r.r7a r.r6 t.t5 (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27)
         hFS5 G0ModField.KernelField.oMaximal endTransport_proved g.conjIsogMaps)
       UnramTate.unramifiedSup_mf
       (G0AssembleMod.afterG7_of3 r3 t3

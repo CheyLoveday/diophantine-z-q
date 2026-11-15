@@ -58,9 +58,9 @@ theorem modelG3G6_of_leaves3 (hFS : G0Split.FibreSimple) (hNOS : PkgI2.NeronOggS
 
 /-- **`QMEndRank` from T6 and T27** (lt-goodred, part c75; not needed by the route below, since
 `LinkedTateLocal` stays a glue field; recorded). -/
-theorem qmEndRank_of_leaves3 (hM1 : PkgI3.HomFreeFinite) (hT27 : PkgI3.QMDichotomyYu) :
+theorem qmEndRank_of_leaves3 (hM1 : PkgI3.HomFreeFinite) (hYu : QMLattice.YuB6Alg) :
     HSyn.LinkedTate.QMEndRank :=
-  LTGoodRed.QM.qmEndRank_of_leaves hM1 hT27
+  LTGoodRed.QM.qmEndRank_of_leaves hM1 hYu
 
 /-- **`TangentDimAtOrigin` from the kernel's Contrib** (dim-contrib, `ZInQ.Contrib.Dim.tangentDimAtOrigin`,
 `ZInQKernel/Contrib/Dim/HodgeLattice.lean`, imported; through leaf-fold2's field map `toAbVarK`). It replaces
@@ -100,11 +100,11 @@ theorem linkedTateLocal_of_leaves3 (hR6 : PkgI2.RaynaudCriterion.{0}) (h5 : PkgI
     (hT : PkgI3.TateModuleFree) (hsp : FrobPiecesNeron.AbVarSpreadsOut)
     (hc : FrobPiecesNeron.ProperSmoothGenConnected) (hRed : PkgI2.ReductionTorsionBijective.{0})
     (hN : PkgI2.NeronMappingAbelianScheme.{0}) (hFS : G0Split.FibreSimple)
-    (h6 : PkgI3.HomFreeFinite) (h27 : PkgI3.QMDichotomyYu) : G0AssembleMod.LinkedTateLocal :=
+    (h6 : PkgI3.HomFreeFinite) (hYu : QMLattice.YuB6Alg) : G0AssembleMod.LinkedTateLocal :=
   LTLocal.linkedTateLocal_of_tateBridge35 (ObjBridge.raynaudCriterion_iff.mpr hR6)
     (ObjBridge.torsionStructure_iff.mpr h5) (@UnramRootsTask.unramRoots_all 2 _ 5 _)
     (@UnramRootsTask.unramRoots_all 2 _ 3 _)
-    (FrobPiecesGood.tateBridge35_of_neron_nmp hT hsp hc hRed hN) hFS (qmEndRank_of_leaves3 h6 h27)
+    (FrobPiecesGood.tateBridge35_of_neron_nmp hT hsp hc hRed hN) hFS (qmEndRank_of_leaves3 h6 hYu)
 
 /-! ### The open statements -/
 
@@ -228,10 +228,10 @@ theorem gluePieces_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
   have hMob : LeafQM.AV.Pin.MobiusGlue := mobiusGlue_of_t5' t.t5
   have hFS5 : G0FibreSimple.FibreComTrivial :=
     fibreComTrivial_of_full (FS5NoCM.fibreComTrivialFull_of_leaves'' (r1r2fpFull_of r3)
-      hMob t.t27 t.t6 l.cmOptimalEmbedding (X6Kummer.x6KummerFibre_of_conic hMob l.x6ConicModel)
+      hMob (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27) t.t6 l.cmOptimalEmbedding (X6Kummer.x6KummerFibre_of_conic hMob l.x6ConicModel)
       r.r5count)
   have hFS : G0Split.FibreSimple :=
-    G0FibreSimple.fibreSimple_of_leaves t3 mulIsogeny_proved G0FibreSimple.rigidityHom
+    G0FibreSimple.fibreSimple_of_leaves t3 (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t3.t27) mulIsogeny_proved G0FibreSimple.rigidityHom
       ⟨G0FibreSimple.finiteDescends_proof, hFS5⟩
   { dimFinite := G0Split.dimFinite
     dimBaseChange := G0Split.dimBaseChange
@@ -253,7 +253,7 @@ theorem gluePieces_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
       (G0ModField.fibreCoverExists_of_propTSAll' t.t5
         (propTSAll_of_pieces3 r.r1r2 t.t5 l.y3Connected l.qmAutCard l.serreRigidity3 l.alFixedPoints
           g.chartProper g.chartQuasiFinite g.heckeVertWitness) unramifiedConjugates_proved)
-      (G0ModField.KernelField.kernelFieldExists_of_split'' t.t6 r.r7a r.r6 t.t5 t.t27
+      (G0ModField.KernelField.kernelFieldExists_of_split'' t.t6 r.r7a r.r6 t.t5 (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27)
         hFS5 G0ModField.KernelField.oMaximal endTransport_proved conjIsogMaps_proved3)
       UnramTate.unramifiedSup_mf
       (G0AssembleMod.afterG7_of3 r3 t3
@@ -273,7 +273,7 @@ theorem gluePieces_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
         (modelG3G6_of_leaves3 hFS r.r7a r.r6 t.t5)
         (G0AssembleMod.linkedTateData_of_local t.t7
           (linkedTateLocal_of_leaves3 r.r6 t.t5 t.t26 g.abVarSpreadsOut l.properSmoothGenConnected
-            t.t4 t.t3 hFS t.t6 t.t27)))
+            t.t4 t.t3 hFS t.t6 (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27))))
     heightCopies := G0HeightCopies.heightCopiesAgree }
 
 end HSyn

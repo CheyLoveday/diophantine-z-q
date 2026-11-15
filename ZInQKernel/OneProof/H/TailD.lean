@@ -555,12 +555,12 @@ theorem mobiusGlue_of_gp3 (t : TextbookLeaves) (gp : GluePieces3) : LeafQM.AV.Pi
 theorem fibreComTrivial_of_gp3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp : GluePieces3) :
     G0FibreSimple.FibreComTrivial :=
   fibreComTrivial_of_full (FS5NoCM.fibreComTrivialFull_of_leaves'' (r1r2fpFull_of r)
-    (mobiusGlue_of_gp3 t gp) t.t27 t.t6 gp.cmOptimalEmbedding gp.x6KummerFibre r.r5count)
+    (mobiusGlue_of_gp3 t gp) (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27) t.t6 gp.cmOptimalEmbedding gp.x6KummerFibre r.r5count)
 
 /-- `FibreSimple` from `GluePieces3` (fs1-descend, mul-rigidity, fs5-nocm). -/
 theorem fibreSimple_of_gp3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp : GluePieces3) :
     G0Split.FibreSimple :=
-  G0FibreSimple.fibreSimple_of_leaves t
+  G0FibreSimple.fibreSimple_of_leaves t (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27)
     (MulRigidity.mulIsogeny_of_mulEtale gp.mulEtale) G0FibreSimple.rigidityHom
     ⟨G0FibreSimple.finiteDescends_proof, fibreComTrivial_of_gp3 r t gp⟩
 
@@ -584,7 +584,7 @@ theorem gluePieces_of_gluePieces3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp
     gp.thetaRatiosAlgebraic
   modularConstituent := modularConstituent_of_field t
     (G0ModField.fibreCoverExists_of_propTSAll' t.t5 gp.propTSAll gp.unramifiedConjugates)
-    (G0ModField.KernelField.kernelFieldExists_of_split'' t.t6 r.r7a r.r6 t.t5 t.t27
+    (G0ModField.KernelField.kernelFieldExists_of_split'' t.t6 r.r7a r.r6 t.t5 (G0FibreSimple.yuB6Alg_of_qmDichotomyYu t.t27)
       (fibreComTrivial_of_gp3 r t gp) gp.oMaximal gp.endTransport gp.conjIsogMaps)
     UnramTate.unramifiedSup_mf
     (G0AssembleMod.afterG7_of3 r t
