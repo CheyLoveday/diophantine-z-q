@@ -73,7 +73,7 @@ theorem null_S1 {h : GL (Fin 2) ℝ} (hh : h ∈ QMSplitVB.Gamma1)
   exact hne (funext htriv)
 
 theorem volume_S1 : volume S1 = ENNReal.ofReal (2 * Real.pi / 3) := by
-  have hdisj : Pairwise (AEDisjoint volume on fun i : Fin 4 => (g4 i)⁻¹ • Tset) := by
+  have hdisj : Pairwise (Function.onFun (AEDisjoint volume) fun i : Fin 4 => (g4 i)⁻¹ • Tset) := by
     intro i j hij
     have := piece_null (i := i) (j := j) (h := 1) one_mem_gamma1 (fun h => hij h.1)
     simpa [AEDisjoint] using this
