@@ -705,8 +705,9 @@ end Transport
 /-- **LEAF `SemistablePersistsDVR` (SGA 7 I, Exp. IX, Prop. 3.3, first assertion; number
 UNVERIFIED).** `O ⊆ K` a discrete valuation ring, `K'/K` a finite extension, `O' ⊆ K'` a discrete
 valuation ring over `O`. If `A` has semistable reduction at `O`, then `A_{K'}` has semistable
-reduction at `O'` (every Néron model of `A_{K'}` over `O'` is semistable). SGA 7 allows any
-extension of discrete valuation rings; here `K'/K` is finite (a specialization). -/
+reduction at `O'` (every Néron model of `A_{K'}` over `O'` is semistable). SGA 7 may allow any
+extension of discrete valuation rings (a reading, UNVERIFIED: the print may instead require `S'`
+finite over `S`); here `K'/K` is finite (a specialization under that reading). -/
 def SemistablePersistsDVR : Prop :=
   ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (K' : Type) [Field K'] [Algebra K K'] [FiniteDimensional K K'] (O' : ValuationSubring K')

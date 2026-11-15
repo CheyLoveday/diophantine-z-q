@@ -104,7 +104,8 @@ noncomputable instance (𝒢 : GroupModel A L) (𝔭 : Ideal (𝓞 L)) [𝔭.IsP
 /-- **Semistable reduction everywhere** (applied to a Néron model `𝒩` of `A_L`): at every maximal
 ideal `𝔭` of `𝓞_L`, the identity component of the geometric special fibre `𝒩_{κ̄(𝔭)}` is
 semi-abelian. (SGA 7 IX Déf. 3.1/3.2, UNVERIFIED locators; the special fibre of the global Néron
-model at `𝔭` is that of the Néron model over `𝓞_{L,𝔭}`, BLR 1.2/2, UNVERIFIED.) -/
+model at `𝔭` is that of the Néron model over `𝓞_{L,𝔭}`: Néron models localize, BLR §1.2 Prop. 4,
+number UNVERIFIED.) -/
 def IsSemistable (𝒢 : GroupModel A L) : Prop :=
   ∀ (𝔭 : Ideal (𝓞 L)) [𝔭.IsMaximal], HasSemiAbelianIdentityComponent (geomFibre 𝒢 𝔭)
 
