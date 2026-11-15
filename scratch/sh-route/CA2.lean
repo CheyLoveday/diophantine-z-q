@@ -479,4 +479,62 @@ theorem isDVR_wE (hw : w.comap (algebraMap K Ω) = O) :
 
 end DVR
 
+section ResAlg
+
+open ReductSplit ReductGlue
+
+/-- **The residue extension of an algebraic extension of valued fields is algebraic.** -/
+theorem res_isAlgebraic {K E : Type} [Field K] [Field E] [Algebra K E] [Algebra.IsAlgebraic K E]
+    {O : ValuationSubring K} {A : ValuationSubring E} (hA : A.comap (algebraMap K E) = O) :
+    letI := (resMap hA).toAlgebra
+    Algebra.IsAlgebraic (ResidueField O) (ResidueField A) := by
+  letI := (resMap hA).toAlgebra
+  constructor
+  intro x
+  obtain ⟨a, rfl⟩ := residue_surjective x
+  set p := minpoly K (a : E)
+  have hp0 : p ≠ 0 := minpoly.ne_zero (Algebra.IsIntegral.isIntegral _)
+  obtain ⟨i0, hi0, hmax⟩ := p.support.exists_max_image (fun i => O.valuation (p.coeff i))
+    (nonempty_support_iff.mpr hp0)
+  set c := p.coeff i0
+  have hc0 : c ≠ 0 := mem_support_iff.mp hi0
+  have hvc0 : O.valuation c ≠ 0 := by rwa [Ne, Valuation.zero_iff]
+  let q := C c⁻¹ * p
+  have hq : ∀ i, q.coeff i ∈ Set.range (algebraMap O K) := by
+    intro i
+    rw [coeff_C_mul]
+    by_cases hi : i ∈ p.support
+    · refine ⟨⟨_, O.mem_of_valuation_le_one _ ?_⟩, rfl⟩
+      show O.valuation (c⁻¹ * p.coeff i) ≤ 1
+      rw [map_mul, map_inv₀]
+      rw [inv_mul_le_iff₀ (zero_lt_iff.mpr hvc0), mul_one]
+      exact hmax i hi
+    · rw [notMem_support_iff.mp hi, mul_zero]; exact ⟨0, map_zero _⟩
+  obtain ⟨qO, hqO⟩ := (mem_lifts q).mp ((lifts_iff_coeff_lifts q).mpr hq)
+  have hqO1 : qO.coeff i0 = 1 := by
+    apply IsFractionRing.injective O K
+    rw [← coeff_map, hqO, map_one, coeff_C_mul, inv_mul_cancel₀ hc0]
+  refine ⟨qO.map (residue O), ?_, ?_⟩
+  · intro h
+    have := congrArg (fun r => r.coeff i0) h
+    simp only [coeff_map, hqO1, map_one, coeff_zero] at this
+    exact one_ne_zero this
+  · rw [aeval_def, eval₂_map]
+    have e1 : (algebraMap (ResidueField O) (ResidueField A)).comp (residue O) =
+        (residue A).comp (comapHom hA) := by
+      ext b; exact resMap_residue hA b
+    rw [e1, ← hom_eval₂]
+    have h0 : qO.eval₂ (comapHom hA) a = 0 := by
+      apply Subtype.ext
+      rw [ZeroMemClass.coe_zero]
+      change A.subtype (qO.eval₂ (comapHom hA) a) = 0
+      rw [hom_eval₂]
+      have e2 : A.subtype.comp (comapHom hA) = (algebraMap K E).comp (algebraMap O K) := rfl
+      rw [e2, ← eval₂_map, hqO]
+      change aeval (a : E) q = 0
+      rw [map_mul, aeval_C, minpoly.aeval, mul_zero]
+    rw [h0, map_zero]
+
+end ResAlg
+
 end ShRoute
