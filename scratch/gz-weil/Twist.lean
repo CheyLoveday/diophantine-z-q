@@ -256,4 +256,88 @@ theorem period_identity (d : ℕ) [NeZero d] {γ : SL(2, ℤ)} (hγ : γ ∈ Gam
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [hmove a, mul_sub]
 
+/-! ## §4. The Gauss sum of `χ_d = (·/d)`: primitivity and `g² = d` -/
+
+/-- For a prime `p ∣ d` (`d` odd squarefree, `d = e p`) there is `U ≡ 1 (mod e)`, coprime to `d`,
+with `(U/d) = −1`. -/
+theorem exists_unit_jacobi_neg {e p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) (hpe : ¬ p ∣ e)
+    (he : e ≠ 0) :
+    ∃ t : ℕ, Nat.Coprime (1 + e * t) (e * p) ∧ jacobiSym ((1 + e * t : ℕ) : ℤ) (e * p) = -1 := by
+  have : Fact p.Prime := ⟨hp⟩
+  have : NeZero e := ⟨he⟩
+  have : NeZero p := ⟨hp.ne_zero⟩
+  obtain ⟨a, ha⟩ := FiniteField.exists_nonsquare (F := ZMod p) (by rw [ZMod.ringChar_zmod_n]; exact hp2)
+  have he0 : (e : ZMod p) ≠ 0 := by
+    rwa [Ne, ZMod.natCast_eq_zero_iff]
+  set t : ℕ := ((a - 1) * (e : ZMod p)⁻¹).val with ht
+  have hU : ((1 + e * t : ℕ) : ZMod p) = a := by
+    push_cast
+    rw [ht, ZMod.natCast_zmod_val]
+    field_simp
+    ring
+  have hpU : ¬ p ∣ (1 + e * t) := by
+    intro h
+    rw [← ZMod.natCast_eq_zero_iff, hU] at h
+    exact ha (h ▸ ⟨0, by simp⟩)
+  refine ⟨t, ?_, ?_⟩
+  · refine Nat.Coprime.mul_right ?_ ?_
+    · rw [show 1 + e * t = 1 + t * e by ring, Nat.coprime_add_mul_right_left]
+      exact Nat.coprime_one_left e
+    · exact (Nat.Coprime.symm ((Nat.Prime.coprime_iff_not_dvd hp).mpr hpU))
+  · rw [jacobiSym.mul_right]
+    have h1 : jacobiSym ((1 + e * t : ℕ) : ℤ) e = 1 := by
+      rw [jacobiSym.mod_left' (a₂ := 1) (by push_cast; rw [Int.add_mul_emod_self_left]),
+        jacobiSym.one_left]
+    have h2 : jacobiSym ((1 + e * t : ℕ) : ℤ) p = -1 := by
+      rw [← jacobiSym.legendreSym.to_jacobiSym, legendreSym.eq_neg_one_iff]
+      rw [Int.cast_natCast, hU]
+      exact ha
+    rw [h1, h2, one_mul]
+
+/-- **`(·/d)` is a primitive Dirichlet character modulo `d`** for odd squarefree `d`. -/
+theorem jacobiChar_isPrimitive {d : ℕ} [NeZero d] (hodd : Odd d) (hsq : Squarefree d) :
+    (jacobiChar d).IsPrimitive := by
+  rw [DirichletCharacter.isPrimitive_def]
+  set m := (jacobiChar d).conductor with hmdef
+  have hm : m ∣ d := DirichletCharacter.conductor_dvd_level _
+  by_contra hne
+  obtain ⟨k, hk⟩ := hm
+  have hk1 : k ≠ 1 := by rintro rfl; exact hne (by rw [hk, mul_one])
+  obtain ⟨p, hp, hpk⟩ := Nat.exists_prime_and_dvd hk1
+  obtain ⟨k', rfl⟩ := hpk
+  set e := m * k' with hedef
+  have hde : d = e * p := by rw [hk, hedef]; ring
+  have hd0 : d ≠ 0 := NeZero.ne d
+  have he0 : e ≠ 0 := by rintro h; rw [h, zero_mul] at hde; exact hd0 hde
+  have hp2 : p ≠ 2 := by
+    rintro rfl
+    have : 2 ∣ d := ⟨e, by rw [hde]; ring⟩
+    exact (Nat.not_even_iff_odd.mpr hodd) (even_iff_two_dvd.mpr this)
+  have hpe : ¬ p ∣ e := by
+    rintro ⟨e', he'⟩
+    have := hsq p ⟨e', by rw [hde, he']; ring⟩
+    exact hp.not_isUnit this
+  obtain ⟨t, hcop, hneg⟩ := exists_unit_jacobi_neg hp hp2 hpe he0
+  rw [← hde] at hcop hneg
+  set u : (ZMod d)ˣ := ZMod.unitOfCoprime (1 + e * t) hcop
+  have hmd : m ∣ d := ⟨k' * p, by rw [hk]; ring⟩
+  have hfac := (DirichletCharacter.factorsThrough_iff_ker_unitsMap (χ := jacobiChar d) hmd).mp
+    (DirichletCharacter.factorsThrough_conductor _)
+  have hker : u ∈ (ZMod.unitsMap hmd).ker := by
+    rw [MonoidHom.mem_ker]
+    ext
+    rw [ZMod.unitsMap_def, Units.coe_map, MonoidHom.coe_ofClass, ZMod.castHom_apply,
+      ZMod.coe_unitOfCoprime, ZMod.cast_natCast hmd, Units.val_one]
+    push_cast
+    rw [show (e : ZMod m) = 0 by
+      rw [ZMod.natCast_eq_zero_iff]; exact ⟨k', rfl⟩]
+    ring
+  have h1 := hfac hker
+  rw [MonoidHom.mem_ker, MulChar.toUnitHom_eq] at h1
+  have h2 : (jacobiChar d) (u : ZMod d) = 1 := by
+    have := congrArg (fun x : ℂˣ => (x : ℂ)) h1
+    simpa [MulChar.coe_equivToUnitHom] using this
+  rw [ZMod.coe_unitOfCoprime, jacobiChar_natCast, hneg] at h2
+  norm_num at h2
+
 end ZInQ.GZWeil
