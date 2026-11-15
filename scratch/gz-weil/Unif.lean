@@ -499,6 +499,76 @@ theorem local_eq (hD : X0.EtaModelDifferential) (τ0 : ℍ) {z0 : ℂ} (hz0 : z0
   norm_cast at this
   omega
 
+include hg2 hg3 in
+/-- **Global identity (C6).** Under the hypotheses of `local_eq`, for every `σ ∈ ℍ`,
+`Φ₁(σ) + c₀ ∉ L` and `℘(Φ₁(σ) + c₀) = x(σ)` (the set where this holds near `σ` is open, closed
+in `ℍ` and contains `τ₀`). -/
+theorem global_eq (hD : X0.EtaModelDifferential) (τ0 : ℍ) {z0 : ℂ} (hz0 : z0 ∉ L.lattice)
+    (hx : L.weierstrassP z0 = X0.xC τ0) (hy : L.derivWeierstrassP z0 = 2 * X0.yC τ0)
+    {σ : ℂ} (hσ : 0 < σ.im) :
+    eichlerCd 1 σ + (z0 - eichlerCd 1 τ0) ∉ L.lattice ∧
+      L.weierstrassP (eichlerCd 1 σ + (z0 - eichlerCd 1 τ0)) = X0.xC σ := by
+  set c0 := z0 - eichlerCd 1 τ0 with hc0
+  set w : ℂ → ℂ := fun σ => eichlerCd 1 σ + c0 with hw
+  have hwτ : w τ0 = z0 := by simp [hw, hc0]
+  set P : ℂ → Prop := fun s => w s ∉ L.lattice ∧ L.weierstrassP (w s) = X0.xC s with hP
+  set U : Set ℂ := {w : ℂ | 0 < w.im} with hU
+  set S : Set ℂ := U ∩ {s | ∀ᶠ t in 𝓝 s, P t} with hS
+  have hSo : IsOpen S := U_open.inter isOpen_setOf_eventually_nhds
+  have hwa : ∀ s ∈ U, AnalyticAt ℂ w s := fun s hs => (analyticAt_eichler hs).add analyticAt_const
+  have hwd : ∀ s ∈ U, HasDerivAt w (2 * Real.pi * Complex.I * X0.fC s) s := fun s hs =>
+    (hasDerivAt_eichlerCd_one hs).add_const c0
+  have hτ0S : (τ0 : ℂ) ∈ S := by
+    refine ⟨τ0.im_pos, ?_⟩
+    have hevL : ∀ᶠ s in 𝓝 (τ0 : ℂ), w s ∉ L.lattice :=
+      (hwa _ τ0.im_pos).continuousAt.eventually
+        (L.isClosed_lattice.isOpen_compl.mem_nhds (hwτ ▸ hz0))
+    filter_upwards [hevL, local_eq L hg2 hg3 hD τ0 hz0 hx hy] with s h1 h2
+    exact ⟨h1, h2⟩
+  have hcl : closure S ∩ U ⊆ S := by
+    rintro σ1 ⟨hcl, hσ1⟩
+    by_cases hσ1S : σ1 ∈ S
+    · exact hσ1S
+    have hfreq : ∃ᶠ s in 𝓝[≠] σ1, P s := by
+      rw [Filter.frequently_iff]
+      intro V hV
+      obtain ⟨u, hu, hσu, huV⟩ := mem_nhdsWithin.mp hV
+      obtain ⟨s0, hs0u, hs0S⟩ := mem_closure_iff.mp hcl u hu hσu
+      have hne : s0 ≠ σ1 := fun h => hσ1S (h ▸ hs0S)
+      exact ⟨s0, huV ⟨hs0u, hne⟩, hs0S.2.self_of_nhds⟩
+    have hf1 : X0.fC σ1 ≠ 0 := X0.fC_ne_zero ⟨σ1, hσ1⟩
+    have hd1 : 2 * Real.pi * Complex.I * X0.fC σ1 ≠ 0 := by
+      refine mul_ne_zero (mul_ne_zero (mul_ne_zero two_ne_zero ?_) Complex.I_ne_zero) hf1
+      exact_mod_cast Real.pi_ne_zero
+    have hwL : w σ1 ∉ L.lattice := by
+      intro hin
+      have hwt : Tendsto w (𝓝[≠] σ1) (𝓝[≠] (w σ1)) :=
+        tendsto_nhdsWithin_iff.mpr ⟨(hwa σ1 hσ1).continuousAt.tendsto.mono_left nhdsWithin_le_nhds,
+          (hwd σ1 hσ1).eventually_ne hd1⟩
+      have hc := (tendsto_weierstrassP_cobounded L hin).comp hwt
+      rw [← tendsto_norm_atTop_iff_cobounded] at hc
+      have hbig := hc.eventually (eventually_gt_atTop (‖X0.xC σ1‖ + 1))
+      have hxc : ∀ᶠ s in 𝓝[≠] σ1, ‖X0.xC s‖ < ‖X0.xC σ1‖ + 1 := by
+        have := (analyticAt_xC hσ1).continuousAt.norm.eventually (gt_mem_nhds (lt_add_one ‖X0.xC σ1‖))
+        exact this.filter_mono nhdsWithin_le_nhds
+      obtain ⟨s, hs, hs1, hs2⟩ := (hfreq.and_eventually (hbig.and hxc)).exists
+      simp only [Function.comp] at hs1
+      rw [hs.2] at hs1
+      linarith
+    have hΨa : AnalyticAt ℂ (fun s => L.weierstrassP (w s) - X0.xC s) σ1 :=
+      ((L.analyticOnNhd_weierstrassP _ hwL).comp (hwa σ1 hσ1)).sub (analyticAt_xC hσ1)
+    have hz : ∀ᶠ s in 𝓝 σ1, L.weierstrassP (w s) - X0.xC s = 0 := by
+      rw [← hΨa.frequently_zero_iff_eventually_zero]
+      exact hfreq.mono fun s hs => sub_eq_zero.mpr hs.2
+    have hevL : ∀ᶠ s in 𝓝 σ1, w s ∉ L.lattice :=
+      (hwa σ1 hσ1).continuousAt.eventually (L.isClosed_lattice.isOpen_compl.mem_nhds hwL)
+    refine ⟨hσ1, ?_⟩
+    filter_upwards [hevL, hz] with s h1 h2
+    exact ⟨h1, sub_eq_zero.mp h2⟩
+  have hsub := (convex_halfSpace_im_gt (0 : ℝ)).isPreconnected.subset_of_closure_inter_subset hSo
+    ⟨τ0, τ0.im_pos, hτ0S⟩ hcl
+  exact (hsub hσ).2.self_of_nhds
+
 end Param
 
 end ZInQ.GZWeil
