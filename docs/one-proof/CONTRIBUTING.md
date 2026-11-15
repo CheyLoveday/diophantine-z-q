@@ -142,15 +142,18 @@ scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
 DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
   still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves14.r9a] by t3 (uses sorry: not a proof)
+DISCHARGES [OpenTextbookLeaves10.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 74 open hypotheses, 3 theorems checked, 2 discharge one
+#discharges: 71 open hypotheses, 5 theorems checked, 2 discharge one
 ```
 <!-- worked-example:end -->
 
 `t1` assumes the hypothesis it proves (`quotientP1Coordinate`), so it reduces nothing; `t2 : True` matches
-nothing; `t3` matches an open hypothesis but uses `sorry`, so it is flagged.
+nothing; `t3` matches an open hypothesis but uses `sorry`, so it is flagged. The count of theorems checked also
+includes the theorems of the contributions already folded in (`#discharges` checks the current file and every
+imported module under `ZInQKernel.Contrib.OneProof`); they discharge nothing, since their hypotheses are no
+longer open.
 
 A real contribution in this shape: cm24-value (`docs/research/cm24-value.md`) proved
 `IgusaCMValue24`, Lin–Yang's Igusa vector at the CM point of discriminant −24, from Mathlib's Jacobi theta
