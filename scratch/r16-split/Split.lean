@@ -90,9 +90,8 @@ theorem aeval_minpoly_eq_zero (P : F →+* Module.End Ω W) (α : F) :
 
 /-- **The joint eigenspaces of a number field acting on a finite-dimensional space over an
 algebraically closed field of characteristic `0` add up to the whole space.** -/
-theorem sum_finrank_jointEig (P : F →+* Module.End Ω W) :
-    ∑ ι : F →ₐ[ℚ] Ω, finrank Ω (jointEig P ι.toRingHom) = finrank Ω W := by
-  classical
+theorem isInternal_jointEig [DecidableEq (F →ₐ[ℚ] Ω)] (P : F →+* Module.End Ω W) :
+    DirectSum.IsInternal (fun ι : F →ₐ[ℚ] Ω => jointEig P ι.toRingHom) := by
   let pb := Field.powerBasisOfFiniteOfSeparable ℚ F
   set α := pb.gen with hαdef
   have hα : Algebra.adjoin ℚ {α} = ⊤ := pb.adjoin_gen_eq_top
@@ -126,10 +125,86 @@ theorem sum_finrank_jointEig (P : F →+* Module.End Ω W) :
     have hι : ι α = r := pb.lift_gen r hroot
     rw [← hι]
     exact le_iSup (fun ι : F →ₐ[ℚ] Ω => S.eigenspace (ι α)) ι
-  have hint := DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top hind hspan
-  have e := LinearEquiv.ofBijective (DirectSum.coeLinearMap _) hint
+  have hE' : (fun ι : F →ₐ[ℚ] Ω => jointEig P ι.toRingHom) =
+      (fun ι : F →ₐ[ℚ] Ω => S.eigenspace (ι α)) := funext hE
+  rw [hE']
+  exact DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top hind hspan
+
+theorem sum_finrank_jointEig (P : F →+* Module.End Ω W) :
+    ∑ ι : F →ₐ[ℚ] Ω, finrank Ω (jointEig P ι.toRingHom) = finrank Ω W := by
+  classical
+  have e := LinearEquiv.ofBijective
+    (DirectSum.coeLinearMap (fun ι : F →ₐ[ℚ] Ω => jointEig P ι.toRingHom)) (isInternal_jointEig P)
   rw [← e.finrank_eq, Module.finrank_directSum]
-  exact Finset.sum_congr rfl fun ι _ => by rw [hE]
+
+/-- The trace of `P a` is `Σ_ι (dim of the ι-eigenspace) ι(a)`. -/
+theorem trace_eq_sum_jointEig (P : F →+* Module.End Ω W) (a : F) :
+    LinearMap.trace Ω W (P a) =
+      ∑ ι : F →ₐ[ℚ] Ω, (finrank Ω (jointEig P ι.toRingHom) : Ω) * ι a := by
+  classical
+  have hmaps : ∀ ι : F →ₐ[ℚ] Ω, Set.MapsTo (P a) (jointEig P ι.toRingHom)
+      (jointEig P ι.toRingHom) := by
+    intro ι φ hφ b
+    show P b (P a φ) = ι b • P a φ
+    rw [← Module.End.mul_apply, ← map_mul, mul_comm, map_mul, Module.End.mul_apply, hφ b,
+      map_smul]
+    rfl
+  rw [LinearMap.trace_eq_sum_trace_restrict (isInternal_jointEig P) hmaps]
+  refine Finset.sum_congr rfl fun ι _ => ?_
+  have hr : (P a).restrict (hmaps ι) = ι a • LinearMap.id := by
+    apply LinearMap.ext; intro φ; apply Subtype.ext
+    exact φ.2 a
+  rw [hr, map_smul, LinearMap.trace_id, smul_eq_mul, mul_comm]
+
+/-- **Characters with rational weighted sums have equal weights.** If `Σ_ι d_ι ι(a) ∈ ℚ` for every
+`a ∈ F`, all `d_ι` are equal (trace form nondegenerate, Dedekind independence of characters). -/
+theorem weights_eq_of_rational (d : (F →ₐ[ℚ] Ω) → ℕ)
+    (h : ∀ a : F, ∃ r : ℚ, ∑ ι : F →ₐ[ℚ] Ω, (d ι : Ω) * ι a = (r : Ω)) (ι ι' : F →ₐ[ℚ] Ω) :
+    d ι = d ι' := by
+  classical
+  choose r hr using h
+  have hinjQ : Function.Injective (Rat.cast : ℚ → Ω) := Rat.cast_injective
+  let lam : F →ₗ[ℚ] ℚ :=
+    { toFun := r
+      map_add' := fun a b => hinjQ (by
+        rw [Rat.cast_add, ← hr, ← hr, ← hr, ← Finset.sum_add_distrib]
+        exact Finset.sum_congr rfl fun κ _ => by rw [map_add, mul_add])
+      map_smul' := fun q a => hinjQ (by
+        rw [RingHom.id_apply, smul_eq_mul, Rat.cast_mul, ← hr, ← hr, Finset.mul_sum]
+        refine Finset.sum_congr rfl fun κ _ => ?_
+        rw [map_smul, Rat.smul_def, mul_left_comm]) }
+  have hnd := traceForm_nondegenerate ℚ F
+  obtain ⟨b, hb⟩ : ∃ b : F, ∀ a, Algebra.trace ℚ F (b * a) = lam a := by
+    refine ⟨((Algebra.traceForm ℚ F).toDual hnd).symm lam, fun a => ?_⟩
+    have h2 := LinearMap.congr_fun
+      (((Algebra.traceForm ℚ F).toDual hnd).apply_symm_apply lam) a
+    rw [LinearMap.BilinForm.toDual_def, Algebra.traceForm_apply] at h2
+    exact h2
+  -- `Σ_κ (d_κ - κ b) κ = 0`
+  have hzero : ∀ a : F, ∑ κ : F →ₐ[ℚ] Ω, ((d κ : Ω) - κ b) * κ a = 0 := by
+    intro a
+    have h1 := trace_eq_sum_embeddings (K := ℚ) (L := F) (E := Ω) (x := b * a)
+    rw [hb a] at h1
+    simp only [sub_mul, Finset.sum_sub_distrib, hr a]
+    rw [eq_ratCast] at h1
+    change ((r a : ℚ) : Ω) = _ at h1
+    rw [h1, sub_eq_zero]
+    exact Finset.sum_congr rfl fun κ _ => by rw [map_mul]
+  have hli : LinearIndependent Ω (fun κ : F →ₐ[ℚ] Ω => (κ : F → Ω)) := by
+    have := (linearIndependent_monoidHom F Ω).comp
+      (fun κ : F →ₐ[ℚ] Ω => (κ.toRingHom : F →* Ω))
+      (fun κ κ' hκ => AlgHom.ext fun x => DFunLike.congr_fun hκ x)
+    exact this
+  have hcoef := (Fintype.linearIndependent_iff.mp hli) (fun κ => (d κ : Ω) - κ b) (by
+    funext a; simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply]
+    exact hzero a)
+  have hdb : ∀ κ : F →ₐ[ℚ] Ω, (d κ : F) = b := fun κ => κ.toRingHom.injective (by
+    have := hcoef κ
+    rw [sub_eq_zero] at this
+    simpa using this)
+  have h3 := (hdb ι).trans (hdb ι').symm
+  rw [← map_natCast (algebraMap ℚ F), ← map_natCast (algebraMap ℚ F) (d ι')] at h3
+  exact_mod_cast (algebraMap ℚ F).injective h3
 
 end LinAlg
 
