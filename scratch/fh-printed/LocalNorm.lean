@@ -5,6 +5,31 @@ import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Analysis.Real.Sqrt
 
+/-!
+# Local components of quadratic idele class characters of `ℚ` (task fh-printed)
+
+For a squarefree integer `d` the quadratic idele class character `χ_d` of `ℚ(√d)` has local
+components `χ_{d,v} : ℚ_v^× → {±1}` with kernel the norm group `N(ℚ_v(√d)^×)` (local class field
+theory); `χ_{d,v}(x)` is the Hilbert symbol `(d, x)_v`. This file works with the norm form
+directly (`IsLocalNorm K d x`: `x = y² − d z²` in `K`) and proves, from Mathlib only (Hensel's
+lemma, the finite-field Chevalley–Warning lemma for two quadrics, quadratic reciprocity):
+
+* the local conditions of Friedberg–Hoffstein read as squares:
+  `isSquare_div_of_localNorm_iff` (odd `p ∤ D₀`), `isSquare_div_two_of_localNorm_iff` (`p = 2`,
+  `D₀ ≡ 1 mod 4`, which also gives `D ≡ 1 mod 4`), `pos_mul_of_real_iff` (`v = ∞`); conversely
+  equal square classes give equal norm groups (`isLocalNorm_iff_of_isSquare_div`);
+* the Dirichlet coefficients of `χ_d` built from its local components (`charAtPrime`,
+  `idelicChar`: `χ_d(p) = χ_{d,p}(p)` at unramified `p`, `0` at ramified `p`) are the Jacobi
+  symbol `(n / |d|)` for `d ≡ 1 (mod 4)` (`idelicChar_eq_jacobiSym`), and `χ_d(2) = 0` for
+  `d ≡ 2, 3 (mod 4)` (`charAtPrime_two_of_ramified`).
+
+The non-norm statements are proved by descent on the norm form (`not_isLocalNorm_of_descent`):
+`p` is not a norm from the unramified extension (`d` a nonsquare unit), a nonsquare unit is not a
+norm from a ramified extension (`p ∥ d`), and at `2`: `2` for `d ≡ 5 (8)`, `−1` for `d ≡ 3 (4)`,
+`5` for `d ≡ 2 (4)`. Every unit is a norm from an unramified extension (`isLocalNorm_unit`,
+`isLocalNorm_two_unit`).
+-/
+
 namespace ZInQ.FHPrinted
 
 open PadicInt Polynomial
@@ -40,6 +65,27 @@ theorem isLocalNorm_of_mul_eq_sq {u r W : K} (hr0 : r ≠ 0) (h : u * r = W ^ 2)
 theorem isLocalNorm_of_eq_sq (h2 : (2 : K) ≠ 0) {w : K} (hw0 : w ≠ 0) (hw : (d : K) = w ^ 2)
     (x : K) : IsLocalNorm K d x :=
   ⟨(x + 1) / 2, (x - 1) / (2 * w), by rw [hw]; field_simp; ring⟩
+
+/-- Equal square classes give equal norm groups: if `d = D c²` with `c ≠ 0`, then `K(√d)` and
+`K(√D)` have the same norms. -/
+theorem isLocalNorm_iff_of_eq_mul_sq {D : ℤ} {c : K} (hc : c ≠ 0) (h : (d : K) = D * c ^ 2)
+    (x : K) : IsLocalNorm K d x ↔ IsLocalNorm K D x := by
+  constructor
+  · rintro ⟨y, z, rfl⟩; exact ⟨y, c * z, by rw [h]; ring⟩
+  · rintro ⟨y, z, rfl⟩; exact ⟨y, z / c, by rw [h]; field_simp⟩
+
+theorem isLocalNorm_iff_of_isSquare_div {D : ℤ} (hd : (d : K) ≠ 0) (hD : (D : K) ≠ 0)
+    (h : IsSquare ((d : K) / D)) (x : K) : IsLocalNorm K d x ↔ IsLocalNorm K D x := by
+  obtain ⟨c, hc⟩ := h
+  have hc0 : c ≠ 0 := by
+    rintro rfl
+    rw [mul_zero, div_eq_zero_iff] at hc
+    rcases hc with h0 | h0
+    · exact hd h0
+    · exact hD h0
+  refine isLocalNorm_iff_of_eq_mul_sq hc0 ?_ x
+  rw [div_eq_iff hD] at hc
+  rw [hc]; ring
 
 end General
 
@@ -246,7 +292,7 @@ theorem not_isLocalNorm_of_ramified {d u : ℤ} (hpd : (p : ℤ) ∣ d) (hpd2 : 
       linear_combination h
     have h3 := congrArg toZMod (mul_left_cancel₀ p_ne_zero_padicInt h2)
     simp only [map_sub, map_mul, map_pow, map_intCast, map_natCast, ZMod.natCast_self,
-      zero_mul, zero_sub, zero_pow (Nat.succ_ne_zero _), sub_zero, neg_zero] at h3
+      zero_mul, zero_pow (Nat.succ_ne_zero _), sub_zero] at h3
     rcases mul_eq_zero.mp h3 with h4 | h4
     · exact absurd h4 hd'0
     · exact pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h4
@@ -398,6 +444,16 @@ theorem pos_mul_of_real_iff {d D : ℤ} (hd : d ≠ 0) (hD : D ≠ 0)
   · exact absurd (h.mpr (real_isLocalNorm_of_pos hD' _)) (real_not_isLocalNorm_neg_one hd')
   · exact absurd (h.mp (real_isLocalNorm_of_pos hd' _)) (real_not_isLocalNorm_neg_one hD')
   · nlinarith
+
+theorem real_isSquare_div_of_pos_mul {d D : ℤ} (h : 0 < d * D) : IsSquare ((d : ℝ) / D) := by
+  have hD : (D : ℝ) ≠ 0 := by
+    intro h0; have : D = 0 := by exact_mod_cast h0
+    subst this; simp at h
+  have hpos : (0 : ℝ) < (d : ℝ) / D := by
+    have h' : (0 : ℝ) < (d : ℝ) * D := by exact_mod_cast h
+    have : (d : ℝ) / D = ((d : ℝ) * D) / ((D : ℝ) * D) := by field_simp
+    rw [this]; exact div_pos h' (mul_self_pos.mpr hD)
+  exact ⟨Real.sqrt ((d : ℝ) / D), (Real.mul_self_sqrt hpos.le).symm⟩
 
 end Infinity
 
@@ -595,22 +651,22 @@ theorem jacobiSym_prime_eq_legendreSym {p : ℕ} [Fact p.Prime] (hp2 : p ≠ 2) 
 the Jacobi symbol, i.e. the Kronecker symbol `(d / p)`. -/
 theorem charAtPrime_eq_jacobiSym {d : ℤ} (hd4 : d % 4 = 1) (hd : Squarefree d) {p : ℕ}
     (hp : p.Prime) : charAtPrime d p = jacobiSym (p : ℤ) d.natAbs := by
-  haveI := Fact.mk hp
+  have := Fact.mk hp
   unfold charAtPrime
-  rw [dif_pos hp]
+  rw [dite_eq_left hp]
   by_cases hp2 : p = 2
   · subst hp2
-    rw [if_pos (fun u hu => isLocalNorm_two_unit hd4 hu)]
+    rw [ite_eq_left (fun u hu => isLocalNorm_two_unit hd4 hu)]
     have hodd : Odd d.natAbs := Nat.odd_iff.mpr (by omega)
     have e2 : ((2 : ℕ) : ℚ_[2]) = 2 := by norm_num
     rw [e2, show ((2 : ℕ) : ℤ) = 2 from rfl, jacobiSym.at_two hodd, ZMod.χ₈_nat_eq_if_mod_eight,
-      if_neg (by omega : d.natAbs % 2 ≠ 0)]
+      ite_eq_right (by omega : d.natAbs % 2 ≠ 0)]
     rcases (by omega : d % 8 = 1 ∨ d % 8 = 5) with h | h
-    · rw [if_pos (isLocalNorm_two_of_one h _), if_pos (by omega)]
-    · rw [if_neg (not_isLocalNorm_two_of_five h), if_neg (by omega)]
+    · rw [ite_eq_left (isLocalNorm_two_of_one h _), ite_eq_left (by omega)]
+    · rw [ite_eq_right (not_isLocalNorm_two_of_five h), ite_eq_right (by omega)]
   · by_cases hpd : (p : ℤ) ∣ d
     · -- ramified
-      rw [if_neg]
+      rw [ite_eq_right]
       · symm
         rw [jacobiSym.eq_zero_iff]
         refine ⟨by have := hd.ne_zero; omega, ?_⟩
@@ -631,23 +687,23 @@ theorem charAtPrime_eq_jacobiSym {d : ℤ} (hd4 : d % 4 = 1) (hd : Squarefree d)
         have := hall (u : ℤ_[p]) (isUnit_of_toZMod (by rw [map_intCast, hu]; exact ha0))
         simpa using this
     · -- unramified
-      rw [if_pos (fun u hu => isLocalNorm_unit hp2 hpd ((hu.map toZMod).ne_zero)),
+      rw [ite_eq_left (fun u hu => isLocalNorm_unit hp2 hpd ((hu.map toZMod).ne_zero)),
         jacobiSym_prime_eq_legendreSym hp2 hd4]
       have h0 := intCast_ne_zero_of_not_dvd hpd
       by_cases hsq : IsSquare (d : ZMod p)
       · obtain ⟨w, hw0, hw⟩ := exists_sq_of_int hp2 hpd hsq
-        rw [if_pos (isLocalNorm_of_eq_sq (by norm_num) hw0 hw _),
+        rw [ite_eq_left (isLocalNorm_of_eq_sq (by norm_num) hw0 hw _),
           (legendreSym.eq_one_iff p h0).mpr hsq]
-      · rw [if_neg (not_isLocalNorm_p hsq), (legendreSym.eq_neg_one_iff p).mpr hsq]
+      · rw [ite_eq_right (not_isLocalNorm_p hsq), (legendreSym.eq_neg_one_iff p).mpr hsq]
 
 theorem zmod2_five_ne_zero : ¬ ((5 : ZMod 2) = 0) := by decide
 
 /-- Consistency check at `2` for even discriminants: `χ_d(2) = 0` when `d ≡ 2, 3 (mod 4)`
 (`χ_{d,2}` is ramified). -/
 theorem charAtPrime_two_of_ramified {d : ℤ} (hd : d % 4 = 2 ∨ d % 4 = 3) : charAtPrime d 2 = 0 := by
-  haveI := Fact.mk Nat.prime_two
+  have := Fact.mk Nat.prime_two
   unfold charAtPrime
-  rw [dif_pos Nat.prime_two, if_neg]
+  rw [dite_eq_left Nat.prime_two, ite_eq_right]
   intro hall
   rcases hd with h | h
   · apply not_isLocalNorm_five_of_two h

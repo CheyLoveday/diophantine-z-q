@@ -22,7 +22,7 @@ DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidit
 DISCHARGES [hFH] by ZInQ.FHPrinted.friedbergHoffsteinB_FE_of_printed
   still assumes: [ZInQ.FHPrinted.FriedbergHoffsteinB_Printed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1916 theorems checked, 8 discharge one
+#discharges: 63 open hypotheses, 1918 theorems checked, 8 discharge one
 'fhprinted_frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.FHPrinted.friedbergHoffsteinB_FE_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.FHPrinted.friedbergHoffsteinB_printed_of_FE' depends on axioms: [propext, Classical.choice, Quot.sound]

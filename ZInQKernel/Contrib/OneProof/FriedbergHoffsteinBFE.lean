@@ -84,7 +84,9 @@ characters `χ` with `χ_v = χ₀,v` for every `v ∈ S` and `L(½, π ⊗ χ) 
 
 The objects, all genuine definitions:
 * `f : Newform N 2`, `f.χ = 1` (Tau Ceti): `π = π_f`, trivial central character;
-* `S : Finset ℕ` with every `p ∣ 2N` in it: the finite places of `S` (`∞` is added below);
+* `S : Finset ℕ` with every `p ∣ 2N` in it: the finite places of `S` (`∞` is added below); if
+  the print requires `S` to contain further places (for instance those where `χ₀` ramifies),
+  apply it to `S` enlarged by them: its conclusion for the larger set implies this one;
 * the quadratic idele class characters of `ℚ` are the `χ_d`, `d` squarefree, `d ≠ 1` (`χ_d`
   the character of `ℚ(√d)`, class field theory); `χ₀ = χ_{D₀}` with `D₀` an odd fundamental
   discriminant, unramified at the finite places of `S` (`p ∤ D₀`): a specialization;

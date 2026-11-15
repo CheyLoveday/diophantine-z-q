@@ -27,3 +27,8 @@ Base 43513d87 (leaf-fold25). Prebuilt tree copied from ~/dzq-check2 (bc90deac, s
   DISCHARGES [hFH] by ZInQ.FHPrinted.friedbergHoffsteinB_FE_of_printed, still assumes
   [ZInQ.FHPrinted.FriedbergHoffsteinB_Printed], axioms standard; fhprinted_frozenTarget (frozenTarget with hFH
   replaced) standard axioms. Output: scratch/fh-printed/Discharges-output.txt (VERIFIED).
+- 11-15 ~06:40 rebuilt after docstring edits; #discharges rerun: same DISCHARGES [hFH] line, 1918 theorems checked
+  (nonvacuity lemma exists_isEntireCont_printedTwistCoeff added). scratch/fh-printed/LocalNorm.lean = copy of the
+  module; scratch/fh-printed/Statement.lean = development copy (superseded by FriedbergHoffsteinBFE.lean).
+- Report docs/research/fh-printed.md written. Rating: new leaf printed except reading (iii) (classical L-function
+  of pi_f x chi_d); equivalent in Lean to FriedbergHoffsteinB_FE.
