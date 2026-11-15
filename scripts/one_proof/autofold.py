@@ -10,7 +10,9 @@ writes the fold that removes the field:
   next top theorem `sixContactMin_of_open<N+1>`;
 * `ZInQKernel/OneProof/Main.lean` switched to it;
 * `docs/one-proof/kinds.tsv` (discharged rows removed, leaf rows added) and `claims.tsv` (rows of discharged
-  fields removed).
+  fields removed). A leaf row takes the bundle and area_issue of the field it replaces, and a flag_class from its
+  flag (pending -> pending-reading, a strictest reading -> strictest, any other flag -> note); a leaf may give
+  its own flag_class, area_issue, packet, label and tier.
 
 It refuses a fold that raises the strict GLUE count (kinds.tsv) unless `--allow-rise` is given.
 
@@ -109,7 +111,19 @@ def load_kinds():
     return rows, list(rows[0].keys())
 
 
+def flag_class(flag, strict, strictest, given=''):
+    classes = [c for c in given.split(',') if c]
+    if not classes and flag.startswith('pending'):
+        classes = ['pending-reading']
+    if strict != strictest and 'strictest' not in classes:
+        classes.append('strictest')
+    if flag and not classes:
+        classes = ['note']
+    return ','.join(classes)
+
+
 def counts(rows):
+    rows = [r for r in rows if r['bundle'] != 'frozenTarget']  # the H fields only, as OPEN.md counts them
     n = len(rows)
     L = sum(r['strict'] == 'LEAF' for r in rows)
     Ls = sum(r['strictest'] == 'LEAF' for r in rows)
@@ -158,9 +172,13 @@ def main():
             flag = lf.get('flag', '')
             strict = 'LEAF' if lf.get('kind') == 'published' and not flag.startswith('pending') else 'GLUE'
             strictest = 'GLUE' if flag.startswith('strictest') else strict
-            kept.append(dict(bundle=next(r['bundle'] for r in rows if r['field'] == d['field']), field=lf['name'],
+            old = next(r for r in rows if r['field'] == d['field'])
+            kept.append(dict(bundle=old['bundle'], field=lf['name'],
                              kind=lf.get('kind', 'published'), flag=flag, strict=strict, strictest=strictest,
-                             source=lf.get('source', ''), rated_by=f'{name}; pending review'))
+                             source=lf.get('source', ''), rated_by=f'{name}; pending review',
+                             packet=lf.get('packet', ''), label=lf.get('label', ''), tier=lf.get('tier', ''),
+                             flag_class=flag_class(flag, strict, strictest, lf.get('flag_class', '')),
+                             area_issue=lf.get('area_issue', old.get('area_issue', ''))))
     after = counts(kept)
     print(f'strict count: {before[1]}/{before[2]} on {before[0]} -> {after[1]}/{after[2]} on {after[0]}; '
           f'strictest {before[3]}/{before[4]} -> {after[3]}/{after[4]}')
@@ -224,13 +242,15 @@ def main():
     open(H + new_mod + '.lean', 'w').write(NL.join(out))
     open(MAIN, 'w').write(ms)
     order = {'research': 0, 'textbook': 1, 'added': 2, 'glue': 3}
-    kept.sort(key=lambda r: (order.get(r['bundle'], 9), r['field'].lower()))
+    pos = {r['field']: i for i, r in enumerate(rows)}  # other rows (frozenTarget's) keep their order
+    kept.sort(key=lambda r: (order.get(r['bundle'], 9), r['field'].lower() if r['bundle'] in order else pos[r['field']]))
     with open(KINDS, 'w', newline='') as fh:
-        w = csv.DictWriter(fh, fieldnames=cols, delimiter='\t', lineterminator='\n')
+        w = csv.DictWriter(fh, fieldnames=cols, delimiter='\t', lineterminator='\n', extrasaction='ignore')
         w.writeheader()
         w.writerows(kept)
-    crows = list(csv.DictReader(open(CLAIMS), delimiter='\t'))
-    ccols = list(crows[0].keys()) if crows else ['field', 'task', 'status', 'since', 'issue']
+    with open(CLAIMS, newline='') as fh:
+        rd = csv.DictReader(fh, delimiter='\t')
+        crows, ccols = list(rd), rd.fieldnames
     with open(CLAIMS, 'w', newline='') as fh:
         w = csv.DictWriter(fh, fieldnames=ccols, delimiter='\t', lineterminator='\n')
         w.writeheader()
