@@ -42,3 +42,14 @@ of the e38375b3 build). One Lean process at a time.
 - Glue proved: `exists_extension` (Néron extension of φ is a homomorphism; reduct-glue's isMonHom_of_ext),
   `kerOmegaLog_nonneg`.
 - `faltingsLemma5_of_printed`, `faltingsLemma5BC_of_printed` COMPILE, standard axioms (VERIFIED).
+
+## Part H: shimuraFamily (Shimura.lean)
+- Shimura.lean = verbatim copy of scratch/shimura-split/ShimuraFam.lean (still compiles at e38375b3, VERIFIED) +
+  section CToPrinted.Shimura.
+- `InGamma3 x := InO x ∧ x * star x = 1 ∧ ∃ y, InO y ∧ x = 1 + 3y` (Γ_S = B^×_+ ∩ K₃).
+- Leaf `ShimuraMainThmIY3`: fine witness (Y,Φ) with R1fpProps, yτ with IsShimuraHolFamily (moduli clause +
+  holomorphic), and fibres of yτ = Γ(3)-orbits (GL(2,ℝ) action through BPAnalytic.QM.iota). Main Thm I minus
+  reciprocity (needs global Artin map: not in Mathlib 4.35) and minus surjectivity onto V_S(ℂ) (needs V_S over
+  ℚ(ζ₃) + Deligne's comparison).
+- `shimuraFamily_of_mainThmI : ShimuraMainThmIY3 → HDec.QMSplit.Moduli.ShimuraFamily` COMPILES, standard axioms
+  (VERIFIED); verbatim copy check `example : ShimuraFamily = HDec.QMSplit.Moduli.ShimuraFamily := rfl` passes.
