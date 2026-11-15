@@ -490,4 +490,118 @@ theorem hF_const (hw : 0 < w.im) (h1 : L.ω₁ = 1) (h2 : L.ω₂ = w) {c : ℂ}
 
 end WP
 
+/-! ## Part D. The theta-constant identity (triple product, Euler, an even/odd series split) -/
+
+section Products
+
+/-- `Q = e^{πiw/8}`. -/
+def Qw (w : ℂ) : ℂ := cexp (π * I * w / 8)
+
+theorem Qw_ne_zero (w : ℂ) : Qw w ≠ 0 := Complex.exp_ne_zero _
+
+theorem norm_Qw_lt_one (hw : 0 < w.im) : ‖Qw w‖ < 1 := by
+  unfold Qw
+  rw [Complex.norm_exp]
+  have : (π * I * w / 8).re = -(π * w.im / 8) := by
+    simp [Complex.mul_re]; ring
+  rw [this]
+  have := Real.pi_pos
+  have : 0 < π * w.im / 8 := by positivity
+  calc rexp (-(π * w.im / 8)) < rexp 0 := Real.exp_lt_exp.2 (by linarith)
+    _ = 1 := Real.exp_zero
+
+theorem Qw_pow (w : ℂ) (k : ℕ) : Qw w ^ k = cexp (k * (π * I * w / 8)) := by
+  unfold Qw; rw [← Complex.exp_nat_mul]
+
+theorem qJ_eq (w : ℂ) : qJ w = Qw w ^ 8 := by
+  rw [Qw_pow, qJ]; congr 1; push_cast; ring
+
+theorem qJ_quarter (w : ℂ) : qJ (w / 4) = Qw w ^ 2 := by
+  rw [Qw_pow, qJ]; congr 1; push_cast; ring
+
+theorem gp_shift {Q c d : ℂ} {k m m' : ℕ} (h : c * Q ^ m = d * Q ^ m') : gp Q c k m = gp Q d k m' := by
+  unfold gp
+  refine tprod_congr fun n => ?_
+  rw [pow_add, pow_add, ← mul_assoc, ← mul_assoc, mul_right_comm c, mul_right_comm d, h]
+
+theorem gp_split {Q : ℂ} (hQ : ‖Q‖ < 1) (c : ℂ) {k : ℕ} (hk : 0 < k) (m : ℕ) :
+    gp Q c k m = (1 + c * Q ^ m) * gp Q c k (k + m) := by
+  unfold gp
+  have hm1 : Multipliable (fun n : ℕ => 1 + c * Q ^ (k * (n + 1) + m)) :=
+    (multipliable_geom_lin hQ c k (k + m) hk).congr fun n => by ring_nf
+  rw [tprod_eq_zero_mul' (f := fun n : ℕ => 1 + c * Q ^ (k * n + m)) hm1]
+  simp only [mul_zero, zero_add]
+  congr 1
+  exact tprod_congr fun n => by ring_nf
+
+theorem gp_pm {Q : ℂ} (hQ : ‖Q‖ < 1) {k : ℕ} (hk : 0 < k) (m : ℕ) :
+    gp Q 1 k m * gp Q (-1) k m = gp Q (-1) (2 * k) (2 * m) := by
+  rw [gp_mul_gp hQ _ _ _ _ hk]
+  unfold gp
+  exact tprod_congr fun n => by ring
+
+theorem gp_ne_zero {Q : ℂ} (hQ : ‖Q‖ < 1) (c : ℂ) {k m : ℕ} (hk : 0 < k) (hm : 0 < m)
+    (hc : ‖c‖ ≤ 1) : gp Q c k m ≠ 0 := by
+  refine tprod_one_add_ne_zero_of_summable (fun n => one_add_ne_zero_of_norm_lt ?_)
+    (summable_geom_lin hQ c k m hk)
+  rw [norm_mul, norm_pow]
+  calc ‖c‖ * ‖Q‖ ^ (k * n + m) ≤ 1 * ‖Q‖ ^ (k * n + m) :=
+        mul_le_mul_of_nonneg_right hc (by positivity)
+    _ < 1 := by rw [one_mul]; exact pow_lt_one₀ (norm_nonneg _) hQ (by positivity)
+
+/-- **Euler's identity** `∏(1 − x^{2n+1}) ∏(1 + x^{n+1}) = 1`, `x = Q^{16}`. -/
+theorem euler16 {Q : ℂ} (hQ : ‖Q‖ < 1) : gp Q (-1) 32 16 * gp Q 1 16 16 = 1 := by
+  have h1 := gp_pm hQ (k := 16) (by norm_num) 16
+  have h2 := gp_even_mul_odd hQ (-1) 16 16 (by norm_num)
+  have h0 := gp_ne_zero hQ (-1) (k := 32) (m := 32) (by norm_num) (by norm_num) (by simp)
+  norm_num at h1 h2
+  apply mul_right_cancel₀ h0
+  linear_combination h1 + gp Q 1 16 16 * h2
+
+/-- Triple product at base `Q`. -/
+theorem theta_gp (hw : 0 < w.im) (z : ℂ) :
+    jacobiTheta₂ z w = gp (Qw w) (-1) 16 16 * gp (Qw w) (eJ z) 16 8 * gp (Qw w) (eJ (-z)) 16 8 := by
+  rw [jacobiTheta₂_eq_jtpP hw]
+  unfold jtpP
+  rw [jtpA_eq_gp, jtpB_eq_gp, jtpB_eq_gp, qJ_eq, gp_pow, gp_pow, gp_pow]
+
+theorem eJ_lin (a : ℂ) (k : ℕ) : eJ (a + k * w / 8) = eJ a * Qw w ^ (2 * k) := by
+  rw [eJ_add, Qw_pow]; unfold eJ; congr 2; push_cast; ring
+
+/-- `θ₄(w/4) = θ₃(w) − θ₂(w)` (split the series into even and odd indices). -/
+theorem theta4_quarter (hw : 0 < w.im) :
+    jacobiTheta₂ (1 / 2) (w / 4) = jacobiTheta₂ 0 w - cexp (π * I * w / 4) * jacobiTheta₂ (w / 2) w := by
+  have hw4 : 0 < (w / 4).im := by simp; linarith
+  set F : ℤ → ℂ := fun m => jacobiTheta₂_term m (1 / 2) (w / 4)
+  let e : ℤ ⊕ ℤ → ℤ := Sum.elim (fun n => 2 * n) (fun n => 2 * n + 1)
+  have he : Function.Bijective e := by
+    constructor
+    · rintro (a | a) (b | b) h <;> simp [e] at h ⊢ <;> omega
+    · intro m
+      obtain ⟨k, hk | hk⟩ := Int.even_or_odd' m
+      · exact ⟨Sum.inl k, by simp [e, hk]⟩
+      · exact ⟨Sum.inr k, by simp [e, hk]⟩
+  have hF := hasSum_jacobiTheta₂_term (1 / 2) hw4
+  have hS : HasSum (F ∘ e) (jacobiTheta₂ 0 w + -cexp (π * I * w / 4) * jacobiTheta₂ (w / 2) w) := by
+    apply HasSum.sum
+    · refine (hasSum_jacobiTheta₂_term 0 hw).congr_fun fun n => ?_
+      simp only [Function.comp_apply, F, e, Sum.elim_inl, jacobiTheta₂_term]
+      rw [show 2 * π * I * ((2 * n : ℤ) : ℂ) * (1 / 2) + π * I * ((2 * n : ℤ) : ℂ) ^ 2 * (w / 4) =
+        (2 * π * I * n * 0 + π * I * n ^ 2 * w) + n * (2 * π * I) by push_cast; ring,
+        Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+    · refine ((hasSum_jacobiTheta₂_term (w / 2) hw).mul_left (-cexp (π * I * w / 4))).congr_fun
+        fun n => ?_
+      simp only [Function.comp_apply, F, e, Sum.elim_inr, jacobiTheta₂_term]
+      rw [show 2 * π * I * ((2 * n + 1 : ℤ) : ℂ) * (1 / 2) + π * I * ((2 * n + 1 : ℤ) : ℂ) ^ 2 * (w / 4) =
+        (π * I + π * I * w / 4 + (2 * π * I * n * (w / 2) + π * I * n ^ 2 * w)) + n * (2 * π * I) by
+          push_cast; ring,
+        Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one, Complex.exp_add,
+        Complex.exp_add, Complex.exp_pi_mul_I]
+      ring
+  have hS' := (Equiv.hasSum_iff (Equiv.ofBijective e he)).2 hF
+  rw [neg_mul, ← sub_eq_add_neg] at hS
+  exact hF.unique ((Equiv.hasSum_iff (Equiv.ofBijective e he)).1 hS)
+
+end Products
+
 end ThetaWP8
