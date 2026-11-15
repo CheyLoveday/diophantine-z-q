@@ -913,6 +913,104 @@ theorem heegnerPointRational_of (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloi
     simp only [Affine.Point.some.injEq]
     exact ⟨(hιθ k₁).trans hk₁, (hιθ k₂).trans hk₂⟩
 
+/-! ## §7. The kernel's `X0ModuliGalois` is the regular case of `X0ModuliGaloisMero` -/
+
+/-- `q = e^{2πiτ}` as a function of `w ∈ ℂ`. -/
+def qC (w : ℂ) : ℂ := Complex.exp (2 * Real.pi * Complex.I * w)
+
+theorem norm_qC_lt_one {w : ℂ} (hw : 0 < w.im) : ‖qC w‖ < 1 := by
+  rw [qC, Complex.norm_exp]
+  have : (2 * Real.pi * Complex.I * w).re = -(2 * Real.pi * w.im) := by
+    simp [Complex.mul_re, Complex.mul_im]
+  rw [this]
+  calc Real.exp (-(2 * Real.pi * w.im)) < Real.exp 0 :=
+        Real.exp_lt_exp.2 (by nlinarith [Real.pi_pos])
+    _ = 1 := Real.exp_zero
+
+/-- Every `r ∈ [0, 1)` is `|q(τ)|` for some `τ ∈ ℍ`... (for `r > 0`). -/
+theorem exists_qC_norm {r : ℝ} (hr0 : 0 < r) (hr1 : r < 1) :
+    ∃ τ : UpperHalfPlane, ‖qC τ‖ = r := by
+  have hl : 0 < -Real.log r := by
+    have := Real.log_neg hr0 hr1; linarith
+  refine ⟨⟨Complex.I * ((-Real.log r / (2 * Real.pi) : ℝ) : ℂ), ?_⟩, ?_⟩
+  · simp only [Complex.mul_im, Complex.I_re, Complex.I_im, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, one_mul, zero_add]
+    exact div_pos hl (by positivity)
+  · rw [qC, Complex.norm_exp]
+    show Real.exp (2 * Real.pi * Complex.I * (Complex.I * ((-Real.log r / (2 * Real.pi) : ℝ) : ℂ))).re = r
+    have : (2 * Real.pi * Complex.I * (Complex.I * ((-Real.log r / (2 * Real.pi) : ℝ) : ℂ))).re =
+        Real.log r := by
+      have hπ : Real.pi ≠ 0 := Real.pi_ne_zero
+      simp only [Complex.mul_re, Complex.mul_im, Complex.I_re, Complex.I_im, Complex.ofReal_re,
+        Complex.ofReal_im, Complex.re_ofNat, Complex.im_ofNat]
+      field_simp
+      ring
+    rw [this, Real.exp_log hr0]
+
+/-- **A function with a `q`-expansion valid on all of `ℍ` is holomorphic on `ℍ`.** -/
+theorem regularAt_of_hasSum {g : UpperHalfPlane → ℂ} {k : ℕ} {a : ℕ → ℚ}
+    (h : ∀ τ : UpperHalfPlane, HasSum (fun n : ℕ => (a n : ℂ) * Complex.exp (2 * Real.pi * Complex.I * τ) ^ n)
+      (Complex.exp (2 * Real.pi * Complex.I * τ) ^ k * g τ)) (τ : UpperHalfPlane) :
+    RegularAt g τ := by
+  set p : FormalMultilinearSeries ℂ ℂ ℂ := FormalMultilinearSeries.ofScalars ℂ (fun n => (a n : ℂ))
+  -- the radius is at least `1`
+  have hrad : ∀ r : NNReal, (r : ℝ) < 1 → (r : ENNReal) ≤ p.radius := by
+    intro r hr
+    rcases eq_or_lt_of_le r.2 with h0 | h0
+    · have : r = 0 := by ext; exact h0.symm
+      rw [this]; simp
+    obtain ⟨σ, hσ⟩ := exists_qC_norm h0 hr
+    apply p.le_radius_of_tendsto (l := 0)
+    have ht := (h σ).summable.tendsto_atTop_zero
+    have ht' := ht.norm
+    simp only [norm_zero] at ht'
+    have hσ' : ‖Complex.exp (2 * Real.pi * Complex.I * σ)‖ = r := hσ
+    refine ht'.congr fun n => ?_
+    rw [FormalMultilinearSeries.ofScalars_norm, norm_mul, norm_pow, hσ']
+  have hq := norm_qC_lt_one τ.im_pos
+  obtain ⟨r, hr1, hr2⟩ := exists_between hq
+  have hr0 : 0 ≤ r := le_trans (norm_nonneg _) hr1.le
+  set r' : NNReal := ⟨r, hr0⟩ with hr'
+  have hmem : qC τ ∈ Metric.eball (0 : ℂ) p.radius := by
+    rw [Metric.mem_eball, edist_zero_right]
+    calc (‖qC τ‖₊ : ENNReal) < (r' : ENNReal) := by
+          rw [ENNReal.coe_lt_coe]; exact_mod_cast hr1
+      _ ≤ p.radius := hrad r' hr2
+  have hpos : 0 < p.radius := by
+    have := hmem; rw [Metric.mem_eball] at this; exact lt_of_le_of_lt bot_le this
+  have hF := p.hasFPowerSeriesOnBall hpos
+  have hFa : AnalyticAt ℂ p.sum (qC τ) := hF.analyticAt_of_mem hmem
+  have hqa : AnalyticAt ℂ qC (τ : ℂ) := by
+    unfold qC; fun_prop
+  have hG : AnalyticAt ℂ (fun w => p.sum (qC w) / qC w ^ k) (τ : ℂ) :=
+    (hFa.comp hqa).div (hqa.pow k) (pow_ne_zero _ (Complex.exp_ne_zero _))
+  apply hG.congr
+  have hopen : IsOpen {w : ℂ | 0 < w.im} := isOpen_lt continuous_const Complex.continuous_im
+  filter_upwards [hopen.mem_nhds τ.im_pos] with w hw
+  have hw' : (UpperHalfPlane.ofComplex w : ℂ) = w := by
+    rw [UpperHalfPlane.ofComplex_apply_of_im_pos hw]
+  have hs := h (UpperHalfPlane.ofComplex w)
+  rw [hw'] at hs
+  have hsum : p.sum (qC w) = qC w ^ k * g (UpperHalfPlane.ofComplex w) := by
+    rw [← FormalMultilinearSeries.ofScalarsSum, FormalMultilinearSeries.ofScalarsSum_eq_tsum]
+    simp only [smul_eq_mul]
+    exact hs.tsum_eq
+  simp only [Function.comp_apply, hsum]
+  exact mul_div_cancel_left₀ _ (pow_ne_zero _ (Complex.exp_ne_zero _))
+
+theorem isRatModFnMero_of (N : ℕ) {g : UpperHalfPlane → ℂ} (hg : IsRatModFn N g) :
+    IsRatModFnMero N g := by
+  obtain ⟨hinv, hgr, k, a, ha⟩ := hg
+  exact ⟨hinv, fun τ => (regularAt_of_hasSum ha τ).meromorphicAt, hgr, k, a, 0, fun τ _ => ha τ⟩
+
+/-- **The kernel's `X0ModuliGalois` follows from its printed form `X0ModuliGaloisMero`.** -/
+theorem x0ModuliGalois_of_mero (h : X0ModuliGaloisMero) : T5Glue.X0ModuliGalois := by
+  intro N hN g hg σ τ τ' μ halg hμ hk
+  obtain ⟨-, -, k, a, ha⟩ := id hg
+  exact h N hN g (isRatModFnMero_of N hg) σ τ τ' μ (regularAt_of_hasSum ha τ)
+    (regularAt_of_hasSum ha τ') halg hμ hk
+
 end ZInQ.GZHeegner
 
 #print axioms ZInQ.GZHeegner.heegnerPointRational_of
+#print axioms ZInQ.GZHeegner.x0ModuliGalois_of_mero

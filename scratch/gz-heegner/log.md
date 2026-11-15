@@ -22,3 +22,6 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
   `mem_kappa_of_fixed` (fixed field of Aut(ℂ/κK) is κK), `weierPt_add`, `point_transport` (poles handled with
   `1/(x∘φ − t)`), `heegnerC_fixed` (σ permutes the Heegner points; injectivity on classes).
   Open glue Props: `ParamRegular`, `ParamCuspGrowth`, `ParamQExpansion` (analysis of x∘φ), `HeegnerClassJ` (class group).
+- VERIFIED (compiled): `x0ModuliGalois_of_mero : X0ModuliGaloisMero → T5Glue.X0ModuliGalois` (via
+  `regularAt_of_hasSum`: a `q`-expansion valid on all of ℍ gives holomorphy, radius ≥ 1 from `le_radius_of_tendsto`).
+  So a fold may replace the kernel leaf `X0ModuliGalois` by `X0ModuliGaloisMero`.
