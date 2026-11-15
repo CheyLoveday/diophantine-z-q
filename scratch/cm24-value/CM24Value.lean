@@ -1487,6 +1487,17 @@ theorem thetaQuotientValue24_of_singularModulus6 (h : SingularModulus6) :
 
 end CM24
 
+/-- The field `igusaCMValue24`, at its fully qualified type. -/
+theorem CM24.igusaCMValue24_field : HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24 := CM24.igusaCMValue24
+/-- The glue `ThetaQuotientValue24`, at its fully qualified type. -/
+theorem CM24.thetaQuotientValue24_field : HDec.LeafQCheck.HM.QMSplit.ThetaQuotientValue24 :=
+  CM24.thetaQuotientValue24
+/-- The closed numeric statement, at its fully qualified type. -/
+theorem CM24.thetaValueAtOmega24_field : HDec.LeafQCheck.HM.QMSplit.Value24.ThetaValueAtOmega24 :=
+  CM24.thetaValueAtOmega24
+
+#print axioms CM24.igusaCMValue24_field
+#print axioms CM24.thetaQuotientValue24_field
 #print axioms CM24.thetaValueAtOmega24_of_singularModulus6
 #print axioms CM24.igusaCMValue24_of_singularModulus6
 #print axioms CM24.thetaValueAtOmega24
