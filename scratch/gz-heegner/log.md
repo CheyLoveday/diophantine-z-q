@@ -25,3 +25,7 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
 - VERIFIED (compiled): `x0ModuliGalois_of_mero : X0ModuliGaloisMero → T5Glue.X0ModuliGalois` (via
   `regularAt_of_hasSum`: a `q`-expansion valid on all of ℍ gives holomorphy, radius ≥ 1 from `le_radius_of_tendsto`).
   So a fold may replace the kernel leaf `X0ModuliGalois` by `X0ModuliGaloisMero`.
+- VERIFIED (compiled): `heegnerClassJ : HeegnerClassJ` (Tau Ceti Chebotarev in the Hilbert class field, copy of
+  `RingClassTwo.exists_prime_picClass_eq` for the maximal order; Redei `prime_trichotomy`; split/ramified prime
+  `𝔭 = ⟨p, θ − r⟩` by `ℤ + ℤθ` coordinates; inert prime principal ⇒ class 1 ⇒ `J = 𝓞_K`). Dev copy `ClassJ.lean`.
+  Remaining open glue: `ParamRegular`, `ParamCuspGrowth`, `ParamQExpansion` (analysis of the coordinates of φ).
