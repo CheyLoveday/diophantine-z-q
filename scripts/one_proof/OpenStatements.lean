@@ -34,6 +34,10 @@ run_cmd do
         let d ← findDocString? env (bundle.str f)
         pure (d.getD "")
       | _ => pure ""
+    -- otherwise the docstring of the definition the statement names
+    let doc ← if doc != "" then pure doc else match h.type.getAppFn with
+      | .const c _ => do pure ((← findDocString? env c).getD "")
+      | _ => pure ""
     let (bundle, field) := match h.label.splitOn "." with
       | [b, f] => (b, f)
       | _ => ("frozenTarget", h.label)
