@@ -8,6 +8,8 @@ The original `g13` is recovered through `R16Used.r16Trace_of_r16`. -/
 
 noncomputable section
 
+namespace HDec
+
 namespace G0ModNewform
 
 open _root_.PkgI4 (Qbar GQ LiesOver IsArithFrob CF coeff IsNewform IsNormalizedEigenform GaloisRep GaloisChar)
@@ -79,9 +81,11 @@ theorem g13_via_trace (hTw : PkgI4.EigenformTwist) (hNew : PkgI4.NewformOfEigenf
     (hT : TateModuleFree) (hBN : GlueC10.BrauerNesbittChar0) (hD : FrobeniusDense)
     {L : Type} [Field L] [NumberField L] {A : AbVar L} (D : ModData L A) (h12 : G12Spec D) :
     ∃ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), G13Spec D N χ f :=
-  g13_trace hTw hNew (R16Used.r16Trace_of_r16 hR16) hS hF hT hBN hD D h12
+  g13_trace hTw hNew (_root_.R16Used.r16Trace_of_r16 hR16) hS hF hT hBN hD D h12
 
 end G0ModNewform
 
-#print axioms G0ModNewform.g13_trace
-#print axioms G0ModNewform.g13_via_trace
+end HDec
+
+#print axioms HDec.G0ModNewform.g13_trace
+#print axioms HDec.G0ModNewform.g13_via_trace
