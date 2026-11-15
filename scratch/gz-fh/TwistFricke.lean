@@ -251,4 +251,74 @@ theorem slash_twist_term (f : Newform N 2) (hχ : f.χ = 1) (r : ℕ) [NeZero r]
 
 end Slash
 
+/-! ## The twist is a Fricke eigenvector -/
+
+section Eigen
+
+open Matrix Matrix.SpecialLinearGroup UpperHalfPlane
+open Matrix.GeneralLinearGroup (upperRightHom)
+open scoped MatrixGroups ModularForm
+
+theorem sum_eq_sum_units {r : ℕ} {E : Type*} [AddCommMonoid E] (g : ZMod r → E)
+    (hg : ∀ a, ¬ IsUnit a → g a = 0) [Fintype (ZMod r)] :
+    ∑ a, g a = ∑ u : (ZMod r)ˣ, g u := by
+  classical
+  rw [← Finset.sum_filter_of_ne (p := IsUnit) (fun a _ h => by_contra fun hu => h (hg a hu))]
+  have : (Finset.univ.filter IsUnit : Finset (ZMod r)) =
+      Finset.univ.map ⟨((↑) : (ZMod r)ˣ → ZMod r), Units.val_injective⟩ := by
+    ext a; simp [IsUnit, eq_comm]
+  rw [this, Finset.sum_map]
+  rfl
+
+variable {N : ℕ} [NeZero N]
+
+/-- The involution `u ↦ −(N u)⁻¹` of `(ZMod r)ˣ`. -/
+def twistInv {r : ℕ} (Nu : (ZMod r)ˣ) (u : (ZMod r)ˣ) : (ZMod r)ˣ := -(Nu * u)⁻¹
+
+theorem twistInv_involutive {r : ℕ} (Nu : (ZMod r)ˣ) : Function.Involutive (twistInv Nu) := by
+  intro u
+  simp only [twistInv, mul_neg, inv_neg, neg_neg, _root_.mul_inv_rev, inv_inv]
+  simp [mul_assoc, mul_left_comm]
+
+/-- **One translate of the twist under `W_{N r²}`**, at a unit `u`. -/
+theorem slash_twist_unit (f : Newform N 2) (hχ : f.χ = 1) (r : ℕ) [NeZero r]
+    [NeZero (N * r * r)] (hcop : Nat.Coprime N r) (u : (ZMod r)ˣ) :
+    (⇑f.toCuspForm ∣[(2 : ℤ)] (upperRightHom (((u : ZMod r).val : ℝ) / r) : GL (Fin 2) ℝ))
+        ∣[(2 : ℤ)] TauCeti.frickeGL ℝ (N * r * r) =
+      f.frickeSign hχ • (⇑f.toCuspForm ∣[(2 : ℤ)]
+        (upperRightHom ((((twistInv (ZMod.unitOfCoprime N hcop) u : (ZMod r)ˣ) : ZMod r).val : ℝ)
+          / r) : GL (Fin 2) ℝ)) := by
+  set a := (u : ZMod r).val with ha
+  have hca : Nat.Coprime (N * a) r := Nat.Coprime.mul_left hcop (ZMod.val_coe_unit_coprime u)
+  obtain ⟨x, y, hxy⟩ := Nat.isCoprime_iff_coprime.mpr hca
+  have hdet : (r : ℤ) * y - N * (a : ℤ) * (-x) = 1 := by push_cast at hxy; linear_combination hxy
+  have h1 := slash_twist_term f hχ r (a : ℤ) (-x) y hdet
+  push_cast at h1
+  rw [h1]
+  congr 1
+  -- `-x ≡ (twistInv u).val (mod r)`
+  set v := ((twistInv (ZMod.unitOfCoprime N hcop) u : (ZMod r)ˣ) : ZMod r) with hv
+  have hxv : ((-x : ℤ) : ZMod r) = v := by
+    have hx1 : (x : ZMod r) * ((ZMod.unitOfCoprime N hcop * u : (ZMod r)ˣ) : ZMod r) = 1 := by
+      have := congrArg (Int.cast : ℤ → ZMod r) hxy
+      push_cast at this
+      rw [ZMod.natCast_self, mul_zero, add_zero] at this
+      rw [Units.val_mul, ZMod.coe_unitOfCoprime, ← ZMod.natCast_zmod_val (u : ZMod r), ← ha]
+      linear_combination this
+    have hinv : (((ZMod.unitOfCoprime N hcop * u)⁻¹ : (ZMod r)ˣ) : ZMod r) = x := by
+      rw [Units.inv_eq_of_mul_eq_one_left hx1]
+    rw [hv, twistInv, Units.val_neg, hinv]; push_cast; ring
+  obtain ⟨m, hm⟩ : (r : ℤ) ∣ (-x) - (v.val : ℤ) := by
+    rw [← ZMod.intCast_eq_intCast_iff_dvd_sub]
+    push_cast
+    rw [ZMod.natCast_zmod_val, ← hxv]; push_cast; ring
+  have hr : (r : ℝ) ≠ 0 := NeZero.ne _
+  have e : ((-x : ℤ) : ℝ) / r = (v.val : ℝ) / r + (m : ℤ) := by
+    have : ((-x : ℤ) : ℝ) = (v.val : ℝ) + r * m := by exact_mod_cast (by linear_combination hm)
+    rw [this]; field_simp
+  push_cast at e
+  rw [e, slash_upperRightHom_add_intCast f.toCuspForm]
+
+end Eigen
+
 end ZInQ.GZFH
