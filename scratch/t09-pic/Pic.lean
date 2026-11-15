@@ -290,8 +290,8 @@ open HDec.WeilPairing
 /-- **LEAF L1 (representability of the Picard functor).** For an abelian variety `A` over a field `K`
 the relative Picard fppf sheaf `Pic_{A/K}` is representable. Published: Murre (1964) and Oort (1962)
 for `X` proper over a field; Grothendieck, FGA Exp. 232, Thm 3.1, and Kleiman, *The Picard scheme*
-(FGA Explained, 2005), Thm 9.4.8 (with Thm 9.2.5: the étale and fppf sheaves agree since
-`𝒪_K = f_*𝒪_A` universally), for `X` projective with geometrically integral fibres — abelian
+(FGA Explained, 2005), Thm 9.4.8 (with Thm 9.2.5: since `𝒪_K = f_*𝒪_A` universally and `A` has the
+section `0`, the Zariski, étale and fppf sheaves all equal `T ↦ Pic(A_T)/Pic(T)`), for `X` projective with geometrically integral fibres — abelian
 varieties are projective (Mumford §6, Application 1; cf. the vendored
 `GrpObj.exists_isImmersion_projectiveSpace_of_smooth_of_geometricallyIntegral`). UNVERIFIED
 numbering. Statement copied from `scratch/c-to-printed2/T09Roadmap.lean`. -/
@@ -304,8 +304,9 @@ of an abelian variety is open, and with the induced group law it is an abelian v
 abelian variety `Â`). Published: Mumford, *Abelian varieties*, §13 (`Â = Pic⁰` is an abelian
 variety of dimension `g`, reduced: §13 Cor. 3 / Thm 1) over `K̄`; Kleiman, *The Picard scheme*,
 Prop. 9.5.3 (`Pic⁰` open and closed, of finite type) and Prop. 9.5.1 (compatible with field
-extension), so smoothness, properness and geometric integrality descend to `K`; Milne, *Abelian
-varieties* (1986), §9-10. UNVERIFIED numbering. Stated over every representation `rep`; it is
+extension), so smoothness, properness and geometric integrality descend to `K`; the identity
+component of a group scheme locally of finite type over a field is geometrically connected
+(SGA 3, VI_A 2.4; Stacks Tag 0B7R); Milne, *Abelian varieties* (1986), §9-10. UNVERIFIED numbering. Stated over every representation `rep`; it is
 invariant under the unique isomorphism of representing objects. -/
 def PicZeroAbVar : Prop :=
   ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
@@ -314,7 +315,9 @@ def PicZeroAbVar : Prop :=
 
 /-- **LEAF L3 (`φ_L` is an isogeny for ample `L`).** If `L` is (very) ample, `λ_L : A → Pic⁰`
 (the map with `λ_L ≫ ι = φ_L`) is finite and surjective. Published: Mumford §6, Application 1
-(`L` ample `⇒ K(L) = ker φ_L` finite) and §8, Thm 1 (`φ_L` surjective onto `Â`, `Â ≅ A/K(L)`);
+(`L = 𝒪(D)`, `D` effective, ample `⇒ K(L) = ker φ_L` finite; for general ample `L` use
+`K(L) ⊆ K(L^m)` with `L^m` effective, and proper + quasi-finite `⇒` finite) and §8, Thm 1 (`φ_L`
+surjective onto `Â`, `Â ≅ A/K(L)`);
 very ample `⇒` ample (Hartshorne II, Thm 7.6 / EGA II 4.5.10); over a non-closed `K`, finiteness and
 surjectivity descend from `K̄` (fpqc descent, EGA IV 2.6.4 / 2.7.1). UNVERIFIED numbering. Quantified
 over every `(B, ι)` with `IsPicZero` (unique up to unique isomorphism) and every lift `λ`. -/
@@ -330,8 +333,9 @@ def PhiVeryAmpleIsogeny : Prop :=
 `y ∈ Â[n]`), under which every endomorphism `f` of `A` has an adjoint on `Pic⁰` (its dual `f^∨`:
 `e_n(x, f^∨ y) = e_n(f x, y)`), and with `e_n(x, φ_L(x)) = 1` for very ample `L`. Published:
 Mumford §20 (definition of `ē_n` and its properties: bilinear, perfect, `e_{nm}(x, y) = e_n(mx, y)`,
-`e_n(x, f^∨ y) = e_n(f x, y)`) and §23 (`e^L_n(x, y) := ē_n(x, φ_L(y))` is skew-symmetric with
-`e^L_n(x, x) = 1`); Galois equivariance: Milne, *Abelian varieties* (1986), §16 (`e_n` is defined
+`e_n(x, f^∨ y) = e_n(f x, y)`, there for isogenies; for every homomorphism: Milne 1986, Lemma 16.2(c),
+or reduce via the isogeny `f + [N]`, `(f + [N])^∨ = f^∨ + [N]`, and bilinearity) and §23
+(`e^L_n(x, y) := ē_n(x, φ_L(y))` is skew-symmetric with `e^L_n(x, x) = 1`, for every `L`); Galois equivariance: Milne, *Abelian varieties* (1986), §16 (`e_n` is defined
 over `K`). UNVERIFIED numbering. The pairing is existential (Mumford's `ē_n` witnesses it), so this is
 a consequence of the printed statements, never stronger. -/
 def WeilPairingPicZero : Prop :=
@@ -359,8 +363,10 @@ def IsAmple (X : Scheme.{0}) (L : X.Pic) : Prop :=
     x ∈ (Scheme.Modules.Hom.zeroLocus s).support.compl ∧
       IsAffineOpen (Scheme.Modules.Hom.zeroLocus s).support.compl
 
-/-- **LEAF L0 (very ample ⇒ ample).** Hartshorne, *Algebraic Geometry*, II Thm 7.6 (with II §5 for
-`X` proper over a field); EGA II 4.5.10; Stacks Tag 01VM-01VS (UNVERIFIED numbering). -/
+/-- **LEAF L0 (very ample ⇒ ample).** EGA II 4.5.10 (very ample relative to an affine base ⇒ ample,
+in the EGA/Stacks sense used by `IsAmple`); Stacks, *Morphisms*, section "Ample and very ample
+sheaves" (Tags 01VM-01VS); Hartshorne II Thm 7.6 (with ampleness defined by global generation, which
+agrees with `IsAmple` on Noetherian schemes, EGA II 4.5.2). UNVERIFIED numbering. -/
 def VeryAmpleIsAmple : Prop :=
   ∀ (K : Type) [Field K] (A : AbVar K) (L : A.X.left.Pic), IsVeryAmple A L → IsAmple A.X.left L
 
@@ -530,6 +536,50 @@ theorem transl_left_comp_mulN_left {A : AbVar K} {n : ℕ} (x : HDec.WeilPairing
   rw [← toMul_nsmul, this]
   rfl
 
+/-- **LEAF L5 (points of `Pic_{A/K}` over `K̄` are line bundles on `A_K̄`).** Kleiman, *The Picard
+scheme*, Thm 9.2.5 (`𝒪_K = f_*𝒪_A` universally and `f` has a section, so
+`Pic(A_T)/Pic(T) ≅ Pic_{(A/K)(fppf)}(T)`), at `T = Spec K̄` where `Pic(T) = 1`; UNVERIFIED numbering.
+Not used by the main theorems; it makes `picClass` the genuine class (no default branch). -/
+def PicPointsAlgClosed : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K),
+    Function.Bijective ((toPicardFunctor A.X.hom).app (op (ptK K)))
+
+/-- **LEAF L6 (`n_A^*M ≅ 𝒪` for `M ∈ Pic⁰[n]`).** Mumford §8 (iv) (`n_A^*M ≅ M^n` for `M ∈ Pic⁰`)
+with `M^n ≅ 𝒪` for `y ∈ Pic⁰[n]` (the group law of `Pic` is `⊗`, vendored
+`homEquiv_symm_toPicardFunctor_mul`); UNVERIFIED numbering. Not used by the main theorems; with
+`transl_left_comp_mulN_left` it removes every default branch of `weilScalar` (`weilScalar_spec`). -/
+def MulNTrivialPicZero : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P),
+    IsPicZero rep B j → ∀ (n : ℕ) (y : HDec.WeilPairing.tors B n),
+      Nonempty (Scheme.Modules.unit (pullback A.X.hom (ptK K).hom) ≅
+        (Scheme.Modules.pullback (mulN A n).left).obj
+          ((fromSkeleton (pullback A.X.hom (ptK K).hom).Modules).obj
+            (picClass rep j (Additive.toMul (y : HDec.WeilPairing.P B))).val))
+
+/-- **`weilScalar` is Mumford's formula** on `A[n] × Pic⁰[n]` (no default branch), given L6:
+`ē_n(x, y) = t_x^*ψ ∘ ψ⁻¹` for any trivialization `ψ : 𝒪 ≅ n_A^*M_y`. -/
+theorem weilScalar_spec (h6 : MulNTrivialPicZero) {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) {B : AbVar K} {j : B.X ⟶ P}
+    (hj : IsPicZero rep B j) {n : ℕ} (x : HDec.WeilPairing.tors A n)
+    (y : HDec.WeilPairing.tors B n) :
+    ∃ ψ : Scheme.Modules.unit (pullback A.X.hom (ptK K).hom) ≅
+        (Scheme.Modules.pullback (mulN A n).left).obj
+          ((fromSkeleton (pullback A.X.hom (ptK K).hom).Modules).obj
+            (picClass rep j (Additive.toMul (y : HDec.WeilPairing.P B))).val),
+      weilScalar rep j n (Additive.toMul (x : HDec.WeilPairing.P A))
+          (Additive.toMul (y : HDec.WeilPairing.P B)) =
+        Scheme.Modules.unitHomAddEquiv (Scheme.Modules.unit _)
+          ((Scheme.Modules.pullbackObjUnitIso (transl (Additive.toMul (x : HDec.WeilPairing.P A))).left).inv ≫
+            (Scheme.Modules.pullback (transl (Additive.toMul (x : HDec.WeilPairing.P A))).left).map ψ.hom ≫
+            (Scheme.Modules.pullbackComp _ _).hom.app _ ≫
+            (Scheme.Modules.pullbackCongr (transl_left_comp_mulN_left x)).hom.app _ ≫ ψ.inv) := by
+  have hψ := h6 K A P rep B j hj n y
+  refine ⟨hψ.some, ?_⟩
+  unfold weilScalar
+  rw [dite_eq_left (transl_left_comp_mulN_left x)]
+  exact dite_eq_left hψ
+
 section LeafMumford
 
 open HDec.WeilPairing
@@ -586,6 +636,7 @@ theorem t09SymmIsogenyExists_of_printed (h0 : VeryAmpleIsAmple) (h1 : PicReprese
 end T09Pic
 
 #print axioms T09Pic.exists_dual_on_picZero
+#print axioms T09Pic.weilScalar_spec
 #print axioms T09Pic.transl_left_comp_mulN_left
 #print axioms T09Pic.t09SymmIsogenyExists_of_mumford
 #print axioms T09Pic.exists_isAmple_of_isAlgClosed

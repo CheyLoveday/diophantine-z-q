@@ -35,3 +35,16 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
 - 2026-11-14 19:20 Pic.lean v7: `exists_isAmple_of_isAlgClosed` (non-vacuity of IsAmple over K̄, from vendored HasAmpleFamily): 0 errors, axioms standard. VERIFIED.
 - 2026-11-14 19:50 Pic.lean v8: §6 genuine Mumford pairing: `ptK`, `transl` (t_x on A_K̄), `mulN` (n_A), `picClass` (class of y ∈ Pic⁰(K̄) by choice), `weilScalar` (t_x^*ψ∘ψ⁻¹ ∈ Γ(A_K̄,𝒪)), `constK`; leaf `WeilPairingMumford` (L4 pinned to weilScalar); `t09SymmIsogenyExists_of_mumford`: 0 errors, axioms standard. VERIFIED.
 - 2026-11-14 20:05 Pic.lean v9: `transl_comp_mulN` (n_A ∘ t_x = n_A for x^n = 1) and `transl_left_comp_mulN_left` (for x ∈ A[n]): the first dite condition of weilScalar holds on torsion: 0 errors, axioms standard. VERIFIED.
+- 2026-11-14 20:30 Pic.lean v10: leaves L5 `PicPointsAlgClosed` (Kleiman 9.2.5 at K̄), L6 `MulNTrivialPicZero` (Mumford §8 (iv)),
+  not used by the main theorems; `weilScalar_spec : L6 → weilScalar = t_x^*ψ ∘ ψ⁻¹` on A[n] × Pic⁰[n] (no default branch).
+  Docstrings amended after review. Output `Pic_out.txt`: 0 errors, 10 `#print axioms` lines all standard. VERIFIED.
+
+## Review (one independent model review, read-only, 2026-11-14 20:25)
+- Verdict: no errors. Definitions match docstrings (Picard functor = Kleiman's Pic_(fppf); group law = ⊗;
+  mumfordBundle = Λ(L); phiL = Mumford's φ_L; IsVeryAmple = Hartshorne's very ample rel. Spec K, twist 1 = 𝒪(1);
+  IsAmple = Stacks 01PS; dualP = Pic(f) = f^∨). Leaves true over any field, consequences of the print; quantifiers ∀ rep,
+  ∀ (B, j), ∀ lam harmless (unique isomorphism / j mono).
+- Cautions (applied to docstrings): L0 cite EGA II 4.5.10 first; L1 Kleiman 9.2.5 needs the section 0; L2 cite
+  geometric connectedness of the identity component (SGA 3 VI_A 2.4 / Stacks 0B7R); L3 Mumford App. 1 is for effective
+  D (pass to L^m); L4 adjunction for all endomorphisms: Milne 1986 Lemma 16.2(c) or reduce via f + [N].
+- All Mumford/Kleiman/EGA/Stacks numbering remains UNVERIFIED (no network).
