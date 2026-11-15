@@ -9,7 +9,8 @@ Inputs (run from the repository root):
   request that links it, holds a hypothesis, and the project's own holds may point at a pushed branch; a project
   brief is shown as project interest, free to claim; a released claim shows as open);
 * docs/one-proof/reviews.tsv and credits.tsv, the ledgers of statement checks and credit;
-* docs/one-proof/issues.json, the claim issue, the statement-checks issue and the packet issues;
+* docs/one-proof/issues.json, the claim issue, the statement-checks issue, the packet issues and the issue that
+  logs folds and landings;
 * scratch/contrib-kit/DischargesTest-output.txt, the saved output of scratch/contrib-kit/DischargesTest.lean.
 
 Outputs: docs/one-proof/OPEN.md, docs/one-proof/pages-wanted.md, the worked example in
@@ -21,8 +22,14 @@ With --check, nothing is written: exit 1 if any output differs from what the inp
 missing, if the tables are inconsistent (hypotheses missing from kinds.tsv or no longer open, duplicate rows, a
 flag without a class, a strictest-reading flag that does not match the strict columns, a value outside the fixed
 vocabularies, an unheld hypothesis without an area issue, a held claim without a link), or if a generated,
-contributor-facing or table file contains text that must not be public (session or worker labels, host names,
-HTML markers, local paths).
+contributor-facing or table file contains text that must not be public (HTML worker markers, home directory
+paths, and the private patterns below).
+
+Private patterns: the project's own session, user, host and worker names and local paths are not spelled out
+here. --check reads them from the file named by the environment variable RENDER_OPEN_PRIVATE_PATTERNS, one
+pattern per line as label<TAB>regex (Python syntax); blank lines and lines starting with # are ignored, and a
+regex starting with (?i) matches without case. When the variable is unset, --check prints a note and checks only
+the generic patterns; when it names no file, --check fails.
 """
 import csv, json, os, re, sys
 from collections import Counter
@@ -73,15 +80,13 @@ COPIES = {'library-print', 'author-copy', 'scan'}
 EVIDENCE = {'HUMAN-READ', 'AI-READ'}
 CREDIT_KINDS = {'proof', 'reduction', 'statement-check', 'statement-fix', 'review', 'referee', 'setup'}
 ISSUE_REF = re.compile(r'[\w.-]+/[\w.-]+#\d+')
-# text that must not appear in generated, contributor-facing or table files
+# text that must not appear in generated, contributor-facing or table files (the private patterns come from
+# the file named by PRIVATE_PATTERNS, see the docstring)
 HYGIENE = [
-    (re.compile(r'\bcove-[0-9a-f]{2}\b'), 'a session name'),
-    (re.compile(r'jackmccarthy'), 'a local user name'),
-    (re.compile(r'\bdevvm\d+|\.dkl0\b|hs_paper\d|dioph_zq\d+|one_proof\d|dioph_gaps\d'), 'a host name'),
     (re.compile(r'<!--\s*zinq'), 'an HTML worker marker'),
-    (re.compile(r'\bcloud W\d+|\bworker \d+\b|\bW1[0-9]\b|\bW[1-9]\b(?=[ :,)])|agentcloud', re.I), 'a worker label'),
-    (re.compile(r'/Users/|/home/(?!runner/)\w+/|\.swarm-worktrees'), 'a local path'),
+    (re.compile(r'/Users/|/home/(?!runner\b)[^/\s]+|/data/users/|/root/|(?<![\w./])~/'), 'a local path'),
 ]
+PRIVATE_PATTERNS = 'RENDER_OPEN_PRIVATE_PATTERNS'
 PUBLIC_DOCS = ['CONTRIBUTING.md', D + 'CONTRIBUTING.md', D + 'STATEMENT-CHECKS.md']
 TABLES = [D + 'kinds.tsv', D + 'claims.tsv', D + 'reviews.tsv', D + 'credits.tsv', D + 'fold-queue.tsv']
 
@@ -122,7 +127,8 @@ def issue_link(ref):
 def load():
     data = json.load(open(D + 'open-statements.json'))
     kinds_rows = read_tsv(D + 'kinds.tsv')
-    issues = {'claims_issue': 'Deicyde/diophantine-z-q#14', 'statement_checks_issue': '', 'packet_issues': {}}
+    issues = {'claims_issue': 'Deicyde/diophantine-z-q#14', 'statement_checks_issue': '', 'packet_issues': {},
+              'log_issue': 'Deicyde/diophantine-z-q#3'}
     if os.path.exists(ISSUES):
         issues.update(json.load(open(ISSUES)))
     return dict(
@@ -221,7 +227,8 @@ def validate(m):
         if r['kind'] not in CREDIT_KINDS:
             problems.append(f"credits.tsv: {r['item']}: unknown kind {r['kind']!r}")
     iss = m['issues']
-    refs = [iss.get('claims_issue', '')] + ([iss['statement_checks_issue']] if iss.get('statement_checks_issue') else []) \
+    refs = [iss.get('claims_issue', ''), iss.get('log_issue', '')] \
+        + ([iss['statement_checks_issue']] if iss.get('statement_checks_issue') else []) \
         + list(iss.get('packet_issues', {}).values())
     for ref in refs:
         if not ISSUE_REF.fullmatch(ref or ''):
@@ -327,6 +334,8 @@ def render(m):
     w('  [STATEMENT-CHECKS.md](STATEMENT-CHECKS.md). [pages-wanted.md](pages-wanted.md) lists the printed pages a')
     w('  reader can check.')
     w('* Tiers come from a model triage that no person has reviewed yet; treat them as a rough guide.')
+    log_ref = iss['log_issue']
+    w(f'* The project logs its folds and landings on [issue #{log_ref.split("#")[1]}]({issue_url(log_ref)}).')
     w('')
 
     w('## Good first targets')
@@ -512,13 +521,36 @@ def outputs(m):
     return res, problems
 
 
-def hygiene(paths):
+def private_patterns():
+    """(patterns, problems) from the file named by RENDER_OPEN_PRIVATE_PATTERNS; patterns is None when the
+    variable is unset, and a variable that names no file is a problem."""
+    path = os.environ.get(PRIVATE_PATTERNS, '')
+    if not path:
+        return None, []
+    if not os.path.isfile(path):
+        return None, [f'{PRIVATE_PATTERNS} names {path}, which is not a file']
+    patterns, problems = [], []
+    for i, line in enumerate(open(path, encoding='utf-8').read().splitlines(), 1):
+        if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        label, tab, rx = line.partition('\t')
+        if not tab or not label.strip() or not rx:
+            problems.append(f'{PRIVATE_PATTERNS} line {i}: not label<TAB>regex')
+            continue
+        try:
+            patterns.append((re.compile(rx), label.strip()))
+        except re.error as ex:
+            problems.append(f'{PRIVATE_PATTERNS} line {i}: not a valid regex ({ex})')
+    return patterns, problems
+
+
+def hygiene(paths, patterns):
     problems = []
     for p in paths:
         if not os.path.exists(p):
             continue
         for i, line in enumerate(open(p).read().splitlines(), 1):
-            for rx, what in HYGIENE:
+            for rx, what in patterns:
                 if rx.search(line):
                     problems.append(f'{p}:{i}: {what}: {line.strip()[:100]}')
     return problems
@@ -536,7 +568,12 @@ def main():
         for p, content in res.items():
             if not os.path.exists(p) or open(p).read() != content:
                 problems.append(f'{p} is out of date: run python3 scripts/one_proof/render_open.py')
-        problems += hygiene(list(res) + PUBLIC_DOCS + TABLES)
+        private, private_problems = private_patterns()
+        if private is None and not private_problems:
+            print(f'note: the private hygiene patterns were not loaded ({PRIVATE_PATTERNS} is unset); only the '
+                  'generic patterns were checked')
+        problems += private_problems
+        problems += hygiene(list(res) + PUBLIC_DOCS + TABLES, HYGIENE + (private or []))
         if os.path.exists(EXAMPLE_OUT):
             got = re.search(r'#discharges: (\d+) open hypotheses', open(EXAMPLE_OUT).read())
             if got and int(got.group(1)) != len(m['hyps']):
