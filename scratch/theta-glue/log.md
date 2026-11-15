@@ -69,3 +69,9 @@
   `grind` proves the degree-16 `ThetaEightSquare` identity in 7 s.
 - Alg files are now Mathlib-only (`gen/gen_alg_tree.py`; namespace `ThetaGlueAlg`, with
   `PkgI1.Char2`/`PkgI1.evenChars` copied verbatim from LPrefix) to lower the memory baseline.
+- `IgusaAlg 5` by the one-shot `ring` (Mathlib-only import): not finished in 10 min, memory 21.7 GB at
+  1 min 50 s CPU (stopped by the background time limit). The one-shot approach does not scale past k = 4.
+- Split proof (`gen/gen_alg_split.py`): `e_k(Y₀..Y₉) = Σ_a e_a(Y₀..Y₄) e_{k−a}(Y₅..Y₉)` (convolution
+  lemma `esymmG_append`, proved generically), explicit normal forms `EA a`, `EB b`, `NS4`, `NS6`, `NP`,
+  `NS12` (texts computed in Python, each its own `ring`), then one final `ring`. `IgusaAlg 3` PROVED this
+  way (7 min 54 s, 12.6 GB; trivial "no goals" errors in `EA0`/`EB0` fixed by `try ring`).
