@@ -310,6 +310,68 @@ theorem memU_comp_iff (hT : φU eT = t.f) (hTg : φV eT = t.g) (g : X.left ≅ X
     rw [h0, zero_mul] at key
     exact zero_ne_one key
 
+include hηV in
+/-- **A `t`-preserving automorphism acts on Elkies' coordinates by signs.** If `g^*t = t`,
+`g^*s = c s` and `g^*r = d r` in `ℚ(X)`, then on `ℚ̄`-points `g` is `(s, r) ↦ (c s, d r)` (and
+`b ↦ c d b` at `t = ∞`). -/
+theorem conicMapL_comp_of_signs (hT : φU eT = t.f) (hTg : φV eT = t.g)
+    (hg1 : X.left.presheaf.map (homOfLE (inf_le_left : t.U ⊓ t.V ≤ t.U)).op (φU eS) *
+      X.left.presheaf.map (homOfLE (inf_le_right : t.U ⊓ t.V ≤ t.V)).op (φV eS) = 1)
+    (hg2 : X.left.presheaf.map (homOfLE (inf_le_left : t.U ⊓ t.V ≤ t.U)).op (φU eR) *
+      X.left.presheaf.map (homOfLE (inf_le_right : t.U ⊓ t.V ≤ t.V)).op (φV eS) =
+      X.left.presheaf.map (homOfLE (inf_le_right : t.U ⊓ t.V ≤ t.V)).op (φV eR))
+    (g : X.left ≅ X.left) (c d : ℤˣ)
+    (hτ : ffPullback g (jU φU hηU eT) = jU φU hηU eT)
+    (hS : ffPullback g (jU φU hηU eS) = ((c : ℤ) : X.left.functionField) * jU φU hηU eS)
+    (hR : ffPullback g (jU φU hηU eR) = ((d : ℤ) : X.left.functionField) * jU φU hηU eR)
+    (y : Spec (CommRingCat.of Qbar) ⟶ X.left) :
+    conicMapL φU φV hTg (y ≫ g.hom) = signAct c d (conicMapL φU φV hTg y) := by
+  have hmem := memU_comp_iff hηU hηV hT hTg g hτ y
+  by_cases h : pt (X := X) y ∈ t.U
+  · have h' := hmem.mpr h
+    have hm := mem_preimage_pt g y h'
+    rw [conicMapL, dif_pos h', conicMapL, dif_pos h]
+    simp only [signAct]
+    congr 1
+    apply Subtype.ext
+    -- each coordinate
+    have coord : ∀ (a : ElkiesRing) (e : ℤˣ),
+        ffPullback g (jU φU hηU a) = ((e : ℤ) : X.left.functionField) * jU φU hηU a →
+        psiU φU (y ≫ g.hom) h' a = ((e : ℤ) : Qbar) * psiU φU y h a := by
+      intro a e he
+      simp only [psiU, RingHom.comp_apply, RingHom.coe_coe]
+      rw [ev_comp_hom g.hom t.U y h' hm]
+      rw [ev_eq_of_germ_eq (mem_preimage_gen g hηU) hηU _ (((e : ℤ) : Γ(X.left, t.U)) * φU a) _ y hm h]
+      · rw [map_mul, map_intCast]
+      · rw [← pullback_jU φU hηU g a, he, map_mul, map_intCast]
+        rfl
+    simp only
+    rw [coord eS c hS, coord eR d hR]
+  · have h' : ¬ pt (X := X) (y ≫ g.hom) ∈ t.U := fun hh => h (hmem.mp hh)
+    have hv' := memV_of_not_memU (X := X) (t := t) (y ≫ g.hom) h'
+    have hv := memV_of_not_memU (X := X) (t := t) y h
+    have hm := mem_preimage_pt g y hv'
+    rw [conicMapL, dif_neg h', conicMapL, dif_neg h]
+    simp only [signAct]
+    congr 1
+    apply Subtype.ext
+    simp only
+    have e1 := germ_glue1 φU φV hηU hηV hg1
+    have e2 := germ_glue2 φU φV hηU hηV hg2
+    have hS' := sigma_inv_of (ffPullback g) _ _ c hS e1
+    have hR' : ffPullback g (jV φV hηV eR) =
+        ((((c * d : ℤˣ)) : ℤ) : X.left.functionField) * jV φV hηV eR := by
+      rw [← e2, map_mul, hR, hS']
+      push_cast
+      ring
+    simp only [psiV, RingHom.comp_apply, RingHom.coe_coe]
+    rw [ev_comp_hom g.hom t.V y hv' hm]
+    rw [ev_eq_of_germ_eq (mem_preimage_gen g hηV) hηV _
+      (((((c * d : ℤˣ)) : ℤ) : Γ(X.left, t.V)) * φV eR) _ y hm hv]
+    · rw [map_mul, map_intCast]
+    · rw [← pullback_jV φV hηV g eR, hR', map_mul, map_intCast]
+      rfl
+
 end Charts
 
 /-- `ℚ(X₆)^W`: the rational functions on `X₆` fixed by every `g ∈ W` (`g^*φ = φ`). -/
