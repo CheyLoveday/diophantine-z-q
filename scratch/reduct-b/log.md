@@ -40,3 +40,4 @@
 - Deliverable: mk.sh assembles ReductB.lean = RBBase.lean + Body.lean; chk.sh: `lake env lean
   scratch/reduct-b/ReductB.lean` 52 s, 7.6 GB, no errors, 11 `#print axioms` all [propext, Classical.choice,
   Quot.sound] (VERIFIED 11-14 18:08, axioms.txt). No sorry, no axiom in Body.lean (grep).
+- FoldSnippet.lean.txt: generated from TailZ19's OpenResearchLeaves12 (32 fields parsed, 3 dropped, 3 added); UNCHECKED (TailZ19 not built here: lake --no-build lists 667 unbuilt modules, mostly TauCeti/CloudW07).
