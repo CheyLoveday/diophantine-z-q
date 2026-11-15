@@ -30,3 +30,12 @@ Friedberg–Hoffstein (printed leaf) + twisted root number (printed leaf) + glue
   FriedbergHoffsteinB_FE, TwistFunctionalEquation); 65 open, 1292 checked, 7 discharge one.
 - Main.lean edit checked in scratch (`gzfh_frozenTarget`), and `FHNonvanishingCd` corollary (`gzfh_fhNonvanishingCd`),
   both standard axioms.
+- **TwistFunctionalEquation PROVED** (`ZInQKernel/Contrib/OneProof/FHNonvanishing/TwistFE.lean`, dev copy
+  `scratch/gz-fh/TwistFricke.lean`; VERIFIED compiles, standard axioms): `slash_frickeGL_twist`
+  (`(f ⊗ χ_D) ∣ W_{N D²} = χ_D(−N) ε_N(f) (f ⊗ χ_D)`), via `dft_chiDMod_nonunit` (primitivity witness),
+  `dft_chiDMod_unit`, matrix identity `upperRightHom_mul_frickeGL`, `slash_twist_unit`, `dft_twistInv`.
+- Restructured: `Contrib/OneProof/FHNonvanishing.lean` (final: `fhNonvanishing_of_friedbergHoffsteinB_FE :
+  FriedbergHoffsteinB_FE → FHNonvanishing`) importing `FHNonvanishing/{Basic,FE,TwistFE}.lean`. Build OK.
+- `#discharges` rerun (VERIFIED): `DISCHARGES [hL2] by fhNonvanishing_of_friedbergHoffsteinB_FE, still assumes:
+  [FriedbergHoffsteinB_FE]`; plus the two older routes; 65 open, 1349 checked, 8 discharge one.
+  `gzfh_frozenTarget` (Main edit with hFH : FriedbergHoffsteinB_FE) and `gzfh_fhNonvanishingCd` standard axioms.

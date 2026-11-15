@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.FHNonvanishing
+import ZInQKernel.Contrib.OneProof.FHNonvanishing.Basic
 
 /-!
 # gz-fh, variant: Friedberg–Hoffstein with the root number read off the functional equation
@@ -6,8 +6,8 @@ import ZInQKernel.Contrib.OneProof.FHNonvanishing
 The root number `ε(½, π ⊗ χ₀)` is by definition the sign of the functional equation of the
 completed L-function of `π ⊗ χ₀`. This file states Friedberg–Hoffstein in that form
 (`FriedbergHoffsteinB_FE`), states the twisted functional equation `TwistFunctionalEquation`
-(a GLUE target: the conjugation of the Fricke involution through the twist by Gauss sums, no
-newform theory), and proves:
+(GLUE: the conjugation of the Fricke involution through the twist by Gauss sums, no newform
+theory; proved in `FHNonvanishing/TwistFE.lean` as `twistFunctionalEquation`), and proves:
 
 * `fhNonvanishing_of_printed_fe : FriedbergHoffsteinB_FE → TwistFunctionalEquation → FHNonvanishing`;
 * `twistFunctionalEquation_of_twistNewformRootNumber`: the printed leaf `TwistNewformRootNumber`
@@ -18,7 +18,8 @@ newform theory), and proves:
 
 So `FHNonvanishing` rests either on {`FriedbergHoffsteinB`, `TwistNewformRootNumber`} (two printed
 leaves, `fhNonvanishing_of_printed`) or on {`FriedbergHoffsteinB_FE` (printed leaf),
-`TwistFunctionalEquation` (glue)}.
+`TwistFunctionalEquation` (glue, proved)}, i.e. on `FriedbergHoffsteinB_FE` alone
+(`fhNonvanishing_of_friedbergHoffsteinB_FE` in `FHNonvanishing.lean`).
 -/
 
 open HeckeRing.GL2 CongruenceSubgroup
@@ -60,11 +61,12 @@ entire continuation `G` of `L(f ⊗ χ_D, s)` satisfies
 
 Textbook (Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971),
 Prop. 3.64; Iwaniec, *Topics in classical automorphic forms* (1997), Thm 7.5;
-Iwaniec–Kowalski Prop. 14.20; all UNVERIFIED numbers). Classified GLUE: it follows from
-`TwistNewformRootNumber` (`twistFunctionalEquation_of_twistNewformRootNumber`), and it can be
-proved without newform theory from Tau Ceti's `CuspForm.twist` and the Fricke-eigenvector
-functional equation `CuspForm.frickeCompletedL_sub_eq_of_normalizedFrickeOperatorCusp_eq_smul`,
-by conjugating `W_{N D²}` through the twist (Gauss sums). Not proved here. -/
+Iwaniec–Kowalski Prop. 14.20; all UNVERIFIED numbers). GLUE, proved:
+`twistFunctionalEquation` (`FHNonvanishing/TwistFE.lean`), from Tau Ceti's `CuspForm.twist` and
+the Fricke-eigenvector functional equation
+`CuspForm.frickeCompletedL_sub_eq_of_normalizedFrickeOperatorCusp_eq_smul`, by conjugating
+`W_{N D²}` through the twist (Gauss sums), without newform theory. It also follows from
+`TwistNewformRootNumber` (`twistFunctionalEquation_of_twistNewformRootNumber`). -/
 def TwistFunctionalEquation : Prop :=
   ∀ (N : ℕ) [NeZero N] (f : Newform N 2) (hχ : f.χ = 1),
   ∀ D : ℤ, IsOddFundDisc D → Nat.Coprime D.natAbs N →
