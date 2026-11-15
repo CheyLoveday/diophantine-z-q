@@ -9,6 +9,8 @@ Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENS
 -/
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
 import Mathlib.FieldTheory.SeparableClosure
+-- [port] Mathlib v4.35 moved `Ideal.inertiaDeg'` to NumberTheory.RamificationInertia.Inertia
+import Mathlib.NumberTheory.RamificationInertia.Inertia
 import ZInQKernel.Contrib.CloudW02Connectedness.Vendor.AnthropicFLT.P2M.Util
 
 set_option maxHeartbeats 4000000

@@ -228,7 +228,8 @@ theorem smul_single (g : SemilinearAut K F) (v : Place K F) (n : ℤ) :
 theorem divisor_smul_apply_smul (g : SemilinearAut K F) (D : Divisor K F) (v : Place K F) :
     (g • D) (g • v) = D v := by
   rw [divisor_smul_def]
-  exact Finsupp.mapDomain_apply (MulAction.injective g) D v
+  -- [port] Mathlib v4.35 renamed `Finsupp.mapDomain_apply` (injective form)
+  exact Finsupp.mapDomain_apply_of_injective (MulAction.injective g) D v
 
 theorem divisor_smul_apply (g : SemilinearAut K F) (D : Divisor K F) (w : Place K F) :
     (g • D) w = D (g⁻¹ • w) := by

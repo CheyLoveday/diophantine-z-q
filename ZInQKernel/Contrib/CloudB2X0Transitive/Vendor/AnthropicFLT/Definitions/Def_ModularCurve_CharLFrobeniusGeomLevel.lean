@@ -789,7 +789,8 @@ theorem frobeniusPushforwardGeomLevel_apply_frob
       = D w := by
   rw [show frobeniusPushforwardGeomLevel K N data hKr D
       = Finsupp.mapDomain (frobOnPlacesGeomLevel K N data hKr) D from rfl]
-  exact Finsupp.mapDomain_apply (frobOnPlacesGeomLevel_injective K N data hKr) D w
+  -- [port] Mathlib v4.35 renamed `Finsupp.mapDomain_apply` (injective form)
+  exact Finsupp.mapDomain_apply_of_injective (frobOnPlacesGeomLevel_injective K N data hKr) D w
 
 include data hKr in
 

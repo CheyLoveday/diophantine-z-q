@@ -266,8 +266,14 @@ open AddSubgroup AddMonoidHom BrandtModuleData
 
 section NatGen
 
+-- [port] Mathlib v4.35 restated `Int.subgroup_cyclic` as `IsAddCyclic H`; its Mathlib v4.33 form, re-proved
+theorem int_subgroup_cyclic_port (H : AddSubgroup ℤ) : ∃ a : ℤ, H = AddSubgroup.closure {a} := by
+  obtain ⟨i, hi⟩ := AddSubgroup.exists_zmultiples_eq_of_zmultiples_eq_top Int.zmultiples_one H
+  exact ⟨i • (1 : ℤ), by rw [← hi, AddSubgroup.zmultiples_eq_closure]⟩
+
+-- [port] `Int.subgroup_cyclic` → `int_subgroup_cyclic_port`
 noncomputable def natGen (K : AddSubgroup ℤ) : ℕ :=
-  (Int.subgroup_cyclic K).choose.natAbs
+  (int_subgroup_cyclic_port K).choose.natAbs
 
 theorem zmultiples_natAbs (a : ℤ) :
     AddSubgroup.zmultiples ((a.natAbs : ℕ) : ℤ) = AddSubgroup.zmultiples a := by
@@ -276,7 +282,8 @@ theorem zmultiples_natAbs (a : ℤ) :
 
 theorem zmultiples_natGen (K : AddSubgroup ℤ) :
     AddSubgroup.zmultiples ((natGen K : ℕ) : ℤ) = K := by
-  have h := (Int.subgroup_cyclic K).choose_spec
+  -- [port] `Int.subgroup_cyclic` → `int_subgroup_cyclic_port`
+  have h := (int_subgroup_cyclic_port K).choose_spec
   rw [natGen, zmultiples_natAbs, AddSubgroup.zmultiples_eq_closure, ← h]
 
 theorem natGen_cast_mem (K : AddSubgroup ℤ) : ((natGen K : ℕ) : ℤ) ∈ K := by

@@ -171,14 +171,16 @@ theorem isDiscreteValuationRing_localization_XYIdeal' {x y : F} (h : W.Nonsingul
     (Localization.AtPrime (XYIdeal W x (C y)))
   haveI : IsNoetherianRing (Localization.AtPrime (XYIdeal W x (C y))) :=
     IsLocalization.isNoetherianRing (XYIdeal W x (C y)).primeCompl _ inferInstance
-  exact ((IsDiscreteValuationRing.TFAE _ hnf).out 0 4).mpr
+  -- [port] Lean v4.35 `List.TFAE.out` indices start at 1
+  exact ((IsDiscreteValuationRing.TFAE _ hnf).out 1 5).mpr
     (isPrincipal_maximalIdeal_localization h)
 
 scoped instance : Module.Finite F[X] W.CoordinateRing := Module.Finite.of_basis (CoordinateRing.basis W)
 
 lemma isMaximal_of_isPrime_of_ne_bot (P : Ideal W.CoordinateRing) [P.IsPrime] (hP : P ≠ ⊥) :
     P.IsMaximal :=
-  Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := F[X]) P <|
+  -- [port] Mathlib v4.35: the algebra form of `isMaximal_of_isIntegral_of_isMaximal_comap` is `..._under`
+  Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := F[X]) P <|
     IsPrime.to_maximal_ideal (Ideal.under_ne_bot F[X] hP)
 
 theorem isDedekindDomain_of_isAlgClosed' [IsAlgClosed F] [W.IsElliptic] :

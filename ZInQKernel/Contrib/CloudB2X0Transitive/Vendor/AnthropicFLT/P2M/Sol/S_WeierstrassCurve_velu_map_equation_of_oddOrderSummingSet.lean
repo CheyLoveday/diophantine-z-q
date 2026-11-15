@@ -480,7 +480,8 @@ theorem smul_single (σ : F ≃ₐ[K] F) (v : Place K F) (n : ℤ) :
 theorem smul_apply_smul (σ : F ≃ₐ[K] F) (D : Divisor K F) (v : Place K F) :
     (σ • D) (σ • v) = D v := by
   rw [smul_def]
-  exact Finsupp.mapDomain_apply (MulAction.injective σ) D v
+  -- [port] Mathlib v4.35 renamed `Finsupp.mapDomain_apply` (injective form)
+  exact Finsupp.mapDomain_apply_of_injective (MulAction.injective σ) D v
 
 theorem smul_apply (σ : F ≃ₐ[K] F) (D : Divisor K F) (w : Place K F) :
     (σ • D) w = D (σ⁻¹ • w) := by
@@ -6885,7 +6886,8 @@ theorem translationCoordHom_injective : Function.Injective (translationCoordHom 
     haveI : Module.Finite F[X] W.CoordinateRing :=
       Module.Finite.of_basis (CoordinateRing.basis W)
     refine Ideal.eq_bot_of_comap_eq_bot (R := F[X]) ?_
-    rw [RingHom.comap_ker, translationCoordHom_comp_algebraMap, ← RingHom.injective_iff_ker_eq_bot]
+    -- [port] Mathlib v4.35 states the hypothesis with `Ideal.under`; unfold it first
+    rw [Ideal.under_def, RingHom.comap_ker, translationCoordHom_comp_algebraMap, ← RingHom.injective_iff_ker_eq_bot]
     exact (injective_iff_map_eq_zero _).mpr fun p hp => transcendental_iff.mp htr p hp
   exact (RingHom.injective_iff_ker_eq_bot (translationCoordHom hA).toRingHom).mpr hker
 

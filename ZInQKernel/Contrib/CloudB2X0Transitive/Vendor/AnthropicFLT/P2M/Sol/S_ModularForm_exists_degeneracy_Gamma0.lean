@@ -10,6 +10,8 @@ Vendor/AnthropicFLT/ATTRIBUTION.upstream.md; license: Vendor/AnthropicFLT/LICENS
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Definitions.Def_ModularForm_HeckeOperator
 import Mathlib.NumberTheory.ModularForms.Basic
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+-- [port] Mathlib v4.35 moved `ModularForm.translate` and `CuspForm.translate` to NormTrace
+import Mathlib.NumberTheory.ModularForms.NormTrace
 import ZInQKernel.Contrib.CloudW02Connectedness.Vendor.AnthropicFLT.P2M.Util
 
 set_option maxHeartbeats 4000000

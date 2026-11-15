@@ -80,7 +80,8 @@ theorem ofMulActionFinsupp_apply {H : Type*} [MulAction G H] (g : G) (f : H →�
   have hg : Function.Injective (g • · : H → H) := by
     intro h₁ h₂
     simp
-  simp only [ofMulActionFinsupp_def, Finsupp.lmapDomain_apply, Finsupp.mapDomain_apply, hg]
+  -- [port] Mathlib v4.35 renamed `Finsupp.mapDomain_apply` (injective form)
+  simp only [ofMulActionFinsupp_def, Finsupp.lmapDomain_apply, Finsupp.mapDomain_apply_of_injective hg]
 
 end Group
 

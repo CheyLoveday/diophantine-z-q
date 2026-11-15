@@ -42,7 +42,8 @@ theorem isMaximal_of_isPrime {P : Ideal W.CoordinateRing} (hP : P ≠ ⊥) [P.Is
     hP (Ideal.eq_bot_of_comap_eq_bot h)
   haveI : (P.comap (algebraMap K[X] W.CoordinateRing)).IsMaximal :=
     IsPrime.to_maximal_ideal hc
-  exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := K[X]) P inferInstance
+  -- [port] Mathlib v4.35: the algebra form of `isMaximal_of_isIntegral_of_isMaximal_comap` is `..._under`
+  exact Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := K[X]) P inferInstance
 
 theorem exists_comap_eq_span [IsAlgClosed K] {P : Ideal W.CoordinateRing} (hP : P ≠ ⊥)
     [P.IsPrime] :

@@ -82,7 +82,8 @@ scoped instance : Module.Finite F[X] W.CoordinateRing := Module.Finite.of_basis 
 
 lemma isMaximal_of_isPrime_of_ne_bot (P : Ideal W.CoordinateRing) [P.IsPrime] (hP : P ≠ ⊥) :
     P.IsMaximal :=
-  Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := F[X]) P <|
+  -- [port] Mathlib v4.35: the algebra form of `isMaximal_of_isIntegral_of_isMaximal_comap` is `..._under`
+  Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := F[X]) P <|
     IsPrime.to_maximal_ideal (Ideal.under_ne_bot F[X] hP)
 
 end WeierstrassCurve.Affine.CoordinateRing.DetInfra

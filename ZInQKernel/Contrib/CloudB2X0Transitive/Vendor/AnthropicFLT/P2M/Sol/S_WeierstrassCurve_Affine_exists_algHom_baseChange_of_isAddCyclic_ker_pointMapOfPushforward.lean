@@ -3335,7 +3335,8 @@ theorem pointPullbackCoordHomTo_injective {xP yP : L}
     haveI : Module.Finite F[X] W.CoordinateRing :=
       Module.Finite.of_basis (CoordinateRing.basis W)
     refine Ideal.eq_bot_of_comap_eq_bot (R := F[X]) ?_
-    rw [RingHom.comap_ker, pointPullbackCoordHomTo_comp_algebraMap,
+    -- [port] Mathlib v4.35 states the hypothesis with `Ideal.under`; unfold it first
+    rw [Ideal.under_def, RingHom.comap_ker, pointPullbackCoordHomTo_comp_algebraMap,
       ← RingHom.injective_iff_ker_eq_bot]
     exact hx
   exact (RingHom.injective_iff_ker_eq_bot (pointPullbackCoordHomTo h).toRingHom).mpr hker
