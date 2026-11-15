@@ -29,3 +29,7 @@ Target: `LeafQM.AV.R1UnivRigid.MumfordRigidityCore` (ZInQKernel/OneProof/H/TailZ
   - `mumfordRigidityCore_of_printed` still assumes [MumfordGroupLaw, RigidityLemma]
   - `mumfordRigidityCore_of_pushforward` still assumes [MumfordGroupLaw, PushforwardStructureSheaf]
   both axioms [propext, Classical.choice, Quot.sound]; "67 open hypotheses, 521 theorems checked, 2 discharge one".
+
+## Step 4: wrap-up
+- docs/research/gt-rigidity.md written (verdict first). scratch/gt-rigidity/MR.lean and MR2.lean are the development copies, superseded by the contribution file (same declarations).
+- Not done: `MumfordGroupLaw` in printed form (S connected, one fibre) + Lean gluing of GrpObj over components; global half of `RigidityLemma` from `PushforwardStructureSheaf`.
