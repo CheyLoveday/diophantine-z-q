@@ -129,13 +129,19 @@ sh-route's construction, which had characteristic 0 and a perfect residue field.
 ## 5. Checks
 
 **Build.** `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
-+ZInQKernel.Contrib.OneProof.StrictHenselizationPair` completed successfully. The contribution module alone builds
-in about 30 s.
++ZInQKernel.Contrib.OneProof.StrictHenselizationPair` completed successfully (12926 jobs, about 10 minutes, because the
+copied build tree was missing some modules). The contribution module alone builds in about 30 s. (VERIFIED)
 
 **`#discharges` output** (`lake env lean scratch/gt-shpair/Discharges.lean`):
 
 ```
-DISCHARGES_OUTPUT_PLACEHOLDER
+DISCHARGES [OpenResearchLeaves16.strictHenselizationPair] by GapSHPair.strictHenselizationPair_of_neron
+  still assumes: [GapSHPair.NeronBaseChangeStrictHenselization]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves16.strictHenselizationPair] by GapSHPair.strictHenselizationPair_of_unramified
+  still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 67 open hypotheses, 593 theorems checked, 2 discharge one
 ```
 
 ## 6. What remains

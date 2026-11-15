@@ -29,3 +29,8 @@ Target: `ReductGlue.StrictHenselizationPair` (ZInQKernel/OneProof/H/TailZ14.lean
 - Pitfalls: `Ω[X]` parses as Kähler notation under TailZ14 (use `Polynomial Ω`); worktree lacked
   `lean/.lake` (copied from ../gt-blr, identical lean/ZInQ); instance mismatch on `MulAction H (Ideal S)` for
   subgroup stabilizers: avoid rewriting `Nat.card (stabilizer H P)`, state counts via inertia only.
+- VERIFIED `lake build +Main +Discharges +Contrib.OneProof.StrictHenselizationPair`: success (12926 jobs, ~10 min).
+- VERIFIED `#discharges` (scratch/gt-shpair/Discharges.lean): strictHenselizationPair discharged by
+  `strictHenselizationPair_of_neron` (still assumes `GapSHPair.NeronBaseChangeStrictHenselization`) and by
+  `strictHenselizationPair_of_unramified` (still assumes `ReductGlue.NeronBaseChangeUnramifiedDVR`);
+  axioms standard. "67 open hypotheses, 593 theorems checked, 2 discharge one".
