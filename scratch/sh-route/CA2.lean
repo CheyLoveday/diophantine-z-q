@@ -203,7 +203,7 @@ theorem ιw_coe (a : wE (K := K) w) : ((ιw w a : w) : Ω) = ιΩ w a := rfl
 
 /-- **Core lemma.** A root `α` of a monic `g` over the valuation ring of the inertia field whose
 residue is a simple root of `g mod 𝔪_w` lies in the inertia field. -/
-theorem mem_inertiaField_of_simple_root (g : (wE (K := K) w)[X]) (hg : g.Monic) (α : Ω)
+theorem mem_inertiaField_of_simple_root (g : (wE (K := K) w)[X]) (α : Ω)
     (hα : (g.map (ιΩ w)).eval α = 0) (hαw : α ∈ w)
     (hs : ((g.map ((residue w).comp (ιw w))).derivative).eval (residue w ⟨α, hαw⟩) ≠ 0) :
     α ∈ inertiaField (K := K) w := by
@@ -256,6 +256,56 @@ theorem mem_inertiaField_of_simple_root (g : (wE (K := K) w)[X]) (hg : g.Monic) 
       exact hτw)
   apply hs
   rw [← h2, Polynomial.map_map]
+
+
+theorem map_ιΩ_eq (g : (wE (K := K) w)[X]) : g.map (ιΩ w) = (g.map (ιw w)).map (algebraMap w Ω) := by
+  rw [Polynomial.map_map]; rfl
+
+instance isLocalHom_ιw : IsLocalHom (ιw (K := K) w) := by
+  constructor
+  intro a ha
+  by_contra h
+  have h1 : a ∈ maximalIdeal (wE (K := K) w) := h
+  rw [mem_max_comap_iff] at h1
+  have h2 : ιw w a ∈ maximalIdeal w := by rw [mem_max_iff]; exact h1
+  exact h2 ha
+
+/-- **The valuation ring of the inertia field is henselian.** -/
+theorem henselian_wE : HenselianLocalRing (wE (K := K) w) where
+  is_henselian f hf a₀ h₁ h₂ := by
+    let q := f.map (ιw w)
+    have hq : q.Monic := hf.map _
+    have hc : q.eval (ιw w a₀) ∈ maximalIdeal w := by
+      rw [eval_map, eval₂_at_apply, mem_max_iff, ιw_coe]
+      exact (mem_max_comap_iff w _ _).mp h₁
+    haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed K
+    obtain ⟨α, hα, hαc⟩ := exists_root_near w q hq _ hc
+    have hroot : (f.map (ιΩ w)).eval (α : Ω) = 0 := by
+      rw [map_ιΩ_eq, eval_map]
+      change eval₂ (algebraMap w Ω) (algebraMap w Ω α) q = 0
+      rw [eval₂_at_apply, hα.eq_zero, map_zero]
+    have hres : residue w α = residue w (ιw w a₀) := by
+      rw [← sub_eq_zero, ← map_sub, residue_eq_zero_iff]; exact hαc
+    have hsimple : ((f.map ((residue w).comp (ιw w))).derivative).eval
+        (residue w ⟨(α : Ω), α.2⟩) ≠ 0 := by
+      have e : (⟨(α : Ω), α.2⟩ : w) = α := rfl
+      rw [e, hres, derivative_map, eval_map]
+      change eval₂ ((residue w).comp (ιw w)) (((residue w).comp (ιw w)) a₀) _ ≠ 0
+      rw [eval₂_at_apply, RingHom.comp_apply, residue_ne_zero_iff_isUnit]
+      exact h₂.map _
+    have hαE := mem_inertiaField_of_simple_root w f (α : Ω) hroot α.2 hsimple
+    let a : wE (K := K) w := ⟨⟨α, hαE⟩, by exact α.2⟩
+    refine ⟨a, ?_, ?_⟩
+    · have h0 : ιΩ w (f.eval a) = 0 := by
+        rw [← eval₂_at_apply, ← eval_map]; exact hroot
+      apply Subtype.ext
+      apply (algebraMap (inertiaField (K := K) w) Ω).injective
+      change ιΩ w _ = algebraMap _ Ω 0
+      rw [map_zero]
+      exact h0
+    · rw [mem_max_comap_iff]
+      have := (mem_max_iff w _).mp hαc
+      exact this
 
 end Ring
 
