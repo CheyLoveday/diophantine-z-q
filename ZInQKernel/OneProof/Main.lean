@@ -2,6 +2,7 @@ import ZInQKernel.OneProof.H.TailZ26
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
+import ZInQKernel.Contrib.OneProof.RingClassLattice
 
 /-!
 # The whole proof in one theorem
@@ -34,7 +35,11 @@ the development fork, and from nothing else. It composes three compiled chains:
   docs/research/leaf-fold14.md).
 * TYZ: `ZInQ.Contrib.TYZChain.tyzThm35ReadingA_of_leaves` proves reading A of Tian–Yuan–Zhang from four leaves; the
   fourth, tyz-35's pinned form of TYZ Theorem 3.3, is derived from TYZ Theorem 3.3 in its printed form
-  (`ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33`, `OneProof/TYZSplit.lean`, task tyz-split).
+  (`ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33`, `OneProof/TYZSplit.lean`, task tyz-split), and the
+  third, Shimura reciprocity for modular functions, from the two printed leaves `T5Glue.ShimuraMainCM` (Shimura 1971
+  Thm 5.4) and `T5Glue.X0ModuliGalois` (the canonical model of X0(N)) by
+  `T5Glue.shimuraReciprocityModFn_of_printed` (`Contrib/OneProof/RingClassLattice.lean`, tasks t5-glue and
+  gt-ringclass, leaf-fold17).
 * GZ and assembly: `ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves` proves `ZInQ.FrozenTarget`
   from H, reading A and the two open Gross–Zagier statements, with `HeckeThetaNewform` proved
   (`OneProof/TopChain.lean`) and Hecke's continuation and the functional equation proved
@@ -52,13 +57,14 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves16) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves14)
     (g : HDec.HSyn.OpenGlue7)
-    (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2) (hS : Shimura.ShimuraReciprocityModFn)
+    (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
+    (hCM : _root_.T5Glue.ShimuraMainCM) (hX : _root_.T5Glue.X0ModuliGalois)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hL2 : ZInQ.GZDecomp.FHNonvanishing) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
     ZInQ.FrozenTarget :=
   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
     (HDec.HSyn.sixContactMin_of_open20 r t l g)
-    (tyzThm35ReadingA_of_leaves h11 h29 hS (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33))
+    (tyzThm35ReadingA_of_leaves h11 h29 (_root_.T5Glue.shimuraReciprocityModFn_of_printed hCM hX) (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33))
     ZInQ.GZTheta.Frontier.heckeThetaNewform hL2 hL3
 
 end ZInQ.Contrib.TYZChain
