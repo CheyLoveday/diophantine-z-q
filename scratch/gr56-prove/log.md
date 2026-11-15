@@ -52,3 +52,13 @@ Base 43513d87 (leaf-fold25). Target: research field `gonzalezRotgerProp56X6` (`G
   63 open, 1973 checked, 9 discharge one.
 - autofold.json now: leaves `eichlerOptEmbCount6`, `qmTorusAbelian`; proof uses `{l}.shimuraTaniyamaQbar`.
   `--dry-run`: strict 46/10 on 56 -> 47/10 on 57; strictest 45/11 -> 46/11. FoldCheck.lean compiles, standard axioms.
+- `qmTorusAbelian_of_main : ShimuraMainThmIDeligneY3AbU → QMTorusAbelian` (VERIFIED, compiles): the research
+  field's moduli clause `ModuliAtUnits` at u = 1 is exactly QMTorusAbelian. `gonzalezRotgerProp56X6_of_main`,
+  `cmPointsOptEmb6_of_main` (no new leaf besides Eichler).
+- autofold.json (main variant): only new leaf `eichlerOptEmbCount6`; proof
+  `GR56.gonzalezRotgerProp56X6_of_main {n}.eichlerOptEmbCount6 {n}.shimuraMainThmIDeligneY3AbU {l}.shimuraTaniyamaQbar {t}...`.
+  `--dry-run`: strict 46/10 on 56 -> 46/10 on 56; strictest 45/11 -> 45/11 (VERIFIED). FoldCheck.lean compiles,
+  `sixContactMin_of_open30` standard axioms. Alternative spec autofold-alt-torus.json (leaf qmTorusAbelian instead
+  of the composite field): 46/10 -> 47/10.
+- `#discharges`: 63 open, 1976 checked, 10 discharge one; GR56 discharges the field by `_of_main`, `_of_st`,
+  `_of_leaves`.

@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.OneProof.QMLattice
 import ZInQKernel.Contrib.OneProof.GRCountX6
 import ZInQKernel.Contrib.HeightBC.G0StableBC
+import ZInQKernel.Contrib.OneProof.RayClassShimura
 
 /-!
 # gr56-prove: CM points on `X₆` inject into optimal embeddings (the lattice model)
@@ -1384,6 +1385,32 @@ theorem cmPointsOptEmb6_of_st (hE1 : QMTorusAbelian)
     (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
     (hM : AvSplit.MumfordTorsionAlgClosed) : GRCountX6.CMPointsOptEmb6 :=
   cmPointsOptEmb6_of hE1 (cmPairDescendsQbar_of_st hST) hU hG hM
+
+/-- **`QMTorusAbelian` from the bundle's field `shimuraMainThmIDeligneY3AbU`** (its moduli clause `ModuliAtUnits`
+at `u = 1`: the object at `Ψ(τ, 1)` is the QM torus `ℂ²/ι(𝒪)(τ, 1)ᵀ`). -/
+theorem qmTorusAbelian_of_main (h : RayClassCFT.ShimuraMainThmIDeligneY3AbU) : QMTorusAbelian := by
+  obtain ⟨Y, Φ, -, Ψ, -, hmod⟩ := h
+  intro τ hτ
+  obtain ⟨P, -, Φu, hΦu, hι⟩ := hmod 1 (by refine ⟨?_, ?_⟩ <;> simpa using RayClassCFT.OhatQ_one) ⟨τ, hτ⟩
+  exact ⟨P.A, P.surface, P.q, Φu, hΦu, hι⟩
+
+/-- **The field from Eichler's count and three fields already in the bundles**: `shimuraMainThmIDeligneY3AbU`
+(research), `shimuraTaniyamaQbar` (added) and the textbook fields. The form for the fold: Eichler's count is
+the only new leaf. -/
+theorem gonzalezRotgerProp56X6_of_main (hE : GRCountX6.EichlerOptEmbCount6)
+    (hS : RayClassCFT.ShimuraMainThmIDeligneY3AbU)
+    (hST : HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : GRCountX6.GonzalezRotgerProp56X6 :=
+  gonzalezRotgerProp56X6_of_st hE (qmTorusAbelian_of_main hS) hST hU hG hM
+
+/-- `CMPointsOptEmb6` from the bundle fields `shimuraMainThmIDeligneY3AbU`, `shimuraTaniyamaQbar` and the
+textbook fields (no new leaf). -/
+theorem cmPointsOptEmb6_of_main (hS : RayClassCFT.ShimuraMainThmIDeligneY3AbU)
+    (hST : HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : GRCountX6.CMPointsOptEmb6 :=
+  cmPointsOptEmb6_of (qmTorusAbelian_of_main hS) (cmPairDescendsQbar_of_st hST) hU hG hM
 
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
