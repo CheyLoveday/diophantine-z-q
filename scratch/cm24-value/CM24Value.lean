@@ -931,4 +931,39 @@ theorem sq_inv (a0 a1 b0 b1 : ℕ) :
   rw [cpow_half_sq, cpow_half_sq, ← e1, Ecal]
   ring
 
+/-- `U` with characteristic reduced mod `ℤ²`. -/
+def Uf (s0 s1 : ℕ) : ℂ := U (((s0 % 2 : ℕ) : ℝ) / 2) (((s1 % 2 : ℕ) : ℝ) / 2)
+
+theorem U_nat (s0 s1 : ℕ) : U ((s0 : ℝ) / 2) ((s1 : ℝ) / 2) = Uf s0 s1 := by
+  rw [Uf, U, U]
+  conv_rhs => rw [← th2_shift_c _ _ _ _ _ _ _ ((s0 / 2 : ℕ) : ℤ) ((s1 / 2 : ℕ) : ℤ)]
+  simp only [Int.cast_natCast]
+  have h0 : (s0 : ℝ) = ((s0 % 2 : ℕ) : ℝ) + 2 * ((s0 / 2 : ℕ) : ℝ) := by
+    exact_mod_cast (Nat.mod_add_div s0 2).symm
+  have h1 : (s1 : ℝ) = ((s1 % 2 : ℕ) : ℝ) + 2 * ((s1 / 2 : ℕ) : ℝ) := by
+    exact_mod_cast (Nat.mod_add_div s1 2).symm
+  congr 1 <;> linarith
+
+theorem exp_pi_nat (k : ℕ) : cexp (π * I * (k : ℂ)) = (-1) ^ k := by
+  rw [mul_comm, Complex.exp_nat_mul, Complex.exp_pi_mul_I]
+
+/-- **Duplication at `W`, with the translation reductions.** -/
+theorem sqW (a0 a1 b0 b1 : ℕ) :
+    Th2 wa wb wc ((b0 : ℝ) / 2) ((b1 : ℝ) / 2) ((a0 : ℝ) / 2) ((a1 : ℝ) / 2) ^ 2 =
+      ∑ σ : Fin 2 × Fin 2, (-1 : ℂ) ^ (((σ.1 : ℕ) + b0) * a0 + ((σ.2 : ℕ) + b1) * a1) *
+        Uf ((σ.1 : ℕ) + b0) ((σ.2 : ℕ) + b1) * Uf σ.1 σ.2 := by
+  rw [dup2 _ _ _ _ (summable_norm_term2 d2pos posW _ _ _ _)
+    (fun _ _ _ _ => summable_norm_term2 d3pos posW2 _ _ _ _)]
+  congr 1; funext σ
+  have e0 : 2 * ((a0 : ℝ) / 2) = 0 + ((a0 : ℤ) : ℝ) := by push_cast; ring
+  have e1 : 2 * ((a1 : ℝ) / 2) = 0 + ((a1 : ℤ) : ℝ) := by push_cast; ring
+  rw [e0, e1, th2_shift_d]
+  have c0 : ((σ.1 : ℕ) : ℝ) / 2 + (b0 : ℝ) / 2 = (((σ.1 : ℕ) + b0 : ℕ) : ℝ) / 2 := by push_cast; ring
+  have c1 : ((σ.2 : ℕ) : ℝ) / 2 + (b1 : ℝ) / 2 = (((σ.2 : ℕ) + b1 : ℕ) : ℝ) / 2 := by push_cast; ring
+  rw [c0, c1]
+  change _ * U _ _ * U _ _ = _
+  rw [U_nat, U_nat, ← exp_pi_nat]
+  congr 2
+  congr 1; push_cast; ring
+
 end CM24
