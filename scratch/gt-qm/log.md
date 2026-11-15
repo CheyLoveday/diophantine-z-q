@@ -11,3 +11,22 @@
   `comm_span`; §2 `alg_core` (pure algebra: image 𝒪 ∩ S_(τ,1) ⇒ ℤ or Φ⁻¹(𝒪), k = S_(τ,1) with IsField.toField);
   §3 `com_embed` (h38 + h69 + qmLatticeAlgebra_of_free/qmLatticeFree_of/qmSkolemNoetherC_proof/qmClassNumberOne_proof,
   unif_ring_hom, lift_unique); §4 main theorem. No new leaves.
+- 2026-11-15 ~02:00: A9. Consumer check (VERIFIED by `scratch/gt-qm/Reach.lean`, value-closure of
+  `HDec.HSyn.sixContactMin_of_open20` over ZInQKernel constants, 73583 constants): `PkgI3.QMDichotomyYu`
+  (from `yuThm11` via `qmDichotomyYu_of_yu`) is applied at exactly 4 live sites, all at (a,b) = (2,−3) with
+  the embedding of a QM structure by 𝒪:
+  `HDec.FS5NoCM.comIntOrQuadOrder_of` (TailC L1700, k = Qbar), `HDec.G0ModField.KernelField.endEqOFibre_of`
+  (TailC L6827, k = Qbar), `HDec.G0FibreSimple.fibreSimple_of_pieces` (TailA L1158, k = Qbar),
+  `HDec.LTGoodRed.QM.qmEndRank_of` (TailF L4038, k = AlgebraicClosure L', L' : IF finite over ℚ).
+  26 live declarations carry the hypothesis type (list in docs/research/gt-qm.md).
+- `YuThm11` as stated (all alg. closed k of char 0, all indefinite division (a,b), any embedding) is NOT
+  proved: the inputs are analytic over ℂ and only reach fields embeddable in ℂ, and the lattice route is
+  written for 𝒪 ⊂ (2,−3). Proved instead: `HDec.QMLattice.YuB6Alg` (def, the 4 consumers' form) and
+  `yuB6Alg_of (hU) (hG) (hM) (hR : ZInQ.LeafPush2.T11b_Rigidity) : YuB6Alg` (compiles, VERIFIED), plus
+  `yuB6Alg_of_yuThm11 : YuThm11 → YuB6Alg` (never stronger, VERIFIED).
+- #discharges (VERIFIED, `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
+  +ZInQKernel.Contrib.OneProof.QMLattice` OK, then `lake env lean scratch/gt-qm/Discharges.lean`):
+  DISCHARGES [OpenAddedLeaves14.qmCentralizerCMC] by HDec.QMLattice.qmCentralizerCMC_of
+    still assumes: [BPAnalytic.Uniformization.UniformizationLeafAll, ZInQ.HomLattice.GAGAMorphism, AvSplit.MumfordTorsionAlgClosed]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 67 open hypotheses, 567 theorems checked, 1 discharge one
