@@ -378,4 +378,127 @@ theorem weierstrassP_surjective (w : ℂ) : ∃ z ∉ L.lattice, L.weierstrassP 
 
 end Surj
 
+/-! ## C5–C7. `x(τ) = ℘(Φ₁(τ) + c₀)` and the periods of `Φ₁` lie in `L` -/
+
+section Param
+
+open ZInQ.Contrib.TYZGenus Filter Topology
+
+variable (L : PeriodPair) (hg2 : L.g₂ = -16) (hg3 : L.g₃ = 0)
+
+include hg2 hg3 in
+theorem relation_A {z : ℂ} (hz : z ∉ L.lattice) :
+    L.derivWeierstrassP z ^ 2 = 4 * L.weierstrassP z ^ 3 + 16 * L.weierstrassP z := by
+  rw [L.derivWeierstrassP_sq z hz, hg2, hg3]; ring
+
+theorem U_open : IsOpen {w : ℂ | 0 < w.im} := isOpen_lt continuous_const Complex.continuous_im
+
+theorem hasDerivAt_wp {z : ℂ} (hz : z ∉ L.lattice) :
+    HasDerivAt L.weierstrassP (L.derivWeierstrassP z) z := by
+  have := (L.analyticOnNhd_weierstrassP z hz).differentiableAt.hasDerivAt
+  rwa [L.deriv_weierstrassP] at this
+
+theorem analyticAt_eichler {σ : ℂ} (hσ : 0 < σ.im) : AnalyticAt ℂ (eichlerCd 1) σ := by
+  have hd : DifferentiableOn ℂ (eichlerCd 1) {w : ℂ | 0 < w.im} := fun w hw =>
+    (hasDerivAt_eichlerCd_one hw).differentiableAt.differentiableWithinAt
+  exact hd.analyticAt (U_open.mem_nhds hσ)
+
+theorem analyticAt_xC {σ : ℂ} (hσ : 0 < σ.im) : AnalyticAt ℂ X0.xC σ := by
+  have hd : DifferentiableOn ℂ X0.xC {w : ℂ | 0 < w.im} := fun w hw =>
+    (X0.differentiableAt_xC ⟨w, hw⟩).differentiableWithinAt
+  exact hd.analyticAt (U_open.mem_nhds hσ)
+
+theorem analyticAt_yC {σ : ℂ} (hσ : 0 < σ.im) : AnalyticAt ℂ X0.yC σ := by
+  have hd : DifferentiableOn ℂ X0.yC {w : ℂ | 0 < w.im} := fun w hw =>
+    (X0.differentiableAt_yC ⟨w, hw⟩).differentiableWithinAt
+  exact hd.analyticAt (U_open.mem_nhds hσ)
+
+theorem analyticAt_fC {σ : ℂ} (hσ : 0 < σ.im) : AnalyticAt ℂ X0.fC σ := by
+  have hd : DifferentiableOn ℂ X0.fC {w : ℂ | 0 < w.im} := fun w hw =>
+    (X0.differentiableAt_fC ⟨w, hw⟩).differentiableWithinAt
+  exact hd.analyticAt (U_open.mem_nhds hσ)
+
+include hg2 hg3 in
+/-- **Local identity (C5).** If `℘(z₀) = x(τ₀)` and `℘'(z₀) = 2y(τ₀)`, then `℘(Φ₁(σ) + c₀) = x(σ)`
+near `τ₀`, `c₀ = z₀ − Φ₁(τ₀)`: `Ψ = ℘(Φ₁ + c₀) − x` satisfies `Ψ' = h Ψ` with `h` analytic and
+`Ψ(τ₀) = 0`, so its order of vanishing is infinite. -/
+theorem local_eq (hD : X0.EtaModelDifferential) (τ0 : ℍ) {z0 : ℂ} (hz0 : z0 ∉ L.lattice)
+    (hx : L.weierstrassP z0 = X0.xC τ0) (hy : L.derivWeierstrassP z0 = 2 * X0.yC τ0) :
+    ∀ᶠ σ in 𝓝 (τ0 : ℂ),
+      L.weierstrassP (eichlerCd 1 σ + (z0 - eichlerCd 1 τ0)) = X0.xC σ := by
+  set c0 := z0 - eichlerCd 1 τ0 with hc0
+  set w : ℂ → ℂ := fun σ => eichlerCd 1 σ + c0 with hw
+  have hwτ : w τ0 = z0 := by simp [hw, hc0]
+  set Ψ : ℂ → ℂ := fun σ => L.weierstrassP (w σ) - X0.xC σ with hΨ
+  have hτ0 : 0 < (τ0 : ℂ).im := τ0.im_pos
+  have hwa : AnalyticAt ℂ w τ0 := (analyticAt_eichler hτ0).add analyticAt_const
+  have hwc : ContinuousAt w τ0 := hwa.continuousAt
+  have hΨa : AnalyticAt ℂ Ψ τ0 :=
+    ((L.analyticOnNhd_weierstrassP _ (hwτ ▸ hz0)).comp hwa).sub (analyticAt_xC hτ0)
+  have hΨ0 : Ψ τ0 = 0 := by simp [hΨ, hwτ, hx]
+  -- eventually: `σ ∈ ℍ`, `w σ ∉ L`, `℘'(w σ) + 2 y(σ) ≠ 0`
+  have hevU : ∀ᶠ σ in 𝓝 (τ0 : ℂ), 0 < σ.im := U_open.mem_nhds hτ0
+  have hevL : ∀ᶠ σ in 𝓝 (τ0 : ℂ), w σ ∉ L.lattice :=
+    hwc.eventually (L.isClosed_lattice.isOpen_compl.mem_nhds (hwτ ▸ hz0))
+  have hy0 : X0.yC τ0 ≠ 0 := X0.yC_ne_zero τ0
+  have hden_c : ContinuousAt (fun σ => L.derivWeierstrassP (w σ) + 2 * X0.yC σ) τ0 := by
+    refine ContinuousAt.add ?_ ((analyticAt_yC hτ0).continuousAt.const_mul 2)
+    exact ContinuousAt.comp_of_eq (g := L.derivWeierstrassP) (f := w)
+      (L.analyticOnNhd_derivWeierstrassP _ (hwτ ▸ hz0)).continuousAt hwc hwτ
+  have hden0 : L.derivWeierstrassP (w τ0) + 2 * X0.yC τ0 ≠ 0 := by
+    rw [hwτ, hy]; intro h; apply hy0; linear_combination h / 4
+  have hevD : ∀ᶠ σ in 𝓝 (τ0 : ℂ), L.derivWeierstrassP (w σ) + 2 * X0.yC σ ≠ 0 :=
+    hden_c.eventually_ne hden0
+  set h : ℂ → ℂ := fun σ => 2 * Real.pi * Complex.I * X0.fC σ *
+    (4 * (L.weierstrassP (w σ) ^ 2 + L.weierstrassP (w σ) * X0.xC σ + X0.xC σ ^ 2 + 4)) /
+      (L.derivWeierstrassP (w σ) + 2 * X0.yC σ) with hh
+  have hha : AnalyticAt ℂ h τ0 := by
+    have hpw : AnalyticAt ℂ (fun σ => L.weierstrassP (w σ)) τ0 :=
+      (L.analyticOnNhd_weierstrassP _ (hwτ ▸ hz0)).comp hwa
+    have hpw' : AnalyticAt ℂ (fun σ => L.derivWeierstrassP (w σ)) τ0 :=
+      (L.analyticOnNhd_derivWeierstrassP _ (hwτ ▸ hz0)).comp hwa
+    have hxa := analyticAt_xC hτ0
+    have hya := analyticAt_yC hτ0
+    have hfa := analyticAt_fC hτ0
+    refine AnalyticAt.div ?_ (hpw'.add (analyticAt_const.mul hya)) hden0
+    exact (((analyticAt_const.mul hfa)).mul
+      (analyticAt_const.mul ((((hpw.pow 2).add (hpw.mul hxa)).add (hxa.pow 2)).add analyticAt_const)))
+  have hderiv : deriv Ψ =ᶠ[𝓝 (τ0 : ℂ)] h * Ψ := by
+    filter_upwards [hevU.eventually_nhds, hevL.eventually_nhds, hevD] with σ hσU hσL hσD
+    have hσ : 0 < σ.im := hσU.self_of_nhds
+    have hL' : w σ ∉ L.lattice := hσL.self_of_nhds
+    have hdw : HasDerivAt w (2 * Real.pi * Complex.I * X0.fC σ) σ :=
+      (hasDerivAt_eichlerCd_one hσ).add_const c0
+    have hdΨ : HasDerivAt Ψ (L.derivWeierstrassP (w σ) * (2 * Real.pi * Complex.I * X0.fC σ) -
+        4 * Real.pi * Complex.I * X0.fC σ * X0.yC σ) σ :=
+      ((hasDerivAt_wp L hL').comp σ hdw).sub (hD ⟨σ, hσ⟩)
+    rw [hdΨ.deriv]
+    have hrel := relation_A L hg2 hg3 hL'
+    have heq := ZInQ.Contrib.TYZGenus.Shimura.etaModelEquation ⟨σ, hσ⟩
+    simp only at heq
+    simp only [Pi.mul_apply, hh, hΨ]
+    field_simp
+    linear_combination (2 * X0.fC σ) * (hrel - 4 * heq)
+  -- the order argument
+  suffices hΨev : ∀ᶠ σ in 𝓝 (τ0 : ℂ), Ψ σ = 0 by
+    filter_upwards [hΨev] with σ hσ
+    exact sub_eq_zero.mp hσ
+  rw [← analyticOrderAt_eq_top]
+  by_contra hne
+  obtain ⟨m, hm⟩ := WithTop.ne_top_iff_exists.mp hne
+  have hm0 : m ≠ 0 := by
+    rintro rfl
+    have := (hΨa.analyticOrderAt_eq_zero).mp (by rw [← hm]; rfl)
+    exact this hΨ0
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hm0
+  have h1 : analyticOrderAt (deriv Ψ) (τ0 : ℂ) = n :=
+    analyticOrderAt_deriv_of_pos hΨa (by rw [← hm]; push_cast; rfl)
+  rw [analyticOrderAt_congr hderiv, analyticOrderAt_mul hha hΨa, ← hm] at h1
+  have : ((n.succ : ℕ) : ℕ∞) ≤ (n : ℕ∞) := by
+    rw [← h1]; exact le_add_self
+  norm_cast at this
+  omega
+
+end Param
+
 end ZInQ.GZWeil
