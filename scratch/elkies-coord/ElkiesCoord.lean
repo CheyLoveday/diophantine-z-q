@@ -192,6 +192,126 @@ noncomputable def signAct (c d : ℤˣ) : HDec.X6Kummer.ConicPt → HDec.X6Kumme
       linear_combination (b.1 ^ 2) * hc + this⟩
 
 
+/-! ## The charts: rational functions `t, s, r` and the action of a `t`-preserving automorphism -/
+
+section Charts
+
+open X6Glue
+
+variable {X : Over (Spec (CommRingCat.of ℚ))} {t : ToP1 X.left} [IsIntegral X.left]
+
+/-- `ElkiesRing → Γ(t.U) → ℚ(X)`. -/
+noncomputable abbrev jU (φU : ElkiesRing ≃+* Γ(X.left, t.U)) (hηU : genericPoint X.left ∈ t.U) :
+    ElkiesRing →+* X.left.functionField :=
+  (X.left.presheaf.germ t.U _ hηU).hom.comp (φU : ElkiesRing →+* Γ(X.left, t.U))
+
+/-- `ElkiesRing → Γ(t.V) → ℚ(X)`. -/
+noncomputable abbrev jV (φV : ElkiesRing ≃+* Γ(X.left, t.V)) (hηV : genericPoint X.left ∈ t.V) :
+    ElkiesRing →+* X.left.functionField :=
+  (X.left.presheaf.germ t.V _ hηV).hom.comp (φV : ElkiesRing →+* Γ(X.left, t.V))
+
+variable (φU : ElkiesRing ≃+* Γ(X.left, t.U)) (φV : ElkiesRing ≃+* Γ(X.left, t.V))
+  (hηU : genericPoint X.left ∈ t.U) (hηV : genericPoint X.left ∈ t.V)
+
+theorem jU_injective : Function.Injective (jU φU hηU) :=
+  (germ_injective_of_isIntegral X.left _ hηU).comp φU.injective
+
+theorem germ_inv_rel (hT : φU eT = t.f) (hTg : φV eT = t.g) : jU φU hηU eT * jV φV hηV eT = 1 := by
+  have hη : genericPoint X.left ∈ t.U ⊓ t.V := ⟨hηU, hηV⟩
+  have := congrArg (X.left.presheaf.germ (t.U ⊓ t.V) _ hη) t.inv
+  rw [map_mul, map_one, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at this
+  simpa [jU, jV, hT, hTg] using this
+
+theorem germ_glue1
+    (hg1 : X.left.presheaf.map (homOfLE (inf_le_left : t.U ⊓ t.V ≤ t.U)).op (φU eS) *
+      X.left.presheaf.map (homOfLE (inf_le_right : t.U ⊓ t.V ≤ t.V)).op (φV eS) = 1) :
+    jU φU hηU eS * jV φV hηV eS = 1 := by
+  have hη : genericPoint X.left ∈ t.U ⊓ t.V := ⟨hηU, hηV⟩
+  have := congrArg (X.left.presheaf.germ (t.U ⊓ t.V) _ hη) hg1
+  rw [map_mul, map_one, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at this
+  simpa [jU, jV] using this
+
+theorem germ_glue2
+    (hg2 : X.left.presheaf.map (homOfLE (inf_le_left : t.U ⊓ t.V ≤ t.U)).op (φU eR) *
+      X.left.presheaf.map (homOfLE (inf_le_right : t.U ⊓ t.V ≤ t.V)).op (φV eS) =
+      X.left.presheaf.map (homOfLE (inf_le_right : t.U ⊓ t.V ≤ t.V)).op (φV eR)) :
+    jU φU hηU eR * jV φV hηV eS = jV φV hηV eR := by
+  have hη : genericPoint X.left ∈ t.U ⊓ t.V := ⟨hηU, hηV⟩
+  have := congrArg (X.left.presheaf.germ (t.U ⊓ t.V) _ hη) hg2
+  rw [map_mul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply,
+    TopCat.Presheaf.germ_res_apply] at this
+  simpa [jU, jV] using this
+
+theorem sigma_inv_of {F : Type*} [Field F] (σ : F →+* F) (a b : F) (c : ℤˣ)
+    (hS : σ a = ((c : ℤ) : F) * a) (h1 : a * b = 1) : σ b = ((c : ℤ) : F) * b := by
+  have e := congrArg σ h1
+  rw [map_mul, map_one, hS] at e
+  have hc := unit_cast_sq (R := F) c
+  linear_combination (((c : ℤ) : F) * b) * e - σ b * ((c : ℤ) : F) ^ 2 * h1 - σ b * hc
+
+theorem mem_preimage_gen (g : X.left ≅ X.left) {A : X.left.Opens} (h : genericPoint X.left ∈ A) :
+    genericPoint X.left ∈ g.hom ⁻¹ᵁ A := by
+  show g.hom (genericPoint X.left) ∈ A
+  rw [genericPoint_eq_of_isOpenImmersion g.hom]
+  exact h
+
+omit [IsIntegral X.left] in
+theorem mem_preimage_pt (g : X.left ≅ X.left) {A : X.left.Opens} (y : Spec (CommRingCat.of Qbar) ⟶ X.left)
+    (h : (Scheme.SpecToEquivOfField Qbar X.left (y ≫ g.hom)).1 ∈ A) :
+    (Scheme.SpecToEquivOfField Qbar X.left y).1 ∈ g.hom ⁻¹ᵁ A := by
+  show g.hom _ ∈ A
+  rw [← pt_comp]
+  exact h
+
+theorem pullback_jU (g : X.left ≅ X.left) (a : ElkiesRing) :
+    ffPullback g (jU φU hηU a) =
+      X.left.presheaf.germ (g.hom ⁻¹ᵁ t.U) _ (mem_preimage_gen g hηU) (g.hom.app t.U (φU a)) := by
+  simp only [jU, RingHom.comp_apply, RingHom.coe_coe]
+  exact ffPullback_germ g t.U hηU _ _
+
+theorem pullback_jV (g : X.left ≅ X.left) (a : ElkiesRing) :
+    ffPullback g (jV φV hηV a) =
+      X.left.presheaf.germ (g.hom ⁻¹ᵁ t.V) _ (mem_preimage_gen g hηV) (g.hom.app t.V (φV a)) := by
+  simp only [jV, RingHom.comp_apply, RingHom.coe_coe]
+  exact ffPullback_germ g t.V hηV _ _
+
+variable {φU φV}
+
+include hηV in
+/-- A `t`-preserving automorphism maps `t.U = {t ≠ ∞}` onto itself (on `ℚ̄`-points). -/
+theorem memU_comp_iff (hT : φU eT = t.f) (hTg : φV eT = t.g) (g : X.left ≅ X.left)
+    (hτ : ffPullback g (jU φU hηU eT) = jU φU hηU eT) (y : Spec (CommRingCat.of Qbar) ⟶ X.left) :
+    pt (X := X) (y ≫ g.hom) ∈ t.U ↔ pt (X := X) y ∈ t.U := by
+  have hinv := germ_inv_rel φU φV hηU hηV hT hTg
+  have hτ' : ffPullback g (jV φV hηV eT) = jV φV hηV eT := by
+    have e := congrArg (ffPullback g) hinv
+    rw [map_mul, map_one, hτ] at e
+    rw [eq_inv_of_mul_eq_one_right e, eq_inv_of_mul_eq_one_right hinv]
+  have gf : X.left.presheaf.germ t.U _ hηU t.f = jU φU hηU eT := by simp [jU, hT]
+  have gg : X.left.presheaf.germ t.V _ hηV t.g = jV φV hηV eT := by simp [jV, hTg]
+  constructor
+  · intro h'
+    by_contra h
+    have hv := memV_of_not_memU (X := X) (t := t) y h
+    have h0 := ev_g_eq_zero (X := X) (t := t) y h hv
+    have hm := mem_preimage_pt g y h'
+    have key := ev_mul_eq_one_of_germ (mem_preimage_gen g hηU) hηV (g.hom.app t.U t.f) t.g
+      (by rw [← ffPullback_germ g t.U hηU, gf, gg, hτ, hinv]) y hm hv
+    rw [h0, mul_zero] at key
+    exact zero_ne_one key
+  · intro h
+    by_contra h'
+    have hv := memV_of_not_memU (X := X) (t := t) (y ≫ g.hom) h'
+    have h0 := ev_g_eq_zero (X := X) (t := t) (y ≫ g.hom) h' hv
+    have hm := mem_preimage_pt g y hv
+    rw [ev_comp_hom g.hom t.V y hv hm] at h0
+    have key := ev_mul_eq_one_of_germ (mem_preimage_gen g hηV) hηU (g.hom.app t.V t.g) t.f
+      (by rw [← ffPullback_germ g t.V hηV, gf, gg, hτ', mul_comm, hinv]) y hm h
+    rw [h0, zero_mul] at key
+    exact zero_ne_one key
+
+end Charts
+
 /-- `ℚ(X₆)^W`: the rational functions on `X₆` fixed by every `g ∈ W` (`g^*φ = φ`). -/
 def fixedByW {X : Over (Spec (CommRingCat.of ℚ))} [IsIntegral X.left]
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) : Set X.left.functionField :=
