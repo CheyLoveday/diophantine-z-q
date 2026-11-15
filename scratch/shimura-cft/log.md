@@ -25,3 +25,11 @@ check with `scratch/shimura-cft/run.sh <file>` (= `lake env lean`).
 - `dcRel_one_iff`: DCRel τ 1 τ' 1 ↔ ∃ x, InGamma3 x ∧ ι(x)·τ = τ' (K₃ ∩ B^×_+ = Γ(3)).
 - `mainThmIY3_of_mainThmI : ShimuraMainThmIDeligneY3 → CToPrinted.Shimura.ShimuraMainThmIY3` (new leaf implies
   c-to-printed's leaf).
+
+## Step 4 (11-14 17:40): Part C draft `E.lean` (not yet compiled)
+- Copies from t5-glue: `mem_range_of_isAlgebraic`, `AbsArtinSurjective`, section `AbsArtin` (absArt surjective
+  for no real places). New: `exists_tau`, `exists_iota`, `exists_artinCondC_of_abs`, `exists_artinCondC`
+  (every σ ∈ Aut(ℂ) fixing κ(K) satisfies ArtinCondC κ σ s for some idele s, K totally complex).
+- Needs import `ZInQKernel.Contrib.TYZGenus.ShimuraModFn`. BLOCKED: ~/dzq-check2 (the build my symlink tree points
+  to) is being rebuilt in place at b5ff0474 (LPrefix.olean missing during rebuild). Waiting for it to finish, then
+  copy the build (real copy, not symlinks).
