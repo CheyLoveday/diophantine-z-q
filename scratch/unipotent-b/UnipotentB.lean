@@ -261,4 +261,97 @@ theorem semistableUnipotent0_of_printed (hP : SemistableUnipotentPrinted)
 theorem semistableUnipotent0_of_old (h : ReductSplit.SemistableUnipotent) : SemistableUnipotent0 :=
   fun K _ _ O _ _ Ω _ _ _ w hw A hA ℓ _ hℓ σ hσ t => h K O Ω w hw A hA ℓ hℓ σ hσ t
 
+/-! ## §4. The unrestricted field (every field `K`): reduction to the printed leaf and two named Props
+
+The kernel row r6 (`PkgI2.RaynaudCriterion`, proved by `ReductGlue.raynaudCriterion_leaves` from
+`semistableUnipotent`) is quantified over every field, so the field itself cannot gain
+`[CharZero K]` without breaking that proof (`docs/research/unipotent-b.md` §4). This section keeps
+the field's statement and reduces it to the printed form over every field plus two named Props. -/
+
+/-- **LEAF (printed form, every field) `SemistableUnipotentPrintedGen`** (SGA 7 I, Exp. IX, Prop. 3.5,
+**UNVERIFIED** wording, as `SemistableUnipotentPrinted` but without `[CharZero K]` and
+`[PerfectField k(s)]`): `O` strictly henselian, `Ω = K^s` a separable closure, semistability over
+`k(s)`, `ℓ` invertible in `O`; semistable iff `I` unipotent, then of echelon `≤ 2`. -/
+def SemistableUnipotentPrintedGen : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O],
+    IsStrictlyHenselianDVR O →
+    ∀ (Ω : Type) [Field Ω] [Algebra K Ω] [IsSepClosure K Ω] (w : ValuationSubring Ω),
+    w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K,
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], IsUnit (ℓ : O) →
+      (HasSemistableReductionRes A O ↔ InertiaUnipotent A w ℓ) ∧
+      (HasSemistableReductionRes A O → ∀ σ τ : Ω ≃ₐ[K] Ω, IsInertia w σ → IsInertia w τ →
+        (galTΩ A ℓ σ - 1) * (galTΩ A ℓ τ - 1) = 0)
+
+/-- `SemistableUnipotentPrintedGen` restricts to `SemistableUnipotentPrinted`. -/
+theorem printed_of_printedGen (h : SemistableUnipotentPrintedGen) : SemistableUnipotentPrinted :=
+  fun K _ _ O _ hO _ Ω _ _ _ w hw A ℓ _ hℓ => h K O hO Ω w hw A ℓ hℓ
+
+/-- **GLUE `SemiAbelianDescendsSepClosed`** (the `k(s)` axis for imperfect residue fields). For a
+discrete valuation ring `O` with separably closed residue field `k`, a group model whose geometric
+special fibre (over `κ̄`, an algebraic closure of `k`, purely inseparable over `k`) has semi-abelian
+identity component already has it over `k`. Needs: the maximal torus of the smooth connected
+commutative group `G⁰_k` exists over `k` (SGA 3 II, Exp. XIV, Thm 1.1, UNVERIFIED) and its base change
+is the maximal torus of `G⁰_κ̄`; the quotient `G⁰_k / T` is smooth, connected and proper after base
+change to `κ̄`, hence an abelian variety (proper descends along field extensions, EGA IV₂ 2.7.1);
+tori over a separably closed field are split. Proved here when `k` is perfect
+(`isSemistableRes_iff`). Not in Mathlib 4.35. -/
+def SemiAbelianDescendsSepClosed : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O],
+    IsSepClosed (IsLocalRing.ResidueField O) →
+    ∀ (A : PkgI3.AbVar K) (𝒩 : GroupModelO A O), 𝒩.IsSemistable → IsSemistableRes 𝒩
+
+/-- `SemiAbelianDescendsSepClosed` holds for perfect residue fields (proved). -/
+theorem semiAbelianDescends_of_perfect (K : Type) [Field K] (O : ValuationSubring K)
+    [PerfectField (IsLocalRing.ResidueField O)] (hk : IsSepClosed (IsLocalRing.ResidueField O))
+    (A : PkgI3.AbVar K) (𝒩 : GroupModelO A O) (h : 𝒩.IsSemistable) : IsSemistableRes 𝒩 := by
+  haveI := hk
+  haveI : IsAlgClosed (IsLocalRing.ResidueField O) := IsSepClosed.isAlgClosed_of_perfectField _
+  exact (isSemistableRes_iff O 𝒩).mpr h
+
+/-- **GLUE `SepClosureTateRestrict`** (the `K^s` axis). `Ω` an algebraic closure of `K`,
+`K^s ⊆ Ω` the separable closure, `w` a valuation ring of `Ω`, `ℓ` invertible in `K`. Every `σ` in
+the inertia group of `w` restricts to `σ_s ∈ Aut(K^s/K)` in the inertia group of `w ∩ K^s`, and
+`A(K^s) → A(Ω)` induces a `ℤ_ℓ`-linear surjection `T_ℓ(A)_{K^s} → T_ℓ(A)_Ω` intertwining `σ_s` and
+`σ`. Needs: `AlgEquiv.restrictNormal` (`K^s/K` is normal) and the residue map of `w ∩ K^s ⊆ w` for
+the inertia condition; `A[ℓⁿ]` étale (bundle leaf `AvSplit.T4.MulEtaleAbelianScheme`) and the
+version of `ReductGlue.exists_lift_of_etale` with `Ω` separably closed (separable elements of `Ω`
+lie in `K^s`) for surjectivity on `A(·)[ℓⁿ]`, then the lift to `T_ℓ` level by level (the transition
+maps are injective on the image). In characteristic `0`, `K^s = Ω`. -/
+def SepClosureTateRestrict : Prop :=
+  ∀ (K : Type) [Field K] (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω]
+    (w : ValuationSubring Ω) (A : PkgI3.AbVar K) (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : K) ≠ 0 →
+    ∀ σ : Ω ≃ₐ[K] Ω, IsInertia w σ →
+      ∃ σs : separableClosure K Ω ≃ₐ[K] separableClosure K Ω,
+        IsInertia (w.comap (algebraMap (separableClosure K Ω) Ω)) σs ∧
+        ∃ φ : TΩ A (separableClosure K Ω) ℓ →ₗ[ℤ_[ℓ]] TΩ A Ω ℓ, Function.Surjective φ ∧
+          ∀ s, φ (galTΩ A ℓ σs s) = galTΩ A ℓ σ (φ s)
+
+/-- **The strictly henselian field (unchanged statement, every field) from the printed leaf over every
+field and the two named Props.** -/
+theorem semistableUnipotentSH_of_gen (hP : SemistableUnipotentPrintedGen)
+    (hD : SemiAbelianDescendsSepClosed) (hT : SepClosureTateRestrict) :
+    ReductGlue.SemistableUnipotentSH := by
+  intro K _ O _ hO Ω _ _ _ w hw A hA ℓ _ hℓ σ hσ t
+  haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed K
+  have hA' : HasSemistableReductionRes A O := by
+    obtain ⟨𝒩, h1, h2⟩ := hA
+    exact ⟨𝒩, h1, hD K O hO.2.2 A 𝒩 h2⟩
+  have hℓK : (ℓ : K) ≠ 0 := natCast_ne_zero_of_isUnit O hℓ
+  obtain ⟨σs, hσs, φ, hφ, hcomm⟩ := hT K Ω w A ℓ hℓK σ hσ
+  have hws : (w.comap (algebraMap (separableClosure K Ω) Ω)).comap
+      (algebraMap K (separableClosure K Ω)) = O := by
+    rw [ValuationSubring.comap_comap, ← IsScalarTower.algebraMap_eq, hw]
+  have key := (hP K O hO (separableClosure K Ω) _ hws A ℓ hℓ).2 hA' σs σs hσs hσs
+  obtain ⟨s, rfl⟩ := hφ t
+  have h2 := congrArg φ (sq_form _ key s)
+  simp only [map_add, map_sub, map_nsmul, map_zero, hcomm] at h2
+  exact h2
+
+/-- **The field `semistableUnipotent` (unchanged statement, every field)** from the printed leaf over
+every field, `StrictHenselizationInside` and the two named Props. -/
+theorem semistableUnipotent_of_gen (hP : SemistableUnipotentPrintedGen)
+    (hD : SemiAbelianDescendsSepClosed) (hT : SepClosureTateRestrict)
+    (hIn : StrictHenselizationInside) : ReductSplit.SemistableUnipotent :=
+  unipotentFromSH_of hIn (semistableUnipotentSH_of_gen hP hD hT)
+
 end UnipotentB
