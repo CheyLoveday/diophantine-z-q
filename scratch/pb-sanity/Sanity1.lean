@@ -1415,6 +1415,91 @@ theorem X_not_mem_bstInv_bot : (Polynomial.X : Bst p) ∉ bstInv p ⊥ := by
 
 end UNotInvariant
 
+/-! ### A character with a unit period is semistable; the unramified quadratic character -/
+
+section Period
+
+/-- **A one-dimensional representation with a unit period is semistable over `K`**: if `b ∈ B_st` is
+a unit with `σ(b) = χ(σ) b` for `σ ∈ G_K`, then `D_st,K(χ) ≅ B_st^{G_K}` (`φ ↦ φ(1) b⁻¹`). -/
+theorem isSemistableOver_of_period (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    (χ : GQp p →* GL (Fin 1) ℚ_[p]) (b : Bst p) (hbu : IsUnit b)
+    (hb : ∀ σ ∈ K.fixingSubgroup,
+      stAct p σ b = ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) • b) :
+    IsSemistableOver p K χ := by
+  obtain ⟨u, rfl⟩ := hbu
+  let e : Fin 1 → ℚ_[p] := fun _ => 1
+  have hv : ∀ v : Fin 1 → ℚ_[p], v = v 0 • e := fun v => by ext k; fin_cases k; simp [e]
+  have hmv : ∀ (σ : GQp p) (v : Fin 1 → ℚ_[p]),
+      Matrix.mulVec (χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) v =
+        ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) • v := fun σ v => by
+    ext k; fin_cases k; simp [Matrix.mulVec, dotProduct]
+  have hinvu : ∀ σ ∈ K.fixingSubgroup, stAct p σ (u⁻¹ : (Bst p)ˣ) =
+      ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0)⁻¹ • ((u⁻¹ : (Bst p)ˣ) : Bst p) := by
+    intro σ hσ
+    have hc0 : ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) ≠ 0 := by
+      intro h0
+      have := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℚ_[p] => M 0 0) (χ σ).mul_inv
+      simp only [Matrix.mul_apply, Fin.sum_univ_one, h0, zero_mul, Matrix.one_apply_eq] at this
+      exact zero_ne_one this
+    have h1 : stAct p σ (u : Bst p) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p) = 1 := by
+      rw [← map_mul, Units.mul_inv, map_one]
+    rw [hb σ hσ, smul_mul_assoc] at h1
+    set c := ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0)
+    have h2 : (u : Bst p) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p) = c⁻¹ • (1 : Bst p) := by
+      have := congrArg (c⁻¹ • ·) h1
+      simp only [smul_smul, inv_mul_cancel₀ hc0, one_smul] at this
+      exact this
+    calc stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p)
+        = (((u⁻¹ : (Bst p)ˣ) : Bst p) * u) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p) := by
+          rw [Units.inv_mul, one_mul]
+      _ = ((u⁻¹ : (Bst p)ˣ) : Bst p) * ((u : Bst p) * stAct p σ ((u⁻¹ : (Bst p)ˣ) : Bst p)) :=
+          mul_assoc _ _ _
+      _ = c⁻¹ • ((u⁻¹ : (Bst p)ˣ) : Bst p) := by rw [h2, mul_smul_comm, mul_one]
+  let F : dstSpace p K χ →ₗ[ℚ_[p]] bstInv p K :=
+    { toFun := fun φ => ⟨(φ : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * ((u⁻¹ : (Bst p)ˣ) : Bst p),
+        fun σ hσ => by
+          have h := φ.2 σ hσ e
+          rw [hmv, map_smul] at h
+          rw [map_mul, ← h, hinvu σ hσ, smul_mul_smul_comm]
+          have hc0 : ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0) ≠ 0 := by
+            intro h0
+            have := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℚ_[p] => M 0 0) (χ σ).mul_inv
+            simp only [Matrix.mul_apply, Fin.sum_univ_one, h0, zero_mul,
+              Matrix.one_apply_eq] at this
+            exact zero_ne_one this
+          rw [mul_inv_cancel₀ hc0, one_smul]⟩
+      map_add' := fun φ ψ => Subtype.ext (by
+        change ((φ + ψ : dstSpace p K χ) : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * _ = _ * _ + _ * _
+        rw [Submodule.coe_add, LinearMap.add_apply, add_mul])
+      map_smul' := fun c φ => Subtype.ext (by
+        change ((c • φ : dstSpace p K χ) : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * _ = c • (_ * _)
+        rw [Submodule.coe_smul, LinearMap.smul_apply, smul_mul_assoc]) }
+  let G : bstInv p K →ₗ[ℚ_[p]] dstSpace p K χ :=
+    { toFun := fun c => ⟨(LinearMap.proj (R := ℚ_[p]) (φ := fun _ : Fin 1 => ℚ_[p]) 0).smulRight
+          ((c : Bst p) * (u : Bst p)), fun σ hσ v => by
+        simp only [LinearMap.smulRight_apply, LinearMap.proj_apply, hmv, Pi.smul_apply,
+          smul_eq_mul, stAct_smul, map_mul, c.2 σ hσ, hb σ hσ, mul_smul_comm, smul_smul,
+          mul_comm (v 0)]⟩
+      map_add' := fun a b => Subtype.ext (LinearMap.ext fun v => by
+        change v 0 • (((a + b : bstInv p K) : Bst p) * (u : Bst p)) =
+          v 0 • ((a : Bst p) * u) + v 0 • ((b : Bst p) * u)
+        rw [Submodule.coe_add, add_mul, smul_add])
+      map_smul' := fun c a => Subtype.ext (LinearMap.ext fun v => by
+        change v 0 • (((c • a : bstInv p K) : Bst p) * (u : Bst p)) = c • (v 0 • ((a : Bst p) * u))
+        rw [Submodule.coe_smul, smul_mul_assoc, smul_comm]) }
+  let L : dstSpace p K χ ≃ₗ[ℚ_[p]] bstInv p K :=
+    LinearEquiv.ofLinearMap F G
+      (LinearMap.ext fun c => Subtype.ext (by
+        change ((1 : ℚ_[p]) • ((c : Bst p) * u)) * ((u⁻¹ : (Bst p)ˣ) : Bst p) = c
+        rw [one_smul, mul_assoc, Units.mul_inv, mul_one]))
+      (LinearMap.ext fun φ => Subtype.ext (LinearMap.ext fun v => by
+        change v 0 • ((φ : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) e * ((u⁻¹ : (Bst p)ˣ) : Bst p) *
+          (u : Bst p)) = (φ : (Fin 1 → ℚ_[p]) →ₗ[ℚ_[p]] Bst p) v
+        rw [mul_assoc, Units.inv_mul, mul_one, ← map_smul, ← hv v]))
+  rw [IsSemistableOver, L.finrank_eq, Module.finrank_self, mul_one, mul_one]
+
+end Period
+
 /-! ### Summary -/
 
 /-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/
