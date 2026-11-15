@@ -68,7 +68,7 @@ definitions of this run remove that problem.
 | `TYZTestVectorExists` | TYZ §2.1, L542–550, with Theorem 2.6 (L809–840) at `χ = 1` | LEAF, flagged pending reading | for every admissible `τ`, `π_ℤ^{U_n}` (as defined by `InPiZ`) has a generator. TYZ print "free of rank 1"; the leaf is the existence half. Flag: `InPiZ` defines `π^{U_n}` as the `a_p(E)`-eigenspace of the `U_n`-invariant forms, which equals TYZ's `π^{U_n}` by strong multiplicity one and Jacquet–Langlands (STANDARD), not by TYZ's text |
 
 Restrictions (each a weakening of the print): only `n ≡ 1, 3 (mod 8)` (TYZ §2 covers `1, 2, 3`, L499); Lemma 2.9
-only for `n > 1`; the factor `w` (§2, S2).
+only for `n > 1`; the factor `w` (§2, "The factor `w_K`").
 
 ## 2. Statement checks (all VERIFIED by reading the lines named; details in the log)
 
