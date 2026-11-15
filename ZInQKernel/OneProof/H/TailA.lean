@@ -5016,12 +5016,6 @@ theorem gluePieces_of_gluePieces2 (r : ResearchLeaves) (t : TextbookLeaves) (gp2
       gp2.modelG3G6 gp2.linkedTateData)
   heightCopies := G0HeightCopies.heightCopiesAgree
 
-/-- **G0 after wave 26** (g0-assemble): the leaf bundles and `GluePieces2` imply
-`ZInQ.SixContactMin`. -/
-theorem sixContactMin_of_leaves2 (r : ResearchLeaves) (t : TextbookLeaves) (gp2 : GluePieces2) :
-    ZInQ.SixContactMin :=
-  sixContactMin_of_leaves r t (gluePieces_of_gluePieces2 r t gp2)
-
 end HSyn
 
 end
@@ -5029,6 +5023,5 @@ end
 end G0AssembleSec
 
 #print axioms HSyn.gluePieces_of_gluePieces2
-#print axioms HSyn.sixContactMin_of_leaves2
 
 end HDec

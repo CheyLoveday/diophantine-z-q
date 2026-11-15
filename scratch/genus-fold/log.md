@@ -24,3 +24,17 @@
   `dim_J1_le_of5 t34Le N hN0 J hJ1`; G18 `javanpeykarJ1 hR18 hBelyi t.t34 ...` -> `javanpeykarJ1_of_le hR18 hBelyi t34Le ...`.
   No statement changed. `lake build +ZInQKernel.OneProof.Main` succeeds (8m45s); frozenTarget axioms
   [propext, Classical.choice, Quot.sound]. No clash with TailZ10's root DimJacGlue/ModularSplit.DimJac.
+
+## Step 3 (11-14 17:20): prune — COMPILED, VERIFIED
+- PruneScan after step 2 (2 min): OpenTextbookLeaves10 unused [genusX1Field]; the other three top bundles 0 unused.
+  prune-set (9 fields): TextbookLeaves.t34, OpenTextbookLeaves2/3/4.t34, OpenTextbookLeaves6/7/8/9/10.genusX1Field
+  (kept as prune-set-before.txt, used-fields-before.txt, unused-all-before.txt).
+- DeadCascade (40 s): dead readers modCurveLeaves_of_bundles, glueOutputs_of_leaves, sixContactMin_of_leaves,
+  sixContactMin_of_leaves_pin, sixContactMin_of_open (LPrefix), sixContactMin_of_leaves2 (TailA), plus generated
+  casesOn/recOn of the nine bundles (dead-cascade-before.txt).
+- scratch/genus-fold/prune_edit.py (written here; no prune_edit.py exists on any origin ref) deletes the 9 fields
+  (with field docstrings), 10 one-line assignments into removed fields (incl. TailN's and TailO's
+  `t34 := t34_of_split5 …`, which assign the removed OpenTextbookLeaves4.t34), the inline `genusX1Field := …` in
+  TailO's sixContactMin_of_open6_poincare literal, the 6 dead readers and their `#print axioms` lines.
+  Output: prune_edit_out.txt. 11 files, 134 deletions, 1 line changed (the inline literal).
+- `lake build +ZInQKernel.OneProof.Main`: success (16 min), frozenTarget axioms [propext, Classical.choice, Quot.sound].

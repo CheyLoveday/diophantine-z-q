@@ -6502,7 +6502,6 @@ structure OpenTextbookLeaves2 : Prop where
   t26 : PkgI3.TateModuleFree
   t27 : PkgI3.QMDichotomyYu
   t33 : LeafModCurves.JacobianExists ℚ
-  t34 : LeafModCurves.DimJ1Genus
   t35 : ZInQ.LeafPush2.UniformizationExists
   /-- T38 (x1-belyi): a function field over `ℚ` with constant field `ℚ` is that of a smooth
   proper curve. -/
@@ -6617,7 +6616,6 @@ theorem textbookLeaves_of_open2 (t : OpenTextbookLeaves2) : TextbookLeaves where
   t27 := t.t27
   t31 := t31_proved
   t33 := t.t33
-  t34 := t.t34
   t35 := t.t35
   x1 := x1Leaves_of_open2 t
   t41 := t.t41

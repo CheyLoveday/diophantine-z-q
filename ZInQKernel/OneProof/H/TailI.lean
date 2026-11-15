@@ -140,7 +140,6 @@ structure OpenTextbookLeaves3 : Prop where
   t26 : PkgI3.TateModuleFree
   t27 : PkgI3.QMDichotomyYu
   t33 : LeafModCurves.JacobianExists ℚ
-  t34 : LeafModCurves.DimJ1Genus
   t35 : ZInQ.LeafPush2.UniformizationExists
   t38 : X1Belyi.CurveOfFunctionFieldQ
   /-- T40 (x1-belyi): `K_N` has a degree-one place (in the kernel: from `X0Transitive`). -/
@@ -215,7 +214,6 @@ theorem textbookLeaves2_of_open3 (t : OpenTextbookLeaves3) : OpenTextbookLeaves2
   t26 := t.t26
   t27 := t.t27
   t33 := t.t33
-  t34 := t.t34
   t35 := t.t35
   t38 := t.t38
   t40 := t.t40

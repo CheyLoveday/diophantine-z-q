@@ -27,7 +27,6 @@ structure OpenTextbookLeaves10 : Prop where
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
   yuThm11 : QMSplit.Yu.YuThm11
-  genusX1Field : _root_.ZInQ.Contrib.CurvesG.GenusX1Field
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
   igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
   neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
@@ -49,7 +48,6 @@ theorem textbookLeaves9_of_open10 (t : OpenTextbookLeaves10) : OpenTextbookLeave
   bdRInvariants := t.bdRInvariants
   yuThm11 := t.yuThm11
   dimJacobianEqGenus := _root_.ModularSplit.DimJac.dimJacobianEqGenus
-  genusX1Field := t.genusX1Field
   regularSmoothPerfect := t.regularSmoothPerfect
   igusaGL2 := t.igusaGL2
   neronSchemeExtensionExists := t.neronSchemeExtensionExists
