@@ -14117,6 +14117,46 @@ theorem g9Glue_of_fieldEmb (hLM : G9Bridge.LocalModel) (hW : G9Bridge.R10Weights
   exact ⟨⟨E, hE, ρE, hmap, core_dR_F ℓ F ιB hιB (A'.galRep ℓ) ρE eE he hdR⟩,
     ⟨E, hE, ρE, hmap, core_ht ℓ F (A'.galRep ℓ) ρE eE he h0 h1 hw⟩⟩
 
+/-- **`G9GlueNoT23` from `LocalModel`, `R10Weights` and an embedding `F' ⊆ B_dR`** (sem-prune): the proof of
+`g9Glue_of_fieldEmb` without its unused T23 binder. -/
+theorem g9GlueNoT23_of_fieldEmb (hLM : G9Bridge.LocalModel) (hW : G9Bridge.R10Weights)
+    (hB : G9Bridge.FieldEmbBdR) : G9GlueNoT23 := by
+  intro hR10 K _ _ A ℓ _ r e hdim hint
+  obtain ⟨F, _, _, _, _, A', j, c, g, hdim', hc, hg⟩ := hLM K A ℓ hdim
+  obtain ⟨hdR, h0, h1⟩ := hR10 ℓ F A' 2 (by rw [hdim']; rfl)
+  obtain ⟨ιB, hιB⟩ := hB ℓ F
+  let cb : PadicAlgCl ℓ ⊗[ℚ_[ℓ]] A'.V ℓ ≃ₗ[PadicAlgCl ℓ] PadicAlgCl ℓ ⊗[ℚ_[ℓ]] A.V ℓ :=
+    LinearEquiv.baseChange ℚ_[ℓ] (PadicAlgCl ℓ) _ _ c
+  let e' := (cb.trans e).trans (twistPair r g)
+  have hcb : ∀ σ x, cb ((A'.galRep ℓ σ).baseChange (PadicAlgCl ℓ) x) =
+      tate A ℓ (j σ) (cb x) := by
+    intro σ x
+    induction x using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a v =>
+      change cb (a ⊗ₜ (A'.galRep ℓ σ v)) = (A.galRep ℓ (j σ)).baseChange (PadicAlgCl ℓ) (cb (a ⊗ₜ v))
+      simp only [cb, LinearEquiv.baseChange_tmul, LinearMap.baseChange_tmul, hc]
+    | add x x' hx hx' => rw [map_add, map_add, hx, hx', map_add, map_add]
+  have he' : ∀ σ x, e' ((A'.galRep ℓ σ).baseChange (PadicAlgCl ℓ) x) =
+      ((r.restrictLocal ℓ (gfToGqp ℓ F σ) : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)).mulVec (e' x).1,
+        (r.restrictLocal ℓ (gfToGqp ℓ F σ) : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)).mulVec
+          (e' x).2) := by
+    intro σ x
+    have hR : (r.restrictLocal ℓ (gfToGqp ℓ F σ) : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)) =
+        r.mat (decomp ℓ (gfToGqp ℓ F σ)) := rfl
+    have hconj : r.mat g⁻¹ * r.mat (resQ K (j σ)) =
+        r.mat (decomp ℓ (gfToGqp ℓ F σ)) * r.mat g⁻¹ := by
+      rw [hg σ, galoisRep_mat_mul, galoisRep_mat_mul, ← mul_assoc, ← mul_assoc,
+        galoisRep_mat_inv_mul, one_mul]
+    simp only [e', LinearEquiv.trans_apply, hcb, twistPair_apply, hint _ (cb x), hR,
+      Matrix.mulVec_mulVec, hconj]
+  obtain ⟨E, hE, ρE, eE, hmap, he⟩ :=
+    coef_descent ℓ F (A'.galRep ℓ) (r.restrictLocal ℓ) e' he'
+  have hw : ∀ w : ℤ, w ≠ 0 → w ≠ -1 → htMultOver ℓ (A'.galRep ℓ) w = 0 :=
+    fun w hw0 hw1 => hW ℓ F A' w hw0 hw1
+  exact ⟨⟨E, hE, ρE, hmap, core_dR_F ℓ F ιB hιB (A'.galRep ℓ) ρE eE he hdR⟩,
+    ⟨E, hE, ρE, hmap, core_ht ℓ F (A'.galRep ℓ) ρE eE he h0 h1 hw⟩⟩
+
 /-- **G9 from the three bridges.** -/
 theorem g9Glue_of_bridges (hLM : G9Bridge.LocalModel) (hW : G9Bridge.R10Weights)
     (hB : G9Bridge.BdRContainsQbar) : G9Glue :=
@@ -14157,6 +14197,11 @@ theorem fieldEmbBdR : G9Bridge.FieldEmbBdR := by
 theorem g9Glue_of_localModel (hLM : G9Bridge.LocalModel) (hW : G9Bridge.R10Weights) :
     G9Glue :=
   g9Glue_of_fieldEmb hLM hW fieldEmbBdR
+
+/-- `G9GlueNoT23` from F2 and F1 (sem-prune). -/
+theorem g9GlueNoT23_of_localModel (hLM : G9Bridge.LocalModel) (hW : G9Bridge.R10Weights) :
+    G9GlueNoT23 :=
+  g9GlueNoT23_of_fieldEmb hLM hW fieldEmbBdR
 
 end ZInQ.Contrib.G9
 
@@ -14349,6 +14394,11 @@ theorem localModel_of_abVarBaseChange (h : G9Bridge.AbVarBaseChange) : G9Bridge.
 theorem g9Glue_of_abVarBaseChange (hBC : G9Bridge.AbVarBaseChange) (hW : G9Bridge.R10Weights) :
     G9Glue :=
   g9Glue_of_localModel (localModel_of_abVarBaseChange hBC) hW
+
+/-- `G9GlueNoT23` from base change of abelian varieties and the weight clause of R10 (sem-prune). -/
+theorem g9GlueNoT23_of_abVarBaseChange (hBC : G9Bridge.AbVarBaseChange) (hW : G9Bridge.R10Weights) :
+    G9GlueNoT23 :=
+  g9GlueNoT23_of_localModel (localModel_of_abVarBaseChange hBC) hW
 
 end
 

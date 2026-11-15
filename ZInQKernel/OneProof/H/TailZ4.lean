@@ -174,6 +174,35 @@ theorem heightRows_of8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8) :
   _root_.ZInQ.HeightGlue.heightRows_of_t35 (heightLeaves_of8 r t)
     (_root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed)
 
+/-- **The five height rows other than R20** (sem-prune), from the fields `heightRows_of8` reads except
+`faltingsLemma5BC`: the proofs of `ZInQ.HeightSplit.heightRows_of`'s other components. -/
+theorem heightRowsNo20_of8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8) :
+    _root_.ZInQ.LeafPush2.R18_Javanpeykar ∧ _root_.ZInQ.DefFaltings.R19_GaudronRemond ∧
+      _root_.ZInQ.DefFaltings.R21_Bost ∧ _root_.ZInQ.LeafPush2.R22_Pazuki ∧
+      _root_.ZInQ.DefFaltings.StableHeightFinite :=
+  have hN1 := _root_.ZInQ.Contrib.NeronC.neronModelExists_of_extension t.neronSchemeExtensionExists
+  have gl := _root_.ZInQ.HeightGlue.heightGlue_of_t35
+    (_root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed)
+  have hMet := _root_.ZInQ.HeightSplit.neronMetrizable_of gl.an3Exists gl.unifDim gl.metrize
+  ⟨_root_.ZInQ.HeightSplit.r18_of_leaves r.javanpeykarBound hN1 r.semistableReductionThm
+      r.semistableNeronBaseChange hMet,
+    _root_.ZInQ.HeightSplit.r19_of_leaves r.gaudronRemondThm14 hN1 r.semistableReductionThm
+      r.semistableNeronBaseChange,
+    _root_.ZInQ.HeightSplit.r21_of_leaves' r.bostLowerBound hN1 r.semistableReductionThm
+      r.semistableNeronBaseChange gl.an3Unique,
+    _root_.ZInQ.HeightSplit.r22_of_upper r.pazukiCor13Upper hN1 r.semistableReductionThm
+      r.semistableNeronBaseChange,
+    _root_.ZInQ.HeightSplit.stableHeightFinite_of' hN1 r.semistableReductionThm r.semistableNeronBaseChange
+      hMet gl.an3Unique⟩
+
+/-- **The lower half of R20** (sem-prune) from the lower half of `faltingsLemma5BC` and the fields
+`heightRows_of8` uses for R20 (N1 from `neronSchemeExtensionExists`, SS1, SS2, SS3). -/
+theorem r20Lower_of8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8)
+    (hF5 : _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower) : G0Split.R20Lower :=
+  _root_.ZInQ.HeightSplit.r20Lower_of_leaves' hF5
+    (_root_.ZInQ.Contrib.NeronC.neronModelExists_of_extension t.neronSchemeExtensionExists)
+    r.semistableReductionThm r.semistableNeronBaseChange r.semistablePersists
+
 /-- leaf-fold7's research bundle from leaf-fold8's. -/
 theorem researchLeaves7_of_open8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8) : OpenResearchLeaves7 where
   r1r2 := r.r1r2
@@ -197,12 +226,12 @@ theorem researchLeaves7_of_open8 (r : OpenResearchLeaves8) (t : OpenTextbookLeav
   r15 := r.r15
   r16 := r.r16
   r17 := r.r17
-  r18 := r18_lf8 (heightRows_of8 r t).1
-  r19 := (heightRows_of8 r t).2.1
+  r18 := r18_lf8 (heightRowsNo20_of8 r t).1
+  r19 := (heightRowsNo20_of8 r t).2.1
   r20 := (heightRows_of8 r t).2.2.1
-  r21 := (heightRows_of8 r t).2.2.2.1
-  r22 := r22_lf8 (heightRows_of8 r t).2.2.2.2.1
-  h5fin := (heightRows_of8 r t).2.2.2.2.2
+  r21 := (heightRowsNo20_of8 r t).2.2.1
+  r22 := r22_lf8 (heightRowsNo20_of8 r t).2.2.2.1
+  h5fin := (heightRowsNo20_of8 r t).2.2.2.2
 
 /-- leaf-fold7's textbook bundle from leaf-fold8's. -/
 theorem textbookLeaves7_of_open8 (t : OpenTextbookLeaves8) : OpenTextbookLeaves7 where
@@ -255,8 +284,9 @@ theorem addedLeaves7_of_open8 (r : OpenResearchLeaves8) (l : OpenAddedLeaves8) :
 and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
 `docs/research/leaf-fold8.md` §2. -/
 theorem sixContactMin_of_open8 (r : OpenResearchLeaves8) (t : OpenTextbookLeaves8) (l : OpenAddedLeaves8)
-    (g : OpenGlue7) : ZInQ.SixContactMin :=
+    (g : OpenGlue7) (hF5 : _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower) : ZInQ.SixContactMin :=
   sixContactMin_of_open7 (researchLeaves7_of_open8 r t) (textbookLeaves7_of_open8 t) (addedLeaves7_of_open8 r l) g
+    (r20Lower_of8 r t hF5)
 
 end HSyn
 

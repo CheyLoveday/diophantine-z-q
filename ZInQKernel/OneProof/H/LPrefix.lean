@@ -12139,10 +12139,24 @@ theorem one_le_grKappa (g d : ℕ) (x : ℝ) (hg : 1 ≤ g) (hd : 1 ≤ d) : 1 �
   exact one_le_mul_of_one_le_of_one_le (one_le_mul_of_one_le_of_one_le (one_le_pow₀ h14) hd')
     (one_le_pow₀ hm)
 
+/-- **The lower half of R20** (sem-prune): `−½ log deg φ ≤ h_F(A) − h_F(B)`, i.e. `h_F(B) ≤ h_F(A) + ½ log deg φ`,
+the only half `transfer_core` uses. It follows from the printed Faltings Lemma 5 and `0 ≤ log #s*Ω¹` alone
+(`HSyn.G0Split.r20Lower_of_leaves'`, TailY, and `CToPrinted.faltingsLemma5Lower_of_printed`, TailZ19). -/
+def R20Lower : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A B : _root_.ZInQ.DefFaltings.AbVar K) (φ : A.X ⟶ B.X),
+    _root_.ZInQ.DefFaltings.IsIsogeny φ →
+    ∀ x y : ℝ, _root_.ZInQ.DefFaltings.stableFaltingsHeight A = x →
+      _root_.ZInQ.DefFaltings.stableFaltingsHeight B = y →
+      -((1 / 2) * Real.log (_root_.ZInQ.DefFaltings.isogDeg φ)) ≤ x - y
+
+/-- R20 gives its lower half (for the callers off the chain that still hold R20). -/
+theorem r20Lower_of_r20 (h : _root_.ZInQ.DefFaltings.R20_FaltingsLemma5) : R20Lower :=
+  fun K _ _ A B φ hφ x y hx hy => (abs_le.mp (h K A B φ hφ x y hx hy)).1
+
 /-- **E3-E4 numerics on concrete objects (proved from R19, R20, R21).** Over a number field `L`,
 for `J` of dimension `g ≥ 2` with an isogeny `J → P`, `h_F(A) + h_F(Z) ≤ h_F(P)`, `dim Z ≤ g`,
 the bounds on `N`, `[L:ℚ]`, `h_F(J)` and `g ≤ N²` give glue-assembly's `NonCMOutput`. -/
-theorem transfer_core (r19 : R19_GaudronRemond) (r20 : R20_FaltingsLemma5) (r21 : R21_Bost)
+theorem transfer_core (r19 : R19_GaudronRemond) (r20 : R20Lower) (r21 : R21_Bost)
     {L : Type} [Field L] [NumberField L] (J P A Z : ZInQ.DefFaltings.AbVar L) (g gZ : ℕ)
     (hJd : J.dim = (g : WithBot ℕ∞)) (hZd : Z.dim = (gZ : WithBot ℕ∞)) (hgZ : gZ ≤ g)
     (hg2 : 2 ≤ g) (φ : J.X ⟶ P.X) (hφ : IsIsogeny φ) (x y a z : ℝ)
@@ -12168,7 +12182,7 @@ theorem transfer_core (r19 : R19_GaudronRemond) (r20 : R20_FaltingsLemma5) (r21 
   refine ⟨N, g, d, x, Real.log (isogDeg ψ), z, hN1, hN, hJav, by exact_mod_cast hg2, hgN,
     by exact_mod_cast hd1, hd, ?_, ?_, ?_⟩
   · rw [hκ] at hlogdeg; exact hlogdeg
-  · have := (abs_le.mp hvar).1
+  · have := hvar
     linarith
   · have hgZr : (gZ : ℝ) ≤ g := by exact_mod_cast hgZ
     linarith

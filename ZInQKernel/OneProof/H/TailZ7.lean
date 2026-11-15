@@ -1604,6 +1604,18 @@ theorem faltingsLemma5BC_final (hF : ZInQ.HeightSplit.FaltingsLemma5) :
     ZInQ.HeightSplit.FaltingsLemma5BC :=
   faltingsLemma5BC_of_base hF isogenyBaseChangeDeg
 
+/-- **The lower half of `faltingsLemma5BC` from the lower half of the base-field form** (sem-prune; the proof
+of `faltingsLemma5BC_of_base` with `isogenyBaseChangeDeg`). -/
+theorem faltingsLemma5BCLower_final (hF : _root_.ZInQ.HeightSplit.FaltingsLemma5Lower) :
+    _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower := by
+  intro K _ _ A B φ hφ L _ _ _ 𝒩A 𝒩B hA hB sA sB x y hx hy
+  obtain ⟨φ', hφ', hdeg⟩ := isogenyBaseChangeDeg K A B φ hφ L
+  rw [← hdeg]
+  exact hF L (A.baseChange L) (B.baseChange L) φ' hφ' (toBC 𝒩A) (toBC 𝒩B)
+    (gmTransport_isNeronModel _ _ 𝒩A hA) (gmTransport_isNeronModel _ _ 𝒩B hB)
+    (gmTransport_isSemistable _ _ 𝒩A sA) (gmTransport_isSemistable _ _ 𝒩B sB) x y
+    ((gmTransport_height _ _ 𝒩A).trans hx) ((gmTransport_height _ _ 𝒩B).trans hy)
+
 end IsogBC
 
 /-! ## §18. The bundles: published-form leaves and the remaining glue, and all seven rows -/

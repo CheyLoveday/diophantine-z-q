@@ -2602,7 +2602,7 @@ theorem openAddedLeaves4_of_Q5 (l : OpenAddedLeavesQ5) : OpenAddedLeaves4 :=
 `gammaStarGen`). -/
 theorem sixContactMin_of_openQ5 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
     (l : OpenAddedLeavesQ5) (g : OpenGlue4) : ZInQ.SixContactMin :=
-  sixContactMin_of_open4 r t (openAddedLeaves4_of_Q5 l) g
+  sixContactMin_of_open4 r t (openAddedLeaves4_of_Q5 l) g (G0Split.r20Lower_of_r20 r.r20)
 
 /-- `OpenAddedLeavesQ5` with `valenceBoundGammaStar` (LEAF?) replaced by the published valence formula
 `ValenceFormulaGammaStar` (LEAF; `e_P ≤ 6` is proved, `LeafQCheck.VB.ellipticOrderLe6_proof`). -/
@@ -3006,9 +3006,9 @@ theorem glue4_of_open6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6) (l : 
 * `OpenGlue6`: 1 glue Prop (`ModelCoordinateResidue`).
 The table of every field is `docs/research/leaf-fold6.md` §2. -/
 theorem sixContactMin_of_open6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6)
-    (l : OpenAddedLeaves6) (g : OpenGlue6) : ZInQ.SixContactMin :=
+    (l : OpenAddedLeaves6) (g : OpenGlue6) (h20 : G0Split.R20Lower) : ZInQ.SixContactMin :=
   sixContactMin_of_open4 (researchLeaves2_of_open5 r) (textbookLeaves4_of_open6 t l) (addedLeaves4_of_open6 r t l)
-    (glue4_of_open6 r t l g)
+    (glue4_of_open6 r t l g) h20
 
 /-- **The other choice for T8** (goal (b)): leaf-fold5's textbook bundle (with `poincareComplement`) and leaf-fold5's
 glue bundle (with `simpleImageIsogeny`): 26 + 21 + 20 + 2 = 69 fields, glue 2. T8 is the kernel's
@@ -3024,7 +3024,7 @@ theorem sixContactMin_of_open6_poincare (r : OpenResearchLeaves5) (t : OpenTextb
       t35 := t.t35, normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ,
       normalCurveSmoothQ := t.normalCurveSmoothQ, geomConnectedOfConstantFieldQ := t.geomConnectedOfConstantFieldQ,
       x0Transitive := t.x0Transitive, neronSchemeExtensionExists := t.neronSchemeExtensionExists }
-    l ⟨g.modelCoordinateResidue⟩
+    l ⟨g.modelCoordinateResidue⟩ (G0Split.r20Lower_of_r20 r.r20)
 
 /-- leaf-fold5's added-leaves bundle from leaf-fold6's: the four fields leafq-check replaced are theorems from the
 new fields (and `r4`, `r1r2`, T5, T11(b)); the other 17 are the same fields. -/
@@ -3057,7 +3057,8 @@ end HDec.HSyn
 end
 
 example : ∀ (_ : HDec.HSyn.OpenResearchLeaves5) (_ : HDec.HSyn.OpenTextbookLeaves6)
-    (_ : HDec.HSyn.OpenAddedLeaves6) (_ : HDec.HSyn.OpenGlue6), _root_.ZInQ.SixContactMin :=
+    (_ : HDec.HSyn.OpenAddedLeaves6) (_ : HDec.HSyn.OpenGlue6) (_ : HDec.HSyn.G0Split.R20Lower),
+    _root_.ZInQ.SixContactMin :=
   HDec.HSyn.sixContactMin_of_open6
 
 example : ∀ (_ : HDec.HSyn.OpenResearchLeaves5) (_ : HDec.HSyn.OpenTextbookLeaves5)

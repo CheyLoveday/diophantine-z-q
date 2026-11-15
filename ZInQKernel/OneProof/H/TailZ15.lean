@@ -133,6 +133,7 @@ and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every fie
 theorem sixContactMin_of_open12 (r : OpenResearchLeaves10) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves9)
     (g : OpenGlue7) : ZInQ.SixContactMin :=
   sixContactMin_of_open11 (researchLeaves9_of_open10 r t l) t l g
+    (_root_.ZInQ.HeightSplit.faltingsLemma5BCLower_of_BC r.faltingsLemma5BC)
 
 end HSyn
 

@@ -269,7 +269,7 @@ The table of every field is `docs/research/leaf-fold5.md` §2. -/
 theorem sixContactMin_of_open5 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves5)
     (l : OpenAddedLeaves5) (g : OpenGlue5) : ZInQ.SixContactMin :=
   sixContactMin_of_open4 (researchLeaves2_of_open5 r) (textbookLeaves4_of_open5 t l g) (addedLeaves4_of_open5 t l)
-    (glue4_of_open5 r t l g)
+    (glue4_of_open5 r t l g) (G0Split.r20Lower_of_r20 r.r20)
 
 end HSyn
 

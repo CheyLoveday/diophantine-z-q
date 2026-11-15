@@ -268,6 +268,7 @@ theorem gluePieces_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
           G0Galois.detTate_of_leaves l.t09SymmIsogenyExists l.isogenyQuasiInverse
             l.divisiblePoints t.t26,
           G0AssembleMod.resQFiniteIndex⟩
+        (g9GlueNoT23_of_deRhamComparisonHT r.r10)
         (G0ModNewform.dirichletOfFinite_of_t17 t17_proved) r.r17
         Swan.swanIndependent_proved Swan.swanIntegral_proved
         Swan.adaptedExists_proved
@@ -288,6 +289,7 @@ theorem sixContactMin_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves
     (l : OpenAddedLeaves3) (g : OpenGlue3) : ZInQ.SixContactMin :=
   sixContactMin_of_leavesR3 (researchLeaves3_of_open2 r)
     (textbookLeaves_of_open2 (textbookLeaves2_of_open3 t)) (gluePieces_of_open3 r t l g)
+    (G0Split.r20Lower_of_r20 r.r20)
 
 end HSyn
 

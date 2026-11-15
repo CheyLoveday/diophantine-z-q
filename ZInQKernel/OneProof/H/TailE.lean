@@ -6389,6 +6389,11 @@ theorem g9Glue_of_deRhamComparisonHT (h : PkgI4.DeRhamComparisonHT) : G0Galois.G
   ZInQ.Contrib.G9.g9Glue_of_abVarBaseChange g9AbVarBaseChange_proved
     (PkgI4.deRhamComparisonHT_iff.mp h).2
 
+/-- **`G9GlueNoT23` from the amended R10** (sem-prune; the proof of `g9Glue_of_deRhamComparisonHT`). -/
+theorem g9GlueNoT23_of_deRhamComparisonHT (h : PkgI4.DeRhamComparisonHT) : G0Galois.G9GlueNoT23 :=
+  ZInQ.Contrib.G9.g9GlueNoT23_of_abVarBaseChange g9AbVarBaseChange_proved
+    (PkgI4.deRhamComparisonHT_iff.mp h).2
+
 /-! ### Kernel-field and conj-twist glue closed (their later commits; parts a75, b05) -/
 
 /-- **`OMaximal` proved** (kernel-field, `G0ModField.KernelField.oMaximal`, pure algebra). -/
@@ -6667,6 +6672,7 @@ theorem gluePieces_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
           G0Galois.detTate_of_leaves l.t09SymmIsogenyExists l.isogenyQuasiInverse
             l.divisiblePoints t.t26,
           G0AssembleMod.resQFiniteIndex⟩
+        (g9GlueNoT23_of_deRhamComparisonHT r.r10)
         (G0ModNewform.dirichletOfFinite_of_t17 t17_proved) r.r17
         Swan.swanIndependent_proved Swan.swanIntegral_proved
         Swan.adaptedExists_proved
@@ -6686,7 +6692,7 @@ The table of every field, its kind and source is `docs/research/leaf-fold2.md`. 
 theorem sixContactMin_of_open2 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves2)
     (l : OpenAddedLeaves2) (g : OpenGlue2) : ZInQ.SixContactMin :=
   sixContactMin_of_leavesR3 (researchLeaves3_of_open2 r) (textbookLeaves_of_open2 t)
-    (gluePieces_of_open2 r t l g)
+    (gluePieces_of_open2 r t l g) (G0Split.r20Lower_of_r20 r.r20)
 
 end HSyn
 
