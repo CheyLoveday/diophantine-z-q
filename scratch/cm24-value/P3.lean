@@ -315,6 +315,93 @@ theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaVa
   have := CM24Alg.mpoly_k6 _ _ ha hb
   push_cast; exact this
 
+/-! ## Removing the leaf: `mpoly(k) = 0` from the cubic modular equation -/
+
+/-- The `S`-transformation of the three theta constants (Mathlib's functional equation). -/
+theorem sA {τ : ℂ} : th1 τ 0 0 = 1 / (-I * τ) ^ (1 / 2 : ℂ) * th1 (-1 / τ) 0 0 := by
+  rw [th1_eq, th1_eq, jacobiTheta₂_functional_equation]; simp
+
+theorem sB {τ : ℂ} (hτ : τ ≠ 0) : th1 τ 0 (1 / 2) = 1 / (-I * τ) ^ (1 / 2 : ℂ) * th1 (-1 / τ) (1 / 2) 0 := by
+  rw [th1_eq, th1_eq, jacobiTheta₂_functional_equation]
+  have e : ((1 / 2 : ℝ) : ℂ) * (-1 / τ) + ((0 : ℝ) : ℂ) = -((((0 : ℝ) : ℂ) * τ + ((1 / 2 : ℝ) : ℂ)) / τ) := by
+    field_simp; push_cast; ring
+  rw [e, jacobiTheta₂_neg_left]
+  have e2 : cexp (π * I * (-1 / τ) * ((1 / 2 : ℝ) : ℂ) ^ 2 + 2 * π * I * ((1 / 2 : ℝ) : ℂ) * ((0 : ℝ) : ℂ)) =
+      cexp (-π * I * (((0 : ℝ) : ℂ) * τ + ((1 / 2 : ℝ) : ℂ)) ^ 2 / τ) := by
+    congr 1; push_cast; field_simp; ring
+  rw [e2]; simp; ring
+
+theorem sC {τ : ℂ} (hτ : τ ≠ 0) : th1 τ (1 / 2) 0 = 1 / (-I * τ) ^ (1 / 2 : ℂ) * th1 (-1 / τ) 0 (1 / 2) := by
+  rw [th1_eq, th1_eq, jacobiTheta₂_functional_equation]
+  have e : (((1 / 2 : ℝ) : ℂ) * τ + ((0 : ℝ) : ℂ)) / τ = ((0 : ℝ) : ℂ) * (-1 / τ) + ((1 / 2 : ℝ) : ℂ) := by
+    field_simp; push_cast; ring
+  rw [e]
+  have e2 : cexp (π * I * τ * ((1 / 2 : ℝ) : ℂ) ^ 2 + 2 * π * I * ((1 / 2 : ℝ) : ℂ) * ((0 : ℝ) : ℂ)) *
+      cexp (-π * I * (((1 / 2 : ℝ) : ℂ) * τ + ((0 : ℝ) : ℂ)) ^ 2 / τ) = 1 := by
+    rw [← Complex.exp_add, ← Complex.exp_zero]; congr 1; push_cast; field_simp; ring
+  have e3 : cexp (π * I * (-1 / τ) * ((0 : ℝ) : ℂ) ^ 2 + 2 * π * I * ((0 : ℝ) : ℂ) * ((1 / 2 : ℝ) : ℂ)) = 1 := by
+    simp
+  rw [e3]
+  linear_combination (1 / (-I * τ) ^ (1 / 2 : ℂ) *
+    jacobiTheta₂ (((0 : ℝ) : ℂ) * (-1 / τ) + ((1 / 2 : ℝ) : ℂ)) (-1 / τ)) * e2
+
+/-- On the imaginary axis `th1 (it) c 0` is the real sum `Σ exp(−πt(n+c)²)`. -/
+theorem th1_imag (t c : ℝ) :
+    th1 (I * t) c 0 = ((∑' n : ℤ, Real.exp (-π * t * ((n : ℝ) + c) ^ 2) : ℝ) : ℂ) := by
+  rw [th1, Complex.ofReal_tsum]
+  congr 1; funext n
+  rw [term1, Complex.ofReal_exp]
+  congr 1; push_cast; ring_nf; rw [I_sq]; ring
+
+theorem th1_imag_pos {t : ℝ} (ht : 0 < t) (c : ℝ) : 0 < ∑' n : ℤ, Real.exp (-π * t * ((n : ℝ) + c) ^ 2) :=
+  (summable_gauss ht c).tsum_pos (fun _ => (Real.exp_pos _).le) 0 (Real.exp_pos _)
+
+/-- `τ' = i√6/3 = −1/τ₃`, `3τ' = τ₆`. -/
+def τp : ℂ := I * ((r6 / 3 : ℝ) : ℂ)
+
+theorem τ3_ne : τ3 ≠ 0 := fun h => by
+  have := congrArg Complex.im h; simp [τ3] at this <;> linarith [r6_pos]
+theorem τp_eq : -1 / τ3 = τp := by
+  rw [div_eq_iff τ3_ne]; apply Complex.ext <;> simp [τ3, τp] <;> nlinarith [r6_sq]
+theorem τp_im : 0 < τp.im := by simp [τp] <;> exact div_pos r6_pos (by norm_num)
+theorem h3τp : 3 * τp = τ6 := by apply Complex.ext <;> simp [τp, τ6] <;> ring
+theorem τ6_eq' : τ6 = I * ((r6 : ℝ) : ℂ) := by apply Complex.ext <;> simp [τ6]
+
+/-- `K = 1/(−iτ₃)^{1/2}` is a positive real. -/
+theorem K_real : 1 / (-I * τ3) ^ (1 / 2 : ℂ) = (((1 / (r6 / 2) ^ (1 / 2 : ℝ)) : ℝ) : ℂ) := by
+  have e : -I * τ3 = ((r6 / 2 : ℝ) : ℂ) := by apply Complex.ext <;> simp [τ3]
+  rw [e, show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by push_cast; ring,
+    ← Complex.ofReal_cpow (div_pos r6_pos (by norm_num)).le]
+  push_cast; ring
+theorem K_pos : (0 : ℝ) < 1 / (r6 / 2) ^ (1 / 2 : ℝ) :=
+  div_pos one_pos (Real.rpow_pos_of_pos (div_pos r6_pos (by norm_num)) _)
+
+/-- **`mpoly(θ₁₀(i√6)²/θ₀₀(i√6)²) = 0`** (no leaf): cubic modular equation at `τ'`, `S`, Landen, Jacobi. -/
+theorem mpoly_A (A0 A1 A2 B0 B1 B2 : ℂ) (hA0 : A0 ≠ 0)
+    (R1 : B0 ^ 2 = A0 ^ 2 + A2 ^ 2) (R2 : B1 ^ 2 = A0 ^ 2 - A2 ^ 2) (R3 : B2 ^ 2 = 2 * A0 * A2)
+    (rJ : A0 ^ 4 = A1 ^ 4 + A2 ^ 4) (R5 : A0 * B0 = A2 * B1 + A1 * B2)
+    (hne : A2 ^ 4 - 2 * A0 ^ 2 * A2 ^ 2 - A0 ^ 4 ≠ 0) :
+    CM24Alg.mpoly (A2 ^ 2 / A0 ^ 2) = 0 := by
+  set Q := A0 ^ 4 + A2 ^ 4 - 2 * A0 * A1 ^ 2 * A2
+  have E1 : 2 * A1 * A2 * B1 * B2 = Q := by
+    linear_combination (-(A0 * B0 + A2 * B1 + A1 * B2)) * R5 + A0 ^ 2 * R1 - A2 ^ 2 * R2 - A1 ^ 2 * R3
+  have E2 : 8 * A0 * A1 ^ 2 * A2 ^ 3 * (A0 ^ 2 - A2 ^ 2) = Q ^ 2 := by
+    linear_combination (2 * A1 * A2 * B1 * B2 + Q) * E1 - 4 * A1 ^ 2 * A2 ^ 2 * B2 ^ 2 * R2
+      - 4 * A1 ^ 2 * A2 ^ 2 * (A0 ^ 2 - A2 ^ 2) * R3
+  set W := A0 ^ 4 + 2 * A0 ^ 2 * A2 ^ 2 - A2 ^ 4
+  set V := (A0 ^ 4 + A2 ^ 4) ^ 2 + 4 * A0 ^ 2 * A2 ^ 2 * (A0 ^ 4 - A2 ^ 4)
+  have E3 : 4 * A0 * A2 * A1 ^ 2 * W = V := by
+    linear_combination E2 - 4 * A0 ^ 2 * A2 ^ 2 * rJ
+  have E4 : 16 * A0 ^ 2 * A2 ^ 2 * (A0 ^ 4 - A2 ^ 4) * W ^ 2 = V ^ 2 := by
+    linear_combination (4 * A0 * A2 * A1 ^ 2 * W + V) * E3 + 16 * A0 ^ 2 * A2 ^ 2 * W ^ 2 * rJ
+  have E5 : (A2 ^ 4 - 2 * A0 ^ 2 * A2 ^ 2 - A0 ^ 4) ^ 2 * (A2 ^ 8 + 12 * A2 ^ 6 * A0 ^ 2 + 2 * A2 ^ 4 * A0 ^ 4
+      - 12 * A2 ^ 2 * A0 ^ 6 + A0 ^ 8) = 0 := by
+    linear_combination -E4
+  have hmh := (mul_eq_zero.1 E5).resolve_left (pow_ne_zero _ hne)
+  unfold CM24Alg.mpoly
+  field_simp
+  linear_combination hmh
+
 /-- **The field `igusaCMValue24` from the singular modulus `k₆`.** -/
 theorem igusaCMValue24_of_singularModulus6 (h : SingularModulus6) : IgusaCMValue24 :=
   igusa_of_thetaQuotientValue24 (thetaQuotientValue24_iff.2 (thetaValueAtOmega24_of_singularModulus6 h))
