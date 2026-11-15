@@ -1,4 +1,5 @@
 import ZInQKernel.OneProof.H.TailC
+import ZInQKernel.OneProof.Genus.Bridge
 
 namespace HDec
 
@@ -228,7 +229,7 @@ theorem glueOutputs_of_leaves3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp : 
   obtain ⟨Pr, φ, hφ, hPprod, hdims⟩ :=
     isogenousProduct hDimF hProdE hRev L.K _ _ _ f g hisoZ
   -- E2: `dim J₁(N) ≤ N²`
-  obtain ⟨gJ, hgJ, hgN⟩ := LeafModCurves.dim_J1_le t.t34 N hN0 J hJ1
+  obtain ⟨gJ, hgJ, hgN⟩ := dim_J1_le_of5 t34Le N hN0 J hJ1
   have hJLd : (((LeafAdopt.abVarEquiv ℚ).symm J).baseChange L.K).dim = (gJ : WithBot ℕ∞) :=
     (hDim ℚ L.K ((LeafAdopt.abVarEquiv ℚ).symm J)).trans hgJ
   have hALd : A.dim = ((2 : ℕ) : WithBot ℕ∞) := by rw [hA2]; rfl
@@ -242,7 +243,7 @@ theorem glueOutputs_of_leaves3 (r : ResearchLeaves3) (t : TextbookLeaves) (gp : 
   have hyP := (ZInQ.DefFaltings.faltingsHeight_coe hfin Pr).symm
   have hzZ := (ZInQ.DefFaltings.faltingsHeight_coe hfin ((LeafAdopt.abVarEquiv L.K).symm Z)).symm
   have hadd := hAdd L.K Pr A ((LeafAdopt.abVarEquiv L.K).symm Z) hPprod _ _ _ hx hzZ hyP
-  have hJb := javanpeykarJ1 hR18 hBelyi t.t34 N hN0 J hJ1 gJ hgJ (by omega) _
+  have hJb := javanpeykarJ1_of_le hR18 hBelyi t34Le N hN0 J hJ1 gJ hgJ (by omega) _
     (ZInQ.DefFaltings.faltingsHeight_coe hfin _).symm
   have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast hN0
   have hgN' : (gJ : ℝ) ≤ (N : ℝ) ^ 2 := by exact_mod_cast hgN

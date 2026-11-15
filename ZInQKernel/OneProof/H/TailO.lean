@@ -2881,8 +2881,6 @@ structure OpenTextbookLeaves6 : Prop where
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   /-- curves-g: `dim Jac X = genus` for curves over `ℚ` (Milne 1986 Prop. 2.1 with Serre duality). -/
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
-  /-- curves-g: the genus of `K_N` is the genus of `Γ₁(N)` (Shimura 1971 §6.7 and Prop. 1.40). -/
-  genusX1Field : _root_.ZInQ.Contrib.CurvesG.GenusX1Field
   t35 : _root_.ZInQ.LeafPush2.UniformizationExists
   /-- curves-g (A): a normal proper model of a function field over `ℚ(T)` (Stacks 0BXX). -/
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
@@ -2951,7 +2949,6 @@ theorem textbookLeaves4_of_open6 (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6
   t24 := eigenformTwist_ofK5 t.t24
   t27 := qmDichotomyYu_ofK5 t.t27
   t33 := jacobianExists_ofK5 t.t33
-  t34 := t34_of_split5 t.dimJacobianEqGenus t.genusX1Field
   t35 := uniformizationExists_ofK5 t.t35
   t38 := t38_of_split5 t.normalModelOfFunctionFieldQ t.normalCurveSmoothQ t.geomConnectedOfConstantFieldQ
   x0Transitive := t.x0Transitive
@@ -3023,7 +3020,7 @@ theorem sixContactMin_of_open6_poincare (r : OpenResearchLeaves5) (t : OpenTextb
       charPolyIndepOfEllAlgClosed := t.charPolyIndepOfEllAlgClosed,
       t8 := _root_.ZInQ.Contrib.AVB1.poincareReducibility_of_simpleImage t.poincareComplement g.simpleImageIsogeny,
       homLatticeCorr := t.homLatticeCorr, t11bExists := t.t11bExists, t23 := t.t23, t24 := t.t24,
-      t27 := t.t27, t33 := t.t33, dimJacobianEqGenus := t.dimJacobianEqGenus, genusX1Field := t.genusX1Field,
+      t27 := t.t27, t33 := t.t33, dimJacobianEqGenus := t.dimJacobianEqGenus,
       t35 := t.t35, normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ,
       normalCurveSmoothQ := t.normalCurveSmoothQ, geomConnectedOfConstantFieldQ := t.geomConnectedOfConstantFieldQ,
       x0Transitive := t.x0Transitive, neronSchemeExtensionExists := t.neronSchemeExtensionExists }

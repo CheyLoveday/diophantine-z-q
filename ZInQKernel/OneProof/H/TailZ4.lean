@@ -121,7 +121,6 @@ structure OpenTextbookLeaves8 : Prop where
   yuThm11 : QMSplit.Yu.YuThm11
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
-  genusX1Field : _root_.ZInQ.Contrib.CurvesG.GenusX1Field
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
   igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
@@ -224,7 +223,6 @@ theorem textbookLeaves7_of_open8 (t : OpenTextbookLeaves8) : OpenTextbookLeaves7
   yuThm11 := t.yuThm11
   t33 := t.t33
   dimJacobianEqGenus := t.dimJacobianEqGenus
-  genusX1Field := t.genusX1Field
   normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ
   regularSmoothPerfect := t.regularSmoothPerfect
   igusaGL2 := t.igusaGL2

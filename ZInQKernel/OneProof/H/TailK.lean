@@ -171,7 +171,6 @@ structure OpenTextbookLeaves4 : Prop where
   t24 : EigenformTwist
   t27 : PkgI3.QMDichotomyYu
   t33 : LeafModCurves.JacobianExists ℚ
-  t34 : LeafModCurves.DimJ1Genus
   t35 : ZInQ.LeafPush2.UniformizationExists
   t38 : X1Belyi.CurveOfFunctionFieldQ
   /-- `X0Transitive` (t40-igusa, `ZInQKernel/Contrib/RLeaf/IgusaX0.lean`): Galois is transitive on the cyclic
@@ -242,7 +241,6 @@ theorem textbookLeaves3_of_open4 (t : OpenTextbookLeaves4) : OpenTextbookLeaves3
   t26 := tateModuleFree_of_t5' t.t5
   t27 := t.t27
   t33 := t.t33
-  t34 := t.t34
   t35 := t.t35
   t38 := t.t38
   t40 := t40_of_x0Transitive4 t.x0Transitive

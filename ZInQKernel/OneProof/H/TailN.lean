@@ -225,7 +225,6 @@ theorem textbookLeaves4_of_open5 (t : OpenTextbookLeaves5) (l : OpenAddedLeaves5
   t24 := eigenformTwist_ofK5 t.t24
   t27 := qmDichotomyYu_ofK5 t.t27
   t33 := jacobianExists_ofK5 t.t33
-  t34 := t34_of_split5 t.dimJacobianEqGenus t.genusX1Field
   t35 := uniformizationExists_ofK5 t.t35
   t38 := t38_of_split5 t.normalModelOfFunctionFieldQ t.normalCurveSmoothQ t.geomConnectedOfConstantFieldQ
   x0Transitive := t.x0Transitive

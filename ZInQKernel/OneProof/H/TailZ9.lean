@@ -84,7 +84,6 @@ structure OpenTextbookLeaves9 : Prop where
   bdRInvariants : ∀ (p : ℕ) [Fact p.Prime], _root_.ZInQ.Contrib.HodgeSplit.BdRInvariants p
   yuThm11 : QMSplit.Yu.YuThm11
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
-  genusX1Field : _root_.ZInQ.Contrib.CurvesG.GenusX1Field
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
   igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
   neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
@@ -140,7 +139,6 @@ theorem textbookLeaves8_of_open9 (t : OpenTextbookLeaves9) : OpenTextbookLeaves8
   yuThm11 := t.yuThm11
   t33 := _root_.ZInQ.Contrib.CloudW07JacobiansCurves.JacobianExists_proof
   dimJacobianEqGenus := t.dimJacobianEqGenus
-  genusX1Field := t.genusX1Field
   normalModelOfFunctionFieldQ := _root_.ZInQ.Contrib.CloudW07JacobiansCurves.NormalModelOfFunctionFieldQ_proof
   regularSmoothPerfect := t.regularSmoothPerfect
   igusaGL2 := t.igusaGL2
