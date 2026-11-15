@@ -96,4 +96,159 @@ theorem exists_of_mem (W : ValuationSubring F) (hW : ∀ r : R, algebraMap R F r
 
 end Loc
 
+/-! ## B. The inertia field of a finite Galois extension is unramified -/
+
+section Key
+
+theorem nonunits_comap {E M : Type*} [Field E] [Field M] (f : E →+* M) (W : ValuationSubring M)
+    (x : E) : x ∈ (W.comap f).nonunits ↔ f x ∈ W.nonunits := by
+  rw [ValuationSubring.mem_nonunits_iff_or, ValuationSubring.mem_nonunits_iff_or]
+  simp only [ValuationSubring.mem_comap, map_inv₀, map_eq_zero]
+
+theorem div_mem_nonunits {M : Type*} [Field M] (W : ValuationSubring M) {n d : M}
+    (hn : n ∈ W.nonunits) (hd : d ∈ W) (hd' : d ∉ W.nonunits) : n / d ∈ W.nonunits := by
+  rw [ValuationSubring.mem_nonunits_iff] at hn hd' ⊢
+  have h1 : W.valuation d = 1 :=
+    le_antisymm ((W.valuation_le_one_iff d).mpr hd) (not_lt.mp hd')
+  rw [map_div₀, h1, div_one]
+  exact hn
+
+theorem div_mem {M : Type*} [Field M] (W : ValuationSubring M) {n d : M}
+    (hn : n ∈ W) (hd : d ∈ W) (hd' : d ∉ W.nonunits) : n / d ∈ W := by
+  rw [← W.valuation_le_one_iff] at hn ⊢
+  rw [ValuationSubring.mem_nonunits_iff] at hd'
+  have h1 : W.valuation d = 1 :=
+    le_antisymm ((W.valuation_le_one_iff d).mpr hd) (not_lt.mp hd')
+  rw [map_div₀, h1, div_one]
+  exact hn
+
+/-- An element of `M` integral over a subring contained in `W` lies in `W`. -/
+theorem mem_of_isIntegral {A M : Type*} [CommRing A] [Field M] [Algebra A M]
+    (W : ValuationSubring M) (hAW : ∀ a : A, algebraMap A M a ∈ W) {x : M}
+    (hx : IsIntegral A x) : x ∈ W := by
+  letI : Algebra A W := ((algebraMap A M).codRestrict W.toSubring hAW).toAlgebra
+  haveI : IsScalarTower A W M := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  have h2 : IsIntegral W x := hx.tower_top
+  obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
+  rw [← hy]; exact y.2
+
+variable {K M : Type*} [Field K] [Field M] [Algebra K M] [FiniteDimensional K M] [IsGalois K M]
+variable (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [Algebra A K]
+  [IsFractionRing A K] [Algebra A M] [IsScalarTower A K M]
+
+instance instSMulCommClassGal : SMulCommClass (M ≃ₐ[K] M) A M where
+  smul_comm σ a x := by
+    rw [AlgEquiv.smul_def, AlgEquiv.smul_def, Algebra.smul_def, Algebra.smul_def, map_mul,
+      IsScalarTower.algebraMap_apply A K M, AlgEquiv.commutes]
+
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1600000 in
+/-- **Key lemma (finite level).** `M/K` finite Galois, `A ⊆ K` a DVR with perfect residue field,
+`W` a valuation ring of `M` over `A`. If `x ∈ W`, `x ≠ 0` is fixed by every `σ ∈ Gal(M/K)` acting
+trivially modulo `𝔪_W`, then `x = ϖⁿ · (unit of W)` for a uniformizer `ϖ` of `A`. -/
+theorem key_finite [PerfectField (ResidueField A)]
+    (W : ValuationSubring M) (hAW : ∀ a : A, algebraMap A M a ∈ W)
+    (hctr : ∀ a : A, algebraMap A M a ∈ W.nonunits ↔ a ∈ maximalIdeal A)
+    (ϖ : A) (hϖ : Irreducible ϖ) (x : M)
+    (hfix : ∀ σ : M ≃ₐ[K] M, (∀ y ∈ W, σ y - y ∈ W.nonunits) → σ x = x)
+    (hxW : x ∈ W) (hx0 : x ≠ 0) :
+    ∃ n : ℕ, x / algebraMap A M ϖ ^ n ∈ W ∧ (x / algebraMap A M ϖ ^ n)⁻¹ ∈ W := by
+  classical
+  -- the ring of integers `S` of `M` over `A`
+  let S := integralClosure A M
+  haveI : IsDedekindDomain S := integralClosure.isDedekindDomain A K M
+  haveI : Module.Finite A S := IsIntegralClosure.finite A K M S
+  haveI : IsFractionRing S M := IsIntegralClosure.isFractionRing_of_finite_extension A K M S
+  haveI : IsGaloisGroup (M ≃ₐ[K] M) A S := IsGaloisGroup.of_isFractionRing _ A S K M
+  have hSW : ∀ s : S, algebraMap S M s ∈ W := fun s =>
+    mem_of_isIntegral W hAW s.2
+  let p := maximalIdeal A
+  let P : Ideal S := ctr W hSW
+  have hP : ∀ s : S, s ∈ P ↔ (s : M) ∈ W.nonunits := fun s => mem_ctr_iff W hSW s
+  haveI : P.LiesOver p := by
+    constructor
+    ext a
+    rw [Ideal.under_def, Ideal.mem_comap, hP]
+    exact (hctr a).symm
+  have hϖ0 : ϖ ≠ 0 := hϖ.ne_zero
+  have hϖp : ϖ ∈ p := (mem_maximalIdeal _).mpr hϖ.not_isUnit
+  have hAinj : Function.Injective (algebraMap A M) := by
+    rw [IsScalarTower.algebraMap_eq A K M]
+    exact (algebraMap K M).injective.comp (IsFractionRing.injective A K)
+  have hP0 : P ≠ ⊥ := by
+    intro h
+    have : algebraMap A S ϖ ∈ P := by rw [hP]; exact (hctr ϖ).mpr hϖp
+    rw [h, Ideal.mem_bot] at this
+    apply hϖ0
+    apply hAinj
+    rw [map_zero]
+    exact congrArg (fun z : S => (z : M)) this
+  letI : Field (A ⧸ p) := Ideal.Quotient.field p
+  haveI : PerfectField (A ⧸ p) := ‹PerfectField (ResidueField A)›
+  haveI : FaithfulSMul A S := by
+    rw [faithfulSMul_iff_algebraMap_injective]
+    intro a b h
+    exact hAinj (congrArg (fun z : S => (z : M)) h)
+  haveI : Module.IsTorsionFree A S := by
+    rw [Module.isTorsionFree_iff_faithfulSMul]; infer_instance
+  haveI : PerfectField p.ResidueField := PerfectField.of_ringEquiv
+    (RingEquiv.ofBijective (algebraMap (A ⧸ p) p.ResidueField)
+      (Ideal.bijective_algebraMap_quotient_residueField p))
+  have hcard : Nat.card (P.inertia (M ≃ₐ[K] M)) = p.ramificationIdxIn S :=
+    Ideal.card_inertia_eq_ramificationIdxIn p P
+  -- the inertia field `E` and its ring of integers `R`
+  let H := P.inertia (M ≃ₐ[K] M)
+  let E : IntermediateField K M := FixedPoints.intermediateField H
+  haveI : IsScalarTower A E M := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  let R := integralClosure A E
+  haveI : IsDedekindDomain R := integralClosure.isDedekindDomain A K E
+  haveI : Module.Finite A R := IsIntegralClosure.finite A K E R
+  haveI : IsFractionRing R E := IsIntegralClosure.isFractionRing_of_finite_extension A K E R
+  have hRS : ∀ r : R, IsIntegral A (algebraMap E M (r : E)) := fun r =>
+    r.2.map (IsScalarTower.toAlgHom A E M)
+  let φ : R →+* S := ((algebraMap E M).comp (algebraMap R E)).codRestrict S (fun r => hRS r)
+  letI : Algebra R S := φ.toAlgebra
+  haveI : IsScalarTower A R S := IsScalarTower.of_algebraMap_eq (fun a => by
+    apply Subtype.ext
+    change algebraMap A M a = algebraMap E M (algebraMap A E a)
+    rw [← IsScalarTower.algebraMap_apply])
+  haveI : IsScalarTower R S M := IsScalarTower.of_algebraMap_eq (fun r => rfl)
+  haveI : Algebra.IsIntegral R S := Algebra.IsIntegral.tower_top A
+  haveI : IsGaloisGroup H E M := IsGaloisGroup.subgroup (M ≃ₐ[K] M) K M H
+  haveI : IsGaloisGroup H R S := IsGaloisGroup.of_isFractionRing H R S E M
+  haveI : Module.Finite R S := Module.Finite.of_restrictScalars_finite A R S
+  haveI : FaithfulSMul R S := by
+    rw [faithfulSMul_iff_algebraMap_injective]
+    intro a b h
+    apply Subtype.ext
+    apply (algebraMap E M).injective
+    exact congrArg (fun z : S => (z : M)) h
+  haveI : Module.IsTorsionFree R S := by
+    rw [Module.isTorsionFree_iff_faithfulSMul]; infer_instance
+  let 𝔮 : Ideal R := P.under R
+  haveI : 𝔮.LiesOver p := Ideal.LiesOver.tower_bot P 𝔮 p
+  haveI : Algebra.HasSeparableResidueFieldsAt R S 𝔮 :=
+    Algebra.HasSeparableResidueFieldsAt.tower_top p 𝔮
+  have hcard' : Nat.card (P.inertia H) = 𝔮.ramificationIdxIn S :=
+    Ideal.card_inertia_eq_ramificationIdxIn 𝔮 P
+  have htop : P.inertia H = ⊤ := by
+    ext h
+    simp only [Subgroup.mem_top, iff_true]
+    intro s
+    exact h.2 s
+  have hcardH : Nat.card (P.inertia H) = Nat.card H := by
+    rw [htop]; exact Subgroup.card_top
+  have he1 := Ideal.ramificationIdxIn_eq_ramificationIdx p P (M ≃ₐ[K] M)
+  have he2 := Ideal.ramificationIdxIn_eq_ramificationIdx 𝔮 P H
+  have htower := Ideal.ramificationIdx_tower (R := A) 𝔮 P
+  have hepos : P.ramificationIdx A ≠ 0 := by
+    rw [← he1, ← hcard]; exact Nat.card_pos.ne'
+  have he𝔮 : 𝔮.ramificationIdx A = 1 := by
+    rw [← he2, ← hcard', hcardH, ← he1, ← hcard] at htower
+    have hc : 0 < Nat.card H := Nat.card_pos
+    exact Nat.eq_of_mul_eq_mul_right hc (by rw [one_mul]; exact htower.symm)
+  sorry
+
+end Key
+
 end ShRoute
