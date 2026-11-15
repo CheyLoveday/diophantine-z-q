@@ -11,14 +11,17 @@ Marks: **VERIFIED** (compiled here, or read in a named file), **STANDARD** (publ
 ## 1. Verdict
 
 **The two leaves `panPrinted` and `bergerPrinted` can be rated printed form.** Every degeneracy that would
-make them vacuous or false and that can be decided in Lean today is excluded by a Lean proof (§2), and both
-statements are consequences of the prints, not stronger (§4). What remains unproved in Lean is not a
-choice in the definitions but two standard theorems about exactly these objects: Fontaine's
-`B_st^{G_K} = K_0` (the half `⊇ K_0` is proved here in dimension form; the half `⊆`, in particular the
-finite-dimensionality of `B_st^{G_K}`, is not) and the additivity of `log` on `{ε : ε^♯ = 1}` (which gives
-the group law on `B_st`). I recommend changing the flag of both rows from "no statement check yet" to
-"definitions checked by pb-sanity (non-degenerate; `B_st^{G_K} ⊆ K_0` and `LogAdditive` standard, not in
-Lean)", and keeping "unread" for the JAMS/Springer locators (`scratch/pb-sanity/autofold.json`).
+make them vacuous or false and that can be decided in Lean today is ruled out by a Lean proof (§2), and both
+statements are consequences of the prints, not stronger (§4). Proved: `B_cris^+`, `B_cris`, `B_st` are not
+zero and `t` is not nilpotent; `G_{ℚ_p}` acts on `B_cris` and on `B_st` by ring automorphisms (including the
+additivity of `log` on `{ε : ε^♯ = 1}`); the monodromy variable `u` is not invariant; `K_0 ⊆ B_st^{G_K}` in
+dimension form; potentially trivial representations are pst; and a nontrivial character (the quadratic
+character of a prime-to-`p` root of unity, e.g. the unramified one) is semistable over `ℚ_p` itself. What
+remains unproved in Lean is not a choice in the definitions but one standard theorem about exactly these
+objects, the half `B_st^{G_K} ⊆ K_0` of Fontaine's `B_st^{G_K} = K_0` (in particular finite-dimensionality),
+and with it any example of a representation that is not pst. I recommend changing the flag of both rows
+from "no statement check yet" to "definitions checked by pb-sanity (non-degenerate; only `B_st^{G_K} ⊆ K_0`
+not in Lean)", and keeping "unread" for the JAMS/Springer locators (`scratch/pb-sanity/autofold.json`).
 
 One caveat for readers of the statement, not a defect: `IsSemistableOver` compares `finrank_{ℚ_p} D_st,K`
 with `finrank_{ℚ_p} B_st^{G_K} · dim V`. Lean's `finrank` is 0 on infinite-dimensional spaces, so the
@@ -45,11 +48,16 @@ All in namespace `HDec.PkgI4.PanBergerSplit`, over pb-bypass's definitions uncha
 | **`G_{ℚ_p}` acts on `B_cris` by ring automorphisms** (a group homomorphism) | `bcrisAut : GQp p →* (Bcris p ≃+* Bcris p)`, `bcrisAct_mul`, `bcrisAct_one` | functoriality of `oAct`, `σ♭`, `W(·)`, `A_inf[1/p]`, adic completion, localizations |
 | **each `σ` acts on `B_st` by a ring automorphism**; `1` acts trivially | `stEquiv`, `stAct_bijective`, `stAct_one` | explicit inverse; `u_1 = 1`, `log [1] = 0` |
 | `u_σ` exists, `u_σ^♯ = 1` (so the `else 0` branch of `logU` never occurs), `u_{στ} = σ♭(u_τ)·u_σ` | `uSigma_spec`, `untilt_uSigma`, `logU_eq`, `uSigma_mul` | KerTheta `dvd_of_coeff_zero` |
-| the group law on `B_st` ⇔ the cocycle identity for `σ ↦ log [u_σ]`; it holds given `LogAdditive` | `stAct_mul_iff`, `stAct_mul (hL : LogAdditive p)` | |
+| the group law on `B_st` ⇔ the cocycle identity for `σ ↦ log [u_σ]` | `stAct_mul_iff`, `stAct_mul (hL : LogAdditive p)` | |
+| **`log [xy] = log [x] + log [y]` in `A_cris`** (`x^♯ = y^♯ = 1`) | `logAdditive : LogAdditive p` | below (second argument) |
+| **`G_{ℚ_p}` acts on `B_st` by ring automorphisms** | `stAut : GQp p →* (Bst p ≃+* Bst p)` | `stAct_mul`, `logAdditive` |
+| **`u` is not `G_{ℚ_p}`-invariant**: some `σ` moves `p♭`, so `σ(u) = u + log [u_σ] ≠ u` | `exists_uSigma_ne_one`, `exists_stAct_X_ne`, `X_not_mem_bstInv_bot` | `p^{1/p} ∉ ℚ_p` (valuation), infinite Galois theory (`InfiniteGalois.mem_range_algebraMap_iff_fixed`), `root_preTiltMap` |
 | **`K_0 ⊆ B_st^{G_K}`** (dimension form): for a root of unity `μ ∈ K` of order prime to `p`, `[μ♭]^i ∈ B_st^{G_K}` and `1, [μ♭], …, [μ♭]^{d−1}` (`d = [ℚ_p(μ):ℚ_p]`) are `ℚ_p`-independent; so a finite-dimensional `B_st^{G_K}` has dimension `≥ [ℚ_p(μ):ℚ_p]` | `teichB_pow_mem_bstInv`, `linearIndependent_teichB`, `natDegree_minpoly_le_finrank_bstInv` | `muFlat`, `coe_theta_zpToW`, `embW_injective`, `linearIndependent_pow` |
 | a representation trivial on `G_K` is semistable over `K` (any `K`; no finiteness of `B_st^{G_K}` needed) | `isSemistableOver_of_trivial`, `isPst_of_trivial_on` | `D_st,K ≅ Hom(V, B_st^{G_K})` |
 | trivial `n`-dimensional `ℚ̄_p`-representation satisfies `LocalIsPst` | `localIsPst_one` | |
 | quadratic characters `σ ↦ σ(α)/α` (`α² ∈ ℚ_p`, e.g. the unramified one) are pst | `quadChar`, `isPst_quadChar` | trivial on `G_{ℚ_p(α)}` |
+| a 1-dimensional representation with a unit period `b ∈ B_st` (`σ b = χ(σ) b` on `G_K`) is semistable over `K` | `isSemistableOver_of_period` | `D_st,K ≅ B_st^{G_K}`, `φ ↦ φ(1) b⁻¹` |
+| **the quadratic character of a root of unity `β` of order prime to `p` with `β² ∈ ℚ_p` is semistable over `ℚ_p`** (for `p` odd, `β` of order `2(p − 1)`: the unramified quadratic character, STANDARD) | `isSemistableOver_quadChar_teich` | period `[β♭]`; Teichmüller uniqueness `eq_of_pow_eq_one_of_untilt`; `A_inf` a domain |
 | summary | `panBerger_definitions_nondegenerate` | |
 
 **The main argument (all in `A_inf`, no `B_dR`).** Write `[ε_i] − 1 = ξ^{s_i} w_i` with `θ(w_i) ≠ 0`
@@ -70,12 +78,6 @@ all `n`; so `c = 0`, a contradiction since `𝓞_ℂ_p` is a domain of character
   `A_cris → B_dR^+` and transcendence of `log [p♭]` over `B_cris`) and uses `B_dR^{G_K} = K`, which rests on
   Ax–Sen–Tate (`ℂ_p^{G_K} = K`) and Tate's `ℂ_p(i)^{G_K} = 0` for `i ≠ 0`. None of these is in Mathlib or in
   the tree (pkg-I4's own sanity check of `IsDeRham` takes `B_dR^{G_{ℚ_p}} = ℚ_p` as a hypothesis).
-* **`LogAdditive`**: `log [xy] = log [x] + log [y]` in `A_cris` for `x^♯ = y^♯ = 1`. Standard (the formal
-  identity `log((1+a)(1+b)) = log(1+a) + log(1+b)` with divided powers; the partial sums agree modulo
-  `p^n A_cris^0` once the truncation is at `M ≥ 2p^n + 2`, since every monomial of total degree `> M` comes
-  from `j > M/2` and carries `(j−1)!`). Formalizing it needs the multinomial expansion of
-  `(a + b + ab)^j` with divided powers; not attempted. It is stated as `LogAdditive` and is the only input
-  missing for the group law of `stAct` (`stAct_mul`).
 * **A representation failing `LocalIsPst`: out of reach.** To show `¬ IsSemistableOver K ρ` one must know
   `finrank B_st^{G_K} ≠ 0` (needs finite-dimensionality, first bullet) and bound `D_st,K(ρ)` from above, e.g.
   `D_st,K = 0` for a character of non-integral Sen weight or for `ℚ_p(χ)` with `χ` non-de Rham. Both need the
@@ -84,8 +86,10 @@ all `n`; so `c = 0`, a contradiction since `𝓞_ℂ_p` is a domain of character
   would make every representation pst).
 * **Unramified characters of infinite order** (Frobenius ↦ a unit of `ℤ_p` that is not a root of unity):
   their periods are solutions of `φ(b) = u b` in `W(k̄)`, which needs Lang's theorem / Hilbert 90 over
-  `W(k̄)`. Only the finite-order ones are covered (by `isPst_of_trivial_on`, e.g. the unramified quadratic
-  character via `isPst_quadChar`).
+  `W(k̄)`. The finite-order ones are covered: all are pst (`isPst_of_trivial_on`), and the quadratic ones
+  attached to prime-to-`p` roots of unity are semistable over `ℚ_p` (`isSemistableOver_quadChar_teich`);
+  the existence of `β = ζ_{2(p−1)}` with `β² ∈ ℚ_p`, `β ∉ ℚ_p` (which makes that character nontrivial) is
+  standard and not formalized.
 
 ## 4. Statement check of the two leaves against the prints
 
@@ -117,7 +121,8 @@ and was checked there; not re-checked here). **Not stronger than the print**, wi
 
 **Ratings.** `panPrinted`: printed form (consequence of Pan Thm 1.0.4 applied to `ρ^∨`, `p ≥ 5`). `bergerPrinted`:
 printed form (Berger Thm 0.7 applied to `V^∨`). Both over definitions that are Fontaine's (§2 shows they are
-not degenerate; §3 lists the two standard facts about them that Lean does not yet have).
+not degenerate; §3 names the one standard fact about them, `B_st^{G_K} ⊆ K_0`, that Lean does not yet
+have).
 
 ## 5. Deliverables
 
@@ -126,7 +131,7 @@ not degenerate; §3 lists the two standard facts about them that Lean does not y
 * `#discharges` (VERIFIED, `scratch/pb-sanity/discharges-output.txt`, after building `Main`, `Discharges`,
   `PanBerger` and `PanBergerSanity`): the sanity file discharges no new field (it proves no open hypothesis);
   `r11r12` is still discharged by pb-bypass's `panBerger_of_printed`, assuming `PanPrinted` and
-  `BergerPrinted`; total `63 open hypotheses, 2048 theorems checked, 8 discharge one`.
+  `BergerPrinted`; total `63 open hypotheses, 2166 theorems checked, 8 discharge one`.
 * `scratch/pb-sanity/autofold.json`: pb-bypass's spec for `r11r12` with the two leaves' flags updated to
   record this check (same imports: the fold does not need the sanity file, and importing `KerTheta` into the
   fold chain is avoided).
