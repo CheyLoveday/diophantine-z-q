@@ -585,68 +585,6 @@ theorem iso_of_conj (hC : ZInQ.HomUnify.HomLatticeCorr) {A A' : PkgI3.AbVar ℂ}
 abbrev CMSet {k : Type} [Field k] (R : Subring k) :=
   {c : Quotient (pairSetoid Qbar) // ∃ P : QMPair Qbar, Quotient.mk _ P = c ∧ Nonempty (com P.q ≃+* R)}
 
-/-- **The CM points by `R` inject into the `𝒪^×`-classes of optimal embeddings `R ↪ 𝒪`** (glue, from the
-textbook fields `uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed`). A point `[(A, ι)]` goes to
-the embedding `a ↦ b`, `ι(b)v = ψ(a)v`, where `v = (τ, 1)ᵀ` spans the normalized lattice `ι(𝒪)v` of `A_ℂ` and
-`ψ : k → ℂ` is fixed; conjugate embeddings give proportional lattices, hence isomorphic pairs over `ℂ`, hence
-over `ℚ̄` (T11(b)). -/
-theorem exists_injective_optEmb (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
-    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
-    (k : Type) [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) (R : Subring k)
-    (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6) :
-    ∃ F : CMSet R → Quot (GRCountX6.ConjRel R), Function.Injective F := by
-  classical
-  have hC := AvSplit.Final.h69 hU hG
-  let ψ : k →+* ℂ := (IsAlgClosed.lift : k →ₐ[ℚ] ℂ).toRingHom
-  obtain ⟨a0, ha0⟩ := exists_not_rat hk
-  let D : (P : QMPair Qbar) → LatData (bcQ P).A (bcQ P).q := fun P =>
-    (exists_latData hU hG hM _ (bcQ P).surface (bcQ P).q).some
-  have key : ∀ c : CMSet R, ∃ P : QMPair Qbar, Quotient.mk _ P = c.1 ∧ Nonempty (com P.q ≃+* R) :=
-    fun c => c.2
-  choose P hP hθ using key
-  let θc : ∀ c, com (bcQ (P c)).q ≃+* R := fun c => (com_bcQ (P c)).some.symm.trans (hθ c).some
-  let χ : ∀ c, R →+* ℂ := fun c => (D (P c)).scalHom.comp (θc c).symm.toRingHom
-  have hψ : ∀ c, ∀ r : R, ∃ e : com (bcQ (P c)).q, (D (P c)).scal e = ψ r := by
-    intro c r
-    obtain ⟨s, hs⟩ := (image_cross hk R hR ψ (χ c) r).1
-    exact ⟨(θc c).symm s, hs⟩
-  have hψ' : ∀ c, ∀ e : com (bcQ (P c)).q, ∃ r : R, ψ r = (D (P c)).scal e := by
-    intro c e
-    obtain ⟨s, hs⟩ := (image_cross hk R hR ψ (χ c) ((θc c) e)).2
-    refine ⟨s, hs.trans ?_⟩
-    simp [χ, LatData.scalHom_apply]
-  let Φ : ∀ c : CMSet R, GRCountX6.OptEmb k R := fun c =>
-    ⟨emb (D (P c)) hC (bcQ (P c)).surface R hc ψ (hψ c),
-      emb_opt (D (P c)) hC (bcQ (P c)).surface R hc ψ (hψ c) (hψ' c)⟩
-  refine ⟨fun c => Quot.mk _ (Φ c), fun c1 c2 h => ?_⟩
-  have hrel : GRCountX6.ConjRel R (Φ c1) (Φ c2) :=
-    (GRCountX6.conjRel_equivalence R).eqvGen_iff.mp (Quot.eqvGen_exact h)
-  obtain ⟨u, hu⟩ := hrel
-  have hb : (Φ c2).1 a0 ∉ Set.range (algebraMap ℚ B) := by
-    rintro ⟨r, hr⟩
-    apply ha0 r
-    apply (Φ c2).1.toRingHom.injective
-    change (Φ c2).1 a0 = (Φ c2).1 (algebraMap ℚ k r)
-    rw [AlgHom.commutes, hr]
-  obtain ⟨f⟩ := iso_of_conj hC (bcQ (P c1)).surface (bcQ (P c2)).surface (D (P c1)) (D (P c2))
-    ((Φ c1).1 a0) ((Φ c2).1 a0) hb (ψ a0)
-    (emb_spec (D (P c1)) hC (bcQ (P c1)).surface R hc ψ (hψ c1) a0)
-    (emb_spec (D (P c2)) hC (bcQ (P c2)).surface R hc ψ (hψ c2) a0) u (hu a0)
-  obtain ⟨g⟩ := qmIso_descend (P c1) (P c2) f
-  apply Subtype.ext
-  rw [← hP c1, ← hP c2]
-  exact Quotient.sound ⟨g⟩
-
-/-- **`#CM(R) ≤ #(optimal embeddings mod 𝒪^×)`**, whenever the right side is finite. -/
-theorem card_cmSet_le (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
-    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
-    (k : Type) [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) (R : Subring k)
-    (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6)
-    (hfin : Finite (Quot (GRCountX6.ConjRel R))) :
-    Finite (CMSet R) ∧ Nat.card (CMSet R) ≤ Nat.card (Quot (GRCountX6.ConjRel R)) := by
-  obtain ⟨F, hF⟩ := exists_injective_optEmb hU hG hM k hk R hR hc
-  exact ⟨Finite.of_injective F hF, Nat.card_le_card_of_injective F hF⟩
-
 /-! ## §8b Comparison of two lattice models along an isomorphism -/
 
 /-- **Two lattice models of isomorphic QM pairs differ by a unit of `𝒪`**: if `g : (A, ι) ≅ (A', ι')` and
@@ -1034,6 +972,96 @@ theorem com_equiv_of_eig (hC : ZInQ.HomUnify.HomLatticeCorr) {A : PkgI3.AbVar �
   rw [map_div₀, map_intCast, map_natCast]
   field_simp
   rw [mul_comm]; exact h2
+
+/-! ## §8e The CM-point map and its bijectivity -/
+
+section Map
+
+variable (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+  (hM : AvSplit.MumfordTorsionAlgClosed)
+
+/-- The fixed embedding `k → ℂ`. -/
+def ψk (k : Type) [Field k] [NumberField k] : k →+* ℂ := (IsAlgClosed.lift : k →ₐ[ℚ] ℂ).toRingHom
+
+/-- The chosen lattice data of the base change `P_ℂ` of a pair. -/
+def datQ (P : QMPair Qbar) : LatData (bcQ P).A (bcQ P).q :=
+  (exists_latData hU hG hM _ (bcQ P).surface (bcQ P).q).some
+
+variable {k : Type} [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) {R : Subring k}
+  (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6)
+
+include hk hR in
+theorem hψ_datQ (P : QMPair Qbar) (θ : com P.q ≃+* R) :
+    (∀ r : R, ∃ e : com (bcQ P).q, (datQ hU hG hM P).scal e = ψk k r) ∧
+      (∀ e : com (bcQ P).q, ∃ r : R, ψk k r = (datQ hU hG hM P).scal e) := by
+  let θc : com (bcQ P).q ≃+* R := (com_bcQ P).some.symm.trans θ
+  let χ : R →+* ℂ := (datQ hU hG hM P).scalHom.comp θc.symm.toRingHom
+  refine ⟨fun r => ?_, fun e => ?_⟩
+  · obtain ⟨s, hs⟩ := (image_cross hk R hR (ψk k) χ r).1
+    exact ⟨θc.symm s, hs⟩
+  · obtain ⟨s, hs⟩ := (image_cross hk R hR (ψk k) χ (θc e)).2
+    refine ⟨s, hs.trans ?_⟩
+    simp [χ, LatData.scalHom_apply]
+
+/-- The optimal embedding of a pair with `End_𝒪 ≅ R`: `a ↦ b` with `ι(b)v = ψ(a)v` on its lattice model. -/
+def embP (P : QMPair Qbar) (θ : com P.q ≃+* R) : GRCountX6.OptEmb k R :=
+  ⟨emb (datQ hU hG hM P) (AvSplit.Final.h69 hU hG) (bcQ P).surface R hc (ψk k)
+      (hψ_datQ hU hG hM hk hR P θ).1,
+    emb_opt (datQ hU hG hM P) (AvSplit.Final.h69 hU hG) (bcQ P).surface R hc (ψk k)
+      (hψ_datQ hU hG hM hk hR P θ).1 (hψ_datQ hU hG hM hk hR P θ).2⟩
+
+theorem embP_spec (P : QMPair Qbar) (θ : com P.q ≃+* R) (a : k) :
+    act ((embP hU hG hM hk hR hc P θ).1 a) (datQ hU hG hM P).v = ψk k a • (datQ hU hG hM P).v :=
+  emb_spec _ _ _ _ _ _ _ a
+
+/-- **The CM-point map** `CM(R) → Emb(R, 𝒪)/𝒪^×`, `[(A, ι)] ↦ [Φ_{(A, ι)}]`. -/
+def cmMap (c : CMSet R) : Quot (GRCountX6.ConjRel R) :=
+  Quot.mk _ (embP hU hG hM hk hR hc c.2.choose c.2.choose_spec.2.some)
+
+/-- **The CM-point map is injective** (glue, from the textbook fields `uniformizationLeafAll`,
+`gagaMorphism`, `mumfordTorsionAlgClosed`): conjugate embeddings give proportional lattices, hence isomorphic
+pairs over `ℂ`, hence over `ℚ̄` (T11(b)). -/
+theorem cmMap_injective : Function.Injective (cmMap hU hG hM hk hR hc) := by
+  intro c1 c2 h
+  have hC := AvSplit.Final.h69 hU hG
+  obtain ⟨a0, ha0⟩ := exists_not_rat hk
+  have hrel := (GRCountX6.conjRel_equivalence R).eqvGen_iff.mp (Quot.eqvGen_exact h)
+  obtain ⟨u, hu⟩ := hrel
+  set Φ2 := embP hU hG hM hk hR hc c2.2.choose c2.2.choose_spec.2.some
+  have hb : Φ2.1 a0 ∉ Set.range (algebraMap ℚ B) := by
+    rintro ⟨r, hr⟩
+    apply ha0 r
+    apply Φ2.1.toRingHom.injective
+    change Φ2.1 a0 = Φ2.1 (algebraMap ℚ k r)
+    rw [AlgHom.commutes, hr]
+  obtain ⟨f⟩ := iso_of_conj hC (bcQ c1.2.choose).surface (bcQ c2.2.choose).surface
+    (datQ hU hG hM c1.2.choose) (datQ hU hG hM c2.2.choose) _ (Φ2.1 a0) hb (ψk k a0)
+    (embP_spec hU hG hM hk hR hc _ _ a0) (embP_spec hU hG hM hk hR hc _ _ a0) u (hu a0)
+  obtain ⟨g⟩ := qmIso_descend _ _ f
+  apply Subtype.ext
+  rw [← c1.2.choose_spec.1, ← c2.2.choose_spec.1]
+  exact Quotient.sound ⟨g⟩
+
+end Map
+
+/-- **The CM points by `R` inject into the `𝒪^×`-classes of optimal embeddings `R ↪ 𝒪`** (glue, from the
+textbook fields `uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed`). -/
+theorem exists_injective_optEmb (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (k : Type) [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) (R : Subring k)
+    (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6) :
+    ∃ F : CMSet R → Quot (GRCountX6.ConjRel R), Function.Injective F :=
+  ⟨cmMap hU hG hM hk hR hc, cmMap_injective hU hG hM hk hR hc⟩
+
+/-- **`#CM(R) ≤ #(optimal embeddings mod 𝒪^×)`**, whenever the right side is finite. -/
+theorem card_cmSet_le (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (k : Type) [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) (R : Subring k)
+    (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6)
+    (hfin : Finite (Quot (GRCountX6.ConjRel R))) :
+    Finite (CMSet R) ∧ Nat.card (CMSet R) ≤ Nat.card (Quot (GRCountX6.ConjRel R)) := by
+  obtain ⟨F, hF⟩ := exists_injective_optEmb hU hG hM k hk R hR hc
+  exact ⟨Finite.of_injective F hF, Nat.card_le_card_of_injective F hF⟩
 
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
