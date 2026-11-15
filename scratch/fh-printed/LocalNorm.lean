@@ -1,6 +1,7 @@
 import Mathlib.NumberTheory.Padics.Hensel
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.NumberTheory.LegendreSymbol.QuadraticReciprocity
+import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Analysis.Real.Sqrt
 
@@ -545,5 +546,143 @@ theorem isSquare_div_two_of_localNorm_iff {D D₀ : ℤ} (hD : Squarefree D) (hD
     push_cast at hw; field_simp; linear_combination hw
 
 end LocalConditions
+
+section Character
+
+/-- **The quadratic character `χ_d` at a prime `p`** (the Dirichlet coefficient of the idele class
+character of `ℚ(√d)` at `p`): `χ_{d,p}(p)` if the local component `χ_{d,p}` is unramified, i.e.
+trivial on `ℤ_p^×` (every unit is a norm from `ℚ_p(√d)`), and `0` otherwise. Here
+`χ_{d,p}(x) = 1` iff `x` is a norm from `ℚ_p(√d)` (local class field theory). -/
+noncomputable def charAtPrime (d : ℤ) (p : ℕ) : ℤ := by
+  classical
+  exact if hp : p.Prime then
+    haveI := Fact.mk hp
+    if (∀ u : ℤ_[p], IsUnit u → IsLocalNorm ℚ_[p] d (u : ℚ_[p])) then
+      (if IsLocalNorm ℚ_[p] d (p : ℚ_[p]) then 1 else -1)
+    else 0
+  else 0
+
+/-- **The Dirichlet coefficients of `L(s, χ_d) = ∏_{p unramified} (1 − χ_{d,p}(p) p^{−s})^{−1}`**:
+`χ_d(n) = ∏_{p^k ∥ n} χ_d(p)^k` (completely multiplicative, `0` at multiples of ramified
+primes). -/
+noncomputable def idelicChar (d : ℤ) (n : ℕ) : ℤ :=
+  n.factorization.prod fun p k => charAtPrime d p ^ k
+
+/-- Quadratic reciprocity in the form used here: for `d ≡ 1 (mod 4)` and an odd prime `p`,
+`(p / |d|) = (d / p)`. -/
+theorem jacobiSym_prime_eq_legendreSym {p : ℕ} [Fact p.Prime] (hp2 : p ≠ 2) {d : ℤ}
+    (hd : d % 4 = 1) : jacobiSym (p : ℤ) d.natAbs = legendreSym p d := by
+  have hpodd : Odd p := (Fact.out : p.Prime).odd_of_ne_two hp2
+  rw [jacobiSym.legendreSym.to_jacobiSym]
+  rcases le_or_gt 0 d with h0 | h0
+  · have hdeq : d = ((d.natAbs : ℕ) : ℤ) := by omega
+    have h1 : d.natAbs % 4 = 1 := by omega
+    conv_rhs => rw [hdeq]
+    exact (jacobiSym.quadratic_reciprocity_one_mod_four h1 hpodd).symm
+  · have h3 : d.natAbs % 4 = 3 := by omega
+    have hoddD : Odd d.natAbs := Nat.odd_iff.mpr (by omega)
+    have hdeq : d = -((d.natAbs : ℕ) : ℤ) := by omega
+    conv_rhs => rw [hdeq]
+    rw [jacobiSym.neg _ hpodd]
+    have hp4 : p % 4 = 1 ∨ p % 4 = 3 := Nat.odd_mod_four_iff.mp (Nat.odd_iff.mp hpodd)
+    rcases hp4 with h1 | h3p
+    · rw [jacobiSym.quadratic_reciprocity_one_mod_four h1 hoddD, ZMod.χ₄_nat_one_mod_four h1,
+        one_mul]
+    · rw [jacobiSym.quadratic_reciprocity_three_mod_four h3p h3, ZMod.χ₄_nat_three_mod_four h3p,
+        neg_one_mul]
+
+/-- **`χ_d(p) = (p / |d|)`** for `d ≡ 1 (mod 4)` squarefree: the idelic character at a prime is
+the Jacobi symbol, i.e. the Kronecker symbol `(d / p)`. -/
+theorem charAtPrime_eq_jacobiSym {d : ℤ} (hd4 : d % 4 = 1) (hd : Squarefree d) {p : ℕ}
+    (hp : p.Prime) : charAtPrime d p = jacobiSym (p : ℤ) d.natAbs := by
+  haveI := Fact.mk hp
+  unfold charAtPrime
+  rw [dif_pos hp]
+  by_cases hp2 : p = 2
+  · subst hp2
+    rw [if_pos (fun u hu => isLocalNorm_two_unit hd4 hu)]
+    have hodd : Odd d.natAbs := Nat.odd_iff.mpr (by omega)
+    have e2 : ((2 : ℕ) : ℚ_[2]) = 2 := by norm_num
+    rw [e2, show ((2 : ℕ) : ℤ) = 2 from rfl, jacobiSym.at_two hodd, ZMod.χ₈_nat_eq_if_mod_eight,
+      if_neg (by omega : d.natAbs % 2 ≠ 0)]
+    rcases (by omega : d % 8 = 1 ∨ d % 8 = 5) with h | h
+    · rw [if_pos (isLocalNorm_two_of_one h _), if_pos (by omega)]
+    · rw [if_neg (not_isLocalNorm_two_of_five h), if_neg (by omega)]
+  · by_cases hpd : (p : ℤ) ∣ d
+    · -- ramified
+      rw [if_neg]
+      · symm
+        rw [jacobiSym.eq_zero_iff]
+        refine ⟨by have := hd.ne_zero; omega, ?_⟩
+        rw [Int.gcd_natCast_natCast]
+        intro h1
+        have : p ∣ Nat.gcd p d.natAbs := Nat.dvd_gcd dvd_rfl (Int.natCast_dvd.mp hpd)
+        rw [h1] at this
+        exact hp.one_lt.ne' (Nat.dvd_one.mp this)
+      · intro hall
+        obtain ⟨a, ha⟩ := FiniteField.exists_nonsquare (F := ZMod p)
+          (by rw [ZMod.ringChar_zmod_n]; exact hp2)
+        have ha0 : a ≠ 0 := by rintro rfl; exact ha ⟨0, by ring⟩
+        set u : ℤ := ((a.val : ℕ) : ℤ)
+        have hu : (u : ZMod p) = a := by simp [u]
+        have hn := not_isLocalNorm_of_ramified hpd (not_sq_dvd_of_squarefree hd) (u := u)
+          (by rw [hu]; exact ha)
+        apply hn
+        have := hall (u : ℤ_[p]) (isUnit_of_toZMod (by rw [map_intCast, hu]; exact ha0))
+        simpa using this
+    · -- unramified
+      rw [if_pos (fun u hu => isLocalNorm_unit hp2 hpd ((hu.map toZMod).ne_zero)),
+        jacobiSym_prime_eq_legendreSym hp2 hd4]
+      have h0 := intCast_ne_zero_of_not_dvd hpd
+      by_cases hsq : IsSquare (d : ZMod p)
+      · obtain ⟨w, hw0, hw⟩ := exists_sq_of_int hp2 hpd hsq
+        rw [if_pos (isLocalNorm_of_eq_sq (by norm_num) hw0 hw _),
+          (legendreSym.eq_one_iff p h0).mpr hsq]
+      · rw [if_neg (not_isLocalNorm_p hsq), (legendreSym.eq_neg_one_iff p).mpr hsq]
+
+theorem zmod2_five_ne_zero : ¬ ((5 : ZMod 2) = 0) := by decide
+
+/-- Consistency check at `2` for even discriminants: `χ_d(2) = 0` when `d ≡ 2, 3 (mod 4)`
+(`χ_{d,2}` is ramified). -/
+theorem charAtPrime_two_of_ramified {d : ℤ} (hd : d % 4 = 2 ∨ d % 4 = 3) : charAtPrime d 2 = 0 := by
+  haveI := Fact.mk Nat.prime_two
+  unfold charAtPrime
+  rw [dif_pos Nat.prime_two, if_neg]
+  intro hall
+  rcases hd with h | h
+  · apply not_isLocalNorm_five_of_two h
+    have h5 : toZMod (5 : ℤ_[2]) ≠ 0 := by
+      rw [map_ofNat]
+      exact zmod2_five_ne_zero
+    have := hall 5 (isUnit_of_toZMod h5)
+    have e : ((5 : ℤ_[2]) : ℚ_[2]) = 5 := by norm_cast
+    rwa [e] at this
+  · apply not_isLocalNorm_neg_one_of_three h
+    have := hall (-1) isUnit_one.neg
+    simpa using this
+
+/-- **The idelic character of `ℚ(√d)` is the Jacobi symbol** `n ↦ (n / |d|)` for `d ≡ 1 (mod 4)`
+squarefree (and `n ≠ 0`). -/
+theorem idelicChar_eq_jacobiSym {d : ℤ} (hd4 : d % 4 = 1) (hd : Squarefree d) :
+    ∀ n : ℕ, n ≠ 0 → idelicChar d n = jacobiSym (n : ℤ) d.natAbs := by
+  intro n
+  induction n using Nat.recOnMul with
+  | zero => intro h; exact absurd rfl h
+  | one => intro _; simp [idelicChar]
+  | prime p hp =>
+    intro _
+    rw [idelicChar, hp.factorization, Finsupp.prod_single_index (by simp), pow_one,
+      charAtPrime_eq_jacobiSym hd4 hd hp]
+  | mul a b iha ihb =>
+    intro hab
+    have ha : a ≠ 0 := left_ne_zero_of_mul hab
+    have hb : b ≠ 0 := right_ne_zero_of_mul hab
+    rw [idelicChar, Nat.factorization_mul ha hb,
+      Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _), ← idelicChar,
+      ← idelicChar, iha ha, ihb hb]
+    push_cast
+    rw [jacobiSym.mul_left]
+
+end Character
 
 end ZInQ.FHPrinted

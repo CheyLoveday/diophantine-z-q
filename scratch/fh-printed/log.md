@@ -15,3 +15,4 @@ Base 43513d87 (leaf-fold25). Prebuilt tree copied from ~/dzq-check2 (bc90deac, s
 - 11-15 06:10 scratch/fh-printed/LocalNorm.lean: IsLocalNorm, Hensel (p odd, p = 2 mod 8),
   descent lemma, p not a norm (unramified nonsquare), nonsquare unit not a norm (ramified): COMPILES (VERIFIED).
 - 11-15 06:40 LocalNorm.lean: + p=2 non-norms (2 for d=5 mod 8, -1 for d=3 mod 4, 5 for d=2 mod 4), unit norms (p odd, p=2), infinity, isSquare_div_of_localNorm_iff (odd p), isSquare_div_two_of_localNorm_iff: COMPILES (VERIFIED)
+- 11-15 07:05 LocalNorm.lean: + charAtPrime, idelicChar (character of Q(sqrt d) from local components), charAtPrime_eq_jacobiSym, idelicChar_eq_jacobiSym (d = 1 mod 4 squarefree), charAtPrime_two_of_ramified: COMPILES (VERIFIED)
