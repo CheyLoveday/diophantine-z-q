@@ -1,6 +1,7 @@
 import Mathlib
 import ZInQKernel.Contrib.CloudW01Spread.FinitePresentation
 import ZInQKernel.Contrib.CloudW01Spread.Smooth
+import ZInQKernel.Contrib.SmoothFibre.Basic
 
 set_option linter.style.haveILetI false
 set_option linter.unusedSectionVars false
@@ -236,5 +237,121 @@ theorem exists_spread (V : Scheme.{0}) [IsAffine V] (v : V ⟶ Spec (CommRingCat
   rw [h1]; erw [hπ]; exact houter
 
 end Diagram
+
+/-! ## Scheme-level lemmas -/
+
+section Lemmas
+
+/-- An affine scheme smooth over a field is reduced (from `ZInQ.SmoothFibre.isReduced_of_smooth_of_field`). -/
+theorem isReduced_of_smooth_field_affine {K : Type} [Field K] {Z : Scheme.{0}} [IsAffine Z]
+    (q : Z ⟶ Spec (CommRingCat.of K)) [Smooth q] : IsReduced Z := by
+  obtain ⟨φ, hφ⟩ := Spec.map_surjective (Z.isoSpec.inv ≫ q)
+  have hs : Smooth (Spec.map φ) := by rw [hφ]; infer_instance
+  have hφs : φ.hom.Smooth := HasRingHomProperty.Spec_iff.mp hs
+  letI := φ.hom.toAlgebra
+  haveI : Algebra.Smooth K Γ(Z, ⊤) := hφs
+  haveI : _root_.IsReduced Γ(Z, ⊤) := ZInQ.SmoothFibre.isReduced_of_smooth_of_field K _
+  exact isReduced_of_isAffine_isReduced Z
+
+/-- A scheme smooth over a field is reduced. -/
+theorem isReduced_of_smooth_field {K : Type} [Field K] {P : Scheme.{0}}
+    (q : P ⟶ Spec (CommRingCat.of K)) [Smooth q] : IsReduced P := by
+  haveI : ∀ i, IsReduced (P.affineCover.X i) := fun i =>
+    isReduced_of_smooth_field_affine (P.affineCover.f i ≫ q)
+  exact IsReduced.of_openCover (𝒰 := P.affineCover)
+
+end Lemmas
+
+/-- (dev copy of `CToPrinted.IsNeronModelOver`, verbatim) -/
+def IsNeronModelOver (R K : Type) [CommRing R] [Field K] [Algebra R K]
+    (X : Over (Spec (CommRingCat.of R))) : Prop :=
+  Smooth X.hom ∧ IsSeparated X.hom ∧ LocallyOfFiniteType X.hom ∧ QuasiCompact X.hom ∧
+    ∀ (Y : Over (Spec (CommRingCat.of R))) [Smooth Y.hom],
+      Function.Bijective fun f : Y ⟶ X =>
+        (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R K)))).map f
+
+/-! ## The Néron property, at `R` and at `R_𝔭` -/
+
+section Main
+
+variable {R K : Type} [CommRing R] [Field K] [Algebra R K] [IsFractionRing R K]
+  {𝔭 : Ideal R} [𝔭.IsPrime] (R𝔭 : Type) [CommRing R𝔭] [Algebra R R𝔭] [IsLocalization.AtPrime R𝔭 𝔭]
+  [Algebra R𝔭 K] [IsScalarTower R R𝔭 K]
+
+include 𝔭
+
+/-- `R_𝔭 → K` is injective. -/
+theorem algebraMap_P_injective : Function.Injective (algebraMap R𝔭 K) := by
+  rw [injective_iff_map_eq_zero]
+  intro z hz
+  obtain ⟨⟨r, t⟩, rfl⟩ := IsLocalization.mk'_surjective 𝔭.primeCompl z
+  have h := IsLocalization.mk'_spec R𝔭 r t
+  have h2 := congrArg (algebraMap R𝔭 K) h
+  rw [map_mul, hz, zero_mul, ← IsScalarTower.algebraMap_apply] at h2
+  have hr : r = 0 := (IsFractionRing.injective R K) (by rw [← h2, map_zero])
+  subst hr; exact IsLocalization.mk'_zero _
+
+theorem isReduced_P (K : Type) [Field K] [Algebra R K] [IsFractionRing R K] [Algebra R𝔭 K]
+    [IsScalarTower R R𝔭 K] : _root_.IsReduced R𝔭 :=
+  isReduced_of_injective (algebraMap R𝔭 K) (algebraMap_P_injective (R := R) (𝔭 := 𝔭) (K := K) R𝔭)
+
+/-- `Spec K → Spec R_𝔭` is scheme-theoretically dominant. -/
+theorem isSTD_k : IsSchemeTheoreticallyDominant
+    (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) := by
+  haveI := isReduced_P (R := R) (𝔭 := 𝔭) R𝔭 K
+  haveI : IsDominant (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))) := by
+    rw [isDominant_iff, Spec.map_base]
+    show DenseRange (PrimeSpectrum.comap (algebraMap R𝔭 K))
+    rw [PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical]
+    intro x hx
+    rw [RingHom.mem_ker] at hx
+    rw [(algebraMap_P_injective (R := R) (𝔭 := 𝔭) (K := K) R𝔭) (hx.trans (map_zero _).symm)]
+    exact zero_mem _
+  exact IsSchemeTheoreticallyDominant.of_isDominant _
+
+/-- **Uniqueness.** Two `R`-morphisms from a smooth `R_𝔭`-scheme `W` to a separated `R`-scheme that agree on
+the generic fibre `W_K` are equal. -/
+theorem uq (X : Over (Spec (CommRingCat.of R))) [IsSeparated X.hom]
+    {W : Scheme.{0}} (w : W ⟶ Spec (CommRingCat.of R𝔭)) [Smooth w]
+    {P : Scheme.{0}} (p : P ⟶ W) (q : P ⟶ Spec (CommRingCat.of K))
+    (H : IsPullback p q w (Spec.map (CommRingCat.ofHom (algebraMap R𝔭 K))))
+    (g₁ g₂ : W ⟶ X.left)
+    (h₁ : g₁ ≫ X.hom = w ≫ Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)))
+    (h₂ : g₂ ≫ X.hom = w ≫ Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)))
+    (h : p ≫ g₁ = p ≫ g₂) : g₁ = g₂ := by
+  haveI := isSTD_k (R := R) (𝔭 := 𝔭) (K := K) R𝔭
+  haveI : Smooth q := MorphismProperty.of_isPullback H ‹Smooth w›
+  haveI : IsReduced P := isReduced_of_smooth_field q
+  haveI : IsSchemeTheoreticallyDominant p := IsSchemeTheoreticallyDominant.of_isPullback H.flip
+  haveI : QuasiCompact p := MorphismProperty.of_isPullback H.flip inferInstance
+  haveI : IsReduced W := IsSchemeTheoreticallyDominant.isReduced p
+  exact ext_of_isDominant_of_isSeparated X.hom (h₁.trans h₂.symm) p h
+
+omit [IsFractionRing R K] [Algebra R R𝔭] [IsLocalization.AtPrime R𝔭 𝔭] [Algebra R𝔭 K]
+  [IsScalarTower R R𝔭 K] in
+/-- The Néron property of `X` over `R`, against an arbitrary pullback square for the generic fibre. -/
+theorem neron_ext {X : Over (Spec (CommRingCat.of R))} (hX : IsNeronModelOver R K X)
+    (Y : Over (Spec (CommRingCat.of R))) [Smooth Y.hom] {P : Scheme.{0}} (p : P ⟶ Y.left)
+    (q : P ⟶ Spec (CommRingCat.of K))
+    (H : IsPullback p q Y.hom (Spec.map (CommRingCat.ofHom (algebraMap R K))))
+    (b : P ⟶ X.left) (hb : b ≫ X.hom = q ≫ Spec.map (CommRingCat.ofHom (algebraMap R K))) :
+    ∃ f : Y.left ⟶ X.left, f ≫ X.hom = Y.hom ∧ p ≫ f = b := by
+  have hb' : (H.isoPullback.inv ≫ b) ≫ X.hom =
+      pullback.snd Y.hom (Spec.map (CommRingCat.ofHom (algebraMap R K))) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap R K)) := by
+    rw [Category.assoc, hb, ← Category.assoc, IsPullback.isoPullback_inv_snd]
+  let h : (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R K)))).obj Y ⟶
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R K)))).obj X :=
+    Over.homMk (pullback.lift _ _ hb') (pullback.lift_snd _ _ _)
+  obtain ⟨f, hf⟩ := (hX.2.2.2.2 Y).2 h
+  refine ⟨f.left, Over.w f, ?_⟩
+  have h1 := congrArg (fun t => t.left ≫ pullback.fst X.hom
+    (Spec.map (CommRingCat.ofHom (algebraMap R K)))) hf
+  simp only [Over.pullback_map_left, pullback.lift_fst, h, Over.homMk_left] at h1
+  have h2 := congrArg (fun t => H.isoPullback.hom ≫ t) h1
+  simp only [IsPullback.isoPullback_hom_fst_assoc, Iso.hom_inv_id_assoc] at h2
+  exact h2
+
+end Main
 
 end GapBLR
