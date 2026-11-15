@@ -121,3 +121,23 @@
 - autofold: `scratch/h29-split/autofold.json` written; `autofold.py --dry-run` answers `not a field of the current
   bundles: ['h29']` (VERIFIED): autofold.py folds bundle fields only, and `h29` is a plain argument of
   `frozenTarget` (kinds.tsv row `frozenTarget h29 composite`). The fold is by hand (see the report).
+
+### `TYZTauExists` reduced (run 2, 03:05–03:10)
+- `scratch/h29-split/Tau.lean` (compiled, 0 errors): `LegendreJonesPall` (leaf: squarefree `n ≡ 1, 3 (mod 8)` is
+  `a²+b²+c²`, `4 ∣ c` if `n ≡ 1`), `pq`, `pq_mul_self`, `tauOf` (Mathlib `QuadraticAlgebra.lift`), `tauOf_apply`,
+  `trace_norm_int`, `int_of_sqfree_mul_sq`, `parity_one`, `parity_three`, `odd_of_three`, `admissible_tauOf`,
+  **`tyzTauExists_of_legendreJonesPall`**: axioms [propext, Classical.choice, Quot.sound] (VERIFIED).
+- Copied into the contribution file and the scratch file, with
+  `tyzLemma29Mod2_of_printedLeaves_threeSquares (hL : LegendreJonesPall) hfx h29 h23 : TYZLemma29Mod2`.
+- `checks.py`: `LegendreJonesPall` holds on 30 random squarefree `n ≡ 1, 3 (mod 8)`, `n < 10⁵` (VERIFIED, computed).
+- `#discharges` rerun (VERIFIED 03:07): two lines `DISCHARGES [h29]`, by `tyzLemma29Mod2_of_printedLeaves`
+  (assumes TYZTauExists, TYZTestVectorExists, TYZLemma29Printed, TYZProp23Printed) and by
+  `tyzLemma29Mod2_of_printedLeaves_threeSquares` (assumes LegendreJonesPall, TYZTestVectorExists,
+  TYZLemma29Printed, TYZProp23Printed); standard axioms; `66 open hypotheses, 1279 theorems checked, 5 discharge one`.
+- autofold spec switched to the three-square theorem; dry run again `not a field of the current bundles: ['h29']`.
+
+### Independent model review (03:10)
+- A fresh agent read §5 and the four leaves against L496–1160 (code and source only): no false, vacuous or
+  too-strong leaf found. Notes: (1) the Hecke-eigenvalue pin of `π^{U_n}` is a standard but unprinted bridge
+  (docstring now says so); (2) TYZ's Legendre/Jones–Pall citation covers `n ≡ 1 (8)`; for `n ≡ 3` the leaf uses
+  plain Legendre and the glue proves `a, b, c` odd (docstring updated); (3) `lcalSq` is inherited (C8, unchanged).

@@ -14,13 +14,19 @@ copied here beyond a few words. Model work, no human review.
 ## 0. Main result
 
 **The top hypothesis `h29 = ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2` of `ZInQ.OneProof.frozenTarget` is proved
-from four printed statements over genuine definitions** (VERIFIED: compiled, `#discharges` output below, axioms
-`[propext, Classical.choice, Quot.sound]`):
+from four statements over genuine definitions: TYZ Lemma 2.9 and Proposition 2.3 in printed form, the
+existence of TYZ's test vector, and Legendre's three-square theorem in the form TYZ cite** (VERIFIED: compiled,
+`#discharges` output below, axioms `[propext, Classical.choice, Quot.sound]`):
 
 ```lean
+theorem ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves_threeSquares
+    (hL : LegendreJonesPall) (hfx : TYZTestVectorExists)
+    (h29 : TYZLemma29Printed) (h23 : TYZProp23Printed) : TYZLemma29Mod2
 theorem ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves
     (hτ : TYZTauExists) (hfx : TYZTestVectorExists)
     (h29 : TYZLemma29Printed) (h23 : TYZProp23Printed) : TYZLemma29Mod2
+theorem ZInQ.Contrib.TYZDecomp.H29Split.tyzTauExists_of_legendreJonesPall
+    (h : LegendreJonesPall) : TYZTauExists
 ```
 
 ```
@@ -30,7 +36,13 @@ DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLea
  ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29Printed,
  ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 66 open hypotheses, 1255 theorems checked, 4 discharge one
+DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves_threeSquares
+  still assumes: [ZInQ.Contrib.TYZDecomp.H29Split.LegendreJonesPall,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29Printed,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 66 open hypotheses, 1279 theorems checked, 5 discharge one
 ```
 
 (The other three lines of the output are contributions already folded in.) The leaves are stated over TYZ's
@@ -51,7 +63,8 @@ definitions of this run remove that problem.
 |---|---|---|---|
 | `TYZLemma29Printed` | TYZ Lemma 2.9, L1062–1066 | LEAF (printed form, restricted) | for squarefree `1 < n ≡ 1, 3 (mod 8)`, every admissible `τ` and every generator `f` of `π_ℤ^{U_n}`: for every sign choice `ℓ` of `𝓛` there are `ε(d) = ±1` and `w ∈ {1; 3 at n = 3}` with `w·Σ_{n=d₁d₂, d₂≡1 (8)} ε 𝓛(d₁)𝓛(d₂) = Q(n)` (non-ordered pairs) |
 | `TYZProp23Printed` | TYZ Proposition 2.3, L580–586 | LEAF (printed form, restricted) | same `n, τ, f`: `f(h²)` is odd for every `h ∈ B̂^×` |
-| `TYZTauExists` | TYZ §2.1, L527–534 (Legendre; Jones–Pall, Acta Math. 70 (1939) 165–191, Thm 5, bib L3290) | LEAF (classical) | for squarefree `n ≡ 1, 3 (mod 8)` an embedding `τ : ℚ(√−n) → B` with `τ(O_K) ⊂ O_B` and, if `n ≡ 1 (8)`, `τ(√−n) = ai + bj + ck`, `n = a²+b²+c²`, `4 ∣ c` |
+| `LegendreJonesPall` | Legendre's three-square theorem; for `4 ∣ c`, Jones–Pall, Acta Math. 70 (1939) 165–191, Thm 5, as cited by TYZ L533 (bib L3290–3292; Jones–Pall not read, UNVERIFIED) | LEAF (classical) | a squarefree `n ≡ 1, 3 (mod 8)` is `a² + b² + c²` (`a, b, c ∈ ℤ`), with `4 ∣ c` if `n ≡ 1 (8)`; checked on 30 random squarefree `n < 10⁵` (`checks.py`, VERIFIED) |
+| `TYZTauExists` | TYZ §2.1, L527–534 | intermediate, **proved** from `LegendreJonesPall` (`tyzTauExists_of_legendreJonesPall`) | for squarefree `n ≡ 1, 3 (mod 8)` an embedding `τ : ℚ(√−n) → B` with `τ(O_K) ⊂ O_B` and, if `n ≡ 1 (8)`, `τ(√−n) = ai + bj + ck`, `n = a²+b²+c²`, `4 ∣ c` |
 | `TYZTestVectorExists` | TYZ §2.1, L542–550, with Theorem 2.6 (L809–840) at `χ = 1` | LEAF, flagged pending reading | for every admissible `τ`, `π_ℤ^{U_n}` (as defined by `InPiZ`) has a generator. TYZ print "free of rank 1"; the leaf is the existence half. Flag: `InPiZ` defines `π^{U_n}` as the `a_p(E)`-eigenspace of the `U_n`-invariant forms, which equals TYZ's `π^{U_n}` by strong multiplicity one and Jacquet–Langlands (STANDARD), not by TYZ's text |
 
 Restrictions (each a weakening of the print): only `n ≡ 1, 3 (mod 8)` (TYZ §2 covers `1, 2, 3`, L499); Lemma 2.9
@@ -115,6 +128,11 @@ only for `n > 1`; the factor `w` (§2, S2).
 
 ## 4. Glue proved (Lean)
 
+From the three-square statement to `τ` (`tyzTauExists_of_legendreJonesPall`): `tauOf` (`√−n ↦ ai + bj + ck`
+through Mathlib's `QuadraticAlgebra.lift`), `trace_norm_int` (an integral `x = u + v√−n` has `2u ∈ ℤ` and
+`u² + nv² ∈ ℤ`, using the conjugation `star`), `int_of_sqfree_mul_sq` (`n w² ∈ ℤ`, `n` squarefree, gives `w ∈ ℤ`),
+`parity_one`, `parity_three`, `odd_of_three` (mod-4 parity; for `n ≡ 3 (8)` the representation has `a, b, c` odd),
+`admissible_tauOf` (`τ(O_K) ⊂ O_B`: integer coordinates, or all in `½ + ℤ`). Then:
 `tyzLemma29Mod2_of_printed` (mod-2 reduction for any `Q`), `tyzLemma29Mod2_of_printedF`, `genusPeriod_mod_two`,
 `card_sqClasses`, `tauHat_algebraMap` (`τ̂(k) = τ(k)` for `k ∈ K`), `tauHatU_mem_Un`, `odd_on_sqClasses`, `tvFun`,
 `tyzLemma29Mod2_of_printedLeaves`. All `[propext, Classical.choice, Quot.sound]` (VERIFIED). The scratch file also
@@ -125,21 +143,25 @@ keeps run 1's checks: `exists_printedQ_iff`, `exists_printedF_iff` (with `Q` unp
 
 `h29` is a plain argument of `frozenTarget`, not a bundle field, and `autofold.py` folds bundle fields only:
 `autofold.py scratch/h29-split/autofold.json --dry-run` answers `not a field of the current bundles: ['h29']`
-(VERIFIED). The spec lists the proof term and the four leaves (kind `published`; `TYZTestVectorExists` flagged
-pending reading) in autofold's format, for a by-hand fold: in `Main.lean`, import
+(VERIFIED). The spec lists the proof term `tyzLemma29Mod2_of_printedLeaves_threeSquares` and its four leaves
+(kind `published`; `TYZTestVectorExists` flagged pending reading, `LegendreJonesPall` flagged locator UNVERIFIED)
+in autofold's format, for a by-hand fold: in `Main.lean`, import
 `ZInQKernel.Contrib.OneProof.TYZLemma29Mod2`, replace the argument `(h29 : TYZLemma29Mod2)` by
-`(hτ : H29Split.TYZTauExists) (hfx : H29Split.TYZTestVectorExists) (hL29 : H29Split.TYZLemma29Printed)
+`(hLJP : H29Split.LegendreJonesPall) (hfx : H29Split.TYZTestVectorExists) (hL29 : H29Split.TYZLemma29Printed)
 (hP23 : H29Split.TYZProp23Printed)` and the use of `h29` by
-`(ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves hτ hfx hL29 hP23)`; replace the kinds.tsv row
-`frozenTarget h29 composite` by four rows (three LEAF unread, one GLUE pending reading); add locator rows for
-L1062–1066, L580–586, L527–534, L542–550/L809–840.
+`(ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves_threeSquares hLJP hfx hL29 hP23)`; replace the
+kinds.tsv row `frozenTarget h29 composite` by four rows (`tyzLemma29Printed`, `tyzProp23Printed` LEAF unread;
+`legendreJonesPall` LEAF, locator UNVERIFIED; `tyzTestVectorExists` GLUE pending reading); add locator rows for
+L1062–1066, L580–586, L533 (Jones–Pall Thm 5), L542–550/L809–840.
 
 ## 6. What remains
 
-* `TYZTauExists` is an arithmetic statement with TYZ's citation; it could be reduced to Legendre's three-square
-  theorem with the `4 ∣ c` refinement (Jones–Pall) plus Lean glue (an explicit `τ`, and `O_{K_n}` for
-  `n ≡ 1, 3 (mod 4)`), not done here. Mathlib 4.35 has no three-square theorem (searched).
+* `LegendreJonesPall` is elementary number theory and a natural crowd target; Mathlib 4.35 has no three-square
+  theorem (searched). Jones–Pall's Theorem 5 was not read (no network).
 * `TYZTestVectorExists`'s flag: the identification of `π^{U_n}` by Hecke eigenvalues is standard but not TYZ's
   wording; an alternative pin uses TYZ's Lemma 2.5 (`B^×\B̂^×/Q̂^×U ≅ O_{B,2}/(ℤ₂ + 2O_{B,2})`, 8 classes) and
   `π^U = 𝒜₀^U` (orthogonal to `χ ∘ det`), which TYZ use (L715–730), at the cost of reading more of TYZ.
-* No human has read the leaves against the print.
+* No human has read the leaves against the print. A second model read (a fresh agent, given the code and the
+  source lines, not this report's conclusions) found no false, vacuous or too-strong leaf; its notes (the
+  Hecke bridge is unprinted; TYZ's citations cover `n ≡ 1 (8)` only, `n ≡ 3` being Gauss/Legendre with odd
+  `a, b, c`) are reflected in the docstrings.

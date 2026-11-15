@@ -13,4 +13,10 @@ DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLea
  ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29Printed,
  ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 66 open hypotheses, 1255 theorems checked, 4 discharge one
+DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves_threeSquares
+  still assumes: [ZInQ.Contrib.TYZDecomp.H29Split.LegendreJonesPall,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29Printed,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 66 open hypotheses, 1279 theorems checked, 5 discharge one

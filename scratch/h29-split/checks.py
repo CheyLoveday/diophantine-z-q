@@ -21,3 +21,25 @@ def ap_count(p):
 
 for p in primerange(3, 14):
     print(p, hurwitz_count(p), 24 * (p + 1), apE(p), ap_count(p))
+
+# The three-square leaf `LegendreJonesPall` on 30 squarefree inputs: n = a^2+b^2+c^2 with 4 | c when n = 1 mod 8
+# (for n = 3 mod 8 every representation has a, b, c odd).
+from sympy import factorint
+def sqfree(n): return all(e == 1 for e in factorint(n).values())
+def rep(n):
+    import math
+    r = int(math.isqrt(n))
+    for c in range(0, r + 1):
+        if n % 8 == 1 and c % 4: continue
+        for b in range(0, r + 1):
+            a2 = n - c*c - b*b
+            if a2 < 0: break
+            a = math.isqrt(a2)
+            if a*a == a2: return (a, b, c)
+    return None
+sample = [n for n in range(1, 100000) if n % 8 in (1, 3) and sqfree(n)]
+import random
+random.seed(29)
+pick = sorted(random.sample(sample, 30))
+print([(n, rep(n)) for n in pick])
+print("all represented:", all(rep(n) is not None for n in pick))
