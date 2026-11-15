@@ -28,3 +28,17 @@
   `exists_embedding`, `algEquiv_eq_one_of_fix`, `deriv_mul_ne_zero` (L'(E/K,1) = F'(1)G(1) ≠ 0).
 - sympy (VERIFIED): transform identities A' = Ad²−Bdc+Cc², B' = −2Abd+B(ad+bc)−2Cac, C' = Ab²−Bab+Ca²:
   A(dz−b)²+B(dz−b)(−cz+a)+C(−cz+a)² = A'z²+B'z+C', disc' = det²·disc, inverse transform returns det²·(A,B,C).
+
+## 03:55 restructure (compiled)
+- Leaves are per-curve (`…At E`) with general forms `∀ E [IsElliptic]`; `c : ℚ` (was ℝ). FINDING (SPECULATIVE
+  argument, recorded in report §4): with `c ∈ ℂ` the Heegner-rationality leaf would be FALSE for CM curves
+  (c = i·c₀ gives [i]∘φ₀, defined over ℚ(i) only); `c ∈ ℚ^×` is safe and still produced by Eichler–Shimura +
+  Faltings (rational Manin constant, rational isogeny multiplier).
+- `EichlerShimuraParamAt E` proved from `WeierstrassUniformization`, `StrongWeilCurve`, `IsogenyLattice`.
+- Contrib files `ZInQKernel/Contrib/OneProof/GrossZagierHeegner.lean`, `.../GrossZagierHeegner/Cd.lean`:
+  `lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Cd` → Build completed successfully (10155 jobs);
+  only module-system warnings in the new files.
+- Cd: `grossZagierHeegnerCd_of_leaves (hU) (ShimuraCMParamCd) (HeegnerPointRationalCd) (GrossZagierFormulaCd)
+  (GrossConjugationCd) : GZStatements.GrossZagierHeegnerCd` compiled.
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges` started 03:5x (copied tree was mid-rebuild
+  in ~/dzq-check2; lake rebuilds TailC.. chain). Output scratch/gz-hl3/build_main.txt.

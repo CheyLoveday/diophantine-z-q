@@ -794,6 +794,55 @@ theorem heegner_at (hU : WeierstrassUniformization) (E : WeierstrassCurve ℚ) [
       exact (hGC N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι y hy σ
         (eq_neg_of_add_eq_zero_left h)).2 hw
 
+/-! ## §5b. Gross–Zagier's Chapter V consequences, proved from the leaves -/
+
+/-- **GZ Ch. V (consequence of the formula): `y_K` has infinite order iff `L'(E/K, 1) ≠ 0`**
+(Gross–Zagier 1986, Ch. V, corollary of Thm 2.1, UNVERIFIED locator), from `GrossZagierFormulaAt`
+and Néron–Tate nondegeneracy (Tau Ceti `canonicalHeight_eq_zero_iff_isOfFinAddOrder` with
+Mathlib's Northcott property of number fields). -/
+theorem heegnerPoint_infinite_iff (E : WeierstrassCurve ℚ) [E.IsElliptic]
+    (hGZ : GrossZagierFormulaAt E) (N : ℕ) [NeZero N] (f : Newform N 2) (hχ : f.χ = 1)
+    (hf : ∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ))
+    (D β : ℤ) (hD : IsOddImagFundDisc D) (hD4 : D < -4) (hH : HeegnerHyp N D)
+    (hβ : (4 * N : ℤ) ∣ D - β ^ 2) (S : Finset (HeegnerForm N D)) (hS : IsHeegnerReps N D β S)
+    (L : PeriodPair) (c : ℚ) (hL : IsPeriodLattice E L) (hc : c ≠ 0) (hcL : PeriodsIn f c L)
+    (K : Type) [Field K] [NumberField K] [DecidableEq K] (hK : Module.finrank ℚ K = 2)
+    (δ : K) (hδ : δ ^ 2 = (D : K)) (ι : K →ₐ[ℚ] ℂ)
+    (hι : ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ))
+    (y : (E⁄K).Point) (hy : Affine.Point.map ι y = heegnerC E L f c S)
+    (F G : ℂ → ℂ) (hF : IsEntireCont (coeff f) 2 F) (hG : IsEntireCont (twistCoeff f D) 2 G) :
+    ¬IsOfFinAddOrder y ↔ deriv (fun s => F s * G s) 1 ≠ 0 := by
+  obtain ⟨κ, hκ0, hκ⟩ := hGZ N f hχ hf D β hD hD4 hH hβ S hS L c hL hc hcL K hK δ hδ ι hι y hy
+    F G hF hG
+  rw [hκ, ← WeierstrassCurve.Affine.Point.canonicalHeight_eq_zero_iff_isOfFinAddOrder]
+  constructor
+  · intro h h0
+    have : (κ : ℂ) * (y.canonicalHeight : ℂ) = ((κ * y.canonicalHeight : ℝ) : ℂ) := by push_cast; ring
+    rw [this, Complex.ofReal_eq_zero] at h0
+    exact h ((mul_eq_zero.mp h0).resolve_left hκ0.ne')
+  · intro h h0
+    exact h (by rw [h0]; simp)
+
+/-- **GZ Ch. V: rank at least one** (Gross–Zagier 1986, Ch. V, UNVERIFIED locator): if `L(E, s)`
+has a simple zero at `s = 1` and there is an odd Heegner discriminant `D < −4` for the level with
+`L(E^D, 1) ≠ 0`, then `E(ℚ)` has a point of infinite order (`y_K + ȳ_K = 2 y_K` mod torsion). From
+the leaves at `E` and the kernel's descent glue `GZDecomp.exists_rat_point_of_heegner`. -/
+theorem exists_rat_point_of_leaves (hU : WeierstrassUniformization) (E : WeierstrassCurve ℚ)
+    [E.IsElliptic] (hES : EichlerShimuraParamAt E) (hHP : HeegnerPointRationalAt E)
+    (hGZ : GrossZagierFormulaAt E) (hGC : GrossConjugationAt E)
+    (N : ℕ) [NeZero N] (f : Newform N 2) (hχ : f.χ = 1)
+    (hf : ∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ))
+    (D : ℤ) (hD : IsOddImagFundDisc D) (hD4 : D < -4) (hH : HeegnerHyp N D)
+    (F G : ℂ → ℂ) (hF : IsEntireCont (coeff f) 2 F) (hG : IsEntireCont (twistCoeff f D) 2 G)
+    (h1 : analyticOrderAt F 1 = 1) (hG1 : G 1 ≠ 0) :
+    ∃ P : E.toAffine.Point, ¬IsOfFinAddOrder P := by
+  have hD0 : (D : ℚ) < 0 := by exact_mod_cast hD.1
+  obtain ⟨K, hKf, hKa, hK2, δ, hδ⟩ := exists_quadratic_field hD0
+  classical
+  obtain ⟨y, hy, hyσ⟩ := heegner_at hU E hES hHP hGZ hGC N f hχ hf D hD hD4 hH F G hF hG h1 hG1
+    K hK2 ⟨δ, by simpa using hδ⟩
+  exact exists_rat_point_of_heegner hK2 y hy hyσ
+
 /-- **`GZDecomp.GrossZagierHeegner` (`hL3`) from six leaves**: uniformization, Eichler–Shimura's
 strong Weil curve, Faltings' isogeny theorem (analytic form), the rationality of the Heegner
 point, the Gross–Zagier formula and Gross's conjugation relation. -/
