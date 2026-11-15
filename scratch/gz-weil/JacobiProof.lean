@@ -4,7 +4,7 @@ import Mathlib.NumberTheory.ModularForms.LevelOne.DimensionFormula
 noncomputable section
 
 open Complex Filter Topology
-open scoped Real
+open scoped Real MatrixGroups ModularForm
 
 namespace ZInQ.GZWeil
 
@@ -180,5 +180,107 @@ theorem log_deriv_S {g h : ℂ → ℂ} (hgh : ∀ s : ℂ, s ≠ 0 → g (-1 / 
     linear_combination H * heq2 - (t * H + 2 * t ^ 2 * H') * hsq
   rw [key]
   field_simp
+
+
+/-! ## J3. The three differences `E₁, E₂, E₃` and their symmetric functions -/
+
+theorem LB_S {t : ℂ} (ht : 0 < t.im) : LB (-1 / t) = t / 2 + t ^ 2 * LB t :=
+  log_deriv_S (fun _ hs => thetaThree_S_sq hs) (ne_zero_of_im_pos ht)
+    (differentiableAt_thetaThree (im_neg_inv_pos ht)) (differentiableAt_thetaThree ht)
+    (thetaThree_ne_zero ht)
+
+theorem LA_S {t : ℂ} (ht : 0 < t.im) : LA (-1 / t) = t / 2 + t ^ 2 * LC t :=
+  log_deriv_S (fun _ hs => thetaTwo_S_sq hs) (ne_zero_of_im_pos ht)
+    (differentiableAt_thetaTwo (im_neg_inv_pos ht)) (differentiableAt_thetaFour ht)
+    (thetaFour_ne_zero ht)
+
+theorem LC_S {t : ℂ} (ht : 0 < t.im) : LC (-1 / t) = t / 2 + t ^ 2 * LA t :=
+  log_deriv_S (fun _ hs => thetaFour_S_sq hs) (ne_zero_of_im_pos ht)
+    (differentiableAt_thetaFour (im_neg_inv_pos ht)) (differentiableAt_thetaTwo ht)
+    (thetaTwo_ne_zero ht)
+
+theorem pow4_of_sq {a b c : ℂ} (h : a ^ 2 = -I * c * b ^ 2) : a ^ 4 = -c ^ 2 * b ^ 4 := by
+  have : a ^ 4 = (a ^ 2) ^ 2 := by ring
+  rw [this, h]
+  ring_nf
+  rw [Complex.I_sq]
+  ring
+
+theorem thetaTwo_add_one_pow4 (t : ℂ) : thetaTwo (t + 1) ^ 4 = -thetaTwo t ^ 4 := by
+  rw [thetaTwo_add_one, mul_pow, ← Complex.exp_nat_mul]
+  have : cexp (((4 : ℕ) : ℂ) * (π * I / 4)) = -1 := by
+    rw [show ((4 : ℕ) : ℂ) * (π * I / 4) = π * I by push_cast; ring]
+    exact Complex.exp_pi_mul_I
+  rw [this]; ring
+
+def E1 (t : ℂ) : ℂ := LB t - LA t + π * I / 4 * thetaFour t ^ 4
+def E2 (t : ℂ) : ℂ := LB t - LC t - π * I / 4 * thetaTwo t ^ 4
+def E3 (t : ℂ) : ℂ := LA t - LC t - π * I / 4 * thetaThree t ^ 4
+
+theorem E1_S {t : ℂ} (ht : 0 < t.im) : E1 (-1 / t) = t ^ 2 * E2 t := by
+  have h4 := pow4_of_sq (thetaFour_S_sq (ne_zero_of_im_pos ht))
+  rw [E1, E2, LB_S ht, LA_S ht, h4]; ring
+
+theorem E2_S {t : ℂ} (ht : 0 < t.im) : E2 (-1 / t) = t ^ 2 * E1 t := by
+  have h4 := pow4_of_sq (thetaTwo_S_sq (ne_zero_of_im_pos ht))
+  rw [E1, E2, LB_S ht, LC_S ht, h4]; ring
+
+theorem E3_S {t : ℂ} (ht : 0 < t.im) : E3 (-1 / t) = -(t ^ 2 * E3 t) := by
+  have h4 := pow4_of_sq (thetaThree_S_sq (ne_zero_of_im_pos ht))
+  simp only [E3]
+  rw [LA_S ht, LC_S ht, h4]; ring
+
+theorem E1_T (t : ℂ) : E1 (t + 1) = -E3 t := by
+  rw [E1, E3, LB_add_one, LA_add_one, thetaFour_add_one]; ring
+
+theorem E2_T (t : ℂ) : E2 (t + 1) = -E2 t := by
+  simp only [E2]
+  rw [LB_add_one, LC_add_one, thetaTwo_add_one_pow4]; ring
+
+theorem E3_T (t : ℂ) : E3 (t + 1) = -E1 t := by
+  rw [E1, E3, LA_add_one, LC_add_one, thetaThree_add_one]; ring
+
+def Psym (t : ℂ) : ℂ := E1 t ^ 2 + E2 t ^ 2 + E3 t ^ 2
+def Rsym (t : ℂ) : ℂ := E1 t ^ 2 * E2 t ^ 2 + E2 t ^ 2 * E3 t ^ 2 + E3 t ^ 2 * E1 t ^ 2
+
+theorem Psym_S {t : ℂ} (ht : 0 < t.im) : Psym (-1 / t) = t ^ 4 * Psym t := by
+  rw [Psym, Psym, E1_S ht, E2_S ht, E3_S ht]; ring
+
+theorem Rsym_S {t : ℂ} (ht : 0 < t.im) : Rsym (-1 / t) = t ^ 8 * Rsym t := by
+  rw [Rsym, Rsym, E1_S ht, E2_S ht, E3_S ht]; ring
+
+theorem Psym_T (t : ℂ) : Psym (t + 1) = Psym t := by
+  rw [Psym, Psym, E1_T, E2_T, E3_T]; ring
+
+theorem Rsym_T (t : ℂ) : Rsym (t + 1) = Rsym t := by
+  rw [Rsym, Rsym, E1_T, E2_T, E3_T]; ring
+
+/-! ## J4. Slash invariance under `SL(2, ℤ)` -/
+
+open ModularGroup in
+theorem slash_invariant_of_S_T {F : ℂ → ℂ} {k : ℕ}
+    (hS : ∀ t : ℂ, 0 < t.im → F (-1 / t) = t ^ k * F t) (hT : ∀ t : ℂ, F (t + 1) = F t) :
+    ∀ γ : SL(2, ℤ), (fun τ : UpperHalfPlane => F τ) ∣[(k : ℤ)] γ = fun τ : UpperHalfPlane => F τ := by
+  apply SlashInvariantForm.slash_action_generators_SL2Z
+  · ext τ
+    rw [ModularForm.SL_slash_def]
+    simp only
+    rw [UpperHalfPlane.modular_S_smul, ModularGroup.denom_S]
+    show F ((-(τ : ℂ))⁻¹) * (τ : ℂ) ^ (-(k : ℤ)) = F τ
+    have h := hS τ τ.im_pos
+    rw [show (-(τ : ℂ))⁻¹ = -1 / τ by ring, h]
+    have hτ : (τ : ℂ) ≠ 0 := ne_zero_of_im_pos τ.im_pos
+    rw [zpow_neg, zpow_natCast]
+    field_simp
+  · ext τ
+    rw [ModularForm.SL_slash_def]
+    simp only
+    rw [UpperHalfPlane.modular_T_smul]
+    have hd : UpperHalfPlane.denom (ModularGroup.T : GL (Fin 2) ℝ) τ = 1 := by
+      rw [ModularGroup.denom_apply]
+      simp [ModularGroup.coe_T]
+    rw [hd, one_zpow, mul_one, UpperHalfPlane.coe_vadd, add_comm]
+    simp only [Complex.ofReal_one]
+    exact hT τ
 
 end ZInQ.GZWeil
