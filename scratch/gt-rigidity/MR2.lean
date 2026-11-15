@@ -159,6 +159,65 @@ theorem fibre_point_of_field [IsProper F.hom]
   congr 1
   exact Subsingleton.elim _ _
 
+/-- **The defect vanishes**, from `𝒪_S ≅ p_*𝒪_X` and field-level rigidity. -/
+theorem defect_eq_one_of_pushforward (hP : PushforwardStructureSheaf) [IsLocallyNoetherian S]
+    [IsProper F.hom] [Smooth F.hom] [GeometricallyConnected F.hom]
+    (hGI : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ S),
+      GeometricallyIntegral (pullback.snd F.hom s))
+    {f : F ⟶ F} (hf : η[F] ≫ f = η[F]) : defect F f = 1 := by
+  have : IsLocallyNoetherian F.left := LocallyOfFiniteType.isLocallyNoetherian F.hom
+  have : IsProper (snd F F).left := by
+    change IsProper (pullback.snd F.hom F.hom); infer_instance
+  have : Smooth (snd F F).left := by
+    change Smooth (pullback.snd F.hom F.hom); infer_instance
+  have : GeometricallyConnected (snd F F).left := by
+    change GeometricallyConnected (pullback.snd F.hom F.hom); infer_instance
+  have hjp : (jl F).left ≫ (snd F F).left = 𝟙 _ := by
+    rw [← Over.comp_left, jl, lift_snd]; rfl
+  have key := eq_of_pushforward hP (snd F F).left (lift (defect F f) (snd F F)).left (jl F).left hjp
+    fun t => fibre_point_of_field F hGI hf t
+  have key2 : lift (defect F f) (snd F F) = snd F F ≫ jl F ≫ lift (defect F f) (snd F F) :=
+    Over.OverMorphism.ext key
+  have := congrArg (· ≫ fst F F) key2
+  simp only [Category.assoc, lift_fst] at this
+  rw [this, jl_defect F hf, Hom.one_def, ← Category.assoc]
+  congr 1
+  exact toUnit_unique _ _
+
+/-- **Mumford, *GIT* Cor. 6.4 for endomorphisms**, from `𝒪_S ≅ p_*𝒪_X`, when every field fibre is
+geometrically integral. -/
+theorem isMonHom_of_pushforward (hP : PushforwardStructureSheaf) [IsLocallyNoetherian S]
+    [IsProper F.hom] [Smooth F.hom] [GeometricallyConnected F.hom]
+    (hGI : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ S),
+      GeometricallyIntegral (pullback.snd F.hom s))
+    {f : F ⟶ F} (hf : η[F] ≫ f = η[F]) : IsMonHom f where
+  one_hom := hf
+  mul_hom := by
+    have h := defect_eq_one_of_pushforward F hP hGI hf
+    rw [defect, mul_inv_eq_one] at h
+    rw [h, Hom.mul_def, lift_fst_comp_snd_comp]
+
 end FieldFibre
+
+/-- A field fibre that is an abelian variety makes `pullback.snd F.hom s` geometrically integral. -/
+theorem geometricallyIntegral_of_isAbVarFibre {S : Scheme.{0}} (F : Over S) (e : S ⟶ F.left)
+    {K : Type} [Field K] (s : Spec (CommRingCat.of K) ⟶ S) (A : AbVar K) (g : A.X.left ⟶ F.left)
+    (h : IsAbVarFibre F e s A g) : GeometricallyIntegral (pullback.snd F.hom s) := by
+  have hR : MorphismProperty.RespectsIso (C := Scheme) @GeometricallyIntegral := by
+    rw [GeometricallyIntegral.eq_geometrically]; infer_instance
+  rw [← h.1.isoPullback_inv_snd]
+  exact (MorphismProperty.cancel_left_of_respectsIso @GeometricallyIntegral _ A.X.hom).2
+    inferInstance
+
+/-- **`MumfordRigidityCore` from `MumfordGroupLaw` and `𝒪_S ≅ p_*𝒪_X`.** -/
+theorem mumfordRigidityCore_of_pushforward (hG : MumfordGroupLaw)
+    (hP : PushforwardStructureSheaf) : MumfordRigidityCore := by
+  intro S F e hN hPr hS hC he hfib
+  obtain ⟨G, hη⟩ := hG S F e hN hPr hS hC he hfib
+  refine ⟨G, hη, fun f hf => ?_⟩
+  refine isMonHom_of_pushforward F hP (fun K _ s => ?_)
+    (Over.OverMorphism.ext (by rw [Over.comp_left, hη, hf]))
+  obtain ⟨A, g, hg⟩ := hfib K s
+  exact geometricallyIntegral_of_isAbVarFibre F e s A g hg
 
 end ZInQ.Contrib.MumfordRigidity
