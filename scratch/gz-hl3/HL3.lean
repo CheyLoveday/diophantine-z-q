@@ -167,4 +167,165 @@ def HeegnerRepsExist : Prop :=
   ∀ (N : ℕ) [NeZero N] (D β : ℤ), IsOddImagFundDisc D → (4 * N : ℤ) ∣ D - β ^ 2 →
     ∃ S : Finset (HeegnerForm N D), IsHeegnerReps N D β S
 
+/-! ## §3. Glue lemmas -/
+
+/-- The discriminant condition of `WeierstrassUniformization` for `(c₄/12, c₆/216)`. -/
+theorem disc_ne_zero (E : WeierstrassCurve ℚ) [E.IsElliptic] :
+    ((E⁄ℂ).c₄ / 12) ^ 3 - 27 * ((E⁄ℂ).c₆ / 216) ^ 2 ≠ 0 := by
+  have h := WeierstrassCurve.c_relation (E⁄ℂ)
+  have hΔ : (E⁄ℂ).Δ ≠ 0 := (E⁄ℂ).isUnit_Δ.ne_zero
+  intro h0
+  apply hΔ
+  linear_combination (1 / 1728 : ℂ) * h + h0
+
+/-- The period lattice exists (uniformization). -/
+theorem exists_isPeriodLattice (hU : WeierstrassUniformization) (E : WeierstrassCurve ℚ)
+    [E.IsElliptic] : ∃ L : PeriodPair, IsPeriodLattice E L :=
+  hU _ _ (disc_ne_zero E)
+
+/-- `weierPt` is not junk: off the lattice it is the point `(℘ − b₂/12, (℘' − a₁x − a₃)/2)`. -/
+theorem weierPt_some (E : WeierstrassCurve ℚ) [E.IsElliptic] {L : PeriodPair}
+    (hL : IsPeriodLattice E L) {z : ℂ} (hz : z ∉ L.lattice) :
+    (E⁄ℂ).Nonsingular (L.weierstrassP z - (E⁄ℂ).b₂ / 12)
+      ((L.derivWeierstrassP z - (E⁄ℂ).a₁ * (L.weierstrassP z - (E⁄ℂ).b₂ / 12) - (E⁄ℂ).a₃) / 2) := by
+  rw [← WeierstrassCurve.Affine.equation_iff_nonsingular, WeierstrassCurve.Affine.equation_iff]
+  have h := L.derivWeierstrassP_sq z hz
+  rw [hL.1, hL.2] at h
+  simp only [WeierstrassCurve.b₂, WeierstrassCurve.c₄, WeierstrassCurve.c₆, WeierstrassCurve.b₄,
+    WeierstrassCurve.b₆] at h ⊢
+  linear_combination (1 / 4 : ℂ) * h
+
+/-- An embedding `ℚ(√D) → ℂ` with `√D ↦ i √|D|`. -/
+theorem exists_embedding {K : Type} [Field K] [NumberField K] {D : ℤ} (hD : D < 0) (δ : K)
+    (hδ : δ ^ 2 = (D : K)) :
+    ∃ ι : K →ₐ[ℚ] ℂ, ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ) := by
+  set w : ℂ := Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ) with hw
+  have hw2 : w ^ 2 = (D : ℂ) := by
+    have h0 : (0 : ℝ) ≤ -(D : ℝ) := by
+      have : (D : ℝ) < 0 := by exact_mod_cast hD
+      linarith
+    rw [hw, mul_pow, Complex.I_sq, ← Complex.ofReal_pow, Real.sq_sqrt h0]
+    push_cast; ring
+  let ι₀ : K →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  have hz : ι₀ δ ^ 2 = (D : ℂ) := by rw [← map_pow, hδ, map_intCast]
+  have hprod : (ι₀ δ - w) * (ι₀ δ + w) = 0 := by linear_combination hz - hw2
+  rcases mul_eq_zero.mp hprod with h | h
+  · exact ⟨ι₀, sub_eq_zero.mp h⟩
+  · refine ⟨ZInQ.Contrib.TYZGenus.CM.conjQ.comp ι₀, ?_⟩
+    have : ι₀ δ = -w := eq_neg_of_add_eq_zero_left h
+    simp only [AlgHom.comp_apply, this, ZInQ.Contrib.TYZGenus.CM.conjQ, hw]
+    simp [Complex.conj_ofReal]
+
+/-- In a quadratic field `ℚ(δ)`, `δ ∉ ℚ`, an automorphism fixing `δ` is the identity. -/
+theorem algEquiv_eq_one_of_fix {K : Type} [Field K] [Algebra ℚ K] (hK : Module.finrank ℚ K = 2)
+    {δ : K} (hδ : δ ∉ Set.range (algebraMap ℚ K)) (σ : K ≃ₐ[ℚ] K) (hσ : σ δ = δ) : σ = 1 := by
+  have hli : LinearIndependent ℚ ![(1 : K), δ] := by
+    rw [LinearIndependent.pair_iff]
+    intro s t hst
+    by_cases ht : t = 0
+    · subst ht
+      simp only [zero_smul, add_zero] at hst
+      exact ⟨(smul_eq_zero.mp hst).resolve_right one_ne_zero, rfl⟩
+    · exfalso
+      apply hδ
+      refine ⟨-s / t, ?_⟩
+      have : t • δ = -(s • (1 : K)) := eq_neg_of_add_eq_zero_right hst
+      rw [Algebra.smul_def, Algebra.smul_def, mul_one] at this
+      have ht' : algebraMap ℚ K t ≠ 0 := (map_ne_zero (algebraMap ℚ K)).mpr ht
+      rw [map_div₀, map_neg, div_eq_iff ht', ← this]
+      ring
+  let b := basisOfLinearIndependentOfCardEqFinrank hli (by simp [hK])
+  have hlin : σ.toLinearMap = LinearMap.id := by
+    refine b.ext fun i => ?_
+    fin_cases i
+    · simp [b, map_one]
+    · simp [b, hσ]
+  ext x
+  have := congrArg (fun g : K →ₗ[ℚ] K => g x) hlin
+  simpa using this
+
+/-- A simple zero at `1` has nonzero derivative. -/
+theorem deriv_ne_zero_of_order_one {F : ℂ → ℂ} (hF : Differentiable ℂ F)
+    (h1 : analyticOrderAt F 1 = 1) : deriv F 1 ≠ 0 := by
+  have hFa : AnalyticAt ℂ F 1 := (Complex.analyticOnNhd_univ_iff_differentiable.mpr hF) 1
+    (Set.mem_univ _)
+  obtain ⟨g, hga, hg1, hgF⟩ := (hFa.analyticOrderAt_eq_natCast (n := 1)).mp (by exact_mod_cast h1)
+  have hd : deriv F 1 = deriv (fun s => (s - 1) * g s) 1 := by
+    apply Filter.EventuallyEq.deriv_eq
+    filter_upwards [hgF] with s hs
+    simpa using hs
+  rw [hd]
+  have : HasDerivAt (fun s => (s - 1) * g s) (1 * g 1 + (1 - 1) * deriv g 1) 1 :=
+    ((hasDerivAt_id 1).sub_const 1).mul hga.differentiableAt.hasDerivAt
+  rw [this.deriv]
+  simpa using hg1
+
+theorem zero_of_order_one {F : ℂ → ℂ} (hF : Differentiable ℂ F)
+    (h1 : analyticOrderAt F 1 = 1) : F 1 = 0 := by
+  have hFa : AnalyticAt ℂ F 1 := (Complex.analyticOnNhd_univ_iff_differentiable.mpr hF) 1
+    (Set.mem_univ _)
+  obtain ⟨g, hga, hg1, hgF⟩ := (hFa.analyticOrderAt_eq_natCast (n := 1)).mp (by exact_mod_cast h1)
+  simpa using hgF.self_of_nhds
+
+/-- `L'(E/K, 1) = F'(1) G(1) ≠ 0` when `F` has a simple zero at `1` and `G(1) ≠ 0`. -/
+theorem deriv_mul_ne_zero {F G : ℂ → ℂ} (hF : Differentiable ℂ F) (hG : Differentiable ℂ G)
+    (h1 : analyticOrderAt F 1 = 1) (hG1 : G 1 ≠ 0) : deriv (fun s => F s * G s) 1 ≠ 0 := by
+  have h : HasDerivAt (fun s => F s * G s) (deriv F 1 * G 1 + F 1 * deriv G 1) 1 :=
+    (hF 1).hasDerivAt.mul (hG 1).hasDerivAt
+  rw [h.deriv, zero_of_order_one hF h1, zero_mul, add_zero]
+  exact mul_ne_zero (deriv_ne_zero_of_order_one hF h1) hG1
+
+/-! ## §4. `GrossZagierHeegner` from the leaves -/
+
+/-- **`GZDecomp.GrossZagierHeegner` from uniformization, the Eichler–Shimura parametrization,
+the existence of Heegner representatives, the rationality of the Heegner point, the Gross–Zagier
+formula and Gross's conjugation relation** (with the proved glue: `β` by Hensel
+(`GZStatements.exists_sq_mod_four_mul_of_heegnerHyp`), the sign of a simple zero
+(`GZDecomp.signOfSimpleZero`), `L'(E/K, 1) ≠ 0`, nondegeneracy of `ĥ` on torsion). -/
+theorem grossZagierHeegner_of_leaves (hU : WeierstrassUniformization)
+    (hES : EichlerShimuraParam) (hR : HeegnerRepsExist) (hHP : HeegnerPointRational)
+    (hGZ : GrossZagierFormula) (hGC : GrossConjugation) : GrossZagierHeegner := by
+  intro E _ N _ f hχ hf D hDisc hD4 hHeeg F G hF hG h1 hG1 K _ _ instAlg hK2 ⟨δ, hδ⟩
+  have : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ K).injective
+  obtain rfl : instAlg = DivisionRing.toRatAlgebra := Subsingleton.elim _ _
+  have : FiniteDimensional ℚ K := Module.finite_of_finrank_eq_succ hK2
+  have : NumberField K := ⟨⟩
+  have hδ' : δ ^ 2 = (D : K) := by rw [hδ]; simp
+  obtain ⟨β, hβ⟩ := ZInQ.GZStatements.exists_sq_mod_four_mul_of_heegnerHyp (NeZero.ne N) hDisc hHeeg
+  obtain ⟨S, hS⟩ := hR N D β hDisc hβ
+  obtain ⟨L, hL⟩ := exists_isPeriodLattice hU E
+  obtain ⟨c, hc, hcL⟩ := hES E N f hχ hf L hL
+  obtain ⟨ι, hι⟩ := exists_embedding hDisc.1 δ hδ'
+  obtain ⟨y, hy⟩ := hHP E N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι
+  refine ⟨y, ?_, ?_⟩
+  · -- infinite order: `ĥ(y) ≠ 0` since `L'(E/K, 1) = κ ĥ(y) ≠ 0`
+    obtain ⟨κ, -, hκ⟩ := hGZ E N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι
+      hι y hy F G hF hG
+    intro htors
+    rw [WeierstrassCurve.Affine.Point.canonicalHeight_eq_zero_of_isOfFinAddOrder htors,
+      Complex.ofReal_zero, mul_zero] at hκ
+    exact deriv_mul_ne_zero hF.1 hG.1 h1 hG1 hκ
+  · intro σ
+    have hσ2 : (σ δ - δ) * (σ δ + δ) = 0 := by
+      have : σ δ ^ 2 = δ ^ 2 := by rw [← map_pow, hδ', map_intCast]
+      linear_combination this
+    rcases mul_eq_zero.mp hσ2 with h | h
+    · -- `σ = 1`
+      have hnr : δ ∉ Set.range (algebraMap ℚ K) := by
+        rintro ⟨q, rfl⟩
+        have hq : q ^ 2 = (D : ℚ) := by
+          apply (algebraMap ℚ K).injective
+          rw [map_pow, hδ', map_intCast]
+        have : (D : ℚ) < 0 := by exact_mod_cast hDisc.1
+        nlinarith [sq_nonneg q]
+      have := algEquiv_eq_one_of_fix hK2 hnr σ (sub_eq_zero.mp h)
+      subst this
+      rw [map_one_apply, sub_self]
+      exact IsOfFinAddOrder.zero
+    · have hw : rootNumber f hχ = -1 := signOfSimpleZero N f hχ F hF h1
+      exact (hGC E N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι y hy σ
+        (eq_neg_of_add_eq_zero_left h)).2 hw
+
 end ZInQ.GZHL3
+
+#print axioms ZInQ.GZHL3.grossZagierHeegner_of_leaves
