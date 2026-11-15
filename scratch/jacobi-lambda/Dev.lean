@@ -1,6 +1,7 @@
-import Mathlib.NumberTheory.ModularForms.JacobiTheta.TwoVariable
+import ZInQKernel.Contrib.GZTheta.TripleProduct
+import Mathlib.Analysis.Real.Pi.Bounds
 
-open Complex
+open Complex Filter Topology Metric
 open scoped Real
 
 noncomputable section
@@ -141,5 +142,105 @@ theorem jacobi_quartic {σ : ℂ} (hσ : 0 < σ.im) :
   have : thetaFour σ ^ 4 = (thetaThree (σ / 2) * thetaFour (σ / 2)) ^ 2 := by rw [h34]; ring
   rw [this, mul_pow, h3, h4]
   ring
+
+/-! ## Exponential bounds near `i∞` -/
+
+/-- `θ₂(s) = e^{πis/4} T(s)`, `T(s) = Σ e^{πi n(n+1) s}`. -/
+def thT (s : ℂ) : ℂ := jacobiTheta₂ (s / 2) s
+
+lemma thetaTwo_eq (s : ℂ) : thetaTwo s = cexp (π * I * s / 4) * thT s := rfl
+
+lemma norm_le_of_hasSum_geom {g : ℕ → ℂ} {a : ℂ} (hg : HasSum g a) {C r : ℝ} (hr0 : 0 ≤ r)
+    (hr1 : r < 1) (hb : ∀ n, ‖g n‖ ≤ C * r ^ (n + 1)) : ‖a‖ ≤ C * (r / (1 - r)) := by
+  have s : HasSum (fun n : ℕ => C * r ^ (n + 1)) (C * (r / (1 - r))) := by
+    have := (hasSum_geometric_of_lt_one hr0 hr1).mul_left (C * r)
+    convert this using 1
+    · funext n; ring
+    · ring
+  have aux : Summable fun n => ‖g n‖ := .of_nonneg_of_le (fun n => norm_nonneg _) hb s.summable
+  rw [← hg.tsum_eq]
+  exact (norm_tsum_le_tsum_norm aux).trans ((aux.tsum_mono s.summable hb).trans_eq s.tsum_eq)
+
+lemma norm_cexp_pi_I_mul (m : ℝ) (s : ℂ) : ‖cexp (π * I * m * s)‖ = rexp (-π * m * s.im) := by
+  rw [Complex.norm_exp]
+  congr 1
+  simp [Complex.mul_re, Complex.mul_im]
+
+lemma hasSum_thT_sub_two {s : ℂ} (hs : 0 < s.im) :
+    HasSum (fun n : ℕ => 2 * cexp (π * I * ((((n : ℝ) + 1) * ((n : ℝ) + 2) : ℝ) : ℂ) * s))
+      (thT s - 2) := by
+  have h0 := (hasSum_jacobiTheta₂_term (s / 2) hs).nat_add_neg_add_one
+  have e : ∀ n : ℕ, jacobiTheta₂_term n (s / 2) s + jacobiTheta₂_term (-(n + 1)) (s / 2) s =
+      2 * cexp (π * I * (((n : ℝ) * ((n : ℝ) + 1) : ℝ) : ℂ) * s) := by
+    intro n
+    simp only [jacobiTheta₂_term]
+    have e1 : cexp (2 * π * I * ((-(n + 1) : ℤ) : ℂ) * (s / 2) + π * I * ((-(n + 1) : ℤ) : ℂ) ^ 2 * s)
+        = cexp (π * I * (((n : ℝ) * ((n : ℝ) + 1) : ℝ) : ℂ) * s) := by
+      congr 1; push_cast; ring
+    have e2 : cexp (2 * π * I * ((n : ℤ) : ℂ) * (s / 2) + π * I * ((n : ℤ) : ℂ) ^ 2 * s)
+        = cexp (π * I * (((n : ℝ) * ((n : ℝ) + 1) : ℝ) : ℂ) * s) := by
+      congr 1; push_cast; ring
+    rw [e1, e2]; ring
+  have h1 : HasSum (fun n : ℕ => 2 * cexp (π * I * (((n : ℝ) * ((n : ℝ) + 1) : ℝ) : ℂ) * s))
+      (thT s) := by
+    convert h0 using 1
+    · funext n
+      exact (e n).symm
+    · rfl
+  rw [← hasSum_nat_add_iff' 1] at h1
+  convert h1 using 1
+  · funext n; push_cast; ring_nf
+  · simp [thT]
+
+lemma exp_neg_pi_le_quarter {t : ℝ} (ht : 1 ≤ t) : rexp (-π * t) ≤ 1 / 4 := by
+  have h1 : rexp (-π * t) ≤ rexp (-π) := Real.exp_le_exp.mpr (by nlinarith [Real.pi_pos])
+  have h2 : 4 ≤ rexp π := by linarith [Real.add_one_le_exp π, Real.pi_gt_three]
+  rw [Real.exp_neg] at h1
+  calc rexp (-π * t) ≤ (rexp π)⁻¹ := h1
+    _ ≤ 1 / 4 := by rw [one_div]; exact inv_anti₀ (by norm_num) h2
+
+lemma geom_aux {r : ℝ} (hr0 : 0 ≤ r) (hr : r ≤ 1 / 4) : 2 * (r / (1 - r)) ≤ 3 * r := by
+  rw [mul_div_assoc', div_le_iff₀ (by linarith)]; nlinarith
+
+theorem norm_thT_sub_two_le {s : ℂ} (hs : 1 ≤ s.im) : ‖thT s - 2‖ ≤ 3 * rexp (-π * s.im) := by
+  have hs0 : 0 < s.im := by linarith
+  set r := rexp (-π * s.im) with hr
+  have hr0 : 0 ≤ r := (Real.exp_pos _).le
+  have hrq := exp_neg_pi_le_quarter hs
+  refine (norm_le_of_hasSum_geom (hasSum_thT_sub_two hs0) hr0 (by linarith) (C := 2) ?_).trans
+    (geom_aux hr0 hrq)
+  intro n
+  rw [norm_mul, norm_cexp_pi_I_mul, Complex.norm_two, hr, ← Real.exp_nat_mul]
+  apply mul_le_mul_of_nonneg_left _ (by norm_num)
+  apply Real.exp_le_exp.mpr
+  push_cast
+  have : (0 : ℝ) ≤ n := n.cast_nonneg
+  nlinarith [Real.pi_pos, mul_nonneg (mul_nonneg Real.pi_pos.le hs0.le) this]
+
+theorem norm_thetaThree_sub_one_le {s : ℂ} (hs : 1 ≤ s.im) :
+    ‖thetaThree s - 1‖ ≤ 3 * rexp (-π * s.im) := by
+  have hs0 : 0 < s.im := by linarith
+  have h := norm_jacobiTheta_sub_one_le hs0
+  rw [jacobiTheta_eq_jacobiTheta₂] at h
+  have hrq := exp_neg_pi_le_quarter hs
+  have hr0 := (Real.exp_pos (-π * s.im)).le
+  refine h.trans ?_
+  have := geom_aux hr0 hrq
+  have e : 2 / (1 - rexp (-π * s.im)) * rexp (-π * s.im) =
+      2 * (rexp (-π * s.im) / (1 - rexp (-π * s.im))) := by ring
+  linarith
+
+theorem norm_thetaFour_sub_one_le {s : ℂ} (hs : 1 ≤ s.im) :
+    ‖thetaFour s - 1‖ ≤ 3 * rexp (-π * s.im) := by
+  have hs0 : 0 < s.im := by linarith
+  have h := ZInQ.GZTheta.norm_jacobiTheta₂_half_sub_one_le hs0
+  rw [ZInQ.GZTheta.norm_qJ] at h
+  have hrq := exp_neg_pi_le_quarter hs
+  have hr0 := (Real.exp_pos (-π * s.im)).le
+  refine h.trans ?_
+  have := geom_aux hr0 hrq
+  have e : 2 / (1 - rexp (-π * s.im)) * rexp (-π * s.im) =
+      2 * (rexp (-π * s.im) / (1 - rexp (-π * s.im))) := by ring
+  linarith
 
 end ZInQ.JacobiLambda

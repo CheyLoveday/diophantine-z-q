@@ -18,3 +18,5 @@ and F(σ) = O(e^{−π Im σ}); iterate to get F = 0.
   θ(z,τ)θ(w,τ) = θ(z+w,2τ)θ(z−w,2τ) + e^{2πiz+πiτ}θ(z+w+τ,2τ)θ(z−w+τ,2τ): VERIFIED (compiled; numerically checked dup_check.py).
 - 05:35 Landen identities `landen_three`, `landen_four`, `landen_two`, `landen_three_four` and `jacobi_quartic`
   (θ₃⁴ = θ₂⁴ + θ₄⁴): VERIFIED compiled, axioms [propext, Classical.choice, Quot.sound].
+- 05:55 exponential bounds for Im s ≥ 1: ‖T(s) − 2‖, ‖θ₃(s) − 1‖, ‖θ₄(s) − 1‖ ≤ 3e^{−π Im s}
+  (T(s) = jacobiTheta₂ (s/2) s, θ₂ = e^{πis/4}T): VERIFIED compiled.
