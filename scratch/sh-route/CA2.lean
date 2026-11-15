@@ -354,4 +354,129 @@ theorem isSepClosed_wE : IsSepClosed (ResidueField (wE (K := K) w)) := by
 
 end Ring
 
+section DVR
+
+open ReductSplit ReductGlue
+
+variable {K : Type} [Field K] {Ω : Type} [Field Ω] [Algebra K Ω] (w : ValuationSubring Ω)
+  [CharZero K] [IsAlgClosure K Ω] {O : ValuationSubring K} [IsDiscreteValuationRing O]
+  [PerfectField (ResidueField O)]
+
+theorem mem_w_of_mem (hw : w.comap (algebraMap K Ω) = O) (a : O) : algebraMap K Ω a ∈ w := by
+  have : (a : K) ∈ w.comap (algebraMap K Ω) := hw ▸ a.2
+  exact this
+
+theorem nonunits_iff_of (hw : w.comap (algebraMap K Ω) = O) (a : O) :
+    algebraMap K Ω a ∈ w.nonunits ↔ a ∈ maximalIdeal O := by
+  rw [← nonunits_comap (algebraMap K Ω) w (a : K), hw, ValuationSubring.mem_nonunits_iff,
+    ← ValuationSubring.valuation_lt_one_iff]
+
+/-- **Elements of the inertia field are uniformizer powers times units** (from `key_finite`). -/
+theorem unit_pow (hw : w.comap (algebraMap K Ω) = O) (ϖ : O) (hϖ : Irreducible ϖ) (x : Ω)
+    (hxE : x ∈ inertiaField (K := K) w) (hxw : x ∈ w) (hx0 : x ≠ 0) :
+    ∃ n : ℕ, x / algebraMap K Ω ϖ ^ n ∈ w ∧ (x / algebraMap K Ω ϖ ^ n)⁻¹ ∈ w := by
+  obtain ⟨M, ⟨hfd, hgal⟩, hxM, hfix⟩ := hxE
+  haveI := hfd
+  haveI := hgal
+  haveI : Normal K Ω := IsAlgClosure.normal K Ω
+  letI : Algebra O M := ((algebraMap K M).comp (algebraMap O K)).toAlgebra
+  haveI : IsScalarTower O K M := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  let W := w.comap (algebraMap M Ω)
+  have hAW : ∀ a : O, algebraMap O M a ∈ W := fun a => mem_w_of_mem w hw a
+  have hctr : ∀ a : O, algebraMap O M a ∈ W.nonunits ↔ a ∈ maximalIdeal O := by
+    intro a
+    rw [nonunits_comap]
+    exact nonunits_iff_of w hw a
+  have hfix' : ∀ σ : M ≃ₐ[K] M, (∀ y ∈ W, σ y - y ∈ W.nonunits) → σ ⟨x, hxM⟩ = ⟨x, hxM⟩ := by
+    intro σ hσ
+    let τ : Ω ≃ₐ[K] Ω := σ.liftNormal Ω
+    have hτ : ∀ m : M, τ (algebraMap M Ω m) = algebraMap M Ω (σ m) := fun m =>
+      AlgEquiv.liftNormal_commutes σ Ω m
+    have hcond : CondM w M τ := by
+      intro y hyM hyw
+      have h1 := hσ ⟨y, hyM⟩ hyw
+      rw [nonunits_comap, map_sub, ← hτ] at h1
+      exact h1
+    have := hfix τ hcond
+    apply (algebraMap M Ω).injective
+    rw [← hτ]
+    exact this
+  have hx0' : (⟨x, hxM⟩ : M) ≠ 0 := fun h => hx0 (congrArg Subtype.val h)
+  obtain ⟨n, h1, h2⟩ := key_finite (K := K) O W hAW hctr ϖ hϖ ⟨x, hxM⟩ hfix' hxw hx0'
+  have e : ((algebraMap O M ϖ : M) : Ω) = algebraMap K Ω ϖ := rfl
+  refine ⟨n, ?_, ?_⟩
+  · have := h1; simpa [W, ValuationSubring.mem_comap, e] using this
+  · have := h2; simpa [W, ValuationSubring.mem_comap, e] using this
+
+theorem hE_eq (hw : w.comap (algebraMap K Ω) = O) :
+    (wE (K := K) w).comap (algebraMap K (inertiaField (K := K) w)) = O := by
+  rw [ValuationSubring.comap_comap]
+  exact hw
+
+theorem ιΩ_injective : Function.Injective (ιΩ (K := K) w) := fun a b h =>
+  Subtype.ext (Subtype.ext h)
+
+theorem ιΩ_comapHom (hw : w.comap (algebraMap K Ω) = O) (ϖ : O) :
+    ιΩ w (comapHom (hE_eq w hw) ϖ) = algebraMap K Ω ϖ := rfl
+
+theorem assoc_pow (hw : w.comap (algebraMap K Ω) = O) (ϖ : O) (hϖ : Irreducible ϖ)
+    {a : wE (K := K) w} (ha : a ≠ 0) : ∃ n : ℕ, Associated (comapHom (hE_eq w hw) ϖ ^ n) a := by
+  have hx0 : ιΩ w a ≠ 0 := fun h => ha (ιΩ_injective w (by rw [h, map_zero]))
+  obtain ⟨n, h1, h2⟩ := unit_pow w hw ϖ hϖ (ιΩ w a) a.1.2 a.2 hx0
+  have hϖ0 : algebraMap K Ω ϖ ≠ 0 := by
+    rw [_root_.map_ne_zero]; exact fun h => hϖ.ne_zero (Subtype.ext h)
+  have hyE : ιΩ w a / algebraMap K Ω ϖ ^ n ∈ inertiaField (K := K) w :=
+    (inertiaField w).div_mem a.1.2 (pow_mem ((inertiaField w).algebraMap_mem _) n)
+  have hyE' : (ιΩ w a / algebraMap K Ω ϖ ^ n)⁻¹ ∈ inertiaField (K := K) w :=
+    (inertiaField w).inv_mem hyE
+  let u : wE (K := K) w := ⟨⟨_, hyE⟩, by exact h1⟩
+  let v : wE (K := K) w := ⟨⟨_, hyE'⟩, by exact h2⟩
+  have hy0 : ιΩ w a / algebraMap K Ω ϖ ^ n ≠ 0 := div_ne_zero hx0 (pow_ne_zero _ hϖ0)
+  have huv : u * v = 1 := ιΩ_injective w (by
+    rw [map_mul, map_one]; exact mul_inv_cancel₀ hy0)
+  refine ⟨n, Units.mk u v huv (by rw [mul_comm]; exact huv), ιΩ_injective w ?_⟩
+  rw [map_mul, map_pow, ιΩ_comapHom w hw]
+  change algebraMap K Ω ϖ ^ n * (ιΩ w a / algebraMap K Ω ϖ ^ n) = ιΩ w a
+  field_simp
+
+theorem irreducible_comapHom (hw : w.comap (algebraMap K Ω) = O) (ϖ : O) (hϖ : Irreducible ϖ) :
+    Irreducible (comapHom (hE_eq w hw) ϖ) := by
+  set π := comapHom (hE_eq w hw) ϖ
+  have hπ0 : π ≠ 0 := fun h => by
+    have := congrArg (ιΩ w) h
+    rw [ιΩ_comapHom w hw, map_zero, map_eq_zero] at this
+    exact hϖ.ne_zero (Subtype.ext this)
+  have hπnu : ¬ IsUnit π := by
+    intro h
+    have h1 : π ∉ maximalIdeal (wE (K := K) w) := fun hm => hm h
+    apply h1
+    rw [mem_max_comap_iff]
+    exact (nonunits_iff_of w hw ϖ).mpr ((mem_maximalIdeal _).mpr hϖ.not_isUnit)
+  refine ⟨hπnu, fun a b hab => ?_⟩
+  by_contra hcon
+  push Not at hcon
+  obtain ⟨hau, hbu⟩ := hcon
+  have ha0 : a ≠ 0 := fun h => hπ0 (by rw [hab, h, zero_mul])
+  have hb0 : b ≠ 0 := fun h => hπ0 (by rw [hab, h, mul_zero])
+  obtain ⟨n, u, hu⟩ := assoc_pow w hw ϖ hϖ ha0
+  obtain ⟨m, u', hu'⟩ := assoc_pow w hw ϖ hϖ hb0
+  rcases n with _ | n
+  · exact hau (by rw [← hu, pow_zero, one_mul]; exact u.isUnit)
+  rcases m with _ | m
+  · exact hbu (by rw [← hu', pow_zero, one_mul]; exact u'.isUnit)
+  have key : π * 1 = π * (π * (π ^ (n + m) * ((u : wE (K := K) w) * u'))) := by
+    rw [mul_one]
+    conv_lhs => rw [hab, ← hu, ← hu']
+    ring
+  have := mul_left_cancel₀ hπ0 key
+  exact hπnu (isUnit_iff_exists_inv.mpr ⟨_, this.symm⟩)
+
+theorem isDVR_wE (hw : w.comap (algebraMap K Ω) = O) :
+    IsDiscreteValuationRing (wE (K := K) w) := by
+  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
+  exact IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
+    ⟨_, irreducible_comapHom w hw ϖ hϖ, fun hx => assoc_pow w hw ϖ hϖ hx⟩
+
+end DVR
+
 end ShRoute
