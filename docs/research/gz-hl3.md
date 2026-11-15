@@ -325,3 +325,23 @@ lake env lean scratch/gz-hl3/Discharges.lean     # output scratch/gz-hl3/dischar
 
 `scratch/gz-hl3/HL3.lean` is the development copy of the main file (minus the header). `scratch/gz-hl3/Reps.lean`
 is the development file of the representatives glue.
+
+---
+
+## 10. What remains, and the next step
+
+* **Literature check.** Every locator and printed constant above is UNVERIFIED (§8).
+* **`HeegnerPointRational` could be reduced further** to the kernel's `TYZGenus.Shimura.ShimuraReciprocityModFn`.
+  That leaf is already derivable from `frozenTarget`'s open `T5Glue.ShimuraMainCM` and `T5Glue.X0ModuliGalois`.
+  The reduction needs three more pieces, and this task did not attempt it.
+  - **(a) A rationality leaf for the coordinates.** The coordinate functions of `φ` must lie in `ℚ(X₀(N))`. But
+    `IsRatModFn` requires no poles on `ℍ`, and `x ∘ φ` has poles at `φ⁻¹(O) ∩ ℍ`. So either a variant of the
+    reciprocity leaf allowing poles away from the Heegner points is needed, or rational functions of `(x∘φ, y∘φ)`
+    regular at the `τ_Q`.
+  - **(b) Glue for the ideal-class action on Heegner forms of level `N`.** For each `J`, `Q ↦ Q'` with
+    `J·⟨1, τ_{Q'}⟩ = c⟨1, τ_Q⟩` and the same for `⟨1/N, τ⟩` must permute the classes of residue `β`.
+  - **(c) Galois descent from `ℂ`-points fixed by `Aut(ℂ/K)` to `E(K)`.**
+
+  Net effect: one composite leaf is replaced by a q-expansion-principle leaf, at the cost of a large amount of glue.
+* **The printed constant** of the Gross–Zagier formula could be added as a second, explicit leaf once someone has
+  read GZ V.2.1 and fixed the height normalization against Tau Ceti's `canonicalHeight`.
