@@ -814,6 +814,258 @@ theorem semistableNeronBaseChange_of_printed'' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3
     ZInQ.HeightSplit.SemistableNeronBaseChange :=
   semistableNeronBaseChange_of_printed' hB h3 h7 hE g1 (identityComponentFromPrinted_of ga gb)
 
+/-! # Part S, continued: `IdentityComponentGroupModel` reduced to three topological glue Props
+
+`OpenSub`: an open `W` of a group scheme `G` closed under the group law carries a group structure making
+`W → G` a homomorphism (`GrpObj.ofRepresentableBy` with the presheaf `T ↦ {f : T ⟶ G | f(T) ⊆ W}`). -/
+
+namespace OpenSub
+
+variable {S : Scheme.{0}} (G : Over S) [GrpObj G] (W : G.left.Opens)
+
+/-- Closure of an open set under the group law of `G`. -/
+structure IsSubgroupOpen : Prop where
+  one : ∀ s, (η[G] : 𝟙_ (Over S) ⟶ G).left s ∈ W
+  mul : ∀ z : (G ⊗ G).left, (fst G G).left z ∈ W → (snd G G).left z ∈ W → (μ[G]).left z ∈ W
+  inv : ∀ x : G.left, x ∈ W → (GrpObj.inv : G ⟶ G).left x ∈ W
+
+variable {G W}
+
+theorem mem_of_range {T : Over S} {f : T ⟶ G} (h : Set.range f.left ⊆ W) (t : T.left) :
+    f.left t ∈ W := h ⟨t, rfl⟩
+
+/-- The maps `T ⟶ G` landing in `W`, a subgroup. -/
+def subHom (hW : IsSubgroupOpen G W) (T : Over S) : Subgroup (T ⟶ G) where
+  carrier := {f | Set.range f.left ⊆ W}
+  one_mem' := by
+    rintro _ ⟨t, rfl⟩
+    rw [Hom.one_def, Over.comp_left, Scheme.Hom.comp_apply]
+    exact hW.one _
+  mul_mem' := by
+    intro f g hf hg
+    rintro _ ⟨t, rfl⟩
+    simp only [Set.mem_ofPred_eq] at hf hg
+    rw [Hom.mul_def, Over.comp_left, Scheme.Hom.comp_apply]
+    refine hW.mul _ ?_ ?_
+    · rw [← Scheme.Hom.comp_apply, ← Over.comp_left, lift_fst]
+      exact mem_of_range hf t
+    · rw [← Scheme.Hom.comp_apply, ← Over.comp_left, lift_snd]
+      exact mem_of_range hg t
+  inv_mem' := by
+    intro f hf
+    rintro _ ⟨t, rfl⟩
+    simp only [Set.mem_ofPred_eq] at hf
+    rw [Hom.inv_def, Over.comp_left, Scheme.Hom.comp_apply]
+    exact hW.inv _ (mem_of_range hf t)
+
+/-- Precomposition, as a group homomorphism. -/
+def subHomMap (hW : IsSubgroupOpen G W) {T T' : Over S} (h : T' ⟶ T) :
+    subHom hW T →* subHom hW T' where
+  toFun f := ⟨h ≫ f.1, by
+    rintro _ ⟨t, rfl⟩
+    rw [Over.comp_left, Scheme.Hom.comp_apply]
+    exact mem_of_range f.2 _⟩
+  map_one' := by
+    apply Subtype.ext
+    simp [Hom.one_def]
+  map_mul' f g := by
+    apply Subtype.ext
+    simp [MonObj.comp_mul]
+
+/-- The presheaf of groups `T ↦ {f : T ⟶ G | f(T) ⊆ W}`. -/
+noncomputable def subFunctor (hW : IsSubgroupOpen G W) : (Over S)ᵒᵖ ⥤ GrpCat.{0} where
+  obj T := GrpCat.of (subHom hW T.unop)
+  map h := GrpCat.ofHom (subHomMap hW h.unop)
+  map_id T := by
+    ext f
+    simp [subHomMap]
+  map_comp h h' := by
+    ext f
+    simp [subHomMap]
+
+variable (W) in
+/-- The open subscheme on `W`, over `S`. -/
+noncomputable abbrev G0 : Over S := Over.mk (W.ι ≫ G.hom)
+
+variable (W) in
+/-- Its inclusion into `G`. -/
+noncomputable abbrev incl : G0 W ⟶ G := Over.homMk W.ι rfl
+
+/-- Maps into `G0` are maps into `G` landing in `W`. -/
+noncomputable def reprBy (hW : IsSubgroupOpen G W) :
+    (subFunctor hW ⋙ forget GrpCat).RepresentableBy (G0 W) where
+  homEquiv {T} :=
+    { toFun := fun f => (⟨f ≫ incl W, by
+        rintro _ ⟨t, rfl⟩
+        rw [Over.comp_left, Scheme.Hom.comp_apply]
+        have hm : W.ι (f.left t) ∈ Set.range W.ι := ⟨_, rfl⟩
+        rw [Scheme.Opens.range_ι] at hm
+        exact hm⟩ : subHom hW T)
+      invFun := fun g => Over.homMk (IsOpenImmersion.lift W.ι g.1.left (by
+          rw [Scheme.Opens.range_ι]; exact g.2)) (by
+          simp only [G0, Over.mk_hom]
+          rw [← Category.assoc, IsOpenImmersion.lift_fac, Over.w])
+      left_inv := fun f => by
+        apply Over.OverMorphism.ext
+        simp only [Over.homMk_left]
+        rw [← cancel_mono W.ι, IsOpenImmersion.lift_fac]
+        rfl
+      right_inv := fun g => by
+        apply Subtype.ext
+        apply Over.OverMorphism.ext
+        simp only [Over.comp_left, Over.homMk_left]
+        exact IsOpenImmersion.lift_fac _ _ _ }
+  homEquiv_comp f g := Subtype.ext (Category.assoc f g (incl W))
+
+/-- The group structure on `G0 W` (from `GrpObj.ofRepresentableBy`). -/
+@[instance_reducible] noncomputable def grpG0 (hW : IsSubgroupOpen G W) : GrpObj (G0 W) :=
+  GrpObj.ofRepresentableBy (G0 W) (subFunctor hW) (reprBy hW)
+
+/-- The inclusion `G0 W → G` is a homomorphism. -/
+theorem isMonHom_incl (hW : IsSubgroupOpen G W) :
+    letI := grpG0 hW
+    IsMonHom (incl W) := by
+  letI := grpG0 hW
+  constructor
+  · have h1 : η[G0 W] ≫ incl W = ((reprBy hW).homEquiv η[G0 W]).1 := rfl
+    have h2 : η[G0 W] = (reprBy hW).homEquiv.symm 1 := rfl
+    rw [h1, h2, Equiv.apply_symm_apply]
+    show (1 : 𝟙_ (Over S) ⟶ G) = η[G]
+    rw [Hom.one_def, toUnit_unique (toUnit _) (𝟙 _), Category.id_comp]
+  · have h1 : μ[G0 W] ≫ incl W = ((reprBy hW).homEquiv μ[G0 W]).1 := rfl
+    have h2 : μ[G0 W] = (reprBy hW).homEquiv.symm
+        ((reprBy hW).homEquiv (fst (G0 W) (G0 W)) * (reprBy hW).homEquiv (snd (G0 W) (G0 W))) := rfl
+    rw [h1, h2, Equiv.apply_symm_apply]
+    show ((fst (G0 W) (G0 W) ≫ incl W) * (snd (G0 W) (G0 W) ≫ incl W) : G0 W ⊗ G0 W ⟶ G) =
+      (incl W ⊗ₘ incl W) ≫ μ[G]
+    rw [Hom.mul_def]
+    congr 1
+
+end OpenSub
+
+section IdCompGM
+
+open ZInQ.HeightSplit ZInQ.DefFaltings
+
+/-- `e(s) ∈ G⁰`. -/
+theorem idCompSet_one {S : Scheme.{0}} (G : Over S) [GrpObj G] (s : S) :
+    (η[G] : 𝟙_ (Over S) ⟶ G).left s ∈ idCompSet G := by
+  have h : G.hom ((η[G] : 𝟙_ (Over S) ⟶ G).left s) = s := by
+    rw [← Scheme.Hom.comp_apply, Over.w]
+    rfl
+  show _ ∈ connectedComponentIn _ _
+  rw [h]
+  exact mem_connectedComponentIn (show _ ∈ G.hom ⁻¹' {s} from h)
+
+/-- **GLUE `IdCompSubgroup`** (SGA 3 VI_A 2.3 fibrewise): for a smooth group scheme `G → S`, `G⁰` is closed
+under the group law. Needs: the fibre of `G ×_S G` over `s` is `G_s ×_{κ(s)} G_s`, and `(G_s)⁰ ×_{κ(s)} (G_s)⁰` is
+connected (`(G_s)⁰` is geometrically connected, Stacks 04KV = bundle leaf `geomConnOfRationalPoint`; a product
+of a connected and a geometrically connected scheme is connected, Stacks 0385), so its image under `μ` is a
+connected subset of `G_s` containing `e(s)`; likewise for the inverse (a homeomorphism of `G_s` fixing
+`e(s)`). Not in Lean. -/
+def IdCompSubgroup : Prop :=
+  ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [Smooth G.hom],
+    (∀ z : (G ⊗ G).left, (fst G G).left z ∈ idCompSet G → (snd G G).left z ∈ idCompSet G →
+      (μ[G]).left z ∈ idCompSet G) ∧
+    (∀ x : G.left, x ∈ idCompSet G → (GrpObj.inv : G ⟶ G).left x ∈ idCompSet G)
+
+/-- **GLUE `IdCompGenericFibre`**: for a group model `𝒢` of `A_L` over `𝓞_L`, every point over the generic
+point lies in `𝒢⁰`. Needs: the subspace `𝒢.hom⁻¹{η}` is homeomorphic to the generic fibre `𝒢_L ≅ A_L`
+(EGA I 3.6.1; Mathlib's `Scheme.Hom.fiber`), which is connected (`A_L` geometrically integral). Not in Lean. -/
+def IdCompGenericFibre : Prop :=
+  ∀ (K : Type) [Field K] (A : PkgI3.AbVar K) (L : Type) [Field L] [NumberField L] [Algebra K L]
+    (𝒢 : GroupModel A L) (x : 𝒢.G.left), (𝒢.G.hom x).asIdeal = ⊥ → x ∈ idCompSet 𝒢.G
+
+/-- **GLUE `IdCompGeomFibres`**: for a group model `𝒢` over `𝓞_L` and an open `W = 𝒢⁰`, the geometric fibre of
+the open subscheme `W` at a maximal ideal is connected. Needs: the fibre of `W` at `𝔭` is `(𝒢_𝔭)⁰`, connected with
+a rational point, hence geometrically connected (bundle leaf `geomConnOfRationalPoint`, Stacks 04KV). Not in
+Lean. -/
+def IdCompGeomFibres : Prop :=
+  ∀ (K : Type) [Field K] (A : PkgI3.AbVar K) (L : Type) [Field L] [NumberField L] [Algebra K L]
+    (𝒢 : GroupModel A L) (W : 𝒢.G.left.Opens), (W : Set 𝒢.G.left) = idCompSet 𝒢.G →
+    ∀ (𝔭 : Ideal (𝓞 L)) [𝔭.IsMaximal], ConnectedSpace ((Over.pullback (Spec.map (CommRingCat.ofHom
+      (algebraMap (𝓞 L) (ResBar 𝔭))))).obj (Over.mk (W.ι ≫ 𝒢.G.hom))).left
+
+/-- **`IdentityComponentGroupModel` from the three topological glue Props** (compiled): the open subscheme on
+`𝒢⁰` with the group structure of `OpenSub`; smooth, separated, quasi-compact (`𝒢` is noetherian); its generic
+fibre is that of `𝒢` (the inclusion is an open immersion, surjective on the generic fibre). -/
+theorem identityComponentGroupModel_of (gc : IdCompSubgroup) (ge : IdCompGenericFibre)
+    (gf : IdCompGeomFibres) : IdentityComponentGroupModel := by
+  intro K _ A L _ _ _ 𝒢 hO
+  let W : 𝒢.G.left.Opens := ⟨idCompSet 𝒢.G, hO⟩
+  have hW : OpenSub.IsSubgroupOpen 𝒢.G W :=
+    { one := fun s => idCompSet_one 𝒢.G s
+      mul := (gc _ 𝒢.G).1
+      inv := (gc _ 𝒢.G).2 }
+  letI : GrpObj (OpenSub.G0 W) := OpenSub.grpG0 hW
+  have hmon : IsMonHom (OpenSub.incl W) := OpenSub.isMonHom_incl hW
+  haveI : Smooth (OpenSub.G0 W).hom := show Smooth (W.ι ≫ 𝒢.G.hom) from inferInstance
+  haveI : IsSeparated (OpenSub.G0 W).hom := show IsSeparated (W.ι ≫ 𝒢.G.hom) from inferInstance
+  haveI : QuasiCompact (OpenSub.G0 W).hom := by
+    haveI : IsLocallyNoetherian 𝒢.G.left := LocallyOfFiniteType.isLocallyNoetherian 𝒢.G.hom
+    haveI : CompactSpace 𝒢.G.left := QuasiCompact.compactSpace_of_compactSpace 𝒢.G.hom
+    haveI : IsNoetherian 𝒢.G.left := {}
+    show QuasiCompact (W.ι ≫ 𝒢.G.hom)
+    infer_instance
+  let jL := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L))
+  have hmap : ((Over.pullback jL).map (OpenSub.incl W)).left =
+      pullback.map (W.ι ≫ 𝒢.G.hom) jL 𝒢.G.hom jL W.ι (𝟙 _) (𝟙 _) (by simp) (by simp) := by
+    apply pullback.hom_ext <;> simp [Over.pullback_map_left]
+  haveI : IsOpenImmersion (OpenSub.incl W).left := show IsOpenImmersion W.ι from inferInstance
+  have hiso : IsIso ((Over.pullback jL).map (OpenSub.incl W)).left := by
+    rw [isIso_iff_isOpenImmersion_and_surjective]
+    refine ⟨ZInQ.H5Glue.isOpenImmersion_pullback_map _ _, ⟨fun z => ?_⟩⟩
+    have hz : z ∈ Set.range ((Over.pullback jL).map (OpenSub.incl W)).left := by
+      rw [hmap, Scheme.Pullback.range_map]
+      refine ⟨?_, ⟨pullback.snd 𝒢.G.hom jL z, rfl⟩⟩
+      show pullback.fst 𝒢.G.hom jL z ∈ Set.range W.ι
+      rw [Scheme.Opens.range_ι]
+      apply ge K A L 𝒢
+      have h1 : 𝒢.G.hom (pullback.fst 𝒢.G.hom jL z) = jL (pullback.snd 𝒢.G.hom jL z) := by
+        rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+      rw [h1]
+      set p := pullback.snd 𝒢.G.hom jL z
+      have hp : p.asIdeal = ⊥ :=
+        (Ideal.eq_bot_or_top p.asIdeal).resolve_right p.isPrime.ne_top
+      show Ideal.comap (algebraMap (𝓞 L) L) p.asIdeal = ⊥
+      rw [hp]
+      exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective (𝓞 L) L)
+    exact hz
+  haveI : IsIso ((Over.forget _).map ((Over.pullback jL).map (OpenSub.incl W))) := hiso
+  haveI : IsIso ((Over.pullback jL).map (OpenSub.incl W)) :=
+    isIso_of_reflects_iso _ (Over.forget _)
+  let e := asIso ((Over.pullback jL).map (OpenSub.incl W))
+  haveI := hmon
+  let 𝒢₀ : GroupModel A L :=
+    { G := OpenSub.G0 W
+      gen := e ≪≫ 𝒢.gen
+      gen_hom := by
+        letI : GrpObj (genericFibre L (OpenSub.G0 W)) := Functor.grpObjObj
+        letI : GrpObj (genericFibre L 𝒢.G) := Functor.grpObjObj
+        letI : GrpObj ((Over.pullback jL).obj (OpenSub.G0 W)) := Functor.grpObjObj
+        letI : GrpObj ((Over.pullback jL).obj 𝒢.G) := Functor.grpObjObj
+        have h1 : IsMonHom ((Over.pullback jL).map (OpenSub.incl W)) := inferInstance
+        exact @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ h1 𝒢.gen_hom }
+  exact ⟨𝒢₀, OpenSub.incl W, inferInstanceAs (IsOpenImmersion W.ι), hmon,
+    fun 𝔭 _ => gf K A L 𝒢 W rfl 𝔭⟩
+
+end IdCompGM
+
+/-- `IdentityComponentOL` (reduct-glue's SGA 3 leaf) from the printed SGA 3 VI_B 3.10 and the three
+topological glue Props. -/
+theorem identityComponentOL_of_printed' (h3 : SGA3_VIB_3_10) (gc : IdCompSubgroup)
+    (ge : IdCompGenericFibre) (gf : IdCompGeomFibres) : ReductGlue.IdentityComponentOL :=
+  identityComponentOL_of_printed h3 (identityComponentGroupModel_of gc ge gf)
+
+/-- **SS2 from four printed-form leaves and five topological glue Props** (compiled). The glue left is about
+the topology of the identity component of a group scheme: `IdCompSubgroup`, `IdCompGenericFibre`,
+`IdCompGeomFibres`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`. -/
+theorem semistableNeronBaseChange_of_printed_final (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+    (h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (gc : IdCompSubgroup) (ge : IdCompGenericFibre)
+    (gf : IdCompGeomFibres) (ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) :
+    ZInQ.HeightSplit.SemistableNeronBaseChange :=
+  semistableNeronBaseChange_of_printed'' hB h3 h7 hE (identityComponentGroupModel_of gc ge gf) ga gb
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
@@ -823,3 +1075,4 @@ end CToPrinted
 #print axioms CToPrinted.openImmersionLocalization
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed'
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed''
+#print axioms CToPrinted.semistableNeronBaseChange_of_printed_final

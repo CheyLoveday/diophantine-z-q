@@ -73,3 +73,15 @@ of the e38375b3 build). One Lean process at a time.
   `where ι :=`; don't name variables ι).
 - `semistableNeronBaseChange_of_printed''` (4 printed leaves + IdentityComponentGroupModel + 2 topological glue)
   COMPILES, standard axioms.
+
+## Part S, glue `IdentityComponentGroupModel` reduced (CToPrinted.lean, namespace OpenSub, section IdCompGM)
+- `OpenSub.IsSubgroupOpen G W`, `subHom`, `subFunctor`, `reprBy`, `grpG0` (GrpObj.ofRepresentableBy on the open
+  subscheme `G0 W = Over.mk (W.ι ≫ G.hom)`), `isMonHom_incl` — COMPILE (general: any open closed under the group law).
+- `idCompSet_one` (e(s) ∈ G⁰) proved.
+- New glue Props: `IdCompSubgroup` (G⁰ closed under μ and inverse), `IdCompGenericFibre` (points over the generic
+  point are in 𝒢⁰), `IdCompGeomFibres` (geometric fibres of the open subscheme 𝒢⁰ connected at maximal ideals).
+- `identityComponentGroupModel_of : IdCompSubgroup → IdCompGenericFibre → IdCompGeomFibres →
+  IdentityComponentGroupModel` COMPILES: qc via LocallyOfFiniteType.isLocallyNoetherian + IsNoetherian +
+  quasiCompact_of_noetherianSpace_source; generic fibre iso via isIso_iff_isOpenImmersion_and_surjective and
+  Scheme.Pullback.range_map.
+- `semistableNeronBaseChange_of_printed_final` (4 printed leaves + 5 topological glue) COMPILES, standard axioms.
