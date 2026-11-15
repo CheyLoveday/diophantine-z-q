@@ -148,3 +148,16 @@ is true for the canonical model if Elkies' theorem is: `W` has exactly four elem
 * `scratch/elkies-coord/autofold.json`, `autofold-dryrun.txt`, `FoldDryRun.lean`: the fold spec, its dry-run, and
   the generated module (first line stripped) with `#print axioms` on the new top theorem.
 * `scratch/elkies-coord/log.md`: results log.
+
+## 7. For the integrator
+
+* Fold: `python3 scripts/one_proof/autofold.py scratch/elkies-coord/autofold.json` (the dry-run output is in
+  `scratch/elkies-coord/autofold-dryrun.txt`). It removes `elkiesX6StarPrinted` from the research bundle and adds
+  `elkiesX6StarFunctionField` (kind `published`, flag `locator UNVERIFIED (section, display, 0/infinity orientation)`).
+* Proposed `docs/research/locators.md` row (not added here, since that file belongs to other tasks):
+  `ElkiesX6StarFunctionField` | Elkies, *Shimura curve computations*, ANTS-III, LNCS 1423 (1998), §3 (`X*(6)`):
+  "`t` is a coordinate on `X*(6) = X(6)/W`", the CM values `t = 0, 1, ∞` at `D = −24, −4, −3`, and
+  `ℚ(X(6)) = ℚ(t)(√−t, √(3(t − 1)))` | section, display and the `0/∞` orientation UNVERIFIED (not read; recalled) |
+  statement check to do: confirm the coordinate sentence and the function-field display.
+* The leaf supersedes gt-elkies' `ElkiesX6StarPrinted` as the published input. `ElkiesX6StarPrinted` stays a proved
+  consequence, as `ElkiesEquationsX6Ab` did after gt-elkies.
