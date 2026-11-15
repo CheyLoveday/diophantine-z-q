@@ -40,3 +40,10 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
 - `stAct_mul_iff`: group law on B_st ⇔ cocycle logU(στ) = logU σ + σ(logU τ).
 - `LogAdditive` (Prop: log[xy] = log[x] + log[y] in A_cris for x^♯ = y^♯ = 1) — NOT proved;
   `stAct_mul (hL : LogAdditive p)`: group law given it.
+
+## Step 3: potentially trivial representations (Sanity1.lean, section Pst) — COMPILES (VERIFIED ~09:30)
+- `isSemistableOver_of_trivial`: ρ trivial on G_K ⇒ IsSemistableOver K ρ (any K; D_st,K ≅ Hom(V, B_st^{G_K}),
+  finrank of Hom computed through ranks, so no finite-dimensionality of B_st^{G_K} is needed).
+- `isPst_of_trivial_on`, `localIsPst_one` (trivial n-dim ℚ̄_p-rep satisfies LocalIsPst).
+- `quadChar` (σ ↦ σ(α)/α for α² ∈ ℚ_p, α ≠ 0; includes the unramified quadratic character),
+  `isPst_quadChar`.

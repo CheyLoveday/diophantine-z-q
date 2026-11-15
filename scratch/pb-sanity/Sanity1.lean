@@ -941,6 +941,104 @@ theorem stAct_mul (hL : LogAdditive p) (σ τ : GQp p) :
 
 end Action
 
+/-! ### Potentially trivial representations are potentially semistable -/
+
+section Pst
+
+variable {n : ℕ}
+
+theorem finrank_fun_eq {W : Type} [AddCommGroup W] [Module ℚ_[p] W] (N : ℕ) :
+    Module.finrank ℚ_[p] (Fin N → W) = N * Module.finrank ℚ_[p] W := by
+  rw [Module.finrank, rank_pi, Cardinal.sum_const', Cardinal.toNat_mul, Cardinal.mk_fin,
+    Cardinal.toNat_natCast]
+  rfl
+
+theorem finrank_linearMap_eq {V W : Type} [AddCommGroup V] [Module ℚ_[p] V]
+    [FiniteDimensional ℚ_[p] V] [AddCommGroup W] [Module ℚ_[p] W] :
+    Module.finrank ℚ_[p] (V →ₗ[ℚ_[p]] W) =
+      Module.finrank ℚ_[p] V * Module.finrank ℚ_[p] W := by
+  let b := Module.finBasis ℚ_[p] V
+  rw [← (b.constr ℚ_[p]).finrank_eq, finrank_fun_eq]
+
+/-- **A representation trivial on `G_K` is semistable over `K`** (for every `K`, with no
+finiteness hypothesis): `D_st,K ≅ Hom(V, B_st^{G_K})`. -/
+theorem isSemistableOver_of_trivial (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    {E : Type} [Field E] [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E]
+    (ρ : GQp p →* GL (Fin n) E) (h : ∀ σ ∈ K.fixingSubgroup, ρ σ = 1) :
+    IsSemistableOver p K ρ := by
+  let F : dstSpace p K ρ →ₗ[ℚ_[p]] ((Fin n → E) →ₗ[ℚ_[p]] bstInv p K) :=
+    { toFun := fun φ => LinearMap.codRestrict (bstInv p K)
+        (φ : (Fin n → E) →ₗ[ℚ_[p]] Bst p) (fun v σ hσ => by
+          have := φ.2 σ hσ v
+          rw [h σ hσ, Units.val_one, Matrix.one_mulVec] at this
+          exact this.symm)
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  let G : ((Fin n → E) →ₗ[ℚ_[p]] bstInv p K) →ₗ[ℚ_[p]] dstSpace p K ρ :=
+    { toFun := fun ψ => ⟨(bstInv p K).subtype ∘ₗ ψ, fun σ hσ v => by
+          rw [h σ hσ, Units.val_one, Matrix.one_mulVec]
+          exact ((ψ v).2 σ hσ).symm⟩
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  let L : dstSpace p K ρ ≃ₗ[ℚ_[p]] ((Fin n → E) →ₗ[ℚ_[p]] bstInv p K) :=
+    LinearEquiv.ofLinearMap F G (LinearMap.ext fun ψ => LinearMap.ext fun v => rfl)
+      (LinearMap.ext fun φ => Subtype.ext (LinearMap.ext fun v => rfl))
+  rw [IsSemistableOver, L.finrank_eq, finrank_linearMap_eq, finrank_fun_eq, mul_comm]
+
+/-- **A representation trivial on `G_K` for a finite `K` is potentially semistable.** -/
+theorem isPst_of_trivial_on {E : Type} [Field E] [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E]
+    (ρ : GQp p →* GL (Fin n) E) (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    [FiniteDimensional ℚ_[p] K] (h : ∀ σ ∈ K.fixingSubgroup, ρ σ = 1) : IsPst p ρ :=
+  ⟨K, inferInstance, isSemistableOver_of_trivial p K ρ h⟩
+
+/-- The trivial `n`-dimensional `ℚ̄_p`-representation satisfies `LocalIsPst`. -/
+theorem localIsPst_one (n : ℕ) : LocalIsPst p n 1 := by
+  refine ⟨⊥, inferInstance, 1, fun σ => by simp, ?_⟩
+  exact isPst_of_trivial_on p 1 ⊥ fun _ _ => rfl
+
+/-! #### Quadratic characters -/
+
+variable {p} in
+theorem gqp_apply_sq_root {α : PadicAlgCl p} {c : ℚ_[p]} (hα : α ^ 2 = algebraMap ℚ_[p] _ c)
+    (σ : GQp p) : σ α = α ∨ σ α = -α := by
+  have h : (σ α - α) * (σ α + α) = 0 := by
+    have : σ α ^ 2 = α ^ 2 := by rw [← map_pow, hα, AlgEquiv.commutes]
+    linear_combination this
+  rcases mul_eq_zero.mp h with h | h
+  · exact Or.inl (sub_eq_zero.mp h)
+  · exact Or.inr (eq_neg_of_add_eq_zero_left h)
+
+/-- The quadratic character `σ ↦ σ(α)/α ∈ {±1}` of `α ∈ ℚ̄_p^×` with `α² ∈ ℚ_p`
+(unramified when `α²` is a non-square unit, `p` odd). -/
+def quadChar {α : PadicAlgCl p} {c : ℚ_[p]} (hα : α ^ 2 = algebraMap ℚ_[p] _ c) (h0 : α ≠ 0) :
+    GQp p →* GL (Fin 1) ℚ_[p] where
+  toFun σ := haveI := Classical.propDecidable; if σ α = α then 1 else -1
+  map_one' := by simp
+  map_mul' σ τ := by
+    classical
+    have hne : -α ≠ α := fun h => h0 (by
+      have : (2 : PadicAlgCl p) * α = 0 := by linear_combination -h
+      exact (mul_eq_zero.mp this).resolve_left two_ne_zero)
+    have hmul : (σ * τ) α = σ (τ α) := rfl
+    rcases gqp_apply_sq_root hα τ with hτ | hτ
+    · rw [hmul, hτ]; simp
+    · rcases gqp_apply_sq_root hα σ with hσ | hσ
+      · rw [hmul, hτ, map_neg, hσ]; simp [hne]
+      · rw [hmul, hτ, map_neg, hσ, neg_neg]; simp [hne]
+
+/-- **Every quadratic character of `G_{ℚ_p}` of the form `σ(α)/α` is potentially semistable**
+(it is trivial on `G_{ℚ_p(α)}`). -/
+theorem isPst_quadChar {α : PadicAlgCl p} {c : ℚ_[p]} (hα : α ^ 2 = algebraMap ℚ_[p] _ c)
+    (h0 : α ≠ 0) : IsPst p (quadChar p hα h0) := by
+  have hint : IsIntegral ℚ_[p] α := Algebra.IsIntegral.isIntegral α
+  have : FiniteDimensional ℚ_[p] (IntermediateField.adjoin ℚ_[p] {α}) :=
+    IntermediateField.adjoin.finiteDimensional hint
+  refine isPst_of_trivial_on p _ (IntermediateField.adjoin ℚ_[p] {α}) fun σ hσ => ?_
+  have : σ α = α := hσ ⟨α, IntermediateField.mem_adjoin_simple_self ℚ_[p] α⟩
+  simp [quadChar, this]
+
+end Pst
+
 end PanBergerSplit
 end PkgI4
 end HDec
