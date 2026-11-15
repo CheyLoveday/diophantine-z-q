@@ -29,3 +29,10 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
   `RingClassTwo.exists_prime_picClass_eq` for the maximal order; Redei `prime_trichotomy`; split/ramified prime
   `𝔭 = ⟨p, θ − r⟩` by `ℤ + ℤθ` coordinates; inert prime principal ⇒ class 1 ⇒ `J = 𝓞_K`). Dev copy `ClassJ.lean`.
   Remaining open glue: `ParamRegular`, `ParamCuspGrowth`, `ParamQExpansion` (analysis of the coordinates of φ).
+- VERIFIED (lake build): contributor file `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean`
+  (imports GrossZagierHeegner + RingClassLattice; 69 KB). `#discharges` output in `discharges-output.txt`:
+  `[hL3] by ZInQ.GZHeegner.grossZagierHeegner_of_printed` (assumes gz-hl3's 5 other leaves, ShimuraMainCM,
+  X0ModuliGaloisMero, ParamRegular, ParamCuspGrowth, ParamQExpansion) and `[hX] by x0ModuliGalois_of_mero`.
+- Count (kinds.tsv convention: strict GLUE = kind not `published`): HeegnerPointRational (composite) −1;
+  hX → X0ModuliGaloisMero (both consequence) 0; ParamRegular/CuspGrowth/QExpansion (glue) +3 while unproved.
+  So the analytic glue must be proved for a net decrease. Next: prove them.
