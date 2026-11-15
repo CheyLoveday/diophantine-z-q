@@ -21,8 +21,7 @@ if the definitions are not degenerate. This file proves, with no `sorry` (only `
   `L_M(a + b + ab) − L_M(a) − L_M(b)` in `ℚ[B][A]`: its coefficients vanish in total degree `≤ M`
   (a derivative argument) and, in the divided-power basis, are divisible by `N` when `M ≥ 2N + 1`).
   The monodromy variable is genuine: for every finite `K` some `σ ∈ G_K` moves `p♭`, so
-  `σ(u) = u + c(σ)t ≠ u` and `u ∉ B_st^{G_K}` (`exists_stAct_X_ne`, `X_not_mem_bstInv`). The monodromy variable is genuine: some `σ` moves `p♭`,
-  so `σ(u) = u + c(σ)t ≠ u` and `u ∉ B_st^{G_{ℚ_p}}` (`exists_stAct_X_ne`, `X_not_mem_bstInv_bot`).
+  `σ(u) = u + c(σ)t ≠ u` and `u ∉ B_st^{G_K}` (`exists_stAct_X_ne`, `X_not_mem_bstInv`).
 * **`K_0 ⊆ B_st^{G_K}`.** `A_inf → B_st` is injective and equivariant (`embW_injective`,
   `stAct_embW`); for a root of unity `μ ∈ K` of order prime to `p`, the Teichmüller lift `[μ♭]`
   lies in `B_st^{G_K}` and `1, [μ♭], …, [μ♭]^{d-1}` (`d = [ℚ_p(μ) : ℚ_p]`) are `ℚ_p`-linearly

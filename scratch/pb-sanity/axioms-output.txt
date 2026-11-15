@@ -22,3 +22,5 @@
 'HDec.PkgI4.PanBergerSplit.logAdditive' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.stAut' depends on axioms: [propext, Classical.choice, Quot.sound]
 'PBLogPoly.FM_coeff_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.X_not_mem_bstInv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.quadChar_ne_one' depends on axioms: [propext, Classical.choice, Quot.sound]

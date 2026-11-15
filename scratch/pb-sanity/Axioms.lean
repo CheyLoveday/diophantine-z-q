@@ -21,3 +21,5 @@ open HDec.PkgI4.PanBergerSplit in
 #print axioms HDec.PkgI4.PanBergerSplit.logAdditive
 #print axioms HDec.PkgI4.PanBergerSplit.stAut
 #print axioms PBLogPoly.FM_coeff_dvd
+#print axioms HDec.PkgI4.PanBergerSplit.X_not_mem_bstInv
+#print axioms HDec.PkgI4.PanBergerSplit.quadChar_ne_one
