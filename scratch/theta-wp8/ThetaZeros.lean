@@ -697,4 +697,152 @@ theorem prod_identity :
 
 end Values
 
+/-! ## Part E. Assembly -/
+
+section Assembly
+
+theorem notInt_div (p : ℤ) (d : ℕ) (hd0 : 0 < d) (hd : ¬ (d : ℤ) ∣ p) :
+    ∀ n : ℤ, (n : ℝ) ≠ (p : ℝ) / d := by
+  intro n h
+  have h1 : ((n * d : ℤ) : ℝ) = p := by
+    push_cast; rw [h]; field_simp
+  have h2 : n * d = p := by exact_mod_cast h1
+  exact hd ⟨n, by rw [← h2]; ring⟩
+
+theorem not_inLat (hw : 0 < w.im) {z : ℂ} (x y : ℝ) (hz : z = x + y * w)
+    (h : (∀ m : ℤ, (m : ℝ) ≠ x) ∨ (∀ n : ℤ, (n : ℝ) ≠ y)) : ¬ InLat w z := by
+  rintro ⟨m, n, hmn⟩
+  rw [hz] at hmn
+  have him := congrArg Complex.im hmn
+  have hre := congrArg Complex.re hmn
+  simp only [add_im, ofReal_im, mul_im, ofReal_re, zero_mul, add_zero, zero_add, intCast_im,
+    intCast_re] at him
+  have hy : y = n := by
+    have : (y - n) * w.im = 0 := by linarith
+    rcases mul_eq_zero.1 this with h' | h'
+    · linarith
+    · exact absurd h' hw.ne'
+  subst hy
+  simp only [add_re, ofReal_re, mul_re, ofReal_im, zero_mul, sub_zero, intCast_re, intCast_im] at hre
+  have hx : x = m := by linarith
+  rcases h with h | h
+  · exact h m hx.symm
+  · exact h n rfl
+
+theorem exp_mul_Q_eq {X : ℂ} (k : ℕ) (n : ℤ) (hX : X + k * (π * I * w / 8) = n * (2 * π * I)) :
+    cexp X * Qw w ^ k = 1 := by
+  rw [Qw_pow, ← Complex.exp_add, hX, Complex.exp_int_mul_two_pi_mul_I]
+
+theorem exp_mul_Q_eq_neg {X : ℂ} (k : ℕ) (n : ℤ)
+    (hX : X + k * (π * I * w / 8) = π * I + n * (2 * π * I)) : cexp X * Qw w ^ k = -1 := by
+  rw [Qw_pow, ← Complex.exp_add, hX, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I,
+    Complex.exp_pi_mul_I]; ring
+
+theorem aux_eq (X S D : ℂ) (hS : S ≠ 0) (hD : D ≠ 0) : X = X * S ^ 2 / D * D / S ^ 2 := by
+  field_simp
+
+theorem theta_add_two (y : ℂ) : jacobiTheta₂ (y + 2) w = jacobiTheta₂ y w := by
+  rw [show y + 2 = y + 1 + 1 by ring, jacobiTheta₂_add_left, jacobiTheta₂_add_left]
+
+/-- **Core theorem** (any period pair `(1, w)`, `Im w > 0`). -/
+theorem core (L : PeriodPair) (hw : 0 < w.im) (h1 : L.ω₁ = 1) (h2 : L.ω₂ = w) :
+    jacobiTheta₂ 0 w / (cexp (π * I * w / 4) * jacobiTheta₂ (w / 2) w) =
+      1 - 2 * ((L.weierstrassP (1 / 2) - L.weierstrassP (1 / 2 + w / 8)) /
+        (L.weierstrassP (3 * w / 8) - L.weierstrassP (1 / 2 + w / 8))) := by
+  set c : ℂ := 1 / 2 + w / 8 with hcdef
+  have n2 := notInt_div 1 2 (by norm_num) (by norm_num)
+  have n4 := notInt_div 1 4 (by norm_num) (by norm_num)
+  have n8 := notInt_div 1 8 (by norm_num) (by norm_num)
+  have nm8 := notInt_div (-1) 8 (by norm_num) (by norm_num)
+  have n38 := notInt_div 3 8 (by norm_num) (by norm_num)
+  push_cast at n2 n4 n8 nm8 n38
+  have hc : ¬ InLat w c := not_inLat hw (1 / 2) (1 / 8) (by push_cast; ring) (Or.inl n2)
+  have h2c : ¬ InLat w (2 * c) := not_inLat hw 1 (1 / 4) (by push_cast; ring) (Or.inr n4)
+  obtain ⟨K, hK0, hK⟩ := hF_const hw h1 h2 hc h2c
+  have ha0 : ¬ InLat w (1 / 2) := not_inLat hw (1 / 2) 0 (by push_cast; ring) (Or.inl n2)
+  have ha1 : ¬ InLat w (1 / 2 - c) := not_inLat hw 0 (-1 / 8) (by push_cast; ring) (Or.inr nm8)
+  have ha2 : ¬ InLat w (1 / 2 + c) := not_inLat hw 1 (1 / 8) (by push_cast; ring) (Or.inr n8)
+  have hb0 : ¬ InLat w (3 * w / 8) := not_inLat hw 0 (3 / 8) (by push_cast; ring) (Or.inr n38)
+  have hb1 : ¬ InLat w (3 * w / 8 - c) := not_inLat hw (-1 / 2) (1 / 4) (by push_cast; ring) (Or.inr n4)
+  have hb2 : ¬ InLat w (3 * w / 8 + c) := not_inLat hw (1 / 2) (1 / 2) (by push_cast; ring) (Or.inr n2)
+  have ha := hK _ ha0 ha1 ha2
+  have hb := hK _ hb0 hb1 hb2
+  unfold hF at ha hb
+  have sa0 := sF_ne_zero hw ha0
+  have sa1 := sF_ne_zero hw ha1
+  have sa2 := sF_ne_zero hw ha2
+  have sb0 := sF_ne_zero hw hb0
+  have sb1 := sF_ne_zero hw hb1
+  have sb2 := sF_ne_zero hw hb2
+  -- `℘(u) − ℘(c) = K · s(u − c) s(u + c) / s(u)²`
+  have hA : L.weierstrassP (1 / 2) - L.weierstrassP c =
+      K * (sF w (1 / 2 - c) * sF w (1 / 2 + c)) / sF w (1 / 2) ^ 2 := by
+    rw [← ha]; exact aux_eq _ _ _ sa0 (mul_ne_zero sa1 sa2)
+  have hB : L.weierstrassP (3 * w / 8) - L.weierstrassP c =
+      K * (sF w (3 * w / 8 - c) * sF w (3 * w / 8 + c)) / sF w (3 * w / 8) ^ 2 := by
+    rw [← hb]; exact aux_eq _ _ _ sb0 (mul_ne_zero sb1 sb2)
+  rw [hA, hB]
+  have hP := prod_identity hw
+  have hf4 := theta4_quarter hw
+  rw [hf4] at hP
+  -- the six theta values
+  set Q := Qw w
+  have hQ : Q ≠ 0 := Qw_ne_zero w
+  set u3 := jacobiTheta₂ (1 / 2 + (3 : ℕ) * w / 8) w
+  set u1 := jacobiTheta₂ (1 / 2 + (1 : ℕ) * w / 8) w
+  set t0 := jacobiTheta₂ 0 w
+  set t2 := jacobiTheta₂ (w / 2) w
+  set t4 := jacobiTheta₂ (w / 4) w
+  have e1 : sF w (1 / 2 - c) = u3 := by unfold sF; congr 1; push_cast; ring
+  have e2 : sF w (1 / 2 + c) = -(Q ^ 2)⁻¹ * u3 := by
+    unfold sF
+    have q := jacobiTheta₂_add_left' (-(1 / 2 + (3 : ℕ) * w / 8) + 2) w
+    rw [theta_add_two, jacobiTheta₂_neg_left] at q
+    have hE := exp_mul_Q_eq_neg (w := w) (X := -π * I * (w + 2 * (-(1 / 2 + (3 : ℕ) * w / 8) + 2))) 2 (-2)
+      (by push_cast; ring)
+    rw [show 1 / 2 + c + (1 + w) / 2 = -(1 / 2 + (3 : ℕ) * w / 8) + 2 + w by push_cast; ring, q]
+    rw [show cexp (-π * I * (w + 2 * (-(1 / 2 + (3 : ℕ) * w / 8) + 2))) = -(Q ^ 2)⁻¹ by
+      rw [eq_div_of_mul_eq (pow_ne_zero _ hQ) hE]; ring]
+  have e3 : sF w (1 / 2) = t2 := by
+    unfold sF; rw [show (1 / 2 : ℂ) + (1 + w) / 2 = w / 2 + 1 by ring, jacobiTheta₂_add_left]
+  have e4 : sF w (3 * w / 8) = -(Q ^ 6)⁻¹ * u1 := by
+    unfold sF
+    have q := jacobiTheta₂_add_left' (-(1 / 2 + (1 : ℕ) * w / 8) + 1) w
+    rw [jacobiTheta₂_add_left, jacobiTheta₂_neg_left] at q
+    have hE := exp_mul_Q_eq_neg (w := w) (X := -π * I * (w + 2 * (-(1 / 2 + (1 : ℕ) * w / 8) + 1))) 6 (-1)
+      (by push_cast; ring)
+    rw [show 3 * w / 8 + (1 + w) / 2 = -(1 / 2 + (1 : ℕ) * w / 8) + 1 + w by push_cast; ring, q]
+    rw [show cexp (-π * I * (w + 2 * (-(1 / 2 + (1 : ℕ) * w / 8) + 1))) = -(Q ^ 6)⁻¹ by
+      rw [eq_div_of_mul_eq (pow_ne_zero _ hQ) hE]; ring]
+  have e5 : sF w (3 * w / 8 - c) = (Q ^ 4)⁻¹ * t4 := by
+    unfold sF
+    have q := jacobiTheta₂_add_left' (-(w / 4)) w
+    rw [jacobiTheta₂_neg_left] at q
+    have hE := exp_mul_Q_eq (w := w) (X := -π * I * (w + 2 * -(w / 4))) 4 0 (by push_cast; ring)
+    rw [show 3 * w / 8 - c + (1 + w) / 2 = -(w / 4) + w by ring, q]
+    rw [show cexp (-π * I * (w + 2 * -(w / 4))) = (Q ^ 4)⁻¹ by
+      rw [eq_div_of_mul_eq (pow_ne_zero _ hQ) hE]; ring]
+  have e6 : sF w (3 * w / 8 + c) = (Q ^ 8)⁻¹ * t0 := by
+    unfold sF
+    have q := jacobiTheta₂_add_left' (0 + 1) w
+    rw [jacobiTheta₂_add_left] at q
+    have hE := exp_mul_Q_eq (w := w) (X := -π * I * (w + 2 * (0 + 1))) 8 (-1) (by push_cast; ring)
+    rw [show 3 * w / 8 + c + (1 + w) / 2 = 0 + 1 + w by ring, q]
+    rw [show cexp (-π * I * (w + 2 * (0 + 1))) = (Q ^ 8)⁻¹ by
+      rw [eq_div_of_mul_eq (pow_ne_zero _ hQ) hE]; ring]
+  have hQ2 : cexp (π * I * w / 4) = Q ^ 2 := by
+    rw [Qw_pow]; congr 1; push_cast; ring
+  have ht0 : t0 ≠ 0 := by intro h; apply sb2; rw [e6, h, mul_zero]
+  have ht4 : t4 ≠ 0 := by intro h; apply sb1; rw [e5, h, mul_zero]
+  have hu1 : u1 ≠ 0 := by intro h; apply sb0; rw [e4, h, mul_zero]
+  have ht2 : t2 ≠ 0 := by rw [← e3]; exact sa0
+  rw [e1, e2, e3, e4, e5, e6, hQ2]
+  rw [hQ2] at hP
+  field_simp
+  linear_combination hP
+
+end Assembly
+
 end ThetaWP8
+
+#print axioms ThetaWP8.core
