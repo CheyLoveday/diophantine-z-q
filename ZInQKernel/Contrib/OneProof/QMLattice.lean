@@ -221,4 +221,113 @@ theorem comm_span {y0 y : B} (h0 : y0.re = 0) (hy0 : ¬ (y0.imI = 0 ∧ y0.imJ =
   refine ⟨y.re, β, ?_⟩
   ext <;> simp [h0, Algebra.algebraMap_eq_smul_one, b1, b2, b3]
 
+/-! ## §2 The algebraic core: a subring of `B` cut out by `𝒪 ∩ S_{(τ,1)}` -/
+
+theorem int_of_O {x : B} (hx : x ∈ LeafQM.O) (h1 : x.imI = 0) (h2 : x.imJ = 0) (h3 : x.imK = 0) :
+    ∃ n : ℤ, x = (n : B) := by
+  obtain ⟨n, rfl⟩ := hx
+  simp [LeafQM.ofInt] at h1 h2 h3
+  simp [h3] at h1
+  refine ⟨n 0, ?_⟩
+  ext <;> simp [LeafQM.ofInt, h1, h2, h3]
+
+/-- **The algebraic core.** A ring `R` embedded in `B` with image exactly `𝒪 ∩ S_{(τ,1)}` (`Im τ > 0`) is
+`ℤ`, or `Φ⁻¹(𝒪)` for the imaginary quadratic field `k = S_{(τ,1)}` and its inclusion `Φ : k → B`. -/
+theorem alg_core {R : Type} [Ring R] {τ : ℂ} (hτ : 0 < τ.im) (F : R →+* B) (hF : Function.Injective F)
+    (hR : ∀ x, x ∈ Set.range F ↔ (x ∈ LeafQM.O ∧ x ∈ S ![τ, 1])) :
+    Nonempty (R ≃+* ℤ) ∨
+    ∃ (k : Type) (_ : Field k) (_ : NumberField k), NumberField.IsTotallyComplex k ∧
+      Module.finrank ℚ k = 2 ∧
+      ∃ Φ : k →ₐ[ℚ] QMSplit.Aut.B, Nonempty (R ≃+* LeafQM.O.comap Φ.toRingHom) := by
+  set v : Fin 2 → ℂ := ![τ, 1] with hvdef
+  have hv : v ≠ 0 := fun h => by simpa [v] using congrFun h 1
+  have hτ' : τ.im ≠ 0 := hτ.ne'
+  have hFO : ∀ r, F r ∈ LeafQM.O := fun r => ((hR (F r)).1 ⟨r, rfl⟩).1
+  have hFS : ∀ r, F r ∈ S v := fun r => ((hR (F r)).1 ⟨r, rfl⟩).2
+  by_cases hall : ∀ x ∈ S v, x.imI = 0 ∧ x.imJ = 0 ∧ x.imK = 0
+  · left
+    have hsurj : Function.Surjective (Int.castRingHom R) := by
+      intro r
+      obtain ⟨h1, h2, h3⟩ := hall _ (hFS r)
+      obtain ⟨n, hn⟩ := int_of_O (hFO r) h1 h2 h3
+      exact ⟨n, hF (by simp [hn])⟩
+    have hinj : Function.Injective (Int.castRingHom R) := by
+      rw [injective_iff_map_eq_zero]
+      intro n hn
+      have h1 := congrArg F hn
+      simp at h1
+      have h2 := congrArg QuaternionAlgebra.re h1
+      simpa using h2
+    exact ⟨(RingEquiv.ofBijective _ ⟨hinj, hsurj⟩).symm⟩
+  · right
+    obtain ⟨x0, hx0S, hx0⟩ : ∃ x ∈ S v, ¬ (x.imI = 0 ∧ x.imJ = 0 ∧ x.imK = 0) := by
+      by_contra hc
+      exact hall (fun x hx => by
+        by_contra h
+        exact hc ⟨x, hx, h⟩)
+    set y0 := x0 - algebraMap ℚ B x0.re with hy0def
+    have hy0re : y0.re = 0 := by simp [y0, Algebra.algebraMap_eq_smul_one]
+    have hy0S : y0 ∈ S v := (S v).sub_mem hx0S (algebraMap_mem_S v _)
+    have hy0nz : ¬ (y0.imI = 0 ∧ y0.imJ = 0 ∧ y0.imK = 0) := by
+      simpa [y0, Algebra.algebraMap_eq_smul_one] using hx0
+    have hneg := sqForm_neg hτ' hy0re hy0S hy0nz
+    have hfield : IsField (S v) :=
+      { exists_pair_ne := ⟨0, 1, fun h => by
+          have := congrArg (fun z : S v => (z : B).re) h
+          simp at this⟩
+        mul_comm := fun a b => Subtype.ext (S_comm hv a.2 b.2)
+        mul_inv_cancel := fun {a} ha => by
+          obtain ⟨y, hy, hxy⟩ := inv_mem_S hv a.2 (fun h => ha (Subtype.ext h))
+          exact ⟨⟨y, hy⟩, Subtype.ext hxy⟩ }
+    letI : Field (S v) := hfield.toField
+    haveI hcz : CharZero (S v) := ⟨fun m n h => by
+      have := congrArg (fun z : S v => (z : B).re) h
+      simpa using this⟩
+    let Φ : S v →ₐ[ℚ] QMSplit.Aut.B := RingHom.toRatAlgHom (S v).subtype
+    have hΦ : ∀ x : S v, Φ x = (x : B) := fun x => rfl
+    have hΦinj : Function.Injective Φ := fun a b h => Subtype.ext (by rwa [hΦ, hΦ] at h)
+    haveI hfd : FiniteDimensional ℚ (S v) := Module.Finite.of_injective Φ.toLinearMap hΦinj
+    haveI : NumberField (S v) := ⟨⟩
+    have htc : NumberField.IsTotallyComplex (S v) := by
+      refine NumberField.isTotallyComplex_of_sq_ratCast_of_neg (x := ⟨y0, hy0S⟩) (r := sqForm y0) ?_ hneg
+      apply hΦinj
+      rw [map_pow, AlgHom.commutes, hΦ]
+      show y0 ^ 2 = _
+      rw [pow_two, pure_sq hy0re]
+    have hrange : LinearMap.range Φ.toLinearMap = Submodule.span ℚ (Set.range ![(1 : B), y0]) := by
+      apply le_antisymm
+      · rintro _ ⟨s, rfl⟩
+        obtain ⟨α, β, hαβ⟩ := comm_span hy0re hy0nz (S_comm hv s.2 hy0S)
+        rw [Submodule.mem_span_range_iff_exists_fun]
+        refine ⟨![α, β], ?_⟩
+        simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+        rw [AlgHom.toLinearMap_apply, hΦ, hαβ, Algebra.algebraMap_eq_smul_one]
+      · rw [Submodule.span_le]
+        rintro _ ⟨i, rfl⟩
+        fin_cases i
+        · exact ⟨1, by simp⟩
+        · exact ⟨⟨y0, hy0S⟩, rfl⟩
+    have hli : LinearIndependent ℚ ![(1 : B), y0] := by
+      rw [LinearIndependent.pair_iff]
+      intro s t hst
+      have e0 := congrArg QuaternionAlgebra.re hst
+      have e1 := congrArg QuaternionAlgebra.imI hst
+      have e2 := congrArg QuaternionAlgebra.imJ hst
+      have e3 := congrArg QuaternionAlgebra.imK hst
+      simp [hy0re] at e0 e1 e2 e3
+      refine ⟨e0, ?_⟩
+      by_contra ht
+      exact hy0nz ⟨e1.resolve_left ht, e2.resolve_left ht, e3.resolve_left ht⟩
+    have hfr : Module.finrank ℚ (S v) = 2 := by
+      rw [← LinearMap.finrank_range_of_inj (f := Φ.toLinearMap) hΦinj, hrange, finrank_span_eq_card hli]
+      simp
+    refine ⟨S v, inferInstance, inferInstance, htc, hfr, Φ, ⟨?_⟩⟩
+    let G : R →+* LeafQM.O.comap Φ.toRingHom :=
+      (F.codRestrict (S v) hFS).codRestrict _ (fun r => hFO r)
+    refine RingEquiv.ofBijective G ⟨fun a b h => hF ?_, fun s => ?_⟩
+    · have := congrArg (fun z : LeafQM.O.comap Φ.toRingHom => ((z : S v) : B)) h
+      exact this
+    · obtain ⟨r, hr⟩ := (hR ((s : S v) : B)).2 ⟨s.2, (s : S v).2⟩
+      exact ⟨r, Subtype.ext (Subtype.ext hr)⟩
+
 end HDec.QMLattice
