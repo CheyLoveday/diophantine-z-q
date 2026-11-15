@@ -18,3 +18,9 @@
 - Genus/Bridge.lean (imports H.TailC + Genus.LocalDer; namespace HDec.HSyn): DimJ1Le5, t34Le (:= GenusFold.dimJ1Le,
   accepted directly since HDec.PkgI3.AbVar / LeafModCurves.IsJ1 are the kernel's after the dedupe),
   dimJ1Le5_of_t34, dim_J1_le_of5, G0Split.javanpeykarJ1_of_le, the two rfl/type examples. Built 4.6 s.
+
+## Step 2 (11-14 16:45): TailD edited — COMPILED, VERIFIED
+- H/TailD.lean: `import ZInQKernel.OneProof.Genus.Bridge`; E2 `LeafModCurves.dim_J1_le t.t34 N hN0 J hJ1` ->
+  `dim_J1_le_of5 t34Le N hN0 J hJ1`; G18 `javanpeykarJ1 hR18 hBelyi t.t34 ...` -> `javanpeykarJ1_of_le hR18 hBelyi t34Le ...`.
+  No statement changed. `lake build +ZInQKernel.OneProof.Main` succeeds (8m45s); frozenTarget axioms
+  [propext, Classical.choice, Quot.sound]. No clash with TailZ10's root DimJacGlue/ModularSplit.DimJac.
