@@ -646,11 +646,12 @@ structure OpenResearchLeaves14 : Prop where
   one canonical coarse witness `X₆` of the fine moduli scheme of abelian schemes. Replaces
   `gonzalezRotgerCountX6`. -/
   gonzalezRotgerCountX6Ab : _root_.ShimuraSplit.GonzalezRotgerCountX6Ab
-  /-- r1univ-rigid: **Mumford's rigidity over a base, printed core** (GIT Thm 6.14 on each connected component and
-  Cor. 6.4 over `S`; numbers UNVERIFIED): a proper smooth geometrically connected family over a locally noetherian
-  `S` with a section `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in
-  `Over S` with identity `e`, and every `S`-endomorphism fixing `e` is a homomorphism. -/
-  mumfordRigidityCore : _root_.LeafQM.AV.R1UnivRigid.MumfordRigidityCore
+  /-- gt-rigidity, rigid-prune (leaf-fold23): **Mumford's GIT Thm 6.14 over a base** (on each connected component;
+  numbers UNVERIFIED): a proper smooth geometrically connected family over a locally noetherian `S` with a section
+  `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
+  identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
+  `ι(a)` is a homomorphism from the field points). -/
+  mumfordGroupLaw : _root_.ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw
   /-- c-to-printed, printed form: Bosch–Lütkebohmert–Raynaud, *Néron models*, §1.2 Prop. 4 (over a Dedekind
   domain, a smooth separated model of finite type is a Néron model iff its localizations at the closed points are;
   locator UNVERIFIED). Replaces `neronLocalizesDVR`. -/
@@ -708,7 +709,7 @@ fields change. -/
 /-- **The two `X₆` rows from the new bundles** (the term of `x6Rows_of_open13`). -/
 theorem x6Rows_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
     LeafAdopt.R1R2fpRep ∧ X6Kummer.X6ConicModel :=
-  have hR := _root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore
+  have hR := _root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw
   QMSplit.Moduli.x6Rows_of_leaves
     { deligneX6P := (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsX6Printed_iff_ab_gl hR).mpr
         l.deligneComponentsX6PrintedAb
@@ -752,7 +753,7 @@ theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeave
   igusaCMValue24 := _root_.CM24.igusaCMValue24_field
   deligneComponentsY3Printed :=
     (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab_gl
-      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore)).mpr
+      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw)).mpr
       l.deligneComponentsY3PrintedAb
 
 /-- **SS1 and SS3** (`semistableReductionThm`, `semistablePersists`) from the restricted printed leaf
@@ -772,7 +773,7 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
     OpenResearchLeaves9 where
   r1r2 := (x6Rows_of_open14 r t l).1
   shimuraFamily := (_root_.LeafQM.AV.R1UnivRigid.shimuraFamily_iff_ab_gl
-      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore)).mpr
+      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw)).mpr
     r.shimuraFamilyAb
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
@@ -802,7 +803,7 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
   neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6 :=
     (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerCountX6_iff_ab_gl
-      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_core r.mumfordRigidityCore)).mpr
+      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw)).mpr
       r.gonzalezRotgerCountX6Ab
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold14, reduct fold; no `sorry`, standard axioms).
