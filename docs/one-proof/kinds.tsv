@@ -5,7 +5,6 @@ research	bostLowerBound	published		LEAF	LEAF	Bost, Sem. Bourbaki 795 (Asterisque
 research	deRhamH1AbVarT	published		LEAF	LEAF	H^1_et(A_Fbar, Q_p), written Hom(V_p A, Q_p), is de Rham with the printed D_dR (Faltings 1989; Tsuji 1999; Scholze 2013 Cor. 1.8, wording read by h-leaves)	leaf-fold10 table (hodge-split; folded by leaf-fold7)
 research	dsThm965	published		LEAF	LEAF	Diamond-Shurman, GTM 228, Thm 9.6.5 (Deligne 1971; Shimura 1971 Thm 7.14 for k = 2), coefficients extended along iota_L o iota_C^-1	leaf-fold10 table (hodge-split; folded by leaf-fold7)
 research	dsThm966	published		LEAF	LEAF	Deligne-Serre 1974 Thm 4.1; Diamond-Shurman Thm 9.6.6 (k = 1, continuous, finite image)	leaf-fold10 table (hodge-split; folded by leaf-fold7)
-research	egaIV_8_10_5_openImm	published		LEAF	LEAF	EGA IV 8.10.5 (locator UNVERIFIED)	c-to-printed; strict convention
 research	eigenformHTNew	consequence		GLUE	GLUE	Kato 2004 9.2-9.4 for newforms, transported to any semisimple attached rho and dualized (Kato's V_f not definable in Mathlib)	leaf-fold10 table (hodge-split; folded by leaf-fold7)
 research	elkiesEquationsX6Ab	published	pending reading: the fibre clause combines Elkies with the moduli meaning of W (composite under the strict reading)	GLUE	GLUE	Elkies 1998, equations of X*(6) as scheme charts over the t-line (display, section and 0/infinity orientation UNVERIFIED)	x6-glue / x6-fold (leaf-fold13); strict convention
 research	faltingsLemma5Printed	published	unread	LEAF	LEAF	Faltings 1983, Lemma 5 (locator UNVERIFIED; not read)	c-to-printed; strict convention

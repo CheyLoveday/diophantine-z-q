@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.Main
+import ZInQKernel.OneProof.H.TailZ19
 import ZInQKernel.Contrib.CloudW01Spread.StacksFrontier.AlgebraicGeometry.Limits.DescendingMorphisms.Isomorphism
 import ZInQKernel.Contrib.CloudW01Spread.StacksFrontier.AlgebraicGeometry.Morphisms.FinitePresentation.Basic
 
