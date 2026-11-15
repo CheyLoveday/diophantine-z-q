@@ -358,9 +358,9 @@ theorem tyzLemma29Mod2_of_thm11Mod2 (h : TYZThm11Mod2) : TYZLemma29Mod2 :=
 
 /-! ## §5. TYZ's objects over genuine definitions
 
-TYZ §2.1 (L496–586) and §2.2 (L588–620), read in the source by this task (see the log). The
+TYZ §2.1 (L496–586) and §2.2 (L589–842), read in the source by this task (see the log). The
 quaternion algebra `B` ramified at `2, ∞` is Hamilton's `ℍ[ℚ]` (`i² = j² = −1`, `ij = k = −ji`, TYZ
-L508–511); `B̂ = B ⊗ 𝔸ᶠ_ℚ` is `ℍ[𝔸ᶠ_ℚ]`; `K̂_n = 𝔸ᶠ_{K_n}` maps to `B̂` through Tau Ceti's base change
+L520–523); `B̂ = B ⊗ 𝔸ᶠ_ℚ` is `ℍ[𝔸ᶠ_ℚ]`; `K̂_n = 𝔸ᶠ_{K_n}` maps to `B̂` through Tau Ceti's base change
 `𝔸ᶠ_{K_n} ≅ 𝔸ᶠ_ℚ ⊗_ℚ K_n` and `τ`; `Cl_n = K_n^× \ K̂_n^× / Ô_{K_n}^×` through Tau Ceti's
 `FiniteAdeleRing.toClassGroup`. TYZ's `π_ℤ^{U_n}` is pinned by its Hecke eigenvalues `a_p(E)` at the
 odd primes (see `InPiZ`). -/
@@ -387,7 +387,7 @@ def qι : ℍ[ℚ] →ₐ[ℚ] ℍ[AQ] where
   commutes' r := by apply Quaternion.ext <;> simp [Algebra.algebraMap_eq_smul_one]
 
 /-- **TYZ's maximal order `O_B = O_B' + ℤζ`**, `O_B' = ℤ + ℤi + ℤj + ℤk`, `ζ = (−1 + i + j + k)/2`
-(TYZ L512–514): membership. -/
+(TYZ L524–525): membership. -/
 def IsHurwitz (q : ℍ[ℚ]) : Prop :=
   ∃ a b c d e : ℤ, q = ⟨a - e / 2, b + e / 2, c + e / 2, d + e / 2⟩
 
@@ -402,7 +402,7 @@ def hurwitzHat : Set ℍ[AQ] :=
 /-- `√−n ∈ K_n = ℚ(√−n)`: Mathlib's `QuadraticAlgebra.omega`, with `ω² = −n`. -/
 abbrev sqrtNeg (n : ℕ) : QNeg n := QuadraticAlgebra.omega
 
-/-- **TYZ's embedding `τ : K_n → B`** (L515–523): `τ(O_{K_n}) ⊂ O_B`, and for `n ≡ 1 (mod 8)`,
+/-- **TYZ's embedding `τ : K_n → B`** (L527–534): `τ(O_{K_n}) ⊂ O_B`, and for `n ≡ 1 (mod 8)`,
 `τ(√−n) = ai + bj + ck` with `n = a² + b² + c²`, `a, b, c ∈ ℤ`, `4 ∣ c`. -/
 def AdmissibleTau (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Prop :=
   (∀ x : 𝓞 (QNeg n), IsHurwitz (τ (x : QNeg n))) ∧
@@ -425,7 +425,7 @@ def tauHatU (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) :
     (FiniteAdeleRing (𝓞 (QNeg n)) (QNeg n))ˣ →* ℍ[AQ]ˣ :=
   Units.map (tauHat n τ).toMonoidHom
 
-/-- `R̂_n = R_n ⊗ Ẑ = τ̂(Ô_{K_n}) + 4Ô_B` for TYZ's order `R_n = O_{K_n} + 4O_B` (L558–559). -/
+/-- `R̂_n = R_n ⊗ Ẑ = τ̂(Ô_{K_n}) + 4Ô_B` for TYZ's order `R_n = O_{K_n} + 4O_B` (L543–544). -/
 def RnHat (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : AddSubgroup ℍ[AQ] :=
   AddSubgroup.closure
     (tauHat n τ '' (FiniteAdeleRing.integralAdeles (𝓞 (QNeg n)) (QNeg n) : Set _) ∪
@@ -445,7 +445,7 @@ def K2Units (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Set ℍ[AQ
     (x : ℍ[AQ]).re v = 1 ∧ (x : ℍ[AQ]).imI v = 0 ∧ (x : ℍ[AQ]).imJ v = 0 ∧
       (x : ℍ[AQ]).imK v = 0}
 
-/-- **TYZ's `U_n = R̂_n^× · K_{n,2}^×`** (L557), as the subgroup of `B̂^×` it generates (invariance
+/-- **TYZ's `U_n = R̂_n^× · K_{n,2}^×`** (L543), as the subgroup of `B̂^×` it generates (invariance
 under a set and under the subgroup it generates are the same). -/
 def Un (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) : Subgroup ℍ[AQ]ˣ :=
   Subgroup.closure (RnUnits n τ ∪ K2Units n τ)
@@ -462,7 +462,7 @@ def eAt (v : HeightOneSpectrum (𝓞 ℚ)) : AQ :=
 def ιAt (v : HeightOneSpectrum (𝓞 ℚ)) (α : ℍ[ℚ]) : ℍ[AQ] :=
   algebraMap AQ ℍ[AQ] (eAt v) * qι α + algebraMap AQ ℍ[AQ] (1 - eAt v)
 
-/-- `a_p(E)` for TYZ's `E : y² = x³ − x` (L534): `a_p = p + 1 − #E(𝔽_p) = −Σ_x ((x³ − x)/p)`. -/
+/-- `a_p(E)` for TYZ's `E : y² = x³ − x` (L513): `a_p = p + 1 − #E(𝔽_p) = −Σ_x ((x³ − x)/p)`. -/
 def apE (p : ℕ) : ℤ := -∑ x ∈ Finset.range p, jacobiSym ((x : ℤ) ^ 3 - x) p
 
 /-- The Hurwitz quaternions of reduced norm `p`, as `2α = (a, b, c, d)` with `a ≡ b ≡ c ≡ d (mod 2)`
@@ -477,7 +477,7 @@ def hurwitzNorm (p : ℕ) : Finset (ℤ × ℤ × ℤ × ℤ) :=
 def quatOf (t : ℤ × ℤ × ℤ × ℤ) : ℍ[ℚ] :=
   ⟨(t.1 : ℚ) / 2, (t.2.1 : ℚ) / 2, (t.2.2.1 : ℚ) / 2, (t.2.2.2 : ℚ) / 2⟩
 
-/-- **TYZ's `π_ℤ^{U_n}`** (L545–561): the integer-valued functions on `B̂^×` (values off `B̂^×` are
+/-- **TYZ's `π_ℤ^{U_n}`** (L536–550): the integer-valued functions on `B̂^×` (values off `B̂^×` are
 not used) that are left `B^×`-invariant, right `U_n`- and `𝔸ᶠ_ℚ^×`-invariant, and lie in `π`, the
 Jacquet–Langlands transfer of the newform of `E` (level 32). Membership in `π` is imposed through the
 Hecke eigenvalues: for every odd prime `p` (where `U_{n,p} = O_{B,p}^×`), the sum over the `24(p + 1)`
@@ -492,7 +492,7 @@ def InPiZ (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] �
     (∀ p : ℕ, p.Prime → p ≠ 2 → ∀ v : HeightOneSpectrum (𝓞 ℚ), (p : 𝓞 ℚ) ∈ v.asIdeal →
       ∀ x : ℍ[AQ]ˣ, ∑ t ∈ hurwitzNorm p, f ((x : ℍ[AQ]) * ιAt v (quatOf t)) = 24 * apE p * f x)
 
-/-- **TYZ's test vector `f_n`** (L561–563): a `ℤ`-generator of `π_ℤ^{U_n}`. -/
+/-- **TYZ's test vector `f_n`** (L550): a `ℤ`-generator of `π_ℤ^{U_n}`. -/
 def IsTestVector (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] → ℤ) : Prop :=
   InPiZ n τ f ∧ ∀ g, InPiZ n τ g → ∃ c : ℤ, ∀ x : ℍ[AQ]ˣ, g x = c * f x
 
@@ -505,14 +505,14 @@ theorem toClassGroup_clLift (n : ℕ) [NeZero n] (t : ClassGroup (𝓞 (QNeg n))
     FiniteAdeleRing.toClassGroup (𝓞 (QNeg n)) (QNeg n) (clLift n t) = t :=
   (FiniteAdeleRing.toClassGroup_surjective (R := 𝓞 (QNeg n)) (K := QNeg n) t).choose_spec
 
-/-- **TYZ's genus period** `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L577–579), for the test vector `f` and the
+/-- **TYZ's genus period** `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L566–568), for the test vector `f` and the
 embedding `τ`: `t` is read in `B̂^×` as `τ̂` of a finite idele in the class `t`. -/
 def genusPeriodTV (n : ℕ) [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] → ℤ) : ℤ :=
   ∑ t ∈ sqClasses n, f ((tauHatU n τ (clLift n t) : ℍ[AQ]ˣ) : ℍ[AQ])
 
 /-! ### The printed leaves -/
 
-/-- **TYZ §2.1, L515–523 (existence of `τ`)**: for squarefree `n ≡ 1, 3 (mod 8)` there is an
+/-- **TYZ §2.1, L527–534 (existence of `τ`)**: for squarefree `n ≡ 1, 3 (mod 8)` there is an
 embedding `τ : K_n → B` with `τ(O_{K_n}) ⊂ O_B` and, for `n ≡ 1 (mod 8)`, `τ(√−n) = ai + bj + ck`,
 `n = a² + b² + c²`, `4 ∣ c`. TYZ cite Legendre's three-square theorem and Jones–Pall [JP, Theorem 5]
 for the `4 ∣ c` refinement. -/
@@ -520,7 +520,7 @@ def TYZTauExists : Prop :=
   ∀ (n : ℕ) [NeZero n], Squarefree n → (n % 8 = 1 ∨ n % 8 = 3) →
     ∃ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ
 
-/-- **TYZ §2.1, L555–563, with Theorem 2.6 at `χ = 1`**: `π_ℤ^{U_n}` is free of rank one over `ℤ`;
+/-- **TYZ §2.1, L542–550, with Theorem 2.6 at `χ = 1`**: `π_ℤ^{U_n}` is free of rank one over `ℤ`;
 here only the existence of a generator `f_n` (a consequence) is stated. -/
 def TYZTestVectorExists : Prop :=
   ∀ (n : ℕ) [NeZero n], Squarefree n → (n % 8 = 1 ∨ n % 8 = 3) →

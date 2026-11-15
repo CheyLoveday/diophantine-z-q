@@ -13,10 +13,10 @@
        "kind": "published", "flag": "",
        "source": "Tian-Yuan-Zhang, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Proposition 2.3"},
       {"name": "tyzTauExists", "type": "_root_.ZInQ.Contrib.TYZDecomp.H29Split.TYZTauExists",
-       "doc": "Tian-Yuan-Zhang, arXiv:1411.4728v1 section 2.1 (source L515-523): the embedding tau with tau(O_K) in O_B and, for n = 1 mod 8, tau(sqrt(-n)) = ai+bj+ck with 4 | c (Legendre; Jones-Pall, Acta Math. 70 (1939), Theorem 5)",
+       "doc": "Tian-Yuan-Zhang, arXiv:1411.4728v1 section 2.1 (source L527-534): the embedding tau with tau(O_K) in O_B and, for n = 1 mod 8, tau(sqrt(-n)) = ai+bj+ck with 4 | c (Legendre; Jones-Pall, Acta Math. 70 (1939), Theorem 5)",
        "kind": "published", "flag": "",
        "source": "Tian-Yuan-Zhang, arXiv:1411.4728v1 section 2.1; Jones-Pall, Acta Math. 70 (1939) 165-191, Theorem 5"},
       {"name": "tyzTestVectorExists", "type": "_root_.ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists",
-       "doc": "Tian-Yuan-Zhang, arXiv:1411.4728v1 section 2.1 (source L555-563) with Theorem 2.6 at chi = 1 (L809-840): pi_Z^{U_n} is free of rank one; here only the existence of a generator f_n, with pi pinned by its Hecke eigenvalues a_p(E) at odd p (strong multiplicity one)",
+       "doc": "Tian-Yuan-Zhang, arXiv:1411.4728v1 section 2.1 (source L542-550) with Theorem 2.6 at chi = 1 (L809-840): pi_Z^{U_n} is free of rank one; here only the existence of a generator f_n, with pi pinned by its Hecke eigenvalues a_p(E) at odd p (strong multiplicity one)",
        "kind": "published", "flag": "pending reading: pi^{U_n} identified with the a_p(E)-eigenspace of U_n-invariant forms by strong multiplicity one and Jacquet-Langlands (standard), not by TYZ's text",
        "source": "Tian-Yuan-Zhang, arXiv:1411.4728v1 section 2.1 and Theorem 2.6"}]}]}
