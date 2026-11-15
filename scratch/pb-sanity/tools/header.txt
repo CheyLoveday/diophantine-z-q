@@ -1,0 +1,30 @@
+/-!
+# Sanity checks of pb-bypass's period rings and of `LocalIsPst` (task pb-sanity)
+
+`ZInQKernel/Contrib/OneProof/PanBerger.lean` (task pb-bypass) defines `A_cris`, `B_cris^+`,
+`log [ε]`, `B_cris`, `B_st = B_cris[u]` with its action of `G_{ℚ_p}`, and `LocalIsPst`, and splits
+the research field `r11r12` into `PanPrinted` and `BergerPrinted`. Those two leaves are genuine only
+if the definitions are not degenerate. This file proves, with no `sorry` (only `propext`, `Classical.choice`, `Quot.sound`):
+
+* **Non-degeneracy.** `p^m · ∏ log [ε_i] ≠ 0` in `A_cris` for every finite family with
+  `ε_i^♯ = 1`, `ε_i ≠ 1` (`pow_mul_prod_logOf_ne_zero`); hence `0 ∉ tMonoid`, and `B_cris^+`,
+  `B_cris`, `B_st` are not the zero ring (`nontrivial_bcrisPlus`, `nontrivial_bcris`,
+  `nontrivial_bst`); `log [ε]` is not nilpotent in `B_cris^+` (`logOf_not_isNilpotent`); such `ε`
+  exist (`nonempty_tEps`, `ε = (1, ζ_p, ζ_{p²}, …)`); `ℚ_p → B_st` is injective. The argument uses
+  only `A_inf`: `ker θ = (ξ)` (`Contrib/G9/KerTheta.lean`), `ξ`-adic separatedness of
+  `A_inf`, the lattice bound `N! · A_cris^0 ⊆ A_inf + ξ^N A_inf[1/p]` and the leading
+  coefficient under `θ[1/p]`.
+* **The action.** `G_{ℚ_p}` acts on `B_cris` by ring automorphisms (`bcrisAut`, a group
+  homomorphism); every `σ` acts on `B_st` by a ring automorphism (`stEquiv`), `1` acts trivially
+  (`stAct_one`); the group law on `B_st` is equivalent to the cocycle identity for `log [u_σ]`
+  (`stAct_mul_iff`) and follows from the additivity of `log` on `{ε : ε^♯ = 1}` (`LogAdditive`,
+  stated, not proved here; `stAct_mul`).
+* **Semistable representations.** A representation trivial on `G_K` is semistable over `K`
+  (`isSemistableOver_of_trivial`, any `K`), so representations with finite image on a finite `K`,
+  the trivial `n`-dimensional representation (`localIsPst_one`) and the quadratic characters
+  `σ ↦ σ(α)/α` (`isPst_quadChar`) are potentially semistable.
+
+Not proved (see `docs/research/pb-sanity.md`): `B_st^{G_K} = K_0` (in particular its finite
+dimensionality, which `IsSemistableOver` needs to mean Fontaine's condition), `LogAdditive`, and a
+representation that fails `LocalIsPst`.
+-/

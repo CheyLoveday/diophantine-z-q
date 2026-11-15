@@ -16,10 +16,6 @@ variable (p : ℕ) [Fact p.Prime]
 local notation "O" => (𝓞_ℂ_[p] : Type)
 local notation "ξ" => ZInQ.Contrib.G9.BdrKer.Cp.xi p
 
-example : IsDomain (Ainf p) := inferInstance
-example : IsDomain (AinfP p) := inferInstance
-example : IsDomain O := inferInstance
-example : IsHausdorff (span {(p : O)}) O := inferInstance
 
 /-- An element of `𝓞_ℂ_p♭` divisible by every power of `p♭` is zero. -/
 theorem tilt_eq_zero_of_dvd (ϖ : PreTilt O p) (hϖ : ϖ.untilt = p) (c : PreTilt O p)
@@ -1038,6 +1034,22 @@ theorem isPst_quadChar {α : PadicAlgCl p} {c : ℚ_[p]} (hα : α ^ 2 = algebra
   simp [quadChar, this]
 
 end Pst
+
+/-! ### Summary -/
+
+/-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/
+theorem panBerger_definitions_nondegenerate :
+    Nontrivial (BcrisPlus p) ∧ Nontrivial (Bcris p) ∧ Nontrivial (Bst p) ∧
+      (0 : BcrisPlus p) ∉ tMonoid p ∧
+      (∃ e : TEps p, logOf p e ≠ 0 ∧
+        ¬ IsNilpotent (algebraMap (Acris p) (BcrisPlus p) (logOf p e))) ∧
+      Function.Injective (algebraMap ℚ_[p] (Bst p)) ∧
+      (∀ σ : GQp p, Function.Bijective (stAct p σ)) ∧ stAct p 1 = RingHom.id _ ∧
+      (∀ σ τ : GQp p, bcrisAct p (σ * τ) = (bcrisAct p σ).comp (bcrisAct p τ)) ∧
+      (∀ n : ℕ, LocalIsPst p n 1) :=
+  ⟨inferInstance, inferInstance, inferInstance, zero_notMem_tMonoid p, exists_t p,
+    algebraMap_qp_bst_injective p, stAct_bijective p, stAct_one p, bcrisAct_mul p,
+    localIsPst_one p⟩
 
 end PanBergerSplit
 end PkgI4
