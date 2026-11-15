@@ -22,3 +22,17 @@ Target: `IgusaCMValue24` (field `igusaCMValue24`), equivalently (qm-glue `thetaQ
   Z = −λ'(i√6)λ(i√6/2)/λ'(i√6/2), λ(i√6) = k₆², λ'(i√6/2) = ((1−k₆)/(1+k₆))², λ = 1−λ':
   3779136·4·Y²Z²((Y+Z−1)²−4YZ)² = −(16/27)(Y²+14YZ+14Y+Z²+14Z+1)⁵ exactly.
   So F(Ω₂₄) = −16/27 is an exact consequence of (1), (2) and the disc −24 singular moduli.
+
+## Lean (CM24Value.lean, assembled by mk.py from the qm-glue copy + T1.lean + Alg.lean + P3.lean)
+
+* 2026-11-14 16:37 COMPILED (standard axioms only, no sorry):
+  `CM24.igusaCMValue24_of_singularModulus6 : SingularModulus6 → IgusaCMValue24` and
+  `CM24.thetaValueAtOmega24_of_singularModulus6`. Steps (all compiled): genus-2 theta `Th2` with real
+  characteristics; summability; partial inversion `pi0` (from Mathlib's `jacobiTheta₂_functional_equation`);
+  `invert` (Ω₂₄ ↦ W = −Ω₂₄⁻¹); `dup2`, `dup1` (duplication); translation 2W ↦ diag(i√6, i√6/2) (`U00..U11`);
+  the ten squared theta constants `sqc0..sqc9`; Landen (`dupA/B/C`) and Jacobi's quartic identity (`jacobi`);
+  final identity in k modulo the minimal polynomial k⁴+12k³+2k²−12k+1 of k₆ (`CM24Alg.core`, Bezout
+  certificate `core_ne` for S ≠ 0).
+* Finding (VERIFIED, py/elim.py): the final identity only needs mpoly(k) = 0 for k = θ₁₀(i√6)²/θ₀₀(i√6)²,
+  not the radical value. Cubic modular equation θ₃(τ)θ₃(3τ) = θ₂(τ)θ₂(3τ) + θ₄(τ)θ₄(3τ) at τ' = i√6/3,
+  with S (τ' = −1/τ₃) and Landen, gives (k²−2k−1)²·mpoly(k) = 0; 0 < k < 1 excludes the first factor.
