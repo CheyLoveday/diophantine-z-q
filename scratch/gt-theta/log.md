@@ -30,3 +30,9 @@
   TailZ4 L237 (`qmHauptmodulBase3_of_leaves (thetaModularity_of ...)`, through TailZ3 L1211 into TailZ2's section
   `variable (hT : PkgI1.ThetaModularity)` L294, whose every use is `auto8 hT`/`auto20 hT` = `s8WeightExact_of hT`,
   `s20WeightExact_of hT`). TailJ L5039 (`hTM`) is the same `s8WeightExact_of hTM hG` pattern.
+
+## 11-14 22:40 generation of Sp4(Z) (VERIFIED, compiled; scratch/gt-theta/Gen.lean, imports Mathlib only)
+- `GapTheta.sp_mem_closure : M ∈ Matrix.symplecticGroup (Fin 2) ℤ → M ∈ Submonoid.closure gens`, with `gens` the
+  images of `S, T, T⁻¹` under the three homomorphisms `iota1, iota2, rot : SL(2,ℤ) →* Mat4` and `Tm(±[[0,1],[1,0]])`.
+  Proof: explicit reduction (Bezout in SL2(Z) on (a2,c2), (a1,c1), (a1,a2); sign; the stabilizer of e1 is
+  `Tm [[q−st, s],[s,0]] · rot(T^{−t}) · iota2 γ`) plus Mathlib's `SpecialLinearGroup.SL2Z_generators`.
