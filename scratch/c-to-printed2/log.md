@@ -29,3 +29,7 @@ Base e38375b3. Compile command: `lake env lean scratch/c-to-printed2/<file>.lean
   - §7: `carayolR17'_of_realization` (modular-split, verbatim);
     `carayolRealization_iff_field : DSThm965 → DSThm966 → (CarayolRealization ↔ CarayolR17')`.
   - §9: `fields_of_printed (hK : KatoRealizationCoh) (hC : CarayolRealization) (l : OpenAddedLeaves9)`.
+- Added to `CToPrinted2.lean`: `perp`, `finrank_perp`, `dualGR_isSemisimple` (contragredient of a semisimple rep is
+  semisimple), leaf `KatoRealizationCohSS` (= `KatoRealizationCoh` with semisimple witness; implied by it,
+  `katoRealizationCohSS_of_coh`), `katoRealization_of_cohSS`, `eigenformHTNew_of_printedSS`;
+  `fields_of_printed` now takes `KatoRealizationCohSS`. **VERIFIED** 0 errors, 9 axiom lines all standard.

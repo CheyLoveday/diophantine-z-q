@@ -431,6 +431,91 @@ theorem dualGR_isIrreducible (ρ : GaloisRep ℓ n) (h : ρ.IsIrreducible) : (du
 
 end DualIrr
 
+/-! ### The contragredient of a semisimple representation is semisimple (new)
+
+`W^⊥ = {v | ∀ w ∈ W, w ⬝ᵥ v = 0}`; `W` is `ρ^∨`-stable iff `W^⊥` is `ρ`-stable; a `ρ`-stable complement `U` of
+`W^⊥` gives the `ρ^∨`-stable complement `U^⊥` of `W`. Lets the realization leaf ask for a semisimple witness
+instead of an irreducible one. -/
+
+section DualSS
+
+variable {K : Type*} [Field K] {n : ℕ}
+
+/-- `v ↦ (w ↦ w ⬝ᵥ v)`, i.e. `(Pi.basisFun K (Fin n)).toDualEquiv`. -/
+theorem toDual_eq_dot (v w : Fin n → K) : (Pi.basisFun K (Fin n)).toDual v w = w ⬝ᵥ v := by
+  have hw : w = ∑ i, w i • Pi.basisFun K (Fin n) i := by
+    ext k; simp [Finset.sum_apply, Pi.single_apply]
+  conv_lhs => rw [hw]
+  simp only [map_sum, map_smul, Module.Basis.toDual_apply_left, Pi.basisFun_repr, smul_eq_mul, dotProduct]
+
+/-- The orthogonal of `W` for the dot product. -/
+def perp (W : Submodule K (Fin n → K)) : Submodule K (Fin n → K) :=
+  W.dualAnnihilator.comap ((Pi.basisFun K (Fin n)).toDualEquiv : (Fin n → K) →ₗ[K] Module.Dual K (Fin n → K))
+
+theorem mem_perp (W : Submodule K (Fin n → K)) (v : Fin n → K) : v ∈ perp W ↔ ∀ w ∈ W, w ⬝ᵥ v = 0 := by
+  simp only [perp, Submodule.mem_comap, Submodule.mem_dualAnnihilator, LinearEquiv.coe_coe,
+    Module.Basis.toDualEquiv_apply, toDual_eq_dot]
+
+theorem finrank_perp (W : Submodule K (Fin n → K)) : Module.finrank K (perp W) = n - Module.finrank K W := by
+  have h1 := Subspace.finrank_add_finrank_dualAnnihilator_eq W
+  have h2 : Module.finrank K (perp W) = Module.finrank K W.dualAnnihilator := by
+    rw [perp, Submodule.comap_equiv_eq_map_symm, LinearEquiv.finrank_map_eq]
+  rw [Module.finrank_fin_fun] at h1
+  omega
+
+theorem eq_zero_of_dot (w : Fin n → K) (h : ∀ v, w ⬝ᵥ v = 0) : w = 0 := by
+  ext i
+  have := h (Pi.single i 1)
+  rwa [dotProduct_single, mul_one] at this
+
+end DualSS
+
+section DualSSRep
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {n : ℕ}
+
+theorem mulVec_mem_of_stable {M : Matrix (Fin n) (Fin n) (PadicAlgCl ℓ)}
+    {W : Submodule (PadicAlgCl ℓ) (Fin n → PadicAlgCl ℓ)} (h : W.map (Matrix.toLin' M) ≤ W)
+    {w : Fin n → PadicAlgCl ℓ} (hw : w ∈ W) : M.mulVec w ∈ W := by
+  have := h (Submodule.mem_map_of_mem (f := Matrix.toLin' M) hw)
+  rwa [Matrix.toLin'_apply] at this
+
+/-- **The contragredient of a semisimple representation is semisimple.** -/
+theorem dualGR_isSemisimple (ρ : GaloisRep ℓ n) (h : ρ.IsSemisimple) : (dualGR ρ).IsSemisimple := by
+  intro W hW
+  -- `W^⊥` is `ρ`-stable
+  have hP : ∀ σ, (perp W).map (Matrix.toLin' (ρ.mat σ)) ≤ perp W := by
+    rintro σ _ ⟨v, hv, rfl⟩
+    rw [Matrix.toLin'_apply, mem_perp]
+    intro w hw
+    rw [Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose]
+    have : (ρ.mat σ).transpose = (dualGR ρ).mat σ⁻¹ := by rw [dualGR_mat, inv_inv]
+    rw [this]
+    exact (mem_perp W v).1 hv _ (mulVec_mem_of_stable (hW σ⁻¹) hw)
+  obtain ⟨U, hcompl, hU⟩ := h (perp W) hP
+  refine ⟨perp U, ?_, ?_⟩
+  · rw [Submodule.isCompl_iff_disjoint]
+    · rw [Submodule.disjoint_def]
+      intro w hw hwU
+      refine eq_zero_of_dot w fun v => ?_
+      have hv : v ∈ perp W ⊔ U := by rw [hcompl.sup_eq_top]; exact Submodule.mem_top
+      obtain ⟨a, ha, u, hu, rfl⟩ := Submodule.mem_sup.1 hv
+      rw [dotProduct_add, (mem_perp W a).1 ha w hw, dotProduct_comm, (mem_perp U w).1 hwU u hu, zero_add]
+    · have h1 := Submodule.finrank_add_eq_of_isCompl hcompl
+      have h2 := finrank_perp W
+      have h3 := finrank_perp U
+      have hWle : Module.finrank (PadicAlgCl ℓ) W ≤ n := by
+        have := Submodule.finrank_le W; rwa [Module.finrank_fin_fun] at this
+      rw [Module.finrank_fin_fun] at h1 ⊢
+      omega
+  · rintro σ _ ⟨v, hv, rfl⟩
+    rw [Matrix.toLin'_apply, mem_perp]
+    intro u hu
+    rw [Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose, dualGR_mat, Matrix.transpose_transpose]
+    exact (mem_perp U v).1 hv _ (mulVec_mem_of_stable (hU σ⁻¹) hu)
+
+end DualSSRep
+
 /-- **LEAF candidate (consequence, see the report): Kato's theorem at his realization, dualized.**
 For a newform `f ∈ S_k(Γ₁(N))`, `k ≥ 2`, with nebentypus `χ`, a prime `ℓ` and embeddings `ιC`, `ιL`,
 **there is** a semisimple continuous `ρ : G_ℚ → GL₂(ℚ̄_ℓ)` attached to `f` (arithmetic Frobenius at
@@ -522,6 +607,52 @@ theorem eigenformHTNew_of_coh (hK : KatoRealizationCoh) (hD : HTDual) : Eigenfor
 theorem eigenformHTNew_of_printed (hK : KatoRealizationCoh) (hT : TateTwistInvariants) (hA : AxSenTate) :
     EigenformHTNew :=
   eigenformHTNew_of_coh hK (htDual_proof hT hA)
+
+/-- **LEAF candidate (consequence; the weakest form proposed here): Kato's theorem at his realization, cohomological
+normalization, with a semisimple witness.** `KatoRealizationCoh` with `ρ.IsSemisimple` in place of
+`ρ.IsIrreducible` (so `KatoRealizationCoh → KatoRealizationCohSS`, `katoRealizationCohSS_of_coh`). Witness: Kato's
+`V_{F_λ}(f)` (Astérisque 295 (2004) §§8.3, 9.2–9.4; UNVERIFIED locators), semisimple by Ribet's irreducibility
+(UNVERIFIED locators). Not stronger than the published statements: one realization only, and semisimplicity is
+weaker than the published irreducibility. -/
+def KatoRealizationCohSS : Prop :=
+  ∀ (ℓ : ℕ) [Fact ℓ.Prime] (ιC : Qbar →ₐ[ℚ] ℂ) (ιL : Qbar →ₐ[ℚ] PadicAlgCl ℓ)
+    (N : ℕ) (k : ℤ) (χ : DirichletCharacter ℂ N) (f : CF N k),
+    0 < N → 2 ≤ k → IsNewform f χ →
+    ∃ ρ : GaloisRep ℓ 2, ρ.IsSemisimple ∧
+      (∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ρ.UnramifiedAt p ∧ ∃ α : Qbar, ιC α = coeff f p ∧
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          (ρ.mat σ⁻¹).trace = ιL α) ∧
+      ρ.HasHTWeightsAtSelf ℓ {0, k - 1}
+
+theorem katoRealizationCohSS_of_coh (hK : KatoRealizationCoh) : KatoRealizationCohSS := by
+  intro ℓ _ ιC ιL N k χ f hN hk hf
+  obtain ⟨ρ, hirr, hatt, hHT⟩ := hK ℓ ιC ιL N k χ f hN hk hf
+  exact ⟨ρ, C9Rhof.isSemisimple_of_isIrreducible (ℓ := ℓ) ⟨ρ.toHom, ρ.continuous_toHom⟩ hirr, hatt, hHT⟩
+
+/-- **`KatoRealization` from the semisimple cohomological form and `HTDual`.** -/
+theorem katoRealization_of_cohSS (hK : KatoRealizationCohSS) (hD : HTDual) : KatoRealization := by
+  intro ℓ _ ιC ιL N k χ f hN hk hf
+  obtain ⟨ρ, hss, hatt, hHT⟩ := hK ℓ ιC ιL N k χ f hN hk hf
+  refine ⟨dualGR ρ, dualGR_isSemisimple ρ hss, ?_, ?_⟩
+  · intro p hp hpN
+    obtain ⟨hu, α, hα, htr⟩ := hatt p hp hpN
+    refine ⟨fun v hv σ hσ => ?_, α, hα, fun v σ hv hσ => ?_⟩
+    · have h1 := hu v hv σ⁻¹ ((v.inertiaSubgroup ℚ).inv_mem hσ)
+      apply Units.ext
+      change (ρ.mat ((σ : v.decompositionSubgroup ℚ) : GQ)⁻¹).transpose = 1
+      have : ((σ⁻¹ : v.decompositionSubgroup ℚ) : GQ) = ((σ : v.decompositionSubgroup ℚ) : GQ)⁻¹ := rfl
+      rw [GaloisRep.mat, ← this, h1, Units.val_one, Matrix.transpose_one]
+    · rw [dualGR_mat, Matrix.trace_transpose, htr v σ hv hσ]
+  · have h := hD ℓ 2 ρ {0, k - 1} (by simp) hHT
+    have hS : (({0, k - 1} : Multiset ℤ).map Neg.neg) = {0, 1 - k} := by
+      simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton, neg_zero, neg_sub]
+    rwa [hS] at h
+
+/-- **Row eigenformHTNew from the weakest leaf `KatoRealizationCohSS`** and the bundle LEAF fields
+`tateTwistInvariants`, `axSenTate`. -/
+theorem eigenformHTNew_of_printedSS (hK : KatoRealizationCohSS) (hT : TateTwistInvariants) (hA : AxSenTate) :
+    EigenformHTNew :=
+  eigenformHTNew_of_realization (katoRealization_of_cohSS hK (htDual_proof hT hA))
 
 /-- **Converse: the field gives back the existential leaf**, given the bundle LEAF fields `dsThm965`, `dsThm966`
 (through hodge-split's `r14Det_of_printed`: a semisimple attached `ρ` exists for every normalized eigenform of
@@ -745,16 +876,18 @@ namespace CToPrinted2
 
 /-- **The two fields `eigenformHTNew` and `r17` of the single proof from the realization leaves**, with the
 bundle's own LEAF fields `tateTwistInvariants`, `axSenTate` (in `OpenAddedLeaves9`). -/
-theorem fields_of_printed (hK : KatoRealizationCoh) (hC : R17.CarayolRealization)
+theorem fields_of_printed (hK : KatoRealizationCohSS) (hC : R17.CarayolRealization)
     (l : HDec.HSyn.OpenAddedLeaves9) :
     ZInQ.Contrib.HodgeSplit.EigenformHTNew ∧ LadicCond.CarayolR17' :=
-  ⟨eigenformHTNew_of_printed hK l.tateTwistInvariants l.axSenTate, R17.carayolR17'_of_realization hC⟩
+  ⟨eigenformHTNew_of_printedSS hK l.tateTwistInvariants l.axSenTate, R17.carayolR17'_of_realization hC⟩
 
 end CToPrinted2
 
 #print axioms CToPrinted2.htDual_proof
 #print axioms CToPrinted2.eigenformHTNew_of_printed
 #print axioms CToPrinted2.eigenformHTNew_of_realization
+#print axioms CToPrinted2.eigenformHTNew_of_printedSS
+#print axioms CToPrinted2.dualGR_isSemisimple
 #print axioms CToPrinted2.katoRealization_iff_field
 #print axioms CToPrinted2.R17.carayolR17'_of_realization
 #print axioms CToPrinted2.R17.carayolRealization_iff_field
