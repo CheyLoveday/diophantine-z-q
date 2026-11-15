@@ -273,7 +273,7 @@ end Generation
 
 section Theta
 open Complex Matrix CM24
-open scoped Real
+open scoped Real MatrixGroups
 open HDec.PkgI1 (SiegelH2 thetaConst evenChars thetaSum8 thetaProd2 spAct spFactor Char2)
 
 theorem siegel_of {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) (h : PDq (Ω 0 0) (Ω 0 1) (Ω 1 1)) :
@@ -378,6 +378,241 @@ theorem spFactor_eq_of {M : Mat4} {A B C D : Matrix (Fin 2) (Fin 2) ℂ}
     (hM : M.map (Int.cast : ℤ → ℂ) = Matrix.fromBlocks A B C D) (Ω : Matrix (Fin 2) (Fin 2) ℂ) :
     spFactor M Ω = (C * Ω + D).det := by
   simp only [spFactor, hM, Matrix.toBlocks_fromBlocks₂₁, Matrix.toBlocks_fromBlocks₂₂]
+
+
+/-! ## II.3 The eleven generators -/
+
+/-- Phase of a squared theta constant: `exp(πi/2)·exp(πi a b) = exp(πi(2 + 4ab)/4)`. -/
+theorem phase_I (a b : ℤ) (x y : ℝ) (hx : x = (a : ℝ) / 2) (hy : y = (b : ℝ) / 2) :
+    I * cexp (4 * π * I * ((x : ℂ) * y)) = cexp (π * I * ((2 + 4 * a * b : ℤ) : ℂ) / 4) := by
+  rw [show I * cexp (4 * π * I * ((x : ℂ) * y)) = cexp (π / 2 * I) * cexp (4 * π * I * ((x : ℂ) * y)) by
+    rw [Complex.exp_pi_div_two_mul_I], ← Complex.exp_add]
+  congr 1; subst hx hy; push_cast; ring
+
+/-! ### Translations -/
+
+theorem Tm_map (S : Matrix (Fin 2) (Fin 2) ℤ) :
+    (Tm S).map (Int.cast : ℤ → ℂ) = Matrix.fromBlocks 1 (S.map (Int.cast : ℤ → ℂ)) 0 1 := by
+  rw [Tm, Matrix.fromBlocks_map, Matrix.map_one _ Int.cast_zero Int.cast_one, Matrix.map_zero _ Int.cast_zero]
+
+/-- `Ω + S`. -/
+def tAct (s00 s01 s11 : ℤ) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![Ω 0 0 + s00, Ω 0 1 + s01; Ω 0 1 + s01, Ω 1 1 + s11]
+
+theorem spAct_Tm (s00 s01 s11 : ℤ) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) :
+    spAct (Tm !![s00, s01; s01, s11]) Ω = tAct s00 s01 s11 Ω := by
+  refine spAct_eq_of (Tm_map _) (by simp) ?_
+  ext i j; fin_cases i <;> fin_cases j <;> simp [tAct, hs]
+
+theorem spFactor_Tm (S : Matrix (Fin 2) (Fin 2) ℤ) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : spFactor (Tm S) Ω = 1 := by
+  rw [spFactor_eq_of (Tm_map _)]; simp
+
+def σT (s00 s01 s11 : ℤ) (m : Char2) : Char2 :=
+  (![fin2 ((m.1 0 : ℕ) : ℤ), fin2 ((m.1 1 : ℕ) : ℤ)],
+   ![fin2 (((m.2 0 : ℕ) : ℤ) + s00 * (((m.1 0 : ℕ) : ℤ) + 1) + s01 * ((m.1 1 : ℕ) : ℤ)),
+     fin2 (((m.2 1 : ℕ) : ℤ) + s11 * (((m.1 1 : ℕ) : ℤ) + 1) + s01 * ((m.1 0 : ℕ) : ℤ))])
+
+def NT (s00 s01 s11 : ℤ) (m : Char2) : ℤ :=
+  -2 * s00 * (((m.1 0 : ℕ) : ℤ) ^ 2 + 2 * ((m.1 0 : ℕ) : ℤ))
+    - 2 * s11 * (((m.1 1 : ℕ) : ℤ) ^ 2 + 2 * ((m.1 1 : ℕ) : ℤ))
+    - 4 * s01 * ((m.1 0 : ℕ) : ℤ) * ((m.1 1 : ℕ) : ℤ)
+
+theorem sqT (s00 s01 s11 : ℤ) (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (tAct s00 s01 s11 Ω) ^ 2 =
+      -(-1) * cexp (π * I * (NT s00 s01 s11 m : ℂ) / 4) * thetaConst (σT s00 s01 s11 m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  rw [thetaConst_eq _ _ (by simp [tAct]), thetaConst_eq _ _ hs]
+  simp only [tAct, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [th2_trans (α := Ω 0 0) (β := Ω 0 1) (γ := Ω 1 1) s00 s01 s11 rfl rfl rfl, mul_pow]
+  rw [th2_sq_red _ _ _ ((m.1 0 : ℕ) : ℤ) ((m.1 1 : ℕ) : ℤ)
+    (((m.2 0 : ℕ) : ℤ) + s00 * (((m.1 0 : ℕ) : ℤ) + 1) + s01 * ((m.1 1 : ℕ) : ℤ))
+    (((m.2 1 : ℕ) : ℤ) + s11 * (((m.1 1 : ℕ) : ℤ) + 1) + s01 * ((m.1 0 : ℕ) : ℤ))
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σT, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast]
+  rw [show -(-1 : ℂ) = 1 by ring, one_mul]
+  congr 1
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  simp only [NT]
+  push_cast
+  ring
+
+theorem good_Tm (s00 s01 s11 : ℤ)
+    (himg : evenChars.image (σT s00 s01 s11) = evenChars)
+    (hinj : ∀ a ∈ evenChars, ∀ b ∈ evenChars, σT s00 s01 s11 a = σT s00 s01 s11 b → a = b)
+    (hev : ∀ m ∈ evenChars, NT s00 s01 s11 m % 2 = 0)
+    (hsum : (∑ m ∈ evenChars, NT s00 s01 s11 m) % 8 = 0) : Good (Tm !![s00, s01; s01, s11]) :=
+  good_of (tAct s00 s01 s11) (fun _ => 1) (fun _ => -1) (σT s00 s01 s11) (NT s00 s01 s11)
+    (fun Ω hΩ => spAct_Tm s00 s01 s11 (pdq_of_siegel hΩ).1) (fun Ω _ => spFactor_Tm _ Ω)
+    (fun _ _ => one_ne_zero) (fun _ => by norm_num) (fun _ => by norm_num)
+    (fun Ω hΩ => siegel_of' ((pdq_of_siegel hΩ).2.add s00 s01 s11))
+    (fun Ω hΩ m => sqT s00 s01 s11 m hΩ) himg hinj hev hsum
+
+theorem good_T11 : Good (Tm !![1, 0; 0, 0]) := good_Tm 1 0 0 (by decide) (by decide) (by decide) (by decide)
+theorem good_T11' : Good (Tm !![-1, 0; 0, 0]) := good_Tm (-1) 0 0 (by decide) (by decide) (by decide) (by decide)
+theorem good_T22 : Good (Tm !![0, 0; 0, 1]) := good_Tm 0 0 1 (by decide) (by decide) (by decide) (by decide)
+theorem good_T22' : Good (Tm !![0, 0; 0, -1]) := good_Tm 0 0 (-1) (by decide) (by decide) (by decide) (by decide)
+theorem good_Tod : Good (Tm !![0, 1; 1, 0]) := good_Tm 0 1 0 (by decide) (by decide) (by decide) (by decide)
+theorem good_Tod' : Good (Tm !![0, -1; -1, 0]) := good_Tm 0 (-1) 0 (by decide) (by decide) (by decide) (by decide)
+
+
+/-! ### Rotations -/
+
+/-- Reindexing `(n₀, n₁) ↦ (n₀, n₀ + n₁)`: the rotation by `T = [[1,1],[0,1]]`. -/
+theorem th2_rotT (α β γ : ℂ) (c0 c1 d0 d1 : ℝ) :
+    Th2 (α + 2 * β + γ) (β + γ) γ c0 c1 d0 d1 = Th2 α β γ c0 (c0 + c1) (d0 - d1) d1 := by
+  let e : ℤ × ℤ ≃ ℤ × ℤ :=
+    { toFun := fun n => (n.1, n.1 + n.2), invFun := fun n => (n.1, n.2 - n.1),
+      left_inv := fun n => by simp, right_inv := fun n => by simp }
+  rw [Th2, Th2]
+  conv_rhs => rw [← e.tsum_eq]
+  congr 1; funext n
+  simp only [term2, e, Equiv.coe_fn_mk]
+  congr 1; push_cast; ring
+
+/-- Reindexing `(n₀, n₁) ↦ (n₀, n₁ − n₀)`: the rotation by `T⁻¹`. -/
+theorem th2_rotTinv (α β γ : ℂ) (c0 c1 d0 d1 : ℝ) :
+    Th2 (α - 2 * β + γ) (β - γ) γ c0 c1 d0 d1 = Th2 α β γ c0 (c1 - c0) (d0 + d1) d1 := by
+  let e : ℤ × ℤ ≃ ℤ × ℤ :=
+    { toFun := fun n => (n.1, n.2 - n.1), invFun := fun n => (n.1, n.1 + n.2),
+      left_inv := fun n => by simp, right_inv := fun n => by simp }
+  rw [Th2, Th2]
+  conv_rhs => rw [← e.tsum_eq]
+  congr 1; funext n
+  simp only [term2, e, Equiv.coe_fn_mk]
+  congr 1; push_cast; ring
+
+theorem rot_map (g : SL(2, ℤ)) : (rot g).map (Int.cast : ℤ → ℂ) = Matrix.fromBlocks
+    ((g : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ℂ)) 0 0
+    (!![(g : Matrix (Fin 2) (Fin 2) ℤ) 1 1, -(g : Matrix (Fin 2) (Fin 2) ℤ) 1 0;
+       -(g : Matrix (Fin 2) (Fin 2) ℤ) 0 1, (g : Matrix (Fin 2) (Fin 2) ℤ) 0 0].map (Int.cast : ℤ → ℂ)) := by
+  simp only [rot, MonoidHom.coe_mk, OneHom.coe_mk, Matrix.fromBlocks_map, Matrix.map_zero _ Int.cast_zero]
+
+theorem spFactor_rot (g : SL(2, ℤ)) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : spFactor (rot g) Ω = 1 := by
+  rw [spFactor_eq_of (rot_map g), Matrix.zero_mul, zero_add, Matrix.det_fin_two]
+  have := det_sl g
+  simp only [Matrix.map_apply, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  have h : (((g : Matrix (Fin 2) (Fin 2) ℤ) 0 0 * (g : Matrix (Fin 2) (Fin 2) ℤ) 1 1 -
+      (g : Matrix (Fin 2) (Fin 2) ℤ) 0 1 * (g : Matrix (Fin 2) (Fin 2) ℤ) 1 0 : ℤ) : ℂ) = 1 := by
+    rw [this]; simp
+  push_cast at h ⊢
+  linear_combination h
+
+/-- `SΩSᵀ`. -/
+def rsAct (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ := !![Ω 1 1, -Ω 0 1; -Ω 0 1, Ω 0 0]
+/-- `TΩTᵀ`. -/
+def rtAct (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![Ω 0 0 + 2 * Ω 0 1 + Ω 1 1, Ω 0 1 + Ω 1 1; Ω 0 1 + Ω 1 1, Ω 1 1]
+/-- `T⁻¹ΩT⁻ᵀ`. -/
+def rtiAct (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![Ω 0 0 - 2 * Ω 0 1 + Ω 1 1, Ω 0 1 - Ω 1 1; Ω 0 1 - Ω 1 1, Ω 1 1]
+
+theorem spAct_rotS {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) :
+    spAct (rot ModularGroup.S) Ω = rsAct Ω := by
+  refine spAct_eq_of (rot_map _) ?_ ?_
+  · simp [Matrix.det_fin_two]
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [rsAct, hs, Matrix.mul_apply, Fin.sum_univ_two, ModularGroup.coe_S]
+
+theorem spAct_rotT {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) :
+    spAct (rot ModularGroup.T) Ω = rtAct Ω := by
+  refine spAct_eq_of (rot_map _) ?_ ?_
+  · simp [Matrix.det_fin_two]
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [rtAct, hs, Matrix.mul_apply, Fin.sum_univ_two, ModularGroup.coe_T] <;> ring
+
+theorem spAct_rotTinv {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) :
+    spAct (rot ModularGroup.T⁻¹) Ω = rtiAct Ω := by
+  refine spAct_eq_of (rot_map _) ?_ ?_
+  · simp [Matrix.det_fin_two, ModularGroup.coe_T_inv]
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [rtiAct, hs, Matrix.mul_apply, Fin.sum_univ_two, ModularGroup.coe_T_inv] <;> ring
+
+def σRS (m : Char2) : Char2 :=
+  (![fin2 (-((m.1 1 : ℕ) : ℤ)), fin2 ((m.1 0 : ℕ) : ℤ)], ![fin2 (-((m.2 1 : ℕ) : ℤ)), fin2 ((m.2 0 : ℕ) : ℤ)])
+def σRT (m : Char2) : Char2 :=
+  (![fin2 ((m.1 0 : ℕ) : ℤ), fin2 (((m.1 0 : ℕ) : ℤ) + ((m.1 1 : ℕ) : ℤ))],
+   ![fin2 (((m.2 0 : ℕ) : ℤ) - ((m.2 1 : ℕ) : ℤ)), fin2 ((m.2 1 : ℕ) : ℤ)])
+def σRTi (m : Char2) : Char2 :=
+  (![fin2 ((m.1 0 : ℕ) : ℤ), fin2 (((m.1 1 : ℕ) : ℤ) - ((m.1 0 : ℕ) : ℤ))],
+   ![fin2 (((m.2 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ)), fin2 ((m.2 1 : ℕ) : ℤ)])
+
+theorem exp_zero_quarter : cexp (π * I * ((0 : ℤ) : ℂ) / 4) = 1 := by simp
+
+theorem sqRS (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (rsAct Ω) ^ 2 = -(-1) * cexp (π * I * ((fun _ => (0 : ℤ)) m : ℂ) / 4) *
+      thetaConst (σRS m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  rw [exp_zero_quarter, thetaConst_eq _ _ (by simp [rsAct]), thetaConst_eq _ _ hs]
+  simp only [rsAct, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [th2_neg, th2_swap]
+  rw [th2_sq_red _ _ _ (-((m.1 1 : ℕ) : ℤ)) ((m.1 0 : ℕ) : ℤ) (-((m.2 1 : ℕ) : ℤ)) ((m.2 0 : ℕ) : ℤ)
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σRS, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast]
+  ring
+
+theorem sqRT (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (rtAct Ω) ^ 2 = -(-1) * cexp (π * I * ((fun _ => (0 : ℤ)) m : ℂ) / 4) *
+      thetaConst (σRT m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  rw [exp_zero_quarter, thetaConst_eq _ _ (by simp [rtAct]), thetaConst_eq _ _ hs]
+  simp only [rtAct, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [th2_rotT]
+  rw [th2_sq_red _ _ _ ((m.1 0 : ℕ) : ℤ) (((m.1 0 : ℕ) : ℤ) + ((m.1 1 : ℕ) : ℤ))
+    (((m.2 0 : ℕ) : ℤ) - ((m.2 1 : ℕ) : ℤ)) ((m.2 1 : ℕ) : ℤ)
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σRT, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast]
+  ring
+
+theorem sqRTi (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (rtiAct Ω) ^ 2 = -(-1) * cexp (π * I * ((fun _ => (0 : ℤ)) m : ℂ) / 4) *
+      thetaConst (σRTi m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  rw [exp_zero_quarter, thetaConst_eq _ _ (by simp [rtiAct]), thetaConst_eq _ _ hs]
+  simp only [rtiAct, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [th2_rotTinv]
+  rw [th2_sq_red _ _ _ ((m.1 0 : ℕ) : ℤ) (((m.1 1 : ℕ) : ℤ) - ((m.1 0 : ℕ) : ℤ))
+    (((m.2 0 : ℕ) : ℤ) + ((m.2 1 : ℕ) : ℤ)) ((m.2 1 : ℕ) : ℤ)
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σRTi, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast]
+  ring
+
+theorem pdq_rs {α β γ : ℂ} (h : PDq α β γ) : PDq γ (-β) α := by
+  have := h.swap; simpa [PDq] using this
+theorem pdq_rt {α β γ : ℂ} (h : PDq α β γ) : PDq (α + 2 * β + γ) (β + γ) γ := by
+  obtain ⟨ha, hd⟩ := h
+  have hc : 0 < γ.im := by nlinarith [sq_nonneg β.im]
+  refine ⟨?_, ?_⟩ <;> simp <;> nlinarith [sq_nonneg (α.im + β.im), sq_nonneg (β.im + γ.im)]
+theorem pdq_rti {α β γ : ℂ} (h : PDq α β γ) : PDq (α - 2 * β + γ) (β - γ) γ := by
+  obtain ⟨ha, hd⟩ := h
+  have hc : 0 < γ.im := by nlinarith [sq_nonneg β.im]
+  refine ⟨?_, ?_⟩ <;> simp <;> nlinarith [sq_nonneg (α.im - β.im), sq_nonneg (β.im - γ.im)]
+
+theorem good_rotS : Good (rot ModularGroup.S) :=
+  good_of rsAct (fun _ => 1) (fun _ => -1) σRS (fun _ => 0)
+    (fun Ω hΩ => spAct_rotS (pdq_of_siegel hΩ).1) (fun Ω _ => spFactor_rot _ Ω)
+    (fun _ _ => one_ne_zero) (fun _ => by norm_num) (fun _ => by norm_num)
+    (fun Ω hΩ => siegel_of' (pdq_rs (pdq_of_siegel hΩ).2))
+    (fun Ω hΩ m => sqRS m hΩ) (by decide) (by decide) (by decide) (by decide)
+
+theorem good_rotT : Good (rot ModularGroup.T) :=
+  good_of rtAct (fun _ => 1) (fun _ => -1) σRT (fun _ => 0)
+    (fun Ω hΩ => spAct_rotT (pdq_of_siegel hΩ).1) (fun Ω _ => spFactor_rot _ Ω)
+    (fun _ _ => one_ne_zero) (fun _ => by norm_num) (fun _ => by norm_num)
+    (fun Ω hΩ => siegel_of' (pdq_rt (pdq_of_siegel hΩ).2))
+    (fun Ω hΩ m => sqRT m hΩ) (by decide) (by decide) (by decide) (by decide)
+
+theorem good_rotTinv : Good (rot ModularGroup.T⁻¹) :=
+  good_of rtiAct (fun _ => 1) (fun _ => -1) σRTi (fun _ => 0)
+    (fun Ω hΩ => spAct_rotTinv (pdq_of_siegel hΩ).1) (fun Ω _ => spFactor_rot _ Ω)
+    (fun _ _ => one_ne_zero) (fun _ => by norm_num) (fun _ => by norm_num)
+    (fun Ω hΩ => siegel_of' (pdq_rti (pdq_of_siegel hΩ).2))
+    (fun Ω hΩ m => sqRTi m hΩ) (by decide) (by decide) (by decide) (by decide)
 
 end Theta
 
