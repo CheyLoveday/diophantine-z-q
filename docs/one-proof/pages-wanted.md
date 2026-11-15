@@ -19,6 +19,8 @@ Printed statements that a reader with the book or paper can check against the Le
 ## unread
 
 * [`faltingsLemma5Printed`](OPEN.md#faltingslemma5printed) (packet R2): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read). Flag: unread
+* [`hCM`](OPEN.md#hcm) (packet R3): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED). Flag: unread: new printed leaf, no reading recorded; locator UNVERIFIED (numbers)
+* [`hX`](OPEN.md#hx) (packet R3): the canonical model of X0(N) over Q and the Galois action on its points (Shimura 1971 section 6.7; Deligne-Rapoport VI-VII; numbers UNVERIFIED). Flag: unread; locator UNVERIFIED (numbers)
 
 ## unverified-table
 
@@ -41,6 +43,8 @@ Printed statements that a reader with the book or paper can check against the Le
 * [`phiAmpleIsogeny`](OPEN.md#phiampleisogeny) (packet R10): Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED). Flag: finiteness over a non-closed K descends from Kbar (fpqc descent); Mumford's Application 1 is stated for effective D (general ample L via L^m); pending review (one model review, no errors)
 * [`weilPairingMumford`](OPEN.md#weilpairingmumford) (packet R10): Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED). Flag: strictest reading: composite (one leaf bundling several printed properties of e_n: perfect, Galois, compatible, dual-adjoint, alternating on lambda_L, with values pinned to weilScalar via Kleiman 9.2.5 and Mumford 8 (iv)); sign convention immaterial; pending review (one model review, no errors)
 * [`h11`](OPEN.md#h11) (packet R3): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED). Flag: locator UNVERIFIED (see the source)
+* [`hCM`](OPEN.md#hcm) (packet R3): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED). Flag: unread: new printed leaf, no reading recorded; locator UNVERIFIED (numbers)
+* [`hX`](OPEN.md#hx) (packet R3): the canonical model of X0(N) over Q and the Galois action on its points (Shimura 1971 section 6.7; Deligne-Rapoport VI-VII; numbers UNVERIFIED). Flag: unread; locator UNVERIFIED (numbers)
 
 ## pending-review
 

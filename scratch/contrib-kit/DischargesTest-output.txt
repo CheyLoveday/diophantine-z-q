@@ -1,8 +1,11 @@
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
+DISCHARGES [OpenResearchLeaves17.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+  still assumes: [LeafQM.AV.R5fpCount]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
   still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves10.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 67 open hypotheses, 497 theorems checked, 2 discharge one
+#discharges: 68 open hypotheses, 862 theorems checked, 3 discharge one
