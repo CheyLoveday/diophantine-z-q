@@ -143,7 +143,7 @@ row("T11", "bdRInvariants", "textbook", "∀ p, ZInQ.Contrib.HodgeSplit.BdRInvar
     "t23_all_of_bdrInvariants (TailX:235) → t23 → g8_g11/g8_g12 hT23 (TailA:2203-2250, TailD:138/172) → G9Glue's 2nd argument, unused by g9Glue_of_fieldEmb (Contrib/G9/Reduction.lean:128, binder _hT23)",
     "UNUSED in substance (syntactic projection only)", "nothing: delete by plumbing", "plumbing",
     "ZInQ.Contrib.G9.g9Glue_of_fieldEmb (probe)", "copies of g8_g11, g8_g12, afterG7_of3 … with G9Glue minus its T23 argument, up to a bundle without bdRInvariants",
-    "T1", "remove by plumbing", "free", "A1", "V: read (all G9Glue proofs on the chain go through g9Glue_of_fieldEmb)")
+    "T1", "remove by plumbing", "free", "A1", "V: read + ClosureProbe (only g8_g11, g8_g12, g8_g12_of_leaves3, afterG7_of3 consume t23; G9Glue proof in closure = TailC L14082 copy, _hT23 unused)")
 row("T12", "yuThm11", "textbook", "HDec.QMSplit.Yu.YuThm11", D+"TailU.lean:443", "H-128", "—", "published form",
     "qmDichotomyYu_of_yu (TailX:237, drops the splitting clause) → t27: TailC:1700 (NoCM), kernelFieldExists, qmEndRank_of (TailF:4082)",
     "b: (a,b) = (2,−3), k algebraic over ℚ, A with an O-action; splitting clause unused",
@@ -212,7 +212,7 @@ row("G01", "quotientP1Coordinate", "glue", "MCRGlue.QuotientP1Coordinate", D+"Ta
     "mcr-quot: ModelCoordinateResidue from L1-L6, T5, CurveBijIso, P1SchemeQ, CMStabObj (CoverModelOfHeckeN NOT needed: ModelYIrreducible from deligneComponentsY3Printed)", "glue + leaves",
     "mcr-quot MCRQuot.lean (compiled on its scratch); CloudW07 projectiveLine/ProjectiveSpace API (probe); Mathlib Scheme.Cover.glueMorphisms",
     "P1SchemeQ (T1), CMStabObj (T2), L1 ProperCurveAF, L3, L5, L6 (T3), L2 in flight", "T3 overall (T1 for P1SchemeQ + NV removal)", "reduce (mcr-quot) and prove the glue Props", "queued per leaf-fold11 §5 (cove-85); L2/L3 in flight (cloud)", "A3",
-    "V: GlueProbe compiles; mcr-quot hCov uses read")
+    "V: GlueProbe, MCRQuotNV (final10 without CoverModelOfHeckeN) compile; mcr-quot hCov uses read")
 
 # ---------------- top statements ----------------
 row("Z01", "h11", "top", "ZInQ.Contrib.TYZDecomp.TYZThm11Integral", "ZInQKernel/Contrib/TYZDecomp/Leaves.lean:259", "T-1", "—", "published form",
