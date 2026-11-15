@@ -68,69 +68,105 @@ def heegnerC (E : WeierstrassCurve ℚ) (L : PeriodPair) {N : ℕ} [NeZero N] (f
     (c : ℂ) {D : ℤ} (S : Finset (HeegnerForm N D)) : (E⁄ℂ).Point :=
   ∑ Q ∈ S, weierPt E L (c * eichler f Q.tauH)
 
-/-! ## §2. The leaves -/
+/-! ## §2. The leaves
+
+Each Heegner-point leaf is stated for one curve `E` (`…At E`) and then for every elliptic curve
+over `ℚ`; the `C_d`-restricted forms (`…Cd`) are in §6. -/
 
 /-- **Uniformization.** For `a, b ∈ ℂ` with `a³ − 27b² ≠ 0` there is a lattice `L` with
-`g₂(L) = a`, `g₃(L) = b`. Silverman, *The Arithmetic of Elliptic Curves* (GTM 106, 2nd ed.),
-Thm VI.5.1 (UNVERIFIED number); Serre, *A Course in Arithmetic*, VII Prop. 5 / §3 (UNVERIFIED). -/
+`g₂(L) = a`, `g₃(L) = b`. J. Silverman, *The Arithmetic of Elliptic Curves* (GTM 106, 2nd ed.,
+2009), Thm VI.5.1 (UNVERIFIED number); J.-P. Serre, *A Course in Arithmetic*, Ch. VII §3
+(UNVERIFIED). -/
 def WeierstrassUniformization : Prop :=
   ∀ a b : ℂ, a ^ 3 - 27 * b ^ 2 ≠ 0 → ∃ L : PeriodPair, L.g₂ = a ∧ L.g₃ = b
 
-/-- **Modular parametrization (Eichler–Shimura, with Faltings' isogeny theorem), in analytic form.**
-If `E/ℚ` has the L-series of a weight-2 newform `f` of level `N` and trivial character, and `L` is
-the period lattice of `E`, there is a real `c ≠ 0` with `c Λ_f ⊆ L`.
-
-Content: `Λ_f` is a lattice and `ℂ/Λ_f ≅ E_f(ℂ)` for the strong Weil curve `E_f/ℚ`, a quotient of
-`J₀(N)` with `L(E_f) = L(f)` (Shimura, *Introduction to the arithmetic theory of automorphic
-functions*, 1971, Thm 7.14–7.15, UNVERIFIED); `E` is `ℚ`-isogenous to `E_f` (Faltings, Invent. Math.
-73 (1983), Korollar 2, UNVERIFIED; for CM curves Shimura, Nagoya Math. J. 43 (1971)); a
-`ℚ`-isogeny `ℂ/Λ_f → ℂ/L` is `z ↦ c z` with `c` real (it commutes with complex conjugation). -/
-def EichlerShimuraParam : Prop :=
-  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+/-- **Modular parametrization of `E` in analytic form**: if `E/ℚ` has the L-series of a weight-2
+newform `f` of level `N` and trivial character and `L` is the period lattice of `E`, there is a
+rational `c ≠ 0` with `c Λ_f ⊆ L`; then `τ ↦ weierPt E L (c φ_f(τ))` is a modular
+parametrization `X₀(N) → E` defined over `ℚ`, with `φ^*ω = c · 2πi f(τ) dτ`. Proved from
+`StrongWeilCurve` and `IsogenyLattice` (`eichlerShimuraParamAt_of_leaves`); for `C_d` it is
+Shimura's theorem for CM curves (§6). -/
+def EichlerShimuraParamAt (E : WeierstrassCurve ℚ) : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
     (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
-    ∀ L : PeriodPair, IsPeriodLattice E L → ∃ c : ℝ, c ≠ 0 ∧ PeriodsIn f c L
+    ∀ L : PeriodPair, IsPeriodLattice E L → ∃ c : ℚ, c ≠ 0 ∧ PeriodsIn f c L
+
+/-- **Eichler–Shimura: the strong Weil curve of a rational newform.** For a weight-2 newform `f`
+of level `N`, trivial character and rational coefficients, there is an elliptic curve `E'/ℚ` with
+`aₙ(E') = aₙ(f)` for all `n ≥ 1`, and its period lattice contains `c Λ_f` for a rational `c ≠ 0`.
+
+Content: `Λ_f` is a lattice and `ℂ/Λ_f` is the complex torus of the optimal quotient `E_f` of
+`J₀(N)`, defined over `ℚ`, with `L(E_f, s) = L(f, s)` (G. Shimura, *Introduction to the arithmetic
+theory of automorphic functions*, 1971, Thm 7.14 and §7.5, UNVERIFIED numbers; Diamond–Shurman,
+*A first course in modular forms*, Thm 6.6.6 and §8.8, UNVERIFIED); the pullback of the
+invariant differential of `E_f` under `X₀(N) → E_f` is `c_E · 2πi f(τ) dτ` with the Manin
+constant `c_E ∈ ℚ^×` (rational `q`-expansion; Manin, Russian Math. Surveys 27 (1972), UNVERIFIED). -/
+def StrongWeilCurve : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+    (∀ n : ℕ, n ≠ 0 → ∃ q : ℚ, coeff f n = q) →
+    ∃ E' : WeierstrassCurve ℚ, E'.IsElliptic ∧ (∀ n : ℕ, n ≠ 0 → coeff f n = (E'.LFunction n : ℂ)) ∧
+      ∀ L' : PeriodPair, IsPeriodLattice E' L' → ∃ c : ℚ, c ≠ 0 ∧ PeriodsIn f c L'
+
+/-- **Faltings' isogeny theorem, in analytic form.** If `E, E'/ℚ` are elliptic curves with the
+same L-series, and `L, L'` are their period lattices, then `m L' ⊆ L` for a rational `m ≠ 0`.
+
+Content: `E` and `E'` are isogenous over `ℚ` (G. Faltings, Invent. Math. 73 (1983), 349–366,
+Korollar 2, UNVERIFIED number); an isogeny `α : E' → E` is `z ↦ m z` on `ℂ/L' → ℂ/L` with
+`α^*ω_E = m ω_{E'}` (Silverman, AEC, Thm VI.4.1 and Cor. III.5.3, UNVERIFIED numbers), and
+`m ∈ ℚ` since `α` and the invariant differentials are defined over `ℚ`. -/
+def IsogenyLattice : Prop :=
+  ∀ (E E' : WeierstrassCurve ℚ) [E.IsElliptic] [E'.IsElliptic],
+    (∀ n : ℕ, n ≠ 0 → E.LFunction n = E'.LFunction n) →
+    ∀ L L' : PeriodPair, IsPeriodLattice E L → IsPeriodLattice E' L' →
+      ∃ m : ℚ, m ≠ 0 ∧ ∀ z ∈ L'.lattice, (m : ℂ) * z ∈ L.lattice
 
 /-- **Rationality of the Heegner point (Shimura's reciprocity law for CM points; Gross).**
-In the Heegner setting (`E`, `f`, `D`, `β` with `β² ≡ D (mod 4N)`, a complete set `S` of
-representatives of the Heegner points of discriminant `D` and residue `β`, a `ℚ`-rational
-parametrization `τ ↦ weierPt E L (c φ_f(τ))`, `c` real), the point
-`Σ_{Q ∈ S} φ(τ_Q) ∈ E(ℂ)` is the image of a point of `E(K)`, `K = ℚ(√D)` embedded by
-`√D ↦ i√|D|`: it is the trace `y_K = Tr_{H/K} φ(x₁)` of the Heegner point `x₁ = (𝒪_K, 𝔫, [𝒪_K])`,
-`𝔫 = (N, (β + √D)/2)`, since `Gal(H/K) ≅ Cl(K)` permutes the `h(D)` Heegner points of residue `β`
-simply transitively.
+Heegner setting: `E/ℚ` with the L-series of a newform `f` of level `N`, trivial character; an
+odd fundamental discriminant `D < −4` with every `p ∣ N` split in `ℚ(√D)`; `β` with
+`β² ≡ D (mod 4N)`; a complete set `S` of representatives of the Heegner points of discriminant
+`D` and residue `β` (`IsHeegnerReps`); the modular parametrization `φ(τ) = weierPt E L (c φ_f(τ))`,
+`c ∈ ℚ^×`, `c Λ_f ⊆ L`; `K = ℚ(√D)` embedded by `ι(√D) = i√|D|`. Then `Σ_{Q ∈ S} φ(τ_Q) ∈ E(ℂ)` is
+the image of a point of `E(K)`: it is `y_K = Tr_{H/K} φ(x₁)` for the Heegner point
+`x₁ = (𝒪_K, 𝔫, [𝒪_K])`, `𝔫 = (N, (β + √D)/2)`, because `Gal(H/K) ≅ Cl(K)` permutes the `h(D)`
+Heegner points of residue `β` simply transitively and `φ` is defined over `ℚ`.
 
 Sources: B. Gross, *Heegner points on X₀(N)*, in *Modular forms* (Durham 1983), Ellis Horwood
 1984, §1–§3 (UNVERIFIED); Gross–Zagier, Invent. Math. 84 (1986), Ch. II §1 and Ch. V §1
 (UNVERIFIED); Shimura 1971, Thm 5.4 and §6.8 (UNVERIFIED). -/
-def HeegnerPointRational : Prop :=
-  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+def HeegnerPointRationalAt (E : WeierstrassCurve ℚ) : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
     (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
     ∀ D β : ℤ, IsOddImagFundDisc D → D < -4 → HeegnerHyp N D → (4 * N : ℤ) ∣ D - β ^ 2 →
     ∀ S : Finset (HeegnerForm N D), IsHeegnerReps N D β S →
-    ∀ (L : PeriodPair) (c : ℝ), IsPeriodLattice E L → c ≠ 0 → PeriodsIn f c L →
+    ∀ (L : PeriodPair) (c : ℚ), IsPeriodLattice E L → c ≠ 0 → PeriodsIn f c L →
     ∀ (K : Type) [Field K] [NumberField K] [DecidableEq K], Module.finrank ℚ K = 2 →
     ∀ δ : K, δ ^ 2 = (D : K) →
     ∀ ι : K →ₐ[ℚ] ℂ, ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ) →
       ∃ y : (E⁄K).Point, Affine.Point.map ι y = heegnerC E L f c S
 
+/-- `HeegnerPointRationalAt` for every elliptic curve over `ℚ`. -/
+def HeegnerPointRational : Prop :=
+  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], HeegnerPointRationalAt E
+
 /-- **The Gross–Zagier formula (Ch. V form, constant forgotten).** In the Heegner setting, let
 `y ∈ E(K)` be the Heegner point (`ι(y) = Σ_{Q ∈ S} φ(τ_Q)`), and let `F`, `G` be the entire
-continuations of `L(f, s) = L(E, s)` and of `L(f ⊗ χ_D, s)`, so that `F G` is
-`L(E/K, s) = L(E, s) L(E^D, s)`. Then `L'(E/K, 1) = κ · ĥ(y)` for some real `κ > 0`.
+continuations of `L(f, s) = L(E, s)` and of `L(f ⊗ χ_D, s) = Σ aₙ(f) χ_D(n) n^{−s}`, so that
+`F G = L(E/K, s)`. Then `L'(E/K, 1) = κ · ĥ(y)` for some real `κ > 0`.
 
 Source: B. Gross, D. Zagier, *Heegner points and derivatives of L-series*, Invent. Math. 84 (1986),
-225–320, Thm I.6.3 (for the `f`-component `c_f` of the Heegner divisor in `J₀(N)`) and Ch. V,
-Thm 2.1 (for `E`): `L'(E/K, 1) = ‖ω‖² ĥ(y_K) / (c² u² √|D|)`-type formula with an explicit
-positive constant (UNVERIFIED numbers and constant). The printed constant is replaced by `∃ κ > 0`
-(the normalization of the height here, Tau Ceti's `canonicalHeight` over `K`, is a positive
-multiple of the one in the print), so this is a consequence of the printed theorem; the identity
-`L(E/K, s) = L(f, s) L(f ⊗ χ_D, s)` (GZ I.(6.?) UNVERIFIED) is folded in. -/
-def GrossZagierFormula : Prop :=
-  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+225–320: Thm I.6.3 (`L'(f, χ, 1) = 8π²(f, f) ĥ(c_{χ,f}) / (h u² √|D|)` for the `f`-isotypic
+component of the Heegner divisor in `J₀(N)(H) ⊗ ℂ`) and its consequence for `E`, Ch. V Thm 2.1
+(`L'(E/K, 1) = ‖ω‖² ĥ(y_K) / (c² u² √|D|)`-type formula with an explicit positive constant);
+all numbers and the constant UNVERIFIED. Weaker than the print: the printed positive constant is
+replaced by `∃ κ > 0` (this also absorbs the normalization of Tau Ceti's `canonicalHeight` over
+`K` and the degree of `φ`); folded in: `L(E/K, s) = L(f, s) L(f ⊗ χ_D, s)` for `(D, N) = 1`
+(GZ Ch. I, UNVERIFIED locator; textbook). -/
+def GrossZagierFormulaAt (E : WeierstrassCurve ℚ) : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
     (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
     ∀ D β : ℤ, IsOddImagFundDisc D → D < -4 → HeegnerHyp N D → (4 * N : ℤ) ∣ D - β ^ 2 →
     ∀ S : Finset (HeegnerForm N D), IsHeegnerReps N D β S →
-    ∀ (L : PeriodPair) (c : ℝ), IsPeriodLattice E L → c ≠ 0 → PeriodsIn f c L →
+    ∀ (L : PeriodPair) (c : ℚ), IsPeriodLattice E L → c ≠ 0 → PeriodsIn f c L →
     ∀ (K : Type) [Field K] [NumberField K] [DecidableEq K], Module.finrank ℚ K = 2 →
     ∀ δ : K, δ ^ 2 = (D : K) →
     ∀ ι : K →ₐ[ℚ] ℂ, ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ) →
@@ -138,20 +174,24 @@ def GrossZagierFormula : Prop :=
     ∀ F G : ℂ → ℂ, IsEntireCont (coeff f) 2 F → IsEntireCont (twistCoeff f D) 2 G →
       ∃ κ : ℝ, 0 < κ ∧ deriv (fun s => F s * G s) 1 = κ * y.canonicalHeight
 
+/-- `GrossZagierFormulaAt` for every elliptic curve over `ℚ`. -/
+def GrossZagierFormula : Prop :=
+  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], GrossZagierFormulaAt E
+
 /-- **Gross's conjugation relation** `ȳ_K = −ε y_K` modulo torsion, `ε` the sign of the functional
 equation of `L(E, s)` (`rootNumber f hχ`, the sign in `Λ_N(2 − s) = ε Λ_N(s)`). In the Heegner
 setting, with `y ∈ E(K)` the Heegner point and `σ` the nontrivial automorphism of `K`
-(`σ(√D) = −√D`): `σ y + y` is torsion if `ε = +1` and `σ y − y` is torsion if `ε = −1`.
+(`σ(√D) = −√D`): `σ y + y` is torsion if `ε = +1`, and `σ y − y` is torsion if `ε = −1`.
 
 Source: B. Gross, *Heegner points on X₀(N)* (1984), §5 (UNVERIFIED): complex conjugation and
-`w_N` act on Heegner points by `(𝒪, 𝔫, [𝔞]) ↦ (𝒪, 𝔫̄, [𝔞⁻¹])` resp. `(𝒪, 𝔫̄, [𝔞 𝔫⁻¹])`, and
+`w_N` act on Heegner points by `(𝒪, 𝔫, [𝔞]) ↦ (𝒪, 𝔫̄, [𝔞⁻¹])` and `(𝒪, 𝔫̄, [𝔞 𝔫⁻¹])`, and
 `φ ∘ w_N = −ε φ + (torsion)`; restated in Gross–Zagier 1986, Ch. V §2 (UNVERIFIED). -/
-def GrossConjugation : Prop :=
-  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (N : ℕ) [NeZero N] (f : Newform N 2) (hχ : f.χ = 1),
+def GrossConjugationAt (E : WeierstrassCurve ℚ) : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2) (hχ : f.χ = 1),
     (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
     ∀ D β : ℤ, IsOddImagFundDisc D → D < -4 → HeegnerHyp N D → (4 * N : ℤ) ∣ D - β ^ 2 →
     ∀ S : Finset (HeegnerForm N D), IsHeegnerReps N D β S →
-    ∀ (L : PeriodPair) (c : ℝ), IsPeriodLattice E L → c ≠ 0 → PeriodsIn f c L →
+    ∀ (L : PeriodPair) (c : ℚ), IsPeriodLattice E L → c ≠ 0 → PeriodsIn f c L →
     ∀ (K : Type) [Field K] [NumberField K] [DecidableEq K], Module.finrank ℚ K = 2 →
     ∀ δ : K, δ ^ 2 = (D : K) →
     ∀ ι : K →ₐ[ℚ] ℂ, ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ) →
@@ -159,6 +199,10 @@ def GrossConjugation : Prop :=
     ∀ σ : K ≃ₐ[ℚ] K, σ δ = -δ →
       (rootNumber f hχ = 1 → IsOfFinAddOrder (Affine.Point.map σ.toAlgHom y + y)) ∧
       (rootNumber f hχ = -1 → IsOfFinAddOrder (Affine.Point.map σ.toAlgHom y - y))
+
+/-- `GrossConjugationAt` for every elliptic curve over `ℚ`. -/
+def GrossConjugation : Prop :=
+  ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], GrossConjugationAt E
 
 /-- **(GLUE) Heegner representatives exist**: the Heegner points of discriminant `D` and residue
 `β` fall into finitely many `Γ₀(N)`-classes (`h(D)` of them). Gross 1984 §1, GZ II §1
@@ -656,15 +700,39 @@ theorem deriv_mul_ne_zero {F G : ℂ → ℂ} (hF : Differentiable ℂ F) (hG : 
 
 /-! ## §5. `GrossZagierHeegner` from the leaves -/
 
-/-- **`GZDecomp.GrossZagierHeegner` from uniformization, the Eichler–Shimura parametrization,
-the rationality of the Heegner point, the Gross–Zagier
-formula and Gross's conjugation relation** (with the proved glue: Heegner representatives (`heegnerRepsExist`), `β` by Hensel
+/-- **The modular parametrization from Eichler–Shimura and Faltings** (glue). -/
+theorem eichlerShimuraParamAt_of_leaves (hU : WeierstrassUniformization) (hSW : StrongWeilCurve)
+    (hI : IsogenyLattice) (E : WeierstrassCurve ℚ) [E.IsElliptic] : EichlerShimuraParamAt E := by
+  intro N _ f hχ hf L hL
+  obtain ⟨E', hE', hf', hL'⟩ := hSW N f hχ fun n hn => ⟨_, hf n hn⟩
+  obtain ⟨L', hL'E⟩ := exists_isPeriodLattice hU E'
+  obtain ⟨c, hc, hcL⟩ := hL' L' hL'E
+  have hEE : ∀ n : ℕ, n ≠ 0 → E.LFunction n = E'.LFunction n := fun n hn => by
+    have := (hf n hn).symm.trans (hf' n hn)
+    exact_mod_cast this
+  obtain ⟨m, hm, hmL⟩ := hI E E' hEE L L' hL hL'E
+  refine ⟨m * c, mul_ne_zero hm hc, fun γ hγ τ => ?_⟩
+  have := hmL _ (hcL γ hγ τ)
+  push_cast
+  rwa [mul_assoc]
+
+/-- **`GrossZagierHeegner` for one curve `E`** from the leaves at `E` (with the proved glue:
+Heegner representatives (`heegnerRepsExist`), `β` by Hensel
 (`GZStatements.exists_sq_mod_four_mul_of_heegnerHyp`), the sign of a simple zero
-(`GZDecomp.signOfSimpleZero`), `L'(E/K, 1) ≠ 0`, nondegeneracy of `ĥ` on torsion). -/
-theorem grossZagierHeegner_of_leaves (hU : WeierstrassUniformization)
-    (hES : EichlerShimuraParam) (hHP : HeegnerPointRational)
-    (hGZ : GrossZagierFormula) (hGC : GrossConjugation) : GrossZagierHeegner := by
-  intro E _ N _ f hχ hf D hDisc hD4 hHeeg F G hF hG h1 hG1 K _ _ instAlg hK2 ⟨δ, hδ⟩
+(`GZDecomp.signOfSimpleZero`), `L'(E/K, 1) = F'(1) G(1) ≠ 0`, `ĥ = 0` on torsion). -/
+theorem heegner_at (hU : WeierstrassUniformization) (E : WeierstrassCurve ℚ) [E.IsElliptic]
+    (hES : EichlerShimuraParamAt E) (hHP : HeegnerPointRationalAt E)
+    (hGZ : GrossZagierFormulaAt E) (hGC : GrossConjugationAt E) :
+    ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+    (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
+    ∀ D : ℤ, IsOddImagFundDisc D → D < -4 → HeegnerHyp N D →
+    ∀ F G : ℂ → ℂ, IsEntireCont (coeff f) 2 F → IsEntireCont (twistCoeff f D) 2 G →
+      analyticOrderAt F 1 = 1 → G 1 ≠ 0 →
+    ∀ (K : Type) [Field K] [DecidableEq K] [Algebra ℚ K], Module.finrank ℚ K = 2 →
+      (∃ δ : K, δ ^ 2 = algebraMap ℚ K D) →
+      ∃ y : (E⁄K).Point, ¬IsOfFinAddOrder y ∧
+        ∀ σ : K ≃ₐ[ℚ] K, IsOfFinAddOrder (Affine.Point.map σ.toAlgHom y - y) := by
+  intro N _ f hχ hf D hDisc hD4 hHeeg F G hF hG h1 hG1 K _ _ instAlg hK2 ⟨δ, hδ⟩
   have : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ K).injective
   obtain rfl : instAlg = DivisionRing.toRatAlgebra := Subsingleton.elim _ _
   have : FiniteDimensional ℚ K := Module.finite_of_finrank_eq_succ hK2
@@ -673,12 +741,12 @@ theorem grossZagierHeegner_of_leaves (hU : WeierstrassUniformization)
   obtain ⟨β, hβ⟩ := ZInQ.GZStatements.exists_sq_mod_four_mul_of_heegnerHyp (NeZero.ne N) hDisc hHeeg
   obtain ⟨S, hS⟩ := heegnerRepsExist N D β hDisc hβ
   obtain ⟨L, hL⟩ := exists_isPeriodLattice hU E
-  obtain ⟨c, hc, hcL⟩ := hES E N f hχ hf L hL
+  obtain ⟨c, hc, hcL⟩ := hES N f hχ hf L hL
   obtain ⟨ι, hι⟩ := exists_embedding hDisc.1 δ hδ'
-  obtain ⟨y, hy⟩ := hHP E N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι
+  obtain ⟨y, hy⟩ := hHP N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι
   refine ⟨y, ?_, ?_⟩
   · -- infinite order: `ĥ(y) ≠ 0` since `L'(E/K, 1) = κ ĥ(y) ≠ 0`
-    obtain ⟨κ, -, hκ⟩ := hGZ E N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι
+    obtain ⟨κ, -, hκ⟩ := hGZ N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι
       hι y hy F G hF hG
     intro htors
     rw [WeierstrassCurve.Affine.Point.canonicalHeight_eq_zero_of_isOfFinAddOrder htors,
@@ -702,8 +770,17 @@ theorem grossZagierHeegner_of_leaves (hU : WeierstrassUniformization)
       rw [map_one_apply, sub_self]
       exact IsOfFinAddOrder.zero
     · have hw : rootNumber f hχ = -1 := signOfSimpleZero N f hχ F hF h1
-      exact (hGC E N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι y hy σ
+      exact (hGC N f hχ hf D β hDisc hD4 hHeeg hβ S hS L c hL hc hcL K hK2 δ hδ' ι hι y hy σ
         (eq_neg_of_add_eq_zero_left h)).2 hw
+
+/-- **`GZDecomp.GrossZagierHeegner` (`hL3`) from six leaves**: uniformization, Eichler–Shimura's
+strong Weil curve, Faltings' isogeny theorem (analytic form), the rationality of the Heegner
+point, the Gross–Zagier formula and Gross's conjugation relation. -/
+theorem grossZagierHeegner_of_leaves (hU : WeierstrassUniformization) (hSW : StrongWeilCurve)
+    (hI : IsogenyLattice) (hHP : HeegnerPointRational) (hGZ : GrossZagierFormula)
+    (hGC : GrossConjugation) : GrossZagierHeegner := by
+  intro E _
+  exact heegner_at hU E (eichlerShimuraParamAt_of_leaves hU hSW hI E) (hHP E) (hGZ E) (hGC E)
 
 end ZInQ.GZHL3
 
