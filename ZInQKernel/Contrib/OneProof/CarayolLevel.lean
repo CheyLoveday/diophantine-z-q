@@ -153,7 +153,7 @@ theorem condExp_eq_of_intertwine (ρ ρ' : GQp p →* GL (Fin n) k)
     · have h' : ∃ L : Fld p, IsAdapted L ρ' := by
         obtain ⟨L, hL⟩ := h
         exact ⟨L, (hiff L).2 hL⟩
-      rw [dif_pos h, dif_pos h']
+      rw [dite_eq_left h, dite_eq_left h']
       have hc : h'.choose = h.choose :=
         choose_congr (funext fun L => propext (hiff L)) h' h
       rw [hc]
@@ -161,7 +161,7 @@ theorem condExp_eq_of_intertwine (ρ ρ' : GQp p →* GL (Fin n) k)
     · have h' : ¬ ∃ L : Fld p, IsAdapted L ρ' := by
         rintro ⟨L, hL⟩
         exact h ⟨L, (hiff L).1 hL⟩
-      rw [dif_neg h, dif_neg h']
+      rw [dite_eq_right h, dite_eq_right h']
   unfold condExp
   rw [codimInv_eq ρ ρ' e he, hswan]
 
