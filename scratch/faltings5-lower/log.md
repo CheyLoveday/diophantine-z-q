@@ -45,3 +45,12 @@ Remaining: `IsogCotBijective` (étaleness at the origin). Plan: Milne quasi-inve
   dims via kernel TangentDim (tangentDim_of_regular ∘ regularOrigin_of/dimOrigin_of ∘ originStalkIso_of genericFibreStalkIso)
   and topologicalKrullDim_eq_of_finite_surjective.
 - Semistability hypotheses of FaltingsLemma5Lower unused; Néron property of 𝒩B used only via CToPrinted.exists_extension.
+
+## 06:25 deliverables
+- `#discharges` (VERIFIED, run): 63 open, 1765 checked, 5 discharge one (no new match; manual fold).
+- LiveUses.lean (VERIFIED): closure of frozenTarget (244035 consts) contains faltingsLemma5Lower_of_printed,
+  faltingsLemma5BCLower_of_printed, OpenResearchLeaves14..21.faltingsLemma5Printed; not faltingsLemma5BC_of_printed
+  (TailZ19 L1898) nor OpenResearchLeaves12/13 projections.
+- FoldCheck.lean (VERIFIED, compiled): open17' (replacement term) .. open28', frozenTarget' with standard axioms; its
+  closure lacks faltingsLemma5Lower_of_printed / faltingsLemma5BCLower_of_printed / OpenResearchLeaves14 projection.
+- Report docs/research/faltings5-lower.md, .fleet/faltings5-lower.md written.
