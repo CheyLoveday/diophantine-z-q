@@ -2189,6 +2189,127 @@ def stAut : GQp p →* (Bst p ≃+* Bst p) where
 
 end LogAdd
 
+/-! ### `u ∉ B_st^{G_K}` for every finite `K`; nontriviality of the quadratic characters -/
+
+section UNotInvariantK
+
+/-- `‖a‖^{deg} = ‖(minpoly a)(0)‖` in `ℚ̄_p` (Mathlib's spectral norm). -/
+theorem norm_pow_natDegree_minpoly (a : PadicAlgCl p) :
+    ‖a‖ ^ (minpoly ℚ_[p] a).natDegree = ‖(minpoly ℚ_[p] a).coeff 0‖ := by
+  have h := spectralNorm.spectralNorm_eq_norm_coeff_zero_rpow (K := ℚ_[p]) (L := PadicAlgCl p) a
+  rw [PadicAlgCl.spectralNorm_eq] at h
+  have hd : (minpoly ℚ_[p] a).natDegree ≠ 0 :=
+    (minpoly.natDegree_pos (Algebra.IsIntegral.isIntegral a)).ne'
+  rw [h, one_div, Real.rpow_inv_natCast_pow (norm_nonneg _) hd]
+
+/-- A `p^n`-th root of `p` in `ℚ̄_p` has degree divisible by `p^n` over `ℚ_p`. -/
+theorem pow_dvd_natDegree_minpoly {a : PadicAlgCl p} (n : ℕ) (ha : a ^ p ^ n = (p : PadicAlgCl p)) :
+    p ^ n ∣ (minpoly ℚ_[p] a).natDegree := by
+  set d := (minpoly ℚ_[p] a).natDegree with hd
+  have ha0 : a ≠ 0 := by
+    intro h0
+    rw [h0, zero_pow (pow_ne_zero _ (Fact.out : p.Prime).ne_zero)] at ha
+    exact (Nat.cast_ne_zero.mpr (Fact.out : p.Prime).ne_zero) ha.symm
+  set c0 := (minpoly ℚ_[p] a).coeff 0 with hc0
+  have hc0ne : c0 ≠ 0 := minpoly.coeff_zero_ne_zero (Algebra.IsIntegral.isIntegral a) ha0
+  have h1 := norm_pow_natDegree_minpoly p a
+  have h2 : ‖a‖ ^ p ^ n = (p : ℝ)⁻¹ := by
+    rw [← norm_pow, ha, ← map_natCast (algebraMap ℚ_[p] (PadicAlgCl p)), PadicAlgCl.norm_extends,
+      Padic.norm_p]
+  have h3 : ‖c0‖ ^ p ^ n = ((p : ℝ)⁻¹) ^ d := by
+    rw [hc0, ← h1, ← pow_mul, mul_comm, pow_mul, h2]
+  rw [Padic.norm_eq_zpow_neg_valuation hc0ne] at h3
+  have hp1 : (1 : ℝ) < p := by exact_mod_cast (Fact.out : p.Prime).one_lt
+  have h4 : ((p : ℝ) ^ (-c0.valuation)) ^ ((p ^ n : ℕ) : ℤ) = ((p : ℝ) ^ (-1 : ℤ)) ^ (d : ℤ) := by
+    rw [zpow_natCast, zpow_natCast, h3, zpow_neg_one]
+  rw [← zpow_mul, ← zpow_mul] at h4
+  have h5 := zpow_right_injective₀ (by positivity : (0 : ℝ) < p) hp1.ne' h4
+  have h6 : (d : ℤ) = c0.valuation * ((p ^ n : ℕ) : ℤ) := by linarith
+  have h7 : ((p ^ n : ℕ) : ℤ) ∣ (d : ℤ) := ⟨c0.valuation, by rw [h6]; ring⟩
+  exact Int.natCast_dvd_natCast.mp h7
+
+/-- **For every finite `K`, some `σ ∈ G_K` moves `p♭`.** -/
+theorem exists_mem_fixingSubgroup_uSigma_ne_one (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    [FiniteDimensional ℚ_[p] K] : ∃ σ ∈ K.fixingSubgroup, uSigma p σ ≠ 1 := by
+  obtain ⟨n, hn⟩ : ∃ n : ℕ, Module.finrank ℚ_[p] K < p ^ n :=
+    ⟨Module.finrank ℚ_[p] K, Nat.lt_pow_self (Fact.out : p.Prime).one_lt⟩
+  set r := ZInQ.Contrib.G9.BdrKer.Cp.root (pFlat p) n with hr
+  have hrp : r ^ p ^ n = (p : O) := by
+    rw [hr, ZInQ.Contrib.G9.BdrKer.Cp.root_pow, pFlat_untilt]
+  set f : Polynomial (PadicAlgCl p) := Polynomial.X ^ p ^ n - Polynomial.C (p : PadicAlgCl p) with hf
+  have hf0 : f ≠ 0 := Polynomial.X_pow_sub_C_ne_zero (pow_pos (Fact.out : p.Prime).pos n) _
+  have hroot : (f.map (algebraMap (PadicAlgCl p) ℂ_[p])).IsRoot (r : ℂ_[p]) := by
+    simp only [hf, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
+      Polynomial.IsRoot, Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X,
+      map_natCast]
+    have := congrArg (fun z : O => (z : ℂ_[p])) hrp
+    simp only [SubmonoidClass.coe_pow] at this
+    rw [this]
+    simp
+  obtain ⟨a, ha⟩ := (IsAlgClosed.splits f).mem_range_of_isRoot hf0 hroot
+  have hap : a ^ p ^ n = (p : PadicAlgCl p) := by
+    apply (algebraMap (PadicAlgCl p) ℂ_[p]).injective
+    rw [map_pow, ha, map_natCast]
+    have := congrArg (fun z : O => (z : ℂ_[p])) hrp
+    simpa using this
+  -- `a ∉ K` by degrees
+  have haK : a ∉ K := by
+    intro haK
+    have hint : IsIntegral ℚ_[p] a := Algebra.IsIntegral.isIntegral a
+    have hle : IntermediateField.adjoin ℚ_[p] {a} ≤ K :=
+      IntermediateField.adjoin_simple_le_iff.mpr haK
+    have h1 : (minpoly ℚ_[p] a).natDegree ≤ Module.finrank ℚ_[p] K := by
+      rw [← IntermediateField.adjoin.finrank hint]
+      exact IntermediateField.finrank_le_of_le_right hle
+    have h2 := Nat.le_of_dvd (minpoly.natDegree_pos hint) (pow_dvd_natDegree_minpoly p n hap)
+    omega
+  -- some `σ ∈ G_K` moves `a`
+  obtain ⟨σ, hσK, hσ⟩ : ∃ σ ∈ K.fixingSubgroup, σ a ≠ a := by
+    by_contra hcon
+    push Not at hcon
+    apply haK
+    rw [← InfiniteGalois.fixedField_fixingSubgroup K]
+    exact fun σ => hcon σ.1 σ.2
+  refine ⟨σ, hσK, fun h1 => hσ ?_⟩
+  have h2 : flatAct p σ (pFlat p) = pFlat p := by
+    rw [← uSigma_spec, h1, one_mul]
+  have h3 := root_preTiltMap p (oAct p σ) (pFlat p) n
+  change ZInQ.Contrib.G9.BdrKer.Cp.root (flatAct p σ (pFlat p)) n = _ at h3
+  rw [h2, ← hr] at h3
+  have h4 := congrArg (fun z : O => (z : ℂ_[p])) h3
+  change (r : ℂ_[p]) = cpAct p σ (r : ℂ_[p]) at h4
+  rw [← ha] at h4
+  have h5 : ((σ a : PadicAlgCl p) : ℂ_[p]) = (a : ℂ_[p]) :=
+    (cpAct_coe p σ a).symm.trans h4.symm
+  exact (algebraMap (PadicAlgCl p) ℂ_[p]).injective h5
+
+/-- **`u ∉ B_st^{G_K}` for every finite `K`**: the monodromy variable is not invariant under any
+open subgroup, as Fontaine's theory requires. -/
+theorem X_not_mem_bstInv (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K] :
+    (Polynomial.X : Bst p) ∉ bstInv p K := by
+  intro h
+  obtain ⟨σ, hσK, hσ⟩ := exists_mem_fixingSubgroup_uSigma_ne_one p K
+  have := h σ hσK
+  rw [stAct_X, add_eq_left, Polynomial.C_eq_zero, logU_eq] at this
+  exact logOf_bcris_ne_zero p ⟨uSigma p σ, untilt_uSigma p σ, hσ⟩ this
+
+/-- The quadratic character `σ ↦ σ(α)/α` is nontrivial when `α ∉ ℚ_p`. -/
+theorem quadChar_ne_one {α : PadicAlgCl p} {c : ℚ_[p]} (hα : α ^ 2 = algebraMap ℚ_[p] _ c)
+    (h0 : α ≠ 0) (hnot : α ∉ Set.range (algebraMap ℚ_[p] (PadicAlgCl p))) :
+    quadChar p hα h0 ≠ 1 := by
+  classical
+  intro h1
+  obtain ⟨σ, hσ⟩ : ∃ σ : GQp p, σ α ≠ α := by
+    by_contra hcon
+    push Not at hcon
+    exact hnot ((InfiniteGalois.mem_range_algebraMap_iff_fixed α).mpr hcon)
+  have h2 := congrArg (fun χ : GQp p →* GL (Fin 1) ℚ_[p] =>
+    ((χ σ : Matrix (Fin 1) (Fin 1) ℚ_[p]) 0 0)) h1
+  simp [quadChar, hσ] at h2
+  norm_num at h2
+
+end UNotInvariantK
+
 /-! ### Summary -/
 
 /-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/

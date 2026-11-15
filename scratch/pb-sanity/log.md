@@ -89,3 +89,9 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
   `FM_coeff_dvd` (for M ≥ 2N+1 all divided-power coefficients of F_M are divisible by N).
 - A_inf[1/p] part: `evS` (A ↦ [x]−1, B ↦ [y]−1), `evS_FM`, `evS_pMul`, `logPartialVal_sub_pMul`.
 - `logAdditive : LogAdditive p`; `stAut : GQp p →* (Bst p ≃+* Bst p)`.
+
+## Step 9: u ∉ B_st^{G_K} for every finite K; quadratic characters nontrivial (COMPILES, 0 errors)
+- `norm_pow_natDegree_minpoly` (‖a‖^deg = ‖minpoly(0)‖ via Mathlib spectralNorm),
+  `pow_dvd_natDegree_minpoly` (a^{p^n} = p ⇒ p^n ∣ [ℚ_p(a):ℚ_p], valuations),
+  `exists_mem_fixingSubgroup_uSigma_ne_one` (some σ ∈ G_K moves p♭, InfiniteGalois.fixedField_fixingSubgroup),
+  `X_not_mem_bstInv` (K finite), `quadChar_ne_one` (α ∉ ℚ_p ⇒ χ_α ≠ 1).

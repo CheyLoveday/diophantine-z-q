@@ -19,7 +19,9 @@ if the definitions are not degenerate. This file proves, with no `sorry` (only `
   cocycle identity for `log [u_σ]` (`stAct_mul_iff`), which follows from the additivity of `log` on
   `{ε : ε^♯ = 1}` (`logAdditive : LogAdditive p`, proved through the truncated identity
   `L_M(a + b + ab) − L_M(a) − L_M(b)` in `ℚ[B][A]`: its coefficients vanish in total degree `≤ M`
-  (a derivative argument) and, in the divided-power basis, are divisible by `N` when `M ≥ 2N + 1`). The monodromy variable is genuine: some `σ` moves `p♭`,
+  (a derivative argument) and, in the divided-power basis, are divisible by `N` when `M ≥ 2N + 1`).
+  The monodromy variable is genuine: for every finite `K` some `σ ∈ G_K` moves `p♭`, so
+  `σ(u) = u + c(σ)t ≠ u` and `u ∉ B_st^{G_K}` (`exists_stAct_X_ne`, `X_not_mem_bstInv`). The monodromy variable is genuine: some `σ` moves `p♭`,
   so `σ(u) = u + c(σ)t ≠ u` and `u ∉ B_st^{G_{ℚ_p}}` (`exists_stAct_X_ne`, `X_not_mem_bstInv_bot`).
 * **`K_0 ⊆ B_st^{G_K}`.** `A_inf → B_st` is injective and equivariant (`embW_injective`,
   `stAct_embW`); for a root of unity `μ ∈ K` of order prime to `p`, the Teichmüller lift `[μ♭]`
@@ -32,7 +34,8 @@ if the definitions are not degenerate. This file proves, with no `sorry` (only `
   `σ ↦ σ(α)/α` (`isPst_quadChar`) are potentially semistable. A character with a unit period in
   `B_st` is semistable (`isSemistableOver_of_period`); so the quadratic character of a root of
   unity `β` of order prime to `p` with `β² ∈ ℚ_p` (for `p` odd and `β` of order `2(p − 1)`, the
-  unramified quadratic character) is semistable over `ℚ_p` itself (`isSemistableOver_quadChar_teich`).
+  unramified quadratic character) is semistable over `ℚ_p` itself (`isSemistableOver_quadChar_teich`),
+  and nontrivial when `β ∉ ℚ_p` (`quadChar_ne_one`).
 
 Not proved (see `docs/research/pb-sanity.md`): `B_st^{G_K} ⊆ K_0` (in particular the finite
 dimensionality of `B_st^{G_K}`, which `IsSemistableOver` needs to mean Fontaine's condition), and a
