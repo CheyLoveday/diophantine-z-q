@@ -4,8 +4,27 @@ import ZInQKernel.Contrib.TYZGenus.ShimuraTheta
 import ZInQKernel.Contrib.TYZGenus.ShimuraThetaDup
 import ZInQKernel.Contrib.TYZGenus.ShimuraZn
 
-/-! hx-used, scratch: the eta route (hCM + one explicit identity ⇒ the level-32 instances of
-`ShimuraReciprocityModFn`). Part 1: the lattices `⟨1/M, τ_Q⟩` in `K`. -/
+/-!
+# hx-used: the eta route (helper of `ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean`)
+
+Task hx-used (2026-11-15). Copied from `scratch/hx-used/EtaRoute.lean`. Report: `docs/research/hx-used.md`.
+
+The two level-32 instances of `Shimura.ShimuraReciprocityModFn` that the consumers of `hX` use
+(`g = X0.xC`, `g = X0.yC`) follow from the printed main theorem of CM `T5Glue.ShimuraMainCM` and one explicit
+identity `XEtaWeierstrass` (x0-32's eta quotient `x` as a weight-0 ratio of Weierstrass values of the lattice
+`⟨1/16, τ⟩` at torsion points), with no canonical-model input:
+`srAt_x`, `srAt_y : XEtaWeierstrass → ShimuraMainCM → ShimuraReciprocityModFnAt 32 _`.
+
+Method: for a Heegner pair `(Q, Q')` and an idele `s` with `σ = [s, K]`, the kernel's `IdeleLatticeScale`
+(gt-ringclass) gives `s⁻¹⟨1, τ_Q⟩ = c'⟨1, τ_{Q'}⟩`, `s⁻¹⟨1/32, τ_Q⟩ = c'⟨1/32, τ_{Q'}⟩`; from these,
+`s⁻¹⟨1/M, τ_Q⟩ = c'⟨1/M, τ_{Q'}⟩` for `M = 16, 2` (`sInv_latM`) and the images of the torsion points `1/32`, `τ/8`,
+`τ/2` are pinned down modulo the lattices (`exists_v1`, `exists_vt`); `ShimuraMainCM` at the lattices `⟨1/16, τ_Q⟩`
+and `⟨1/2, τ_Q⟩` then moves the `℘`-ratio of `XEtaWeierstrass` and of its Fricke transform to the corresponding
+ratio at `τ_{Q'}` (`transport16`, `transport2`); `y` is a polynomial in `x` and `x∘W₃₂` (`yC_formula`, from the
+proved Fricke relation).
+
+No `sorry`, no `axiom`.
+-/
 
 noncomputable section
 
@@ -887,6 +906,61 @@ theorem xEtaWeierstrassPair_of (hX : XEtaWeierstrass) : XEtaWeierstrassPair := b
     wp_congr _ 7 1 (by rw [hω.1, hω.2]; push_cast; ring)
   rw [wpRatio, wpRatio, r1, r2, r3]
 
+
+/-- **GLUE THETA-WP-8 (Jacobi's `θ` against `℘` at 8-torsion; an identity of explicit functions on `ℍ`).**
+For the lattice `⟨1, w⟩`, `w ∈ ℍ`, with Mathlib's `jacobiTheta₂` (`θ(z; w) = Σₙ e^{2πinz + πin²w}`) and
+`℘ = ℘_{⟨1, w⟩}` (Mathlib's `PeriodPair.weierstrassP`):
+`θ(0; w) / (e^{πiw/4} θ(w/2; w)) = 1 − 2(℘(1/2) − ℘(1/2 + w/8))/(℘(3w/8) − ℘(1/2 + w/8))`.
+The left side is `θ₀₀(w)/θ₁₀(w)` in the classical notation. Checked at 12 random points of `ℍ` to 40 digits
+(`scratch/hx-used/num/check_theta.py`); found as the form of `XEtaWeierstrass` under the kernel's proved
+`x = 2θ₀₀(16τ)/θ₁₀(16τ)` (`Shimura.xC_theta`). Classical in nature (Jacobi's relations between theta constants and
+`℘` at torsion points, e.g. via `℘(u) − ℘(v) = −σ(u − v)σ(u + v)/(σ(u)²σ(v)²)` and `σ ∝ e^{ηz²/2}θ₁`); no printed
+source located (theorem numbers would be UNVERIFIED in any case). -/
+def ThetaWeierstrass8 : Prop :=
+  ∀ w : UpperHalfPlane,
+    jacobiTheta₂ 0 w / (cexp (Real.pi * I * w / 4) * jacobiTheta₂ ((w : ℂ) / 2) w) =
+      1 - 2 * wpRatio (pp w) (1 / 2) (3 * (w : ℂ) / 8) (1 / 2 + (w : ℂ) / 8)
+
+/-- `16τ ∈ ℍ`. -/
+def mul16 (τ : UpperHalfPlane) : UpperHalfPlane :=
+  ⟨16 * (τ : ℂ), by
+    have := ZInQ.Contrib.TYZGenus.X0.mul_mem_upperHalfPlaneSet (d := 16) (by norm_num) τ
+    simpa using this⟩
+
+/-- `⟨1/16, τ⟩ = (1/16)·⟨1, 16τ⟩`. -/
+theorem isScale_16 (τ : UpperHalfPlane) :
+    IsScale (ppM 16 (by norm_num) τ) (pp (mul16 τ)) (1 / 16) := by
+  refine ⟨by norm_num, ?_⟩
+  ext x
+  simp only [SetLike.mem_coe, PeriodPair.mem_lattice, Set.mem_smul_set, smul_eq_mul, ppM, pp, mul16]
+  constructor
+  · rintro ⟨a, b, rfl⟩
+    exact ⟨a * 1 + b * (16 * (τ : ℂ)), ⟨a, b, rfl⟩, by push_cast; ring⟩
+  · rintro ⟨y, ⟨a, b, rfl⟩, rfl⟩
+    exact ⟨a, b, by push_cast; ring⟩
+
+/-- **`XEtaWeierstrass` from its theta form** (with the kernel's `Shimura.xC_theta`). -/
+theorem xEtaWeierstrass_of_theta (h : ThetaWeierstrass8) : XEtaWeierstrass := by
+  intro τ
+  have hw := h (mul16 τ)
+  have hm : ((mul16 τ : UpperHalfPlane) : ℂ) = 16 * (τ : ℂ) := rfl
+  rw [hm] at hw
+  have hQ : Qt (τ : ℂ) ^ 2 = cexp (Real.pi * I * (16 * (τ : ℂ)) / 4) := by
+    rw [Qt_def, ← Complex.exp_nat_mul]; congr 1; push_cast; ring
+  have h8 : (16 * (τ : ℂ)) / 2 = 8 * τ := by ring
+  rw [h8] at hw
+  rw [xC_theta τ, hQ, mul_div_assoc, hw]
+  have e : wpRatio (pp (mul16 τ)) (1 / 2) (3 * (16 * (τ : ℂ)) / 8) (1 / 2 + 16 * (τ : ℂ) / 8) =
+      wpRatio (ppM 16 (by norm_num) τ) ((1 / 16) * (1 / 2)) ((1 / 16) * (3 * (16 * (τ : ℂ)) / 8))
+        ((1 / 16) * (1 / 2 + 16 * (τ : ℂ) / 8)) := by
+    rw [wpRatio_scale (isScale_16 τ)]
+  have e2 : wpRatio (ppM 16 (by norm_num) τ) ((1 / 16) * (1 / 2)) ((1 / 16) * (3 * (16 * (τ : ℂ)) / 8))
+        ((1 / 16) * (1 / 2 + 16 * (τ : ℂ) / 8)) =
+      wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (3 * (τ : ℂ) / 8) (1 / 32 + (τ : ℂ) / 8) := by
+    congr 1 <;> ring
+  rw [e, e2]
+  ring
+
 /-- `⟨1/16, −1/(32τ)⟩ = (−1/(16τ))·⟨1/2, τ⟩`. -/
 theorem isScale_fricke (τ : UpperHalfPlane) :
     IsScale (ppM 16 (by norm_num) (frickeH τ)) (ppM 2 (by norm_num) τ) (-1 / (16 * (τ : ℂ))) := by
@@ -1077,7 +1151,15 @@ theorem srAt_y (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
     X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.yC τ) :=
   srAt_of_conj _ fun T e he σ hs => y_conj (xEtaWeierstrassPair_of hX) hCM T e he σ hs
 
-#print axioms srAt_x
-#print axioms srAt_y
+/-- `srAt_x` from the theta form of the glue. -/
+theorem srAt_x_theta (hT : ThetaWeierstrass8) (hCM : ShimuraMainCM) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.xC τ) :=
+  srAt_x (xEtaWeierstrass_of_theta hT) hCM
+
+/-- `srAt_y` from the theta form of the glue. -/
+theorem srAt_y_theta (hT : ThetaWeierstrass8) (hCM : ShimuraMainCM) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.yC τ) :=
+  srAt_y (xEtaWeierstrass_of_theta hT) hCM
+
 
 end X0EtaRoute

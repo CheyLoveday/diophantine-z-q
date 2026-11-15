@@ -906,6 +906,61 @@ theorem xEtaWeierstrassPair_of (hX : XEtaWeierstrass) : XEtaWeierstrassPair := b
     wp_congr _ 7 1 (by rw [hω.1, hω.2]; push_cast; ring)
   rw [wpRatio, wpRatio, r1, r2, r3]
 
+
+/-- **GLUE THETA-WP-8 (Jacobi's `θ` against `℘` at 8-torsion; an identity of explicit functions on `ℍ`).**
+For the lattice `⟨1, w⟩`, `w ∈ ℍ`, with Mathlib's `jacobiTheta₂` (`θ(z; w) = Σₙ e^{2πinz + πin²w}`) and
+`℘ = ℘_{⟨1, w⟩}` (Mathlib's `PeriodPair.weierstrassP`):
+`θ(0; w) / (e^{πiw/4} θ(w/2; w)) = 1 − 2(℘(1/2) − ℘(1/2 + w/8))/(℘(3w/8) − ℘(1/2 + w/8))`.
+The left side is `θ₀₀(w)/θ₁₀(w)` in the classical notation. Checked at 12 random points of `ℍ` to 40 digits
+(`scratch/hx-used/num/check_theta.py`); found as the form of `XEtaWeierstrass` under the kernel's proved
+`x = 2θ₀₀(16τ)/θ₁₀(16τ)` (`Shimura.xC_theta`). Classical in nature (Jacobi's relations between theta constants and
+`℘` at torsion points, e.g. via `℘(u) − ℘(v) = −σ(u − v)σ(u + v)/(σ(u)²σ(v)²)` and `σ ∝ e^{ηz²/2}θ₁`); no printed
+source located (theorem numbers would be UNVERIFIED in any case). -/
+def ThetaWeierstrass8 : Prop :=
+  ∀ w : UpperHalfPlane,
+    jacobiTheta₂ 0 w / (cexp (Real.pi * I * w / 4) * jacobiTheta₂ ((w : ℂ) / 2) w) =
+      1 - 2 * wpRatio (pp w) (1 / 2) (3 * (w : ℂ) / 8) (1 / 2 + (w : ℂ) / 8)
+
+/-- `16τ ∈ ℍ`. -/
+def mul16 (τ : UpperHalfPlane) : UpperHalfPlane :=
+  ⟨16 * (τ : ℂ), by
+    have := ZInQ.Contrib.TYZGenus.X0.mul_mem_upperHalfPlaneSet (d := 16) (by norm_num) τ
+    simpa using this⟩
+
+/-- `⟨1/16, τ⟩ = (1/16)·⟨1, 16τ⟩`. -/
+theorem isScale_16 (τ : UpperHalfPlane) :
+    IsScale (ppM 16 (by norm_num) τ) (pp (mul16 τ)) (1 / 16) := by
+  refine ⟨by norm_num, ?_⟩
+  ext x
+  simp only [SetLike.mem_coe, PeriodPair.mem_lattice, Set.mem_smul_set, smul_eq_mul, ppM, pp, mul16]
+  constructor
+  · rintro ⟨a, b, rfl⟩
+    exact ⟨a * 1 + b * (16 * (τ : ℂ)), ⟨a, b, rfl⟩, by push_cast; ring⟩
+  · rintro ⟨y, ⟨a, b, rfl⟩, rfl⟩
+    exact ⟨a, b, by push_cast; ring⟩
+
+/-- **`XEtaWeierstrass` from its theta form** (with the kernel's `Shimura.xC_theta`). -/
+theorem xEtaWeierstrass_of_theta (h : ThetaWeierstrass8) : XEtaWeierstrass := by
+  intro τ
+  have hw := h (mul16 τ)
+  have hm : ((mul16 τ : UpperHalfPlane) : ℂ) = 16 * (τ : ℂ) := rfl
+  rw [hm] at hw
+  have hQ : Qt (τ : ℂ) ^ 2 = cexp (Real.pi * I * (16 * (τ : ℂ)) / 4) := by
+    rw [Qt_def, ← Complex.exp_nat_mul]; congr 1; push_cast; ring
+  have h8 : (16 * (τ : ℂ)) / 2 = 8 * τ := by ring
+  rw [h8] at hw
+  rw [xC_theta τ, hQ, mul_div_assoc, hw]
+  have e : wpRatio (pp (mul16 τ)) (1 / 2) (3 * (16 * (τ : ℂ)) / 8) (1 / 2 + 16 * (τ : ℂ) / 8) =
+      wpRatio (ppM 16 (by norm_num) τ) ((1 / 16) * (1 / 2)) ((1 / 16) * (3 * (16 * (τ : ℂ)) / 8))
+        ((1 / 16) * (1 / 2 + 16 * (τ : ℂ) / 8)) := by
+    rw [wpRatio_scale (isScale_16 τ)]
+  have e2 : wpRatio (ppM 16 (by norm_num) τ) ((1 / 16) * (1 / 2)) ((1 / 16) * (3 * (16 * (τ : ℂ)) / 8))
+        ((1 / 16) * (1 / 2 + 16 * (τ : ℂ) / 8)) =
+      wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (3 * (τ : ℂ) / 8) (1 / 32 + (τ : ℂ) / 8) := by
+    congr 1 <;> ring
+  rw [e, e2]
+  ring
+
 /-- `⟨1/16, −1/(32τ)⟩ = (−1/(16τ))·⟨1/2, τ⟩`. -/
 theorem isScale_fricke (τ : UpperHalfPlane) :
     IsScale (ppM 16 (by norm_num) (frickeH τ)) (ppM 2 (by norm_num) τ) (-1 / (16 * (τ : ℂ))) := by
@@ -1095,6 +1150,16 @@ theorem srAt_x (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
 theorem srAt_y (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
     X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.yC τ) :=
   srAt_of_conj _ fun T e he σ hs => y_conj (xEtaWeierstrassPair_of hX) hCM T e he σ hs
+
+/-- `srAt_x` from the theta form of the glue. -/
+theorem srAt_x_theta (hT : ThetaWeierstrass8) (hCM : ShimuraMainCM) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.xC τ) :=
+  srAt_x (xEtaWeierstrass_of_theta hT) hCM
+
+/-- `srAt_y` from the theta form of the glue. -/
+theorem srAt_y_theta (hT : ThetaWeierstrass8) (hCM : ShimuraMainCM) :
+    X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.yC τ) :=
+  srAt_y (xEtaWeierstrass_of_theta hT) hCM
 
 
 end X0EtaRoute

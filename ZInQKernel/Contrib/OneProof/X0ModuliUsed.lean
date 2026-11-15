@@ -27,6 +27,9 @@ consumers of `ShimuraReciprocityModFn` with the restricted statement); `ZInQ.Fro
 identity `X0EtaRoute.XEtaWeierstrass` (x0-32's `x` as a weight-0 ratio of Weierstrass values of `⟨1/16, τ⟩` at
 torsion points; glue, numerically verified), with no canonical-model input: `X0EtaRoute.srAt_x`, `srAt_y`,
 `tyzThm35ReadingA_of_eta`, and `ZInQ.FrozenTarget` with `hX` replaced by `XEtaWeierstrass` (`frozenTarget_of_eta`).
+The same with the glue in theta form `X0EtaRoute.ThetaWeierstrass8` (`θ₀₀(w)/θ₁₀(w)` against `℘_{⟨1,w⟩}` at
+8-torsion points, no eta quotients; implies `XEtaWeierstrass`): `tyzThm35ReadingA_of_theta`, `frozenTarget_of_theta`
+(the recommended fold).
 
 No `sorry`, no `axiom`.
 -/
@@ -361,6 +364,30 @@ theorem frozenTarget_of_eta
     (tyzThm35ReadingA_of_eta h11 h29 hCM hXE h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
 
+open ZInQ.Contrib.TYZDecomp in
+/-- **TYZ reading A without `hX`, theta form of the glue** (`X0EtaRoute.ThetaWeierstrass8`: Jacobi's `θ₀₀/θ₁₀`
+against `℘` at 8-torsion points; implies `XEtaWeierstrass` by the kernel's `Shimura.xC_theta`). -/
+theorem tyzThm35ReadingA_of_theta (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
+    (hCM : T5Glue.ShimuraMainCM) (hT : X0EtaRoute.ThetaWeierstrass8)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33) : ZInQ.Literature.TYZThm35ReadingA :=
+  tyzThm35ReadingA_of_eta h11 h29 hCM (X0EtaRoute.xEtaWeierstrass_of_theta hT) h33
+
+/-- **Theorem 1.1 with `hX` replaced by `X0EtaRoute.ThetaWeierstrass8`** (the recommended manual fold): the term of
+`ZInQ.OneProof.frozenTarget` with `tyzThm35ReadingA_of_leaves h11 h29 (shimuraReciprocityModFn_of_printed hCM hX)
+(tyzThm33Pinned_of_tyzThm33 h33)` replaced by `tyzThm35ReadingA_of_theta h11 h29 hCM hT h33`. -/
+theorem frozenTarget_of_theta
+    (r : HDec.HSyn.OpenResearchLeaves22) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves17)
+    (g : HDec.HSyn.OpenGlue7)
+    (h11 : ZInQ.Contrib.TYZDecomp.TYZThm11Integral) (h29 : ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2)
+    (hCM : _root_.T5Glue.ShimuraMainCM) (hT : X0EtaRoute.ThetaWeierstrass8)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
+    (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+    ZInQ.FrozenTarget :=
+  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+    (HDec.HSyn.sixContactMin_of_open29 r t l g)
+    (tyzThm35ReadingA_of_theta h11 h29 hCM hT h33)
+    ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
+
 end X0ModuliUsed
 
 #print axioms X0ModuliUsed.x0ModuliGaloisX0_32_of
@@ -370,3 +397,6 @@ end X0ModuliUsed
 #print axioms X0EtaRoute.srAt_y
 #print axioms X0ModuliUsed.tyzThm35ReadingA_of_eta
 #print axioms X0ModuliUsed.frozenTarget_of_eta
+#print axioms X0EtaRoute.xEtaWeierstrass_of_theta
+#print axioms X0ModuliUsed.tyzThm35ReadingA_of_theta
+#print axioms X0ModuliUsed.frozenTarget_of_theta

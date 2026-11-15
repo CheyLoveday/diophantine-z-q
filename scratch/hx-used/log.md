@@ -73,3 +73,16 @@ axioms [propext, Classical.choice, Quot.sound]. So the consumers' needs follow f
   (8y = x³ + 4x + 16 − (x−2)²(x∘W + x + 2), from the proved `Shimura.etaModelFricke`).
 * `x_conj`, `xW_conj`, `y_conj`, `srAt_of_conj` (algebraicity with s = 1; main case: AutExtends, ArtinLift
   (`artinLift_of_abs absArtinSurjectiveQNeg`), `ringClass_of_artin`, `ideleLatticeScale_of ringClassLattice invertibleColon`).
+
+## 6. Glue reduced and in theta form; contributor file (VERIFIED: lake build, standard axioms)
+
+* `X0EtaRoute.xEtaWeierstrassPair_of : XEtaWeierstrass → XEtaWeierstrassPair` (second form from x(γ₃τ) = x(τ),
+  γ₃ = [[3,1],[32,11]] ∈ Γ₀(32), kernel `Shimura.etaModelInvariant`, and ⟨1/16, γ₃τ⟩ = (32τ+11)⁻¹⟨1/16, τ⟩).
+* `X0EtaRoute.ThetaWeierstrass8` (θ(0;w)/(e^{πiw/4}θ(w/2;w)) = 1 − 2(℘(1/2) − ℘(1/2+w/8))/(℘(3w/8) − ℘(1/2+w/8)),
+  ℘ of ⟨1,w⟩) and `xEtaWeierstrass_of_theta : ThetaWeierstrass8 → XEtaWeierstrass` (kernel `Shimura.xC_theta`).
+  Numerics: `num/check_theta.py`, 12 random w, worst relative error 5e-41.
+* Helper module `ZInQKernel/Contrib/OneProof/X0ModuliUsed/EtaRoute.lean` (copy `scratch/hx-used/EtaRoute.lean`);
+  `X0ModuliUsed.lean` §5: `tyzThm35ReadingA_of_eta`, `frozenTarget_of_eta`, `tyzThm35ReadingA_of_theta`,
+  `frozenTarget_of_theta`. `lake build ZInQKernel.Contrib.OneProof.X0ModuliUsed`: OK; all axioms standard.
+* `discharges.txt` rerun: `63 open hypotheses, 1987 theorems checked, 7 discharge one` (none from this file: no
+  theorem here concludes an open hypothesis; `hX` is replaced, not proved).
