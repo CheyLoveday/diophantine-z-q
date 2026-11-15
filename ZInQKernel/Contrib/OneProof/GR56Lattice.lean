@@ -349,4 +349,158 @@ theorem scal_injective (hC : ZInQ.HomUnify.HomLatticeCorr) (hA : A.dim = 2) :
 
 end LatData
 
+/-! ## §5 Orders in an imaginary quadratic field -/
+
+section NT
+
+variable {k : Type} [Field k] [NumberField k]
+
+/-- An integral element of a quadratic field satisfies `r² − t r + n = 0` with `t, n ∈ ℤ`. -/
+theorem quad_rel (hk : Module.finrank ℚ k = 2) (r : k) (hr : IsIntegral ℤ r) :
+    ∃ t n : ℤ, r * r - (t : k) * r + (n : k) = 0 := by
+  have hm := minpoly.isIntegrallyClosed_eq_field_fractions' ℚ hr
+  have hdeg : (minpoly ℚ r).natDegree ≤ 2 := hk ▸ minpoly.natDegree_le r
+  have hmon : (minpoly ℤ r).Monic := minpoly.monic hr
+  have hpd : (minpoly ℤ r).natDegree ≤ 2 := by
+    rw [hm, Polynomial.natDegree_map_eq_of_injective (algebraMap ℤ ℚ).injective_int] at hdeg
+    exact hdeg
+  have hpos : 0 < (minpoly ℤ r).natDegree := minpoly.natDegree_pos hr
+  have hev : Polynomial.aeval r (minpoly ℤ r) = 0 := minpoly.aeval ℤ r
+  have hlc : (minpoly ℤ r).coeff (minpoly ℤ r).natDegree = 1 := hmon.coeff_natDegree
+  rw [Polynomial.aeval_eq_sum_range] at hev
+  generalize (minpoly ℤ r) = p at *
+  interval_cases h : p.natDegree
+  · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, pow_zero, pow_one] at hev
+    rw [hlc, one_smul, zsmul_eq_mul, mul_one] at hev
+    refine ⟨-2 * p.coeff 0, p.coeff 0 * p.coeff 0, ?_⟩
+    have : r = -(p.coeff 0 : k) := by linear_combination hev
+    rw [this]; push_cast; ring
+  · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, pow_zero, pow_one] at hev
+    rw [hlc, one_smul, zsmul_eq_mul, zsmul_eq_mul, mul_one] at hev
+    refine ⟨-p.coeff 1, p.coeff 0, ?_⟩
+    push_cast
+    linear_combination hev
+
+theorem roots_cases {x y t n : ℂ} (h1 : x * x - t * x + n = 0) (h2 : y * y - t * y + n = 0) :
+    x = y ∨ x = t - y := by
+  have : (x - y) * (x - (t - y)) = 0 := by linear_combination h1 - h2
+  rcases mul_eq_zero.1 this with h | h
+  · left; linear_combination h
+  · right; linear_combination h
+
+/-- **Two embeddings of an order in `ℂ` have the same image.** -/
+theorem image_cross (hk : Module.finrank ℚ k = 2) (R : Subring k)
+    (hR : R ≤ (integralClosure ℤ k).toSubring) (ψ : k →+* ℂ) (χ : R →+* ℂ) (r : R) :
+    (∃ s : R, χ s = ψ r) ∧ (∃ s : R, ψ s = χ r) := by
+  have hr : IsIntegral ℤ (r : k) := hR r.2
+  obtain ⟨t, n, htn⟩ := quad_rel hk _ hr
+  have hrel : r * r - (t : R) * r + (n : R) = 0 := Subtype.ext (by push_cast; exact htn)
+  have hχ : χ r * χ r - (t : ℂ) * χ r + (n : ℂ) = 0 := by
+    have := congrArg χ hrel
+    simpa using this
+  have hψ : ψ r * ψ r - (t : ℂ) * ψ r + (n : ℂ) = 0 := by
+    have := congrArg ψ htn
+    simpa using this
+  refine ⟨?_, ?_⟩
+  · rcases roots_cases hψ hχ with h | h
+    · exact ⟨r, h.symm⟩
+    · exact ⟨(t : R) - r, by rw [map_sub, map_intCast, h]⟩
+  · rcases roots_cases hχ hψ with h | h
+    · exact ⟨r, h.symm⟩
+    · exact ⟨(t : R) - r, by
+        rw [h]; push_cast; rw [map_sub, map_intCast]⟩
+
+/-- Every element of `k` has a positive integer multiple in an order of finite index. -/
+theorem exists_nat_mul_mem (R : Subring k) (hc : Nat.Coprime (conductor R) 6) (a : k) :
+    ∃ n : ℕ, 0 < n ∧ (n : k) * a ∈ R := by
+  have hc0 : conductor R ≠ 0 := by
+    intro h0; rw [h0] at hc; norm_num at hc
+  have hx : IsAlgebraic ℤ a := IsFractionRing.isAlgebraic_iff ℤ ℚ k |>.mpr (.of_finite ℚ a)
+  obtain ⟨m, s, hm, hms⟩ := hx.exists_nsmul_eq (integralClosure ℤ k)
+  have hmem : m • a ∈ (integralClosure ℤ k).toSubring.toAddSubgroup := by
+    rw [hms]; exact s.2
+  have h2 := R.toAddSubgroup.nsmul_relIndex_mem hmem
+  refine ⟨conductor R * m, Nat.mul_pos (Nat.pos_of_ne_zero hc0) (Nat.pos_of_ne_zero hm), ?_⟩
+  have : (((conductor R * m : ℕ)) : k) * a = conductor R • (m • a) := by
+    rw [smul_smul, nsmul_eq_mul]
+  rw [this]
+  exact h2
+
+/-- An element of `k` outside `ℚ`. -/
+theorem exists_not_rat (hk : Module.finrank ℚ k = 2) : ∃ a : k, ∀ r : ℚ, a ≠ algebraMap ℚ k r := by
+  by_contra h
+  push Not at h
+  have hs : Function.Surjective (Algebra.linearMap ℚ k) := fun a => by
+    obtain ⟨r, hr⟩ := h a; exact ⟨r, hr.symm⟩
+  let e := LinearEquiv.ofBijective (Algebra.linearMap ℚ k) ⟨(algebraMap ℚ k).injective, hs⟩
+  have := e.finrank_eq
+  rw [Module.finrank_self, hk] at this
+  norm_num at this
+
+end NT
+
+/-! ## §6 The optimal embedding of a CM point -/
+
+section Emb
+
+variable {k : Type} [Field k] [NumberField k] {A : PkgI3.AbVar ℂ} {q : QMStr A} (D : LatData A q)
+  (hC : ZInQ.HomUnify.HomLatticeCorr) (hA : A.dim = 2) (R : Subring k)
+  (hc : Nat.Coprime (conductor R) 6) (ψ : k →+* ℂ)
+  (hψ : ∀ r : R, ∃ e : com q, D.scal e = ψ r)
+
+include hC hA hc hψ in
+theorem exists_B (a : k) : ∃ b : B, act b D.v = ψ a • D.v := by
+  obtain ⟨n, hn, hna⟩ := exists_nat_mul_mem R hc a
+  obtain ⟨e, he⟩ := hψ ⟨_, hna⟩
+  obtain ⟨x, -, hxe⟩ := D.exists_O hC hA e
+  refine ⟨((n : ℚ)⁻¹) • x, ?_⟩
+  rw [act_smul, hxe, he, smul_smul]
+  congr 1
+  simp only [map_mul, map_natCast]
+  have : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  push_cast
+  field_simp
+
+/-- The embedding `k → B`: `a ↦` the unique `b` with `ι(b)v = ψ(a)v`. -/
+def embF (a : k) : B := Classical.choose (exists_B D hC hA R hc ψ hψ a)
+
+theorem embF_spec (a : k) : act (embF D hC hA R hc ψ hψ a) D.v = ψ a • D.v :=
+  Classical.choose_spec (exists_B D hC hA R hc ψ hψ a)
+
+/-- The embedding as a `ℚ`-algebra map. -/
+def emb : k →ₐ[ℚ] B where
+  toFun := embF D hC hA R hc ψ hψ
+  map_one' := HDec.QMLattice.act_inj D.v_ne (by rw [embF_spec, act_one, map_one, one_smul])
+  map_mul' a b := HDec.QMLattice.act_inj D.v_ne (by
+    rw [embF_spec, act_mul, embF_spec, HDec.QMLattice.act_smul_vec, embF_spec, smul_smul, map_mul,
+      mul_comm])
+  map_zero' := HDec.QMLattice.act_inj D.v_ne (by rw [embF_spec, act_zero, map_zero, zero_smul])
+  map_add' a b := HDec.QMLattice.act_inj D.v_ne (by
+    rw [embF_spec, act_add, embF_spec, embF_spec, map_add, add_smul])
+  commutes' r := HDec.QMLattice.act_inj D.v_ne (by
+    rw [embF_spec, HDec.QMLattice.act_algebraMap, eq_ratCast (algebraMap ℚ k) r, map_ratCast])
+
+theorem emb_spec (a : k) : act (emb D hC hA R hc ψ hψ a) D.v = ψ a • D.v := embF_spec D hC hA R hc ψ hψ a
+
+include hψ in
+theorem emb_opt (hψ' : ∀ e : com q, ∃ r : R, ψ r = D.scal e) :
+    LeafQM.O.comap (emb D hC hA R hc ψ hψ).toRingHom = R := by
+  ext a
+  rw [Subring.mem_comap]
+  constructor
+  · intro ha
+    obtain ⟨e, he⟩ := D.exists_com hC hA ha (emb_spec D hC hA R hc ψ hψ a)
+    obtain ⟨r, hr⟩ := hψ' e
+    have : (r : k) = a := ψ.injective (hr.trans he)
+    rw [← this]; exact r.2
+  · intro ha
+    obtain ⟨e, he⟩ := hψ ⟨a, ha⟩
+    obtain ⟨x, hx, hxe⟩ := D.exists_O hC hA e
+    have : x = emb D hC hA R hc ψ hψ a :=
+      HDec.QMLattice.act_inj D.v_ne (by rw [hxe, emb_spec, he])
+    show emb D hC hA R hc ψ hψ a ∈ LeafQM.O
+    rw [← this]; exact hx
+
+end Emb
+
 end GR56
