@@ -1,9 +1,9 @@
-# gz-weil: the modular parametrization of `C_d` is a Lean theorem (no Eichler–Shimura, no Faltings, no new leaf)
+# gz-weil: the modular parametrization and the period lattice of `C_d` are Lean theorems (no Eichler–Shimura, no Faltings, no uniformization, no new leaf)
 
 Status: research note (task gz-weil, 2026-11-15), branch `wip/gz-weil` (base c118e9d2 = gz-hl3, merged with
-gz-hl3's later commits up to bbb6c764). Lean: four new contributor files under
+gz-hl3's later commits up to bbb6c764). Lean: five new contributor files under
 `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/` (`Weil.lean`, `WeilParam.lean`, `WeilTheta.lean`,
-`WeilJacobi.lean`). Nothing else
+`WeilJacobi.lean`, `WeilLattice.lean`). Nothing else
 under `ZInQKernel/` was edited. Development files, checks and log: `scratch/gz-weil/`.
 
 Marks. **VERIFIED**: read in a source named here, computed, or compiled. **STANDARD**: a published theorem with
@@ -23,18 +23,24 @@ a theorem:
 ```lean
 -- WeilJacobi.lean
 theorem ZInQ.GZWeil.shimuraCMParamCd_proved : ZInQ.GZHL3.ShimuraCMParamCd
-
-theorem ZInQ.GZWeil.grossZagierHeegnerCd_of_heegnerLeaves (hU : GZHL3.WeierstrassUniformization)
-    (hHP : GZHL3.HeegnerPointRationalCd) (hGZ : GZHL3.GrossZagierFormulaCd)
-    (hGC : GZHL3.GrossConjugationCd) : ZInQ.GZStatements.GrossZagierHeegnerCd
+-- WeilLattice.lean
+theorem ZInQ.GZWeil.exists_isPeriodLattice_cd {d : ℕ} (hd : d ≠ 0) :
+    ∃ L : PeriodPair, ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L
+theorem ZInQ.GZWeil.grossZagierHeegnerCd_of_threeLeaves (hHP : GZHL3.HeegnerPointRationalCd)
+    (hGZ : GZHL3.GrossZagierFormulaCd) (hGC : GZHL3.GrossConjugationCd) :
+    ZInQ.GZStatements.GrossZagierHeegnerCd
 ```
 
+The construction of a period lattice of `C_d` also makes gz-hl3's `WeierstrassUniformization` unnecessary on
+the `C_d` route. The square lattice `ℤ + ℤi` has `g₃ = 0`, every lattice with `g₃ = 0` has `g₂ ≠ 0`, and a rescaling
+gives `g₂ = 4d²` (§3.5).
+
 All new theorems depend only on `[propext, Classical.choice, Quot.sound]`. That is VERIFIED, compiled:
-`scratch/gz-weil/Check.lean`, output `out_check.txt`, 26 theorems.
+`scratch/gz-weil/Check.lean`, output `out_check.txt`, 31 theorems.
 
 `scratch/gz-weil/MainEdit.lean` proves `ZInQ.FrozenTarget` from `frozenTarget`'s open hypotheses, with `hL3`
-replaced by four leaves: `WeierstrassUniformization`, `HeegnerPointRationalCd`, `GrossZagierFormulaCd` and
-`GrossConjugationCd` (`frozenTarget_gzweil_final`, standard axioms). It goes through gz-statements' proved chain
+replaced by gz-hl3's three Heegner-point leaves: `HeegnerPointRationalCd`, `GrossZagierFormulaCd` and
+`GrossConjugationCd` (`frozenTarget_gzweil_three`, standard axioms). It goes through gz-statements' proved chain
 `GrossZagierHeegnerCd → GrossZagierCd`.
 
 The proof has four steps, all in Lean:
@@ -58,13 +64,17 @@ The proof has four steps, all in Lean:
 | `hL3` itself | (folded in) | 1 | 1 |
 | gz-hl3, general form | `WeierstrassUniformization`, `StrongWeilCurve`, `IsogenyLattice` | 3 (`StrongWeilCurve`, `IsogenyLattice`, `HeegnerPointRational`) | 6 |
 | gz-hl3, `C_d` form | `WeierstrassUniformization`, `ShimuraCMParamCd` | 2 (`ShimuraCMParamCd`, `HeegnerPointRationalCd`) | 5 |
-| **gz-weil, `C_d` form** | **`WeierstrassUniformization` only** | **1 (`HeegnerPointRationalCd`)** | **4** |
+| **gz-weil, `C_d` form** | **none** | **1 (`HeegnerPointRationalCd`)** | **3** |
 
-So gz-weil removes two composite leaves (`StrongWeilCurve`, `IsogenyLattice`), or one (`ShimuraCMParamCd`) on
-gz-hl3's `C_d` route. It adds none. The `C_d` split of `hL3` now has one composite, the Heegner point's
-rationality (outside this task), and three printed leaves: uniformization, the Gross–Zagier formula with its
-constant forgotten, and Gross's conjugation relation. Against `hL3` alone, the composite count is neutral
-(1 → 1). Making it negative needs `HeegnerPointRationalCd` (gz-hl3 §10).
+So gz-weil removes three leaves of gz-hl3's general split (`StrongWeilCurve`, `IsogenyLattice`,
+`WeierstrassUniformization`), or two of its `C_d` split (`ShimuraCMParamCd`, `WeierstrassUniformization`). It adds
+none. The `C_d` split of `hL3` is now exactly the Heegner-point theory:
+- `HeegnerPointRationalCd` (composite, outside this task);
+- `GrossZagierFormulaCd` (printed, constant forgotten);
+- `GrossConjugationCd` (printed).
+
+Against `hL3` alone, the composite count is neutral (1 → 1), with two printed research leaves beside it. Making it
+negative needs `HeegnerPointRationalCd` (gz-hl3 §10).
 
 **The general form is unchanged.** `hL3` as stated quantifies over every elliptic curve over `ℚ`, and for an
 arbitrary `E` the parametrization still needs Eichler–Shimura and Faltings. The gain is on the `C_d` form,
@@ -100,10 +110,11 @@ integrator therefore has to replace `hL3` by the `C_d` chain (§5); `#discharges
 | `GZHL3.ShimuraCMParamCd` (gz-hl3, `Cd.lean`) | `EichlerShimuraParamAt C_d` for all `d ≡ 5 (8)` squarefree | Shimura, Nagoya Math. J. 43 (1971) | composite | **now a theorem** (`shimuraCMParamCd_proved`) |
 | `GZWeil.ModularParamC1` (new, intermediate) | `∀ L` with `g₂ = 4, g₃ = 0` (lattice of `C₁ : y² = x³ − x`): `∃ c ∈ ℚ^×`, `c(Φ₁(γτ) − Φ₁(τ)) ∈ L` for `γ ∈ Γ₀(32)` | Eichler–Shimura for the one newform of level 32 | — | **a theorem** (`modularParamC1`); also implied by gz-hl3's leaves (`modularParamC1_of_leaves`) |
 | `X0.EtaModelDifferential` (x0-32's leaf, existing) | `x'(τ) = 4πi f₁(τ) y(τ)` on the eta-quotient model of `X₀(32)` | Manin constant 1 for 32a1 (Cremona) | — | **a theorem** (`etaModelDifferential`) |
+| `GZHL3.WeierstrassUniformization` (gz-hl3) | `a³ − 27b² ≠ 0 ⇒ ∃ L, g₂ = a, g₃ = b` | Silverman VI.5.1 | printed form | **not needed** on the `C_d` route: a lattice of `C_d` is constructed (`exists_isPeriodLattice_cd`, §3.5) |
 | `GZWeil.JacobiLambdaDeriv` (new, intermediate) | `dλ/dt = πi λ θ₄⁴`, `λ = θ₂⁴/θ₃⁴` | Jacobi, *Fundamenta nova* (1829); Chandrasekharan, *Elliptic functions* (1985), Ch. VII | (would be printed form) | **a theorem** (`jacobiLambdaDeriv`, §3.4) |
 
-What stays from gz-hl3's `C_d` split: `WeierstrassUniformization` (printed), `HeegnerPointRationalCd` (composite),
-`GrossZagierFormulaCd` (printed, constant forgotten) and `GrossConjugationCd` (printed).
+What stays from gz-hl3's `C_d` split: `HeegnerPointRationalCd` (composite), `GrossZagierFormulaCd` (printed,
+constant forgotten) and `GrossConjugationCd` (printed).
 
 ---
 
@@ -186,6 +197,17 @@ The model: x0-32's eta quotients `x, y` on `ℍ`. tyz-cm proved `y² = x³ + 4x`
   factor vanishes identically. Applying `S` then forces `E₂ = 0` (`ω, ω² ≠ 1`), hence `E₁ = 0`. Finally `E₁ = 0`
   says `(log θ₂/θ₃)' = (πi/4)θ₄⁴`, i.e. `λ' = πiλθ₄⁴`.
 
+### 3.5 A period lattice of `C_d` (`WeilLattice.lean`)
+
+* The square lattice `ℤ + ℤi` is stable under multiplication by `i`. Hence `G₆ = i⁻⁶G₆ = −G₆` and `g₃ = 0`
+  (`g₃_squarePP`; `G_congr` because `G` depends only on the lattice).
+* `g₂_ne_zero_of_g₃_eq_zero`. If `g₂ = g₃ = 0`, then `℘'² = 4℘³`. `℘` is onto (§3.2 C4), so it has a zero `z₁`.
+  If `ord_{z₁}℘ = n ≥ 1`, then `ord ℘' = n − 1` and `2(n − 1) = 3n`, which is impossible. If instead `℘ ≡ 0` near
+  `z₁`, then `℘` would be constant on `ℂ ∖ L`.
+* `exists_isPeriodLattice_cd`: rescale by a fourth root of `g₂(ℤ[i])/4d²`.
+* `heegner_at_of_lattice` is gz-hl3's `heegner_at` proof with the lattice given in place of the uniformization
+  theorem. `grossZagierHeegnerCd_of_threeLeaves` assembles everything.
+
 ---
 
 ## 4. Are the statements right? (VERIFIED where marked)
@@ -215,44 +237,43 @@ The model: x0-32's eta quotients `x, y` on `ℍ`. tyz-cm proved `y² = x³ + 4x`
     `GZTheta.EtaTheta`).
   - `.../WeilTheta.lean` (eta identity from Jacobi's formula; imports `WeilParam`);
   - `.../WeilJacobi.lean` (Jacobi's formula proved; imports `WeilTheta` and Mathlib's level-one dimension
-    formula).
+    formula);
+  - `.../WeilLattice.lean` (a lattice of `C_d`; `hL3`'s `C_d` form from the three Heegner-point leaves; imports
+    `WeilJacobi`).
 
-  None imports `OneProof.Main`. `lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi`: success
-  (11342 jobs).
-* **`#discharges`** (`scratch/gz-weil/Discharges.lean` → `discharges-output.txt`): 65 open hypotheses, 1606
+  None imports `OneProof.Main`. `lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilLattice`: success
+  (11343 jobs).
+* **`#discharges`** (`scratch/gz-weil/Discharges.lean` → `discharges-output.txt`): 65 open hypotheses, 1618
   theorems checked, 6 discharge one. The six are the same as before, including gz-hl3's general discharge of
   `hL3`. The new theorems discharge no open hypothesis directly, as expected: `hL3` is stated for all `E`, and
   the new leaves cover `C_d`.
-* **The `Main.lean` edit** (checked out of tree: `scratch/gz-weil/MainEdit.lean`, `frozenTarget_gzweil_final`,
+* **The `Main.lean` edit** (checked out of tree: `scratch/gz-weil/MainEdit.lean`, `frozenTarget_gzweil_three`,
   standard axioms):
-  1. add `import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi`;
+  1. add `import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilLattice`;
   2. replace the binder `(hL3 : ZInQ.GZDecomp.GrossZagierHeegner)` by
-     `(hU : ZInQ.GZHL3.WeierstrassUniformization) (hHP : ZInQ.GZHL3.HeegnerPointRationalCd)
-     (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd) (hGC : ZInQ.GZHL3.GrossConjugationCd)`;
+     `(hHP : ZInQ.GZHL3.HeegnerPointRationalCd) (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd)
+     (hGC : ZInQ.GZHL3.GrossConjugationCd)`;
   3. replace the body's call of `GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves … hL3` by
      `ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
      (HDec.HSyn.sixContactMin_of_open27 r t l g) (tyzThm35ReadingA_of_leaves …)
      (ZInQ.GZStatements.fhNonvanishingCd_of_fhNonvanishing hL2)
-     (ZInQ.GZWeil.grossZagierHeegnerCd_of_heegnerLeaves hU hHP hGZ hGC)`
+     (ZInQ.GZWeil.grossZagierHeegnerCd_of_threeLeaves hHP hGZ hGC)`
      (`MainEdit.lean` gives the composition verbatim).
 
-  `kinds.tsv` then has four rows in place of `hL3`:
-  - `WeierstrassUniformization`: LEAF, textbook, printed form;
+  `kinds.tsv` then has three rows in place of `hL3`:
   - `HeegnerPointRationalCd`: LEAF, composite;
   - `GrossZagierFormulaCd` and `GrossConjugationCd`: LEAF, research, printed form, unread.
 
-  Each needs a `locators.md` row. Intermediate forms are also checked: `frozenTarget_gzweil` with
-  `JacobiLambdaDeriv` as a leaf, and `frozenTarget_gzweil'` with `X0.EtaModelDifferential`.
+  Each needs a `locators.md` row. Intermediate forms are also checked:
+  - `frozenTarget_gzweil_final`, with `WeierstrassUniformization` as a leaf;
+  - `frozenTarget_gzweil`, with `JacobiLambdaDeriv` as a leaf as well;
+  - `frozenTarget_gzweil'`, with `X0.EtaModelDifferential` as a leaf.
 
 ---
 
 ## 6. What remains
 
 * **`HeegnerPointRationalCd`** is the last composite leaf of the `C_d` split (gz-hl3 §10).
-* **`WeierstrassUniformization`** (printed, textbook) could also be removed on the `C_d` route. That needs one
-  lattice with `g₃ = 0`, `g₂ ≠ 0`, for instance `ℤ[i]` rescaled. `g₃(ℤ[i]) = 0` is a symmetry argument;
-  `g₂(ℤ[i]) ≠ 0` needs `E₄(i) ≠ 0`, which follows from `E₄³ − E₆² = 1728Δ`, `Δ ≠ 0` and `E₆(i) = 0` once Mathlib's
-  `PeriodPair.G` is connected to its Eisenstein series. Not attempted.
 * **The general form of `hL3`** (all `E/ℚ`) still needs Eichler–Shimura and Faltings. The present result does not
   apply to it.
 * **By-products for other tasks.** x0-32's leaf `X0.EtaModelDifferential` is a theorem
@@ -264,15 +285,16 @@ The model: x0-32's eta quotients `x, y` on `ℍ`. tyz-cm proved `y² = x³ + 4x`
 ## 7. Reproduction
 
 ```
-lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi
+lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilLattice
 lake env lean scratch/gz-weil/Check.lean          # #print axioms → out_check.txt
 lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges
 lake env lean scratch/gz-weil/Discharges.lean     # → discharges-output.txt
-lake env lean scratch/gz-weil/MainEdit.lean       # frozenTarget_gzweil_final, axioms
+lake env lean scratch/gz-weil/MainEdit.lean       # frozenTarget_gzweil_three (and intermediates), axioms
 python3 scratch/gz-weil/etadiff_check.py          # exact q-series checks
 python3 scratch/gz-weil/lambda_check.py           # Jacobi's formula and product_star, numerically
 python3 scratch/gz-weil/abc_check.py              # S/T laws of the log-derivatives, numerically
 ```
 
 Development files: `scratch/gz-weil/Twist.lean` (= `Weil.lean`), `Unif.lean` (= `WeilParam.lean` with copies),
-`Lambda.lean` (= `WeilTheta.lean`) and `JacobiProof.lean` (= `WeilJacobi.lean`).
+`Lambda.lean` (= `WeilTheta.lean`), `JacobiProof.lean` (= `WeilJacobi.lean`) and `Lattice.lean`
+(= `WeilLattice.lean`).

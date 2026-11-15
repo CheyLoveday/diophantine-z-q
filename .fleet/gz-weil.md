@@ -4,7 +4,9 @@
 `StrongWeilCurve` (Eichler–Shimura, rational Manin constant) and `IsogenyLattice` (Faltings, analytic form) are
 gone, and no new leaf replaces them. Their only consumer, `GZHL3.ShimuraCMParamCd` (the analytic modular
 parametrization of every `C_d`), is now a Lean theorem: `ZInQ.GZWeil.shimuraCMParamCd_proved`, with standard
-axioms only.
+axioms only. gz-hl3's `WeierstrassUniformization` is not needed on the `C_d` route either: a period lattice of
+`C_d` is constructed (`exists_isPeriodLattice_cd`). So the `C_d` form of `hL3` follows from gz-hl3's three
+Heegner-point leaves alone (`grossZagierHeegnerCd_of_threeLeaves`).
 
 The proof has four steps, all in Lean:
 - the twist from `C_d` to `C₁` (Gauss sum of `(·/d)`, Tau Ceti's intertwining lemma, scaling of lattices);
@@ -17,9 +19,8 @@ The proof has four steps, all in Lean:
 
 By-product: x0-32's leaf `X0.EtaModelDifferential` is a theorem.
 
-**Count.** The `C_d` split of `hL3` now has four leaves, against five for gz-hl3's `C_d` split and six for its
+**Count.** The `C_d` split of `hL3` now has three leaves, against five for gz-hl3's `C_d` split and six for its
 general split:
-- `WeierstrassUniformization` (printed);
 - `HeegnerPointRationalCd` (composite);
 - `GrossZagierFormulaCd` (printed, constant forgotten);
 - `GrossConjugationCd` (printed).
@@ -29,15 +30,14 @@ making it negative needs `HeegnerPointRationalCd`, which was outside this task. 
 is unchanged.
 
 **What compiles.**
-- `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/{Weil,WeilParam,WeilTheta,WeilJacobi}.lean` (new files only);
-  `lake build …WeilJacobi` succeeds.
-- `scratch/gz-weil/Check.lean`: 26 theorems, standard axioms.
-- `MainEdit.lean`: `frozenTarget_gzweil_final` = `frozenTarget` with `hL3` replaced by the four leaves above, via
+- `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/{Weil,WeilParam,WeilTheta,WeilJacobi,WeilLattice}.lean` (new
+  files only); `lake build …WeilLattice` succeeds.
+- `scratch/gz-weil/Check.lean`: 31 theorems, standard axioms.
+- `MainEdit.lean`: `frozenTarget_gzweil_three` = `frozenTarget` with `hL3` replaced by the three leaves above, via
   gz-statements' `C_d` chain; standard axioms.
 - `#discharges` is recorded. It shows no direct discharge of `hL3`, because `hL3` is stated for all `E`; the
   integrator must swap `hL3` for the `C_d` chain (report §5).
 
 **What remains.**
-- `HeegnerPointRationalCd`.
-- `WeierstrassUniformization` could also go on the `C_d` route, via `g₂(ℤ[i]) ≠ 0`; not attempted.
+- `HeegnerPointRationalCd` (and the two printed Gross–Zagier/Gross leaves, which are unread).
 - Report: `docs/research/gz-weil.md`.
