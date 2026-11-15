@@ -64,4 +64,101 @@ theorem eq_of_pushforward (hP : PushforwardStructureSheaf) {T X : Scheme.{0}}
   rw [← e1] at e2
   rw [← e2, Category.assoc, h2, Category.comp_id]
 
+section FieldFibre
+
+open scoped CategoryTheory.Obj
+
+variable {S : Scheme.{0}} (F : Over S) [GrpObj F]
+
+/-- **The defect is constant on every fibre of `snd`** (field-level rigidity, the kernel's
+`MulRigidity.isMonHom_of_geometricallyIntegral`, on the base change of `F` to the residue field). -/
+theorem fibre_point_of_field [IsProper F.hom]
+    (hGI : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ S),
+      GeometricallyIntegral (pullback.snd F.hom s))
+    {f : F ⟶ F} (hf : η[F] ≫ f = η[F]) (y : F.left) :
+    ∃ y₀ : (F ⊗ F).left, ∀ x : (F ⊗ F).left, (snd F F).left x = y →
+      (lift (defect F f) (snd F F)).left x = y₀ := by
+  let K : Type := F.left.residueField y
+  let yb : Spec (CommRingCat.of K) ⟶ F.left := F.left.fromSpecResidueField y
+  let sb : Spec (CommRingCat.of K) ⟶ S := yb ≫ F.hom
+  let P := Over.pullback sb
+  let FK : Over (Spec (CommRingCat.of K)) := P.obj F
+  let fK : FK ⟶ FK := P.map f
+  have : IsProper FK.hom := by dsimp [FK, P]; infer_instance
+  have : GeometricallyIntegral FK.hom := hGI K sb
+  have hηK : η[FK] ≫ fK = η[FK] := by
+    change (Functor.LaxMonoidal.ε P ≫ P.map η[F]) ≫ P.map f = Functor.LaxMonoidal.ε P ≫ P.map η[F]
+    rw [Category.assoc, ← Functor.map_comp, hf]
+  have hmon : IsMonHom fK := MulRigidity.isMonHom_of_geometricallyIntegral FK FK fK hηK
+  have hdK : defect FK fK = 1 := by
+    rw [defect, hmon.mul_hom, ← lift_fst_comp_snd_comp, ← Hom.mul_def, mul_inv_cancel]
+  have hμd : Functor.LaxMonoidal.μ P F F ≫ P.map (defect F f) = defect FK fK := by
+    rw [defect, defect, Functor.map_mul, Functor.map_inv', Functor.map_mul, comp_mul,
+      GrpObj.comp_inv, comp_mul, Functor.map_comp, Functor.map_comp, Functor.map_comp,
+      ← Category.assoc, ← Category.assoc (Functor.LaxMonoidal.μ P F F),
+      ← Category.assoc (Functor.LaxMonoidal.μ P F F), Functor.Monoidal.μ_fst,
+      Functor.Monoidal.μ_snd]
+    rfl
+  let yt : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ FK :=
+    Over.homMk (pullback.lift yb (𝟙 _) (by simp [sb])) (by simp [FK, P])
+  let jK : FK ⟶ FK ⊗ FK := lift (𝟙 FK) (toUnit FK ≫ yt)
+  have hjK : jK ≫ defect FK fK = 1 := by
+    rw [hdK, Hom.one_def, Hom.one_def, ← Category.assoc]
+    congr 1
+    exact toUnit_unique _ _
+  let ψ : FK.left ⟶ (F ⊗ F).left :=
+    (jK ≫ Functor.LaxMonoidal.μ P F F).left ≫ pullback.fst _ _
+  have hmap : ∀ {A B : Over S} (g : A ⟶ B),
+      (P.map g).left ≫ pullback.fst B.hom sb = pullback.fst A.hom sb ≫ g.left := fun g =>
+    pullback.lift_fst _ _ _
+  have hψd : ψ ≫ (defect F f).left = FK.hom ≫ η[FK].left ≫ pullback.fst F.hom sb := by
+    calc ψ ≫ (defect F f).left
+        = (jK ≫ Functor.LaxMonoidal.μ P F F ≫ P.map (defect F f)).left ≫
+            pullback.fst F.hom sb := by
+          simp only [ψ, Over.comp_left, Category.assoc]
+          rw [hmap]
+      _ = (jK ≫ defect FK fK).left ≫ pullback.fst F.hom sb := by rw [hμd]
+      _ = _ := by rw [hjK]; rfl
+  have hψs : ψ ≫ (snd F F).left = FK.hom ≫ yb := by
+    simp only [ψ, Over.comp_left, Category.assoc]
+    rw [Over.snd_left, Over.μ_pullback_left_fst_snd, ← Category.assoc, ← Over.snd_left,
+      ← Over.comp_left, lift_snd, Over.comp_left, Over.toUnit_left, Category.assoc]
+    congr 1
+    exact pullback.lift_fst _ _ _
+  have hψf : ψ ≫ pullback.fst F.hom F.hom = pullback.fst F.hom sb := by
+    simp only [ψ, Over.comp_left, Category.assoc]
+    rw [Over.μ_pullback_left_fst_fst, ← Category.assoc, ← Over.fst_left,
+      ← Over.comp_left, lift_fst, Over.id_left, Category.id_comp]
+  have hpb : IsPullback ψ FK.hom (snd F F).left yb := by
+    refine IsPullback.of_right ?_ hψs (IsPullback.of_hasPullback F.hom F.hom)
+    rw [hψf]
+    exact IsPullback.of_hasPullback F.hom sb
+  clear_value ψ
+  have hcond : (η[FK].left ≫ pullback.fst F.hom sb) ≫ F.hom = yb ≫ F.hom := by
+    rw [Category.assoc, pullback.condition, ← Category.assoc]
+    have : η[FK].left ≫ FK.hom = 𝟙 _ := Over.w η[FK]
+    erw [this, Category.id_comp]
+  refine ⟨(pullback.lift (η[FK].left ≫ pullback.fst F.hom sb) yb hcond) (default : Spec (CommRingCat.of K)), fun x hx => ?_⟩
+  have hx' : (snd F F).left x = yb (default : Spec (CommRingCat.of K)) := by
+    rw [hx]
+    exact (Scheme.fromSpecResidueField_apply _ _).symm
+  obtain ⟨w, hw1, hw2⟩ :=
+    Scheme.Pullback.exists_preimage_pullback (f := (snd F F).left) (g := yb) x default hx'
+  have hz : ψ (hpb.isoPullback.inv w) = x := by
+    rw [← hw1, ← Scheme.Hom.comp_apply, hpb.isoPullback_inv_fst]
+  have key : ψ ≫ (lift (defect F f) (snd F F)).left =
+      FK.hom ≫ pullback.lift (η[FK].left ≫ pullback.fst F.hom sb) yb hcond := by
+    apply pullback.hom_ext
+    · rw [Category.assoc, Category.assoc, pullback.lift_fst]
+      change ψ ≫ ((lift (defect F f) (snd F F)) ≫ fst F F).left = _
+      rw [lift_fst, hψd]
+    · rw [Category.assoc, Category.assoc, pullback.lift_snd]
+      change ψ ≫ ((lift (defect F f) (snd F F)) ≫ snd F F).left = _
+      rw [lift_snd, hψs]
+  rw [← hz, ← Scheme.Hom.comp_apply, key, Scheme.Hom.comp_apply]
+  congr 1
+  exact Subsingleton.elim _ _
+
+end FieldFibre
+
 end ZInQ.Contrib.MumfordRigidity
