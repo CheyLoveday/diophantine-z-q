@@ -21,7 +21,7 @@ verbatim copy of the field with an `example : copy = kernel constant := rfl` che
 |---|---|---|---|
 | `neronLocalizesDVR` (`ReductGlue.NeronLocalizesDVR`) | `CToPrinted.neronLocalizesDVR_of_printed` | `BLR_1_2_4`: BLR 1.2 Prop. 4, the full "iff", over every Dedekind domain and every smooth separated `R`-scheme of finite type | **none** (all glue proved) |
 | `faltingsLemma5BC` (`ZInQ.HeightSplit.FaltingsLemma5BC`) | `CToPrinted.faltingsLemma5BC_of_printed` | `FaltingsLemma5Printed`: Faltings 1983 Lemma 5, the identity with the correction term `[K:ℚ]⁻¹ log #s*Ω¹_{G/S}`; `RaynaudKernelBound`: Raynaud, Ast. 127 VII 2.1.3 | **none** (all glue proved) |
-| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed''` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 3 named glue Props about the topology of group schemes: `IdentityComponentGroupModel`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`. reduct-glue's leaf `OpenImmersionOfLocal` is now a **theorem** from EGA IV 8.10.5 (`openImmersionLocalization`) |
+| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed_final'` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 4 small glue Props on the topology of the identity component (`IdCompSubgroup`, `IdCompGeomFibres`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`). Proved: reduct-glue's leaf `OpenImmersionOfLocal` from EGA IV 8.10.5; the group-model construction on `𝒢⁰`; the step from SGA 7 IX 3.3 to reduct-split's form; `IdCompGenericFibre` |
 | `shimuraFamily` (`HDec.QMSplit.Moduli.ShimuraFamily`) | `CToPrinted.Shimura.shimuraFamily_of_mainThmI` | `ShimuraMainThmIY3`: Shimura 1967 Main Thm I with the moduli interpretation, **without the reciprocity law** | none, but the leaf is a consequence of the print rather than the print (§5): the reciprocity law needs global class field theory, which Mathlib lacks |
 
 Also compiled: `semistableNeronBaseChange_of_printedBLR`. It derives SS2 from reduct-glue's three other leaves
@@ -31,9 +31,12 @@ by the printed BLR 1.2/4.
 **Net effect on the strict count** (SPECULATIVE until the integrator rules):
 - `neronLocalizesDVR` and `faltingsLemma5BC` become theorems from published-form leaves, with no glue. That is
   1 GLUE (c) → 1 LEAF, and 1 GLUE (c) → 2 LEAVES.
-- `semistableNeronBaseChange` becomes four printed-form leaves plus three glue Props about the topology of group
-  schemes. One of the four, BLR 1.2/4, is shared with `neronLocalizesDVR`. reduct-glue's EGA leaf
-  `OpenImmersionOfLocal` is now a Lean theorem from the printed EGA IV 8.10.5.
+- `semistableNeronBaseChange` becomes four printed-form leaves plus four small glue Props about the topology of the
+  identity component. One of the four leaves, BLR 1.2/4, is shared with `neronLocalizesDVR`. Of reduct-glue's
+  four leaves:
+  - two are now Lean theorems from printed leaves (`NeronLocalizesDVR` from BLR 1.2/4, `OpenImmersionOfLocal`
+    from EGA IV 8.10.5);
+  - the other two are reduced to the printed SGA 3 VI_B 3.10 and SGA 7 IX 3.3 plus that glue.
 - `shimuraFamily` stays a consequence of one theorem. Its leaf is now as close to the print as Mathlib 4.35
   allows, and §5 lists what is missing.
 
@@ -110,69 +113,97 @@ to Raynaud.
 
 ## 4. `semistableNeronBaseChange` (part S)
 
-reduct-glue proved SS2 from four leaves. With part N, one of them (`NeronLocalizesDVR`) is replaced by the printed
-`BLR_1_2_4` (`semistableNeronBaseChange_of_printedBLR`, compiled). For the other three, this part states the printed
-theorem and names the step from it to the field's form as glue.
+reduct-glue proved SS2 from four leaves:
+- `IdentityComponentBaseChangeDVR` (SGA 7 IX 3.3, in reduct-split's open-subgroup form);
+- `IdentityComponentOL` (SGA 3 VI_B 3.10, in a group-model form);
+- `OpenImmersionOfLocal` (EGA IV 8.10.5, specialized to `Spec (𝓞_L)_𝔭`);
+- `NeronLocalizesDVR` (BLR 1.2/4).
 
-**Definition** `idCompSet G` gives the identity component `G⁰` of a group scheme `G → S` as a set: `x` belongs to it
-if `x` lies in the connected component of `e(f x)` in the fibre `f⁻¹{f x}`. The fibre has the subspace topology,
-which is homeomorphic to the scheme fibre (EGA I 3.6.1). **Mathlib 4.35 has no identity component of a group
-scheme over a base.**
+Now:
+- `NeronLocalizesDVR` is a theorem from the printed `BLR_1_2_4` (part N; `semistableNeronBaseChange_of_printedBLR`).
+- `OpenImmersionOfLocal` is a theorem from the printed EGA IV 8.10.5.
+- The other two are reduced to their printed forms plus four small glue Props about the topology of the identity
+  component, and one more such Prop is proved.
+
+**Final theorem:** `semistableNeronBaseChange_of_printed_final' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+(h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (gc : IdCompSubgroup) (gf : IdCompGeomFibres)
+(ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) : SemistableNeronBaseChange` (compiled, standard axioms).
+
+**Definition** `idCompSet G` is the identity component `G⁰` of a group scheme `G → S`, as a set: `x` belongs to it
+if `x` lies in the connected component of `e(f x)` in the fibre `f⁻¹{f x}`. The fibre carries the subspace topology,
+which Mathlib's `Scheme.Hom.fiberHomeo` identifies with the scheme fibre. **Mathlib 4.35 has no identity component
+of a group scheme over a base.**
+
+### 4.1 The printed-form leaves
 
 | leaf (printed form, UNVERIFIED wording) | statement | replaces |
 |---|---|---|
-| `SGA3_VIB_3_10` (SGA 3 VI_B Thm 3.10) | `G` a smooth group scheme over any `S` ⇒ `IsOpen (idCompSet G)` | `IdentityComponentOL` (through glue `IdentityComponentGroupModel`) |
-| `SGA7_IX_3_3` (SGA 7 I, IX Prop. 3.3, second assertion) | `O ⊆ O'` DVRs with `O' ∩ K = O`, `A` semistable at `O`, Néron models `𝒩`, `𝒩'`; `c : 𝒩 ×_O O' → 𝒩'` a homomorphism with isomorphic generic fibre; `U` an open with `U = idCompSet (𝒩 ×_O O')`. Then `U.ι ≫ c` is an open immersion with image `idCompSet 𝒩'`, i.e. `N⁰ ⊗ R' ≅ N'⁰` | `IdentityComponentBaseChangeDVR` (through glue `IdentityComponentFromPrinted`) |
-| `EGAIV_8_10_5_openImm` (EGA IV₃ 8.10.5, open-immersion item) | the kernel's limit setting (as in `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii`): if the base change of `f_i : X_i → Y_i` (finitely presented) to `lim D` is an open immersion, so is its base change to some `D_j` | `OpenImmersionOfLocal` (through glue `OpenImmersionLocalization`) |
+| `SGA3_VIB_3_10` (SGA 3 VI_B Thm 3.10) | `G` a smooth group scheme over any `S` ⇒ `IsOpen (idCompSet G)` | `IdentityComponentOL` |
+| `SGA7_IX_3_3` (SGA 7 I, IX Prop. 3.3, second assertion) | Setting: `O ⊆ O'` DVRs with `K'/K` finite and `O' ∩ K = O`, `A` semistable at `O`, Néron models `𝒩`, `𝒩'`; `c : 𝒩 ×_O O' → 𝒩'` a homomorphism with isomorphic generic fibre; `U` an open with `U = idCompSet (𝒩 ×_O O')`. Conclusion: `U.ι ≫ c` is an open immersion with image `idCompSet 𝒩'`, i.e. `N⁰ ⊗ R' ≅ N'⁰` | `IdentityComponentBaseChangeDVR` |
+| `EGAIV_8_10_5_openImm` (EGA IV₃ 8.10.5, open-immersion item) | In the kernel's limit setting (as in its leaf `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii`): if the base change of `f_i : X_i → Y_i` (finitely presented) to `lim D` is an open immersion, so is its base change to some `D_j` | `OpenImmersionOfLocal` |
 
-Two remarks on the Lean form of SGA 7 IX 3.3:
+Three remarks on the Lean form of SGA 7 IX 3.3:
 - The print speaks of the canonical morphism. The Lean form allows any homomorphism with isomorphic generic
   fibre. Such a map is the canonical one followed by a group automorphism of `𝒩'` (Néron), and that automorphism
-  preserves `𝒩'⁰`. So this is a consequence of the print, not a strengthening.
+  preserves `𝒩'⁰`. So the Lean form is a consequence of the print.
 - The print's `N⁰ ⊗ R'` is written as `(N ⊗ R')⁰`. They agree because the fibres of `N⁰` are geometrically
-  connected (SGA 3 VI_B 3.3).
+  connected.
+- The print allows any extension of DVRs (as recalled). The Lean form takes `K'/K` finite, which is a
+  specialization.
 
-**Glue proved here:**
-- **`OpenImmersionLocalization`, PROVED** (`openImmersionLocalization : EGAIV_8_10_5_openImm →
-  ReductGlue.OpenImmersionOfLocal`). The proof has three steps:
-  - `Spec O = lim_{a ∉ 𝔭} Spec 𝓞_L[1/a]`, where the index is `𝔭.primeCompl` preordered by divisibility
-    (`ringCoconeOIsColimit`, `specConeOIsLimit`; the colimit comes from `IsLocalization` and reduct-glue's
-    `mem_iff_exists`).
-  - EGA IV 8.10.5 at each maximal `𝔭` gives `s_𝔭 ∉ 𝔭` (`exists_away_of_dvr`).
-  - The open cover of `Y` by `Y ×_S D(s_𝔭)` (`Cover.mkOfCovers`, `Scheme.Pullback.range_fst`) and
-    `IsZariskiLocalAtTarget.of_openCover`, with `pullbackRightPullbackFstIso` to identify the pulled-back
-    morphisms.
-- **`IdentityComponentFromPrinted`, reduced** (`identityComponentFromPrinted_of`) to two topological glue Props.
-  - The canonical homomorphism `c : 𝒩 ×_O O' → 𝒩'` comes from reduct-glue's `bcDVR`, the Néron property and
-    `isMonHom_of_ext`.
-  - `j = (i ×_O O') ≫ c` is an open immersion because `range (i ×_O O') = fst⁻¹(range i) = fst⁻¹ 𝒩⁰ =
-    (𝒩 ×_O O')⁰` (by `Scheme.Pullback.range_map` and the two glue Props), and `c` is an open immersion on that
-    open by SGA 7 IX 3.3 (`IsOpenImmersion.isoOfRangeEq`).
+### 4.2 Glue proved
 
-**Glue left (named Props, unproved; each docstring says what it needs):**
-- `OpenSubgroupIsIdComp`: an open subgroup of a group model over a DVR whose generic fibre and geometric special
-  fibre are connected has image `idCompSet`. The reason is that an open subgroup of a group scheme over a field is
-  closed.
-- `IdCompBaseChangeDVR`: `fst⁻¹(G⁰) = (G ×_O O')⁰` for a smooth group scheme `G`. The reason is that `(G_s)⁰` is
-  geometrically connected (Stacks 04KV, the bundle leaf `geomConnOfRationalPoint`).
+1. **`OpenImmersionLocalization`** (`openImmersionLocalization : EGAIV_8_10_5_openImm → OpenImmersionOfLocal`).
+   - `Spec O = lim_{a ∉ 𝔭} Spec 𝓞_L[1/a]`, indexed by `𝔭.primeCompl` preordered by divisibility
+     (`ringCoconeOIsColimit`, `specConeOIsLimit`; built on `IsLocalization` and reduct-glue's `mem_iff_exists`, in
+     the pattern of the kernel's `specConeIsLimit`).
+   - EGA IV 8.10.5 at each maximal `𝔭` gives `s_𝔭 ∉ 𝔭` with an open immersion over `D(s_𝔭)`
+     (`exists_away_of_dvr`).
+   - Finish with the open cover of `Y` by `Y ×_S D(s_𝔭)` (`Cover.mkOfCovers`, `Scheme.Pullback.range_fst`),
+     `IsZariskiLocalAtTarget.of_openCover`, and `pullbackRightPullbackFstIso`.
+2. **`IdentityComponentFromPrinted`, reduced** (`identityComponentFromPrinted_of`) to `OpenSubgroupIsIdComp` and
+   `IdCompBaseChangeDVR`.
+   - The canonical homomorphism `c` comes from reduct-glue's `bcDVR`, the Néron property and `isMonHom_of_ext`.
+   - `j = (i ×_O O') ≫ c` is an open immersion, by this chain:
+     `range(i ×_O O') = fst⁻¹(range i) = fst⁻¹ 𝒩⁰ = (𝒩 ×_O O')⁰`.
+     The chain uses `Scheme.Pullback.range_map` and the two glue Props. SGA 7 IX 3.3 says `c` is an open
+     immersion on that open, and `IsOpenImmersion.isoOfRangeEq` combines the two.
+3. **`IdentityComponentGroupModel`, reduced** (`identityComponentGroupModel_of`) to `IdCompSubgroup`,
+   `IdCompGenericFibre` and `IdCompGeomFibres`.
+   - The general construction `OpenSub`: an open `W` of a group scheme `G` that is closed under the group law
+     carries a group structure for which `W → G` is a homomorphism. It uses `GrpObj.ofRepresentableBy` with the
+     presheaf of groups `T ↦ {f : T ⟶ G | f(T) ⊆ W}` (`grpG0`, `isMonHom_incl`).
+   - Smoothness and separatedness hold because `W → G` is an open immersion.
+   - Quasi-compactness: `𝒢` is noetherian (`LocallyOfFiniteType.isLocallyNoetherian`,
+     `quasiCompact_of_noetherianSpace_source`).
+   - Generic fibre: the inclusion is an open immersion that is surjective on generic fibres
+     (`isIso_iff_isOpenImmersion_and_surjective`).
+4. **`IdCompGenericFibre`, PROVED** (`idCompGenericFibre`).
+   - The generic fibre `𝒢_L ≅ A_L` is connected.
+   - Its image in `𝒢` is the set of points over the generic point.
+   - That image is a connected set containing `e(η)` (`IsPreconnected.subset_connectedComponentIn`).
 
-The earlier, coarser glue Props are kept in the file, and `semistableNeronBaseChange_of_printed`,
-`semistableNeronBaseChange_of_printed'` and `semistableNeronBaseChange_of_printed''` are the successive forms:
-- `IdentityComponentGroupModel`: the open subscheme on `𝒢⁰` is a group model with connected geometric fibres.
-  - Subgroup property: SGA 3 VI_A 2.3, using the bundle leaf `geomConnOfRationalPoint` (Stacks 04KV).
-  - Quasi-compactness: `𝒢` is noetherian.
-  - Generic fibre: `A_L` is connected.
-- `IdentityComponentFromPrinted` (`SGA3_VIB_3_10 → SGA7_IX_3_3 → IdentityComponentBaseChangeDVR`). It needs the
-  canonical homomorphism, which is proved in reduct-glue. It also needs the facts that an open subgroup with
-  connected fibres is `𝒩⁰`, and that the identity component commutes with base change.
-- `OpenImmersionLocalization` (`EGAIV_8_10_5_openImm → OpenImmersionOfLocal`). It needs:
-  - `Spec O = lim_{s ∉ 𝔭} Spec 𝓞_L[1/s]`, as the kernel's `specConeIsLimit` does for `Spec L`;
-  - finite presentation over the noetherian `𝓞_L`;
-  - open immersions are local on the target (`IsZariskiLocalAtTarget`).
+### 4.3 Glue left
 
-`semistableNeronBaseChange_of_printed'' (hB h3 h7 hE g1 ga gb)` compiles, and so do the coarser forms.
-`SGA7_IX_3_3` is stated for finite `K'/K`. The print allows any extension (as recalled), so this is a
-specialization.
+There are four named Props, all true, each with a docstring saying what it needs. All are about the topology of
+the identity component of a smooth group scheme, and all reduce to two standard facts: an open subgroup of a group
+scheme over a field is closed, and `(G_s)⁰` is geometrically connected (Stacks 04KV, the bundle leaf
+`geomConnOfRationalPoint`). The missing tool is the fibrewise identification `(G ×_S G)_s = G_s ×_{κ(s)} G_s` on
+underlying spaces.
+
+| glue | statement |
+|---|---|
+| `IdCompSubgroup` | `G⁰` is closed under `μ` and the inverse (SGA 3 VI_A 2.3 fibrewise) |
+| `IdCompGeomFibres` | the geometric fibres of the open subscheme `𝒢⁰ ⊆ 𝒢` at maximal ideals are connected |
+| `OpenSubgroupIsIdComp` | an open subgroup of a group model over a DVR with connected generic and geometric special fibres has image `idCompSet` |
+| `IdCompBaseChangeDVR` | `fst⁻¹(G⁰) = (G ×_O O')⁰` for a smooth group scheme over a DVR |
+
+The successive coarser forms remain in the file and compile:
+- `semistableNeronBaseChange_of_printed` (glue `IdentityComponentGroupModel`, `IdentityComponentFromPrinted`,
+  `OpenImmersionLocalization`);
+- `_of_printed'`;
+- `_of_printed''`;
+- `_of_printed_final`.
 
 ## 5. `shimuraFamily` (part H)
 
@@ -230,5 +261,5 @@ No analytification is needed.
 
 `scratch/c-to-printed/run.sh FILE` runs `lean` with `LEAN_PATH` on a copy of the e38375b3 build (`~/ctp-lib`). It
 was run one Lean process at a time:
-- `CToPrinted.lean`: about 10 s, no errors, 7 `#print axioms` lines, all standard (VERIFIED).
+- `CToPrinted.lean`: about 15 s, no errors, 9 `#print axioms` lines, all standard (VERIFIED).
 - `Shimura.lean`: about 6 s, no errors, 3 `#print axioms` lines, all standard (VERIFIED).
