@@ -307,6 +307,51 @@ theorem henselian_wE : HenselianLocalRing (wE (K := K) w) where
       have := (mem_max_iff w _).mp hαc
       exact this
 
+/-- **The residue field of the inertia field is separably closed.** -/
+theorem isSepClosed_wE : IsSepClosed (ResidueField (wE (K := K) w)) := by
+  haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed K
+  apply IsSepClosed.of_exists_root
+  intro p hpm hpirr hpsep
+  obtain ⟨g, hgp, hgdeg, hgm⟩ := lifts_and_natDegree_eq_and_monic
+    (Polynomial.map_surjective (residue _) residue_surjective p) hpm
+  have hdeg : (g.map (ιΩ w)).degree ≠ 0 := by
+    rw [hgm.degree_map, degree_eq_natDegree hgm.ne_zero, hgdeg]
+    exact_mod_cast (Irreducible.natDegree_pos hpirr).ne'
+  obtain ⟨α, hα⟩ := IsAlgClosed.exists_root (g.map (ιΩ w)) hdeg
+  have hαw : α ∈ w := by
+    letI : Algebra (wE (K := K) w) Ω := (ιΩ w).toAlgebra
+    exact mem_of_isIntegral w (A := wE (K := K) w) (fun a => a.2)
+      ⟨g, hgm, by rwa [IsRoot, eval_map] at hα⟩
+  -- the residue polynomial
+  let κm := ResidueField.map (ιw (K := K) w)
+  have hgw : g.map ((residue w).comp (ιw w)) = p.map κm := by
+    rw [← hgp, Polynomial.map_map, ResidueField.map_comp_residue]
+  have hgw0 : (g.map (ιw w)).eval ⟨α, hαw⟩ = 0 := by
+    apply Subtype.ext
+    change algebraMap w Ω _ = algebraMap w Ω 0
+    rw [map_zero, ← eval₂_at_apply, ← eval_map, ← map_ιΩ_eq]
+    exact hα
+  have hroot' : (p.map κm).eval (residue w ⟨α, hαw⟩) = 0 := by
+    rw [← hgw, ← Polynomial.map_map, eval_map, eval₂_at_apply, hgw0, map_zero]
+  have hsimple : ((g.map ((residue w).comp (ιw w))).derivative).eval
+      (residue w ⟨α, hαw⟩) ≠ 0 := by
+    rw [hgw]
+    have := (hpsep.map (f := κm)).eval₂_derivative_ne_zero (RingHom.id _) (x := residue w ⟨α, hαw⟩)
+      (by rw [← eval]; exact hroot')
+    exact this
+  have hαE := mem_inertiaField_of_simple_root w g α hα hαw hsimple
+  let a : wE (K := K) w := ⟨⟨α, hαE⟩, by exact hαw⟩
+  refine ⟨residue _ a, ?_⟩
+  have h0 : ιΩ w (g.eval a) = 0 := by
+    rw [← eval₂_at_apply, ← eval_map]; exact hα
+  have h1 : g.eval a = 0 := by
+    apply Subtype.ext
+    apply (algebraMap (inertiaField (K := K) w) Ω).injective
+    change ιΩ w _ = algebraMap _ Ω 0
+    rw [map_zero]
+    exact h0
+  rw [← hgp, eval_map, eval₂_at_apply, h1, map_zero]
+
 end Ring
 
 end ShRoute
