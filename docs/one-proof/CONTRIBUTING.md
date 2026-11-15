@@ -45,8 +45,10 @@ Never change a hypothesis's statement. If you find one false, vacuous, or strong
 
 ## Where it goes
 
-A new file `ZInQKernel/Contrib/OneProof/<StatementName>.lean`, importing `ZInQKernel.OneProof.Main` (or the module that
-defines the statement you prove) and whatever else you need. Proofs only in new files: do not edit existing
+A new file `ZInQKernel/Contrib/OneProof/<StatementName>.lean`, importing the module that defines the statement
+you prove (OPEN.md's `type` names it; for example `ZInQKernel.OneProof.H.TailZ19`) and whatever else you need.
+Do not import `ZInQKernel.OneProof.Main`: once your file is folded, `Main` imports it, and the import would be
+a cycle. Proofs only in new files: do not edit existing
 modules. Keep a file under about 150 KB. Open a pull request against this fork's `main`.
 
 ## How to check it
@@ -117,6 +119,17 @@ build from source.
 A cold measurement of `lake build +ZInQKernel.OneProof.Main` on a GitHub-hosted runner will be added to this
 table. On a laptop a full build is a bigger investment. A measured row from your machine (commit, cold or partial,
 cores, memory cap, peak memory, disk, Lake jobs, wall-clock) is welcome and credited.
+
+## For maintainers: folding a contribution
+
+`scripts/one_proof/autofold.py SPEC.json` writes the fold of a checked contribution: a new module
+`ZInQKernel/OneProof/H/TailZ<k+1>.lean` with the next generation of each affected bundle (the discharged fields
+removed, the new leaves added), a theorem filling each discharged field with its proof, and the next top theorem;
+it switches `Main.lean` to it and updates `kinds.tsv` and `claims.tsv`. It refuses a fold that raises the strict
+GLUE count. The spec format is in the script's docstring; `scratch/contrib-kit/autofold-test.json` exercises the
+mechanics (with `sorry`, so it is a test, not a fold). Then build, check the axioms, compare hashes with
+`scratch/one-proof/DumpCompact.lean` and `cmp_hashes.py` (no existing constant may change except `frozenTarget`),
+and regenerate OPEN.md (`scripts/one_proof/OpenStatements.lean`, `render_open.py --check`, `render_open.py`).
 
 ## A worked example
 

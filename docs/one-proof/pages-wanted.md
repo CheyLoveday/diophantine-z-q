@@ -31,9 +31,7 @@ Printed statements that a reader with the book or paper can check against the Le
 * [`mumfordRigidityCore`](OPEN.md#mumfordrigiditycore) (packet R2): Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`blr_1_2_4`](OPEN.md#blr_1_2_4) (packet R1): Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 4 (locator UNVERIFIED). Flag: pending reading: may be printed in the strictly henselian form
 * [`faltingsLemma5Printed`](OPEN.md#faltingslemma5printed) (packet R2): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read). Flag: unread
-* [`raynaudKernelBound`](OPEN.md#raynaudkernelbound) (packet R2): Raynaud's bound on the kernel term in Faltings' Lemma 5 (number UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`sga3_VIB_3_10`](OPEN.md#sga3_vib_3_10) (packet R2): SGA 3 VI_B 3.10 (number UNVERIFIED). Flag: locator UNVERIFIED (see the source)
-* [`egaIV_8_10_5_openImm`](OPEN.md#egaiv_8_10_5_openimm) (packet R2): EGA IV 8.10.5 (locator UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`babaGranathRationalAb`](OPEN.md#babagranathrationalab) (packet R4): Baba-Granath 2008, rationality of the genus-2 curves with QM by the order of discriminant 6 (locator UNVERIFIED). Flag: one table reading (CM assignment, section 3.1) UNVERIFIED
 * [`gonzalezRotgerX6Ab`](OPEN.md#gonzalezrotgerx6ab) (packet R4): Gonzalez-Rotger 2006 on X6 (printed form; locator UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`elkiesEquationsX6Ab`](OPEN.md#elkiesequationsx6ab) (packet R4): Elkies 1998, equations of X*(6) as scheme charts over the t-line (display, section and 0/infinity orientation UNVERIFIED). Flag: pending reading: the fibre clause combines Elkies with the moduli meaning of W (composite under the strict reading)

@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ24
+import ZInQKernel.OneProof.H.TailZ25
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
@@ -50,14 +50,14 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 
 /-- **Theorem 1.1, from every statement still open.** -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves14) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves13)
+    (r : HDec.HSyn.OpenResearchLeaves15) (t : HDec.HSyn.OpenTextbookLeaves10) (l : HDec.HSyn.OpenAddedLeaves13)
     (g : HDec.HSyn.OpenGlue7)
     (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2) (hS : Shimura.ShimuraReciprocityModFn)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hL2 : ZInQ.GZDecomp.FHNonvanishing) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
     ZInQ.FrozenTarget :=
   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
-    (HDec.HSyn.sixContactMin_of_open18 r t l g)
+    (HDec.HSyn.sixContactMin_of_open19 r t l g)
     (tyzThm35ReadingA_of_leaves h11 h29 hS (ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33 h33))
     ZInQ.GZTheta.Frontier.heckeThetaNewform hL2 hL3
 

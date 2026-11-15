@@ -22,10 +22,10 @@ The open statements of the current proof (generated from docs/one-proof/OPEN.md;
 describe the fork main they name):
 
 <!-- open-count:begin -->
-**68 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
+**65 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves15`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 51 published / 17 glue** (the strictest flagged reading; 53/15 without the two strictest-reading flags).
-* By kind: composite 5, consequence 7, project glue 1, published 55.
+* **Strict count: 48 published / 17 glue** (the strictest flagged reading; 50/15 without the two strictest-reading flags).
+* By kind: composite 5, consequence 7, project glue 1, published 52.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 

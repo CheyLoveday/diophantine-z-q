@@ -114,7 +114,7 @@ H-120	tateTwistInvariants	ZInQ.Contrib.HodgeSplit.TateTwistInvariants	5fd81e870,
 H-121	axSenTate	ZInQ.Contrib.HodgeSplit.AxSenTate	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
 H-122	hodgeTateDecompAbVar	ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
 H-123	deRhamH1AbVarT	ZInQ.Contrib.HodgeSplit.DeRhamH1AbVarT	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
-H-124	bdRInvariants	ZInQ.Contrib.HodgeSplit.BdRInvariants	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
+H-124		ZInQ.Contrib.HodgeSplit.BdRInvariants	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
 H-125	dsThm965	ZInQ.Contrib.HodgeSplit.DSThm965	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
 H-126	dsThm966	ZInQ.Contrib.HodgeSplit.DSThm966	5fd81e870,085a7a53a,f18bcb904,3691994d4	yes
 H-127	eigenformHTNew	ZInQ.Contrib.HodgeSplit.EigenformHTNew	5fd81e870	no
@@ -163,10 +163,10 @@ H-169	deligneComponentsY3PrintedAb	ShimuraGlue.DeligneComponentsY3PrintedAb	f18b
 H-170	mumfordRigidityCore	LeafQM.AV.R1UnivRigid.MumfordRigidityCore	f18bcb904,3691994d4	yes
 H-171	blr_1_2_4	CToPrinted.BLR_1_2_4	f18bcb904,3691994d4	yes
 H-172	faltingsLemma5Printed	CToPrinted.FaltingsLemma5Printed	f18bcb904,3691994d4	yes
-H-173	raynaudKernelBound	CToPrinted.RaynaudKernelBound	f18bcb904,3691994d4	yes
+H-173		CToPrinted.RaynaudKernelBound	f18bcb904,3691994d4	yes
 H-174	sga3_VIB_3_10	CToPrinted.SGA3_VIB_3_10	f18bcb904,3691994d4	yes
 H-175	sga7_IX_3_3	CToPrinted.SGA7_IX_3_3	f18bcb904,3691994d4	yes
-H-176	egaIV_8_10_5_openImm	CToPrinted.EGAIV_8_10_5_openImm	f18bcb904,3691994d4	yes
+H-176		CToPrinted.EGAIV_8_10_5_openImm	f18bcb904,3691994d4	yes
 H-177		ShimuraGlue.DeligneComponentsX6Printed	f18bcb904	no
 H-178		HDec.QMSplit.Moduli.BabaGranathRational	f18bcb904	no
 H-179		ShimuraGlue.Ray.RayClassCM	f18bcb904	no

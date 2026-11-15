@@ -135,7 +135,6 @@ structure OpenTextbookLeaves3 : Prop where
   Replaces T11(a) and `HomLinearLift`. -/
   homLatticeCorr : HomUnify.HomLatticeCorr
   t11b : ZInQ.LeafPush2.T11b_Rigidity
-  t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
   t24 : EigenformTwist
   t26 : PkgI3.TateModuleFree
   t27 : PkgI3.QMDichotomyYu
@@ -209,7 +208,6 @@ theorem textbookLeaves2_of_open3 (t : OpenTextbookLeaves3) : OpenTextbookLeaves2
   t9 := t.t9
   t11a := HomUnify.t11a_riemannEnd_of_corr t.homLatticeCorr
   t11b := t.t11b
-  t23 := t.t23
   t24 := t.t24
   t26 := t.t26
   t27 := t.t27
@@ -268,6 +266,7 @@ theorem gluePieces_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
           G0Galois.detTate_of_leaves l.t09SymmIsogenyExists l.isogenyQuasiInverse
             l.divisiblePoints t.t26,
           G0AssembleMod.resQFiniteIndex⟩
+        (g9GlueNoT23_of_deRhamComparisonHT r.r10)
         (G0ModNewform.dirichletOfFinite_of_t17 t17_proved) r.r17
         Swan.swanIndependent_proved Swan.swanIntegral_proved
         Swan.adaptedExists_proved
@@ -276,18 +275,6 @@ theorem gluePieces_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
           (linkedTateLocal_of_leaves3 r.r6 t.t5 t.t26 g.abVarSpreadsOut l.properSmoothGenConnected
             t.t4 t.t3 hFS t.t6 t.t27)))
     heightCopies := G0HeightCopies.heightCopiesAgree }
-
-/-- **G0 with only the open leaves and the open glue** (leaf-fold3; no `sorry`, standard axioms).
-`ZInQ.SixContactMin` follows from
-* `OpenResearchLeaves2`: 26 research-level fields (unchanged from leaf-fold2);
-* `OpenTextbookLeaves3`: 20 textbook fields (`HomLatticeCorr` for T11(a); T3 and T4 back);
-* `OpenAddedLeaves3`: 16 leaves (11 LEAF, 5 LEAF?);
-* `OpenGlue3`: 6 glue Props.
-The table of every field is `docs/research/leaf-fold3.md` §2. -/
-theorem sixContactMin_of_open3 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves3)
-    (l : OpenAddedLeaves3) (g : OpenGlue3) : ZInQ.SixContactMin :=
-  sixContactMin_of_leavesR3 (researchLeaves3_of_open2 r)
-    (textbookLeaves_of_open2 (textbookLeaves2_of_open3 t)) (gluePieces_of_open3 r t l g)
 
 end HSyn
 
@@ -308,7 +295,6 @@ end
 #print axioms HomUnify.t11a_riemannEnd_of_corr
 #print axioms HSyn.textbookLeaves2_of_open3
 #print axioms HSyn.gluePieces_of_open3
-#print axioms HSyn.sixContactMin_of_open3
 
 end G0A2_d90_fold3
 

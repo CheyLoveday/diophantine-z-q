@@ -167,7 +167,6 @@ structure OpenTextbookLeaves4 : Prop where
   /-- hom-unify: analytic representation of homomorphisms (replaces T11(a) and `HomLinearLift`). -/
   homLatticeCorr : HomUnify.HomLatticeCorr
   t11b : ZInQ.LeafPush2.T11b_Rigidity
-  t23 : ∀ (p : ℕ) [Fact p.Prime], PkgI4.T23_FontaineClosure p
   t24 : EigenformTwist
   t27 : PkgI3.QMDichotomyYu
   t33 : LeafModCurves.JacobianExists ℚ
@@ -236,7 +235,6 @@ theorem textbookLeaves3_of_open4 (t : OpenTextbookLeaves4) : OpenTextbookLeaves3
   t9 := t.t9
   homLatticeCorr := t.homLatticeCorr
   t11b := t.t11b
-  t23 := t.t23
   t24 := t.t24
   t26 := tateModuleFree_of_t5' t.t5
   t27 := t.t27
@@ -333,6 +331,7 @@ theorem gluePieces_of_open4 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
           detTate_of_leaves4 l.t09SymmIsogenyExists l.isogenyQuasiInverse t.t5
             (tateModuleFree_of_t5' t.t5),
           G0AssembleMod.resQFiniteIndex⟩
+        (g9GlueNoT23_of_deRhamComparisonHT r.r10)
         (G0ModNewform.dirichletOfFinite_of_t17 t17_proved) r.r17
         Swan.swanIndependent_proved Swan.swanIntegral_proved
         Swan.adaptedExists_proved
@@ -352,10 +351,10 @@ theorem gluePieces_of_open4 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
 * `OpenGlue4`: 1 glue Prop (`HeckeVertWitness`).
 The table of every field is `docs/research/leaf-fold4.md` §2. -/
 theorem sixContactMin_of_open4 (r : OpenResearchLeaves2) (t : OpenTextbookLeaves4)
-    (l : OpenAddedLeaves4) (g : OpenGlue4) : ZInQ.SixContactMin :=
+    (l : OpenAddedLeaves4) (g : OpenGlue4) (h20 : G0Split.R20Lower) : ZInQ.SixContactMin :=
   sixContactMin_of_leavesR3 (researchLeaves3_of_open2 r)
     (textbookLeaves_of_open2 (textbookLeaves2_of_open3 (textbookLeaves3_of_open4 t)))
-    (gluePieces_of_open4 r t l g)
+    (gluePieces_of_open4 r t l g) h20
 
 end HSyn
 

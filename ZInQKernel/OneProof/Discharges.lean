@@ -17,7 +17,8 @@ hypotheses, or a theorem `L₁ → … → Lₙ → H` that proves the hypothesi
 
     #discharges
 
-and run `lake env lean <scratch file>` (after `lake build +ZInQKernel.OneProof.Main
+(the scratch file imports `Main`; the contribution itself must not, since a fold makes `Main` import it) and run
+`lake env lean <scratch file>` (after `lake build +ZInQKernel.OneProof.Main
 +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.<name>`). For every theorem of the current file
 and of the modules under `ZInQKernel.Contrib.OneProof`, it reports each open hypothesis the theorem's conclusion
 matches, the hypotheses the theorem still assumes, and its axioms. A match needs the conclusion to be the
