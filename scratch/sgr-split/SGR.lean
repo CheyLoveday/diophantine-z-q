@@ -388,7 +388,6 @@ theorem qml3AsQMAb_of (hD : AbVarSurfaceRelDim) : QML3AsQMAb := by
           GeometricallyIrreducible.geometrically_irreducibleSpace (f := P.A.X.hom) y fst snd h
         infer_instance⟩
       one_eq := by
-        change η[P.A.X].left = (Additive.toMul (P.e.eta 0)).left
         rw [map_zero, toMul_zero]
         change _ = ((toUnit (AbVar.ptObj (K := K) K)) ≫ η[P.A.X]).left
         rw [Over.comp_left, Over.toUnit_left, ptObj_hom_self]; exact (Category.id_comp _).symm
@@ -412,7 +411,6 @@ theorem qml3AsQMAb_of (hD : AbVarSurfaceRelDim) : QML3AsQMAb := by
         change (Additive.toMul (P.e.eta (3 * b))).left = (Additive.toMul (P.e.eta 0)).left
         rw [(P.e.ker _).mpr ⟨b, rfl⟩, (P.e.ker 0).mpr ⟨0, by simp⟩]
       eta_ker := fun K' _ s a => by
-        change s ≫ (Additive.toMul (P.e.eta a)).left = s ≫ (Additive.toMul (P.e.eta 0)).left ↔ _
         rw [← P.e.ker a, show P.e.eta 0 = 0 from map_zero _]
         constructor
         · intro h
