@@ -149,3 +149,12 @@ review.
   field), no glue.
 - The leaf is a consequence of the print (the conventions are existential, and §3 lists the weakenings). Its only
   readings are the inherited Lemma QP caveat and "`Y₃ = Sh_{K₃}`".
+
+## 7. For integration
+
+- To replace route-a-fold's field `shimuraFamilyAb : QMSplit.Moduli.ShimuraFamilyAb` by the new leaf, use
+  `ShimuraCFT.shimuraFamilyAb_of_mainThmI`. The new leaf field is `ShimuraCFT.ShimuraMainThmIDeligneY3Ab`.
+- The file's copies of `R1fpPropsAb`, `ShimuraFamilyAb`, `IsHolFamily`, `IsShimuraHolFamily` and the t5-glue
+  sections are verbatim. On a base with TailZ16/TailZ17 (route-a-fold), drop the duplicates and keep Part B onward.
+- Part B onward uses no kernel edit and no new axiom. Tau Ceti modules are imported only from the vendored
+  `ZInQKernel/Contrib/TauCeti/`.
