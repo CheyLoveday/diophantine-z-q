@@ -1,8 +1,8 @@
-# Finite-Hopf annihilator source port — provenance and adaptation log
+# Milne quasi-inverse source — provenance and adaptation log
 
 ## Scope and status
 
-This directory contains a **source-only, uncompiled** port of the whole finite-Hopf annihilator proof branch from `openai/math`, plus a wrapper on actual Mathlib group schemes. It does not prove the full isogeny quasiinverse target by itself. No compiler result, elaborated axiom report, or discharge result is asserted here.
+This directory contains the **source-only, uncompiled** graph for `AvSplit.MilneIsogenyQuasiInverse`: a finite-Hopf annihilator port, the actual scheme kernel and power descent, and new ring/flatness and final assembly proofs. Source authorship and independent source review are complete; no compiler result, elaborated axiom report, native body check or discharge result is asserted here.
 
 Source preparation date: 2026-11-15. The source port is AI-assisted (Metamate), with independent source reading of the complete seven-module rank-annihilation closure. Independent source reading is not independent compilation or human mathematical review.
 
@@ -110,4 +110,42 @@ Original upstream pins read: Lean `4.34.1`, Mathlib `d13f23b723b8a846827a245b89c
 
 Static source inspection found the needed current norm, finite-projective contraction, convolution, affine/Hopf, and fpqc interfaces. That is not an elaboration certificate. Compatibility of every old-version structure construction, typeclass inference, simp lemma and transparency option remains unrun.
 
-No Lean/Lake/native compiler, upstream hooks, downloaded compiled artifacts, cached foreign binaries, or old source acknowledgments were used. The parent owns any future isolated validation, exact kernel/isogeny assembly, claims, commits, PRs and publishing. This annihilator subtree does not include Flatness, RingFlatness, Kernel, Descent or Main source work owned by other agents.
+No Lean/Lake/native compiler, upstream hooks, downloaded project artifacts, cached foreign binaries, or old source acknowledgments were used while preparing or independently reviewing this source. The parent owns later isolated validation, claims, commits, PRs and publishing. The original annihilator-only checkpoint was commit `364d19e9d14f4319f901654300c062972b6030ea`; the complete source graph adds the separate kernel/descent and flatness/assembly work described below. This notice does not certify any compiled result.
+
+## Kernel and descent source port
+
+The following source pieces are from `openai/math@4eaee87548250b2682affda7d05d947c05554bae`, with the same adjacent byte-preserved Apache-2.0 LICENSE. The prefixes below are `lean/OAI/AlgebraicGeometry/` in the upstream repository.
+
+- `Kernel.lean` ports `Picard/PoincareBundle/Kernel/Scheme.lean` whole (192 lines), with a clearly marked appended section constructing the bundled kernel group, commutativity/finiteness and annihilator transport.
+  - Git blob: `ab6f03c943082039b04385cbf780dde6102137b2`
+  - SHA-256: `94ddea6b724d09c068ebaf8ece143e8a7f8e9f013d63c712d54359eb386d4b76`
+- `Descent.lean` combines the following retained source:
+  - `FormalGeometry/Completion/OverEffectiveDescent.lean`, whole (44 lines): blob `8732be16cd8087897d1f78d67c053607cff71977`, SHA-256 `f438ccf0407e2dc9ed6472d46fdd0228a08bb26d14fa873ecd57ea8869a7e81a`.
+  - `AbelianScheme/IsogenyQuotient/GroupKernelPowerDescent.lean`, whole (51 lines): blob `af69877b23c79f93a7114ec55b17b4198eaf5aab`, SHA-256 `1ce80408aeee6ad89f9746308ab74cca2c26afa327096688cde41203f7bf5a67`.
+  - `Picard/Homomorphisms/GroupDescent.lean`, cut at original lines 15, 23–51 and 79–107: blob `09aa0c686a95d8d2bb8f624e91bba2b663154d1c`, SHA-256 `e32a098eded998cec64db44ce33762944e0691519b5ab2d9a7349fc38ba85a4d`.
+  - `AbelianScheme/IsogenyQuotient/FppfPowerComplement.lean`, cut at original lines 16–28: blob `c6f1a83a70cc672a27210a4cbf1969fca17e2cf6`, SHA-256 `82d4d3f5db1634ca7e40af16a7a60a58767e7681fd5d9b2b5ee09f980c2b639d`.
+
+Adaptations are ordinary provenance comments before imports; namespaces relocated under `ZInQ.Contrib.MilneQuasiInverse.{Kernel,Descent.*}`; qualified cross-references re-pointed; internal OAI imports replaced by the explicit pinned Mathlib imports needed for the retained cuts; unused declarations omitted; and one redundant local `IsStableUnderComposition @Surjective` instance omitted because the pinned Mathlib supplies it. The retained upstream proof bodies are otherwise preserved. The appended Kernel section reopens the required namespace/universe context; two cross-instance joins use explicit `have`/`exact` rather than rewriting through a different instance path. All compatibility edits remain in these new contribution files.
+
+Independent non-author source review re-fetched all five pieces at the immutable source revision, compared their hashes and retained lines, checked the added kernel transport and both power-composition equations, and cleared them for isolated compilation only.
+
+## New ring, geometry and assembly source
+
+`RingFlatness.lean`, `Flatness.lean` and `Main.lean` are new AI-assisted proof source for this contribution, not copies of a foreign target or result-bearing structure.
+
+- `RingFlatness` proves the finite constant-fibre-rank criterion over reduced rings via residue fields, Nakayama, the kernel/nilradical argument and localization.
+- `Flatness` proves the actual shear pullback, transfers the finite/flat constant-rank kernel-pair projection, reduces to affine rings, and derives `finite_surjective_abVarHom_flat` for the original all-fields canonical `PkgI3` inputs `f` and `hf`. No assumed shear, rank, flatness, characteristic-zero or new printed leaf is added.
+- `Main` combines the actual kernel group, positive annihilator, this flatness proof and fpqc power descent. It packages the reverse scheme homomorphism with `PkgI3.AbVar.Hom.mk'` and uses the original `AvSplit.comp_natCast_hom'` to obtain both required integer-multiplication equations.
+- The top-level `MilneIsogenyQuasiInverse.lean` is an import-only contribution entry point. It adds no target alias or premise and never imports `ZInQKernel.OneProof.Main`.
+
+All proof bodies were independently read against the unchanged Mathlib pin. The source review resolved the needed connected-limit preservation for `Over.forget` from the actual pinned Mathlib instances. Remaining risks are target-version elaboration and instance/rewrite compatibility; no native result is implied by that source review.
+
+## Complete source graph and validation boundary
+
+The graph is `MilneIsogenyQuasiInverse → MilneQuasiInverse.Main → TailQ, Kernel, Descent, GroupAnnihilator, Flatness`; `GroupAnnihilator` reaches the nine vendor modules, and `Flatness` reaches canonical `HDecomp.Objects` plus `RingFlatness`. Kernel, Descent, RingFlatness and the vendor modules import Mathlib only. The graph has no cycle through `OneProof.Main` and does not change the original target, canonical objects, dependency pins or assemblies.
+
+The final export is exactly `ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInverse_proof : _root_.AvSplit.MilneIsogenyQuasiInverse`. Its source supplies every original premise with no desired-result assumption. This is still a source claim awaiting actual compilation, axiom/discharge output, whole stored-type/body/instance-data validation and independent final review on the final integration.
+
+`#check`/`#print axioms` test scratch and the additional whole-declaration/negative-control checker are kept outside the published mathematical source; they do not provide proof axioms or native proof shortcuts. Pinned Lean computational primitives are trusted only under the documented base/source boundary, with their logical bodies audited; project/vendor custom native delegation remains disallowed. No compiler, checker or control outcome is claimed by this notice.
+
+The Z-is-Diophantine-in-Q goal remains open. Finishing this intermediate source graph, compiling a helper or receiving green CI does not finish the intended theorem.
