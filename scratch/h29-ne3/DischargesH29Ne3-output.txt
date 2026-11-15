@@ -1,11 +1,3 @@
-scratch/h29-ne3/DischargesH29Ne3.lean:21:29: error: Application type mismatch: The argument
-  r
-has type
-  HDec.HSyn.OpenResearchLeaves19
-but is expected to have type
-  HDec.HSyn.OpenResearchLeaves20
-in the application
-  ZInQ.OneProof.frozenTarget r
 'ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_sixLeaves' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Printed_of_ne3_thm21' depends on axioms: [propext,
  Classical.choice,
@@ -14,21 +6,15 @@ in the application
 'ZInQ.Contrib.TYZDecomp.H29Split.torsionOrder_qNeg_three' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZDecomp.H29Split.sqClasses_three' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZDecomp.H29Split.pairIdx_three_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
-'h29ne3_frozenTarget' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves20.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+'h29ne3_frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves19.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves20.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
+DISCHARGES [OpenResearchLeaves19.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
   still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves20.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.ElkiesX6Star.elkiesX6StarPrinted_of_ab
+DISCHARGES [OpenResearchLeaves19.elkiesX6StarPrinted] by HDec.QMSplit.Moduli.ElkiesX6Star.elkiesX6StarPrinted_of_ab
   still assumes: [HDec.QMSplit.Moduli.ElkiesEquationsX6Ab]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves20.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_SH_of_field
-  still assumes: [CToPrinted.SGA7_IX_3_3]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves20.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
-  still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_printedLeaves
   still assumes: [ZInQ.Contrib.TYZDecomp.H29Split.TYZTauExists,
@@ -57,4 +43,4 @@ DISCHARGES [h29] by ZInQ.Contrib.TYZDecomp.H29Split.tyzLemma29Mod2_of_sixLeaves
  ZInQ.Contrib.TYZDecomp.H29Split.TYZThm21At31,
  ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 65 open hypotheses, 1357 theorems checked, 9 discharge one
+#discharges: 66 open hypotheses, 1307 theorems checked, 7 discharge one

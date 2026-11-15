@@ -42,3 +42,13 @@ Env note: worktree lacked lean/.lake (unknown module prefix 'ZInQ'); copied from
   source (OpenResearchLeaves20) than this worktree's Main.lean (OpenResearchLeaves19). Rebuilding Main and
   Discharges from the worktree source.
 - kinds-rows.tsv (six rows, published, LEAF/LEAF, flags 'restricted: ...; unread' or 'unread') and autofold.json written.
+
+## Step 3. #discharges (VERIFIED)
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges` from the worktree sources (19.5 min, success),
+  then rebuilt the module, then `lake env lean scratch/h29-ne3/DischargesH29Ne3.lean` (exit 0):
+  DISCHARGES [h29] by H29Split.tyzLemma29Mod2_of_sixLeaves, still assumes the six leaves
+  (LegendreThreeSquares, JonesPallX2Y2Z16, TYZTestVectorExists, TYZLemma29PrintedNe3, TYZThm21At31,
+  TYZProp23Printed); axioms [propext, Classical.choice, Quot.sound].
+  `#discharges: 66 open hypotheses, 1307 theorems checked, 7 discharge one`.
+- `h29ne3_frozenTarget` and MainEdit's `ZInQ.OneProof.frozenTarget`: axioms [propext, Classical.choice, Quot.sound].
+- ZInQKernel/Contrib/OneProof/TYZLemma29Mod2.lean restored to the tracked version (not committed).
