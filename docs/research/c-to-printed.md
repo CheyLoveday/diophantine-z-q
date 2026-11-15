@@ -1,44 +1,59 @@
 # c-to-printed: four "consequence of one theorem" fields from printed-form leaves
 
-Task c-to-printed, 2026-11-14. Base e38375b3 (wip/w62). Lean: `scratch/c-to-printed/CToPrinted.lean` (imports
-`ZInQKernel.OneProof.H.TailZ14`; parts N, S, F) and `scratch/c-to-printed/Shimura.lean` (imports
-`ZInQKernel.OneProof.H.TailU`; part H). Neither file has a `sorry` or an `axiom`. Every theorem below depends only
-on `[propext, Classical.choice, Quot.sound]`, checked by `#print axioms` at the end of each file (VERIFIED). Results
-log: `scratch/c-to-printed/log.md`. Nothing under `ZInQKernel/` or `blueprint/` was edited. This is model work with
-no human review.
+Task c-to-printed, 2026-11-14. Base e38375b3 (wip/w62). Two Lean files, neither with a `sorry` or an `axiom`:
+- `scratch/c-to-printed/CToPrinted.lean` imports `ZInQKernel.OneProof.H.TailZ14` and contains parts N, F and S.
+- `scratch/c-to-printed/Shimura.lean` imports `ZInQKernel.OneProof.H.TailU` and contains part H.
+
+Every theorem named below depends only on `[propext, Classical.choice, Quot.sound]`; this is checked by the
+`#print axioms` lines at the end of each file (VERIFIED). The results log is `scratch/c-to-printed/log.md`.
+Nothing under `ZInQKernel/` or `blueprint/` was edited. This is model work: there was one independent model
+review of the statements (§6) and no human review.
 
 Marks: **VERIFIED** = compiled or read in a file. **STANDARD** = published, with a reference. **SPECULATIVE** = a
 judgement. **UNVERIFIED** = a theorem number or wording recalled without a source. There is no network on this host,
-so BLR, SGA 3, SGA 7, EGA IV, Faltings 1983, Raynaud (Astérisque 127) and Shimura 1967 could not be consulted.
-Every locator and every "printed" wording below is UNVERIFIED.
+so BLR, SGA 3, SGA 7, EGA IV, Stacks, Faltings 1983, Raynaud (Astérisque 127) and Shimura 1967 could not be
+consulted. Every locator and every "printed" wording below is UNVERIFIED.
 
-Each field is proved from the exact kernel constant, so the statement is unchanged. Each file also carries a
-verbatim copy of the field with an `example : copy = kernel constant := rfl` check.
+Each field is proved as the exact kernel constant, so no statement changed. Each file also carries a verbatim copy
+of its field, checked by `example : copy = kernel constant := rfl`.
 
 ## 1. Main result
 
-| field (kernel constant) | Lean theorem (compiled) | published-form leaves | glue left |
+**Three of the four fields are now Lean theorems from published-form leaves alone, with no glue left.** The fourth,
+`shimuraFamily`, is proved from the fullest form of Shimura's Main Theorem I that Mathlib can state. That form is a
+consequence of the print rather than the print itself, because the reciprocity law needs global class field
+theory, which Mathlib lacks.
+
+| field (kernel constant) | Lean theorem (compiled) | leaves (all published form, UNVERIFIED wording) | glue left |
 |---|---|---|---|
-| `neronLocalizesDVR` (`ReductGlue.NeronLocalizesDVR`) | `CToPrinted.neronLocalizesDVR_of_printed` | `BLR_1_2_4`: BLR 1.2 Prop. 4, the full "iff", over every Dedekind domain and every smooth separated `R`-scheme of finite type | **none** (all glue proved) |
-| `faltingsLemma5BC` (`ZInQ.HeightSplit.FaltingsLemma5BC`) | `CToPrinted.faltingsLemma5BC_of_printed` | `FaltingsLemma5Printed`: Faltings 1983 Lemma 5, the identity with the correction term `[K:ℚ]⁻¹ log #s*Ω¹_{G/S}`; `RaynaudKernelBound`: Raynaud, Ast. 127 VII 2.1.3 | **none** (all glue proved) |
-| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed_final'` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 3 small glue Props on the topology of the identity component (`IdCompSubgroup`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`), plus the existing bundle leaf `geomConnOfRationalPoint`. Proved here: reduct-glue's leaf `OpenImmersionOfLocal` from EGA IV 8.10.5; the group-model construction on `𝒢⁰`; the step from SGA 7 IX 3.3 to reduct-split's form; `IdCompGenericFibre`; `IdCompGeomFibres` |
-| `shimuraFamily` (`HDec.QMSplit.Moduli.ShimuraFamily`) | `CToPrinted.Shimura.shimuraFamily_of_mainThmI` | `ShimuraMainThmIY3`: Shimura 1967 Main Thm I with the moduli interpretation, **without the reciprocity law** | none, but the leaf is a consequence of the print rather than the print (§5): the reciprocity law needs global class field theory, which Mathlib lacks |
+| `neronLocalizesDVR` (`ReductGlue.NeronLocalizesDVR`) | `CToPrinted.neronLocalizesDVR_of_printed` | `BLR_1_2_4`: BLR 1.2 Prop. 4, the full "iff", over any Dedekind domain and any smooth separated scheme of finite type | **none** |
+| `faltingsLemma5BC` (`ZInQ.HeightSplit.FaltingsLemma5BC`) | `CToPrinted.faltingsLemma5BC_of_printed` | `FaltingsLemma5Printed` (Faltings 1983 Lemma 5: the identity with correction term `[K:ℚ]⁻¹ log #s*Ω¹_{G/S}`); `RaynaudKernelBound` (Raynaud, Ast. 127 VII 2.1.3) | **none** |
+| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed_full` | `BLR_1_2_4`; `SGA3_VIB_3_10` (`G⁰` is open); `SGA7_IX_3_3` (`N⁰ ⊗ R' ≅ N'⁰`); `EGAIV_8_10_5_openImm` (open immersions spread out); and the leaf `AVGlue.GeomConnOfRationalPoint` (Stacks 04KV), already in the bundles | **none** |
+| `shimuraFamily` (`HDec.QMSplit.Moduli.ShimuraFamily`) | `CToPrinted.Shimura.shimuraFamily_of_mainThmI` | `ShimuraMainThmIY3`: Shimura 1967 Main Thm I with the moduli interpretation, without the reciprocity law and without surjectivity onto `V_S(ℂ)` | none, but the leaf is a consequence of the print (§5) |
 
-Also compiled: `semistableNeronBaseChange_of_printedBLR`. It derives SS2 from reduct-glue's three other leaves
-(`IdentityComponentBaseChangeDVR`, `IdentityComponentOL`, `OpenImmersionOfLocal`), with `NeronLocalizesDVR` replaced
-by the printed BLR 1.2/4.
+**Definitions added over Mathlib** (none of these exists in Mathlib 4.35):
+- `IsNeronModelOver` (BLR 1.2 Def. 1);
+- `idCompSet`, the identity component of a group scheme over a base, as a set;
+- `kerScheme`, `kerUnit`, `kerOmegaLog`: the kernel of a homomorphism of group schemes, its unit section and
+  `log #s*Ω¹`. The last is computed stalkwise, since Mathlib has no sheaf of relative differentials on schemes;
+- `InGamma3`.
 
-**Net effect on the strict count** (SPECULATIVE until the integrator rules):
-- `neronLocalizesDVR` and `faltingsLemma5BC` become theorems from published-form leaves, with no glue. That is
-  1 GLUE (c) → 1 LEAF, and 1 GLUE (c) → 2 LEAVES.
-- `semistableNeronBaseChange` becomes four printed-form leaves, the existing bundle leaf
-  `geomConnOfRationalPoint`, and three small glue Props about the topology of the identity component. One of the four leaves, BLR 1.2/4, is shared with `neronLocalizesDVR`. Of reduct-glue's
-  four leaves:
-  - two are now Lean theorems from printed leaves (`NeronLocalizesDVR` from BLR 1.2/4, `OpenImmersionOfLocal`
-    from EGA IV 8.10.5);
-  - the other two are reduced to the printed SGA 3 VI_B 3.10 and SGA 7 IX 3.3 plus that glue.
-- `shimuraFamily` stays a consequence of one theorem. Its leaf is now as close to the print as Mathlib 4.35
-  allows, and §5 lists what is missing.
+**Effect on the strict count** (SPECULATIVE until the integrator rules):
+
+| field | before | after |
+|---|---|---|
+| `neronLocalizesDVR` | GLUE (c) | LEAF `BLR_1_2_4` |
+| `faltingsLemma5BC` | GLUE (c) | 2 LEAVES: `FaltingsLemma5Printed`, `RaynaudKernelBound` |
+| `semistableNeronBaseChange` | GLUE (c) | 3 new LEAVES (`SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm`), plus `BLR_1_2_4` (shared) and `geomConnOfRationalPoint` (already in the bundles) |
+| `shimuraFamily` | GLUE (c) | still GLUE (c), with leaf `ShimuraMainThmIY3` |
+
+Side effect for reduct-glue: three of its leaves become theorems from these printed forms:
+- `NeronLocalizesDVR` from `BLR_1_2_4`;
+- `OpenImmersionOfLocal` from `EGAIV_8_10_5_openImm` (`openImmersionOfLocal_of_printed`);
+- `IdentityComponentOL`, in the stronger form `IdentityComponentOLRange`, from SGA 3 and Stacks 04KV.
+
+Its fourth leaf, reduct-split's `IdentityComponentBaseChangeDVR`, is replaced in the proof by
+`IdentityComponentBaseChangeDVRRange`, which is proved from SGA 3, SGA 7 and Stacks 04KV.
 
 No statement was found false or vacuous.
 
@@ -113,102 +128,78 @@ to Raynaud.
 
 ## 4. `semistableNeronBaseChange` (part S)
 
-reduct-glue proved SS2 from four leaves:
-- `IdentityComponentBaseChangeDVR` (SGA 7 IX 3.3, in reduct-split's open-subgroup form);
-- `IdentityComponentOL` (SGA 3 VI_B 3.10, in a group-model form);
-- `OpenImmersionOfLocal` (EGA IV 8.10.5, specialized to `Spec (𝓞_L)_𝔭`);
-- `NeronLocalizesDVR` (BLR 1.2/4).
+**Final theorem** (compiled, standard axioms):
 
-Now:
-- `NeronLocalizesDVR` is a theorem from the printed `BLR_1_2_4` (part N; `semistableNeronBaseChange_of_printedBLR`).
-- `OpenImmersionOfLocal` is a theorem from the printed EGA IV 8.10.5.
-- The other two are reduced to their printed forms plus four small glue Props about the topology of the identity
-  component, and one more such Prop is proved.
+`semistableNeronBaseChange_of_printed_full (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10) (h7 : SGA7_IX_3_3)
+(hE : EGAIV_8_10_5_openImm) (hG : AVGlue.GeomConnOfRationalPoint) : ZInQ.HeightSplit.SemistableNeronBaseChange`.
 
-**Final theorem:** `semistableNeronBaseChange_of_printed_final'' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
-(h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (hG : AVGlue.GeomConnOfRationalPoint) (gc : IdCompSubgroup)
-(ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) : SemistableNeronBaseChange` (compiled, standard axioms).
-`hG` is a leaf already in the bundles (Stacks 04KV, `geomConnOfRationalPoint`), so no new leaf is added.
+### 4.1 The leaves
 
-**Definition** `idCompSet G` is the identity component `G⁰` of a group scheme `G → S`, as a set: `x` belongs to it
-if `x` lies in the connected component of `e(f x)` in the fibre `f⁻¹{f x}`. The fibre carries the subspace topology,
-which Mathlib's `Scheme.Hom.fiberHomeo` identifies with the scheme fibre. **Mathlib 4.35 has no identity component
-of a group scheme over a base.**
+**Definition** `idCompSet G`, the identity component `G⁰` of a group scheme `G → S` as a set: `x` belongs to it if it
+lies in the connected component of `e(f x)` in the fibre `f⁻¹{f x}`, with the subspace topology. Mathlib's
+`Scheme.Hom.fiberHomeo` identifies that subspace with the scheme fibre.
 
-### 4.1 The printed-form leaves
-
-| leaf (printed form, UNVERIFIED wording) | statement | replaces |
-|---|---|---|
-| `SGA3_VIB_3_10` (SGA 3 VI_B Thm 3.10) | `G` a smooth group scheme over any `S` ⇒ `IsOpen (idCompSet G)` | `IdentityComponentOL` |
-| `SGA7_IX_3_3` (SGA 7 I, IX Prop. 3.3, second assertion) | Setting: `O ⊆ O'` DVRs with `K'/K` finite and `O' ∩ K = O`, `A` semistable at `O`, Néron models `𝒩`, `𝒩'`; `c : 𝒩 ×_O O' → 𝒩'` a homomorphism with isomorphic generic fibre; `U` an open with `U = idCompSet (𝒩 ×_O O')`. Conclusion: `U.ι ≫ c` is an open immersion with image `idCompSet 𝒩'`, i.e. `N⁰ ⊗ R' ≅ N'⁰` | `IdentityComponentBaseChangeDVR` |
-| `EGAIV_8_10_5_openImm` (EGA IV₃ 8.10.5, open-immersion item) | In the kernel's limit setting (as in its leaf `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii`): if the base change of `f_i : X_i → Y_i` (finitely presented) to `lim D` is an open immersion, so is its base change to some `D_j` | `OpenImmersionOfLocal` |
-
-Three remarks on the Lean form of SGA 7 IX 3.3:
-- The print speaks of the canonical morphism. The Lean form allows any homomorphism with isomorphic generic
-  fibre. Such a map is the canonical one followed by a group automorphism of `𝒩'` (Néron), and that automorphism
-  preserves `𝒩'⁰`. So the Lean form is a consequence of the print.
-- The print's `N⁰ ⊗ R'` is written as `(N ⊗ R')⁰`. They agree because the fibres of `N⁰` are geometrically
-  connected.
-- The print allows any extension of DVRs (as recalled). The Lean form takes `K'/K` finite, which is a
-  specialization.
-
-### 4.2 Glue proved
-
-1. **`OpenImmersionLocalization`** (`openImmersionLocalization : EGAIV_8_10_5_openImm → OpenImmersionOfLocal`).
-   - `Spec O = lim_{a ∉ 𝔭} Spec 𝓞_L[1/a]`, indexed by `𝔭.primeCompl` preordered by divisibility
-     (`ringCoconeOIsColimit`, `specConeOIsLimit`; built on `IsLocalization` and reduct-glue's `mem_iff_exists`, in
-     the pattern of the kernel's `specConeIsLimit`).
-   - EGA IV 8.10.5 at each maximal `𝔭` gives `s_𝔭 ∉ 𝔭` with an open immersion over `D(s_𝔭)`
-     (`exists_away_of_dvr`).
-   - Finish with the open cover of `Y` by `Y ×_S D(s_𝔭)` (`Cover.mkOfCovers`, `Scheme.Pullback.range_fst`),
-     `IsZariskiLocalAtTarget.of_openCover`, and `pullbackRightPullbackFstIso`.
-2. **`IdentityComponentFromPrinted`, reduced** (`identityComponentFromPrinted_of`) to `OpenSubgroupIsIdComp` and
-   `IdCompBaseChangeDVR`.
-   - The canonical homomorphism `c` comes from reduct-glue's `bcDVR`, the Néron property and `isMonHom_of_ext`.
-   - `j = (i ×_O O') ≫ c` is an open immersion, by this chain:
-     `range(i ×_O O') = fst⁻¹(range i) = fst⁻¹ 𝒩⁰ = (𝒩 ×_O O')⁰`.
-     The chain uses `Scheme.Pullback.range_map` and the two glue Props. SGA 7 IX 3.3 says `c` is an open
-     immersion on that open, and `IsOpenImmersion.isoOfRangeEq` combines the two.
-3. **`IdentityComponentGroupModel`, reduced** (`identityComponentGroupModel_of`) to `IdCompSubgroup`,
-   `IdCompGenericFibre` and `IdCompGeomFibres`.
-   - The general construction `OpenSub`: an open `W` of a group scheme `G` that is closed under the group law
-     carries a group structure for which `W → G` is a homomorphism. It uses `GrpObj.ofRepresentableBy` with the
-     presheaf of groups `T ↦ {f : T ⟶ G | f(T) ⊆ W}` (`grpG0`, `isMonHom_incl`).
-   - Smoothness and separatedness hold because `W → G` is an open immersion.
-   - Quasi-compactness: `𝒢` is noetherian (`LocallyOfFiniteType.isLocallyNoetherian`,
-     `quasiCompact_of_noetherianSpace_source`).
-   - Generic fibre: the inclusion is an open immersion that is surjective on generic fibres
-     (`isIso_iff_isOpenImmersion_and_surjective`).
-4. **`IdCompGeomFibres`, PROVED from the bundle leaf `geomConnOfRationalPoint`** (`idCompGeomFibres`).
-   - `Spec κ̄(𝔭) → S` factors as `Spec φ ≫ (Spec κ(y) → S)` (`SpecToEquivOfField`).
-   - The fibre of `W = 𝒢⁰` over `y` is homeomorphic (`fiberHomeo`) to the connected component of `e(y)` in
-     `𝒢_y`, so it is connected.
-   - It has the rational point `e(y)` and is of finite type, so Stacks 04KV makes it geometrically connected.
-   - The geometric fibre is its base change along `Spec φ` (`IsPullback.of_right`).
-5. **`IdCompGenericFibre`, PROVED** (`idCompGenericFibre`).
-   - The generic fibre `𝒢_L ≅ A_L` is connected.
-   - Its image in `𝒢` is the set of points over the generic point.
-   - That image is a connected set containing `e(η)` (`IsPreconnected.subset_connectedComponentIn`).
-
-### 4.3 Glue left
-
-Three named Props remain. All are true, and each docstring says what it needs. All concern the topology of the
-identity component of a smooth group scheme, and they reduce to two standard facts:
-- an open subgroup of a group scheme over a field is closed;
-- `(G_s)⁰` is geometrically connected (Stacks 04KV).
-
-| glue | statement |
+| leaf (UNVERIFIED wording) | Lean statement |
 |---|---|
-| `IdCompSubgroup` | `G⁰` is closed under `μ` and the inverse (SGA 3 VI_A 2.3 fibrewise) |
-| `OpenSubgroupIsIdComp` | an open subgroup of a group model over a DVR whose generic and geometric special fibres are connected has image `idCompSet` |
-| `IdCompBaseChangeDVR` | `fst⁻¹(G⁰) = (G ×_O O')⁰` for a smooth group scheme over a DVR |
+| `SGA3_VIB_3_10` (SGA 3 VI_B 3.10; EGA IV 15.6.5) | `G` a smooth group scheme over any `S` ⇒ `IsOpen (idCompSet G)` |
+| `SGA7_IX_3_3` (SGA 7 I, IX 3.3, second assertion) | Setting: `O ⊆ O'` DVRs with `K'/K` finite and `O' ∩ K = O`, `A` semistable at `O`, Néron models `𝒩`, `𝒩'`; `c : 𝒩 ×_O O' → 𝒩'` a homomorphism with isomorphic generic fibre; `U` the open `idCompSet (𝒩 ×_O O')`. Conclusion: `U → 𝒩'` is an open immersion with image `idCompSet 𝒩'` |
+| `EGAIV_8_10_5_openImm` (EGA IV₃ 8.10.5, open-immersion item) | In the kernel's limit setting (as in its leaf `EGAIV_8_10_5_xii`): if the base change of a finitely presented `f_i : X_i → Y_i` to `lim D` is an open immersion, so is its base change to some `D_j` |
+| `AVGlue.GeomConnOfRationalPoint` (Stacks 04KV; **already a bundle leaf**) | a connected `k`-scheme of finite type with a rational point is geometrically connected |
+| `BLR_1_2_4` | part N |
 
-The successive coarser forms remain in the file and compile:
-- `semistableNeronBaseChange_of_printed` (glue `IdentityComponentGroupModel`, `IdentityComponentFromPrinted`,
-  `OpenImmersionLocalization`);
-- `_of_printed'`;
-- `_of_printed''`;
-- `_of_printed_final`.
+Each Lean form of SGA 7 IX 3.3 is a consequence of the print:
+- It allows any homomorphism `c` whose generic fibre is an isomorphism. Such a map is the canonical one followed by
+  a group automorphism of `𝒩'` (Néron), and that automorphism preserves `𝒩'⁰`.
+- It writes `N⁰ ⊗ R'` as `(N ⊗ R')⁰`. These agree by `idComp_baseChange`, which is proved here.
+- It takes `K'/K` finite, while the print allows any extension of DVRs (as recalled).
+
+### 4.2 What is proved (all compiled)
+
+1. **`neronLocalizesDVR_of_printed`** (part N) gives reduct-glue's `NeronLocalizesDVR`.
+2. **`openImmersionLocalization`** gives reduct-glue's `OpenImmersionOfLocal` from EGA IV 8.10.5.
+   - `Spec O = lim_{a ∉ 𝔭} Spec 𝓞_L[1/a]`, indexed by `𝔭.primeCompl` preordered by divisibility
+     (`ringCoconeOIsColimit`, `specConeOIsLimit`).
+   - EGA IV 8.10.5 gives `s_𝔭 ∉ 𝔭` (`exists_away_of_dvr`).
+   - Finish with the open cover of `Y` by `Y ×_S D(s_𝔭)` and `IsZariskiLocalAtTarget.of_openCover`.
+3. **`geomConnected_idComp`**: `G⁰ → S` is geometrically connected.
+   - At each `y`, the fibre of `G⁰` is homeomorphic (`fiberHomeo`) to the connected component of `e(y)`, hence
+     connected.
+   - It has the rational point `e(y)`, so Stacks 04KV applies; conclude with
+     `GeometricallyConnected.iff_geometricallyConnected_fiber`.
+4. **`idComp_baseChange`**: `fst⁻¹(G⁰) = (G ×_S S')⁰` for a smooth quasi-compact `G` over a noetherian `S` and any
+   `S' → S`.
+   - `G⁰ ×_S Spec κ(s')` is connected and maps onto the points of `fst⁻¹(G⁰)` over `s'`.
+   - Conversely, `fst` maps the component of `e'(s')` to a connected set containing `e(g s')`.
+5. **`idCompSubgroup_of`**: `G⁰` is closed under `μ` and the inverse.
+   - `G⁰ ×_S G⁰ → S` is geometrically connected (`GeometricallyConnected.comp`), so its fibres are connected.
+   - `μ(e, e) = e`.
+6. **`OpenSub.grpG0`, `OpenSub.isMonHom_incl`**: an open `W` closed under the group law carries a group structure
+   for which `W → G` is a homomorphism (`GrpObj.ofRepresentableBy` on `T ↦ {f : T ⟶ G | f(T) ⊆ W}`). This is
+   general and reusable.
+7. **`identityComponentOLRange_of`**: every group model `𝒢` over `𝓞_L` has the group model `𝒢₀` on `𝒢⁰`, with
+   image exactly `𝒢⁰`.
+   - Smooth and separated, because `𝒢₀ → 𝒢` is an open immersion.
+   - Quasi-compact, because `𝒢` is noetherian.
+   - Its generic fibre equals `𝒢`'s, because `idCompGenericFibre` puts the generic fibre of `𝒢` inside `𝒢⁰`
+     (`A_L` is connected).
+8. **`identityComponentBaseChangeDVRRange_of`**: for an open subgroup `U` with image `𝒩⁰`, `U ×_O O' → 𝒩'` is an
+   open immersion and a homomorphism.
+   - The canonical `c` comes from `bcDVR`, the Néron property and `isMonHom_of_ext`.
+   - `range(U ×_O O') = (𝒩 ×_O O')⁰` by `range_map` and `idComp_baseChange`.
+   - Then apply SGA 7 IX 3.3.
+9. **`semistableNeronBaseChange_of_printed_full`** reuses reduct-glue's `semistableNeronBaseChangeLocalGlobal_of`
+   with two changes:
+   - `𝒢₀` comes from (7), and the image of `𝒢₀ ×_{𝓞_L} O` is `(𝒩 ×_{𝓞_L} O)⁰` by (4);
+   - the local step is (8) instead of reduct-split's connectedness form.
+
+   So reduct-split's `IdentityComponentBaseChangeDVR` and the topological claim "an open subgroup with connected
+   fibres is the identity component" (`OpenSubgroupIsIdComp`) are no longer needed.
+
+The intermediate reductions stay in the file and compile. They give successively smaller sets of named glue:
+- `semistableNeronBaseChange_of_printedBLR` (reduct-glue's four leaves with BLR printed);
+- `_of_printed`, `_of_printed'`, `_of_printed''`;
+- `_of_printed_final`, `_of_printed_final'`, `_of_printed_final''`;
+- `_of_printed_best` (glue `OpenSubgroupIsIdComp` only).
 
 ## 5. `shimuraFamily` (part H)
 
@@ -245,26 +236,54 @@ No analytification is needed.
 
 ## 6. Statement review
 
-- **No field statement changed.** Each is proved as the kernel constant. Verbatim copies are checked by `rfl`
-  (VERIFIED).
-- **None of the new leaves is vacuous as far as I can tell** (SPECULATIVE):
-  - `BLR_1_2_4` and `FaltingsLemma5Printed`/`RaynaudKernelBound` have Néron models as hypotheses, and these exist
-    (BLR 1.4/3).
-  - `SGA7_IX_3_3` quantifies over an open `U` equal to `idCompSet`. That open exists by SGA 3 VI_B 3.10, so the
-    leaf is not vacuous provided `idCompSet` is the identity component. It is, by construction.
-  - `ShimuraMainThmIY3` is an existential, and it is true for Shimura's `φ_S` composed with the inclusion of a
-    component.
-- **None is stronger than the print, as recalled.** Every Lean form is the print or a weakening: the localization
-  form of BLR quantifies over isomorphic copies; SGA 7 3.3 allows any homomorphism with isomorphic generic fibre;
-  Shimura's reciprocity law and surjectivity are dropped. The exception is a possibly wrong recollection, which
-  is the reading risk of each section.
-- **Definitions Mathlib lacks:** a sheaf of relative differentials on schemes (replaced by stalkwise conormal
-  modules), the identity component of a group scheme over a base (replaced by `idCompSet`), global class field
-  theory, and Shimura's canonical models.
+- **No field statement changed.** Each field is proved as its kernel constant, and the verbatim copies are checked
+  by `rfl` (VERIFIED).
+- **Independent review.** One model reviewer read all 18 leaf and glue statements with no access to my
+  conclusions. It found nothing false, vacuous or stronger than the print. In particular:
+  - it re-derived the sign and factor of `FaltingsLemma5Printed` against the kernel's height normalization;
+  - it checked `RaynaudKernelBound` locally (it is sharp for `μ_p`);
+  - it checked the `Γ(3)` orbit clause of `ShimuraMainThmIY3` (`det ι = nrd`, `Γ(3)` has no `±` ambiguity).
+
+  It had three cosmetic notes:
+  - `LocallyOfFiniteType` is redundant in `IsNeronModelOver`; it is kept to match BLR's definition.
+  - The docstring of `SGA3_VIB_3_10` was rewritten.
+  - The docstring of `kerOmegaLog` now says that Faltings' `G = 𝒩_A⁰ ×_{𝒩_B⁰} S` is an open subscheme of the Lean
+    `G` containing `s(S)`, so the value is the same.
+
+  Its locator doubts match mine: BLR 1.2/4 may be printed with strict henselizations, and "3.10" and "2.1.3" may be
+  numbered differently.
+- **Not vacuous.**
+  - The hypotheses of `BLR_1_2_4`, `SGA7_IX_3_3`, `FaltingsLemma5Printed` and `RaynaudKernelBound` are Néron
+    models, which exist (BLR 1.4/3).
+  - The open `U = idCompSet` in `SGA7_IX_3_3` exists by `SGA3_VIB_3_10`.
+  - `ShimuraMainThmIY3` is an existential that holds for Shimura's `φ_S`.
+- **Not stronger than the print, as recalled.**
+  - BLR quantifies over isomorphic copies of `𝒪_{S,s}`.
+  - SGA 3 is stated for smooth `G`.
+  - SGA 7 allows any homomorphism with isomorphic generic fibre and only finite `K'/K`.
+  - EGA uses the kernel's own limit setting.
+  - Shimura drops reciprocity and surjectivity.
+- **Definitions Mathlib lacks:**
+  - a sheaf of relative differentials on schemes (replaced by stalkwise conormal modules);
+  - the identity component of a group scheme over a base (`idCompSet`);
+  - global class field theory and Shimura's canonical models (§5).
 
 ## 7. Checks
 
-`scratch/c-to-printed/run.sh FILE` runs `lean` with `LEAN_PATH` on a copy of the e38375b3 build (`~/ctp-lib`). It
-was run one Lean process at a time:
-- `CToPrinted.lean`: about 15 s, no errors, 10 `#print axioms` lines, all standard (VERIFIED).
+`scratch/c-to-printed/run.sh FILE` runs `lean` with `LEAN_PATH` on a copy of the e38375b3 build (`~/ctp-lib`), one
+Lean process at a time. Results:
+- `CToPrinted.lean`: about 20 s, no errors, 13 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`
+  (VERIFIED).
 - `Shimura.lean`: about 6 s, no errors, 3 `#print axioms` lines, all standard (VERIFIED).
+- `grep` finds no `sorry` and no `axiom` in either file (VERIFIED).
+
+For integration, the field theorems are:
+- `CToPrinted.neronLocalizesDVR_of_printed`;
+- `CToPrinted.faltingsLemma5BC_of_printed`;
+- `CToPrinted.semistableNeronBaseChange_of_printed_full`;
+- `CToPrinted.Shimura.shimuraFamily_of_mainThmI`.
+
+The new leaves are:
+- `BLR_1_2_4`, `FaltingsLemma5Printed`, `RaynaudKernelBound`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`,
+  `EGAIV_8_10_5_openImm`, `Shimura.ShimuraMainThmIY3`;
+- plus the existing bundle leaf `AVGlue.GeomConnOfRationalPoint`.
