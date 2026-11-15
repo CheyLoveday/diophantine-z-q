@@ -268,5 +268,77 @@ theorem shimuraGoodReductionNoGuard_of_rep (hRep : ShimuraIntegralModelRep)
     · exact paste_iota _ _ _ _ _ (hki a) (hi a)
     · exact paste_eta _ _ _ _ _ _ _ (hke (a * u)) (he a)
 
+
+/-! ## G3 proved: fibres are unique up to isomorphism -/
+
+open MonoidalCategory CartesianMonoidalCategory MonObj _root_.PkgI3 in
+/-- The identity of a fibre goes to `η(0)` (as in r1univ-rigid's `isGrpFibre_of_rigidity`). -/
+theorem eta_left_comp {S : Scheme.{0}} {𝒜 : QMFamily S} {K : Type} [Field K]
+    {t : Spec (CommRingCat.of K) ⟶ S} {P : QML3 K} {g : P.A.X.left ⟶ 𝒜.F.left}
+    (he : ∀ a : O, (Additive.toMul (P.e.eta a)).left ≫ g = t ≫ 𝒜.eta a) :
+    η[P.A.X].left ≫ g = t ≫ 𝒜.eta 0 := by
+  rw [← one_left_comp he]
+  change _ = ((toUnit (AbVar.ptObj (K := K) K)) ≫ η[P.A.X]).left ≫ g
+  rw [Over.comp_left, Over.toUnit_left]
+  simp [AbVar.ptObj, Algebra.algebraMap_self]
+
+open MonoidalCategory CartesianMonoidalCategory MonObj _root_.PkgI3 in
+/-- **G3 holds** (proved: the pullback isomorphism of two fibres is `𝒪`-equivariant, respects the
+level sections, and is a homomorphism by the kernel's `G0FibreSimple.rigidityHom`). -/
+theorem fibreClassUnique : FibreClassUnique := by
+  intro S 𝒜 K _ y P P' ⟨k, hpb, hι, he⟩ ⟨k', hpb', hι', he'⟩
+  let e : P.A.X.left ⟶ P'.A.X.left := hpb'.lift k P.A.X.hom hpb.w
+  let e' : P'.A.X.left ⟶ P.A.X.left := hpb.lift k' P'.A.X.hom hpb'.w
+  have ek : e ≫ k' = k := hpb'.lift_fst _ _ _
+  have eh : e ≫ P'.A.X.hom = P.A.X.hom := hpb'.lift_snd _ _ _
+  have ek' : e' ≫ k = k' := hpb.lift_fst _ _ _
+  have eh' : e' ≫ P.A.X.hom = P'.A.X.hom := hpb.lift_snd _ _ _
+  have ee : e ≫ e' = 𝟙 _ := hpb.hom_ext (by rw [Category.assoc, ek', ek, Category.id_comp])
+    (by rw [Category.assoc, eh', eh, Category.id_comp])
+  have ee' : e' ≫ e = 𝟙 _ := hpb'.hom_ext (by rw [Category.assoc, ek, ek', Category.id_comp])
+    (by rw [Category.assoc, eh, eh', Category.id_comp])
+  let φ0 : P.A.X ⟶ P'.A.X := Over.homMk e eh
+  let ψ0 : P'.A.X ⟶ P.A.X := Over.homMk e' eh'
+  have h0 := eta_left_comp he
+  have h0' := eta_left_comp he'
+  have hη : η[P.A.X] ≫ φ0 = η[P'.A.X] := by
+    apply Over.OverMorphism.ext
+    apply hpb'.hom_ext
+    · rw [Over.comp_left, Category.assoc]
+      change η[P.A.X].left ≫ e ≫ k' = _
+      rw [ek, h0, h0']
+    · exact (Over.w (η[P.A.X] ≫ φ0)).trans (Over.w η[P'.A.X]).symm
+  have hη' : η[P'.A.X] ≫ ψ0 = η[P.A.X] := by
+    apply Over.OverMorphism.ext
+    apply hpb.hom_ext
+    · rw [Over.comp_left, Category.assoc]
+      change η[P'.A.X].left ≫ e' ≫ k = _
+      rw [ek', h0, h0']
+    · exact (Over.w (η[P'.A.X] ≫ ψ0)).trans (Over.w η[P.A.X]).symm
+  have := G0FibreSimple.rigidityHom K P.A P'.A φ0 hη
+  have := G0FibreSimple.rigidityHom K P'.A P.A ψ0 hη'
+  refine Quotient.sound ⟨⟨AbVar.Hom.mk' φ0, AbVar.Hom.mk' ψ0, ?_, ?_, fun a => ?_, fun a => ?_⟩⟩
+  · apply Over.OverMorphism.ext
+    simp only [AbVar.Hom.hom_mk', Over.comp_left, Over.id_left]
+    exact ee
+  · apply Over.OverMorphism.ext
+    simp only [AbVar.Hom.hom_mk', Over.comp_left, Over.id_left]
+    exact ee'
+  · apply Over.OverMorphism.ext
+    simp only [AbVar.Hom.hom_mk', Over.comp_left]
+    apply hpb'.hom_ext
+    · change (P.q.iota a).hom.left ≫ e ≫ k' = e ≫ (P'.q.iota a).hom.left ≫ k'
+      rw [ek, hι, hι', reassoc_of% ek]
+    · change (P.q.iota a).hom.left ≫ e ≫ P'.A.X.hom = e ≫ (P'.q.iota a).hom.left ≫ P'.A.X.hom
+      rw [eh, Over.w, Over.w, eh]
+  · apply congrArg Additive.ofMul ?_ |>.trans (ofMul_toMul _)
+    apply Over.OverMorphism.ext
+    simp only [AbVar.Hom.hom_mk', Over.comp_left]
+    apply hpb'.hom_ext
+    · change (Additive.toMul (P.e.eta a)).left ≫ e ≫ k' = (Additive.toMul (P'.e.eta a)).left ≫ k'
+      rw [ek, he, he']
+    · change (Additive.toMul (P.e.eta a)).left ≫ e ≫ P'.A.X.hom =
+        (Additive.toMul (P'.e.eta a)).left ≫ P'.A.X.hom
+      rw [eh, Over.w, Over.w]
+
 end HDec.SGRSplit
-#print axioms HDec.SGRSplit.shimuraGoodReductionNoGuard_of_rep
