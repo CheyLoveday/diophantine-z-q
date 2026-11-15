@@ -264,23 +264,15 @@ theorem prod2 : HDec.PkgI1.thetaProd2 Om24 ^ 2 = Ecal ^ 20 *
   simp only [sqc0, sqc1, sqc2, sqc3, sqc4, sqc5, sqc6, sqc7, sqc8, sqc9]
   unfold CM24Alg.Pp; ring
 
-/-- **Main theorem: the closed numeric statement from the singular modulus `k₆`.** -/
-theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaValueAtOmega24 := by
-  obtain ⟨hA0', hk'⟩ := h
-  rw [← A0_eq] at hA0' hk'
-  rw [← A2_eq] at hk'
+/-- **Core: the closed numeric statement from `mpoly(θ₁₀(i√6)²/θ₀₀(i√6)²) = 0`.** -/
+theorem thetaValueAtOmega24_of_mpoly (k : ℂ) (hA0' : th1 τ6 0 0 ≠ 0)
+    (hk' : th1 τ6 (1 / 2) 0 ^ 2 = k * th1 τ6 0 0 ^ 2) (hm : CM24Alg.mpoly k = 0) : ThetaValueAtOmega24 := by
   set A0 := th1 τ6 0 0
   set A1 := th1 τ6 0 (1 / 2)
   set A2 := th1 τ6 (1 / 2) 0
   set B0 := th1 τ3 0 0
   set B1 := th1 τ3 0 (1 / 2)
   set B2 := th1 τ3 (1 / 2) 0
-  set k : ℂ := (((2 - √3) * (√3 - √2) : ℝ) : ℂ) with hkdef
-  have hm : CM24Alg.mpoly k = 0 := by
-    have ha : ((√2 : ℝ) : ℂ) ^ 2 = 2 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
-    have hb : ((√3 : ℝ) : ℂ) ^ 2 = 3 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
-    have := CM24Alg.mpoly_k6 _ _ ha hb
-    rw [hkdef]; push_cast; exact this
   have rB0 : B0 ^ 2 = A0 ^ 2 + A2 ^ 2 := by have := dupA τ3_im; rw [h2τ3] at this; exact this
   have rB1 : B1 ^ 2 = A0 ^ 2 - A2 ^ 2 := by have := dupB τ3_im; rw [h2τ3] at this; exact this
   have rB2 : B2 ^ 2 = 2 * A0 * A2 := by have := dupC τ3_im; rw [h2τ3] at this; exact this
@@ -311,6 +303,17 @@ theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaVa
   rw [div_eq_iff hD, HDec.PkgI1.jNum, HDec.PkgI1.jDen, hP, hS]
   have := CM24Alg.core k hm
   linear_combination (Ecal ^ 20 * A0 ^ 80) * this
+
+/-- **Main theorem (leaf form): the closed numeric statement from the singular modulus `k₆`.** -/
+theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaValueAtOmega24 := by
+  obtain ⟨hA0', hk'⟩ := h
+  rw [← A0_eq] at hA0' hk'
+  rw [← A2_eq] at hk'
+  refine thetaValueAtOmega24_of_mpoly _ hA0' hk' ?_
+  have ha : ((√2 : ℝ) : ℂ) ^ 2 = 2 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hb : ((√3 : ℝ) : ℂ) ^ 2 = 3 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+  have := CM24Alg.mpoly_k6 _ _ ha hb
+  push_cast; exact this
 
 /-- **The field `igusaCMValue24` from the singular modulus `k₆`.** -/
 theorem igusaCMValue24_of_singularModulus6 (h : SingularModulus6) : IgusaCMValue24 :=

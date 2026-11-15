@@ -882,6 +882,106 @@ theorem U11 : U (1 / 2) (1 / 2) = 0 := by
   rw [h2wa, h2wb, h2wc]; push_cast at ht ⊢
   linear_combination (π * I) * ht
 
+/-! ## The cubic modular equation `θ₃(τ)θ₃(3τ) = θ₂(τ)θ₂(3τ) + θ₄(τ)θ₄(3τ)` -/
+
+/-- `(ε, r, s) ↦ (r + s + ε, r − s)`. -/
+def cubE1 : Fin 2 × (ℤ × ℤ) ≃ ℤ × ℤ where
+  toFun w := (w.2.1 + w.2.2 + (w.1 : ℕ), w.2.1 - w.2.2)
+  invFun mn := (if (mn.1 + mn.2) % 2 = 0 then 0 else 1,
+    ((mn.1 + mn.2 - (if (mn.1 + mn.2) % 2 = 0 then 0 else 1)) / 2,
+     (mn.1 + mn.2 - (if (mn.1 + mn.2) % 2 = 0 then 0 else 1)) / 2 - mn.2))
+  left_inv w := by
+    obtain ⟨σ, p, q⟩ := w
+    fin_cases σ <;> simp <;> omega
+  right_inv mn := by
+    obtain ⟨m, n⟩ := mn
+    by_cases h : (m + n) % 2 = 0 <;> simp [h] <;> omega
+
+/-- `(ε, r, s) ↦ (2r − s + ε, s)`. -/
+def cubE2 : Fin 2 × (ℤ × ℤ) ≃ ℤ × ℤ where
+  toFun w := (2 * w.2.1 - w.2.2 + (w.1 : ℕ), w.2.2)
+  invFun uv := (if (uv.1 + uv.2) % 2 = 0 then 0 else 1,
+    ((uv.1 + uv.2 - (if (uv.1 + uv.2) % 2 = 0 then 0 else 1)) / 2, uv.2))
+  left_inv w := by
+    obtain ⟨σ, p, q⟩ := w
+    fin_cases σ <;> simp <;> omega
+  right_inv uv := by
+    obtain ⟨u, v⟩ := uv
+    by_cases h : (u + v) % 2 = 0 <;> simp [h] <;> omega
+
+/-- `(r, s) ↦ (r − s, −1 − s)`. -/
+def cubE3 : ℤ × ℤ ≃ ℤ × ℤ where
+  toFun w := (w.1 - w.2, -1 - w.2)
+  invFun w := (w.1 - 1 - w.2, -1 - w.2)
+  left_inv w := by obtain ⟨r, s⟩ := w; simp <;> omega
+  right_inv w := by obtain ⟨r, s⟩ := w; simp <;> omega
+
+theorem cubic {τ : ℂ} (hτ : 0 < τ.im) :
+    th1 τ 0 0 * th1 (3 * τ) 0 0 =
+      th1 τ (1 / 2) 0 * th1 (3 * τ) (1 / 2) 0 + th1 τ 0 (1 / 2) * th1 (3 * τ) 0 (1 / 2) := by
+  have h3 : 0 < (3 * τ).im := by simp; linarith
+  have hQ : ∀ x y : ℝ, τ.im * (x ^ 2 + y ^ 2) ≤ τ.im * x ^ 2 + 2 * (0 : ℂ).im * x * y + (3 * τ).im * y ^ 2 := by
+    intro x y; simp; nlinarith [sq_nonneg y]
+  rw [← th2_diag hτ h3, ← th2_diag hτ h3, ← th2_diag hτ h3]
+  set F := term2 τ 0 (3 * τ) 0 0 0 0
+  set G := term2 τ 0 (3 * τ) 0 0 (1 / 2) (1 / 2)
+  set H := term2 τ 0 (3 * τ) (1 / 2) (1 / 2) 0 0
+  have hF : Summable F := summable_term2 hτ hQ _ _ _ _
+  have hG : Summable G := summable_term2 hτ hQ _ _ _ _
+  have hH : Summable H := summable_term2 hτ hQ _ _ _ _
+  -- the phase: `G(m,n) = (−1)^{m+n} F(m,n)`
+  have hGF : ∀ m n : ℤ, G (m, n) = cexp (((m + n : ℤ) : ℂ) * (π * I)) * F (m, n) := by
+    intro m n
+    simp only [G, F, term2, ← Complex.exp_add]
+    congr 1; push_cast; ring
+  have hev : ∀ r s : ℤ, G (r + s, r - s) = F (r + s, r - s) := by
+    intro r s
+    rw [hGF, show (((r + s + (r - s) : ℤ) : ℂ) * (π * I)) = ((r : ℤ) : ℂ) * (2 * π * I) by push_cast; ring,
+      exp_int_mul_two_pi_mul_I, one_mul]
+  have hod : ∀ r s : ℤ, G (r + s + 1, r - s) = -F (r + s + 1, r - s) := by
+    intro r s
+    rw [hGF, show (((r + s + 1 + (r - s) : ℤ) : ℂ) * (π * I)) = ((r : ℤ) : ℂ) * (2 * π * I) + π * I by
+      push_cast; ring, Complex.exp_add, exp_int_mul_two_pi_mul_I, Complex.exp_pi_mul_I]
+    ring
+  have hFH : ∀ r s : ℤ, F (r + s + 1, r - s) = H (2 * r - s, s) := by
+    intro r s
+    simp only [F, H, term2]
+    congr 1; push_cast; ring
+  have hHH : ∀ r s : ℤ, H (2 * r - s + 1, s) = H (2 * (r - s) - (-1 - s), -1 - s) := by
+    intro r s
+    simp only [H, term2]
+    congr 1; push_cast; ring
+  -- LHS − θ₄θ₄' = 2 Σ F(r+s+1, r−s)
+  have hL : Th2 τ 0 (3 * τ) 0 0 0 0 - Th2 τ 0 (3 * τ) 0 0 (1 / 2) (1 / 2) =
+      2 * ∑' w : ℤ × ℤ, F (w.1 + w.2 + 1, w.1 - w.2) := by
+    rw [Th2, Th2, ← hF.tsum_sub hG]
+    have hs : Summable (fun w => (F - G) (cubE1 w)) := cubE1.summable_iff.2 (hF.sub hG)
+    rw [show (fun n => F n - G n) = (F - G) from rfl, ← cubE1.tsum_eq, hs.tsum_prod, tsum_fintype,
+      Fin.sum_univ_two, ← tsum_mul_left]
+    have h0 : ∀ w : ℤ × ℤ, (F - G) (cubE1 (0, w)) = 0 := by
+      intro w; simp only [cubE1, Equiv.coe_fn_mk, Pi.sub_apply, Fin.val_zero, Nat.cast_zero, add_zero]
+      rw [hev]; ring
+    have h1 : ∀ w : ℤ × ℤ, (F - G) (cubE1 (1, w)) = 2 * F (w.1 + w.2 + 1, w.1 - w.2) := by
+      intro w; simp only [cubE1, Equiv.coe_fn_mk, Pi.sub_apply, Fin.val_one, Nat.cast_one]
+      rw [hod]; ring
+    simp only [h0, h1, tsum_zero, zero_add]
+  have hR : Th2 τ 0 (3 * τ) (1 / 2) (1 / 2) 0 0 = 2 * ∑' w : ℤ × ℤ, H (2 * w.1 - w.2, w.2) := by
+    rw [Th2]
+    have hs : Summable (fun w => H (cubE2 w)) := cubE2.summable_iff.2 hH
+    rw [← cubE2.tsum_eq, hs.tsum_prod, tsum_fintype, Fin.sum_univ_two]
+    have h1 : ∑' w : ℤ × ℤ, H (cubE2 (1, w)) = ∑' w : ℤ × ℤ, H (2 * w.1 - w.2, w.2) := by
+      simp only [cubE2, Equiv.coe_fn_mk, Fin.val_one, Nat.cast_one]
+      conv_rhs => rw [← cubE3.tsum_eq]
+      congr 1; funext w
+      simp only [cubE3, Equiv.coe_fn_mk]
+      exact hHH w.1 w.2
+    rw [h1]
+    simp only [cubE2, Equiv.coe_fn_mk, Fin.val_zero, Nat.cast_zero, add_zero]
+    ring
+  have hLR : ∑' w : ℤ × ℤ, F (w.1 + w.2 + 1, w.1 - w.2) = ∑' w : ℤ × ℤ, H (2 * w.1 - w.2, w.2) :=
+    tsum_congr fun w => hFH w.1 w.2
+  linear_combination hL - hR + 2 * hLR
+
 end CM24
 
 namespace CM24Alg
@@ -1180,23 +1280,15 @@ theorem prod2 : HDec.PkgI1.thetaProd2 Om24 ^ 2 = Ecal ^ 20 *
   simp only [sqc0, sqc1, sqc2, sqc3, sqc4, sqc5, sqc6, sqc7, sqc8, sqc9]
   unfold CM24Alg.Pp; ring
 
-/-- **Main theorem: the closed numeric statement from the singular modulus `k₆`.** -/
-theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaValueAtOmega24 := by
-  obtain ⟨hA0', hk'⟩ := h
-  rw [← A0_eq] at hA0' hk'
-  rw [← A2_eq] at hk'
+/-- **Core: the closed numeric statement from `mpoly(θ₁₀(i√6)²/θ₀₀(i√6)²) = 0`.** -/
+theorem thetaValueAtOmega24_of_mpoly (k : ℂ) (hA0' : th1 τ6 0 0 ≠ 0)
+    (hk' : th1 τ6 (1 / 2) 0 ^ 2 = k * th1 τ6 0 0 ^ 2) (hm : CM24Alg.mpoly k = 0) : ThetaValueAtOmega24 := by
   set A0 := th1 τ6 0 0
   set A1 := th1 τ6 0 (1 / 2)
   set A2 := th1 τ6 (1 / 2) 0
   set B0 := th1 τ3 0 0
   set B1 := th1 τ3 0 (1 / 2)
   set B2 := th1 τ3 (1 / 2) 0
-  set k : ℂ := (((2 - √3) * (√3 - √2) : ℝ) : ℂ) with hkdef
-  have hm : CM24Alg.mpoly k = 0 := by
-    have ha : ((√2 : ℝ) : ℂ) ^ 2 = 2 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
-    have hb : ((√3 : ℝ) : ℂ) ^ 2 = 3 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
-    have := CM24Alg.mpoly_k6 _ _ ha hb
-    rw [hkdef]; push_cast; exact this
   have rB0 : B0 ^ 2 = A0 ^ 2 + A2 ^ 2 := by have := dupA τ3_im; rw [h2τ3] at this; exact this
   have rB1 : B1 ^ 2 = A0 ^ 2 - A2 ^ 2 := by have := dupB τ3_im; rw [h2τ3] at this; exact this
   have rB2 : B2 ^ 2 = 2 * A0 * A2 := by have := dupC τ3_im; rw [h2τ3] at this; exact this
@@ -1227,6 +1319,17 @@ theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaVa
   rw [div_eq_iff hD, HDec.PkgI1.jNum, HDec.PkgI1.jDen, hP, hS]
   have := CM24Alg.core k hm
   linear_combination (Ecal ^ 20 * A0 ^ 80) * this
+
+/-- **Main theorem (leaf form): the closed numeric statement from the singular modulus `k₆`.** -/
+theorem thetaValueAtOmega24_of_singularModulus6 (h : SingularModulus6) : ThetaValueAtOmega24 := by
+  obtain ⟨hA0', hk'⟩ := h
+  rw [← A0_eq] at hA0' hk'
+  rw [← A2_eq] at hk'
+  refine thetaValueAtOmega24_of_mpoly _ hA0' hk' ?_
+  have ha : ((√2 : ℝ) : ℂ) ^ 2 = 2 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hb : ((√3 : ℝ) : ℂ) ^ 2 = 3 := by exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+  have := CM24Alg.mpoly_k6 _ _ ha hb
+  push_cast; exact this
 
 /-- **The field `igusaCMValue24` from the singular modulus `k₆`.** -/
 theorem igusaCMValue24_of_singularModulus6 (h : SingularModulus6) : IgusaCMValue24 :=
