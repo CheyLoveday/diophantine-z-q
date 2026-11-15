@@ -288,4 +288,94 @@ theorem period_const {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32) (τ τ' : ℍ) :
   exact hUo.is_const_of_deriv_eq_zero hUc (fun w hw => (hd w hw).differentiableAt.differentiableWithinAt)
     (fun w hw => (hd w hw).deriv) τ.im_pos τ'.im_pos
 
+/-! ## C4. `℘` is surjective -/
+
+section Surj
+
+variable (L : PeriodPair)
+
+theorem countable_lattice : (L.lattice : Set ℂ).Countable :=
+  countable_of_Lindelof_of_discrete (X := L.lattice)
+
+theorem isConnected_compl_lattice : IsConnected (L.lattice : Set ℂ)ᶜ :=
+  Set.Countable.isConnected_compl_of_one_lt_rank (by simp) (countable_lattice L)
+
+theorem tendsto_weierstrassP_cobounded {l : ℂ} (hl : l ∈ L.lattice) :
+    Filter.Tendsto L.weierstrassP (nhdsWithin l {l}ᶜ) (Bornology.cobounded ℂ) :=
+  tendsto_cobounded_of_meromorphicOrderAt_neg (by rw [L.order_weierstrassP l hl]; decide)
+
+theorem weierstrassP_not_const : ¬ ∃ c : ℂ, ∀ z ∈ (L.lattice : Set ℂ)ᶜ, L.weierstrassP z = c := by
+  rintro ⟨c, hc⟩
+  have h0 : (0 : ℂ) ∈ L.lattice := L.lattice.zero_mem
+  have hev : L.weierstrassP =ᶠ[nhdsWithin 0 {0}ᶜ] fun _ => c := by
+    have hn := L.compl_lattice_sdiff_singleton_mem_nhds 0
+    filter_upwards [nhdsWithin_le_nhds (s := ({0}ᶜ : Set ℂ)) hn, self_mem_nhdsWithin] with z hz hz0
+    refine hc z fun hzL => hz ⟨hzL, hz0⟩
+  have hT := tendsto_weierstrassP_cobounded L h0
+  have hT' : Filter.Tendsto (fun _ : ℂ => c) (nhdsWithin 0 {0}ᶜ) (Bornology.cobounded ℂ) :=
+    hT.congr' hev
+  have hb : Filter.Tendsto (fun _ : ℂ => ‖c‖) (nhdsWithin (0 : ℂ) {0}ᶜ) Filter.atTop := by
+    simpa [← tendsto_norm_atTop_iff_cobounded] using hT'
+  exact Filter.not_tendsto_const_atTop _ _ hb
+
+/-- **`℘_L : ℂ ∖ L → ℂ` is surjective**: its image is open (open mapping) and closed (reduce to
+the compact closure of a fundamental domain; `℘ → ∞` at the lattice points). -/
+theorem weierstrassP_surjective (w : ℂ) : ∃ z ∉ L.lattice, L.weierstrassP z = w := by
+  set V := L.weierstrassP '' (L.lattice : Set ℂ)ᶜ with hV
+  have hUo : IsOpen (L.lattice : Set ℂ)ᶜ := L.isClosed_lattice.isOpen_compl
+  have hopen : IsOpen V := by
+    rcases L.analyticOnNhd_weierstrassP.is_constant_or_isOpen
+      (isConnected_compl_lattice L).isPreconnected with h | h
+    · exact absurd h (weierstrassP_not_const L)
+    · exact h _ subset_rfl hUo
+  have hclosed : IsClosed V := by
+    rw [← closure_subset_iff_isClosed]
+    intro v hv
+    obtain ⟨u, hu, hlim⟩ := mem_closure_iff_seq_limit.mp hv
+    choose z hz hzu using hu
+    set b := L.basis
+    have hspan : Submodule.span ℤ (Set.range b) = L.lattice := L.lattice_eq_span_range_basis.symm
+    set p : ℕ → ℂ := fun n => ZSpan.fract b (z n) with hp
+    have hpz : ∀ n, L.weierstrassP (p n) = u n := by
+      intro n
+      have hmem : ((ZSpan.floor b (z n) : Submodule.span ℤ (Set.range b)) : ℂ) ∈ L.lattice := by
+        rw [← hspan]; exact (ZSpan.floor b (z n)).2
+      rw [hp]
+      simp only [ZSpan.fract_apply]
+      rw [← hzu n]
+      exact L.weierstrassP_sub_coe (z n) ⟨_, hmem⟩
+    have hpL : ∀ n, p n ∉ L.lattice := by
+      intro n hpn
+      apply hz n
+      have hmem : ((ZSpan.floor b (z n) : Submodule.span ℤ (Set.range b)) : ℂ) ∈ L.lattice := by
+        rw [← hspan]; exact (ZSpan.floor b (z n)).2
+      have : z n = p n + ((ZSpan.floor b (z n) : Submodule.span ℤ (Set.range b)) : ℂ) := by
+        rw [hp]; simp only [ZSpan.fract_apply]; ring
+      rw [this]; exact add_mem hpn hmem
+    have hK : IsCompact (closure (ZSpan.fundamentalDomain b)) :=
+      (ZSpan.fundamentalDomain_isBounded b).isCompact_closure
+    obtain ⟨q, -, φ, hφ, htend⟩ := hK.tendsto_subseq
+      (fun n => subset_closure (ZSpan.fract_mem_fundamentalDomain b (z n)))
+    have hu' : Filter.Tendsto (fun k => L.weierstrassP (p (φ k))) Filter.atTop (nhds v) := by
+      simp only [hpz]; exact hlim.comp hφ.tendsto_atTop
+    by_cases hq : q ∈ L.lattice
+    · exfalso
+      have hw : Filter.Tendsto (fun k => p (φ k)) Filter.atTop (nhdsWithin q {q}ᶜ) := by
+        refine tendsto_nhdsWithin_iff.mpr ⟨htend, Filter.Eventually.of_forall fun k => ?_⟩
+        intro h
+        exact hpL (φ k) (h ▸ hq)
+      have hc := (tendsto_weierstrassP_cobounded L hq).comp hw
+      rw [← tendsto_norm_atTop_iff_cobounded] at hc
+      exact not_tendsto_atTop_of_tendsto_nhds (hu'.norm) hc
+    · have hcont : ContinuousAt L.weierstrassP q := (L.analyticOnNhd_weierstrassP q hq).continuousAt
+      have := tendsto_nhds_unique (hcont.tendsto.comp htend) hu'
+      exact ⟨q, hq, this⟩
+  have hne : V.Nonempty := ⟨_, L.ω₁ / 2, L.ω₁_div_two_notMem_lattice, rfl⟩
+  have huniv := (IsClopen.eq_univ ⟨hclosed, hopen⟩ hne)
+  have hw : w ∈ V := huniv ▸ Set.mem_univ w
+  obtain ⟨z, hz, hzw⟩ := hw
+  exact ⟨z, hz, hzw⟩
+
+end Surj
+
 end ZInQ.GZWeil
