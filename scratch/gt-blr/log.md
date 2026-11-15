@@ -14,3 +14,17 @@
   PROVED in ZInQKernel/Contrib/CloudW01Spread), W is smooth over R (Spec R[1/s] → Spec R open immersion) with
   generic fibre V_K, extend by the Néron property of X over R, glue by (i).
   The risk flagged in gap-triage A10 ("needs a smooth model over all of R") does not arise: W/R[1/s] smooth ⇒ W/R smooth.
+
+## 2026-11-14 21:40 MP proved
+- `GapBLR.BLR_1_2_4_MP` (the .mp half, binders of `CToPrinted.BLR_1_2_4`) PROVED: `GapBLR.blr_1_2_4_mp`,
+  ZInQKernel/Contrib/OneProof/BLRLocalizes.lean, VERIFIED (lake build +Main +Discharges +BLRLocalizes: success;
+  axioms [propext, Classical.choice, Quot.sound]).
+  General form `GapBLR.isNeronModelOver_localization`: any CommRing R, IsFractionRing R K, any prime 𝔭 (no Dedekind).
+- `GapBLR.neronLocalizesDVR_proved : ReductGlue.NeronLocalizesDVR` (no hypotheses), VERIFIED.
+- `GapBLR.blr_1_2_4_mp_of_printed : CToPrinted.BLR_1_2_4 → BLR_1_2_4_MP`, VERIFIED.
+- #discharges (scratch/gt-blr/Discharges.lean): "72 open hypotheses, 61 theorems checked, 0 discharge one" — expected:
+  the open field is the full iff; the .mp half matches no open statement. A fold must reroute the consumers.
+- Reused from the chain: `LeafQM.AV.R1UnivRigid.isReduced_of_smooth` (TailZ16), `CToPrinted.algOL`,
+  `isScalarTower_OL`, `isLocalization_center`, `isNeronModelOver_of`, `ZInQ.Contrib.SpreadOut.EGAIV_8_8_2_ii_proof`,
+  `EGAIV_17_7_8_ii_proof`, `smooth_of_iso`. New (not in chain): limit diagram `Spec R_𝔭 = lim Spec R[1/s]` for general
+  R (TailZ19 has only the 𝓞_L / valuation-subring instance `specConeOIsLimit`).
