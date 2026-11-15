@@ -14,7 +14,8 @@ Marks: **VERIFIED** (compiled here, or read in a named file), **STANDARD** (publ
 make them vacuous or false and that can be decided in Lean today is ruled out by a Lean proof (§2), and both
 statements are consequences of the prints, not stronger (§4). Proved: `B_cris^+`, `B_cris`, `B_st` are not
 zero and `t` is not nilpotent; `G_{ℚ_p}` acts on `B_cris` and on `B_st` by ring automorphisms (including the
-additivity of `log` on `{ε : ε^♯ = 1}`); the monodromy variable `u` is not invariant; `K_0 ⊆ B_st^{G_K}` in
+additivity of `log` on `{ε : ε^♯ = 1}`); the monodromy variable `u` is not fixed by any `G_K`, `K` finite;
+`K_0 ⊆ B_st^{G_K}` in
 dimension form; potentially trivial representations are pst; and a nontrivial character (the quadratic
 character of a prime-to-`p` root of unity, e.g. the unramified one) is semistable over `ℚ_p` itself. What
 remains unproved in Lean is not a choice in the definitions but one standard theorem about exactly these
@@ -51,13 +52,13 @@ All in namespace `HDec.PkgI4.PanBergerSplit`, over pb-bypass's definitions uncha
 | the group law on `B_st` ⇔ the cocycle identity for `σ ↦ log [u_σ]` | `stAct_mul_iff`, `stAct_mul (hL : LogAdditive p)` | |
 | **`log [xy] = log [x] + log [y]` in `A_cris`** (`x^♯ = y^♯ = 1`) | `logAdditive : LogAdditive p` | below (second argument) |
 | **`G_{ℚ_p}` acts on `B_st` by ring automorphisms** | `stAut : GQp p →* (Bst p ≃+* Bst p)` | `stAct_mul`, `logAdditive` |
-| **`u` is not `G_{ℚ_p}`-invariant**: some `σ` moves `p♭`, so `σ(u) = u + log [u_σ] ≠ u` | `exists_uSigma_ne_one`, `exists_stAct_X_ne`, `X_not_mem_bstInv_bot` | `p^{1/p} ∉ ℚ_p` (valuation), infinite Galois theory (`InfiniteGalois.mem_range_algebraMap_iff_fixed`), `root_preTiltMap` |
+| **`u` is not invariant under any open subgroup**: for every finite `K` some `σ ∈ G_K` moves `p♭`, so `σ(u) = u + log [u_σ] ≠ u` and `u ∉ B_st^{G_K}` (with a trivial action on `u`, `B_st^{G_K}` would contain `B_cris^{G_K}[u]`, infinite-dimensional, and `IsSemistableOver` would degenerate) | `exists_mem_fixingSubgroup_uSigma_ne_one`, `X_not_mem_bstInv`, (`K = ℚ_p`: `exists_stAct_X_ne`, `X_not_mem_bstInv_bot`) | a `p^n`-th root of `p` has degree divisible by `p^n` (`pow_dvd_natDegree_minpoly`, spectral norm and valuations), so it is not in `K` for `p^n > [K:ℚ_p]`; infinite Galois theory (`InfiniteGalois.fixedField_fixingSubgroup`); `root_preTiltMap` |
 | **`K_0 ⊆ B_st^{G_K}`** (dimension form): for a root of unity `μ ∈ K` of order prime to `p`, `[μ♭]^i ∈ B_st^{G_K}` and `1, [μ♭], …, [μ♭]^{d−1}` (`d = [ℚ_p(μ):ℚ_p]`) are `ℚ_p`-independent; so a finite-dimensional `B_st^{G_K}` has dimension `≥ [ℚ_p(μ):ℚ_p]` | `teichB_pow_mem_bstInv`, `linearIndependent_teichB`, `natDegree_minpoly_le_finrank_bstInv` | `muFlat`, `coe_theta_zpToW`, `embW_injective`, `linearIndependent_pow` |
 | a representation trivial on `G_K` is semistable over `K` (any `K`; no finiteness of `B_st^{G_K}` needed) | `isSemistableOver_of_trivial`, `isPst_of_trivial_on` | `D_st,K ≅ Hom(V, B_st^{G_K})` |
 | trivial `n`-dimensional `ℚ̄_p`-representation satisfies `LocalIsPst` | `localIsPst_one` | |
 | quadratic characters `σ ↦ σ(α)/α` (`α² ∈ ℚ_p`, e.g. the unramified one) are pst | `quadChar`, `isPst_quadChar` | trivial on `G_{ℚ_p(α)}` |
 | a 1-dimensional representation with a unit period `b ∈ B_st` (`σ b = χ(σ) b` on `G_K`) is semistable over `K` | `isSemistableOver_of_period` | `D_st,K ≅ B_st^{G_K}`, `φ ↦ φ(1) b⁻¹` |
-| **the quadratic character of a root of unity `β` of order prime to `p` with `β² ∈ ℚ_p` is semistable over `ℚ_p`** (for `p` odd, `β` of order `2(p − 1)`: the unramified quadratic character, STANDARD) | `isSemistableOver_quadChar_teich` | period `[β♭]`; Teichmüller uniqueness `eq_of_pow_eq_one_of_untilt`; `A_inf` a domain |
+| **the quadratic character of a root of unity `β` of order prime to `p` with `β² ∈ ℚ_p` is semistable over `ℚ_p`**, and nontrivial if `β ∉ ℚ_p` (for `p` odd, `β` of order `2(p − 1)`: the unramified quadratic character, STANDARD) | `isSemistableOver_quadChar_teich`, `quadChar_ne_one` | period `[β♭]`; Teichmüller uniqueness `eq_of_pow_eq_one_of_untilt`; `A_inf` a domain |
 | summary | `panBerger_definitions_nondegenerate` | |
 
 **The main argument (all in `A_inf`, no `B_dR`).** Write `[ε_i] − 1 = ξ^{s_i} w_i` with `θ(w_i) ≠ 0`
