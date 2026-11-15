@@ -360,7 +360,7 @@ theorem invert (a0 a1 : ℝ) (b0 b1 : ℤ) :
   have e0 : ((b0 : ℝ) / 2) = -((b0 : ℝ) / 2) + (b0 : ℤ) := by ring
   have e1 : ((b1 : ℝ) / 2) = -((b1 : ℝ) / 2) + (b1 : ℤ) := by ring
   conv_rhs => rw [e0, e1, th2_shift_c]
-  ring
+  ring_nf
 
 
 /-! ## `2W = diag(i√6, i√6/2) + [[2,1],[1,1]]`: translation to a diagonal matrix -/
