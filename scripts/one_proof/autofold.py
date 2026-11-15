@@ -32,7 +32,8 @@ Spec (JSON):
                     "doc": "Mumford, Abelian varieties, 13 (printed form)", "kind": "published", "flag": "",
                     "source": "Mumford, Abelian varieties, section 13"}]}]}
 
-In "proof", `{n}` stands for the new bundle (so a leaf is `{n}.<leaf>`); write types and proofs fully qualified
+In "proof", `{n}` stands for the new bundle (so a leaf is `{n}.<leaf>`), and `{r}`, `{t}`, `{l}`, `{g}` (frozenTarget's
+variable names) for the other bundles' new values, so a proof may use their fields (`{t}.gagaMorphism`); write types and proofs fully qualified
 (`_root_.` for names outside `HDec`), since the new module opens nothing. Leaves go into the bundle of the field
 they replace.
 
@@ -222,13 +223,15 @@ def main():
             'Fields added (new leaves): ' + (', '.join(f"`{lf['name']}`" for d in spec['discharges']
                                                        for lf in d.get('leaves', [])) or 'none') + '. -/',
             '', 'namespace HDec', '', 'namespace HSyn', '']
-    newname = {}
+    newname = {s: bump(s) for s in bundles if any(owner[f] == s for f in by_field)}
     for sname, (var, fn, groups) in bundles.items():
         mine = [f for f in by_field if owner[f] == sname]
         if not mine:
             continue
-        nn = bump(sname)
-        newname[sname] = nn
+        nn = newname[sname]
+        # other bundles the proofs name as {r}, {t}, {l}, {g} (frozenTarget's variable names): their new values
+        extra = [(v, newname.get(s, s)) for v, s in binders
+                 if s != sname and any('{' + v + '}' in by_field[f]['proof'] for f in mine)]
         leaves = [lf for f in mine for lf in by_field[f].get('leaves', [])]
         out.append(f'/-- `{sname}` without ' + ', '.join(f'`{f}`' for f in mine)
                    + (', with the leaves ' + ', '.join(f"`{lf['name']}`" for lf in leaves) if leaves else '')
@@ -244,16 +247,21 @@ def main():
         out.append('')
         conv = f'{sname[0].lower()}{sname[1:]}_of_{nn}'
         out.append(f'/-- `{sname}` from `{nn}`: ' + ', '.join(f'`{f}`' for f in mine) + ' by the contributions. -/')
-        out.append(f'theorem {conv} (n : {nn}) : {sname} where')
+        params = ''.join(f' ({v} : {t})' for v, t in extra)
+        out.append(f'theorem {conv} (n : {nn}){params} : {sname} where')
         for f, _ in groups:
             if f in by_field:
-                out.append(f"  {f} := {by_field[f]['proof'].replace('{n}', 'n')}")
+                proof = by_field[f]['proof'].replace('{n}', 'n')
+                for v, _ in extra:
+                    proof = proof.replace('{' + v + '}', v)
+                out.append(f"  {f} := {proof}")
             else:
                 out.append(f'  {f} := n.{f}')
         out.append('')
-        bundles[sname] = (var, fn, groups, conv)
+        bundles[sname] = (var, fn, groups, conv, [v for v, _ in extra])
     new_binders = ' '.join(f'({v} : {newname.get(s, s)})' for v, s in binders)
-    call = ' '.join(f'({bundles[s][3]} {v})' if s in newname else v for v, s in binders)
+    call = ' '.join('(' + ' '.join([bundles[s][3], v] + bundles[s][4]) + ')' if s in newname else v
+                    for v, s in binders)
     out += [f'/-- **G0 with only the open leaves and the open glue** ({name}; generated). -/',
             f'theorem sixContactMin_of_open{N + 1} {new_binders} : ZInQ.SixContactMin :=',
             f'  {top} {call}', '', 'end HSyn', '', 'end HDec', '',
