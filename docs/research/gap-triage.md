@@ -212,7 +212,8 @@ Conflicts and owners:
       (hTS : TameQuotientSmooth) (hP1 : SmoothModelOfP1) (hFix : TameFixedPointsDisjoint) (hCyc : TameInertiaCyclic)
       (hT : ObjBridge.TorsionStructure) (hC : CurveBijIso) (hYI : ModelYIrreducible) (hO : CMStabObj) :
       ModelCoordinateResidue
-  -- := final4 … hYI quotientDescendsQ' (toP1BijIsCoordinateQ_of hC GapGlue.p1SchemeQ) (cMStabInvolution_of hC hYI hO)
+  -- := MCRQuot.modelCoordinateResidue_final4 hAF hQE hTS hP1 hFix hCyc hT hC hYI MCRQuot.quotientDescendsQ
+  --      (MCRQuot.toP1BijIsCoordinateQ_of hC GapGlue.p1SchemeQ) (MCRQuot.cMStabInvolution_of hC hYI hO)
   theorem GapGlue.modelYIrreducible_of_open9 (l : HDec.HSyn.OpenAddedLeaves9) : ModelYIrreducible  -- compiled (GlueProbe)
   ```
 
