@@ -6,7 +6,7 @@
     "shimuraIntegralModelRep",
     "quotientP1Coordinate"
   ],
-  "bypass": "Rethread the conversions from the top generation down to TailN without shimuraGoodReduction / shimuraGoodReductionNoGuard / shimuraIntegralModelRep and modelCoordinateResidue / quotientP1Coordinate; at the TailN conversion set heckeVertWitness := SGRDirect.heckeVertWitness_of_nvSqrt (LeafAdopt.R1R2fp_of_rep r.r1r2) (ObjBridge.torsionStructure_iff.mpr t.t5) l.qmAutCard l.serreRigidity3 l.alFixedPoints n.nvLocalInertia n.heckeSqrtBranch (check the then-current field names against TailI/TailK).",
+  "bypass": "Rethread the conversions from the top generation down to TailN without shimuraGoodReduction / shimuraGoodReductionNoGuard / shimuraIntegralModelRep and modelCoordinateResidue / quotientP1Coordinate; at the TailN conversion set heckeVertWitness := SGRDirect.heckeVertWitness_of_nvSqrtAny (LeafAdopt.R1R2fp_of_rep r.r1r2) (ObjBridge.torsionStructure_iff.mpr t.t5) l.qmAutCard l.serreRigidity3 l.alFixedPoints n.nvLocalInertia n.heckeSqrtBranchAny (check the then-current field names against TailI/TailK).",
   "new_leaves": [
     {
       "field": "nvLocalInertia",
@@ -18,20 +18,22 @@
       "doc": "docs/research/sgr-direct.md §4"
     },
     {
-      "field": "heckeSqrtBranch",
-      "type": "SGRDirect.HeckeSqrtBranch",
+      "field": "heckeSqrtBranchAny",
+      "type": "SGRDirect.HeckeSqrtBranchAny",
       "kind": "consequence",
       "flag": "",
       "strict": "GLUE",
-      "source": "Elkies, Shimura curve computations (ANTS-III 1998) §3 chart s^2 = -t on X*(6), from the field elkiesX6StarPrinted; t = (27X+16)/16",
+      "source": "Elkies, Shimura curve computations (ANTS-III 1998) §3: Q(X6) = Q(X)(sqrt X, sqrt(-(27X+16))) (chart s^2 = -t, t = (27X+16)/16), from the field elkiesX6StarPrinted; constant-free",
       "doc": "docs/research/sgr-direct.md §4"
     }
   ],
   "module": "ZInQKernel.Contrib.OneProof.SGRDirectNV",
-  "theorem": "SGRDirect.heckeVertWitness_of_nvSqrt",
+  "theorem": "SGRDirect.heckeVertWitness_of_nvSqrtAny",
   "proved_in_file": [
     "SGRDirect.ramifiedSqrtInertia",
     "SGRDirect.vertInertiaTrivial",
-    "SGRDirect.heckeBranchFibreUnram"
+    "SGRDirect.heckeBranchFibreUnram",
+    "SGRDirect.exists_good_sqrt",
+    "SGRDirect.even_padicValRat_of_sq_mem"
   ]
 }

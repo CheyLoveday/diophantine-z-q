@@ -30,9 +30,9 @@ the field outright from existing fields alone, with every step proved, is not re
 3. **Route NV, compiled** (§4, VERIFIED: `lake build`, standard axioms):
 
    ```lean
-   theorem SGRDirect.heckeVertWitness_of_nvSqrt (hRR : R1R2fp) (hT : ObjBridge.TorsionStructure)
+   theorem SGRDirect.heckeVertWitness_of_nvSqrtAny (hRR : R1R2fp) (hT : ObjBridge.TorsionStructure)
        (hA : HeckeRest.QMAutCard) (hS : HeckeRest.SerreRigidity3) (hW : HeckeRest.ALFixedPoints)
-       (hL : NVLocalInertia) (hQ : HeckeSqrtBranch) : HDec.HeckeRestNV.HeckeVertWitness
+       (hL : NVLocalInertia) (hQ : HeckeSqrtBranchAny) : HDec.HeckeRestNV.HeckeVertWitness
    ```
 
    - The first five hypotheses are exactly what the chain already passes to the consumer
@@ -40,9 +40,14 @@ the field outright from existing fields alone, with every step proved, is not re
      `serreRigidity3`, `alFixedPoints`.
    - The two remaining named Props, both GLUE:
      - `NVLocalInertia`: local algebra of tame covers, h-b1 Lemma NV step 3.
-     - `HeckeSqrtBranch`: `E` contains `√(a(27X + 16))` with `a` prime to `p > 324`, from Elkies' model of `X₆`.
+     - `HeckeSqrtBranchAny`: `E` contains `√(c(27X + 16))` for some nonzero rational `c`. This is the quadratic
+       subfield of `ℚ(X₆)/ℚ(X)` ramified at `−16/27` and `∞`, from Elkies' model of `X₆`. No constant is
+       specified: `exists_good_sqrt` (compiled) shows that `v_p(c)` is even for every `p ≥ 5`. Its argument: the
+       residue fields over `X = 0` are unramified at `p` (from `R1R2fp`) and contain `√c`, and the new lemma
+       `even_padicValRat_of_sq_mem` says a number field unramified at `p` contains no square root of a rational of
+       odd `p`-adic valuation.
 4. **Three further named Props are proved in Lean** (VERIFIED, standard axioms). Route NV started with five; these
-   three are now theorems:
+   three are now theorems, and the fourth (`HeckeSqrtBranch`) is weakened to `HeckeSqrtBranchAny`:
    - `ramifiedSqrtInertia`: Hilbert theory over `ℚ[X]`, with the fixing group of a sub-ring of integers and Mathlib's
      `card_inertia_eq_ramificationIdxIn`;
    - `vertInertiaTrivial`: Hilbert theory over the DVR `ℤ[X]_{(p)}`. Its residue extensions are separable because
@@ -58,7 +63,7 @@ the field outright from existing fields alone, with every step proved, is not re
    - That group has order at most 2, and its nontrivial element moves the square root, which is ramified there.
 
 **Counts.** The bypass fold (§5) would replace `shimuraIntegralModelRep` and `quotientP1Coordinate` (GLUE, GLUE) by
-`nvLocalInertia` and `heckeSqrtBranch` (GLUE, GLUE). That is a net change of 0. What it buys:
+`nvLocalInertia` and `heckeSqrtBranchAny` (GLUE, GLUE). That is a net change of 0. What it buys:
 - **Removed:** the integral model of the Shimura curve, with its pending reading of Kottwitz/Lan, Lemma P and the
   level comparison.
 - **Removed:** the tame-quotient scheme theory of mcr-quot.
@@ -120,7 +125,8 @@ supplies the integral model except the field itself. Route NV replaces both with
 | Prop | content | status | rating, reason |
 |---|---|---|---|
 | `NVLocalInertia` | `E/ℚ(X)` finite Galois of degree `< p`, branch data in `S ∪ {∞}` with `S` `p`-integral and distinct mod `p`, `b ∈ S` with all residue fields over `X = b` unramified at `p`. Then every vertical inertia element has a conjugate in an inertia set over `X − b`. | **open, GLUE** (project, commutative algebra) | **not printed form.** h-b1 §3 step 3, which rv-h-b1 §3 found "holds as stated". It is a consequence of Abhyankar's lemma (SGA 1 XIII 5.3; Grothendieck–Murre, LNM 208) and Zariski–Nagata purity (SGA 1 X 3.1). Purity is **proved** in the chain for 2-dimensional regular local rings (`PropTSGlue.PurityGlobalDim2`). Locators UNVERIFIED. |
-| `HeckeSqrtBranch` | for the Hecke cover, `E` contains `s` with `s² = a(27X + 16)`, `a ∈ ℤ` prime to every `p > 324` | **open, GLUE** (from the field `elkiesX6StarPrinted`) | **not printed form.** Elkies' coordinate `t` (`t = 0, 1, ∞` at discriminants `−24, −4, −3`) equals `(27X + 16)/16` in R2fp's coordinate (branch values `−16/27, 0, ∞`, same CM types). Elkies' chart `s² = −t` then gives `a = −1`, and `Y₃ → X₆` is dominant. The same comparison is in the chain's `X6Kummer.ConicModel` docstring (`j = 16(t − 1)/27`). |
+| `HeckeSqrtBranchAny` | for the Hecke cover, `E` contains `s` with `s² = c(27X + 16)` for some `c ∈ ℚ^×` | **open, GLUE** (from the field `elkiesX6StarPrinted`) | **not printed form.** Elkies' coordinate `t` (`t = 0, 1, ∞` at discriminants `−24, −4, −3`) equals `(27X + 16)/16` in R2fp's coordinate (branch values `−16/27, 0, ∞`, same CM types). Elkies' chart `s² = −t` gives `c = −1`, and `Y₃ → X₆` is dominant. The same comparison is in the chain's `X6Kummer.ConicModel` docstring (`j = 16(t − 1)/27`). Any orientation of Elkies' chart still yields some `c`. |
+| `HeckeSqrtBranch` | the same with `c = a ∈ ℤ` prime to every `p > 324` | superseded (it implies `HeckeSqrtBranchAny`: `heckeSqrtBranchAny_of_heckeSqrtBranch`) | — |
 | `RamifiedSqrtInertia` | over a prime above `X − b` with `e ∣ 2`, an inertia element fixing `√(c(X − b))` is `1` | **proved** (`ramifiedSqrtInertia`) | textbook |
 | `VertInertiaTrivial` | degree `< p`, trivial inertia at every vertical prime ⇒ `VertUnramWitness E p` | **proved** (`vertInertiaTrivial`) | textbook |
 | `HeckeBranchFibreUnram` | residue fields of the Hecke cover over `−16/27` are unramified at `p > 324` | **proved** from `R1R2fp` and T5 (`heckeBranchFibreUnram`) | — |
@@ -139,7 +145,8 @@ neither is proposed as a LEAF.
   | `ℚ(√p)(X)` | residue fields over `b` ramified at `p` | hypothesis fails | — |
   | h-b1's F1, `y² = p·j(27j+16)` | residue fields over `0` and `−16/27` are `ℚ`; vertical inertia `ℤ/2` (rv-h-b1 R5) | only asserts `I_V ⊆ I_{Q_0}`: true | F1 fails `HeckeSqrtBranch` (its only quadratic subfield has constant `p`), so the composite does not wrongly prove F1 unramified |
 
-**The compiled composite** (`vertUnramWitness_of_nv`, `heckeVertWitness_of_nv`):
+**The compiled composite** (`vertUnramWitness_of_nv`, `heckeVertWitness_of_nv`; the final `heckeVertWitness_of_nvSqrtAny`
+first turns `√(c(27X + 16))` into `√(a(27X + 16))` with `p ∤ a` by `exists_good_sqrt`):
 - `HeckeBranch` and `HeckeDegree` come from the chain's `TSHecke.heckeBranch_of'` and `heckeDegree_of_torsion`.
 - `VertInertiaTrivial` reduces the goal to: every `τ` in the inertia set of every vertical prime `q` is `1`.
 - For such `τ`:
@@ -177,9 +184,9 @@ neither is proposed as a LEAF.
 - `lake build +ZInQKernel.Contrib.OneProof.SGRDirectNV` succeeds.
 - `#print axioms` gives `propext, Classical.choice, Quot.sound` for each of: `heckeVertWitness_of_nv`,
   `vertUnramWitness_of_nv`, `ramifiedSqrtInertia`, `vertInertiaTrivial`, `heckeBranchFibreUnram`,
-  `heckeVertWitness_of_nvLocal`, `heckeVertWitness_of_nvSqrt`.
+  `heckeVertWitness_of_nvLocal`, `heckeVertWitness_of_nvSqrt`, `exists_good_sqrt`, `heckeVertWitness_of_nvSqrtAny`.
 - The file has no code that runs at build time. It only uses `set_option` for heartbeats.
-- `#discharges` (`scratch/sgr-direct/Discharges-output.txt`): "63 open hypotheses, 1853 theorems checked,
+- `#discharges` (`scratch/sgr-direct/Discharges-output.txt`): "63 open hypotheses, 1863 theorems checked,
   7 discharge one". None of the seven is from this file, as expected: `HeckeVertWitness` is not itself an open
   field.
 
@@ -194,9 +201,9 @@ neither is proposed as a LEAF.
 So a bypass has to rethread the conversions from the top bundle down to TailN. At the TailN conversion it sets:
 
 ```lean
-heckeVertWitness := SGRDirect.heckeVertWitness_of_nvSqrt (LeafAdopt.R1R2fp_of_rep r.r1r2)
+heckeVertWitness := SGRDirect.heckeVertWitness_of_nvSqrtAny (LeafAdopt.R1R2fp_of_rep r.r1r2)
   (ObjBridge.torsionStructure_iff.mpr t.t5) l.qmAutCard l.serreRigidity3 l.alFixedPoints
-  n.nvLocalInertia n.heckeSqrtBranch
+  n.nvLocalInertia n.heckeSqrtBranchAny
 ```
 
 The names are those of the then-current bundles; check them against TailI/TailK. The strict count does not change
@@ -213,7 +220,7 @@ of the two Props is proved (−1).
    - Read off `I_𝔓 = I_{Q_b}` from the unramified residue fields over `b`.
 
    A good target for a commutative-algebra contributor.
-2. `HeckeSqrtBranch`. Take the section `s = φU(eS)` of Elkies' chart (`ElkiesCharts`, field
+2. `HeckeSqrtBranchAny`. Take the section `s = φU(eS)` of Elkies' chart (`ElkiesCharts`, field
    `elkiesX6StarPrinted`). Then:
    - identify `t = 1 + 27π₆/16` by a Möbius argument on `X₆/W`;
    - pull `s` back to `Spec B_ℚ` along `h`, the comparison morphism and `fY`;

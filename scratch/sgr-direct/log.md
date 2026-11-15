@@ -55,3 +55,13 @@ theorem numbers from memory UNVERIFIED.
   ALFixedPoints → NVLocalInertia → HeckeSqrtBranch → HeckeVertWitness`. Remaining named Props: NVLocalInertia
   (local algebra, h-b1 step 3), HeckeSqrtBranch (sqrt of a(27X+16) in E, from Elkies' charts).
 - `#discharges` (Discharges-output.txt): 63 open, 1853 checked, 7 discharge one (none from this file, as expected).
+
+## 5. Constant-free square root (VERIFIED: compiled)
+
+- `even_padicValRat_of_sq_mem`: β ∈ L (number field ⊂ Q̄, UnramifiedAt L p), β² = q ∈ ℚ^× ⇒ v_p(q) even
+  (γ = den·β·p^{-k} ∈ 𝓞_L with γ² = den·num·p; P² primary; ramificationIdx' sSup argument).
+- `exists_point_zero_unram`, `exists_good_sqrt`: from s² = c(27X+16) to s'² = a(27X+16) with p ∤ a (p ≥ 5), via the
+  residue fields over X = 0 (R1R2fp + T5).
+- `HeckeSqrtBranchAny` (∃ c ≠ 0, √(c(27X+16)) ∈ E), weaker than HeckeSqrtBranch; final composite
+  `heckeVertWitness_of_nvSqrtAny : … → NVLocalInertia → HeckeSqrtBranchAny → HeckeVertWitness`.
+- #discharges: 63 open, 1863 checked, 7 discharge one (none from this file).
