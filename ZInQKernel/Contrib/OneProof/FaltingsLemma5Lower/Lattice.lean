@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Algebra.Module.ZLattice.Covolume
+import Mathlib.MeasureTheory.Measure.Haar.Unique
 
 /-! faltings5-lower, part 2: superlattices of finite index (pure Mathlib). -/
 
