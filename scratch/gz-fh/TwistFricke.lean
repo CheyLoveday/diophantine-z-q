@@ -187,6 +187,46 @@ theorem slash_gamma0_newform (f : Newform N 2) (hχ : f.χ = 1) (γ : SL(2, ℤ)
   rw [hχ] at h
   simpa using h
 
+/-- The matrix `[r, −b; −N a, d₀] ∈ Γ₀(N)` for `r d₀ − N a b = 1`. -/
+def twistGamma (N r : ℕ) (a b d₀ : ℤ) (h : (r : ℤ) * d₀ - N * a * b = 1) : SL(2, ℤ) :=
+  ⟨!![(r : ℤ), -b; -(N * a), d₀], by rw [Matrix.det_fin_two_of]; linear_combination h⟩
+
+theorem coe_twistGamma (N r : ℕ) (a b d₀ : ℤ) (h : (r : ℤ) * d₀ - N * a * b = 1) :
+    ((twistGamma N r a b d₀ h : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) =
+      !![(r : ℤ), -b; -(N * a), d₀] := rfl
+
+theorem twistGamma_mem (N r : ℕ) (a b d₀ : ℤ) (h : (r : ℤ) * d₀ - N * a * b = 1) :
+    twistGamma N r a b d₀ h ∈ Gamma0 N := by
+  rw [Gamma0_mem]
+  have : (twistGamma N r a b d₀ h) 1 0 = -(N * a) := by
+    rw [show (twistGamma N r a b d₀ h) 1 0 =
+      ((twistGamma N r a b d₀ h : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) 1 0 from rfl,
+      coe_twistGamma]; simp
+  rw [this]; simp
+
+/-- **The matrix identity**: `[1, a/r; 0, 1] W_{N r²} = (r I) W_N γ [1, b/r; 0, 1]` with
+`γ = [r, −b; −N a, d₀]`, `r d₀ − N a b = 1`. -/
+theorem upperRightHom_mul_frickeGL (N r : ℕ) [NeZero N] [NeZero r] [NeZero (N * r * r)]
+    (a b d₀ : ℤ) (h : (r : ℤ) * d₀ - N * a * b = 1) :
+    (upperRightHom ((a : ℝ) / r) : GL (Fin 2) ℝ) * TauCeti.frickeGL ℝ (N * r * r) =
+      Matrix.GeneralLinearGroup.scalar (Fin 2) (Units.mk0 (r : ℝ) (NeZero.ne _)) *
+        TauCeti.frickeGL ℝ N * mapGL ℝ (twistGamma N r a b d₀ h) *
+          (upperRightHom ((b : ℝ) / r) : GL (Fin 2) ℝ) := by
+  have hr : (r : ℝ) ≠ 0 := NeZero.ne _
+  have hR : (r : ℝ) * d₀ - N * a * b = 1 := by exact_mod_cast h
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.upperRightHom_apply,
+      coe_twistGamma, Matrix.GeneralLinearGroup.coe_scalar, Matrix.natCast_apply,
+      Matrix.SpecialLinearGroup.mapGL_coe_matrix, Matrix.map_apply] <;>
+    field_simp <;>
+    first
+    | simp
+    | linear_combination (1 - (r : ℝ)) * hR
+    | linear_combination (-(r : ℝ)) * hR
+    | linear_combination (r : ℝ) * hR
+    | linear_combination hR
+
 end Slash
 
 end ZInQ.GZFH
