@@ -614,4 +614,179 @@ theorem dirichlet {w : UpperHalfPlane} (hw : w ∈ Tset) {γ : GL (Fin 2) ℝ} (
   have : 0 ≤ Phi y w / ((nrd y : ℝ) * w.im) := div_nonneg this (by have := w.im_pos; positivity)
   linarith
 
+
+/-! ## Null sets: circles and lines orthogonal to `ℝ` -/
+
+open MeasureTheory
+
+theorem null_quadric_C (α β δ : ℝ) (h : α ≠ 0 ∨ β ≠ 0 ∨ δ ≠ 0) :
+    volume {z : ℂ | α * Complex.normSq z + β * z.re + δ = 0} = 0 := by
+  rcases eq_or_ne α 0 with hα | hα
+  · rcases eq_or_ne β 0 with hβ | hβ
+    · have hδ : δ ≠ 0 := by tauto
+      have : {z : ℂ | α * Complex.normSq z + β * z.re + δ = 0} = ∅ := by
+        ext z; simp [hα, hβ, hδ]
+      rw [this, measure_empty]
+    · have : {z : ℂ | α * Complex.normSq z + β * z.re + δ = 0} =
+          Complex.measurableEquivRealProd ⁻¹' ({-δ / β} ×ˢ Set.univ) := by
+        ext z
+        simp only [Set.mem_ofPred_eq, Set.mem_preimage, Complex.measurableEquivRealProd_apply,
+          Set.mem_prod, Set.mem_singleton_iff, Set.mem_univ, and_true, hα, zero_mul, zero_add]
+        constructor
+        · intro hz; field_simp; linarith
+        · intro hz; rw [hz]; field_simp; ring
+      rw [this, Complex.volume_preserving_equiv_real_prod.measure_preimage_equiv,
+        Measure.volume_eq_prod, Measure.prod_prod, Real.volume_singleton, zero_mul]
+  · set r : ℝ := -β / (2 * α)
+    set D : ℝ := (β ^ 2 - 4 * α * δ) / (4 * α ^ 2)
+    refine measure_mono_null (t := Metric.sphere (r : ℂ) (√D)) ?_
+      (Measure.addHaar_sphere volume _ _)
+    intro z hz
+    simp only [Set.mem_ofPred_eq] at hz
+    have e : dist z (r : ℂ) ^ 2 = D := by
+      rw [Complex.dist_eq, Complex.sq_norm, Complex.normSq_apply]
+      rw [Complex.normSq_apply] at hz
+      simp only [Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im, sub_zero]
+      simp only [r, D]
+      field_simp
+      linear_combination (16 * α) * hz
+    rw [Metric.mem_sphere, ← e, Real.sqrt_sq dist_nonneg]
+
+theorem null_quadric (α β δ : ℝ) (h : α ≠ 0 ∨ β ≠ 0 ∨ δ ≠ 0) :
+    volume {w : UpperHalfPlane | α * Complex.normSq (w : ℂ) + β * w.re + δ = 0} = 0 := by
+  rw [UpperHalfPlane.volume_eq_lintegral]
+  refine setLIntegral_measure_zero _ _ (measure_mono_null ?_ (null_quadric_C α β δ h))
+  rintro _ ⟨w, hw, rfl⟩
+  exact hw
+
+/-! ## Almost disjointness of the translates of `T` -/
+
+theorem smul_eq_self {g : GL (Fin 2) ℝ} {y : B} (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = iota y)
+    (hn : 0 < nrd y) (hI : y.imI = 0) (hJ : y.imJ = 0) (hK : y.imK = 0) (z : UpperHalfPlane) :
+    g • z = z := by
+  have hdet := det_pos_of hg hn
+  have hy0 : (y.re : ℝ) ≠ 0 := by
+    intro h0
+    have : nrd y = 0 := by
+      simp only [nrd, hI, hJ, hK]; have : y.re = 0 := by exact_mod_cast h0
+      simp [this]
+    rw [this] at hn; exact lt_irrefl _ hn
+  apply UpperHalfPlane.ext
+  rw [coe_smul_eq hdet]
+  have e00 : (g : Matrix (Fin 2) (Fin 2) ℝ) 0 0 = (y.re : ℝ) := by rw [hg, iota_apply]; simp [hI]
+  have e01 : (g : Matrix (Fin 2) (Fin 2) ℝ) 0 1 = 0 := by rw [hg, iota_apply]; simp [hJ, hK]
+  have e10 : (g : Matrix (Fin 2) (Fin 2) ℝ) 1 0 = 0 := by rw [hg, iota_apply]; simp [hJ, hK]
+  have e11 : (g : Matrix (Fin 2) (Fin 2) ℝ) 1 1 = (y.re : ℝ) := by rw [hg, iota_apply]; simp [hI]
+  simp only [num, denom, e00, e01, e10, e11]
+  have hq : y.re ≠ 0 := by exact_mod_cast hy0
+  have : (y.re : ℂ) ≠ 0 := by exact_mod_cast hq
+  push_cast
+  simp only [zero_mul, zero_add, add_zero]
+  field_simp
+
+/-- On `T ∩ γ⁻¹ T` the two Dirichlet inequalities are equalities: `Φ_y = 0`. -/
+theorem Phi_zero {γ : GL (Fin 2) ℝ} (hγ : γ ∈ Γs) {g : GL (Fin 2) ℝ} {y : B}
+    (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = iota y) (hn : 0 < nrd y)
+    (hz : ∀ z : UpperHalfPlane, γ • z = g • z) {w : UpperHalfPlane} (hw1 : w ∈ Tset)
+    (hw2 : γ • w ∈ Tset) : Phi y w = 0 := by
+  have d1 := dirichlet hw1 hγ
+  have d2 := dirichlet hw2 (gs_inv hγ)
+  rw [inv_smul_smul] at d2
+  have heq : dist (γ • w) p0 = dist w p0 := le_antisymm d2 d1
+  rw [hz, dist_eq_iff, Fp_smul hg hn] at heq
+  have hnr : (0 : ℝ) < nrd y := by exact_mod_cast hn
+  have hd : 0 < (nrd y : ℝ) * w.im := by have := w.im_pos; positivity
+  have : Phi y w / ((nrd y : ℝ) * w.im) = 0 := by linarith
+  rcases div_eq_zero_iff.1 this with h | h
+  · exact h
+  · exact absurd h hd.ne'
+
+/-- The cone argument for a rotation about `p`. -/
+theorem cone_rigid {g : GL (Fin 2) ℝ} {y : B} (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = iota y)
+    (hn : 0 < nrd y) (hI : y.imI = 0) (hK : y.imK = 0) {w : UpperHalfPlane} (hw : w ∈ Tset)
+    (hgw : g • w ∈ Tset)
+    (hrot : ∀ U X : ℝ, X ≤ U → -X ≤ U →
+      ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * X + 6 * ((y.re : ℝ) * y.imJ) * U ≤
+        ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * U - 2 * ((y.re : ℝ) * y.imJ) * X →
+      -(((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * X + 6 * ((y.re : ℝ) * y.imJ) * U) ≤
+        ((y.re : ℝ) ^ 2 - 3 * (y.imJ : ℝ) ^ 2) * U - 2 * ((y.re : ℝ) * y.imJ) * X →
+      U ≤ X ∨ U ≤ -X) :
+    Uq w = Xq w ∨ Uq w = -Xq w := by
+  obtain ⟨hu, hx⟩ := cone_smul hg hn hI hK w
+  have hm : 0 < Complex.normSq (denom g w) := Complex.normSq_pos.2 (denom_ne_zero g w)
+  obtain ⟨h1, h2, -⟩ := hw
+  obtain ⟨k1, k2, -⟩ := hgw
+  have k1' := mul_le_mul_of_nonneg_left k1 hm.le
+  have k2' := mul_le_mul_of_nonneg_left k2 hm.le
+  rw [hu, hx] at k1'
+  rw [mul_neg, hu, hx] at k2'
+  rcases hrot _ _ h1 h2 k1' k2' with h | h
+  · left; linarith
+  · right; linarith
+
+theorem disjoint_T {γ : GL (Fin 2) ℝ} (hγ : γ ∈ Γs)
+    (hne : (fun z : UpperHalfPlane => γ • z) ≠ id) :
+    volume (Tset ∩ (fun z : UpperHalfPlane => γ • z) ⁻¹' Tset) = 0 := by
+  obtain ⟨y, hy, hn, g, hg, hz⟩ := cover_y hγ
+  have hpos := nrd_pos_of hn
+  by_cases hP : Pq y = 0
+  · -- `y = a₀ + a₂ j` fixes `p`: the cone argument
+    have hI : y.imI = 0 := by
+      have : (y.imI : ℝ) = 0 := by simp only [Pq] at hP; nlinarith [sq_nonneg (y.imI : ℝ), sq_nonneg (y.imK : ℝ)]
+      exact_mod_cast this
+    have hK : y.imK = 0 := by
+      have : (y.imK : ℝ) = 0 := by simp only [Pq] at hP; nlinarith [sq_nonneg (y.imI : ℝ), sq_nonneg (y.imK : ℝ)]
+      exact_mod_cast this
+    have hsub : Tset ∩ (fun z : UpperHalfPlane => γ • z) ⁻¹' Tset ⊆
+        {w | 1 * Complex.normSq (w : ℂ) + (-6) * w.re + (-3) = 0} ∪
+        {w | 1 * Complex.normSq (w : ℂ) + 6 * w.re + (-3) = 0} := by
+      rintro w ⟨hw1, hw2⟩
+      simp only [Set.mem_preimage, hz] at hw2
+      obtain ⟨n0, n1, n2, n3, rfl⟩ := (inO_iff y).1 hy
+      simp only at hI hK
+      have hn3 : n3 = 0 := by exact_mod_cast (show (n3 : ℚ) = 0 by linarith)
+      subst hn3
+      have hn1 : n1 = 0 := by exact_mod_cast (show (n1 : ℚ) = 0 by simpa using hI)
+      subst hn1
+      have hN : ((2 * n0 + n2 : ℤ) : ℚ) ^ 2 + 3 * ((n2 : ℤ) : ℚ) ^ 2 = 4 * nrd ⟨(n0 : ℚ) + n2 / 2,
+          (0 : ℤ) + (0 : ℤ) / 2, n2 / 2, (0 : ℤ) / 2⟩ := by
+        simp only [nrd]; push_cast; ring
+      have hb : (2 * n0 + n2) ^ 2 + 3 * n2 ^ 2 ≤ 24 := by
+        have : nrd ⟨(n0 : ℚ) + n2 / 2, (0 : ℤ) + (0 : ℤ) / 2, n2 / 2, (0 : ℤ) / 2⟩ ≤ 6 := nrd_le_six hn
+        have : ((2 * n0 + n2 : ℤ) : ℚ) ^ 2 + 3 * ((n2 : ℤ) : ℚ) ^ 2 ≤ 24 := by linarith
+        exact_mod_cast this
+      have hn2 : -2 ≤ n2 ∧ n2 ≤ 2 := by constructor <;> nlinarith
+      have hn0 : -3 ≤ n0 ∧ n0 ≤ 3 := by constructor <;> nlinarith
+      obtain ⟨a1, a2⟩ := hn2
+      obtain ⟨b1, b2⟩ := hn0
+      have key := fun hrot => cone_rigid hg hpos hI hK hw1 hw2 hrot
+      simp only [Set.mem_union, Set.mem_ofPred_eq]
+      have hU : Uq w = Complex.normSq (w : ℂ) - 3 := rfl
+      have hX : Xq w = 6 * w.re := rfl
+      by_cases h20 : n2 = 0
+      · subst h20
+        exfalso; apply hne; funext z; rw [hz]
+        exact smul_eq_self hg hpos (by simp) (by simp) (by simp) z
+      · interval_cases n2 <;> (try omega) <;> interval_cases n0 <;> (try norm_num [nrd] at hn) <;>
+          (rcases key (by
+              intro U X h1 h2 h3 h4; by_contra h; push Not at h; obtain ⟨h5, h6⟩ := h
+              (try norm_num at h3 h4) <;> linarith) with h | h <;>
+            [left; right] <;> rw [hU, hX] at h <;> linarith)
+    refine measure_mono_null hsub (measure_union_null ?_ ?_)
+    · exact null_quadric 1 (-6) (-3) (Or.inl one_ne_zero)
+    · exact null_quadric 1 6 (-3) (Or.inl one_ne_zero)
+  · -- `Φ_y = 0` is a circle or a line
+    have hsub : Tset ∩ (fun z : UpperHalfPlane => γ • z) ⁻¹' Tset ⊆
+        {w | (Pq y + 2 * √2 * Rq y) * Complex.normSq (w : ℂ) + (-12 * √2 * Sq y) * w.re +
+          (3 * Pq y - 6 * √2 * Rq y) = 0} := by
+      rintro w ⟨hw1, hw2⟩
+      have := Phi_zero hγ hg hpos hz hw1 hw2
+      simp only [Set.mem_ofPred_eq]
+      rw [← this]; simp only [Phi, Uq, Xq]; ring
+    refine measure_mono_null hsub (null_quadric _ _ _ ?_)
+    by_contra h
+    push Not at h
+    obtain ⟨h1, -, h3⟩ := h
+    exact hP (by linarith)
+
 end HDec.GammaStarArea
