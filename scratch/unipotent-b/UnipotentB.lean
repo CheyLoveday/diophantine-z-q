@@ -193,4 +193,72 @@ theorem semistableUnipotentSH0_of (h : SemistableUnipotentPrintedEchelon) :
   have hA' : HasSemistableReductionRes A O := (hasSemistableReductionRes_iff O A).mpr hA
   exact sq_form _ (h K O hO Ω w hw A ℓ hℓ hA' σ σ hσ hσ) t
 
+/-! ## §3. The DVR field from the strictly henselian one -/
+
+/-- `ReductSplit.SemistableUnipotent` with `[CharZero K]` and `[PerfectField k(s)]` added (the DVR
+field after the instances are added). -/
+def SemistableUnipotent0 : Prop :=
+  ∀ (K : Type) [Field K] [CharZero K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    [PerfectField (IsLocalRing.ResidueField O)]
+    (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (w : ValuationSubring Ω),
+    w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K, HasSemistableReduction A O →
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], IsUnit (ℓ : O) → ∀ σ : Ω ≃ₐ[K] Ω, IsInertia w σ →
+      ∀ t : TΩ A Ω ℓ, galTΩ A ℓ σ (galTΩ A ℓ σ t) - 2 • galTΩ A ℓ σ t + t = 0
+
+open ZInQ.Contrib.AbVarBC in
+/-- **SGA 7 IX 3.5 over a general DVR (char. 0 field, perfect residue field) from the strictly
+henselian form**: reduct-glue's `unipotentFromSH_of` with the two instances carried along. The
+inertia field `E` has characteristic `0`, and its strictly henselian valuation ring has residue
+field algebraic over `k(s)`, hence perfect (`Algebra.IsAlgebraic.perfectField`). -/
+theorem semistableUnipotent0_of (hIn : StrictHenselizationInside) (hSH : SemistableUnipotentSH0) :
+    SemistableUnipotent0 := by
+  intro K _ _ O _ _ Ω _ _ _ w hw A hA ℓ _ hℓ σ hσ t
+  obtain ⟨E, hE, ⟨hSHP, halg, hbc⟩, hfix⟩ := hIn K O Ω w hw
+  haveI : IsDiscreteValuationRing (w.comap (algebraMap E Ω)) := hSHP.1
+  haveI : IsAlgClosure E Ω := ⟨IsAlgClosure.isAlgClosed K, Algebra.IsAlgebraic.tower_top (K := K) E⟩
+  haveI : CharZero E := charZero_of_injective_algebraMap (algebraMap K E).injective
+  haveI : PerfectField (IsLocalRing.ResidueField (w.comap (algebraMap E Ω))) := by
+    letI := (resMap hE).toAlgebra
+    haveI := halg
+    exact Algebra.IsAlgebraic.perfectField (IsLocalRing.ResidueField O)
+  have hAE : HasSemistableReduction (A.baseChange E) (w.comap (algebraMap E Ω)) := by
+    obtain ⟨𝒩, h𝒩, hs⟩ := hA
+    exact ⟨bcDVR hE 𝒩, hbc A 𝒩 h𝒩, (isSemistable_bcDVR_iff hE halg 𝒩).mp hs⟩
+  have hℓP : IsUnit (ℓ : w.comap (algebraMap E Ω)) := by
+    have := hℓ.map (comapHom hE)
+    rwa [map_natCast] at this
+  let σ₁ := toE E σ (hfix σ hσ)
+  have hσ₁ : IsInertia w σ₁ := isInertia_toE E w σ (hfix σ hσ) hσ
+  let φ : TΩ (A.baseChange E) Ω ℓ →ₗ[ℤ_[ℓ]] TΩ A Ω ℓ :=
+    PkgI3.Tate.map (MonoidHom.toAdditive (bcPt A Ω).toMonoidHom)
+  let ψ : TΩ A Ω ℓ →ₗ[ℤ_[ℓ]] TΩ (A.baseChange E) Ω ℓ :=
+    PkgI3.Tate.map (MonoidHom.toAdditive (bcPt A Ω).symm.toMonoidHom)
+  have hφψ : φ (ψ t) = t := by
+    apply Subtype.ext
+    funext n
+    change Additive.ofMul (bcPt A Ω ((bcPt A Ω).symm (Additive.toMul (t.1 n)))) = t.1 n
+    rw [MulEquiv.apply_symm_apply]
+    rfl
+  have hcomm : ∀ s, φ (galTΩ (A.baseChange E) ℓ σ₁ s) = galTΩ A ℓ σ (φ s) := by
+    intro s
+    apply Subtype.ext
+    funext n
+    change Additive.ofMul (bcPt A Ω ((A.baseChange E).galAct σ₁ (Additive.toMul (s.1 n)))) =
+      Additive.ofMul (A.galAct σ (bcPt A Ω (Additive.toMul (s.1 n))))
+    rw [bcPt_galAct, toE_restrictScalars]
+  have key := hSH E (w.comap (algebraMap E Ω)) hSHP Ω w rfl (A.baseChange E) hAE ℓ hℓP σ₁ hσ₁
+    (ψ t)
+  have := congrArg φ key
+  simp only [map_add, map_sub, map_nsmul, map_zero, hcomm, hφψ] at this
+  exact this
+
+/-- **The DVR field (with the two instances) from the printed leaf and `StrictHenselizationInside`.** -/
+theorem semistableUnipotent0_of_printed (hP : SemistableUnipotentPrinted)
+    (hIn : StrictHenselizationInside) : SemistableUnipotent0 :=
+  semistableUnipotent0_of hIn (semistableUnipotentSH0_of (echelon_of_printed hP))
+
+/-- The old field implies the new one (the new field is weaker: it is the old one restricted). -/
+theorem semistableUnipotent0_of_old (h : ReductSplit.SemistableUnipotent) : SemistableUnipotent0 :=
+  fun K _ _ O _ _ Ω _ _ _ w hw A hA ℓ _ hℓ σ hσ t => h K O Ω w hw A hA ℓ hℓ σ hσ t
+
 end UnipotentB
