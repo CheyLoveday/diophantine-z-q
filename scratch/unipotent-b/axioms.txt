@@ -1,3 +1,9 @@
+scratch/unipotent-b/UnipotentB.lean:576:6: warning: Variable name `K` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _K
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
 'UnipotentB.isSemistableRes_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 'UnipotentB.echelon_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'UnipotentB.semistableUnipotentSH0_of' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -8,3 +14,10 @@
 'UnipotentB.semiAbelianDescends_of_perfect' depends on axioms: [propext, Classical.choice, Quot.sound]
 'UnipotentB.semistableUnipotentSH_of_gen' depends on axioms: [propext, Classical.choice, Quot.sound]
 'UnipotentB.semistableUnipotent_of_gen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.sepClosureTateRestrict_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.semistableUnipotent_of_gen'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.exists_lift_of_etale_sep' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.torsionFromSepClosure_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.inertiaRestrictSepClosure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.semistableUnipotent_of_printedGen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'UnipotentB.semistableUnipotentSH_of_printedGen' depends on axioms: [propext, Classical.choice, Quot.sound]

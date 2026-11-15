@@ -423,6 +423,248 @@ theorem semistableUnipotent_of_gen' (hP : SemistableUnipotentPrintedGen)
     ReductSplit.SemistableUnipotent :=
   semistableUnipotent_of_gen hP hD (sepClosureTateRestrict_of hI hT) hIn
 
+
+/-! ## §6. The two smaller Props proved (`TorsionFromSepClosure` from the bundle leaf
+`AvSplit.T4.MulEtaleAbelianScheme`) -/
+
+section SepClosure
+
+open ZInQ.Contrib.AbVarBC
+
+variable {K : Type} [Field K]
+
+/-- Elements in the image of an étale `K`-algebra in any field `Ω` are separable over `K`
+(`ReductGlue.isSeparable_of_etale` with `Ω` for `K̄`, same proof). -/
+theorem isSeparable_of_etale' {Ω : Type} [Field Ω] [Algebra K Ω] {R : Type} [CommRing R]
+    [Algebra K R] [Algebra.Etale K R] (f : R →ₐ[K] Ω) (r : R) : IsSeparable K (f r) := by
+  haveI : Module.Finite K R := Algebra.FormallyUnramified.finite_of_free K R
+  haveI : Algebra.IsIntegral K f.range := by
+    refine ⟨fun ⟨y, hy⟩ => ?_⟩
+    obtain ⟨s, rfl⟩ := hy
+    have : IsIntegral K (f.rangeRestrict s) := (Algebra.IsIntegral.isIntegral (R := K) s).map _
+    exact this
+  let E : IntermediateField K Ω :=
+    Subalgebra.toIntermediateField' f.range (isField_of_isIntegral_of_isField' (Field.toIsField K))
+  let f' : R →ₐ[K] E := f.codRestrict E.toSubalgebra (fun r => ⟨r, rfl⟩)
+  have hsurj : Function.Surjective f' := by
+    rintro ⟨y, hy⟩
+    obtain ⟨r, hr⟩ : y ∈ f.range := hy
+    exact ⟨r, Subtype.ext hr⟩
+  have : Algebra.FormallyUnramified K E := Algebra.FormallyUnramified.of_surjective f' hsurj
+  have : Algebra.FiniteType K E := Algebra.FiniteType.of_surjective f' hsurj
+  have : Algebra.IsSeparable K E := Algebra.FormallyUnramified.isSeparable K E
+  have h := Algebra.IsSeparable.isSeparable K (f' r)
+  have h2 : IsSeparable K (E.val (f' r)) := IsSeparable.map E.val Subtype.val_injective h
+  exact h2
+
+/-- **Points of an étale `K`-scheme with values in a field `Ω` come from the separable closure
+`K^s ⊆ Ω`** (`ReductGlue.exists_lift_of_etale` with `K^s` for the algebraically closed field; the
+coordinates are separable over `K`). -/
+theorem exists_lift_of_etale_sep {Ω₂ : Type} [Field Ω₂] [Algebra K Ω₂]
+    (X : Over (Spec (CommRingCat.of K))) [Etale X.hom]
+    (q : Spec (CommRingCat.of Ω₂) ⟶ X.left)
+    (hq : q ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap K Ω₂))) :
+    ∃ p : Spec (CommRingCat.of (separableClosure K Ω₂)) ⟶ X.left,
+      Spec.map (CommRingCat.ofHom (algebraMap (separableClosure K Ω₂) Ω₂)) ≫ p = q ∧
+        p ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap K (separableClosure K Ω₂))) := by
+  classical
+  let Ω := separableClosure K Ω₂
+  let κ : Ω →ₐ[K] Ω₂ := IsScalarTower.toAlgHom K Ω Ω₂
+  let pt : X.left := q (IsLocalRing.closedPoint Ω₂)
+  obtain ⟨_, ⟨U, hU, rfl⟩, hpU, -⟩ :=
+    X.left.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ pt) isOpen_univ
+  change X.left.Opens at U
+  change IsAffineOpen U at hU
+  have hrange : Set.range q ⊆ Set.range U.ι := by
+    rintro _ ⟨s, rfl⟩
+    rw [Scheme.Opens.range_ι]
+    have : s = IsLocalRing.closedPoint Ω₂ :=
+      Subsingleton.elim (α := PrimeSpectrum Ω₂) _ _
+    rw [this]
+    exact hpU
+  let q' := IsOpenImmersion.lift U.ι q hrange
+  have hq' : q' ≫ U.ι = q := IsOpenImmersion.lift_fac _ _ _
+  let e := hU.isoSpec
+  let φ : Γ(X.left, U) ⟶ CommRingCat.of Ω₂ := Spec.preimage (q' ≫ e.hom)
+  let θ : CommRingCat.of K ⟶ Γ(X.left, U) := Spec.preimage (e.inv ≫ U.ι ≫ X.hom)
+  have hφ : Spec.map φ = q' ≫ e.hom := Spec.map_preimage _
+  have hθ : Spec.map θ = e.inv ≫ U.ι ≫ X.hom := Spec.map_preimage _
+  have hql : q = Spec.map φ ≫ e.inv ≫ U.ι := by
+    rw [hφ, Category.assoc, e.hom_inv_id_assoc, hq']
+  have hcomp : θ ≫ φ = CommRingCat.ofHom (algebraMap K Ω₂) := by
+    apply Spec.map_injective
+    rw [Spec.map_comp, hφ, hθ, Category.assoc, e.hom_inv_id_assoc, ← Category.assoc q', hq', hq]
+  have hθet : RingHom.Etale θ.hom := by
+    have : Etale (Spec.map θ) := by rw [hθ]; infer_instance
+    exact HasRingHomProperty.Spec_iff.mp this
+  letI : Algebra K Γ(X.left, U) := θ.hom.toAlgebra
+  have : Algebra.Etale K Γ(X.left, U) := hθet
+  let f : Γ(X.left, U) →ₐ[K] Ω₂ :=
+    { φ.hom with
+      commutes' := fun a => congrArg (fun g => CommRingCat.Hom.hom g a) hcomp }
+  have : Module.Finite K Γ(X.left, U) := Algebra.FormallyUnramified.finite_of_free K _
+  have hsep : ∀ r, IsSeparable K (φ.hom r) := fun r => isSeparable_of_etale' f r
+  let ψ0 : Γ(X.left, U) → Ω := fun r => ⟨φ.hom r, mem_separableClosure_iff.mpr (hsep r)⟩
+  have hψ0 : ∀ r, (κ : Ω →+* Ω₂) (ψ0 r) = φ.hom r := fun r => rfl
+  have hκinj : Function.Injective (κ : Ω →+* Ω₂) := (κ : Ω →+* Ω₂).injective
+  let ψ : Γ(X.left, U) →+* Ω :=
+    { toFun := ψ0
+      map_one' := hκinj (by rw [hψ0, map_one, map_one])
+      map_mul' := fun a b => hκinj (by rw [hψ0, map_mul, map_mul, hψ0, hψ0])
+      map_zero' := hκinj (by rw [hψ0, map_zero, map_zero])
+      map_add' := fun a b => hκinj (by rw [hψ0, map_add, map_add, hψ0, hψ0]) }
+  have hψ : CommRingCat.ofHom ψ ≫ CommRingCat.ofHom (κ : Ω →+* Ω₂) = φ := by
+    ext r
+    exact hψ0 r
+  have hlift : Spec.map (CommRingCat.ofHom (κ : Ω →+* Ω₂)) ≫
+      (Spec.map (CommRingCat.ofHom ψ) ≫ e.inv ≫ U.ι) = q := by
+    rw [← Category.assoc, ← Spec.map_comp, hψ, hql]
+  refine ⟨Spec.map (CommRingCat.ofHom ψ) ≫ e.inv ≫ U.ι, hlift, ?_⟩
+  haveI := epi_spec_map_field (κ : Ω →+* Ω₂)
+  apply (cancel_epi (Spec.map (CommRingCat.ofHom (κ : Ω →+* Ω₂)))).1
+  rw [← Category.assoc, hlift, hq, ← Spec.map_comp, ← CommRingCat.ofHom_comp, κ.comp_algebraMap]
+
+/-- **Torsion points of order prime to the characteristic come from `K^s`** (from `[m]` étale, the
+bundle leaf `AvSplit.T4.MulEtaleAbelianScheme`; same proof as `ReductGlue.torsion_descends_etale`). -/
+theorem torsion_from_sepClosure (hE : AvSplit.T4.MulEtaleAbelianScheme) (Ω : Type) [Field Ω]
+    [Algebra K Ω] (A : PkgI3.AbVar K) (m : ℕ) (hm : (m : K) ≠ 0) (x : A.Pt Ω) (hx : x ^ m = 1) :
+    ∃ y : A.Pt (separableClosure K Ω),
+      extPt A (IsScalarTower.toAlgHom K (separableClosure K Ω) Ω) y = x := by
+  haveI : PkgI2.IsAbelianScheme (Grp.mk A.X) := ⟨inferInstanceAs (IsProper A.X.hom),
+    inferInstanceAs (Smooth A.X.hom), inferInstanceAs (GeometricallyConnected A.X.hom)⟩
+  have het : Etale ((𝟙 A.X ^ m : A.X ⟶ A.X).left) :=
+    hE K (Grp.mk A.X) m (isUnit_iff_ne_zero.mpr hm)
+  let κ := IsScalarTower.toAlgHom K (separableClosure K Ω) Ω
+  let M : A.X ⟶ A.X := 𝟙 A.X ^ m
+  let P : Over (Spec (CommRingCat.of K)) := Over.mk (pullback.snd M.left (η[A.X]).left)
+  haveI : Etale P.hom := by
+    change Etale (pullback.snd M.left (η[A.X]).left)
+    infer_instance
+  have hxm : x ≫ M = 1 := by rw [comp_pow_one]; exact hx
+  have hw : x.left ≫ M.left =
+      (PkgI3.AbVar.ptObj (K := K) Ω).hom ≫ (η[A.X]).left := by
+    have h1 := congrArg Over.Hom.left hxm
+    rw [Over.comp_left] at h1
+    rw [h1]
+    change (toUnit _ ≫ η[A.X]).left = _
+    rw [Over.comp_left]
+    congr 1
+  let z : Spec (CommRingCat.of Ω) ⟶ P.left := pullback.lift x.left _ hw
+  have hz : z ≫ P.hom = Spec.map (CommRingCat.ofHom (algebraMap K Ω)) :=
+    pullback.lift_snd _ _ _
+  obtain ⟨p0, hp0, hp0g⟩ := exists_lift_of_etale_sep P z hz
+  have hpr : pullback.fst M.left (η[A.X]).left ≫ A.X.hom = P.hom := by
+    change _ = pullback.snd M.left (η[A.X]).left
+    rw [← Over.w M, ← Category.assoc, pullback.condition, Category.assoc, Over.w η[A.X]]
+    simp
+  let p : A.Pt (separableClosure K Ω) :=
+    Over.homMk (p0 ≫ pullback.fst M.left (η[A.X]).left) (by
+      change (p0 ≫ pullback.fst M.left (η[A.X]).left) ≫ A.X.hom = _
+      rw [Category.assoc, hpr, hp0g]
+      rfl)
+  refine ⟨p, ?_⟩
+  apply Over.OverMorphism.ext
+  change Spec.map (CommRingCat.ofHom (κ : separableClosure K Ω →+* Ω)) ≫
+    p0 ≫ pullback.fst M.left (η[A.X]).left = x.left
+  rw [← Category.assoc]
+  erw [hp0]
+  exact pullback.lift_fst _ _ _
+
+
+/-- **`TorsionFromSepClosure` from the bundle leaf `MulEtaleAbelianScheme`.** -/
+theorem torsionFromSepClosure_of (hE : AvSplit.T4.MulEtaleAbelianScheme) : TorsionFromSepClosure :=
+  fun K _ Ω _ _ _ A m hm x hx => torsion_from_sepClosure hE Ω A m hm x hx
+
+end SepClosure
+
+open scoped Pointwise in
+theorem inertiaRestrict' (K : Type) [Field K] (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω]
+    (w : ValuationSubring Ω) (σ : Ω ≃ₐ[K] Ω) (hσ : IsInertia w σ) :
+      ∃ σs : separableClosure K Ω ≃ₐ[K] separableClosure K Ω,
+        IsInertia (w.comap (algebraMap (separableClosure K Ω) Ω)) σs ∧
+        ∀ x : separableClosure K Ω, (σs x : Ω) = σ x := by
+  set E := separableClosure K Ω
+  haveI : Normal K Ω := IsAlgClosure.normal K Ω
+  let σs : E ≃ₐ[K] E := σ.restrictNormal E
+  have hres : ∀ x : E, (σs x : Ω) = σ x := fun x => AlgEquiv.restrictNormal_commutes σ E x
+  refine ⟨σs, ?_, hres⟩
+  obtain ⟨hd, hi⟩ := hσ
+  have hs : σ • w = w := hd
+  set w' := w.comap (algebraMap E Ω)
+  have hd' : σs ∈ w'.decompositionSubgroup K := by
+    show σs • w' = w'
+    ext y
+    simp only [← SetLike.mem_coe, ValuationSubring.coe_pointwise_smul, Set.mem_smul_set,
+      AlgEquiv.smul_def]
+    constructor
+    · rintro ⟨z, hz, rfl⟩
+      show ((σs z : E) : Ω) ∈ w
+      rw [hres, ← hs]
+      exact ⟨(z : Ω), hz, rfl⟩
+    · intro hy
+      refine ⟨σs.symm y, ?_, σs.apply_symm_apply y⟩
+      have hy' : ((y : E) : Ω) ∈ σ • w := by rw [hs]; exact hy
+      have hy'' : ((y : E) : Ω) ∈ σ • (w : Set Ω) := by
+        rw [← ValuationSubring.coe_pointwise_smul]; exact hy'
+      obtain ⟨u, hu, hu'⟩ := Set.mem_smul_set.mp hy''
+      rw [AlgEquiv.smul_def] at hu'
+      have : ((σs.symm y : E) : Ω) = u := by
+        apply σ.injective
+        rw [← hres, σs.apply_symm_apply]
+        exact hu'.symm
+      show ((σs.symm y : E) : Ω) ∈ w
+      rw [this]; exact hu
+  refine ⟨hd', ?_⟩
+  rw [ValuationSubring.inertiaSubgroup, MonoidHom.mem_ker] at hi ⊢
+  refine RingEquiv.ext fun r => ?_
+  obtain ⟨a, rfl⟩ := IsLocalRing.residue_surjective r
+  -- the image of `a` in `w`
+  let b : w := ⟨((a : E) : Ω), a.2⟩
+  have h1 := RingEquiv.congr_fun hi (IsLocalRing.residue w b)
+  change (⟨σ, hd⟩ : w.decompositionSubgroup K) • IsLocalRing.residue w b =
+    IsLocalRing.residue w b at h1
+  change (⟨σs, hd'⟩ : w'.decompositionSubgroup K) • IsLocalRing.residue w' a =
+    IsLocalRing.residue w' a
+  rw [← IsLocalRing.ResidueField.residue_smul] at h1 ⊢
+  -- `c = σs a - a` maps into the maximal ideal of `w`
+  rw [← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff] at h1 ⊢
+  let f : w' →+* w :=
+    { toFun := fun x => ⟨((x : E) : Ω), x.2⟩
+      map_one' := rfl
+      map_mul' := fun _ _ => rfl
+      map_zero' := rfl
+      map_add' := fun _ _ => rfl }
+  have hfc : f ((⟨σs, hd'⟩ : w'.decompositionSubgroup K) • a - a) =
+      (⟨σ, hd⟩ : w.decompositionSubgroup K) • b - b := by
+    apply Subtype.ext
+    change ((σs (a : E) : E) : Ω) - ((a : E) : Ω) = σ ((a : E) : Ω) - ((a : E) : Ω)
+    rw [hres]
+  intro hu
+  exact h1 (by rw [← hfc]; exact hu.map f)
+
+/-- **`InertiaRestrictSepClosure`, PROVED** (restriction `AlgEquiv.restrictNormal` to the Galois
+extension `K^s/K`; decomposition by `σ • w = w`; inertia through `w ∩ K^s → w`, which maps units to
+units). -/
+theorem inertiaRestrictSepClosure : InertiaRestrictSepClosure := by
+  intro K _ Ω _ _ _ w σ hσ
+  exact inertiaRestrict' K Ω w σ hσ
+
+
+/-- **The field `semistableUnipotent`, unchanged statement, over every field**, from the printed leaf
+over every field, `StrictHenselizationInside`, the bundle leaf `MulEtaleAbelianScheme` and the one
+glue `SemiAbelianDescendsSepClosed` (needed only for imperfect residue fields). -/
+theorem semistableUnipotent_of_printedGen (hP : SemistableUnipotentPrintedGen)
+    (hD : SemiAbelianDescendsSepClosed) (hE : AvSplit.T4.MulEtaleAbelianScheme)
+    (hIn : StrictHenselizationInside) : ReductSplit.SemistableUnipotent :=
+  semistableUnipotent_of_gen' hP hD inertiaRestrictSepClosure (torsionFromSepClosure_of hE) hIn
+
+/-- **The strictly henselian field `SemistableUnipotentSH`, unchanged statement**, likewise. -/
+theorem semistableUnipotentSH_of_printedGen (hP : SemistableUnipotentPrintedGen)
+    (hD : SemiAbelianDescendsSepClosed) (hE : AvSplit.T4.MulEtaleAbelianScheme) :
+    ReductGlue.SemistableUnipotentSH :=
+  semistableUnipotentSH_of_gen hP hD
+    (sepClosureTateRestrict_of inertiaRestrictSepClosure (torsionFromSepClosure_of hE))
+
 end UnipotentB
 
 #print axioms UnipotentB.isSemistableRes_iff
@@ -437,3 +679,8 @@ end UnipotentB
 #print axioms UnipotentB.semistableUnipotent_of_gen
 #print axioms UnipotentB.sepClosureTateRestrict_of
 #print axioms UnipotentB.semistableUnipotent_of_gen'
+#print axioms UnipotentB.exists_lift_of_etale_sep
+#print axioms UnipotentB.torsionFromSepClosure_of
+#print axioms UnipotentB.inertiaRestrictSepClosure
+#print axioms UnipotentB.semistableUnipotent_of_printedGen
+#print axioms UnipotentB.semistableUnipotentSH_of_printedGen
