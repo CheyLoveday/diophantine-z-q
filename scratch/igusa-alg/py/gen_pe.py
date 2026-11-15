@@ -1,6 +1,10 @@
 # Generate Lean PE (polynomial expression) trees for the s-forms from sforms.pkl.
 import pickle, sympy as sp
 d = pickle.load(open('sforms.pkl', 'rb'))
+import subprocess
+NB = {}
+for line in open('bound.out'):
+    w = line.split(); NB[int(w[0])] = int(w[3]) + 1
 s = sp.symbols('s0:4')
 def mono(c, e):
     fs = []
@@ -34,7 +38,8 @@ for j, c in enumerate(ch):
 out.append('/-- `X₁₂ = 2¹⁷·3·χ₁₂` in `s_i = U_i²`. -/\ndef x12E : PE := %s\n' % sumtree(['x12E%d' % j for j in range(len(ch))]))
 for i, (q, r) in enumerate(d['blocks']):
     out.append('def blkQ%d : PE := %s\n' % (i, pe(q)))
-    out.append('def blkR%d : PE := %s\n' % (i, pe(r) if r != 0 else '(.c 0)'))
+    out.append('def blkR%d : PE := %s\n' % (i, pe(r) if r != 0 else '(.mul (.c 0) (.pow (.v 0) 8))'))
+out.append('def blocksPE : List (PE × PE) := [' + ', '.join('(blkQ%d, blkR%d)' % (i, i) for i in range(7)) + ']\n')
 for k in range(3, 10):
     D, mons = d['INT'][k]
     terms = []
@@ -46,5 +51,11 @@ for k in range(3, 10):
         terms.append('(.mul (.c (%d)) %s)' % (n, t))
     out.append('/-- integer form of `P_k`: `D_k · P_k(Ψ₄/4, Ψ₆/4, -X₁₀/2¹⁴, X₁₂/(2¹⁷·3))`, k = %d. -/\ndef rhsE%d : PE := %s\n' % (k, k, sumtree(terms)))
     out.append('def dK%d : ℤ := %d\n' % (k, D))
+    out.append('def data%d : Data := ⟨blocksPE, %d, dK%d, rhsE%d⟩\n' % (k, k, k, k))
+    out.append('''/-- The identity `D_k e_k = Σ n Ψ₄^i Ψ₆^j X₁₀^l X₁₂^m` in `s`, k = %d, over every commutative ring. -/
+theorem gen%d_eq_zero {R : Type*} [CommRing R] (s0 s1 s2 s3 : R) : data%d.gen s0 s1 s2 s3 = 0 :=
+  data%d.gen_eq_zero (2 ^ %d) (by decide +kernel) (by decide +kernel) (by decide) (by decide +kernel)
+    (by decide +kernel) s0 s1 s2 s3
+''' % (k, k, k, k, NB[k]))
 open('../gen_pe.lean', 'w').write('\n'.join(out))
 print(len('\n'.join(out)))
