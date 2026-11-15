@@ -28,8 +28,9 @@ CToPrinted.Shimura.ShimuraMainThmIY3`. Its fibre clause at `g = 1` is c-to-print
 system of models `(V_S, φ_S)` over the fields `k_S` is the same thing as one canonical model `M_K` of
 `G(ℚ)\(X × G(𝔸_f))/K` over the reflex field, here `ℚ`. For `K = K₃` that model is the moduli scheme `Y₃`, and its
 complex points are `B^×_+\(ℍ × (B⊗𝔸_f)^×)/K₃`. Shimura's `V_S` over `k_S = ℚ(ζ₃)` and Deligne's comparison
-`Y₃ ⊗ ℚ(ζ₃) = V_S ⊔ V_S^σ` are both contained in clause 1 below, since
-`π₀ = ℚ^×_{>0}\𝔸_f^×/nrd K₃ = (ℤ/3)^×`. So no model over `ℚ(ζ₃)` has to be named.
+`Y₃ ⊗ ℚ(ζ₃) = V_S ⊔ V_S^σ` come out of clauses 1 and 4 below with Deligne's comparison. Clause 1 gives
+`π₀ = ℚ^×_{>0}\𝔸_f^×/nrd K₃ = (ℤ/3)^×`, and clause 4 gives the Galois action on `π₀` through `nrd q̂(s)`. The leaf is
+Deligne's form over `ℚ`, so no model over `ℚ(ζ₃)` has to be named.
 
 Shimura's own per-`S` form is also statable: a scheme `V` over `Spec ℚ(ζ₃)` with `φ : ℍ → V(ℂ)`. Linking that form to
 `Y₃` would need the comparison as a separate theorem (Deligne 1971 §4), so it was not chosen. §5 has the details.

@@ -1089,8 +1089,10 @@ surfaces with level-3 structure; abelian-scheme form of the moduli clause).
 
 *Lean form*: some `(Y, Φ)` with `R1fpPropsAb` (the fine moduli scheme `Y₃` over `ℚ`; r1univ-rigid's
 abelian-scheme clause list) satisfies `ShimuraDeligneBody`. `Y₃ = Sh_{K₃}(B^×, ℍ^±)` over `ℚ`: its
-two geometric components are Shimura's `V_S` and `V_S^σ` over `k_S = ℚ(ζ₃)` (the comparison is clause 1
-with `π₀ = ℚ^×_{>0}\𝔸_f^×/nrd K₃ = (ℤ/3)^×`), so no model over `ℚ(ζ₃)` has to be named.
+two geometric components (`π₀ = ℚ^×_{>0}\𝔸_f^×/nrd K₃ = (ℤ/3)^×`, clause 1) are Shimura's `V_S` and
+`V_S^σ` over `k_S = ℚ(ζ₃)` via clauses 1 and 4 and Deligne's comparison between Shimura's systems of models
+and the adelic canonical model over the reflex field `ℚ`; the leaf is Deligne's form over `ℚ`, so no
+model over `ℚ(ζ₃)` has to be named.
 
 *Form*: a consequence of the print, not stronger: the reciprocity law is stated at every CM point and
 every idele, with the conventions made existential (`ε`, `δ`); `ℍ` with `B^×_+` replaces
@@ -1145,6 +1147,7 @@ theorem shimuraFamily_of_mainThmIAb (hC : LeafQM.AV.R1UnivRigid.MumfordRigidityC
 
 end ShimuraCFT
 
+#print axioms ShimuraCFT.ShimuraMainThmIDeligneY3Ab
 #print axioms ShimuraCFT.shimuraFamilyAb_of_mainThmI
 #print axioms ShimuraCFT.shimuraFamily_of_mainThmI
 #print axioms ShimuraCFT.shimuraFamily_of_mainThmIAb

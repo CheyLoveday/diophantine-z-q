@@ -33,3 +33,11 @@ check with `scratch/shimura-cft/run.sh <file>` (= `lake env lean`).
 - Needs import `ZInQKernel.Contrib.TYZGenus.ShimuraModFn`. BLOCKED: ~/dzq-check2 (the build my symlink tree points
   to) is being rebuilt in place at b5ff0474 (LPrefix.olean missing during rebuild). Waiting for it to finish, then
   copy the build (real copy, not symlinks).
+
+## Independent review (model subagent, read-only, 11-14 ~17:50)
+- No PROBLEM. All of DCRel, reciprocity conventions (ε, δ cover q̂(s)^{±1}, q̂(s̄)^{±1}), ArtinCondC, qHat,
+  IsCMPoint, K3Q judged OK. Reviewer constructed Ψ(τ,g) = ℂ²/ι(B ∩ 𝒪̂g⁻¹)(τ,1)ᵀ meeting clauses 1-4 together.
+- RISK (wording): "comparison is clause 1" too quick — FIXED: docstring and report now say "via clauses 1 and 4
+  and Deligne's comparison".
+- Minor: global Artin normalization only checked locally (absorbed by ε). Suggested `#print axioms` on the leaf
+  def itself — ADDED.
