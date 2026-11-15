@@ -23,3 +23,9 @@ and F(σ) = O(e^{−π Im σ}); iterate to get F = 0.
 - 06:15 Cauchy estimate `norm_deriv_le_of_bound`, nonvanishing `thetaFour_ne_zero`, `thetaThree_ne_zero`, `thT_ne_zero`,
   `thetaTwo_ne_zero` on ℍ (by iterating Landen up to Im ≥ 1; no products), and the recursion
   `Fq_rec : F τ = (θ₄(τ)²/θ₃(τ)²) F(2τ)` with h = θ₂/θ₃, F = h'/h − (πi/4)θ₄⁴: VERIFIED compiled, standard axioms.
+- 06:45 full proof `jacobiLambdaDeriv'` in Dev.lean: VERIFIED compiled, standard axioms.
+- 06:55 contributor file `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/JacobiLambdaDeriv.lean` (imports WeilTheta):
+  `lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.JacobiLambdaDeriv` success (11342 jobs).
+  `Check.lean` → `out_check.txt`: verbatim copy of the Prop ↔ gz-weil's constant by `Iff.rfl`;
+  `ZInQ.GZWeil.jacobiLambdaDeriv`, `etaModelDifferential`, `modularParamC1`, `shimuraCMParamCd`,
+  `grossZagierHeegnerCd_of_leaves4` all [propext, Classical.choice, Quot.sound]. VERIFIED.
