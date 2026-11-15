@@ -191,7 +191,7 @@ general facts).
 | `scratch/sgr-split/Discharges.lean` | `#discharges` | output below |
 | `scratch/sgr-split/AutofoldDryRun.lean` | `autofold.py --dry-run --allow-rise` output, line 1 stripped | `sixContactMin_of_open26`, standard axioms |
 
-`#discharges` (`scratch/sgr-split/discharges.out`; the other lines are other contributions already in the tree):
+`#discharges` (`scratch/sgr-split/discharges.txt`; the other lines are other contributions already in the tree):
 
 ```
 DISCHARGES [OpenAddedLeaves16.shimuraGoodReductionNoGuard] by SGRSplit.shimuraGoodReductionNoGuard_of_printed
@@ -208,10 +208,10 @@ DISCHARGES [OpenAddedLeaves16.shimuraGoodReductionNoGuard] by SGRSplit.shimuraGo
 
 Autofold: `scratch/sgr-split/autofold.json` discharges `shimuraGoodReductionNoGuard` with proof
 `_root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed {n}.shimuraIntegralModelRep` and one new row,
-`shimuraIntegralModelRep` (published, flag "pending reading: ..."). `--dry-run` reports
+`shimuraIntegralModelRep` (published, flag "pending reading: ..."). `--dry-run` (`scratch/sgr-split/autofold-dryrun.txt`) reports
 `strict count: 46/13 on 59 -> 46/13 on 59; strictest 45/14 -> 45/14` (no rise); its module, line 1 stripped
 (`scratch/sgr-split/AutofoldDryRun.lean`), compiles: `sixContactMin_of_open26` with standard axioms.
 
-Build note: the worktree reused the prebuilt tree of `~/dzq-check2` (same commit `6edf020d`), then built
+Build note: the worktree reused a prebuilt build tree of the same commit (`6edf020d`), then built
 `ZInQKernel.OneProof.Main`, `ZInQKernel.OneProof.Discharges` (up to date except `TailZ28`–`TailZ31`, `Main`)
 and the new module (59 to 86 s).
