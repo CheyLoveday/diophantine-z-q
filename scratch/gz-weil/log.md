@@ -85,3 +85,13 @@ Task: make gz-hl3's split of `hL3` net negative by turning `StrongWeilCurve` and
 - `lake build …WeilJacobi` success (11342 jobs); out_check.txt 26 theorems standard axioms;
   MainEdit `frozenTarget_gzweil_final` (hL3 → WU, HPR_Cd, GZF_Cd, GC_Cd) standard axioms;
   #discharges: 65 open, 1606 theorems checked, 6 discharge one (unchanged).
+
+## Step 6: WeierstrassUniformization removed on the C_d route (VERIFIED, compiled, 05:40 PST)
+- `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilLattice.lean` (dev `scratch/gz-weil/Lattice.lean`):
+  `squarePP` (ℤ+ℤi), `g₃_squarePP` (i-stability via `G_congr`, `g₃_scalePP`), `g₂_ne_zero_of_g₃_eq_zero`
+  (℘ onto ⇒ zero z₁; ℘'² = 4℘³ ⇒ 2(n−1) = 3n contradiction; ℘ ≢ 0 by `weierstrassP_not_const`),
+  `exists_isPeriodLattice_cd` (fourth-root rescaling), `heegner_at_of_lattice` (gz-hl3's proof, lattice given),
+  `grossZagierHeegnerCd_of_threeLeaves (hHP hGZ hGC) : GZStatements.GrossZagierHeegnerCd`.
+- `lake build …WeilLattice` success (11343 jobs); out_check.txt 31 theorems standard axioms;
+  MainEdit `frozenTarget_gzweil_three` (hL3 → HeegnerPointRationalCd, GrossZagierFormulaCd, GrossConjugationCd)
+  standard axioms; #discharges 65 open, 1618 checked, 6 discharge one.

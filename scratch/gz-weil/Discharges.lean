@@ -6,5 +6,6 @@ import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Weil
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilTheta
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilLattice
 
 #discharges
