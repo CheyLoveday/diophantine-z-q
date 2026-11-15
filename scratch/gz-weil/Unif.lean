@@ -196,4 +196,96 @@ theorem hasDerivAt_eichlerCd_one {z : ℂ} (hz : 0 < z.im) :
   ring_nf
   rfl
 
+/-! ## C3. `Φ₁(γτ) − Φ₁(τ)` is constant for `γ ∈ Γ₀(32)` -/
+
+/-- The Möbius map of `γ` on `ℂ`. -/
+def moeb (γ : SL(2, ℤ)) (z : ℂ) : ℂ :=
+  (((γ 0 0 : ℤ) : ℂ) * z + ((γ 0 1 : ℤ) : ℂ)) / (((γ 1 0 : ℤ) : ℂ) * z + ((γ 1 1 : ℤ) : ℂ))
+
+theorem coe_smul_eq_moeb (γ : SL(2, ℤ)) (τ : ℍ) : ((γ • τ : ℍ) : ℂ) = moeb γ τ := by
+  rw [UpperHalfPlane.coe_specialLinearGroup_apply, moeb]
+  simp
+
+theorem denom_ne_zero' (γ : SL(2, ℤ)) {z : ℂ} (hz : 0 < z.im) :
+    ((γ 1 0 : ℤ) : ℂ) * z + ((γ 1 1 : ℤ) : ℂ) ≠ 0 := by
+  intro h
+  have him := congrArg Complex.im h
+  simp only [Complex.add_im, Complex.mul_im, Complex.intCast_re, Complex.intCast_im, zero_mul,
+    add_zero, Complex.zero_im] at him
+  have hc : (γ 1 0 : ℝ) = 0 := by
+    rcases mul_eq_zero.mp him with h1 | h1
+    · exact h1
+    · exact absurd h1 hz.ne'
+  have hc' : γ 1 0 = 0 := by exact_mod_cast hc
+  have hre := congrArg Complex.re h
+  simp only [Complex.add_re, Complex.mul_re, Complex.intCast_re, Complex.intCast_im, hc,
+    zero_mul, sub_zero, zero_add, Complex.zero_re] at hre
+  have hd : γ 1 1 = 0 := by exact_mod_cast hre
+  have hdet : γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
+    have h := γ.det_coe
+    rwa [Matrix.det_fin_two] at h
+  simp only [hc', hd, mul_zero, sub_zero] at hdet
+  exact absurd hdet (by norm_num)
+
+theorem hasDerivAt_moeb (γ : SL(2, ℤ)) {z : ℂ} (hz : 0 < z.im) :
+    HasDerivAt (moeb γ) (1 / (((γ 1 0 : ℤ) : ℂ) * z + ((γ 1 1 : ℤ) : ℂ)) ^ 2) z := by
+  have hden := denom_ne_zero' γ hz
+  have h1 : HasDerivAt (fun w => ((γ 0 0 : ℤ) : ℂ) * w + ((γ 0 1 : ℤ) : ℂ)) ((γ 0 0 : ℤ) : ℂ) z := by
+    simpa using ((hasDerivAt_id z).const_mul ((γ 0 0 : ℤ) : ℂ)).add_const ((γ 0 1 : ℤ) : ℂ)
+  have h2 : HasDerivAt (fun w => ((γ 1 0 : ℤ) : ℂ) * w + ((γ 1 1 : ℤ) : ℂ)) ((γ 1 0 : ℤ) : ℂ) z := by
+    simpa using ((hasDerivAt_id z).const_mul ((γ 1 0 : ℤ) : ℂ)).add_const ((γ 1 1 : ℤ) : ℂ)
+  have h := h1.div h2 hden
+  convert h using 2
+  · funext w; rfl
+  have hdet : γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
+    have h := γ.det_coe
+    rwa [Matrix.det_fin_two] at h
+  have hdetC : ((γ 0 0 : ℤ) : ℂ) * ((γ 1 1 : ℤ) : ℂ) - ((γ 0 1 : ℤ) : ℂ) * ((γ 1 0 : ℤ) : ℂ) = 1 := by
+    exact_mod_cast hdet
+  linear_combination -hdetC
+
+theorem im_moeb_pos (γ : SL(2, ℤ)) {z : ℂ} (hz : 0 < z.im) : 0 < (moeb γ z).im := by
+  have := (γ • (⟨z, hz⟩ : ℍ)).im_pos
+  rwa [UpperHalfPlane.im, coe_smul_eq_moeb] at this
+
+/-- `f₁(γτ) = (cτ + d)² f₁(τ)` for `γ ∈ Γ₀(32)` (gz-theta's `etaQuot32_slash_eq`). -/
+theorem fC_moeb {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32) {z : ℂ} (hz : 0 < z.im) :
+    ZInQ.Contrib.TYZGenus.X0.fC (moeb γ z) =
+      (((γ 1 0 : ℤ) : ℂ) * z + ((γ 1 1 : ℤ) : ℂ)) ^ 2 * ZInQ.Contrib.TYZGenus.X0.fC z := by
+  set τ : ℍ := ⟨z, hz⟩
+  have h := congrFun (ZInQ.GZTheta.etaQuot32_slash_eq hγ) τ
+  rw [ModularForm.SL_slash_def] at h
+  simp only at h
+  have hden : UpperHalfPlane.denom (γ : GL (Fin 2) ℝ) τ = ((γ 1 0 : ℤ) : ℂ) * z + ((γ 1 1 : ℤ) : ℂ) := by
+    rw [UpperHalfPlane.denom]
+    simp [τ]
+  rw [hden] at h
+  have hne := denom_ne_zero' γ hz
+  have e1 : ZInQ.Contrib.TYZGenus.X0.fC (moeb γ z) = ZInQ.GZTheta.etaQuot32 (γ • τ) := by
+    rw [ZInQ.GZTheta.etaQuot32, coe_smul_eq_moeb]; rfl
+  have e2 : ZInQ.Contrib.TYZGenus.X0.fC z = ZInQ.GZTheta.etaQuot32 τ := rfl
+  rw [e1, e2, ← h, zpow_neg, zpow_ofNat]
+  field_simp
+
+/-- **`Φ₁(γτ) − Φ₁(τ)` does not depend on `τ`** (`γ ∈ Γ₀(32)`): its derivative
+`2πi (f₁(γτ)(cτ + d)⁻² − f₁(τ))` vanishes. -/
+theorem period_const {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32) (τ τ' : ℍ) :
+    eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 τ = eichlerCd 1 ((γ • τ' : ℍ) : ℂ) - eichlerCd 1 τ' := by
+  rw [coe_smul_eq_moeb, coe_smul_eq_moeb]
+  set U : Set ℂ := {w | 0 < w.im} with hU
+  have hUo : IsOpen U := isOpen_lt continuous_const Complex.continuous_im
+  have hUc : IsPreconnected U := (convex_halfSpace_im_gt 0).isPreconnected
+  have hd : ∀ w ∈ U, HasDerivAt (fun w => eichlerCd 1 (moeb γ w) - eichlerCd 1 w) 0 w := by
+    intro w hw
+    have h1 := (hasDerivAt_eichlerCd_one (im_moeb_pos γ hw)).comp w (hasDerivAt_moeb γ hw)
+    have h2 := hasDerivAt_eichlerCd_one hw
+    convert h1.sub h2 using 1
+    · funext v; rfl
+    rw [fC_moeb hγ hw]
+    have hne := denom_ne_zero' γ hw
+    field_simp
+    ring
+  exact hUo.is_const_of_deriv_eq_zero hUc (fun w hw => (hd w hw).differentiableAt.differentiableWithinAt)
+    (fun w hw => (hd w hw).deriv) τ.im_pos τ'.im_pos
+
 end ZInQ.GZWeil
