@@ -152,13 +152,74 @@ theorem evenChars_val : PkgI1.evenChars.val = (([(![0, 0], ![0, 0]), (![0, 0], !
 theorem univ_fin2_fin2 : (Finset.univ : Finset (Fin 2 → Fin 2)) =
     {![0, 0], ![0, 1], ![1, 0], ![1, 1]} := by decide
 
-theorem Sq_expand (m : PkgI1.Char2) (u : (Fin 2 → Fin 2) → ℂ) : Sq m u =
-    (-1 : ℂ) ^ ((((![0, 0] + m.1) 0 : Fin 2) : ℕ) * (m.2 0 : ℕ) + (((![0, 0] + m.1) 1 : Fin 2) : ℕ) * (m.2 1 : ℕ)) * (u ![0, 0] * u (![0, 0] + m.1)) +
-    (-1 : ℂ) ^ ((((![0, 1] + m.1) 0 : Fin 2) : ℕ) * (m.2 0 : ℕ) + (((![0, 1] + m.1) 1 : Fin 2) : ℕ) * (m.2 1 : ℕ)) * (u ![0, 1] * u (![0, 1] + m.1)) +
-    (-1 : ℂ) ^ ((((![1, 0] + m.1) 0 : Fin 2) : ℕ) * (m.2 0 : ℕ) + (((![1, 0] + m.1) 1 : Fin 2) : ℕ) * (m.2 1 : ℕ)) * (u ![1, 0] * u (![1, 0] + m.1)) +
-    (-1 : ℂ) ^ ((((![1, 1] + m.1) 0 : Fin 2) : ℕ) * (m.2 0 : ℕ) + (((![1, 1] + m.1) 1 : Fin 2) : ℕ) * (m.2 1 : ℕ)) * (u ![1, 1] * u (![1, 1] + m.1)) := by
+theorem Sq0 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![0, 0]) u = u ![0, 0] ^ 2 + u ![0, 1] ^ 2 + u ![1, 0] ^ 2 + u ![1, 1] ^ 2 := by
   rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
     Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq1 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![0, 1]) u = u ![0, 0] ^ 2 - u ![0, 1] ^ 2 + u ![1, 0] ^ 2 - u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq2 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![1, 0]) u = u ![0, 0] ^ 2 + u ![0, 1] ^ 2 - u ![1, 0] ^ 2 - u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq3 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![1, 1]) u = u ![0, 0] ^ 2 - u ![0, 1] ^ 2 - u ![1, 0] ^ 2 + u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq4 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 1], ![0, 0]) u = 2 * u ![0, 0] * u ![0, 1] + 2 * u ![1, 0] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq5 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 1], ![1, 0]) u = 2 * u ![0, 0] * u ![0, 1] - 2 * u ![1, 0] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq6 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 0], ![0, 0]) u = 2 * u ![0, 0] * u ![1, 0] + 2 * u ![0, 1] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq7 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 0], ![0, 1]) u = 2 * u ![0, 0] * u ![1, 0] - 2 * u ![0, 1] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq8 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 1], ![0, 0]) u = 2 * u ![0, 0] * u ![1, 1] + 2 * u ![0, 1] * u ![1, 0] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq9 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 1], ![1, 1]) u = 2 * u ![0, 0] * u ![1, 1] - 2 * u ![0, 1] * u ![1, 0] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
   ring
 
 theorem evenChars_eq : PkgI1.evenChars = {(![0, 0], ![0, 0]), (![0, 0], ![0, 1]), (![0, 0], ![1, 0]), (![0, 0], ![1, 1]), (![0, 1], ![0, 0]), (![0, 1], ![1, 0]), (![1, 0], ![0, 0]), (![1, 0], ![0, 1]), (![1, 1], ![0, 0]), (![1, 1], ![1, 1])} := by decide
@@ -182,8 +243,7 @@ theorem igusaAlg3 : IgusaAlg 3 := by
   intro u
   rw [evenChars_val, Multiset.map_coe, esymm_coe]
   simp only [psi4T, chi10T, psi6T, chi12T, igusaP, sum_evenChars, prod_evenChars, List.map, esymmL]
-  simp only [Sq_expand]
-  simp
+  simp only [Sq0, Sq1, Sq2, Sq3, Sq4, Sq5, Sq6, Sq7, Sq8, Sq9]
   generalize u ![0, 0] = x0
   generalize u ![0, 1] = x1
   generalize u ![1, 0] = x2
