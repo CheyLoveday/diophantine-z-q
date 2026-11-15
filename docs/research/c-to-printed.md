@@ -21,7 +21,7 @@ verbatim copy of the field with an `example : copy = kernel constant := rfl` che
 |---|---|---|---|
 | `neronLocalizesDVR` (`ReductGlue.NeronLocalizesDVR`) | `CToPrinted.neronLocalizesDVR_of_printed` | `BLR_1_2_4`: BLR 1.2 Prop. 4, the full "iff", over every Dedekind domain and every smooth separated `R`-scheme of finite type | **none** (all glue proved) |
 | `faltingsLemma5BC` (`ZInQ.HeightSplit.FaltingsLemma5BC`) | `CToPrinted.faltingsLemma5BC_of_printed` | `FaltingsLemma5Printed`: Faltings 1983 Lemma 5, the identity with the correction term `[K:ℚ]⁻¹ log #s*Ω¹_{G/S}`; `RaynaudKernelBound`: Raynaud, Ast. 127 VII 2.1.3 | **none** (all glue proved) |
-| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 3 named glue Props: `IdentityComponentGroupModel`, `IdentityComponentFromPrinted`, `OpenImmersionLocalization` |
+| `semistableNeronBaseChange` (`ZInQ.HeightSplit.SemistableNeronBaseChange`) | `CToPrinted.semistableNeronBaseChange_of_printed''` | `BLR_1_2_4`, `SGA3_VIB_3_10`, `SGA7_IX_3_3`, `EGAIV_8_10_5_openImm` | 3 named glue Props about the topology of group schemes: `IdentityComponentGroupModel`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`. reduct-glue's leaf `OpenImmersionOfLocal` is now a **theorem** from EGA IV 8.10.5 (`openImmersionLocalization`) |
 | `shimuraFamily` (`HDec.QMSplit.Moduli.ShimuraFamily`) | `CToPrinted.Shimura.shimuraFamily_of_mainThmI` | `ShimuraMainThmIY3`: Shimura 1967 Main Thm I with the moduli interpretation, **without the reciprocity law** | none, but the leaf is a consequence of the print rather than the print (§5): the reciprocity law needs global class field theory, which Mathlib lacks |
 
 Also compiled: `semistableNeronBaseChange_of_printedBLR`. It derives SS2 from reduct-glue's three other leaves
@@ -31,8 +31,9 @@ by the printed BLR 1.2/4.
 **Net effect on the strict count** (SPECULATIVE until the integrator rules):
 - `neronLocalizesDVR` and `faltingsLemma5BC` become theorems from published-form leaves, with no glue. That is
   1 GLUE (c) → 1 LEAF, and 1 GLUE (c) → 2 LEAVES.
-- `semistableNeronBaseChange` becomes four printed-form leaves plus three glue Props. One of the four, BLR 1.2/4,
-  is shared with `neronLocalizesDVR`.
+- `semistableNeronBaseChange` becomes four printed-form leaves plus three glue Props about the topology of group
+  schemes. One of the four, BLR 1.2/4, is shared with `neronLocalizesDVR`. reduct-glue's EGA leaf
+  `OpenImmersionOfLocal` is now a Lean theorem from the printed EGA IV 8.10.5.
 - `shimuraFamily` stays a consequence of one theorem. Its leaf is now as close to the print as Mathlib 4.35
   allows, and §5 lists what is missing.
 
@@ -131,7 +132,32 @@ Two remarks on the Lean form of SGA 7 IX 3.3:
 - The print's `N⁰ ⊗ R'` is written as `(N ⊗ R')⁰`. They agree because the fibres of `N⁰` are geometrically
   connected (SGA 3 VI_B 3.3).
 
-**Glue (named Props, unproved; each docstring says what it needs):**
+**Glue proved here:**
+- **`OpenImmersionLocalization`, PROVED** (`openImmersionLocalization : EGAIV_8_10_5_openImm →
+  ReductGlue.OpenImmersionOfLocal`). The proof has three steps:
+  - `Spec O = lim_{a ∉ 𝔭} Spec 𝓞_L[1/a]`, where the index is `𝔭.primeCompl` preordered by divisibility
+    (`ringCoconeOIsColimit`, `specConeOIsLimit`; the colimit comes from `IsLocalization` and reduct-glue's
+    `mem_iff_exists`).
+  - EGA IV 8.10.5 at each maximal `𝔭` gives `s_𝔭 ∉ 𝔭` (`exists_away_of_dvr`).
+  - The open cover of `Y` by `Y ×_S D(s_𝔭)` (`Cover.mkOfCovers`, `Scheme.Pullback.range_fst`) and
+    `IsZariskiLocalAtTarget.of_openCover`, with `pullbackRightPullbackFstIso` to identify the pulled-back
+    morphisms.
+- **`IdentityComponentFromPrinted`, reduced** (`identityComponentFromPrinted_of`) to two topological glue Props.
+  - The canonical homomorphism `c : 𝒩 ×_O O' → 𝒩'` comes from reduct-glue's `bcDVR`, the Néron property and
+    `isMonHom_of_ext`.
+  - `j = (i ×_O O') ≫ c` is an open immersion because `range (i ×_O O') = fst⁻¹(range i) = fst⁻¹ 𝒩⁰ =
+    (𝒩 ×_O O')⁰` (by `Scheme.Pullback.range_map` and the two glue Props), and `c` is an open immersion on that
+    open by SGA 7 IX 3.3 (`IsOpenImmersion.isoOfRangeEq`).
+
+**Glue left (named Props, unproved; each docstring says what it needs):**
+- `OpenSubgroupIsIdComp`: an open subgroup of a group model over a DVR whose generic fibre and geometric special
+  fibre are connected has image `idCompSet`. The reason is that an open subgroup of a group scheme over a field is
+  closed.
+- `IdCompBaseChangeDVR`: `fst⁻¹(G⁰) = (G ×_O O')⁰` for a smooth group scheme `G`. The reason is that `(G_s)⁰` is
+  geometrically connected (Stacks 04KV, the bundle leaf `geomConnOfRationalPoint`).
+
+The earlier, coarser glue Props are kept in the file, and `semistableNeronBaseChange_of_printed`,
+`semistableNeronBaseChange_of_printed'` and `semistableNeronBaseChange_of_printed''` are the successive forms:
 - `IdentityComponentGroupModel`: the open subscheme on `𝒢⁰` is a group model with connected geometric fibres.
   - Subgroup property: SGA 3 VI_A 2.3, using the bundle leaf `geomConnOfRationalPoint` (Stacks 04KV).
   - Quasi-compactness: `𝒢` is noetherian.
@@ -144,7 +170,9 @@ Two remarks on the Lean form of SGA 7 IX 3.3:
   - finite presentation over the noetherian `𝓞_L`;
   - open immersions are local on the target (`IsZariskiLocalAtTarget`).
 
-`semistableNeronBaseChange_of_printed (hB h3 h7 hE g1 g2 g3)` compiles.
+`semistableNeronBaseChange_of_printed'' (hB h3 h7 hE g1 ga gb)` compiles, and so do the coarser forms.
+`SGA7_IX_3_3` is stated for finite `K'/K`. The print allows any extension (as recalled), so this is a
+specialization.
 
 ## 5. `shimuraFamily` (part H)
 
@@ -202,5 +230,5 @@ No analytification is needed.
 
 `scratch/c-to-printed/run.sh FILE` runs `lean` with `LEAN_PATH` on a copy of the e38375b3 build (`~/ctp-lib`). It
 was run one Lean process at a time:
-- `CToPrinted.lean`: about 6 s, no errors, 4 `#print axioms` lines, all standard (VERIFIED).
+- `CToPrinted.lean`: about 10 s, no errors, 7 `#print axioms` lines, all standard (VERIFIED).
 - `Shimura.lean`: about 6 s, no errors, 3 `#print axioms` lines, all standard (VERIFIED).
