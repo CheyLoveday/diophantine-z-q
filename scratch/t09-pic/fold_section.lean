@@ -5,8 +5,8 @@ namespace HDec
 
 namespace HSyn
 
-/-- leaf-fold12's `OpenAddedLeaves11` with `t09SymmIsogenyExists` replaced by t09-pic's five printed leaves
-(17 fields; the 12 other fields copied verbatim from `ZInQKernel/OneProof/H/TailZ18.lean`). -/
+/-- leaf-fold12's `OpenAddedLeaves11` with `t09SymmIsogenyExists` replaced by t09-pic's four printed leaves
+(16 fields; the 12 other fields copied verbatim from `ZInQKernel/OneProof/H/TailZ18.lean`). -/
 structure OpenAddedLeaves11T09Pic : Prop where
   thetaRatiosAlgebraic : G0Split.ThetaPt.ThetaRatiosAlgebraic
   qmCentralizerCMC : QMSplit.Aut.QMCentralizerCMC
@@ -20,8 +20,6 @@ structure OpenAddedLeaves11T09Pic : Prop where
   valenceFormulaCocompactEq : LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
   deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
-  /-- t09-pic L0: very ample ⇒ ample (EGA II 4.5.10). -/
-  veryAmpleIsAmple : _root_.T09Pic.VeryAmpleIsAmple
   /-- t09-pic L1: `Pic_{A/K}` representable (Murre–Oort; FGA 232; Kleiman 9.4.8). -/
   picRepresentableAbVar : _root_.T09Pic.PicRepresentableAbVar
   /-- t09-pic L2: `Pic⁰_{A/K}` is an abelian variety (Mumford §13; Kleiman 9.5). -/
@@ -37,7 +35,7 @@ theorem openAddedLeaves11_of_t09pic (l : OpenAddedLeaves11T09Pic) : OpenAddedLea
   qmCentralizerCMC := l.qmCentralizerCMC
   tateTwistInvariants := l.tateTwistInvariants
   axSenTate := l.axSenTate
-  t09SymmIsogenyExists := _root_.T09Pic.t09SymmIsogenyExists_of_mumford l.veryAmpleIsAmple
+  t09SymmIsogenyExists := _root_.T09Pic.t09SymmIsogenyExists_of_four
     l.picRepresentableAbVar l.picZeroAbVar l.phiAmpleIsogeny l.weilPairingMumford
   milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
   x6ConicModel := l.x6ConicModel
@@ -59,5 +57,5 @@ end HDec
 
 example (l : HDec.HSyn.OpenAddedLeaves11) : HDec.WeilPairing.T09_SymmIsogenyExists := l.t09SymmIsogenyExists
 
-#print axioms T09Pic.t09SymmIsogenyExists_of_mumford
+#print axioms T09Pic.t09SymmIsogenyExists_of_four
 #print axioms HDec.HSyn.sixContactMin_of_open15_t09pic

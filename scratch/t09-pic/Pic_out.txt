@@ -1,4 +1,4 @@
-scratch/t09-pic/Pic.lean:133:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:142:2: warning: Try this: 
   letI̵
 
 The goal is a proposition, so `let` is preferred over `letI`.
@@ -6,7 +6,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:149:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:158:2: warning: Try this: 
   letI̵
 
 The goal is a proposition, so `let` is preferred over `letI`.
@@ -14,7 +14,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:152:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:161:2: warning: Try this: 
   haveI̵
 
 The goal is a proposition, so `have` is preferred over `haveI`.
@@ -22,10 +22,10 @@ The difference between `have` and `haveI` is that `haveI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:172:4: warning: Unused tactic linter: `change η[A.X].left ≫ lam.left ≫ j.left = η[B.X].left ≫ j.left` does nothing.
+scratch/t09-pic/Pic.lean:181:4: warning: Unused tactic linter: `change η[A.X].left ≫ lam.left ≫ j.left = η[B.X].left ≫ j.left` does nothing.
 
 Note: This linter can be disabled with `set_option linter.unusedTactic false`
-scratch/t09-pic/Pic.lean:230:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:239:2: warning: Try this: 
   letI̵
 
 The goal is a proposition, so `let` is preferred over `letI`.
@@ -33,7 +33,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:251:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:260:2: warning: Try this: 
   letI̵
 
 The goal is a proposition, so `let` is preferred over `letI`.
@@ -41,7 +41,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:254:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:263:2: warning: Try this: 
   haveI̵
 
 The goal is a proposition, so `have` is preferred over `haveI`.
@@ -49,10 +49,10 @@ The difference between `have` and `haveI` is that `haveI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:278:4: warning: Unused tactic linter: `change η[B.X].left ≫ fv.left ≫ j.left = η[B.X].left ≫ j.left` does nothing.
+scratch/t09-pic/Pic.lean:287:4: warning: Unused tactic linter: `change η[B.X].left ≫ fv.left ≫ j.left = η[B.X].left ≫ j.left` does nothing.
 
 Note: This linter can be disabled with `set_option linter.unusedTactic false`
-scratch/t09-pic/Pic.lean:444:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:453:2: warning: Try this: 
   haveI̵
 
 The goal is a proposition, so `have` is preferred over `haveI`.
@@ -60,7 +60,7 @@ The difference between `have` and `haveI` is that `haveI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:447:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:456:2: warning: Try this: 
   letI̵
 
 The goal is a proposition, so `let` is preferred over `letI`.
@@ -68,7 +68,31 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-scratch/t09-pic/Pic.lean:448:2: warning: Try this: 
+scratch/t09-pic/Pic.lean:457:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+scratch/t09-pic/Pic.lean:585:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+scratch/t09-pic/Pic.lean:586:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+scratch/t09-pic/Pic.lean:588:2: warning: Try this: 
   haveI̵
 
 The goal is a proposition, so `have` is preferred over `haveI`.
@@ -77,6 +101,8 @@ But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
 'T09Pic.exists_dual_on_picZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'T09Pic.veryAmpleIsAmple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'T09Pic.t09SymmIsogenyExists_of_four' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.weilScalar_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.transl_left_comp_mulN_left' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.t09SymmIsogenyExists_of_mumford' depends on axioms: [propext, Classical.choice, Quot.sound]

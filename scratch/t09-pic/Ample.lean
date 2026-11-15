@@ -25,7 +25,7 @@ def IsAmple (X : Scheme.{0}) (L : X.Pic) : Prop :=
 /-- An invertible `E` with sections `σ_k` whose nonvanishing loci are affine and cover `X` is
 ample (`n = 1`). -/
 theorem isAmple_mk_of_sections {X : Scheme.{0}} [CompactSpace X] (E : X.Modules) [E.IsInvertible]
-    {ι : Type} (σ : ι → (𝟙_ X.Modules ⟶ E))
+    {I : Type} (σ : I → (𝟙_ X.Modules ⟶ E))
     (haff : ∀ k, IsAffineOpen (Scheme.Modules.Hom.zeroLocus (σ k)).support.compl)
     (hcov : ∀ x, ∃ k, x ∈ (Scheme.Modules.Hom.zeroLocus (σ k)).support.compl) :
     IsAmple X (Scheme.Pic.mk E) := by
@@ -105,5 +105,24 @@ theorem compl_support_zeroLocus_coordSection (i : X ⟶ ℙ(N; S)) (k : N) :
         (Proj.basicOpen _ (MvPolynomial.X j) ⊓ Proj.basicOpen _ (MvPolynomial.X k))) := ⟨hxW, hj, h⟩
     rw [key] at hm
     exact hm.2
+
+/-- **The pull-back of `𝒪(1)` along an immersion with closed image is ample** (proved): the sections
+`i^*Xₖ` have nonvanishing loci `i⁻¹ D₊(Xₖ)`, affine since `D₊(Xₖ)` is affine and `i` is a closed
+immersion onto its image, and they cover. -/
+theorem isAmple_of_isImmersion [CompactSpace X] [Finite N] [IsAffine S] (i : X ⟶ ℙ(N; S))
+    [IsImmersion i] (hcl : IsClosed (Set.range i)) :
+    IsAmple X (Scheme.Pic.map i (Scheme.Pic.mk (ProjectiveSpace.twist N S 1))) := by
+  rw [Scheme.Pic.map_mk]
+  refine isAmple_mk_of_sections _ (coordSection i) (fun k => ?_) (fun x => ?_)
+  · rw [compl_support_zeroLocus_coordSection]
+    refine i.isAffineOpen_preimage_of_le_coborderRange
+      (ProjectiveSpace.isAffineOpen_standardOpen N S k) ?_
+    intro y _
+    change y ∈ coborder (Set.range i)
+    rw [coborder_eq_univ_iff.mpr hcl]
+    trivial
+  · obtain ⟨k, hk⟩ := TopologicalSpace.Opens.mem_iSup.mp
+      ((ProjectiveSpace.iSup_standardOpen N S).ge (Set.mem_univ (i x)))
+    exact ⟨k, by rw [compl_support_zeroLocus_coordSection]; exact hk⟩
 
 end T09Pic
