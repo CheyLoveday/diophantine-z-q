@@ -81,7 +81,6 @@ theorem mem_iff (p : ℕ) (a : O) : (∃ c : O, a = (p : O) * c) ↔ red p (crd 
     choose k hk using hd
     refine ⟨⟨ofInt k, ⟨k, rfl⟩⟩, Subtype.ext ?_⟩
     rw [MulMemClass.coe_mul, hp, crd_spec a, natCast_mul_ofInt]
-    change ofInt (crd a) = ofInt (fun i => (p : ℤ) * k i)
     congr 1; funext i; exact hk i
 
 /-- The lift of a vector mod `p` with coordinates in `[0, p)`. -/
@@ -903,6 +902,15 @@ theorem stQM_of (hRep : HDec.LeafAdopt.R1R2fpRep) (hconn : HDec.TSHecke.Y3Connec
     rw [reassoc_of% i.right, h2]
   · simp only [PkgI3.AbVar.Hom.hom_mk', Category.assoc]
     rw [reassoc_of% h1, i.left]
+
+/-- **`CMDescends` without `ShimuraTaniyamaQbar`** (the chain's `LeafQCheck.cmDescends_of` with `stQM_of`; T11(b) is
+`t11b_of_exists5 t.t11bExists`, `TorsionDescends` is `torsionDescends_of_t5`). -/
+theorem cmDescends_of (hRep : HDec.LeafAdopt.R1R2fpRep) (hconn : HDec.TSHecke.Y3Connected)
+    (hAL : HDec.HeckeRest.ALFixedPoints) (hT : _root_.PkgI2.TorsionStructure.{0})
+    (hU : _root_.ZInQ.LeafPush2.UniformizationExists) (hC : _root_.ZInQ.HomUnify.HomLatticeCorr)
+    (hR : ZInQ.LeafPush2.T11b_Rigidity) : HDec.HSyn.G0Split.FibreQM.PeriodMapH.CMDescends :=
+  HDec.HSyn.G0Split.FibreQM.PeriodMapH.LeafQCheck.cmDescends_of (stQM_of hRep hconn hAL hT hU hC) hR
+    (HDec.HSyn.G0Split.FibreQM.PeriodMapH.LeafQCheck.torsionDescends_of_t5 hT) hRep
 
 end Final
 
