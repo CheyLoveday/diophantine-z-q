@@ -103,6 +103,7 @@ Note: This linter can be disabled with `set_option linter.style.haveILetI false`
 'T09Pic.exists_dual_on_picZero' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.veryAmpleIsAmple' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.t09SymmIsogenyExists_of_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'T09Pic.t09SymmIsogenyExists_of_split' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.weilScalar_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.transl_left_comp_mulN_left' depends on axioms: [propext, Classical.choice, Quot.sound]
 'T09Pic.t09SymmIsogenyExists_of_mumford' depends on axioms: [propext, Classical.choice, Quot.sound]

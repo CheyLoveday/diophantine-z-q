@@ -58,3 +58,14 @@ Field: `t09SymmIsogenyExists : HDec.WeilPairing.T09_SymmIsogenyExists`
   Pic_out.txt: 0 errors, 12 `#print axioms` lines all [propext, Classical.choice, Quot.sound]. VERIFIED.
 - FoldCheck.lean regenerated: `OpenAddedLeaves11T09Pic` now 16 fields (L0 dropped);
   `sixContactMin_of_open15_t09pic`: 0 errors, axioms standard (22.7 s). VERIFIED.
+- Pic.lean v12: L4 split into six leaves L4a `WeilPairingExists`, L4b `WeilPairingPerfect`, L4c `WeilPairingGalois`,
+  L4d `WeilPairingCompat`, L4e `WeilPairingDual`, L4f `WeilPairingAlternating` (each about any `e` with
+  `IsMumfordPairing rep j e`, i.e. values = weilScalar); `weilPairingMumford_of_split`; `t09SymmIsogenyExists_of_split`
+  (nine leaves L1, L2, L3, L4a-f). Pic_out.txt: 0 errors, 13 `#print axioms` lines all standard. VERIFIED.
+
+## Review 2 (same reviewer, §5b and §6)
+- No errors. transl = t_x, mulN = [n], iso chain = descent scalar t_x^*ψ∘ψ⁻¹ (up to inverse); choices of ψ, representative,
+  picClass do not change the value (Aut 𝒪 = K̄^× constants fixed by t_x^*; Kleiman 9.2.5 + Pic(K̄)=1); every clause
+  invariant under e ↦ -e; constK = constants, injective (bijective); §5b statements fine.
+- Cautions applied: L6 docstring cites the identification of Mumford's Pic⁰ with the K̄-points of the identity component
+  (Mumford §8 Thm 1, §13; Kleiman §9.5) and the n = 0 case; weilScalar cites Milne 1986 §16 for the explicit formula.
