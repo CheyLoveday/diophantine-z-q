@@ -1,0 +1,10 @@
+import ZInQKernel.OneProof.Main
+import ZInQKernel.OneProof.Discharges
+import ZInQKernel.Contrib.OneProof.X0ModuliUsed
+
+#discharges
+
+#print axioms X0ModuliUsed.x0ModuliGaloisX0_32_of
+#print axioms X0ModuliUsed.tyzThm35ReadingA_of_used
+#print axioms X0ModuliUsed.frozenTarget_of_used
+#print axioms ZInQ.OneProof.frozenTarget

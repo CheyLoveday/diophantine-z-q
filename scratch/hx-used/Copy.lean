@@ -10,6 +10,7 @@ noncomputable section
 namespace HXCopy
 
 set_option autoImplicit false
+set_option maxRecDepth 20000
 
 open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
   ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex

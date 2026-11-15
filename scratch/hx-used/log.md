@@ -44,3 +44,15 @@ of `E16[8]` (mod ±), exactly two match `x − 2` (up to the constant −1/4):
 i.e. the proved Fricke relation `Shimura.etaModelFricke`): worst relative errors 1e-36, 1e-37, 2e-40, 1e-33.
 All points in (Ix), (IxW) are canonical for `(E_τ, ⟨1/32⟩)`: 1/32 generates C/C16 in E/C16, `⟨τ/8⟩ = φ(E[8])` in E/C16
 (generators ±τ/8, ±3τ/8; both variants agree), `τ/2` = φ(E[2]) in E/C2, `1/16, 3/16 ∈ C/C2`.
+
+## 4. Checks (VERIFIED)
+
+* `scratch/hx-used/Copy.lean`: verbatim copies of `T5Glue.X0ModuliGalois` and `Shimura.ShimuraReciprocityModFn`, `rfl`
+  against the kernel: compiles (`copy-output.txt`, needs `set_option maxRecDepth 20000`).
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.X0ModuliUsed`: OK.
+* `scratch/hx-used/Discharges.lean` → `discharges.txt`: `#discharges: 63 open hypotheses, 1845 theorems checked,
+  7 discharge one` — all 7 are existing contributions in the import closure; none is from X0ModuliUsed (expected: the
+  used form is weaker than `hX`, so nothing in this file proves an open hypothesis; the fold is manual).
+  `frozenTarget_of_used`, `ZInQ.OneProof.frozenTarget`: axioms [propext, Classical.choice, Quot.sound].
+* autofold: not applicable (`hX` is a plain argument of `frozenTarget`, not a bundle field; x0-moduli recorded
+  `autofold: not a field of the current bundles: ['hX']`).
