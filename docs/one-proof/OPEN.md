@@ -28,6 +28,7 @@ removes it. See
   [STATEMENT-CHECKS.md](STATEMENT-CHECKS.md). [pages-wanted.md](pages-wanted.md) lists the printed pages a
   reader can check.
 * Tiers come from a model triage that no person has reviewed yet; treat them as a rough guide.
+* The project logs its folds and landings on [issue #3](https://github.com/Deicyde/diophantine-z-q/issues/3).
 
 ## Good first targets
 

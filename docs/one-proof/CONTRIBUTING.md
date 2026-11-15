@@ -74,13 +74,13 @@ lake env lean <scratch file>
 For every theorem in your file it prints which open hypotheses it proves, the hypotheses it still assumes
 (your new leaves), and its axioms. A statement change does not match. A proof using `sorry` is flagged.
 
-You may not have to run it yourself. For a pull request that only adds files under
-`ZInQKernel/Contrib/OneProof/`, the project runs the same check on the files it adds, built on top of the current
-`main` (not on the rest of your branch), in a sandbox with no secrets
-and no access to project machines (`scripts/one_proof/sandbox/README.md`), and posts the result on the pull
-request. A pull request that changes anything else is out of scope for the automatic check. The automatic check
-is being set up: until the project has posted its first check, include your own `#discharges` output in the
-pull request. The repository's default `lake build` does not compile `ZInQKernel/Contrib/OneProof`, so a green
+You may not have to run it yourself. For a pull request into `main` that only adds files under
+`ZInQKernel/Contrib/OneProof/`, the same check runs on the files it adds, built on top of the current `main` (not
+on the rest of your branch), as the GitHub Actions check "discharge check" on a fresh hosted runner with no
+secrets and no access to project machines (`scripts/one_proof/sandbox/README.md`). The verdict is in the check's
+job summary, and the run may wait for a maintainer to approve it before it starts. A pull request that changes
+anything else is out of scope for the automatic check. The automatic check is being set up: until it has run on
+a first contribution, include your own `#discharges` output in the pull request. The repository's default `lake build` does not compile `ZInQKernel/Contrib/OneProof`, so a green
 CI check alone says nothing about a contribution.
 
 The automatic result is advisory, and a person reads every file before it is merged. If your file has code that
@@ -91,7 +91,7 @@ say in the pull request why it is needed.
 The bar for merging:
 
 * the Lean compiles with only the standard axioms, and the discharge check shows the hypothesis proved (until
-  the project has posted its first automatic check: your own `#discharges` output, read by a person);
+  the automatic check has run on a first contribution: your own `#discharges` output, read by a person);
 * a person has read the file for code that runs at build time;
 * each new printed leaf has a row in [`docs/research/locators.md`](../research/locators.md) and enters
   kinds.tsv flagged unread (or pending reading, if its print may say something weaker);
@@ -200,7 +200,8 @@ hypothesis left the list.
 * [STATEMENT-CHECKS.md](STATEMENT-CHECKS.md): checking a statement against its printed source, no Lean needed.
 * `scripts/one_proof/render_open.py`: regenerates OPEN.md (`--check` fails if a fold changed the hypotheses
   without updating kinds.tsv).
-* `scripts/one_proof/sandbox/`: the isolated discharge check the project runs on pull requests.
+* `scripts/one_proof/sandbox/`: the isolated discharge check the project runs on pull requests, through
+  `.github/workflows/contrib-discharges.yml`.
 * `scripts/claims/`: reads the claim lines and regenerates claims.tsv.
 * `docs/research/leaf-fold*.md`: the fold reports, with what each fold removed and added.
 
@@ -212,7 +213,9 @@ hypothesis left the list.
    replaces, and flags a published leaf with no flag as unread; add packet, label and tier where they apply.
 4. Update the ledgers: the folded rows' status in fold-queue.tsv, a credits.tsv row (with fold and commit) for
    each folded contribution, and any recorded readings in reviews.tsv.
-5. Run `scripts/one_proof/render_open.py`, then `scripts/one_proof/render_open.py --check`.
+5. Run `scripts/one_proof/render_open.py`, then `scripts/one_proof/render_open.py --check` with
+   `ONE_PROOF_HYGIENE_FILE` naming the file of site-specific patterns (see the comment above `HYGIENE` in the
+   script).
 
 ## Who answers
 

@@ -423,9 +423,9 @@ statements, some textbook theorems are proved, and the project's reductions add 
 
 ## How to help
 
-Start at https://github.com/Deicyde/diophantine-z-q/issues/14, which a coding agent can follow as written: pick an
-open statement nobody has claimed, claim it, prove exactly that Lean statement and open a pull request against the
-fork's main, where the proof is folded into `ZInQ.OneProof.frozenTarget`. docs/one-proof/OPEN.md lists every open
+Start at https://github.com/Deicyde/diophantine-z-q/issues/14, which a coding agent can follow as written to prove
+exactly the Lean statement of an open hypothesis and open a pull request against the fork's main, where the proof
+is folded into `ZInQ.OneProof.frozenTarget`. docs/one-proof/OPEN.md lists every open
 hypothesis of that theorem with its exact Lean statement, its kind, its source and who is working on it;
 CONTRIBUTING.md is the guide for contributors, and docs/one-proof/CONTRIBUTING.md the short contract for a proof,
 which `#discharges` checks.

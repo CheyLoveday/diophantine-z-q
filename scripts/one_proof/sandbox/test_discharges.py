@@ -452,8 +452,10 @@ class CommentTest(unittest.TestCase):
         self.assertNotIn('\u2014', text)  # no em-dash
         self.assertIn(discharge_comment.REMINDER, text)
         self.assertIn(discharge_comment.ADVISORY, text)
-        tail = text.rstrip('\n').split('\n')[-2:]
-        self.assertEqual(tail, ['project discharge check.', 'Posted by Claude Code, at Jack\'s request.'])
+        # A job summary, not a post: it ends with the reminder, with no role line or footer.
+        self.assertEqual(text.rstrip('\n').split('\n')[-1], discharge_comment.REMINDER)
+        self.assertNotIn('Posted by', text)
+        self.assertNotIn('project discharge check.', text)
 
     def test_pass_comment(self):
         res = dict(result_for(PASS_REPORT), pr='7 cc @elliotglazer [x](https://example.invalid)')
@@ -525,6 +527,7 @@ class CommentTest(unittest.TestCase):
         self.common(text)
         self.assertIn('### Discharge check: out of scope\n', text)
         self.assertIn('nothing was built', text)
+        self.assertIn('add new files under `ZInQKernel/Contrib/OneProof/` and change nothing else', text)
         self.assertIn('- `modifies ZInQKernel/OneProof/Main.lean @x`', text)
 
     def test_mismatched_result(self):
