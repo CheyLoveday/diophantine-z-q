@@ -125,6 +125,16 @@ def main():
     main_src, binders, top, N, last_mod, k = main_state()
     by_field = {d['field']: d for d in spec['discharges']}
 
+    # a contribution importing Main would make an import cycle once Main imports the fold
+    for m in spec.get('imports', []):
+        path = m.replace('.', '/') + '.lean'
+        try:
+            src = open(path).read()
+        except OSError:
+            die(f'import {m}: no file {path}')
+        if re.search(r'^import ZInQKernel\.OneProof\.Main\s*$', src, re.M):
+            die(f'{path} imports ZInQKernel.OneProof.Main: import the module that defines the statement instead')
+
     # which bundle holds each discharged field
     bundles = {}
     for var, sname in binders:

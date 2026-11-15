@@ -37,8 +37,9 @@ Never change a hypothesis's statement. If you find one false, vacuous, or strong
 
 ## Where it goes
 
-A new file `ZInQKernel/Contrib/OneProof/<Name>.lean`, importing `ZInQKernel.OneProof.Main` (or the module that
-defines the statement you prove) and whatever else you need. Proofs only in new files: do not edit existing
+A new file `ZInQKernel/Contrib/OneProof/<Name>.lean`, importing the module that defines the statement you prove
+(OPEN.md's `type` names it; for example `ZInQKernel.OneProof.H.TailZ19`) and whatever else you need. Do not import
+`ZInQKernel.OneProof.Main`: once your file is folded, `Main` imports it, and the import would be a cycle. Proofs only in new files: do not edit existing
 modules. Keep a file under about 150 KB. Open a pull request against this fork's `main`.
 
 ## How to check it
