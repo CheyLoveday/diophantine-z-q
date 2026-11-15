@@ -891,7 +891,10 @@ Ann. of Math. 78 (1963), §§2-4 (every QM torus `ℂ²/𝒪v` by a maximal orde
 over `ℚ` carries a polarization, of the form `E(x, y) = tr(μ x̄ y)`); with Riemann's theorem and GAGA (Serre 1956)
 the polarized torus is the analytic space of an abelian surface and `ι` is algebraic. See also Birkenhake–Lange,
 *Complex abelian varieties*, 2nd ed. (2004), Ch. 9 (abelian varieties with endomorphism structure).
-Theorem numbers UNVERIFIED. A consequence of the published statements (it asserts nothing about polarizations). -/
+Theorem numbers UNVERIFIED. A consequence of the published statements (it asserts nothing about polarizations).
+It is also the moduli clause of the research field `shimuraMainThmIDeligneY3AbU` at `u = 1`
+(`qmTorusAbelian_of_main`), so the fold `gonzalezRotgerProp56X6_of_main` does not add it as a leaf; the alternative
+spec `scratch/gr56-prove/autofold-alt-torus.json` does. -/
 def QMTorusAbelian : Prop :=
   ∀ (τ : ℂ) (hτ : 0 < τ.im), ∃ (A : PkgI3.AbVar ℂ) (_ : A.dim = 2) (q : QMStr A)
     (Φ : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts A (RingHom.id ℂ)),
