@@ -20,3 +20,6 @@
   standard (VERIFIED). kinds.tsv: t09SymmIsogenyExists removed, four t09-pic leaves added (weilPairingMumford flagged
   composite at the strictest reading). Count after fold 2: 68 fields, strict 53/15 (GLUE -1), strictest 50/18.
   claims.tsv: t09-pic's claim row of the removed field deleted. JSON + OPEN.md regenerated.
+- 11-14 19:13 hash guard (DumpBase over TailZ22 + Main's other imports; DumpNew over Main): 13225 before, 13414
+  after, 0 deleted, 0 changed, 189 new (91 TailZ23, 97 TailZ24, frozenTarget). The before dump equals x6-fold's
+  after dump minus frozenTarget (0/0/0), so the initial rebuild changed nothing. VERIFIED.
