@@ -65,3 +65,12 @@
   (gonzalezRotgerProp56X6, neronBaseChangeStrictHenselization, elkiesX6StarPrinted); none from this module, as
   expected (no theorem here has type ZInQ.RLeaf.IgusaGL2). VERIFIED.
 - `scratch/flt-cqj/autofold.json`: deliberately not runnable (no `discharges` key); records the bypass spec.
+
+## 06:10 — differential check of the leaf's definition `cyclicQuotientJ` (VERIFIED computation, 30 inputs)
+- `scratch/flt-cqj/velu_check.py` re-implements FLT's `cyclicQuotientJ` (iterated Vélu: `kernelXSet`,
+  `coKernelXSet`, `xVeluCurve`/`twoVeluCurve`, `xVeluX`/`twoVeluX`, `subgroupOfX`, `cqjStep` with ℓ = minFac,
+  `primeFactorsList.length` steps, j = c₄³/Δ) by reading Def_WeierstrassCurve_CyclicQuotientJ.lean, and compares it
+  on 30 random curves over F_p (p in [200, 2000], N ∈ {2,…,10,12}, H = ⟨P⟩, P rational of exact order N) with
+  PARI's `ellisogeny(E, P, 1)`, and for prime N checks Φ_N(j_lean, j(E)) = 0 with `polmodular(N)`.
+  Result: 30/30 agree (output: velu_check-output.txt). The replica's fidelity to the Lean text is by reading
+  (not machine-checked); the check rules out a mis-stated Vélu step in the definitions the leaf is stated over.
