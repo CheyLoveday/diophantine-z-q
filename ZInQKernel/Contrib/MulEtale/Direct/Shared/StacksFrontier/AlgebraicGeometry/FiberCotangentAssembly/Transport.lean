@@ -2,8 +2,8 @@ module
 
 public import Mathlib.AlgebraicGeometry.Stalk
 public import Mathlib.Topology.Sheaves.Stalks
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.EgaSgaAttribute
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.EgaSgaAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 
 -- Exact source: https://github.com/AxiomMath/Stacks/blob/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/AlgebraicGeometry/FiberCotangentAssembly/Transport.lean
 -- Original source SHA256: ffa3e4b2f06dad662ceda4dccef38e3eef6003bc227fef1b60332edc4e0e50e6

@@ -7,8 +7,8 @@ public import Mathlib.AlgebraicGeometry.Pullbacks
 public import Mathlib.AlgebraicGeometry.Stalk
 public import Mathlib.RingTheory.Flat.Localization
 public import ZInQKernel.Contrib.MulEtale.Direct.Shared.StacksFrontier.AlgebraicGeometry.Perfect.BaseChangeStalk
-import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.EgaSgaAttribute
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.EgaSgaAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 
 -- Exact source: https://github.com/AxiomMath/Stacks/blob/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/AlgebraicGeometry/Morphisms/CohenMacaulay/FibreStalk.lean
 -- Original source SHA256: 702688c7735429ad5a1ae50d8ad115752dd51a11c5c028cade3d9b7c856dcb43

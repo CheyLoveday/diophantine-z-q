@@ -1,7 +1,7 @@
 module
 
 public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksFrontier.AlgebraicGeometry.Variety.Tangent.Defs
-import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.EgaSgaAttribute
+import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.EgaSgaAttribute
 
 /-!
 # The tangent map of a morphism of schemes over a base

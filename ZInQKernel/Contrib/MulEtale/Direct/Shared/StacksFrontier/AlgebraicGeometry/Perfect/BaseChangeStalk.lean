@@ -6,8 +6,8 @@ public import Mathlib.AlgebraicGeometry.Stalk
 public import Mathlib.RingTheory.Localization.Defs
 public import Mathlib.RingTheory.Flat.Localization
 public import ZInQKernel.Contrib.MulEtale.Direct.Shared.StacksFrontier.AlgebraicGeometry.Pullback.StalkFromSpecStalk
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.EgaSgaAttribute
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.EgaSgaAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 
 -- Exact source: https://github.com/AxiomMath/Stacks/blob/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/AlgebraicGeometry/Perfect/BaseChangeStalk.lean
 -- Original source SHA256: d92ca417746e94c9864bc2d13b61114de2b404a697b43a9299d9dc93e9cfd6e2

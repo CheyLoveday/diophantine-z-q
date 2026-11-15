@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.AlgebraicGeometry.Fiber
-public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksCore.Tactic.StacksAttribute
+public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
 public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksFrontier.AlgebraicGeometry.Variety.Tangent.Defs
 public import ZInQKernel.Contrib.MulEtale.Direct.Original.StacksFrontier.AlgebraicGeometry.Variety.Tangent.Functorial
 
