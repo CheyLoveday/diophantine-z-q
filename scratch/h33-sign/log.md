@@ -52,3 +52,25 @@ pending-review flag: the sign of `[i]` in `tyzZn` (z_n for n ≡ 5 mod 8). Sourc
 - (3) elliptic-log lattice coordinates of tyzZn are ≥ 5e-10 from every rational with denominator ≤ 10^4
   (torsion would give ~1e-190): z_n numerically non-torsion for all 20 n (TYZ's torsion lemma bounds
   A(ℍ'_n)_tors ⊂ A[4], so order ≤ 4 would suffice).
+
+## Normalization checks of TYZThm33 against the source (step 3) — Iso.lean VERIFIED compiled
+- `scratch/h33-sign/Iso.lean` (Mathlib only): `lake env lean` 0 errors, 0 warnings (Iso.out empty).
+  `tyzA_to_kernelA`/`kernelA_to_tyzA` (2y²=x³+x ≅ y²=x³+4x by (2x,4y)), `iso_comm_i` (commutes with
+  (x,y)↦(−x,iy)), `i_preserves_kernelA`, `tyzE_to_curveC` (ny²=x³−x ≅ y²=x³−n²x by (nx,n²y)),
+  `fixed5`/`fixed7` (fixed points of TYZ's embeddings L1203-1205 = roots of tyzForm / tyzForm7),
+  `disc5`/`disc7` (discriminants −64n, −n).
+- Checks (all read in Period7.tex; VERIFIED): scope n≡5,7 ⊂ 5,6,7 (L1167); χ:Cl_n→{±1}, Cl_n=Gal(H_n/K_n)
+  (L1263); Φ ⊂ Cl'_n reps, K'_n=K_n for 5,7 (L1263, L1279); P_χ=Σ_{t∈Φ} f_n(P_n)^t χ(t) (L1283);
+  χ_{d0,d1} char of K_n(√d1) (n≡5,6) / K_n(√d1*) (n≡7), d1*=(−1)^{(d1−1)/2}d1 (L1304-1305) = radTYZ;
+  classes 0<d0≡5,6,7, 0<d1≡1,2,3 (L1303); formula P_χ=ε 2^{h2(n)} 𝓛(d1) 𝒫(d0) in A(H'_n(i))⊗Q (L1306-1308);
+  ε=±i iff (d0,d1)≡(5,3) else ±1 (L1309) = EpsTYZ; h2(n)=dim_F2 Cl_n/2Cl_n (L992) = h2G;
+  𝒫(n)=2^{−1−ρ(n)}𝓛(n)α_n ∈ A(K_n)^-⊗Q, A(K_n)^-={ᾱ=−α}, 𝒫(n)=0 if 𝓛(n)=0 (L1291-1295) → (Q d, m d, InMinus);
+  𝓛(n) def (L338-345): 0 iff ord>1, so ord≥2 ⇒ Q d torsion is implied; 𝓛² = L(E_n,1)/(2^{2k−2−a}Ω) with
+  k = #odd primes, a=1 for odd n (L347-349) = lcalSq (2^{2k−3}); Ω_{n,∞}=(2/√n)∫₁^∞dx/√(x³−x) (L350-351) =
+  omegaTYZ; 𝓛 defined up to sign (L364) → ∀ℓ, ε chosen after ℓ; E_n: ny²=x³−x (L312) ≅ curveC n;
+  A: 2y²=x³+x (L1173) ≅ curveA.
+- √d1 resp. √d1* lies in H_n in every case n≡5,7 (d1*≡1 mod 4; for n≡5, d1≡3: K_n(√d1)=K_n(√−d0),
+  −d0≡1 mod 4), so IsChiPair is satisfiable for every pair in TYZ's list (STANDARD genus theory).
+- P_χ mod torsion is independent of Φ: z^{σ} − z torsion (σ=σ_ϖ², Thm 3.6(1) L1411) — so quantifying ∀φ with
+  ε=ε(d0,d1) is TYZ's statement.
+- Mathlib's `WeierstrassCurve.LSeries` uses local minimal models (rv-lit.md L75), so model-independent.
