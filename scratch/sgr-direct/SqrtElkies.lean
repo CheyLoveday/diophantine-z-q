@@ -207,6 +207,54 @@ theorem heckeSqrtBranchAny_of_elkies (hRR : R1R2fp) (hT : ObjBridge.TorsionStruc
       rw [ptOf_comp, hpt] at this
       exact this
     exact ((PrimeSpectrum.le_iff_specializes P ⟨M, hM.isPrime⟩).mp hPM).mem_open (m ⁻¹ᵁ tE.U).isOpen hMV
-  sorry
+  -- the pulled-back section `s₀ ∈ B`
+  have hle : (⊤ : (Spec (CommRingCat.of (integralClosure ℚ[X] E))).Opens) ≤ m ⁻¹ᵁ tE.U := le_of_eq hV.symm
+  set σ : Γ(Spec (CommRingCat.of (integralClosure ℚ[X] E)), ⊤) := res hle (m.app tE.U sE) with hσ
+  set s₀ : integralClosure ℚ[X] E := (Scheme.ΓSpecIso (CommRingCat.of (integralClosure ℚ[X] E))).hom σ
+    with hs₀
+  have hψ : ∀ ψ : integralClosure ℚ[X] E →+* Qbar, ψ s₀ = ev _ (hmem ψ) sE := by
+    intro ψ
+    have e1 := ev_spec_top (CommRingCat.ofHom ψ) s₀
+    have e2 : (Scheme.ΓSpecIso (CommRingCat.of (integralClosure ℚ[X] E))).inv s₀ = σ := by
+      rw [hs₀]
+      exact (Scheme.ΓSpecIso (CommRingCat.of (integralClosure ℚ[X] E))).hom_inv_id_apply σ
+    rw [e2, hσ, ev_res, ← ev_comp] at e1
+    exact e1.symm
+  have hsq : ∀ ψ : integralClosure ℚ[X] E →+* Qbar,
+      ψ s₀ ^ 2 = -(1 + 27 * ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) X) / 16) := by
+    intro ψ
+    rw [hψ, ← map_pow, hsE, map_neg, hev]
+  -- density: `s₀² = −(1 + 27X/16)` in `B`
+  set f : ℚ[X] := 1 + Polynomial.C (27 / 16 : ℚ) * X with hf
+  have hψC : ∀ (ψ : integralClosure ℚ[X] E →+* Qbar) (r : ℚ),
+      ψ (algebraMap ℚ[X] (integralClosure ℚ[X] E) (Polynomial.C r)) = (r : Qbar) := by
+    intro ψ r
+    have hsub : ((ψ.comp (algebraMap ℚ[X] (integralClosure ℚ[X] E))).comp Polynomial.C : ℚ →+* Qbar) =
+        Rat.castHom Qbar := Subsingleton.elim _ _
+    exact congrArg (fun g : ℚ →+* Qbar => g r) hsub
+  have hx0 : s₀ ^ 2 + algebraMap ℚ[X] (integralClosure ℚ[X] E) f = 0 := by
+    apply eq_zero_of_forall_ringHom_qbar
+    intro ψ
+    rw [map_add, map_pow, hsq, hf, map_add, map_add, map_one, map_one, map_mul, map_mul, hψC]
+    push_cast
+    ring
+  -- conclusion in `E`
+  refine ⟨-1, 4 * (s₀ : E), by norm_num, ?_⟩
+  have h1 := congrArg (fun z : integralClosure ℚ[X] E => (z : E)) hx0
+  simp only [Subalgebra.coe_add, Subalgebra.coe_pow, Subalgebra.coe_zero] at h1
+  have h2 : ((algebraMap ℚ[X] (integralClosure ℚ[X] E) f : integralClosure ℚ[X] E) : E) =
+      algebraMap ℚ[X] E f := rfl
+  rw [h2] at h1
+  have hpoly : (Polynomial.C (-1 : ℚ) * (Polynomial.C 27 * X + Polynomial.C 16) : ℚ[X]) = -16 * f := by
+    rw [hf]
+    simp only [map_neg, map_one, mul_add, neg_mul, one_mul]
+    rw [show (16 : ℚ[X]) = Polynomial.C 16 from rfl]
+    rw [← mul_assoc, ← Polynomial.C_mul]
+    norm_num
+    ring
+  rw [hpoly, map_mul, map_neg, map_ofNat]
+  linear_combination 16 * h1
 
 end SGRDirect
+
+#print axioms SGRDirect.heckeSqrtBranchAny_of_elkies
