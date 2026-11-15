@@ -117,7 +117,32 @@ Every even `θ_m²` is a quadratic form `S_m(U)` in `U = (U₀₀, U₀₁, U₁
 
 ## 4. Lean status of `IgusaAlg k`
 
-(filled in below)
+| k | degree in `U` | terms of `e_k` | Lean | method, time, peak memory (VERIFIED, `lake env lean`) |
+|---|---|---|---|---|
+| 3 | 24 | 119 | **PROVED** (`igusaAlg3`) | unfold + one `ring`; 1 min 36 s, 14 GB |
+| 4 | 32 | 249 | **PROVED** (`igusaAlg4`) | unfold + one `ring`; 4 min 21 s, 21.4 GB |
+| 5 | 40 | 447 | not proved | one `ring`: not done after 10 min at 21.7 GB; split proof: >24 GB |
+| 6-9 | 48-72 | 721-1533 | not proved | (larger) |
+
+All seven are VERIFIED by exact symbolic expansion in `Q[U]` (`py/verify_pk.py`, 1 s).
+
+Methods tried for `k ≥ 5` (all VERIFIED by running; details in the log):
+* one `ring` after unfolding;
+* a dynamic programme with `ring_nf` after each step;
+* an integer-coefficient identity in a generic `CommRing`;
+* `grind (ringSteps := 10⁸)`;
+* a split proof. This used the convolution `e_k(Y₀..Y₉) = Σ_a e_a(Y₀..Y₄)e_{k−a}(Y₅..Y₉)`, proved
+  generically, together with explicit normal forms checked by separate `ring` calls. Profiling showed
+  that most of the time went into elaborating long polynomial texts.
+* proof by reflection: verified list-based polynomial arithmetic, about 150 lines, sound for all inputs
+  (`gen/reflect_core.lean`, compiles), evaluated by `decide +kernel`. It proves the `k = 3` identity,
+  but the kernel evaluates only about 10³ term products per second, and large literals are expensive
+  to elaborate.
+
+None of these brings `k = 5` under the 24 GB memory cap of this task. The obstruction is engineering,
+not mathematics. A faster certified polynomial normalizer (or a larger memory budget for `ring`) would
+close `IgusaAlg 5..9` mechanically. The statements are closed, explicit and small: each is one line of
+`igusaP` plus the definitions in §4 of the Lean file.
 
 ## 5. The leaf
 

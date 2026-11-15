@@ -707,6 +707,150 @@ theorem qmThetaSymmetricCurve_of_alg (hL : LinYangThetaCurve)
     (h : ∀ k, 3 ≤ k → k ≤ 9 → IgusaAlg k) : QMThetaSymmetricCurve :=
   qmThetaSymmetricCurve_of hL (igusaThetaSymmetric_of_alg h)
 
+
+/-! ## 7. `IgusaAlg 3` and `IgusaAlg 4` proved by `ring`
+
+The multiset is unfolded to an explicit list (`evenChars_val`, by `decide`) and `Multiset.esymm` to the
+recursion `esymmL`; the ten `Sq` become explicit quadratics (`Sq0`..`Sq9`); then one `ring` (degree 24,
+resp. 32, in four variables). `IgusaAlg 5`..`IgusaAlg 9` (degrees 40-72) are beyond this method within
+the 24 GB memory budget (docs/research/theta-glue.md §4); they are VERIFIED by exact expansion
+(py/verify_pk.py). -/
+
+def esymmL : List ℂ → ℕ → ℂ
+  | _, 0 => 1
+  | [], _ + 1 => 0
+  | a :: l, k + 1 => esymmL l (k + 1) + a * esymmL l k
+
+theorem esymm_cons_succ (a : ℂ) (s : Multiset ℂ) (n : ℕ) :
+    (a ::ₘ s).esymm (n + 1) = s.esymm (n + 1) + a * s.esymm n := by
+  simp only [Multiset.esymm, Multiset.powersetCard_cons, Multiset.map_add, Multiset.sum_add,
+    Multiset.map_map, Function.comp_def, Multiset.prod_cons, Multiset.sum_map_mul_left]
+
+theorem esymm_coe (l : List ℂ) (k : ℕ) : (l : Multiset ℂ).esymm k = esymmL l k := by
+  induction l generalizing k with
+  | nil => cases k <;> simp [esymmL, Multiset.esymm, Multiset.powersetCard_zero_right]
+  | cons a l ih =>
+    cases k with
+    | zero => simp [esymmL, Multiset.esymm]
+    | succ k => rw [← Multiset.cons_coe, esymm_cons_succ, ih, ih, esymmL]
+
+theorem evenChars_val : PkgI1.evenChars.val = (([(![0, 0], ![0, 0]), (![0, 0], ![0, 1]),
+    (![0, 0], ![1, 0]), (![0, 0], ![1, 1]), (![0, 1], ![0, 0]), (![0, 1], ![1, 0]),
+    (![1, 0], ![0, 0]), (![1, 0], ![0, 1]), (![1, 1], ![0, 0]), (![1, 1], ![1, 1])] : List PkgI1.Char2) : Multiset PkgI1.Char2) := by decide
+
+
+theorem Sq0 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![0, 0]) u = u ![0, 0] ^ 2 + u ![0, 1] ^ 2 + u ![1, 0] ^ 2 + u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq1 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![0, 1]) u = u ![0, 0] ^ 2 - u ![0, 1] ^ 2 + u ![1, 0] ^ 2 - u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq2 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![1, 0]) u = u ![0, 0] ^ 2 + u ![0, 1] ^ 2 - u ![1, 0] ^ 2 - u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq3 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 0], ![1, 1]) u = u ![0, 0] ^ 2 - u ![0, 1] ^ 2 - u ![1, 0] ^ 2 + u ![1, 1] ^ 2 := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq4 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 1], ![0, 0]) u = 2 * u ![0, 0] * u ![0, 1] + 2 * u ![1, 0] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq5 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![0, 1], ![1, 0]) u = 2 * u ![0, 0] * u ![0, 1] - 2 * u ![1, 0] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq6 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 0], ![0, 0]) u = 2 * u ![0, 0] * u ![1, 0] + 2 * u ![0, 1] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq7 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 0], ![0, 1]) u = 2 * u ![0, 0] * u ![1, 0] - 2 * u ![0, 1] * u ![1, 1] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq8 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 1], ![0, 0]) u = 2 * u ![0, 0] * u ![1, 1] + 2 * u ![0, 1] * u ![1, 0] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem Sq9 (u : (Fin 2 → Fin 2) → ℂ) :
+    Sq (![1, 1], ![1, 1]) u = 2 * u ![0, 0] * u ![1, 1] - 2 * u ![0, 1] * u ![1, 0] := by
+  rw [Sq, univ_fin2_fin2, Finset.sum_insert (by decide), Finset.sum_insert (by decide),
+    Finset.sum_insert (by decide), Finset.sum_singleton]
+  simp
+  ring
+
+theorem prod_evenChars (f : PkgI1.Char2 → ℂ) :
+    ∏ m ∈ PkgI1.evenChars, f m = f (![0, 0], ![0, 0]) * f (![0, 0], ![0, 1]) * f (![0, 0], ![1, 0]) * f (![0, 0], ![1, 1]) * f (![0, 1], ![0, 0]) * f (![0, 1], ![1, 0]) * f (![1, 0], ![0, 0]) * f (![1, 0], ![0, 1]) * f (![1, 1], ![0, 0]) * f (![1, 1], ![1, 1]) := by
+  rw [evenChars_eq]
+  simp (config := {decide := true}) only [Finset.prod_insert, Finset.mem_insert, Finset.mem_singleton,
+    Finset.prod_singleton, not_false_eq_true]
+  ring
+
+set_option maxHeartbeats 0 in
+theorem igusaAlg3 : IgusaAlg 3 := by
+  intro u
+  rw [evenChars_val, Multiset.map_coe, esymm_coe]
+  simp only [psi4T, chi10T, psi6T, chi12T, igusaP, sum_evenChars, prod_evenChars, List.map, esymmL]
+  simp only [Sq0, Sq1, Sq2, Sq3, Sq4, Sq5, Sq6, Sq7, Sq8, Sq9]
+  generalize u ![0, 0] = x0
+  generalize u ![0, 1] = x1
+  generalize u ![1, 0] = x2
+  generalize u ![1, 1] = x3
+  ring
+
+set_option maxHeartbeats 0 in
+theorem igusaAlg4 : IgusaAlg 4 := by
+  intro u
+  rw [evenChars_val, Multiset.map_coe, esymm_coe]
+  simp only [psi4T, chi10T, psi6T, chi12T, igusaP, sum_evenChars, prod_evenChars, List.map, esymmL]
+  simp only [Sq0, Sq1, Sq2, Sq3, Sq4, Sq5, Sq6, Sq7, Sq8, Sq9]
+  generalize u ![0, 0] = x0
+  generalize u ![0, 1] = x1
+  generalize u ![1, 0] = x2
+  generalize u ![1, 1] = x3
+  ring
+
+
+/-- **Route 1 for `QMThetaSymmetricCurve` with `k = 3, 4` discharged (proved):** the LEAF and the five
+closed polynomial identities `IgusaAlg 5..9`. -/
+theorem qmThetaSymmetricCurve_of_alg59 (hL : LinYangThetaCurve)
+    (h : ∀ k, 5 ≤ k → k ≤ 9 → IgusaAlg k) : QMThetaSymmetricCurve :=
+  qmThetaSymmetricCurve_of_alg hL fun k h3 h9 => by
+    rcases (by omega : k = 3 ∨ k = 4 ∨ 5 ≤ k) with rfl | rfl | h5
+    · exact igusaAlg3
+    · exact igusaAlg4
+    · exact h k h5 h9
+
 end HDec.HSyn.G0Split.ThetaPt.ThetaGlue
 
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.thetaConst_sq_eq
@@ -714,3 +858,6 @@ end HDec.HSyn.G0Split.ThetaPt.ThetaGlue
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.qmThetaSymmetricCurve_of
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaThetaSymmetric_of_alg
 #print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.qmThetaSymmetricCurve_of_alg
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaAlg3
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaAlg4
+#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.qmThetaSymmetricCurve_of_alg59

@@ -79,3 +79,12 @@
   showed most time in elaborating long polynomial texts (typeclass inference ~400 s of 470 s) and in
   `ring` proof terms; `ring` itself is ~15 s. Next approach: proof by reflection (verified list-based
   polynomial arithmetic over ℤ, evaluated by `decide +kernel`).
+- Reflection experiment (`gen/reflect_core.lean`: list polynomials over ℤ with `padd`/`pmul`/`ppow`/`pscale`,
+  semantics lemmas `ev_merge`, `ev_pmul`, ... compile in 5 s): `decide +kernel` proves the k = 3 identity
+  (computed entirely in the kernel) in ~70 s, 10 GB above baseline; micro-benchmark: a 165×165-term product
+  takes 32 s in the kernel; a 2589-term literal took 9 min / 27 GB to elaborate. Not viable for k ≥ 5.
+- Decision: `IgusaAlg 5..9` remain GLUE (closed polynomial identities, VERIFIED by exact expansion);
+  `IgusaAlg 3`, `IgusaAlg 4` proofs moved into `ThetaGlue.lean` §7 with
+  `qmThetaSymmetricCurve_of_alg59 : LinYangThetaCurve → (∀ k, 5 ≤ k → k ≤ 9 → IgusaAlg k) → QMThetaSymmetricCurve`.
+  The separate files `Alg3.lean`, `Alg4.lean` (TailA import) are the versions that compiled
+  (1 min 36 s / 4 min 21 s).
