@@ -196,4 +196,67 @@ theorem red_all {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) : M �
 
 end Reduction
 
+
+/-! ## The generating set -/
+
+/-- Eleven generators: the images of `S, T, T⁻¹` under `iota1`, `iota2`, `rot`, and the translations by
+`±[[0, 1], [1, 0]]`. -/
+def gens : Set Mat4 :=
+  {iota1 S, iota1 T, iota1 T⁻¹, iota2 S, iota2 T, iota2 T⁻¹, rot S, rot T, rot T⁻¹,
+    Tm !![0, 1; 1, 0], Tm !![0, -1; -1, 0]}
+
+theorem S_inv_eq : (S⁻¹ : SL(2, ℤ)) = S * S * S := by decide
+
+theorem hom_mem {φ : SL(2, ℤ) →* Mat4} {H : Submonoid Mat4} (hS : φ S ∈ H) (hT : φ T ∈ H)
+    (hT' : φ T⁻¹ ∈ H) (g : SL(2, ℤ)) : φ g ∈ H := by
+  have hg : g ∈ (Subgroup.closure ({S, T} : Set SL(2, ℤ))).toSubmonoid := by
+    rw [SpecialLinearGroup.SL2Z_generators]; trivial
+  rw [Subgroup.closure_toSubmonoid] at hg
+  have hle : Submonoid.closure (({S, T} : Set SL(2, ℤ)) ∪ ({S, T} : Set SL(2, ℤ))⁻¹) ≤ H.comap φ := by
+    rw [Submonoid.closure_le]
+    rintro x (hx | hx)
+    · rcases hx with rfl | rfl
+      · exact hS
+      · exact hT
+    · rw [Set.mem_inv] at hx
+      rcases hx with hx | hx
+      · rw [← inv_inv x, hx, S_inv_eq]
+        show φ (S * S * S) ∈ H
+        rw [map_mul, map_mul]; exact H.mul_mem (H.mul_mem hS hS) hS
+      · rw [← inv_inv x, hx]; exact hT'
+  exact hle hg
+
+theorem sp_mem_closure {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) :
+    M ∈ Submonoid.closure gens := by
+  set H := Submonoid.closure gens
+  have g : ∀ x ∈ gens, x ∈ H := fun x hx => Submonoid.subset_closure hx
+  have h1 : ∀ g', iota1 g' ∈ H := hom_mem (g _ (by simp [gens])) (g _ (by simp [gens]))
+    (g _ (by simp [gens]))
+  have h2 : ∀ g', iota2 g' ∈ H := hom_mem (g _ (by simp [gens])) (g _ (by simp [gens]))
+    (g _ (by simp [gens]))
+  have hr : ∀ g', rot g' ∈ H := hom_mem (g _ (by simp [gens])) (g _ (by simp [gens]))
+    (g _ (by simp [gens]))
+  have hod : ∀ k : ℤ, Tm !![0, k; k, 0] ∈ H := by
+    intro k
+    induction k using Int.induction_on with
+    | zero => rw [show Tm !![0, (0 : ℤ); 0, 0] = 1 by
+                ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+                  simp [Tm]]
+              exact H.one_mem
+    | succ k ih =>
+      rw [show Tm !![0, (k : ℤ) + 1; (k : ℤ) + 1, 0] = Tm !![0, (k : ℤ); k, 0] * Tm !![0, 1; 1, 0] by
+        rw [Tm_mul]; congr 1; ext i j; fin_cases i <;> fin_cases j <;> simp]
+      exact H.mul_mem ih (g _ (by simp [gens]))
+    | pred k ih =>
+      rw [show Tm !![0, -(k : ℤ) - 1; -(k : ℤ) - 1, 0] = Tm !![0, -(k : ℤ); -k, 0] * Tm !![0, -1; -1, 0] by
+        rw [Tm_mul]; congr 1; ext i j; fin_cases i <;> fin_cases j <;> simp <;> ring]
+      exact H.mul_mem ih (g _ (by simp [gens]))
+  have hT : ∀ x s : ℤ, Tm !![x, s; s, 0] ∈ H := by
+    intro x s
+    rw [show Tm !![x, s; s, 0] = iota1 (T ^ x) * Tm !![0, s; s, 0] by
+      ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+        simp [Tm, iota1, coe_T_zpow, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two]]
+    exact H.mul_mem (h1 _) (hod s)
+  exact red_all H h1 h2 hr hT hM
+
 end GapTheta
