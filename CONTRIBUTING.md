@@ -58,7 +58,7 @@ Run project commands from the repository root. `lean-toolchain` selects **Lean 4
 
 The root Lake project is the current `ZInQKernel` development tree. The separate `lean/` package is the byte-preserved accepted helper snapshot from the research archive; it is **not a replacement for building your new kernel contribution**.
 
-You do not need to build anything to contribute. For a pull request into `main` that only adds files under `ZInQKernel/Contrib/OneProof/`, the discharge check runs on the files it adds, built on top of the current `main`, as the GitHub Actions check "discharge check" on a fresh hosted runner with no secrets and no access to project machines ([`scripts/one_proof/sandbox/README.md`](scripts/one_proof/sandbox/README.md)). The verdict is in the check's job summary, and the run may wait for a maintainer to approve it before it starts. A pull request that changes anything else is out of scope for the automatic check. The automatic check is being set up: until it has run on a first contribution, include your own `#discharges` output in the pull request. The automatic result is advisory, and a person reads every file before it is merged. The repository's default `lake build` does not compile `ZInQKernel/Contrib/OneProof`, so a green CI check says nothing about a contribution. If you want to build locally, the measured costs are in the build-cost table of [`docs/one-proof/CONTRIBUTING.md`](docs/one-proof/CONTRIBUTING.md#what-it-costs-to-build).
+You do not need to build anything to contribute. For a pull request into `main` that only adds files under `ZInQKernel/Contrib/OneProof/`, the discharge check runs on the files it adds, built on top of the current `main`, as the GitHub Actions check "discharge check" on a fresh hosted runner with no secrets and no access to project machines ([`scripts/one_proof/sandbox/README.md`](scripts/one_proof/sandbox/README.md)). The verdict is in the check's job summary, and the run may wait for a maintainer to approve it before it starts. A pull request that changes anything else is out of scope for the automatic check. The automatic check is being set up: until it has run on a first contribution, include your own `#discharges` output in the pull request. The automatic result is advisory; the project's agents check every pull request before it is merged. The other checks do not compile `ZInQKernel/Contrib/OneProof`, so their green marks say nothing about a contribution. If you want to build locally, the measured costs are in the build-cost table of [`docs/one-proof/CONTRIBUTING.md`](docs/one-proof/CONTRIBUTING.md#what-it-costs-to-build).
 
 ## Implement and reuse
 
@@ -102,7 +102,7 @@ lake build
 
 ## Open a focused PR
 
-Commit your contribution to your fork and open a pull request **against `Deicyde/diophantine-z-q` branch `main`**, naming the claimed hypothesis. The merge bar is in [`docs/one-proof/CONTRIBUTING.md`](docs/one-proof/CONTRIBUTING.md#how-to-check-it); Jack merges, and the integrator folds accepted results into the single assembly.
+Commit your contribution to your fork and open a pull request **against `Deicyde/diophantine-z-q` branch `main`**, naming the claimed hypothesis. The merge bar is in [`docs/one-proof/CONTRIBUTING.md`](docs/one-proof/CONTRIBUTING.md#how-to-check-it); the project's integrator merges a pull request that meets it and folds accepted results into the single assembly.
 
 Include:
 

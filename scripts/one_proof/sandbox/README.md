@@ -102,9 +102,9 @@ parent.
 - The scan flags build-time code, and a file with scan hits is not merged. A clean scan lowers the chance of build-time
   code but does not rule it out; the scan matches tokens, not Lean's grammar, so it may flag harmless text, and
   a file can still do something it does not name. A file with scan hits gets "This file has scan hits: it may
-  contain code that runs at build time, so a person must read it before this result counts.", and the verdict
-  headline says the same. The reader may ask for a lean4checker replay of the built oleans; that replay also
-  runs on a hosted runner, since it loads the untrusted oleans.
+  contain code that runs at build time. A file with scan hits is not merged, and this result does not count
+  while it has them.", and the verdict headline says the same. A reviewer may ask for a lean4checker replay of
+  the built oleans; that replay also runs on a hosted runner, since it loads the untrusted oleans.
 - A pull request that edits the workflow, or anything outside `ZInQKernel/Contrib/OneProof/`, is out of scope,
   and its result does not count, whatever the check reports. On `pull_request`, GitHub runs the workflow file
   from the merge commit, so a pull request that edits `.github/workflows` can make the check print anything;
