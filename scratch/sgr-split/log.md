@@ -19,3 +19,11 @@ Target: `HDec.CurveSplitGR.ShimuraGoodReductionNoGuard` (ZInQKernel/OneProof/H/T
 ## Findings
 - curve-split §3.6 "not statable": superseded; QMAbScheme supplies abelian schemes over a base with O-action and level 3.
 - NOS (r7a) / Néron / BLR leaves concern models of abelian varieties; they do not produce a model of the curve. (Statements VERIFIED by reading; conclusion SPECULATIVE-free mathematical observation, STANDARD.)
+- 02:48 `abVarSurfaceRelDim` proved (Smooth.exists_isStandardSmooth chart + ZInQ.Contrib.Dim stalk dimensions). VERIFIED.
+- 02:57 G1 `qmAbFieldFibre_of : SmoothGeomConnIntegral → AbVarEndTorsionFree → QMAbFieldFibre` compiled (`G1.lean`, standard axioms). VERIFIED.
+- 02:59 Contrib file rebuilt with G1; `#discharges`: still assumes [ShimuraIntegralModelRep, SmoothGeomConnIntegral, AbVarEndTorsionFree]; autofold dry-run 46/13 on 59 -> 48/13 on 61 (no rise), generated module compiles. VERIFIED.
+
+## Current new leaves
+- `ShimuraIntegralModelRep` (published, pending reading; GLUE until read).
+- `SmoothGeomConnIntegral` (textbook: Stacks/EGA IV_2; locators UNVERIFIED).
+- `AbVarEndTorsionFree` (textbook: Mumford AV §19; locators UNVERIFIED).
