@@ -35,7 +35,10 @@ two statements:
    All of the following compiles with standard axioms (VERIFIED):
    * `qmThetaSymmetricCurve_of : LinYangThetaCurve → IgusaThetaSymmetric → QMThetaSymmetricCurve`;
    * `igusaThetaSymmetric_of_alg : (∀ k, 3 ≤ k → k ≤ 9 → IgusaAlg k) → IgusaThetaSymmetric`;
-   * the final form `qmThetaSymmetricCurve_of_alg`.
+   * the final form `qmThetaSymmetricCurve_of_alg`;
+   * with `IgusaAlg 3` and `IgusaAlg 4` proved in Lean (§4):
+     `qmThetaSymmetricCurve_of_alg59 : LinYangThetaCurve → (∀ k, 5 ≤ k → k ≤ 9 → IgusaAlg k) →
+     QMThetaSymmetricCurve`.
 
    The three statements:
    * **LEAF (composite) `LinYangThetaCurve`.** Along `τ ↦ Ω(τ)`, `ψ₄ψ₆ = 2¹²3⁵χ₁₀` and
@@ -47,8 +50,9 @@ two statements:
      theorem would be used. Here they need no structure theorem: by the duplication formula
      (proved) they reduce to
    * **GLUE `IgusaAlg k`.** Closed polynomial identities in four complex variables of degree `8k`.
-     All seven are VERIFIED by exact symbolic expansion (`py/verify_pk.py`). For the Lean status of
-     each `k`, see §4.
+     All seven are VERIFIED by exact symbolic expansion (`py/verify_pk.py`). `k = 3, 4` are **proved in
+     Lean** by `ring`. `k = 5..9` (degrees 40-72) exceed the memory budget of every proof method tried
+     (§4).
 
    Substituting the leaf into the `P_k` reproduces theta-split's numerically fitted `qmR k` exactly
    for every `k = 3..9`. The Lean proof does this in `qmThetaSymmetricCurve_of`. So the `R_k` now
@@ -57,8 +61,8 @@ two statements:
 **Verdict.** Route 1 for `thetaRatiosAlgebraic` now rests on:
 * `ThetaEightSquare`, proved;
 * one composite literature leaf in printed variables, `LinYangThetaCurve`;
-* seven closed polynomial identities `IgusaAlg 3..9` with no analytic content, checked by exact
-  computer algebra (Lean status in §4).
+* five closed polynomial identities `IgusaAlg 5..9` with no analytic content. Each is verified by exact
+  computer algebra; none is proved in Lean. `IgusaAlg 3` and `IgusaAlg 4` are proved in Lean.
 
 Neither Igusa's structure theorem nor any modularity theorem is needed as a leaf.
 
@@ -76,7 +80,14 @@ Neither Igusa's structure theorem nor any modularity theorem is needed as a leaf
 | `Sq`, `IgusaAlg k` | GLUE (closed) | `∀ u : {0,1}² → ℂ`, with `t_m = Σ_c ±u_c u_{c+a}`: `e_k(t⁴) = P_k(ψ₄(t), …)` | exact expansion VERIFIED; Lean: §4 |
 | `qmThetaSymmetricCurve_of` | theorem | LEAF + GLUE ⇒ `QMThetaSymmetricCurve` | **PROVED** |
 | `igusaThetaSymmetric_of_alg` | theorem | `IgusaAlg 3..9` ⇒ `IgusaThetaSymmetric` | **PROVED** |
-| `qmThetaSymmetricCurve_of_alg` | theorem | final form | **PROVED** |
+| `qmThetaSymmetricCurve_of_alg` | theorem | LEAF + `IgusaAlg 3..9` ⇒ `QMThetaSymmetricCurve` | **PROVED** |
+| `igusaAlg3`, `igusaAlg4` | theorems | `IgusaAlg 3`, `IgusaAlg 4` | **PROVED** (`ring`) |
+| `qmThetaSymmetricCurve_of_alg59` | theorem | LEAF + `IgusaAlg 5..9` ⇒ `QMThetaSymmetricCurve` | **PROVED** |
+
+The whole file compiles with no `sorry` in 6 min 23 s, with a peak of 23.5 GB, mostly from `igusaAlg4`.
+All twelve `#print axioms` lines are `[propext, Classical.choice, Quot.sound]` (VERIFIED). For a lighter
+check, remove §7. That section is also available as the standalone files `Alg3.lean` and `Alg4.lean`,
+which carry their own copies of the definitions and take 1 min 36 s and 4 min 21 s.
 
 Combined with theta-split's `qmThetaSymmetricCore_of` and `thetaPointOfFibre_of_qm_curve`, this gives:
 `ThetaPointOfFibre ⇐ FibreQMPeriod ∧ LinYangThetaCurve ∧ IgusaAlg 3..9`.
@@ -164,12 +175,39 @@ over all `Ω ∈ 𝔥₂` that carry a concrete QM structure: integer matrices f
 
 | file | content |
 |---|---|
-| `ThetaGlue.lean` | all Lean above (§1-§6 in the file) |
-| `Dup.lean` | development copy of the duplication formula and `ThetaEightSquare` |
-| `AlgTest.lean` | `ring` proof attempts for `IgusaAlg k` (§4) |
+| `ThetaGlue.lean` | all Lean above (§0-§7 in the file) |
+| `Dup.lean` | development copy of the duplication formula and `ThetaEightSquare` (namespace `HDec.ThetaGlue`) |
+| `Alg3.lean`, `Alg4.lean` | standalone proofs of `IgusaAlg 3`, `IgusaAlg 4` (copies of the definitions) |
+| `gen/alg_prefix.lean`, `gen/gen_alg_*.py` | generators of the `IgusaAlg` proofs (tree, DP, split, generic-ring variants) |
+| `gen/reflect_core.lean`, `gen/gen_reflect.py` | proof-by-reflection experiment (verified list polynomials) |
 | `py/poly.py`, `py/linalg.py` | exact polynomials and linear algebra over `Q` |
 | `py/dup_num.py`, `py/dup_sym.py`, `py/jtrans.py` | duplication formula (numeric and symbolic), `J`-transformation |
 | `py/igusa.py`, `py/invariants.py`, `py/igusa2.py`, `py/signs.py` | characteristics, modular invariants, `ψ₆`, `χ₁₂` |
 | `py/pk.py`, `py/verify_pk.py` (+ output) | the `P_k` and their exact verification |
 | `py/hp.py` (copy of theta-split's), `py/curve_check.py` | 80-digit check of the leaf along `Ω(τ)` |
 | `gen/gen_igusa.py`, `gen/igusa_defs.lean` | generator of the Lean definitions |
+
+## 7. Integration notes
+
+* Replace theta-split's two GLUE fields. In `GluePieces3` and its copies, theta-split's Route 1 has the
+  fields `ThetaEightSquare` and `QMThetaSymmetricCurve`. `ThetaEightSquare` is now a theorem
+  (`ThetaGlue.thetaEightSquare`), so drop that field. Replace `QMThetaSymmetricCurve` with the fields
+  `LinYangThetaCurve` (LEAF) and `∀ k, 5 ≤ k → k ≤ 9 → IgusaAlg k` (GLUE), and use
+  `qmThetaSymmetricCurve_of_alg59` together with theta-split's `thetaPointOfFibre_of_qm_curve`.
+* The verbatim copies `thetaEight`, `qmR`, `ThetaEightSquare` and `QMThetaSymmetricCurve` in §0 must be
+  identified with theta-split's originals. The texts are identical; check with `Iff.rfl` once both
+  files are in one module.
+* The leaf list gains `LinYangThetaCurve`, a composite leaf in the same style as `PkgI1.QMHauptmodul`.
+  It loses `ThetaRatiosAlgebraic`.
+* `ThetaGlue.lean` needs only TailA's names (`PkgI1.*`, `isSiegel_Omega`, `ZInQ.LeafPush2.IsSiegel`),
+  so it can follow TailA in the chain.
+
+## 8. Findings
+
+* The `R_k` that theta-split fitted numerically are now derived exactly: global identities in Igusa's
+  generators combined with Lin–Yang's vector give exactly `qmR 3..9`.
+* The `χ₁₂` theta expression recalled from Igusa,
+  `2⁻¹⁷3⁻¹ Σ_{Göpel Q} ∏_{m∉Q} θ_m⁴`, equals exactly the cusp form normalized by `χ₁₂|diag = Δ⊗Δ`.
+  This, together with the 80-digit check of the leaf, confirms the normalizations
+  `s₅ = 2¹²3⁵χ₁₀` and `s₆ = 2¹²3⁶χ₁₂` used in scratch/h-v14/igusa_check.py.
+* No statement was found false, vacuous or inert.
