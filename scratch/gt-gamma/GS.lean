@@ -469,4 +469,149 @@ theorem cover_T (z : UpperHalfPlane) : ∃ γ ∈ Γs, γ • z ∈ Tset := by
     rw [show (1 : ℝ) = √1 by simp]; exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
   nlinarith
 
+
+/-! ## The Dirichlet property of `T` -/
+
+theorem no_sq3 (a b k : ℤ) (h : a ^ 2 + 3 * b ^ 2 = 3 * k + 2) : False := by
+  have h' := congrArg (Int.cast : ℤ → ZMod 3) h
+  push_cast at h'
+  generalize (a : ZMod 3) = x at h'
+  generalize (b : ZMod 3) = y at h'
+  generalize (k : ZMod 3) = z at h'
+  revert x y z
+  decide
+
+theorem sq3_16 (a b : ℤ) (h : a ^ 2 + 3 * b ^ 2 = 16) :
+    ((a = 4 ∨ a = -4) ∧ b = 0) ∨ ((a = 2 ∨ a = -2) ∧ (b = 2 ∨ b = -2)) := by
+  have ha : -4 ≤ a ∧ a ≤ 4 := by constructor <;> nlinarith
+  have hb : -2 ≤ b ∧ b ≤ 2 := by constructor <;> nlinarith
+  obtain ⟨ha1, ha2⟩ := ha
+  obtain ⟨hb1, hb2⟩ := hb
+  interval_cases a <;> interval_cases b <;> revert h <;> norm_num
+
+theorem sq3_48 (a b : ℤ) (h : a ^ 2 + 3 * b ^ 2 = 48) :
+    ((a = 6 ∨ a = -6) ∧ (b = 2 ∨ b = -2)) ∨ (a = 0 ∧ (b = 4 ∨ b = -4)) := by
+  have ha : -7 ≤ a ∧ a ≤ 7 := by constructor <;> nlinarith
+  have hb : -4 ≤ b ∧ b ≤ 4 := by constructor <;> nlinarith
+  obtain ⟨ha1, ha2⟩ := ha
+  obtain ⟨hb1, hb2⟩ := hb
+  interval_cases a <;> interval_cases b <;> revert h <;> norm_num
+
+/-- **The vertex condition** (integers `A_i = 2a_i`): `2P + R' ∓ S' ≥ 0` for every `y ∈ 𝒪` of reduced norm
+`1, 2, 3, 6`; Cauchy–Schwarz when `P ≥ 4N`, enumeration otherwise. -/
+theorem intV (A0 A1 A2 A3 N : ℤ) (h1 : ∃ m, A1 = 2 * m + A3)
+    (hN : A0 ^ 2 - 2 * A1 ^ 2 + 3 * A2 ^ 2 - 6 * A3 ^ 2 = 4 * N)
+    (hNv : N = 1 ∨ N = 2 ∨ N = 3 ∨ N = 6) :
+    0 ≤ 2 * (A1 ^ 2 + 3 * A3 ^ 2) + (A0 * A1 - 3 * A2 * A3) - (A0 * A3 + A1 * A2) ∧
+      0 ≤ 2 * (A1 ^ 2 + 3 * A3 ^ 2) + (A0 * A1 - 3 * A2 * A3) + (A0 * A3 + A1 * A2) := by
+  have hnorm : A0 ^ 2 + 3 * A2 ^ 2 = 4 * N + 2 * (A1 ^ 2 + 3 * A3 ^ 2) := by linarith
+  have hN1 : 1 ≤ N := by omega
+  have hN6 : N ≤ 6 := by omega
+  by_cases hP : 4 * N ≤ A1 ^ 2 + 3 * A3 ^ 2
+  · set P := A1 ^ 2 + 3 * A3 ^ 2 with hPdef
+    set R := A0 * A1 - 3 * A2 * A3
+    set S := A0 * A3 + A1 * A2
+    have hP0 : 0 ≤ P := by positivity
+    have hRS : R ^ 2 + 3 * S ^ 2 = (A0 ^ 2 + 3 * A2 ^ 2) * P := by ring
+    have hb : (A0 ^ 2 + 3 * A2 ^ 2) * P ≤ 3 * P ^ 2 := by rw [hnorm]; nlinarith
+    have hT1 : 3 * (R - S) ^ 2 ≤ 4 * (R ^ 2 + 3 * S ^ 2) := by nlinarith [sq_nonneg (R + 3 * S)]
+    have hT2 : 3 * (R + S) ^ 2 ≤ 4 * (R ^ 2 + 3 * S ^ 2) := by nlinarith [sq_nonneg (R - 3 * S)]
+    constructor
+    · by_contra h; push Not at h
+      nlinarith
+    · by_contra h; push Not at h
+      nlinarith
+  · push Not at hP
+    obtain ⟨m1, hm1⟩ := h1
+    have hA1 : -4 ≤ A1 ∧ A1 ≤ 4 := by constructor <;> nlinarith
+    have hA3 : -2 ≤ A3 ∧ A3 ≤ 2 := by constructor <;> nlinarith
+    obtain ⟨hA1l, hA1u⟩ := hA1
+    obtain ⟨hA3l, hA3u⟩ := hA3
+    rcases hNv with rfl | rfl | rfl | rfl <;> interval_cases A1 <;> interval_cases A3 <;>
+      (try norm_num at hP) <;> (try norm_num at hnorm) <;> (try norm_num) <;> (try omega) <;>
+      first
+      | (guard_hyp hnorm : A0 ^ 2 + 3 * A2 ^ 2 = 20; exact (no_sq3 A0 A2 6 (by linarith)).elim)
+      | (guard_hyp hnorm : A0 ^ 2 + 3 * A2 ^ 2 = 32; exact (no_sq3 A0 A2 10 (by linarith)).elim)
+      | (guard_hyp hnorm : A0 ^ 2 + 3 * A2 ^ 2 = 56; exact (no_sq3 A0 A2 18 (by linarith)).elim)
+      | (guard_hyp hnorm : A0 ^ 2 + 3 * A2 ^ 2 = 16;
+          rcases sq3_16 A0 A2 hnorm with ⟨h | h, h'⟩ | ⟨h | h, h' | h'⟩ <;> subst h <;> subst h' <;>
+          norm_num)
+      | (guard_hyp hnorm : A0 ^ 2 + 3 * A2 ^ 2 = 48;
+          rcases sq3_48 A0 A2 hnorm with ⟨h | h, h' | h'⟩ | ⟨h, h' | h'⟩ <;> subst h <;> subst h' <;>
+          norm_num)
+
+theorem vertex_cond {y : B} (hy : InO y) (hn : nrd y = 1 ∨ nrd y = 2 ∨ nrd y = 3 ∨ nrd y = 6) :
+    0 ≤ Pq y + 2 * (Rq y - Sq y) ∧ 0 ≤ Pq y + 2 * (Rq y + Sq y) := by
+  obtain ⟨N, hNq, hNv⟩ : ∃ N : ℤ, nrd y = N ∧ (N = 1 ∨ N = 2 ∨ N = 3 ∨ N = 6) := by
+    rcases hn with h | h | h | h
+    · exact ⟨1, by rw [h]; norm_num, by norm_num⟩
+    · exact ⟨2, by rw [h]; norm_num, by norm_num⟩
+    · exact ⟨3, by rw [h]; norm_num, by norm_num⟩
+    · exact ⟨6, by rw [h]; norm_num, by norm_num⟩
+  obtain ⟨n0, n1, n2, n3, rfl⟩ := (inO_iff y).1 hy
+  have hNq' : ((2 * n0 + n2 : ℤ) : ℚ) ^ 2 - 2 * ((2 * n1 + n3 : ℤ) : ℚ) ^ 2 + 3 * ((n2 : ℤ) : ℚ) ^ 2 -
+      6 * ((n3 : ℤ) : ℚ) ^ 2 = 4 * (N : ℚ) := by
+    simp only [nrd] at hNq; push_cast; linarith
+  have hN : (2 * n0 + n2) ^ 2 - 2 * (2 * n1 + n3) ^ 2 + 3 * n2 ^ 2 - 6 * n3 ^ 2 = 4 * N := by
+    exact_mod_cast hNq'
+  obtain ⟨v1, v2⟩ := intV (2 * n0 + n2) (2 * n1 + n3) n2 n3 N ⟨n1, rfl⟩ hN hNv
+  have w1 : (0 : ℝ) ≤ 2 * (((2 * n1 + n3 : ℤ) : ℝ) ^ 2 + 3 * (n3 : ℝ) ^ 2) +
+      (((2 * n0 + n2 : ℤ) : ℝ) * ((2 * n1 + n3 : ℤ) : ℝ) - 3 * (n2 : ℝ) * n3) -
+      (((2 * n0 + n2 : ℤ) : ℝ) * n3 + ((2 * n1 + n3 : ℤ) : ℝ) * n2) := by exact_mod_cast v1
+  have w2 : (0 : ℝ) ≤ 2 * (((2 * n1 + n3 : ℤ) : ℝ) ^ 2 + 3 * (n3 : ℝ) ^ 2) +
+      (((2 * n0 + n2 : ℤ) : ℝ) * ((2 * n1 + n3 : ℤ) : ℝ) - 3 * (n2 : ℝ) * n3) +
+      (((2 * n0 + n2 : ℤ) : ℝ) * n3 + ((2 * n1 + n3 : ℤ) : ℝ) * n2) := by exact_mod_cast v2
+  push_cast at w1 w2
+  simp only [Pq, Rq, Sq]
+  push_cast
+  constructor <;> nlinarith
+
+theorem sqrt2_sq : √2 ^ 2 = (2 : ℝ) := Real.sq_sqrt (by norm_num)
+
+theorem Phi_nonneg {y : B} (hV1 : 0 ≤ Pq y + 2 * (Rq y - Sq y)) (hV2 : 0 ≤ Pq y + 2 * (Rq y + Sq y))
+    {w : UpperHalfPlane} (hw : w ∈ Tset) : 0 ≤ Phi y w := by
+  obtain ⟨h1, h2, h3⟩ := hw
+  set P := Pq y
+  set R := Rq y
+  set S := Sq y
+  set U := Uq w
+  set X := Xq w
+  set s := √2 with hs
+  have hs0 : 0 < s := Real.sqrt_pos.2 (by norm_num)
+  set L := 6 + 6 * s
+  have hL : 0 < L := by positivity
+  have hP0 : 0 ≤ P := Pq_nonneg y
+  have hA : P * (L + 6) + 2 * s * L * (R - S) = 6 * (2 + s) * (P + 2 * (R - S)) := by
+    linear_combination 12 * (R - S) * sqrt2_sq
+  have hB : P * (L + 6) + 2 * s * L * (R + S) = 6 * (2 + s) * (P + 2 * (R + S)) := by
+    linear_combination 12 * (R + S) * sqrt2_sq
+  have key : 2 * L * Phi y w = 12 * (L - U) * P + (U + X) * (P * (L + 6) + 2 * s * L * (R - S)) +
+      (U - X) * (P * (L + 6) + 2 * s * L * (R + S)) := by
+    simp only [Phi]; ring
+  rw [hA, hB] at key
+  have t1 : 0 ≤ 12 * (L - U) * P := by
+    apply mul_nonneg _ hP0; linarith
+  have t2 : 0 ≤ (U + X) * (6 * (2 + s) * (P + 2 * (R - S))) := by
+    apply mul_nonneg (by linarith); positivity
+  have t3 : 0 ≤ (U - X) * (6 * (2 + s) * (P + 2 * (R + S))) := by
+    apply mul_nonneg (by linarith); positivity
+  have : 0 ≤ 2 * L * Phi y w := by rw [key]; linarith
+  have h2L : 0 < 2 * L := by positivity
+  exact nonneg_of_mul_nonneg_right (by linarith) h2L |> fun h => by
+    by_contra hneg; push Not at hneg
+    have := mul_neg_of_pos_of_neg h2L hneg
+    linarith
+
+/-- **Dirichlet property**: every point of `T` is a point of its orbit closest to `p`. -/
+theorem dirichlet {w : UpperHalfPlane} (hw : w ∈ Tset) {γ : GL (Fin 2) ℝ} (hγ : γ ∈ Γs) :
+    dist w p0 ≤ dist (γ • w) p0 := by
+  obtain ⟨y, hy, hn, g, hg, hz⟩ := cover_y hγ
+  have hpos := nrd_pos_of hn
+  obtain ⟨hV1, hV2⟩ := vertex_cond hy hn
+  rw [hz, dist_le_iff, Fp_smul hg hpos]
+  have hnr : (0 : ℝ) < nrd y := by exact_mod_cast hpos
+  have := Phi_nonneg hV1 hV2 hw
+  have : 0 ≤ Phi y w / ((nrd y : ℝ) * w.im) := div_nonneg this (by have := w.im_pos; positivity)
+  linarith
+
 end HDec.GammaStarArea
