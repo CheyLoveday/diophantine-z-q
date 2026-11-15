@@ -168,7 +168,6 @@ structure OpenTextbookLeaves4 : Prop where
   homLatticeCorr : HomUnify.HomLatticeCorr
   t11b : ZInQ.LeafPush2.T11b_Rigidity
   t24 : EigenformTwist
-  t27 : PkgI3.QMDichotomyYu
   t33 : LeafModCurves.JacobianExists ℚ
   t35 : ZInQ.LeafPush2.UniformizationExists
   t38 : X1Belyi.CurveOfFunctionFieldQ
@@ -237,7 +236,6 @@ theorem textbookLeaves3_of_open4 (t : OpenTextbookLeaves4) : OpenTextbookLeaves3
   t11b := t.t11b
   t24 := t.t24
   t26 := tateModuleFree_of_t5' t.t5
-  t27 := t.t27
   t33 := t.t33
   t35 := t.t35
   t38 := t.t38

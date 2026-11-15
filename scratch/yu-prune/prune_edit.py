@@ -91,4 +91,32 @@ def drop_decl(f, name):
             end = k + 1 if k < len(ls) and ls[k] == '' else k
             drop(f, range(e, end), f'example of dead reader {name}')
 
-# FIELDS / ASSIGNMENTS / READERS: filled in after the scan
+# fields (prune-set-applied.txt, plus OpenTextbookLeaves11.yuThm11)
+for f, s, fl in [('LPrefix', 'TextbookLeaves', 't27'), ('TailE', 'OpenTextbookLeaves2', 't27'),
+                 ('TailI', 'OpenTextbookLeaves3', 't27'), ('TailK', 'OpenTextbookLeaves4', 't27'),
+                 ('TailO', 'OpenTextbookLeaves6', 't27'), ('TailX', 'OpenTextbookLeaves7', 'yuThm11'),
+                 ('TailZ4', 'OpenTextbookLeaves8', 'yuThm11'), ('TailZ9', 'OpenTextbookLeaves9', 'yuThm11'),
+                 ('TailZ11', 'OpenTextbookLeaves10', 'yuThm11'), ('TailZ32', 'OpenTextbookLeaves11', 'yuThm11')]:
+    drop_field(f, s, fl)
+# assignments into removed fields
+for f, h, fl, ex in [
+        ('LPrefix', 'theorem textbookLeaves_of_open ', 't27', '  t27 := t.t27'),
+        ('TailE', 'theorem textbookLeaves_of_open2 ', 't27', '  t27 := t.t27'),
+        ('TailI', 'theorem textbookLeaves2_of_open3 ', 't27', '  t27 := t.t27'),
+        ('TailK', 'theorem textbookLeaves3_of_open4 ', 't27', '  t27 := t.t27'),
+        ('TailN', 'theorem textbookLeaves4_of_open5 ', 't27', '  t27 := qmDichotomyYu_ofK5 t.t27'),
+        ('TailO', 'theorem textbookLeaves4_of_open6 ', 't27', '  t27 := qmDichotomyYu_ofK5 t.t27'),
+        ('TailX', 'theorem textbookLeaves6_of_open7 ', 't27', '  t27 := QMSplit.Yu.qmDichotomyYu_of_yu t.yuThm11'),
+        ('TailZ4', 'theorem textbookLeaves7_of_open8 ', 'yuThm11', '  yuThm11 := t.yuThm11'),
+        ('TailZ9', 'theorem textbookLeaves8_of_open9 ', 'yuThm11', '  yuThm11 := t.yuThm11'),
+        ('TailZ11', 'theorem textbookLeaves9_of_open10 ', 'yuThm11', '  yuThm11 := t.yuThm11'),
+        ('TailZ32', 'theorem openTextbookLeaves10_of_OpenTextbookLeaves11 ', 'yuThm11', '  yuThm11 := n.yuThm11')]:
+    drop_assign(f, h, fl, ex)
+# dead readers (dead-cascade.txt minus generated casesOn/recOn), and the bridge helper that loses its users
+for f, n in [('TailD', 'fibreComTrivial_of_gp3'), ('TailD', 'fibreSimple_of_gp3'), ('TailD', 'gluePieces_of_gluePieces3'),
+             ('TailE', 'gluePieces_of_open2'), ('TailI', 'gluePieces_of_open3'), ('TailA', 'yuB6Alg_of_qmDichotomyYu')]:
+    drop_decl(f, n)
+for f, ls in files.items():
+    open(H + f + '.lean', 'w').write('\n'.join(l for l in ls if l is not None))
+for d in sorted(deleted):
+    print(f'{d[0]}:{d[1]}  [{d[2]}]  {d[3]}')

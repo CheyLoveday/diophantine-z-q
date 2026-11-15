@@ -2792,7 +2792,6 @@ structure OpenTextbookLeaves6 : Prop where
   /-- av-b2, LEAF: T11(b) without its uniqueness clause (Conrad 2006 §3; Milne 1986 §20). -/
   t11bExists : AVB2.T11bExists
   t24 : _root_.PkgI4.EigenformTwist
-  t27 : _root_.PkgI3.QMDichotomyYu
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   /-- curves-g: `dim Jac X = genus` for curves over `ℚ` (Milne 1986 Prop. 2.1 with Serre duality). -/
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
@@ -2861,7 +2860,6 @@ theorem textbookLeaves4_of_open6 (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6
   homLatticeCorr := homLatticeCorr_ofK5 t.homLatticeCorr
   t11b := t11b_of_exists5 t.t11bExists
   t24 := eigenformTwist_ofK5 t.t24
-  t27 := qmDichotomyYu_ofK5 t.t27
   t33 := jacobianExists_ofK5 t.t33
   t35 := uniformizationExists_ofK5 t.t35
   t38 := t38_of_split5 t.normalModelOfFunctionFieldQ t.normalCurveSmoothQ t.geomConnectedOfConstantFieldQ

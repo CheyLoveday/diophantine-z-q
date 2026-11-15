@@ -1099,12 +1099,6 @@ theorem qm_embeds_end0 {k : Type} [Field k] {A : PkgI3.AbVar k} (q : QMStr A) :
     Nonempty (ℍ[ℚ, 2, -3] →ₐ[ℚ] PkgI3.AbVar.End0 A) :=
   ⟨(qmBasis q).liftHom⟩
 
-/-- (yu-prune) `QMLattice.YuB6Alg` from T27 (`PkgI3.QMDichotomyYu`): take `(a, b) = (2, −3)` and the embedding of
-the QM structure. Used only by off-chain readers of the old bundles' `t27`. -/
-theorem yuB6Alg_of_qmDichotomyYu (h : PkgI3.QMDichotomyYu) : QMLattice.YuB6Alg := by
-  intro k _ _ _ _ A hA q
-  exact PkgI3.qmDichotomy_B6 h k A hA B6_isUnit (qm_embeds_end0 q)
-
 /-! ## §3 The named glue pieces (unproved; each true by the cited textbook argument) -/
 
 /-- **Glue piece FS1 (descent of simplicity along a field extension; G5-G6 on the model `A/K`).**

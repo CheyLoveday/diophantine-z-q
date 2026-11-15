@@ -135,8 +135,6 @@ structure OpenTextbookLeaves7 : Prop where
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   t11bExists : AVB2.T11bExists
   t24 : _root_.PkgI4.EigenformTwist
-  /-- qm-split, H-35: Yu 2013 Thm 1.1 with its splitting clause (replaces `t27`). -/
-  yuThm11 : QMSplit.Yu.YuThm11
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
@@ -228,7 +226,6 @@ theorem textbookLeaves6_of_open7 (t : OpenTextbookLeaves7) (l : OpenAddedLeaves7
   homLatticeCorr := _root_.AvSplit.Final.h69 t.uniformizationLeafAll t.gagaMorphism
   t11bExists := t.t11bExists
   t24 := t.t24
-  t27 := QMSplit.Yu.qmDichotomyYu_of_yu t.yuThm11
   t33 := t.t33
   dimJacobianEqGenus := t.dimJacobianEqGenus
   t35 := _root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed

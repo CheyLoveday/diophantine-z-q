@@ -114,7 +114,6 @@ structure OpenTextbookLeaves8 : Prop where
   groupSchemeEquidim : _root_.AVGlue.GroupSchemeEquidim
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
-  yuThm11 : QMSplit.Yu.YuThm11
   t33 : _root_.LeafModCurves.JacobianExists ℚ
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
@@ -222,7 +221,6 @@ theorem textbookLeaves7_of_open8 (t : OpenTextbookLeaves8) : OpenTextbookLeaves7
   gagaMorphism := t.gagaMorphism
   t11bExists := t11bExists_lf8
   t24 := _root_.ZInQ.Contrib.CloudW08EigenformTwists.EigenformTwist_proof
-  yuThm11 := t.yuThm11
   t33 := t.t33
   dimJacobianEqGenus := t.dimJacobianEqGenus
   normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ
