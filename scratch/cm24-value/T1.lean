@@ -101,4 +101,85 @@ theorem pi0 {α β γ : ℂ} (hα : 0 < α.im) (c0 c1 d0 d1 : ℝ)
   conv_rhs => rw [mul_assoc, ← jt_dual α β γ hα0 c0 c1 d0 d1 m n1]
   ring
 
+
+/-! ## Symmetries -/
+
+theorem th2_swap (α β γ : ℂ) (c0 c1 d0 d1 : ℝ) : Th2 α β γ c0 c1 d0 d1 = Th2 γ β α c1 c0 d1 d0 := by
+  rw [Th2, Th2, ← (Equiv.prodComm ℤ ℤ).tsum_eq]
+  congr 1; funext n
+  simp only [term2, Equiv.prodComm_apply, Prod.fst_swap, Prod.snd_swap]
+  congr 1; ring
+
+theorem th2_shift_c (α β γ : ℂ) (c0 c1 d0 d1 : ℝ) (k0 k1 : ℤ) :
+    Th2 α β γ (c0 + k0) (c1 + k1) d0 d1 = Th2 α β γ c0 c1 d0 d1 := by
+  rw [Th2, Th2]
+  conv_rhs => rw [← (Equiv.addRight ((k0, k1) : ℤ × ℤ)).tsum_eq]
+  congr 1; funext n
+  simp only [term2, Equiv.coe_addRight, Prod.fst_add, Prod.snd_add]
+  congr 1; push_cast; ring
+
+theorem th2_shift_d (α β γ : ℂ) (c0 c1 d0 d1 : ℝ) (k0 k1 : ℤ) :
+    Th2 α β γ c0 c1 (d0 + k0) (d1 + k1) =
+      cexp (2 * π * I * (c0 * k0 + c1 * k1)) * Th2 α β γ c0 c1 d0 d1 := by
+  rw [Th2, Th2, ← tsum_mul_left]
+  congr 1; funext n
+  have h : cexp (((-(n.1 * k0 + n.2 * k1) : ℤ) : ℂ) * (2 * π * I)) = 1 := exp_int_mul_two_pi_mul_I _
+  rw [term2, term2, ← mul_one (cexp (_ + _)), ← h, ← Complex.exp_add, ← Complex.exp_add]
+  congr 1; push_cast; ring
+
+/-! ## Duplication -/
+
+/-- `(σ, p, q) ↦ (p + q + σ, p − q)`, a bijection `Fin 2 × ℤ × ℤ ≃ ℤ × ℤ`. -/
+def dupE1 : Fin 2 × (ℤ × ℤ) ≃ ℤ × ℤ where
+  toFun w := (w.2.1 + w.2.2 + (w.1 : ℕ), w.2.1 - w.2.2)
+  invFun mn := (if (mn.1 - mn.2) % 2 = 0 then 0 else 1,
+    (mn.2 + (mn.1 - mn.2 - (if (mn.1 - mn.2) % 2 = 0 then 0 else 1)) / 2,
+     (mn.1 - mn.2 - (if (mn.1 - mn.2) % 2 = 0 then 0 else 1)) / 2))
+  left_inv w := by
+    obtain ⟨σ, p, q⟩ := w
+    fin_cases σ <;> simp <;> omega
+  right_inv mn := by
+    obtain ⟨m, n⟩ := mn
+    by_cases h : (m - n) % 2 = 0 <;> simp [h] <;> omega
+
+/-- The 2D version: `((σ₀,σ₁), (p, q)) ↦ (p + q + σ, p − q)` on `ℤ² × ℤ²`. -/
+def dupE2 : (Fin 2 × Fin 2) × ((ℤ × ℤ) × (ℤ × ℤ)) ≃ (ℤ × ℤ) × (ℤ × ℤ) where
+  toFun w := ((w.2.1.1 + w.2.2.1 + (w.1.1 : ℕ), w.2.1.2 + w.2.2.2 + (w.1.2 : ℕ)),
+    (w.2.1.1 - w.2.2.1, w.2.1.2 - w.2.2.2))
+  invFun mn :=
+    let s0 : ℤ := if (mn.1.1 - mn.2.1) % 2 = 0 then 0 else 1
+    let s1 : ℤ := if (mn.1.2 - mn.2.2) % 2 = 0 then 0 else 1
+    ((if (mn.1.1 - mn.2.1) % 2 = 0 then 0 else 1, if (mn.1.2 - mn.2.2) % 2 = 0 then 0 else 1),
+      ((mn.2.1 + (mn.1.1 - mn.2.1 - s0) / 2, mn.2.2 + (mn.1.2 - mn.2.2 - s1) / 2),
+       ((mn.1.1 - mn.2.1 - s0) / 2, (mn.1.2 - mn.2.2 - s1) / 2)))
+  left_inv w := by
+    obtain ⟨⟨σ0, σ1⟩, ⟨p0, p1⟩, ⟨q0, q1⟩⟩ := w
+    fin_cases σ0 <;> fin_cases σ1 <;> simp <;> omega
+  right_inv mn := by
+    obtain ⟨⟨m0, m1⟩, ⟨n0, n1⟩⟩ := mn
+    by_cases h0 : (m0 - n0) % 2 = 0 <;> by_cases h1 : (m1 - n1) % 2 = 0 <;> simp [h0, h1] <;> omega
+
+theorem dupE2_apply (σ0 σ1 : Fin 2) (p0 p1 q0 q1 : ℤ) :
+    dupE2 ((σ0, σ1), ((p0, p1), (q0, q1))) =
+      ((p0 + q0 + (σ0 : ℕ), p1 + q1 + (σ1 : ℕ)), (p0 - q0, p1 - q1)) := rfl
+
+theorem dup2 {α β γ : ℂ} (c0 c1 d0 d1 : ℝ)
+    (hs : Summable (fun n => ‖term2 α β γ c0 c1 d0 d1 n‖))
+    (hs2 : ∀ c0' c1' d0' d1' : ℝ, Summable (fun n => ‖term2 (2 * α) (2 * β) (2 * γ) c0' c1' d0' d1' n‖)) :
+    Th2 α β γ c0 c1 d0 d1 ^ 2 = ∑ σ : Fin 2 × Fin 2,
+      Th2 (2 * α) (2 * β) (2 * γ) (((σ.1 : ℕ) : ℝ) / 2 + c0) (((σ.2 : ℕ) : ℝ) / 2 + c1) (2 * d0) (2 * d1) *
+      Th2 (2 * α) (2 * β) (2 * γ) (((σ.1 : ℕ) : ℝ) / 2) (((σ.2 : ℕ) : ℝ) / 2) 0 0 := by
+  have hprod := summable_mul_of_summable_norm hs hs
+  have h2 : Summable (fun c => term2 α β γ c0 c1 d0 d1 (dupE2 c).1 *
+      term2 α β γ c0 c1 d0 d1 (dupE2 c).2) := dupE2.summable_iff.2 hprod
+  rw [sq, Th2, tsum_mul_tsum_of_summable_norm hs hs, ← dupE2.tsum_eq, h2.tsum_prod, tsum_fintype]
+  congr 1; funext σ
+  rw [Th2, Th2, tsum_mul_tsum_of_summable_norm (hs2 _ _ _ _) (hs2 _ _ _ _)]
+  congr 1; funext w
+  obtain ⟨σ0, σ1⟩ := σ
+  obtain ⟨⟨p0, p1⟩, ⟨q0, q1⟩⟩ := w
+  rw [dupE2_apply]
+  simp only [term2, ← Complex.exp_add]
+  congr 1; push_cast; ring
+
 end CM24
