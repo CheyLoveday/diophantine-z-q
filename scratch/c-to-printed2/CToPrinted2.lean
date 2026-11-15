@@ -664,6 +664,32 @@ theorem katoRealization_of_field (hD : DSThm965) (hDS : DSThm966) (h : Eigenform
     eigenformRepExists_of_r14Det (r14Det_of_printed hD hDS) ℓ ιC ιL N k χ f hN (by omega) hf.1
   exact ⟨ρ, hss, hatt, h ℓ ιC ιL N k χ f ρ hN hk hf hss hatt⟩
 
+/-- **Converse for the cohomological form**: over the bundle LEAF fields `dsThm965`, `dsThm966`, `tateTwistInvariants`,
+`axSenTate`, the field gives back `KatoRealizationCohSS` (the contragredient of a semisimple attached `ρ`). -/
+theorem katoRealizationCohSS_of_field (hD : DSThm965) (hDS : DSThm966) (hT : TateTwistInvariants)
+    (hA : AxSenTate) (h : EigenformHTNew) : KatoRealizationCohSS := by
+  intro ℓ _ ιC ιL N k χ f hN hk hf
+  obtain ⟨ρ, hss, hatt, hHT⟩ := katoRealization_of_field hD hDS h ℓ ιC ιL N k χ f hN hk hf
+  refine ⟨dualGR ρ, dualGR_isSemisimple ρ hss, ?_, ?_⟩
+  · intro p hp hpN
+    obtain ⟨hu, α, hα, htr⟩ := hatt p hp hpN
+    refine ⟨fun v hv σ hσ => ?_, α, hα, fun v σ hv hσ => ?_⟩
+    · have h1 := hu v hv σ⁻¹ ((v.inertiaSubgroup ℚ).inv_mem hσ)
+      apply Units.ext
+      change (ρ.mat ((σ : v.decompositionSubgroup ℚ) : GQ)⁻¹).transpose = 1
+      have : ((σ⁻¹ : v.decompositionSubgroup ℚ) : GQ) = ((σ : v.decompositionSubgroup ℚ) : GQ)⁻¹ := rfl
+      rw [GaloisRep.mat, ← this, h1, Units.val_one, Matrix.transpose_one]
+    · rw [dualGR_mat, inv_inv, Matrix.trace_transpose, htr v σ hv hσ]
+  · have h2 := htDual_proof hT hA ℓ 2 ρ {0, 1 - k} (by simp) hHT
+    have hS : (({0, 1 - k} : Multiset ℤ).map Neg.neg) = {0, k - 1} := by
+      simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton, neg_zero, neg_sub]
+    rwa [hS] at h2
+
+/-- **All three Kato forms are equivalent to the field over the bundle.** -/
+theorem katoRealizationCohSS_iff_field (hD : DSThm965) (hDS : DSThm966) (hT : TateTwistInvariants)
+    (hA : AxSenTate) : KatoRealizationCohSS ↔ EigenformHTNew :=
+  ⟨fun hK => eigenformHTNew_of_printedSS hK hT hA, katoRealizationCohSS_of_field hD hDS hT hA⟩
+
 theorem katoRealization_iff_field (hD : DSThm965) (hDS : DSThm966) : KatoRealization ↔ EigenformHTNew :=
   ⟨eigenformHTNew_of_realization, katoRealization_of_field hD hDS⟩
 
@@ -889,6 +915,7 @@ end CToPrinted2
 #print axioms CToPrinted2.eigenformHTNew_of_printedSS
 #print axioms CToPrinted2.dualGR_isSemisimple
 #print axioms CToPrinted2.katoRealization_iff_field
+#print axioms CToPrinted2.katoRealizationCohSS_iff_field
 #print axioms CToPrinted2.R17.carayolR17'_of_realization
 #print axioms CToPrinted2.R17.carayolRealization_iff_field
 #print axioms CToPrinted2.fields_of_printed

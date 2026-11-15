@@ -33,3 +33,6 @@ Base e38375b3. Compile command: `lake env lean scratch/c-to-printed2/<file>.lean
   semisimple), leaf `KatoRealizationCohSS` (= `KatoRealizationCoh` with semisimple witness; implied by it,
   `katoRealizationCohSS_of_coh`), `katoRealization_of_cohSS`, `eigenformHTNew_of_printedSS`;
   `fields_of_printed` now takes `KatoRealizationCohSS`. **VERIFIED** 0 errors, 9 axiom lines all standard.
+- Added `katoRealizationCohSS_of_field`, `katoRealizationCohSS_iff_field : DSThm965 → DSThm966 →
+  TateTwistInvariants → AxSenTate → (KatoRealizationCohSS ↔ EigenformHTNew)`. **VERIFIED** 0 errors, 10 axiom
+  lines all `[propext, Classical.choice, Quot.sound]`.
