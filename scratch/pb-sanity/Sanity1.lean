@@ -151,6 +151,146 @@ theorem mem_xi_pow_of_algebraMap (k : ℕ) (a : Ainf p)
     ring
   exact Ideal.mem_span_singleton'.mpr ⟨b, this.symm⟩
 
+/-! ### The lattice bound: `N! · A_cris^0 ⊆ A_inf + ξ^N A_inf[1/p]` -/
+
+section Lattice
+
+variable (N : ℕ)
+
+/-- `ξ^N A_inf[1/p]`. -/
+abbrev xiIdeal : Ideal (AinfP p) := span {algebraMap (Ainf p) (AinfP p) ξ ^ N}
+
+/-- `A_inf[1/p] / ξ^N`. -/
+abbrev Qn := AinfP p ⧸ xiIdeal p N
+
+/-- The class of `ξ^i / i!`. -/
+def latGen (i : ℕ) : Qn p N :=
+  Ideal.Quotient.mk _ (qpToLoc p ((i.factorial : ℚ_[p])⁻¹) * algebraMap (Ainf p) (AinfP p) ξ ^ i)
+
+/-- The `A_inf`-span of the classes of `ξ^i / i!`. -/
+def latG : Submodule (Ainf p) (Qn p N) := Submodule.span (Ainf p) (Set.range (latGen p N))
+
+theorem algebraMap_Qn (a : Ainf p) :
+    algebraMap (Ainf p) (Qn p N) a = Ideal.Quotient.mk _ (algebraMap (Ainf p) (AinfP p) a) := rfl
+
+theorem smul_Qn (r : Ainf p) (q : Qn p N) : r • q = algebraMap (Ainf p) (Qn p N) r * q :=
+  Algebra.smul_def r q
+
+theorem latGen_mul (i j : ℕ) :
+    latGen p N i * latGen p N j = ((i + j).choose j : Ainf p) • latGen p N (i + j) := by
+  rw [smul_Qn, latGen, latGen, latGen, algebraMap_Qn, ← map_mul, ← map_mul]
+  congr 1
+  have key : ((i + j).choose j : ℚ_[p]) * ((i + j).factorial : ℚ_[p])⁻¹ =
+      (i.factorial : ℚ_[p])⁻¹ * (j.factorial : ℚ_[p])⁻¹ := by
+    have h := Nat.add_choose_mul_factorial_mul_factorial i j
+    have hi : (i.factorial : ℚ_[p]) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero i
+    have hj : (j.factorial : ℚ_[p]) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero j
+    have hij : ((i + j).factorial : ℚ_[p]) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (i + j)
+    field_simp
+    rw [← h]
+    push_cast
+    ring
+  have hc : algebraMap (Ainf p) (AinfP p) ((i + j).choose j : Ainf p) =
+      qpToLoc p ((i + j).choose j : ℚ_[p]) := by
+    rw [map_natCast, map_natCast]
+  rw [hc, pow_add]
+  calc qpToLoc p (i.factorial : ℚ_[p])⁻¹ * algebraMap (Ainf p) (AinfP p) ξ ^ i *
+        (qpToLoc p (j.factorial : ℚ_[p])⁻¹ * algebraMap (Ainf p) (AinfP p) ξ ^ j)
+      = qpToLoc p ((i.factorial : ℚ_[p])⁻¹ * (j.factorial : ℚ_[p])⁻¹) *
+        (algebraMap (Ainf p) (AinfP p) ξ ^ i * algebraMap (Ainf p) (AinfP p) ξ ^ j) := by
+        rw [map_mul]; ring
+    _ = _ := by rw [← key, map_mul]; ring
+
+theorem latG_mul_mem {x y : Qn p N} (hx : x ∈ latG p N) (hy : y ∈ latG p N) :
+    x * y ∈ latG p N := by
+  have h1 : latG p N * latG p N ≤ latG p N := by
+    rw [latG, Submodule.span_mul_span, Submodule.span_le]
+    rintro _ ⟨_, ⟨i, rfl⟩, _, ⟨j, rfl⟩, rfl⟩
+    show latGen p N i * latGen p N j ∈ latG p N
+    rw [latGen_mul]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i + j, rfl⟩)
+  exact h1 (Submodule.mul_mem_mul hx hy)
+
+theorem latGen_zero : latGen p N 0 = 1 := by
+  rw [latGen, pow_zero, mul_one, Nat.factorial_zero, Nat.cast_one, inv_one, map_one, map_one]
+
+/-- The subring of `A_inf[1/p]` of elements whose class lies in `latG`. -/
+def latSub : Subring (AinfP p) where
+  carrier := {z | Ideal.Quotient.mk (xiIdeal p N) z ∈ latG p N}
+  mul_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_ofPred_eq, map_mul] at ha hb ⊢
+    exact latG_mul_mem p N ha hb
+  one_mem' := by
+    simp only [Set.mem_ofPred_eq, map_one]
+    rw [← latGen_zero]
+    exact Submodule.subset_span ⟨0, rfl⟩
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_ofPred_eq, map_add] at ha hb ⊢
+    exact Submodule.add_mem _ ha hb
+  zero_mem' := by
+    simp only [Set.mem_ofPred_eq, map_zero]
+    exact Submodule.zero_mem _
+  neg_mem' := by
+    intro a ha
+    simp only [Set.mem_ofPred_eq, map_neg] at ha ⊢
+    exact Submodule.neg_mem _ ha
+
+theorem acris0_le_latSub : Acris0 p ≤ latSub p N := by
+  rw [Acris0, Subring.closure_le]
+  rintro z (⟨a, rfl⟩ | ⟨n, x, hx, rfl⟩)
+  · show Ideal.Quotient.mk _ _ ∈ latG p N
+    rw [← algebraMap_Qn, Algebra.algebraMap_eq_smul_one, ← latGen_zero]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨0, rfl⟩)
+  · have hx' : x ∈ span {ξ} := by
+      rw [← ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]; exact hx
+    obtain ⟨b, rfl⟩ := Ideal.mem_span_singleton'.mp hx'
+    show Ideal.Quotient.mk _ _ ∈ latG p N
+    have : Ideal.Quotient.mk (xiIdeal p N) (dpow p n (b * ξ)) = b ^ n • latGen p N n := by
+      rw [smul_Qn, latGen, algebraMap_Qn, ← map_mul, dpow]
+      congr 1
+      rw [map_mul, mul_pow, map_pow]
+      ring
+    rw [this]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨n, rfl⟩)
+
+theorem latGen_eq_zero {i : ℕ} (hi : N ≤ i) : latGen p N i = 0 := by
+  rw [latGen, Ideal.Quotient.eq_zero_iff_mem]
+  apply Ideal.mul_mem_left
+  rw [Ideal.mem_span_singleton']
+  exact ⟨algebraMap (Ainf p) (AinfP p) ξ ^ (i - N), by rw [← pow_add]; congr 1; omega⟩
+
+theorem latG_bound {q : Qn p N} (hq : q ∈ latG p N) :
+    ∃ a : Ainf p, (N.factorial : Qn p N) * q = algebraMap (Ainf p) (Qn p N) a := by
+  induction hq using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨i, rfl⟩ := hx
+    by_cases hi : N ≤ i
+    · exact ⟨0, by rw [latGen_eq_zero p N hi, mul_zero, map_zero]⟩
+    · obtain ⟨c, hc⟩ := Nat.factorial_dvd_factorial (show i ≤ N by omega)
+      refine ⟨(c : Ainf p) * ξ ^ i, ?_⟩
+      rw [algebraMap_Qn, latGen, ← map_natCast (Ideal.Quotient.mk (xiIdeal p N)), ← map_mul]
+      congr 1
+      have hi0 : (i.factorial : ℚ_[p]) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero i
+      have e1 : (N.factorial : AinfP p) * qpToLoc p (i.factorial : ℚ_[p])⁻¹ = (c : AinfP p) := by
+        rw [← map_natCast (qpToLoc p), ← map_mul, hc]
+        push_cast
+        rw [mul_comm (i.factorial : ℚ_[p]), mul_assoc, mul_inv_cancel₀ hi0, mul_one, map_natCast]
+      rw [map_mul, map_natCast, map_pow, ← e1]
+      ring
+  | zero => exact ⟨0, by rw [mul_zero, map_zero]⟩
+  | add x y _ _ hx hy =>
+    obtain ⟨a, ha⟩ := hx
+    obtain ⟨b, hb⟩ := hy
+    exact ⟨a + b, by rw [mul_add, ha, hb, map_add]⟩
+  | smul r x _ hx =>
+    obtain ⟨a, ha⟩ := hx
+    refine ⟨r * a, ?_⟩
+    rw [smul_Qn, mul_left_comm, ha, map_mul]
+
+end Lattice
+
 end PanBergerSplit
 end PkgI4
 end HDec
