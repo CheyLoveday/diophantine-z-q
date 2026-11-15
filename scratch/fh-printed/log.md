@@ -21,3 +21,9 @@ Base 43513d87 (leaf-fold25). Prebuilt tree copied from ~/dzq-check2 (bc90deac, s
   friedbergHoffsteinB_FE_of_printed, rootNumberTwistEqOne_iff (RootNumberTwistEqOne f D0 <->
   chi_D0(-N) eps(f) = 1), friedbergHoffsteinB_printed_of_FE, friedbergHoffsteinB_printed_iff_FE:
   COMPILE, axioms [propext, Classical.choice, Quot.sound] (VERIFIED).
+- 11-15 06:27 (host clock) deliverable ZInQKernel/Contrib/OneProof/FriedbergHoffsteinBFE.lean + helper
+  FHPrinted/LocalNorm.lean: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
+  +ZInQKernel.Contrib.OneProof.FriedbergHoffsteinBFE` OK (12996 jobs). scratch/fh-printed/Discharges.lean:
+  DISCHARGES [hFH] by ZInQ.FHPrinted.friedbergHoffsteinB_FE_of_printed, still assumes
+  [ZInQ.FHPrinted.FriedbergHoffsteinB_Printed], axioms standard; fhprinted_frozenTarget (frozenTarget with hFH
+  replaced) standard axioms. Output: scratch/fh-printed/Discharges-output.txt (VERIFIED).

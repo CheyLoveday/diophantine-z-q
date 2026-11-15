@@ -55,7 +55,7 @@ theorem localNorm_iff_of_localChar_eq {K : Type*} [Field K] {d D : ℤ}
   have := congrFun h (Units.mk0 x hx)
   simp only [localChar, Units.val_mk0] at this
   by_cases h1 : IsLocalNorm K d x <;> by_cases h2 : IsLocalNorm K D x <;>
-    simp only [h1, h2, if_true, if_false, iff_true, iff_false, not_true, not_false_eq_true] at this ⊢
+    simp only [h1, h2, ite_true, ite_false, iff_true, iff_false, not_true] at this ⊢
   · norm_num at this
   · norm_num at this
 
