@@ -1991,7 +1991,8 @@ theorem kw_surgehgf4_hH2c_betweenCurvesLocallyHoloLift_of_cocountable
     ((pointMapOfPushforward ι'' hι'' hfin''
       (normFormulaAlong_of_elliptic ι'' hfin'')) (L.kw_toPointHom w))
   refine ⟨(· + w) ⁻¹' U',
-    (continuous_add_right w).continuousAt.preimage_mem_nhds hU',
+    -- [port] Mathlib v4.35 renamed `continuous_add_right` to `continuous_add_const`
+    (continuous_add_const w).continuousAt.preimage_mem_nhds hU',
     fun z => G' (z + w) - cw,
     (hG'd.comp (differentiable_id.add_const w).differentiableOn
       (Set.mapsTo_preimage _ _)).sub_const cw,
