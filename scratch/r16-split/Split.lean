@@ -210,19 +210,53 @@ end LinAlg
 
 /-! ## 2. Precomposition: a field acting on `V` acts on `Hom_k(V, Ω)` -/
 
+/-- Precomposition by `T`, an `Ω`-linear endomorphism of `Hom_k(V, Ω)`. -/
+def precompL {k V Ω : Type*} [Field k] [AddCommGroup V] [Module k V] [Field Ω] [Algebra k Ω]
+    (T : Module.End k V) : Module.End Ω (V →ₗ[k] Ω) :=
+  { toFun := fun φ => φ ∘ₗ T
+    map_add' := fun φ ψ => LinearMap.add_comp _ _ _
+    map_smul' := fun c φ => LinearMap.smul_comp _ _ _ }
+
 /-- `a ↦ (φ ↦ φ ∘ ρ(a))`, a ring homomorphism since `F` is commutative. -/
 def precompHom {k V Ω F : Type*} [Field k] [AddCommGroup V] [Module k V] [Field Ω] [Algebra k Ω]
     [Field F] (ρ : F →+* Module.End k V) : F →+* Module.End Ω (V →ₗ[k] Ω) where
-  toFun a :=
-    { toFun := fun φ => φ ∘ₗ ρ a
-      map_add' := fun φ ψ => LinearMap.add_comp _ _ _
-      map_smul' := fun c φ => LinearMap.smul_comp _ _ _ }
-  map_one' := LinearMap.ext fun φ => LinearMap.ext fun v => by simp
+  toFun a := precompL (ρ a)
+  map_one' := LinearMap.ext fun φ => LinearMap.ext fun v => by simp [precompL]
   map_mul' a b := LinearMap.ext fun φ => LinearMap.ext fun v => by
     show φ (ρ (a * b) v) = φ (ρ b (ρ a v))
     rw [mul_comm, map_mul, Module.End.mul_apply]
-  map_zero' := LinearMap.ext fun φ => LinearMap.ext fun v => by simp
-  map_add' a b := LinearMap.ext fun φ => LinearMap.ext fun v => by simp
+  map_zero' := LinearMap.ext fun φ => LinearMap.ext fun v => by simp [precompL]
+  map_add' a b := LinearMap.ext fun φ => LinearMap.ext fun v => by simp [precompL]
+
+theorem precompL_apply {k V Ω : Type*} [Field k] [AddCommGroup V] [Module k V] [Field Ω] [Algebra k Ω]
+    (T : Module.End k V) (φ : V →ₗ[k] Ω) : precompL T φ = φ ∘ₗ T := rfl
+
+/-- The trace of precomposition by `T` on `Hom_k(V, Ω)` is the trace of `T`. -/
+theorem trace_precompL {k V Ω : Type*} [Field k] [AddCommGroup V] [Module k V]
+    [FiniteDimensional k V] [Field Ω] [Algebra k Ω] (T : Module.End k V) :
+    LinearMap.trace Ω (V →ₗ[k] Ω) (precompL T) = algebraMap k Ω (LinearMap.trace k V T) := by
+  classical
+  set b := Module.finBasis k V
+  set e : (Fin (finrank k V) → Ω) ≃ₗ[Ω] (V →ₗ[k] Ω) := b.constr Ω with he
+  set B : Basis (Fin (finrank k V)) Ω (V →ₗ[k] Ω) := (Pi.basisFun Ω _).map e with hB
+  rw [LinearMap.trace_eq_matrix_trace Ω B, LinearMap.trace_eq_matrix_trace k b, Matrix.trace,
+    Matrix.trace, map_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [Matrix.diag_apply, Matrix.diag_apply, LinearMap.toMatrix_apply, LinearMap.toMatrix_apply]
+  have hBr : ∀ x, B.repr x i = x (b i) := fun x => by
+    rw [hB, Basis.map_repr, LinearEquiv.trans_apply, Pi.basisFun_repr, he, Basis.constr_symm_apply]
+  have hBi : B i = b.constr Ω (Pi.single i 1) := by
+    rw [hB, Basis.map_apply, Pi.basisFun_apply]
+  rw [hBr, hBi]
+  rw [precompL_apply, LinearMap.comp_apply, Basis.constr_apply_fintype,
+    Finset.sum_eq_single i (fun j _ hj => by rw [Pi.single_eq_of_ne hj, smul_zero])
+      (fun h => absurd (Finset.mem_univ i) h), Pi.single_eq_same, Basis.equivFun_apply,
+    Algebra.smul_def, mul_one]
+
+theorem trace_precompHom {k V Ω F : Type*} [Field k] [AddCommGroup V] [Module k V]
+    [FiniteDimensional k V] [Field Ω] [Algebra k Ω] [Field F] (ρ : F →+* Module.End k V) (a : F) :
+    LinearMap.trace Ω (V →ₗ[k] Ω) (precompHom ρ a) = algebraMap k Ω (LinearMap.trace k V (ρ a)) :=
+  trace_precompL (ρ a)
 
 /-! ## 3. `End⁰(A)` acts on `V_ℓ(A)` through a ring homomorphism -/
 
@@ -333,6 +367,76 @@ theorem dim_eq_of_rank_two (hT : PkgI3.TateModuleFree) (A : AbVar ℚ) {F : Type
   rw [hT2] at hrk
   exact eq_of_two_mul hrk
 
+/-- **Rational traces (from Mumford §19 Thm 4, `PkgI3.CharPolyIndepOfEll`).** Every element of
+`End⁰(A)` has rational trace on `V_ℓ(A)`. -/
+theorem trace_endV_rat (hCP : PkgI3.CharPolyIndepOfEll) (A : AbVar ℚ)
+    [Module.Finite ℚ_[ℓ] (A.V ℓ)] (x : A.End0) :
+    ∃ r : ℚ, LinearMap.trace ℚ_[ℓ] (A.V ℓ) (endV ℓ A x) = (r : ℚ_[ℓ]) := by
+  induction x using TensorProduct.induction_on with
+  | zero => exact ⟨0, by simp⟩
+  | tmul q e =>
+    obtain ⟨P, -, hP⟩ := hCP ℚ A e
+    have h : LinearMap.trace ℚ_[ℓ] (A.V ℓ) ((homT (ℓ := ℓ) e).baseChange ℚ_[ℓ]) =
+        ((-P.nextCoeff : ℤ) : ℚ_[ℓ]) := by
+      rw [LinearMap.trace_eq_matrix_trace ℚ_[ℓ] (Module.finBasis ℚ_[ℓ] (A.V ℓ)),
+        Matrix.trace_eq_neg_charpoly_nextCoeff,
+        hP ℓ (Nat.cast_ne_zero.mpr (Fact.out : ℓ.Prime).ne_zero) _ _,
+        Polynomial.nextCoeff_map (Int.castRingHom ℚ_[ℓ]).injective_int]
+      simp
+    refine ⟨q * ((-P.nextCoeff : ℤ) : ℚ), ?_⟩
+    rw [endV_tmul, map_smul, homVAdd_apply, h, smul_eq_mul]
+    push_cast; rfl
+  | add x y hx hy =>
+    obtain ⟨r, hr⟩ := hx
+    obtain ⟨r', hr'⟩ := hy
+    exact ⟨r + r', by rw [map_add, map_add, hr, hr', Rat.cast_add]⟩
+
+/-- **Glue (proved): the rank-two clause from the dimension clause.** If a number field `F` acts on
+`A` through `θ` and `dim A = [F : ℚ]`, then every `ι`-eigenfunctional space of `V_ℓ(A)` has
+dimension `2`. Uses `PkgI3.TateModuleFree` and `PkgI3.CharPolyIndepOfEll` (Mumford §19 Thm 4). -/
+theorem rank_two_of_dim (hT : PkgI3.TateModuleFree) (hCP : PkgI3.CharPolyIndepOfEll)
+    (A : AbVar ℚ) {F : Type} [Field F] [Algebra ℚ F] [FiniteDimensional ℚ F] (θ : F →+* A.End0)
+    (hdim : A.dim = ((Module.finrank ℚ F : ℕ) : WithBot ℕ∞)) (emb : F →+* PadicAlgCl ℓ) :
+    Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) = 2 := by
+  obtain ⟨hfree, hfin, hrk⟩ := hT ℚ A ℓ (Nat.cast_ne_zero.mpr (Fact.out : ℓ.Prime).ne_zero)
+  have := hfree; have := hfin
+  set P := precompHom (Ω := PadicAlgCl ℓ) (rhoV ℓ A θ) with hPdef
+  set d : (F →ₐ[ℚ] PadicAlgCl ℓ) → ℕ := fun κ => Module.finrank (PadicAlgCl ℓ)
+    (jointEig P κ.toRingHom) with hd
+  -- all weights equal
+  have hrat : ∀ a : F, ∃ r : ℚ, ∑ κ : F →ₐ[ℚ] PadicAlgCl ℓ, (d κ : PadicAlgCl ℓ) * κ a =
+      (r : PadicAlgCl ℓ) := by
+    intro a
+    obtain ⟨r, hr⟩ := trace_endV_rat ℓ hCP A (θ a)
+    refine ⟨r, ?_⟩
+    rw [← trace_eq_sum_jointEig P a, hPdef, trace_precompHom]
+    change algebraMap ℚ_[ℓ] (PadicAlgCl ℓ) (LinearMap.trace ℚ_[ℓ] (A.V ℓ) (endV ℓ A (θ a))) = _
+    rw [hr, map_ratCast]
+  have heq := weights_eq_of_rational d hrat
+  -- the sum of the weights
+  have hV : Module.finrank ℚ_[ℓ] (A.V ℓ) = Module.finrank ℤ_[ℓ] (A.T ℓ) :=
+    Module.finrank_baseChange
+  have hW : Module.finrank (PadicAlgCl ℓ) (A.V ℓ →ₗ[ℚ_[ℓ]] PadicAlgCl ℓ) =
+      Module.finrank ℚ_[ℓ] (A.V ℓ) := Module.finrank_linearMap_self _ _ _
+  have hs := sum_finrank_jointEig (F := F) (Ω := PadicAlgCl ℓ) P
+  rw [hdim] at hrk
+  have hT2 : Module.finrank ℤ_[ℓ] (A.T ℓ) = 2 * Module.finrank ℚ F := by
+    have h' : (((Module.finrank ℤ_[ℓ] (A.T ℓ) : ℕ) : ℕ∞) : WithBot ℕ∞) =
+        (((2 * Module.finrank ℚ F : ℕ) : ℕ∞) : WithBot ℕ∞) := by
+      rw [hrk]; push_cast; rfl
+    exact Nat.cast_injective (WithBot.coe_injective h')
+  let κ := emb.toRatAlgHom
+  have hκ : κ.toRingHom = emb := RingHom.toRatAlgHom_toRingHom emb
+  have hc : ∑ κ' : F →ₐ[ℚ] PadicAlgCl ℓ, d κ' = ∑ _κ' : F →ₐ[ℚ] PadicAlgCl ℓ, d κ :=
+    Finset.sum_congr rfl fun κ' _ => heq κ' κ
+  rw [hc, Finset.sum_const, Finset.card_univ, AlgHom.card, smul_eq_mul, hW, hV, hT2] at hs
+  have hpos : 0 < Module.finrank ℚ F := Module.finrank_pos
+  have h2 : d κ = 2 := by
+    have := Nat.eq_of_mul_eq_mul_left hpos (hs.trans (mul_comm _ _))
+    exact this
+  rw [eigenFun_eq, ← hκ]
+  exact h2
+
 end Kernel
 
 /-! ## 4. The core leaf and the composition -/
@@ -394,6 +498,47 @@ theorem coreX_of_r16 (h : LeafModCurves.R16_EichlerShimuraJ1') : R16CoreX := by
   obtain ⟨hfin, A, π, θ, hs, -, hgal⟩ := h N χ f J hN hf hJ
   exact ⟨hfin, A, π, θ, hs, hgal⟩
 
+/-- **R16 without its rank-two clause** (Eichler–Shimura for `J₁(N)`, existential form). Literally
+`LeafModCurves.R16_EichlerShimuraJ1'` with the conjunct "the `ι`-component of `V_ℓ(A)` has
+dimension 2" deleted, so it is a consequence of R16. `K_f` is a number field, and there are an
+abelian variety `A` over `ℚ`, a surjective homomorphism `π : J → A` and `θ : K_f → End⁰_ℚ(A)` with
+`dim A = [K_f : ℚ]` such that arithmetic Frobenius at every prime `p ∤ Nℓ` acts on every
+`ι`-component of `V_ℓ(A)` with trace `ι(a_p(f))` and determinant `ι(χ(p))p`.
+
+Sources (at Shimura's `A_f`; locators UNVERIFIED): Shimura 1973 Thm 1, unconditional clauses
+(audit row R16) for `A_f`, `θ`, `dim A_f = [K_f : ℚ]`; Shimura 1971 Thm 3.52 for `[K_f : ℚ] < ∞`;
+Diamond–Shurman Thm 9.5.4 / Shimura 1971 Thm 7.11 for the characteristic polynomial of Frobenius
+(from the congruence relation, Shimura 1971 Thm 7.9). Compared with R16 the source "V_ℓ(A_f) is
+free of rank 2 over `K_f ⊗ ℚ_ℓ`" (Shimura 1971 §7.4, Ribet 1977) is no longer needed: it is proved
+from `dim A_f = [K_f : ℚ]` and Mumford §19 Thm 4 (`rank_two_of_dim`). GLUE (composite). -/
+def R16CoreY : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (J : AbVar ℚ),
+    0 < N → IsNewform f χ → IsJ1 N J →
+    FiniteDimensional ℚ (coeffField f) ∧
+    ∃ (A : AbVar ℚ) (π : Hom J A) (θ : coeffField f →+* A.End0),
+      Surjective π.hom.left ∧
+      A.dim = ((Module.finrank ℚ (coeffField f) : ℕ) : WithBot ℕ∞) ∧
+      ∀ (ℓ : ℕ) [Fact ℓ.Prime] (emb : coeffField f →+* PadicAlgCl ℓ),
+        ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
+          (∀ a : coeffField f, (a : ℂ) = coeff f p →
+              LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) = emb a) ∧
+          (∀ c : coeffField f, (c : ℂ) = χ (p : ZMod N) →
+              LinearMap.det (frobOn ℓ A θ emb σ) = emb c * p)
+
+/-- **R16 from its core without the rank-two clause, `TateModuleFree` and Mumford §19 Thm 4.** -/
+theorem r16_of_coreY (hC : R16CoreY) (hT : PkgI3.TateModuleFree)
+    (hCP : PkgI3.CharPolyIndepOfEll) : LeafModCurves.R16_EichlerShimuraJ1' := by
+  intro N χ f J hN hf hJ
+  obtain ⟨hfin, A, π, θ, hs, hdim, hgal⟩ := hC N χ f J hN hf hJ
+  exact ⟨hfin, A, π, θ, hs, hdim, fun ℓ _ emb =>
+    ⟨rank_two_of_dim ℓ hT hCP A θ hdim emb, hgal ℓ emb⟩⟩
+
+/-- The core is a consequence of R16. -/
+theorem coreY_of_r16 (h : LeafModCurves.R16_EichlerShimuraJ1') : R16CoreY := by
+  intro N χ f J hN hf hJ
+  obtain ⟨hfin, A, π, θ, hs, hdim, hgal⟩ := h N χ f J hN hf hJ
+  exact ⟨hfin, A, π, θ, hs, hdim, fun ℓ _ emb => (hgal ℓ emb).2⟩
+
 end Core
 
 end R16Split
@@ -401,4 +546,6 @@ end R16Split
 #print axioms R16Split.r16_of_coreX
 #print axioms R16Split.coreX_of_r16
 #print axioms R16Split.sum_finrank_jointEig
+#print axioms R16Split.r16_of_coreY
+#print axioms R16Split.coreY_of_r16
 
