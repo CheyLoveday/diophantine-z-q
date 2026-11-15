@@ -787,7 +787,7 @@ end Transport2
 
 /-! ## Part 7. The identity (Ix), its Fricke transform, and `y` from `x` -/
 
-/-- **GLUE X-ETA-WP (an identity of explicit functions on `ℍ`).** x0-32's eta quotient
+/-- The two forms of (Ix) (the second follows from the first: `xEtaWeierstrassPair_of`). x0-32's eta quotient
 `x = η(2τ)²η(16τ)/(η(4τ)η(32τ)²) + 2` is a weight-0 ratio of Weierstrass values of the lattice
 `⟨1/16, τ⟩` at three of its torsion points, in two ways:
 `x(τ) = 2 − 4(℘(1/32) − ℘(1/32 + τ/8))/(℘(3τ/8) − ℘(1/32 + τ/8))`
@@ -795,16 +795,97 @@ end Transport2
 Found by a search over the points of `E[8]` and checked at 12 random points of `ℍ` to 36 digits
 (`scratch/hx-used/num/search_x.py`, `check_xy.py`). Classical in nature (Jacobi's theta/`℘`
 relations; `x = 2θ₀₀(16τ)/θ₁₀(16τ)` is the kernel's `Shimura.xC_theta`), no printed source located. -/
-def XEtaWeierstrass : Prop :=
+def XEtaWeierstrassPair : Prop :=
   ∀ τ : UpperHalfPlane,
     ZInQ.Contrib.TYZGenus.X0.xC τ = 2 - 4 * wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (3 * τ / 8) (1 / 32 + τ / 8) ∧
     ZInQ.Contrib.TYZGenus.X0.xC τ = 2 - 4 * wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (τ / 8) (1 / 32 + 3 * τ / 8)
+
 
 theorem wpRatio_scale {P Q : PeriodPair} {c : ℂ} (h : IsScale P Q c) (a b d : ℂ) :
     wpRatio P (c * a) (c * b) (c * d) = wpRatio Q a b d := by
   simp only [wpRatio, h.weierstrassP]
   have hc : ((c ^ 2)⁻¹ : ℂ) ≠ 0 := inv_ne_zero (pow_ne_zero 2 h.1)
   rw [← mul_sub, ← mul_sub, mul_div_mul_left _ _ hc]
+
+/-- **GLUE X-ETA-WP (an identity of explicit functions on `ℍ`).** x0-32's eta quotient
+`x = η(2τ)²η(16τ)/(η(4τ)η(32τ)²) + 2` is a weight-0 ratio of Weierstrass values of the lattice
+`⟨1/16, τ⟩` at three of its torsion points:
+`x(τ) = 2 − 4(℘(1/32) − ℘(1/32 + τ/8))/(℘(3τ/8) − ℘(1/32 + τ/8))`, `℘ = ℘_{⟨1/16, τ⟩}` (Mathlib's
+`PeriodPair.weierstrassP` of the period pair `(1/16, τ)`). Found by a search over the points of
+`(1/8)⟨1/16, τ⟩` and checked at 12 random points of `ℍ` to 36 digits (`scratch/hx-used/num/search_x.py`,
+`check_xy.py`). Classical in nature (Jacobi's relations between `θ` and `℘`; the kernel proves
+`x = 2θ₀₀(16τ)/θ₁₀(16τ)`, `Shimura.xC_theta`); no printed source located. -/
+def XEtaWeierstrass : Prop :=
+  ∀ τ : UpperHalfPlane,
+    ZInQ.Contrib.TYZGenus.X0.xC τ = 2 - 4 * wpRatio (ppM 16 (by norm_num) τ) (1 / 32) (3 * τ / 8) (1 / 32 + τ / 8)
+
+/-- `γ₃ = [[3, 1], [32, 11]] ∈ Γ₀(32)`. -/
+def gamma3 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=
+  ⟨!![3, 1; 32, 11], by rw [Matrix.det_fin_two_of]; norm_num⟩
+
+theorem gamma3_mem : gamma3 ∈ CongruenceSubgroup.Gamma0 32 := by
+  rw [CongruenceSubgroup.Gamma0_mem]
+  simp [gamma3]
+  decide
+
+/-- `⟨1/16, γ₃τ⟩ = (32τ + 11)⁻¹·⟨1/16, τ⟩`. -/
+theorem isScale_gamma3 (τ : UpperHalfPlane) :
+    IsScale (ppM 16 (by norm_num) (gamma3 • τ)) (ppM 16 (by norm_num) τ) (1 / (32 * (τ : ℂ) + 11)) := by
+  have hden : (32 * (τ : ℂ) + 11) ≠ 0 := by
+    intro h
+    have := congrArg Complex.im h
+    simp at this
+    exact (ne_of_gt τ.im_pos) (by linarith)
+  have hg : ((gamma3 • τ : UpperHalfPlane) : ℂ) = (3 * τ + 1) / (32 * τ + 11) := by
+    rw [UpperHalfPlane.coe_specialLinearGroup_apply]; simp [gamma3]
+  have hden' : (11 + (τ : ℂ) * 32) ≠ 0 := by rw [add_comm, mul_comm]; exact hden
+  refine ⟨by simp [hden], ?_⟩
+  ext x
+  simp only [SetLike.mem_coe, PeriodPair.mem_lattice, Set.mem_smul_set, smul_eq_mul, ppM, hg]
+  constructor
+  · rintro ⟨a, b, rfl⟩
+    refine ⟨((11 * a + 16 * b : ℤ) : ℂ) * (1 / 16) + ((2 * a + 3 * b : ℤ) : ℂ) * τ,
+      ⟨11 * a + 16 * b, 2 * a + 3 * b, rfl⟩, ?_⟩
+    push_cast; field_simp; ring
+  · rintro ⟨y, ⟨a, b, rfl⟩, rfl⟩
+    refine ⟨3 * a - 16 * b, -2 * a + 11 * b, ?_⟩
+    have hu : (32 * (τ : ℂ) + 11) * (32 * (τ : ℂ) + 11)⁻¹ = 1 := mul_inv_cancel₀ hden
+    push_cast
+    linear_combination (-(3 * (a : ℂ) - 16 * b) / 16) * hu
+
+/-- **The second form of (Ix) from the first** (`x(γ₃τ) = x(τ)`, kernel's `Shimura.etaModelInvariant`). -/
+theorem xEtaWeierstrassPair_of (hX : XEtaWeierstrass) : XEtaWeierstrassPair := by
+  intro τ
+  refine ⟨hX τ, ?_⟩
+  have hden : (32 * (τ : ℂ) + 11) ≠ 0 := by
+    intro h
+    have := congrArg Complex.im h
+    simp at this
+    exact (ne_of_gt τ.im_pos) (by linarith)
+  have hg : ((gamma3 • τ : UpperHalfPlane) : ℂ) = (3 * τ + 1) / (32 * τ + 11) := by
+    rw [UpperHalfPlane.coe_specialLinearGroup_apply]; simp [gamma3]
+  have hinv := (etaModelInvariant gamma3 gamma3_mem τ).1
+  have hden' : (11 + (τ : ℂ) * 32) ≠ 0 := by rw [add_comm, mul_comm]; exact hden
+  rw [← hinv, hX (gamma3 • τ)]
+  have hω : (ppM 16 (by norm_num) τ).ω₁ = 1 / 16 ∧ (ppM 16 (by norm_num) τ).ω₂ = τ :=
+    ⟨by simp [ppM], rfl⟩
+  have e : wpRatio (ppM 16 (by norm_num) (gamma3 • τ)) (1 / 32) (3 * ((gamma3 • τ : UpperHalfPlane) : ℂ) / 8)
+      (1 / 32 + ((gamma3 • τ : UpperHalfPlane) : ℂ) / 8) =
+      wpRatio (ppM 16 (by norm_num) (gamma3 • τ)) ((1 / (32 * (τ : ℂ) + 11)) * ((τ : ℂ) + 11 / 32))
+        ((1 / (32 * (τ : ℂ) + 11)) * (9 * (τ : ℂ) / 8 + 3 / 8))
+        ((1 / (32 * (τ : ℂ) + 11)) * (11 * (τ : ℂ) / 8 + 15 / 32)) := by
+    congr 1 <;> (try rw [hg]) <;> field_simp <;> ring
+  rw [e, wpRatio_scale (isScale_gamma3 τ)]
+  have r1 : (ppM 16 (by norm_num) τ).weierstrassP ((τ : ℂ) + 11 / 32) =
+      (ppM 16 (by norm_num) τ).weierstrassP (1 / 32) :=
+    wp_congr _ 5 1 (by rw [hω.1, hω.2]; push_cast; ring)
+  have r2 : (ppM 16 (by norm_num) τ).weierstrassP (9 * (τ : ℂ) / 8 + 3 / 8) =
+      (ppM 16 (by norm_num) τ).weierstrassP ((τ : ℂ) / 8) :=
+    wp_congr _ 6 1 (by rw [hω.1, hω.2]; push_cast; ring)
+  have r3 : (ppM 16 (by norm_num) τ).weierstrassP (11 * (τ : ℂ) / 8 + 15 / 32) =
+      (ppM 16 (by norm_num) τ).weierstrassP (1 / 32 + 3 * (τ : ℂ) / 8) :=
+    wp_congr _ 7 1 (by rw [hω.1, hω.2]; push_cast; ring)
+  rw [wpRatio, wpRatio, r1, r2, r3]
 
 /-- `⟨1/16, −1/(32τ)⟩ = (−1/(16τ))·⟨1/2, τ⟩`. -/
 theorem isScale_fricke (τ : UpperHalfPlane) :
@@ -822,7 +903,7 @@ theorem isScale_fricke (τ : UpperHalfPlane) :
     push_cast; field_simp; ring
 
 /-- **(IxW)**: the Fricke transform of (Ix), `x(−1/(32τ))` through `℘_{⟨1/2, τ⟩}`. -/
-theorem xC_fricke_wp (hX : XEtaWeierstrass) (τ : UpperHalfPlane) :
+theorem xC_fricke_wp (hX : XEtaWeierstrassPair) (τ : UpperHalfPlane) :
     ZInQ.Contrib.TYZGenus.X0.xC (frickeH τ) = 2 - 4 * wpRatio (ppM 2 (by norm_num) τ) (τ / 2) (3 / 16) (τ / 2 + 1 / 16) ∧
     ZInQ.Contrib.TYZGenus.X0.xC (frickeH τ) = 2 - 4 * wpRatio (ppM 2 (by norm_num) τ) (τ / 2) (1 / 16) (τ / 2 + 3 / 16) := by
   have hτ : (τ : ℂ) ≠ 0 := UpperHalfPlane.ne_zero τ
@@ -890,7 +971,7 @@ section Assembly
 
 variable {f : ℕ} [NeZero f] {D : ℤ}
 
-theorem x_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
+theorem x_conj (hX : XEtaWeierstrassPair) (hCM : ShimuraMainCM) (T : TData m f D)
     (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
     (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
       I * (Real.sqrt m : ℂ))
@@ -902,7 +983,7 @@ theorem x_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
   · rw [(hX T.Q.tauH).1, (hX T.Q'.tauH).1]; exact conj_two_sub_four h
   · rw [(hX T.Q.tauH).1, (hX T.Q'.tauH).2]; exact conj_two_sub_four h
 
-theorem xW_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
+theorem xW_conj (hX : XEtaWeierstrassPair) (hCM : ShimuraMainCM) (T : TData m f D)
     (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
     (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
       I * (Real.sqrt m : ℂ))
@@ -914,7 +995,7 @@ theorem xW_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
   · rw [(xC_fricke_wp hX T.Q.tauH).1, (xC_fricke_wp hX T.Q'.tauH).1]; exact conj_two_sub_four h
   · rw [(xC_fricke_wp hX T.Q.tauH).1, (xC_fricke_wp hX T.Q'.tauH).2]; exact conj_two_sub_four h
 
-theorem y_conj (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) (T : TData m f D)
+theorem y_conj (hX : XEtaWeierstrassPair) (hCM : ShimuraMainCM) (T : TData m f D)
     (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
     (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
       I * (Real.sqrt m : ℂ))
@@ -989,12 +1070,12 @@ theorem srAt_of_conj (g : UpperHalfPlane → ℂ)
 /-- **`ShimuraReciprocityModFn` at level 32 for x0-32's `x`**, from `ShimuraMainCM` and (Ix). -/
 theorem srAt_x (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
     X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.xC τ) :=
-  srAt_of_conj _ fun T e he σ hs => x_conj hX hCM T e he σ hs
+  srAt_of_conj _ fun T e he σ hs => x_conj (xEtaWeierstrassPair_of hX) hCM T e he σ hs
 
 /-- **`ShimuraReciprocityModFn` at level 32 for x0-32's `y`**, from `ShimuraMainCM` and (Ix). -/
 theorem srAt_y (hX : XEtaWeierstrass) (hCM : ShimuraMainCM) :
     X0ModuliUsed.ShimuraReciprocityModFnAt 32 (fun τ => ZInQ.Contrib.TYZGenus.X0.yC τ) :=
-  srAt_of_conj _ fun T e he σ hs => y_conj hX hCM T e he σ hs
+  srAt_of_conj _ fun T e he σ hs => y_conj (xEtaWeierstrassPair_of hX) hCM T e he σ hs
 
 #print axioms srAt_x
 #print axioms srAt_y
