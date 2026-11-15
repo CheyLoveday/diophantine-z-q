@@ -754,7 +754,174 @@ theorem paramCuspGrowth : ParamCuspGrowth := by
         unfold gPar phiT xPar
         rw [hz τ, sub_sub])⟩
 
-end ZInQ.GZHeegner
+/-! ## Taylor series at `0` as power series; the Weierstrass equation in `q` -/
 
-#print axioms ZInQ.GZHeegner.paramCuspGrowth
-#print axioms ZInQ.GZHeegner.paramRegular
+section Taylor
+
+open PowerSeries Nat
+
+/-- The Taylor series of `f` at `0`. -/
+def tay (f : ℂ → ℂ) : PowerSeries ℂ := PowerSeries.mk fun n => ((n ! : ℂ))⁻¹ * iteratedDeriv n f 0
+
+theorem coeff_tay (f : ℂ → ℂ) (n : ℕ) :
+    PowerSeries.coeff n (tay f) = ((n ! : ℂ))⁻¹ * iteratedDeriv n f 0 := by
+  simp [tay]
+
+theorem tay_congr {f g : ℂ → ℂ} (h : f =ᶠ[nhds 0] g) : tay f = tay g := by
+  ext n; rw [coeff_tay, coeff_tay, h.iteratedDeriv_eq n]
+
+theorem tay_add {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
+    tay (fun w => f w + g w) = tay f + tay g := by
+  ext n
+  rw [coeff_tay, map_add, coeff_tay, coeff_tay,
+    iteratedDeriv_fun_add hf.contDiffAt hg.contDiffAt]
+  ring
+
+theorem tay_sub {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
+    tay (fun w => f w - g w) = tay f - tay g := by
+  ext n
+  rw [coeff_tay, map_sub, coeff_tay, coeff_tay,
+    iteratedDeriv_fun_sub hf.contDiffAt hg.contDiffAt]
+  ring
+
+theorem tay_mul {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
+    tay (fun w => f w * g w) = tay f * tay g := by
+  ext n
+  rw [coeff_tay, iteratedDeriv_fun_mul hf.contDiffAt hg.contDiffAt, PowerSeries.coeff_mul,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun k hk => ?_
+  rw [Finset.mem_range] at hk
+  rw [coeff_tay, coeff_tay]
+  have hkn : k ≤ n := Nat.lt_succ_iff.1 hk
+  have h := Nat.choose_mul_factorial_mul_factorial hkn
+  have h1 : ((n ! : ℂ)) = (n.choose k : ℂ) * (k ! : ℂ) * ((n - k) ! : ℂ) := by exact_mod_cast h.symm
+  have hk0 : ((k ! : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+  have hnk0 : (((n - k) ! : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (n - k)
+  have hc0 : ((n.choose k : ℕ) : ℂ) ≠ 0 := by exact_mod_cast (Nat.choose_pos hkn).ne'
+  rw [h1]
+  field_simp
+
+theorem tay_const (c : ℂ) : tay (fun _ => c) = PowerSeries.C c := by
+  ext n
+  rw [coeff_tay, iteratedDeriv_const, PowerSeries.coeff_C]
+  split_ifs <;> simp_all
+
+theorem tay_id : tay (fun w => w) = PowerSeries.X := by
+  ext n
+  rw [coeff_tay, iteratedDeriv_fun_id_zero, PowerSeries.coeff_X]
+  split_ifs with h <;> simp [h]
+
+theorem tay_deriv {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) : tay (deriv f) = d⁄dX (tay f) := by
+  ext n
+  rw [coeff_tay, PowerSeries.coeff_derivative, coeff_tay, ← iteratedDeriv_succ']
+  rw [Nat.factorial_succ]
+  push_cast
+  have : ((n ! : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
+  have h2 : ((n : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
+  field_simp
+
+/-- The Weierstrass equation for `Y = w²(℘(Z(w)) − b)` as a formal power series identity:
+`(wY' − 2Y)² = (4(Y + bw²)³ − g₂w⁴(Y + bw²) − g₃w⁶)·A`. -/
+def odePhi (A : ℂ⟦X⟧) (b g₂ g₃ : ℂ) (S : ℂ⟦X⟧) : ℂ⟦X⟧ :=
+  (X * d⁄dX S - 2 * S) ^ 2 -
+    (4 * (S + C b * X ^ 2) ^ 3 - C g₂ * X ^ 4 * (S + C b * X ^ 2) - C g₃ * X ^ 6) * A
+
+theorem X_mul_derivative_X_pow_mul (n : ℕ) (ε : ℂ⟦X⟧) :
+    X * d⁄dX (X ^ n * ε) = X ^ n * (C (n : ℂ) * ε + X * d⁄dX ε) := by
+  rw [Derivation.leibniz, PowerSeries.derivative_pow, PowerSeries.derivative_X, smul_eq_mul,
+    smul_eq_mul]
+  rcases n with _ | n
+  · simp
+  · simp only [Nat.add_sub_cancel, pow_succ, map_natCast]
+    push_cast
+    ring
+
+/-- **Uniqueness of the formal solution with given constant term.** -/
+theorem odePhi_unique (A : ℂ⟦X⟧) (b g₂ g₃ : ℂ) {S T : ℂ⟦X⟧} (hS : odePhi A b g₂ g₃ S = 0)
+    (hT : odePhi A b g₂ g₃ T = 0) (h0 : constantCoeff S = constantCoeff T)
+    (hne : constantCoeff S ≠ 0) (hA : constantCoeff A * constantCoeff S = 1) : S = T := by
+  suffices h : ∀ n, ∀ m < n, PowerSeries.coeff m S = PowerSeries.coeff m T by
+    ext m; exact h (m + 1) m (Nat.lt_succ_self m)
+  intro n
+  induction n with
+  | zero => intro m hm; exact absurd hm (Nat.not_lt_zero m)
+  | succ n ih =>
+    intro m hm
+    rcases Nat.lt_succ_iff_lt_or_eq.1 hm with hm | rfl
+    · exact ih m hm
+    obtain ⟨ε, hε⟩ : X ^ m ∣ S - T := by
+      rw [PowerSeries.X_pow_dvd_iff]
+      intro k hk; rw [map_sub, ih k hk, sub_self]
+    have hSe : S = T + X ^ m * ε := by rw [← hε]; ring
+    have hdS : X * d⁄dX S = X * d⁄dX T + X ^ m * (C (m : ℂ) * ε + X * d⁄dX ε) := by
+      rw [hSe, map_add, mul_add, X_mul_derivative_X_pow_mul]
+    have key : odePhi A b g₂ g₃ S - odePhi A b g₂ g₃ T = X ^ m *
+        ((X * d⁄dX T + X ^ m * (C (m : ℂ) * ε + X * d⁄dX ε) - 2 * S + (X * d⁄dX T - 2 * T)) *
+          (C (m : ℂ) * ε + X * d⁄dX ε - 2 * ε) -
+        A * (4 * ((S + C b * X ^ 2) ^ 2 + (S + C b * X ^ 2) * (T + C b * X ^ 2) +
+          (T + C b * X ^ 2) ^ 2) - C g₂ * X ^ 4) * ε) := by
+      unfold odePhi
+      rw [hdS, hSe]
+      ring
+    set B := (X * d⁄dX T + X ^ m * (C (m : ℂ) * ε + X * d⁄dX ε) - 2 * S + (X * d⁄dX T - 2 * T)) *
+          (C (m : ℂ) * ε + X * d⁄dX ε - 2 * ε) -
+        A * (4 * ((S + C b * X ^ 2) ^ 2 + (S + C b * X ^ 2) * (T + C b * X ^ 2) +
+          (T + C b * X ^ 2) ^ 2) - C g₂ * X ^ 4) * ε with hBdef
+    rw [hS, hT, sub_zero] at key
+    have hB : B = 0 := (mul_eq_zero.1 key.symm).resolve_left (pow_ne_zero _ PowerSeries.X_ne_zero)
+    have hc := congrArg constantCoeff hB
+    have hX0 : constantCoeff (X : ℂ⟦X⟧) = 0 := PowerSeries.constantCoeff_X
+    simp only [hBdef, map_sub, map_add, map_mul, map_pow, hX0, PowerSeries.constantCoeff_C,
+      map_ofNat, zero_mul, mul_zero, zero_pow (two_ne_zero), zero_add, add_zero, sub_zero,
+      map_zero] at hc
+    rw [← h0] at hc
+    set s₀ := constantCoeff S
+    set e₀ := constantCoeff ε
+    have hz : (0 : ℂ) ^ m * (m : ℂ) = 0 := by rcases m with _ | m <;> simp
+    have hc' : -4 * s₀ * e₀ * ((m : ℂ) - 2 + 3 * (constantCoeff A * s₀)) = 0 := by
+      linear_combination hc + e₀ ^ 2 * (2 - (m : ℂ)) * hz
+    rw [hA] at hc'
+    have hm1 : ((m : ℂ) - 2 + 3 * 1) ≠ 0 := by
+      have : ((m : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero m
+      convert this using 1; ring
+    have he : e₀ = 0 := by
+      rcases mul_eq_zero.1 hc' with h | h
+      · rcases mul_eq_zero.1 h with h | h
+        · exfalso; apply hne; have : (-4 : ℂ) ≠ 0 := by norm_num
+          exact (mul_eq_zero.1 h).resolve_left this
+        · exact h
+      · exact absurd h hm1
+    have : PowerSeries.coeff m (S - T) = 0 := by
+      rw [hε, PowerSeries.coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self,
+        PowerSeries.coeff_zero_eq_constantCoeff_apply]
+      exact he
+    rw [map_sub, sub_eq_zero] at this
+    exact this
+
+theorem map_derivative (σ : ℂ →+* ℂ) (S : ℂ⟦X⟧) :
+    PowerSeries.map σ (d⁄dX S) = d⁄dX (PowerSeries.map σ S) := by
+  ext n
+  rw [PowerSeries.coeff_map, PowerSeries.coeff_derivative, PowerSeries.coeff_derivative,
+    PowerSeries.coeff_map, map_mul]
+  simp
+
+theorem map_odePhi (σ : ℂ →+* ℂ) (A : ℂ⟦X⟧) (b g₂ g₃ : ℂ) (S : ℂ⟦X⟧) :
+    PowerSeries.map σ (odePhi A b g₂ g₃ S) =
+      odePhi (PowerSeries.map σ A) (σ b) (σ g₂) (σ g₃) (PowerSeries.map σ S) := by
+  simp only [odePhi, map_sub, map_mul, map_pow, map_add, PowerSeries.map_X, PowerSeries.map_C,
+    map_derivative, map_ofNat]
+
+/-- **The fixed field of `Aut(ℂ)` is `ℚ`.** -/
+theorem rat_of_fixed (z : ℂ) (hz : ∀ σ : ℂ ≃+* ℂ, σ z = z) : ∃ q : ℚ, (q : ℂ) = z := by
+  obtain ⟨a, ha⟩ := T5Glue.fixedAlgebraic z (fun σ _ => hz σ)
+  have hfix : ∀ ρ : Qbar ≃ₐ[ℚ] Qbar, ρ a = a := by
+    intro ρ
+    obtain ⟨σ, hσ⟩ := T5Glue.autExtends ρ
+    apply ιC.injective
+    rw [← hσ, ha, hz]
+  obtain ⟨q, hq⟩ := (InfiniteGalois.mem_range_algebraMap_iff_fixed a).2 hfix
+  exact ⟨q, by rw [← ha, ← hq]; simp⟩
+
+end Taylor
+
+end ZInQ.GZHeegner
