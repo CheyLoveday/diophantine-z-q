@@ -35,6 +35,9 @@ abbrev B := LeafQM.B
 theorem act_smul_vec (x : B) (c : ℂ) (w : Fin 2 → ℂ) : act x (c • w) = c • act x w := by
   simp [act, Matrix.mulVec_smul]
 
+theorem act_add_vec (x : B) (u u' : Fin 2 → ℂ) : act x (u + u') = act x u + act x u' := by
+  simp [act, Matrix.mulVec_add]
+
 theorem act_algebraMap (r : ℚ) (w : Fin 2 → ℂ) : act (algebraMap ℚ B r) w = (r : ℂ) • w := by
   rw [Algebra.algebraMap_eq_smul_one, act_smul, act_one]
 
@@ -584,6 +587,116 @@ theorem unif_conj (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
     apply hpres
     rw [hΛ]
     simpa using hz
+
+/-! ## §6 The lattice algebra of `ℂ²/Λ_τ` -/
+
+/-- `w = ι(i)(τ, 1)ᵀ`. -/
+def wvec (τ : ℂ) : Fin 2 → ℂ := act (BPAnalytic.QM.oBasis 1) ![τ, 1]
+
+theorem wvec_eq (τ : ℂ) : wvec τ = ![√2 * τ, -√2] := by
+  funext i; fin_cases i <;> simp [wvec, act_apply0, act_apply1, BPAnalytic.QM.oBasis]
+
+theorem vw_li {τ : ℂ} (hτ : τ.im ≠ 0) : LinearIndependent ℂ ![![τ, 1], wvec τ] := by
+  have hτ0 : τ ≠ 0 := fun h => hτ (by rw [h, Complex.zero_im])
+  have s2 : (√2 : ℂ) ≠ 0 := BPAnalytic.QM.sqrt2_ne_zero
+  rw [LinearIndependent.pair_iff]
+  intro s t h
+  have h0 := congrFun h 0
+  have h1 := congrFun h 1
+  simp [wvec_eq] at h0 h1
+  have ht : (2 * √2 * τ : ℂ) * t = 0 := by linear_combination h0 - τ * h1
+  have ht' : t = 0 := (mul_eq_zero.mp ht).resolve_left (by simp [hτ0, s2])
+  refine ⟨?_, ht'⟩
+  rw [ht'] at h1; simpa using h1
+
+/-- The `ℂ`-basis `(v, w)` of `ℂ²`. -/
+def bvw {τ : ℂ} (hτ : τ.im ≠ 0) : Module.Basis (Fin 2) ℂ (Fin 2 → ℂ) :=
+  basisOfLinearIndependentOfCardEqFinrank (vw_li hτ) (by simp)
+
+theorem bvw_zero {τ : ℂ} (hτ : τ.im ≠ 0) : bvw hτ 0 = ![τ, 1] := by
+  simp [bvw, coe_basisOfLinearIndependentOfCardEqFinrank]
+
+theorem bvw_one {τ : ℂ} (hτ : τ.im ≠ 0) : bvw hτ 1 = wvec τ := by
+  simp [bvw, coe_basisOfLinearIndependentOfCardEqFinrank]
+
+theorem decomp {τ : ℂ} (hτ : τ.im ≠ 0) (u : Fin 2 → ℂ) :
+    u = (bvw hτ).repr u 0 • ![τ, 1] + (bvw hτ).repr u 1 • wvec τ := by
+  conv_lhs => rw [← (bvw hτ).sum_repr u]
+  rw [Fin.sum_univ_two, bvw_zero, bvw_one]
+
+theorem repr_comb {τ : ℂ} (hτ : τ.im ≠ 0) (α β : ℂ) :
+    (bvw hτ).repr (α • ![τ, 1] + β • wvec τ) 0 = α ∧ (bvw hτ).repr (α • ![τ, 1] + β • wvec τ) 1 = β := by
+  rw [← bvw_zero hτ, ← bvw_one hτ]
+  simp [Finsupp.single_apply]
+
+/-- `x ↦ ι(x)v`, `ℚ`-linearly. -/
+def actV (v : Fin 2 → ℂ) : B →ₗ[ℚ] (Fin 2 → ℂ) where
+  toFun b := act b v
+  map_add' a b := act_add a b v
+  map_smul' r b := by
+    rw [act_smul, RingHom.id_apply, Rat.cast_smul_eq_qsmul]
+
+/-- **If `S_{(τ,1)} = ℚ`, every `ℂ`-linear map preserving `ι(B)(τ, 1)ᵀ` is some `ι(x)`.** With
+`N' = N − ι(x)` killing `v` and `N'w = ι(y)v`, `y ≠ 0` would force the `w`-coordinate of `ι(b)v` to be
+rational for all `b ∈ B`; that `ℚ`-linear functional has kernel `S_v = ℚ`, so `4 ≤ 1 + 1`. -/
+theorem eq_act_of_trivial {τ : ℂ} (hτ : τ.im ≠ 0)
+    (hall : ∀ x ∈ S ![τ, 1], x.imI = 0 ∧ x.imJ = 0 ∧ x.imK = 0)
+    (N : Module.End ℂ (Fin 2 → ℂ)) (hN : ∀ x : B, ∃ y : B, N (act x ![τ, 1]) = act y ![τ, 1]) :
+    ∃ x : B, ∀ z, N z = act x z := by
+  obtain ⟨x, hx⟩ := hN 1
+  rw [act_one] at hx
+  obtain ⟨y1, hy1⟩ := hN (BPAnalytic.QM.oBasis 1)
+  set y := y1 - x * BPAnalytic.QM.oBasis 1 with hydef
+  have hNw : N (wvec τ) - act x (wvec τ) = act y ![τ, 1] := by
+    rw [hydef, act_sub, act_mul, ← hy1]; rfl
+  refine ⟨x, ?_⟩
+  by_cases hy : y = 0
+  · intro z
+    have hw : N (wvec τ) = act x (wvec τ) := by
+      rw [hy, act_zero] at hNw; exact sub_eq_zero.mp hNw
+    rw [decomp hτ z, map_add, map_smul, map_smul, act_add_vec, act_smul_vec, act_smul_vec, hx, hw]
+  · exfalso
+    obtain ⟨yi, hyi⟩ : ∃ yi : B, yi * y = 1 :=
+      ⟨(QMSplit.CNO.nrd y)⁻¹ • star y, by simpa using QMSplit.CNO.div_mul_cancel' 1 y hy⟩
+    let β : B →ₗ[ℚ] ℂ := ((bvw hτ).coord 1).restrictScalars ℚ ∘ₗ actV ![τ, 1]
+    have hβ : ∀ b, β b = (bvw hτ).repr (act b ![τ, 1]) 1 := fun b => rfl
+    have hβrat : ∀ b, ∃ r : ℚ, β b = r := by
+      intro b
+      obtain ⟨z, hz⟩ := hN b
+      have e1 : N (act b ![τ, 1]) - act x (act b ![τ, 1]) = β b • act y ![τ, 1] := by
+        conv_lhs => rw [decomp hτ (act b ![τ, 1])]
+        rw [map_add, map_smul, map_smul, act_add_vec, act_smul_vec, act_smul_vec, hx, hβ, ← hNw]
+        module
+      have e2 : act (yi * (z - x * b)) ![τ, 1] = β b • ![τ, 1] := by
+        rw [act_mul, act_sub, act_mul, ← hz, e1, act_smul_vec, ← act_mul, hyi, act_one]
+      obtain ⟨h1, h2, h3⟩ := hall _ ⟨β b, e2⟩
+      set u := yi * (z - x * b)
+      have hu : u = algebraMap ℚ B u.re := by
+        ext <;> simp [h1, h2, h3, Algebra.algebraMap_eq_smul_one]
+      refine ⟨u.re, ?_⟩
+      rw [hu, act_algebraMap] at e2
+      have := congrFun e2 1
+      simpa using this.symm
+    have hker : ∀ b, β b = 0 → b ∈ Submodule.span ℚ {(1 : B)} := by
+      intro b hb
+      have : act b ![τ, 1] = (bvw hτ).repr (act b ![τ, 1]) 0 • ![τ, 1] := by
+        conv_lhs => rw [decomp hτ (act b ![τ, 1])]
+        rw [← hβ, hb, zero_smul, add_zero]
+      obtain ⟨h1, h2, h3⟩ := hall b ⟨_, this⟩
+      rw [Submodule.mem_span_singleton]
+      exact ⟨b.re, by ext <;> simp [h1, h2, h3]⟩
+    have hr : Module.finrank ℚ (LinearMap.range β) ≤ 1 := by
+      have hle : LinearMap.range β ≤ Submodule.span ℚ {(1 : ℂ)} := by
+        rintro _ ⟨b, rfl⟩
+        obtain ⟨r, hr⟩ := hβrat b
+        rw [hr, Submodule.mem_span_singleton]
+        exact ⟨r, by simp [Rat.cast_smul_eq_qsmul]⟩
+      exact (Submodule.finrank_mono hle).trans ((finrank_span_le_card ({(1 : ℂ)} : Set ℂ)).trans (by simp))
+    have hk : Module.finrank ℚ (LinearMap.ker β) ≤ 1 :=
+      (Submodule.finrank_mono (fun b hb => hker b hb)).trans ((finrank_span_le_card ({(1 : B)} : Set B)).trans (by simp))
+    have := LinearMap.finrank_range_add_finrank_ker β
+    rw [QuaternionAlgebra.finrank_eq_four] at this
+    omega
 
 end HDec.QMLattice
 
