@@ -19,3 +19,14 @@ Friedberg–Hoffstein (printed leaf) + twisted root number (printed leaf) + glue
 - Leaf ratings: FriedbergHoffsteinB = specialization of FH 1995 Thm B (recalled, UNVERIFIED) with idelic local
   conditions translated to `D/D₀ ∈ (ℚ_p^×)²`; TwistNewformRootNumber = IK Prop 14.20 / Atkin–Li specialized,
   Gauss sum evaluated (UNVERIFIED numbers).
+- Refactor: glue lemmas `exists_aux_disc`, `not_dvd_of_mem_primeFactors`, `heegner_of_local`; FH hypothesis now
+  also pins the level `M = N D₀²` of the twisted newform (weaker leaf).
+- `ZInQKernel/Contrib/OneProof/FHNonvanishing/FE.lean` (VERIFIED compiles, standard axioms):
+  `FriedbergHoffsteinB_FE` (root number as FE sign on 0<Re s<2), `TwistFunctionalEquation` (GLUE target),
+  `fhNonvanishing_of_printed_fe`, `twistFunctionalEquation_of_twistNewformRootNumber`, `friedbergHoffsteinB_of_fe`,
+  `completedL_eq_frickeCompletedL` (completedL M G = Tau Ceti frickeCompletedL on Re s > 0).
+- `#discharges` (scratch/gz-fh/Discharges-output.txt, VERIFIED): `DISCHARGES [hL2] by fhNonvanishing_of_printed`
+  (still assumes FriedbergHoffsteinB, TwistNewformRootNumber) and `by fhNonvanishing_of_printed_fe` (still assumes
+  FriedbergHoffsteinB_FE, TwistFunctionalEquation); 65 open, 1292 checked, 7 discharge one.
+- Main.lean edit checked in scratch (`gzfh_frozenTarget`), and `FHNonvanishingCd` corollary (`gzfh_fhNonvanishingCd`),
+  both standard axioms.

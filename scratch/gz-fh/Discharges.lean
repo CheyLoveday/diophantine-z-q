@@ -1,6 +1,7 @@
 import ZInQKernel.OneProof.Main
 import ZInQKernel.OneProof.Discharges
 import ZInQKernel.Contrib.OneProof.FHNonvanishing
+import ZInQKernel.Contrib.OneProof.FHNonvanishing.FE
 import ZInQKernel.Contrib.GZStatements.Weak
 
 #discharges
@@ -26,3 +27,7 @@ theorem gzfh_fhNonvanishingCd (hFH : ZInQ.GZFH.FriedbergHoffsteinB)
 
 #print axioms gzfh_frozenTarget
 #print axioms gzfh_fhNonvanishingCd
+#print axioms ZInQ.GZFH.fhNonvanishing_of_printed
+#print axioms ZInQ.GZFH.fhNonvanishing_of_printed_fe
+#print axioms ZInQ.GZFH.twistFunctionalEquation_of_twistNewformRootNumber
+#print axioms ZInQ.GZFH.friedbergHoffsteinB_of_fe
