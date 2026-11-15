@@ -155,4 +155,44 @@ theorem sqc9 : HDec.PkgI1.thetaConst (![1, 1], ![1, 1]) Om24 ^ 2 =
   simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
   first | (left; ring1) | ring1
 
+/-! ## Genus one: duplication (Landen) and Jacobi's identity -/
+
+theorem th1_c1 (τ : ℂ) (d : ℝ) : th1 τ 1 d = th1 τ 0 d := by
+  simpa using th1_shift_c τ 0 d 1
+
+theorem th1_d1 (τ : ℂ) (c : ℝ) : th1 τ c 1 = cexp (2 * π * I * c) * th1 τ c 0 := by
+  simpa using th1_shift_d τ c 0 1
+
+theorem exp_half : cexp (2 * π * I * ((1 / 2 : ℝ) : ℂ)) = -1 := by
+  rw [show (2 : ℂ) * π * I * ((1 / 2 : ℝ) : ℂ) = π * I by push_cast; ring, Complex.exp_pi_mul_I]
+
+theorem dupA {τ : ℂ} (hτ : 0 < τ.im) :
+    th1 τ 0 0 ^ 2 = th1 (2 * τ) 0 0 ^ 2 + th1 (2 * τ) (1 / 2) 0 ^ 2 := by
+  rw [dup1 hτ, Fin.sum_univ_two]; norm_num; ring
+
+theorem dupB {τ : ℂ} (hτ : 0 < τ.im) :
+    th1 τ 0 (1 / 2) ^ 2 = th1 (2 * τ) 0 0 ^ 2 - th1 (2 * τ) (1 / 2) 0 ^ 2 := by
+  rw [dup1 hτ, Fin.sum_univ_two]
+  have e : (2 : ℝ) * (1 / 2) = 1 := by norm_num
+  simp only [e, th1_d1, Fin.val_zero, Fin.val_one, Nat.cast_zero, Nat.cast_one, zero_div, zero_add,
+    add_zero, exp_half]
+  push_cast; simp only [mul_zero, Complex.exp_zero]; ring
+
+theorem dupC {τ : ℂ} (hτ : 0 < τ.im) :
+    th1 τ (1 / 2) 0 ^ 2 = 2 * th1 (2 * τ) 0 0 * th1 (2 * τ) (1 / 2) 0 := by
+  rw [dup1 hτ, Fin.sum_univ_two]
+  have e : (1 : ℝ) / 2 + 1 / 2 = 1 := by norm_num
+  simp only [Fin.val_zero, Fin.val_one, Nat.cast_zero, Nat.cast_one, zero_div, zero_add, mul_zero, e, th1_c1]
+  ring
+
+/-- **Jacobi's quartic identity** `θ₀₀⁴ = θ₀₁⁴ + θ₁₀⁴`, from the duplication formulas. -/
+theorem jacobi {τ : ℂ} (hτ : 0 < τ.im) :
+    th1 τ 0 0 ^ 4 = th1 τ 0 (1 / 2) ^ 4 + th1 τ (1 / 2) 0 ^ 4 := by
+  have hA := dupA hτ; have hB := dupB hτ; have hC := dupC hτ
+  linear_combination (th1 τ 0 0 ^ 2 + th1 (2 * τ) 0 0 ^ 2 + th1 (2 * τ) (1 / 2) 0 ^ 2) * hA
+    - (th1 τ 0 (1 / 2) ^ 2 + th1 (2 * τ) 0 0 ^ 2 - th1 (2 * τ) (1 / 2) 0 ^ 2) * hB
+    - (th1 τ (1 / 2) 0 ^ 2 + 2 * th1 (2 * τ) 0 0 * th1 (2 * τ) (1 / 2) 0) * hC
+
+theorem h2τ3 : 2 * τ3 = τ6 := by apply Complex.ext <;> simp [τ3, τ6] <;> ring
+
 end CM24
