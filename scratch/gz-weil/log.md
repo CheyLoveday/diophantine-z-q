@@ -30,3 +30,26 @@ Task: make gz-hl3's split of `hL3` net negative by turning `StrongWeilCurve` and
 - `modularParamC1_of_leaves : WU → StrongWeilCurve → IsogenyLattice → ModularParamC1` (new leaf no stronger).
 - `grossZagierHeegnerCd_of_leaves hU hP hHP hGZ hGC : GrossZagierHeegnerCd`.
 - axioms: [propext, Classical.choice, Quot.sound] for all three.
+
+## Step 2: ModularParamC1 from x0-32's EtaModelDifferential (VERIFIED, compiled, 04:50 PST)
+- dev file `scratch/gz-weil/Unif.lean`; theorems C1 `hasDerivAt_eichlerCd_one` (Φ₁' = 2πi f₁),
+  C3 `period_const`, C4 `weierstrassP_surjective`, C5 `local_eq` (order-of-vanishing argument),
+  C6 `global_eq` (clopen in ℍ), C7 `period_mem` (identity theorem, pole at 0), C8
+  `modularParamC1_of_etaModelDifferential` (lattices ((1±i)/2)L of 32a1; c = 2). Axioms standard.
+- Inputs used from the kernel (proved): tyz-cm `etaModelEquation` (y²=x³+4x), `etaModelInvariant`,
+  gz-theta `etaThetaIdentity` (f₁ = Σ heckeCoeff 1 n qⁿ), `etaQuot32_slash_eq` (weight 2), x0-32
+  `differentiableAt_xC/yC/fC`, `yC_ne_zero`, `fC_ne_zero`; Mathlib `PeriodPair` (℘, ℘', order −2, relation).
+- Only open input: `ZInQ.Contrib.TYZGenus.X0.EtaModelDifferential` (∀ τ, HasDerivAt xC (4πi fC τ · yC τ) τ).
+- Independent numerical check (VERIFIED, exact integers, `scratch/gz-weil/etadiff_check.py`, python3):
+  q dx/dq = 2yf to q^113; y² = x³+4x to q^109; f = Σ heckeCoeff 1 n qⁿ to q^119.
+
+## Step 3: integration (VERIFIED, 04:58 PST)
+- `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Weil.lean` (twist step) and `.../WeilParam.lean`
+  (uniformization step): `lake build ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam` → success (11340 jobs).
+- `scratch/gz-weil/Check.lean` → `out_check.txt`: 16 theorems, all [propext, Classical.choice, Quot.sound].
+- `#discharges` (`scratch/gz-weil/Discharges.lean` → `discharges-output.txt`): 65 open hypotheses, 1412 theorems
+  checked; my theorems discharge no open hypothesis directly (hL3 is stated for all E; the new leaves are
+  C_d-restricted), as expected; gz-hl3's general discharge of hL3 still listed.
+- `scratch/gz-weil/MainEdit.lean`: `frozenTarget_gzweil` = frozenTarget with hL3 replaced by
+  (WeierstrassUniformization, X0.EtaModelDifferential, HeegnerPointRationalCd, GrossZagierFormulaCd,
+  GrossConjugationCd), through gz-statements' Cd chain; compiles, standard axioms.
