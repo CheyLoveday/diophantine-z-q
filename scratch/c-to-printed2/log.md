@@ -36,3 +36,5 @@ Base e38375b3. Compile command: `lake env lean scratch/c-to-printed2/<file>.lean
 - Added `katoRealizationCohSS_of_field`, `katoRealizationCohSS_iff_field : DSThm965 → DSThm966 →
   TateTwistInvariants → AxSenTate → (KatoRealizationCohSS ↔ EigenformHTNew)`. **VERIFIED** 0 errors, 10 axiom
   lines all `[propext, Classical.choice, Quot.sound]`.
+- `T09Roadmap.lean`: `PicRepresentableAbVar` (Grothendieck representability of `picardFunctor A.X.hom` for
+  `A : PkgI3.AbVar K`, unused) compiles with no errors (**VERIFIED** statable; nothing proved).

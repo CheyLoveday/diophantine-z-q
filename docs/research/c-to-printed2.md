@@ -210,8 +210,9 @@ than the print.
 Mathlib 4.35 has no ample line bundles (`grep Ample` in `Mathlib/AlgebraicGeometry` finds nothing; VERIFIED).
 
 **Missing definitions, in the order a published-form chain needs them:**
-1. Grothendieck's representability of `Pic_{A/K}` for `A` projective. This is statable today over `picardFunctor`
-   (FGA; Kleiman, *The Picard scheme*, Thm 9.4.8; UNVERIFIED numbers).
+1. Grothendieck's representability of `Pic_{A/K}` for `A` projective (FGA; Kleiman, *The Picard scheme*, Thm
+   9.4.8; UNVERIFIED numbers). This is statable today over `picardFunctor`: **VERIFIED**, since
+   `scratch/c-to-printed2/T09Roadmap.lean` (`PicRepresentableAbVar`, unused) compiles.
 2. The identity component of a group scheme locally of finite type over `K`, and the theorem that `Pic⁰_{A/K}` is an
    abelian variety (Mumford §13; UNVERIFIED).
 3. The translation `t_x` on `A_{K̄}`, and `φ_L(x) = t_x^*L ⊗ L⁻¹` through `Pic.map`; the theorem of the square.
