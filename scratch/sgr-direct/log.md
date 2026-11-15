@@ -65,3 +65,15 @@ theorem numbers from memory UNVERIFIED.
 - `HeckeSqrtBranchAny` (∃ c ≠ 0, √(c(27X+16)) ∈ E), weaker than HeckeSqrtBranch; final composite
   `heckeVertWitness_of_nvSqrtAny : … → NVLocalInertia → HeckeSqrtBranchAny → HeckeVertWitness`.
 - #discharges: 63 open, 1863 checked, 7 discharge one (none from this file).
+
+## 6. HeckeSqrtBranchAny proved; only NVLocalInertia remains (VERIFIED: compiled, standard axioms)
+
+- `ZInQKernel/Contrib/OneProof/SGRDirectElkies.lean` (imports SGRDirectNV and Contrib.OneProof.ElkiesX6Star):
+  `exists_ringHom_ker_eq`, `eq_zero_of_forall_ringHom_qbar` (Nullstellensatz density), `gl2_inv_val`,
+  `elkies_coordinate` (R1(b) into the triple + CurveSplit.curveBijIso + ShimuraGlue.Mob.good_all + orbit_iff_twist +
+  MobiusGlue), `heckeSqrtBranchAny_of_elkies` (Elkies chart section pulled back to Spec B; m⁻¹(t ≠ ∞) = ⊤ via
+  closed points + generization), `heckeVertWitness_of_nvElkies : R1R2fp → TorsionStructure → QMAutCard →
+  SerreRigidity3 → ALFixedPoints → NVLocalInertia → ElkiesX6StarPrinted → HeckeVertWitness`.
+- #discharges: 63 open, 1869 checked, 7 discharge one (none from these files).
+- Fold arithmetic (deep bypass, not executed): −2 GLUE (shimuraIntegralModelRep, quotientP1Coordinate) +1 GLUE
+  (nvLocalInertia) = −1.
