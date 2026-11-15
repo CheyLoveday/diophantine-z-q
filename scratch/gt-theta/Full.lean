@@ -614,6 +614,162 @@ theorem good_rotTinv : Good (rot ModularGroup.T⁻¹) :=
     (fun Ω hΩ => siegel_of' (pdq_rti (pdq_of_siegel hΩ).2))
     (fun Ω hΩ m => sqRTi m hΩ) (by decide) (by decide) (by decide) (by decide)
 
+
+/-! ### Partial inversions -/
+
+/-- **Partial inversion** in the first coordinate, squared, solved for the inverted side
+(cm24-value's `pi0`, i.e. Mathlib's `jacobiTheta₂_functional_equation`). -/
+theorem j1_sq {α β γ : ℂ} (h : PDq α β γ) (c0 c1 d0 d1 : ℝ) :
+    Th2 (-1 / α) (β / α) (γ - β ^ 2 / α) c0 c1 d0 d1 ^ 2 =
+      (-I * α) * cexp (4 * π * I * ((c0 : ℂ) * d0)) * Th2 α β γ d0 c1 (-c0) d1 ^ 2 := by
+  have e := pi0 h.1 d0 c1 (-c0) d1 (h.summable _ _ _ _) (h.j1.summable _ _ _ _)
+  simp only [neg_neg] at e
+  rw [e, mul_pow, mul_pow, cpow_half_sq]
+  have ha : -I * α ≠ 0 := mul_ne_zero (by simp) h.ne_zero
+  have hx : cexp (4 * π * I * ((c0 : ℂ) * d0)) * cexp (2 * π * I * d0 * ((-c0 : ℝ) : ℂ)) ^ 2 = 1 := by
+    rw [sq, ← Complex.exp_add, ← Complex.exp_add, ← Complex.exp_zero]; congr 1; push_cast; ring
+  rw [show ∀ (a e1 e2 X : ℂ), a * e1 * (1 / a * e2 ^ 2 * X) = (a * (1 / a)) * (e1 * e2 ^ 2) * X from
+    fun _ _ _ _ => by ring, mul_one_div_cancel ha, hx, one_mul, one_mul]
+
+def j1Act (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![-1 / Ω 0 0, Ω 0 1 / Ω 0 0; Ω 0 1 / Ω 0 0, Ω 1 1 - Ω 0 1 ^ 2 / Ω 0 0]
+def j2Act (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![Ω 0 0 - Ω 0 1 ^ 2 / Ω 1 1, Ω 0 1 / Ω 1 1; Ω 0 1 / Ω 1 1, -1 / Ω 1 1]
+
+def σJ1 (m : Char2) : Char2 :=
+  (![fin2 ((m.2 0 : ℕ) : ℤ), fin2 ((m.1 1 : ℕ) : ℤ)], ![fin2 (-((m.1 0 : ℕ) : ℤ)), fin2 ((m.2 1 : ℕ) : ℤ)])
+def σJ2 (m : Char2) : Char2 :=
+  (![fin2 ((m.1 0 : ℕ) : ℤ), fin2 ((m.2 1 : ℕ) : ℤ)], ![fin2 ((m.2 0 : ℕ) : ℤ), fin2 (-((m.1 1 : ℕ) : ℤ))])
+def NJ1 (m : Char2) : ℤ := 2 + 4 * ((m.1 0 : ℕ) : ℤ) * ((m.2 0 : ℕ) : ℤ)
+def NJ2 (m : Char2) : ℤ := 2 + 4 * ((m.1 1 : ℕ) : ℤ) * ((m.2 1 : ℕ) : ℤ)
+
+theorem sqJ1 (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (j1Act Ω) ^ 2 = -(Ω 0 0) * cexp (π * I * (NJ1 m : ℂ) / 4) * thetaConst (σJ1 m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  rw [thetaConst_eq _ _ (by simp [j1Act]), thetaConst_eq _ _ hs]
+  simp only [j1Act, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [j1_sq hpd]
+  rw [th2_sq_red _ _ _ ((m.2 0 : ℕ) : ℤ) ((m.1 1 : ℕ) : ℤ) (-((m.1 0 : ℕ) : ℤ)) ((m.2 1 : ℕ) : ℤ)
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σJ1, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast, NJ1]
+  rw [← phase_I ((m.1 0 : ℕ) : ℤ) ((m.2 0 : ℕ) : ℤ) (((m.1 0 : ℕ) : ℝ) / 2) (((m.2 0 : ℕ) : ℝ) / 2)
+    (by push_cast; ring) (by push_cast; ring)]
+  ring
+
+theorem sqJ2 (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (j2Act Ω) ^ 2 = -(Ω 1 1) * cexp (π * I * (NJ2 m : ℂ) / 4) * thetaConst (σJ2 m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  rw [thetaConst_eq _ _ (by simp [j2Act]), thetaConst_eq _ _ hs]
+  simp only [j2Act, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  conv_lhs => rw [th2_swap, j1_sq hpd.swap, th2_swap]
+  rw [th2_sq_red _ _ _ ((m.1 0 : ℕ) : ℤ) ((m.2 1 : ℕ) : ℤ) ((m.2 0 : ℕ) : ℤ) (-((m.1 1 : ℕ) : ℤ))
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σJ2, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast, NJ2]
+  rw [← phase_I ((m.1 1 : ℕ) : ℤ) ((m.2 1 : ℕ) : ℤ) (((m.1 1 : ℕ) : ℝ) / 2) (((m.2 1 : ℕ) : ℝ) / 2)
+    (by push_cast; ring) (by push_cast; ring)]
+  ring
+
+theorem iota1_S_map : (iota1 ModularGroup.S).map (Int.cast : ℤ → ℂ) =
+    Matrix.fromBlocks !![0, 0; 0, 1] !![-1, 0; 0, 0] !![1, 0; 0, 0] !![0, 0; 0, 1] := by
+  ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [iota1, ModularGroup.coe_S]
+
+theorem iota2_S_map : (iota2 ModularGroup.S).map (Int.cast : ℤ → ℂ) =
+    Matrix.fromBlocks !![1, 0; 0, 0] !![0, 0; 0, -1] !![0, 0; 0, 1] !![1, 0; 0, 0] := by
+  ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [iota2, ModularGroup.coe_S]
+
+theorem good_J1 : Good (iota1 ModularGroup.S) := by
+  refine good_of j1Act (fun Ω => Ω 0 0) (fun Ω => Ω 0 0) σJ1 NJ1 (fun Ω hΩ => ?_) (fun Ω hΩ => ?_)
+    (fun Ω hΩ => (pdq_of_siegel hΩ).2.ne_zero) (fun _ => rfl) (fun _ => rfl)
+    (fun Ω hΩ => siegel_of' (pdq_of_siegel hΩ).2.j1) (fun Ω hΩ m => sqJ1 m hΩ)
+    (by decide) (by decide) (by decide) (by decide)
+  · obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+    have h0 := hpd.ne_zero
+    refine spAct_eq_of iota1_S_map ?_ ?_
+    · rw [Matrix.det_fin_two]; simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+      simpa [hs] using h0
+    · ext i j; fin_cases i <;> fin_cases j <;>
+        simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two] <;>
+        simp [j1Act, hs] <;> field_simp <;> ring
+  · rw [spFactor_eq_of iota1_S_map, Matrix.det_fin_two]
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+    simp
+
+theorem good_J2 : Good (iota2 ModularGroup.S) := by
+  refine good_of j2Act (fun Ω => Ω 1 1) (fun Ω => Ω 1 1) σJ2 NJ2 (fun Ω hΩ => ?_) (fun Ω hΩ => ?_)
+    (fun Ω hΩ => (pdq_of_siegel hΩ).2.swap.ne_zero) (fun _ => rfl) (fun _ => rfl)
+    (fun Ω hΩ => siegel_of' (pdq_of_siegel hΩ).2.swap.j1.swap) (fun Ω hΩ m => sqJ2 m hΩ)
+    (by decide) (by decide) (by decide) (by decide)
+  · obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+    have h0 := hpd.swap.ne_zero
+    refine spAct_eq_of iota2_S_map ?_ ?_
+    · rw [Matrix.det_fin_two]; simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+      simpa [hs] using h0
+    · ext i j; fin_cases i <;> fin_cases j <;>
+        simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two] <;>
+        simp [j2Act, hs] <;> field_simp <;> ring
+  · rw [spFactor_eq_of iota2_S_map, Matrix.det_fin_two]
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+    simp
+
+/-! ## II.4 Every element of `Sp₄(ℤ)` -/
+
+theorem iota1_T : iota1 ModularGroup.T = Tm !![1, 0; 0, 0] := by
+  ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [iota1, Tm, ModularGroup.coe_T]
+theorem iota1_Tinv : iota1 ModularGroup.T⁻¹ = Tm !![-1, 0; 0, 0] := by
+  ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [iota1, Tm, ModularGroup.coe_T_inv]
+theorem iota2_T : iota2 ModularGroup.T = Tm !![0, 0; 0, 1] := by
+  ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [iota2, Tm, ModularGroup.coe_T]
+theorem iota2_Tinv : iota2 ModularGroup.T⁻¹ = Tm !![0, 0; 0, -1] := by
+  ext i j; rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [iota2, Tm, ModularGroup.coe_T_inv]
+
+theorem gens_good : ∀ M ∈ gens, Good M := by
+  intro M hM
+  simp only [gens, Set.mem_insert_iff, Set.mem_singleton_iff] at hM
+  rcases hM with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  · exact good_J1
+  · rw [iota1_T]; exact good_T11
+  · rw [iota1_Tinv]; exact good_T11'
+  · exact good_J2
+  · rw [iota2_T]; exact good_T22
+  · rw [iota2_Tinv]; exact good_T22'
+  · exact good_rotS
+  · exact good_rotT
+  · exact good_rotTinv
+  · exact good_Tod
+  · exact good_Tod'
+
+/-- **Igusa's two transformation laws on all of `Sp₄(ℤ)`.** -/
+theorem good_sp {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) : Good M :=
+  (Submonoid.closure_le (S := goodSub).2 gens_good) (sp_mem_closure hM)
+
 end Theta
+
+/-! ## II.5 The two open hypotheses -/
+
+/-- **`igusaPsi4` proved** (`ψ₄` is a Siegel modular form of weight 4 for `Sp₄(ℤ)`, in its theta
+expression). -/
+theorem igusaPsi4_proof : HDec.QMSplit.Theta.IgusaPsi4 := by
+  intro M hM Ω hΩ
+  obtain ⟨-, -, h, -⟩ := good_sp hM Ω hΩ
+  simp only [HDec.QMSplit.Theta.psi4]; rw [h]; ring
+
+/-- **`igusaChi10` proved** (`χ₁₀` is a Siegel modular form of weight 10 for `Sp₄(ℤ)`, in its theta
+expression). -/
+theorem igusaChi10_proof : HDec.QMSplit.Theta.IgusaChi10 := by
+  intro M hM Ω hΩ
+  obtain ⟨-, -, -, h⟩ := good_sp hM Ω hΩ
+  simp only [HDec.QMSplit.Theta.chi10]; rw [h]; ring
+
+/-- pkg-I1's `ThetaModularity` (row H-2), proved. -/
+theorem thetaModularity_proof : HDec.PkgI1.ThetaModularity :=
+  HDec.QMSplit.Theta.thetaModularity_of igusaPsi4_proof igusaChi10_proof
 
 end GapTheta
