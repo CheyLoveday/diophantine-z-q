@@ -924,4 +924,83 @@ theorem rat_of_fixed (z : ℂ) (hz : ∀ σ : ℂ ≃+* ℂ, σ z = z) : ∃ q :
 
 end Taylor
 
+/-! ## The `q`-expansion of `x∘φ` at `∞` -/
+
+section QExp
+
+open PowerSeries
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+/-- `V(w) = Σ e_{n+1} wⁿ`, so that `φ_f = q·V(q)`. -/
+def vSeries : FormalMultilinearSeries ℂ ℂ ℂ :=
+  FormalMultilinearSeries.ofScalars ℂ (fun n => eCoeff f (n + 1))
+
+def vFun : ℂ → ℂ := (vSeries f).sum
+
+theorem vCoeff_summable (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun n => eCoeff f (n + 1) * q ^ n) := by
+  have h := (summable_nat_add_iff 1).2 (eCoeff_summable f q hq)
+  by_cases h0 : q = 0
+  · subst h0; exact summable_of_ne_finset_zero (s := {0}) (fun n hn => by
+      simp at hn; simp [hn])
+  · refine (h.mul_left q⁻¹).congr fun n => ?_
+    rw [pow_succ]; field_simp
+
+theorem vSeries_le_radius (r : NNReal) (hr : (r : ℝ) < 1) : (r : ENNReal) ≤ (vSeries f).radius := by
+  apply (vSeries f).le_radius_of_tendsto (l := 0)
+  have hr' : ‖((r : ℝ) : ℂ)‖ < 1 := by simpa using hr
+  have ht := (vCoeff_summable f ((r : ℝ) : ℂ) hr').tendsto_atTop_zero.norm
+  simp only [norm_zero] at ht
+  refine ht.congr fun n => ?_
+  simp [vSeries, FormalMultilinearSeries.ofScalars_norm, norm_mul, norm_pow]
+
+theorem vSeries_mem_ball {w : ℂ} (hw : ‖w‖ < 1) : w ∈ Metric.eball (0 : ℂ) (vSeries f).radius := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hw
+  have hr0 : 0 ≤ r := le_trans (norm_nonneg _) hr1.le
+  set r' : NNReal := ⟨r, hr0⟩
+  rw [Metric.mem_eball, edist_zero_right]
+  calc (‖w‖₊ : ENNReal) < (r' : ENNReal) := by rw [ENNReal.coe_lt_coe]; exact_mod_cast hr1
+    _ ≤ _ := vSeries_le_radius f r' hr2
+
+theorem vSeries_radius_pos : 0 < (vSeries f).radius := by
+  have := vSeries_mem_ball f (w := 0) (by simp)
+  rw [Metric.mem_eball] at this; exact lt_of_le_of_lt bot_le this
+
+theorem vFun_hasFPS : HasFPowerSeriesOnBall (vFun f) (vSeries f) 0 (vSeries f).radius :=
+  (vSeries f).hasFPowerSeriesOnBall (vSeries_radius_pos f)
+
+theorem analyticAt_vFun : AnalyticAt ℂ (vFun f) 0 := (vFun_hasFPS f).analyticAt
+
+theorem vFun_eq (q : ℂ) (hq : ‖q‖ < 1) : vFun f q = ∑' n, eCoeff f (n + 1) * q ^ n := by
+  have hs := (vSeries f).hasSum (vSeries_mem_ball f hq)
+  simp only [vSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] at hs
+  exact hs.tsum_eq.symm
+
+theorem eSum_eq_mul_vFun (q : ℂ) (hq : ‖q‖ < 1) : (eSeries f).sum q = q * vFun f q := by
+  rw [eSum_eq_tsum, vFun_eq f q hq, ← tsum_mul_left,
+    (eCoeff_summable f q hq).tsum_eq_zero_add]
+  have h0 : eCoeff f 0 = 0 := by simp [eCoeff]
+  rw [h0, zero_mul, zero_add]
+  congr 1; funext n; rw [pow_succ]; ring
+
+theorem eCoeff_one : eCoeff f 1 = 1 := by
+  simp only [eCoeff, one_ne_zero, if_false, Nat.cast_one, div_one]
+  exact f.isNorm
+
+theorem vFun_zero : vFun f 0 = 1 := by
+  rw [vFun_eq f 0 (by simp), tsum_eq_single 0 (fun n hn => by simp [hn])]
+  simp [eCoeff_one]
+
+theorem coeff_tay_vFun (n : ℕ) : PowerSeries.coeff n (tay (vFun f)) = eCoeff f (n + 1) := by
+  rw [coeff_tay]
+  have h := (vFun_hasFPS f).factorial_smul 1 n
+  rw [iteratedDeriv_eq_iteratedFDeriv, ← h]
+  simp only [vSeries, FormalMultilinearSeries.ofScalars_apply_eq, one_pow, smul_eq_mul, mul_one,
+    nsmul_eq_mul]
+  have : ((n.factorial : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
+  field_simp
+
+end QExp
+
 end ZInQ.GZHeegner
