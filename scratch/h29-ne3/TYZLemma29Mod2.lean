@@ -1,35 +1,42 @@
 import ZInQKernel.Contrib.TYZDecomp.Leaves
 import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.Global.Adeles.FiniteBaseChange
 import ZInQKernel.Contrib.TauCeti.RingTheory.DedekindDomain.FiniteAdeleRing.ClassGroup
+import ZInQKernel.Contrib.TYZChain.Lcal
 
 /-!
-# `TYZLemma29Mod2` from Tian–Yuan–Zhang's Lemma 2.9 and Proposition 2.3 in printed form
+# `TYZLemma29Mod2` from Tian–Yuan–Zhang's Lemma 2.9, Theorem 2.1 at `n = 3` and Proposition 2.3
 
-Tasks h29-split and h29-fix; reports `docs/research/h29-split.md`, `docs/research/h29-fix.md`, logs and
-computations in `scratch/h29-split/`, `scratch/h29-fix/`. (Revised version of
-`ZInQKernel/Contrib/OneProof/TYZLemma29Mod2.lean`, a drop-in replacement: same module name, same namespace.)
+Tasks h29-split, h29-fix and h29-ne3; reports `docs/research/h29-split.md`, `docs/research/h29-fix.md`,
+`docs/research/h29-ne3.md`, logs and computations in `scratch/h29-split/`, `scratch/h29-fix/`,
+`scratch/h29-ne3/`. (Revised version of `ZInQKernel/Contrib/OneProof/TYZLemma29Mod2.lean`, a drop-in
+replacement: same module name, same namespace.)
 
 Tian–Yuan–Zhang (TYZ), *Genus periods, genus points and congruent number problem*, arXiv:1411.4728v1,
-Asian J. Math. 21 (2017). Line numbers `Lnnnn` refer to the arXiv source `Period7.tex`, read by both tasks.
+Asian J. Math. 21 (2017). Line numbers `Lnnnn` refer to the arXiv source `Period7.tex`, read by the three tasks.
 
 The hypothesis `h29 = ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2` of `ZInQ.OneProof.frozenTarget` is proved
-(`tyzLemma29Mod2_of_printedLeaves_legendre`) from five statements over genuine definitions:
+(`tyzLemma29Mod2_of_sixLeaves`) from six statements over genuine definitions:
 
-* `TYZLemma29Printed`: TYZ Lemma 2.9 (L1062–1066) **with the factor `w_K` of Theorem 2.1** (L554–559):
-  `w_K · Σ ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)`, `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L566–568). The printed Lemma 2.9
-  (without `w_K`) is false at `n = 3`: `Q(3) = ±3` (computed, `scratch/h29-fix/brandt.py`) while
-  `𝓛(3) = ±1`; Theorem 2.1 and the proof of Lemma 2.9 (L1068–1077) give the `w_K` form.
+* `TYZLemma29PrintedNe3`: TYZ Lemma 2.9 (L1062–1066) as printed, for squarefree `1 < n ≡ 1, 3 (mod 8)`,
+  `n ≠ 3`: `Σ ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)`, `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L566–568). The printed lemma is
+  false at `n = 3` (`Q(3) = ±3`, `𝓛(3) = ±1`; computed in `scratch/h29-fix/brandt.py`, `lcal_small.py`), so
+  `n = 3` is excluded; for `n ≠ 3` the factor `w_K` of Theorem 2.1 is `1` and this is the print.
+* `TYZThm21At31`: TYZ Theorem 2.1 (L554–559) at `(d₁, d₂) = (3, 1)` (`χ_{3,1} = 1`, L510; `k = a = 1`):
+  `Σ_{t ∈ Cl_3} f_3(t) = ±w_K 𝓛(3)𝓛(1)`, `w_K = #μ(ℚ(√−3))/2` (L558), stated with Mathlib's
+  `NumberField.Units.torsionOrder`. Only the formula, not the vanishing clause.
 * `TYZProp23Printed`: TYZ Proposition 2.3 (L580–586), `f_n((B̂^×)²) ⊂ 1 + 2ℤ`;
 * `TYZTestVectorExists`: `π_ℤ^{U_n}` has a generator `f_n`, and `f_n ≠ 0` (L542–550; Theorem 2.6 at
-  `χ = 1`, L809–840), with `π^U` described as TYZ print it (`π^U = 𝒜₀^U`, Theorem 2.4(1), L715–720, L760;
-  the 8 classes of Lemma 2.5, L646–651);
+  `χ = 1`, L809–840), with `π^U` described as TYZ print it (`π^U = 𝒜₀^U`, Theorem 2.4(1), L615–623,
+  L715–727, L760; the 8 classes of Lemma 2.5, L645–661);
 * `LegendreThreeSquares` (Legendre) and `JonesPallX2Y2Z16` (`x² + y² + 16z²` represents `n ≡ 1 (mod 8)`;
   Jones–Pall Theorem 5 as cited by TYZ L533), which give TYZ's embedding `τ` (L527–534).
 
 Here `B = ℍ[ℚ]`, `B̂ = ℍ[𝔸ᶠ_ℚ]`, `K̂_n = 𝔸ᶠ_{K_n}` (Tau Ceti's base change `𝔸ᶠ_{K_n} ≅ 𝔸ᶠ_ℚ ⊗ K_n`),
 `Cl_n` through Tau Ceti's `FiniteAdeleRing.toClassGroup`, `U_n = R̂_n^× K_{n,2}^×` with `R_n = O_{K_n} + 4O_B`.
-The glue: the mod-2 reduction (`tyzLemma29Mod2_of_printed`: `ε = ±1` and `w_K ∈ {1, 3}` vanish mod 2), the
-"therefore" of Proposition 2.3 (`genusPeriod_mod_two`: `Q(n) ≡ #2Cl_n = g(n)`), the class-group step
+The glue: the `w_K` form of Lemma 2.9 (`TYZLemma29Printed`, an intermediate statement) from the two TYZ
+leaves (`tyzLemma29Printed_of_ne3_thm21`: `#μ(ℚ(√−3)) = 6`, `Cl_3 = 1`, `pairIdx 3 = {1}`), the mod-2
+reduction (`tyzLemma29Mod2_of_printed`: `ε = ±1` and `w_K ∈ {1, 3}` vanish mod 2), the "therefore" of
+Proposition 2.3 (`genusPeriod_mod_two`: `Q(n) ≡ #2Cl_n = g(n)`), the class-group step
 (`tv_eq_of_toClassGroup_eq`: `f_n ∘ τ̂` is constant on ideal classes), and the explicit `τ` from three squares.
 
 No `sorry`, no `axiom`.
@@ -341,9 +348,9 @@ def twoRepQ (t : Fin 2 × Fin 2 × Fin 2) : ℍ[ℚ] :=
   ⟨1 - ((t.2.2 : ℕ) : ℚ), 2 * ((t.1 : ℕ) : ℚ) + ((t.2.2 : ℕ) : ℚ),
     2 * ((t.2.1 : ℕ) : ℚ) + ((t.2.2 : ℕ) : ℚ), ((t.2.2 : ℕ) : ℚ)⟩
 
-/-- **TYZ Lemma 2.5's representatives** (L646–651): `1 + 2x ∈ B₂^× ⊂ B̂^×` (component `1` off `2`). By
+/-- **TYZ Lemma 2.5's representatives** (L645–661): `1 + 2x ∈ B₂^× ⊂ B̂^×` (component `1` off `2`). By
 Lemma 2.5 these 8 elements represent `B^× \ B̂^× / ℚ̂^× U` bijectively, `U = Ô_B^{2,×} ℤ₂^×(1 + 4O_{B,2})`,
-and the Tamagawa measure is uniform on the 8 classes (checked by computation in
+and the Tamagawa measure is uniform on the 8 classes (printed L654–661, proved L694–705; checked by computation in
 `scratch/h29-fix/brandt.py`). -/
 def twoRep (v : HeightOneSpectrum (𝓞 ℚ)) (t : Fin 2 × Fin 2 × Fin 2) : ℍ[AQ] :=
   ιAt v (twoRepQ t)
@@ -352,13 +359,13 @@ def twoRep (v : HeightOneSpectrum (𝓞 ℚ)) (t : Fin 2 × Fin 2 × Fin 2) : �
 TYZ Theorem 2.4(3), L632–637; `nrd(1 + 2x) ≡ 1 + 2 tr x (mod 4)`, `tr ζ = −1`). -/
 def chi0Rep (t : Fin 2 × Fin 2 × Fin 2) : ℤ := (-1) ^ (t.2.2 : ℕ)
 
-/-- **TYZ's `π_ℤ^{U_n}`** (L536–550): the integer-valued functions on `B̂^×` (values off `B̂^×` are
-not used) that are left `B^×`-invariant, right `U_n`- and `𝔸ᶠ_ℚ^×`-invariant, and lie in `π`.
+/-- **TYZ's `π_ℤ^{U_n}`** (L536–550; `π_ℤ` defined at L542): the integer-valued functions on `B̂^×`
+(values off `B̂^×` are not used) that are left `B^×`-invariant, right `U_n`- and `𝔸ᶠ_ℚ^×`-invariant, and lie in `π`.
 
 Membership in `π` is imposed as TYZ print it (h29-fix; h29-split used Hecke eigenvalues, an unprinted
 bridge, instead): since `U ⊂ U_n` (TYZ L924, `U_n = U · K_{n,2}^×`), `π^{U_n} ⊂ π^U`, and
 `π^U = 𝒜₀^U`, the `U`-invariant forms orthogonal to `χ ∘ nrd` for every character `χ` of `ℚ^× \ ℚ̂^×`:
-`π ⊂ 𝒜₀` (L715–720), `dim π^U = 6` (Theorem 2.4(1), L613–619) and `dim 𝒜₀^U = 6` (L760). A `U`-invariant
+`π ⊂ 𝒜₀` (L715–720), `dim π^U = 6` (Theorem 2.4(1), L615–623) and `dim 𝒜₀^U = 6` (L760). A `U`-invariant
 form factors through the 8 classes of Lemma 2.5 (uniform measure), and only `χ = 1, χ₀` are trivial on
 `nrd(U)` (L722–727: "perpendicular to the characters `1` and `(−1)^tr`"), so orthogonality is the two
 finite sums below. (Computation, `brandt.py`: on this 6-dimensional space the Hecke operator `T_p` acts by
@@ -406,7 +413,8 @@ stated as: it has a generator `f_n`, and `f_n` is not zero. (The generator TYZ c
 `π(g) f₀`, L834–839, with `f₀` a sum of the `f_δ`, nonzero; "`π_ℤ^{U,χ₂} = ℤ f`".)
 
 Everything in the definition of `π_ℤ^{U_n}` (`InPiZ`) is printed: the double coset space and its
-measure (Lemma 2.5), `π^U = 𝒜₀^U` (Theorem 2.4(1), L715–720, L760), the orthogonality to `1` and
+measure (Lemma 2.5, L645–661; measure printed L654–661, proved L694–705), `π^U = 𝒜₀^U` (Theorem 2.4(1),
+L615–623; L715–720, L760), the orthogonality to `1` and
 `χ₀ ∘ nrd` (L722–727); `U_n = U · K_{n,2}^×` (L924). The case `n = 1` (`K = ℚ(i)`) is not needed and
 is omitted (a weakening). Checked by computation (`brandt.py`): for `n = 3` (8 embeddings), `11`, `19`,
 `π^{U_n}` is one-dimensional with a primitive integer generator taking the values `{1, −3}` up to sign. -/
@@ -416,15 +424,59 @@ def TYZTestVectorExists : Prop :=
       ∃ f : ℍ[AQ] → ℤ, IsTestVector n τ f ∧ ∃ x : ℍ[AQ]ˣ, f x ≠ 0
 
 /-- **TYZ Lemma 2.9 (L1062–1066) with the factor `w_K` of Theorem 2.1 (L554–559), for squarefree
-`1 < n ≡ 1, 3 (mod 8)`**: for every admissible `τ` and test vector `f_n`,
-`w_K Σ ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)` with `ε = ±1`, over the non-ordered decompositions `n = d₁d₂`,
-`d₁, d₂ > 0`, `d₂ ≡ 1 (mod 8)` (`Lemma29At`). This is what TYZ's proof (L1068–1077: (PQ) of L1001, the
-symmetry Lemma 2.8 and Theorem 2.1) proves; the printed statement drops `w_K` and is false at `n = 3`
-(`Q(3) = ±3`, `𝓛(3) = ±1`; see `Lemma29Printed`). For `n ≠ 3` it is the printed statement. -/
+`1 < n ≡ 1, 3 (mod 8)`** (an intermediate statement, proved: `tyzLemma29Printed_of_ne3_thm21`): for every
+admissible `τ` and test vector `f_n`, `w_K Σ ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)` with `ε = ±1`, over the non-ordered
+decompositions `n = d₁d₂`, `d₁, d₂ > 0`, `d₂ ≡ 1 (mod 8)` (`Lemma29At`). This is what TYZ's proof
+(L1068–1077: (PQ) of L1001, the symmetry Lemma 2.8 and Theorem 2.1) proves; the printed statement drops
+`w_K` and is false at `n = 3` (`Q(3) = ±3`, `𝓛(3) = ±1`; see `Lemma29Printed`). In h29-fix this was a leaf;
+a statement review rated it GLUE (a corrected form, not a printed statement), and h29-ne3 proves it from the
+two printed leaves `TYZLemma29PrintedNe3` (`n ≠ 3`) and `TYZThm21At31` (`n = 3`). -/
 def TYZLemma29Printed : Prop :=
   ∀ (n : ℕ) [NeZero n], Squarefree n → 1 < n → (n % 8 = 1 ∨ n % 8 = 3) →
     ∀ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ → ∀ f : ℍ[AQ] → ℤ, IsTestVector n τ f →
       Lemma29At n (genusPeriodTV n τ f)
+
+/-- **TYZ Lemma 2.9 (L1062–1066) as printed, for squarefree `1 < n ≡ 1, 3 (mod 8)`, `n ≠ 3`.** For every
+admissible embedding `τ` (L527–534), every test vector `f_n` (a `ℤ`-generator of `π_ℤ^{U_n}`, L550) and every
+sign choice `ℓ` of `𝓛` on the squarefree classes `1, 3 (mod 8)` (`ℓ(m)² = 𝓛(m)²`, `lcalSq`, TYZ L336–353),
+there are signs `ε = ±1` with `Σ_{n = d₁d₂} ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)`, the sum over the non-ordered
+decompositions `n = d₁d₂`, `d₁, d₂ > 0`, `d₂ ≡ 1 (mod 8)` (`pairIdx n`, the pair indexed by `d = d₂` when
+`n ≡ 3`, by its smaller member when `n ≡ 1`), and `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L566–568, `genusPeriodTV`).
+
+Restrictions of the print (each a weakening): odd classes `n ≡ 1, 3 (mod 8)` only (TYZ: `n ≡ 1, 2, 3`),
+`n > 1`, and `n ≠ 3`. At `n = 3` the print is false: `Cl_3 = 1`, `Q(3) = f_3(1) = ±3` for each of the 8
+admissible `τ` (h29-fix, `scratch/h29-fix/brandt.py`, exact; also by hand from Theorem 2.6), while
+`𝓛(3)² = 1` (`lcal_small.py`, PARI), so the print would read `±1 = ±3`. TYZ's proof (L1068–1077, through
+Theorem 2.1) carries a factor `w_K` that the print drops; `w_K = 1` for squarefree `1 < n ≠ 3` (then
+`μ(ℚ(√−n)) = {±1}`, STANDARD), so for `n ≠ 3` the print and the proof agree. The case `n = 3`
+is the separate leaf `TYZThm21At31`. Quantifying over every sign choice `ℓ` is harmless: changing the sign
+of `ℓ(m)` is absorbed by `ε`. Checked (h29-fix, `brandt2.py`) on 18 values `n ≠ 3`, two embeddings each:
+`Q(n)` is one of the values `Σ ε𝓛𝓛`. -/
+def TYZLemma29PrintedNe3 : Prop :=
+  ∀ (n : ℕ) [NeZero n], Squarefree n → 1 < n → n ≠ 3 → (n % 8 = 1 ∨ n % 8 = 3) →
+    ∀ τ : QNeg n →ₐ[ℚ] ℍ[ℚ], AdmissibleTau n τ → ∀ f : ℍ[AQ] → ℤ, IsTestVector n τ f →
+      ∀ ℓ : ℕ → ℤ, IsLcalSign ℓ →
+        ∃ ε : ℕ → ℤ, (∀ d, ε d = 1 ∨ ε d = -1) ∧
+          ∑ d ∈ pairIdx n, ε d * (ℓ (n / d) * ℓ d) = genusPeriodTV n τ f
+
+/-- **TYZ Theorem 2.1 (L554–559) at `n = 3`, `(d₁, d₂) = (3, 1)`.** Here `χ_{3,1} = 1` (the convention for
+`d₂ = 1`, L510), so the quadratic period is `P(3, 1) = Σ_{t ∈ Cl_3} f_3(t)` (L551–552); `k = 1` (one odd
+prime factor) and `a = 1` (`n` odd), so `2^{k−a} = 1`. For every admissible `τ`, every test vector `f_3` and
+every sign choice `ℓ` of `𝓛`: `P(3, 1) = ±w_K 𝓛(3)𝓛(1)`, where `2w_K` is the number of roots of unity in
+`K = ℚ(√−3)` (L558), i.e. `w_K = torsionOrder K / 2` with Mathlib's `NumberField.Units.torsionOrder`
+(the order of the group of roots of unity of `K`). The idele read for a class `t` is `clLift 3 t` (any idele
+in the class gives the same value, `tv_eq_of_toClassGroup_eq`).
+
+Only the displayed formula of Theorem 2.1 is stated, not its first assertion (`P(d₁, d₂) ≠ 0` only if
+`d₂ ≡ 1 (mod 8)`), which is false for ordered pairs when `n ≡ 3 (mod 8)`; it is not needed at `(3, 1)`,
+where `d₂ = 1`. A consequence of the print (one instance). Checked (h29-fix, `brandt.py`): for each of the
+8 admissible `τ`, `P(3, 1) = f_3(1) = ±3` and `𝓛(3)² = 1`, `w_K = 3`. -/
+def TYZThm21At31 : Prop :=
+  ∀ τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ], AdmissibleTau 3 τ → ∀ f : ℍ[AQ] → ℤ, IsTestVector 3 τ f →
+    ∀ ℓ : ℕ → ℤ, IsLcalSign ℓ →
+      ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
+        ∑ t : ClassGroup (𝓞 (QNeg 3)), f ((tauHatU 3 τ (clLift 3 t) : ℍ[AQ]ˣ) : ℍ[AQ]) =
+          ε * ((NumberField.Units.torsionOrder (QNeg 3) / 2 : ℕ) : ℤ) * (ℓ 3 * ℓ 1)
 
 /-- **TYZ Proposition 2.3 (L580–586), first assertion, for squarefree `1 < n ≡ 1, 3 (mod 8)`**:
 `f_n((B̂^×)²) ⊂ 1 + 2ℤ`.
@@ -528,12 +580,12 @@ theorem tyzLemma29Mod2_of_printedLeaves (hτ : TYZTauExists) (hfx : TYZTestVecto
         (hfx m hsq h1 hcl _ (hτ m hsq hcl).choose_spec).choose := by
       rw [genusPeriod_of_ne]
       refine Finset.sum_congr rfl fun t _ => ?_
-      simp only [tvFun, dif_pos hm]
+      simp only [tvFun, dite_eq_left_of_eq_true (eq_true hm)]
     rw [hQ]
     exact key
   · intro n _ hsq h1 hcl t ht
     have hm : Squarefree n ∧ 1 < n ∧ (n % 8 = 1 ∨ n % 8 = 3) := ⟨hsq, h1, hcl⟩
-    simp only [tvFun, dif_pos hm]
+    simp only [tvFun, dite_eq_left_of_eq_true (eq_true hm)]
     have hf := (hfx n hsq h1 hcl _ (hτ n hsq hcl).choose_spec).choose_spec.1
     exact odd_on_sqClasses hf.1 (h23 n hsq h1 hcl _ (hτ n hsq hcl).choose_spec _ hf) ht
 
@@ -542,20 +594,19 @@ and `τ(O_{K_n}) ⊂ O_B` from the trace and norm of integral elements) -/
 
 /-- **Legendre's three-square theorem** (the "if" direction): a natural number that is not of the form
 `4^a(8b + 7)` is a sum of three squares. Legendre, *Essai sur la théorie des nombres* (1798); Gauss,
-*Disquisitiones Arithmeticae* (1801), art. 291–292 (STANDARD; article numbers UNVERIFIED). TYZ L531–532
-cite it ("a classical result of Legendre"). Not in Mathlib 4.35 (searched; Mathlib has Lagrange's
+*Disquisitiones Arithmeticae* (1801), art. 291–292 (STANDARD; article numbers UNVERIFIED). TYZ L533
+cites it ("a classical result of Legendre"). Not in Mathlib 4.35 (searched; Mathlib has Lagrange's
 `Nat.sum_four_squares`). -/
 def LegendreThreeSquares : Prop :=
   ∀ n : ℕ, (∀ a b : ℕ, n ≠ 4 ^ a * (8 * b + 7)) → ∃ x y z : ℤ, (n : ℤ) = x ^ 2 + y ^ 2 + z ^ 2
 
-/-- **The ternary form `x² + y² + 16z²` represents every squarefree `n ≡ 1 (mod 8)`** (TYZ L532–533:
-"`n ≡ 1 (mod 8)` implies the existence of a solution with `4 | c`. See [JP, Theorem 5]"; B. W. Jones and
+/-- **The ternary form `x² + y² + 16z²` represents every squarefree `n ≡ 1 (mod 8)`** (TYZ L533:
+`n ≡ 1 (mod 8)` gives a solution with `4 ∣ c`, citing [JP, Theorem 5]; B. W. Jones and
 G. Pall, *Regular and semi-regular positive ternary quadratic forms*, Acta Math. 70 (1939) 165–191,
-Theorem 5, as cited by TYZ (bib L3290–3292; that theorem not read, its wording UNVERIFIED). The form is
-one of the regular diagonal ternary forms (Dickson, *Modern Elementary Theory of Numbers* (1939), table
-of regular forms, UNVERIFIED); it represents every positive integer not of the forms `4k + 3`, `8k + 6`,
-`16k + 12`, `4^a(8k + 7)` — exhaustively VERIFIED to `10⁶` (`scratch/h29-fix/regular_form.py`) — so every
-`n ≡ 1 (mod 8)`. Stated for squarefree `n`, TYZ's standing assumption (L499), a weakening. -/
+Theorem 5, as cited by TYZ L533 (bib L3290–3292; that theorem not read, its wording UNVERIFIED). Checked:
+the form represents every positive integer up to `10⁶` not of the forms `4k + 3`, `8k + 6`, `16k + 12`,
+`4^a(8k + 7)`, in particular every `n ≡ 1 (mod 8)` up to `10⁶` (exhaustive, VERIFIED,
+`scratch/h29-fix/regular_form.py`). Stated for squarefree `n`, TYZ's standing assumption (L499), a weakening. -/
 def JonesPallX2Y2Z16 : Prop :=
   ∀ n : ℕ, Squarefree n → n % 8 = 1 → ∃ x y z : ℤ, (n : ℤ) = x ^ 2 + y ^ 2 + 16 * z ^ 2
 
@@ -735,13 +786,85 @@ theorem tyzLemma29Mod2_of_printedLeaves_threeSquares (hL : LegendreJonesPall)
     TYZLemma29Mod2 :=
   tyzLemma29Mod2_of_printedLeaves (tyzTauExists_of_legendreJonesPall hL) hfx h29 h23
 
-/-- **`h29` from five published statements** (h29-fix): Legendre's three-square theorem, the
-Jones–Pall representation by `x² + y² + 16z²`, TYZ's test vector (Theorem 2.6 at `χ = 1`), TYZ Lemma 2.9
-(with Theorem 2.1's `w_K`) and Proposition 2.3. -/
+/-- **`h29` from five statements** (h29-fix): Legendre's three-square theorem, the Jones–Pall
+representation by `x² + y² + 16z²`, TYZ's test vector (Theorem 2.6 at `χ = 1`), TYZ Lemma 2.9 with Theorem
+2.1's `w_K` (`TYZLemma29Printed`, now proved from two printed leaves, `tyzLemma29Printed_of_ne3_thm21`) and
+Proposition 2.3. Kept as an intermediate step of `tyzLemma29Mod2_of_sixLeaves`. -/
 theorem tyzLemma29Mod2_of_printedLeaves_legendre (hL : LegendreThreeSquares) (hJ : JonesPallX2Y2Z16)
     (hfx : TYZTestVectorExists) (h29 : TYZLemma29Printed) (h23 : TYZProp23Printed) :
     TYZLemma29Mod2 :=
   tyzLemma29Mod2_of_printedLeaves_threeSquares (legendreJonesPall_of hL hJ) hfx h29 h23
+
+/-! ### The `w_K` form of Lemma 2.9 from the printed Lemma 2.9 (`n ≠ 3`) and Theorem 2.1 at `(3, 1)`
+
+Glue (h29-ne3): `#μ(ℚ(√−3)) = 6`, so TYZ's `w_K` at `n = 3` is `3 = wK 3`; `Cl(ℚ(√−3)) = 1`, so
+`2Cl_3 = Cl_3` and the genus period `Q(3)` is the quadratic period `P(3, 1)`; `pairIdx 3 = {1}`. -/
+
+/-- `ℚ(√−3)` has `6` roots of unity: Mathlib's `IsCyclotomicExtension.Rat.torsionOrder_eq` (`2n` for the
+`n`-th cyclotomic field, `n` odd), with `ℚ(√−3) = ℚ(ζ₃)` (`ZInQ.Contrib.TYZLcal.isCyclotomicExtension_three`). -/
+theorem torsionOrder_qNeg_three : NumberField.Units.torsionOrder (QNeg 3) = 6 := by
+  rw [IsCyclotomicExtension.Rat.torsionOrder_eq (n := 3) (K := QNeg 3)]
+  simp [show ¬ Even 3 by decide]
+
+/-- TYZ's `w_K` (`2w_K` = number of roots of unity, L558) at `K = ℚ(√−3)` is `wK 3 = 3`. -/
+theorem wK_three_eq_torsionOrder :
+    wK 3 = ((NumberField.Units.torsionOrder (QNeg 3) / 2 : ℕ) : ℤ) := by
+  rw [torsionOrder_qNeg_three]
+  simp [wK]
+
+/-- `Cl(ℚ(√−3))` is trivial (`𝓞_{ℚ(√−3)}` is a PID, `ZInQ.Contrib.TYZLcal.pid_three`). -/
+theorem subsingleton_classGroup_three : Subsingleton (ClassGroup (𝓞 (QNeg 3))) := by
+  have h1 : Fintype.card (ClassGroup (𝓞 (QNeg 3))) = 1 :=
+    card_classGroup_eq_one_iff.mpr ZInQ.Contrib.TYZLcal.pid_three
+  exact Fintype.card_le_one_iff_subsingleton.mp h1.le
+
+/-- `2Cl_3 = Cl_3`. -/
+theorem sqClasses_three : sqClasses 3 = Finset.univ := by
+  have := subsingleton_classGroup_three
+  refine Finset.eq_univ_of_forall fun t => ?_
+  rw [Subsingleton.elim t 1]
+  exact one_mem_sqClasses 3
+
+/-- The genus period at `n = 3` is the quadratic period `P(3, 1) = Σ_{t ∈ Cl_3} f(t)` of `TYZThm21At31`. -/
+theorem genusPeriodTV_three (τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]) (f : ℍ[AQ] → ℤ) :
+    genusPeriodTV 3 τ f =
+      ∑ t : ClassGroup (𝓞 (QNeg 3)), f ((tauHatU 3 τ (clLift 3 t) : ℍ[AQ]ˣ) : ℍ[AQ]) := by
+  rw [genusPeriodTV, sqClasses_three]
+
+/-- The only decomposition `3 = d₁d₂` with `d₂ ≡ 1 (mod 8)` is `(3, 1)`. -/
+theorem pairIdx_three_eq : pairIdx 3 = {1} := by decide
+
+/-- **Lemma 2.9 (`w_K` form) at `n = 3` from Theorem 2.1 at `(3, 1)`.** -/
+theorem lemma29At_three (h31 : TYZThm21At31) {τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]} (hτ : AdmissibleTau 3 τ)
+    {f : ℍ[AQ] → ℤ} (hf : IsTestVector 3 τ f) : Lemma29At 3 (genusPeriodTV 3 τ f) := by
+  intro ℓ hℓ
+  obtain ⟨ε, hε, h⟩ := h31 τ hτ f hf ℓ hℓ
+  refine ⟨fun _ => ε, fun _ => hε, ?_⟩
+  rw [genusPeriodTV_three, h, pairIdx_three_eq, Finset.sum_singleton, Nat.div_one,
+    wK_three_eq_torsionOrder]
+  ring
+
+/-- **Glue: the `w_K` form of TYZ Lemma 2.9** from the printed Lemma 2.9 for `n ≠ 3` (where `wK n = 1`)
+and Theorem 2.1 at `(d₁, d₂) = (3, 1)`. -/
+theorem tyzLemma29Printed_of_ne3_thm21 (hNe3 : TYZLemma29PrintedNe3) (h31 : TYZThm21At31) :
+    TYZLemma29Printed := by
+  intro n _ hsq h1 hcl τ hτ f hf
+  by_cases h3 : n = 3
+  · subst h3
+    exact lemma29At_three h31 hτ hf
+  · intro ℓ hℓ
+    obtain ⟨ε, hε, h⟩ := hNe3 n hsq h1 h3 hcl τ hτ f hf ℓ hℓ
+    refine ⟨ε, hε, ?_⟩
+    have hw : wK n = 1 := by simp [wK, h3]
+    rw [hw, one_mul, h]
+
+/-- **`h29` from six published statements** (h29-ne3): Legendre's three-square theorem, the Jones–Pall
+representation by `x² + y² + 16z²`, TYZ's test vector (Theorem 2.6 at `χ = 1`), TYZ Lemma 2.9 as printed
+for `n ≠ 3`, TYZ Theorem 2.1 at `(d₁, d₂) = (3, 1)`, and TYZ Proposition 2.3. -/
+theorem tyzLemma29Mod2_of_sixLeaves (hL : LegendreThreeSquares) (hJ : JonesPallX2Y2Z16)
+    (hfx : TYZTestVectorExists) (hNe3 : TYZLemma29PrintedNe3) (h31 : TYZThm21At31)
+    (h23 : TYZProp23Printed) : TYZLemma29Mod2 :=
+  tyzLemma29Mod2_of_printedLeaves_legendre hL hJ hfx (tyzLemma29Printed_of_ne3_thm21 hNe3 h31) h23
 
 end Genuine
 
