@@ -10,20 +10,24 @@ has no network).
 
 ## 1. Verdict and main result
 
-**`ShimuraGlue.Ray.RayClassCM` (x6-glue §5.1) is now a Lean theorem.** Its inputs are:
-* four leaves, each a published statement or a consequence of one;
-* one glue Prop, `CMBaseChange`, which is not yet proved.
+**`ShimuraGlue.Ray.RayClassCM` (x6-glue §5.1) is now a Lean theorem from four leaves, with no glue left.**
+* Two of the leaves are already in the bundle.
+* The other two are consequences of printed theorems:
+  * shimura-cft's Deligne leaf with its moduli clause also at `𝒪̂^×`;
+  * Eichler's class number one.
 
-VERIFIED: `scratch/rayclass-cft/RayClassCFT.lean` compiles with 0 errors in 34 s (9.0 GB). Every
-`#print axioms` line is `[propext, Classical.choice, Quot.sound]`; see `RayClassCFT_result.txt`.
+VERIFIED: `scratch/rayclass-cft/RayClassCFT.lean` compiles with 0 errors in 1 min 17 s (14.8 GB). All 22
+`#print axioms` lines are `[propext, Classical.choice, Quot.sound]`; see `RayClassCFT_result.txt`.
 
 ```lean
-theorem RayClassCFT.rayClassCM_of4 (hL : ShimuraMainThmIDeligneY3AbU)
+theorem RayClassCFT.rayClassCM_of_leaves (hL : ShimuraMainThmIDeligneY3AbU)
     (hMR : LeafQM.AV.R1UnivRigid.MumfordRigidityCore) (hCN : ClassNumberOneB)
-    (hB : CMBaseChange) (hHL : ZInQ.HomUnify.HomLinearLift) : ShimuraGlue.Ray.RayClassCM
+    (hHL : ZInQ.HomUnify.HomLinearLift) : ShimuraGlue.Ray.RayClassCM
 ```
 
 The statement `RayClassCM` is x6-glue's, copied verbatim (`RayDefs.lean` = `X6Glue.lean` lines 6587-6745).
+So x6-glue's rows `r1r2` and `x6ConicModel` now rest on published-form leaves only, apart from x6-glue's own §5.2
+caveat (the fibre clause of `ElkiesEquationsX6`).
 
 **The ray-class form needs more than shimura-cft's Deligne form gives.** As stated,
 `ShimuraMainThmIDeligneY3Ab` describes the moduli object at `Ψ(τ, 1)` only. The points `Ψ(τ, 1)` fill only one of
@@ -36,10 +40,11 @@ Two printed statements fill the gap:
    described there, not the level structure. It is folded into the Deligne leaf as `ShimuraMainThmIDeligneY3AbU`.
 2. **`ClassNumberOneB`**: Eichler's class number one, `(B ⊗ 𝔸_f)^× = B^× · 𝒪̂^×`.
 
-The other glue the reduction first needed is now proved:
+The glue the reduction needed is all proved:
 * `QHatIntegral`, for every number field;
 * `RingOfIntegersGen`, for the three fields;
 * `CMAnalytic`, from the bundle's textbook leaf `HomLinearLift`;
+* `CMBaseChange`, from the kernel's proved rigidity;
 * the Galois descent of residue fields;
 * the kernel of Tau Ceti's Artin map on the ray class field;
 * the extension of `Aut(ℚ̄)` to `Aut(ℂ)`.
@@ -52,7 +57,7 @@ The other glue the reduction first needed is now proved:
 | `MumfordRigidityCore` | LEAF (existing; r1univ-rigid, route-a-fold field) | Mumford's rigidity, for `R1fpPropsAb ↔ R1fpProps` | already in the bundle |
 | `ClassNumberOneB` | **LEAF** (printed, adelic form) | `∀ g ∈ (B⊗𝔸_f)^×, ∃ γ ∈ B, nrd γ ≠ 0, ∃ u ∈ 𝒪̂^×, g = γu` | Eichler, J. reine angew. Math. 195 (1955); Vignéras LNM 800, Cor. III.5.7; Voight GTM 288, Cor. 28.5.17 with §27.6 (UNVERIFIED numbers) |
 | `ZInQ.HomUnify.HomLinearLift` | LEAF (existing; hom-unify, first clause of `HomLatticeCorr`) | every homomorphism of abelian varieties lifts to a `ℂ`-linear map of the uniformizations | Birkenhake–Lange Prop. 1.2.1 (UNVERIFIED) |
-| `CMBaseChange` | GLUE (unproved) | the CM relations `φ² = −1`, `φ² − φ + 1 = 0`, `φ² = −6` of `P/ℚ̄` pass to an object `Q/ℂ` with `IsBaseChangeOf ιe P Q` | true; proof sketch in §4 |
+| `CMBaseChange` | GLUE, **proved** (`cmBaseChange`) | the CM relations `φ² = −1`, `φ² − φ + 1 = 0`, `φ² = −6` of `P/ℚ̄` pass to an object `Q/ℂ` with `IsBaseChangeOf ιe P Q` | `RayGlueB.lean` |
 | `QHatIntegral k` | GLUE, **proved** for every number field (`qHatIntegral`) | `q(𝒪_k) ⊆ 𝒪` ⇒ `q̂` maps the congruence ideles of `3𝒪_k` into `K₃` | `RayGlueI.lean` |
 | `RingOfIntegersGen k y` | GLUE, **proved** for `ℚ(i)`, `ℚ(ζ₃)`, `ℚ(√−6)` | `𝒪_k = ℤ[y]` | `RayGlueO.lean` |
 | `CMAnalytic` | GLUE, **proved** from `HomLinearLift` (`cmAnalytic_of`) | for `Q/ℂ` uniformized `ι`-compatibly by `Λ_τ`, a ring map `End_𝒪(Q) → 𝒪`, `f ↦ β_f`, with `ι(β_f)(τ,1)ᵀ ∈ ℂ(τ,1)ᵀ` | `RayGlueA.lean` |
@@ -158,17 +163,16 @@ The CM hypothesis of `embed_core` comes from the object (`obj_at`, `cm_data`, `r
   * `ι : B → M₂(ℂ)` is a `ℚ`-algebra map (`iotaC`);
   * the three fields are totally complex, of degree 2 (`isTotallyComplex_of_root`, `finrank_K4/K3/K24`).
 
-**`CMBaseChange` (not proved; sketch, SPECULATIVE).** `IsPullback g` gives an `Over`-isomorphism
-`g' : Q.A.X ≅ (P.A.baseChange ℂ).X`.
-1. `g'` preserves the identity. This is the `η`-clause of `IsBaseChangeOf` at `a = 0`, since `η(0)` is the
-   identity point.
-2. So `g'` is a homomorphism, by the kernel's proved rigidity `G0FibreSimple.rigidityHom`.
-3. Conjugation by `g'`, composed with the kernel's ring map `endBC : End P.A → End (P.A)_ℂ`, is a ring map
-   `End P.A → End Q.A`. It carries `ι_P` to `ι_Q` (the `ι`-clause, by pullback uniqueness), hence carries
-   `End_𝒪(P)` into `End_𝒪(Q)` and preserves the polynomial identities.
-
-The work is category theory: `Over.pullback`, `Functor.grpObjObj`'s unit, `IsPullback.isoPullback`. There is no
-new mathematics.
+* **`CMBaseChange`** (`cmBaseChange`, `RayGlueB.lean`).
+  * `IsPullback g` gives `bcIso : Q.A.X ≅ (P.A.baseChange L).X` over `L`, via `IsPullback.isoPullback`.
+  * It preserves the identity (`bcIso_eta`). This uses the `η`-clause of `IsBaseChangeOf` at `a = 0`, where
+    `η(0)` is the unit section (`eta_compat`, `one_pt_left`), and the unit of `Over.pullback` read on the
+    pullback projections (`eta_bc_fst`).
+  * So `bcIso` and its inverse are homomorphisms, by the kernel's proved rigidity
+    `G0FibreSimple.rigidityHom` (`bcIso_isMonHom`).
+  * Conjugation by `bcIso` (`conjEnd`) after the kernel's `endBC` is a ring map `End P.A → End Q.A`. It carries
+    `ι_P(a)` to `ι_Q(a)` (`bc_iota`, from the `ι`-clause and `pullback.hom_ext`), so it carries `End_𝒪(P)` into
+    `End_𝒪(Q)` (`com_map`) and preserves the three polynomial identities.
 
 ## 5. Files and checks (VERIFIED: one Lean process at a time)
 
@@ -183,8 +187,9 @@ new mathematics.
 | `RayProof5.lean` | `obj_at`, `RingOfIntegersGen`, `cm_data`, the three fields, **`rayClassCM_of`** | olean chain |
 | `RayGlueO.lean` | `RingOfIntegersGen` for the three fields, `rayClassCM_of2` | olean chain |
 | `RayGlueI.lean` | `QHatIntegral` for every number field, `rayClassCM_of3` | olean chain |
-| `RayGlueA.lean` | `CMAnalytic` from `HomLinearLift`, **`rayClassCM_of4`** | olean chain |
-| `RayClassCFT.lean` | all of the above in one file (`mk.py`) | **0 errors, 34 s, 9.0 GB; all axioms standard** (`RayClassCFT_result.txt`) |
+| `RayGlueA.lean` | `CMAnalytic` from `HomLinearLift`, `rayClassCM_of4` | olean chain |
+| `RayGlueB.lean` | `CMBaseChange` (base-change isomorphism, rigidity, conjugation), **`rayClassCM_of_leaves`** | olean chain |
+| `RayClassCFT.lean` | all of the above in one file (`mk.py RayGlueB.lean`) | **0 errors, 1 min 17 s, 14.8 GB; 22 axiom lines, all standard** (`RayClassCFT_result.txt`) |
 
 How to check:
 * The parts: `scratch/rayclass-cft/chk.sh <file> <olean-name>`. It sets `LEAN_PATH` to lake's path plus
@@ -193,13 +198,20 @@ How to check:
 
 ## 6. For integration
 
-* With `rayClassCM_of4`, x6-glue's leaf field `rayClass : RayClassCM` in `X6Leaves`/`ShimuraGlueLeaves4`
-  becomes four leaves and one glue Prop:
-  * leaves: `ShimuraMainThmIDeligneY3AbU` (which implies shimura-cft's leaf), `ClassNumberOneB`,
-    `MumfordRigidityCore`, `HomLinearLift`, of which the last two are already bundle leaves;
-  * glue: `CMBaseChange`.
+* With `rayClassCM_of_leaves`, x6-glue's leaf field `rayClass : RayClassCM` in `X6Leaves`/`ShimuraGlueLeaves4`
+  becomes four leaves:
+  * `ShimuraMainThmIDeligneY3AbU`, which implies shimura-cft's leaf (`mainThmI_of_U`);
+  * `ClassNumberOneB`;
+  * `MumfordRigidityCore` (already a bundle leaf);
+  * `HomLinearLift` (already a bundle leaf, through `HomLatticeCorr`).
 * If route-a-fold's `shimuraFamilyAb` field is also replaced by shimura-cft's leaf, use
-  `ShimuraMainThmIDeligneY3AbU` there too (`mainThmI_of_U`). Then one Deligne leaf serves both rows.
-* No kernel edit and no new axiom. The copies (shimura-cft, x6-glue, t5-glue `Field.lean`, height-glue
-  `liftQuad`) are verbatim, except that two Tau Ceti lemmas are re-proved for a general base field. For `K = ℚ`,
-  `Algebra ℚ (v.adicCompletion ℚ)` has two instances that are not definitionally equal.
+  `ShimuraMainThmIDeligneY3AbU` there too. Then one Deligne leaf serves both rows.
+* No kernel edit and no new axiom.
+  * The copies (shimura-cft, x6-glue, t5-glue `Field.lean`, height-glue `liftQuad`) are verbatim.
+  * Two Tau Ceti lemmas are re-proved for a general base field `K`. For `K = ℚ`,
+    `Algebra ℚ (v.adicCompletion ℚ)` has two instances that are not definitionally equal.
+* Reusable for other rows:
+  * `qHatIntegral` (any number field);
+  * `cmAnalytic_of`, the analytic representation `End_𝒪(Q) → 𝒪` of a QM surface;
+  * `exists_bc_ringHom`, base change `End P.A → End Q.A` for any `IsBaseChangeOf`;
+  * `residueImage_le`, Galois descent of residue fields of `ℚ̄`-points.
