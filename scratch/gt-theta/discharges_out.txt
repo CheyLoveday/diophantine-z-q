@@ -1,0 +1,7 @@
+#discharges: 72 open hypotheses, 87 theorems checked, 0 discharge one
+'GapTheta.thetaModularityM46' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GapTheta.thetaModularityM46Siegel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GapTheta.s8WeightExact_of'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GapTheta.s20WeightExact_of'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GapTheta.s8WeightExact_of_gen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GapTheta.s20WeightExact_of_gen' depends on axioms: [propext, Classical.choice, Quot.sound]
