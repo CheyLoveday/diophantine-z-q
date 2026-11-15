@@ -492,7 +492,7 @@ theorem local_eq (hD : X0.EtaModelDifferential) (τ0 : ℍ) {z0 : ℂ} (hz0 : z0
     exact this hΨ0
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hm0
   have h1 : analyticOrderAt (deriv Ψ) (τ0 : ℂ) = n :=
-    analyticOrderAt_deriv_of_pos hΨa (by rw [← hm]; push_cast; rfl)
+    analyticOrderAt_deriv_of_pos hΨa (by rw [← hm]; rfl)
   rw [analyticOrderAt_congr hderiv, analyticOrderAt_mul hha hΨa, ← hm] at h1
   have : ((n.succ : ℕ) : ℕ∞) ≤ (n : ℕ∞) := by
     rw [← h1]; exact le_add_self
@@ -514,7 +514,7 @@ theorem global_eq (hD : X0.EtaModelDifferential) (τ0 : ℍ) {z0 : ℂ} (hz0 : z
   set P : ℂ → Prop := fun s => w s ∉ L.lattice ∧ L.weierstrassP (w s) = X0.xC s with hP
   set U : Set ℂ := {w : ℂ | 0 < w.im} with hU
   set S : Set ℂ := U ∩ {s | ∀ᶠ t in 𝓝 s, P t} with hS
-  have hSo : IsOpen S := U_open.inter isOpen_setOf_eventually_nhds
+  have hSo : IsOpen S := U_open.inter isOpen_setOfPred_eventually_nhds
   have hwa : ∀ s ∈ U, AnalyticAt ℂ w s := fun s hs => (analyticAt_eichler hs).add analyticAt_const
   have hwd : ∀ s ∈ U, HasDerivAt w (2 * Real.pi * Complex.I * X0.fC s) s := fun s hs =>
     (hasDerivAt_eichlerCd_one hs).add_const c0
@@ -568,6 +568,100 @@ theorem global_eq (hD : X0.EtaModelDifferential) (τ0 : ℍ) {z0 : ℂ} (hz0 : z
   have hsub := (convex_halfSpace_im_gt (0 : ℝ)).isPreconnected.subset_of_closure_inter_subset hSo
     ⟨τ0, τ0.im_pos, hτ0S⟩ hcl
   exact (hsub hσ).2.self_of_nhds
+
+include hg2 hg3 in
+/-- **The periods of `Φ₁` over `Γ₀(32)` lie in every lattice of `32a1 : y² = x³ + 4x` (C7)**,
+given x0-32's differential identity `dx/2y = 2πi f₁ dτ`. -/
+theorem period_mem (hD : X0.EtaModelDifferential) {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32) (τ : ℍ) :
+    eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 τ ∈ L.lattice := by
+  -- a point `z₀` over `(x(τ), y(τ))`
+  obtain ⟨z1, hz1, hx1⟩ := weierstrassP_surjective L (X0.xC τ)
+  have hrel := relation_A L hg2 hg3 hz1
+  have heqτ := ZInQ.Contrib.TYZGenus.Shimura.etaModelEquation τ
+  obtain ⟨z0, hz0, hx, hy⟩ : ∃ z0, z0 ∉ L.lattice ∧ L.weierstrassP z0 = X0.xC τ ∧
+      L.derivWeierstrassP z0 = 2 * X0.yC τ := by
+    have hsq : (L.derivWeierstrassP z1 - 2 * X0.yC τ) * (L.derivWeierstrassP z1 + 2 * X0.yC τ) = 0 := by
+      rw [hx1] at hrel
+      linear_combination hrel - 4 * heqτ
+    rcases mul_eq_zero.mp hsq with h | h
+    · exact ⟨z1, hz1, hx1, by linear_combination h⟩
+    · refine ⟨-z1, fun h' => hz1 (by simpa using neg_mem h'), by rw [L.weierstrassP_neg, hx1], ?_⟩
+      rw [L.derivWeierstrassP_neg]; linear_combination -h
+  set c0 := z0 - eichlerCd 1 τ with hc0
+  set w : ℂ → ℂ := fun σ => eichlerCd 1 σ + c0 with hw
+  have hwτ : w τ = z0 := by simp [hw, hc0]
+  set ω := eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 τ with hω
+  have hG := fun {σ : ℂ} (hσ : 0 < σ.im) => global_eq L hg2 hg3 hD τ hz0 hx hy hσ
+  -- `℘(w σ + ω) = ℘(w σ)` on `ℍ`
+  have hshift : ∀ σ : ℍ, w σ + ω = w ((γ • σ : ℍ) : ℂ) := by
+    intro σ
+    have := period_const hγ σ τ
+    simp only [hw, hω]
+    linear_combination -this
+  have hkey : ∀ σ : ℍ, L.weierstrassP (w σ + ω) = L.weierstrassP (w σ) := by
+    intro σ
+    rw [hshift σ, (hG (γ • σ).im_pos).2, (hG σ.im_pos).2]
+    exact ((ZInQ.Contrib.TYZGenus.Shimura.etaModelInvariant γ hγ σ).1)
+  -- the identity theorem on `Ω = ℂ ∖ (L ∪ (L − ω))`
+  set Ω : Set ℂ := {u | u ∉ L.lattice ∧ u + ω ∉ L.lattice} with hΩ
+  have hΩc : IsPreconnected Ω := by
+    have hc : ((L.lattice : Set ℂ) ∪ (fun u => u + ω) ⁻¹' (L.lattice : Set ℂ)).Countable :=
+      (countable_lattice L).union ((countable_lattice L).preimage (add_left_injective ω))
+    have := (Set.Countable.isConnected_compl_of_one_lt_rank (by simp) hc).isPreconnected
+    convert this using 1
+    ext u; simp [hΩ]
+  have hsh : ∀ u, u + ω ∉ L.lattice → AnalyticAt ℂ (fun v => L.weierstrassP (v + ω)) u :=
+    fun u hu => AnalyticAt.comp (g := L.weierstrassP) (f := fun v => v + ω) (x := u)
+      (L.analyticOnNhd_weierstrassP _ hu) (analyticAt_id.add analyticAt_const)
+  have hg1a : AnalyticOnNhd ℂ (fun u => L.weierstrassP (u + ω)) Ω := fun u hu => hsh u hu.2
+  have hg2a : AnalyticOnNhd ℂ L.weierstrassP Ω := fun u hu => L.analyticOnNhd_weierstrassP _ hu.1
+  have hu0 : w τ ∈ Ω := ⟨(hG τ.im_pos).1, by rw [hshift τ]; exact (hG (γ • τ).im_pos).1⟩
+  have hwa : AnalyticAt ℂ w τ := (analyticAt_eichler τ.im_pos).add analyticAt_const
+  have hwd : HasDerivAt w (2 * Real.pi * Complex.I * X0.fC τ) τ :=
+    (hasDerivAt_eichlerCd_one τ.im_pos).add_const c0
+  have hd1 : 2 * Real.pi * Complex.I * X0.fC τ ≠ 0 := by
+    refine mul_ne_zero (mul_ne_zero (mul_ne_zero two_ne_zero ?_) Complex.I_ne_zero)
+      (X0.fC_ne_zero τ)
+    exact_mod_cast Real.pi_ne_zero
+  have hmap : 𝓝 (w τ) ≤ Filter.map w (𝓝 (τ : ℂ)) := by
+    rcases hwa.eventually_constant_or_nhds_le_map_nhds with h | h
+    · exfalso
+      have hne := hwd.eventually_ne hd1 (c := w τ)
+      obtain ⟨s, hs1, hs2⟩ := ((h.filter_mono nhdsWithin_le_nhds).and hne).exists
+      exact hs2 hs1
+    · exact h
+  have hev : (fun u => L.weierstrassP (u + ω)) =ᶠ[𝓝 (w τ)] L.weierstrassP := by
+    refine Filter.Eventually.filter_mono hmap ?_
+    rw [Filter.eventually_map]
+    filter_upwards [U_open.mem_nhds τ.im_pos] with s hs
+    exact hkey ⟨s, hs⟩
+  have hEq := hg1a.eqOn_of_preconnected_of_eventuallyEq hg2a hΩc hu0 hev
+  -- if `ω ∉ L`, `℘` would be bounded near `0`
+  by_contra hωL
+  have h0L : (0 : ℂ) ∈ L.lattice := L.lattice.zero_mem
+  have hev0 : ∀ᶠ u in 𝓝[≠] (0 : ℂ), u ∈ Ω := by
+    have h1 : ∀ᶠ u in 𝓝[≠] (0 : ℂ), u ∉ L.lattice := by
+      filter_upwards [nhdsWithin_le_nhds (s := ({0}ᶜ : Set ℂ))
+        (L.compl_lattice_sdiff_singleton_mem_nhds 0), self_mem_nhdsWithin] with u hu hu0
+      exact fun huL => hu ⟨huL, hu0⟩
+    have h2 : ∀ᶠ u in 𝓝 (0 : ℂ), u + ω ∉ L.lattice := by
+      have hc : ContinuousAt (fun u : ℂ => u + ω) 0 := (continuous_id.add continuous_const).continuousAt
+      exact hc.eventually (L.isClosed_lattice.isOpen_compl.mem_nhds (by simpa using hωL))
+    filter_upwards [h1, h2.filter_mono nhdsWithin_le_nhds] with u hu1 hu2
+    exact ⟨hu1, hu2⟩
+  have hcont : ContinuousAt (fun u => L.weierstrassP (u + ω)) 0 :=
+    (hsh 0 (by simpa using hωL)).continuousAt
+  have hb : ∀ᶠ u in 𝓝[≠] (0 : ℂ), ‖L.weierstrassP (u + ω)‖ < ‖L.weierstrassP ω‖ + 1 := by
+    have h0 : (fun u => ‖L.weierstrassP (u + ω)‖) 0 < ‖L.weierstrassP ω‖ + 1 := by simp
+    exact (hcont.norm.eventually (gt_mem_nhds h0)).filter_mono nhdsWithin_le_nhds
+  have hc := tendsto_weierstrassP_cobounded L h0L
+  rw [← tendsto_norm_atTop_iff_cobounded] at hc
+  have hbig := hc.eventually (eventually_gt_atTop (‖L.weierstrassP ω‖ + 1))
+  obtain ⟨u, hu1, hu2, hu3⟩ := (hev0.and (hb.and hbig)).exists
+  have he := hEq hu1
+  simp only at he
+  rw [he] at hu2
+  linarith
 
 end Param
 
