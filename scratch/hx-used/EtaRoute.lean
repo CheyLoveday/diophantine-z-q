@@ -283,6 +283,134 @@ theorem exists_v1 : ∃ (v : QNeg m) (p q : ℤ),
     (by simp [pp]; norm_num)
   exact h4
 
+/-- `j/32 ∈ ⟨1/M, τ_Q⟩` forces `d ∣ j` (`dM = 32`). -/
+theorem dvd_of_mem_latM (Q : HeegnerForm 32 D) {M d : ℕ} (hdM : d * M = 32) {j : ℤ}
+    (h : (j : ℂ) * (1 / 32) ∈ latM Q M) : (d : ℤ) ∣ j := by
+  have hM0 : M ≠ 0 := by rintro rfl; simp at hdM
+  have hd0 : d ≠ 0 := by rintro rfl; simp at hdM
+  rw [← ppM_lattice Q M hM0] at h
+  have h' : ((j * M / 32 : ℚ) : ℂ) * (ppM M hM0 Q.tauH).ω₁ + ((0 : ℚ) : ℂ) * (ppM M hM0 Q.tauH).ω₂ ∈
+      (ppM M hM0 Q.tauH).lattice := by
+    convert h using 1
+    simp only [ppM]
+    have : (M : ℂ) ≠ 0 := by exact_mod_cast hM0
+    push_cast
+    field_simp
+    ring
+  rw [PeriodPair.mul_ω₁_add_mul_ω₂_mem_lattice] at h'
+  obtain ⟨h1, -⟩ := h'
+  have h2 : ((j * M / 32 : ℚ)) = ((j * M / 32 : ℚ).num : ℚ) := by
+    exact (Rat.coe_int_num_of_den_eq_one h1).symm
+  set k := (j * M / 32 : ℚ).num
+  have h3 : (j : ℚ) * M = 32 * k := by
+    have : (32 : ℚ) ≠ 0 := by norm_num
+    field_simp at h2; linarith
+  have h4 : j * M = 32 * k := by exact_mod_cast h3
+  refine ⟨k, ?_⟩
+  have hM' : (M : ℤ) ≠ 0 := by exact_mod_cast hM0
+  have h5 : (32 : ℤ) = d * M := by exact_mod_cast hdM.symm
+  rw [h5] at h4
+  have : j * M = (d * k) * M := by linarith
+  exact mul_right_cancel₀ hM' this
+
+/-- **`s⁻¹⟨1/M, τ_Q⟩ = c'⟨1/M, τ_{Q'}⟩`** for `dM = 32`. -/
+theorem sInv_latM {M d : ℕ} (hdM : d * M = 32) :
+    kappa m '' sInvLat m T.s (kappa m ⁻¹' (latM T.Q M : Set ℂ)) = T.c • (latM T.Q' M : Set ℂ) := by
+  have hM0 : 0 < M := Nat.pos_of_ne_zero (by rintro rfl; simp at hdM)
+  have hd0 : 0 < d := Nat.pos_of_ne_zero (by rintro rfl; simp at hdM)
+  have hinvM : 1 / (M : ℂ) = d / 32 := by
+    have : (32 : ℂ) = d * M := by exact_mod_cast hdM.symm
+    have hM' : (M : ℂ) ≠ 0 := by exact_mod_cast hM0.ne'
+    have hd' : (d : ℂ) ≠ 0 := by exact_mod_cast hd0.ne'
+    rw [this]; field_simp
+  have hMC : (M : ℂ) ≠ 0 := by exact_mod_cast hM0.ne'
+  have hdC : (d : ℂ) ≠ 0 := by exact_mod_cast hd0.ne'
+  have h32 : (32 : ℂ) = d * M := by exact_mod_cast hdM.symm
+  obtain ⟨v1, p1, q1, hv1, hk1, hp1⟩ := exists_v1 T
+  set alg := algebraMap (QNeg m) (AfK m)
+  have hsub : latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) ⊆ latHat m (kappa m ⁻¹' (latM T.Q M : Set ℂ)) :=
+    latHat_lat_sub T.Q (lat_le_latM T.Q hM0)
+  -- `x − j v₁ ∈ s⁻¹𝔞` gives `s_f x − j u₁ ∈ 𝔞̂`
+  have key : ∀ (x : QNeg m) (j : ℤ), x - j • v1 ∈ sInvLat m T.s (kappa m ⁻¹' (T.Q.lat : Set ℂ)) →
+      finPart T.s * alg x - j • alg (u1 m) ∈ latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) := by
+    intro x j hx
+    rw [mem_sInvLat_iff, ← (coe_KL (m := m))] at hx
+    have h2 := latHat_zsmul_mem _ j (by rw [(coe_KL (m := m))]; exact hv1)
+    have := latHat_add_mem _ hx h2
+    rw [(coe_KL (m := m))] at this
+    convert this using 1
+    rw [map_sub, map_zsmul, mul_sub, smul_sub, mul_smul_comm]; abel
+  have hp8 := dvd_pow_eight_sub_one hp1
+  ext y
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    -- `x ∈ s⁻¹𝔞_N`
+    have hxN : x ∈ sInvLat m T.s (kappa m ⁻¹' (T.Q.latN : Set ℂ)) :=
+      latHat_mono (Set.preimage_mono (latM_le_latN T.Q hdM)) hx
+    rw [mem_sInv_iff T.hlatN, HeegnerForm.latN, mem_smul_span_pair] at hxN
+    obtain ⟨p, q, hpq⟩ := hxN
+    set j : ℤ := p * p1 ^ 7 with hj
+    obtain ⟨k8, hk8⟩ := hp8
+    have hxj : x - j • v1 ∈ sInvLat m T.s (kappa m ⁻¹' (T.Q.lat : Set ℂ)) := by
+      rw [mem_sInv_iff T.hlat, HeegnerForm.lat, mem_smul_span_pair]
+      refine ⟨-p * k8, q - j * q1, ?_⟩
+      rw [kappa_sub, zsmul_eq_mul, kappa_intCast_mul, hpq, hk1, hj]
+      have : (p1 : ℂ) ^ 8 = 1 + 32 * k8 := by
+        have := congrArg (fun z : ℤ => (z : ℂ)) hk8; push_cast at this; linear_combination this
+      push_cast
+      linear_combination (-T.c * p / 32) * this
+    have h1 := hsub (key x j hxj)
+    have h2 : alg (j • u1 m) ∈ latHat m (kappa m ⁻¹' (latM T.Q M : Set ℂ)) := by
+      rw [← (coe_KL (m := m))] at h1 hx ⊢
+      have := latHat_sub_mem _ hx h1
+      rw [sub_sub_cancel] at this
+      rwa [map_zsmul]
+    have h3 := (Set.ext_iff.1 (latHat_inter_latM T.hsq T.hD T.Q hM0) _).1 h2
+    rw [Set.mem_preimage, zsmul_eq_mul, kappa_intCast_mul, kappa_u1] at h3
+    obtain ⟨e, he⟩ := dvd_of_mem_latM T.Q hdM h3
+    -- `d ∣ p`
+    have hdp : (d : ℤ) ∣ p := by
+      have h32d : (d : ℤ) ∣ 32 := ⟨M, by exact_mod_cast hdM.symm⟩
+      have : p = j * p1 - p * (p1 ^ 8 - 1) := by rw [hj]; ring
+      rw [this, hk8]
+      exact dvd_sub (dvd_mul_of_dvd_left ⟨e, he⟩ _) (dvd_mul_of_dvd_right (dvd_mul_of_dvd_left h32d _) _)
+    obtain ⟨a, ha⟩ := hdp
+    rw [latM, mem_smul_span_pair]
+    refine ⟨a, q, ?_⟩
+    rw [hpq, ha]; push_cast; rw [h32]; field_simp
+  · intro hy
+    rw [latM, mem_smul_span_pair] at hy
+    obtain ⟨a, b, rfl⟩ := hy
+    set j : ℤ := d * a * p1 ^ 7 with hj
+    obtain ⟨k8, hk8⟩ := hp8
+    have hz : T.c * ((-a * k8 * d : ℤ) + ((b - j * q1 : ℤ) : ℂ) * T.Q'.tau) ∈ T.c • (T.Q'.lat : Set ℂ) := by
+      rw [HeegnerForm.lat, mem_smul_span_pair]; exact ⟨-a * k8 * d, b - j * q1, by ring⟩
+    rw [← T.hlat] at hz
+    obtain ⟨w, hw, hwk⟩ := hz
+    refine ⟨j • v1 + w, ?_, ?_⟩
+    · rw [mem_sInvLat_iff, ← (coe_KL (m := m))]
+      have hju : alg (j • u1 m) ∈ latHat m ((KL m (latM T.Q M) : Submodule ℤ (QNeg m)) : Set (QNeg m)) := by
+        apply mem_latHat_of_mem
+        rw [(coe_KL (m := m)), Set.mem_preimage, zsmul_eq_mul, kappa_intCast_mul, kappa_u1, latM,
+          SetLike.mem_coe, Submodule.mem_span_pair]
+        refine ⟨a * p1 ^ 7, 0, ?_⟩
+        simp only [zsmul_eq_mul, zero_smul, add_zero, hj, hinvM]
+        push_cast
+        ring
+      have hv1' : finPart T.s * alg v1 - alg (u1 m) ∈ latHat m ((KL m (latM T.Q M) : Submodule ℤ (QNeg m)) : Set (QNeg m)) := by
+        rw [(coe_KL (m := m))]; exact hsub hv1
+      have hw' : finPart T.s * alg w ∈ latHat m ((KL m (latM T.Q M) : Submodule ℤ (QNeg m)) : Set (QNeg m)) := by
+        rw [(coe_KL (m := m))]; exact hsub hw
+      have := latHat_add_mem _ (latHat_add_mem _ hju (latHat_zsmul_mem _ j hv1')) hw'
+      convert this using 1
+      rw [map_add, map_zsmul, map_zsmul, mul_add, mul_smul_comm, smul_sub]; abel
+    · rw [kappa_add, zsmul_eq_mul, kappa_intCast_mul, hk1, hwk, hj]
+      have : (p1 : ℂ) ^ 8 = 1 + 32 * k8 := by
+        have := congrArg (fun z : ℤ => (z : ℂ)) hk8; push_cast at this; linear_combination this
+      push_cast
+      rw [hinvM]
+      linear_combination (T.c * a * d / 32) * this
+
 end Transport
 
 end X0EtaRoute
