@@ -773,3 +773,7 @@ theorem thetaModularity_proof : HDec.PkgI1.ThetaModularity :=
   HDec.QMSplit.Theta.thetaModularity_of igusaPsi4_proof igusaChi10_proof
 
 end GapTheta
+
+#print axioms GapTheta.igusaPsi4_proof
+#print axioms GapTheta.igusaChi10_proof
+#print axioms GapTheta.thetaModularity_proof
