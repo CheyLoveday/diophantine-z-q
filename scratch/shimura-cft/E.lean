@@ -210,6 +210,27 @@ theorem absArtinSurjective_of_noReal (hK : ∀ w : InfinitePlace K, ¬ w.IsReal)
 
 end AbsArtin
 
+
+/-- `ℚ(√−m)` has no real places. -/
+theorem not_isReal_QNeg (m : ℕ) [NeZero m] (w : InfinitePlace (QNeg m)) : ¬ w.IsReal := by
+  intro hw
+  rw [InfinitePlace.isReal_iff, ComplexEmbedding.isReal_iff] at hw
+  set φ := w.embedding
+  have h1 : φ QuadraticAlgebra.omega ^ 2 = -(m : ℂ) := by
+    rw [← map_pow, omega_sq', map_neg, map_natCast]
+  have h2 : (starRingEnd ℂ) (φ QuadraticAlgebra.omega) = φ QuadraticAlgebra.omega := by
+    have := congrArg (fun ψ : QNeg m →+* ℂ => ψ QuadraticAlgebra.omega) hw
+    simpa [ComplexEmbedding.conjugate_coe_eq] using this
+  have him : (φ QuadraticAlgebra.omega).im = 0 := Complex.conj_eq_iff_im.1 h2
+  have hre := congrArg Complex.re h1
+  have hm : (0 : ℝ) < m := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne m)
+  simp only [sq, Complex.mul_re, him, mul_zero, sub_zero, Complex.neg_re, Complex.natCast_re] at hre
+  nlinarith [sq_nonneg (φ QuadraticAlgebra.omega).re]
+
+/-- **`AbsArtinSurjectiveQNeg`, proved.** -/
+theorem absArtinSurjectiveQNeg : AbsArtinSurjectiveQNeg :=
+  fun m _ _ => absArtinSurjective_of_noReal (QNeg m) (not_isReal_QNeg m)
+
 end T5Glue
 
 namespace ShimuraCFT
