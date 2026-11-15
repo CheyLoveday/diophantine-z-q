@@ -1,0 +1,262 @@
+import ShRG
+import Top
+import CA1
+
+/-!
+# sh-route, part C: the inertia field inside an algebraic closure
+
+`K` of characteristic 0, `Ω` an algebraic closure, `w` a valuation ring of `Ω`. The inertia field
+`inertiaField w` is the set of `x ∈ Ω` such that, for some finite Galois `M ∋ x`, every
+`τ ∈ Aut(Ω/K)` acting trivially modulo `𝔪_w` on `w ∩ M` fixes `x` (the union of the inertia fields
+of the finite Galois subextensions).
+-/
+
+open IsLocalRing Polynomial
+
+set_option linter.style.haveILetI false
+
+namespace ShRoute
+
+section Omega
+
+variable {K : Type} [Field K] {Ω : Type} [Field Ω] [Algebra K Ω] (w : ValuationSubring Ω)
+
+/-- `τ` acts trivially modulo `𝔪_w` on `w ∩ M`. -/
+def CondM (M : IntermediateField K Ω) (τ : Ω ≃ₐ[K] Ω) : Prop :=
+  ∀ y ∈ M, y ∈ w → τ y - y ∈ w.nonunits
+
+theorem CondM.mono {M M' : IntermediateField K Ω} (h : M ≤ M') {τ : Ω ≃ₐ[K] Ω}
+    (hτ : CondM w M' τ) : CondM w M τ := fun y hy => hτ y (h hy)
+
+/-- `x ∈ M` is fixed by every `τ` acting trivially modulo `𝔪_w` on `w ∩ M`. -/
+def FixVia (M : IntermediateField K Ω) (x : Ω) : Prop :=
+  x ∈ M ∧ ∀ τ : Ω ≃ₐ[K] Ω, CondM w M τ → τ x = x
+
+theorem FixVia.mono {M M' : IntermediateField K Ω} (h : M ≤ M') {x : Ω} (hx : FixVia w M x) :
+    FixVia w M' x := ⟨h hx.1, fun τ hτ => hx.2 τ (hτ.mono w h)⟩
+
+/-- `M` is finite Galois over `K`. -/
+def IsFG (M : IntermediateField K Ω) : Prop := FiniteDimensional K M ∧ IsGalois K M
+
+/-- An inertia automorphism acts trivially modulo `𝔪_w` on all of `w`. -/
+theorem condM_of_isInertia {σ : Ω ≃ₐ[K] Ω} (hσ : PkgI2.IsInertia w σ) (M : IntermediateField K Ω) :
+    CondM w M σ := by
+  intro y _ hy
+  obtain ⟨h, hI⟩ := hσ
+  have h1 : (⟨σ, h⟩ : w.decompositionSubgroup K) • residue w ⟨y, hy⟩ = residue w ⟨y, hy⟩ := by
+    have := congrArg (fun f => f (residue w ⟨y, hy⟩)) (MonoidHom.mem_ker.mp hI)
+    exact this
+  rw [← IsLocalRing.ResidueField.residue_smul] at h1
+  have h2 := (Ideal.Quotient.eq).mp h1
+  rw [ValuationSubring.valuation_lt_one_iff] at h2
+  rw [ValuationSubring.mem_nonunits_iff]
+  exact h2
+
+variable [CharZero K] [IsAlgClosure K Ω]
+
+theorem isFG_of (s : IntermediateField K Ω) [FiniteDimensional K s] :
+    ∃ M : IntermediateField K Ω, IsFG M ∧ s ≤ M := by
+  haveI : Normal K Ω := IsAlgClosure.normal K Ω
+  refine ⟨IntermediateField.normalClosure K s Ω, ⟨inferInstance, ?_⟩, IntermediateField.le_normalClosure s⟩
+  haveI : Algebra.IsSeparable K (IntermediateField.normalClosure K s Ω) :=
+    Algebra.IsAlgebraic.isSeparable_of_perfectField
+  exact ⟨⟩
+
+theorem exists_two {M₁ M₂ : IntermediateField K Ω} (h₁ : IsFG M₁) (h₂ : IsFG M₂) :
+    ∃ M : IntermediateField K Ω, IsFG M ∧ M₁ ≤ M ∧ M₂ ≤ M := by
+  haveI := h₁.1
+  haveI := h₂.1
+  obtain ⟨M, hM, hle⟩ := isFG_of (M₁ ⊔ M₂)
+  exact ⟨M, hM, le_trans le_sup_left hle, le_trans le_sup_right hle⟩
+
+/-- The inertia field of `w` (over `K`). -/
+def inertiaField : IntermediateField K Ω where
+  carrier := {x | ∃ M : IntermediateField K Ω, IsFG M ∧ FixVia w M x}
+  mul_mem' := by
+    rintro x y ⟨M₁, h₁, hx⟩ ⟨M₂, h₂, hy⟩
+    obtain ⟨M, hM, l₁, l₂⟩ := exists_two h₁ h₂
+    have hx := hx.mono w l₁
+    have hy := hy.mono w l₂
+    exact ⟨M, hM, M.mul_mem hx.1 hy.1, fun τ hτ => by rw [map_mul, hx.2 τ hτ, hy.2 τ hτ]⟩
+  add_mem' := by
+    rintro x y ⟨M₁, h₁, hx⟩ ⟨M₂, h₂, hy⟩
+    obtain ⟨M, hM, l₁, l₂⟩ := exists_two h₁ h₂
+    have hx := hx.mono w l₁
+    have hy := hy.mono w l₂
+    exact ⟨M, hM, M.add_mem hx.1 hy.1, fun τ hτ => by rw [map_add, hx.2 τ hτ, hy.2 τ hτ]⟩
+  algebraMap_mem' c := by
+    obtain ⟨M, hM, -⟩ := isFG_of (⊥ : IntermediateField K Ω)
+    exact ⟨M, hM, M.algebraMap_mem c, fun τ _ => τ.commutes c⟩
+  inv_mem' := by
+    rintro x ⟨M, hM, hx⟩
+    exact ⟨M, hM, M.inv_mem hx.1, fun τ hτ => by rw [map_inv₀, hx.2 τ hτ]⟩
+
+theorem mem_inertiaField {x : Ω} :
+    x ∈ inertiaField (K := K) w ↔ ∃ M : IntermediateField K Ω, IsFG M ∧ FixVia w M x := Iff.rfl
+
+/-- **The inertia group fixes the inertia field.** -/
+theorem inertia_fixes {σ : Ω ≃ₐ[K] Ω} (hσ : PkgI2.IsInertia w σ) {x : Ω}
+    (hx : x ∈ inertiaField (K := K) w) : σ x = x := by
+  obtain ⟨M, -, hM⟩ := hx
+  exact hM.2 σ (condM_of_isInertia w hσ M)
+
+/-- Finitely many elements of the inertia field are fixed via one finite Galois `M`. -/
+theorem exists_common (s : Finset Ω) (hs : ∀ x ∈ s, x ∈ inertiaField (K := K) w) :
+    ∃ M : IntermediateField K Ω, IsFG M ∧ ∀ x ∈ s, FixVia w M x := by
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+    obtain ⟨M, hM, -⟩ := isFG_of (⊥ : IntermediateField K Ω)
+    exact ⟨M, hM, by simp⟩
+  | insert a s _ ih =>
+    obtain ⟨M₁, h₁, hM₁⟩ := ih (fun x hx => hs x (Finset.mem_insert_of_mem hx))
+    obtain ⟨M₂, h₂, hM₂⟩ := hs a (Finset.mem_insert_self a s)
+    obtain ⟨M, hM, l₁, l₂⟩ := exists_two h₁ h₂
+    refine ⟨M, hM, fun x hx => ?_⟩
+    rcases Finset.mem_insert.mp hx with rfl | hx
+    · exact hM₂.mono w l₂
+    · exact (hM₁ x hx).mono w l₁
+
+end Omega
+
+section Ring
+
+variable {K : Type} [Field K] {Ω : Type} [Field Ω] [Algebra K Ω] (w : ValuationSubring Ω)
+
+theorem mem_max_iff (b : w) : b ∈ maximalIdeal w ↔ (b : Ω) ∈ w.nonunits := by
+  rw [ValuationSubring.valuation_lt_one_iff, ValuationSubring.mem_nonunits_iff]
+
+theorem mem_max_comap_iff {E : Type} [Field E] (f : E →+* Ω) (a : w.comap f) :
+    a ∈ maximalIdeal (w.comap f) ↔ f (a : E) ∈ w.nonunits := by
+  rw [ValuationSubring.valuation_lt_one_iff, ← ValuationSubring.mem_nonunits_iff,
+    nonunits_comap]
+
+/-- **Roots near a point.** A monic `q ∈ w[X]` with `q(c) ∈ 𝔪_w` has a root `α ∈ w` with
+`α ≡ c mod 𝔪_w` (`Ω` algebraically closed, `w` integrally closed). -/
+theorem exists_root_near [IsAlgClosed Ω] (q : w[X]) (hq : q.Monic) (c : w)
+    (hc : q.eval c ∈ maximalIdeal w) : ∃ α : w, q.IsRoot α ∧ α - c ∈ maximalIdeal w := by
+  induction h : q.natDegree generalizing q with
+  | zero =>
+    exfalso
+    rw [hq.natDegree_eq_zero] at h
+    rw [h, eval_one] at hc
+    exact (maximalIdeal.isMaximal w).ne_top ((Ideal.eq_top_iff_one _).mpr hc)
+  | succ n ih =>
+    have hdeg : (q.map (algebraMap w Ω)).degree ≠ 0 := by
+      rw [hq.degree_map, degree_eq_natDegree hq.ne_zero, h]
+      exact_mod_cast Nat.succ_ne_zero n
+    obtain ⟨β, hβ⟩ := IsAlgClosed.exists_root (q.map (algebraMap w Ω)) hdeg
+    have hβw : β ∈ w := mem_of_isIntegral w (A := w) (fun a => a.2)
+      ⟨q, hq, by rwa [IsRoot, eval_map] at hβ⟩
+    let β' : w := ⟨β, hβw⟩
+    have hr : q.IsRoot β' := by
+      apply Subtype.ext
+      rw [IsRoot, eval_map] at hβ
+      have : algebraMap w Ω (q.eval β') = q.eval₂ (algebraMap w Ω) β := by
+        rw [← eval₂_at_apply]; rfl
+      exact this.trans hβ
+    have hfac := (mul_divByMonic_eq_iff_isRoot).mpr hr
+    have hq2 : (q /ₘ (X - C β')).Monic :=
+      Monic.of_mul_monic_left (monic_X_sub_C β') (by rw [hfac]; exact hq)
+    have hdeg2 : (q /ₘ (X - C β')).natDegree = n := by
+      rw [natDegree_divByMonic _ (monic_X_sub_C β'), h, natDegree_X_sub_C]; rfl
+    rw [← hfac, eval_mul, eval_sub, eval_X, eval_C] at hc
+    rcases (maximalIdeal.isMaximal w).isPrime.mem_or_mem hc with h1 | h1
+    · exact ⟨β', hr, by rw [← neg_sub]; exact neg_mem h1⟩
+    · obtain ⟨α, hα, hαc⟩ := ih (q /ₘ (X - C β')) hq2 h1 hdeg2
+      refine ⟨α, ?_, hαc⟩
+      rw [IsRoot, ← hfac, eval_mul, hα.eq_zero, mul_zero]
+
+/-- **Two distinct roots with the same residue give a double root modulo `𝔪_w`.** -/
+theorem derivative_eval_eq_zero_of_two_roots (q : w[X]) {α β : w} (hα : q.IsRoot α)
+    (hβ : q.IsRoot β) (hne : α ≠ β) (hres : residue w α = residue w β) :
+    ((q.map (residue w)).derivative).eval (residue w α) = 0 := by
+  have hfac := (mul_divByMonic_eq_iff_isRoot).mpr hα
+  set q1 := q /ₘ (X - C α)
+  have hβ1 : q1.IsRoot β := by
+    have := hβ
+    rw [IsRoot, ← hfac, eval_mul, eval_sub, eval_X, eval_C] at this
+    rcases mul_eq_zero.mp this with h | h
+    · exact absurd (sub_eq_zero.mp h).symm hne
+    · exact h
+  have hfac1 := (mul_divByMonic_eq_iff_isRoot).mpr hβ1
+  rw [← hfac, ← hfac1]
+  simp only [Polynomial.map_mul, Polynomial.map_sub, map_X, map_C, derivative_mul,
+    derivative_sub, derivative_X, derivative_C, eval_add, eval_mul, eval_sub, eval_X, eval_C,
+    hres, sub_self, zero_mul, mul_zero, add_zero]
+
+variable [CharZero K] [IsAlgClosure K Ω]
+
+/-- The valuation ring of the inertia field. -/
+abbrev wE : ValuationSubring (inertiaField (K := K) w) :=
+  w.comap (algebraMap (inertiaField (K := K) w) Ω)
+
+/-- `wE → Ω`. -/
+def ιΩ : wE (K := K) w →+* Ω :=
+  (algebraMap (inertiaField (K := K) w) Ω).comp (wE (K := K) w).subtype
+
+/-- `wE → w`. -/
+def ιw : wE (K := K) w →+* w :=
+  (ιΩ (K := K) w).codRestrict w.toSubring (fun a => a.2)
+
+theorem ιw_coe (a : wE (K := K) w) : ((ιw w a : w) : Ω) = ιΩ w a := rfl
+
+/-- **Core lemma.** A root `α` of a monic `g` over the valuation ring of the inertia field whose
+residue is a simple root of `g mod 𝔪_w` lies in the inertia field. -/
+theorem mem_inertiaField_of_simple_root (g : (wE (K := K) w)[X]) (hg : g.Monic) (α : Ω)
+    (hα : (g.map (ιΩ w)).eval α = 0) (hαw : α ∈ w)
+    (hs : ((g.map ((residue w).comp (ιw w))).derivative).eval (residue w ⟨α, hαw⟩) ≠ 0) :
+    α ∈ inertiaField (K := K) w := by
+  classical
+  -- the coefficients are fixed via one `M₀`
+  obtain ⟨M₀, h₀, hM₀⟩ := exists_common w (g.support.image fun i => ιΩ w (g.coeff i))
+    (by
+      intro x hx
+      obtain ⟨i, -, rfl⟩ := Finset.mem_image.mp hx
+      exact (g.coeff i : inertiaField (K := K) w).2)
+  haveI := h₀.1
+  have hαint : IsIntegral K α := Algebra.IsIntegral.isIntegral α
+  haveI : FiniteDimensional K (IntermediateField.adjoin K {α}) :=
+    IntermediateField.adjoin.finiteDimensional hαint
+  obtain ⟨M, hM, hle⟩ := isFG_of (M₀ ⊔ IntermediateField.adjoin K {α})
+  have hαM : α ∈ M := hle (le_sup_right (a := M₀) (IntermediateField.mem_adjoin_simple_self K α))
+  refine ⟨M, hM, hαM, fun τ hτ => ?_⟩
+  have hτ₀ : CondM w M₀ τ := hτ.mono w (le_trans le_sup_left hle)
+  -- `τ α` is a root of `g`
+  have hcoef : (g.map (ιΩ w)).map (τ : Ω →+* Ω) = g.map (ιΩ w) := by
+    ext i
+    rw [coeff_map, coeff_map]
+    by_cases hi : i ∈ g.support
+    · exact (hM₀ _ (Finset.mem_image_of_mem _ hi)).2 τ hτ₀
+    · rw [notMem_support_iff.mp hi, map_zero, map_zero]
+  have hτα : (g.map (ιΩ w)).eval (τ α) = 0 := by
+    rw [← hcoef, eval_map]
+    change eval₂ (τ : Ω →+* Ω) ((τ : Ω →+* Ω) α) _ = 0
+    rw [eval₂_at_apply, hα, map_zero]
+  have hτw : τ α - α ∈ w.nonunits := hτ α hαM hαw
+  by_contra hne
+  have hταw : τ α ∈ w := by
+    have : τ α = α + (τ α - α) := by ring
+    rw [this]
+    exact add_mem hαw (ValuationSubring.nonunits_le hτw)
+  let gw := g.map (ιw w)
+  have root_of : ∀ (x : Ω) (hx : x ∈ w), (g.map (ιΩ w)).eval x = 0 → gw.IsRoot ⟨x, hx⟩ := by
+    intro x hx h
+    apply Subtype.ext
+    have e : g.map (ιΩ w) = gw.map (algebraMap w Ω) := by
+      rw [Polynomial.map_map]; rfl
+    rw [e, eval_map] at h
+    change algebraMap w Ω (gw.eval ⟨x, hx⟩) = algebraMap w Ω 0
+    rw [← eval₂_at_apply, map_zero]
+    exact h
+  have h2 := derivative_eval_eq_zero_of_two_roots w gw (root_of α hαw hα)
+    (root_of (τ α) hταw hτα) (fun h => hne (congrArg Subtype.val h).symm)
+    (by
+      rw [eq_comm, ← sub_eq_zero, ← map_sub, residue_eq_zero_iff, mem_max_iff]
+      exact hτw)
+  apply hs
+  rw [← h2, Polynomial.map_map]
+
+end Ring
+
+end ShRoute
