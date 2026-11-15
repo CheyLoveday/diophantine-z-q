@@ -72,17 +72,17 @@ regenerated.
 hypotheses:
 
 ```
-DISCHARGES [OpenAddedLeaves11.x6ConicModel] by t1
-  still assumes: [HDec.X6Kummer.X6ConicModel]
+DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
+  still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves10.bdRInvariants] by t3 (uses sorry: not a proof)
+DISCHARGES [OpenTextbookLeaves10.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 67 open hypotheses, 3 theorems checked, 2 discharge one
+#discharges: 72 open hypotheses, 3 theorems checked, 2 discharge one
 ```
 
-`t1` assumes the hypothesis it proves, so it reduces nothing; `t3` matches a statement with its own binders
-(`∀ p [Fact p.Prime], …`) but uses `sorry`; `t2 : True` matches nothing.
+`t1` assumes the hypothesis it proves, so it reduces nothing; `t3` has the right statement but uses `sorry`;
+`t2 : True` matches nothing.
 
 A real contribution in this shape: cm24-value (`docs/research/cm24-value.md`) proved
 `IgusaCMValue24`, Lin–Yang's Igusa vector at the CM point of discriminant −24, from Mathlib's Jacobi theta
