@@ -1,5 +1,8 @@
 import ZInQKernel.OneProof.H.TailW
 import ZInQKernel.OneProof.H.TailZ16
+import ZInQKernel.Contrib.CloudW03NeronSurj.Vendor.Theorems.Thm_Algebra_Smooth_isDomain_and_isIntegrallyClosed_of_isLocalization_atPrime
+import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.IrreducibleOfConnectedDomainStalk
+import ZInQKernel.Contrib.AbVarBC.Main
 
 /-!
 # sgr-split: `ShimuraGoodReductionNoGuard` from the printed integral model of the Shimura curve
@@ -20,14 +23,15 @@ The kernel now has them: r1univ-rigid's `LeafQM.AV.R1UnivRigid.QMAbScheme S` (an
 * `qml3AsQMAb_of : AbVarSurfaceRelDim → QML3AsQMAb` (proved: an object over a field is a `QMAbScheme` over
   `Spec K` with the same data) and `abVarSurfaceRelDim : AbVarSurfaceRelDim` (proved from the kernel's smooth
   dimension theory: an abelian surface is smooth of relative dimension 2);
-* `qmAbFieldFibre_of : SmoothGeomConnIntegral → AbVarEndTorsionFree → QMAbFieldFibre` (proved: the fibre of a
-  `QMAbScheme` at a field point, with its `𝒪`-action and level points, is an object `QML3`);
-* `shimuraGoodReductionNoGuard_of_printed : ShimuraIntegralModelRep → SmoothGeomConnIntegral →
-  AbVarEndTorsionFree → ShimuraGoodReductionNoGuard`, the discharge.
+* `qmAbFieldFibre : QMAbFieldFibre` (proved: the fibre of a `QMAbScheme` at a field point of characteristic 0,
+  with its `𝒪`-action and level points, is an object `QML3`), from `smoothGeomConnIntegral` (a smooth
+  geometrically connected scheme over a field is geometrically integral) and `abVarEndTorsionFree` (`End` of an
+  abelian variety is torsion-free in characteristic 0), both proved from the kernel;
+* `shimuraGoodReductionNoGuard_of_printed : ShimuraIntegralModelRep → ShimuraGoodReductionNoGuard`, the
+  discharge.
 
-New hypotheses: the printed leaf `ShimuraIntegralModelRep` (Kottwitz/Buzzard/Morita) and two textbook leaves,
-`SmoothGeomConnIntegral` (a smooth geometrically connected scheme over a field is geometrically integral) and
-`AbVarEndTorsionFree` (`End` of an abelian variety is torsion-free). Report: docs/research/sgr-split.md.
+The only new hypothesis is the printed leaf `ShimuraIntegralModelRep` (Kottwitz/Buzzard/Morita). Report:
+docs/research/sgr-split.md.
 -/
 
 noncomputable section
@@ -90,14 +94,11 @@ dividing `D` (Kottwitz's do), and the comparison (i)–(ii) for the PEL form. -/
 def ShimuraIntegralModelRep : Prop :=
   ∀ (p : ℕ) [Fact p.Prime], 324 < p → ShimuraIntegralModelRepAt p
 
-/-- **GLUE G1 (project glue): the fibre of a QM abelian scheme at a field point is an object.** For a
-`QMAbScheme` `𝒜` over any `S` and a point `y : Spec K → S` with `K ⊇ ℚ`, some `P : QML3 K` is the fibre of `𝒜`
-at `y`. Proof outline (not compiled): the base change `A_y = (Over.pullback y).obj A` is a group object
-(Mathlib's `Functor.grpObjObj`), proper and smooth of relative dimension 2 over `K` (base change), geometrically
-integral (smooth and geometrically connected over a field; the Mathlib gap: smooth ⇒ geometrically normal, so
-connected ⇒ irreducible), of dimension 2 (the kernel's smooth dimension theory), with `ι` restricted to a unital
-ring map `𝒪 → End_K(A_y)` (injective as `A_y ≠ 0` and `B` is simple) and `η` restricted to `𝒪 → A_y(K)` with
-kernel `3𝒪` (`eta_ker` at `y`). -/
+/-- **GLUE G1: the fibre of a QM abelian scheme at a field point is an object.** For a `QMAbScheme` `𝒜` over
+any `S` and a point `y : Spec K → S` with `K ⊇ ℚ`, some `P : QML3 K` is the fibre of `𝒜` at `y`. Proved
+(`qmAbFieldFibre`): the base change `A_y` with Mathlib's `Functor.grpObjObj` group law is an abelian variety of
+dimension 2, `ι` and `η` push forward along the monoidal functor `Over.pullback y`, and `ι` stays injective
+because `End(A_y)` is torsion-free. -/
 def QMAbFieldFibre : Prop :=
   ∀ (S : Scheme.{0}) (𝒜 : QMAbScheme S) (K : Type) [Field K] [Algebra ℚ K]
     (y : Spec (CommRingCat.of K) ⟶ S), ∃ P : QML3 K, IsFibreOf 𝒜.toQMFamily y P
@@ -522,31 +523,77 @@ theorem qml3AsQMAb_of (hD : AbVarSurfaceRelDim) : QML3AsQMAb := by
         · intro h; rw [h] }
   exact ⟨𝒜', fun T 𝒜 y => Iff.rfl⟩
 
-/-! ## G1 from two textbook leaves -/
+/-! ## G1, proved -/
 
 section G1
 
 open MonoidalCategory CartesianMonoidalCategory MonObj PkgI3
 open scoped CategoryTheory.Obj
 
-/-- **LEAF (textbook; unread): a smooth, geometrically connected scheme over a field is geometrically
-integral.** For `f : X → Spec K` smooth with geometrically connected fibres, every base change `X_L` to a field
-`L` is integral. Printed: a smooth scheme over a field is geometrically regular, hence geometrically normal;
-a connected, normal, locally noetherian scheme is integral (Stacks Project, the chapters Varieties and
-Properties: "smooth over a field ⇒ geometrically regular", "normal + connected + locally noetherian ⇒
-integral"; EGA IV₂ 4.5–4.6, 6.7–6.8; locators UNVERIFIED). Mathlib v4.35 lacks the passage from regular local
-rings at closed points to all points. -/
+/-- **A smooth, geometrically connected scheme over a field is geometrically integral** (Stacks Project,
+Varieties and Properties; EGA IV₂ 4.5–4.6, 6.7–6.8; locators UNVERIFIED). Proved below
+(`smoothGeomConnIntegral`) from the kernel's vendored `Algebra.Smooth.isDomain_and_isIntegrallyClosed_of_isLocalization_atPrime`
+(stalks of a smooth scheme over a field are domains), Tau Ceti's
+`irreducibleSpace_of_connected_of_isDomain_stalk` and r1univ-rigid's `isReduced_of_smooth`. -/
 def SmoothGeomConnIntegral : Prop :=
   ∀ (K : Type) [Field K] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of K)), Smooth f →
     GeometricallyConnected f → GeometricallyIntegral f
 
-/-- **LEAF (textbook; unread): `End(A)` is torsion-free.** For an abelian variety `A/K` (the kernel's
-`PkgI3.AbVar`), `n • f = 0` with `n > 0` forces `f = 0`. Printed: `Hom(X, Y)` is a torsion-free `ℤ`-module, since
-`n_Y` is an isogeny (surjective with finite kernel), so `n f = 0` puts the connected image `f(X)` inside the
-finite `Y[n]` (Mumford, *Abelian varieties*, §4 Application 2 and §19 Thm. 3; Milne, *Abelian varieties*,
-§7 and §12; locators UNVERIFIED). -/
+/-- **`End(A)` is torsion-free in characteristic 0**: for an abelian variety `A/K`, `char K = 0`, `n • f = 0`
+with `n > 0` forces `f = 0` (Mumford, *Abelian varieties*, §19 Thm. 3; locators UNVERIFIED). Proved below
+(`abVarEndTorsionFree`) from the kernel's `ZInQ.Contrib.AbVarBC.mulIsogeny` (`[n]` is finite and surjective in
+characteristic 0, proved from Mathlib): `[n] ≫ f = [n] ≫ 1` and `[n]` is dominant onto the reduced `A`. -/
 def AbVarEndTorsionFree : Prop :=
-  ∀ (K : Type) [Field K] (A : AbVar K) (n : ℕ) (f : AbVar.End A), 0 < n → n • f = 0 → f = 0
+  ∀ (K : Type) [Field K] [CharZero K] (A : AbVar K) (n : ℕ) (f : AbVar.End A), 0 < n → n • f = 0 → f = 0
+
+/-- Stalks of a smooth scheme over a field are domains. -/
+theorem isDomain_stalk_of_smooth {k : Type} [Field k] {X : Scheme.{0}}
+    (f : X ⟶ Spec (CommRingCat.of k)) [Smooth f] (x : X) : IsDomain (X.presheaf.stalk x) := by
+  obtain ⟨_, ⟨V, hV, rfl⟩, hxV, -⟩ :=
+    X.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ x) isOpen_univ
+  have hU : IsAffineOpen (⊤ : (Spec (CommRingCat.of k)).Opens) := isAffineOpen_top _
+  have hVU : V ≤ f ⁻¹ᵁ ⊤ := by simp
+  have hsm := f.smooth_appLE hU hV hVU
+  let _ : Field Γ(Spec (CommRingCat.of k), ⊤) :=
+    (ZInQ.Contrib.Dim.isField_sections_spec k ⊤ Set.univ_nonempty).toField
+  let _ : Algebra Γ(Spec (CommRingCat.of k), ⊤) Γ(X, V) := (f.appLE ⊤ V hVU).hom.toAlgebra
+  have : Algebra.Smooth Γ(Spec (CommRingCat.of k), ⊤) Γ(X, V) := hsm
+  let x' : V := ⟨x, hxV⟩
+  have hloc := hV.isLocalization_stalk x'
+  let _ := TopCat.Presheaf.algebra_section_stalk X.presheaf x'
+  exact (ZInQ.Contrib.CloudW03NeronSurj.FLT.Algebra.Smooth.isDomain_and_isIntegrallyClosed_of_isLocalization_atPrime
+    Γ(Spec (CommRingCat.of k), ⊤) Γ(X, V) (hV.primeIdealOf x').asIdeal (X.presheaf.stalk x)).1
+
+/-- **`SmoothGeomConnIntegral` holds** (compiled). -/
+theorem smoothGeomConnIntegral : SmoothGeomConnIntegral := by
+  intro K _ X f hs hc
+  refine ⟨fun L _ y Z fst snd h => ?_⟩
+  have : Smooth snd := MorphismProperty.of_isPullback h hs
+  have : ConnectedSpace Z := hc.geometrically_connectedSpace y fst snd h
+  have : IsReduced Z := LeafQM.AV.R1UnivRigid.isReduced_of_smooth snd
+  have : IsLocallyNoetherian Z := LocallyOfFiniteType.isLocallyNoetherian snd
+  have : IrreducibleSpace Z :=
+    TauCeti.AlgebraicGeometry.irreducibleSpace_of_connected_of_isDomain_stalk Z
+      (fun x => isDomain_stalk_of_smooth snd x)
+  exact isIntegral_of_irreducibleSpace_of_isReduced Z
+
+/-- **`AbVarEndTorsionFree` holds** (compiled). -/
+theorem abVarEndTorsionFree : AbVarEndTorsionFree := by
+  intro K _ _ A n f hn h
+  obtain ⟨-, hsurj⟩ := ZInQ.Contrib.AbVarBC.mulIsogeny K A (n : ℤ) (by exact_mod_cast hn.ne')
+  have h1 : f * ((n : ℤ) : AbVar.End A) = 0 := by
+    rw [← Int.cast_comm, ← zsmul_eq_mul, natCast_zsmul, h]
+  have h2 : ((n : ℤ) : AbVar.End A).hom ≫ f.hom =
+      ((n : ℤ) : AbVar.End A).hom ≫ (1 : A.X ⟶ A.X) := by
+    rw [MonObj.comp_one]
+    exact congrArg AbVar.Hom.hom h1
+  apply AbVar.Hom.ext'
+  rw [AbVar.Hom.hom_zero]
+  apply Over.OverMorphism.ext
+  have : IsReduced A.X.left := LeafQM.AV.R1UnivRigid.isReduced_of_smooth A.X.hom
+  have : IsDominant ((n : ℤ) : AbVar.End A).hom.left := inferInstance
+  exact ext_of_isDominant_of_isSeparated A.X.hom (by rw [Over.w, Over.w])
+    ((n : ℤ) : AbVar.End A).hom.left (by rw [← Over.comp_left, h2, Over.comp_left])
 
 section
 variable {S : Scheme.{0}} (𝒜 : QMAbScheme S) {K : Type} [Field K] (y : Spec (CommRingCat.of K) ⟶ S)
@@ -616,7 +663,7 @@ def fibreAbVar (hI : SmoothGeomConnIntegral) {S : Scheme.{0}} (𝒜 : QMAbScheme
     hI K _ _ inferInstance inferInstance
   ⟨(Over.pullback y).obj 𝒜.F⟩
 
-/-- **G1 from the two textbook leaves** (compiled): the base change `A_y = (Over.pullback y).obj A` with the
+/-- **G1 from `SmoothGeomConnIntegral` and `AbVarEndTorsionFree`** (compiled): the base change `A_y = (Over.pullback y).obj A` with the
 group law of Mathlib's `Functor.grpObjObj` is an abelian variety (`fibreAbVar`, geometric integrality from
 `SmoothGeomConnIntegral`) of dimension 2 (the kernel's `SmoothStalk.lean`); `ι` and `η` push forward along the
 monoidal functor `Over.pullback y` (`Functor.map_mul`, `Functor.map_one`); `ι` is injective because
@@ -625,6 +672,7 @@ in `⋂ 3^k 𝒪 = 0`; the fibre square is Mathlib's pullback. -/
 theorem qmAbFieldFibre_of (hI : SmoothGeomConnIntegral) (hT : AbVarEndTorsionFree) :
     QMAbFieldFibre := by
   intro S 𝒜 K _ _ y
+  have : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ K).injective
   letI := 𝒜.grp
   have := 𝒜.proper
   have := 𝒜.smooth
@@ -747,11 +795,14 @@ end G1
 
 /-! ## The discharge -/
 
-/-- **`ShimuraGoodReductionNoGuard` from the printed integral model and two textbook leaves** (compiled;
-standard axioms). -/
-theorem shimuraGoodReductionNoGuard_of_printed (hRep : ShimuraIntegralModelRep)
-    (hI : SmoothGeomConnIntegral) (hT : AbVarEndTorsionFree) : ShimuraGoodReductionNoGuard :=
-  shimuraGoodReductionNoGuard_of_rep hRep (qmAbFieldFibre_of hI hT) (qml3AsQMAb_of abVarSurfaceRelDim)
+/-- **G1 holds** (compiled). -/
+theorem qmAbFieldFibre : QMAbFieldFibre :=
+  qmAbFieldFibre_of smoothGeomConnIntegral abVarEndTorsionFree
+
+/-- **`ShimuraGoodReductionNoGuard` from the printed integral model alone** (compiled; standard axioms). -/
+theorem shimuraGoodReductionNoGuard_of_printed (hRep : ShimuraIntegralModelRep) :
+    ShimuraGoodReductionNoGuard :=
+  shimuraGoodReductionNoGuard_of_rep hRep qmAbFieldFibre (qml3AsQMAb_of abVarSurfaceRelDim)
     fibreClassUnique
 
 end SGRSplit
