@@ -354,6 +354,75 @@ theorem semistableUnipotent_of_gen (hP : SemistableUnipotentPrintedGen)
     (hIn : StrictHenselizationInside) : ReductSplit.SemistableUnipotent :=
   unipotentFromSH_of hIn (semistableUnipotentSH_of_gen hP hD hT)
 
+/-! ## §5. `SepClosureTateRestrict` from two smaller Props -/
+
+/-- **A Tate-module surjectivity criterion**: an injective `φ : M →+ N` onto the `ℓ`-power torsion
+of `N` induces a surjection `T_ℓ M → T_ℓ N`. -/
+theorem tateMap_surjective {ℓ : ℕ} [Fact ℓ.Prime] {M N : Type} [AddCommGroup M] [AddCommGroup N]
+    (φ : M →+ N) (hinj : Function.Injective φ)
+    (hsurj : ∀ (n : ℕ) (y : N), (ℓ ^ n) • y = 0 → ∃ x : M, φ x = y) :
+    Function.Surjective (PkgI3.Tate.map (ℓ := ℓ) φ) := by
+  intro t
+  choose s hs using fun n => hsurj n (t.1 n) (PkgI3.Tate.pow_smul_eq_zero t.2 n)
+  refine ⟨⟨s, ?_, fun n => ?_⟩, Subtype.ext (funext fun n => hs n)⟩
+  · apply hinj
+    rw [hs, map_zero]
+    exact t.2.1
+  · apply hinj
+    rw [map_nsmul, hs, hs]
+    exact t.2.2 n
+
+/-- **GLUE `InertiaRestrictSepClosure`**: an element of the inertia group of `w` in `Aut(Ω/K)`
+restricts to an element of the inertia group of `w ∩ K^s` in `Aut(K^s/K)` (`K^s/K` is normal;
+decomposition and inertia are compatible with restriction to a normal subextension; Serre,
+*Corps locaux*, I §7, UNVERIFIED locator). -/
+def InertiaRestrictSepClosure : Prop :=
+  ∀ (K : Type) [Field K] (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω]
+    (w : ValuationSubring Ω) (σ : Ω ≃ₐ[K] Ω), IsInertia w σ →
+      ∃ σs : separableClosure K Ω ≃ₐ[K] separableClosure K Ω,
+        IsInertia (w.comap (algebraMap (separableClosure K Ω) Ω)) σs ∧
+        ∀ x : separableClosure K Ω, (σs x : Ω) = σ x
+
+/-- **GLUE `TorsionFromSepClosure`**: for `m` invertible in `K`, every point of `A(Ω)[m]` comes from
+`A(K^s)` (`A[m]` is étale over `K`, bundle leaf `AvSplit.T4.MulEtaleAbelianScheme`; the points of an
+étale `K`-scheme with values in `Ω` have separable coordinates, hence come from `K^s`: the
+separably closed version of `ReductGlue.exists_lift_of_etale`). -/
+def TorsionFromSepClosure : Prop :=
+  ∀ (K : Type) [Field K] (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω]
+    (A : PkgI3.AbVar K) (m : ℕ), (m : K) ≠ 0 → ∀ x : A.Pt Ω, x ^ m = 1 →
+      ∃ y : A.Pt (separableClosure K Ω),
+        ZInQ.Contrib.AbVarBC.extPt A (IsScalarTower.toAlgHom K (separableClosure K Ω) Ω) y = x
+
+open ZInQ.Contrib.AbVarBC in
+/-- **`SepClosureTateRestrict` from `InertiaRestrictSepClosure` and `TorsionFromSepClosure`.** -/
+theorem sepClosureTateRestrict_of (hI : InertiaRestrictSepClosure) (hT : TorsionFromSepClosure) :
+    SepClosureTateRestrict := by
+  intro K _ Ω _ _ _ w A ℓ _ hℓ σ hσ
+  obtain ⟨σs, hσs, hres⟩ := hI K Ω w σ hσ
+  let κ := IsScalarTower.toAlgHom K (separableClosure K Ω) Ω
+  let φ0 : Additive (A.Pt (separableClosure K Ω)) →+ Additive (A.Pt Ω) :=
+    MonoidHom.toAdditive (extPt A κ)
+  refine ⟨σs, hσs, PkgI3.Tate.map φ0, ?_, fun s => ?_⟩
+  · refine tateMap_surjective φ0 (extPt_injective A κ) fun n y hy => ?_
+    have hℓn : ((ℓ ^ n : ℕ) : K) ≠ 0 := by rw [Nat.cast_pow]; exact pow_ne_zero _ hℓ
+    obtain ⟨x, hx⟩ := hT K Ω A (ℓ ^ n) hℓn (Additive.toMul y) (by
+      have : Additive.toMul ((ℓ ^ n) • y) = 1 := by rw [hy]; rfl
+      rwa [toMul_nsmul] at this)
+    exact ⟨Additive.ofMul x, by change Additive.ofMul (extPt A κ x) = y; rw [hx]; rfl⟩
+  · apply Subtype.ext
+    funext n
+    change Additive.ofMul (extPt A κ (A.galAct σs (Additive.toMul (s.1 n)))) =
+      Additive.ofMul (A.galAct σ (extPt A κ (Additive.toMul (s.1 n))))
+    rw [extPt_galAct A κ σs σ (fun x => hres x)]
+
+/-- **The field (unchanged statement) from the printed leaf over every field,
+`StrictHenselizationInside`, `SemiAbelianDescendsSepClosed` and the two smaller Props.** -/
+theorem semistableUnipotent_of_gen' (hP : SemistableUnipotentPrintedGen)
+    (hD : SemiAbelianDescendsSepClosed) (hI : InertiaRestrictSepClosure)
+    (hT : TorsionFromSepClosure) (hIn : StrictHenselizationInside) :
+    ReductSplit.SemistableUnipotent :=
+  semistableUnipotent_of_gen hP hD (sepClosureTateRestrict_of hI hT) hIn
+
 end UnipotentB
 
 #print axioms UnipotentB.isSemistableRes_iff
@@ -366,3 +435,5 @@ end UnipotentB
 #print axioms UnipotentB.semiAbelianDescends_of_perfect
 #print axioms UnipotentB.semistableUnipotentSH_of_gen
 #print axioms UnipotentB.semistableUnipotent_of_gen
+#print axioms UnipotentB.sepClosureTateRestrict_of
+#print axioms UnipotentB.semistableUnipotent_of_gen'
