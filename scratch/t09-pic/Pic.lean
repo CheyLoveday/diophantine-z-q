@@ -137,4 +137,41 @@ lemma eta_comp_phiL {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
   rw [h, show (1 : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ P) = CartesianMonoidalCategory.toUnit _ ≫ η from rfl]
   simp
 
+
+/-- **`φ_L` factors through `Pic⁰` by a homomorphism** `λ_L : A → B`: `A` is connected and
+`φ_L(0) = 0` (so the image lies in the identity component), `ι` is an open immersion onto it, and
+the lift preserves `0`, hence is a homomorphism by rigidity
+(`MulRigidity.isMonHom_of_geometricallyIntegral`, Mumford §4 Cor. 1). -/
+theorem exists_hom_comp_eq_phiL {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) {B : AbVar K} {j : B.X ⟶ P}
+    (hj : IsPicZero rep B j) (L : A.X.left.Pic) :
+    ∃ lam : Hom A B, lam.hom ≫ j = phiL rep L := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  obtain ⟨hopen, hrange, hmon⟩ := hj
+  have h0 := eta_comp_phiL rep L
+  haveI : IsIntegral A.X.left := GeometricallyIntegral.isIntegral_of_subsingleton A.X.hom
+  have hsub : Set.range (phiL rep L).left ⊆ Set.range j.left := by
+    rw [hrange]
+    rintro _ ⟨a, rfl⟩
+    refine ⟨A.X.hom a, ?_⟩
+    have he : η[P].left (A.X.hom a) = (phiL rep L).left (η[A.X].left (A.X.hom a)) := by
+      rw [← h0]; rfl
+    rw [he]
+    exact (isPreconnected_range (phiL rep L).left.continuous).subset_connectedComponent
+      ⟨_, rfl⟩ ⟨a, rfl⟩
+  let l : A.X.left ⟶ B.X.left := IsOpenImmersion.lift j.left (phiL rep L).left hsub
+  have hl : l ≫ j.left = (phiL rep L).left := IsOpenImmersion.lift_fac _ _ _
+  have hw : l ≫ B.X.hom = A.X.hom := by
+    rw [← Over.w j, ← Category.assoc, hl, Over.w]
+  let lam : A.X ⟶ B.X := Over.homMk l hw
+  have hlam : lam ≫ j = phiL rep L := Over.OverMorphism.ext hl
+  have hη : η[A.X] ≫ lam = η[B.X] := by
+    apply Over.OverMorphism.ext
+    apply (cancel_mono j.left).1
+    rw [Over.comp_left, Category.assoc]
+    change η[A.X].left ≫ lam.left ≫ j.left = η[B.X].left ≫ j.left
+    rw [← Over.comp_left, hlam, ← Over.comp_left, h0, ← Over.comp_left _ _ _ η[B.X] j, IsMonHom.one_hom]
+  have : IsMonHom lam := MulRigidity.isMonHom_of_geometricallyIntegral A.X B.X lam hη
+  exact ⟨Hom.mk' lam, hlam⟩
+
 end T09Pic
