@@ -14,8 +14,9 @@ bundles (`r1r2`, `t5`, `qmAutCard`, `serreRigidity3`, `alFixedPoints`) and five 
 * `RamifiedSqrtInertia` (GLUE, textbook Hilbert theory): over a point with ramification index `∣ 2`, a
   nontrivial inertia element moves `√(c (X − b))`;
 * `VertInertiaTrivial` (GLUE, textbook Hilbert theory): trivial vertical inertia gives ramification index 1;
-* `HeckeBranchFibreUnram` (GLUE from the field `hCM`, h-b1 §3 step 2): the residue fields of the Hecke cover
-  over `−16/27` (CM points by `ℤ[√−6]`) are unramified at `p > 324`;
+* `HeckeBranchFibreUnram` (GLUE from the field `shimuraMainThmIDeligneY3AbU`, its reciprocity law at CM points;
+  h-b1 §3 step 2): the residue fields of the Hecke cover over `−16/27` (CM points by `ℤ[√−6]`) are unramified at
+  `p > 324`;
 * `HeckeSqrtBranch` (GLUE from Elkies' model of `X₆`, the field `elkiesX6StarPrinted`): `E` contains a
   square root of `a (27X + 16)` with `a` a unit at every `p > 324`.
 
@@ -99,7 +100,8 @@ def VertInertiaTrivial : Prop :=
     ∀ q : Ideal (integralClosure ℤ[X] E), q.IsPrime → q.under ℤ[X] = vertPrime p →
     (∀ τ ∈ InertiaZ E q, τ = 1) → q.ramificationIdx ℤ[X] = 1
 
-/-- **GLUE from the field `hCM` (Shimura reciprocity at CM points; h-b1 §3 step 2).** For a triple with R1fp,
+/-- **GLUE from the field `shimuraMainThmIDeligneY3AbU` (Shimura's reciprocity law at CM points on `Y₃`;
+h-b1 §3 step 2).** For a triple with R1fp,
 R1hecke, R2fp and any `E` carrying the normalization chart, every residue field of `E` over the branch value
 `−16/27` (whose points are CM points by the maximal order `ℤ[√−6]`, conductor `1`) is unramified at every
 prime `p > 324`: by Shimura reciprocity the field of definition of a level-3 CM point lies in the ray class
@@ -118,7 +120,10 @@ def HeckeBranchFibreUnram : Prop :=
 
 /-- **GLUE from Elkies' model of `X₆` (the field `elkiesX6StarPrinted`).** For a triple with R1fp, R1hecke,
 R2fp and any `E` carrying the normalization chart, `E` contains a square root of `a (27X + 16)` for an integer
-`a` prime to every `p > 324`: `E ⊇ ℚ(X₆) = ℚ(X)(√X, √(−(27X + 16)))` (Elkies; rv-h-cm §2), so `a = −1`. -/
+`a` prime to every `p > 324`. Elkies' coordinate `t` on `X₆/W` (`t = 0, 1, ∞` at the CM points of discriminant
+`−24, −4, −3`) is `t = (27X + 16)/16` in the coordinate `X` of R2fp (branch values `−16/27, 0, ∞` with the same
+CM types), and Elkies' chart `s² = −t` gives `(4s)² = −(27X + 16)` in `ℚ(X₆) ⊆ E` (`Y₃ → X₆` is dominant), so
+`a = −1` (rv-h-b1 §2: `ℚ(X₆) = ℚ(X)(√X, √(−(27X + 16)))`, constants `−1, 3`). -/
 def HeckeSqrtBranch : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (π : ToP1 Y.left),
     R1fpProps Y Φ → R1heckeProps Y Φ → R2fpProps Y Φ π →
