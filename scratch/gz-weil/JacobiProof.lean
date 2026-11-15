@@ -580,4 +580,81 @@ theorem tendsto_coe_imInf : Tendsto (fun τ : UpperHalfPlane => (τ : ℂ)) Uppe
   refine Filter.tendsto_comap_iff.mpr ?_
   exact Filter.tendsto_comap
 
+
+/-! ## J7. `P` and `R` are level-one cusp forms of weights 4 and 8, hence zero -/
+
+section CuspForms
+
+open UpperHalfPlane SlashInvariantForm
+
+theorem slashP : ∀ γ : SL(2, ℤ), (fun τ : UpperHalfPlane => Psym τ) ∣[(4 : ℤ)] γ =
+    fun τ : UpperHalfPlane => Psym τ := by
+  intro γ
+  have := slash_invariant_of_S_T (F := Psym) (k := 4) (fun _ ht => Psym_S ht) Psym_T γ
+  exact_mod_cast this
+
+theorem slashR : ∀ γ : SL(2, ℤ), (fun τ : UpperHalfPlane => Rsym τ) ∣[(8 : ℤ)] γ =
+    fun τ : UpperHalfPlane => Rsym τ := by
+  intro γ
+  have := slash_invariant_of_S_T (F := Rsym) (k := 8) (fun _ ht => Rsym_S ht) Rsym_T γ
+  exact_mod_cast this
+
+theorem isZeroAtImInfty_P : IsZeroAtImInfty (fun τ : UpperHalfPlane => Psym τ) :=
+  tendsto_Psym.comp tendsto_coe_imInf
+
+theorem isZeroAtImInfty_R : IsZeroAtImInfty (fun τ : UpperHalfPlane => Rsym τ) :=
+  tendsto_Rsym.comp tendsto_coe_imInf
+
+/-- `P = E₁² + E₂² + E₃²` as a level-one cusp form of weight 4. -/
+def PForm : CuspForm 𝒮ℒ 4 where
+  toFun τ := Psym τ
+  slash_action_eq' A hA := by
+    obtain ⟨A, rfl⟩ := hA
+    exact slashP A
+  holo' := by
+    rw [UpperHalfPlane.mdifferentiable_iff]
+    refine .congr (fun z hz => (analyticAt_Psym hz).differentiableAt.differentiableWithinAt)
+      fun z hz => ?_
+    simp [ofComplex_apply_of_im_pos hz]
+  zero_at_cusps' hc := by
+    rw [Subgroup.IsArithmetic.isCusp_iff_isCusp_SL2Z] at hc
+    rw [OnePoint.isZeroAt_iff_forall_SL2Z hc]
+    intro γ _
+    rw [slashP γ]
+    exact isZeroAtImInfty_P
+
+/-- `R = E₁²E₂² + E₂²E₃² + E₃²E₁²` as a level-one cusp form of weight 8. -/
+def RForm : CuspForm 𝒮ℒ 8 where
+  toFun τ := Rsym τ
+  slash_action_eq' A hA := by
+    obtain ⟨A, rfl⟩ := hA
+    exact slashR A
+  holo' := by
+    rw [UpperHalfPlane.mdifferentiable_iff]
+    refine .congr (fun z hz => (analyticAt_Rsym hz).differentiableAt.differentiableWithinAt)
+      fun z hz => ?_
+    simp [ofComplex_apply_of_im_pos hz]
+  zero_at_cusps' hc := by
+    rw [Subgroup.IsArithmetic.isCusp_iff_isCusp_SL2Z] at hc
+    rw [OnePoint.isZeroAt_iff_forall_SL2Z hc]
+    intro γ _
+    rw [slashR γ]
+    exact isZeroAtImInfty_R
+
+theorem Psym_eq_zero {t : ℂ} (ht : 0 < t.im) : Psym t = 0 := by
+  have h := rank_zero_iff_forall_zero.mp (CuspForm.rank_eq_zero_of_weight_lt_twelve
+    (k := 4) (by norm_num)) PForm
+  have := congrArg (fun F : CuspForm 𝒮ℒ 4 => F ⟨t, ht⟩) h
+  simp only [CuspForm.zero_apply] at this
+  exact this
+
+theorem Rsym_eq_zero {t : ℂ} (ht : 0 < t.im) : Rsym t = 0 := by
+  have h := rank_zero_iff_forall_zero.mp (CuspForm.rank_eq_zero_of_weight_lt_twelve
+    (k := 8) (by norm_num)) RForm
+  have := congrArg (fun F : CuspForm 𝒮ℒ 8 => F ⟨t, ht⟩) h
+  simp only [CuspForm.zero_apply] at this
+  exact this
+
+end CuspForms
+
 end ZInQ.GZWeil
