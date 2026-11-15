@@ -283,4 +283,217 @@ theorem slash_invariant_of_S_T {F : ℂ → ℂ} {k : ℕ}
     simp only [Complex.ofReal_one]
     exact hT τ
 
+
+/-! ## J5. Analyticity on `ℍ` -/
+
+theorem U_isOpen : IsOpen {w : ℂ | 0 < w.im} := isOpen_lt continuous_const Complex.continuous_im
+
+/-- `u(t) = θ(t/2; t) = e^{−πit/4} θ₂(t)`. -/
+def uTheta (t : ℂ) : ℂ := jacobiTheta₂ (t / 2) t
+
+theorem differentiableAt_uTheta {t : ℂ} (ht : 0 < t.im) : DifferentiableAt ℂ uTheta t := by
+  have h1 : DifferentiableAt ℂ (fun s : ℂ => (s / 2, s)) t :=
+    (differentiableAt_id.div_const 2).prodMk differentiableAt_id
+  have h2 := (hasFDerivAt_jacobiTheta₂ (t / 2) ht).differentiableAt
+  exact DifferentiableAt.comp (f := fun s : ℂ => (s / 2, s))
+    (g := fun p : ℂ × ℂ => jacobiTheta₂ p.1 p.2) t h2 h1
+
+theorem thetaTwo_eq (t : ℂ) : thetaTwo t = cexp (π * I * t / 4) * uTheta t := rfl
+
+theorem analyticOnNhd_of_diff {f : ℂ → ℂ} (hf : ∀ t : ℂ, 0 < t.im → DifferentiableAt ℂ f t) :
+    AnalyticOnNhd ℂ f {w : ℂ | 0 < w.im} :=
+  DifferentiableOn.analyticOnNhd (f := f) (s := {w : ℂ | 0 < w.im})
+    (fun t ht => (hf t ht).differentiableWithinAt) U_isOpen
+
+theorem analyticAt_LA {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ LA t := by
+  have h := analyticOnNhd_of_diff (fun _ hs => differentiableAt_thetaTwo hs)
+  exact ((h t ht).deriv).div (h t ht) (thetaTwo_ne_zero ht)
+
+theorem analyticAt_LB {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ LB t := by
+  have h := analyticOnNhd_of_diff (fun _ hs => differentiableAt_thetaThree hs)
+  exact ((h t ht).deriv).div (h t ht) (thetaThree_ne_zero ht)
+
+theorem analyticAt_LC {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ LC t := by
+  have h := analyticOnNhd_of_diff (fun _ hs => differentiableAt_thetaFour hs)
+  exact ((h t ht).deriv).div (h t ht) (thetaFour_ne_zero ht)
+
+theorem analyticAt_thetaTwo {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ thetaTwo t :=
+  analyticOnNhd_of_diff (fun _ hs => differentiableAt_thetaTwo hs) t ht
+theorem analyticAt_thetaThree {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ thetaThree t :=
+  analyticOnNhd_of_diff (fun _ hs => differentiableAt_thetaThree hs) t ht
+theorem analyticAt_thetaFour {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ thetaFour t :=
+  analyticOnNhd_of_diff (fun _ hs => differentiableAt_thetaFour hs) t ht
+
+theorem analyticAt_E1 {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ E1 t :=
+  ((analyticAt_LB ht).sub (analyticAt_LA ht)).add (analyticAt_const.mul ((analyticAt_thetaFour ht).pow 4))
+theorem analyticAt_E2 {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ E2 t :=
+  ((analyticAt_LB ht).sub (analyticAt_LC ht)).sub (analyticAt_const.mul ((analyticAt_thetaTwo ht).pow 4))
+theorem analyticAt_E3 {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ E3 t :=
+  ((analyticAt_LA ht).sub (analyticAt_LC ht)).sub (analyticAt_const.mul ((analyticAt_thetaThree ht).pow 4))
+
+theorem analyticAt_Psym {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ Psym t :=
+  (((analyticAt_E1 ht).pow 2).add ((analyticAt_E2 ht).pow 2)).add ((analyticAt_E3 ht).pow 2)
+theorem analyticAt_Rsym {t : ℂ} (ht : 0 < t.im) : AnalyticAt ℂ Rsym t :=
+  ((((analyticAt_E1 ht).pow 2).mul ((analyticAt_E2 ht).pow 2)).add
+    (((analyticAt_E2 ht).pow 2).mul ((analyticAt_E3 ht).pow 2))).add
+    (((analyticAt_E3 ht).pow 2).mul ((analyticAt_E1 ht).pow 2))
+
+/-! ## J6. Behaviour at `i∞` -/
+
+/-- The filter `Im t → ∞` on `ℂ`. -/
+abbrev imInf : Filter ℂ := Filter.comap Complex.im Filter.atTop
+
+theorem eventually_im_pos : ∀ᶠ t in imInf, 0 < t.im :=
+  Filter.eventually_comap.mpr ((Filter.eventually_gt_atTop 0).mono fun _ h _ hx => hx ▸ h)
+
+theorem tendsto_exp_neg_im : Tendsto (fun t : ℂ => Real.exp (-π * t.im)) imInf (𝓝 0) := by
+  have : Tendsto (fun y : ℝ => Real.exp (-π * y)) atTop (𝓝 0) := by
+    refine Real.tendsto_exp_atBot.comp ?_
+    exact Filter.tendsto_id.const_mul_atTop_of_neg (by linarith [Real.pi_pos] : -π < 0)
+  exact this.comp Filter.tendsto_comap
+
+theorem tendsto_thetaThree : Tendsto thetaThree imInf (𝓝 1) := by
+  have h := isBigO_at_im_infty_jacobiTheta_sub_one.trans_tendsto tendsto_exp_neg_im
+  have h' : Tendsto (fun t => jacobiTheta t - 1 + 1) imInf (𝓝 (0 + 1)) := h.add_const 1
+  simp only [sub_add_cancel, zero_add] at h'
+  refine h'.congr fun t => ?_
+  rw [jacobiTheta_eq_jacobiTheta₂]; rfl
+
+theorem tendsto_add_one_imInf : Tendsto (fun t : ℂ => t + 1) imInf imInf := by
+  refine Filter.tendsto_comap_iff.mpr ?_
+  have : (Complex.im ∘ fun t : ℂ => t + 1) = Complex.im := by funext t; simp
+  rw [this]; exact Filter.tendsto_comap
+
+theorem tendsto_thetaFour : Tendsto thetaFour imInf (𝓝 1) := by
+  have := tendsto_thetaThree.comp tendsto_add_one_imInf
+  refine this.congr fun t => ?_
+  simp [thetaThree_add_one]
+
+/-- `‖u(t) − 2‖ ≤ 2r/(1 − r)`, `r = e^{−π Im t}`. -/
+theorem norm_uTheta_sub_two_le {t : ℂ} (ht : 0 < t.im) :
+    ‖uTheta t - 2‖ ≤ 2 * Real.exp (-π * t.im) / (1 - Real.exp (-π * t.im)) := by
+  set r := Real.exp (-π * t.im) with hr
+  have hr0 : 0 ≤ r := (Real.exp_pos _).le
+  have hr1 : r < 1 := by
+    rw [hr, ← Real.exp_zero]; exact Real.exp_lt_exp.mpr (by nlinarith [Real.pi_pos])
+  set f : ℤ → ℂ := fun n => jacobiTheta₂_term n (t / 2) t with hf
+  have hs : HasSum f (uTheta t) := hasSum_jacobiTheta₂_term (t / 2) ht
+  have hnorm : ∀ n : ℤ, ‖f n‖ = r ^ (n * (n + 1)).toNat := by
+    intro n
+    rw [hf, norm_jacobiTheta₂_term, hr, ← Real.exp_nat_mul]
+    congr 1
+    have hnn : 0 ≤ n * (n + 1) := by nlinarith [sq_nonneg n]
+    have : ((n * (n + 1)).toNat : ℝ) = ((n * (n + 1) : ℤ) : ℝ) := by
+      exact_mod_cast Int.toNat_of_nonneg hnn
+    rw [this]
+    simp only [Complex.div_ofNat_im]
+    push_cast
+    ring
+  set h : ℤ → ℂ := fun n => (if n = 0 then 1 else 0) + (if n = -1 then 1 else 0) with hh
+  have hhs : HasSum h 2 := by
+    have := (hasSum_ite_eq (0 : ℤ) (1 : ℂ)).add (hasSum_ite_eq (-1 : ℤ) (1 : ℂ))
+    rw [show (1 : ℂ) + 1 = 2 by norm_num] at this
+    exact this
+  have hg : HasSum (fun n => f n - h n) (uTheta t - 2) := hs.sub hhs
+  set b : ℤ → ℝ := fun n => if n = 0 then 0 else r ^ n.natAbs with hb
+  have hbs : HasSum b (r / (1 - r) + r / (1 - r)) := by
+    refine HasSum.of_nat_of_neg_add_one ?_ ?_
+    · have hg' := (hasSum_geometric_of_lt_one hr0 hr1).mul_left r
+      have e : r * (1 - r)⁻¹ = r / (1 - r) := by rw [div_eq_mul_inv]
+      rw [e] at hg'
+      refine (hasSum_nat_add_iff' (f := fun n : ℕ => b n) (g := r / (1 - r)) 1).mp ?_
+      simp only [hb, Finset.range_one, Finset.sum_singleton, Nat.cast_zero, ↓reduceIte, sub_zero]
+      refine hg'.congr_fun fun n => ?_
+      simp only [Nat.cast_add, Nat.cast_one]
+      rw [if_neg (by omega)]
+      have : ((n : ℤ) + 1).natAbs = n + 1 := by omega
+      rw [this, pow_succ, mul_comm]
+    · have hg' := (hasSum_geometric_of_lt_one hr0 hr1).mul_left r
+      have e : r * (1 - r)⁻¹ = r / (1 - r) := by rw [div_eq_mul_inv]
+      rw [e] at hg'
+      refine hg'.congr_fun fun n => ?_
+      simp only [hb]
+      rw [if_neg (by omega)]
+      have : (-((n : ℤ) + 1)).natAbs = n + 1 := by omega
+      rw [this, pow_succ, mul_comm]
+  have hbound : ∀ n : ℤ, ‖f n - h n‖ ≤ b n := by
+    intro n
+    by_cases h0 : n = 0
+    · subst h0; simp [hh, hb, hf, jacobiTheta₂_term]
+    by_cases h1 : n = -1
+    · subst h1
+      have : f (-1) = 1 := by
+        simp only [hf, jacobiTheta₂_term]
+        rw [← Complex.exp_zero]; congr 1; push_cast; ring
+      simp [hh, hb, this, hr0]
+    · have hhn : h n = 0 := by simp [hh, h0, h1]
+      rw [hhn, sub_zero, hnorm]
+      show r ^ _ ≤ if n = 0 then 0 else r ^ n.natAbs
+      rw [if_neg h0]
+      apply pow_le_pow_of_le_one hr0 hr1.le
+      have : (n.natAbs : ℤ) ≤ n * (n + 1) := by
+        rcases le_or_gt 0 n with hn | hn
+        · rw [Int.natAbs_of_nonneg hn]; nlinarith [show 1 ≤ n by omega]
+        · rw [Int.ofNat_natAbs_of_nonpos hn.le]; nlinarith [show n ≤ -2 by omega]
+      omega
+  have := hg.norm_le_of_bounded hbs hbound
+  calc ‖uTheta t - 2‖ ≤ r / (1 - r) + r / (1 - r) := this
+    _ = 2 * r / (1 - r) := by ring
+
+theorem tendsto_uTheta : Tendsto uTheta imInf (𝓝 2) := by
+  have hr : Tendsto (fun t : ℂ => 2 * Real.exp (-π * t.im) / (1 - Real.exp (-π * t.im))) imInf
+      (𝓝 (2 * 0 / (1 - 0))) :=
+    (tendsto_exp_neg_im.const_mul 2).div (tendsto_const_nhds.sub tendsto_exp_neg_im) (by norm_num)
+  rw [show (2 : ℝ) * 0 / (1 - 0) = 0 by norm_num] at hr
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  refine squeeze_zero' (Filter.Eventually.of_forall fun _ => norm_nonneg _) ?_ hr
+  filter_upwards [eventually_im_pos] with t ht
+  exact norm_uTheta_sub_two_le ht
+
+/-- **Cauchy estimate at `i∞`**: if `g → c` as `Im t → ∞` then `g' → 0`. -/
+theorem tendsto_deriv_zero {g : ℂ → ℂ} {c : ℂ} (hd : ∀ t : ℂ, 0 < t.im → DifferentiableAt ℂ g t)
+    (hg : Tendsto g imInf (𝓝 c)) : Tendsto (deriv g) imInf (𝓝 0) := by
+  rw [Metric.tendsto_nhds]
+  intro ε hε
+  have h1 := Metric.tendsto_nhds.mp hg (ε / 4) (by positivity)
+  have hA' : ∃ A : ℝ, ∀ s : ℂ, A ≤ s.im → dist (g s) c < ε / 4 := by
+    have h1' := Filter.eventually_comap.mp h1
+    rw [Filter.eventually_atTop] at h1'
+    obtain ⟨A, hA⟩ := h1'
+    exact ⟨A, fun s hs => hA s.im hs s rfl⟩
+  obtain ⟨A, hA⟩ := hA'
+  have h2 : ∀ᶠ t in imInf, max A 1 + 1 ≤ t.im :=
+    Filter.eventually_comap.mpr ((Filter.eventually_ge_atTop (max A 1 + 1)).mono
+      fun _ h _ hx => hx ▸ h)
+  filter_upwards [h2] with t ht
+  rw [dist_zero_right]
+  have hsub : Metric.closedBall t (1 / 2) ⊆ {w : ℂ | 0 < w.im} := by
+    intro s hs
+    have := Complex.abs_im_le_norm (s - t)
+    rw [Metric.mem_closedBall, dist_eq_norm] at hs
+    simp only [Complex.sub_im] at this
+    show 0 < s.im
+    have := abs_le.mp (this.trans hs)
+    linarith [le_max_right A 1]
+  have hdc : DiffContOnCl ℂ (fun s => g s - c) (Metric.ball t (1 / 2)) :=
+    DifferentiableOn.diffContOnCl_ball (U := {w : ℂ | 0 < w.im})
+      (fun s hs => ((hd s hs).sub_const c).differentiableWithinAt) hsub
+  have hC : ∀ s ∈ Metric.sphere t (1 / 2), ‖g s - c‖ ≤ ε / 4 := by
+    intro s hs
+    have hsi : A ≤ s.im := by
+      have := Complex.abs_im_le_norm (s - t)
+      rw [mem_sphere_iff_norm] at hs
+      simp only [Complex.sub_im] at this
+      have := abs_le.mp (this.trans hs.le)
+      linarith [le_max_left A 1]
+    have := hA s hsi
+    rw [dist_eq_norm] at this
+    exact this.le
+  have hcd := Complex.norm_deriv_le_of_forall_mem_sphere_norm_le (by norm_num) hdc hC
+  have hdd : deriv (fun s => g s - c) t = deriv g t := by
+    rw [deriv_sub_const]
+  rw [hdd] at hcd
+  calc ‖deriv g t‖ ≤ ε / 4 / (1 / 2) := hcd
+    _ < ε := by linarith
+
 end ZInQ.GZWeil
