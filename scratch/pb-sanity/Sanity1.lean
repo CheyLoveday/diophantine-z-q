@@ -1098,6 +1098,225 @@ theorem isPst_quadChar {α : PadicAlgCl p} {c : ℚ_[p]} (hα : α ^ 2 = algebra
 
 end Pst
 
+/-! ### `K_0 ⊆ B_st^{G_K}`: Teichmüller lifts of roots of unity of order prime to `p` -/
+
+section K0
+
+/-- `A_inf → B_st` (through `A_cris^0`, `A_cris`, `B_cris^+`, `B_cris`). -/
+def embW : Ainf p →+* Bst p :=
+  Polynomial.C.comp ((algebraMap (BcrisPlus p) (Bcris p)).comp
+    ((algebraMap (Acris p) (BcrisPlus p)).comp ((algebraMap (Acris0 p) (Acris p)).comp
+      (ainfToAcris0 p))))
+
+theorem acris0Act_ainfToAcris0 (σ : GQp p) (w : Ainf p) :
+    acris0Act p σ (ainfToAcris0 p w) = ainfToAcris0 p (WittVector.map (flatAct p σ) w) :=
+  Subtype.ext (locAct_algebraMap p σ w)
+
+theorem stAct_embW (σ : GQp p) (w : Ainf p) :
+    stAct p σ (embW p w) = embW p (WittVector.map (flatAct p σ) w) := by
+  simp only [embW, RingHom.comp_apply, stAct_C, bcrisAct_algebraMap, bcrisPlusAct_algebraMap,
+    acrisAct_algebraMap, acris0Act_ainfToAcris0]
+
+/-- **`A_inf → B_st` is injective** (by the main lemma with a factor `y ∈ A_inf`). -/
+theorem embW_injective : Function.Injective (embW p) := by
+  rw [injective_iff_map_eq_zero]
+  intro w hw
+  by_contra hne
+  have h1 : algebraMap (BcrisPlus p) (Bcris p) (algebraMap (Acris p) (BcrisPlus p) (ofAinf p w))
+      = 0 := Polynomial.C_eq_zero.mp hw
+  obtain ⟨⟨s, hs⟩, hs0⟩ := (IsLocalization.map_eq_zero_iff (tMonoid p) (Bcris p) _).mp h1
+  obtain ⟨l, rfl⟩ := exists_list_of_mem_tMonoid p hs
+  rw [← map_mul] at hs0
+  obtain ⟨⟨_, k, rfl⟩, hk⟩ :=
+    (IsLocalization.map_eq_zero_iff (Submonoid.powers (p : Acris p)) (BcrisPlus p) _).mp hs0
+  apply pow_mul_prod_logOf_mul_ne_zero p l k w hne
+  rw [mul_assoc]
+  exact hk
+
+theorem embW_zpToW (z : ℤ_[p]) :
+    embW p (zpToW p z) = algebraMap ℚ_[p] (Bst p) (algebraMap ℤ_[p] ℚ_[p] z) := by
+  rw [Polynomial.algebraMap_apply]
+  change _ = Polynomial.C (qpToBcris p (algebraMap ℤ_[p] ℚ_[p] z))
+  rw [qpToBcris, RingHom.comp_apply, qpToBcrisPlus, IsLocalization.lift_eq]
+  rfl
+
+/-- For `σ ∈ G_{ℚ_p}` fixing `μ ∈ ℚ̄_p`, `σ` fixes `μ ∈ 𝓞_ℂ_p`. -/
+theorem oAct_of_fixed (σ : GQp p) {μ : PadicAlgCl p} (hσ : σ μ = μ) (hμ : (μ : ℂ_[p]) ∈ 𝓞_ℂ_[p]) :
+    oAct p σ ⟨(μ : ℂ_[p]), hμ⟩ = ⟨(μ : ℂ_[p]), hμ⟩ :=
+  Subtype.ext (by
+    change cpAct p σ (μ : ℂ_[p]) = (μ : ℂ_[p])
+    rw [cpAct_coe, hσ])
+
+variable {μ : PadicAlgCl p} {m : ℕ}
+
+theorem norm_root_of_unity (hm0 : 0 < m) (hμ : μ ^ m = 1) : ‖(μ : ℂ_[p])‖ = 1 := by
+  have h := congrArg norm hμ
+  rw [norm_pow, norm_one] at h
+  rw [PadicComplex.norm_extends]
+  exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) hm0.ne').mp h
+
+theorem mem_O_of_root_of_unity (hm0 : 0 < m) (hμ : μ ^ m = 1) : (μ : ℂ_[p]) ∈ 𝓞_ℂ_[p] :=
+  (ZInQ.Contrib.G9.PkgI4.Cp.mem_O_iff p _).mpr (norm_root_of_unity p hm0 hμ).le
+
+theorem exists_pow_p_mul_eq (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    ∃ q : ℕ, μ ^ (p * q) = μ := by
+  rcases Nat.lt_or_ge 1 m with h1 | h1
+  · obtain ⟨q, -, hq⟩ := Nat.exists_mul_mod_eq_one_of_coprime hcop h1
+    refine ⟨q, ?_⟩
+    rw [← Nat.div_add_mod (p * q) m, pow_add, pow_mul, hμ, one_pow, one_mul, hq, pow_one]
+  · have : m = 1 := by omega
+    subst this
+    rw [pow_one] at hμ
+    exact ⟨0, by rw [hμ, one_pow]⟩
+
+/-- The Teichmüller representative `μ♭ = (μ, μ^{1/p}, …)`, `μ^{1/p^n} = μ^{q^n}` (`pq ≡ 1 mod m`). -/
+noncomputable def muFlat (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) : PreTilt O p :=
+  ⟨fun n => Ideal.Quotient.mk _ ((⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ : O) ^
+      (Classical.choose (exists_pow_p_mul_eq p hm0 hμ hcop)) ^ n), fun n => by
+    rw [← map_pow]
+    congr 1
+    set q := Classical.choose (exists_pow_p_mul_eq p hm0 hμ hcop)
+    have hq : (⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ : O) ^ (p * q) =
+        ⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ := by
+      apply Subtype.ext
+      simp only [SubmonoidClass.coe_pow]
+      rw [PadicComplex.coe_eq, ← map_pow]
+      exact congrArg _ (Classical.choose_spec (exists_pow_p_mul_eq p hm0 hμ hcop))
+    rw [← pow_mul, pow_succ, mul_assoc, mul_comm q p, mul_comm, pow_mul, hq]⟩
+
+theorem untilt_muFlat (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    PreTilt.untilt (muFlat p hm0 hμ hcop) = ⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ := by
+  set q := Classical.choose (exists_pow_p_mul_eq p hm0 hμ hcop)
+  set μO : O := ⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩
+  have hq : μO ^ (p * q) = μO := by
+    apply Subtype.ext
+    simp only [μO, SubmonoidClass.coe_pow]
+    rw [PadicComplex.coe_eq, ← map_pow]
+    exact congrArg _ (Classical.choose_spec (exists_pow_p_mul_eq p hm0 hμ hcop))
+  have := untilt_eq_of_coeff p (fun n => μO ^ q ^ n) (fun n => by
+    rw [← pow_mul, pow_succ, mul_assoc, mul_comm q p, mul_comm, pow_mul, hq])
+    (muFlat p hm0 hμ hcop) (fun n => rfl)
+  simpa using this
+
+theorem flatAct_muFlat (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) (σ : GQp p)
+    (hσ : σ μ = μ) : flatAct p σ (muFlat p hm0 hμ hcop) = muFlat p hm0 hμ hcop := by
+  set q := Classical.choose (exists_pow_p_mul_eq p hm0 hμ hcop)
+  set μO : O := ⟨(μ : ℂ_[p]), mem_O_of_root_of_unity p hm0 hμ⟩ with hμO
+  apply Perfection.ext
+  intro n
+  rw [DR.coeff_preTiltMap]
+  change DR.modPMap p (oAct p σ) (Ideal.Quotient.mk _ (μO ^ q ^ n)) =
+    Ideal.Quotient.mk _ (μO ^ q ^ n)
+  rw [DR.modPMap, Ideal.quotientMap_mk, map_pow, hμO, oAct_of_fixed p σ hσ]
+
+/-- The image of `[μ♭]` in `B_st`. -/
+noncomputable def teichB (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) : Bst p :=
+  embW p (WittVector.teichmuller p (muFlat p hm0 hμ hcop))
+
+/-- `[μ♭] ∈ B_st^{G_K}` when `μ ∈ K`. -/
+theorem teichB_pow_mem_bstInv (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m)
+    (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (hK : μ ∈ K) (i : ℕ) :
+    teichB p hm0 hμ hcop ^ i ∈ bstInv p K := by
+  intro σ hσ
+  have hσμ : σ μ = μ := hσ ⟨μ, hK⟩
+  rw [map_pow, teichB, stAct_embW, WittVector.map_teichmuller, flatAct_muFlat p hm0 hμ hcop σ hσμ]
+
+/-- `θ ∘ (ℤ_p → A_inf)` is the inclusion `ℤ_p ⊆ ℂ_p`. -/
+theorem coe_theta_zpToW (z : ℤ_[p]) :
+    ((theta p (zpToW p z) : O) : ℂ_[p]) = algebraMap ℚ_[p] ℂ_[p] (algebraMap ℤ_[p] ℚ_[p] z) := by
+  set f : ℤ_[p] →+* ℂ_[p] := ((PadicComplexInt p).subtype).comp ((theta p).comp (zpToW p)) with hf
+  set g : ℤ_[p] →+* ℂ_[p] := (algebraMap ℚ_[p] ℂ_[p]).comp (algebraMap ℤ_[p] ℚ_[p]) with hg
+  have hfn : ∀ u, ‖f u‖ ≤ 1 := fun u =>
+    ZInQ.Contrib.G9.BdrKer.Cp.norm_le_one p (theta p (zpToW p u))
+  have hgn : ∀ u, ‖g u‖ ≤ 1 := fun u => by
+    simp only [hg, RingHom.comp_apply]
+    rw [IsScalarTower.algebraMap_apply ℚ_[p] (PadicAlgCl p) ℂ_[p], ← PadicComplex.coe_eq,
+      PadicComplex.norm_extends, PadicAlgCl.norm_extends, PadicInt.algebraMap_apply]
+    exact PadicInt.norm_le_one u
+  have key : ∀ n : ℕ, ‖f z - g z‖ ≤ 2 * ‖(p : ℂ_[p])‖ ^ n := by
+    intro n
+    obtain ⟨u, hu⟩ := Ideal.mem_span_singleton'.mp (PadicInt.appr_spec n z)
+    have hz : z = (PadicInt.appr z n : ℤ_[p]) + u * (p : ℤ_[p]) ^ n := by rw [hu]; ring
+    rw [hz, map_add, map_add, map_natCast, map_natCast, add_sub_add_left_eq_sub, map_mul,
+      map_mul, map_pow, map_pow, map_natCast, map_natCast, ← sub_mul, norm_mul, norm_pow,
+      mul_comm]
+    have hb : ‖f u - g u‖ ≤ 2 := (norm_sub_le _ _).trans (by linarith [hfn u, hgn u])
+    have hpn := pow_nonneg (norm_nonneg (p : ℂ_[p])) n
+    nlinarith
+  have h0 : f z - g z = 0 := by
+    by_contra hne
+    have hpos : 0 < ‖f z - g z‖ := norm_pos_iff.mpr hne
+    obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one (show 0 < ‖f z - g z‖ / 2 by linarith)
+      (ZInQ.Contrib.G9.PkgI4.Cp.norm_p_lt_one p)
+    have := key n
+    linarith
+  exact sub_eq_zero.mp h0
+
+/-- **`K_0 ⊆ B_st^{G_K}` (dimension form).** For a root of unity `μ ∈ K` of order prime to `p`,
+the powers `1, [μ♭], …, [μ♭]^{d-1}` (`d = [ℚ_p(μ) : ℚ_p]`) are `ℚ_p`-linearly independent
+elements of `B_st^{G_K}`. The maximal unramified subextension `K_0` of a finite `K` is `ℚ_p(μ)`
+for such a `μ` (Serre, *Local Fields*, IV §4; UNVERIFIED), so `dim_{ℚ_p} B_st^{G_K} ≥ [K_0 : ℚ_p]`
+whenever `B_st^{G_K}` is finite-dimensional. -/
+theorem linearIndependent_teichB (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m) :
+    LinearIndependent ℚ_[p]
+      (fun i : Fin (minpoly ℚ_[p] μ).natDegree => teichB p hm0 hμ hcop ^ (i : ℕ)) := by
+  classical
+  rw [Fintype.linearIndependent_iff]
+  intro g hg i
+  set T0 := WittVector.teichmuller p (muFlat p hm0 hμ hcop) with hT0
+  obtain ⟨⟨_, k, rfl⟩, hb⟩ :=
+    IsLocalization.exist_integer_multiples (Submonoid.powers (p : ℤ_[p])) Finset.univ g
+  choose z hz using fun j => hb j (Finset.mem_univ j)
+  -- the relation in `A_inf`
+  have h1 : embW p (∑ j, zpToW p (z j) * T0 ^ (j : ℕ)) = 0 := by
+    rw [map_sum]
+    simp only [map_mul, map_pow, embW_zpToW, hz]
+    have : ∀ j, algebraMap ℚ_[p] (Bst p) ((p : ℤ_[p]) ^ k • g j) * embW p T0 ^ (j : ℕ) =
+        algebraMap ℚ_[p] (Bst p) (algebraMap ℤ_[p] ℚ_[p] ((p : ℤ_[p]) ^ k)) *
+          (g j • teichB p hm0 hμ hcop ^ (j : ℕ)) := fun j => by
+      rw [Algebra.smul_def (g j), Algebra.smul_def, map_mul, teichB]
+      ring
+    simp only [this, ← Finset.mul_sum, hg, mul_zero]
+  have h2 := embW_injective p (h1.trans (map_zero _).symm)
+  -- apply `θ` and pass to `ℂ_p`
+  have h3 := congrArg (fun w => ((theta p w : O) : ℂ_[p])) h2
+  simp only [map_sum, map_mul, map_pow, map_zero, ZeroMemClass.coe_zero, AddSubmonoidClass.coe_finsetSum,
+    MulMemClass.coe_mul, SubmonoidClass.coe_pow, coe_theta_zpToW] at h3
+  have hθT : ((theta p T0 : O) : ℂ_[p]) = (μ : ℂ_[p]) := by
+    rw [hT0, theta, WittVector.fontaineTheta_teichmuller, untilt_muFlat]
+  rw [hθT] at h3
+  -- linear independence of the powers of `μ` over `ℚ_p`
+  have hli := linearIndependent_pow (K := ℚ_[p]) (μ : ℂ_[p])
+  have hmin : minpoly ℚ_[p] (μ : ℂ_[p]) = minpoly ℚ_[p] μ := by
+    rw [PadicComplex.coe_eq]
+    exact minpoly.algHom_eq (IsScalarTower.toAlgHom ℚ_[p] (PadicAlgCl p) ℂ_[p])
+      (algebraMap (PadicAlgCl p) ℂ_[p]).injective μ
+  rw [hmin] at hli
+  rw [Fintype.linearIndependent_iff] at hli
+  have h4 := hli (fun j => algebraMap ℤ_[p] ℚ_[p] (z j)) (by
+    simpa only [Algebra.smul_def] using h3) i
+  rw [hz i, Algebra.smul_def, mul_eq_zero] at h4
+  rcases h4 with h4 | h4
+  · exfalso
+    rw [map_pow, map_natCast] at h4
+    exact pow_ne_zero _ (Nat.cast_ne_zero.mpr (Fact.out : p.Prime).ne_zero) h4
+  · exact h4
+
+/-- Hence, if `B_st^{G_K}` is finite-dimensional (Fontaine: it is `K_0`), its dimension is at least
+`[ℚ_p(μ) : ℚ_p]` for every root of unity `μ ∈ K` of order prime to `p`. -/
+theorem natDegree_minpoly_le_finrank_bstInv (hm0 : 0 < m) (hμ : μ ^ m = 1) (hcop : p.Coprime m)
+    (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (hK : μ ∈ K)
+    [FiniteDimensional ℚ_[p] (bstInv p K)] :
+    (minpoly ℚ_[p] μ).natDegree ≤ Module.finrank ℚ_[p] (bstInv p K) := by
+  have hli : LinearIndependent ℚ_[p] (fun i : Fin (minpoly ℚ_[p] μ).natDegree =>
+      (⟨teichB p hm0 hμ hcop ^ (i : ℕ), teichB_pow_mem_bstInv p hm0 hμ hcop K hK i⟩ :
+        bstInv p K)) :=
+    LinearIndependent.of_comp (bstInv p K).subtype (linearIndependent_teichB p hm0 hμ hcop)
+  simpa using hli.fintype_card_le_finrank
+
+end K0
+
+
 /-! ### Summary -/
 
 /-- **Summary of the unconditional sanity checks** of pb-bypass's definitions. -/

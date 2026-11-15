@@ -47,3 +47,14 @@ Proved (namespace HDec.PkgI4.PanBergerSplit):
 - `isPst_of_trivial_on`, `localIsPst_one` (trivial n-dim ℚ̄_p-rep satisfies LocalIsPst).
 - `quadChar` (σ ↦ σ(α)/α for α² ∈ ℚ_p, α ≠ 0; includes the unramified quadratic character),
   `isPst_quadChar`.
+
+## Step 4: K_0 ⊆ B_st^{G_K} (Sanity1.lean, section K0) — COMPILES (VERIFIED ~11:40)
+- `pow_mul_prod_logOf_mul_ne_zero`: main lemma with an extra factor y ≠ 0 of A_inf.
+- `embW_injective`: A_inf → B_st is injective. `stAct_embW`: equivariant (σ acts by W(σ♭)).
+- `muFlat` (μ♭ = (μ, μ^q, μ^{q²}, …) for μ^m = 1, p ∤ m, pq ≡ 1 mod m), `untilt_muFlat`,
+  `flatAct_muFlat`; `teichB_pow_mem_bstInv`: [μ♭]^i ∈ B_st^{G_K} when μ ∈ K.
+- `coe_theta_zpToW`: θ ∘ (ℤ_p → A_inf) is the inclusion ℤ_p ⊆ ℂ_p.
+- `linearIndependent_teichB`: 1, [μ♭], …, [μ♭]^{d−1} (d = deg minpoly_{ℚ_p} μ) are ℚ_p-linearly
+  independent in B_st; `natDegree_minpoly_le_finrank_bstInv`: if B_st^{G_K} is finite-dimensional
+  then dim ≥ [ℚ_p(μ):ℚ_p]. (K_0 = ℚ_p(μ) for μ of order p^f − 1: Serre, Local Fields IV §4,
+  UNVERIFIED locator; standard.)
