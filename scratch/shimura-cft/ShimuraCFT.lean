@@ -1148,3 +1148,233 @@ end ShimuraCFT
 #print axioms ShimuraCFT.shimuraFamilyAb_of_mainThmI
 #print axioms ShimuraCFT.shimuraFamily_of_mainThmI
 #print axioms ShimuraCFT.shimuraFamily_of_mainThmIAb
+
+/-! ## B6. Checks on the definitions, and c-to-printed's `ShimuraMainThmIY3` from the leaf
+
+`q̂` extends `q` (`qHat_algebraMap`); `K₃ ∩ B^×_+ = Γ(3)` (`dcRel_one_iff`), so the leaf implies the
+earlier "fullest statable" form `CToPrinted.Shimura.ShimuraMainThmIY3` (`mainThmIY3_of_mainThmI`). -/
+
+noncomputable section
+
+namespace ShimuraCFT
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV NumberField IsDedekindDomain
+open scoped TensorProduct FiniteAdeleExtension
+
+variable {K : Type} [Field K] [NumberField K]
+
+/-- `q̂` extends `q`: `q̂(k) = q(k)` for `k ∈ K ⊂ 𝔸_{K,f}`. -/
+theorem qHat_algebraMap (q : K →ₐ[ℚ] LeafQM.B) (k : K) :
+    qHat q (algebraMap K (FiniteAdeleRing (𝓞 K) K) k) = bEmb (q k) := by
+  simp [qHat, qT, TauCeti.GlobalNumberFields.finiteAdeleBaseChangeAlgEquiv_symm_algebraMap]
+
+/-- `ℤ̂` as a subring. -/
+def ZhatS : Subring AQ where
+  carrier := ZhatQ
+  mul_mem' ha hb v := mul_mem (ha v) (hb v)
+  one_mem' v := one_mem _
+  add_mem' ha hb v := add_mem (ha v) (hb v)
+  zero_mem' v := zero_mem _
+  neg_mem' ha v := neg_mem (ha v)
+
+/-- A rational number lies in `ℤ̂` iff it is an integer. -/
+theorem rat_mem_zhat_iff (r : ℚ) : algebraMap ℚ AQ r ∈ ZhatQ ↔ ∃ m : ℤ, r = m := by
+  constructor
+  · intro h
+    obtain ⟨o, ho⟩ := HeightOneSpectrum.mem_integers_of_valuation_le_one (R := 𝓞 ℚ) (K := ℚ) r
+      (fun v => by
+        have hv := h v
+        rw [HeightOneSpectrum.mem_adicCompletionIntegers] at hv
+        rw [← HeightOneSpectrum.valuedAdicCompletion_eq_valuation']
+        exact hv)
+    exact ⟨Rat.ringOfIntegersEquiv o, by rw [Rat.ringOfIntegersEquiv_apply_coe, ho]⟩
+  · rintro ⟨m, rfl⟩
+    have : algebraMap ℚ AQ (m : ℚ) = ((m : ℤ) : AQ) := map_intCast _ _
+    rw [this]
+    exact intCast_mem ZhatS m
+
+
+/-- Coordinates in the basis `1, i, (1+j)/2, (i+k)/2` (inverse of `ShimuraGlue.ofQ`). -/
+def cQ {R : Type*} [CommRing R] (x : ShimuraGlue.BR R) : Fin 4 → R :=
+  ![x.re - x.imJ, x.imI - x.imK, 2 * x.imJ, 2 * x.imK]
+
+theorem cQ_ofQ {R : Type*} [CommRing R] [Algebra ℚ R] (n : Fin 4 → R) :
+    cQ (ShimuraGlue.ofQ n) = n := by
+  have hh := ShimuraGlue.two_mul_half R
+  funext i
+  fin_cases i <;> simp [cQ, ShimuraGlue.ofQ]
+  · linear_combination (n 2) * hh
+  · linear_combination (n 3) * hh
+
+theorem cQ_bEmb (x : LeafQM.B) : cQ (bEmb x) = fun i => algebraMap ℚ AQ (cQ x i) := by
+  funext i
+  fin_cases i <;> simp [cQ, bEmb, map_sub, map_mul, map_ofNat]
+
+theorem cQ_ofInt (m : Fin 4 → ℤ) : cQ (LeafQM.ofInt m) = fun i => (m i : ℚ) := by
+  funext i
+  fin_cases i <;> simp [cQ, LeafQM.ofInt] <;> ring
+
+theorem eq_ofInt_of_cQ (x : LeafQM.B) (m : Fin 4 → ℤ) (h : ∀ i, cQ x i = m i) :
+    x = LeafQM.ofInt m := by
+  have h0 := h 0; have h1 := h 1; have h2 := h 2; have h3 := h 3
+  simp [cQ] at h0 h1 h2 h3
+  ext <;> simp [LeafQM.ofInt] <;> linarith
+
+theorem inO_of_bEmb_mem {x : LeafQM.B} (h : bEmb x ∈ OhatQ) : InO x := by
+  obtain ⟨n, hn, he⟩ := h
+  have hc : ∀ i, algebraMap ℚ AQ (cQ x i) ∈ ZhatQ := fun i => by
+    have := congrFun (congrArg cQ he) i
+    rw [cQ_bEmb, cQ_ofQ] at this
+    have h' : algebraMap ℚ AQ (cQ x i) = n i := this
+    rw [h']; exact hn i
+  choose m hm using fun i => (rat_mem_zhat_iff _).1 (hc i)
+  exact ⟨m, eq_ofInt_of_cQ x m hm⟩
+
+theorem bEmb_mem_of_inO {x : LeafQM.B} (h : InO x) : bEmb x ∈ OhatQ := by
+  obtain ⟨m, rfl⟩ := h
+  refine ⟨fun i => algebraMap ℚ AQ (m i), fun i => (rat_mem_zhat_iff _).2 ⟨m i, rfl⟩, ?_⟩
+  have h1 := ShimuraGlue.ofQ_coords (bEmb (LeafQM.ofInt m))
+  have h2 : (![(bEmb (LeafQM.ofInt m)).re - (bEmb (LeafQM.ofInt m)).imJ,
+      (bEmb (LeafQM.ofInt m)).imI - (bEmb (LeafQM.ofInt m)).imK,
+      2 * (bEmb (LeafQM.ofInt m)).imJ, 2 * (bEmb (LeafQM.ofInt m)).imK] : Fin 4 → AQ) =
+      fun i => algebraMap ℚ AQ (m i) := by
+    have := cQ_bEmb (LeafQM.ofInt m)
+    rw [cQ_ofInt] at this
+    exact this
+  rw [h2] at h1
+  exact h1
+
+theorem star_ofInt (m : Fin 4 → ℤ) :
+    star (LeafQM.ofInt m) = LeafQM.ofInt ![m 0 + m 2, -m 1, -m 2, -m 3] := by
+  ext <;> simp [LeafQM.ofInt] <;> ring
+
+theorem inO_star {x : LeafQM.B} (h : InO x) : InO (star x) := by
+  obtain ⟨m, rfl⟩ := h
+  exact ⟨_, star_ofInt m⟩
+
+theorem nrd_bEmb (x : LeafQM.B) :
+    ShimuraGlue.nrdQ AQ (bEmb x) = algebraMap ℚ AQ (ShimuraGlue.nrdQ ℚ x) := by
+  simp only [ShimuraGlue.nrdQ_apply]
+  simp [bEmb, map_sub, map_add, map_mul, map_pow, map_ofNat]
+
+theorem nrd_mem_of_mem {y : BAQ} (h : y ∈ OhatQ) : ShimuraGlue.nrdQ AQ y ∈ ZhatQ := by
+  obtain ⟨n, hn, rfl⟩ := h
+  rw [ShimuraGlue.nrdQ_ofQ]
+  have : ShimuraGlue.N4 (fun i => ZhatS.subtype ⟨n i, hn i⟩) =
+      ZhatS.subtype (ShimuraGlue.N4 (fun i => (⟨n i, hn i⟩ : ZhatS))) := (ShimuraGlue.map_N4 _ _).symm
+  rw [show (fun i => ZhatS.subtype ⟨n i, hn i⟩) = n from rfl] at this
+  rw [this]
+  exact (ShimuraGlue.N4 (fun i => (⟨n i, hn i⟩ : ZhatS))).2
+
+theorem nrd_coe_eq {x : LeafQM.B} :
+    ((ShimuraGlue.nrdQ ℚ x : ℚ) : LeafQM.B) = x * star x := ShimuraGlue.nrdQ_eq_mul_star x
+
+theorem star_mul_eq {x : LeafQM.B} : star x * x = x * star x := by
+  exact (star_comm_self' x)
+
+
+theorem nrdQ_eq_one {x : LeafQM.B} (h : x * star x = 1) : ShimuraGlue.nrdQ ℚ x = 1 := by
+  have h1 : ((ShimuraGlue.nrdQ ℚ x : ℚ) : LeafQM.B) = ((1 : ℚ) : LeafQM.B) := by
+    rw [nrd_coe_eq, h]; rfl
+  exact QuaternionAlgebra.coe_injective h1
+
+/-- A positive rational `r` with `r, r⁻¹` both in `ℤ̂` is `1`. -/
+theorem eq_one_of_mem {r : ℚ} (hpos : 0 < r) (h1 : algebraMap ℚ AQ r ∈ ZhatQ)
+    (h2 : algebraMap ℚ AQ r⁻¹ ∈ ZhatQ) : r = 1 := by
+  obtain ⟨m, hm⟩ := (rat_mem_zhat_iff _).1 h1
+  obtain ⟨m', hm'⟩ := (rat_mem_zhat_iff _).1 h2
+  have hr0 : r ≠ 0 := hpos.ne'
+  have hmm : (m : ℚ) * m' = 1 := by rw [← hm, ← hm', mul_inv_cancel₀ hr0]
+  have hmm' : m * m' = 1 := by exact_mod_cast hmm
+  have hmpos : (0 : ℚ) < m := hm ▸ hpos
+  have hmpos' : 0 < m := by exact_mod_cast hmpos
+  have : m = 1 := by
+    rcases Int.eq_one_or_neg_one_of_mul_eq_one hmm' with h | h
+    · exact h
+    · omega
+  rw [hm, this]; simp
+
+/-- **`K₃ ∩ B^×_+ = Γ(3)`**: the relation `DCRel` at `g = g' = 1` is the action of
+`Γ(3) = {x ∈ 𝒪 : x x̄ = 1, x ≡ 1 mod 3𝒪}` (c-to-printed's `InGamma3`). -/
+theorem dcRel_one_iff (τ τ' : UpperHalfPlane) :
+    DCRel τ 1 τ' 1 ↔ ∃ x : LeafQM.B, CToPrinted.Shimura.InGamma3 x ∧
+      ∃ g : GL (Fin 2) ℝ, (g : Matrix (Fin 2) (Fin 2) ℝ) = BPAnalytic.QM.iota x ∧ g • τ = τ' := by
+  constructor
+  · rintro ⟨γ, hpos, hM, k, ⟨hk1, hk2, y, hy, hky⟩, hg⟩
+    refine ⟨γ, ?_, hM⟩
+    -- `q(γ) = k⁻¹`
+    have hgk : bEmb γ * (k : BAQ) = 1 := by simpa using hg.symm
+    have hγk : bEmb γ = ((k⁻¹ : BAQˣ) : BAQ) := by
+      calc bEmb γ = bEmb γ * (k : BAQ) * ((k⁻¹ : BAQˣ) : BAQ) := by simp [mul_assoc]
+        _ = _ := by rw [hgk, one_mul]
+    have hγO : bEmb γ ∈ OhatQ := hγk ▸ hk2
+    have hO : InO γ := inO_of_bEmb_mem hγO
+    -- `nrd γ = 1`
+    set r := ShimuraGlue.nrdQ ℚ γ with hr
+    have hn1 : algebraMap ℚ AQ r ∈ ZhatQ := nrd_bEmb γ ▸ nrd_mem_of_mem hγO
+    have hnk : ShimuraGlue.nrdQ AQ (k : BAQ) ∈ ZhatQ := nrd_mem_of_mem hk1
+    have hprod : algebraMap ℚ AQ r * ShimuraGlue.nrdQ AQ (k : BAQ) = 1 := by
+      rw [← nrd_bEmb, ← map_mul, hgk, map_one]
+    have hkinv : ShimuraGlue.nrdQ AQ (k : BAQ) = algebraMap ℚ AQ r⁻¹ := by
+      have hr0 : r ≠ 0 := hpos.ne'
+      calc ShimuraGlue.nrdQ AQ (k : BAQ)
+          = algebraMap ℚ AQ r⁻¹ * (algebraMap ℚ AQ r * ShimuraGlue.nrdQ AQ (k : BAQ)) := by
+            rw [← mul_assoc, ← map_mul, inv_mul_cancel₀ hr0, map_one, one_mul]
+        _ = _ := by rw [hprod, mul_one]
+    have hr1 : r = 1 := eq_one_of_mem hpos hn1 (hkinv ▸ hnk)
+    have hγs : γ * star γ = 1 := by
+      rw [← nrd_coe_eq, ← hr, hr1]; rfl
+    have hsγ : star γ * γ = 1 := by rw [star_mul_eq, hγs]
+    -- `k = q(γ̄)`, so `γ̄ ≡ 1 mod 3`
+    have hkst : (k : BAQ) = bEmb (star γ) := by
+      calc (k : BAQ) = bEmb (star γ * γ) * (k : BAQ) := by rw [hsγ, map_one, one_mul]
+        _ = bEmb (star γ) * (bEmb γ * (k : BAQ)) := by rw [map_mul, mul_assoc]
+        _ = _ := by rw [hgk, mul_one]
+    set y₁ : LeafQM.B := (1 / 3 : ℚ) • (star γ - 1) with hy₁
+    have hy₁e : bEmb y₁ = y := by
+      rw [hy₁, map_smul, map_sub, map_one, ← hkst, hky]
+      rw [Algebra.smul_def, add_sub_cancel_left, ← mul_assoc]
+      have : (algebraMap ℚ BAQ (1 / 3)) * (3 : BAQ) = 1 := by
+        rw [← map_ofNat (algebraMap ℚ BAQ) 3, ← map_mul]; norm_num
+      rw [this, one_mul]
+    have hy₁O : InO y₁ := inO_of_bEmb_mem (hy₁e ▸ hy)
+    have hsγ1 : star γ = 1 + 3 * y₁ := by
+      rw [hy₁, Algebra.smul_def, ← mul_assoc]
+      have : (3 : LeafQM.B) * algebraMap ℚ LeafQM.B (1 / 3) = 1 := by
+        rw [← map_ofNat (algebraMap ℚ LeafQM.B) 3, ← map_mul]; norm_num
+      rw [this, one_mul]; abel
+    refine ⟨hO, hγs, star y₁, inO_star hy₁O, ?_⟩
+    have := congrArg star hsγ1
+    rw [star_star, star_add, star_one, star_mul, star_ofNat] at this
+    rw [this]
+    congr 1
+    exact (Commute.ofNat_right _ 3).eq
+  · rintro ⟨x, ⟨hxO, hxn, y, hyO, hxy⟩, hM⟩
+    have hsx : star x * x = 1 := by rw [star_mul_eq, hxn]
+    have hn : ShimuraGlue.nrdQ ℚ x = 1 := nrdQ_eq_one hxn
+    let k : BAQˣ :=
+      { val := bEmb (star x)
+        inv := bEmb x
+        val_inv := by rw [← map_mul, hsx, map_one]
+        inv_val := by rw [← map_mul, hxn, map_one] }
+    refine ⟨x, by rw [hn]; norm_num, hM, k, ⟨bEmb_mem_of_inO (inO_star hxO), bEmb_mem_of_inO hxO,
+      bEmb (star y), bEmb_mem_of_inO (inO_star hyO), ?_⟩, ?_⟩
+    · show bEmb (star x) = 1 + 3 * bEmb (star y)
+      rw [hxy, star_add, star_one, star_mul, star_ofNat, map_add, map_one, map_mul, map_ofNat,
+        (Commute.ofNat_right _ 3).eq]
+    · show (1 : BAQ) = bEmb x * 1 * bEmb (star x)
+      rw [mul_one, ← map_mul, hxn, map_one]
+
+/-- **c-to-printed's `ShimuraMainThmIY3` from the printed leaf** (the new leaf is at least as strong:
+its fibre clause at `g = 1` is the `Γ(3)`-orbit clause, by `dcRel_one_iff`). -/
+theorem mainThmIY3_of_mainThmI (h : ShimuraMainThmIDeligneY3) :
+    CToPrinted.Shimura.ShimuraMainThmIY3 := by
+  obtain ⟨Y, Φ, h1, Ψ, -, hfib, -, hmod, -⟩ := h
+  exact ⟨Y, Φ, h1, fun τ => Ψ τ 1, hmod, fun τ τ' => (hfib τ 1 τ' 1).trans (dcRel_one_iff τ τ')⟩
+
+end ShimuraCFT
+
+#print axioms ShimuraCFT.qHat_algebraMap
+#print axioms ShimuraCFT.dcRel_one_iff
+#print axioms ShimuraCFT.mainThmIY3_of_mainThmI

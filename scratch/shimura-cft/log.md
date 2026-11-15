@@ -18,3 +18,10 @@ check with `scratch/shimura-cft/run.sh <file>` (= `lake env lean`).
 - LEAF `ShimuraMainThmIDeligneY3Ab` (R1fpPropsAb) and `ShimuraMainThmIDeligneY3` (R1fpProps).
 - `shimuraFamilyAb_of_mainThmI`, `shimuraFamily_of_mainThmI`, `mainThmI_iff_ab` (MumfordRigidityCore),
   `shimuraFamily_of_mainThmIAb`.
+
+## Step 3 (11-14 17:34): checks on the definitions — COMPILED (12.9 s), axioms standard. VERIFIED
+- `qHat_algebraMap`: q̂(k) = q(k) for k ∈ K ⊂ 𝔸_{K,f} (q̂ extends q).
+- `rat_mem_zhat_iff`: r ∈ ℚ lies in ℤ̂ iff r ∈ ℤ (Mathlib `mem_integers_of_valuation_le_one`).
+- `dcRel_one_iff`: DCRel τ 1 τ' 1 ↔ ∃ x, InGamma3 x ∧ ι(x)·τ = τ' (K₃ ∩ B^×_+ = Γ(3)).
+- `mainThmIY3_of_mainThmI : ShimuraMainThmIDeligneY3 → CToPrinted.Shimura.ShimuraMainThmIY3` (new leaf implies
+  c-to-printed's leaf).
