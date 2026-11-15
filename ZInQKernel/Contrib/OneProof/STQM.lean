@@ -1,0 +1,471 @@
+import ZInQKernel.OneProof.H.TailO
+
+/-! # st-qbar: `STQM` (QM abelian surfaces over `ℂ` with CM are defined over `ℚ̄`), proved
+
+Task st-qbar (docs/research/st-qbar.md). Removes the leaf `shimuraTaniyamaQbar`: the only use of
+`ShimuraTaniyamaQbar` is `stQM := stQM_lf7 l.shimuraTaniyamaQbar` (TailX), and `STQM` is proved here from fields
+already in the bundles (R1R2fpRep, Y3Connected, T5, T35, HomLatticeCorr) and the chain's `ALFixedPoints`.
+
+Method (fixed points of Atkin–Lehner twists): for CM by `ℤ[i]`, `ℤ[ζ₃]`, `ℤ[√−6]` with `φ ∈ End_𝒪(A)`,
+`ψ = ι(w)c/n` with `(w, c, n) = (i, 1+φ, 2), (j, 2φ−1, 3), (ij, φ, 6)` is an automorphism of `A` with
+`ψ ι(a) ψ⁻¹ = ι(w a w⁻¹)` (integrality: `ι(w)c` kills `A[n]`, by `A[p] ≅ 𝒪/p𝒪` and a finite check mod `p`;
+then the uniformization and `HomLatticeCorr` divide by `n`). So the `ℂ`-point `y` of `Y₃` is fixed by the
+automorphism `g_α ≫ g_u` of `Y₃` (R1hecke), which moves a non-CM `ℚ̄`-point (`ALFixedPoints`). `Y₃` is an
+irreducible proper smooth curve over `ℚ`: at its generic point `g_α ≫ g_u` would be the identity
+(`ext_of_isDominant`), so the point of `y` is closed, with residue field finite over `ℚ`, and `y` comes from
+`Y₃(ℚ̄)`; R1fp naturality then gives the model over `ℚ̄`.
+-/
+
+set_option linter.style.haveILetI false
+set_option linter.unusedVariables false
+
+noncomputable section
+
+open CategoryTheory AlgebraicGeometry Limits
+
+namespace GapST
+open _root_.LeafQM _root_.LeafQM.AV
+
+/-! ## Part A: `𝒪` modulo `p` (finite checks) -/
+
+/-- Multiplication of coordinate vectors modulo `p` (the formula of `mulCoord`). -/
+def mulZ {p : ℕ} (n m : Fin 4 → ZMod p) : Fin 4 → ZMod p :=
+  ![m 0 * n 0 + 2 * m 1 * n 1 + 2 * m 1 * n 3 - m 2 * n 2 + 2 * m 3 * n 3,
+    m 0 * n 1 + m 1 * n 0 + m 1 * n 2 - m 2 * n 3 + m 3 * n 2,
+    m 0 * n 2 - 2 * m 1 * n 3 + m 2 * n 0 + m 2 * n 2 + 2 * m 3 * n 1,
+    m 0 * n 3 - m 1 * n 2 + m 2 * n 1 + m 2 * n 3 + m 3 * n 0]
+
+/-- Reduction of integer coordinates modulo `p`. -/
+def red (p : ℕ) (n : Fin 4 → ℤ) : Fin 4 → ZMod p := fun i => (n i : ZMod p)
+
+theorem red_mul (p : ℕ) (n m : Fin 4 → ℤ) : red p (mulCoord n m) = mulZ (red p n) (red p m) := by
+  funext i; fin_cases i <;> simp [red, mulZ, mulCoord]
+
+/-- Coordinates of an element of `𝒪`. -/
+noncomputable def crd (a : O) : Fin 4 → ℤ := a.2.choose
+
+theorem crd_spec (a : O) : (a : B) = ofInt (crd a) := a.2.choose_spec
+
+theorem crd_eq {a : O} {n : Fin 4 → ℤ} (h : (a : B) = ofInt n) : crd a = n :=
+  ofInt_injective ((crd_spec a).symm.trans h)
+
+theorem crd_mul (a b : O) : crd (a * b) = mulCoord (crd a) (crd b) := by
+  apply crd_eq
+  rw [MulMemClass.coe_mul, crd_spec a, crd_spec b, ofInt_mul]
+
+theorem crd_sub (a b : O) : crd (a - b) = crd a - crd b := by
+  apply crd_eq
+  rw [AddSubgroupClass.coe_sub, crd_spec a, crd_spec b, ofInt_sub]
+
+theorem crd_one : crd 1 = ![1, 0, 0, 0] := by
+  apply crd_eq
+  rw [OneMemClass.coe_one, ofInt_one]
+
+theorem natCast_mul_ofInt (p : ℕ) (k : Fin 4 → ℤ) :
+    (p : B) * ofInt k = ofInt (fun i => (p : ℤ) * k i) := by
+  ext <;> simp [ofInt] <;> ring
+
+/-- `a ∈ p𝒪` iff its coordinates vanish modulo `p`. -/
+theorem mem_iff (p : ℕ) (a : O) : (∃ c : O, a = (p : O) * c) ↔ red p (crd a) = 0 := by
+  have hp : ((p : O) : B) = (p : B) := map_natCast O.subtype p
+  constructor
+  · rintro ⟨c, rfl⟩
+    have : crd ((p : O) * c) = fun i => (p : ℤ) * crd c i := by
+      apply crd_eq
+      rw [MulMemClass.coe_mul, hp, crd_spec c, natCast_mul_ofInt]
+    funext i
+    simp [red, this]
+  · intro h
+    have hd : ∀ i, (p : ℤ) ∣ crd a i := fun i =>
+      (ZMod.intCast_zmod_eq_zero_iff_dvd _ p).1 (congrFun h i)
+    choose k hk using hd
+    refine ⟨⟨ofInt k, ⟨k, rfl⟩⟩, Subtype.ext ?_⟩
+    rw [MulMemClass.coe_mul, hp, crd_spec a, natCast_mul_ofInt]
+    change ofInt (crd a) = ofInt (fun i => (p : ℤ) * k i)
+    congr 1; funext i; exact hk i
+
+/-- The lift of a vector mod `p` with coordinates in `[0, p)`. -/
+def liftP {p : ℕ} (c : Fin 4 → ZMod p) : O := ⟨ofInt (fun i => ((c i).val : ℤ)), ⟨_, rfl⟩⟩
+
+theorem red_liftP {p : ℕ} [NeZero p] (c : Fin 4 → ZMod p) : red p (crd (liftP c)) = c := by
+  rw [crd_eq (n := fun i => ((c i).val : ℤ)) rfl]
+  funext i; simp [red]
+
+theorem vec_eta {p : ℕ} (x : Fin 4 → ZMod p) : x = ![x 0, x 1, x 2, x 3] := by
+  funext i; fin_cases i <;> rfl
+
+/-! ### The finite checks -/
+
+set_option maxRecDepth 100000 in
+theorem d2_2i : ∀ x0 x1 x2 x3 a0 a1 a2 a3 : ZMod 2,
+    mulZ ![x0, x1, x2, x3] ![x0, x1, x2, x3] = 0 →
+    mulZ (mulZ ![0, 1, 0, 0] ![a0, a1, a2, a3]) ![x0, x1, x2, x3] = 0 := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+theorem d2_3j : ∀ x0 x1 x2 x3 a0 a1 a2 a3 : ZMod 3,
+    mulZ ![x0, x1, x2, x3] ![x0, x1, x2, x3] = 0 →
+    mulZ (mulZ ![2, 0, 2, 0] ![a0, a1, a2, a3]) ![x0, x1, x2, x3] = 0 := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+theorem d2_3ij : ∀ x0 x1 x2 x3 a0 a1 a2 a3 : ZMod 3,
+    mulZ ![x0, x1, x2, x3] ![x0, x1, x2, x3] = 0 →
+    mulZ (mulZ ![0, 2, 0, 2] ![a0, a1, a2, a3]) ![x0, x1, x2, x3] = 0 := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+theorem d1_2i : ∀ x0 x1 x2 x3 : ZMod 2, ![x0, x1, x2, x3] ≠ 0 →
+    ∃ b0 b1 b2 b3 : ZMod 2, mulZ ![b0, b1, b2, b3] ![x0, x1, x2, x3] = ![1, 0, 0, 0] ∨
+      mulZ ![b0, b1, b2, b3] ![x0, x1, x2, x3] = ![0, 1, 0, 0] := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+theorem d1_3j : ∀ x0 x1 x2 x3 : ZMod 3, ![x0, x1, x2, x3] ≠ 0 →
+    ∃ b0 b1 b2 b3 : ZMod 3, mulZ ![b0, b1, b2, b3] ![x0, x1, x2, x3] = ![1, 0, 0, 0] ∨
+      mulZ ![b0, b1, b2, b3] ![x0, x1, x2, x3] = ![2, 0, 2, 0] := by
+  decide +kernel
+
+/-! ### Consequences in `𝒪` -/
+
+/-- `i·j ∈ 𝒪`. -/
+theorem crd_oi : crd oi = ![0, 1, 0, 0] := crd_eq rfl
+theorem crd_oj : crd oj = ![-1, 0, 2, 0] := crd_eq rfl
+theorem crd_oij : crd (oi * oj) = ![0, -1, 0, 2] := by
+  rw [crd_mul, crd_oi, crd_oj]; funext i; fin_cases i <;> simp [mulCoord]
+
+/-- **D2** in `𝒪`: if `x² ∈ p𝒪` then `w a x ∈ p𝒪` for all `a` (for the listed `(p, w)`). -/
+theorem d2_of {p : ℕ} (w : O)
+    (hc : ∀ x a : Fin 4 → ZMod p, mulZ x x = 0 → mulZ (mulZ (red p (crd w)) a) x = 0)
+    (x : O) (hx : ∃ c : O, x * x = (p : O) * c) (a : O) : ∃ c : O, w * a * x = (p : O) * c := by
+  rw [mem_iff] at hx ⊢
+  rw [crd_mul, red_mul, crd_mul, red_mul]
+  rw [crd_mul, red_mul] at hx
+  exact hc _ _ hx
+
+theorem hc2i : ∀ x a : Fin 4 → ZMod 2, mulZ x x = 0 → mulZ (mulZ (red 2 (crd oi)) a) x = 0 := by
+  intro x a h
+  rw [vec_eta x] at h ⊢; rw [vec_eta a]
+  have : red 2 (crd oi) = ![0, 1, 0, 0] := by rw [crd_oi]; funext i; fin_cases i <;> rfl
+  rw [this]; exact d2_2i _ _ _ _ _ _ _ _ h
+
+
+
+theorem red_sub (p : ℕ) (n m : Fin 4 → ℤ) : red p (n - m) = red p n - red p m := by
+  funext i; simp [red]
+
+/-- **D1** in `𝒪`: an element not in `p𝒪` has a left multiple `≡ 1` or `≡ w₀` mod `p`. -/
+theorem d1_of {p : ℕ} [NeZero p] (w₀ : O)
+    (hc : ∀ x : Fin 4 → ZMod p, x ≠ 0 →
+      ∃ y : Fin 4 → ZMod p, mulZ y x = red p (crd 1) ∨ mulZ y x = red p (crd w₀))
+    (a : O) (ha : ¬ ∃ c : O, a = (p : O) * c) :
+    ∃ b : O, (∃ c : O, b * a - 1 = (p : O) * c) ∨ (∃ c : O, b * a - w₀ = (p : O) * c) := by
+  rw [mem_iff] at ha
+  obtain ⟨y, hy⟩ := hc _ ha
+  refine ⟨liftP y, ?_⟩
+  simp only [mem_iff, crd_sub, crd_mul, red_sub, red_mul, red_liftP]
+  rcases hy with hy | hy
+  · left; rw [hy, sub_self]
+  · right; rw [hy, sub_self]
+
+theorem hd1_2 : ∀ x : Fin 4 → ZMod 2, x ≠ 0 →
+    ∃ y : Fin 4 → ZMod 2, mulZ y x = red 2 (crd 1) ∨ mulZ y x = red 2 (crd oi) := by
+  intro x hx
+  rw [vec_eta x] at hx
+  obtain ⟨b0, b1, b2, b3, h⟩ := d1_2i _ _ _ _ hx
+  refine ⟨![b0, b1, b2, b3], ?_⟩
+  rw [crd_one, crd_oi, vec_eta x]
+  have e1 : red 2 ![1, 0, 0, 0] = ![1, 0, 0, 0] := by funext i; fin_cases i <;> rfl
+  have e2 : red 2 ![0, 1, 0, 0] = ![0, 1, 0, 0] := by funext i; fin_cases i <;> rfl
+  rw [e1, e2]; exact h
+
+theorem hd1_3 : ∀ x : Fin 4 → ZMod 3, x ≠ 0 →
+    ∃ y : Fin 4 → ZMod 3, mulZ y x = red 3 (crd 1) ∨ mulZ y x = red 3 (crd oj) := by
+  intro x hx
+  rw [vec_eta x] at hx
+  obtain ⟨b0, b1, b2, b3, h⟩ := d1_3j _ _ _ _ hx
+  refine ⟨![b0, b1, b2, b3], ?_⟩
+  rw [crd_one, crd_oj, vec_eta x]
+  have e1 : red 3 ![1, 0, 0, 0] = ![1, 0, 0, 0] := by funext i; fin_cases i <;> rfl
+  have e2 : red 3 ![-1, 0, 2, 0] = ![2, 0, 2, 0] := by funext i; fin_cases i <;> rfl
+  rw [e1, e2]; exact h
+
+theorem hc3j : ∀ x a : Fin 4 → ZMod 3, mulZ x x = 0 → mulZ (mulZ (red 3 (crd oj)) a) x = 0 := by
+  intro x a h
+  rw [vec_eta x] at h ⊢; rw [vec_eta a]
+  have : red 3 (crd oj) = ![2, 0, 2, 0] := by rw [crd_oj]; funext i; fin_cases i <;> rfl
+  rw [this]; exact d2_3j _ _ _ _ _ _ _ _ h
+
+theorem hc3ij : ∀ x a : Fin 4 → ZMod 3, mulZ x x = 0 →
+    mulZ (mulZ (red 3 (crd (oi * oj))) a) x = 0 := by
+  intro x a h
+  rw [vec_eta x] at h ⊢; rw [vec_eta a]
+  have : red 3 (crd (oi * oj)) = ![0, 2, 0, 2] := by rw [crd_oij]; funext i; fin_cases i <;> rfl
+  rw [this]; exact d2_3ij _ _ _ _ _ _ _ _ h
+
+theorem hc2ij : ∀ x a : Fin 4 → ZMod 2, mulZ x x = 0 →
+    mulZ (mulZ (red 2 (crd (oi * oj))) a) x = 0 := by
+  intro x a h
+  rw [vec_eta x] at h ⊢; rw [vec_eta a]
+  have : red 2 (crd (oi * oj)) = ![0, 1, 0, 0] := by rw [crd_oij]; funext i; fin_cases i <;> rfl
+  rw [this]; exact d2_2i _ _ _ _ _ _ _ _ h
+
+/-! ## Part B: `A[p]` for a QM surface over `ℂ` -/
+
+section Points
+
+open MonoidalCategory CartesianMonoidalCategory MonObj
+
+variable {A : PkgI3.AbVar ℂ}
+
+/-- An endomorphism acting on `ℂ`-points. -/
+abbrev act (f : PkgI3.AbVar.End A) (x : A.Pt ℂ) : A.Pt ℂ := x ≫ f.hom
+
+theorem act_mul (f g : PkgI3.AbVar.End A) (x : A.Pt ℂ) : act (f * g) x = act f (act g x) := by
+  change x ≫ (g.hom ≫ f.hom) = (x ≫ g.hom) ≫ f.hom
+  rw [Category.assoc]
+
+theorem act_one (x : A.Pt ℂ) : act 1 x = x := Category.comp_id x
+
+theorem act_add (f g : PkgI3.AbVar.End A) (x : A.Pt ℂ) : act (f + g) x = act f x * act g x := by
+  change x ≫ (f.hom * g.hom) = _
+  exact MonObj.comp_mul _ _ _
+
+theorem act_zero (x : A.Pt ℂ) : act 0 x = 1 := by
+  change x ≫ (1 : A.X ⟶ A.X) = 1
+  exact MonObj.comp_one _
+
+theorem act_pt_mul (f : PkgI3.AbVar.End A) (x y : A.Pt ℂ) : act f (x * y) = act f x * act f y :=
+  MonObj.mul_comp _ _ _
+
+theorem act_pt_one (f : PkgI3.AbVar.End A) : act f (1 : A.Pt ℂ) = 1 := MonObj.one_comp _
+
+theorem act_pow (f : PkgI3.AbVar.End A) (x : A.Pt ℂ) (n : ℕ) : act f (x ^ n) = (act f x) ^ n :=
+  MonObj.pow_comp _ _ _
+
+theorem act_neg (f : PkgI3.AbVar.End A) (x : A.Pt ℂ) : act (-f) x = (act f x)⁻¹ := by
+  have h := act_add (-f) f x
+  rw [neg_add_cancel, act_zero] at h
+  exact eq_inv_of_mul_eq_one_left h.symm
+
+theorem act_sub (f g : PkgI3.AbVar.End A) (x : A.Pt ℂ) : act (f - g) x = act f x * (act g x)⁻¹ := by
+  rw [sub_eq_add_neg, act_add, act_neg]
+
+theorem act_natCast (n : ℕ) (x : A.Pt ℂ) : act (n : PkgI3.AbVar.End A) x = x ^ n := by
+  induction n with
+  | zero => rw [Nat.cast_zero, act_zero, pow_zero]
+  | succ n ih => rw [Nat.cast_succ, act_add, ih, act_one, pow_succ]
+
+theorem act_neg_one (x : A.Pt ℂ) : act (-1 : PkgI3.AbVar.End A) x = x⁻¹ := by
+  rw [act_neg, act_one]
+
+theorem card_tors (hT : PkgI2.TorsionStructure.{0}) (hA : A.dim = 2) (n : ℕ) (hn : 0 < n) :
+    Nat.card {x : A.Pt ℂ // x ^ n = 1} = n ^ 4 := by
+  have := HDec.HSyn.G0Split.FibreQM.PeriodMapH.LeafQCheck.card_torsion_algClosed hT A 2
+    (by rw [hA]; rfl) n hn
+  rwa [show 2 * 2 = 4 from rfl] at this
+
+/-- **No `w₀` with `ι(w₀)² = p·ε` kills `A[p]`** (else `A[p²] ⊆ A[p]`, against the count `p⁸ > p⁴`). -/
+theorem exists_not_killed (hT : PkgI2.TorsionStructure.{0}) (hA : A.dim = 2) (q : QMStr A)
+    (p : ℕ) (hp : 1 < p) (w₀ : O) (ε : PkgI3.AbVar.End A)
+    (hw : q.iota w₀ * q.iota w₀ = (p : PkgI3.AbVar.End A) * ε)
+    (hε : ∀ y : A.Pt ℂ, act ε y = 1 → y = 1) :
+    ∃ v : A.Pt ℂ, v ^ p = 1 ∧ act (q.iota w₀) v ≠ 1 := by
+  by_contra H
+  push Not at H
+  have hp0 : 0 < p := by omega
+  have key : ∀ x : A.Pt ℂ, x ^ (p * p) = 1 → x ^ p = 1 := by
+    intro x hx
+    have h1 : act (q.iota w₀) (x ^ p) = 1 := H _ (by rw [← pow_mul]; exact hx)
+    have h2 : act (q.iota w₀) (act (q.iota w₀) x) = 1 := H _ (by rw [← act_pow]; exact h1)
+    rw [← act_mul, hw, act_mul, act_natCast, ← act_pow] at h2
+    exact hε _ h2
+  let F : {x : A.Pt ℂ // x ^ (p * p) = 1} → {x : A.Pt ℂ // x ^ p = 1} := fun x => ⟨x.1, key _ x.2⟩
+  have hF : Function.Injective F := fun x y h => Subtype.ext (by have := congrArg Subtype.val h; exact this)
+  have c1 := card_tors hT hA (p * p) (Nat.mul_pos hp0 hp0)
+  have c2 := card_tors hT hA p hp0
+  haveI : Finite {x : A.Pt ℂ // x ^ p = 1} := Nat.finite_of_card_ne_zero (by rw [c2]; positivity)
+  have := Nat.card_le_card_of_injective F hF
+  rw [c1, c2] at this
+  have h4 : p ^ 4 < (p * p) ^ 4 := Nat.pow_lt_pow_left (by nlinarith) (by norm_num)
+  omega
+
+/-- **The annihilator of `v` is `p𝒪`** (given `D1` for `(p, w₀)`). -/
+theorem ann_iff (q : QMStr A) (p : ℕ) (w₀ : O) (v : A.Pt ℂ) (hv : v ^ p = 1)
+    (hw : act (q.iota w₀) v ≠ 1)
+    (hD1 : ∀ a : O, (¬ ∃ c : O, a = (p : O) * c) →
+      ∃ b : O, (∃ c : O, b * a - 1 = (p : O) * c) ∨ (∃ c : O, b * a - w₀ = (p : O) * c))
+    (a : O) : act (q.iota a) v = 1 ↔ ∃ c : O, a = (p : O) * c := by
+  have hpc : ∀ c : O, act (q.iota ((p : O) * c)) v = 1 := by
+    intro c
+    rw [map_mul, map_natCast, act_mul, act_natCast, ← act_pow, hv, act_pt_one]
+  constructor
+  · intro ha
+    by_contra hne
+    obtain ⟨b, hb⟩ := hD1 a hne
+    have hba : act (q.iota (b * a)) v = 1 := by rw [map_mul, act_mul, ha, act_pt_one]
+    rcases hb with ⟨c, hc⟩ | ⟨c, hc⟩
+    · have e : (1 : O) = b * a - (p : O) * c := by rw [← hc]; abel
+      apply hw
+      have : v = 1 := by
+        have h1 := act_one (A := A) v
+        rw [← map_one q.iota, e, map_sub, act_sub, hba, hpc, inv_one, _root_.mul_one] at h1
+        exact h1.symm
+      rw [this, act_pt_one]
+    · have e : w₀ = b * a - (p : O) * c := by rw [← hc]; abel
+      apply hw
+      rw [e, map_sub, act_sub, hba, hpc, inv_one, _root_.mul_one]
+  · rintro ⟨c, rfl⟩; exact hpc c
+
+/-- **`a ↦ ι(a)v` is onto `A[p]`** (injective on `𝒪/p𝒪`, and `#A[p] = p⁴ = #(𝒪/p𝒪)`). -/
+theorem surj_of_ann (hT : PkgI2.TorsionStructure.{0}) (hA : A.dim = 2) (q : QMStr A) (p : ℕ)
+    [NeZero p] (v : A.Pt ℂ) (hv : v ^ p = 1)
+    (hann : ∀ a : O, act (q.iota a) v = 1 ↔ ∃ c : O, a = (p : O) * c) :
+    ∀ x : A.Pt ℂ, x ^ p = 1 → ∃ a : O, act (q.iota a) v = x := by
+  have hp0 : 0 < p := Nat.pos_of_ne_zero (NeZero.ne p)
+  let F : (Fin 4 → ZMod p) → {x : A.Pt ℂ // x ^ p = 1} := fun c =>
+    ⟨act (q.iota (liftP c)) v, by rw [← act_pow, hv, act_pt_one]⟩
+  have hF : Function.Injective F := by
+    intro c c' h
+    have h1 : act (q.iota (liftP c)) v = act (q.iota (liftP c')) v := congrArg Subtype.val h
+    have h2 : act (q.iota (liftP c - liftP c')) v = 1 := by
+      rw [map_sub, act_sub, h1, mul_inv_cancel]
+    rw [hann, mem_iff, crd_sub, red_sub, red_liftP, red_liftP, sub_eq_zero] at h2
+    exact h2
+  have c2 := card_tors hT hA p hp0
+  haveI : Finite {x : A.Pt ℂ // x ^ p = 1} := Nat.finite_of_card_ne_zero (by rw [c2]; positivity)
+  have hbij : Function.Bijective F := hF.bijective_of_nat_card_le (by
+    rw [c2, Nat.card_eq_fintype_card, Fintype.card_fun, ZMod.card, Fintype.card_fin])
+  intro x hx
+  obtain ⟨c, hc⟩ := hbij.2 ⟨x, hx⟩
+  exact ⟨liftP c, congrArg Subtype.val hc⟩
+
+/-- **`ι(w)c` kills `A[p]`** when `c ∈ End_𝒪(A)`, `c² ∈ p·End(A)` and `D2` holds for `(p, w)`. -/
+theorem kills_of (q : QMStr A) (p : ℕ) (v : A.Pt ℂ) (hv : v ^ p = 1)
+    (hann : ∀ a : O, act (q.iota a) v = 1 ↔ ∃ c : O, a = (p : O) * c)
+    (hsurj : ∀ x : A.Pt ℂ, x ^ p = 1 → ∃ a : O, act (q.iota a) v = x)
+    (w : O) (hD2 : ∀ x : O, (∃ c : O, x * x = (p : O) * c) → ∀ a : O, ∃ c : O, w * a * x = (p : O) * c)
+    (c : PkgI3.AbVar.End A) (hc : c ∈ com q) (d : PkgI3.AbVar.End A)
+    (hcd : c * c = (p : PkgI3.AbVar.End A) * d) :
+    ∀ x : A.Pt ℂ, x ^ p = 1 → act (q.iota w * c) x = 1 := by
+  have hcomm : ∀ a : O, c * q.iota a = q.iota a * c := by
+    intro a
+    rw [com, Subring.mem_centralizer_iff] at hc
+    exact (hc _ ⟨a, rfl⟩).symm
+  obtain ⟨u, hu⟩ := hsurj (act c v) (by rw [← act_pow, hv, act_pt_one])
+  have hca : ∀ a : O, act c (act (q.iota a) v) = act (q.iota (a * u)) v := by
+    intro a
+    rw [← act_mul, hcomm, act_mul, ← hu, map_mul, act_mul]
+  have huu : ∃ e : O, u * u = (p : O) * e := by
+    rw [← hann, ← hca, hu, ← act_mul, hcd, act_mul, act_natCast, ← act_pow, hv, act_pt_one]
+  intro x hx
+  obtain ⟨a, rfl⟩ := hsurj x hx
+  rw [act_mul, hca, ← act_mul, ← map_mul, hann, ← _root_.mul_assoc]
+  exact hD2 u huu a
+
+end Points
+
+
+/-- A non-closed point of an irreducible proper smooth curve over a field is dense. -/
+theorem closure_eq_univ_of_not_closed {K : Type} [Field K] {X : Scheme.{0}}
+    (f : X ⟶ Spec (CommRingCat.of K)) [IsProper f] [SmoothOfRelativeDimension 1 f]
+    [IrreducibleSpace X] (p : X) (hp : ¬ IsClosed ({p} : Set X)) :
+    closure ({p} : Set X) = Set.univ := by
+  haveI : LocallyOfFiniteType f := inferInstance
+  haveI : JacobsonSpace X := LocallyOfFiniteType.jacobsonSpace f
+  haveI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian f
+  obtain ⟨z, hzZ, hzc⟩ := nonempty_inter_closedPoints (Z := closure {p})
+    ⟨p, subset_closure rfl⟩ isClosed_closure.isLocallyClosed
+  have hz : IsClosed ({z} : Set X) := mem_closedPoints_iff.mp hzc
+  have hpz : p ⤳ z := specializes_iff_mem_closure.mpr hzZ
+  obtain ⟨h1, h2⟩ := InfraSmoothDim.stalk_dim_of_smoothOfRelativeDimension f 1 z hz
+  haveI : IsDomain (X.presheaf.stalk z) :=
+    HDec.CIcopy.CurveGlueCI.isDomain_of_dim_one (by exact_mod_cast h1) h2
+  haveI : Ring.KrullDimLE 1 (X.presheaf.stalk z) := by
+    rw [Ring.krullDimLE_iff]; exact h1.le
+  obtain ⟨P, hP⟩ : p ∈ Set.range (X.fromSpecStalk z) := by
+    rw [Scheme.range_fromSpecStalk]; exact hpz
+  have hPbot : P.asIdeal = ⊥ := by
+    by_contra hne
+    have hmax : P.asIdeal.IsMaximal := P.2.isMaximal_of_ne_bot hne
+    have : P = IsLocalRing.closedPoint _ :=
+      PrimeSpectrum.ext (IsLocalRing.eq_maximalIdeal hmax)
+    apply hp
+    rw [← hP, this, Scheme.fromSpecStalk_closedPoint]; exact hz
+  have hηz : genericPoint X ⤳ z := (genericPoint_spec X).specializes (Set.mem_univ z)
+  obtain ⟨Q, hQ⟩ : genericPoint X ∈ Set.range (X.fromSpecStalk z) := by
+    rw [Scheme.range_fromSpecStalk]; exact hηz
+  have hPQ : P ⤳ Q := (PrimeSpectrum.le_iff_specializes P Q).mp
+    (by change P.asIdeal ≤ Q.asIdeal; rw [hPbot]; exact bot_le)
+  have hpη : p ⤳ genericPoint X := by
+    rw [← hP, ← hQ]; exact hPQ.map (X.fromSpecStalk z).continuous
+  refine Set.eq_univ_of_univ_subset ?_
+  rw [← (genericPoint_spec X).def]
+  exact closure_minimal (Set.singleton_subset_iff.mpr (specializes_iff_mem_closure.mp hpη))
+    isClosed_closure
+
+/-- **A fixed `ℂ`-point of a nontrivial endomorphism of an irreducible proper smooth curve over `ℚ`
+comes from a `ℚ̄`-point.** -/
+theorem exists_qbar_factor (Y : Over (Spec (CommRingCat.of ℚ))) [IsProper Y.hom]
+    [SmoothOfRelativeDimension 1 Y.hom] [IrreducibleSpace Y.left]
+    (y : fieldPt ℂ ⟶ Y) (h : Y ⟶ Y) (hy : y ≫ h = y) (s : fieldPt Qbar ⟶ Y) (hs : s ≫ h ≠ s) :
+    ∃ (ιe : Qbar →+* ℂ) (y₀ : fieldPt Qbar ⟶ Y), fieldMap ιe.toRatAlgHom ≫ y₀ = y := by
+  obtain ⟨⟨p, e⟩, hpe⟩ : ∃ q, Scheme.SpecToEquivOfField ℂ Y.left y.left = q := ⟨_, rfl⟩
+  have hyl : y.left = Spec.map e ≫ Y.left.fromSpecResidueField p := by
+    rw [← (Scheme.SpecToEquivOfField ℂ Y.left).symm_apply_apply y.left, hpe]; rfl
+  by_cases hc : IsClosed ({p} : Set Y.left)
+  · have : IsClosedImmersion (Y.left.fromSpecResidueField p) :=
+      isClosed_singleton_iff_isClosedImmersion.mp hc
+    haveI : LocallyOfFiniteType Y.hom := inferInstance
+    have : IsFinite (Y.left.fromSpecResidueField p ≫ Y.hom) :=
+      (isFinite_iff_locallyOfFiniteType_of_jacobsonSpace
+        (f := Y.left.fromSpecResidueField p ≫ Y.hom)).mpr inferInstance
+    let φ := Spec.preimage (Y.left.fromSpecResidueField p ≫ Y.hom)
+    letI : Algebra ℚ (Y.left.residueField p) := φ.hom.toAlgebra
+    have hφ : φ.hom.IsIntegral := by
+      rw [← IsIntegralHom.SpecMap_iff, Spec.map_preimage]
+      infer_instance
+    haveI : Algebra.IsIntegral ℚ (Y.left.residueField p) := ⟨fun x => hφ x⟩
+    haveI : Algebra.IsAlgebraic ℚ (Y.left.residueField p) := Algebra.IsIntegral.isAlgebraic
+    let j : Y.left.residueField p →ₐ[ℚ] Qbar := IsAlgClosed.lift
+    letI : Algebra (Y.left.residueField p) Qbar := j.toRingHom.toAlgebra
+    letI : Algebra (Y.left.residueField p) ℂ := e.hom.toAlgebra
+    haveI : IsScalarTower ℚ (Y.left.residueField p) Qbar :=
+      IsScalarTower.of_algebraMap_eq (fun x => (j.commutes x).symm)
+    haveI : Algebra.IsAlgebraic (Y.left.residueField p) Qbar :=
+      Algebra.IsAlgebraic.tower_top (K := ℚ) _
+    let ι : Qbar →ₐ[Y.left.residueField p] ℂ := IsAlgClosed.lift
+    have hιj : ∀ x, ι (j x) = e.hom x := fun x => ι.commutes x
+    let y₀ : fieldPt Qbar ⟶ Y :=
+      Over.homMk (Spec.map (CommRingCat.ofHom j.toRingHom) ≫ Y.left.fromSpecResidueField p)
+        (HDec.TSHeckeGal.specQbar_to_specQ_eq' _ _)
+    refine ⟨ι.toRingHom, y₀, ?_⟩
+    apply Over.OverMorphism.ext
+    rw [hyl]
+    change Spec.map (CommRingCat.ofHom ι.toRingHom) ≫ Spec.map (CommRingCat.ofHom j.toRingHom) ≫
+      Y.left.fromSpecResidueField p = _
+    rw [← Category.assoc, ← Spec.map_comp]
+    congr 2
+    ext x
+    exact hιj x
+  · exfalso
+    apply hs
+    have hcl := closure_eq_univ_of_not_closed Y.hom p hc
+    haveI : IsReduced Y.left := by
+      haveI : Smooth Y.hom := SmoothOfRelativeDimension.smooth 1 Y.hom
+      exact HDec.ModelGlue.isReduced_of_smooth_domain Y.hom
+    haveI : IsDominant y.left := by
+      constructor
+      rw [DenseRange, dense_iff_closure_eq, ← Set.univ_subset_iff, ← hcl]
+      apply closure_mono
+      rw [Set.singleton_subset_iff]
+      refine ⟨IsLocalRing.closedPoint ℂ, ?_⟩
+      rw [hyl]; exact Y.left.fromSpecResidueField_apply p _
+    have hl : h.left = 𝟙 Y.left :=
+      ext_of_isDominant_of_isSeparated Y.hom (by rw [Over.w h, Category.id_comp]) y.left
+        (by rw [Category.comp_id, ← Over.comp_left, hy])
+    apply Over.OverMorphism.ext
+    rw [Over.comp_left, hl, Category.comp_id]
+
+
+end GapST
