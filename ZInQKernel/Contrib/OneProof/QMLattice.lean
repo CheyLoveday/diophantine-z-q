@@ -26,7 +26,8 @@ characteristic `0`, every indefinite division `(a, b)`) is not proved here.
 * §5 `exists_lift`, `end0_equiv` (`ℚ ⊗_ℤ M ≅ C` for a lattice `M` in a `ℚ`-algebra `C`).
 * §6 the `ℂ`-basis `(v, w)`, clearing denominators, and the two cases: `S_{(τ,1)} = ℚ` gives
   `End⁰(A) ≅ B` (`case_triv`), otherwise `End⁰(A) ≅ M₂(ℚ(√d))`, `d = y₀² < 0` (`case_quad`).
-* §7 `yu_core` (over `ℂ`), `YuB6Alg`, `yuB6Alg_of`, `yuB6Alg_of'`, `yuB6Alg_of_yuThm11`.
+* §7 `yu_core` (over `ℂ`), `YuB6Alg`, `YuB6Emb` (fields embeddable in `ℂ`), `yuB6Emb_of`, `yuB6Alg_of`,
+  `yuB6Alg_of'`, `yuB6Alg_of_yuThm11`.
 -/
 
 set_option linter.all false
@@ -968,15 +969,24 @@ def YuB6Alg : Prop :=
         ∃ d : ℚ, d < 0 ∧ Nonempty (PkgI3.AbVar.End0 A ≃ₐ[ℚ]
           Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d)))
 
-/-- **`YuB6Alg` proved** from the textbook fields `uniformizationLeafAll`, `gagaMorphism`,
-`mumfordTorsionAlgClosed` and T11(b) (`T11b_Rigidity`, from the bundle's `t11bExists`): transport to `ℂ` by
-an embedding `k → ℂ` and T11(b) (`End(A) = End(A_ℂ)`), then `yu_core`. -/
-theorem yuB6Alg_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+/-- **Yu's dichotomy at `B = (2, −3)` for QM by `𝒪`, over every algebraically closed field of characteristic
+`0` that embeds in `ℂ`** (e.g. `ℂ`, `ℚ̄`, any such field of cardinality at most the continuum). -/
+def YuB6Emb : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] [CharZero k], Nonempty (k →+* ℂ) → ∀ (A : PkgI3.AbVar k),
+    A.dim = 2 → ∀ q : LeafQM.AV.QMStr A,
+      Nonempty (PkgI3.AbVar.End0 A ≃ₐ[ℚ] ℍ[ℚ, 2, -3]) ∨
+        ∃ d : ℚ, d < 0 ∧ Nonempty (PkgI3.AbVar.End0 A ≃ₐ[ℚ]
+          Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d)))
+
+/-- **`YuB6Emb` proved** from the textbook fields `uniformizationLeafAll`, `gagaMorphism`,
+`mumfordTorsionAlgClosed` and T11(b) (`T11b_Rigidity`): transport to `ℂ` along the embedding and T11(b)
+(`End(A) = End(A_ℂ)`), then `yu_core`. -/
+theorem yuB6Emb_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
     (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
-    (hR : ZInQ.LeafPush2.T11b_Rigidity) : YuB6Alg := by
-  intro k _ _ _ _ A hA q
-  let ιe : k →ₐ[ℚ] ℂ := IsAlgClosed.lift
-  letI : Algebra k ℂ := ιe.toRingHom.toAlgebra
+    (hR : ZInQ.LeafPush2.T11b_Rigidity) : YuB6Emb := by
+  intro k _ _ _ hσ A hA q
+  obtain ⟨σ⟩ := hσ
+  letI : Algebra k ℂ := σ.toAlgebra
   let e := HDec.G0ModField.KernelField.endBC A ℂ
   have he : Function.Bijective e := by
     refine ⟨HDec.G0ModField.KernelField.endBC_injective A ℂ, fun g => ?_⟩
@@ -985,6 +995,13 @@ theorem yuB6Alg_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
   let qC : LeafQM.AV.QMStr (A.baseChange ℂ) := ⟨e.comp q.iota, he.1.comp q.injective⟩
   have hdim : (A.baseChange ℂ).dim = 2 := by rw [PkgI3.AbVar.dim_baseChange]; exact hA
   exact yu_core hU hG hM (A.baseChange ℂ) hdim qC e he
+
+/-- **`YuB6Alg` proved**: a field algebraic over `ℚ` embeds in `ℂ` (`IsAlgClosed.lift`). -/
+theorem yuB6Alg_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (hR : ZInQ.LeafPush2.T11b_Rigidity) : YuB6Alg := by
+  intro k _ _ _ _ A hA q
+  exact yuB6Emb_of hU hG hM hR k ⟨(IsAlgClosed.lift : k →ₐ[ℚ] ℂ).toRingHom⟩ A hA q
 
 /-- **`YuB6Alg` is a consequence of the bundle's `YuThm11`** (so it is never stronger than the published
 statement): take `(a, b) = (2, −3)` and the embedding `B → End⁰(A)` of the QM structure; drop the splitting
@@ -1007,6 +1024,19 @@ theorem isAlgebraic_algebraicClosure (L : Type) [Field L] [CharZero L] [FiniteDi
 theorem yuB6Alg_of' (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
     (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) : YuB6Alg :=
   yuB6Alg_of hU hG hM (AVB2.t11b_of_exists HSyn.t11bExists_lf8)
+
+/-- `YuB6Emb` from the three textbook fields alone (T11(b) proved in the chain). -/
+theorem yuB6Emb_of' (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) : YuB6Emb :=
+  yuB6Emb_of hU hG hM (AVB2.t11b_of_exists HSyn.t11bExists_lf8)
+
+/-- `YuB6Emb` is a consequence of `YuThm11`. -/
+theorem yuB6Emb_of_yuThm11 (h : QMSplit.Yu.YuThm11) : YuB6Emb := by
+  intro k _ _ _ _ A hA q
+  rcases h k A hA 2 (-3) PkgI3.quatIndefinite_two_neg_three G0FibreSimple.B6_isUnit
+      (G0FibreSimple.qm_embeds_end0 q) with h1 | ⟨d, hd, h2, -⟩
+  · exact Or.inl h1
+  · exact Or.inr ⟨d, hd, h2⟩
 
 end HDec.QMLattice
 
