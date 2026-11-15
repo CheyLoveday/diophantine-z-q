@@ -32,6 +32,7 @@ ZInQKernel.OneProof.H.TailZ14 ReductGlue.ReductLeavesPrinted (10 fields): [neron
 ZInQKernel.OneProof.H.TailZ14 ReductGlue.ReductPrintedGlue (5 fields): [unipotent, reduction, persists, identityComponent, serreTate]
 ZInQKernel.OneProof.H.TailZ14 ReductGlue.ReductPrintedGlue' (4 fields): [unipotent, reduction, identityComponent, serreTate]
 ZInQKernel.OneProof.H.TailZ14 ReductGlue.ReductPrintedGlue'' (3 fields): [reduction, identityComponent, serreTate]
+ZInQKernel.OneProof.H.TailZ19 CToPrinted.CToPrintedLeaves (7 fields): [blr, faltings5, raynaud, sga3, sga7, ega, geomConn]
 ZInQKernel.OneProof.H.TailZ2 HDec.LeafQCheck.HM.QMSplit.IsCocompactFuchsian (6 fields): [one_mem, mul_mem, inv_mem, det_pos, properlyDiscontinuous, cocompact]
 ZInQKernel.OneProof.H.TailZ3 HDec.LeafQCheck.QMSplitVB.IsCocompactFuchsian (6 fields): [one_mem, mul_mem, inv_mem, det_pos, properlyDiscontinuous, cocompact]
 ZInQKernel.OneProof.H.TailZ4 HDec.HSyn.OpenResearchLeaves8 (29 fields): [r1rec, r5, r8]
