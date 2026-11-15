@@ -379,6 +379,53 @@ theorem local_pt {X : Over (Spec (CommRingCat.of R))} [Smooth X.hom]
       rw [← Category.assoc, ← c1, Category.assoc, hg1', hρ, Category.assoc, hf2', ← Category.assoc, c2]
     exact key
 
+/-- **The converse of BLR 1.2/4's `.mp`**: if `X ⊗_R R_𝔭` is a Néron model over `R_𝔭` for every maximal `𝔭`,
+then `X` is a Néron model over `R`. -/
+theorem isNeronModelOver_of_local {X : Over (Spec (CommRingCat.of R))} [Smooth X.hom] [IsSeparated X.hom]
+    [QuasiCompact X.hom]
+    (hloc : ∀ (𝔭 : Ideal R) [𝔭.IsMaximal] (R𝔭 : Type) [CommRing R𝔭] [Algebra R R𝔭]
+      [IsLocalization.AtPrime R𝔭 𝔭] [Algebra R𝔭 K] [IsScalarTower R R𝔭 K],
+      CToPrinted.IsNeronModelOver R𝔭 K
+        ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R R𝔭)))).obj X)) :
+    CToPrinted.IsNeronModelOver R K X := by
+  let ιK := Spec.map (CommRingCat.ofHom (algebraMap R K))
+  refine ⟨inferInstance, inferInstance, inferInstance, inferInstance, fun Y _ => ⟨?_, ?_⟩⟩
+  · intro f₁ f₂ h
+    have key : f₁.left = f₂.left := by
+      refine uqA R (IsFractionRing.injective R K) X Y.hom (pullback.fst Y.hom ιK) (pullback.snd Y.hom ιK)
+        (IsPullback.of_hasPullback _ _) _ _ ((Over.w f₁).trans (Over.w f₂).symm) ?_
+      have h1 := congrArg (fun t => t.left ≫ pullback.fst _ _) h
+      simpa only [Over.pullback_map_left, pullback.lift_fst] using h1
+    exact Over.OverMorphism.ext key
+  · intro h
+    have hw : h.left ≫ pullback.snd X.hom ιK = pullback.snd Y.hom ιK := Over.w h
+    let a := h.left ≫ pullback.fst X.hom ιK
+    have ha : a ≫ X.hom = pullback.snd Y.hom ιK ≫ ιK := by
+      simp only [a, Category.assoc]
+      rw [pullback.condition, ← Category.assoc, hw]
+    choose U hxU g hg1 hg2 using local_pt hloc Y.hom a ha
+    let 𝒰 : Y.left.OpenCover := {
+      I₀ := Y.left, X i := (U i), f i := (U i).ι,
+      mem₀ := by
+        rw [Scheme.presieve₀_mem_precoverage_iff]
+        refine ⟨fun x ↦ ⟨x, by simpa using hxU x⟩, inferInstance⟩ }
+    obtain ⟨f, hf1, hf2⟩ := glue_cover R (IsFractionRing.injective R K) X (𝟙 _) Y.hom a 𝒰 g
+      (fun i => by rw [Category.comp_id]; exact hg1 i) hg2
+    rw [Category.comp_id] at hf1
+    refine ⟨Over.homMk f hf1, ?_⟩
+    apply Over.OverMorphism.ext
+    apply pullback.hom_ext
+    · simp only [Over.pullback_map_left, Over.homMk_left, pullback.lift_fst]
+      exact hf2
+    · simp only [Over.pullback_map_left, Over.homMk_left, pullback.lift_snd]
+      exact hw.symm
+
 end Local
+
+/-- **BLR §1.2 Prop. 4, proved** (both directions; `CToPrinted.BLR_1_2_4` exactly). -/
+theorem blr_1_2_4 : CToPrinted.BLR_1_2_4 := by
+  intro R K _ _ _ _ _ X _ _ _
+  exact ⟨fun hX 𝔭 _ R𝔭 _ _ _ _ _ => isNeronModelOver_localization (𝔭 := 𝔭) R𝔭 hX,
+    fun h => isNeronModelOver_of_local h⟩
 
 end GapBLR
