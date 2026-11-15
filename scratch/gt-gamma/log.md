@@ -18,5 +18,5 @@ Target: `HDec.LeafQCheck.HM.QMSplit.GammaStarCocompactArea` (TailZ2 L93), no hyp
 ## Compile log
 - 11-14 21:50 GS.lean part 1-2 (Fp_smul, dist_smul_pos, cover_y, finite_O, finite_mob,
   properlyDiscontinuous, exists_min): compiles, no errors (lake env lean, ~8 s).
-- 11-14 22:30 GS.lean parts 3-4: cone step, sigma=ι(μ) ∈ Γ*, covering `cover_T`, vertex condition `intV` (C–S + enumeration), `Phi_nonneg`, Dirichlet property `dirichlet`: compile (~19 s).
-- 11-14 23:20 GS.lean complete: `HDec.GammaStarArea.gammaStarCocompactArea_proof : HDec.LeafQCheck.HM.QMSplit.GammaStarCocompactArea` compiles over TailZ3; #print axioms: [propext, Classical.choice, Quot.sound] (VERIFIED, ~19 s).
+- 11-14 21:20 GS.lean parts 3-4: cone step, sigma=ι(μ) ∈ Γ*, covering `cover_T`, vertex condition `intV` (C–S + enumeration), `Phi_nonneg`, Dirichlet property `dirichlet`: compile (~19 s).
+- 11-14 21:45 GS.lean complete: `HDec.GammaStarArea.gammaStarCocompactArea_proof : HDec.LeafQCheck.HM.QMSplit.GammaStarCocompactArea` compiles over TailZ3; #print axioms: [propext, Classical.choice, Quot.sound] (VERIFIED, ~19 s).
