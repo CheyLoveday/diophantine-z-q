@@ -49,3 +49,17 @@ Compile: `lake env lean scratch/h29-fix/TYZLemma29Mod2.lean`: no errors (warning
     axioms: [propext, Classical.choice, Quot.sound]
   `h29fix_frozenTarget` (Theorem 1.1 with h29 replaced by the five): axioms [propext, Classical.choice, Quot.sound].
   #discharges: 66 open hypotheses, 1289 theorems checked, 6 discharge one.
+
+## Step 3. Genus periods with class groups (brandt2.py, output brandt2-output.txt)
+
+Extension of the model: right action of the uniformizer 1 + tau(sqrt -n) for n = 1 (mod 8) (via lambda = 1 + i);
+an O_K-ideal a of odd norm N maps (as an idele, through tau-hat) to the class of conj(gamma), gamma in tau(a) O_B of
+norm N (class number one of O_B); 2Cl_n from PARI bnfinit/bnfisprincipal. 19 values of n (2 embeddings tau each,
+38 runs; n = 1 (8): 17, 33, 41, 57, 73, 89, 97, 105, 113; n = 3 (8): 3, 11, 19, 35, 43, 51, 59, 67, 83, 123),
+L-values from PARI. VERIFIED (exact for Q(n), 8+ digits for L):
+* pi^{U_n} is one-dimensional in every run (TYZ Thm 2.6 at chi = 1);
+* f_n is odd at every class of 2Cl_n (TYZ Prop 2.3 restricted to K^-hat^x);
+* Q(n) lies in { w_K * sum_{pairs} eps L(d1) L(d2) : eps = +-1 } in every run (the corrected Lemma 2.9 leaf),
+  e.g. Q(17) = +-2 (L(17)^2 = 4), Q(41) = 0 (L(41) = 0), Q(113) = 4, Q(43) = +-3 (L(43)^2 = 9, w_K = 1),
+  Q(51) = +-3 = +-(L(51) + 2 L(3)L(17)) form, Q(59) = +-1 with #2Cl = 3.
+* With w_K = 1 at n = 3 it would fail (Q(3) = +-3, L(3) = +-1); n = 43 shows +-3 is a genuine value when L = +-3.
