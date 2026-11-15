@@ -132,6 +132,63 @@ theorem mem_of_isIntegral {A M : Type*} [CommRing A] [Field M] [Algebra A M]
   obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
   rw [← hy]; exact y.2
 
+
+/-- **Uniformizer from `𝔮 · J ⊆ ϖR` with `J ⊄ 𝔮`.** `R` Dedekind, `W` a valuation subring of
+`F = Frac R` over `R` with center `𝔮 ≠ 0`, `ϖ ∈ 𝔮` and `j ∉ 𝔮` with `𝔮 · j ⊆ ϖ R`. Then every nonzero
+`y ∈ F` with `y = a/s`, `s ∉ 𝔮`, is `ϖⁿ` times a unit of `W`. -/
+theorem unit_mul_pow_of_div {R F : Type*} [CommRing R] [IsDedekindDomain R] [Field F]
+    [Algebra R F] [IsFractionRing R F] (W : ValuationSubring F)
+    (hW : ∀ r : R, algebraMap R F r ∈ W) (ϖ j : R) (hj : j ∉ ctr W hW)
+    (hdiv : ∀ n ∈ ctr W hW, ∃ r : R, n * j = ϖ * r) (hϖ : ϖ ∈ ctr W hW) (hϖ0 : ϖ ≠ 0) :
+    ∀ (m : ℕ) (y : F) (a s : R), y ≠ 0 → s ∉ ctr W hW →
+      y * algebraMap R F s = algebraMap R F a → a ∉ (ctr W hW) ^ (m + 1) →
+      ∃ n : ℕ, y / algebraMap R F ϖ ^ n ∈ W ∧ (y / algebraMap R F ϖ ^ n)⁻¹ ∈ W := by
+  set 𝔮 := ctr W hW
+  have hϖF : algebraMap R F ϖ ≠ 0 :=
+    (map_ne_zero_iff _ (IsFractionRing.injective R F)).mpr hϖ0
+  have unit_case : ∀ (y : F) (a s : R), y ≠ 0 → s ∉ 𝔮 →
+      y * algebraMap R F s = algebraMap R F a → a ∉ 𝔮 →
+      ∃ n : ℕ, y / algebraMap R F ϖ ^ n ∈ W ∧ (y / algebraMap R F ϖ ^ n)⁻¹ ∈ W := by
+    intro y a s hy hs hys ha
+    refine ⟨0, ?_, ?_⟩
+    · rw [pow_zero, div_one]; exact mem_of_mul_eq' W hW hs hys
+    · rw [pow_zero, div_one]
+      refine mem_of_mul_eq' W hW (a := s) ha ?_
+      rw [← hys]; field_simp
+  intro m
+  induction m with
+  | zero =>
+    intro y a s hy hs hys ha
+    exact unit_case y a s hy hs hys (by rwa [zero_add, pow_one] at ha)
+  | succ m ih =>
+    intro y a s hy hs hys ha
+    by_cases ha𝔮 : a ∉ 𝔮
+    · exact unit_case y a s hy hs hys ha𝔮
+    push Not at ha𝔮
+    obtain ⟨r, hr⟩ := hdiv a ha𝔮
+    have hsj : s * j ∉ 𝔮 := fun h =>
+      ((Ideal.IsPrime.mem_or_mem inferInstance h).elim hs hj)
+    have hr' : r ∉ 𝔮 ^ (m + 1) := by
+      intro hrm
+      have h1 : j * a ∈ 𝔮 ^ (m + 1 + 1) := by
+        rw [mul_comm, hr, pow_succ']
+        exact Ideal.mul_mem_mul hϖ hrm
+      rcases Ideal.IsPrime.mul_mem_pow 𝔮 h1 with h | h
+      · exact hj h
+      · exact ha h
+    have hy' : y / algebraMap R F ϖ ≠ 0 := div_ne_zero hy hϖF
+    have hys' : y / algebraMap R F ϖ * algebraMap R F (s * j) = algebraMap R F r := by
+      have h2 : algebraMap R F a * algebraMap R F j = algebraMap R F ϖ * algebraMap R F r := by
+        rw [← map_mul, ← map_mul, hr]
+      rw [← hys] at h2
+      rw [map_mul]
+      field_simp
+      linear_combination h2
+    obtain ⟨n, h1, h2⟩ := ih (y / algebraMap R F ϖ) r (s * j) hy' hsj hys' hr'
+    refine ⟨n + 1, ?_, ?_⟩
+    · rwa [pow_succ', ← div_div]
+    · rwa [pow_succ', ← div_div]
+
 variable {K M : Type*} [Field K] [Field M] [Algebra K M] [FiniteDimensional K M] [IsGalois K M]
 variable (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [Algebra A K]
   [IsFractionRing A K] [Algebra A M] [IsScalarTower A K M]
@@ -247,7 +304,119 @@ theorem key_finite [PerfectField (ResidueField A)]
     rw [← he2, ← hcard', hcardH, ← he1, ← hcard] at htower
     have hc : 0 < Nat.card H := Nat.card_pos
     exact Nat.eq_of_mul_eq_mul_right hc (by rw [one_mul]; exact htower.symm)
-  sorry
+  -- `p𝓞_E = 𝔮 · J` with `J ⊄ 𝔮`
+  have hpspan : p = Ideal.span {ϖ} := (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ
+  have hRinj : Function.Injective (algebraMap A R) := by
+    intro a b h
+    exact hAinj (congrArg (fun r : R => algebraMap E M (r : E)) h)
+  have hpR0 : p.map (algebraMap A R) ≠ ⊥ := by
+    rw [hpspan, Ideal.map_span, Set.image_singleton, Ne, Ideal.span_singleton_eq_bot]
+    exact fun h => hϖ0 (hRinj (by rw [h, map_zero]))
+  have hmult := Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity p 𝔮 hpR0
+  rw [he𝔮] at hmult
+  have h𝔮top : 𝔮 ≠ ⊤ := Ideal.IsPrime.ne_top inferInstance
+  have hfin : FiniteMultiplicity 𝔮 (p.map (algebraMap A R)) :=
+    FiniteMultiplicity.of_not_isUnit (by rwa [Ideal.isUnit_iff]) hpR0
+  obtain ⟨J, hJ⟩ : 𝔮 ∣ p.map (algebraMap A R) := by
+    have := pow_multiplicity_dvd 𝔮 (p.map (algebraMap A R))
+    rwa [← hmult, pow_one] at this
+  have hJ𝔮 : ¬ J ≤ 𝔮 := by
+    intro hle
+    apply hfin.not_pow_dvd_of_multiplicity_lt (m := 2) (by rw [← hmult]; norm_num)
+    rw [hJ, pow_two]
+    exact mul_dvd_mul_left 𝔮 (Ideal.dvd_iff_le.mpr hle)
+  obtain ⟨j, hjJ, hj𝔮⟩ := IsConcreteLE.not_le_iff_exists.mp hJ𝔮
+  let ϖR := algebraMap A R ϖ
+  have hϖR : p.map (algebraMap A R) = Ideal.span {ϖR} := by
+    rw [hpspan, Ideal.map_span, Set.image_singleton]
+  have hdivide : ∀ n ∈ 𝔮, ∃ r : R, n * j = ϖR * r := by
+    intro n hn
+    have : n * j ∈ p.map (algebraMap A R) := by
+      rw [hJ]; exact Ideal.mul_mem_mul hn hjJ
+    rw [hϖR, Ideal.mem_span_singleton'] at this
+    obtain ⟨r, hr⟩ := this
+    exact ⟨r, by rw [← hr, mul_comm]⟩
+  have hϖ𝔮 : ϖR ∈ 𝔮 := by
+    have : ϖR ∈ p.map (algebraMap A R) := Ideal.mem_map_of_mem _ hϖp
+    rw [hJ] at this
+    exact (Ideal.mul_le_right (I := J) (J := 𝔮)) (by rwa [mul_comm] at this)
+  -- every element of the inertia group acts trivially modulo `𝔪_W` on all of `W`
+  have hcond : ∀ σ ∈ H, ∀ y ∈ W, σ y - y ∈ W.nonunits := by
+    intro σ hσ y hy
+    obtain ⟨a, s, hs, hys⟩ := exists_of_mem W hSW hP0 hy
+    have ha : σ (a : M) - a ∈ W.nonunits := by
+      have := (hP _).mp (hσ a)
+      have e1 : ((σ • a : S) : M) = σ (a : M) := rfl
+      rwa [Subalgebra.coe_sub, e1] at this
+    have hs' : σ (s : M) - s ∈ W.nonunits := by
+      have := (hP _).mp (hσ s)
+      have e1 : ((σ • s : S) : M) = σ (s : M) := rfl
+      rwa [Subalgebra.coe_sub, e1] at this
+    rw [hP] at hs
+    have hsW : (s : M) ∈ W := hSW s
+    rw [ValuationSubring.mem_nonunits_iff] at ha hs' hs ⊢
+    have vs : W.valuation (s : M) = 1 :=
+      le_antisymm ((W.valuation_le_one_iff _).mpr hsW) (not_lt.mp hs)
+    have vσs : W.valuation (σ (s : M)) = 1 := by
+      have : σ (s : M) = (s : M) + (σ (s : M) - s) := by ring
+      rw [this, Valuation.map_add_eq_of_lt_left _ (by rw [vs]; exact hs'), vs]
+    have hs0 : (s : M) ≠ 0 := fun h => by rw [h, map_zero] at vs; exact zero_ne_one vs
+    have hσs0 : σ (s : M) ≠ 0 := fun h => by rw [h, map_zero] at vσs; exact zero_ne_one vσs
+    have hy' : y = (a : M) / s := by rw [eq_div_iff hs0]; exact hys
+    have key : σ y - y = ((σ (a : M) - a) * s - a * (σ (s : M) - s)) / (σ (s : M) * s) := by
+      rw [hy', map_div₀]
+      field_simp
+      ring
+    rw [key, map_div₀, map_mul, vσs, vs, mul_one, div_one]
+    have haW : W.valuation (a : M) ≤ 1 := (W.valuation_le_one_iff _).mpr (hSW a)
+    rw [sub_eq_add_neg]
+    apply Valuation.map_add_lt _
+    · rw [map_mul, vs, mul_one]; exact ha
+    · rw [Valuation.map_neg, map_mul]
+      calc W.valuation (a : M) * W.valuation (σ (s : M) - s)
+          ≤ 1 * W.valuation (σ (s : M) - s) := by gcongr
+        _ < 1 := by rw [one_mul]; exact hs'
+  have hxE : x ∈ E := by
+    intro h
+    exact hfix h (hcond h h.2)
+  -- the valuation ring of `E`
+  let WE := W.comap (algebraMap E M)
+  have hRW : ∀ r : R, algebraMap R E r ∈ WE := fun r => hSW (φ r)
+  have hctrE : ctr WE hRW = 𝔮 := by
+    ext r
+    rw [mem_ctr_iff, nonunits_comap]
+    exact (hP (φ r)).symm
+  have hϖR0 : algebraMap A R ϖ ≠ 0 := fun h => hϖ0 (hRinj (by rw [h, map_zero]))
+  have hctrE0 : ctr WE hRW ≠ ⊥ := by
+    rw [hctrE]
+    intro h
+    rw [h] at hϖ𝔮
+    exact hϖR0 hϖ𝔮
+  obtain ⟨a, s, hs, hxs⟩ := exists_of_mem WE hRW hctrE0 (x := ⟨x, hxE⟩) hxW
+  have hxE0 : (⟨x, hxE⟩ : E) ≠ 0 := fun h => hx0 (congrArg Subtype.val h)
+  have ha0 : a ≠ 0 := by
+    intro h
+    rw [h, map_zero] at hxs
+    rcases mul_eq_zero.mp hxs with h' | h'
+    · exact hxE0 h'
+    · apply hs
+      rw [(map_eq_zero_iff _ (IsFractionRing.injective R E)).mp h']
+      exact Ideal.zero_mem _
+  have hfa : FiniteMultiplicity 𝔮 (Ideal.span {a}) :=
+    FiniteMultiplicity.of_not_isUnit (by rwa [Ideal.isUnit_iff])
+      (by rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]; exact ha0)
+  have ham : a ∉ 𝔮 ^ (multiplicity 𝔮 (Ideal.span {a}) + 1) := by
+    intro h
+    apply hfa.not_pow_dvd_of_multiplicity_lt (lt_add_one _)
+    rw [Ideal.dvd_iff_le, Ideal.span_singleton_le_iff_mem]
+    exact h
+  rw [← hctrE] at hdivide hϖ𝔮 hj𝔮 ham
+  obtain ⟨n, h1, h2⟩ := unit_mul_pow_of_div WE hRW (algebraMap A R ϖ) j hj𝔮 hdivide hϖ𝔮 hϖR0
+    _ _ a s hxE0 hs hxs ham
+  have e : ((algebraMap A E ϖ : E) : M) = algebraMap A M ϖ := rfl
+  refine ⟨n, ?_, ?_⟩
+  · have := h1; simpa [WE, ValuationSubring.mem_comap, e] using this
+  · have := h2; simpa [WE, ValuationSubring.mem_comap, e] using this
 
 end Key
 
