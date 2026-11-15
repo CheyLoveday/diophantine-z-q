@@ -118,7 +118,6 @@ structure OpenTextbookLeaves8 : Prop where
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
-  igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
   neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 /-- **The added leaves still open** (leaf-fold8): leaf-fold7's `OpenAddedLeaves7` without `zariskiConnectedness`,
@@ -225,7 +224,6 @@ theorem textbookLeaves7_of_open8 (t : OpenTextbookLeaves8) : OpenTextbookLeaves7
   dimJacobianEqGenus := t.dimJacobianEqGenus
   normalModelOfFunctionFieldQ := t.normalModelOfFunctionFieldQ
   regularSmoothPerfect := t.regularSmoothPerfect
-  igusaGL2 := t.igusaGL2
   neronSchemeExtensionExists := t.neronSchemeExtensionExists
 
 /-- leaf-fold7's added bundle from leaf-fold8's. -/

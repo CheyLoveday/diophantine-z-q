@@ -80,7 +80,6 @@ structure OpenTextbookLeaves9 : Prop where
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   dimJacobianEqGenus : _root_.ZInQ.Contrib.CurvesG.DimJacobianEqGenus
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
-  igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
   neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 /-! ## From the new bundles to leaf-fold8's -/
@@ -133,7 +132,6 @@ theorem textbookLeaves8_of_open9 (t : OpenTextbookLeaves9) : OpenTextbookLeaves8
   dimJacobianEqGenus := t.dimJacobianEqGenus
   normalModelOfFunctionFieldQ := _root_.ZInQ.Contrib.CloudW07JacobiansCurves.NormalModelOfFunctionFieldQ_proof
   regularSmoothPerfect := t.regularSmoothPerfect
-  igusaGL2 := t.igusaGL2
   neronSchemeExtensionExists := t.neronSchemeExtensionExists
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold9; no `sorry`, standard axioms).

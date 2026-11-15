@@ -22,7 +22,6 @@ structure OpenTextbookLeaves11 : Prop where
   uniformizationLeafAll : _root_.BPAnalytic.Uniformization.UniformizationLeafAll
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
-  igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
   neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 /-- `OpenTextbookLeaves10` from `OpenTextbookLeaves11`: `mulEtaleAbelianScheme` by the contributions. -/
@@ -38,7 +37,6 @@ theorem openTextbookLeaves10_of_OpenTextbookLeaves11 (n : OpenTextbookLeaves11) 
   uniformizationLeafAll := n.uniformizationLeafAll
   gagaMorphism := n.gagaMorphism
   regularSmoothPerfect := n.regularSmoothPerfect
-  igusaGL2 := n.igusaGL2
   neronSchemeExtensionExists := n.neronSchemeExtensionExists
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold19; generated). -/

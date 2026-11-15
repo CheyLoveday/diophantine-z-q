@@ -1,3 +1,4 @@
+import ZInQKernel.Contrib.OneProof.ModularEquationGeneric
 import ZInQKernel.OneProof.H.TailO
 import ZInQKernel.OneProof.H.TailP
 import ZInQKernel.OneProof.H.TailQ
@@ -140,9 +141,6 @@ structure OpenTextbookLeaves7 : Prop where
   normalModelOfFunctionFieldQ : _root_.ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ
   /-- curve-split, H-81: Stacks 00TV (regular ⇒ smooth over a perfect field; replaces `normalCurveSmoothQ`). -/
   regularSmoothPerfect : _root_.CurveSplit.RegularSmoothPerfect
-  /-- Igusa's theorem (kernel leaf; Igusa 1959; Lang, *Elliptic functions* Ch. 6 §3): the Galois image on `E_j[N]`
-  is `GL₂(ℤ/N)` (curve-split, H-41; replaces `x0Transitive`). -/
-  igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2
   neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 /-- **The added leaves still open** (leaf-fold7): leaf-fold6's `OpenAddedLeaves6` without `qmClassNumberOne` and
@@ -233,7 +231,7 @@ theorem textbookLeaves6_of_open7 (t : OpenTextbookLeaves7) (l : OpenAddedLeaves7
   normalCurveSmoothQ := _root_.CurveSplit.normalCurveSmoothQ_of_regularSmooth t.regularSmoothPerfect
   geomConnectedOfConstantFieldQ :=
     _root_.CurveSplit.geomConnectedOfConstantFieldQ_of_zariski l.zariskiConnectedness
-  x0Transitive := _root_.CurveSplit.x0Transitive_of_igusaGL2 t.igusaGL2
+  x0Transitive := _root_.FltCqj2.x0Transitive_proof
   neronSchemeExtensionExists := t.neronSchemeExtensionExists
 
 /-- The three QM rows from `QMCentralizerCMC` and T11(b) (qm-split's `rows_of_C`). -/
