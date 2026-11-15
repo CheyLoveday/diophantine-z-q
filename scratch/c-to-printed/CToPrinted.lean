@@ -297,8 +297,150 @@ theorem semistableNeronBaseChange_of_printed (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_1
     ZInQ.HeightSplit.SemistableNeronBaseChange :=
   semistableNeronBaseChange_of_printedBLR hB (g2 h3 h7) (identityComponentOL_of_printed h3 g1) (g3 hE)
 
+/-! # Part F: `faltingsLemma5BC` from Faltings' Lemma 5 (printed identity) and Raynaud's bound
+
+reduct-split proved `FaltingsLemma5BC` from the base-field form `HeightSplit.FaltingsLemma5` with no glue
+(`ReductSplit.faltingsLemma5BC_final`). `FaltingsLemma5` (`|h(A) − h(B)| ≤ ½ log deg φ`) is a consequence of
+two printed results (height-split §8): Faltings' Lemma 5, an identity with the correction term
+`[K:ℚ]⁻¹ log #s*Ω¹_{G/𝓞_K}` for `G = ker(𝒩_A → 𝒩_B)`, and Raynaud's bound on that term. Both are stated here
+over Mathlib objects: `G` is the fibre product `𝒩_A ×_{φ_𝒩, 𝒩_B, e} S`, its unit section `s`, and
+`#s*Ω¹_{G/S}` is computed stalkwise as the conormal module `I/I²` of `s` (`kerOmegaLog`). -/
+
+section Faltings
+
+open ZInQ.HeightSplit ZInQ.DefFaltings
+
+/-- Verbatim copy of `ZInQ.HeightSplit.FaltingsLemma5` (`ZInQKernel/OneProof/H/TailY.lean`). -/
+def FaltingsLemma5 : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (φ : A.X ⟶ B.X), IsIsogeny φ →
+    ∀ (𝒩A : GroupModel A K) (𝒩B : GroupModel B K), 𝒩A.IsNeronModel → 𝒩B.IsNeronModel →
+      IsSemistable 𝒩A → IsSemistable 𝒩B →
+      ∀ x y : ℝ, 𝒩A.height = x → 𝒩B.height = y → |x - y| ≤ (1 / 2) * Real.log (isogDeg φ)
+
+example : FaltingsLemma5 = ZInQ.HeightSplit.FaltingsLemma5 := rfl
+
+/-- Verbatim copy of the field statement `ZInQ.HeightSplit.FaltingsLemma5BC`. -/
+def FaltingsLemma5BC : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (φ : A.X ⟶ B.X), IsIsogeny φ →
+    ∀ (L : Type) [Field L] [NumberField L] [Algebra K L]
+      (𝒩A : GroupModel A L) (𝒩B : GroupModel B L), 𝒩A.IsNeronModel → 𝒩B.IsNeronModel →
+      IsSemistable 𝒩A → IsSemistable 𝒩B →
+      ∀ x y : ℝ, 𝒩A.height = x → 𝒩B.height = y → |x - y| ≤ (1 / 2) * Real.log (isogDeg φ)
+
+example : FaltingsLemma5BC = ZInQ.HeightSplit.FaltingsLemma5BC := rfl
+
+variable {S : Scheme.{0}}
+
+/-- The kernel `G = X ×_{f, Y, e} S` of a homomorphism `f : X → Y` of group schemes over `S`. -/
+noncomputable abbrev kerScheme {X Y : Over S} [GrpObj Y] (f : X ⟶ Y) : Scheme.{0} :=
+  pullback f.left (η[Y] : 𝟙_ (Over S) ⟶ Y).left
+
+/-- The unit section `s : S → G` of the kernel of a homomorphism. -/
+noncomputable def kerUnit {X Y : Over S} [GrpObj X] [GrpObj Y] (f : X ⟶ Y) (hf : IsMonHom f) :
+    (𝟙_ (Over S)).left ⟶ kerScheme f :=
+  pullback.lift (η[X] : 𝟙_ (Over S) ⟶ X).left (𝟙 _) (by
+    rw [Category.id_comp, ← Over.comp_left, IsMonHom.one_hom])
+
+/-- **`log #s*Ω¹_{G/S}`** for the kernel `G` of `f` and its unit section `s`: the sum over the points `P` of
+`S` of `log #(I_P/I_P²)`, `I_P = ker(𝒪_{G,s(P)} → 𝒪_{S,P})` the stalk of the ideal of the section. For a
+section `s` of `G → S`, `s*Ω¹_{G/S}` is the conormal sheaf `s*(I/I²)` (EGA IV 17.2.5, UNVERIFIED locator), whose
+stalk at `P` is `I_P/I_P²`; over a Dedekind `S` a torsion coherent module is the sum of its stalks, so its
+cardinality is the product of theirs. (An infinite stalk contributes `log 0 = 0`; for a quasi-finite `G` with
+étale generic fibre all stalks are finite and almost all trivial.) -/
+noncomputable def kerOmegaLog {X Y : Over S} [GrpObj X] [GrpObj Y] (f : X ⟶ Y) (hf : IsMonHom f) : ℝ :=
+  ∑ᶠ (P : (𝟙_ (Over S)).left),
+    Real.log (Nat.card (RingHom.ker ((kerUnit f hf).stalkMap P).hom).Cotangent)
+
+theorem kerOmegaLog_nonneg {X Y : Over S} [GrpObj X] [GrpObj Y] (f : X ⟶ Y) (hf : IsMonHom f) :
+    0 ≤ kerOmegaLog f hf :=
+  finsum_nonneg fun _ => Real.log_natCast_nonneg _
+
+/-- The generic-fibre condition: `φ_𝒩` extends `φ_K` through the identifications of the generic fibres. -/
+def ExtendsIsogeny {K : Type} [Field K] [NumberField K] {A B : PkgI3.AbVar K} (φ : A.X ⟶ B.X)
+    (𝒩A : GroupModel A K) (𝒩B : GroupModel B K) (φ𝒩 : 𝒩A.G ⟶ 𝒩B.G) : Prop :=
+  (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 K) K)))).map φ𝒩 ≫ 𝒩B.gen.hom =
+    𝒩A.gen.hom ≫ (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap K K)))).map φ
+
+/-- **LEAF `FaltingsLemma5Printed`** (G. Faltings, *Endlichkeitssätze für abelsche Varietäten über
+Zahlkörpern*, Invent. Math. 73 (1983), Lemma 5, p. 358; wording recalled, UNVERIFIED: locators.md could not
+read it). *Printed* (as recalled): for an isogeny `φ : A → B` of abelian varieties over a number field `K` with
+semistable reduction everywhere, `G = ker(φ_𝒩 : 𝒩_A → 𝒩_B)` (a quasi-finite flat group scheme over
+`S = Spec 𝓞_K`) and `s` its unit section,
+`h(B) = h(A) + ½ log deg φ − [K:ℚ]⁻¹ log #s*Ω¹_{G/S}`.
+*Lean form*: `𝒩_A`, `𝒩_B` semistable Néron models over `𝓞_K` (kernel `GroupModel`), `φ_𝒩` the homomorphism
+extending `φ` (unique by the Néron property, so "every" is "the"), heights the kernel's `GroupModel.height`
+(the identity does not depend on the normalization of the metric, which shifts both sides equally). -/
+def FaltingsLemma5Printed : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (φ : A.X ⟶ B.X), IsIsogeny φ →
+    ∀ (𝒩A : GroupModel A K) (𝒩B : GroupModel B K), 𝒩A.IsNeronModel → 𝒩B.IsNeronModel →
+      IsSemistable 𝒩A → IsSemistable 𝒩B →
+      ∀ (φ𝒩 : 𝒩A.G ⟶ 𝒩B.G) (hφ𝒩 : IsMonHom φ𝒩), ExtendsIsogeny φ 𝒩A 𝒩B φ𝒩 →
+      ∀ x y : ℝ, 𝒩A.height = x → 𝒩B.height = y →
+        y = x + (1 / 2) * Real.log (isogDeg φ) - kerOmegaLog φ𝒩 hφ𝒩 / Module.finrank ℚ K
+
+/-- **LEAF `RaynaudKernelBound`** (M. Raynaud, *Hauteurs et isogénies*, Astérisque 127 (1985), Exp. VII,
+Cor. 2.1.3 as cited by height-split §8 and Pazuki 2012 Rem. 2.3; number and wording recalled, UNVERIFIED).
+In the setting of `FaltingsLemma5Printed`: `log #s*Ω¹_{G/S} ≤ [K:ℚ] log deg φ` (the lower bound `0 ≤` is
+automatic, `kerOmegaLog_nonneg`). -/
+def RaynaudKernelBound : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (φ : A.X ⟶ B.X), IsIsogeny φ →
+    ∀ (𝒩A : GroupModel A K) (𝒩B : GroupModel B K), 𝒩A.IsNeronModel → 𝒩B.IsNeronModel →
+      IsSemistable 𝒩A → IsSemistable 𝒩B →
+      ∀ (φ𝒩 : 𝒩A.G ⟶ 𝒩B.G) (hφ𝒩 : IsMonHom φ𝒩), ExtendsIsogeny φ 𝒩A 𝒩B φ𝒩 →
+        kerOmegaLog φ𝒩 hφ𝒩 ≤ Module.finrank ℚ K * Real.log (isogDeg φ)
+
+/-- The Néron extension of an isogeny is a homomorphism extending it (glue, proved). -/
+theorem exists_extension {K : Type} [Field K] [NumberField K] {A B : PkgI3.AbVar K} (φ : A.X ⟶ B.X)
+    (hφ : IsIsogeny φ) (𝒩A : GroupModel A K) (𝒩B : GroupModel B K) (hB : 𝒩B.IsNeronModel) :
+    ∃ (φ𝒩 : 𝒩A.G ⟶ 𝒩B.G), IsMonHom φ𝒩 ∧ ExtendsIsogeny φ 𝒩A 𝒩B φ𝒩 := by
+  haveI := hφ.1
+  let F := Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 K) K)))
+  let fK := Spec.map (CommRingCat.ofHom (algebraMap K K))
+  let φK : (A.baseChange K).X ⟶ (B.baseChange K).X := (Over.pullback fK).map φ
+  have hK : IsMonHom φK := by
+    letI : GrpObj ((Over.pullback fK).obj A.X) := Functor.grpObjObj
+    letI : GrpObj ((Over.pullback fK).obj B.X) := Functor.grpObjObj
+    exact (inferInstance : IsMonHom ((Over.pullback fK).map φ))
+  obtain ⟨φ𝒩, h⟩ := (hB 𝒩A.G).2 (𝒩A.gen.hom ≫ φK)
+  refine ⟨φ𝒩, ?_, h⟩
+  haveI : Smooth (𝟙_ (Over (Spec (CommRingCat.of (𝓞 K))))).hom :=
+    ZInQ.Contrib.NeronC.smooth_tensorUnit _
+  haveI : Smooth (𝒩A.G ⊗ 𝒩A.G).hom :=
+    ZInQ.Contrib.NeronC.smooth_tensor _ _ inferInstance inferInstance
+  letI : GrpObj (F.obj 𝒩A.G) := Functor.grpObjObj
+  letI : GrpObj (genericFibre K 𝒩A.G) := Functor.grpObjObj
+  have hA := 𝒩A.gen_hom
+  have h1 : IsMonHom (𝒩A.gen.hom ≫ φK) := @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ hA hK
+  exact ReductGlue.isMonHom_of_ext F (𝒩A.gen.hom ≫ φK) 𝒩B.gen.hom h1 𝒩B.gen_hom
+    (hB _).1 (hB _).1 φ𝒩 h
+
+/-- **`FaltingsLemma5` from the printed Lemma 5 and Raynaud's bound** (compiled). -/
+theorem faltingsLemma5_of_printed (hF : FaltingsLemma5Printed) (hR : RaynaudKernelBound) :
+    ZInQ.HeightSplit.FaltingsLemma5 := by
+  intro K _ _ A B φ hφ 𝒩A 𝒩B hA hB sA sB x y hx hy
+  obtain ⟨φ𝒩, hm, he⟩ := exists_extension φ hφ 𝒩A 𝒩B hB
+  have hid := hF K A B φ hφ 𝒩A 𝒩B hA hB sA sB φ𝒩 hm he x y hx hy
+  have hub := hR K A B φ hφ 𝒩A 𝒩B hA hB sA sB φ𝒩 hm he
+  have hlb := kerOmegaLog_nonneg φ𝒩 hm
+  have hn : (0 : ℝ) < Module.finrank ℚ K := by exact_mod_cast Module.finrank_pos
+  set c := kerOmegaLog φ𝒩 hm
+  set d := Real.log (isogDeg φ)
+  have h1 : c / Module.finrank ℚ K ≤ d := by rw [div_le_iff₀ hn]; linarith
+  have h2 : 0 ≤ c / Module.finrank ℚ K := div_nonneg hlb hn.le
+  rw [hid, abs_le]
+  constructor <;> linarith
+
+/-- **The field `faltingsLemma5BC` from the printed Lemma 5 and Raynaud's bound** (compiled, with
+reduct-split's `faltingsLemma5BC_final`). -/
+theorem faltingsLemma5BC_of_printed (hF : FaltingsLemma5Printed) (hR : RaynaudKernelBound) :
+    ZInQ.HeightSplit.FaltingsLemma5BC :=
+  ReductSplit.faltingsLemma5BC_final (faltingsLemma5_of_printed hF hR)
+
+end Faltings
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
 #print axioms CToPrinted.semistableNeronBaseChange_of_printedBLR
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed
+#print axioms CToPrinted.faltingsLemma5BC_of_printed

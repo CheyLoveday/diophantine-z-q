@@ -32,3 +32,13 @@ of the e38375b3 build). One Lean process at a time.
   range idCompSet 𝒩'), `EGAIV_8_10_5_openImm` (limit setting of the kernel's EGAIV_8_10_5_xii, open immersions).
 - Named glue (unproved): `IdentityComponentGroupModel`, `IdentityComponentFromPrinted`, `OpenImmersionLocalization`.
 - `semistableNeronBaseChange_of_printed` (4 printed leaves + 3 glue ⇒ SS2) COMPILES, standard axioms (VERIFIED).
+
+## Part F: faltingsLemma5BC (CToPrinted.lean)
+- Definitions: `kerScheme f = pullback f.left η_Y.left` (G = ker φ_𝒩), `kerUnit f hf` (unit section, from
+  IsMonHom.one_hom), `kerOmegaLog f hf = ∑ᶠ P, log #(ker(s.stalkMap P)).Cotangent` (log #s*Ω¹_{G/S}, stalkwise
+  conormal; Mathlib has no sheaf of relative differentials on schemes), `ExtendsIsogeny`.
+- Leaves: `FaltingsLemma5Printed` (Faltings 1983 Lemma 5 identity h(B) = h(A) + ½ log deg φ − [K:ℚ]⁻¹ log #s*Ω¹,
+  UNVERIFIED), `RaynaudKernelBound` (log #s*Ω¹ ≤ [K:ℚ] log deg φ, Raynaud Ast. 127 VII 2.1.3, UNVERIFIED).
+- Glue proved: `exists_extension` (Néron extension of φ is a homomorphism; reduct-glue's isMonHom_of_ext),
+  `kerOmegaLog_nonneg`.
+- `faltingsLemma5_of_printed`, `faltingsLemma5BC_of_printed` COMPILE, standard axioms (VERIFIED).
