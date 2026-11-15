@@ -67,10 +67,6 @@ def fHat (m f : ℕ) [NeZero m] [NeZero f] : AddSubgroup (AfK m) where
     rw [af_neg_apply, Valuation.map_neg]
     exact hz v
 
-theorem mem_fHat {f : ℕ} [NeZero f] {z : AfK m} :
-    z ∈ fHat m f ↔ ∀ v : HeightOneSpectrum (𝓞 (QNeg m)), Valued.v (z v) ≤ cBound m f v :=
-  Iff.rfl
-
 theorem conductor_le_pow_exponent {f : ℕ} [NeZero f] (v : HeightOneSpectrum (𝓞 (QNeg m))) :
     (conductorOrder (QNeg m) f).conductor ≤
       v.asIdeal ^ (conductorOrder (QNeg m) f).conductorModulus.exponent v := by
@@ -260,7 +256,7 @@ theorem setOf_mul_mem_latHat_eq {f : ℕ} [NeZero f] (y : AfK m) (J : Ideal (�
   ext j
   constructor
   · intro hj
-    rw [Set.mem_setOf_eq, mem_latHat_O_iff] at hj
+    rw [Set.mem_ofPred_eq, mem_latHat_O_iff] at hj
     obtain ⟨b, hb⟩ := hj
     obtain ⟨r, hrJ, rfl⟩ := (hD1 j).1 (mem_intAdeles_of_mem_oHat hb)
     refine ⟨?_, r, hrJ, rfl⟩
@@ -309,7 +305,7 @@ theorem setOf_mul_mem_latHat_eq {f : ℕ} [NeZero f] (y : AfK m) (J : Ideal (�
   · rintro ⟨hjO, r, hrJ, hrj⟩
     obtain ⟨b, y0, hj⟩ := (mem_conductorOrderSubalgebra (QNeg m)).1 hjO
     have hint : y * algebraMap (QNeg m) (AfK m) j ∈ 𝒪̂ := (hD1 j).2 ⟨r, hrJ, hrj⟩
-    rw [Set.mem_setOf_eq, mem_latHat_O_iff]
+    rw [Set.mem_ofPred_eq, mem_latHat_O_iff]
     refine ⟨a * b, fun v => ?_⟩
     by_cases hv : v.asIdeal ∣ (conductorOrder (QNeg m) f).conductorModulus.finitePart
     · have e : y * algebraMap (QNeg m) (AfK m) j - algebraMap (QNeg m) (AfK m) ((a * b : ℤ) : QNeg m) =
@@ -319,7 +315,7 @@ theorem setOf_mul_mem_latHat_eq {f : ℕ} [NeZero f] (y : AfK m) (J : Ideal (�
         have e2 : (((f : 𝓞 (QNeg m)) * y0 : 𝓞 (QNeg m)) : QNeg m) = (f : QNeg m) * (y0 : QNeg m) := by
           simp
         rw [e2, hj]
-        simp only [map_sub, map_mul, map_add, Int.cast_mul]
+        simp only [map_mul, map_add, Int.cast_mul]
         ring
       rw [e, af_add_apply, af_mul_apply, af_mul_apply]
       refine Valuation.map_add_le _ ?_ ?_
