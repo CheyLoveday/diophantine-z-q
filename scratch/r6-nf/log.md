@@ -20,3 +20,4 @@
   syntactically GapNeron.RaynaudCriterionNF).
 - step 1 (scratch/r6-nf/prune_r8.py, output prune_r8_out.txt): deleted r8 from ResearchLeaves3, OpenResearchLeaves2/5/7/8,
   the three r8-only fields of OpenResearchLeaves9, and their 12 assignments. Not compiled yet (compiled with step 2).
+- 05:43 build after steps 1-2 (+ reroute/threading): `lake build +ZInQKernel.OneProof.Main` OK first try (12985 jobs); frozenTarget axioms standard.
