@@ -29,3 +29,7 @@ and F(σ) = O(e^{−π Im σ}); iterate to get F = 0.
   `Check.lean` → `out_check.txt`: verbatim copy of the Prop ↔ gz-weil's constant by `Iff.rfl`;
   `ZInQ.GZWeil.jacobiLambdaDeriv`, `etaModelDifferential`, `modularParamC1`, `shimuraCMParamCd`,
   `grossZagierHeegnerCd_of_leaves4` all [propext, Classical.choice, Quot.sound]. VERIFIED.
+- 07:10 `Discharges.lean` → discharges-output.txt: 65 open, 1526 checked, 6 discharge one (same six as base; new theorems
+  discharge none directly, as expected). `MainEdit.lean` → out_mainedit.txt: `frozenTarget_jacobiLambda` (hL3 → 4 leaves),
+  standard axioms. autofold.json dry run: "not a field of the current bundles: ['jacobiLambdaDeriv']" (expected at this base).
+- Report docs/research/jacobi-lambda.md written.
