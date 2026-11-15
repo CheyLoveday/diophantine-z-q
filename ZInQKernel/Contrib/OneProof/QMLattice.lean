@@ -330,4 +330,143 @@ theorem alg_core {R : Type} [Ring R] {τ : ℂ} (hτ : 0 < τ.im) (F : R →+* B
     · obtain ⟨r, hr⟩ := (hR ((s : S v) : B)).2 ⟨s.2, (s : S v).2⟩
       exact ⟨r, Subtype.ext (Subtype.ext hr)⟩
 
+/-! ## §3 The centralizer through the uniformization `A(ℂ) = ℂ²/ι(𝒪)(τ, 1)ᵀ` -/
+
+open HSyn.G0Split.FibreQM in
+/-- **`End_𝒪(A)` embeds in `B` with image `𝒪 ∩ S_{(τ,1)}`.** By T35 (`h38`), T11a (`h69`) and the proved
+`QMLatticeAlgebra`, `A(ℂ) = ℂ²/Λ` with `Λ` carried by `F` onto `ι(𝒪)(τ, 1)ᵀ`, `ι`-compatibly. An element `e` of
+the centralizer acts on `ℂ²` by a map commuting with `ι(𝒪)`, hence by a scalar `c(e)` (`commutant`); since
+`c(e)(τ, 1)ᵀ ∈ ι(𝒪)(τ, 1)ᵀ`, `c(e)(τ, 1)ᵀ = ι(x)(τ, 1)ᵀ` for a unique `x ∈ 𝒪`; `e ↦ x` is the embedding.
+Conversely each such `x` gives the scalar `c`, which preserves `Λ` and so comes from an endomorphism (T11a),
+central because `ρ` is injective. -/
+theorem com_embed (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed)
+    (A : PkgI3.AbVar ℂ) (hA : A.dim = 2) (q : LeafQM.AV.QMStr A) :
+    ∃ (τ : ℂ) (_ : 0 < τ.im) (F : LeafQM.AV.com q →+* B), Function.Injective F ∧
+      ∀ x : B, x ∈ Set.range F ↔ (x ∈ LeafQM.O ∧ x ∈ S ![τ, 1]) := by
+  have hE : UniformizationExistsT35 := AvSplit.Final.h38 hU hM
+  have hR : T11aRiemannEnd := ZInQ.HomUnify.t11a_riemannEnd_of_corr (AvSplit.Final.h69 hU hG)
+  have hL : QMLatticeAlgebra :=
+    qmLatticeAlgebra_of_free (qmLatticeFree_of qmSkolemNoetherC_proof QMSplit.CNO.qmClassNumberOne_proof)
+  obtain ⟨Λ, Φu, hd, hlat, hΦ⟩ := hE ℂ A (RingHom.id ℂ) 2 hA
+  haveI := hd
+  obtain ⟨ρ, hρ, hpres⟩ := unif_ring_hom hR A hA Λ Φu hΦ
+  obtain ⟨τ, hτ, Fl, hF, hFρ⟩ := hL Λ hlat (ρ.comp q.iota) (fun a z hz => hpres (q.iota a) z hz)
+  set v : Fin 2 → ℂ := ![τ, 1] with hvdef
+  have hv : v ≠ 0 := fun h => by simpa [v] using congrFun h 1
+  have hΛ : ∀ z, z ∈ Λ ↔ Fl z ∈ FibreQMNorm.qmOrbit v := by
+    intro z
+    rw [← FibreQMNorm.qmLattice_eq_orbit hτ.ne', ← hF]
+    constructor
+    · intro h; exact ⟨z, h, rfl⟩
+    · rintro ⟨w, hw, he⟩
+      have : w = z := Fl.injective he
+      rw [← this]; exact hw
+  have hι : ∀ (a : LeafQM.O) z, Fl (ρ (q.iota a) z) = act (a : B) (Fl z) := fun a z => hFρ a z
+  have hT11 := hR A 2 Λ Φu hA hΦ
+  have hρinj : Function.Injective ρ := fun e e' h =>
+    (hT11.1 (ρ e) (hpres e)).unique (hρ e) (fun z => by rw [h]; exact hρ e' z)
+  have hρsurj : ∀ N : Module.End ℂ (Fin 2 → ℂ), (∀ z ∈ Λ, N z ∈ Λ) → ∃ e, ρ e = N := by
+    intro N hN
+    obtain ⟨f, hf, -⟩ := hT11.1 N hN
+    exact ⟨f, lift_unique hΦ (fun z => by rw [hρ, hf])⟩
+  -- elements of the centralizer act by scalars
+  have hcomm : ∀ e ∈ LeafQM.AV.com q, ∃ c : ℂ, ∀ w, ρ e w = c • w := by
+    intro e he
+    obtain ⟨c, hc⟩ := commutant (Fl.toLinearMap ∘ₗ ρ e ∘ₗ Fl.symm.toLinearMap) (fun x hx z => by
+      have hcm : q.iota ⟨x, hx⟩ * e = e * q.iota ⟨x, hx⟩ := by
+        rw [LeafQM.AV.com, Subring.mem_centralizer_iff] at he
+        exact he _ ⟨⟨x, hx⟩, rfl⟩
+      have h1 : Fl.symm (act x z) = ρ (q.iota ⟨x, hx⟩) (Fl.symm z) := by
+        rw [LinearEquiv.symm_apply_eq, hι, LinearEquiv.apply_symm_apply]
+      simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
+      rw [h1, ← Module.End.mul_apply, ← map_mul, ← hcm, map_mul, Module.End.mul_apply, hι])
+    refine ⟨c, fun w => ?_⟩
+    have := hc (Fl w)
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply] at this
+    rw [← Fl.symm_apply_apply (ρ e w), this, map_smul, LinearEquiv.symm_apply_apply]
+  let w0 : Fin 2 → ℂ := Fl.symm v
+  have hw0 : w0 ≠ 0 := fun h => hv (by rw [← Fl.apply_symm_apply v]; show Fl w0 = 0; rw [h, map_zero])
+  have hcinj : ∀ a b : ℂ, a • w0 = b • w0 → a = b := fun a b h => smul_left_injective ℂ hw0 h
+  let c : LeafQM.AV.com q → ℂ := fun e => Fl (ρ e w0) 1
+  have hscal : ∀ e : LeafQM.AV.com q, ∀ w, ρ e w = c e • w := by
+    intro e w
+    obtain ⟨c0, h0⟩ := hcomm e e.2
+    have : c e = c0 := by
+      show Fl (ρ e w0) 1 = c0
+      rw [h0, map_smul, LinearEquiv.apply_symm_apply]
+      simp [v]
+    rw [this, h0]
+  have c_one : c 1 = 1 := hcinj _ _ (by rw [← hscal, OneMemClass.coe_one, map_one, one_smul]; rfl)
+  have c_zero : c 0 = 0 := hcinj _ _ (by rw [← hscal, ZeroMemClass.coe_zero, map_zero, zero_smul]; rfl)
+  have c_mul : ∀ e e', c (e * e') = c e * c e' := fun e e' => hcinj _ _ (by
+    rw [← hscal, MulMemClass.coe_mul, map_mul, Module.End.mul_apply, hscal e', map_smul, hscal e,
+      smul_smul, mul_comm])
+  have c_add : ∀ e e', c (e + e') = c e + c e' := fun e e' => hcinj _ _ (by
+    rw [← hscal, AddMemClass.coe_add, map_add, LinearMap.add_apply, hscal e, hscal e', add_smul])
+  have hvO : ∀ e : LeafQM.AV.com q, ∃ x ∈ LeafQM.O, act x v = c e • v := by
+    intro e
+    have h1 : w0 ∈ Λ := (hΛ w0).2 (by
+      show Fl (Fl.symm v) ∈ _
+      rw [LinearEquiv.apply_symm_apply, mem_qmOrbit_iff]
+      exact ⟨1, LeafQM.O.one_mem, (act_one v).symm⟩)
+    have h2 := (hΛ _).1 (hpres e w0 h1)
+    rw [hscal, map_smul, LinearEquiv.apply_symm_apply, mem_qmOrbit_iff] at h2
+    obtain ⟨x, hx, hxe⟩ := h2
+    exact ⟨x, hx, hxe.symm⟩
+  choose X hXO hX using hvO
+  let F : LeafQM.AV.com q →+* B :=
+    { toFun := X
+      map_one' := act_inj hv (by rw [hX, act_one, c_one, one_smul])
+      map_mul' := fun e e' => act_inj hv (by
+        rw [hX, act_mul, hX, act_smul_vec, hX, smul_smul, c_mul, mul_comm])
+      map_zero' := act_inj hv (by rw [hX, act_zero, c_zero, zero_smul])
+      map_add' := fun e e' => act_inj hv (by rw [hX, act_add, hX, hX, c_add, add_smul]) }
+  have hFX : ∀ e, F e = X e := fun e => rfl
+  refine ⟨τ, hτ, F, fun e e' h => ?_, fun x => ⟨?_, ?_⟩⟩
+  · have h1 : c e • v = c e' • v := by rw [← hX, ← hX]; exact congrArg (fun y => act y v) h
+    have h2 : c e = c e' := smul_left_injective ℂ hv h1
+    apply Subtype.ext
+    apply hρinj
+    refine LinearMap.ext fun w => ?_
+    rw [hscal e, hscal e', h2]
+  · rintro ⟨e, rfl⟩
+    exact ⟨hXO e, c e, hX e⟩
+  · rintro ⟨hxO, c0, hc0⟩
+    let N : Module.End ℂ (Fin 2 → ℂ) := c0 • LinearMap.id
+    have hN : ∀ z ∈ Λ, N z ∈ Λ := by
+      intro z hz
+      have h1 := (hΛ z).1 hz
+      rw [mem_qmOrbit_iff] at h1
+      obtain ⟨y, hy, hyz⟩ := h1
+      apply (hΛ _).2
+      rw [mem_qmOrbit_iff]
+      refine ⟨y * x, LeafQM.O.mul_mem hy hxO, ?_⟩
+      show Fl (c0 • z) = _
+      rw [map_smul, hyz, act_mul, hc0, act_smul_vec]
+    obtain ⟨e0, he0⟩ := hρsurj N hN
+    have he0com : e0 ∈ LeafQM.AV.com q := by
+      rw [LeafQM.AV.com, Subring.mem_centralizer_iff]
+      rintro _ ⟨a, rfl⟩
+      apply hρinj
+      rw [map_mul, map_mul, he0]
+      refine LinearMap.ext fun w => ?_
+      simp [N]
+    have hce : c ⟨e0, he0com⟩ = c0 := hcinj _ _ (by rw [← hscal]; show ρ e0 w0 = _; rw [he0]; rfl)
+    refine ⟨⟨e0, he0com⟩, act_inj hv ?_⟩
+    rw [hFX, hX, hce, hc0]
+
+/-! ## §4 `QMCentralizerCMC` -/
+
+/-- **`QMCentralizerCMC` (added-bundle field `qmCentralizerCMC`) from the textbook fields
+`uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed`.** -/
+theorem qmCentralizerCMC_of (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    HDec.QMSplit.Aut.QMCentralizerCMC := by
+  intro A hA q
+  obtain ⟨τ, hτ, F, hF, hR⟩ := com_embed hU hG hM A hA q
+  exact alg_core hτ F hF hR
+
 end HDec.QMLattice
+
+#print axioms HDec.QMLattice.qmCentralizerCMC_of
