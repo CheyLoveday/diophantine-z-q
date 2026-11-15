@@ -2775,7 +2775,7 @@ noncomputable def transportIso (Q : QML3 K) {A' : PkgI3.AbVar K} (hs : A'.dim = 
 
 end TwistCount
 
-/-- **`TwistClassCard` from the 3-torsion bound and the Atkin–Lehner count** (Glazer's
+/-- **`TwistClassCard` from the 3-torsion bound and the Atkin–Lehner count** (the manuscript's
 `4·81 = 324`): a class in the twist class of `P` is `[(A, ι∘w, η')]` for `w ∈ W` and a level
 structure `η'`, which is determined by the `3`-torsion point `η'(1)`. -/
 theorem twistClassCard_of (hT : TorsionBound3) (hW : InnerTwistCount) : TwistClassCard := by
@@ -8921,7 +8921,7 @@ the representation `r` is the scalar `β(σ)` (`ρ_ℓ(σ) = β(σ)⁻¹ a_σ μ
 on `G_L ⊇ G_F`, and the Tate action of `A` trivial on `P_p ∩ G_F`: by Raynaud's criterion (R6)
 `A` is semistable over `F ⊇ L_v(A[3])` (`A[5]` if `p = 3`), and then wild inertia acts trivially
 (D2, `PkgI2.D2_fixed_of_raynaud`); at `p > D` by good reduction (G3) and
-Néron–Ogg–Shafarevich). Here `β` is the local twist (the inverse of Glazer's `β`). -/
+Néron–Ogg–Shafarevich). Here `β` is the local twist (the inverse of the manuscript's `β`). -/
 def TwistShape (r : GaloisRep ℓ 2) (F : Fld p) (β : GQp p → PadicAlgCl ℓ) : Prop :=
   ∀ σ ∈ fixSet F ∩ wildSet,
     ((r.restrictLocal p σ : GL (Fin 2) (PadicAlgCl ℓ)) : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)) =

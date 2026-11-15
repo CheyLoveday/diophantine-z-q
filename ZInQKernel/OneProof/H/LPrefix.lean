@@ -2469,7 +2469,7 @@ section CondBreaksSec
 /-! ### Copied from `scratch/glue-conductor/Breaks.lean` (compiled there). -/
 
 /-!
-# glue-conductor: the elementary core of Glazer's uniform conductor bound (D1, D3, D4)
+# glue-conductor: the elementary core of the manuscript's uniform conductor bound (D1, D3, D4)
 
 Manuscript `diophantine_zq.tex` L796-851 (h-trust steps D1-D4). Everything here is about
 integers and rationals; the ramification data enter as the sequence `g i = |G_i|` of orders
@@ -3094,7 +3094,7 @@ section DescProjRepSec
 # glue-descent: the algebraic core of B1 and C1 (N5 L632-664, L719-731)
 
 All statements are over arbitrary groups, fields, vector spaces and algebras (genuine Mathlib
-definitions). They are the steps of Glazer's scalar descent after the abelian surface has been
+definitions). They are the steps of the manuscript's scalar descent after the abelian surface has been
 replaced by its Tate realization:
 
 * `G` stands for `G_ℚ`, `E` for a finite extension of `ℚ_ℓ` containing the image of the

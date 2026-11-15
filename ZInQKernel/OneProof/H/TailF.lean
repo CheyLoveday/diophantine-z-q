@@ -2321,7 +2321,7 @@ theorem modelG3G6_of (hFS : HSyn.G0Split.FibreSimple) (hG3 : QMModelG3) :
 
 /-! ### §5 `G15RamWild` from the descended operators (proved) -/
 
-/-- **Glazer's wild-ramification clauses (i)-(ii) for an operator family `ρ` on `V`** (the form of
+/-- **The manuscript's wild-ramification clauses (i)-(ii) for an operator family `ρ` on `V`** (the form of
 `LocalRamWild` on the descended `ρ_ℓ = β_ℓ⁻¹ a_ℓ Tm_ℓ` instead of on G8's `r_ℓ`; N5 L819-852,
 D1-D4): for `p ≤ D` the absolute upper ramification groups `G_{ℚ_p}^t`, `t > U₀`, act trivially
 through `decomp p`; for `p > D` wild inertia does. -/
@@ -2380,7 +2380,7 @@ with
   separately from I3.M0, plus `dim A_{L'} = 2` and `rank_ℤ End(A_{L'}) = 4`);
 * g14-trace's `FrobTraceLink` for the two operator families (N5 L777-786: reduction at a
   Frobenius, the relative Frobenius composed with `μ̄_τ`);
-* Glazer's wild-ramification clauses (i)-(ii) for the descended operators `ρ₅` at `p ≠ 5` and
+* The manuscript's wild-ramification clauses (i)-(ii) for the descended operators `ρ₅` at `p ≠ 5` and
   `ρ₃` at `p = 5` (`RhoRamWild`; N5 L819-852, D1-D4).
 GLUE. -/
 def LinkedTateCore : Prop :=
@@ -2641,7 +2641,7 @@ theorem scalarTransferQ (L' : IF) [FiniteDimensional ℚ L'] [IsGalois ℚ L'] (
     apply hκ
     rw [hgam, map_one, hg1 k hk]
 
-/-- **Glue: the Frobenius trace link and Glazer's wild ramification for the canonical
+/-- **Glue: the Frobenius trace link and the manuscript's wild ramification for the canonical
 operators** (linked-tate; the remaining content of `LinkedTateCoreDR`). For every fibre context
 and G7 data, every transport `(Θ, h)` with unram-tate's `TatePoints` property, every
 points-level descent datum `(m, a, n, d)` of `A` for `ε` (the clauses of g0-mod-field's
@@ -2739,7 +2739,7 @@ def LinkedFrob : Prop :=
       G14Trace.FrobTraceLink (@PkgI3.AbVar.baseChange L _ A L' _ (incAlg hLL'))
         (tmOf hLL' A Θ h m 5) (tmOf hLL' A Θ h m 3)
 
-/-- **Glue: Glazer's wild ramification for the canonical descended operators** (linked-tate;
+/-- **Glue: the manuscript's wild ramification for the canonical descended operators** (linked-tate;
 N5 L819-852, D1-D4). Same data as `LinkedFrob`, and every `γ₀ : G_ℚ → ℚ̄` that is `β/a` under some embedding `ℚ̄ → ℂ` (the
 scalars of G7, N5 L719-722), with `∂γ₀ = n/d`, constant on `G_{L'}`-cosets and `1` on `G_{L'}`, and
 all embeddings `j₅`, `j₃`: `RhoRamWild` for
