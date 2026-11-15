@@ -48,6 +48,8 @@ open scoped MatrixGroups
 
 namespace ZInQ.GZHeegner
 
+/-! ## §1. Lattice algebra: Dirichlet composition, homothety of lattice pairs -/
+
 /-- `s_D = i√|D|`, the normalized square root of `D < 0`. -/
 def sD (D : ℤ) : ℂ := Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ)
 
