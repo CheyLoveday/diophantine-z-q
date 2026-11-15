@@ -1,6 +1,7 @@
 import ZInQKernel.OneProof.Main
 import ZInQKernel.OneProof.Discharges
 import ZInQKernel.Contrib.OneProof.SGRDirectNV
+import ZInQKernel.Contrib.OneProof.SGRDirectElkies
 
 #discharges
 
@@ -13,3 +14,5 @@ import ZInQKernel.Contrib.OneProof.SGRDirectNV
 #print axioms SGRDirect.heckeVertWitness_of_nvSqrt
 #print axioms SGRDirect.exists_good_sqrt
 #print axioms SGRDirect.heckeVertWitness_of_nvSqrtAny
+#print axioms SGRDirect.heckeSqrtBranchAny_of_elkies
+#print axioms SGRDirect.heckeVertWitness_of_nvElkies
