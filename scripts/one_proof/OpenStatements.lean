@@ -22,10 +22,10 @@ run_cmd do
   let mut entries : Array Json := #[]
   for h in hyps do
     let pp ← liftTermElabM do
-      let fmt ← withOptions (fun o => o.setNat `format.width 100) (ppExpr h.type)
+      let fmt ← ppExpr h.type
       pure (toString fmt)
     let full ← liftTermElabM do
-      let fmt ← withOptions (fun o => (o.setBool `pp.fullNames true).setNat `format.width 100) (ppExpr h.type)
+      let fmt ← withOptions (fun o => o.setBool `pp.fullNames true) (ppExpr h.type)
       pure (toString fmt)
     -- a bundle field's docstring sits on its projection `Bundle.field`
     let doc ← match h.label.splitOn "." with
@@ -39,7 +39,7 @@ run_cmd do
       | _ => ("frozenTarget", h.label)
     entries := entries.push <| Json.mkObj [
       ("field", Json.str field), ("bundle", Json.str bundle), ("statement", Json.str pp),
-      ("type", Json.str full), ("docstring", Json.str doc.trim)]
+      ("type", Json.str full), ("docstring", Json.str doc)]
   let out := Json.mkObj [("root", Json.str "ZInQ.OneProof.frozenTarget"), ("count", toJson entries.size),
     ("hypotheses", Json.arr entries)]
   IO.FS.createDirAll "docs/one-proof"
