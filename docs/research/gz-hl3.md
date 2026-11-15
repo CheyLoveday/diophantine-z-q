@@ -287,6 +287,9 @@ implies the Cd split.
   3. in the body, replace the last argument `hL3` by
      `(ZInQ.GZHL3.grossZagierHeegner_of_leaves hU hSW hI hHP hGZ hGC)`.
 
+  The edited theorem compiles out of tree: `scratch/gz-hl3/MainEdit.lean` proves `ZInQ.FrozenTarget` from every
+  other hypothesis of `frozenTarget` and the six leaves, with axioms `[propext, Classical.choice, Quot.sound]`
+  (VERIFIED, `lake env lean`).
   `kinds.tsv` then gets six rows in place of `hL3`. `WeierstrassUniformization` is LEAF, textbook, printed form.
   `StrongWeilCurve`, `IsogenyLattice` and `HeegnerPointRational` are LEAF, composite, pending reading.
   `GrossZagierFormula` and `GrossConjugation` are LEAF, research, printed form (constant forgotten), unread. Each

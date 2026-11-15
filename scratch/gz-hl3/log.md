@@ -54,3 +54,4 @@
 - `lake env lean scratch/gz-hl3/Discharges.lean`: `DISCHARGES [hL3] by ZInQ.GZHL3.grossZagierHeegner_of_leaves`,
   still assumes the six leaves, axioms [propext, Classical.choice, Quot.sound]; no sorry.
 - `scratch/gz-hl3/Check.lean` → out_check.txt: all listed theorems standard axioms.
+- 04:30 scratch/gz-hl3/MainEdit.lean (frozenTarget with hL3 → six leaves) compiles, standard axioms (VERIFIED).
