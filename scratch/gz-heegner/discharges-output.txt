@@ -29,11 +29,9 @@ DISCHARGES [hL3] by ZInQ.GZHeegner.grossZagierHeegner_of_printed
  ZInQ.GZHL3.GrossConjugation,
  T5Glue.ShimuraMainCM,
  ZInQ.GZHeegner.X0ModuliGaloisMero,
- ZInQ.GZHeegner.ParamRegular,
- ZInQ.GZHeegner.ParamCuspGrowth,
  ZInQ.GZHeegner.ParamQExpansion]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hX] by ZInQ.GZHeegner.x0ModuliGalois_of_mero
   still assumes: [ZInQ.GZHeegner.X0ModuliGaloisMero]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 65 open hypotheses, 1400 theorems checked, 8 discharge one
+#discharges: 65 open hypotheses, 1519 theorems checked, 8 discharge one

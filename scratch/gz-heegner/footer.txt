@@ -1,0 +1,20 @@
+
+namespace ZInQ.GZHeegner
+
+/-- **`HeegnerPointRational` from the two printed CM / modular-curve leaves and one analytic glue
+Prop** (`HeegnerClassJ`, `ParamRegular`, `ParamCuspGrowth` are proved). -/
+theorem heegnerPointRational_of_printed (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero)
+    (hQ : ParamQExpansion) : ZInQ.GZHL3.HeegnerPointRational :=
+  heegnerPointRational_of hCM hX paramRegular paramCuspGrowth hQ heegnerClassJ
+
+/-- **gz-hl3's `hL3` with `HeegnerPointRational` replaced**: `GrossZagierHeegner` from gz-hl3's five
+other leaves, `ShimuraMainCM`, `X0ModuliGaloisMero` and `ParamQExpansion`. -/
+theorem grossZagierHeegner_of_printed (hU : ZInQ.GZHL3.WeierstrassUniformization)
+    (hSW : ZInQ.GZHL3.StrongWeilCurve) (hI : ZInQ.GZHL3.IsogenyLattice)
+    (hGZ : ZInQ.GZHL3.GrossZagierFormula) (hGC : ZInQ.GZHL3.GrossConjugation)
+    (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) (hQ : ParamQExpansion) :
+    ZInQ.GZDecomp.GrossZagierHeegner :=
+  ZInQ.GZHL3.grossZagierHeegner_of_leaves hU hSW hI (heegnerPointRational_of_printed hCM hX hQ)
+    hGZ hGC
+
+end ZInQ.GZHeegner

@@ -16,16 +16,18 @@ This file proves it from
   `g ∈ ℚ(X₀(N))` regular at the two points. The kernel's `T5Glue.X0ModuliGalois` (hypothesis `hX`)
   is its special case for `g` regular on all of `ℍ` (`x0ModuliGalois_of_mero`, §7). The weakening is
   needed: the coordinates `x∘φ`, `y∘φ` of a modular parametrization have poles in `ℍ`;
-* three analytic glue Props on the coordinates of `φ = weierPt E L (c φ_f)` (§3): `ParamRegular`
-  (meromorphy and regularity), `ParamCuspGrowth` (moderate growth at the cusps), `ParamQExpansion`
-  (rational `q`-expansion at `∞`).
+* one analytic glue Prop on the coordinates of `φ = weierPt E L (c φ_f)` (§3): `ParamQExpansion`
+  (rational `q`-expansion at `∞`). The other two, `ParamRegular` (meromorphy and regularity) and
+  `ParamCuspGrowth` (moderate growth at every cusp), are proved in §8.
 
 Proved here: the Dirichlet composition `J·⟨1, τ_{Q'}⟩ = ⟨1, τ_Q⟩` (`exists_compose`), homothety of
 lattice pairs ⇔ `Γ₀(N)`-equivalence (`pairHom_of_equiv`, `equiv_of_pairHom`), every ideal class of
 `ℚ(√−m)` contains `⟨a, (−b + √D)/2⟩` with `a` prime to `M` (`heegnerClassJ`, Tau Ceti's Chebotarev
 theorem), the restriction `Aut(ℂ) → Gal(ℚ̄/ℚ)` and the fixed field of `Aut(ℂ/κ(K))`, the Galois
 transport of the points `φ(τ_Q)` (poles handled through `1/(x∘φ − t)`), and the permutation of the
-Heegner points (`heegnerC_fixed`). Main theorem: `heegnerPointRational_of_printed`.
+Heegner points (`heegnerC_fixed`), and (§8) the analysis of `φ`: `D φ_f = f`, `φ_f(γτ) = K₀ + G(q_N)` at
+every cusp (`exists_const_eichler`), meromorphy of `℘`, `℘'`, `1/(℘ − c₀)`. Main theorem:
+`heegnerPointRational_of_printed`.
 
 No `sorry`, no `axiom`.
 -/
@@ -529,7 +531,7 @@ def ParamSetting (E : WeierstrassCurve ℚ) {N : ℕ} [NeZero N] (f : Newform N 
   f.χ = 1 ∧ (∀ n : ℕ, n ≠ 0 → ZInQ.GZDecomp.coeff f n = (E.LFunction n : ℂ)) ∧
     ZInQ.GZHL3.IsPeriodLattice E L ∧ c ≠ 0 ∧ ZInQ.GZHL3.PeriodsIn f c L
 
-/-- **(GLUE, analysis) Meromorphy and regularity of the coordinates of `φ`.** `x∘φ`, `y∘φ` and
+/-- **(GLUE, analysis; proved: `paramRegular`) Meromorphy and regularity of the coordinates of `φ`.** `x∘φ`, `y∘φ` and
 `1/(x∘φ − t)` are meromorphic on `ℍ`; `x∘φ`, `y∘φ` are regular where `c φ_f(τ) ∉ L`, and
 `1/(x∘φ − t)` (value `0` at the poles of `x∘φ`) is regular where `c φ_f(τ) ∈ L` or `x(φ(τ)) ≠ t`.
 Content: `φ_f` is holomorphic on `ℍ` (Hecke's bound `aₙ(f) = O(n)`; Mathlib
@@ -546,18 +548,17 @@ def ParamRegular : Prop :=
     (∀ (t : ℚ) (τ : UpperHalfPlane), (zPar f c τ ∈ L.lattice ∨ xPar E L f c τ ≠ t) →
       RegularAt (gPar E L f c t) τ)
 
-/-- **(GLUE, analysis) Moderate growth of the coordinates of `φ` at every cusp.** For
-`γ ∈ SL₂(ℤ)`, `x(φ(γτ))`, `y(φ(γτ))`, `1/(x(φ(γτ)) − t)` are `O(e^{2πk Im τ})` as `Im τ → ∞`.
-Content: `f|γ` is a cusp form for `γ⁻¹Γ₀(N)γ`, so `φ_f(γτ) → φ_f(γ∞)` exponentially fast with a
-`q^{1/h}`-expansion, and `℘_L` has at most a double pole there. -/
+/-- **(GLUE, analysis; proved: `paramCuspGrowth`) Moderate growth of the coordinates of `φ` at every
+cusp.** For `γ ∈ SL₂(ℤ)`, each of `x(φ(γτ))`, `y(φ(γτ))`, `1/(x(φ(γτ)) − t)` is `O(e^{2πk Im τ})` as
+`Im τ → ∞`, for some `k`. -/
 def ParamCuspGrowth : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (N : ℕ) [NeZero N] (f : Newform N 2)
-    (L : PeriodPair) (c : ℚ), ParamSetting E f L c → ∀ γ : SL(2, ℤ), ∃ k : ℕ,
-    (fun τ : UpperHalfPlane => xPar E L f c (γ • τ)) =O[UpperHalfPlane.atImInfty]
-        (fun τ => Real.exp (2 * Real.pi * k * τ.im)) ∧
-    (fun τ : UpperHalfPlane => yPar E L f c (γ • τ)) =O[UpperHalfPlane.atImInfty]
-        (fun τ => Real.exp (2 * Real.pi * k * τ.im)) ∧
-    ∀ t : ℚ, (fun τ : UpperHalfPlane => gPar E L f c t (γ • τ)) =O[UpperHalfPlane.atImInfty]
+    (L : PeriodPair) (c : ℚ), ParamSetting E f L c → ∀ γ : SL(2, ℤ),
+    (∃ k : ℕ, (fun τ : UpperHalfPlane => xPar E L f c (γ • τ)) =O[UpperHalfPlane.atImInfty]
+        (fun τ => Real.exp (2 * Real.pi * k * τ.im))) ∧
+    (∃ k : ℕ, (fun τ : UpperHalfPlane => yPar E L f c (γ • τ)) =O[UpperHalfPlane.atImInfty]
+        (fun τ => Real.exp (2 * Real.pi * k * τ.im))) ∧
+    ∀ t : ℚ, ∃ k : ℕ, (fun τ : UpperHalfPlane => gPar E L f c t (γ • τ)) =O[UpperHalfPlane.atImInfty]
         (fun τ => Real.exp (2 * Real.pi * k * τ.im))
 
 /-- A rational Laurent expansion in `q = e^{2πiτ}` valid for `Im τ > T`. -/
@@ -951,9 +952,9 @@ theorem isRatModFnMero_coords (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : P
   refine ⟨⟨fun γ hγ τ => xPar_smul hP hγ τ, fun τ => (hmer τ).1, fun γ => ?_, qx⟩,
     ⟨fun γ hγ τ => yPar_smul hP hγ τ, fun τ => (hmer τ).2.1, fun γ => ?_, qy⟩,
     fun t => ⟨fun γ hγ τ => gPar_smul hP hγ t τ, fun τ => (hmer τ).2.2 t, fun γ => ?_, qg t⟩⟩
-  · obtain ⟨k, hk, -, -⟩ := hG E N f L c hs γ; exact ⟨k, hk⟩
-  · obtain ⟨k, -, hk, -⟩ := hG E N f L c hs γ; exact ⟨k, hk⟩
-  · obtain ⟨k, -, -, hk⟩ := hG E N f L c hs γ; exact ⟨k, hk t⟩
+  · exact (hG E N f L c hs γ).1
+  · exact (hG E N f L c hs γ).2.1
+  · exact (hG E N f L c hs γ).2.2 t
 
 /-- `σ` as a `ℚ`-algebra map. -/
 abbrev sigA (σ : ℂ ≃+* ℂ) : ℂ →ₐ[ℚ] ℂ := (σ : ℂ →+* ℂ).toRatAlgHom
@@ -1252,25 +1253,678 @@ theorem x0ModuliGalois_of_mero (h : X0ModuliGaloisMero) : T5Glue.X0ModuliGalois 
   exact h N hN g (isRatModFnMero_of N hg) σ τ τ' μ (regularAt_of_hasSum ha τ)
     (regularAt_of_hasSum ha τ') halg hμ hk
 
+/-! ## §8. The analytic glue `ParamRegular` and `ParamCuspGrowth`, proved -/
+
+section AnalyticGlue
+
+open scoped Manifold ModularForm
+
+/-! ## The Weierstrass side: `℘`, `℘'` and `1/(℘ − c₀)` as functions on `ℂ` -/
+
+section Wp
+
+variable (L : PeriodPair)
+
+theorem analyticAt_wp {z : ℂ} (hz : z ∉ L.lattice) : AnalyticAt ℂ L.weierstrassP z :=
+  L.differentiableOn_weierstrassP.analyticAt (L.isClosed_lattice.isOpen_compl.mem_nhds hz)
+
+theorem analyticAt_dwp {z : ℂ} (hz : z ∉ L.lattice) : AnalyticAt ℂ L.derivWeierstrassP z :=
+  L.analyticOnNhd_derivWeierstrassP z hz
+
+theorem meromorphicAt_inv_pow (z₀ : ℂ) (n : ℕ) : MeromorphicAt (fun z : ℂ => 1 / (z - z₀) ^ n) z₀ :=
+  (MeromorphicAt.const 1 z₀).div (((MeromorphicAt.id z₀).sub (MeromorphicAt.const z₀ z₀)).pow n)
+
+theorem meromorphicAt_wp (z₀ : ℂ) : MeromorphicAt L.weierstrassP z₀ := by
+  by_cases h : z₀ ∈ L.lattice
+  · have e : L.weierstrassP =
+        fun z => L.weierstrassPExcept z₀ z + (1 / (z - z₀) ^ 2 - 1 / z₀ ^ 2) :=
+      funext fun z => (L.weierstrassPExcept_add ⟨z₀, h⟩ z).symm
+    rw [e]
+    exact (L.analyticAt_weierstrassPExcept z₀).meromorphicAt.add
+      ((meromorphicAt_inv_pow z₀ 2).sub (MeromorphicAt.const _ z₀))
+  · exact (analyticAt_wp L h).meromorphicAt
+
+theorem meromorphicAt_dwp (z₀ : ℂ) : MeromorphicAt L.derivWeierstrassP z₀ := by
+  by_cases h : z₀ ∈ L.lattice
+  · have e : L.derivWeierstrassP =
+        fun z => L.derivWeierstrassPExcept z₀ z - 2 * (1 / (z - z₀) ^ 3) :=
+      funext fun z => by rw [← L.derivWeierstrassPExcept_sub ⟨z₀, h⟩ z]; ring
+    rw [e]
+    exact (L.analyticAt_derivWeierstrassPExcept z₀).meromorphicAt.sub
+      ((MeromorphicAt.const 2 z₀).mul (meromorphicAt_inv_pow z₀ 3))
+  · exact (analyticAt_dwp L h).meromorphicAt
+
+open Classical in
+/-- `z ↦ 1/(℘(z) − c₀)`, `0` on `L`. -/
+def phiT (c₀ : ℂ) (z : ℂ) : ℂ := if z ∈ L.lattice then 0 else (L.weierstrassP z - c₀)⁻¹
+
+theorem analyticAt_phiT_of_mem (c₀ : ℂ) {z₀ : ℂ} (h : z₀ ∈ L.lattice) :
+    AnalyticAt ℂ (phiT L c₀) z₀ := by
+  set A : ℂ → ℂ := fun z => L.weierstrassPExcept z₀ z - 1 / z₀ ^ 2 - c₀ with hAdef
+  have hA : AnalyticAt ℂ A z₀ := (L.analyticAt_weierstrassPExcept z₀).sub analyticAt_const
+    |>.sub analyticAt_const
+  set R : ℂ → ℂ := fun z => (z - z₀) ^ 2 / (1 + (z - z₀) ^ 2 * A z) with hRdef
+  have hR : AnalyticAt ℂ R z₀ := by
+    apply AnalyticAt.div
+    · fun_prop
+    · exact analyticAt_const.add (((analyticAt_id.sub analyticAt_const).pow 2).mul hA)
+    · simp
+  apply hR.congr
+  filter_upwards [L.compl_lattice_sdiff_singleton_mem_nhds z₀] with z hz
+  by_cases hzz : z = z₀
+  · subst hzz; simp [phiT, h, R]
+  · have hzL : z ∉ L.lattice := fun hz' => hz ⟨hz', hzz⟩
+    have hw : z - z₀ ≠ 0 := sub_ne_zero.2 hzz
+    simp only [phiT, hzL, if_false, R, A]
+    rw [← L.weierstrassPExcept_add ⟨z₀, h⟩ z]
+    have : L.weierstrassPExcept z₀ z + (1 / (z - z₀) ^ 2 - 1 / z₀ ^ 2) - c₀ =
+        (1 + (z - z₀) ^ 2 * (L.weierstrassPExcept z₀ z - 1 / z₀ ^ 2 - c₀)) / (z - z₀) ^ 2 := by
+      field_simp; ring
+    rw [this, inv_div]
+
+theorem phiT_eventuallyEq {c₀ z₀ : ℂ} (h : z₀ ∉ L.lattice) :
+    phiT L c₀ =ᶠ[nhds z₀] fun z => (L.weierstrassP z - c₀)⁻¹ := by
+  filter_upwards [L.isClosed_lattice.isOpen_compl.mem_nhds h] with z hz
+  simp only [phiT, if_neg (show z ∉ L.lattice from hz)]
+
+theorem analyticAt_phiT_of_ne (c₀ : ℂ) {z₀ : ℂ} (h : z₀ ∉ L.lattice)
+    (hne : L.weierstrassP z₀ ≠ c₀) : AnalyticAt ℂ (phiT L c₀) z₀ :=
+  (((analyticAt_wp L h).sub analyticAt_const).inv (sub_ne_zero.2 hne)).congr
+    (phiT_eventuallyEq L h).symm
+
+theorem meromorphicAt_phiT (c₀ z₀ : ℂ) : MeromorphicAt (phiT L c₀) z₀ := by
+  by_cases h : z₀ ∈ L.lattice
+  · exact (analyticAt_phiT_of_mem L c₀ h).meromorphicAt
+  · exact (((meromorphicAt_wp L z₀).sub (MeromorphicAt.const c₀ z₀)).inv).congr
+      ((phiT_eventuallyEq L h).symm.filter_mono nhdsWithin_le_nhds)
+
+end Wp
+
+/-! ## The Eichler integral is holomorphic on `ℍ` -/
+
+section Eichler
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+/-- The coefficients of `φ_f = Σ aₙ/n qⁿ`. -/
+def eCoeff (n : ℕ) : ℂ := if n = 0 then 0 else ZInQ.GZDecomp.coeff f n / n
+
+/-- `φ_f` as a power series in `q`. -/
+def eSeries : FormalMultilinearSeries ℂ ℂ ℂ := FormalMultilinearSeries.ofScalars ℂ (eCoeff f)
+
+theorem hasSum_newform (τ : UpperHalfPlane) :
+    HasSum (fun n => ZInQ.GZDecomp.coeff f n * qC τ ^ n) (f.toCuspForm τ) := by
+  have h := ModularForm.hasSum_qExpansion f.toCuspForm one_pos
+    (TauCeti.one_mem_strictPeriods_Gamma1_map N) τ
+  have hq : Function.Periodic.qParam 1 (τ : ℂ) = qC τ := by
+    simp [Function.Periodic.qParam, qC]
+  rw [hq] at h
+  exact h
+
+theorem coeff_zero_newform : ZInQ.GZDecomp.coeff f 0 = 0 :=
+  CuspFormClass.qExpansion_coeff_zero f.toCuspForm one_pos (TauCeti.one_mem_strictPeriods_Gamma1_map N)
+
+theorem eSeries_radius (r : NNReal) (hr : (r : ℝ) < 1) : (r : ENNReal) ≤ (eSeries f).radius := by
+  rcases eq_or_lt_of_le r.2 with h0 | h0
+  · have : r = 0 := by ext; exact h0.symm
+    rw [this]; simp
+  obtain ⟨σ, hσ⟩ := exists_qC_norm h0 hr
+  apply (eSeries f).le_radius_of_tendsto (l := 0)
+  have ht := ((hasSum_newform f σ).summable.tendsto_atTop_zero).norm
+  simp only [norm_zero] at ht
+  refine squeeze_zero (fun n => by positivity) (fun n => ?_) ht
+  rw [eSeries, FormalMultilinearSeries.ofScalars_norm, norm_mul, norm_pow, hσ]
+  apply mul_le_mul_of_nonneg_right _ (by positivity)
+  unfold eCoeff
+  split_ifs with hn
+  · simp
+  · rw [norm_div]
+    have h1 : (1 : ℝ) ≤ ‖(n : ℂ)‖ := by
+      rw [Complex.norm_natCast]; exact_mod_cast Nat.one_le_iff_ne_zero.2 hn
+    exact div_le_self (norm_nonneg _) h1
+
+theorem eSeries_mem_ball {w : ℂ} (hw : ‖w‖ < 1) : w ∈ Metric.eball (0 : ℂ) (eSeries f).radius := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hw
+  have hr0 : 0 ≤ r := le_trans (norm_nonneg _) hr1.le
+  set r' : NNReal := ⟨r, hr0⟩
+  rw [Metric.mem_eball, edist_zero_right]
+  calc (‖w‖₊ : ENNReal) < (r' : ENNReal) := by rw [ENNReal.coe_lt_coe]; exact_mod_cast hr1
+    _ ≤ _ := eSeries_radius f r' hr2
+
+theorem eSeries_radius_pos : 0 < (eSeries f).radius := by
+  have := eSeries_mem_ball f (w := 0) (by simp)
+  rw [Metric.mem_eball] at this; exact lt_of_le_of_lt bot_le this
+
+theorem eichler_eq (τ : UpperHalfPlane) : ZInQ.GZHL3.eichler f τ = (eSeries f).sum (qC τ) := by
+  have hs := (eSeries f).hasSum (eSeries_mem_ball f (norm_qC_lt_one τ.im_pos))
+  simp only [eSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] at hs
+  have h1 := (hasSum_nat_add_iff' 1).mpr hs
+  simp only [Finset.range_one, Finset.sum_singleton, eCoeff] at h1
+  unfold ZInQ.GZHL3.eichler
+  refine (HasSum.tsum_eq ?_)
+  convert h1 using 1
+  · funext n
+    rw [if_neg (Nat.succ_ne_zero n), qC, ← Complex.exp_nat_mul]
+    push_cast
+    ring_nf
+  · simp [eSeries]
+
+theorem analyticAt_eSum {w : ℂ} (hw : ‖w‖ < 1) : AnalyticAt ℂ (eSeries f).sum w :=
+  ((eSeries f).hasFPowerSeriesOnBall (eSeries_radius_pos f)).analyticAt_of_mem
+    (eSeries_mem_ball f hw)
+
+theorem analyticAt_qC (w : ℂ) : AnalyticAt ℂ qC w := by unfold qC; fun_prop
+
+theorem eichler_ofComplex_eventuallyEq (τ : UpperHalfPlane) :
+    (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex) =ᶠ[nhds (τ : ℂ)]
+      fun w => (eSeries f).sum (qC w) := by
+  have hopen : IsOpen {w : ℂ | 0 < w.im} := isOpen_lt continuous_const Complex.continuous_im
+  filter_upwards [hopen.mem_nhds τ.im_pos] with w hw
+  simp only [Function.comp_apply]
+  rw [eichler_eq, UpperHalfPlane.ofComplex_apply_of_im_pos hw]
+
+theorem analyticAt_eichler (τ : UpperHalfPlane) :
+    AnalyticAt ℂ (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex) τ :=
+  ((analyticAt_eSum f (norm_qC_lt_one τ.im_pos)).comp (analyticAt_qC _)).congr
+    (eichler_ofComplex_eventuallyEq f τ).symm
+
+theorem analyticAt_zPar (c : ℚ) (τ : UpperHalfPlane) :
+    AnalyticAt ℂ (zPar f c ∘ UpperHalfPlane.ofComplex) τ :=
+  show AnalyticAt ℂ (fun w => (c : ℂ) * (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex) w) τ from
+    analyticAt_const.mul (analyticAt_eichler f τ)
+
+theorem zPar_ofComplex (c : ℚ) (τ : UpperHalfPlane) :
+    (zPar f c ∘ UpperHalfPlane.ofComplex) (τ : ℂ) = zPar f c τ := by
+  simp [UpperHalfPlane.ofComplex_apply]
+
+end Eichler
+
+/-- **`ParamRegular`, proved.** -/
+theorem paramRegular : ParamRegular := by
+  intro E _ N _ f L c _
+  set b : ℂ := (E⁄ℂ).b₂ / 12 with hb
+  have hz := analyticAt_zPar f c
+  have hval := zPar_ofComplex f c
+  have ex : xPar E L f c ∘ UpperHalfPlane.ofComplex =
+      (fun z => L.weierstrassP z - b) ∘ (zPar f c ∘ UpperHalfPlane.ofComplex) := rfl
+  have ey : yPar E L f c ∘ UpperHalfPlane.ofComplex =
+      (fun z => (L.derivWeierstrassP z - (E⁄ℂ).a₁ * (L.weierstrassP z - b) - (E⁄ℂ).a₃) / 2) ∘
+        (zPar f c ∘ UpperHalfPlane.ofComplex) := rfl
+  have eg : ∀ t : ℚ, gPar E L f c t ∘ UpperHalfPlane.ofComplex =
+      phiT L (b + t) ∘ (zPar f c ∘ UpperHalfPlane.ofComplex) := by
+    intro t; funext w; simp only [Function.comp_apply, gPar, phiT, xPar, sub_sub, hb]
+  have mx : ∀ z₀, MeromorphicAt (fun z => L.weierstrassP z - b) z₀ := fun z₀ =>
+    (meromorphicAt_wp L z₀).sub (MeromorphicAt.const _ _)
+  have my : ∀ z₀, MeromorphicAt (fun z => (L.derivWeierstrassP z - (E⁄ℂ).a₁ *
+      (L.weierstrassP z - b) - (E⁄ℂ).a₃) / 2) z₀ := fun z₀ =>
+    (((meromorphicAt_dwp L z₀).sub ((MeromorphicAt.const _ _).mul (mx z₀))).sub
+      (MeromorphicAt.const _ _)).div (MeromorphicAt.const _ _)
+  refine ⟨fun τ => ⟨?_, ?_, fun t => ?_⟩, fun τ hτ => ⟨?_, ?_⟩, fun t τ h => ?_⟩
+  · rw [ex]; exact (mx _).comp_analyticAt (hz τ)
+  · rw [ey]; exact (my _).comp_analyticAt (hz τ)
+  · rw [eg]; exact (meromorphicAt_phiT L _ _).comp_analyticAt (hz τ)
+  · show AnalyticAt ℂ _ _
+    rw [ex]
+    refine AnalyticAt.comp ?_ (hz τ)
+    rw [hval]
+    exact (analyticAt_wp L hτ).sub analyticAt_const
+  · show AnalyticAt ℂ _ _
+    rw [ey]
+    refine AnalyticAt.comp ?_ (hz τ)
+    rw [hval]
+    exact ((((analyticAt_dwp L hτ).sub (analyticAt_const.mul ((analyticAt_wp L hτ).sub
+      analyticAt_const))).sub analyticAt_const).div analyticAt_const two_ne_zero)
+  · show AnalyticAt ℂ _ _
+    rw [eg]
+    refine AnalyticAt.comp ?_ (hz τ)
+    rw [hval]
+    rcases h with h | h
+    · exact analyticAt_phiT_of_mem L _ h
+    · by_cases hm : zPar f c τ ∈ L.lattice
+      · exact analyticAt_phiT_of_mem L _ hm
+      · refine analyticAt_phiT_of_ne L _ hm ?_
+        intro he; apply h; simp only [xPar, ← hb, he]; ring
+
+
+/-! ## Power series converging on the unit disc -/
+
+section PSeries
+
+/-- A power series converging on the unit disc has `‖cₙ‖ rⁿ` bounded for each `r < 1`. -/
+theorem pseries_bound (c : ℕ → ℂ) (hc : ∀ q : ℂ, ‖q‖ < 1 → Summable (fun n => c n * q ^ n))
+    {r : ℝ} (hr0 : 0 ≤ r) (hr1 : r < 1) : ∃ C, ∀ n, ‖c n‖ * r ^ n ≤ C := by
+  have hs := (hc (r : ℂ) (by rw [Complex.norm_real, Real.norm_of_nonneg hr0]; exact hr1))
+  have ht := hs.tendsto_atTop_zero.norm
+  simp only [norm_zero] at ht
+  obtain ⟨C, hC⟩ := ht.bddAbove_range
+  refine ⟨C, fun n => ?_⟩
+  have := hC ⟨n, rfl⟩
+  simpa [norm_mul, norm_pow, Complex.norm_real, Real.norm_of_nonneg hr0] using this
+
+/-- Absolute convergence of a dominated power series inside the unit disc. -/
+theorem pseries_summable_norm (c d : ℕ → ℂ) (hc : ∀ q : ℂ, ‖q‖ < 1 → Summable (fun n => c n * q ^ n))
+    (K : ℝ) (hK : 0 ≤ K) (k : ℕ) (hd : ∀ n, ‖d n‖ ≤ K * (n : ℝ) ^ k * ‖c n‖) {q : ℂ}
+    (hq : ‖q‖ < 1) : Summable (fun n => ‖d n‖ * ‖q‖ ^ n) := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hq
+  have hr0 : 0 < r := lt_of_le_of_lt (norm_nonneg _) hr1
+  obtain ⟨C, hC⟩ := pseries_bound c hc hr0.le hr2
+  have hρ : ‖‖q‖ / r‖ < 1 := by
+    rw [Real.norm_of_nonneg (div_nonneg (norm_nonneg _) hr0.le), div_lt_one hr0]; exact hr1
+  have hgeo := (summable_pow_mul_geometric_of_norm_lt_one k hρ).mul_left (K * C)
+  refine Summable.of_nonneg_of_le (fun n => by positivity) (fun n => ?_) hgeo
+  have h1 : ‖c n‖ * ‖q‖ ^ n ≤ C * (‖q‖ / r) ^ n := by
+    rw [div_pow, mul_div_assoc', le_div_iff₀ (pow_pos hr0 n)]
+    calc ‖c n‖ * ‖q‖ ^ n * r ^ n = (‖c n‖ * r ^ n) * ‖q‖ ^ n := by ring
+      _ ≤ C * ‖q‖ ^ n := by gcongr; exact hC n
+  calc ‖d n‖ * ‖q‖ ^ n ≤ (K * (n : ℝ) ^ k * ‖c n‖) * ‖q‖ ^ n := by gcongr; exact hd n
+    _ = K * (n : ℝ) ^ k * (‖c n‖ * ‖q‖ ^ n) := by ring
+    _ ≤ K * (n : ℝ) ^ k * (C * (‖q‖ / r) ^ n) := by gcongr
+    _ = K * C * ((n : ℝ) ^ k * (‖q‖ / r) ^ n) := by ring
+
+/-- **Termwise differentiation** of a power series converging on the unit disc. -/
+theorem hasDerivAt_pseries (c : ℕ → ℂ) (hc : ∀ q : ℂ, ‖q‖ < 1 → Summable (fun n => c n * q ^ n))
+    {z : ℂ} (hz : ‖z‖ < 1) :
+    HasDerivAt (fun w => ∑' n, c n * w ^ n) (∑' n, c n * ((n : ℂ) * z ^ (n - 1))) z := by
+  obtain ⟨r, hr1, hr2⟩ := exists_between hz
+  have hr0 : 0 < r := lt_of_le_of_lt (norm_nonneg _) hr1
+  have hrr : ‖(r : ℂ)‖ < 1 := by rw [Complex.norm_real, Real.norm_of_nonneg hr0.le]; exact hr2
+  have hs := pseries_summable_norm c (fun n => (n : ℂ) * c n) hc 1 zero_le_one 1
+    (fun n => by simp [norm_mul]) hrr
+  have hu : Summable (fun n => ‖c n‖ * (n : ℝ) * r ^ (n - 1)) := by
+    refine (hs.mul_left r⁻¹).congr fun n => ?_
+    rw [Complex.norm_real, Real.norm_of_nonneg hr0.le, norm_mul, Complex.norm_natCast]
+    rcases n with _ | n
+    · simp
+    · rw [pow_succ]; field_simp; simp
+  refine hasDerivAt_tsum_of_isPreconnected (g := fun n w => c n * w ^ n)
+    (g' := fun n w => c n * ((n : ℂ) * w ^ (n - 1))) hu Metric.isOpen_ball
+    (convex_ball (0 : ℂ) r).isPreconnected (fun n y _ => (hasDerivAt_pow n y).const_mul (c n))
+    (fun n y hy => ?_) (Metric.mem_ball_self hr0) (hc 0 (by simp)) (by simpa using hr1)
+  rw [Metric.mem_ball, dist_zero_right] at hy
+  rw [norm_mul, norm_mul, Complex.norm_natCast, norm_pow, ← mul_assoc]
+  gcongr
+
+end PSeries
+
+/-! ## The derivative of the Eichler integral -/
+
+section EichlerDeriv
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+theorem eCoeff_summable (q : ℂ) (hq : ‖q‖ < 1) : Summable (fun n => eCoeff f n * q ^ n) := by
+  have hs := (eSeries f).hasSum (eSeries_mem_ball f hq)
+  simp only [eSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] at hs
+  exact hs.summable
+
+theorem eSum_eq_tsum (q : ℂ) : (eSeries f).sum q = ∑' n, eCoeff f n * q ^ n := by
+  rw [eSeries, ← FormalMultilinearSeries.ofScalarsSum, FormalMultilinearSeries.ofScalarsSum_eq_tsum]
+  simp
+
+theorem hasDerivAt_qC (w : ℂ) : HasDerivAt qC (2 * Real.pi * Complex.I * qC w) w := by
+  unfold qC
+  have := ((hasDerivAt_id w).const_mul (2 * Real.pi * Complex.I)).cexp
+  simpa [mul_comm] using this
+
+theorem hasDerivAt_eichler (τ : UpperHalfPlane) :
+    HasDerivAt (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex)
+      (2 * Real.pi * Complex.I * f.toCuspForm τ) τ := by
+  have hq := norm_qC_lt_one τ.im_pos
+  have h1 := (hasDerivAt_pseries (eCoeff f) (eCoeff_summable f) hq).comp (τ : ℂ) (hasDerivAt_qC τ)
+  have hev : (ZInQ.GZHL3.eichler f ∘ UpperHalfPlane.ofComplex) =ᶠ[nhds (τ : ℂ)]
+      ((fun w => ∑' n, eCoeff f n * w ^ n) ∘ qC) := by
+    filter_upwards [eichler_ofComplex_eventuallyEq f τ] with w hw
+    rw [hw, Function.comp_apply, eSum_eq_tsum]
+  refine HasDerivAt.congr_of_eventuallyEq ?_ hev
+  convert h1 using 1
+  have key : ∀ n : ℕ, eCoeff f n * ((n : ℂ) * qC τ ^ (n - 1)) * (2 * Real.pi * Complex.I * qC τ) =
+      2 * Real.pi * Complex.I * (ZInQ.GZDecomp.coeff f n * qC τ ^ n) := by
+    intro n
+    rcases n with _ | n
+    · simp [eCoeff, coeff_zero_newform]
+    · simp only [eCoeff, if_neg (Nat.succ_ne_zero n), Nat.add_sub_cancel]
+      have hn : ((n + 1 : ℕ) : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
+      rw [pow_succ]
+      field_simp
+  show _ = (∑' n, eCoeff f n * ((n : ℂ) * qC τ ^ (n - 1))) * (2 * Real.pi * Complex.I * qC τ)
+  rw [← tsum_mul_right, funext key, tsum_mul_left, (hasSum_newform f τ).tsum_eq]
+
+theorem mdiff_eichler : MDiff (ZInQ.GZHL3.eichler f) := fun τ =>
+  UpperHalfPlane.mdifferentiableAt_iff.2 (hasDerivAt_eichler f τ).differentiableAt
+
+theorem D_eichler : Derivative.normalizedDerivOfComplex (ZInQ.GZHL3.eichler f) = ⇑f.toCuspForm := by
+  funext τ
+  rw [Derivative.normalizedDerivOfComplex, (hasDerivAt_eichler f τ).deriv]
+  field_simp
+
+end EichlerDeriv
+
+/-! ## The Eichler integral at the other cusps -/
+
+section Cusp
+
+variable {N : ℕ} [NeZero N] (f : Newform N 2)
+
+theorem conj_T_mem_Gamma1 (γ : SL(2, ℤ)) :
+    γ * ModularGroup.T ^ (N : ℤ) * γ⁻¹ ∈ CongruenceSubgroup.Gamma1 N := by
+  have hT : ModularGroup.T ^ (N : ℤ) ∈ CongruenceSubgroup.Gamma N := by
+    simp only [CongruenceSubgroup.Gamma_mem, ModularGroup.coe_T_zpow]
+    simp
+  have h := (CongruenceSubgroup.Gamma_normal (N := N)).conj_mem _ hT γ
+  rw [CongruenceSubgroup.Gamma_mem] at h
+  rw [CongruenceSubgroup.Gamma1_mem]
+  exact ⟨h.1, h.2.2.2, h.2.2.1⟩
+
+/-- `f|₂γ`. -/
+def fSlash (γ : SL(2, ℤ)) : UpperHalfPlane → ℂ := (⇑f.toCuspForm) ∣[(2 : ℤ)] γ
+
+theorem fSlash_T (γ : SL(2, ℤ)) :
+    fSlash f γ ∣[(2 : ℤ)] (ModularGroup.T ^ (N : ℤ)) = fSlash f γ := by
+  unfold fSlash
+  rw [← SlashAction.slash_mul]
+  have e : γ * ModularGroup.T ^ (N : ℤ) = (γ * ModularGroup.T ^ (N : ℤ) * γ⁻¹) * γ := by group
+  rw [e, SlashAction.slash_mul]
+  congr 1
+  rw [ModularForm.SL_slash]
+  exact f.toCuspForm.slash_action_eq' _ (Subgroup.mem_map_of_mem _ (conj_T_mem_Gamma1 γ))
+
+theorem fSlash_periodic (γ : SL(2, ℤ)) :
+    Function.Periodic (fSlash f γ ∘ UpperHalfPlane.ofComplex) (N : ℝ) := by
+  intro w
+  by_cases hw : 0 < w.im
+  · have hw' : 0 < (w + ((N : ℝ) : ℂ)).im := by simpa using hw
+    simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply_of_im_pos hw,
+      UpperHalfPlane.ofComplex_apply_of_im_pos hw']
+    have h := congrFun (fSlash_T f γ) ⟨w, hw⟩
+    rw [ModularForm.SL_slash_apply] at h
+    have h10 : ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 0) = 0 := by
+      rw [show ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 0) = (ModularGroup.T ^ (N : ℤ)).1 1 0 from rfl,
+        ModularGroup.coe_T_zpow]; simp
+    have h11 : ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 1) = 1 := by
+      rw [show ((ModularGroup.T ^ (N : ℤ) : SL(2, ℤ)) 1 1) = (ModularGroup.T ^ (N : ℤ)).1 1 1 from rfl,
+        ModularGroup.coe_T_zpow]; simp
+    have hd : UpperHalfPlane.denom (ModularGroup.T ^ (N : ℤ) : SL(2, ℤ))
+        (⟨w, hw⟩ : UpperHalfPlane) = 1 := by
+      rw [ModularGroup.denom_apply, h10, h11]; simp
+    rw [hd, one_zpow, mul_one] at h
+    rw [← h]
+    congr 1
+    apply UpperHalfPlane.ext
+    rw [UpperHalfPlane.modular_T_zpow_smul]
+    simp [add_comm]
+  · have hw' : ¬ 0 < (w + ((N : ℝ) : ℂ)).im := by simpa using hw
+    simp only [Function.comp_apply]
+    rw [UpperHalfPlane.ofComplex_apply_of_im_nonpos (not_lt.1 hw),
+      UpperHalfPlane.ofComplex_apply_of_im_nonpos (not_lt.1 hw')]
+
+theorem fSlash_mdiff (γ : SL(2, ℤ)) : MDiff (fSlash f γ) := by
+  unfold fSlash
+  rw [ModularForm.SL_slash]
+  exact (ModularFormClass.holo f.toCuspForm).slash _ _
+
+theorem fSlash_zero (γ : SL(2, ℤ)) : UpperHalfPlane.IsZeroAtImInfty (fSlash f γ) :=
+  CuspFormClass.zero_at_infty_slash f.toCuspForm γ
+
+theorem hNpos : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+
+/-- The `q_N`-expansion coefficients of `f|₂γ`. -/
+def bCoeff (γ : SL(2, ℤ)) (m : ℕ) : ℂ := (UpperHalfPlane.qExpansion (N : ℝ) (fSlash f γ)).coeff m
+
+theorem hasSum_fSlash (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    HasSum (fun m => bCoeff f γ m * Function.Periodic.qParam (N : ℝ) τ ^ m) (fSlash f γ τ) := by
+  simpa [smul_eq_mul, bCoeff] using UpperHalfPlane.hasSum_qExpansion (hNpos (N := N))
+    (fSlash_periodic f γ) (fSlash_mdiff f γ) (fSlash_zero f γ).isBoundedAtImInfty τ
+
+theorem bCoeff_summable (γ : SL(2, ℤ)) (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun m => bCoeff f γ m * q ^ m) := by
+  simpa [smul_eq_mul, bCoeff] using (UpperHalfPlane.hasSum_qExpansion_of_norm_lt (hNpos (N := N))
+    (fSlash_periodic f γ) (fSlash_mdiff f γ) (fSlash_zero f γ).isBoundedAtImInfty hq).summable
+
+theorem bCoeff_zero (γ : SL(2, ℤ)) : bCoeff f γ 0 = 0 := by
+  rw [bCoeff, UpperHalfPlane.qExpansion_coeff_zero (hNpos (N := N))
+    (UpperHalfPlane.analyticAt_cuspFunction_zero (hNpos (N := N)) (fSlash_periodic f γ)
+      (fSlash_mdiff f γ) (fSlash_zero f γ).isBoundedAtImInfty) (fSlash_periodic f γ)]
+  exact (fSlash_zero f γ).valueAtInfty_eq_zero
+
+/-- The coefficients of the antiderivative `Σ_{m ≥ 1} b_m (N/m) q_N^m`. -/
+def betaC (γ : SL(2, ℤ)) (m : ℕ) : ℂ := if m = 0 then 0 else bCoeff f γ m * N / m
+
+theorem betaC_norm (γ : SL(2, ℤ)) (m : ℕ) : ‖betaC f γ m‖ ≤ N * (m : ℝ) ^ 0 * ‖bCoeff f γ m‖ := by
+  unfold betaC
+  split_ifs with hm
+  · simp only [norm_zero, pow_zero, mul_one]; positivity
+  · rw [norm_div, norm_mul, Complex.norm_natCast, Complex.norm_natCast, pow_zero, mul_one]
+    have h1 : (1 : ℝ) ≤ m := by exact_mod_cast Nat.one_le_iff_ne_zero.2 hm
+    rw [div_le_iff₀ (by linarith)]
+    have := mul_le_mul_of_nonneg_left h1 (by positivity : (0 : ℝ) ≤ N * ‖bCoeff f γ m‖)
+    linarith
+
+theorem betaC_summable_norm (γ : SL(2, ℤ)) {q : ℂ} (hq : ‖q‖ < 1) :
+    Summable (fun m => ‖betaC f γ m‖ * ‖q‖ ^ m) :=
+  pseries_summable_norm (bCoeff f γ) (betaC f γ) (bCoeff_summable f γ) N (by positivity) 0
+    (betaC_norm f γ) hq
+
+theorem betaC_summable (γ : SL(2, ℤ)) (q : ℂ) (hq : ‖q‖ < 1) :
+    Summable (fun m => betaC f γ m * q ^ m) :=
+  Summable.of_norm ((betaC_summable_norm f γ hq).congr fun m => by rw [norm_mul, norm_pow])
+
+/-- `G(τ) = Σ_{m ≥ 1} b_m (N/m) q_N(τ)^m`. -/
+def Gq (γ : SL(2, ℤ)) (τ : UpperHalfPlane) : ℂ :=
+  ∑' m, betaC f γ m * Function.Periodic.qParam (N : ℝ) τ ^ m
+
+theorem hasDerivAt_qParamN (w : ℂ) :
+    HasDerivAt (fun w => Function.Periodic.qParam (N : ℝ) w)
+      (2 * Real.pi * Complex.I / N * Function.Periodic.qParam (N : ℝ) w) w := by
+  have := ((hasDerivAt_id w).const_mul (2 * Real.pi * Complex.I / (N : ℂ))).cexp
+  convert this using 1
+  · funext z; simp [Function.Periodic.qParam]; ring_nf
+  · simp [Function.Periodic.qParam]; ring_nf
+
+theorem hasDerivAt_Gq (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    HasDerivAt (Gq f γ ∘ UpperHalfPlane.ofComplex)
+      (2 * Real.pi * Complex.I * fSlash f γ τ) τ := by
+  have hq : ‖Function.Periodic.qParam (N : ℝ) (τ : ℂ)‖ < 1 :=
+    Function.Periodic.norm_qParam_lt_one (hNpos (N := N)) τ.im_pos
+  have h1 := (hasDerivAt_pseries (betaC f γ) (betaC_summable f γ) hq).comp (τ : ℂ)
+    (hasDerivAt_qParamN (N := N) τ)
+  have hev : (Gq f γ ∘ UpperHalfPlane.ofComplex) =ᶠ[nhds (τ : ℂ)]
+      ((fun w => ∑' m, betaC f γ m * w ^ m) ∘ fun w => Function.Periodic.qParam (N : ℝ) w) := by
+    filter_upwards [UpperHalfPlane.isOpen_upperHalfPlaneSet.mem_nhds τ.im_pos] with w hw
+    simp only [Function.comp_apply, Gq, UpperHalfPlane.ofComplex_apply_of_im_pos hw]
+  refine HasDerivAt.congr_of_eventuallyEq ?_ hev
+  convert h1 using 1
+  set q := Function.Periodic.qParam (N : ℝ) (τ : ℂ)
+  have hN0 : (N : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne N
+  have key : ∀ m : ℕ, betaC f γ m * ((m : ℂ) * q ^ (m - 1)) * (2 * Real.pi * Complex.I / N * q) =
+      2 * Real.pi * Complex.I * (bCoeff f γ m * q ^ m) := by
+    intro m
+    rcases m with _ | m
+    · simp [betaC, bCoeff_zero]
+    · simp only [betaC, if_neg (Nat.succ_ne_zero m), Nat.add_sub_cancel]
+      have hm : ((m + 1 : ℕ) : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero m
+      rw [pow_succ]
+      field_simp
+  show _ = (∑' m, betaC f γ m * ((m : ℂ) * q ^ (m - 1))) * (2 * Real.pi * Complex.I / N * q)
+  rw [← tsum_mul_right, funext key, tsum_mul_left, (hasSum_fSlash f γ τ).tsum_eq]
+
+theorem mdiff_Gq (γ : SL(2, ℤ)) : MDiff (Gq f γ) := fun τ =>
+  UpperHalfPlane.mdifferentiableAt_iff.2 (hasDerivAt_Gq f γ τ).differentiableAt
+
+theorem D_Gq (γ : SL(2, ℤ)) : Derivative.normalizedDerivOfComplex (Gq f γ) = fSlash f γ := by
+  funext τ
+  rw [Derivative.normalizedDerivOfComplex, (hasDerivAt_Gq f γ τ).deriv]
+  field_simp
+
+theorem eichler_slash (γ : SL(2, ℤ)) :
+    (ZInQ.GZHL3.eichler f ∣[(0 : ℤ)] γ) = fun τ => ZInQ.GZHL3.eichler f (γ • τ) := by
+  funext τ
+  rw [ModularForm.SL_slash_apply]
+  simp
+
+theorem D_eichler_slash (γ : SL(2, ℤ)) :
+    Derivative.normalizedDerivOfComplex (fun τ => ZInQ.GZHL3.eichler f (γ • τ)) = fSlash f γ := by
+  rw [← eichler_slash, Derivative.normalizedDerivOfComplex_SL_slash (mdiff_eichler f), D_eichler]
+  funext τ
+  simp [fSlash]
+
+theorem mdiff_eichler_slash (γ : SL(2, ℤ)) : MDiff (fun τ => ZInQ.GZHL3.eichler f (γ • τ)) := by
+  rw [← eichler_slash, ModularForm.SL_slash]
+  exact (mdiff_eichler f).slash _ _
+
+/-- **`φ_f(γτ) = K₀ + Σ_{m ≥ 1} b_m (N/m) q_N^m`**: the Eichler integral is holomorphic at every
+cusp. -/
+theorem exists_const_eichler (γ : SL(2, ℤ)) :
+    ∃ K₀ : ℂ, ∀ τ : UpperHalfPlane, ZInQ.GZHL3.eichler f (γ • τ) = K₀ + Gq f γ τ := by
+  set H : UpperHalfPlane → ℂ := fun τ => ZInQ.GZHL3.eichler f (γ • τ) - Gq f γ τ with hH
+  have hmd : MDiff H := (mdiff_eichler_slash f γ).sub (mdiff_Gq f γ)
+  have hD : Derivative.normalizedDerivOfComplex H = 0 := by
+    rw [hH, show (fun τ => ZInQ.GZHL3.eichler f (γ • τ) - Gq f γ τ) =
+      (fun τ => ZInQ.GZHL3.eichler f (γ • τ)) - Gq f γ from rfl,
+      Derivative.normalizedDerivOfComplex_sub _ _ (mdiff_eichler_slash f γ) (mdiff_Gq f γ),
+      D_eichler_slash, D_Gq, sub_self]
+  have hderiv : Set.EqOn (deriv (H ∘ UpperHalfPlane.ofComplex)) 0 {z : ℂ | 0 < z.im} := by
+    intro w hw
+    have h := congrFun hD ⟨w, hw⟩
+    simp only [Derivative.normalizedDerivOfComplex, Pi.zero_apply] at h
+    have h2 : (2 * (Real.pi : ℂ) * Complex.I)⁻¹ ≠ 0 := by
+      simp [Real.pi_ne_zero, Complex.I_ne_zero]
+    exact (mul_eq_zero.1 h).resolve_left h2
+  obtain ⟨a, ha⟩ := UpperHalfPlane.isOpen_upperHalfPlaneSet.exists_is_const_of_deriv_eq_zero
+    (convex_halfSpace_im_gt 0).isPreconnected (UpperHalfPlane.mdifferentiable_iff.1 hmd) hderiv
+  refine ⟨a, fun τ => ?_⟩
+  have := ha τ τ.im_pos
+  simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply] at this
+  rw [← this]; simp [hH]
+
+/-- The antiderivative as a power series sum (analytic at `q = 0`). -/
+def Gser (γ : SL(2, ℤ)) : FormalMultilinearSeries ℂ ℂ ℂ :=
+  FormalMultilinearSeries.ofScalars ℂ (betaC f γ)
+
+theorem Gser_radius (γ : SL(2, ℤ)) : 0 < (Gser f γ).radius := by
+  have h := (Gser f γ).le_radius_of_summable_norm (r := (1 / 2 : NNReal)) (by
+    have := betaC_summable_norm f γ (q := (1 / 2 : ℂ)) (by norm_num)
+    refine this.congr fun m => ?_
+    rw [Gser, FormalMultilinearSeries.ofScalars_norm]
+    norm_num)
+  exact lt_of_lt_of_le (by norm_num) h
+
+theorem Gq_eq (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    Gq f γ τ = (Gser f γ).sum (Function.Periodic.qParam (N : ℝ) τ) := by
+  rw [Gser, ← FormalMultilinearSeries.ofScalarsSum, FormalMultilinearSeries.ofScalarsSum_eq_tsum]
+  simp [Gq]
+
+theorem analyticAt_Gser (γ : SL(2, ℤ)) : AnalyticAt ℂ (Gser f γ).sum 0 :=
+  ((Gser f γ).hasFPowerSeriesOnBall (Gser_radius f γ)).analyticAt_of_mem
+    (by rw [Metric.mem_eball, edist_self]; exact Gser_radius f γ)
+
+end Cusp
+
+/-- **Moderate growth from meromorphy at the cusp.** If `F(τ) = M(q_N(τ))` with `M` meromorphic at
+`q = 0`, then `F(τ) = O(e^{2πk Im τ})` as `Im τ → ∞`. -/
+theorem growth_of_meromorphicAt {N : ℕ} [NeZero N] {M : ℂ → ℂ} (hM : MeromorphicAt M 0)
+    (F : UpperHalfPlane → ℂ) (hF : ∀ τ, F τ = M (Function.Periodic.qParam (N : ℝ) τ)) :
+    ∃ k : ℕ, F =O[UpperHalfPlane.atImInfty] fun τ => Real.exp (2 * Real.pi * k * τ.im) := by
+  obtain ⟨n, hn⟩ := hM
+  obtain ⟨δ, hδ, hδb⟩ := Metric.continuousAt_iff.1 hn.continuousAt 1 one_pos
+  set C : ℝ := ‖(fun z => (z - 0) ^ n • M z) 0‖ + 1
+  have hNpos' : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+  refine ⟨n, Asymptotics.IsBigO.of_bound C ?_⟩
+  rw [Filter.eventually_iff, UpperHalfPlane.atImInfty_mem]
+  refine ⟨N * |Real.log δ| / (2 * Real.pi) + 1, fun τ hτ => ?_⟩
+  simp only [Set.mem_setOf_eq]
+  set q := Function.Periodic.qParam (N : ℝ) (τ : ℂ)
+  have hq0 : q ≠ 0 := Complex.exp_ne_zero _
+  have hqn : ‖q‖ = Real.exp (-2 * Real.pi * τ.im / N) := by
+    rw [Function.Periodic.norm_qParam (N : ℝ) (τ : ℂ)]; rfl
+  have hqδ : ‖q‖ < δ := by
+    rw [hqn]
+    have hπ := Real.pi_pos
+    have h1 : -2 * Real.pi * τ.im / N < Real.log δ := by
+      have hA : N * |Real.log δ| / (2 * Real.pi) < τ.im := by linarith [hτ]
+      rw [div_lt_iff₀ (by positivity) ] at hA
+      have : -2 * Real.pi * τ.im / N < -|Real.log δ| := by
+        rw [div_lt_iff₀ hNpos']; nlinarith
+      linarith [neg_abs_le (Real.log δ)]
+    calc Real.exp (-2 * Real.pi * τ.im / N) < Real.exp (Real.log δ) := Real.exp_lt_exp.2 h1
+      _ = δ := Real.exp_log hδ
+  have hb := hδb (x := q) (by rw [dist_zero_right]; exact hqδ)
+  rw [dist_eq_norm] at hb
+  have hb' : ‖(q - 0) ^ n • M q‖ ≤ C := by
+    have := norm_sub_norm_le ((fun z => (z - 0) ^ n • M z) q) ((fun z => (z - 0) ^ n • M z) 0)
+    simp only at this; linarith
+  rw [sub_zero, norm_smul, norm_pow] at hb'
+  have hqpos : 0 < ‖q‖ := norm_pos_iff.2 hq0
+  rw [hF τ, Real.norm_of_nonneg (Real.exp_pos _).le]
+  have hM' : ‖M q‖ ≤ C / ‖q‖ ^ n := by
+    rw [le_div_iff₀ (pow_pos hqpos n)]; linarith [mul_comm (‖q‖ ^ n) ‖M q‖]
+  refine hM'.trans ?_
+  rw [div_le_iff₀ (pow_pos hqpos n), hqn, ← Real.exp_nat_mul, mul_assoc, ← Real.exp_add]
+  have hC : 0 ≤ C := by positivity
+  have h2 : 2 * Real.pi * n * τ.im + n * (-2 * Real.pi * τ.im / N) ≥ 0 := by
+    have hτ0 : 0 < τ.im := τ.im_pos
+    have h3 : n * (2 * Real.pi * τ.im / N) ≤ n * (2 * Real.pi * τ.im) := by
+      apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg n)
+      rw [div_le_iff₀ hNpos']
+      have : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (NeZero.ne N)
+      nlinarith [mul_nonneg (mul_nonneg (by positivity : (0 : ℝ) ≤ 2 * Real.pi) hτ0.le)
+        (sub_nonneg.2 this)]
+    have : n * (-2 * Real.pi * τ.im / N) = -(n * (2 * Real.pi * τ.im / N)) := by ring
+    rw [this]; nlinarith
+  calc C = C * 1 := (mul_one C).symm
+    _ ≤ C * Real.exp (2 * Real.pi * n * τ.im + n * (-2 * Real.pi * τ.im / N)) := by
+        gcongr; exact Real.one_le_exp h2
+
+
+theorem meromorphicAt_wpb (L : PeriodPair) (b z₀ : ℂ) :
+    MeromorphicAt (fun z => L.weierstrassP z - b) z₀ :=
+  (meromorphicAt_wp L z₀).sub (MeromorphicAt.const _ _)
+
+theorem meromorphicAt_psi (L : PeriodPair) (a₁ a₃ b z₀ : ℂ) :
+    MeromorphicAt (fun z => (L.derivWeierstrassP z - a₁ * (L.weierstrassP z - b) - a₃) / 2) z₀ :=
+  (((meromorphicAt_dwp L z₀).sub ((MeromorphicAt.const _ _).mul (meromorphicAt_wpb L b z₀))).sub
+    (MeromorphicAt.const _ _)).div (MeromorphicAt.const _ _)
+
+/-- **`ParamCuspGrowth`, proved.** -/
+theorem paramCuspGrowth : ParamCuspGrowth := by
+  intro E _ N _ f L c _ γ
+  obtain ⟨K₀, hK⟩ := exists_const_eichler f γ
+  set Z : ℂ → ℂ := fun q => (c : ℂ) * K₀ + (c : ℂ) * (Gser f γ).sum q with hZdef
+  have hZ : AnalyticAt ℂ Z 0 := analyticAt_const.add (analyticAt_const.mul (analyticAt_Gser f γ))
+  have hz : ∀ τ : UpperHalfPlane, zPar f c (γ • τ) = Z (Function.Periodic.qParam (N : ℝ) τ) := by
+    intro τ; simp only [zPar, hK, Gq_eq, hZdef]; ring
+  set b : ℂ := (E⁄ℂ).b₂ / 12 with hb
+  refine ⟨growth_of_meromorphicAt (N := N) ((meromorphicAt_wpb L b _).comp_analyticAt hZ) _
+      (fun τ => by simp only [xPar, hz, Function.comp_apply, hb]),
+    growth_of_meromorphicAt (N := N)
+      ((meromorphicAt_psi L (E⁄ℂ).a₁ (E⁄ℂ).a₃ b _).comp_analyticAt hZ) _
+      (fun τ => by simp only [yPar, xPar, hz, Function.comp_apply, hb]),
+    fun t => growth_of_meromorphicAt (N := N) ((meromorphicAt_phiT L (b + t) _).comp_analyticAt hZ)
+      _ (fun τ => by
+        show gPar E L f c t (γ • τ) = phiT L (b + t) (Z (Function.Periodic.qParam (N : ℝ) τ))
+        unfold gPar phiT xPar
+        rw [hz τ, sub_sub])⟩
+
+
+end AnalyticGlue
+
 end ZInQ.GZHeegner
 
 namespace ZInQ.GZHeegner
 
-/-- **`HeegnerPointRational` from the two printed CM / modular-curve leaves and the analytic glue**
-(`HeegnerClassJ` is proved: `heegnerClassJ`). -/
+/-- **`HeegnerPointRational` from the two printed CM / modular-curve leaves and one analytic glue
+Prop** (`HeegnerClassJ`, `ParamRegular`, `ParamCuspGrowth` are proved). -/
 theorem heegnerPointRational_of_printed (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero)
-    (hR : ParamRegular) (hG : ParamCuspGrowth) (hQ : ParamQExpansion) :
-    ZInQ.GZHL3.HeegnerPointRational :=
-  heegnerPointRational_of hCM hX hR hG hQ heegnerClassJ
+    (hQ : ParamQExpansion) : ZInQ.GZHL3.HeegnerPointRational :=
+  heegnerPointRational_of hCM hX paramRegular paramCuspGrowth hQ heegnerClassJ
 
 /-- **gz-hl3's `hL3` with `HeegnerPointRational` replaced**: `GrossZagierHeegner` from gz-hl3's five
-other leaves, `ShimuraMainCM`, `X0ModuliGaloisMero` and the analytic glue. -/
+other leaves, `ShimuraMainCM`, `X0ModuliGaloisMero` and `ParamQExpansion`. -/
 theorem grossZagierHeegner_of_printed (hU : ZInQ.GZHL3.WeierstrassUniformization)
     (hSW : ZInQ.GZHL3.StrongWeilCurve) (hI : ZInQ.GZHL3.IsogenyLattice)
     (hGZ : ZInQ.GZHL3.GrossZagierFormula) (hGC : ZInQ.GZHL3.GrossConjugation)
-    (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) (hR : ParamRegular)
-    (hG : ParamCuspGrowth) (hQ : ParamQExpansion) : ZInQ.GZDecomp.GrossZagierHeegner :=
-  ZInQ.GZHL3.grossZagierHeegner_of_leaves hU hSW hI (heegnerPointRational_of_printed hCM hX hR hG hQ)
+    (hCM : T5Glue.ShimuraMainCM) (hX : X0ModuliGaloisMero) (hQ : ParamQExpansion) :
+    ZInQ.GZDecomp.GrossZagierHeegner :=
+  ZInQ.GZHL3.grossZagierHeegner_of_leaves hU hSW hI (heegnerPointRational_of_printed hCM hX hQ)
     hGZ hGC
 
 end ZInQ.GZHeegner

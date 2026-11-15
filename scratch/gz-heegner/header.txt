@@ -1,0 +1,34 @@
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner
+import ZInQKernel.Contrib.OneProof.RingClassLattice
+
+/-!
+# gz-heegner: `GZHL3.HeegnerPointRational` from the main theorem of complex multiplication and the
+canonical model of `X₀(N)`
+
+Task gz-heegner (2026-11-15). Report: `docs/research/gz-heegner.md`; scratch and log: `scratch/gz-heegner/`.
+
+gz-hl3 (`GrossZagierHeegner.lean`) proved `hL3` from six leaves, one of them the composite
+`GZHL3.HeegnerPointRational` (the Heegner point `Σ_{Q ∈ S} φ(τ_Q)` is the image of a point of `E(K)`).
+This file proves it from
+
+* `T5Glue.ShimuraMainCM` (Shimura 1971 Thm 5.4; already the hypothesis `hCM` of `frozenTarget`),
+* `X0ModuliGaloisMero` (§2): the canonical model of `X₀(N)` in its printed form, for every
+  `g ∈ ℚ(X₀(N))` regular at the two points. The kernel's `T5Glue.X0ModuliGalois` (hypothesis `hX`)
+  is its special case for `g` regular on all of `ℍ` (`x0ModuliGalois_of_mero`, §7). The weakening is
+  needed: the coordinates `x∘φ`, `y∘φ` of a modular parametrization have poles in `ℍ`;
+* one analytic glue Prop on the coordinates of `φ = weierPt E L (c φ_f)` (§3): `ParamQExpansion`
+  (rational `q`-expansion at `∞`). The other two, `ParamRegular` (meromorphy and regularity) and
+  `ParamCuspGrowth` (moderate growth at every cusp), are proved in §8.
+
+Proved here: the Dirichlet composition `J·⟨1, τ_{Q'}⟩ = ⟨1, τ_Q⟩` (`exists_compose`), homothety of
+lattice pairs ⇔ `Γ₀(N)`-equivalence (`pairHom_of_equiv`, `equiv_of_pairHom`), every ideal class of
+`ℚ(√−m)` contains `⟨a, (−b + √D)/2⟩` with `a` prime to `M` (`heegnerClassJ`, Tau Ceti's Chebotarev
+theorem), the restriction `Aut(ℂ) → Gal(ℚ̄/ℚ)` and the fixed field of `Aut(ℂ/κ(K))`, the Galois
+transport of the points `φ(τ_Q)` (poles handled through `1/(x∘φ − t)`), and the permutation of the
+Heegner points (`heegnerC_fixed`), and (§8) the analysis of `φ`: `D φ_f = f`, `φ_f(γτ) = K₀ + G(q_N)` at
+every cusp (`exists_const_eichler`), meromorphy of `℘`, `℘'`, `1/(℘ − c₀)`. Main theorem:
+`heegnerPointRational_of_printed`.
+
+No `sorry`, no `axiom`.
+-/
+
