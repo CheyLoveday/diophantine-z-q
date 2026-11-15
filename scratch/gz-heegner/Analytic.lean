@@ -1001,6 +1001,121 @@ theorem coeff_tay_vFun (n : ℕ) : PowerSeries.coeff n (tay (vFun f)) = eCoeff f
   have : ((n.factorial : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
   field_simp
 
+variable (L : PeriodPair)
+
+/-- `Z(w) = c·w·V(w)` (`= c φ_f` at `w = q`). -/
+def zF (c : ℂ) (w : ℂ) : ℂ := c * w * vFun f w
+
+/-- `Ŷ(w) = w²℘_{L−0}(Z(w)) + (c²V(w)²)⁻¹ − b w²` (`= w²(℘(Z(w)) − b)` for `w ≠ 0`). -/
+def yF (c b : ℂ) (w : ℂ) : ℂ :=
+  w ^ 2 * L.weierstrassPExcept 0 (zF f c w) + (c ^ 2 * vFun f w ^ 2)⁻¹ - b * w ^ 2
+
+theorem analyticAt_vFun_of {w : ℂ} (hw : ‖w‖ < 1) : AnalyticAt ℂ (vFun f) w :=
+  (vFun_hasFPS f).analyticAt_of_mem (vSeries_mem_ball f hw)
+
+theorem analyticAt_zF (c : ℂ) {w : ℂ} (hw : ‖w‖ < 1) : AnalyticAt ℂ (zF f c) w := by
+  have := analyticAt_vFun_of f hw
+  unfold zF; fun_prop
+
+theorem zF_zero (c : ℂ) : zF f c 0 = 0 := by simp [zF]
+
+theorem analyticAt_yF {c : ℂ} (hc : c ≠ 0) (b : ℂ) : AnalyticAt ℂ (yF f L c b) 0 := by
+  have hV := analyticAt_vFun f
+  have hE : AnalyticAt ℂ (fun w => L.weierstrassPExcept 0 (zF f c w)) 0 := by
+    exact (L.analyticAt_weierstrassPExcept 0).comp_of_eq (analyticAt_zF f c (by simp))
+      (zF_zero f c)
+  have hden : AnalyticAt ℂ (fun w => c ^ 2 * vFun f w ^ 2) 0 := by fun_prop
+  have hne : c ^ 2 * vFun f 0 ^ 2 ≠ 0 := by rw [vFun_zero]; simpa using hc
+  unfold yF
+  exact ((analyticAt_id.pow 2).mul hE).add (hden.inv hne) |>.sub (analyticAt_const.mul
+    (analyticAt_id.pow 2))
+
+theorem yF_zero (c b : ℂ) : yF f L c b 0 = (c ^ 2)⁻¹ := by simp [yF, vFun_zero]
+
+/-- A punctured ball around `0` on which `V ≠ 0` and `Z(w) ∉ L`. -/
+theorem exists_good_ball {c : ℂ} (hc : c ≠ 0) :
+    ∃ ε > 0, ε ≤ 1 / 2 ∧ ∀ w : ℂ, ‖w‖ < ε → vFun f w ≠ 0 ∧ (w ≠ 0 → zF f c w ∉ L.lattice) := by
+  obtain ⟨δ, hδ, hδb⟩ := Metric.continuousAt_iff.1 (analyticAt_vFun f).continuousAt (1 / 2)
+    (by norm_num)
+  obtain ⟨r, hr, hrb⟩ := Metric.mem_nhds_iff.1 (L.compl_lattice_sdiff_singleton_mem_nhds 0)
+  have hc0 : 0 < ‖c‖ := norm_pos_iff.2 hc
+  refine ⟨min (min δ (r / (2 * ‖c‖))) (1 / 2), by positivity, min_le_right _ _, fun w hw => ?_⟩
+  have hw1 : ‖w‖ < δ := lt_of_lt_of_le hw ((min_le_left _ _).trans (min_le_left _ _))
+  have hw2 : ‖w‖ < r / (2 * ‖c‖) := lt_of_lt_of_le hw ((min_le_left _ _).trans (min_le_right _ _))
+  have hV := hδb (x := w) (by rwa [dist_zero_right])
+  rw [dist_eq_norm, vFun_zero] at hV
+  have hVne : vFun f w ≠ 0 := by
+    intro h0; rw [h0, zero_sub, norm_neg, norm_one] at hV; norm_num at hV
+  have hVle : ‖vFun f w‖ < 3 / 2 := by
+    have := norm_le_norm_sub_add (vFun f w) 1
+    rw [norm_one] at this; linarith
+  refine ⟨hVne, fun hw0 hzL => ?_⟩
+  have hz0 : zF f c w ≠ 0 := by
+    unfold zF; exact mul_ne_zero (mul_ne_zero hc hw0) hVne
+  have hzr : zF f c w ∈ Metric.ball (0 : ℂ) r := by
+    rw [Metric.mem_ball, dist_zero_right, zF, norm_mul, norm_mul]
+    calc ‖c‖ * ‖w‖ * ‖vFun f w‖ ≤ ‖c‖ * ‖w‖ * (3 / 2) := by gcongr
+      _ < ‖c‖ * (r / (2 * ‖c‖)) * (3 / 2) := by gcongr
+      _ = 3 / 4 * r := by field_simp; ring
+      _ < r := by linarith
+  exact hrb hzr ⟨hzL, hz0⟩
+
+theorem yF_eq {c : ℂ} (hc : c ≠ 0) (b : ℂ) {w : ℂ} (hV : vFun f w ≠ 0) (hw : w ≠ 0) :
+    yF f L c b w = w ^ 2 * (L.weierstrassP (zF f c w) - b) := by
+  have h := L.weierstrassPExcept_add ⟨0, L.lattice.zero_mem⟩ (zF f c w)
+  simp only [sub_zero, div_zero, one_div, zero_pow two_ne_zero, inv_zero] at h
+  unfold yF
+  rw [← h]
+  simp only [zF]
+  field_simp
+
+theorem hasDerivAt_wp {z : ℂ} (hz : z ∉ L.lattice) :
+    HasDerivAt L.weierstrassP (L.derivWeierstrassP z) z := by
+  have hd := (analyticAt_wp L hz).differentiableAt.hasDerivAt
+  rwa [L.deriv_weierstrassP] at hd
+
+/-- **The Weierstrass equation in the variable `w`**, near `0`. -/
+theorem yF_ode {c : ℂ} (hc : c ≠ 0) (b : ℂ) :
+    (fun w => (w * deriv (yF f L c b) w - 2 * yF f L c b w) ^ 2) =ᶠ[nhds 0]
+      fun w => (4 * (yF f L c b w + b * w ^ 2) ^ 3 - L.g₂ * w ^ 4 * (yF f L c b w + b * w ^ 2) -
+        L.g₃ * w ^ 6) * deriv (zF f c) w ^ 2 := by
+  obtain ⟨ε, hε, hε1, hgood⟩ := exists_good_ball f L hc
+  have hY := analyticAt_yF f L hc b
+  have hZ := analyticAt_zF f c (w := 0) (by simp)
+  refine (AnalyticAt.frequently_eq_iff_eventually_eq (by fun_prop) (by
+    have := hY.deriv; have := hZ.deriv; fun_prop)).1 ?_
+  refine Filter.Eventually.frequently ?_
+  have hball : Metric.ball (0 : ℂ) ε ∈ nhds (0 : ℂ) := Metric.ball_mem_nhds 0 hε
+  filter_upwards [nhdsWithin_le_nhds hball, self_mem_nhdsWithin] with w hw hw0
+  rw [Metric.mem_ball, dist_zero_right] at hw
+  have hw0' : w ≠ 0 := hw0
+  obtain ⟨hV, hZL⟩ := hgood w hw
+  have hzL := hZL hw0'
+  -- `Ŷ = w²(℘∘Z − b)` near `w`
+  have hopen : IsOpen {v : ℂ | v ≠ 0 ∧ ‖v‖ < ε} :=
+    isOpen_ne.inter (isOpen_lt continuous_norm continuous_const)
+  have hev : yF f L c b =ᶠ[nhds w] fun v => v ^ 2 * (L.weierstrassP (zF f c v) - b) := by
+    filter_upwards [hopen.mem_nhds ⟨hw0', hw⟩] with v hv
+    exact yF_eq f L hc b (hgood v hv.2).1 hv.1
+  have hZw : HasDerivAt (zF f c) (deriv (zF f c) w) w :=
+    (analyticAt_zF f c (by linarith : ‖w‖ < 1)).differentiableAt.hasDerivAt
+  have hd : HasDerivAt (fun v => v ^ 2 * (L.weierstrassP (zF f c v) - b))
+      (2 * w * (L.weierstrassP (zF f c w) - b) +
+        w ^ 2 * (L.derivWeierstrassP (zF f c w) * deriv (zF f c) w)) w := by
+    have h1 : HasDerivAt (fun v : ℂ => v ^ 2) (2 * w) w := by
+      simpa using hasDerivAt_pow 2 w
+    have h2 := ((hasDerivAt_wp L hzL).comp w hZw).sub_const b
+    exact h1.mul h2
+  rw [hev.deriv_eq, hd.deriv, yF_eq f L hc b hV hw0']
+  have hsq := L.derivWeierstrassP_sq _ hzL
+  set P := L.weierstrassP (zF f c w)
+  set P' := L.derivWeierstrassP (zF f c w)
+  set Z' := deriv (zF f c) w
+  have e1 : w * (2 * w * (P - b) + w ^ 2 * (P' * Z')) - 2 * (w ^ 2 * (P - b)) = w ^ 3 * P' * Z' := by
+    ring
+  rw [e1]
+  linear_combination (w ^ 6 * Z' ^ 2) * hsq
+
 end QExp
 
 end ZInQ.GZHeegner
