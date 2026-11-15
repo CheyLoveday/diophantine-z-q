@@ -35,3 +35,10 @@ Base e38375b3 (wip/w62). Lean 4.35 / Mathlib v4.35.0.
   (uniformizer of O stays a uniformizer), `res_isAlgebraic` (residue ext of algebraic ext is algebraic),
   `exists_comap_eq` (extension of valuation rings).
 - **`shInside0 : SHInside0`, `shExists0 : SHExists0` PROVED.**
+
+## CA3.lean — compiles, no sorry (VERIFIED, 8 s)
+- `inertM`: inertia subgroup of Gal(M/K) (submonoid of finite group).
+- `inertiaField_le`: inertia field over K ⊆ inertia field over K' (K'/K finite, same w).
+- `inertiaField_le_adjoin`: inertia field over K' ⊆ E(t') (t' finite generating K'), via finite Galois correspondence
+  Fix(I ∩ Gal(M/K')) = Fix(I) ⊔ K' in a finite Galois M.
+- **`shPair0 : SHPair0` PROVED** (Ω = AlgebraicClosure K', w from `exists_comap_eq`, κ(O') perfect as algebraic over κ(O)).

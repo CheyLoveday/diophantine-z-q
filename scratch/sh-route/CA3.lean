@@ -159,4 +159,65 @@ theorem inertiaField_le_adjoin (t' : Finset Ω)
 
 end Pair
 
+section Assemble
+
+theorem isSHUnram_inertia {K : Type} [Field K] [CharZero K] {O : ValuationSubring K}
+    [IsDiscreteValuationRing O] [PerfectField (ResidueField O)] {Ω : Type} [Field Ω]
+    [Algebra K Ω] [IsAlgClosure K Ω] (w : ValuationSubring Ω)
+    (hw : w.comap (algebraMap K Ω) = O) : IsSHUnram O (wE (K := K) w) (hE_eq w hw) := by
+  refine ⟨⟨isDVR_wE w hw, henselian_wE w, isSepClosed_wE w⟩, inferInstance,
+      fun ϖ hϖ => irreducible_comapHom w hw ϖ hϖ, ?_⟩
+  letI := (resMap (hE_eq w hw)).toAlgebra
+  haveI := res_isAlgebraic (hE_eq w hw)
+  exact Algebra.IsAlgebraic.isSeparable_of_perfectField
+
+/-- **`SHPair0` is a theorem.** -/
+theorem shPair0 : SHPair0 := by
+  intro K _ _ O _ _ K' _ _ _ O' _ hO
+  haveI : CharZero K' := charZero_of_injective_algebraMap (algebraMap K K').injective
+  let Ω := AlgebraicClosure K'
+  haveI : IsScalarTower K K' Ω := inferInstance
+  haveI : IsAlgClosure K Ω := ⟨IsAlgClosure.isAlgClosed K', Algebra.IsAlgebraic.trans K K' Ω⟩
+  obtain ⟨w, hw'⟩ := exists_comap_eq (Ω := Ω) O'
+  have hw : w.comap (algebraMap K Ω) = O := by
+    rw [IsScalarTower.algebraMap_eq K K' Ω, ← ValuationSubring.comap_comap, hw', hO]
+  haveI : PerfectField (ResidueField O') := by
+    letI := (resMap hO).toAlgebra
+    haveI := res_isAlgebraic hO
+    exact Algebra.IsAlgebraic.perfectField (ResidueField O)
+  let E := inertiaField (K := K) w
+  let E' := inertiaField (K := K') w
+  let φ : E →+* E' :=
+    { toFun := fun e => ⟨e, inertiaField_le w e.2⟩
+      map_one' := rfl
+      map_mul' := fun _ _ => rfl
+      map_zero' := rfl
+      map_add' := fun _ _ => rfl }
+  letI : Algebra E E' := φ.toAlgebra
+  haveI : IsScalarTower K E E' := IsScalarTower.of_algebraMap_eq (fun c => by
+    apply Subtype.ext
+    change algebraMap K Ω c = algebraMap E' Ω (algebraMap K E' c)
+    rw [IsScalarTower.algebraMap_apply K K' E', IsScalarTower.algebraMap_apply K K' Ω]
+    rfl)
+  -- finiteness of `E'/E`
+  let f := IsScalarTower.toAlgHom K K' Ω
+  haveI : FiniteDimensional K f.fieldRange :=
+    LinearEquiv.finiteDimensional (AlgEquiv.ofInjectiveField f).toLinearEquiv
+  obtain ⟨t', ht'⟩ : f.fieldRange.FG := IntermediateField.essFiniteType_iff.mp inferInstance
+  let L := IntermediateField.adjoin E (t' : Set Ω)
+  haveI : FiniteDimensional E L := IntermediateField.finiteDimensional_adjoin
+    (fun z _ => (Algebra.IsIntegral.isIntegral (R := K) z).tower_top)
+  let ψ : E' →ₗ[E] L :=
+    { toFun := fun x => ⟨x, inertiaField_le_adjoin w t' ht' x.2⟩
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  have hψ : Function.Injective ψ := fun a b h =>
+    Subtype.ext (congrArg (fun z : L => (z : Ω)) h)
+  haveI : FiniteDimensional E E' := Module.Finite.of_injective ψ hψ
+  exact ⟨E, E', inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
+    inferInstance, inferInstance, inferInstance, inferInstance, wE (K := K) w, wE (K := K') w,
+    hE_eq w hw, hE_eq w hw', isSHUnram_inertia w hw, isSHUnram_inertia w hw', rfl⟩
+
+end Assemble
+
 end ShRoute
