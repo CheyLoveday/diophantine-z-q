@@ -2,8 +2,7 @@
  "name": "leaf-fold22",
  "imports": [
   "ZInQKernel.Contrib.OneProof.RayClassShimura",
-  "ZInQKernel.Contrib.OneProof.ShimuraGoodReductionNoGuard",
-  "ZInQKernel.Contrib.OneProof.WeilPairingSplit"
+  "ZInQKernel.Contrib.OneProof.ShimuraGoodReductionNoGuard"
  ],
  "discharges": [
   {
@@ -35,60 +34,6 @@
      "kind": "consequence",
      "flag": "pending reading: Kottwitz 1992 section 5 is the PEL functor; the polarization-free integral form needs a relative Lemma P over every locally noetherian base and the rational-to-integral level comparison; Buzzard and Morita may require level prime to D (level 3 at 3 | 6); locators UNVERIFIED",
      "source": "Kottwitz, J. AMS 5 (1992) section 5; Buzzard, Duke Math. J. 87 (1997) sections 1-4; Morita, Hokkaido Math. J. 10 (1981); Carayol, Compositio 59 (1986) secondary (locators UNVERIFIED); Lan 2013, Thms 1.4.1.11 and 5.3.3.1 (second locators)"
-    }
-   ]
-  },
-  {
-   "field": "weilPairingMumford",
-   "proof": "_root_.T09Pic.Split.weilPairingMumford_of_split {n}.weilPairingExists {n}.weilPairingPerfect {n}.weilPairingGalois {n}.weilPairingCompat {n}.weilPairingDual {n}.weilPairingAlternating",
-   "leaves": [
-    {
-     "name": "weilPairingExists",
-     "type": "_root_.T09Pic.Split.WeilPairingExists",
-     "doc": "t09-pic split of L4, printed form: L4a: Mumford's pairing e_n exists (bilinear, mu_n-valued), with values the genuine weilScalar (T09Pic.Split; locator UNVERIFIED). With the other five, replaces weilPairingMumford (weilPairingMumford_of_split).",
-     "kind": "published",
-     "flag": "pending review (t09-pic: one model review of L4, no errors); locator UNVERIFIED (numbering)",
-     "source": "Mumford, Abelian varieties, section 20 (definition of e_n), with Kleiman 9.2.5 and Mumford section 8 (iv) (locators UNVERIFIED)"
-    },
-    {
-     "name": "weilPairingPerfect",
-     "type": "_root_.T09Pic.Split.WeilPairingPerfect",
-     "doc": "t09-pic split of L4, printed form: L4b: e_n is perfect for n invertible (T09Pic.Split; locator UNVERIFIED). With the other five, replaces weilPairingMumford (weilPairingMumford_of_split).",
-     "kind": "published",
-     "flag": "pending review (t09-pic: one model review of L4, no errors); locator UNVERIFIED (numbering)",
-     "source": "Mumford, Abelian varieties, section 20 (locators UNVERIFIED)"
-    },
-    {
-     "name": "weilPairingGalois",
-     "type": "_root_.T09Pic.Split.WeilPairingGalois",
-     "doc": "t09-pic split of L4, printed form: L4c: e_n is Galois-equivariant (defined over K) (T09Pic.Split; locator UNVERIFIED). With the other five, replaces weilPairingMumford (weilPairingMumford_of_split).",
-     "kind": "published",
-     "flag": "pending review (t09-pic: one model review of L4, no errors); locator UNVERIFIED (numbering)",
-     "source": "Milne, Abelian varieties (1986), section 16 (locators UNVERIFIED)"
-    },
-    {
-     "name": "weilPairingCompat",
-     "type": "_root_.T09Pic.Split.WeilPairingCompat",
-     "doc": "t09-pic split of L4, printed form: L4d: e_mn(x, y) = e_n(mx, y) for y in the n-torsion of the dual (T09Pic.Split; locator UNVERIFIED). With the other five, replaces weilPairingMumford (weilPairingMumford_of_split).",
-     "kind": "published",
-     "flag": "pending review (t09-pic: one model review of L4, no errors); locator UNVERIFIED (numbering)",
-     "source": "Mumford, Abelian varieties, section 20 (locators UNVERIFIED)"
-    },
-    {
-     "name": "weilPairingDual",
-     "type": "_root_.T09Pic.Split.WeilPairingDual",
-     "doc": "t09-pic split of L4, printed form: L4e: e_n(x, f^v y) = e_n(f x, y) (T09Pic.Split; locator UNVERIFIED). With the other five, replaces weilPairingMumford (weilPairingMumford_of_split).",
-     "kind": "published",
-     "flag": "pending review (t09-pic: one model review of L4, no errors); locator UNVERIFIED (numbering)",
-     "source": "Mumford, Abelian varieties, section 20 (5); Milne 1986 Lemma 16.2(c) (locators UNVERIFIED)"
-    },
-    {
-     "name": "weilPairingAlternating",
-     "type": "_root_.T09Pic.Split.WeilPairingAlternating",
-     "doc": "t09-pic split of L4, printed form: L4f: e^L_n(x, x) = 1 for ample L (T09Pic.Split; locator UNVERIFIED). With the other five, replaces weilPairingMumford (weilPairingMumford_of_split).",
-     "kind": "published",
-     "flag": "pending review (t09-pic: one model review of L4, no errors); locator UNVERIFIED (numbering)",
-     "source": "Mumford, Abelian varieties, section 23 (locators UNVERIFIED)"
     }
    ]
   }
