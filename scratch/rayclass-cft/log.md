@@ -44,3 +44,16 @@ Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the pre
   `conj_mem_K3Q`, `dcRel_of_decomp`, `dcRel_fix`, `qHatU_unitEmbedding`, `nrd_pos_of_cm`, `obj_at`,
   `cm_data`, `isTotallyComplex_of_root`, `finrank_K4/K3/K24`, Tau Ceti kernel of the Artin map =
   ray subgroup (`ker_ideleClassArtinMap`, `range_ideleClassNormMap_rayClassField`, `mk_mem_raySubgroup_iff`).
+
+## Step 2 (11-14, ~19:10): glue proved (VERIFIED, compiled, standard axioms)
+- `RayGlueO.lean`: `ringOfIntegersGen_K4`, `ringOfIntegersGen_K3` (Mathlib's
+  `IsCyclotomicExtension.Rat.isIntegralClosure_adjoin_singleton` + `adjoin_quad`), `ringOfIntegersGen_K24`
+  (by hand: trace, norm and `(x − x̄)√−6` integral rationals; `6 ∣ e`; parity mod 4); `rayClassCM_of2`.
+- `RayGlueI.lean`: `exists_integral_coeffs`/`exists_integral_preimage` (integral finite adeles of `k` are
+  `∑ aᵢ ⊗ bᵢ`, `aᵢ ∈ ℤ̂`, `bᵢ` an integral basis; re-proof of the integral branch of Tau Ceti's private
+  `exists_semilocalHom_sum_tmul_eq` from its public `integralSemilocalEquiv` API), `qHat_mem_OhatQ`,
+  `valued_three`, `cong_sub_one_div_three`, `qHatIntegral` (for every number field `k`), `rayClassCM_of3`.
+- `rayClassCM_of3 (hL : ShimuraMainThmIDeligneY3AbU) (hMR : MumfordRigidityCore) (hCN : ClassNumberOneB)
+  (hB : CMBaseChange) (hA : CMAnalytic) : RayClassCM` — [propext, Classical.choice, Quot.sound].
+- Pitfall: for `K = ℚ`, `Algebra ℚ (v.adicCompletion ℚ)` has two non-defeq instances (`DivisionRing.toRatAlgebra`
+  vs `instAlgebraAdicCompletion`); state the semilocal lemmas for a general number field `K` and specialize.
