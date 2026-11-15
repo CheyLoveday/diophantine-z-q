@@ -20,3 +20,9 @@ Target: `HDec.LeafQCheck.HM.QMSplit.GammaStarCocompactArea` (TailZ2 L93), no hyp
   properlyDiscontinuous, exists_min): compiles, no errors (lake env lean, ~8 s).
 - 11-14 21:20 GS.lean parts 3-4: cone step, sigma=ι(μ) ∈ Γ*, covering `cover_T`, vertex condition `intV` (C–S + enumeration), `Phi_nonneg`, Dirichlet property `dirichlet`: compile (~19 s).
 - 11-14 21:45 GS.lean complete: `HDec.GammaStarArea.gammaStarCocompactArea_proof : HDec.LeafQCheck.HM.QMSplit.GammaStarCocompactArea` compiles over TailZ3; #print axioms: [propext, Classical.choice, Quot.sound] (VERIFIED, ~19 s).
+- 11-14 21:55 contribution file ZInQKernel/Contrib/OneProof/GammaStarArea.lean compiles over Main (lake env lean, no errors).
+- 11-14 21:57 first `lake build` started rebuilding ~82 modules of Main's closure that import the upstream `lean/`
+  package (the copied lean/.lake from leaf-fold14 has other trace paths); interrupted, which deleted 5 oleans
+  (TYZGenus.Package, RingClassGalois, PoleValuationsAux, LocalCongruence, Size.Majorants.Bound); restarted the
+  full `lake build +Main +Discharges +GammaStarArea` (sibling worktrees gt-blr/gt-ega did the same rebuild).
+- statement.lean: verbatim copies of GammaStarCocompactArea (TailZ2 L46-95) and ShimizuCovolumeO1 (L1007-1020).
