@@ -36,3 +36,19 @@
 - So the single proof holds with Igusa's theorem replaced by the FLT bijection, and the CloudB2 FLT vendor tree
   coexists with the whole OneProof closure (imports ZInQKernel.OneProof.Main + CloudB2X0Transitive.Reduction in one
   environment: no name clash). VERIFIED.
+
+## 05:00 — X0Transitive reduced to the modular equation alone (VERIFIED, compiled)
+- `scratch/flt-cqj/Count.lean` (compiles, no sorry): `J(N) := #{a ∈ (ℤ/N)² | ord a = N} = ψ(N) φ(N)`
+  (`J_eq`, by CRT multiplicativity `J_mul` and the prime-power count `J_prime_pow`, with FLT's
+  `dedekindPsi_mul_of_coprime`, `dedekindPsi_prime_pow`); `ncard_cyclic_mul_totient` (finite abelian G:
+  #{cyclic H, |H| = N}·φ(N) = #{a | ord a = N}); `ncard_cyclic_sq`: (ℤ/N)² has ψ(N) cyclic subgroups of order N.
+- `scratch/flt-cqj/ModEq.lean` (= Count + ModEqMain.part, assembled by assemble.py; compiles):
+  * leaf candidate `FltCqj.ModularEquationGeneric : Prop`: ∀ N>0, data, cyclic C ≤ E_j(Q(j)bar) of order N,
+    Φ_N(j(E_j/C), j) = 0 (j(E_j/C) = FLT's iterated-Vélu `cyclicQuotientJ`).
+  * `modularEquationGeneric_of_bijOn : CyclicQuotientJBijOn → ModularEquationGeneric` (so it is weaker).
+  * `ncard_cyclic_ejBar`: E_j has exactly ψ(N) cyclic subgroups of order N (T36 proved + count).
+  * `bijOn_of_modularEquation`: ModularEquationGeneric → the bijection for E_j (surjective by Galois stability +
+    irreducibility of Φ_N(X,j) over ℚ(j) [FLT, ported]; injective by counting: both sides have ψ(N) elements,
+    Φ_N(X,j) separable of degree ψ(N)).
+  * `x0Transitive_of_modularEquationGeneric : ModularEquationGeneric → ZInQ.RLeaf.X0Transitive`.
+  * `#print axioms`: [propext, Classical.choice, Quot.sound] for both theorems.
