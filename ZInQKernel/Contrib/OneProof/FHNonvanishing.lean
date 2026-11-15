@@ -51,7 +51,7 @@ Let `f` be a newform of weight 2, level `N` and trivial nebentypus, and `π = π
 finite set of primes containing every prime dividing `2N` (with `∞`, the places of `S` in the
 theorem). Let `χ₀ = χ_{D₀}` be the quadratic character of an odd fundamental discriminant `D₀ ≠ 1`
 unramified at every `p ∈ S`. Suppose `ε(½, π ⊗ χ₀) = 1`, stated as: the twist `f ⊗ χ_{D₀}` is
-the newform `g` (of some level, trivial nebentypus) with root number `rootNumber g = 1`. Then
+the newform `g` of level `N D₀²` and trivial nebentypus with root number `rootNumber g = 1`. Then
 there are infinitely many quadratic characters `χ = χ_D` with `χ_v = χ₀,v` at every `v ∈ S ∪ {∞}`
 and `L(½, π ⊗ χ) ≠ 0`.
 
@@ -79,7 +79,7 @@ def FriedbergHoffsteinB : Prop :=
   ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
   ∀ S : Finset ℕ, (∀ p : ℕ, p.Prime → p ∣ 2 * N → p ∈ S) →
   ∀ D₀ : ℤ, IsOddFundDisc D₀ → (∀ p ∈ S, ¬ (p : ℤ) ∣ D₀) →
-    (∃ (M : ℕ) (_ : NeZero M) (g : Newform M 2) (hg : g.χ = 1),
+    (∃ (M : ℕ) (_ : NeZero M) (g : Newform M 2) (hg : g.χ = 1), M = N * D₀.natAbs ^ 2 ∧
         (∀ n : ℕ, n ≠ 0 → coeff g n = twistCoeff f D₀ n) ∧ rootNumber g hg = 1) →
     ∀ B : ℕ, ∃ D : ℤ, B < D.natAbs ∧ IsOddFundDisc D ∧ 0 < D * D₀ ∧
       (∀ (p : ℕ) [Fact p.Prime], p ∈ S → IsSquare ((D : ℚ_[p]) / (D₀ : ℚ_[p]))) ∧
@@ -224,14 +224,11 @@ theorem heegner_neg_prime {N q : ℕ} (hq : q.Prime) (hqN : (8 * N : ℤ) ∣ -(
     rw [h1]
     exact ⟨one_ne_zero, ⟨1, by ring⟩⟩
 
-/-! ## The reduction -/
-
-/-- **`FHNonvanishing` from Friedberg–Hoffstein Theorem B and the twisted root number.** -/
-theorem fhNonvanishing_of_printed (hFH : FriedbergHoffsteinB) (hTw : TwistNewformRootNumber) :
-    FHNonvanishing := by
-  intro N _ f hχ hw B
-  have hN0 : N ≠ 0 := NeZero.ne N
-  -- Dirichlet: a prime `q ≡ −1 (mod 8N)`
+/-- **The auxiliary discriminant.** For `N ≠ 0` there is an odd imaginary fundamental
+discriminant `D₀ ≡ 1 (mod 8N)` with the Heegner hypothesis for `N`: `D₀ = −q` for a prime
+`q ≡ −1 (mod 8N)` (Dirichlet's theorem, Mathlib). -/
+theorem exists_aux_disc {N : ℕ} (hN0 : N ≠ 0) :
+    ∃ D₀ : ℤ, IsOddImagFundDisc D₀ ∧ HeegnerHyp N D₀ ∧ (8 * N : ℤ) ∣ D₀ - 1 := by
   have : NeZero (8 * N) := ⟨by omega⟩
   obtain ⟨q, -, hq, hqmod⟩ :=
     Nat.forall_exists_prime_gt_and_eq_mod (q := 8 * N) (a := -1) isUnit_one.neg 0
@@ -241,45 +238,68 @@ theorem fhNonvanishing_of_printed (hFH : FriedbergHoffsteinB) (hTw : TwistNewfor
     have e : (-(q : ℤ) - 1) = -1 - q := by ring
     rw [e]; exact_mod_cast this
   obtain ⟨hD₀, hH₀⟩ := heegner_neg_prime hq hqN
-  set D₀ : ℤ := -(q : ℤ) with hD₀def
-  have hD₀ne : D₀ ≠ 0 := ne_of_lt hD₀.1
-  have hD₀f : IsOddFundDisc D₀ := ⟨by have := hD₀.1; omega, hD₀.2.1, hD₀.2.2⟩
-  -- the twist by `χ_{D₀}` has root number `+1`
-  obtain ⟨M, _, g, hg, -, hcoef, hroot⟩ :=
-    hTw N f hχ D₀ hD₀f (ZInQ.GZStatements.coprime_of_heegnerHyp hD₀ne hH₀)
-  have hJ := ZInQ.GZStatements.jacobiSym_neg_level hN0 hD₀ hH₀
-  have hroot1 : rootNumber g hg = 1 := by
-    rw [hroot, hJ, hw]; push_cast; ring
-  -- Friedberg–Hoffstein with `S = {p ∣ 2N}`
-  have hS : ∀ p : ℕ, p.Prime → p ∣ 2 * N → p ∈ (2 * N).primeFactors := fun p hp hpd =>
-    Nat.mem_primeFactors.mpr ⟨hp, hpd, by omega⟩
-  have hSD₀ : ∀ p ∈ (2 * N).primeFactors, ¬ (p : ℤ) ∣ D₀ := by
-    intro p hpS hpD
-    obtain ⟨hp, hpd, -⟩ := Nat.mem_primeFactors.mp hpS
-    have hp2N : (p : ℤ) ∣ (2 * N : ℤ) := by exact_mod_cast hpd
-    have h1 : (p : ℤ) ∣ D₀ - 1 :=
-      dvd_trans hp2N (dvd_trans (Dvd.intro (4 : ℤ) (by ring)) hqN)
-    have : (p : ℤ) ∣ 1 := by
-      have := dvd_sub hpD h1
-      simpa using this
-    exact hp.one_lt.ne' (by exact_mod_cast Int.eq_one_of_dvd_one (by positivity) this)
-  obtain ⟨D, hDB, hDf, hsign, hloc, hG⟩ :=
-    hFH N f hχ (2 * N).primeFactors hS D₀ hD₀f hSD₀ ⟨M, inferInstance, g, hg, hcoef, hroot1⟩ B
-  have hDneg : D < 0 := by
-    have : (0 : ℤ) < q := by exact_mod_cast hq.pos
-    nlinarith
+  exact ⟨-(q : ℤ), hD₀, hH₀, hqN⟩
+
+theorem mem_primeFactors_two_mul {N : ℕ} (hN0 : N ≠ 0) {p : ℕ} (hp : p.Prime) (hpd : p ∣ 2 * N) :
+    p ∈ (2 * N).primeFactors :=
+  Nat.mem_primeFactors.mpr ⟨hp, hpd, by omega⟩
+
+/-- `D₀ ≡ 1 (mod 8N)` is prime to every `p ∣ 2N`. -/
+theorem not_dvd_of_mem_primeFactors {N : ℕ} {D₀ : ℤ} (h8 : (8 * N : ℤ) ∣ D₀ - 1) :
+    ∀ p ∈ (2 * N).primeFactors, ¬ (p : ℤ) ∣ D₀ := by
+  intro p hpS hpD
+  obtain ⟨hp, hpd, -⟩ := Nat.mem_primeFactors.mp hpS
+  have hp2N : (p : ℤ) ∣ (2 * N : ℤ) := by exact_mod_cast hpd
+  have h1 : (p : ℤ) ∣ D₀ - 1 :=
+    dvd_trans hp2N (dvd_trans (Dvd.intro (4 : ℤ) (by ring)) h8)
+  have : (p : ℤ) ∣ 1 := by
+    have := dvd_sub hpD h1
+    simpa using this
+  exact hp.one_lt.ne' (by exact_mod_cast Int.eq_one_of_dvd_one (by positivity) this)
+
+/-- **Local conditions to the Heegner hypothesis.** If `D₀ < 0`, `D₀ ≡ 1 (mod 8N)`, and `D` is an
+odd fundamental discriminant with `D D₀ > 0` and `D / D₀` a square in `ℚ_p` for every `p ∣ 2N`,
+then `D` is an odd imaginary fundamental discriminant with the Heegner hypothesis for `N`. -/
+theorem heegner_of_local {N : ℕ} (hN0 : N ≠ 0) {D₀ D : ℤ} (hD₀ : D₀ < 0)
+    (h8N : (8 * N : ℤ) ∣ D₀ - 1) (hDf : IsOddFundDisc D) (hsign : 0 < D * D₀)
+    (hloc : ∀ (p : ℕ) [Fact p.Prime], p ∈ (2 * N).primeFactors →
+      IsSquare ((D : ℚ_[p]) / (D₀ : ℚ_[p]))) :
+    IsOddImagFundDisc D ∧ HeegnerHyp N D := by
+  have hDneg : D < 0 := by nlinarith
   have hDisc : IsOddImagFundDisc D := ⟨hDneg, hDf.2.1, hDf.2.2⟩
-  refine ⟨D, by omega, hDisc, ?_, hG⟩
-  refine (ZInQ.GZStatements.heegnerHyp_iff_split hDisc).mpr ⟨fun h2 => ?_, fun p hp hp2 hpN => ?_⟩
-  · have h8 : (8 : ℤ) ∣ D₀ - 1 := dvd_trans (Dvd.intro (N : ℤ) rfl) hqN
-    have := hloc 2 (hS 2 Nat.prime_two (dvd_mul_right 2 N))
+  refine ⟨hDisc, (ZInQ.GZStatements.heegnerHyp_iff_split hDisc).mpr
+    ⟨fun h2 => ?_, fun p hp hp2 hpN => ?_⟩⟩
+  · have h8 : (8 : ℤ) ∣ D₀ - 1 := dvd_trans (Dvd.intro (N : ℤ) rfl) h8N
+    have := hloc 2 (mem_primeFactors_two_mul hN0 Nat.prime_two (dvd_mul_right 2 N))
     exact mod_eight_of_isSquare_div hDf.2.1 h8 this
   · have : Fact p.Prime := ⟨hp⟩
     have hpd : (p : ℤ) ∣ D₀ - 1 := by
       have hpN' : (p : ℤ) ∣ (N : ℤ) := by exact_mod_cast hpN
-      exact dvd_trans (dvd_trans hpN' (Dvd.intro_left (8 : ℤ) rfl)) hqN
+      exact dvd_trans (dvd_trans hpN' (Dvd.intro_left (8 : ℤ) rfl)) h8N
     exact zmod_of_isSquare_div hDf.2.2 hpd
-      (hloc p (hS p hp (dvd_mul_of_dvd_right hpN 2)))
+      (hloc p (mem_primeFactors_two_mul hN0 hp (dvd_mul_of_dvd_right hpN 2)))
+
+/-! ## The reduction -/
+
+/-- **`FHNonvanishing` from Friedberg–Hoffstein Theorem B and the twisted root number.** -/
+theorem fhNonvanishing_of_printed (hFH : FriedbergHoffsteinB) (hTw : TwistNewformRootNumber) :
+    FHNonvanishing := by
+  intro N _ f hχ hw B
+  have hN0 : N ≠ 0 := NeZero.ne N
+  obtain ⟨D₀, hD₀, hH₀, h8N⟩ := exists_aux_disc hN0
+  have hD₀f : IsOddFundDisc D₀ := ⟨by have := hD₀.1; omega, hD₀.2.1, hD₀.2.2⟩
+  -- the twist by `χ_{D₀}` has root number `χ_{D₀}(−N) ε(f) = (−1)(−1) = +1`
+  obtain ⟨M, _, g, hg, hM, hcoef, hroot⟩ :=
+    hTw N f hχ D₀ hD₀f (ZInQ.GZStatements.coprime_of_heegnerHyp (ne_of_lt hD₀.1) hH₀)
+  have hJ := ZInQ.GZStatements.jacobiSym_neg_level hN0 hD₀ hH₀
+  have hroot1 : rootNumber g hg = 1 := by
+    rw [hroot, hJ, hw]; push_cast; ring
+  -- Friedberg–Hoffstein with `S = {p ∣ 2N}`
+  obtain ⟨D, hDB, hDf, hsign, hloc, hG⟩ :=
+    hFH N f hχ (2 * N).primeFactors (fun p hp hpd => mem_primeFactors_two_mul hN0 hp hpd) D₀
+      hD₀f (not_dvd_of_mem_primeFactors h8N) ⟨M, inferInstance, g, hg, hM, hcoef, hroot1⟩ B
+  obtain ⟨hDisc, hH⟩ := heegner_of_local hN0 hD₀.1 h8N hDf hsign hloc
+  exact ⟨D, by have := hDisc.1; omega, hDisc, hH, hG⟩
 
 end ZInQ.GZFH
 
