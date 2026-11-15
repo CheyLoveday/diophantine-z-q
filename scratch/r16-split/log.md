@@ -16,3 +16,21 @@ bundle field `HDec.HSyn.OpenResearchLeaves20.r16`.
 - Open bundle leaves that bear on r16: `charPolyIndepOfEllAlgClosed` (Mumford §19 Thm 4, alg. closed `k`; kernel
   `ZInQ.Contrib.AVB1.charPolyIndepOfEll_of_algClosed` gives `PkgI3.CharPolyIndepOfEll`), `mumfordTorsionAlgClosed` (T5;
   kernel LF4T5 gives `PkgI3.TateModuleFree`). VERIFIED (OPEN.md, grep).
+
+## Lean results (all `lake env lean scratch/r16-split/Split.lean`, standard axioms printed)
+- `R16Split.sum_finrank_jointEig`: for a finite-dim. `ℚ`-algebra field `F` acting on a finite-dim. `Ω`-space `W`
+  (`Ω` alg. closed, char 0) by a ring hom, `Σ_{ι : F →ₐ[ℚ] Ω} dim (joint ι-eigenspace) = dim W`. VERIFIED (compiled).
+- `R16Split.trace_eq_sum_jointEig`, `R16Split.weights_eq_of_rational` (trace form nondegenerate + Dedekind). VERIFIED.
+- `R16Split.trace_precompL` (trace of `φ ↦ φ ∘ T` on `Hom_k(V, Ω)` is `trace T`). VERIFIED. (A `show` on the
+  precomposition goal timed out at whnf; fixed with an explicit `precompL_apply` rewrite.)
+- `R16Split.endV_mul`, `endV_one`, `rhoV` (`End⁰(A) → End(V_ℓ A)` is a ring hom). VERIFIED.
+- `R16Split.dim_eq_of_rank_two` (TateModuleFree at ℓ = 2): rank-two clause ⇒ `dim A = [F:ℚ]`. VERIFIED.
+- `R16Split.rank_two_of_dim` (TateModuleFree + CharPolyIndepOfEll): `dim A = [F:ℚ]` ⇒ rank-two clause. VERIFIED.
+- `R16Split.r16_of_coreX : R16CoreX → TateModuleFree → R16_EichlerShimuraJ1'`. VERIFIED, axioms standard.
+- `R16Split.r16_of_coreY : R16CoreY → TateModuleFree → CharPolyIndepOfEll → R16_EichlerShimuraJ1'`. VERIFIED.
+- `coreX_of_r16`, `coreY_of_r16` (the cores are consequences of r16). VERIFIED.
+- `ZInQKernel/Contrib/OneProof/R16Split.lean` (same content + `r16_of_printed` over the bundle leaves
+  `mumfordTorsionAlgClosed`, `charPolyIndepOfEllAlgClosed`): `lake build +ZInQKernel.Contrib.OneProof.R16Split`
+  succeeded (9122 jobs, 31 s). VERIFIED.
+- autofold `--dry-run` on `scratch/r16-split/autofold.json`: exit 0, "strict count: 47/11 on 58 -> 47/11 on 58;
+  strictest 46/12 -> 46/12"; output saved as `scratch/r16-split/FoldDryRun.lean`. VERIFIED (python; compile pending).
