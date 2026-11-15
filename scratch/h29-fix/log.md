@@ -63,3 +63,16 @@ L-values from PARI. VERIFIED (exact for Q(n), 8+ digits for L):
   e.g. Q(17) = +-2 (L(17)^2 = 4), Q(41) = 0 (L(41) = 0), Q(113) = 4, Q(43) = +-3 (L(43)^2 = 9, w_K = 1),
   Q(51) = +-3 = +-(L(51) + 2 L(3)L(17)) form, Q(59) = +-1 with #2Cl = 3.
 * With w_K = 1 at n = 3 it would fail (Q(3) = +-3, L(3) = +-1); n = 43 shows +-3 is a genuine value when L = +-3.
+
+## Step 4. Second read (fresh model agent, given the code and the TYZ line ranges, not this report)
+
+No errors. Ratings: all five LEAF. Notes recorded:
+* InPiZ matches TYZ's pi_Z^{U_n} using printed facts only (representatives 1+2x, chi_0 = (-1)^c, nrd(U) gives only
+  chi = 1, chi_0); Un = U K_{n,2}^x (L924) checked; RnHat = prod_p R_{n,p}.
+* w_K form re-derived from (PQ), genus theory (h_2 = k resp. k-1), Lemma 2.8 and Thm 2.1: w_K sum eps L L = Q(n).
+* Independent of brandt.py: with tau(omega) = zeta, f_3 = f_0 of Thm 2.6, f_0(1) = 3, so Q(3) = +-3; TYZ's printed
+  Thm 2.1 and Lemma 2.9 are inconsistent at n = 3 by their own statements.
+* Weakness (harmless): Thm 2.4(2)'s lattice "pi_Z^U" has index 16 in the integer-valued elements of pi^U; the leaf
+  uses integer-valued elements (TYZ's definition of pi_Z, L540), and on the line pi^{U_n} the generator pi(g) f_0 is
+  primitive, so "free of rank 1" holds for it.
+* Not verified by the reader: Tau Ceti API orientation, lValOne/omegaTYZ, wording of Jones-Pall Thm 5.

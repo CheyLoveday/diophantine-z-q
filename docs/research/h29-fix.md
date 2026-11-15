@@ -162,10 +162,10 @@ Net: strict GLUE −1, strictest GLUE −1, open statements +4.
 
 ## 5. What remains
 
-* No human has read the leaves against the print. A second model read of the revised file is recorded in §6.
+* No human has read the leaves against the print (one fresh model read, §6: no errors, all LEAF).
 * `JonesPallX2Y2Z16`: Jones–Pall's Theorem 5 was not read (no network); TYZ's citation and the exhaustive check
   to `10⁶` support the statement. Legendre's theorem and the `x² + y² + 16z²` statement are natural crowd targets
-  (elementary number theory; Legendre via Dirichlet's theorem on primes in progressions, available in Mathlib, or
+  (elementary number theory; Legendre via Dirichlet's theorem on primes in progressions, which Mathlib has (`Nat.forall_exists_prime_gt_and_eq_mod`, `NumberTheory/LSeries/PrimesInAP.lean`, VERIFIED), or
   via the geometry of numbers).
 * The Hecke bridge (`T_p = a_p(E)` on `𝒜₀^U` for all odd `p`) is not needed by the leaves; it is checked to `p < 40`.
 * `TYZLemma29Printed` corrects a misprint; if the integrator prefers leaves that are literal prints, the
@@ -174,4 +174,13 @@ Net: strict GLUE −1, strictest GLUE −1, open statements +4.
 
 ## 6. Second read
 
-(See the log, step 4.)
+A fresh model agent, given the code and the TYZ line ranges (not this report), read the five leaves and their
+definitions against the source (log, step 4). It found **no errors** and rated all five LEAF. Points it added:
+* it re-derived the `w_K` form from (PQ), genus theory and Theorem 2.1, and showed `Q(3) = ±3` by hand
+  (`τ(ω) = ζ` makes `g = 1` in Theorem 2.6, so `f_3 = f₀` and `f₀(1) = 3`): TYZ's printed Theorem 2.1 and
+  Lemma 2.9 contradict each other at `n = 3` by their own statements, without numerics;
+* harmless weakness: the lattice called `π_ℤ^U` in Theorem 2.4(2) has index 16 in the integer-valued elements of
+  `π^U`; the leaf uses the integer-valued elements (TYZ's definition of `π_ℤ`, L540), and on the line `π^{U_n}` the
+  generator `π(g)f₀` is primitive (values `0, ±1` or `±1, ±3`), so "free of rank 1" holds as printed;
+* not checked by it: the orientation of Tau Ceti's base change and class-group API, the analytic definitions
+  behind `lcalSq`, the wording of Jones–Pall's Theorem 5.
