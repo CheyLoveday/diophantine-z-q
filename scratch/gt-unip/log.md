@@ -25,3 +25,14 @@ TailZ29/ElkiesX6Star/Main), then `lake build +Main +Discharges +Contrib.OneProof
 
 ## Compile outcomes
 - 01:4x `lake env lean ZInQKernel/Contrib/OneProof/UnipotentForward.lean`: no errors, no warnings, 10 s (VERIFIED).
+- `lake build +Main +Discharges +Contrib.OneProof.UnipotentForward`: 12933 jobs, EXIT 0 (VERIFIED).
+- `#discharges` (scratch/gt-unip/DischargesCheck.lean, output discharges-output.txt): 68 open hypotheses, 993
+  theorems checked, 5 discharge one; `OpenResearchLeaves19.semistableUnipotent` by
+  `semistableUnipotent_of_forward` (still assumes SGA7_IX_3_5_Forward, SemiAbelianDescendsSepClosed, MulEtale, NBCSH)
+  and by `semistableUnipotent_of_forwardGeom` (still assumes SGA7_IX_3_5_ForwardGeom, MulEtale, NBCSH). All seven
+  `#print axioms`: [propext, Classical.choice, Quot.sound] (VERIFIED).
+- autofold dry run, spec scratch/gt-unip/autofold-spec.json (geom route): "strict count: 49/12 on 61 -> 50/11 on 61;
+  strictest 48/13 -> 49/12"; the printed module (FoldDryRun.lean, line 1 stripped) compiles,
+  `sixContactMin_of_open24` standard axioms (VERIFIED).
+- autofold dry run, autofold-spec-robust.json (robust route + glue): "49/12 on 61 -> 50/12 on 62; strictest 48/13 ->
+  49/13" (VERIFIED, not compiled).
