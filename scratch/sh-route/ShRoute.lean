@@ -5441,6 +5441,30 @@ theorem route_final (hR : RaynaudSemistableSH) (hP : SemistablePersistsSH)
    semistablePersistsDVR0_of hP (strictHenselizationPair0_final hN),
    semistableUnipotent0_of hU (strictHenselizationInside0_final hN)⟩
 
+/-! ### Sanity checks: the new statements are no stronger than the old ones -/
+
+/-- The Néron leaf is a specialization of reduct-glue's `NeronBaseChangeUnramifiedDVR` (the general
+BLR §7.2 Thm. 1 form: ramification index 1, separable residue extension). -/
+theorem neronBaseChangeSH_of_unramified (h : NeronBaseChangeUnramifiedDVR) : NeronBaseChangeSH := by
+  intro K _ _ O _ K₁ _ _ O₁ hO hU A 𝒩 h𝒩
+  obtain ⟨hSH, halg, hunr, hsep⟩ := hU
+  haveI : IsDiscreteValuationRing O₁ := hSH.1
+  haveI := halg
+  haveI : Algebra.IsSeparable K K₁ := Algebra.IsAlgebraic.isSeparable_of_perfectField
+  exact h K O K₁ O₁ hO inferInstance hunr hsep A 𝒩 h𝒩
+
+/-- Each char-0 leaf is a specialization of reduct-glue's leaf (same statement, two added
+hypotheses). -/
+theorem char0_of_general :
+    (StrictHenselizationNeron → StrictHenselizationNeron0) ∧
+    (StrictHenselizationPair → StrictHenselizationPair0) ∧
+    (StrictHenselizationInside → StrictHenselizationInside0) ∧
+    (RaynaudSemistable → RaynaudSemistable0) ∧
+    (SemistablePersistsDVR → SemistablePersistsDVR0) ∧
+    (SemistableUnipotent → SemistableUnipotent0) :=
+  ⟨fun h K _ _ O _ _ => h K O, fun h K _ _ O _ _ => h K O, fun h K _ _ O _ _ => h K O,
+   fun h K _ _ O _ _ => h K O, fun h K _ _ O _ _ => h K O, fun h K _ _ O _ _ => h K O⟩
+
 end ShRoute
 
 #print axioms ShRoute.key_finite
@@ -5455,4 +5479,6 @@ end ShRoute
 #print axioms ShRoute.strictHenselizationPair0_final
 #print axioms ShRoute.strictHenselizationInside0_final
 #print axioms ShRoute.route_final
+#print axioms ShRoute.neronBaseChangeSH_of_unramified
+#print axioms ShRoute.char0_of_general
 

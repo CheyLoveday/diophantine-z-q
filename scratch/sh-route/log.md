@@ -42,3 +42,12 @@ Base e38375b3 (wip/w62). Lean 4.35 / Mathlib v4.35.0.
 - `inertiaField_le_adjoin`: inertia field over K' ⊆ E(t') (t' finite generating K'), via finite Galois correspondence
   Fix(I ∩ Gal(M/K')) = Fix(I) ⊔ K' in a finite Galois M.
 - **`shPair0 : SHPair0` PROVED** (Ω = AlgebraicClosure K', w from `exists_comap_eq`, κ(O') perfect as algebraic over κ(O)).
+
+## Final assembly (VERIFIED 18:10)
+- `mk.sh` → ShRoute.lean = Base + Body (diff with reduct-glue's copies empty) + Top + CA1 + CA2 + CA3 + Final.
+- `chk.sh`: `lake env lean scratch/sh-route/ShRoute.lean`, 68 s, 7.75 GB, no errors; 58 `#print axioms` lines, all
+  `[propext, Classical.choice, Quot.sound]` (axioms.txt). No `sorry` (only in docstrings).
+- Pitfall: the file-level `open ... MonObj` / Polynomial opens of Base/Body make `mul_one`, `one_mul`, `eval_map`,
+  `eval` ambiguous in appended parts; qualified as `_root_.` / `Polynomial.`.
+- Final: `strictHenselization{Neron,Pair,Inside}0_final : NeronBaseChangeSH → …0`; `route_final`;
+  `neronBaseChangeSH_of_unramified : NeronBaseChangeUnramifiedDVR → NeronBaseChangeSH`; `char0_of_general`.

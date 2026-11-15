@@ -54,4 +54,6 @@
 'ShRoute.strictHenselizationPair0_final' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShRoute.strictHenselizationInside0_final' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ShRoute.route_final' depends on axioms: [propext, Classical.choice, Quot.sound]
-68.73 s 7756232 KB
+'ShRoute.neronBaseChangeSH_of_unramified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ShRoute.char0_of_general' depends on axioms: [propext, Classical.choice, Quot.sound]
+68.30 s 7753068 KB
