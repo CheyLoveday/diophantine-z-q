@@ -14,3 +14,32 @@ kinds.tsv: composite, GLUE.
   odd (G10), HT weights {0,−1} (G9). A is not CM (NoCM branch), so r₅ is not induced from a Hecke character.
 - `g8_g12_of_leaves3` is called once, by `HSyn.G0AssembleMod.afterG7_of3` (TailD l. 171), on the route to
   `sixContactMin_of_open28` / `ZInQ.OneProof.frozenTarget`.
+
+## Step 2. Weakest form the consumers need (VERIFIED by reading TailA l. 2211-2235)
+`PanBerger` restricted to `p = 5` (`PanBerger5`, scratch only): g12 never uses another prime. Pan at `p = 5`
+has no residual proviso. Further restriction to the Tate-module instance (r₅ ⊕ r₅ ≅ V₅(A)⊗ℚ̄₅ on G_{L'}) would
+let pst replace de Rham via semistable reduction (SGA 7 IX) + Breuil 2000 Cor. 5.3.4, but those also need B_st.
+
+## Step 3. Proof from other fields: not possible (STANDARD)
+The other fields (R9 Faltings, R10 de Rham comparison, R7a NOS, R16 Eichler–Shimura, R6 Raynaud, CM/Tate leaves)
+go from forms to representations or describe local properties; none gives modularity of a 2-dim G_ℚ-rep.
+r₅ is not CM-induced (NoCM branch; End⁰(A_Q̄) = B indefinite quaternion division algebra), so Hecke's theorem
+does not apply. Route K (Khare–Wintenberger + Ribet/Kisin Cor. 0.3) would replace more than this field and add
+Weil-restriction glue (h-decomposition §1). So the field stays a research input; the deliverable splits it.
+
+## Step 4. Main result: B_cris, B_st, LocalIsPst defined; PanBerger split into two printed leaves
+- scratch/pb-bypass/FontainePst.lean (first version) and ZInQKernel/Contrib/OneProof/PanBerger.lean (final):
+  `lake env lean ZInQKernel/Contrib/OneProof/PanBerger.lean` compiles with no error and no warning (11-15 05:48,
+  1 min 46 s), axioms of `panBerger_of_printed`, `isPst_trivial`: [propext, Classical.choice, Quot.sound]
+  (VERIFIED in the scratch copy by #print axioms).
+- Definitions (namespace HDec.PkgI4.PanBergerSplit): Acris0 = Subring.closure (A_inf ∪ {x^n/n! : θx = 0}) in
+  A_inf[1/p]; Acris = AdicCompletion (span{p}) Acris0; BcrisPlus = Acris[1/p]; logT = p-adic limit of the
+  partial sums of log(1+x) (Cauchy proof: p^n ∣ (j-1)! for j-1 ≥ p^n); Bcris = localization at all log[ε],
+  ε^♯ = 1, ε ≠ 1; Bst = Bcris[X]; G_{ℚ_p}-action by functoriality (locMap/adicMap/IsLocalization.map, proofs that
+  A_cris^0 and the t-generators are preserved), σ(X) = X + log[σ(p♭)/p♭]; dstSpace (Hom form, as ddrSpace),
+  bstInv = B_st^{G_K}, IsSemistableOver, IsPst, LocalIsPst.
+- Leaves: PanPrinted := PanFor LocalIsPst; BergerPrinted := BergerDR LocalIsPst.
+  `panBerger_of_printed : PanPrinted → BergerPrinted → PanBerger` (VERIFIED, compiles).
+- Sanity: `isSemistableOver_trivial` (trivial 1-dim rep semistable over every K, via D_st ≅ B_st^{G_K}),
+  `isPst_trivial` (VERIFIED, compiles). Not proved (as for pkg-I4's IsDeRham): B_st^{G_K} = K_0, B_cris ≠ 0,
+  group-action property.
