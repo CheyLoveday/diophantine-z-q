@@ -56,7 +56,7 @@ source).** On some witness of the moduli clause lists (the canonical `Y₃` with
 * **`t` is a coordinate on `X₆/W`**, in its `ℚ̄`-point form: `t(x) = t(x')` iff `x' = w(x)` for some
   `w ∈ W = {1, w₂, w₃, w₆}` (`atkinLehnerW`). This is a consequence of the printed `X*(6) := X(6)/W ≅ P¹_t`: the
   `ℚ̄`-points of the quotient of a curve by a finite group are the orbits (SGA 1 V.1, Mumford, *Abelian
-  varieties* §7; STANDARD);
+  varieties* §7; STANDARD, locators UNVERIFIED);
 * **the CM values** `t = 0, 1, ∞` at the CM points of discriminants `−24, −4, −3` (the elliptic points of orders
   2, 4, 6 of the `(2, 4, 6)` triangle group);
 * **the equations** `X₆ = X*(6)(√−t, √(3(t − 1)))` as the curve over the `t`-line in its two charts

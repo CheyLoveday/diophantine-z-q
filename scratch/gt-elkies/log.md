@@ -31,3 +31,4 @@ Contrib file only). Note: the stale .lake/build.orig of this worktree was remove
   (I_m = μ_m𝒪 principal; Rotger 2004, Baba–Granath 2008 §2; locators UNVERIFIED).
 - 0/∞ orientation (t(−24) = 0, t(−3) = ∞): residue fields (ℚ(√−3) over both t = 0 and t = ∞ in the charts) and the branching of
   the three quadratic subcovers (all ≅ P¹_ℚ) do not distinguish it; it stays an UNVERIFIED reading of Elkies. (Computed by hand.)
+- Hilbert symbols (−3,−3)_v and (−1,−3)_v = −1 exactly at v ∈ {3, ∞} (PARI hilbert, p = 2,3,5,7,∞). VERIFIED.
