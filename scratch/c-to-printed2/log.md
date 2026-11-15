@@ -38,3 +38,6 @@ Base e38375b3. Compile command: `lake env lean scratch/c-to-printed2/<file>.lean
   lines all `[propext, Classical.choice, Quot.sound]`.
 - `T09Roadmap.lean`: `PicRepresentableAbVar` (Grothendieck representability of `picardFunctor A.X.hom` for
   `A : PkgI3.AbVar K`, unused) compiles with no errors (**VERIFIED** statable; nothing proved).
+- Independent model review: no mathematical error found; wording fixes applied (report §1, §2.1 `ā_p` caveat, §5,
+  §7; two docstrings in `CToPrinted2.lean`). Re-run: `CToPrinted2.lean` 0 errors, 10 standard axiom lines;
+  `HTDual_out.txt` 0 errors, standard axioms; `T09Roadmap_out.txt` empty. **VERIFIED**.

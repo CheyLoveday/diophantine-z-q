@@ -602,7 +602,8 @@ theorem katoRealization_of_coh (hK : KatoRealizationCoh) (hD : HTDual) : KatoRea
 theorem eigenformHTNew_of_coh (hK : KatoRealizationCoh) (hD : HTDual) : EigenformHTNew :=
   eigenformHTNew_of_realization (katoRealization_of_coh hK hD)
 
-/-- **Row eigenformHTNew from Kato's theorem in his own normalization alone**, with the two bundle LEAF fields
+/-- **Row eigenformHTNew from the realization leaf `KatoRealizationCoh` (Kato's normalization; Kato with
+Eichler–Shimura–Deligne and Ribet at `V_{F_λ}(f)`)**, with the two bundle LEAF fields
 `tateTwistInvariants`, `axSenTate` (Tate 1967 §3.3 Thms 1–2) closing modular-split's glue `HTDual`. -/
 theorem eigenformHTNew_of_printed (hK : KatoRealizationCoh) (hT : TateTwistInvariants) (hA : AxSenTate) :
     EigenformHTNew :=
@@ -685,7 +686,8 @@ theorem katoRealizationCohSS_of_field (hD : DSThm965) (hDS : DSThm966) (hT : Tat
       simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton, neg_zero, neg_sub]
     rwa [hS] at h2
 
-/-- **All three Kato forms are equivalent to the field over the bundle.** -/
+/-- **The cohomological semisimple form is equivalent to the field over the bundle** (as is `KatoRealization`,
+`katoRealization_iff_field`; the irreducible form `KatoRealizationCoh` only implies it). -/
 theorem katoRealizationCohSS_iff_field (hD : DSThm965) (hDS : DSThm966) (hT : TateTwistInvariants)
     (hA : AxSenTate) : KatoRealizationCohSS ↔ EigenformHTNew :=
   ⟨fun hK => eigenformHTNew_of_printedSS hK hT hA, katoRealizationCohSS_of_field hD hDS hT hA⟩

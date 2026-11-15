@@ -29,18 +29,21 @@ changed.
 - `DS → Tate → (KatoRealizationCohSS ↔ EigenformHTNew)`.
 
 So the existential substitute for the undefinable object (Carayol's `σ_λ(π_f)`, Kato's `V_{F_λ}(f)`) loses nothing
-relative to the field. Each field says exactly as much as the printed theorem at the author's realization.
+relative to the field. Modulo those bundle leaves, each field says exactly as much as the existential leaf. The leaf
+is in turn a consequence of the printed theorem at the author's realization, and strictly weaker than it.
 
 **Strict kind.** For `eigenformHTNew` and `r17` the kind is unchanged: GLUE (c) under the strict reading, LEAF under the
 lenient one. Each realization leaf is still a consequence, because the printed object is quantified existentially
-(§2). What changed is that no project glue is left between leaf and field, and the leaf is the weakest possible
-(the equivalences above). A fold could replace the two fields by `KatoRealizationCohSS` (or `KatoRealization`) and
+(§2). What changed is that no project glue is left between leaf and field, and the leaf is as weak as the field allows
+(equivalent to it modulo the bundle leaves above). A fold could replace the two fields by `KatoRealizationCohSS` (or `KatoRealization`) and
 `CarayolRealization` (§6). Counts are SPECULATIVE until a fold applies this.
 
 **VERIFIED** (`scratch/c-to-printed2/CToPrinted2_out.txt`):
 - `lake env lean scratch/c-to-printed2/CToPrinted2.lean` (imports `ZInQKernel.OneProof.H.TailZ15`) gives 0 errors.
 - 10 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`.
-- `HTDual.lean` (imports `OneProof.H.TailT`) also compiles on its own, with standard axioms.
+- `HTDual.lean` (imports `OneProof.H.TailT`) also compiles on its own, with standard axioms (`HTDual_out.txt`).
+- The independent model review found no mathematical error. Its wording corrections are applied here and in two
+  docstrings.
 
 ## 2. The printed theorems, the missing definitions, the substitutes
 
@@ -83,6 +86,10 @@ The Frobenius and semisimplicity clauses determine `ρ` up to conjugacy: by Cheb
 - semisimplicity, from Ribet's irreducibility (Ribet 1977 for `k = 2`, Ribet 1985 in general; UNVERIFIED locators),
   which is stronger than semisimplicity;
 - the weights, which are Kato's.
+
+A second caveat is unchecked: Kato's Hecke quotient might have geometric Frobenius trace `ā_p` (complex
+conjugate) rather than `a_p`. In that case the witness is `V_{F_λ}(f^*)` for the conjugate newform `f^*`, and the
+leaf is still a consequence of the print.
 
 The convention caveat is modular-split's (UNVERIFIED). In the kernel's convention, `ℚ_ℓ(1)` has weight `−1`, so `H¹`
 of an elliptic curve has weights `{0, 1}`; this matches `{0, k − 1}` at `k = 2`. If Kato's `V_{F_λ}(f)` is in the
@@ -222,7 +229,9 @@ Mathlib 4.35 has no ample line bundles (`grep Ample` in `Mathlib/AlgebraicGeomet
 
 With 1–5 in place, T09 becomes "Mumford §§20, 23 at `(Pic⁰, ē_n, φ_L)`" in published form. Until then the field is
 itself the smallest faithful substitute. **Shortcuts ruled out:**
-- `D.dual = A` needs a principal polarization (av-split §4.1);
+- `D.dual = A` over `K` needs an isomorphism `A ≅ Â` with the right pairings, i.e. essentially a principal
+  polarization (av-split §4.1). Over `K̄` the `WeilDual` docstring notes that even `Â = A` carries a structure. That
+  does not help over a number field, where Galois equivariance is the content;
 - a `∀ D : WeilDual A` form would be unsafe (`WeilDual` docstring: over `K̄` even `Â = A` carries one).
 
 ## 6. Effect on the single proof (SPECULATIVE until a fold applies it)
@@ -248,7 +257,9 @@ itself the smallest faithful substitute. **Shortcuts ruled out:**
 
 - `scratch/c-to-printed2/CToPrinted2.lean`: everything (§0 verbatim fields, §1–§5 `HTDual`, §6 Kato, §7 Carayol, §9
   integration). Output: `CToPrinted2_out.txt`.
-- `scratch/c-to-printed2/HTDual.lean`: §1–§5 alone, on `TailT`.
+- `scratch/c-to-printed2/HTDual.lean`: §1–§5 alone, on `TailT`. Output: `HTDual_out.txt`.
+- `scratch/c-to-printed2/T09Roadmap.lean`: statability check of Grothendieck's Picard representability (unused).
+  Output: `T09Roadmap_out.txt` (empty, meaning no errors or warnings).
 - `scratch/c-to-printed2/log.md`: results log.
 - Sources copied verbatim: modular-split's `EigenHT.lean` and `R17.lean` (leaves, `dualGR`, `HTDual`, the conjugation
   lemmas) and the three field definitions.
