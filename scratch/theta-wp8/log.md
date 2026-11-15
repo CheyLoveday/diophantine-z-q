@@ -29,3 +29,12 @@ Notation: ϑ(z) = jacobiTheta₂ z w, s(z) = ϑ(z + (1+w)/2) (zeros exactly Λ =
 - #discharges (scratch/theta-wp8/Discharges.lean → discharges-output.txt): 63 open hypotheses, 2103 theorems,
   7 discharge one (the same 7 pre-existing ones; `hX` is a plain argument of frozenTarget, not a bundle field).
   All five new theorems and `ZInQ.OneProof.frozenTarget`: standard axioms.
+
+## gz-heegner `X0ModuliGaloisMero` (subtask 2)
+- Used in `heegnerC_fixed` (Heegner.lean l. 1033–1123) at the newform level N, g = xPar, yPar (VERIFIED, read).
+- C_d form: d ≡ 5 (mod 8) squarefree, conductor 32d² (VERIFIED, PARI, num/conductor.py: 800, 5408, 14112, 26912,
+  43808, 89888); a_13(C_1) = 6 vs a_13(C_5) = −6, a_5(C_1) = −2 vs a_5(C_13) = 2 (VERIFIED, PARI).
+- Verdict: never N = 32; the eta route does not cover it; the hL3 fold keeps X0ModuliGaloisMero.
+
+## Deliverables
+- docs/research/theta-wp8.md; scratch/theta-wp8/autofold.json (manual fold; hX not a bundle field).
