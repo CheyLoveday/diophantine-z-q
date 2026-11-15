@@ -184,9 +184,10 @@ def idCompSet (G : Over S) [GrpObj G] : Set G.left :=
   {x | x ∈ connectedComponentIn (G.hom.base ⁻¹' {G.hom.base x})
     ((η[G] : 𝟙_ (Over S) ⟶ G).left.base (G.hom.base x))}
 
-/-- **LEAF `SGA3_VIB_3_10`** (SGA 3 I, Exp. VI_B, Thm. 3.10; number recalled, UNVERIFIED): for a smooth
-group scheme `G` over a scheme `S` (the print: locally of finite presentation with smooth connected...
-fibres; smooth suffices), `G⁰` is open in `G`. -/
+/-- **LEAF `SGA3_VIB_3_10`** (SGA 3 I, Exp. VI_B, Thm. 3.10; number recalled, UNVERIFIED; also EGA IV₃ 15.6.5,
+Stacks 055R-type statements). *Printed* (as recalled): for a group scheme `G → S` locally of finite presentation
+with smooth fibres, the union `G⁰` of the identity components of the fibres is open in `G`. *Lean form*: `G`
+smooth over `S` (a special case), `G⁰ = idCompSet G`. -/
 def SGA3_VIB_3_10 : Prop :=
   ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [Smooth G.hom], IsOpen (idCompSet G)
 
@@ -348,8 +349,10 @@ noncomputable def kerUnit {X Y : Over S} [GrpObj X] [GrpObj Y] (f : X ⟶ Y) (hf
 `S` of `log #(I_P/I_P²)`, `I_P = ker(𝒪_{G,s(P)} → 𝒪_{S,P})` the stalk of the ideal of the section. For a
 section `s` of `G → S`, `s*Ω¹_{G/S}` is the conormal sheaf `s*(I/I²)` (EGA IV 17.2.5, UNVERIFIED locator), whose
 stalk at `P` is `I_P/I_P²`; over a Dedekind `S` a torsion coherent module is the sum of its stalks, so its
-cardinality is the product of theirs. (An infinite stalk contributes `log 0 = 0`; for a quasi-finite `G` with
-étale generic fibre all stalks are finite and almost all trivial.) -/
+cardinality is the product of theirs. (An infinite stalk would contribute `log 0 = 0`; in the use below all stalks
+are finite and almost all trivial.) Faltings' `G` is `𝒩_A⁰ ×_{𝒩_B⁰} S` (quasi-finite flat in the semistable
+case); it is an open subscheme of `kerScheme φ_𝒩 = 𝒩_A ×_{𝒩_B} S` containing `s(S)`, so the stalks at `s(P)`,
+and hence this number, are the same for both (independent review). -/
 noncomputable def kerOmegaLog {X Y : Over S} [GrpObj X] [GrpObj Y] (f : X ⟶ Y) (hf : IsMonHom f) : ℝ :=
   ∑ᶠ (P : (𝟙_ (Over S)).left),
     Real.log (Nat.card (RingHom.ker ((kerUnit f hf).stalkMap P).hom).Cotangent)
