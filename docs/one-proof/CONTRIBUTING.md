@@ -66,6 +66,17 @@ hypothesis proved. The maintainers then fold it into the single proof: a new bun
 hypothesis (and with your leaves, if any), `frozenTarget` switched to it, the build re-checked, and OPEN.md
 regenerated.
 
+## For maintainers: folding a contribution
+
+`scripts/one_proof/autofold.py SPEC.json` writes the fold of a checked contribution: a new module
+`ZInQKernel/OneProof/H/TailZ<k+1>.lean` with the next generation of each affected bundle (the discharged fields
+removed, the new leaves added), a theorem filling each discharged field with its proof, and the next top theorem;
+it switches `Main.lean` to it and updates `kinds.tsv` and `claims.tsv`. It refuses a fold that raises the strict
+GLUE count. The spec format is in the script's docstring; `scratch/contrib-kit/autofold-test.json` exercises the
+mechanics (with `sorry`, so it is a test, not a fold). Then build, check the axioms, compare hashes with
+`scratch/one-proof/DumpCompact.lean` and `cmp_hashes.py` (no existing constant may change except `frozenTarget`),
+and regenerate OPEN.md (`scripts/one_proof/OpenStatements.lean`, `render_open.py --check`, `render_open.py`).
+
 ## A worked example
 
 `scratch/contrib-kit/DischargesTest.lean` runs `#discharges` on three theorems, against the current open
