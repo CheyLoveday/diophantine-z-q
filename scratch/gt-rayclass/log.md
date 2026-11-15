@@ -28,3 +28,12 @@
 - `python3 scripts/one_proof/autofold.py scratch/gt-rayclass/autofold-spec.json --dry-run`:
   `strict count: 45/13 on 58 -> 45/12 on 57; strictest 44/14 -> 44/13` (no file changed).
   Generated module saved (line 1 stripped) as `scratch/gt-rayclass/FoldCheck.lean`.
+
+## Step 3 (03:55): build, #discharges, fold check (VERIFIED)
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.RayClassShimura`:
+  success, 12980 jobs, 8 min 19 s; frozenTarget standard axioms.
+- `lake env lean scratch/gt-rayclass/Discharges.lean`: DISCHARGES rayClassCMAb by rayClassCMAb_of_leaves (still
+  assumes ShimuraMainThmIDeligneY3AbU, UniformizationLeafAll, GAGAMorphism) and by rayClassCMAb_of; DISCHARGES
+  shimuraFamilyAb by shimuraFamilyAb_of_U (still assumes ShimuraMainThmIDeligneY3AbU); all axioms standard;
+  "#discharges: 65 open hypotheses, 1499 theorems checked, 7 discharge one" (3 of the 7 are earlier contributions).
+- `lake env lean scratch/gt-rayclass/FoldCheck.lean`: sixContactMin_of_open27 standard axioms, 6 s.
