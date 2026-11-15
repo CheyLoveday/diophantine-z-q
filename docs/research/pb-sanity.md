@@ -82,15 +82,17 @@ all `n`; so `c = 0`, a contradiction since `𝓞_ℂ_p` is a domain of character
 * **A representation failing `LocalIsPst`: out of reach.** To show `¬ IsSemistableOver K ρ` one must know
   `finrank B_st^{G_K} ≠ 0` (needs finite-dimensionality, first bullet) and bound `D_st,K(ρ)` from above, e.g.
   `D_st,K = 0` for a character of non-integral Sen weight or for `ℚ_p(χ)` with `χ` non-de Rham. Both need the
-  embedding `B_st ⊆ B_dR` and Sen theory / Tate's theorem. So "LocalIsPst is not always true" is not proved;
-  the non-degeneracy results of §2 exclude the specific failure that pb-bypass flagged (a zero `B_cris`, which
-  would make every representation pst).
+  embedding `B_st ⊆ B_dR` and Sen theory / Tate's theorem. So "LocalIsPst is not always true" is not proved.
+  The results of §2 exclude the two concrete ways the definitions could have made every representation pst:
+  a zero `B_cris` (pb-bypass's worry), and a monodromy variable fixed by some `G_K` (which would make
+  `B_st^{G_K}` infinite-dimensional and `IsSemistableOver` trivially true for representations with
+  `D_st,K = 0`).
 * **Unramified characters of infinite order** (Frobenius ↦ a unit of `ℤ_p` that is not a root of unity):
   their periods are solutions of `φ(b) = u b` in `W(k̄)`, which needs Lang's theorem / Hilbert 90 over
   `W(k̄)`. The finite-order ones are covered: all are pst (`isPst_of_trivial_on`), and the quadratic ones
   attached to prime-to-`p` roots of unity are semistable over `ℚ_p` (`isSemistableOver_quadChar_teich`);
-  the existence of `β = ζ_{2(p−1)}` with `β² ∈ ℚ_p`, `β ∉ ℚ_p` (which makes that character nontrivial) is
-  standard and not formalized.
+  such a character is nontrivial as soon as `β ∉ ℚ_p` (`quadChar_ne_one`); the existence of
+  `β = ζ_{2(p−1)}` with `β² ∈ ℚ_p`, `β ∉ ℚ_p` for odd `p` is standard and not formalized.
 
 ## 4. Statement check of the two leaves against the prints
 
