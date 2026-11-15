@@ -50,3 +50,11 @@
   `[port] Tau Ceti name clash: renamed ...` in each). A wrong rename cannot change meaning silently (fresh names fail to elaborate).
 - One follow-on: the auto-generated instance name `WeierstrassCurve.Univ.Affine.instAddGroupPointFieldBaseChangeMvPolynomialCoeffIntCurve`
   (referenced by name downstream) changed with `Coeff`; given its old name explicitly (`-- [port]`, EDSEngine) (build6.log).
+
+## 2026-11-15 04:16-04:29 ModularEquationGeneric proved
+- build7.log: `lake build ZInQKernel.Contrib.OneProof.ModularEquationGeneric` → `Build completed successfully (9990 jobs)`; no
+  'declaration uses sorry'. VERIFIED.
+- Statement.lean (verbatim copies of CyclicQuotientJBijOn, X0Transitive, ModularEquationGeneric, each `Iff.rfl` against the constant;
+  copies proved): compiles; `#print axioms` of all three proofs: [propext, Classical.choice, Quot.sound] (Statement-output.txt). VERIFIED.
+- Vendor/AnthropicFLT/NOTICE (upstream NOTICE + 'Modified for the Z-in-Q kernel' paragraph) and SOURCE_MANIFEST.flt-cqj2.json
+  (414 modules, upstream path + sha256 of the ~/flt-src file) added.
