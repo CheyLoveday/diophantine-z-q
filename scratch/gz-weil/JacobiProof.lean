@@ -496,4 +496,88 @@ theorem tendsto_deriv_zero {g : ℂ → ℂ} {c : ℂ} (hd : ∀ t : ℂ, 0 < t.
   calc ‖deriv g t‖ ≤ ε / 4 / (1 / 2) := hcd
     _ < ε := by linarith
 
+
+theorem tendsto_LB : Tendsto LB imInf (𝓝 0) := by
+  have h := (tendsto_deriv_zero (fun t ht => differentiableAt_thetaThree ht) tendsto_thetaThree).div
+    tendsto_thetaThree one_ne_zero
+  rw [zero_div] at h
+  exact h
+
+theorem tendsto_LC : Tendsto LC imInf (𝓝 0) := by
+  have h := (tendsto_deriv_zero (fun t ht => differentiableAt_thetaFour ht) tendsto_thetaFour).div
+    tendsto_thetaFour one_ne_zero
+  rw [zero_div] at h
+  exact h
+
+theorem LA_eq {t : ℂ} (ht : 0 < t.im) : LA t = π * I / 4 + deriv uTheta t / uTheta t := by
+  have hu := differentiableAt_uTheta ht
+  have he : HasDerivAt (fun s : ℂ => cexp (π * I * s / 4)) (π * I / 4 * cexp (π * I * t / 4)) t := by
+    have h1 : HasDerivAt (fun s : ℂ => π * I * s / 4) (π * I / 4) t := by
+      simpa using ((hasDerivAt_id t).const_mul (π * I : ℂ)).div_const 4
+    have := h1.cexp
+    convert this using 1; ring
+  have hd : HasDerivAt thetaTwo (π * I / 4 * cexp (π * I * t / 4) * uTheta t +
+      cexp (π * I * t / 4) * deriv uTheta t) t := he.mul hu.hasDerivAt
+  have h2 := thetaTwo_ne_zero ht
+  rw [thetaTwo_eq] at h2
+  have hc : cexp (π * I * t / 4) ≠ 0 := Complex.exp_ne_zero _
+  have hu0 : uTheta t ≠ 0 := fun h0 => h2 (by rw [h0, mul_zero])
+  rw [LA, hd.deriv, thetaTwo_eq]
+  field_simp
+
+theorem tendsto_LA : Tendsto LA imInf (𝓝 (π * I / 4)) := by
+  have h := (tendsto_deriv_zero (fun t ht => differentiableAt_uTheta ht) tendsto_uTheta).div
+    tendsto_uTheta two_ne_zero
+  rw [zero_div] at h
+  have h' := h.const_add (π * I / 4)
+  rw [add_zero] at h'
+  refine h'.congr' ?_
+  filter_upwards [eventually_im_pos] with t ht
+  exact (LA_eq ht).symm
+
+theorem tendsto_cexp_pi_I : Tendsto (fun t : ℂ => cexp (π * I * t)) imInf (𝓝 0) := by
+  rw [tendsto_zero_iff_norm_tendsto_zero]
+  refine tendsto_exp_neg_im.congr fun t => ?_
+  rw [Complex.norm_exp]
+  congr 1
+  simp [Complex.mul_re]
+
+theorem tendsto_thetaTwo_pow4 : Tendsto (fun t => thetaTwo t ^ 4) imInf (𝓝 0) := by
+  have h := tendsto_cexp_pi_I.mul (tendsto_uTheta.pow 4)
+  rw [zero_mul] at h
+  refine h.congr fun t => ?_
+  rw [thetaTwo_eq, mul_pow, ← Complex.exp_nat_mul]
+  congr 2
+  push_cast; ring
+
+theorem tendsto_E1 : Tendsto E1 imInf (𝓝 0) := by
+  have h := (tendsto_LB.sub tendsto_LA).add ((tendsto_const_nhds (x := π * I / 4)).mul (tendsto_thetaFour.pow 4))
+  simp only [one_pow, mul_one, zero_sub, neg_add_cancel] at h
+  exact h
+
+theorem tendsto_E2 : Tendsto E2 imInf (𝓝 0) := by
+  have h := (tendsto_LB.sub tendsto_LC).sub ((tendsto_const_nhds (x := π * I / 4)).mul tendsto_thetaTwo_pow4)
+  simp only [sub_zero, mul_zero] at h
+  exact h
+
+theorem tendsto_E3 : Tendsto E3 imInf (𝓝 0) := by
+  have h := (tendsto_LA.sub tendsto_LC).sub ((tendsto_const_nhds (x := π * I / 4)).mul (tendsto_thetaThree.pow 4))
+  simp only [one_pow, mul_one, sub_zero, sub_self] at h
+  exact h
+
+theorem tendsto_Psym : Tendsto Psym imInf (𝓝 0) := by
+  have h := ((tendsto_E1.pow 2).add (tendsto_E2.pow 2)).add (tendsto_E3.pow 2)
+  simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, add_zero] at h
+  exact h
+
+theorem tendsto_Rsym : Tendsto Rsym imInf (𝓝 0) := by
+  have h := ((((tendsto_E1.pow 2).mul (tendsto_E2.pow 2))).add
+    ((tendsto_E2.pow 2).mul (tendsto_E3.pow 2))).add ((tendsto_E3.pow 2).mul (tendsto_E1.pow 2))
+  simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero, add_zero] at h
+  exact h
+
+theorem tendsto_coe_imInf : Tendsto (fun τ : UpperHalfPlane => (τ : ℂ)) UpperHalfPlane.atImInfty imInf := by
+  refine Filter.tendsto_comap_iff.mpr ?_
+  exact Filter.tendsto_comap
+
 end ZInQ.GZWeil
