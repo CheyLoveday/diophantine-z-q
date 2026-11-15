@@ -62,3 +62,14 @@ of the e38375b3 build). One Lean process at a time.
 - `openImmersionLocalization : EGAIV_8_10_5_openImm → ReductGlue.OpenImmersionOfLocal` COMPILES (open cover of
   Y by Y ×_S D(s_𝔭) via Cover.mkOfCovers; IsZariskiLocalAtTarget.of_openCover; pullbackRightPullbackFstIso).
 - `semistableNeronBaseChange_of_printed'` (4 printed leaves + 2 glue) COMPILES. All 7 #print axioms standard.
+
+## Part S, glue `IdentityComponentFromPrinted` reduced (CToPrinted.lean, section FromPrinted)
+- `SGA7_IX_3_3` restricted to `[FiniteDimensional K K']` (specialization; safer than "any extension").
+- New glue Props (topology of group schemes): `OpenSubgroupIsIdComp` (open subgroup with connected generic and
+  geometric special fibres has range idCompSet), `IdCompBaseChangeDVR` (fst⁻¹ G⁰ = (G ×_O O')⁰).
+- `identityComponentFromPrinted_of : OpenSubgroupIsIdComp → IdCompBaseChangeDVR → IdentityComponentFromPrinted`
+  COMPILES (canonical c from bcDVR + Néron property + isMonHom_of_ext; Scheme.Pullback.range_map;
+  IsOpenImmersion.isoOfRangeEq). Pitfall: `ι` is a reserved token in this import context (Cocone.mk instead of
+  `where ι :=`; don't name variables ι).
+- `semistableNeronBaseChange_of_printed''` (4 printed leaves + IdentityComponentGroupModel + 2 topological glue)
+  COMPILES, standard axioms.

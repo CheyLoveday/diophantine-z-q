@@ -231,15 +231,17 @@ with fraction fields `K ⊆ K'`, `A_K` an abelian variety with semistable reduct
 of `A_K` over `R` and of `A_{K'}` over `R'`; then the canonical morphism `N ×_R R' → N'` induces an
 isomorphism `N⁰ ×_R R' ≅ N'⁰` of identity components.
 
-*Lean form*: `K'/K` any extension, `O' ∩ K = O`; `c : 𝒩 ×_O O' → 𝒩'` any homomorphism whose generic fibre is
+*Lean form*: `K'/K` finite (the print allows any extension of discrete valuation rings, as recalled; the
+finite case is a specialization), `O' ∩ K = O`; `c : 𝒩 ×_O O' → 𝒩'` any homomorphism whose generic fibre is
 an isomorphism (the canonical morphism is one; any other is the canonical one followed by an automorphism of
 the group scheme `𝒩'`, which preserves `𝒩'⁰`); `N⁰ ×_R R'` is the identity component of `𝒩 ×_O O'` (the
 identity component commutes with base change, SGA 3 VI_B 3.3, UNVERIFIED), given as an open `U` with
 `U = idCompSet`. Conclusion: `U → 𝒩'` is an open immersion with image `𝒩'⁰`. -/
 def SGA7_IX_3_3 : Prop :=
   ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
-    (K' : Type) [Field K'] [Algebra K K'] (O' : ValuationSubring K') [IsDiscreteValuationRing O']
-    (hO : O'.comap (algebraMap K K') = O) (A : PkgI3.AbVar K), HasSemistableReduction A O →
+    (K' : Type) [Field K'] [Algebra K K'] [FiniteDimensional K K'] (O' : ValuationSubring K')
+    [IsDiscreteValuationRing O'] (hO : O'.comap (algebraMap K K') = O) (A : PkgI3.AbVar K),
+    HasSemistableReduction A O →
     ∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel →
     ∀ 𝒩' : GroupModelO (A.baseChange K') O', 𝒩'.IsNeronModel →
     letI : GrpObj (bcO hO 𝒩.G) := Functor.grpObjObj
@@ -715,6 +717,103 @@ theorem semistableNeronBaseChange_of_printed' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_
     (g2 : IdentityComponentFromPrinted) : ZInQ.HeightSplit.SemistableNeronBaseChange :=
   semistableNeronBaseChange_of_printed hB h3 h7 hE g1 g2 openImmersionLocalization
 
+/-! # Part S, continued: `IdentityComponentFromPrinted` reduced to two topological glue Props -/
+
+section FromPrinted
+
+open ReductSplit
+
+/-- **GLUE `OpenSubgroupIsIdComp`** (topology of group schemes over a DVR). An open subgroup scheme `U` of a
+group model `𝒩` over a DVR `O` whose generic fibre and geometric special fibre are connected has image the
+identity component `𝒩⁰` (as a set). Needs: over each of the two points of `Spec O`, the fibre `U_s` is an open
+subgroup of `𝒩_s`, hence closed (its complement is a union of cosets; SGA 3 VI_A 2.3-2.4, Stacks 047R-type
+statements), and connected (the generic fibre directly; the special fibre as the image of the connected
+geometric fibre), so `U_s = (𝒩_s)⁰`. Not in Lean. -/
+def OpenSubgroupIsIdComp : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O] (A : PkgI3.AbVar K)
+    (𝒩 : GroupModelO A O) (U : Over (Spec (CommRingCat.of O))) [GrpObj U] (i : U ⟶ 𝒩.G),
+    IsOpenImmersion i.left → IsMonHom i → ConnectedSpace ((Over.pullback (jO O)).obj U).left →
+    ConnectedSpace ((Over.pullback (Spec.map (CommRingCat.ofHom
+      (algebraMap O (ResBarO O))))).obj U).left →
+    Set.range i.left = idCompSet 𝒩.G
+
+/-- **GLUE `IdCompBaseChangeDVR`** (the identity component commutes with base change; SGA 3 VI_B 3.3,
+UNVERIFIED). For a smooth group scheme `G` over a DVR `O` and `O ⊆ O'`, the preimage of `G⁰` in `G ×_O O'`
+is `(G ×_O O')⁰`. Needs: `(G_s)⁰` has a rational point, so it is geometrically connected (bundle leaf
+`geomConnOfRationalPoint`, Stacks 04KV), so `(G_s)⁰ ×_{κ(s)} κ(s')` is connected, open and closed in `G_{s'}`
+and contains `e`; and the fibre of `G ×_O O'` over `s'` is `G_s ×_{κ(s)} κ(s')`. Not in Lean. -/
+def IdCompBaseChangeDVR : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (K' : Type) [Field K'] [Algebra K K'] [FiniteDimensional K K'] (O' : ValuationSubring K')
+    [IsDiscreteValuationRing O'] (hO : O'.comap (algebraMap K K') = O)
+    (G : Over (Spec (CommRingCat.of O))) [GrpObj G] [Smooth G.hom],
+    letI : GrpObj (bcO hO G) := Functor.grpObjObj
+    pullback.fst G.hom (Spec.map (CommRingCat.ofHom (comapHom hO))) ⁻¹' idCompSet G =
+      idCompSet (bcO hO G)
+
+/-- **`IdentityComponentFromPrinted` from the two topological glue Props** (compiled). The canonical
+homomorphism `c : 𝒩 ×_O O' → 𝒩'` is built from the Néron property of `𝒩'` (reduct-glue's `bcDVR`,
+`isMonHom_of_ext`); `j = (i ×_O O') ≫ c` is an open immersion because `i ×_O O'` is an open immersion onto
+`(𝒩 ×_O O')⁰` (the two glue Props and `range_map`), on which `c` is an open immersion by SGA 7 IX 3.3. -/
+theorem identityComponentFromPrinted_of (ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) :
+    IdentityComponentFromPrinted := by
+  intro h3 h7 K _ O _ K' _ _ _ O' _ hO A hss 𝒩 h𝒩 𝒩' h𝒩' U _ i hoi hmi hcg hcs
+  let N := ReductGlue.bcDVR hO 𝒩
+  haveI : Smooth (𝟙_ (Over (Spec (CommRingCat.of O')))).hom :=
+    ZInQ.Contrib.NeronC.smooth_tensorUnit _
+  haveI : Smooth (N.G ⊗ N.G).hom := ZInQ.Contrib.NeronC.smooth_tensor _ _ inferInstance inferInstance
+  obtain ⟨c, hc⟩ := (h𝒩' N.G).2 N.gen.hom
+  simp only at hc
+  have hcm : IsMonHom c :=
+    ReductGlue.isMonHom_of_ext (Over.pullback (jO O')) N.gen.hom 𝒩'.gen.hom N.gen_hom 𝒩'.gen_hom
+      (h𝒩' _).1 (h𝒩' _).1 c hc
+  have hciso : IsIso ((Over.pullback (jO O')).map c) := by
+    have : IsIso ((Over.pullback (jO O')).map c ≫ 𝒩'.gen.hom) := by
+      rw [hc]; exact Iso.isIso_hom N.gen
+    exact @IsIso.of_isIso_comp_right _ _ _ _ _ _ _ (Iso.isIso_hom 𝒩'.gen) this
+  letI : GrpObj (bcO hO 𝒩.G) := Functor.grpObjObj
+  have hW : IsOpen (idCompSet (bcO hO 𝒩.G)) := h3 _ (bcO hO 𝒩.G)
+  let W : (bcO hO 𝒩.G).left.Opens := ⟨idCompSet (bcO hO 𝒩.G), hW⟩
+  obtain ⟨hWo, -⟩ := h7 K O K' O' hO A hss 𝒩 h𝒩 𝒩' h𝒩' c hcm hciso W rfl
+  let g := Spec.map (CommRingCat.ofHom (comapHom hO))
+  let k := (Over.pullback g).map i
+  haveI : IsOpenImmersion i.left := hoi
+  haveI : IsOpenImmersion k.left := ZInQ.H5Glue.isOpenImmersion_pullback_map _ i
+  have hkmap : k.left = pullback.map U.hom g 𝒩.G.hom g i.left (𝟙 _) (𝟙 _) (by simp) (by simp) := by
+    apply pullback.hom_ext <;> simp [k, Over.pullback_map_left]
+  have hrk : Set.range k.left = Set.range W.ι := by
+    rw [Scheme.Opens.range_ι, hkmap, Scheme.Pullback.range_map]
+    have hga := ga K O A 𝒩 U i hoi hmi hcg hcs
+    have hgb := gb K O K' O' hO 𝒩.G
+    have hid : Set.range ((𝟙 (Spec (CommRingCat.of O')) : Spec (CommRingCat.of O') ⟶ _) :
+        Spec (CommRingCat.of O') → Spec (CommRingCat.of O')) = Set.univ :=
+      Set.range_eq_univ.mpr (fun x => ⟨x, rfl⟩)
+    rw [hid, Set.preimage_univ, Set.inter_univ, hga]
+    exact hgb
+  refine ⟨k ≫ c, ?_, ?_⟩
+  · show IsOpenImmersion (k.left ≫ c.left)
+    have hfac := IsOpenImmersion.isoOfRangeEq_hom_fac k.left W.ι hrk
+    generalize IsOpenImmersion.isoOfRangeEq k.left W.ι hrk = eW at hfac
+    have e : k.left ≫ c.left = eW.hom ≫ (W.ι ≫ c.left) := by
+      rw [← hfac]
+      exact Category.assoc _ _ _
+    rw [e]
+    haveI := hWo
+    infer_instance
+  · letI : GrpObj ((Over.pullback g).obj U) := Functor.grpObjObj
+    have hk : IsMonHom k := inferInstance
+    exact @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ hk hcm
+
+end FromPrinted
+
+/-- **SS2 from four printed-form leaves and three topological glue Props** (compiled):
+`IdentityComponentGroupModel`, `OpenSubgroupIsIdComp`, `IdCompBaseChangeDVR`. -/
+theorem semistableNeronBaseChange_of_printed'' (hB : BLR_1_2_4) (h3 : SGA3_VIB_3_10)
+    (h7 : SGA7_IX_3_3) (hE : EGAIV_8_10_5_openImm) (g1 : IdentityComponentGroupModel)
+    (ga : OpenSubgroupIsIdComp) (gb : IdCompBaseChangeDVR) :
+    ZInQ.HeightSplit.SemistableNeronBaseChange :=
+  semistableNeronBaseChange_of_printed' hB h3 h7 hE g1 (identityComponentFromPrinted_of ga gb)
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
@@ -723,3 +822,4 @@ end CToPrinted
 #print axioms CToPrinted.faltingsLemma5BC_of_printed
 #print axioms CToPrinted.openImmersionLocalization
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed'
+#print axioms CToPrinted.semistableNeronBaseChange_of_printed''
