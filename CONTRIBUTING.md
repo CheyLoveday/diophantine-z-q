@@ -138,7 +138,7 @@ Credit goes to the operator, marked AI-assisted. Good fits: reducing a GLUE hypo
 - [Blueprint Pages](.github/workflows/blueprint-pages.yml) builds the site on PRs; deployment follows a verified push to `main`, not a PR or manual site build.
 - [Lean WIP](.github/workflows/lean-wip.yml) is a manually dispatched build of the default target.
 
-None of these compiles `ZInQKernel/Contrib/OneProof`. A passing workflow proves only its stated checks passed on that commit. It is not independent human review or completion of the full theorem. For a contribution, the automatic result is the check "discharge check" on the PR, with its verdict in the job summary; it is advisory, and a person reads every file before it is merged.
+None of these compiles `ZInQKernel/Contrib/OneProof`. A passing workflow proves only its stated checks passed on that commit. It is not independent human review or completion of the full theorem. For a contribution, the automatic result is the check "discharge check" on the PR, with its verdict in the job summary; it is advisory, and the project's agents check every file before it is merged (no person reads every file).
 
 For optional local research-package checks, see [docs/building.md](docs/building.md). In particular, `python scripts/check_lean.py` is the archival source/quarantine check, while its `--build` mode checks that package's accepted helpers; neither substitutes for compiling your `ZInQKernel/Contrib/` module. Construction checks need Python 3.11+ and Node.js 22+ and establish finite cases, not the main theorem.
 

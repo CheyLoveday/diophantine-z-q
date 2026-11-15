@@ -20,7 +20,7 @@ HIT_SENTENCE = ('This file has scan hits: it may contain code that runs at build
                 'it before this result counts.')
 ADVISORY = ('The result is advisory for every file: contributor code runs during the build, and again when the '
             'reporter imports it, so it can forge the result, and a clean scan does not rule that out.')
-REMINDER = 'A person reads every file before Jack merges it; this check does not replace that read.'
+REMINDER = 'The project\'s agents also run the build, axiom and build-time-code checks before a merge; this check is one of them.'
 MAX_HITS = 50
 
 

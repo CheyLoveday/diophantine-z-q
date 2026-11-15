@@ -83,19 +83,19 @@ anything else is out of scope for the automatic check. The automatic check is be
 a first contribution, include your own `#discharges` output in the pull request. The repository's default `lake build` does not compile `ZInQKernel/Contrib/OneProof`, so a green
 CI check alone says nothing about a contribution.
 
-The automatic result is advisory, and a person reads every file before it is merged. If your file has code that
-runs at build time (`#eval`, `run_cmd`, `initialize`, new `syntax`, `notation`, macros or elaborators), the
-automatic result does not count until a person has read the file, since such code could print a forged result;
-say in the pull request why it is needed.
+The automatic result is advisory. The project's agents check every pull request before it is merged (the build,
+`#discharges`, the axioms, and the scan for code that runs at build time); no person reads every file. A file with
+code that runs at build time (`#eval`, `run_cmd`, `initialize`, new `syntax`, `notation`, macros or elaborators)
+is not merged, since such code could print a forged result; if you need it, ask on the issue first.
 
 The bar for merging:
 
 * the Lean compiles with only the standard axioms, and the discharge check shows the hypothesis proved (until
-  the automatic check has run on a first contribution: your own `#discharges` output, read by a person);
-* a person has read the file for code that runs at build time;
+  the automatic check has run on a first contribution: your own `#discharges` output, checked by the project's agents);
+* the file has no code that runs at build time;
 * each new printed leaf has a row in [`docs/research/locators.md`](../research/locators.md) and enters
   kinds.tsv flagged unread (or pending reading, if its print may say something weaker);
-* Jack merges.
+* the project's integrator merges it into the next fold (agent review: the checks above, run by the project's agents).
 
 Merges into this fork carry no Protocol B review (the original repository's review protocol); a result is
 reviewed again when it moves to the original repository. The integrator then folds it into the single proof: a
