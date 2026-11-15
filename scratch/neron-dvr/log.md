@@ -48,3 +48,18 @@ Field `neronSchemeModelExistsDVR` lives in `OpenResearchLeaves19` (TailZ29 L41).
   * Not traced to the end: which copy (A6.lean vs LPrefix L833) the chain resolves; other TailH users were
     reported by the subagent to funnel into `raynaudPlace_of_R6` (SPECULATIVE until re-read).
   Conclusion: r6 is applied only at number fields (SPECULATIVE for completeness of the list, VERIFIED per site).
+
+## Checks against the built single proof (Main built 03:54, frozenTarget axioms standard)
+- Discharges.lean: `#discharges: 66 open hypotheses, 1228 theorems checked, 3 discharge one` — the 3 are pre-existing
+  contributions; no GapNeron theorem matches (expected: NF is weaker). All GapNeron axioms standard. The replacement
+  `example` for `ss1_ss3_of14` over OpenResearchLeaves14 compiles (VERIFIED).
+- Reach.lean (closure of frozenTarget; reach.txt) VERIFIED:
+  * field consumers: exactly ss1_ss3_of_cp chain, raynaudCriterion_leaves (+raynaudCriterion_final/_of_leaves),
+    grothendieckMonodromy_final' (+final/_of_leaves), exists_neron_groupModel, hasSemistableReduction_of; bundles
+    OpenResearchLeaves14–19 and 9. TailZ15/17/19/22 generations unreachable.
+  * r8: only bundles 2,5,7,8, ResearchLeaves3, transport grothendieckMonodromy_ofK5, producers. `.r8` read only by
+    bundle maps. Dead.
+  * r6 applied only at LPrefix L833 (QML3 field: TailC good_of_QML3 NumberField K; TailF qmModelG3_of K ≤ L' finite)
+    and TailH L2659 (NumberField F). Other consumers pass it on.
+- Conclusion: the field cannot be dropped by a fold: r6 (OpenResearchLeaves9.r6) and r8 (OpenResearchLeaves8.r8)
+  need every field; dropping needs new copies of old generations 9..2/ResearchLeaves3 with NF r6/r8.
