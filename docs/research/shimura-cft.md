@@ -118,7 +118,20 @@ Shimura's own per-`S` form is also statable: a scheme `V` over `Spec ℚ(ζ₃)`
   `mainThmI_iff_ab`, `shimuraFamily_of_mainThmIAb`.
 - Part B6: `qHat_algebraMap`, `rat_mem_zhat_iff`, `dcRel_one_iff`, `mainThmIY3_of_mainThmI`.
 
-(Part C/D status: see the log; filled in at the end.)
+- Part C: copies from t5-glue (`mem_range_of_isAlgebraic`, `AbsArtinSurjective`, the section `AbsArtin` with
+  `absArtinSurjective_of_noReal`, `not_isReal_QNeg`) and new `exists_tau`, `exists_iota`,
+  `exists_artinCondC_of_abs`, `exists_artinCondC`.
+- Part D: `q3`, `z3`, `isCMPoint_q3`, `IsTotallyComplex (QNeg 3)`, `recip_hyp_nonempty`.
+
+Whole file: 0 errors, about 20.5 s and 8.8 GB, 17 `#print axioms` lines, all `[propext, Classical.choice,
+Quot.sound]`, including the leaf definition itself (VERIFIED). The file imports TailZ12, the three Contrib modules
+of R1UnivLeaves, Tau Ceti `Global.Reciprocity` and `Adeles.FiniteBaseChange`, and `TYZGenus.ShimuraModFn`.
+
+Independent model review (read-only, one pass): no PROBLEM. It checked DCRel, the reciprocity conventions,
+`ArtinCondC`, `qHat`, `IsCMPoint` and `K3Q`, and it constructed a `Ψ` meeting all four clauses. One wording RISK
+("the comparison is clause 1") is fixed: §1 and the docstring now say "clauses 1 and 4 with Deligne's comparison".
+One minor RISK: Tau Ceti's global normalization was checked only locally, and `ε` absorbs it anyway. No human
+review.
 
 ## 5. Shimura's per-`S` form, and what was not done
 

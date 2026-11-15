@@ -41,3 +41,13 @@ check with `scratch/shimura-cft/run.sh <file>` (= `lake env lean`).
   and Deligne's comparison".
 - Minor: global Artin normalization only checked locally (absorbed by ε). Suggested `#print axioms` on the leaf
   def itself — ADDED.
+
+## Step 5 (11-14 18:02): Parts C, D merged — whole file COMPILED (20.5 s, 8.8 GB), 0 errors, 17 `#print axioms`
+lines all `[propext, Classical.choice, Quot.sound]` (incl. the leaf def `ShimuraMainThmIDeligneY3Ab`). VERIFIED
+- Build: `.lake/build`, `lean/.lake/build` are now real copies of ~/dzq-check2 builds (b5ff0474 rebuild, finished
+  17:55); sources here are e38375b3, the imported modules are unchanged between the two.
+- Import added: `ZInQKernel.Contrib.TYZGenus.ShimuraModFn` (for t5-glue's AbsArtin copy).
+- Part C: `exists_artinCondC` (K totally complex: every σ fixing κ(K) is [s,K] on K^ab, via t5-glue's proved
+  `absArtinSurjective_of_noReal`); helpers `exists_tau`, `exists_iota`, `exists_artinCondC_of_abs`.
+- Part D: `q3 : ℚ(√−3) → B` (√−3 ↦ j), `z3 = i√3`, `isCMPoint_q3`, instance `IsTotallyComplex (QNeg 3)`,
+  `recip_hyp_nonempty δ` (hypotheses of clause 4 met for either δ, and ArtinCondC satisfiable for all σ).
