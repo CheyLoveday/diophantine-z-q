@@ -766,5 +766,24 @@ theorem denom {τ : ℂ} {N : Module.End ℂ (Fin 2 → ℂ)}
   | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [map_zsmul]; exact Submodule.smul_mem _ a hx
 
+/-- **Case `S_{(τ,1)} = ℚ`: `ℚ ⊗ End ≅ B`.** -/
+theorem case_triv {τ : ℂ} (hτ : 0 < τ.im) {M : Type} [Ring M] (g0 : M →+* Module.End ℂ (Fin 2 → ℂ))
+    (hg0 : Function.Injective g0)
+    (hrange : ∀ N : Module.End ℂ (Fin 2 → ℂ),
+      (∀ z ∈ FibreQMNorm.qmOrbit ![τ, 1], N z ∈ FibreQMNorm.qmOrbit ![τ, 1]) ↔ ∃ m, g0 m = N)
+    (hall : ∀ x ∈ S ![τ, 1], x.imI = 0 ∧ x.imJ = 0 ∧ x.imK = 0) :
+    Nonempty (TensorProduct ℤ ℚ M ≃ₐ[ℚ] B) := by
+  have hτ' : τ.im ≠ 0 := hτ.ne'
+  obtain ⟨Ψ, hΨ⟩ := exists_lift g0 actHom actHom_inj (fun m => by
+    obtain ⟨x, hx⟩ := eq_act_of_trivial hτ' hall (g0 m)
+      (presB_of_lattice ((hrange (g0 m)).2 ⟨m, rfl⟩))
+    exact ⟨x, LinearMap.ext fun z => by rw [actHom_apply, hx]⟩)
+  refine end0_equiv Ψ (fun a b h => hg0 (by rw [← hΨ, ← hΨ, h])) (fun b => ?_)
+  obtain ⟨n, hn, hnb⟩ := denom (N := actHom b) (fun x => ⟨b * x, by rw [actHom_apply, act_mul]⟩)
+  obtain ⟨m, hm⟩ := (hrange _).1 hnb
+  refine ⟨n, hn, m, actHom_inj ?_⟩
+  rw [hΨ, hm, actHom_smul]
+  push_cast; rfl
+
 end HDec.QMLattice
 
