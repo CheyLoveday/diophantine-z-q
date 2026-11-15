@@ -52,3 +52,16 @@
     Φ_N(X,j) separable of degree ψ(N)).
   * `x0Transitive_of_modularEquationGeneric : ModularEquationGeneric → ZInQ.RLeaf.X0Transitive`.
   * `#print axioms`: [propext, Classical.choice, Quot.sound] for both theorems.
+
+## 05:40 — module, bypass with the smaller leaf, #discharges
+- New module `ZInQKernel/Contrib/CloudB2X0Transitive/ModularEquation.lean` (= scratch ModEq.lean, docstring added):
+  `lake build ZInQKernel.Contrib.CloudB2X0Transitive.ModularEquation`: Build completed successfully (9575 jobs). VERIFIED.
+- `gen_bypass.py OUT modeq` → `scratch/flt-cqj/FoldBypassModEq.lean` (field `modularEquationGeneric :
+  FltCqj.ModularEquationGeneric`): compiles; `#print axioms` of `sixContactMin_of_open26_cqj` and
+  `ZInQ.Contrib.TYZChain.frozenTarget_cqj`: [propext, Classical.choice, Quot.sound]. VERIFIED.
+  (`FoldBypass.lean`, field `cyclicQuotientJBijOn`, regenerated and recompiled: same.)
+- `#discharges` (scratch/flt-cqj/DischargesCheck.lean, Main + Discharges + ModularEquation): "65 open hypotheses,
+  1200 theorems checked, 3 discharge one" — the three are other contributions in Main's closure
+  (gonzalezRotgerProp56X6, neronBaseChangeStrictHenselization, elkiesX6StarPrinted); none from this module, as
+  expected (no theorem here has type ZInQ.RLeaf.IgusaGL2). VERIFIED.
+- `scratch/flt-cqj/autofold.json`: deliberately not runnable (no `discharges` key); records the bypass spec.

@@ -55,20 +55,27 @@ def rename(text):
         text = re.sub(r'(?<![\w.])' + re.escape(old) + r'(?![\w\'])', new, text)
     return text
 
+MODE = sys.argv[2] if len(sys.argv) > 2 else 'bijon'
+if MODE == 'bijon':
+    FIELD, FTYPE = 'cyclicQuotientJBijOn', '_root_.ZInQ.Contrib.CloudB2X0Transitive.CyclicQuotientJBijOn'
+    X0PROOF = '_root_.ZInQ.Contrib.CloudB2X0Transitive.x0Transitive_of_cyclicQuotientJBijOn'
+    IMPORT = 'ZInQKernel.Contrib.CloudB2X0Transitive.Reduction'
+else:
+    FIELD, FTYPE = 'modularEquationGeneric', '_root_.FltCqj.ModularEquationGeneric'
+    X0PROOF = '_root_.FltCqj.x0Transitive_of_modularEquationGeneric'
+    IMPORT = 'ZInQKernel.Contrib.CloudB2X0Transitive.ModularEquation'
 out = []
 for fn, name, text in copied:
     t = rename(text)
-    t = t.replace('igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2',
-                  'cyclicQuotientJBijOn : _root_.ZInQ.Contrib.CloudB2X0Transitive.CyclicQuotientJBijOn')
-    t = re.sub(r'igusaGL2 := (\w+)\.igusaGL2', r'cyclicQuotientJBijOn := \1.cyclicQuotientJBijOn', t)
-    t = t.replace('_root_.CurveSplit.x0Transitive_of_igusaGL2 t.igusaGL2',
-                  '_root_.ZInQ.Contrib.CloudB2X0Transitive.x0Transitive_of_cyclicQuotientJBijOn t.cyclicQuotientJBijOn')
+    t = t.replace('igusaGL2 : _root_.ZInQ.RLeaf.IgusaGL2', FIELD + ' : ' + FTYPE)
+    t = re.sub(r'igusaGL2 := (\w+)\.igusaGL2', FIELD + r' := \1.' + FIELD, t)
+    t = t.replace('_root_.CurveSplit.x0Transitive_of_igusaGL2 t.igusaGL2', X0PROOF + ' t.' + FIELD)
     if 'igusaGL2' in t:
         sys.exit('unhandled igusaGL2 in ' + name)
     out.append('-- copied from %s.lean: %s\n%s' % (fn, name, t))
 
 hdr = '''import ZInQKernel.OneProof.Main
-import ZInQKernel.Contrib.CloudB2X0Transitive.Reduction
+IMPORTLINE
 
 /-! # flt-cqj: the H chain with Igusa's theorem replaced by the cyclic-quotient bijection (bypass fold check)
 
@@ -119,5 +126,10 @@ end ZInQ.Contrib.TYZChain
 #print axioms HDec.HSyn.sixContactMin_of_open26_cqj
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_cqj
 '''
+hdr = hdr.replace('IMPORTLINE', 'import ' + IMPORT)
+if MODE != 'bijon':
+    hdr = hdr.replace('`cyclicQuotientJBijOn : ZInQ.Contrib.CloudB2X0Transitive.CyclicQuotientJBijOn` (Anthropic FLT\'s\n`bijOn_cyclicQuotientJ_isRoot_modularPolynomial_of_transcendental_j`, universe 0)',
+        '`modularEquationGeneric : FltCqj.ModularEquationGeneric` (the modular equation for the generic curve,\n`ZInQKernel/Contrib/CloudB2X0Transitive/ModularEquation.lean`)').replace('`x0Transitive_of_cyclicQuotientJBijOn`', '`FltCqj.x0Transitive_of_modularEquationGeneric`').replace('replaced by the cyclic-quotient bijection', 'replaced by the modular equation')
+    ftr = ftr.replace('replaced by `cyclicQuotientJBijOn`', 'replaced by `modularEquationGeneric`')
 open(sys.argv[1], 'w').write(hdr + '\n\n'.join(out) + ftr)
 print(len(copied), 'declarations copied:', ' '.join(n for _, n, _ in copied))
