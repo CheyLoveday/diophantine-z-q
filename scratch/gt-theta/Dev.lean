@@ -201,4 +201,77 @@ theorem assemble {Ω Ω' : Matrix (Fin 2) (Fin 2) ℂ} (D : ℂ) (σ : Char2 →
     rw [this, exp_int_mul_two_pi_mul_I]
     ring
 
+
+/-! ## `M6` -/
+
+open HDec.HSyn.G0Split.FibreQM.PeriodGlue (M4 M6 M4_map M6_map A4 B4 C4 D4 A6 B6 C6 D6)
+
+theorem spAct_M6 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1)
+    (hΔ : (Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2 ≠ 0) :
+    spAct M6 Ω = !![-(Ω 0 0 + 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2),
+      -((Ω 0 1 - 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2));
+      -((Ω 0 1 - 1) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2)),
+      -(Ω 1 1 + 2) / ((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2)] := by
+  unfold spAct
+  simp only [M6_map, Matrix.toBlocks_fromBlocks₁₁, Matrix.toBlocks_fromBlocks₁₂,
+    Matrix.toBlocks_fromBlocks₂₁, Matrix.toBlocks_fromBlocks₂₂]
+  have hdet : (C6 * Ω + D6).det = (Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2 := by
+    rw [Matrix.det_fin_two]
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [C6, D6, hs]
+    ring
+  letI := Matrix.invertibleOfIsUnitDet (C6 * Ω + D6) (isUnit_iff_ne_zero.mpr (hdet ▸ hΔ))
+  rw [Matrix.mul_inv_eq_iff_eq_mul_of_invertible]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    simp [A6, B6, C6, D6, hs] <;> field_simp <;> ring
+
+theorem spFactor_M6 {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ω 1 0 = Ω 0 1) :
+    spFactor M6 Ω = (Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2 := by
+  unfold spFactor
+  simp only [M6_map, Matrix.toBlocks_fromBlocks₂₁, Matrix.toBlocks_fromBlocks₂₂]
+  rw [Matrix.det_fin_two]
+  simp only [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_two]
+  simp [C6, D6, hs]
+  ring
+
+/-- The characteristic permutation of `M6`. -/
+def σ6 (m : Char2) : Char2 :=
+  (![fin2 (-((m.2 1 : ℕ) : ℤ)), fin2 ((m.2 0 : ℕ) : ℤ)],
+   ![fin2 (((m.1 1 : ℕ) : ℤ) - ((m.2 1 : ℕ) : ℤ) + 1 - ((m.2 0 : ℕ) : ℤ)),
+     fin2 (-((m.1 0 : ℕ) : ℤ) + 2 * ((m.2 0 : ℕ) : ℤ) + 2 + ((m.2 1 : ℕ) : ℤ))])
+
+/-- The phase exponent of `M6` (in units of `πi/4`). -/
+def N6 (m : Char2) : ℤ :=
+  4 * ((m.1 0 : ℕ) : ℤ) * ((m.2 0 : ℕ) : ℤ) + 4 * ((m.1 1 : ℕ) : ℤ) * ((m.2 1 : ℕ) : ℤ)
+    - 2 * ((m.2 1 : ℕ) : ℤ) ^ 2 + 4 * ((m.2 1 : ℕ) : ℤ) - 4 * ((m.2 0 : ℕ) : ℤ) ^ 2
+    - 8 * ((m.2 0 : ℕ) : ℤ) - 4 * ((m.2 0 : ℕ) : ℤ) * ((m.2 1 : ℕ) : ℤ)
+
+theorem sq6 (m : Char2) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ SiegelH2) :
+    thetaConst m (spAct M6 Ω) ^ 2 =
+      -((Ω 0 0 + 1) * (Ω 1 1 + 2) - (Ω 0 1 - 1) ^ 2) * cexp (π * I * (N6 m : ℂ) / 4) *
+        thetaConst (σ6 m) Ω ^ 2 := by
+  obtain ⟨hs, hpd⟩ := pdq_of_siegel hΩ
+  have hpd1 : PDq (Ω 0 0 + 1) (Ω 0 1 - 1) (Ω 1 1 + 2) := by simpa [PDq] using hpd
+  rw [spAct_M6 hs hpd1.det_ne, thetaConst_eq _ _ (by simp), thetaConst_eq _ _ hs]
+  simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  rw [th2_neg, th2_swap, inv_sq' hpd1,
+    th2_trans (α := Ω 0 0) (β := Ω 0 1) (γ := Ω 1 1) 1 (-1) 2 (by push_cast; ring) (by push_cast; ring)
+      (by push_cast; ring), mul_pow]
+  rw [th2_sq_red _ _ _ (-((m.2 1 : ℕ) : ℤ)) ((m.2 0 : ℕ) : ℤ)
+    (((m.1 1 : ℕ) : ℤ) - ((m.2 1 : ℕ) : ℤ) + 1 - ((m.2 0 : ℕ) : ℤ))
+    (-((m.1 0 : ℕ) : ℤ) + 2 * ((m.2 0 : ℕ) : ℤ) + 2 + ((m.2 1 : ℕ) : ℤ))
+    (by push_cast; ring) (by push_cast; ring) (by push_cast; ring) (by push_cast; ring)]
+  simp only [σ6, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, fin2_cast]
+  rw [show ∀ (D e1 e2 T : ℂ), -D * e1 * (e2 ^ 2 * T) = -D * (e1 * e2 ^ 2) * T from
+    fun _ _ _ _ => by ring]
+  congr 2
+  rw [← Complex.exp_nat_mul, ← Complex.exp_add]
+  congr 1
+  simp only [N6]
+  push_cast
+  ring
+
 end GapTheta
