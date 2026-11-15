@@ -42,9 +42,10 @@ ping, and is released if there is no reply within 7 days of the ping.
 
 | hypothesis | holder | since |
 | --- | --- | --- |
-| [`shimuraFamilyAb`](#shimurafamilyab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/shimura-cft)) | 2026-11-14 |
+| [`shimuraFamilyAb`](#shimurafamilyab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gt-rayclass)) | 2026-11-15 |
 | [`r7a`](#r7a) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) | 2026-11-14 |
-| [`rayClassCMAb`](#rayclasscmab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft)) | 2026-11-14 |
+| [`mumfordRigidityCore`](#mumfordrigiditycore) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)) | 2026-11-15 |
+| [`rayClassCMAb`](#rayclasscmab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gt-rayclass)) | 2026-11-15 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
@@ -54,6 +55,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`groupSchemeEquidim`](#groupschemeequidim) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`uniformizationLeafAll`](#uniformizationleafall) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
 | [`gagaMorphism`](#gagamorphism) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
+| [`yuThm11`](#yuthm11) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/yu-prune)) | 2026-11-15 |
 | [`regularSmoothPerfect`](#regularsmoothperfect) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) | 2026-11-15 |
 | [`igusaGL2`](#igusagl2) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) | 2026-11-15 |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289)) | 2026-11-14 |
@@ -159,8 +161,8 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`r11r12`](#r11r12) | research | composite | GLUE |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r16`](#r16) | research | composite | GLUE |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r17`](#r17) | research | consequence | GLUE |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
-| [`rayClassCMAb`](#rayclasscmab) | research | consequence | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft)) |
-| [`shimuraFamilyAb`](#shimurafamilyab) | research | consequence | GLUE |  |  | T4 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/shimura-cft)) |
+| [`rayClassCMAb`](#rayclasscmab) | research | consequence | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gt-rayclass)) |
+| [`shimuraFamilyAb`](#shimurafamilyab) | research | consequence | GLUE |  |  | T4 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gt-rayclass)) |
 | [`axSenTate`](#axsentate) | added | published | LEAF |  |  | T2 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335)) |
 | [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) | added | published | LEAF | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  |  | T2 | [elliotglazer #80](https://github.com/elliotglazer/diophantine-z-q/issues/80) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942)) |
@@ -182,7 +184,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`gonzalezRotgerX6Ab`](#gonzalezrotgerx6ab) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`hodgeTateDecompAbVar`](#hodgetatedecompabvar) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`javanpeykarBound`](#javanpeykarbound) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF | unverified-locator | bigger | T3 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF | unverified-locator | bigger | T3 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)) |
 | [`neronBaseChangeStrictHenselization`](#neronbasechangestricthenselization) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | narrowing | T1-T2 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -192,8 +194,8 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`raynaudSemistableSH`](#raynaudsemistablesh) | research | published | LEAF | reading-risk, unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`semistablePersistsSHcp`](#semistablepersistsshcp) | research | published | LEAF | restricted, unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`sga3_VIB_3_10`](#sga3_vib_3_10) | research | published | LEAF | unverified-locator | narrowing | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
-| [`sga7_IX_3_3_SH`](#sga7_ix_3_3_sh) | research | published | LEAF | pending-review |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`sga7_IX_3_5_ForwardGeom`](#sga7_ix_3_5_forwardgeom) | research | published | LEAF | pending-review |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`sga7_IX_3_3_SH`](#sga7_ix_3_3_sh) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`sga7_IX_3_5_ForwardGeom`](#sga7_ix_3_5_forwardgeom) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`cartierSmooth`](#cartiersmooth) | textbook | published | LEAF |  |  | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
 | [`gagaMorphism`](#gagamorphism) | textbook | published | LEAF |  |  | T3-T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
@@ -206,7 +208,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
 | [`regularSmoothPerfect`](#regularsmoothperfect) | textbook | published | LEAF |  |  | T2 | [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) |
 | [`uniformizationLeafAll`](#uniformizationleafall) | textbook | published | LEAF |  |  | T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
-| [`yuThm11`](#yuthm11) | textbook | published | LEAF |  | narrowing | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
+| [`yuThm11`](#yuthm11) | textbook | published | LEAF |  | narrowing | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/yu-prune)) |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`h29`](#h29) | frozenTarget | composite | GLUE |  |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`hCM`](#hcm) | frozenTarget | published | LEAF | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
@@ -416,7 +418,7 @@ LadicCond.CarayolR17'
 * Source: Shimura reciprocity at CM points in ray-class form (a consequence of Shimura 1967 Main Thm I)
 * discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft)).
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gt-rayclass)).
 
 ```lean
 ShimuraGlue.Ray.RayClassCMAb
@@ -432,7 +434,7 @@ ShimuraGlue.Ray.RayClassCMAb
 * Source: Shimura 1967 Main Thm I on one fine witness; the remaining glue is the link from Shimura's V_S to the moduli scheme Y3 (shimura-cft reduces the field to one leaf, ShimuraMainThmIDeligneY3Ab, which the shimura-cft review rates composite)
 * tier T4 (model triage, unreviewed); discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/shimura-cft)).
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gt-rayclass)).
 
 ```lean
 HDec.QMSplit.Moduli.ShimuraFamilyAb
@@ -816,7 +818,7 @@ ZInQ.HeightSplit.JavanpeykarBound
 * Source: Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED)
 * packet [R2](#packet-r2); label bigger (a bigger investment); tier T3 (model triage, unreviewed); discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune)).
 
 ```lean
 LeafQM.AV.R1UnivRigid.MumfordRigidityCore
@@ -970,7 +972,7 @@ CToPrinted.SGA3_VIB_3_10
 
 ### sga7_IX_3_3_SH
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves20.sga7_IX_3_3_SH`; kind **published**, strict **LEAF**; flag: pending review (statement review running); reading risk (gt-sga7 section 4, as for raynaudSemistableSH): the print may assume an algebraically closed residue field; the restricted form SGA7PersistsNF.SGA7_IX_3_3_SHcp is then the print.
+* Bundle field `HDec.HSyn.OpenResearchLeaves20.sga7_IX_3_3_SH`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED: SGA 7 IX 3.3 may assume an algebraically closed residue field; then the print is SGA7PersistsNF.SGA7_IX_3_3_SHcp, or BLR 7.4 (numbering to read) covers this form.
 * Source: SGA 7 I Exp. IX Prop. 3.3, second assertion, over strictly henselian traits: N0 x_S S' -> N'0 is an isomorphism for semistable reduction (number UNVERIFIED); with neronBaseChangeStrictHenselization (BLR 1.2/2) and fpqc descent gives the general-DVR field sga7_IX_3_3
 * discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
@@ -984,7 +986,7 @@ SGA7PersistsNF.SGA7_IX_3_3_SH
 
 ### sga7_IX_3_5_ForwardGeom
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves20.sga7_IX_3_5_ForwardGeom`; kind **published**, strict **LEAF**; flag: pending review (statement review running); reading risk: SGA 7 IX may read semistability over k(s); then this form needs SemiAbelianDescendsSepClosed (imperfect residue fields only).
+* Bundle field `HDec.HSyn.OpenResearchLeaves20.sga7_IX_3_5_ForwardGeom`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED: if Prop. 3.5 reads semistability on the k(s) fibre, this form is a consequence through SemiAbelianDescendsSepClosed (standard for every separably closed field); if its display lacks the echelon clause, the square-zero bound comes from IX 2.4 (consequence).
 * Source: SGA 7 I Exp. IX Prop. 3.5, forward direction at sigma = tau, over a strictly henselian DVR with K^s (number UNVERIFIED)
 * discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
@@ -1233,7 +1235,7 @@ BPAnalytic.Uniformization.UniformizationLeafAll
 * Source: Chia-Fu Yu, J. Pure Appl. Algebra 217 (2013) Thm 1.1 (with its splitting clause; case labels dropped)
 * label narrowing (pending narrowing: a narrower restatement is planned, so it is not offered as stated); tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
-* Status: pending narrowing: a narrower restatement is planned, so it is not offered as stated.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/yu-prune)).
 
 ```lean
 HDec.QMSplit.Yu.YuThm11
