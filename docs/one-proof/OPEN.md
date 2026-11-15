@@ -12,7 +12,7 @@ removes it. See
 
 **68 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 50 published / 18 glue** (the strictest flagged reading; 53/15 without the one strictest-reading flag).
+* **Strict count: 51 published / 17 glue** (the strictest flagged reading; 53/15 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
@@ -35,11 +35,10 @@ removes it. See
 | [`r16`](#r16) | research | composite | GLUE |  | open |
 | [`r17`](#r17) | research | consequence | GLUE |  | open |
 | [`rayClassCMAb`](#rayclasscmab) | research | consequence | GLUE |  | rayclass-cft |
-| [`raynaudSemistableSH`](#raynaudsemistablesh) | research | published | GLUE | reading risk (reduct-b §5): the print may assume an algebraically closed residue field, and then this unrestricted form is stronger than the print for imperfect residue fields (r6 is stated over every field, so the restricted form does not fit); pending review | open |
 | [`semistableUnipotent`](#semistableunipotent) | research | consequence | GLUE | pending reading: base (strictly henselian trait vs number-field DVR) | unipotent-b |
 | [`sga7_IX_3_3`](#sga7_ix_3_3) | research | consequence | GLUE | pending reading: base | open |
 | [`shimuraFamilyAb`](#shimurafamilyab) | research | consequence | GLUE |  | shimura-cft |
-| [`strictHenselizationPair`](#stricthenselizationpair) | research | composite | GLUE | combines strict henselization along a finite extension with Neron models commuting with it; pending review | open |
+| [`strictHenselizationPair`](#stricthenselizationpair) | research | composite | GLUE | combines strict henselization along a finite extension with Neron models commuting with it | open |
 | [`axSenTate`](#axsentate) | added | published | LEAF |  | cloud W11 |
 | [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) | added | published | LEAF |  | open |
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | cloud round 2 |
@@ -73,7 +72,8 @@ removes it. See
 | [`r9a`](#r9a) | research | published | LEAF |  | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | open |
 | [`raynaudKernelBound`](#raynaudkernelbound) | research | published | LEAF |  | open |
-| [`semistablePersistsSHcp`](#semistablepersistsshcp) | research | published | LEAF | restricted form (char K = 0, perfect hence algebraically closed residue field): a specialization of every reading of the print; pending review | open |
+| [`raynaudSemistableSH`](#raynaudsemistablesh) | research | published | LEAF | reading risk (reduct-b section 5): the print may assume an algebraically closed residue field; rated low by the next-fold review | open |
+| [`semistablePersistsSHcp`](#semistablepersistsshcp) | research | published | LEAF | restricted form (char K = 0, perfect residue field): a specialization of every reading of the print | open |
 | [`sga3_VIB_3_10`](#sga3_vib_3_10) | research | published | LEAF |  | open |
 | [`bdRInvariants`](#bdrinvariants) | textbook | published | LEAF |  | open |
 | [`cartierSmooth`](#cartiersmooth) | textbook | published | LEAF |  | cloud W16 |
@@ -311,23 +311,6 @@ ShimuraGlue.Ray.RayClassCMAb
 > (Shimura, Ann. of Math. 85 (1967) Main Thm I; Deligne 1971 §3; locators UNVERIFIED) in ray-class form: the
 > residue field of a CM point by `ℚ(i)`, `ℚ(ζ₃)`, `ℚ(√−6)` embeds into the ray class field of conductor `3`.
 
-### raynaudSemistableSH
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves14.raynaudSemistableSH`; kind **published**, strict **GLUE**; flag: reading risk (reduct-b §5): the print may assume an algebraically closed residue field, and then this unrestricted form is stronger than the print for imperfect residue fields (r6 is stated over every field, so the restricted form does not fit); pending review.
-* Source: SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible in O and A[m] rational over K imply semistable Neron models at O (number UNVERIFIED); with strictHenselizationPair gives the general-DVR 4.7 and, by K1 (Mumford 4 and [m] etale), 3.6
-* Status: open: no one is on it.
-
-```lean
-ReductGlue.RaynaudSemistableSH
-```
-
-> reduct-glue (reduct-b), printed form, strictly henselian base: Raynaud's criterion, SGA 7 I Exp. IX
-> Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR `O`: if `m ≥ 3` is invertible in `O` and the points of
-> order `m` are rational over `K`, then `A` has semistable Néron models at `O`. Unrestricted in `K` and the residue
-> field (`r6` is stated over every field); reading risk: if the print assumes an algebraically closed residue field,
-> this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
-> `raynaudSemistable` and (by K1) `semistableReductionDVR`.
-
 ### semistableUnipotent
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves14.semistableUnipotent`; kind **consequence**, strict **GLUE**; flag: pending reading: base (strictly henselian trait vs number-field DVR).
@@ -367,7 +350,7 @@ HDec.QMSplit.Moduli.ShimuraFamilyAb
 
 ### strictHenselizationPair
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves14.strictHenselizationPair`; kind **composite**, strict **GLUE**; flag: combines strict henselization along a finite extension with Neron models commuting with it; pending review.
+* Bundle field `HDec.HSyn.OpenResearchLeaves14.strictHenselizationPair`; kind **composite**, strict **GLUE**; flag: combines strict henselization along a finite extension with Neron models commuting with it.
 * Source: EGA IV_4 18.8.10 and 18.6.8 (Stacks 05WR) with BLR, Neron models, 1.2 Prop. 2 (numbers UNVERIFIED)
 * Status: open: no one is on it.
 
@@ -879,9 +862,26 @@ CToPrinted.RaynaudKernelBound
 
 > c-to-printed, printed form: Raynaud's bound on the kernel term in Faltings' Lemma 5 (locator UNVERIFIED).
 
+### raynaudSemistableSH
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves14.raynaudSemistableSH`; kind **published**, strict **LEAF**; flag: reading risk (reduct-b section 5): the print may assume an algebraically closed residue field; rated low by the next-fold review.
+* Source: SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible in O and A[m] rational over K imply semistable Neron models at O (number UNVERIFIED); with strictHenselizationPair gives the general-DVR 4.7 and, by K1 (Mumford 4 and [m] etale), 3.6
+* Status: open: no one is on it.
+
+```lean
+ReductGlue.RaynaudSemistableSH
+```
+
+> reduct-glue (reduct-b), printed form, strictly henselian base: Raynaud's criterion, SGA 7 I Exp. IX
+> Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR `O`: if `m ≥ 3` is invertible in `O` and the points of
+> order `m` are rational over `K`, then `A` has semistable Néron models at `O`. Unrestricted in `K` and the residue
+> field (`r6` is stated over every field); reading risk: if the print assumes an algebraically closed residue field,
+> this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
+> `raynaudSemistable` and (by K1) `semistableReductionDVR`.
+
 ### semistablePersistsSHcp
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves14.semistablePersistsSHcp`; kind **published**, strict **LEAF**; flag: restricted form (char K = 0, perfect hence algebraically closed residue field): a specialization of every reading of the print; pending review.
+* Bundle field `HDec.HSyn.OpenResearchLeaves14.semistablePersistsSHcp`; kind **published**, strict **LEAF**; flag: restricted form (char K = 0, perfect residue field): a specialization of every reading of the print.
 * Source: SGA 7 I Exp. IX Prop. 3.3, first assertion, over a strictly henselian DVR with K of characteristic 0 and algebraically closed residue field, K'/K finite (number UNVERIFIED); with strictHenselizationPair gives SS1 and SS3 at number fields (ReductB.ss1_ss3_of_cp)
 * Status: open: no one is on it.
 
