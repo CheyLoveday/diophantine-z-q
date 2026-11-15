@@ -174,4 +174,102 @@ theorem exists_hom_comp_eq_phiL {A : AbVar K} {P : Over (Spec (CommRingCat.of K)
   have : IsMonHom lam := MulRigidity.isMonHom_of_geometricallyIntegral A.X B.X lam hη
   exact ⟨Hom.mk' lam, hlam⟩
 
+
+/-! ## §3. Leaves (printed statements over the genuine objects of §1) -/
+
+section Leaves
+
+open HDec.WeilPairing
+
+/-- **LEAF L1 (representability of the Picard functor).** For an abelian variety `A` over a field `K`
+the relative Picard fppf sheaf `Pic_{A/K}` is representable. Published: Murre (1964) and Oort (1962)
+for `X` proper over a field; Grothendieck, FGA Exp. 232, Thm 3.1, and Kleiman, *The Picard scheme*
+(FGA Explained, 2005), Thm 9.4.8 (with Thm 9.2.5: the étale and fppf sheaves agree since
+`𝒪_K = f_*𝒪_A` universally), for `X` projective with geometrically integral fibres — abelian
+varieties are projective (Mumford §6, Application 1; cf. the vendored
+`GrpObj.exists_isImmersion_projectiveSpace_of_smooth_of_geometricallyIntegral`). UNVERIFIED
+numbering. Statement copied from `scratch/c-to-printed2/T09Roadmap.lean`. -/
+def PicRepresentableAbVar : Prop :=
+  ∀ (K : Type) [Field K] (A : PkgI3.AbVar K),
+    ∃ P : Over (Spec (CommRingCat.of K)), Nonempty ((picardFunctor A.X.hom).obj.RepresentableBy P)
+
+/-- **LEAF L2 (`Pic⁰_{A/K}` is an abelian variety).** The identity component of the Picard scheme
+of an abelian variety is open, and with the induced group law it is an abelian variety (the dual
+abelian variety `Â`). Published: Mumford, *Abelian varieties*, §13 (`Â = Pic⁰` is an abelian
+variety of dimension `g`, reduced: §13 Cor. 3 / Thm 1) over `K̄`; Kleiman, *The Picard scheme*,
+Prop. 9.5.3 (`Pic⁰` open and closed, of finite type) and Prop. 9.5.1 (compatible with field
+extension), so smoothness, properness and geometric integrality descend to `K`; Milne, *Abelian
+varieties* (1986), §9-10. UNVERIFIED numbering. Stated over every representation `rep`; it is
+invariant under the unique isomorphism of representing objects. -/
+def PicZeroAbVar : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P),
+    ∃ (B : AbVar K) (j : B.X ⟶ P), IsPicZero rep B j
+
+/-- **LEAF L3 (`φ_L` is an isogeny for ample `L`).** If `L` is (very) ample, `λ_L : A → Pic⁰`
+(the map with `λ_L ≫ ι = φ_L`) is finite and surjective. Published: Mumford §6, Application 1
+(`L` ample `⇒ K(L) = ker φ_L` finite) and §8, Thm 1 (`φ_L` surjective onto `Â`, `Â ≅ A/K(L)`);
+very ample `⇒` ample (Hartshorne II, Thm 7.6 / EGA II 4.5.10); over a non-closed `K`, finiteness and
+surjectivity descend from `K̄` (fpqc descent, EGA IV 2.6.4 / 2.7.1). UNVERIFIED numbering. Quantified
+over every `(B, ι)` with `IsPicZero` (unique up to unique isomorphism) and every lift `λ`. -/
+def PhiVeryAmpleIsogeny : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P),
+    IsPicZero rep B j → ∀ L : A.X.left.Pic, IsVeryAmple A L →
+      ∀ lam : A.X ⟶ B.X, lam ≫ j = phiL rep L → IsIsogenyMor lam
+
+/-- **LEAF L4 (Mumford's Weil pairing `ē_n : A[n] × Â[n] → μ_n` at `Â = Pic⁰`).** There are pairings
+`e_n : A[n] × Pic⁰[n] → μ_n` (on `K̄`-points) which, for `n ≥ 1` invertible in `K`, are perfect,
+`G_K`-equivariant (`e_n` is defined over `K`), compatible (`e_{mn}(x, y) = e_n(m x, y)` for
+`y ∈ Â[n]`), under which every endomorphism `f` of `A` has an adjoint on `Pic⁰` (its dual `f^∨`:
+`e_n(x, f^∨ y) = e_n(f x, y)`), and with `e_n(x, φ_L(x)) = 1` for very ample `L`. Published:
+Mumford §20 (definition of `ē_n` and its properties: bilinear, perfect, `e_{nm}(x, y) = e_n(mx, y)`,
+`e_n(x, f^∨ y) = e_n(f x, y)`) and §23 (`e^L_n(x, y) := ē_n(x, φ_L(y))` is skew-symmetric with
+`e^L_n(x, x) = 1`); Galois equivariance: Milne, *Abelian varieties* (1986), §16 (`e_n` is defined
+over `K`). UNVERIFIED numbering. The pairing is existential (Mumford's `ē_n` witnesses it), so this is
+a consequence of the printed statements, never stronger. -/
+def WeilPairingPicZero : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (P : Over (Spec (CommRingCat.of K)))
+    (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (B : AbVar K) (j : B.X ⟶ P),
+    IsPicZero rep B j →
+    ∃ e : ∀ n : ℕ, Pairing A B n,
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → IsPerfect (e n)) ∧
+      (∀ n : ℕ, 0 < n → (n : K) ≠ 0 → HDec.WeilPairing.IsGalEquivariant (e n)) ∧
+      (∀ m n : ℕ, 0 < m → 0 < n → ((m * n : ℕ) : K) ≠ 0 →
+        ∀ (x : tors A (m * n)) (y : tors B n),
+          (e (m * n) x (torsIncl B (dvd_mul_left n m) y)).val = (e n (torsSmul A m n x) y).val) ∧
+      (∀ f : End A, ∃ fv : End B, ∀ n : ℕ, 0 < n → (n : K) ≠ 0 →
+        ∀ x y, e n x (torsMap fv n y) = e n (torsMap f n x) y) ∧
+      (∀ L : A.X.left.Pic, IsVeryAmple A L → ∀ lam : Hom A B, lam.hom ≫ j = phiL rep L →
+        ∀ n : ℕ, 0 < n → (n : K) ≠ 0 → ∀ x : tors A n, e n x (torsMap lam n x) = 0)
+
+end Leaves
+
+/-! ## §4. `t09SymmIsogenyExists` from the four leaves -/
+
+/-- **Main result.** The field `t09SymmIsogenyExists` follows from the four printed leaves L1-L4 over
+the genuine Picard functor; the glue (existence of a very ample class, `φ_L(0) = 0`, `φ_L` lands in
+`Pic⁰`, the lift is a homomorphism) is proved above. -/
+theorem t09SymmIsogenyExists_of_leaves (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar)
+    (h3 : PhiVeryAmpleIsogeny) (h4 : WeilPairingPicZero) :
+    HDec.WeilPairing.T09_SymmIsogenyExists := by
+  intro K _ A
+  obtain ⟨P, ⟨rep⟩⟩ := h1 K A
+  obtain ⟨B, j, hj⟩ := h2 K A P rep
+  obtain ⟨L, hL⟩ := exists_isVeryAmple A
+  obtain ⟨lam, hlam⟩ := exists_hom_comp_eq_phiL rep hj L
+  obtain ⟨e, hperf, hgal, hcompat, hdual, halt⟩ := h4 K A P rep B j hj
+  exact ⟨{ D := { dual := B, e := e, perfect := hperf, galois := hgal, compat := hcompat,
+                  dualEnd := hdual }
+           lam := lam
+           isogeny := h3 K A P rep B j hj L hL lam.hom hlam
+           symm := fun n hn hnK x => by
+             rw [HDec.WeilPairing.weil_apply]
+             exact halt L hL lam hlam n hn hnK x }⟩
+
 end T09Pic
+
+#print axioms T09Pic.exists_isVeryAmple
+#print axioms T09Pic.eta_comp_phiL
+#print axioms T09Pic.exists_hom_comp_eq_phiL
+#print axioms T09Pic.t09SymmIsogenyExists_of_leaves
