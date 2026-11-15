@@ -19,6 +19,7 @@ theorem esymmL_eq_zero : ∀ (l : List ℂ) (j : ℕ), l.length < j → esymmL l
     ring
 
 set_option maxHeartbeats 0 in
+set_option maxRecDepth 200000 in
 theorem igusaAlg%d : IgusaAlg %d := by
   intro u
   rw [evenChars_val, Multiset.map_coe, esymm_coe]
@@ -34,8 +35,7 @@ def lst(i): return '[' + ', '.join('Y%d' % t for t in range(i, 10)) + ']'
 # base i = 9
 L.append('  have d9_0 : esymmL %s 0 = 1 := rfl' % lst(9))
 L.append('  have d9_1 : esymmL %s 1 = 0 + Y9 * 1 := rfl' % lst(9))
-L.append('  rw [← hY9] at d9_1')
-L.append('  ring_nf at d9_1')
+L.append('  conv at d9_1 => rhs; rw [← hY9]; ring_nf')
 for i in range(8, -1, -1):
     n = 10 - i
     L.append('  have d%d_0 : esymmL %s 0 = 1 := rfl' % (i, lst(i)))
@@ -44,9 +44,9 @@ for i in range(8, -1, -1):
         b = 'd%d_%d' % (i + 1, j - 1)
         L.append('  have d%d_%d : esymmL %s %d = esymmL %s %d + Y%d * esymmL %s %d := rfl' %
                  (i, j, lst(i), j, lst(i + 1), j, i, lst(i + 1), j - 1))
-        rw = ([a] if a else ['esymmL_eq_zero %s %d (by simp)' % (lst(i + 1), j)]) + [b, '← hY%d' % i]
+        rw = ([a] if a else ['esymmL_eq_zero %s %d (by simp)' % (lst(i + 1), j)]) + [b]
         L.append('  rw [%s] at d%d_%d' % (', '.join(rw), i, j))
-        L.append('  ring_nf at d%d_%d' % (i, j))
+        L.append('  conv at d%d_%d => rhs; rw [← hY%d]; ring_nf' % (i, j, i))
     # clear level i+1 facts
     L.append('  clear %s' % ' '.join('d%d_%d' % (i + 1, j) for j in range(0, min(k, n - 1) + 1)))
 L.append('  rw [d0_%d]' % k)

@@ -61,3 +61,11 @@
   multiset as an explicit list (`evenChars_val` by `decide`, `esymm_coe` to a recursive `esymmL`), the ten
   `Sq` as explicit quadratics (`Sq0..Sq9`), `sum_evenChars`/`prod_evenChars`, then `ring`. Files
   `scratch/theta-glue/Alg3.lean` .. `Alg9.lean` (same proof, one `k` each; prefix `gen/alg_prefix.lean`).
+- `IgusaAlg 4` PROVED by the same `ring` proof (VERIFIED, TailA import: 4 min 21 s, peak 21.4 GB).
+- Variants tried for `IgusaAlg 3` (all VERIFIED by running): dynamic programme over `e_j(y_i..y_9)` with
+  `ring_nf` after each step: proved, 2 min 37 s, 15.6 GB (no gain); integer-coefficient identity in a
+  generic `CommRing` (`algR3`) by `ring`: ~4-5 min (worse); `grind (ringSteps := 10⁸)` on the unfolded
+  goal: proved, 3 min 12 s, 24.0 GB (worse); `generalize` of large subterms times out (`isDefEq`).
+  `grind` proves the degree-16 `ThetaEightSquare` identity in 7 s.
+- Alg files are now Mathlib-only (`gen/gen_alg_tree.py`; namespace `ThetaGlueAlg`, with
+  `PkgI1.Char2`/`PkgI1.evenChars` copied verbatim from LPrefix) to lower the memory baseline.

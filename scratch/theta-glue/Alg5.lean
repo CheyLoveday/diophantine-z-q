@@ -1,10 +1,19 @@
-import ZInQKernel.OneProof.H.TailA
+import Mathlib
 
 /-! # theta-glue: `IgusaAlg k` proved by `ring` (copies of the definitions from ThetaGlue.lean) -/
 
 noncomputable section
 
-namespace HDec.HSyn.G0Split.ThetaPt.ThetaGlue
+namespace ThetaGlueAlg
+
+/-! Verbatim copies from ZInQKernel/OneProof/H/LPrefix.lean (namespace `HDec.PkgI1`). -/
+namespace PkgI1
+/-- A half-integral characteristic `m = (a, b)`, `a b ∈ {0,1}²`. -/
+abbrev Char2 := (Fin 2 → Fin 2) × (Fin 2 → Fin 2)
+/-- The ten even characteristics (`aᵀb ≡ 0 mod 2`). -/
+def evenChars : Finset Char2 :=
+  Finset.univ.filter fun m => ((m.1 0 : ℕ) * (m.2 0 : ℕ) + (m.1 1 : ℕ) * (m.2 1 : ℕ)) % 2 = 0
+end PkgI1
 
 /-- `ψ₆` as a function of the squares `t_m = θ_m²`. -/
 def psi6T (t : PkgI1.Char2 → ℂ) : ℂ :=
@@ -238,7 +247,9 @@ theorem prod_evenChars (f : PkgI1.Char2 → ℂ) :
     Finset.prod_singleton, not_false_eq_true]
   ring
 
+
 set_option maxHeartbeats 0 in
+set_option maxRecDepth 200000 in
 theorem igusaAlg5 : IgusaAlg 5 := by
   intro u
   rw [evenChars_val, Multiset.map_coe, esymm_coe]
@@ -250,6 +261,6 @@ theorem igusaAlg5 : IgusaAlg 5 := by
   generalize u ![1, 1] = x3
   ring
 
-end HDec.HSyn.G0Split.ThetaPt.ThetaGlue
+end ThetaGlueAlg
 
-#print axioms HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaAlg5
+#print axioms ThetaGlueAlg.igusaAlg5
