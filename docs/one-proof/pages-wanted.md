@@ -27,7 +27,6 @@ Printed statements that a reader with the book or paper can check against the Le
 ## unverified-locator
 
 * [`bostLowerBound`](OPEN.md#bostlowerbound) (packet R5): Bost, Sem. Bourbaki 795 (Asterisque 237, 1996): h_D(A) >= -(g/2) log 2pi, Deligne normalization (display UNVERIFIED, height-split §2). Flag: locator UNVERIFIED (see the source)
-* [`mumfordRigidityCore`](OPEN.md#mumfordrigiditycore) (packet R2): Mumford, Geometric Invariant Theory, Thm 6.14 and Cor. 6.4 (numbers UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`faltingsLemma5Printed`](OPEN.md#faltingslemma5printed) (packet R2): Faltings 1983, Lemma 5 (locator UNVERIFIED; not read). Flag: unread
 * [`sga3_VIB_3_10`](OPEN.md#sga3_vib_3_10) (packet R2): SGA 3 VI_B 3.10 (number UNVERIFIED). Flag: locator UNVERIFIED (see the source)
 * [`babaGranathRationalAb`](OPEN.md#babagranathrationalab) (packet R4): Baba-Granath 2008, rationality of the genus-2 curves with QM by the order of discriminant 6 (locator UNVERIFIED). Flag: one table reading (CM assignment, section 3.1) UNVERIFIED
@@ -48,6 +47,7 @@ Printed statements that a reader with the book or paper can check against the Le
 
 ## pending-review
 
+* [`mumfordGroupLaw`](OPEN.md#mumfordgrouplaw) (packet R2): Mumford-Fogarty-Kirwan, Geometric Invariant Theory, Thm 6.14 (S connected locally noetherian, F -> S smooth proper with a section e, a fibre an abelian variety: F is an abelian scheme with identity e), on each connected component; numbers UNVERIFIED. Flag: pending review (statement review of MumfordGroupLaw as the print); locator UNVERIFIED (GIT Thm 6.14 on each connected component of S)
 * [`picRepresentableAbVar`](OPEN.md#picrepresentableabvar) (packet R10): Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED). Flag: pending review (one model review, no errors)
 * [`picZeroAbVar`](OPEN.md#piczeroabvar) (packet R10): Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED). Flag: combines Mumford 13 (over Kbar) with descent to K (Kleiman 9.5.1) and geometric connectedness of the identity component (SGA 3 VI_A 2.4); pending review (one model review, no errors)
 * [`phiAmpleIsogeny`](OPEN.md#phiampleisogeny) (packet R10): Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED). Flag: finiteness over a non-closed K descends from Kbar (fpqc descent); Mumford's Application 1 is stated for effective D (general ample L via L^m); pending review (one model review, no errors)
