@@ -54,7 +54,8 @@ other login is `outside`. These and the upstream issue list are set at the top o
 
 One row per field. `hold` is one of:
 
-- `held`: a public claim, a pushed branch or a draft pull request; `claim_url` links it.
+- `held`: a public claim line, on the claims issue or in a draft pull request that links it; `claim_url` links
+  it. The project's own holds may point at a pushed branch instead.
 - `interest`: a project row with no public claim (a brief or a reservation); `claim_url` is empty.
 - `released`: a claim released by a `Releasing` line or by the lapse rule; `status` holds the blocker.
 

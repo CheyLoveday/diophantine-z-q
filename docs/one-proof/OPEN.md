@@ -35,8 +35,9 @@ removes it. See
 
 ## Held
 
-A hypothesis is held only by a public claim, a pushed branch or a draft pull request. A claim with no public
-activity for 14 days gets one ping, and is released if there is no reply within 7 days of the ping.
+A hypothesis is held only by a public claim line, on the claims issue or in a draft pull request that links it
+(the project's own holds may point at a pushed branch). A claim with no public activity for 14 days gets one
+ping, and is released if there is no reply within 7 days of the ping.
 
 | hypothesis | holder | since |
 | --- | --- | --- |
@@ -44,7 +45,7 @@ activity for 14 days gets one ping, and is released if there is no reply within 
 | [`r7a`](#r7a) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) | 2026-11-14 |
 | [`semistableUnipotent`](#semistableunipotent) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/unipotent-b)) | 2026-11-14 |
 | [`rayClassCMAb`](#rayclasscmab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft)) | 2026-11-14 |
-| [`mulEtaleAbelianScheme`](#muletaleabelianscheme) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994)) | 2026-11-15 |
+| [`mulEtaleAbelianScheme`](#muletaleabelianscheme) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994)) | 2026-11-14 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
@@ -79,8 +80,8 @@ Reduction block: SGA 7 I Exp. IX, BLR 1.2 Prop. 4, Serre-Tate 1968. Claim it on 
 * [`r7a`](#r7a) (LEAF): Serre-Tate 1968 Thm 1
 * [`semistableUnipotent`](#semistableunipotent) (GLUE; pending-reading): SGA 7 I Exp. IX Prop. 3.5, semistable => (sigma-1)^2 = 0 on T_l for sigma in inertia, one sigma at a time
 * [`sga7_IX_3_3`](#sga7_ix_3_3) (GLUE; pending-reading): SGA 7 IX 3.3 (may be stated over a strictly henselian trait; used at number-field DVRs)
-* [`raynaudSemistableSH`](#raynaudsemistablesh) (LEAF; reading-risk): SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible in O and A[m] rational over K imply semistable Neron models at O (number UNVERIFIED); with strictHenselizationPair gives the general-DVR 4.7 and, by K1 (Mumford 4 and [m] etale), 3.6
-* [`semistablePersistsSHcp`](#semistablepersistsshcp) (LEAF; restricted): SGA 7 I Exp. IX Prop. 3.3, first assertion, over a strictly henselian DVR with K of characteristic 0 and algebraically closed residue field, K'/K finite (number UNVERIFIED); with strictHenselizationPair gives SS1 and SS3 at number fields (ReductB.ss1_ss3_of_cp)
+* [`raynaudSemistableSH`](#raynaudsemistablesh) (LEAF; reading-risk, unverified-locator): SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible in O and A[m] rational over K imply semistable Neron models at O (number UNVERIFIED); with strictHenselizationPair gives the general-DVR 4.7 and, by K1 (Mumford 4 and [m] etale), 3.6
+* [`semistablePersistsSHcp`](#semistablepersistsshcp) (LEAF; restricted, unverified-locator): SGA 7 I Exp. IX Prop. 3.3, first assertion, over a strictly henselian DVR with K of characteristic 0 and algebraically closed residue field, K'/K finite (number UNVERIFIED); with strictHenselizationPair gives SS1 and SS3 at number fields (ReductB.ss1_ss3_of_cp)
 * [`strictHenselizationPair`](#stricthenselizationpair) (GLUE; unverified-locator): EGA IV_4 18.8.10 and 18.6.8 (Stacks 05WR) with BLR, Neron models, 1.2 Prop. 2 (numbers UNVERIFIED)
 
 ### Packet R2
@@ -198,8 +199,8 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`r7a`](#r7a) | research | published | LEAF |  |  | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) |
 | [`r9a`](#r9a) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
-| [`raynaudSemistableSH`](#raynaudsemistablesh) | research | published | LEAF | reading-risk |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`semistablePersistsSHcp`](#semistablepersistsshcp) | research | published | LEAF | restricted |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`raynaudSemistableSH`](#raynaudsemistablesh) | research | published | LEAF | reading-risk, unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`semistablePersistsSHcp`](#semistablepersistsshcp) | research | published | LEAF | restricted, unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`sga3_VIB_3_10`](#sga3_vib_3_10) | research | published | LEAF | unverified-locator | narrowing | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
 | [`cartierSmooth`](#cartiersmooth) | textbook | published | LEAF |  |  | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |

@@ -7,5 +7,5 @@ contact_links:
     url: https://github.com/Deicyde/diophantine-z-q/blob/main/docs/one-proof/OPEN.md
     about: Every open hypothesis with its exact Lean text, kind, source, holder and reading packet.
   - name: Report a problem in the manuscript
-    url: https://github.com/elliotglazer/diophantine-z-q/issues/2
-    about: Reports on the manuscript itself go to the full check of the manuscript upstream.
+    url: https://github.com/elliotglazer/diophantine-z-q/issues/new
+    about: Reports on the manuscript itself go to the original repository, as a new issue.

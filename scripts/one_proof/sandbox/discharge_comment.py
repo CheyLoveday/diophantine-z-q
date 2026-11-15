@@ -64,6 +64,8 @@ def check_records(ds, name):
                 return '%s.%s is not a list of strings' % (where, key)
         if not isinstance(d.get('uses_sorry'), bool):
             return '%s.uses_sorry is not true or false' % where
+        if 'proved' in d and not is_strs(d['proved']):
+            return '%s.proved is not a list of strings' % where
     return None
 
 
@@ -104,7 +106,9 @@ def validate(result):
 
 def write_records(w, ds):
     for d in ds:
-        hyps = ', '.join(code(h) for h in d['hypotheses'])
+        proved = d.get('proved')
+        hyps = ', '.join(code(h) + (' (assumed, so not proved)' if proved is not None and h not in proved else '')
+                         for h in d['hypotheses'])
         flag = ' (uses sorry: not a proof)' if d['uses_sorry'] else ''
         w('- DISCHARGES %s by %s%s' % (hyps, code(d['theorem']), flag))
         assumes = d['still_assumes']
@@ -160,8 +164,9 @@ def format_comment(scan, result=None, run_url=None, pr=None):
               % (short(result.get('base')), short(result.get('head'))))
             w('')
         if result['passed']:
-            w('**Pass:** at least one theorem discharges an open hypothesis, and every reported theorem uses no '
-              '`sorry` and only the axioms `propext`, `Classical.choice` and `Quot.sound`.')
+            w('**Pass:** at least one theorem discharges an open hypothesis, and every reported theorem proves a '
+              'hypothesis it does not assume, uses no `sorry`, and uses only the axioms `propext`, '
+              '`Classical.choice` and `Quot.sound`.')
         else:
             w('**Fail:**')
             w('')

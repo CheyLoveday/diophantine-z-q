@@ -59,8 +59,9 @@ a person has read every added file for build-time code. The check does not repla
    rejects malformed records and names with control characters; it also reads the build log for errors and
    for Lean's sorry warning on the added files. The step uploads `.sandbox/out` (the logs and
    `result.json`). The check fails on a build error, on any reported theorem that uses `sorry`, on any axiom
-   beyond `propext`, `Classical.choice` and `Quot.sound`, on a rejected reporter line, or when no theorem
-   discharges an open hypothesis. `render_open.py --check` runs too, but only as information: it checks the
+   beyond `propext`, `Classical.choice` and `Quot.sound`, on a rejected reporter line, on a reported theorem
+   that assumes the hypothesis it proves (the reporter lists the open hypotheses each theorem's own hypotheses
+   match), or when no theorem discharges an open hypothesis. `render_open.py --check` runs too, but only as information: it checks the
    base commit's documents, not the contribution.
 5. **Comment**, back on the project machine, with read-only calls. The artifact is downloaded,
    `discharge_comment.py` formats the comment (base and head from the scan, the pull request number from the

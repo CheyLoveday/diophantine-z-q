@@ -3,9 +3,9 @@ rayClassCMAb	rayclass-cft	in progress: RayClassCM from Shimura Main Thm I (Delig
 shimuraFamilyAb	shimura-cft	proved from Shimura Main Thm I in Deligne adelic form; awaiting a rating, then a fold	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/shimura-cft	held
 semistableUnipotent	unipotent-b	in progress: printed strictly henselian form of SGA 7 IX 3.5	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/unipotent-b	held
 thetaRatiosAlgebraic	igusa-alg	in progress: theta-glue reduced it to one leaf and five polynomial identities	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg	held
-quotientP1Coordinate	fleet	in progress	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot	held
+quotientP1Coordinate	mcr-quot	in progress	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot	held
 mumfordTorsionAlgClosed	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
-mulEtaleAbelianScheme	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#80	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994	held
+mulEtaleAbelianScheme	cloud batch 2	claimed on the issue 2026-11-14 23:47Z, in progress	2026-11-14	elliotglazer/diophantine-z-q#80	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6886111994	held
 cartierSmooth	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 geomConnOfRationalPoint	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 groupSchemeEquidim	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held

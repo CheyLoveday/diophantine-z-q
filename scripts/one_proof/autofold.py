@@ -10,11 +10,15 @@ writes the fold that removes the field:
   next top theorem `sixContactMin_of_open<N+1>`;
 * `ZInQKernel/OneProof/Main.lean` switched to it;
 * `docs/one-proof/kinds.tsv` (discharged rows removed, leaf rows added) and `claims.tsv` (rows of discharged
-  fields removed). A leaf row takes the bundle and area_issue of the field it replaces, and a flag_class from its
-  flag (pending -> pending-reading, a strictest reading -> strictest, any other flag -> note); a leaf may give
-  its own flag_class, area_issue, packet, label and tier.
+  fields removed). A leaf row takes the bundle and area_issue of the field it replaces. A published leaf with no
+  flag gets the flag "unread: new printed leaf, no reading recorded" (it counts LEAF until a reading says
+  otherwise; a plausible weaker reading is flagged "pending reading: ..." and counts GLUE). Its flag_class comes
+  from the flag's prefix, as in the existing rows: pending reading, pending review, reading risk, restricted,
+  unread, strictest reading, "locator UNVERIFIED" anywhere, else note. A leaf may give its own flag_class,
+  area_issue, packet, label and tier. Every new row passes render_open.py's row checks before anything is written.
 
-It refuses a fold that raises the strict GLUE count (kinds.tsv) unless `--allow-rise` is given.
+It refuses a fold that raises either GLUE count of kinds.tsv (the strict and the strictest column) unless
+`--allow-rise` is given.
 
 Spec (JSON):
 
@@ -39,9 +43,12 @@ Usage, from the repository root:
 Then build and check (the same checks as every fold): `lake build +ZInQKernel.OneProof.Main`;
 `#print axioms ZInQ.OneProof.frozenTarget` standard; `scratch/one-proof/DumpCompact.lean` with `cmp_hashes.py` against the
 base (no existing constant changed except `frozenTarget`); `lake env lean scripts/one_proof/OpenStatements.lean`;
-`python3 scripts/one_proof/render_open.py --check` and `render_open.py`.
+`python3 scripts/one_proof/render_open.py`, then `render_open.py --check`.
 """
-import csv, glob, json, re, sys
+import csv, glob, json, os, re, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import render_open  # noqa: E402  (its row checks)
 
 H = 'ZInQKernel/OneProof/H/'
 MAIN = 'ZInQKernel/OneProof/Main.lean'
@@ -111,11 +118,20 @@ def load_kinds():
     return rows, list(rows[0].keys())
 
 
+NEW_LEAF_FLAG = 'unread: new printed leaf, no reading recorded'
+FLAG_PREFIXES = [('pending reading', 'pending-reading'), ('pending review', 'pending-review'),
+                 ('reading risk', 'reading-risk'), ('restricted', 'restricted'), ('unread', 'unread')]
+
+
 def flag_class(flag, strict, strictest, given=''):
-    classes = [c for c in given.split(',') if c]
-    if not classes and flag.startswith('pending'):
-        classes = ['pending-reading']
-    if strict != strictest and 'strictest' not in classes:
+    """The flag_class of a new row: the spec's, else from the flag's prefix; 'strictest' exactly when the strict
+    and strictest columns differ."""
+    classes = [c for c in given.split(',') if c and c != 'strictest']
+    if not classes:
+        classes = [c for pre, c in FLAG_PREFIXES if flag.startswith(pre)]
+        if 'locator UNVERIFIED' in flag:
+            classes.append('unverified-locator')
+    if strict != strictest:
         classes.append('strictest')
     if flag and not classes:
         classes = ['note']
@@ -167,23 +183,36 @@ def main():
     rows, cols = load_kinds()
     before = counts(rows)
     kept = [r for r in rows if r['field'] not in by_field]
+    new_rows = []
     for d in spec['discharges']:
         for lf in d.get('leaves', []):
+            kind = lf.get('kind', 'published')
             flag = lf.get('flag', '')
-            strict = 'LEAF' if lf.get('kind') == 'published' and not flag.startswith('pending') else 'GLUE'
+            if not flag and lf.get('flag_class'):
+                die(f"leaf {lf['name']}: a flag_class needs the flag text it classifies")
+            if not flag and kind == 'published':
+                flag = NEW_LEAF_FLAG
+            strict = 'LEAF' if kind == 'published' and not flag.startswith('pending reading') else 'GLUE'
             strictest = 'GLUE' if flag.startswith('strictest') else strict
             old = next(r for r in rows if r['field'] == d['field'])
-            kept.append(dict(bundle=old['bundle'], field=lf['name'],
-                             kind=lf.get('kind', 'published'), flag=flag, strict=strict, strictest=strictest,
-                             source=lf.get('source', ''), rated_by=f'{name}; pending review',
-                             packet=lf.get('packet', ''), label=lf.get('label', ''), tier=lf.get('tier', ''),
-                             flag_class=flag_class(flag, strict, strictest, lf.get('flag_class', '')),
-                             area_issue=lf.get('area_issue', old.get('area_issue', ''))))
+            new_rows.append(dict(bundle=old['bundle'], field=lf['name'],
+                                 kind=kind, flag=flag, strict=strict, strictest=strictest,
+                                 source=lf.get('source', ''), rated_by=f'{name}; pending review',
+                                 packet=lf.get('packet', ''), label=lf.get('label', ''), tier=lf.get('tier', ''),
+                                 flag_class=flag_class(flag, strict, strictest, lf.get('flag_class', '')),
+                                 area_issue=lf.get('area_issue', old.get('area_issue', ''))))
+    kept += new_rows
+    open_after = {r['field'] for r in kept}
+    with open(CLAIMS, newline='') as fh:
+        held = {r['field'] for r in csv.DictReader(fh, delimiter='\t') if r.get('hold') == 'held'}
+    problems = [p for r in new_rows for p in render_open.kinds_row_problems(r, open_after, held)]
+    if problems:
+        die('the new kinds.tsv rows would fail render_open.py --check:\n  ' + '\n  '.join(problems))
     after = counts(kept)
     print(f'strict count: {before[1]}/{before[2]} on {before[0]} -> {after[1]}/{after[2]} on {after[0]}; '
           f'strictest {before[3]}/{before[4]} -> {after[3]}/{after[4]}')
-    if after[2] > before[2] and '--allow-rise' not in sys.argv:
-        die('the strict GLUE count rises; not folding (pass --allow-rise to override)')
+    if (after[2] > before[2] or after[4] > before[4]) and '--allow-rise' not in sys.argv:
+        die('a GLUE count (strict or strictest) rises; not folding (pass --allow-rise to override)')
 
     # the new module
     new_mod = f'TailZ{k + 1}'
@@ -256,7 +285,8 @@ def main():
         w.writeheader()
         w.writerows(r for r in crows if r['field'] not in by_field)
     print(f'wrote {H}{new_mod}.lean, switched {MAIN} to sixContactMin_of_open{N + 1}, updated {KINDS} and {CLAIMS}')
-    print('next: lake build +ZInQKernel.OneProof.Main, the hash guard, OpenStatements.lean, render_open.py --check')
+    print('next: lake build +ZInQKernel.OneProof.Main, the hash guard, OpenStatements.lean, render_open.py, '
+          'render_open.py --check')
 
 
 if __name__ == '__main__':
