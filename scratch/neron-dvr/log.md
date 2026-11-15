@@ -28,3 +28,23 @@ Field `neronSchemeModelExistsDVR` lives in `OpenResearchLeaves19` (TailZ29 L41).
 - TailZ23 L803 `neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR` into `OpenResearchLeaves9`, read at
   TailZ9 L100-101 `r8 := grothendieckMonodromy_final' … r.neronSchemeModelExistsDVR …` (TailZ7 L1496): conclusion
   `PkgI2.GrothendieckMonodromy` over EVERY field (Objects.lean L1416).
+
+## Contributor file
+- ZInQKernel/Contrib/OneProof/NeronDVR.lean: `lake env lean` clean (no errors, no warnings) and
+  `lake build ZInQKernel.Contrib.OneProof.NeronDVR` succeeds (VERIFIED, 03:47).
+
+## Where r6 / r8 are applied (downstream of the old bundles)
+- r8 (`PkgI2.GrothendieckMonodromy`): no theorem in ZInQKernel takes it as a hypothesis; the only uses are
+  bundle-field copies (TailD L98, TailE L6578, LPrefix L13695, TailZ4 L192, TailX L201) and the transport
+  `grothendieckMonodromy_ofK5` (TailM L463-467, `exact h K O w hw A`) (VERIFIED by grep for
+  `GrothendieckMonodromy`, `.r8`, `r8 :=`). So r8 is a dead field of the old bundles.
+- r6 (`PkgI2.RaynaudCriterion`) applications (subagent trace, sites re-read VERIFIED):
+  * TailC L5947-5959 `good_of_QML3`: `K : IF` with `[FiniteDimensional ℚ K]`, `haveI : NumberField K` (L5954),
+    → `LeafQM.AV.QML3.goodReduction` (HDecomp/QM/Structures.lean L619) → `GlueA6Alg.goodReduction_of_QM_rational3'`
+    → A6.lean L692 `hRay K O w hw A …` at the same K.
+  * TailF L2293-2297 `qmModelG3_of`: same `QML3.goodReduction` at `K : IF` with `K ≤ L ≤ L'`,
+    `[FiniteDimensional ℚ L']` (TailF L2263); no NumberField instance on K in scope, but K is finite over ℚ.
+  * TailH L2659 `raynaudPlace_of_R6`: `hR6 F O₁ …` with `haveI : NumberField F := ⟨⟩` (TailH L2601).
+  * Not traced to the end: which copy (A6.lean vs LPrefix L833) the chain resolves; other TailH users were
+    reported by the subagent to funnel into `raynaudPlace_of_R6` (SPECULATIVE until re-read).
+  Conclusion: r6 is applied only at number fields (SPECULATIVE for completeness of the list, VERIFIED per site).
