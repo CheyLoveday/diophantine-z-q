@@ -37,3 +37,5 @@ Every step is also checked numerically in `py/`. Report: `docs/research/cm24-val
 
 **What remains.** Nothing for this field, and no leaf was introduced. `CM24Kernel.lean` is ready to become a
 `ZInQKernel/Contrib/` module.
+
+_Finished 2026-11-14 16:57 PST; last compile log: `scratch/cm24-value/compile.out` (both files, 0 errors)._
