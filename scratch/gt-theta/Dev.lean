@@ -539,6 +539,127 @@ theorem s8WeightExact_of' (hT : ThetaModularityM46) (hG : GammaStarGen) : S8Weig
 theorem s8WeightExact_of_gen (hG : GammaStarGen) : S8WeightExact :=
   s8WeightExact_of' thetaModularityM46 hG
 
+
+/-- `g20Auto_of_sp` with the modularity at the one matrix `M` in place of `ThetaModularity`. -/
+theorem g20Auto_of_sp' (g : GL (Fin 2) ℝ)
+    (hdet : 0 < (g : Matrix (Fin 2) (Fin 2) ℝ).det)
+    (M : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ)
+    (hT : ∀ z : ℂ, 0 < z.im → thetaProd2 (spAct M (HDec.PkgI1.Omega z)) =
+      spFactor M (HDec.PkgI1.Omega z) ^ 10 * thetaProd2 (HDec.PkgI1.Omega z))
+    (hrel : ∀ z : ℂ, 0 < z.im →
+      HDec.PkgI1.spAct M (HDec.PkgI1.Omega z) = HDec.PkgI1.Omega (num g z / denom g z))
+    (ε : ℂ) (hε : ε ^ 10 = 1)
+    (hfac : ∀ z : ℂ, 0 < z.im →
+      HDec.PkgI1.spFactor M (HDec.PkgI1.Omega z) * ((g : Matrix (Fin 2) (Fin 2) ℝ).det : ℂ) *
+        ((z - 3) * (z + 1)) =
+      ε * denom g z ^ 2 * ((num g z / denom g z - 3) * (num g z / denom g z + 1))) :
+    LQ20.G20Auto g := by
+  refine ⟨hdet, fun z => ?_⟩
+  have hw : ((g • z : UpperHalfPlane) : ℂ) = num g z / denom g z :=
+    coe_smul_of_det_pos (by rwa [detv]) z
+  have hwim : 0 < (num g z / denom g z).im := by rw [← hw]; exact (g • z).im_pos
+  have hmod := hT z z.im_pos
+  rw [hrel z z.im_pos] at hmod
+  have hf := hfac z z.im_pos
+  unfold LQ20.G20
+  rw [hw, hmod]
+  have hf10 : (HDec.PkgI1.spFactor M (HDec.PkgI1.Omega z) * ((g : Matrix (Fin 2) (Fin 2) ℝ).det : ℂ) *
+      ((z - 3) * (z + 1))) ^ 10 =
+      (denom g z ^ 2 * ((num g z / denom g z - 3) * (num g z / denom g z + 1))) ^ 10 := by
+    rw [hf, mul_assoc, mul_pow, hε, one_mul]
+  obtain ⟨h3, h4⟩ := sub3_add1_ne z.im_pos
+  obtain ⟨h5, h6⟩ := sub3_add1_ne hwim
+  have hD : denom g z ≠ 0 := denom_ne_zero g z
+  have hW : ((num g z / denom g z - 3) * (num g z / denom g z + 1)) ^ 10 ≠ 0 :=
+    pow_ne_zero _ (mul_ne_zero h5 h6)
+  have hZ : (((z : ℂ) - 3) * ((z : ℂ) + 1)) ^ 10 ≠ 0 := pow_ne_zero _ (mul_ne_zero h3 h4)
+  rw [div_mul_eq_mul_div, mul_div_assoc', div_eq_div_iff hW hZ]
+  linear_combination (HDec.PkgI1.thetaProd2 (HDec.PkgI1.Omega z)) * hf10
+
+/-- `g20Auto_gen` with the modularity at `M` in place of `ThetaModularity`. -/
+theorem g20Auto_gen' (g : GL (Fin 2) ℝ)
+    (hdet : 0 < (g : Matrix (Fin 2) (Fin 2) ℝ).det)
+    (M : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ)
+    (hT : ∀ z : ℂ, 0 < z.im → thetaProd2 (spAct M (HDec.PkgI1.Omega z)) =
+      spFactor M (HDec.PkgI1.Omega z) ^ 10 * thetaProd2 (HDec.PkgI1.Omega z))
+    (A B C D : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.map (Int.cast : ℤ → ℂ) = Matrix.fromBlocks A B C D)
+    (hI1 : ∀ z : ℂ, dFh (num g z) (denom g z) • (A * Nf z + dF z • B) =
+      Nfh (num g z) (denom g z) * (C * Nf z + dF z • D))
+    (hI2 : ∀ z : ℂ, (C * Nf z + dF z • D).det * ((g : Matrix (Fin 2) (Fin 2) ℝ).det : ℂ) *
+      ((z - 3) * (z + 1)) = -1 * dF z ^ 2 * ((num g z - 3 * denom g z) * (num g z + denom g z))) :
+    LQ20.G20Auto g := by
+  have hw : ∀ z : ℂ, 0 < z.im → 0 < (num g z / denom g z).im := fun z hz => by
+    have := (g • (⟨z, hz⟩ : UpperHalfPlane)).im_pos
+    rwa [← UpperHalfPlane.coe_im, coe_smul_of_det_pos (by rwa [detv])] at this
+  have hV : ∀ z : ℂ, 0 < z.im → denom g z ≠ 0 := fun z hz =>
+    UpperHalfPlane.denom_ne_zero_of_im g hz.ne'
+  have hP : ∀ z : ℂ, 0 < z.im → (C * Nf z + dF z • D).det ≠ 0 := fun z hz h0 => by
+    have e := hI2 z
+    rw [h0, zero_mul, zero_mul] at e
+    obtain ⟨h5, h6⟩ := sub3_add1_ne (hw z hz)
+    have h7 : num g z - 3 * denom g z ≠ 0 := fun h => h5 (by
+      rw [show num g z = 3 * denom g z by linear_combination h, mul_div_assoc,
+        div_self (hV z hz)]; ring)
+    have h8 : num g z + denom g z ≠ 0 := fun h => h6 (by
+      rw [show num g z = -denom g z by linear_combination h, neg_div, div_self (hV z hz)]; ring)
+    have := dF_ne hz
+    have : -1 * dF z ^ 2 * ((num g z - 3 * denom g z) * (num g z + denom g z)) ≠ 0 := by
+      apply mul_ne_zero (mul_ne_zero (by norm_num) (pow_ne_zero _ this)) (mul_ne_zero h7 h8)
+    exact this e.symm
+  refine g20Auto_of_sp' g hdet M hT (fun z hz => ?_) (-1) (by norm_num) (fun z hz => ?_)
+  · exact spAct_of_poly M A B C D hM z _ _ (hV z hz) (dF_ne hz) (dF_ne (hw z hz)) (hP z hz) (hI1 z)
+  · exact spFactor_of_poly M A B C D hM z _ _ _ (hV z hz) (dF_ne hz) (hI2 z)
+
+theorem g20Auto_g4' (hT : ThetaModularityM46) {g : GL (Fin 2) ℝ}
+    (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = HDec.PkgI1.iota HDec.HSyn.G0Split.FibreQM.PeriodGlue.x4) :
+    LQ20.G20Auto g := by
+  rw [iota_x4] at hg
+  have hdet : (g : Matrix (Fin 2) (Fin 2) ℝ).det = 2 := by
+    rw [hg, Matrix.det_fin_two_of]; linear_combination (-1 : ℝ) * sqrt2_sq'
+  have hnum : ∀ z : ℂ, num g z = (√2 : ℂ) * z + z - 3 := fun z => by
+    simp only [UpperHalfPlane.num, hg]; simp; ring
+  have hden : ∀ z : ℂ, denom g z = -(√2 : ℂ) + z + 1 := fun z => by
+    simp only [UpperHalfPlane.denom, hg]; simp; ring
+  refine g20Auto_gen' g (by rw [hdet]; norm_num) M4 (thetaProd2_M hT (Or.inl rfl)) A4 B4 C4 D4 M4_map
+    (fun z => by rw [hnum, hden]; exact I1_g4 z) (fun z => ?_)
+  rw [hnum, hden, hdet]; push_cast; exact I2_g4 z
+
+theorem g20Auto_g6' (hT : ThetaModularityM46) {g : GL (Fin 2) ℝ}
+    (hg : (g : Matrix (Fin 2) (Fin 2) ℝ) = HDec.PkgI1.iota HDec.HSyn.G0Split.FibreQM.PeriodGlue.x6) :
+    LQ20.G20Auto g := by
+  rw [iota_x6] at hg
+  have hdet : (g : Matrix (Fin 2) (Fin 2) ℝ).det = 3 := by
+    rw [hg, Matrix.det_fin_two_of]; norm_num
+  have hnum : ∀ z : ℂ, num g z = -3 * z / 2 - 3 / 2 := fun z => by
+    simp only [UpperHalfPlane.num, hg]; simp; ring
+  have hden : ∀ z : ℂ, denom g z = z / 2 - 3 / 2 := fun z => by
+    simp only [UpperHalfPlane.denom, hg]; simp; ring
+  refine g20Auto_gen' g (by rw [hdet]; norm_num) M6 (thetaProd2_M hT (Or.inr rfl)) A6 B6 C6 D6 M6_map
+    (fun z => by rw [hnum, hden]; exact I1_g6 z) (fun z => ?_)
+  rw [hnum, hden, hdet]; push_cast; exact I2_g6 z
+
+/-- **The exact weight-20 automorphy of `G20` on `Γ*` from `ThetaModularityM46` and `GammaStarGen`**
+(same statement as `LQ20.s20WeightExact_of`; gap-triage A2's consumer form). -/
+theorem s20WeightExact_of' (hT : ThetaModularityM46) (hG : GammaStarGen) :
+    ∀ γ ∈ HDec.PkgI1.GammaStar, ∀ z : UpperHalfPlane,
+      LQ20.G20 ((γ • z : UpperHalfPlane) : ℂ) * (((γ : Matrix (Fin 2) (Fin 2) ℝ).det : ℝ) : ℂ) ^ 10 =
+        denom γ z ^ 20 * LQ20.G20 (z : ℂ) := by
+  intro γ hγ z
+  have hmem : γ ∈ LQ20.G20AutoSubgroup := by
+    refine (Subgroup.closure_le (K := LQ20.G20AutoSubgroup)).mpr ?_ (hG γ hγ)
+    rintro g ((hg | hg) | ⟨q, hq, hg⟩)
+    · exact g20Auto_g4' hT hg
+    · exact g20Auto_g6' hT hg
+    · exact LQ20.g20Auto_scalar q hq hg
+  exact hmem.2 z
+
+/-- **The weight-20 automorphy from `GammaStarGen` alone.** -/
+theorem s20WeightExact_of_gen (hG : GammaStarGen) :
+    ∀ γ ∈ HDec.PkgI1.GammaStar, ∀ z : UpperHalfPlane,
+      LQ20.G20 ((γ • z : UpperHalfPlane) : ℂ) * (((γ : Matrix (Fin 2) (Fin 2) ℝ).det : ℝ) : ℂ) ^ 10 =
+        denom γ z ^ 20 * LQ20.G20 (z : ℂ) :=
+  s20WeightExact_of' thetaModularityM46 hG
+
 end Consumers
 
 end GapTheta
