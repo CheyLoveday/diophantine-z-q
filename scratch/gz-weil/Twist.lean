@@ -382,4 +382,140 @@ theorem gaussD_sq {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squarefree d) :
     neg_eq_neg_one_mul, map_mul, jacobiChar_neg_one hd4, one_mul, map_one] at h
   linear_combination h
 
+/-! ## §5. Scaling a lattice -/
+
+/-- The period pair `(g ω₁, g ω₂)`, `g ≠ 0`. -/
+def scalePP (L : PeriodPair) (g : ℂ) (hg : g ≠ 0) : PeriodPair where
+  ω₁ := g * L.ω₁
+  ω₂ := g * L.ω₂
+  indep := by
+    have hinj : Function.Injective (LinearMap.mulLeft ℝ g : ℂ →ₗ[ℝ] ℂ) := fun x y h => by
+      simpa [hg] using h
+    have := L.indep.map' (LinearMap.mulLeft ℝ g) (LinearMap.ker_eq_bot.mpr hinj)
+    convert this using 1
+    ext i
+    fin_cases i <;> simp
+
+theorem mem_scalePP {L : PeriodPair} {g : ℂ} (hg : g ≠ 0) {x : ℂ} :
+    x ∈ (scalePP L g hg).lattice ↔ ∃ y ∈ L.lattice, x = g * y := by
+  simp only [PeriodPair.mem_lattice, scalePP]
+  constructor
+  · rintro ⟨m, n, rfl⟩
+    exact ⟨m * L.ω₁ + n * L.ω₂, ⟨m, n, rfl⟩, by ring⟩
+  · rintro ⟨y, ⟨m, n, rfl⟩, rfl⟩
+    exact ⟨m, n, by ring⟩
+
+theorem G_scalePP (L : PeriodPair) {g : ℂ} (hg : g ≠ 0) (n : ℕ) :
+    (scalePP L g hg).G n = (g ^ n)⁻¹ * L.G n := by
+  let e : L.lattice ≃ (scalePP L g hg).lattice :=
+    { toFun := fun l => ⟨g * l, (mem_scalePP hg).mpr ⟨l, l.2, rfl⟩⟩
+      invFun := fun l => ⟨g⁻¹ * l, by
+        obtain ⟨y, hy, hl⟩ := (mem_scalePP hg).mp l.2
+        rw [hl, ← mul_assoc, inv_mul_cancel₀ hg, one_mul]; exact hy⟩
+      left_inv := fun l => by ext; simp [hg]
+      right_inv := fun l => by ext; simp [hg] }
+  rw [PeriodPair.G, PeriodPair.G, ← e.tsum_eq, ← tsum_mul_left]
+  congr 1
+  funext l
+  simp only [e, Equiv.coe_fn_mk]
+  rw [mul_pow, mul_inv]
+
+theorem g₂_scalePP (L : PeriodPair) {g : ℂ} (hg : g ≠ 0) :
+    (scalePP L g hg).g₂ = (g ^ 4)⁻¹ * L.g₂ := by
+  rw [PeriodPair.g₂, PeriodPair.g₂, G_scalePP]; ring
+
+theorem g₃_scalePP (L : PeriodPair) {g : ℂ} (hg : g ≠ 0) :
+    (scalePP L g hg).g₃ = (g ^ 6)⁻¹ * L.g₃ := by
+  rw [PeriodPair.g₃, PeriodPair.g₃, G_scalePP]; ring
+
+/-- `L` is a period lattice of `C_d : y² = x³ − d²x` iff `g₂(L) = 4d²`, `g₃(L) = 0`. -/
+theorem isPeriodLattice_cd_iff (d : ℕ) (L : PeriodPair) :
+    ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L ↔
+      L.g₂ = 4 * (d : ℂ) ^ 2 ∧ L.g₃ = 0 := by
+  simp only [ZInQ.GZHL3.IsPeriodLattice, WeierstrassCurve.c₄, WeierstrassCurve.c₆,
+    WeierstrassCurve.b₂, WeierstrassCurve.b₄, WeierstrassCurve.b₆, WeierstrassCurve.baseChange,
+    WeierstrassCurve.map, shortCurve]
+  push_cast
+  constructor <;> rintro ⟨h1, h2⟩ <;> refine ⟨?_, ?_⟩ <;> [rw [h1]; rw [h2]; rw [h1]; rw [h2]] <;>
+    ring
+
+/-! ## §6. The level-32 leaf and the reduction -/
+
+/-- `C₁ : y² = x³ − x`, i.e. `C_d` for `d = 1` (Cremona `32a2`). -/
+abbrev curveC1 : WeierstrassCurve ℚ := shortCurve (-((1 : ℕ) : ℚ) ^ 2)
+
+/-- **(LEAF, level 32) The modular parametrization of `C₁ : y² = x³ − x` by `X₀(32)`, in analytic
+form, with rational Manin constant.** Let `Φ₁(τ) = Σ_{n ≥ 1} aₙ/n qⁿ` be the Eichler integral of
+the weight-2 newform `f₁ = Σ aₙ qⁿ = η(4τ)²η(8τ)²` of level 32 (`aₙ = heckeCoeff 1 n`, the
+coefficients of the Hecke character of `ℚ(i)` attached to `C₁`; `aₙ = aₙ(C₁)` is Deuring's
+theorem, proved in the kernel). For every period lattice `L` of `C₁` (`g₂(L) = 4`, `g₃(L) = 0`)
+there is `c ∈ ℚ^×` with `c (Φ₁(γτ) − Φ₁(τ)) ∈ L` for all `γ ∈ Γ₀(32)`, `τ ∈ ℍ`: the map
+`τ ↦ weierPt C₁ L (c Φ₁(τ))` factors through `X₀(32)`, i.e. `c Λ_{f₁} ⊆ L`.
+
+This is `GZHL3.EichlerShimuraParamAt C₁` at the level-32 newform (`modularParamC1_of_leaves`
+derives it from gz-hl3's `StrongWeilCurve`, `IsogenyLattice`, `WeierstrassUniformization`):
+Eichler–Shimura for the one newform of level 32, with `X₀(32) = 32a1` (genus one) and the explicit
+2-isogeny `32a1 → 32a2 = C₁` (x0-32, `TYZGenus/X0.lean` §4–§10). Sources: Shimura 1971, Thm 7.14
+(UNVERIFIED number); Cremona, *Algorithms for modular elliptic curves*, Table 1 (32a1 optimal,
+Manin constant 1; UNVERIFIED locator). -/
+def ModularParamC1 : Prop :=
+  ∀ L : PeriodPair, ZInQ.GZHL3.IsPeriodLattice curveC1 L → ∃ c : ℚ, c ≠ 0 ∧
+    ∀ γ ∈ Gamma0 32, ∀ τ : ℍ, (c : ℂ) * (eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) ∈
+      L.lattice
+
+theorem gaussD_ne_zero {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squarefree d) :
+    gaussD d ≠ 0 := by
+  intro h
+  have := gaussD_sq hd4 hsq
+  rw [h] at this
+  norm_num at this
+  exact NeZero.ne d (by exact_mod_cast this.symm)
+
+/-- **The twist step.** `ModularParamC1` gives the analytic modular parametrization of every
+`C_d`, `d ≡ 1 (mod 4)` squarefree, at the Eichler integral `Φ_d` and level `32 d²`. -/
+theorem periods_cd (h : ModularParamC1) {d : ℕ} [NeZero d] (hd4 : d % 4 = 1)
+    (hsq : Squarefree d) (L : PeriodPair)
+    (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) :
+    ∃ c : ℚ, c ≠ 0 ∧ ∀ γ ∈ Gamma0 (32 * d ^ 2), ∀ τ : ℍ,
+      (c : ℂ) * (eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ)) ∈ L.lattice := by
+  set g := gaussD d with hgdef
+  have hg : g ≠ 0 := gaussD_ne_zero hd4 hsq
+  have hg2 : g ^ 2 = d := gaussD_sq hd4 hsq
+  obtain ⟨h2, h3⟩ := (isPeriodLattice_cd_iff d L).mp hL
+  have hL' : ZInQ.GZHL3.IsPeriodLattice curveC1 (scalePP L g hg) := by
+    rw [isPeriodLattice_cd_iff, g₂_scalePP, g₃_scalePP, h2, h3]
+    refine ⟨?_, by ring⟩
+    have : g ^ 4 = (d : ℂ) ^ 2 := by rw [show g ^ 4 = (g ^ 2) ^ 2 by ring, hg2]
+    rw [this]
+    have hd : (d : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne d
+    field_simp
+    push_cast; ring
+  obtain ⟨c, hc, hper⟩ := h _ hL'
+  refine ⟨c, hc, fun γ hγ τ => ?_⟩
+  obtain ⟨γ', τ', hγ', heq⟩ := period_identity d hγ τ
+  have hm : ∀ a : ZMod d, ∃ m ∈ L.lattice, (c : ℂ) *
+      (eichlerCd 1 ((γ' a • τ' a : ℍ) : ℂ) - eichlerCd 1 (τ' a : ℂ)) = g * m :=
+    fun a => (mem_scalePP hg).mp (hper (γ' a) (hγ' a) (τ' a))
+  choose m hmL hmeq using hm
+  have hd : (d : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne d
+  have key : (c : ℂ) * (eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ)) =
+      ∑ a : ZMod d, ((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * m a := by
+    have e1 : (c : ℂ) * (eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ)) =
+        (d : ℂ)⁻¹ * ((c : ℂ) * ((d : ℂ) * (eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ)))) := by
+      field_simp
+    rw [e1, heq, Finset.mul_sum, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    rw [dft_jacobiChar hd4 hsq, ZInQ.GZTheta.jacobiChar_apply]
+    calc (d : ℂ)⁻¹ * ((c : ℂ) * (((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * g *
+          (eichlerCd 1 ((γ' a • τ' a : ℍ) : ℂ) - eichlerCd 1 (τ' a : ℂ))))
+        = (d : ℂ)⁻¹ * (((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * g *
+          ((c : ℂ) * (eichlerCd 1 ((γ' a • τ' a : ℍ) : ℂ) - eichlerCd 1 (τ' a : ℂ)))) := by ring
+      _ = (d : ℂ)⁻¹ * (((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * (g ^ 2) * m a) := by
+          rw [hmeq a]; ring
+      _ = _ := by rw [hg2]; field_simp
+  rw [key]
+  refine Submodule.sum_mem _ fun a _ => ?_
+  have := Submodule.smul_mem L.lattice (jacobiSym ((a.val : ℕ) : ℤ) d) (hmL a)
+  rwa [zsmul_eq_mul] at this
+
 end ZInQ.GZWeil
