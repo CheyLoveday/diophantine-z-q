@@ -291,6 +291,185 @@ theorem latG_bound {q : Qn p N} (hq : q ∈ latG p N) :
 
 end Lattice
 
+/-! ### `p^m · ∏ log [ε_i] ≠ 0` in `A_cris` -/
+
+/-- The `ε` with `ε^♯ = 1`, `ε ≠ 1` (those whose `log [ε]` are inverted in `B_cris`). -/
+abbrev TEps := {ε : PreTilt O p // PreTilt.untilt ε = 1 ∧ ε ≠ 1}
+
+/-- `log [ε] ∈ A_cris`. -/
+def logOf (e : TEps p) : Acris p := logT p (theta_teich_sub_one p e.2.1)
+
+/-- `Σ_{1 ≤ j ≤ M} (-1)^{j+1} x^{j-1}/j`, so that the partial log sum is `x · Vsum`. -/
+def Vsum (x : Ainf p) (M : ℕ) : AinfP p :=
+  ∑ j ∈ Finset.Ico 1 (M + 1), (-1) ^ (j + 1) * ((j - 1).factorial : AinfP p) *
+    (qpToLoc p ((j.factorial : ℚ_[p])⁻¹) * algebraMap (Ainf p) (AinfP p) x ^ (j - 1))
+
+theorem logPartialVal_eq (x : Ainf p) (M : ℕ) :
+    logPartialVal p x M = algebraMap (Ainf p) (AinfP p) x * Vsum p x M := by
+  rw [logPartialVal, Vsum, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j hj
+  rw [Finset.mem_Ico] at hj
+  obtain ⟨i, rfl⟩ : ∃ i, j = i + 1 := ⟨j - 1, by omega⟩
+  simp only [logTerm, dpow, Nat.add_sub_cancel, pow_succ]
+  ring
+
+theorem thetaP_algebraMap (a : Ainf p) :
+    fontaineThetaInvertP O p (algebraMap (Ainf p) (AinfP p) a) =
+      algebraMap O (Localization.Away (p : O)) (theta p a) :=
+  IsLocalization.Away.lift_eq (p : Ainf p)
+    (by simpa using IsLocalization.Away.algebraMap_isUnit (p : O)) a
+
+theorem thetaP_Vsum {x : Ainf p} (hx : theta p x = 0) {M : ℕ} (hM : 1 ≤ M) :
+    fontaineThetaInvertP O p (Vsum p x M) = 1 := by
+  have h0 : fontaineThetaInvertP O p (algebraMap (Ainf p) (AinfP p) x) = 0 := by
+    rw [thetaP_algebraMap, hx, map_zero]
+  rw [Vsum, map_sum, Finset.sum_eq_single 1]
+  · simp
+  · intro j hj hj1
+    rw [Finset.mem_Ico] at hj
+    simp only [map_mul, map_pow, h0, zero_pow (show j - 1 ≠ 0 by omega), mul_zero]
+  · intro h; exfalso; apply h; rw [Finset.mem_Ico]; omega
+
+theorem algebraMap_O_injective :
+    Function.Injective (algebraMap O (Localization.Away (p : O))) :=
+  IsLocalization.injective _
+    (powers_le_nonZeroDivisors_of_noZeroDivisors (ZInQ.Contrib.G9.BdrKer.Cp.p_ne_zero p))
+
+theorem natCast_O_ne_zero {k : ℕ} (hk : k ≠ 0) : (k : O) ≠ 0 := by
+  intro h
+  have h1 : ((k : O) : ℂ_[p]) = 0 := by rw [h]; rfl
+  push_cast at h1
+  exact hk (by exact_mod_cast h1)
+
+theorem theta_xi : theta p ξ = 0 := by
+  rw [← RingHom.mem_ker]
+  change ξ ∈ RingHom.ker (WittVector.fontaineTheta O p)
+  rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]
+  exact Ideal.mem_span_singleton_self _
+
+theorem prod_logPartialVal_decomp (l : List (TEps p)) (s : TEps p → ℕ) (w : TEps p → Ainf p)
+    (hsw : ∀ e : TEps p, WittVector.teichmuller p e.1 - 1 = ξ ^ s e * w e) (M : ℕ) :
+    (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) M).prod =
+      algebraMap (Ainf p) (AinfP p) ξ ^ (l.map s).sum * algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) M).prod := by
+  induction l with
+  | nil => simp
+  | cons e l ih =>
+    simp only [List.map_cons, List.prod_cons, List.sum_cons]
+    rw [ih, logPartialVal_eq, hsw e]
+    simp only [map_mul, map_pow, pow_add]
+    ring
+
+/-- **Main lemma.** For every finite family of `ε_i` with `ε_i^♯ = 1`, `ε_i ≠ 1`, and every
+`m`, `p^m · ∏ log [ε_i] ≠ 0` in `A_cris`. -/
+theorem pow_mul_prod_logOf_ne_zero (l : List (TEps p)) (m : ℕ) :
+    (p : Acris p) ^ m * (l.map (logOf p)).prod ≠ 0 := by
+  classical
+  have hdec : ∀ e : TEps p, ∃ (s : ℕ) (w : Ainf p),
+      WittVector.teichmuller p e.1 - 1 = ξ ^ s * w ∧ theta p w ≠ 0 :=
+    fun e => eq_xi_pow_mul p _ (teich_sub_one_ne_zero p e.2.2)
+  choose s w hsw hw using hdec
+  set X := algebraMap (Ainf p) (AinfP p) ξ with hX
+  have hX0 : X ≠ 0 := ZInQ.Contrib.G9.BdrKer.Cp.xi'_ne_zero p
+  set S := (l.map s).sum with hS
+  set N := S + 1 with hN
+  have hdecomp : ∀ M : ℕ, (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) M).prod
+      = X ^ S * algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) M).prod :=
+    fun M => prod_logPartialVal_decomp p l s w hsw M
+  set c : O := (N.factorial : O) * (p : O) ^ m * (l.map fun e => theta p (w e)).prod with hc
+  have hc0 : c ≠ 0 := by
+    refine mul_ne_zero (mul_ne_zero (natCast_O_ne_zero p (Nat.factorial_ne_zero N))
+      (pow_ne_zero _ (ZInQ.Contrib.G9.BdrKer.Cp.p_ne_zero p))) ?_
+    intro h0
+    rw [List.prod_eq_zero_iff] at h0
+    obtain ⟨e, _, he⟩ := List.mem_map.mp h0
+    exact hw e he
+  intro hP
+  have key : ∀ n : ℕ, ∃ a' : Ainf p, c = (p : O) ^ n * theta p a' := by
+    intro n
+    have hev := congrArg (AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n) hP
+    rw [map_zero, map_mul, map_pow, map_natCast, map_list_prod, List.map_map] at hev
+    have hfac : (AdicCompletion.evalₐ (Ideal.span {(p : Acris0 p)}) n) ∘ logOf p =
+        fun e => Ideal.Quotient.mk _ (logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)) :=
+      funext fun e => evalₐ_logT p _ n
+    rw [hfac] at hev
+    have hmem : ((p : Acris0 p) ^ m *
+        (l.map fun e => logPartial p (theta_teich_sub_one p e.2.1) (p ^ n)).prod) ∈
+        (span {(p : Acris0 p)}) ^ n := by
+      rw [← Ideal.Quotient.eq_zero_iff_mem, map_mul, map_pow, map_natCast, map_list_prod,
+        List.map_map]
+      exact hev
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton'] at hmem
+    obtain ⟨z, hz⟩ := hmem
+    have hzAP : (z : AinfP p) * (p : AinfP p) ^ n = (p : AinfP p) ^ m *
+        (l.map fun e => logPartialVal p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod := by
+      have := congrArg (Acris0 p).subtype hz
+      rw [map_mul, map_mul, map_pow, map_pow, map_natCast, map_list_prod, List.map_map] at this
+      exact this
+    -- the lattice
+    obtain ⟨a, ha⟩ := latG_bound p N (acris0_le_latSub p N z.2)
+    rw [algebraMap_Qn, ← map_natCast (Ideal.Quotient.mk (xiIdeal p N)), ← map_mul,
+      Ideal.Quotient.eq, Ideal.mem_span_singleton'] at ha
+    obtain ⟨w0, hw0⟩ := ha
+    -- the main identity in `A_inf[1/p]`
+    have hmain : (N.factorial : AinfP p) * (p : AinfP p) ^ m * X ^ S *
+        algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod =
+        (p : AinfP p) ^ n * (algebraMap (Ainf p) (AinfP p) a + w0 * X ^ N) := by
+      have h1 := congrArg (fun y => (N.factorial : AinfP p) * y) hzAP
+      rw [hdecomp] at h1
+      have h2 : (N.factorial : AinfP p) * (z : AinfP p) =
+          algebraMap (Ainf p) (AinfP p) a + w0 * X ^ N := by
+        rw [← hX] at hw0
+        linear_combination -hw0
+      linear_combination -h1 + (p : AinfP p) ^ n * h2
+    -- `a ∈ ξ^S A_inf`
+    have haS : a ∈ span {ξ ^ S} := by
+      apply mem_xi_pow_of_p_pow_mul p S n
+      apply mem_xi_pow_of_algebraMap
+      rw [Ideal.mem_span_singleton']
+      refine ⟨(N.factorial : AinfP p) * (p : AinfP p) ^ m *
+        algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod -
+        (p : AinfP p) ^ n * w0 * X, ?_⟩
+      rw [map_mul, map_pow, map_natCast]
+      rw [hN, pow_succ] at hmain
+      linear_combination hmain
+    obtain ⟨a', rfl⟩ := Ideal.mem_span_singleton'.mp haS
+    refine ⟨a', ?_⟩
+    have hcancel : (N.factorial : AinfP p) * (p : AinfP p) ^ m *
+        algebraMap (Ainf p) (AinfP p) (l.map w).prod *
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod =
+        (p : AinfP p) ^ n * (algebraMap (Ainf p) (AinfP p) a' + w0 * X) := by
+      apply mul_left_cancel₀ (pow_ne_zero S hX0)
+      rw [hN, pow_succ, map_mul, map_pow] at hmain
+      linear_combination hmain
+    have hθ := congrArg (fontaineThetaInvertP O p) hcancel
+    have hV : fontaineThetaInvertP O p
+        (l.map fun e => Vsum p (WittVector.teichmuller p e.1 - 1) (p ^ n)).prod = 1 := by
+      rw [map_list_prod, List.map_map]
+      apply List.prod_eq_one
+      intro y hy
+      obtain ⟨e, _, rfl⟩ := List.mem_map.mp hy
+      exact thetaP_Vsum p (theta_teich_sub_one p e.2.1) (Nat.one_le_pow _ _ (Fact.out : p.Prime).pos)
+    have hXθ : fontaineThetaInvertP O p X = 0 := by
+      rw [hX, thetaP_algebraMap, theta_xi, map_zero]
+    simp only [map_mul, map_add, map_pow, map_natCast, hV, hXθ, thetaP_algebraMap, mul_zero,
+      add_zero, mul_one] at hθ
+    apply algebraMap_O_injective p
+    rw [hc, map_mul, map_mul, map_mul, map_pow, map_natCast, map_natCast, map_pow, map_natCast]
+    rw [map_list_prod, List.map_map] at hθ
+    exact hθ
+  apply hc0
+  apply IsHausdorff.haus' (I := span {(p : O)})
+  intro n
+  obtain ⟨a', ha'⟩ := key n
+  rw [SModEq.sub_mem, sub_zero, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow,
+    Ideal.mem_span_singleton, ha']
+  exact dvd_mul_right _ _
+
 end PanBergerSplit
 end PkgI4
 end HDec
