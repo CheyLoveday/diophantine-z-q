@@ -26,6 +26,27 @@ open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenu
 '''
 out = (imports + '\n\n' + doc + '\n-- ===== t5-glue (origin/wip/t5-glue 39bb3cd2, scratch/t5-glue/T5Glue.lean), verbatim =====\n'
        + body + '\n-- ===== gt-ringclass: proof of RingClassLattice =====\n\n' + opens + rcl + '\nend T5Glue\n' + fin)
+# drop t5-glue declarations outside the dependency closure of the final theorems
+# (found by scratch/gt-ringclass/Dead.lean)
+DEAD = ['pp_lattice_coe', 'linIndep_one_t', 'mem_Osub', 'finPart_mul_inv',
+        'shimuraReciprocityModFn_of_leaves', 'shimuraReciprocityModFn_of_t5Leaves',
+        'shimuraReciprocityModFn_of_final', "cmModuli_of_t5'"]
+lines = out.split('\n')
+for name in DEAD:
+    hits = [i for i, l in enumerate(lines)
+            if l.startswith('theorem ' + name + ' ') or l == 'theorem ' + name]
+    assert len(hits) == 1, (name, hits)
+    i = hits[0]
+    start = i
+    if lines[i - 1].rstrip().endswith('-/'):
+        start = i - 1
+        while not lines[start].startswith('/--'):
+            start -= 1
+    end = i
+    while lines[end].strip() != '':
+        end += 1
+    del lines[start:end + 1]
+out = '\n'.join(lines)
 dst = os.path.join(root, 'ZInQKernel/Contrib/OneProof/RingClassLattice.lean')
 open(dst, 'w').write(out)
 print('wrote', dst, len(out.splitlines()), 'lines', len(out.encode()), 'bytes')

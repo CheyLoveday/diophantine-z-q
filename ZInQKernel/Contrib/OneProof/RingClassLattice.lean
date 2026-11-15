@@ -696,9 +696,6 @@ def DiscNeZero : Prop := ∀ τ : UpperHalfPlane, discL (pp τ) ≠ 0
 
 /-! ### Lemmas -/
 
-theorem pp_lattice_coe (τ : UpperHalfPlane) :
-    (pp τ).lattice = Submodule.span ℤ {(1 : ℂ), (τ : ℂ)} := rfl
-
 /-- `a/N ∉ ⟨1, τ⟩` for `0 < a < N`. -/
 theorem div_nat_not_mem (τ : UpperHalfPlane) {a N : ℕ} (h1 : 0 < a) (h2 : a < N) :
     ((a : ℂ) / N) ∉ (pp τ).lattice := by
@@ -1357,25 +1354,6 @@ theorem eq_of_sub_div_mem (τ : UpperHalfPlane) {N k k' : ℕ} (hk : k < N - 1) 
     have e : (((k - k' : ℕ) : ℂ) / N) = (((k : ℂ) + 1) / N - ((k' : ℂ) + 1) / N) := by
       rw [Nat.cast_sub hlt.le]; ring
     rw [e]; exact h
-
-theorem linIndep_one_t {D : ℤ} {N : ℕ} (Q : HeegnerForm N D) {t : QNeg m}
-    (ht : kappa m t = Q.tau) : LinearIndependent ℚ ![(1 : QNeg m), t] := by
-  have him : t.im ≠ 0 := by
-    intro h0
-    have hQ : (Q.tau).im = 0 := by
-      rw [← ht]; simp [kappa, h0]
-    have := Q.tauH.im_pos
-    exact absurd hQ (ne_of_gt this)
-  rw [LinearIndependent.pair_iff]
-  intro p q hpq
-  have h2 := congrArg QuadraticAlgebra.im hpq
-  simp at h2
-  rcases h2 with h2 | h2
-  · subst h2
-    have := congrArg QuadraticAlgebra.re hpq
-    simp at this
-    exact ⟨this, rfl⟩
-  · exact absurd h2 him
 
 end Aux
 
@@ -2165,9 +2143,6 @@ variable {m : ℕ} [NeZero m]
 def Osub (m f : ℕ) [NeZero m] [NeZero f] : Submodule ℤ (QNeg m) :=
   ((conductorOrder (QNeg m) f).toSubalgebra.toSubmodule).restrictScalars ℤ
 
-theorem mem_Osub {f : ℕ} [NeZero f] {x : QNeg m} :
-    x ∈ Osub m f ↔ x ∈ (conductorOrder (QNeg m) f).toSubalgebra := Iff.rfl
-
 /-- **`𝔍_s = K ∩ s_f·Ô_O`**: the `O`-lattice of the idele `s` (`Ô_O` the closure of `O`). -/
 def idealOf (m f : ℕ) [NeZero m] [NeZero f] (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
     Set (QNeg m) :=
@@ -2179,10 +2154,6 @@ def colon (𝔞 𝔍 : Set (QNeg m)) : Set (QNeg m) := {y | ∀ j ∈ 𝔍, j * 
 theorem finPart_inv_mul (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) : finPart s⁻¹ * finPart s = 1 := by
   simp only [finPart]
   rw [← Prod.snd_mul, ← Units.val_mul, inv_mul_cancel, Units.val_one, Prod.snd_one]
-
-theorem finPart_mul_inv (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) : finPart s * finPart s⁻¹ = 1 := by
-  simp only [finPart]
-  rw [← Prod.snd_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Prod.snd_one]
 
 /-- `Ô_O·𝔞̂ ⊆ 𝔞̂` for an `O`-stable `𝔞`. -/
 theorem latHat_O_mul {f : ℕ} [NeZero f] (𝔞 : Submodule ℤ (QNeg m))
@@ -2714,15 +2685,6 @@ theorem shimuraReciprocityModFn_of_split (hCM : CMModuli) (hX : X0RatStructure) 
   obtain ⟨x, hx, hx'⟩ := hCM N hN m f hsq e he J ρ hρ D hD Q Q' c hL hLN
   exact hX N hN g hg Q.tauH Q'.tauH ρ x hx hx'
 
-/-- **Row T-5 from two printed leaves** (`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`:
-the canonical model of `X₀(N)`), one textbook fact (`DiscNeZero`) and five glue Props
-(`AutExtends`, `FixedAlgebraic`: field theory; `ArtinLift`: class field theory; `LatHatInter`,
-`IdeleLatticeHeegner`: adelic lattice computations). -/
-theorem shimuraReciprocityModFn_of_leaves (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
-    (hD : DiscNeZero) (hA : AutExtends) (hF : FixedAlgebraic) (hAL : ArtinLift)
-    (hI : LatHatInter) (hH : IdeleLatticeHeegner) : ShimuraReciprocityModFn :=
-  shimuraReciprocityModFn_of_split (cmModuli_of hCM hA hF hAL hI hH) (x0RatStructure_of hX hA hF hD)
-
 end T5Glue
 
 -- ===== parts/Closed.lean =====
@@ -2757,23 +2719,11 @@ theorem cmModuli_of_leaf (hL : ShimuraMainCM) (hAL : ArtinLift) (hS : IdeleLatti
   cmModuli_of hL autExtends fixedAlgebraic hAL latHatInter
     (ideleLatticeHeegner_of hS strongApprox latHatInter)
 
-/-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`) from two printed leaves and two glue
-Props** (`ArtinLift`, `IdeleLatticeScale`). -/
-theorem shimuraReciprocityModFn_of_t5Leaves (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
-    (hAL : ArtinLift) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
-  shimuraReciprocityModFn_of_split (cmModuli_of_leaf hCM hAL hS) (x0RatStructure_of_leaf hX)
-
 /-- **`CMModuli`, final form**: the printed main theorem of CM, the surjectivity of Tau Ceti's
 absolute Artin map for `ℚ(√−m)`, and the ring-class lattice computation. -/
 theorem cmModuli_of_final (hL : ShimuraMainCM) (hA : AbsArtinSurjectiveQNeg)
     (hS : IdeleLatticeScale) : CMModuli :=
   cmModuli_of_leaf hL (artinLift_of_abs hA) hS
-
-/-- Row T-5 from two printed leaves and the two glue Props `AbsArtinSurjectiveQNeg`,
-`IdeleLatticeScale`. -/
-theorem shimuraReciprocityModFn_of_final (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
-    (hA : AbsArtinSurjectiveQNeg) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
-  shimuraReciprocityModFn_of_split (cmModuli_of_final hCM hA hS) (x0RatStructure_of_leaf hX)
 
 /-- **`CMModuli`, final form**: the printed main theorem of CM and the ring-class lattice
 computation (`AbsArtinSurjectiveQNeg` is proved: `absArtinSurjectiveQNeg`). -/
@@ -2799,10 +2749,6 @@ open ZInQ.Contrib.TYZGenus.Shimura
 theorem shimuraReciprocityModFn_of_t5' (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
     (hA : RingClassLattice) (hB : InvertibleColon) : ShimuraReciprocityModFn :=
   shimuraReciprocityModFn_of_t5 hCM hX (ideleLatticeScale_of hA hB)
-
-/-- **`CMModuli` from the printed main theorem of CM and `RingClassLattice`.** -/
-theorem cmModuli_of_t5' (hL : ShimuraMainCM) (hA : RingClassLattice) : CMModuli :=
-  cmModuli_of_t5 hL (ideleLatticeScale_of hA invertibleColon)
 
 /-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
 (`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and one
