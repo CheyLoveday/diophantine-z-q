@@ -384,4 +384,74 @@ theorem slash_frickeGL_twist (f : Newform N 2) (hχ : f.χ = 1) {D : ℤ} (hD : 
 
 end Eigen
 
+/-! ## The twisted functional equation -/
+
+section FE
+
+open Matrix Matrix.SpecialLinearGroup UpperHalfPlane
+open scoped MatrixGroups ModularForm
+
+/-- `completedL M G` is Tau Ceti's `frickeCompletedL F M` for a weight-2 cusp form `F` of level
+`Γ₁(M)` and the entire continuation `G` of its L-series, on `Re s > 0`. -/
+theorem completedL_eq_frickeCompletedL_cusp {M : ℕ} [NeZero M]
+    (F : CuspForm ((Gamma1 M).map (mapGL ℝ)) 2) {G : ℂ → ℂ}
+    (hG : IsEntireCont (fun n => (UpperHalfPlane.qExpansion 1 F).coeff n) 2 G) {s : ℂ}
+    (hs : 0 < s.re) :
+    ZInQ.Literature.completedL M G s =
+      CuspForm.frickeCompletedL F (M.toPNat (NeZero.pos M)) s := by
+  have hk : (0 : ℤ) < 2 := by norm_num
+  have hEq : G = ModularForm.L hk F := by
+    have := CuspForm.eq_strictWidthInfty_cpow_mul_L F hk hG.1 (fun {s} hs => by
+      simp only [strictWidthInfty_Gamma1]
+      exact hG.2 s (by norm_num at hs; linarith))
+    simpa [strictWidthInfty_Gamma1] using this
+  rw [hEq, ZInQ.Literature.completedL,
+    CuspForm.frickeCompletedL_eq_cpow_mul_Λ F _ hk s, ModularForm.L]
+  have hMc : (((M.toPNat (NeZero.pos M) : ℕ+) : ℕ) : ℂ) = (M : ℂ) := rfl
+  rw [hMc, Complex.Gammaℂ_def]
+  have hΓ : Complex.Gamma s ≠ 0 := Complex.Gamma_ne_zero_of_re_pos hs
+  have hπ : (2 * (Real.pi : ℂ)) ^ (-s) ≠ 0 := by
+    rw [Ne, Complex.cpow_eq_zero_iff]
+    exact fun h => by exact_mod_cast (mul_ne_zero two_ne_zero Real.pi_ne_zero) (by exact_mod_cast h.1)
+  field_simp
+
+/-- **The twisted functional equation, proved** (`TwistFunctionalEquation` is glue). -/
+theorem twistFunctionalEquation : TwistFunctionalEquation := by
+  intro N _ f hχ D hD hcop G hG s hs1 hs2
+  have hD0 : D ≠ 0 := by rintro rfl; exact absurd hD.2.1 (by decide)
+  have : NeZero D.natAbs := ⟨Int.natAbs_ne_zero.mpr hD0⟩
+  have : NeZero (N * D.natAbs * D.natAbs) :=
+    ⟨mul_ne_zero (mul_ne_zero (NeZero.ne N) (NeZero.ne _)) (NeZero.ne _)⟩
+  have hk : (0 : ℤ) < 2 := by norm_num
+  set F := CuspForm.twist (chiDMod D) (L := N * D.natAbs * D.natAbs) (dvd_mul_right _ _)
+    ⟨N, by ring⟩ f.toCuspForm with hFdef
+  set c : ℂ := (jacobiSym (-(N : ℤ)) D.natAbs : ℂ) with hc
+  have hεF : TauCeti.normalizedFrickeOperatorCusp (N := N * D.natAbs * D.natAbs) 2 F =
+      (c * f.frickeSign hχ) • F := by
+    apply DFunLike.coe_injective
+    rw [TauCeti.coe_normalizedFrickeOperatorCusp, FunLike.coe_smul]
+    have h1 : TauCeti.atkinLehnerNormalizer (N * D.natAbs * D.natAbs) 2 = 1 := by
+      simp [TauCeti.atkinLehnerNormalizer]
+    rw [h1, one_smul]
+    exact slash_frickeGL_twist f hχ hD hcop.symm
+  have hFE := CuspForm.frickeCompletedL_sub_eq_of_normalizedFrickeOperatorCusp_eq_smul F hk hεF s
+  have e2 : ((2 : ℤ) : ℂ) = 2 := by norm_num
+  rw [e2] at hFE
+  -- `G` continues the L-series of `F`
+  have hGF : IsEntireCont (fun n => (UpperHalfPlane.qExpansion 1 F).coeff n) 2 G := by
+    refine isEntireCont_congr (fun n _ => ?_) hG
+    rw [hFdef, CuspForm.qExpansion_twist_coeff, chiDMod_natCast]
+    simp only [twistCoeff, coeff]
+    ring
+  have h2s : 0 < (2 - s).re := by simp only [Complex.sub_re]; norm_num; linarith
+  rw [show N * D.natAbs ^ 2 = N * D.natAbs * D.natAbs by ring,
+    completedL_eq_frickeCompletedL_cusp F hGF h2s, completedL_eq_frickeCompletedL_cusp F hGF hs1,
+    hFE]
+  simp only [rootNumber]
+  ring
+
+end FE
+
 end ZInQ.GZFH
+
+#print axioms ZInQ.GZFH.twistFunctionalEquation
