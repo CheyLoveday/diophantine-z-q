@@ -30,3 +30,12 @@
     still assumes: [BPAnalytic.Uniformization.UniformizationLeafAll, ZInQ.HomLattice.GAGAMorphism, AvSplit.MumfordTorsionAlgClosed]
     axioms: [propext, Classical.choice, Quot.sound]
   #discharges: 67 open hypotheses, 567 theorems checked, 1 discharge one
+- 2026-11-15: refactor: `com_embed` now derived from `unif_conj` (no duplicated setup). Added `YuB6Emb`
+  (fields with an embedding into ℂ) with `yuB6Emb_of`, `yuB6Emb_of'`, `yuB6Emb_of_yuThm11`; `yuB6Alg_of'`
+  (T11b from the chain's `AVB2.t11b_of_exists HSyn.t11bExists_lf8`). Full rebuild + #discharges re-run (same
+  output, 571 theorems checked), Axioms.lean: all 7 main theorems standard axioms; Reroute.lean: 4 rerouted
+  consumers standard axioms (VERIFIED).
+- Live `.t27` projections (Reach.lean, VERIFIED): gluePieces_of_open4, G0FibreSimple.fibreSimple_of_leaves,
+  conversions textbookLeaves6_of_open7 (yuThm11 ↦ t27), textbookLeaves4_of_open6, textbookLeaves3_of_open4,
+  textbookLeaves2_of_open3, textbookLeaves_of_open2.
+- Report: docs/research/gt-qm.md.
