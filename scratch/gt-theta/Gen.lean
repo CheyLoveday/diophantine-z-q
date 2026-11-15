@@ -155,6 +155,45 @@ theorem red_stab {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
   rw [key]
   exact H.mul_mem (H.mul_mem (hT _ _) (hr _)) (h2 _)
 
+omit h1 h2 hr hT in
+theorem of_left {M X X' : Mat4} (hXX' : X' * X = 1) (hX' : X' ∈ H) (hN : X * M ∈ H) : M ∈ H := by
+  rw [show M = X' * (X * M) by rw [← mul_assoc, hXX', one_mul]]
+  exact H.mul_mem hX' hN
+
+theorem red_sign {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+    (e1 : M (Sum.inl 1) (Sum.inl 0) = 0) (e2 : M (Sum.inr 0) (Sum.inl 0) = 0)
+    (e3 : M (Sum.inr 1) (Sum.inl 0) = 0) : M ∈ H := by
+  have k := sp_rel hM (Sum.inl 0) (Sum.inr 0)
+  simp only [e1, e2, e3, Matrix.J, Matrix.fromBlocks_apply₁₂] at k
+  simp at k
+  have hg : M (Sum.inl 0) (Sum.inl 0) * M (Sum.inr 0) (Sum.inr 0) = 1 := by linarith
+  rcases Int.eq_one_or_neg_one_of_mul_eq_one hg with h | h
+  · exact red_stab H h1 h2 hr hT hM h e1 e2 e3
+  · refine of_left H (X := iota1 (-1)) (X' := iota1 (-1)) (by rw [← map_mul]; simp) (h1 _) ?_
+    refine red_stab H h1 h2 hr hT (Submonoid.mul_mem _ (iota1_mem _) hM) ?_ ?_ ?_ ?_ <;>
+      simp [iota1, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, h, e1, e2, e3]
+
+theorem red_c0 {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+    (e2 : M (Sum.inr 0) (Sum.inl 0) = 0) (e3 : M (Sum.inr 1) (Sum.inl 0) = 0) : M ∈ H := by
+  obtain ⟨U, hU⟩ := bezout_sl (M (Sum.inl 0) (Sum.inl 0)) (M (Sum.inl 1) (Sum.inl 0))
+  refine of_left H (X := rot U) (X' := rot U⁻¹) (by rw [← map_mul]; simp) (hr _) ?_
+  refine red_sign H h1 h2 hr hT (Submonoid.mul_mem _ (rot_mem _) hM) ?_ ?_ ?_ <;>
+    simp [rot, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, e2, e3, hU]
+
+theorem red_c2 {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+    (e3 : M (Sum.inr 1) (Sum.inl 0) = 0) : M ∈ H := by
+  obtain ⟨U, hU⟩ := bezout_sl (M (Sum.inl 0) (Sum.inl 0)) (M (Sum.inr 0) (Sum.inl 0))
+  refine of_left H (X := iota1 U) (X' := iota1 U⁻¹) (by rw [← map_mul]; simp) (h1 _) ?_
+  refine red_c0 H h1 h2 hr hT (Submonoid.mul_mem _ (iota1_mem _) hM) ?_ ?_ <;>
+    simp [iota1, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, e3, hU]
+
+/-- **Every element of `Sp₄(ℤ)` lies in `H`.** -/
+theorem red_all {M : Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) : M ∈ H := by
+  obtain ⟨U, hU⟩ := bezout_sl (M (Sum.inl 1) (Sum.inl 0)) (M (Sum.inr 1) (Sum.inl 0))
+  refine of_left H (X := iota2 U) (X' := iota2 U⁻¹) (by rw [← map_mul]; simp) (h2 _) ?_
+  refine red_c2 H h1 h2 hr hT (Submonoid.mul_mem _ (iota2_mem _) hM) ?_
+  simp [iota2, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, hU]
+
 end Reduction
 
 end GapTheta
