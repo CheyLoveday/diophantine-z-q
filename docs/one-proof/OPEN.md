@@ -10,13 +10,13 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**68 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**66 hypotheses of the H part** (in the bundles `OpenAddedLeaves13`, `OpenGlue7`, `OpenResearchLeaves14`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 51 published / 17 glue** (the strictest flagged reading; 53/15 without the one strictest-reading flag).
+* **Strict count: 49 published / 17 glue** (the strictest flagged reading; 51/15 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
-* By kind: composite 5, consequence 7, project glue 1, published 55.
+* By kind: composite 5, consequence 7, project glue 1, published 53.
 
 ## Index
 
@@ -71,11 +71,9 @@ removes it. See
 | [`r7a`](#r7a) | research | published | LEAF |  | cloud round 2 |
 | [`r9a`](#r9a) | research | published | LEAF |  | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | open |
-| [`raynaudKernelBound`](#raynaudkernelbound) | research | published | LEAF |  | open |
 | [`raynaudSemistableSH`](#raynaudsemistablesh) | research | published | LEAF | reading risk (reduct-b section 5): the print may assume an algebraically closed residue field; rated low by the next-fold review | open |
 | [`semistablePersistsSHcp`](#semistablepersistsshcp) | research | published | LEAF | restricted form (char K = 0, perfect residue field): a specialization of every reading of the print | open |
 | [`sga3_VIB_3_10`](#sga3_vib_3_10) | research | published | LEAF |  | open |
-| [`bdRInvariants`](#bdrinvariants) | textbook | published | LEAF |  | open |
 | [`cartierSmooth`](#cartiersmooth) | textbook | published | LEAF |  | cloud W16 |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  | cloud round 2 |
 | [`gagaMorphism`](#gagamorphism) | textbook | published | LEAF |  | cloud W17 |
@@ -850,18 +848,6 @@ PkgI3.FaltingsTate
 > varieties `A, B` over a number field `K` and a prime `ℓ`, the natural map
 > `Hom_K(A, B) ⊗ ℤ_ℓ → Hom_{ℤ_ℓ}(T_ℓ A, T_ℓ B)` is injective with image the `G_K`-equivariant maps.
 
-### raynaudKernelBound
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves14.raynaudKernelBound`; kind **published**, strict **LEAF**.
-* Source: Raynaud's bound on the kernel term in Faltings' Lemma 5 (number UNVERIFIED)
-* Status: open: no one is on it.
-
-```lean
-CToPrinted.RaynaudKernelBound
-```
-
-> c-to-printed, printed form: Raynaud's bound on the kernel term in Faltings' Lemma 5 (locator UNVERIFIED).
-
 ### raynaudSemistableSH
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves14.raynaudSemistableSH`; kind **published**, strict **LEAF**; flag: reading risk (reduct-b section 5): the print may assume an algebraically closed residue field; rated low by the next-fold review.
@@ -906,16 +892,6 @@ CToPrinted.SGA3_VIB_3_10
 
 > c-to-printed, printed form: SGA 3 VI_B 3.10 (the identity component `G⁰` of a smooth group scheme is open;
 > number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`.
-
-### bdRInvariants
-
-* Bundle field `HDec.HSyn.OpenTextbookLeaves10.bdRInvariants`; kind **published**, strict **LEAF**.
-* Source: B_dR^{G_Q_p} = Q_p: Fontaine, Asterisque 223 (1994) Exp. II; Brinon-Conrad, CMI notes 4
-* Status: open: no one is on it.
-
-```lean
-∀ (p : ℕ) [inst : Fact (Nat.Prime p)], ZInQ.Contrib.HodgeSplit.BdRInvariants p
-```
 
 ### cartierSmooth
 

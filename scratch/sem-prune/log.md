@@ -29,3 +29,16 @@
   (TailZ15 researchLeaves9_of_open10 faltingsLemma5BC) added to prune_edit.py. The two off-chain conversions
   g9GlueNoT23_of_g9Glue and r20Lower_of_r20 lost all users and were removed.
 - Step 2 (prune) compiles: `lake build +ZInQKernel.OneProof.Main` OK, frozenTarget: propext, Classical.choice, Quot.sound.
+- Checks after the prune (all VERIFIED on this host, one Lean process at a time):
+  * PruneScan: 34 + 14 + 17 + 1 = 66 top fields, 0 unused, prune set empty.
+  * DumpCompact: frozenTarget standard axioms; 13393 constants; cmp_hashes.py: removed 37 (16 pruned field projections,
+    21 dead readers), new 16 (helpers), changed 214 (176 bundle auxiliaries/projection values of the 16 edited bundles;
+    38 others: the 5 edited consumers g8_g11, g8_g12, g8_g12_of_leaves3, afterG7_of3, transfer_core; the stack
+    glueOutputs_of_leaves3, sixContactMin_of_leavesR3, sixContactMin_of_open4/6/7/8/9/10/11 (new binder) and
+    _open12/_open17 (value); conversions researchLeaves*/textbookLeaves*/gluePieces_of_* (assignment deleted or
+    afterG7_of3's new argument)). frozenTarget and sixContactMin_of_open18 unchanged hashes.
+  * DischargesTest (scratch/contrib-kit): now reports ONE discharge (t1); its t3 control targets the pruned
+    bdRInvariants, so it discharges nothing. Copy with t3 on `cartierSmooth` (scratch/sem-prune/DischargesTest2.lean):
+    two discharges (t1, t3 flagged sorry), as expected.
+  * OpenStatements.lean: 72 open hypotheses; render_open.py --check: 66 bundle fields, all classified; OPEN.md:
+    strictest 49/17 (was 51/17), strict 51/15 (was 53/15).

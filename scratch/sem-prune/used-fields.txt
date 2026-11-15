@@ -25,7 +25,6 @@ USED   gonzalezRotgerCountX6Ab : ShimuraSplit.GonzalezRotgerCountX6Ab
 USED   mumfordRigidityCore : LeafQM.AV.R1UnivRigid.MumfordRigidityCore
 USED   blr_1_2_4 : CToPrinted.BLR_1_2_4
 USED   faltingsLemma5Printed : CToPrinted.FaltingsLemma5Printed
-UNUSED raynaudKernelBound : CToPrinted.RaynaudKernelBound
 USED   sga3_VIB_3_10 : CToPrinted.SGA3_VIB_3_10
 USED   sga7_IX_3_3 : CToPrinted.SGA7_IX_3_3
 USED   egaIV_8_10_5_openImm : CToPrinted.EGAIV_8_10_5_openImm
@@ -48,7 +47,6 @@ USED   geomConnOfRationalPoint : AVGlue.GeomConnOfRationalPoint
 USED   groupSchemeEquidim : AVGlue.GroupSchemeEquidim
 USED   uniformizationLeafAll : BPAnalytic.Uniformization.UniformizationLeafAll
 USED   gagaMorphism : ZInQ.HomLattice.GAGAMorphism
-UNUSED bdRInvariants : HDec.HSyn.OpenTextbookLeaves10 → ∀ (p : ℕ) [inst : Fact (Nat.Prime p)], ZInQ.Contrib.HodgeSplit.BdRInvariants p
 USED   yuThm11 : HDec.QMSplit.Yu.YuThm11
 USED   regularSmoothPerfect : CurveSplit.RegularSmoothPerfect
 USED   igusaGL2 : ZInQ.RLeaf.IgusaGL2
