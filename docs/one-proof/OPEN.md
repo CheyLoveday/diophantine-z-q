@@ -14,9 +14,10 @@ removes it. See
 **56 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves22`, `OpenTextbookLeaves11`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
 * **Strict count: 45 published / 11 glue** (the strictest flagged reading; 46/10 without the one strictest-reading flag).
-* LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
-  of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
-  project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
+* LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
+  instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
+  a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
+  column `flag`).
 * By kind: composite 4, consequence 4, project glue 1, published 47.
 
 ## How to help
