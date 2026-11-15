@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "shimuraGoodReductionNoGuard",
-   "proof": "_root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed {n}.shimuraIntegralModelRep {n}.qmAbFieldFibre",
+   "proof": "_root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed {n}.shimuraIntegralModelRep {n}.smoothGeomConnIntegral {n}.abVarEndTorsionFree",
    "leaves": [
     {
      "name": "shimuraIntegralModelRep",
@@ -17,12 +17,20 @@
      "source": "Kottwitz, J. AMS 5 (1992) section 5; Buzzard, Duke Math. J. 87 (1997) sections 1-4; Morita, Hokkaido Math. J. 10 (1981); Carayol, Compositio 59 (1986) secondary (locators UNVERIFIED)"
     },
     {
-     "name": "qmAbFieldFibre",
-     "type": "_root_.SGRSplit.QMAbFieldFibre",
-     "doc": "Glue: the fibre of a QM abelian scheme at a characteristic-0 field point is an object QML3 (base change, geometric integrality of a smooth geometrically connected group scheme, dimension 2, restriction of iota and eta)",
-     "kind": "project glue",
+     "name": "smoothGeomConnIntegral",
+     "type": "_root_.SGRSplit.SmoothGeomConnIntegral",
+     "doc": "A smooth, geometrically connected scheme over a field is geometrically integral (smooth => geometrically regular => geometrically normal; connected + normal + locally noetherian => integral): Stacks Project, Varieties and Properties; EGA IV_2 4.5-4.6, 6.7-6.8 (printed form; locators UNVERIFIED)",
+     "kind": "published",
      "flag": "",
-     "source": "sgr-split G1 (project glue; outline in the docstring)"
+     "source": "Stacks Project (Varieties: smooth over a field is geometrically regular; Properties: normal, connected, locally noetherian is integral); EGA IV_2 4.5-4.6, 6.7-6.8 (locators UNVERIFIED)"
+    },
+    {
+     "name": "abVarEndTorsionFree",
+     "type": "_root_.SGRSplit.AbVarEndTorsionFree",
+     "doc": "End(A) of an abelian variety is torsion-free (n_A is an isogeny): Mumford, Abelian varieties, section 4 Application 2 and section 19 Thm 3; Milne, Abelian varieties, sections 7 and 12 (printed form; locators UNVERIFIED)",
+     "kind": "published",
+     "flag": "",
+     "source": "Mumford, Abelian varieties, section 19 Thm 3 (Hom(X,Y) torsion-free); Milne, Abelian varieties (locators UNVERIFIED)"
     }
    ]
   }
