@@ -148,4 +148,268 @@ theorem coeff_FM_eq_zero (M i s : ℕ) (h : i + s ≤ M) : ((FM M).coeff i).coef
   · omega
   · rfl
 
+/-! ### Divided-power integrality -/
+
+/-- All coefficients of `F` in the basis `A^i B^s / (i! s!)` are integers. -/
+def IsDPInt (F : S) : Prop :=
+  ∀ i s, ∃ z : ℤ, (F.coeff i).coeff s * (i.factorial : ℚ) * (s.factorial : ℚ) = z
+
+theorem isDPInt_add {F G : S} (hF : IsDPInt F) (hG : IsDPInt G) : IsDPInt (F + G) := by
+  intro i s
+  obtain ⟨a, ha⟩ := hF i s
+  obtain ⟨b, hb⟩ := hG i s
+  exact ⟨a + b, by rw [coeff_add, coeff_add, add_mul, add_mul, ha, hb]; push_cast; ring⟩
+
+theorem isDPInt_neg {F : S} (hF : IsDPInt F) : IsDPInt (-F) := by
+  intro i s
+  obtain ⟨a, ha⟩ := hF i s
+  exact ⟨-a, by rw [coeff_neg, coeff_neg, neg_mul, neg_mul, ha]; push_cast; ring⟩
+
+theorem isDPInt_sum {ι : Type*} (t : Finset ι) (F : ι → S) (h : ∀ k ∈ t, IsDPInt (F k)) :
+    IsDPInt (∑ k ∈ t, F k) := by
+  classical
+  induction t using Finset.induction_on with
+  | empty => intro i s; exact ⟨0, by simp⟩
+  | insert a t ha ih =>
+    rw [Finset.sum_insert ha]
+    exact isDPInt_add (h a (Finset.mem_insert_self a t))
+      (ih fun k hk => h k (Finset.mem_insert_of_mem hk))
+
+theorem isDPInt_mul {F G : S} (hF : IsDPInt F) (hG : IsDPInt G) : IsDPInt (F * G) := by
+  classical
+  choose a ha using hF
+  choose b hb using hG
+  intro i s
+  refine ⟨∑ x ∈ Finset.HasAntidiagonal.antidiagonal i, ∑ y ∈ Finset.HasAntidiagonal.antidiagonal s,
+    ((i.choose x.1 * s.choose y.1 : ℕ) : ℤ) * a x.1 y.1 * b x.2 y.2, ?_⟩
+  rw [coeff_mul, finsetSum_coeff, Finset.sum_mul, Finset.sum_mul]
+  push_cast
+  apply Finset.sum_congr rfl
+  intro x hx
+  rw [coeff_mul, Finset.sum_mul, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro y hy
+  rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx hy
+  have hxi : (i.factorial : ℚ) = (i.choose x.1 : ℚ) * x.1.factorial * x.2.factorial := by
+    rw [← hx, Nat.choose_symm_add]
+    have := Nat.add_choose_mul_factorial_mul_factorial x.1 x.2
+    exact_mod_cast this.symm
+  have hys : (s.factorial : ℚ) = (s.choose y.1 : ℚ) * y.1.factorial * y.2.factorial := by
+    rw [← hy, Nat.choose_symm_add]
+    have := Nat.add_choose_mul_factorial_mul_factorial y.1 y.2
+    exact_mod_cast this.symm
+  rw [← ha x.1 y.1, ← hb x.2 y.2, hxi, hys]
+  ring
+
+theorem isDPInt_C_C_int (z : ℤ) : IsDPInt (C (C (z : ℚ))) := by
+  intro i s
+  rw [coeff_C]
+  split_ifs with hi
+  · subst hi
+    rw [coeff_C]
+    split_ifs with hs
+    · subst hs; exact ⟨z, by simp⟩
+    · exact ⟨0, by simp⟩
+  · exact ⟨0, by simp⟩
+
+theorem isDPInt_one : IsDPInt 1 := by
+  have := isDPInt_C_C_int 1
+  simpa using this
+
+/-- `γ_r(A) = A^r / r!`. -/
+theorem isDPInt_dpowA (r : ℕ) : IsDPInt (C (C ((r.factorial : ℚ)⁻¹)) * X ^ r) := by
+  intro i s
+  rw [coeff_C_mul_X_pow]
+  by_cases hi : i = r
+  · subst hi
+    rw [if_pos rfl, coeff_C]
+    by_cases hs : s = 0
+    · subst hs
+      exact ⟨1, by
+        rw [if_pos rfl, Nat.factorial_zero, Nat.cast_one, mul_one,
+          inv_mul_cancel₀ (by exact_mod_cast Nat.factorial_ne_zero i)]; simp⟩
+    · exact ⟨0, by rw [if_neg hs]; simp⟩
+  · exact ⟨0, by rw [if_neg hi]; simp⟩
+
+/-- `γ_k(B) = B^k / k!`. -/
+theorem isDPInt_dpowB (k : ℕ) : IsDPInt (C (C ((k.factorial : ℚ)⁻¹) * X ^ k)) := by
+  intro i s
+  rw [coeff_C]
+  by_cases hi : i = 0
+  · subst hi
+    rw [if_pos rfl, coeff_C_mul_X_pow]
+    by_cases hs : s = k
+    · subst hs
+      exact ⟨1, by
+        rw [if_pos rfl, Nat.factorial_zero, Nat.cast_one, mul_one,
+          inv_mul_cancel₀ (by exact_mod_cast Nat.factorial_ne_zero s)]; simp⟩
+    · exact ⟨0, by rw [if_neg hs]; simp⟩
+  · exact ⟨0, by rw [if_neg hi]; simp⟩
+
+theorem isDPInt_C_one_add_X_pow (r : ℕ) : IsDPInt (C ((1 + X : R) ^ r)) := by
+  intro i s
+  rw [coeff_C]
+  by_cases hi : i = 0
+  · subst hi
+    rw [if_pos rfl, add_comm, coeff_X_add_one_pow]
+    exact ⟨(r.choose s * s.factorial : ℕ), by push_cast; ring⟩
+  · exact ⟨0, by rw [if_neg hi]; simp⟩
+
+/-- Divided binomial theorem: `(u + v)^j / j! = Σ_r u^r/r! · v^{j-r}/(j-r)!`. -/
+theorem dpow_add_S (j : ℕ) (u v : S) :
+    C (C ((j.factorial : ℚ)⁻¹)) * (u + v) ^ j =
+      ∑ r ∈ Finset.range (j + 1), (C (C ((r.factorial : ℚ)⁻¹)) * u ^ r) *
+        (C (C (((j - r).factorial : ℚ)⁻¹)) * v ^ (j - r)) := by
+  rw [add_pow, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro r hr
+  rw [Finset.mem_range] at hr
+  have hc : ((j.choose r : ℕ) : S) * C (C ((j.factorial : ℚ)⁻¹)) =
+      C (C ((r.factorial : ℚ)⁻¹)) * C (C (((j - r).factorial : ℚ)⁻¹)) := by
+    rw [← map_natCast C, ← map_natCast C, ← map_mul, ← map_mul, ← map_mul, ← map_mul]
+    congr 2
+    have h := Nat.choose_mul_factorial_mul_factorial (show r ≤ j by omega)
+    have h2 : (r.factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero r
+    have h3 : ((j - r).factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero (j - r)
+    have h4 : ((j.choose r : ℕ) : ℚ) ≠ 0 := by
+      exact_mod_cast (Nat.choose_pos (show r ≤ j by omega)).ne'
+    rw [← h]
+    push_cast
+    field_simp
+  calc C (C ((j.factorial : ℚ)⁻¹)) * (u ^ r * v ^ (j - r) * (j.choose r : S))
+      = (((j.choose r : ℕ) : S) * C (C ((j.factorial : ℚ)⁻¹))) * (u ^ r * v ^ (j - r)) := by ring
+    _ = _ := by rw [hc]; ring
+
+/-- `γ_j(c) = c^j / j!` is divided-power integral. -/
+theorem isDPInt_dpow_cA (j : ℕ) : IsDPInt (C (C ((j.factorial : ℚ)⁻¹)) * cA ^ j) := by
+  rw [cA, dpow_add_S]
+  apply isDPInt_sum
+  intro r _
+  apply isDPInt_mul
+  · rw [mul_pow, ← map_pow, ← mul_assoc]
+    exact isDPInt_mul (isDPInt_dpowA r) (isDPInt_C_one_add_X_pow r)
+  · rw [← map_pow, ← map_mul]
+    exact isDPInt_dpowB (j - r)
+
+/-! ### Support of `c^k` -/
+
+theorem cA_pow_succ (k : ℕ) : cA ^ (k + 1) = cA ^ k * X * C (1 + X) + cA ^ k * C X := by
+  rw [pow_succ]; unfold cA; ring
+
+theorem coeff_cA_pow_eq_zero (k : ℕ) : ∀ i s, (k < i ∨ k < s) → ((cA ^ k).coeff i).coeff s = 0 := by
+  induction k with
+  | zero =>
+    intro i s h
+    rw [pow_zero, coeff_one]
+    split_ifs with hi
+    · subst hi
+      rw [coeff_one]
+      split_ifs with hs
+      · omega
+      · rfl
+    · rfl
+  | succ k ih =>
+    intro i s h
+    rw [cA_pow_succ, coeff_add, coeff_mul_C, coeff_mul_C, coeff_add]
+    rcases i with _ | i
+    · rw [coeff_mul_X_zero, zero_mul, coeff_zero, zero_add]
+      rcases s with _ | s
+      · rw [coeff_mul_X_zero]
+      · rw [coeff_mul_X]
+        exact ih 0 s (by omega)
+    · rw [coeff_mul_X, mul_add, mul_one, coeff_add]
+      have h1 : ((cA ^ k).coeff i).coeff s = 0 := ih i s (by omega)
+      have h2 : ((cA ^ k).coeff i * X).coeff s = 0 := by
+        rcases s with _ | s
+        · rw [coeff_mul_X_zero]
+        · rw [coeff_mul_X]; exact ih i s (by omega)
+      have h3 : ((cA ^ k).coeff (i + 1) * X).coeff s = 0 := by
+        rcases s with _ | s
+        · rw [coeff_mul_X_zero]
+        · rw [coeff_mul_X]; exact ih (i + 1) s (by omega)
+      rw [h1, h2, h3]
+      ring
+
+/-! ### High coefficients of `F_M` are divisible by `N` when `M ≥ 2N + 1` -/
+
+theorem κ_eq (j : ℕ) (hj : 1 ≤ j) :
+    κ j = (-1) ^ (j + 1) * ((j - 1).factorial : ℚ) * ((j.factorial : ℚ)⁻¹) := by
+  have h := Nat.mul_factorial_pred (show j ≠ 0 by omega)
+  have h1 : ((j - 1).factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero _
+  have h2 : (j : ℚ) ≠ 0 := by exact_mod_cast (show j ≠ 0 by omega)
+  rw [κ, ← h]
+  push_cast
+  field_simp
+
+theorem FM_eq_sum (M : ℕ) : FM M = ∑ j ∈ Finset.Ico 1 (M + 1),
+    C (C ((-1) ^ (j + 1) * ((j - 1).factorial : ℚ))) *
+      (C (C ((j.factorial : ℚ)⁻¹)) * cA ^ j - C (C ((j.factorial : ℚ)⁻¹)) * X ^ j -
+        C (C ((j.factorial : ℚ)⁻¹) * X ^ j)) := by
+  rw [FM, LM, LM, LM, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro j hj
+  rw [Finset.mem_Ico] at hj
+  rw [κ_eq j hj.1]
+  simp only [map_mul, map_pow]
+  ring
+
+theorem exists_sum_eq_mul (N : ℕ) (t : Finset ℕ) (f : ℕ → ℚ)
+    (h : ∀ j ∈ t, ∃ z : ℤ, f j = N * z) : ∃ z : ℤ, ∑ j ∈ t, f j = N * z := by
+  classical
+  induction t using Finset.induction_on with
+  | empty => exact ⟨0, by simp⟩
+  | insert a t ha ih =>
+    obtain ⟨z1, hz1⟩ := h a (Finset.mem_insert_self a t)
+    obtain ⟨z2, hz2⟩ := ih fun j hj => h j (Finset.mem_insert_of_mem hj)
+    exact ⟨z1 + z2, by rw [Finset.sum_insert ha, hz1, hz2]; push_cast; ring⟩
+
+/-- **Claim 2.** If `M ≥ 2N + 1`, every coefficient of `F_M` in the basis `A^i B^s/(i! s!)` is
+divisible by `N`. -/
+theorem FM_coeff_dvd (N M : ℕ) (hN : 0 < N) (hNM : 2 * N + 1 ≤ M) (i s : ℕ) :
+    ∃ z : ℤ, ((FM M).coeff i).coeff s * (i.factorial : ℚ) * (s.factorial : ℚ) = N * z := by
+  by_cases hlow : i + s ≤ M
+  · exact ⟨0, by rw [coeff_FM_eq_zero M i s hlow]; simp⟩
+  push Not at hlow
+  rw [FM_eq_sum, finsetSum_coeff, finsetSum_coeff, Finset.sum_mul, Finset.sum_mul]
+  apply exists_sum_eq_mul
+  intro j hj
+  rw [Finset.mem_Ico] at hj
+  rw [coeff_C_mul, coeff_C_mul]
+  set G : S := C (C ((j.factorial : ℚ)⁻¹)) * cA ^ j - C (C ((j.factorial : ℚ)⁻¹)) * X ^ j -
+    C (C ((j.factorial : ℚ)⁻¹) * X ^ j) with hG
+  have hGint : IsDPInt G := by
+    rw [hG, sub_eq_add_neg, sub_eq_add_neg]
+    refine isDPInt_add (isDPInt_add (isDPInt_dpow_cA j) (isDPInt_neg (isDPInt_dpowA j)))
+      (isDPInt_neg (isDPInt_dpowB j))
+  obtain ⟨w, hw⟩ := hGint i s
+  by_cases hjN : N + 1 ≤ j
+  · obtain ⟨e, he⟩ := Nat.dvd_factorial hN (show N ≤ j - 1 by omega)
+    refine ⟨(-1) ^ (j + 1) * e * w, ?_⟩
+    rw [show (-1) ^ (j + 1) * ((j - 1).factorial : ℚ) * (G.coeff i).coeff s * (i.factorial : ℚ) *
+        (s.factorial : ℚ) = (-1) ^ (j + 1) * ((j - 1).factorial : ℚ) *
+          ((G.coeff i).coeff s * (i.factorial : ℚ) * (s.factorial : ℚ)) by ring, hw, he]
+    push_cast
+    ring
+  · have h1 : ((C (C ((j.factorial : ℚ)⁻¹)) * cA ^ j : S).coeff i).coeff s = 0 := by
+      rw [coeff_C_mul, coeff_C_mul, coeff_cA_pow_eq_zero j i s (by omega), mul_zero]
+    have h2 : ((C (C ((j.factorial : ℚ)⁻¹)) * X ^ j : S).coeff i).coeff s = 0 := by
+      rw [coeff_C_mul_X_pow]
+      split_ifs with hij
+      · rw [coeff_C]
+        split_ifs with hs0
+        · omega
+        · rfl
+      · rfl
+    have h3 : ((C (C ((j.factorial : ℚ)⁻¹) * X ^ j) : S).coeff i).coeff s = 0 := by
+      rw [coeff_C]
+      split_ifs with hi0
+      · rw [coeff_C_mul_X_pow]
+        split_ifs with hsj
+        · omega
+        · rfl
+      · rfl
+    have hG0 : (G.coeff i).coeff s = 0 := by
+      rw [hG, coeff_sub, coeff_sub, coeff_sub, coeff_sub, h1, h2, h3, sub_zero, sub_zero]
+    exact ⟨0, by rw [hG0]; simp⟩
+
 end PBLogPoly
