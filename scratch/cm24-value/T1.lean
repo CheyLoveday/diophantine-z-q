@@ -357,4 +357,83 @@ theorem invert (a0 a1 : ℝ) (b0 b1 : ℤ) :
   conv_rhs => rw [e0, e1, th2_shift_c]
   ring
 
+
+/-! ## `2W = diag(i√6, i√6/2) + [[2,1],[1,1]]`: translation to a diagonal matrix -/
+
+/-- `τ₆ = i√6`, `τ₃ = i√6/2`: the two CM points of discriminant `−24` (one per ideal class). -/
+def τ6 : ℂ := ⟨0, r6⟩
+def τ3 : ℂ := ⟨0, r6 / 2⟩
+
+theorem τ6_im : 0 < τ6.im := by simp [τ6] <;> exact r6_pos
+theorem τ3_im : 0 < τ3.im := by simp [τ3] <;> exact div_pos r6_pos (by norm_num)
+
+theorem h2wa : 2 * wa = τ6 + 2 := by apply Complex.ext <;> simp [wa, τ6] <;> ring
+theorem h2wb : 2 * wb = 1 := by apply Complex.ext <;> simp [wb]
+theorem h2wc : 2 * wc = τ3 + 1 := by apply Complex.ext <;> simp [wc, τ3] <;> ring
+
+theorem th2_phase {α β γ α' β' γ' : ℂ} {c0 c1 d0 d1 d0' d1' : ℝ} (κ : ℂ)
+    (h : ∀ n : ℤ × ℤ, ∃ k : ℤ,
+      π * I * (α * (((n.1 : ℝ) + c0 : ℝ) : ℂ) ^ 2 + 2 * β * (((n.1 : ℝ) + c0 : ℝ) : ℂ) * (((n.2 : ℝ) + c1 : ℝ) : ℂ)
+        + γ * (((n.2 : ℝ) + c1 : ℝ) : ℂ) ^ 2)
+        + 2 * π * I * ((((n.1 : ℝ) + c0 : ℝ) : ℂ) * d0 + (((n.2 : ℝ) + c1 : ℝ) : ℂ) * d1) =
+      (π * I * (α' * (((n.1 : ℝ) + c0 : ℝ) : ℂ) ^ 2 + 2 * β' * (((n.1 : ℝ) + c0 : ℝ) : ℂ) * (((n.2 : ℝ) + c1 : ℝ) : ℂ)
+        + γ' * (((n.2 : ℝ) + c1 : ℝ) : ℂ) ^ 2)
+        + 2 * π * I * ((((n.1 : ℝ) + c0 : ℝ) : ℂ) * d0' + (((n.2 : ℝ) + c1 : ℝ) : ℂ) * d1'))
+        + κ + k * (2 * π * I)) :
+    Th2 α β γ c0 c1 d0 d1 = cexp κ * Th2 α' β' γ' c0 c1 d0' d1' := by
+  rw [Th2, Th2, ← tsum_mul_left]
+  congr 1; funext n
+  obtain ⟨k, hk⟩ := h n
+  rw [term2, hk, Complex.exp_add, Complex.exp_add, exp_int_mul_two_pi_mul_I, term2]
+  ring
+
+theorem cast_even (n : ℤ) : ∃ t : ℤ, ((n : ℂ) * (n + 1)) = t + t := by
+  obtain ⟨t, ht⟩ := Int.even_mul_succ_self n
+  exact ⟨t, by exact_mod_cast ht⟩
+
+/-- `U(c) = θ[c; 0](2W)` for `c ∈ {0, 1/2}²`. -/
+def U (c0 c1 : ℝ) : ℂ := Th2 (2 * wa) (2 * wb) (2 * wc) c0 c1 0 0
+
+theorem U00 : U 0 0 = th1 τ6 0 0 * th1 τ3 0 (1 / 2) := by
+  rw [U, th2_phase (α' := τ6) (β' := 0) (γ' := τ3) (d0' := 0) (d1' := 1 / 2) 0, th2_diag τ6_im τ3_im]
+  · simp
+  intro n
+  obtain ⟨t, ht⟩ := cast_even (n.2 - 1)
+  refine ⟨n.1 ^ 2 + n.1 * n.2 + t, ?_⟩
+  rw [h2wa, h2wb, h2wc]; push_cast at ht ⊢
+  linear_combination (π * I) * ht
+
+theorem U10 : U (1 / 2) 0 = I * (th1 τ6 (1 / 2) 0 * th1 τ3 0 0) := by
+  rw [U, th2_phase (α' := τ6) (β' := 0) (γ' := τ3) (d0' := 0) (d1' := 0) (π * I / 2),
+    th2_diag τ6_im τ3_im]
+  · congr 1
+    rw [show (π : ℂ) * I / 2 = π / 2 * I by ring, Complex.exp_mul_I]
+    have h1 : Complex.cos (π / 2) = 0 := by exact_mod_cast Real.cos_pi_div_two
+    have h2 : Complex.sin (π / 2) = 1 := by exact_mod_cast Real.sin_pi_div_two
+    rw [h1, h2]; ring
+  intro n
+  obtain ⟨t, ht⟩ := cast_even n.2
+  refine ⟨n.1 ^ 2 + n.1 + n.1 * n.2 + t, ?_⟩
+  rw [h2wa, h2wb, h2wc]; push_cast at ht ⊢
+  linear_combination (π * I) * ht
+
+theorem U01 : U 0 (1 / 2) = cexp (π * I / 4) * (th1 τ6 0 (1 / 2) * th1 τ3 (1 / 2) 0) := by
+  rw [U, th2_phase (α' := τ6) (β' := 0) (γ' := τ3) (d0' := 1 / 2) (d1' := 0) (π * I / 4),
+    th2_diag τ6_im τ3_im]
+  intro n
+  obtain ⟨t, ht⟩ := cast_even n.2
+  refine ⟨n.1 ^ 2 + n.1 * n.2 + t, ?_⟩
+  rw [h2wa, h2wb, h2wc]; push_cast at ht ⊢
+  linear_combination (π * I) * ht
+
+theorem U11 : U (1 / 2) (1 / 2) = 0 := by
+  rw [U, th2_phase (α' := τ6) (β' := 0) (γ' := τ3) (d0' := 1 / 2) (d1' := 1 / 2) (π * I / 4),
+    th2_diag τ6_im τ3_im, th1_odd]
+  · simp
+  intro n
+  obtain ⟨t, ht⟩ := cast_even n.2
+  refine ⟨n.1 ^ 2 + n.1 * n.2 + n.1 + t, ?_⟩
+  rw [h2wa, h2wb, h2wc]; push_cast at ht ⊢
+  linear_combination (π * I) * ht
+
 end CM24
