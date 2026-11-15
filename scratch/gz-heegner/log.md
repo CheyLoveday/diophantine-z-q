@@ -58,3 +58,6 @@ Task: prove `ZInQ.GZHL3.HeegnerPointRational` (gz-hl3) from `T5Glue.ShimuraMainC
    ZInQ.GZHL3.HeegnerPointRational`, axioms [propext, Classical.choice, Quot.sound];
   `#discharges`: `[hL3] by grossZagierHeegner_of_printed` (assumes gz-hl3's 5 other leaves, ShimuraMainCM,
   X0ModuliGaloisMero); `[hX] by x0ModuliGalois_of_mero`. Contributor file 137 KB.
+- `HeegnerCd.lean`: `heegnerPointRationalCd_of_printed`, `grossZagierHeegnerCd_of_printed` (VERIFIED, compiled).
+- Report written: docs/research/gz-heegner.md. Main.lean uses `hX` once (`shimuraReciprocityModFn_of_printed hCM hX`,
+  line 67, VERIFIED read) → `(x0ModuliGalois_of_mero hX)` after the binder change.
