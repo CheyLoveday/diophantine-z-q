@@ -147,11 +147,11 @@ theorem exists_root_near [IsAlgClosed Ω] (q : w[X]) (hq : q.Monic) (c : w)
       exact_mod_cast Nat.succ_ne_zero n
     obtain ⟨β, hβ⟩ := IsAlgClosed.exists_root (q.map (algebraMap w Ω)) hdeg
     have hβw : β ∈ w := mem_of_isIntegral w (A := w) (fun a => a.2)
-      ⟨q, hq, by rwa [IsRoot, eval_map] at hβ⟩
+      ⟨q, hq, by rwa [IsRoot, Polynomial.eval_map] at hβ⟩
     let β' : w := ⟨β, hβw⟩
     have hr : q.IsRoot β' := by
       apply Subtype.ext
-      rw [IsRoot, eval_map] at hβ
+      rw [IsRoot, Polynomial.eval_map] at hβ
       have : algebraMap w Ω (q.eval β') = q.eval₂ (algebraMap w Ω) β := by
         rw [← eval₂_at_apply]; rfl
       exact this.trans hβ
@@ -230,7 +230,7 @@ theorem mem_inertiaField_of_simple_root (g : (wE (K := K) w)[X]) (α : Ω)
     · exact (hM₀ _ (Finset.mem_image_of_mem _ hi)).2 τ hτ₀
     · rw [notMem_support_iff.mp hi, map_zero, map_zero]
   have hτα : (g.map (ιΩ w)).eval (τ α) = 0 := by
-    rw [← hcoef, eval_map]
+    rw [← hcoef, Polynomial.eval_map]
     change eval₂ (τ : Ω →+* Ω) ((τ : Ω →+* Ω) α) _ = 0
     rw [eval₂_at_apply, hα, map_zero]
   have hτw : τ α - α ∈ w.nonunits := hτ α hαM hαw
@@ -245,7 +245,7 @@ theorem mem_inertiaField_of_simple_root (g : (wE (K := K) w)[X]) (α : Ω)
     apply Subtype.ext
     have e : g.map (ιΩ w) = gw.map (algebraMap w Ω) := by
       rw [Polynomial.map_map]; rfl
-    rw [e, eval_map] at h
+    rw [e, Polynomial.eval_map] at h
     change algebraMap w Ω (gw.eval ⟨x, hx⟩) = algebraMap w Ω 0
     rw [← eval₂_at_apply, map_zero]
     exact h
@@ -276,12 +276,12 @@ theorem henselian_wE : HenselianLocalRing (wE (K := K) w) where
     let q := f.map (ιw w)
     have hq : q.Monic := hf.map _
     have hc : q.eval (ιw w a₀) ∈ maximalIdeal w := by
-      rw [eval_map, eval₂_at_apply, mem_max_iff, ιw_coe]
+      rw [Polynomial.eval_map, eval₂_at_apply, mem_max_iff, ιw_coe]
       exact (mem_max_comap_iff w _ _).mp h₁
     haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed K
     obtain ⟨α, hα, hαc⟩ := exists_root_near w q hq _ hc
     have hroot : (f.map (ιΩ w)).eval (α : Ω) = 0 := by
-      rw [map_ιΩ_eq, eval_map]
+      rw [map_ιΩ_eq, Polynomial.eval_map]
       change eval₂ (algebraMap w Ω) (algebraMap w Ω α) q = 0
       rw [eval₂_at_apply, hα.eq_zero, map_zero]
     have hres : residue w α = residue w (ιw w a₀) := by
@@ -289,7 +289,7 @@ theorem henselian_wE : HenselianLocalRing (wE (K := K) w) where
     have hsimple : ((f.map ((residue w).comp (ιw w))).derivative).eval
         (residue w ⟨(α : Ω), α.2⟩) ≠ 0 := by
       have e : (⟨(α : Ω), α.2⟩ : w) = α := rfl
-      rw [e, hres, derivative_map, eval_map]
+      rw [e, hres, derivative_map, Polynomial.eval_map]
       change eval₂ ((residue w).comp (ιw w)) (((residue w).comp (ιw w)) a₀) _ ≠ 0
       rw [eval₂_at_apply, RingHom.comp_apply, residue_ne_zero_iff_isUnit]
       exact h₂.map _
@@ -297,7 +297,7 @@ theorem henselian_wE : HenselianLocalRing (wE (K := K) w) where
     let a : wE (K := K) w := ⟨⟨α, hαE⟩, by exact α.2⟩
     refine ⟨a, ?_, ?_⟩
     · have h0 : ιΩ w (f.eval a) = 0 := by
-        rw [← eval₂_at_apply, ← eval_map]; exact hroot
+        rw [← eval₂_at_apply, ← Polynomial.eval_map]; exact hroot
       apply Subtype.ext
       apply (algebraMap (inertiaField (K := K) w) Ω).injective
       change ιΩ w _ = algebraMap _ Ω 0
@@ -321,7 +321,7 @@ theorem isSepClosed_wE : IsSepClosed (ResidueField (wE (K := K) w)) := by
   have hαw : α ∈ w := by
     letI : Algebra (wE (K := K) w) Ω := (ιΩ w).toAlgebra
     exact mem_of_isIntegral w (A := wE (K := K) w) (fun a => a.2)
-      ⟨g, hgm, by rwa [IsRoot, eval_map] at hα⟩
+      ⟨g, hgm, by rwa [IsRoot, Polynomial.eval_map] at hα⟩
   -- the residue polynomial
   let κm := ResidueField.map (ιw (K := K) w)
   have hgw : g.map ((residue w).comp (ιw w)) = p.map κm := by
@@ -329,28 +329,28 @@ theorem isSepClosed_wE : IsSepClosed (ResidueField (wE (K := K) w)) := by
   have hgw0 : (g.map (ιw w)).eval ⟨α, hαw⟩ = 0 := by
     apply Subtype.ext
     change algebraMap w Ω _ = algebraMap w Ω 0
-    rw [map_zero, ← eval₂_at_apply, ← eval_map, ← map_ιΩ_eq]
+    rw [map_zero, ← eval₂_at_apply, ← Polynomial.eval_map, ← map_ιΩ_eq]
     exact hα
   have hroot' : (p.map κm).eval (residue w ⟨α, hαw⟩) = 0 := by
-    rw [← hgw, ← Polynomial.map_map, eval_map, eval₂_at_apply, hgw0, map_zero]
+    rw [← hgw, ← Polynomial.map_map, Polynomial.eval_map, eval₂_at_apply, hgw0, map_zero]
   have hsimple : ((g.map ((residue w).comp (ιw w))).derivative).eval
       (residue w ⟨α, hαw⟩) ≠ 0 := by
     rw [hgw]
     have := (hpsep.map (f := κm)).eval₂_derivative_ne_zero (RingHom.id _) (x := residue w ⟨α, hαw⟩)
-      (by rw [← eval]; exact hroot')
+      (by rw [← Polynomial.eval]; exact hroot')
     exact this
   have hαE := mem_inertiaField_of_simple_root w g α hα hαw hsimple
   let a : wE (K := K) w := ⟨⟨α, hαE⟩, by exact hαw⟩
   refine ⟨residue _ a, ?_⟩
   have h0 : ιΩ w (g.eval a) = 0 := by
-    rw [← eval₂_at_apply, ← eval_map]; exact hα
+    rw [← eval₂_at_apply, ← Polynomial.eval_map]; exact hα
   have h1 : g.eval a = 0 := by
     apply Subtype.ext
     apply (algebraMap (inertiaField (K := K) w) Ω).injective
     change ιΩ w _ = algebraMap _ Ω 0
     rw [map_zero]
     exact h0
-  rw [← hgp, eval_map, eval₂_at_apply, h1, map_zero]
+  rw [← hgp, Polynomial.eval_map, eval₂_at_apply, h1, map_zero]
 
 end Ring
 
@@ -461,11 +461,11 @@ theorem irreducible_comapHom (hw : w.comap (algebraMap K Ω) = O) (ϖ : O) (hϖ 
   obtain ⟨n, u, hu⟩ := assoc_pow w hw ϖ hϖ ha0
   obtain ⟨m, u', hu'⟩ := assoc_pow w hw ϖ hϖ hb0
   rcases n with _ | n
-  · exact hau (by rw [← hu, pow_zero, one_mul]; exact u.isUnit)
+  · exact hau (by rw [← hu, pow_zero, _root_.one_mul]; exact u.isUnit)
   rcases m with _ | m
-  · exact hbu (by rw [← hu', pow_zero, one_mul]; exact u'.isUnit)
+  · exact hbu (by rw [← hu', pow_zero, _root_.one_mul]; exact u'.isUnit)
   have key : π * 1 = π * (π * (π ^ (n + m) * ((u : wE (K := K) w) * u'))) := by
-    rw [mul_one]
+    rw [_root_.mul_one]
     conv_lhs => rw [hab, ← hu, ← hu']
     ring
   have := mul_left_cancel₀ hπ0 key
@@ -507,7 +507,7 @@ theorem res_isAlgebraic {K E : Type} [Field K] [Field E] [Algebra K E] [Algebra.
     · refine ⟨⟨_, O.mem_of_valuation_le_one _ ?_⟩, rfl⟩
       show O.valuation (c⁻¹ * p.coeff i) ≤ 1
       rw [map_mul, map_inv₀]
-      rw [inv_mul_le_iff₀ (zero_lt_iff.mpr hvc0), mul_one]
+      rw [inv_mul_le_iff₀ (zero_lt_iff.mpr hvc0), _root_.mul_one]
       exact hmax i hi
     · rw [notMem_support_iff.mp hi, mul_zero]; exact ⟨0, map_zero _⟩
   obtain ⟨qO, hqO⟩ := (mem_lifts q).mp ((lifts_iff_coeff_lifts q).mpr hq)

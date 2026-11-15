@@ -303,7 +303,7 @@ theorem key_finite [PerfectField (ResidueField A)]
   have he𝔮 : 𝔮.ramificationIdx A = 1 := by
     rw [← he2, ← hcard', hcardH, ← he1, ← hcard] at htower
     have hc : 0 < Nat.card H := Nat.card_pos
-    exact Nat.eq_of_mul_eq_mul_right hc (by rw [one_mul]; exact htower.symm)
+    exact Nat.eq_of_mul_eq_mul_right hc (by rw [_root_.one_mul]; exact htower.symm)
   -- `p𝓞_E = 𝔮 · J` with `J ⊄ 𝔮`
   have hpspan : p = Ideal.span {ϖ} := (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).mp hϖ
   have hRinj : Function.Injective (algebraMap A R) := by
@@ -367,15 +367,15 @@ theorem key_finite [PerfectField (ResidueField A)]
       rw [hy', map_div₀]
       field_simp
       ring
-    rw [key, map_div₀, map_mul, vσs, vs, mul_one, div_one]
+    rw [key, map_div₀, map_mul, vσs, vs, _root_.mul_one, div_one]
     have haW : W.valuation (a : M) ≤ 1 := (W.valuation_le_one_iff _).mpr (hSW a)
     rw [sub_eq_add_neg]
     apply Valuation.map_add_lt _
-    · rw [map_mul, vs, mul_one]; exact ha
+    · rw [map_mul, vs, _root_.mul_one]; exact ha
     · rw [Valuation.map_neg, map_mul]
       calc W.valuation (a : M) * W.valuation (σ (s : M) - s)
           ≤ 1 * W.valuation (σ (s : M) - s) := by gcongr
-        _ < 1 := by rw [one_mul]; exact hs'
+        _ < 1 := by rw [_root_.one_mul]; exact hs'
   have hxE : x ∈ E := by
     intro h
     exact hfix h (hcond h h.2)
