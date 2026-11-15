@@ -929,3 +929,222 @@ def ShimuraFamilyAb : Prop :=
     ∀ π : ToP1 Y.left, HSyn.G0Split.FibreQM.R1bFamily Y Φ π
 
 end HDec.QMSplit.Moduli
+
+/-! # Part B (new): Shimura's Main Theorem I with its reciprocity law, in Deligne's adelic form
+
+All objects below are Mathlib's (finite adeles, ideles, quaternion algebras, schemes) or Tau Ceti's
+(`ideleClassArtinMap`, `finiteAdeleBaseChangeAlgEquiv`), vendored in `ZInQKernel/Contrib/TauCeti/`. -/
+
+noncomputable section
+
+namespace ShimuraCFT
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV NumberField IsDedekindDomain
+open scoped TensorProduct FiniteAdeleExtension
+
+/-! ## B1. `𝔸_f`, `B ⊗ 𝔸_f`, `𝒪̂` and the level group `K₃`
+
+`𝔸_f = FiniteAdeleRing (𝓞 ℚ) ℚ`: Mathlib's finite adeles of the number field `ℚ` (the base of Tau
+Ceti's base change `𝔸_{ℚ,f} ⊗_ℚ K ≅ 𝔸_{K,f}`). The kernel's `ShimuraGlue.Af = FiniteAdeleRing ℤ ℚ` is
+the same ring with `ℤ` in place of `𝓞 ℚ`; the definitions of `𝒪̂` and `K₃` below are the kernel's
+(`ShimuraGlue.Ohat`, `ShimuraGlue.K3`) with that one change. -/
+
+/-- The finite adeles `𝔸_f` of `ℚ`. -/
+abbrev AQ : Type := FiniteAdeleRing (𝓞 ℚ) ℚ
+
+/-- `B ⊗_ℚ 𝔸_f` for `B = (2, −3 | ℚ)`. -/
+abbrev BAQ : Type := ShimuraGlue.BR AQ
+
+/-- `ℤ̂ ⊆ 𝔸_f`: the adeles integral at every finite place. -/
+def ZhatQ : Set AQ := {a | ∀ v : HeightOneSpectrum (𝓞 ℚ), a v ∈ v.adicCompletionIntegers ℚ}
+
+/-- `𝒪̂ = 𝒪 ⊗ ℤ̂ ⊆ B ⊗ 𝔸_f`: the `ℤ̂`-span of the basis `1, i, (1+j)/2, (i+k)/2` of the kernel's `𝒪`
+(`ShimuraGlue.ofQ`). -/
+def OhatQ : Set BAQ := {x | ∃ n : Fin 4 → AQ, (∀ i, n i ∈ ZhatQ) ∧ x = ShimuraGlue.ofQ n}
+
+/-- **`K₃ = {k ∈ 𝒪̂^× : k ≡ 1 mod 3𝒪̂}`**, the level of `Y₃` (as in the kernel's `ShimuraGlue.K3`). -/
+def K3Q : Set BAQˣ :=
+  {k | (k : BAQ) ∈ OhatQ ∧ ((k⁻¹ : BAQˣ) : BAQ) ∈ OhatQ ∧ ∃ y ∈ OhatQ, (k : BAQ) = 1 + 3 * y}
+
+/-- The embedding `B → B ⊗ 𝔸_f`, coordinatewise. -/
+def bEmb : LeafQM.B →ₐ[ℚ] BAQ where
+  toFun x := ⟨algebraMap ℚ AQ x.re, algebraMap ℚ AQ x.imI, algebraMap ℚ AQ x.imJ,
+    algebraMap ℚ AQ x.imK⟩
+  map_one' := by ext <;> simp
+  map_mul' x y := by
+    ext <;> simp only [QuaternionAlgebra.re_mul, QuaternionAlgebra.imI_mul,
+      QuaternionAlgebra.imJ_mul, QuaternionAlgebra.imK_mul, map_add, map_sub, map_mul, map_neg,
+      map_ofNat, map_zero] <;> ring
+  map_zero' := by ext <;> simp
+  map_add' x y := by ext <;> simp
+  commutes' r := by
+    show (⟨_, _, _, _⟩ : BAQ) = ⟨algebraMap ℚ AQ r, 0, 0, 0⟩
+    apply QuaternionAlgebra.ext <;> simp
+
+/-! ## B2. The embedding `q̂ : 𝔸_{K,f} → B ⊗ 𝔸_f` of an embedding `q : K → B` -/
+
+variable {K : Type} [Field K] [NumberField K]
+
+/-- `𝔸_f ⊗_ℚ K → B ⊗ 𝔸_f`, `a ⊗ k ↦ a · q(k)`. -/
+def qT (q : K →ₐ[ℚ] LeafQM.B) : AQ ⊗[ℚ] K →ₐ[AQ] BAQ :=
+  Algebra.TensorProduct.lift (Algebra.ofId AQ BAQ) (bEmb.comp q)
+    (fun a k => by
+      show algebraMap AQ BAQ a * _ = _ * algebraMap AQ BAQ a
+      exact Algebra.commutes a _)
+
+/-- **`q̂ : 𝔸_{K,f} → B ⊗ 𝔸_f`**, the extension of `q` to finite adeles, through Tau Ceti's base
+change `𝔸_{ℚ,f} ⊗_ℚ K ≅ 𝔸_{K,f}`. -/
+def qHat (q : K →ₐ[ℚ] LeafQM.B) : FiniteAdeleRing (𝓞 K) K →+* BAQ :=
+  (qT q).toRingHom.comp
+    (TauCeti.GlobalNumberFields.finiteAdeleBaseChangeAlgEquiv ℚ K).symm.toRingEquiv.toRingHom
+
+/-- `s ↦ q̂(s_f)`, ideles of `K` to `(B ⊗ 𝔸_f)^×`. -/
+def qHatU (q : K →ₐ[ℚ] LeafQM.B) : IdeleGroup (𝓞 K) K →* BAQˣ :=
+  (Units.map (qHat q).toMonoidHom).comp (IdeleGroup.toFiniteIdele (𝓞 K) K)
+
+/-! ## B3. The Artin symbol on `Aut(ℂ)`, the Galois action on `ℂ`-points, CM points -/
+
+/-- **`σ = [s, K]` on `K^ab`** for `K ⊂ ℂ` through `κ`: for every finite abelian extension `L/K` and
+every `K`-embedding `j : L → ℂ`, `σ ∘ j = j ∘ art_K(s)`, with `art_K = ideleClassArtinMap K L` Tau
+Ceti's global Artin map `C_K → Gal(L/K)` (uniformizers ↦ arithmetic Frobenius). -/
+def ArtinCondC (κ : K →+* ℂ) (σ : ℂ ≃+* ℂ) (s : IdeleGroup (𝓞 K) K) : Prop :=
+  ∀ (L : Type) [Field L] [NumberField L] [Algebra K L] [IsAbelianGalois K L] (j : L →+* ℂ),
+    j.comp (algebraMap K L) = κ → ∀ x : L,
+      σ (j x) = j (TauCeti.ClassFieldTheory.ideleClassArtinMap K L (QuotientGroup.mk s) x)
+
+/-- The action of `σ ∈ Aut(ℂ)` on `ℂ`-points of a `ℚ`-scheme: `y ↦ y ∘ Spec σ` (on coordinates,
+`σ` applied to the values of regular functions). -/
+def galPt {Y : Over (Spec (CommRingCat.of ℚ))} (σ : ℂ ≃+* ℂ) (y : fieldPt ℂ ⟶ Y) : fieldPt ℂ ⟶ Y :=
+  fieldMap (σ : ℂ →+* ℂ).toRatAlgHom ≫ y
+
+/-- **`z ∈ ℍ` is the CM point of `q : K → B` with reflex embedding `κ`**: `q(K^×)` fixes `z` and acts
+on `(z, 1)ᵀ` through `κ`: `ι(q(a))·(z, 1)ᵀ = κ(a)·(z, 1)ᵀ` (`ι = BPAnalytic.QM.iota : B → M₂(ℝ)`). -/
+def IsCMPoint (q : K →ₐ[ℚ] LeafQM.B) (κ : K →+* ℂ) (z : UpperHalfPlane) : Prop :=
+  ∀ a : K, Matrix.mulVec ((BPAnalytic.QM.iota (q a)).map (algebraMap ℝ ℂ)) ![(z : ℂ), 1] =
+    κ a • ![(z : ℂ), 1]
+
+/-- `B^×_+ ∋ γ` acting on `ℍ` and on `G(𝔸_f)`: the relation `(τ', g') = (γτ, γ g k)` with
+`γ ∈ B`, `nrd γ > 0`, `k ∈ K₃` (`γ` acts on `ℍ` through `ι(γ) ∈ GL₂(ℝ)⁺`). -/
+def DCRel (τ : UpperHalfPlane) (g : BAQˣ) (τ' : UpperHalfPlane) (g' : BAQˣ) : Prop :=
+  ∃ γ : LeafQM.B, 0 < ShimuraGlue.nrdQ ℚ γ ∧
+    (∃ M : GL (Fin 2) ℝ, (M : Matrix (Fin 2) (Fin 2) ℝ) = BPAnalytic.QM.iota γ ∧ M • τ = τ') ∧
+    ∃ k ∈ K3Q, (g' : BAQ) = bEmb γ * (g : BAQ) * (k : BAQ)
+
+end ShimuraCFT
+
+/-! ## B4. The leaf: Shimura's Main Theorem I (canonical model of `Γ(3)\ℍ`, reciprocity included) in
+Deligne's adelic form, on the moduli scheme `Y₃` -/
+
+noncomputable section
+
+namespace ShimuraCFT
+
+open CategoryTheory AlgebraicGeometry Limits
+open LeafQM LeafQM.AV NumberField IsDedekindDomain
+
+/-- **The canonical-model clauses of Shimura's Main Theorem I for `Sh_{K₃}(B^×, ℍ^±)` on a
+`ℚ`-scheme `Y` with moduli bijections `Φ`** (Deligne's adelic form), with a map
+`Ψ : ℍ × (B ⊗ 𝔸_f)^× → Y(ℂ)`:
+
+1. *(uniformization)* `Ψ` induces a bijection `B^×_+ \ (ℍ × (B ⊗ 𝔸_f)^×) / K₃ ≃ Y(ℂ)`: it is onto,
+   and `Ψ(τ, g) = Ψ(τ', g')` iff `(τ', g') = (γτ, γ g k)` with `γ ∈ B^×`, `nrd γ > 0`, `k ∈ K₃`;
+2. *(complex structure)* `τ ↦ Ψ(τ, g)` is holomorphic for every `g` (`ShimuraSplit.IsHolFamily`);
+3. *(moduli interpretation, at `g = 1`)* the object at `Ψ(τ, 1)` is `ℂ²/ι(𝒪)(τ, 1)ᵀ` with its `ι`
+   (and `τ ↦ Ψ(τ, 1)` holomorphic): `IsShimuraHolFamily Y Φ (Ψ · 1)` (shimura-split's clause, verbatim);
+4. *(Shimura's reciprocity law at CM points)* for every imaginary quadratic `K`, `κ : K → ℂ`,
+   `q : K → B` with CM point `z ∈ ℍ` (`IsCMPoint`, reflex embedding `κ`, or its conjugate when
+   `δ = false`), every idele `s` of `K` and every `σ ∈ Aut(ℂ)` with `σ = [s, K]` on `K^ab`
+   (`ArtinCondC`, Tau Ceti's Artin map): `σ(Ψ(z, g)) = Ψ(z, q̂(s_f)^ε g)` for all `g`.
+   The signs `ε = ±1`, `δ` are existential: they absorb the conventions (Deligne 1971 versus 1979
+   normalization of the reciprocity map, `z` versus `z̄` in `h_z`, left versus right Galois action
+   on points), which change the printed law only by `s ↦ s⁻¹` or `s ↦ s̄`. -/
+def ShimuraDeligneBody (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) : Prop :=
+  ∃ Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y),
+    (∀ y : fieldPt ℂ ⟶ Y, ∃ τ g, Ψ τ g = y) ∧
+    (∀ τ g τ' g', Ψ τ g = Ψ τ' g' ↔ DCRel τ g τ' g') ∧
+    (∀ g, ShimuraSplit.IsHolFamily (X := Y.left) (fun τ => (Ψ τ g).left)) ∧
+    HDec.HSyn.G0Split.FibreQM.IsShimuraHolFamily Y Φ (fun τ => Ψ τ 1) ∧
+    ∃ (ε : ℤˣ) (δ : Bool),
+      ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 →
+      ∀ (κ : K →+* ℂ) (q : K →ₐ[ℚ] LeafQM.B) (z : UpperHalfPlane),
+        IsCMPoint q (if δ then κ else (starRingEnd ℂ).comp κ) z →
+      ∀ (σ : ℂ ≃+* ℂ) (s : IdeleGroup (𝓞 K) K), ArtinCondC κ σ s →
+      ∀ g : BAQˣ, galPt σ (Ψ z g) = Ψ z (qHatU q s ^ (ε : ℤ) * g)
+
+/-- **LEAF `ShimuraMainThmIDeligneY3Ab`** (Shimura's Main Theorem I for `Γ(3)`, printed form with its
+reciprocity law, in Deligne's adelic reformulation, on the fine moduli scheme `Y₃` of QM abelian
+surfaces with level-3 structure; abelian-scheme form of the moduli clause).
+
+*Published statements* (locators recalled, UNVERIFIED; no network):
+* G. Shimura, *Construction of class fields and zeta functions of algebraic curves*, Ann. of Math. 85
+  (1967), 58-159, Main Theorem I (existence of the canonical system `(V_S, φ_S)` over `k_S`, with the
+  reciprocity law at CM points) and §§2-3 (for `F = ℚ`, `V_S` from the moduli of QM abelian surfaces,
+  `φ_S(τ)` the moduli point of `ℂ²/ι(𝒪)(τ,1)ᵀ`);
+* P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971), §§3-4: Shimura's systems of models over
+  the `k_S` are the same as one canonical model `M_K` of `G(ℚ)\(X × G(𝔸_f))/K` over the reflex field
+  `E = ℚ`, characterized by `σ[h, g] = [h, r(s) g]` at special points (`σ = art_E(s)`), and for
+  quaternion algebras over `ℚ` this model is the moduli scheme (§4); also Milne, *Introduction to
+  Shimura varieties* (2005), §§12-14.
+
+*Lean form*: some `(Y, Φ)` with `R1fpPropsAb` (the fine moduli scheme `Y₃` over `ℚ`; r1univ-rigid's
+abelian-scheme clause list) satisfies `ShimuraDeligneBody`. `Y₃ = Sh_{K₃}(B^×, ℍ^±)` over `ℚ`: its
+two geometric components are Shimura's `V_S` and `V_S^σ` over `k_S = ℚ(ζ₃)` (the comparison is clause 1
+with `π₀ = ℚ^×_{>0}\𝔸_f^×/nrd K₃ = (ℤ/3)^×`), so no model over `ℚ(ζ₃)` has to be named.
+
+*Form*: a consequence of the print, not stronger: the reciprocity law is stated at every CM point and
+every idele, with the conventions made existential (`ε`, `δ`); `ℍ` with `B^×_+` replaces
+`ℍ^± = ℂ \ ℝ` with `B^×` (an element of negative norm swaps the half planes); the biholomorphism of
+clause 1 is weakened to "bijective, holomorphic in `τ`"; the moduli clause is kept at `g = 1` only;
+the field-of-moduli clause (`k_S(φ_S(z))` is a class field) is dropped (it follows from 1 and 4). -/
+def ShimuraMainThmIDeligneY3Ab : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ ShimuraDeligneBody Y Φ
+
+/-- The same leaf with the kernel's clause list `R1fpProps` (families without group law); equivalent
+to `ShimuraMainThmIDeligneY3Ab` under Mumford's rigidity (`mainThmI_iff_ab`). -/
+def ShimuraMainThmIDeligneY3 : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), R1fpProps Y Φ ∧ ShimuraDeligneBody Y Φ
+
+/-! ## B5. The fields from the leaf -/
+
+/-- The family `τ ↦ Ψ(τ, 1)` is shimura-split's holomorphic family. -/
+theorem isShimuraHolFamily_of_body {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    (h : ShimuraDeligneBody Y Φ) :
+    ∃ yτ : UpperHalfPlane → (fieldPt ℂ ⟶ Y), HDec.HSyn.G0Split.FibreQM.IsShimuraHolFamily Y Φ yτ := by
+  obtain ⟨Ψ, -, -, -, hmod, -⟩ := h
+  exact ⟨fun τ => Ψ τ 1, hmod⟩
+
+/-- **`shimuraFamilyAb` (route-a-fold's field) from the printed leaf.** -/
+theorem shimuraFamilyAb_of_mainThmI (h : ShimuraMainThmIDeligneY3Ab) :
+    HDec.QMSplit.Moduli.ShimuraFamilyAb := by
+  obtain ⟨Y, Φ, h1, hb⟩ := h
+  obtain ⟨yτ, hy⟩ := isShimuraHolFamily_of_body hb
+  exact ⟨Y, Φ, h1, fun π => ⟨yτ, HDec.HSyn.G0Split.FibreQM.isR1bFamily_of_hol hy π⟩⟩
+
+/-- **`shimuraFamily` (the kernel's field) from the leaf in `R1fpProps` form.** -/
+theorem shimuraFamily_of_mainThmI (h : ShimuraMainThmIDeligneY3) :
+    HDec.QMSplit.Moduli.ShimuraFamily := by
+  obtain ⟨Y, Φ, h1, hb⟩ := h
+  obtain ⟨yτ, hy⟩ := isShimuraHolFamily_of_body hb
+  exact HDec.QMSplit.Moduli.shimuraFamily_of_hol ⟨Y, Φ, h1, yτ, hy⟩
+
+/-- The two forms of the leaf agree under Mumford's rigidity (`MumfordRigidityCore`, r1univ-rigid). -/
+theorem mainThmI_iff_ab (hC : LeafQM.AV.R1UnivRigid.MumfordRigidityCore) :
+    ShimuraMainThmIDeligneY3 ↔ ShimuraMainThmIDeligneY3Ab := by
+  constructor
+  · rintro ⟨Y, Φ, h1, hb⟩
+    exact ⟨Y, Φ, (LeafQM.AV.R1UnivRigid.r1fpProps_iff_ab_core hC Y Φ).1 h1, hb⟩
+  · rintro ⟨Y, Φ, h1, hb⟩
+    exact ⟨Y, Φ, (LeafQM.AV.R1UnivRigid.r1fpProps_iff_ab_core hC Y Φ).2 h1, hb⟩
+
+/-- **`shimuraFamily` from the printed (abelian-scheme) leaf and Mumford's rigidity.** -/
+theorem shimuraFamily_of_mainThmIAb (hC : LeafQM.AV.R1UnivRigid.MumfordRigidityCore)
+    (h : ShimuraMainThmIDeligneY3Ab) : HDec.QMSplit.Moduli.ShimuraFamily :=
+  shimuraFamily_of_mainThmI ((mainThmI_iff_ab hC).2 h)
+
+end ShimuraCFT
+
+#print axioms ShimuraCFT.shimuraFamilyAb_of_mainThmI
+#print axioms ShimuraCFT.shimuraFamily_of_mainThmI
+#print axioms ShimuraCFT.shimuraFamily_of_mainThmIAb

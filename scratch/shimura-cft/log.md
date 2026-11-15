@@ -7,3 +7,14 @@ check with `scratch/shimura-cft/run.sh <file>` (= `lake env lean`).
 - `ShimuraCFT.lean` Part A = R1UnivLeaves.lean lines 10-564 (R1UnivRigid core) + c-to-printed Shimura.lean
   (minus import) + `ShimuraFamilyAb` def. Imports TailZ12 + R1UnivLeaves' imports + Tau Ceti
   `Global.Reciprocity`, `Adeles.FiniteBaseChange`. COMPILED 13 s, 8.6 GB, 3 axiom lines standard. VERIFIED.
+
+## Step 2 (11-14 17:30): printed leaf stated, fields proved — COMPILED (11 s, 8.6 GB), axioms standard. VERIFIED
+- Defs (ShimuraCFT): `AQ = FiniteAdeleRing (𝓞 ℚ) ℚ`, `BAQ = (2,−3 | AQ)`, `ZhatQ`, `OhatQ`, `K3Q` (kernel's
+  `ShimuraGlue.K3` with 𝓞 ℚ for ℤ), `bEmb : B →ₐ[ℚ] BAQ`, `qT`, `qHat : 𝔸_{K,f} →+* BAQ` via Tau Ceti
+  `finiteAdeleBaseChangeAlgEquiv ℚ K`, `qHatU : 𝕀_K →* BAQˣ`, `ArtinCondC κ σ s` (Tau Ceti
+  `ideleClassArtinMap K L` on every finite abelian `L` with `K`-embedding into ℂ), `galPt`, `IsCMPoint`, `DCRel`.
+- `ShimuraDeligneBody Y Φ`: Ψ : ℍ → BAQˣ → Y(ℂ) onto, fibres = DCRel (B^×_+ \ ℍ×G(𝔸_f) / K₃), holomorphic in τ,
+  moduli at g=1 (IsShimuraHolFamily verbatim), reciprocity σΨ(z,g)=Ψ(z, q̂(s_f)^ε g) (ε, δ existential).
+- LEAF `ShimuraMainThmIDeligneY3Ab` (R1fpPropsAb) and `ShimuraMainThmIDeligneY3` (R1fpProps).
+- `shimuraFamilyAb_of_mainThmI`, `shimuraFamily_of_mainThmI`, `mainThmI_iff_ab` (MumfordRigidityCore),
+  `shimuraFamily_of_mainThmIAb`.
