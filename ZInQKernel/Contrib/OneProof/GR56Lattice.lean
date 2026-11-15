@@ -1063,6 +1063,178 @@ theorem card_cmSet_le (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
   obtain ⟨F, hF⟩ := exists_injective_optEmb hU hG hM k hk R hR hc
   exact ⟨Finite.of_injective F hF, Nat.card_le_card_of_injective F hF⟩
 
+/-! ## §8f Surjectivity of the CM-point map from the two existence leaves -/
+
+/-- The unit `1 + i` of `𝒪` (reduced norm `−1`). -/
+def uI : (↥LeafQM.O)ˣ :=
+  ⟨⟨LeafQM.ofInt ![1, 1, 0, 0], ![1, 1, 0, 0], rfl⟩, ⟨LeafQM.ofInt ![-1, 1, 0, 0], ![-1, 1, 0, 0], rfl⟩,
+    Subtype.ext GRCountX6.one_add_i_mem_units.1, Subtype.ext GRCountX6.one_add_i_mem_units.2.1⟩
+
+section ConjEmb
+
+variable {k : Type} [Field k] [NumberField k] {R : Subring k}
+
+/-- Conjugation by a unit of `𝒪` as a `ℚ`-algebra map of `B`. -/
+def conjAlg (u : (↥LeafQM.O)ˣ) : B →ₐ[ℚ] B where
+  toFun x := ((u : LeafQM.O) : B) * x * (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B)
+  map_one' := by simp only [mul_one]; exact GRCountX6.unit_mul_inv u
+  map_mul' x y := by
+    have hUiU := GRCountX6.unit_inv_mul u
+    calc ((u : LeafQM.O) : B) * (x * y) * (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B)
+        = ((u : LeafQM.O) : B) * x * ((((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) * ((u : LeafQM.O) : B)) * y *
+            (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) := by rw [hUiU, mul_one]; noncomm_ring
+      _ = _ := by noncomm_ring
+  map_zero' := by simp only [mul_zero, zero_mul]
+  map_add' x y := by simp only [mul_add, add_mul]
+  commutes' r := by
+    show ((u : LeafQM.O) : B) * algebraMap ℚ B r * (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) = algebraMap ℚ B r
+    rw [← Algebra.commutes r ((u : LeafQM.O) : B), mul_assoc, GRCountX6.unit_mul_inv u, mul_one]
+
+theorem conjAlg_apply (u : (↥LeafQM.O)ˣ) (x : B) :
+    conjAlg u x = ((u : LeafQM.O) : B) * x * (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) := rfl
+
+theorem conjAlg_mem (u : (↥LeafQM.O)ˣ) (x : B) : conjAlg u x ∈ LeafQM.O ↔ x ∈ LeafQM.O := by
+  rw [conjAlg_apply]
+  have hUiU := GRCountX6.unit_inv_mul u
+  constructor
+  · intro h
+    have : x = (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) *
+        (((u : LeafQM.O) : B) * x * (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B)) * ((u : LeafQM.O) : B) := by
+      calc x = ((((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) * ((u : LeafQM.O) : B)) * x *
+            ((((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) * ((u : LeafQM.O) : B)) := by
+            rw [hUiU, one_mul, mul_one]
+        _ = _ := by noncomm_ring
+    rw [this]
+    exact LeafQM.O.mul_mem (LeafQM.O.mul_mem (u⁻¹ : (↥LeafQM.O)ˣ).1.2 h) u.1.2
+  · intro h
+    exact LeafQM.O.mul_mem (LeafQM.O.mul_mem u.1.2 h) (u⁻¹ : (↥LeafQM.O)ˣ).1.2
+
+theorem optEmb_mem (Φ : GRCountX6.OptEmb k R) (a : k) : Φ.1 a ∈ LeafQM.O ↔ a ∈ R := by
+  have h := Φ.2
+  constructor
+  · intro ha; rw [← h]; exact ha
+  · intro ha; rw [← h] at ha; exact ha
+
+/-- Conjugating an optimal embedding by a unit of `𝒪`. -/
+def conjEmb (u : (↥LeafQM.O)ˣ) (Φ : GRCountX6.OptEmb k R) : GRCountX6.OptEmb k R :=
+  ⟨(conjAlg u).comp Φ.1, Subring.ext fun a => by
+    show conjAlg u (Φ.1 a) ∈ LeafQM.O ↔ a ∈ R
+    rw [conjAlg_mem, optEmb_mem]⟩
+
+theorem conjEmb_apply (u : (↥LeafQM.O)ˣ) (Φ : GRCountX6.OptEmb k R) (a : k) :
+    (conjEmb u Φ).1 a = ((u : LeafQM.O) : B) * Φ.1 a * (((u⁻¹ : (↥LeafQM.O)ˣ) : LeafQM.O) : B) := rfl
+
+theorem conjRel_conjEmb (u : (↥LeafQM.O)ˣ) (Φ : GRCountX6.OptEmb k R) :
+    GRCountX6.ConjRel R Φ (conjEmb u Φ) := ⟨u, fun _ => rfl⟩
+
+theorem act_uI (τ : ℂ) :
+    act ((uI : LeafQM.O) : B) ![τ, 1] = ![(1 + ((√2 : ℝ) : ℂ)) * τ, 1 - ((√2 : ℝ) : ℂ)] := by
+  have hU : ((uI : LeafQM.O) : B) = ⟨1, 1, 0, 0⟩ := by
+    ext <;> simp [uI, LeafQM.ofInt]
+  have e0 : act ((uI : LeafQM.O) : B) ![τ, 1] 0 = (1 + ((√2 : ℝ) : ℂ)) * τ := by
+    rw [HDec.QMLattice.act_apply0, hU]; simp; try ring
+  have e1 : act ((uI : LeafQM.O) : B) ![τ, 1] 1 = 1 - ((√2 : ℝ) : ℂ) := by
+    rw [HDec.QMLattice.act_apply1, hU]; simp; try ring
+  funext i
+  fin_cases i
+  · exact e0
+  · exact e1
+
+/-- **From the lower to the upper half plane**: conjugating by `1 + i` (norm `−1`) moves the eigenvector. -/
+theorem eig_conj_uI (Φ : GRCountX6.OptEmb k R) (ψ : k →+* ℂ) {τ : ℂ} (hτ : τ.im < 0)
+    (heig : ∀ a, act (Φ.1 a) ![τ, 1] = ψ a • ![τ, 1]) :
+    ∃ τ' : ℂ, 0 < τ'.im ∧ ∀ a, act ((conjEmb uI Φ).1 a) ![τ', 1] = ψ a • ![τ', 1] := by
+  set s : ℝ := √2 with hs
+  have hs1 : (1 : ℝ) < s := by
+    rw [hs, show (1 : ℝ) = √1 by simp]; exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  have hden : (1 - (s : ℂ)) ≠ 0 := by
+    intro h
+    have := congrArg Complex.re h
+    simp at this; linarith
+  set κ : ℝ := (1 + s) / (1 - s) with hκ
+  have hκneg : κ < 0 := div_neg_of_pos_of_neg (by linarith) (by linarith)
+  refine ⟨(κ : ℂ) * τ, ?_, fun a => ?_⟩
+  · rw [Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, zero_mul, add_zero]
+    exact mul_pos_of_neg_of_neg hκneg hτ
+  · have hv : (![(κ : ℂ) * τ, 1] : Fin 2 → ℂ) =
+        (1 - (s : ℂ))⁻¹ • act ((uI : LeafQM.O) : B) ![τ, 1] := by
+      rw [act_uI, ← hs]
+      funext i; fin_cases i
+      · simp [hκ]; field_simp
+      · simp; field_simp
+    have hUiU := GRCountX6.unit_inv_mul uI
+    rw [hv, conjEmb_apply, HDec.QMLattice.act_smul_vec, act_mul, act_mul, ← act_mul _ ((uI : LeafQM.O) : B), hUiU, act_one,
+      heig, HDec.QMLattice.act_smul_vec, smul_comm]
+
+end ConjEmb
+
+section Surj
+
+variable (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+  (hM : AvSplit.MumfordTorsionAlgClosed)
+  {k : Type} [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) {R : Subring k}
+  (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6)
+
+/-- **The CM-point map is surjective** (from `QMTorusAbelian`, `CMPairDescendsQbar` and the textbook fields):
+an optimal embedding `Φ` has an eigenvector `(τ, 1)ᵀ`, `Im τ > 0` after conjugating by `1 + i`; the QM torus
+`ℂ²/ι(𝒪)(τ, 1)ᵀ` is an abelian surface with `End_𝒪 ≅ R`, it descends to `ℚ̄`, and its lattice model compares to
+the chosen one by a unit of `𝒪`. -/
+theorem cmMap_surjective [NumberField.IsTotallyComplex k] (hE1 : QMTorusAbelian)
+    (hE2 : CMPairDescendsQbar) : Function.Surjective (cmMap hU hG hM hk hR hc) := by
+  have hC := AvSplit.Final.h69 hU hG
+  have pos : ∀ (Φ : GRCountX6.OptEmb k R) (τ : ℂ) (hτ : 0 < τ.im),
+      (∀ a, act (Φ.1 a) ![τ, 1] = ψk k a • ![τ, 1]) →
+        ∃ c, cmMap hU hG hM hk hR hc c = Quot.mk _ Φ := by
+    intro Φ τ hτ heig
+    obtain ⟨A, hA, q, Φu, hΦu, hι⟩ := hE1 τ hτ
+    obtain ⟨D', hD'⟩ := latData_of_torus hC hA hτ Φu hΦu hι
+    have heig' : ∀ a, act (Φ.1 a) D'.v = ψk k a • D'.v := by
+      intro a; rw [LatData.v, hD']; exact heig a
+    obtain ⟨⟨θ⟩, e, he, hne⟩ := com_equiv_of_eig hC hA D' hk hc Φ (ψk k) heig'
+    obtain ⟨Q, ⟨g⟩⟩ := hE2 A hA q ⟨e, he, hne⟩
+    let θQ : com Q.q ≃+* R := ((com_bcQ Q).some.trans (comEquiv g)).trans θ
+    let c : CMSet R := ⟨Quotient.mk _ Q, Q, rfl, ⟨θQ⟩⟩
+    refine ⟨c, ?_⟩
+    have hP0 : Quotient.mk (pairSetoid Qbar) c.2.choose = Quotient.mk _ Q := c.2.choose_spec.1
+    have hiso : Nonempty (QMIso c.2.choose.q Q.q) := Quotient.exact hP0
+    obtain ⟨f0⟩ := hiso
+    exact Quot.sound (conj_of_iso hC (bcQ c.2.choose).surface hA (datQ hU hG hM c.2.choose) D'
+      ((qmIsoBC f0).trans g) (ψk k) _ Φ (embP_spec hU hG hM hk hR hc _ _) heig')
+  intro x
+  induction x using Quot.ind with
+  | mk Φ =>
+    obtain ⟨τ0, hτ0, heig0⟩ := exists_eigvec hk Φ.1 (ψk k)
+    rcases lt_or_gt_of_ne hτ0 with hneg | hpos
+    · obtain ⟨τ1, hτ1, heig1⟩ := eig_conj_uI Φ (ψk k) hneg heig0
+      obtain ⟨c, hc'⟩ := pos (conjEmb uI Φ) τ1 hτ1 heig1
+      exact ⟨c, hc'.trans (Quot.sound (conjRel_conjEmb uI Φ)).symm⟩
+    · exact pos Φ τ0 hpos heig0
+
+end Surj
+
+/-- **`CMPointsOptEmb6` (gt-grcount's consequence statement) proved** from the two existence leaves and the
+textbook fields: the CM-point map is a bijection. -/
+theorem cmPointsOptEmb6_of (hE1 : QMTorusAbelian) (hE2 : CMPairDescendsQbar)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : GRCountX6.CMPointsOptEmb6 := by
+  intro k _ _ _ hk R hR hc
+  exact ⟨Equiv.ofBijective (cmMap hU hG hM hk hR hc)
+    ⟨cmMap_injective hU hG hM hk hR hc, cmMap_surjective hU hG hM hk hR hc hE1 hE2⟩⟩
+
+/-- **`R5fpCount` from Eichler's count, the two existence leaves and the textbook fields.** -/
+theorem r5fpCount_of_leaves (hE : GRCountX6.EichlerOptEmbCount6) (hE1 : QMTorusAbelian)
+    (hE2 : CMPairDescendsQbar) (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) : R5fpCount :=
+  GRCountX6.r5fpCount_of_eichler hE (cmPointsOptEmb6_of hE1 hE2 hU hG hM)
+
+/-- **The field `gonzalezRotgerProp56X6` from Eichler's count, the two existence leaves and the textbook
+fields** (`uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed` of `OpenTextbookLeaves11`). -/
+theorem gonzalezRotgerProp56X6_of_leaves (hE : GRCountX6.EichlerOptEmbCount6) (hE1 : QMTorusAbelian)
+    (hE2 : CMPairDescendsQbar) (hU : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    GRCountX6.GonzalezRotgerProp56X6 :=
+  GRCountX6.prop56X6_of_r5fpCount (r5fpCount_of_leaves hE hE1 hE2 hU hG hM)
+
 /-! ## §9 The upper bound `#CM(R) ≤ 2^{b(k)} h(R)` from Eichler's count -/
 
 /-- **`R5fpCountLe` (GLUE; the upper half of `LeafQM.AV.R5fpCount`, the only half the chain uses).** For an order
