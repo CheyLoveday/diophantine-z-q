@@ -108,4 +108,17 @@ The leaf is used once per point `x` (at `s = f x`), at the same `S` and `G` as t
 
 ## 5. `#discharges` output
 
-(filled in after the build; see scratch/gt-sga3/log.md)
+Built with `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
++ZInQKernel.Contrib.OneProof.SGA3IdComp` (exit 0; the module built in 80 s). Then
+`lake env lean scratch/gt-sga3/Discharges.lean` printed (VERIFIED):
+
+```
+DISCHARGES [OpenResearchLeaves16.sga3_VIB_3_10] by SGA3IdComp.sga3_VIB_3_10_of_nbhd
+  still assumes: [SGA3IdComp.SGA3_VIB_3_10_Nbhd, AVGlue.GeomConnOfRationalPoint]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 67 open hypotheses, 528 theorems checked, 1 discharge one
+```
+
+Fold spec: remove `sga3_VIB_3_10` and add the leaf `SGA3IdComp.SGA3_VIB_3_10_Nbhd` (kind: published, LEAF,
+consequence of SGA 3 VI_B 3.10). `AVGlue.GeomConnOfRationalPoint` is already the field
+`geomConnOfRationalPoint`.

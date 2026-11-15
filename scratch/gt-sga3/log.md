@@ -30,3 +30,9 @@ Target: `CToPrinted.SGA3_VIB_3_10` (ZInQKernel/OneProof/H/TailZ19.lean L199):
 - Contribution file ZInQKernel/Contrib/OneProof/SGA3IdComp.lean = Part1.lean + header (imports TailZ19, CloudW07
   SmoothSourceDescent and RegularLocalRing.Domain).
 - Note: fresh worktree lacked lean/.lake ("unknown module prefix ZInQ"); copied from ../gt-blr (identical lean/ZInQ).
+- lake build +Main +Discharges +Contrib.OneProof.SGA3IdComp: exit 0 (VERIFIED).
+- #discharges (scratch/gt-sga3/Discharges.lean), VERIFIED output:
+  DISCHARGES [OpenResearchLeaves16.sga3_VIB_3_10] by SGA3IdComp.sga3_VIB_3_10_of_nbhd
+    still assumes: [SGA3IdComp.SGA3_VIB_3_10_Nbhd, AVGlue.GeomConnOfRationalPoint]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 67 open hypotheses, 528 theorems checked, 1 discharge one
