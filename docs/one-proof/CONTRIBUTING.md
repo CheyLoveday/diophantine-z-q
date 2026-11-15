@@ -95,7 +95,7 @@ The bar for merging:
 * the file has no code that runs at build time;
 * each new printed leaf has a row in [`docs/research/locators.md`](../research/locators.md) and enters
   kinds.tsv flagged unread (or pending reading, if its print may say something weaker);
-* Jack merges.
+* the project's integrator merges it into the next fold (agent review: the checks above, run by the project's agents).
 
 Merges into this fork carry no Protocol B review (the original repository's review protocol); a result is
 reviewed again when it moves to the original repository. The integrator then folds it into the single proof: a
