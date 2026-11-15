@@ -15,3 +15,10 @@
   axioms of open25 = propext, Classical.choice, Quot.sound.
 - 02:17 base PruneScan31 (root open25): OpenResearchLeaves19 30, OpenTextbookLeaves10 14, OpenAddedLeaves16 14,
   OpenGlue7 1 = 59 fields, 0 unused (frozenTarget itself has 58: OTL11 drops mulEtaleAbelianScheme). *-base.txt.
+- 02:38 step 1 (plumbing, scratch/yu-prune/plumb.py) compiled first try: `lake build ZInQKernel.OneProof.H.TailZ31`
+  OK (12139 jobs); open25 axioms standard.
+- 02:41 PruneScan31 after step 1: exactly `OpenTextbookLeaves10.yuThm11` UNUSED; prune set 9 fields
+  (TextbookLeaves.t27, OpenTextbookLeaves2/3/4/6.t27, OpenTextbookLeaves7/8/9/10.yuThm11), no constants
+  (prune-set-step1.txt). Plus OpenTextbookLeaves11.yuThm11 (TailZ32), which the open25 root cannot see.
+- 02:43 DeadCascade31: dead readers fibreComTrivial_of_gp3, fibreSimple_of_gp3, gluePieces_of_gluePieces3 (TailD),
+  gluePieces_of_open2 (TailE), gluePieces_of_open3 (TailI) + generated casesOn/recOn (dead-cascade.txt).

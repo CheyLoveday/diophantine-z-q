@@ -1,8 +1,8 @@
-"""sem-prune step 2: delete scratch/yu-prune/prune-set-applied.txt's fields from every bundle generation, the
-assignments into them, and the dead readers (scratch/yu-prune/dead-cascade.txt, generated casesOn/recOn
-excluded; plus heightLeaves_of8/heightRows_of8, which read OpenResearchLeaves8.faltingsLemma5BC and leave the
-closure once the r20 assignment goes), with their `#print axioms` lines and `example`s. Deletions only.
-Adapted from genus-fold's prune_edit.py. Run from the repository root; prints every deleted line."""
+"""yu-prune step 2: delete scratch/yu-prune/prune-set-applied.txt's fields from every bundle generation (plus
+OpenTextbookLeaves11.yuThm11 in TailZ32, which the open25-rooted scan cannot see), the assignments into them, and the
+dead readers (scratch/yu-prune/dead-cascade.txt, generated casesOn/recOn excluded), with their `#print axioms` lines
+and `example`s. Deletions only (and the bridge helper that loses its users). sem-prune's script, adapted.
+Run from the repository root; prints every deleted line."""
 import re
 H = 'ZInQKernel/OneProof/H/'
 files = {}
@@ -91,52 +91,4 @@ def drop_decl(f, name):
             end = k + 1 if k < len(ls) and ls[k] == '' else k
             drop(f, range(e, end), f'example of dead reader {name}')
 
-# fields (prune-set-applied.txt)
-for f, s, fl in [('LPrefix', 'TextbookLeaves', 't23'), ('TailD', 'ResearchLeaves3', 'r20'),
-                 ('TailE', 'OpenResearchLeaves2', 'r20'), ('TailE', 'OpenTextbookLeaves2', 't23'),
-                 ('TailI', 'OpenTextbookLeaves3', 't23'), ('TailK', 'OpenTextbookLeaves4', 't23'),
-                 ('TailN', 'OpenResearchLeaves5', 'r20'), ('TailO', 'OpenTextbookLeaves6', 't23'),
-                 ('TailX', 'OpenResearchLeaves7', 'r20'), ('TailX', 'OpenTextbookLeaves7', 'bdRInvariants'),
-                 ('TailZ11', 'OpenTextbookLeaves10', 'bdRInvariants'),
-                 ('TailZ23', 'OpenResearchLeaves14', 'raynaudKernelBound'),
-                 ('TailZ4', 'OpenResearchLeaves8', 'faltingsLemma5BC'), ('TailZ4', 'OpenTextbookLeaves8', 'bdRInvariants'),
-                 ('TailZ9', 'OpenResearchLeaves9', 'faltingsLemma5BC'), ('TailZ9', 'OpenTextbookLeaves9', 'bdRInvariants')]:
-    drop_field(f, s, fl)
-# assignments into removed fields
-for f, h, fl, ex in [
-        ('TailI', 'theorem textbookLeaves2_of_open3 ', 't23', '  t23 := t.t23'),
-        ('TailD', 'theorem researchLeaves3_of ', 'r20', '    r20 := r.r20,'),
-        ('TailK', 'theorem textbookLeaves3_of_open4 ', 't23', '  t23 := t.t23'),
-        ('TailE', 'theorem researchLeaves3_of_open2 ', 'r20', '  r20 := r.r20'),
-        ('TailE', 'theorem textbookLeaves_of_open2 ', 't23', '  t23 := t.t23'),
-        ('TailN', 'theorem researchLeaves2_of_open5 ', 'r20', '  r20 := r.r20'),
-        ('TailN', 'theorem textbookLeaves4_of_open5 ', 't23', '  t23 := t.t23'),
-        ('LPrefix', 'theorem textbookLeaves_of_open ', 't23', '  t23 := t.t23'),
-        ('TailX', 'theorem researchLeaves5_of_open7 ', 'r20', '  r20 := r.r20'),
-        ('TailX', 'theorem textbookLeaves6_of_open7 ', 't23',
-         '  t23 := HodgeLF7.t23 (_root_.ZInQ.Contrib.HodgeSplit.t23_all_of_bdrInvariants t.bdRInvariants)'),
-        ('TailO', 'theorem textbookLeaves4_of_open6 ', 't23', '  t23 := t.t23'),
-        ('TailZ4', 'theorem researchLeaves7_of_open8 ', 'r20', '  r20 := (heightRows_of8 r t).2.2.1'),
-        ('TailZ4', 'theorem textbookLeaves7_of_open8 ', 'bdRInvariants', '  bdRInvariants := t.bdRInvariants'),
-        ('TailZ11', 'theorem textbookLeaves9_of_open10 ', 'bdRInvariants', '  bdRInvariants := t.bdRInvariants'),
-        ('TailZ23', 'theorem researchLeaves9_of_open14 ', 'faltingsLemma5BC',
-         '  faltingsLemma5BC := _root_.CToPrinted.faltingsLemma5BC_of_printed r.faltingsLemma5Printed r.raynaudKernelBound'),
-        ('TailZ15', 'theorem researchLeaves9_of_open10 ', 'faltingsLemma5BC', '  faltingsLemma5BC := r.faltingsLemma5BC'),
-        ('TailZ9', 'theorem researchLeaves8_of_open9 ', 'faltingsLemma5BC', '  faltingsLemma5BC := r.faltingsLemma5BC'),
-        ('TailZ9', 'theorem textbookLeaves8_of_open9 ', 'bdRInvariants', '  bdRInvariants := t.bdRInvariants')]:
-    drop_assign(f, h, fl, ex)
-# dead readers (dead-cascade.txt minus generated casesOn/recOn, plus the two TailZ4 readers)
-for f, n in [('TailA', 'g8_g12_of_leaves'), ('TailA', 'newformG12Out_of_galois'), ('TailA', 'afterG7_of'),
-             ('TailA', 'gluePieces_of_gluePieces2'), ('TailD', "sixContactMin_of_leaves3'"),
-             ('TailD', 'sixContactMin_of_leaves3'), ('TailE', 'sixContactMin_of_open2'),
-             ('TailF', 'HSyn.LinkedTate.afterG7_of_final'), ("TailF", "afterG7_of_linked'"),
-             ('TailF', 'afterG7_of_linked'), ('TailI', 'sixContactMin_of_open3'), ('TailN', 'sixContactMin_of_open5'),
-             ('TailO', 'sixContactMin_of_open6_poincare'), ('TailO', 'sixContactMin_of_openQ10'),
-             ('TailO', 'sixContactMin_of_openQ9'), ('TailO', 'sixContactMin_of_openQ8'),
-             ('TailO', 'sixContactMin_of_openQ7'), ('TailO', 'sixContactMin_of_openQ6'),
-             ('TailO', 'sixContactMin_of_openQ5'), ('TailZ4', 'heightRows_of8'), ('TailZ4', 'heightLeaves_of8')]:
-    drop_decl(f, n)
-for f, ls in files.items():
-    open(H + f + '.lean', 'w').write('\n'.join(l for l in ls if l is not None))
-for d in sorted(deleted):
-    print(f'{d[0]}:{d[1]}  [{d[2]}]  {d[3]}')
+# FIELDS / ASSIGNMENTS / READERS: filled in after the scan

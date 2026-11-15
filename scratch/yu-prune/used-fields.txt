@@ -43,7 +43,7 @@ USED   geomConnOfRationalPoint : AVGlue.GeomConnOfRationalPoint
 USED   groupSchemeEquidim : AVGlue.GroupSchemeEquidim
 USED   uniformizationLeafAll : BPAnalytic.Uniformization.UniformizationLeafAll
 USED   gagaMorphism : ZInQ.HomLattice.GAGAMorphism
-USED   yuThm11 : HDec.QMSplit.Yu.YuThm11
+UNUSED yuThm11 : HDec.QMSplit.Yu.YuThm11
 USED   regularSmoothPerfect : CurveSplit.RegularSmoothPerfect
 USED   igusaGL2 : ZInQ.RLeaf.IgusaGL2
 USED   neronSchemeExtensionExists : ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
