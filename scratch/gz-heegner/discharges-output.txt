@@ -33,4 +33,4 @@ DISCHARGES [hL3] by ZInQ.GZHeegner.grossZagierHeegner_of_printed
 DISCHARGES [hX] by ZInQ.GZHeegner.x0ModuliGalois_of_mero
   still assumes: [ZInQ.GZHeegner.X0ModuliGaloisMero]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 65 open hypotheses, 1613 theorems checked, 8 discharge one
+#discharges: 65 open hypotheses, 1615 theorems checked, 8 discharge one
