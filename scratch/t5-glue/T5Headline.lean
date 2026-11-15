@@ -1923,6 +1923,755 @@ theorem artinLift_of_abs (h : AbsArtinSurjectiveQNeg) : ArtinLift := by
 
 end T5Glue
 
+-- ===== parts/AbsArtin.lean =====
+
+noncomputable section
+
+set_option maxRecDepth 20000
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
+  ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex
+  ZInQ.Contrib.TYZGenus.Shimura IsDedekindDomain
+
+/-! ## §5f. `AbsArtinSurjective` for number fields without real places, proved
+
+The absolute Artin map `C_K → G_K^ab` is continuous (preimages of open subgroups are global norm
+subgroups, open), kills the idele classes with trivial finite part (they lie in every ray
+subgroup, hence in every norm group), and `C_K` is a finite union of translates of the image of
+`Ô^×` (finite index of the ray subgroup of the trivial modulus) times those classes. So the image is
+the image of a compact set, closed, and dense (Tau Ceti), hence everything. -/
+
+section AbsArtin
+
+variable (K : Type) [Field K] [NumberField K]
+
+set_option synthInstance.maxHeartbeats 400000 in
+instance zeroDim_Gab :
+    ZeroDimensionalSpace (TopologicalAbelianization (TauCeti.AbsoluteGaloisGroup K)) :=
+  inferInstance
+
+/-- The absolute Artin map `C_K →* G_K^ab` (multiplicative form). -/
+def absArt : IdeleClassGroup (𝓞 K) K →* TopologicalAbelianization (TauCeti.AbsoluteGaloisGroup K) :=
+  MonoidHom.toAdditive.symm
+    ((globalClassFormation K).absoluteArtinMap.comp (globalGroundEquiv K).toAddMonoidHom)
+
+theorem ofMul_absArt (c : IdeleClassGroup (𝓞 K) K) :
+    Additive.ofMul (absArt K c) =
+      (globalClassFormation K).absoluteArtinMap (globalGroundEquiv K (Additive.ofMul c)) :=
+  rfl
+
+theorem continuous_absArt : Continuous (absArt K) := by
+  refine continuous_of_continuousAt_one (absArt K) ?_
+  rw [ContinuousAt, map_one]
+  intro N hN
+  obtain ⟨U0, hU0N, hU0o, h1⟩ := mem_nhds_iff.1 hN
+  obtain ⟨H, hH⟩ := ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one hU0o h1
+  obtain ⟨V, hV⟩ := (globalClassFormation K).exists_absoluteArtinMap_mem_iff H.toOpenSubgroup
+  have hpre : ∀ c, c ∈ globalNormSubgroup K V → absArt K c ∈ (H : Set _) := by
+    intro c hc
+    rw [mem_globalNormSubgroup_iff, ← hV] at hc
+    exact hc
+  rw [Filter.mem_map]
+  refine Filter.mem_of_superset ((isOpen_globalNormSubgroup K V).mem_nhds (one_mem _)) ?_
+  intro c hc
+  exact hU0N (hH (hpre c hc))
+
+theorem denseRange_absArt : DenseRange (absArt K) := by
+  have h1 : DenseRange (fun a => Additive.toMul ((globalClassFormation K).absoluteArtinMap a)) :=
+    DenseRange.comp (Additive.toMul.surjective.denseRange) (globalClassFormation K).denseRange_absoluteArtinMap
+      continuous_toMul
+  have h2 : Function.Surjective fun c : IdeleClassGroup (𝓞 K) K =>
+      globalGroundEquiv K (Additive.ofMul c) :=
+    (globalGroundEquiv K).surjective.comp Additive.ofMul.surjective
+  have : (absArt K : IdeleClassGroup (𝓞 K) K → _) =
+      (fun a => Additive.toMul ((globalClassFormation K).absoluteArtinMap a)) ∘
+        (fun c : IdeleClassGroup (𝓞 K) K => globalGroundEquiv K (Additive.ofMul c)) := rfl
+  rw [DenseRange, this, h2.range_comp]
+  exact h1
+
+/-- **Idele classes with trivial finite part are killed** (no real places). -/
+theorem absArt_eq_one_of_coord (hK : ∀ w : InfinitePlace K, ¬ w.IsReal) (x : IdeleGroup (𝓞 K) K)
+    (hx : ∀ v : HeightOneSpectrum (𝓞 K), v.ideleFiniteCoord x = 1) :
+    absArt K (x : IdeleClassGroup (𝓞 K) K) = 1 := by
+  apply Additive.ofMul.injective
+  rw [ofMul_absArt, ofMul_one, (globalClassFormation K).absoluteArtinMap_eq_zero_iff]
+  intro V
+  have hmem : (x : IdeleClassGroup (𝓞 K) K) ∈ globalNormSubgroup K V := by
+    rw [globalNormSubgroup_eq_range_classField]
+    apply isAdmissibleModulus_abelianConductor K (classField K V)
+    rw [mem_raySubgroup_iff]
+    refine ⟨x, ?_, rfl⟩
+    rw [mem_ideleCongruenceSubgroup_iff]
+    refine ⟨fun v _ => by simp [hx v], fun v _ => by simp [hx v], fun w _ => absurd w.2 (hK w.1)⟩
+  exact hmem
+
+/-- Units of the integral finite adeles, `Ô^×`. -/
+def intUnits : Set (FiniteAdeleRing (𝓞 K) K)ˣ :=
+  {w | (w : FiniteAdeleRing (𝓞 K) K) ∈ FiniteAdeleRing.integralAdeles (𝓞 K) K ∧
+    ((w⁻¹ : (FiniteAdeleRing (𝓞 K) K)ˣ) : FiniteAdeleRing (𝓞 K) K) ∈
+      FiniteAdeleRing.integralAdeles (𝓞 K) K}
+
+theorem isCompact_intUnits : IsCompact (intUnits K) := by
+  have hc := FiniteAdeleRing.isCompact_integralAdeles (R := 𝓞 K) (K := K)
+  have hc2 : IsCompact ((FiniteAdeleRing.integralAdeles (𝓞 K) K : Set (FiniteAdeleRing (𝓞 K) K)) ×ˢ
+      (MulOpposite.op '' (FiniteAdeleRing.integralAdeles (𝓞 K) K : Set (FiniteAdeleRing (𝓞 K) K)))) :=
+    hc.prod (hc.image MulOpposite.continuous_op)
+  have := Units.isClosedEmbedding_embedProduct.isCompact_preimage hc2
+  convert this using 1
+  ext w
+  simp [intUnits, Units.embedProduct]
+
+/-- `Ô^× → 𝕀_K`, `w ↦ (1, w)`. -/
+def finEmb : (FiniteAdeleRing (𝓞 K) K)ˣ →* IdeleGroup (𝓞 K) K :=
+  Units.map (MonoidHom.inr (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K) :
+    FiniteAdeleRing (𝓞 K) K →* AdeleRing (𝓞 K) K)
+
+theorem continuous_finEmb : Continuous (finEmb K) :=
+  Units.continuous_map (show Continuous fun w : FiniteAdeleRing (𝓞 K) K =>
+    ((1 : InfiniteAdeleRing K), w) from continuous_const.prodMk continuous_id)
+
+/-- The compact set `T = ⋃_q q̄·[Ô^×]` (finitely many ray-class representatives `q̄`). -/
+def bigT : Set (IdeleClassGroup (𝓞 K) K) :=
+  ⋃ q : IdeleClassGroup (𝓞 K) K ⧸ raySubgroup (Modulus.one K),
+    (fun w => q.out * ((finEmb K w : IdeleGroup (𝓞 K) K) : IdeleClassGroup (𝓞 K) K)) '' intUnits K
+
+theorem isCompact_bigT : IsCompact (bigT K) := by
+  have : Finite (IdeleClassGroup (𝓞 K) K ⧸ raySubgroup (Modulus.one K)) :=
+    Subgroup.finite_quotient_of_finiteIndex
+  refine isCompact_iUnion fun q => (isCompact_intUnits K).image ?_
+  have hmk : Continuous (QuotientGroup.mk : IdeleGroup (𝓞 K) K → IdeleClassGroup (𝓞 K) K) :=
+    QuotientGroup.continuous_mk
+  exact continuous_const.mul (hmk.comp (continuous_finEmb K))
+
+theorem range_absArt_eq (hK : ∀ w : InfinitePlace K, ¬ w.IsReal) :
+    Set.range (absArt K) = absArt K '' bigT K := by
+  refine Set.Subset.antisymm ?_ (Set.image_subset_range _ _)
+  rintro _ ⟨c, rfl⟩
+  set q : IdeleClassGroup (𝓞 K) K ⧸ raySubgroup (Modulus.one K) := QuotientGroup.mk c
+  obtain ⟨⟨h, hh⟩, hq⟩ := QuotientGroup.mk_out_eq_mul (raySubgroup (Modulus.one K)) c
+  -- `c = q̄ · h⁻¹` with `h⁻¹` a ray class
+  have hc : c = q.out * h⁻¹ := by rw [hq, mul_inv_cancel_right]
+  obtain ⟨x, hx, hxc⟩ := mem_raySubgroup_iff.1 (inv_mem hh)
+  rw [mem_ideleCongruenceSubgroup_iff] at hx
+  have hv1 : ∀ v : HeightOneSpectrum (𝓞 K),
+      Valued.v (v.ideleFiniteCoord x : v.adicCompletion K) = 1 := by
+    intro v
+    refine hx.1 v ?_
+    intro hdvd
+    have : (Modulus.one K).finitePart = ⊤ := rfl
+    rw [this, Ideal.dvd_iff_le, top_le_iff] at hdvd
+    exact v.isPrime.ne_top hdvd
+  set xf := IdeleGroup.toFiniteIdele (𝓞 K) K x
+  have hcoord : ∀ v : HeightOneSpectrum (𝓞 K),
+      ((xf : FiniteAdeleRing (𝓞 K) K) v) = (v.ideleFiniteCoord x : v.adicCompletion K) := fun v => rfl
+  have hcoordi : ∀ v : HeightOneSpectrum (𝓞 K),
+      ((xf⁻¹ : (FiniteAdeleRing (𝓞 K) K)ˣ) : FiniteAdeleRing (𝓞 K) K) v =
+        ((v.ideleFiniteCoord x)⁻¹ : (v.adicCompletion K)ˣ) := fun v => rfl
+  have hxf : xf ∈ intUnits K := by
+    refine ⟨fun v => ?_, fun v => ?_⟩
+    · rw [hcoord, HeightOneSpectrum.mem_adicCompletionIntegers, hv1 v]
+    · rw [hcoordi, HeightOneSpectrum.mem_adicCompletionIntegers, Units.val_inv_eq_inv_val, map_inv₀,
+        hv1 v, inv_one]
+  set y := (finEmb K xf)⁻¹ * x
+  have hy : ∀ v : HeightOneSpectrum (𝓞 K), v.ideleFiniteCoord y = 1 := by
+    intro v
+    apply Units.ext
+    show ((finEmb K xf)⁻¹ * x : IdeleGroup (𝓞 K) K).val.2 v = 1
+    rw [Units.val_mul, Prod.snd_mul]
+    show ((xf⁻¹ : (FiniteAdeleRing (𝓞 K) K)ˣ) : FiniteAdeleRing (𝓞 K) K) v * (x.val.2 v) = 1
+    have e1 : ((xf⁻¹ : (FiniteAdeleRing (𝓞 K) K)ˣ) : FiniteAdeleRing (𝓞 K) K) * xf = 1 := by
+      rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
+    have e2 : ((xf⁻¹ : (FiniteAdeleRing (𝓞 K) K)ˣ) : FiniteAdeleRing (𝓞 K) K) v *
+        (xf : FiniteAdeleRing (𝓞 K) K) v = 1 := by
+      rw [← FiniteAdeleRing.mul_apply, e1, FiniteAdeleRing.one_apply]
+    exact e2
+  have hxy : x = finEmb K xf * y := by rw [mul_inv_cancel_left]
+  refine ⟨q.out * ((finEmb K xf : IdeleGroup (𝓞 K) K) : IdeleClassGroup (𝓞 K) K),
+    Set.mem_iUnion.2 ⟨q, xf, hxf, rfl⟩, ?_⟩
+  rw [hc, ← hxc, QuotientGroup.mk'_apply, hxy, QuotientGroup.mk_mul, map_mul, map_mul, map_mul,
+    absArt_eq_one_of_coord K hK y hy, mul_one]
+
+/-- **`AbsArtinSurjective K` for number fields without real places.** -/
+theorem absArtinSurjective_of_noReal (hK : ∀ w : InfinitePlace K, ¬ w.IsReal) :
+    AbsArtinSurjective K := by
+  have hclosed : IsClosed (Set.range (absArt K)) := by
+    rw [range_absArt_eq K hK]
+    exact ((isCompact_bigT K).image (continuous_absArt K)).isClosed
+  intro g
+  have hg : (g : TopologicalAbelianization (TauCeti.AbsoluteGaloisGroup K)) ∈ Set.range (absArt K) := by
+    rw [← hclosed.closure_eq]
+    exact denseRange_absArt K _
+  obtain ⟨c, hc⟩ := hg
+  exact ⟨c, by rw [← ofMul_absArt, hc]⟩
+
+end AbsArtin
+
+/-- `ℚ(√−m)` has no real places. -/
+theorem not_isReal_QNeg (m : ℕ) [NeZero m] (w : InfinitePlace (QNeg m)) : ¬ w.IsReal := by
+  intro hw
+  rw [InfinitePlace.isReal_iff, ComplexEmbedding.isReal_iff] at hw
+  set φ := w.embedding
+  have h1 : φ QuadraticAlgebra.omega ^ 2 = -(m : ℂ) := by
+    rw [← map_pow, omega_sq', map_neg, map_natCast]
+  have h2 : (starRingEnd ℂ) (φ QuadraticAlgebra.omega) = φ QuadraticAlgebra.omega := by
+    have := congrArg (fun ψ : QNeg m →+* ℂ => ψ QuadraticAlgebra.omega) hw
+    simpa [ComplexEmbedding.conjugate_coe_eq] using this
+  have him : (φ QuadraticAlgebra.omega).im = 0 := Complex.conj_eq_iff_im.1 h2
+  have hre := congrArg Complex.re h1
+  have hm : (0 : ℝ) < m := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne m)
+  simp only [sq, Complex.mul_re, him, mul_zero, sub_zero, Complex.neg_re, Complex.natCast_re] at hre
+  nlinarith [sq_nonneg (φ QuadraticAlgebra.omega).re]
+
+/-- **`AbsArtinSurjectiveQNeg`, proved.** -/
+theorem absArtinSurjectiveQNeg : AbsArtinSurjectiveQNeg :=
+  fun m _ _ => absArtinSurjective_of_noReal (QNeg m) (not_isReal_QNeg m)
+
+end T5Glue
+
+-- ===== parts/Colon.lean =====
+
+noncomputable section
+
+set_option maxRecDepth 20000
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
+  ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex
+  ZInQ.Contrib.TYZGenus.Shimura IsDedekindDomain Pointwise
+
+/-! ## §5g. `s⁻¹𝔞 = (𝔞 : 𝔍_s)` with `𝔍_s = K ∩ s_f·Ô_O` (adelic, proved) -/
+
+section Colon
+
+variable {m : ℕ} [NeZero m]
+
+/-- The order `O = ℤ + f𝓞_K`, as a `ℤ`-submodule of `K`. -/
+def Osub (m f : ℕ) [NeZero m] [NeZero f] : Submodule ℤ (QNeg m) :=
+  ((conductorOrder (QNeg m) f).toSubalgebra.toSubmodule).restrictScalars ℤ
+
+theorem mem_Osub {f : ℕ} [NeZero f] {x : QNeg m} :
+    x ∈ Osub m f ↔ x ∈ (conductorOrder (QNeg m) f).toSubalgebra := Iff.rfl
+
+/-- **`𝔍_s = K ∩ s_f·Ô_O`**: the `O`-lattice of the idele `s` (`Ô_O` the closure of `O`). -/
+def idealOf (m f : ℕ) [NeZero m] [NeZero f] (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    Set (QNeg m) :=
+  {j | finPart s⁻¹ * algebraMap (QNeg m) (AfK m) j ∈ latHat m (Osub m f : Set (QNeg m))}
+
+/-- The colon lattice `(𝔞 : 𝔍) = {y : 𝔍y ⊆ 𝔞}`. -/
+def colon (𝔞 𝔍 : Set (QNeg m)) : Set (QNeg m) := {y | ∀ j ∈ 𝔍, j * y ∈ 𝔞}
+
+theorem finPart_inv_mul (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) : finPart s⁻¹ * finPart s = 1 := by
+  simp only [finPart]
+  rw [← Prod.snd_mul, ← Units.val_mul, inv_mul_cancel, Units.val_one, Prod.snd_one]
+
+theorem finPart_mul_inv (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) : finPart s * finPart s⁻¹ = 1 := by
+  simp only [finPart]
+  rw [← Prod.snd_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Prod.snd_one]
+
+/-- `Ô_O·𝔞̂ ⊆ 𝔞̂` for an `O`-stable `𝔞`. -/
+theorem latHat_O_mul {f : ℕ} [NeZero f] (𝔞 : Submodule ℤ (QNeg m))
+    (h𝔞 : ∀ o ∈ Osub m f, ∀ y ∈ 𝔞, o * y ∈ 𝔞) {z w : AfK m}
+    (hz : z ∈ latHat m (Osub m f : Set (QNeg m))) (hw : w ∈ latHat m (𝔞 : Set (QNeg m))) :
+    z * w ∈ latHat m (𝔞 : Set (QNeg m)) := by
+  refine map_mem_closure₂ continuous_mul hz hw ?_
+  rintro _ ⟨o, ho, rfl⟩ _ ⟨y, hy, rfl⟩
+  exact ⟨o * y, h𝔞 o ho y hy, map_mul _ _ _⟩
+
+/-- `f·𝒪̂ ⊆ Ô_O`. -/
+theorem fIntAd_sub_latHatO {f : ℕ} [NeZero f] {z : AfK m}
+    (hz : algebraMap (QNeg m) (AfK m) ((f : QNeg m)⁻¹) * z ∈
+      FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m)) :
+    z ∈ latHat m (Osub m f : Set (QNeg m)) := by
+  have hf0 : (f : QNeg m) ≠ 0 := by exact_mod_cast NeZero.ne f
+  have hcl := FiniteAdeleRing.closure_range_algebraMap (𝓞 (QNeg m)) (QNeg m)
+  have hz' := (Set.ext_iff.1 hcl (algebraMap (QNeg m) (AfK m) ((f : QNeg m)⁻¹) * z)).2 hz
+  have hcont : Continuous fun w : AfK m => algebraMap (QNeg m) (AfK m) (f : QNeg m) * w :=
+    continuous_const.mul continuous_id
+  have h1 := image_closure_subset_closure_image hcont ⟨_, hz', rfl⟩
+  have hzeq : algebraMap (QNeg m) (AfK m) (f : QNeg m) *
+      (algebraMap (QNeg m) (AfK m) ((f : QNeg m)⁻¹) * z) = z := by
+    rw [← mul_assoc, ← map_mul, mul_inv_cancel₀ hf0, map_one, one_mul]
+  beta_reduce at h1
+  rw [hzeq] at h1
+  refine closure_mono ?_ h1
+  rintro _ ⟨_, ⟨r, rfl⟩, rfl⟩
+  refine ⟨(f : QNeg m) * (r : QNeg m), ?_, ?_⟩
+  · show (f : QNeg m) * (r : QNeg m) ∈ (conductorOrder (QNeg m) f).toSubalgebra
+    rw [conductorOrder_toSubalgebra, mem_conductorOrderSubalgebra]
+    exact ⟨0, r, by simp⟩
+  · rw [map_mul] <;> rfl
+
+/-- **Density**: `s_f` lies in the closure of `𝔍_s`. -/
+theorem finPart_mem_closure_idealOf {f : ℕ} [NeZero f] (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    finPart s ∈ closure (algebraMap (QNeg m) (AfK m) '' idealOf m f s) := by
+  set W : Set (AfK m) := (fun z => algebraMap (QNeg m) (AfK m) ((f : QNeg m)⁻¹) *
+    (finPart s⁻¹ * z - 1)) ⁻¹' (FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m) : Set (AfK m))
+  have hWo : IsOpen W := (FiniteAdeleRing.isOpen_integralAdeles (𝓞 (QNeg m)) (QNeg m)).preimage
+    (continuous_const.mul ((continuous_const.mul continuous_id).sub continuous_const))
+  have hsW : finPart s ∈ W := by
+    show algebraMap (QNeg m) (AfK m) ((f : QNeg m)⁻¹) * (finPart s⁻¹ * finPart s - 1) ∈
+      FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m)
+    rw [finPart_inv_mul, sub_self, mul_zero]
+    exact Subalgebra.zero_mem _
+  have h1O : algebraMap (QNeg m) (AfK m) 1 ∈ latHat m (Osub m f : Set (QNeg m)) :=
+    mem_latHat_of_mem (show (1 : QNeg m) ∈ (conductorOrder (QNeg m) f).toSubalgebra from
+      Subalgebra.one_mem _)
+  have hWsub : ∀ z ∈ W, finPart s⁻¹ * z ∈ latHat m (Osub m f : Set (QNeg m)) := by
+    intro z hz
+    have h2 := fIntAd_sub_latHatO (m := m) (f := f) hz
+    have e : finPart s⁻¹ * z = (finPart s⁻¹ * z - 1) + algebraMap (QNeg m) (AfK m) 1 := by
+      rw [map_one]; ring
+    rw [e]
+    exact latHat_add_mem _ h2 h1O
+  rw [mem_closure_iff]
+  intro U hU hsU
+  obtain ⟨j, hj⟩ := (FiniteAdeleRing.denseRange_algebraMap (𝓞 (QNeg m)) (QNeg m)).exists_mem_open
+    (hU.inter hWo) ⟨_, hsU, hsW⟩
+  exact ⟨_, hj.1, j, hWsub _ hj.2, rfl⟩
+
+/-- **`s⁻¹𝔞 = (𝔞 : 𝔍_s)`** for an `O`-stable `𝔞` with `K ∩ 𝔞̂ = 𝔞`. -/
+theorem sInvLat_eq_colon {f : ℕ} [NeZero f] (𝔞 : Submodule ℤ (QNeg m))
+    (h𝔞 : ∀ o ∈ Osub m f, ∀ y ∈ 𝔞, o * y ∈ 𝔞)
+    (hInt : ∀ x : QNeg m, algebraMap (QNeg m) (AfK m) x ∈ latHat m (𝔞 : Set (QNeg m)) → x ∈ 𝔞)
+    (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    sInvLat m s (𝔞 : Set (QNeg m)) = colon (𝔞 : Set (QNeg m)) (idealOf m f s) := by
+  ext y
+  constructor
+  · intro hy j hj
+    apply hInt
+    have e : algebraMap (QNeg m) (AfK m) (j * y) =
+        (finPart s⁻¹ * algebraMap (QNeg m) (AfK m) j) * (finPart s * algebraMap (QNeg m) (AfK m) y) := by
+      rw [map_mul, show (finPart s⁻¹ * algebraMap (QNeg m) (AfK m) j) *
+          (finPart s * algebraMap (QNeg m) (AfK m) y) = (finPart s⁻¹ * finPart s) *
+          (algebraMap (QNeg m) (AfK m) j * algebraMap (QNeg m) (AfK m) y) by ring,
+        finPart_inv_mul, one_mul]
+    rw [e]
+    exact latHat_O_mul 𝔞 h𝔞 hj hy
+  · intro hy
+    have hcl := finPart_mem_closure_idealOf (m := m) (f := f) s
+    have hmaps : Set.MapsTo (fun z : AfK m => z * algebraMap (QNeg m) (AfK m) y)
+        (algebraMap (QNeg m) (AfK m) '' idealOf m f s)
+        (algebraMap (QNeg m) (AfK m) '' (𝔞 : Set (QNeg m))) := by
+      rintro _ ⟨j, hj, rfl⟩
+      exact ⟨j * y, hy j hj, map_mul _ _ _⟩
+    exact map_mem_closure (f := fun z : AfK m => z * algebraMap (QNeg m) (AfK m) y)
+      (continuous_id.mul continuous_const) hcl hmaps
+
+end Colon
+
+end T5Glue
+
+-- ===== parts/Scale.lean =====
+
+noncomputable section
+
+set_option maxRecDepth 20000
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
+  ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex
+  ZInQ.Contrib.TYZGenus.Shimura IsDedekindDomain Pointwise
+
+/-! ## §5h. `IdeleLatticeScale` from two smaller glue Props -/
+
+/-- **GLUE RING-CLASS-LATTICE (the idelic and the congruence descriptions of `Pic O` agree).** If
+the ring class of the idele `s` (Tau Ceti's `ringClassIdeleQuotient`, defined through ray classes
+modulo the conductor) is the class of `J ∩ O`, then the `O`-lattice `𝔍_s = K ∩ s_f·Ô_O` of `s` is
+`k·(J ∩ O)` for some `k ∈ Kˣ`. (Standard: `Pic O ≅ 𝔸_K^×/Kˣ Ô_O^× K_∞^×`, `s ↦ [K ∩ s_f Ô_O]`;
+Neukirch I §12 and VI §1, Cox §7 and §9; UNVERIFIED numbers. Proof: move `s` by a principal idele
+into the congruence subgroup of the conductor `𝔣` (Tau Ceti
+`exists_unitEmbedding_mul_mem_ideleCongrOneSubgroup`); then `rayClassQuotient` is the ray class of
+the ideal `I` of `s_f` (`rayClassQuotient_mk_of_mem`), `I = J·(βγ)` with `β ∈ O`, `γ ≡ 1 mod* 𝔣`
+(`mem_ker_rayClassToPic`), and locally `s_f Ô_O = I_p` at `p ∤ f`, `= O_p` at `p ∣ f`, so
+`𝔍_s = I ∩ O = βγ·(J ∩ O)`.) -/
+def RingClassLattice : Prop :=
+  ∀ (m f : ℕ) [NeZero m] [NeZero f], Squarefree m →
+  ∀ (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus)
+    (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)),
+    ringClassIdeleQuotient (conductorOrder (QNeg m) f) (icl s) =
+      (conductorOrder (QNeg m) f).picClass J →
+    ∃ k : QNeg m, k ≠ 0 ∧ idealOf m f s = (fun x => k * x) '' idealMeetOrder m f J
+
+/-- **GLUE INVERTIBLE-COLON (`J ∩ O` is invertible).** Under `κ(J ∩ O)·L' = c·L` and
+`κ(J ∩ O)·L'_N = c·L_N` (Heegner forms of discriminant `disc O`, `J` prime to `f`):
+`c ≠ 0`, `κ(𝔞 : J ∩ O) = c⁻¹·L'` and `κ(𝔞_N : J ∩ O) = c⁻¹·L'_N`, where `𝔞 = κ⁻¹L`, `𝔞_N = κ⁻¹L_N`.
+(`⊇` is immediate; `⊆` cancels `J ∩ O` using its inverse: ideals of `O` prime to the conductor are
+invertible, Tau Ceti `isUnit_coeIdeal_of_mem_integralIdealsAwayConductor`; `L'`, `L'_N` are
+`O`-stable.) -/
+def InvertibleColon : Prop :=
+  ∀ (N : ℕ), 0 < N → ∀ (m f : ℕ) [NeZero m] [NeZero f], Squarefree m →
+  ∀ (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus)
+    (D : ℤ), D = discOf m f → ∀ (Q Q' : HeegnerForm N D) (c : ℂ),
+    idealLat m f J * Q'.lat = Q.lat.map (LinearMap.mulLeft ℤ c) →
+    idealLat m f J * Q'.latN = Q.latN.map (LinearMap.mulLeft ℤ c) →
+    c ≠ 0 ∧
+      kappa m '' colon (kappa m ⁻¹' (Q.lat : Set ℂ)) (idealMeetOrder m f J) =
+        c⁻¹ • (Q'.lat : Set ℂ) ∧
+      kappa m '' colon (kappa m ⁻¹' (Q.latN : Set ℂ)) (idealMeetOrder m f J) =
+        c⁻¹ • (Q'.latN : Set ℂ)
+
+section ScaleAux
+
+variable {m : ℕ} [NeZero m]
+
+theorem colon_smul (𝔞 𝔍 : Set (QNeg m)) {k : QNeg m} (hk : k ≠ 0) :
+    colon 𝔞 ((fun x => k * x) '' 𝔍) = (fun x => k⁻¹ * x) '' colon 𝔞 𝔍 := by
+  ext y
+  constructor
+  · intro hy
+    refine ⟨k * y, fun j hj => ?_, by field_simp⟩
+    have := hy (k * j) ⟨j, hj, rfl⟩
+    rwa [show j * (k * y) = k * j * y by ring]
+  · rintro ⟨z, hz, rfl⟩ _ ⟨j, hj, rfl⟩
+    have := hz j hj
+    rwa [show k * j * (k⁻¹ * z) = j * z by field_simp]
+
+theorem kappa_image_smul (X : Set (QNeg m)) (k : QNeg m) :
+    kappa m '' ((fun x => k * x) '' X) = kappa m k • kappa m '' X := by
+  ext z
+  simp only [Set.mem_image, Set.mem_smul_set, smul_eq_mul]
+  constructor
+  · rintro ⟨_, ⟨x, hx, rfl⟩, rfl⟩
+    exact ⟨kappa m x, ⟨x, hx, rfl⟩, by rw [← kappaAlg_apply, ← kappaAlg_apply, ← kappaAlg_apply,
+      map_mul]⟩
+  · rintro ⟨_, ⟨x, hx, rfl⟩, rfl⟩
+    exact ⟨k * x, ⟨x, hx, rfl⟩, by rw [← kappaAlg_apply, ← kappaAlg_apply, ← kappaAlg_apply,
+      map_mul]⟩
+
+theorem smul_smul_set (a b : ℂ) (S : Set ℂ) : a • b • S = (a * b) • S := by
+  rw [smul_smul]
+
+theorem kappa_inv (k : QNeg m) : kappa m k⁻¹ = (kappa m k)⁻¹ := by
+  rw [← kappaAlg_apply, ← kappaAlg_apply, map_inv₀]
+
+/-- `κ⁻¹⟨κa, κb⟩ = ⟨a, b⟩`. -/
+theorem preimage_span_pair (a b : QNeg m) :
+    kappa m ⁻¹' (Submodule.span ℤ {kappa m a, kappa m b} : Set ℂ) =
+      (Submodule.span ℤ {a, b} : Set (QNeg m)) := by
+  ext x
+  simp only [Set.mem_preimage, SetLike.mem_coe, Submodule.mem_span_pair]
+  constructor
+  · rintro ⟨p, q, hpq⟩
+    refine ⟨p, q, kappa_injective ?_⟩
+    simp only [zsmul_eq_mul] at hpq ⊢
+    rw [kappa_add, kappa_intCast_mul, kappa_intCast_mul, ← hpq]
+  · rintro ⟨p, q, rfl⟩
+    refine ⟨p, q, ?_⟩
+    simp only [zsmul_eq_mul]
+    rw [kappa_add, kappa_intCast_mul, kappa_intCast_mul]
+
+/-- **`K ∩ 𝔞̂_N = 𝔞_N` for `𝔞_N = κ⁻¹⟨1/N, τ_Q⟩`** (`n = 2c₀`, `d = 2AN`). -/
+theorem latHat_inter_heegnerN (hsq : Squarefree m) {f : ℕ} [NeZero f] {D : ℤ}
+    (hD : D = discOf m f) {N : ℕ} (hN : 0 < N) (Q : HeegnerForm N D) :
+    {x : QNeg m | algebraMap (QNeg m) (AfK m) x ∈ latHat m (kappa m ⁻¹' (Q.latN : Set ℂ))} =
+      kappa m ⁻¹' (Q.latN : Set ℂ) := by
+  have ht := kappa_tK (m := m) hD Q
+  have hNq : (N : ℚ) ≠ 0 := by exact_mod_cast hN.ne'
+  set a : QNeg m := algebraMap ℚ (QNeg m) (1 / N) with ha
+  have hka : kappa m a = 1 / (N : ℂ) := by rw [ha, kappa_rat]; push_cast; rfl
+  have hlatN : Q.latN = Submodule.span ℤ {kappa m a, kappa m (tK m Q (cz m f))} := by
+    rw [HeegnerForm.latN, hka, ht]
+  rw [hlatN, preimage_span_pair]
+  have hA : (0 : ℤ) < Q.A := Q.A_pos
+  have hAq : (Q.A : ℚ) ≠ 0 := by exact_mod_cast hA.ne'
+  have hAt : ((Q.A.toNat : ℕ) : ℚ) = Q.A := by
+    have : ((Q.A.toNat : ℕ) : ℤ) = Q.A := Int.toNat_of_nonneg hA.le
+    exact_mod_cast this
+  have hNa : (N : QNeg m) * a = 1 := by
+    rw [ha, ← map_natCast (algebraMap ℚ (QNeg m)), ← map_mul]; field_simp; simp
+  refine latHat_inter_of_sandwich a (tK m Q (cz m f)) (2 * cz m f) (2 * Q.A.toNat * N)
+    (by have := cz_pos (m := m) (f := f); omega)
+    (by have h1 : 0 < Q.A.toNat := by omega
+        positivity) ?_ ?_ ?_
+  · intro y
+    have h1 := two_cz_mul_mem hsq hD Q y
+    rw [Submodule.mem_span_pair] at h1 ⊢
+    obtain ⟨p, q, hpq⟩ := h1
+    refine ⟨p * N, q, ?_⟩
+    rw [← hpq]
+    simp only [zsmul_eq_mul]
+    push_cast
+    rw [show (p : QNeg m) * (N : QNeg m) * a = (p : QNeg m) * ((N : QNeg m) * a) by ring, hNa, mul_one]
+  · refine ⟨((2 * Q.A.toNat : ℕ) : 𝓞 (QNeg m)), ?_⟩
+    rw [map_natCast]
+    push_cast
+    rw [mul_assoc, hNa, mul_one]
+  · refine ⟨((N : ℕ) : 𝓞 (QNeg m)) * ((-Q.B : 𝓞 (QNeg m)) + (cz m f : 𝓞 (QNeg m)) * sqrtNeg m), ?_⟩
+    have hsq' : algebraMap (𝓞 (QNeg m)) (QNeg m) (sqrtNeg m) = QuadraticAlgebra.omega := coe_sqrtNeg
+    rw [map_mul, map_natCast, map_add, map_mul, map_neg, map_intCast, map_natCast, hsq',
+      natCast_mul_mk N, natCast_mul_mk (2 * Q.A.toNat * N)]
+    ext
+    · simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+        QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast,
+        QuadraticAlgebra.re_omega, QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add,
+        QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul, QuadraticAlgebra.im_intCast]
+      push_cast [hAt]
+      field_simp
+      ring
+    · simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+        QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast,
+        QuadraticAlgebra.re_omega, QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add,
+        QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul, QuadraticAlgebra.re_intCast]
+      push_cast [hAt]
+      field_simp
+      ring
+
+end ScaleAux
+
+/-- **`IdeleLatticeScale` from `RingClassLattice` and `InvertibleColon`** (with `sInvLat_eq_colon`,
+`latHatInter`, `latHat_inter_heegnerN` and the kernel's `κ(O)`-stability lemmas). -/
+theorem ideleLatticeScale_of (hA : RingClassLattice) (hB : InvertibleColon) :
+    IdeleLatticeScale := by
+  intro N hN m f _ _ hsq J s hcl D hD Q Q' c hLc hLN
+  obtain ⟨k, hk, hks⟩ := hA m f hsq J s hcl
+  obtain ⟨hc, h1, h2⟩ := hB N hN m f hsq J D hD Q Q' c hLc hLN
+  have hκk : kappa m k ≠ 0 := by
+    intro h0; apply hk; apply kappa_injective; rw [h0]; simp [kappa]
+  refine ⟨(kappa m k)⁻¹ * c⁻¹, mul_ne_zero (inv_ne_zero hκk) (inv_ne_zero hc), ?_, ?_⟩
+  · have hO : ∀ o ∈ Osub m f, ∀ y ∈ kappaComap (m := m) Q.lat, o * y ∈ kappaComap (m := m) Q.lat := by
+      intro o ho y hy
+      show kappaLin m (o * y) ∈ Q.lat
+      rw [kappaLin_apply, ← kappaAlg_apply, map_mul, kappaAlg_apply, kappaAlg_apply]
+      exact kappa_mul_mem_lat hsq hD Q ho _ (by simpa [kappaComap, kappaLin_apply] using hy)
+    have hInt : ∀ x : QNeg m, algebraMap (QNeg m) (AfK m) x ∈
+        latHat m ((kappaComap (m := m) Q.lat : Submodule ℤ (QNeg m)) : Set (QNeg m)) →
+        x ∈ kappaComap (m := m) Q.lat := by
+      intro x hx
+      rw [coe_kappaComap] at hx
+      have := latHatInter m hsq f D hD N Q
+      have hx' := (Set.ext_iff.1 this x).1 hx
+      show x ∈ ((kappaComap (m := m) Q.lat : Submodule ℤ (QNeg m)) : Set (QNeg m))
+      rw [coe_kappaComap]; exact hx'
+    have e := sInvLat_eq_colon (kappaComap (m := m) Q.lat) hO hInt s
+    rw [coe_kappaComap] at e
+    rw [e, hks, colon_smul _ _ hk, kappa_image_smul, h1, kappa_inv, smul_smul_set]
+  · have hO : ∀ o ∈ Osub m f, ∀ y ∈ kappaComap (m := m) Q.latN,
+        o * y ∈ kappaComap (m := m) Q.latN := by
+      intro o ho y hy
+      show kappaLin m (o * y) ∈ Q.latN
+      rw [kappaLin_apply, ← kappaAlg_apply, map_mul, kappaAlg_apply, kappaAlg_apply]
+      exact kappa_mul_mem_latN_gen hsq hD Q ho _ (by simpa [kappaComap, kappaLin_apply] using hy)
+    have hInt : ∀ x : QNeg m, algebraMap (QNeg m) (AfK m) x ∈
+        latHat m ((kappaComap (m := m) Q.latN : Submodule ℤ (QNeg m)) : Set (QNeg m)) →
+        x ∈ kappaComap (m := m) Q.latN := by
+      intro x hx
+      rw [coe_kappaComap] at hx
+      have := latHat_inter_heegnerN hsq hD hN Q
+      have hx' := (Set.ext_iff.1 this x).1 hx
+      show x ∈ ((kappaComap (m := m) Q.latN : Submodule ℤ (QNeg m)) : Set (QNeg m))
+      rw [coe_kappaComap]; exact hx'
+    have e := sInvLat_eq_colon (kappaComap (m := m) Q.latN) hO hInt s
+    rw [coe_kappaComap] at e
+    rw [e, hks, colon_smul _ _ hk, kappa_image_smul, h2, kappa_inv, smul_smul_set]
+
+end T5Glue
+
+-- ===== parts/Invert.lean =====
+
+noncomputable section
+
+set_option maxRecDepth 20000
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
+  ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex
+  ZInQ.Contrib.TYZGenus.Shimura IsDedekindDomain Pointwise
+  TauCeti.GlobalNumberFields.NumberFieldOrder
+
+/-! ## §5i. `InvertibleColon`, proved from Tau Ceti's invertibility of `J ∩ O` -/
+
+section Invert
+
+variable {m f : ℕ} [NeZero m] [NeZero f]
+
+theorem kappa_mul_eq (a b : QNeg m) : kappa m (a * b) = kappa m a * kappa m b := by
+  simp only [← kappaAlg_apply, map_mul]
+
+/-- The invertible fractional ideal `J ∩ O` of `O` (Tau Ceti). -/
+abbrev jUnit (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus) :
+    (FractionalIdeal (nonZeroDivisors (conductorOrder (QNeg m) f).toSubalgebra) (QNeg m))ˣ :=
+  (conductorOrder (QNeg m) f).integralIdealsAwayConductorToInvertible
+    ((conductorOrder (QNeg m) f).integralIdealsAwayConductorEquiv.symm J)
+
+/-- Its elements are those of `J ∩ O`. -/
+theorem mem_jUnit_iff (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus)
+    (x : QNeg m) :
+    x ∈ ((jUnit J).val : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m)) ↔
+      x ∈ idealMeetOrder m f J := by
+  rw [FractionalIdeal.mem_coe, coe_integralIdealsAwayConductorToInvertible_apply,
+    FractionalIdeal.mem_coeIdeal]
+  constructor
+  · rintro ⟨x', hx', rfl⟩
+    rw [Ideal.mem_map_of_equiv] at hx'
+    obtain ⟨y, hy, rfl⟩ := hx'
+    rw [coe_integralIdealsAwayConductorEquiv_symm_apply, Ideal.mem_comap] at hy
+    refine ⟨(conductorOrder (QNeg m) f).toRingOfIntegersEquiv y |>.2, (y : 𝓞 (QNeg m)), hy, rfl⟩
+  · rintro ⟨hxO, z, hz, rfl⟩
+    refine ⟨⟨(z : QNeg m), hxO⟩, ?_, rfl⟩
+    rw [Ideal.mem_map_of_equiv]
+    refine ⟨⟨z, by rw [mem_toRingOfIntegers]; exact hxO⟩, ?_, rfl⟩
+    rw [coe_integralIdealsAwayConductorEquiv_symm_apply, Ideal.mem_comap]
+    exact hz
+
+theorem inv_mul_jUnit (J : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus) :
+    (((jUnit J)⁻¹).val : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m)) *
+      ((jUnit J).val : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m)) = 1 := by
+  rw [← FractionalIdeal.coe_mul, ← Units.val_mul, inv_mul_cancel, Units.val_one,
+    FractionalIdeal.coe_one]
+
+end Invert
+
+/-- **`InvertibleColon`, proved.** -/
+theorem invertibleColon : InvertibleColon := by
+  intro N hN m f _ _ hsq J D hD Q Q' c hLc hLN
+  set Jf : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m) := ((jUnit J).val : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m))
+  set Jinv : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m) :=
+    (((jUnit J)⁻¹).val : Submodule (conductorOrder (QNeg m) f).toSubalgebra (QNeg m))
+  have hmul : Jinv * Jf = 1 := inv_mul_jUnit J
+  -- κ(o)·L' ⊆ L' for o ∈ O
+  have hOL : ∀ {L : Submodule ℤ ℂ}, (∀ o ∈ (conductorOrder (QNeg m) f).toSubalgebra, ∀ x ∈ L, kappa m o * x ∈ L) →
+      ∀ w ∈ Jinv * Jf, ∀ x ∈ L, kappa m w * x ∈ L := by
+    intro L hL w hw x hx
+    rw [hmul, Submodule.mem_one] at hw
+    obtain ⟨o, rfl⟩ := hw
+    exact hL o o.2 x hx
+  -- elements of `idealLat J` are κ-images of elements of `J ∩ O`
+  have hspan : ∀ i ∈ idealLat m f J, ∃ j ∈ idealMeetOrder m f J, kappa m j = i := by
+    intro i hi
+    induction hi using Submodule.span_induction with
+    | mem z hz => obtain ⟨j, hj, rfl⟩ := hz; exact ⟨j, hj, rfl⟩
+    | zero => exact ⟨0, (mem_jUnit_iff J 0).1 (Submodule.zero_mem _), by simp [kappa]⟩
+    | add a b _ _ ha hb =>
+      obtain ⟨j₁, hj₁, rfl⟩ := ha
+      obtain ⟨j₂, hj₂, rfl⟩ := hb
+      exact ⟨j₁ + j₂, (mem_jUnit_iff J _).1 (Submodule.add_mem _ ((mem_jUnit_iff J _).2 hj₁)
+        ((mem_jUnit_iff J _).2 hj₂)), kappa_add _ _⟩
+    | smul r a _ ha =>
+      obtain ⟨j, hj, rfl⟩ := ha
+      refine ⟨(r : QNeg m) * j, (mem_jUnit_iff J _).1 ?_, ?_⟩
+      · have : (r : QNeg m) * j = (r : (conductorOrder (QNeg m) f).toSubalgebra) • j := by
+          rw [Algebra.smul_def]; rfl
+        rw [this]; exact Submodule.smul_mem _ _ ((mem_jUnit_iff J _).2 hj)
+      · rw [kappa_intCast_mul, zsmul_eq_mul]
+  -- the cancellation: `κ(J ∩ O)·z ⊆ c·L` ⇒ `z ∈ L'` (for `L = κ(J∩O)·L'`-type data)
+  have cancel : ∀ (L L' : Submodule ℤ ℂ),
+      (∀ o ∈ (conductorOrder (QNeg m) f).toSubalgebra, ∀ x ∈ L', kappa m o * x ∈ L') →
+      idealLat m f J * L' = L.map (LinearMap.mulLeft ℤ c) →
+      ∀ z : ℂ, (∀ j ∈ idealMeetOrder m f J, kappa m j * z ∈ L) → c * z ∈ L' := by
+    intro L L' hL' hJL z hz
+    -- every `w ∈ Jinv * Jf` satisfies `κ(w)·(c z) ∈ L'`
+    have key : ∀ w ∈ Jinv * Jf, kappa m w * (c * z) ∈ L' := by
+      intro w hw
+      refine Submodule.mul_induction_on hw ?_ ?_
+      · intro a ha b hb
+        have hb' : b ∈ idealMeetOrder m f J := (mem_jUnit_iff J b).1 hb
+        have h1 : c * (kappa m b * z) ∈ idealLat m f J * L' := by
+          rw [hJL]
+          exact ⟨kappa m b * z, hz b hb', rfl⟩
+        have h2 : ∀ y ∈ idealLat m f J * L', kappa m a * y ∈ L' := by
+          intro y hy
+          refine Submodule.mul_induction_on hy ?_ ?_
+          · intro i hi x hx
+            obtain ⟨j, hj, rfl⟩ := hspan i hi
+            rw [← mul_assoc, ← kappa_mul_eq]
+            exact hOL hL' (a * j) (Submodule.mul_mem_mul ha ((mem_jUnit_iff J j).2 hj)) x hx
+          · intro y₁ y₂ h₁ h₂
+            rw [mul_add]; exact L'.add_mem h₁ h₂
+        have := h2 _ h1
+        rwa [kappa_mul_eq, show kappa m a * kappa m b * (c * z) = kappa m a * (c * (kappa m b * z))
+          by ring]
+      · intro x y hx hy
+        rw [kappa_add, add_mul]; exact L'.add_mem hx hy
+    have h1 : (1 : QNeg m) ∈ Jinv * Jf := by rw [hmul]; exact Submodule.one_le.1 le_rfl
+    have := key 1 h1
+    rwa [show kappa m 1 = 1 by simp [kappa, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one],
+      one_mul] at this
+  -- elements of `idealLat J * L'` are κ-images when `L' ⊆ κ(K)`
+  have hrange : ∀ (L' : Submodule ℤ ℂ), (L' : Set ℂ) ⊆ Set.range (kappa m) →
+      ∀ w ∈ idealLat m f J * L', w ∈ Set.range (kappa m) := by
+    intro L' hL' w hw
+    refine Submodule.mul_induction_on hw ?_ ?_
+    · intro i hi y hy
+      obtain ⟨j, -, rfl⟩ := hspan i hi
+      obtain ⟨y₀, rfl⟩ := hL' hy
+      exact ⟨j * y₀, kappa_mul_eq _ _⟩
+    · rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩
+      exact ⟨a + b, kappa_add _ _⟩
+  -- `c ≠ 0`
+  have hJne : (J : Ideal (𝓞 (QNeg m))) ≠ ⊥ :=
+    ((conductorOrder (QNeg m) f).mem_integralIdealsPrimeTo_conductorModulus_iff.1 J.2).1
+  have hc : c ≠ 0 := by
+    intro hc0
+    set n : ℕ := Ideal.absNorm (J : Ideal (𝓞 (QNeg m)))
+    have hn0 : n ≠ 0 := fun h => hJne (Ideal.absNorm_eq_zero_iff.1 h)
+    have hnJ : (n : 𝓞 (QNeg m)) ∈ (J : Ideal (𝓞 (QNeg m))) := Ideal.absNorm_mem _
+    have hnO : (n : QNeg m) ∈ idealMeetOrder m f J :=
+      ⟨Subalgebra.natCast_mem _ n, (n : 𝓞 (QNeg m)), hnJ, by simp⟩
+    have hj : (n : ℂ) ∈ idealLat m f J := by
+      refine Submodule.subset_span ⟨(n : QNeg m), hnO, ?_⟩
+      rw [← kappaAlg_apply, map_natCast]
+    have h1 : (n : ℂ) * 1 ∈ idealLat m f J * Q'.lat :=
+      Submodule.mul_mem_mul hj (Submodule.subset_span (by simp))
+    rw [hLc, hc0] at h1
+    obtain ⟨y, -, hy⟩ := h1
+    simp only [LinearMap.mulLeft_apply, zero_mul, mul_one] at hy
+    exact hn0 (by exact_mod_cast hy.symm)
+  -- the two image equalities
+  have img : ∀ (L L' : Submodule ℤ ℂ), (1 : ℂ) ∈ L →
+      (∀ o ∈ (conductorOrder (QNeg m) f).toSubalgebra, ∀ x ∈ L', kappa m o * x ∈ L') →
+      (L' : Set ℂ) ⊆ Set.range (kappa m) →
+      idealLat m f J * L' = L.map (LinearMap.mulLeft ℤ c) →
+      kappa m '' colon (kappa m ⁻¹' (L : Set ℂ)) (idealMeetOrder m f J) = c⁻¹ • (L' : Set ℂ) := by
+    intro L L' hL1 hL'O hL'r hJL
+    ext w
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      have hcz := cancel L L' hL'O hJL (kappa m x) (fun j hj => by
+        have := hx j hj
+        rwa [Set.mem_preimage, kappa_mul_eq] at this)
+      exact Set.mem_smul_set.2 ⟨c * kappa m x, hcz, by rw [smul_eq_mul, inv_mul_cancel_left₀ hc]⟩
+    · intro hw
+      obtain ⟨y, hy, rfl⟩ := Set.mem_smul_set.1 hw
+      obtain ⟨y₀, rfl⟩ := hL'r hy
+      have hcL : c ∈ Set.range (kappa m) := by
+        apply hrange L' hL'r
+        rw [hJL]
+        exact ⟨1, hL1, by simp⟩
+      obtain ⟨c₀, hc₀⟩ := hcL
+      have hc₀0 : c₀ ≠ 0 := by rintro rfl; apply hc; rw [← hc₀]; simp [kappa]
+      refine ⟨c₀⁻¹ * y₀, fun j hj => ?_, ?_⟩
+      · have h1 : kappa m j * kappa m y₀ ∈ idealLat m f J * L' :=
+          Submodule.mul_mem_mul (Submodule.subset_span ⟨j, hj, rfl⟩) hy
+        rw [hJL] at h1
+        obtain ⟨q, hq, hqe⟩ := h1
+        simp only [LinearMap.mulLeft_apply] at hqe
+        show kappa m (j * (c₀⁻¹ * y₀)) ∈ L
+        rw [kappa_mul_eq, kappa_mul_eq, kappa_inv, hc₀,
+          show kappa m j * (c⁻¹ * kappa m y₀) = c⁻¹ * (kappa m j * kappa m y₀) by ring, ← hqe,
+          inv_mul_cancel_left₀ hc]
+        exact hq
+      · rw [kappa_mul_eq, kappa_inv, hc₀, smul_eq_mul]
+  -- `⟨1/N, τ_{Q'}⟩ ⊆ κ(K)`
+  have hrN : (Q'.latN : Set ℂ) ⊆ Set.range (kappa m) := by
+    obtain ⟨t, ht⟩ := exists_kappa_tau (m := m) hD Q'
+    intro z hz
+    rw [SetLike.mem_coe, HeegnerForm.latN, Submodule.mem_span_pair] at hz
+    obtain ⟨a, b, rfl⟩ := hz
+    refine ⟨(a : QNeg m) * algebraMap ℚ (QNeg m) (1 / N) + (b : QNeg m) * t, ?_⟩
+    rw [kappa_add, kappa_intCast_mul, kappa_intCast_mul, kappa_rat, ht, zsmul_eq_mul, zsmul_eq_mul]
+    push_cast; rfl
+  refine ⟨hc, img Q.lat Q'.lat (Submodule.subset_span (by simp))
+    (fun o ho => kappa_mul_mem_lat hsq hD Q' ho) (lat_subset_range hD Q') hLc,
+    img Q.latN Q'.latN (lat_le_latN Q hN (Submodule.subset_span (by simp)))
+    (fun o ho => kappa_mul_mem_latN_gen hsq hD Q' ho) hrN hLN⟩
+
+end T5Glue
+
 -- ===== parts/Row.lean =====
 
 noncomputable section
@@ -2007,13 +2756,48 @@ theorem cmModuli_of_final (hL : ShimuraMainCM) (hA : AbsArtinSurjectiveQNeg)
     (hS : IdeleLatticeScale) : CMModuli :=
   cmModuli_of_leaf hL (artinLift_of_abs hA) hS
 
-/-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
-(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and two
-glue Props (`AbsArtinSurjectiveQNeg`: surjectivity of Tau Ceti's absolute Artin map `C_K → G_K^ab`
-for `K = ℚ(√−m)`; `IdeleLatticeScale`: the ring-class lattice computation). -/
+/-- Row T-5 from two printed leaves and the two glue Props `AbsArtinSurjectiveQNeg`,
+`IdeleLatticeScale`. -/
 theorem shimuraReciprocityModFn_of_final (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
     (hA : AbsArtinSurjectiveQNeg) (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
   shimuraReciprocityModFn_of_split (cmModuli_of_final hCM hA hS) (x0RatStructure_of_leaf hX)
+
+/-- **`CMModuli`, final form**: the printed main theorem of CM and the ring-class lattice
+computation (`AbsArtinSurjectiveQNeg` is proved: `absArtinSurjectiveQNeg`). -/
+theorem cmModuli_of_t5 (hL : ShimuraMainCM) (hS : IdeleLatticeScale) : CMModuli :=
+  cmModuli_of_final hL absArtinSurjectiveQNeg hS
+
+/-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
+(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and one
+glue Prop (`IdeleLatticeScale`: the ring-class lattice computation). -/
+theorem shimuraReciprocityModFn_of_t5 (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hS : IdeleLatticeScale) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_split (cmModuli_of_t5 hCM hS) (x0RatStructure_of_leaf hX)
+
+end T5Glue
+
+namespace T5Glue
+
+open ZInQ.Contrib.TYZGenus.Shimura
+
+/-- **Row T-5 with `IdeleLatticeScale` split**: two printed leaves and two small glue Props
+(`RingClassLattice`: TC's ring-class quotient is the lattice class `[K ∩ s_f Ô_O]`;
+`InvertibleColon`: `J ∩ O` is invertible). -/
+theorem shimuraReciprocityModFn_of_t5' (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hA : RingClassLattice) (hB : InvertibleColon) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_t5 hCM hX (ideleLatticeScale_of hA hB)
+
+/-- **`CMModuli` from the printed main theorem of CM and `RingClassLattice`.** -/
+theorem cmModuli_of_t5' (hL : ShimuraMainCM) (hA : RingClassLattice) : CMModuli :=
+  cmModuli_of_t5 hL (ideleLatticeScale_of hA invertibleColon)
+
+/-- **Row T-5 (the kernel's `Shimura.ShimuraReciprocityModFn`): final form.** Two printed leaves
+(`ShimuraMainCM`: Shimura 1971 Thm. 5.4; `X0ModuliGalois`: the canonical model of `X₀(N)`) and one
+glue Prop (`RingClassLattice`: Tau Ceti's ring-class quotient of an idele `s` is the class of the
+`O`-lattice `K ∩ s_f Ô_O`). -/
+theorem shimuraReciprocityModFn_of_t5'' (hCM : ShimuraMainCM) (hX : X0ModuliGalois)
+    (hA : RingClassLattice) : ShimuraReciprocityModFn :=
+  shimuraReciprocityModFn_of_t5' hCM hX hA invertibleColon
 
 end T5Glue
 
@@ -2024,18 +2808,18 @@ namespace T5Glue
 open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 
 /-- **Theorem 1.1 from every statement still open, with row T-5 replaced by two printed leaves and
-two glue Props** (`ShimuraMainCM`, `X0ModuliGalois`; `AbsArtinSurjectiveQNeg`, `IdeleLatticeScale`).
-The kernel's `ZInQ.OneProof.frozenTarget` with `hS : Shimura.ShimuraReciprocityModFn` discharged by
-`shimuraReciprocityModFn_of_final`. -/
+one glue Prop** (`ShimuraMainCM`, `X0ModuliGalois`; `RingClassLattice`). The kernel's
+`ZInQ.OneProof.frozenTarget` with `hS : Shimura.ShimuraReciprocityModFn` discharged by
+`shimuraReciprocityModFn_of_t5''`. -/
 theorem frozenTarget_t5
     (r : HDec.HSyn.OpenResearchLeaves9) (t : HDec.HSyn.OpenTextbookLeaves9) (l : HDec.HSyn.OpenAddedLeaves8)
     (g : HDec.HSyn.OpenGlue7)
     (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
-    (hCM : ShimuraMainCM) (hX : X0ModuliGalois) (hA : AbsArtinSurjectiveQNeg) (hS : IdeleLatticeScale)
+    (hCM : ShimuraMainCM) (hX : X0ModuliGalois) (hA : RingClassLattice)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hL2 : ZInQ.GZDecomp.FHNonvanishing) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
     ZInQ.FrozenTarget :=
-  ZInQ.OneProof.frozenTarget r t l g h11 h29 (shimuraReciprocityModFn_of_final hCM hX hA hS) h33 hL2 hL3
+  ZInQ.OneProof.frozenTarget r t l g h11 h29 (shimuraReciprocityModFn_of_t5'' hCM hX hA) h33 hL2 hL3
 
 end T5Glue
 
