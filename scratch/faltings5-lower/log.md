@@ -36,3 +36,12 @@ Module dir ZInQKernel/Contrib/OneProof/FaltingsLemma5Lower/:
 - Ker.lean: `isogKerCard : IsogKerCard` (kernel scheme pullback φ e, ring maps of points via Tangent.ptRing,
   algebraic elements of ℂ lie in ι(K̄), `Finite.algHom`) (VERIFIED).
 Remaining: `IsogCotBijective` (étaleness at the origin). Plan: Milne quasi-inverse (bundle field) + Tangent.lean.
+
+## 06:20 — main theorem proved (VERIFIED: `lake build ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower` succeeds;
+`#print axioms` = [propext, Classical.choice, Quot.sound])
+- `GapHeight.faltingsLemma5Lower (hM : AvSplit.MilneIsogenyQuasiInverse) : ZInQ.HeightSplit.FaltingsLemma5Lower`.
+- P1 `isogCotBijective (hM) : IsogCotBijective` (CotPts/Cot/CotTan/CotFinal): derivation at origin killing f^* →
+  tangent vector v of A with v ≫ φ = 1 → (Milne) v ≫ [d] = 1 → v = 1 (Tangent.eq_one_of_comp_intCast) → D = 0;
+  dims via kernel TangentDim (tangentDim_of_regular ∘ regularOrigin_of/dimOrigin_of ∘ originStalkIso_of genericFibreStalkIso)
+  and topologicalKrullDim_eq_of_finite_surjective.
+- Semistability hypotheses of FaltingsLemma5Lower unused; Néron property of 𝒩B used only via CToPrinted.exists_extension.
