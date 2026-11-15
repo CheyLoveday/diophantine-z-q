@@ -30,7 +30,7 @@ RayClassCM ⇐ ShimuraMainThmIDeligneY3AbU (leaf 1 above folded into the Deligne
 Everything else (Tau Ceti kernel of the Artin map = ray subgroup, Galois descent of residue fields,
 extension of automorphisms of `ℚ̄` to `ℂ`, DCRel manipulations) to be proved.
 
-## Step 1 (11-14, 21:xx): the reduction compiles (VERIFIED)
+## Step 1 (11-14, 18:47): the reduction compiles (VERIFIED)
 Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the previous):
 `Base.lean` (shimura-cft verbatim) → `RayDefs.lean` (x6-glue's Ray section verbatim, lines 6587-6745)
 → `RayProof1..5.lean`. All compile with 0 errors.
