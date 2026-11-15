@@ -537,4 +537,53 @@ theorem res_isAlgebraic {K E : Type} [Field K] [Field E] [Algebra K E] [Algebra.
 
 end ResAlg
 
+section Assemble
+
+open ReductSplit ReductGlue
+
+/-- **Extension of a valuation ring to an extension field** (Chevalley; via Mathlib's
+`IsLocalRing.exists_factor_valuationRing`). -/
+theorem exists_comap_eq {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] (O : ValuationSubring K) :
+    ∃ w : ValuationSubring Ω, w.comap (algebraMap K Ω) = O := by
+  obtain ⟨B, hB, hloc⟩ := IsLocalRing.exists_factor_valuationRing ((algebraMap K Ω).comp O.subtype)
+  refine ⟨B, le_antisymm ?_ (fun x hx => hB ⟨x, hx⟩)⟩
+  intro x hx
+  by_contra hxO
+  have hx0 : x ≠ 0 := fun h => hxO (h ▸ O.zero_mem)
+  have hinv : x⁻¹ ∈ O := (O.mem_or_inv_mem x).resolve_left hxO
+  have hunit : IsUnit (((algebraMap K Ω).comp O.subtype).codRestrict B.toSubring hB ⟨x⁻¹, hinv⟩) := by
+    refine isUnit_iff_exists_inv.mpr ⟨⟨algebraMap K Ω x, hx⟩, Subtype.ext ?_⟩
+    change algebraMap K Ω x⁻¹ * algebraMap K Ω x = 1
+    rw [← map_mul, inv_mul_cancel₀ hx0, map_one]
+  obtain ⟨u, hu⟩ := hloc.map_nonunit _ hunit
+  apply hxO
+  have h1 : ((u : O) : K) * (((u⁻¹ : Oˣ) : O) : K) = 1 :=
+    congrArg (fun z : O => (z : K)) (Units.mul_inv u)
+  rw [hu] at h1
+  change x⁻¹ * _ = 1 at h1
+  have : (((u⁻¹ : Oˣ) : O) : K) = x := by
+    rw [← inv_inv x]; exact (eq_inv_of_mul_eq_one_right h1)
+  rw [← this]; exact (u⁻¹ : Oˣ).1.2
+
+/-- **`SHInside0` is a theorem.** -/
+theorem shInside0 : SHInside0 := by
+  intro K _ _ O _ _ Ω _ _ _ w hw
+  haveI : Algebra.IsAlgebraic K (inertiaField (K := K) w) := inferInstance
+  refine ⟨inertiaField (K := K) w, hE_eq w hw,
+    ⟨⟨isDVR_wE w hw, henselian_wE w, isSepClosed_wE w⟩, inferInstance,
+      fun ϖ hϖ => irreducible_comapHom w hw ϖ hϖ, ?_⟩,
+    fun σ hσ x hx => inertia_fixes w hσ hx⟩
+  letI := (resMap (hE_eq w hw)).toAlgebra
+  haveI := res_isAlgebraic (hE_eq w hw)
+  exact Algebra.IsAlgebraic.isSeparable_of_perfectField
+
+/-- **`SHExists0` is a theorem.** -/
+theorem shExists0 : SHExists0 := by
+  intro K _ _ O _ _
+  obtain ⟨w, hw⟩ := exists_comap_eq (Ω := AlgebraicClosure K) O
+  obtain ⟨E, hE, h, -⟩ := shInside0 K O (AlgebraicClosure K) w hw
+  exact ⟨E, inferInstance, inferInstance, _, hE, h⟩
+
+end Assemble
+
 end ShRoute

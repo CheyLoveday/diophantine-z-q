@@ -25,3 +25,13 @@ Base e38375b3 (wip/w62). Lean 4.35 / Mathlib v4.35.0.
   E = Fix(H), R = integralClosure A E, 𝔮 = P ∩ R; Mathlib `Ideal.card_inertia_eq_ramificationIdxIn` over A and over R
   (group H, inertia of P in H is ⊤) + `ramificationIdx_tower` ⇒ e(𝔮|p) = 1; `ramificationIdx_eq_multiplicity` ⇒
   p𝓞_E = 𝔮·J, J ⊄ 𝔮; inertia elements act trivially mod 𝔪_W on W (via exists_of_mem) so x ∈ E.
+
+## CA2.lean (imports ShRG, Top, CA1 oleans) — compiles, no sorry (VERIFIED, 16 s)
+- `inertiaField w : IntermediateField K Ω` = {x | ∃ finite Galois M ∋ x, every τ ∈ Aut(Ω/K) with τy−y ∈ 𝔪_w for
+  y ∈ w∩M fixes x}; `inertia_fixes`: IsInertia w σ ⇒ σ fixes it.
+- `mem_inertiaField_of_simple_root` (core): root α of g over wE whose residue is a simple root of g mod 𝔪_w lies in
+  the inertia field (two roots with one residue ⇒ double root mod 𝔪_w).
+- `henselian_wE`, `isSepClosed_wE`, `isDVR_wE` (from `key_finite` via `unit_pow`), `irreducible_comapHom`
+  (uniformizer of O stays a uniformizer), `res_isAlgebraic` (residue ext of algebraic ext is algebraic),
+  `exists_comap_eq` (extension of valuation rings).
+- **`shInside0 : SHInside0`, `shExists0 : SHExists0` PROVED.**
