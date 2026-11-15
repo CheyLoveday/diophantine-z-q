@@ -966,4 +966,79 @@ theorem sqW (a0 a1 b0 b1 : ℕ) :
   congr 2
   congr 1; push_cast; ring
 
+theorem om24_sym : Om24 1 0 = Om24 0 1 := by rw [om24_10, om24_01]
+
+theorem sq_char (m : HDec.PkgI1.Char2) :
+    HDec.PkgI1.thetaConst m Om24 ^ 2 =
+      Ecal * cexp (π * I * (((m.1 0 : ℕ) * (m.2 0 : ℕ) + (m.1 1 : ℕ) * (m.2 1 : ℕ) : ℕ) : ℂ)) *
+      ∑ σ : Fin 2 × Fin 2, (-1 : ℂ) ^ (((σ.1 : ℕ) + (m.2 0 : ℕ)) * (m.1 0 : ℕ) + ((σ.2 : ℕ) + (m.2 1 : ℕ)) * (m.1 1 : ℕ)) *
+        Uf ((σ.1 : ℕ) + (m.2 0 : ℕ)) ((σ.2 : ℕ) + (m.2 1 : ℕ)) * Uf σ.1 σ.2 := by
+  rw [thetaConst_eq m Om24 om24_sym, om24_00, om24_01, om24_11, sq_inv, sqW]
+
+theorem U11' : U (1 / 2) (1 / 2) = 0 := U11
+theorem U11'' : U 2⁻¹ 2⁻¹ = 0 := by rw [← one_div]; exact U11
+
+theorem exp_pi_two : cexp (π * I * 2) = 1 := by
+  rw [show (π : ℂ) * I * 2 = ((1 : ℤ) : ℂ) * (2 * π * I) by push_cast; ring, exp_int_mul_two_pi_mul_I]
+
+theorem sqc0 : HDec.PkgI1.thetaConst (![0, 0], ![0, 0]) Om24 ^ 2 =
+    Ecal * (U 0 0 ^ 2 + U (1 / 2) 0 ^ 2 + U 0 (1 / 2) ^ 2) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc1 : HDec.PkgI1.thetaConst (![0, 1], ![0, 0]) Om24 ^ 2 =
+    Ecal * (U 0 0 ^ 2 + U (1 / 2) 0 ^ 2 - U 0 (1 / 2) ^ 2) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc2 : HDec.PkgI1.thetaConst (![1, 0], ![0, 0]) Om24 ^ 2 =
+    Ecal * (U 0 0 ^ 2 - U (1 / 2) 0 ^ 2 + U 0 (1 / 2) ^ 2) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc3 : HDec.PkgI1.thetaConst (![1, 1], ![0, 0]) Om24 ^ 2 =
+    Ecal * (U 0 0 ^ 2 - U (1 / 2) 0 ^ 2 - U 0 (1 / 2) ^ 2) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc4 : HDec.PkgI1.thetaConst (![0, 0], ![1, 0]) Om24 ^ 2 =
+    Ecal * (2 * U 0 0 * U (1 / 2) 0) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc5 : HDec.PkgI1.thetaConst (![0, 1], ![1, 0]) Om24 ^ 2 =
+    Ecal * (2 * U 0 0 * U (1 / 2) 0) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc6 : HDec.PkgI1.thetaConst (![0, 0], ![0, 1]) Om24 ^ 2 =
+    Ecal * (2 * U 0 0 * U 0 (1 / 2)) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc7 : HDec.PkgI1.thetaConst (![1, 0], ![0, 1]) Om24 ^ 2 =
+    Ecal * (2 * U 0 0 * U 0 (1 / 2)) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc8 : HDec.PkgI1.thetaConst (![0, 0], ![1, 1]) Om24 ^ 2 =
+    Ecal * (2 * U 0 (1 / 2) * U (1 / 2) 0) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
+theorem sqc9 : HDec.PkgI1.thetaConst (![1, 1], ![1, 1]) Om24 ^ 2 =
+    Ecal * (-(2 * U 0 (1 / 2) * U (1 / 2) 0)) := by
+  rw [sq_char]
+  simp [Fin.sum_univ_two, Fintype.sum_prod_type, Uf, exp_pi_two, U11'']
+  first | (left; ring1) | ring1
+
 end CM24
