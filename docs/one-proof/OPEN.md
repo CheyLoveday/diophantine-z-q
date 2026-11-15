@@ -45,6 +45,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`shimuraFamilyAb`](#shimurafamilyab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/shimura-cft)) | 2026-11-14 |
 | [`r7a`](#r7a) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) | 2026-11-14 |
 | [`semistableUnipotent`](#semistableunipotent) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/unipotent-b)) | 2026-11-14 |
+| [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-dvr)) | 2026-11-15 |
 | [`rayClassCMAb`](#rayclasscmab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/rayclass-cft)) | 2026-11-14 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) | 2026-11-14 |
@@ -64,7 +65,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942)) | 2026-11-14 |
 | [`shimuraGoodReductionNoGuard`](#shimuragoodreductionnoguard) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/79#issuecomment-6887798479)) | 2026-11-15 |
 | [`geomConnOfAlgClosure`](#geomconnofalgclosure) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957)) | 2026-11-15 |
-| [`quotientP1Coordinate`](#quotientp1coordinate) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot)) | 2026-11-14 |
+| [`quotientP1Coordinate`](#quotientp1coordinate) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/p1-scheme)) | 2026-11-15 |
 | [`h11`](#h11) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) | 2026-11-14 |
 | [`h29`](#h29) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) | 2026-11-14 |
 
@@ -156,7 +157,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`shimuraGoodReductionNoGuard`](#shimuragoodreductionnoguard) | added | composite | GLUE |  |  | T4 | [elliotglazer #79](https://github.com/elliotglazer/diophantine-z-q/issues/79) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/79#issuecomment-6887798479)) |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | added | composite | GLUE |  |  | T2 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg)) |
 | [`weilPairingMumford`](#weilpairingmumford) | added | published | GLUE | strictest, pending-review, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
-| [`quotientP1Coordinate`](#quotientp1coordinate) | glue | project glue | GLUE |  | wave | T3 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot)) |
+| [`quotientP1Coordinate`](#quotientp1coordinate) | glue | project glue | GLUE |  | wave | T3 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/p1-scheme)) |
 | [`eigenformHTNew`](#eigenformhtnew) | research | consequence | GLUE |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`elkiesX6StarPrinted`](#elkiesx6starprinted) | research | consequence | GLUE | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`r11r12`](#r11r12) | research | composite | GLUE |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
@@ -189,7 +190,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`javanpeykarBound`](#javanpeykarbound) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF | unverified-locator | bigger | T3 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`neronBaseChangeStrictHenselization`](#neronbasechangestricthenselization) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | narrowing | T1-T2 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | pending narrowing: a narrower restatement is planned, so it is not offered as stated |
+| [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | narrowing | T1-T2 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-dvr)) |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`r7a`](#r7a) | research | published | LEAF |  |  | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130)) |
 | [`r9a`](#r9a) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
@@ -297,7 +298,7 @@ T09Pic.WeilPairingMumford
 * Source: a finite q : Y -> Z over Z_(p) and Z = P^1_{Z_(p)} by charts with R2fp's fibre relation for the composite: the tame quotient Y/Gamma' = P^1 (SGA 1 Exp. V); no quotient schemes or P^1_{Z_(p)} in Mathlib 4.35
 * label wave (taken by the project's gap push); tier T3 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot)).
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/p1-scheme)).
 
 ```lean
 HDec.MCRGlue.QuotientP1Coordinate
@@ -878,7 +879,7 @@ GapSHPair.NeronBaseChangeStrictHenselization
 * Source: BLR, Neron models, 1.4 Thm 3 over a DVR, scheme form (no group law)
 * packet [R2](#packet-r2); label narrowing (pending narrowing: a narrower restatement is planned, so it is not offered as stated); tier T1-T2 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
-* Status: pending narrowing: a narrower restatement is planned, so it is not offered as stated.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-dvr)).
 
 ```lean
 ReductSplit.NeronSchemeModelExistsDVR
