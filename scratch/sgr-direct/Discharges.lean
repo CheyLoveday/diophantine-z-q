@@ -6,3 +6,6 @@ import ZInQKernel.Contrib.OneProof.SGRDirectNV
 
 #print axioms SGRDirect.heckeVertWitness_of_nv
 #print axioms SGRDirect.vertUnramWitness_of_nv
+#print axioms SGRDirect.ramifiedSqrtInertia
+#print axioms SGRDirect.vertInertiaTrivial
+#print axioms SGRDirect.heckeVertWitness_of_nvLocal
