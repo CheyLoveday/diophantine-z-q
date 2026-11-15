@@ -45,7 +45,7 @@ Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the pre
   `cm_data`, `isTotallyComplex_of_root`, `finrank_K4/K3/K24`, Tau Ceti kernel of the Artin map =
   ray subgroup (`ker_ideleClassArtinMap`, `range_ideleClassNormMap_rayClassField`, `mk_mem_raySubgroup_iff`).
 
-## Step 2 (11-14, ~19:10): glue proved (VERIFIED, compiled, standard axioms)
+## Step 2 (11-14, 18:54): glue proved (VERIFIED, compiled, standard axioms)
 - `RayGlueO.lean`: `ringOfIntegersGen_K4`, `ringOfIntegersGen_K3` (Mathlib's
   `IsCyclotomicExtension.Rat.isIntegralClosure_adjoin_singleton` + `adjoin_quad`), `ringOfIntegersGen_K24`
   (by hand: trace, norm and `(x − x̄)√−6` integral rationals; `6 ∣ e`; parity mod 4); `rayClassCM_of2`.
@@ -57,3 +57,14 @@ Files (olean chain via `chk.sh`, LEAN_PATH + /tmp/rc-olean; each imports the pre
   (hB : CMBaseChange) (hA : CMAnalytic) : RayClassCM` — [propext, Classical.choice, Quot.sound].
 - Pitfall: for `K = ℚ`, `Algebra ℚ (v.adicCompletion ℚ)` has two non-defeq instances (`DivisionRing.toRatAlgebra`
   vs `instAlgebraAdicCompletion`); state the semilocal lemmas for a general number field `K` and specialize.
+
+## Step 3: `CMAnalytic` proved from the bundle's textbook leaf `HomLinearLift` (VERIFIED, compiled)
+- `RayGlueA.lean`: `qmLattice_countable`, `linear_eq_zero_of_mem` (a ℂ-subspace inside `Λ_τ` is 0, by
+  countability), `iota_eig_zero`/`iota_eig_inj` (`ι(b)(τ,1)ᵀ = 0 ⇒ b = 0`, no anisotropy needed),
+  `exists_of_mem_qmLattice`, `lift_unique`, `liftM` (+ `_mul/_add/_one/_zero`), `liftM_comm` (End_𝒪
+  lifts commute with `ι(𝒪)`, via `IotaCompatible`), `liftM_scalar` (commuting with `ι(i)`, `ι(j)` ⇒ scalar),
+  `cmAnalytic_of (hHL : ZInQ.HomUnify.HomLinearLift) : CMAnalytic`, and
+  `rayClassCM_of4 (hL) (hMR) (hCN) (hB : CMBaseChange) (hHL : HomLinearLift) : RayClassCM`.
+  All `#print axioms`: [propext, Classical.choice, Quot.sound].
+- `HomLinearLift` is hom-unify's leaf (ZInQKernel/Contrib/HomUnify/Corr.lean), the first clause of the bundle
+  leaf `HomLatticeCorr` (`homLinearLift_of_corr`).
