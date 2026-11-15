@@ -113,3 +113,6 @@ of the e38375b3 build). One Lean process at a time.
   [propext, Classical.choice, Quot.sound] (VERIFIED). Proof = reduct-glue's semistableNeronBaseChangeLocalGlobal_of
   copied with the two forms above; OpenSubgroupIsIdComp no longer needed.
 - No sorry, no axiom in scratch/c-to-printed/*.lean (VERIFIED by grep).
+- Bundle `CToPrintedLeaves` (6 new leaves + GeomConnOfRationalPoint); `fields_of_leaves` (3 fields) and
+  `reductGlue_leaves_of_printed` (NeronLocalizesDVR ∧ IdentityComponentOL ∧ OpenImmersionOfLocal) COMPILE.
+  14 #print axioms lines, all standard (VERIFIED, ~11 s).

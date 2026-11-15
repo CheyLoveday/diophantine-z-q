@@ -1724,6 +1724,37 @@ theorem semistableNeronBaseChange_of_printed_full (hB : BLR_1_2_4) (h3 : SGA3_VI
   exact isOpenImmersion_of_neron N hN T ((Over.pullback (gO O')).map j) j₂ h₁ h₂
 
 
+/-- reduct-glue's leaf `IdentityComponentOL` is a theorem from the printed SGA 3 VI_B 3.10 and the bundle
+leaf `AVGlue.GeomConnOfRationalPoint`. -/
+theorem identityComponentOL_of_printed_full (h3 : SGA3_VIB_3_10)
+    (hG : AVGlue.GeomConnOfRationalPoint) : ReductGlue.IdentityComponentOL :=
+  identityComponentOL_of_printed' h3 (idCompSubgroup_of h3 hG) idCompGenericFibre (idCompGeomFibres hG)
+
+/-- **The published-form leaves of this task** (part H's `ShimuraMainThmIY3` is in `Shimura.lean`).
+`AVGlue.GeomConnOfRationalPoint` is already a field of the leaf bundles. -/
+structure CToPrintedLeaves : Prop where
+  blr : BLR_1_2_4
+  faltings5 : FaltingsLemma5Printed
+  raynaud : RaynaudKernelBound
+  sga3 : SGA3_VIB_3_10
+  sga7 : SGA7_IX_3_3
+  ega : EGAIV_8_10_5_openImm
+  geomConn : AVGlue.GeomConnOfRationalPoint
+
+/-- **Three of the four fields from the leaves** (compiled). -/
+theorem fields_of_leaves (l : CToPrintedLeaves) :
+    ReductGlue.NeronLocalizesDVR ∧ ZInQ.HeightSplit.FaltingsLemma5BC ∧
+      ZInQ.HeightSplit.SemistableNeronBaseChange :=
+  ⟨neronLocalizesDVR_of_printed l.blr, faltingsLemma5BC_of_printed l.faltings5 l.raynaud,
+    semistableNeronBaseChange_of_printed_full l.blr l.sga3 l.sga7 l.ega l.geomConn⟩
+
+/-- **reduct-glue's leaves `NeronLocalizesDVR`, `IdentityComponentOL`, `OpenImmersionOfLocal` from the leaves**
+(compiled). -/
+theorem reductGlue_leaves_of_printed (l : CToPrintedLeaves) :
+    ReductGlue.NeronLocalizesDVR ∧ ReductGlue.IdentityComponentOL ∧ ReductGlue.OpenImmersionOfLocal :=
+  ⟨neronLocalizesDVR_of_printed l.blr, identityComponentOL_of_printed_full l.sga3 l.geomConn,
+    openImmersionLocalization l.ega⟩
+
 end CToPrinted
 
 #print axioms CToPrinted.neronLocalizesDVR_of_printed
@@ -1738,3 +1769,5 @@ end CToPrinted
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_final''
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_best
 #print axioms CToPrinted.semistableNeronBaseChange_of_printed_full
+#print axioms CToPrinted.fields_of_leaves
+#print axioms CToPrinted.reductGlue_leaves_of_printed

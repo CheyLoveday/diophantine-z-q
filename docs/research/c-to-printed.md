@@ -50,7 +50,8 @@ theory, which Mathlib lacks.
 Side effect for reduct-glue: three of its leaves become theorems from these printed forms:
 - `NeronLocalizesDVR` from `BLR_1_2_4`;
 - `OpenImmersionOfLocal` from `EGAIV_8_10_5_openImm` (`openImmersionOfLocal_of_printed`);
-- `IdentityComponentOL`, in the stronger form `IdentityComponentOLRange`, from SGA 3 and Stacks 04KV.
+- `IdentityComponentOL` from SGA 3 and Stacks 04KV (`identityComponentOL_of_printed_full`; the stronger
+  `IdentityComponentOLRange` is also proved).
 
 Its fourth leaf, reduct-split's `IdentityComponentBaseChangeDVR`, is replaced in the proof by
 `IdentityComponentBaseChangeDVRRange`, which is proved from SGA 3, SGA 7 and Stacks 04KV.
@@ -272,12 +273,18 @@ No analytification is needed.
 
 `scratch/c-to-printed/run.sh FILE` runs `lean` with `LEAN_PATH` on a copy of the e38375b3 build (`~/ctp-lib`), one
 Lean process at a time. Results:
-- `CToPrinted.lean`: about 20 s, no errors, 13 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`
+- `CToPrinted.lean`: about 11 s, no errors, 14 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]`
   (VERIFIED).
 - `Shimura.lean`: about 6 s, no errors, 3 `#print axioms` lines, all standard (VERIFIED).
 - `grep` finds no `sorry` and no `axiom` in either file (VERIFIED).
 
-For integration, the field theorems are:
+For integration:
+- the bundle `CToPrinted.CToPrintedLeaves` holds the six new leaves and `AVGlue.GeomConnOfRationalPoint`;
+- `CToPrinted.fields_of_leaves` gives three of the four fields;
+- `CToPrinted.reductGlue_leaves_of_printed` gives reduct-glue's leaves `NeronLocalizesDVR`, `IdentityComponentOL`
+  and `OpenImmersionOfLocal`.
+
+The field theorems are:
 - `CToPrinted.neronLocalizesDVR_of_printed`;
 - `CToPrinted.faltingsLemma5BC_of_printed`;
 - `CToPrinted.semistableNeronBaseChange_of_printed_full`;
