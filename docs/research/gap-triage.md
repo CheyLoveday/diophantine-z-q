@@ -34,8 +34,9 @@ Agent claims are SPECULATIVE unless I re-checked them. Section 3 lists what I re
    - The chain proves it from the existing field `deligneComponentsY3Printed`:
      `GapTriage.modelYIrreducible_of_open9 (l : HDec.HSyn.OpenAddedLeaves9) : ModelYIrreducibleCopy`, with standard
      axioms.
-   - So mcr-quot's composite needs only L1–L6, T5, `CurveBijIso`, `P1SchemeQ` and `CMStabObj`.
-     `modelCoordinateResidue_final4` already takes `hYI : ModelYIrreducible` in place of `hCov`.
+   - So mcr-quot's composite needs only L1–L6, T5, `CurveBijIso`, `P1SchemeQ` and `CMStabObj`. Compiled:
+     `GapTriageMCR.modelCoordinateResidue_final10` (`scratch/gap-triage/MCRQuotNV.lean`, which is MCRQuot.lean
+     verbatim plus 20 lines) takes `hYI : ModelYIrreducible` in place of `hCov`, via `final4`, with standard axioms.
 4. **`P1SchemeQ` is within reach of the vendored CloudW07 library** (VERIFIED: every declaration below passes
    `#check`). Available pieces:
    - `projectiveLine k` (`Proj k[X₀,X₁]`), `isProper_toSpec`, `smoothOfRelativeDimension_toSpec`, `chartSpecIso`,
@@ -208,6 +209,7 @@ Conflicts and owners:
 - **Scratch theorems for the fold:**
   ```lean
   theorem GapGlue.p1SchemeQ : MCRQuot.P1SchemeQ
+  -- compiled already (MCRQuotNV.lean, as GapTriageMCR.modelCoordinateResidue_final10, with hP : P1SchemeQ as an input):
   theorem GapGlue.modelCoordinateResidue_final10 (hAF : ProperCurveAF) (hQE : FiniteQuotientExists)
       (hTS : TameQuotientSmooth) (hP1 : SmoothModelOfP1) (hFix : TameFixedPointsDisjoint) (hCyc : TameInertiaCyclic)
       (hT : ObjBridge.TorsionStructure) (hC : CurveBijIso) (hYI : ModelYIrreducible) (hO : CMStabObj) :
@@ -554,6 +556,7 @@ Status counts (base, from the tsv):
   `lake build ZInQKernel.OneProof.Main` exited 0):
   - `GlueProbe.lean`: finding 3, the `rfl`, the theorem and its axioms; the P¹ `#check`s.
   - `VerifyProbe.lean`: 24 `#check`s of the Mathlib, vendored and chain declarations cited above.
+  - `MCRQuotNV.lean`: mcr-quot's composite without `CoverModelOfHeckeN` (finding 3).
   - `ClosureProbe.lean`: membership of the `t23` consumers and of the glue-route constants in the closure of
     `HDec.HSyn.sixContactMin_of_open12` (212 392 constants).
   - The GZStatements module is not in that build, so its statements were read instead (`Weak.lean` L46–145).
