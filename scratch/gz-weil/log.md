@@ -53,3 +53,17 @@ Task: make gz-hl3's split of `hL3` net negative by turning `StrongWeilCurve` and
 - `scratch/gz-weil/MainEdit.lean`: `frozenTarget_gzweil` = frozenTarget with hL3 replaced by
   (WeierstrassUniformization, X0.EtaModelDifferential, HeegnerPointRationalCd, GrossZagierFormulaCd,
   GrossConjugationCd), through gz-statements' Cd chain; compiles, standard axioms.
+
+## Step 4: EtaModelDifferential from Jacobi's derivative formula (VERIFIED, compiled, 05:30 PST)
+- New leaf `ZInQ.GZWeil.JacobiLambdaDeriv`: ∀ t, Im t > 0 → HasDerivAt (θ₂⁴/θ₃⁴) (πi (θ₂⁴/θ₃⁴) θ₄⁴) t,
+  θ₂(t) = e^{πit/4} jacobiTheta₂ (t/2) t, θ₃ = jacobiTheta₂ 0, θ₄ = jacobiTheta₂ (1/2).
+  Numerically VERIFIED (python3, `scratch/gz-weil/lambda_check.py`): central difference vs πiλθ₄⁴ agree to 4e-10
+  at t = 0.3+0.8i, −0.2+1.1i, 0.45+0.6i. Printed locators UNVERIFIED (classical; Jacobi 1829).
+- `product_star` (f₁ θ(2τ;4τ)² = 2Q θ(0;16τ) θ(8τ;16τ) θ(1/2;16τ)⁴) proved from tyz-cm/gz-theta product forms
+  + `euler_BCD`; numerically VERIFIED in the form f θ₂(4τ)² = 2θ₂θ₃θ₄⁴(16τ) (error 1e-16).
+- `etaModelDifferential_of_jacobiLambdaDeriv`, `shimuraCMParamCd_of_jacobiLambdaDeriv`,
+  `grossZagierHeegnerCd_of_printed` in `ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilTheta.lean`;
+  `lake build …WeilTheta` success (11341 jobs); out_check.txt: 21 theorems, all standard axioms.
+- MainEdit: `frozenTarget_gzweil` (hL3 → WU, JacobiLambdaDeriv, HPR_Cd, GZF_Cd, GC_Cd) and
+  `frozenTarget_gzweil'` (with EtaModelDifferential): both compile, standard axioms.
+- #discharges rerun (with WeilTheta): 65 open, 1434 theorems checked, 6 discharge one (unchanged; expected).

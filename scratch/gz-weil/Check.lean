@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilTheta
 
 #print axioms ZInQ.GZWeil.twist_formula
 #print axioms ZInQ.GZWeil.period_identity
@@ -16,3 +16,8 @@ import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam
 #print axioms ZInQ.GZWeil.modularParamC1_of_etaModelDifferential
 #print axioms ZInQ.GZWeil.shimuraCMParamCd_of_etaModelDifferential
 #print axioms ZInQ.GZWeil.grossZagierHeegnerCd_of_weil
+#print axioms ZInQ.GZWeil.product_star
+#print axioms ZInQ.GZWeil.etaModelDifferential_of_jacobiLambdaDeriv
+#print axioms ZInQ.GZWeil.modularParamC1_of_jacobiLambdaDeriv
+#print axioms ZInQ.GZWeil.shimuraCMParamCd_of_jacobiLambdaDeriv
+#print axioms ZInQ.GZWeil.grossZagierHeegnerCd_of_printed
