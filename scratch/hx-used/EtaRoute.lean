@@ -580,8 +580,46 @@ theorem wp2_cases (τ : UpperHalfPlane) {p : ℤ} (hp : Odd p) :
       (rw [hω.1, hω.2, hc]; push_cast; ring)
 
 /-- Ratios of differences are invariant under a common scaling. -/
-theorem ratio_conj (σ : ℂ →+* ℂ) {a b c a' b' c' k : ℂ} (hk : k ≠ 0) (ha : σ a = k * a')
+theorem ratio_conj (σ : ℂ ≃+* ℂ) {a b c a' b' c' k : ℂ} (hk : k ≠ 0) (ha : σ a = k * a')
     (hb : σ b = k * b') (hc : σ c = k * c') : σ ((a - c) / (b - c)) = (a' - c') / (b' - c') := by
   rw [map_div₀, map_sub, map_sub, ha, hb, hc, ← mul_sub, ← mul_sub, mul_div_mul_left _ _ hk]
+
+/-! ## Part 6. The transport of the two `℘`-ratios -/
+
+/-- `(℘(a) − ℘(c))/(℘(b) − ℘(c))`. -/
+def wpRatio (P : PeriodPair) (a b c : ℂ) : ℂ :=
+  (P.weierstrassP a - P.weierstrassP c) / (P.weierstrassP b - P.weierstrassP c)
+
+section Transport2
+
+variable {f : ℕ} [NeZero f] {D : ℤ} (T : TData m f D)
+
+/-- One application of `ShimuraMainCM` at the lattice `⟨1/M, τ_Q⟩`. -/
+theorem cm_point {M d : ℕ} (hdM : d * M = 32) (hCM : ShimuraMainCM)
+    (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
+    (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+      I * (Real.sqrt m : ℂ))
+    (σ : ℂ ≃+* ℂ) (hs : ArtinCond m e σ T.s) (hM : M ≠ 0) :
+    ∃ μ : ℂ, μ ≠ 0 ∧ ∀ (u v : QNeg m) (w : ℂ),
+      kappa m u ∉ (ppM M hM T.Q.tauH).lattice →
+      finPart T.s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) u ∈
+        latHat m (kappa m ⁻¹' (T.Q.lat : Set ℂ)) →
+      kappa m v = T.c * w →
+      σ ((ppM M hM T.Q.tauH).weierstrassP (kappa m u)) =
+        (μ ^ 2 * (T.c ^ 2)⁻¹) * (ppM M hM T.Q'.tauH).weierstrassP w := by
+  have hM0 : 0 < M := Nat.pos_of_ne_zero hM
+  have hP : ((ppM M hM T.Q.tauH).lattice : Set ℂ) = kappa m '' (kappa m ⁻¹' (latM T.Q M : Set ℂ)) := by
+    rw [ppM_lattice]; exact (Set.image_preimage_eq_of_subset (latM_subset_range T.hD T.Q M)).symm
+  have hsc := ppMul_isScale T.c T.hc (ppM M hM T.Q'.tauH)
+  have hP' : ((ppMul T.c T.hc (ppM M hM T.Q'.tauH)).lattice : Set ℂ) =
+      kappa m '' sInvLat m T.s (kappa m ⁻¹' (latM T.Q M : Set ℂ)) := by
+    rw [hsc.2, sInv_latM T hdM, ppM_lattice]
+  obtain ⟨μ, hμ, hpts⟩ := hCM m T.hsq e he σ T.s hs _ _ _ hP hP'
+  refine ⟨μ, hμ.1, fun u v w hu hv hw => ?_⟩
+  have h1 := (hpts u v hu (latHat_lat_sub T.Q (lat_le_latM T.Q hM0) hv)).1
+  rw [h1, hw, hsc.weierstrassP]
+  ring
+
+end Transport2
 
 end X0EtaRoute
