@@ -36,3 +36,11 @@ Target: `IgusaCMValue24` (field `igusaCMValue24`), equivalently (qm-glue `thetaQ
 * Finding (VERIFIED, py/elim.py): the final identity only needs mpoly(k) = 0 for k = θ₁₀(i√6)²/θ₀₀(i√6)²,
   not the radical value. Cubic modular equation θ₃(τ)θ₃(3τ) = θ₂(τ)θ₂(3τ) + θ₄(τ)θ₄(3τ) at τ' = i√6/3,
   with S (τ' = −1/τ₃) and Landen, gives (k²−2k−1)²·mpoly(k) = 0; 0 < k < 1 excludes the first factor.
+* 2026-11-14 16:45 COMPILED (standard axioms only, no sorry): `CM24.thetaValueAtOmega24`, `CM24.igusaCMValue24`,
+  `CM24.thetaQuotientValue24` with NO leaf: `cubic` (cubic modular equation, series rearrangement),
+  `sA/sB/sC` (S-transforms from Mathlib), `th1_imag`/`K_real` (positivity), `mpoly_A` (elimination
+  (k²−2k−1)²·m(k) = 0), then `thetaValueAtOmega24_of_mpoly`.
+* 2026-11-14 16:50 COMPILED `CM24Kernel.lean` (import ZInQKernel.OneProof.H.TailZ3; oleans of ~/dzq-check2,
+  whose 527 closure sources are byte-identical to this base): `CM24.igusaCMValue24_field :
+  HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24` (the build's own field type), standard axioms.
+* VERIFIED (diff): TailZ3.lean l.894-1142 = qm-glue ThetaValue24.lean l.199-447.
