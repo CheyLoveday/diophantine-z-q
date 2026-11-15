@@ -4,9 +4,34 @@ import ZInQKernel.Contrib.HeightBC.G0StableBC
 import ZInQKernel.Contrib.OneProof.RayClassShimura
 
 /-!
-# gr56-prove: CM points on `X₆` inject into optimal embeddings (the lattice model)
+# gr56-prove: González–Rotger Prop. 5.6 on `X₆` from Eichler's count and the lattice model
 
-Work in progress.
+The research field `gonzalezRotgerProp56X6 : GRCountX6.GonzalezRotgerProp56X6` (González–Rotger 2006 Prop. 5.6
+at `(D, N) = (6, 1)`: `#CM(R) = 2^{b(k)} h(R)` on every witness of `X₀(6,1)`) is proved from
+
+* `GRCountX6.EichlerOptEmbCount6` (Eichler's count of `𝒪^×`-classes of optimal embeddings `R ↪ 𝒪`, pure
+  quaternion-order algebra, defined by gt-grcount in `GRCountX6.lean`; the only new leaf), and
+* fields already in the bundles: `shimuraMainThmIDeligneY3AbU` (research), `shimuraTaniyamaQbar` (added),
+  `uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed` (textbook):
+
+`gonzalezRotgerProp56X6_of_main`. The content is the **CM-point correspondence**
+`CM(R) ≃ Emb(R, 𝒪)/𝒪^×` (gt-grcount's `CMPointsOptEmb6`, proved here: `cmPointsOptEmb6_of_main`), through the
+lattice model of QM abelian surfaces (gt-qm, `QMLattice.lean`):
+
+* §1-§4: lattice data `LatData` of a QM surface over `ℂ` (uniformization with kernel `ι(𝒪)(τ, 1)ᵀ`), isomorphisms
+  of QM pairs from scalars between normalized lattices (`qmIso_of_scalar`), base change along the fixed
+  `σQ : ℚ̄ → ℂ` and descent of isomorphisms (T11(b), `qmIso_descend`), `End_𝒪(A)` acting by scalars;
+* §5-§7: orders in quadratic fields, the optimal embedding `a ↦ b`, `ι(b)v = ψ(a)v`, of a CM point (`emb`,
+  `emb_opt`), and the lattice argument: conjugate embeddings give proportional lattices (`iso_of_conj`);
+* §8: the CM-point map `cmMap` is injective from the three textbook fields (`cmMap_injective`), and surjective
+  from `QMTorusAbelian` (QM tori are abelian surfaces) and `CMPairDescendsQbar` (CM points are algebraic)
+  (`cmMap_surjective`); `QMTorusAbelian` is the moduli clause of `shimuraMainThmIDeligneY3AbU`
+  (`qmTorusAbelian_of_main`) and `CMPairDescendsQbar` follows from `shimuraTaniyamaQbar`
+  (`cmPairDescendsQbar_of_st`); then `GRCountX6.r5fpCount_of_eichler` and `GRCountX6.prop56X6_of_r5fpCount`;
+* §9-§10: the upper bound `R5fpCountLe` (the only half the chain uses) from Eichler's count and the textbook
+  fields alone, and the chain's one consumer (`HDec.FS5NoCM.nocm_on_witness`, TailC) rerouted to it.
+
+No `sorry`; standard axioms only.
 -/
 
 set_option linter.all false
