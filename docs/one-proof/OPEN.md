@@ -11,7 +11,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 
 **65 hypotheses of the H part** (in the bundles `OpenAddedLeaves12`, `OpenGlue7`, `OpenResearchLeaves13`, `OpenTextbookLeaves10`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 47 published / 18 glue** (the strictest flagged reading; 48/17 without the one strictest-reading flag).
+* **Strict count: 46 published / 19 glue** (the strictest flagged reading; 47/18 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a consequence
   of it that is never stronger. GLUE is everything else: a consequence of one theorem, a composite of several,
   project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`, column `flag`).
@@ -21,6 +21,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 
 | hypothesis | bundle | kind | strict | flag | status |
 | --- | --- | --- | --- | --- | --- |
+| [`deligneComponentsY3PrintedAb`](#delignecomponentsy3printedab) | added | published | GLUE | pending reading: depends (medium), whether one display states that the PEL moduli scheme with its uniformization is the canonical model at B = (2,-3|Q), level K3 (Deligne 389 section 5, Milne 2005 section 14) | open |
 | [`shimuraGoodReductionNoGuard`](#shimuragoodreductionnoguard) | added | composite | GLUE |  | cloud W13 |
 | [`t09SymmIsogenyExists`](#t09symmisogenyexists) | added | consequence | GLUE |  | t09-pic |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | added | composite | GLUE |  | igusa-alg |
@@ -41,8 +42,7 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`shimuraFamilyAb`](#shimurafamilyab) | research | consequence | GLUE |  | shimura-cft |
 | [`axSenTate`](#axsentate) | added | published | LEAF |  | cloud W11 |
 | [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) | added | published | LEAF |  | open |
-| [`deligneComponentsY3PrintedAb`](#delignecomponentsy3printedab) | added | published | LEAF |  | open |
-| [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | open |
+| [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  | cloud round 2 |
 | [`geomConnOfAlgClosure`](#geomconnofalgclosure) | added | published | LEAF | weakened form | open |
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | added | published | LEAF |  | cloud W17 |
 | [`qmCentralizerCMC`](#qmcentralizercmc) | added | published | LEAF |  | open |
@@ -66,28 +66,42 @@ one in Lean, or reducing it to statements printed in the literature, removes it.
 | [`mumfordRigidityCore`](#mumfordrigiditycore) | research | published | LEAF |  | open |
 | [`neronSchemeModelExistsDVR`](#neronschememodelexistsdvr) | research | published | LEAF |  | open |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | published | LEAF |  | open |
-| [`r7a`](#r7a) | research | published | LEAF |  | open |
+| [`r7a`](#r7a) | research | published | LEAF |  | cloud round 2 |
 | [`r9a`](#r9a) | research | published | LEAF |  | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | open |
 | [`raynaudKernelBound`](#raynaudkernelbound) | research | published | LEAF |  | open |
 | [`sga3_VIB_3_10`](#sga3_vib_3_10) | research | published | LEAF |  | open |
 | [`bdRInvariants`](#bdrinvariants) | textbook | published | LEAF |  | open |
 | [`cartierSmooth`](#cartiersmooth) | textbook | published | LEAF |  | cloud W16 |
-| [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  | open |
+| [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  | cloud round 2 |
 | [`gagaMorphism`](#gagamorphism) | textbook | published | LEAF |  | cloud W17 |
 | [`geomConnOfRationalPoint`](#geomconnofrationalpoint) | textbook | published | LEAF |  | cloud W16 |
 | [`groupSchemeEquidim`](#groupschemeequidim) | textbook | published | LEAF |  | cloud W16 |
-| [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | textbook | published | LEAF |  | open |
+| [`homFreeFiniteAlgClosed`](#homfreefinitealgclosed) | textbook | published | LEAF |  | cloud round 2 |
 | [`igusaGL2`](#igusagl2) | textbook | published | LEAF |  | cloud W14 |
 | [`mulEtaleAbelianScheme`](#muletaleabelianscheme) | textbook | published | LEAF |  | cloud W16 |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  | cloud W16 |
-| [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  | open |
-| [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  | open |
+| [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  | cloud round 2 |
+| [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  | cloud round 2 |
 | [`regularSmoothPerfect`](#regularsmoothperfect) | textbook | published | LEAF |  | cloud W15 |
 | [`uniformizationLeafAll`](#uniformizationleafall) | textbook | published | LEAF |  | cloud W17 |
 | [`yuThm11`](#yuthm11) | textbook | published | LEAF |  | open |
 
 ## The hypotheses
+
+### deligneComponentsY3PrintedAb
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves12.deligneComponentsY3PrintedAb`; kind **published**, strict **GLUE**; flag: pending reading: depends (medium), whether one display states that the PEL moduli scheme with its uniformization is the canonical model at B = (2,-3|Q), level K3 (Deligne 389 section 5, Milne 2005 section 14).
+* Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 (UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and Lemma QP, as for r1r2); over Mathlib's FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, ConnectedComponents
+* Status: open: no one is on it.
+
+```lean
+ShimuraGlue.DeligneComponentsY3PrintedAb
+```
+
+> shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
+> components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
+> 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED).
 
 ### shimuraGoodReductionNoGuard
 
@@ -363,7 +377,7 @@ CToPrinted.SGA7_IX_3_3
 ### shimuraFamilyAb
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves13.shimuraFamilyAb`; kind **consequence**, strict **GLUE**.
-* Source: Shimura 1967 Main Thm I (holomorphic family over the upper half plane) on one fine witness, composed with every algebraic pi : Y -> P1 (GAGA-level step, flagged by qm-split)
+* Source: Shimura 1967 Main Thm I on one fine witness; the remaining glue is the link from Shimura's V_S to the moduli scheme Y3 (shimura-cft reduces the field to one leaf, ShimuraMainThmIDeligneY3Ab, which the shimura-cft review rates composite)
 * Status: shimura-cft: proved from Shimura Main Thm I in Deligne adelic form; awaiting a rating, then a fold (since 2026-11-14).
 
 ```lean
@@ -403,25 +417,11 @@ ShimuraGlue.DeligneComponentsX6PrintedAb
 > Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
 > `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean).
 
-### deligneComponentsY3PrintedAb
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves12.deligneComponentsY3PrintedAb`; kind **published**, strict **LEAF**.
-* Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and 3; PSPM 33 (1979) 2.1.3, 2.6.3; Milne 2005 Thms 5.17, 13.6 (UNVERIFIED): pi0(Y x_Q Qbar) = Q_{>0}^x \ A_f^x / nrd(K3) with sigma acting by the cyclotomic idele to a fixed sign, for G = B^x, B = (2,-3|Q), at level K3, on one fine witness Y3 (with the R1fp clause list and Lemma QP, as for r1r2); over Mathlib's FiniteAdeleRing, QuaternionAlgebra, cyclotomicCharacter, ConnectedComponents
-* Status: open: no one is on it.
-
-```lean
-ShimuraGlue.DeligneComponentsY3PrintedAb
-```
-
-> shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-> components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-> 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED).
-
 ### egaIV_8_10_5_xii
 
 * Bundle field `HDec.HSyn.OpenAddedLeaves12.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
 * Source: EGA IV_3 8.10.5 (xii)
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress: repairing round 1's vendored port (H-65) (since 2026-11-14) [issue #80](https://github.com/elliotglazer/diophantine-z-q/issues/80).
 
 ```lean
 ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
@@ -797,7 +797,7 @@ ZInQ.HeightSplit.PazukiCor13Upper
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves13.r7a`; kind **published**, strict **LEAF**.
 * Source: Serre-Tate 1968 Thm 1
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-5, Néron–Ogg–Shafarevich) (since 2026-11-14) [issue #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 
 ```lean
 PkgI2.NeronOggShafarevich
@@ -894,7 +894,7 @@ AVGlue.CartierSmooth
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 4 (specialization)
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-71); supplier PR Deicyde/diophantine-z-q#13 held until it lands (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
 ```lean
 ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
@@ -960,7 +960,7 @@ AVGlue.GroupSchemeEquidim
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.homFreeFiniteAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 3
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-70) (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
 ```lean
 ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed
@@ -1032,7 +1032,7 @@ AvSplit.MumfordTorsionAlgClosed
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.neronSchemeExtensionExists`; kind **published**, strict **LEAF**.
 * Source: BLR 1.4 Thm 3
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-77) (since 2026-11-14) [issue #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 
 ```lean
 ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
@@ -1049,7 +1049,7 @@ ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 * Bundle field `HDec.HSyn.OpenTextbookLeaves10.poincareComplement`; kind **published**, strict **LEAF**.
 * Source: Poincare's complete reducibility, complement form: Milne 1986 Prop. 12.1; Mumford 19 Thm 1
-* Status: open: no one is on it.
+* Status: cloud round 2: in progress (H-72) (since 2026-11-14) [issue #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 
 ```lean
 ZInQ.Contrib.AVB1.PoincareComplement
@@ -1125,11 +1125,15 @@ These are `frozenTarget`'s other arguments (outside the H bundles). They are tra
 
 ### h11
 
+* Status: cloud round 2: in progress (T-1); new base case TYZLcalOne proved (since 2026-11-14) [issue #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
+
 ```lean
 ZInQ.Contrib.TYZDecomp.TYZThm11Integral
 ```
 
 ### h29
+
+* Status: cloud round 2: in progress (T-3) (since 2026-11-14) [issue #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
 
 ```lean
 ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2
@@ -1137,11 +1141,15 @@ ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2
 
 ### hS
 
+* Status: open: no one is on it.
+
 ```lean
 ZInQ.Contrib.TYZGenus.Shimura.ShimuraReciprocityModFn
 ```
 
 ### h33
+
+* Status: open: no one is on it.
 
 ```lean
 ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33
@@ -1149,11 +1157,15 @@ ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33
 
 ### hL2
 
+* Status: open: no one is on it.
+
 ```lean
 ZInQ.GZDecomp.FHNonvanishing
 ```
 
 ### hL3
+
+* Status: open: no one is on it.
 
 ```lean
 ZInQ.GZDecomp.GrossZagierHeegner

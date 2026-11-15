@@ -21,3 +21,11 @@ shimuraGoodReductionNoGuard	cloud W13	briefed, not yet claimed on the issue	2026
 uniformizationLeafAll	cloud W17	briefed behind a feasibility check	2026-11-14	elliotglazer/diophantine-z-q#82
 gagaMorphism	cloud W17	briefed behind a feasibility check	2026-11-14	elliotglazer/diophantine-z-q#82
 milneIsogenyQuasiInverse	cloud W17	briefed (CharZero form), after the two above	2026-11-14	elliotglazer/diophantine-z-q#81
+egaIV_8_10_5_xii	cloud round 2	in progress: repairing round 1's vendored port (H-65)	2026-11-14	elliotglazer/diophantine-z-q#80
+homFreeFiniteAlgClosed	cloud round 2	in progress (H-70)	2026-11-14	elliotglazer/diophantine-z-q#81
+charPolyIndepOfEllAlgClosed	cloud round 2	in progress (H-71); supplier PR Deicyde/diophantine-z-q#13 held until it lands	2026-11-14	elliotglazer/diophantine-z-q#81
+poincareComplement	cloud round 2	in progress (H-72)	2026-11-14	elliotglazer/diophantine-z-q#81
+neronSchemeExtensionExists	cloud round 2	in progress (H-77)	2026-11-14	elliotglazer/diophantine-z-q#85
+r7a	cloud round 2	in progress (H-5, Néron–Ogg–Shafarevich)	2026-11-14	elliotglazer/diophantine-z-q#37
+h11	cloud round 2	in progress (T-1); new base case TYZLcalOne proved	2026-11-14	elliotglazer/diophantine-z-q#74
+h29	cloud round 2	in progress (T-3)	2026-11-14	elliotglazer/diophantine-z-q#74

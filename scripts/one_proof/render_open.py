@@ -22,6 +22,11 @@ for r in csv.DictReader(open(D + 'claims.tsv'), delimiter='\t'):
     claims.setdefault(r['field'], []).append(r)
 
 h_fields = [h['field'] for h in hyps if h['bundle'] != 'frozenTarget']
+others = {h['field'] for h in hyps if h['bundle'] == 'frozenTarget'}
+unknown = sorted(set(claims) - set(h_fields) - others)
+if unknown:
+    print('claims.tsv names no open hypothesis:', unknown)
+    sys.exit(1)
 missing = sorted(set(h_fields) - set(kinds))
 stale = sorted(set(kinds) - set(h_fields))
 if missing or stale:
@@ -113,6 +118,8 @@ for h in hyps:
     if h['bundle'] != 'frozenTarget':
         continue
     w(f"### {h['field']}")
+    w('')
+    w(f"* Status: {claim_text(h['field'])}.")
     w('')
     w('```lean')
     w(h['type'])
