@@ -228,7 +228,9 @@ theorem generic_equation :
 theorem generic_nonsingular [W.IsElliptic] :
     (W⁄(W⁄K).FunctionField).Nonsingular (genericX W K) (genericY W K) := by
   haveI : (W⁄(W⁄K).FunctionField).IsElliptic := by
-    dsimp only [Affine.baseChange, WeierstrassCurve.baseChange]; infer_instance
+    -- [port] Lean v4.35 instance search no longer finds the `map` instance here; name it
+    dsimp only [Affine.baseChange, WeierstrassCurve.baseChange]
+    exact WeierstrassCurve.instIsEllipticMap W _
   exact (equation_iff_nonsingular (W := W⁄(W⁄K).FunctionField)).mp (generic_equation W K)
 
 noncomputable def genericPoint [W.IsElliptic] : (W⁄(W⁄K).FunctionField).Point :=
