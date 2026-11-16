@@ -73,3 +73,11 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   this base `40/8 on 48 -> 48/8 on 56; strictest 39/9 -> 48/8` (no --allow-rise); lf31 rating
   `37/11 on 48 -> 47/9 on 56; strictest 37/11 -> 47/9` (-2 strict, -2 strictest). Dry-run module compiles.
   #discharges: 12 discharge lines (all forms).
+- ~05:55 `ampleBaseChangeAlgClosure` proved (scratch/pic-dict/Ample.lean, merged): ampleness pulls back along an
+  affine morphism (`isAmple_pullback`; vendored `Hom.comap_zeroLocus`, `coe_support_comap`, monoidal pullback).
+- Final theorems: `weilPairingMumford_of_mumford` (MumfordSquareAC, MumfordMulNPicZeroAC, MumfordPhiSurjectiveAC,
+  MumfordWeilPairingAC, MumfordWeilNondegAC, MumfordWeilAltAC; + field PhiAmpleIsogeny) and
+  `phiAmpleIsogeny_of_mumford` (MumfordKLFiniteAC, MumfordPhiSurjectiveAC, PushforwardUnitUniversal,
+  GeomIntegralProd). Dry-runs: weil only `40/8 -> 45/8 on 53; strictest 39/9 -> 45/8` (lf31 `37/11 -> 43/10`);
+  both `40/8 -> 47/8 on 55; strictest 39/9 -> 47/8` (lf31 `37/11 -> 46/9; strictest 37/11 -> 46/9`). Both dry-run
+  modules compile. #discharges: 14 discharge lines (all intermediate forms).
