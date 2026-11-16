@@ -45,3 +45,4 @@
   saved in stale-claims-rows-removed.txt), then render_open.py wrote OPEN.md, pages-wanted.md, CONTRIBUTING.md,
   STATUS.md and --check says "ok: 57 open hypotheses, all classified; 4 generated files up to date".
 - 01:35 report docs/research/pi0-fold.md written.
+- 01:40 .fleet/pi0-fold.md written; done.
