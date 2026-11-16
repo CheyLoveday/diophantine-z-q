@@ -19,7 +19,7 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2948 theorems checked, 7 discharge one
+#discharges: 56 open hypotheses, 2994 theorems checked, 7 discharge one
 'LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_dvr' depends on axioms: [propext, Classical.choice, Quot.sound]
 'LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_local' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.GroupLaw.mumfordGroupLawCurve_of_dvr' depends on axioms: [propext, Classical.choice, Quot.sound]

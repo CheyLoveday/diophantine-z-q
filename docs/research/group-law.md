@@ -29,13 +29,13 @@ theorem LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_dvr (hD : ZInQ.Contrib.GroupLa
 ```
 
 The new leaf `MumfordGroupLawDVR` is the field's statement with `S = Spec R`, where `R` is a DVR. It is strictly weaker
-than the field (`dvr_of_field : MumfordGroupLaw → MumfordGroupLawDVR`). At a field point the group law needs no leaf
+than the field (`dvr_of_field : MumfordGroupLaw → MumfordGroupLawDVR`). Where the local ring is a field, the group law needs no leaf
 (`grpObj_of_isField`). Everything else is proved in Lean:
 * the local rings of a smooth curve are fields or DVRs;
 * the local group laws spread out to neighbourhoods;
 * the local laws glue, because on field points they are the fibres' group laws (field-level rigidity).
 
-| | before | after a narrowing fold (proposed, §5) |
+| | before | after the narrowing fold (§5; compiled in an overlay) |
 |---|---|---|
 | field | `mumfordGroupLaw : MumfordGroupLaw` (any locally noetherian `S`) | `mumfordGroupLaw : MumfordGroupLawDVR` (`S = Spec` of a DVR) |
 | count | 1 LEAF (pending review) | 1 LEAF (printed form, special case of the print) |
@@ -87,7 +87,7 @@ Evidence: scratch/group-law/fold/ (narrowing.patch, foldcheck.txt).
 
 All files are new, under `ZInQKernel/Contrib/OneProof/` (1,544 lines in total). Each compiles with `lake env lean`, and
 `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.MumfordGroupLawRed`
-succeeds (13,703 jobs). Their imports contain no `OneProof/H/TailZ` module above 22 except TailZ40, which TailZ23
+succeeds (13,704 jobs). Their imports contain no `OneProof/H/TailZ` module above 22 except TailZ40, which TailZ23
 already imports, so a fold may import them from TailZ23 without a cycle (checked by an import BFS, log).
 
 | file | content |
@@ -99,7 +99,7 @@ already imports, so a fold may import them from TailZ23 without a cycle (checked
 | `GroupLawStalks.lean` | `grpObj_of_stalkLaws` (group laws at all `Γ(S,V)_𝔭` ⇒ group law on `F`); `stalkData`; **`grpObj_of_isField`** (over a field the group law exists outright: the fibre at the identity point is `F`); `isDomain_of_maximalIdeal_eq_span`; **`stalk_field_or_dvr`**, `field_or_dvr_localization` (for `S` smooth of relative dimension 1 over a field, every local ring is a field or a DVR, from the fork's `ZInQ.Contrib.Dim` and Mathlib's `ringKrullDim_stalk_eq_coheight`). |
 | `MumfordGroupLawRed.lean` (final) | the leaves `MumfordGroupLawDVR`, `MumfordGroupLawLocal`; `local_of_field`, `dvr_of_local`, `dvr_of_field`; the narrowed forms `MumfordGroupLawCurve` (base smooth of relative dimension 1 over a field) and `MumfordGroupLawRed` (reduced base); **`mumfordGroupLawCurve_of_dvr`**, **`mumfordGroupLawRed_of_local`**; `LeafQM.AV.R1UnivRigid.exists_qmAbScheme_of` (rigid-prune's `exists_qmAbScheme_gl` verbatim, with the group law over `S` as hypothesis); `qmFamilyGroupLaw_of_curve`, **`qmFamilyGroupLaw_of_dvr`**, `qmFamilyGroupLaw_of_local`. |
 
-`#discharges` (scratch/group-law/Discharges.lean → discharges.txt) checks 2,948 theorems and finds 7 discharges, none
+`#discharges` (scratch/group-law/Discharges.lean → discharges.txt) checks 2,994 theorems and finds 7 discharges, none
 from these files. That is expected: no new theorem has type `MumfordGroupLaw`. The `mumfordGroupLaw` line it prints is
 the existing `mumfordGroupLaw_of_core`. `#print axioms` of the main theorems: `[propext, Classical.choice, Quot.sound]`.
 

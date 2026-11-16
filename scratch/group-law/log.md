@@ -47,7 +47,7 @@ replayed 13698 jobs, frozenTarget standard axioms (VERIFIED, 11-16 12:31).
   `LeafQM.AV.R1UnivRigid.exists_qmAbScheme_of` (rigid-prune's proof, verbatim, hypothesis = group law over S),
   `qmFamilyGroupLaw_of_curve`, `qmFamilyGroupLaw_of_dvr`, `qmFamilyGroupLaw_of_local`.
 - `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.MumfordGroupLawRed`:
-  13703 jobs OK. scratch/group-law/Discharges.lean → discharges.txt: `#discharges` finds 7 discharges, none by the
+  13703 jobs OK (13704 after GroupLawLocDiagram; rerun 2994 theorems checked). scratch/group-law/Discharges.lean → discharges.txt: `#discharges` finds 7 discharges, none by the
   new file (expected: no new theorem has type `MumfordGroupLaw`); all new main theorems standard axioms.
 
 ## Verdict so far
