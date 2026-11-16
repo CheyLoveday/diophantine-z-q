@@ -16,11 +16,11 @@ universe u
 /-- A nonempty scheme locally of finite type over an algebraically closed field `k` has a `k`-point
 (Mathlib's `pointOfClosedPoint`, Nullstellensatz). -/
 theorem exists_section_of_isAlgClosed {k : Type u} [Field k] [IsAlgClosed k] {X : Scheme.{u}}
-    (f : X ⟶ Spec (CommRingCat.of k)) [LocallyOfFiniteType f] (x0 : X) :
+    (f : X ⟶ Spec (CommRingCat.of k)) (hf : LocallyOfFiniteType f) (x0 : X) :
     ∃ s : Spec (CommRingCat.of k) ⟶ X, s ≫ f = 𝟙 _ := by
   haveI : JacobsonSpace X := LocallyOfFiniteType.jacobsonSpace f
   obtain ⟨x, -, hx⟩ := nonempty_inter_closedPoints (Z := (Set.univ : Set X)) ⟨x0, trivial⟩
-    isLocallyClosed_univ
+    isClosed_univ.isLocallyClosed
   exact ⟨pointOfClosedPoint f x hx, pointOfClosedPoint_comp f x hx⟩
 
 /-- **Every fppf covering sieve contains every point with values in an algebraically closed field.** -/
@@ -29,7 +29,7 @@ theorem fppf_arrows_of_isAlgClosed {X : Scheme.{u}} {S : Sieve X} (hS : S ∈ Sc
   rw [Precoverage.mem_toGrothendieck_iff] at hS
   induction hS with
   | of X R hR =>
-    obtain ⟨ι, Y, f, rfl⟩ := R.exists_eq_ofArrows
+    obtain ⟨I, Y, f, rfl⟩ := R.exists_eq_ofArrows
     rw [Scheme.fppfPrecoverage, Scheme.ofArrows_mem_precoverage_iff] at hR
     obtain ⟨hsurj, hP⟩ := hR
     obtain ⟨i, y, hy⟩ := hsurj (s (IsLocalRing.closedPoint k))
@@ -37,7 +37,7 @@ theorem fppf_arrows_of_isAlgClosed {X : Scheme.{u}} {S : Sieve X} (hS : S ∈ Sc
     haveI : LocallyOfFinitePresentation (f i) := (hP i).2
     obtain ⟨z, -, -⟩ := Scheme.Pullback.exists_preimage_pullback (f := f i) (g := s) y
       (IsLocalRing.closedPoint k) hy
-    obtain ⟨σ, hσ⟩ := exists_section_of_isAlgClosed (pullback.snd (f i) s) z
+    obtain ⟨σ, hσ⟩ := exists_section_of_isAlgClosed (pullback.snd (f i) s) inferInstance z
     refine ⟨Y i, σ ≫ pullback.fst (f i) s, f i, ⟨i⟩, ?_⟩
     rw [Category.assoc, pullback.condition, ← Category.assoc, hσ, Category.id_comp]
   | top X => trivial
@@ -52,24 +52,28 @@ theorem over_fppf_id_mem {K : Type} [Field K] {S : Sieve (T09Pic.ptK K)}
     S.arrows (𝟙 _) := by
   rw [GrothendieckTopology.mem_over_iff] at hS
   have h := fppf_arrows_of_isAlgClosed hS (k := AlgebraicClosure K) (𝟙 _)
-  rw [Sieve.overEquiv_iff] at h
+  replace h := (Sieve.overEquiv_iff S _).1 h
   have h2 := S.downward_closed h
     (Over.homMk (𝟙 (T09Pic.ptK K).left) (by simp) :
       T09Pic.ptK K ⟶ Over.mk (𝟙 _ ≫ (T09Pic.ptK K).hom))
   convert h2 using 1
   ext
-  simp
+  exact (Category.id_comp _).symm
 
 /-- **L5 is a theorem** (`T09Pic.PicPointsAlgClosed`; Kleiman 9.2.5 at `T = Spec K̄`). -/
 theorem picPointsAlgClosed : T09Pic.PicPointsAlgClosed := by
   intro K _ A
   constructor
   · intro c c' h
+    haveI : Presheaf.IsLocallyInjective (Scheme.fppfTopology.over (Spec (CommRingCat.of K)))
+      (toPicardFunctor A.X.hom) := Presheaf.isLocallyInjective_toSheafify' _ (picardPresheaf A.X.hom)
     have hm := Presheaf.equalizerSieve_mem (Scheme.fppfTopology.over (Spec (CommRingCat.of K)))
       (toPicardFunctor A.X.hom) c c' h
     have := over_fppf_id_mem hm
     simpa [Presheaf.equalizerSieve] using this
   · intro s
+    haveI : Presheaf.IsLocallySurjective (Scheme.fppfTopology.over (Spec (CommRingCat.of K)))
+      (toPicardFunctor A.X.hom) := Presheaf.isLocallySurjective_toSheafify' _ (picardPresheaf A.X.hom)
     have hm := Presheaf.imageSieve_mem (Scheme.fppfTopology.over (Spec (CommRingCat.of K)))
       (toPicardFunctor A.X.hom) s
     obtain ⟨t, ht⟩ := over_fppf_id_mem hm
@@ -93,8 +97,10 @@ theorem toPicardFunctor_picClass (y : B.Pt (AlgebraicClosure K)) :
     (toPicardFunctor A.X.hom).app (op (ptK K)) (picClass rep j y) = rep.homEquiv (y ≫ j) := by
   have h : ∃ c, (toPicardFunctor A.X.hom).app (op (ptK K)) c = rep.homEquiv (y ≫ j) :=
     (picPointsAlgClosed K A).2 _
-  unfold picClass
-  rw [dif_pos h]
+  have e : picClass rep j y = h.choose := by
+    unfold picClass
+    exact dif_pos h
+  rw [e]
   exact h.choose_spec
 
 theorem picClass_eq_iff (y : B.Pt (AlgebraicClosure K)) (c : (AK A).Pic) :
@@ -151,17 +157,23 @@ end Dictionary
 
 /-! ## §3. Translations, `φ_L` on points -/
 
+/-- `t_x` on the scheme `A_K̄`. -/
+abbrev trl {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) : AK A ⟶ AK A := (transl x).left
+
+/-- `n_A` on the scheme `A_K̄`. -/
+abbrev mlN (A : AbVar K) (n : ℕ) : AK A ⟶ AK A := (mulN A n).left
+
 /-- `L_K̄ = p₁^*L`. -/
 def bcPic (A : AbVar K) (L : A.X.left.Pic) : (AK A).Pic :=
   Scheme.Pic.map (pullback.fst A.X.hom (ptK K).hom) L
 
 /-- Mumford's `φ_L(x) = t_x^*L ⊗ L⁻¹` (§8). -/
 def phiPt {A : AbVar K} (c : (AK A).Pic) (x : A.Pt (AlgebraicClosure K)) : (AK A).Pic :=
-  Scheme.Pic.map (transl x).left c * c⁻¹
+  Scheme.Pic.map (trl x) c * c⁻¹
 
 /-- Mumford's `Pic⁰(A_K̄)`: classes invariant under every translation `t_x`, `x ∈ A(K̄)` (§8). -/
 def IsTranslInv {A : AbVar K} (c : (AK A).Pic) : Prop :=
-  ∀ x : A.Pt (AlgebraicClosure K), Scheme.Pic.map (transl x).left c = c
+  ∀ x : A.Pt (AlgebraicClosure K), Scheme.Pic.map (trl x) c = c
 
 /-- Mumford's `Â_n = Pic⁰(A_K̄)[n]`. -/
 def IsDualTors {A : AbVar K} (n : ℕ) (c : (AK A).Pic) : Prop := IsTranslInv c ∧ c ^ n = 1
@@ -178,21 +190,22 @@ theorem transl_comp_transl {A : AbVar K} (z x : A.Pt (AlgebraicClosure K)) :
 /-- **Glue (proved): `φ_L(x)` lies in Mumford's `Pic⁰`**, from the theorem of the square. -/
 theorem phiPt_translInv {A : AbVar K}
     (hsq : ∀ (c : (AK A).Pic) (x y : A.Pt (AlgebraicClosure K)),
-      Scheme.Pic.map (transl (x * y)).left c * c =
-        Scheme.Pic.map (transl x).left c * Scheme.Pic.map (transl y).left c)
+      Scheme.Pic.map (trl (x * y)) c * c =
+        Scheme.Pic.map (trl x) c * Scheme.Pic.map (trl y) c)
     (c : (AK A).Pic) (x : A.Pt (AlgebraicClosure K)) : IsTranslInv (phiPt c x) := by
   intro z
-  have h1 : Scheme.Pic.map (transl z).left (Scheme.Pic.map (transl x).left c) =
-      Scheme.Pic.map (transl (z * x)).left c := by
+  have h1 : Scheme.Pic.map (trl z) (Scheme.Pic.map (trl x) c) =
+      Scheme.Pic.map (trl (z * x)) c := by
     rw [← Scheme.Pic.map_comp, ← Over.comp_left, transl_comp_transl]
   have h2 := hsq c z x
   simp only [phiPt, ← Scheme.Pic.mapHom_apply, map_mul, map_inv] at h2 ⊢
   simp only [Scheme.Pic.mapHom_apply] at h2 ⊢
   rw [h1]
-  have : Scheme.Pic.map (transl (z * x)).left c =
-      Scheme.Pic.map (transl z).left c * Scheme.Pic.map (transl x).left c * c⁻¹ := by
+  have : Scheme.Pic.map (trl (z * x)) c =
+      Scheme.Pic.map (trl z) c * Scheme.Pic.map (trl x) c * c⁻¹ := by
     rw [← h2]; group
-  rw [this]; group
+  rw [this, mul_comm (_ * _ * _) _]
+  simp [mul_assoc]
 
 /-- `A_K̄ → A × A`, `(a, s) ↦ (a, x(s))` is `(A ◁ x).left`. -/
 lemma baseChangeMap_pt {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) :
@@ -210,7 +223,8 @@ theorem map_mumfordBundle_pt {A : AbVar K} (L : A.X.left.Pic) (x : A.Pt (Algebra
         (transl x ≫ CartesianMonoidalCategory.fst A.X (ptK K)).left := by simp
     rw [this]
     congr 1
-    simp [transl]
+    simp only [transl, CartesianMonoidalCategory.lift_fst]
+    congr 1
   have hfst : JacobianChallenge.baseChangeMap A.X.hom x ≫ pullback.fst A.X.hom A.X.hom =
       pullback.fst A.X.hom (ptK K).hom := pullback.lift_fst _ _ _
   have hsnd : JacobianChallenge.baseChangeMap A.X.hom x ≫ pullback.snd A.X.hom A.X.hom =
@@ -238,16 +252,22 @@ theorem exists_lift_pt {A B : AbVar K} (lam : A.X ⟶ B.X) [LocallyOfFiniteType 
   obtain ⟨a, ha⟩ := hs.surj (y.left (IsLocalRing.closedPoint (AlgebraicClosure K)))
   obtain ⟨z, -, -⟩ := Scheme.Pullback.exists_preimage_pullback (f := lam.left) (g := y.left) a
     (IsLocalRing.closedPoint (AlgebraicClosure K)) ha
-  haveI : LocallyOfFiniteType (pullback.snd lam.left y.left) :=
-    MorphismProperty.pullback_snd _ _ inferInstance
-  obtain ⟨σ, hσ⟩ := exists_section_of_isAlgClosed (pullback.snd lam.left y.left) z
+  have hlft : LocallyOfFiniteType (pullback.snd lam.left y.left) :=
+    MorphismProperty.of_isPullback (P := @LocallyOfFiniteType) (IsPullback.of_hasPullback _ _)
+      inferInstance
+  obtain ⟨σ, hσ⟩ := exists_section_of_isAlgClosed (pullback.snd lam.left y.left) hlft z
   have hc : σ ≫ pullback.fst lam.left y.left ≫ lam.left = y.left := by
-    rw [pullback.condition, ← Category.assoc, hσ, Category.id_comp]
+    rw [pullback.condition]
+    have := congrArg (· ≫ y.left) hσ
+    exact (Category.assoc _ _ _).symm.trans (this.trans (Category.id_comp _))
   refine ⟨Over.homMk (σ ≫ pullback.fst lam.left y.left) ?_, ?_⟩
   · change (σ ≫ pullback.fst lam.left y.left) ≫ A.X.hom = (ptK K).hom
-    rw [← Over.w lam, Category.assoc, ← Category.assoc _ lam.left, Category.assoc, hc, Over.w y]
+    rw [← Over.w lam, Category.assoc, reassoc_of% hc]
+    exact Over.w y
   · apply Over.OverMorphism.ext
-    simpa using hc
+    show (σ ≫ pullback.fst lam.left y.left) ≫ lam.left = y.left
+    rw [Category.assoc]
+    exact hc
 
 /-! ## §4. Mumford's `ē_n` by its formula, on any class -/
 
@@ -256,7 +276,7 @@ abbrev mod {A : AbVar K} (c : (AK A).Pic) : (AK A).Modules :=
   (fromSkeleton (AK A).Modules).obj c.val
 
 /-- Trivializations `ψ : 𝒪 ≅ n_A^*M` of `n_A^*M` on `A_K̄`. -/
-abbrev Triv (A : AbVar K) (n : ℕ) (c : (AK A).Pic) : Type 1 :=
+abbrev Triv (A : AbVar K) (n : ℕ) (c : (AK A).Pic) :=
   Scheme.Modules.unit (AK A) ≅ (Scheme.Modules.pullback (mulN A n).left).obj (mod c)
 
 /-- **Mumford's formula** `ē_n(x, M) = t_x^*ψ ∘ ψ⁻¹ ∈ Γ(A_K̄, 𝒪)` for `x ∈ A[n](K̄)` and a trivialization
@@ -276,14 +296,14 @@ def weilFormula {A : AbVar K} {n : ℕ} (x : tors A n) (c : (AK A).Pic) (ψ : Tr
 Cor. 4 (UNVERIFIED numbering). Instance `X = A_K̄`, `X(K̄) = A(K̄)`. -/
 def MumfordSquare : Prop :=
   ∀ (K : Type) [Field K] (A : AbVar K) (c : (AK A).Pic) (x y : A.Pt (AlgebraicClosure K)),
-    Scheme.Pic.map (transl (x * y)).left c * c =
-      Scheme.Pic.map (transl x).left c * Scheme.Pic.map (transl y).left c
+    Scheme.Pic.map (trl (x * y)) c * c =
+      Scheme.Pic.map (trl x) c * Scheme.Pic.map (trl y) c
 
 /-- **LEAF (`n_X^*L ≅ Lⁿ` on `Pic⁰`).** For `L ∈ Pic⁰(X)` (`t_x^*L ≅ L` for all `x ∈ X(k)`), `n_X^*L ≅ Lⁿ`.
 Mumford §8 (iv) (UNVERIFIED numbering). Instance `X = A_K̄`. -/
 def MumfordMulNPicZero : Prop :=
   ∀ (K : Type) [Field K] (A : AbVar K) (c : (AK A).Pic), IsTranslInv c →
-    ∀ n : ℕ, Scheme.Pic.map (mulN A n).left c = c ^ n
+    ∀ n : ℕ, Scheme.Pic.map (mlN A n) c = c ^ n
 
 /-- **LEAF (`φ_L` maps onto `Pic⁰`).** For `L` ample and `M ∈ Pic⁰(X)` there is `x ∈ X(k)` with
 `M ≅ t_x^*L ⊗ L⁻¹`. Mumford §8, Thm 1 (UNVERIFIED numbering). Instance `X = A_K̄`. -/
@@ -369,13 +389,9 @@ theorem constK_injective (A : AbVar K) : Function.Injective (constK A) := by
   exact (constK A).injective
 
 theorem nonempty_triv {A : AbVar K} {n : ℕ} {c : (AK A).Pic}
-    (h : Scheme.Pic.map (mulN A n).left c = 1) : Nonempty (Triv A n c) := by
-  have h1 : Scheme.Pic.map (mulN A n).left c =
-      Scheme.Pic.mk ((Scheme.Modules.pullback (mulN A n).left).obj (mod c)) := by
-    conv_lhs => rw [← Scheme.Pic.mk_fromSkeleton c]
-    exact Scheme.Pic.map_mk _ _
-  rw [h1, Scheme.Pic.one_eq_mk_unit, Scheme.Pic.mk_eq_mk_iff] at h
-  exact ⟨h.some.symm⟩
+    (h : Scheme.Pic.map (mlN A n) c = 1) : Nonempty (Triv A n c) := by
+  obtain ⟨e⟩ := Scheme.Pic.eq_iff_nonempty_iso.1 h
+  exact ⟨(Scheme.Pic.oneIso).symm ≪≫ e.symm ≪≫ Scheme.Pic.mkIso _⟩
 
 theorem weilFormula_congr {A : AbVar K} {n : ℕ} (x : tors A n) {c c' : (AK A).Pic} (h : c = c')
     (ψ : Triv A n c) : weilFormula x c' (h ▸ ψ) = weilFormula x c ψ := by
@@ -393,7 +409,7 @@ def mkPairing {A B : AbVar K} {n : ℕ} (u : tors A n → tors B n → (Algebrai
         apply Subtype.ext
         simp [hy]))
     (fun x x' => by
-      ext y
+      refine AddMonoidHom.ext fun y => ?_
       apply Additive.toMul.injective
       apply Subtype.ext
       simp [hx])
@@ -409,6 +425,7 @@ theorem weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNP
     (h20b : MumfordWeilNondeg) (h20c : MumfordWeilCompat) (h20d : MumfordWeilDual)
     (h23 : MumfordWeilAlt) (hgal : WeilFormulaGalois) (h3 : PhiAmpleIsogeny) :
     WeilPairingMumford := by
+  classical
   intro K _ A P rep B j hj
   obtain ⟨L, hL⟩ := exists_isVeryAmple A
   have hLa := veryAmpleIsAmple K A L hL
@@ -460,7 +477,7 @@ theorem weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNP
     intro n hn hnK x x' y
     apply hpin
     rw [Units.val_mul, map_mul, hu2, hu2, hspec, hspec, hspec]
-    exact (h20a K A n hn hnK x x' _ _ (htors n y) (htors n y)).2.2.1 _
+    exact ((h20a K A n hn hnK x x' _ _ (htors n y) (htors n y)).2.2.1 _).symm
   have huy : ∀ (n : ℕ) (hn : 0 < n) (hnK : (n : K) ≠ 0) (x : tors A n) (y y' : tors B n),
       u n hn hnK x (y + y') = u n hn hnK x y * u n hn hnK x y' := by
     intro n hn hnK x y y'
@@ -471,7 +488,7 @@ theorem weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNP
           picClass rep j (Additive.toMul (y' : HDec.WeilPairing.P B)) :=
       picClass_mul rep hj _ _
     rw [← weilFormula_congr x hc]
-    exact (h20a K A n hn hnK x x _ _ (htors n y) (htors n y')).2.2.2 _ _ _
+    exact ((h20a K A n hn hnK x x _ _ (htors n y) (htors n y')).2.2.2 _ _ _).symm
   let e : ∀ n : ℕ, Pairing A B n := fun n =>
     if h : 0 < n ∧ (n : K) ≠ 0 then
       mkPairing (u n h.1 h.2) (hu1 n h.1 h.2) (hux n h.1 h.2) (huy n h.1 h.2)
@@ -522,9 +539,7 @@ theorem weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNP
     · have hc := (h20b K A n hn hnK).2 _ (htors n y) (fun x ψ => by
         rw [hind n hn hnK x _ (htors n y) ψ (htriv n y).some]
         exact (he0 n hn hnK x y).1 (hy x))
-      apply Additive.toMul.injective
-      apply picClass_injective rep hj
-      rw [hc, toMul_zero, hone]
+      exact Subtype.ext (Additive.toMul.injective (picClass_injective rep hj (hc.trans hone.symm)))
   · -- Galois
     intro n hn hnK σ x y
     apply Mu.val_injective
@@ -544,10 +559,9 @@ theorem weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNP
       intro h; apply hmnK; rw [Nat.cast_mul, h, mul_zero]
     have hmn : 0 < m * n := Nat.mul_pos hm hn
     rw [he (m * n) hmn hmnK, he n hn hnK]
-    congr 1
     apply hpin
     rw [hu2, hspec, hspec]
-    exact h20c K A m n hm hn hmnK x _ (htors n y) _ _
+    exact (h20c K A m n hm hn hmnK x _ (htors n y) _ _).symm
   · -- adjoint
     intro f fv hfv n hn hnK x y
     apply Mu.val_injective
@@ -559,7 +573,7 @@ theorem weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNP
           (picClass rep j (Additive.toMul (y : HDec.WeilPairing.P B))) :=
       picClass_dual rep j f.hom fv.hom hfv _
     rw [← weilFormula_congr x hd]
-    exact h20d K A n hn hnK f x _ (htors n y) _ _
+    exact (h20d K A n hn hnK f x _ (htors n y) _ _).symm
   · -- `e_n(x, λ_L x) = 1`
     intro L' hL' lam' hlam' n hn hnK x
     rw [he0 n hn hnK]
@@ -597,7 +611,8 @@ theorem exists_pt_of_isClosed {B : AbVar K} (b : B.X.left) (hb : IsClosed {b}) :
     congr 1
     ext a
     exact ψ.commutes a
-  · simp
+  · show (Spec.map _ ≫ B.X.left.fromSpecResidueField b) _ = b
+    exact Scheme.fromSpecResidueField_apply b _
 
 /-- **Surjectivity from surjectivity on `K̄`-points** (glue, proved): the image of `lam` is closed (`lam`
 is proper) and contains every closed point of the Jacobson scheme `B`. -/
@@ -612,7 +627,7 @@ theorem surjective_of_forall_pt {A B : AbVar K} (lam : A.X ⟶ B.X)
     intro b hb
     obtain ⟨y, rfl⟩ := exists_pt_of_isClosed b hb
     obtain ⟨x, rfl⟩ := h y
-    exact ⟨x.left (IsLocalRing.closedPoint _), by simp⟩
+    exact ⟨x.left (IsLocalRing.closedPoint _), rfl⟩
   constructor
   intro b
   have : b ∈ closure (closedPoints B.X.left) := by rw [closure_closedPoints]; trivial
@@ -664,3 +679,6 @@ theorem phiAmpleIsogeny_of_printed (hKL : MumfordKLFinite) (h8 : MumfordPhiSurje
     exact ⟨x, picClass_injective rep hj (by rw [picClass_phiL rep L lam'.hom hlam x, hx])⟩
 
 end PicDict
+#print axioms PicDict.weilPairingMumford_of_printed
+#print axioms PicDict.phiAmpleIsogeny_of_printed
+#print axioms PicDict.picPointsAlgClosed
