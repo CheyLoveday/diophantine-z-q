@@ -189,4 +189,50 @@ theorem loc_of_commute1 {k : ℕ} {A B C : ℚ_[2]}
     rw [hdec]; simp only [PadicInt.coe_one, smul_add, smul_smul, mul_one]
     congr 2; field_simp
 
+/-! ## The local condition `C1` -/
+
+section C1def
+
+variable {ω : ℍ[ℚ]} {k : ℕ}
+
+theorem qp_omega_sq (h2 : ω * ω = -(((8 * k + 1 : ℕ) : ℚ)) • 1) :
+    qp 2 ω * qp 2 ω = (0 : ℚ_[2]) • qp 2 ω - (((8 * k + 1 : ℕ) : ℚ) : ℚ_[2]) • 1 := by
+  rw [← map_mul, h2, zero_smul, zero_sub, qp_smul, map_one]; push_cast; rw [neg_smul]
+
+theorem qp_star_omega (hst : star ω = -ω) : star (qp 2 ω) = (0 : ℚ_[2]) • 1 - qp 2 ω := by
+  rw [qp, ← qmap_star, ← qp, hst, map_neg, zero_smul, zero_sub]
+
+theorem norm_qp_varpi (hϖn : Quaternion.normSq (1 + ω) = ((2 * (4 * k + 1) : ℕ) : ℚ)) :
+    ‖Quaternion.normSq (qp 2 (1 + ω))‖ = 1 / 2 := by
+  rw [normSq_qp, hϖn]
+  have : ((((2 * (4 * k + 1) : ℕ) : ℚ)) : ℚ_[2]) = 2 * ((4 * k + 1 : ℤ) : ℚ_[2]) := by push_cast; ring
+  rw [this, norm_mul, show (2 : ℚ_[2]) = ((2 : ℕ) : ℚ_[2]) by norm_num, Padic.norm_p,
+    norm_odd_int ⟨2 * k, by ring⟩]
+  norm_num
+
+/-- `L(ϖ²)`: `ϖ² = 2(−4k + ω)`. -/
+theorem loc2OK_varpi_sq (hωZ : IsHurZ ω) (h2 : ω * ω = -(((8 * k + 1 : ℕ) : ℚ)) • 1)
+    (hnrd : ∀ x z : ℚ_[2], Quaternion.normSq (x • (1 : ℍ[ℚ_[2]]) + z • qp 2 ω) =
+      x ^ 2 + ((8 * k + 1 : ℕ) : ℚ_[2]) * z ^ 2) :
+    Loc2OK (qp 2 ω) (qp 2 (1 + ω) * qp 2 (1 + ω)) := by
+  have e : qp 2 (1 + ω) * qp 2 (1 + ω) =
+      (2 : ℚ_[2]) • ((-(4 * k : ℚ_[2])) • (1 : ℍ[ℚ_[2]]) + (1 : ℚ_[2]) • qp 2 ω) := by
+    rw [← map_mul, add_mul, mul_add, mul_add, one_mul, mul_one, one_mul, h2, map_add, map_add, map_add,
+      map_one, qp_smul, map_one]
+    simp only [smul_add, smul_smul, one_smul]
+    push_cast
+    module
+  refine ⟨2, by norm_num, _, e, ?_, ?_, -(4 * k : ℚ_[2]), 1, ?_, by simp, 0, isHur_zero, by simp⟩
+  · refine (isHur_one.smul ?_).add ((isHur_qp_hurZ' hωZ).smul (Zp 2).one_mem)
+    rw [mem_Zp, norm_neg]
+    have := Padic.norm_int_le_one (p := 2) (4 * k : ℤ); push_cast at this; exact this
+  · rw [hnrd]
+    have : (-(4 * k : ℚ_[2])) ^ 2 + ((8 * k + 1 : ℕ) : ℚ_[2]) * 1 ^ 2 = (((4 * k + 1) ^ 2 : ℤ) : ℚ_[2]) := by
+      push_cast; ring
+    rw [this]; exact norm_odd_int (Odd.pow ⟨2 * k, by ring⟩)
+  · rw [norm_neg]
+    have := Padic.norm_int_le_one (p := 2) (4 * k : ℤ); push_cast at this; exact this
+
+end C1def
+
 end ZInQ.Contrib.HfxProof
