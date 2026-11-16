@@ -7,40 +7,46 @@ T09Pic.WeilPairingMumford` (`ZInQKernel/OneProof/H/TailZ24.lean:708`).
 
 ## 1. Verdict
 
-**The field is not removed outright.** Its perfectness clause is Mumford's nondegeneracy of `ē_n` (§20, through
-the duality of §15 and `deg n_X = n^{2g}`) and its last clause is Mumford §23 (`e^L(x, x) = 1`); neither has any
-Lean infrastructure in the tree (no Cartier duality of `ker n_X` and `ker n̂`, no theorem of the cube or seesaw, no
-theta groups), and neither is in reach in a day. Five of pic-dict's seven Mumford displays remain leaves.
+**The field is not removed outright**, but one of pic-dict's seven Mumford displays is now a Lean theorem with
+no hypotheses, and the field rests on five displays plus an open field.
 
-**What is new (all VERIFIED: compiled, standard axioms):**
+* Its perfectness clause is Mumford's nondegeneracy of `ē_n` (§20, through the duality of §15 and
+  `deg n_X = n^{2g}`) and its alternation clause is Mumford §23 (`e^L(x, x) = 1`). Neither has Lean
+  infrastructure in the tree (no Cartier duality of `ker n_X` and `ker n̂`, no theorem of the cube or seesaw), so
+  nondegeneracy stays a leaf; §23 is attacked in §6.
 
-1. **Mumford's §20 display is a theorem, modulo one formal glue statement about the library.**
-   pic-dict's leaf `PicDict.MumfordWeilPairingAC` (the formula `ē_n(x, M) = t_x^*ψ ∘ ψ⁻¹` is independent of `ψ`,
-   is a constant `n`-th root of unity, and is bilinear) is proved:
-   * three of its four conjuncts **outright**, over any field (`formula_indep`, `formula_root`, `formula_mul`);
-   * the fourth (multiplicativity in the class `M`) from `WeilProof.PullbackCompMonoidal`: Mathlib's
-     `Scheme.Modules.pullbackComp f g` commutes with the tensorators of the vendored monoidal structure of
-     `Scheme.Modules.pullback` (pull-back is a monoidal pseudofunctor). The unit constraint is *not* assumed
-     (`unitRatio_tr` derives it on abelian varieties).
-2. **The field** from five Mumford leaves, that glue, and the open field `phiAmpleIsogeny` (which replaces
-   pic-dict's `MumfordKLFiniteAC`; in leaf-fold32 that field is `PicFix.phiAmpleIsogeny_of_printed` of two printed
-   leaves):
+**What is new (all VERIFIED: compiled, `#print axioms` = `[propext, Classical.choice, Quot.sound]`):**
+
+1. **`WeilProof.mumfordWeilPairingAC_proof : PicDict.MumfordWeilPairingAC`.** Mumford's §20 display as pic-dict
+   stated it: the formula `ē_n(x, M) = t_x^*ψ ∘ ψ⁻¹` is independent of `ψ`, is a constant `n`-th root of unity,
+   and is bilinear. Three conjuncts are proved from the cocycle relation of the formula over any field; the
+   fourth (multiplicativity in `M`) from `PullbackCompMonoidal`.
+2. **`WeilProof.pullbackCompMonoidal_proof : PullbackCompMonoidal`**: Mathlib's `Scheme.Modules.pullbackComp`
+   commutes with the tensorators of the vendored monoidal structure of `Scheme.Modules.pullback` (pull-back of
+   sheaves of modules is a monoidal pseudofunctor). New general lemma on the way: `Mates.leftAdjointCompIso_δ`
+   (the left-adjoint comparison of a monoidal right-adjoint comparison is oplax monoidal).
+3. **The field**:
 
    ```lean
    theorem WeilProof.weilPairingMumford_proof (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
-       (h8 : MumfordPhiSurjectiveAC) (hA : PullbackCompMonoidal) (h20b : MumfordWeilNondegAC)
-       (h23 : MumfordWeilAltAC) (h3 : T09Pic.PhiAmpleIsogeny) : T09Pic.WeilPairingMumford
+       (h8 : MumfordPhiSurjectiveAC) (h20b : MumfordWeilNondegAC) (h23 : MumfordWeilAltAC)
+       (h3 : T09Pic.PhiAmpleIsogeny) : T09Pic.WeilPairingMumford
    ```
 
-   Variants: `weilPairingMumford_of_pullbackCompMonoidal` (with `MumfordKLFiniteAC` in place of the field) and
-   `weilPairingMumford_of_bilinRight` (with the narrower §20 leaf `MumfordWeilBilinRightAC`, the fourth conjunct
-   alone, in place of the glue).
+   `h3` is the open field `phiAmpleIsogeny` (it replaces pic-dict's `MumfordKLFiniteAC`, whose only use was to
+   produce it; in leaf-fold32 the field is `PicFix.phiAmpleIsogeny_of_printed` of two printed leaves).
+   Variant `weilPairingMumford_of_six`: `MumfordKLFiniteAC` in place of `h3`.
 
-**Count.** With honest flags (the two remaining `ē_n` leaves pending reading, the glue as project glue) the fold
-raises GLUE: dry run `34/11 on 45 -> 37/13 on 50; strictest 34/11 -> 37/13` (needs `--allow-rise`). It is −1 or
-0 only after `PullbackCompMonoidal` is proved and the §20/§23 readings clear (see §5). **Do not fold now**; fold
-the file's theorem when one of those happens, or use `mumfordWeilPairingAC_of_pullbackCompMonoidal` to drop
-pic-dict's §20 leaf from any fold of pic-dict's reduction.
+**Count** (dry runs on this base, `scratch/weil-proof/autofold*.json`; each printed module compiles):
+
+| flags of `mumfordWeilNondegAC`, `mumfordWeilAltAC` | dry run |
+|---|---|
+| pending reading (honest: they are stated for the formula, see §5) | `34/11 on 45 -> 37/12 on 49; strictest 34/11 -> 37/12` (needs `--allow-rise`) |
+| unread (pic-dict's rating) | `34/11 on 45 -> 39/10 on 49; strictest 34/11 -> 39/10` |
+
+So the fold is −1 once the §20/§23 readings confirm that Mumford states `ē_n` by the formula; with honest flags
+it is +1 now. pic-dict's own reduction had seven leaves (four of them pending readings); this one has five
+(two pending readings).
 
 ## 2. Files
 
@@ -96,13 +102,13 @@ Notation: `X` a scheme, `m, t : X ⟶ X` with `t ≫ m = m`, `M` a module, `ψ :
 
 | statement | kind | printed form? | reason |
 |---|---|---|---|
-| `WeilProof.PullbackCompMonoidal` | **project glue** | n/a | Formal property of the library: Mathlib's `pullbackComp` (an adjunction mate) commutes with the vendored tensorators of `pullback` (built by `Localization.Monoidal.functorMonoidalOfComp`). True in the standard theory (pull-back of modules is a monoidal pseudofunctor); its truth for these Lean definitions is STANDARD in content but unproved here. Proof plan in §6. |
+| `WeilProof.PullbackCompMonoidal` | **proved** (`pullbackCompMonoidal_proof`) | n/a | Not a leaf. |
 | `WeilProof.MumfordWeilBilinRightAC` (variant only) | published | yes, as a conjunct | Mumford §20 bilinearity, second variable, for the formula; same reading caveat as the next rows. Not used by `weilPairingMumford_proof`. |
 | `PicDict.MumfordWeilNondegAC` (pic-dict's) | published | **pending reading** | Stated for the formula; it is the print only if §20 states `ē_n` by `t_x^*ψ ∘ ψ⁻¹` and not only through the duality of §15 (pic-fix's note). |
 | `PicDict.MumfordWeilAltAC` (pic-dict's) | published | **pending reading** | Mumford §23, same caveat. |
 | `PicDict.MumfordSquareAC`, `MumfordMulNPicZeroAC`, `MumfordPhiSurjectiveAC` (pic-dict's) | published | yes (unread) | Statements about line bundles only (no `ē_n`), Mumford §6 Cor. 4, §8 (iv), §8 Thm 1; locators UNVERIFIED. `MumfordPhiSurjectiveAC` is already a field in leaf-fold32. |
 
-pic-dict's `MumfordWeilPairingAC` and `MumfordKLFiniteAC` are no longer assumptions of the field.
+pic-dict's `MumfordWeilPairingAC` is a theorem and `MumfordKLFiniteAC` is no longer an assumption of the field (it enters only through the open field `phiAmpleIsogeny`).
 
 ## 6. What remains
 
