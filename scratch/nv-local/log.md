@@ -21,3 +21,14 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
   Then: tau in I_q fixes P, hence Q (unibranch); tau acts on kappa(Q) inside the inertia group of the prime
   P' = {c1/c2 : c1 in P} of O_kappa (normality); kappa(Q) unramified at p => tau trivial on kappa(Q)
   (|I(P'|P'_0)| = e(P'|P'_0) for the fixed field of tau, tower e(P'|p)=1).
+
+## 2026-11-16 00:00 compiled (scratch/nv-local/Core.lean, `lake env lean`, standard axioms) VERIFIED
+- `SGRDirect.NVLocal.eq_one_of_inertia_of_unram`: K number field, P prime of O_K with e(P|Z)=1, sigma in
+  Aut(K) with sigma x - x in P for all x in O_K  =>  sigma = 1 (fixed field of <sigma>, card_inertia =
+  ramificationIdxIn, ramificationIdx_tower).
+- `primeOf`, `primeOf_isPrime`, `mem_primeOf_of_mem`, `inertia_primeOf`, `eq_one_of_primeOf`: the prime
+  {y : y*psi(d2) = psi(d1), d1 in P, d2 notin P} of O_L for psi : C -> L with ker psi <= P and O_L inside the
+  localization; an automorphism compatible with an action congruent to id mod P lies in its inertia.
+- `zqIncl`, `galB`, `galC_mem` (plumbing).
+- `BranchRegular` (def, GLUE) and `nvLocalInertia_of_branchRegular : BranchRegular -> NVLocalInertia`.
+  `#print axioms`: [propext, Classical.choice, Quot.sound].

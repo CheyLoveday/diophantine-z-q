@@ -317,6 +317,82 @@ theorem nvLocalInertia_of_branchRegular (h : BranchRegular) : NVLocalInertia := 
     haveI : Module.IsTorsionFree ℚ Qbar :=
       Module.isTorsionFree_iff_algebraMap_injective.mpr (RingHom.injective _)
     exact ⟨(IsAlgClosed.lift (R := ℚ) (M := Qbar) (S := integralClosure ℚ[X] E ⧸ Q)).toRingHom⟩
-  sorry
+  -- the number field `L = φ(κ)` and `e : κ ≃ L`
+  set L := IntermediateField.adjoin ℚ (Set.range φ) with hLdef
+  haveI : FiniteDimensional ℚ L := finiteDimensional_residue E b Q hQu φ
+  haveI : NumberField L := ⟨⟩
+  have hunL : UnramifiedAt L p := hres Q hQ hQu φ
+  let f : integralClosure ℚ[X] E ⧸ Q →+* L :=
+    { toFun := fun z => ⟨φ z, IntermediateField.subset_adjoin _ _ ⟨z, rfl⟩⟩
+      map_one' := Subtype.ext (map_one φ)
+      map_mul' := fun x y => Subtype.ext (map_mul φ x y)
+      map_zero' := Subtype.ext (map_zero φ)
+      map_add' := fun x y => Subtype.ext (φ.map_add x y) }
+  have hfsurj : Function.Surjective f := by
+    have hle : L ≤ (φ.fieldRange).toIntermediateField (fun q : ℚ =>
+        ⟨(q : integralClosure ℚ[X] E ⧸ Q), (map_ratCast φ q).trans (eq_ratCast _ q).symm⟩) := by
+      rw [hLdef, IntermediateField.adjoin_le_iff]
+      rintro _ ⟨z, rfl⟩
+      exact ⟨z, rfl⟩
+    rintro ⟨y, hy⟩
+    obtain ⟨z, hz⟩ := hle hy
+    exact ⟨z, Subtype.ext hz⟩
+  let e : integralClosure ℚ[X] E ⧸ Q ≃+* L := RingEquiv.ofBijective f ⟨f.injective, hfsurj⟩
+  have he : ∀ z, (e z : Qbar) = φ z := fun z => rfl
+  -- `σ`: the action of `τ` on `κ`, transported to `L`
+  let σκ : integralClosure ℚ[X] E ⧸ Q ≃+* integralClosure ℚ[X] E ⧸ Q :=
+    Ideal.quotientEquiv Q Q (galB τ) hQτ
+  have hσκ : ∀ y, σκ (Ideal.Quotient.mk Q y) = Ideal.Quotient.mk Q (galB τ y) := fun y => rfl
+  let σL : L ≃+* L := (e.symm.trans σκ).trans e
+  let σ : L ≃ₐ[ℚ] L := AlgEquiv.ofRingEquiv (f := σL) (fun x => by
+    rw [eq_ratCast (algebraMap ℚ L), map_ratCast])
+  -- `ψ : C → L`
+  let ψ : integralClosure ℤ[X] E →+* L :=
+    e.toRingHom.comp ((Ideal.Quotient.mk Q).comp (zqIncl E))
+  have hψ : ∀ c, ψ c = e (Ideal.Quotient.mk Q (zqIncl E c)) := fun c => rfl
+  have hker : ∀ c, ψ c = 0 → c ∈ 𝔓 := by
+    intro c hc
+    rw [hψ, map_eq_zero_iff _ e.injective, Ideal.Quotient.eq_zero_iff_mem] at hc
+    exact hQ𝔓 hc
+  have hNL : ∀ y : 𝓞 L, ∃ c₁ c₂ : integralClosure ℤ[X] E, c₂ ∉ 𝔓 ∧ (y : L) * ψ c₂ = ψ c₁ := by
+    intro y
+    have hy : IsIntegral ℤ (e.symm (y : L)) :=
+      (y.2 : IsIntegral ℤ (y : L)).map (e.symm.toRingHom.toIntAlgHom)
+    obtain ⟨c₁, c₂, hc₂, hc⟩ := hN _ hy
+    refine ⟨c₁, c₂, hc₂, ?_⟩
+    rw [hψ, hψ, ← hc, map_mul, RingEquiv.apply_symm_apply, mul_comm]
+  have hσψ : ∀ c : integralClosure ℤ[X] E, ∃ c' : integralClosure ℤ[X] E,
+      σ (ψ c) = ψ c' ∧ c' - c ∈ 𝔓 := by
+    intro c
+    obtain ⟨c', hc', hc'𝔓⟩ := hτC c
+    refine ⟨c', ?_, hc'𝔓⟩
+    show e (σκ (e.symm (e (Ideal.Quotient.mk Q (zqIncl E c))))) = ψ c'
+    rw [RingEquiv.symm_apply_apply, hσκ, hψ]
+    congr 2
+    apply Subtype.ext
+    rw [galB_apply]
+    exact hc'.symm
+  have hp𝔓 : (p : integralClosure ℤ[X] E) ∈ 𝔓 := by
+    have h1 : algebraMap ℤ[X] (integralClosure ℤ[X] E) (C (p : ℤ)) ∈ 𝔓 := by
+      rw [← Ideal.mem_comap, ← Ideal.under_def, h𝔓u]; exact hpm
+    simpa using h1
+  have hσ1 : σ = 1 := eq_one_of_primeOf 𝔓 ψ hker hNL σ hσψ p hp𝔓 hunL
+  -- conclusion: `τ ∈ I_Q`
+  refine ⟨Q, hQ, hQu, 1, ?_⟩
+  rw [one_mul, inv_one, mul_one]
+  intro y
+  refine ⟨galB τ y, galB_apply τ y, ?_⟩
+  rw [← Ideal.Quotient.eq, ← hσκ]
+  have h2 : σL (e (Ideal.Quotient.mk Q y)) = e (Ideal.Quotient.mk Q y) := by
+    have := congrArg (fun g : L ≃ₐ[ℚ] L => g (e (Ideal.Quotient.mk Q y))) hσ1
+    rw [AlgEquiv.one_apply] at this
+    exact this
+  have h3 : e (σκ (Ideal.Quotient.mk Q y)) = e (Ideal.Quotient.mk Q y) := by
+    rw [← h2]
+    show e (σκ (Ideal.Quotient.mk Q y)) = e (σκ (e.symm (e (Ideal.Quotient.mk Q y))))
+    rw [RingEquiv.symm_apply_apply]
+  exact e.injective h3
 
 end SGRDirect.NVLocal
+
+#print axioms SGRDirect.NVLocal.nvLocalInertia_of_branchRegular
