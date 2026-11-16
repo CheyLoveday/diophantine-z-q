@@ -252,4 +252,96 @@ theorem charts_transport (k : X ≅ X₀) (t₀ : ToP1 X₀.left) (hc : X6Glue.E
 
 end Transport
 
+/-! ## 4. Pinning: any two witnesses have compatibly isomorphic coarse curves -/
+
+section Pin
+
+open LeafQM.AV.R1UnivRigid
+
+/-- `phi_part` (Pin.lean) for the abelian-scheme clauses. -/
+theorem phi_part_ab {Y Y' : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y} {Φ' : PtEquiv Y'}
+    (hU : R1univAbProps Y Φ) (h1' : R1fpPropsAb Y' Φ') :
+    ∃ g : Y' ⟶ Y, ∀ (K : Type) [Field K] [Algebra ℚ K] (y : fieldPt K ⟶ Y'),
+      Φ' K y = Φ K (y ≫ g) := by
+  obtain ⟨hp', hs', -, -, ⟨𝒜', h𝒜'⟩, -⟩ := h1'
+  have hall : ∀ (K : Type) [Field K] [Algebra ℚ K] (s : fieldPt K ⟶ Y'), ∃ P : QML3 K,
+      IsFibreOf 𝒜'.toQMFamily s.left P :=
+    fun K _ _ s => ⟨Quotient.out (Φ' K s), h𝒜' K s _ (Quotient.out_eq _).symm⟩
+  obtain ⟨g, hg⟩ := hU Y' hp' hs' 𝒜' hall
+  refine ⟨g, fun K _ _ y => ?_⟩
+  rw [hg K y _ (h𝒜' K y _ (Quotient.out_eq _).symm)]
+  exact (Quotient.out_eq _).symm
+
+/-- `compare_iso` (TailU) for the abelian-scheme clauses: two fine witnesses are compatibly isomorphic. -/
+theorem compare_iso_ab {Y Y' : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y} {Φ' : PtEquiv Y'}
+    (h : R1fpPropsAb Y Φ) (h' : R1fpPropsAb Y' Φ') :
+    ∃ g : Y' ≅ Y, ∀ (K : Type) [Field K] [Algebra ℚ K] (y : fieldPt K ⟶ Y'),
+      Φ' K y = Φ K (y ≫ g.hom) := by
+  obtain ⟨g, hg⟩ := phi_part_ab h.2.2.2.2.2 h'
+  obtain ⟨g', hg'⟩ := phi_part_ab h'.2.2.2.2.2 h
+  have e1 : g' ≫ g = 𝟙 Y := eq_id_of_fieldPts h.1 h.2.1 _ fun K _ _ y => (Φ K).injective (by
+    rw [← Category.assoc, ← hg K (y ≫ g'), ← hg' K y])
+  have e2 : g ≫ g' = 𝟙 Y' := eq_id_of_fieldPts h'.1 h'.2.1 _ fun K _ _ y => (Φ' K).injective (by
+    rw [← Category.assoc, ← hg' K (y ≫ g), ← hg K y])
+  exact ⟨⟨g, g', e2, e1⟩, hg⟩
+
+/-- **Coarse comparison over one fine witness** (abelian-scheme clauses): the kernel's `coarseFactor_of` and
+`coarseCompare_of`, with `PairsLift` from T5 (`pairsLift_of_T5`), `FactorThroughSurj` and `CurveBijIso` proved. -/
+theorem coarse_compare_ab (hT : ObjBridge.TorsionStructure) {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {X X' : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)}
+    {Ψ' : (fieldPt Qbar ⟶ X') ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X} {fY' : Y ⟶ X'}
+    (h1 : R1fpPropsAb Y Φ) (h6 : X6Props Y Φ X Ψ fY) (h6' : X6Props Y Φ X' Ψ' fY') :
+    ∃ g : X ≅ X', ∀ x : fieldPt Qbar ⟶ X, Ψ' (x ≫ g.hom) = Ψ x := by
+  have hL := _root_.ShimuraSplit.pairsLift_of_T5 hT
+  have hval : ∀ y : fieldPt Qbar ⟶ Y, Ψ (y ≫ fY) = Ψ' (y ≫ fY') := by
+    intro y
+    obtain ⟨P, hP⟩ := Quotient.exists_rep (Φ Qbar y)
+    rw [h6.2.2.2.2.2 y P hP.symm, h6'.2.2.2.2.2 y P hP.symm]
+  have hsurj : ∀ x : fieldPt Qbar ⟶ X, ∃ y : fieldPt Qbar ⟶ Y, y ≫ fY = x := by
+    intro x
+    obtain ⟨Q, hQ⟩ := Quotient.exists_rep (Ψ x)
+    obtain ⟨P, hP⟩ := hL Q
+    obtain ⟨y, hy⟩ := (Φ Qbar).surjective (M3.mk P)
+    refine ⟨y, Ψ.injective ?_⟩
+    rw [h6.2.2.2.2.2 y P hy, hP, hQ]
+  have hconst : ∀ y y' : fieldPt Qbar ⟶ Y, y ≫ fY = y' ≫ fY → y ≫ fY' = y' ≫ fY' := by
+    intro y y' e
+    apply Ψ'.injective
+    rw [← hval, ← hval, e]
+  obtain ⟨h, hh⟩ := _root_.CoarseFactorAG.factorThroughSurj Y X X' h1.1 h1.2.1 h6.1 h6.2.1 h6'.1 h6'.2.1
+    fY fY' hsurj hconst
+  have hcomp : ∀ x : fieldPt Qbar ⟶ X, Ψ' (x ≫ h) = Ψ x := by
+    intro x
+    obtain ⟨y, rfl⟩ := hsurj x
+    rw [Category.assoc, hh, hval]
+  have hbij : Function.Bijective (fun x : fieldPt Qbar ⟶ X => x ≫ h) := by
+    have e : (fun x : fieldPt Qbar ⟶ X => x ≫ h) = Ψ'.symm ∘ Ψ := by
+      funext x
+      simp only [Function.comp]
+      rw [← hcomp x, Equiv.symm_apply_apply]
+    rw [e]; exact Ψ'.symm.bijective.comp Ψ.bijective
+  have := HDec.HSyn.curveBijIso_lf7 X X' h6.1 h6.2.1 h6'.1 h6'.2.1 h hbij
+  exact ⟨asIso h, hcomp⟩
+
+end Pin
+
+/-! ## 5. The new leaf is not stronger than the field it replaces -/
+
+/-- **`ElkiesX6StarFunctionField` and T5 give `ElkiesX6StarEvery`**: Elkies' clauses on the witness of the field
+transport to every witness (`compare_iso_ab`, `x6Props_transport`, `coarse_compare_ab`, and the transport lemmas of
+§3). So the every-witness form asserts no more than the field, given T5 (a theorem of the build from the textbook
+field `mumfordTorsionAlgClosed`). -/
+theorem every_of_functionField (h : ElkiesCoord.ElkiesX6StarFunctionField) (hT : ObjBridge.TorsionStructure) :
+    ElkiesX6StarEvery := by
+  intro Y Φ X Ψ fY h1 h6
+  obtain ⟨Y₀, Φ₀, X₀, Ψ₀, fY₀, t₀, h1₀, h6₀, hff, hcm, hc⟩ := h
+  obtain ⟨g, hg⟩ := compare_iso_ab h1₀ h1
+  obtain ⟨k, hk⟩ := coarse_compare_ab hT h1 h6 (x6Props_transport g hg h6₀)
+  exact ⟨t₀.comp k.hom.left, ff_transport k hk t₀ hff, cm_transport k hk t₀ hcm, charts_transport k t₀ hc⟩
+
+/-- Given a witness and T5, the new leaf and the field are equivalent. -/
+theorem every_iff_functionField (hW : X6WitnessAb) (hT : ObjBridge.TorsionStructure) :
+    ElkiesX6StarEvery ↔ ElkiesCoord.ElkiesX6StarFunctionField :=
+  ⟨fun h => elkiesX6StarFunctionField_of_every h hW, fun h => every_of_functionField h hT⟩
+
 end HDec.QMSplit.Moduli.ElkiesPrint

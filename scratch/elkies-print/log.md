@@ -25,3 +25,7 @@ elsewhere (queue2 verdict)". VERIFIED (read).
 ## Compile log
 - C1 ElkiesPrint.lean v1 (leaf ElkiesX6StarEvery, X6WitnessAb, discharge, ffMap/ffMap_germ/ffMap_comp/ffMap_id): compiles (VERIFIED).
 - C2 transport section (AL conjugation, fixedByW_eq_image, ff_transport, cm_transport, charts_transport): compiles (VERIFIED).
+- C3 pinning (phi_part_ab, compare_iso_ab, coarse_compare_ab) and the converse `every_of_functionField :
+  ElkiesX6StarFunctionField → ObjBridge.TorsionStructure → ElkiesX6StarEvery`, `every_iff_functionField`: compile.
+  #print axioms on elkiesX6StarFunctionField_of_every, every_of_functionField, every_iff_functionField:
+  [propext, Classical.choice, Quot.sound] (VERIFIED, scratch/elkies-print/Axioms.lean).
