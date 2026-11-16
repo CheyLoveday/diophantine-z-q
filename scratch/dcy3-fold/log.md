@@ -21,3 +21,14 @@
   kinds.tsv before (kinds-counts-before.txt): H rows 51, strict 41 LEAF / 10 GLUE, strictest 39 / 12; all 62 rows strict
   49 / 13, strictest 47 / 15. The field's row: added, GLUE / GLUE.
 - 23:41 step 1 (thread.py: hY3 binder on addedLeaves8_of_open9, open11-open27; supplied in open28 by DCY3Used.y3Connected_of_leaves; TailZ34 imports DeligneComponentsY3Used): build OK first try (13686 jobs), frozenTarget axioms standard.
+- 23:45 PruneScan after step 1 (prunescan-step1-out.txt): exactly OpenAddedLeaves17.deligneComponentsY3PrintedAb unused;
+  prune set (prune-set-step1.txt) = OpenAddedLeaves9.deligneComponentsY3Printed and the Ab field in OpenAddedLeaves12-17.
+  The off-chain generations OpenAddedLeaves10 (TailZ17) and 11 (TailZ18) must lose the field too: addedLeaves10_of_open11
+  and addedLeaves11_of_open12 fill them from the next generation (prune-set-applied.txt = scan set + these two).
+  DeadCascade (dead-cascade.txt): only generated casesOn/recOn and the off-chain conversions addedLeaves9_of_open10,
+  addedLeaves10_of_open11, addedLeaves11_of_open12 with open13-16 above them; these only lose an assignment, so no
+  declaration is deleted.
+- step 2 (prune_dcy3.py, prune_out.txt: 52 deleted lines): 9 fields (with docstrings) and 9 assignments. Docstrings of
+  addedLeaves8_of_open9, OpenAddedLeaves9, sixContactMin_of_open28 and Main's module doc updated.
+  kinds.tsv and claims.tsv rows of deligneComponentsY3PrintedAb deleted (removed-rows.txt).
+- 23:52 build after step 2: OK (13686 jobs); frozenTarget axioms standard.

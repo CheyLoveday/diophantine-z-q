@@ -39,4 +39,3 @@ r9b	faltings-cm	host task faltings-cm running: whether every live instance is CM
 gonzalezRotgerProp56X6	gr56-prove	host task gr56-prove running: Prop. 5.6 at D = 6 from the lattice model and cm-stab	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/gr56-prove	held
 hFH	fh-printed	fh-printed done (FriedbergHoffsteinB_Printed, equivalent, still consequence); parked	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/fh-printed	held
 r16CoreY	r16-used	r16-used done (AfTateCharPoly, rated consequence); parked	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/r16-used	held
-deligneComponentsY3PrintedAb	dcy3-used	dcy3-used done: removable (y3Connected from mumfordGroupLaw and the Shimura composite); fold queued	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/dcy3-used	held

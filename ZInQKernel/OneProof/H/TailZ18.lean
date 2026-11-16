@@ -1221,10 +1221,6 @@ structure OpenAddedLeaves11 : Prop where
   /-- qm-split, H-87/H-88: `ι(𝒪¹)` is cocompact Fuchsian with covolume `2π/3` (Shimura 1971 Prop. 9.2;
   Shimizu 1965). -/
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
-  /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-  components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-  389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED). -/
-  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
 
 /-- route-a-fold's added-leaf bundle from leaf-fold12's: `igusaCMValue24` is cm24-value's theorem. -/
 theorem addedLeaves10_of_open11 (l : OpenAddedLeaves11) : OpenAddedLeaves10 where
@@ -1240,7 +1236,6 @@ theorem addedLeaves10_of_open11 (l : OpenAddedLeaves11) : OpenAddedLeaves10 wher
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   igusaCMValue24 := _root_.CM24.igusaCMValue24_field
-  deligneComponentsY3PrintedAb := l.deligneComponentsY3PrintedAb
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold12; no `sorry`, standard axioms).
 `ZInQ.SixContactMin` from `OpenResearchLeaves11` (29), `OpenTextbookLeaves10` (15), `OpenAddedLeaves11` (13) and

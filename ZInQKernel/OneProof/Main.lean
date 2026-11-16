@@ -37,7 +37,10 @@ the development fork, and from nothing else. It composes three compiled chains:
   leaves over the Picard functor: representability, `Pic⁰`, `φ_L` an isogeny, Mumford's `ē_n`;
   docs/research/leaf-fold14.md); `TailZ40` is rigid-prune's (TailZ23's conversions use the field
   `mumfordRigidityCore` only as Mumford's GIT Thm 6.14 on QM families, `QMFamilyGroupLaw`, proved from gt-rigidity's
-  `MumfordGroupLaw` without Cor. 6.4; docs/research/rigid-prune.md).
+  `MumfordGroupLaw` without Cor. 6.4; docs/research/rigid-prune.md); dcy3-fold removed the added field `deligneComponentsY3PrintedAb`: the chain
+  reads it only as `TSHecke.Y3Connected`, now proved by dcy3-used's `DCY3Used.y3Connected_of_leaves` from
+  `mumfordGroupLaw` and `shimuraMainThmIDeligneY3AbU` and passed from `sixContactMin_of_open28` down to
+  `addedLeaves8_of_open9`; docs/research/dcy3-fold.md).
 * TYZ: `ZInQ.Contrib.TYZChain.tyzThm35ReadingA_of_leaves` proves reading A of Tian–Yuan–Zhang from four leaves; the
   fourth, tyz-35's pinned form of TYZ Theorem 3.3, is derived from TYZ Theorem 3.3 in its printed form
   (`ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33`, `OneProof/TYZSplit.lean`, task tyz-split), and the

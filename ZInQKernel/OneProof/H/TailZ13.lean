@@ -15,7 +15,8 @@ namespace HSyn
 /-! ## The bundle -/
 
 /-- **The added leaves still open** (leaf-fold10): leaf-fold8's `OpenAddedLeaves8` with `y3Connected` replaced by
-shimura-glue's `DeligneComponentsY3Printed`. 14 fields. -/
+shimura-glue's `DeligneComponentsY3Printed`. 14 fields. dcy3-fold: that field is pruned (13 fields); `y3Connected`
+is an argument of `addedLeaves8_of_open9`. -/
 structure OpenAddedLeaves9 : Prop where
   thetaRatiosAlgebraic : G0Split.ThetaPt.ThetaRatiosAlgebraic
   qmCentralizerCMC : QMSplit.Aut.QMCentralizerCMC
@@ -34,15 +35,12 @@ structure OpenAddedLeaves9 : Prop where
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
   /-- qm-glue, H-88: Lin–Yang's Igusa vector at the Baba–Granath CM value `j = −16/27` (discriminant `−24`). -/
   igusaCMValue24 : LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24
-  /-- shimura-glue: Deligne's theorem on the connected components of a Shimura variety, printed form, for
-  `G = B^×` at level `K₃` on one fine witness `Y₃` (a bijection `π₀(Y ×_ℚ ℚ̄) ≃ ℚ^×_{>0}\𝔸_f^×/nrd(K₃)` under which
-  `σ` acts by the cyclotomic idele to a fixed sign; Deligne, Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33
-  (1979) 2.1.3, 2.6.3; locators UNVERIFIED), replaces `y3Connected`. -/
-  deligneComponentsY3Printed : _root_.ShimuraGlue.DeligneComponentsY3Printed
 
 /-! ## From the new bundle to leaf-fold8's -/
 
-/-- leaf-fold8's added-leaf bundle from leaf-fold10's: `y3Connected` from the printed Deligne leaf. -/
+/-- leaf-fold8's added-leaf bundle from leaf-fold10's. dcy3-fold: `y3Connected` is the argument `hY3`, supplied in
+`sixContactMin_of_open28` (TailZ34) by dcy3-used's `DCY3Used.y3Connected_of_leaves` from the research fields
+`mumfordGroupLaw` and `shimuraMainThmIDeligneY3AbU`; Deligne's printed leaf is no longer read. -/
 theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) (hY3 : TSHecke.Y3Connected) : OpenAddedLeaves8 where
   thetaRatiosAlgebraic := l.thetaRatiosAlgebraic
   qmCentralizerCMC := l.qmCentralizerCMC

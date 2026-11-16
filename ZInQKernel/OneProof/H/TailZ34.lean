@@ -114,10 +114,6 @@ structure OpenAddedLeaves17 : Prop where
   axSenTate : _root_.ZInQ.Contrib.HodgeSplit.AxSenTate
   milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
-  /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-  components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-  389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED). -/
-  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
   /-- x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
   Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
   `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean). -/
@@ -152,7 +148,6 @@ theorem openAddedLeaves16_of_OpenAddedLeaves17 (n : OpenAddedLeaves17) : OpenAdd
   milneIsogenyQuasiInverse := n.milneIsogenyQuasiInverse
   egaIV_8_10_5_xii := n.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := _root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed n.shimuraIntegralModelRep
-  deligneComponentsY3PrintedAb := n.deligneComponentsY3PrintedAb
   deligneComponentsX6PrintedAb := n.deligneComponentsX6PrintedAb
   geomConnOfAlgClosure := n.geomConnOfAlgClosure
   picRepresentableAbVar := n.picRepresentableAbVar
@@ -160,7 +155,8 @@ theorem openAddedLeaves16_of_OpenAddedLeaves17 (n : OpenAddedLeaves17) : OpenAdd
   phiAmpleIsogeny := n.phiAmpleIsogeny
   weilPairingMumford := n.weilPairingMumford
 
-/-- **G0 with only the open leaves and the open glue** (leaf-fold22; generated). -/
+/-- **G0 with only the open leaves and the open glue** (leaf-fold22; generated). dcy3-fold: supplies `TSHecke.Y3Connected`
+(threaded down to `addedLeaves8_of_open9`) by `DCY3Used.y3Connected_of_leaves` from two research fields. -/
 theorem sixContactMin_of_open28 (r : OpenResearchLeaves21) (t : OpenTextbookLeaves11) (l : OpenAddedLeaves17) (g : OpenGlue7) : ZInQ.SixContactMin :=
   sixContactMin_of_open27 (openResearchLeaves20_of_OpenResearchLeaves21 r t) t (openAddedLeaves16_of_OpenAddedLeaves17 l) g
     (_root_.DCY3Used.y3Connected_of_leaves r.mumfordGroupLaw r.shimuraMainThmIDeligneY3AbU)

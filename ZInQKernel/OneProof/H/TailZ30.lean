@@ -21,10 +21,6 @@ structure OpenAddedLeaves15 : Prop where
   /-- qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
   Thm 2.20; Rankin Thm 4.1.4). -/
   valenceFormulaCocompactEq : LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq
-  /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-  components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-  389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED). -/
-  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
   /-- x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
   Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
   `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean). -/
@@ -59,7 +55,6 @@ theorem openAddedLeaves14_of_OpenAddedLeaves15 (n : OpenAddedLeaves15) (t : Open
   egaIV_8_10_5_xii := n.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := n.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := n.valenceFormulaCocompactEq
-  deligneComponentsY3PrintedAb := n.deligneComponentsY3PrintedAb
   deligneComponentsX6PrintedAb := n.deligneComponentsX6PrintedAb
   geomConnOfAlgClosure := n.geomConnOfAlgClosure
   picRepresentableAbVar := n.picRepresentableAbVar

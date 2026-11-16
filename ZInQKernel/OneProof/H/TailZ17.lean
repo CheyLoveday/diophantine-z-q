@@ -202,11 +202,6 @@ structure OpenAddedLeaves10 : Prop where
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
   /-- qm-glue, H-88: Lin–Yang's Igusa vector at the Baba–Granath CM value `j = −16/27` (discriminant `−24`). -/
   igusaCMValue24 : LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24
-  /-- shimura-glue, printed form: Deligne's theorem on the connected components of a Shimura variety for
-  `G = B^×` at level `K₃` on one fine witness `Y₃` of the moduli problem of abelian schemes with `𝒪`-action and
-  level 3 (Deligne, Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED).
-  Replaces `deligneComponentsY3Printed`. -/
-  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
 
 /-! ## From the new bundles to leaf-fold10's -/
 
@@ -264,9 +259,6 @@ theorem addedLeaves9_of_open10 (r : OpenResearchLeaves11) (l : OpenAddedLeaves10
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   igusaCMValue24 := l.igusaCMValue24
-  deligneComponentsY3Printed :=
-    (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab (mumfordRigidity_of11 r)).mpr
-      l.deligneComponentsY3PrintedAb
 
 /-- **G0 with only the open leaves and the open glue** (route-a-fold; no `sorry`, standard axioms).
 `ZInQ.SixContactMin` follows from `OpenResearchLeaves11` (29), `OpenTextbookLeaves10` (16), `OpenAddedLeaves10` (14)

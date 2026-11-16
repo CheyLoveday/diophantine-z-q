@@ -746,10 +746,6 @@ theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeave
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   igusaCMValue24 := _root_.CM24.igusaCMValue24_field
-  deligneComponentsY3Printed :=
-    (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab_gl
-      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw)).mpr
-      l.deligneComponentsY3PrintedAb
 
 /-- leaf-fold9's research bundle from leaf-fold14's (the composite of `researchLeaves12_of_open13`,
 `researchLeaves11_of_open12`, `researchLeaves10_of_open11` and `researchLeaves9_of_open10`, with the three reduct

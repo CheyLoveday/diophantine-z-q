@@ -780,10 +780,6 @@ structure OpenAddedLeaves13 : Prop where
   /-- qm-split, H-87/H-88: `ι(𝒪¹)` is cocompact Fuchsian with covolume `2π/3` (Shimura 1971 Prop. 9.2;
   Shimizu 1965). -/
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
-  /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-  components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-  389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED). -/
-  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
   /-- x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
   Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
   `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean). -/
@@ -823,7 +819,6 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
   shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
-  deligneComponentsY3PrintedAb := l.deligneComponentsY3PrintedAb
   deligneComponentsX6PrintedAb := l.deligneComponentsX6PrintedAb
   geomConnOfAlgClosure := l.geomConnOfAlgClosure
 
