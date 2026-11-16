@@ -106,6 +106,30 @@ theorem isFESign_of_rootNumber {N : ℕ} [NeZero N] (f : Newform N 2) (hχ : f.�
   obtain ⟨G, hG⟩ := exists_isEntireCont_coeff f
   exact ⟨G, hG, fun s h1 h2 => by rw [completedL_newform_sub f hχ hG h1 h2, hε]⟩
 
+/-- **`IsFESign` pins `ε`**: the sign of the functional equation of `L(s, f)` at level `N` is
+exactly `rootNumber f hχ` (so the leaf's `ε` is a function of `f`, and `IsFESign f ε` holds for
+exactly one `ε`). -/
+theorem isFESign_iff {N : ℕ} [NeZero N] (f : Newform N 2) (hχ : f.χ = 1) (ε : ℤ) :
+    IsFESign f ε ↔ (ε : ℂ) = rootNumber f hχ := by
+  constructor
+  · rintro ⟨G, hG, hFE⟩
+    have hG1 : IsEntireCont (twistCoeff f 1) 2 G :=
+      isEntireCont_congr (fun n _ => by simp [twistCoeff, chiD]) hG
+    obtain ⟨s, hs1, hs2, hGs⟩ :=
+      exists_ne_zero_on_strip hG.1 (twist_cont_ne_zero f one_ne_zero hG1)
+    have e1 := hFE s hs1 hs2
+    have e2 := completedL_newform_sub f hχ hG hs1 hs2
+    have h2π : (2 * Real.pi : ℂ) ≠ 0 := by
+      exact_mod_cast mul_ne_zero two_ne_zero Real.pi_ne_zero
+    have hΛ : ZInQ.Literature.completedL N G s ≠ 0 := by
+      rw [completedL_eq]
+      refine mul_ne_zero ?_ (mul_ne_zero (mul_ne_zero ?_ (Complex.Gamma_ne_zero_of_re_pos hs1)) hGs)
+      · rw [Ne, Complex.cpow_eq_zero_iff]
+        exact fun h => (NeZero.ne N) (by exact_mod_cast h.1)
+      · rw [Ne, Complex.cpow_eq_zero_iff]; exact fun h => h2π h.1
+    exact mul_right_cancel₀ hΛ (e1.symm.trans e2)
+  · intro h; exact isFESign_of_rootNumber f hχ h.symm
+
 /-- A prime `p` with `p² ∣ d` is excluded for `d` squarefree. -/
 theorem not_sq_dvd_of_squarefree {d : ℤ} (hd : Squarefree d) {p : ℕ} (hp : p.Prime) :
     ¬ (p : ℤ) ^ 2 ∣ d := by
