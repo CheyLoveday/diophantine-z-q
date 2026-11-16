@@ -143,6 +143,27 @@ What it still rests on as reading, not Lean (unchanged from tyz-split and h33-si
 
 The row should keep the flag that there is no human review of the paper, and add the journal check.
 
+### 3.1 Independent statement review (model, 11-16)
+
+A separate model agent reviewed the leaf without access to the TeX, using the notes. It did not run Lean.
+* **`IsX0Identification`: faithful.** It is exactly the class of pullbacks of ℚ-isomorphisms `(X₀(32), ∞) ≅ (A, O)`.
+  The cusp conditions, the width of `∞`, the degree argument and the converse all check out. No spurious pairs:
+  the only pairs are `(x, ±y)`.
+* **`TYZThm33Printed`: weaker than the print, and not vacuous.**
+  * `Q` and `m` are chosen after `ℓ` and before `n`; `ε` after `Φ` and `χ`.
+  * It does not depend on the eta model.
+  * Mathematically it is equivalent to `TYZThm33EpsAfter basePt`.
+* **Inherited, not regressions:** the `P_n`/`[i]`/`δ` dictionary.
+* **Docstring:** the reviewer asked to restore four items of the old docstring:
+  * the warning that the other sign of `[i]` makes the leaf false;
+  * the `ℓ` vacuity remark;
+  * classes 6 and 2 kept as printed, and `h₂` reused at L2354;
+  * `A ⊗ ℚ` equality as torsion.
+
+  They are restored, and "degree 2" now reads "degree at most 2". The file was rebuilt and `#discharges` re-run with
+  the same result.
+* Unrelated stale remark: the docstring of `CM.tyzForm` (CM.lean:426) says "source not on this host".
+
 ## 4. Lean results (VERIFIED, compiled)
 
 * `lake build +ZInQKernel.Contrib.OneProof.TYZThm33 +ZInQKernel.OneProof.Discharges`: success (the module in 39 s;

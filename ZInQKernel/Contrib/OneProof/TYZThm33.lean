@@ -101,10 +101,10 @@ coordinate functions, which are elements of `ℚ(X₀(32))`; the conditions say:
   `q`-expansion at `∞`): `i₀` is a morphism over `ℚ` with `i₀⁻¹(O) ⊆ {cusps}`;
 * `Y² = X³ + 4X`: `i₀` lands on `A`;
 * `X` is unbounded at `∞`: `i₀(∞) = O`;
-* `X = O(e^{4π Im τ})` at `∞` (a pole of order at most `2` in `q`) and `X` is bounded at every other cusp
-  `γ∞` (`γ ∈ SL₂(ℤ)`, `32 ∤ c`; the cusps `γ∞` with `32 ∣ c` are `Γ₀(32)`-equivalent to `∞`): `X` has degree
-  `2` on `X₀(32)`, so `i₀` has degree `1` (`deg X = deg i₀ · deg x`, `deg x = 2`), i.e. `i₀` is an
-  isomorphism.
+* `X = O(e^{4π Im τ})` at `∞` (a pole of order at most `2` in `q`, `∞` having width `1`) and `X` is bounded at
+  every other cusp `γ∞` (`γ ∈ SL₂(ℤ)`, `32 ∤ c`; the cusps `γ∞` with `32 ∣ c` are exactly those
+  `Γ₀(32)`-equivalent to `∞`): `X` has degree at most `2` on `X₀(32)`, and `deg X = deg i₀ · deg x = 2 deg i₀`,
+  so `deg i₀ = 1` (and `deg X = 2`), i.e. `i₀` is an isomorphism.
 Conversely every isomorphism `i₀ : (X₀(32), ∞) ≅ (A, O)` over `ℚ` has these pullbacks (`x` has a single
 double pole at `O`, `q` is a local parameter at `∞`). So the predicate is exactly TYZ's normalization. -/
 def IsX0Identification (X Y : UpperHalfPlane → ℂ) : Prop :=
@@ -149,15 +149,25 @@ Encoding (a reading of the printed display, never stronger):
   embeddings (h33-sign `Iso.lean`), read on `X₀(32)` through `X_U ≅ X₀(32)_{ℚ(i)}` (L1191–1193).
 * `z_n = (1 − [i]) i₀(P_n)` for `n ≡ 5` (TYZ's `f₀ − f₀∘[i]` on the component of `P_n`; the sign of `[i]`
   is fixed by TYZ's text, `α = −i` at L1564–1566, and by TYZ Thm 3.6(1) in Lean: h33-sign), `i₀(P_n)` for
-  `n ≡ 7`.
+  `n ≡ 7`. In the proof of the Hecke-action proposition for `n ≡ 5` the cusps `[∞,1]`, `[0]` lie on the
+  component of `P_n` (about L1238, L1519, L1551), and with this sign `f₀∘[1 − i]` is `ϖ`-invariant up to
+  2-torsion (about L1584–1589), as Prop. 3.1 and the proof of Thm 3.3 need. With the other sign the lifts do
+  not commute with `[i]`, the contributing and excluded characters swap, and the leaf would be false, not
+  weaker (statement review of tyz-split; h33-sign).
+* `A(H'_n(i)) ⊗ ℚ ⊂ A(ℚ̄) ⊗ ℚ`; a vector of `A(ℚ̄) ⊗ ℚ` is `Q/m`, and equality in it is "the difference of the
+  cleared multiples is torsion"; `ℤ[i]` acts through `iPt`.
 * `ε(d₀,d₁)` is chosen after `Φ` and `χ` (`TYZThm33EpsAfter`): TYZ fix `Φ` before the theorem. Its class
   (`EpsClass`) is printed at L1308–1309.
 * `𝒫(d) = Q d / m d` with `Q d ∈ A(K_d)^-` and `Q d` torsion when `ord_{s=1} L(E_d, s) > 1` (then
   `𝓛(d) = 0`, L338–345, and `𝒫(d) = 0`, L1295); the value of the coefficient `2^{−1−ρ(d)}𝓛(d)` is
   forgotten (it needs Néron–Tate regulators): weaker than the print.
 * `𝓛(d₁)` is defined up to sign (L364); `ℓ` is any integer choice with `ℓ(d₁)² = 𝓛(d₁)²` (`lcalSq`), the sign
-  absorbed in `ε`. Non-vacuity in `ℓ` needs TYZ Thm 1.1 (`TYZThm11Integral`).
-* Only `n ≡ 5, 7` (TYZ: `n ≡ 5, 6, 7`); `Φ` by lifts to `Gal(ℚ̄/ℚ)` (`IsPhi`), `χ` a character of `Cl_n`,
+  absorbed in `ε`. Non-vacuity: the hypothesis on `ℓ` is satisfiable only if every `𝓛(m)²` (`m ≡ 1, 3`) is
+  an integer square, i.e. together with TYZ Thm 1.1 (`TYZThm11Integral`); otherwise the leaf (and the row,
+  through `IsTYZLcal`) is vacuously true. The hypotheses on `(X, Y, w)` are satisfiable given `hCM`
+  (`tyzThm33Printed_hyps_satisfiable`).
+* Only `n ≡ 5, 7` (TYZ: `n ≡ 5, 6, 7`); then `d₀, d₁` are odd, so the classes `6, 2` do not occur (they are
+  kept in the statement as printed). `h₂` is defined in TYZ §2 (L992) and reused in §3 (L2354). `Φ` by lifts to `Gal(ℚ̄/ℚ)` (`IsPhi`), `χ` a character of `Cl_n`,
   `χ_{d₀,d₁}` by its radicand (`IsChiPair`), `h₂ = log₂ [Cl_n : Cl_n²]` (`h2G`), as in `TYZSplit.TYZThm33`. -/
 def TYZThm33Printed : Prop :=
   ∀ X Y : UpperHalfPlane → ℂ, IsX0Identification X Y → ∀ w : ℕ → PtA,
