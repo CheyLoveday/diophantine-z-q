@@ -111,4 +111,60 @@ lemma pullbackComp_assoc_app (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ W) (M : W.Mo
   rw [← Category.assoc ((pullbackComp f g).hom.app _), H2]
   simp
 
+lemma pullbackCongr_inv_app {f f' : X ⟶ Y} (e : f = f') (M : Y.Modules) :
+    (pullbackCongr e).inv.app M = eqToHom (by rw [e]) := by
+  subst e; rfl
+
+lemma pullbackComp_assoc_inv₁ (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ W) (M : W.Modules) :
+    (Scheme.Modules.pullback f).map ((pullbackComp g h).inv.app M) ≫
+        (pullbackComp f g).hom.app ((Scheme.Modules.pullback h).obj M) ≫
+          (pullbackComp (f ≫ g) h).hom.app M =
+      (pullbackComp f (g ≫ h)).hom.app M ≫ eqToHom (by rw [Category.assoc]) := by
+  rw [← cancel_epi ((Scheme.Modules.pullback f).map ((pullbackComp g h).hom.app M)),
+    ← Category.assoc, ← Functor.map_comp, Iso.hom_inv_id_app, CategoryTheory.Functor.map_id, Category.id_comp,
+    reassoc_of% (pullbackComp_assoc_app f g h M)]
+  simp
+
+lemma pullbackComp_assoc_inv₂ (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ W) (M : W.Modules) :
+    (pullbackComp f g).inv.app ((Scheme.Modules.pullback h).obj M) ≫
+        (Scheme.Modules.pullback f).map ((pullbackComp g h).hom.app M) ≫
+          (pullbackComp f (g ≫ h)).hom.app M =
+      (pullbackComp (f ≫ g) h).hom.app M ≫ eqToHom (by rw [Category.assoc]) := by
+  rw [pullbackComp_assoc_app, Iso.inv_hom_id_app_assoc]
+
+/-- `g^* m^* M ≅ m^* g^* M` for `g ≫ m = m ≫ g`. -/
+def Qiso (g m : X ⟶ X) (hb : g ≫ m = m ≫ g) (M : X.Modules) :
+    (Scheme.Modules.pullback g).obj ((Scheme.Modules.pullback m).obj M) ≅
+      (Scheme.Modules.pullback m).obj ((Scheme.Modules.pullback g).obj M) :=
+  (pullbackComp g m).app M ≪≫ (pullbackCongr hb).app M ≪≫ ((pullbackComp m g).app M).symm
+
+/-- `t'^* g^* ≅ g^* t^*` for `t' ≫ g = g ≫ t`. -/
+def Niso (t' g t : X ⟶ X) (ha : t' ≫ g = g ≫ t) :
+    Scheme.Modules.pullback g ⋙ Scheme.Modules.pullback t' ≅
+      Scheme.Modules.pullback t ⋙ Scheme.Modules.pullback g :=
+  pullbackComp t' g ≪≫ pullbackCongr ha ≪≫ (pullbackComp g t).symm
+
+/-- **Coherence (II).** -/
+lemma coherence_II (t' g m t : X ⟶ X) (ha : t' ≫ g = g ≫ t) (hb : g ≫ m = m ≫ g)
+    (h : t ≫ m = m) (h' : t' ≫ m = m) (M : X.Modules) :
+    (Niso t' g t ha).inv.app ((Scheme.Modules.pullback m).obj M) ≫
+        (Scheme.Modules.pullback t').map (Qiso g m hb M).hom ≫
+          (pullbackComp t' m).hom.app ((Scheme.Modules.pullback g).obj M) ≫
+            (pullbackCongr h').hom.app ((Scheme.Modules.pullback g).obj M) ≫ (Qiso g m hb M).inv =
+      (Scheme.Modules.pullback g).map
+        ((pullbackComp t m).hom.app M ≫ (pullbackCongr h).hom.app M) := by
+  rw [← cancel_mono ((pullbackComp g m).hom.app M)]
+  simp only [Niso, Qiso, Iso.trans_inv, Iso.trans_hom, Iso.symm_inv, Iso.symm_hom, Iso.app_hom,
+    Iso.app_inv, NatTrans.comp_app, Functor.map_comp, Category.assoc, Iso.inv_hom_id_app,
+    Category.comp_id, pullbackCongr_hom_app, pullbackCongr_inv_app]
+  -- RHS
+  rw [map_eqToHom_comp_pullbackComp g h M, reassoc_of% (pullbackComp_assoc_app g t m M)]
+  -- LHS
+  rw [reassoc_of% (eqToHom_comp_pullbackComp h' g M)]
+  rw [reassoc_of% (pullbackComp_assoc_inv₁ t' m g M)]
+  rw [reassoc_of% (map_eqToHom_comp_pullbackComp t' hb M)]
+  rw [reassoc_of% (pullbackComp_assoc_inv₂ t' g m M)]
+  rw [reassoc_of% (eqToHom_comp_pullbackComp ha.symm m M)]
+  simp
+
 end PicDict.Transport
