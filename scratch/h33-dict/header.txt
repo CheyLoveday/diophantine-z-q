@@ -1,0 +1,34 @@
+import ZInQKernel.OneProof.TYZSplit
+import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
+
+/-!
+# h33-dict: the top hypothesis `h33` (TYZ Theorem 3.3) from its printed form
+
+Task h33-dict (2026-11-16). Report: `docs/research/h33-dict.md`; scratch: `scratch/h33-dict/`.
+
+`ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33` (the argument `h33` of `ZInQ.OneProof.frozenTarget`) states TYZ
+Theorem 3.3 over the kernel's CM points `TYZ35.basePt`, built on x0-32's eta-quotient model `X0.phiC`, with
+`ε` chosen before the representatives `Φ`. The 11-16 dictionary pass rated it a consequence for two reasons:
+(1) TYZ build `z_n` from an algebraic identification `i₀ : X₀(32) → A`, not from the eta model; (2) choosing
+`ε` before `Φ` needs TYZ Prop. 3.2(4). This file proves
+
+  `tyzThm33_of_printed (hCM : T5Glue.ShimuraMainCM) (h : TYZThm33Printed) : TYZSplit.TYZThm33`
+
+where `TYZThm33Printed` (§1) is TYZ Theorem 3.3 over an arbitrary identification `i₀ : (X₀(32), ∞) ≅ (A, O)`
+over `ℚ` (encoded by its pullbacks in `ℚ(X₀(32))`, `IsX0Identification`), with `ε` chosen after `Φ` and `χ`,
+and `hCM` is the printed main theorem of complex multiplication, already a hypothesis of `frozenTarget`.
+Every dictionary step is proved:
+
+* §2 TYZ Prop. 3.2(4) in the form the uniformization uses (`TYZProp324Used`: two lifts of the same
+  `t ∈ Cl_n` move `z_n` to points differing by torsion), from the CM inputs that `hCM` gives through the
+  proved theta identity (hx-used, theta-wp8): the kernel's glue KER for `n ≡ 5`, `z_n ∈ A(H_n)` for `n ≡ 7`;
+* §3 `ε` can be chosen before `Φ` (`tyzThm33_of_epsAfter`);
+* §4 the eta model `(x, y)` is an identification: `x, y ∈ ℚ(X₀(32))` and the curve equation (kernel),
+  `x` unbounded at `∞` (x0-32), and, new here, `x = O(e^{4π Im τ})` at `∞` and `x` bounded at every cusp
+  `γ∞` with `32 ∤ c` (Ligozat's orders, from an exact form of tyz-cm's Hermite decomposition and the
+  `SL₂(ℤ)`-invariance of `|η|⁴ Im`): `isX0Identification_eta`;
+* §5 the CM points: `toC (heegnerPt Q) = phiC τ_Q` (from `hCM`), so `basePt` is `zOfLift` of the
+  Heegner points of the eta model.
+
+No `sorry`, no `axiom`.
+-/
