@@ -154,6 +154,35 @@ lemma translT_zero {T : Over (Spec (CommRingCat.of K))} :
       ← CategoryTheory.Hom.one_def, ← CategoryTheory.Hom.mul_def, mul_one]
   · simp [translT]
 
+lemma Θ_inj {T : Over (Spec (CommRingCat.of K))} {x y : (Nrm A).toFunctor.obj (op T)}
+    (h : (Θ A hU).hom.app (op T) x = (Θ A hU).hom.app (op T) y) : x = y := by
+  have := congrArg ((Θ A hU).inv.app (op T)) h
+  simpa using this
+
+/-- `PsiT a c = 1` when `dT a c = 1`. -/
+lemma PsiT_eq_one {T : Over (Spec (CommRingCat.of K))} (a : T ⟶ A.X) (c : (Nrm A).toFunctor.obj (op T))
+    (h : dT A a c.1 = 1) :
+    letI := picardFunctorCommGrpObj A.X.hom rep
+    PsiT rep hU a c = CartesianMonoidalCategory.toUnit T ≫ η[P] := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  rw [PsiT, ← homEquiv_symm_one rep]
+  congr 1
+  rw [Θ_hom_app]
+  exact congrArg _ h
+
+/-- Conversely, `PsiT a c = 1` forces `dT a c = 1`. -/
+lemma dT_eq_one_of_PsiT {T : Over (Spec (CommRingCat.of K))} (a : T ⟶ A.X)
+    (c : (Nrm A).toFunctor.obj (op T))
+    (h : letI := picardFunctorCommGrpObj A.X.hom rep
+      PsiT rep hU a c = CartesianMonoidalCategory.toUnit T ≫ η[P]) : dT A a c.1 = 1 := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  rw [PsiT, ← homEquiv_symm_one rep] at h
+  have h2 := rep.homEquiv.symm.injective h
+  have h3 : (1 : (pullback A.X.hom T.hom).Pic) ∈ (Nrm A).obj (op T) := by
+    change Scheme.Pic.map _ 1 = 1; exact Scheme.Pic.map_one _
+  have h4 := Θ_inj hU (x := ⟨dT A a c.1, dT_mem A a c.1 c.2⟩) (y := ⟨(1 : (pullback A.X.hom T.hom).Pic), h3⟩) (by rw [h2]; rfl)
+  exact congrArg Subtype.val h4
+
 end Psi
 
 end PicDict
