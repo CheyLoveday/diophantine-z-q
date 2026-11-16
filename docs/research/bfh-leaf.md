@@ -39,7 +39,8 @@ theorem ZInQ.Contrib.TYZChain.frozenTarget_bfh   -- scratch/bfh-leaf/FoldCheck.l
     (hBFH : ZInQ.BFHPrinted.BFHClauseII) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) : ZInQ.FrozenTarget
 ```
 
-All compile with no warnings; each has axioms `[propext, Classical.choice, Quot.sound]` (VERIFIED,
+All compile with no warnings other than Lake's notes that the Mathlib-only helpers import Mathlib modules without
+the `module` keyword (as fh-printed's `LocalNorm.lean`); each has axioms `[propext, Classical.choice, Quot.sound]` (VERIFIED,
 `scratch/bfh-leaf/Discharges-output.txt`, `FoldCheck-output.txt`). `frozenTarget_bfh` is the body of
 `ZInQ.OneProof.frozenTarget` (Main.lean at 862bd440) copied verbatim with `hFH` replaced by `hBFH` and
 `ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH` replaced by
