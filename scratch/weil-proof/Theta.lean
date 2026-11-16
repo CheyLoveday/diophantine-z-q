@@ -259,4 +259,20 @@ lemma tensor_relation (hA : PullbackCompMonoidal) {t m : X ⟶ X} (h : t ≫ m =
 
 end TensorRel
 
+/-! ### Monoidal faithfulness (I5) -/
+
+open MonoidalCategory
+
+lemma unit_endo_eq_id_of_whisker {C : Type*} [Category C] [MonoidalCategory C] (A : 𝟙_ C ⟶ 𝟙_ C)
+    {N N' : C} (j : N ⊗ N' ≅ 𝟙_ C) (hA : A ▷ N = 𝟙 (𝟙_ C ⊗ N)) : A = 𝟙 (𝟙_ C) := by
+  have h1 : A ▷ (N ⊗ N') = 𝟙 (𝟙_ C ⊗ (N ⊗ N')) := by
+    rw [MonoidalCategory.whiskerRight_tensor, hA]; simp
+  have h2 : A ▷ 𝟙_ C = 𝟙 (𝟙_ C ⊗ 𝟙_ C) := by
+    have := MonoidalCategory.whisker_exchange A j.hom
+    rw [h1, Category.id_comp] at this
+    rw [← cancel_epi (𝟙_ C ◁ j.hom), this, Category.comp_id]
+  have h3 := MonoidalCategory.rightUnitor_naturality A
+  rw [h2, Category.id_comp] at h3
+  rw [← cancel_epi (ρ_ (𝟙_ C)).hom, ← h3, Category.comp_id]
+
 end WeilProof.Theta
