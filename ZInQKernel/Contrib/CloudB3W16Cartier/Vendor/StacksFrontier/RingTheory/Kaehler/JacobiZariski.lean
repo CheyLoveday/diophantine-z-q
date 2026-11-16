@@ -38,6 +38,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.Algebra
 
 
 /-!
@@ -174,7 +175,7 @@ namespace Stacks.KaehlerDifferential.LeftExactness
 
 /-- For a tower `R → A → B` with `H₁(L_{B/A}) = 0`, the canonical map
 `B ⊗[A] Ω[A⁄R] → Ω[B⁄R]` is injective. -/
-alias solution := _root_.KaehlerDifferential.mapBaseChange_injective
+alias solution := _root_.ZInQ.Contrib.CloudB3W16Cartier.Vendor.KaehlerDifferential.mapBaseChange_injective
 
 end Stacks.KaehlerDifferential.LeftExactness
 

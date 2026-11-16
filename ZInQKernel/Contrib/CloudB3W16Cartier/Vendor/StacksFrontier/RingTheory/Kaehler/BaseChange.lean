@@ -153,7 +153,7 @@ theorem solution (R : Type*) [CommRing R]
       r ∘ₗ KaehlerDifferential.mapBaseChange R A B = LinearMap.id :=
   have ⟨_, _⟩ := (Algebra.formallySmooth_iff A B).mp ‹_›
   exists_retraction_of_exact_of_projective (KaehlerDifferential.exact_mapBaseChange_map R A B)
-    (_root_.KaehlerDifferential.mapBaseChange_injective R A B)
+    (_root_.ZInQ.Contrib.CloudB3W16Cartier.Vendor.KaehlerDifferential.mapBaseChange_injective R A B)
     (KaehlerDifferential.map_surjective R A B)
 
 end Stacks.KaehlerDifferential.TowerSplitting

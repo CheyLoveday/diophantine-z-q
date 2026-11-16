@@ -83,40 +83,6 @@ universe u
 
 namespace AlgebraicGeometry.Scheme.Hom
 
-/-- **The canonical map on relative differentials, evaluated on a pulled-back universal
-differential.** For a commutative square of schemes, an open `U` of `X` and an open
-`U' ≤ f ⁻¹ᵁ U` of `X'`, the canonical map `f^*Ω_{X/S} ⟶ Ω_{X'/S'}` carries the pullback of the
-universal differential of a section `a` over `U` to the universal differential of the image of
-`a` in `Γ(X', U')`.
-
-This is the defining compatibility of the canonical map with the universal derivations,
-`AlgebraicGeometry.Scheme.Hom.IsRelativeDifferentialsMap`, untransposed: the adjoint transpose
-is the unit of the adjunction followed by the map, and the unit followed by a restriction is
-`AlgebraicGeometry.Scheme.Modules.pullbackSection`. -/
-theorem relativeDifferentialsMap_pullbackSection {X' X S' S : Scheme.{u}} (f : X' ⟶ X)
-    (p : X ⟶ S) (p' : X' ⟶ S') (g : S' ⟶ S) (hcomm : f ≫ p = p' ≫ g)
-    (U : X.Opens) (U' : X'.Opens) (h : U' ≤ f ⁻¹ᵁ U) (a : Γ(X, U)) :
-    (relativeDifferentialsMap f p p' g hcomm).val.app (op U')
-        (Scheme.Modules.pullbackSection f (relativeDifferentials p) U U' h
-          ((universalRelativeDerivation p).d a)) =
-      (universalRelativeDerivation p').d (f.appLE U U' h a) := by
-  set c := relativeDifferentialsMap f p p' g hcomm
-  have hkey : ((((Scheme.Modules.pullbackPushforwardAdjunction f).homEquiv
-      (relativeDifferentials p) (relativeDifferentials p') c).val.app (op U)).hom
-        ((universalRelativeDerivation p).d a)) =
-      (universalRelativeDerivation p').d ((f.app U).hom a) :=
-    (isRelativeDifferentialsMap_iff_eq f p p' g hcomm c).mpr rfl U a
-  have hadj : (((Scheme.Modules.pullbackPushforwardAdjunction f).homEquiv
-      (relativeDifferentials p) (relativeDifferentials p') c).val.app (op U)).hom
-        ((universalRelativeDerivation p).d a) =
-      c.val.app (op (f ⁻¹ᵁ U))
-        ((((Scheme.Modules.pullbackPushforwardAdjunction f).unit.app
-          (relativeDifferentials p)).val.app (op U)) ((universalRelativeDerivation p).d a)) := rfl
-  refine (PresheafOfModules.naturality_apply c.val (homOfLE h).op _).trans ?_
-  refine (congrArg (fun z => ((relativeDifferentials p').val.map (homOfLE h).op) z)
-    (hadj.symm.trans hkey)).trans ?_
-  exact ((universalRelativeDerivation p').d_map (homOfLE h).op ((f.app U).hom a)).symm
-
 /-- **Stacks Project, Tag 01V0.** For a cartesian square of schemes with left edge `f' : X' ⟶ S'`,
 right edge `f : X ⟶ S` and top edge `g' : X' ⟶ X`, the canonical map
 `g'^* Ω_{X/S} ⟶ Ω_{X'/S'}` of Tag 01UV is an isomorphism. -/
