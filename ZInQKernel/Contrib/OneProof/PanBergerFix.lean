@@ -252,8 +252,8 @@ section Steinitz
 
 open Cardinal
 
-/-- `#ℚ_p ≤ 𝔠`. -/
-theorem padic_card_le : #ℚ_[p] ≤ 𝔠 := by
+/-- The cardinality of `ℚ_p` is at most `𝔠`. -/
+theorem padic_card_le : Cardinal.mk ℚ_[p] ≤ 𝔠 := by
   have hex : ∀ x : ℚ_[p], ∀ n : ℕ, ∃ r : ℚ, ‖x - r‖ < 1 / ((n : ℝ) + 1) :=
     fun x n => Padic.rat_dense p x (by positivity)
   choose f hf using hex
@@ -269,22 +269,22 @@ theorem padic_card_le : #ℚ_[p] ≤ 𝔠 := by
       calc ‖x - y‖ = ‖(x - (f y n : ℚ_[p])) - (y - (f y n : ℚ_[p]))‖ := by ring_nf
         _ ≤ _ := norm_sub_le _ _
     linarith
-  calc #ℚ_[p] ≤ #(ℕ → ℚ) := mk_le_of_injective hinj
+  calc Cardinal.mk ℚ_[p] ≤ Cardinal.mk (ℕ → ℚ) := mk_le_of_injective hinj
     _ = 𝔠 := by
       rw [← power_def, Cardinal.mkRat, mk_nat, aleph0_power_aleph0]
 
-/-- `#ℚ̄_p = 𝔠`. -/
-theorem padicAlgCl_card : #(PadicAlgCl p) = 𝔠 := by
+/-- The cardinality of `ℚ̄_p` is `𝔠`. -/
+theorem padicAlgCl_card : Cardinal.mk (PadicAlgCl p) = 𝔠 := by
   have : FaithfulSMul ℚ_[p] (PadicAlgCl p) :=
     (faithfulSMul_iff_algebraMap_injective _ _).mpr (algebraMap ℚ_[p] (PadicAlgCl p)).injective
   have : Module.IsTorsionFree ℚ_[p] (PadicAlgCl p) :=
     Module.IsTorsionFree.trans_faithfulSMul ℚ_[p] (PadicAlgCl p) (PadicAlgCl p)
   apply le_antisymm
-  · calc #(PadicAlgCl p) ≤ max #ℚ_[p] ℵ₀ :=
+  · calc Cardinal.mk (PadicAlgCl p) ≤ max (Cardinal.mk ℚ_[p]) ℵ₀ :=
           Algebra.IsAlgebraic.cardinalMk_le_max ℚ_[p] (PadicAlgCl p)
       _ ≤ 𝔠 := max_le (padic_card_le p) aleph0_le_continuum
-  · calc 𝔠 ≤ #ℚ_[p] := continuum_le_cardinal_of_nontriviallyNormedField _
-      _ ≤ #(PadicAlgCl p) := mk_le_of_injective (algebraMap ℚ_[p] (PadicAlgCl p)).injective
+  · calc 𝔠 ≤ Cardinal.mk ℚ_[p] := continuum_le_cardinal_of_nontriviallyNormedField _
+      _ ≤ Cardinal.mk (PadicAlgCl p) := mk_le_of_injective (algebraMap ℚ_[p] (PadicAlgCl p)).injective
 
 /-- **`ℂ ≃+* ℚ̄_p`** (Steinitz; Mathlib's `IsAlgClosed.ringEquiv_of_equiv_of_charZero`). -/
 theorem exists_complex_equiv : Nonempty (ℂ ≃+* PadicAlgCl p) := by
