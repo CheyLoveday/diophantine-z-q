@@ -1,9 +1,35 @@
 import ZInQKernel.Contrib.OneProof.PanBergerFix
 
 /-!
-# `PanBerger` from Pan's and Berger's theorems, each stated for one representation (task pb-fix2)
+# `PanBerger` from Pan's and Berger's theorems in printed form (task pb-fix2)
 
-Work in progress.
+The open research field `r11r12 : HDec.PkgI4.PanBerger` (Pan's Theorem 1.0.4 with "de Rham at
+`p`" for "potentially semistable at `p`") is discharged by `panBerger_of_printedU` from two leaves
+stated in printed form, each about one representation and over genuine definitions:
+
+* `BergerPrintedU` (Berger 2002, Théorème 0.7): de Rham ⇒ potentially semistable, for the
+  `ℚ_p`-representation `V` underlying `ρ`, with Fontaine's definitions in tensor form
+  `(B ⊗_{ℚ_p} V)^{G_K}` and Fontaine's `K_0 = W(k_K)[1/p]` (`K0W`, Witt vectors of the residue
+  field of `K`, Mathlib's `WittVector`);
+* `PanPrintedU` (Pan 2022, Theorem 1.0.4): every hypothesis on the one `ρ` (pst and Hodge–Tate
+  with distinct weights computed on `V`), conclusion with Pan's `ι_p` and geometric Frobenius.
+
+The glue applies both to the contragredient `ρ^∨` (`dualRep`, `σ ↦ ρ(σ⁻¹)ᵀ`):
+
+* pkg-I4's `LocalIsDeRham ρ` and `DistinctHTWeights ρ` are computed on `Hom_G(V, B)`; the trace
+  pairing `E^n ≅ (E^n)^*` turns them into the printed de Rham and Hodge–Tate conditions for `ρ^∨`
+  (`finrank_tensorInv_dualHom`; weights `{a, b}` become `{−a, −b}`), with no input from Sen theory;
+* irreducibility, finite ramification and oddness pass to `ρ^∨` (`dualRep_isIrreducible`, …);
+* Pan's identity for `ρ^∨` at `σ⁻¹` is `tr ρ(σ) = ψ(σ)⁻¹ ι_p⁻¹(a_q(g))` (`trace_dualRep_inv`);
+* the algebraicity of `a_q(g)` that `PanBerger`'s conclusion asks for comes from Diamond–Shurman
+  9.6.5/9.6.6 (`DSThm965`, `DSThm966`, leaves of the same bundle) through pb-fix's
+  `coeff_mem_range`, and `ι_p` from Steinitz (`exists_complex_equiv`).
+
+Also proved (sanity of `K_0`): `[W(k)[1/p] : ℚ_p] = [k : 𝔽_p]` for every finite field `k` of
+characteristic `p` (`finrank_wittLoc`: Teichmüller lifts of an `𝔽_p`-basis are a `ℤ_p`-basis of
+`W(k)`), the residue field `k_K` of a finite `K/ℚ_p` is finite (`resField_finite`), so
+`|k_K| = p^{[K_0 : ℚ_p]}` (`card_resField`: `[K_0 : ℚ_p]` is the residue degree), and
+`1 ≤ [K_0 : ℚ_p] ≤ [K : ℚ_p]`, `[K_0(ℚ_p) : ℚ_p] = 1`.
 -/
 
 noncomputable section
@@ -828,12 +854,51 @@ end Predicates
 
 /-! ## §7. The two printed leaves -/
 
-/-- Berger (leaf). -/
+/-- **Berger, Théorème 0.7** (L. Berger, *Représentations p-adiques et équations
+différentielles*, Invent. Math. 148 (2002), 219-284; Théorème 0.7 = Corollaire 5.22 of the
+published version (author copy pp. 6 and 52, read by the locator audit row R11; Springer
+pagination unread) = Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3), at `K = ℚ_p`: every
+de Rham `p`-adic representation of `G_{ℚ_p}` is potentially semistable. Printed form, applied to
+the `ℚ_p`-representation `V = E^n` underlying a continuous `ρ` with values in `GL_n(E)`, `E/ℚ_p`
+finite inside `ℚ̄_p` (both predicates are computed on `V` itself, in Fontaine's tensor form):
+
+* de Rham: `dim_{ℚ_p} (B_dR ⊗_{ℚ_p} V)^{G_{ℚ_p}} = dim_{ℚ_p} V` (`IsDeRhamU`);
+* potentially semistable: for some finite `K/ℚ_p` inside `ℚ̄_p`,
+  `dim_{ℚ_p} (B_st ⊗_{ℚ_p} V)^{G_K} = [K_0 : ℚ_p] · dim_{ℚ_p} V` with `K_0 = W(k_K)[1/p]`, `k_K`
+  the residue field of `K` (`IsSemistableOverU`, `K0W`), i.e. `dim_{K_0} D_st,K(V) = dim V`.
+
+Readings (flags): `B_st` is Fontaine's abstract `B_cris[X]` with `σ(X) = X + c(σ)t` (pb-bypass's
+`Bst`), not the subring `B_cris[log [p♭]]` of `B_dR`; the semistability condition is written in
+`ℚ_p`-dimensions with the explicit factor `[K_0 : ℚ_p]` (`D_st,K` is a `K_0`-space because
+`K_0 ⊆ B_st^{G_K}`; that module structure is not built in Lean). -/
 def BergerPrintedU : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)),
     Continuous ρ → LocalIsDeRhamU p n ρ → LocalIsPstU p n ρ
 
-/-- Pan (leaf). -/
+/-- **Pan, Theorem 1.0.4** (L. Pan, *The Fontaine–Mazur conjecture in the residually reducible
+case*, J. Amer. Math. Soc. 35 (2022), 1031-1169; = arXiv:1901.07166v2, Theorem 1.0.4 with
+Conjecture 1.0.1, pp. 5 and 2, read by h-a011 §1.1 and the locator audit row R12; JAMS numbering
+and page UNVERIFIED), for `p ≥ 5`, with Pan's fixed isomorphism `ι_p : ℚ̄_p ≅ ℂ` (for each `ι_p`).
+Every hypothesis is on the one representation `ρ`, in printed form:
+
+* `ρ : G_ℚ → GL₂(ℚ̄_p)` continuous (`GaloisRep`), irreducible (`IsIrreducible`, Burnside's form:
+  the image spans `M₂(ℚ̄_p)`; this implies irreducible), unramified outside finitely many primes
+  (`FinitelyRamified`), odd (`IsOdd`: `det ρ(c) = −1`);
+* `ρ|_{G_{ℚ_p}}` potentially semistable (`LocalIsPstU`, Fontaine's definition on the underlying
+  space, as in `BergerPrintedU`);
+* `ρ|_{G_{ℚ_p}}` Hodge–Tate with distinct Hodge–Tate weights (`LocalDistinctHTU`: the
+  multiplicities `dim_E (ℂ_p(w) ⊗_{ℚ_p} V)^{G_{ℚ_p}}` are those of two distinct integers).
+
+Conclusion, "`ρ` comes from a cuspidal eigenform up to twist", in Pan's normalization (geometric
+Frobenius): a normalized cuspidal eigenform `g` of level `N ≥ 1` and weight `k ≥ 1`, a continuous
+character `ψ` and a finite set `S` of primes with `tr ρ(Frob_q) = ψ(Frob_q) · ι_p⁻¹(a_q(g))` for
+`q ∉ S`, `Frob_q = σ⁻¹` the geometric Frobenius at any place `v | q` (`σ` arithmetic).
+
+Reading (flag): "comes from `g` up to twist" is read as `ρ ≅ ρ_{g,ι_p} ⊗ ψ'`, `ρ_{g,ι_p}` the
+`p`-adic representation attached to `g` through `ι_p`; the trace identity follows from it in
+every Frobenius and duality normalization of `ρ_{g,ι_p}` (in dimension 2 the dual, and the
+representation of the conjugate eigenform, differ from `ρ_{g,ι_p}` by a character), with a
+suitably changed `ψ`. -/
 def PanPrintedU : Prop :=
   ∀ (p : ℕ) [Fact p.Prime], 5 ≤ p → ∀ (ιp : PadicAlgCl p ≃+* ℂ) (ρ : GaloisRep p 2),
     ρ.IsIrreducible → ρ.FinitelyRamified → LocalIsPstU p 2 (ρ.restrictLocal p) → ρ.IsOdd →
@@ -856,6 +921,9 @@ theorem charInv_apply {ℓ : ℕ} [Fact ℓ.Prime] (ψ : GaloisChar ℓ) (σ : G
   rw [map_inv]
   rfl
 
+/-- **`PanBerger` (the research field `r11r12`) from Pan's and Berger's printed theorems**, both
+applied to the contragredient `ρ^∨`, with Diamond–Shurman's Thms 9.6.5 and 9.6.6 (existing leaves
+`dsThm965`, `dsThm966`) for the algebraicity of the Hecke eigenvalues. -/
 theorem panBerger_of_printedU (hP : PanPrintedU) (hB : BergerPrintedU)
     (hD : ZInQ.Contrib.HodgeSplit.DSThm965) (hDS : ZInQ.Contrib.HodgeSplit.DSThm966) :
     PanBerger := by
