@@ -20,7 +20,10 @@
 - (2) **Determinant: not resolvable in the tree.** The leaf states the characteristic polynomial. Under a
   "satisfies" reading of DS 9.5.4, the determinant would need the Weil pairing, and the tree has none on
   abelian varieties. The consumer uses the determinant, so the clause cannot be dropped. `afTateDSLambda` is
-  flagged "reading risk"; a statement check of DS 9.5.4 decides it.
+  flagged "reading risk"; a statement check of DS 9.5.4 decides it. A fallback pair is proved but not folded:
+  `AfTateDSLambdaSat` (dim 2 + "satisfies") with `AfDetLambda` (`det ρ_{f,λ}(Frob_p) = χ(p)p`) implies the leaf
+  (`dsLambda_of_sat_det`). Also proved: `AfTateDSTensor` (the `ℚ_ℓ ⊗ K_f` form) implies the leaf
+  (`dsLambda_of_tensor`), so the leaf follows from either form of the print.
 
 **Compiles (VERIFIED).**
 - `lake build +Main +Discharges +ZInQKernel.Contrib.OneProof.AfTateLambda`: OK (13704 jobs).
