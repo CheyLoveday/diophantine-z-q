@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.PrintedStableHeight
 import ZInQKernel.Contrib.OneProof.GeomConnOfRationalPoint
+import ZInQKernel.OneProof.H.TailZ19
 
 noncomputable section
 
@@ -440,5 +441,161 @@ theorem isClosed_range_openSubgroup [IsAlgClosed K] {X Y : Over (Spec (CommRingC
   exact (interior_subset).antisymm (Set.sdiff_eq_empty.mp hDe)
 
 end OpenSubgroup
+
+/-! ## §7. The identity component of a group scheme of finite type over a field -/
+
+section IdComp
+
+open CToPrinted OpenSub
+
+/-- `G⁰` is closed under the group law, for `G` locally of finite type and quasi-compact over a noetherian base,
+once it is open (the proof of TailZ19's `idCompSubgroup_of`, with openness as a hypothesis instead of SGA 3
+VI_B 3.10). -/
+theorem isSubgroupOpen_of_isOpen (hG : AVGlue.GeomConnOfRationalPoint) {k : Type} [Field k]
+    (G : Over (Spec (CommRingCat.of k))) [GrpObj G] [LocallyOfFiniteType G.hom] [QuasiCompact G.hom] (hW : IsOpen (idCompSet G)) :
+    IsSubgroupOpen G ⟨idCompSet G, hW⟩ := by
+  let S := Spec (CommRingCat.of k)
+  let W : G.left.Opens := ⟨idCompSet G, hW⟩
+  haveI : IsLocallyNoetherian G.left := LocallyOfFiniteType.isLocallyNoetherian G.hom
+  haveI : CompactSpace G.left := QuasiCompact.compactSpace_of_compactSpace G.hom
+  haveI : IsNoetherian G.left := {}
+  let f0 : W.toScheme ⟶ S := W.ι ≫ G.hom
+  haveI : GeometricallyConnected f0 := geomConnected_idComp hG G W rfl
+  let e := (η[G] : 𝟙_ (Over S) ⟶ G).left
+  have he : ∀ s, G.hom (e s) = s := by
+    intro s
+    rw [← Scheme.Hom.comp_apply, Over.w]
+    rfl
+  refine ⟨fun s => idCompSet_one G s, ?_, ?_⟩
+  · intro z hz1 hz2
+    let s := G.hom (pullback.fst G.hom G.hom z)
+    let m := pullback.map f0 f0 G.hom G.hom W.ι W.ι (𝟙 _) (by simp [f0]) (by simp [f0])
+    let f00 := pullback.snd f0 f0 ≫ f0
+    haveI : GeometricallyConnected f00 := GeometricallyConnected.comp _ _
+    have hc : _root_.IsConnected (f00 ⁻¹' {s}) := f00.isConnected_preimage_singleton s
+    have hm : ∀ v, G.hom (pullback.fst G.hom G.hom (m v)) = f00 v := by
+      intro v
+      rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, pullback.condition,
+        ← Category.assoc, pullback.lift_snd, Category.assoc]
+    let μl := (μ[G] : G ⊗ G ⟶ G).left
+    have hμ : ∀ w : (G ⊗ G).left, G.hom (μl w) = G.hom (pullback.fst G.hom G.hom w) := by
+      intro w
+      rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply]
+      exact congrArg (fun h => h w) (congrArg (fun k => k.base) (Over.w (μ[G] : G ⊗ G ⟶ G)))
+    let P := μl '' (m '' (f00 ⁻¹' {s}))
+    have hP : _root_.IsPreconnected P :=
+      (hc.isPreconnected.image _ m.continuous.continuousOn).image _ μl.continuous.continuousOn
+    have hPsub : P ⊆ G.hom ⁻¹' {s} := by
+      rintro _ ⟨_, ⟨v, hv, rfl⟩, rfl⟩
+      show G.hom (μl (m v)) = s
+      rw [hμ, hm]
+      exact hv
+    -- `e(s) ∈ P`
+    have hη : Set.range e ⊆ Set.range W.ι := by
+      rintro _ ⟨t, rfl⟩
+      rw [Scheme.Opens.range_ι]
+      exact idCompSet_one G t
+    let eW : S ⟶ W.toScheme := IsOpenImmersion.lift W.ι e hη
+    have heW : eW ≫ W.ι = e := IsOpenImmersion.lift_fac _ _ _
+    let v0 : S ⟶ pullback f0 f0 := pullback.lift eW eW rfl
+    have hv0 : v0 ≫ m = (lift (η[G]) (η[G]) : 𝟙_ (Over S) ⟶ G ⊗ G).left := by
+      apply pullback.hom_ext
+      · simp [v0, m, heW, e]
+      · simp [v0, m, heW, e]
+    have hlift : lift (η[G]) (η[G]) ≫ μ[G] = (η[G] : 𝟙_ (Over S) ⟶ G) := by
+      have := MonObj.lift_comp_one_left (𝟙 (𝟙_ (Over S))) (η[G] : 𝟙_ (Over S) ⟶ G)
+      rwa [Category.id_comp] at this
+    have hes : e s ∈ P := by
+      refine ⟨m (v0 s), ⟨v0 s, ?_, rfl⟩, ?_⟩
+      · show f00 (v0 s) = s
+        have hlf : (lift (η[G]) (η[G]) : 𝟙_ (Over S) ⟶ G ⊗ G).left ≫ pullback.fst G.hom G.hom = e := by
+          have h0 := congrArg CommaMorphism.left
+            (CartesianMonoidalCategory.lift_fst (η[G] : 𝟙_ (Over S) ⟶ G) (η[G] : 𝟙_ (Over S) ⟶ G))
+          exact h0
+        rw [← hm, ← Scheme.Hom.comp_apply v0 m, hv0]
+        show G.hom (pullback.fst G.hom G.hom
+          ((lift (η[G]) (η[G]) : 𝟙_ (Over S) ⟶ G ⊗ G).left s)) = s
+        rw [← Scheme.Hom.comp_apply (lift (η[G]) (η[G]) : 𝟙_ (Over S) ⟶ G ⊗ G).left
+          (pullback.fst G.hom G.hom), hlf]
+        exact he s
+      · show μl (m (v0 s)) = e s
+        rw [← Scheme.Hom.comp_apply v0 m, hv0, ← Scheme.Hom.comp_apply, ← Over.comp_left, hlift]
+    -- `z ∈ m '' (f00⁻¹ {s})`
+    have hz : z ∈ Set.range m := by
+      rw [Scheme.Pullback.range_map]
+      refine ⟨?_, ?_⟩
+      · show pullback.fst G.hom G.hom z ∈ Set.range W.ι
+        rw [Scheme.Opens.range_ι]; exact hz1
+      · show pullback.snd G.hom G.hom z ∈ Set.range W.ι
+        rw [Scheme.Opens.range_ι]; exact hz2
+    obtain ⟨v, rfl⟩ := hz
+    have hzP : μl (m v) ∈ P := ⟨m v, ⟨v, (hm v).symm, rfl⟩, rfl⟩
+    have := hP.subset_connectedComponentIn hes hPsub hzP
+    show μl (m v) ∈ connectedComponentIn (G.hom ⁻¹' {G.hom (μl (m v))}) (e (G.hom (μl (m v))))
+    rw [hμ]
+    exact this
+  · intro x hx
+    let ιl := (GrpObj.inv : G ⟶ G).left
+    have hι : ∀ y, G.hom (ιl y) = G.hom y := by
+      intro y
+      rw [← Scheme.Hom.comp_apply, Over.w]
+    let C := connectedComponentIn (G.hom ⁻¹' {G.hom x}) (e (G.hom x))
+    have hC : _root_.IsPreconnected (ιl '' C) :=
+      isPreconnected_connectedComponentIn.image _ ιl.continuous.continuousOn
+    have hsub : ιl '' C ⊆ G.hom ⁻¹' {G.hom x} := by
+      rintro _ ⟨y, hy, rfl⟩
+      show G.hom (ιl y) = G.hom x
+      rw [hι]
+      exact connectedComponentIn_subset (G.hom ⁻¹' {G.hom x}) _ hy
+    have hes : e (G.hom x) ∈ ιl '' C := by
+      refine ⟨e (G.hom x), mem_connectedComponentIn (he _), ?_⟩
+      show ιl (e (G.hom x)) = e (G.hom x)
+      rw [← Scheme.Hom.comp_apply, ← Over.comp_left, GrpObj.one_inv]
+    have := hC.subset_connectedComponentIn hes hsub ⟨x, hx, rfl⟩
+    show ιl x ∈ connectedComponentIn (G.hom ⁻¹' {G.hom (ιl x)}) (e (G.hom (ιl x)))
+    rw [hι]
+    exact this
+
+variable {k : Type} [Field k]
+
+theorem idCompSet_eq_cc (G : Over (Spec (CommRingCat.of k))) [GrpObj G] (s : Spec (CommRingCat.of k)) :
+    idCompSet G = connectedComponent ((η[G] : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ G).left s) := by
+  ext x
+  have h1 : G.hom.base ⁻¹' {G.hom.base x} = Set.univ := by
+    ext y
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_univ, iff_true]
+    exact Subsingleton.elim _ _
+  have h2 : G.hom.base x = s := Subsingleton.elim _ _
+  show x ∈ connectedComponentIn (G.hom.base ⁻¹' {G.hom.base x}) _ ↔ _
+  rw [h1, connectedComponentIn_univ, h2]
+
+variable (G : Over (Spec (CommRingCat.of k))) [GrpObj G] [LocallyOfFiniteType G.hom] [QuasiCompact G.hom]
+
+theorem isOpen_idCompSet : IsOpen (idCompSet G) := by
+  haveI : IsLocallyNoetherian G.left := LocallyOfFiniteType.isLocallyNoetherian G.hom
+  haveI : CompactSpace G.left := QuasiCompact.compactSpace_of_compactSpace G.hom
+  haveI : IsNoetherian G.left := {}
+  rw [idCompSet_eq_cc G default]
+  exact AVGlue.isOpen_connectedComponent_of_noetherian _
+
+theorem isClosed_idCompSet : IsClosed (idCompSet G) := by
+  rw [idCompSet_eq_cc G default]; exact isClosed_connectedComponent
+
+/-- `G⁰`, as an open of `G`. -/
+abbrev W0 : G.left.Opens := ⟨idCompSet G, isOpen_idCompSet G⟩
+
+theorem isSubgroupOpen_W0 (hG : AVGlue.GeomConnOfRationalPoint) : IsSubgroupOpen G (W0 G) :=
+  isSubgroupOpen_of_isOpen hG G (isOpen_idCompSet G)
+
+theorem connectedSpace_W0 : ConnectedSpace (W0 G).toScheme := by
+  have hc : _root_.IsConnected (idCompSet G) := by
+    rw [idCompSet_eq_cc G default]; exact isConnected_connectedComponent
+  have himg : (W0 G).ι '' Set.univ = idCompSet G := by
+    rw [Set.image_univ, Scheme.Opens.range_ι]; rfl
+  rw [← himg] at hc
+  exact connectedSpace_iff_univ.mpr
+    ⟨hc.1.of_image, ((W0 G).ι.isOpenEmbedding.isInducing.isPreconnected_image).mp hc.2⟩
+
+end IdComp
 
 end ZInQ.SemiAbDescend
