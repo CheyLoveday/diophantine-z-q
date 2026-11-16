@@ -106,4 +106,126 @@ theorem exists_fundamentalDomain_ball (Λ : Submodule ℤ (Fin g → ℂ)) [Disc
       have := hBT y hy (x - y) hxy
       rwa [add_sub_cancel] at this
 
+
+/-! ## A group uniformized by `ℂ^g` -/
+
+section Unif
+
+variable {G : Type*} [Group G] [TopologicalSpace G]
+
+/-- `Φ : ℂ^g → G` is a continuous surjective homomorphism with kernel `Λ`. -/
+structure IsUnif (Λ : Submodule ℤ (Fin g → ℂ)) (Φ : (Fin g → ℂ) → G) : Prop where
+  cont : Continuous Φ
+  add : ∀ z w, Φ (z + w) = Φ z * Φ w
+  ker : ∀ z, Φ z = 1 ↔ z ∈ Λ
+  surj : Function.Surjective Φ
+
+variable {Λ : Submodule ℤ (Fin g → ℂ)} {Φ : (Fin g → ℂ) → G}
+
+namespace IsUnif
+
+theorem map_zero (h : IsUnif Λ Φ) : Φ 0 = 1 := (h.ker 0).2 Λ.zero_mem
+
+theorem map_neg (h : IsUnif Λ Φ) (z : Fin g → ℂ) : Φ (-z) = (Φ z)⁻¹ := by
+  rw [eq_inv_iff_mul_eq_one, ← h.add, neg_add_cancel, h.map_zero]
+
+theorem map_sub (h : IsUnif Λ Φ) (a b : Fin g → ℂ) : Φ (a - b) = Φ a * (Φ b)⁻¹ := by
+  rw [sub_eq_add_neg, h.add, h.map_neg]
+
+theorem eq_iff (h : IsUnif Λ Φ) (a b : Fin g → ℂ) : Φ a = Φ b ↔ a - b ∈ Λ := by
+  rw [← h.ker, h.map_sub, mul_inv_eq_one]
+
+/-- The induced map on the torus `ℂ^g/Λ`. -/
+def torusMap (h : IsUnif Λ Φ) : (Fin g → ℂ) ⧸ Λ.toAddSubgroup → G :=
+  Quotient.lift (s := QuotientAddGroup.leftRel Λ.toAddSubgroup) Φ (fun a b hab => by
+    rw [h.eq_iff]
+    have := QuotientAddGroup.leftRel_apply.mp hab
+    have e : a - b = -(-a + b) := by abel
+    rw [e]
+    exact Λ.neg_mem this)
+
+theorem torusMap_mk (h : IsUnif Λ Φ) (x : Fin g → ℂ) :
+    h.torusMap (QuotientAddGroup.mk x) = Φ x := rfl
+
+theorem torusMap_continuous (h : IsUnif Λ Φ) : Continuous h.torusMap :=
+  h.cont.quotient_lift _
+
+theorem torusMap_bijective (h : IsUnif Λ Φ) : Function.Bijective h.torusMap := by
+  refine ⟨fun x y hxy => ?_, fun p => ?_⟩
+  · induction x using QuotientAddGroup.induction_on with | H a => ?_
+    induction y using QuotientAddGroup.induction_on with | H b => ?_
+    rw [h.torusMap_mk, h.torusMap_mk, h.eq_iff] at hxy
+    apply QuotientAddGroup.eq.mpr
+    have e : -a + b = -(a - b) := by abel
+    rw [e]
+    exact Λ.neg_mem hxy
+  · obtain ⟨a, ha⟩ := h.surj p
+    exact ⟨QuotientAddGroup.mk a, ha⟩
+
+theorem compactSpace_torus [DiscreteTopology Λ] [IsZLattice ℝ Λ] :
+    CompactSpace ((Fin g → ℂ) ⧸ Λ.toAddSubgroup) := by
+  have := IsZLattice.isCompact_range_of_periodic Λ
+    (QuotientAddGroup.mk : (Fin g → ℂ) → (Fin g → ℂ) ⧸ Λ.toAddSubgroup) continuous_quot_mk
+    (fun z w hw => QuotientAddGroup.eq.mpr (by
+      rw [neg_add_rev, add_assoc, neg_add_cancel, add_zero]; exact Λ.toAddSubgroup.neg_mem hw))
+  rw [QuotientAddGroup.mk_surjective.range_eq] at this
+  exact isCompact_univ_iff.mp this
+
+/-- `ℂ^g/Λ ≃ₜ G` (compact to Hausdorff). -/
+noncomputable def torusHomeo [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ) :
+    (Fin g → ℂ) ⧸ Λ.toAddSubgroup ≃ₜ G :=
+  haveI := compactSpace_torus (Λ := Λ)
+  Continuous.homeoOfEquivCompactToT2 (f := Equiv.ofBijective _ h.torusMap_bijective)
+    h.torusMap_continuous
+
+theorem torusHomeo_mk [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ)
+    (x : Fin g → ℂ) : h.torusHomeo (QuotientAddGroup.mk x) = Φ x := rfl
+
+theorem torusHomeo_add [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ)
+    (x y : (Fin g → ℂ) ⧸ Λ.toAddSubgroup) :
+    h.torusHomeo (x + y) = h.torusHomeo x * h.torusHomeo y := by
+  induction x using QuotientAddGroup.induction_on with | H a => ?_
+  induction y using QuotientAddGroup.induction_on with | H b => ?_
+  rw [← QuotientAddGroup.mk_add, h.torusHomeo_mk, h.torusHomeo_mk, h.torusHomeo_mk, h.add]
+
+theorem torusHomeo_neg [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ)
+    (x : (Fin g → ℂ) ⧸ Λ.toAddSubgroup) : h.torusHomeo (-x) = (h.torusHomeo x)⁻¹ := by
+  induction x using QuotientAddGroup.induction_on with | H a => ?_
+  rw [← QuotientAddGroup.mk_neg, h.torusHomeo_mk, h.torusHomeo_mk, h.map_neg]
+
+theorem isOpenMap [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ) :
+    IsOpenMap Φ := by
+  have : Φ = h.torusHomeo ∘ (QuotientAddGroup.mk : (Fin g → ℂ) → _) := rfl
+  rw [this]
+  exact h.torusHomeo.isOpenMap.comp QuotientAddGroup.isOpenMap_coe
+
+theorem compactSpace [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ) :
+    CompactSpace G :=
+  haveI := compactSpace_torus (Λ := Λ)
+  h.torusHomeo.compactSpace
+
+theorem secondCountable [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ) :
+    SecondCountableTopology G :=
+  h.torusHomeo.symm.secondCountableTopology
+
+theorem isTopologicalGroup [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ) :
+    IsTopologicalGroup G := by
+  set e := h.torusHomeo
+  have hmul : (fun p : G × G => p.1 * p.2) = fun p => e (e.symm p.1 + e.symm p.2) := by
+    funext p; rw [h.torusHomeo_add, e.apply_symm_apply, e.apply_symm_apply]
+  have hinv : (fun p : G => p⁻¹) = fun p => e (-e.symm p) := by
+    funext p; rw [h.torusHomeo_neg, e.apply_symm_apply]
+  exact
+    { continuous_mul := by
+        rw [hmul]
+        exact e.continuous.comp ((e.symm.continuous.comp continuous_fst).add
+          (e.symm.continuous.comp continuous_snd))
+      continuous_inv := by
+        rw [hinv]
+        exact e.continuous.comp (e.symm.continuous.neg) }
+
+end IsUnif
+
+end Unif
+
 end ZInQ.HeightDict.TorusVolume
