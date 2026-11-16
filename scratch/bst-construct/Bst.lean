@@ -227,6 +227,79 @@ theorem bst_eq_adjoin :
 
 end Rings
 
+/-! ## §3. Fontaine's admissibility for a `G_{ℚ_p}`-stable subring `B ⊆ B_dR` -/
+
+section Admissible
+
+variable (p : ℕ) [Fact p.Prime]
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] {n : ℕ}
+
+/-- **`B^H`**: the elements of `B` fixed by every `σ ∈ H` (a `ℚ_p`-subalgebra of `B`). -/
+def fixedSub (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) : Subalgebra ℚ_[p] B where
+  carrier := {b | ∀ σ ∈ H, bdrAct p σ (b : BdR p) = b}
+  mul_mem' {a b} ha hb σ hσ := by
+    simp only [Set.mem_ofPred_eq, Subalgebra.coe_mul, map_mul] at *
+    rw [ha σ hσ, hb σ hσ]
+  add_mem' {a b} ha hb σ hσ := by
+    simp only [Set.mem_ofPred_eq, Subalgebra.coe_add, map_add] at *
+    rw [ha σ hσ, hb σ hσ]
+  algebraMap_mem' c σ _ := by
+    change bdrAct p σ (algebraMap ℚ_[p] (BdR p) c) = algebraMap ℚ_[p] (BdR p) c
+    exact bdrAct_qpToBdR p σ c
+
+/-- `B ⊗_{ℚ_p} V → B_dR ⊗_{ℚ_p} V`. -/
+def inclT (B : Subalgebra ℚ_[p] (BdR p)) :
+    (B ⊗[ℚ_[p]] (Fin n → E)) →ₗ[ℚ_[p]] (BdR p ⊗[ℚ_[p]] (Fin n → E)) :=
+  TensorProduct.map B.val.toLinearMap LinearMap.id
+
+theorem inclT_smul (B : Subalgebra ℚ_[p] (BdR p)) (b : B) (x : B ⊗[ℚ_[p]] (Fin n → E)) :
+    inclT p B (b • x) = (b : BdR p) • inclT p B x := by
+  induction x using TensorProduct.inductionOn with
+  | tmul c v =>
+    rw [TensorProduct.smul_tmul', inclT, TensorProduct.map_tmul, TensorProduct.map_tmul,
+      TensorProduct.smul_tmul']
+    rfl
+  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+
+theorem tensorAct_smul (ρ : GQp p →* GL (Fin n) E) (σ : GQp p) (b : BdR p)
+    (y : BdR p ⊗[ℚ_[p]] (Fin n → E)) :
+    TensorProduct.map (PanBergerSplit.bdrLin p σ) (PanBergerSplit.vAct p ρ σ) (b • y) =
+      bdrAct p σ b • TensorProduct.map (PanBergerSplit.bdrLin p σ) (PanBergerSplit.vAct p ρ σ) y := by
+  induction y using TensorProduct.inductionOn with
+  | tmul c v =>
+    rw [TensorProduct.smul_tmul', TensorProduct.map_tmul, TensorProduct.map_tmul,
+      TensorProduct.smul_tmul']
+    change bdrAct p σ (b * c) ⊗ₜ _ = (bdrAct p σ b * bdrAct p σ c) ⊗ₜ _
+    rw [map_mul]
+  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+
+/-- **`D_B,H(V) = (B ⊗_{ℚ_p} V)^H`**, Fontaine's functor (Fontaine, Astérisque 223, Exp. III
+§1; UNVERIFIED numbering), for `V = E^n` with the action `ρ`: the elements of `B ⊗ V` fixed by
+`H`, the action computed in `B_dR ⊗ V`. A module over `B^H` (multiplication on `B`). -/
+def dB (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E) :
+    Submodule (fixedSub p B H) (B ⊗[ℚ_[p]] (Fin n → E)) where
+  carrier := {x | inclT p B x ∈ PanBergerSplit.tensorInv p (PanBergerSplit.bdrLin p) H ρ}
+  zero_mem' := by
+    simp only [Set.mem_ofPred_eq, map_zero]
+    exact Submodule.zero_mem _
+  add_mem' {x y} hx hy := by
+    simp only [Set.mem_ofPred_eq, map_add] at *
+    exact Submodule.add_mem _ hx hy
+  smul_mem' e x hx := by
+    simp only [Set.mem_ofPred_eq] at *
+    intro σ hσ
+    have h1 : inclT p B (e • x) = ((e : B) : BdR p) • inclT p B x := inclT_smul p B (e : B) x
+    rw [h1, tensorAct_smul, hx σ hσ, e.2 σ hσ]
+
+/-- **`V` is `B`-admissible as a representation of `H`** (Fontaine's definition):
+`dim_{B^H} (B ⊗_{ℚ_p} V)^H = dim_{ℚ_p} V`. -/
+def IsAdmissible (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p))
+    (ρ : GQp p →* GL (Fin n) E) : Prop :=
+  @finrank (fixedSub p B H) (dB p B H ρ) _ (Submodule.addCommMonoid _)
+    (Submodule.module (dB p B H ρ)) = finrank ℚ_[p] (Fin n → E)
+
+end Admissible
+
 end BergerBst
 end PkgI4
 end HDec
