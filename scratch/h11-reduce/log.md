@@ -22,3 +22,18 @@ Base origin/main 0caafe66. TYZ source Period7.tex: NOT on this host (~/tyz-src a
 * `tunnell_check.py` (cypari2 via `uv run --offline --with cypari2`): Tunnell's formula on 30 odd squarefree n
   (1..187, all classes mod 8): max |L(C_n,1) − β(B−A/2)²/(4√n)| = 2.2e-19 at 38-digit precision. VERIFIED
   (numerically). Also lcalSq(n) = ((A−2B)/2^{k+1})² on the sample (1, 1, 4, 1, 1, ..., 16 at n = 113, 9 at 131).
+
+## Lean
+
+* Build tree: copied ~/dzq-check2/.lake/build (and lean/.lake/build); the dependency closure of
+  TYZLemma29Mod2 is unchanged between 0caafe66 and dzq-check2 HEAD (git diff empty on those dirs);
+  `lake build ZInQKernel.Contrib.OneProof.TYZLemma29Mod2` replayed (9196 jobs, nothing rebuilt).
+* `ZInQKernel/Contrib/OneProof/TYZThm11Integral.lean` (namespace `ZInQ.Contrib.TYZDecomp.H11Reduce`):
+  compiles, no errors, no warnings, no sorry (VERIFIED, `lake env lean`, second attempt after two one-line
+  fixes). `#print axioms` (scratch/h11-reduce/Axioms.lean, output Axioms-output.txt): standard three for
+  `tyzThm11Integral_of_leaves`, `tyzLemma29Mod2_of_tunnellR`, `tyzLemma29PrintedNe3_of_R`.
+  - leaves: `TunnellOddL1` (new, published: Tunnell 1983), `TYZLemma29PrintedNe3R` (real-ℓ form of the open
+    leaf `TYZLemma29PrintedNe3`, which it implies).
+  - `tyzThm11Integral_of_leaves hL3s hJP hfx hL29R hTun : TYZThm11Integral`.
+  - `tyzLemma29Mod2_of_tunnell(R) hL3s hJP hfx hL29(R) hP23 hTun : TYZLemma29Mod2` (no `TYZThm21At31`).
+  - `lcalSq_one_of_tunnell`, `lcalSq_three_of_tunnell` (A(1)=B(1)=2, A(3)=B(3)=4 computed in Lean).
