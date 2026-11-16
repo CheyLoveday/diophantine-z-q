@@ -49,22 +49,25 @@ noncomputable def kroneckerTwistCoeff {N : ℕ} [NeZero N] (f : Newform N 2) (D 
 def KroneckerCentralValueNeZero {N : ℕ} [NeZero N] (f : Newform N 2) (D : ℤ) : Prop :=
   ∀ G : ℂ → ℂ, IsEntireCont (kroneckerTwistCoeff f D) 2 G → G 1 ≠ 0
 
-/-- **Bump–Friedberg–Hoffstein 1990, opening theorem, clause (ii), at weight 2 (`k = 1`) and
+/-- **Bump–Friedberg–Hoffstein 1990, opening theorem, clause (ii), at weight `k = 2` and
 trivial character, with `χ_D(n) = (D / n)` the Kronecker symbol.**
 
-Printed statement (as read from page images of pp. 543–544 by the theorem-application audit,
-INVENTORY.md A025, and confirmed clause by clause by the bfh-leaf statement review; no copy on this
-host): let `f` be a cuspidal newform of even weight `2k` and trivial character on `Γ₀(N)`, `ε` the
-sign of the functional equation of `L(s, f)`, and `S` a finite set of primes containing the primes
-dividing `N`. Then there is a fundamental discriminant `D` of a quadratic field with `ε D > 0`,
-every `p ∈ S` split in `ℚ(√D)`, and `L(k, f, χ_D) ≠ 0`, where `χ_D(n) = (D / n)` and
-`L(s, f, χ_D) = ∑ aₙ χ_D(n) n^{−s}` with centre `s = k`. No CM exclusion, no level condition.
+Printed statement (the statement-check read of D. Bump, S. Friedberg, J. Hoffstein, Invent. Math.
+102 (1990), opening theorem, pp. 543–544; paraphrase): let `f` be a newform of even weight `k` and
+trivial character on `Γ₀(N)`, `ε` the sign of the functional equation of `L(s, f)`, and `S` a
+finite set of primes containing the primes dividing `N`. Then there is a fundamental
+discriminant `D` of a quadratic field with `ε D > 0`, every `p ∈ S` split in `ℚ(√D)`, and
+`L(k/2, f, χ_D) ≠ 0`, where `χ_D(n) = (D / n)` and `L(s, f, χ_D) = ∑ aₙ χ_D(n) n^{−s}` (centre
+`s = k/2`). No CM exclusion, no level condition.
 
-Here: `f : Newform N 2` with `f.χ = 1` (Tau Ceti); `IsFESign f ε` (the functional equation of the
-completed `L(s, f)` at level `N` with sign `ε`); `S : Finset ℕ` of primes containing every prime
-dividing `N`; `Int.IsFundamentalDiscr D` (Mathlib) with `D ≠ 1`; `0 < ε * D`; `SplitsInQuadratic D S`
-(two distinct primes of `𝓞 K` above each `p ∈ S`, `K` a quadratic number field containing `√D`);
-`KroneckerCentralValueNeZero f D` (`kroneckerSym`, the Kronecker symbol).
+Here, the instance at `k = 2` (centre `s = 1`), stated over Tau Ceti's newform on `Γ₁(N)` with
+trivial nebentypus: `f : Newform N 2` with `f.χ = 1`; `IsFESign f ε` (the functional equation of
+the completed `L(s, f)` at level `N` with sign `ε`); `S : Finset ℕ` of primes containing every
+prime dividing `N`; `Int.IsFundamentalDiscr D` (Mathlib) with `D ≠ 1`; `0 < ε * D`;
+`SplitsInQuadratic D S` (two distinct primes of `𝓞 K` above each `p ∈ S`, `K` a quadratic number
+field containing `√D`); `KroneckerCentralValueNeZero f D` (`kroneckerSym`, the Kronecker symbol).
+The statement over the classical newform on `Γ₀(N)`, as printed, is `BFHClauseIIGamma0`
+(`BFHGamma0.lean`), which implies this one (`bfhClauseIIKronecker_of_bfhClauseIIGamma0`).
 
 Source: D. Bump, S. Friedberg, J. Hoffstein, *Nonvanishing theorems for L-functions of modular
 forms and their derivatives*, Invent. Math. 102 (1990), 543–618, opening theorem (pp. 543–544),
