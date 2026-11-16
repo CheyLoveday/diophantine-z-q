@@ -15,6 +15,7 @@ Delaval, Jie Xu and Shitan Xu; see the LICENSE and NOTICE in
 
 namespace ZInQ.Contrib.OneProof.RegularSmoothPerfect
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **H-81 leaf `RegularSmoothPerfect`** (proved). If `S` is a finite type algebra over a perfect
 field `k` and `S_q` is a regular local ring, then `S_q` is formally smooth over `k` (its residue
 field is essentially of finite type over the perfect field `k`, hence formally smooth), so some
