@@ -7,11 +7,27 @@ DISCHARGES [OpenResearchLeaves26.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_o
 DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
   still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_ac
+  still assumes: [PicDict.MumfordKLFiniteAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.AmpleBaseChangeAlgClosure,
+ PicDict.PicZeroPtsTranslInv]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_printed
   still assumes: [PicDict.MumfordKLFinite,
  PicDict.MumfordPhiSurjective,
  PicDict.AmpleBaseChangeAlgClosure,
  PicDict.PicZeroPtsTranslInv]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_ac
+  still assumes: [PicDict.MumfordSquareAC,
+ PicDict.MumfordMulNPicZeroAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.AmpleBaseChangeAlgClosure,
+ PicDict.MumfordWeilPairingAC,
+ PicDict.MumfordWeilNondegAC,
+ PicDict.MumfordWeilAltAC,
+ T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_printed
   still assumes: [PicDict.MumfordSquare,
@@ -35,4 +51,4 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 2961 theorems checked, 9 discharge one
+#discharges: 59 open hypotheses, 3007 theorems checked, 11 discharge one

@@ -6,62 +6,62 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilAlt {n}.phiAmpleIsogeny",
+   "proof": "_root_.PicDict.weilPairingMumford_of_ac {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
    "leaves": [
     {
-     "name": "mumfordSquare",
-     "type": "_root_.PicDict.MumfordSquare",
-     "doc": "pic-dict: theorem of the square at A_Kbar (Mumford, Abelian varieties, section 6 Cor. 4; locator UNVERIFIED).",
+     "name": "mumfordSquareAC",
+     "type": "_root_.PicDict.MumfordSquareAC",
+     "doc": "pic-dict: theorem of the square over an algebraically closed field (Mumford, Abelian varieties, section 6 Cor. 4; locator UNVERIFIED).",
      "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 6 Cor. 4: t_{x+y}^*L (x) L = t_x^*L (x) t_y^*L"
     },
     {
-     "name": "mumfordMulNPicZero",
-     "type": "_root_.PicDict.MumfordMulNPicZero",
-     "doc": "pic-dict: n^*L = L^n for translation-invariant L on A_Kbar (Mumford section 8 (iv); locator UNVERIFIED).",
+     "name": "mumfordMulNPicZeroAC",
+     "type": "_root_.PicDict.MumfordMulNPicZeroAC",
+     "doc": "pic-dict: n_X^*L = L^n for L in Pic0(X), k algebraically closed (Mumford section 8 (iv); locator UNVERIFIED).",
      "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 8 (iv): n_X^*L = L^n for L in Pic0"
     },
     {
-     "name": "mumfordPhiSurjective",
-     "type": "_root_.PicDict.MumfordPhiSurjective",
-     "doc": "pic-dict: for L ample, every translation-invariant class on A_Kbar is t_x^*L (x) L^-1 (Mumford section 8 Thm 1; locator UNVERIFIED).",
+     "name": "mumfordPhiSurjectiveAC",
+     "type": "_root_.PicDict.MumfordPhiSurjectiveAC",
+     "doc": "pic-dict: for L ample every L' in Pic0(X) is t_x^*L (x) L^-1 (Mumford section 8 Thm 1; locator UNVERIFIED).",
      "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, 8 Thm 1: phi_L : X(k) -> Pic0(X) is onto for L ample"
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 8 Thm 1"
     },
     {
      "name": "ampleBaseChangeAlgClosure",
      "type": "_root_.PicDict.AmpleBaseChangeAlgClosure",
-     "doc": "pic-dict: ampleness is preserved by the base change K -> Kbar (EGA II 4.6.13; locator UNVERIFIED).",
+     "doc": "pic-dict: ampleness is preserved by the base change K -> Kbar (EGA II 4.6.13 (iii); locator UNVERIFIED).",
      "kind": "published",
      "flag": "unread: new printed leaf; locator UNVERIFIED",
      "source": "EGA II 4.6.13 (iii): L ample on X/K => L_K' ample on X_K'"
     },
     {
-     "name": "mumfordWeilPairing",
-     "type": "_root_.PicDict.MumfordWeilPairing",
-     "doc": "pic-dict: Mumford's e_n by its formula is well defined, mu_n-valued and bilinear at A_Kbar (Mumford section 20; locator UNVERIFIED).",
+     "name": "mumfordWeilPairingAC",
+     "type": "_root_.PicDict.MumfordWeilPairingAC",
+     "doc": "pic-dict: Mumford's e_n (formula t_x^*psi o psi^-1) is well defined, mu_n-valued and bilinear (Mumford section 20; locator UNVERIFIED).",
      "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, 20: e_n : X_n x Xhat_n -> mu_n, e_n(x,L) = t_x^*psi o psi^-1, bilinear"
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 20: e_n : X_n x Xhat_n -> mu_n, bilinear"
     },
     {
-     "name": "mumfordWeilNondeg",
-     "type": "_root_.PicDict.MumfordWeilNondeg",
+     "name": "mumfordWeilNondegAC",
+     "type": "_root_.PicDict.MumfordWeilNondegAC",
      "doc": "pic-dict: e_n nondegenerate for n prime to char (Mumford section 20; locator UNVERIFIED).",
      "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, 20: e_n is nondegenerate (n prime to p)"
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 20: e_n nondegenerate"
     },
     {
-     "name": "mumfordWeilAlt",
-     "type": "_root_.PicDict.MumfordWeilAlt",
+     "name": "mumfordWeilAltAC",
+     "type": "_root_.PicDict.MumfordWeilAltAC",
      "doc": "pic-dict: e_n(x, phi_L(x)) = 1 (Mumford section 23; locator UNVERIFIED).",
      "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 23: e^L_n(x,x) = 1"
     }
    ]
