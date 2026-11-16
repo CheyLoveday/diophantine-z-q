@@ -27,4 +27,10 @@ DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.On
  ZInQ.Contrib.OneProof.DegDet.DegLadicIsogeny,
  ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2930 theorems checked, 9 discharge one
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_printed
+  still assumes: [ZInQ.Contrib.OneProof.DegDet.DegHomogPoly,
+ ZInQ.Contrib.OneProof.DegDet.SepDegKernel,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 2970 theorems checked, 10 discharge one

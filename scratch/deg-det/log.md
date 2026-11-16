@@ -57,3 +57,9 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
   `degLadicIsogeny_of_sepDegKernel : SepDegKernel → MumfordTorsionAlgClosed → DegLadicIsogeny`,
   `degEqDetTate_of_printed`, `charPolyIndepOfEllAlgClosed_of_printed : DegHomogPoly → SepDegKernel →
   MumfordTorsionAlgClosed → HomFreeFiniteAlgClosed → CharPolyIndepOfEllAlgClosed` (no glue left).
+- VERIFIED: autofold spec updated to the printed route (scratch/deg-det/autofold.json):
+  `strict count: 34/11 on 45 -> 35/11 on 46; strictest 34/11 -> 35/11` (no GLUE rise, accepted without --allow-rise);
+  dry-run module scratch/deg-det/FoldDryRun.lean compiles ('HDec.HSyn.sixContactMin_of_open36' standard axioms).
+  #discharges (Discharges-output.txt): DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by
+  DegDet.charPolyIndepOfEllAlgClosed_of_printed, still assumes [DegHomogPoly, SepDegKernel, AvSplit.MumfordTorsionAlgClosed,
+  HomFreeFiniteAlgClosed], axioms standard. (Also the earlier charPolyIndepOfEllAlgClosed_of_degHomogPoly line.)
