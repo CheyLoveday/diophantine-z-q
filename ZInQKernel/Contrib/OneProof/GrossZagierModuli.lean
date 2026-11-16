@@ -264,4 +264,96 @@ theorem latEnd_span_root {D a b c : ℤ} {σ : ℂ} (hσ : 0 < σ.im) (ha : 0 < 
     · exact mem_span_pair_of (-(n * c)) (m + n * e - n * b) (by
         push_cast; linear_combination (n : ℂ) * hroot)
 
+/-! ### The lattice pair of a Heegner form is a Heegner point -/
+
+open ZInQ.GZHL3 (HasResidue Gamma0Equiv IsHeegnerReps)
+
+theorem tauH_coe {N : ℕ} {D : ℤ} (Q : HeegnerForm N D) : (Q.tauH : ℂ) = Q.tau := rfl
+
+theorem tau_root {N : ℕ} {D : ℤ} (Q : HeegnerForm N D) :
+    (Q.A : ℂ) * Q.tau ^ 2 + Q.B * Q.tau + Q.C = 0 :=
+  ZInQ.GZHL3.Reps.cmPoint_root Q.A_pos Q.disc Q.D_neg
+
+theorem tau_im {N : ℕ} {D : ℤ} (Q : HeegnerForm N D) : 0 < Q.tau.im := Q.tauH.im_pos
+
+theorem natCast_ne_zero_of {N : ℕ} {D : ℤ} (Q : HeegnerForm N D) : (N : ℂ) ≠ 0 :=
+  ZInQ.GZHeegner.N_ne_zero Q
+
+/-- `⟨1/N, τ⟩ = ⟨1, τ⟩ + ℤ·(1/N)`, and `k/N ∈ ⟨1, τ⟩ ⇔ N ∣ k`. -/
+theorem cyclic_pairOf {N : ℕ} (hN : (N : ℂ) ≠ 0) (τ : ℍ) :
+    (pairOf N τ).2 = (pairOf N τ).1 ⊔ Submodule.span ℤ {1 / (N : ℂ)} ∧
+      ∀ k : ℤ, (k : ℂ) * (1 / (N : ℂ)) ∈ (pairOf N τ).1 ↔ (N : ℤ) ∣ k := by
+  refine ⟨le_antisymm ?_ ?_, fun k => ⟨fun h => ?_, fun h => ?_⟩⟩
+  · rw [pairOf, Submodule.span_le]
+    rintro _ (rfl | h)
+    · exact Submodule.mem_sup_right (Submodule.subset_span rfl)
+    · rw [Set.mem_singleton_iff] at h; subst h
+      exact Submodule.mem_sup_left (Submodule.subset_span (by simp))
+  · refine sup_le ?_ ?_
+    · rw [pairOf, Submodule.span_le]
+      rintro _ (rfl | h)
+      · exact mem_span_pair_of N 0 (by push_cast; field_simp; ring)
+      · rw [Set.mem_singleton_iff] at h; subst h
+        exact mem_span_pair_of 0 1 (by ring)
+    · rw [Submodule.span_le, Set.singleton_subset_iff]
+      exact Submodule.subset_span (by simp)
+  · obtain ⟨x, y, hxy⟩ := exists_coords h
+    have e : (((N : ℤ) * x - k : ℤ) : ℂ) + (((N : ℤ) * y : ℤ) : ℂ) * (τ : ℂ) = 0 := by
+      push_cast
+      have := hxy; field_simp at this
+      linear_combination (-1 : ℂ) * this
+    obtain ⟨i1, -⟩ := int_indep τ.im_pos e
+    exact ⟨x, by linarith⟩
+  · obtain ⟨m, rfl⟩ := h
+    exact mem_span_pair_of m 0 (by push_cast; field_simp; ring)
+
+theorem latN_eq_map {N : ℕ} (hN : (N : ℂ) ≠ 0) (τ : ℂ) :
+    Submodule.span ℤ {1 / (N : ℂ), τ} =
+      (Submodule.span ℤ {1, (N : ℂ) * τ}).map (LinearMap.mulLeft ℤ (1 / (N : ℂ))) := by
+  rw [map_mulLeft_span_pair]
+  congr 2
+  · ring
+  · rw [Set.singleton_eq_singleton_iff]; field_simp
+
+/-- **The lattice pair `(⟨1, τ_Q⟩, ⟨1/N, τ_Q⟩)` of a Heegner form of residue `β` is a Heegner
+point.** -/
+theorem isHeegnerPair_of_form {N : ℕ} {D β : ℤ} (hsq : Squarefree D) (Q : HeegnerForm N D)
+    (hQ : HasResidue β Q) : IsHeegnerPair N D β (pairOf N Q.tauH).1 (pairOf N Q.tauH).2 := by
+  have hN := natCast_ne_zero_of Q
+  have hD := Q.D_neg
+  have hs := sD_eq_of_root (tau_im Q) Q.A_pos (tau_root Q) Q.disc hD
+  obtain ⟨A', hA'⟩ := Q.N_dvd
+  obtain ⟨e, he⟩ := hQ
+  have hA'c : (Q.A : ℂ) = N * A' := by exact_mod_cast hA'
+  have hec : (Q.B : ℂ) - β = 2 * N * e := by exact_mod_cast he
+  refine ⟨⟨1, Q.tau, one_ne_zero, by simpa using tau_im Q, rfl⟩,
+    ⟨1 / (N : ℂ), cyclic_pairOf hN Q.tauH⟩, ?_, ?_, ?_⟩
+  · exact latEnd_span_root (tau_im Q) Q.A_pos (tau_root Q) Q.disc hsq hD
+  · show latEnd (Submodule.span ℤ {1 / (N : ℂ), Q.tau}) = cmOrder D
+    rw [latN_eq_map hN, latEnd_map (one_div_ne_zero hN)]
+    have hA'pos : 0 < A' := by
+      have := Q.A_pos; rw [hA'] at this
+      exact pos_of_mul_pos_right this (by exact_mod_cast (Nat.cast_nonneg N : (0 : ℤ) ≤ N))
+    refine latEnd_span_root (a := A') (b := Q.B) (c := Q.C * N) ?_ hA'pos ?_ ?_ hsq hD
+    · have : ((N : ℂ) * Q.tau).im = N * Q.tau.im := by simp
+      rw [this]
+      exact mul_pos (by
+        have : (0 : ℝ) < N := by
+          rcases Nat.eq_zero_or_pos N with h | h
+          · exact absurd (by rw [h]; simp) hN
+          · exact_mod_cast h
+        exact this) (tau_im Q)
+    · push_cast; linear_combination (N : ℂ) * tau_root Q - (N : ℂ) * Q.tau ^ 2 * hA'c
+    · linear_combination Q.disc + 4 * Q.C * hA'
+  · show ∀ z ∈ Submodule.span ℤ {1 / (N : ℂ), Q.tau},
+      (-(β : ℂ) + Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ)) / 2 * z ∈ Submodule.span ℤ {1, Q.tau}
+    rw [sD_def, hs]
+    apply mul_mem_of_gen
+    · exact mem_span_pair_of e A' (by
+        field_simp
+        linear_combination hec + (2 * Q.tau) * hA'c)
+    · exact mem_span_pair_of (-Q.C) (N * e - Q.B) (by
+        push_cast
+        linear_combination tau_root Q + Q.tau / 2 * hec)
+
 end ZInQ.GZModuli
