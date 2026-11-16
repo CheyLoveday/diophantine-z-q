@@ -3,7 +3,6 @@ module
 
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Groupoids.OverField.Morphisms.Dimension
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.GroupScheme.OverField.ActionGroupoid
-public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Morphisms.FibreDimension.Equidimensional
 
 -- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
 set_option autoImplicit false

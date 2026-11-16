@@ -5,7 +5,7 @@
       "source": "StacksFrontier/AlgebraicGeometry/Groupoids/GroupSchemeProperties/Dimension.lean",
       "source_sha256": "dd5f882963fb8f9cf812deeb0569dbb4271ca066f11fd65059c303484644f1a5",
       "destination": "ZInQKernel/Contrib/CloudB3W16Dimension/StacksFrontier/AlgebraicGeometry/Groupoids/GroupSchemeProperties/Dimension.lean",
-      "ported_sha256": "43cfef14cc88e098925e5b5e7be75102b34ea60e4e319a95b91fe66d7aa926ee"
+      "ported_sha256": "7295940dc898637ff9c21e85e134717201a819181ee4407e4971290d936eac69"
     },
     {
       "source": "StacksFrontier/AlgebraicGeometry/Groupoids/OverField/Morphisms/Dimension.lean",
