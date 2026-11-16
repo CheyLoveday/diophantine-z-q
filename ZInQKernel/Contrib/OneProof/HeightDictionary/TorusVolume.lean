@@ -3,6 +3,8 @@ import Mathlib.MeasureTheory.Function.Jacobian
 import Mathlib.Algebra.Module.ZLattice.Covolume
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
 import Mathlib.Topology.Algebra.Group.Quotient
+import Mathlib.RingTheory.Norm.Transitivity
+import Mathlib.RingTheory.Complex
 
 /-! # height-dict: the volume of a uniformized compact group (Mathlib only)
 
@@ -349,5 +351,155 @@ theorem piMeasure_image_ball (h : IsUnif Λ Φ) [T2Space G] [DiscreteTopology Λ
 end IsUnif
 
 end PiMeasure
+
+
+/-! ## The volume of a normalized invariant measure -/
+
+section Main
+
+/-- The real determinant of a complex-linear map of `ℂ^g` is `|det_ℂ|²`. -/
+theorem det_restrictScalars_eq (D : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+    (D.restrictScalars ℝ : (Fin g → ℂ) →L[ℝ] (Fin g → ℂ)).det =
+      ‖LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))‖ ^ 2 := by
+  rw [ContinuousLinearMap.det, ContinuousLinearMap.coe_restrictScalars,
+    LinearMap.det_restrictScalars, Algebra.norm_complex_apply, Complex.normSq_eq_norm_sq]
+
+theorem eq_of_abs_le {x y : ℝ} (K : ℝ) (h : ∀ ε : ℝ, 0 < ε → ε ≤ 1 → |x - y| ≤ ε * K) : x = y := by
+  have hK : 0 ≤ K := by
+    have := h 1 one_pos le_rfl
+    linarith [abs_nonneg (x - y)]
+  refine eq_of_forall_dist_le fun e he => ?_
+  rw [Real.dist_eq]
+  set ε := min 1 (e / (K + 1))
+  have hε : 0 < ε := lt_min one_pos (div_pos he (by linarith))
+  have h1 := h ε hε (min_le_left _ _)
+  have h2 : ε * K ≤ e := by
+    have : ε ≤ e / (K + 1) := min_le_right _ _
+    calc ε * K ≤ e / (K + 1) * K := mul_le_mul_of_nonneg_right this hK
+      _ ≤ e := by
+        rw [div_mul_eq_mul_div, div_le_iff₀ (by linarith)]
+        nlinarith
+  linarith
+
+variable {G : Type*} [Group G] [TopologicalSpace G] [T2Space G] [MeasurableSpace G] [BorelSpace G]
+variable {Λ : Submodule ℤ (Fin g → ℂ)} [DiscreteTopology Λ] [IsZLattice ℝ Λ]
+variable {Φ : (Fin g → ℂ) → G}
+
+/-- **The volume of a normalized invariant measure.** Let `Φ : ℂ^g → G` be a continuous surjective
+homomorphism with kernel the full lattice `Λ` onto a Hausdorff group, `μ` a finite left-invariant
+Borel measure on `G` and `F : G → ℂ^g` a map such that `F ∘ Φ` is strictly differentiable at `0`
+with `ℂ`-linear derivative `D`. If `F_* μ` has density `a` at `F(1)` relative to Lebesgue measure
+(`hnorm`), then `μ(G) = a · |det D|² · covol(Λ)`. -/
+theorem volume_eq_of_normalized (h : IsUnif Λ Φ) (μ : Measure G) [IsFiniteMeasure μ]
+    [μ.IsMulLeftInvariant] (F : G → (Fin g → ℂ)) (D : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))
+    (hψ : HasStrictFDerivAt (F ∘ Φ) (D.restrictScalars ℝ) 0) (a : ℝ)
+    (hnorm : ∀ ε : ℝ, 0 < ε → ∃ W ∈ 𝓝 (1 : G), ∀ E ⊆ W, MeasurableSet E →
+      |(μ E).toReal - a * (volume (F '' E)).toReal| ≤ ε * (volume (F '' E)).toReal) :
+    (μ univ).toReal =
+      a * ‖LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))‖ ^ 2 * ZLattice.covolume Λ := by
+  haveI := h.isTopologicalGroup
+  haveI := h.compactSpace
+  haveI := h.secondCountable
+  obtain ⟨r₀, hr₀, DD, hDm, hfd, hB, hsep, hfin⟩ := exists_fundamentalDomain_ball Λ
+  set π := piMeasure Φ DD with hπ
+  haveI : IsFiniteMeasure π := ⟨by rw [h.piMeasure_univ]; exact hfin⟩
+  haveI := h.piMeasure_leftInvariant hfd
+  haveI := h.piMeasure_isOpenPos hfd
+  haveI : IsHaarMeasure π := {}
+  have hμ : μ = haarScalarFactor μ π • π := isMulLeftInvariant_eq_smul μ π
+  set c : ℝ≥0 := haarScalarFactor μ π
+  set d : ℝ := ‖LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))‖ ^ 2 with hd
+  have hd0 : 0 ≤ d := by positivity
+  set A : (Fin g → ℂ) →L[ℝ] (Fin g → ℂ) := D.restrictScalars ℝ
+  have hAd : |A.det| = d := by rw [det_restrictScalars_eq, abs_of_nonneg hd0]
+  -- the scalar is `a d`
+  have hc : (c : ℝ) = a * d := by
+    refine eq_of_abs_le (d + 1 + |a|) fun ε hε hε1 => ?_
+    -- Jacobian estimates
+    have hup : ∀ᶠ δ in 𝓝[>] (0 : ℝ≥0), ∀ (s : Set (Fin g → ℂ)) (f : (Fin g → ℂ) → (Fin g → ℂ)),
+        ApproximatesLinearOn f A s δ →
+          volume (f '' s) ≤ ENNReal.ofReal (d + ε) * volume s :=
+      addHaar_image_le_mul_of_det_lt (volume : Measure (Fin g → ℂ)) A
+        (m := Real.toNNReal (d + ε)) (by
+          rw [hAd]
+          exact (ENNReal.ofReal_lt_ofReal_iff (by positivity)).mpr (by linarith))
+    have hlow : ∀ᶠ δ in 𝓝[>] (0 : ℝ≥0), ∀ (s : Set (Fin g → ℂ)) (f : (Fin g → ℂ) → (Fin g → ℂ)),
+        ApproximatesLinearOn f A s δ →
+          ENNReal.ofReal (d - ε) * volume s ≤ volume (f '' s) := by
+      by_cases hdε : ε < d
+      · exact mul_le_addHaar_image_of_lt_det (volume : Measure (Fin g → ℂ)) A
+          (m := Real.toNNReal (d - ε)) (by
+            rw [hAd]
+            exact (ENNReal.ofReal_lt_ofReal_iff (by linarith)).mpr (by linarith))
+      · filter_upwards with δ s f _
+        rw [ENNReal.ofReal_of_nonpos (by linarith), zero_mul]
+        exact bot_le
+    obtain ⟨δ, ⟨hδu, hδl⟩, hδpos⟩ := ((hup.and hlow).and self_mem_nhdsWithin).exists
+    obtain ⟨s, hs, hsA⟩ := hψ.approximates_deriv_on_nhds (c := δ) (Or.inr hδpos)
+    obtain ⟨W, hW, hWn⟩ := hnorm ε hε
+    have hΦW : Φ ⁻¹' W ∈ 𝓝 (0 : Fin g → ℂ) :=
+      h.cont.continuousAt.preimage_mem_nhds (by rw [h.map_zero]; exact hW)
+    obtain ⟨r₁, hr₁, hr₁s⟩ := Metric.mem_nhds_iff.mp (inter_mem hs hΦW)
+    set r := min r₁ r₀
+    have hr : 0 < r := lt_min hr₁ hr₀
+    set B := ball (0 : Fin g → ℂ) r
+    have hBs : B ⊆ s := fun x hx => (hr₁s (ball_subset_ball (min_le_left _ _) hx)).1
+    have hBW : Φ '' B ⊆ W := by
+      rintro _ ⟨x, hx, rfl⟩
+      exact (hr₁s (ball_subset_ball (min_le_left _ _) hx)).2
+    have hEm : MeasurableSet (Φ '' B) := (h.isOpenMap _ isOpen_ball).measurableSet
+    have hN := hWn (Φ '' B) hBW hEm
+    rw [image_image] at hN
+    have hsB : ApproximatesLinearOn (F ∘ Φ) A B δ := hsA.mono_set hBs
+    have hX1 := hδu B (F ∘ Φ) hsB
+    have hX2 := hδl B (F ∘ Φ) hsB
+    have hπB : π (Φ '' B) = volume B := h.piMeasure_image_ball hB hsep (min_le_right _ _)
+    have hμB : μ (Φ '' B) = c * volume B := by
+      rw [hμ, Measure.smul_apply, hπB, ENNReal.smul_def, smul_eq_mul]
+    -- real numbers
+    have hV0 : 0 < volume B := measure_ball_pos _ _ hr
+    have hVt : volume B ≠ ⊤ := measure_ball_lt_top.ne
+    set V := (volume B).toReal
+    have hVpos : 0 < V := ENNReal.toReal_pos hV0.ne' hVt
+    have hXt : volume ((fun x => F (Φ x)) '' B) ≠ ⊤ :=
+      ne_top_of_le_ne_top (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hVt) hX1
+    set X := (volume ((fun x => F (Φ x)) '' B)).toReal
+    have hXu : X ≤ (d + ε) * V := by
+      have := ENNReal.toReal_mono (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hVt) hX1
+      rwa [ENNReal.toReal_mul, ENNReal.toReal_ofReal (by positivity)] at this
+    have hXl : (d - ε) * V ≤ X := by
+      by_cases hdε : 0 ≤ d - ε
+      · have := ENNReal.toReal_mono hXt hX2
+        rwa [ENNReal.toReal_mul, ENNReal.toReal_ofReal hdε] at this
+      · have : (d - ε) * V ≤ 0 := mul_nonpos_of_nonpos_of_nonneg (by linarith) hVpos.le
+        exact this.trans ENNReal.toReal_nonneg
+    have hμr : (μ (Φ '' B)).toReal = c * V := by
+      rw [hμB, ENNReal.toReal_mul, ENNReal.coe_toReal]
+    rw [hμr] at hN
+    -- |c V - a X| ≤ ε X
+    have hX0 : 0 ≤ X := ENNReal.toReal_nonneg
+    have h1 : |(c : ℝ) * V - a * X| ≤ ε * ((d + ε) * V) :=
+      hN.trans (mul_le_mul_of_nonneg_left hXu hε.le)
+    have h2 : |a * X - a * d * V| ≤ |a| * (ε * V) := by
+      rw [show a * X - a * d * V = a * (X - d * V) by ring, abs_mul]
+      refine mul_le_mul_of_nonneg_left ?_ (abs_nonneg a)
+      rw [abs_le]; constructor <;> nlinarith
+    have h3 : |((c : ℝ) - a * d) * V| ≤ ε * ((d + ε) * V) + |a| * (ε * V) := by
+      have : ((c : ℝ) - a * d) * V = ((c : ℝ) * V - a * X) + (a * X - a * d * V) := by ring
+      rw [this]
+      exact (abs_add_le _ _).trans (add_le_add h1 h2)
+    rw [abs_mul, abs_of_pos hVpos] at h3
+    have h4 : |(c : ℝ) - a * d| ≤ ε * (d + ε) + |a| * ε := by
+      have : |(c : ℝ) - a * d| * V ≤ (ε * (d + ε) + |a| * ε) * V := by linarith
+      exact le_of_mul_le_mul_right this hVpos
+    calc |(c : ℝ) - a * d| ≤ ε * (d + ε) + |a| * ε := h4
+      _ ≤ ε * (d + 1 + |a|) := by nlinarith [abs_nonneg a]
+  -- conclusion
+  have hcov : ZLattice.covolume Λ = (volume DD).toReal :=
+    ZLattice.covolume_eq_measure_fundamentalDomain Λ volume hfd
+  rw [hμ, Measure.smul_apply, h.piMeasure_univ, ENNReal.smul_def, smul_eq_mul, ENNReal.toReal_mul,
+    ENNReal.coe_toReal, hc, hcov]
+
+end Main
 
 end ZInQ.HeightDict.TorusVolume
