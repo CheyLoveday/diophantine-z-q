@@ -17,3 +17,12 @@ Base: origin/main 0caafe66 + merged origin/wip/t21-proof f597c34c (T21Proof help
   cosets, a function F on {0,1}³ whose level sets are the classes, and rank-one linear algebra. COMPILES.
 - `HfxProof/Euclid.lean`: `euclid_prime` (βO_B + pO_B = γO_B, nrd γ = p). COMPILES.
 - `HfxProof/ClassOne.lean`: `exists_global_mul_unit` (B̂^× = B^× Ô_B^×, Ô_B read place by place). COMPILES.
+- `HfxProof/Finite25.lean`: `lemma25_check` (decide, 13 s): every residue of (O_B/4)^× is ±μβ_t. COMPILES.
+- `HfxProof/Lemma25.lean`: `exists_twoRep` (TYZ Lemma 2.5 surjectivity: every unit of B̂ lies in some
+  B^× twoRep(t) H, for every n, τ). COMPILES.
+- `HfxProof/Order.lean`, `TwoAdic.lean`, `TauData.lean`, `Sg.lean`, `Merge.lean`: general local order R_2,
+  2-adic obstruction (branches e = 1 mod 4 and uniformizer mod 8), data of admissible τ (τ(√−n) = ai+bj+ck,
+  τ(O_K) ⊂ ℤ+ℤω), local-obstruction subgroup SgC and `twoRep_not_mem_DC`, merge lemma
+  `twoRep_mem_DC_of` with integer-congruence criterion `local_merge_cond`. COMPILE.
+- `HfxProof/Finite3.lean` (decide, 27 s) + `HfxProof/Case3.lean`: `testVector_three`: hfx for every
+  squarefree n ≡ 3 (mod 8) and admissible τ. COMPILES (no sorry).
