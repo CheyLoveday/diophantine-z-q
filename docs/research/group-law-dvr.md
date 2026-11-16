@@ -44,7 +44,7 @@ new contribution was edited):
 
 | fold | ORL28 fields replacing `mumfordGroupLawConn` | count | status |
 |---|---|---|---|
-| F1 narrowing | `mumfordGroupLawDVR : MumfordGroupLawDVR` (LEAF, printed form, strictly weaker: `dvr_of_conn`) | 0 | VERIFIED (overlay) |
+| F1 narrowing | `mumfordGroupLawDVR : MumfordGroupLawDVR` (LEAF, printed form, implied by the old field: `dvr_of_conn`) | 0 | VERIFIED (overlay) |
 | F2 Néron | `neronSchemeExtensionDedekind` (LEAF, printed form) + `neronGoodModelIso` (GLUE) | +1 field; GIT 6.14 gone | VERIFIED (overlay) |
 
 F1 is group-law's narrowing, updated to TailZ45. F2 removes *GIT* 6.14 from the literature list. Its leaf is the
