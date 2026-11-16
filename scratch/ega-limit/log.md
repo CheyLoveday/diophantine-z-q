@@ -40,3 +40,7 @@ Target: field `egaIV_8_10_5_xii : ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii`
   `set_option maxSynthPendingDepth 3` after the imports of every vendored file.
 - build2: `lake build` of the three tops + Spread + CloudW01 FinitePresentation/Smooth + CloudW06 AdjoinFinset:
   "Build completed successfully (9150 jobs)", 1m51s wall. VERIFIED.
+- `scratch/ega-limit/Glue.lean` (imports Spread, CloudW01Spread Smooth/FinitePresentation, CloudW06 AdjoinFinset,
+  the three vendored tops): `lake env lean` OK, no errors;
+  `#print axioms ZInQ.Contrib.EGAProperLimit.egaIV_8_10_5_xii_proof`: [propext, Classical.choice, Quot.sound].
+  VERIFIED. Statement of the theorem: `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii` (the field's type, unchanged).

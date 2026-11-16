@@ -132,4 +132,92 @@ theorem isPullback_prodSnd :
 
 end Cube
 
+/-- **A quasi-compact quasi-separated scheme is the target of a surjective flat quasi-compact
+morphism from an affine scheme** (glue): the disjoint union of a finite affine open cover. -/
+theorem exists_affine_surjective_flat (S : Scheme.{u}) [CompactSpace S] [QuasiSeparatedSpace S] :
+    ∃ (Y₀ : Scheme.{u}) (p : Y₀ ⟶ S), IsAffine Y₀ ∧ Surjective p ∧ Flat p ∧ QuasiCompact p := by
+  let 𝒰 := S.affineCover.finiteSubcover
+  refine ⟨∐ 𝒰.X, Sigma.desc 𝒰.f, inferInstance, ⟨fun x => ?_⟩, inferInstance, inferInstance⟩
+  obtain ⟨i, y, rfl⟩ := 𝒰.exists_eq x
+  exact ⟨Sigma.ι 𝒰.X i y, by rw [← Scheme.Hom.comp_apply, Sigma.ι_comp_desc]⟩
+
+/-- Base changing to the limit is base changing along a transition morphism and then to the limit
+(from AxiomMath/Stacks `AlgebraicGeometry.overPullbackObjTransitionIso`,
+`Limits/EventuallyProperOverLimit.lean`, Apache-2.0; restated here, that module is not vendored). -/
+noncomputable def transitionIso {I : Type*} [Category I] (D : I ⥤ Scheme.{u})
+    (c : Cone D) {i j : I} (a : j ⟶ i) (Z : Over (D.obj i)) :
+    (Over.pullback (c.π.app i)).obj Z ≅
+      (Over.pullback (c.π.app j)).obj ((Over.pullback (D.map a)).obj Z) :=
+  (eqToIso (by rw [c.w a]) :
+      (Over.pullback (c.π.app i)).obj Z ≅ (Over.pullback (c.π.app j ≫ D.map a)).obj Z) ≪≫
+    (Over.pullbackComp (c.π.app j) (D.map a)).app Z
+
+/-- Base change along a composite of transition morphisms is the iterated base change. -/
+noncomputable def compIso {I : Type*} [Category I] (D : I ⥤ Scheme.{u})
+    {i j k : I} (a : j ⟶ i) (b : k ⟶ j) (Z : Over (D.obj i)) :
+    (Over.pullback (D.map (b ≫ a))).obj Z ≅
+      (Over.pullback (D.map b)).obj ((Over.pullback (D.map a)).obj Z) :=
+  (eqToIso (by rw [D.map_comp]) :
+      (Over.pullback (D.map (b ≫ a))).obj Z ≅ (Over.pullback (D.map b ≫ D.map a)).obj Z) ≪≫
+    (Over.pullbackComp (D.map b) (D.map a)).app Z
+
+/-- **EGA IV₃ 8.10.5 (xii)**, with exactly the fixed target's hypotheses. -/
+theorem egaIV_8_10_5_xii_proof : ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii := by
+  intro J _ _ _ D _ _ _ c hc i Xi hlfp hqc hqs hprop
+  letI : LocallyOfFinitePresentation Xi.hom := hlfp
+  letI : QuasiCompact Xi.hom := hqc
+  letI : QuasiSeparated Xi.hom := hqs
+  haveI : CompactSpace Xi.left := QuasiCompact.compactSpace_of_compactSpace Xi.hom
+  haveI : QuasiSeparatedSpace Xi.left := quasiSeparatedSpace_of_quasiSeparated Xi.hom
+  -- Step 1 (Stacks 01ZQ): `Xi` is separated at a later stage `j₁`.
+  let τ : Xi ⟶ Over.mk (𝟙 (D.obj i)) := Over.homMk Xi.hom
+  haveI : CompactSpace (Over.mk (𝟙 (D.obj i))).left := inferInstanceAs (CompactSpace (D.obj i))
+  haveI : QuasiSeparatedSpace (Over.mk (𝟙 (D.obj i))).left :=
+    inferInstanceAs (QuasiSeparatedSpace (D.obj i))
+  haveI : IsProper ((Over.pullback (c.π.app i)).obj Xi).hom := hprop
+  haveI : IsSeparated ((Over.pullback (c.π.app i)).map τ).left :=
+    (CloudW01Spread.pullback_to_identity_iff (@IsSeparated) (c.π.app i) Xi).2 inferInstance
+  obtain ⟨j₁, a₁, hsep₁⟩ :=
+    exists_isSeparated_baseChange_of_isLimit D c i Xi (Over.mk (𝟙 (D.obj i))) τ hc
+  let Z := (Over.pullback (D.map a₁)).obj Xi
+  haveI : IsSeparated Z.hom :=
+    (CloudW01Spread.pullback_to_identity_iff (@IsSeparated) (D.map a₁) Xi).1 hsep₁
+  haveI : LocallyOfFinitePresentation Z.hom := inferInstanceAs
+    (LocallyOfFinitePresentation ((Over.pullback (D.map a₁)).obj Xi).hom)
+  haveI : QuasiCompact Z.hom := inferInstanceAs (QuasiCompact ((Over.pullback (D.map a₁)).obj Xi).hom)
+  haveI : QuasiSeparated Z.hom :=
+    inferInstanceAs (QuasiSeparated ((Over.pullback (D.map a₁)).obj Xi).hom)
+  haveI : IsProper ((Over.pullback (c.π.app j₁)).obj Z).hom :=
+    ZInQ.Contrib.SpreadOut.isProper_of_iso (transitionIso D c a₁ Xi).symm
+  -- Step 2: a surjective flat quasi-compact `p : Y₀ ⟶ D j₁` with `Y₀` affine.
+  obtain ⟨Y₀, p, hY₀, hps, hpf, hpq⟩ := exists_affine_surjective_flat (D.obj j₁)
+  -- Step 3: Chow's lemma for `Z ×_{D j₁} Y₀ ⟶ Y₀` (affine base).
+  have hchow : HasChowModification (prodSnd Z p).left :=
+    hasChowModification_of_isAffine (pullback.snd Z.hom p)
+  -- Step 4 (Stacks 081F given Chow) for `Z ×_{D j₁} Y₀ ⟶ Y₀` over `D j₁`.
+  haveI : CompactSpace (prodObj Z p).left := inferInstanceAs (CompactSpace ↥(pullback Z.hom p))
+  haveI : QuasiSeparatedSpace (prodObj Z p).left :=
+    quasiSeparatedSpace_of_quasiSeparated (pullback.snd Z.hom p)
+  haveI : CompactSpace (Over.mk p).left := inferInstanceAs (CompactSpace Y₀)
+  haveI : QuasiSeparatedSpace (Over.mk p).left := inferInstanceAs (QuasiSeparatedSpace Y₀)
+  haveI : LocallyOfFiniteType (prodSnd Z p).left :=
+    inferInstanceAs (LocallyOfFiniteType (pullback.snd Z.hom p))
+  haveI : IsProper ((Over.pullback (c.π.app j₁)).map (prodSnd Z p)).left :=
+    MorphismProperty.of_isPullback (isPullback_prodSnd (c.π.app j₁) Z p).flip
+      (inferInstanceAs (IsProper ((Over.pullback (c.π.app j₁)).obj Z).hom))
+  obtain ⟨j, hj, hpj⟩ := exists_isProper_baseChange_of_isLimit_of_hasChowModification D c hc j₁
+    (prodObj Z p) (Over.mk p) (prodSnd Z p) hchow
+  -- Step 5: universal closedness descends along the surjective flat quasi-compact
+  -- `Y₀ ×_{D j₁} D j ⟶ D j` (Mathlib, fpqc descent).
+  have huc : UniversallyClosed (pullback.snd Z.hom (D.map hj)) :=
+    MorphismProperty.of_isPullback_of_descendsAlong (P := @UniversallyClosed)
+      (Q := @Surjective ⊓ @Flat ⊓ @QuasiCompact) (isPullback_prodSnd (D.map hj) Z p)
+      ⟨⟨inferInstance, inferInstance⟩, inferInstance⟩ hpj.toUniversallyClosed
+  haveI : IsProper ((Over.pullback (D.map hj)).obj Z).hom := by
+    change IsProper (pullback.snd Z.hom (D.map hj))
+    exact { toUniversallyClosed := huc }
+  exact ⟨j, hj ≫ a₁, ZInQ.Contrib.SpreadOut.isProper_of_iso (compIso D a₁ hj Xi)⟩
+
 end ZInQ.Contrib.EGAProperLimit
+
+#print axioms ZInQ.Contrib.EGAProperLimit.egaIV_8_10_5_xii_proof
