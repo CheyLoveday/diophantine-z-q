@@ -26,3 +26,9 @@
   cmDescends_of delegates; cmDescends_of6 uses W; TailX stQM uses stQM_ofW; 3 patterns one conjunct shorter;
   x6ConicModel_of_published wraps R1R2fpRepW_of_rep; x6Rows_of_open14 from x6Rows_of_leavesW (no field read).
 - 01:05 step 1 build OK (13695 jobs; one off-chain fix-up in TailZ17 researchLeaves10_of_open11: R1R2fpRepW_of_rep wrap). frozenTarget axioms standard.
+- 01:12 PruneScan after step 1: exactly OpenAddedLeaves17.{deligneComponentsX6PrintedAb, geomConnOfAlgClosure} unused; prune set = the two fields in OpenAddedLeaves12-17 (12 entries, prune-set-step1.txt). Top-bundle field statements (used-fields lists) identical to the base.
+- 01:20 step 2 (prune_pi0.py, prune_out.txt: 130 deleted lines): 12 fields (2 x OpenAddedLeaves12-17, with docstrings),
+  10 assignments, dead readers x6Rows_of_open13, researchLeaves12_of_open13, addedLeaves11_of_open12,
+  sixContactMin_of_open16 (TailZ22, with their #print lines). TailZ22 module doc updated. Build OK (13695 jobs),
+  frozenTarget axioms standard. kinds.tsv rows (2) and claims.tsv rows (2) deleted (removed-rows.txt).
+  kinds after: H rows 46, strict 38 LEAF / 8 GLUE, strictest 37 / 9 (kinds-counts-after.txt).
