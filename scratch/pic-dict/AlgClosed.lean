@@ -291,4 +291,110 @@ theorem mumfordKLFinite_of_ac (h : MumfordKLFiniteAC) : MumfordKLFinite := by
   change AC.phi c₀ (pts x) = 1
   rw [phi_pts]; exact hx
 
+lemma wf_congr2 {X : Scheme.{0}} {t t' m m' : X ⟶ X} (et : t = t') (em : m = m') (h : t ≫ m = m)
+    (h' : t' ≫ m' = m') (M : X.Modules) (ψ : Scheme.Modules.unit X ≅ (Scheme.Modules.pullback m).obj M) :
+    Transport.wf t' m' h' M (ψ ≪≫ (Scheme.Modules.pullbackCongr em).app M) = Transport.wf t m h M ψ := by
+  subst et em
+  have : ψ ≪≫ (Scheme.Modules.pullbackCongr (rfl : m = m)).app M = ψ := by
+    ext1
+    simp [Scheme.Modules.pullbackCongr]
+  rw [this]
+
+lemma formula_congr_pt {k : Type} [Field k] {X : AbVar k} {n : ℕ} {x y : AC.Kpt X} (e : x = y)
+    (hx : x ^ n = 1) (hy : y ^ n = 1) (c : X.X.left.Pic) (ψ : AC.Triv X n c) :
+    AC.formula x hx c ψ = AC.formula y hy c ψ := by
+  subst e; rfl
+
+lemma formula_congr_c {k : Type} [Field k] {X : AbVar k} {n : ℕ} (x : AC.Kpt X) (hx : x ^ n = 1)
+    {c c' : X.X.left.Pic} (e : c = c') (ψ : AC.Triv X n c) :
+    AC.formula x hx c' (e ▸ ψ) = AC.formula x hx c ψ := by
+  subst e; rfl
+
+lemma pts_pow {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) (n : ℕ) : pts (x ^ n) = pts x ^ n :=
+  map_pow (ptsHom A) x n
+
+lemma pts_tors {A : AbVar K} {n : ℕ} (x : tors A n) : pts (Additive.toMul (x : P A)) ^ n = 1 := by
+  rw [← pts_pow, ← toMul_nsmul, nsmul_tors x]
+  exact map_one (ptsHom A)
+
+/-- Change of trivialization type along `n_{A_K̄} = n_A`. -/
+abbrev trivAC {A : AbVar K} {n : ℕ} {c : (AK A).Pic} (ψ : Triv A n c) : AC.Triv (AKbar A) n c :=
+  ψ ≪≫ (Scheme.Modules.pullbackCongr (mul_AKbar A n).symm).app (mod c)
+
+lemma congr_trans_symm {X : Scheme.{0}} {m m' : X ⟶ X} (e : m = m') (M : X.Modules)
+    (ψ : Scheme.Modules.unit X ≅ (Scheme.Modules.pullback m').obj M) :
+    ψ = (ψ ≪≫ (Scheme.Modules.pullbackCongr e.symm).app M) ≪≫ (Scheme.Modules.pullbackCongr e).app M := by
+  subst e
+  ext1
+  simp [Scheme.Modules.pullbackCongr]
+
+lemma triv_surj {A : AbVar K} {n : ℕ} {c : (AK A).Pic} (ψ' : AC.Triv (AKbar A) n c) :
+    ∃ ψ : Triv A n c, ψ' = trivAC ψ := by
+  exact ⟨ψ' ≪≫ (Scheme.Modules.pullbackCongr (mul_AKbar A n)).app (mod c),
+    congr_trans_symm (mul_AKbar A n).symm (mod c) ψ'⟩
+
+lemma formula_bridge {A : AbVar K} {n : ℕ} (x : tors A n) (c : (AK A).Pic) (ψ : Triv A n c) :
+    AC.formula (X := AKbar A) (pts (Additive.toMul (x : P A))) (pts_tors x) c (trivAC ψ) =
+      weilFormula x c ψ := by
+  rw [weilFormula_eq_wf]
+  exact wf_congr2 (tr_pts _).symm (mul_AKbar A n).symm _ _ (mod c) ψ
+
+lemma isDT_iff {A : AbVar K} (n : ℕ) (c : (AK A).Pic) : AC.IsDT (X := AKbar A) n c ↔ IsDualTors n c := by
+  show AC.IsTI (X := AKbar A) c ∧ c ^ n = 1 ↔ IsTranslInv c ∧ c ^ n = 1
+  rw [isTI_iff]
+
+lemma natCast_ne_zero_bar {n : ℕ} (h : (n : K) ≠ 0) : (n : AlgebraicClosure K) ≠ 0 := by
+  rw [← map_natCast (algebraMap K (AlgebraicClosure K))]
+  exact (map_ne_zero_iff _ (algebraMap K (AlgebraicClosure K)).injective).2 h
+
+theorem mumfordWeilPairing_of_ac (h : MumfordWeilPairingAC) : MumfordWeilPairing := by
+  intro K _ A n hn hnK x x' c c' hc hc'
+  have H := h (AlgebraicClosure K) (AKbar A) n hn (natCast_ne_zero_bar hnK) _ _ (pts_tors x) (pts_tors x')
+    c c' ((isDT_iff n c).2 hc) ((isDT_iff n c').2 hc')
+  refine ⟨fun ψ ψ' => ?_, fun ψ => ?_, fun ψ => ?_, fun ψ ψ' ψ'' => ?_⟩
+  · exact (formula_bridge x c ψ).symm.trans ((H.1 _ _).trans (formula_bridge x c ψ'))
+  · obtain ⟨u, hu1, hu2⟩ := H.2.1 (trivAC ψ)
+    exact ⟨u, hu1, hu2.trans (formula_bridge x c ψ)⟩
+  · exact (formula_bridge (x + x') c ψ).symm.trans ((formula_congr_pt (pts_mul _ _) _ _ c _).trans
+      ((H.2.2.1 (trivAC ψ)).trans (congrArg₂ (· * ·) (formula_bridge x c ψ) (formula_bridge x' c ψ))))
+  · exact (formula_bridge x (c * c') ψ'').symm.trans ((H.2.2.2 (trivAC ψ) (trivAC ψ') (trivAC ψ'')).trans
+      (congrArg₂ (· * ·) (formula_bridge x c ψ) (formula_bridge x c' ψ')))
+
+theorem mumfordWeilNondeg_of_ac (h : MumfordWeilNondegAC) : MumfordWeilNondeg := by
+  intro K _ A n hn hnK
+  have H := h (AlgebraicClosure K) (AKbar A) n hn (natCast_ne_zero_bar hnK)
+  refine ⟨fun x hx => ?_, fun c hc hx => ?_⟩
+  · have h1 := H.1 (pts (Additive.toMul (x : P A))) (pts_tors x) (fun c hc ψ' => by
+      obtain ⟨ψ, rfl⟩ := triv_surj ψ'
+      exact (formula_bridge x c ψ).trans (hx c ((isDT_iff n c).1 hc) ψ))
+    apply Subtype.ext
+    apply Additive.toMul.injective
+    apply pts_injective
+    rw [h1]
+    exact (map_one (ptsHom A)).symm
+  · refine H.2 c ((isDT_iff n c).2 hc) (fun σ hσ ψ' => ?_)
+    obtain ⟨y, rfl⟩ := pts_surjective σ
+    obtain ⟨ψ, rfl⟩ := triv_surj ψ'
+    have hy : Additive.ofMul y ∈ tors A n := by
+      rw [mem_tors]
+      apply Additive.toMul.injective
+      apply pts_injective
+      rw [toMul_nsmul, toMul_ofMul, pts_pow, hσ, toMul_zero]
+      exact (map_one (ptsHom A)).symm
+    exact (formula_congr_pt rfl _ _ _ _).trans ((formula_bridge ⟨_, hy⟩ c ψ).trans (hx ⟨_, hy⟩ ψ))
+
+theorem mumfordWeilAlt_of_ac (h : MumfordWeilAltAC) : MumfordWeilAlt := by
+  intro K _ A n hn hnK c₀ x ψ
+  have key : ∀ (c' : (AKbar A).X.left.Pic) (hc' : c' = AC.phi c₀ (pts (Additive.toMul (x : P A))))
+      (ψ' : AC.Triv (AKbar A) n c'), AC.formula (pts (Additive.toMul (x : P A))) (pts_tors x) c' ψ' = 1 := by
+    intro c' hc' ψ'
+    subst hc'
+    exact h (AlgebraicClosure K) (AKbar A) n hn (natCast_ne_zero_bar hnK) c₀ _ (pts_tors x) ψ'
+  exact (formula_bridge x _ ψ).symm.trans (key _ (phi_pts c₀ _).symm (trivAC ψ))
+
 end PicDict
+
+#print axioms PicDict.mumfordWeilPairing_of_ac
+#print axioms PicDict.mumfordWeilNondeg_of_ac
+#print axioms PicDict.mumfordWeilAlt_of_ac
+#print axioms PicDict.mumfordSquare_of_ac
