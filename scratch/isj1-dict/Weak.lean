@@ -270,4 +270,159 @@ theorem aeval_compMat
 
 end Mat
 
+
+/-! ## 5. Continuity, and the trace-and-determinant argument on one `ι`-component -/
+
+section Main
+
+variable (ℓ : ℕ) [Fact ℓ.Prime] (A : AbVar ℚ) {F : Type} [Field F] [Algebra ℚ F]
+  (θ : F →+* A.End0)
+
+theorem continuous_orbit (hT : TateModuleFree) (v : A.V ℓ) :
+    Continuous (fun σ : Field.absoluteGaloisGroup ℚ => A.galRep ℓ σ v) := by
+  have hℓ : ((ℓ : ℕ) : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : ℓ.Prime).ne_zero
+  obtain ⟨h1, h2, -⟩ := hT ℚ A ℓ hℓ
+  have hc := PkgI3.RhoCont.continuous_galRep ℓ A
+  have h0 : Continuous (fun σ : Field.absoluteGaloisGroup ℚ => (σ, v)) :=
+    Continuous.prodMk continuous_id continuous_const
+  refine (hc.comp h0).congr fun σ => ?_
+  simp only [Function.comp_apply]
+
+theorem continuous_compMat_entry (hT : TateModuleFree)
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) (i j : Fin 2) :
+    Continuous (fun σ : PkgI4.GQ => compMat ℓ A θ b emb σ i j) := by
+  letI := R16Used.tensorModule ℓ A θ
+  let crd : A.V ℓ →ₗ[ℚ_[ℓ]] PadicAlgCl ℓ :=
+    { toFun := fun v => R16Used.liftHom (k := ℚ_[ℓ]) emb (b.repr v i)
+      map_add' := fun u v => by simp only [map_add, Finsupp.add_apply]
+      map_smul' := fun x v => by
+        rw [RingHom.id_apply, ← R16Used.tsmul_left (R16Split.rhoV ℓ A θ) x v, LinearEquiv.map_smul,
+          Finsupp.smul_apply, smul_eq_mul, map_mul, R16Used.liftHom_tmul_one, Algebra.smul_def] }
+  have hcrd : Continuous crd := IsModuleTopology.continuous_of_linearMap crd
+  have hρ := continuous_orbit ℓ A hT (b j)
+  refine (hcrd.comp hρ).congr fun σ => ?_
+  rfl
+
+open ZInQ.Contrib.HodgeSplit in
+/-- **The trace-and-determinant argument on one `ι`-component (glue).** Let `V_ℓ(A)` be free of
+rank 2 over `ℚ_ℓ ⊗ F` (basis `b`), `ι : F → ℚ̄_ℓ`, and suppose (weak reading) that every arithmetic
+Frobenius at `p ∤ Nℓ` satisfies `X² − a_p X + χ(p)p` over `ℚ_ℓ ⊗ F`, and (oddness) that complex
+conjugation has determinant `−1` over `ℚ_ℓ ⊗ F`. Then on the `ι`-component every such Frobenius has
+characteristic polynomial `X² − ι(a_p) X + ι(χ(p)p)`. Proof: complex conjugation is non-scalar on
+the component; on the open non-scalar locus the determinant agrees with `ε₀ χ_ℓ` at Frobenius
+elements, hence everywhere there (Chebotarev, T18), hence on `G_ℚ` (translate by complex
+conjugation); a `2 × 2` matrix satisfying a monic quadratic whose constant term is its nonzero
+determinant has it as characteristic polynomial. -/
+theorem component_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ)
+    (θ : Fd →+* A.End0)
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] Fd) (A.V ℓ))
+    (emb : Fd →+* PadicAlgCl ℓ) (N : ℕ) (hN : 0 < N) (χ : DirichletCharacter ℂ N) (a : ℕ → Fd)
+    (hodd : ∀ c : ZInQ.Contrib.G9.PkgI4.GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c →
+      (R16Used.frobMat ℓ A θ b c).det = -1)
+    (hweak : ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p →
+      ∃ c : Fd, (c : ℂ) = χ (p : ZMod N) ∧
+        aeval (R16Used.frobMat ℓ A θ b σ) (R16Used.esPoly ℓ (a p) (c * (p : Fd))) = 0) :
+    ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p → ∀ c : Fd,
+      (c : ℂ) = χ (p : ZMod N) →
+      (compMat ℓ A θ b emb σ).charpoly =
+        Polynomial.X ^ 2 - C (emb (a p)) * Polynomial.X + C (emb (c * (p : Fd))) := by
+  haveI : NeZero N := ⟨hN.ne'⟩
+  obtain ⟨ιC⟩ : Nonempty (ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] ℂ) := ⟨IsAlgClosed.lift⟩
+  obtain ⟨ιL, hιL⟩ := exists_iotaL ℓ Fd emb ιC
+  set M := compMat ℓ A θ b emb with hM
+  let Fc : PkgI4.GQ → PadicAlgCl ℓ := fun σ =>
+    ((eps0 ιC ιL χ σ : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) *
+      ((G0Galois.cycQ ℓ σ : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ)
+  have hFmul : ∀ σ τ, Fc (σ * τ) = Fc σ * Fc τ := by
+    intro σ τ; simp only [Fc, map_mul, Units.val_mul]; ring
+  have hFne : ∀ σ, Fc σ ≠ 0 := fun σ => mul_ne_zero (Units.ne_zero _) (Units.ne_zero _)
+  have hFc : Continuous Fc :=
+    (Units.continuous_val.comp (eps0_continuous ιC ιL χ)).mul
+      (Units.continuous_val.comp (continuous_cycQ ℓ))
+  have hFfrob : ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p → ∀ c : Fd,
+      (c : ℂ) = χ (p : ZMod N) → Fc σ = emb (c * (p : Fd)) := by
+    intro p hp hpN σ hσ c hc
+    have hpN' : ¬ p ∣ N := fun h => hpN (dvd_mul_of_dvd_left h ℓ)
+    have hpl : p ≠ ℓ := by rintro rfl; exact hpN (dvd_mul_left p N)
+    obtain ⟨γ, hγ, he⟩ := eps0_frobAt ιC ιL χ hp hpN' hσ
+    simp only [Fc, he, cycQ_frobAt hp hpl hσ, hιL γ c (hc.trans hγ.symm), map_mul, map_natCast]
+  have hMmul : ∀ σ τ, M (σ * τ) = M σ * M τ := compMat_mul ℓ A θ b emb
+  have hMone : M 1 = 1 := compMat_one ℓ A θ b emb
+  have hMc : ∀ i j, Continuous fun σ => M σ i j := continuous_compMat_entry ℓ A θ hT b emb
+  let D : PkgI4.GQ → PadicAlgCl ℓ := fun σ => (M σ).det
+  have hDc : Continuous D := by
+    have : D = fun σ => M σ 0 0 * M σ 1 1 - M σ 0 1 * M σ 1 0 := by
+      funext σ; exact Matrix.det_fin_two _
+    rw [this]
+    exact ((hMc 0 0).mul (hMc 1 1)).sub ((hMc 0 1).mul (hMc 1 0))
+  have hDmul : ∀ σ τ, D (σ * τ) = D σ * D τ := fun σ τ => by
+    simp only [D, hMmul, Matrix.det_mul]
+  have hDne : ∀ σ, D σ ≠ 0 := by
+    intro σ h
+    have h1 : D σ * D σ⁻¹ = 1 := by
+      rw [← hDmul, mul_inv_cancel]; simp only [D, hMone, Matrix.det_one]
+    rw [h, zero_mul] at h1
+    exact zero_ne_one h1
+  let W : Set PkgI4.GQ := {σ | DS965Weak.NonScalar (M σ)}
+  have hWo : IsOpen W := by
+    have : W = {σ | M σ 0 1 ≠ 0} ∪ ({σ | M σ 1 0 ≠ 0} ∪ {σ | M σ 0 0 ≠ M σ 1 1}) := by
+      ext σ; simp [W, DS965Weak.NonScalar]
+    rw [this]
+    exact (isOpen_ne_fun (hMc 0 1) continuous_const).union
+      ((isOpen_ne_fun (hMc 1 0) continuous_const).union (isOpen_ne_fun (hMc 0 0) (hMc 1 1)))
+  obtain ⟨c0, hc0⟩ := exists_isComplexConj
+  have hc0sq : c0 * c0 = 1 := IsComplexConj.mul_self hc0
+  have hdc0 : D c0 = -1 := by
+    simp only [D, hM, compMat]
+    rw [show (R16Used.frobMat ℓ A θ b c0).map (R16Used.liftHom (k := ℚ_[ℓ]) emb) =
+      (R16Used.liftHom (k := ℚ_[ℓ]) emb).mapMatrix (R16Used.frobMat ℓ A θ b c0) from rfl,
+      ← RingHom.map_det, hodd c0 hc0, map_neg, map_one]
+  have hNS0 : DS965Weak.NonScalar (M c0) := by
+    by_contra hns
+    simp only [DS965Weak.NonScalar, not_or, not_not] at hns
+    obtain ⟨h01, h10, h0011⟩ := hns
+    have hsq : M c0 * M c0 = 1 := by rw [← hMmul, hc0sq, hMone]
+    have e00 := congrFun (congrFun hsq 0) 0
+    simp only [Matrix.mul_apply, Fin.sum_univ_two, h01, h10, mul_zero, add_zero,
+      Matrix.one_apply_eq] at e00
+    have h1 : D c0 = 1 := by
+      simp only [D, Matrix.det_fin_two, h01, h10, ← h0011, mul_zero, sub_zero, e00]
+    rw [hdc0] at h1
+    have h2 : (2 : PadicAlgCl ℓ) = 0 := by linear_combination -h1
+    exact two_ne_zero h2
+  have hDW : ∀ σ ∈ W, D σ = Fc σ := by
+    refine DS965Weak.eq_on_open_of_eq_on_arithFrob (N * ℓ).primeFactors D Fc hDc hFc W hWo ?_
+    intro p hp hpS v τ hv hτ hτW
+    have hpN : ¬ p ∣ N * ℓ := fun h => hpS (Nat.mem_primeFactors.mpr
+      ⟨hp, h, Nat.mul_ne_zero hN.ne' (Fact.out : ℓ.Prime).ne_zero⟩)
+    have hτ' : IsFrobAt τ p := isFrobAt_of_isArithFrob τ v p hp hv hτ
+    obtain ⟨c, hc, hae⟩ := hweak p hp hpN τ hτ'
+    have h2 := aeval_compMat ℓ A θ b emb τ _ _ hae
+    have hcp := DS965Weak.charpoly_of_aeval_nonScalar hτW h2
+    obtain ⟨-, hdet⟩ := R16Used.trace_det_of_charpoly _ _ _ hcp
+    rw [hFfrob p hp hpN τ hτ' c hc]
+    exact hdet
+  have hD : ∀ σ, D σ = Fc σ := by
+    intro σ
+    by_cases hσ : σ ∈ W
+    · exact hDW σ hσ
+    · have hσc : σ * c0 ∈ W := by
+        show DS965Weak.NonScalar (M (σ * c0))
+        rw [hMmul]
+        exact DS965Weak.nonScalar_mul hσ (hDne σ) hNS0
+      have h1 := hDW _ hσc
+      rw [hDmul, hFmul, hDW c0 hNS0] at h1
+      exact mul_right_cancel₀ (hFne c0) h1
+  intro p hp hpN σ hσ c hc
+  obtain ⟨c', hc', hae⟩ := hweak p hp hpN σ hσ
+  have hcc : c' = c := Subtype.ext (hc'.trans hc.symm)
+  subst hcc
+  have h2 := aeval_compMat ℓ A θ b emb σ _ _ hae
+  refine DS965Weak.charpoly_of_aeval_det h2 ?_ ?_
+  · exact (hD σ).trans (hFfrob p hp hpN σ hσ c' hc)
+  · rw [← hFfrob p hp hpN σ hσ c' hc]; exact hFne σ
+
+end Main
+
 end ISJ1Weak
