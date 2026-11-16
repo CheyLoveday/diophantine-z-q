@@ -21,3 +21,11 @@ statement in ZInQKernel/Contrib/OneProof/StrictHenselizationPair.lean:1527, bund
   flat); 𝔫 = 𝔪' ∩ D; D_𝔫 DVR, unramified over O (Mathlib `FormallyUnramified.of_map_maximalIdeal`), étale at 𝔫
   (`IsEtaleAt.of_isUnramifiedAt_of_flat`), D[1/f] étale; each x ∈ s is c/t with t ∉ 𝔫 (valuation-ring argument in
   D_𝔫); B = image of D[1/(f∏t)]. Strict henselianity is NOT used.
+
+## Part B (VERIFIED, compiled: scratch/neron-sh-proof/PartB.lean, imports ZInQKernel.Contrib.OneProof.BLRLocalizes)
+- `NeronSH.isNeronModelOver_indSmooth`: R → R₁ with `IndSmooth R R₁` (every finite subset of R₁ in a smooth
+  R-subalgebra), R₁ ↪ K₁, Spec K₁ = Spec R₁ ×_R Spec K (IsPullback) ⇒ `CToPrinted.IsNeronModelOver R K X →
+  IsNeronModelOver R₁ K₁ (X ×_R R₁)`. Uses EGA IV 8.8.2(ii)/17.7.8(ii) (proved in tree, CloudW01Spread),
+  Mathlib `Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation`, gt-blr's `uqA`, `glue_cover`, `neron_ext`.
+  Stages: smooth subalgebras B ⊆ R₁ (directed by IndSmooth); second limit over B ⊇ B_i for descending
+  V_{K₁} → X_K to (Spec B_j ×_{B_i} W) ×_R K.

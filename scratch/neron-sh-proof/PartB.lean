@@ -432,4 +432,168 @@ theorem descend_ext (hsm : ∀ i, Algebra.Smooth R (B i)) (hcov : ∀ x : R₁, 
 
 end Descend
 
+/-! ## Ind-smooth algebras -/
+
+/-- **Ind-smoothness**: every finite subset of `R₁` lies in an `R`-subalgebra of `R₁` that is smooth over `R`. -/
+def IndSmooth (R R₁ : Type) [CommRing R] [CommRing R₁] [Algebra R R₁] : Prop :=
+  ∀ s : Finset R₁, ∃ B : Subalgebra R R₁, Algebra.Smooth R B ∧ (s : Set R₁) ⊆ B
+
+section Index
+
+variable {R R₁ : Type} [CommRing R] [CommRing R₁] [Algebra R R₁]
+
+/-- The smooth `R`-subalgebras of `R₁`. -/
+abbrev SIdx (R R₁ : Type) [CommRing R] [CommRing R₁] [Algebra R R₁] : Type :=
+  {B : Subalgebra R R₁ // Algebra.Smooth R B}
+
+theorem SIdx.exists_ge (hind : IndSmooth R R₁) (a b : SIdx R R₁) :
+    ∃ c : SIdx R R₁, a ≤ c ∧ b ≤ c := by
+  classical
+  have fg : ∀ x : SIdx R R₁, ∃ t : Finset R₁, Algebra.adjoin R (t : Set R₁) = x.1 := fun x => by
+    haveI := x.2
+    have h1 : (⊤ : Subalgebra R x.1).FG := Algebra.FiniteType.out
+    exact (Subalgebra.fg_top x.1).mp h1
+  obtain ⟨ta, hta⟩ := fg a
+  obtain ⟨tb, htb⟩ := fg b
+  obtain ⟨c, hc, hsub⟩ := hind (ta ∪ tb)
+  refine ⟨⟨c, hc⟩, ?_, ?_⟩
+  · show a.1 ≤ c
+    rw [← hta]
+    exact Algebra.adjoin_le (fun x hx => hsub (by simp [hx]))
+  · show b.1 ≤ c
+    rw [← htb]
+    exact Algebra.adjoin_le (fun x hx => hsub (by simp [hx]))
+
+theorem SIdx.isDirected (hind : IndSmooth R R₁) : IsDirectedOrder (SIdx R R₁) :=
+  ⟨SIdx.exists_ge hind⟩
+
+theorem SIdx.nonempty (hind : IndSmooth R R₁) : Nonempty (SIdx R R₁) := by
+  obtain ⟨B, hB, -⟩ := hind ∅
+  exact ⟨⟨B, hB⟩⟩
+
+theorem SIdx.cov (hind : IndSmooth R R₁) (x : R₁) : ∃ i : SIdx R R₁, x ∈ i.1 := by
+  obtain ⟨B, hB, hx⟩ := hind {x}
+  exact ⟨⟨B, hB⟩, hx (by simp)⟩
+
+theorem SIdx'.isDirected (hind : IndSmooth R R₁) (i : SIdx R R₁) : IsDirectedOrder {j : SIdx R R₁ // i ≤ j} :=
+  ⟨fun a b => by
+    obtain ⟨c, hac, hbc⟩ := SIdx.exists_ge hind a.1 b.1
+    exact ⟨⟨c, le_trans a.2 hac⟩, hac, hbc⟩⟩
+
+theorem SIdx'.cov (hind : IndSmooth R R₁) (i : SIdx R R₁) (x : R₁) :
+    ∃ j : {j : SIdx R R₁ // i ≤ j}, x ∈ j.1.1 := by
+  obtain ⟨k, hk⟩ := SIdx.cov hind x
+  obtain ⟨c, hic, hkc⟩ := SIdx.exists_ge hind i k
+  exact ⟨⟨c, hic⟩, hkc hk⟩
+
+end Index
+
+/-! ## The Néron property after ind-smooth base change -/
+
+section Main
+
+variable {R R₁ K K₁ : Type} [CommRing R] [CommRing R₁] [Field K] [Field K₁] [Algebra R R₁] [Algebra R K]
+  [Algebra R₁ K₁] [Algebra K K₁] [Algebra R K₁] [IsScalarTower R R₁ K₁] [IsScalarTower R K K₁]
+
+/-- **Local existence** for a smooth affine `R₁`-scheme. -/
+theorem local_ext (hind : IndSmooth R R₁)
+    (hsq : IsPullback (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap K K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap R R₁))) (Spec.map (CommRingCat.ofHom (algebraMap R K))))
+    {X : Over (Spec (CommRingCat.of R))} (hX : CToPrinted.IsNeronModelOver R K X)
+    (V : Scheme.{0}) [IsAffine V] (v : V ⟶ Spec (CommRingCat.of R₁)) [Smooth v]
+    (b : pullback v (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ⟶ X.left)
+    (hb : b ≫ X.hom = pullback.snd v (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R K₁))) :
+    ∃ g : V ⟶ X.left, g ≫ X.hom = v ≫ Spec.map (CommRingCat.ofHom (algebraMap R R₁)) ∧
+      pullback.fst v (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫ g = b := by
+  haveI := SIdx.isDirected hind
+  haveI := SIdx.nonempty hind
+  obtain ⟨i, W, φ, hW, hWq, hWs, Hφ⟩ := exists_spread (B := fun j : SIdx R R₁ => j.1)
+    (fun _ _ h => h) (SIdx.cov hind) V v
+  let C := i.unop.1
+  let W' : Over (Spec (CommRingCat.of C)) := W
+  haveI : Smooth W'.hom := hW
+  haveI : QuasiCompact W'.hom := hWq
+  haveI : QuasiSeparated W'.hom := hWs
+  haveI := SIdx'.isDirected hind i.unop
+  haveI : Nonempty {j : SIdx R R₁ // i.unop ≤ j} := ⟨⟨i.unop, le_rfl⟩⟩
+  exact descend_ext (B := fun j : {j : SIdx R R₁ // i.unop ≤ j} => j.1.1) (fun _ _ h => h) C
+    (fun j => j.2) (fun j => j.1.2) (SIdx'.cov hind i.unop) hsq hX W' V v φ Hφ b hb
+
+/-- **Existence of extensions** for an arbitrary smooth `R₁`-scheme. -/
+theorem glue_ext (hind : IndSmooth R R₁) (hinj : Function.Injective (algebraMap R₁ K₁))
+    (hsq : IsPullback (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap K K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap R R₁))) (Spec.map (CommRingCat.ofHom (algebraMap R K))))
+    {X : Over (Spec (CommRingCat.of R))} (hX : CToPrinted.IsNeronModelOver R K X)
+    (Y : Scheme.{0}) (y : Y ⟶ Spec (CommRingCat.of R₁)) [Smooth y]
+    (b : pullback y (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ⟶ X.left)
+    (hb : b ≫ X.hom = pullback.snd y (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R K₁))) :
+    ∃ g : Y ⟶ X.left, g ≫ X.hom = y ≫ Spec.map (CommRingCat.ofHom (algebraMap R R₁)) ∧
+      pullback.fst y (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫ g = b := by
+  haveI : IsSeparated X.hom := hX.2.1
+  let 𝒰 := Y.affineCover
+  have hm : ∀ i, (pullback.lift (pullback.fst (𝒰.f i ≫ y) (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫
+      𝒰.f i) (pullback.snd _ _) (by rw [Category.assoc]; exact pullback.condition) ≫ b) ≫ X.hom =
+      pullback.snd (𝒰.f i ≫ y) (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap R K₁)) := fun i => by
+    rw [Category.assoc, hb, ← Category.assoc, pullback.lift_snd]
+  choose g hg1 hg2 using fun i => local_ext hind hsq hX (𝒰.X i) (𝒰.f i ≫ y) _ (hm i)
+  exact GapBLR.glue_cover R₁ hinj X _ y b 𝒰 g hg1 hg2
+
+/-- **Néron models commute with ind-smooth base change.** If every finite subset of `R₁` lies in a smooth
+`R`-subalgebra and `Spec K₁ = Spec R₁ ×_R Spec K` (with `R₁ ⊆ K₁`), the base change of a Néron model over `R`
+is a Néron model over `R₁`. -/
+theorem isNeronModelOver_indSmooth (hind : IndSmooth R R₁) (hinj : Function.Injective (algebraMap R₁ K₁))
+    (hsq : IsPullback (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap K K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap R R₁))) (Spec.map (CommRingCat.ofHom (algebraMap R K))))
+    {X : Over (Spec (CommRingCat.of R))} (hX : CToPrinted.IsNeronModelOver R K X) :
+    CToPrinted.IsNeronModelOver R₁ K₁
+      ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap R R₁)))).obj X) := by
+  have hX' := hX
+  obtain ⟨hsm, hsep, hlft, hqc, -⟩ := hX'
+  let jR := Spec.map (CommRingCat.ofHom (algebraMap R R₁))
+  let kK := Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))
+  have hk : kK ≫ jR = Spec.map (CommRingCat.ofHom (algebraMap R K₁)) := specK₁_comp
+  refine ⟨show Smooth (pullback.snd X.hom jR) from inferInstance,
+    show IsSeparated (pullback.snd X.hom jR) from inferInstance,
+    show LocallyOfFiniteType (pullback.snd X.hom jR) from inferInstance,
+    show QuasiCompact (pullback.snd X.hom jR) from inferInstance, fun Y _ => ⟨?_, ?_⟩⟩
+  · intro f₁ f₂ h
+    have w₁ : f₁.left ≫ pullback.snd X.hom jR = Y.hom := Over.w f₁
+    have w₂ : f₂.left ≫ pullback.snd X.hom jR = Y.hom := Over.w f₂
+    have key : f₁.left ≫ pullback.fst X.hom jR = f₂.left ≫ pullback.fst X.hom jR := by
+      refine GapBLR.uqA R₁ hinj X Y.hom
+        (pullback.fst Y.hom kK) (pullback.snd Y.hom kK) (IsPullback.of_hasPullback _ _) _ _ ?_ ?_
+      · rw [Category.assoc, pullback.condition, ← Category.assoc, w₁, Category.assoc, pullback.condition,
+          ← Category.assoc, w₂]
+      · have h1 := congrArg (fun t => t.left ≫ pullback.fst _ _ ≫ pullback.fst _ _) h
+        simpa only [Over.pullback_map_left, pullback.lift_fst_assoc, Category.assoc] using h1
+    apply Over.OverMorphism.ext
+    exact pullback.hom_ext key (w₁.trans w₂.symm)
+  · intro h
+    have hw : h.left ≫ pullback.snd (pullback.snd X.hom jR) kK = pullback.snd Y.hom kK := Over.w h
+    let a := h.left ≫ pullback.fst (pullback.snd X.hom jR) kK ≫ pullback.fst X.hom jR
+    have ha : a ≫ X.hom = pullback.snd Y.hom kK ≫ Spec.map (CommRingCat.ofHom (algebraMap R K₁)) := by
+      simp only [a, Category.assoc]
+      rw [pullback.condition, pullback.condition_assoc, ← Category.assoc, hw, hk]
+    obtain ⟨g, hg1, hg2⟩ := glue_ext hind hinj hsq hX Y.left Y.hom a ha
+    refine ⟨Over.homMk (pullback.lift g Y.hom hg1) (pullback.lift_snd _ _ _), ?_⟩
+    apply Over.OverMorphism.ext
+    apply pullback.hom_ext
+    · apply pullback.hom_ext
+      · simp only [Over.pullback_map_left, Over.homMk_left, Category.assoc, pullback.lift_fst]
+        exact hg2
+      · simp only [Over.pullback_map_left, Over.homMk_left, Category.assoc, pullback.lift_fst,
+          pullback.lift_snd]
+        exact pullback.condition.trans ((congrArg (· ≫ kK) hw).symm.trans ((Category.assoc _ _ _).trans
+          (congrArg (h.left ≫ ·) pullback.condition.symm)))
+    · simp only [Over.pullback_map_left, Over.homMk_left, pullback.lift_snd]
+      exact hw.symm
+
+end Main
+
 end NeronSH
