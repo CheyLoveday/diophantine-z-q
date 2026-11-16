@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.ModularEquationGeneric
 import ZInQKernel.Contrib.OneProof.STQM
+import ZInQKernel.Contrib.OneProof.Pi0FoldSTQM
 import ZInQKernel.OneProof.H.TailO
 import ZInQKernel.OneProof.H.TailP
 import ZInQKernel.OneProof.H.TailQ
@@ -71,7 +72,7 @@ Igusa's two modularity statements, `r1b` by `ShimuraFamily` (qm-split) and `r14`
 (hodge-split), and `r10` by the Hodge–Tate decomposition and the de Rham property of `H¹_ét` (hodge-split, with
 Tate's two theorems from the added bundle). 29 fields. -/
 structure OpenResearchLeaves7 : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   /-- qm-split, H-20: Shimura 1967 Main Thm I on one fine witness, for every map `π : Y → P¹` (replaces `r1b`). -/
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
   r1rec : LeafQM.AV.R1rec
@@ -251,7 +252,7 @@ theorem addedLeaves6_of_open7 (r : OpenResearchLeaves7) (t : OpenTextbookLeaves7
   qmAutCard := (qmRows_of7 t l).1
   alFixedPoints := (qmRows_of7 t l).2.1
   zariskiConnectedness := l.zariskiConnectedness
-  stQM := _root_.GapST.stQM_of r.r1r2 l.y3Connected (qmRows_of7 t l).2.1
+  stQM := _root_.GapST.stQM_ofW r.r1r2 l.y3Connected (qmRows_of7 t l).2.1
     (_root_.AvSplit.Final.h25 t.mumfordTorsionAlgClosed)
     (_root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed)
     (_root_.AvSplit.Final.h69 t.uniformizationLeafAll t.gagaMorphism)

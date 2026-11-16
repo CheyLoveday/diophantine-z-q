@@ -8339,7 +8339,7 @@ theorem fibreQMPeriod_of_named_all (hH : PkgI1.QMHauptmodul) (hU : QMComplexUnif
   fun Y Φ π h1 h2 => fibreQMPeriodAt_of Y Φ π h1 hH hU (hV Y Φ π h1 h2) hD hT
 
 /-- The same from the decomposition's bundle form of the leaf (`LeafAdopt.R1R2fpRep`). -/
-theorem fibreQMPeriod_of_named_rep (h : LeafAdopt.R1R2fpRep) (hM : Pin.MobiusGlue)
+theorem fibreQMPeriod_of_named_rep (h : LeafAdopt.R1R2fpRepW) (hM : Pin.MobiusGlue)
     (hH : PkgI1.QMHauptmodul) (hU : QMComplexUnif)
     (hV : QMPeriodValue (ownY (LeafAdopt.R1R2fp_of_rep h)) (ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (ownπ (LeafAdopt.R1R2fp_of_rep h)))
@@ -8446,7 +8446,7 @@ theorem fibreQMPeriod_main (h : R1R2fp) (hM : Pin.MobiusGlue)
 
 /-- **Main result from the decomposition's bundle form of the leaf (`LeafAdopt.R1R2fpRep`,
 proved).** -/
-theorem fibreQMPeriod_main_rep (h : LeafAdopt.R1R2fpRep) (hM : Pin.MobiusGlue)
+theorem fibreQMPeriod_main_rep (h : LeafAdopt.R1R2fpRepW) (hM : Pin.MobiusGlue)
     (hH : PkgI1.QMHauptmodul) (hE : UniformizationExistsT35) (hR11 : T11aRiemannEnd)
     (hCN : QMClassNumberOne)
     (hR : R1bFamily (ownY (LeafAdopt.R1R2fp_of_rep h)) (ownΦ (LeafAdopt.R1R2fp_of_rep h))

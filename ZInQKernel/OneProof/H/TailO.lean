@@ -1176,7 +1176,7 @@ theorem torsionDescends_of_t5 (hT : PkgI2.TorsionStructure.{0}) : TorsionDescend
 
 /-- **The descended data** (glue, proved). -/
 theorem descend_main (hST : STQM) (hR : ZInQ.LeafPush2.T11b_Rigidity) (hTD : TorsionDescends)
-    (hRep : LeafAdopt.R1R2fpRep) (Q : QML3 ℂ) (hcm : HasCM4 Q.q ∨ HasCM3 Q.q ∨ HasCM24 Q.q) :
+    (hRep : LeafAdopt.R1R2fpRepW) (Q : QML3 ℂ) (hcm : HasCM4 Q.q ∨ HasCM3 Q.q ∨ HasCM24 Q.q) :
     ∃ (ιe : Qbar →+* ℂ) (P : QML3 Qbar) (Q' : QML3 ℂ)
       (κ : PkgI3.AbVar.End Q.A →+* PkgI3.AbVar.End P.A),
       IsBaseChangeOf ιe P Q' ∧ Nonempty (QMIso Q.q Q'.q) ∧ ∀ a, κ (Q.q.iota a) = P.q.iota a := by
@@ -1299,9 +1299,10 @@ theorem descend_main (hST : STQM) (hR : ZInQ.LeafPush2.T11b_Rigidity) (hTD : Tor
         · simp [Over.w] }
   exact ⟨iso1.trans iso2.symm⟩
 
-/-- **`CMDescends` from `STQM`, `T11b_Rigidity`, `TorsionDescends` and `R1R2fpRep` (proved).** -/
-theorem cmDescends_of (hST : STQM) (hR : ZInQ.LeafPush2.T11b_Rigidity) (hTD : TorsionDescends)
-    (hRep : LeafAdopt.R1R2fpRep) : CMDescends := by
+/-- **`CMDescends` from `STQM`, `T11b_Rigidity`, `TorsionDescends` and the weak row `R1R2fpRepW` (proved;
+pi0-fold: `cmDescends_of` with the weak row, same proof).** -/
+theorem cmDescends_ofW (hST : STQM) (hR : ZInQ.LeafPush2.T11b_Rigidity) (hTD : TorsionDescends)
+    (hRep : LeafAdopt.R1R2fpRepW) : CMDescends := by
   intro Q
   have com_of : ∀ (P : QML3 Qbar) (κ : PkgI3.AbVar.End Q.A →+* PkgI3.AbVar.End P.A),
       (∀ a, κ (Q.q.iota a) = P.q.iota a) → ∀ φ ∈ com Q.q, κ φ ∈ com P.q := by
@@ -1321,6 +1322,12 @@ theorem cmDescends_of (hST : STQM) (hR : ZInQ.LeafPush2.T11b_Rigidity) (hTD : To
     obtain ⟨φ, hφ, hφ2⟩ := h
     exact ⟨ιe, P, Q', hBC, ⟨κ φ, com_of P κ hκ φ hφ, by rw [← map_mul, hφ2, map_neg, map_ofNat]⟩,
       hiso⟩
+
+/-- **`CMDescends` from `STQM`, `T11b_Rigidity`, `TorsionDescends` and `R1R2fpRep` (proved).** pi0-fold: through
+`cmDescends_ofW`; kept for st-qbar's `GapST.cmDescends_of`. -/
+theorem cmDescends_of (hST : STQM) (hR : ZInQ.LeafPush2.T11b_Rigidity) (hTD : TorsionDescends)
+    (hRep : LeafAdopt.R1R2fpRep) : CMDescends :=
+  cmDescends_ofW hST hR hTD (LeafAdopt.R1R2fpRepW_of_rep hRep)
 
 end Glue2
 
@@ -2870,7 +2877,7 @@ theorem textbookLeaves4_of_open6 (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6
 /-- **`CMDescends` from Shimura–Taniyama** (leafq-check's `cmDescends_of`, with leaf-fold5's T11(b) and T5). -/
 theorem cmDescends_of6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6) :
     G0Split.FibreQM.PeriodMapH.CMDescends :=
-  G0Split.FibreQM.PeriodMapH.LeafQCheck.cmDescends_of l.stQM (t11b_of_exists5 t.t11bExists)
+  G0Split.FibreQM.PeriodMapH.LeafQCheck.cmDescends_ofW l.stQM (t11b_of_exists5 t.t11bExists)
     (G0Split.FibreQM.PeriodMapH.LeafQCheck.torsionDescends_of_t5 (torsionStructure_ofK5 t.t5)) r.r1r2
 
 /-- **`QMHauptmodul` from `QMHauptmodulBase3`** (leafq-check's `base2_of_base3` and `qmHauptmodul_of_base2`:

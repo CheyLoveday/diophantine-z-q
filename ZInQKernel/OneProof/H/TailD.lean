@@ -39,7 +39,7 @@ structure ResearchLeaves3 : Prop where
   principal polarization whose Rosati involution is `x ↦ μ⁻¹x̄μ` on `ι(𝒪)` (`μ = 2j + ij`, the
   type fixed by the PEL datum); see the definition. Checked by model reviews (rv-qm-polar), no
   human review. -/
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   -- (g0-assemble2) `r1an : R01b_ComplexUniformization` (an `opaque` placeholder) removed: unused;
   -- its concrete family form is `GluePieces3.r1bFamily` (fibre-qm-period).
   /-- R1(d), Shimura reciprocity, object form (leaf-qm-fp; premise Lemma P, rv-qm-polar). -/
@@ -465,12 +465,12 @@ structure GluePieces3 : Prop where
   /-- fibre-qm-period, LEAF (Eichler class number one, lattice form). -/
   qmClassNumberOne : G0Split.FibreQM.QMClassNumberOne
   /-- fibre-qm-period, LEAF (R1(b) in family form), for the triple of the leaf bundle. -/
-  r1bFamily : ∀ h : LeafAdopt.R1R2fpRep,
+  r1bFamily : ∀ h : LeafAdopt.R1R2fpRepW,
     G0Split.FibreQM.R1bFamily (G0Split.FibreQM.ownY (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))
   /-- fibre-qm-period, GLUE, for the triple of the leaf bundle. -/
-  periodMapGlue : ∀ h : LeafAdopt.R1R2fpRep,
+  periodMapGlue : ∀ h : LeafAdopt.R1R2fpRepW,
     G0Split.FibreQM.PeriodMapGlue (G0Split.FibreQM.ownY (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))

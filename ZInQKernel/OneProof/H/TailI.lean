@@ -75,7 +75,7 @@ ts-hecke, hecke-rest; part c80): prop-ts's `propTSAll_of_bundle_meet` with `Kumm
 (R1conn), `QMAutCard`, `SerreRigidity3`, `ALFixedPoints`, the leaf T5, and the glue `ChartProper`,
 `ChartQuasiFinite`, `HeckeVertWitness`. -/
 -- (leaf-fold4) hecke-rest now proves ChartProper and ChartQuasiFinite; hP, hQ are unused here.
-theorem propTSAll_of_pieces3 (hR : LeafAdopt.R1R2fpRep) (h5 : PkgI2.TorsionStructure.{0})
+theorem propTSAll_of_pieces3 (hR : LeafAdopt.R1R2fpRepW) (h5 : PkgI2.TorsionStructure.{0})
     (hconn : TSHecke.Y3Connected) (hA : HeckeRest.QMAutCard) (hS : HeckeRest.SerreRigidity3)
     (hW : HeckeRest.ALFixedPoints) (hP : HeckeRestCurve.ChartProper)
     (hQ : HeckeRestCurve.ChartQuasiFinite) (hV : HeckeRestNV.HeckeVertWitness) :
@@ -180,7 +180,7 @@ and `modelG3` (linked-tate's route with lt-goodred's `GoodRedTorsion`), with `pr
 the three glue Props hecke-rest leaves under it (`propTSAll_of_pieces3`), and with `linkedTateLocal`
 replaced by N1-g1 `AbVarSpreadsOut` (`linkedTateLocal_of_leaves3`). -/
 structure OpenGlue3 : Prop where
-  periodMapGlue : ∀ h : LeafAdopt.R1R2fpRep,
+  periodMapGlue : ∀ h : LeafAdopt.R1R2fpRepW,
     G0Split.FibreQM.PeriodMapGlue (G0Split.FibreQM.ownY (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))

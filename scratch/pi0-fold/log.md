@@ -11,3 +11,18 @@
   (56dcca02^), leaf-fold30's autofold module moved verbatim to the new TailZ60 (the first name of my reserved range),
   Main.lean imports TailZ60. No other file touched (DeligneComponentsY3Used is Contrib, not editable, so TailZ40 has to
   keep rigid-prune's content).
+- 00:25 base checks: DumpCompact 17254 constants (hashes_before.txt, dumpcompact_before_out.txt incl. frozenTarget's pp.all
+  type), axioms standard. PruneScan base: OpenResearchLeaves26 25, OpenTextbookLeaves11 11, OpenAddedLeaves17 11,
+  OpenGlue8 1 = 48 fields, 0 unused (prunescan-base-out.txt). kinds.tsv before: H rows 48, strict 40 LEAF / 8 GLUE,
+  strictest 39 / 9; all 59 rows strict 48 / 11, strictest 47 / 12 (kinds-counts-before.txt).
+- 00:35 Scope.lean (Scope_out.txt): 47 closure constants read R1R2fpRep or the two fields. Two un-editable Contrib
+  files constrain the in-place route: SGRFold (`LeafAdopt.R1R2fp_of_rep (x6Rows_of_open14 ...).1`, so R1R2fp_of_rep
+  and x6Rows_of_open14 must switch together) and STQM (`GapST.stQM_of`/`cm_point` take the strong row, and
+  `GapST.cmDescends_of` passes it to `LeafQCheck.cmDescends_of`, so that one keeps a strong form).
+- step 1 (thread.py; producers.lean pasted into TailZ21; gen_stqmw.py writes the new contributor file
+  Contrib/OneProof/Pi0FoldSTQM.lean with GapST.cm_pointW, stQM_ofW): R1R2fpRepW + R1R2fpRepW_of_rep (LPrefix, next to
+  R1R2fpRep); R1R2fp_of_rep on the weak row; every consumer binder / internal-bundle field `LeafAdopt.R1R2fpRep` ->
+  `R1R2fpRepW` (33 lines), producers' conclusions kept strong; TailO cmDescends_of body -> cmDescends_ofW, strong
+  cmDescends_of delegates; cmDescends_of6 uses W; TailX stQM uses stQM_ofW; 3 patterns one conjunct shorter;
+  x6ConicModel_of_published wraps R1R2fpRepW_of_rep; x6Rows_of_open14 from x6Rows_of_leavesW (no field read).
+- 01:05 step 1 build OK (13695 jobs; one off-chain fix-up in TailZ17 researchLeaves10_of_open11: R1R2fpRepW_of_rep wrap). frozenTarget axioms standard.
