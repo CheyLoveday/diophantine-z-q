@@ -129,4 +129,81 @@ theorem two_adic_b1 (q : ℚ) (hq : q ≠ 0) (nn : H4 ℤ) (k : ℕ) (hk : nrdH 
   congr 1
   simp only [mapH, map_add, map_mul, red4_four, zero_mul, add_zero, red4_cZ]
 
+/-- `1 − i` in Hurwitz coordinates. -/
+def oneMI : H4 ℤ := ⟨1, -1, 0, 0⟩
+
+theorem hurZ_oneMI_mul_oneI {R : Type*} [Field R] [CharZero R] :
+    (hurZ oneMI : ℍ[R]) * hurZ oneI = (2 : R) • 1 := by
+  apply hc_injective
+  rw [hc_mul_hurZ, hc_smul, hc_one]
+  ext <;> simp [mapH, mulH, oneMI, oneI] <;> norm_num
+
+theorem red8_two_mul (X Z : ℤ_[2]) (A : ℤ_[2]) (w : ℤ) :
+    red8 (2 * (X + Z * cZ w + 4 * A)) = 2 * red8 X + 2 * red8 Z * (w : ZMod 8) := by
+  have : (2 : ℤ_[2]) * (X + Z * cZ w + 4 * A) = 2 * X + 2 * Z * cZ w + 8 * A := by ring
+  rw [this, map_add, map_add, map_mul, map_mul, map_mul, map_mul, red8_eight, red8_cZ, zero_mul,
+    add_zero, map_ofNat]
+
+theorem red8_two_mul' (Z : ℤ_[2]) (A : ℤ_[2]) (w : ℤ) :
+    red8 (2 * (Z * cZ w + 4 * A)) = 2 * red8 Z * (w : ZMod 8) := by
+  have := red8_two_mul 0 Z A w
+  rw [zero_add, map_zero, mul_zero, zero_add] at this
+  exact this
+
+/-- **The 2-adic step, `nrd e = 2 · odd`.** -/
+theorem two_adic_b2 (q : ℚ) (hq : q ≠ 0) (nn : H4 ℤ) (k : ℕ) (hk : nrdH nn = 2 ^ k)
+    (β β' ωc e : H4 ℤ) (hβ : Odd (nrdH β)) (hβ' : Odd (nrdH β')) (o : ℤ) (ho : Odd o)
+    (he : nrdH e = 2 * o) (c : ℚ_[2]) (hc0 : c ≠ 0)
+    (u : ℍ[ℚ_[2]]) (hnu : ‖Quaternion.normSq u‖ = 1) (hR : InR (hurZ ωc) u)
+    (heq : qp 2 (q • hurZ nn) * hurZ β' * (c • u) = hurZ β * hurZ e) :
+    ∃ μ ∈ unitList, ∃ X Y : ZMod 8, mapH (Int.castRingHom (ZMod 8)) (mulH oneMI (mulH β e)) =
+      mulH (mapH (Int.castRingHom (ZMod 8)) (mulH μ β'))
+        ⟨2 * X + 2 * Y * (ωc.a0 : ZMod 8), 2 * Y * (ωc.a1 : ZMod 8), 2 * Y * (ωc.a2 : ZMod 8),
+          2 * Y * (ωc.a3 : ZMod 8)⟩ := by
+  rw [qp_smul, qp_hurZ, smul_mul_assoc, smul_mul_assoc, mul_smul_comm, smul_smul] at heq
+  set d : ℚ_[2] := (q : ℚ_[2]) * c with hd
+  have hd0 : d ≠ 0 := mul_ne_zero (by exact_mod_cast hq) hc0
+  have hN := congrArg Quaternion.normSq heq
+  rw [Quaternion.normSq_smul, map_mul, map_mul, map_mul, normSq_hurZ, normSq_hurZ, normSq_hurZ,
+    normSq_hurZ, hk, he] at hN
+  have hnorm := congrArg norm hN
+  have h2 : ‖((2 * o : ℤ) : ℚ_[2])‖ = (2 : ℝ) ^ (-(1 : ℤ)) := by
+    push_cast; rw [norm_mul]
+    rw [show ‖(o : ℚ_[2])‖ = 1 from norm_odd_int ho, mul_one]
+    rw [show (2 : ℚ_[2]) = ((2 : ℕ) : ℚ_[2]) by norm_num, Padic.norm_p]; norm_num
+  simp only [norm_mul, norm_pow] at hnorm
+  rw [h2, norm_odd_int hβ, norm_odd_int hβ', hnu, norm_two_pow, mul_one, one_mul] at hnorm
+  obtain ⟨m, hkm, hε⟩ := val_bookkeeping (b := 1) hd0 le_rfl (by simpa [mul_comm] using hnorm)
+  have hev : Even (nrdH nn) := ⟨2 ^ (2 * m), by rw [hk, hkm]; ring⟩
+  obtain ⟨nn', rfl⟩ := exists_oneI_mul hev
+  have hk4 : nrdH nn' = 4 ^ m := by
+    rw [nrdH_mulH, show nrdH oneI = 2 from rfl, hkm] at hk
+    have : (2 : ℤ) * nrdH nn' = 2 * 4 ^ m := by rw [hk, pow_succ, pow_mul]; norm_num; ring
+    linarith
+  obtain ⟨μ₀, hμ₀, rfl⟩ := eq_smul_unit_of_nrdH m nn' hk4
+  rw [hurZ_mulH, hurZ_smulH] at heq
+  set ε : ℚ_[2] := d * ((2 ^ m : ℤ) : ℚ_[2]) with hεdef
+  have hεn : ‖ε‖ = 1 := hε
+  have heq' : hurZ oneI * (hurZ μ₀ * hurZ β' * (ε • u)) = hurZ (mulH β e) := by
+    rw [hurZ_mulH, ← heq, hεdef]
+    simp only [mul_smul_comm, smul_mul_assoc, smul_smul, mul_assoc]
+  have h3 : (2 : ℚ_[2]) • (hurZ μ₀ * hurZ β' * (ε • u)) = (hurZ (mulH oneMI (mulH β e)) : ℍ[ℚ_[2]]) := by
+    rw [hurZ_mulH, ← heq', ← mul_assoc, hurZ_oneMI_mul_oneI, smul_mul_assoc, one_mul]
+  obtain ⟨X, Z, A, hU⟩ := inR_coords (InR.smul (le_of_eq hεn) hR)
+  have h4 := congrArg hc h3
+  rw [hc_smul, hc_mul, hc_mul, hc_hurZ, hc_hurZ, hc_hurZ, hU] at h4
+  have h4' : mapH PadicInt.Coe.ringHom (mulH (mapH cZ (mulH μ₀ β'))
+      ⟨2 * (X + Z * cZ ωc.a0 + 4 * A.a0), 2 * (Z * cZ ωc.a1 + 4 * A.a1), 2 * (Z * cZ ωc.a2 + 4 * A.a2),
+        2 * (Z * cZ ωc.a3 + 4 * A.a3)⟩) = mapH PadicInt.Coe.ringHom (mapH cZ (mulH oneMI (mulH β e))) := by
+    rw [mapH_mapH, coe_comp_cZ, ← h4]
+    ext <;> simp only [mapH, mulH, map_add, map_sub, map_mul, map_neg, map_ofNat, map_intCast,
+      eq_intCast] <;> ring
+  have h5 := congrArg (mapH red8) (mapH_coe_injective h4')
+  rw [mapH_mulH, mapH_mapH, mapH_mapH] at h5
+  have hrc : red8.comp cZ = Int.castRingHom (ZMod 8) := RingHom.ext_int _ _
+  rw [hrc] at h5
+  refine ⟨μ₀, mem_unitList hμ₀, red8 X, red8 Z, h5.symm.trans ?_⟩
+  congr 1
+  simp only [mapH, red8_two_mul, red8_two_mul']
+
 end ZInQ.Contrib.HfxProof
