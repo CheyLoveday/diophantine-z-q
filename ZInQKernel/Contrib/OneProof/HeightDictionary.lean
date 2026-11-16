@@ -1,6 +1,7 @@
 import ZInQKernel.OneProof.H.TailZ4
 import ZInQKernel.Contrib.OneProof.HeightDictionary.TorusVolume
 import ZInQKernel.Contrib.OneProof.HeightDictionary.Holomorphic
+import ZInQKernel.Contrib.OneProof.HeightDictionary.Conormal
 
 /-! # height-dict: the kernel's Faltings height is the printed one (archimedean dictionary)
 
@@ -78,18 +79,37 @@ def IsFaltingsMetricSq (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ} (eta
 
 end Defs
 
+section PrintedOmega
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- `⋀^g ω` inside the Hodge line `L ⊗ ⋀^g ω_{A_L}`, for the printed `ω = Γ(S, e*Ω¹)`
+(`Conormal.printedOmega`). -/
+noncomputable def printedDetLattice (𝒢 : GroupModel A L) (g : ℕ) :
+    Submodule (𝓞 L) (𝒢.hodgeSpace g) :=
+  Submodule.span (𝓞 L) (Set.range fun v : Fin g → Conormal.printedOmega 𝒢 =>
+    (1 : L) ⊗ₜ[𝓞 L] exteriorPower.ιMulti (𝓞 L) g (fun i => (v i : 𝒢.cotangent)))
+
+theorem printedDetLattice_eq (𝒢 : GroupModel A L) (g : ℕ) :
+    printedDetLattice 𝒢 g = 𝒢.detLattice g := by
+  unfold printedDetLattice GroupModel.detLattice
+  rw [Conormal.printedOmega_eq]
+
+end PrintedOmega
+
 /-- **Faltings' stable height, as the print builds it** (Faltings 1983 §1; Deligne, Sém. Bourbaki
 616 §1; locators UNVERIFIED): `x = deg(ω̄_𝒩)/[L:ℚ]` for the Néron model `𝒩` of `A_L` over a number
-field `L ⊇ K` where `A` has semistable reduction everywhere, `g = dim A`, `ω_𝒩 = ⋀^g e*Ω¹` (the
-kernel's `detLattice g`), computed with any nonzero section `η`:
+field `L ⊇ K` where `A` has semistable reduction everywhere, `g = dim A`, `ω_𝒩 = ⋀^g Γ(S, e*Ω¹)`
+(`printedDetLattice`, built from the stalks of `e*Ω¹` by Kähler differentials), computed with any
+nonzero section `η`:
 `deg = log #(ω_𝒩/𝓞_L η) − ½ ∑_{τ : L → ℂ} log ‖η‖²_τ` with the printed metric
 `‖η‖²_τ = (i/2)^g ∫_{A_τ(ℂ)} η ∧ η̄` (`IsFaltingsMetricSq`). -/
 def IsPrintedStableHeight {K : Type} [Field K] (A : PkgI3.AbVar K) (x : ℝ) : Prop :=
   ∃ (L : Type) (_ : Field L) (_ : NumberField L) (_ : Algebra K L) (𝒩 : GroupModel A L) (g : ℕ),
     𝒩.IsNeronModel ∧ IsSemistable 𝒩 ∧ A.dim = (g : WithBot ℕ∞) ∧
-    ∃ eta ∈ 𝒩.detLattice g, eta ≠ 0 ∧ secIndex (𝒩.detLattice g) eta ≠ 0 ∧
+    ∃ eta ∈ printedDetLattice 𝒩 g, eta ≠ 0 ∧ secIndex (printedDetLattice 𝒩 g) eta ≠ 0 ∧
       ∃ r : (L →+* ℂ) → ℝ, (∀ τ, IsFaltingsMetricSq 𝒩 τ eta (r τ)) ∧
-        x = (Real.log (secIndex (𝒩.detLattice g) eta) -
+        x = (Real.log (secIndex (printedDetLattice 𝒩 g) eta) -
           (1 / 2) * ∑ τ : L →+* ℂ, Real.log (r τ)) / Module.finrank ℚ L
 
 /-- **Leaf R21-Bost over the printed height** (J.-B. Bost, Sém. Bourbaki 795 (1994/95), Astérisque
@@ -313,12 +333,14 @@ theorem isPrintedStableHeight_of (hU : AnalyticUniformizationUnique) (hDim : Uni
   have hdim : A.dim = (g : WithBot ℕ∞) := hDim K A L M.model τ₀ g _ Φ₀
     (M.hodge.periods_discrete τ₀) (M.hodge.periods_isZLattice τ₀) hΦ₀
   obtain ⟨eta, hetaM, heta0, hsec⟩ := M.hodge.isLattice
-  have hetaM' : eta ∈ M.model.detLattice g := M.lattice_eq ▸ hetaM
-  have hsec' : secIndex (M.model.detLattice g) eta ≠ 0 := M.lattice_eq ▸ hsec
+  have hetaM' : eta ∈ printedDetLattice M.model g := by
+    rw [printedDetLattice_eq]; exact M.lattice_eq ▸ hetaM
+  have hsec' : secIndex (printedDetLattice M.model g) eta ≠ 0 := by
+    rw [printedDetLattice_eq]; exact M.lattice_eq ▸ hsec
   refine ⟨L, iF, iN, iA, M.model, g, hN, hS, hdim, eta, hetaM', heta0, hsec',
     fun τ => torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta),
     fun τ => isFaltingsMetricSq_of_metrized M τ eta, ?_⟩
-  rw [hxM, M.hodge.modelHeight_eq hetaM heta0, M.lattice_eq]
+  rw [hxM, M.hodge.modelHeight_eq hetaM heta0, M.lattice_eq, printedDetLattice_eq]
 
 /-- **The converse identification** `IsPrintedStableHeight A x → IsStableFaltingsHeight A x`, given
 that Néron models are metrizable (`NeronMetrizable`, from T35). With `isPrintedStableHeight_of`, the
@@ -338,6 +360,7 @@ theorem isStableFaltingsHeight_of_printed (hU : AnalyticUniformizationUnique)
   subst hgg
   have hrτ : ∀ τ, r τ = torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta) := fun τ =>
     (isFaltingsMetricSq_iff M τ eta heta0 (r τ)).mp (hr τ)
+  rw [printedDetLattice_eq] at hetaM hxr
   have hetaL : eta ∈ M.hodge.lattice := M.lattice_eq ▸ hetaM
   refine ⟨L, iF, iN, iA, M.model, hN, hS, ?_⟩
   rw [groupModel_height_eq hU metrizedDimUnique M, M.hodge.modelHeight_eq hetaL heta0, hxr,

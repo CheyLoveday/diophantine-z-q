@@ -39,4 +39,4 @@ DISCHARGES [OpenResearchLeaves26.gaudronRemondThm14] by ZInQ.HeightDict.gaudronR
  ZInQ.DefFaltings.AnalyticUniformizationUnique,
  ZInQ.HeightSplit.UniformizationDim]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2936 theorems checked, 11 discharge one
+#discharges: 56 open hypotheses, 2963 theorems checked, 11 discharge one
