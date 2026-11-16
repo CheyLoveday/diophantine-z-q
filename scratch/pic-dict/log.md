@@ -82,3 +82,11 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   both `40/8 -> 47/8 on 55; strictest 39/9 -> 47/8` (lf31 `37/11 -> 46/9; strictest 37/11 -> 46/9`). Both dry-run
   modules compile. #discharges: 14 discharge lines (all intermediate forms).
 - Verbatim copies of the three rows (scratch/pic-dict/Verbatim.lean) compile and equal the originals by rfl (VERIFIED).
+- ~06:05 `picZeroAbVar_of_leaves` (scratch/pic-dict/PicZero.lean, merged): `PicZeroAbVar` from `PicLocFinType`
+  (Kleiman 9.4.8), `IdentityComponentLFT` (SGA 3 VI_A 2.4), `PicZeroSmooth` (pending reading), `PicZeroProper`
+  (Kleiman 9.5.4). Glue proved: open subscheme on the identity component as a group object (`AVGlue.grpObjOfMono`,
+  `liftV`), smooth ⇒ geometrically reduced (`isReduced_of_smooth_field`, via vendored
+  `ZInQ.SmoothFibre.isReduced_of_smooth_of_field`), geometric integrality. VERIFIED, standard axioms.
+  Spec scratch/pic-dict/autofold-all.json (three rows): this base `40/8 on 48 -> 49/9 on 58; strictest 39/9 -> 49/9`
+  (needs --allow-rise); lf31 rating `37/11 -> 49/9; strictest 37/11 -> 49/9` (same as both-rows: the
+  pending-reading leaf replaces the row). Dry-run module compiles. #discharges: 15 lines.
