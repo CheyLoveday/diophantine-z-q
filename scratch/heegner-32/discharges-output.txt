@@ -33,4 +33,4 @@ DISCHARGES [hL3] by ZInQ.GZHeegner.grossZagierHeegner_of_printed
  T5Glue.ShimuraMainCM,
  ZInQ.GZHeegner.X0ModuliGaloisMero]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 61 open hypotheses, 3062 theorems checked, 8 discharge one
+#discharges: 61 open hypotheses, 3088 theorems checked, 8 discharge one

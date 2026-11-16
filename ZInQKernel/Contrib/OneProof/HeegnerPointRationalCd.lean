@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd.Compose
+import ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd.Genus
 
 /-!
 # heegner-32: the Heegner point of `C_d` without the canonical model of `X₀(32 d²)`
@@ -17,23 +17,26 @@ canonical model:
   Galois statement `TwistTransportCd` on `X₀(32)`;
 * `HeegnerPointRationalCd/Recip.lean`: `TwistTransportCd` from `hCM` and the lattice statement `TwistLatticeCd`;
 * `HeegnerPointRationalCd/Compose.lean`: the conductor-`d` composition of Heegner forms, Chebotarev in the ring class
-  field of conductor `d` (`ringClassJd`, proved), and `TwistTransportCd` from `hCM` and genus theory (`GenusSqrtD`).
+  field of conductor `d` (`ringClassJd`, proved), and `TwistTransportCd` from `hCM` and genus theory (`GenusSqrtD`);
+* `HeegnerPointRationalCd/Genus.lean`: genus theory, proved: `K(√d)` lies in the ring class field of conductor `d`
+  (Bauer), and the Artin symbol of a prime of degree one acts on `√d` by `(p/d)` (Euler, quadratic reciprocity)
+  (`genusSqrtD`).
 
-The main theorem is `ZInQ.Heegner32.grossZagierHeegnerCd_of_genus'`. No `sorry`, no `axiom`.
+The main theorem is `ZInQ.Heegner32.grossZagierHeegnerCd_of_printed`: `GZStatements.GrossZagierHeegnerCd` (the `C_d`
+form of `hL3`) from `hCM` and the two printed Gross–Zagier statements. No `sorry`, no `axiom`.
 -/
 
 namespace ZInQ.Heegner32
 
-/-- **`GZStatements.GrossZagierHeegnerCd` (the `C_d` form of `hL3`) from the main theorem of CM, genus theory
-(`GenusSqrtD`) and the two printed Gross–Zagier statements.** -/
-theorem grossZagierHeegnerCd_of_printed (hCM : T5Glue.ShimuraMainCM) (hG : GenusSqrtD)
+/-- **`GZStatements.GrossZagierHeegnerCd` (the `C_d` form of `hL3`) from the main theorem of CM and the two printed
+Gross–Zagier statements** (the Heegner point of `C_d` needs no canonical model of `X₀(32 d²)`). -/
+theorem grossZagierHeegnerCd_of_printed (hCM : T5Glue.ShimuraMainCM)
     (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd) (hGC : ZInQ.GZHL3.GrossConjugationCd) :
     ZInQ.GZStatements.GrossZagierHeegnerCd :=
-  grossZagierHeegnerCd_of_genus' hCM hG hGZ hGC
+  grossZagierHeegnerCd_of_hCM hCM hGZ hGC
 
-/-- **The even-`c` Heegner point of `C_d` from the main theorem of CM and genus theory.** -/
-theorem heegnerPointRationalCdEven_of_printed (hCM : T5Glue.ShimuraMainCM) (hG : GenusSqrtD) :
-    HeegnerPointRationalCdEven :=
-  heegnerPointRationalCdEven_of_twist (twistTransportCd_of_genus hCM ringClassJd hG)
+/-- **The even-`c` Heegner point of `C_d` from the main theorem of CM alone.** -/
+theorem heegnerPointRationalCdEven_of_printed (hCM : T5Glue.ShimuraMainCM) : HeegnerPointRationalCdEven :=
+  heegnerPointRationalCdEven_of_hCM hCM
 
 end ZInQ.Heegner32

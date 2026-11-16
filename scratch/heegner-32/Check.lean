@@ -13,3 +13,7 @@ open ZInQ.Heegner32 in
 #print axioms ZInQ.Heegner32.nb_lat
 #print axioms ZInQ.Heegner32.nb_latN
 #print axioms ZInQ.Heegner32.phiC_shift_gamma0
+#print axioms ZInQ.Heegner32.genusSqrtD
+#print axioms ZInQ.Heegner32.adjSqrt_le_ringClassField
+#print axioms ZInQ.Heegner32.artin_sqrtH
+#print axioms ZInQ.Heegner32.grossZagierHeegnerCd_of_hCM
