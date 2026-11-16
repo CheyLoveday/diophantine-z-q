@@ -495,6 +495,47 @@ theorem teich_span {ι : Type*} [Fintype ι] (b : Basis ι (ZMod p) k) (x : Witt
   congr 1
   exact Finset.sum_congr rfl fun i _ => by ring
 
+/-- **`[W(k)[1/p] : ℚ_p] = [k : 𝔽_p]`** for a finite field `k` of characteristic `p`. -/
+theorem finrank_wittLoc : finrank ℚ_[p] (WittLoc p k) = finrank (ZMod p) k := by
+  let b := Module.finBasis (ZMod p) k
+  letI : Algebra ℤ_[p] (WittVector p k) := (zpToWitt p k).toAlgebra
+  have hsmul : ∀ (a : ℤ_[p]) (w : WittVector p k), a • w = zpToWitt p k a * w := fun _ _ => rfl
+  have hli : LinearIndependent ℤ_[p] (fun i => WittVector.teichmuller p (b i)) := by
+    rw [Fintype.linearIndependent_iff]
+    intro g hg
+    exact teich_relation_trivial p k b g (by simpa only [hsmul] using hg)
+  have hsp : ⊤ ≤ Submodule.span ℤ_[p] (Set.range fun i => WittVector.teichmuller p (b i)) := by
+    intro x _
+    obtain ⟨g, hg⟩ := teich_span p k b x
+    rw [hg]
+    refine Submodule.sum_mem _ fun i _ => ?_
+    rw [← hsmul]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+  let B := Basis.mk hli hsp
+  letI : Algebra ℤ_[p] (WittLoc p k) :=
+    ((algebraMap (WittVector p k) (WittLoc p k)).comp (zpToWitt p k)).toAlgebra
+  haveI : IsScalarTower ℤ_[p] ℚ_[p] (WittLoc p k) := IsScalarTower.of_algebraMap_eq fun z => by
+    rw [RingHom.algebraMap_toAlgebra, RingHom.algebraMap_toAlgebra]
+    exact (IsLocalization.lift_eq (M := Submonoid.powers (p : ℤ_[p])) _ z).symm
+  haveI : IsScalarTower ℤ_[p] (WittVector p k) (WittLoc p k) :=
+    IsScalarTower.of_algebraMap_eq fun z => rfl
+  have hsub : Algebra.algebraMapSubmonoid (WittVector p k) (Submonoid.powers (p : ℤ_[p])) =
+      Submonoid.powers (p : WittVector p k) := by
+    rw [Algebra.algebraMapSubmonoid, Submonoid.map_powers, map_natCast]
+  haveI : IsLocalization (Algebra.algebraMapSubmonoid (WittVector p k)
+      (Submonoid.powers (p : ℤ_[p]))) (WittLoc p k) := by
+    rw [hsub]
+    infer_instance
+  let B' := B.localizationLocalization ℚ_[p] (Submonoid.powers (p : ℤ_[p])) (WittLoc p k)
+  rw [Module.finrank_eq_card_basis B', Module.finrank_eq_card_basis b]
+  simp only [Fintype.card_fin]
+
+/-- **`|k| = p^{[W(k)[1/p] : ℚ_p]}`**: the residue degree is `[K_0 : ℚ_p]`. -/
+theorem card_eq_pow_finrank_wittLoc : Nat.card k = p ^ finrank ℚ_[p] (WittLoc p k) := by
+  have := Fintype.ofFinite k
+  rw [finrank_wittLoc, Nat.card_eq_fintype_card, Module.card_eq_pow_finrank (K := ZMod p),
+    ZMod.card]
+
 end WittBasis
 
 /-! ## §5. `K_0 = W(k)[1/p]` -/
