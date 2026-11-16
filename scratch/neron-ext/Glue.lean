@@ -222,6 +222,19 @@ theorem opensRange_lift {X Y Z : Scheme.{0}} (f : X ⟶ Z) (g : Y ⟶ Z) [IsOpen
     refine ⟨y, f.isOpenEmbedding.injective ?_⟩
     rw [← Scheme.Hom.comp_apply, IsOpenImmersion.lift_fac, hy]
 
+theorem opensRange_of_fac {X Y Z : Scheme.{0}} (a : X ⟶ Y) (f : Y ⟶ Z) (g : X ⟶ Z)
+    [IsOpenImmersion a] [IsOpenImmersion f] [IsOpenImmersion g] (h : a ≫ f = g) :
+    a.opensRange = f ⁻¹ᵁ g.opensRange := by
+  subst h
+  ext x
+  simp only [Scheme.Hom.coe_opensRange, Set.mem_range]
+  constructor
+  · rintro ⟨y, rfl⟩
+    exact ⟨y, by rw [Scheme.Hom.comp_apply]⟩
+  · rintro ⟨y, hy⟩
+    refine ⟨y, f.isOpenEmbedding.injective ?_⟩
+    rw [← Scheme.Hom.comp_apply, hy]
+
 /-- The opens (containing the generic point) over which `B` has a Néron model. -/
 def Good (U : (S L).Opens) : Prop := (jL L) ⁻¹ᵁ U = ⊤ ∧ Nonempty (NeronOn L B U)
 
@@ -305,8 +318,11 @@ theorem isBasis_good :
     ⟨n.restrict inf_le_left (jL_preimage_eq_top L hne)⟩⟩
   refine ⟨U ⊓ W, ⟨⟨U ⊓ W, hg⟩, Scheme.Opens.opensRange_ι _⟩, ⟨hxU, hx⟩, inf_le_right⟩
 
-instance locDir : (cov B hcov).LocallyDirected :=
-  .ofIsBasisOpensRange (by intros; simp [cov]; rfl) (isBasis_good B hcov)
+noncomputable instance locDir : (cov B hcov).LocallyDirected :=
+  .ofIsBasisOpensRange (by intros; simp [cov]) (isBasis_good B hcov)
+
+theorem mem_range_ι (U : (S L).Opens) (x : S L) (hx : x ∈ U) : x ∈ Set.range U.ι := by
+  rw [Scheme.Opens.range_ι]; exact hx
 
 /-- The functor `i ↦ X_i`. -/
 noncomputable def F : (cov B hcov).I₀ ⥤ Scheme.{0} where
@@ -319,8 +335,7 @@ noncomputable def F : (cov B hcov).I₀ ⥤ Scheme.{0} where
 noncomputable def toU (i : (cov B hcov).I₀) : (nn B i).X.left ⟶ (cov B hcov).X i :=
   IsOpenImmersion.lift i.1.ι (nn B i).X.hom (by
     rintro _ ⟨x, rfl⟩
-    rw [Scheme.Opens.range_ι]
-    exact mem_of_supp L (nn B i).supp x)
+    exact mem_range_ι _ _ (mem_of_supp L (nn B i).supp x))
 
 @[reassoc (attr := simp)]
 theorem toU_ι (i : (cov B hcov).I₀) : toU B hcov i ≫ (cov B hcov).f i = (nn B i).X.hom :=
@@ -337,13 +352,15 @@ noncomputable def nat : F B hcov ⟶ (cov B hcov).functorOfLocallyDirected where
 
 theorem equifibered : (nat B hcov).Equifibered := by
   intro i j h
+  haveI : IsOpenImmersion ((F B hcov).map h) := isOpenImmersion_tr B (leOfHom h)
   refine (IsOpenImmersion.isPullback (toU B hcov i) ((F B hcov).map h)
     (((cov B hcov).functorOfLocallyDirected).map h) (toU B hcov j)
     ((nat B hcov).naturality h) ?_).flip
   show toU B hcov j ⁻¹ᵁ ((cov B hcov).trans h).opensRange = (tr B (leOfHom h)).left.opensRange
-  rw [opensRange_tr, Cover.LocallyDirected.ofIsBasisOpensRange_trans, opensRange_lift,
+  rw [opensRange_tr, opensRange_of_fac _ _ _ (Scheme.Cover.trans_map (cov B hcov) h),
     ← Scheme.Hom.comp_preimage, toU_ι]
-  simp [cov]
+  congr 1
+  exact Scheme.Opens.opensRange_ι _
 
 /-- The relative gluing datum. -/
 noncomputable def gd : (cov B hcov).RelativeGluingData where
