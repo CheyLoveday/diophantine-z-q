@@ -400,4 +400,198 @@ theorem eq_of_norm_RsZ {P Q : ℚ_[ℓ][X]} (hP : P.Monic) (hQ : Q.Monic)
 
 end Compare
 
+/-! ## 4. A polynomial function on `ℤ[φ]`, extended to `S[X]/(R)` -/
+
+section PolyFn
+
+variable {R : ℤ[X]} (N : MvPolynomial (Fin R.natDegree) ℚ)
+
+variable (R) in
+/-- The polynomial function `N` read on `S[X]/(R)` in the basis `1, X, …, X^{d-1}`. -/
+def Nt (S : Type*) [CommRing S] [Algebra ℚ S] (F : S[X]) : S :=
+  MvPolynomial.aeval (fun i : Fin R.natDegree => (F %ₘ R.map (Int.castRingHom S)).coeff i) N
+
+theorem map_intCast_comp {S S' : Type*} [CommRing S] [CommRing S'] (f : S →+* S') :
+    (R.map (Int.castRingHom S)).map f = R.map (Int.castRingHom S') := by
+  rw [Polynomial.map_map, RingHom.ext_int (f.comp (Int.castRingHom S)) (Int.castRingHom S')]
+
+theorem Nt_map (hR : R.Monic) {S S' : Type*} [CommRing S] [Algebra ℚ S] [CommRing S']
+    [Algebra ℚ S'] (f : S →ₐ[ℚ] S') (F : S[X]) :
+    Nt R N S' (F.map (f : S →+* S')) = f (Nt R N S F) := by
+  unfold Nt
+  rw [← map_intCast_comp (f : S →+* S'), ← map_modByMonic _ (hR.map _),
+    MvPolynomial.comp_aeval_apply]
+  simp_rw [coeff_map]
+  rfl
+
+theorem Nt_modByMonic (S : Type*) [CommRing S] [Algebra ℚ S] (hR : R.Monic) (F : S[X]) :
+    Nt R N S (F %ₘ R.map (Int.castRingHom S)) = Nt R N S F := by
+  unfold Nt
+  rw [modByMonic_eq_of_dvd_sub (hR.map _) (dvd_modByMonic_sub _ _)]
+
+/-- A remainder mod `R` is the sum of its first `d` monomials. -/
+theorem modByMonic_eq_sum (hR : R.Monic) (S : Type*) [CommRing S] [Nontrivial S] (F : S[X]) :
+    F %ₘ R.map (Int.castRingHom S) = ∑ i : Fin R.natDegree,
+      C ((F %ₘ R.map (Int.castRingHom S)).coeff i) * X ^ (i : ℕ) := by
+  rw [Fin.sum_univ_eq_sum_range (fun i => C ((F %ₘ R.map (Int.castRingHom S)).coeff i) * X ^ i)]
+  by_cases hd : R.natDegree = 0
+  · have h1 : R = 1 := hR.natDegree_eq_zero.mp hd
+    simp [h1]
+  · have hne : R.map (Int.castRingHom S) ≠ 1 := by
+      intro h
+      apply hd
+      have := congrArg natDegree h
+      rwa [hR.natDegree_map, natDegree_one] at this
+    conv_lhs => rw [as_sum_range' (F %ₘ R.map (Int.castRingHom S)) R.natDegree (by
+      have := natDegree_modByMonic_lt F (hR.map (Int.castRingHom S)) hne
+      rwa [hR.natDegree_map] at this)]
+    simp_rw [C_mul_X_pow_eq_monomial]
+
+/-- Homogeneous polynomials scale by `c^n`. -/
+theorem aeval_mul_of_isHomogeneous {σ S : Type*} [CommRing S] [Algebra ℚ S]
+    {M : MvPolynomial σ ℚ} {n : ℕ} (hM : M.IsHomogeneous n) (c : S) (x : σ → S) :
+    MvPolynomial.aeval (fun i => c * x i) M = c ^ n * MvPolynomial.aeval x M := by
+  conv_lhs => rw [M.as_sum]
+  conv_rhs => rw [M.as_sum]
+  rw [map_sum, map_sum, Finset.mul_sum]
+  refine Finset.sum_congr rfl fun v hv => ?_
+  rw [MvPolynomial.aeval_monomial, MvPolynomial.aeval_monomial]
+  have hdeg := hM.degree_eq_sum_deg_support hv
+  have : (v.prod fun i k => (c * x i) ^ k) = c ^ n * v.prod fun i k => x i ^ k := by
+    simp_rw [mul_pow]
+    rw [Finsupp.prod_mul]
+    congr 1
+    rw [Finsupp.prod, Finset.prod_pow_eq_pow_sum, ← hdeg]
+  rw [this]
+  ring
+
+theorem Nt_C_mul {n : ℕ} (hN : N.IsHomogeneous n) (S : Type*) [CommRing S]
+    [Algebra ℚ S] (c : S) (F : S[X]) : Nt R N S (C c * F) = c ^ n * Nt R N S F := by
+  unfold Nt
+  rw [← smul_eq_C_mul, smul_modByMonic]
+  simp_rw [coeff_smul, smul_eq_mul]
+  exact aeval_mul_of_isHomogeneous hN c _
+
+/-- `NtZ F = N(coefficients of F mod R)` for `F ∈ ℤ[X]`. -/
+abbrev NtZ (F : ℤ[X]) : ℚ := Nt R N ℚ (F.map (Int.castRingHom ℚ))
+
+/-- **Generic multiplicativity.** If `N` read on `ℤ[X]/(R)` is multiplicative on pairs with nonzero
+values and `N(1) = 1`, then `N` read on `S[X]/(R)` is multiplicative, for every `ℚ`-algebra `S`. -/
+theorem Nt_mul (hR : R.Monic) (h1 : NtZ N 1 = 1)
+    (hmulZ : ∀ F G : ℤ[X], NtZ N F ≠ 0 → NtZ N G ≠ 0 → NtZ N (F * G) = NtZ N F * NtZ N G)
+    (S : Type*) [CommRing S] [Nontrivial S] [Algebra ℚ S] (F G : S[X]) :
+    Nt R N S (F * G) = Nt R N S F * Nt R N S G := by
+  classical
+  let σ := Fin R.natDegree ⊕ Fin R.natDegree
+  let Fg : (MvPolynomial σ ℚ)[X] := ∑ i : Fin R.natDegree, C (MvPolynomial.X (Sum.inl i)) * X ^ (i : ℕ)
+  let Gg : (MvPolynomial σ ℚ)[X] := ∑ i : Fin R.natDegree, C (MvPolynomial.X (Sum.inr i)) * X ^ (i : ℕ)
+  have hmapF : ∀ (T : Type) [CommRing T] [Algebra ℚ T] (x : σ → T),
+      Fg.map (MvPolynomial.aeval x : MvPolynomial σ ℚ →ₐ[ℚ] T).toRingHom =
+        ∑ i : Fin R.natDegree, C (x (Sum.inl i)) * X ^ (i : ℕ) := by
+    intro T _ _ x
+    simp [Fg, Polynomial.map_sum]
+  have hmapG : ∀ (T : Type) [CommRing T] [Algebra ℚ T] (x : σ → T),
+      Gg.map (MvPolynomial.aeval x : MvPolynomial σ ℚ →ₐ[ℚ] T).toRingHom =
+        ∑ i : Fin R.natDegree, C (x (Sum.inr i)) * X ^ (i : ℕ) := by
+    intro T _ _ x
+    simp [Gg, Polynomial.map_sum]
+  set S2 := MvPolynomial σ ℚ
+  set a := Nt R N S2 Fg
+  set b := Nt R N S2 Gg
+  set ab := Nt R N S2 (Fg * Gg)
+  -- evaluation at a point of `ℚ^σ`
+  have hev : ∀ x : σ → ℚ, ∀ H : S2[X],
+      MvPolynomial.eval x (Nt R N S2 H) =
+        Nt R N ℚ (H.map (MvPolynomial.aeval x : S2 →ₐ[ℚ] ℚ).toRingHom) := by
+    intro x H
+    rw [← MvPolynomial.coe_aeval_eq_eval]
+    exact (Nt_map N hR (MvPolynomial.aeval x : S2 →ₐ[ℚ] ℚ) H).symm
+  -- the polynomial `(ab - a b) a b` vanishes on `ℕ^σ`
+  have hint : ∀ y : σ → ℕ, MvPolynomial.eval (fun i => (y i : ℚ)) ((ab - a * b) * (a * b)) = 0 := by
+    intro y
+    set Fy : ℤ[X] := ∑ i : Fin R.natDegree, C ((y (Sum.inl i) : ℕ) : ℤ) * X ^ (i : ℕ)
+    set Gy : ℤ[X] := ∑ i : Fin R.natDegree, C ((y (Sum.inr i) : ℕ) : ℤ) * X ^ (i : ℕ)
+    have hF : Fg.map (MvPolynomial.aeval (fun i => (y i : ℚ)) : S2 →ₐ[ℚ] ℚ).toRingHom =
+        Fy.map (Int.castRingHom ℚ) := by
+      rw [hmapF]; simp [Fy, Polynomial.map_sum]
+    have hG : Gg.map (MvPolynomial.aeval (fun i => (y i : ℚ)) : S2 →ₐ[ℚ] ℚ).toRingHom =
+        Gy.map (Int.castRingHom ℚ) := by
+      rw [hmapG]; simp [Gy, Polynomial.map_sum]
+    simp only [map_mul, map_sub]
+    rw [hev, hev, hev, Polynomial.map_mul, hF, hG, ← Polynomial.map_mul]
+    change (NtZ N (Fy * Gy) - NtZ N Fy * NtZ N Gy) * (NtZ N Fy * NtZ N Gy) = 0
+    by_cases hFy : NtZ N Fy = 0
+    · rw [hFy]; ring
+    by_cases hGy : NtZ N Gy = 0
+    · rw [hGy]; ring
+    rw [hmulZ Fy Gy hFy hGy, sub_self, zero_mul]
+  have hK : (ab - a * b) * (a * b) = 0 := by
+    set K := (ab - a * b) * (a * b)
+    refine MvPolynomial.eq_zero_of_eval_zero_at_prod_finset K
+      (fun i => (Finset.range (K.degreeOf i + 1)).image (fun k : ℕ => (k : ℚ))) (fun i => ?_) ?_
+    · rw [Finset.card_image_of_injective _ Nat.cast_injective, Finset.card_range]
+      exact Nat.lt_succ_self _
+    · intro x hx
+      choose y _ hy using fun i => Finset.mem_image.mp (hx i)
+      have : x = fun i => (y i : ℚ) := funext fun i => (hy i).symm
+      rw [this]
+      exact hint y
+  -- `a, b ≠ 0`: evaluate at the coefficients of `1 mod R`
+  set u : Fin R.natDegree → ℚ := fun i => (((1 : ℤ[X]) %ₘ R).coeff i : ℚ)
+  have hone : ∑ i : Fin R.natDegree, C (u i) * X ^ (i : ℕ) = (1 : ℚ[X]) %ₘ R.map (Int.castRingHom ℚ) := by
+    rw [modByMonic_eq_sum hR ℚ 1]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    congr 2
+    have := map_modByMonic (Int.castRingHom ℚ) (p := (1 : ℤ[X])) hR
+    rw [Polynomial.map_one] at this
+    rw [← this, coeff_map]
+    rfl
+  have hNt1 : Nt R N ℚ ((1 : ℚ[X]) %ₘ R.map (Int.castRingHom ℚ)) = 1 := by
+    rw [Nt_modByMonic N ℚ hR, ← h1, NtZ, Polynomial.map_one]
+  have ha : a ≠ 0 := by
+    intro ha0
+    have := hev (Sum.elim u u) Fg
+    rw [hmapF] at this
+    simp only [Sum.elim_inl] at this
+    rw [hone, hNt1] at this
+    have h2 : MvPolynomial.eval (Sum.elim u u) a = 1 := this
+    rw [ha0, map_zero] at h2
+    exact zero_ne_one h2
+  have hb : b ≠ 0 := by
+    intro hb0
+    have := hev (Sum.elim u u) Gg
+    rw [hmapG] at this
+    simp only [Sum.elim_inr] at this
+    rw [hone, hNt1] at this
+    have h2 : MvPolynomial.eval (Sum.elim u u) b = 1 := this
+    rw [hb0, map_zero] at h2
+    exact zero_ne_one h2
+  have hab : ab = a * b := by
+    rcases mul_eq_zero.mp hK with h | h
+    · exact sub_eq_zero.mp h
+    · exact absurd h (mul_ne_zero ha hb)
+  -- specialize at the coefficients of `F, G mod R`
+  set R' := R.map (Int.castRingHom S)
+  set x : σ → S := Sum.elim (fun i => (F %ₘ R').coeff i) (fun i => (G %ₘ R').coeff i)
+  set f : S2 →ₐ[ℚ] S := MvPolynomial.aeval x
+  have hFx : Fg.map f.toRingHom = F %ₘ R' := by
+    rw [modByMonic_eq_sum hR S F]; simp [Fg, f, x, Polynomial.map_sum, R']
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [MvPolynomial.aeval_X]
+    rfl
+  have hGx : Gg.map f.toRingHom = G %ₘ R' := by
+    rw [modByMonic_eq_sum hR S G]; simp [Gg, f, x, Polynomial.map_sum, R']
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [MvPolynomial.aeval_X]
+    rfl
+  rw [← Nt_modByMonic N S hR (F * G), mul_modByMonic, Nt_modByMonic N S hR,
+    ← Nt_modByMonic N S hR F, ← Nt_modByMonic N S hR G, ← hFx, ← hGx, ← Polynomial.map_mul]
+  change Nt R N S ((Fg * Gg).map (f : S2 →+* S)) = Nt R N S (Fg.map (f : S2 →+* S)) *
+    Nt R N S (Gg.map (f : S2 →+* S))
+  rw [Nt_map N hR, Nt_map N hR, Nt_map N hR]
+  change f ab = f a * f b
+  rw [hab, map_mul]
+
+end PolyFn
+
 end DegDet
