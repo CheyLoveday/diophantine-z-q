@@ -274,11 +274,11 @@ theorem grossZagierModuliOptCd_of (h : GrossZagierModuliOpt) : GrossZagierModuli
 /-- **(GLUE, a period computation) `C_d` is the strong Weil curve of its isogeny class**: for the
 newform `f` of `C_d` and the period lattice `L` of `C_d`, `L = c₀ Λ_f` for a rational `c₀`.
 
-Not proved. Checked numerically for `d = 5` (`N = 800`) and `d = 13` (`N = 5408`) with PARI's
-`ellweilcurve` (`scratch/gz-optimal/py/optimal_cd.py`: `C_d` is the curve of its class with Smith
-invariants `[1, 1]`, i.e. `L_{C_d} = L_f`), VERIFIED; for general `d` SPECULATIVE. For `d = 1` it is
-false (`y² = x³ − x` is `32a2`, not optimal), so it depends on `d ≡ 5 (mod 8)`. gz-weil proved the
-inclusion `c Λ_f ⊆ L` for some `c ∈ ℚ^×`; the content is the reverse inclusion. -/
+Not proved. Checked numerically (VERIFIED, computed on a sample of periods): `Λ_f = L` (`c₀ = 1`) for the
+18 values `d = 5, 13, …, 165` tested (`scratch/gz-optimal/py/periods_cd.gp`), and PARI's `ellweilcurve`
+gives `C_d` as the optimal curve of its class for `d = 5, 13`; for general `d` SPECULATIVE. For `d = 1`
+it is false (`y² = x³ − x` is `32a2`, not optimal), so it depends on `d ≡ 5 (mod 8)`. gz-weil proved
+`2 Λ_f ⊆ L`; the content is `L = c₀ Λ_f` for one `c₀`. -/
 def CdOptimal : Prop :=
   ∀ d : ℕ, d % 8 = 5 → Squarefree d → ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
     (∀ n : ℕ, n ≠ 0 → coeff f n = ((shortCurve (-(d : ℚ) ^ 2)).LFunction n : ℂ)) →

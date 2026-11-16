@@ -24,7 +24,7 @@ except the two Gross–Zagier page locators quoted from `docs/research/locators.
    compile:
    - **Route A** (`grossZagierFormulaCd_of_selfOptimal`): the new leaf plus **`CdOptimal`**, a period computation
      (GLUE). It says `C_d` is its own strong Weil curve: `L(C_d) = c₀ Λ_f`. **Numerically `Λ_f = L(C_d)` (c₀ = 1)
-     for all 13 values of d tested, d ≡ 5 (mod 8) squarefree between 5 and 109** (§4, VERIFIED, computed).
+     for all 18 values of d tested, d ≡ 5 (mod 8) squarefree between 5 and 165** (§4, VERIFIED, computed).
      Then every admissible φ is `[n] ∘ φ_opt`.
    - **Route B** (`grossZagierFormulaCd_of_transfer`): the new leaf plus **`StrongWeilOptimalCd`** (the strong Weil
      curve `E'` with `L(E') = c' Λ_f`) and **`AnalyticIsogenyRational`** (the isogeny `z ↦ μz`, μ ∈ ℚ, is defined
@@ -163,12 +163,12 @@ analytic ones.
 | Statement | Kind | Rating and reason |
 | --- | --- | --- |
 | `GrossZagierModuliOptCd` | published | **LEAF, printed form under either reading** (§1). Weaker than gz-moduli's leaf (proved). |
-| `CdOptimal` (route A) | project glue | **GLUE.** A period computation: `L(C_d) = c₀ Λ_f`. Numerically true, c₀ = 1, for 13 values of `d` (§4). gz-weil proved `2 Λ_f ⊆ L`. Open: `Λ_f ⊆ L` and `L ⊆ Λ_f`. It fails for `d = 1` (`y² = x³ − x` is 32a2, not optimal), so it depends on `d ≡ 5 (mod 8)`. Not known to me as a published theorem (SPECULATIVE). |
+| `CdOptimal` (route A) | project glue | **GLUE.** A period computation: `L(C_d) = c₀ Λ_f`. Numerically true, c₀ = 1, for 18 values of `d` (§4). gz-weil proved `2 Λ_f ⊆ L`. Open: `Λ_f ⊆ L` and `L ⊆ Λ_f`. It fails for `d = 1` (`y² = x³ − x` is 32a2, not optimal), so it depends on `d ≡ 5 (mod 8)`. Not known to me as a published theorem (SPECULATIVE). |
 | `StrongWeilOptimalCd` (route B) | composite | **GLUE.** Textbook (Shimura 1971 Thm 7.14, §7.5; Diamond–Shurman §6.6; Manin 1972; AEC III.1; UNVERIFIED). Printed over `J₀(N)`; the analytic form `L' = c Λ_f` adds the period computation for the optimal quotient and the rationality of `c`. It sharpens gz-hl3's `StrongWeilCurve` (inclusion, rated composite) to equality. |
 | `AnalyticIsogenyRational` (route B) | composite | **GLUE.** Textbook (AEC Thm VI.4.1, Prop. VI.3.6, Thm III.5.2, Cor. III.5.3; UNVERIFIED). Composite only because Mathlib has no isogenies of Weierstrass curves, so the isogeny is given by its multiplier (as gz-hl3's `IsogenyLattice`). |
 | `ModularParamAnalyticCd` (not used by the consumer) | composite | **GLUE.** Eichler–Shimura + Faltings + multiplicity one. |
 
-All five statements are true mathematically. Route A's `CdOptimal` is true for the 13 tested `d`; for general `d` it
+All five statements are true mathematically. Route A's `CdOptimal` is true for the 18 tested `d`; for general `d` it
 is SPECULATIVE.
 
 ## 4. Numerical evidence for `CdOptimal`
@@ -185,10 +185,11 @@ over the isogeny class.
   - `γ = [a, b; c, e] ∈ Γ₀(N)`, `c = kN`, `τ = (−e + i)/c`, so that `γτ = (a + i)/c`;
   - the `q`-series is truncated at `|q|^M < 10⁻¹⁷`;
   - each `Ψ(γ)` is written in the basis `E.omega` of `L(C_d)` (the differential `dx/2y`, as `IsPeriodLattice`).
-* Results for `d = 5, 13, 21, 29, 37, 53, 61, 69, 77, 85, 93, 101, 109`:
+* Results for `d = 5, 13, 21, 29, 37, 53, 61, 69, 77, 85, 93, 101, 109, 133, 141, 149, 157, 165` (outputs
+  `periods_cd_out.txt`, `periods_cd_out2.txt`, `periods_cd_out3.txt`):
   - every coordinate is an integer, to within `10⁻¹⁸`;
-  - the sampled periods span `L(C_d)`, index 1. The sample was `a ≤ 25`, `k = 1`; for `d = 77` it needed
-    `a ≤ 80`, `k ≤ 2`.
+  - the sampled periods span `L(C_d)`, index 1. The sample was `a ≤ 25`, `k = 1`; for `d = 77` and `d = 165` it
+    needed `a ≤ 80`, `k ≤ 2`.
 * So numerically `Λ_f = L(C_d)`: `C_d` is X₀(N)-optimal with Manin constant 1. This agrees with heegner-32's
   observation for `d = 5, 13`.
 * VERIFIED as a computation. It is a sample: the integrality of every `Ψ(γ)` is not proved.
@@ -239,5 +240,5 @@ the route. The fold is the Main edit (`MainEdit.lean`). Once `hL3` is split into
 * **A statement check of Gross–Zagier Ch. V §2 for the hypothesis on φ.** If V.2.1 is printed for every modular
   parametrization, gz-moduli's leaf is printed and gives the −1 directly. Otherwise use route A.
 * **`CdOptimal` in Lean** (route A then gives the clean −1), or a published source for it. The numerics cover
-  `d ≤ 109`.
+  18 values of `d ≤ 165`.
 * The explicit constant could be restored once a reading fixes the normalization of `ĥ`, as in gz-moduli.

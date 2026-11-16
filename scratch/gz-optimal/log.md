@@ -44,3 +44,7 @@ Base: wip/gz-moduli 85111fc7. Build tree: reflink copy of ~/dzq-wt/gz-moduli/.la
 - Merged origin/wip/heegner-32 (718d8d4c) and origin/wip/gz-conj (2c7ce521): clean. MainEdit.lean:
   `frozenTarget_gzoptimal` (hL3 → GrossZagierModuliOptCd + CdOptimal) and `frozenTarget_gzoptimal_transfer`
   (hL3 → GrossZagierModuliOptCd + StrongWeilOptimalCd + AnalyticIsogenyRational), standard axioms (VERIFIED).
+- Periods, more d (periods_cd_out2.txt, out3.txt): d = 133, 141, 149, 157 index 1 (a ≤ 25); d = 165 index 2 with a ≤ 25,
+  index 1 with a ≤ 80, k ≤ 2. All coordinates integral (≤ 1.4e-18). Total 18 values of d, 5 ≤ d ≤ 165: Λ_f = L(C_d)
+  numerically (VERIFIED, computed, sample).
+- Report docs/research/gz-optimal.md written; autofold.json (route A), autofold-routeB.json.

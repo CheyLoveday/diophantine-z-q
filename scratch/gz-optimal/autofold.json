@@ -19,7 +19,7 @@
     {
      "name": "cdOptimal",
      "type": "_root_.ZInQ.GZOptimal.CdOptimal",
-     "doc": "C_d (d = 5 mod 8 squarefree) is its own strong Weil curve: L(C_d) = c0 Lambda_f, c0 in Q (a period computation; numerically L = Lambda_f for 13 values of d up to 109, scratch/gz-optimal/py/periods_cd.gp; PARI ellweilcurve for d = 5, 13)",
+     "doc": "C_d (d = 5 mod 8 squarefree) is its own strong Weil curve: L(C_d) = c0 Lambda_f, c0 in Q (a period computation; numerically L = Lambda_f for 18 values of d up to 165, scratch/gz-optimal/py/periods_cd.gp; PARI ellweilcurve for d = 5, 13)",
      "kind": "project glue",
      "flag": "",
      "source": "computation (gz-optimal): periods of the twisted newform f_d against the lattice of C_d; gz-weil proved 2 Lambda_f in L"
