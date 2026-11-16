@@ -487,6 +487,164 @@ theorem isPstB_trivial : IsPstB p (1 : GQp p →* GL (Fin 1) ℚ_[p]) :=
 
 end Trivial
 
+/-! ## §6. The action of `G_{ℚ_p}`: `A_max`, `B_max^+` and `B_max` are stable -/
+
+section Action
+
+theorem adicMap_psEval {A B : Type*} [CommRing A] [CommRing B] (J : Ideal A) (J' : Ideal B)
+    (g : A →+* B) (hg : J ≤ J'.comap g) {x : A} (hx : x ∈ J) (f : A⟦X⟧) :
+    DR.adicMap J J' g hg (psEval J hx f) =
+      psEval J' (show g x ∈ J' from hg hx) (PowerSeries.map g f) := by
+  refine AdicCompletion.ext_evalₐ fun n => ?_
+  rw [DR.adicMap_evalₐ, evalₐ_psEval]
+  unfold DR.adicMapAux
+  rw [RingHom.comp_apply]
+  erw [evalₐ_psEval]
+  rw [Ideal.quotientMap_mk, PowerSeries.trunc_map, Polynomial.eval_map, Polynomial.eval₂_at_apply]
+
+variable (p : ℕ) [Fact p.Prime]
+
+open PanBergerSplit (Ainf AinfP locAct flatAct)
+
+theorem evalB_congr {x y : AinfP p} (hx : x ∈ Ith p) (hxy : x = y) (f : (AinfP p)⟦X⟧) :
+    evalB p hx f = evalB p (hxy ▸ hx) f := by
+  subst hxy
+  rfl
+
+theorem locAct_mem (σ : GQp p) {x : AinfP p} (hx : x ∈ Ith p) : locAct p σ x ∈ Ith p :=
+  DR.ker_le_comap_locMap p (oAct p σ) hx
+
+theorem bdrAct_toBdR (σ : GQp p) (y : BDeRhamPlus 𝓞_ℂ_[p] p) :
+    bdrAct p σ (toBdR p y) = toBdR p (DR.bdrPlusMap p (oAct p σ) y) := by
+  rw [bdrAct, DR.bdrMap, IsLocalization.map_eq]
+
+/-- **`σ(Σ a_k x^k) = Σ σ(a_k) σ(x)^k`** in `B_dR`. -/
+theorem bdrAct_evalB (σ : GQp p) {x : AinfP p} (hx : x ∈ Ith p) (f : (AinfP p)⟦X⟧) :
+    bdrAct p σ (toBdR p (evalB p hx f)) =
+      toBdR p (evalB p (locAct_mem p σ hx) (PowerSeries.map (locAct p σ) f)) := by
+  rw [bdrAct_toBdR]
+  exact congrArg (toBdR p) (adicMap_psEval _ _ _ _ hx f)
+
+/-- `σ` as a `ℚ_p`-algebra map of `B_dR`. -/
+def bdrAlg (σ : GQp p) : BdR p →ₐ[ℚ_[p]] BdR p :=
+  { bdrAct p σ with commutes' := bdrAct_qpToBdR p σ }
+
+theorem bdrAlg_apply (σ : GQp p) (x : BdR p) : bdrAlg p σ x = bdrAct p σ x := rfl
+
+theorem wittMap_xi_mem (σ : GQp p) :
+    ∃ c : Ainf p, WittVector.map (flatAct p σ) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) =
+      ZInQ.Contrib.G9.BdrKer.Cp.xi p * c := by
+  have hk : WittVector.map (flatAct p σ) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ∈
+      RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) := by
+    rw [RingHom.mem_ker, PanBergerSplit.theta_wittMap]
+    have : ZInQ.Contrib.G9.BdrKer.Cp.xi p ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) := by
+      rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]
+      exact Ideal.mem_span_singleton_self _
+    rw [RingHom.mem_ker.mp this, map_zero]
+  rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp, Ideal.mem_span_singleton'] at hk
+  obtain ⟨c, hc⟩ := hk
+  exact ⟨c, by rw [← hc, mul_comm]⟩
+
+theorem restricted_map (g : Ainf p →+* Ainf p) {f : (Ainf p)⟦X⟧} (hf : f ∈ restricted p) :
+    PowerSeries.map g f ∈ restricted p := fun k => by
+  obtain ⟨N, hN⟩ := hf k
+  refine ⟨N, fun n hn => ?_⟩
+  change (p : Ainf p) ^ k ∣ PowerSeries.coeff n (PowerSeries.map g f)
+  rw [PowerSeries.coeff_map]
+  have := map_dvd g (hN n hn)
+  rwa [map_pow, map_natCast] at this
+
+theorem restricted_rescale (c : Ainf p) {f : (Ainf p)⟦X⟧} (hf : f ∈ restricted p) :
+    PowerSeries.rescale c f ∈ restricted p := fun k => by
+  obtain ⟨N, hN⟩ := hf k
+  refine ⟨N, fun n hn => ?_⟩
+  change (p : Ainf p) ^ k ∣ PowerSeries.coeff n (PowerSeries.rescale c f)
+  rw [PowerSeries.coeff_rescale]
+  exact Dvd.dvd.mul_left (hN n hn) _
+
+/-- **`A_max` is `G_{ℚ_p}`-stable**: `σ(Σ a_n (ω/p)^n) = Σ σ(a_n) c^n (ω/p)^n` where
+`σ(ω) = ω c`, `c ∈ A_inf` (`σ(ω) ∈ ker θ = ω A_inf`). -/
+theorem bdrAct_amax (σ : GQp p) {y : BDeRhamPlus 𝓞_ℂ_[p] p} (hy : y ∈ Amax p) :
+    ∃ y' ∈ Amax p, bdrAct p σ (toBdR p y) = toBdR p y' := by
+  obtain ⟨f, hf, rfl⟩ := hy
+  obtain ⟨c, hc⟩ := wittMap_xi_mem p σ
+  refine ⟨_, ⟨PowerSeries.rescale c (PowerSeries.map (WittVector.map (flatAct p σ)) f),
+    restricted_rescale p c (restricted_map p _ hf), rfl⟩, ?_⟩
+  rw [RingHom.comp_apply, bdrAct_evalB]
+  congr 1
+  rw [RingHom.comp_apply]
+  apply psEval_eq_of_terms
+  intro k
+  rw [PowerSeries.coeff_map, PowerSeries.coeff_map, PowerSeries.coeff_map, PowerSeries.coeff_rescale,
+    PowerSeries.coeff_map, PanBergerSplit.locAct_algebraMap, omegaP, map_mul,
+    PanBergerSplit.locAct_qpToLoc, ZInQ.Contrib.G9.BdrKer.Cp.xi', PanBergerSplit.locAct_algebraMap,
+    hc, map_mul, map_mul, map_pow]
+  ring
+
+theorem ringInverse_bdrAct (σ : GQp p) (x : BdR p) :
+    bdrAct p σ (Ring.inverse x) = Ring.inverse (bdrAct p σ x) := by
+  by_cases hx : IsUnit x
+  · obtain ⟨u, rfl⟩ := hx
+    rw [Ring.inverse_unit]
+    have h : bdrAct p σ (u : BdR p) = ((Units.map (bdrAct p σ : BdR p →* BdR p) u : (BdR p)ˣ) :
+        BdR p) := rfl
+    rw [h, Ring.inverse_unit, ← map_inv]
+    rfl
+  · have h0 : x = 0 := by
+      by_contra hne
+      obtain ⟨y, hy⟩ : ∃ y : BdR p, x * y = 1 :=
+        (ZInQ.Contrib.G9.BdrKer.Cp.isField_BDeRham p).mul_inv_cancel hne
+      exact hx ⟨⟨x, y, hy, by rw [mul_comm]; exact hy⟩, rfl⟩
+    rw [h0, Ring.inverse_zero, map_zero, Ring.inverse_zero]
+
+theorem map_locAct_logSeries (σ : GQp p) :
+    PowerSeries.map (locAct p σ) (logSeries p) = logSeries p := by
+  ext n
+  rw [PowerSeries.coeff_map, logSeries, PowerSeries.coeff_mk]
+  split_ifs
+  · exact map_zero _
+  · rw [map_mul, map_pow, map_neg, map_one, PanBergerSplit.locAct_qpToLoc]
+
+/-- `σ(log [ε]) = log [σ(ε)]`. -/
+theorem bdrAct_logTeich (σ : GQp p) {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε = 1) :
+    bdrAct p σ (toBdR p (logTeich p h)) =
+      toBdR p (logTeich p (show PreTilt.untilt (flatAct p σ ε) = 1 by
+        rw [DR.untilt_preTiltMap, h, map_one])) := by
+  rw [logTeich, logPlus, bdrAct_evalB, map_locAct_logSeries]
+  congr 1
+  apply evalB_congr
+  rw [PanBergerSplit.locAct_algebraMap, map_sub, map_one, WittVector.map_teichmuller]
+
+theorem tInvSet_stable (σ : GQp p) {z : BdR p} (hz : z ∈ tInvSet p) :
+    bdrAct p σ z ∈ tInvSet p := by
+  obtain ⟨ε, h, hne, rfl⟩ := hz
+  refine ⟨flatAct p σ ε, by rw [DR.untilt_preTiltMap, h, map_one], fun h1 => hne (PanBergerSplit.flatAct_injective p σ
+    (by rw [h1, map_one])), ?_⟩
+  rw [ringInverse_bdrAct, bdrAct_logTeich]
+
+/-- **`B_max^+` is `G_{ℚ_p}`-stable.** -/
+theorem bmaxPlus_stable (σ : GQp p) : BmaxPlus p ≤ (BmaxPlus p).comap (bdrAlg p σ) := by
+  rw [BmaxPlus, Algebra.adjoin_le_iff]
+  intro z hz
+  obtain ⟨y, hy, rfl⟩ := hz
+  rw [SetLike.mem_coe, Subalgebra.mem_comap, bdrAlg_apply]
+  obtain ⟨y', hy', he⟩ := bdrAct_amax p σ hy
+  rw [he]
+  exact Algebra.subset_adjoin ⟨y', hy', rfl⟩
+
+/-- **`B_max` is `G_{ℚ_p}`-stable.** -/
+theorem bmax_stable (σ : GQp p) : Bmax p ≤ (Bmax p).comap (bdrAlg p σ) := by
+  rw [Bmax, Algebra.adjoin_le_iff]
+  intro z hz
+  rw [SetLike.mem_coe, Subalgebra.mem_comap, bdrAlg_apply]
+  rcases hz with ⟨y, hy, rfl⟩ | hz
+  · obtain ⟨y', hy', he⟩ := bdrAct_amax p σ hy
+    rw [he]
+    exact Algebra.subset_adjoin (Or.inl ⟨y', hy', rfl⟩)
+  · exact Algebra.subset_adjoin (Or.inr (tInvSet_stable p σ hz))
+
+end Action
+
 end BergerBst
 end PkgI4
 end HDec
