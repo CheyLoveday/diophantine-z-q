@@ -592,4 +592,61 @@ theorem unramified [IsAlgClosed k]
 
 end Assembly
 
+
+section Degree
+
+variable {k : Type} [Field k] (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+  [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] (t : C.left.functionField)
+
+theorem secR_surjective : Function.Surjective (secR (k := k)) := fun a =>
+  ⟨(Scheme.ΓSpecIso _).hom (((chart k).appIso ⊤).hom a), by
+    rw [secR, CommRingCat.comp_apply, Iso.hom_inv_id_apply, Iso.hom_inv_id_apply]⟩
+
+theorem psi_mem_adjoin (r : Rk k) :
+    letI := ZInQ.LeafPush2.ffAlgebra C
+    psi C t r ∈ IntermediateField.adjoin k {t} := by
+  letI := ZInQ.LeafPush2.ffAlgebra C
+  induction r using MvPolynomial.induction_on with
+  | C c => rw [psi_C]; exact IntermediateField.algebraMap_mem _ c
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | mul_X p i hp =>
+    rw [map_mul, Subsingleton.elim i i0, psi_X]
+    exact mul_mem hp (IntermediateField.mem_adjoin_simple_self k t)
+
+theorem degree_rep (ht : letI := ZInQ.LeafPush2.ffAlgebra C; Transcendental k t)
+    {β : C.left ⟶ P1 k} (hβ : C.left.fromSpecFunctionField ≫ β = ptT C t)
+    (o : (P1 k).presheaf.stalk (β (genericPoint C.left))) :
+    ∃ r₁ r₂ : Rk k, (β.stalkMap (genericPoint C.left)).hom o * psi C t r₂ = psi C t r₁ ∧
+      psi C t r₂ ≠ 0 ∧ (r₁ = 0 → o = 0) := by
+  have hyU : β (genericPoint C.left) ∈ (chart k) ''ᵁ ⊤ := by
+    rw [beta_genericPoint C t hβ]; exact ⟨_, trivial, rfl⟩
+  have hUaff : IsAffineOpen ((chart k) ''ᵁ ⊤) := by
+    rw [Scheme.Hom.image_top_eq_opensRange]; exact isAffineOpen_opensRange _
+  letI := TopCat.Presheaf.algebra_section_stalk (P1 k).presheaf (⟨β (genericPoint C.left), hyU⟩ : ((chart k) ''ᵁ ⊤ : (P1 k).Opens))
+  have hloc := hUaff.isLocalization_stalk ⟨β (genericPoint C.left), hyU⟩
+  set ρ := (β.stalkMap (genericPoint C.left)).hom
+  have hMI : ∀ r, ρ ((P1 k).presheaf.germ _ (β (genericPoint C.left)) hyU (secR r)) = psi C t r := by
+    intro r
+    have := stalkMap_secR C t hβ (genericPoint C.left) hyU r
+    rwa [TopCat.Presheaf.stalkSpecializes_refl] at this
+  obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.mk'_surjective (hUaff.primeIdealOf ⟨β (genericPoint C.left), hyU⟩).asIdeal.primeCompl o
+  subst hab
+  obtain ⟨r₁, rfl⟩ := secR_surjective a
+  obtain ⟨r₂, hr₂⟩ := secR_surjective b.1
+  have hspec := IsLocalization.mk'_spec ((P1 k).presheaf.stalk (β (genericPoint C.left))) (secR r₁) b
+  have hb : IsUnit (algebraMap _ ((P1 k).presheaf.stalk (β (genericPoint C.left))) (b : Γ(P1 k, (chart k) ''ᵁ ⊤))) :=
+    IsLocalization.map_units _ b
+  refine ⟨r₁, r₂, ?_, ?_, ?_⟩
+  · have := congrArg ρ hspec
+    rw [map_mul] at this
+    rw [← hMI, ← hMI, hr₂]
+    exact this
+  · rw [← hMI, hr₂]
+    exact (hb.map ρ).ne_zero
+  · rintro rfl
+    show IsLocalization.mk' _ (secR 0) b = 0
+    rw [map_zero, IsLocalization.mk'_zero]
+
+end Degree
+
 end JavanpeykarFix
