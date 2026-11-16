@@ -22,3 +22,7 @@ Base origin/main 2880fef1. Build copied from ~/dzq-check2 (same commit) 2026-11-
 - VERIFIED (compiled, Transfer.lean §1-4): algebraic elements of ℂ lie in ιC(ℚ̄); place λ_τ = {a ∈ 𝓞_K : ‖τ a‖ < 1}
   is a HeightOneSpectrum over ℓ; v_λ(x) ≤ v_λ(y) ⇒ ‖τx‖ ≤ ‖τy‖; τ continuous on WithVal v_λ; finite ℚ_ℓ-field
   tgt τ ⊇ τ(K) is complete; continuous extension τhat : K_λ → ℚ̄_ℓ with τhat ∘ algebraMap = τ.
+- VERIFIED (compiled, scratch/coeff-ext/DSCoeffExt.lean, 2026-11-16 ~07:30): `DSCoeffExt.dsThm965Weak_of_printed
+  (h1 : DSThm965Printed) (h2 : EigenformCoeffFieldFinite) : DS965Weak.DSThm965Weak` and
+  `DSCoeffExt.dsThm966_of_printed (h : DSThm966Printed) : ZInQ.Contrib.HodgeSplit.DSThm966`; converse
+  `dsThm966Printed_of_dsThm966`. Axioms [propext, Classical.choice, Quot.sound].
