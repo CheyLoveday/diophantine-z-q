@@ -16,3 +16,13 @@ Base: wip/isj1-dict 37628525. Build tree: reflink copy of ~/dzq-check2/.lake/bui
   bundle (flt-cqj2's bypass fold replaced it by ModularEquationGeneric, then proved that).
 - Model gap: `IgusaGL2` is stated for the kernel model `E_j = ofJNe0Or1728 j`; the printed algebraic statement
   (Diamond–Shurman §7.5, UNVERIFIED number) is for `y² = 4x³ − g x − g`, `g = 27j/(j−1728)`.
+
+## Lean (one process at a time)
+- 02:10 `lake build R16IsJ1Dict IgusaSL2 TauCeti...VariableChange`: success (10401 jobs, 1m22s; partial rebuild on the copied tree).
+- 02:15 `lake env lean scratch/x1-igusa/X1Igusa.lean`: no errors; axioms standard for
+  `x1PointsConjugate_of_igusaGL2`, `xTransitive_of_igusaGL2For`, `EDS_j`, `cDS_smul`, `x1PointsConjugate_of_igusaGL2DS`. VERIFIED.
+- Computation (VERIFIED by `cDS_smul`, Lean `linear_combination`): with m = j − 1728, u² = −18/m², the change of variables
+  (u, r, s, t) = (u, −3/2, m u/2, 0) sends Diamond–Shurman's EDS : y² = x³ − (g/4)x − g/4, g = 27j/m, to the kernel's
+  E_j = ofJNe0Or1728 j: `cDS u hu • EDSBar = EjBar`. So x_DS = u² x_kernel − 3/2 on points, u² ∈ ℚ(j).
+- `EDS_j : EDS.j = j` VERIFIED; Δ(EDS) = g²(g − 27), g − 27 = 27·1728/m.
+- 02:25 `lake build ZInQKernel.Contrib.OneProof.X1Igusa`: success (10402 jobs). VERIFIED.
