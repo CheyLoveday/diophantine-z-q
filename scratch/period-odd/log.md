@@ -20,3 +20,8 @@ target: hL3 replaced by `GrossZagierModuliOptCd` + `EtaW32Character` only.
   ℘_L(z+h) = −d²/x; ℘'_L(z+h)/2 = d²y/x²; (℘_{L'}, ℘'_{L'}/2) on y² = x³ + 4d²x. All residuals < 1e-12. VERIFIED.
 - Character-sum identity used for (A) (derivation, to be compiled): for a ≠ 0, char ≠ 2,
   Σ_x χ(x³+ax) = Σ_{x≠0} χ(x + a/x) = Σ_X χ(X)(1 + χ(X²−4a)) = Σ_X χ(X³ − 4aX).
+- (A) DONE: `ZInQKernel/Contrib/OneProof/PeriodOdd/LFunction.lean` compiles (`lake env lean`, 7 s);
+  `ZInQ.PeriodOdd.LFunction_ePrime_eq (hd : Odd d) (hsq : Squarefree d) : (ePrime d).LFunction =
+  (shortCurve (-(d : ℚ) ^ 2)).LFunction`, `ePrime d := shortCurve (4 * d^2)`; axioms
+  [propext, Classical.choice, Quot.sound]. VERIFIED. Ingredients: `charSum_isog` (Σχ(x³+ax) = Σχ(X³−4aX), a ≠ 0),
+  minimality of y² = x³+4d²x at 2 from c₄ (v₂(c₄) = 6), additive at p | 2d, good at p ∤ 2d.
