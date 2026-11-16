@@ -35,6 +35,13 @@ public import Mathlib.Tactic.NormNum.RealSqrt
 import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Dimension.CodimensionOpen
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Dimension.Krull
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Local Krull dimension at a point (Stacks 0B7I)

@@ -6,6 +6,13 @@ public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeo
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Variety.Defs.Dimension.Components
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Dimension.Equidimensional
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Equidimensional fibres and relative dimension

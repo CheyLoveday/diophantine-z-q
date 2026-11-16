@@ -4,6 +4,13 @@ public import Mathlib.RingTheory.KrullDimension.Zero
 public import Mathlib.RingTheory.LocalProperties.Reduced
 import Mathlib.Tactic.Ring
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Minimal primes, localizations and reduced rings

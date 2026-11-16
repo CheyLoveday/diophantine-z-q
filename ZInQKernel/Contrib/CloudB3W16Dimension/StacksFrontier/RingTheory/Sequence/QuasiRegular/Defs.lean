@@ -35,6 +35,13 @@ public import Mathlib.Tactic.NormNum.RealSqrt
 public import Mathlib.Tactic.ReduceModChar
 public import Mathlib.Topology.Sheaves.Init
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # The canonical map to the associated graded module of a sequence
@@ -67,6 +74,10 @@ filtration, an `(R/J)[X]`-module in which `X_i` acts by multiplication by the cl
 
 open scoped Finset
 
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1200000
 

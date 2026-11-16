@@ -15,7 +15,13 @@ Imports are routed under `ZInQKernel.Contrib.CloudB3W16Dimension`. Citation-only
 `stacks`/`ega`/`sga` attributes and `add_to_*` commands are removed, and their two
 registration modules are omitted; no new macros or elaborators are introduced.
 The mathematical declarations retain their upstream names unless a documented
-current-Mathlib compatibility repair requires otherwise.
+current-Mathlib compatibility repair requires otherwise. Each ported module
+carries upstream's `autoImplicit = false`, `relaxedAutoImplicit = false` and
+`maxSynthPendingDepth = 3` locally; current Mathlib backward-defeq compatibility
+is enabled locally too. Quasi-regular `Defs.lean` explicitly inherits the Ring
+structure when constructing its commutative endomorphism subalgebra and uses
+local elaboration transparency/heartbeat settings. No repository configuration
+or pin is changed.
 
 `UniversalSubspace.lean` reconstructs the universal-subspace dimension transport
 from Mathlib's actual `Homeomorph.Set.univ` and

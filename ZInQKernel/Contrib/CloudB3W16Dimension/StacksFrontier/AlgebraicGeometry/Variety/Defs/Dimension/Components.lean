@@ -5,6 +5,13 @@ public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
 
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Variety.Defs.Dimension.NonemptyOpen
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # Local dimension and irreducible components
 

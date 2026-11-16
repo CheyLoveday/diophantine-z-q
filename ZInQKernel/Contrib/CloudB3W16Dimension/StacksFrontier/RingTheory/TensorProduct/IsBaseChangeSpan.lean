@@ -2,6 +2,13 @@ module
 
 public import Mathlib.RingTheory.IsTensorProduct
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # A base change is spanned by the image of its source
 

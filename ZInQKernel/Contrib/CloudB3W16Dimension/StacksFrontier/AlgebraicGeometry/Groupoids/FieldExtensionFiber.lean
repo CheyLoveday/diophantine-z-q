@@ -5,6 +5,13 @@ public import Mathlib.AlgebraicGeometry.ResidueField
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Groupoids.FieldExtensionEvaluation
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.CategoryTheory.PullbackCancelMono
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # Homogeneity of a groupoid scheme over a field
 

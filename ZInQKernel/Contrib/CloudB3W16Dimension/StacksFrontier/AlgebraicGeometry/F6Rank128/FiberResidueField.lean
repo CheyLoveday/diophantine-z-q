@@ -5,6 +5,13 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Preimmersion
 public import Mathlib.AlgebraicGeometry.ResidueField
 public import Mathlib.FieldTheory.FinTrdeg
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # Residue fields along a morphism surjective on stalks, and on a scheme-theoretic fibre
 

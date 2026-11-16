@@ -3,6 +3,13 @@ module
 public import Mathlib.LinearAlgebra.Matrix.Nonsingular
 public import Mathlib.LinearAlgebra.Matrix.ToLin
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-! # Linear algebra over commutative semirings
 
 `Matrix.Nonsingular` and the resulting `StrongRankCondition` instance for nontrivial

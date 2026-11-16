@@ -5,6 +5,13 @@ public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.S
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.Sequence.QuasiRegular.Basic.FlatBaseChangeAndLocalConverse
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.Sequence.QuasiRegular.Basic.SpreadToStandardOpen
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # Regular sequences are quasi-regular (Stacks tags 00LN, 061M)
 

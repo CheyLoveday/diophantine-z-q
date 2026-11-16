@@ -11,6 +11,13 @@ public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Dim
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Dimension.LocalKrullDim
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Separation.IsolatedPoint
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # The dimension of a scheme
 

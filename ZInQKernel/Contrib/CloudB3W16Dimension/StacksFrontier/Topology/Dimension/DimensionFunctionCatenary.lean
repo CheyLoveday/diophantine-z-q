@@ -5,6 +5,13 @@ public import Mathlib.Tactic.Linarith
 public import Mathlib.Topology.NoetherianSpace
 public import Mathlib.Topology.Sober
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Dimension functions on locally Noetherian sober catenary spaces

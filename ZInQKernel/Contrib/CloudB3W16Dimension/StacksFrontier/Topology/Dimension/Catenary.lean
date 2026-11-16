@@ -4,6 +4,13 @@ public import Mathlib.Data.ENat.Lattice
 public import Mathlib.Order.RelSeries
 public import Mathlib.Topology.Sets.Closeds
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Catenary topological spaces

@@ -12,6 +12,13 @@ import ZInQKernel.Contrib.CloudB3W16Dimension.StacksCore.LinearAlgebra.Matrix.Co
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.CohenMacaulay.Defs
 import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.MinimalPrimes.Reduced
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Serre's criterion: a Noetherian ring is reduced iff it has `(R_0)` and `(S_1)`

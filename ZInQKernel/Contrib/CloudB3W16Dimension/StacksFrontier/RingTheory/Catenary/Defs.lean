@@ -4,6 +4,13 @@ public import Mathlib.Order.CompletePartialOrder
 public import Mathlib.RingTheory.Spectrum.Prime.Topology
 public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.Topology.Dimension.Catenary
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 
 /-!
 # Catenary rings: the order-theoretic core

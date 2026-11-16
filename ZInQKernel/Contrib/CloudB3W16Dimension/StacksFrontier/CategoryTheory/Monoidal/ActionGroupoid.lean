@@ -4,6 +4,13 @@ public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
 public import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
 public import Mathlib.CategoryTheory.Monoidal.Cartesian.Mod
 
+-- Match upstream elaboration settings; enable current Mathlib defeq compatibility.
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxSynthPendingDepth 3
+set_option backward.defeqAttrib.useBackward true
+
+
 /-!
 # The action groupoid of a group object acting on an object
 
