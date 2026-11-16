@@ -24,3 +24,10 @@
   output minus line 1 (scratch/pb-fix/FoldDryRun.lean) compiles, sixContactMin_of_open30 standard axioms (VERIFIED).
 - Wording patch for pb-bypass's PanBerger.lean docstrings (not applied: rule "edit nothing else under ZInQKernel/"):
   scratch/pb-fix/PanBerger-wording.patch (Brinon–Conrad §6.1 -> §5 Thm 5.2.1; Fontaine Exp. VIII -> Exp. III 1.5).
+
+## 2026-11-15 23:10 report
+- Added isSemistableOverT_trivial_iff, isPstT_trivial (standard axioms, VERIFIED); `#` cardinal notation replaced by
+  Cardinal.mk (contribution scan: 0 hits, VERIFIED). Reran axioms/#discharges/dry-run fold on the final file: all
+  standard, r11r12 discharged, fold compiles (VERIFIED).
+- Report docs/research/pb-fix.md written. Ratings: bergerPrintedT printed form; panPrintedT printed form under the
+  eigenform reading.
