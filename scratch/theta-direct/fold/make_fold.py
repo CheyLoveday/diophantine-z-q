@@ -17,7 +17,10 @@ fold-deleted.txt. The edits:
 4. Main.lean: `import ZInQKernel.Contrib.OneProof.ThetaDirect`; frozenTarget's call
    `sixContactMin_of_open29 r t l g` becomes `sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul`.
    No new hypothesis: `thetaRatiosAtQM_of_qmHauptmodul` is a theorem (`fun _ => thetaRatiosAtQM_proof`).
-5. Contributor modules: delete ThetaDirect/UseForm.lean (its block is now in TailK); Split.lean imports
+5. ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean (hX-fold's alternative tops `frozenTarget_of_used/_eta/_theta`,
+   l.334, l.363, l.387, found by the fold-check build): the same extra argument, and
+   `import ZInQKernel.Contrib.OneProof.ThetaDirect`.
+6. Contributor modules: delete ThetaDirect/UseForm.lean (its block is now in TailK); Split.lean imports
    `ZInQKernel.OneProof.H.TailZ19` in place of `…ThetaDirect.UseForm`.
 """
 import os, re, shutil, subprocess, sys
@@ -31,6 +34,7 @@ for side in ('a', 'b'):
             shutil.copy(f'ZInQKernel/OneProof/H/{f}', f'{OUT}/{side}/ZInQKernel/OneProof/H/{f}')
     shutil.copy('ZInQKernel/OneProof/Main.lean', f'{OUT}/{side}/ZInQKernel/OneProof/Main.lean')
     os.makedirs(f'{OUT}/{side}/ZInQKernel/Contrib/OneProof/ThetaDirect')
+    shutil.copy('ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean', f'{OUT}/{side}/ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean')
     for f in ('UseForm.lean', 'Split.lean'):
         shutil.copy(f'ZInQKernel/Contrib/OneProof/ThetaDirect/{f}', f'{OUT}/{side}/ZInQKernel/Contrib/OneProof/ThetaDirect/{f}')
 B = f'{OUT}/b'
@@ -70,6 +74,12 @@ sub1(M, 'import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8\n',
      'import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8\nimport ZInQKernel.Contrib.OneProof.ThetaDirect\n')
 sub1(M, '(HDec.HSyn.sixContactMin_of_open29 r t l g)',
      '(HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)')
+X = 'ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean'
+sub1(X, 'import ZInQKernel.OneProof.H.TailZ35\n', 'import ZInQKernel.OneProof.H.TailZ35\nimport ZInQKernel.Contrib.OneProof.ThetaDirect\n')
+sx = open(X).read()
+assert sx.count('(HDec.HSyn.sixContactMin_of_open29 r t l g)') == 3
+open(X, 'w').write(sx.replace('(HDec.HSyn.sixContactMin_of_open29 r t l g)',
+    '(HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)'))
 C = 'ZInQKernel/Contrib/OneProof/ThetaDirect/'
 os.remove(C + 'UseForm.lean')
 sub1(C + 'Split.lean', 'import ZInQKernel.Contrib.OneProof.ThetaDirect.UseForm\n', 'import ZInQKernel.OneProof.H.TailZ19\n')

@@ -1,6 +1,6 @@
 diff -ruN a/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean b/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean
---- a/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean	2026-11-16 00:57:24.348372202 -0800
-+++ b/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean	2026-11-16 00:57:24.428693548 -0800
+--- a/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean	2026-11-16 01:12:36.061478610 -0800
++++ b/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean	2026-11-16 01:12:36.154187556 -0800
 @@ -1,4 +1,4 @@
 -import ZInQKernel.Contrib.OneProof.ThetaDirect.UseForm
 +import ZInQKernel.OneProof.H.TailZ19
@@ -8,7 +8,7 @@ diff -ruN a/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean b/ZInQKernel/Cont
  /-! theta-direct: copied verbatim from origin/wip/theta-fold (8e3dbdea) `ZInQKernel/Contrib/OneProof/LinYangSplit.lean`;
     only the import lines are changed (this base has no theta-fold modules). -/
 diff -ruN a/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean b/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean
---- a/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean	2026-11-16 00:57:24.348314035 -0800
+--- a/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean	2026-11-16 01:12:36.061424498 -0800
 +++ b/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean	1969-12-31 16:00:00.000000000 -0800
 @@ -1,92 +0,0 @@
 -import ZInQKernel.OneProof.H.TailZ19
@@ -103,9 +103,47 @@ diff -ruN a/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean b/ZInQKernel/Co
 -end
 -
 -end HDec
+diff -ruN a/ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean b/ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean
+--- a/ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean	2026-11-16 01:12:36.061364208 -0800
++++ b/ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean	2026-11-16 01:12:36.153885611 -0800
+@@ -3,6 +3,7 @@
+ import ZInQKernel.Contrib.TYZChain.Main
+ import ZInQKernel.OneProof.TYZSplit
+ import ZInQKernel.OneProof.H.TailZ35
++import ZInQKernel.Contrib.OneProof.ThetaDirect
+ import ZInQKernel.OneProof.TopChain
+ import ZInQKernel.Contrib.OneProof.FHNonvanishing
+ 
+@@ -331,7 +332,7 @@
+     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+     ZInQ.FrozenTarget :=
+   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+-    (HDec.HSyn.sixContactMin_of_open29 r t l g)
++    (HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)
+     (tyzThm35ReadingA_of_used h11 h29 hCM hXU h33)
+     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
+ 
+@@ -360,7 +361,7 @@
+     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+     ZInQ.FrozenTarget :=
+   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+-    (HDec.HSyn.sixContactMin_of_open29 r t l g)
++    (HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)
+     (tyzThm35ReadingA_of_eta h11 h29 hCM hXE h33)
+     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
+ 
+@@ -384,7 +385,7 @@
+     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+     ZInQ.FrozenTarget :=
+   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+-    (HDec.HSyn.sixContactMin_of_open29 r t l g)
++    (HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)
+     (tyzThm35ReadingA_of_theta h11 h29 hCM hT h33)
+     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
+ 
 diff -ruN a/ZInQKernel/OneProof/H/TailK.lean b/ZInQKernel/OneProof/H/TailK.lean
---- a/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 00:57:24.346743234 -0800
-+++ b/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 00:57:24.423809033 -0800
+--- a/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 01:12:36.059676320 -0800
++++ b/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 01:12:36.148152000 -0800
 @@ -188,7 +188,6 @@
    leaves (for `AbVarSpreadsOut`). -/
  structure OpenAddedLeaves4 : Prop where
@@ -225,8 +263,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailK.lean b/ZInQKernel/OneProof/H/TailK.lean
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailN.lean b/ZInQKernel/OneProof/H/TailN.lean
---- a/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 00:57:24.346798206 -0800
-+++ b/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 00:57:24.427271769 -0800
+--- a/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 01:12:36.059732735 -0800
++++ b/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 01:12:36.151420194 -0800
 @@ -229,7 +229,6 @@
  /-- leaf-fold4's added-leaves bundle from leaf-fold5's (`serreRigidity3` from T35 and `HomLatticeCorr`). -/
  theorem addedLeaves4_of_open5 (t : OpenTextbookLeaves5) (l : OpenAddedLeaves5) : OpenAddedLeaves4 where
@@ -236,8 +274,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailN.lean b/ZInQKernel/OneProof/H/TailN.lean
    qmClassNumberOne := l.qmClassNumberOne
    senTwist := l.senTwist
 diff -ruN a/ZInQKernel/OneProof/H/TailO.lean b/ZInQKernel/OneProof/H/TailO.lean
---- a/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 00:57:24.346850775 -0800
-+++ b/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 00:57:24.424541915 -0800
+--- a/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 01:12:36.059803361 -0800
++++ b/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 01:12:36.148841506 -0800
 @@ -2592,7 +2592,7 @@
    egaIV_17_7_8_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii
  
@@ -319,8 +357,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailO.lean b/ZInQKernel/OneProof/H/TailO.lean
 -#print axioms HDec.HSyn.addedLeaves5_of_open6
  #print axioms HDec.HSyn.sixContactMin_of_open6
 diff -ruN a/ZInQKernel/OneProof/H/TailX.lean b/ZInQKernel/OneProof/H/TailX.lean
---- a/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 00:57:24.346955262 -0800
-+++ b/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 00:57:24.425395149 -0800
+--- a/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 01:12:36.059916621 -0800
++++ b/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 01:12:36.149623743 -0800
 @@ -150,7 +150,6 @@
  `ShimuraTaniyamaQbar`, `isogenyQuasiInverse` by `MilneIsogenyQuasiInverse`, `senTwist`, `finiteImageHT` by
  Tate's two theorems, and `shimuraGoodReduction` by its guard-free form. 16 fields. -/
@@ -351,8 +389,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailX.lean b/ZInQKernel/OneProof/H/TailX.lean
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ11.lean b/ZInQKernel/OneProof/H/TailZ11.lean
---- a/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 00:57:24.347010445 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 00:57:24.404540075 -0800
+--- a/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 01:12:36.059973346 -0800
++++ b/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 01:12:36.128490705 -0800
 @@ -53,8 +53,9 @@
  leaf-fold8's `OpenAddedLeaves8` (14) and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every
  field is `docs/research/leaf-fold10.md` §2. -/
@@ -366,8 +404,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ11.lean b/ZInQKernel/OneProof/H/TailZ11.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ13.lean b/ZInQKernel/OneProof/H/TailZ13.lean
---- a/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 00:57:24.347058978 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 00:57:24.425955171 -0800
+--- a/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 01:12:36.060032495 -0800
++++ b/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 01:12:36.150137526 -0800
 @@ -17,7 +17,6 @@
  /-- **The added leaves still open** (leaf-fold10): leaf-fold8's `OpenAddedLeaves8` with `y3Connected` replaced by
  shimura-glue's `DeligneComponentsY3Printed`. 14 fields. -/
@@ -397,8 +435,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ13.lean b/ZInQKernel/OneProof/H/TailZ13.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ15.lean b/ZInQKernel/OneProof/H/TailZ15.lean
---- a/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 00:57:24.347107701 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 00:57:24.404604461 -0800
+--- a/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 01:12:36.060087559 -0800
++++ b/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 01:12:36.128558858 -0800
 @@ -130,9 +130,10 @@
  and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
  `docs/research/leaf-fold10.md` §2. -/
@@ -413,8 +451,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ15.lean b/ZInQKernel/OneProof/H/TailZ15.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ17.lean b/ZInQKernel/OneProof/H/TailZ17.lean
---- a/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 00:57:24.347160220 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 00:57:24.427504049 -0800
+--- a/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 01:12:36.060141089 -0800
++++ b/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 01:12:36.151634416 -0800
 @@ -253,7 +253,6 @@
  /-- leaf-fold10's added-leaf bundle from route-a-fold's: Deligne's printed theorem on `Y₃` from its
  abelian-scheme form and the research field `mumfordRigidityCore`. -/
@@ -436,8 +474,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ17.lean b/ZInQKernel/OneProof/H/TailZ17.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ18.lean b/ZInQKernel/OneProof/H/TailZ18.lean
---- a/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 00:57:24.347213900 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 00:57:24.404964273 -0800
+--- a/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 01:12:36.060215251 -0800
++++ b/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 01:12:36.128965899 -0800
 @@ -1248,8 +1248,9 @@
  `ZInQ.SixContactMin` from `OpenResearchLeaves11` (29), `OpenTextbookLeaves10` (15), `OpenAddedLeaves11` (13) and
  `OpenGlue7` (1). -/
@@ -451,8 +489,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ18.lean b/ZInQKernel/OneProof/H/TailZ18.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ19.lean b/ZInQKernel/OneProof/H/TailZ19.lean
---- a/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 00:57:24.347282996 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 00:57:24.405429212 -0800
+--- a/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 01:12:36.060285346 -0800
++++ b/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 01:12:36.129415486 -0800
 @@ -1911,8 +1911,9 @@
  `ZInQ.SixContactMin` from `OpenResearchLeaves12` (32), `OpenTextbookLeaves10` (15), `OpenAddedLeaves11` (13) and
  `OpenGlue7` (1). -/
@@ -466,8 +504,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ19.lean b/ZInQKernel/OneProof/H/TailZ19.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ22.lean b/ZInQKernel/OneProof/H/TailZ22.lean
---- a/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 00:57:24.347366661 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 00:57:24.426031866 -0800
+--- a/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 01:12:36.060363393 -0800
++++ b/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 01:12:36.150209834 -0800
 @@ -230,7 +230,6 @@
  /-- **The added leaves still open** (x6-fold): leaf-fold12's `OpenAddedLeaves11` without `x6ConicModel` (proved by
  x6-glue's `x6ConicModel_of_published`), with two of its leaves added. 14 fields. -/
@@ -514,8 +552,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ22.lean b/ZInQKernel/OneProof/H/TailZ22.l
 -#print axioms HDec.HSyn.addedLeaves11_of_open12
 -#print axioms HDec.HSyn.sixContactMin_of_open16
 diff -ruN a/ZInQKernel/OneProof/H/TailZ23.lean b/ZInQKernel/OneProof/H/TailZ23.lean
---- a/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 00:57:24.347422725 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 00:57:24.427746513 -0800
+--- a/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 01:12:36.060420899 -0800
++++ b/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 01:12:36.151915219 -0800
 @@ -738,7 +738,6 @@
  `addedLeaves10_of_open11` and `addedLeaves9_of_open10`). -/
  theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
@@ -538,8 +576,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ23.lean b/ZInQKernel/OneProof/H/TailZ23.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ24.lean b/ZInQKernel/OneProof/H/TailZ24.lean
---- a/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 00:57:24.347484518 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 00:57:24.426325797 -0800
+--- a/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 01:12:36.060493218 -0800
++++ b/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 01:12:36.150533190 -0800
 @@ -767,7 +767,6 @@
  `t09SymmIsogenyExists` (t09-pic's `T09Pic.t09SymmIsogenyExists_of_four`), with its four printed leaves added.
  17 fields. -/
@@ -569,8 +607,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ24.lean b/ZInQKernel/OneProof/H/TailZ24.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ25.lean b/ZInQKernel/OneProof/H/TailZ25.lean
---- a/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 00:57:24.347576045 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 00:57:24.406778982 -0800
+--- a/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 01:12:36.060555902 -0800
++++ b/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 01:12:36.130836172 -0800
 @@ -134,8 +134,9 @@
    strictHenselizationPair := n.strictHenselizationPair
  
@@ -584,8 +622,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ25.lean b/ZInQKernel/OneProof/H/TailZ25.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ26.lean b/ZInQKernel/OneProof/H/TailZ26.lean
---- a/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 00:57:24.347641083 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 00:57:24.426672319 -0800
+--- a/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 01:12:36.060615121 -0800
++++ b/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 01:12:36.150902846 -0800
 @@ -130,7 +130,6 @@
  
  /-- `OpenAddedLeaves13` without `shimizuCovolumeO1` (leaf-fold16). -/
@@ -615,8 +653,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ26.lean b/ZInQKernel/OneProof/H/TailZ26.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ27.lean b/ZInQKernel/OneProof/H/TailZ27.lean
---- a/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 00:57:24.347693982 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 00:57:24.407159623 -0800
+--- a/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 01:12:36.060670645 -0800
++++ b/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 01:12:36.131267079 -0800
 @@ -122,8 +122,9 @@
    strictHenselizationPair := n.strictHenselizationPair
  
@@ -630,8 +668,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ27.lean b/ZInQKernel/OneProof/H/TailZ27.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ28.lean b/ZInQKernel/OneProof/H/TailZ28.lean
---- a/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 00:57:24.347745780 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 00:57:24.407384771 -0800
+--- a/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 01:12:36.060722994 -0800
++++ b/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 01:12:36.131391197 -0800
 @@ -121,8 +121,9 @@
    gonzalezRotgerProp56X6 := n.gonzalezRotgerProp56X6
  
@@ -645,8 +683,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ28.lean b/ZInQKernel/OneProof/H/TailZ28.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ29.lean b/ZInQKernel/OneProof/H/TailZ29.lean
---- a/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 00:57:24.347794614 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 00:57:24.407519835 -0800
+--- a/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 01:12:36.060775473 -0800
++++ b/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 01:12:36.131509254 -0800
 @@ -118,8 +118,9 @@
    neronBaseChangeStrictHenselization := n.neronBaseChangeStrictHenselization
  
@@ -660,8 +698,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ29.lean b/ZInQKernel/OneProof/H/TailZ29.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ30.lean b/ZInQKernel/OneProof/H/TailZ30.lean
---- a/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 00:57:24.347847213 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 00:57:24.426950356 -0800
+--- a/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 01:12:36.060827921 -0800
++++ b/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 01:12:36.151117288 -0800
 @@ -12,7 +12,6 @@
  
  /-- `OpenAddedLeaves14` without `qmCentralizerCMC` (leaf-fold18). -/
@@ -692,8 +730,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ30.lean b/ZInQKernel/OneProof/H/TailZ30.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ31.lean b/ZInQKernel/OneProof/H/TailZ31.lean
---- a/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 00:57:24.347910088 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 00:57:24.427033572 -0800
+--- a/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 01:12:36.060893751 -0800
++++ b/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 01:12:36.151161084 -0800
 @@ -12,7 +12,6 @@
  
  /-- `OpenAddedLeaves15` without `valenceFormulaCocompactEq` (leaf-fold18). -/
@@ -723,8 +761,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ31.lean b/ZInQKernel/OneProof/H/TailZ31.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ32.lean b/ZInQKernel/OneProof/H/TailZ32.lean
---- a/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 00:57:24.347957800 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 00:57:24.407705494 -0800
+--- a/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 01:12:36.060944497 -0800
++++ b/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 01:12:36.131738539 -0800
 @@ -42,8 +42,9 @@
    neronSchemeExtensionExists := n.neronSchemeExtensionExists
  
@@ -738,8 +776,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ32.lean b/ZInQKernel/OneProof/H/TailZ32.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ33.lean b/ZInQKernel/OneProof/H/TailZ33.lean
---- a/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 00:57:24.348005482 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 00:57:24.407734037 -0800
+--- a/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 01:12:36.061007711 -0800
++++ b/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 01:12:36.131767993 -0800
 @@ -119,8 +119,9 @@
    elkiesX6StarPrinted := n.elkiesX6StarPrinted
  
@@ -753,8 +791,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ33.lean b/ZInQKernel/OneProof/H/TailZ33.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ34.lean b/ZInQKernel/OneProof/H/TailZ34.lean
---- a/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 00:57:24.348055266 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 00:57:24.427097848 -0800
+--- a/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 01:12:36.061077026 -0800
++++ b/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 01:12:36.151215145 -0800
 @@ -115,7 +115,6 @@
  
  /-- `OpenAddedLeaves16` without `shimuraGoodReductionNoGuard`, with the leaves `shimuraIntegralModelRep` (leaf-fold22). -/
@@ -784,8 +822,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ34.lean b/ZInQKernel/OneProof/H/TailZ34.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ35.lean b/ZInQKernel/OneProof/H/TailZ35.lean
---- a/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 00:57:24.346384494 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 00:57:24.410252243 -0800
+--- a/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 01:12:36.059329418 -0800
++++ b/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 01:12:36.134027481 -0800
 @@ -113,8 +113,9 @@
    shimuraMainThmIDeligneY3AbU := n.shimuraMainThmIDeligneY3AbU
  
@@ -799,8 +837,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ35.lean b/ZInQKernel/OneProof/H/TailZ35.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ4.lean b/ZInQKernel/OneProof/H/TailZ4.lean
---- a/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 00:57:24.348107685 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 00:57:24.425733787 -0800
+--- a/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 01:12:36.061147732 -0800
++++ b/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 01:12:36.149896352 -0800
 @@ -126,7 +126,6 @@
  `qmHauptmodulBase3` replaced by the valence formula, Shimizu's covolume and the CM value at `−24` (qm-glue). 14
  fields. -/
@@ -831,8 +869,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ4.lean b/ZInQKernel/OneProof/H/TailZ4.lea
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ9.lean b/ZInQKernel/OneProof/H/TailZ9.lean
---- a/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 00:57:24.348170590 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 00:57:24.404406404 -0800
+--- a/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 01:12:36.061202034 -0800
++++ b/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 01:12:36.128249302 -0800
 @@ -141,8 +141,9 @@
  `OpenAddedLeaves8` (14) and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
  `docs/research/leaf-fold9.md` §2. -/
@@ -846,8 +884,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ9.lean b/ZInQKernel/OneProof/H/TailZ9.lea
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/Main.lean b/ZInQKernel/OneProof/Main.lean
---- a/ZInQKernel/OneProof/Main.lean	2026-11-16 00:57:24.348223539 -0800
-+++ b/ZInQKernel/OneProof/Main.lean	2026-11-16 00:57:24.428531673 -0800
+--- a/ZInQKernel/OneProof/Main.lean	2026-11-16 01:12:36.061260913 -0800
++++ b/ZInQKernel/OneProof/Main.lean	2026-11-16 01:12:36.152626348 -0800
 @@ -5,6 +5,7 @@
  import ZInQKernel.Contrib.OneProof.RingClassLattice
  import ZInQKernel.Contrib.OneProof.FHNonvanishing

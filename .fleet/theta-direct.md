@@ -19,9 +19,10 @@ none for `thetaRatiosAlgebraic`, as expected (use form, not the universal field)
 
 **Fold (manual, for the integration lead):** −1 GLUE, −1 field, no new hypothesis. theta-fold's plumbing (`hθ` through
 `gluePieces_of_open4`, `_open4` … `_open29`) and prune (the field in `OpenAddedLeaves4…17`, three dead readers), with
-Main supplying `hθ := HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul`; generated as
-scratch/theta-direct/fold/fold.patch by make_fold.py (python dry run passes; patched tree NOT built). Every consumer
+Main supplying `hθ := HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul`; also X0ModuliUsed.lean's three
+alternative tops; generated as scratch/theta-direct/fold/fold.patch by make_fold.py. **The patched tree builds**
+(Main + Discharges, 13006 jobs): frozenTarget axioms standard, `#discharges` 62 → 61 open hypotheses. Every consumer
 with file:line is in docs/research/theta-direct.md §3.
 
-**Remains:** the fold (and building it); deleting the UseForm.lean copy at fold time. Merge of wip/theta-fold
+**Remains:** applying the fold (docs/kinds/STATUS regeneration, PruneScan); deleting the UseForm.lean copy at fold time. Merge of wip/theta-fold
 conflicted and was aborted; definitions copied instead.

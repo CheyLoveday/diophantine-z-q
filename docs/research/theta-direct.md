@@ -88,8 +88,8 @@ Only reader of the field (VERIFIED by grep at a40d5c4d; theta-fold's PruneScan f
 `G0Split.ThetaPt.thetaPointOfFibre_of_qm_ratios (G0Split.FibreQM.fibreQMPeriod_main_rep …) l.thetaRatiosAlgebraic`.
 TailK cannot import the contributor module (it imports TailZ19), so the proof enters at the top, exactly as in
 theta-fold's plumbing. The fold is generated, as a patch against a40d5c4d, by
-`python3 scratch/theta-direct/fold/make_fold.py` → `scratch/theta-direct/fold/fold.patch` (867 lines, 29 files;
-python dry run on a /tmp copy, every assertion of theta-fold's scripts passes; **not built**, see §6):
+`python3 scratch/theta-direct/fold/make_fold.py` → `scratch/theta-direct/fold/fold.patch` (905 lines, 30 files).
+**The patched tree builds** (VERIFIED, §3.1).
 
 1. **Plumbing** (theta-fold's `plumb.py`, copied unchanged as scratch/theta-direct/fold/plumb_theta_fold.py):
    * move theta-split's `ThetaRatiosAtQM`, `Jmap_ne_zero`, `thetaPointOfFibre_of_qm_atQM` into TailK just before
@@ -116,11 +116,30 @@ python dry run on a /tmp copy, every assertion of theta-fold's scripts passes; *
    `l.thetaRatiosAlgebraic` of the anonymous constructor in TailO l.2595 (`openAddedLeaves4_of_Q5`); the dead readers
    `addedLeaves5_of_open6` (TailO l.2927), `addedLeaves11_of_open12` (TailZ22 l.316), `sixContactMin_of_open16`
    (TailZ22 l.335) with their `#print axioms` lines.
-4. **Contributor modules**: delete `ThetaDirect/UseForm.lean` (its block is then in TailK); in `ThetaDirect/Split.lean`
+4. **ZInQKernel/Contrib/OneProof/X0ModuliUsed.lean** (hX-fold's alternative tops `frozenTarget_of_used`,
+   `frozenTarget_of_eta`, `frozenTarget_of_theta`; found by the fold-check build): l.334, l.363, l.387
+   `(HDec.HSyn.sixContactMin_of_open29 r t l g)` → `(… r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)`, and
+   `import ZInQKernel.Contrib.OneProof.ThetaDirect`.
+5. **Contributor modules**: delete `ThetaDirect/UseForm.lean` (its block is then in TailK); in `ThetaDirect/Split.lean`
    replace `import ZInQKernel.Contrib.OneProof.ThetaDirect.UseForm` by `import ZInQKernel.OneProof.H.TailZ19`.
 
 After the fold, the H part has 55 hypotheses (OpenAddedLeaves17 loses one field); kinds.tsv/claims.tsv lose the
 `thetaRatiosAlgebraic` row and gain nothing.
+
+### 3.1 Fold check (VERIFIED)
+
+`git archive HEAD` into /tmp/td_foldcheck, `patch -p1 -E < fold.patch`, the worktree's `.lake/build` and
+`lean/.lake/build` copied, `.lake/packages` symlinked; then `lake build ZInQKernel.OneProof.Main
+ZInQKernel.OneProof.Discharges`: **Build completed successfully (13006 jobs)** (first attempt failed only in
+X0ModuliUsed.lean, now item 4). In the patched tree (scratch/theta-direct/fold/FoldAx.lean →
+foldcheck-axioms-discharges.txt):
+* `#print axioms ZInQ.OneProof.frozenTarget`: `[propext, Classical.choice, Quot.sound]`; same for
+  `X0ModuliUsed.frozenTarget_of_theta`;
+* `frozenTarget`'s type is unchanged in form (`OpenResearchLeaves22 → OpenTextbookLeaves11 → OpenAddedLeaves17 →
+  OpenGlue7 → …`), and `OpenAddedLeaves17` no longer has `thetaRatiosAlgebraic` (grep: 0 occurrences in TailZ34);
+* `#discharges: 61 open hypotheses, 2799 theorems checked, 7 discharge one` (base: 62 open hypotheses).
+
+Not run on the patched tree: PruneScan/DumpCompact (the integration lead's tools), the docs regeneration.
 
 ## 4. Method
 
@@ -207,8 +226,8 @@ Modular → Relations → ThetaDirect) about 2 min; the copied Kron/Glue about 3
 
 ## 6. What remains
 
-* The fold itself (integration lead): fold.patch is generated and its python edits are checked, but the patched tree
-  was not built here. theta-fold built the same plumbing and prune on leaf-fold23 (its report §4).
+* The fold itself (integration lead): fold.patch builds (§3.1); docs/one-proof, kinds.tsv, claims.tsv, STATUS.md and
+  a PruneScan are left to the lead.
 * Duplicates for the lead's dedupe at fold time: `UseForm.lean` (moves into TailK); `Kron`, `Split`, `Glue` are
   theta-fold's modules (same constant names, namespaces `IgusaAlgEval`, `…ThetaPt.ThetaSplit`, `…ThetaPt.ThetaGlue`,
   `…ThetaPt.IgusaAlgFinal`): if theta-fold's modules are ever folded too, keep one copy.

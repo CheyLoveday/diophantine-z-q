@@ -11,8 +11,9 @@ gt-theta's transformation laws), the kernel's proved valence formula, elliptic-o
 * (R2) there are algebraic `c₂`, `c₃` with `(Σθ⁸)²χ₁₂ = c₂(Σθ⁸)⁵ + c₃(∏θ²)²` along `Ω(z)` (weight 40, nodes
   `√2 + i`, `τ₂₄`).
 
-(Lin–Yang's Example 29 would give `c₁ = −4/3⁵`, `c₂ = 1/(2¹⁸3⁶)`, `c₃ = ` an explicit rational; only algebraicity is
-proved and used here.) -/
+(Only algebraicity of the `c_i` is proved and used. If theta-glue's `LinYangThetaCurve` (Lin–Yang's Example 29 in
+theta expressions) holds, then `c₁ = −3⁵`, `c₂ = 2⁻¹⁸3⁻⁶`, `c₃ = 3⁴2⁻¹²`; this is a computation from that unproved
+statement, not checked here.) -/
 
 set_option linter.all false
 

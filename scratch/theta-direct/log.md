@@ -62,3 +62,12 @@ Task theta-direct, started 2026-11-16 00:00 PST. Base a40d5c4d (wip/theta-direct
 * #discharges (Main + Discharges + ThetaDirect, 13007 jobs): 62 open hypotheses, 2804 theorems checked, 7 discharge
   one; no line for thetaRatiosAlgebraic (expected: use form). Saved: discharges.txt.
 * Fold patch: fold/make_fold.py → fold/fold.patch (867 lines, 29 files), fold-deleted.txt; not built.
+
+## Step 4: fold check (VERIFIED)
+* Patched copy /tmp/td_foldcheck (git archive HEAD + fold.patch, build dirs copied): first build failed only in
+  Contrib/OneProof/X0ModuliUsed.lean l.334/363/387 (extra calls of sixContactMin_of_open29); added to make_fold.py
+  (patch now 905 lines, 30 files). Rebuild: Main + Discharges OK (13006 jobs).
+* Patched tree: `#print axioms ZInQ.OneProof.frozenTarget` standard; `#discharges: 61 open hypotheses, 2799 theorems
+  checked, 7 discharge one` (base 62). Saved: fold/foldcheck-axioms-discharges.txt, fold/FoldAx.lean.
+* Relations.lean docstring: the c_i values implied by LinYangThetaCurve stated as unchecked (c₁ = −3⁵,
+  c₂ = 2⁻¹⁸3⁻⁶, c₃ = 3⁴2⁻¹²; arithmetic from that statement, not used). Module rebuilt OK.
