@@ -97,7 +97,6 @@ def Comm {t s : X ⟶ X} (h : s ≫ t = t ≫ s) (α : (Scheme.Modules.pullback 
 
 /-- **Multiplicativity of the commutator in the first variable.** -/
 lemma comm_prod_left {t t' s : X ⟶ X} (ht : ∀ r : Γ(X, ⊤), t.appTop r = r)
-    (hs : ∀ r : Γ(X, ⊤), s.appTop r = r)
     {h₁ : s ≫ t = t ≫ s} {h₂ : s ≫ t' = t' ≫ s} (h₃ : s ≫ (t ≫ t') = (t ≫ t') ≫ s)
     {α : (Scheme.Modules.pullback t).obj N ⟶ N} {α' : (Scheme.Modules.pullback t').obj N ⟶ N}
     {β : (Scheme.Modules.pullback s).obj N ⟶ N} {κ κ' : Γ(X, ⊤)}
@@ -106,5 +105,64 @@ lemma comm_prod_left {t t' s : X ⟶ X} (ht : ∀ r : Γ(X, ⊤), t.appTop r = r
   rw [prod_assoc, c₂, prod_smul_right ht, prod_mv_right, prod_assoc', mv_comp_smul, mv_mv, mv_mv, c₁,
     prod_smul_left, prod_mv_left, prod_assoc]
   simp only [mv_comp_smul, mv_mv, smulHom_mul, Category.assoc]
+
+/-- `s^{j+1}` as an iterated composite. -/
+def powM (s : X ⟶ X) : ℕ → (X ⟶ X)
+  | 0 => s
+  | j + 1 => powM s j ≫ s
+
+variable (N) in
+/-- The `(j+1)`-st power of a lift `β` over `s`, a lift over `powM s j`. -/
+def pw {s : X ⟶ X} (β : (Scheme.Modules.pullback s).obj N ⟶ N) :
+    (j : ℕ) → (Scheme.Modules.pullback (powM s j)).obj N ⟶ N
+  | 0 => β
+  | j + 1 => prod N (pw β j) β
+
+lemma powM_comm (s : X ⟶ X) : ∀ j, s ≫ powM s j = powM s j ≫ s
+  | 0 => rfl
+  | j + 1 => by
+    change s ≫ (powM s j ≫ s) = (powM s j ≫ s) ≫ s
+    rw [← Category.assoc, powM_comm s j]
+
+lemma powM_appTop {s : X ⟶ X} (hs : ∀ r : Γ(X, ⊤), s.appTop r = r) :
+    ∀ j, ∀ r : Γ(X, ⊤), (powM s j).appTop r = r
+  | 0 => hs
+  | j + 1 => fun r => by
+    change (powM s j ≫ s).appTop r = r
+    rw [Scheme.Hom.comp_appTop]
+    change (powM s j).appTop (s.appTop r) = r
+    rw [hs, powM_appTop hs j]
+
+/-- **A lift commutes with its powers.** -/
+lemma comm_pw {s : X ⟶ X} (hs : ∀ r : Γ(X, ⊤), s.appTop r = r)
+    (β : (Scheme.Modules.pullback s).obj N ⟶ N) :
+    ∀ j, Comm N (powM_comm s j) (pw N β j) β 1
+  | 0 => by
+    change prod N β β = mv N rfl (prod N β β) ≫ N.smulHom 1
+    simp
+  | j + 1 => by
+    have h := comm_prod_left (powM_appTop hs j) (powM_comm s (j + 1)) (comm_pw hs β j)
+      (show Comm N rfl β β 1 by change prod N β β = mv N rfl (prod N β β) ≫ N.smulHom 1; simp)
+    rw [mul_one] at h
+    exact h
+
+lemma comm_mv_left {t t' s : X ⟶ X} (e : t = t') {h : s ≫ t = t ≫ s} (h' : s ≫ t' = t' ≫ s)
+    {α : (Scheme.Modules.pullback t).obj N ⟶ N} {β : (Scheme.Modules.pullback s).obj N ⟶ N}
+    {κ : Γ(X, ⊤)} (c : Comm N h α β κ) : Comm N h' (mv N e α) β κ := by
+  subst e
+  simpa using c
+
+lemma comm_smul_left {t s : X ⟶ X} (hs : ∀ r : Γ(X, ⊤), s.appTop r = r) {h : s ≫ t = t ≫ s}
+    {α : (Scheme.Modules.pullback t).obj N ⟶ N} {β : (Scheme.Modules.pullback s).obj N ⟶ N}
+    {κ : Γ(X, ⊤)} (u : Γ(X, ⊤)ˣ) (c : Comm N h (α ≫ N.smulHom u) β κ) : Comm N h α β κ := by
+  unfold Comm at *
+  rw [prod_smul_left, prod_smul_right hs, mv_comp_smul] at c
+  have hiso : N.smulHom (u : Γ(X, ⊤)) ≫ N.smulHom ((u⁻¹ : Γ(X, ⊤)ˣ) : Γ(X, ⊤)) = 𝟙 N := by
+    rw [← smulHom_mul, Units.inv_mul, smulHom_one]
+  have hiso' : N.smulHom ((u⁻¹ : Γ(X, ⊤)ˣ) : Γ(X, ⊤)) ≫ N.smulHom (u : Γ(X, ⊤)) = 𝟙 N := by
+    rw [← smulHom_mul, Units.mul_inv, smulHom_one]
+  haveI : IsIso (N.smulHom (u : Γ(X, ⊤))) := ⟨⟨_, hiso, hiso'⟩⟩
+  rw [← cancel_mono (N.smulHom (u : Γ(X, ⊤))), c, Category.assoc, Category.assoc, ← smulHom_mul,
+    ← smulHom_mul, mul_comm]
 
 end WeilProof.Theta
