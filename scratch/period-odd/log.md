@@ -46,3 +46,13 @@ target: hL3 replaced by `GrossZagierModuliOptCd` + `EtaW32Character` only.
   `ModularForm.eq_const_of_weight_zero`, so f = D φ_f = 0. Axioms standard. VERIFIED.
 - TARGET MET: `ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 : GrossZagierModuliOptCd → EtaW32Character →
   GZHL3.GrossZagierFormulaCd`, axioms [propext, Classical.choice, Quot.sound]. VERIFIED (lake build + #print axioms).
+- Added `cd_or_ePrime_optimal` (from EtaW32Character: C_d or E'_d has period lattice ℚ^×·Λ_f). Axioms standard. VERIFIED.
+- MainEdit.lean: `frozenTarget_periododd` (cd-optimal's frozenTarget_cdoptimal minus `CdTwistedPeriodOdd`),
+  axioms standard (out_mainedit.txt). VERIFIED.
+- #discharges: 61 open, 3247 theorems, 9 discharge one (same 9 lines as cd-optimal; none by period-odd: the field
+  grossZagierFormulaCd exists only after the C_d split of hL3). VERIFIED (discharges-output.txt).
+- autofold.json: field grossZagierFormulaCd, leaves grossZagierModuliOptCd + etaW32Character (published, flag "").
+  `autofold.py --dry-run`: "not a field of the current bundles: ['grossZagierFormulaCd']" — same for cd-optimal's
+  autofold-formula.json (VERIFIED). Expected until the C_d split is folded.
+- CdTwistedPeriodOdd: NOT proved; no longer needed. Status/rating in report §4 (GLUE, not printed, SPECULATIVE route).
+- Report: docs/research/period-odd.md.
