@@ -191,4 +191,162 @@ theorem adjSqrt_le_ringClassField (hsq : Squarefree m) (h3 : m % 4 = 3) {d : ℕ
 
 end GenusField
 
+/-! ## §4. The Artin symbol of a prime of degree one on `√d`, and `GenusSqrtD` -/
+
+section Artin
+
+variable {m : ℕ} [NeZero m]
+
+/-- `√d` as an element of the ring class field of conductor `d`. -/
+def sqrtH (hsq : Squarefree m) (h3 : m % 4 = 3) (d : ℕ) [NeZero d] (hd4 : d % 4 = 1) :
+    ringClassField (conductorOrder (QNeg m) d) :=
+  ⟨sqrtK (QNeg m) (d : ℤ), adjSqrt_le_ringClassField hsq h3 hd4
+    (IntermediateField.mem_adjoin_simple_self _ _)⟩
+
+theorem sqrtH_sq (hsq : Squarefree m) (h3 : m % 4 = 3) (d : ℕ) [NeZero d] (hd4 : d % 4 = 1) :
+    sqrtH hsq h3 d hd4 ^ 2 = (d : ringClassField (conductorOrder (QNeg m) d)) := by
+  apply Subtype.ext
+  show sqrtK (QNeg m) (d : ℤ) ^ 2 = _
+  rw [sqrtK_sq]; simp
+
+/-- `√d` in `𝓞` of the ring class field. -/
+def sqrtHO (hsq : Squarefree m) (h3 : m % 4 = 3) (d : ℕ) [NeZero d] (hd4 : d % 4 = 1) :
+    𝓞 (ringClassField (conductorOrder (QNeg m) d)) :=
+  ⟨sqrtH hsq h3 d hd4, by
+    refine ⟨Polynomial.X ^ 2 - Polynomial.C (d : ℤ), Polynomial.monic_X_pow_sub_C _ two_ne_zero, ?_⟩
+    rw [Polynomial.eval₂_sub, Polynomial.eval₂_X_pow, Polynomial.eval₂_C, sqrtH_sq, eq_intCast]
+    push_cast; ring⟩
+
+theorem sqrtHO_sq (hsq : Squarefree m) (h3 : m % 4 = 3) (d : ℕ) [NeZero d] (hd4 : d % 4 = 1) :
+    sqrtHO hsq h3 d hd4 ^ 2 = (d : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) := by
+  apply RingOfIntegers.ext
+  simp only [RingOfIntegers.coe_eq_algebraMap, map_pow, map_natCast]
+  exact sqrtH_sq hsq h3 d hd4
+
+set_option maxHeartbeats 2000000 in
+/-- **The Artin symbol of a prime `𝔭` of degree one, `N𝔭 = p ∤ 2d`, acts on `√d` by `(p/d)`** (Euler's criterion
+`d^{(p−1)/2} ≡ (d/p)` and quadratic reciprocity for `d ≡ 1 mod 4`). -/
+theorem artin_sqrtH (hsq : Squarefree m) (h3 : m % 4 = 3) {d : ℕ} [NeZero d] (hd4 : d % 4 = 1)
+    (J : integralIdealsPrimeTo (conductorOrder (QNeg m) d).conductorModulus)
+    [(J : Ideal (𝓞 (QNeg m))).IsMaximal] {p : ℕ} (hp : p.Prime)
+    (hN : Ideal.absNorm (J : Ideal (𝓞 (QNeg m))) = p) (hp2d : ¬ (p : ℤ) ∣ 2 * d) :
+    ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J)
+      (sqrtH hsq h3 d hd4) =
+      ((jacobiSym p d : ℤ) : ringClassField (conductorOrder (QNeg m) d)) * sqrtH hsq h3 d hd4 := by
+  obtain ⟨Q, hQp, hQo⟩ := (inferInstance : Nonempty ((J : Ideal (𝓞 (QNeg m))).primesOver (𝓞 (ringClassField (conductorOrder (QNeg m) d)))))
+  have hF := isArithFrobAt_ringClassArtinEquiv_picClass (conductorOrder (QNeg m) d) J Q
+  set s := sqrtHO hsq h3 d hd4
+  have hq : Nat.card (𝓞 (QNeg m) ⧸ Q.under (𝓞 (QNeg m))) = p := by
+    rw [← Ideal.over_def Q (J : Ideal (𝓞 (QNeg m))), ← hN, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  have h := hF s
+  simp only [MulSemiringAction.toAlgHom_apply] at h
+  rw [hq] at h
+  have hp2 : p ≠ 2 := by rintro rfl; exact hp2d ⟨d, rfl⟩
+  have hodd : p % 2 = 1 := (Nat.Prime.mod_two_eq_one_iff_ne_two hp).2 hp2
+  have hpd : ¬ (p : ℤ) ∣ d := fun h' => hp2d (dvd_mul_of_dvd_right h' _)
+  have := Fact.mk hp
+  set L := legendreSym p d with hL
+  -- `p ∈ Q`
+  have hpQ : (p : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) ∈ Q := by
+    have hpJ : ((p : ℕ) : 𝓞 (QNeg m)) ∈ (J : Ideal (𝓞 (QNeg m))) := by
+      rw [← hN]; exact Ideal.absNorm_mem _
+    have := (Ideal.mem_of_liesOver Q (J : Ideal (𝓞 (QNeg m))) _).1 hpJ
+    simpa using this
+  -- Euler: `d^{(p-1)/2} ≡ L (mod p)`
+  have heuler : ((d : ℤ) ^ (p / 2) - L : ℤ) ∈ Ideal.span {(p : ℤ)} := by
+    rw [Ideal.mem_span_singleton, ← ZMod.intCast_zmod_eq_zero_iff_dvd]
+    push_cast
+    rw [hL, legendreSym.eq_pow]; simp
+  have heQ : (((d : ℤ) ^ (p / 2) - L : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) ∈ Q := by
+    obtain ⟨t, ht⟩ := Ideal.mem_span_singleton.1 heuler
+    rw [ht]; push_cast; exact Q.mul_mem_right _ hpQ
+  have hpow : s ^ p = s * (d : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) ^ (p / 2) := by
+    have hp' : p = 2 * (p / 2) + 1 := by omega
+    conv_lhs => rw [hp', pow_succ, pow_mul, sqrtHO_sq]
+    ring
+  have hsL : ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J) • s - (L : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * s ∈ Q := by
+    have : ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J) • s - (L : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * s = (ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J) • s - s ^ p) + s * ((((d : ℤ) ^ (p / 2) - L : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d)))) := by
+      rw [hpow]; push_cast; ring
+    rw [this]; exact Q.add_mem h (Q.mul_mem_left _ heQ)
+  have hsq2 : (ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J) • s) ^ 2 = s ^ 2 := by
+    rw [← smul_pow', sqrtHO_sq]
+    exact map_natCast (MulSemiringAction.toRingHom _ (𝓞 (ringClassField (conductorOrder (QNeg m) d))) (ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J))) d
+  have hL1 : L = 1 ∨ L = -1 := by
+    have h0 : L ≠ 0 := by
+      rw [hL, Ne, legendreSym.eq_zero_iff, ZMod.intCast_zmod_eq_zero_iff_dvd]; exact hpd
+    rcases legendreSym.eq_one_or_neg_one p (a := d) (by
+      rwa [Ne, ZMod.intCast_zmod_eq_zero_iff_dvd]) with h1 | h1
+    · exact Or.inl h1
+    · exact Or.inr h1
+  have hAs : ringClassArtinEquiv (conductorOrder (QNeg m) d) ((conductorOrder (QNeg m) d).picClass J) • s = (L : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * s := by
+    rcases sq_eq_sq_iff_eq_or_eq_neg.1 hsq2 with h4 | h4 <;> rcases hL1 with hL' | hL'
+    · rw [h4, hL']; simp
+    · exfalso
+      rw [h4, hL'] at hsL
+      have h2s : 2 * s ∈ Q := by
+        have : 2 * s = s - ((-1 : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * s := by push_cast; ring
+        rw [this]; exact hsL
+      have h4d : ((4 * d : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) ∈ Q := by
+        have : ((4 * d : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) = (2 * s) * (2 * s) := by
+          have := sqrtHO_sq hsq h3 d hd4; push_cast; linear_combination (-4 : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * this
+        rw [this]; exact Q.mul_mem_left _ h2s
+      have h4dJ : ((4 * d : ℤ) : 𝓞 (QNeg m)) ∈ (J : Ideal (𝓞 (QNeg m))) := by
+        rw [Ideal.mem_of_liesOver Q (J : Ideal (𝓞 (QNeg m))), map_intCast]; exact h4d
+      obtain ⟨p', hp', hlies⟩ := exists_prime_liesOver (J : Ideal (𝓞 (QNeg m)))
+        (by intro hb; rw [hb, Ideal.absNorm_bot] at hN; exact hp.ne_zero hN.symm)
+      have hpp' : p' = p := by
+        have h1 := natCast_mem_of_liesOver (p := p') (J : Ideal (𝓞 (QNeg m)))
+        have h2 : ((p : ℕ) : 𝓞 (QNeg m)) ∈ (J : Ideal (𝓞 (QNeg m))) := by
+          rw [← hN]; exact Ideal.absNorm_mem _
+        have h3' := (intCast_mem_iff_of_liesOver (p := p') (J : Ideal (𝓞 (QNeg m))) p).1 (by simpa using h2)
+        exact ((Nat.prime_dvd_prime_iff_eq hp' hp).1 (by exact_mod_cast h3'))
+      subst hpp'
+      have h4 := (intCast_mem_iff_of_liesOver (p := p') (J : Ideal (𝓞 (QNeg m))) (4 * d)).1 h4dJ
+      apply hp2d
+      have : (4 * (d : ℤ)) = 2 * (2 * d) := by ring
+      rw [this] at h4
+      rcases (Nat.prime_iff_prime_int.1 hp').dvd_or_dvd h4 with h5 | h5
+      · exact dvd_mul_of_dvd_left h5 _
+      · exact h5
+    · exfalso
+      rw [h4, hL'] at hsL
+      have h2s : -(2 * s) ∈ Q := by
+        have : -(2 * s) = -s - ((1 : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * s := by push_cast; ring
+        rw [this]; exact hsL
+      have h2s' : 2 * s ∈ Q := by simpa using Q.neg_mem h2s
+      have h4d : ((4 * d : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) ∈ Q := by
+        have : ((4 * d : ℤ) : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) = (2 * s) * (2 * s) := by
+          have := sqrtHO_sq hsq h3 d hd4; push_cast; linear_combination (-4 : 𝓞 (ringClassField (conductorOrder (QNeg m) d))) * this
+        rw [this]; exact Q.mul_mem_left _ h2s'
+      have h4dJ : ((4 * d : ℤ) : 𝓞 (QNeg m)) ∈ (J : Ideal (𝓞 (QNeg m))) := by
+        rw [Ideal.mem_of_liesOver Q (J : Ideal (𝓞 (QNeg m))), map_intCast]; exact h4d
+      obtain ⟨p', hp', hlies⟩ := exists_prime_liesOver (J : Ideal (𝓞 (QNeg m)))
+        (by intro hb; rw [hb, Ideal.absNorm_bot] at hN; exact hp.ne_zero hN.symm)
+      have hpp' : p' = p := by
+        have h2 : ((p : ℕ) : 𝓞 (QNeg m)) ∈ (J : Ideal (𝓞 (QNeg m))) := by
+          rw [← hN]; exact Ideal.absNorm_mem _
+        have h3' := (intCast_mem_iff_of_liesOver (p := p') (J : Ideal (𝓞 (QNeg m))) p).1 (by simpa using h2)
+        exact ((Nat.prime_dvd_prime_iff_eq hp' hp).1 (by exact_mod_cast h3'))
+      subst hpp'
+      have h4 := (intCast_mem_iff_of_liesOver (p := p') (J : Ideal (𝓞 (QNeg m))) (4 * d)).1 h4dJ
+      apply hp2d
+      have : (4 * (d : ℤ)) = 2 * (2 * d) := by ring
+      rw [this] at h4
+      rcases (Nat.prime_iff_prime_int.1 hp').dvd_or_dvd h4 with h5 | h5
+      · exact dvd_mul_of_dvd_left h5 _
+      · exact h5
+    · rw [h4, hL']; simp
+  -- back to `H`, and `L = (p/d)`
+  have hLJ : L = jacobiSym p d := by
+    rw [hL, jacobiSym.legendreSym.to_jacobiSym]
+    exact_mod_cast jacobiSym.quadratic_reciprocity_one_mod_four hd4 (Nat.odd_iff.2 hodd)
+  have := congrArg (fun x : 𝓞 (ringClassField (conductorOrder (QNeg m) d)) => (x : ringClassField (conductorOrder (QNeg m) d))) hAs
+  rw [← hLJ]
+  first
+    | exact_mod_cast this
+    | (push_cast at this; exact this)
+    | simpa [s, sqrtHO] using this
+
+end Artin
+
 end ZInQ.Heegner32
