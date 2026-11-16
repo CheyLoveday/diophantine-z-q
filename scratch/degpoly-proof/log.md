@@ -19,3 +19,15 @@ lattice representation, `HomFreeC.homFreeFiniteC`). Build dir copied (reflink) f
   `DegPolyScratch.charpoly_V_eq` (charpoly of `toMatrix b b (V_ℓ φ)` = `(latEnd Λ M _).charpoly.map`),
   `DegPolyScratch.charPolyIndep_of_emb (HL : UniformizationLeafAll) (HT : MumfordTorsionAlgClosed) (emb : K̄ →+* ℂ) A φ`
   = the body of `PkgI3.CharPolyIndepOfEll` for this `K`, `A`, `φ`.
+- VERIFIED compiled: contribution `ZInQKernel/Contrib/OneProof/CharPolyLattice.lean` (imports TailE, TailQ, AVB1.AlgClosed,
+  LF4T5 only: independent of deg-det's and homfree-proof's unmerged files) `lake build ZInQKernel.Contrib.OneProof.CharPolyLattice`
+  OK (11761 jobs). Theorems: `charpoly_V_eq`, `charPolyIndep_of_emb`, `charPolyIndepOfEllC` (T7 over fields with σ : k →+* ℂ),
+  `charPolyIndepOfEllAlgClosedC`, `charPolyIndepOfEllAlgQ`, new leaf def `CharPolyIndepOfEllAlgClosedNoEmb`,
+  `charPolyIndepOfEllAlgClosed_of_noEmb : UniformizationLeafAll → MumfordTorsionAlgClosed → CharPolyIndepOfEllAlgClosedNoEmb →
+  ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed`.
+- VERIFIED: `lake build +Main +Discharges +CharPolyLattice` OK (13699 jobs, frozenTarget standard axioms). #discharges
+  (scratch/degpoly-proof/Discharges-output.txt): DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by
+  CharPolyLattice.charPolyIndepOfEllAlgClosed_of_noEmb, still assumes [UniformizationLeafAll, MumfordTorsionAlgClosed,
+  CharPolyIndepOfEllAlgClosedNoEmb], axioms standard. (56 open hypotheses, 2878 theorems checked, 8 discharge one.)
+- VERIFIED: autofold dry run (scratch/degpoly-proof/autofold.json): `strict count: 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11`;
+  module scratch/degpoly-proof/FoldDryRun.lean (line 1 stripped) compiles, `HDec.HSyn.sixContactMin_of_open36` standard axioms.

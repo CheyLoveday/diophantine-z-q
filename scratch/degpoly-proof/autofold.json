@@ -1,0 +1,12 @@
+{"name": "degpoly-proof",
+ "imports": ["ZInQKernel.Contrib.OneProof.CharPolyLattice"],
+ "discharges": [
+   {"field": "charPolyIndepOfEllAlgClosed",
+    "proof": "_root_.ZInQ.Contrib.OneProof.CharPolyLattice.charPolyIndepOfEllAlgClosed_of_noEmb {n}.uniformizationLeafAll {n}.mumfordTorsionAlgClosed {n}.charPolyIndepOfEllAlgClosedNoEmb",
+    "leaves": [{"name": "charPolyIndepOfEllAlgClosedNoEmb",
+                "type": "_root_.ZInQ.Contrib.OneProof.CharPolyLattice.CharPolyIndepOfEllAlgClosedNoEmb",
+                "doc": "Mumford, Abelian varieties (1970), 19 Thm 4 (integral l-independent characteristic polynomial of T_l(phi)), specialized to algebraically closed fields with no ring homomorphism to C (characteristic p, or characteristic 0 of transcendence degree above the continuum); over fields that embed into C the statement is proved (degpoly-proof: charpoly V_l(phi) = charpoly_Z(phi on the period lattice)). Locator UNVERIFIED.",
+                "kind": "published",
+                "flag": "specialization (forall-instance) of the printed theorem to fields with no embedding into C; no consumer of T7 found at such a field (degpoly-proof section 5)",
+                "source": "Mumford 19 Thm 4 (fields with no embedding into C)"}]}],
+ "note": "degpoly-proof: charPolyIndepOfEllAlgClosed proved over every algebraically closed field with a ring hom to C from the bundle's own fields uniformizationLeafAll and mumfordTorsionAlgClosed (conj-twist's natural injective alpha : Z_l (x) Lambda -> T_l, rank 2g, so charpoly V_l(phi) = charpoly_Z(phi|Lambda)); the rest is the weaker leaf charPolyIndepOfEllAlgClosedNoEmb. Count-neutral. Report docs/research/degpoly-proof.md."}
