@@ -47,3 +47,13 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
 - VERIFIED: autofold dry run (scratch/deg-det/autofold.json): `strict count: 34/11 on 45 -> 34/12 on 46; strictest 34/11 -> 34/12`
   (refused without --allow-rise). With --allow-rise --dry-run the module (scratch/deg-det/FoldDryRun.lean, line 1 stripped) compiles:
   'HDec.HSyn.sixContactMin_of_open36' standard axioms.
+- VERIFIED compiled (scratch/deg-det/TateIndex.lean, copied to ZInQKernel/Contrib/OneProof/DegEqDetTate/TateIndex.lean):
+  `TateIndex.norm_det_eq_inv_card` (|det F|_ℓ = [T : F T]⁻¹ for injective F on a free finite ℤ_ℓ-module; Smith normal form),
+  `TateIndex.card_quot_range_pow`, `TateIndex.exists_tate_lift_n`, `TateIndex.exists_eq_pow_smul`,
+  `TateIndex.map_injective_of_finite_ker`, `TateIndex.norm_det_map_eq`: for M with #M[ℓ^n] = ℓ^(nr) and φ : M →+ M with
+  FINITE KERNEL (surjectivity NOT needed — found while proving), ‖det T_ℓ φ‖ = ‖#ker φ‖ in ℤ_ℓ.
+- VERIFIED compiled (lake build ZInQKernel.Contrib.OneProof.DegEqDetTate; CheckAxioms standard axioms):
+  new LEAF `SepDegKernel` (Mumford §4/§7: for an isogeny ψ, ker ψ(k̄) finite and deg ψ = #ker ψ(k̄) · (ringExpChar k)^e),
+  `degLadicIsogeny_of_sepDegKernel : SepDegKernel → MumfordTorsionAlgClosed → DegLadicIsogeny`,
+  `degEqDetTate_of_printed`, `charPolyIndepOfEllAlgClosed_of_printed : DegHomogPoly → SepDegKernel →
+  MumfordTorsionAlgClosed → HomFreeFiniteAlgClosed → CharPolyIndepOfEllAlgClosed` (no glue left).

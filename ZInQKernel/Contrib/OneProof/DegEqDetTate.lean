@@ -1,5 +1,7 @@
 import ZInQKernel.Contrib.OneProof.CharPolyIndepOfEllAlgClosed
 import ZInQKernel.Contrib.OneProof.DegEqDetTate.Algebra
+import ZInQKernel.Contrib.OneProof.DegEqDetTate.TateIndex
+import ZInQKernel.OneProof.H.TailQ
 
 /-!
 # deg-det: `DegEqDetTate` (Mumford §19 Thm 4, `deg φ = det T_ℓ φ`) from its two geometric inputs
@@ -168,5 +170,86 @@ theorem charPolyIndepOfEllAlgClosed_of_degHomogPoly (hP : DegHomogPoly) (hL : De
     (hH : ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed) :
     ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed :=
   charPolyIndepOfEllAlgClosed_of_degEqDetTate (degEqDetTate_of_degHomogPoly hP hL hH) hH
+
+/-! ## 4. `DegLadicIsogeny` from the separable degree and Mumford's torsion count -/
+
+/-- **LEAF (printed form): the degree of an isogeny is `#ker` times a power of the characteristic exponent.**
+D. Mumford, *Abelian varieties* (1970), §4 and §7 (UNVERIFIED locators: for an isogeny `f`, `ker f` is a
+finite group of order `deg_s f`, and `deg_i f` is a power of `p = char k`); also Milne, *Abelian varieties*
+(2008 notes), §7 (UNVERIFIED). `k` algebraically closed; the kernel is taken on the points over
+`k̄ = AlgebraicClosure k` (the points carrying `T_ℓ` in the kernel; `k → k̄` is an isomorphism since `k` is
+algebraically closed, so these are Mumford's closed points); `ringExpChar k` is `1` in characteristic `0` and
+`p` in characteristic `p`. `deg` is the genuine function-field degree `degEnd`. -/
+def SepDegKernel : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A),
+    PkgI3.AbVar.IsIsogenyMor ψ.hom →
+      Finite (PkgI3.AbVar.ptMap (L := AlgebraicClosure k) ψ).ker ∧
+        ∃ e : ℕ, degEnd ψ =
+          Nat.card (PkgI3.AbVar.ptMap (L := AlgebraicClosure k) ψ).ker * ringExpChar k ^ e
+
+theorem coprime_ringExpChar_pow {k : Type} [Field k] (ℓ : ℕ) [hℓ : Fact ℓ.Prime] (hℓk : (ℓ : k) ≠ 0)
+    (e : ℕ) : ℓ.Coprime (ringExpChar k ^ e) := by
+  obtain ⟨q, hq⟩ : ∃ q, ringExpChar k = q := ⟨_, rfl⟩
+  rw [hq]
+  have h : ExpChar k q := ringExpChar.of_eq hq
+  cases h with
+  | zero => simp
+  | prime hp =>
+    apply Nat.Coprime.pow_right
+    rw [Nat.coprime_primes hℓ.out hp]
+    rintro rfl
+    exact hℓk (CharP.cast_eq_zero k ℓ)
+
+/-- **`DegLadicIsogeny` from `SepDegKernel` and `mumfordTorsionAlgClosed`.** `|det T_ℓ ψ|_ℓ = |#ker ψ|_ℓ`
+(`TateIndex.norm_det_map_eq`, elementary divisors, with `#A[ℓⁿ] = ℓ^{2gn}`) and
+`|deg ψ|_ℓ = |#ker ψ|_ℓ` (the inseparable part is prime to `ℓ`). -/
+theorem degLadicIsogeny_of_sepDegKernel (hS : SepDegKernel) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    DegLadicIsogeny := by
+  intro k _ _ A ψ ℓ _ hℓ hiso I _ _ b
+  classical
+  obtain ⟨hfin, e, hdeg⟩ := hS k A ψ hiso
+  obtain ⟨g, hg⟩ := PkgI3.AbVar.dim_finite A
+  have hT := AvSplit.torsionStructure_of_mumford hM k
+  have hcard : ∀ n : ℕ, Nat.card (T5Torsion.TateFree.tb ℓ (Additive (A.Pt (AlgebraicClosure k))) n) =
+      ℓ ^ (n * (2 * g)) := by
+    intro n
+    obtain ⟨e', -⟩ := hT (ObjBridge.toGrp A) g (ℓ ^ n) hg
+      (pow_pos (Fact.out : ℓ.Prime).pos n) (by push_cast; exact pow_ne_zero _ hℓ)
+    rw [← Nat.card_congr (T5Torsion.TateFree.torsionEquivTb A ℓ n), Nat.card_congr e', Nat.card_fun,
+      Nat.card_zmod, Nat.card_eq_fintype_card, Fintype.card_fin, ← pow_mul]
+  set φ : Additive (A.Pt (AlgebraicClosure k)) →+ Additive (A.Pt (AlgebraicClosure k)) :=
+    MonoidHom.toAdditive (PkgI3.AbVar.ptMap (L := AlgebraicClosure k) ψ) with hφ
+  let eK : φ.ker ≃ (PkgI3.AbVar.ptMap (L := AlgebraicClosure k) ψ).ker :=
+    { toFun := fun x => ⟨Additive.toMul x.1, x.2⟩
+      invFun := fun x => ⟨Additive.ofMul x.1, x.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  haveI : Finite φ.ker := Finite.of_equiv _ eK.symm
+  have key := TateIndex.norm_det_map_eq (2 * g) hcard φ
+  haveI : Module.Free ℤ_[ℓ] (A.T ℓ) :=
+    Module.Free.of_equiv (T5Torsion.TateFree.tate_linearEquiv (2 * g) hcard).some.symm
+  haveI : Module.Finite ℤ_[ℓ] (A.T ℓ) :=
+    Module.Finite.equiv (T5Torsion.TateFree.tate_linearEquiv (2 * g) hcard).some.symm
+  rw [LinearMap.det_toMatrix b, LinearMap.det_baseChange]
+  change ‖((LinearMap.det (PkgI3.AbVar.homT (ℓ := ℓ) ψ) : ℤ_[ℓ]) : ℚ_[ℓ])‖ = _
+  rw [← PadicInt.norm_def]
+  change ‖LinearMap.det (PkgI3.Tate.map φ)‖ = _
+  rw [key, hdeg, Nat.card_congr eK, Nat.cast_mul, norm_mul,
+    show ‖((ringExpChar k ^ e : ℕ) : ℚ_[ℓ])‖ = 1 from
+      Padic.norm_natCast_eq_one_iff.mpr (coprime_ringExpChar_pow ℓ hℓ e), _root_.mul_one,
+    PadicInt.norm_def, PadicInt.coe_natCast]
+
+/-- **`DegEqDetTate` from two printed leaves and two open fields** (no glue left open). -/
+theorem degEqDetTate_of_printed (hP : DegHomogPoly) (hS : SepDegKernel)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hH : ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed) :
+    DegEqDetTate :=
+  degEqDetTate_of_degHomogPoly hP (degLadicIsogeny_of_sepDegKernel hS hM) hH
+
+/-- **`CharPolyIndepOfEllAlgClosed` from the printed leaves `DegHomogPoly`, `SepDegKernel` and the open
+fields `mumfordTorsionAlgClosed`, `homFreeFiniteAlgClosed`.** -/
+theorem charPolyIndepOfEllAlgClosed_of_printed (hP : DegHomogPoly) (hS : SepDegKernel)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hH : ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed) :
+    ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed :=
+  charPolyIndepOfEllAlgClosed_of_degEqDetTate (degEqDetTate_of_printed hP hS hM hH) hH
 
 end ZInQ.Contrib.OneProof.DegDet
