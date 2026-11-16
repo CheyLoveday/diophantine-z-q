@@ -39,4 +39,14 @@ DISCHARGES [OpenResearchLeaves26.gaudronRemondThm14] by ZInQ.HeightDict.gaudronR
  ZInQ.DefFaltings.AnalyticUniformizationUnique,
  ZInQ.HeightSplit.UniformizationDim]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2963 theorems checked, 11 discharge one
+DISCHARGES [OpenResearchLeaves26.javanpeykarBound] by ZInQ.HeightDict.javanpeykarBound_of_printed
+  still assumes: [ZInQ.HeightDict.JavanpeykarBoundPrinted,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
+  still assumes: [ZInQ.HeightDict.PazukiCor13UpperPrinted,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 2967 theorems checked, 13 discharge one

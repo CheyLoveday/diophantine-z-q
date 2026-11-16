@@ -50,3 +50,8 @@ Base: origin/main 2880fef1e. Build tree copied from ~/dzq-check2 (same commit).
 - `IsPrintedStableHeight` now uses `printedDetLattice` (⋀^g of `Conormal.printedOmega`); `printedDetLattice_eq`
   proved; all theorems re-checked; `#discharges` and autofold dry run re-run (same output, 34/11 -> 34/11,
   `sixContactMin_of_open36` standard axioms).
+- VERIFIED (compiled): `JavanpeykarBoundPrinted`, `PazukiCor13UpperPrinted` (verbatim restatements over
+  `IsPrintedStableHeight`) with `javanpeykarBound_of_printed`, `pazukiCor13Upper_of_printed`; `#discharges` now
+  13 discharge one (four HeightDict rows + primes); optional spec `scratch/height-dict/autofold-all4.json` dry run
+  exit 0, 34/11 -> 34/11, `FoldDryRunAll4.lean` compiles (standard axioms). Main spec `autofold.json` (two rows)
+  re-run: same.
