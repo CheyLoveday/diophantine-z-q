@@ -24,3 +24,6 @@
 - scratch/coeff-rational/autofold.json: eigenformCoeffFieldFinite := CoeffRational.eigenformCoeffFieldFinite_of_heckePrime {n}.gamma1IntegralSpan {n}.heckePrimeIntegralToRational (both kind published, flag unread). Dry run: strict 16/21 on 37 -> 18/20 on 38; strictest 16/21 -> 18/20 (GLUE -1).
 - FoldCheck.lean (dry-run output minus line 1): compiles; HDec.HSyn.sixContactMin_of_open39 standard axioms.
 - autofold-oneleaf.json (rationalHeckeSpan, kind composite): dry run 16/21 -> 16/21 (unchanged).
+
+## Done
+- Report docs/research/coeff-rational.md; .fleet/coeff-rational.md.
