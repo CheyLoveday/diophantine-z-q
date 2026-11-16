@@ -248,6 +248,50 @@ theorem isoNear (B : Over (Spec (CommRingCat.of L))) (X 𝒜 : Over (S L)) [Smoo
   rw [← locNeron_res_iff hw 𝒜] at h𝒜
   exact locNeron_of_iso i h𝒜
 
+/-- The basic open `D(g)`. -/
+def Db (g : 𝓞 L) : (S L).Opens := PrimeSpectrum.basicOpen (R := 𝓞 L) g
+
+theorem mem_Db {g : 𝓞 L} {x : S L} : x ∈ Db g ↔ g ∉ (PrimeSpectrum.asIdeal (R := 𝓞 L) x) :=
+  PrimeSpectrum.mem_basicOpen _ _
+
+theorem ne_zero_of_idx (s : GIdx L) : s.unop.s ≠ 0 := fun h => s.unop.hs (h ▸ Ideal.zero_mem _)
+
+/-- **Glue N1-g2 (proved).** Given a local Néron model at a maximal ideal `v` and a smooth separated
+quasi-compact model `𝒜` which is a Néron model at every maximal ideal not containing `f ≠ 0`, `B` has a
+Néron model over an open neighbourhood of `v`. -/
+theorem near (B : Over (Spec (CommRingCat.of L))) (v : Ideal (𝓞 L)) [hv : v.IsMaximal]
+    (N : Over (Spec (CommRingCat.of (Localization.AtPrime v)))) (hN : LocalModel B v N)
+    (𝒜 : Over (S L)) [Smooth 𝒜.hom] [IsSeparated 𝒜.hom] [QuasiCompact 𝒜.hom]
+    (eA : (gf L).obj 𝒜 ≅ B) (f : 𝓞 L) (hf : f ≠ 0)
+    (h𝒜 : ∀ (w : Ideal (𝓞 L)) [w.IsMaximal], f ∉ w → LocNeron L w 𝒜) :
+    ∃ U : (S L).Opens, pt v ∈ U ∧ Nonempty (NeronOn L B U) := by
+  obtain ⟨Dv, X, hXs, hXsep, hXqc, eX, hvD, hXD, hXv⟩ := spreadAt B v N hN
+  haveI := hXs; haveI := hXsep; haveI := hXqc
+  obtain ⟨s₁, s₂, hcmp⟩ := isoNear B X 𝒜 eX eA
+  let k := s₁.unop.s * s₂.unop.s * f
+  have hk : k ≠ 0 := mul_ne_zero (mul_ne_zero (ne_zero_of_idx s₁) (ne_zero_of_idx s₂)) hf
+  obtain ⟨g, hgv, hg⟩ := exists_avoid v k hk
+  let U := Dv ⊓ Db g
+  have hvU : pt v ∈ U := ⟨hvD, mem_Db.2 hgv⟩
+  have hU : (jL L) ⁻¹ᵁ U = ⊤ := jL_preimage_eq_top L ⟨_, hvU⟩
+  haveI := isIso_gf_resι X hU
+  refine ⟨U, hvU, ⟨neronOn_of_local B U (res X U) (supp_res X U)
+    (asIso ((gf L).map (resι X U)) ≪≫ eX) (fun w _ hw => ?_) (hT_of_mem (pt v) hv hvU)⟩⟩
+  rw [locNeron_res_iff hw X]
+  by_cases hwv : w = v
+  · subst hwv; exact hXv
+  · obtain ⟨x, hxU, hxw⟩ := hw
+    have hgw : g ∉ w := by
+      have := mem_Db.1 hxU.2
+      rwa [hxw] at this
+    have hkw : k ∉ w := fun h => hgw (hg w ‹_› hwv h)
+    have h1 : s₁.unop.s ∉ w := fun h => hkw (Ideal.mul_mem_right _ _ (Ideal.mul_mem_right _ _ h))
+    have h2 : s₂.unop.s ∉ w := fun h => hkw (Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ h))
+    have h3 : f ∉ w := fun h => hkw (Ideal.mul_mem_left _ _ h)
+    refine hcmp w ⟨x, ⟨mem_Dg.2 ?_, mem_Dg.2 ?_⟩, hxw⟩ (h𝒜 w h3)
+    · rwa [hxw]
+    · rwa [hxw]
+
 end Near
 
 end NeronExt
