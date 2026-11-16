@@ -997,6 +997,44 @@ theorem bst_stable (σ : GQp p) : Bst p ≤ (Bst p).comap (bdrAlg p σ) := by
 
 end BstStable
 
+/-! ## §10. Transcendence of `log [p̃]` (named input) and `B_st ≅ B_max[X]` -/
+
+section Transcendence
+
+variable (p : ℕ) [Fact p.Prime]
+
+/-- `B_dR^+ → B_dR` is injective (`B_dR` is the fraction field of the domain `B_dR^+`). -/
+theorem toBdR_injective : Function.Injective (toBdR p) := by
+  have := ZInQ.Contrib.G9.BdrKer.Cp.isFractionRing_BDeRham p
+  exact IsFractionRing.injective (BDeRhamPlus 𝓞_ℂ_[p] p) (ZInQ.Contrib.G9.BdrKer.BdR 𝓞_ℂ_[p] p)
+
+/-- **Fontaine: `log [p̃]` is transcendental over `B_max`** (Fontaine, *Le corps des périodes
+p-adiques*, Astérisque 223 (1994), Exp. II §3 for `B_cris`; Colmez for `B_max`; Berger 2002 §1.2
+uses it to write `B_st = B_max[log [p̃]]`; numbering UNVERIFIED). Stated over this file's genuine
+`B_max ⊆ B_dR` and `log [p̃] ∈ B_dR^+`. Not used by `panBerger_of_printedB`. -/
+def LogPTildeTranscendental : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime], Transcendental (Bmax p) (toBdR p (logPTilde p))
+
+/-- Equivalently, `B_max[X] → B_dR`, `X ↦ log [p̃]`, is injective. -/
+theorem logPTildeTranscendental_iff :
+    LogPTildeTranscendental ↔ ∀ (p : ℕ) [Fact p.Prime],
+      Function.Injective (Polynomial.aeval (R := Bmax p) (toBdR p (logPTilde p))) :=
+  ⟨fun h p _ => transcendental_iff_injective.mp (h p),
+    fun h p _ => transcendental_iff_injective.mpr (h p)⟩
+
+/-- **Given the transcendence, `B_st` is the polynomial ring `B_max[X]`** (`X ↦ log [p̃]`). -/
+def bstEquivPolynomial (h : LogPTildeTranscendental) :
+    Polynomial (Bmax p) ≃ₐ[Bmax p] Algebra.adjoin (Bmax p) {toBdR p (logPTilde p)} :=
+  (AlgEquiv.ofInjective _ (transcendental_iff_injective.mp (h p))).trans
+    (Subalgebra.equivOfEq _ _ (Algebra.adjoin_singleton_eq_range_aeval _ _).symm)
+
+theorem bstEquivPolynomial_X (h : LogPTildeTranscendental) :
+    ((bstEquivPolynomial p h Polynomial.X : Algebra.adjoin (Bmax p) {toBdR p (logPTilde p)}) :
+      BdR p) = toBdR p (logPTilde p) := by
+  simp [bstEquivPolynomial]
+
+end Transcendence
+
 end BergerBst
 end PkgI4
 end HDec
