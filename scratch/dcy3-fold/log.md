@@ -13,3 +13,10 @@
   (the tree still has h29-fix's version). origin/wip/leaf-fold29's tip 305280f7 changes only docs.
   Workaround for this task's checks: the drop-in is copied into the working tree LOCALLY ONLY and is never committed
   (that Contrib file is outside this task's allowed edits). The integrator must apply it to leaf-fold29.
+- 23:31 base + drop-in (local): `lake build +ZInQKernel.OneProof.Main` OK (13685 jobs); frozenTarget axioms standard.
+- 23:32 base DumpCompact (OneProof + Contrib.OneProof modules): 16935 constants -> hashes_before.txt; frozenTarget's
+  pp.all type in frozenTarget_before.txt.
+- 23:37 base PruneScan: OpenResearchLeaves24 26, OpenTextbookLeaves11 11, OpenAddedLeaves17 13, OpenGlue7 1 = 51 fields,
+  0 unused (prunescan-base-out.txt, used-fields-base.txt, unused-all-base.txt, prune-set-base.txt).
+  kinds.tsv before (kinds-counts-before.txt): H rows 51, strict 41 LEAF / 10 GLUE, strictest 39 / 12; all 62 rows strict
+  49 / 13, strictest 47 / 15. The field's row: added, GLUE / GLUE.
