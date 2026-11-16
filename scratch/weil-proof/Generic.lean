@@ -228,3 +228,39 @@ theorem formula_root (X : AbVar k) {n : ℕ} (hn : 0 < n) (x : AC.Kpt X) (hx : x
   · rw [const_eq]; simpa using hv
 
 end WeilProof
+
+/-! ## Step 3: `MumfordWeilPairingAC` from its fourth part, and the field -/
+
+namespace WeilProof
+
+open PicDict PkgI3 PkgI3.AbVar MonoidalCategory
+open scoped CategoryTheory.MonObj
+
+/-- **LEAF (`ē_n` is multiplicative in the class).** Mumford, *Abelian varieties*, §20 (bilinearity of
+`ē_n : X_n × X̂_n → μ_n`, here its second variable), for the formula `ē_n(x, M) = t_x^*ψ ∘ ψ⁻¹`, `n`
+prime to the characteristic, `k` algebraically closed (UNVERIFIED numbering). This is the fourth
+conjunct of `PicDict.MumfordWeilPairingAC`; the other three are proved here
+(`formula_indep`, `formula_root`, `formula_mul`). -/
+def MumfordWeilBilinRightAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (n : ℕ), 0 < n → (n : k) ≠ 0 →
+    ∀ (x : AC.Kpt X) (hx : x ^ n = 1) (c c' : X.X.left.Pic), AC.IsDT n c → AC.IsDT n c' →
+      ∀ (ψ : AC.Triv X n c) (ψ' : AC.Triv X n c') (ψ'' : AC.Triv X n (c * c')),
+        AC.formula x hx (c * c') ψ'' = AC.formula x hx c ψ * AC.formula x hx c' ψ'
+
+/-- **`MumfordWeilPairingAC` from its fourth conjunct**: well defined, `μ_n`-valued constant and
+multiplicative in `x` are proved. -/
+theorem mumfordWeilPairingAC_of_bilinRight (h : MumfordWeilBilinRightAC) : MumfordWeilPairingAC := by
+  intro k _ _ X n hn hnk x x' hx hx' c c' hc hc'
+  refine ⟨fun ψ ψ' => formula_indep X x hx c ψ ψ', fun ψ => formula_root X hn x hx c ψ,
+    fun ψ => formula_mul X x x' hx hx' c ψ, fun ψ ψ' ψ'' => h k X n hn hnk x hx c c' hc hc' ψ ψ' ψ''⟩
+
+/-- **The field `weilPairingMumford`** from six of pic-dict's Mumford leaves and the narrower
+`MumfordWeilBilinRightAC` in place of `MumfordWeilPairingAC`. -/
+theorem weilPairingMumford_of_bilinRight (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
+    (h8 : MumfordPhiSurjectiveAC) (hbil : MumfordWeilBilinRightAC) (h20b : MumfordWeilNondegAC)
+    (h23 : MumfordWeilAltAC) (hKL : MumfordKLFiniteAC) : T09Pic.WeilPairingMumford :=
+  PicDict.weilPairingMumford_final hsq h8iv h8 (mumfordWeilPairingAC_of_bilinRight hbil) h20b h23 hKL
+
+end WeilProof
+
+#print axioms WeilProof.weilPairingMumford_of_bilinRight
