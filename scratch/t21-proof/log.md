@@ -36,3 +36,30 @@ BrandtValue.lean (gT = −3·[B^×H] + 1·[else] ∈ InPiZ; generator ⇒ f(1) =
 Route: g defined by membership in the double coset B^×H (invariances free); sums need exactly
 {0, t*} ⊂ B^×H among TYZ's 8 representatives: positive by explicit R̂_3^× element, negative by the
 local invariant (global content argument + 2-adic mod-4 obstruction, decide).
+
+## Step 4: L-value bounds — VERIFIED (compiles; each file builds in < 15 s)
+- LKernel.lean: `norm_gaussLambda_sub_mainL_le` (0 ≤ a,b < 1): ‖Λ_{a,b}(1) − mainL a b‖ ≤ (15.2e^{−π} + 0.2487)/π,
+  mainL = closed form of the four nearest lattice points (a−m, b−n), m,n ∈ {0,1}; tails by geometric majorants.
+- LValues.lean: `lValOne_three_eq` (L(C_3,1) = Σ_{j ∈ (ℤ/12)²} twChar 3 j (π/12) Λ_{j/12}(1), from
+  `isLContinuation_twChar`); coefficient tables uRe/uIm/jac12 with `twChar_three_eq`, `cU_eq`; `re_term`.
+- LBounds.lean: generic `Lsum_bounds` (M, tables cr ci, l ≤ e^{−π/M²} ≤ u, W = Σ(|cr|+|ci|), rational bounds on
+  Re/Im of the main sum ⇒ ‖L − S‖ ≤ (15.2e^{−π}+0.2487)W/(4M), rl ≤ Re S ≤ rh, il ≤ Im S ≤ ih).
+- LUnit.lean: certificates by `decide +kernel` (all 10 together < 10 s):
+  C_1 (M = 4, l = 0.8036, u = 0.836): Re S ∈ [3/5, 71/100], Im S ∈ [−1/25, 1/25], W = 8;
+  C_3 (M = 12, l = 0.9781, u = 0.9787): Re S ∈ [149/100, 153/100], Im S ∈ [−1/50, 1/50], W = 64.
+  `lValOne_one_bounds`: 0.09 ≤ Re L(C_1,1), ‖L(C_1,1)‖ ≤ 1.26.
+  `lValOne_three_bounds`: 0.14 ≤ Re L(C_3,1), ‖L(C_3,1)‖ ≤ 2.9.
+  Cross-check (python, scratch/t21-proof/lsplit.py, cert.py): L(C_1,1) ≈ 0.65551, L(C_3,1) ≈ 1.51385
+  (= Ω/4 and Ω/√3 with Ω = omegaInt ≈ 2.62206, i.e. 𝓛(1)² = 𝓛(3)² = 1).
+
+## Step 5: TYZThm21At31 PROVED — VERIFIED
+`ZInQ.Contrib.T21Proof.tyzThm21At31 : ZInQ.Contrib.TYZDecomp.H29Split.TYZThm21At31`
+(ZInQKernel/Contrib/OneProof/TYZThm21At31.lean). `lcalSq_one_bounds`, `lcalSq_three_bounds`: 0 < ‖𝓛(m)²‖ < 4.
+#discharges (scratch/t21-proof/Discharges.lean, output Discharges-output.txt):
+  DISCHARGES [hT21] by ZInQ.Contrib.T21Proof.tyzThm21At31 / still assumes: [] / axioms: [propext, Classical.choice, Quot.sound]
+No native_decide, #eval, sorry, axiom, syntax/macro in T21Proof/ or TYZThm21At31.lean (grep).
+
+## Step 6: fold
+autofold.py refuses (`not a field of the current bundles: ['hT21']`: hT21 is a top-level argument of frozenTarget,
+autofold folds bundle fields only). Manual fold checked: scratch/t21-proof/FoldCheck.lean states frozenTarget
+without hT21 (passing tyzThm21At31), compiles, axioms standard. Spec kept in autofold.json (no leaves).
