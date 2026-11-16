@@ -32,3 +32,9 @@
   * `heegner_at_even`, `grossZagierHeegnerCd_of_even`, `grossZagierHeegnerCd_of_twist`:
     `GZStatements.GrossZagierHeegnerCd` from `TwistTransportCd`, `GrossZagierFormulaCd`, `GrossConjugationCd`
     (the constant `c` of the parametrization replaced by `2·num(c)`).
+
+## Numerical check of `TwistTransportCd` (scratch/heegner-32/py/twist_check.py)
+- d = 5, D = −31 (h = 3), β = 113, level 800: the three `Z_Q ∈ 32a1(ℂ)` computed from PARI's `eta` (250 digits
+  requested, ~15 digits reached at Im τ ≈ 0.0035). The polynomials `∏_Q (X − x(Z_Q))` and `∏_Q (X − √5·y(Z_Q))`
+  have rational coefficients to ~15 digits (e.g. constant term of the second `3182911.1197037037… = (3182911·3375 + 404)/3375`;
+  the others found by `algdep` as degree-1 or squares). Consistent with `σ(Z_Q) = (σ(√5)/√5)·Z_{πQ}` (VERIFIED, numerical).
