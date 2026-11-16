@@ -57,16 +57,16 @@ theorem le_hiQ {q : ℚ} {N : ℕ} {l u : ℚ} {E : ℝ} (hl0 : 0 ≤ l) (hl : (
 /-! ## The imaginary part of a lattice term -/
 
 /-- The rational coefficient `(c_i α₁ + c_r α₂)/(4N)` of `E^N` in the imaginary part. -/
-def qI (cr ci α1 α2 : ℤ) : ℚ :=
+def qIm (cr ci α1 α2 : ℤ) : ℚ :=
   if α1 ^ 2 + α2 ^ 2 = 0 then 0 else ((ci * α1 + cr * α2 : ℤ) : ℚ) / (4 * ((α1 ^ 2 + α2 ^ 2 : ℤ) : ℚ))
 
 theorem im_term (M : ℕ) (hM : 0 < M) (cr ci α1 α2 : ℤ) :
     ((((cr : ℂ) + (ci : ℂ) * I) / 4) * (1 / (M : ℂ)) *
       ((π : ℂ) * tmL ((α1 : ℝ) / M) ((α2 : ℝ) / M))).im =
-      (qI cr ci α1 α2 : ℝ) * Real.exp (-π / (M : ℝ) ^ 2) ^ nQ α1 α2 := by
+      (qIm cr ci α1 α2 : ℝ) * Real.exp (-π / (M : ℝ) ^ 2) ^ nQ α1 α2 := by
   have hM' : (M : ℝ) ≠ 0 := by exact_mod_cast hM.ne'
   have hpi := Real.pi_pos
-  unfold qI nQ tmL
+  unfold qIm nQ tmL
   by_cases hN : α1 ^ 2 + α2 ^ 2 = 0
   · have h1 : α1 = 0 := by nlinarith [sq_nonneg α1, sq_nonneg α2]
     have h2 : α2 = 0 := by nlinarith [sq_nonneg α1, sq_nonneg α2]
@@ -106,7 +106,7 @@ theorem re_term' (M : ℕ) (hM : 0 < M) (cr ci α1 α2 : ℤ) (u v : ℝ) (hu : 
 theorem im_term' (M : ℕ) (hM : 0 < M) (cr ci α1 α2 : ℤ) (u v : ℝ) (hu : u = (α1 : ℝ) / M)
     (hv : v = (α2 : ℝ) / M) :
     ((((cr : ℂ) + (ci : ℂ) * I) / 4) * (1 / (M : ℂ)) * ((π : ℂ) * tmL u v)).im =
-      (qI cr ci α1 α2 : ℝ) * Real.exp (-π / (M : ℝ) ^ 2) ^ nQ α1 α2 := by
+      (qIm cr ci α1 α2 : ℝ) * Real.exp (-π / (M : ℝ) ^ 2) ^ nQ α1 α2 := by
   subst hu hv; exact im_term M hM cr ci α1 α2
 
 /-! ## One class -/
@@ -122,9 +122,9 @@ def reCl (M : ℕ) (cr ci : ℤ) (j1 j2 : ℕ) (E : ℝ) : ℝ :=
 
 /-- The imaginary part of the main term of the class `(j₁, j₂)`. -/
 def imCl (M : ℕ) (cr ci : ℤ) (j1 j2 : ℕ) (E : ℝ) : ℝ :=
-  (qI cr ci j1 j2 : ℝ) * E ^ nQ j1 j2 + (qI cr ci j1 (j2 - M) : ℝ) * E ^ nQ j1 (j2 - M) +
-    (qI cr ci (j1 - M) j2 : ℝ) * E ^ nQ (j1 - M) j2 +
-    (qI cr ci (j1 - M) (j2 - M) : ℝ) * E ^ nQ (j1 - M) (j2 - M)
+  (qIm cr ci j1 j2 : ℝ) * E ^ nQ j1 j2 + (qIm cr ci j1 (j2 - M) : ℝ) * E ^ nQ j1 (j2 - M) +
+    (qIm cr ci (j1 - M) j2 : ℝ) * E ^ nQ (j1 - M) j2 +
+    (qIm cr ci (j1 - M) (j2 - M) : ℝ) * E ^ nQ (j1 - M) (j2 - M)
 
 theorem cast_sub_div (M j : ℕ) (hM : 0 < M) :
     (j : ℝ) / M - 1 = ((((j : ℤ) - (M : ℤ) : ℤ)) : ℝ) / M := by
@@ -167,15 +167,15 @@ def reClHi (M : ℕ) (cr ci : ℤ) (j1 j2 : ℕ) (l u : ℚ) : ℚ :=
 
 /-- Rational lower bound of `imCl`. -/
 def imClLo (M : ℕ) (cr ci : ℤ) (j1 j2 : ℕ) (l u : ℚ) : ℚ :=
-  loQ (qI cr ci j1 j2) (nQ j1 j2) l u + loQ (qI cr ci j1 (j2 - M)) (nQ j1 (j2 - M)) l u +
-    loQ (qI cr ci (j1 - M) j2) (nQ (j1 - M) j2) l u +
-    loQ (qI cr ci (j1 - M) (j2 - M)) (nQ (j1 - M) (j2 - M)) l u
+  loQ (qIm cr ci j1 j2) (nQ j1 j2) l u + loQ (qIm cr ci j1 (j2 - M)) (nQ j1 (j2 - M)) l u +
+    loQ (qIm cr ci (j1 - M) j2) (nQ (j1 - M) j2) l u +
+    loQ (qIm cr ci (j1 - M) (j2 - M)) (nQ (j1 - M) (j2 - M)) l u
 
 /-- Rational upper bound of `imCl`. -/
 def imClHi (M : ℕ) (cr ci : ℤ) (j1 j2 : ℕ) (l u : ℚ) : ℚ :=
-  hiQ (qI cr ci j1 j2) (nQ j1 j2) l u + hiQ (qI cr ci j1 (j2 - M)) (nQ j1 (j2 - M)) l u +
-    hiQ (qI cr ci (j1 - M) j2) (nQ (j1 - M) j2) l u +
-    hiQ (qI cr ci (j1 - M) (j2 - M)) (nQ (j1 - M) (j2 - M)) l u
+  hiQ (qIm cr ci j1 j2) (nQ j1 j2) l u + hiQ (qIm cr ci j1 (j2 - M)) (nQ j1 (j2 - M)) l u +
+    hiQ (qIm cr ci (j1 - M) j2) (nQ (j1 - M) j2) l u +
+    hiQ (qIm cr ci (j1 - M) (j2 - M)) (nQ (j1 - M) (j2 - M)) l u
 
 section bounds
 variable {M : ℕ} {cr ci : ℤ} {j1 j2 : ℕ} {l u : ℚ} {E : ℝ}
