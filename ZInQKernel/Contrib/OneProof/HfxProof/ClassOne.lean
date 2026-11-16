@@ -33,7 +33,9 @@ theorem normSq_qp {p : ℕ} [Fact p.Prime] (γ : ℍ[ℚ]) :
     Quaternion.normSq (qp p γ) = ((Quaternion.normSq γ : ℚ) : ℚ_[p]) := by
   rw [qp, normSq_qmap]; rfl
 
-theorem qp_inv {p : ℕ} [Fact p.Prime] (γ : ℍ[ℚ]) : qp p γ⁻¹ = (qp p γ)⁻¹ := map_inv₀ _ _
+theorem qp_inv {p : ℕ} [Fact p.Prime] (γ : ℍ[ℚ]) :
+    qp p γ⁻¹ = ((Quaternion.normSq γ : ℚ) : ℚ_[p])⁻¹ • star (qp p γ) := by
+  rw [Quaternion.inv_def, qp_smul, qp, qmap_star]; push_cast; rfl
 
 theorem isHur_of_norm_coords {p : ℕ} [Fact p.Prime] {y : ℍ[ℚ_[p]]} (h0 : ‖y.re‖ ≤ 1)
     (h1 : ‖y.imI‖ ≤ 1) (h2 : ‖y.imJ‖ ≤ 1) (h3 : ‖y.imK‖ ≤ 1) : IsHur (Zp p) y := by
@@ -57,9 +59,7 @@ theorem norm_prime_pow_ne {ℓ p e : ℕ} [Fact ℓ.Prime] (hp : p.Prime) (hne :
   rw [norm_pow]
   have : ‖(p : ℚ_[ℓ])‖ = 1 := by
     have h := Padic.norm_natCast_eq_one_iff (p := ℓ) (n := p)
-    refine h.mpr ?_
-    intro hd
-    exact hne ((Nat.prime_dvd_prime_iff_eq (Fact.out) hp).mp hd).symm
+    exact h.mpr ((Nat.coprime_primes Fact.out hp).mpr hne.symm)
   rw [this, one_pow]
 
 theorem isHur_qp_hurZ' {p : ℕ} [Fact p.Prime] {γ : ℍ[ℚ]} (h : IsHurZ γ) : IsHur (Zp p) (qp p γ) := by
@@ -76,11 +76,19 @@ theorem isHur_qp_hurZ' {p : ℕ} [Fact p.Prime] {γ : ℍ[ℚ]} (h : IsHurZ γ) 
 def Cond (m : ℕ) (y : ℍ[AQ]) : Prop :=
   ∀ w : HeightOneSpectrum (𝓞 ℚ), ‖((m : ℤ) : ℚ_[Pw w])‖ ≤ ‖Quaternion.normSq (piQ w y)‖
 
+theorem normSq_piQ_unit_ne_zero (w : HeightOneSpectrum (𝓞 ℚ)) (y : ℍ[AQ]ˣ) :
+    Quaternion.normSq (piQ w (y : ℍ[AQ])) ≠ 0 := by
+  intro h
+  have := congrArg (fun z => Quaternion.normSq (piQ w z)) y.mul_inv
+  simp only [map_mul, map_one, h, zero_mul] at this
+  exact zero_ne_one this
+
 theorem piQ_unit_inv (w : HeightOneSpectrum (𝓞 ℚ)) (y : ℍ[AQ]ˣ) :
-    piQ w ((y⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) = (piQ w y)⁻¹ := by
-  have h : piQ w (y : ℍ[AQ]) * piQ w ((y⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) = 1 := by
-    rw [← map_mul, Units.mul_inv, map_one]
-  exact (DivisionRing.inv_eq_of_mul _ _ h).symm
+    piQ w ((y⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) =
+      (Quaternion.normSq (piQ w (y : ℍ[AQ])))⁻¹ • star (piQ w (y : ℍ[AQ])) := by
+  have h : ((1 : ℚ_[Pw w]) • piQ w (y : ℍ[AQ])) * piQ w ((y⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) = 1 := by
+    rw [one_smul, ← map_mul, Units.mul_inv, map_one]
+  rw [eq_of_mul_eq_one one_ne_zero (normSq_piQ_unit_ne_zero w y) h, inv_one, one_smul]
 
 theorem piQ_unit_ne_zero (w : HeightOneSpectrum (𝓞 ℚ)) (y : ℍ[AQ]ˣ) : piQ w (y : ℍ[AQ]) ≠ 0 := by
   intro h
@@ -114,10 +122,9 @@ theorem descent_step {m : ℕ} {y : ℍ[AQ]ˣ} (hy : LH y) (hm : Cond m y) {w₀
     · have hne : p ≠ (Pw w : ℕ) := by
         intro h; exact hw (eq_of_Pw_eq h.symm)
       refine IsHur.mul ?_ (hy w)
-      rw [qp_inv, Quaternion.inv_def, normSq_qp, hγn]
-      refine isHur_inv_star (isHur_qp_hurZ' hγZ) ?_
-      push_cast
-      exact norm_prime_pow_ne hpp hne
+      rw [qp_inv, hγn]
+      refine IsHur.smul ?_ (isHur_qp_hurZ' hγZ).star
+      rw [mem_Zp, norm_inv]; push_cast; rw [norm_prime_pow_ne hpp hne, inv_one]
   · intro w
     rw [map_mul, map_mul, piQ_qι, normSq_qp, Quaternion.normSq_inv, hγn, norm_mul]
     have hm' := hm w
