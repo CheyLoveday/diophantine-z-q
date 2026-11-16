@@ -13,7 +13,7 @@ the files here are development copies and checks.
 | `Discharges.lean`, `discharges.txt` | `#discharges` run and its output |
 | `autofold.json` | **the spec** (nondegeneracy flagged pending reading): 34/11 -> 37/11 |
 | `autofold-unread.json` | the same with pic-dict's "unread" flag: 34/11 -> 38/10 |
-| `autofold-lf32.json` | spec for a leaf-fold32 base (phiAmpleIsogeny already folded) |
+| `autofold-lf32.json` | spec for leaf-fold32b (phiAmpleIsogeny already folded): 16/21 -> 18/21; `FoldDryRunLF32.lean` compiled there |
 | `FoldDryRun.lean`, `FoldDryRunUnread.lean` | dry-run modules (line 1 stripped), compile |
 | `Test*.lean` | throwaway experiments |
 | `log.md` | results log |

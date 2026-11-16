@@ -29,7 +29,10 @@ theorem WeilProof.Theta.weilPairingMumford_final (hsq : MumfordSquareAC) (h8iv :
 
 `h3` is the open field `phiAmpleIsogeny` of the same bundle; in leaf-fold32 it is
 `PicFix.phiAmpleIsogeny_of_printed` of the two leaves `mumfordKLFiniteSectionAC`, `mumfordPhiSurjectiveAC`
-(spec `scratch/weil-proof/autofold-lf32.json`, untested).
+(spec `scratch/weil-proof/autofold-lf32.json`, dry-run on a temporary worktree of `origin/wip/leaf-fold32b` at
+6b7a45445 with the two files added: `strict count: 16/21 on 37 -> 18/21 on 39; strictest 16/21 -> 18/21` — that
+base rates many rows GLUE, and this fold leaves its GLUE count unchanged; the printed module
+`scratch/weil-proof/FoldDryRunLF32.lean` compiled there to `sixContactMin_of_open39`, standard axioms).
 
 **Count** (autofold dry runs on this base; each printed module compiles to `sixContactMin_of_open36` with the
 standard axioms):

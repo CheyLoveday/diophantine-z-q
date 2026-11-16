@@ -36,5 +36,5 @@
    ]
   }
  ],
- "note": "UNTESTED spec for a base after leaf-fold32 (origin/wip/leaf-fold32b): phiAmpleIsogeny already folded into mumfordKLFiniteSectionAC and mumfordPhiSurjectiveAC; not dry-run here"
+ "note": "Spec for origin/wip/leaf-fold32b at 6b7a45445 (phiAmpleIsogeny already folded into mumfordKLFiniteSectionAC and mumfordPhiSurjectiveAC). Dry run there: strict count 16/21 on 37 -> 18/21 on 39; strictest 16/21 -> 18/21; module compiles (scratch/weil-proof/FoldDryRunLF32.lean)."
 }
