@@ -60,7 +60,15 @@ def sig(text):
 def mentions(text, names):
     return any(re.search(r'(?<![\w])' + re.escape(s) + r'(?![\w\'])', text) for s in names)
 
-TOP = 'sixContactMin_of_open35'
+MAIN = open('ZInQKernel/OneProof/Main.lean').read()
+_mt = re.search(r'theorem _root_\.ZInQ\.OneProof\.frozenTarget\n.*?\n(?=end ZInQ\.Contrib\.TYZChain)', MAIN, re.S).group(0)
+_b = dict((v, t) for v, t in re.findall(r'\((\w) : HDec\.HSyn\.(\w+)\)', _mt))
+TOPR, TOPT, TOPL, TOPG = _b['r'], _b['t'], _b['l'], _b['g']
+TOP = re.search(r'HDec\.HSyn\.(sixContactMin_of_open\d+) r t l g', _mt).group(1)
+MAIN_IMPORTS = re.findall(r'^import .*$', MAIN, re.M)
+MAIN_OPENS = re.search(r'namespace ZInQ\.Contrib\.TYZChain\n\n((?:open .*\n)*)', MAIN).group(1)
+TPL = {'OpenResearchLeaves26': TOPR, 'OpenTextbookLeaves12': TOPT, 'OpenAddedLeaves17': TOPL, 'OpenGlue8': TOPG,
+       'sixContactMin_of_open35': TOP}
 todo = [TOP]
 copied = []
 while todo:
@@ -174,14 +182,7 @@ items.sort()
 opens = ['open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj',
          'open NumberField']
 
-hdr = '''import ZInQKernel.OneProof.H.TailZ42
-import ZInQKernel.OneProof.TYZSplit
-import ZInQKernel.OneProof.TopChain
-import ZInQKernel.Contrib.TYZChain.Main
-import ZInQKernel.Contrib.OneProof.RingClassLattice
-import ZInQKernel.Contrib.OneProof.TYZLemma29Mod2
-import ZInQKernel.Contrib.OneProof.FHNonvanishing
-import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
+hdr = '\n'.join(MAIN_IMPORTS) + '''
 import ZInQKernel.Contrib.OneProof.GR56Lattice
 import ZInQKernel.Contrib.OneProof.GRDict
 
@@ -246,10 +247,18 @@ for _, ln, kind, n in items:
     parts.append(do_rename(t) + '\n')
     parts.append('end\n')
 parts += switch('HDec.HSyn')
-top26 = blocks['OpenResearchLeaves26'][0]
+TAIL0 = len(parts)
+def _ft(suffix, doc):
+    t = _mt.replace('theorem _root_.ZInQ.OneProof.frozenTarget', 'theorem frozenTarget_' + suffix, 1)
+    t = re.sub(r'(?<=HDec\.HSyn\.)' + TOPR + r'(?![\w])', TOPR + suffix, t)
+    t = t.replace('HDec.HSyn.' + TOP + ' r t l g', 'HDec.HSyn.' + TOP + suffix + ' r t l g')
+    return doc + '\n' + t
+FT_BLOCK = ('namespace ZInQ.Contrib.TYZChain\n\n' + MAIN_OPENS + '\n' +
+    _ft('E', '/-- `ZInQ.OneProof.frozenTarget` (Main.lean, verbatim) with the research bundle `E` (no `gonzalezRotgerProp56X6`). -/') + '\n' +
+    _ft('F', '/-- `frozenTarget` with the research bundle `F` (neither González–Rotger field). -/') + '\n')
 parts.append('''/-- **The next research bundle** (gr-dict): `OpenResearchLeaves26` with `gonzalezRotgerProp56X6` replaced by
 Eichler's count `eichlerOptEmbCount6`. -/''')
-L = struct_copy('OpenResearchLeaves26').split('\n')
+L = struct_copy(TOPR).split('\n')
 L[0] = 'structure OpenResearchLeaves26E : Prop where'
 txt = '\n'.join(L)
 txt = re.sub(r'  /-- gr-dict bypass: replaces.*?\n.*?-/\n  r5le : _root_.GR56.R5fpCountLe',
@@ -259,7 +268,7 @@ txt = re.sub(r'  /-- gr-dict bypass: replaces.*?\n.*?-/\n  r5le : _root_.GR56.R5
   `gonzalezRotgerProp56X6` (bypass: the chain needs only the upper bound, `GR56.r5fpCountLe_of_eichler`). -/
   eichlerOptEmbCount6 : _root_.GRCountX6.EichlerOptEmbCount6''', txt, flags=re.S)
 parts.append(txt + '\n')
-fields26 = re.findall(r'^  ([A-Za-z_][\w\']*) :', blocks['OpenResearchLeaves26'][0]['text'], re.M)
+fields26 = re.findall(r'^  ([A-Za-z_][\w\']*) :', blocks[TOPR][0]['text'], re.M)
 lines = ['/-- `OpenResearchLeaves26S` from `OpenResearchLeaves26E`: the bound from Eichler and the textbook fields. -/',
          'theorem openResearchLeaves26S_of_26E (n : OpenResearchLeaves26E) (t : OpenTextbookLeaves12) :',
          '    OpenResearchLeaves26S where']
@@ -324,53 +333,17 @@ end HSyn
 
 end HDec
 
-namespace ZInQ.Contrib.TYZChain
-
-open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
-
-/-- `ZInQ.OneProof.frozenTarget` (Main.lean) with `OpenResearchLeaves26E` (no `gonzalezRotgerProp56X6`; Eichler's
-count instead). -/
-theorem frozenTarget_E
-    (r : HDec.HSyn.OpenResearchLeaves26E) (t : HDec.HSyn.OpenTextbookLeaves12) (l : HDec.HSyn.OpenAddedLeaves17)
-    (g : HDec.HSyn.OpenGlue8)
-    (h11 : TYZThm11Integral)
-    (hL3s : H29Split.LegendreThreeSquares) (hJP : H29Split.JonesPallX2Y2Z16)
-    (hfx : H29Split.TYZTestVectorExists) (hL29 : H29Split.TYZLemma29PrintedNe3)
-    (hT21 : H29Split.TYZThm21At31) (hP23 : H29Split.TYZProp23Printed)
-    (hCM : _root_.T5Glue.ShimuraMainCM)
-    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
-    (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
-    ZInQ.FrozenTarget :=
-  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
-    (HDec.HSyn.sixContactMin_of_open35E r t l g)
-    (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves hL3s hJP hfx hL29 hT21 hP23) hCM h33)
-    ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
-
-/-- `frozenTarget` with `OpenResearchLeaves26F` (neither González–Rotger field). -/
-theorem frozenTarget_F
-    (r : HDec.HSyn.OpenResearchLeaves26F) (t : HDec.HSyn.OpenTextbookLeaves12) (l : HDec.HSyn.OpenAddedLeaves17)
-    (g : HDec.HSyn.OpenGlue8)
-    (h11 : TYZThm11Integral)
-    (hL3s : H29Split.LegendreThreeSquares) (hJP : H29Split.JonesPallX2Y2Z16)
-    (hfx : H29Split.TYZTestVectorExists) (hL29 : H29Split.TYZLemma29PrintedNe3)
-    (hT21 : H29Split.TYZThm21At31) (hP23 : H29Split.TYZProp23Printed)
-    (hCM : _root_.T5Glue.ShimuraMainCM)
-    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
-    (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
-    ZInQ.FrozenTarget :=
-  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
-    (HDec.HSyn.sixContactMin_of_open35F r t l g)
-    (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves hL3s hJP hfx hL29 hT21 hP23) hCM h33)
-    ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
-
-end ZInQ.Contrib.TYZChain
+''' + FT_BLOCK + '''end ZInQ.Contrib.TYZChain
 
 #print axioms HDec.HSyn.sixContactMin_of_open35F
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_F
 #print axioms HDec.HSyn.sixContactMin_of_open35E
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_E
 ''')
-out = '\n'.join(parts)
+tail = '\n'.join(parts[TAIL0:])
+for a in sorted(TPL, key=len, reverse=True):
+    tail = re.sub(re.escape(a) + r'(?=[SEF_]|\b)', TPL[a], tail)
+out = '\n'.join(parts[:TAIL0]) + '\n' + tail
 out = out.replace('namespace HDec\n\nnamespace HSyn\n\n', 'namespace HDec\n\nnamespace HSyn\n\n' + '\n'.join(opens) + '\n\n', 1)
 open('scratch/gr-dict/BypassFold.lean', 'w').write(out)
 print('structs', used_structs)

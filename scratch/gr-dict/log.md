@@ -16,7 +16,7 @@ Base: origin/main 2880fef1 (leaf-fold31, TailZ42, sixContactMin_of_open35). Mark
   Agrees with gr56-prove's reach.txt over frozenTarget (97682 constants).
 - `scratch/gr-dict/gen_bypass.py` (adapted from st-qbar) writes `BypassFold.lean`: research generations on the live
   path copied with suffix S (ResearchLeaves3, OpenResearchLeaves 2,5,7,8,9,14..26: 19 structures), count field
-  replaced by `r5le : GR56.R5fpCountLe`; 69 theorems copied with suffix _S (incl. SGRFold.research14_of_open29,
+  replaced by `r5le : GR56.R5fpCountLe`; 71 theorems copied with suffix _S (incl. SGRFold.research14_of_open29,
   heckeSqrtBranchAny_of_open29, G0RevIsog.reverseIsogeny_of_leaves3); 18 forwarding lines replaced;
   TailK consumer → `FS5NoCM.fibreComTrivialFull_of_leaves''_le … r.r5le` (gr56-prove).
   New top: `OpenResearchLeaves26E` (field `eichlerOptEmbCount6 : GRCountX6.EichlerOptEmbCount6` in place of
@@ -70,3 +70,10 @@ Base: origin/main 2880fef1 (leaf-fold31, TailZ42, sixContactMin_of_open35). Mark
 - Closure of frozenTarget_F (112744 constants): no R5fpCount / GonzalezRotgerProp56X6 / GonzalezRotgerCountX6(Ab);
   GonzalezRotgerX6Ab only as the value built by gonzalezRotgerX6Ab_of_printed and read by x6Rows_of_open14_S
   (VERIFIED). Neither GR field is an input of frozenTarget_F.
+
+## Step 5: gen_bypass.py parametrized (07:20)
+- TOP, the four top bundle names, the imports and frozenTarget's text are now read from Main.lean (frozenTarget_E/_F
+  are Main's theorem text with the research bundle and top theorem renamed). Regenerated output differs from the
+  previous one only in two docstrings; recompiled, four top theorems standard axioms (VERIFIED).
+- Counts in the generated module: 19 structures copied, 71 theorems (70 `_S` + `ResearchLeaves3S.h5`), plus the
+  new top (26E, 26F, two maps, two sixContactMin, two frozenTarget).

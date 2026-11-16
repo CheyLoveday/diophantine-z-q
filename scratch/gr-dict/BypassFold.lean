@@ -2724,8 +2724,7 @@ namespace ZInQ.Contrib.TYZChain
 
 open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 
-/-- `ZInQ.OneProof.frozenTarget` (Main.lean) with `OpenResearchLeaves26E` (no `gonzalezRotgerProp56X6`; Eichler's
-count instead). -/
+/-- `ZInQ.OneProof.frozenTarget` (Main.lean, verbatim) with the research bundle `E` (no `gonzalezRotgerProp56X6`). -/
 theorem frozenTarget_E
     (r : HDec.HSyn.OpenResearchLeaves26E) (t : HDec.HSyn.OpenTextbookLeaves12) (l : HDec.HSyn.OpenAddedLeaves17)
     (g : HDec.HSyn.OpenGlue8)
@@ -2742,7 +2741,8 @@ theorem frozenTarget_E
     (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves hL3s hJP hfx hL29 hT21 hP23) hCM h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
 
-/-- `frozenTarget` with `OpenResearchLeaves26F` (neither González–Rotger field). -/
+
+/-- `frozenTarget` with the research bundle `F` (neither González–Rotger field). -/
 theorem frozenTarget_F
     (r : HDec.HSyn.OpenResearchLeaves26F) (t : HDec.HSyn.OpenTextbookLeaves12) (l : HDec.HSyn.OpenAddedLeaves17)
     (g : HDec.HSyn.OpenGlue8)
@@ -2758,6 +2758,7 @@ theorem frozenTarget_F
     (HDec.HSyn.sixContactMin_of_open35F r t l g)
     (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves hL3s hJP hfx hL29 hT21 hP23) hCM h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
+
 
 end ZInQ.Contrib.TYZChain
 

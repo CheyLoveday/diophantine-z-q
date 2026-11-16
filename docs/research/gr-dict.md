@@ -65,7 +65,7 @@ consumes `gonzalezRotgerProp56X6`**, and after the reroute nothing consumes it a
   field (`gonzalezRotgerProp56X6`, `gonzalezRotgerCountX6Ab`, `gonzalezRotgerCountX6` or `r5count`) is replaced by
   `r5le : GR56.R5fpCountLe`.
 * **Theorems.** Every theorem on the path whose signature mentions one of those structures is copied with suffix
-  `_S` (69 theorems). This includes `SGRFold.research14_of_open29` and `SGRFold.heckeSqrtBranchAny_of_open29`
+  `_S` (71 theorems: 70 with suffix `_S` and the dot-notation helper `ResearchLeaves3S.h5`). This includes `SGRFold.research14_of_open29` and `SGRFold.heckeSqrtBranchAny_of_open29`
   from `Contrib/OneProof/SGRFold.lean`, and `G0RevIsog.reverseIsogeny_of_leaves3`.
 * **Edits inside the copies.** The 18 forwarding lines become `r5le := _.r5le`. TailK's consumer becomes
   gr56-prove's `FS5NoCM.fibreComTrivialFull_of_leaves''_le … r.r5le`, the TailC text with `≤` in place of `=`.
