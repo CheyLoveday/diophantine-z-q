@@ -3,8 +3,8 @@ import ZInQKernel.Contrib.OneProof.SGRDirectNVLocal
 /-!
 # abhyankar: the named steps of `TameBranchNormal`
 
-`SGRDirect.NVLocal.TameBranchNormal` (nv-local) is proved from the following Props, each a step of the proof
-of the dimension-two case of Abhyankar's lemma (SGA 1 XIII 5.2–5.3; Grothendieck–Murre, LNM 208, §2.3;
+`SGRDirect.NVLocal.TameBranchNormal` (nv-local) is proved from the following Props (all of them proved in the
+other files of `Abhyankar/`), each a step of the proof of the dimension-two case of Abhyankar's lemma (SGA 1 XIII 5.2–5.3; Grothendieck–Murre, LNM 208, §2.3;
 locators UNVERIFIED):
 
 * `TBNLocal` — the statement over the local ring `A = R_m` (`tameBranchNormal_of_local`);
