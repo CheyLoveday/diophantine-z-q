@@ -938,15 +938,13 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 open PanBergerSplit (Ainf AinfP locAct flatAct)
 
-local notation "pF" => ZInQ.Contrib.G9.BdrKer.Cp.pFlat p
-
 /-- `σ(p̃) = p̃ · u` with `u^♯ = 1` (`u = σ(p̃)/p̃`, the Kummer cocycle of `p` at `σ`). -/
 theorem exists_uSigma (σ : GQp p) :
-    ∃ u : PreTilt 𝓞_ℂ_[p] p, flatAct p σ pF = pF * u ∧ PreTilt.untilt u = 1 := by
-  have hσp : PreTilt.untilt (flatAct p σ pF) = (p : 𝓞_ℂ_[p]) := by
+    ∃ u : PreTilt 𝓞_ℂ_[p] p, flatAct p σ (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) = (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) * u ∧ PreTilt.untilt u = 1 := by
+  have hσp : PreTilt.untilt (flatAct p σ (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p)) = (p : 𝓞_ℂ_[p]) := by
     rw [DR.untilt_preTiltMap, ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat, map_natCast]
-  obtain ⟨u, hu⟩ := ZInQ.Contrib.G9.BdrKer.Cp.dvd_of_coeff_zero p pF
-    (ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat p) (flatAct p σ pF) (by
+  obtain ⟨u, hu⟩ := ZInQ.Contrib.G9.BdrKer.Cp.dvd_of_coeff_zero p (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p)
+    (ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat p) (flatAct p σ (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p)) (by
       rw [← PreTilt.mk_untilt_eq_coeff_zero, hσp]
       exact Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_span_singleton_self _))
   refine ⟨u, hu, ?_⟩
@@ -956,7 +954,7 @@ theorem exists_uSigma (σ : GQp p) :
     linear_combination -this
   exact sub_eq_zero.mp (ZInQ.Contrib.G9.BdrKer.Cp.p_regular p _ h1)
 
-theorem locAct_pTildeArg (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ pF = pF * u) :
+theorem locAct_pTildeArg (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) = (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) * u) :
     locAct p σ (pTildeArg p) =
       algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p u - 1) + pTildeArg p +
         algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p u - 1) * pTildeArg p := by
@@ -980,14 +978,14 @@ theorem logPTilde_step_B (σ : GQp p) :
   rw [logPTilde_eq]
   exact h
 
-theorem logPTilde_step_A (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ pF = pF * u)
+theorem logPTilde_step_A (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) = (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) * u)
     (hu1 : PreTilt.untilt u = 1) :
     evalB p (locAct_mem p σ (pTildeArg_mem p)) (logSeries p) = logTeich p hu1 + logPTilde p := by
   exact (evalB_congr' p _ _ (locAct_pTildeArg p σ hu) _).trans
     (logPlus_add p (teich_sub_one_mem p hu1) (pTildeArg_mem p))
 
 /-- **`σ(log [p̃]) = log [p̃] + log [u_σ]`** in `B_dR` (`log [u_σ] = c(σ)·t`). -/
-theorem bdrAct_logPTilde (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ pF = pF * u)
+theorem bdrAct_logPTilde (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) = (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) * u)
     (hu1 : PreTilt.untilt u = 1) :
     bdrAct p σ (toBdR p (logPTilde p)) = toBdR p (logTeich p hu1) + toBdR p (logPTilde p) := by
   rw [logPTilde_step_B, logPTilde_step_A p σ hu hu1, map_add]
