@@ -62,3 +62,14 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   #discharges: 11 lines discharge (both forms listed). Dry-runs (scratch/pic-dict/autofold.json):
   `40/8 on 48 -> 46/8 on 54; strictest 39/9 -> 46/8`; lf31 rating `37/11 -> 44/10; strictest 37/11 -> 44/10`.
   Both rows: `40/8 -> 46/9 on 55; 39/9 -> 46/9`; lf31 `37/11 -> 45/10; 37/11 -> 45/10`. Dry-run modules compile.
+- ~05:40 scratch/pic-dict/TranslInv.lean (merged): `picZeroPtsTranslInv_of_leaves (hU : PushforwardUnitUniversal)
+  (hGI : GeomIntegralProd) : PicZeroPtsTranslInv`. Proof: the vendored Kleiman 9.2.5 (`picardFunctorNormalizedIso`,
+  hypothesis = hU) gives honest normalized classes on `A × T`; the renormalized `t_a^*c ⊗ c⁻¹` (`dT`) is natural in
+  `T`; classifying it at `T = A ⊗ B` gives `Ψ : A ⊗ B → P`, trivial on both axes, landing in `B`, a homomorphism by
+  `MulRigidity` (needs `A ⊗ B` geometrically integral = hGI), hence trivial; at `K̄`-points this is
+  `t_x^*M_y = M_y`. VERIFIED, standard axioms.
+- `phiAmpleIsogeny_of_leaves` (MumfordKLFiniteAC, MumfordPhiSurjectiveAC, AmpleBaseChangeAlgClosure,
+  PushforwardUnitUniversal, GeomIntegralProd). Both-rows spec (scratch/pic-dict/autofold-both.json):
+  this base `40/8 on 48 -> 48/8 on 56; strictest 39/9 -> 48/8` (no --allow-rise); lf31 rating
+  `37/11 on 48 -> 47/9 on 56; strictest 37/11 -> 47/9` (-2 strict, -2 strictest). Dry-run module compiles.
+  #discharges: 12 discharge lines (all forms).
