@@ -195,4 +195,116 @@ theorem evK_clears {n : ℤ} {Φ : Polynomial (Polynomial ℚ)} {k : ℕ} (h : C
     ring
   rw [h Kbar (evK θ) (evK_DJ_ne θ), ev2_ΨSq, EDSBar_eq, h1, h2]
 
+
+/-! ## C'. Points: the `\overline{ℚ(j)}` side -/
+
+/-- A root `θ` of `ΨSqₙ(E_j^{DS})((g_j − 27)·)` is `w(P)` for a nonzero `n`-torsion point `P` of the kernel's
+`E_j`; and `ΨSq_d` vanishes there for every `d` killing `P`. -/
+theorem exists_point_of_root {n : ℕ} (θ : Kbar)
+    (h : (EDSBar.ΨSq n).eval (algebraMap Qj Kbar (gDS - 27) * θ) = 0) :
+    ∃ P : EjBar.toAffine.Point, P ≠ 0 ∧ n • P = 0 ∧ wOf P = θ ∧
+      ∀ d : ℕ, d • P = 0 → (EDSBar.ΨSq d).eval (algebraMap Qj Kbar (gDS - 27) * θ) = 0 := by
+  obtain ⟨y, hns, hz⟩ := EDSBar.eval_ΨSq_eq_zero_iff_exists_zsmul_eq_zero.mp h
+  set Q : EDSBar.toAffine.Point := Affine.Point.some _ _ hns with hQdef
+  have hQ0 : Q ≠ 0 := Affine.Point.some_ne_zero hns
+  have hQn : n • Q = 0 := zsmul_fromAffine_eq_zero_iff.mp hz
+  obtain ⟨u, hu2⟩ := exists_u
+  have hu : u ≠ 0 := by
+    rintro rfl
+    rw [zero_pow two_ne_zero, eq_comm, map_eq_zero_iff _ (algebraMap Qj Kbar).injective] at hu2
+    exact alpha_ne_zero hu2
+  obtain ⟨ψ, hψ⟩ := exists_addEquiv_xCoord EjBar EDSBar (cDS u hu) (cDS_smul u hu2 hu)
+  have hP0 : ψ.symm Q ≠ 0 := by rw [ne_eq, AddEquiv.map_eq_zero_iff]; exact hQ0
+  refine ⟨ψ.symm Q, hP0, ?_, ?_, ?_⟩
+  · rw [← map_nsmul, hQn, map_zero]
+  · have hx := hψ (ψ.symm Q) hP0
+    rw [AddEquiv.apply_symm_apply] at hx
+    have hc : ((cDS u hu).u : Kbar) ^ 2 = algebraMap Qj Kbar alpha := hu2
+    have hr : (cDS u hu).r = algebraMap Qj Kbar (-3 / 2) := rfl
+    rw [hc, hr] at hx
+    have hxQ : xCoord Q = algebraMap Qj Kbar (gDS - 27) * θ := rfl
+    have hg : algebraMap Qj Kbar (gDS - 27) ≠ 0 := by
+      rw [ne_eq, map_eq_zero_iff _ (algebraMap Qj Kbar).injective, gDS_sub]
+      exact div_ne_zero (by norm_num) X_sub_1728_ne_zero
+    unfold wOf
+    rw [← hx, hxQ]
+    field_simp
+  · intro d hd
+    have : d • Q = 0 := by rw [← AddEquiv.apply_symm_apply ψ Q, ← map_nsmul, hd, map_zero]
+    exact (EDSBar.eval_ΨSq_eq_zero_iff_zsmul_eq_zero hns d).mpr (zsmul_fromAffine_eq_zero_iff.mpr this)
+
+/-! ## C''. Points: the complex side (the uniformization) -/
+
+/-- `(u, 0, 0, 0) · y² = x³ − (g/4)x − g/4` with `g = g₂³/g₃²`, `u² = g₂/g₃`, is `ℂ/Λ`'s curve. -/
+theorem curveC_smul (L : PeriodPair) (h2 : L.g₂ ≠ 0) (h3 : L.g₃ ≠ 0) (u : ℂ)
+    (hu2 : u ^ 2 = L.g₂ / L.g₃) (hu : u ≠ 0) :
+    (⟨Units.mk0 u hu, 0, 0, 0⟩ : VariableChange ℂ) • curveG (L.g₂ ^ 3 / L.g₃ ^ 2) =
+      L.weierstrassCurve := by
+  have hu2' : u ^ 2 * L.g₃ = L.g₂ := by rw [hu2]; field_simp
+  ext <;> simp only [variableChange_a₁, variableChange_a₂, variableChange_a₃, variableChange_a₄,
+    variableChange_a₆, curveG, PeriodPair.weierstrassCurve_a₁, PeriodPair.weierstrassCurve_a₂,
+    PeriodPair.weierstrassCurve_a₃, PeriodPair.weierstrassCurve_a₄, PeriodPair.weierstrassCurve_a₆,
+    Units.val_inv_eq_inv_val, Units.val_mk0]
+  all_goals field_simp
+  · ring
+  · ring
+  · ring
+  · linear_combination (L.g₂ * (u ^ 2 * L.g₃ + L.g₂)) * hu2'
+  · linear_combination ((u ^ 2 * L.g₃) ^ 2 + u ^ 2 * L.g₃ * L.g₂ + L.g₂ ^ 2) * hu2'
+
+/-- `n • toPoint z = toPoint (n z)`. -/
+theorem nsmul_toPoint (L : PeriodPair) (hΔ : L.DiscriminantNeZero) (z : ℂ) (n : ℕ) :
+    n • L.toPoint hΔ z = L.toPoint hΔ (n * z) := by
+  have hU := L.isUniformization_toPoint hΔ
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [succ_nsmul, ih, ← hU.1]
+    congr 1; push_cast; ring
+
+theorem toPoint_eq_zero_iff (L : PeriodPair) (hΔ : L.DiscriminantNeZero) (z : ℂ) :
+    L.toPoint hΔ z = 0 ↔ z ∈ L.lattice :=
+  ⟨(L.isUniformization_toPoint hΔ).2.2 z, L.toPoint_of_mem hΔ⟩
+
+theorem discNeZero_pp (τ : UpperHalfPlane) : (pp τ).DiscriminantNeZero := disc_ppD_ne_zero τ
+
+/-- **The division polynomial at Weber's point.** On `ℂ/⟨1, τ⟩` with `g₂g₃ ≠ 0`, `x = (g₂/g₃)℘(1/N)` is a root of
+`ΨSqₙ(y² = x³ − (g/4)x − g/4)`, `g = g₂³/g₃²`, iff `n/N ∈ ⟨1, τ⟩`. -/
+theorem eval_ΨSq_weber_eq_zero_iff (τ : UpperHalfPlane) (h2 : (pp τ).g₂ ≠ 0) (h3 : (pp τ).g₃ ≠ 0)
+    {N : ℕ} (hN : 2 ≤ N) (n : ℕ) :
+    ((curveG ((pp τ).g₂ ^ 3 / (pp τ).g₃ ^ 2)).ΨSq n).eval
+        ((pp τ).g₂ / (pp τ).g₃ * (pp τ).weierstrassP (1 / N)) = 0 ↔
+      (n : ℂ) * (1 / N) ∈ (pp τ).lattice := by
+  set L := pp τ with hL
+  have hΔ : L.DiscriminantNeZero := discNeZero_pp τ
+  have hz : (1 / (N : ℂ)) ∉ L.lattice := by
+    have := div_nat_not_mem τ (a := 1) (N := N) one_pos (by omega)
+    rwa [Nat.cast_one] at this
+  obtain ⟨u, hu2⟩ := IsAlgClosed.exists_pow_nat_eq (L.g₂ / L.g₃) two_pos
+  have hu : u ≠ 0 := by
+    rintro rfl
+    rw [zero_pow two_ne_zero, eq_comm, div_eq_zero_iff] at hu2
+    rcases hu2 with h | h
+    · exact h2 h
+    · exact h3 h
+  obtain ⟨e, he⟩ := exists_addEquiv_xCoord L.weierstrassCurve (curveG (L.g₂ ^ 3 / L.g₃ ^ 2)) _
+    (curveC_smul L h2 h3 u hu2 hu)
+  set Q₀ := L.toPoint hΔ (1 / N) with hQ₀
+  have hQ₀0 : Q₀ ≠ 0 := by rw [hQ₀, ne_eq, toPoint_eq_zero_iff]; exact hz
+  have hxQ₀ : xCoord Q₀ = L.weierstrassP (1 / N) := by
+    rw [hQ₀, L.toPoint_of_notMem hΔ hz]; rfl
+  have hQ0 : e Q₀ ≠ 0 := by rw [ne_eq, AddEquiv.map_eq_zero_iff]; exact hQ₀0
+  obtain ⟨x, y, hns, hQ⟩ : ∃ x y, ∃ hns : (curveG (L.g₂ ^ 3 / L.g₃ ^ 2)).toAffine.Nonsingular x y,
+      e Q₀ = Affine.Point.some x y hns := by
+    cases h : e Q₀ with
+    | zero => exact absurd h hQ0
+    | some x y hns => exact ⟨x, y, hns, rfl⟩
+  have hx : x = L.g₂ / L.g₃ * L.weierstrassP (1 / N) := by
+    have := he Q₀ hQ₀0
+    have h' : xCoord (Affine.Point.some x y hns) = x := rfl
+    rw [hQ, hxQ₀, h'] at this
+    simpa [hu2] using this
+  rw [← hx, eval_ΨSq_eq_zero_iff_zsmul_eq_zero _ hns, zsmul_fromAffine_eq_zero_iff, ← hQ,
+    ← map_nsmul, AddEquiv.map_eq_zero_iff, hQ₀, nsmul_toPoint, toPoint_eq_zero_iff]
+
 end X1Igusa.Weber

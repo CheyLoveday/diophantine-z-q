@@ -21,3 +21,4 @@ identity theorem; `I ∩ ℚ[J] = 0` since `j(i) = 1728`, `j(ρ) = 0`; contains 
 `Φ_N`; algebraic lemma (localization at `ℚ[J]∖0`, PID `ℚ(j)[T]`) gives `θ` with `I = ker(T ↦ θ)`; `θ = w(P)`, `P` of
 exact order `N` by the division-polynomial criterion on both sides.
 - 03:08 PartA.lean (algebraic lemma exists_root_of_isPrime, clearing exists_clears, ev2_ΨSq, evK_clears) compiles, no sorry.
+- 03:20 PartA.lean + points: exists_point_of_root (Kbar side), curveC_smul, eval_ΨSq_weber_eq_zero_iff (ℂ side, via vendored uniformization) compile.
