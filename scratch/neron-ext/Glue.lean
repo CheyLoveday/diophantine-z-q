@@ -368,6 +368,162 @@ noncomputable def gd : (cov B hcov).RelativeGluingData where
   natTrans := nat B hcov
   equifibered := equifibered B hcov
 
+instance isOpenImmersion_F_map {i j : (cov B hcov).I₀} (h : i ⟶ j) :
+    IsOpenImmersion ((gd B hcov).functor.map h) :=
+  isOpenImmersion_tr B (leOfHom h)
+
+/-- The glued `𝓞_L`-scheme. -/
+noncomputable def N : Over (S L) := Over.mk (gd B hcov).toBase
+
+theorem toBase_isPullback (i : (cov B hcov).I₀) :
+    IsPullback (colimit.ι (gd B hcov).functor i) (toU B hcov i) (gd B hcov).toBase
+      ((cov B hcov).f i) :=
+  ((gd B hcov).isPullback_natTrans_ι_toBase i).flip
+
+theorem prop_N (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P]
+    [P.IsStableUnderBaseChange] (hP : ∀ i : (cov B hcov).I₀, P (nn B i).X.hom) :
+    P (gd B hcov).toBase := by
+  apply IsZariskiLocalAtTarget.of_openCover (cov B hcov)
+  intro i
+  have h := toBase_isPullback B hcov i
+  have e : pullback.snd (gd B hcov).toBase ((cov B hcov).f i) = h.isoPullback.inv ≫ toU B hcov i := by
+    simp
+  change P (pullback.snd (gd B hcov).toBase ((cov B hcov).f i))
+  rw [e, MorphismProperty.cancel_left_of_respectsIso (P := P)]
+  refine MorphismProperty.of_postcomp P (W' := @IsOpenImmersion) _ ((cov B hcov).f i)
+    inferInstance ?_
+  rw [toU_ι]
+  exact hP i
+
+/-- A base index (some good open). -/
+noncomputable def i0 : (cov B hcov).I₀ :=
+  let x0 : S L := jL L (Nonempty.some (PrimeSpectrum.nonempty_iff_nontrivial.mpr inferInstance))
+  ⟨(hcov x0).choose, jL_preimage_eq_top L ⟨x0, (hcov x0).choose_spec.1⟩,
+    (hcov x0).choose_spec.2⟩
+
+/-- The inclusion `X_{i₀} → N`. -/
+noncomputable def ιN (i : (cov B hcov).I₀) : (nn B i).X ⟶ N B hcov :=
+  Over.homMk (colimit.ι (gd B hcov).functor i) (by
+    show colimit.ι (gd B hcov).functor i ≫ (gd B hcov).toBase = _
+    rw [Scheme.Cover.RelativeGluingData.ι_toBase]
+    exact toU_ι B hcov i)
+
+instance (i : (cov B hcov).I₀) : IsOpenImmersion (ιN B hcov i).left := by
+  show IsOpenImmersion (colimit.ι (gd B hcov).functor i); infer_instance
+
+instance isIso_gf_ιN (i : (cov B hcov).I₀) : IsIso ((gf L).map (ιN B hcov i)) := by
+  refine isIso_gf_map L (ιN B hcov i) i.1 i.2.1 (fun x hx => ?_)
+  show x ∈ Set.range (colimit.ι (gd B hcov).functor i)
+  rw [← Scheme.Cover.RelativeGluingData.preimage_toBase_eq_range_ι]
+  exact mem_range_ι _ _ hx
+
+/-- The generic-fibre identification of `N`. -/
+noncomputable def eN : (gf L).obj (N B hcov) ≅ B :=
+  (asIso ((gf L).map (ιN B hcov (i0 B hcov)))).symm ≪≫ (nn B (i0 B hcov)).e
+
+section Ext
+
+variable (Y : Over (S L)) [Smooth Y.hom]
+
+/-- The pieces of `Y` over the good opens. -/
+noncomputable def Yi (i : (cov B hcov).I₀) : Over (S L) :=
+  Over.mk (pullback.fst Y.hom ((cov B hcov).f i) ≫ Y.hom)
+
+instance (i : (cov B hcov).I₀) : Smooth (Yi B hcov Y i).hom := by
+  dsimp [Yi]; infer_instance
+
+theorem supp_Yi (i : (cov B hcov).I₀) : Supp L i.1 (Yi B hcov Y i) := by
+  show (pullback.fst Y.hom ((cov B hcov).f i) ≫ Y.hom) ⁻¹ᵁ i.1 = ⊤
+  rw [pullback.condition, Scheme.Hom.comp_preimage]
+  show pullback.snd Y.hom ((cov B hcov).f i) ⁻¹ᵁ (i.1.ι ⁻¹ᵁ i.1) = ⊤
+  rw [Scheme.Opens.ι_preimage_self, Scheme.Hom.preimage_top]
+
+/-- The inclusion of a piece. -/
+noncomputable def inc (i : (cov B hcov).I₀) : Yi B hcov Y i ⟶ Y := Over.homMk (pullback.fst _ _) rfl
+
+instance (i : (cov B hcov).I₀) : IsOpenImmersion (inc B hcov Y i).left := by
+  show IsOpenImmersion (pullback.fst Y.hom ((cov B hcov).f i)); infer_instance
+
+variable (φ : (gf L).obj Y ⟶ B)
+
+/-- The local extensions. -/
+noncomputable def ψ (i : (cov B hcov).I₀) : Yi B hcov Y i ⟶ (nn B i).X :=
+  ((nn B i).ext (Yi B hcov Y i) (supp_Yi B hcov Y i) ((gf L).map (inc B hcov Y i) ≫ φ)).choose
+
+theorem ψ_spec (i : (cov B hcov).I₀) :
+    (gf L).map (ψ B hcov Y φ i) ≫ (nn B i).e.hom = (gf L).map (inc B hcov Y i) ≫ φ :=
+  ((nn B i).ext (Yi B hcov Y i) (supp_Yi B hcov Y i) ((gf L).map (inc B hcov Y i) ≫ φ)).choose_spec
+
+/-- The cover of `Y` by its pieces. -/
+noncomputable abbrev 𝒱 : Y.left.OpenCover := (cov B hcov).pullback₁ Y.hom
+
+theorem compat {i j : (cov B hcov).I₀} (hij : i ⟶ j) :
+    (𝒱 B hcov Y).trans hij ≫ (ψ B hcov Y φ j).left ≫ colimit.ι (gd B hcov).functor j =
+      (ψ B hcov Y φ i).left ≫ colimit.ι (gd B hcov).functor i := by
+  have htm : (𝒱 B hcov Y).trans hij ≫ pullback.fst Y.hom ((cov B hcov).f j) =
+      pullback.fst Y.hom ((cov B hcov).f i) := Scheme.Cover.trans_map (𝒱 B hcov Y) hij
+  let t' : Yi B hcov Y i ⟶ Yi B hcov Y j := Over.homMk ((𝒱 B hcov Y).trans hij) (by
+    show _ ≫ pullback.fst Y.hom ((cov B hcov).f j) ≫ Y.hom = pullback.fst Y.hom ((cov B hcov).f i) ≫ Y.hom
+    rw [← Category.assoc, htm])
+  have ht : t' ≫ inc B hcov Y j = inc B hcov Y i := Over.OverMorphism.ext htm
+  have key : t' ≫ ψ B hcov Y φ j = ψ B hcov Y φ i ≫ tr B (leOfHom hij) := by
+    apply (nn B j).inj
+    rw [CategoryTheory.Functor.map_comp, Category.assoc, ψ_spec, ← Category.assoc,
+      ← CategoryTheory.Functor.map_comp, ht, CategoryTheory.Functor.map_comp, Category.assoc,
+      tr_spec, ψ_spec]
+  have k2 := congrArg (fun t => t.left) key
+  simp only [Over.comp_left] at k2
+  rw [← Category.assoc]
+  change t'.left ≫ _ ≫ _ = _
+  rw [← Category.assoc, k2, Category.assoc]
+  congr 1
+  exact colimit.w (gd B hcov).functor hij
+
+theorem fac (i : (cov B hcov).I₀) :
+    ((ψ B hcov Y φ i).left ≫ colimit.ι (gd B hcov).functor i) ≫ (N B hcov).hom =
+      (𝒱 B hcov Y).f i ≫ Y.hom := by
+  show _ ≫ (gd B hcov).toBase = _
+  rw [Category.assoc, Scheme.Cover.RelativeGluingData.ι_toBase]
+  show _ ≫ toU B hcov i ≫ (cov B hcov).f i = _
+  rw [toU_ι]
+  exact Over.w (ψ B hcov Y φ i)
+
+/-- The glued extension. -/
+noncomputable def ext : Y ⟶ N B hcov :=
+  Scheme.OpenCover.glueMorphismsOverOfLocallyDirected (𝒱 B hcov Y)
+    (fun i => (ψ B hcov Y φ i).left ≫ colimit.ι (gd B hcov).functor i)
+    (fun hij => compat B hcov Y φ hij) (fac B hcov Y φ)
+
+theorem ext_spec : (gf L).map (ext B hcov Y φ) ≫ (eN B hcov).hom = φ := by
+  haveI : IsIso ((gf L).map (inc B hcov Y (i0 B hcov))) :=
+    isIso_gf_map L (inc B hcov Y (i0 B hcov)) (i0 B hcov).1 (i0 B hcov).2.1 (fun y hy => by
+      show y ∈ Set.range (pullback.fst Y.hom ((cov B hcov).f (i0 B hcov)))
+      rw [Scheme.Pullback.range_fst]
+      exact mem_range_ι _ _ hy)
+  have hf0 : inc B hcov Y (i0 B hcov) ≫ ext B hcov Y φ = ψ B hcov Y φ (i0 B hcov) ≫ ιN B hcov (i0 B hcov) := by
+    apply Over.OverMorphism.ext
+    show (𝒱 B hcov Y).f (i0 B hcov) ≫ (ext B hcov Y φ).left = _
+    rw [ext, Scheme.OpenCover.map_glueMorphismsOverOfLocallyDirected_left]
+    rfl
+  rw [← cancel_epi ((gf L).map (inc B hcov Y (i0 B hcov))), ← Category.assoc,
+    ← CategoryTheory.Functor.map_comp, hf0, CategoryTheory.Functor.map_comp]
+  simp only [eN, Iso.trans_hom, Iso.symm_hom, asIso_inv, Category.assoc, IsIso.hom_inv_id_assoc]
+  exact ψ_spec B hcov Y φ (i0 B hcov)
+
+end Ext
+
+/-- **Glue N1-g3 (proved).** If every point of `Spec 𝓞_L` has an open neighbourhood over which `B` has a
+Néron model, then `B` has a Néron model over `Spec 𝓞_L`. -/
+noncomputable def glued : NeronOn L B ⊤ where
+  X := N B hcov
+  supp := Scheme.Hom.preimage_top _
+  smooth := prop_N B hcov @Smooth (fun i => (nn B i).smooth)
+  sep := prop_N B hcov @IsSeparated (fun i => (nn B i).sep)
+  qc := prop_N B hcov @QuasiCompact (fun i => (nn B i).qc)
+  e := eN B hcov
+  ext := fun Y _ _ φ => ⟨ext B hcov Y φ, ext_spec B hcov Y φ⟩
+
 end Glue
 
 end NeronExt
+#print axioms NeronExt.glued
