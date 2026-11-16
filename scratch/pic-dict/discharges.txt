@@ -7,6 +7,9 @@ DISCHARGES [OpenResearchLeaves26.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_o
 DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
   still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_final
+  still assumes: [PicDict.MumfordKLFiniteAC, PicDict.MumfordPhiSurjectiveAC]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_ac
   still assumes: [PicDict.MumfordKLFiniteAC,
  PicDict.MumfordPhiSurjectiveAC,
@@ -34,6 +37,15 @@ DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_pri
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
   still assumes: [PicDict.PicLocFinType, PicDict.IdentityComponentLFT, PicDict.PicZeroSmooth, PicDict.PicZeroProper]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_final
+  still assumes: [PicDict.MumfordSquareAC,
+ PicDict.MumfordMulNPicZeroAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.MumfordWeilPairingAC,
+ PicDict.MumfordWeilNondegAC,
+ PicDict.MumfordWeilAltAC,
+ PicDict.MumfordKLFiniteAC]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_ac
   still assumes: [PicDict.MumfordSquareAC,
@@ -76,4 +88,4 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 3057 theorems checked, 15 discharge one
+#discharges: 59 open hypotheses, 3063 theorems checked, 17 discharge one

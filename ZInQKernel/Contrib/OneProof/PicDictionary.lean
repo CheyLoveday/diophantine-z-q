@@ -4,6 +4,7 @@ import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Pic
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.PullbackMonoidal
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.IdealSheaf.Image
 import ZInQKernel.Contrib.SmoothFibre.Basic
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.StructureSheaf
 
 /-! # pic-dict: the Pic dictionary at `K̄`, and the rows `weilPairingMumford` and `phiAmpleIsogeny` from printed leaves
 
@@ -2319,5 +2320,46 @@ theorem picZeroAbVar_of_leaves (h1 : PicLocFinType) (h2 : IdentityComponentLFT) 
   · exact inferInstanceAs (IsOpenImmersion V.ι)
   · change Set.range V.ι = _
     rw [Scheme.Opens.range_ι, hV]
+
+end PicDict
+
+/-! ## The two remaining general statements are theorems; final results -/
+
+namespace PicDict
+
+open T09Pic PkgI3 PkgI3.AbVar
+
+/-- **`PushforwardUnitUniversal` is a theorem** (vendored
+`isIso_pushforwardUnitMap_pullback_snd_of_geometricallyIntegral`: proper geometrically integral over a field). -/
+theorem pushforwardUnitUniversal : PushforwardUnitUniversal := by
+  intro K _ A T
+  letI : A.X.left.Over (Spec (CommRingCat.of K)) := ⟨A.X.hom⟩
+  haveI : IsProper (A.X.left ↘ Spec (CommRingCat.of K)) := inferInstanceAs (IsProper A.X.hom)
+  haveI : GeometricallyIntegral (A.X.left ↘ Spec (CommRingCat.of K)) :=
+    inferInstanceAs (GeometricallyIntegral A.X.hom)
+  exact isIso_pushforwardUnitMap_pullback_snd_of_geometricallyIntegral T
+
+/-- **`GeomIntegralProd` is a theorem** for abelian varieties: `A × B` is smooth (so geometrically reduced) and
+geometrically irreducible (Mathlib's `GeometricallyIrreducible.comp`). -/
+theorem geomIntegralProd : GeomIntegralProd := by
+  intro K _ A B
+  have e : (A.X ⊗ B.X).hom = pullback.fst A.X.hom B.X.hom ≫ A.X.hom := rfl
+  haveI : Smooth (A.X ⊗ B.X).hom := by rw [e]; infer_instance
+  haveI := geometricallyReduced_of_smooth (A.X ⊗ B.X).hom
+  haveI : GeometricallyIrreducible (A.X ⊗ B.X).hom := by
+    rw [e]; exact GeometricallyIrreducible.comp _ _
+  exact GeometricallyIntegral.of_geometricallyReduced_of_geometricallyIrreducible _
+
+/-- **Main result (`PhiAmpleIsogeny`)** from two of Mumford's statements over an algebraically closed field:
+§6 Application 1 (`K(L)` finite for `L` ample) and §8 Thm 1 (`φ_L` onto `Pic⁰`). -/
+theorem phiAmpleIsogeny_final (hKL : MumfordKLFiniteAC) (h8 : MumfordPhiSurjectiveAC) : PhiAmpleIsogeny :=
+  phiAmpleIsogeny_of_mumford hKL h8 pushforwardUnitUniversal geomIntegralProd
+
+/-- **Main result (`WeilPairingMumford`)** from seven of Mumford's statements over an algebraically closed field:
+§6 Cor. 4, §6 App. 1, §8 (iv), §8 Thm 1, §20 (`ē_n` well defined and bilinear; nondegenerate), §23. -/
+theorem weilPairingMumford_final (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
+    (h8 : MumfordPhiSurjectiveAC) (h20a : MumfordWeilPairingAC) (h20b : MumfordWeilNondegAC)
+    (h23 : MumfordWeilAltAC) (hKL : MumfordKLFiniteAC) : WeilPairingMumford :=
+  weilPairingMumford_of_mumford hsq h8iv h8 h20a h20b h23 (phiAmpleIsogeny_final hKL h8)
 
 end PicDict

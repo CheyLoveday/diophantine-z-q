@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_mumford {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC (_root_.PicDict.phiAmpleIsogeny_of_mumford {n}.mumfordKLFiniteAC {n}.mumfordPhiSurjectiveAC {n}.pushforwardUnitUniversal {n}.geomIntegralProd)",
+   "proof": "_root_.PicDict.weilPairingMumford_final {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.mumfordKLFiniteAC",
    "leaves": [
     {
      "name": "mumfordSquareAC",
@@ -55,13 +55,7 @@
      "kind": "published",
      "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 23: e^L_n(x,x) = 1"
-    }
-   ]
-  },
-  {
-   "field": "phiAmpleIsogeny",
-   "proof": "_root_.PicDict.phiAmpleIsogeny_of_mumford {n}.mumfordKLFiniteAC {n}.mumfordPhiSurjectiveAC {n}.pushforwardUnitUniversal {n}.geomIntegralProd",
-   "leaves": [
+    },
     {
      "name": "mumfordKLFiniteAC",
      "type": "_root_.PicDict.MumfordKLFiniteAC",
@@ -69,24 +63,13 @@
      "kind": "published",
      "flag": "unread: new printed leaf; Mumford prints it for L = O(D) with D effective, general ample L via L^m; locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 6 Application 1"
-    },
-    {
-     "name": "pushforwardUnitUniversal",
-     "type": "_root_.PicDict.PushforwardUnitUniversal",
-     "doc": "pic-dict: O_T = (A_T -> T)_* O holds universally for an abelian variety over a field (EGA III 7.8.6; Kleiman, The Picard scheme, Ex. 9.3.11; over a field flat base change, Stacks 02KH; locators UNVERIFIED).",
-     "kind": "published",
-     "flag": "unread: new printed leaf (EGA III 7.8.6 / Kleiman Ex. 9.3.11; over a field this is flat base change with Gamma(A,O) = K); locator UNVERIFIED",
-     "source": "EGA III 7.8.6; Kleiman, The Picard scheme, Ex. 9.3.11"
-    },
-    {
-     "name": "geomIntegralProd",
-     "type": "_root_.PicDict.GeomIntegralProd",
-     "doc": "pic-dict: the product of two geometrically integral schemes over a field is geometrically integral (EGA IV 4.6.5; Stacks, Varieties; locators UNVERIFIED). Instance A x B for abelian varieties.",
-     "kind": "published",
-     "flag": "unread: new printed leaf; locator UNVERIFIED",
-     "source": "EGA IV 4.6.5 (products of geometrically integral schemes)"
     }
    ]
+  },
+  {
+   "field": "phiAmpleIsogeny",
+   "proof": "_root_.PicDict.phiAmpleIsogeny_final {n}.mumfordKLFiniteAC {n}.mumfordPhiSurjectiveAC",
+   "leaves": []
   }
  ]
 }

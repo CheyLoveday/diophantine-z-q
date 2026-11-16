@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_mumford {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
+   "proof": "_root_.PicDict.weilPairingMumford_final {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.mumfordKLFiniteAC",
    "leaves": [
     {
      "name": "mumfordSquareAC",
@@ -55,6 +55,14 @@
      "kind": "published",
      "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 23: e^L_n(x,x) = 1"
+    },
+    {
+     "name": "mumfordKLFiniteAC",
+     "type": "_root_.PicDict.MumfordKLFiniteAC",
+     "doc": "pic-dict: K(L) finite for L ample, k algebraically closed (Mumford section 6 Application 1, printed for L = O(D), D effective; locator UNVERIFIED).",
+     "kind": "published",
+     "flag": "unread: new printed leaf; Mumford prints it for L = O(D) with D effective, general ample L via L^m; locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 6 Application 1"
     }
    ]
   }
