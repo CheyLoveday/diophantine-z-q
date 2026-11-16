@@ -10,3 +10,10 @@
 - 02:12 base build OK (13697 jobs; first attempt hit the 10-min background limit and was restarted), frozenTarget
   axioms standard. DumpCompact 17299 constants (hashes_before.txt). PruneScan base: 25 + 10 + 9 + 1 = 45 fields,
   0 unused (prunescan-base-out.txt). kinds before: H rows 45, strict 34 LEAF / 11 GLUE, strictest 34 / 11.
+- 02:27 step 1 (plumb.py) build OK (13706 jobs; +ThetaDirect modules), frozenTarget axioms standard. PruneScan step 1:
+  exactly OpenAddedLeaves17.thetaRatiosAlgebraic unused; prune set = the field in OpenAddedLeaves4, 6, 7, 8, 9, 12-17
+  (11 entries, prune-set-step1.txt; the same as theta-direct's patch).
+- 02:33 step 2 (prune.py, prune_out.txt: 11 fields, 12 assignments, 1 constructor element edited). No dead readers
+  left on this base (addedLeaves5_of_open6, addedLeaves11_of_open12, sixContactMin_of_open16 already gone).
+  Module docs of TailK's moved block and TailZ25 updated. kinds.tsv/claims.tsv rows deleted (removed-rows.txt).
+  kinds after: H rows 44, strict 34 LEAF / 10 GLUE, strictest 34 / 10.

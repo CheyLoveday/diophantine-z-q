@@ -188,7 +188,6 @@ structure OpenTextbookLeaves4 : Prop where
   leaves (for `AbVarSpreadsOut`). -/
 structure OpenAddedLeaves4 : Prop where
   cmOptimalEmbedding : FS5NoCM.CMOptimalEmbedding
-  thetaRatiosAlgebraic : G0Split.ThetaPt.ThetaRatiosAlgebraic
   qmHauptmodul : PkgI1.QMHauptmodul
   qmClassNumberOne : G0Split.FibreQM.QMClassNumberOne
   senTwist : G0Galois.SenTwist
@@ -284,7 +283,11 @@ theorem detTate_of_leaves4 (h9 : WeilPairing.T09_SymmIsogenyExists)
 theta-split's `ThetaRatiosAtQM` (scratch/theta-split/ThetaUse.lean §1, via igusa-alg and linyang-printed) is how
 `gluePieces_of_open4` uses the theta algebraicity: only along pkg-I1's QM period matrices `Ω(τ)`. igusa-alg and
 linyang-printed prove it from the printed leaves `IgusaThetaExpressions` and `LinYangEx29All` (with `QMHauptmodul`;
-`ZInQKernel/Contrib/OneProof/LinYangPrinted.lean`), which replace the universal field `thetaRatiosAlgebraic`. -/
+`ZInQKernel/Contrib/OneProof/LinYangPrinted.lean`), which replace the universal field `thetaRatiosAlgebraic`.
+theta-fold2: theta-direct proves it with no hypotheses (`HDec.ThetaDirect.thetaRatiosAtQM_proof`,
+`ZInQKernel/Contrib/OneProof/ThetaDirect.lean`); `gluePieces_of_open4` takes it as `hθ`, threaded up to
+`sixContactMin_of_open19` (TailZ25), which supplies `HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul`. The field
+`thetaRatiosAlgebraic` is pruned from `OpenAddedLeaves4` and every later generation (docs/research/theta-fold2.md). -/
 
 namespace G0Split.ThetaPt.ThetaSplit
 
