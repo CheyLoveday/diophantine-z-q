@@ -21,3 +21,5 @@ Base wip/gz-optimal 2631cd0b. Build tree copied from ~/dzq-wt/gz-optimal (.lake/
   Identity: s = -y/w with w := eta(16)^3/(eta(8)eta(32)^2), w^2 = x (monomial identity from x = eta16^6/(eta8^2 eta32^4)).
   w has character (2/d) on Gamma0(32) by Gordon-Hughes/Newman (prod delta^r = 2^-1); all exponent sums OK.
 * Unif.lean: general gz-weil uniformization (local_eq_gen, global_eq_gen, period_mem_gen) and lattice uniqueness lattice_eq_of_g₂_g₃ — compiled, no errors (VERIFIED).
+* py/wchar.gp: w(gamma tau)/w(tau) = (2/d) for 602 gamma in Gamma0(32) (c <= 384, a <= 60, both signs): VERIFIED (computed), 0 failures.
+* Structure.lean: lattice_eq_of_periods (Lambda_d <= L and some period not in (1+i)L => L = c0 Lambda_d, c0 in Q) compiled, axioms standard (Check0.lean).
