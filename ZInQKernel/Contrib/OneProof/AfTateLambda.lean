@@ -24,7 +24,8 @@ of DS 9.5.4; (3) the leaf was stated over `ℚ_ℓ ⊗ K_f`, the print over `K_{
 `ε ∘ ρ_L : R → L → Ω` has trace and determinant `ε(tr, det of L ⊗_R g)` (basis `1 ⊗ v_i` of `L ⊗_R V`);
 §0b: coeff-ext's place `λ_ι` and `ι̂ : K_λ → ℚ̄_ℓ` (copied); §6: `λ_ι ∣ ℓ`, `ι̂` restricted to `ℚ_ℓ` is the
 structure map (density of `ℚ`), and `component`: the kernel's `ι`-component `frobOn` has the dimension of
-`V_λ` and trace/determinant `ι̂(tr/det ρ_{f,λ})`; §7: `r16CoreY_of_printed`.
+`V_λ` and trace/determinant `ι̂(tr/det ρ_{f,λ})`; §7: `r16CoreY_of_printed`; §8: `dsLambda_of_tensor` (the
+`K_{f,λ}` leaf follows from the `ℚ_ℓ ⊗ K_f` form `AfTateDSTensor` of DS 9.5.4, by base change of a basis).
 
 No `sorry`, no `axiom`, no build-time code. -/
 
@@ -891,5 +892,78 @@ theorem r16CoreY_of_printed (h1 : HeckeJ1DS) (h2 : AfShimura) (h3 : AfTateDSLamb
   exact R16Split.dim_eq_of_rank_two hT A θ (fun emb => (key 2 emb).1)
 
 end Discharge
+
+/-! ## 8. The `ℚ_ℓ ⊗ K_f` form of Diamond–Shurman 9.5.4 implies the `K_{f,λ}` form -/
+
+section TensorForm
+
+open IsDedekindDomain NumberField
+
+/-- **`ρ_{A_f,ℓ}` over `ℚ_ℓ ⊗ K_f` (Diamond–Shurman Lemma 9.5.3 + Thm 9.5.4 in the `K_f ⊗ ℚ_ℓ` form)**, universal
+over `A_f` as in `AfTateDSLambda`: `V_ℓ(A_f)` has a `ℚ_ℓ ⊗ K_f`-basis in which every arithmetic Frobenius at
+`p ∤ Nℓ` has characteristic polynomial `X² − a_p X + χ(p)p` (isj1-dict's `AfTateAt` body). Not a leaf of
+the fold: `dsLambda_of_tensor` shows that `AfTateDSLambda` is a consequence of it, so the new leaf follows
+from either form of the print. -/
+def AfTateDSTensor : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
+    ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ (tp : Nat.Primes → AbVar.End J) (δ : (ZMod N)ˣ → AbVar.End J),
+      (∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p)) →
+      (∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) →
+    ∀ (A : AbVar ℚ) (π : AbVar.Hom J A) (θ : coeffField f →+* A.End0),
+      IsAfQuotient χ f tp δ A π → IsAfAction χ f tp δ π θ →
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime],
+      ∃ b : (letI := R16Used.tensorModule ℓ A θ;
+          Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] coeffField f) (A.V ℓ)),
+        ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
+          ∃ c : coeffField f, (c : ℂ) = χ (p : ZMod N) ∧
+            (R16Used.frobMat ℓ A θ b σ).charpoly =
+              R16Used.esPoly ℓ (⟨coeff f p, coeff_mem_coeffField f p⟩ : coeffField f)
+                (c * (p : coeffField f))
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {K : Type} [Field K] [NumberField K]
+
+theorem rhoLam_one_tmul (lam : HeightOneSpectrum (𝓞 K)) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal]
+    (a : K) : rhoLam ℓ lam ((1 : ℚ_[ℓ]) ⊗ₜ a) = algebraMap K (lam.adicCompletion K) a := by
+  rw [rhoLam_tmul, map_one, _root_.one_mul]
+
+/-- **Base change of the characteristic polynomial to `K_λ` (glue, proved).** -/
+theorem charpoly_frobLam_of_basis (A : AbVar ℚ) (θ : K →+* A.End0)
+    (lam : HeightOneSpectrum (𝓞 K)) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal]
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] K) (A.V ℓ))
+    (σ : GQ) (a d : K) (h : (R16Used.frobMat ℓ A θ b σ).charpoly = R16Used.esPoly ℓ a d) :
+    letI := R16Used.tensorModule ℓ A θ
+    letI := (rhoLam ℓ lam).toAlgebra
+    letI : Module.Free (lam.adicCompletion K) (lam.adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ) :=
+      Module.Free.of_divisionRing (lam.adicCompletion K) (lam.adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ)
+    ∀ [Module.Finite (lam.adicCompletion K) (lam.adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ)],
+    LinearMap.charpoly (frobLam ℓ A θ lam σ) =
+      ((Polynomial.X : Polynomial (lam.adicCompletion K)) ^ 2 -
+        Polynomial.C (algebraMap K (lam.adicCompletion K) a) * Polynomial.X +
+        Polynomial.C (algebraMap K (lam.adicCompletion K) d)) := by
+  letI := R16Used.tensorModule ℓ A θ
+  letI := (rhoLam ℓ lam).toAlgebra
+  letI : Module.Free (lam.adicCompletion K) (lam.adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ) :=
+    Module.Free.of_divisionRing (lam.adicCompletion K) (lam.adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ)
+  intro _
+  have hM : R16Used.frobMat ℓ A θ b σ = LinearMap.toMatrix b b (galR ℓ A θ σ) := by
+    ext i j; rw [LinearMap.toMatrix_apply]; rfl
+  rw [← LinearMap.charpoly_toMatrix (frobLam ℓ A θ lam σ) (Algebra.TensorProduct.basis _ b)]
+  change (LinearMap.toMatrix (Algebra.TensorProduct.basis _ b) (Algebra.TensorProduct.basis _ b)
+    ((galR ℓ A θ σ).baseChange _)).charpoly = _
+  rw [LinearMap.toMatrix_baseChange, ← hM, Matrix.charpoly_map, h, R16Used.esPoly]
+  simp only [Polynomial.map_add, Polynomial.map_sub, Polynomial.map_mul, Polynomial.map_pow,
+    Polynomial.map_X, Polynomial.map_C, RingHom.algebraMap_toAlgebra, rhoLam_one_tmul]
+
+/-- **The `K_{f,λ}` leaf is a consequence of the `ℚ_ℓ ⊗ K_f` form (glue, proved).** -/
+theorem dsLambda_of_tensor (h : AfTateDSTensor) : AfTateDSLambda := by
+  intro N χ f hN hf X _ jX tX hC hG P₀ J aj hJ tp δ htp hδ A π θ hQ hAct _ ℓ _ lam _ _ p hp hpN σ hσ
+  obtain ⟨b, hb⟩ := h N χ f hN hf X jX tX hC hG P₀ J aj hJ tp δ htp hδ A π θ hQ hAct ℓ
+  obtain ⟨c, hc, hcp⟩ := hb p hp hpN σ hσ
+  exact ⟨c, hc, charpoly_frobLam_of_basis A θ lam b σ _ _ hcp⟩
+
+end TensorForm
 
 end AfTateLam

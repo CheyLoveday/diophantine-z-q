@@ -12,6 +12,7 @@ import ZInQKernel.Contrib.OneProof.AfTateLambda
 #print axioms AfTateLam.τhat_algQl
 #print axioms AfTateLam.lin_trace_det
 #print axioms AfTateLam.exists_frob
+#print axioms AfTateLam.dsLambda_of_tensor
 #check (AfTateLam.r16CoreY_of_printed :
   AfTateLam.HeckeJ1DS → AfTateLam.AfShimura → AfTateLam.AfTateDSLambda → X1Igusa.IgusaGL2DS →
     AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY)

@@ -41,3 +41,7 @@ Review objections to `AfTateOr.AfTateDSOr` and the response:
   The afTateDSLambda flag is class "reading risk" (counts LEAF, precedent raynaudSemistableSH); with "pending reading"
   instead the count would be 37/11 (GLUE unchanged).
 - 14:15 `scratch/aftate-fix2/Target.lean`: verbatim copy of `R16Split.R16CoreY`, `copy_iff : R16CoreY ↔ R16Split.R16CoreY := Iff.rfl`, discharge at the copy; standard axioms (VERIFIED).
+- 14:17 §8 added: `AfTateDSTensor` (DS 9.5.4 in the `ℚ_ℓ ⊗ K_f` form, universal over `A_f`; not a fold leaf) and
+  `dsLambda_of_tensor : AfTateDSTensor → AfTateDSLambda` (base change of a `ℚ_ℓ ⊗ K_f`-basis, `toMatrix_baseChange`,
+  `Matrix.charpoly_map`); compiles, standard axioms (VERIFIED). Module rebuilt; `#discharges` unchanged
+  (`3382 theorems checked, 18 discharge one`); fold dry run unchanged (34/11 -> 38/10), compiles.

@@ -62,7 +62,7 @@ DISCHARGES [OpenResearchLeaves26.r16CoreY] by X1Igusa.r16CoreY_of_weakPicZero_ig
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 3378 theorems checked, 18 discharge one
+#discharges: 56 open hypotheses, 3382 theorems checked, 18 discharge one
 'AfTateLam.r16CoreY_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'AfTateLam.component' depends on axioms: [propext, Classical.choice, Quot.sound]
 'AfTateLam.trace_det_precomp' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -71,6 +71,7 @@ DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidit
 'AfTateLam.τhat_algQl' depends on axioms: [propext, Classical.choice, Quot.sound]
 'AfTateLam.lin_trace_det' depends on axioms: [propext, Classical.choice, Quot.sound]
 'AfTateLam.exists_frob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AfTateLam.dsLambda_of_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
 AfTateLam.r16CoreY_of_printed : AfTateLam.HeckeJ1DS →
   AfTateLam.AfShimura →
     AfTateLam.AfTateDSLambda → X1Igusa.IgusaGL2DS → AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY
