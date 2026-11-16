@@ -598,4 +598,58 @@ theorem connectedSpace_W0 : ConnectedSpace (W0 G).toScheme := by
 
 end IdComp
 
+/-! ## §8. The kernel commutes with base change -/
+
+section KerBC
+
+variable {k k' : Type} [Field k] [Field k'] (φ : k →+* k')
+
+/-- **Smooth connected affine kernels stay so after a field extension** (connectedness from Stacks 04KV). -/
+theorem isSmoothConnAffineKer_bc (hG : AVGlue.GeomConnOfRationalPoint)
+    {U B : Over (Spec (CommRingCat.of k))} [GrpObj U] [GrpObj B] (π : U ⟶ B) [IsMonHom π]
+    (h : IsSmoothConnAffineKer π) :
+    letI : GrpObj ((Over.pullback (sφ φ)).obj B) := Functor.grpObjObj
+    IsSmoothConnAffineKer ((Over.pullback (sφ φ)).map π) := by
+  letI : GrpObj ((Over.pullback (sφ φ)).obj B) := Functor.grpObjObj
+  obtain ⟨hs, ha, hc⟩ := h
+  let F := Over.pullback (sφ φ)
+  have h1 : IsPullback (F.map (pullback.fst π η[B])) (F.map (pullback.snd π η[B])) (F.map π)
+      (F.map η[B]) := (IsPullback.of_hasPullback π η[B]).map F
+  have h2 : IsPullback (F.map (pullback.fst π η[B])) (toUnit (F.obj (kerObj π))) (F.map π)
+      η[F.obj B] := by
+    refine IsPullback.of_iso h1 (Iso.refl _) (Iso.refl _) (Functor.Monoidal.εIso F).symm (Iso.refl _)
+      ?_ ?_ ?_ ?_
+    · simp
+    · exact toUnit_unique _ _
+    · simp
+    · change F.map η[B] ≫ 𝟙 _ = (Functor.Monoidal.εIso F).inv ≫ (Functor.LaxMonoidal.ε F ≫ F.map η[B])
+      rw [Category.comp_id, ← Functor.Monoidal.εIso_hom, Iso.inv_hom_id_assoc]
+  let E : F.obj (kerObj π) ≅ kerObj (F.map π) := h2.isoPullback
+  -- properties of `F.obj (kerObj π) = kerObj π ×_k k'`
+  haveI := hs
+  haveI := ha
+  have hsF : Smooth (F.obj (kerObj π)).hom := by
+    change Smooth (pullback.snd (kerObj π).hom (sφ φ)); infer_instance
+  have haF : IsAffine (F.obj (kerObj π)).left := by
+    change IsAffine (pullback (kerObj π).hom (sφ φ))
+    haveI : IsAffineHom (pullback.snd (kerObj π).hom (sφ φ)) := inferInstance
+    exact isAffine_of_isAffineHom (pullback.snd (kerObj π).hom (sφ φ))
+  have hcF : ConnectedSpace (F.obj (kerObj π)).left := by
+    let sec : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ kerObj π :=
+      pullback.lift η[U] (𝟙 _) (by rw [IsMonHom.one_hom π, Category.id_comp])
+    have hsec : sec.left ≫ (kerObj π).hom = 𝟙 _ := Over.w sec
+    have hgc : GeometricallyConnected (kerObj π).hom :=
+      hG k (kerObj π).left (kerObj π).hom sec.left hsec inferInstance inferInstance hc
+    exact hgc.geometrically_connectedSpace (sφ φ)
+      (pullback.fst _ _) (pullback.snd _ _) (IsPullback.of_hasPullback _ _)
+  have hw : (kerObj (F.map π)).hom = E.inv.left ≫ (F.obj (kerObj π)).hom := (Over.w E.inv).symm
+  haveI : IsIso E.hom.left := by change IsIso ((Over.forget _).map E.hom); infer_instance
+  haveI : IsIso E.inv.left := by change IsIso ((Over.forget _).map E.inv); infer_instance
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hw]; infer_instance
+  · exact IsAffine.of_isIso E.inv.left
+  · exact (E.hom.left.surjective).connectedSpace E.hom.left.continuous
+
+end KerBC
+
 end ZInQ.SemiAbDescend
