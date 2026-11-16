@@ -45,6 +45,12 @@ deep input, and every other step of Mumford's proof is Lean:
 **Recommendation.** Fold this spec instead of charpoly-ell's: same count, and the crowdsourcing target becomes
 `DegHomogPoly` (cube + Riemann–Roch) instead of the whole of Thm 4, of which everything else is done.
 
+**Integration note.** Only `Module.Finite ℤ (End A)` is used from `homFreeFiniteAlgClosed` (integrality of `φ`, here
+and in charpoly-ell's step). homfree-proof (origin/wip/homfree-proof, a05705093) proves that field from
+`uniformizationLeafAll`, `mumfordTorsionAlgClosed` and a weaker new leaf; if that fold lands first, the proof
+expression in `scratch/deg-det/autofold.json` should take `homFreeFiniteAlgClosed` from homfree-proof's theorem on the
+new bundle's fields instead of `{n}.homFreeFiniteAlgClosed`.
+
 Two intermediate routes also compile and are kept in `Reduction.lean` (they are superseded):
 `charPolyIndepOfEllAlgClosed_of_degHomogPoly` (assumes `DegLadicIsogeny`, `|det V_ℓ ψ|_ℓ = |deg ψ|_ℓ`) and
 `charPolyIndepOfEllAlgClosed_of_printed` (assumes the printed `SepDegKernel`, `deg ψ = #ker ψ · p^e`, Mumford §4,
