@@ -21,12 +21,18 @@ Folding both gives −2 strict and −2 strictest GLUE on the lf31 rating (autof
   - **`K̄`-points of `Pic⁰` are translation-invariant**, by vendored Kleiman 9.2.5 plus rigidity on `A × Pic⁰`.
     This removes the composite step of `phiAmpleIsogeny`.
   - Consumers unchanged.
-- `picZeroAbVar`: not reduced. The combined step is smoothness and properness of the identity component of the fppf
-  Picard scheme (Mumford §13 over `K̄`, identified with the identity component and descended from `K̄`). Using the
-  `λ_L` machinery would be circular there, and smoothness needs `dim Â = h¹(𝒪)`. Report §5 says how `B` gets
-  Smooth: two theorem steps, nonsingular to smooth and descent.
+- `picZeroAbVar`: **reduced to four statements, all glue proved** (`picZeroAbVar_of_leaves`; the open subgroup scheme
+  on the identity component is an `AbVar`; smooth ⇒ geometrically reduced is proved).
+  - Three statements are printed: Kleiman 9.4.8, SGA 3 VI_A 2.4, Kleiman 9.5.4.
+  - **`picZeroSmooth` (`Pic⁰_{A/K}` smooth) is pending reading**. Mumford §13 has it over `K̄`; one print over
+    `K` (BLR 8.4 / Milne 1986 §10) would clear it.
+  - Spec `scratch/pic-dict/autofold-all.json` (all three rows): lf31 `37/11 -> 49/9` (same as two rows). It would be
+    −3 if `picZeroSmooth` clears.
+  - Smoothness of `B` is two theorem steps, nonsingular to smooth and descent (report §3).
 
-**Remains.** Reading the locators (all UNVERIFIED), and BLR 8.4 / Milne 1986 §10 for a one-print form of
-`picZeroAbVar`. Optional Lean: `GeomIntegralProd` (a Mathlib gap), and the open subgroup glue for `picZeroAbVar`.
+**Remains.** Reading the locators (all UNVERIFIED), above all a one-print source for `picZeroSmooth`. Optional Lean:
+`GeomIntegralProd` (a Mathlib gap).
 
 Report: `docs/research/pic-dict.md`; log `scratch/pic-dict/log.md`.
+
+

@@ -207,7 +207,7 @@ abelian variety, a complete group variety over `k = k̄`. Nonsingular implies sm
 field, and a reduced group scheme of finite type over `k̄` is smooth (Mumford §4; UNVERIFIED). Over `K`, smoothness
 of `Pic⁰_{A/K}` descends from `K̄`: it is fpqc local on the base (EGA IV 17.7.1(ii); Stacks 02VL; UNVERIFIED), and
 `Pic⁰_{A/K} ×_K K̄ = Pic⁰_{A_K̄/K̄}` (Kleiman 9.5.1). So smooth versus nonsingular is two theorem steps,
-nonsingular to smooth and descent, as the unif-printed review counted. Both sit inside the combined step of §5.
+nonsingular to smooth and descent, as the unif-printed review counted. Both sit inside the leaf `picZeroSmooth` of §5, which is the one statement still pending reading.
 
 ## 4. Remark on `phiAmpleIsogeny`
 
