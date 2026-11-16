@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.PeriodOdd.Isogeny
+import ZInQKernel.Contrib.OneProof.PeriodOdd.NeZero
 
 /-!
 # period-odd: the Gross–Zagier formula for `C_d` without `CdTwistedPeriodOdd`
@@ -17,8 +18,10 @@ optimal". This file removes `CdTwistedPeriodOdd`: the Gross–Zagier formula is 
 * `core_isog`: in the second case, gz-optimal's leaf at `E'_d` (it covers every short model with the
   L-function of `C_d`: `LFunction_ePrime_eq`) and the explicit 2-isogeny `φ : C_d → E'_d`
   (`isogPt`, `weierPt_ePrime_eq`, `map_isogPt`) give the formula at `C_d`.
-* `grossZagierFormulaCd_of_etaW32`: **`GrossZagierFormulaCd` from `GrossZagierModuliOptCd`,
-  `EtaW32Character` and `LamCdNeZero`** (`Λ_d ≠ 0`).
+* `periodLattice_ne_zero` (`PeriodOdd/NeZero.lean`): `Λ_f ≠ 0` for every weight-2 newform
+  (a `Γ₀(N)`-invariant Eichler integral would be a weight-0 modular form, hence constant).
+* `grossZagierFormulaCd_of_etaW32`: **`GrossZagierFormulaCd` from `GrossZagierModuliOptCd` and
+  `EtaW32Character`** alone.
 
 No `sorry`, no `axiom`.
 -/
@@ -31,15 +34,6 @@ open scoped WeierstrassCurve.Affine
 namespace ZInQ.PeriodOdd
 
 open ZInQ.CdOpt ZInQ.GZOptimal
-
-/-- **(GLUE) The period lattice of `f_d` is not zero.** For `d ≡ 5 (mod 8)` squarefree, some period
-`Φ_d(γτ) − Φ_d(τ)`, `γ ∈ Γ₀(32 d²)`, of gz-weil's Eichler integral `Φ_d = Σ aₙ(C_d)/n qⁿ` is
-nonzero: `Φ_d` is not `Γ₀(32 d²)`-invariant. A consequence of the classical fact that the periods
-of a weight-2 newform form a lattice in `ℂ` (Shimura 1971, Thm 7.9 / §7.5; UNVERIFIED locator);
-equivalently, a holomorphic `Γ₀(N)`-invariant function on `ℍ` bounded at the cusps is constant,
-while `Φ_d = q + O(q²)`. -/
-def LamCdNeZero : Prop :=
-  ∀ d : ℕ, d % 8 = 5 → Squarefree d → ∃ l ∈ LamCd d, l ≠ 0
 
 /-! ## §1. The classification of `Λ_d ⊆ L` -/
 
@@ -253,10 +247,11 @@ end Core
 /-! ## §3. The consumer -/
 
 /-- **`GZHL3.GrossZagierFormulaCd` from gz-optimal's optimal-parametrization leaf, the eta-quotient
-transformation law and `Λ_d ≠ 0`**: cd-optimal's route A without `CdTwistedPeriodOdd`. Either
+transformation law**: cd-optimal's route A without `CdTwistedPeriodOdd` (`Λ_d ≠ 0`:
+`periodLattice_ne_zero`). Either
 `C_d` is optimal (route A, `core_selfOptimal`) or `E'_d` is (`core_isog`). -/
-theorem grossZagierFormulaCd_of_etaW32 (hGZ : GrossZagierModuliOptCd) (hW : EtaW32Character)
-    (hne : LamCdNeZero) : ZInQ.GZHL3.GrossZagierFormulaCd := fun d hd8 hsq => by
+theorem grossZagierFormulaCd_of_etaW32 (hGZ : GrossZagierModuliOptCd) (hW : EtaW32Character) :
+    ZInQ.GZHL3.GrossZagierFormulaCd := fun d hd8 hsq => by
   have hd0 : d ≠ 0 := by omega
   have hd4 : d % 4 = 1 := by omega
   have hd1 : 1 < d := by omega
@@ -269,7 +264,8 @@ theorem grossZagierFormulaCd_of_etaW32 (hGZ : GrossZagierModuliOptCd) (hW : EtaW
   have hy' := (by rw [hy, heegnerC_eq (short_cd d) hL] :
     Affine.Point.map ι y = ZInQ.GZHL3.weierPt (shortCurve (-(d : ℚ) ^ 2)) L
       (c * ∑ r : S, ZInQ.GZHL3.eichler f r.1.tauH))
-  rcases lattice_cases hd4 hsq hL hU (hne d hd8 hsq) with ⟨c₀, hlat⟩ | ⟨c', hlat'⟩
+  have hne : ∃ l ∈ LamCd d, l ≠ 0 := by rw [← hΛ]; exact periodLattice_ne_zero f
+  rcases lattice_cases hd4 hsq hL hU hne with ⟨c₀, hlat⟩ | ⟨c', hlat'⟩
   · rw [← hΛ] at hlat
     exact core_selfOptimal (short_cd d) hχ hcoeff hL hc hP hD hD4 hH hβ hτ hK hδ hι y hy' hF hG
       (hGZ d hd8 hsq _ (short_cd d) fun _ _ => rfl) hlat

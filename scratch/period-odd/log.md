@@ -39,3 +39,10 @@ target: hL3 replaced by `GrossZagierModuliOptCd` + `EtaW32Character` only.
   New residual: `LamCdNeZero` (∃ nonzero period of Φ_d for Γ₀(32d²)); CdTwistedPeriodOdd is no longer needed.
   Finding: the bypass needs Λ_d ≠ 0, which CdTwistedPeriodOdd implied; the tree has no proof of it (searched
   ZInQKernel/Contrib for periodLattice/LamCd nonvanishing: none).
+- `LamCdNeZero` PROVED (so dropped): `ZInQKernel/Contrib/OneProof/PeriodOdd/NeZero.lean`,
+  `ZInQ.PeriodOdd.periodLattice_ne_zero (f : Newform N 2) : ∃ l ∈ periodLattice f, l ≠ 0` (any level, any
+  character): a Γ₀(N)-invariant Eichler integral is a weight-0 modular form (holomorphic: gz-heegner `mdiff_eichler`;
+  bounded at every cusp: gz-heegner `exists_const_eichler` + `analyticAt_Gser`), constant by Mathlib's
+  `ModularForm.eq_const_of_weight_zero`, so f = D φ_f = 0. Axioms standard. VERIFIED.
+- TARGET MET: `ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 : GrossZagierModuliOptCd → EtaW32Character →
+  GZHL3.GrossZagierFormulaCd`, axioms [propext, Classical.choice, Quot.sound]. VERIFIED (lake build + #print axioms).
