@@ -32,3 +32,13 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
 - `zqIncl`, `galB`, `galC_mem` (plumbing).
 - `BranchRegular` (def, GLUE) and `nvLocalInertia_of_branchRegular : BranchRegular -> NVLocalInertia`.
   `#print axioms`: [propext, Classical.choice, Quot.sound].
+
+## 2026-11-15 23:25 Contrib file VERIFIED
+- ZInQKernel/Contrib/OneProof/SGRDirectNVLocal.lean (imports SGRDirectElkies): the Core.lean content plus
+  `heckeVertWitness_of_branchRegular` (HeckeVertWitness from r1r2, t5, qmAutCard, serreRigidity3,
+  alFixedPoints, elkiesX6StarPrinted, BranchRegular). `lake build +ZInQKernel.Contrib.OneProof.SGRDirectNVLocal`
+  OK (12 s).
+- scratch/nv-local/Discharges.lean -> Discharges-output.txt: "#discharges: 63 open hypotheses, 1904 theorems
+  checked, 7 discharge one" (none from this file, as expected: HeckeVertWitness is not an open field); all six
+  listed theorems: [propext, Classical.choice, Quot.sound].
+- scratch/nv-local/autofold.json (no fold; bypass as sgr-direct with branchRegular in place of nvLocalInertia).
