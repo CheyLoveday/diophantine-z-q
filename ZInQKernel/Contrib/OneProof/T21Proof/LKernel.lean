@@ -291,4 +291,31 @@ theorem abs_evenMain_le {b x : ℝ} (hb0 : 0 ≤ b) (hb1 : b < 1) (hx : 1 ≤ x)
   · have := exp_quarter_le (t := b) (by rw [abs_of_nonneg hb0]; linarith) hx
     linarith
 
+/-! ## The theta kernel and `Λ_{a,b}(1)` -/
+
+/-- The lattice term `(u + iv) e^{−π(u² + v²)x}`. -/
+def tm (u v x : ℝ) : ℂ := ((u : ℂ) + I * v) * (Real.exp (-π * (u ^ 2 + v ^ 2) * x) : ℂ)
+
+/-- Its integral over `(1, ∞)`: `(u + iv) e^{−π(u² + v²)}/(π(u² + v²))`. -/
+def tmL (u v : ℝ) : ℂ :=
+  ((u : ℂ) + I * v) * ((Real.exp (-π * (u ^ 2 + v ^ 2)) / (π * (u ^ 2 + v ^ 2)) : ℝ) : ℂ)
+
+/-- The four nearest lattice terms of `θ_{a,b}`. -/
+def thetaMain (a b x : ℝ) : ℂ := tm a b x + tm a (b - 1) x + tm (a - 1) b x + tm (a - 1) (b - 1) x
+
+/-- The closed form `Λ_{a,b}(1) ≈ mainL a b` (four nearest lattice points). -/
+def mainL (a b : ℝ) : ℂ := tmL a b + tmL a (b - 1) + tmL (a - 1) b + tmL (a - 1) (b - 1)
+
+theorem exp_mul_exp' (s t x : ℝ) :
+    Real.exp (-π * s * x) * Real.exp (-π * t * x) = Real.exp (-π * (s + t) * x) := by
+  rw [← Real.exp_add]; ring_nf
+
+theorem thetaMain_eq (a b x : ℝ) :
+    thetaMain a b x = ((oddMain a x * evenMain b x : ℝ) : ℂ) +
+      I * ((evenMain a x * oddMain b x : ℝ) : ℂ) := by
+  simp only [thetaMain, tm, oddMain, evenMain]
+  push_cast
+  simp only [mul_add, add_mul, Complex.exp_add]
+  ring
+
 end ZInQ.Contrib.T21Proof
