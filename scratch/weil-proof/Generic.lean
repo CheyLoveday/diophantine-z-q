@@ -370,7 +370,7 @@ theorem wf_tensor_ratio (hA : PullbackCompMonoidal) (t m : X ⟶ X) (h : t ≫ m
 lemma wf_unit (t m : X ⟶ X) (h : t ≫ m = m) : wf t m h (unit X) (pOU m).symm = 1 := by
   rw [wf_eq_alpha]
   have : alpha t m h (unit X) (pOU m).symm = 𝟙 _ := by
-    simp only [alpha, Iso.symm_hom, Iso.symm_inv, Category.assoc]
+    simp only [alpha, Iso.symm_hom, Iso.symm_inv]
     have e := pOU_inv_comp t m
     rw [← reassoc_of% e, reassoc_of% (pOU_inv_congr h), Iso.inv_hom_id]
   rw [this, id_val]
