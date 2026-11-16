@@ -32,3 +32,15 @@
   sixContactMin_of_open16 (TailZ22, with their #print lines). TailZ22 module doc updated. Build OK (13695 jobs),
   frozenTarget axioms standard. kinds.tsv rows (2) and claims.tsv rows (2) deleted (removed-rows.txt).
   kinds after: H rows 46, strict 38 LEAF / 8 GLUE, strictest 37 / 9 (kinds-counts-after.txt).
+- 01:25 after step 2: PruneScan 25 + 11 + 9 + 1 = 46 fields, 0 unused, prune set empty (prunescan-out.txt).
+  DumpCompact 17276 constants; cmp_hashes_out.txt: removed 16 (12 projections of the pruned fields, 4 dead readers),
+  new 38 (helpers: LPrefix 2, TailO 1, TailZ21 33 incl. X6LeavesW's auxiliaries, Pi0FoldSTQM 2), changed 157
+  (110 generated auxiliaries/projections of the 23 edited structures; 47 consumers/conversions, listed in the report).
+  frozenTarget's pp.all type text identical (binder types keep their names); frozenTarget hash unchanged.
+- DischargesTest: t1 discharges OpenGlue8.nvLocalInertia (still assumes it), t2 nothing, t3 cartierSmooth flagged
+  sorry; 7 real discharges of existing contributions; 57 open hypotheses. Saved to scratch/contrib-kit/.
+- OpenStatements.lean: 57 open hypotheses. render_open.py REFUSED at first: claims.tsv had 4 stale rows for fields that
+  earlier folds removed (igusaGL2, h29, elkiesX6StarPrinted, semistablePersistsSHcp; the same failure on the base,
+  which is why leaf-fold30's tip ddbcfd61 regenerated only the json). Those rows deleted (rows of removed fields;
+  saved in stale-claims-rows-removed.txt), then render_open.py wrote OPEN.md, pages-wanted.md, CONTRIBUTING.md,
+  STATUS.md and --check says "ok: 57 open hypotheses, all classified; 4 generated files up to date".
