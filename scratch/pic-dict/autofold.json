@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilCompat {n}.mumfordWeilDual {n}.mumfordWeilAlt {n}.phiAmpleIsogeny",
+   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilCompat {n}.mumfordWeilAlt {n}.phiAmpleIsogeny",
    "leaves": [
     {
      "name": "mumfordSquare",
@@ -63,14 +63,6 @@
      "kind": "published",
      "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 20: e_{nm}(x,L) = e_n(mx,L)"
-    },
-    {
-     "name": "mumfordWeilDual",
-     "type": "_root_.PicDict.MumfordWeilDual",
-     "doc": "pic-dict: e_n(x, f^*L) = e_n(f x, L) for endomorphisms (Mumford section 20 (5), for isogenies; Milne 1986 Lemma 16.2(c); locators UNVERIFIED).",
-     "kind": "published",
-     "flag": "unread: new printed leaf; Mumford prints it for isogenies, Milne 16.2(c) for every homomorphism; locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, 20 (5) (isogenies); Milne 1986, 16.2(c) (all homomorphisms)"
     },
     {
      "name": "mumfordWeilAlt",
