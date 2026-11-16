@@ -40,3 +40,13 @@ Build: .lake/build copied from ~/dzq-wt/ds965-weak; `lake build R16Used Jacobian
 - Finding (argument, not Lean): the scalar case cannot be excluded from the weak relation alone (a G_ℚ-character
   ψ with ψ(Frob_p) a root of P_p and ψ² = εχ_ℓ is not excluded by elementary means); an input about the same A is
   needed. Oddness of each ι-component is the minimal one used here.
+
+## Contribution and checks (VERIFIED, 11-16)
+
+- `ZInQKernel/Contrib/OneProof/R16IsJ1Dict.lean` = Dict + Weak + Final (`AfTateWeakOddPicZero`, `weakOdd_of_picZero`,
+  `r16CoreY_of_dict`, `r16CoreY_of_picZero`, `weakOddPicZero_of_afTate`). Pic⁰ leaves weakened to ∃ representative.
+- `lake build +Main +Discharges +R16IsJ1Dict`: success (13670 jobs); rebuild of R16IsJ1Dict after the last edit: success.
+- `#discharges`: r16CoreY discharged by r16CoreY_of_picZero / r16CoreY_of_dict / r16CoreY_of_weakOdd; standard axioms;
+  "61 open hypotheses, 2400 theorems checked, 11 discharge one".
+- autofold dry run (autofold.json): strict 45/10 on 55 -> 47/10 on 57; strictest 43/12 -> 45/12; FoldDryRun.lean
+  compiles, sixContactMin_of_open31 standard axioms. Weak spec: 45/10 -> 46/11 (rise; pending-reading flag).

@@ -2,7 +2,8 @@
 
 Task isj1-dict, branch `wip/isj1-dict`, base 60a3fac7 (fork main with leaf-fold28b), with the branches
 `wip/r16-used` (dcf24ac6) and `wip/ds965-weak` (b893b3da) merged. Date 2026-11-16.
-Lean: `ZInQKernel/Contrib/OneProof/R16IsJ1Dict.lean` (new). Scratch: `scratch/isj1-dict/` (results log
+Lean: `ZInQKernel/Contrib/OneProof/R16IsJ1Dict.lean` (new; imports `R16Used`, `DSThm965Weak` and the
+vendored `JacobianExists`, not `OneProof.Main`; no build-time code). Scratch: `scratch/isj1-dict/` (results log
 `log.md`). Nothing else under `ZInQKernel/` or `blueprint/` was edited. Model work, no human review.
 
 Marks: **VERIFIED** = compiled, or read in a file of this tree. **STANDARD** = published, with a reference.
@@ -77,8 +78,8 @@ def CurveIsoOfFunctionFieldIso : Prop :=
 def AfTateCharPolyPicZero : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 0 < N → IsNewform f χ →
     ∃ X : Over SpecQ, IsX1Model N X ∧
-      ∀ (V : AbelianVariety ℚ) (rep : (picardFunctorDegree X.hom 0).obj.RepresentableBy V.group.X),
-        PicardTensorCompatible X.hom V.group rep → AfTateAt N χ f (ofVendored V)
+      ∃ (V : AbelianVariety ℚ) (rep : (picardFunctorDegree X.hom 0).obj.RepresentableBy V.group.X),
+        PicardTensorCompatible X.hom V.group rep ∧ AfTateAt N χ f (ofVendored V)
 
 def AfTateWeakOddAt (N) (χ) (f : CF N 2) (J : AbVar ℚ) : Prop :=
   ∃ (A : AbVar ℚ) (π : Hom J A) (θ : coeffField f →+* A.End0), Surjective π.hom.left ∧
@@ -192,9 +193,46 @@ theorem R16IsJ1Dict.weakOddPicZero_of_afTate (h : R16Used.AfTateCharPoly) (hT : 
     (hx : LeafModCurves.X1ModelExists) : AfTateWeakOddPicZero
 ```
 
-## 4. Compile status, `#discharges`, fold
+## 4. Compile status, `#discharges`, fold (VERIFIED, 2026-11-16, one Lean process at a time)
 
-(Filled in §4 below after the build; see `scratch/isj1-dict/log.md`.)
+| what | command | outcome |
+|---|---|---|
+| scratch, part 1 | `lake env lean scratch/isj1-dict/Dict.lean` | no errors; axioms standard (`Dict-output.txt`) |
+| scratch, part 2 | `lake env lean scratch/isj1-dict/Weak.lean` | no errors; axioms standard |
+| contribution | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.R16IsJ1Dict` | success, 13670 jobs. The build tree was copied from ds965-weak's worktree, so this was a partial rebuild. After the final edit (`∃` representative) `lake build +…R16IsJ1Dict` also succeeded. |
+| `#discharges` | `lake env lean scratch/isj1-dict/Discharges.lean` | see below (`Discharges-output.txt`) |
+| fold dry run | `python3 scripts/one_proof/autofold.py scratch/isj1-dict/autofold.json --dry-run`, then line 1 stripped and `lake env lean scratch/isj1-dict/FoldDryRun.lean` | `strict count: 45/10 on 55 -> 47/10 on 57; strictest 43/12 -> 45/12`. `HDec.HSyn.sixContactMin_of_open31` has standard axioms. |
+| weak alternative | `autofold.py scratch/isj1-dict/autofold-weak.json --dry-run` | `45/10 -> 46/11; strictest 43/12 -> 44/13`. This is a rise, because the weak leaf is flagged pending reading, so autofold would need `--allow-rise`. |
+
+```
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_dict
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, R16IsJ1Dict.X1PointsConjugate,
+ R16IsJ1Dict.CurveIsoOfFunctionFieldIso, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, R16IsJ1Dict.X1PointsConjugate,
+ R16IsJ1Dict.CurveIsoOfFunctionFieldIso, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakOdd
+  still assumes: [R16IsJ1Dict.AfTateWeakOdd, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 61 open hypotheses, 2400 theorems checked, 11 discharge one
+```
+
+The other discharges in the output are earlier contributions, plus r16-used's `R16Used.r16CoreY_of_printed`,
+which is present because r16-used was merged. `mumfordTorsionAlgClosed` is already a published LEAF field.
+
+**Fold accounting.**
+- `r16CoreY`, a composite GLUE field, is replaced by three leaves:
+  - `afTateCharPolyPicZero`: published, unread;
+  - `curveIsoOfFunctionFieldIso`: published;
+  - `x1PointsConjugate`: consequence, which counts as GLUE.
+- GLUE stays at 10 and LEAF rises by 2.
+- Under the review's rating of r16-used's leaf (consequence), r16-used's fold would have left GLUE unchanged.
+  This fold also leaves it unchanged, but it pins down where the dictionary content sits: one proved step,
+  two separate textbook leaves, and the remaining `K_N` step.
+- The fold is not applied. `Main.lean`, `kinds.tsv` and `claims.tsv` are unchanged; folding is the
+  integrator's step. Folding requires merging `wip/r16-used` and `wip/ds965-weak`, which this file imports.
 
 ## 5. Objections to `AfTateCharPoly` that remain
 
@@ -251,3 +289,20 @@ The review gave several reasons; the dictionary ones are taken first.
 | `afTateWeakOddPicZero` (alternative) | `R16IsJ1Dict.AfTateWeakOddPicZero` | no: weak reading plus oddness | published, pending reading | Under the characteristic-polynomial reading it is a consequence (proved). Under the weak reading it needs oddness from a second source. |
 | `x1PointsConjugate` | `R16IsJ1Dict.X1PointsConjugate` | no | consequence | It is transitivity, a consequence of Igusa / Shimura 1971 Thm 6.6 (Galois group `GL₂(ℤ/N)`, resp. `/±1`). False for `N = 0`, hence `0 < N`. |
 | `curveIsoOfFunctionFieldIso` | `R16IsJ1Dict.CurveIsoOfFunctionFieldIso` | yes | published | It is the object part of the equivalence between normal proper curves over `k` and function fields (Stacks, Hartshorne I.6.12). |
+
+## 7. Files
+
+- `ZInQKernel/Contrib/OneProof/R16IsJ1Dict.lean`: the contribution (parts 1 and 2 and the final discharges).
+- `scratch/isj1-dict/Dict.lean`, `Weak.lean`: the two parts as scratch files, with `#print axioms`. They are
+  the development versions; the contribution has the final `∃`-representative form of the `Pic⁰` leaves.
+- `scratch/isj1-dict/Discharges.lean`, `Discharges-output.txt`: the `#discharges` check.
+- `scratch/isj1-dict/autofold.json` (primary), `autofold-weak.json` (weak alternative), `FoldDryRun.lean`,
+  `FoldDryRun-output.txt`.
+- `scratch/isj1-dict/log.md`: the results log.
+
+Proposed `locators.md` rows (not added, since that file belongs to another task):
+- `afTateCharPolyPicZero` | DS GTM 228 §7.7, Lemma 9.5.3, Thm 9.5.4 | UNVERIFIED | `J₁(N) = Pic⁰(X₁(N)_alg)`;
+  check the wording "characteristic polynomial" vs "equation".
+- `x1PointsConjugate` | Shimura 1971 Thm 6.6; Igusa 1959 | UNVERIFIED | `Gal(F_N/ℚ(j)) ≅ GL₂(ℤ/N)/±1`.
+- `curveIsoOfFunctionFieldIso` | Stacks, Algebraic Curves, "Curves and function fields"; Hartshorne I.6.12 |
+  UNVERIFIED.
