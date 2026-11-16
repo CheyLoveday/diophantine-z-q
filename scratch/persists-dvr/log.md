@@ -27,3 +27,13 @@ Base: wip/r6-nf 0bc2446d.
   discharged outright (`semistablePersistsSHcp_of_SH`); autofold applies, no consumer reroute needed.
 - GeomConnOfRationalPoint is used only inside the chain's `idCompSubgroup_of`, `idCompBaseChangeDVR_of`,
   `identityComponentBaseChangeDVRRange_of`; the fibre step needs no field change (no torus transport).
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.PersistsDVR`
+  succeeds (12987 jobs); frozenTarget axioms standard at the base (VERIFIED).
+- `#discharges` (scratch/persists-dvr/discharges.txt): `OpenResearchLeaves21.semistablePersistsSHcp` discharged by
+  `GapPersists.semistablePersistsSHcp_of_SH` (assumes SGA3_VIB_3_10, SGA7_IX_3_3_SH,
+  NeronBaseChangeStrictHenselization, GeomConnOfRationalPoint) and by `semistablePersistsSHcp_of_printed`
+  (assumes SGA3_VIB_3_10, SGA7_IX_3_3, GeomConnOfRationalPoint); standard axioms (VERIFIED).
+- `autofold.py scratch/persists-dvr/autofold.json --dry-run`: exit 0, strict 45/10 on 55 -> 44/10 on 54, strictest
+  44/11 -> 43/11. Its module (line 1 stripped, scratch/persists-dvr/FoldCheck.lean) compiles;
+  `sixContactMin_of_open29` standard axioms (VERIFIED).
+- scratch/persists-dvr/axioms.txt: #check of the four exported theorems and #print axioms of all six (VERIFIED).
