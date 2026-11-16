@@ -26,3 +26,15 @@
   `add_eq_finrank`: a + b = dim V.
 - Importing TailX instead of TailS makes the same file time out in typeclass search (Module.Free, IsTorsionFree): keep the
   linear algebra in a module importing TailS only.
+
+## 17:05 Core theorem COMPILES (VERIFIED: lake build ZInQKernel.Contrib.OneProof.HodgeTateDecompAbVarCore, 11800 jobs, success)
+- `ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompAbVar_of_leaves
+   (hHT : HodgeTateDecompExists) (hT : TateTwistInvariants) (hA : AxSenTate)
+   (h9 : HDec.WeilPairing.T09_SymmIsogenyExists) (hQ : HDec.WeilPairing.IsogenyQuasiInverse)
+   (hT5 : HDec.PkgI2.TorsionStructure) : HodgeSplit.HodgeTateDecompAbVar`; axioms [propext, Classical.choice, Quot.sound].
+- Modules: Contrib/OneProof/HodgeTateDecompAbVarDecomp.lean (imports TailS + AbVarBC.G9Instance: leaf, counts,
+  a = b, cyclotomic naturality), HodgeTateDecompAbVarWeil.lean (imports TailK: Weil pairing over any field with l != 0),
+  HodgeTateDecompAbVarCore.lean (assembly; needs maxHeartbeats 1000000 for the G9-copy/kernel-copy transport).
+- New leaf: `HodgeTateDecompExists` = the field with `∃ a b` in place of the dimension g (no dims). Proved
+  `hodgeTateDecompExists_of_field : HodgeTateDecompAbVar → HodgeTateDecompExists` (leaf not stronger than the field).
+- `cyc_gfToGqp`: pkg-I4's χ(gfToGqp σ) = Mathlib's cyclotomicCharacter (AlgebraicClosure F) p σ (naturality, VERIFIED compiled).
