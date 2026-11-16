@@ -1,0 +1,9 @@
+import ZInQKernel.Contrib.OneProof.SGRDirectNV
+open Polynomial
+#check @SGRDirect.NVLocalInertia
+#check @Ideal.exists_ideal_over_prime_of_isIntegral
+#check @Ideal.exists_ideal_le_liesOver_of_le
+#check @Algebra.HasGoingDown
+#check @Ideal.isMaximal_of_isIntegral_of_isMaximal_comap
+#check @HDec.PropTSGlue.exists_secIdeal
+#check @Ideal.ramificationIdx_tower
