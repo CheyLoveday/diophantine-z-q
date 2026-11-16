@@ -1,6 +1,6 @@
 import ZInQKernel.Contrib.OneProof.GroupLawGlue
 import ZInQKernel.Contrib.OneProof.GroupLawStage
-import ZInQKernel.Contrib.OneProof.BLRLocalizes
+import ZInQKernel.Contrib.OneProof.GroupLawLocDiagram
 import ZInQKernel.Contrib.SpreadOut.Spread
 
 /-!
@@ -32,7 +32,7 @@ open ZInQ.Contrib.SpreadOut
 
 section Spread
 
-open GapBLR
+open ZInQ.Contrib.GroupLaw.Loc
 
 variable {S : Scheme.{0}} {F : Over S} {e : S ⟶ F.left} {V : S.Opens} (hV : IsAffineOpen V)
   (𝔭 : Ideal Γ(S, V)) [𝔭.IsPrime]
