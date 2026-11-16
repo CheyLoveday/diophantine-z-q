@@ -15,7 +15,13 @@ Task pic-dict (report `docs/research/pic-dict.md`).
   the adjoint clause (`mumfordWeilDual_of_pairing`).
 * §5 states the leaves: Mumford's displays for the abelian variety `A_K̄` over `K̄`.
 * §6 assembles `T09Pic.WeilPairingMumford` (`weilPairingMumford_of_printed`).
-* §7 assembles `T09Pic.PhiAmpleIsogeny` (`phiAmpleIsogeny_of_printed`), with `finiteOfFiniteKerPts` proved. -/
+* §7 assembles `T09Pic.PhiAmpleIsogeny` (`phiAmpleIsogeny_of_printed`), with `finiteOfFiniteKerPts` proved.
+* The last part restates the leaves over an algebraically closed field `k` for `X : AbVar k` (namespace `PicDict.AC`;
+  leaves `Mumford*AC`). It proves the bridge to `A_K̄ := Over.pullback (Spec K̄ → Spec K)` of `A` (`tr_pts`,
+  `mul_AKbar`, `pts`, `formula_bridge`), and gives the main results `weilPairingMumford_of_ac` and
+  `phiAmpleIsogeny_of_ac`.
+* The adjoint and compatibility properties of `ē_n` are proved from bilinearity by transport
+  (`mumfordWeilDual_of_pairing`, `mumfordWeilCompat_of_pairing`). -/
 
 noncomputable section
 
