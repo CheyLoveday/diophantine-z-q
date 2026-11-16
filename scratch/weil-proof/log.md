@@ -20,3 +20,12 @@ weil-used (origin/wip/weil-used 8ea3eaf3): consumers read only left kernel, Galo
 - Finding: part (iv) (multiplicativity in the class) needs monoidal coherence of the vendored pullback monoidal
   structure (built by localization lifting) with Mathlib's `Scheme.Modules.pullbackComp` (adjunction-mate) and
   `pullbackObjUnitIso` vs ε. Not in the tree; out of reach today.
+- VERIFIED: `wf_tensor_ratio` (from `PullbackCompMonoidal`: wf(ψ⊗ψ')·r_t = wf ψ · wf ψ', r_t = ratio of
+  pullbackObjUnitIso⁻¹ and ε), `wf_unit`, `unitRatio_tr` (r_t = 1 for translations, derived: no unit-coherence
+  hypothesis needed), `mumfordWeilBilinRightAC_of_pullbackCompMonoidal`,
+  `mumfordWeilPairingAC_of_pullbackCompMonoidal : PullbackCompMonoidal → PicDict.MumfordWeilPairingAC`,
+  `weilPairingMumford_of_pullbackCompMonoidal` (6 Mumford leaves + GLUE PullbackCompMonoidal); standard axioms.
+- `PullbackCompMonoidal`: Mathlib's `Scheme.Modules.pullbackComp f g` commutes with the vendored tensorators μ
+  (Modules/PullbackMonoidal.lean, built by Localization.Monoidal.functorMonoidalOfComp). Not proved: needs the
+  presheaf-level pullbackComp monoidal + compatibility of `sheafificationCompPullback` with pullbackComp
+  (conjugate computation). Rated GLUE (formal, STANDARD in the theory: pullback is a monoidal pseudofunctor).
