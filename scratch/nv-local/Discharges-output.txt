@@ -19,7 +19,7 @@ DISCHARGES [OpenResearchLeaves22.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1906 theorems checked, 7 discharge one
+#discharges: 63 open hypotheses, 1923 theorems checked, 7 discharge one
 'SGRDirect.NVLocal.eq_one_of_inertia_of_unram' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.NVLocal.exists_branch' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.NVLocal.primeOf_isPrime' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -27,3 +27,8 @@ DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidit
 'SGRDirect.NVLocal.eq_one_of_primeOf' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.NVLocal.nvLocalInertia_of_branchRegular' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SGRDirect.NVLocal.heckeVertWitness_of_branchRegular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.NVLocal.ramificationIdx_map_localization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.NVLocal.unram_near' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.NVLocal.branchRegular_of_tame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.NVLocal.nvLocalInertia_of_tame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SGRDirect.NVLocal.heckeVertWitness_of_tame' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -57,3 +57,15 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
   [propext, Classical.choice, Quot.sound].
 - scratch/nv-local/NVLocal.lean = copy of the Contrib file; Core-first.lean = the first compiled version
   (old BranchRegular with existence clause).
+
+## 2026-11-16 02:30 TameBranchNormal (general form) VERIFIED
+- New GLUE Prop `TameBranchNormal` (no project definitions): R noetherian domain, m maximal, R_m regular local
+  of dim 2, m = (f, g), (f) prime, p in m, L/Frac R Galois of degree < p, e = 1 at height-one P <= m with
+  f, g notin P; then for every maximal P of the integral closure over m and every prime Q over (f) inside P:
+  (UB) every such Q' equals Q; (N) every element of a fraction ring of S/Q integral over S/Q is a/s, s notin P.
+- Compiled: `ramificationIdx_map_localization` (Mathlib's AtPrime lemma for any submonoid), `maximal_eq_span`
+  (m = (dX - a, p)), `secGen_isPrimitive`, `secGen_map`, `span_secGen_eq` (Gauss), `span_secGen_isPrime`,
+  `isLocalization_B` (B = (Z\0)^{-1} C), `unram_near` (from BranchData + distinctness), `branchRegular_of_tame`,
+  `nvLocalInertia_of_tame`, `heckeVertWitness_of_tame`. All [propext, Classical.choice, Quot.sound].
+- Contrib file rebuilt (lake, 22 s); Discharges-output.txt: "63 open hypotheses, 1923 theorems checked,
+  7 discharge one" (none from this file). autofold.json: new leaf tameBranchNormal (project glue, GLUE).

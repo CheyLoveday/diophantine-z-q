@@ -11,3 +11,8 @@ import ZInQKernel.Contrib.OneProof.SGRDirectNVLocal
 #print axioms SGRDirect.NVLocal.eq_one_of_primeOf
 #print axioms SGRDirect.NVLocal.nvLocalInertia_of_branchRegular
 #print axioms SGRDirect.NVLocal.heckeVertWitness_of_branchRegular
+#print axioms SGRDirect.NVLocal.ramificationIdx_map_localization
+#print axioms SGRDirect.NVLocal.unram_near
+#print axioms SGRDirect.NVLocal.branchRegular_of_tame
+#print axioms SGRDirect.NVLocal.nvLocalInertia_of_tame
+#print axioms SGRDirect.NVLocal.heckeVertWitness_of_tame
