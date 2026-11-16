@@ -381,7 +381,54 @@ theorem descend_ext (hsm : ∀ i, Algebra.Smooth R (B i)) (hcov : ∀ x : R₁, 
     pullback.lift (v ≫ πB B hB j) φ (by rw [Category.assoc, πB_toC, Hφ.w])
   refine ⟨ψV ≫ f0', ?_, ?_⟩
   · rw [Category.assoc, hf0', ← Category.assoc, pullback.lift_fst, Category.assoc, πB_ej]
-  sorry
+  -- the inverse comparison `V ×_{R₁} K₁ → P`
+  have hβ : (pullback.fst v kK₁ ≫ e.hom) ≫ h2 =
+      (pullback.snd v kK₁ ≫ Spec.map (CommRingCat.ofHom (algebraMap K K₁))) ≫ jK := by
+    show (pullback.fst v kK₁ ≫ e.hom) ≫ (pullback.snd (πC C) W.hom ≫ W.hom ≫ eC) = _
+    rw [Category.assoc, ← Category.assoc e.hom, he4, ← Category.assoc φ, Hφ.w, Category.assoc,
+      πC_eC, ← Category.assoc, pullback.condition, Category.assoc, Category.assoc, specK₁_comp,
+      specK_comp]
+  let β : pullback v kK₁ ⟶ P := pullback.lift _ _ hβ
+  have hβ1 : β ≫ pullback.fst h2 jK = pullback.fst v kK₁ ≫ e.hom := pullback.lift_fst _ _ _
+  have hβ2 : β ≫ pullback.snd h2 jK = pullback.snd v kK₁ ≫ Spec.map (CommRingCat.ofHom (algebraMap K K₁)) :=
+    pullback.lift_snd _ _ _
+  have hα1 : α ≫ pullback.fst v kK₁ = pullback.fst h2 jK ≫ e.inv := pullback.lift_fst _ _ _
+  have hα2 : α ≫ pullback.snd v kK₁ = κ := pullback.lift_snd _ _ _
+  have hβα : β ≫ α = 𝟙 _ := by
+    apply pullback.hom_ext
+    · rw [Category.assoc, hα1, ← Category.assoc, hβ1, Category.assoc, e.hom_inv_id, Category.comp_id,
+        Category.id_comp]
+    · rw [Category.assoc, hα2, Category.id_comp]
+      apply hsq.hom_ext
+      · rw [Category.assoc, hκ1, ← Category.assoc, hβ1, Category.assoc, he3, pullback.condition]
+      · rw [Category.assoc, hκ2, hβ2]
+  -- the cone map at `j`
+  let cDj : pullback (πC C) W.hom ⟶ pullback (toC B hB C hC j) W.hom :=
+    pullback.lift (pullback.fst (πC C) W.hom ≫ πB B hB j) (pullback.snd (πC C) W.hom)
+      (by rw [Category.assoc, πB_toC, pullback.condition])
+  have hcDj : (cD.π.app j).left = cDj := rfl
+  let cEj : P ⟶ pullback Y.hom jK := cE.π.app j
+  have hcEj : cEj ≫ pullback.fst Y.hom jK = pullback.fst h2 jK ≫ cDj := by
+    have : cEj ≫ pullback.fst Y.hom jK = pullback.fst h2 jK ≫ (cD.π.app j).left :=
+      pullback.lift_fst _ _ _
+    exact this
+  have heψ : e.hom ≫ cDj = ψV := by
+    apply pullback.hom_ext
+    · rw [Category.assoc, pullback.lift_fst, ← Category.assoc, he3, pullback.lift_fst]
+    · rw [Category.assoc, pullback.lift_snd, he4, pullback.lift_snd]
+  have k1 : pullback.fst v kK₁ ≫ ψV = β ≫ cEj ≫ pullback.fst Y.hom jK := by
+    rw [hcEj, ← heψ, ← Category.assoc]
+    exact (congrArg (· ≫ cDj) hβ1.symm).trans (Category.assoc _ _ _)
+  have k2 : pullback.fst Y.hom jK ≫ f0' = g' ≫ pullback.fst X.hom jK := hpf
+  let a' : P ⟶ pullback X.hom jK := a
+  have hg1' : cEj ≫ g' = a' := hg1
+  have ha1 : a' ≫ pullback.fst X.hom jK = α ≫ b := pullback.lift_fst _ _ _
+  calc pullback.fst v kK₁ ≫ ψV ≫ f0' = (pullback.fst v kK₁ ≫ ψV) ≫ f0' := (Category.assoc _ _ _).symm
+    _ = β ≫ cEj ≫ (pullback.fst Y.hom jK ≫ f0') := 
+        (congrArg (· ≫ f0') k1).trans ((Category.assoc _ _ _).trans (congrArg (β ≫ ·) (Category.assoc _ _ _)))
+    _ = β ≫ (cEj ≫ g') ≫ pullback.fst X.hom jK := by rw [k2, Category.assoc]
+    _ = (β ≫ α) ≫ b := by rw [hg1', ha1, Category.assoc]
+    _ = b := by rw [hβα, Category.id_comp]
 
 end Descend
 
