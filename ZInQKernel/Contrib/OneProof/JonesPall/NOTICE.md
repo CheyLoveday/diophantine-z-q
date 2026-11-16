@@ -24,14 +24,25 @@ single `hJP` argument, not the complete unconditional H10/Q theorem.
 - Original source SHA-256: `a902763f2e8c6ca272f03774536d58b93c99f5843214288efe226f5e767da284`
 - Source link: https://github.com/facebookresearch/atlas-lean/blob/8860f7b55276b96e51df600021845dd5eb48f5ab/MathlibExt/NumberTheory/QuadraticForms/LegendreThreeSquare.lean
 - The original copyright header and full upstream license, including its
-  prefatory text, are preserved. `LICENSE` SHA-256:
+  prefatory text, are preserved in the canonical provider. The shared
+  `LegendreThreeSquares/LICENSE` SHA-256 is:
   `fc78801eadec58b04e0d5cabe735eb6808e23f47b0cb92b89b55792019b54131`.
 
-`Atlas.lean` relocates the same genuine Mathlib-only Ankeny proof and encloses
-its declarations in `ZInQ.Contrib.OneProof.JonesPall.Atlas`. The import list and
-upstream proof bodies are unchanged; only the enclosing namespace and
-source/change comments are relocated. The separate Legendre contribution and
-its primary files are not modified or claimed here.
+The contribution imports the **canonical common module**
+`ZInQKernel.Contrib.OneProof.LegendreThreeSquares.Atlas`, published in draft
+https://github.com/Deicyde/diophantine-z-q/pull/36 at immutable head
+`47ca4df214d1402caa3de40c7d6f661567120fcd`. Its three shared files are carried
+byte-identically at the same canonical paths until that dependency is on main:
+`LegendreThreeSquares/Atlas.lean`, `LegendreThreeSquares/LICENSE`, and
+`LegendreThreeSquares/NOTICE.md`.
+
+`Representation.lean` fully qualifies that common module's Nat theorem. There
+is no second Ankeny implementation or separate JonesPall.Atlas provider in the
+final source tree. This draft depends on PR #36's shared provider; it does not
+add or claim its hL3s entry theorem. The separate Legendre primary files and
+published source are untouched. The superseded private namespace copy remains
+reachable in historical commit `9edb3362593eeb1be4de6a7119c22f3d036c7e65`; the
+follow-up deduplication does not erase or amend that history.
 
 ## New quaternion descent and transport
 

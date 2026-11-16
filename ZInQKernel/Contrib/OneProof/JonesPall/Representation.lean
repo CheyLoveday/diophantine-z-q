@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.JonesPall.Atlas
+import ZInQKernel.Contrib.OneProof.LegendreThreeSquares.Atlas
 import ZInQKernel.Contrib.OneProof.JonesPall.Descent
 import ZInQKernel.Contrib.OneProof.JonesPall.Parity
 import Mathlib.NumberTheory.SumTwoSquares
@@ -26,7 +26,8 @@ private theorem oriented_three_squares (n : ℕ) (hn : n % 8 = 1) :
     · have htwo : 2 ∣ n :=
         ⟨2 * 4 ^ u * (8 * v + 7), by rw [heq, pow_succ]; ring⟩
       omega
-  obtain ⟨x, y, z, hxyz⟩ := Atlas.Nat.exists_three_squares_of_not_four_pow_mul_eight_mul_add_seven n hnot
+  obtain ⟨x, y, z, hxyz⟩ :=
+    ZInQ.Contrib.OneProof.LegendreThreeSquares.Atlas.Nat.exists_three_squares_of_not_four_pow_mul_eight_mul_add_seven n hnot
   have h : (n : ℤ) = (x : ℤ) ^ 2 + (y : ℤ) ^ 2 + (z : ℤ) ^ 2 := by
     exact_mod_cast hxyz.symm
   have hn4 : n % 4 = 1 := by omega

@@ -40,12 +40,12 @@ Source: `facebookresearch/atlas-lean`, commit
 Original source SHA-256: `a902763f2e8c6ca272f03774536d58b93c99f5843214288efe226f5e767da284`.
 
 Changes in this contribution: relocated the file and enclosed its declarations in the namespace
-`ZInQ.Contrib.OneProof.JonesPall.Atlas`. The upstream import list and proof bodies are
+`ZInQ.Contrib.OneProof.LegendreThreeSquares.Atlas`. The upstream import list and proof bodies are
 unchanged. The complete upstream LICENSE, including its prefatory text, is preserved next to this
 file; see NOTICE.md for the source and change record.
 -/
 
-namespace ZInQ.Contrib.OneProof.JonesPall.Atlas
+namespace ZInQ.Contrib.OneProof.LegendreThreeSquares.Atlas
 
 namespace Nat
 
@@ -1224,4 +1224,4 @@ theorem exists_three_squares_of_not_four_pow_mul_eight_mul_add_seven
 
 end Nat
 
-end ZInQ.Contrib.OneProof.JonesPall.Atlas
+end ZInQ.Contrib.OneProof.LegendreThreeSquares.Atlas
