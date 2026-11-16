@@ -54,7 +54,8 @@ def pts {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) : AC.Kpt (AKbar A) :=
     (pullback.lift_snd _ _ _)
 
 lemma pts_left_fst {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) :
-    (pts x).left ≫ pullback.fst A.X.hom (ptK K).hom = x.left := pullback.lift_fst _ _ _
+    (pts x).left ≫ pullback.fst A.X.hom (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K)))) =
+      x.left := pullback.lift_fst _ _ _
 
 lemma mu_AKbar (A : AbVar K) : μ[(AKbar A).X] =
     Functor.LaxMonoidal.μ (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K)))))
@@ -91,5 +92,44 @@ lemma tr_pts {A : AbVar K} (x : A.Pt (AlgebraicClosure K)) :
           (CartesianMonoidalCategory.snd A.X (ptK K) ≫ x) ≫ μ[A.X]) (CartesianMonoidalCategory.snd A.X (ptK K)))
       simpa [transl] using this
     exact h1.trans h2.symm
+
+lemma mul_AKbar (A : AbVar K) (n : ℕ) : (AC.mul (AKbar A) n).left = (mulN A n).left := by
+  have h1 : AC.mul (AKbar A) n =
+      (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K))))).map
+        ((𝟙 A.X) ^ n) := by
+    rw [AC.mul]
+    have := map_pow (Functor.homMonoidHom (Over.pullback (Spec.map (CommRingCat.ofHom
+      (algebraMap K (AlgebraicClosure K)))))) (𝟙 A.X) n
+    simp only [Functor.homMonoidHom_apply, CategoryTheory.Functor.map_id] at this
+    exact this.symm
+  rw [h1, mulN]
+  apply pullback.hom_ext
+  · simp
+    exact (congrArg Over.Hom.left (CartesianMonoidalCategory.whiskerRight_fst ((𝟙 A.X) ^ n) (ptK K))).symm
+  · simp
+    exact (congrArg Over.Hom.left (CartesianMonoidalCategory.whiskerRight_snd ((𝟙 A.X) ^ n) (ptK K))).symm
+
+lemma pts_mul {A : AbVar K} (x y : A.Pt (AlgebraicClosure K)) : pts (x * y) = pts x * pts y := by
+  apply Over.OverMorphism.ext
+  apply pullback.hom_ext
+  · rw [pts_left_fst]
+    change _ = (CartesianMonoidalCategory.lift (pts x) (pts y) ≫ μ[bcX A]).left ≫ _
+    rw [mu_AKbar]
+    simp only [Over.comp_left, Category.assoc, Over.pullback_map_left, pullback.lift_fst]
+    have key : (CartesianMonoidalCategory.lift (pts x) (pts y)).left ≫
+        (Functor.LaxMonoidal.μ (Over.pullback (Spec.map (CommRingCat.ofHom
+          (algebraMap K (AlgebraicClosure K))))) A.X A.X).left ≫
+        pullback.fst (A.X ⊗ A.X).hom (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K)))) =
+        (CartesianMonoidalCategory.lift x y).left := by
+      apply pullback.hom_ext
+      · rw [Category.assoc, Category.assoc, Over.μ_pullback_left_fst_fst]
+        simp
+        exact (pts_left_fst x).trans (pullback.lift_fst _ _ _).symm
+      · rw [Category.assoc, Category.assoc, Over.μ_pullback_left_fst_snd]
+        simp
+        exact (pts_left_fst y).trans (pullback.lift_snd _ _ _).symm
+    rw [reassoc_of% key]
+    rfl
+  · exact (Over.w (pts (x * y))).trans (Over.w (pts x * pts y)).symm
 
 end PicDict
