@@ -25,3 +25,6 @@ i.e. `GrossConjugationAt (shortCurve (-(d:ℚ)^2))` for d ≡ 5 (mod 8) squarefr
   `conj_mem_iff_of_isPeriodLattice`, `weierstrassP_conj`, `map_conj_weierPt`: compiles, no sorry (VERIFIED).
 - Fricke.lean: `fricke_apply` (f(-1/(Nz)) = ε N z² f(z)), `eichler_fricke` (ε=+1 ⇒ φ_f∘W_N = φ_f),
   `conj_eichler`, `conj_eichler_psi` (conj φ_f(τ) = φ_f(1/(N τ̄))): compiles (VERIFIED).
+- Main.lean (all parts + `rootNumber_cd`, `iota_comp_sigma`, `map_conj_heegnerC`, `conj_clause`,
+  `grossConjugationCd : ZInQ.GZHL3.GrossConjugationCd`): compiles; `#print axioms` for
+  grossConjugationCd, conj_clause, lattice_eq_of_g: [propext, Classical.choice, Quot.sound] (VERIFIED).

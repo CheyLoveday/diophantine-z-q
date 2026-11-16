@@ -1,5 +1,9 @@
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Heegner
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Cd
+import ZInQKernel.Contrib.GZStatements.Level
+import ZInQKernel.Contrib.OneProof.FHNonvanishing.FE
+import ZInQKernel.Contrib.HeckeAll.Provider
 
 /-! gz-conj: development file. -/
 
@@ -581,4 +585,185 @@ theorem sum_star_eq {M : Type*} [AddCommMonoid M] (hsq : Squarefree D) {β : ℤ
 
 end Forms
 
+
+section HeegnerConj
+
+open ZInQ.Contrib.TYZGenus.CM (HeegnerForm)
+open scoped WeierstrassCurve.Affine
+open WeierstrassCurve ZInQ.GZDecomp
+
+/-- **Complex conjugation fixes the Heegner sum when the Fricke sign is `+1`** (root number
+`−1`): `conj (Σ_{Q ∈ S} φ(τ_Q)) = Σ_{Q ∈ S} φ(τ_{Q*}) = Σ_{Q ∈ S} φ(τ_Q)`. -/
+theorem map_conj_heegnerC (E : WeierstrassCurve ℚ) [E.IsElliptic] {N : ℕ} [NeZero N]
+    (f : Newform N 2) (hχ : f.χ = 1) (hε : f.frickeSign hχ = 1)
+    (hcoeff : ∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) {D β : ℤ} (hsq : Squarefree D)
+    {S : Finset (HeegnerForm N D)} (hS : ZInQ.GZHL3.IsHeegnerReps N D β S) {L : PeriodPair}
+    {c : ℚ} (hL : ZInQ.GZHL3.IsPeriodLattice E L) (hP : ZInQ.GZHL3.PeriodsIn f c L) :
+    Affine.Point.map cq (ZInQ.GZHL3.heegnerC E L f (c : ℂ) S) =
+      ZInQ.GZHL3.heegnerC E L f (c : ℂ) S := by
+  have hreal : ∀ n : ℕ, n ≠ 0 → conj (coeff f n) = coeff f n := fun n hn => by
+    rw [hcoeff n hn, map_intCast]
+  unfold ZInQ.GZHL3.heegnerC
+  rw [map_sum]
+  have step : ∀ Q ∈ S, Affine.Point.map cq (ZInQ.GZHL3.weierPt E L ((c : ℂ) * ZInQ.GZHL3.eichler f Q.tauH)) =
+      ZInQ.GZHL3.weierPt E L ((c : ℂ) * ZInQ.GZHL3.eichler f (starForm hsq Q).tauH) := by
+    intro Q _
+    rw [map_conj_weierPt E hL, map_mul, map_ratCast, conj_eichler_psi f hχ hε hreal, star_tauH]
+  rw [Finset.sum_congr rfl step]
+  exact sum_star_eq hsq hS (fun τ => ZInQ.GZHL3.weierPt E L ((c : ℂ) * ZInQ.GZHL3.eichler f τ))
+    (fun γ hγ τ => GZHeegner.weierPt_smul hL hP hγ τ)
+
+/-- On a quadratic field `K = ℚ(δ)`, `δ² = D < 0`, with `ι(δ) = i√|D|` and `σ(δ) = −δ`:
+`ι ∘ σ = conj ∘ ι`. -/
+theorem iota_comp_sigma {K : Type} [Field K] [NumberField K] {D : ℤ} (hD : D < 0)
+    (hK2 : Module.finrank ℚ K = 2) (δ : K) (hδ : δ ^ 2 = (D : K)) (ι : K →ₐ[ℚ] ℂ)
+    (hι : ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ)) (σ : K ≃ₐ[ℚ] K) (hσ : σ δ = -δ) :
+    ι.comp σ.toAlgHom = cq.comp ι := by
+  have hδQ : ∀ q : ℚ, algebraMap ℚ K q ≠ δ := by
+    intro q hq
+    have h1 : q ^ 2 = (D : ℚ) := by
+      apply (algebraMap ℚ K).injective
+      rw [map_pow, hq, hδ, map_intCast]
+    have h2 : (0 : ℚ) ≤ D := h1 ▸ sq_nonneg q
+    have h3 : (0 : ℤ) ≤ D := by exact_mod_cast h2
+    omega
+  have hli : LinearIndependent ℚ ![(1 : K), δ] := by
+    rw [LinearIndependent.pair_iff]
+    intro s t hst
+    by_cases ht : t = 0
+    · subst ht
+      simp only [zero_smul, add_zero] at hst
+      exact ⟨(smul_eq_zero.mp hst).resolve_right one_ne_zero, rfl⟩
+    · exfalso
+      apply hδQ (-s / t)
+      have : t • δ = -(s • (1 : K)) := eq_neg_of_add_eq_zero_right hst
+      rw [Algebra.smul_def, Algebra.smul_def, mul_one] at this
+      have ht' : algebraMap ℚ K t ≠ 0 := by simpa using ht
+      rw [map_div₀, map_neg, eq_comm, ← this]
+      field_simp
+  let b := basisOfLinearIndependentOfCardEqFinrank hli (by simp [hK2])
+  apply AlgHom.toLinearMap_injective
+  refine b.ext fun i => ?_
+  fin_cases i
+  · simp [b]
+  · simp only [b, coe_basisOfLinearIndependentOfCardEqFinrank]
+    simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero, AlgHom.toLinearMap_apply,
+      AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgEquiv.coe_algHom, hσ, map_neg, hι, cq_apply,
+      map_mul, Complex.conj_I, Complex.conj_ofReal]
+    ring
+
+/-- **The `ε = −1` half of Gross's conjugation relation, for every `E/ℚ`.** In the Heegner setting,
+if the root number of `f` is `−1` (Fricke sign `+1`), then `σ y = y` for the Heegner point `y`. -/
+theorem conj_clause (E : WeierstrassCurve ℚ) [E.IsElliptic] {N : ℕ} [NeZero N] (f : Newform N 2)
+    (hχ : f.χ = 1) (hε : f.frickeSign hχ = 1)
+    (hcoeff : ∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) {D β : ℤ}
+    (hDf : IsOddImagFundDisc D) {S : Finset (HeegnerForm N D)}
+    (hS : ZInQ.GZHL3.IsHeegnerReps N D β S) {L : PeriodPair} {c : ℚ}
+    (hL : ZInQ.GZHL3.IsPeriodLattice E L) (hP : ZInQ.GZHL3.PeriodsIn f c L)
+    {K : Type} [Field K] [NumberField K] [DecidableEq K] (hK2 : Module.finrank ℚ K = 2)
+    (δ : K) (hδ : δ ^ 2 = (D : K)) (ι : K →ₐ[ℚ] ℂ)
+    (hι : ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ)) (y : (E⁄K).Point)
+    (hy : Affine.Point.map ι y = ZInQ.GZHL3.heegnerC E L f c S) (σ : K ≃ₐ[ℚ] K)
+    (hσ : σ δ = -δ) : Affine.Point.map σ.toAlgHom y - y = 0 := by
+  have hισ := iota_comp_sigma hDf.1 hK2 δ hδ ι hι σ hσ
+  apply Affine.Point.map_injective (f := ι)
+  rw [map_sub, Affine.Point.map_map, hισ, ← Affine.Point.map_map, hy,
+    map_conj_heegnerC E f hχ hε hcoeff hDf.2.2 hS hL hP, sub_self, map_zero]
+
+end HeegnerConj
+
+section RootNumber
+
+open WeierstrassCurve ZInQ.GZDecomp
+
+/-- **The root number of the newform of `C_d`, `d ≡ 5 (mod 8)`, is `−1`**: Tau Ceti's functional
+equation `Λ_N(2 − s) = ε Λ_N(s)` against the proved `FunctionalEquation5` (`Λ(2 − s) = −Λ(s)` at
+`N = 32 d²`, the level forced by `level_eq_of_coeff_cd`), and `L(f, s) ≢ 0`. -/
+theorem rootNumber_cd {d : ℕ} (hd : d % 8 = 5) (hsq : Squarefree d) {N : ℕ} [NeZero N]
+    (f : Newform N 2) (hχ : f.χ = 1)
+    (hf : ∀ n : ℕ, n ≠ 0 → coeff f n = ((shortCurve (-(d : ℚ) ^ 2)).LFunction n : ℂ)) :
+    rootNumber f hχ = -1 := by
+  have hd4 : d % 4 = 1 := by omega
+  have hd0 : d ≠ 0 := by omega
+  have hN := ZInQ.GZStatements.level_eq_of_coeff_cd hd4 hsq f hχ hf
+  obtain ⟨F, hF⟩ := ZInQ.Contrib.heckeContinuation d hd0
+  have hFf : IsEntireCont (coeff f) 2 F := isEntireCont_of_isLContinuation hf hF
+  have key : ∀ s : ℂ, 0 < s.re → s.re < 2 →
+      (rootNumber f hχ + 1) * ZInQ.Literature.completedL N F s = 0 := by
+    intro s h1 h2
+    have e1 := ZInQ.GZFH.completedL_newform_sub f hχ hFf h1 h2
+    have e2 := ZInQ.Contrib.functionalEquation5 d hd hsq F hF s h1 h2
+    rw [← hN] at e2
+    linear_combination e2 - e1
+  by_contra hr
+  have hr1 : rootNumber f hχ + 1 ≠ 0 := fun h => hr (by linear_combination h)
+  have hN0 : ((N : ℕ) : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne N
+  have hF0 : ∀ s : ℂ, 0 < s.re → s.re < 2 → F s = 0 := by
+    intro s h1 h2
+    have h := (mul_eq_zero.mp (key s h1 h2)).resolve_left hr1
+    simp only [ZInQ.Literature.completedL] at h
+    have hpi : (2 * Real.pi : ℂ) ≠ 0 := by
+      exact_mod_cast (by positivity : (2 * Real.pi : ℝ) ≠ 0)
+    have hc1 : (N : ℂ) ^ (s / 2) ≠ 0 := (Complex.cpow_ne_zero_iff_of_exponent_ne_zero
+      (by intro h0; simp at h0; rw [h0] at h1; simp at h1)).mpr hN0
+    have hc2 : (2 * Real.pi : ℂ) ^ (-s) ≠ 0 := (Complex.cpow_ne_zero_iff_of_exponent_ne_zero
+      (by intro h0; rw [neg_eq_zero] at h0; rw [h0] at h1; simp at h1)).mpr hpi
+    have hc3 : Complex.Gamma s ≠ 0 := Complex.Gamma_ne_zero_of_re_pos h1
+    exact (mul_eq_zero.mp h).resolve_left (mul_ne_zero (mul_ne_zero hc1 hc2) hc3)
+  have hFa : AnalyticOnNhd ℂ F Set.univ :=
+    Complex.analyticOnNhd_univ_iff_differentiable.mpr hFf.1
+  have hU : {s : ℂ | 0 < s.re ∧ s.re < 2} ∈ 𝓝 (1 : ℂ) :=
+    ((isOpen_lt continuous_const Complex.continuous_re).inter
+      (isOpen_lt Complex.continuous_re continuous_const)).mem_nhds (by norm_num)
+  have hev : F =ᶠ[𝓝 (1 : ℂ)] 0 := by
+    filter_upwards [hU] with s hs
+    exact hF0 s hs.1 hs.2
+  have hFz : ∀ s, F s = 0 := fun s =>
+    hFa.eqOn_zero_of_preconnected_of_eventuallyEq_zero isPreconnected_univ (Set.mem_univ 1) hev
+      (Set.mem_univ s)
+  have hLz : (fun x : ℝ => LSeries (coeff f) x) =ᶠ[atTop] 0 := by
+    filter_upwards [eventually_gt_atTop (2 : ℝ)] with x hx
+    rw [← hFf.2 x (by simpa using hx)]
+    exact hFz x
+  rcases LSeries_eventually_eq_zero_iff'.mp hLz with h | h
+  · have h1 := h 1 one_ne_zero
+    rw [hf 1 one_ne_zero, ZInQ.GZStatements.LFunction_cd_eq_heckeCoeff hd4 hsq one_ne_zero,
+      ZInQ.Contrib.HeckeFE.heckeCoeff_one] at h1
+    exact one_ne_zero h1
+  · have hab := CuspForm.abscissaOfAbsConv_qExpansion_coeff_le f.toCuspForm
+    simp only [strictWidthInfty_Gamma1] at hab
+    have hab' : LSeries.abscissaOfAbsConv (coeff f) ≤ (((2 : ℤ) : ℝ) / 2 : ℝ) + 1 := hab
+    rw [h] at hab'
+    have h2 : ((((2 : ℤ) : ℝ) / 2 : ℝ) : EReal) + 1 = ((2 : ℝ) : EReal) := by
+      rw [← EReal.coe_one, ← EReal.coe_add]; norm_num
+    rw [h2] at hab'
+    exact absurd hab' (not_le.mpr (EReal.coe_lt_top 2))
+
+end RootNumber
+
+section Main
+
+open WeierstrassCurve ZInQ.GZDecomp
+open scoped WeierstrassCurve.Affine
+
+/-- **`GrossConjugationCd`, proved.** -/
+theorem grossConjugationCd : ZInQ.GZHL3.GrossConjugationCd := by
+  intro d hd hsq
+  have := ZInQ.GZDecomp.shortCurve_cd_isElliptic (d := d) (by omega)
+  intro N _ f hχ hcoeff D β hDf hD4 hHH hβ S hS L c hL hc hP K _ _ _ hK2 δ hδ ι hι y hy σ hσ
+  have hr := rootNumber_cd hd hsq f hχ hcoeff
+  refine ⟨fun h1 => absurd (h1.symm.trans hr) (by norm_num), fun _ => ?_⟩
+  have hε : f.frickeSign hχ = 1 := by
+    have : rootNumber f hχ = Complex.I ^ (2 : ℤ) * f.frickeSign hχ := rfl
+    rw [hr, zpow_two, Complex.I_mul_I] at this
+    linear_combination this
+  rw [conj_clause _ f hχ hε hcoeff hDf hS hL hP hK2 δ hδ ι hι y hy σ hσ]
+  exact IsOfFinAddOrder.zero
+
+end Main
+
 end ZInQ.GZConj
+
+#print axioms ZInQ.GZConj.grossConjugationCd
+#print axioms ZInQ.GZConj.conj_clause
+#print axioms ZInQ.GZConj.lattice_eq_of_g
