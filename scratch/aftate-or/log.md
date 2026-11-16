@@ -17,3 +17,12 @@ Target: make weber-field's `R16IsJ1Dict.AfTateCharPolyPicZero` printed (base wip
   (searched: `T12_ComplexConjEigen` gives only balanced ±1 eigenspaces on all of `V_ℓ(A)`; `GaloisRep.IsOdd` concerns
   other representations; no Ribet irreducibility leaf). VERIFIED (grep of ZInQKernel).
 - Mathlib: `ModularForm.levelOne_weight_two_rank_zero` (no weight-2 level-one forms), for the `N = 1` case.
+
+## Lean (scratch/aftate-or/AfTateOr.lean, `lake env lean`)
+- 11-16 06:45 defs `IsX1AlgDS`, `AfTateOrAt`, leaf `AfTateDSOr`; `weakOddAt_of_orAt`, `orAt_of_afTateAt`,
+  `orAt_of_weakOddAt` compile. VERIFIED.
+- 11-16 07:05 `isX1AlgDS_of_isX1Model` (kernel model ⇒ DS's X₁(N)_alg, N ≥ 2; uses weberFieldComparison, adjoin_wOf,
+  fieldX1Equiv, X1PointsConjugate) compiles; axioms standard. VERIFIED.
+- 11-16 07:15 `not_isNewform_one` (Mathlib `levelOne_weight_two_rank_zero`), `weakOdd_of_dsOr`,
+  `r16CoreY_of_dsOr_igusaDS : AfTateDSOr → IgusaGL2DS → MumfordTorsionAlgClosed → R16CoreY` compile; axioms
+  [propext, Classical.choice, Quot.sound]. VERIFIED.

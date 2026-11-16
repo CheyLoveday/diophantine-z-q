@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.WeberField
+import Mathlib.NumberTheory.ModularForms.LevelOne.DimensionFormula
 
 noncomputable section
 
@@ -184,5 +185,63 @@ theorem isX1AlgDS_of_isX1Model (hI : R16IsJ1Dict.X1PointsConjugate) {N : ℕ} (h
     change _ = ev2 F (algebraMap Qj Kbar RatFunc.X) (wOf P) at h2
     rw [← h2]
     exact (map_eq_zero_iff _ (fieldX1 P).val.toRingHom.injective).symm
+
+/-! ## 5. Level one: no newforms of weight 2 (Mathlib's dimension formula) -/
+
+open scoped MatrixGroups in
+/-- `S₂(Γ₁(1)) = 0` (Mathlib's `ModularForm.levelOne_weight_two_rank_zero`). -/
+theorem cuspForm_one_two_eq_zero (f : CF 1 2) : (⇑f : UpperHalfPlane → ℂ) = 0 := by
+  have hG : ((CongruenceSubgroup.Gamma1 1 : Subgroup SL(2, ℤ)) : Subgroup (GL (Fin 2) ℝ)) = 𝒮ℒ := by
+    have : CongruenceSubgroup.Gamma1 1 = ⊤ := by
+      ext A
+      simp only [Subgroup.mem_top, iff_true]
+      rw [CongruenceSubgroup.Gamma1_mem]
+      exact ⟨Subsingleton.elim _ _, Subsingleton.elim _ _, Subsingleton.elim _ _⟩
+    rw [this, MonoidHom.range_eq_map]
+  have key : ∀ (Γ : Subgroup (GL (Fin 2) ℝ)) (_ : Γ = 𝒮ℒ) (g : CuspForm Γ 2),
+      (⇑g : UpperHalfPlane → ℂ) = 0 := by
+    rintro Γ rfl g
+    have h0 : (g : ModularForm 𝒮ℒ 2) = 0 :=
+      (rank_zero_iff_forall_zero.mp ModularForm.levelOne_weight_two_rank_zero) _
+    have := congrArg (fun h : ModularForm 𝒮ℒ 2 => (⇑h : UpperHalfPlane → ℂ)) h0
+    simpa using this
+  exact key _ hG f
+
+/-- There is no newform of level `1` and weight `2`. -/
+theorem not_isNewform_one (χ : DirichletCharacter ℂ 1) (f : CF 1 2) : ¬ IsNewform f χ := by
+  intro hf
+  have h1 : PkgI4.coeff f 1 = 1 := hf.1.2.1
+  have hz := cuspForm_one_two_eq_zero f
+  have : PkgI4.coeff f 1 = 0 := by
+    simp only [PkgI4.coeff]
+    rw [hz, UpperHalfPlane.qExpansion_zero]
+    simp
+  rw [this] at h1
+  exact zero_ne_one h1
+
+/-! ## 6. The discharge -/
+
+/-- **The weak-odd form over every Jacobian of `X₁(N)` from the leaf (glue, proved).** -/
+theorem weakOdd_of_dsOr (h : AfTateDSOr) (hI : R16IsJ1Dict.X1PointsConjugate)
+    (hT : TateModuleFree) : R16IsJ1Dict.AfTateWeakOdd := by
+  intro N χ f J hN hf hJ
+  rcases Nat.lt_or_ge N 2 with hN1 | hN2
+  · have h1 : N = 1 := by omega
+    subst h1
+    exact absurd hf (not_isNewform_one χ f)
+  obtain ⟨X, P₀, aj, hX, hJac⟩ := hJ
+  obtain ⟨V, rep, htc⟩ := R16IsJ1Dict.exists_picZero X hX.1
+  have hA := h N χ f hN2 hf X (isX1AlgDS_of_isX1Model hI hN2 hX) V rep htc
+  exact (weakOddAt_of_orAt hT hN hf hA).of_iso
+    (R16IsJ1Dict.abVarIso_picZero_of_isJacobian hX.1 hJac V rep htc).symm
+
+/-- **The discharge of `r16CoreY`** from the leaf `AfTateDSOr`, Igusa's theorem as printed
+(`X1Igusa.IgusaGL2DS`) and the bundle's `mumfordTorsionAlgClosed`. -/
+theorem r16CoreY_of_dsOr_igusaDS (h : AfTateDSOr) (hI : X1Igusa.IgusaGL2DS)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY :=
+  R16IsJ1Dict.r16CoreY_of_weakOdd
+    (weakOdd_of_dsOr h (X1Igusa.x1PointsConjugate_of_igusaGL2DS hI)
+      (T5Torsion.TateFree.tateModuleFree_of_torsionStructure
+        (AvSplit.torsionStructure_of_mumford hM))) hM
 
 end AfTateOr
