@@ -116,6 +116,128 @@ theorem branch_e (A K L Ω₁ : Type) [CommRing A] [IsDomain A] [IsRegularLocalR
     rw [← IsScalarTower.algebraMap_apply A (Localization.AtPrime (Ideal.span {f})) Ω₁]; exact ht₁
   have key := HDec.HSyn.t2_proved (Localization.AtPrime (Ideal.span {f})) K L Ω₁
     (algebraMap A (Localization.AtPrime (Ideal.span {f})) f) hirr N hN hunit hyp t₁ ht hadj₁
-  sorry
+  -- localizing the integral closure of `A` in `Ω₁`
+  obtain ⟨hM1, hM2, hM3⟩ := TsKummer.intCl_isLocalization A (Localization.AtPrime (Ideal.span {f})) Ω₁
+    (Ideal.span {f}).primeCompl hPM
+  letI := (TsKummer.intClIncl A (Localization.AtPrime (Ideal.span {f})) Ω₁).toAlgebra
+  -- `integralClosure A₁ Ω₁ = integralClosure A Ω₁`
+  haveI hintA₁ : Algebra.IsIntegral A A₁ := by
+    rw [hA₁]
+    exact Algebra.IsIntegral.adjoin (by
+      rintro x (rfl | rfl)
+      · exact ⟨_, monic_X_pow_sub_C f hN.ne', by simp [ht₁]⟩
+      · exact isIntegral_algebraMap)
+  have hmem : ∀ x : Ω₁, IsIntegral A₁ x ↔ IsIntegral A x := fun x =>
+    ⟨fun h => isIntegral_trans x h, fun h => h.tower_top⟩
+  let f0 : integralClosure A₁ Ω₁ ≃+* integralClosure A Ω₁ :=
+    { toFun := fun x => ⟨x.1, (hmem x.1).1 x.2⟩
+      invFun := fun y => ⟨y.1, (hmem y.1).2 y.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_mul' := fun _ _ => rfl
+      map_add' := fun _ _ => rfl }
+  let fe : integralClosure A₁ Ω₁ ≃ₐ[A] integralClosure A Ω₁ :=
+    AlgEquiv.ofRingEquiv (f := f0) (fun r => rfl)
+  -- `(s) ∩ A = (f)`
+  have hs0 : s ≠ 0 := by
+    intro h
+    apply hf0
+    apply hAΩ
+    rw [map_zero, ← ht₁, ← hs, h]
+    simp [hN.ne']
+  have hs1 : (Ideal.span {s}).height = 1 := by
+    have hsm : s ∈ maximalIdeal A₁ := by rw [hmaxA₁]; exact Ideal.subset_span (by simp)
+    apply le_antisymm (Ideal.height_span_singleton_le_one ((mem_maximalIdeal s).mp hsm))
+    rw [ENat.one_le_iff_ne_zero]
+    intro h0
+    have := Ideal.height_eq_zero_iff_eq_bot.mp h0
+    rw [Ideal.span_singleton_eq_bot] at this
+    exact hs0 this
+  haveI : FaithfulSMul A A₁ :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr (fun x y h => hAΩ (congrArg Subtype.val h))
+  have hfs : algebraMap A A₁ f = s ^ N := Subtype.ext (by
+    show algebraMap A Ω₁ f = (s : Ω₁) ^ N
+    rw [hs, ht₁])
+  have hsunder : (Ideal.span {s}).comap (algebraMap A A₁) = Ideal.span {f} := by
+    symm
+    apply Ideal.eq_of_le_of_height_le
+    · rw [Ideal.span_le, Set.singleton_subset_iff]
+      show algebraMap A A₁ f ∈ Ideal.span {s}
+      rw [hfs]
+      exact Ideal.pow_mem_of_mem _ (Ideal.mem_span_singleton_self s) N hN
+    · rw [hp₀1]
+      exact le_of_eq (height_under_eq_one (Ideal.span {s}) hs1)
+  haveI : (Ideal.span {s}).LiesOver (Ideal.span {f}) := ⟨hsunder.symm⟩
+  haveI : Q₁.LiesOver (Ideal.span {s}) := ⟨hQ₁.symm⟩
+  haveI : Q₁.LiesOver (Ideal.span {f}) := Ideal.LiesOver.trans Q₁ (Ideal.span {s}) (Ideal.span {f})
+  set P := Q₁.map fe with hP_def
+  haveI : P.IsPrime := Ideal.map_isPrime_of_equiv fe
+  have hPunder : P.under A = Ideal.span {f} := by
+    ext x
+    rw [Ideal.under, Ideal.mem_comap, hP_def, ← fe.commutes x, ← Ideal.mem_comap,
+      Ideal.comap_map_of_bijective fe fe.bijective, ← Ideal.mem_comap]
+    change x ∈ Q₁.under A ↔ x ∈ Ideal.span {f}
+    rw [← Ideal.LiesOver.over (P := Q₁) (p := Ideal.span {f})]
+  haveI : P.LiesOver (Ideal.span {f}) := ⟨hPunder.symm⟩
+  haveI := IsLocalization.AtPrime.isPrime_map_of_liesOver (integralClosure A Ω₁) (Ideal.span {f})
+    (integralClosure (Localization.AtPrime (Ideal.span {f})) Ω₁) P
+  haveI := IsLocalization.AtPrime.liesOver_map_of_liesOver (Ideal.span {f})
+    (Localization.AtPrime (Ideal.span {f})) (integralClosure (Localization.AtPrime (Ideal.span {f})) Ω₁) P
+  have h1 := (key (P.map (algebraMap (integralClosure A Ω₁)
+    (integralClosure (Localization.AtPrime (Ideal.span {f})) Ω₁)))).1
+  rw [IsLocalization.AtPrime.ramificationIdx_map_eq_ramificationIdx (Ideal.span {f})
+    (Localization.AtPrime (Ideal.span {f})) (integralClosure (Localization.AtPrime (Ideal.span {f})) Ω₁) P,
+    hP_def, TsKummer.ramificationIdx_map_algEquiv fe Q₁] at h1
+  -- the tower `A → A₁ → integralClosure A₁ Ω₁`
+  haveI : FiniteDimensional K Ω₁ := Module.Finite.trans L Ω₁
+  haveI : IsScalarTower A L Ω₁ := IsScalarTower.of_algebraMap_eq (fun a => by
+    rw [IsScalarTower.algebraMap_apply A K Ω₁, IsScalarTower.algebraMap_apply A K L,
+      ← IsScalarTower.algebraMap_apply K L Ω₁])
+  have hAL : Function.Injective (algebraMap A L) := by
+    rw [IsScalarTower.algebraMap_eq A K L]
+    exact (algebraMap K L).injective.comp (IsFractionRing.injective A K)
+  have hNL : ((N : ℕ) : L) ≠ 0 := by
+    have hu' := (isUnit_natCast_of_not_dvd hp hpm (n := N)
+      (fun h => absurd (Nat.le_of_dvd hN h) (not_le.mpr hdeg))).map (algebraMap A L)
+    rw [map_natCast] at hu'
+    exact hu'.ne_zero
+  haveI : Algebra.IsSeparable L Ω₁ := by
+    have h1 := (IntermediateField.isSeparable_adjoin_simple_iff_isSeparable (F := L) (x := t₁)).mpr
+      (isSeparable_of_pow hNL (a := algebraMap A L f) (fun h => hf0 (hAL (by rw [h, map_zero])))
+        (by rw [ht₁, ← IsScalarTower.algebraMap_apply]))
+    rw [hadj₁] at h1
+    exact Algebra.IsSeparable.of_algHom _ _ (IntermediateField.topEquiv (F := L) (E := Ω₁)).symm.toAlgHom
+  haveI : Algebra.IsSeparable K Ω₁ := Algebra.IsSeparable.trans K L Ω₁
+  haveI : Module.Finite A (integralClosure A Ω₁) := IsIntegralClosure.finite A K Ω₁ (integralClosure A Ω₁)
+  let eA : integralClosure A Ω₁ ≃ₗ[A] integralClosure A₁ Ω₁ :=
+    { toFun := fun x => ⟨x.1, (hmem x.1).2 x.2⟩
+      invFun := fun x => ⟨x.1, (hmem x.1).1 x.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_add' := fun _ _ => rfl
+      map_smul' := fun r x => by
+        apply Subtype.ext
+        show r • (x : Ω₁) = _
+        rfl }
+  haveI : Module.Finite A (integralClosure A₁ Ω₁) := Module.Finite.equiv eA
+  haveI : Module.Finite A₁ (integralClosure A₁ Ω₁) := Module.Finite.of_restrictScalars_finite A _ _
+  haveI : IsIntegrallyClosed (integralClosure A₁ Ω₁) := isIntegrallyClosed_tower A K Ω₁ A₁
+  haveI : Module.Free A₁ (integralClosure A₁ Ω₁) := TPurity3.normalFreeDim2 A₁ _ hdim₁
+    (fun x y h => Subtype.ext (congrArg (fun w : integralClosure A₁ Ω₁ => (w : Ω₁)) h))
+  have htow := Ideal.ramificationIdx_tower (R := A) (Ideal.span {s}) Q₁
+  have hsn' : (Ideal.span {s}).ramificationIdx A = N := by
+    haveI : IsDomain (Localization.AtPrime (Ideal.span {s})) :=
+      IsLocalization.isDomain_localization (Ideal.span {s}).primeCompl_le_nonZeroDivisors
+    haveI : IsDiscreteValuationRing (Localization.AtPrime (Ideal.span {s})) := dvr_atPrime _ hs1
+    rw [Ideal.ramificationIdx_eq (Ideal.span {f}) (Ideal.span {s})]
+    have hmapn : (Ideal.span {f}).map (algebraMap A (Localization.AtPrime (Ideal.span {s}))) =
+        maximalIdeal (Localization.AtPrime (Ideal.span {s})) ^ N := by
+      rw [← Localization.AtPrime.map_eq_maximalIdeal, ← Ideal.map_pow, Ideal.span_singleton_pow,
+        Ideal.map_span, Ideal.map_span, Set.image_singleton, Set.image_singleton,
+        IsScalarTower.algebraMap_apply A A₁ (Localization.AtPrime (Ideal.span {s})), hfs]
+    rw [hmapn, IsDiscreteValuationRing.length_quotient_pow_maximalIdeal, ENat.toNat_natCast]
+  rw [h1, hsn'] at htow
+  have : N * Q₁.ramificationIdx A₁ = N * 1 := by rw [← htow, mul_one]
+  exact Nat.eq_of_mul_eq_mul_left hN this
 
 end Abhyankar
