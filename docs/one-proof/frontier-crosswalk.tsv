@@ -108,7 +108,7 @@ H-114		ZInQ.HeightSplit.R5.EichlerOptimalEmbeddingCount	5fd81e870	no
 H-115		ZInQ.HeightGlue.QM.CMDescent	5fd81e870	no
 H-116		ZInQ.HeightGlue.QM.QMUniformizationC	5fd81e870	no
 H-117		ZInQ.RLeaf.IgusaGL2	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
-H-118	regularSmoothPerfect	CurveSplit.RegularSmoothPerfect	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-118		CurveSplit.RegularSmoothPerfect	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-119		CurveSplit.ShimuraGoodReductionNoGuard	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-120	tateTwistInvariants	ZInQ.Contrib.HodgeSplit.TateTwistInvariants	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-121	axSenTate	ZInQ.Contrib.HodgeSplit.AxSenTate	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
@@ -140,7 +140,7 @@ H-146		ReductSplit.SemistableReductionDVR	085a7a53a	no
 H-147		ReductSplit.SemistableUnipotent	085a7a53a	no
 H-148		ReductSplit.NeronSchemeModelExistsDVR	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-149		HDec.QMSplit.Moduli.DeligneComponentsX6	085a7a53a	no
-H-150	geomConnOfAlgClosure	HDec.QMSplit.Moduli.GeomConnOfAlgClosure	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-150		HDec.QMSplit.Moduli.GeomConnOfAlgClosure	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-151		HDec.QMSplit.Moduli.BabaGranathX6'	085a7a53a	no
 H-152		HDec.QMSplit.Moduli.ReciprocityCanonical	085a7a53a	no
 H-153		HDec.QMSplit.Moduli.ElkiesConicX6	085a7a53a	no
@@ -182,7 +182,7 @@ H-188		ReductGlue.StrictHenselizationInside	f18bcb904,3691994d4,f96b7323d	yes
 H-189		ReductGlue.ReductionFromSH	f18bcb904	no
 H-190		HDec.HSyn.G0Split.ThetaPt.ThetaGlue.LinYangThetaCurve	f18bcb904,3691994d4,f96b7323d	yes
 H-191	thetaRatiosAlgebraic	HDec.HSyn.G0Split.ThetaPt.ThetaGlue.IgusaAlg	f18bcb904	no
-H-192	deligneComponentsX6PrintedAb	ShimuraGlue.DeligneComponentsX6PrintedAb	3691994d4,f96b7323d	yes
+H-192		ShimuraGlue.DeligneComponentsX6PrintedAb	3691994d4,f96b7323d	yes
 H-193		HDec.QMSplit.Moduli.BabaGranathRationalAb	3691994d4,f96b7323d	yes
 H-194	gonzalezRotgerX6Ab	HDec.QMSplit.Moduli.GonzalezRotgerX6Ab	3691994d4,f96b7323d	yes
 H-195		HDec.QMSplit.Moduli.ElkiesEquationsX6Ab	3691994d4	no
