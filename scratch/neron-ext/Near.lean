@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.NeronExtSpread
+import ZInQKernel.Contrib.SpreadOut.NumberField
 
 /-! # neron-ext: a Néron model near a closed point from a Néron model over its local ring -/
 
@@ -294,4 +295,108 @@ theorem near (B : Over (Spec (CommRingCat.of L))) (v : Ideal (𝓞 L)) [hv : v.I
 
 end Near
 
+/-! ## The good part: an abelian scheme over `𝓞_L[1/f]` -/
+
+section Good
+
+variable {L : Type} [Field L] [NumberField L]
+
+theorem isUnit_f_L {f : 𝓞 L} (hf : f ≠ 0) : IsUnit (algebraMap (𝓞 L) L f) :=
+  isUnit_iff_ne_zero.2 ((map_ne_zero_iff _ (FaithfulSMul.algebraMap_injective (𝓞 L) L)).2 hf)
+
+/-- **Glue N1-g1 + N1-ab.** An abelian variety over `L` has a smooth separated quasi-compact model
+over `𝓞_L` (supported on some `D(f)`) which is a Néron model at every maximal ideal not containing
+`f`: spread out to a smooth proper group scheme over `𝓞_L[1/f]` (`abVarSpreadsOut_of_ega`: EGA IV
+8.8.2 (ii) and 17.7.8 (ii) proved, 8.10.5 (xii) the chain's leaf), and use BLR 1.2/8 over the DVRs
+`(𝓞_L)_w` (`isNeronModelOver_of_grpObj`). -/
+theorem goodModel (hpr : EGAIV_8_10_5_xii) (B : PkgI3.AbVar L) :
+    ∃ (𝒜 : Over (S L)) (_ : Smooth 𝒜.hom) (_ : IsSeparated 𝒜.hom) (_ : QuasiCompact 𝒜.hom)
+      (_ : (gf L).obj 𝒜 ≅ B.X) (f : 𝓞 L), f ≠ 0 ∧
+        ∀ (w : Ideal (𝓞 L)) [w.IsMaximal], f ∉ w → LocNeron L w 𝒜 := by
+  obtain ⟨f, hf, hR⟩ := NF.abVarSpreadsOut_of_ega EGAIV_8_8_2_ii_proof hpr EGAIV_17_7_8_ii_proof L B
+  let R := Localization.Away f
+  letI : Algebra R L := (IsLocalization.Away.lift f (isUnit_f_L hf)).toAlgebra
+  haveI : IsScalarTower (𝓞 L) R L :=
+    IsScalarTower.of_algebraMap_eq (fun z => (IsLocalization.Away.lift_eq f (isUnit_f_L hf) z).symm)
+  obtain ⟨G, hG, hGs, hGp, gen, -⟩ := hR R
+  haveI := hGs; haveI := hGp
+  let ιf := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) R))
+  haveI : IsOpenImmersion ιf := IsOpenImmersion.of_isLocalization f
+  let 𝒜 : Over (S L) := Over.mk (G.hom ≫ ιf)
+  haveI : Smooth 𝒜.hom := show Smooth (G.hom ≫ ιf) from inferInstance
+  haveI : IsSeparated 𝒜.hom := show IsSeparated (G.hom ≫ ιf) from inferInstance
+  haveI : QuasiCompact 𝒜.hom := show QuasiCompact (G.hom ≫ ιf) from inferInstance
+  let jRL := Spec.map (CommRingCat.ofHom (algebraMap R L))
+  have hk : jRL ≫ ιf = jL L := by
+    simp only [jRL, ιf, jL, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    rw [← IsScalarTower.algebraMap_eq]
+  let eA : (gf L).obj 𝒜 ≅ B.X :=
+    pbCongr hk.symm 𝒜 ≪≫ (Over.pullbackComp jRL ιf).app 𝒜 ≪≫ (Over.pullback jRL).mapIso (pbMapIso ιf G) ≪≫ gen
+  refine ⟨𝒜, inferInstance, inferInstance, inferInstance, eA, f, hf, fun w hw hfw => ?_⟩
+  have hw0 : w ≠ ⊥ := Ring.ne_bot_of_isMaximal_of_not_isField hw (RingOfIntegers.not_isField L)
+  letI := locAlg L w
+  haveI := locAlg_tower L w
+  haveI : IsDiscreteValuationRing (Localization.AtPrime w) :=
+    IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 L) hw0 _
+  haveI : IsFractionRing (Localization.AtPrime w) L :=
+    IsFractionRing.isFractionRing_of_isDomain_of_isLocalization w.primeCompl _ L
+  have hfu : IsUnit (algebraMap (𝓞 L) (Localization.AtPrime w) f) :=
+    IsLocalization.map_units (Localization.AtPrime w) (⟨f, hfw⟩ : w.primeCompl)
+  let φ : R →+* Localization.AtPrime w := IsLocalization.Away.lift f hfu
+  let jw' := Spec.map (CommRingCat.ofHom φ)
+  let jw := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (Localization.AtPrime w)))
+  have hjw : jw' ≫ ιf = jw := by
+    simp only [jw', ιf, jw, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    congr 2
+    exact IsLocalization.Away.lift_comp f hfu
+  let iso : (Over.pullback jw).obj 𝒜 ≅ (Over.pullback jw').obj G :=
+    pbCongr hjw.symm 𝒜 ≪≫ (Over.pullbackComp jw' ιf).app 𝒜 ≪≫ (Over.pullback jw').mapIso (pbMapIso ιf G)
+  letI : GrpObj ((Over.pullback jw').obj G) := Functor.grpObjObj
+  haveI : IsProper ((Over.pullback jw').obj G).hom := show IsProper (pullback.snd _ _) from inferInstance
+  haveI : Smooth ((Over.pullback jw').obj G).hom := show Smooth (pullback.snd _ _) from inferInstance
+  exact isNeronModelOver_of_iso iso (isNeronModelOver_of_grpObj (Localization.AtPrime w) L _)
+
+end Good
+
+/-! ## The main theorem -/
+
+/-- **`NeronDVRLocal` (LEAF; published).** For an abelian variety `A/K` and a number field `L ⊇ K`,
+at every maximal ideal `v` of `𝓞_L` the abelian variety `A_L` has a Néron model over the discrete
+valuation ring `(𝓞_L)_v` (any presentation `R_v` with its map to `L`) in the sense of BLR §1.2 Def. 1:
+a smooth, separated, quasi-compact `R_v`-scheme `N` with the Néron mapping property for all smooth
+`R_v`-schemes (`CToPrinted.IsNeronModelOver`) and `N_L ≅ A_L`. Source: Bosch–Lütkebohmert–Raynaud,
+*Néron models* (1990), §1.4 Thm. 3 over the Dedekind scheme `Spec R_v` (a discrete valuation ring),
+with §1.2 Def. 1 (locators UNVERIFIED, no network). It follows from `NeronSchemeExtensionExists`
+(`dvrLocal_of_extension`), so it is not stronger. -/
+def NeronDVRLocal : Prop :=
+  ∀ (K : Type) [Field K] (A : PkgI3.AbVar K) (L : Type) [Field L] [NumberField L] [Algebra K L]
+    (v : Ideal (𝓞 L)) [v.IsMaximal] (Rv : Type) [CommRing Rv] [Algebra (𝓞 L) Rv]
+    [IsLocalization.AtPrime Rv v] [Algebra Rv L] [IsScalarTower (𝓞 L) Rv L],
+    ∃ N : Over (Spec (CommRingCat.of Rv)), CToPrinted.IsNeronModelOver Rv L N ∧
+      Nonempty ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap Rv L)))).obj N ≅
+        (A.baseChange L).X)
+
+/-- **`neronSchemeExtensionExists` from the local leaf** (and the chain's EGA IV 8.10.5 (xii) leaf). -/
+theorem extension_of_dvrLocal (hpr : EGAIV_8_10_5_xii) (hloc : NeronDVRLocal) :
+    ZInQ.Contrib.NeronC.NeronSchemeExtensionExists := by
+  intro K _ A L _ _ _
+  let B := (A.baseChange L).X
+  obtain ⟨𝒜, h1, h2, h3, eA, f, hf, h𝒜⟩ := goodModel hpr (A.baseChange L)
+  haveI := h1; haveI := h2; haveI := h3
+  have hcov : ∀ x : S L, ∃ U : (S L).Opens, x ∈ U ∧ Nonempty (NeronOn L B U) := by
+    intro x
+    obtain ⟨v, hv, hxv⟩ := Ideal.exists_le_maximal (PrimeSpectrum.asIdeal (R := 𝓞 L) x)
+      (PrimeSpectrum.isPrime (R := 𝓞 L) x).ne_top
+    letI := locAlg L v
+    haveI := locAlg_tower L v
+    obtain ⟨N, hN1, hN2⟩ := hloc K A L v (Localization.AtPrime v)
+    obtain ⟨U, hvU, hn⟩ := near B v N ⟨hN1, hN2⟩ 𝒜 eA f hf h𝒜
+    refine ⟨U, ?_, hn⟩
+    have hle : (show PrimeSpectrum (𝓞 L) from x) ≤ (show PrimeSpectrum (𝓞 L) from pt v) := hxv
+    exact ((PrimeSpectrum.le_iff_specializes _ _).mp hle).mem_open U.isOpen hvU
+  let n := glued B hcov
+  exact ⟨n.X, n.smooth, n.sep, n.qc, n.e, fun Y _ => n.ext Y (Scheme.Hom.preimage_top _)⟩
+
 end NeronExt
+
+#print axioms NeronExt.extension_of_dvrLocal
