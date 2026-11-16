@@ -7,6 +7,7 @@ set_option linter.style.haveILetI false
 set_option linter.unusedSectionVars false
 
 open CategoryTheory Limits AlgebraicGeometry
+open NumberField
 
 namespace NeronExt
 
@@ -87,12 +88,12 @@ theorem local_ptT {X : Over (Spec (CommRingCat.of R))} [Smooth X.hom] (T : Set (
   have hf1' : f𝔭 ≫ X.hom = pullback.fst jR v ≫ jR := hf1
   have hf2' : pullback.fst (pullback.fst jR v) kK ≫ f𝔭 = ε ≫ a := hf2
   -- spread `f𝔭` to some `R[1/s] ×_R V`
-  haveI hA : ∀ (i : (Idx 𝔭)ᵒᵖ), IsAffine ((bcDiag 𝔭 v).obj i) := fun i => by
+  haveI hA : ∀ (i : (GapBLR.Idx 𝔭)ᵒᵖ), IsAffine ((bcDiag 𝔭 v).obj i) := fun i => by
     haveI : IsAffine ((specDiag 𝔭).obj i) := show IsAffine (Spec _) from inferInstance
     exact show IsAffine (pullback (ej i) v) from inferInstance
-  haveI : ∀ {i j : (Idx 𝔭)ᵒᵖ} (f : i ⟶ j), IsAffineHom ((bcDiag 𝔭 v).map f) := fun f => inferInstance
-  haveI : ∀ i : (Idx 𝔭)ᵒᵖ, CompactSpace ((bcDiag 𝔭 v).obj i) := fun i => inferInstance
-  haveI : ∀ i : (Idx 𝔭)ᵒᵖ, QuasiSeparatedSpace ((bcDiag 𝔭 v).obj i) := fun i => inferInstance
+  haveI : ∀ {i j : (GapBLR.Idx 𝔭)ᵒᵖ} (f : i ⟶ j), IsAffineHom ((bcDiag 𝔭 v).map f) := fun f => inferInstance
+  haveI : ∀ i : (GapBLR.Idx 𝔭)ᵒᵖ, CompactSpace ((bcDiag 𝔭 v).obj i) := fun i => inferInstance
+  haveI : ∀ i : (GapBLR.Idx 𝔭)ᵒᵖ, QuasiSeparatedSpace ((bcDiag 𝔭 v).obj i) := fun i => inferInstance
   have ha' : (bcCone 𝔭 R𝔭 v).π ≫ bcT 𝔭 v = (Functor.const _).map (f𝔭 ≫ X.hom) := by
     ext i
     show bcπ 𝔭 R𝔭 v i ≫ pullback.snd (ej i) v ≫ v = f𝔭 ≫ X.hom
@@ -216,6 +217,7 @@ noncomputable def neronOn_of_local (B : Over (Spec (CommRingCat.of L))) (U : (S 
       (fun y => hT _ (mem_of_supp L hY y)) (φ ≫ e.inv)
     refine ⟨f, ?_⟩
     have hf' : (gf L).map f = φ ≫ e.inv := hf
+    show (gf L).map f ≫ e.hom = φ
     rw [hf', Category.assoc, Iso.inv_hom_id, Category.comp_id]
 
 /-- In `Spec 𝓞_L`, every point of an open containing a maximal ideal `v` lies under a maximal ideal of
@@ -226,6 +228,57 @@ theorem hT_of_mem {U : (S L).Opens} (v : S L) (hv : v.asIdeal.IsMaximal) (hvU : 
   by_cases h0 : x.asIdeal = ⊥
   · exact ⟨v.asIdeal, hv, ⟨v, hvU, rfl⟩, h0 ▸ bot_le⟩
   · exact ⟨x.asIdeal, Ideal.IsPrime.isMaximal x.isPrime h0, ⟨x, hx, rfl⟩, le_rfl⟩
+
+theorem isJacobsonRing_int : IsJacobsonRing ℤ := by
+  rw [isJacobsonRing_iff_prime_eq]
+  intro P hP
+  refine le_antisymm ?_ Ideal.le_jacobson
+  by_cases h0 : P = ⊥
+  · subst h0
+    intro n hn
+    rw [Ideal.mem_bot]
+    by_contra hne
+    obtain ⟨p, hp1, hp2⟩ := Nat.exists_infinite_primes (n.natAbs + 1)
+    have hmax : (Ideal.span {(p : ℤ)}).IsMaximal :=
+      PrincipalIdealRing.isMaximal_of_irreducible (Nat.prime_iff_prime_int.mp hp2).irreducible
+    have hmem : n ∈ Ideal.span {(p : ℤ)} := (Ideal.mem_sInf.mp hn) ⟨bot_le, hmax⟩
+    rw [Ideal.mem_span_singleton] at hmem
+    have h2 : p ∣ n.natAbs := by
+      have := Int.natAbs_dvd_natAbs.mpr hmem
+      simpa using this
+    have h3 := Nat.le_of_dvd (Int.natAbs_pos.mpr hne) h2
+    omega
+  · haveI := hP.isMaximal h0
+    exact Ideal.jacobson_eq_self_of_isMaximal.le
+
+/-- Every point of an open of `Spec 𝓞_L` lies under a maximal ideal of the open (`𝓞_L` is Jacobson). -/
+theorem exists_maximal_mem {U : (S L).Opens} (x : S L) (hx : x ∈ U) :
+    ∃ 𝔭 : Ideal (𝓞 L), 𝔭.IsMaximal ∧ 𝔭 ∈ maxIn U ∧ x.asIdeal ≤ 𝔭 := by
+  by_cases h0 : x.asIdeal = ⊥
+  · obtain ⟨_, ⟨g, rfl⟩, hxg, hsub⟩ :=
+      PrimeSpectrum.isTopologicalBasis_basic_opens.exists_subset_of_mem_open hx U.isOpen
+    have hg0 : g ≠ 0 := by
+      intro h
+      apply (PrimeSpectrum.mem_basicOpen _ _).1 hxg
+      rw [h]; exact zero_mem _
+    haveI : IsJacobsonRing ℤ := isJacobsonRing_int
+    haveI : IsJacobsonRing (𝓞 L) := isJacobsonRing_of_isIntegral (R := ℤ)
+    have hjac : (⊥ : Ideal (𝓞 L)).jacobson = ⊥ :=
+      IsJacobsonRing.out' (⊥ : Ideal (𝓞 L)) (Ideal.isPrime_bot.isRadical)
+    have : g ∉ (⊥ : Ideal (𝓞 L)).jacobson := by rw [hjac]; simpa using hg0
+    rw [Ideal.jacobson, Ideal.mem_sInf] at this
+    push Not at this
+    obtain ⟨w, ⟨-, hw⟩, hgw⟩ := this
+    refine ⟨w, hw, ⟨⟨w, hw.isPrime⟩, hsub ((PrimeSpectrum.mem_basicOpen _ _).2 hgw), rfl⟩, ?_⟩
+    rw [h0]; exact bot_le
+  · exact ⟨x.asIdeal, Ideal.IsPrime.isMaximal x.isPrime h0, ⟨x, hx, rfl⟩, le_rfl⟩
+
+/-- **The Néron property over an open `U ⊆ Spec 𝓞_L` is local at the maximal ideals of `U`.** -/
+noncomputable def neronOn_of_local' (B : Over (Spec (CommRingCat.of L))) (U : (S L).Opens)
+    (X : Over (S L)) [Smooth X.hom] [IsSeparated X.hom] [QuasiCompact X.hom] (hX : Supp L U X)
+    (e : (gf L).obj X ≅ B)
+    (hloc : ∀ (𝔭 : Ideal (𝓞 L)) [𝔭.IsMaximal], 𝔭 ∈ maxIn U → LocNeron L 𝔭 X) : NeronOn L B U :=
+  neronOn_of_local B U X hX e hloc (fun x hx => exists_maximal_mem x hx)
 
 end OnU
 
