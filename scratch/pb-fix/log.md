@@ -10,3 +10,17 @@
   * BergerPrintedT := BergerDR LocalIsPstT.
   * PanPrintedT: ∀ ι_p : ℚ̄_p ≃+* ℂ, tr ρ(σ_arith) = ψ(σ) ι_p^{-1}(a_q(g)) (no algebraicity in the leaf).
   * glue: PanFor LocalIsPstT from PanPrintedT + DSThm965 + DSThm966 (r14Det_of_printed) + Steinitz.
+
+## 2026-11-15 23:00 PanBergerFix.lean compiles
+- `lake build +ZInQKernel.Contrib.OneProof.PanBergerFix`: success, no warnings in the file (VERIFIED).
+  Fixes needed: IsTorsionFree/FaithfulSMul ℚ_p ℚ̄_p instances supplied by hand (typeclass search timed out
+  even at 400000 heartbeats); `Module.Free`/`Module.Finite` of `Fin n → E` supplied by `haveI`.
+- Axioms (scratch/pb-fix/axioms-output.txt): panBerger_of_printedT, panFor_of_printedT, coeff_mem_range,
+  exists_complex_equiv, isSemistableOverT_iff, localIsPst_iff_T, finrank_K0_pos, finrank_K0_bot: standard (VERIFIED).
+- #discharges (scratch/pb-fix/discharges-output.txt): `DISCHARGES [OpenResearchLeaves22.r11r12] by
+  HDec.PkgI4.PanBergerSplit.panBerger_of_printedT; still assumes: PanPrintedT, BergerPrintedT, DSThm965, DSThm966`;
+  totals 63 open hypotheses, 1950 theorems checked, 9 discharge one (VERIFIED).
+- autofold dry run (scratch/pb-fix/autofold.json): strict 46/10 on 56 -> 48/9 on 57; strictest 45/11 -> 47/10;
+  output minus line 1 (scratch/pb-fix/FoldDryRun.lean) compiles, sixContactMin_of_open30 standard axioms (VERIFIED).
+- Wording patch for pb-bypass's PanBerger.lean docstrings (not applied: rule "edit nothing else under ZInQKernel/"):
+  scratch/pb-fix/PanBerger-wording.patch (Brinon–Conrad §6.1 -> §5 Thm 5.2.1; Fontaine Exp. VIII -> Exp. III 1.5).
