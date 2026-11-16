@@ -33,7 +33,7 @@ theorem aeval_mem {w : ValuationSubring FL} (hw : ∀ c : L, algebraMap L FL c �
   | C a => simpa using hw a
   | add p q hp hq => simpa using add_mem hp hq
   | monomial n a _ =>
-    simpa [pow_succ] using mul_mem (mul_mem (hw a) (pow_mem hz n)) hz
+    simpa [pow_succ, mul_assoc] using mul_mem (mul_mem (hw a) (pow_mem hz n)) hz
 
 /-- **The Belyi ramification condition survives a constant field extension (glue, proved).** Given
 the `e = 1` property of the places of `F_L / F` over every place of `F/K` with a principal maximal
@@ -162,21 +162,22 @@ theorem mem_adjoin_repr (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L] (t : F) 
       Subalgebra.toSubmodule (K⟮ι t⟯).toSubalgebra := by
     rw [Subalgebra.mul_toSubmodule]
     exact hy2
-  induction hy3 using Submodule.mul_induction_on with
-  | mem m hm n hn =>
-    obtain ⟨l, rfl⟩ := hm
+  refine Submodule.mul_induction_on hy3 (fun m hm n hn => ?_) (fun a b ha hb => ?_)
+  · obtain ⟨l, rfl⟩ := hm
     have hn' : n ∈ (K⟮t⟯).map ι := by
       rw [adjoin_map, Set.image_singleton]; exact hn
     obtain ⟨c, hc, rfl⟩ := hn'
     refine ⟨(ℓ.repr l).mapRange (fun a => a • (⟨c, hc⟩ : K⟮t⟯)) (zero_smul _ _), ?_⟩
     rw [Finsupp.sum_mapRange_index (by intro j; simp)]
     conv_lhs => rw [← ℓ.linearCombination_repr l]
-    simp only [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finset.sum_mul,
-      IsScalarTower.coe_toAlgHom', map_smul, IntermediateField.coe_smul, smul_mul_assoc,
-      Algebra.smul_def, AlgHom.commutes, mul_comm, mul_left_comm, mul_assoc]
-    rfl
-  | add a b _ _ ha hb =>
-    obtain ⟨e₁, rfl⟩ := ha
+    simp only [Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+    rw [Finset.sum_mul]
+    refine Finset.sum_congr rfl fun x _ => ?_
+    change (IsScalarTower.toAlgHom K L FL) (ℓ.repr l x • ℓ x) * ι c =
+      ι (ℓ.repr l x • c) * algebraMap L FL (ℓ x)
+    rw [map_smul, map_smul, Algebra.smul_def, Algebra.smul_def, IsScalarTower.coe_toAlgHom']
+    ring
+  · obtain ⟨e₁, rfl⟩ := ha
     obtain ⟨e₂, rfl⟩ := hb
     refine ⟨e₁ + e₂, ?_⟩
     rw [Finsupp.sum_add_index' (by intro j; simp) (by intro j c₁ c₂; simp [add_mul])]
@@ -194,6 +195,7 @@ theorem finrank_adjoin_eq (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L]
     (hbij : Function.Bijective (Algebra.TensorProduct.productMap ι (IsScalarTower.toAlgHom K L FL)))
     (t : F) [FiniteDimensional K⟮t⟯ F] :
     Module.finrank (IntermediateField.adjoin L {ι t}) FL = Module.finrank K⟮t⟯ F := by
+  classical
   set L' := IntermediateField.adjoin L {ι t}
   set n := Module.finrank K⟮t⟯ F
   let b := Module.finBasis K⟮t⟯ F
@@ -206,7 +208,7 @@ theorem finrank_adjoin_eq (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L]
   have hℓ' : LinearIndependent K ℓ' := by
     have := ℓ.linearIndependent.map' (IsScalarTower.toAlgHom K L FL).toLinearMap
       (LinearMap.ker_eq_bot.mpr (IsScalarTower.toAlgHom K L FL).injective)
-    refine LinearIndependent.of_comp (Lr K L FL).val ?_
+    refine LinearIndependent.of_comp (Lr K L FL).val.toLinearMap ?_
     exact this
   have hind := H.linearIndependent_right hℓ'
   -- linear independence of `v` over `L'`
@@ -222,10 +224,50 @@ theorem finrank_adjoin_eq (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L]
         _ (fun j _ => by simp)
     have hg' : ∑ j ∈ S, ι (∑ i, (e i j : K⟮t⟯) • b i) * algebraMap L FL (ℓ j) = 0 := by
       rw [← hg]
-      simp only [map_sum, Finset.sum_mul, IntermediateField.coe_smul_def' ]
-      sorry
-    sorry
-  sorry
+      have h1 : ∀ i, g i • v i = (g i : FL) * ι (b i) := fun i => rfl
+      simp only [h1, hsum, map_sum, Finset.sum_mul]
+      rw [Finset.sum_comm]
+      refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
+      rw [show ∀ (c : K⟮t⟯) (x : F), c • x = (c : F) * x from fun c x => rfl, map_mul]
+      ring
+    have hzero : ∀ j ∈ S, ∑ i, (e i j : K⟮t⟯) • b i = 0 := by
+      intro j hj
+      have := linearIndependent_iff'.mp hind S
+        (fun j => ⟨ι (∑ i, (e i j : K⟮t⟯) • b i), ⟨_, rfl⟩⟩) (by
+          rw [← hg']
+          refine Finset.sum_congr rfl fun j _ => ?_
+          rfl) j hj
+      have h2 : ι (∑ i, (e i j : K⟮t⟯) • b i) = 0 := congrArg Subtype.val this
+      exact ι.injective (h2.trans (map_zero ι).symm)
+    have hcoef : ∀ j ∈ S, e i j = 0 := fun j hj =>
+      Fintype.linearIndependent_iff.mp b.linearIndependent (fun i => e i j) (hzero j hj) i
+    apply Subtype.ext
+    rw [hsum i]
+    simp only [ZeroMemClass.coe_zero]
+    refine Finset.sum_eq_zero fun j hj => ?_
+    rw [hcoef j hj]
+    simp
+  -- spanning
+  have hsp : ⊤ ≤ Submodule.span L' (Set.range v) := by
+    rintro z -
+    obtain ⟨w, rfl⟩ := hbij.2 z
+    induction w using TensorProduct.induction_on with
+    | zero => simp
+    | tmul f l =>
+      rw [Algebra.TensorProduct.productMap_apply_tmul, ← b.sum_repr f, map_sum, Finset.sum_mul]
+      refine Submodule.sum_mem _ fun i _ => ?_
+      have hmem : ι ((b.repr f i : K⟮t⟯) : F) * algebraMap L FL l ∈ L' :=
+        mul_mem (ι_mem_adjoin ι t _) (IntermediateField.algebraMap_mem L' l)
+      have : ι (b.repr f i • b i) * (IsScalarTower.toAlgHom K L FL) l =
+          (⟨_, hmem⟩ : L') • v i := by
+        rw [show ∀ (c : K⟮t⟯) (x : F), c • x = (c : F) * x from fun c x => rfl, map_mul,
+          IsScalarTower.coe_toAlgHom']
+        change _ = (ι ((b.repr f i : F)) * algebraMap L FL l) * ι (b i)
+        ring
+      rw [this]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
+    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  rw [Module.finrank_eq_card_basis (Module.Basis.mk hli hsp), Fintype.card_fin]
 
 end Degree
 
