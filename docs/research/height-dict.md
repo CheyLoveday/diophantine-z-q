@@ -227,6 +227,18 @@ DISCHARGES [OpenResearchLeaves26.gaudronRemondThm14] by ZInQ.HeightDict.gaudronR
 The output also lists the `'` variants. They assume the kernel Props `AnalyticUniformizationUnique` and
 `UniformizationDim` instead of the two fields.
 
+The other two height-split rows over `IsStableFaltingsHeight` are handled the same way: verbatim
+restatements `JavanpeykarBoundPrinted` and `PazukiCor13UpperPrinted`, with `javanpeykarBound_of_printed` and
+`pazukiCor13Upper_of_printed`. `#discharges` lists them as well:
+
+```
+DISCHARGES [OpenResearchLeaves26.javanpeykarBound] by ZInQ.HeightDict.javanpeykarBound_of_printed
+DISCHARGES [OpenResearchLeaves26.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
+```
+
+Each still assumes its printed leaf, `UniformizationLeafAll` and `MumfordTorsionAlgClosed`, with standard
+axioms. The total line reads `13 discharge one`.
+
 **Autofold.** The spec is `scratch/height-dict/autofold.json`. Its two discharges:
 
 - `bostLowerBound` → `bostLowerBound_of_printed {n}.bostLowerBoundPrinted {t}.uniformizationLeafAll {t}.mumfordTorsionAlgClosed`;
@@ -236,6 +248,10 @@ Both new leaves are kind `published`. Bost's has the flag "locator UNVERIFIED (s
 empty, so it gets the default "unread" flag. The dry run exits 0 with "strict count: 34/11 on 45 -> 34/11 on
 45; strictest 34/11 -> 34/11". The dry-run module, `scratch/height-dict/FoldDryRun.lean` (the output without
 its first line), compiles, and `HDec.HSyn.sixContactMin_of_open36` has standard axioms.
+
+An optional spec, `scratch/height-dict/autofold-all4.json`, also replaces `javanpeykarBound` and
+`pazukiCor13Upper`. Its dry run is the same (exit 0, 34/11 → 34/11), and `FoldDryRunAll4.lean` compiles with
+standard axioms. Use it if the 11-16 dictionary rating applies to those two rows as well.
 
 ## 4. The dictionary steps
 
@@ -275,6 +291,10 @@ Proposed `docs/research/locators.md` rows (not added; locators.md is a shared no
   as `bostLowerBound` (display UNVERIFIED).
 - `GaudronRemondThm14Printed`: Gaudron–Rémond 2014, Thm 1.4 p. 2060, as for `gaudronRemondThm14`.
 
+The optional rows `JavanpeykarBoundPrinted` (Javanpeykar 2014 Thm 1.1.1) and `PazukiCor13UpperPrinted`
+(Pazuki 2012 Cor. 1.3(2), upper half; the level-2 coordinate risk is unchanged) are rated printed form for the
+same reason: verbatim restatements over the printed height.
+
 Note: `claims.tsv` shows `gaudronRemondThm14` held by gr14-narrow (forward direction only). The two pieces
 of work compose: gr14-narrow's narrower statement can be restated over `IsPrintedStableHeight` in the same
 way, using `isPrintedStableHeight_of`.
@@ -311,4 +331,5 @@ way, using `isPrintedStableHeight_of`.
     `GroupModel.height`);
   - `DischargesCheck.lean`, `discharges.txt`;
   - `autofold.json`, `autofold-dryrun.txt`, `FoldDryRun.lean`;
+  - optional: `autofold-all4.json`, `autofold-all4-dryrun.txt`, `FoldDryRunAll4.lean`;
   - `Conormal1.lean` (the development copy of `Conormal.lean`).
