@@ -1,0 +1,4 @@
+PARI stack size set to 1000000000 bytes, maximum size set to 14000001024
+  ***   Warning: increasing stack size to 2000000000.
+  ***   Warning: increasing stack size to 4000000000.
+  ***   Warning: increasing stack size to 8000000000.
