@@ -180,15 +180,44 @@ theorem r5ptProps_of_thm512 (h : GonzalezRotgerThm512X6) (hU : BPAnalytic.Unifor
   intro k _ _ _ hk R hR hc x P hP ⟨θ⟩
   exact h Y Φ X Ψ fY h1 h6 k hk R hR hc x (isGRCMPoint_of_com hU hG hM hk hR hc Ψ x P hP θ)
 
+/-- **GLUE (composite) `X6ModuliWitness`: a witness of the moduli description of `Y₃` and `X₆ = X₀(6,1)` exists.**
+The canonical models: Shimura, Ann. of Math. 85 (1967), Main Theorems I-II; Deligne, Sém. Bourbaki 389 (1971),
+4.9-4.21 and the PEL form 5.7-5.8 (numbers UNVERIFIED), giving the fine moduli scheme `Y₃` of QM abelian surfaces
+with level-3 structure (`R1fpPropsAb`, which also needs the polarization lemma of rv-qm-polar), and the coarse
+quotient `X₆ = Y₃/(𝒪/3𝒪)^×` with its moduli bijection on `ℚ̄`-points (`X6Props`). No single printed statement has
+this form, so it is a composite. It is not a new field: the existing research field `elkiesX6StarFunctionField`
+asserts it (`x6ModuliWitness_of_elkies`), and so does the old field `gonzalezRotgerX6Ab`. -/
+def X6ModuliWitness : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ X6Props Y Φ X Ψ fY
+
+/-- The witness carried by the research field `elkiesX6StarFunctionField`. -/
+theorem x6ModuliWitness_of_elkies (hE : HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField) :
+    X6ModuliWitness := by
+  obtain ⟨Y, Φ, X, Ψ, fY, -, h1, h6, -⟩ := hE
+  exact ⟨Y, Φ, X, Ψ, fY, h1, h6⟩
+
+/-- The witness carried by the old field itself (so `X6ModuliWitness` is never stronger than `gonzalezRotgerX6Ab`). -/
+theorem x6ModuliWitness_of_gonzalezRotgerX6Ab (h : HDec.QMSplit.Moduli.GonzalezRotgerX6Ab) : X6ModuliWitness := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6, -⟩ := h
+  exact ⟨Y, Φ, X, Ψ, fY, h1, h6⟩
+
+/-- **`gonzalezRotgerX6Ab` from the witness and Thm 5.12 over González–Rotger's CM points.** -/
+theorem gonzalezRotgerX6Ab_of_witness (h : GonzalezRotgerThm512X6) (hW : X6ModuliWitness)
+    (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : HDec.QMSplit.Moduli.GonzalezRotgerX6Ab := by
+  obtain ⟨Y, Φ, X, Ψ, fY, h1, h6⟩ := hW
+  exact ⟨Y, Φ, X, Ψ, fY, h1, h6, r5ptProps_of_thm512 h hU hG hM h1 h6⟩
+
 /-- **The field `gonzalezRotgerX6Ab` from Thm 5.12 over González–Rotger's CM points** (new LEAF), the witness of
 the existing research field `elkiesX6StarFunctionField` and the textbook fields `uniformizationLeafAll`,
 `gagaMorphism`, `mumfordTorsionAlgClosed`. -/
 theorem gonzalezRotgerX6Ab_of_printed (h : GonzalezRotgerThm512X6)
     (hE : HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField)
     (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
-    (hM : AvSplit.MumfordTorsionAlgClosed) : HDec.QMSplit.Moduli.GonzalezRotgerX6Ab := by
-  obtain ⟨Y, Φ, X, Ψ, fY, -, h1, h6, -⟩ := hE
-  exact ⟨Y, Φ, X, Ψ, fY, h1, h6, r5ptProps_of_thm512 h hU hG hM h1 h6⟩
+    (hM : AvSplit.MumfordTorsionAlgClosed) : HDec.QMSplit.Moduli.GonzalezRotgerX6Ab :=
+  gonzalezRotgerX6Ab_of_witness h (x6ModuliWitness_of_elkies hE) hU hG hM
 
 /-! ## 4. González–Rotger Prop. 5.6 over its own CM points, and the field `gonzalezRotgerProp56X6` -/
 

@@ -41,6 +41,13 @@ DISCHARGES [OpenResearchLeaves26.gonzalezRotgerX6Ab] by GRDict.gonzalezRotgerX6A
  ZInQ.HomLattice.GAGAMorphism,
  AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.gonzalezRotgerX6Ab] by GRDict.gonzalezRotgerX6Ab_of_witness
+  still assumes: [GRDict.GonzalezRotgerThm512X6,
+ GRDict.X6ModuliWitness,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
   still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -56,4 +63,4 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 3048 theorems checked, 12 discharge one
+#discharges: 56 open hypotheses, 3051 theorems checked, 13 discharge one
