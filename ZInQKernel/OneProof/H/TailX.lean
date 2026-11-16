@@ -183,6 +183,10 @@ structure OpenGlue7 : Prop where
   /-- mcr-glue: a finite `q : 𝒴 → 𝒵` over `ℤ_(p)` and an isomorphism `𝒵 ≅ P¹_{ℤ_(p)}` by charts whose composite
   has R2fp's fibre relation (replaces `modelCoordinateResidue`). -/
   quotientP1Coordinate : MCRGlue.QuotientP1Coordinate
+  /-- sgr-fold (sgr-direct): h-b1 §3 Lemma NV step 3 (`SGRDirect.NVLocalInertia`, GLUE). -/
+  nvLocalInertia : SGRDirect.NVLocalInertia
+  /-- sgr-fold (sgr-direct): `√(c (27X + 16))` in the Hecke cover (filled at the top from `elkiesX6StarPrinted`). -/
+  heckeSqrtBranchAny : SGRDirect.HeckeSqrtBranchAny
 
 /-! ## From the new bundles to leaf-fold6's -/
 
@@ -270,6 +274,8 @@ theorem addedLeaves6_of_open7 (r : OpenResearchLeaves7) (t : OpenTextbookLeaves7
 /-- leaf-fold6's glue bundle from leaf-fold7's. -/
 theorem glue6_of_open7 (g : OpenGlue7) : OpenGlue6 where
   modelCoordinateResidue := MCRGlue.modelCoordinateResidue_of_quotient' g.quotientP1Coordinate
+  nvLocalInertia := g.nvLocalInertia
+  heckeSqrtBranchAny := g.heckeSqrtBranchAny
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold7; no `sorry`, standard axioms).
 `ZInQ.SixContactMin` follows from `OpenResearchLeaves7` (29), `OpenTextbookLeaves7` (23), `OpenAddedLeaves7` (16)

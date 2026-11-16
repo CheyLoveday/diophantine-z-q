@@ -1,4 +1,5 @@
 import ZInQKernel.OneProof.H.TailN
+import ZInQKernel.Contrib.OneProof.SGRDirectNV
 
 /-! ## leaf-fold6, part f10: leafq-check's `Fold.lean`, ported after leaf-fold5's chain (made by `mk_f10.py`:
 `import TailK` dropped; leafq-check's `OpenAddedLeaves5`-`10`, `sixContactMin_of_open5`-`10`,
@@ -2846,6 +2847,12 @@ structure OpenGlue6 : Prop where
   /-- model-glue: a coordinate `ρ : 𝒴 → P¹` on the smooth model with transcendental residue at every point
   whose stalk is a DVR with maximal ideal `(p)` (the tame quotient `𝒴/Γ' ≅ P¹_{ℤ_(p)}`). -/
   modelCoordinateResidue : ModelGlue.ModelCoordinateResidue
+  /-- sgr-fold (sgr-direct): h-b1 §3 Lemma NV step 3, local inertia of tame covers of `P¹_{ℤ_(p)}`
+  (`SGRDirect.NVLocalInertia`, GLUE). -/
+  nvLocalInertia : SGRDirect.NVLocalInertia
+  /-- sgr-fold (sgr-direct): the Hecke cover contains `√(c (27X + 16))` (`SGRDirect.HeckeSqrtBranchAny`; filled at
+  the top from Elkies' printed model, `SGRDirect.heckeSqrtBranchAny_of_elkies`). -/
+  heckeSqrtBranchAny : SGRDirect.HeckeSqrtBranchAny
 
 /-- leaf-fold4's textbook bundle from leaf-fold6's (as leaf-fold5's `textbookLeaves4_of_open5`, with
 `t8 := t8_ofK6 t.t8`). -/
@@ -2903,12 +2910,16 @@ theorem addedLeaves4_of_open6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   egaIV_17_7_8_ii := l.egaIV_17_7_8_ii
 
-/-- leaf-fold4's glue bundle from leaf-fold6's: `HeckeVertWitness` from leaves and `ModelCoordinateResidue`
-(leaf-fold5's `heckeVertWitness_of_leaves5`). -/
+/-- leaf-fold4's glue bundle from leaf-fold6's: `HeckeVertWitness` by sgr-direct's route NV
+(`SGRDirect.heckeVertWitness_of_nvSqrtAny`) from `r1r2`, T5, `qmAutCard`, Serre's rigidity (from T35),
+`alFixedPoints`, `NVLocalInertia` and `HeckeSqrtBranchAny`, without the integral model of the Shimura curve
+(sgr-fold; leaf-fold5's `heckeVertWitness_of_leaves5` needed `shimuraGoodReduction` and `ModelCoordinateResidue`). -/
 theorem glue4_of_open6 (r : OpenResearchLeaves5) (t : OpenTextbookLeaves6) (l : OpenAddedLeaves6)
     (g : OpenGlue6) : OpenGlue4 where
-  heckeVertWitness := heckeVertWitness_of_leaves5 l.shimuraGoodReduction r.r1r2 (torsionStructure_ofK5 t.t5)
-    g.modelCoordinateResidue l.curveBijIso
+  heckeVertWitness := SGRDirect.heckeVertWitness_of_nvSqrtAny (LeafAdopt.R1R2fp_of_rep r.r1r2)
+    (torsionStructure_ofK5 t.t5) l.qmAutCard
+    (serreRigidity3_of_T35_5 (uniformizationExists_ofK5 t.t35) (homLatticeCorr_ofK5 t.homLatticeCorr))
+    l.alFixedPoints g.nvLocalInertia g.heckeSqrtBranchAny
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold6; no `sorry`, standard axioms).
 `ZInQ.SixContactMin` follows from
