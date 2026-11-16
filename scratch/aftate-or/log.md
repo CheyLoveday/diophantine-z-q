@@ -28,3 +28,8 @@ Target: make weber-field's `R16IsJ1Dict.AfTateCharPolyPicZero` printed (base wip
   [propext, Classical.choice, Quot.sound]. VERIFIED.
 - 11-16 07:50 contribution ZInQKernel/Contrib/OneProof/AfTateOr.lean (same declarations + docstrings): `lake build ZInQKernel.Contrib.OneProof.AfTateOr` Build completed successfully (11357 jobs; only the new module compiled, 9.7 s). VERIFIED.
 - 11-16 07:55 #discharges (scratch/aftate-or/Discharges.lean -> Discharges-output.txt): `DISCHARGES [OpenResearchLeaves23.r16CoreY] by AfTateOr.r16CoreY_of_dsOr_igusaDS still assumes: [AfTateOr.AfTateDSOr, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed] axioms: [propext, Classical.choice, Quot.sound]`; all #print axioms standard. VERIFIED.
+- 11-16 08:00 autofold spec scratch/aftate-or/autofold.json (field r16CoreY; leaves afTateDSOr NEW, igusaGL2DS unchanged
+  from weber-field). `python3 scripts/one_proof/autofold.py scratch/aftate-or/autofold.json --dry-run`:
+  `strict count: 45/10 on 55 -> 47/9 on 56; strictest 43/12 -> 45/11`. Output (line 1 stripped) =
+  scratch/aftate-or/FoldDryRun.lean; `lake env lean` compiles; `HDec.HSyn.sixContactMin_of_open31` axioms
+  [propext, Classical.choice, Quot.sound]. VERIFIED.
