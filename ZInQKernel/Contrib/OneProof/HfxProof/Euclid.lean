@@ -65,15 +65,24 @@ theorem InI.isHurZ {β : ℍ[ℚ]} {p : ℕ} (hβ : IsHurZ β) {ξ : ℍ[ℚ]} (
 
 theorem normSq_nonneg' (y : ℍ[ℚ]) : 0 ≤ Quaternion.normSq y := Quaternion.normSq_nonneg
 
+theorem normSq_pos' {y : ℍ[ℚ]} (hy : y ≠ 0) : 0 < Quaternion.normSq y :=
+  lt_of_le_of_ne Quaternion.normSq_nonneg (Ne.symm (Quaternion.normSq_ne_zero.mpr hy))
+
+theorem natCast_mul_eq_smul (p : ℕ) (b : ℍ[ℚ]) : (p : ℍ[ℚ]) * b = (p : ℚ) • b := by
+  rw [← nsmul_eq_mul, Nat.cast_smul_eq_nsmul]
+
 /-- An element of the ideal of minimal positive norm generates it. -/
 theorem InI.exists_gen {β : ℍ[ℚ]} (hβ : IsHurZ β) {p : ℕ} (hp : 0 < p) :
     ∃ γ, InI β p γ ∧ γ ≠ 0 ∧ ∀ ξ, InI β p ξ → ∃ δ, IsHurZ δ ∧ ξ = γ * δ := by
   classical
   have hex : ∃ k : ℕ, ∃ ξ, InI β p ξ ∧ ξ ≠ 0 ∧ Quaternion.normSq ξ = k := by
     refine ⟨p ^ 2, (p : ℍ[ℚ]), ⟨0, 1, isHur_zero, isHur_one, by simp⟩, ?_, ?_⟩
-    · exact_mod_cast hp.ne'
-    · have : ((p : ℚ) : ℍ[ℚ]) = (p : ℍ[ℚ]) := by norm_cast
-      rw [← this, Quaternion.normSq_coe]; push_cast; ring
+    · intro h
+      have := congrArg Quaternion.normSq h
+      rw [Quaternion.normSq_natCast, map_zero] at this
+      have : (p : ℚ) = 0 := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp this
+      exact hp.ne' (by exact_mod_cast this)
+    · rw [Quaternion.normSq_natCast]; push_cast; ring
   obtain ⟨γ, hγI, hγ0, hγk⟩ := Nat.find_spec hex
   refine ⟨γ, hγI, hγ0, fun ξ hξ => ?_⟩
   obtain ⟨δ, hδ, hlt⟩ := exists_isHurZ_normSq_lt_one (γ⁻¹ * ξ)
@@ -84,7 +93,7 @@ theorem InI.exists_gen {β : ℍ[ℚ]} (hβ : IsHurZ β) {p : ℕ} (hp : 0 < p) 
     rw [mul_sub, ← mul_assoc, mul_inv_cancel₀ hγ0, one_mul]
   have hnr : Quaternion.normSq r < Quaternion.normSq γ := by
     rw [hrq, map_mul]
-    have hpos : 0 < Quaternion.normSq γ := Quaternion.normSq_pos.mpr hγ0
+    have hpos : 0 < Quaternion.normSq γ := normSq_pos' hγ0
     calc Quaternion.normSq γ * Quaternion.normSq (γ⁻¹ * ξ - δ) < Quaternion.normSq γ * 1 :=
           mul_lt_mul_of_pos_left hlt hpos
       _ = _ := mul_one _
@@ -124,12 +133,10 @@ theorem euclid_prime {β : ℍ[ℚ]} (hβ : IsHurZ β) {p : ℕ} (hp : p.Prime)
   obtain ⟨d, hd⟩ := hδ'.normSq_int
   have hp2 : g * d = (p : ℤ) ^ 2 := by
     have := congrArg Quaternion.normSq hpδ
-    rw [map_mul, hg, hd] at this
-    have h2 : ((p : ℚ) : ℍ[ℚ]) = (p : ℍ[ℚ]) := by norm_cast
-    rw [← h2, Quaternion.normSq_coe] at this
-    exact_mod_cast this.symm.trans (by ring)
+    rw [map_mul, hg, hd, Quaternion.normSq_natCast] at this
+    exact_mod_cast this.symm
   have hg0 : 0 < g := by
-    have := Quaternion.normSq_pos.mpr hγ0; rw [hg] at this; exact_mod_cast this
+    have := normSq_pos' hγ0; rw [hg] at this; exact_mod_cast this
   have hd0 : 0 ≤ d := by
     have := normSq_nonneg' δ'; rw [hd] at this; exact_mod_cast this
   -- `g ∣ p²`, so `g ∈ {1, p, p²}`
@@ -150,7 +157,7 @@ theorem euclid_prime {β : ℍ[ℚ]} (hβ : IsHurZ β) {p : ℕ} (hp : p.Prime)
       rw [Quaternion.self_mul_star, hg, hgi']; simp
     rw [h1] at hab
     -- norms: `nrd (1 - p b) = nrd β nrd a`
-    have hab' : β * a = 1 - (p : ℍ[ℚ]) * b := by rw [hab]; ring
+    have hab' : β * a = 1 - (p : ℍ[ℚ]) * b := by rw [eq_sub_iff_add_eq]; exact hab.symm
     have hn := congrArg Quaternion.normSq hab'
     obtain ⟨k, hk⟩ := hdvd
     obtain ⟨na, hna⟩ := ha.normSq_int
@@ -161,22 +168,21 @@ theorem euclid_prime {β : ℍ[ℚ]} (hβ : IsHurZ β) {p : ℕ} (hp : p.Prime)
       intro x; obtain ⟨m, hm⟩ := mem_ZS.mp x.2; rw [← hm]; simp
     have hc1 : hc (1 - (p : ℍ[ℚ]) * b) = mapH (Int.castRingHom ℚ)
         ⟨1 + (-(p : ℤ)) * c.a0, (-(p : ℤ)) * c.a1, (-(p : ℤ)) * c.a2, (-(p : ℤ)) * c.a3⟩ := by
-      have h2 : ((p : ℚ) : ℍ[ℚ]) = (p : ℍ[ℚ]) := by norm_cast
-      rw [← h2, Quaternion.coe_mul_eq_smul, hc_sub, hc_one, hc_smul, hbz]
+      rw [natCast_mul_eq_smul, hc_sub, hc_one, hc_smul, hbz]
       simp only [mapH, c, Subring.coe_subtype, eq_intCast]
       push_cast
       rw [hint, hint, hint, hint]
       ext <;> simp <;> ring
     rw [normSq_eq_nrdH (1 - _), hc1, ← map_nrdH, nrdH_one_add_smul, map_mul, hk, hna] at hn
     have hz : (k * na : ℤ) * p = 1 + -(p : ℤ) * (2 * c.a0 - c.a3 + -(p : ℤ) * nrdH c) := by
-      have : ((k * na : ℤ) * p : ℚ) = ((1 + -(p : ℤ) * (2 * c.a0 - c.a3 + -(p : ℤ) * nrdH c) : ℤ) : ℚ) := by
-        rw [← hn]; push_cast; ring
+      have : ((k * na * p : ℤ) : ℚ) = ((1 + -(p : ℤ) * (2 * c.a0 - c.a3 + -(p : ℤ) * nrdH c) : ℤ) : ℚ) := by
+        rw [eq_intCast] at hn; push_cast at hn ⊢; linarith
       exact_mod_cast this
     have : (p : ℤ) ∣ 1 := ⟨k * na + (2 * c.a0 - c.a3 + -(p : ℤ) * nrdH c), by linarith⟩
     have := Int.eq_one_of_dvd_one (by positivity) this
     have := hp.one_lt
     omega
-  · rw [pow_one] at hgi'; rw [hg, hgi']
+  · rw [pow_one] at hgi'; rw [hg, hgi']; push_cast; rfl
   · -- `nrd γ = p²`: then `δ'` is a unit and `β ∈ p O_B`
     exfalso
     apply hnot
@@ -193,8 +199,7 @@ theorem euclid_prime {β : ℍ[ℚ]} (hβ : IsHurZ β) {p : ℕ} (hp : p.Prime)
       rw [hpδ, mul_assoc, mul_inv_cancel₀ hδ'0, mul_one]
     have : (p : ℚ)⁻¹ • β = star δ' * δ := by
       rw [hβδ, hγe, ← hinv, mul_assoc]
-      have h2 : ((p : ℚ) : ℍ[ℚ]) = (p : ℍ[ℚ]) := by norm_cast
-      rw [← h2, Quaternion.coe_mul_eq_smul, smul_mul_assoc, smul_smul,
+      rw [natCast_mul_eq_smul, smul_smul,
         inv_mul_cancel₀ (by exact_mod_cast hp.ne_zero), one_smul]
     rw [this]
     exact hδ'.star.mul hδ
