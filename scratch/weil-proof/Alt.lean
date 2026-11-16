@@ -26,7 +26,7 @@ lemma isIso_pw {X : Scheme.{0}} {N : X.Modules} {s : X ⟶ X} (b : (PB s).obj N 
 /-- **The core of Mumford §23** on a scheme `X`: `t = s^n` (as lifts' base), `t ≫ m = m`,
 `m ≫ t = s ≫ m`, translations fixing `Γ(X, 𝒪)`, `L` with `m^*L` invertible, `Φ ⊗ L ≅ t^*L`. -/
 theorem alt_core {X : Scheme.{0}} {m t s : X ⟶ X} (h : t ≫ m = m) (hb : m ≫ t = s ≫ m)
-    (hab : t ≫ s = s ≫ t) (ht : ∀ r : Γ(X, ⊤), t.appTop r = r) (hs : ∀ r : Γ(X, ⊤), s.appTop r = r)
+    (hab : t ≫ s = s ≫ t) (hs : ∀ r : Γ(X, ⊤), s.appTop r = r)
     (hr : (pOU t).inv = Functor.LaxMonoidal.ε (PB t)) (j₀ : ℕ) (hpow : powM s j₀ = t)
     (L Φ : X.Modules) [((PB m).obj L).IsInvertible] {N' : X.Modules}
     (jN : (PB m).obj L ⊗ N' ≅ 𝟙_ X.Modules)
@@ -102,5 +102,40 @@ theorem alt_core {X : Scheme.{0}} {m t s : X ⟶ X} (h : t ≫ m = m) (hb : m �
   have hA : alpha t m h Φ ψ = 𝟙 _ := unit_endo_eq_id_of_whisker (C := X.Modules) _ jN hAN
   rw [hA]
   rfl
+
+variable {k : Type} [Field k]
+
+/-- **Mumford §23 (`e_n(x, φ_L(x)) = 1`) from divisibility.** -/
+theorem mumfordWeilAltAC_of_div (hdiv : DivisibleAC) : MumfordWeilAltAC := by
+  intro k _ _ X n hn hnk c₀ x hx ψ
+  obtain ⟨y, rfl⟩ := hdiv k X n hn hnk x
+  have h : (AC.tr (y ^ n)).left ≫ (AC.mul X n).left = (AC.mul X n).left := by
+    rw [← Over.comp_left, AC.tr_comp_mul _ hx]
+  have hb : (AC.mul X n).left ≫ (AC.tr (y ^ n)).left = (AC.tr y).left ≫ (AC.mul X n).left := by
+    rw [← Over.comp_left, ← Over.comp_left, tr_mul_comm]
+  have hab : (AC.tr (y ^ n)).left ≫ (AC.tr y).left = (AC.tr y).left ≫ (AC.tr (y ^ n)).left := by
+    rw [← Over.comp_left, ← Over.comp_left, AC.tr_comp_tr, AC.tr_comp_tr, mul_comm]
+  have hr : (pOU (AC.tr (y ^ n)).left).inv = Functor.LaxMonoidal.ε (PB (AC.tr (y ^ n)).left) := by
+    have h1 := unitRatio_tr pullbackCompMonoidal_proof X (y ^ n) hx
+    have h2 : unitRatio (AC.tr (y ^ n)).left = 𝟙 _ :=
+      (unitHomAddEquiv (unit X.X.left)).injective (h1.trans id_val.symm)
+    have h3 := congrArg (· ≫ Functor.LaxMonoidal.ε (PB (AC.tr (y ^ n)).left)) h2
+    simp only [unitRatio, Category.assoc, Category.id_comp] at h3
+    rw [← Functor.Monoidal.εIso_hom, Iso.inv_hom_id] at h3
+    exact (Category.comp_id _).symm.trans h3
+  have hpow : powM (AC.tr y).left (n - 1) = (AC.tr (y ^ n)).left := by
+    rw [powM_tr, Nat.sub_add_cancel hn]
+  have hcl : AC.phi c₀ (y ^ n) * c₀ = Scheme.Pic.map (AC.tr (y ^ n)).left c₀ := by
+    simp only [AC.phi, inv_mul_cancel_right]
+  let w : AC.modX (AC.phi c₀ (y ^ n)) ⊗ AC.modX c₀ ≅ (PB (AC.tr (y ^ n)).left).obj (AC.modX c₀) :=
+    (Scheme.Pic.mulIso _ _).symm ≪≫ eqToIso (congrArg (fun c : X.X.left.Pic => (fromSkeleton X.X.left.Modules).obj c.val) hcl) ≪≫
+      Scheme.Pic.mkIso _
+  let jN : (PB (AC.mul X n).left).obj (AC.modX c₀) ⊗
+      (fromSkeleton X.X.left.Modules).obj ((Scheme.Pic.map (AC.mul X n).left c₀)⁻¹).val ≅ 𝟙_ X.X.left.Modules :=
+    ((Scheme.Pic.mkIso _).symm ⊗ᵢ Iso.refl _) ≪≫ (Scheme.Pic.mulIso _ _).symm ≪≫
+      eqToIso (congrArg (fun c : X.X.left.Pic => (fromSkeleton X.X.left.Modules).obj c.val) (mul_inv_cancel _)) ≪≫ Scheme.Pic.oneIso
+  unfold AC.formula
+  rw [wf_eq_alpha]
+  exact alt_core h hb hab (tr_appTop X y) hr (n - 1) hpow (AC.modX c₀) (AC.modX (AC.phi c₀ (y ^ n))) jN ψ w
 
 end WeilProof.Theta
