@@ -30,7 +30,9 @@ theorem AfTateLam.r16CoreY_of_printed (h1 : AfTateLam.HeckeJ1DS) (h2 : AfTateLam
 characteristic-polynomial reading of DS 9.5.4, flagged "reading risk" for the "satisfies" reading.
 
 **Fold** (dry run, §3): `r16CoreY` (GLUE) is replaced by `heckeJ1DS`, `afShimura`, `afTateDSLambda` and
-`igusaGL2DS`, all kind published. [dry-run line pending]
+`igusaGL2DS`, all kind published: **`strict count: 34/11 on 45 -> 38/10 on 48; strictest 34/11 -> 38/10`** (GLUE −1);
+the generated `HDec.HSyn.sixContactMin_of_open36` compiles with the standard axioms. If the review moves
+`afTateDSLambda` from "reading risk" to "pending reading" (§4), the count is 37/11 (GLUE unchanged).
 
 ## 1. Statements (namespace `AfTateLam`; VERIFIED, compiled)
 
@@ -94,15 +96,78 @@ def AfTateDSLambda : Prop := -- LEAF
 
 ## 3. Checks (VERIFIED, 2026-11-16, one Lean process at a time)
 
-[pending]
+| check | command | outcome |
+|---|---|---|
+| development file | `lake env lean scratch/aftate-fix2/AfTateLambda.lean` | no errors (18 s) |
+| contribution, Main, Discharges | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.AfTateLambda` | `Build completed successfully (13704 jobs)`; `AfTateLambda` built in 16 s; `frozenTarget` standard axioms |
+| `#discharges` | `lake env lean scratch/aftate-fix2/Discharges.lean` (output `Discharges-output.txt`) | see below |
+| fold dry run | `python3 scripts/one_proof/autofold.py scratch/aftate-fix2/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/aftate-fix2/FoldDryRun.lean` | `strict count: 34/11 on 45 -> 38/10 on 48; strictest 34/11 -> 38/10`; `'HDec.HSyn.sixContactMin_of_open36' depends on axioms: [propext, Classical.choice, Quot.sound]` |
+| build-time code | `grep -n "#eval\|run_cmd\|initialize\|^syntax\|^notation\|^macro\|elab \|sorry\|^axiom"` on the contribution | only the docstring line "No `sorry`, no `axiom`, no build-time code" |
+
+```
+DISCHARGES [OpenResearchLeaves26.r16CoreY] by AfTateLam.r16CoreY_of_printed
+  still assumes: [AfTateLam.HeckeJ1DS,
+ AfTateLam.AfShimura,
+ AfTateLam.AfTateDSLambda,
+ X1Igusa.IgusaGL2DS,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 3378 theorems checked, 18 discharge one
+```
+
+The eight `#print axioms` lines (`r16CoreY_of_printed`, `component`, `trace_det_precomp`, `finrank_E`,
+`liesOver_place`, `τhat_algQl`, `lin_trace_det`, `exists_frob`) are all `[propext, Classical.choice, Quot.sound]`.
 
 ## 4. The determinant (objection 2): finding
 
-[pending]
+What `R16CoreY` needs from each `ι`-component is the trace **and** the determinant of every Frobenius at
+`p ∤ Nℓ`, i.e. the characteristic polynomial. `AfTateDSLambda` states the characteristic polynomial of
+`ρ_{f,λ}(Frob)` over `K_{f,λ}`, with no oddness clause and no separate determinant clause.
+
+- **Characteristic-polynomial reading of DS 9.5.4** (the print says "the characteristic equation of
+  `ρ(Frob_𝔭)` is `x² − a_p x + χ(p)p = 0`"): the leaf is the print at DS's objects (over `K_{f,λ}`, for every
+  `A_f`; unramifiedness dropped, newforms only, both weakenings).
+- **"Satisfies" reading** (the print says only that `ρ(Frob_𝔭)` satisfies the polynomial): on a 2-dimensional
+  `V_λ` this excludes only the case that `ρ(Frob_𝔭)` is a scalar root of the polynomial. Excluding it needs
+  `det ρ_{f,λ} = χ χ_ℓ` (then Chebotarev and `χ(−1) = 1`, as isj1-dict's `component_charpoly` does). The review
+  notes that DS may give the determinant only as Exercise 9.6.3(b) (not checked here: no copy of DS on this host).
+  - *Derive it in Lean from the Weil pairing* (the review's option): not possible in the tree. It needs the
+    `e_ℓ`-pairing on `V_ℓ(J₁(N))`, its Galois equivariance with `χ_ℓ`, and `T_p* = ⟨p⟩⁻¹ T_p` for the pairing
+    (DS §6.3/§9.5, UNVERIFIED). `grep -rli "weil pairing\|weilPairing"` over `ZInQKernel/` finds only Tau Ceti
+    elliptic-curve files and unrelated hits; there is no pairing on `PkgI3.AbVar` (VERIFIED).
+  - *Drop the determinant clause where the consumers do not use it*: the consumer `R16CoreY` (a fixed bundle
+    field) states `det(frobOn σ) = ι(c)p`, so it cannot be dropped.
+  - *Bundle oddness into a second disjunct* (aftate-or's choice): the review rejected this unless the
+    determinant is printed in 9.5.4, so it was not repeated.
+
+So the reading risk is unchanged by this task and is now isolated in one flag: `afTateDSLambda` is kind
+published with flag class **reading risk** (counts LEAF, as `raynaudSemistableSH`), and a statement check of
+DS 9.5.4 decides it. If the check finds "satisfies", the alternative sources for the characteristic polynomial
+of Frobenius on `V_λ(A_f)` are Shimura 1971 Thm 7.14 (UNVERIFIED) and Ribet, LNM 601 (1977), §1–2 (trace
+`a_p` and determinant `χ(p)p` for `ρ_λ` realized on `A_f` for `k = 2`, UNVERIFIED). The leaf text needs no
+change for either source.
 
 ## 5. Leaf ratings
 
-[pending]
+| leaf | Lean | printed form? | kind / flag | reason |
+|---|---|---|---|---|
+| `heckeJ1DS` (new) | `AfTateLam.HeckeJ1DS` | **yes** | published; flag `unread: …` | The existence over `ℚ` of DS's `T_p` and `⟨d⟩` on `J₁(N) = Pic⁰(X₁(N))` (DS §6.3 defines them on `Div⁰`/`Pic⁰` by the double cosets, §7.9 shows they are defined over `ℚ`). The divisor action is DS's (coset representatives of DS Prop. 5.2.1), read through Abel–Jacobi `[x] − [x'] ↦ aj(x)/aj(x')`. Quantified over every model, every choice of generators `(j_X, t_X)` with the relations of `(j, f₁)` (any two such triples are isomorphic by `nonempty_ringEquiv_of_rel` and a curve is determined by its function field, so they all are DS's `(X₁(N), j, f₁)`), every rational base point and every Jacobian. Not stronger: the conditions determine `T_p` and `⟨d⟩` uniquely (an endomorphism over `ℚ` is determined on `J(ℂ)`, which is generated by the classes `[x_τ] − [x_{τ'}]`). |
+| `afShimura` (new) | `AfTateLam.AfShimura` | **yes** | published; flag `unread: …` | Shimura 1973 Thm 1, read by the locator audit (row R16: the `ℚ`-rational quotient `A_f`, the coefficient-field action, `[K_f:ℚ] = dim A_f`). `IsAfQuotient` writes "quotient of `J` by `I_f J`" as the universal property, which `J/I_f J` has (the quotient of an abelian variety by an abelian subvariety is the cokernel among abelian varieties; STANDARD). `I_f` is the image of the kernel of `T_p ↦ a_p`, `⟨d⟩ ↦ χ(d)` (DS's `I_f = Ann_{𝕋_ℤ}(f)`, since `f` is an eigenvector with these eigenvalues). `θ` is DS Prop. 6.6.4's action. Weakening: newforms only, `N ≥ 2`. |
+| `afTateDSLambda` (new) | `AfTateLam.AfTateDSLambda` | **yes under the characteristic-polynomial reading** of DS 9.5.4 | published; flag **reading risk** (§4) | DS Thm 9.5.4 over `K_{f,λ}` (DS's `ρ_{f,λ}` is `V_ℓ(A_f)` decomposed along `K_f ⊗ ℚ_ℓ = ∏ K_{f,λ}`; `K_{f,λ} ⊗_{ℚ_ℓ⊗K_f} V_ℓ(A_f)` is that factor), **universal over every `A_f`**. Weakenings: newforms only, unramifiedness dropped, `V_λ` finite assumed (instance argument). `K_f` a number field is an instance argument (the print's presupposition). |
+| `igusaGL2DS` | `X1Igusa.IgusaGL2DS` | yes (x1-igusa §6) | published, unread | unchanged; used only for aftate-or's dictionary `IsX1Model → IsX1AlgDS` |
+
+**Why the definitions are genuine.** Every notion is spelled out over Mathlib and kernel objects: `X(ℂ)` and
+regular functions (sections over opens and `ΓSpecIso`), the uniformization through `K(X) = ℚ(j, f₁)` (aftate-or's
+relation data with the kernel's Weber function), `J(ℂ)` with its group law (morphisms into the group object), the
+free algebra and `evF`, abelian-variety homomorphisms, Mathlib's `adicCompletion`, Tau Ceti's completion map,
+the kernel's `V_ℓ(A)` and Galois action. No structure was introduced for the purpose. The only universally
+quantified data that a reader must check against DS are the double-coset formulas in `IsHeckeT` and
+`IsDiamond`.
+
+Proposed `locators.md` rows (not added; another task's file):
+- `heckeJ1DS` | Diamond–Shurman GTM 228 §6.3 (Hecke on `Div⁰`, `Pic⁰`), Prop. 5.2.1 (cosets), §7.9 (over `ℚ`); Shimura 1971 §7.2 | UNVERIFIED.
+- `afShimura` | Shimura, J. Math. Soc. Japan 25 (1973) Thm 1, pp. 526–527 (audit row R16) | read by the audit for the quotient/action/dimension clauses.
+- `afTateDSLambda` | Diamond–Shurman Lemma 9.5.3, Thm 9.5.4; Shimura 1971 Thm 7.14; Ribet 1977 | UNVERIFIED; check "characteristic equation" vs "satisfies".
 
 ## 6. Files
 
