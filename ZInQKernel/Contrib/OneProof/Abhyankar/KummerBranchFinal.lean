@@ -214,4 +214,262 @@ theorem branch_final {A K L Ω Ω₁ : Type} [CommRing A] [IsDomain A] [IsLocalR
         exact Algebra.IsAlgebraic.isSeparable_of_perfectField
   exact unram_of_baseChange (A₀ := A) (K₀ := K) hBΩ Q hP T T₁ (FractionRing T₁) Ω₁ ι σ hσ hgen hL₁
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 6400000 in
+/-- **`KummerUnramBranch` is proved.** -/
+theorem kummerUnramBranch : KummerUnramBranch := by
+  intro A K L Ω _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hdim f g hm hfp p hp hpm hdeg t u ht hu hadj
+    A'' hA'' Q _ hQ1 hfP
+  subst hA''
+  classical
+  set N := Module.finrank K L with hNdef
+  have hN : 0 < N := Module.finrank_pos
+  have hAΩ : Function.Injective (algebraMap A Ω) := by
+    rw [IsScalarTower.algebraMap_eq A K Ω]
+    exact (algebraMap K Ω).injective.comp (IsFractionRing.injective A K)
+  obtain ⟨hreg, hdim'', hmax''⟩ := kummerBase A Ω hAΩ hdim f g hm N N hN hN t u ht hu
+  haveI := hreg
+  haveI : IsIntegrallyClosed (Algebra.adjoin A ({t, u} : Set Ω)) :=
+    TPurity3.isIntegrallyClosed_of_dim2 hdim''
+  haveI : IsIntegrallyClosed A := TPurity3.isIntegrallyClosed_of_dim2 hdim
+  have hA''Ω : Function.Injective (algebraMap (Algebra.adjoin A ({t, u} : Set Ω)) Ω) :=
+    Subtype.val_injective
+  haveI : IsScalarTower A L Ω := IsScalarTower.of_algebraMap_eq (fun a => by
+    rw [IsScalarTower.algebraMap_apply A K Ω, IsScalarTower.algebraMap_apply A K L,
+      ← IsScalarTower.algebraMap_apply K L Ω])
+  have hAL : Function.Injective (algebraMap A L) := by
+    rw [IsScalarTower.algebraMap_eq A K L]
+    exact (algebraMap K L).injective.comp (IsFractionRing.injective A K)
+  have hNL : ((N : ℕ) : L) ≠ 0 := by
+    have hu' := (isUnit_natCast_of_not_dvd hp hpm (n := N)
+      (fun h => absurd (Nat.le_of_dvd hN h) (not_le.mpr hdeg))).map (algebraMap A L)
+    rw [map_natCast] at hu'
+    exact hu'.ne_zero
+  have hf0 : f ≠ 0 := TPurity3.ne_zero_of_pair hm (TPurity3.height_maximalIdeal_of_dim2 hdim)
+  have hg0 : g ≠ 0 := TPurity3.ne_zero_of_pair (z := g) (w := f) (by rw [hm, TPurity3.span_pair_comm])
+    (TPurity3.height_maximalIdeal_of_dim2 hdim)
+  have ht' : t ^ N = algebraMap L Ω (algebraMap A L f) := by rw [ht, ← IsScalarTower.algebraMap_apply]
+  have hu' : u ^ N = algebraMap L Ω (algebraMap A L g) := by rw [hu, ← IsScalarTower.algebraMap_apply]
+  have htsep : IsSeparable L t := isSeparable_of_pow hNL (fun h => hf0 (hAL (by rw [h, map_zero]))) ht'
+  have husep : IsSeparable L u := isSeparable_of_pow hNL (fun h => hg0 (hAL (by rw [h, map_zero]))) hu'
+  haveI : Algebra.IsSeparable L Ω := by
+    have h1 := IntermediateField.isSeparable_adjoin_pair_of_isSeparable (hx := htsep) (hy := husep)
+    rw [hadj] at h1
+    exact Algebra.IsSeparable.of_algHom _ _ (IntermediateField.topEquiv (F := L) (E := Ω)).symm.toAlgHom
+  haveI : Algebra.IsSeparable K Ω := Algebra.IsSeparable.trans K L Ω
+  haveI : FiniteDimensional K Ω := Module.Finite.trans L Ω
+  haveI hintA : Algebra.IsIntegral A (Algebra.adjoin A ({t, u} : Set Ω)) := Algebra.IsIntegral.adjoin (by
+    rintro x (rfl | rfl)
+    · exact ⟨_, monic_X_pow_sub_C (algebraMap A A f) hN.ne', by simp [ht]⟩
+    · exact ⟨_, monic_X_pow_sub_C (algebraMap A A g) hN.ne', by simp [hu]⟩)
+  haveI : Module.Finite A (integralClosure A Ω) := IsIntegralClosure.finite A K Ω (integralClosure A Ω)
+  have hmem : ∀ x : Ω, x ∈ integralClosure A Ω ↔
+      x ∈ integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω := by
+    intro x
+    rw [mem_integralClosure_iff, mem_integralClosure_iff]
+    exact ⟨fun h => h.tower_top, fun h => isIntegral_trans x h⟩
+  let eA : integralClosure A Ω ≃ₗ[A] integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω :=
+    { toFun := fun x => ⟨x.1, (hmem x.1).mp x.2⟩
+      invFun := fun x => ⟨x.1, (hmem x.1).mpr x.2⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_add' := fun _ _ => rfl
+      map_smul' := fun r x => by
+        apply Subtype.ext
+        show r • (x : Ω) = _
+        rfl }
+  haveI : Module.Finite A (integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω) := Module.Finite.equiv eA
+  haveI : Module.Finite (Algebra.adjoin A ({t, u} : Set Ω))
+      (integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω) :=
+    Module.Finite.of_restrictScalars_finite A _ _
+  haveI : IsNoetherianRing (integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω) :=
+    IsNoetherianRing.of_finite (Algebra.adjoin A ({t, u} : Set Ω)) _
+  haveI : FaithfulSMul (Algebra.adjoin A ({t, u} : Set Ω))
+      (integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω) :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr (fun x y h => Subtype.ext (congrArg
+      (fun w : integralClosure (Algebra.adjoin A ({t, u} : Set Ω)) Ω => (w : Ω)) h))
+  haveI : FaithfulSMul A (Algebra.adjoin A ({t, u} : Set Ω)) :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr (fun x y h => hAΩ (congrArg Subtype.val h))
+  have hP1 : (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).height = 1 := height_under_eq_one Q hQ1
+  -- the field `Ω₁ = L(t)`
+  have htint : IsIntegral L t := htsep.isIntegral
+  haveI : FiniteDimensional L (IntermediateField.adjoin L ({t} : Set Ω)) :=
+    IntermediateField.adjoin.finiteDimensional htint
+  haveI : Algebra.IsSeparable K (IntermediateField.adjoin L ({t} : Set Ω)) :=
+    Algebra.IsSeparable.of_algHom K Ω ((IntermediateField.adjoin L ({t} : Set Ω)).val.restrictScalars K)
+  set t₁ : IntermediateField.adjoin L ({t} : Set Ω) := ⟨t, IntermediateField.mem_adjoin_simple_self L t⟩
+    with ht₁def
+  have ht₁ : t₁ ^ N = algebraMap A (IntermediateField.adjoin L ({t} : Set Ω)) f := by
+    apply Subtype.ext
+    show t ^ N = algebraMap A Ω f
+    exact ht
+  have hadj₁ : IntermediateField.adjoin L {t₁} = ⊤ := by
+    apply IntermediateField.lift_injective
+    rw [IntermediateField.lift_adjoin, IntermediateField.lift_top, Set.image_singleton]
+  have hadj₁' : Algebra.adjoin L {t₁} = ⊤ := by
+    have h1 := congrArg IntermediateField.toSubalgebra hadj₁
+    rw [IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic
+      (Algebra.IsIntegral.isIntegral t₁).isAlgebraic, IntermediateField.top_toSubalgebra] at h1
+    exact h1
+  -- the Kummer base `A₁ = A[t₁, g] ⊆ Ω₁`
+  haveI : IsScalarTower A K (IntermediateField.adjoin L ({t} : Set Ω)) :=
+    IsScalarTower.of_algebraMap_eq (fun a => Subtype.ext (by
+      show algebraMap A Ω a = algebraMap K Ω (algebraMap A K a)
+      exact IsScalarTower.algebraMap_apply A K Ω a))
+  have hAΩ₁ : Function.Injective (algebraMap A (IntermediateField.adjoin L ({t} : Set Ω))) := by
+    intro x y hxy
+    apply hAΩ
+    exact congrArg Subtype.val hxy
+  obtain ⟨A₁, hA₁⟩ : ∃ A₁ : Subalgebra A (IntermediateField.adjoin L ({t} : Set Ω)),
+      A₁ = Algebra.adjoin A {t₁, algebraMap A (IntermediateField.adjoin L ({t} : Set Ω)) g} := ⟨_, rfl⟩
+  have hs₁mem : t₁ ∈ A₁ := by rw [hA₁]; exact Algebra.subset_adjoin (by simp)
+  have hg₁mem : algebraMap A (IntermediateField.adjoin L ({t} : Set Ω)) g ∈ A₁ := by
+    rw [hA₁]; exact Algebra.subset_adjoin (by simp)
+  set s : A₁ := ⟨t₁, hs₁mem⟩ with hsdef
+  set g₁ : A₁ := ⟨_, hg₁mem⟩ with hg₁def
+  obtain ⟨hreg₁, hdim₁, hloc₁, hmax₁⟩ := kummerBase' A (IntermediateField.adjoin L ({t} : Set Ω)) hAΩ₁
+    hdim f g hm N 1 hN one_pos t₁ (algebraMap A _ g) ht₁ (pow_one _) A₁ hA₁ s g₁ rfl rfl
+  haveI := hreg₁
+  haveI : IsIntegrallyClosed A₁ := TPurity3.isIntegrallyClosed_of_dim2 hdim₁
+  haveI hsp : (Ideal.span {s}).IsPrime :=
+    span_prime_of_pair hdim₁ (x := g₁) (y := s) (by rw [hmax₁, TPurity3.span_pair_comm])
+  have hsm : s ∈ maximalIdeal A₁ := by rw [hmax₁]; exact Ideal.subset_span (by simp)
+  have hbe : ∀ Q₁ : Ideal (integralClosure A₁ (IntermediateField.adjoin L ({t} : Set Ω))), [Q₁.IsPrime] →
+      Q₁.under A₁ = Ideal.span {s} → Q₁.ramificationIdx A₁ = 1 := fun Q₁ _ hQ₁ =>
+    branch_e A K L (IntermediateField.adjoin L ({t} : Set Ω)) hdim f g hm hfp p hp hpm hdeg t₁ ht₁ hadj₁
+      A₁ hA₁ s g₁ rfl rfl Q₁ hQ₁
+  haveI : Algebra.IsIntegral A A₁ := by
+    rw [hA₁]
+    exact Algebra.IsIntegral.adjoin (by
+      rintro x (rfl | rfl)
+      · exact ⟨_, monic_X_pow_sub_C f hN.ne', by simp [ht₁]⟩
+      · exact isIntegral_algebraMap)
+  -- `T₁ = A₁_(s)`
+  have hs0 : s ≠ 0 := by
+    intro h
+    have h' : (t : Ω) = 0 := congrArg (fun x : A₁ => ((x : IntermediateField.adjoin L ({t} : Set Ω)) : Ω)) h
+    apply hf0
+    apply hAΩ
+    rw [map_zero, ← ht, h', zero_pow hN.ne']
+  have hs1 : (Ideal.span {s}).height = 1 := by
+    apply le_antisymm (Ideal.height_span_singleton_le_one ((mem_maximalIdeal s).mp hsm))
+    rw [ENat.one_le_iff_ne_zero]
+    intro h0
+    have := Ideal.height_eq_zero_iff_eq_bot.mp h0
+    rw [Ideal.span_singleton_eq_bot] at this
+    exact hs0 this
+  haveI : IsDomain (Localization.AtPrime (Ideal.span {s})) :=
+    IsLocalization.isDomain_localization (Ideal.span {s}).primeCompl_le_nonZeroDivisors
+  haveI : IsDiscreteValuationRing (Localization.AtPrime (Ideal.span {s})) := dvr_atPrime _ hs1
+  have hunitT₁ : ∀ y : (Ideal.span {s}).primeCompl,
+      IsUnit (algebraMap A₁ (IntermediateField.adjoin L ({t} : Set Ω)) y) := fun y =>
+    isUnit_iff_ne_zero.mpr (fun h0 => y.2 (by
+      rw [show (y : A₁) = 0 from Subtype.ext (by simpa using h0)]
+      exact Ideal.zero_mem _))
+  letI : Algebra (Localization.AtPrime (Ideal.span {s})) (IntermediateField.adjoin L ({t} : Set Ω)) :=
+    (IsLocalization.lift (M := (Ideal.span {s}).primeCompl) (S := Localization.AtPrime (Ideal.span {s}))
+      hunitT₁).toAlgebra
+  haveI : IsScalarTower A₁ (Localization.AtPrime (Ideal.span {s})) (IntermediateField.adjoin L ({t} : Set Ω)) :=
+    IsScalarTower.of_algebraMap_eq (fun x => (IsLocalization.lift_eq hunitT₁ x).symm)
+  -- `T = A''_P`
+  haveI : (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).IsPrime := Ideal.IsPrime.under _ Q
+  have hunitT : ∀ y : (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).primeCompl,
+      IsUnit (algebraMap (Algebra.adjoin A ({t, u} : Set Ω)) Ω y) :=
+    fun y => isUnit_iff_ne_zero.mpr (fun h0 => y.2 (by
+      rw [hA''Ω (h0.trans (map_zero _).symm)]; exact Ideal.zero_mem _))
+  letI : Algebra (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) Ω :=
+    (IsLocalization.lift (M := (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).primeCompl)
+      (S := Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) hunitT).toAlgebra
+  haveI : IsScalarTower (Algebra.adjoin A ({t, u} : Set Ω))
+      (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) Ω :=
+    IsScalarTower.of_algebraMap_eq (fun x => (IsLocalization.lift_eq hunitT x).symm)
+  haveI : IsDomain (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) :=
+    IsLocalization.isDomain_localization (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).primeCompl_le_nonZeroDivisors
+  haveI : IsDiscreteValuationRing (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) :=
+    dvr_atPrime _ hP1
+  -- `φ : A₁ → A''`
+  have hφmem : ∀ x : A₁, ((x : IntermediateField.adjoin L ({t} : Set Ω)) : Ω) ∈
+      Algebra.adjoin A ({t, u} : Set Ω) := by
+    intro y
+    have hy : (y : IntermediateField.adjoin L ({t} : Set Ω)) ∈ Algebra.adjoin A
+        ({t₁, algebraMap A (IntermediateField.adjoin L ({t} : Set Ω)) g} :
+          Set (IntermediateField.adjoin L ({t} : Set Ω))) := hA₁ ▸ y.2
+    generalize (y : IntermediateField.adjoin L ({t} : Set Ω)) = x at hy ⊢
+    induction hy using Algebra.adjoin_induction with
+    | mem x hx =>
+      rcases hx with hx | hx
+      · rw [hx]; exact Algebra.subset_adjoin (Or.inl rfl)
+      · rw [Set.mem_singleton_iff.mp hx]; exact Subalgebra.algebraMap_mem _ g
+    | algebraMap r => exact Subalgebra.algebraMap_mem _ r
+    | add x y _ _ hx hy => exact add_mem hx hy
+    | mul x y _ _ hx hy => exact mul_mem hx hy
+  let φ : A₁ →+* Algebra.adjoin A ({t, u} : Set Ω) :=
+    { toFun := fun x => ⟨_, hφmem x⟩
+      map_one' := rfl
+      map_mul' := fun _ _ => rfl
+      map_zero' := rfl
+      map_add' := fun _ _ => rfl }
+  letI : Algebra A₁ (Algebra.adjoin A ({t, u} : Set Ω)) := φ.toAlgebra
+  haveI : IsScalarTower A A₁ (Algebra.adjoin A ({t, u} : Set Ω)) :=
+    IsScalarTower.of_algebraMap_eq (fun a => Subtype.ext rfl)
+  haveI : Algebra.IsIntegral A₁ (Algebra.adjoin A ({t, u} : Set Ω)) := Algebra.IsIntegral.tower_top A
+  haveI : FaithfulSMul A₁ (Algebra.adjoin A ({t, u} : Set Ω)) :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr (fun x y h => by
+      apply Subtype.ext; apply Subtype.ext
+      exact congrArg (fun w : Algebra.adjoin A ({t, u} : Set Ω) => (w : Ω)) h)
+  have hcomap : Ideal.span {s} = (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).comap φ := by
+    have hle : Ideal.span {s} ≤ (Q.under (Algebra.adjoin A ({t, u} : Set Ω))).comap φ := by
+      rw [Ideal.span_le, Set.singleton_subset_iff]
+      show φ s ∈ Q.under (Algebra.adjoin A ({t, u} : Set Ω))
+      have hft : algebraMap A (Algebra.adjoin A ({t, u} : Set Ω)) f = (φ s) ^ N :=
+        Subtype.ext (by show algebraMap A Ω f = t ^ N; rw [ht])
+      have hfP' : algebraMap A (Algebra.adjoin A ({t, u} : Set Ω)) f ∈
+          Q.under (Algebra.adjoin A ({t, u} : Set Ω)) := hfP
+      rw [hft] at hfP'
+      exact (Ideal.IsPrime.under _ Q).mem_of_pow_mem N hfP'
+    have hht : ((Q.under (Algebra.adjoin A ({t, u} : Set Ω))).comap φ).height = 1 :=
+      height_under_eq_one (R := A₁) (S := Algebra.adjoin A ({t, u} : Set Ω)) _ hP1
+    haveI : (Ideal.span {s}).FiniteHeight := ⟨Or.inr (by rw [hs1]; exact ENat.one_ne_top)⟩
+    have hh : ((Q.under (Algebra.adjoin A ({t, u} : Set Ω))).comap φ).height ≤ (Ideal.span {s}).height := by
+      rw [hht, hs1]
+    exact Ideal.eq_of_le_of_height_le _ hle hh
+  let σ := Localization.localRingHom (Ideal.span {s}) (Q.under (Algebra.adjoin A ({t, u} : Set Ω))) φ hcomap
+  have hσ : ∀ x, algebraMap (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) Ω (σ x) =
+      algebraMap (IntermediateField.adjoin L ({t} : Set Ω)) Ω
+        (algebraMap (Localization.AtPrime (Ideal.span {s})) (IntermediateField.adjoin L ({t} : Set Ω)) x) := by
+    have e : (algebraMap (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω)))) Ω).comp σ =
+        (algebraMap (IntermediateField.adjoin L ({t} : Set Ω)) Ω).comp
+          (algebraMap (Localization.AtPrime (Ideal.span {s})) (IntermediateField.adjoin L ({t} : Set Ω))) := by
+      apply IsLocalization.ringHom_ext (Ideal.span {s}).primeCompl
+      ext a
+      simp only [RingHom.comp_apply]
+      show algebraMap _ Ω (Localization.localRingHom (Ideal.span {s}) _ φ hcomap
+        (algebraMap A₁ _ a)) = _
+      rw [Localization.localRingHom_to_map,
+        ← IsScalarTower.algebraMap_apply (Algebra.adjoin A ({t, u} : Set Ω)) _ Ω,
+        ← IsScalarTower.algebraMap_apply A₁ (Localization.AtPrime (Ideal.span {s})) _]
+      rfl
+    exact fun x => RingHom.congr_fun e x
+  have hgen0 : IntermediateField.adjoin (IntermediateField.adjoin L ({t} : Set Ω))
+      (Set.range (algebraMap (Algebra.adjoin A ({t, u} : Set Ω)) Ω)) = ⊤ := by
+    have hL : (IntermediateField.adjoin (IntermediateField.adjoin L ({t} : Set Ω))
+        (Set.range (algebraMap (Algebra.adjoin A ({t, u} : Set Ω)) Ω))).restrictScalars L = ⊤ := by
+      rw [eq_top_iff, ← hadj, IntermediateField.adjoin_le_iff]
+      intro y hy
+      rcases hy with hy | hy
+      · rw [hy]
+        exact IntermediateField.algebraMap_mem _ t₁
+      · rw [Set.mem_singleton_iff.mp hy]
+        exact IntermediateField.subset_adjoin _ _ ⟨⟨u, Algebra.subset_adjoin (by simp)⟩, rfl⟩
+    rw [eq_top_iff]
+    intro x _
+    have : x ∈ (IntermediateField.adjoin (IntermediateField.adjoin L ({t} : Set Ω))
+        (Set.range (algebraMap (Algebra.adjoin A ({t, u} : Set Ω)) Ω))).restrictScalars L := by
+      rw [hL]; trivial
+    exact this
+  exact branch_final (A := A) (K := K) (L := L) (Ω := Ω) p hp hpm hdeg t₁ hadj₁' A₁ s rfl hsp hsm hbe
+    (Algebra.adjoin A ({t, u} : Set Ω)) Q hP1 (Localization.AtPrime (Q.under (Algebra.adjoin A ({t, u} : Set Ω))))
+    (Localization.AtPrime (Ideal.span {s})) (algebraMap (IntermediateField.adjoin L ({t} : Set Ω)) Ω) σ hσ
+    (adjoin_eq_top_toAlgebra _ hgen0)
+
 end Abhyankar
