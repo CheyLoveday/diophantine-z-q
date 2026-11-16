@@ -10,12 +10,12 @@ writes the fold that removes the field:
   next top theorem `sixContactMin_of_open<N+1>`;
 * `ZInQKernel/OneProof/Main.lean` switched to it;
 * `docs/one-proof/kinds.tsv` (discharged rows removed, leaf rows added) and `claims.tsv` (rows of discharged
-  fields removed). A leaf row takes the bundle and area_issue of the field it replaces. A published leaf with no
+  fields removed). A leaf row takes the bundle, area_issue, packet, label and tier of the field it replaces. A published leaf with no
   flag gets the flag "unread: new printed leaf, no reading recorded" (it counts LEAF until a reading says
   otherwise; a plausible weaker reading is flagged "pending reading: ..." and counts GLUE). Its flag_class comes
   from the flag's prefix, as in the existing rows: pending reading, pending review, reading risk, restricted,
   unread, strictest reading, "locator UNVERIFIED" anywhere, else note. A leaf may give its own flag_class,
-  area_issue, packet, label and tier. Every new row passes render_open.py's row checks before anything is written.
+  area_issue, packet, label and tier instead. Every new row passes render_open.py's row checks before anything is written.
 
 It refuses a fold that raises either GLUE count of kinds.tsv (the strict and the strictest column) unless
 `--allow-rise` is given.
@@ -199,7 +199,8 @@ def main():
             new_rows.append(dict(bundle=old['bundle'], field=lf['name'],
                                  kind=kind, flag=flag, strict=strict, strictest=strictest,
                                  source=lf.get('source', ''), rated_by=f'{name}; pending review',
-                                 packet=lf.get('packet', ''), label=lf.get('label', ''), tier=lf.get('tier', ''),
+                                 packet=lf.get('packet', old.get('packet', '')), label=lf.get('label', old.get('label', '')),
+                                 tier=lf.get('tier', old.get('tier', '')),
                                  flag_class=flag_class(flag, strict, strictest, lf.get('flag_class', '')),
                                  area_issue=lf.get('area_issue', old.get('area_issue', ''))))
     kept += new_rows
