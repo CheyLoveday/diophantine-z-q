@@ -30,3 +30,13 @@ Review objections to `AfTateOr.AfTateDSOr` and the response:
   AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY` compiles (VERIFIED, EXIT 0, 18 s).
 - 14:06 contribution copied to `ZInQKernel/Contrib/OneProof/AfTateLambda.lean`; `lake build +Main +Discharges
   +AfTateLambda` started.
+- 14:12 `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.AfTateLambda`:
+  `Build completed successfully (13704 jobs)` (VERIFIED; `frozenTarget` standard axioms).
+- 14:12 `#discharges` (`scratch/aftate-fix2/Discharges-output.txt`, VERIFIED):
+  `DISCHARGES [OpenResearchLeaves26.r16CoreY] by AfTateLam.r16CoreY_of_printed`, still assumes
+  `[HeckeJ1DS, AfShimura, AfTateDSLambda, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed]`, axioms standard;
+  `#discharges: 56 open hypotheses, 3378 theorems checked, 18 discharge one`.
+- 14:13 autofold dry run (`scratch/aftate-fix2/autofold.json`): `strict count: 34/11 on 45 -> 38/10 on 48; strictest
+  34/11 -> 38/10`; generated `sixContactMin_of_open36` compiles with standard axioms (`FoldDryRun-output.txt`, VERIFIED).
+  The afTateDSLambda flag is class "reading risk" (counts LEAF, precedent raynaudSemistableSH); with "pending reading"
+  instead the count would be 37/11 (GLUE unchanged).
