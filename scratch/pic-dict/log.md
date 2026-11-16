@@ -51,3 +51,14 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   weil only `40/8 on 48 -> 47/8 on 55; strictest 39/9 -> 47/8` (lf31 rating: `37/11 -> 45/10; 37/11 -> 45/10`);
   both rows `40/8 -> 47/9 on 56; strictest 39/9 -> 47/9` (lf31: `37/11 -> 46/10; 37/11 -> 46/10`).
   Both dry-run modules compile (sixContactMin_of_open35, standard axioms).
+- ~05:15 `mumfordWeilCompat_of_pairing` proved (Transport.wf_transport₂, coherence_III; scratch/pic-dict/Compat.lean).
+- ~05:25 AC restatement (scratch/pic-dict/AlgClosed.lean, merged): leaves for `k` algebraically closed and
+  `X : AbVar k` with `X(k) = 𝟙_ ⟶ X.X`, `t_x = lift (𝟙, toUnit ≫ x) ≫ μ`, `n_X = 𝟙^n`, Mumford's `Pic⁰` =
+  translation-invariant classes, Mumford's formula: `MumfordSquareAC`, `MumfordMulNPicZeroAC`,
+  `MumfordPhiSurjectiveAC`, `MumfordWeilPairingAC`, `MumfordWeilNondegAC`, `MumfordWeilAltAC`, `MumfordKLFiniteAC`.
+  Bridge to `A_K̄ := Over.pullback (Spec K̄ → Spec K)` of `A` proved: `tr_pts` (translations), `mul_AKbar`,
+  `pts_mul`, `pts` bijective, `formula_bridge`; `*_of_ac` for each leaf. VERIFIED, standard axioms.
+- Final: `weilPairingMumford_of_ac` (7 leaves + phiAmpleIsogeny), `phiAmpleIsogeny_of_ac` (4 leaves, one composite).
+  #discharges: 11 lines discharge (both forms listed). Dry-runs (scratch/pic-dict/autofold.json):
+  `40/8 on 48 -> 46/8 on 54; strictest 39/9 -> 46/8`; lf31 rating `37/11 -> 44/10; strictest 37/11 -> 44/10`.
+  Both rows: `40/8 -> 46/9 on 55; 39/9 -> 46/9`; lf31 `37/11 -> 45/10; 37/11 -> 45/10`. Dry-run modules compile.
