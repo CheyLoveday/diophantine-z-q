@@ -24,7 +24,7 @@ theorem AfTateLam.r16CoreY_of_printed (h1 : AfTateLam.HeckeJ1DS) (h2 : AfTateLam
 |---|---|
 | (1) `A` existential | **Resolved.** `AfTateDSLambda` is universal over every `(A, π, θ)` that is Diamond–Shurman's `A_f = J₁(N)/I_f J₁(N)` with its `K_f`-action. The Hecke algebra is a Lean object: `T_p` and `⟨d⟩` are the endomorphisms of `J` with DS's double-coset action on divisor classes of the points `x_τ ∈ X(ℂ)` (`IsHeckeT`, `IsDiamond`, `AtTau`); `I_f` is the kernel of `T_p ↦ a_p(f)`, `⟨d⟩ ↦ χ(d)` (free algebra); `A_f` is the universal quotient killing `I_f J` (`IsAfQuotient`); `θ(a_p) = T_p|A_f`, `θ(χ(d)) = ⟨d⟩|A_f` (`IsAfAction`). Existence is two separate printed leaves: the Hecke operators over `ℚ` (`HeckeJ1DS`, DS §6.3/§7.9) and `A_f` over `ℚ` (`AfShimura`, Shimura 1973 Thm 1, read by the locator audit). The glue proves that this `A` satisfies everything the consumer needs: surjectivity is part of `IsAfQuotient`, `dim A = [K_f:ℚ]` follows from the rank two of every `ι`-component (`R16Split.dim_eq_of_rank_two`), trace and determinant follow from §6. |
 | (2) "satisfies" reading needs `det ρ = χχ_ℓ` | **Not resolvable in the tree; recorded as a reading risk.** The leaf states the characteristic polynomial (no oddness clause, no determinant clause). Deriving `det ρ_{f,λ} = χχ_ℓ` from a "satisfies" form needs the Weil pairing on `V_ℓ(J₁(N))` and the adjointness `T_p* = ⟨p⟩⁻¹T_p`; the tree has no Weil pairing on abelian varieties (VERIFIED, grep). The consumer `R16CoreY` uses the determinant, so the clause cannot be dropped. See §4. |
-| (3) `ℚ_ℓ ⊗ K_f` in place of `K_{f,λ}` | **Resolved.** `AfTateDSLambda` is stated over `K_{f,λ} = λ.adicCompletion K_f` (Mathlib) for every place `λ ∣ ℓ`, on `V_λ = K_{f,λ} ⊗_{ℚ_ℓ ⊗ K_f} V_ℓ(A)` with `ℚ_ℓ → K_{f,λ}` from Mathlib's `ℚ_ℓ ≅ ℚ_{v_ℓ}` and Tau Ceti's completion map. The glue from `K_{f,λ}` to the consumers' `ι`-components (`AfTateLam.component`) is proved by base change directly; it does not need the semi-local decomposition `ℚ_ℓ ⊗ K_f ≅ ∏ K_{f,λ}` (each `ι` factors through its own `K_{f,λ_ι}`). |
+| (3) `ℚ_ℓ ⊗ K_f` in place of `K_{f,λ}` | **Resolved.** `AfTateDSLambda` is stated over `K_{f,λ} = λ.adicCompletion K_f` (Mathlib) for every place `λ ∣ ℓ`, on `V_λ = K_{f,λ} ⊗_{ℚ_ℓ ⊗ K_f} V_ℓ(A)` with `ℚ_ℓ → K_{f,λ}` from Mathlib's `ℚ_ℓ ≅ ℚ_{v_ℓ}` and Tau Ceti's completion map. The glue from `K_{f,λ}` to the consumers' `ι`-components (`AfTateLam.component`) is proved by base change directly; it does not need the semi-local decomposition `ℚ_ℓ ⊗ K_f ≅ ∏ K_{f,λ}` (each `ι` factors through its own `K_{f,λ_ι}`). Conversely `dsLambda_of_tensor` proves the `K_{f,λ}` leaf from the `ℚ_ℓ ⊗ K_f` form `AfTateDSTensor` (base change of a basis), so the leaf follows from the print in either form (`ρ_{A_f,ℓ}` over `K_f ⊗ ℚ_ℓ` or `ρ_{f,λ}` over `K_{f,λ}`). The assembly `K_{f,λ}`-form ⇒ `ℚ_ℓ ⊗ K_f`-form (which needs Tau Ceti's `semilocalEquiv`) is not needed for either direction that matters here and was not formalized. |
 
 **Ratings** (§5): `heckeJ1DS` and `afShimura` printed form; `afTateDSLambda` printed form under the
 characteristic-polynomial reading of DS 9.5.4, flagged "reading risk" for the "satisfies" reading.
@@ -92,13 +92,15 @@ def AfTateDSLambda : Prop := -- LEAF
 | `component` | the kernel's `ι`-component: `V_λ` finite, `dim eigenFun = dim_{K_λ} V_λ`, `tr frobOn σ = ι̂(tr ρ_{f,λ}(σ))`, `det frobOn σ = ι̂(det ρ_{f,λ}(σ))`. |
 | `lin_trace_det` | `charpoly g = X² − tX + d` gives `dim = 2`, `tr g = t`, `det g = d`. |
 | `exists_frob` | a Frobenius element at a prime not dividing `S` (Chebotarev, `ZInQ.Contrib.frobeniusDense`, proved). |
+| `charpoly_frobLam_of_basis`, `dsLambda_of_tensor` | a `ℚ_ℓ ⊗ K_f`-basis `b` with `charpoly(frobMat b σ) = X² − (1⊗a)X + (1⊗d)` gives `charpoly ρ_{f,λ}(σ) = X² − aX + d` over `K_λ` (`LinearMap.toMatrix_baseChange`, `Matrix.charpoly_map`); hence `AfTateDSTensor → AfTateDSLambda`. |
 | `r16CoreY_of_printed` | `N = 1` by aftate-or's `not_isNewform_one`; for `N ≥ 2`, aftate-or's dictionary `isX1AlgDS_of_isX1Model` (with Igusa) gives `IsX1Gen`; L1 gives the Hecke operators, L2 gives `K_f` finite and `(A, π, θ)`; for each `ℓ, ι`, L3 at `λ_ι` with `component` and `lin_trace_det` gives trace `ι(a_p)` and determinant `ι(χ(p))p` on the `ι`-component and its rank 2 (at one Frobenius from `exists_frob`); `dim A = [K_f:ℚ]` from `R16Split.dim_eq_of_rank_two`. `TateModuleFree` from `mumfordTorsionAlgClosed`. |
 
 ## 3. Checks (VERIFIED, 2026-11-16, one Lean process at a time)
 
 | check | command | outcome |
 |---|---|---|
-| development file | `lake env lean scratch/aftate-fix2/AfTateLambda.lean` | no errors (18 s) |
+| development file | `lake env lean scratch/aftate-fix2/AfTateLambda.lean` | no errors (16 s) |
+| target copy | `lake env lean scratch/aftate-fix2/Target.lean` | verbatim copy of `R16Split.R16CoreY`, `copy_iff : … ↔ R16Split.R16CoreY := Iff.rfl`, discharge at the copy, standard axioms |
 | contribution, Main, Discharges | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.AfTateLambda` | `Build completed successfully (13704 jobs)`; `AfTateLambda` built in 16 s; `frozenTarget` standard axioms |
 | `#discharges` | `lake env lean scratch/aftate-fix2/Discharges.lean` (output `Discharges-output.txt`) | see below |
 | fold dry run | `python3 scripts/one_proof/autofold.py scratch/aftate-fix2/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/aftate-fix2/FoldDryRun.lean` | `strict count: 34/11 on 45 -> 38/10 on 48; strictest 34/11 -> 38/10`; `'HDec.HSyn.sixContactMin_of_open36' depends on axioms: [propext, Classical.choice, Quot.sound]` |
@@ -112,11 +114,11 @@ DISCHARGES [OpenResearchLeaves26.r16CoreY] by AfTateLam.r16CoreY_of_printed
  X1Igusa.IgusaGL2DS,
  AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 3378 theorems checked, 18 discharge one
+#discharges: 56 open hypotheses, 3382 theorems checked, 18 discharge one
 ```
 
-The eight `#print axioms` lines (`r16CoreY_of_printed`, `component`, `trace_det_precomp`, `finrank_E`,
-`liesOver_place`, `τhat_algQl`, `lin_trace_det`, `exists_frob`) are all `[propext, Classical.choice, Quot.sound]`.
+The nine `#print axioms` lines (`r16CoreY_of_printed`, `component`, `trace_det_precomp`, `finrank_E`,
+`liesOver_place`, `τhat_algQl`, `lin_trace_det`, `exists_frob`, `dsLambda_of_tensor`) are all `[propext, Classical.choice, Quot.sound]`.
 
 ## 4. The determinant (objection 2): finding
 
@@ -153,7 +155,7 @@ change for either source.
 |---|---|---|---|---|
 | `heckeJ1DS` (new) | `AfTateLam.HeckeJ1DS` | **yes** | published; flag `unread: …` | The existence over `ℚ` of DS's `T_p` and `⟨d⟩` on `J₁(N) = Pic⁰(X₁(N))` (DS §6.3 defines them on `Div⁰`/`Pic⁰` by the double cosets, §7.9 shows they are defined over `ℚ`). The divisor action is DS's (coset representatives of DS Prop. 5.2.1), read through Abel–Jacobi `[x] − [x'] ↦ aj(x)/aj(x')`. Quantified over every model, every choice of generators `(j_X, t_X)` with the relations of `(j, f₁)` (any two such triples are isomorphic by `nonempty_ringEquiv_of_rel` and a curve is determined by its function field, so they all are DS's `(X₁(N), j, f₁)`), every rational base point and every Jacobian. Not stronger: the conditions determine `T_p` and `⟨d⟩` uniquely (an endomorphism over `ℚ` is determined on `J(ℂ)`, which is generated by the classes `[x_τ] − [x_{τ'}]`). |
 | `afShimura` (new) | `AfTateLam.AfShimura` | **yes** | published; flag `unread: …` | Shimura 1973 Thm 1, read by the locator audit (row R16: the `ℚ`-rational quotient `A_f`, the coefficient-field action, `[K_f:ℚ] = dim A_f`). `IsAfQuotient` writes "quotient of `J` by `I_f J`" as the universal property, which `J/I_f J` has (the quotient of an abelian variety by an abelian subvariety is the cokernel among abelian varieties; STANDARD). `I_f` is the image of the kernel of `T_p ↦ a_p`, `⟨d⟩ ↦ χ(d)` (DS's `I_f = Ann_{𝕋_ℤ}(f)`, since `f` is an eigenvector with these eigenvalues). `θ` is DS Prop. 6.6.4's action. Weakening: newforms only, `N ≥ 2`. |
-| `afTateDSLambda` (new) | `AfTateLam.AfTateDSLambda` | **yes under the characteristic-polynomial reading** of DS 9.5.4 | published; flag **reading risk** (§4) | DS Thm 9.5.4 over `K_{f,λ}` (DS's `ρ_{f,λ}` is `V_ℓ(A_f)` decomposed along `K_f ⊗ ℚ_ℓ = ∏ K_{f,λ}`; `K_{f,λ} ⊗_{ℚ_ℓ⊗K_f} V_ℓ(A_f)` is that factor), **universal over every `A_f`**. Weakenings: newforms only, unramifiedness dropped, `V_λ` finite assumed (instance argument). `K_f` a number field is an instance argument (the print's presupposition). |
+| `afTateDSLambda` (new) | `AfTateLam.AfTateDSLambda` | **yes under the characteristic-polynomial reading** of DS 9.5.4 | published; flag **reading risk** (§4) | A consequence of the print whether DS states it for `ρ_{A_f,ℓ}` over `K_f ⊗ ℚ_ℓ` (`dsLambda_of_tensor`, proved) or for `ρ_{f,λ}` over `K_{f,λ}` (directly). DS Thm 9.5.4 over `K_{f,λ}` (DS's `ρ_{f,λ}` is `V_ℓ(A_f)` decomposed along `K_f ⊗ ℚ_ℓ = ∏ K_{f,λ}`; `K_{f,λ} ⊗_{ℚ_ℓ⊗K_f} V_ℓ(A_f)` is that factor), **universal over every `A_f`**. Weakenings: newforms only, unramifiedness dropped, `V_λ` finite assumed (instance argument). `K_f` a number field is an instance argument (the print's presupposition). |
 | `igusaGL2DS` | `X1Igusa.IgusaGL2DS` | yes (x1-igusa §6) | published, unread | unchanged; used only for aftate-or's dictionary `IsX1Model → IsX1AlgDS` |
 
 **Why the definitions are genuine.** Every notion is spelled out over Mathlib and kernel objects: `X(ℂ)` and
