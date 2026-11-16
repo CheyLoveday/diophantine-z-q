@@ -395,4 +395,47 @@ theorem exists_nat_LH (y : ℍ[AQ]) : ∃ N : ℕ, 0 < N ∧ LH (qι (N : ℍ[�
   · exact key _ i2
   · exact key _ i3
 
+theorem normSq_piQ_qι_mul (w : HeightOneSpectrum (𝓞 ℚ)) (N : ℕ) (y : ℍ[AQ]) :
+    Quaternion.normSq (piQ w (qι (N : ℍ[ℚ]) * y)) = (N : ℚ_[Pw w]) ^ 2 * Quaternion.normSq (piQ w y) := by
+  rw [map_mul, map_mul, piQ_qι, qp_natCast, Quaternion.normSq_natCast]
+
+/-- **`B̂^× = B^× Ô_B^×`.** -/
+theorem exists_global_mul_unit (x : ℍ[AQ]ˣ) :
+    ∃ γ : ℍ[ℚ], ∃ hγ : γ ≠ 0, LH (((qιU γ hγ)⁻¹ * x : ℍ[AQ]ˣ) : ℍ[AQ]) ∧
+      LH ((((qιU γ hγ)⁻¹ * x)⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) := by
+  obtain ⟨N, hN, hNx⟩ := exists_nat_LH (x : ℍ[AQ])
+  obtain ⟨N', hN', hNx'⟩ := exists_nat_LH ((x⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ])
+  have hN0 : (N : ℍ[ℚ]) ≠ 0 := by
+    intro h
+    have := congrArg Quaternion.normSq h
+    rw [Quaternion.normSq_natCast, map_zero] at this
+    exact hN.ne' (by exact_mod_cast pow_eq_zero_iff (n := 2) (by norm_num) |>.mp this)
+  set y : ℍ[AQ]ˣ := qιU (N : ℍ[ℚ]) hN0 * x with hy
+  have hyc : (y : ℍ[AQ]) = qι (N : ℍ[ℚ]) * x := rfl
+  have hLy : LH y := by rw [hyc]; exact hNx
+  have hC : Cond ((N * N') ^ 2) y := by
+    intro w
+    rw [hyc, normSq_piQ_qι_mul]
+    have h1 := (hNx' w).normSq_mem
+    rw [mem_Zp, normSq_piQ_qι_mul, piQ_unit_inv, Quaternion.normSq_smul, Quaternion.normSq_star] at h1
+    have hn0 := normSq_piQ_unit_ne_zero w x
+    set a := Quaternion.normSq (piQ w (x : ℍ[AQ]))
+    have e : ((N' : ℚ_[Pw w])) ^ 2 * ((a⁻¹) ^ 2 * a) = (N' : ℚ_[Pw w]) ^ 2 * a⁻¹ := by
+      field_simp
+    rw [e, norm_mul, norm_inv] at h1
+    have ha : 0 < ‖a‖ := norm_pos_iff.mpr hn0
+    have h2 : ‖(N' : ℚ_[Pw w]) ^ 2‖ ≤ ‖a‖ := by
+      rwa [mul_inv_le_iff₀ ha, one_mul] at h1
+    push_cast
+    rw [norm_mul, mul_pow, norm_mul]
+    exact mul_le_mul_of_nonneg_left h2 (norm_nonneg _)
+  have hm0 : 0 < (N * N') ^ 2 := by positivity
+  obtain ⟨γ, hγ, h1, h2⟩ := exists_global_aux _ hm0 y hLy hC
+  have hγ' : (N : ℍ[ℚ])⁻¹ * γ ≠ 0 := mul_ne_zero (inv_ne_zero hN0) hγ
+  have e : (qιU ((N : ℍ[ℚ])⁻¹ * γ) hγ')⁻¹ * x = (qιU γ hγ)⁻¹ * y := by
+    apply Units.ext
+    show qι ((N : ℍ[ℚ])⁻¹ * γ)⁻¹ * x = qι γ⁻¹ * (qι (N : ℍ[ℚ]) * x)
+    rw [mul_inv_rev, inv_inv, map_mul, mul_assoc]
+  exact ⟨_, hγ', by rw [e]; exact h1, by rw [e]; exact h2⟩
+
 end ZInQ.Contrib.HfxProof
