@@ -14,3 +14,17 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
 - The vendored library proves Kleiman 9.2.5 in general form (`Picard/Descent.lean`,
   `isIso_picardFunctorNormalized_ι_comp_toPicardFunctor`, under `IsIso pushforwardUnitMap` universally); not needed
   for L5.
+- 04:00 build finished (62 min wall, exit 0).
+- 04:45 scratch/pic-dict/Core.lean compiles (`lake env lean`, ~10 s after imports). VERIFIED, axioms
+  [propext, Classical.choice, Quot.sound] for:
+  - `PicDict.picPointsAlgClosed : T09Pic.PicPointsAlgClosed` (L5 is a theorem). Proof: every fppf covering sieve of a
+    scheme contains every point with values in an algebraically closed field (induction on `Precoverage.Saturate`,
+    Nullstellensatz `pointOfClosedPoint`), then Mathlib's `isLocallyInjective_toSheafify'` /
+    `isLocallySurjective_toSheafify'`.
+  - dictionary glue: `toPicardFunctor_picClass`, `picClass_mul`, `picClass_injective`, `picClass_gal`,
+    `picClass_dual`, `picClass_phiL` (M_{λ_L x} = t_x^*L_K̄ ⊗ L_K̄⁻¹), `phiPt_translInv` (from the square),
+    `exists_lift_pt`, `exists_pt_of_isClosed`, `surjective_of_forall_pt`.
+  - `weilPairingMumford_of_printed` (9 Mumford-type leaves at A_K̄ + `WeilFormulaGalois` glue + field
+    `PhiAmpleIsogeny`) : `T09Pic.WeilPairingMumford`.
+  - `phiAmpleIsogeny_of_printed` (`MumfordKLFinite`, `MumfordPhiSurjective`, `AmpleBaseChangeAlgClosure`,
+    `PicZeroPtsTranslInv` (composite), `FiniteOfFiniteKerPts` (glue)) : `T09Pic.PhiAmpleIsogeny`.
