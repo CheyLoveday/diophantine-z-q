@@ -469,6 +469,50 @@ theorem exists_chart {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
   · intro q hq
     exact hc' hq.2
 
+/-- **The charts are holomorphic coordinates.** In the coordinates of any analytic uniformization
+`Φ : ℂ^g → A_τ(ℂ)`, the translated chart at `p = Φ z₀` is `z ↦ (F ∘ Φ)(z − z₀)`. -/
+theorem chartAt_comp {g : ℕ} (𝒢 : GroupModel A L) {τ : L →+* ℂ} {Λ : Submodule ℤ (Fin g → ℂ)}
+    {Φ : (Fin g → ℂ) → 𝒢.Pts τ} (hΦ : 𝒢.IsAnalyticUniformization τ Λ Φ)
+    (U : Fin g → 𝒢.G.left.Opens) (s : ∀ i, Γ(𝒢.G.left, U i)) (z₀ : Fin g → ℂ) :
+    chartAt 𝒢 τ U s (Φ z₀) ∘ Φ = (coordMap 𝒢 τ U s ∘ Φ) ∘ (fun z => z - z₀) := by
+  have h0 : Φ 0 = 1 := (hΦ.2.1 0).2 Λ.zero_mem
+  have hneg : Φ (-z₀) = (Φ z₀)⁻¹ := by
+    refine eq_inv_of_mul_eq_one_left ?_
+    rw [← hΦ.1, neg_add_cancel, h0]
+  funext z
+  simp only [chartAt, Function.comp_apply]
+  rw [sub_eq_neg_add, hΦ.1, hneg]
+
+/-- In the coordinates of an analytic uniformization, the translated chart at `p = Φ z₀` is
+holomorphic near `z₀`, with derivative at `z₀` of determinant `jacDet Φ f` (nonzero when
+`η = l · df₁ ∧ ⋯ ∧ df_g ≠ 0`, see `exists_chart`). -/
+theorem chartAt_comp_hasStrictFDerivAt {g : ℕ} (𝒢 : GroupModel A L) {τ : L →+* ℂ}
+    {Λ : Submodule ℤ (Fin g → ℂ)} {Φ : (Fin g → ℂ) → 𝒢.Pts τ}
+    (hΦ : 𝒢.IsAnalyticUniformization τ Λ Φ) (U : Fin g → 𝒢.G.left.Opens)
+    (hU : ∀ i, 𝒢.genericUnit ∈ U i) (s : ∀ i, Γ(𝒢.G.left, U i))
+    (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal 𝒢.genStalk) (z₀ : Fin g → ℂ) :
+    ∃ D : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ),
+      HasStrictFDerivAt (chartAt 𝒢 τ U s (Φ z₀) ∘ Φ) D z₀ ∧
+      LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) = 𝒢.jacDet Φ (fun i => ⟨_, hm i⟩) := by
+  set V := ⋂ i, 𝒢.dom Φ (U i)
+  have hVo : IsOpen V := isOpen_iInter_of_finite fun i => hΦ.2.2.2.1 (U i)
+  have h0V : (0 : Fin g → ℂ) ∈ V :=
+    mem_iInter.mpr fun i => ZInQ.Metrization.zero_mem_dom 𝒢 hΦ (U i) (hU i)
+  have hψd : DifferentiableOn ℂ (coordMap 𝒢 τ U s ∘ Φ) V :=
+    differentiableOn_pi.mpr fun i => (hΦ.2.2.2.2 (U i) (s i)).mono (iInter_subset _ i)
+  have hψ := Holomorphic.hasStrictFDerivAt hVo hψd h0V
+  have hsub : HasStrictFDerivAt (fun z : Fin g → ℂ => z - z₀) (ContinuousLinearMap.id ℂ _) z₀ :=
+    (hasStrictFDerivAt_id z₀).sub_const z₀
+  have hψ' : HasStrictFDerivAt (coordMap 𝒢 τ U s ∘ Φ) (fderiv ℂ (coordMap 𝒢 τ U s ∘ Φ) 0)
+      ((fun z : Fin g → ℂ => z - z₀) z₀) := by
+    simpa only [sub_self] using hψ
+  refine ⟨(fderiv ℂ (coordMap 𝒢 τ U s ∘ Φ) 0).comp (ContinuousLinearMap.id ℂ _), ?_, ?_⟩
+  · rw [chartAt_comp 𝒢 hΦ U s z₀]
+    exact hψ'.comp z₀ hsub
+  · rw [ContinuousLinearMap.comp_id]
+    exact det_fderiv_coordMap 𝒢 hΦ U hU s hm
+
 end Charts
 
 /-! ## §4. Existence of the measure `(i/2)^g η ∧ η̄` for every group model (from T35) -/
