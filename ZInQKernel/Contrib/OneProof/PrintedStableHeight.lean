@@ -779,4 +779,62 @@ theorem gaudronRemondThm14Printed_of_kernel (h : GaudronRemondThm14)
     GaudronRemondThm14Printed :=
   fun K _ _ A B g x hg hx hiso => h K A B g x hg (isStableFaltingsHeight_of_printed hT35 hGC hx) hiso
 
+/-! ## §7. The other two height-split rows over the printed height (optional)
+
+`JavanpeykarBound` and `PazukiCor13Upper` are also stated over `IsStableFaltingsHeight`; height-dict
+restated them over its `HeightDict.IsPrintedStableHeight`, whose metric has the soundness defect fixed
+here. These are the same restatements over `ZInQ.HeightFix.IsPrintedStableHeight`. -/
+
+section OtherRows
+
+open LeafModCurves (IsCurve IsJacobian IsBelyiFunction)
+open LeafPush2 (ffAlgebra javanpeykarBound CPts IsUniformization IsSiegel IsPeriodMatrix Char2
+  thetaConst pazukiC2)
+
+/-- **Leaf R18-Javanpeykar over the printed height** (Javanpeykar, Algebra Number Theory 8 (2014),
+Thm 1.1.1, read by the locator audit): `ZInQ.HeightSplit.JavanpeykarBound` with
+`IsStableFaltingsHeight` replaced by `IsPrintedStableHeight`. -/
+def JavanpeykarBoundPrinted : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (X : Over (Spec (CommRingCat.of K))) [IsCurve X]
+    [IsIntegral X.left] (P₀ : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ X) (J : PkgI3.AbVar K)
+    (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ g : ℕ, J.dim = (g : WithBot ℕ∞) → 1 ≤ g →
+    ∀ t : X.left.functionField,
+      letI := ffAlgebra X
+      IsBelyiFunction K X.left.functionField t →
+      ∀ d : ℕ, Module.finrank (IntermediateField.adjoin K {t}) X.left.functionField = d → 0 < d →
+      ∀ x : ℝ, IsPrintedStableHeight J x → x ≤ javanpeykarBound g d
+
+/-- **Leaf R22-Pazuki (upper half) over the printed height** (Pazuki, Bull. SMF 140 (2012),
+Cor. 1.3(2), read by the locator audit; the level-2 coordinate risk of `PazukiCor13Upper` is
+unchanged). -/
+def PazukiCor13UpperPrinted : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A : PkgI3.AbVar K), A.dim = (2 : WithBot ℕ∞) →
+    ∀ x : ℝ, IsPrintedStableHeight A x →
+    ∀ (σ : K →+* ℂ) (Λ : Submodule ℤ (Fin 2 → ℂ)) (Φ : (Fin 2 → ℂ) → CPts A σ),
+      IsUniformization σ Λ Φ →
+    ∀ Ω : Matrix (Fin 2) (Fin 2) ℂ, IsSiegel Ω → IsPeriodMatrix Λ Ω →
+    ∀ (F : Type) [Field F] [NumberField F] (emb : F →+* ℂ) (z : Char2 → F) (c : ℂ), c ≠ 0 →
+      (∀ m, emb (z m) = c * thetaConst Ω m) →
+      max 1 (absLogHeightL2 z) - max 1 (x + Real.log Real.pi) / 2 ≤
+        pazukiC2 * Real.log (min (max 1 (absLogHeightL2 z)) (max 1 (x + Real.log Real.pi)) + 2)
+
+/-- `JavanpeykarBound` from the printed-height leaf (T35 fields and the descent glue). -/
+theorem javanpeykarBound_of_printed (hJ : JavanpeykarBoundPrinted)
+    (hUL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) (hD : SemiAbelianDescendsPerfect) : JavanpeykarBound :=
+  fun K _ _ X _ _ P₀ J aj hJac g hg hg1 t hB d hd hd0 x hx =>
+    hJ K X P₀ J aj hJac g hg hg1 t hB d hd hd0 x
+      (isPrintedStableHeight_of (AvSplit.Final.h38 hUL hMT) hD hx)
+
+/-- `PazukiCor13Upper` from the printed-height leaf (T35 fields and the descent glue). -/
+theorem pazukiCor13Upper_of_printed (hP : PazukiCor13UpperPrinted)
+    (hUL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) (hD : SemiAbelianDescendsPerfect) : PazukiCor13Upper :=
+  fun K _ _ A hA x hx σ Λ Φ hΦ Ω hΩ hPer F _ _ emb z c hc hz =>
+    hP K A hA x (isPrintedStableHeight_of (AvSplit.Final.h38 hUL hMT) hD hx)
+      σ Λ Φ hΦ Ω hΩ hPer F emb z c hc hz
+
+end OtherRows
+
 end ZInQ.HeightFix
