@@ -28,3 +28,30 @@ GeomConnOfRationalPoint); `UnipotentForward.IsSemistableRes` (the k(s) form, Uni
 
 - 02:5x copied ~/dzq-check2/.lake/build (at 2880fef1) and lean/.lake/build; LPrefix etc. out of date for e22df37c,
   rebuilding the three import cones with `lake build`.
+- 03:12 build of the three import cones done (19 min, 0 errors).
+
+## New leaves and proofs (all VERIFIED: `lake env lean`, no errors, no sorry)
+
+| field | new leaf | proof | extra inputs |
+| --- | --- | --- | --- |
+| sga7_IX_3_3_SH | `DictModels.SGA7Pre.SGA7_IX_3_3_SHpre` (U = pullback.fst⁻¹ N⁰) | `sga7_IX_3_3_SH_of_pre` | sga3_VIB_3_10, geomConnOfRationalPoint (via `idComp_baseChange`) |
+| raynaudSemistableSH | `DictModels.RaynaudOr.RaynaudSemistableSHOr` (k(s) form, general torus, ∨ geometric form) | `raynaudSemistableSH_of_or` | geomConnOfRationalPoint |
+| mumfordGroupLaw | `DictModels.MumfordConn.MumfordGroupLawConn` (+ ConnectedSpace S) | `mumfordGroupLaw_of_conn` (gluing over components proved) | none |
+| neronBaseChangeStrictHenselization | `DictModels.NeronBLR72.BLR_7_2_1` (= ReductGlue.NeronBaseChangeUnramifiedDVR) | `neronBaseChangeStrictHenselization_of_BLR72` | none |
+
+Converses (leaf from field): `pre_of_SH`, `or_of_field`, `conn_of_field` (VERIFIED). BLR_7_2_1 is more general than
+its field (by design: printed form).
+
+Proved glue (VERIFIED): `hasSemiAbelian_pullback_bar` (k(s) semi-abelian with general torus ⇒ split semi-abelian over
+k̄, any field, with 04KV), `isSemistable_of_resT`, `glue_ext`, `glue_exists`, `grpObj_of_pieces`, `pb_eta`.
+
+## Checks
+
+- 03:21 `lake build +Main +Discharges +4 contributions`: 13699 jobs, success, 2.5 min.
+- `#discharges` (scratch/dict-models/discharges.txt; VERIFIED): the four new theorems each DISCHARGE their field;
+  still assumes: SHpre + SGA3_VIB_3_10 + GeomConnOfRationalPoint; RaynaudSemistableSHOr + GeomConnOfRationalPoint;
+  MumfordGroupLawConn; BLR_7_2_1. Axioms [propext, Classical.choice, Quot.sound] for all four.
+- scratch/dict-models/Statements.lean: verbatim copies of the four field statements, each `rfl` to the original:
+  compiles, no errors (VERIFIED).
+- autofold dry run (scratch/dict-models/autofold-dryrun.txt): strict 40/8 -> 40/8, strictest 39/9 -> 39/9 (rows are LEAF
+  on this base). FoldCheck.lean (dry-run output minus line 1) compiles; `sixContactMin_of_open35` axioms standard (VERIFIED).

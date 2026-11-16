@@ -27,7 +27,7 @@ bundle leaves where needed). For `BLR_7_2_1` this does not hold: the leaf is mor
 leaf only because it is the printed theorem. So none of the new leaves can be false while the old field is true,
 except possibly `BLR_7_2_1`, and that only if BLR's print is narrower (§5).
 
-Contributions (VERIFIED: each compiles with `lake env lean`, no errors, no `sorry`):
+Contributions (VERIFIED: each compiles, no errors, no `sorry`, standard axioms):
 
 * `ZInQKernel/Contrib/OneProof/SGA7IX33SHPre.lean` (imports `SGA7PersistsNF`)
 * `ZInQKernel/Contrib/OneProof/RaynaudSemistableOr.lean` (imports `UnipotentForward`)
@@ -38,7 +38,7 @@ Autofold spec: `scratch/dict-models/autofold.json`, one spec with four discharge
 `scratch/dict-models/autofold-dryrun.txt`. The counts on this base are strict 40/8 → 40/8 and strictest 39/9 → 39/9,
 because the rows are still LEAF on e22df37c (the dictionary re-rating is not in this base). On a base where the
 dictionary pass has re-rated these rows, the fold would turn up to four GLUE rows back into LEAF.
-`#discharges` output and axioms: §6.
+`#discharges` output and axioms: §6 (all four fields discharged, standard axioms).
 
 ## 2. `sga7_IX_3_3_SH`: `N⁰ ×_S S'` as printed
 
@@ -172,14 +172,34 @@ spec says so. The new leaf is strictly more general than the old field (it does 
 henselian). That is fine only because it is the published statement; it should be checked against the print first
 (`STATEMENT-CHECKS.md`).
 
-## 6. Checks
+## 6. Checks (all VERIFIED)
 
-* Compile: all four files, `lake env lean` (VERIFIED, 03:13–03:21; no errors, no `sorry`).
+* Compile: each of the four files with `lake env lean`. No errors, no `sorry`.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` plus the four contributions: 13,699 jobs,
+  success.
 * Verbatim statements: `scratch/dict-models/Statements.lean` copies the four field statements from the tree and checks
-  each one `rfl` against the original (outcome in log.md).
-* `#discharges`: `scratch/dict-models/Discharges.lean`, output in `scratch/dict-models/discharges.txt` (see log.md).
-* Fold check: the dry-run output (`autofold-dryrun.txt`, line 1 stripped) compiled as `scratch/dict-models/FoldCheck.lean`
-  (see log.md).
+  each one `rfl` against the original. It compiles.
+* `#discharges` (`scratch/dict-models/Discharges.lean`, output `scratch/dict-models/discharges.txt`):
+
+```
+DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by DictModels.MumfordConn.mumfordGroupLaw_of_conn
+  still assumes: [DictModels.MumfordConn.MumfordGroupLawConn]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by DictModels.NeronBLR72.neronBaseChangeStrictHenselization_of_BLR72
+  still assumes: [DictModels.NeronBLR72.BLR_7_2_1]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.raynaudSemistableSH] by DictModels.RaynaudOr.raynaudSemistableSH_of_or
+  still assumes: [DictModels.RaynaudOr.RaynaudSemistableSHOr, AVGlue.GeomConnOfRationalPoint]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.sga7_IX_3_3_SH] by DictModels.SGA7Pre.sga7_IX_3_3_SH_of_pre
+  still assumes: [DictModels.SGA7Pre.SGA7_IX_3_3_SHpre, CToPrinted.SGA3_VIB_3_10, AVGlue.GeomConnOfRationalPoint]
+  axioms: [propext, Classical.choice, Quot.sound]
+```
+
+  `GeomConnOfRationalPoint` and `SGA3_VIB_3_10` are fields of the current bundles (textbook and research).
+* Fold check: the autofold dry run (`autofold-dryrun.txt`, line 1 stripped) compiles as
+  `scratch/dict-models/FoldCheck.lean`. `HDec.HSyn.sixContactMin_of_open35` has axioms
+  `[propext, Classical.choice, Quot.sound]`.
 
 ## 7. What remains
 
