@@ -112,4 +112,48 @@ lemma dT_natural {T T' : Over (Spec (CommRingCat.of K))} (g : T' ⟶ T) (a : T �
 
 end Setup
 
+section Psi
+
+variable {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
+  (rep : (picardFunctor A.X.hom).obj.RepresentableBy P) (hU : PushforwardUnitUniversal)
+
+/-- The morphism classifying the renormalized `φ_c(a)`. -/
+def PsiT {T : Over (Spec (CommRingCat.of K))} (a : T ⟶ A.X) (c : (Nrm A).toFunctor.obj (op T)) :
+    T ⟶ P :=
+  rep.homEquiv.symm ((Θ A hU).hom.app (op T) ⟨dT A a c.1, dT_mem A a c.1 c.2⟩)
+
+lemma PsiT_natural {T T' : Over (Spec (CommRingCat.of K))} (g : T' ⟶ T) (a : T ⟶ A.X)
+    (c : (Nrm A).toFunctor.obj (op T)) :
+    g ≫ PsiT rep hU a c = PsiT rep hU (g ≫ a) ((Nrm A).toFunctor.map g.op c) := by
+  rw [PsiT, PsiT, rep.comp_homEquiv_symm]
+  congr 1
+  rw [← NatTrans.naturality_apply]
+  congr 1
+  apply Subtype.ext
+  exact dT_natural A g a c.1
+
+/-- `η ≫ (classifying map of 1)`: the class `1` classifies the unit. -/
+lemma homEquiv_symm_one {T : Over (Spec (CommRingCat.of K))} :
+    letI := picardFunctorCommGrpObj A.X.hom rep
+    rep.homEquiv.symm ((toPicardFunctor A.X.hom).app (op T) (1 : (pullback A.X.hom T.hom).Pic)) =
+      CartesianMonoidalCategory.toUnit T ≫ η[P] := by
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  have h := (picardClassifyingHom A.X.hom rep T).map_one
+  rw [picardClassifyingHom_apply] at h
+  exact h
+
+lemma dT_one {T : Over (Spec (CommRingCat.of K))} (a : T ⟶ A.X) : dT A a 1 = 1 := by
+  simp [dT, Scheme.Pic.map_one]
+
+lemma translT_zero {T : Over (Spec (CommRingCat.of K))} :
+    translT A (CartesianMonoidalCategory.toUnit T ≫ η[A.X]) = 𝟙 _ := by
+  apply CartesianMonoidalCategory.hom_ext
+  · simp only [translT, CartesianMonoidalCategory.lift_fst, Category.id_comp]
+    rw [← Category.assoc, CartesianMonoidalCategory.toUnit_unique (CartesianMonoidalCategory.snd A.X T ≫
+        CartesianMonoidalCategory.toUnit T) (CartesianMonoidalCategory.toUnit _),
+      ← CategoryTheory.Hom.one_def, ← CategoryTheory.Hom.mul_def, mul_one]
+  · simp [translT]
+
+end Psi
+
 end PicDict
