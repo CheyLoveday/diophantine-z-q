@@ -22,7 +22,10 @@ Task pic-dict (report `docs/research/pic-dict.md`).
   `mul_AKbar`, `pts`, `formula_bridge`), and gives the main results `weilPairingMumford_of_ac` and
   `phiAmpleIsogeny_of_ac`.
 * The adjoint and compatibility properties of `ē_n` are proved from bilinearity by transport
-  (`mumfordWeilDual_of_pairing`, `mumfordWeilCompat_of_pairing`). -/
+  (`mumfordWeilDual_of_pairing`, `mumfordWeilCompat_of_pairing`).
+* The final part proves that the `K̄`-points of `Pic⁰` are translation-invariant (`picZeroPtsTranslInv_of_leaves`):
+  vendored Kleiman 9.2.5 and rigidity on `A × Pic⁰`. This gives `phiAmpleIsogeny_of_leaves` from printed leaves
+  only. -/
 
 noncomputable section
 
