@@ -3,6 +3,9 @@ import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.LocalGlobal.Completio
 
 noncomputable section
 
+set_option maxHeartbeats 400000
+set_option synthInstance.maxHeartbeats 40000
+
 set_option linter.unusedSectionVars false
 
 namespace AfTateLam
@@ -87,17 +90,17 @@ def IsHeckeT (N : ℕ) (jX tX : X.left.functionField) (aj : X ⟶ J.X) (p : ℕ)
     (∀ i : Fin p, AtTau N jX tX (y i) (shiftDiv p i τ)) →
     (∀ i : Fin p, AtTau N jX tX (y' i) (shiftDiv p i τ')) →
     (p ∣ N → endC t (ajC aj x / ajC aj x') = ∏ i, ajC aj (y i) / ajC aj (y' i)) ∧
-    (¬ p ∣ N → ∀ γ : SL(2, ℤ), (N : ℤ) ∣ γ 1 0 → ((γ 1 1 : ℤ) : ZMod N) = (p : ZMod N) →
-      ∀ z z' : CPt X, AtTau N jX tX z (γ • mulNat p τ) → AtTau N jX tX z' (γ • mulNat p τ') →
+    (¬ p ∣ N → ∀ g : SL(2, ℤ), (N : ℤ) ∣ g 1 0 → ((g 1 1 : ℤ) : ZMod N) = (p : ZMod N) →
+      ∀ z z' : CPt X, AtTau N jX tX z (g • mulNat p τ) → AtTau N jX tX z' (g • mulNat p τ') →
         endC t (ajC aj x / ajC aj x') = (∏ i, ajC aj (y i) / ajC aj (y' i)) * (ajC aj z / ajC aj z'))
 
 /-- **`δ` is the diamond operator `⟨d⟩` on `J₁(N)`** (Diamond–Shurman §6.3): `⟨d⟩[x_τ] = [x_{γτ}]` for
 `γ = (a b; c d') ∈ SL₂(ℤ)` with `N ∣ c`, `d' ≡ d (mod N)`. -/
 def IsDiamond (N : ℕ) (jX tX : X.left.functionField) (aj : X ⟶ J.X) (d : (ZMod N)ˣ)
     (δ : AbVar.End J) : Prop :=
-  ∀ γ : SL(2, ℤ), (N : ℤ) ∣ γ 1 0 → ((γ 1 1 : ℤ) : ZMod N) = (d : ZMod N) →
+  ∀ g : SL(2, ℤ), (N : ℤ) ∣ g 1 0 → ((g 1 1 : ℤ) : ZMod N) = (d : ZMod N) →
     ∀ (τ τ' : UpperHalfPlane) (x x' z z' : CPt X),
-      AtTau N jX tX x τ → AtTau N jX tX x' τ' → AtTau N jX tX z (γ • τ) → AtTau N jX tX z' (γ • τ') →
+      AtTau N jX tX x τ → AtTau N jX tX x' τ' → AtTau N jX tX z (g • τ) → AtTau N jX tX z' (g • τ') →
         endC δ (ajC aj x / ajC aj x') = ajC aj z / ajC aj z'
 
 /-! ## 3. The Hecke algebra, `I_f` and `A_f = J₁(N)/I_f J₁(N)` (Diamond–Shurman §6.6) -/
@@ -155,8 +158,8 @@ variable {K : Type} [Field K] [NumberField K]
 /-- `ℚ_ℓ → K_λ` for a place `λ ∣ ℓ` (Mathlib's `ℚ_ℓ ≅ ℚ_{v_ℓ}`, then Tau Ceti's completion map). -/
 def algQl (ℓ : ℕ) [Fact ℓ.Prime] (lam : HeightOneSpectrum (𝓞 K))
     [lam.asIdeal.LiesOver (vQ ℓ).asIdeal] : ℚ_[ℓ] →+* lam.adicCompletion K :=
-  (HeightOneSpectrum.completionAlgHom (vQ ℓ) lam).toRingHom.comp
-    ((Padic.adicCompletionEquiv (𝓞 ℚ) ⟨ℓ, Fact.out⟩ : ℚ_[ℓ] ≃A[ℚ] _) : ℚ_[ℓ] →+* _)
+  ((vQ ℓ).adicCompletionExtension ℚ K lam).comp
+    (RingHomClass.toRingHom (Padic.adicCompletionEquiv (𝓞 ℚ) ⟨ℓ, Fact.out⟩))
 
 /-- `ℚ_ℓ ⊗_ℚ K → K_λ`, `x ⊗ a ↦ x · a`. -/
 def rhoLam (ℓ : ℕ) [Fact ℓ.Prime] (lam : HeightOneSpectrum (𝓞 K))
