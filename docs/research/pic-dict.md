@@ -11,10 +11,14 @@ three are rated `consequence`, GLUE/GLUE.
 |---|---|---|---|---|
 | `weilPairingMumford` | **replaced by leaves + Lean glue** | Mumford over `k = k̄`: §6 Cor. 4, §8 (iv), §8 Thm 1, §20 (definition and bilinearity), §20 (nondegenerate), §23 | all proved: L5, the dictionary, base change to `K̄` (including ampleness), and the Galois, compatibility and adjoint clauses | **−1 / −1** |
 | `phiAmpleIsogeny` | **replaced by leaves + Lean glue** | Mumford §6 App. 1 over `k̄`; EGA III 7.8.6 (`𝒪 = f_*𝒪` universally); EGA IV 4.6.5 (products of geometrically integral schemes); shares §8 Thm 1 | all proved: finiteness, surjectivity, the dictionary, and `K̄`-points of `Pic⁰` being translation-invariant | **−1 / −1** |
-| `picZeroAbVar` | not reduced; **combined step identified** (§5) | none | none | unchanged |
+| `picZeroAbVar` | **reduced to four statements, glue proved**; one is pending reading | Kleiman 9.4.8 (Pic locally of finite type), SGA 3 VI_A 2.4 (identity component), Kleiman 9.5.4 (`Pic⁰` proper); `picZeroSmooth` (`Pic⁰_{A/K}` smooth: pending reading, §5) | all proved: the open subgroup scheme as an `AbVar`, smooth ⇒ geometrically reduced | 0 / 0 now; −1 / −1 if a reading clears `picZeroSmooth` |
 
 Folding both rows (`scratch/pic-dict/autofold-both.json`): `strict count: 37/11 on 48 -> 46/9 on 55; strictest
 37/11 -> 46/9` on the lf31 rating, that is −2 / −2, with 9 new printed leaves.
+
+Folding all three rows (`scratch/pic-dict/autofold-all.json`): `37/11 on 48 -> 49/9 on 58; strictest 37/11 -> 49/9`.
+The count is the same as for two rows, because the pending-reading leaf `picZeroSmooth` is counted GLUE in place of
+the row. If a reading clears `picZeroSmooth`, the three rows together give −3 / −3.
 
 Everything below is VERIFIED: compiled, and `#print axioms` gives `[propext, Classical.choice, Quot.sound]`.
 
@@ -46,10 +50,15 @@ Everything below is VERIFIED: compiled, and `#print axioms` gives `[propext, Cla
     finite.
   * `ampleBaseChangeAlgClosure` (EGA II 4.6.13 at `K̄`): ampleness pulls back along an affine morphism
     (`isAmple_pullback`).
+  * `picZeroAbVar_of_leaves (h1 : PicLocFinType) (h2 : IdentityComponentLFT) (h3a : PicZeroSmooth)
+    (h3b : PicZeroProper) : T09Pic.PicZeroAbVar`. The open subscheme on the identity component becomes a group
+    object (`AVGlue.grpObjOfMono`), smooth gives geometrically reduced (`isReduced_of_smooth_field`), and with
+    geometric irreducibility this gives geometrically integral.
 * The consumer `T09Pic.t09SymmIsogenyExists_of_four` and its users are unchanged.
 
 `#discharges` (`scratch/pic-dict/Discharges.lean`, output `scratch/pic-dict/discharges.txt`; the intermediate forms
-are also listed, 14 lines in all):
+are also listed, 15 lines in all; the `picZeroAbVar` line is `DISCHARGES
+[OpenAddedLeaves17.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves`, still assuming its four statements):
 
 ```
 DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_mumford
@@ -67,7 +76,7 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilAltAC,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 3047 theorems checked, 14 discharge one
+#discharges: 59 open hypotheses, 3057 theorems checked, 15 discharge one
 ```
 
 ### Autofold
@@ -167,6 +176,15 @@ locators are UNVERIFIED: there is no copy of Mumford, Kleiman, EGA or Milne on t
 | `pushforwardUnitUniversal` | EGA III 7.8.6; Kleiman, *The Picard scheme*, Ex. 9.3.11: `𝒪_S = f_*𝒪_X` universally for `f` proper flat with geometrically integral fibres | yes (instance `f = A → Spec K`, base change `T`), with a note | over a field it is also flat base change (Stacks 02KH) with `Γ(A, 𝒪) = K`; the cited prints state it universally |
 | `geomIntegralProd` | EGA IV 4.6.5 (products of geometrically integral schemes over a field) | yes (instance `A × B`) | Mathlib v4.35 lacks it (noted in `HDecomp/Faltings/H5Neron.lean`) |
 
+Leaves of `picZeroAbVar_of_leaves` (spec `autofold-all.json`):
+
+| leaf (field) | display | printed form? | reason |
+|---|---|---|---|
+| `picLocFinType` | Kleiman 9.4.8: `Pic_{X/S}` exists, separated, locally of finite presentation | yes, with a note | stated for every representing object, which is isomorphic to Kleiman's by Yoneda |
+| `identityComponentLFT` | SGA 3 VI_A 2.4 (Stacks 0B7R; Kleiman 9.5.1): `G⁰` open, a subgroup, geometrically irreducible | yes | general statement for group schemes locally of finite type over a field |
+| `picZeroProper` | Kleiman 9.5.4: `Pic⁰_{X/K}` proper for `X` proper and geometrically normal | yes (instance) | an abelian variety is geometrically normal |
+| `picZeroSmooth` | `Pic⁰_{A/K}` smooth | **pending reading** | Mumford §13 proves it over `k̄` (`dim Â = h¹(𝒪) = g`); over `K` it needs descent and the identification of Mumford's `Â` with the identity component, unless BLR 8.4 or Milne 1986 §10 prints it in one statement |
+
 Notes on the statements:
 
 * Each formula-based leaf quantifies over trivializations `ψ : 𝒪 ≅ n^*M`. Such a `ψ` exists for every
@@ -198,45 +216,42 @@ fppf `Pic_{A/K}` are translation-invariant). §2.6 proves it from two printed st
 Weil row could use the same lemma instead of reading the surjectivity of `λ_L` from `phiAmpleIsogeny`; with the
 both-rows fold this makes no difference.
 
-## 5. `picZeroAbVar`: the combined step
+## 5. `picZeroAbVar`: four statements, one pending reading
 
-The row asks for `∃ B j, IsPicZero rep B j` for every representation `rep`. The steps:
+`picZeroAbVar_of_leaves` proves the row from:
 
-* **(Z1)** `P` is locally of finite type over `K` (Kleiman 9.4.8; the existing L1 only states representability).
-* **(Z2)** The identity component `G⁰` is open and closed, a subgroup, geometrically irreducible and of finite type
-  (SGA 3 VI_A 2.4 / Kleiman 9.5.1). gt-sga3's `SGA3IdComp.lean` proves closure under `μ` and openness from a
-  neighbourhood leaf.
-* **(Z3)** `G⁰` is smooth and proper over `K`.
-* **(Z4)** The restricted group law makes `G⁰` an `AbVar`, with `j` an open immersion and a homomorphism. This is
-  Lean glue, not done.
+* (Z1) `picLocFinType`;
+* (Z2) `identityComponentLFT`;
+* (Z3a) `picZeroSmooth`;
+* (Z3b) `picZeroProper`.
 
-(Z3) is the combined step.
+The glue is proved. The open subscheme on the identity component, with the restricted multiplication, unit and
+inverse (lifted through the open immersion), is a group object. Its structure map is proper by (Z3b) and smooth by
+(Z3a). Smooth gives geometrically reduced (proved), and (Z2) gives geometrically irreducible, so it is geometrically
+integral. The inclusion is an open immersion onto the identity component and a homomorphism.
 
-* Properness could come from a surjection `A → G⁰` (`λ_L`, using the machinery of §2), but every surjectivity
-  argument above uses that `B` is already an abelian variety. Here that would be circular.
-* Smoothness is deep. In characteristic `p`, `Pic⁰` is reduced only because `dim Â = h¹(𝒪_A) = g` (Mumford §13). The
-  passage from Mumford's `Â = X/K(L)` to the identity component of the fppf `Pic_{A_K̄/K̄}`, as schemes, then needs
-  `(G⁰)_K̄ = (G_K̄)⁰` (Kleiman 9.5.1) and descent of smooth and proper (EGA IV 17.7.1, 2.7.1). These are several
-  sources.
+The one statement not known to be a single print is (Z3a), smoothness over `K`. Mumford §13 gives it over `k̄`
+(`Â = Pic⁰` is reduced since `dim T₀ = h¹(𝒪_A) = g = dim Â`). Over `K` this is combined with:
 
-As the lf31 row says, the row would clear with one print over an arbitrary field in identity-component form
-("`Pic⁰_{A/K}` is an abelian variety": BLR 8.4, FGA Explained 9.5, Milne 1986 §10; pending reading). Nothing was
-folded, so the count is unchanged. Replacing the row by printed (Z1), (Z2), a smoothness print and the Lean glue
-(Z4) is the remaining work. It is mostly Lean: the open subscheme as a group object, properness, and geometric
-integrality.
+* the identification of Mumford's `Â` with the identity component of the fppf Picard scheme;
+* descent along `K̄/K` (EGA IV 17.7.1) and Kleiman 9.5.1.
+
+A single print over an arbitrary field ("`Pic⁰_{A/K}` is an abelian variety": BLR 8.4, FGA Explained 9.5, Milne
+1986 §10) would clear it. Then all three rows are −1. Properness is not derived from `λ_L`: every surjectivity
+argument in §2 presupposes `B`, so that would be circular. Kleiman 9.5.4 supplies it directly.
 
 ## 6. What remains
 
 * Reading:
   * the locators of §3, in particular that §23 states `e^L_n(x, x) = 1` (rather than only skew-symmetry), that §20
     includes well-definedness, and the exact form of EGA III 7.8.6 / Kleiman Ex. 9.3.11;
-  * BLR 8.4 / Milne 1986 §10 for a single print of `picZeroAbVar`.
+  * BLR 8.4 / Milne 1986 §10 (or Kleiman §9.5) for a single print of `picZeroSmooth`, and the locators of
+    Kleiman 9.4.8 and 9.5.4.
 * Optional Lean:
   * parts of `MumfordWeilPairingAC` (independence of `ψ`, constancy and additivity in `x` are formal);
   * `GeomIntegralProd` (a Mathlib gap);
-  * the (Z4) glue for `picZeroAbVar`.
 
 Files: `scratch/pic-dict/` holds the development copies (`Core.lean`, `Transport.lean`, `Finite.lean`, `Dual.lean`,
-`Compat.lean`, `AlgClosed.lean`, `TranslInv.lean`), plus `Discharges.lean`, `discharges.txt`, `autofold.json`,
-`autofold-both.json`, `FoldDryRun*.lean` and `log.md`. The deliverable is
+`Compat.lean`, `AlgClosed.lean`, `TranslInv.lean`, `Ample.lean`, `PicZero.lean`), plus `Discharges.lean`, `discharges.txt`, `autofold.json`,
+`autofold-both.json`, `autofold-all.json`, `FoldDryRun*.lean` and `log.md`. The deliverable is
 `ZInQKernel/Contrib/OneProof/PicDictionary.lean`.
