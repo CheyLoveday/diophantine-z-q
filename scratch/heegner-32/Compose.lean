@@ -804,4 +804,180 @@ theorem grossZagierHeegnerCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingCla
     ZInQ.GZStatements.GrossZagierHeegnerCd :=
   grossZagierHeegnerCd_of_twist (twistTransportCd_of_genus hCM hJ hG) hGZ hGC
 
+/-! ## §7. `RingClassJd`, proved (gz-heegner's `heegnerClassJ'` at conductor `d`) -/
+
+section ClassJdProof
+
+open TauCeti.GlobalNumberFields.NumberFieldOrder IsDedekindDomain ZInQ.RouteK.Redei
+open ZInQ.GZHeegner (exists_coords_theta coe_thetaO kappa_theta_sub kappa_intCast kappa_lin theta_norm)
+
+variable {m : ℕ} [NeZero m]
+
+set_option maxRecDepth 20000 in
+/-- **Chebotarev for the ring class field of conductor `f`** (gz-heegner's `exists_prime_picClass_eq1`, any `f`). -/
+theorem exists_prime_picClass_eqf {f : ℕ} [NeZero f] (c : Pic (conductorOrder (QNeg m) f))
+    (T : Set (HeightOneSpectrum (𝓞 (QNeg m)))) (hT : T.Finite) :
+    ∃ 𝔭 : HeightOneSpectrum (𝓞 (QNeg m)), 𝔭 ∉ T ∧
+      ¬ (conductorOrder (QNeg m) f).conductor ≤ 𝔭.asIdeal ∧
+      ∀ hJ : 𝔭.asIdeal ∈ integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus,
+        (conductorOrder (QNeg m) f).picClass ⟨_, hJ⟩ = c := by
+  have hD := NumberField.Chebotarev.hasNaturalDensity_frobeniusPrimeSet (QNeg m)
+    (ringClassField (conductorOrder (QNeg m) f))
+    (ConjClasses.mk (ringClassArtinEquiv (conductorOrder (QNeg m) f) c))
+  have hδ : (Nat.card (ConjClasses.mk (ringClassArtinEquiv (conductorOrder (QNeg m) f) c)).carrier : ℝ) /
+      Nat.card (ringClassField (conductorOrder (QNeg m) f) ≃ₐ[QNeg m]
+        ringClassField (conductorOrder (QNeg m) f)) ≠ 0 := by
+    apply div_ne_zero
+    · have : Nonempty (ConjClasses.mk (ringClassArtinEquiv (conductorOrder (QNeg m) f) c)).carrier :=
+        ⟨⟨_, ConjClasses.mem_carrier_mk⟩⟩
+      exact_mod_cast (Nat.card_pos (α := (ConjClasses.mk
+        (ringClassArtinEquiv (conductorOrder (QNeg m) f) c)).carrier)).ne'
+    · exact_mod_cast (Nat.card_pos (α := ringClassField (conductorOrder (QNeg m) f) ≃ₐ[QNeg m]
+        ringClassField (conductorOrder (QNeg m) f))).ne'
+  have hinf := ((hD.infinite hδ).sdiff (hT.union (finite_conductor_primes (d := m) (f := f))))
+  obtain ⟨𝔭, h𝔭, h𝔭T⟩ := hinf.nonempty
+  rw [Set.mem_union, not_or] at h𝔭T
+  refine ⟨𝔭, h𝔭T.1, h𝔭T.2, fun hJ => ?_⟩
+  obtain ⟨⟨Q, hQp, hQo⟩, hF⟩ :=
+    NumberField.Chebotarev.exists_isArithFrobAt_of_mem_frobeniusPrimeSet_mk h𝔭
+  have hur := NumberField.Chebotarev.isUnramifiedAt_of_mem_frobeniusPrimeSet h𝔭 Q
+  have : ((⟨𝔭.asIdeal, hJ⟩ : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus) :
+    Ideal (𝓞 (QNeg m))).IsMaximal := 𝔭.isMaximal
+  have : Q.LiesOver ((⟨𝔭.asIdeal, hJ⟩ : integralIdealsPrimeTo (conductorOrder (QNeg m) f).conductorModulus) :
+    Ideal (𝓞 (QNeg m))) := hQo
+  have hF' := isArithFrobAt_ringClassArtinEquiv_picClass (conductorOrder (QNeg m) f) ⟨_, hJ⟩ Q
+  exact (ringClassArtinEquiv (conductorOrder (QNeg m) f)).injective (isArithFrobAt_eq_of_isUnramifiedAt hF' hF)
+
+theorem im_thetaO (h3 : m % 4 = 3) : (((thetaO m h3 : 𝓞 (QNeg m)) : QNeg m)).im = 1 / 2 := by
+  rw [coe_thetaO]
+
+/-- **The lattice of `I ∩ 𝒪_f` for an ideal with basis `⟨a, θ − r⟩`.** -/
+theorem idealLat_eq_jLatd (hsq : Squarefree m) (h3 : m % 4 = 3) {f : ℕ} [NeZero f]
+    (I : Ideal (𝓞 (QNeg m))) (a r : ℤ)
+    (ha : ((a : ℤ) : 𝓞 (QNeg m)) ∈ I) (hr : thetaO m h3 - (r : 𝓞 (QNeg m)) ∈ I)
+    (hI : ∀ y ∈ I, ∃ u v : ℤ, y = (u : 𝓞 (QNeg m)) * a + (v : 𝓞 (QNeg m)) * (thetaO m h3 - r)) :
+    idealLat m f I = jLatd (-(m : ℤ)) a (2 * r - 1) f := by
+  unfold idealLat jLatd
+  apply le_antisymm
+  · rw [Submodule.span_le]
+    rintro _ ⟨x, ⟨⟨n, z, hxz⟩, y, hyI, rfl⟩, rfl⟩
+    obtain ⟨u, v, rfl⟩ := hI y hyI
+    obtain ⟨z₀, z₁, rfl⟩ := exists_coords_theta hsq h3 z
+    -- the `θ`-coordinate `v` is divisible by `f`
+    have him := congrArg QuadraticAlgebra.im hxz
+    simp only [map_add, map_mul, map_intCast, map_sub, map_natCast, RingOfIntegers.coe_eq_algebraMap] at him
+    rw [← RingOfIntegers.coe_eq_algebraMap, coe_thetaO] at him
+    simp [QuadraticAlgebra.im_intCast, QuadraticAlgebra.im_natCast] at him
+    have hv : v = f * z₁ := by
+      have : (v : ℚ) = f * z₁ := by linarith
+      exact_mod_cast this
+    rw [SetLike.mem_coe, Submodule.mem_span_pair]
+    refine ⟨u, z₁, ?_⟩
+    have : ((((u : 𝓞 (QNeg m)) * a + (v : 𝓞 (QNeg m)) * (thetaO m h3 - r) : 𝓞 (QNeg m))) : QNeg m) =
+        (u : QNeg m) * (((a : 𝓞 (QNeg m)) : QNeg m)) +
+          (v : QNeg m) * (((thetaO m h3 - (r : 𝓞 (QNeg m)) : 𝓞 (QNeg m)) : QNeg m)) := by
+      simp only [RingOfIntegers.coe_eq_algebraMap, map_add, map_mul, map_intCast]
+    rw [this, kappa_lin, kappa_intCast, kappa_theta_sub, hv]
+    simp [zsmul_eq_mul]
+    ring
+  · rw [Submodule.span_le]
+    rintro _ (rfl | h)
+    · refine Submodule.subset_span ⟨_, ⟨⟨a, 0, by simp⟩, _, ha, rfl⟩, kappa_intCast a⟩
+    · rw [Set.mem_singleton_iff] at h; subst h
+      refine Submodule.subset_span ⟨_, ⟨⟨0, thetaO m h3 - r, by simp⟩, (f : 𝓞 (QNeg m)) * (thetaO m h3 - r),
+        Ideal.mul_mem_left _ _ hr, rfl⟩, ?_⟩
+      · have : (((f : 𝓞 (QNeg m)) * (thetaO m h3 - r) : 𝓞 (QNeg m)) : QNeg m) =
+            (f : QNeg m) * (((thetaO m h3 - (r : 𝓞 (QNeg m)) : 𝓞 (QNeg m)) : QNeg m)) := by
+          simp only [RingOfIntegers.coe_eq_algebraMap, map_mul, map_natCast]
+        rw [this, show ((f : QNeg m)) = (((f : ℤ) : ℚ) : QNeg m) by push_cast; rfl]
+        have h2 := kappa_lin (m := m) (f : ℤ) 0 (((thetaO m h3 - (r : 𝓞 (QNeg m)) : 𝓞 (QNeg m)) : QNeg m)) 0
+        simp only [Int.cast_natCast, Int.cast_zero, zero_mul, add_zero] at h2
+        rw [show (((f : ℤ) : ℚ) : QNeg m) = (f : QNeg m) by push_cast; rfl, h2, kappa_theta_sub]
+
+open ZInQ.Contrib.TYZGenus.RingClass in
+/-- **`RingClassJd`, proved.** -/
+theorem ringClassJd : RingClassJd := by
+  intro m _ hsq h3 f _ M hM cl
+  have hMm : M * m ≠ 0 := mul_ne_zero hM (by exact_mod_cast NeZero.ne m)
+  have hT : {𝔭 : HeightOneSpectrum (𝓞 (QNeg m)) |
+      Ideal.span {((M * m : ℤ) : 𝓞 (QNeg m))} ≤ 𝔭.asIdeal}.Finite := by
+    have hne : Ideal.span {((M * m : ℤ) : 𝓞 (QNeg m))} ≠ 0 := by
+      rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]; exact_mod_cast hMm
+    exact (Ideal.finite_factors hne).subset fun 𝔭 h𝔭 => Ideal.dvd_iff_le.2 h𝔭
+  obtain ⟨𝔭, h𝔭T, hcond, h𝔭c⟩ := exists_prime_picClass_eqf cl _ hT
+  have hJ := mem_primeTo_of_not_le (d := m) (f := f) 𝔭 hcond
+  have hM𝔭 : ((M * m : ℤ) : 𝓞 (QNeg m)) ∉ 𝔭.asIdeal := fun h =>
+    h𝔭T ((Ideal.span_singleton_le_iff_mem _).2 h)
+  obtain ⟨p, hp, hlies⟩ := exists_prime_liesOver 𝔭.asIdeal 𝔭.ne_bot
+  obtain ⟨σ, hσ⟩ := exists_conj_ne_one (n := m)
+  have split : Ideal.absNorm 𝔭.asIdeal = p → ∃ (J : integralIdealsPrimeTo
+      (conductorOrder (QNeg m) f).conductorModulus) (a b : ℤ),
+      (conductorOrder (QNeg m) f).picClass J = cl ∧ 0 < a ∧ 4 * a ∣ b ^ 2 - (-(m : ℤ)) ∧
+      IsCoprime a M ∧ IsCoprime a b ∧ Ideal.absNorm (J : Ideal (𝓞 (QNeg m))) = a.natAbs ∧
+      idealLat m f J = jLatd (-(m : ℤ)) a b f := by
+    intro hN
+    obtain ⟨r, hr⟩ := exists_int_sub_mem_of_absNorm 𝔭.asIdeal hp hN (thetaO m h3)
+    have hpMm : ¬ (p : ℤ) ∣ M * m :=
+      fun h => hM𝔭 ((intCast_mem_iff_of_liesOver (p := p) 𝔭.asIdeal (M * m)).2 h)
+    have hpZ : Prime (p : ℤ) := Nat.prime_iff_prime_int.1 hp
+    have hdiv : (4 * p : ℤ) ∣ (2 * r - 1) ^ 2 - (-(m : ℤ)) := by
+      have hmem : (((r ^ 2 - r + ((m : ℤ) + 1) / 4) : ℤ) : 𝓞 (QNeg m)) ∈ 𝔭.asIdeal := by
+        rw [← theta_norm h3 r]; exact Ideal.mul_mem_right _ _ hr
+      obtain ⟨t, ht⟩ := (intCast_mem_iff_of_liesOver (p := p) 𝔭.asIdeal _).1 hmem
+      obtain ⟨k, hk⟩ : ∃ k : ℕ, m = 4 * k + 3 := ⟨m / 4, by omega⟩
+      have hk' : ((m : ℤ) + 1) / 4 = k + 1 := by omega
+      rw [hk'] at ht
+      refine ⟨t, ?_⟩
+      have hm : (m : ℤ) = 4 * k + 3 := by exact_mod_cast hk
+      rw [hm]; linear_combination 4 * ht
+    refine ⟨⟨𝔭.asIdeal, hJ⟩, p, 2 * r - 1, h𝔭c hJ, by exact_mod_cast hp.pos, hdiv, ?_, ?_, ?_, ?_⟩
+    · exact (Prime.irreducible hpZ).coprime_iff_not_dvd.2 (fun h => hpMm (dvd_mul_of_dvd_left h _))
+    · refine (Prime.irreducible hpZ).coprime_iff_not_dvd.2 (fun hb => hpMm (dvd_mul_of_dvd_right ?_ _))
+      have h4 : (p : ℤ) ∣ (2 * r - 1) ^ 2 - (-(m : ℤ)) := dvd_trans ⟨4, by ring⟩ hdiv
+      have : (m : ℤ) = ((2 * r - 1) ^ 2 - (-(m : ℤ))) - (2 * r - 1) ^ 2 := by ring
+      rw [this]
+      exact dvd_sub h4 (dvd_pow hb two_ne_zero)
+    · simp [hN]
+    · apply idealLat_eq_jLatd hsq h3 𝔭.asIdeal p r
+        (by exact_mod_cast natCast_mem_of_liesOver (p := p) 𝔭.asIdeal) hr
+      intro y hy
+      obtain ⟨x₀, x₁, rfl⟩ := exists_coords_theta hsq h3 y
+      have h1 : (((x₀ + x₁ * r : ℤ)) : 𝓞 (QNeg m)) ∈ 𝔭.asIdeal := by
+        have : (((x₀ + x₁ * r : ℤ)) : 𝓞 (QNeg m)) =
+            ((x₀ : 𝓞 (QNeg m)) + x₁ * thetaO m h3) - x₁ * (thetaO m h3 - r) := by push_cast; ring
+        rw [this]; exact Ideal.sub_mem _ hy (Ideal.mul_mem_left _ _ hr)
+      obtain ⟨t, ht⟩ := (intCast_mem_iff_of_liesOver (p := p) 𝔭.asIdeal _).1 h1
+      refine ⟨t, x₁, ?_⟩
+      have ht' : (x₀ : 𝓞 (QNeg m)) = p * t - x₁ * r := by
+        have : ((x₀ : ℤ) : 𝓞 (QNeg m)) = ((p * t - x₁ * r : ℤ) : 𝓞 (QNeg m)) := by
+          congr 1; linarith
+        rw [this]; push_cast; ring
+      rw [ht']; push_cast; ring
+  rcases prime_trichotomy m σ hσ hp 𝔭.asIdeal with ⟨-, -, hN⟩ | ⟨-, hP, -⟩ | ⟨-, -, hN⟩
+  · exact split hN
+  · have h1 : (conductorOrder (QNeg m) f).picClass ⟨𝔭.asIdeal, hJ⟩ = 1 :=
+      ((conductorOrder (QNeg m) f).picClass_eq_one_iff _).2
+        ⟨p, Subalgebra.natCast_mem _ p, hP⟩
+    rw [h𝔭c hJ] at h1
+    subst h1
+    refine ⟨1, 1, 1, map_one _, one_pos, ⟨((m : ℤ) + 1) / 4, by omega⟩, isCoprime_one_left,
+      isCoprime_one_left, by simp [Ideal.one_eq_top], ?_⟩
+    have h := idealLat_eq_jLatd (f := f) hsq h3 (⊤ : Ideal (𝓞 (QNeg m))) 1 1 Submodule.mem_top
+      Submodule.mem_top (fun y _ => by
+        obtain ⟨x₀, x₁, rfl⟩ := exists_coords_theta hsq h3 y
+        exact ⟨x₀ + x₁, x₁, by push_cast; ring⟩)
+    norm_num at h
+    convert h using 2
+    simp [Ideal.one_eq_top]
+  · exact split hN
+
+end ClassJdProof
+
+/-- **`GZStatements.GrossZagierHeegnerCd` from `hCM`, genus theory and the two printed Gross–Zagier
+statements** (Chebotarev at conductor `d` proved). -/
+theorem grossZagierHeegnerCd_of_genus' (hCM : T5Glue.ShimuraMainCM) (hG : GenusSqrtD)
+    (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd) (hGC : ZInQ.GZHL3.GrossConjugationCd) :
+    ZInQ.GZStatements.GrossZagierHeegnerCd :=
+  grossZagierHeegnerCd_of_genus hCM ringClassJd hG hGZ hGC
+
 end ZInQ.Heegner32
