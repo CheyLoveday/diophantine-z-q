@@ -20,7 +20,7 @@ All finite checks are `decide`, `ring` or `omega`.
 
 **Compiles** (standard axioms only, no `sorry`):
 * `ZInQKernel/Contrib/OneProof/R5fpCountLe.lean` (imports `GR56Lattice`) and the helpers
-  `ZInQKernel/Contrib/OneProof/EichlerBound/*.lean` (about 2000 lines);
+  `ZInQKernel/Contrib/OneProof/EichlerBound/*.lean` (2457 lines in total, all new files);
 * the bypass `scratch/eichler-bound/BypassFold.lean`, whose `frozenTarget_E` has the research bundle without
   `gonzalezRotgerProp56X6` and with no added field;
 * `#discharges` output recorded.
