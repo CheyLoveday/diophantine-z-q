@@ -1,3 +1,4 @@
+import ZInQKernel.Contrib.AVB1.Poincare
 import ZInQKernel.OneProof.H.TailZ24
 import ZInQKernel.Contrib.AbVarBC.Main
 
@@ -76,10 +77,8 @@ theorem isFinite_tensorHom {R S T U : Over (Spec (CommRingCat.of k))} (a : R ⟶
 
 /-- **The complement, given `ψ : J → D` with `ψ ∘ i` an isogeny.** -/
 theorem complement_of_psi (hQ : AvSplit.MilneIsogenyQuasiInverse) (hC : AVGlue.CartierSmooth)
-    [CharZero k] (J B D : AbVar k) (i : Hom B J) (hi : IsClosedImmersion i.hom.left)
-    (ψ : Hom J D) (hφ : IsIsogenyMor (i.hom ≫ ψ.hom)) :
+    [CharZero k] (J B D : AbVar k) (i : Hom B J) (ψ : Hom J D) (hφ : IsIsogenyMor (i.hom ≫ ψ.hom)) :
     ∃ (Z : AbVar k) (g : Hom Z J), IsIsogenyMor (fst B.X Z.X ≫ i.hom * snd B.X Z.X ≫ g.hom) := by
-  haveI := hi
   obtain ⟨d, hd, φ', hφφ', hφ'φ⟩ := hQ k B D (Hom.mk' (i.hom ≫ ψ.hom)) hφ
   rw [Hom.hom_mk'] at hφφ' hφ'φ
   simp only [Category.assoc] at hφφ' hφ'φ
@@ -154,5 +153,120 @@ theorem complement_of_psi (hQ : AvSplit.MilneIsogenyQuasiInverse) (hC : AVGlue.C
       rw [hM1]; exact (ZInQ.Contrib.AbVarBC.mulIsogeny k J _ hd0).2
     rw [Over.comp_left] at hs'
     exact Surjective.of_comp m'.left m.left
+
+/-! ## §3. The polarization step: `ψ : J → Pic⁰_{B/k}` with `ψ ∘ i = λ_{i^*L}` -/
+
+/-- A morphism `φ : A → P` to the Picard scheme of `B'` with `φ(0) = 0` factors through `Pic⁰` by a
+homomorphism (`T09Pic.exists_hom_comp_eq_phiL`'s proof, for any such `φ`). -/
+theorem exists_hom_lift {A B' : AbVar k} {P : Over (Spec (CommRingCat.of k))}
+    (rep : (picardFunctor B'.X.hom).obj.RepresentableBy P) {D : AbVar k} {j : D.X ⟶ P}
+    (hj : T09Pic.IsPicZero rep D j) (φ : A.X ⟶ P)
+    (h0 : letI := picardFunctorCommGrpObj B'.X.hom rep; η[A.X] ≫ φ = η[P]) :
+    ∃ lam : Hom A D, lam.hom ≫ j = φ := by
+  letI := picardFunctorCommGrpObj B'.X.hom rep
+  obtain ⟨hopen, hrange, hmon⟩ := hj
+  haveI : IsIntegral A.X.left := GeometricallyIntegral.isIntegral_of_subsingleton A.X.hom
+  have hsub : Set.range φ.left ⊆ Set.range j.left := by
+    rw [hrange]
+    rintro _ ⟨a, rfl⟩
+    refine ⟨A.X.hom a, ?_⟩
+    have he : η[P].left (A.X.hom a) = φ.left (η[A.X].left (A.X.hom a)) := by
+      rw [← h0]; rfl
+    rw [he]
+    exact (isPreconnected_range φ.left.continuous).subset_connectedComponent
+      ⟨_, rfl⟩ ⟨a, rfl⟩
+  let l : A.X.left ⟶ D.X.left := IsOpenImmersion.lift j.left φ.left hsub
+  have hl : l ≫ j.left = φ.left := IsOpenImmersion.lift_fac _ _ _
+  have hw : l ≫ D.X.hom = A.X.hom := by
+    rw [← Over.w j, ← Category.assoc, hl, Over.w]
+  let lam : A.X ⟶ D.X := Over.homMk l hw
+  have hlam : lam ≫ j = φ := Over.OverMorphism.ext hl
+  have hη : η[A.X] ≫ lam = η[D.X] := by
+    apply Over.OverMorphism.ext
+    apply (cancel_mono j.left).1
+    rw [Over.comp_left, Category.assoc]
+    rw [← Over.comp_left, hlam, ← Over.comp_left, h0, ← Over.comp_left _ _ _ η[D.X] j,
+      IsMonHom.one_hom]
+  have : IsMonHom lam := MulRigidity.isMonHom_of_geometricallyIntegral A.X D.X lam hη
+  exact ⟨Hom.mk' lam, hlam⟩
+
+/-- **Naturality of the Mumford bundle** along a homomorphism: `(i × i)^*Λ(L) = Λ(i^*L)`. -/
+theorem mumfordBundle_map {B J : AbVar k} (i : Hom B J) (L : J.X.left.Pic) :
+    Scheme.Pic.map (i.hom ⊗ₘ i.hom).left (T09Pic.mumfordBundle J L) =
+      T09Pic.mumfordBundle B (Scheme.Pic.map i.hom.left L) := by
+  have hμ : (i.hom ⊗ₘ i.hom).left ≫ (μ[J.X]).left = (μ[B.X]).left ≫ i.hom.left := by
+    rw [← Over.comp_left, ← Over.comp_left, IsMonHom.mul_hom]
+  have hfst : (i.hom ⊗ₘ i.hom).left ≫ pullback.fst J.X.hom J.X.hom =
+      pullback.fst B.X.hom B.X.hom ≫ i.hom.left := by
+    simp [Over.tensorHom_left]
+  have hsnd : (i.hom ⊗ₘ i.hom).left ≫ pullback.snd J.X.hom J.X.hom =
+      pullback.snd B.X.hom B.X.hom ≫ i.hom.left := by
+    simp [Over.tensorHom_left]
+  rw [T09Pic.mumfordBundle, T09Pic.mumfordBundle, ← Scheme.Pic.mapHom_apply]
+  simp only [map_mul, map_inv, Scheme.Pic.mapHom_apply, ← Scheme.Pic.map_comp, hμ, hfst, hsnd]
+
+/-- **The polarization step.** For a closed immersion homomorphism `i : B → J` there are an abelian
+variety `D` (`Pic⁰_{B/k}`) and a homomorphism `ψ : J → D` with `ψ ∘ i` an isogeny. -/
+theorem exists_psi (h1 : T09Pic.PicRepresentableAbVar) (h2 : T09Pic.PicZeroAbVar)
+    (h3 : T09Pic.PhiAmpleIsogeny) (J B : AbVar k) (i : Hom B J)
+    (hi : IsClosedImmersion i.hom.left) :
+    ∃ (D : AbVar k) (ψ : Hom J D), IsIsogenyMor (i.hom ≫ ψ.hom) := by
+  haveI := hi
+  obtain ⟨P, ⟨rep⟩⟩ := h1 k B
+  obtain ⟨D, j, hj⟩ := h2 k B P rep
+  obtain ⟨L, hL⟩ := T09Pic.exists_isVeryAmple J
+  let L' : B.X.left.Pic := Scheme.Pic.map i.hom.left L
+  have hL' : T09Pic.IsVeryAmple B L' := by
+    obtain ⟨N, hN, e, he, hover, hLe⟩ := hL
+    haveI := he
+    refine ⟨N, hN, i.hom.left ≫ e, inferInstance, ?_, ?_⟩
+    · rw [Category.assoc, hover, Over.w i.hom]
+    · change Scheme.Pic.map i.hom.left L = _
+      rw [hLe, Scheme.Pic.map_comp]
+  -- the family `(i × 1)^*Λ(L)` on `B × J` and its classifying map `ψ' : J → P`
+  let c : (pullback B.X.hom J.X.hom).Pic :=
+    Scheme.Pic.map (i.hom ▷ J.X).left (T09Pic.mumfordBundle J L)
+  let ψ' : J.X ⟶ P := rep.homEquiv.symm ((toPicardFunctor B.X.hom).app (op J.X) c)
+  -- `ψ' ∘ i = φ_{L'}`
+  have hiψ' : i.hom ≫ ψ' = T09Pic.phiL rep L' := by
+    rw [T09Pic.comp_classify, T09Pic.phiL]
+    congr 2
+    have e1 : JacobianChallenge.baseChangeMap B.X.hom i.hom = (B.X ◁ i.hom).left := by
+      apply pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+    rw [e1, ← mumfordBundle_map]
+    change Scheme.Pic.map (B.X ◁ i.hom).left (Scheme.Pic.map (i.hom ▷ J.X).left _) = _
+    rw [← Scheme.Pic.map_comp, ← Over.comp_left, ← tensorHom_def']
+  -- `ψ'(0) = 0`
+  have hη : letI := picardFunctorCommGrpObj B.X.hom rep; η[J.X] ≫ ψ' = η[P] := by
+    letI := picardFunctorCommGrpObj B.X.hom rep
+    have e1 : JacobianChallenge.baseChangeMap B.X.hom η[J.X] = (B.X ◁ η[J.X]).left := by
+      apply pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+    have e2 : JacobianChallenge.baseChangeMap J.X.hom η[J.X] = (J.X ◁ η[J.X]).left := by
+      apply pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+    have hc : Scheme.Pic.map (JacobianChallenge.baseChangeMap B.X.hom η[J.X]) c = 1 := by
+      rw [e1]
+      change Scheme.Pic.map (B.X ◁ η[J.X]).left (Scheme.Pic.map (i.hom ▷ J.X).left _) = _
+      rw [← Scheme.Pic.map_comp, ← Over.comp_left, whisker_exchange, Over.comp_left,
+        Scheme.Pic.map_comp, ← e2, T09Pic.mumfordBundle_restrict_zero, Scheme.Pic.map_one]
+    rw [T09Pic.comp_classify, hc]
+    have h := (picardClassifyingHom B.X.hom rep (𝟙_ _)).map_one
+    rw [picardClassifyingHom_apply] at h
+    rw [h, show (1 : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ P) =
+      CartesianMonoidalCategory.toUnit _ ≫ η from rfl]
+    simp
+  obtain ⟨ψ, hψ⟩ := exists_hom_lift rep hj ψ' hη
+  refine ⟨D, ψ, h3 k B P rep D j hj L' (T09Pic.veryAmpleIsAmple k B L' hL') _ ?_⟩
+  rw [Category.assoc, hψ, hiψ']
+
+/-! ## §4. The field -/
+
+/-- **`poincareComplement`, proved** from five open fields (L1-L3 of t09-pic, Milne's quasi-inverse,
+Cartier) and the proved `[d]`-isogeny and image factorization. -/
+theorem poincareComplement_of_open (h1 : T09Pic.PicRepresentableAbVar) (h2 : T09Pic.PicZeroAbVar)
+    (h3 : T09Pic.PhiAmpleIsogeny) (hQ : AvSplit.MilneIsogenyQuasiInverse)
+    (hC : AVGlue.CartierSmooth) : ZInQ.Contrib.AVB1.PoincareComplement := by
+  intro k _ _ J B i hi
+  obtain ⟨D, ψ, hψ⟩ := exists_psi h1 h2 h3 J B i hi
+  exact complement_of_psi hQ hC J B D i ψ hψ
 
 end ZInQ.Contrib.OneProof.PoincareComplement
