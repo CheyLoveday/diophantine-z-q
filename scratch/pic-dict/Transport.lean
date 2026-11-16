@@ -68,3 +68,47 @@ lemma pullbackObjUnitIso_comp (f : X ⟶ Y) (h : Y ⟶ Z) :
   rw [Adjunction.homEquiv_naturality_left, hf, Adjunction.homEquiv_naturality_right, hh]
 
 end PicDict.Transport
+
+namespace PicDict.Transport
+
+open Scheme.Modules
+
+universe v
+
+variable {X Y Z W : Scheme.{v}}
+
+lemma pullbackCongr_hom_app {f f' : X ⟶ Y} (e : f = f') (M : Y.Modules) :
+    (pullbackCongr e).hom.app M = eqToHom (by rw [e]) := by
+  subst e; rfl
+
+/-- naturality of `pullbackComp` in the first variable -/
+lemma eqToHom_comp_pullbackComp {f f' : X ⟶ Y} (e : f = f') (h : Y ⟶ Z) (M : Z.Modules)
+    (p : (Scheme.Modules.pullback f).obj ((Scheme.Modules.pullback h).obj M) =
+      (Scheme.Modules.pullback f').obj ((Scheme.Modules.pullback h).obj M)) :
+    eqToHom p ≫ (pullbackComp f' h).hom.app M =
+      (pullbackComp f h).hom.app M ≫ eqToHom (by rw [e]) := by
+  subst e; simp
+
+/-- naturality of `pullbackComp` in the second variable -/
+lemma map_eqToHom_comp_pullbackComp (f : X ⟶ Y) {h h' : Y ⟶ Z} (e : h = h') (M : Z.Modules)
+    (p : (Scheme.Modules.pullback h).obj M = (Scheme.Modules.pullback h').obj M) :
+    (Scheme.Modules.pullback f).map (eqToHom p) ≫ (pullbackComp f h').hom.app M =
+      (pullbackComp f h).hom.app M ≫ eqToHom (by rw [e]) := by
+  subst e; simp
+
+/-- associativity of `pullbackComp`, on objects -/
+lemma pullbackComp_assoc_app (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ W) (M : W.Modules) :
+    (Scheme.Modules.pullback f).map ((pullbackComp g h).hom.app M) ≫
+        (pullbackComp f (g ≫ h)).hom.app M =
+      (pullbackComp f g).hom.app ((Scheme.Modules.pullback h).obj M) ≫
+        (pullbackComp (f ≫ g) h).hom.app M ≫ eqToHom (by rw [Category.assoc]) := by
+  have H := congrArg (fun τ => τ.app M) (pseudofunctor_associativity f g h)
+  simp only [NatTrans.comp_app, Functor.whiskerRight_app, Functor.associator_hom_app,
+    Functor.whiskerLeft_app, Category.id_comp, eqToHom_app] at H
+  have H1 := (Iso.inv_comp_eq ((pullbackComp f (g ≫ h)).app M)).mp H
+  have H2 := (Iso.inv_comp_eq ((Scheme.Modules.pullback f).mapIso ((pullbackComp g h).app M))).mp H1
+  simp only [Functor.mapIso_hom, Iso.app_hom] at H2
+  rw [← Category.assoc ((pullbackComp f g).hom.app _), H2]
+  simp
+
+end PicDict.Transport
