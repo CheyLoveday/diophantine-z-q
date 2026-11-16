@@ -23,3 +23,4 @@ Base: wip/height-fix 49e6d97d + origin/main (merge 530ef0e7) + origin/wip/leaf-f
 - A.lean §5 COMPILED (VERIFIED): isPullback_shear, smooth_of_smoothKer (faithfully flat qc hom with smooth kernel onto smooth group => smooth source; Mathlib DescendsAlong @Smooth).
 - A.lean §6 COMPILED (VERIFIED): isClosed_range_openSubgroup (open subgroup scheme of lft group over alg. closed field is closed; Jacobson + K-points + translations).
 - A.lean §7 COMPILED (VERIFIED): identity component over a field: isOpen_idCompSet, isClosed_idCompSet, isSubgroupOpen_W0 (from 04KV, proved), connectedSpace_W0.
+- A.lean §8-§9 COMPILED (VERIFIED, 11-16 ~16:40): semiAbelianDescendsPerfect_of_chevalley : ChevalleyPerfect → ZInQ.HeightFix.SemiAbelianDescendsPerfect; #print axioms = [propext, Classical.choice, Quot.sound]. Only new hypothesis: the leaf ChevalleyPerfect. Covers every perfect field (the full Prop).
