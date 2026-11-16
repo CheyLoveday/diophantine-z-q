@@ -15,3 +15,6 @@ open HDec.PkgI4.PanBergerSplit
 #print axioms finrank_K0W_le
 #print axioms finrank_K0W_pos
 #print axioms finrank_K0W_bot
+#print axioms isSemistableOverU_dualHom_iff
+#print axioms isSemistableOverU_trivial_iff
+#print axioms isPstU_trivial
