@@ -104,7 +104,7 @@ theorem exists_algPtMap {R S : Type} [CommRing R] [Algebra K R] [CommRing S] [Al
   · have := congrArg (fun g => g.hom c) hc
     simpa using this
   · apply Over.OverMorphism.ext
-    simp only [algPtMap, Over.homMk_left]
+    simp only [algPtMap]
     rw [← hψ0]
     rfl
 
