@@ -13,3 +13,7 @@ d=101 tried=5 found_A=9 coords=[1, 0] err=4.1 e-19
 d=109 tried=7 found_A=13 coords=[-1, 0] err=8.5 e-19
 d=133 tried=9 found_A=23 coords=[0, 1] err=6.9 e-19
 d=141 tried=3 found_A=7 coords=[1, 0] err=5.4 e-19
+d=149 tried=4 found_A=7 coords=[1, 0] err=5.5 e-19
+d=157 tried=3 found_A=5 coords=[1, 0] err=3.8 e-19
+d=165 tried=5 found_A=19 coords=[2, -1] err=2.4 e-18
+d=173 tried=3 found_A=5 coords=[1, 0] err=2.9 e-19

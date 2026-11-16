@@ -25,3 +25,11 @@ Base wip/gz-optimal 2631cd0b. Build tree copied from ~/dzq-wt/gz-optimal (.lake/
 * Structure.lean: lattice_eq_of_periods (Lambda_d <= L and some period not in (1+i)L => L = c0 Lambda_d, c0 in Q) compiled, axioms standard (Check0.lean).
 * Level32.lean: period_mem_C1 (EtaW32Character => periods of Phi_1 over gamma in Gamma0(32), chi_8(gamma_11)=1, lie in every lattice of C_1) compiled.
 * Level32.lean: LamCd_le_of_etaW32 (EtaW32Character => Lambda_d ⊆ L for every period lattice L of C_d, d = 1 mod 4 squarefree > 1) compiled. Sharpens gz-weil's 2 Lambda ⊆ L.
+* CdOptimal.lean: cdOptimal_of (EtaW32Character, CdTwistedPeriodOdd => CdOptimal), periodLattice_le_of_etaW32,
+  grossZagierFormulaCd_of_cdLeaves; Check.lean: 9 theorems, standard axioms (VERIFIED).
+* Eta leaf restated for v = eta8 eta32^2/eta16^3 (s = 2 integral, as in Ono Thm 1.64); w = 1/v.
+* MainEdit.lean: frozenTarget_cdoptimal, standard axioms (VERIFIED). Discharges.lean: 61 open, 3123 theorems, 9 discharge
+  one, no CdOpt line (hL3 is top-level all-E, as for gz-optimal) (VERIFIED).
+* Target.lean: verbatim copy of CdOptimal, rfl against the original; cdOptimal_target standard axioms (VERIFIED).
+* py/twn_mod2.gp: mod-2 level-32 criterion (sum_{e|d} rho(A/(32d^2/e^2)) not in (1+i)L_1) found an odd A for every
+  squarefree d = 5 mod 8 tested (output py/twn_mod2_out.txt) (VERIFIED, computed; relies on the derived reduction).

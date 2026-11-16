@@ -158,8 +158,6 @@ theorem sC_eq (τ : ℍ) : sC τ * x1C τ = x1C τ ^ 2 + 1 := by
 
 /-! ## §3. Analyticity and the differential -/
 
-theorem U_mem {σ : ℂ} (hσ : 0 < σ.im) : (⟨σ, hσ⟩ : ℍ) = (⟨σ, hσ⟩ : ℍ) := rfl
-
 theorem differentiableAt_sC {σ : ℂ} (hσ : 0 < σ.im) : DifferentiableAt ℂ sC σ := by
   have h1 := X0.differentiableAt_yC ⟨σ, hσ⟩
   have h2 := differentiableAt_wC ⟨σ, hσ⟩
@@ -380,7 +378,7 @@ theorem LamCd_le_of_etaW32 (hW : EtaW32Character) {d : ℕ} (hd4 : d % 4 = 1) (h
     have hδ10 : δ 1 0 = γ 1 0 * (γ' 0 1 1 - γ' a 1 1) := by
       rw [hδ, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv,
         Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
-      simp [h10]; try ring
+      simp [h10]
     have hδ11 : δ 1 1 = -(γ 1 0 * γ' 0 0 1) + γ' a 1 1 * γ' 0 0 0 := by
       rw [hδ, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv,
         Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
