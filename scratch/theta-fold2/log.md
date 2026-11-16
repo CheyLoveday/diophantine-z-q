@@ -25,3 +25,9 @@
   auxiliaries/projections of the 11 edited structures, 13 conversions (V), gluePieces_of_open4 (T),
   sixContactMin_of_open4,6..15,17,18 (T), sixContactMin_of_open19 (V). open20..open35, frozenTarget, X0ModuliUsed
   tops keep their hashes.
+- 02:50 DischargesTest (scratch/contrib-kit/DischargesTest-output.txt): t1 discharges OpenGlue8.nvLocalInertia (still
+  assumes it), t2 nothing, t3 OpenTextbookLeaves12.cartierSmooth flagged sorry; the 7 real discharges unchanged;
+  55 open hypotheses (the saved file said 59 and OpenTextbookLeaves11: it predated the last folds).
+- 02:52 OpenStatements.lean: 55 open hypotheses. render_open.py wrote OPEN.md, pages-wanted.md, CONTRIBUTING.md,
+  STATUS.md ("44 H hypotheses, strictest 34/10, 11 others"); --check ok. The committed generated docs at the base
+  were stale (STATUS said 48 H, 39/9, OpenTextbookLeaves11); kinds.tsv at the base gives 45 H, 34/11.
