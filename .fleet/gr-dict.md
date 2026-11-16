@@ -27,3 +27,6 @@ discharged; `BypassFold.lean` incl. `frozenTarget_F` with neither GR field.
 locators.md rows for the two new leaves; statement review of GonzalezRotgerThm512X6/IsGRCMPoint; the Elkies row
 carries the same moduli-witness assertion and should get the same dictionary review. Eichler's count and Thm 5.12
 themselves are unproved (no local quaternion-order theory in Mathlib).
+
+Last checked 2026-11-16 07:30 PST: GRDict.lean, BypassFold.lean (frozenTarget_E/_F), FoldCheck.lean all compile with
+`[propext, Classical.choice, Quot.sound]`; log scratch/gr-dict/log.md.
