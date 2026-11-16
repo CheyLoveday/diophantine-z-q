@@ -1,7 +1,7 @@
 # t21-proof: the main sum Re sum_{j,m,n} c_j alpha/|alpha|^2 E^{|alpha|^2} with interval bounds on E.
 import math
 from fractions import Fraction as Fr
-exec(open('/home/jackmccarthy/dzq-wt/t21-proof/scratch/t21-proof/lsplit.py').read().split('for (d,M,t)')[0])
+exec(open('scratch/t21-proof/lsplit.py').read().split('for (d,M,t)')[0])
 def mainsum(d,M):
     x_lo=Fr(3141592,10**6)/M**2; x_hi=Fr(3141593,10**6)/M**2
     l=1-x_hi; u=1/(1+x_lo)

@@ -2,7 +2,7 @@
 
 Task pic-dict. Base e22df37cd (fork main after leaf-fold30). Rows (all fields of `HDec.HSyn.OpenAddedLeaves17`,
 `TailZ34.lean:111`; statements in `ZInQKernel/OneProof/H/TailZ24.lean`): `T09Pic.PicZeroAbVar` (l.302),
-`T09Pic.PhiAmpleIsogeny` (l.366), `T09Pic.WeilPairingMumford` (l.708). On fork main after leaf-fold31 (cove-80) all
+`T09Pic.PhiAmpleIsogeny` (l.366), `T09Pic.WeilPairingMumford` (l.708). On fork main after leaf-fold31 all
 three are rated `consequence`, GLUE/GLUE.
 
 ## 1. Result

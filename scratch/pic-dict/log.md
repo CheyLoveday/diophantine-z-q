@@ -40,7 +40,7 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   9 Mumford-type leaves and `T09Pic.PhiAmpleIsogeny`; standard axioms.
 - autofold dry-run (scratch/pic-dict/autofold.json, weilPairingMumford only, no --allow-rise):
   `strict count: 40/8 on 48 -> 48/8 on 56; strictest 39/9 -> 48/8`; with the three rows re-rated
-  consequence GLUE/GLUE as cove-80 does in lf31 (temporary kinds.tsv edit, restored):
+  consequence GLUE/GLUE as lf31 does (temporary kinds.tsv edit, restored):
   `strict count: 37/11 on 48 -> 46/10 on 56; strictest 37/11 -> 46/10` (-1 strict, -1 strictest).
   The dry-run module compiles (`sixContactMin_of_open35`, standard axioms).
 - ~05:00 `finiteOfFiniteKerPts` proved (scratch/pic-dict/Finite.lean; merged). `phiAmpleIsogeny_of_printed` now takes
