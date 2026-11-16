@@ -12,44 +12,55 @@ host).
 
 ## 0. Result
 
-1. **Of the three theorems the review said `IsJ1` needs, one is proved in Lean and one is now a separate
-   textbook leaf.** The third, the identification of the function field, remains a dictionary step that cannot
-   be stated in Lean today. A fourth step that the review did not list is also needed, the choice of the
-   torsion point, and it is now a separate leaf.
+**`r16CoreY` is discharged in Lean from two leaves plus the bundle's `mumfordTorsionAlgClosed`:**
+
+```lean
+theorem R16IsJ1Dict.r16CoreY_of_picZero_igusa (h : AfTateCharPolyPicZero) (hI : X1PointsConjugate)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY
+```
+
+- `AfTateCharPolyPicZero` is r16-used's `AfTateCharPoly` for `J₁(N) = Pic⁰` of one model.
+- `X1PointsConjugate` is Igusa's transitivity.
+- Both are VERIFIED: compiled, standard axioms, `#discharges` recorded.
+- The autofold dry run gives strict 45/10 → 46/10 (LEAF/GLUE) and strictest 43/12 → 44/12.
+
+1. **The `IsJ1` dictionary. Of the three theorems the review said `IsJ1` needs, two are proved in Lean.** The
+   third, the identification of the function field, is the one remaining dictionary step, and it cannot be
+   stated in Lean today. A fourth step, the choice of the torsion point, was not on the review's list; it is
+   now a separate leaf.
 
    | dictionary step | status |
    |---|---|
-   | **Pic⁰ is the Albanese** | **Proved** (VERIFIED). See `abVarIso_picZero_of_isJacobian`: every kernel Jacobian (`IsJacobian`, the Albanese property) is isomorphic to every tensor-compatible representative of the degree-zero Picard scheme `Pic⁰_{X/ℚ}`. The proof uses the vendored Jacobian-Challenge library. Base-point independence (`abVarIso_of_isJacobian`) and transport along curve isomorphisms (`IsJacobian.of_iso`) are proved too. |
-   | **a curve is determined by its function field** | New printed leaf `CurveIsoOfFunctionFieldIso`: integral smooth proper geometrically connected curves over `ℚ` with ring-isomorphic function fields are `ℚ`-isomorphic. Sources: Stacks, *Algebraic Curves*, "Curves and function fields"; Hartshorne I.6.12. Both UNVERIFIED. Not proved: a Lean proof needs extension of rational maps through the valuative criterion, spreading out, and gluing, more than this task's budget. |
-   | **choice of `P`** (not on the review's list) | New leaf `X1PointsConjugate` (Igusa): for `N ≥ 1`, `Aut(ℚ(j)‾/ℚ(j))` is transitive on the `x`-coordinates of the points of exact order `N` of `E_j`. `IsX1Model` lets `P` vary, so two models can only be compared through this. **Finding:** the statement is false for `N = 0`, so it is stated with `0 < N`. |
-   | **`K_N = ℚ(j, f₁)`**: DS's `X₁(N)_alg` is a model in the kernel's sense | **Remains, not stated in Lean.** DS define `X₁(N)_alg` through the Weber function `f₁` (complex-analytic). The kernel uses `ℚ(j)(x(P))` on `E_j`. Stating the comparison needs `f₁`, which has no Lean definition in the tree. The comparison is classical (DS §7.5–7.7, Shimura 1971 Ch. 6; UNVERIFIED). |
+   | **Pic⁰ is the Albanese** | **Proved** (VERIFIED), using the vendored Jacobian-Challenge library. `abVarIso_picZero_of_isJacobian`: every kernel Jacobian (`IsJacobian`, the Albanese property) is isomorphic to every tensor-compatible representative of `Pic⁰_{X/ℚ}`. Also proved: base-point independence (`abVarIso_of_isJacobian`) and transport along curve isomorphisms (`IsJacobian.of_iso`). |
+   | **a curve is determined by its function field** | **Proved** (VERIFIED), as `curveIsoOfFunctionFieldIso_proof`. Integral smooth proper geometrically connected curves over `ℚ` with ring-isomorphic function fields are `ℚ`-isomorphic. The proof extends the function-field isomorphism to morphisms both ways, using the vendored `Scheme.exists_hom_of_valuationRing_stalk` (valuative extension of rational maps) and `Scheme.valuationRing_stalk` (stalks of smooth curves are valuation rings). Both composites are the identity, by Mathlib's `ext_of_isDominant_of_isSeparated'`, since `Spec K(X) → X` is dominant. |
+   | **choice of `P`** (not on the review's list) | Leaf `X1PointsConjugate` (Igusa): for `N ≥ 1`, `Aut(ℚ(j)‾/ℚ(j))` is transitive on the `x`-coordinates of the points of exact order `N` of `E_j`. `IsX1Model` lets `P` vary, so models built from different points can only be compared through this. Rated **consequence**, of the printed Galois group `GL₂(ℤ/N)`, resp. `GL₂(ℤ/N)/±1` on `x`-coordinates. **Finding:** the statement is false for `N = 0`, so it is stated with `0 < N`. |
+   | **`K_N = ℚ(j, f₁)`**: DS's `X₁(N)_alg` is a model in the kernel's sense | **Remains, not stated in Lean.** DS define `X₁(N)_alg` through the Weber function `f₁`, which is complex-analytic. The kernel uses `ℚ(j)(x(P))` on `E_j`. The comparison is classical (DS §7.5–7.7, Shimura 1971 Ch. 6; UNVERIFIED), but stating it needs `f₁`, which the tree does not define. |
 
-2. **`AfTateCharPoly` restated over one model's `Pic⁰`** (VERIFIED). `AfTateCharPolyPicZero` says: there is
-   a model `X` of `X₁(N)` such that `J₁(N) = Pic⁰_{X/ℚ}` (a representing abelian variety with the tensor group
-   law) satisfies the conclusion of `AfTateCharPoly`. This is the shape of DS's statement: one curve, its
-   `Pic⁰`, and `A_f` as a quotient of it. Two directions are proved:
-   - `afTateCharPoly_of_picZero`: it implies `AfTateCharPoly` for every `IsJ1` Jacobian, given the two leaves;
-   - `afTateCharPolyPicZero_of_afTate`: conversely, it follows from `AfTateCharPoly` and the bundle's
-     `X1ModelExists`. So it is never stronger than r16-used's leaf.
+2. **`AfTateCharPoly` restated over the kernel's own `J₁(N)`** (VERIFIED). `AfTateCharPolyPicZero` says:
+   there are a model `X` of `X₁(N)` and a representative of `J₁(N) = Pic⁰_{X/ℚ}`, with the tensor group law,
+   satisfying the conclusion of `AfTateCharPoly`. This is DS's shape: one curve, its `Pic⁰`, and `A_f` as a
+   quotient. Two directions are proved:
+   - `afTateCharPoly_of_picZero`: it implies `AfTateCharPoly` for every `IsJ1` Jacobian, given Igusa;
+   - `afTateCharPolyPicZero_of_afTate`: it follows from `AfTateCharPoly` and the bundle's `X1ModelExists`.
+     So it is never stronger than r16-used's leaf.
 
-3. **The weak reading of DS 9.5.4** (VERIFIED). `AfTateWeakOdd` replaces "has characteristic polynomial" by
-   "**satisfies** `X² − a_p X + χ(p)p` over `ℚ_ℓ ⊗ K_f`", and adds **oddness**: complex conjugation has
-   determinant `−1` on every `ι`-component. Three things are proved:
-   - `r16CoreY_of_weakOdd` (with `mumfordTorsionAlgClosed`) discharges the field;
-   - `weakOdd_of_afTate` shows the weak leaf follows from `AfTateCharPoly` (Cayley–Hamilton). It also proves
-     oddness from the characteristic polynomials through Chebotarev and `χ(−1) = 1`;
-   - the combined form `AfTateWeakOddPicZero` with `r16CoreY_of_dict` discharges the field from the weak leaf
-     over `Pic⁰` of one model, the two dictionary leaves, and `mumfordTorsionAlgClosed`.
+   The print applies to it as a direct instance once DS's `X₁(N)_alg` is known to be a model in the kernel's
+   sense. That is the `K_N` step.
+3. **The weak reading of DS 9.5.4** (VERIFIED). `AfTateWeakOdd` asks only that Frobenius **satisfies**
+   `X² − a_p X + χ(p)p` over `ℚ_ℓ ⊗ K_f`, plus **oddness**: complex conjugation has determinant `−1` on every
+   `ι`-component. Proved:
+   - `r16CoreY_of_weakOdd` discharges the field;
+   - `weakOdd_of_afTate` shows the weak leaf is a consequence of `AfTateCharPoly`: Cayley–Hamilton for the
+     relation, and oddness from the characteristic polynomials through Chebotarev and `χ(−1) = 1`;
+   - `r16CoreY_of_weakPicZero_igusa` discharges the field from `AfTateWeakOddPicZero` and Igusa.
 
-   The method is ds965-weak's, transferred to each `ι`-component, with the scalar case handled by complex
-   conjugation (§3). **The scalar case cannot be excluded from the weak relation alone** (§3.3). The input used
-   is oddness, a statement about the same `A`.
-
+   The method is ds965-weak's, transferred to each `ι`-component, with the scalar case excluded by complex
+   conjugation (§3). **The scalar case cannot be excluded from the weak relation alone** (§3.3, argument); some
+   input about the same `A` is needed, and oddness is the one used.
 4. **Objections to `AfTateCharPoly` that remain** (§5):
    - the `K_N` dictionary step;
-   - the two new leaves, which are printed theorems: one is a published statement, the other a consequence of
-     Igusa's;
-   - the DS 9.5.4 wording, now covered by the weak form, which needs oddness;
+   - Igusa as a consequence-rated leaf;
+   - the DS 9.5.4 wording, for which the weak form works with oddness;
    - `A_f` as an existential, unchanged from r16-used.
 
 ## 1. Statements
@@ -71,7 +82,7 @@ def X1PointsConjugate : Prop :=
   ∀ (N : ℕ) (P P' : EjBar.toAffine.Point), 0 < N → addOrderOf P = N → addOrderOf P' = N →
     ∃ σ : Kbar ≃ₐ[Qj] Kbar, σ (xCoord P) = xCoord P'
 
-def CurveIsoOfFunctionFieldIso : Prop :=
+def CurveIsoOfFunctionFieldIso : Prop :=   -- proved: curveIsoOfFunctionFieldIso_proof
   ∀ (X X' : Over SpecQ) [IsIntegral X.left] [IsIntegral X'.left], IsCurve X → IsCurve X' →
     Nonempty (X.left.functionField ≃+* X'.left.functionField) → Nonempty (X ≅ X')
 
@@ -191,6 +202,11 @@ theorem R16IsJ1Dict.r16CoreY_of_picZero (h : AfTateCharPolyPicZero) (hI : X1Poin
     (hC : CurveIsoOfFunctionFieldIso) (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY
 theorem R16IsJ1Dict.weakOddPicZero_of_afTate (h : R16Used.AfTateCharPoly) (hT : PkgI3.TateModuleFree)
     (hx : LeafModCurves.X1ModelExists) : AfTateWeakOddPicZero
+-- with the curve statement proved (curveIsoOfFunctionFieldIso_proof):
+theorem R16IsJ1Dict.r16CoreY_of_picZero_igusa (h : AfTateCharPolyPicZero) (hI : X1PointsConjugate)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY
+theorem R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa (h : AfTateWeakOddPicZero) (hI : X1PointsConjugate)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY
 ```
 
 ## 4. Compile status, `#discharges`, fold (VERIFIED, 2026-11-16, one Lean process at a time)
@@ -199,38 +215,40 @@ theorem R16IsJ1Dict.weakOddPicZero_of_afTate (h : R16Used.AfTateCharPoly) (hT : 
 |---|---|---|
 | scratch, part 1 | `lake env lean scratch/isj1-dict/Dict.lean` | no errors; axioms standard (`Dict-output.txt`) |
 | scratch, part 2 | `lake env lean scratch/isj1-dict/Weak.lean` | no errors; axioms standard |
-| contribution | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.R16IsJ1Dict` | success, 13670 jobs. The build tree was copied from ds965-weak's worktree, so this was a partial rebuild. After the final edit (`∃` representative) `lake build +…R16IsJ1Dict` also succeeded. |
+| scratch, part 3 | `lake env lean scratch/isj1-dict/CurveIso.lean` | no errors; `curveIsoOfFunctionFieldIso_proof` axioms standard |
+| contribution | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.R16IsJ1Dict` | success, 13670 jobs. The build tree was copied from ds965-weak's worktree, so this was a partial rebuild. After the last edits (`∃` representative, curve proof) `lake build +…R16IsJ1Dict` also succeeded. |
 | `#discharges` | `lake env lean scratch/isj1-dict/Discharges.lean` | see below (`Discharges-output.txt`) |
-| fold dry run | `python3 scripts/one_proof/autofold.py scratch/isj1-dict/autofold.json --dry-run`, then line 1 stripped and `lake env lean scratch/isj1-dict/FoldDryRun.lean` | `strict count: 45/10 on 55 -> 47/10 on 57; strictest 43/12 -> 45/12`. `HDec.HSyn.sixContactMin_of_open31` has standard axioms. |
-| weak alternative | `autofold.py scratch/isj1-dict/autofold-weak.json --dry-run` | `45/10 -> 46/11; strictest 43/12 -> 44/13`. This is a rise, because the weak leaf is flagged pending reading, so autofold would need `--allow-rise`. |
+| fold dry run | `python3 scripts/one_proof/autofold.py scratch/isj1-dict/autofold.json --dry-run`, then line 1 stripped and `lake env lean scratch/isj1-dict/FoldDryRun.lean` | **`strict count: 45/10 on 55 -> 46/10 on 56; strictest 43/12 -> 44/12`**. `HDec.HSyn.sixContactMin_of_open31` has standard axioms. |
+| weak alternative | `autofold.py scratch/isj1-dict/autofold-weak.json --dry-run` | `45/10 -> 45/11; strictest 43/12 -> 43/13`. This is a rise, because the weak leaf is flagged pending reading, so autofold would need `--allow-rise`. |
 
 ```
-DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_dict
-  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, R16IsJ1Dict.X1PointsConjugate,
- R16IsJ1Dict.CurveIsoOfFunctionFieldIso, AvSplit.MumfordTorsionAlgClosed]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero_igusa
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, R16IsJ1Dict.X1PointsConjugate, AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero
-  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, R16IsJ1Dict.X1PointsConjugate,
- R16IsJ1Dict.CurveIsoOfFunctionFieldIso, AvSplit.MumfordTorsionAlgClosed]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, R16IsJ1Dict.X1PointsConjugate, AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakOdd
   still assumes: [R16IsJ1Dict.AfTateWeakOdd, AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 61 open hypotheses, 2400 theorems checked, 11 discharge one
+#discharges: 61 open hypotheses, 2410 theorems checked, 13 discharge one
 ```
 
-The other discharges in the output are earlier contributions, plus r16-used's `R16Used.r16CoreY_of_printed`,
-which is present because r16-used was merged. `mumfordTorsionAlgClosed` is already a published LEAF field.
+Other entries in the output:
+- the intermediate forms `r16CoreY_of_picZero` and `r16CoreY_of_dict`, which take the curve statement as a
+  hypothesis;
+- earlier contributions;
+- r16-used's `R16Used.r16CoreY_of_printed`, present because r16-used was merged.
+
+`mumfordTorsionAlgClosed` is already a published LEAF field.
 
 **Fold accounting.**
-- `r16CoreY`, a composite GLUE field, is replaced by three leaves:
-  - `afTateCharPolyPicZero`: published, unread;
-  - `curveIsoOfFunctionFieldIso`: published;
-  - `x1PointsConjugate`: consequence, which counts as GLUE.
-- GLUE stays at 10 and LEAF rises by 2.
-- Under the review's rating of r16-used's leaf (consequence), r16-used's fold would have left GLUE unchanged.
-  This fold also leaves it unchanged, but it pins down where the dictionary content sits: one proved step,
-  two separate textbook leaves, and the remaining `K_N` step.
+- `r16CoreY`, a composite GLUE field, is replaced by `afTateCharPolyPicZero` (published, unread) and
+  `x1PointsConjugate` (consequence, so GLUE).
+- GLUE stays at 10 and LEAF rises by 1.
+- r16-used's fold would have left GLUE unchanged under the review's rating of its leaf (consequence). This fold
+  also leaves GLUE unchanged, but the dictionary content is now accounted for: two steps proved, Igusa as a
+  separate leaf, and the remaining `K_N` step.
 - The fold is not applied. `Main.lean`, `kinds.tsv` and `claims.tsv` are unchanged; folding is the
   integrator's step. Folding requires merging `wip/r16-used` and `wip/ds965-weak`, which this file imports.
 
@@ -255,13 +273,7 @@ The review gave several reasons; the dictionary ones are taken first.
      in Lean.
    - This is the only remaining point at which the print does not apply as a direct instance of
      `AfTateCharPolyPicZero`.
-2. **A curve is determined by its function field.** This is now the separate leaf `CurveIsoOfFunctionFieldIso`,
-   rated published (object part of the Stacks/Hartshorne equivalence).
-   - A Lean proof is a reasonable crowdsourcing item. It needs: extension of the generic point through the
-     valuative criterion at each (DVR) stalk; spreading out from `Spec 𝒪_{X,x}` to a neighbourhood (Mathlib's
-     EGA IV 8.8.2 in `AffineTransitionLimit.lean`); and gluing by uniqueness on the reduced, separated
-     schemes.
-   - The kernel already has "a bijective morphism of smooth curves is an isomorphism" (curve-split).
+2. **A curve is determined by its function field.** **Closed**: proved in Lean (`curveIsoOfFunctionFieldIso_proof`).
 3. **Pic⁰ is the Albanese.** **Closed**: proved in Lean.
 4. **Choice of `P`** (Igusa). Not on the review's list, but needed. It is now the separate leaf
    `X1PointsConjugate`, rated consequence: transitivity is a consequence of the printed Galois group
@@ -288,12 +300,12 @@ The review gave several reasons; the dictionary ones are taken first.
 | `afTateCharPolyPicZero` | `R16IsJ1Dict.AfTateCharPolyPicZero` | **yes, modulo the `K_N` dictionary step** | published, unread (dictionary step and DS wording noted) | It is DS Lemma 9.5.3 + Thm 9.5.4 at DS's objects: one model of `X₁(N)`, its `J₁(N) = Pic⁰`, `A_f` a quotient. `A_f` is existential, and only one representative of `Pic⁰` and one model are asserted. It is not stronger than r16-used's leaf (`afTateCharPolyPicZero_of_afTate`). The print applies as a direct instance once DS's `X₁(N)_alg` is a model in the kernel's sense (§5.1). |
 | `afTateWeakOddPicZero` (alternative) | `R16IsJ1Dict.AfTateWeakOddPicZero` | no: weak reading plus oddness | published, pending reading | Under the characteristic-polynomial reading it is a consequence (proved). Under the weak reading it needs oddness from a second source. |
 | `x1PointsConjugate` | `R16IsJ1Dict.X1PointsConjugate` | no | consequence | It is transitivity, a consequence of Igusa / Shimura 1971 Thm 6.6 (Galois group `GL₂(ℤ/N)`, resp. `/±1`). False for `N = 0`, hence `0 < N`. |
-| `curveIsoOfFunctionFieldIso` | `R16IsJ1Dict.CurveIsoOfFunctionFieldIso` | yes | published | It is the object part of the equivalence between normal proper curves over `k` and function fields (Stacks, Hartshorne I.6.12). |
+| (`curveIsoOfFunctionFieldIso`) | `R16IsJ1Dict.CurveIsoOfFunctionFieldIso` | n/a: **proved**, not a leaf | — | `curveIsoOfFunctionFieldIso_proof` (standard axioms). |
 
 ## 7. Files
 
 - `ZInQKernel/Contrib/OneProof/R16IsJ1Dict.lean`: the contribution (parts 1 and 2 and the final discharges).
-- `scratch/isj1-dict/Dict.lean`, `Weak.lean`: the two parts as scratch files, with `#print axioms`. They are
+- `scratch/isj1-dict/Dict.lean`, `Weak.lean`, `CurveIso.lean`: the three parts as scratch files, with `#print axioms`. They are
   the development versions; the contribution has the final `∃`-representative form of the `Pic⁰` leaves.
 - `scratch/isj1-dict/Discharges.lean`, `Discharges-output.txt`: the `#discharges` check.
 - `scratch/isj1-dict/autofold.json` (primary), `autofold-weak.json` (weak alternative), `FoldDryRun.lean`,
@@ -304,5 +316,4 @@ Proposed `locators.md` rows (not added, since that file belongs to another task)
 - `afTateCharPolyPicZero` | DS GTM 228 §7.7, Lemma 9.5.3, Thm 9.5.4 | UNVERIFIED | `J₁(N) = Pic⁰(X₁(N)_alg)`;
   check the wording "characteristic polynomial" vs "equation".
 - `x1PointsConjugate` | Shimura 1971 Thm 6.6; Igusa 1959 | UNVERIFIED | `Gal(F_N/ℚ(j)) ≅ GL₂(ℤ/N)/±1`.
-- `curveIsoOfFunctionFieldIso` | Stacks, Algebraic Curves, "Curves and function fields"; Hartshorne I.6.12 |
-  UNVERIFIED.
+- (`curveIsoOfFunctionFieldIso` needs no row: it is proved.)
