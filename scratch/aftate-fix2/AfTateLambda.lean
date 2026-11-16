@@ -12,18 +12,15 @@ attribute [local instance] Classical.propDecidable
 
 namespace AfTateLam
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
-open LeafModCurves PkgI3 PkgI3.AbVar
-open PkgI4 (Qbar GQ CF coeff IsNewform)
-open scoped TensorProduct MatrixGroups
+open scoped TensorProduct
 
-/-! ## 0. Generic: functionals semilinear along `ι = ε ∘ ρ_L` and the base change `L ⊗_R V` -/
+/-! ## 0. Generic: functionals semilinear along `io = eps ∘ ρ_L` and the base change `L ⊗_R V` -/
 
 section Generic
 
 variable {k R V Ω L : Type*} [Field k] [CommRing R] [Algebra k R] [AddCommGroup V] [Module k V]
   [Module R V] [IsScalarTower k R V] [Field Ω] [Algebra k Ω] [Field L] [Algebra R L]
-  (ι : R →+* Ω) (ε : L →+* Ω) (E : Submodule Ω (V →ₗ[k] Ω))
+  (io : R →+* Ω) (eps : L →+* Ω) (E : Submodule Ω (V →ₗ[k] Ω))
 
 /-- `v ↦ 1 ⊗ v`, `V → L ⊗_R V`. -/
 def mk1 : V →ₗ[R] L ⊗[R] V := TensorProduct.mk R L V 1
@@ -40,24 +37,24 @@ theorem span_mk1 : Submodule.span L (Set.range (mk1 (L := L) (R := R) (V := V)))
     | add x y hx hy => exact Submodule.add_mem _ hx hy
   exact eq_top_iff.2 fun t _ => key t
 
-/-- The additive lift `l ⊗ v ↦ ε(l) φ(v)` of a semilinear functional. -/
-def liftφ (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) :
+/-- The additive lift `l ⊗ v ↦ eps(l) φ(v)` of a semilinear functional. -/
+def liftφ (heps : ∀ r : R, eps (algebraMap R L r) = io r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = io r * φ v) :
     L ⊗[R] V →+ Ω :=
   TensorProduct.liftAddHom
-    (AddMonoidHom.mk' (fun l : L => AddMonoidHom.mk' (fun v : V => ε l * φ v)
+    (AddMonoidHom.mk' (fun l : L => AddMonoidHom.mk' (fun v : V => eps l * φ v)
         (by intro a b; rw [map_add, mul_add]))
       (by intro a b; ext v; simp [add_mul]))
     (by
       intro r l v
-      simp only [AddMonoidHom.mk'_apply, Algebra.smul_def, map_mul, hε, hφ]
+      simp only [AddMonoidHom.mk'_apply, Algebra.smul_def, map_mul, heps, hφ]
       ring)
 
-theorem liftφ_tmul (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (l : L) (v : V) :
-    liftφ ι ε hε φ hφ (l ⊗ₜ v) = ε l * φ v := by
+theorem liftφ_tmul (heps : ∀ r : R, eps (algebraMap R L r) = io r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (l : L) (v : V) :
+    liftφ io eps heps φ hφ (l ⊗ₜ v) = eps l * φ v := by
   simp [liftφ]
 
-theorem liftφ_smul (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (l : L)
-    (t : L ⊗[R] V) : liftφ ι ε hε φ hφ (l • t) = ε l * liftφ ι ε hε φ hφ t := by
+theorem liftφ_smul (heps : ∀ r : R, eps (algebraMap R L r) = io r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (l : L)
+    (t : L ⊗[R] V) : liftφ io eps heps φ hφ (l • t) = eps l * liftφ io eps heps φ hφ t := by
   induction t using TensorProduct.inductionOn with
   | tmul l' v =>
     rw [TensorProduct.smul_tmul', liftφ_tmul, liftφ_tmul, smul_eq_mul, map_mul, mul_assoc]
@@ -98,33 +95,33 @@ def vB (i : sB (L := L) (R := R) (V := V)) : V := (sB_sub i.2).choose
 theorem mk1_vB (i : sB (L := L) (R := R) (V := V)) : mk1 (L := L) (vB i) = bL (L := L) (R := R) (V := V) i := by
   rw [bL, Module.Basis.mk_apply]; exact (sB_sub i.2).choose_spec
 
-/-- The functional `φ_j : v ↦ ε(b_j^*(1 ⊗ v))`. -/
-def phiB (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (j : sB (L := L) (R := R) (V := V)) : V →ₗ[k] Ω where
-  toFun v := ε ((bL (L := L) (R := R) (V := V)).coord j (mk1 (L := L) v))
+/-- The functional `φ_j : v ↦ eps(b_j^*(1 ⊗ v))`. -/
+def phiB (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (j : sB (L := L) (R := R) (V := V)) : V →ₗ[k] Ω where
+  toFun v := eps ((bL (L := L) (R := R) (V := V)).coord j (mk1 (L := L) v))
   map_add' u v := by rw [map_add, map_add, map_add]
   map_smul' c v := by
     rw [RingHom.id_apply, ← algebraMap_smul R c v, LinearMap.map_smul, ← algebraMap_smul L,
-      LinearMap.map_smul, smul_eq_mul, map_mul, hε, hιk, Algebra.smul_def]
+      LinearMap.map_smul, smul_eq_mul, map_mul, heps, hik, Algebra.smul_def]
 
-theorem phiB_apply (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (j : sB (L := L) (R := R) (V := V)) (v : V) :
-    phiB ι ε hιk hε j v = ε ((bL (L := L) (R := R) (V := V)).coord j (mk1 (L := L) v)) := rfl
+theorem phiB_apply (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (j : sB (L := L) (R := R) (V := V)) (v : V) :
+    phiB io eps hik heps j v = eps ((bL (L := L) (R := R) (V := V)).coord j (mk1 (L := L) v)) := rfl
 
-theorem phiB_semilin (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (j : sB (L := L) (R := R) (V := V)) (r : R) (v : V) :
-    phiB ι ε hιk hε j (r • v) = ι r * phiB ι ε hιk hε j v := by
+theorem phiB_semilin (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (j : sB (L := L) (R := R) (V := V)) (r : R) (v : V) :
+    phiB io eps hik heps j (r • v) = io r * phiB io eps hik heps j v := by
   rw [phiB_apply, phiB_apply, LinearMap.map_smul, ← algebraMap_smul L, LinearMap.map_smul,
-    smul_eq_mul, map_mul, hε]
+    smul_eq_mul, map_mul, heps]
 
-theorem phiB_vB (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (i j : sB (L := L) (R := R) (V := V)) :
-    phiB ι ε hιk hε j (vB i) = if i = j then 1 else 0 := by
+theorem phiB_vB (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (i j : sB (L := L) (R := R) (V := V)) :
+    phiB io eps hik heps j (vB i) = if i = j then 1 else 0 := by
   rw [phiB_apply, mk1_vB, Module.Basis.coord_apply, Module.Basis.repr_self]
   by_cases h : i = j
   · subst h; simp
   · rw [Finsupp.single_eq_of_ne (Ne.symm h), map_zero, if_neg h]
 
 /-- **Expansion of a semilinear functional** in the `φ_j`. -/
-theorem eq_sum_phiB (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (v : V) :
-    φ v = ∑ j, φ (vB j) * phiB ι ε hιk hε j v := by
-  have h1 : φ v = liftφ ι ε hε φ hφ (mk1 (L := L) v) := by
+theorem eq_sum_phiB (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (φ : V →ₗ[k] Ω) (hφ : ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (v : V) :
+    φ v = ∑ j, φ (vB j) * phiB io eps hik heps j v := by
+  have h1 : φ v = liftφ io eps heps φ hφ (mk1 (L := L) v) := by
     rw [mk1, TensorProduct.mk_apply, liftφ_tmul, map_one, one_mul]
   rw [h1, ← (bL (L := L) (R := R) (V := V)).sum_repr (mk1 (L := L) v), map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -133,68 +130,272 @@ theorem eq_sum_phiB (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x
     Module.Basis.coord_apply]
   ring
 
-theorem phiB_mem (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (j : sB (L := L) (R := R) (V := V)) : phiB ι ε hιk hε j ∈ E :=
-  (hE _).2 (phiB_semilin ι ε hιk hε j)
+theorem phiB_mem (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (j : sB (L := L) (R := R) (V := V)) : phiB io eps hik heps j ∈ E :=
+  (hE _).2 (phiB_semilin io eps hik heps j)
 
 /-- The coordinate isomorphism `E ≃ Ω^s`, `φ ↦ (φ(v_j))_j`. -/
-def coordE (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) : E ≃ₗ[Ω] (sB (L := L) (R := R) (V := V) → Ω) where
+def coordE (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) : E ≃ₗ[Ω] (sB (L := L) (R := R) (V := V) → Ω) where
   toFun φ j := (φ : V →ₗ[k] Ω) (vB j)
   map_add' _ _ := by ext j; simp
   map_smul' _ _ := by ext j; simp
-  invFun a := ⟨∑ j, a j • phiB ι ε hιk hε j, Submodule.sum_mem _ fun j _ =>
-    Submodule.smul_mem _ _ (phiB_mem ι ε E hιk hε hE j)⟩
+  invFun a := ⟨∑ j, a j • phiB io eps hik heps j, Submodule.sum_mem _ fun j _ =>
+    Submodule.smul_mem _ _ (phiB_mem io eps E hik heps hE j)⟩
   left_inv φ := by
     apply Subtype.ext; apply LinearMap.ext; intro v
     simp only [LinearMap.coe_sum, Finset.sum_apply, LinearMap.smul_apply, smul_eq_mul]
-    exact (eq_sum_phiB ι ε hιk hε (φ : V →ₗ[k] Ω) ((hE _).1 φ.2) v).symm
+    exact (eq_sum_phiB io eps hik heps (φ : V →ₗ[k] Ω) ((hE _).1 φ.2) v).symm
   right_inv a := by
     funext i
     simp only [LinearMap.coe_sum, Finset.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       phiB_vB, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
 
-theorem finrank_E (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) : Module.finrank Ω E = Module.finrank L (L ⊗[R] V) := by
-  rw [(coordE ι ε E hιk hε hE).finrank_eq, Module.finrank_fintype_fun_eq_card,
+theorem finrank_E (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) : Module.finrank Ω E = Module.finrank L (L ⊗[R] V) := by
+  rw [(coordE io eps E hik heps hE).finrank_eq, Module.finrank_fintype_fun_eq_card,
     Module.finrank_eq_card_basis (bL (L := L) (R := R) (V := V))]
 
 /-- The basis of `E` dual to `(v_i)`. -/
-def basisE (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) : Module.Basis (sB (L := L) (R := R) (V := V)) Ω E :=
-  Module.Basis.ofEquivFun (coordE ι ε E hιk hε hE)
+def basisE (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) : Module.Basis (sB (L := L) (R := R) (V := V)) Ω E :=
+  Module.Basis.ofEquivFun (coordE io eps E hik heps hE)
 
-theorem basisE_repr (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (φ : E) (i : sB (L := L) (R := R) (V := V)) :
-    (basisE ι ε E hιk hε hE).repr φ i = (φ : V →ₗ[k] Ω) (vB i) := by
+theorem basisE_repr (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (φ : E) (i : sB (L := L) (R := R) (V := V)) :
+    (basisE io eps E hik heps hE).repr φ i = (φ : V →ₗ[k] Ω) (vB i) := by
   rw [basisE, Module.Basis.ofEquivFun_repr_apply]; rfl
 
-/-- **Precomposition by `g` on `E` is the transpose of `ε(g_L)`.** -/
-theorem toMatrix_precomp (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (g : V →ₗ[R] V) (T : E →ₗ[Ω] E)
+/-- **Precomposition by `g` on `E` is the transpose of `eps(g_L)`.** -/
+theorem toMatrix_precomp (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (g : V →ₗ[R] V) (T : E →ₗ[Ω] E)
     (hT : ∀ φ : E, (T φ : V →ₗ[k] Ω) = (φ : V →ₗ[k] Ω) ∘ₗ (g.restrictScalars k)) :
-    LinearMap.toMatrix (basisE ι ε E hιk hε hE) (basisE ι ε E hιk hε hE) T =
+    LinearMap.toMatrix (basisE io eps E hik heps hE) (basisE io eps E hik heps hE) T =
       ((LinearMap.toMatrix (bL (L := L) (R := R) (V := V)) (bL (L := L) (R := R) (V := V))
-        (g.baseChange L)).map ε).transpose := by
+        (g.baseChange L)).map eps).transpose := by
   ext i j
   rw [LinearMap.toMatrix_apply, basisE_repr, hT, Matrix.transpose_apply, Matrix.map_apply,
     LinearMap.toMatrix_apply, LinearMap.comp_apply, LinearMap.restrictScalars_apply]
-  have hj : ((basisE ι ε E hιk hε hE j : E) : V →ₗ[k] Ω) = phiB ι ε hιk hε j := by
+  have hj : ((basisE io eps E hik heps hE j : E) : V →ₗ[k] Ω) = phiB io eps hik heps j := by
     rw [basisE, Module.Basis.coe_ofEquivFun]
-    change (∑ i, (Pi.single j (1 : Ω) : _ → Ω) i • phiB ι ε hιk hε i) = phiB ι ε hιk hε j
+    change (∑ i, (Pi.single j (1 : Ω) : _ → Ω) i • phiB io eps hik heps i) = phiB io eps hik heps j
     simp [Pi.single_apply]
   rw [hj, phiB_apply, ← mk1_vB, mk1, TensorProduct.mk_apply, TensorProduct.mk_apply,
     LinearMap.baseChange_tmul, Module.Basis.coord_apply]
 
-theorem trace_det_precomp (hιk : ∀ x : k, ι (algebraMap k R x) = algebraMap k Ω x) (hε : ∀ r : R, ε (algebraMap R L r) = ι r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = ι r * φ v) (g : V →ₗ[R] V) (T : E →ₗ[Ω] E)
+theorem trace_det_precomp (hik : ∀ x : k, io (algebraMap k R x) = algebraMap k Ω x) (heps : ∀ r : R, eps (algebraMap R L r) = io r) (hE : ∀ φ : V →ₗ[k] Ω, φ ∈ E ↔ ∀ (r : R) (v : V), φ (r • v) = io r * φ v) (g : V →ₗ[R] V) (T : E →ₗ[Ω] E)
     (hT : ∀ φ : E, (T φ : V →ₗ[k] Ω) = (φ : V →ₗ[k] Ω) ∘ₗ (g.restrictScalars k)) :
-    LinearMap.trace Ω E T = ε (LinearMap.trace L _ (g.baseChange L)) ∧
-      @LinearMap.det E _ Ω _ _ T = ε (LinearMap.det (g.baseChange L)) := by
-  have h := toMatrix_precomp ι ε E hιk hε hE g T hT
+    LinearMap.trace Ω E T = eps (LinearMap.trace L _ (g.baseChange L)) ∧
+      @LinearMap.det E _ Ω _ _ T = eps (LinearMap.det (g.baseChange L)) := by
+  have h := toMatrix_precomp io eps E hik heps hE g T hT
   constructor
-  · rw [LinearMap.trace_eq_matrix_trace Ω (basisE ι ε E hιk hε hE), h, Matrix.trace_transpose,
+  · rw [LinearMap.trace_eq_matrix_trace Ω (basisE io eps E hik heps hE), h, Matrix.trace_transpose,
       LinearMap.trace_eq_matrix_trace L (bL (L := L) (R := R) (V := V)), Matrix.trace,
       Matrix.trace, map_sum]
     rfl
-  · rw [← LinearMap.det_toMatrix (basisE ι ε E hιk hε hE), h, Matrix.det_transpose,
+  · rw [← LinearMap.det_toMatrix (basisE io eps E hik heps hE), h, Matrix.det_transpose,
       ← LinearMap.det_toMatrix (bL (L := L) (R := R) (V := V)), RingHom.map_det]
     rfl
 
 end Generic
+
+
+/-! ## 0b. The place `λ_τ` of an embedding `τ : K → ℚ̄_ℓ` and `τ̂ : K_λ → ℚ̄_ℓ` (copied verbatim from coeff-ext's
+`ZInQKernel/Contrib/OneProof/DSCoeffExt.lean`, branch wip/coeff-ext d0256cea, §§2–4) -/
+
+section CoeffExtCopy
+
+open NumberField IsDedekindDomain
+
+/-! ## 2. Norms on `ℚ̄_ℓ` -/
+
+section Norm
+
+open Polynomial
+
+variable {ℓ : ℕ} [Fact ℓ.Prime]
+
+/-- Copy of `SwanBridge.isIntegral_iff_norm_le_one` (forward direction). -/
+theorem norm_le_one_of_isIntegral (y : PadicAlgCl ℓ) (hy : IsIntegral ℤ_[ℓ] y) : ‖y‖ ≤ 1 := by
+  have hyQ : IsIntegral ℚ_[ℓ] y := (Algebra.IsAlgebraic.isAlgebraic y).isIntegral
+  rw [← PadicAlgCl.spectralNorm_eq, spectralNorm, spectralValue_le_one_iff (minpoly.monic hyQ)]
+  intro n
+  rw [minpoly.isIntegrallyClosed_eq_field_fractions' ℚ_[ℓ] hy, coeff_map]
+  exact PadicInt.norm_le_one _
+
+theorem norm_le_one_of_isIntegral_int (y : PadicAlgCl ℓ) (hy : IsIntegral ℤ y) : ‖y‖ ≤ 1 :=
+  norm_le_one_of_isIntegral y (hy.tower_top)
+
+theorem norm_natCast_prime : ‖(ℓ : PadicAlgCl ℓ)‖ < 1 := by
+  have : (ℓ : PadicAlgCl ℓ) = algebraMap ℚ_[ℓ] (PadicAlgCl ℓ) (ℓ : ℚ_[ℓ]) := by simp
+  rw [this, PadicAlgCl.norm_extends]
+  exact Padic.norm_p_lt_one
+
+end Norm
+
+/-! ## 3. The place of a number field cut out by an embedding into `ℚ̄_ℓ` -/
+
+section Place
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {K : Type*} [Field K] [NumberField K] (τ : K →+* PadicAlgCl ℓ)
+
+theorem norm_le_one_int (a : 𝓞 K) : ‖τ (a : K)‖ ≤ 1 :=
+  norm_le_one_of_isIntegral_int _ ((a.isIntegral_coe).map τ.toIntAlgHom)
+
+/-- The prime ideal `{a ∈ 𝓞_K : ‖τ a‖ < 1}`. -/
+def placeIdeal : Ideal (𝓞 K) where
+  carrier := {a | ‖τ (a : K)‖ < 1}
+  zero_mem' := by simp
+  add_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_ofPred_eq, map_add] at *
+    exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
+  smul_mem' := by
+    intro c a ha
+    simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul, norm_mul] at *
+    calc ‖τ (c : K)‖ * ‖τ (a : K)‖ ≤ 1 * ‖τ (a : K)‖ :=
+          mul_le_mul_of_nonneg_right (norm_le_one_int τ c) (norm_nonneg _)
+      _ < 1 := by rw [one_mul]; exact ha
+
+theorem mem_placeIdeal {a : 𝓞 K} : a ∈ placeIdeal τ ↔ ‖τ (a : K)‖ < 1 := Iff.rfl
+
+theorem natCast_mem_placeIdeal : (ℓ : 𝓞 K) ∈ placeIdeal τ := by
+  rw [mem_placeIdeal]
+  simpa using (norm_natCast_prime (ℓ := ℓ))
+
+/-- The place `λ_τ` of `K` above `ℓ` cut out by `τ : K → ℚ̄_ℓ`. -/
+def place : HeightOneSpectrum (𝓞 K) where
+  asIdeal := placeIdeal τ
+  isPrime := by
+    refine ⟨?_, ?_⟩
+    · rw [Ne, Ideal.eq_top_iff_one, mem_placeIdeal]
+      simp
+    · intro a b hab
+      rw [mem_placeIdeal] at hab
+      simp only [map_mul, norm_mul] at hab
+      by_contra h
+      push Not at h
+      rw [mem_placeIdeal, mem_placeIdeal, not_lt, not_lt] at h
+      have ha : ‖τ (a : K)‖ = 1 := le_antisymm (norm_le_one_int τ a) h.1
+      have hb : ‖τ (b : K)‖ = 1 := le_antisymm (norm_le_one_int τ b) h.2
+      rw [ha, hb, one_mul] at hab
+      exact lt_irrefl _ hab
+  ne_bot := by
+    intro h
+    have h1 := natCast_mem_placeIdeal (K := K) τ
+    rw [h, Ideal.mem_bot] at h1
+    exact (Nat.cast_ne_zero.2 (Fact.out : ℓ.Prime).ne_zero) h1
+
+theorem norm_eq_one_of_not_mem {d : 𝓞 K} (hd : d ∉ (place τ).asIdeal) : ‖τ (d : K)‖ = 1 :=
+  le_antisymm (norm_le_one_int τ d) (not_lt.1 hd)
+
+/-- Valuation comparison: `v_λ(x) ≤ v_λ(y)` gives `‖τ x‖ ≤ ‖τ y‖`. -/
+theorem norm_le_of_valuation_le {x y : K} (hy : y ≠ 0)
+    (h : (place τ).valuation K x ≤ (place τ).valuation K y) : ‖τ x‖ ≤ ‖τ y‖ := by
+  have hv : (place τ).valuation K (x / y) ≤ 1 := by
+    rw [map_div₀]
+    have : (place τ).valuation K y ≠ 0 := by simpa using hy
+    exact (div_le_one₀ (zero_lt_iff.2 this)).2 h
+  obtain ⟨n, d, hnd⟩ := HeightOneSpectrum.exists_primeCompl_mul_eq_of_integer (place τ) _ hv
+  have hd : ‖τ (d : 𝓞 K)‖ = 1 := norm_eq_one_of_not_mem τ d.2
+  have hn := norm_le_one_int τ n
+  have e := congrArg (fun z => ‖τ z‖) hnd
+  simp only [map_mul, norm_mul, map_div₀, norm_div] at e
+  have hd' : ‖τ (algebraMap (𝓞 K) K (d : 𝓞 K))‖ = 1 := hd
+  rw [hd', mul_one] at e
+  have hyn : 0 < ‖τ y‖ := norm_pos_iff.2 ((map_ne_zero τ).2 hy)
+  have : ‖τ x‖ / ‖τ y‖ ≤ 1 := e ▸ hn
+  exact (div_le_one₀ hyn).1 this
+
+end Place
+
+/-! ## 4. Extension to the completion `K_λ` -/
+
+section Completion
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {K : Type*} [Field K] [NumberField K] (τ : K →+* PadicAlgCl ℓ)
+
+/-- `τ` as a ring hom on `WithVal v_λ`. -/
+def τW : WithVal ((place τ).valuation K) →+* PadicAlgCl ℓ :=
+  τ.comp (WithVal.equiv ((place τ).valuation K)).toRingHom
+
+theorem continuous_τW : Continuous (τW τ) := by
+  refine continuous_of_continuousAt_zero (τW τ).toAddMonoidHom ?_
+  rw [ContinuousAt, map_zero]
+  intro s hs
+  obtain ⟨ε, hε, hball⟩ := Metric.mem_nhds_iff.1 hs
+  obtain ⟨m, hm⟩ := exists_pow_lt_of_lt_one hε (norm_natCast_prime (ℓ := ℓ))
+  set y : K := (ℓ : K) ^ m
+  have hy : y ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 (Fact.out : ℓ.Prime).ne_zero)
+  set yW : WithVal ((place τ).valuation K) := WithVal.toVal _ y
+  have hyv : (Valued.v : Valuation (WithVal ((place τ).valuation K)) _) yW ≠ 0 := by
+    rw [← WithVal.apply_ofVal]
+    simpa [yW] using hy
+  have hres : (Valued.v : Valuation (WithVal ((place τ).valuation K)) _).restrict yW ≠ 0 := by
+    rwa [Ne, Valuation.restrict_eq_zero_iff]
+  rw [Filter.mem_map, Valued.mem_nhds_zero]
+  refine ⟨Units.mk0 _ hres, fun x hx => ?_⟩
+  simp only [Set.mem_ofPred_eq, Units.val_mk0, Valuation.restrict_lt_iff] at hx
+  show (τW τ) x ∈ s
+  apply hball
+  rw [Metric.mem_ball, dist_zero_right]
+  have hle : (place τ).valuation K (WithVal.ofVal x) ≤ (place τ).valuation K y := by
+    rw [WithVal.apply_ofVal, WithVal.apply_ofVal]
+    exact hx.le
+  calc ‖τW τ x‖ = ‖τ (WithVal.ofVal x)‖ := rfl
+    _ ≤ ‖τ y‖ := norm_le_of_valuation_le τ hy hle
+    _ = ‖(ℓ : PadicAlgCl ℓ)‖ ^ m := by simp [y]
+    _ < ε := hm
+
+/-- A finite extension of `ℚ_ℓ` inside `ℚ̄_ℓ` containing `τ(K)`. -/
+def tgt : IntermediateField ℚ_[ℓ] (PadicAlgCl ℓ) :=
+  IntermediateField.adjoin ℚ_[ℓ] (Set.range (fun i => τ (Module.finBasis ℚ K i)))
+
+instance : FiniteDimensional ℚ_[ℓ] (tgt τ) :=
+  IntermediateField.finiteDimensional_adjoin (fun x _ => (Algebra.IsIntegral.isIntegral x))
+
+theorem mem_tgt (x : K) : τ x ∈ tgt τ := by
+  rw [← (Module.finBasis ℚ K).sum_repr x, map_sum]
+  refine sum_mem fun i _ => ?_
+  rw [Algebra.smul_def, map_mul, eq_ratCast, map_ratCast]
+  exact mul_mem (SubfieldClass.ratCast_mem _ _)
+    (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)
+
+instance : CompleteSpace (tgt τ) := by
+  have : FiniteDimensional ℚ_[ℓ] ((tgt τ).toSubalgebra.toSubmodule) :=
+    (inferInstance : FiniteDimensional ℚ_[ℓ] (tgt τ))
+  exact (Submodule.complete_of_finiteDimensional ((tgt τ).toSubalgebra.toSubmodule)).completeSpace_coe
+
+/-- `τ` into the complete field `tgt τ`. -/
+def τE : WithVal ((place τ).valuation K) →+* tgt τ :=
+  (τW τ).codRestrict (tgt τ) (fun _ => mem_tgt τ _)
+
+theorem continuous_τE : Continuous (τE τ) :=
+  Continuous.subtype_mk (continuous_τW τ) _
+
+/-- The continuous extension `K_λ → ℚ̄_ℓ` of `τ`. -/
+def τhat : (place τ).adicCompletion K →+* PadicAlgCl ℓ :=
+  ((tgt τ).val.toRingHom.comp (UniformSpace.Completion.extensionHom (τE τ) (continuous_τE τ))).comp
+    (HeightOneSpectrum.adicCompletion.equiv K (place τ)).toRingHom
+
+theorem continuous_τhat : Continuous (τhat τ) :=
+  continuous_subtype_val.comp ((UniformSpace.Completion.continuous_extension).comp
+    (HeightOneSpectrum.adicCompletion.continuous_toCompletion K (place τ)))
+
+theorem τhat_algebraMap (x : K) : τhat τ (algebraMap K ((place τ).adicCompletion K) x) = τ x := by
+  simp only [τhat, RingHom.coe_comp, Function.comp_apply, RingEquiv.toRingHom_eq_coe,
+    RingEquiv.coe_toRingHom]
+  have : (HeightOneSpectrum.adicCompletion.equiv K (place τ))
+      (algebraMap K ((place τ).adicCompletion K) x) =
+      ((WithVal.toVal ((place τ).valuation K) x : WithVal _) :
+        ((place τ).valuation K).Completion) := rfl
+  rw [this, UniformSpace.Completion.extensionHom_coe]
+  rfl
+
+end Completion
+
+end CoeffExtCopy
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
+open LeafModCurves PkgI3 PkgI3.AbVar
+open PkgI4 (Qbar GQ CF coeff IsNewform)
+open scoped TensorProduct MatrixGroups
+
+
 
 /-! ## 1. The uniformization `τ ↦ x_τ ∈ X(ℂ)` of a model of `X₁(N)_alg` -/
 
@@ -330,9 +531,12 @@ section Lambda
 
 open IsDedekindDomain NumberField
 
+/-- `ℓ` as an element of `Nat.Primes`. -/
+def primeL (ℓ : ℕ) [Fact ℓ.Prime] : Nat.Primes := ⟨ℓ, Fact.out⟩
+
 /-- The `ℓ`-adic place of `ℚ`. -/
 def vQ (ℓ : ℕ) [Fact ℓ.Prime] : HeightOneSpectrum (𝓞 ℚ) :=
-  (Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm ⟨ℓ, Fact.out⟩
+  (Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm (primeL ℓ)
 
 variable {K : Type} [Field K] [NumberField K]
 
@@ -340,7 +544,7 @@ variable {K : Type} [Field K] [NumberField K]
 def algQl (ℓ : ℕ) [Fact ℓ.Prime] (lam : HeightOneSpectrum (𝓞 K))
     [lam.asIdeal.LiesOver (vQ ℓ).asIdeal] : ℚ_[ℓ] →+* lam.adicCompletion K :=
   ((vQ ℓ).adicCompletionExtension ℚ K lam).comp
-    (RingHomClass.toRingHom (Padic.adicCompletionEquiv (𝓞 ℚ) ⟨ℓ, Fact.out⟩))
+    (RingHomClass.toRingHom (Padic.adicCompletionEquiv (𝓞 ℚ) (primeL ℓ)))
 
 /-- `ℚ_ℓ ⊗_ℚ K → K_λ`, `x ⊗ a ↦ x · a`. -/
 def rhoLam (ℓ : ℕ) [Fact ℓ.Prime] (lam : HeightOneSpectrum (𝓞 K))
@@ -369,5 +573,225 @@ def frobLam (ℓ : ℕ) [Fact ℓ.Prime] (A : AbVar ℚ) (θ : K →+* A.End0) (
   (galR ℓ A θ σ).baseChange _
 
 end Lambda
+
+/-! ## 5. The three leaves -/
+
+section Leaves
+
+open IsDedekindDomain NumberField
+
+/-- **LEAF L1 (Hecke operators on `J₁(N)` over `ℚ`).** For DS's `X₁(N)_alg` (`IsX1Gen`: function field
+`ℚ(j, f₁)`) with a rational point and its Jacobian `J = J₁(N)` (Albanese property, Abel–Jacobi map `aj`),
+the Hecke operators `T_p` (every prime `p`) and the diamond operators `⟨d⟩` exist as endomorphisms of
+`J` over `ℚ`, acting on degree-0 divisor classes of points `x_τ` by Diamond–Shurman's double-coset
+formulas (`IsHeckeT`, `IsDiamond`). Diamond–Shurman, *A First Course in Modular Forms*, GTM 228 (2005),
+§6.3 (`T_p` and `⟨d⟩` on `Div⁰`, `Pic⁰` and `Jac(X₁(N))`) and §7.9 (they are defined over `ℚ`); Shimura
+1971 §7.2 (modular correspondences on the Jacobian, rational over `ℚ`); locators UNVERIFIED. -/
+def HeckeJ1DS : Prop :=
+  ∀ (N : ℕ), 2 ≤ N → ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+      ∃ (tp : Nat.Primes → AbVar.End J) (δ : (ZMod N)ˣ → AbVar.End J),
+        (∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p)) ∧
+        (∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d))
+
+/-- **LEAF L2 (Shimura's `A_f` over `ℚ`).** For a newform `f ∈ S₂(Γ₁(N))` with nebentypus `χ`, `K_f` is
+a number field, and the quotient `A_f = J₁(N)/I_f J₁(N)` exists as an abelian variety over `ℚ` with the
+action `θ : K_f → End⁰(A_f)` induced by the Hecke algebra (`θ(a_p) = T_p|A_f`, `θ(χ(d)) = ⟨d⟩|A_f`).
+Shimura, *On the factors of the jacobian variety of a modular function field*, J. Math. Soc. Japan 25
+(1973), Thm 1 (pp. 526–527; read by the locator audit, row R16: the `ℚ`-rational quotient, the
+coefficient-field action and `dim A_f = [K_f : ℚ]`); Diamond–Shurman Def. 6.6.3, Prop. 6.6.4 (over `ℂ`).
+The Hecke operators are any with DS's double-coset action (by L1 they exist; they are unique since an
+endomorphism of `J` is determined by its action on `J(ℂ)`). -/
+def AfShimura : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
+    ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ (tp : Nat.Primes → AbVar.End J) (δ : (ZMod N)ˣ → AbVar.End J),
+      (∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p)) →
+      (∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) →
+      FiniteDimensional ℚ (coeffField f) ∧
+        ∃ (A : AbVar ℚ) (π : AbVar.Hom J A) (θ : coeffField f →+* A.End0),
+          IsAfQuotient χ f tp δ A π ∧ IsAfAction χ f tp δ π θ
+
+/-- **LEAF L3 (Diamond–Shurman Thm 9.5.4, over `K_{f,λ}`).** For every `(A, π, θ)` that is DS's
+`(A_f, J₁(N) ↠ A_f, K_f-action)` (L2's characterization), every prime `ℓ` and every place `λ ∣ ℓ` of
+`K_f`: `σ ∈ G_ℚ` acts on `V_λ(A_f) = K_{f,λ} ⊗_{ℚ_ℓ ⊗ K_f} V_ℓ(A_f)` (`frobLam`, the representation
+`ρ_{f,λ}`), and for `p ∤ Nℓ` every arithmetic Frobenius at `p` has characteristic polynomial
+`X² − a_p(f) X + χ(p) p` over `K_{f,λ}`. Diamond–Shurman GTM 228, Lemma 9.5.3 (`V_ℓ(A_f)` free of rank 2
+over `K_f ⊗ ℚ_ℓ`, which defines `ρ_{f,λ}`) and Thm 9.5.4; Shimura 1971 Thm 7.14 / Ribet 1977 for the
+characteristic-polynomial form; numbers UNVERIFIED. `K_f` a number field is the print's presupposition
+(instance argument); finiteness of `V_λ` likewise. -/
+def AfTateDSLambda : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
+    ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ (tp : Nat.Primes → AbVar.End J) (δ : (ZMod N)ˣ → AbVar.End J),
+      (∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p)) →
+      (∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) →
+    ∀ (A : AbVar ℚ) (π : AbVar.Hom J A) (θ : coeffField f →+* A.End0),
+      IsAfQuotient χ f tp δ A π → IsAfAction χ f tp δ π θ →
+    ∀ [NumberField (coeffField f)] (ℓ : ℕ) [Fact ℓ.Prime]
+      (lam : HeightOneSpectrum (𝓞 (coeffField f))) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal],
+      letI := R16Used.tensorModule ℓ A θ
+      letI := (rhoLam ℓ lam).toAlgebra
+      letI : Module.Free (lam.adicCompletion (coeffField f))
+          (lam.adicCompletion (coeffField f) ⊗[ℚ_[ℓ] ⊗[ℚ] coeffField f] A.V ℓ) :=
+        Module.Free.of_divisionRing (lam.adicCompletion (coeffField f))
+          (lam.adicCompletion (coeffField f) ⊗[ℚ_[ℓ] ⊗[ℚ] coeffField f] A.V ℓ)
+      ∀ [Module.Finite (lam.adicCompletion (coeffField f))
+          (lam.adicCompletion (coeffField f) ⊗[ℚ_[ℓ] ⊗[ℚ] coeffField f] A.V ℓ)],
+      ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
+        ∃ c : coeffField f, (c : ℂ) = χ (p : ZMod N) ∧
+          LinearMap.charpoly (frobLam ℓ A θ lam σ) =
+            ((Polynomial.X : Polynomial (lam.adicCompletion (coeffField f))) ^ 2 -
+              Polynomial.C (algebraMap (coeffField f) (lam.adicCompletion (coeffField f))
+                ⟨coeff f p, coeff_mem_coeffField f p⟩) * Polynomial.X +
+              Polynomial.C (algebraMap (coeffField f) (lam.adicCompletion (coeffField f))
+                (c * (p : coeffField f))) : Polynomial (lam.adicCompletion (coeffField f)))
+
+end Leaves
+
+/-! ## 6. Glue: from `K_{f,λ}` to the `ι`-components -/
+
+section Component
+
+open IsDedekindDomain NumberField
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {K : Type} [Field K] [NumberField K]
+
+theorem liesOver_place (τ : K →+* PadicAlgCl ℓ) : (place τ).asIdeal.LiesOver (vQ ℓ).asIdeal := by
+  have hmem : ((ℓ : ℕ) : 𝓞 ℚ) ∈ (place τ).asIdeal.comap (algebraMap (𝓞 ℚ) (𝓞 K)) := by
+    rw [Ideal.mem_comap, map_natCast]; exact natCast_mem_placeIdeal τ
+  let w : HeightOneSpectrum (𝓞 ℚ) :=
+    { asIdeal := (place τ).asIdeal.comap (algebraMap (𝓞 ℚ) (𝓞 K))
+      isPrime := Ideal.comap_isPrime _ _
+      ne_bot := by
+        intro h
+        rw [h, Ideal.mem_bot] at hmem
+        exact (Nat.cast_ne_zero.2 (Fact.out : ℓ.Prime).ne_zero) hmem }
+  have hw : Rat.HeightOneSpectrum.primesEquiv w = primeL ℓ := by
+    have hdvd : Rat.HeightOneSpectrum.natGenerator w ∣ ℓ := by
+      rw [Rat.HeightOneSpectrum.natGenerator_dvd_iff]
+      have := Ideal.mem_map_of_mem (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)) hmem
+      rwa [map_natCast] at this
+    apply Subtype.ext
+    exact (Nat.prime_dvd_prime_iff_eq (Rat.HeightOneSpectrum.prime_natGenerator w)
+      (Fact.out : ℓ.Prime)).1 hdvd
+  have hv : vQ ℓ = w := (Equiv.symm_apply_eq _).2 hw.symm
+  exact ⟨by rw [hv]⟩
+
+theorem continuous_algQl (lam : HeightOneSpectrum (𝓞 K)) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal] :
+    Continuous (algQl ℓ lam) :=
+  ((vQ ℓ).continuous_adicCompletionExtension ℚ K lam).comp
+    (map_continuous (Padic.adicCompletionEquiv (𝓞 ℚ) (primeL ℓ)))
+
+theorem τhat_algQl (τ : K →+* PadicAlgCl ℓ) [(place τ).asIdeal.LiesOver (vQ ℓ).asIdeal] (x : ℚ_[ℓ]) :
+    τhat τ (algQl ℓ (place τ) x) = algebraMap ℚ_[ℓ] (PadicAlgCl ℓ) x := by
+  have hc1 : Continuous fun x => τhat τ (algQl ℓ (place τ) x) :=
+    (continuous_τhat τ).comp (continuous_algQl (place τ))
+  have hc2 : Continuous (algebraMap ℚ_[ℓ] (PadicAlgCl ℓ)) := continuous_algebraMap ℚ_[ℓ] _
+  have hq : (fun x => τhat τ (algQl ℓ (place τ) x)) ∘ (Rat.cast : ℚ → ℚ_[ℓ]) =
+      (algebraMap ℚ_[ℓ] (PadicAlgCl ℓ)) ∘ (Rat.cast : ℚ → ℚ_[ℓ]) := by
+    funext q; simp only [Function.comp_apply, map_ratCast]
+  exact congrFun ((Padic.denseRange_ratCast ℓ).equalizer hc1 hc2 hq) x
+
+variable (A : AbVar ℚ) (θ : K →+* A.End0)
+
+theorem isScalarTower_tensor :
+    letI := R16Used.tensorModule ℓ A θ; IsScalarTower ℚ_[ℓ] (ℚ_[ℓ] ⊗[ℚ] K) (A.V ℓ) := by
+  letI := R16Used.tensorModule ℓ A θ
+  refine IsScalarTower.of_algebraMap_smul fun x v => ?_
+  rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply]
+  exact R16Used.tsmul_left (R16Split.rhoV ℓ A θ) x v
+
+theorem mem_eigenFun_iff_semilin (emb : K →+* PadicAlgCl ℓ) (φ : A.V ℓ →ₗ[ℚ_[ℓ]] PadicAlgCl ℓ) :
+    letI := R16Used.tensorModule ℓ A θ
+    φ ∈ eigenFun ℓ A θ emb ↔ ∀ (r : ℚ_[ℓ] ⊗[ℚ] K) (v : A.V ℓ), φ (r • v) = R16Used.liftHom emb r * φ v := by
+  letI := R16Used.tensorModule ℓ A θ
+  constructor
+  · intro h r v
+    exact R16Used.semilin (R16Split.rhoV ℓ A θ) emb (eigenFun ℓ A θ emb)
+      (fun φ => R16Used.mem_eigenFun_iff ℓ A θ emb φ) h r v
+  · intro h
+    rw [R16Used.mem_eigenFun_iff]
+    intro a
+    apply LinearMap.ext
+    intro v
+    have h1 := h ((1 : ℚ_[ℓ]) ⊗ₜ a) v
+    rw [R16Used.tsmul_right, R16Used.liftHom_one_tmul] at h1
+    simpa using h1
+
+theorem rhoLam_tmul (lam : HeightOneSpectrum (𝓞 K)) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal]
+    (x : ℚ_[ℓ]) (a : K) :
+    rhoLam ℓ lam (x ⊗ₜ a) = algQl ℓ lam x * algebraMap K (lam.adicCompletion K) a := by
+  letI : Algebra ℚ_[ℓ] (lam.adicCompletion K) := (algQl ℓ lam).toAlgebra
+  exact R16Used.liftHom_tmul _ x a
+
+theorem τhat_rhoLam (emb : K →+* PadicAlgCl ℓ) [(place emb).asIdeal.LiesOver (vQ ℓ).asIdeal]
+    (r : ℚ_[ℓ] ⊗[ℚ] K) : τhat emb (rhoLam ℓ (place emb) r) = R16Used.liftHom emb r := by
+  induction r using TensorProduct.inductionOn with
+  | tmul x a =>
+    rw [rhoLam_tmul, R16Used.liftHom_tmul, map_mul, τhat_algQl, τhat_algebraMap]
+  | add r s hr hs => rw [map_add, map_add, hr, hs, map_add]
+
+/-- **The `ι`-component from `ρ_{f,λ}` (glue, proved).** For `ι : K → ℚ̄_ℓ` with place `λ = λ_ι`, the
+`ι`-eigenfunctionals have the dimension of `V_λ`, and `σ` acts on them with trace and determinant
+`ι̂(tr ρ_λ(σ))`, `ι̂(det ρ_λ(σ))`. -/
+theorem component (emb : K →+* PadicAlgCl ℓ) [FiniteDimensional ℚ_[ℓ] (A.V ℓ)] (σ : GQ) :
+    letI := R16Used.tensorModule ℓ A θ
+    haveI := liesOver_place emb
+    letI := (rhoLam ℓ (place emb)).toAlgebra
+    Module.Finite ((place emb).adicCompletion K)
+        ((place emb).adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ) ∧
+      Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) =
+        Module.finrank ((place emb).adicCompletion K)
+          ((place emb).adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ) ∧
+      LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) =
+        τhat emb (LinearMap.trace _ _ (frobLam ℓ A θ (place emb) σ)) ∧
+      LinearMap.det (frobOn ℓ A θ emb σ) = τhat emb (LinearMap.det (frobLam ℓ A θ (place emb) σ)) := by
+  letI := R16Used.tensorModule ℓ A θ
+  haveI := liesOver_place emb
+  letI := (rhoLam ℓ (place emb)).toAlgebra
+  haveI := isScalarTower_tensor (ℓ := ℓ) A θ
+  haveI : Module.Finite (ℚ_[ℓ] ⊗[ℚ] K) (A.V ℓ) :=
+    Module.Finite.of_restrictScalars_finite ℚ_[ℓ] (ℚ_[ℓ] ⊗[ℚ] K) (A.V ℓ)
+  haveI : Module.Finite ((place emb).adicCompletion K)
+      ((place emb).adicCompletion K ⊗[ℚ_[ℓ] ⊗[ℚ] K] A.V ℓ) := inferInstance
+  have hik : ∀ x : ℚ_[ℓ], R16Used.liftHom emb (algebraMap ℚ_[ℓ] (ℚ_[ℓ] ⊗[ℚ] K) x) =
+      algebraMap ℚ_[ℓ] (PadicAlgCl ℓ) x := by
+    intro x
+    rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply,
+      R16Used.liftHom_tmul_one]
+  have heps : ∀ r, τhat emb (algebraMap (ℚ_[ℓ] ⊗[ℚ] K) ((place emb).adicCompletion K) r) =
+      R16Used.liftHom emb r := fun r => τhat_rhoLam emb r
+  have hE := mem_eigenFun_iff_semilin A θ emb
+  refine ⟨inferInstance, finrank_E (R16Used.liftHom emb) (τhat emb) (eigenFun ℓ A θ emb) hik heps hE, ?_⟩
+  exact trace_det_precomp (R16Used.liftHom emb) (τhat emb) (eigenFun ℓ A θ emb) hik heps hE
+    (galR ℓ A θ σ) (frobOn ℓ A θ emb σ) (fun φ => rfl)
+
+end Component
+
+/-- Trace, determinant and dimension from a quadratic characteristic polynomial. -/
+theorem lin_trace_det {F M : Type*} [Field F] [AddCommGroup M] [Module F M] [FiniteDimensional F M]
+    (g : M →ₗ[F] M) (t d : F)
+    (h : g.charpoly = Polynomial.X ^ 2 - Polynomial.C t * Polynomial.X + Polynomial.C d) :
+    Module.finrank F M = 2 ∧ LinearMap.trace F M g = t ∧ LinearMap.det g = d := by
+  have hn : Module.finrank F M = 2 := by
+    rw [← LinearMap.charpoly_natDegree g, h]
+    compute_degree!
+  let b := Module.finBasis F M
+  have hM : (LinearMap.toMatrix b b g).charpoly =
+      Polynomial.X ^ 2 - Polynomial.C t * Polynomial.X + Polynomial.C d := by
+    rw [LinearMap.charpoly_toMatrix, h]
+  haveI : Nonempty (Fin (Module.finrank F M)) := ⟨⟨0, by omega⟩⟩
+  refine ⟨hn, ?_, ?_⟩
+  · rw [LinearMap.trace_eq_matrix_trace F b, Matrix.trace_eq_neg_charpoly_coeff, hM,
+      Fintype.card_fin, hn]
+    simp [Polynomial.coeff_X_pow, Polynomial.coeff_C, Polynomial.coeff_X]
+  · rw [← LinearMap.det_toMatrix b, Matrix.det_eq_sign_charpoly_coeff, hM, Fintype.card_fin, hn]
+    simp [Polynomial.coeff_X_pow, Polynomial.coeff_C, Polynomial.coeff_X]
 
 end AfTateLam
