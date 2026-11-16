@@ -378,11 +378,11 @@ theorem LamCd_le_of_etaW32 (hW : EtaW32Character) {d : ℕ} (hd4 : d % 4 = 1) (h
     have hδ10 : δ 1 0 = γ 1 0 * (γ' 0 1 1 - γ' a 1 1) := by
       rw [hδ, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv,
         Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
-      simp [h10]
+      simp [h10]; ring
     have hδ11 : δ 1 1 = -(γ 1 0 * γ' 0 0 1) + γ' a 1 1 * γ' 0 0 0 := by
       rw [hδ, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv,
         Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
-      simp [h10]; try ring
+      simp [h10]
     have hdet : γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
       have h := γ.det_coe; rwa [Matrix.det_fin_two] at h
     have hδΓ : δ ∈ Gamma0 32 := by

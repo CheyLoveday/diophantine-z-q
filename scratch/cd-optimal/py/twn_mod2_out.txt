@@ -17,3 +17,5 @@ d=149 tried=4 found_A=7 coords=[1, 0] err=5.5 e-19
 d=157 tried=3 found_A=5 coords=[1, 0] err=3.8 e-19
 d=165 tried=5 found_A=19 coords=[2, -1] err=2.4 e-18
 d=173 tried=3 found_A=5 coords=[1, 0] err=2.9 e-19
+d=181 tried=6 found_A=11 coords=[0, -1] err=4.6 e-19
+d=197 tried=3 found_A=5 coords=[1, 0] err=2.8 e-19
