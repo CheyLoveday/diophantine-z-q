@@ -57,3 +57,13 @@
 - `#discharges` (scratch/heegner-32/discharges-output.txt): 61 open hypotheses, 3062 theorems checked; the new
   theorems discharge no field directly (they prove the `C_d` form `GZStatements.GrossZagierHeegnerCd`, not `hL3`),
   as for gz-weil.
+
+## Lean results (2026-11-16 ~01:30 PST, continued), VERIFIED (compiled; out_check.txt)
+- `Genus.lean`: `quadraticChar_natCast_eq_jacobi`, `norm_mod_d`, `adjSqrt_le_ringClassField` (K(√d) ⊆ H_{𝒪_d}, Bauer),
+  `artin_sqrtH` (Art(𝔭)(√d) = (p/d)√d, Euler + reciprocity), `genusSqrtD` (GenusSqrtD proved for the ideals used).
+- `RingClassJd`/`GenusSqrtD` restated for the ideals the proof produces (prime of degree one, or 𝒪_K); both proved.
+- **`grossZagierHeegnerCd_of_hCM` / `grossZagierHeegnerCd_of_printed`: `GZStatements.GrossZagierHeegnerCd` from `hCM`,
+  `GrossZagierFormulaCd`, `GrossConjugationCd` only.** `heegnerPointRationalCdEven_of_printed (hCM)`.
+- MainEdit: `frozenTarget_heegner32` (hL3 → GrossZagierFormulaCd + GrossConjugationCd), standard axioms.
+- `#discharges`: 61 open, 3088 checked, 8 discharge one (none of the new theorems: they prove the C_d form).
+- autofold spec: scratch/heegner-32/autofold.json (hL3 is top-level; manual Main edit as in MainEdit.lean).
