@@ -7,3 +7,6 @@
   so TailK cannot import the proof. But TailZ25 (sixContactMin_of_open19) is outside the closure: thread hθ only through
   gluePieces_of_open4 and sixContactMin_of_open4..open18, and supply the proof in TailZ25. open19..open35, Main and
   Contrib callers (X0ModuliUsed calls open29) keep their signatures. No Contrib file calls open4..open18 (grep).
+- 02:12 base build OK (13697 jobs; first attempt hit the 10-min background limit and was restarted), frozenTarget
+  axioms standard. DumpCompact 17299 constants (hashes_before.txt). PruneScan base: 25 + 10 + 9 + 1 = 45 fields,
+  0 unused (prunescan-base-out.txt). kinds before: H rows 45, strict 34 LEAF / 11 GLUE, strictest 34 / 11.
