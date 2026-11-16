@@ -32,3 +32,5 @@ Copied in scratch/nos-proof/OldStatements.lean.
   injectivity copied with K̄ → Ω); compiles, standard axioms.
 - scratch/nos-proof/SepCompat.lean: dict-galois's `NeronOggShafarevichSep` (verbatim copy, diff IDENTICAL) from
   `NOSConverseSep`; compiles, standard axioms (in case dict-galois's fold lands first).
+- Report docs/research/nos-proof.md and .fleet/nos-proof.md written. Final: r7a discharged from NOSConverseSep
+  (count 34/11 -> 34/11); target -1 not reached (converse live; needs a leaf absent from the bundles).
