@@ -24,7 +24,6 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilCompat,
  PicDict.MumfordWeilDual,
  PicDict.MumfordWeilAlt,
- PicDict.WeilFormulaGalois,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves26.r16CoreY] by R16Split.coreY_of_r16
@@ -39,4 +38,4 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 2911 theorems checked, 9 discharge one
+#discharges: 59 open hypotheses, 2942 theorems checked, 9 discharge one

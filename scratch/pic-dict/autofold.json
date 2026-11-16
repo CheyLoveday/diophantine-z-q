@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilCompat {n}.mumfordWeilDual {n}.mumfordWeilAlt {n}.weilFormulaGalois {n}.phiAmpleIsogeny",
+   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilCompat {n}.mumfordWeilDual {n}.mumfordWeilAlt {n}.phiAmpleIsogeny",
    "leaves": [
     {
      "name": "mumfordSquare",
@@ -79,14 +79,6 @@
      "kind": "published",
      "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 23: e^L_n(x,x) = 1"
-    },
-    {
-     "name": "weilFormulaGalois",
-     "type": "_root_.PicDict.WeilFormulaGalois",
-     "doc": "pic-dict: GLUE, transport of Mumford's formula along 1 x Spec(sigma) on A_Kbar (not a published statement; Lean proof open).",
-     "kind": "project glue",
-     "flag": "glue: transport of structure along sigma in G_K; provable, not yet proved in Lean",
-     "source": "project glue: transport of structure"
     }
    ]
   }
