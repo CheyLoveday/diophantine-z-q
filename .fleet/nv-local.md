@@ -1,4 +1,4 @@
-# nv-local (2026-11-15)
+# nv-local (2026-11-15, final)
 
 **Verdict.** `SGRDirect.NVLocalInertia` (sgr-direct's one open Prop of route NV) is not proved outright. It is
 proved in Lean, with standard axioms, from one strictly smaller GLUE Prop, `SGRDirect.NVLocal.TameBranchNormal`.
