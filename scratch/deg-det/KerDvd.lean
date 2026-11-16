@@ -182,4 +182,82 @@ theorem eq_one_of_σP_eq (P : A.Pt Kb) (h : σP P = 𝟙 _) : P = 1 := by
 
 end Kernel
 
+section Artin
+
+open PkgI3.AbVar
+
+variable {A}
+
+theorem σP_apply_mul (P Q : A.Pt Kb) (x) : (σP (P * Q)).hom x = (σP Q).hom ((σP P).hom x) := by
+  rw [σP_mul]; rfl
+
+theorem σP_apply_one (x) : (σP (1 : A.Pt Kb)).hom x = x := by
+  rw [σP_one]; rfl
+
+/-- **`#ker ψ(k̄)` divides `deg ψ`** (when `deg ψ ≠ 0`; then the kernel is finite): the kernel acts
+faithfully on `K(A)` by translations, fixing `ψ^* K(A)`; Artin's theorem. -/
+theorem kerDvdDeg (ψ : End A) (hdeg : degEnd ψ ≠ 0) :
+    Finite (ptMap (L := Kb) ψ).ker ∧ Nat.card (ptMap (L := Kb) ψ).ker ∣ degEnd ψ := by
+  classical
+  have hiso := ZInQ.Contrib.OneProof.DegDet.isIsogenyMor_of_degEnd_ne_zero hdeg
+  have hψe : ψ.hom.left (genericPoint A.X.left) = genericPoint A.X.left :=
+    ZInQ.Contrib.OneProof.DegDet.map_genericPoint _ hiso.2.surj
+  let fB : Field (A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left))) :=
+    (ZInQ.Contrib.OneProof.DegDet.isField_stalk _ hψe).toField
+  let fK : Field (A.X.left.presheaf.stalk (genericPoint A.X.left)) :=
+    (ZInQ.Contrib.OneProof.DegDet.isField_stalk _ rfl).toField
+  let alg : Algebra (A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left)))
+      (A.X.left.presheaf.stalk (genericPoint A.X.left)) :=
+    (ψ.hom.left.stalkMap (genericPoint A.X.left)).hom.toAlgebra
+  have hfr : degEnd ψ = Module.finrank (A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left)))
+      (A.X.left.presheaf.stalk (genericPoint A.X.left)) := by
+    unfold degEnd; rw [if_pos hiso]
+  set G := (ptMap (L := Kb) ψ).ker
+  have hmemG : ∀ P : G, P.1 ≫ ψ.hom = 1 := fun P => P.2
+  let ρ0 : G → (A.X.left.presheaf.stalk (genericPoint A.X.left) ≃ₐ[A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left))] A.X.left.presheaf.stalk (genericPoint A.X.left)) := fun P =>
+    { toFun := (σP P.1).hom
+      invFun := (σP P.1⁻¹).hom
+      left_inv := fun x => by
+        change (σP P.1⁻¹).hom ((σP P.1).hom x) = x
+        rw [← σP_apply_mul, _root_.mul_inv_cancel, σP_apply_one]
+      right_inv := fun x => by
+        change (σP P.1).hom ((σP P.1⁻¹).hom x) = x
+        rw [← σP_apply_mul, _root_.inv_mul_cancel, σP_apply_one]
+      map_mul' := map_mul _
+      map_add' := map_add _
+      commutes' := fun b => by
+        change (σP P.1).hom ((ψ.hom.left.stalkMap (genericPoint A.X.left)).hom b) =
+          (ψ.hom.left.stalkMap (genericPoint A.X.left)).hom b
+        rw [← CommRingCat.comp_apply, stalkMap_comp_σP ψ P.1 (hmemG P)] }
+  let ρ : G →* (A.X.left.presheaf.stalk (genericPoint A.X.left) ≃ₐ[A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left))] A.X.left.presheaf.stalk (genericPoint A.X.left)) :=
+    { toFun := ρ0
+      map_one' := by
+        ext x
+        exact σP_apply_one x
+      map_mul' := fun P Q => by
+        ext x
+        change (σP (P.1 * Q.1)).hom x = (σP P.1).hom ((σP Q.1).hom x)
+        rw [_root_.mul_comm, σP_apply_mul] }
+  have hinj : Function.Injective ρ := by
+    rw [← MonoidHom.ker_eq_bot_iff, eq_bot_iff]
+    intro P hP
+    rw [MonoidHom.mem_ker] at hP
+    have h1 : σP P.1 = 𝟙 _ := by
+      ext x
+      have := congrArg (fun e : A.X.left.presheaf.stalk (genericPoint A.X.left) ≃ₐ[A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left))] A.X.left.presheaf.stalk (genericPoint A.X.left) => e x) hP
+      exact this
+    exact (Subgroup.mem_bot).mpr (Subtype.ext (eq_one_of_σP_eq P.1 h1))
+  have hfd : FiniteDimensional (A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left))) (A.X.left.presheaf.stalk (genericPoint A.X.left)) := Module.finite_of_finrank_pos (by rw [← hfr]; omega)
+  haveI : Finite G := Finite.of_injective ρ hinj
+  refine ⟨inferInstance, ?_⟩
+  set H := ρ.range
+  have hH : Nat.card H = Nat.card G := (Nat.card_congr (MonoidHom.ofInjective hinj).toEquiv).symm
+  have h1 := IntermediateField.finrank_fixedField_eq_card H
+  have h2 := Module.finrank_mul_finrank (A.X.left.presheaf.stalk (ψ.hom.left (genericPoint A.X.left))) (IntermediateField.fixedField H) (A.X.left.presheaf.stalk (genericPoint A.X.left))
+  rw [hfr, ← h2, h1, hH]
+  exact Dvd.intro_left _ rfl
+
+end Artin
+
 end DegDet.KerDvd
+#print axioms DegDet.KerDvd.kerDvdDeg
