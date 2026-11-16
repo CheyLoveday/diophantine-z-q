@@ -1,0 +1,5 @@
+scratch/ega-limit/Discharges.lean:1:0: error: import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.AlgebraicGeometry.Limits.ProjectiveSpace failed, environment already contains 'AlgebraicGeometry.ProjectiveSpace' from ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.ProjectiveSpace.Relative
+
+real	0m37.012s
+user	0m1.949s
+sys	0m4.338s

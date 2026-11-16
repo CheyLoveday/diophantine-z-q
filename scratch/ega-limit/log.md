@@ -44,3 +44,13 @@ Target: field `egaIV_8_10_5_xii : ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii`
   the three vendored tops): `lake env lean` OK, no errors;
   `#print axioms ZInQ.Contrib.EGAProperLimit.egaIV_8_10_5_xii_proof`: [propext, Classical.choice, Quot.sound].
   VERIFIED. Statement of the theorem: `ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii` (the field's type, unchanged).
+- Contribution `ZInQKernel/Contrib/OneProof/EGAIV_8_10_5_xii.lean` (= Glue.lean with docstring, imports Glueing
+  instead of the FinitePresentation bridge) + `EGAProperLimit/NOTICE.md` written.
+- Build tree: copied (reflink) `~/dzq-wt/pazuki-dict/.lake/build` and `lean/.lake` (base 2880fef1 + one added
+  Contrib file, Main built); `lake build +Main +Discharges +EGAIV_8_10_5_xii`: success, 13772 jobs, 74 rebuilt
+  (the 73 vendored + contribution), 3m17s. (A first trial copy to /tmp was deleted with `rm -rf` on that /tmp
+  copy only; noted as a rules slip, nothing else touched.)
+- `#discharges` scratch (`scratch/ega-limit/Discharges.lean`): FAILED at import: "environment already contains
+  'AlgebraicGeometry.ProjectiveSpace' from ZInQKernel.Contrib.CloudW07JacobiansCurves...ProjectiveSpace.Relative"
+  — vendored Stacks `Limits/ProjectiveSpace.lean` clashes with CloudW07's vendored Jacobian-Challenge
+  (different definition: `ProjectiveSpace (coordinates : Type u)`). Name-clash scan running (DumpMine/DumpMain).
