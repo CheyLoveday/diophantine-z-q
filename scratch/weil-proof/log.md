@@ -56,3 +56,15 @@ weil-used (origin/wip/weil-used 8ea3eaf3): consumers read only left kernel, Galo
   (`prod`, `mv`), associativity `prod_assoc` (from pic-dict's pullbackComp_assoc_app), commutator relation
   `Comm`, `comm_prod_left` (multiplicative in the first variable, needs t^* to fix Γ), `comm_pw` (a lift
   commutes with its powers), `comm_mv_left`, `comm_smul_left`.
+
+## 11-16 evening
+- VERIFIED: `WeilProof.Theta.alt_core` (scheme-level §23 core), `mumfordWeilAltAC_of_div`, `divisibleAC`
+  (k-points of an abelian variety over k = k̄ are n-divisible for n invertible; from the tree's
+  `mulEtaleAbelianScheme_proof`), `mumfordWeilAltAC_proof`, `weilPairingMumford_final` (4 Mumford leaves +
+  open field phiAmpleIsogeny); standard axioms (scratch/weil-proof/Axioms.lean).
+- Pitfall: `set` abbreviations in the long §23 assembly made the kernel time out on `theta_rho`; fixed by a
+  generic core lemma over variables (`alt_core`).
+- Contributor-kit check: removed a `local notation "L"` from WeilFormula.lean (notation is not allowed in merged
+  contributions); replaced by `Scheme.Modules.sheafification`.
+- Autofold (honest flags, nondegeneracy pending reading): 34/11 on 45 -> 37/11 on 48 (no rise); unread flag:
+  -> 38/10. Dry-run modules compile.

@@ -552,7 +552,6 @@ def eF (f : X ⟶ Y) (g : Y ⟶ Z) : PF f ⋙ PF g ≅ PF (f ≫ g) := eQ f g
 def pcP (f : X ⟶ Y) (g : Y ⟶ Z) : PP g ⋙ PP f ≅ PP (f ≫ g) :=
   Adjunction.leftAdjointCompIso (AD g) (AD f) (AD (f ≫ g)) (eF f g)
 
-local notation "L" => Scheme.Modules.sheafification
 
 abbrev shA (X : Scheme.{u}) := PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)
 
@@ -575,7 +574,7 @@ lemma PF_PF (f : X ⟶ Y) (g : Y ⟶ Z) {M N : PresheafOfModules (X.sheaf.obj �
 
 /-- (U1) -/
 lemma unit_ee (f : X ⟶ Y) (P : Y.PresheafOfModules) :
-    (shA Y).unit.app P ≫ (RS Y).map ((adjS f).unit.app ((L Y).obj P)) ≫
+    (shA Y).unit.app P ≫ (RS Y).map ((adjS f).unit.app ((Scheme.Modules.sheafification Y).obj P)) ≫
         (RS Y).map ((pushforward f).map ((ee f).hom.app P)) =
       (AD f).unit.app P ≫ (PF f).map ((shA X).unit.app ((PP f).obj P)) := by
   have h := Adjunction.unit_leftAdjointUniq_hom_app ((shA Y).comp (adjS f)) ((AD f).comp (shA X)) P
@@ -606,13 +605,13 @@ set_option maxHeartbeats 1000000 in
 /-- (E) -/
 lemma ee_comp (f : X ⟶ Y) (g : Y ⟶ Z) (A : Z.PresheafOfModules) :
     (Scheme.Modules.pullback f).map ((ee g).hom.app A) ≫ (ee f).hom.app ((PP g).obj A) ≫
-        (L X).map ((pcP f g).hom.app A) =
-      (pullbackComp f g).hom.app ((L Z).obj A) ≫ (ee (f ≫ g)).hom.app A := by
+        (Scheme.Modules.sheafification X).map ((pcP f g).hom.app A) =
+      (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj A) ≫ (ee (f ≫ g)).hom.app A := by
   apply (((shA Z).comp ((adjS g).comp (adjS f))).homEquiv _ _).injective
   rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit]
   simp only [Adjunction.comp_unit_app, Functor.map_comp, Category.assoc, Functor.comp_map, Functor.comp_obj]
   -- right side
-  have u2 := congrArg (fun φ => (RS Z).map φ) (unit_pullbackComp f g ((L Z).obj A))
+  have u2 := congrArg (fun φ => (RS Z).map φ) (unit_pullbackComp f g ((Scheme.Modules.sheafification Z).obj A))
   simp only [Functor.map_comp, Functor.comp_map] at u2
   dsimp only [Scheme.Modules.sheafification] at u2 ⊢
   rw [reassoc_of% u2, push_push f g ((ee (f ≫ g)).hom.app A)]
@@ -709,13 +708,13 @@ lemma pcP_monoidal (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) :
 
 /-- The main identity on sheafified objects. -/
 theorem main_sheafified (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) :
-    Functor.LaxMonoidal.μ (Scheme.Modules.pullback f) ((Scheme.Modules.pullback g).obj ((L Z).obj A))
-        ((Scheme.Modules.pullback g).obj ((L Z).obj B)) ≫
+    Functor.LaxMonoidal.μ (Scheme.Modules.pullback f) ((Scheme.Modules.pullback g).obj ((Scheme.Modules.sheafification Z).obj A))
+        ((Scheme.Modules.pullback g).obj ((Scheme.Modules.sheafification Z).obj B)) ≫
       (Scheme.Modules.pullback f).map
-        (Functor.LaxMonoidal.μ (Scheme.Modules.pullback g) ((L Z).obj A) ((L Z).obj B)) ≫
-        (pullbackComp f g).hom.app ((L Z).obj A ⊗ (L Z).obj B) =
-      ((pullbackComp f g).hom.app ((L Z).obj A) ⊗ₘ (pullbackComp f g).hom.app ((L Z).obj B)) ≫
-        Functor.LaxMonoidal.μ (Scheme.Modules.pullback (f ≫ g)) ((L Z).obj A) ((L Z).obj B) := by
+        (Functor.LaxMonoidal.μ (Scheme.Modules.pullback g) ((Scheme.Modules.sheafification Z).obj A) ((Scheme.Modules.sheafification Z).obj B)) ≫
+        (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj A ⊗ (Scheme.Modules.sheafification Z).obj B) =
+      ((pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj A) ⊗ₘ (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj B)) ≫
+        Functor.LaxMonoidal.μ (Scheme.Modules.pullback (f ≫ g)) ((Scheme.Modules.sheafification Z).obj A) ((Scheme.Modules.sheafification Z).obj B) := by
   -- precompose with the iso `f^*(e_g⁻¹) ⊗ f^*(e_g⁻¹)`
   rw [← cancel_epi ((Scheme.Modules.pullback f).map ((ee g).inv.app A) ⊗ₘ
     (Scheme.Modules.pullback f).map ((ee g).inv.app B))]
@@ -729,32 +728,32 @@ theorem main_sheafified (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) 
       (Scheme.Modules.pullback f).map ((ee g).hom.app A ⊗ₘ (ee g).hom.app B) = 𝟙 _ := by
     rw [← Functor.map_comp, tensorHom_comp_tensorHom, Iso.inv_hom_id_app, Iso.inv_hom_id_app]
     simp
-  have c2 : (Scheme.Modules.pullback f).map (Functor.OplaxMonoidal.δ (L Y) ((PP g).obj A) ((PP g).obj B)) ≫
-      (Scheme.Modules.pullback f).map (Functor.LaxMonoidal.μ (L Y) ((PP g).obj A) ((PP g).obj B)) = 𝟙 _ := by
+  have c2 : (Scheme.Modules.pullback f).map (Functor.OplaxMonoidal.δ (Scheme.Modules.sheafification Y) ((PP g).obj A) ((PP g).obj B)) ≫
+      (Scheme.Modules.pullback f).map (Functor.LaxMonoidal.μ (Scheme.Modules.sheafification Y) ((PP g).obj A) ((PP g).obj B)) = 𝟙 _ := by
     rw [← Functor.map_comp, Functor.Monoidal.δ_μ, CategoryTheory.Functor.map_id]
   have c3 : (ee f).inv.app ((PP g).obj A ⊗ (PP g).obj B) ≫
-      (Scheme.Modules.pullback f).map ((L Y).map (Functor.LaxMonoidal.μ (PP g) A B)) =
-      (L X).map ((PP f).map (Functor.LaxMonoidal.μ (PP g) A B)) ≫ (ee f).inv.app ((PP g).obj (A ⊗ B)) :=
+      (Scheme.Modules.pullback f).map ((Scheme.Modules.sheafification Y).map (Functor.LaxMonoidal.μ (PP g) A B)) =
+      (Scheme.Modules.sheafification X).map ((PP f).map (Functor.LaxMonoidal.μ (PP g) A B)) ≫ (ee f).inv.app ((PP g).obj (A ⊗ B)) :=
     ((ee f).inv.naturality (Functor.LaxMonoidal.μ (PP g) A B)).symm
-  have c4 : (Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map (Functor.OplaxMonoidal.δ (L Z) A B)) ≫
-      (pullbackComp f g).hom.app ((L Z).obj A ⊗ (L Z).obj B) =
-      (pullbackComp f g).hom.app ((L Z).obj (A ⊗ B)) ≫
-        (Scheme.Modules.pullback (f ≫ g)).map (Functor.OplaxMonoidal.δ (L Z) A B) :=
-    (pullbackComp f g).hom.naturality (Functor.OplaxMonoidal.δ (L Z) A B)
-  have hE : ∀ C : Z.PresheafOfModules, (pullbackComp f g).hom.app ((L Z).obj C) =
+  have c4 : (Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map (Functor.OplaxMonoidal.δ (Scheme.Modules.sheafification Z) A B)) ≫
+      (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj A ⊗ (Scheme.Modules.sheafification Z).obj B) =
+      (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj (A ⊗ B)) ≫
+        (Scheme.Modules.pullback (f ≫ g)).map (Functor.OplaxMonoidal.δ (Scheme.Modules.sheafification Z) A B) :=
+    (pullbackComp f g).hom.naturality (Functor.OplaxMonoidal.δ (Scheme.Modules.sheafification Z) A B)
+  have hE : ∀ C : Z.PresheafOfModules, (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj C) =
       (Scheme.Modules.pullback f).map ((ee g).hom.app C) ≫ (ee f).hom.app ((PP g).obj C) ≫
-        (L X).map ((pcP f g).hom.app C) ≫ (ee (f ≫ g)).inv.app C := by
+        (Scheme.Modules.sheafification X).map ((pcP f g).hom.app C) ≫ (ee (f ≫ g)).inv.app C := by
     intro C
     rw [reassoc_of% (ee_comp f g C), Iso.hom_inv_id_app]
     exact (Category.comp_id _).symm
   have c5 : (ee f).inv.app ((PP g).obj (A ⊗ B)) ≫ (Scheme.Modules.pullback f).map ((ee g).inv.app (A ⊗ B)) ≫
-      (pullbackComp f g).hom.app ((L Z).obj (A ⊗ B)) =
-      (L X).map ((pcP f g).hom.app (A ⊗ B)) ≫ (ee (f ≫ g)).inv.app (A ⊗ B) := by
+      (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj (A ⊗ B)) =
+      (Scheme.Modules.sheafification X).map ((pcP f g).hom.app (A ⊗ B)) ≫ (ee (f ≫ g)).inv.app (A ⊗ B) := by
     rw [hE]
     simp [← Functor.map_comp_assoc]
   have c6 : ∀ C : Z.PresheafOfModules, (Scheme.Modules.pullback f).map ((ee g).inv.app C) ≫
-      (pullbackComp f g).hom.app ((L Z).obj C) ≫ (ee (f ≫ g)).hom.app C =
-      (ee f).hom.app ((PP g).obj C) ≫ (L X).map ((pcP f g).hom.app C) := by
+      (pullbackComp f g).hom.app ((Scheme.Modules.sheafification Z).obj C) ≫ (ee (f ≫ g)).hom.app C =
+      (ee f).hom.app ((PP g).obj C) ≫ (Scheme.Modules.sheafification X).map ((pcP f g).hom.app C) := by
     intro C
     rw [hE]
     simp [← Functor.map_comp_assoc]
@@ -766,12 +765,12 @@ theorem main_sheafified (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) 
   rw [tensorHom_comp_tensorHom_assoc, tensorHom_comp_tensorHom_assoc]
   simp only [Category.assoc]
   rw [c6, c6, ← tensorHom_comp_tensorHom_assoc, Functor.LaxMonoidal.μ_natural_assoc]
-  have hP := congrArg (fun φ => (L X).map φ) (pcP_monoidal f g A B)
+  have hP := congrArg (fun φ => (Scheme.Modules.sheafification X).map φ) (pcP_monoidal f g A B)
   simp only [Functor.map_comp] at hP
   rw [reassoc_of% hP]
 
 /-- The counit `L(M.val) ≅ M`. -/
-abbrev epsM (M : Z.Modules) : (L Z).obj M.val ≅ M :=
+abbrev epsM (M : Z.Modules) : (Scheme.Modules.sheafification Z).obj M.val ≅ M :=
   (asIso (PresheafOfModules.sheafificationAdjunction (𝟙 Z.ringCatSheaf.obj)).counit).app M
 
 /-- **`pullbackComp` is monoidal**, from (E) and (P). -/
