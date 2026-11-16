@@ -682,4 +682,136 @@ theorem P0_monic (hR : R.Monic) {n : ℕ} (hN : N.IsHomogeneous n) (h1 : NtZ N 1
 
 end PolyFn
 
+/-! ## 5. Mumford's theorem, abstract form -/
+
+section Main
+
+variable {ℓ : ℕ} [hℓ : Fact ℓ.Prime]
+
+theorem algebraMap_rat_comp (L : Type*) [Field L] [CharZero L] [Algebra ℚ_[ℓ] L] :
+    (algebraMap ℚ_[ℓ] L).comp (algebraMap ℚ ℚ_[ℓ]) = algebraMap ℚ L :=
+  RingHom.ext_rat _ _
+
+/-- **Mumford's theorem `deg φ = det T_ℓ(φ)`, abstract form.** Let `E` be a ring, `deg : E → ℕ`, `φ ∈ E`
+integral over `ℤ` (`R(φ) = 0`, `R` monic). Assume
+
+* `deg` is a homogeneous polynomial function of degree `n` on `ℤ[φ]` (in the coordinates
+  `x ↦ ∑ xᵢ φ^i`, `i < deg R`),
+* `deg 1 = 1` and `deg(ψχ) = deg ψ · deg χ` when both are nonzero,
+* `ρ : E → M_I(ℚ_ℓ)` is a ring homomorphism with `|det ρ(ψ)|_ℓ = |deg ψ|_ℓ` whenever `deg ψ ≠ 0`.
+
+Then `det ρ(φ) = deg φ`. -/
+theorem det_eq_deg_abstract {E : Type*} [Ring E] (φ : E) (deg : E → ℕ)
+    (R : ℤ[X]) (hR : R.Monic) (hRφ : aeval φ R = 0)
+    (n : ℕ) (N : MvPolynomial (Fin R.natDegree) ℚ) (hN : N.IsHomogeneous n)
+    (hpoly : ∀ x : Fin R.natDegree → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (hdeg1 : deg 1 = 1)
+    (hmul : ∀ ψ χ : E, deg ψ ≠ 0 → deg χ ≠ 0 → deg (ψ * χ) = deg ψ * deg χ)
+    {I : Type*} [Fintype I] [DecidableEq I] (ρ : E →+* Matrix I I ℚ_[ℓ])
+    (hlink : ∀ ψ : E, deg ψ ≠ 0 → ‖(ρ ψ).det‖ = ‖(deg ψ : ℚ_[ℓ])‖) :
+    (ρ φ).det = (deg φ : ℚ_[ℓ]) := by
+  classical
+  set W := PadicAlgCl ℓ
+  set ι := algebraMap ℚ_[ℓ] W with hι
+  -- `deg` on `ℤ[X]`
+  set D : ℤ[X] → ℕ := fun F => deg (aeval φ F) with hD
+  have hRid : R.map (Int.castRingHom ℤ) = R := by
+    rw [show Int.castRingHom ℤ = RingHom.id ℤ from RingHom.ext_int _ _, Polynomial.map_id]
+  have hDN : ∀ F : ℤ[X], (D F : ℚ) = NtZ N F := by
+    intro F
+    have h1 : aeval φ F = ∑ i : Fin R.natDegree, ((F %ₘ R).coeff i) • φ ^ (i : ℕ) := by
+      rw [← aeval_modByMonic_eq_self_of_root hRφ]
+      have := modByMonic_eq_sum hR ℤ F
+      rw [hRid] at this
+      conv_lhs => rw [this]
+      rw [map_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_mul, aeval_C, map_pow, aeval_X, Algebra.algebraMap_eq_smul_one, smul_mul_assoc,
+        one_mul]
+    rw [hD]
+    simp only
+    rw [h1, hpoly, NtZ, Nt, ← map_modByMonic _ hR, ← MvPolynomial.coe_aeval_eq_eval]
+    simp_rw [coeff_map]
+    rfl
+  have h1 : NtZ N 1 = 1 := by
+    rw [← hDN, hD]; simp [hdeg1]
+  have hmulZ : ∀ F G : ℤ[X], NtZ N F ≠ 0 → NtZ N G ≠ 0 → NtZ N (F * G) = NtZ N F * NtZ N G := by
+    intro F G hF hG
+    rw [← hDN] at hF hG
+    rw [← hDN, ← hDN, ← hDN, hD]
+    simp only [map_mul]
+    rw [hmul _ _ (by exact_mod_cast hF) (by exact_mod_cast hG), Nat.cast_mul]
+  -- the extension to `W[X]`
+  have hNtW : ∀ F : ℤ[X], Nt R N W (F.map (Int.castRingHom W)) = (D F : W) := by
+    intro F
+    have := Nt_map N hR (Algebra.ofId ℚ W) (F.map (Int.castRingHom ℚ))
+    rw [Polynomial.map_map] at this
+    rw [show (Int.castRingHom W) = ((Algebra.ofId ℚ W : ℚ →ₐ[ℚ] W) : ℚ →+* W).comp
+      (Int.castRingHom ℚ) from RingHom.ext_int _ _, this]
+    change algebraMap ℚ W (NtZ N F) = _
+    rw [← hDN, map_natCast]
+  have hNt1 : Nt R N W 1 = 1 := by
+    have := hNtW 1
+    rw [Polynomial.map_one] at this
+    rw [this, hD]; simp [hdeg1]
+  let φW : W[X] →* W :=
+    { toFun := Nt R N W
+      map_one' := hNt1
+      map_mul' := Nt_mul N hR h1 hmulZ W }
+  set P := (P0 N).map (algebraMap ℚ W) with hP
+  obtain ⟨hP0m, hP0d⟩ := P0_monic N hR hN h1
+  have hPm : P.Monic := hP0m.map _
+  have hPd : P.natDegree = n := by rw [hP, natDegree_map, hP0d]
+  have hφW : ∀ F : W[X], Nt R N W F = Rs P F := by
+    refine eq_Rs_of_mul φW n P hPm hPd ?_ ?_
+    · intro c
+      change Nt R N W (C c) = c ^ n
+      rw [← mul_one (C c), Nt_C_mul N hN, hNt1, mul_one]
+    · intro r
+      change Nt R N W (X - C r) = _
+      rw [show (X - C r : W[X]) = C (-1) * (C r - X) by rw [C_neg, C_1]; ring, Nt_C_mul N hN,
+        Nt_C_sub_X N hR]
+  -- the two polynomials over `ℚ_ℓ`
+  set Pℓ := (P0 N).map (algebraMap ℚ ℚ_[ℓ]) with hPℓ
+  have hPℓm : Pℓ.Monic := hP0m.map _
+  have hPPℓ : Pℓ.map ι = P := by
+    rw [hPℓ, Polynomial.map_map, hι, algebraMap_rat_comp]
+  set M := ρ φ with hM
+  set Q := M.charpoly with hQ
+  have hRsP : ∀ F : ℤ[X], RsZ Pℓ F = (D F : W) := by
+    intro F
+    unfold RsZ
+    rw [← hι, hPPℓ, ← hφW, hNtW]
+  have hRsQ : ∀ F : ℤ[X], RsZ Q F = ι ((ρ (aeval φ F)).det) := by
+    intro F
+    unfold RsZ
+    rw [← hι, hQ, ← Matrix.charpoly_map, ← det_aeval_eq_Rs]
+    rw [← algebraMap_int_eq, aeval_map_algebraMap]
+    have e1 : aeval (M.map ι) F = (ι.mapMatrix (aeval M F)) := by
+      have := Polynomial.aeval_algHom_apply (ι.mapMatrix.toIntAlgHom : Matrix I I ℚ_[ℓ] →ₐ[ℤ] _) M F
+      exact this
+    have e2 : aeval M F = ρ (aeval φ F) := by
+      rw [hM]
+      exact Polynomial.aeval_algHom_apply (ρ.toIntAlgHom) φ F
+    rw [e1, e2, RingHom.map_det]
+  have hPQ : Pℓ = Q := by
+    refine eq_of_norm_RsZ hPℓm (Matrix.charpoly_monic M) fun F hF => ?_
+    rw [hRsP] at hF ⊢
+    rw [hRsQ]
+    have hDF : D F ≠ 0 := by
+      intro h0; apply hF; rw [h0, Nat.cast_zero]
+    have := hlink (aeval φ F) hDF
+    rw [hι, PadicAlgCl.norm_extends ℓ, this, ← map_natCast ι, hι, PadicAlgCl.norm_extends ℓ]
+  have hfin := hRsQ X
+  rw [← hPQ, hRsP] at hfin
+  simp only [hD, aeval_X] at hfin
+  have : ι ((deg φ : ℕ) : ℚ_[ℓ]) = ι (ρ φ).det := by
+    rw [map_natCast]
+    exact hfin
+  exact (ι.injective this).symm
+
+end Main
+
 end DegDet
+#print axioms DegDet.det_eq_deg_abstract
