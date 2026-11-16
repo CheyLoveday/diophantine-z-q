@@ -213,4 +213,50 @@ lemma theta_rho (L : X.Modules) :
 
 end Coherence
 
+/-! ### The tensor relation (G5a) -/
+
+section TensorRel
+
+open MonoidalCategory
+
+/-- `θ_t(F) = pullbackComp ≫ pullbackCongr : t^* m^* F → m^* F` for `t ≫ m = m`. -/
+def thetaT {t m : X ⟶ X} (h : t ≫ m = m) (F : X.Modules) :
+    (Scheme.Modules.pullback t).obj ((Scheme.Modules.pullback m).obj F) ⟶ (Scheme.Modules.pullback m).obj F :=
+  (pullbackComp t m).hom.app F ≫ (pullbackCongr h).hom.app F
+
+/-- **(G5a)** Tensoring a trivialization `ψ` of `m^*Φ` with `N = m^*L`. -/
+lemma tensor_relation (hA : PullbackCompMonoidal) {t m : X ⟶ X} (h : t ≫ m = m)
+    (hr : (pOU t).inv = Functor.LaxMonoidal.ε (Scheme.Modules.pullback t)) (Φ L : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj Φ) :
+    (Scheme.Modules.pullback t).map ((λ_ ((Scheme.Modules.pullback m).obj L)).inv ≫
+        (ψ.hom ▷ (Scheme.Modules.pullback m).obj L) ≫ Functor.LaxMonoidal.μ (Scheme.Modules.pullback m) Φ L) ≫
+        thetaT h (Φ ⊗ L) =
+      thetaT h L ≫ (λ_ ((Scheme.Modules.pullback m).obj L)).inv ≫
+        ((alpha t m h Φ ψ ≫ ψ.hom) ▷ (Scheme.Modules.pullback m).obj L) ≫
+          Functor.LaxMonoidal.μ (Scheme.Modules.pullback m) Φ L := by
+  have h4 := hA t m Φ L
+  have h5 := congr_mu h Φ L
+  have hl := Functor.LaxMonoidal.left_unitality_inv (Scheme.Modules.pullback t)
+    ((Scheme.Modules.pullback m).obj L)
+  have hn : ((Scheme.Modules.pullback t).map ψ.hom ▷ (Scheme.Modules.pullback t).obj
+        ((Scheme.Modules.pullback m).obj L)) ≫ Functor.LaxMonoidal.μ (Scheme.Modules.pullback t)
+          ((Scheme.Modules.pullback m).obj Φ) ((Scheme.Modules.pullback m).obj L) =
+      Functor.LaxMonoidal.μ (Scheme.Modules.pullback t) (𝟙_ X.Modules) ((Scheme.Modules.pullback m).obj L) ≫
+        (Scheme.Modules.pullback t).map (ψ.hom ▷ (Scheme.Modules.pullback m).obj L) :=
+    Functor.LaxMonoidal.μ_natural_left (Scheme.Modules.pullback t) ψ.hom ((Scheme.Modules.pullback m).obj L)
+  simp only [thetaT, Functor.map_comp, Category.assoc]
+  rw [← hl]
+  simp only [Category.assoc]
+  rw [← reassoc_of% hn, reassoc_of% h4, h5]
+  have hal : alpha t m h Φ ψ ≫ ψ.hom = Functor.LaxMonoidal.ε (Scheme.Modules.pullback t) ≫
+      (Scheme.Modules.pullback t).map ψ.hom ≫ (pullbackComp t m).hom.app Φ ≫ (pullbackCongr h).hom.app Φ := by
+    simp [alpha, ← hr]
+  rw [hal]
+  simp only [← MonoidalCategory.tensorHom_id, tensorHom_comp_tensorHom_assoc, Category.id_comp,
+    Category.assoc]
+  rw [MonoidalCategory.tensorHom_def', Category.assoc, ← leftUnitor_inv_naturality_assoc]
+  simp
+
+end TensorRel
+
 end WeilProof.Theta
