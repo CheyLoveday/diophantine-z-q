@@ -26,3 +26,9 @@ Base origin/main 2880fef1. Build copied from ~/dzq-check2 (same commit) 2026-11-
   (h1 : DSThm965Printed) (h2 : EigenformCoeffFieldFinite) : DS965Weak.DSThm965Weak` and
   `DSCoeffExt.dsThm966_of_printed (h : DSThm966Printed) : ZInQ.Contrib.HodgeSplit.DSThm966`; converse
   `dsThm966Printed_of_dsThm966`. Axioms [propext, Classical.choice, Quot.sound].
+- VERIFIED: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DSCoeffExt`
+  succeeded (13699 jobs; DSCoeffExt 14 s). `#discharges` (scratch/coeff-ext/discharges-output.txt):
+  `OpenResearchLeaves26.dsThm965Weak` by `DSCoeffExt.dsThm965Weak_of_printed`, still assumes
+  [DSCoeffExt.DSThm965Printed, DSCoeffExt.EigenformCoeffFieldFinite]; `OpenResearchLeaves26.dsThm966` by
+  `DSCoeffExt.dsThm966_of_printed`, still assumes [DSCoeffExt.DSThm966Printed]; axioms standard.
+- VERIFIED (Check.lean): verbatim copies of both targets equal the originals by rfl.

@@ -5,7 +5,29 @@ import ZInQKernel.Contrib.TauCeti.NumberTheory.ModularForms.HeckeSlash.BadPrime.
 
 /-! # coeff-ext: Diamond–Shurman 9.6.5 over `K_{f,λ}` and the eigenform dictionary
 
-HEADER_DOC
+Task coeff-ext (2026-11-16), report `docs/research/coeff-ext.md`, scratch `scratch/coeff-ext/`.
+
+Two coefficient-field dictionary steps are removed from the leaves `dsThm965Weak` and `dsThm966`.
+
+* **Diamond–Shurman 9.6.5 over `K_{f,λ}`.** The field `DS965Weak.DSThm965Weak` states Deligne's theorem
+  over `GL₂(ℚ̄_ℓ)` for every pair of embeddings `ιC : ℚ̄ → ℂ`, `ιL : ℚ̄ → ℚ̄_ℓ`. The print gives
+  `ρ_{f,λ} : G_ℚ → GL₂(K_{f,λ})` for each prime `λ ∣ ℓ` of the number field `K_f`. `DSThm965Printed` states
+  the print over Mathlib's `λ.adicCompletion K_f`; `dsThm965Weak_of_printed` proves the field from it and
+  from `EigenformCoeffFieldFinite` (`K_f` is a number field, the print's presupposition). The glue
+  (all proved here): `τ = ιL ∘ ιC⁻¹ : K_f → ℚ̄_ℓ` (algebraic numbers of `ℂ` lie in `ιC(ℚ̄)`), the place
+  `λ_τ = {a ∈ 𝓞_{K_f} : ‖τ a‖ < 1}`, continuity of `τ` for the `λ_τ`-adic topology
+  (`v_λ(x) ≤ v_λ(y) ⇒ ‖τ x‖ ≤ ‖τ y‖`), its extension `τ̂ : K_{f,λ_τ} → ℚ̄_ℓ` through the complete finite
+  extension `ℚ_ℓ(τ(K_f))`, and `charpoly_map`.
+* **"Normalized eigenform".** `IsNormalizedEigenformDS` is Diamond–Shurman's Def. 5.8.1 over Tau Ceti's
+  `HeckeRing.GL2.Eigenform` (eigenvector of every `T_n`, the `U_p`, `p ∣ N`, included, in the `χ`-space of the
+  diamond operators) with `a₁ = 1`. `isNormalizedEigenform_iff_DS` proves it equivalent to the kernel's
+  coefficient form `ZInQ.Contrib.G9.PkgI4.IsNormalizedEigenform`; the `U_p` half is
+  `heckeTCuspNat_eq_coeff_smul_all` (every prime `p`, from Tau Ceti's
+  `heckeTCuspNat_eq_smul_iff_forall_qExpansion_coeff_prime_mul_ofUnitHom`). Both new 9.6.5/9.6.6 leaves use
+  this definition, so they are direct instances of their prints.
+* **Deligne–Serre.** `DSThm966Printed` is `ZInQ.Contrib.HodgeSplit.DSThm966` with the definition above,
+  located at Deligne–Serre 1974 Thm 4.1 (4.1.1); `dsThm966_of_printed` and `dsThm966Printed_of_dsThm966`
+  show the two equivalent.
 -/
 
 noncomputable section
