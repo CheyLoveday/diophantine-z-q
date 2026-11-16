@@ -206,4 +206,162 @@ theorem conj_mem_LamCd {d : ℕ} (hd4 : d % 4 = 1) (hsq : Squarefree d) {w : ℂ
     rw [show conj (n • x) = n • conj x by rw [zsmul_eq_mul, zsmul_eq_mul, map_mul, map_intCast]]
     exact Submodule.smul_mem _ n hx
 
+/-! ## §4. Lattices stable under `i`: Gaussian rounding -/
+
+section Gauss
+
+variable (L : PeriodPair)
+
+theorem finite_ball (R : ℝ) : {x : ℂ | x ∈ L.lattice ∧ ‖x‖ ≤ R}.Finite := by
+  have h := ZSpan.setFinite_inter L.basis (Metric.isBounded_closedBall (x := (0 : ℂ)) (r := R))
+  refine h.subset fun x hx => ⟨mem_closedBall_zero_iff.2 hx.2, ?_⟩
+  have := hx.1
+  rw [L.lattice_eq_span_range_basis] at this
+  exact this
+
+/-- A shortest nonzero vector of a nonzero subgroup `Λ ⊆ L`. -/
+theorem exists_min (Λ : Submodule ℤ ℂ) (hΛ : Λ ≤ L.lattice) {x : ℂ} (hx : x ∈ Λ) (hx0 : x ≠ 0) :
+    ∃ μ ∈ Λ, μ ≠ 0 ∧ ∀ ν ∈ Λ, ν ≠ 0 → ‖μ‖ ≤ ‖ν‖ := by
+  set S : Set ℂ := {y | y ∈ Λ ∧ y ≠ 0 ∧ ‖y‖ ≤ ‖x‖} with hSdef
+  have hS : S.Finite := (finite_ball L ‖x‖).subset fun y hy => ⟨hΛ hy.1, hy.2.2⟩
+  obtain ⟨μ, hμS, hmin⟩ := Set.exists_min_image S (fun y => ‖y‖) hS ⟨x, hx, hx0, le_rfl⟩
+  refine ⟨μ, hμS.1, hμS.2.1, fun ν hν hν0 => ?_⟩
+  by_cases h : ‖ν‖ ≤ ‖x‖
+  · exact hmin ν ⟨hν, hν0, h⟩
+  · push Not at h
+    linarith [hμS.2.2]
+
+/-- `Λ` is closed under multiplication by Gaussian integers if it is closed under `i`. -/
+theorem gauss_mul_mem {Λ : Submodule ℤ ℂ} (hI : ∀ y ∈ Λ, I * y ∈ Λ) (m n : ℤ) {y : ℂ}
+    (hy : y ∈ Λ) : ((m : ℂ) + n * I) * y ∈ Λ := by
+  have h1 : ((m : ℂ) + n * I) * y = m • y + n • (I * y) := by
+    simp only [zsmul_eq_mul]; ring
+  rw [h1]
+  exact add_mem (Λ.smul_mem m hy) (Λ.smul_mem n (hI y hy))
+
+theorem norm_sub_gauss_lt (z : ℂ) : ‖z - ((round z.re : ℤ) + (round z.im : ℤ) * I)‖ < 1 := by
+  have hre := abs_sub_round z.re
+  have him := abs_sub_round z.im
+  set w := z - ((round z.re : ℤ) + (round z.im : ℤ) * I) with hw
+  have hwre : w.re = z.re - round z.re := by simp [hw]
+  have hwim : w.im = z.im - round z.im := by simp [hw]
+  have hsq : ‖w‖ ^ 2 = w.re ^ 2 + w.im ^ 2 := by
+    rw [Complex.sq_norm, Complex.normSq_apply]; ring
+  have h1 : w.re ^ 2 ≤ 1 / 4 := by
+    rw [hwre]; have := abs_le.mp hre; nlinarith
+  have h2 : w.im ^ 2 ≤ 1 / 4 := by
+    rw [hwim]; have := abs_le.mp him; nlinarith
+  by_contra h
+  push Not at h
+  nlinarith [norm_nonneg w]
+
+/-- **Gaussian rounding.** If `Λ` is closed under `i` and `μ` is a shortest nonzero vector of `Λ`,
+then `Λ = ℤ[i] μ`. -/
+theorem gauss_rep {Λ : Submodule ℤ ℂ} (hI : ∀ y ∈ Λ, I * y ∈ Λ) {μ : ℂ} (hμ : μ ∈ Λ)
+    (hμ0 : μ ≠ 0) (hmin : ∀ ν ∈ Λ, ν ≠ 0 → ‖μ‖ ≤ ‖ν‖) {ν : ℂ} (hν : ν ∈ Λ) :
+    ∃ m n : ℤ, ν = ((m : ℂ) + n * I) * μ := by
+  set z := ν / μ with hz
+  refine ⟨round z.re, round z.im, ?_⟩
+  set g : ℂ := ((round z.re : ℤ) : ℂ) + ((round z.im : ℤ) : ℂ) * I with hg
+  have hmem : ν - g * μ ∈ Λ := sub_mem hν (gauss_mul_mem hI _ _ hμ)
+  by_contra hne
+  have hne' : ν - g * μ ≠ 0 := sub_ne_zero.mpr hne
+  have h2 := hmin _ hmem hne'
+  have heq : ν - g * μ = (z - g) * μ := by rw [hz]; field_simp
+  rw [heq, norm_mul] at h2
+  have hμpos : 0 < ‖μ‖ := norm_pos_iff.mpr hμ0
+  have hlt := norm_sub_gauss_lt z
+  nlinarith
+
+end Gauss
+
+/-- The units of `ℤ[i]`. -/
+theorem unit_cases {m n : ℤ} (h : m ^ 2 + n ^ 2 = 1) :
+    (m = 1 ∧ n = 0) ∨ (m = -1 ∧ n = 0) ∨ (m = 0 ∧ n = 1) ∨ (m = 0 ∧ n = -1) := by
+  have hm : m ^ 2 ≤ 1 := by nlinarith [sq_nonneg n]
+  have hn : n ^ 2 ≤ 1 := by nlinarith [sq_nonneg m]
+  have hm' : -1 ≤ m ∧ m ≤ 1 := by constructor <;> nlinarith
+  have hn' : -1 ≤ n ∧ n ≤ 1 := by constructor <;> nlinarith
+  obtain ⟨hm1, hm2⟩ := hm'
+  obtain ⟨hn1, hn2⟩ := hn'
+  interval_cases m <;> interval_cases n <;> simp_all
+
+theorem gauss_norm_eq_one {m n : ℤ} {ω : ℂ} (hω : ω ≠ 0)
+    (h : ‖((m : ℂ) + n * I) * ω‖ = ‖ω‖) : m ^ 2 + n ^ 2 = 1 := by
+  rw [norm_mul] at h
+  have hω' : 0 < ‖ω‖ := norm_pos_iff.mpr hω
+  have h1 : ‖((m : ℂ) + n * I)‖ = 1 := by
+    have := mul_right_cancel₀ hω'.ne' (h.trans (one_mul _).symm)
+    exact this
+  have h2 : ‖((m : ℂ) + n * I)‖ ^ 2 = (m : ℝ) ^ 2 + (n : ℝ) ^ 2 := by
+    rw [Complex.sq_norm, Complex.normSq_apply]; simp; ring
+  rw [h1] at h2
+  have : ((m ^ 2 + n ^ 2 : ℤ) : ℝ) = 1 := by push_cast; linarith
+  exact_mod_cast this
+
+/-! ## §5. The conjugate and `i`-rotated lattices -/
+
+/-- The period pair `(ω̄₁, ω̄₂)`. -/
+def conjPP (L : PeriodPair) : PeriodPair where
+  ω₁ := conj L.ω₁
+  ω₂ := conj L.ω₂
+  indep := by
+    have hinj : Function.Injective (Complex.conjLIE.toLinearEquiv.toLinearMap : ℂ →ₗ[ℝ] ℂ) :=
+      Complex.conjLIE.injective
+    have := L.indep.map' _ (LinearMap.ker_eq_bot.mpr hinj)
+    convert this using 1
+    ext i
+    fin_cases i <;> simp
+
+theorem mem_conjPP {L : PeriodPair} {x : ℂ} :
+    x ∈ (conjPP L).lattice ↔ ∃ y ∈ L.lattice, x = conj y := by
+  simp only [PeriodPair.mem_lattice, conjPP]
+  constructor
+  · rintro ⟨m, n, rfl⟩
+    exact ⟨m * L.ω₁ + n * L.ω₂, ⟨m, n, rfl⟩, by simp⟩
+  · rintro ⟨y, ⟨m, n, rfl⟩, rfl⟩
+    exact ⟨m, n, by simp⟩
+
+theorem G_conjPP (L : PeriodPair) (n : ℕ) : (conjPP L).G n = conj (L.G n) := by
+  let e : L.lattice ≃ (conjPP L).lattice :=
+    { toFun := fun l => ⟨conj l, mem_conjPP.mpr ⟨l, l.2, rfl⟩⟩
+      invFun := fun l => ⟨conj l, by
+        obtain ⟨y, hy, hl⟩ := mem_conjPP.mp l.2
+        rw [hl, Complex.conj_conj]; exact hy⟩
+      left_inv := fun l => by ext; simp
+      right_inv := fun l => by ext; simp }
+  rw [PeriodPair.G, PeriodPair.G, ← e.tsum_eq, Complex.conj_tsum]
+  congr 1
+  funext l
+  simp [e, map_pow, map_inv₀]
+
+theorem g₂_conjPP (L : PeriodPair) : (conjPP L).g₂ = conj L.g₂ := by
+  rw [PeriodPair.g₂, PeriodPair.g₂, G_conjPP, map_mul, map_ofNat]
+
+theorem g₃_conjPP (L : PeriodPair) : (conjPP L).g₃ = conj L.g₃ := by
+  rw [PeriodPair.g₃, PeriodPair.g₃, G_conjPP, map_mul, map_ofNat]
+
+/-- A period lattice of `C_d` is stable under `i`. -/
+theorem I_mul_mem_of_cd {d : ℕ} {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) {y : ℂ}
+    (hy : y ∈ L.lattice) : I * y ∈ L.lattice := by
+  obtain ⟨h2, h3⟩ := (ZInQ.GZWeil.isPeriodLattice_cd_iff d L).mp hL
+  have hI : (I : ℂ) ≠ 0 := I_ne_zero
+  have heq := lattice_eq_of_g₂_g₃ (L := ZInQ.GZWeil.scalePP L I hI) (L' := L)
+    (by rw [ZInQ.GZWeil.g₂_scalePP]; simp [show I ^ 4 = (1 : ℂ) by norm_num [pow_succ]])
+    (by rw [ZInQ.GZWeil.g₃_scalePP, h3, mul_zero])
+  rw [← heq]
+  exact (ZInQ.GZWeil.mem_scalePP hI).mpr ⟨y, hy, rfl⟩
+
+/-- A period lattice of `C_d` is stable under complex conjugation. -/
+theorem conj_mem_of_cd {d : ℕ} {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) {y : ℂ}
+    (hy : y ∈ L.lattice) : conj y ∈ L.lattice := by
+  obtain ⟨h2, h3⟩ := (ZInQ.GZWeil.isPeriodLattice_cd_iff d L).mp hL
+  have heq := lattice_eq_of_g₂_g₃ (L := conjPP L) (L' := L)
+    (by rw [g₂_conjPP, h2]; simp [map_ofNat])
+    (by rw [g₃_conjPP, h3, map_zero])
+  rw [← heq]
+  exact mem_conjPP.mpr ⟨y, hy, rfl⟩
+
 end ZInQ.CdOpt
