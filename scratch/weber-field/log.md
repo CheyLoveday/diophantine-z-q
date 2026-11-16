@@ -27,3 +27,4 @@ exact order `N` by the division-polynomial criterion on both sides.
   `WeberFieldComparison`, `adjoin_wOf` from scratch/x1-igusa/WeberComparison.lean, checked by string match):
   `lake build ZInQKernel.Contrib.OneProof.WeberField` OK (11356 jobs, all replayed but the new one, 7.3 s). VERIFIED.
 - 11-16 03:14 #discharges (scratch/weber-field/Discharges.lean -> Discharges-output.txt): 61 open, 2609 theorems checked, 16 discharge one; r16CoreY by X1Igusa.r16CoreY_of_picZero_igusaDS (imported); weberFieldComparison and its main lemmas: standard axioms. VERIFIED.
+- 11-16 03:15 autofold.json (x1-igusa's spec, afTateCharPolyPicZero flag updated, imports WeberField); dry run: strict count 45/10 on 55 -> 47/9 on 56; strictest 43/12 -> 45/11 (identical to x1-igusa: kinds/flag prefixes unchanged); FoldDryRun.lean compiles, sixContactMin_of_open31 standard axioms. VERIFIED.
