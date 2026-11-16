@@ -25,7 +25,9 @@ of DS 9.5.4; (3) the leaf was stated over `ℚ_ℓ ⊗ K_f`, the print over `K_{
 §0b: coeff-ext's place `λ_ι` and `ι̂ : K_λ → ℚ̄_ℓ` (copied); §6: `λ_ι ∣ ℓ`, `ι̂` restricted to `ℚ_ℓ` is the
 structure map (density of `ℚ`), and `component`: the kernel's `ι`-component `frobOn` has the dimension of
 `V_λ` and trace/determinant `ι̂(tr/det ρ_{f,λ})`; §7: `r16CoreY_of_printed`; §8: `dsLambda_of_tensor` (the
-`K_{f,λ}` leaf follows from the `ℚ_ℓ ⊗ K_f` form `AfTateDSTensor` of DS 9.5.4, by base change of a basis).
+`K_{f,λ}` leaf follows from the `ℚ_ℓ ⊗ K_f` form `AfTateDSTensor` of DS 9.5.4, by base change of a basis);
+§9: `dsLambda_of_sat_det` (a fallback for the "satisfies" reading: dimension 2 + "satisfies"
+(`AfTateDSLambdaSat`) and a separate determinant statement (`AfDetLambda`) give the leaf; neither is in the fold).
 
 No `sorry`, no `axiom`, no build-time code. -/
 
@@ -965,5 +967,102 @@ theorem dsLambda_of_tensor (h : AfTateDSTensor) : AfTateDSLambda := by
   exact ⟨c, hc, charpoly_frobLam_of_basis A θ lam b σ _ _ hcp⟩
 
 end TensorForm
+
+/-! ## 9. A fallback for the "satisfies" reading: Lemma 9.5.3 + "satisfies" + a separate determinant leaf -/
+
+section SatisfiesForm
+
+open IsDedekindDomain NumberField
+
+/-- The common hypotheses of the `K_{f,λ}` statements, with the conclusion `P` at each Frobenius. -/
+def AtFrobLam (P : ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (A : AbVar ℚ)
+    (θ : coeffField f →+* A.End0) [NumberField (coeffField f)] (ℓ : ℕ) [Fact ℓ.Prime]
+    (lam : HeightOneSpectrum (𝓞 (coeffField f))) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal]
+    (p : ℕ) (σ : GQ), Prop) : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
+    ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ (tp : Nat.Primes → AbVar.End J) (δ : (ZMod N)ˣ → AbVar.End J),
+      (∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p)) →
+      (∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) →
+    ∀ (A : AbVar ℚ) (π : AbVar.Hom J A) (θ : coeffField f →+* A.End0),
+      IsAfQuotient χ f tp δ A π → IsAfAction χ f tp δ π θ →
+    ∀ [NumberField (coeffField f)] (ℓ : ℕ) [Fact ℓ.Prime]
+      (lam : HeightOneSpectrum (𝓞 (coeffField f))) [lam.asIdeal.LiesOver (vQ ℓ).asIdeal],
+      ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p → P N χ f A θ ℓ lam p σ
+
+/-- **Fallback leaf (DS Lemma 9.5.3 + Thm 9.5.4, "satisfies" reading, over `K_{f,λ}`).** `V_λ(A_f)` has
+dimension 2 over `K_{f,λ}` and every Frobenius at `p ∤ Nℓ` satisfies `X² − a_p X + χ(p)p`. Not in the fold. -/
+def AfTateDSLambdaSat : Prop :=
+  AtFrobLam fun N χ f A θ _ ℓ _ lam _ p σ =>
+    letI := R16Used.tensorModule ℓ A θ
+    letI := (rhoLam ℓ lam).toAlgebra
+    Module.finrank (lam.adicCompletion (coeffField f))
+        (lam.adicCompletion (coeffField f) ⊗[ℚ_[ℓ] ⊗[ℚ] coeffField f] A.V ℓ) = 2 ∧
+    ∃ c : coeffField f, (c : ℂ) = χ (p : ZMod N) ∧
+      Polynomial.aeval (frobLam ℓ A θ lam σ)
+        ((Polynomial.X : Polynomial (lam.adicCompletion (coeffField f))) ^ 2 -
+          Polynomial.C (algebraMap (coeffField f) (lam.adicCompletion (coeffField f))
+            ⟨coeff f p, coeff_mem_coeffField f p⟩) * Polynomial.X +
+          Polynomial.C (algebraMap (coeffField f) (lam.adicCompletion (coeffField f))
+            (c * (p : coeffField f)))) = 0
+
+/-- **Fallback leaf (the determinant of `ρ_{f,λ}` at Frobenius, `det ρ_{f,λ} = χ χ_ℓ`).** For `p ∤ Nℓ`,
+`det ρ_{f,λ}(Frob_p) = χ(p) p`. Printed form only if a statement check finds the determinant formula in
+print (the review: possibly only Diamond–Shurman Exercise 9.6.3(b); Shimura 1971 Thm 7.14, Ribet 1977,
+UNVERIFIED). Not in the fold. -/
+def AfDetLambda : Prop :=
+  AtFrobLam fun N χ f A θ _ ℓ _ lam _ p σ =>
+    letI := R16Used.tensorModule ℓ A θ
+    letI := (rhoLam ℓ lam).toAlgebra
+    ∃ c : coeffField f, (c : ℂ) = χ (p : ZMod N) ∧
+      LinearMap.det (frobLam ℓ A θ lam σ) =
+        algebraMap (coeffField f) (lam.adicCompletion (coeffField f)) (c * (p : coeffField f))
+
+/-- A linear map of a 2-dimensional space satisfying a monic quadratic whose constant term is its nonzero
+determinant has that quadratic as characteristic polynomial. -/
+theorem charpoly_of_aeval_det_lin {F M : Type*} [Field F] [AddCommGroup M] [Module F M]
+    [FiniteDimensional F M] (hM : Module.finrank F M = 2) (g : M →ₗ[F] M) (t d : F)
+    (h : Polynomial.aeval g (Polynomial.X ^ 2 - Polynomial.C t * Polynomial.X + Polynomial.C d) = 0)
+    (hd : LinearMap.det g = d) (hd0 : d ≠ 0) :
+    g.charpoly = Polynomial.X ^ 2 - Polynomial.C t * Polynomial.X + Polynomial.C d := by
+  let b := Module.finBasisOfFinrankEq F M hM
+  rw [← LinearMap.charpoly_toMatrix g b]
+  refine DS965Weak.charpoly_of_aeval_det ?_ ?_ hd0
+  · have hmat : LinearMap.toMatrixAlgEquiv b g = LinearMap.toMatrix b b g := by
+      ext i j; rw [LinearMap.toMatrixAlgEquiv_apply, LinearMap.toMatrix_apply]
+    have := Polynomial.aeval_algHom_apply (LinearMap.toMatrixAlgEquiv b).toAlgHom g
+      (Polynomial.X ^ 2 - Polynomial.C t * Polynomial.X + Polynomial.C d)
+    rw [h, map_zero] at this
+    rw [← hmat]
+    exact this
+  · rw [LinearMap.det_toMatrix]; exact hd
+
+/-- **The fold's leaf from the fallback pair (glue, proved).** -/
+theorem dsLambda_of_sat_det (hS : AfTateDSLambdaSat) (hD : AfDetLambda) : AfTateDSLambda := by
+  intro N χ f hN hf X _ jX tX hC hG P₀ J aj hJ tp δ htp hδ A π θ hQ hAct _ ℓ _ lam _ _ p hp hpN σ hσ
+  obtain ⟨h2, c, hc, hae⟩ := hS N χ f hN hf X jX tX hC hG P₀ J aj hJ tp δ htp hδ A π θ hQ hAct ℓ lam
+    p hp hpN σ hσ
+  obtain ⟨c', hc', hdet⟩ := hD N χ f hN hf X jX tX hC hG P₀ J aj hJ tp δ htp hδ A π θ hQ hAct ℓ lam
+    p hp hpN σ hσ
+  have hcc : c' = c := Subtype.ext (hc'.trans hc.symm)
+  subst hcc
+  refine ⟨c', hc, ?_⟩
+  letI := R16Used.tensorModule ℓ A θ
+  letI := (rhoLam ℓ lam).toAlgebra
+  have hpN' : Nat.Coprime p N :=
+    (Nat.Prime.coprime_iff_not_dvd hp).2 (fun h => hpN (dvd_mul_of_dvd_left h ℓ))
+  have hχ : χ (p : ZMod N) ≠ 0 := by
+    have hu : IsUnit (p : ZMod N) := (ZMod.isUnit_iff_coprime p N).2 hpN'
+    exact (hu.map χ).ne_zero
+  have hc0 : c' ≠ 0 := by
+    intro h0; apply hχ; rw [← hc', h0]; rfl
+  have hd0 : algebraMap (coeffField f) (lam.adicCompletion (coeffField f)) (c' * (p : coeffField f)) ≠ 0 := by
+    rw [map_ne_zero]
+    exact mul_ne_zero hc0 (Nat.cast_ne_zero.2 hp.ne_zero)
+  exact charpoly_of_aeval_det_lin h2 _ _ _ hae hdet hd0
+
+end SatisfiesForm
 
 end AfTateLam

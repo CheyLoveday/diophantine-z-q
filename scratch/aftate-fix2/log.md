@@ -45,3 +45,8 @@ Review objections to `AfTateOr.AfTateDSOr` and the response:
   `dsLambda_of_tensor : AfTateDSTensor → AfTateDSLambda` (base change of a `ℚ_ℓ ⊗ K_f`-basis, `toMatrix_baseChange`,
   `Matrix.charpoly_map`); compiles, standard axioms (VERIFIED). Module rebuilt; `#discharges` unchanged
   (`3382 theorems checked, 18 discharge one`); fold dry run unchanged (34/11 -> 38/10), compiles.
+- 14:21 §9 added: fallback pair `AfTateDSLambdaSat` (dim 2 + "satisfies", over K_λ) and `AfDetLambda`
+  (det ρ_{f,λ}(Frob_p) = χ(p)p), `dsLambda_of_sat_det : AfTateDSLambdaSat → AfDetLambda → AfTateDSLambda`
+  (`DS965Weak.charpoly_of_aeval_det` on a 2-dim space; χ(p) ≠ 0 for p ∤ N). Compiles, standard axioms (VERIFIED).
+  Module rebuilt; `#discharges` unchanged (`3387 theorems checked, 18 discharge one`, r16CoreY by
+  r16CoreY_of_printed); FoldDryRun recompiled, standard axioms.
