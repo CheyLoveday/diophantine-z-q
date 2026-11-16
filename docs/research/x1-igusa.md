@@ -142,9 +142,33 @@ The coefficients of `cDS_smul` were computed by hand: `s = mu/2` from `a₁`, `r
 |---|---|---|
 | scratch | `lake env lean scratch/x1-igusa/X1Igusa.lean` | no errors, axioms standard (VERIFIED) |
 | contribution | `lake build ZInQKernel.Contrib.OneProof.X1Igusa` | success, 10402 jobs (VERIFIED) |
-| `#discharges` | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.X1Igusa`, then `lake env lean scratch/x1-igusa/Discharges.lean` | DISCHARGES_PLACEHOLDER |
-| fold dry run | `python3 scripts/one_proof/autofold.py scratch/x1-igusa/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/x1-igusa/FoldDryRun.lean` | FOLD_PLACEHOLDER |
-| Weber comparison | `lake env lean scratch/x1-igusa/WeberComparison.lean` | WEBER_PLACEHOLDER |
+| `#discharges` | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.X1Igusa`, then `lake env lean scratch/x1-igusa/Discharges.lean` | success (13671 jobs). Output below and in `Discharges-output.txt` (VERIFIED) |
+| fold dry run | `python3 scripts/one_proof/autofold.py scratch/x1-igusa/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/x1-igusa/FoldDryRun.lean` | **`strict count: 45/10 on 55 -> 47/9 on 56; strictest 43/12 -> 45/11`**. `HDec.HSyn.sixContactMin_of_open31` has standard axioms (VERIFIED) |
+| Weber comparison | `lake env lean scratch/x1-igusa/WeberComparison.lean` | no errors; `adjoin_wOf` has standard axioms; `WeberFieldComparison` is stated, not proved (VERIFIED) |
+
+```
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by X1Igusa.r16CoreY_of_picZero_igusaDS
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by X1Igusa.r16CoreY_of_picZero_igusaDSX
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, X1Igusa.IgusaGL2DSX, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by X1Igusa.r16CoreY_of_weakPicZero_igusaDS
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 61 open hypotheses, 2457 theorems checked, 16 discharge one
+```
+
+**Fold accounting.**
+- `r16CoreY`, a composite GLUE field, is replaced by `afTateCharPolyPicZero` and `igusaGL2DS`, both published and
+  unread.
+- The strict count goes from 45/10 to 47/9 (LEAF/GLUE), and the strictest from 43/12 to 45/11. GLUE falls by 1,
+  where isj1-dict's fold left it unchanged (45/10 → 46/10).
+- The fold is not applied: `Main.lean`, `kinds.tsv` and `claims.tsv` are unchanged, since folding is the
+  integrator's step.
+- The fold needs the branches this one is based on (`wip/isj1-dict`, and through it `wip/r16-used` and
+  `wip/ds965-weak`).
+- Build tree: a copy of `~/dzq-check2`'s build tree (leaf-fold30), partially rebuilt.
 
 ## 4. Is `AfTateCharPolyPicZero` a direct instance of DS 9.5.4? (the `K_N` gap)
 

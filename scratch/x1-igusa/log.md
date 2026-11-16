@@ -26,3 +26,15 @@ Base: wip/isj1-dict 37628525. Build tree: reflink copy of ~/dzq-check2/.lake/bui
   E_j = ofJNe0Or1728 j: `cDS u hu • EDSBar = EjBar`. So x_DS = u² x_kernel − 3/2 on points, u² ∈ ℚ(j).
 - `EDS_j : EDS.j = j` VERIFIED; Δ(EDS) = g²(g − 27), g − 27 = 27·1728/m.
 - 02:25 `lake build ZInQKernel.Contrib.OneProof.X1Igusa`: success (10402 jobs). VERIFIED.
+- 03:0x `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.X1Igusa`:
+  success (13671 jobs; first attempt stopped by the 10-min background limit, rerun resumed). VERIFIED.
+- `lake env lean scratch/x1-igusa/Discharges.lean`: DISCHARGES [OpenResearchLeaves23.r16CoreY] by
+  X1Igusa.r16CoreY_of_picZero_igusaDS, still assumes [R16IsJ1Dict.AfTateCharPolyPicZero, X1Igusa.IgusaGL2DS,
+  AvSplit.MumfordTorsionAlgClosed], axioms standard; also ..._igusaDSX and r16CoreY_of_weakPicZero_igusaDS.
+  `#discharges: 61 open hypotheses, 2457 theorems checked, 16 discharge one`. VERIFIED.
+- `autofold.py scratch/x1-igusa/autofold.json --dry-run`: strict count 45/10 on 55 -> 47/9 on 56; strictest 43/12 -> 45/11.
+  `FoldDryRun.lean` compiles; sixContactMin_of_open31 axioms standard. VERIFIED.
+- `lake env lean scratch/x1-igusa/WeberComparison.lean`: no errors; `WeberFieldComparison` stated (GLUE, not proved);
+  `adjoin_wOf` (Q(j)(w(P)) = Q(j)(x(P))) standard axioms. VERIFIED.
+- Finding: Ej = twist of EDS by Q(sqrt(-2)) (u = 3 sqrt(-2)/(j-1728)); so IgusaGL2 for the kernel model is a
+  consequence of the print (twist argument), not the printed form. SPECULATIVE (argument), algebra VERIFIED.
