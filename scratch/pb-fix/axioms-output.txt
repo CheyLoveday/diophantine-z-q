@@ -6,3 +6,5 @@
 'HDec.PkgI4.PanBergerSplit.localIsPst_iff_T' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.finrank_K0_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.PanBergerSplit.finrank_K0_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.isSemistableOverT_trivial_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanBergerSplit.isPstT_trivial' depends on axioms: [propext, Classical.choice, Quot.sound]

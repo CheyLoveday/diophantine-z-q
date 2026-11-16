@@ -8,3 +8,5 @@ open HDec.PkgI4.PanBergerSplit
 #print axioms localIsPst_iff_T
 #print axioms finrank_K0_pos
 #print axioms finrank_K0_bot
+#print axioms isSemistableOverT_trivial_iff
+#print axioms isPstT_trivial

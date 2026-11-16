@@ -205,8 +205,9 @@ theorem isSemistableOverT_iff (K : IntermediateField ℚ_[p] (PadicAlgCl p))
     Subspace.dual_finrank_eq, Module.finrank_pi_fintype, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, smul_eq_mul]
 
-/-- **Fontaine's `dim_{ℚ_p} B_st^{G_K} = [K_0 : ℚ_p]`** (Fontaine, Astérisque 223, Exp. II,
-3.? and Exp. III; Brinon–Conrad, CMI notes, Thm 9.2.? ; numbers UNVERIFIED) for every finite
+/-- **Fontaine's `dim_{ℚ_p} B_st^{G_K} = [K_0 : ℚ_p]`** (from `B_st^{G_K} = K_0`: Fontaine,
+Astérisque 223 (1994), Exp. II §3 and Exp. III; Brinon–Conrad, CMI notes, §9.2; numbers
+UNVERIFIED) for every finite
 `K ⊆ ℚ̄_p`, over pb-bypass's `B_st`. Not a leaf of this file's fold: it only relates the new
 predicate to pb-bypass's (`localIsPst_iff_T`). -/
 def BstInvariantsDim : Prop :=
@@ -227,6 +228,23 @@ theorem localIsPst_iff_T (hF : BstInvariantsDim p) (n : ℕ)
   refine exists_congr fun E => exists_congr fun hE => exists_congr fun ρE =>
     and_congr_right fun _ => ?_
   exact isPst_iff_T p hF ρE
+
+/-- **Normalization of `IsSemistableOverT` on the trivial representation.** The trivial
+one-dimensional representation is semistable over `K` in the printed sense exactly when
+`dim_{ℚ_p} B_st^{G_K} = [K_0 : ℚ_p]` (Fontaine's theorem, not in Lean): with the explicit
+normalization, even this example rests on `B_st^{G_K} = K_0`. -/
+theorem isSemistableOverT_trivial_iff (K : IntermediateField ℚ_[p] (PadicAlgCl p)) :
+    IsSemistableOverT p K (1 : GQp p →* GL (Fin 1) ℚ_[p]) ↔
+      finrank ℚ_[p] (bstInv p K) = finrank ℚ_[p] (K0 p K) := by
+  have h := isSemistableOver_trivial p K
+  rw [IsSemistableOver] at h
+  rw [isSemistableOverT_iff, IsSemistableOverH, h, finrank_self]
+  simp
+
+/-- Given Fontaine's `dim B_st^{G_K} = [K_0 : ℚ_p]`, the trivial representation is potentially
+semistable in the printed sense (pb-bypass's `isPst_trivial` transported). -/
+theorem isPstT_trivial (hF : BstInvariantsDim p) : IsPstT p (1 : GQp p →* GL (Fin 1) ℚ_[p]) :=
+  (isPst_iff_T p hF _).mp (isPst_trivial p)
 
 /-! ### `ℂ ≃+* ℚ̄_p` (Steinitz), copied from `scratch/g8-tate/part_tools.lean` -/
 
