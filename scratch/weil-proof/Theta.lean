@@ -165,4 +165,52 @@ lemma comm_smul_left {t s : X ⟶ X} (hs : ∀ r : Γ(X, ⊤), s.appTop r = r) {
   rw [← cancel_mono (N.smulHom (u : Γ(X, ⊤))), c, Category.assoc, Category.assoc, ← smulHom_mul,
     ← smulHom_mul, mul_comm]
 
+/-! ### The coherence (C**) -/
+
+lemma assoc_hom' (f g h : X ⟶ X) (M : X.Modules) :
+    (pullbackComp f g).hom.app ((Scheme.Modules.pullback h).obj M) ≫ (pullbackComp (f ≫ g) h).hom.app M =
+      (Scheme.Modules.pullback f).map ((pullbackComp g h).hom.app M) ≫ (pullbackComp f (g ≫ h)).hom.app M ≫
+        eqToHom (by rw [Category.assoc]) := by
+  rw [reassoc_of% (pullbackComp_assoc_app f g h M)]
+  simp
+
+section Coherence
+
+variable {a b m : X ⟶ X} (ha : a ≫ m = m) (hb : m ≫ a = b ≫ m) (hab : a ≫ b = b ≫ a)
+
+/-- `θ_a(F) : a^* m^* F → m^* F`. -/
+def thetaA (F : X.Modules) : (Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback m).obj F) ⟶
+    (Scheme.Modules.pullback m).obj F :=
+  (pullbackComp a m).hom.app F ≫ (pullbackCongr ha).hom.app F
+
+/-- `ρ : m^*(a^* L) ≅ b^*(m^* L)` from `m ≫ a = b ≫ m`. -/
+def rhoAB (L : X.Modules) : (Scheme.Modules.pullback m).obj ((Scheme.Modules.pullback a).obj L) ⟶
+    (Scheme.Modules.pullback b).obj ((Scheme.Modules.pullback m).obj L) :=
+  (pullbackComp m a).hom.app L ≫ (pullbackCongr hb).hom.app L ≫ (pullbackComp b m).inv.app L
+
+/-- The swap `a^* b^* F ≅ b^* a^* F`. -/
+def swapAB (F : X.Modules) : (Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback b).obj F) ⟶
+    (Scheme.Modules.pullback b).obj ((Scheme.Modules.pullback a).obj F) :=
+  (pullbackComp a b).hom.app F ≫ (pullbackCongr hab).hom.app F ≫ (pullbackComp b a).inv.app F
+
+/-- **(C**)**: transporting `θ_a` along `ρ`. -/
+lemma theta_rho (L : X.Modules) :
+    thetaA ha ((Scheme.Modules.pullback a).obj L) ≫ rhoAB hb L =
+      (Scheme.Modules.pullback a).map (rhoAB hb L) ≫ swapAB hab ((Scheme.Modules.pullback m).obj L) ≫
+        (Scheme.Modules.pullback b).map (thetaA ha L) := by
+  rw [← cancel_mono ((pullbackComp b m).hom.app L)]
+  simp only [thetaA, rhoAB, swapAB, Category.assoc, Iso.inv_hom_id_app, Category.comp_id,
+    pullbackCongr_hom_app, Functor.map_comp]
+  -- left side
+  rw [reassoc_of% (eqToHom_comp_pullbackComp ha a L _), reassoc_of% (assoc_hom' a m a L)]
+  -- right side
+  rw [map_eqToHom_comp_pullbackComp b ha L _, reassoc_of% (pullbackComp_assoc_inv₂ b a m L),
+    reassoc_of% (eqToHom_comp_pullbackComp hab m L _), reassoc_of% (assoc_hom' a b m L)]
+  rw [← Functor.map_comp_assoc (Scheme.Modules.pullback a) ((pullbackComp b m).inv.app L),
+    Iso.inv_hom_id_app, CategoryTheory.Functor.map_id, Category.id_comp,
+    reassoc_of% (map_eqToHom_comp_pullbackComp a hb L _)]
+  simp
+
+end Coherence
+
 end WeilProof.Theta
