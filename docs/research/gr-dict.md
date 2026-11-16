@@ -76,7 +76,7 @@ consumes `gonzalezRotgerProp56X6`**, and after the reroute nothing consumes it a
   * The top theorems `sixContactMin_of_open35E` and `frozenTarget_E`.
 
 `lake env lean scratch/gr-dict/BypassFold.lean`: compiles, standard axioms (VERIFIED). No existing constant is
-changed; the module adds 98 declarations (2767 lines, 190 KB).
+changed; the module adds 98 declarations (2768 lines, 189 KB).
 
 ```
 GR56.r5fpCountLe_of_eichler : GRCountX6.EichlerOptEmbCount6 →
