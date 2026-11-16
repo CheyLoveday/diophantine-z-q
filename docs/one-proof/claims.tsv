@@ -4,8 +4,8 @@ gagaMorphism	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2
 homFreeFiniteAlgClosed	homfree-proof	host task homfree-proof running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/homfree-proof	held
 charPolyIndepOfEllAlgClosed	deg-det	host task deg-det running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/deg-det	held
 poincareComplement	poincare-proof	host task poincare-proof running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/poincare-proof	held
-neronSchemeExtensionExists	host task	host task running (claimed 2026-11-16)	2026-11-16	elliotglazer/diophantine-z-q#85	project	project		held
-h11	host task	host task running (claimed 2026-11-16)	2026-11-16	elliotglazer/diophantine-z-q#74	project	project		held
+neronSchemeExtensionExists	neron-ext	host task neron-ext running	2026-11-16	elliotglazer/diophantine-z-q#85	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-ext	held
+h11	h11-reduce	host task h11-reduce running	2026-11-16	elliotglazer/diophantine-z-q#74	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce	held
 picRepresentableAbVar	pic-repr	host task pic-repr running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr	held
 picZeroAbVar	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
 weilPairingMumford	weil-proof	host task weil-proof running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/weil-proof	held
@@ -25,4 +25,4 @@ hfx	hfx-proof	host task hfx-proof running	2026-11-16		project	project	https://gi
 blr_7_2_1	neron-sh-proof	host task neron-sh-proof running: proves neronBaseChangeStrictHenselization, which this leaf replaces	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-sh-proof	held
 sga7_IX_3_5_ForwardGeom	sga7-35-proof	host task sga7-35-proof running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/sga7-35-proof	held
 raynaudSemistableSHOr	raynaud-proof	host task raynaud-proof running: proves raynaudSemistableSH, which this leaf replaces	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/raynaud-proof	held
-hL29	host task	host task running (claimed 2026-11-16)	2026-11-16		project	project		held
+hL29	h29-proof	host task h29-proof running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof	held
