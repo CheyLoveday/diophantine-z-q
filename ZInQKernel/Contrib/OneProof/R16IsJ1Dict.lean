@@ -270,20 +270,19 @@ variety with the tensor group law) satisfies the conclusion of `AfTateCharPoly`.
 def AfTateCharPolyPicZero : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 0 < N → IsNewform f χ →
     ∃ X : Over SpecQ, IsX1Model N X ∧
-      ∀ (V : AbelianVariety ℚ) (rep : (picardFunctorDegree X.hom 0).obj.RepresentableBy V.group.X),
-        PicardTensorCompatible X.hom V.group rep → AfTateAt N χ f (ofVendored V)
+      ∃ (V : AbelianVariety ℚ) (rep : (picardFunctorDegree X.hom 0).obj.RepresentableBy V.group.X),
+        PicardTensorCompatible X.hom V.group rep ∧ AfTateAt N χ f (ofVendored V)
 
 /-- **`AfTateCharPoly` from its `Pic⁰` form (glue).** No rational point is assumed on the model:
 it is transported from the one carried by `IsJ1`. -/
 theorem afTateCharPoly_of_picZero (h : AfTateCharPolyPicZero) (hI : X1PointsConjugate)
     (hC : CurveIsoOfFunctionFieldIso) : R16Used.AfTateCharPoly := by
   intro N χ f J hN hf hJ
-  obtain ⟨X₀, ⟨hXc₀, hXi₀, P₀', hP₀', ⟨eX₀⟩⟩, hA⟩ := h N χ f hN hf
+  obtain ⟨X₀, ⟨hXc₀, hXi₀, P₀', hP₀', ⟨eX₀⟩⟩, V, rep, htc, hA⟩ := h N χ f hN hf
   obtain ⟨X, P₀, aj, ⟨hXc, hXi, P, hP, ⟨eX⟩⟩, hJac⟩ := hJ
   obtain ⟨σ, hσ⟩ := hI N P₀' P hN hP₀' hP
   obtain ⟨e⟩ := @hC X₀ X hXi₀ hXi hXc₀ hXc ⟨(eX₀.trans (fieldX1Equiv σ hσ)).trans eX.symm⟩
-  obtain ⟨V, rep, htc⟩ := exists_picZero X₀ hXc₀
-  exact (hA V rep htc).of_iso
+  exact hA.of_iso
     (abVarIso_picZero_of_isJacobian hXc₀ (IsJacobian.of_iso e hJac) V rep htc).symm
 
 /-- The `Pic⁰` form is a consequence of `AfTateCharPoly` and the existence of a model with a
@@ -293,7 +292,8 @@ theorem afTateCharPolyPicZero_of_afTate (h : R16Used.AfTateCharPoly)
     AfTateCharPolyPicZero := by
   intro N χ f hN hf
   obtain ⟨X, P₀, hX⟩ := hx N hN
-  refine ⟨X, hX, fun V rep htc => ?_⟩
+  obtain ⟨V, rep, htc⟩ := exists_picZero X hX.1
+  refine ⟨X, hX, V, rep, htc, ?_⟩
   obtain ⟨aj, hJ⟩ := isJacobian_picZero X hX.1 V rep htc P₀
   exact h N χ f (ofVendored V) hN hf ⟨X, P₀, aj, hX, hJ⟩
 
@@ -483,7 +483,7 @@ theorem frobMat_mul
     (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
     (σ τ : PkgI4.GQ) :
     R16Used.frobMat ℓ A θ b (σ * τ) = R16Used.frobMat ℓ A θ b σ * R16Used.frobMat ℓ A θ b τ := by
-  letI := R16Used.tensorModule ℓ A θ
+  let _ := R16Used.tensorModule ℓ A θ
   ext i j
   simp only [R16Used.frobMat, Matrix.of_apply, Matrix.mul_apply]
   have h : A.galRep ℓ (σ * τ) (b j) = A.galRep ℓ σ (A.galRep ℓ τ (b j)) :=
@@ -499,7 +499,7 @@ theorem frobMat_mul
 theorem frobMat_one
     (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ)) :
     R16Used.frobMat ℓ A θ b 1 = 1 := by
-  letI := R16Used.tensorModule ℓ A θ
+  let _ := R16Used.tensorModule ℓ A θ
   ext i j
   have h1 : A.galRep ℓ 1 (b j) = b j := LinearMap.congr_fun (map_one (A.galRep ℓ)) (b j)
   simp only [R16Used.frobMat, Matrix.of_apply]
@@ -592,7 +592,7 @@ theorem continuous_compMat_entry (hT : TateModuleFree)
     (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
     (emb : F →+* PadicAlgCl ℓ) (i j : Fin 2) :
     Continuous (fun σ : PkgI4.GQ => compMat ℓ A θ b emb σ i j) := by
-  letI := R16Used.tensorModule ℓ A θ
+  let _ := R16Used.tensorModule ℓ A θ
   let crd : A.V ℓ →ₗ[ℚ_[ℓ]] PadicAlgCl ℓ :=
     { toFun := fun v => R16Used.liftHom (k := ℚ_[ℓ]) emb (b.repr v i)
       map_add' := fun u v => by simp only [map_add, Finsupp.add_apply]
@@ -627,7 +627,7 @@ theorem component_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ
       (c : ℂ) = χ (p : ZMod N) →
       (compMat ℓ A θ b emb σ).charpoly =
         Polynomial.X ^ 2 - C (emb (a p)) * Polynomial.X + C (emb (c * (p : Fd))) := by
-  haveI : NeZero N := ⟨hN.ne'⟩
+  have : NeZero N := ⟨hN.ne'⟩
   obtain ⟨ιC⟩ : Nonempty (ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] ℂ) := ⟨IsAlgClosed.lift⟩
   obtain ⟨ιL, hιL⟩ := exists_iotaL ℓ Fd emb ιC
   set M := compMat ℓ A θ b emb with hM
@@ -861,7 +861,7 @@ theorem pow_neg_one_val {M : Type*} [Group M] {t : M} {n : ℕ} [NeZero n] (ht :
     subst hn1
     have : t = 1 := by simpa using ht
     simp [this]
-  · haveI : Fact (1 < n) := ⟨by omega⟩
+  · have : Fact (1 < n) := ⟨by omega⟩
     have hv : ((-1 : ZMod n)).val = n - 1 := by
       rw [ZMod.neg_val, ite_eq_right_iff.mpr (fun h => absurd h one_ne_zero), ZMod.val_one]
     rw [hv, eq_inv_iff_mul_eq_one, ← pow_succ, Nat.sub_add_cancel (by omega), ht]
@@ -873,7 +873,7 @@ theorem cycQ_complexConj {ℓ : ℕ} [Fact ℓ.Prime] {c : GQ} (hc : IsComplexCo
     refine PadicInt.ext_of_toZModPow.mp fun n => ?_
     rw [cyclotomicCharacter.toZModPow, map_neg, map_one]
     have hl : (ℓ ^ n) ≠ 0 := pow_ne_zero _ (Fact.out : ℓ.Prime).ne_zero
-    haveI : NeZero (ℓ ^ n) := ⟨hl⟩
+    have : NeZero (ℓ ^ n) := ⟨hl⟩
     refine (modularCyclotomicCharacter.unique Qbar _ c.toRingEquiv fun t ht => ?_).symm
     have htn : t ^ (ℓ ^ n) = 1 := (mem_rootsOfUnity _ _).mp ht
     have htn' : (t : Qbar) ^ (ℓ ^ n) = 1 := by
@@ -917,7 +917,7 @@ theorem odd_of_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ) (
         (R16Used.frobMat ℓ A θ b σ).charpoly = R16Used.esPoly ℓ (a p) (c * (p : Fd))) :
     ∀ c : ZInQ.Contrib.G9.PkgI4.GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c →
       (compMat ℓ A θ b emb c).det = -1 := by
-  haveI : NeZero N := ⟨hN.ne'⟩
+  have : NeZero N := ⟨hN.ne'⟩
   obtain ⟨ιC⟩ : Nonempty (ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] ℂ) := ⟨IsAlgClosed.lift⟩
   obtain ⟨ιL, hιL⟩ := exists_iotaL ℓ Fd emb ιC
   set M := compMat ℓ A θ b emb with hM
@@ -1001,7 +1001,7 @@ theorem AfTateWeakOddAt.of_iso {N : ℕ} {χ : DirichletCharacter ℂ N} {f : CF
 /-- **LEAF (Eichler–Shimura for `A_f` over `J₁(N) = Pic⁰(X₁(N))`, weakest reading of
 Diamond–Shurman 9.5.4, with oddness).** For `N ≥ 1` and a newform `f ∈ S₂(Γ₁(N))` with nebentypus
 `χ`, there is a model `X` of `X₁(N)` over `ℚ` (`IsX1Model`) such that for the degree-zero Picard
-scheme `J₁(N) = Pic⁰_{X/ℚ}` (any representing abelian variety `V` with the tensor group law) there are
+scheme `J₁(N) = Pic⁰_{X/ℚ}` (some representing abelian variety `V` with the tensor group law) there are
 a quotient `π : J₁(N) ↠ A` over `ℚ` and `θ : K_f → End⁰(A)` with, for every prime `ℓ`: `V_ℓ(A)` free
 of rank 2 over `ℚ_ℓ ⊗ K_f` (Diamond–Shurman Lemma 9.5.3); complex conjugation of determinant `−1` on
 every `ι`-component (`ρ_{A_f,ℓ}` odd); and every arithmetic Frobenius at `p ∤ Nℓ` satisfying
@@ -1010,19 +1010,18 @@ Diamond–Shurman's `X₁(N)_alg`, `J₁(N) = Pic⁰`, `A = A_f`. Locators UNVER
 def AfTateWeakOddPicZero : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 0 < N → IsNewform f χ →
     ∃ X : Over SpecQ, IsX1Model N X ∧
-      ∀ (V : AbelianVariety ℚ) (rep : (picardFunctorDegree X.hom 0).obj.RepresentableBy V.group.X),
-        PicardTensorCompatible X.hom V.group rep → AfTateWeakOddAt N χ f (ofVendored V)
+      ∃ (V : AbelianVariety ℚ) (rep : (picardFunctorDegree X.hom 0).obj.RepresentableBy V.group.X),
+        PicardTensorCompatible X.hom V.group rep ∧ AfTateWeakOddAt N χ f (ofVendored V)
 
 /-- **`AfTateWeakOdd` from its `Pic⁰` form over one model (glue).** -/
 theorem weakOdd_of_picZero (h : AfTateWeakOddPicZero) (hI : X1PointsConjugate)
     (hC : CurveIsoOfFunctionFieldIso) : AfTateWeakOdd := by
   intro N χ f J hN hf hJ
-  obtain ⟨X₀, ⟨hXc₀, hXi₀, P₀', hP₀', ⟨eX₀⟩⟩, hA⟩ := h N χ f hN hf
+  obtain ⟨X₀, ⟨hXc₀, hXi₀, P₀', hP₀', ⟨eX₀⟩⟩, V, rep, htc, hA⟩ := h N χ f hN hf
   obtain ⟨X, P₀, aj, ⟨hXc, hXi, P, hP, ⟨eX⟩⟩, hJac⟩ := hJ
   obtain ⟨σ, hσ⟩ := hI N P₀' P hN hP₀' hP
   obtain ⟨e⟩ := @hC X₀ X hXi₀ hXi hXc₀ hXc ⟨(eX₀.trans (fieldX1Equiv σ hσ)).trans eX.symm⟩
-  obtain ⟨V, rep, htc⟩ := exists_picZero X₀ hXc₀
-  exact (hA V rep htc).of_iso
+  exact hA.of_iso
     (abVarIso_picZero_of_isJacobian hXc₀ (IsJacobian.of_iso e hJac) V rep htc).symm
 
 /-- **The discharge of `r16CoreY` (glue, proved).** From the weak-reading leaf over `Pic⁰` of one model,
@@ -1044,7 +1043,8 @@ theorem weakOddPicZero_of_afTate (h : R16Used.AfTateCharPoly) (hT : PkgI3.TateMo
     (hx : LeafModCurves.X1ModelExists) : AfTateWeakOddPicZero := by
   intro N χ f hN hf
   obtain ⟨X, P₀, hX⟩ := hx N hN
-  refine ⟨X, hX, fun V rep htc => ?_⟩
+  obtain ⟨V, rep, htc⟩ := exists_picZero X hX.1
+  refine ⟨X, hX, V, rep, htc, ?_⟩
   obtain ⟨aj, hJ⟩ := isJacobian_picZero X hX.1 V rep htc P₀
   exact weakOdd_of_afTate h hT N χ f (ofVendored V) hN hf ⟨X, P₀, aj, hX, hJ⟩
 
