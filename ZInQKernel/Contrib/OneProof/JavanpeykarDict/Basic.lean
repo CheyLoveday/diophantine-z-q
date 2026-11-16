@@ -25,7 +25,7 @@ Albanese predicate over `PkgI3.AbVar`) against the print's `Jac(X)`; (2) `dim J`
   cohomology). Step (2), proved.
 * §4 the restated leaf `JavanpeykarPrinted` (the print for `X = X₀ ×_K ℚ̄`: `Jac(X)` as `Pic⁰`, `g` the
   genus of `X_ℚ̄`, a Belyi function of `X_ℚ̄` over `ℚ̄`), the glue `BelyiBaseChange` (step (3): a
-  `K`-rational Belyi function stays a Belyi function over `ℚ̄`, same degree; stated, not proved), and
+  `K`-rational Belyi function stays a Belyi function over `ℚ̄`, same degree; proved in `FunctionField.lean` from Stichtenoth's theorem), and
   `javanpeykarBound_of_printed : JavanpeykarPrinted → BelyiBaseChange → JavanpeykarBound`.
 
 No `sorry`, no `axiom`. -/
@@ -301,13 +301,13 @@ def JavanpeykarPrinted : Prop :=
         (baseChangeCurve X (AlgebraicClosure K)).left.functionField = d → 0 < d →
       ∀ x : ℝ, IsStableFaltingsHeight (ofVendored V) x → x ≤ javanpeykarBound (genusBar X) d
 
-/-- **Glue (not proved here): a `K`-rational Belyi function stays a Belyi function over `ℚ̄`, of
+/-- **Glue (proved in `JavanpeykarDict/FunctionField.lean`, `belyiBaseChange_of_unramified`, from the leaf `ConstantFieldExtensionUnramified`): a `K`-rational Belyi function stays a Belyi function over `ℚ̄`, of
 the same degree.** For a smooth proper geometrically connected integral curve `X/K` over a number
 field and `t ∈ K(X)` a Belyi function over `K` (`IsBelyiFunction K`) of degree
 `d = [K(X) : K(t)] > 0`, the base change `X_ℚ̄` is integral and some `t' ∈ ℚ̄(X_ℚ̄)` (the image of `t`)
 is a Belyi function over `ℚ̄` of degree `d`.
 
-Proof outline (STANDARD; not formalized): `ℚ̄(X_ℚ̄) = K(X) ⊗_K ℚ̄` (`X` geometrically integral), so
+Proof outline (formalized in `FunctionField.lean` and `BelyiAlgebra.lean`): `ℚ̄(X_ℚ̄) = K(X) ⊗_K ℚ̄` (`X` geometrically integral), so
 `[ℚ̄(X_ℚ̄) : ℚ̄(t)] = [K(X) : K(t)]`; a place `w` of `ℚ̄(X_ℚ̄)/ℚ̄` with `t − a ∈ 𝔪_w`, `a ≠ 0, 1`, lies over
 the place `w₀ = w ∩ K(X)`, where `p(t) ∈ 𝔪_{w₀}` for `p` the minimal polynomial of `a` over `K`
 (`p ≠ T, T − 1`), so `p(t)` is a uniformizer at `w₀`; a constant field extension is unramified
