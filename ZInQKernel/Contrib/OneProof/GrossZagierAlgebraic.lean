@@ -303,4 +303,383 @@ theorem transcendental_of_order_neg {F : IntermediateField ℚ (LaurentSeries �
     (algebraMap ℚ F)) (algebraMap ℚ (LaurentSeries ℚ)), ← aeval_def] at h1
   exact h1.symm
 
+/-! ## §3. Analysis: `q`-expansions, the equation and the pole at `∞` -/
+
+open ZInQ.GZHeegner (tay coeff_tay tay_congr tay_add tay_sub tay_mul tay_const tay_pow tay_cmul
+  tay_X_pow RegularAt)
+
+theorem norm_exp_two_pi_I (z : ℂ) :
+    ‖Complex.exp (2 * Real.pi * Complex.I * z)‖ = Real.exp (-(2 * Real.pi * z.im)) := by
+  rw [Complex.norm_exp]; congr 1; simp [Complex.mul_re, Complex.mul_im]
+
+theorem qPar_ne_zero (τ : ℍ) : qPar τ ≠ 0 := Complex.exp_ne_zero _
+
+/-- `e^{-2πT}`: the `q`-radius of the region `Im τ > T`. -/
+def R0 (T : ℝ) : ℝ := Real.exp (-(2 * Real.pi * T))
+
+theorem R0_pos (T : ℝ) : 0 < R0 T := Real.exp_pos _
+
+theorem norm_qPar_lt {T : ℝ} {τ : ℍ} (hτ : T < τ.im) : ‖qPar τ‖ < R0 T := by
+  rw [qPar, norm_exp_two_pi_I, R0]
+  exact Real.exp_lt_exp.2 (by have := Real.pi_pos; change T < (τ : ℂ).im at hτ; nlinarith)
+
+open FormalMultilinearSeries in
+/-- A `q`-series convergent on `Im τ > T ≥ 0` has radius `≥ e^{-2πT}`. -/
+theorem le_radius {c : ℕ → ℂ} {T : ℝ} (hT : 0 ≤ T) {G : ℍ → ℂ}
+    (h : ∀ τ : ℍ, T < τ.im → HasSum (fun n => c n * qPar τ ^ n) (G τ)) :
+    ENNReal.ofReal (R0 T) ≤ (ofScalars ℂ c).radius := by
+  refine ENNReal.le_of_forall_nnreal_lt fun r hr => ?_
+  have hr' : (r : ℝ) < R0 T := by
+    rw [← ENNReal.ofReal_coe_nnreal, ENNReal.ofReal_lt_ofReal_iff (R0_pos T)] at hr
+    exact hr
+  rcases eq_or_lt_of_le r.2 with h0 | h0
+  · have : r = 0 := by ext; exact h0.symm
+    rw [this]; simp
+  have hlog : Real.log r < -(2 * Real.pi * T) := by
+    have := Real.log_lt_log h0 hr'
+    rwa [R0, Real.log_exp] at this
+  set t : ℝ := -Real.log r / (2 * Real.pi)
+  have hπ := Real.pi_pos
+  have ht : T < t := by
+    rw [lt_div_iff₀ (by positivity)]; linarith
+  set σ : ℍ := ⟨Complex.I * (t : ℂ), by simp; linarith⟩
+  have hσim : σ.im = t := by simp [σ, UpperHalfPlane.im]
+  have hσ : ‖qPar σ‖ = r := by
+    rw [qPar, norm_exp_two_pi_I]
+    change Real.exp (-(2 * Real.pi * σ.im)) = r
+    rw [hσim, show -(2 * Real.pi * t) = Real.log r by simp only [t]; field_simp]
+    exact Real.exp_log h0
+  apply (ofScalars ℂ c).le_radius_of_tendsto (l := 0)
+  have ht' := ((h σ (by rw [hσim]; exact ht)).summable.tendsto_atTop_zero).norm
+  simp only [norm_zero] at ht'
+  refine ht'.congr fun n => ?_
+  rw [ofScalars_norm, norm_mul, norm_pow, hσ]
+
+open FormalMultilinearSeries in
+theorem sum_eq {c : ℕ → ℂ} {T : ℝ} {G : ℍ → ℂ}
+    (h : ∀ τ : ℍ, T < τ.im → HasSum (fun n => c n * qPar τ ^ n) (G τ)) (τ : ℍ) (hτ : T < τ.im) :
+    (ofScalars ℂ c).sum (qPar τ) = G τ := by
+  rw [← ofScalarsSum, ofScalarsSum_eq_tsum]
+  simp only [smul_eq_mul]
+  exact (h τ hτ).tsum_eq
+
+open FormalMultilinearSeries in
+theorem analyticAt_sum {c : ℕ → ℂ} {T : ℝ} (hrad : ENNReal.ofReal (R0 T) ≤ (ofScalars ℂ c).radius)
+    {w : ℂ} (hw : ‖w‖ < R0 T) : AnalyticAt ℂ (ofScalars ℂ c).sum w := by
+  have hmem : w ∈ Metric.eball (0 : ℂ) (ofScalars ℂ c).radius := by
+    rw [Metric.mem_eball, edist_zero_right]
+    refine lt_of_lt_of_le ?_ hrad
+    rw [← ofReal_norm, ENNReal.ofReal_lt_ofReal_iff (R0_pos T)]
+    exact hw
+  have hpos : 0 < (ofScalars ℂ c).radius := lt_of_le_of_lt bot_le (by
+    have := hmem; rw [Metric.mem_eball] at this; exact this)
+  exact ((ofScalars ℂ c).hasFPowerSeriesOnBall hpos).analyticAt_of_mem hmem
+
+open FormalMultilinearSeries in
+/-- **A function with a `q`-expansion on `Im τ > T` is regular there.** -/
+theorem regularAt_of {X : ℍ → ℂ} {k : ℕ} {a : ℕ → ℚ} {T : ℝ} (hT : 0 ≤ T)
+    (h : ∀ τ : ℍ, T < τ.im → HasSum (fun n => (a n : ℂ) * qPar τ ^ n) (qPar τ ^ k * X τ))
+    (τ : ℍ) (hτ : T < τ.im) : RegularAt X τ := by
+  have hrad := le_radius hT h
+  have hFa := analyticAt_sum hrad (norm_qPar_lt hτ)
+  have hqa : AnalyticAt ℂ (fun w : ℂ => Complex.exp (2 * Real.pi * Complex.I * w)) (τ : ℂ) := by
+    fun_prop
+  have hG : AnalyticAt ℂ (fun w : ℂ => (ofScalars ℂ fun n => (a n : ℂ)).sum
+      (Complex.exp (2 * Real.pi * Complex.I * w)) / Complex.exp (2 * Real.pi * Complex.I * w) ^ k)
+      (τ : ℂ) :=
+    ((hFa.comp (f := fun w : ℂ => Complex.exp (2 * Real.pi * Complex.I * w)) hqa)).div (hqa.pow k) (pow_ne_zero _ (Complex.exp_ne_zero _))
+  unfold RegularAt
+  apply hG.congr
+  have hopen : IsOpen {w : ℂ | T < w.im} := isOpen_lt continuous_const Complex.continuous_im
+  filter_upwards [hopen.mem_nhds hτ] with w hw
+  have hw0 : 0 < w.im := lt_of_le_of_lt hT hw
+  have hw' : (UpperHalfPlane.ofComplex w : ℂ) = w := by
+    rw [UpperHalfPlane.ofComplex_apply_of_im_pos hw0]
+  have hs := sum_eq h (UpperHalfPlane.ofComplex w) (by
+    change T < (UpperHalfPlane.ofComplex w : ℂ).im; rw [hw']; exact hw)
+  simp only [qPar, hw'] at hs
+  simp only [Function.comp_apply, hs]
+  exact mul_div_cancel_left₀ _ (pow_ne_zero _ (Complex.exp_ne_zero _))
+
+/-- The Laurent series `q^{-k} Σ aₙ qⁿ`. -/
+def laurentOf (k : ℕ) (a : ℕ → ℚ) : LaurentSeries ℚ :=
+  HahnSeries.single (-(k : ℤ)) (1 : ℚ) * HahnSeries.ofPowerSeries ℤ ℚ (PowerSeries.mk a)
+
+theorem coeff_laurentOf (k : ℕ) (a : ℕ → ℚ) (m : ℤ) :
+    (laurentOf k a).coeff m = if m + k < 0 then 0 else a (m + k).natAbs := by
+  rw [laurentOf, HahnSeries.coeff_single_mul, one_mul, sub_neg_eq_add, PowerSeries.coeff_coe,
+    PowerSeries.coeff_mk]
+
+theorem hasQExp_laurentOf {X : ℍ → ℂ} {k : ℕ} {a : ℕ → ℚ} {T : ℝ}
+    (h : ∀ τ : ℍ, T < τ.im → HasSum (fun n => (a n : ℂ) * qPar τ ^ n) (qPar τ ^ k * X τ)) :
+    HasQExp X (laurentOf k a) := by
+  refine ⟨T, fun τ hτ => ?_⟩
+  have hq := qPar_ne_zero τ
+  set g : ℕ → ℤ := fun n => (n : ℤ) - k
+  have hg : Function.Injective g := fun n n' e => by simp only [g] at e; omega
+  rw [← hg.hasSum_iff]
+  · have h2 := (h τ hτ).mul_right ((qPar τ ^ k)⁻¹)
+    rw [mul_comm (qPar τ ^ k), mul_assoc, mul_inv_cancel₀ (pow_ne_zero _ hq), mul_one] at h2
+    convert h2 using 1
+    funext n
+    simp only [Function.comp_apply, g, coeff_laurentOf]
+    rw [ite_eq_right_of_eq_false _ _ (eq_false (by omega)), show ((n : ℤ) - k + k) = (n : ℤ) by ring, Int.natAbs_natCast,
+      zpow_sub₀ hq, zpow_natCast, zpow_natCast, div_eq_mul_inv, mul_assoc]
+  · intro m hm
+    have hmk : m + k < 0 := by
+      by_contra hc
+      exact hm ⟨(m + k).toNat, by simp only [g]; omega⟩
+    simp [coeff_laurentOf, hmk]
+
+/-- Taylor series of the cleared Weierstrass expression. -/
+theorem tay_weq (Gx Gy : ℂ → ℂ) (hx : AnalyticAt ℂ Gx 0) (hy : AnalyticAt ℂ Gy 0)
+    (A1 A2 A3 A4 A6 : ℂ) (kx ky : ℕ) :
+    tay (fun w => Gy w ^ 2 * w ^ (3 * kx) + A1 * Gx w * Gy w * w ^ (2 * kx + ky) +
+        A3 * Gy w * w ^ (3 * kx + ky) - (Gx w ^ 3 * w ^ (2 * ky) + A2 * Gx w ^ 2 * w ^ (kx + 2 * ky) +
+        A4 * Gx w * w ^ (2 * kx + 2 * ky) + A6 * w ^ (3 * kx + 2 * ky))) =
+      tay Gy ^ 2 * PowerSeries.X ^ (3 * kx) +
+        PowerSeries.C A1 * tay Gx * tay Gy * PowerSeries.X ^ (2 * kx + ky) +
+        PowerSeries.C A3 * tay Gy * PowerSeries.X ^ (3 * kx + ky) -
+        (tay Gx ^ 3 * PowerSeries.X ^ (2 * ky) +
+          PowerSeries.C A2 * tay Gx ^ 2 * PowerSeries.X ^ (kx + 2 * ky) +
+          PowerSeries.C A4 * tay Gx * PowerSeries.X ^ (2 * kx + 2 * ky) +
+          PowerSeries.C A6 * PowerSeries.X ^ (3 * kx + 2 * ky)) := by
+  rw [tay_sub (by fun_prop) (by fun_prop)]
+  repeat rw [tay_add (by fun_prop) (by fun_prop)]
+  repeat rw [tay_mul (by fun_prop) (by fun_prop)]
+  repeat rw [tay_X_pow]
+  repeat rw [tay_const]
+  repeat rw [tay_pow hx]
+  repeat rw [tay_pow hy]
+
+open FormalMultilinearSeries in
+theorem tay_sum {c : ℕ → ℂ} (hpos : 0 < (ofScalars ℂ c).radius) :
+    tay (ofScalars ℂ c).sum = PowerSeries.mk c := by
+  ext n
+  rw [coeff_tay, PowerSeries.coeff_mk]
+  have h := ((ofScalars ℂ c).hasFPowerSeriesOnBall hpos).factorial_smul 1 n
+  rw [iteratedDeriv_eq_iteratedFDeriv, ← h]
+  simp only [ofScalars_apply_eq, one_pow, smul_eq_mul, mul_one, nsmul_eq_mul]
+  have : ((n.factorial : ℂ)) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n
+  field_simp
+
+/-- A function analytic at `0` vanishing on a punctured disc has Taylor series `0`. -/
+theorem tay_eq_zero_of_punctured {F : ℂ → ℂ} (hF : AnalyticAt ℂ F 0) {R : ℝ} (hR : 0 < R)
+    (h : ∀ w : ℂ, w ≠ 0 → ‖w‖ < R → F w = 0) : tay F = 0 := by
+  have h00 : F 0 = 0 := by
+    have hlim : Tendsto F (𝓝[≠] 0) (𝓝 (F 0)) :=
+      hF.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+    have hev : F =ᶠ[𝓝[≠] (0 : ℂ)] fun _ => 0 := by
+      filter_upwards [self_mem_nhdsWithin, nhdsWithin_le_nhds (Metric.ball_mem_nhds 0 hR)]
+        with w hw hwb
+      exact h w hw (by simpa using hwb)
+    exact tendsto_nhds_unique hlim (tendsto_const_nhds.congr' hev.symm)
+  have : F =ᶠ[𝓝 0] fun _ => 0 := by
+    filter_upwards [Metric.ball_mem_nhds 0 hR] with w hw
+    by_cases hw0 : w = 0
+    · rw [hw0, h00]
+    · exact h w hw0 (by simpa using hw)
+  rw [tay_congr this, tay_const]; simp
+
+/-- The Weierstrass equation for `q^{-kx} A`, `q^{-ky} B` from the cleared power-series identity. -/
+theorem wEq_laurent (E : WeierstrassCurve ℚ) (kx ky : ℕ) (A B : PowerSeries ℚ)
+    (h : B ^ 2 * PowerSeries.X ^ (3 * kx) +
+        PowerSeries.C E.a₁ * A * B * PowerSeries.X ^ (2 * kx + ky) +
+        PowerSeries.C E.a₃ * B * PowerSeries.X ^ (3 * kx + ky) -
+        (A ^ 3 * PowerSeries.X ^ (2 * ky) +
+          PowerSeries.C E.a₂ * A ^ 2 * PowerSeries.X ^ (kx + 2 * ky) +
+          PowerSeries.C E.a₄ * A * PowerSeries.X ^ (2 * kx + 2 * ky) +
+          PowerSeries.C E.a₆ * PowerSeries.X ^ (3 * kx + 2 * ky)) = 0) :
+    WEq E (HahnSeries.single (-(kx : ℤ)) 1 * HahnSeries.ofPowerSeries ℤ ℚ A)
+      (HahnSeries.single (-(ky : ℤ)) 1 * HahnSeries.ofPowerSeries ℤ ℚ B) := by
+  set ι := HahnSeries.ofPowerSeries ℤ ℚ
+  set u : LaurentSeries ℚ := HahnSeries.single (-1 : ℤ) 1
+  set t : LaurentSeries ℚ := HahnSeries.single (1 : ℤ) 1
+  have hut : u * t = 1 := by simp [u, t, HahnSeries.single_mul_single]
+  have hpow : ∀ k : ℕ, HahnSeries.single (-(k : ℤ)) (1 : ℚ) = u ^ k := fun k => by
+    simp [u, HahnSeries.single_pow]
+  have hX : ι PowerSeries.X = t := HahnSeries.ofPowerSeries_X
+  have hcst : ∀ c : ℚ, HahnSeries.C c = algebraMap ℚ (LaurentSeries ℚ) c := fun c =>
+    RingHom.congr_fun (Subsingleton.elim HahnSeries.C (algebraMap ℚ (LaurentSeries ℚ))) c
+  have hC : ∀ c : ℚ, ι (PowerSeries.C c) = algebraMap ℚ (LaurentSeries ℚ) c := fun c =>
+    (HahnSeries.ofPowerSeries_C c).trans (hcst c)
+  have hm : ∀ m : ℕ, (u * t) ^ m = 1 := fun m => by rw [hut, one_pow]
+  have h' := congrArg ι h
+  simp only [map_add, map_sub, map_mul, map_pow, map_zero, hX, hC] at h'
+  rw [hpow, hpow]
+  unfold WEq
+  linear_combination u ^ (3 * kx + 2 * ky) * h' - (u ^ (2 * ky) * ι B ^ 2) * hm (3 * kx) -
+    (algebraMap ℚ (LaurentSeries ℚ) E.a₁ * u ^ (kx + ky) * ι A * ι B) * hm (2 * kx + ky) -
+    (algebraMap ℚ (LaurentSeries ℚ) E.a₃ * u ^ ky * ι B) * hm (3 * kx + ky) +
+    (u ^ (3 * kx) * ι A ^ 3) * hm (2 * ky) +
+    (algebraMap ℚ (LaurentSeries ℚ) E.a₂ * u ^ (2 * kx) * ι A ^ 2) * hm (kx + 2 * ky) +
+    (algebraMap ℚ (LaurentSeries ℚ) E.a₄ * u ^ kx * ι A) * hm (2 * kx + 2 * ky) +
+    algebraMap ℚ (LaurentSeries ℚ) E.a₆ * hm (3 * kx + 2 * ky)
+
+open FormalMultilinearSeries in
+/-- **The Weierstrass equation transfers from `(X, Y)` to their `q`-expansions.** -/
+theorem wEq_of {E : WeierstrassCurve ℚ} {X Y : ℍ → ℂ} {kx ky : ℕ} {ax ay : ℕ → ℚ} {T : ℝ}
+    (hT : 0 ≤ T)
+    (hX : ∀ τ : ℍ, T < τ.im → HasSum (fun n => (ax n : ℂ) * qPar τ ^ n) (qPar τ ^ kx * X τ))
+    (hY : ∀ τ : ℍ, T < τ.im → HasSum (fun n => (ay n : ℂ) * qPar τ ^ n) (qPar τ ^ ky * Y τ))
+    (heqn : ∀ τ : ℍ, RegularAt X τ → RegularAt Y τ → (E⁄ℂ).Equation (X τ) (Y τ)) :
+    WEq E (laurentOf kx ax) (laurentOf ky ay) := by
+  have hrx := le_radius hT hX
+  have hry := le_radius hT hY
+  have h0R : ‖(0 : ℂ)‖ < R0 T := by simpa using R0_pos T
+  have hx0 := analyticAt_sum hrx h0R
+  have hy0 := analyticAt_sum hry h0R
+  have hposx := lt_of_lt_of_le (ENNReal.ofReal_pos.2 (R0_pos T)) hrx
+  have hposy := lt_of_lt_of_le (ENNReal.ofReal_pos.2 (R0_pos T)) hry
+  set Gx := (ofScalars ℂ fun n => (ax n : ℂ)).sum with hGx
+  set Gy := (ofScalars ℂ fun n => (ay n : ℂ)).sum with hGy
+  set A1 : ℂ := algebraMap ℚ ℂ E.a₁
+  set A2 : ℂ := algebraMap ℚ ℂ E.a₂
+  set A3 : ℂ := algebraMap ℚ ℂ E.a₃
+  set A4 : ℂ := algebraMap ℚ ℂ E.a₄
+  set A6 : ℂ := algebraMap ℚ ℂ E.a₆
+  have hF0 : ∀ w : ℂ, w ≠ 0 → ‖w‖ < R0 T →
+      (fun w => Gy w ^ 2 * w ^ (3 * kx) + A1 * Gx w * Gy w * w ^ (2 * kx + ky) +
+        A3 * Gy w * w ^ (3 * kx + ky) - (Gx w ^ 3 * w ^ (2 * ky) + A2 * Gx w ^ 2 * w ^ (kx + 2 * ky) +
+        A4 * Gx w * w ^ (2 * kx + 2 * ky) + A6 * w ^ (3 * kx + 2 * ky))) w = 0 := by
+    intro w hw0 hw
+    have h2pi : (2 * Real.pi * Complex.I : ℂ) ≠ 0 := by simp [Real.pi_ne_zero, Complex.I_ne_zero]
+    set z : ℂ := Complex.log w / (2 * Real.pi * Complex.I)
+    have hexp : Complex.exp (2 * Real.pi * Complex.I * z) = w := by
+      rw [mul_div_cancel₀ _ h2pi, Complex.exp_log hw0]
+    have hzim : T < z.im := by
+      have h1 : ‖w‖ = Real.exp (-(2 * Real.pi * z.im)) := by rw [← hexp, norm_exp_two_pi_I]
+      rw [h1, R0] at hw
+      have := Real.exp_lt_exp.1 hw
+      nlinarith [Real.pi_pos]
+    set τ : ℍ := ⟨z, lt_of_le_of_lt hT hzim⟩
+    have hqτ : qPar τ = w := hexp
+    have hτ : T < τ.im := hzim
+    have ex := sum_eq hX τ hτ
+    have ey := sum_eq hY τ hτ
+    rw [hqτ, ← hGx] at ex
+    rw [hqτ, ← hGy] at ey
+    have heq := heqn τ (regularAt_of hT hX τ hτ) (regularAt_of hT hY τ hτ)
+    rw [Affine.equation_iff] at heq
+    have e1 : (E⁄ℂ).a₁ = A1 := rfl
+    have e2 : (E⁄ℂ).a₂ = A2 := rfl
+    have e3 : (E⁄ℂ).a₃ = A3 := rfl
+    have e4 : (E⁄ℂ).a₄ = A4 := rfl
+    have e6 : (E⁄ℂ).a₆ = A6 := rfl
+    rw [e1, e2, e3, e4, e6] at heq
+    simp only [ex, ey]
+    linear_combination (w ^ (3 * kx + 2 * ky)) * heq
+  have hFa : AnalyticAt ℂ (fun w => Gy w ^ 2 * w ^ (3 * kx) + A1 * Gx w * Gy w * w ^ (2 * kx + ky) +
+        A3 * Gy w * w ^ (3 * kx + ky) - (Gx w ^ 3 * w ^ (2 * ky) + A2 * Gx w ^ 2 * w ^ (kx + 2 * ky) +
+        A4 * Gx w * w ^ (2 * kx + 2 * ky) + A6 * w ^ (3 * kx + 2 * ky))) 0 := by fun_prop
+  have htay := tay_eq_zero_of_punctured hFa (R0_pos T) hF0
+  rw [tay_weq Gx Gy hx0 hy0, hGx, hGy, tay_sum hposx, tay_sum hposy] at htay
+  have hmA : PowerSeries.mk (fun n => (ax n : ℂ)) =
+      PowerSeries.map (algebraMap ℚ ℂ) (PowerSeries.mk ax) := by
+    ext n; simp [eq_ratCast]
+  have hmB : PowerSeries.mk (fun n => (ay n : ℂ)) =
+      PowerSeries.map (algebraMap ℚ ℂ) (PowerSeries.mk ay) := by
+    ext n; simp [eq_ratCast]
+  rw [hmA, hmB] at htay
+  apply wEq_laurent
+  apply PowerSeries.map_injective (algebraMap ℚ ℂ) (algebraMap ℚ ℂ).injective
+  rw [map_zero, ← htay]
+  simp only [map_add, map_sub, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, A1, A2, A3,
+    A4, A6]
+
+/-- **The pole at `∞` transfers**: if `‖X‖ → ∞` at `∞`, the `q`-expansion of `X` has negative
+order. -/
+theorem order_neg_of {X : ℍ → ℂ} {x : LaurentSeries ℚ} (hq : HasQExp X x)
+    (hp : Tendsto (fun τ : ℍ => ‖X τ‖) atImInfty atTop) : x.order < 0 := by
+  by_contra hc
+  rw [not_lt] at hc
+  obtain ⟨T, hT⟩ := hq
+  set T' := max T 0
+  have hT' : ∀ τ : ℍ, T' < τ.im →
+      HasSum (fun n : ℕ => (x.coeff n : ℂ) * qPar τ ^ n) (X τ) := by
+    intro τ hτ
+    have h1 := hT τ (lt_of_le_of_lt (le_max_left _ _) hτ)
+    rw [← (Nat.cast_injective (R := ℤ)).hasSum_iff] at h1
+    · convert h1 using 1
+      funext n
+      simp [zpow_natCast]
+    · intro m hm
+      have hm0 : m < 0 := by
+        by_contra h; exact hm ⟨m.toNat, by omega⟩
+      rw [HahnSeries.coeff_eq_zero_of_lt_order (lt_of_lt_of_le hm0 hc)]
+      simp
+  set p := FormalMultilinearSeries.ofScalars ℂ fun n => (x.coeff n : ℂ)
+  have hrad := le_radius (le_max_right _ _) hT'
+  have hcont : ContinuousAt p.sum 0 :=
+    (analyticAt_sum hrad (by simpa using R0_pos T')).continuousAt
+  obtain ⟨δ, hδ, hb⟩ := Metric.continuousAt_iff.1 hcont 1 one_pos
+  have hev : ∀ᶠ τ in atImInfty, ‖X τ‖ < ‖p.sum 0‖ + 1 := by
+    rw [Filter.Eventually, UpperHalfPlane.atImInfty_mem]
+    refine ⟨max (T' + 1) (-Real.log δ / (2 * Real.pi) + 1), fun τ hτ => ?_⟩
+    have hτ1 : T' < τ.im := by linarith [le_max_left (T' + 1) (-Real.log δ / (2 * Real.pi) + 1)]
+    have hτ2 : -Real.log δ / (2 * Real.pi) < τ.im := by
+      linarith [le_max_right (T' + 1) (-Real.log δ / (2 * Real.pi) + 1)]
+    have hqδ : ‖qPar τ‖ < δ := by
+      rw [qPar, norm_exp_two_pi_I]
+      have hπ := Real.pi_pos
+      have : -(2 * Real.pi * (τ : ℂ).im) < Real.log δ := by
+        rw [UpperHalfPlane.coe_im]
+        rw [div_lt_iff₀ (by positivity)] at hτ2
+        linarith
+      calc Real.exp (-(2 * Real.pi * (τ : ℂ).im)) < Real.exp (Real.log δ) := Real.exp_lt_exp.2 this
+        _ = δ := Real.exp_log hδ
+    have hd := hb (by simpa using hqδ)
+    rw [sum_eq hT' τ hτ1] at hd
+    have := norm_sub_norm_le (X τ) (p.sum 0)
+    rw [dist_eq_norm] at hd
+    show ‖X τ‖ < ‖p.sum 0‖ + 1
+    linarith
+  obtain ⟨τ, h1, h2⟩ := (hev.and (hp.eventually_ge_atTop (‖p.sum 0‖ + 1))).exists
+  linarith
+
+/-! ## §4. The bridge -/
+
+/-- **gz-optimal's analytic leaf from the algebraic leaf and the `q`-expansion principle.** -/
+theorem grossZagierModuliOptAt_of_alg (hQ : Gamma0QExpansion) {E : WeierstrassCurve ℚ}
+    (h : GrossZagierAlgOptAt E) : ZInQ.GZOptimal.GrossZagierModuliOptAt E := by
+  intro N _ f hχ hf X Y hm hopt D β hD hD4 hH hβ R _ τ hτ K _ _ _ hK δ hδ ι hι n hn y hy F G hF hG
+  obtain ⟨-, hmX, -, kx, ax, Tx, hsX⟩ := hm.ratX
+  obtain ⟨-, hmY, -, ky, ay, Ty, hsY⟩ := hm.ratY
+  set T := max (max Tx Ty) 0
+  have hT0 : 0 ≤ T := le_max_right _ _
+  have hsX' : ∀ τ : ℍ, T < τ.im →
+      HasSum (fun n => (ax n : ℂ) * qPar τ ^ n) (qPar τ ^ kx * X τ) := fun τ hτ =>
+    hsX τ (lt_of_le_of_lt (le_trans (le_max_left _ _) (le_max_left _ _)) hτ)
+  have hsY' : ∀ τ : ℍ, T < τ.im →
+      HasSum (fun n => (ay n : ℂ) * qPar τ ^ n) (qPar τ ^ ky * Y τ) := fun τ hτ =>
+    hsY τ (lt_of_le_of_lt (le_trans (le_max_right _ _) (le_max_left _ _)) hτ)
+  have hqx := hasQExp_laurentOf hsX'
+  have hqy := hasQExp_laurentOf hsY'
+  have hxK := hQ N X hm.ratX _ hqx
+  have hyK := hQ N Y hm.ratY _ hqy
+  have hweq := wEq_of hT0 hsX' hsY' hm.eqn
+  have hord := order_neg_of hqx hm.pole
+  set x' : X0Field N := ⟨_, hxK⟩
+  set y' : X0Field N := ⟨_, hyK⟩
+  have hon := eval₂_polynomial_of_wEq (E := E) x' y' hweq
+  have htr := transcendental_of_order_neg x' hord
+  have h1 : phiOf (E := E) x' y' hon htr (genX E) = x' := phiOf_genX x' y' hon htr
+  have h2 : phiOf (E := E) x' y' hon htr (genY E) = y' := phiOf_genY x' y' hon htr
+  refine h N f hχ hf (phiOf x' y' hon htr) (by rw [h1]; exact hord) X Y hmX hmY
+    (by rw [h1]; exact hqx) (by rw [h2]; exact hqy) hopt D β hD hD4 hH hβ R τ hτ K hK δ hδ ι hι
+    n hn y hy F G hF hG
+
+/-- **`GZOptimal.GrossZagierModuliOptCd` from the algebraic leaf and the `q`-expansion
+principle.** -/
+theorem grossZagierModuliOptCd_of_alg (hQ : Gamma0QExpansion) (h : GrossZagierAlgOptCd) :
+    ZInQ.GZOptimal.GrossZagierModuliOptCd := fun d hd hsq E' _ hE' hL =>
+  grossZagierModuliOptAt_of_alg hQ (h d hd hsq E' hE' hL)
+
+/-- **The Gross–Zagier formula for `C_d` (gz-hl3's consumer) from printed leaves only**: the
+algebraic Gross–Zagier leaf, the `q`-expansion principle for `Γ₀(N)`, and cd-optimal's eta-quotient
+law (via period-odd's `grossZagierFormulaCd_of_etaW32`). -/
+theorem grossZagierFormulaCd_of_alg (hGZ : GrossZagierAlgOptCd) (hQ : Gamma0QExpansion)
+    (hW : ZInQ.CdOpt.EtaW32Character) : ZInQ.GZHL3.GrossZagierFormulaCd :=
+  ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 (grossZagierModuliOptCd_of_alg hQ hGZ) hW
+
 end ZInQ.GZAlg
