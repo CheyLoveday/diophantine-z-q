@@ -350,7 +350,7 @@ theorem ne_zero_of_lattice {L : PeriodPair} {c : ℚ}
   exact ω₁_ne_zero L (by simpa using hw.symm)
 
 theorem periodsIn_zsmul {L : PeriodPair} {c : ℚ} (hP : ZInQ.GZHL3.PeriodsIn f c L) (n : ℤ) :
-    ZInQ.GZHL3.PeriodsIn f ((n : ℚ) * c) L := by
+    ZInQ.GZHL3.PeriodsIn f (((n : ℚ) * c : ℚ) : ℂ) L := by
   intro γ hγ τ
   have := L.lattice.smul_mem n (hP γ hγ τ)
   rw [zsmul_eq_mul] at this
@@ -400,5 +400,74 @@ theorem sum_modPt_eq {E : WeierstrassCurve ℚ} [E.IsElliptic] (hE : IsShortMode
       ZInQ.GZHL3.weierPt E L (c * ∑ r : S, ZInQ.GZHL3.eichler f r.1.tauH) := by
   rw [Finset.mul_sum, ← weierPt_sum hE hs.2.2.1]
   exact Finset.sum_congr rfl fun r _ => ZInQ.GZModuli.modPt_eq hs r.1.tauH
+
+/-! ## §5. The optimal-parametrization leaf is weaker than gz-moduli's leaf -/
+
+/-- **`GrossZagierModuliOptAt E` follows from gz-moduli's `GrossZagierModuliAt E`** (short `E`): the
+`n`-multiple of the optimal Heegner sum is the Heegner sum of the parametrization `[n] ∘ φ`. -/
+theorem grossZagierModuliOptAt_of_moduliAt {E : WeierstrassCurve ℚ} [E.IsElliptic]
+    (hE : IsShortModel E) (h : ZInQ.GZModuli.GrossZagierModuliAt E) : GrossZagierModuliOptAt E := by
+  intro N _ f hχ hcoeff X Y _ hopt D β hD hD4 hH hβ R _ τ hτ K _ _ _ hK δ hδ ι hι n _ y hy F G hF hG
+  obtain ⟨L, c, hL, hlat, hmod⟩ := hopt
+  have hs : ParamSetting E f L ((n : ℚ) * c) :=
+    ⟨hχ, hcoeff, hL, mul_ne_zero (by exact_mod_cast ‹n ≠ 0›) (ne_zero_of_lattice hlat),
+      periodsIn_zsmul (periodsIn_of_lattice hlat) n⟩
+  refine h N f hχ hcoeff _ _ (ZInQ.GZModuli.isModularParam_of hs) D β hD hD4 hH hβ R τ hτ K hK δ
+    hδ ι hι y ?_ F G hF hG
+  rw [hy]
+  simp only [hmod, fun r => ZInQ.GZModuli.modPt_eq hs (τ r), zPar, weierPt_sum hE hL,
+    weierPt_zsmul hE hL, Finset.mul_sum]
+  congr 1
+  refine Finset.sum_congr rfl fun r _ => ?_
+  push_cast; ring
+
+/-- **`GrossZagierModuliOptCd` follows from gz-moduli's all-`E` leaf `GrossZagierModuli`.** -/
+theorem grossZagierModuliOptCd_of_moduli (h : ZInQ.GZModuli.GrossZagierModuli) :
+    GrossZagierModuliOptCd :=
+  fun _ _ _ E' _ hE' _ => grossZagierModuliOptAt_of_moduliAt hE' (h E')
+
+/-! ## §6. `GZHL3.GrossZagierFormulaAt E` from the optimal case -/
+
+/-- **Route A (`E` is its own strong Weil curve).** If the period lattice of `E` is `c₀ Λ_f`, then
+every admissible `c` (`c Λ_f ⊆ L`, `c ∈ ℚ^×`) is `n c₀` with `n ∈ ℤ ∖ {0}`, the parametrization
+`weierPt E L (c φ_f)` is `[n] ∘ φ_opt`, and the Heegner sum is `n · y_K(φ_opt)`. -/
+theorem grossZagierFormulaAt_of_selfOptimal {E : WeierstrassCurve ℚ} [E.IsElliptic]
+    (hE : IsShortModel E) (hGZ : GrossZagierModuliOptAt E)
+    (hOpt : ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+      (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
+      ∀ L : PeriodPair, ZInQ.GZHL3.IsPeriodLattice E L →
+        ∃ c₀ : ℚ, L.lattice = (periodLattice f).map (LinearMap.mulLeft ℤ (c₀ : ℂ))) :
+    ZInQ.GZHL3.GrossZagierFormulaAt E := by
+  intro N _ f hχ hcoeff D β hD hD4 hH hβ S hS L c hL hc hP K _ _ _ hK δ hδ ι hι y hy F G hF hG
+  obtain ⟨c₀, hlat⟩ := hOpt N f hχ hcoeff L hL
+  have hc₀ := ne_zero_of_lattice hlat
+  have hs₀ : ParamSetting E f L c₀ := ⟨hχ, hcoeff, hL, hc₀, periodsIn_of_lattice hlat⟩
+  -- `c / c₀ ∈ ℤ`
+  obtain ⟨n, hn⟩ : ∃ n : ℤ, c / c₀ = n := by
+    apply rat_mem_int (L := L)
+    have h1 := L.ω₁_mem_lattice
+    rw [hlat] at h1
+    obtain ⟨w, hw, hw1⟩ := h1
+    have : ((c / c₀ : ℚ) : ℂ) * L.ω₁ = c * w := by
+      rw [← hw1]; simp only [LinearMap.mulLeft_apply]; push_cast; field_simp
+    rw [this]
+    exact mul_mem_of_periodsIn hP hw
+  have hcn : (c : ℂ) = n * c₀ := by
+    have : c = n * c₀ := by rw [← hn]; field_simp
+    exact_mod_cast this
+  have hn0 : n ≠ 0 := by
+    rintro rfl; apply hc; simpa using hcn
+  refine hGZ N f hχ hcoeff _ _ (ZInQ.GZModuli.isModularParam_of hs₀) ⟨L, c₀, hL, hlat,
+    ZInQ.GZModuli.modPt_eq hs₀⟩ D β hD hD4 hH hβ S (fun Q => Q.1.tauH)
+    (ZInQ.GZModuli.isHeegnerPointReps_of hD hS) K hK δ hδ ι hι n hn0 y ?_ F G hF hG
+  rw [hy, heegnerC_eq hE hL, sum_modPt_eq hE hs₀, weierPt_zsmul hE hL, hcn, mul_assoc]
+
+/-- **`GZHL3.GrossZagierFormulaCd` from the optimal-parametrization leaf and `CdOptimal`** (route A:
+the curves `C_d` are their own strong Weil curves). -/
+theorem grossZagierFormulaCd_of_selfOptimal (hGZ : GrossZagierModuliOptCd) (hOpt : CdOptimal) :
+    ZInQ.GZHL3.GrossZagierFormulaCd := fun d hd hsq => by
+  have := shortCurve_cd_isElliptic (d := d) (by omega)
+  exact grossZagierFormulaAt_of_selfOptimal (short_cd d) (hGZ d hd hsq _ (short_cd d) fun _ _ => rfl)
+    (hOpt d hd hsq)
 
 end ZInQ.GZOptimal
