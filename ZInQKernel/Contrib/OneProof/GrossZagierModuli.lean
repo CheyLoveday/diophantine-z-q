@@ -625,4 +625,185 @@ theorem isHeegnerPointReps_of {N : ℕ} [NeZero N] {D β : ℤ} (hD : IsOddImagF
   have b := huniq Q.1 ⟨Q.2, heq⟩
   exact Subtype.ext (b.trans a.symm)
 
+/-! ## §3. The analytic parametrization is a modular parametrization over `ℚ` -/
+
+open ZInQ.GZHeegner (ParamSetting zPar xPar yPar gPar qC zF yF)
+
+section Analytic
+
+variable {E : WeierstrassCurve ℚ} [E.IsElliptic] {N : ℕ} [NeZero N] {f : Newform N 2}
+  {L : PeriodPair} {c : ℚ}
+
+theorem zPar_eq_zF (τ : ℍ) : zPar f c τ = zF f c (qC τ) := by
+  rw [zPar, ZInQ.GZHeegner.eichler_eq,
+    ZInQ.GZHeegner.eSum_eq_mul_vFun f _ (ZInQ.GZHeegner.norm_qC_lt_one τ.im_pos)]
+  simp only [zF]; ring
+
+theorem norm_qC (τ : ℍ) : ‖qC τ‖ = Real.exp (-(2 * Real.pi * τ.im)) := by
+  rw [qC, Complex.norm_exp]
+  congr 1
+  simp [Complex.mul_re, Complex.mul_im]
+
+/-- `c φ_f` is not locally constant: near every `τ` there are points `z ≠ τ` with `c φ_f(z) ∉ L`
+(identity theorem on `ℍ`, and `c φ_f(τ') ∉ L` for `Im τ'` large). -/
+theorem frequently_zPar_notMem (hs : ParamSetting E f L c) (τ : ℍ) :
+    ∃ᶠ z in 𝓝[≠] (τ : ℂ), zPar f c (ofComplex z) ∉ L.lattice := by
+  have hc : (c : ℂ) ≠ 0 := by exact_mod_cast hs.2.2.2.1
+  set g : ℂ → ℂ := zPar f c ∘ ofComplex with hgdef
+  have hg : AnalyticAt ℂ g τ := ZInQ.GZHeegner.analyticAt_zPar f c τ
+  by_contra hcon
+  rw [Filter.not_frequently] at hcon
+  simp only [not_not] at hcon
+  rcases hg.eventually_eq_or_eventually_ne (analyticAt_const (v := g τ)) with hA | hB
+  · have hU : AnalyticOnNhd ℂ g {z : ℂ | 0 < z.im} := fun z hz =>
+      ZInQ.GZHeegner.analyticAt_zPar f c ⟨z, hz⟩
+    have heq := hU.eqOn_of_preconnected_of_eventuallyEq analyticOnNhd_const
+      (convex_halfSpace_im_gt 0).isPreconnected τ.im_pos hA
+    have hmem : g τ ∈ L.lattice := by
+      obtain ⟨z, hz1, hz2⟩ := ((hA.filter_mono nhdsWithin_le_nhds).and hcon).exists
+      rw [← hz1]; exact hz2
+    obtain ⟨ε, hε, -, hgood⟩ := ZInQ.GZHeegner.exists_good_ball f L hc
+    obtain ⟨τ', hτ'⟩ := ZInQ.GZHeegner.exists_qC_norm (r := min (ε / 2) (1 / 2))
+      (by positivity) (lt_of_le_of_lt (min_le_right _ _) (by norm_num))
+    have hq0 : qC τ' ≠ 0 := Complex.exp_ne_zero _
+    have hlt : ‖qC τ'‖ < ε := by
+      rw [hτ']; exact lt_of_le_of_lt (min_le_left _ _) (by linarith)
+    apply (hgood _ hlt).2 hq0
+    rw [← zPar_eq_zF, ← ZInQ.GZHeegner.zPar_ofComplex f c τ']
+    have h1 : g τ' = g τ := heq τ'.im_pos
+    show g τ' ∈ L.lattice
+    rw [h1]; exact hmem
+  · have hcont : ∀ᶠ z in 𝓝 (τ : ℂ), g z ∈ ((L.lattice : Set ℂ) \ {g τ})ᶜ :=
+      hg.continuousAt.preimage_mem_nhds (L.compl_lattice_sdiff_singleton_mem_nhds (g τ))
+    obtain ⟨z, hz1, hz2, hz3⟩ := ((hcont.filter_mono nhdsWithin_le_nhds).and (hB.and hcon)).exists
+    exact hz1 ⟨hz3, by simpa using hz2⟩
+
+/-- **At a pole (`c φ_f(τ) ∈ L`), `x∘φ` has no finite limit.** (`1/(x∘φ − t)` is regular at `τ` with
+value `0`.) -/
+theorem not_tendsto_xPar (hs : ParamSetting E f L c) (τ : ℍ) (hz : zPar f c τ ∈ L.lattice)
+    (x₀ : ℂ) : ¬ Tendsto (xPar E L f c ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 x₀) := by
+  intro hx
+  obtain ⟨t, ht⟩ : ∃ t : ℚ, x₀ ≠ t := by
+    by_cases h : x₀ = ((0 : ℚ) : ℂ)
+    · exact ⟨1, by rw [h]; norm_num⟩
+    · exact ⟨0, h⟩
+  have hreg := (ZInQ.GZHeegner.paramRegular E N f L c hs).2.2 t τ (Or.inl hz)
+  have hg0 : (gPar E L f c t ∘ ofComplex) (τ : ℂ) = 0 := by
+    simp [Function.comp, UpperHalfPlane.ofComplex_apply, gPar, hz]
+  have hlim0 : Tendsto (gPar E L f c t ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 0) := by
+    rw [← hg0]; exact hreg.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+  set F := 𝓝[≠] (τ : ℂ) ⊓ 𝓟 {z | zPar f c (ofComplex z) ∉ L.lattice} with hF
+  haveI : F.NeBot := Filter.frequently_iff_neBot.mp (frequently_zPar_notMem hs τ)
+  have hlim1 : Tendsto (gPar E L f c t ∘ ofComplex) F (𝓝 (x₀ - t)⁻¹) := by
+    have h1 : Tendsto (fun z => (xPar E L f c (ofComplex z) - t)⁻¹) F (𝓝 (x₀ - t)⁻¹) :=
+      ((hx.mono_left inf_le_left).sub_const _).inv₀ (sub_ne_zero.2 ht)
+    refine h1.congr' ?_
+    filter_upwards [mem_inf_of_right (mem_principal_self _)] with z hz'
+    have hz'' : zPar f c (ofComplex z) ∉ L.lattice := hz'
+    simp [Function.comp, gPar, hz'']
+  exact inv_ne_zero (sub_ne_zero.2 ht) (tendsto_nhds_unique hlim1 (hlim0.mono_left inf_le_left))
+
+/-- **`modPt` of the analytic parametrization is `weierPt E L (c φ_f(τ))`.** -/
+theorem modPt_eq (hs : ParamSetting E f L c) (τ : ℍ) :
+    modPt E (xPar E L f c) (yPar E L f c) τ = ZInQ.GZHL3.weierPt E L (zPar f c τ) := by
+  have hL := hs.2.2.1
+  unfold modPt
+  by_cases hz : zPar f c τ ∈ L.lattice
+  · rw [dif_neg, ZInQ.GZHeegner.weierPt_eq_zero E L hz]
+    rintro ⟨p, -, hx, -⟩
+    exact not_tendsto_xPar hs τ hz p.1 hx
+  · obtain ⟨hrx, hry⟩ := (ZInQ.GZHeegner.paramRegular E N f L c hs).2.1 τ hz
+    have hx : Tendsto (xPar E L f c ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 (xPar E L f c τ)) := by
+      have := hrx.continuousAt.tendsto.mono_left (nhdsWithin_le_nhds (s := {(τ : ℂ)}ᶜ))
+      simpa [Function.comp, UpperHalfPlane.ofComplex_apply] using this
+    have hy : Tendsto (yPar E L f c ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 (yPar E L f c τ)) := by
+      have := hry.continuousAt.tendsto.mono_left (nhdsWithin_le_nhds (s := {(τ : ℂ)}ᶜ))
+      simpa [Function.comp, UpperHalfPlane.ofComplex_apply] using this
+    have hns := ZInQ.GZHL3.weierPt_some E hL hz
+    have h : ∃ p : ℂ × ℂ, (E⁄ℂ).Nonsingular p.1 p.2 ∧
+        Tendsto (xPar E L f c ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 p.1) ∧
+        Tendsto (yPar E L f c ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 p.2) :=
+      ⟨(xPar E L f c τ, yPar E L f c τ), hns, hx, hy⟩
+    rw [dif_pos h, ZInQ.GZHeegner.weierPt_eq_some E hL hz]
+    have h1 := tendsto_nhds_unique h.choose_spec.2.1 hx
+    have h2 := tendsto_nhds_unique h.choose_spec.2.2 hy
+    simp only [Affine.Point.some.injEq]
+    exact ⟨h1, h2⟩
+
+/-- **`x∘φ` has a pole at `∞`**: `q² x(φ) = Ŷ(q)` with `Ŷ(0) = c⁻² ≠ 0` (gz-heegner). -/
+theorem tendsto_norm_xPar (hs : ParamSetting E f L c) :
+    Tendsto (fun τ : ℍ => ‖xPar E L f c τ‖) atImInfty atTop := by
+  have hc : (c : ℂ) ≠ 0 := by exact_mod_cast hs.2.2.2.1
+  set b : ℂ := (E⁄ℂ).b₂ / 12 with hb
+  set Y := yF f L c b with hYdef
+  have hY : AnalyticAt ℂ Y 0 := ZInQ.GZHeegner.analyticAt_yF f L hc b
+  have hY0 : Y 0 = ((c : ℂ) ^ 2)⁻¹ := ZInQ.GZHeegner.yF_zero f L _ _
+  obtain ⟨ε, hε, -, hgood⟩ := ZInQ.GZHeegner.exists_good_ball f L hc
+  have hx : ∀ τ : ℍ, ‖qC τ‖ < ε → qC τ ^ 2 * xPar E L f c τ = Y (qC τ) := by
+    intro τ hτ
+    have hq0 : qC τ ≠ 0 := Complex.exp_ne_zero _
+    rw [xPar, zPar_eq_zF, hYdef, ZInQ.GZHeegner.yF_eq f L hc _ (hgood _ hτ).1 hq0]
+  have hnq : Tendsto (fun τ : ℍ => ‖qC τ‖) atImInfty (𝓝 0) := by
+    simp_rw [norm_qC]
+    refine Real.tendsto_exp_atBot.comp (tendsto_neg_atTop_atBot.comp ?_)
+    exact (tendsto_comap (f := UpperHalfPlane.im)).const_mul_atTop (by positivity)
+  have hq : Tendsto (fun τ : ℍ => qC τ) atImInfty (𝓝 0) := tendsto_zero_iff_norm_tendsto_zero.2 hnq
+  set K : ℝ := ‖Y 0‖ with hK
+  have hK0 : 0 < K := by rw [hK, hY0]; exact norm_pos_iff.2 (inv_ne_zero (pow_ne_zero 2 hc))
+  have hYlim : Tendsto (fun τ : ℍ => ‖Y (qC τ)‖) atImInfty (𝓝 K) :=
+    (continuous_norm.tendsto _).comp (hY.continuousAt.tendsto.comp hq)
+  have hev1 : ∀ᶠ τ : ℍ in atImInfty, ‖qC τ‖ < ε := hnq.eventually (gt_mem_nhds hε)
+  have hev2 : ∀ᶠ τ : ℍ in atImInfty, K / 2 < ‖Y (qC τ)‖ := hYlim.eventually (lt_mem_nhds (by linarith))
+  have hq2 : Tendsto (fun τ : ℍ => ‖qC τ‖ ^ 2) atImInfty (𝓝[>] 0) := by
+    refine tendsto_nhdsWithin_iff.2 ⟨by simpa using hnq.pow 2, Filter.Eventually.of_forall fun τ => ?_⟩
+    have : qC τ ≠ 0 := Complex.exp_ne_zero _
+    exact pow_pos (norm_pos_iff.2 this) 2
+  have hinv : Tendsto (fun τ : ℍ => K / 2 * (‖qC τ‖ ^ 2)⁻¹) atImInfty atTop :=
+    (tendsto_inv_nhdsGT_zero.comp hq2).const_mul_atTop (by linarith)
+  refine tendsto_atTop_mono' _ ?_ hinv
+  filter_upwards [hev1, hev2] with τ h1 h2
+  have hpos : 0 < ‖qC τ‖ ^ 2 := pow_pos (norm_pos_iff.2 (Complex.exp_ne_zero _)) 2
+  have e : ‖Y (qC τ)‖ = ‖qC τ‖ ^ 2 * ‖xPar E L f c τ‖ := by
+    rw [← hx τ h1, norm_mul, norm_pow]
+  rw [← div_eq_mul_inv, div_le_iff₀ hpos]
+  nlinarith
+
+/-- **The analytic parametrization `τ ↦ weierPt E L (c φ_f(τ))` is a modular parametrization over
+`ℚ`**: its coordinates lie in `ℚ(X₀(N))` (gz-heegner's `isRatModFnMero_coords`), satisfy the
+Weierstrass equation, and `x∘φ` has a pole at `∞`. -/
+theorem isModularParam_of (hs : ParamSetting E f L c) :
+    IsModularParam N E (xPar E L f c) (yPar E L f c) := by
+  obtain ⟨mx, my, -⟩ := ZInQ.GZHeegner.isRatModFnMero_coords ZInQ.GZHeegner.paramRegular
+    ZInQ.GZHeegner.paramCuspGrowth ZInQ.GZHeegner.paramQExpansion E f L c hs
+  refine ⟨mx, my, fun τ hx _ => ?_, tendsto_norm_xPar hs⟩
+  by_cases hz : zPar f c τ ∈ L.lattice
+  · exact (not_tendsto_xPar hs τ hz _
+      (hx.continuousAt.tendsto.mono_left nhdsWithin_le_nhds)).elim
+  · exact (ZInQ.GZHL3.weierPt_some E hs.2.2.1 hz).1
+
+end Analytic
+
+/-! ## §4. `GrossZagierFormulaAt` from the moduli form -/
+
+/-- **`GZHL3.GrossZagierFormulaAt E` from `GrossZagierModuliAt E`**, for every elliptic `E/ℚ`. -/
+theorem grossZagierFormulaAt_of_moduli (E : WeierstrassCurve ℚ) [E.IsElliptic]
+    (h : GrossZagierModuliAt E) : ZInQ.GZHL3.GrossZagierFormulaAt E := by
+  intro N _ f hχ hcoeff D β hD hD4 hH hβ S hS L c hL hc hP K _ _ _ hK δ hδ ι hι y hy F G hF hG
+  have hs : ParamSetting E f L c := ⟨hχ, hcoeff, hL, hc, hP⟩
+  refine h N f hχ hcoeff _ _ (isModularParam_of hs) D β hD hD4 hH hβ S (fun Q => Q.1.tauH)
+    (isHeegnerPointReps_of hD hS) K hK δ hδ ι hι y ?_ F G hF hG
+  rw [hy, ZInQ.GZHL3.heegnerC, ← Finset.sum_coe_sort S]
+  exact Finset.sum_congr rfl fun Q _ => (modPt_eq hs Q.1.tauH).symm
+
+/-- **`GZHL3.GrossZagierFormula` from `GrossZagierModuli`.** -/
+theorem grossZagierFormula_of_moduli (h : GrossZagierModuli) : ZInQ.GZHL3.GrossZagierFormula :=
+  fun E _ => grossZagierFormulaAt_of_moduli E (h E)
+
+/-- **`GZHL3.GrossZagierFormulaCd` from `GrossZagierModuliCd`** (the discharge of the
+`C_d` Gross–Zagier leaf by its moduli form). -/
+theorem grossZagierFormulaCd_of_moduli (h : GrossZagierModuliCd) :
+    ZInQ.GZHL3.GrossZagierFormulaCd := fun d hd hsq => by
+  have := shortCurve_cd_isElliptic (d := d) (by omega)
+  exact grossZagierFormulaAt_of_moduli _ (h d hd hsq)
+
 end ZInQ.GZModuli
