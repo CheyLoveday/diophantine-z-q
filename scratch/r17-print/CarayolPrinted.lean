@@ -316,4 +316,123 @@ theorem isSemisimple_of_adjoin {ℓ : ℕ} [Fact ℓ.Prime] (ρ : GaloisRep ℓ 
 
 end Burnside
 
+/-! ## §3. The printed leaf and the discharge of `r17` -/
+
+section Leaf
+
+open HeckeRing.GL2 NumberField IsDedekindDomain
+
+/-- `ρ` with coefficients extended along a continuous field homomorphism `φ : A → ℚ̄_ℓ`, as a
+kernel `GaloisRep`. -/
+def mapRep {ℓ : ℕ} [Fact ℓ.Prime] {A : Type*} [Field A] [TopologicalSpace A]
+    (φ : A →+* PadicAlgCl ℓ) (hφ : Continuous φ) (ρ : GQ →* GL (Fin 2) A) (hρ : Continuous ρ) :
+    GaloisRep ℓ 2 where
+  toHom := (mapGL φ).comp ρ
+  continuous_toHom := (Units.continuous_map (continuous_id.matrix_map hφ)).comp hρ
+
+/-- **LEAF (Carayol 1986, Théorème (A), at `F = ℚ`, weight 2, in the packaged form over
+`K_{f,λ}`).**
+
+Printed statements (no network; every locator and wording below is UNVERIFIED unless marked):
+* H. Carayol, *Sur les représentations ℓ-adiques associées aux formes modulaires de Hilbert*,
+  Ann. Sci. ÉNS (4) 19 (1986) 409–468, Théorème (A), pp. 409–411, and §0.8 p. 411 (coverage read
+  by the locator audit, `docs/research/locators.md` row R17: every finite place `v ∤ ℓ`, every `ℓ`
+  including 2, `v ∣ N` included; the extra discrete-series hypothesis concerns only totally real
+  fields of even degree, not `ℚ`). Hypotheses: `π` a cuspidal automorphic representation of
+  `GL₂(𝔸_F)`, holomorphic discrete series of weight `(k, …, k)`, `k ≥ 2` at infinity (for `F = ℚ`,
+  `k = 2`: the representation of a weight-2 newform `f`); `λ` a finite place of the coefficient
+  field `E = K_f` above `ℓ`. Conclusion: the `λ`-adic representation `σ_λ(π) : G_F → GL₂(E_λ)`
+  restricted to a decomposition group at `v ∤ ℓ` corresponds to `π_v` under the local Langlands
+  correspondence (normalization up to the usual twist/contragredient). For newforms,
+  Casselman, Math. Ann. 201 (1973), gives `a(π_p) = v_p(N)`, and the local correspondence for
+  `GL₂` preserves conductors, so the conductor exponent of `σ_λ(π)|G_{ℚ_p}` is `v_p(N)` for
+  `p ≠ ℓ`.
+* The conductor packaging used here — "for a newform `f` of weight 2 and level `N`, the
+  representation `ρ_{f,λ} : G_ℚ → GL₂(K_{f,λ})` is continuous, (absolutely) irreducible,
+  unramified at `p ∤ Nℓ` with `tr ρ_{f,λ}(Frob_p) = a_p(f)`, and has conductor `N` away from `ℓ`" —
+  is how the result is quoted, e.g. Darmon–Diamond–Taylor, *Fermat's Last Theorem* (1997),
+  Thm 3.1 and the remarks after it (UNVERIFIED), with irreducibility from Ribet, *Galois
+  representations attached to eigenforms with Nebentypus*, LNM 601 (1977), Thm 2.3 (UNVERIFIED).
+
+Lean form. Newform: Tau Ceti's `Newform N 2` (the printed notion: normalized eigenform in the
+Petersson orthogonal complement of the old space, Diamond–Shurman Def. 5.8.1; dictionary with the
+kernel's `IsNewform` proved in `NewformDict`). `K_f = DSCoeffExt.coeffField f`, a number field (the
+print's presupposition), `λ` a `HeightOneSpectrum (𝓞 K_f)` containing `ℓ`, `K_{f,λ}` Mathlib's
+`λ.adicCompletion K_f`. Galois side: the kernel's (`ZInQKernel/HDecomp/Conductor/LadicCond.lean`)
+`G_ℚ = Gal(ℚ̄/ℚ)`, places as valuation subrings, arithmetic Frobenius `IsArithFrob`, the
+decomposition map `decomp p : G_{ℚ_p} → G_ℚ`, and the Serre–Tate conductor exponent `condExp`
+(`codim V^{I_p} + Swan`). "Absolutely irreducible" in Burnside's form: the `K_{f,λ}`-algebra
+spanned by the image is all of `M₂(K_{f,λ})`. The trace normalization is arithmetic Frobenius
+(Tate module); the conductor does not change under the contragredient. The statement asserts the
+existence of one such representation, as printed (`ρ_{f,λ}`), and only its trace, not its full
+characteristic polynomial: it is a consequence of the print, not stronger. -/
+def CarayolThmA : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2)
+    [NumberField (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))]
+    (ℓ : ℕ) [Fact ℓ.Prime] (lam : HeightOneSpectrum (𝓞 (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))),
+    (ℓ : 𝓞 (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) ∈ lam.asIdeal →
+    ∃ ρ : GQ →* GL (Fin 2) (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))),
+      Continuous ρ ∧
+      Algebra.adjoin (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))
+        (Set.range fun σ => (ρ σ : Matrix (Fin 2) (Fin 2)
+          (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))))) = ⊤ ∧
+      (∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ →
+        (∀ v : ValuationSubring Qbar, LiesOver v p →
+          ∀ σ ∈ v.inertiaSubgroup ℚ, ρ ((σ : v.decompositionSubgroup ℚ) : GQ) = 1) ∧
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          (ρ σ : Matrix (Fin 2) (Fin 2)
+            (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))).trace =
+            algebraMap (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))
+              (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))
+              ⟨coeff (f.toCuspForm : CF N 2) p, DSCoeffExt.coeff_mem_coeffField _ p⟩) ∧
+      ∀ (p : ℕ) [Fact p.Prime], p ≠ ℓ →
+        condExp (ρ.comp (decomp p)) = (N.factorization p : ℚ)
+
+/-- **`r17` (`LadicCond.CarayolR17'`) from Carayol's Théorème (A) in its packaged printed form
+and the bundle leaf `EigenformCoeffFieldFinite`** (`K_f` is a number field). Steps, all proved:
+the kernel's `IsNewform` is Tau Ceti's printed `Newform` (`NewformDict`); `τ = ιL ∘ ιC⁻¹ : K_f → ℚ̄_ℓ`
+cuts out a place `λ_τ ∣ ℓ` and extends continuously to `K_{f,λ_τ}` (`DSCoeffExt`); extending the
+scalars of the leaf's `ρ_{f,λ_τ}` along it gives a representation attached to `f` in the kernel's
+sense, absolutely irreducible hence semisimple (§2), with the same conductor exponents (§1);
+Brauer–Nesbitt with Chebotarev (`CarayolLevel.iso_of_attached`) and the invariance of `condExp`
+under isomorphism (`CarayolLevel.condExp_eq_of_intertwine`) transfer the conductor to every
+semisimple attached `ρ`. -/
+theorem carayolR17'_of_printed (h : CarayolThmA) (hK : DSCoeffExt.EigenformCoeffFieldFinite) :
+    LadicCond.CarayolR17' := by
+  intro ℓ _ ιC ιL N χ f ρ p _ hN hf hs ha hp
+  have : NeZero N := ⟨hN.ne'⟩
+  obtain ⟨g, rfl, hχ⟩ := NewformDict.exists_newform_of_isNewform hf
+  set K := DSCoeffExt.coeffField (g.toCuspForm : CF N 2) with hKdef
+  have : FiniteDimensional ℚ K :=
+    hK N 2 χ (g.toCuspForm : CF N 2) le_rfl (DSCoeffExt.isNormalizedEigenformDS_of hf.1)
+  have : NumberField K := ⟨⟩
+  set τ := DSCoeffExt.emb ιC K ιL with hτ
+  obtain ⟨ρ', hρc, hirr, hatt, hcond⟩ :=
+    h N g ℓ (DSCoeffExt.place τ) (DSCoeffExt.natCast_mem_placeIdeal _)
+  set ρL := mapRep (DSCoeffExt.τhat τ) (DSCoeffExt.continuous_τhat τ) ρ' hρc with hρL
+  have hsL : ρL.IsSemisimple := by
+    apply isSemisimple_of_adjoin
+    exact adjoin_map_eq_top (DSCoeffExt.τhat τ) _ hirr
+  have haL : ρL.AttachedTo ιC ιL (g.toCuspForm : CF N 2) := by
+    intro q hq hqN
+    obtain ⟨hun, htr⟩ := hatt q hq hqN
+    refine ⟨?_, DSCoeffExt.pre ιC K ⟨coeff (g.toCuspForm : CF N 2) q,
+      DSCoeffExt.coeff_mem_coeffField _ q⟩, DSCoeffExt.ιC_pre _ _ _, ?_⟩
+    · intro v hv σ hσ
+      show mapGL _ (ρ' _) = 1
+      rw [hun v hv σ hσ, map_one]
+    · intro v σ hv hσ
+      show ((ρ' σ : Matrix (Fin 2) (Fin 2) _).map (DSCoeffExt.τhat τ)).trace = _
+      rw [← AddMonoidHom.map_trace, htr v σ hv hσ, DSCoeffExt.τhat_algebraMap]
+      rfl
+  obtain ⟨e, he⟩ := CarayolLevel.iso_of_attached ιC ιL hN _ ρ ρL hs hsL ha haL
+  have h1 := CarayolLevel.condExp_eq_of_intertwine _ _ e
+    (CarayolLevel.restrictLocal_intertwine (p := p) ρ ρL e he)
+  rw [← h1]
+  have h2 : ρL.restrictLocal p = (mapGL (DSCoeffExt.τhat τ)).comp (ρ'.comp (decomp p)) := rfl
+  rw [h2, condExp_map]
+  exact hcond p hp
+
+end Leaf
+
 end CarayolPrinted
