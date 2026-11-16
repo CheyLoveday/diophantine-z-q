@@ -28,3 +28,18 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
     `PhiAmpleIsogeny`) : `T09Pic.WeilPairingMumford`.
   - `phiAmpleIsogeny_of_printed` (`MumfordKLFinite`, `MumfordPhiSurjective`, `AmpleBaseChangeAlgClosure`,
     `PicZeroPtsTranslInv` (composite), `FiniteOfFiniteKerPts` (glue)) : `T09Pic.PhiAmpleIsogeny`.
+- 04:30-04:45 scratch/pic-dict/Transport.lean (VERIFIED, compiles, standard axioms): `pullbackObjUnitIso_comp`
+  (pOUI compatible with pullbackComp, via the adjunction mate `conjugateEquiv_pullbackComp_inv`),
+  pullbackComp coherence lemmas, `coherence_I`, `coherence_II`, `wf_transport` (Mumford's formula is carried by
+  any `g` with `t' ≫ g = g ≫ t`, `g ≫ m = m ≫ g` to `g.appTop` of the formula), `wf_iso`, and
+  `weilFormulaGaloisEx` (the Galois clause, transport along `1 × Spec σ`). Uses the vendored
+  `pullbackObjUnitIso_conj_app_top` (FreeGeneratorPullback.lean).
+- Merged into ZInQKernel/Contrib/OneProof/PicDictionary.lean; `lake build ZInQKernel.Contrib.OneProof.PicDictionary`
+  succeeds. `#discharges` (scratch/pic-dict/discharges.txt):
+  `DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_printed` still assumes the
+  9 Mumford-type leaves and `T09Pic.PhiAmpleIsogeny`; standard axioms.
+- autofold dry-run (scratch/pic-dict/autofold.json, weilPairingMumford only, no --allow-rise):
+  `strict count: 40/8 on 48 -> 48/8 on 56; strictest 39/9 -> 48/8`; with the three rows re-rated
+  consequence GLUE/GLUE as cove-80 does in lf31 (temporary kinds.tsv edit, restored):
+  `strict count: 37/11 on 48 -> 46/10 on 56; strictest 37/11 -> 46/10` (-1 strict, -1 strictest).
+  The dry-run module compiles (`sixContactMin_of_open35`, standard axioms).
