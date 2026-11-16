@@ -23,3 +23,12 @@ Copied in scratch/nos-proof/OldStatements.lean.
   K^s = separableClosure K K̄ and dict-galois's `isInertia_extend` (copied verbatim from wip/dict-galois 81d1f67f).
 - scratch/nos-proof/T2.lean compiles (13:12): `NOSProof.neronOggShafarevich_of_converse : NOSConverseSep →
   PkgI2.NeronOggShafarevich.{0}`, axioms [propext, Classical.choice, Quot.sound] (VERIFIED).
+- Contrib file ZInQKernel/Contrib/OneProof/NeronOggShafarevich.lean builds (lake build, 16 s); #discharges
+  (scratch/nos-proof/Discharges-output.txt, VERIFIED): `DISCHARGES [OpenResearchLeaves26.r7a] by
+  NOSProof.neronOggShafarevich_of_converse; still assumes: [NOSProof.NOSConverseSep]; axioms standard`.
+- autofold.json dry run: "strict count: 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11";
+  AutofoldDry.lean compiles, `sixContactMin_of_open36` standard axioms (VERIFIED).
+- §5 added: (a) ⇒ (b) over ANY field Ω ⊇ K (`inertiaTrivialOn_of_goodReduction_any`; av-split's TailQ §3-§5
+  injectivity copied with K̄ → Ω); compiles, standard axioms.
+- scratch/nos-proof/SepCompat.lean: dict-galois's `NeronOggShafarevichSep` (verbatim copy, diff IDENTICAL) from
+  `NOSConverseSep`; compiles, standard axioms (in case dict-galois's fold lands first).
