@@ -26,3 +26,7 @@ Base: origin/main 0caafe66 + merged origin/wip/t21-proof f597c34c (T21Proof help
   `twoRep_mem_DC_of` with integer-congruence criterion `local_merge_cond`. COMPILE.
 - `HfxProof/Finite3.lean` (decide, 27 s) + `HfxProof/Case3.lean`: `testVector_three`: hfx for every
   squarefree n ≡ 3 (mod 8) and admissible τ. COMPILES (no sorry).
+- `HfxProof/Finite1.lean` (decide, 2 min), `HfxProof/Order1.lean`, `HfxProof/Case1.lean`: `testVector_one8`:
+  hfx for every squarefree n ≡ 1 (mod 8) and admissible τ. COMPILES (no sorry).
+- `ZInQKernel/Contrib/OneProof/TYZTestVectorExists.lean`: `ZInQ.Contrib.HfxProof.tyzTestVectorExists :
+  H29Split.TYZTestVectorExists`. COMPILES. No sorry/native_decide/axiom/#eval (grep).
