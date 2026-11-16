@@ -9,8 +9,12 @@ The upstream Apache-2.0 license is preserved as `LICENSE`. All source copyright,
 author, reference and explanatory notices are retained. The source/destination
 file list and hashes are in `SOURCE_MANIFEST.json`.
 
-Port scope: the transitive source cone of
+Port scope: the initial transitive source cone of
 `StacksFrontier.AlgebraicGeometry.Groupoids.GroupSchemeProperties.Dimension`.
+The unused `FibreDimension.Equidimensional` import was subsequently removed.
+Fifteen source modules retained from that initial cone are no longer imported by
+the closing proof; they remain listed in the manifest and were independently
+compiled from source alongside the modules that the proof uses.
 Imports are routed under `ZInQKernel.Contrib.CloudB3W16Dimension`. Citation-only
 `stacks`/`ega`/`sga` attributes and `add_to_*` commands are removed, and their two
 registration modules are omitted; no new macros or elaborators are introduced.
