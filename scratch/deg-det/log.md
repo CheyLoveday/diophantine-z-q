@@ -76,3 +76,8 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
   `DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford` (same hypotheses → CharPolyIndepOfEllAlgClosed),
   helper lemmas card_tb_of_mumford, norm_det_V_eq_card_ker, card_basis_V (rank V_ℓ = 2g), norm_deg_le_norm_det.
   Axioms standard (scratch/deg-det/CheckAxioms.lean). ONE new leaf (DegHomogPoly), no glue.
+- VERIFIED: autofold spec now discharges via charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford with ONE leaf degHomogPoly:
+  dry run `strict count: 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11`; FoldDryRun.lean compiles
+  (sixContactMin_of_open36 standard axioms). `lake build +Main +Discharges +DegEqDetTate` OK (13704 jobs). #discharges:
+  DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford,
+  still assumes [DegHomogPoly, AvSplit.MumfordTorsionAlgClosed, HomFreeFiniteAlgClosed], axioms standard.

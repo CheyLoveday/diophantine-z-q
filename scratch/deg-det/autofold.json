@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "charPolyIndepOfEllAlgClosed",
-   "proof": "_root_.ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_printed {n}.degHomogPoly {n}.sepDegKernel {n}.mumfordTorsionAlgClosed {n}.homFreeFiniteAlgClosed",
+   "proof": "_root_.ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford {n}.degHomogPoly {n}.mumfordTorsionAlgClosed {n}.homFreeFiniteAlgClosed",
    "leaves": [
     {
      "name": "degHomogPoly",
@@ -15,17 +15,9 @@
      "kind": "published",
      "flag": "unread: new printed leaf (Mumford 19: deg is a homogeneous polynomial function of degree 2g on End X, from the theorem of the cube and Riemann-Roch); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, section 19 (deg is a homogeneous polynomial function of degree 2g on End(X)); also Milne, Abelian varieties (2008), section 12"
-    },
-    {
-     "name": "sepDegKernel",
-     "type": "_root_.ZInQ.Contrib.OneProof.DegDet.SepDegKernel",
-     "doc": "Mumford, Abelian varieties (1970), sections 4 and 7 (locators UNVERIFIED): for an isogeny psi of an abelian variety over an algebraically closed field k, ker psi is finite of order deg_s psi and deg_i psi is a power of the characteristic exponent. Stated as: the kernel of psi on the points over AlgebraicClosure k is finite and degEnd psi = #ker * (ringExpChar k)^e for some e.",
-     "kind": "published",
-     "flag": "unread: new printed leaf (Mumford 4/7: #ker = separable degree, inseparable degree a power of p); locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, sections 4 and 7 (#ker f = deg_s f for an isogeny f; deg_i f a power of char k); also Milne, Abelian varieties (2008), section 7"
     }
    ]
   }
  ],
- "note": "deg-det: charPolyIndepOfEllAlgClosed (via charpoly-ell's DegEqDetTate) from two printed leaves (degHomogPoly: deg is a homogeneous polynomial function of degree 2g on End; sepDegKernel: deg = #ker * p^e) and the bundle's own fields mumfordTorsionAlgClosed and homFreeFiniteAlgClosed. Proved in Lean: the whole algebra of Mumford's proof of 19 Thm 4 (multiplicative polynomial functions on Z[phi] extended to Qbar_l[X]/(R) by the Combinatorial Nullstellensatz; det F(M) = prod F(roots); the l-adic comparison lemma), deg(psi chi) = deg psi deg chi (tower law), and |det T_l psi|_l = |#ker psi|_l for any endomorphism with finite kernel (Smith normal form over Z_l, finite levels, A[l^n] = (Z/l^n)^{2g}). Net count: -1 field +2 leaves, no glue (strict 34/11 -> 35/11). charpoly-ell's fold (one leaf DegEqDetTate) has the better count; this one replaces Mumford 19 Thm 4 by its two inputs. Report docs/research/deg-det.md."
+ "note": "deg-det: charPolyIndepOfEllAlgClosed (via charpoly-ell's DegEqDetTate, Mumford 19 Thm 4) from ONE printed leaf degHomogPoly (deg is a homogeneous polynomial function of degree 2g on End(A); Mumford 19) and the bundle's own fields mumfordTorsionAlgClosed and homFreeFiniteAlgClosed. Proved in Lean: the algebra of Mumford's proof of 19 Thm 4 (Nullstellensatz extension of a multiplicative polynomial function on Z[phi], det F(M) = prod F(roots), one-sided l-adic comparison lemma), deg(psi chi) = deg psi deg chi (tower law), |det T_l psi|_l = |#ker psi|_l for any endomorphism with finite kernel (Smith normal form over Z_l), #ker psi(kbar) | deg psi (translations by the kernel act faithfully on K(A) fixing psi^*K(A); Artin), rank V_l = 2g. Net count: -1 field +1 leaf, no glue (strict 34/11 -> 34/11), the same count as charpoly-ell's fold, with Mumford 19 Thm 4 replaced by its one deep input. Report docs/research/deg-det.md."
 }
