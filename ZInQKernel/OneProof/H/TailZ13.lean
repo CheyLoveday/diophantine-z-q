@@ -24,7 +24,6 @@ structure OpenAddedLeaves9 : Prop where
   t09SymmIsogenyExists : WeilPairing.T09_SymmIsogenyExists
   milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
   x6ConicModel : X6Kummer.X6ConicModel
-  shimuraTaniyamaQbar : G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   shimuraGoodReductionNoGuard : CurveSplitGR.ShimuraGoodReductionNoGuard
   /-- qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
@@ -54,7 +53,6 @@ theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) : OpenAddedLeaves8 where
   x6ConicModel := l.x6ConicModel
   y3Connected := _root_.ShimuraSplit.y3Connected_of_deligne
     (_root_.ShimuraGlue.deligneComponentsY3_of_printed l.deligneComponentsY3Printed)
-  shimuraTaniyamaQbar := l.shimuraTaniyamaQbar
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq

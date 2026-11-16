@@ -743,7 +743,6 @@ theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeave
   t09SymmIsogenyExists := l.t09SymmIsogenyExists
   milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
   x6ConicModel := (x6Rows_of_open14 r t l).2
-  shimuraTaniyamaQbar := l.shimuraTaniyamaQbar
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq

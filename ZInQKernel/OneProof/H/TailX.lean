@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.ModularEquationGeneric
+import ZInQKernel.Contrib.OneProof.STQM
 import ZInQKernel.OneProof.H.TailO
 import ZInQKernel.OneProof.H.TailP
 import ZInQKernel.OneProof.H.TailQ
@@ -163,8 +164,6 @@ structure OpenAddedLeaves7 : Prop where
   x6ConicModel : X6Kummer.X6ConicModel
   y3Connected : TSHecke.Y3Connected
   zariskiConnectedness : _root_.ZariskiConn.ZariskiConnectedness.{0}
-  /-- qm-split, H-86: Shimura–Taniyama, a CM abelian variety over `ℂ` has a model over `ℚ̄` (replaces `stQM`). -/
-  shimuraTaniyamaQbar : G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
   valenceFormulaGammaStar : LeafQCheck.VB.ValenceFormulaGammaStar
   egaIV_8_8_2_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_8_2_ii
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
@@ -254,7 +253,10 @@ theorem addedLeaves6_of_open7 (r : OpenResearchLeaves7) (t : OpenTextbookLeaves7
   qmAutCard := (qmRows_of7 t l).1
   alFixedPoints := (qmRows_of7 t l).2.1
   zariskiConnectedness := l.zariskiConnectedness
-  stQM := stQM_lf7 l.shimuraTaniyamaQbar
+  stQM := _root_.GapST.stQM_of r.r1r2 l.y3Connected (qmRows_of7 t l).2.1
+    (_root_.AvSplit.Final.h25 t.mumfordTorsionAlgClosed)
+    (_root_.AvSplit.Final.h38 t.uniformizationLeafAll t.mumfordTorsionAlgClosed)
+    (_root_.AvSplit.Final.h69 t.uniformizationLeafAll t.gagaMorphism)
   valenceFormulaGammaStar := l.valenceFormulaGammaStar
   egaIV_8_8_2_ii := l.egaIV_8_8_2_ii
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii

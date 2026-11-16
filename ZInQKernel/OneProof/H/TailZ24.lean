@@ -772,7 +772,6 @@ structure OpenAddedLeaves13 : Prop where
   tateTwistInvariants : _root_.ZInQ.Contrib.HodgeSplit.TateTwistInvariants
   axSenTate : _root_.ZInQ.Contrib.HodgeSplit.AxSenTate
   milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
-  shimuraTaniyamaQbar : G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   shimuraGoodReductionNoGuard : CurveSplitGR.ShimuraGoodReductionNoGuard
   /-- qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
@@ -820,7 +819,6 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
   t09SymmIsogenyExists := _root_.T09Pic.t09SymmIsogenyExists_of_four l.picRepresentableAbVar l.picZeroAbVar
     l.phiAmpleIsogeny l.weilPairingMumford
   milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
-  shimuraTaniyamaQbar := l.shimuraTaniyamaQbar
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq

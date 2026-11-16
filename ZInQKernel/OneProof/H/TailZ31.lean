@@ -16,7 +16,6 @@ structure OpenAddedLeaves16 : Prop where
   tateTwistInvariants : _root_.ZInQ.Contrib.HodgeSplit.TateTwistInvariants
   axSenTate : _root_.ZInQ.Contrib.HodgeSplit.AxSenTate
   milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
-  shimuraTaniyamaQbar : G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
   shimuraGoodReductionNoGuard : CurveSplitGR.ShimuraGoodReductionNoGuard
   /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
@@ -53,7 +52,6 @@ theorem openAddedLeaves15_of_OpenAddedLeaves16 (n : OpenAddedLeaves16) : OpenAdd
   tateTwistInvariants := n.tateTwistInvariants
   axSenTate := n.axSenTate
   milneIsogenyQuasiInverse := n.milneIsogenyQuasiInverse
-  shimuraTaniyamaQbar := n.shimuraTaniyamaQbar
   egaIV_8_10_5_xii := n.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := n.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := _root_.ValenceCocompact.valenceFormulaCocompactEq_proof
