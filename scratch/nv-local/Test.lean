@@ -1,0 +1,14 @@
+import ZInQKernel.Contrib.OneProof.SGRDirectNVLocal
+open Polynomial
+#check @Polynomial.IsPrimitive.Int.dvd_iff_map_cast_dvd_map_cast
+#check @IsLocalization.isLocalization_isLocalization_atPrime_isLocalization
+#check @Module.length_quotient
+#check @Ideal.coheight_comap_of_surjective
+#check @Ideal.comap_map_of_bijective
+#check @IsLocalization.comap_map_of_isPrime_disjoint
+#check @IsLocalization.isPrime_of_isPrime_disjoint
+#check @Localization.AtPrime.algebraOfLiesOver
+#check @HDec.PropTSGlue.regular_dim2_intPoly
+#check @HDec.PropTSGlue.isFractionRing_int
+#check @Polynomial.isPrimitive_iff_content_eq_one
+#check @Polynomial.content_X_mul
