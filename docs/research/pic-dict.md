@@ -9,28 +9,30 @@ three are rated `consequence`, GLUE/GLUE.
 
 | row | result | new leaves (each one printed display) | glue | strict / strictest change on the lf31 rating |
 |---|---|---|---|---|
-| `weilPairingMumford` | **replaced by leaves + Lean glue** | Mumford over `k = k̄`: §6 Cor. 4, §8 (iv), §8 Thm 1, §20 (definition and bilinearity), §20 (nondegenerate), §23; EGA II 4.6.13 | all proved: L5, the dictionary, base change to `K̄`, and the Galois, compatibility and adjoint clauses | **−1 / −1** |
-| `phiAmpleIsogeny` | **replaced by leaves + Lean glue** | Mumford §6 App. 1 over `k̄`; EGA III 7.8.6 (`𝒪 = f_*𝒪` universally); EGA IV 4.6.5 (products of geometrically integral schemes); shares §8 Thm 1 and EGA II 4.6.13 | all proved: finiteness, surjectivity, the dictionary, and `K̄`-points of `Pic⁰` being translation-invariant | **−1 / −1** |
+| `weilPairingMumford` | **replaced by leaves + Lean glue** | Mumford over `k = k̄`: §6 Cor. 4, §8 (iv), §8 Thm 1, §20 (definition and bilinearity), §20 (nondegenerate), §23 | all proved: L5, the dictionary, base change to `K̄` (including ampleness), and the Galois, compatibility and adjoint clauses | **−1 / −1** |
+| `phiAmpleIsogeny` | **replaced by leaves + Lean glue** | Mumford §6 App. 1 over `k̄`; EGA III 7.8.6 (`𝒪 = f_*𝒪` universally); EGA IV 4.6.5 (products of geometrically integral schemes); shares §8 Thm 1 | all proved: finiteness, surjectivity, the dictionary, and `K̄`-points of `Pic⁰` being translation-invariant | **−1 / −1** |
 | `picZeroAbVar` | not reduced; **combined step identified** (§5) | none | none | unchanged |
 
-Folding both rows (`scratch/pic-dict/autofold-both.json`): `strict count: 37/11 on 48 -> 47/9 on 56; strictest
-37/11 -> 47/9` on the lf31 rating, that is −2 / −2.
+Folding both rows (`scratch/pic-dict/autofold-both.json`): `strict count: 37/11 on 48 -> 46/9 on 55; strictest
+37/11 -> 46/9` on the lf31 rating, that is −2 / −2, with 9 new printed leaves.
 
 Everything below is VERIFIED: compiled, and `#print axioms` gives `[propext, Classical.choice, Quot.sound]`.
 
-* `ZInQKernel/Contrib/OneProof/PicDictionary.lean`, namespace `PicDict`, 110 KB, no build-time code. It imports
-  `ZInQKernel.OneProof.H.TailZ24` and two vendored modules (`…/Modules/FreeGeneratorPullback`,
-  `…/Picard/Descent`). `lake build ZInQKernel.Contrib.OneProof.PicDictionary` succeeds.
+* `ZInQKernel/Contrib/OneProof/PicDictionary.lean`, namespace `PicDict`, about 115 KB, no build-time code. It imports
+  `ZInQKernel.OneProof.H.TailZ24` and four vendored modules (`…/Modules/FreeGeneratorPullback`,
+  `…/Picard/Descent`, `…/Modules/PullbackMonoidal`, `…/IdealSheaf/Image`). `lake build ZInQKernel.Contrib.OneProof.PicDictionary` succeeds.
 * The main results:
-  * `theorem PicDict.weilPairingMumford_of_ac (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
-    (h8 : MumfordPhiSurjectiveAC) (hamp : AmpleBaseChangeAlgClosure) (h20a : MumfordWeilPairingAC)
-    (h20b : MumfordWeilNondegAC) (h23 : MumfordWeilAltAC) (h3 : PhiAmpleIsogeny) : T09Pic.WeilPairingMumford`
-  * `theorem PicDict.phiAmpleIsogeny_of_leaves (hKL : MumfordKLFiniteAC) (h8 : MumfordPhiSurjectiveAC)
-    (hamp : AmpleBaseChangeAlgClosure) (hU : PushforwardUnitUniversal) (hGI : GeomIntegralProd) :
-    T09Pic.PhiAmpleIsogeny`
-  * Intermediate forms, also compiled: `weilPairingMumford_of_printed` and `phiAmpleIsogeny_of_printed`, with the
-    leaves stated at `X = A_K̄` in the kernel's coordinates; and `phiAmpleIsogeny_of_ac`, with the composite
-    `PicZeroPtsTranslInv` as a hypothesis.
+  * `theorem PicDict.weilPairingMumford_of_mumford (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
+    (h8 : MumfordPhiSurjectiveAC) (h20a : MumfordWeilPairingAC) (h20b : MumfordWeilNondegAC)
+    (h23 : MumfordWeilAltAC) (h3 : PhiAmpleIsogeny) : T09Pic.WeilPairingMumford`
+  * `theorem PicDict.phiAmpleIsogeny_of_mumford (hKL : MumfordKLFiniteAC) (h8 : MumfordPhiSurjectiveAC)
+    (hU : PushforwardUnitUniversal) (hGI : GeomIntegralProd) : T09Pic.PhiAmpleIsogeny`
+  * Intermediate forms, also compiled and listed by `#discharges`:
+    * `weilPairingMumford_of_printed` and `phiAmpleIsogeny_of_printed`, with the leaves stated at `X = A_K̄` in the
+      kernel's coordinates;
+    * `weilPairingMumford_of_ac` and `phiAmpleIsogeny_of_leaves`, which also take the leaf `AmpleBaseChangeAlgClosure`
+      (now proved);
+    * `phiAmpleIsogeny_of_ac`, with the composite `PicZeroPtsTranslInv` as a hypothesis.
 * Proved on the way:
   * `picPointsAlgClosed : T09Pic.PicPointsAlgClosed`: **L5 is a theorem.**
   * `weilFormulaGaloisEx`: the Galois clause, by transport of structure along `1 × Spec σ`.
@@ -42,53 +44,53 @@ Everything below is VERIFIED: compiled, and `#print axioms` gives `[propext, Cla
     translation-invariant classes, by rigidity on `A × Pic⁰` (§2.6).
   * `finiteOfFiniteKerPts`: a homomorphism of abelian varieties with finitely many `K̄`-points in its kernel is
     finite.
+  * `ampleBaseChangeAlgClosure` (EGA II 4.6.13 at `K̄`): ampleness pulls back along an affine morphism
+    (`isAmple_pullback`).
 * The consumer `T09Pic.t09SymmIsogenyExists_of_four` and its users are unchanged.
 
 `#discharges` (`scratch/pic-dict/Discharges.lean`, output `scratch/pic-dict/discharges.txt`; the intermediate forms
-are also listed, 12 lines in all):
+are also listed, 14 lines in all):
 
 ```
-DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_leaves
+DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_mumford
   still assumes: [PicDict.MumfordKLFiniteAC,
  PicDict.MumfordPhiSurjectiveAC,
- PicDict.AmpleBaseChangeAlgClosure,
  PicDict.PushforwardUnitUniversal,
  PicDict.GeomIntegralProd]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_ac
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_mumford
   still assumes: [PicDict.MumfordSquareAC,
  PicDict.MumfordMulNPicZeroAC,
  PicDict.MumfordPhiSurjectiveAC,
- PicDict.AmpleBaseChangeAlgClosure,
  PicDict.MumfordWeilPairingAC,
  PicDict.MumfordWeilNondegAC,
  PicDict.MumfordWeilAltAC,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 3040 theorems checked, 12 discharge one
+#discharges: 59 open hypotheses, 3047 theorems checked, 14 discharge one
 ```
 
 ### Autofold
 
 The recommended spec is `scratch/pic-dict/autofold-both.json`. It makes two discharges:
 
-* `weilPairingMumford` by `weilPairingMumford_of_ac … (phiAmpleIsogeny_of_leaves …)`, with 7 leaves;
-* `phiAmpleIsogeny` by `phiAmpleIsogeny_of_leaves …`, with 3 more leaves (`mumfordKLFiniteAC`,
+* `weilPairingMumford` by `weilPairingMumford_of_mumford … (phiAmpleIsogeny_of_mumford …)`, with 6 leaves;
+* `phiAmpleIsogeny` by `phiAmpleIsogeny_of_mumford …`, with 3 more leaves (`mumfordKLFiniteAC`,
   `pushforwardUnitUniversal`, `geomIntegralProd`).
 
-All 10 leaves are kind published, flagged unread.
+All 9 leaves are kind published, flagged unread.
 
-* On this base `autofold.py --dry-run` prints `strict count: 40/8 on 48 -> 48/8 on 56; strictest 39/9 -> 48/8`. No
+* On this base `autofold.py --dry-run` prints `strict count: 40/8 on 48 -> 47/8 on 55; strictest 39/9 -> 47/8`. No
   `--allow-rise` is needed, because this base still rates both rows strict LEAF.
 * On the lf31 rating (the three rows set to consequence GLUE/GLUE in a temporary copy of `kinds.tsv`, then restored)
-  it prints `strict count: 37/11 on 48 -> 47/9 on 56; strictest 37/11 -> 47/9`.
+  it prints `strict count: 37/11 on 48 -> 46/9 on 55; strictest 37/11 -> 46/9`.
 * The printed module compiles: `scratch/pic-dict/FoldDryRunBoth.lean`, line 1 stripped, gives
   `sixContactMin_of_open35` with the standard axioms.
 
 `scratch/pic-dict/autofold.json` folds `weilPairingMumford` alone, keeping the field `phiAmpleIsogeny`.
 
-* On this base: `40/8 on 48 -> 46/8 on 54; strictest 39/9 -> 46/8`.
-* On the lf31 rating: `37/11 -> 44/10; strictest 37/11 -> 44/10`.
+* On this base: `40/8 on 48 -> 45/8 on 53; strictest 39/9 -> 45/8`.
+* On the lf31 rating: `37/11 -> 43/10; strictest 37/11 -> 43/10`.
 * Its dry-run module also compiles (`scratch/pic-dict/FoldDryRun.lean`).
 
 ## 2. Glue, all proved
@@ -158,7 +160,6 @@ locators are UNVERIFIED: there is no copy of Mumford, Kleiman, EGA or Milne on t
 | `mumfordSquareAC` | Mumford §6 Cor. 4 (theorem of the square) | yes | for every `L` and `x, y ∈ X(k)` |
 | `mumfordMulNPicZeroAC` | Mumford §8 (iv): `n^*L ≅ Lⁿ` for `L ∈ Pic⁰` | yes | stated for `n ∈ ℕ`; Mumford states it for `n ∈ ℤ` |
 | `mumfordPhiSurjectiveAC` | Mumford §8 Thm 1: `L` ample, `M ∈ Pic⁰` ⇒ `M ≅ t_x^*L ⊗ L⁻¹` | yes | `IsAmple` is the EGA/Stacks notion, which is Mumford's on a complete variety |
-| `ampleBaseChangeAlgClosure` | EGA II 4.6.13 (iii): ample stays ample under field extension | yes (instance `K' = K̄`) | |
 | `mumfordWeilPairingAC` | Mumford §20: `ē_n` by `t_x^*ψ ∘ ψ⁻¹` is well defined, `μ_n`-valued and bilinear | yes, with a note | well-definedness (independence of `ψ`) belongs to the definition; stated for `p ∤ n` |
 | `mumfordWeilNondegAC` | Mumford §20: `ē_n` nondegenerate, `p ∤ n` | yes | "both kernels trivial" is a consequence of "perfect" |
 | `mumfordWeilAltAC` | Mumford §23: `e^L_n(x, x) = 1`, `e^L_n(x, y) = ē_n(x, φ_L(y))` | yes | for every `L` |
@@ -172,6 +173,7 @@ Statements that were leaves in a first version and are now proved in Lean:
 * the Galois clause (Milne 1986 §16);
 * L5 (Kleiman 9.2.5 at `Spec K̄`) and L6;
 * the composite `picZeroPtsTranslInv` (Kleiman 9.5.10 + Mumford §8);
+* EGA II 4.6.13 at `K̄` (`ampleBaseChangeAlgClosure`);
 * `finiteOfFiniteKerPts`.
 
 **Smoothness of `B`** (question in the brief). `B : AbVar K` carries Mathlib's `Smooth`. Mumford §13 gives `Â` as an
@@ -222,7 +224,6 @@ integrality.
     includes well-definedness, and the exact form of EGA III 7.8.6 / Kleiman Ex. 9.3.11;
   * BLR 8.4 / Milne 1986 §10 for a single print of `picZeroAbVar`.
 * Optional Lean:
-  * a proof of `AmpleBaseChangeAlgClosure` (the vendored `Hom.comap_zeroLocus` is the tool);
   * parts of `MumfordWeilPairingAC` (independence of `ψ`, constancy and additivity in `x` are formal);
   * `GeomIntegralProd` (a Mathlib gap);
   * the (Z4) glue for `picZeroAbVar`.
