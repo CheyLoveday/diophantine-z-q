@@ -311,4 +311,85 @@ theorem chart_mem_basicOpen_X0_sub_X1 (z : Spec (CommRingCat.of (Rk k))) :
 
 end ChartOpens
 
+
+section MainIdentity
+
+variable {k : Type} [Field k]
+
+/-- The section of `ℙ¹` over the chart `D₊(X₁)` given by `r ∈ k[s]`. -/
+def secR : CommRingCat.of (Rk k) ⟶ Γ(P1 k, (chart k) ''ᵁ ⊤) :=
+  (Scheme.ΓSpecIso _).inv ≫ ((chart k).appIso ⊤).inv
+
+variable (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left] (t : C.left.functionField)
+
+theorem fromSpecStalk_appLE_top (X : Scheme) (x : X) (V : X.Opens) (hV : x ∈ V)
+    (e : ⊤ ≤ X.fromSpecStalk x ⁻¹ᵁ V) (τ : Γ(X, V)) :
+    (X.fromSpecStalk x).appLE V ⊤ e τ = (Scheme.ΓSpecIso _).inv (X.presheaf.germ V x hV τ) := by
+  rw [Scheme.Hom.appLE, Scheme.fromSpecStalk_app hV]
+  simp only [CommRingCat.comp_apply]
+  rw [← CommRingCat.comp_apply, ← Functor.map_comp]
+  have : (homOfLE (le_top : X.fromSpecStalk x ⁻¹ᵁ V ≤ ⊤)).op ≫ (homOfLE e).op = 𝟙 _ :=
+    Subsingleton.elim _ _
+  rw [this, CategoryTheory.Functor.map_id]
+  rfl
+
+/-- Germs at the generic point through `Spec k(C) → C`. -/
+theorem germ_app_eq {Y : Scheme} (f : C.left ⟶ Y) (U : Y.Opens) (h : f (genericPoint C.left) ∈ U)
+    (σ : Γ(Y, U)) (e : ⊤ ≤ (C.left.fromSpecFunctionField ≫ f) ⁻¹ᵁ U) :
+    (Scheme.ΓSpecIso _).inv (C.left.presheaf.germ (f ⁻¹ᵁ U) (genericPoint C.left) h (f.app U σ)) =
+      (C.left.fromSpecFunctionField ≫ f).appLE U ⊤ e σ := by
+  rw [Scheme.Hom.comp_appLE, CommRingCat.comp_apply]
+  exact (fromSpecStalk_appLE_top C.left _ _ h _ _).symm
+
+theorem appLE_top_top {R S : CommRingCat} (φ : R ⟶ S) (e : ⊤ ≤ Spec.map φ ⁻¹ᵁ ⊤) (a : Γ(Spec R, ⊤)) :
+    (Spec.map φ).appLE ⊤ ⊤ e a = (Spec.map φ).appTop a := by
+  rw [Scheme.Hom.appLE]
+  have : (homOfLE e).op = (𝟙 (Opposite.op (⊤ : (Spec S).Opens)) : _) := Subsingleton.elim _ _
+  rw [this]
+  erw [CategoryTheory.Functor.map_id, Category.comp_id]
+
+/-- The chart side: `(Spec φ ≫ chart)^*` of the section `r` is `φ(r)`. -/
+theorem specMap_chart_appLE_secR {S : CommRingCat} (φ : CommRingCat.of (Rk k) ⟶ S) (r : Rk k)
+    (e : ⊤ ≤ (Spec.map φ ≫ chart k) ⁻¹ᵁ ((chart k) ''ᵁ ⊤)) :
+    (Spec.map φ ≫ chart k).appLE ((chart k) ''ᵁ ⊤) ⊤ e (secR r) = (Scheme.ΓSpecIso _).inv (φ r) := by
+  rw [Scheme.Hom.comp_appLE, CommRingCat.comp_apply, secR, CommRingCat.comp_apply,
+    Scheme.Hom.appIso_inv_app_apply, ← CommRingCat.comp_apply]
+  erw [Scheme.Hom.map_appLE]
+  rw [appLE_top_top, ← CommRingCat.comp_apply, ← Scheme.ΓSpecIso_inv_naturality,
+    CommRingCat.comp_apply]
+
+/-- **Main identity.** For `x ∈ C` with `β(x)` in the chart, the germ at `β(x)` of the section `r`,
+pulled back by `β` and specialized to the generic point, is `ψ_t(r)`. -/
+theorem stalkMap_secR {β : C.left ⟶ P1 k} (hβ : C.left.fromSpecFunctionField ≫ β = ptT C t)
+    (x : C.left) (hx : β x ∈ (chart k) ''ᵁ ⊤) (r : Rk k) :
+    C.left.presheaf.stalkSpecializes ((genericPoint_spec C.left).specializes (Set.mem_univ x))
+      (β.stalkMap x ((P1 k).presheaf.germ _ (β x) hx (secR r))) = psi C t r := by
+  rw [Scheme.Hom.germ_stalkMap_apply]
+  erw [TopCat.Presheaf.germ_stalkSpecializes_apply]
+  have hη : β (genericPoint C.left) ∈ (chart k) ''ᵁ ⊤ :=
+    ((genericPoint_spec C.left).specializes (Set.mem_univ x)).map β.continuous |>.mem_open
+      ((chart k) ''ᵁ ⊤).isOpen hx
+  have e : ⊤ ≤ (C.left.fromSpecFunctionField ≫ β) ⁻¹ᵁ ((chart k) ''ᵁ ⊤) := by
+    intro p _
+    have hp : C.left.fromSpecFunctionField p ⤳ genericPoint C.left := by
+      have : C.left.fromSpecFunctionField p ∈ Set.range C.left.fromSpecFunctionField := ⟨p, rfl⟩
+      rw [Scheme.fromSpecFunctionField, Scheme.range_fromSpecStalk] at this
+      exact this
+    have heq : C.left.fromSpecFunctionField p = genericPoint C.left :=
+      (hp.antisymm ((genericPoint_spec C.left).specializes (Set.mem_univ _))).eq
+    show β (C.left.fromSpecFunctionField p) ∈ ((chart k) ''ᵁ ⊤ : (P1 k).Opens)
+    rw [heq]
+    exact hη
+  have key := germ_app_eq C β _ hη (secR r) e
+  have h2 : ∀ (g : Spec C.left.functionField ⟶ P1 k) (hg : g = ptT C t)
+      (e' : ⊤ ≤ g ⁻¹ᵁ ((chart k) ''ᵁ ⊤)),
+      g.appLE ((chart k) ''ᵁ ⊤) ⊤ e' (secR r) = (Scheme.ΓSpecIso _).inv (psi C t r) := by
+    rintro g rfl e'
+    exact specMap_chart_appLE_secR (psi C t) r e'
+  rw [h2 _ hβ e] at key
+  have := congrArg (Scheme.ΓSpecIso C.left.functionField).hom key
+  simpa using this
+
+end MainIdentity
+
 end JavanpeykarFix
