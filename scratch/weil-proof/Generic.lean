@@ -264,27 +264,25 @@ theorem weilPairingMumford_of_bilinRight (hsq : MumfordSquareAC) (h8iv : Mumford
 end WeilProof
 
 
-/-! ## Step 4: the fourth part from the monoidal coherence of pull-back (glue) -/
+/-! ## Step 4: the fourth part from the monoidality of `pullbackComp` (glue) -/
 
 namespace WeilProof
 
 open Scheme.Modules PicDict.Transport MonoidalCategory
 
-/-- **GLUE (pull-back of sheaves of modules is a monoidal pseudofunctor).** For the monoidal
-structure of `Scheme.Modules.pullback` (vendored, `Modules/PullbackMonoidal.lean`):
-(a) Mathlib's `pullbackComp f g : g^* ⋙ f^* ≅ (f ≫ g)^*` is a monoidal natural isomorphism, and
-(b) Mathlib's `pullbackObjUnitIso f : f^* 𝒪_Y ≅ 𝒪_X` is the inverse of the unit constraint `ε`.
-A formal property of the library's constructions (no published locator needed). -/
-def PullbackMonoidalCoherence : Prop :=
-  (∀ {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (M N : Z.Modules),
+/-- **GLUE (`pullbackComp` is monoidal).** For the monoidal structure of `Scheme.Modules.pullback`
+(vendored, `Modules/PullbackMonoidal.lean`, obtained by lifting along sheafification), Mathlib's
+`pullbackComp f g : g^* ⋙ f^* ≅ (f ≫ g)^*` is a monoidal natural isomorphism: it commutes with the
+tensorators `μ`. A formal property of the library's constructions (pull-back of sheaves of modules is
+a monoidal pseudofunctor); no published locator is needed. -/
+def PullbackCompMonoidal : Prop :=
+  ∀ {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (M N : Z.Modules),
     Functor.LaxMonoidal.μ (Scheme.Modules.pullback f) ((Scheme.Modules.pullback g).obj M)
         ((Scheme.Modules.pullback g).obj N) ≫
       (Scheme.Modules.pullback f).map (Functor.LaxMonoidal.μ (Scheme.Modules.pullback g) M N) ≫
         (pullbackComp f g).hom.app (M ⊗ N) =
       ((pullbackComp f g).hom.app M ⊗ₘ (pullbackComp f g).hom.app N) ≫
-        Functor.LaxMonoidal.μ (Scheme.Modules.pullback (f ≫ g)) M N) ∧
-  (∀ {X Y : Scheme.{0}} (f : X ⟶ Y),
-    (pullbackObjUnitIso f).inv = Functor.LaxMonoidal.ε (Scheme.Modules.pullback f))
+        Functor.LaxMonoidal.μ (Scheme.Modules.pullback (f ≫ g)) M N
 
 lemma unitor_tensor {C : Type*} [Category C] [MonoidalCategory C] (a b : 𝟙_ C ⟶ 𝟙_ C) :
     (λ_ (𝟙_ C)).inv ≫ (a ⊗ₘ b) ≫ (λ_ (𝟙_ C)).hom = a ≫ b := by
@@ -293,6 +291,14 @@ lemma unitor_tensor {C : Type*} [Category C] [MonoidalCategory C] (a b : 𝟙_ C
     rw [unitors_equal, rightUnitor_naturality]
   rw [← Category.assoc (a ▷ _), h1]
   simp
+
+lemma eps_unitor_gen {C D : Type*} [Category C] [MonoidalCategory C] [Category D]
+    [MonoidalCategory D] (F : C ⥤ D) [F.LaxMonoidal] :
+    Functor.LaxMonoidal.ε F ≫ F.map (λ_ (𝟙_ C)).inv =
+      (λ_ (𝟙_ D)).inv ≫ (Functor.LaxMonoidal.ε F ⊗ₘ Functor.LaxMonoidal.ε F) ≫
+        Functor.LaxMonoidal.μ F (𝟙_ C) (𝟙_ C) := by
+  rw [← Functor.LaxMonoidal.left_unitality_inv, ← Category.assoc, leftUnitor_inv_naturality,
+    Category.assoc, MonoidalCategory.tensorHom_def', Category.assoc]
 
 variable {X : Scheme.{0}}
 
@@ -307,36 +313,67 @@ lemma congr_mu {Y : Scheme.{0}} {s m : X ⟶ Y} (e : s = m) (M N : Y.Modules) :
         Functor.LaxMonoidal.μ (Scheme.Modules.pullback m) M N := by
   subst e; simp [pullbackCongr]
 
-lemma eps_unitor_gen {C D : Type*} [Category C] [MonoidalCategory C] [Category D]
-    [MonoidalCategory D] (F : C ⥤ D) [F.LaxMonoidal] :
-    Functor.LaxMonoidal.ε F ≫ F.map (λ_ (𝟙_ C)).inv =
-      (λ_ (𝟙_ D)).inv ≫ (Functor.LaxMonoidal.ε F ⊗ₘ Functor.LaxMonoidal.ε F) ≫
-        Functor.LaxMonoidal.μ F (𝟙_ C) (𝟙_ C) := by
-  rw [← Functor.LaxMonoidal.left_unitality_inv, ← Category.assoc, leftUnitor_inv_naturality,
-    Category.assoc, MonoidalCategory.tensorHom_def', Category.assoc]
+/-- The ratio of `pullbackObjUnitIso⁻¹` and the unit constraint `ε` of `t^*`. -/
+def unitRatio (t : X ⟶ X) : unit X ⟶ unit X :=
+  (pOU t).inv ≫ (Functor.Monoidal.εIso (Scheme.Modules.pullback t)).inv
 
-/-- **The Weil formula is multiplicative under tensor products of trivializations** (from the
-coherence glue). -/
-theorem wf_tensor (hC : PullbackMonoidalCoherence) (t m : X ⟶ X) (h : t ≫ m = m) (M M' : X.Modules)
+/-- The Weil formula with `ε` in place of `pullbackObjUnitIso⁻¹`. -/
+def beta (t m : X ⟶ X) (h : t ≫ m = m) (M : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) : unit X ⟶ unit X :=
+  Functor.LaxMonoidal.ε (Scheme.Modules.pullback t) ≫ (Scheme.Modules.pullback t).map ψ.hom ≫
+    (pullbackComp t m).hom.app M ≫ (pullbackCongr h).hom.app M ≫ ψ.inv
+
+lemma pOU_inv_eq (t : X ⟶ X) :
+    (pOU t).inv = unitRatio t ≫ Functor.LaxMonoidal.ε (Scheme.Modules.pullback t) := by
+  simp only [unitRatio, Category.assoc]
+  rw [← Functor.Monoidal.εIso_hom, Iso.inv_hom_id, Category.comp_id]
+
+lemma alpha_eq_beta (t m : X ⟶ X) (h : t ≫ m = m) (M : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) :
+    alpha t m h M ψ = unitRatio t ≫ beta t m h M ψ := by
+  rw [alpha, beta, pOU_inv_eq, Category.assoc]
+
+/-- **Tensor products of trivializations** (from the glue): `α(ψ ⊗ ψ') = r · λ⁻¹(β ⊗ β')λ`. -/
+lemma alpha_tensor (hA : PullbackCompMonoidal) (t m : X ⟶ X) (h : t ≫ m = m) (M M' : X.Modules)
     (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) (ψ' : unit X ≅ (Scheme.Modules.pullback m).obj M') :
-    wf t m h (M ⊗ M') ((λ_ (unit X)).symm ≪≫ (ψ ⊗ᵢ ψ') ≪≫
+    alpha t m h (M ⊗ M') ((λ_ (unit X)).symm ≪≫ (ψ ⊗ᵢ ψ') ≪≫
         Functor.Monoidal.μIso (Scheme.Modules.pullback m) M M') =
-      wf t m h M ψ * wf t m h M' ψ' := by
-  rw [wf_eq_alpha, wf_eq_alpha, wf_eq_alpha, ← val_unitor_tensor]
+      unitRatio t ≫ (λ_ (unit X)).inv ≫ (beta t m h M ψ ⊗ₘ beta t m h M' ψ') ≫ (λ_ (unit X)).hom := by
+  rw [alpha_eq_beta]
   congr 1
-  have h4 := hC.1 t m M M'
+  have h4 := hA t m M M'
   have h5 := congr_mu h M M'
-  have h2 : (pOU t).inv ≫ (Scheme.Modules.pullback t).map (λ_ (unit X)).inv =
-      (λ_ (unit X)).inv ≫ ((pOU t).inv ⊗ₘ (pOU t).inv) ≫
-        Functor.LaxMonoidal.μ (Scheme.Modules.pullback t) (unit X) (unit X) := by
-    simp only [pOU, hC.2 t]
-    exact eps_unitor_gen (Scheme.Modules.pullback t)
+  have h2 : Functor.LaxMonoidal.ε (Scheme.Modules.pullback t) ≫
+      (Scheme.Modules.pullback t).map (λ_ (unit X)).inv =
+      (λ_ (unit X)).inv ≫ (Functor.LaxMonoidal.ε (Scheme.Modules.pullback t) ⊗ₘ
+        Functor.LaxMonoidal.ε (Scheme.Modules.pullback t)) ≫
+        Functor.LaxMonoidal.μ (Scheme.Modules.pullback t) (unit X) (unit X) :=
+    eps_unitor_gen (Scheme.Modules.pullback t)
   have h3 := Functor.LaxMonoidal.μ_natural (Scheme.Modules.pullback t) ψ.hom ψ'.hom
-  simp only [alpha, Iso.trans_hom, Iso.trans_inv, Iso.symm_hom, Iso.symm_inv, tensorIso_hom,
+  simp only [beta, Iso.trans_hom, Iso.trans_inv, Iso.symm_hom, Iso.symm_inv, tensorIso_hom,
     tensorIso_inv, Functor.Monoidal.μIso_hom, Functor.Monoidal.μIso_inv, Functor.map_comp,
     Category.assoc]
   rw [reassoc_of% h2, ← reassoc_of% h3, reassoc_of% h4, reassoc_of% h5, Functor.Monoidal.μ_δ_assoc]
   simp only [tensorHom_comp_tensorHom_assoc]
+
+/-- **The Weil formula of a tensor product of trivializations**, up to the unit ratio. -/
+theorem wf_tensor_ratio (hA : PullbackCompMonoidal) (t m : X ⟶ X) (h : t ≫ m = m) (M M' : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) (ψ' : unit X ≅ (Scheme.Modules.pullback m).obj M') :
+    wf t m h (M ⊗ M') ((λ_ (unit X)).symm ≪≫ (ψ ⊗ᵢ ψ') ≪≫
+        Functor.Monoidal.μIso (Scheme.Modules.pullback m) M M') * val (unitRatio t) =
+      wf t m h M ψ * wf t m h M' ψ' := by
+  rw [wf_eq_alpha, wf_eq_alpha, wf_eq_alpha, alpha_tensor hA, alpha_eq_beta, alpha_eq_beta,
+    comp_val, val_unitor_tensor, comp_val, comp_val]
+  ring
+
+/-- The trivial bundle with its canonical trivialization has Weil formula `1`. -/
+lemma wf_unit (t m : X ⟶ X) (h : t ≫ m = m) : wf t m h (unit X) (pOU m).symm = 1 := by
+  rw [wf_eq_alpha]
+  have : alpha t m h (unit X) (pOU m).symm = 𝟙 _ := by
+    simp only [alpha, Iso.symm_hom, Iso.symm_inv, Category.assoc]
+    have e := pOU_inv_comp t m
+    rw [← reassoc_of% e, reassoc_of% (pOU_inv_congr h), Iso.inv_hom_id]
+  rw [this, id_val]
 
 end WeilProof
 
@@ -345,8 +382,26 @@ namespace WeilProof
 open PicDict PkgI3 PkgI3.AbVar Scheme.Modules PicDict.Transport MonoidalCategory
 open scoped CategoryTheory.MonObj
 
-/-- **The fourth part from the coherence glue.** -/
-theorem mumfordWeilBilinRightAC_of_coherence (hC : PullbackMonoidalCoherence) :
+variable {k : Type} [Field k]
+
+/-- On an abelian variety, the unit ratio of a translation is `1` (from the glue, by comparing the
+two trivializations of `𝒪 ⊗ 𝒪`). -/
+lemma unitRatio_tr (hA : PullbackCompMonoidal) (X : AbVar k) {n : ℕ} (x : AC.Kpt X) (hx : x ^ n = 1) :
+    val (unitRatio (AC.tr x).left) = 1 := by
+  have h : (AC.tr x).left ≫ (AC.mul X n).left = (AC.mul X n).left := by
+    rw [← Over.comp_left, AC.tr_comp_mul x hx]
+  set m := (AC.mul X n).left
+  set t := (AC.tr x).left
+  have e1 := wf_tensor_ratio hA t m h (unit X.X.left) (unit X.X.left) (pOU m).symm (pOU m).symm
+  rw [wf_unit, mul_one] at e1
+  have e2 := wf_iso t m h (M₁ := unit X.X.left ⊗ unit X.X.left) (M₂ := unit X.X.left)
+    (λ_ (unit X.X.left)) ((λ_ (unit X.X.left)).symm ≪≫ ((pOU m).symm ⊗ᵢ (pOU m).symm) ≪≫
+      Functor.Monoidal.μIso (Scheme.Modules.pullback m) (unit X.X.left) (unit X.X.left))
+  rw [← e2, wf_change t m h (unit X.X.left) (pOU m).symm _ (tr_appTop X x _), wf_unit, one_mul] at e1
+  exact e1
+
+/-- **The fourth part from the glue.** -/
+theorem mumfordWeilBilinRightAC_of_pullbackCompMonoidal (hA : PullbackCompMonoidal) :
     MumfordWeilBilinRightAC := by
   intro k _ _ X n _ _ x hx c c' _ _ ψ ψ' ψ''
   let m := (AC.mul X n).left
@@ -356,19 +411,22 @@ theorem mumfordWeilBilinRightAC_of_coherence (hC : PullbackMonoidalCoherence) :
       (Scheme.Modules.pullback m).mapIso (Scheme.Pic.mulIso c c').symm
   rw [formula_indep X x hx (c * c') ψ'' ψ₀]
   unfold AC.formula
-  rw [wf_iso, wf_tensor hC]
+  rw [wf_iso, ← mul_one (wf _ _ _ (_ ⊗ _) _), ← unitRatio_tr hA X x hx, wf_tensor_ratio hA]
 
-/-- **The field from six Mumford leaves and the coherence glue.** -/
-theorem weilPairingMumford_of_coherence (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
-    (h8 : MumfordPhiSurjectiveAC) (hC : PullbackMonoidalCoherence) (h20b : MumfordWeilNondegAC)
-    (h23 : MumfordWeilAltAC) (hKL : MumfordKLFiniteAC) : T09Pic.WeilPairingMumford :=
-  weilPairingMumford_of_bilinRight hsq h8iv h8 (mumfordWeilBilinRightAC_of_coherence hC) h20b h23 hKL
+/-- **The field from six Mumford leaves and the glue `PullbackCompMonoidal`.** -/
+theorem weilPairingMumford_of_pullbackCompMonoidal (hsq : MumfordSquareAC)
+    (h8iv : MumfordMulNPicZeroAC) (h8 : MumfordPhiSurjectiveAC) (hA : PullbackCompMonoidal)
+    (h20b : MumfordWeilNondegAC) (h23 : MumfordWeilAltAC) (hKL : MumfordKLFiniteAC) :
+    T09Pic.WeilPairingMumford :=
+  weilPairingMumford_of_bilinRight hsq h8iv h8 (mumfordWeilBilinRightAC_of_pullbackCompMonoidal hA)
+    h20b h23 hKL
 
-/-- `MumfordWeilPairingAC` (pic-dict's §20 leaf) from the coherence glue alone. -/
-theorem mumfordWeilPairingAC_of_coherence (hC : PullbackMonoidalCoherence) : MumfordWeilPairingAC :=
-  mumfordWeilPairingAC_of_bilinRight (mumfordWeilBilinRightAC_of_coherence hC)
+/-- pic-dict's §20 leaf `MumfordWeilPairingAC` from the glue alone. -/
+theorem mumfordWeilPairingAC_of_pullbackCompMonoidal (hA : PullbackCompMonoidal) :
+    MumfordWeilPairingAC :=
+  mumfordWeilPairingAC_of_bilinRight (mumfordWeilBilinRightAC_of_pullbackCompMonoidal hA)
 
 end WeilProof
 
-#print axioms WeilProof.weilPairingMumford_of_coherence
+#print axioms WeilProof.weilPairingMumford_of_pullbackCompMonoidal
 #print axioms WeilProof.weilPairingMumford_of_bilinRight
