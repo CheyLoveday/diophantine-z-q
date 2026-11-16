@@ -332,4 +332,119 @@ theorem weber_eq_Wf {N : ℕ} (τ : UpperHalfPlane) (h2 : (pp τ).g₂ ≠ 0) (h
     weber (pp τ) (1 / (N : ℂ)) = Wf N τ := by
   simp only [weber, h3, h2, ↓reduceIte, Wf, G2f, G3f, Dlf, Pf, ofComplex_apply]
 
+
+/-! ### Special values: `g₃(i) = 0`, `g₂(ρ) = 0`, `j(i) = 1728`, `j(ρ) = 0` -/
+
+theorem isScale_I : IsScale (pp UpperHalfPlane.I) (pp UpperHalfPlane.I) Complex.I := by
+  refine ⟨Complex.I_ne_zero, ?_⟩
+  ext x
+  have h1 : (pp UpperHalfPlane.I).ω₁ = 1 := rfl
+  have h2 : (pp UpperHalfPlane.I).ω₂ = Complex.I := rfl
+  simp only [SetLike.mem_coe, Set.mem_smul_set, PeriodPair.mem_lattice, smul_eq_mul, h1, h2]
+  constructor
+  · rintro ⟨m, n, rfl⟩
+    exact ⟨_, ⟨n, -m, rfl⟩, by push_cast; linear_combination (-(m : ℂ)) * Complex.I_sq⟩
+  · rintro ⟨_, ⟨m, n, rfl⟩, rfl⟩
+    exact ⟨-n, m, by push_cast; linear_combination (-(n : ℂ)) * Complex.I_sq⟩
+
+theorem omega3_im_pos : 0 < omega3.im := by
+  simp [omega3]
+
+/-- `ρ = e^{2πi/3}` in `ℍ`. -/
+def τρ : UpperHalfPlane := ⟨omega3, omega3_im_pos⟩
+
+theorem omega3_ne_zero : omega3 ≠ 0 := by
+  intro h; have := omega3_cube; rw [h] at this; norm_num at this
+
+theorem omega3_ne_one : omega3 ≠ 1 := by
+  intro h; have := omega3_sq_add; rw [h] at this; norm_num at this
+
+theorem isScale_ρ : IsScale (pp τρ) (pp τρ) omega3 := by
+  refine ⟨omega3_ne_zero, ?_⟩
+  ext x
+  have h1 : (pp τρ).ω₁ = 1 := rfl
+  have h2 : (pp τρ).ω₂ = omega3 := rfl
+  simp only [SetLike.mem_coe, Set.mem_smul_set, PeriodPair.mem_lattice, smul_eq_mul, h1, h2]
+  constructor
+  · rintro ⟨m, n, rfl⟩
+    exact ⟨_, ⟨n - m, -m, rfl⟩, by push_cast; linear_combination (-(m : ℂ)) * omega3_sq_add⟩
+  · rintro ⟨_, ⟨m, n, rfl⟩, rfl⟩
+    exact ⟨-n, m - n, by push_cast; linear_combination (-(n : ℂ)) * omega3_sq_add⟩
+
+theorem g3_I : (pp UpperHalfPlane.I).g₃ = 0 := by
+  have h := isScale_I.g₃
+  have h6 : Complex.I ^ 6 = -1 := by
+    rw [show (6 : ℕ) = 2 * 3 from rfl, pow_mul, Complex.I_sq]; norm_num
+  rw [h6, inv_neg, inv_one, neg_one_mul] at h
+  linear_combination h / 2
+
+theorem g2_ρ : (pp τρ).g₂ = 0 := by
+  have h := isScale_ρ.g₂
+  have h4 : omega3 ^ 4 = omega3 := by rw [pow_succ, omega3_cube, one_mul]
+  rw [h4] at h
+  have h' : (omega3 - 1) * (pp τρ).g₂ = 0 := by
+    have : omega3 * (pp τρ).g₂ = (pp τρ).g₂ := by
+      conv_lhs => rw [h]
+      rw [← mul_assoc, mul_inv_cancel₀ omega3_ne_zero, one_mul]
+    linear_combination this
+  rcases mul_eq_zero.1 h' with h0 | h0
+  · exact absurd (sub_eq_zero.1 h0) omega3_ne_one
+  · exact h0
+
+theorem g2_I_ne : (pp UpperHalfPlane.I).g₂ ≠ 0 := by
+  intro h
+  apply disc_ppD_ne_zero UpperHalfPlane.I
+  show (pp UpperHalfPlane.I).g₂ ^ 3 - 27 * (pp UpperHalfPlane.I).g₃ ^ 2 = 0
+  rw [h, g3_I]; ring
+
+theorem g3_ρ_ne : (pp τρ).g₃ ≠ 0 := by
+  intro h
+  apply disc_ppD_ne_zero τρ
+  show (pp τρ).g₂ ^ 3 - 27 * (pp τρ).g₃ ^ 2 = 0
+  rw [h, g2_ρ]; ring
+
+theorem Jf_I : Jf (UpperHalfPlane.I : ℂ) = 1728 := by
+  simp only [Jf, ofComplex_apply, jL, discL, g3_I]
+  have := g2_I_ne
+  field_simp
+  ring
+
+theorem Jf_ρ : Jf (τρ : ℂ) = 0 := by
+  simp only [Jf, ofComplex_apply, jL, g2_ρ]
+  ring
+
+/-- `j` is not a root of a nonzero polynomial on all of `ℍ`. -/
+theorem exists_eval_Jf_ne {c : Polynomial ℚ} (hc : c ≠ 0) :
+    ∃ z ∈ Hs, c.eval₂ (Rat.castHom ℂ) (Jf z) ≠ 0 := by
+  by_contra h
+  push Not at h
+  set T : Set ℂ := {x | c.eval₂ (Rat.castHom ℂ) x = 0} with hT
+  have hTf : T.Finite := by
+    have : T = {x | (c.map (Rat.castHom ℂ)).IsRoot x} := by
+      ext x; simp [T, Polynomial.eval_map]
+    rw [this]
+    exact Polynomial.finite_setOfPred_isRoot
+      ((Polynomial.map_ne_zero_iff (Rat.castHom ℂ).injective).mpr hc)
+  have := isPreconnected_Hs.constant_of_mapsTo hTf.isDiscrete diffOn_Jf.continuousOn
+    (fun z hz => h z hz) (x := (UpperHalfPlane.I : ℂ)) (y := (τρ : ℂ))
+    UpperHalfPlane.I.coe_im_pos τρ.coe_im_pos
+  rw [Jf_I, Jf_ρ] at this
+  norm_num at this
+
+/-- Some `τ` has `g₂(τ)g₃(τ) ≠ 0`. -/
+theorem exists_good_point : ∃ z₀ ∈ Hs, G2f z₀ ≠ 0 ∧ G3f z₀ ≠ 0 := by
+  by_contra h
+  push Not at h
+  have h' : ∀ z ∈ Hs, G2f z * G3f z = 0 := fun z hz => by
+    by_cases h2 : G2f z = 0
+    · rw [h2, zero_mul]
+    · rw [h z hz h2, mul_zero]
+  rcases eq_zero_or_eq_zero diffOn_G2f diffOn_G3f h' with h1 | h1
+  · apply g2_I_ne
+    have := h1 _ UpperHalfPlane.I.coe_im_pos
+    simp only [G2f, ofComplex_apply] at this; exact this
+  · apply g3_ρ_ne
+    have := h1 _ τρ.coe_im_pos
+    simp only [G3f, ofComplex_apply] at this; exact this
+
 end X1Igusa.Weber
