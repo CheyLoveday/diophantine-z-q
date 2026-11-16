@@ -85,6 +85,13 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_S
 DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by WeilProof.Theta.weilPairingMumford_final
+  still assumes: [PicDict.MumfordSquareAC,
+ PicDict.MumfordMulNPicZeroAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.MumfordWeilNondegAC,
+ T09Pic.PhiAmpleIsogeny]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by WeilProof.Theta.weilPairingMumford_of_div
   still assumes: [PicDict.MumfordSquareAC,
  PicDict.MumfordMulNPicZeroAC,
@@ -130,4 +137,4 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by WeilProof.weilPairingMumfor
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 3181 theorems checked, 22 discharge one
+#discharges: 56 open hypotheses, 3185 theorems checked, 23 discharge one

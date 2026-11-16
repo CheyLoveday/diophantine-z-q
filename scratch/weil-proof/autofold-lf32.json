@@ -1,13 +1,13 @@
 {
  "name": "weil-proof",
  "imports": [
-  "ZInQKernel.Contrib.OneProof.WeilFormula",
+  "ZInQKernel.Contrib.OneProof.WeilFormulaTheta",
   "ZInQKernel.Contrib.OneProof.PhiAmpleIsogeny"
  ],
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.WeilProof.weilPairingMumford_proof {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC (_root_.PicFix.phiAmpleIsogeny_of_printed {n}.mumfordKLFiniteSectionAC {n}.mumfordPhiSurjectiveAC)",
+   "proof": "_root_.WeilProof.Theta.weilPairingMumford_final {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilNondegAC (_root_.PicFix.phiAmpleIsogeny_of_printed {n}.mumfordKLFiniteSectionAC {n}.mumfordPhiSurjectiveAC)",
    "leaves": [
     {
      "name": "mumfordSquareAC",
@@ -32,17 +32,9 @@
      "kind": "published",
      "flag": "pending reading: stated for the formula e_n(x, M) = t_x^*psi o psi^-1; it is Mumford's print only if section 20 states e_n by this formula (and not only through the duality of section 15); sign immaterial; locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 20: e_n nondegenerate"
-    },
-    {
-     "name": "mumfordWeilAltAC",
-     "type": "_root_.PicDict.MumfordWeilAltAC",
-     "doc": "pic-dict: e_n(x, phi_L(x)) = 1 (Mumford section 23; locator UNVERIFIED).",
-     "kind": "published",
-     "flag": "pending reading: stated for the formula e_n(x, M) = t_x^*psi o psi^-1; it is Mumford's print only if section 20 states e_n by this formula (and not only through the duality of section 15); sign immaterial; locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, 23: e^L_n(x,x) = 1"
     }
    ]
   }
  ],
- "note": "UNTESTED spec for a base after leaf-fold32 (origin/wip/leaf-fold32b), where phiAmpleIsogeny is already folded into the fields mumfordKLFiniteSectionAC and mumfordPhiSurjectiveAC; not dry-run here"
+ "note": "UNTESTED spec for a base after leaf-fold32 (origin/wip/leaf-fold32b): phiAmpleIsogeny already folded into mumfordKLFiniteSectionAC and mumfordPhiSurjectiveAC; not dry-run here"
 }
