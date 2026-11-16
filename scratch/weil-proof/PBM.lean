@@ -126,4 +126,29 @@ theorem main_sheafified (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) 
   simp only [Functor.map_comp] at hP
   rw [reassoc_of% hP]
 
+/-- The counit `L(M.val) ≅ M`. -/
+abbrev epsM (M : Z.Modules) : (L Z).obj M.val ≅ M :=
+  (asIso (PresheafOfModules.sheafificationAdjunction (𝟙 Z.ringCatSheaf.obj)).counit).app M
+
+/-- **`pullbackComp` is monoidal**, from (E) and (P). -/
+theorem pullbackComp_monoidal (f : X ⟶ Y) (g : Y ⟶ Z) (M N : Z.Modules) :
+    Functor.LaxMonoidal.μ (Scheme.Modules.pullback f) ((Scheme.Modules.pullback g).obj M)
+        ((Scheme.Modules.pullback g).obj N) ≫
+      (Scheme.Modules.pullback f).map (Functor.LaxMonoidal.μ (Scheme.Modules.pullback g) M N) ≫
+        (pullbackComp f g).hom.app (M ⊗ N) =
+      ((pullbackComp f g).hom.app M ⊗ₘ (pullbackComp f g).hom.app N) ≫
+        Functor.LaxMonoidal.μ (Scheme.Modules.pullback (f ≫ g)) M N := by
+  rw [← cancel_epi ((Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map (epsM M).hom) ⊗ₘ
+    (Scheme.Modules.pullback f).map ((Scheme.Modules.pullback g).map (epsM N).hom))]
+  rw [Functor.LaxMonoidal.μ_natural_assoc, ← Functor.map_comp_assoc, Functor.LaxMonoidal.μ_natural,
+    Functor.map_comp_assoc]
+  have nc := (pullbackComp f g).hom.naturality ((epsM M).hom ⊗ₘ (epsM N).hom)
+  simp only [Functor.comp_map] at nc
+  rw [nc, tensorHom_comp_tensorHom_assoc]
+  have nM := (pullbackComp f g).hom.naturality (epsM M).hom
+  have nN := (pullbackComp f g).hom.naturality (epsM N).hom
+  simp only [Functor.comp_map] at nM nN
+  rw [nM, nN, ← tensorHom_comp_tensorHom_assoc, Functor.LaxMonoidal.μ_natural]
+  rw [reassoc_of% (main_sheafified f g M.val N.val)]
+
 end WeilProof.PBM
