@@ -23,3 +23,12 @@ Task theta-direct, started 2026-11-16 00:00 PST. Base a40d5c4d (wip/theta-direct
 * R1: ψ₆·Σθ⁸ = c₁·∏θ² on Ω(ℍ) (weight 20, one node τ₂₄); R2: (Σθ⁸)²χ₁₂ = c₂(Σθ⁸)⁵ + c₃(∏θ²)² (weight 40,
   nodes √2+i and τ₂₄). c_i algebraic from algebraic theta ratios at the nodes (CM24 at Ω₂₄; genus one at Ω₀).
 * Then e_k(θ⁸)/(Σθ⁸)^k algebraic where j_θ ∈ ℚ∖0 (IgusaAlg k, weighted homogeneity) ⇒ ThetaRatiosAtQM.
+
+## Step 1 (compiled, VERIFIED)
+* Helper modules build: UseForm, Kron, Split, Glue, Printed (`lake build ...ThetaDirect.Printed`, 12131 jobs).
+* ThetaDirect/Valence.lean compiles: `valenceGS` (ValenceFormulaGammaStar from valenceFormulaCocompactEq_proof +
+  shimizuCovolumeO1_proof), `eq_zero_of_nodes` (vanishing at r inequivalent nodes for weight 2m < 24r),
+  `auto_mul/sub/const_mul/pow`, `autoGS` (automorphy of S(Ω z)/((z−3)(z+1))^w for Γ* from modularity at M4, M6;
+  even w).
+* ThetaDirect/Nodes.lean compiles: `nodeAlg_om24` (θ_m/θ_00 algebraic at Ω₂₄ = Ω(τ₂₄)), `nodeAlg_cm4`
+  (θ_m/θ_00 algebraic at Ω₀ = Ω(√2+i)), via genus-one values at i (θ01(i) = θ10(i), Jacobi).
