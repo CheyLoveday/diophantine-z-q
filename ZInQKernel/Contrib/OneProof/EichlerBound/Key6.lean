@@ -163,6 +163,97 @@ theorem ram_contra (hk : Module.finrank ℚ k = 2) {Ψ Φ : OptEmb k R} {ℓ : �
   have h5 := Nat.lt_two_pow_self (n := z0.natAbs)
   omega
 
+include Bs in
+/-- **Unramified `ℓ ∣ 6`**: a bad `ℓ` for two embeddings of the same type forces `ℓ ∣ Δ`. -/
+theorem unram_dvd (hk : Module.finrank ℚ k = 2) {Ψ Φ : OptEmb k R} {ℓ : ℤ} (hℓ : L6 ℓ)
+    (htype : PP ℓ (Φ.1 Bs.ω - Ψ.1 Bs.ω)) (hB : ∀ d ∈ Jo Ψ Φ, PP ℓ d) :
+    ℓ ∣ Bs.t ^ 2 - 4 * Bs.n := by
+  have hℓ0 := L6_ne hℓ
+  have hℓq : (ℓ : ℚ) ≠ 0 := by exact_mod_cast hℓ0
+  obtain ⟨c, hc, hcne, hcl⟩ := exists_not_LO Bs hk Ψ Φ (L6_natAbs hℓ)
+  obtain ⟨c1, hc1, hcc1⟩ := PP_eq_pi_mul hℓ (hB c hc)
+  have hc1P : ¬ PP ℓ c1 := by
+    intro h
+    obtain ⟨c2, hc2, hcc2⟩ := PP_eq_pi_mul hℓ h
+    apply hcl
+    rw [hcc1, hcc2, ← mul_assoc, piL_sq hℓ, LO_iff_smul ℓ hℓ0]
+    refine ⟨((-epsL ℓ : ℤ) : ℚ) • c2, smul_mem_O hc2 _, ?_⟩
+    rw [coe_mul_eq_smul, smul_smul]; push_cast; ring_nf
+  set β0 := Ψ.1 Bs.ω
+  set β := Φ.1 Bs.ω
+  have hβ0 := emb_omega_mem Bs Ψ
+  have hβ := emb_omega_mem Bs Φ
+  obtain ⟨w0, hw0, hfrob⟩ := frob hℓ hβ
+  have hint : c * β0 = β * c := hc.2 Bs.ω
+  -- `nrd π · c₁β₀ = (nrd π β̄ + ℓ w₀) c₁`
+  have e1 : nrd (piL ℓ) • (c1 * β0) = (nrd (piL ℓ) • star β + (ℓ : ℚ) • w0) * c1 := by
+    have : star (piL ℓ) * c * β0 = star (piL ℓ) * β * piL ℓ * c1 := by
+      rw [mul_assoc, hint, hcc1]; simp only [mul_assoc]
+    rw [hfrob] at this
+    rw [← this, hcc1]
+    rw [show star (piL ℓ) * (piL ℓ * c1) * β0 = (star (piL ℓ) * piL ℓ) * (c1 * β0) by simp only [mul_assoc],
+      star_mul_self', coe_mul_eq_smul]
+  rw [nrd_piL hℓ, add_mul, smul_mul_assoc, smul_mul_assoc] at e1
+  have e2 : c1 * β0 - star β * c1 = ((epsL ℓ : ℤ) : ℚ) • (w0 * c1) := by
+    have h3 : (ℓ : ℚ) • (((epsL ℓ : ℤ) : ℚ) • (c1 * β0 - star β * c1) - w0 * c1) = 0 := by
+      push_cast at e1
+      simp only [smul_sub, smul_smul]
+      rw [mul_comm (ℓ : ℚ), e1]
+      abel
+    rw [smul_eq_zero] at h3
+    rcases h3 with h | h
+    · exact absurd h hℓq
+    · rw [sub_eq_zero] at h
+      rw [← h, smul_smul]
+      have : ((epsL ℓ : ℤ) : ℚ) * ((epsL ℓ : ℤ) : ℚ) = 1 := by exact_mod_cast epsL_sq
+      rw [this, one_smul]
+  have hP1 : PP ℓ (c1 * β0 - star β * c1) := by
+    rw [e2]; exact PP_epsL_smul hℓ (PP_mul_right hw0 hc1)
+  have hP2 : PP ℓ (star β * c1 - c1 * star β) := PP_comm hℓ (star_mem hβ) hc1
+  have hP3 : PP ℓ (c1 * (β0 - star β)) := by
+    have := PP_add hℓ hP1 hP2
+    rwa [show c1 * β0 - star β * c1 + (star β * c1 - c1 * star β) = c1 * (β0 - star β) by
+      rw [mul_sub]; abel] at this
+  have hP4 : PP ℓ (β0 - star β) :=
+    (PP_prime (L6_prime hℓ) hc1 (LeafQM.O.sub_mem hβ0 (star_mem hβ)) hP3).resolve_left hc1P
+  have hP5 : PP ℓ (β - star β) := by
+    have := PP_add hℓ htype hP4
+    rwa [show β - β0 + (β0 - star β) = β - star β by abel] at this
+  rw [PP_iff (LeafQM.O.sub_mem hβ (star_mem hβ))] at hP5
+  obtain ⟨z, hz, hd⟩ := hP5
+  rw [nrd_sub_star, trd_omega, nrd_omega] at hz
+  have : z = 4 * Bs.n - Bs.t ^ 2 := by exact_mod_cast hz.symm
+  rw [this] at hd
+  have := dvd_neg.mpr hd
+  rwa [neg_sub] at this
+
+include Bs in
+/-- **No bad prime `ℓ ∈ {2, 3}` for two embeddings of the same type at `ℓ`.** -/
+theorem not_bad6 (hk : Module.finrank ℚ k = 2) (hc : Nat.Coprime (conductor R) 6) {Ψ Φ : OptEmb k R}
+    {ℓ : ℤ} (hℓ : L6 ℓ) (htype : PP ℓ (Φ.1 Bs.ω - Ψ.1 Bs.ω)) : ¬ Bad Ψ Φ ℓ := by
+  intro hB
+  have hPP := pp_of_bad (L6_ne hℓ) hB
+  have hΔ := unram_dvd Bs hk hℓ htype hPP
+  obtain ⟨a, ha1, ha2⟩ := exists_l R hc Bs.mem Bs.notRat Bs.span Bs.quad hℓ hΔ
+  exact ram_contra Bs hk hℓ hPP ha1 ha2
+
+/-- **Types**: modulo `P_ℓ`, `Φ(ω)` is `Ψ(ω)` or its conjugate. -/
+theorem type_dichotomy {ℓ : ℤ} (hℓ : L6 ℓ) (Ψ Φ : OptEmb k R) :
+    PP ℓ (Φ.1 Bs.ω - Ψ.1 Bs.ω) ∨ PP ℓ (Φ.1 Bs.ω - star (Ψ.1 Bs.ω)) := by
+  have hβ0 := emb_omega_mem Bs Ψ
+  have hβ := emb_omega_mem Bs Φ
+  have e : (Φ.1 Bs.ω - Ψ.1 Bs.ω) * (Φ.1 Bs.ω - star (Ψ.1 Bs.ω)) =
+      Φ.1 Bs.ω * Ψ.1 Bs.ω - Ψ.1 Bs.ω * Φ.1 Bs.ω := by
+    have h1 := emb_omega_sq Bs Φ
+    have h2 : Ψ.1 Bs.ω * star (Ψ.1 Bs.ω) = ((Bs.n : ℚ) : B) := by rw [mul_star_self', nrd_omega]
+    have h3 : star (Ψ.1 Bs.ω) = ((Bs.t : ℚ) : B) - Ψ.1 Bs.ω := by rw [star_eq_trd_sub, trd_omega]
+    have h4 : Φ.1 Bs.ω * ((Bs.t : ℚ) : B) = ((Bs.t : ℚ) : B) * Φ.1 Bs.ω := (coe_comm _ _).symm
+    rw [sub_mul, mul_sub, mul_sub, h1, h2, h3, mul_sub, h4]
+    abel
+  have := PP_comm hℓ hβ hβ0
+  rw [← e] at this
+  exact PP_prime (L6_prime hℓ) (LeafQM.O.sub_mem hβ hβ0) (LeafQM.O.sub_mem hβ (star_mem hβ0)) this
+
 end Emb
 
 end EichlerBound
