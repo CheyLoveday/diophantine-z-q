@@ -40,7 +40,7 @@ polynomial).** Diamond–Shurman, *A First Course in Modular Forms*, GTM 228 (20
 (`k ≥ 2`; from Deligne, Sém. Bourbaki 355 (1969, publ. 1971), and Shimura 1971 Thm 7.14 for
 `k = 2`; numbering UNVERIFIED): for a normalized eigenform `f ∈ S_k(N, χ)`, `k ≥ 2`, and `λ ∣ ℓ` in
 `K_f`, there is a continuous `ρ_{f,λ} : G_ℚ → GL₂(K_{f,λ})`, unramified at every `p ∤ ℓN`, such that
-for every maximal ideal `𝔭` of `ℤ̄` over `p`, `ρ_{f,λ}(Frob_𝔭)` satisfies the polynomial equation
+for every maximal ideal `𝔭` of `ℤ̄` over `p`, `ρ_{f,λ}(Frob_𝔭)` satisfies (this wording UNVERIFIED; it may print "characteristic polynomial") the polynomial equation
 `x² − a_p(f) x + χ(p) p^{k−1} = 0`. Lean form as `ZInQ.Contrib.HodgeSplit.DSThm965` (coefficients
 extended along `K_{f,λ} → ℚ̄_ℓ` given by `ιL ∘ ιC⁻¹`, places of `ℚ̄` as valuation subrings,
 arithmetic Frobenius as pkg-I4's `IsArithFrob`), with the conclusion
