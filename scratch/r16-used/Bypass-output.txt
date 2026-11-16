@@ -1,0 +1,22 @@
+scratch/r16-used/Bypass.lean:16:5: warning: Ambiguous namespace `PkgI3`: it is interpreted as `_root_.HDec.PkgI3` because this `open` occurs inside `namespace HDec.G0ModNewform`, while `_root_.PkgI3` is silently not opened. Specify the namespace unambiguously, e.g. `_root_.HDec.PkgI3`. The warning can sometimes also be addressed by moving the `open` outside of the surrounding `namespace`.
+
+Note: This linter can be disabled with `set_option linter.ambiguousOpen false`
+scratch/r16-used/Bypass.lean:16:11: warning: Ambiguous namespace `PkgI3.AbVar`: it is interpreted as `_root_.HDec.PkgI3.AbVar` because this `open` occurs inside `namespace HDec.G0ModNewform`, while `_root_.PkgI3.AbVar` is silently not opened. Specify the namespace unambiguously, e.g. `_root_.HDec.PkgI3.AbVar`. The warning can sometimes also be addressed by moving the `open` outside of the surrounding `namespace`.
+
+Note: This linter can be disabled with `set_option linter.ambiguousOpen false`
+scratch/r16-used/Bypass.lean:16:23: warning: Ambiguous namespace `C9Rhof`: it is interpreted as `_root_.HDec.C9Rhof` because this `open` occurs inside `namespace HDec.G0ModNewform`, while `_root_.C9Rhof` is silently not opened. Specify the namespace unambiguously, e.g. `_root_.HDec.C9Rhof`. The warning can sometimes also be addressed by moving the `open` outside of the surrounding `namespace`.
+
+Note: This linter can be disabled with `set_option linter.ambiguousOpen false`
+scratch/r16-used/Bypass.lean:17:5: warning: Ambiguous namespace `LeafModCurves`: it is interpreted as `_root_.HDec.LeafModCurves` because this `open` occurs inside `namespace HDec.G0ModNewform`, while `_root_.LeafModCurves` is silently not opened. Specify the namespace unambiguously, e.g. `_root_.HDec.LeafModCurves`. The warning can sometimes also be addressed by moving the `open` outside of the surrounding `namespace`.
+
+Note: This linter can be disabled with `set_option linter.ambiguousOpen false`
+scratch/r16-used/Bypass.lean:37:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+'HDec.G0ModNewform.g13_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0ModNewform.g13_via_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
