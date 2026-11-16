@@ -63,3 +63,16 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
   #discharges (Discharges-output.txt): DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by
   DegDet.charPolyIndepOfEllAlgClosed_of_printed, still assumes [DegHomogPoly, SepDegKernel, AvSplit.MumfordTorsionAlgClosed,
   HomFreeFiniteAlgClosed], axioms standard. (Also the earlier charPolyIndepOfEllAlgClosed_of_degHomogPoly line.)
+- VERIFIED compiled (scratch/deg-det/KerDvd.lean → ZInQKernel/Contrib/OneProof/DegEqDetTate/KerDvd.lean):
+  `KerDvd.kerDvdDeg : degEnd ψ ≠ 0 → Finite (ptMap ψ).ker ∧ Nat.card (ptMap ψ).ker ∣ degEnd ψ` (translations τ_P by
+  kernel points over k̄ ≅ k, their action σ on the function field characterized by Spec(σ f) ≫ ι = ι ≫ f, fixing ψ^*K(A),
+  faithful by ext_of_isDominant_of_isSeparated; Artin IntermediateField.finrank_fixedField_eq_card + tower law).
+  This REPLACES the leaf SepDegKernel.
+- VERIFIED compiled: Algebra.lean one-sided `eq_of_norm_RsZ_le` (monic P,Q, deg P = deg Q, |RsP F| ≤ |RsQ F| ⇒ P = Q) and
+  `det_eq_deg_abstract_le`.
+- VERIFIED compiled (lake build ZInQKernel.Contrib.OneProof.DegEqDetTate; files restructured: DegEqDetTate/Reduction.lean = old
+  top file, DegEqDetTate/KerDvd.lean, new top DegEqDetTate.lean): `DegDet.degEqDetTate_of_degHomogPoly_mumford :
+  DegHomogPoly → MumfordTorsionAlgClosed → HomFreeFiniteAlgClosed → DegEqDetTate` and
+  `DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford` (same hypotheses → CharPolyIndepOfEllAlgClosed),
+  helper lemmas card_tb_of_mumford, norm_det_V_eq_card_ker, card_basis_V (rank V_ℓ = 2g), norm_deg_le_norm_det.
+  Axioms standard (scratch/deg-det/CheckAxioms.lean). ONE new leaf (DegHomogPoly), no glue.

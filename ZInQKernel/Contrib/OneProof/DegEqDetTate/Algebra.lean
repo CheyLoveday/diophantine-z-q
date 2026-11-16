@@ -17,6 +17,9 @@ purely algebraic part, which this file proves in an abstract form, `det_eq_deg_a
 3. `Nt_mul`, `P0_monic`: a homogeneous polynomial function on `ℤ[X]/(R)` that is multiplicative on pairs of
    nonzero values extends to a multiplicative function on `S[X]/(R)` for every `ℚ`-algebra `S`
    (Combinatorial Nullstellensatz), and `N(t − X)` is monic of degree `n`.
+
+`det_eq_deg_abstract_le` is the one-sided variant (`|deg ψ|_ℓ ≤ |det ρ ψ|_ℓ` and `#I = n`), with the one-sided
+comparison lemma `eq_of_norm_RsZ_le`.
 -/
 
 open Polynomial
@@ -364,6 +367,229 @@ theorem mult_eq_of_norm_Rs {μ P1 Q1 : ℚ_[ℓ][X]} (hμ : Irreducible μ) (hμ
     exact mul_left_cancel₀ hne this
   exact pow_right_injective₀ hy0 hy1.ne hye
 
+theorem mult_le_of_norm_Rs_le {μ P1 Q1 : ℚ_[ℓ][X]} (hμ : Irreducible μ) (hμm : μ.Monic)
+    (hP1 : P1 ≠ 0) (hQ1 : Q1 ≠ 0) (hPμ : ¬ μ ∣ P1) (hQμ : ¬ μ ∣ Q1) (e f : ℕ)
+    (h : ∀ F : ℤ[X], RsZ (μ ^ e * P1) F ≠ 0 → ‖RsZ (μ ^ e * P1) F‖ ≤ ‖RsZ (μ ^ f * Q1) F‖) :
+    f ≤ e := by
+  classical
+  set ι := algebraMap ℚ_[ℓ] (PadicAlgCl ℓ) with hι
+  set d := μ.natDegree with hd_def
+  have hd : 0 < d := natDegree_pos_iff_degree_pos.mpr (degree_pos_of_irreducible hμ)
+  have hℓ1 : (1 : ℝ) < ℓ := by exact_mod_cast hℓ.out.one_lt
+  set a : ℝ := (ℓ : ℝ)⁻¹ with ha_def
+  have ha0 : 0 < a := inv_pos.mpr (zero_lt_one.trans hℓ1)
+  have ha1 : a < 1 := inv_lt_one_of_one_lt₀ hℓ1
+  -- scaling `μ` into `ℤ_ℓ[X]`
+  obtain ⟨s, hs⟩ : ∃ s : ℕ, ∀ i, ‖(ℓ : ℚ_[ℓ]) ^ s * μ.coeff i‖ ≤ 1 := by
+    obtain ⟨s, hsM⟩ := pow_unbounded_of_one_lt (∑ i ∈ Finset.range (d + 1), ‖μ.coeff i‖) hℓ1
+    refine ⟨s, fun i => ?_⟩
+    rw [norm_mul, norm_pow, Padic.norm_p, inv_pow]
+    have hci : ‖μ.coeff i‖ ≤ ∑ i ∈ Finset.range (d + 1), ‖μ.coeff i‖ := by
+      by_cases hi : i ≤ d
+      · exact Finset.single_le_sum (f := fun i => ‖μ.coeff i‖) (fun _ _ => norm_nonneg _)
+          (Finset.mem_range.mpr (Nat.lt_succ_of_le hi))
+      · rw [coeff_eq_zero_of_natDegree_lt (not_le.mp hi), norm_zero]
+        exact Finset.sum_nonneg fun _ _ => norm_nonneg _
+    have hpos : (0 : ℝ) < (ℓ : ℝ) ^ s := pow_pos (zero_lt_one.trans hℓ1) s
+    rw [inv_mul_le_iff₀ hpos, mul_one]
+    exact hci.trans hsM.le
+  set c : ℕ → ℤ_[ℓ] := fun i => ⟨(ℓ : ℚ_[ℓ]) ^ s * μ.coeff i, hs i⟩ with hc
+  set μ0 : ℚ_[ℓ][X] := C ((ℓ : ℚ_[ℓ]) ^ s) * μ with hμ0
+  have hμ0nd : (μ0.map ι).natDegree < d + 1 := by
+    refine Nat.lt_succ_of_le ((natDegree_map_le).trans ?_)
+    exact (natDegree_C_mul_le _ _).trans le_rfl
+  have hμ0ev : ∀ w, (μ0.map ι).eval w = ∑ i ∈ Finset.range (d + 1), ι (c i) * w ^ i := by
+    intro w
+    rw [eval_eq_sum_range' hμ0nd]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [coeff_map, hμ0, coeff_C_mul]
+  have hμ0μ : ∀ w, (μ0.map ι).eval w = ι ((ℓ : ℚ_[ℓ]) ^ s) * (μ.map ι).eval w := by
+    intro w
+    rw [hμ0, Polynomial.map_mul, map_C, eval_mul, eval_C]
+  -- the test polynomials
+  set Fn : ℕ → ℤ[X] := fun n => ∑ i ∈ Finset.range (d + 1),
+    C ((PadicInt.appr (c i) (2 * n) : ℕ) : ℤ) * X ^ i + C ((ℓ : ℤ) ^ n) with hFn
+  have hFev : ∀ n w, ((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w =
+      ∑ i ∈ Finset.range (d + 1), ((PadicInt.appr (c i) (2 * n) : ℕ) : PadicAlgCl ℓ) * w ^ i +
+        (ℓ : PadicAlgCl ℓ) ^ n := by
+    intro n w
+    simp [hFn, Polynomial.map_sum, eval_finsetSum]
+  have happr : ∀ n i, ‖((PadicInt.appr (c i) (2 * n) : ℕ) : PadicAlgCl ℓ) - ι (c i)‖ ≤
+      a ^ (2 * n) := by
+    intro n i
+    have h1 := (PadicInt.norm_le_pow_iff_mem_span_pow _ _).mpr (PadicInt.appr_spec (2 * n) (c i))
+    rw [PadicInt.norm_def, PadicInt.coe_sub, PadicInt.coe_natCast] at h1
+    rw [← map_natCast ι, ← map_sub, hι, PadicAlgCl.norm_extends ℓ, norm_sub_rev]
+    convert h1 using 1
+    rw [ha_def, zpow_neg, zpow_natCast, inv_pow]
+  have herr : ∀ n w (B : ℝ), 1 ≤ B → ‖w‖ ≤ B →
+      ‖((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w - (μ0.map ι).eval w -
+        (ℓ : PadicAlgCl ℓ) ^ n‖ ≤ a ^ (2 * n) * B ^ d := by
+    intro n w B hB hw
+    have hrw : ((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w - (μ0.map ι).eval w -
+        (ℓ : PadicAlgCl ℓ) ^ n = ∑ i ∈ Finset.range (d + 1),
+          (((PadicInt.appr (c i) (2 * n) : ℕ) : PadicAlgCl ℓ) - ι (c i)) * w ^ i := by
+      rw [hFev, hμ0ev]
+      simp_rw [sub_mul]
+      rw [Finset.sum_sub_distrib]
+      ring
+    rw [hrw]
+    exact norm_sum_range_le d _ w _ B (pow_nonneg ha0.le _) hB hw fun i _ => happr n i
+  -- roots
+  have hμmap : μ.map ι ≠ 0 := (hμm.map ι).ne_zero
+  have hP1map : P1.map ι ≠ 0 := (Polynomial.map_ne_zero_iff ι.injective).mpr hP1
+  have hQ1map : Q1.map ι ≠ 0 := (Polynomial.map_ne_zero_iff ι.injective).mpr hQ1
+  have hcardμ : Multiset.card (μ.map ι).roots = d := by
+    rw [← (IsAlgClosed.splits (μ.map ι)).natDegree_eq_card_roots, natDegree_map]
+  have hμroot : ∀ w ∈ (μ.map ι).roots, (μ.map ι).eval w = 0 := fun w hw =>
+    (mem_roots hμmap).mp hw
+  have hnotroot : ∀ (R : ℚ_[ℓ][X]), R ≠ 0 → ¬ μ ∣ R → ∀ w ∈ (R.map ι).roots,
+      (μ.map ι).eval w ≠ 0 := by
+    intro R hR hRμ w hw hμw
+    have hRw : aeval w R = 0 := by
+      rw [aeval_def, eval₂_eq_eval_map]
+      exact (mem_roots ((Polynomial.map_ne_zero_iff ι.injective).mpr hR)).mp hw
+    have hμw' : aeval w μ = 0 := by rw [aeval_def, eval₂_eq_eval_map]; exact hμw
+    have hmin := minpoly.eq_of_irreducible_of_monic hμ hμw' hμm
+    exact hRμ (hmin ▸ minpoly.dvd ℚ_[ℓ] w hRw)
+  have hℓs : ι ((ℓ : ℚ_[ℓ]) ^ s) ≠ 0 := by
+    rw [map_ne_zero_iff _ ι.injective]
+    exact pow_ne_zero _ (by exact_mod_cast hℓ.out.ne_zero)
+  have hμ0ne : ∀ (R : ℚ_[ℓ][X]), R ≠ 0 → ¬ μ ∣ R → ∀ w ∈ (R.map ι).roots,
+      0 < ‖(μ0.map ι).eval w‖ := by
+    intro R hR hRμ w hw
+    rw [norm_pos_iff, hμ0μ]
+    exact mul_ne_zero hℓs (hnotroot R hR hRμ w hw)
+  -- the bound `B`
+  set Z : Finset (PadicAlgCl ℓ) :=
+    ((μ.map ι).roots + (P1.map ι).roots + (Q1.map ι).roots).toFinset with hZ
+  set B : ℝ := 1 + ∑ w ∈ Z, ‖w‖ with hB
+  have hB1 : 1 ≤ B := le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => norm_nonneg _)
+  have hBw : ∀ w ∈ Z, ‖w‖ ≤ B := fun w hw =>
+    (Finset.single_le_sum (f := fun w => ‖w‖) (fun _ _ => norm_nonneg _) hw).trans
+      (le_add_of_nonneg_left zero_le_one)
+  have hmemZ1 : ∀ w ∈ (μ.map ι).roots, w ∈ Z := fun w hw => by
+    rw [hZ, Multiset.mem_toFinset]; exact Multiset.mem_add.mpr (Or.inl (Multiset.mem_add.mpr (Or.inl hw)))
+  have hmemZ2 : ∀ w ∈ (P1.map ι).roots, w ∈ Z := fun w hw => by
+    rw [hZ, Multiset.mem_toFinset]; exact Multiset.mem_add.mpr (Or.inl (Multiset.mem_add.mpr (Or.inr hw)))
+  have hmemZ3 : ∀ w ∈ (Q1.map ι).roots, w ∈ Z := fun w hw => by
+    rw [hZ, Multiset.mem_toFinset]; exact Multiset.mem_add.mpr (Or.inr hw)
+  -- eventually
+  have hlim := tendsto_pow_atTop_nhds_zero_of_lt_one ha0.le ha1
+  have ev1 : ∀ᶠ n in atTop, a ^ n * B ^ d < 1 := by
+    have hBd : 0 < B ^ d := pow_pos (zero_lt_one.trans_le hB1) d
+    filter_upwards [hlim.eventually (gt_mem_nhds (inv_pos.mpr hBd))] with n hn
+    calc a ^ n * B ^ d < (B ^ d)⁻¹ * B ^ d := mul_lt_mul_of_pos_right hn hBd
+      _ = 1 := inv_mul_cancel₀ hBd.ne'
+  set S : Finset (PadicAlgCl ℓ) := (P1.map ι).roots.toFinset ∪ (Q1.map ι).roots.toFinset with hS
+  have hSpos : ∀ w ∈ S, 0 < ‖(μ0.map ι).eval w‖ := by
+    intro w hw
+    rcases Finset.mem_union.mp hw with hw | hw
+    · exact hμ0ne P1 hP1 hPμ w (Multiset.mem_toFinset.mp hw)
+    · exact hμ0ne Q1 hQ1 hQμ w (Multiset.mem_toFinset.mp hw)
+  have ev2 : ∀ᶠ n in atTop, ∀ w ∈ S, a ^ n < ‖(μ0.map ι).eval w‖ := by
+    rw [eventually_all_finset]
+    intro w hw
+    exact hlim.eventually (gt_mem_nhds (hSpos w hw))
+  obtain ⟨N, hN⟩ := eventually_atTop.mp (ev1.and ev2)
+  -- values of `F_n` at the roots
+  have hsmall : ∀ n, N ≤ n → ∀ w ∈ Z, ‖((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w -
+      (μ0.map ι).eval w - (ℓ : PadicAlgCl ℓ) ^ n‖ < a ^ n := by
+    intro n hn w hw
+    refine (herr n w B hB1 (hBw w hw)).trans_lt ?_
+    have := (hN n hn).1
+    calc a ^ (2 * n) * B ^ d = a ^ n * (a ^ n * B ^ d) := by rw [two_mul, pow_add]; ring
+      _ < a ^ n * 1 := mul_lt_mul_of_pos_left this (pow_pos ha0 n)
+      _ = a ^ n := mul_one _
+  have V1 : ∀ n, N ≤ n → ∀ w ∈ (μ.map ι).roots,
+      ‖((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w‖ = a ^ n := by
+    intro n hn w hw
+    set E := ((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w - (μ0.map ι).eval w -
+      (ℓ : PadicAlgCl ℓ) ^ n with hE
+    have hval : ((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w =
+        (ℓ : PadicAlgCl ℓ) ^ n + E := by
+      rw [hE, hμ0μ, hμroot w hw, mul_zero]; ring
+    have hEl := hsmall n hn w (hmemZ1 w hw)
+    rw [← hE] at hEl
+    rw [hval, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm, norm_natCast_prime_pow]
+    · exact max_eq_left hEl.le
+    · rw [norm_natCast_prime_pow]; exact hEl.ne'
+  have V2 : ∀ n, N ≤ n → ∀ w ∈ S,
+      ‖((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w‖ = ‖(μ0.map ι).eval w‖ := by
+    intro n hn w hw
+    have hwZ : w ∈ Z := by
+      rcases Finset.mem_union.mp hw with hw | hw
+      · exact hmemZ2 w (Multiset.mem_toFinset.mp hw)
+      · exact hmemZ3 w (Multiset.mem_toFinset.mp hw)
+    set E := ((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w - (μ0.map ι).eval w -
+      (ℓ : PadicAlgCl ℓ) ^ n with hE
+    have hval : ((Fn n).map (Int.castRingHom (PadicAlgCl ℓ))).eval w =
+        (μ0.map ι).eval w + ((ℓ : PadicAlgCl ℓ) ^ n + E) := by
+      rw [hE]; ring
+    have hEl := hsmall n hn w hwZ
+    rw [← hE] at hEl
+    have hsm : ‖(ℓ : PadicAlgCl ℓ) ^ n + E‖ < ‖(μ0.map ι).eval w‖ := by
+      refine (IsUltrametricDist.norm_add_le_max _ _).trans_lt ?_
+      rw [norm_natCast_prime_pow]
+      exact max_lt ((hN n hn).2 w hw) (hEl.trans ((hN n hn).2 w hw))
+    rw [hval, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hsm.ne', max_eq_left hsm.le]
+  -- the norms of the products
+  have hRsP : ∀ (R : ℚ_[ℓ][X]) (k : ℕ), R ≠ 0 → ¬ μ ∣ R →
+      (∀ w ∈ (R.map ι).roots, w ∈ S) → ∀ n, N ≤ n →
+      ‖RsZ (μ ^ k * R) (Fn n)‖ = ((a ^ n) ^ d) ^ k *
+        ((R.map ι).roots.map (fun w => ‖(μ0.map ι).eval w‖)).prod := by
+    intro R k hR hRμ hRS n hn
+    have hRmap : R.map ι ≠ 0 := (Polynomial.map_ne_zero_iff ι.injective).mpr hR
+    unfold RsZ
+    rw [Polynomial.map_mul, Polynomial.map_pow, Rs_mul_left (pow_ne_zero _ hμmap) hRmap,
+      Rs_pow_left, norm_mul, norm_pow]
+    unfold Rs
+    rw [norm_multiset_prod_map, norm_multiset_prod_map]
+    congr 2
+    · rw [Multiset.map_congr rfl (V1 n hn), Multiset.map_const', Multiset.prod_replicate, hcardμ]
+    · exact Multiset.map_congr rfl fun w hw => V2 n hn w (hRS w hw)
+  have hP1S : ∀ w ∈ (P1.map ι).roots, w ∈ S := fun w hw =>
+    Finset.mem_union.mpr (Or.inl (Multiset.mem_toFinset.mpr hw))
+  have hQ1S : ∀ w ∈ (Q1.map ι).roots, w ∈ S := fun w hw =>
+    Finset.mem_union.mpr (Or.inr (Multiset.mem_toFinset.mpr hw))
+  set CP := ((P1.map ι).roots.map (fun w => ‖(μ0.map ι).eval w‖)).prod with hCP
+  set CQ := ((Q1.map ι).roots.map (fun w => ‖(μ0.map ι).eval w‖)).prod with hCQ
+  have hCPpos : 0 < CP := Multiset.prod_pos fun x hx => by
+    obtain ⟨w, hw, rfl⟩ := Multiset.mem_map.mp hx
+    exact hμ0ne P1 hP1 hPμ w hw
+  have key : ∀ n, N ≤ n → ((a ^ n) ^ d) ^ e * CP ≤ ((a ^ n) ^ d) ^ f * CQ := by
+    intro n hn
+    have h1 := hRsP P1 e hP1 hPμ hP1S n hn
+    have h2 := hRsP Q1 f hQ1 hQμ hQ1S n hn
+    rw [← h1, ← h2]
+    refine h _ ?_
+    rw [← norm_pos_iff, h1]
+    exact mul_pos (pow_pos (pow_pos (pow_pos ha0 n) d) e) hCPpos
+  by_contra hfe
+  push Not at hfe
+  have hy0 : 0 < (a ^ d) ^ (f - e) := pow_pos (pow_pos ha0 d) _
+  have hy1 : (a ^ d) ^ (f - e) < 1 :=
+    pow_lt_one₀ (pow_pos ha0 d).le (pow_lt_one₀ ha0.le ha1 hd.ne') (by omega)
+  have hlim2 := tendsto_pow_atTop_nhds_zero_of_lt_one hy0.le hy1
+  have hCQ0 : 0 ≤ CQ := Multiset.prod_nonneg fun x hx => by
+    obtain ⟨w, -, rfl⟩ := Multiset.mem_map.mp hx
+    exact norm_nonneg _
+  have ev3 : ∀ᶠ n in atTop, ((a ^ d) ^ (f - e)) ^ n * CQ < CP := by
+    have : Tendsto (fun n => ((a ^ d) ^ (f - e)) ^ n * CQ) atTop (𝓝 (0 * CQ)) := hlim2.mul_const CQ
+    rw [zero_mul] at this
+    exact this.eventually (gt_mem_nhds hCPpos)
+  obtain ⟨n, hn1, hn2⟩ := (ev3.and (eventually_ge_atTop N)).exists
+  have k := key n hn2
+  have hxe : 0 < ((a ^ n) ^ d) ^ e := pow_pos (pow_pos (pow_pos ha0 n) d) e
+  have hsplit : ((a ^ n) ^ d) ^ f = ((a ^ n) ^ d) ^ e * ((a ^ d) ^ (f - e)) ^ n := by
+    have hf : f = e + (f - e) := by omega
+    calc ((a ^ n) ^ d) ^ f = ((a ^ n) ^ d) ^ (e + (f - e)) := by rw [← hf]
+      _ = ((a ^ n) ^ d) ^ e * ((a ^ n) ^ d) ^ (f - e) := pow_add _ _ _
+      _ = ((a ^ n) ^ d) ^ e * ((a ^ d) ^ (f - e)) ^ n := by ring
+  rw [hsplit, mul_assoc] at k
+  have := le_of_mul_le_mul_left k hxe
+  linarith
+
 /-- **Comparison lemma** (Mumford §19, the lemma in the proof of Thm 4; here over `ℚ_ℓ`): two monic
 polynomials over `ℚ_ℓ` with `|∏_{P(a)=0} F(a)|_ℓ = |∏_{Q(b)=0} F(b)|_ℓ` for every `F ∈ ℤ[X]` with nonzero
 left side are equal. -/
@@ -410,6 +636,59 @@ theorem eq_of_norm_RsZ {P Q : ℚ_[ℓ][X]} (hP : P.Monic) (hQ : Q.Monic)
   have hQa := UniqueFactorizationMonoid.prod_normalizedFactors hQ0
   rw [hnf] at hPa
   exact eq_of_monic_of_associated hP hQ (hPa.symm.trans hQa)
+
+/-- **One-sided comparison lemma.** Monic `P, Q` over `ℚ_ℓ` of the same degree with
+`|∏_{P(a)=0} F(a)|_ℓ ≤ |∏_{Q(b)=0} F(b)|_ℓ` for every `F ∈ ℤ[X]` with nonzero left side are equal. -/
+theorem eq_of_norm_RsZ_le {P Q : ℚ_[ℓ][X]} (hP : P.Monic) (hQ : Q.Monic)
+    (hdeg : P.natDegree = Q.natDegree)
+    (h : ∀ F : ℤ[X], RsZ P F ≠ 0 → ‖RsZ P F‖ ≤ ‖RsZ Q F‖) : P = Q := by
+  classical
+  have hP0 := hP.ne_zero
+  have hQ0 := hQ.ne_zero
+  have hcount : ∀ μ : ℚ_[ℓ][X], Irreducible μ → μ.Monic →
+      (UniqueFactorizationMonoid.normalizedFactors Q).count μ ≤
+        (UniqueFactorizationMonoid.normalizedFactors P).count μ := by
+    intro μ hμ hμm
+    obtain ⟨e, P1, hP1μ, hPe⟩ := WfDvdMonoid.max_power_factor hP0 hμ
+    obtain ⟨f, Q1, hQ1μ, hQf⟩ := WfDvdMonoid.max_power_factor hQ0 hμ
+    have hP1 : P1 ≠ 0 := by rintro rfl; rw [mul_zero] at hPe; exact hP0 hPe
+    have hQ1 : Q1 ≠ 0 := by rintro rfl; rw [mul_zero] at hQf; exact hQ0 hQf
+    have hfe : f ≤ e := mult_le_of_norm_Rs_le hμ hμm hP1 hQ1 hP1μ hQ1μ e f (by
+      rw [← hPe, ← hQf]; exact h)
+    have hnd : ∀ (k : ℕ) (R : ℚ_[ℓ][X]), ¬ μ ∣ R → ¬ μ ^ (k + 1) ∣ μ ^ k * R := by
+      intro k R hR hdvd
+      rw [pow_succ] at hdvd
+      exact hR ((mul_dvd_mul_iff_left (pow_ne_zero k hμ.ne_zero)).mp hdvd)
+    rw [UniqueFactorizationMonoid.count_normalizedFactors_eq hμ hμm.normalize_eq_self
+        ⟨P1, hPe⟩ (hPe ▸ hnd e P1 hP1μ),
+      UniqueFactorizationMonoid.count_normalizedFactors_eq hμ hμm.normalize_eq_self
+        ⟨Q1, hQf⟩ (hQf ▸ hnd f Q1 hQ1μ)]
+    exact hfe
+  have hle : UniqueFactorizationMonoid.normalizedFactors Q ≤
+      UniqueFactorizationMonoid.normalizedFactors P := by
+    rw [Multiset.le_iff_count]
+    intro μ
+    by_cases hμ : μ ∈ UniqueFactorizationMonoid.normalizedFactors Q
+    · have hirr := UniqueFactorizationMonoid.irreducible_of_normalized_factor μ hμ
+      have hnorm := UniqueFactorizationMonoid.normalize_normalized_factor μ hμ
+      have hmon : μ.Monic := by rw [← hnorm]; exact Polynomial.monic_normalize hirr.ne_zero
+      exact hcount μ hirr hmon
+    · rw [Multiset.count_eq_zero.mpr hμ]; exact Nat.zero_le _
+  have hdvd : Q ∣ P := by
+    rw [← (UniqueFactorizationMonoid.prod_normalizedFactors hQ0).dvd_iff_dvd_left,
+      ← (UniqueFactorizationMonoid.prod_normalizedFactors hP0).dvd_iff_dvd_right]
+    exact Multiset.prod_dvd_prod_of_le hle
+  obtain ⟨c, hc⟩ := hdvd
+  have hc0 : c ≠ 0 := by rintro rfl; rw [mul_zero] at hc; exact hP0 hc
+  have hcm : c.Monic := by
+    have := hP
+    rw [hc] at this
+    exact hQ.of_mul_monic_left this
+  have hcd : c.natDegree = 0 := by
+    have := congrArg natDegree hc
+    rw [hQ.natDegree_mul hcm, ← hdeg] at this
+    omega
+  rw [hc, hcm.natDegree_eq_zero.mp hcd, mul_one]
 
 end Compare
 
@@ -816,6 +1095,128 @@ theorem det_eq_deg_abstract {E : Type*} [Ring E] (φ : E) (deg : E → ℕ)
       intro h0; apply hF; rw [h0, Nat.cast_zero]
     have := hlink (aeval φ F) hDF
     rw [hι, PadicAlgCl.norm_extends ℓ, this, ← map_natCast ι, hι, PadicAlgCl.norm_extends ℓ]
+  have hfin := hRsQ X
+  rw [← hPQ, hRsP] at hfin
+  simp only [hD, aeval_X] at hfin
+  have : ι ((deg φ : ℕ) : ℚ_[ℓ]) = ι (ρ φ).det := by
+    rw [map_natCast]
+    exact hfin
+  exact (ι.injective this).symm
+
+/-- **One-sided variant of `det_eq_deg_abstract`**: `|deg ψ|_ℓ ≤ |det ρ(ψ)|_ℓ` and `#I = n` suffice. Let `E` be a ring, `deg : E → ℕ`, `φ ∈ E`
+integral over `ℤ` (`R(φ) = 0`, `R` monic). Assume
+
+* `deg` is a homogeneous polynomial function of degree `n` on `ℤ[φ]` (in the coordinates
+  `x ↦ ∑ xᵢ φ^i`, `i < deg R`),
+* `deg 1 = 1` and `deg(ψχ) = deg ψ · deg χ` when both are nonzero,
+* `ρ : E → M_I(ℚ_ℓ)` is a ring homomorphism with `|det ρ(ψ)|_ℓ = |deg ψ|_ℓ` whenever `deg ψ ≠ 0`.
+
+Then `det ρ(φ) = deg φ`. -/
+theorem det_eq_deg_abstract_le {E : Type*} [Ring E] (φ : E) (deg : E → ℕ)
+    (R : ℤ[X]) (hR : R.Monic) (hRφ : aeval φ R = 0)
+    (n : ℕ) (N : MvPolynomial (Fin R.natDegree) ℚ) (hN : N.IsHomogeneous n)
+    (hpoly : ∀ x : Fin R.natDegree → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (hdeg1 : deg 1 = 1)
+    (hmul : ∀ ψ χ : E, deg ψ ≠ 0 → deg χ ≠ 0 → deg (ψ * χ) = deg ψ * deg χ)
+    {I : Type*} [Fintype I] [DecidableEq I] (ρ : E →+* Matrix I I ℚ_[ℓ])
+    (hI : Fintype.card I = n)
+    (hlink : ∀ ψ : E, deg ψ ≠ 0 → ‖(deg ψ : ℚ_[ℓ])‖ ≤ ‖(ρ ψ).det‖) :
+    (ρ φ).det = (deg φ : ℚ_[ℓ]) := by
+  classical
+  set W := PadicAlgCl ℓ
+  set ι := algebraMap ℚ_[ℓ] W with hι
+  -- `deg` on `ℤ[X]`
+  set D : ℤ[X] → ℕ := fun F => deg (aeval φ F) with hD
+  have hRid : R.map (Int.castRingHom ℤ) = R := by
+    rw [show Int.castRingHom ℤ = RingHom.id ℤ from RingHom.ext_int _ _, Polynomial.map_id]
+  have hDN : ∀ F : ℤ[X], (D F : ℚ) = NtZ N F := by
+    intro F
+    have h1 : aeval φ F = ∑ i : Fin R.natDegree, ((F %ₘ R).coeff i) • φ ^ (i : ℕ) := by
+      rw [← aeval_modByMonic_eq_self_of_root hRφ]
+      have := modByMonic_eq_sum hR ℤ F
+      rw [hRid] at this
+      conv_lhs => rw [this]
+      rw [map_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_mul, aeval_C, map_pow, aeval_X, Algebra.algebraMap_eq_smul_one, smul_mul_assoc,
+        one_mul]
+    rw [hD]
+    simp only
+    rw [h1, hpoly, NtZ, Nt, ← map_modByMonic _ hR, ← MvPolynomial.coe_aeval_eq_eval]
+    simp_rw [coeff_map]
+    rfl
+  have h1 : NtZ N 1 = 1 := by
+    rw [← hDN, hD]; simp [hdeg1]
+  have hmulZ : ∀ F G : ℤ[X], NtZ N F ≠ 0 → NtZ N G ≠ 0 → NtZ N (F * G) = NtZ N F * NtZ N G := by
+    intro F G hF hG
+    rw [← hDN] at hF hG
+    rw [← hDN, ← hDN, ← hDN, hD]
+    simp only [map_mul]
+    rw [hmul _ _ (by exact_mod_cast hF) (by exact_mod_cast hG), Nat.cast_mul]
+  -- the extension to `W[X]`
+  have hNtW : ∀ F : ℤ[X], Nt R N W (F.map (Int.castRingHom W)) = (D F : W) := by
+    intro F
+    have := Nt_map N hR (Algebra.ofId ℚ W) (F.map (Int.castRingHom ℚ))
+    rw [Polynomial.map_map] at this
+    rw [show (Int.castRingHom W) = ((Algebra.ofId ℚ W : ℚ →ₐ[ℚ] W) : ℚ →+* W).comp
+      (Int.castRingHom ℚ) from RingHom.ext_int _ _, this]
+    change algebraMap ℚ W (NtZ N F) = _
+    rw [← hDN, map_natCast]
+  have hNt1 : Nt R N W 1 = 1 := by
+    have := hNtW 1
+    rw [Polynomial.map_one] at this
+    rw [this, hD]; simp [hdeg1]
+  let φW : W[X] →* W :=
+    { toFun := Nt R N W
+      map_one' := hNt1
+      map_mul' := Nt_mul N hR h1 hmulZ W }
+  set P := (P0 N).map (algebraMap ℚ W) with hP
+  obtain ⟨hP0m, hP0d⟩ := P0_monic N hR hN h1
+  have hPm : P.Monic := hP0m.map _
+  have hPd : P.natDegree = n := by rw [hP, natDegree_map, hP0d]
+  have hφW : ∀ F : W[X], Nt R N W F = Rs P F := by
+    refine eq_Rs_of_mul φW n P hPm hPd ?_ ?_
+    · intro c
+      change Nt R N W (C c) = c ^ n
+      rw [← mul_one (C c), Nt_C_mul N hN, hNt1, mul_one]
+    · intro r
+      change Nt R N W (X - C r) = _
+      rw [show (X - C r : W[X]) = C (-1) * (C r - X) by rw [C_neg, C_1]; ring, Nt_C_mul N hN,
+        Nt_C_sub_X N hR]
+  -- the two polynomials over `ℚ_ℓ`
+  set Pℓ := (P0 N).map (algebraMap ℚ ℚ_[ℓ]) with hPℓ
+  have hPℓm : Pℓ.Monic := hP0m.map _
+  have hPPℓ : Pℓ.map ι = P := by
+    rw [hPℓ, Polynomial.map_map, hι, algebraMap_rat_comp]
+  set M := ρ φ with hM
+  set Q := M.charpoly with hQ
+  have hRsP : ∀ F : ℤ[X], RsZ Pℓ F = (D F : W) := by
+    intro F
+    unfold RsZ
+    rw [← hι, hPPℓ, ← hφW, hNtW]
+  have hRsQ : ∀ F : ℤ[X], RsZ Q F = ι ((ρ (aeval φ F)).det) := by
+    intro F
+    unfold RsZ
+    rw [← hι, hQ, ← Matrix.charpoly_map, ← det_aeval_eq_Rs]
+    rw [← algebraMap_int_eq, aeval_map_algebraMap]
+    have e1 : aeval (M.map ι) F = (ι.mapMatrix (aeval M F)) := by
+      have := Polynomial.aeval_algHom_apply (ι.mapMatrix.toIntAlgHom : Matrix I I ℚ_[ℓ] →ₐ[ℤ] _) M F
+      exact this
+    have e2 : aeval M F = ρ (aeval φ F) := by
+      rw [hM]
+      exact Polynomial.aeval_algHom_apply (ρ.toIntAlgHom) φ F
+    rw [e1, e2, RingHom.map_det]
+  have hPQ : Pℓ = Q := by
+    refine eq_of_norm_RsZ_le hPℓm (Matrix.charpoly_monic M)
+      (by rw [hPℓ, natDegree_map, hP0d, hQ, Matrix.charpoly_natDegree_eq_dim, hI]) fun F hF => ?_
+    rw [hRsP] at hF ⊢
+    rw [hRsQ]
+    have hDF : D F ≠ 0 := by
+      intro h0; apply hF; rw [h0, Nat.cast_zero]
+    have := hlink (aeval φ F) hDF
+    rw [hι, PadicAlgCl.norm_extends ℓ, ← map_natCast ι, hι, PadicAlgCl.norm_extends ℓ]
+    exact this
   have hfin := hRsQ X
   rw [← hPQ, hRsP] at hfin
   simp only [hD, aeval_X] at hfin
