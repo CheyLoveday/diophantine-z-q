@@ -25,3 +25,11 @@ leaf for Bump–Friedberg–Hoffstein 1990, opening theorem clause (ii), and pro
   hypothesis; hFH's type FriedbergHoffsteinB_FE is not derivable from BFH (ii)); output recorded. The `hFH` line in
   the output is fh-printed's theorem (imported transitively through FriedbergHoffsteinBFE).
 - autofold.json written (hand fold note).
+
+## Nonvacuity witness — VERIFIED (compiled, standard axioms)
+- `ZInQKernel/Contrib/OneProof/BFHPrinted/Witness.lean` (= scratch/bfh-leaf/Witness.lean): 7 splits in ℚ(ζ₃) ∋ √−3 = 2ζ₃+1
+  (kernels of ζ₃ ↦ 2, ζ₃ ↦ 4 into 𝔽₇ via `IsPrimitiveRoot.integralPowerBasis`). Pitfall: `IsCyclotomicExtension {3} ℚ
+  (CyclotomicField 3 ℚ)` is not found by instance search even with a local hypothesis; prove for a general K and
+  instantiate with explicit `@`.
+- `splitsInQuadratic_witness : Int.IsFundamentalDiscr (-3) ∧ (-3:ℤ) ≠ 1 ∧ SplitsInQuadratic (-3) {7}`.
+- Rebuilt; FoldCheck and #discharges rerun (2260 theorems checked; no change in the discharge lines).

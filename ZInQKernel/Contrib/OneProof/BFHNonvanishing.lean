@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.FriedbergHoffsteinBFE
 import ZInQKernel.Contrib.OneProof.BFHPrinted.Split
+import ZInQKernel.Contrib.OneProof.BFHPrinted.Witness
 
 /-!
 # `ZInQ.GZDecomp.FHNonvanishing` from Bump–Friedberg–Hoffstein 1990, clause (ii)
@@ -89,6 +90,18 @@ def BFHClauseII : Prop :=
   ∀ S : Finset ℕ, (∀ p ∈ S, p.Prime) → (∀ p : ℕ, p.Prime → p ∣ 2 * N → p ∈ S) →
     ∃ d : ℤ, Int.IsFundamentalDiscr d ∧ d ≠ 1 ∧ 0 < ε * d ∧ SplitsInQuadratic d S ∧
       CentralValueNeZero f d
+
+/-- **The splitting clause is satisfiable**: `d = −3` is a fundamental discriminant of a quadratic
+field and `7` splits in `ℚ(√−3)` (`cyclotomicThree_witness`). -/
+theorem splitsInQuadratic_witness :
+    Int.IsFundamentalDiscr (-3) ∧ (-3 : ℤ) ≠ 1 ∧ SplitsInQuadratic (-3) {7} := by
+  refine ⟨?_, by norm_num, ?_⟩
+  · have h := (Int.isFundamentalDiscr_four_mul_add_one (m := -1)).mpr (by
+      rw [show (4 : ℤ) * -1 + 1 = -3 by norm_num]
+      exact Int.squarefree_natAbs.mp (by simpa using Nat.prime_three.squarefree))
+    simpa using h
+  · obtain ⟨K, hF, hN, hK, hδ, hs⟩ := cyclotomicThree_witness
+    exact ⟨K, hF, hN, hK, hδ, fun p hp => by rw [Finset.mem_singleton.mp hp]; exact hs⟩
 
 /-! ## Glue -/
 
