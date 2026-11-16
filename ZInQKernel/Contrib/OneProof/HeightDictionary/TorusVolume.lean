@@ -12,6 +12,10 @@ The archimedean step of the dictionary between the kernel's coordinate-form Falt
 open MeasureTheory Measure Set Filter Topology Module Metric
 open scoped NNReal ENNReal Pointwise
 
+set_option linter.unusedSectionVars false
+set_option linter.style.haveILetI false
+set_option linter.unusedSimpArgs false
+
 namespace ZInQ.HeightDict.TorusVolume
 
 variable {g : ℕ}
@@ -42,7 +46,7 @@ theorem exists_fundamentalDomain_ball (Λ : Submodule ℤ (Fin g → ℂ)) [Disc
     [IsZLattice ℝ Λ] :
     ∃ r₀ : ℝ, 0 < r₀ ∧ ∃ D : Set (Fin g → ℂ), MeasurableSet D ∧
       IsAddFundamentalDomain Λ D volume ∧ ball 0 r₀ ⊆ D ∧
-      ∀ x ∈ D, ∀ y ∈ ball (0 : Fin g → ℂ) r₀, x - y ∈ Λ → x = y := by
+      (∀ x ∈ D, ∀ y ∈ ball (0 : Fin g → ℂ) r₀, x - y ∈ Λ → x = y) ∧ volume D < ⊤ := by
   obtain ⟨r₀, hr₀, hsep⟩ := exists_ball_sub_mem Λ
   let b := (Module.Free.chooseBasis ℤ Λ).ofZLatticeBasis ℝ Λ
   have hb : Submodule.span ℤ (Set.range b) = Λ :=
@@ -67,7 +71,7 @@ theorem exists_fundamentalDomain_ball (Λ : Submodule ℤ (Fin g → ℂ)) [Disc
   have hDm : MeasurableSet D := measurableSet_ball.union (hD₀m.diff hTo.measurableSet)
   have hBT : ∀ y ∈ ball (0 : Fin g → ℂ) r₀, ∀ l ∈ Λ, y + l ∈ T := fun y hy l hl =>
     ⟨l, hl, by simpa using hy⟩
-  refine ⟨r₀, hr₀, D, hDm, ?_, subset_union_left, ?_⟩
+  refine ⟨r₀, hr₀, D, hDm, ?_, subset_union_left, ?_, ?_⟩
   · refine IsAddFundamentalDomain.mk' hDm.nullMeasurableSet fun x => ?_
     simp only [Submodule.vadd_def, vadd_eq_add]
     by_cases hx : x ∈ T
@@ -105,6 +109,9 @@ theorem exists_fundamentalDomain_ball (Λ : Submodule ℤ (Fin g → ℂ)) [Disc
       apply h.2
       have := hBT y hy (x - y) hxy
       rwa [add_sub_cancel] at this
+  · have hb1 : Bornology.IsBounded D :=
+      Metric.isBounded_ball.union ((ZSpan.fundamentalDomain_isBounded b).subset sdiff_subset)
+    exact hb1.measure_lt_top
 
 
 /-! ## A group uniformized by `ℂ^g` -/
@@ -227,5 +234,120 @@ theorem isTopologicalGroup [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ]
 end IsUnif
 
 end Unif
+
+
+/-! ## The pushed-forward Lebesgue measure -/
+
+section PiMeasure
+
+variable {G : Type*} [Group G] [TopologicalSpace G] [MeasurableSpace G] [BorelSpace G]
+variable {Λ : Submodule ℤ (Fin g → ℂ)} {Φ : (Fin g → ℂ) → G}
+
+/-- `π_D = Φ_*(Lebesgue|_D)`. -/
+noncomputable def piMeasure (Φ : (Fin g → ℂ) → G) (D : Set (Fin g → ℂ)) : Measure G :=
+  Measure.map Φ (volume.restrict D)
+
+namespace IsUnif
+
+theorem piMeasure_apply (h : IsUnif Λ Φ) (D : Set (Fin g → ℂ)) {S : Set G} (hS : MeasurableSet S) :
+    piMeasure Φ D S = volume (Φ ⁻¹' S ∩ D) := by
+  rw [piMeasure, Measure.map_apply h.cont.measurable hS,
+    Measure.restrict_apply (h.cont.measurable hS)]
+
+theorem preimage_vadd (h : IsUnif Λ Φ) (S : Set G) (l : Λ) :
+    (fun x => l +ᵥ x) ⁻¹' (Φ ⁻¹' S) = Φ ⁻¹' S := by
+  ext x
+  simp only [mem_preimage, Submodule.vadd_def, vadd_eq_add, h.add, (h.ker l).2 l.2, one_mul]
+
+theorem vadd_set (h : IsUnif Λ Φ) (S : Set G) (l : Λ) : l +ᵥ (Φ ⁻¹' S) = Φ ⁻¹' S := by
+  ext x
+  constructor
+  · rintro ⟨y, hy, rfl⟩
+    have := congrArg (fun T => y ∈ T) (h.preimage_vadd S l)
+    simp only [mem_preimage, eq_iff_iff] at this
+    exact this.mpr hy
+  · intro hx
+    refine ⟨-(l : Fin g → ℂ) + x, ?_, ?_⟩
+    · have := congrArg (fun T => (-(l : Fin g → ℂ) + x) ∈ T) (h.preimage_vadd S l)
+      simp only [mem_preimage, eq_iff_iff] at this
+      apply this.mp
+      simpa [Submodule.vadd_def] using hx
+    · simp [Submodule.vadd_def]
+
+theorem piMeasure_eq_of_fd [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ)
+    {D D' : Set (Fin g → ℂ)}
+    (hD : IsAddFundamentalDomain Λ D volume) (hD' : IsAddFundamentalDomain Λ D' volume) :
+    piMeasure Φ D = piMeasure Φ D' := by
+  have : MeasurableVAdd Λ (Fin g → ℂ) := (inferInstance : MeasurableVAdd Λ.toAddSubgroup _)
+  have : VAddInvariantMeasure Λ (Fin g → ℂ) volume :=
+    (inferInstance : VAddInvariantMeasure Λ.toAddSubgroup _ volume)
+  ext S hS
+  rw [h.piMeasure_apply D hS, h.piMeasure_apply D' hS]
+  exact hD.measure_set_eq hD' (h.cont.measurable hS) (h.preimage_vadd S)
+
+theorem piMeasure_leftInvariant [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ]
+    (h : IsUnif Λ Φ) {D : Set (Fin g → ℂ)} (hD : IsAddFundamentalDomain Λ D volume) :
+    (piMeasure Φ D).IsMulLeftInvariant := by
+  haveI := h.isTopologicalGroup
+  have : MeasurableVAdd Λ (Fin g → ℂ) := (inferInstance : MeasurableVAdd Λ.toAddSubgroup _)
+  have : VAddInvariantMeasure Λ (Fin g → ℂ) volume :=
+    (inferInstance : VAddInvariantMeasure Λ.toAddSubgroup _ volume)
+  haveI : VAddCommClass (Fin g → ℂ) Λ (Fin g → ℂ) :=
+    ⟨fun z l x => by simp only [Submodule.vadd_def, vadd_eq_add]; abel⟩
+  constructor
+  intro p
+  obtain ⟨z, rfl⟩ := h.surj p
+  ext S hS
+  rw [Measure.map_apply (measurable_const_mul _) hS, h.piMeasure_apply D hS,
+    h.piMeasure_apply D (measurable_const_mul _ hS)]
+  have e1 : Φ ⁻¹' ((fun x => Φ z * x) ⁻¹' S) = (fun x => z + x) ⁻¹' (Φ ⁻¹' S) := by
+    ext x; simp [h.add]
+  have e2 : (fun x => z + x) ⁻¹' (Φ ⁻¹' S) ∩ D =
+      (fun x => z + x) ⁻¹' (Φ ⁻¹' S ∩ (z +ᵥ D)) := by
+    ext x
+    simp only [mem_inter_iff, mem_preimage]
+    constructor
+    · rintro ⟨h1, h2⟩; exact ⟨h1, ⟨x, h2, rfl⟩⟩
+    · rintro ⟨h1, ⟨y, hy, hyx⟩⟩
+      have : y = x := by simpa [vadd_eq_add] using hyx
+      exact ⟨h1, this ▸ hy⟩
+  rw [e1, e2, measure_preimage_add]
+  exact ((hD.vadd_of_comm z).measure_set_eq hD (h.cont.measurable hS) (h.preimage_vadd S))
+
+theorem piMeasure_isOpenPos [DiscreteTopology Λ] [IsZLattice ℝ Λ] (h : IsUnif Λ Φ)
+    {D : Set (Fin g → ℂ)}
+    (hD : IsAddFundamentalDomain Λ D volume) : (piMeasure Φ D).IsOpenPosMeasure := by
+  have : MeasurableVAdd Λ (Fin g → ℂ) := (inferInstance : MeasurableVAdd Λ.toAddSubgroup _)
+  have : VAddInvariantMeasure Λ (Fin g → ℂ) volume :=
+    (inferInstance : VAddInvariantMeasure Λ.toAddSubgroup _ volume)
+  constructor
+  intro O hO hne h0
+  rw [h.piMeasure_apply D hO.measurableSet] at h0
+  have hz := hD.measure_zero_of_invariant (Φ ⁻¹' O) (h.vadd_set O) h0
+  obtain ⟨p, hp⟩ := hne
+  obtain ⟨z, rfl⟩ := h.surj p
+  exact ((hO.preimage h.cont).measure_pos volume ⟨z, hp⟩).ne' hz
+
+theorem piMeasure_univ (h : IsUnif Λ Φ) (D : Set (Fin g → ℂ)) :
+    piMeasure Φ D univ = volume D := by
+  rw [h.piMeasure_apply D MeasurableSet.univ, preimage_univ, univ_inter]
+
+theorem piMeasure_image_ball (h : IsUnif Λ Φ) [T2Space G] [DiscreteTopology Λ] [IsZLattice ℝ Λ]
+    {D : Set (Fin g → ℂ)} {r₀ : ℝ} (hBD : ball 0 r₀ ⊆ D)
+    (hsep : ∀ x ∈ D, ∀ y ∈ ball (0 : Fin g → ℂ) r₀, x - y ∈ Λ → x = y) {r : ℝ} (hr : r ≤ r₀) :
+    piMeasure Φ D (Φ '' ball 0 r) = volume (ball (0 : Fin g → ℂ) r) := by
+  rw [h.piMeasure_apply D (h.isOpenMap _ isOpen_ball).measurableSet]
+  congr 1
+  ext x
+  constructor
+  · rintro ⟨⟨y, hy, hyx⟩, hxD⟩
+    have := hsep x hxD y (ball_subset_ball hr hy) ((h.eq_iff x y).mp hyx.symm)
+    rwa [this]
+  · intro hx
+    exact ⟨⟨x, hx, rfl⟩, hBD (ball_subset_ball hr hx)⟩
+
+end IsUnif
+
+end PiMeasure
 
 end ZInQ.HeightDict.TorusVolume
