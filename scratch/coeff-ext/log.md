@@ -32,3 +32,6 @@ Base origin/main 2880fef1. Build copied from ~/dzq-check2 (same commit) 2026-11-
   [DSCoeffExt.DSThm965Printed, DSCoeffExt.EigenformCoeffFieldFinite]; `OpenResearchLeaves26.dsThm966` by
   `DSCoeffExt.dsThm966_of_printed`, still assumes [DSCoeffExt.DSThm966Printed]; axioms standard.
 - VERIFIED (Check.lean): verbatim copies of both targets equal the originals by rfl.
+- VERIFIED: autofold dry run (scratch/coeff-ext/autofold-dryrun.txt): strict 34/11 on 45 -> 35/11 on 46, strictest
+  34/11 -> 35/11 (GLUE unchanged, one more LEAF: `eigenformCoeffFieldFinite`). The generated fold (line 1 stripped,
+  scratch/coeff-ext/FoldCheck.lean) compiles: `HDec.HSyn.sixContactMin_of_open36` standard axioms.
