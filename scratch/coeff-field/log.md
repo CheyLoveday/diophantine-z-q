@@ -23,3 +23,14 @@ Base: wip/coeff-fix 496c1f75, merged origin/main 0caafe66 (STATUS.md only) → a
 - `CoeffField.finiteDimensional_adjoin_eigenvalues`: V f.d. over K, c : ι → V →ₗ[K] K with zero joint kernel,
   span K {v | ∀ i, c i v ∈ F} = ⊤, f ≠ 0, every μ ∈ s an eigenvalue at f of a K-linear T preserving the
   F-rational vectors ⇒ FiniteDimensional F (Algebra.adjoin F s).
+
+## Spec.lean → contribution (VERIFIED: compiles with lake env lean, 13 s; axioms propext, Classical.choice, Quot.sound)
+- `ZInQKernel/Contrib/OneProof/EigenformCoeffFieldFinite.lean` (namespace `CoeffFieldFinite`; copy in scratch).
+- `eigenformCoeffFieldFinite_of : CharSpaceRationalSpan → DSCoeffExt.EigenformCoeffFieldFinite`
+- `charSpaceRationalSpan_of : Gamma1IntegralSpan → DiamondPreservesIntegral → CharSpaceRationalSpan`
+- `eigenformCoeffFieldFinite_of_gamma1`, `dsThm965Weak_of_printed (h1 : DSThm965Printed) hA hB`,
+  `dsThm965Weak_of_printed_charSpace h1 hR`.
+- Leaves stated in integral form (ℤ coefficients) to match the prints (Shimura 3.52: rational integers;
+  𝕋_ℤ preserves S_k(Γ₁(N), ℤ)). Lean pitfall: `group` does not use commutativity; finish with
+  `simp only [zpow_neg_one]; rw [mul_comm e, mul_inv_cancel_right]`. Kernel deterministic timeout when
+  `map_smul' := fun _ _ => rfl` for ℚ-linear maps between subalgebras of ℂ; `Subtype.ext (by simp)` fixes it.
