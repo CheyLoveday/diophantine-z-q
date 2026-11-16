@@ -44,6 +44,11 @@ proves that `f.toCuspFormGamma0 hχ` is a classical newform on `Γ₀(N)`.
   the twisted slash sum is the untwisted one, `twistedHeckeSlashSum_eq_heckeSlashSum`).
 * `isGamma0Newform_toCuspFormGamma0`: `f.toCuspFormGamma0 hχ` is a classical newform on `Γ₀(N)`.
 * `coeffGamma0_toCuspFormGamma0`: its Fourier coefficients are those of `f`.
+* The converse: `restrict_mem_cuspFormsNew_of_isGamma0New` (a `Γ₀(N)`-new form restricts to a
+  `Γ₁(N)`-new form: an old form of trivial nebentypus is the restriction of some `G₀` on `Γ₀(N)`,
+  and the trace `Γ₁(N) → Γ₀(N)` carries the `Γ₁(N)`-old subspace into the `Γ₀(N)`-old subspace,
+  `cuspFormsOld_le_comap_trace`), whence `IsGamma0Newform.toNewform`, the Tau Ceti newform of
+  trivial nebentypus with the same function (`IsGamma0Newform.toCuspFormGamma0_toNewform`).
 -/
 
 open Matrix.SpecialLinearGroup UpperHalfPlane CongruenceSubgroup HeckeRing.GL2 HeckeRing.GLn
@@ -196,5 +201,114 @@ theorem isGamma0Newform_toCuspFormGamma0 [NeZero N] (f : Newform N k) (hχ : f.�
       Newform.coe_toCuspFormGamma0]
   isNew := isGamma0New_toCuspFormGamma0 f hχ
   isNorm := by rw [coeffGamma0_toCuspFormGamma0]; exact f.isNorm
+
+/-! ## The converse: a classical newform on `Γ₀(N)` is a Tau Ceti newform of trivial nebentypus -/
+
+variable (N k) in
+/-- **The old subspace of `S_k(Γ₀(N))`**: the span of the `V_d S_k(Γ₀(M))`, `d M ∣ N`, `M ≠ N`
+(Tau Ceti's `cuspFormsOld` with `Γ₁` replaced by `Γ₀`). -/
+noncomputable def cuspFormsOldGamma0 [NeZero N] :
+    Submodule ℂ (CuspForm ((Gamma0 N).map (mapGL ℝ)) k) :=
+  ⨆ (M : ℕ) (d : ℕ) (h : d * M ∣ N ∧ M ≠ N),
+    have : NeZero d := NeZero.of_dvd (dvd_of_mul_right_dvd h.1)
+    LinearMap.range
+      (TauCeti.CuspForm.levelRaiseₗ (k := k) d (Gamma0_map_le_conjAct_scaleGL_of_dvd h.1))
+
+theorem levelRaise_mem_cuspFormsOldGamma0 [NeZero N] {M d : ℕ} (h : d * M ∣ N) (hM : M ≠ N)
+    (g : CuspForm ((Gamma0 M).map (mapGL ℝ)) k) :
+    haveI : NeZero d := NeZero.of_dvd (dvd_of_mul_right_dvd h)
+    TauCeti.CuspForm.levelRaise d (Gamma0_map_le_conjAct_scaleGL_of_dvd h) g ∈
+      cuspFormsOldGamma0 N k :=
+  let _ := NeZero.of_dvd (dvd_of_mul_right_dvd h)
+  Submodule.mem_iSup_of_mem M (Submodule.mem_iSup_of_mem d
+    (Submodule.mem_iSup_of_mem ⟨h, hM⟩ ⟨g, TauCeti.CuspForm.levelRaiseₗ_apply d _ g⟩))
+
+/-- `IsGamma0New F` is membership in the Petersson complement of the old subspace. -/
+theorem isGamma0New_iff [NeZero N] {F : CuspForm ((Gamma0 N).map (mapGL ℝ)) k} :
+    IsGamma0New F ↔ F ∈ CuspForm.peterssonOrthogonal (cuspFormsOldGamma0 N k) := by
+  constructor
+  · intro hF
+    rw [CuspForm.mem_peterssonOrthogonal_iff_le_ker]
+    refine iSup_le fun M ↦ iSup_le fun d ↦ iSup_le fun h ↦ ?_
+    have := NeZero.of_dvd (dvd_of_mul_right_dvd h.1)
+    rintro _ ⟨g, rfl⟩
+    rw [TauCeti.CuspForm.levelRaiseₗ_apply, LinearMap.mem_ker,
+      CuspForm.peterssonInnerCosetsₛₗ_apply_apply, ← CuspForm.peterssonInnerCosets_conj_symm,
+      hF M d h.1 h.2 g, map_zero]
+  · intro hF M d h hM g
+    exact CuspForm.mem_peterssonOrthogonal_iff.mp hF _ (levelRaise_mem_cuspFormsOldGamma0 h hM g)
+
+/-- The trace from `Γ₁(N)` to `Γ₀(N)` maps the old subspace of `S_k(Γ₁(N))` into the old
+subspace of `S_k(Γ₀(N))`: the trace of `V_d g` is `V_d g₀`, where `g₀ ∈ S_k(Γ₀(M))` restricts to
+the diamond sum `∑ᵤ ⟨u mod M⟩ g` (`cuspFormTraceGamma0_levelRaise`), which has trivial
+nebentypus (`sum_diamondOpCusp_mem_cuspFormCharSpace_one`). -/
+theorem cuspFormsOld_le_comap_trace [NeZero N] :
+    cuspFormsOld N k ≤ (cuspFormsOldGamma0 N k).comap (cuspFormTraceGamma0 N k) := by
+  refine cuspFormsOld_le fun M d hdvd hM g ↦ ?_
+  have : NeZero d := NeZero.of_dvd (dvd_of_mul_right_dvd hdvd)
+  have hMN : M ∣ N := dvd_of_mul_left_dvd hdvd
+  have : NeZero M := NeZero.of_dvd hMN
+  have hS := sum_diamondOpCusp_mem_cuspFormCharSpace_one (N := N) (ZMod.unitsMap_surjective hMN) g
+  rw [cuspFormCharSpace_one_eq_range] at hS
+  obtain ⟨g₀, hg₀⟩ := hS
+  rw [Submodule.mem_comap, cuspFormTraceGamma0_levelRaise hMN hdvd g g₀ hg₀]
+  exact levelRaise_mem_cuspFormsOldGamma0 hdvd hM g₀
+
+/-- **A `Γ₀(N)`-new form restricts to a `Γ₁(N)`-new form.** An old form `G` of trivial
+nebentypus is the restriction of some `G₀ ∈ S_k(Γ₀(N))`; its trace `#(ℤ/N)ˣ · G₀` is
+`Γ₀(N)`-old (`cuspFormsOld_le_comap_trace`), so `G₀` is, and
+`⟪G, F|Γ₁⟫ = [Γ₀(N)·{±1} : Γ₁(N)·{±1}] ⟪G₀, F⟫ = 0`. Newness at the trivial nebentypus is tested
+against the old forms of trivial nebentypus (`mem_cuspFormsNew_iff_of_mem_cuspFormCharSpace`). -/
+theorem restrict_mem_cuspFormsNew_of_isGamma0New [NeZero N]
+    {F : CuspForm ((Gamma0 N).map (mapGL ℝ)) k} (hF : IsGamma0New F) :
+    CuspForm.restrict (Gamma1_map_le_Gamma0_map N) F ∈ cuspFormsNew N k := by
+  rw [mem_cuspFormsNew_iff_of_mem_cuspFormCharSpace (restrict_mem_cuspFormCharSpace_one F),
+    CuspForm.mem_peterssonOrthogonal_iff]
+  rintro G ⟨hGold, hGchar⟩
+  rw [cuspFormCharSpace_one_eq_range] at hGchar
+  obtain ⟨G₀, rfl⟩ := hGchar
+  have htr := cuspFormsOld_le_comap_trace hGold
+  rw [Submodule.mem_comap, CuspForm.restrictₗ_apply, cuspFormTraceGamma0_restrict] at htr
+  have hcard : (Fintype.card (ZMod N)ˣ : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
+  have hG₀ : G₀ ∈ cuspFormsOldGamma0 N k := by
+    have := Submodule.smul_mem _ (Fintype.card (ZMod N)ˣ : ℂ)⁻¹ htr
+    rwa [smul_smul, inv_mul_cancel₀ hcard, one_smul] at this
+  rw [CuspForm.restrictₗ_apply, CuspForm.peterssonInnerCosets_restrict_restrict,
+    CuspForm.mem_peterssonOrthogonal_iff.mp (isGamma0New_iff.mp hF) G₀ hG₀, mul_zero]
+
+/-- **A classical newform on `Γ₀(N)`, as a Tau Ceti newform on `Γ₁(N)` of trivial nebentypus**:
+its restriction to `Γ₁(N)`. -/
+noncomputable def IsGamma0Newform.toNewform [NeZero N] {F : CuspForm ((Gamma0 N).map (mapGL ℝ)) k}
+    (hF : IsGamma0Newform F) : Newform N k where
+  toCuspForm := CuspForm.restrict (Gamma1_map_le_Gamma0_map N) F
+  χ := 1
+  mem_charSpace := restrict_mem_cuspFormCharSpace_one F
+  eigenvalue n hn := (hF.isEigen n.val n.pos hn).choose
+  isEigen n hn := by
+    apply Subtype.ext
+    apply DFunLike.coe_injective
+    have hc := (hF.isEigen n.val n.pos hn).choose_spec
+    generalize (hF.isEigen n.val n.pos hn).choose = c at hc ⊢
+    rw [← coe_heckeGamma0, hc]
+    simp [CuspForm.coe_restrict]
+  ne_zero h0 := by
+    have hF0 : ⇑F = 0 := by
+      simpa [CuspForm.coe_restrict] using congrArg DFunLike.coe h0
+    have h1 := hF.isNorm
+    rw [coeffGamma0, hF0, qExpansion_zero] at h1
+    simp at h1
+  isNew := restrict_mem_cuspFormsNew_of_isGamma0New hF.isNew
+  isNorm := by simpa [coeffGamma0, CuspForm.coe_restrict] using hF.isNorm
+
+@[simp] theorem IsGamma0Newform.toNewform_χ [NeZero N] {F : CuspForm ((Gamma0 N).map (mapGL ℝ)) k}
+    (hF : IsGamma0Newform F) : hF.toNewform.χ = 1 := rfl
+
+/-- Converting back recovers `F`. -/
+theorem IsGamma0Newform.toCuspFormGamma0_toNewform [NeZero N]
+    {F : CuspForm ((Gamma0 N).map (mapGL ℝ)) k} (hF : IsGamma0Newform F) :
+    hF.toNewform.toCuspFormGamma0 hF.toNewform_χ = F :=
+  DFunLike.coe_injective (by
+    rw [Newform.coe_toCuspFormGamma0]
+    exact CuspForm.coe_restrict (Gamma1_map_le_Gamma0_map N) F)
 
 end ZInQ.BFHPrinted

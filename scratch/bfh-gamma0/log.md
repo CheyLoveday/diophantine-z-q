@@ -39,3 +39,16 @@
 - Statement-copy.lean.txt: verbatim copies of 22 statements/definitions involved.
 - Statement-check record for BFH pp. 543-544: not found on this host (grep of docs/, all origin branches'
   docs/one-proof/STATEMENT-CHECKS.md and reviews.tsv). Cited per the task brief.
+
+## Converse (VERIFIED, compiled; standard axioms)
+- `cuspFormsOldGamma0`, `levelRaise_mem_cuspFormsOldGamma0`, `isGamma0New_iff` (IsGamma0New ↔ Petersson complement
+  of the Γ₀ old subspace).
+- `cuspFormsOld_le_comap_trace`: trace Γ₁(N)→Γ₀(N) maps Γ₁-old into Γ₀-old (cuspFormTraceGamma0_levelRaise +
+  sum_diamondOpCusp_mem_cuspFormCharSpace_one + cuspFormCharSpace_one_eq_range at level M).
+- `restrict_mem_cuspFormsNew_of_isGamma0New`; `IsGamma0Newform.toNewform` (Tau Ceti Newform, χ = 1);
+  `IsGamma0Newform.toCuspFormGamma0_toNewform`.
+- BFHGamma0.lean: `coeff_toNewform`, `bfhClauseIIGamma0_of_bfhClauseIIKronecker`,
+  `bfhClauseIIGamma0_iff : BFHClauseIIGamma0 ↔ BFHClauseIIKronecker`,
+  `bfhClauseIIGamma0_iff_bfhClauseII`.
+- Discharges rerun: `#discharges: 56 open hypotheses, 3109 theorems checked, 8 discharge one`; 23 theorems,
+  all [propext, Classical.choice, Quot.sound], no sorryAx. FoldCheck rerun: standard axioms.

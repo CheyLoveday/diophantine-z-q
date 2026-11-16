@@ -22,7 +22,7 @@ DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidit
 DISCHARGES [hFH] by ZInQ.FHPrinted.friedbergHoffsteinB_FE_of_printed
   still assumes: [ZInQ.FHPrinted.FriedbergHoffsteinB_Printed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 3089 theorems checked, 8 discharge one
+#discharges: 56 open hypotheses, 3109 theorems checked, 8 discharge one
 'ZInQ.BFHPrinted.restrict_levelRaise_gamma0' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.BFHPrinted.relIndex_gamma1_gamma0_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.BFHPrinted.isGamma0New_toCuspFormGamma0' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -41,3 +41,12 @@ DISCHARGES [hFH] by ZInQ.FHPrinted.friedbergHoffsteinB_FE_of_printed
  Classical.choice,
  Quot.sound]
 'ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.isGamma0New_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.cuspFormsOld_le_comap_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.restrict_mem_cuspFormsNew_of_isGamma0New' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.IsGamma0Newform.toNewform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.IsGamma0Newform.toCuspFormGamma0_toNewform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.coeff_toNewform' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.bfhClauseIIGamma0_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.BFHPrinted.bfhClauseIIGamma0_iff_bfhClauseII' depends on axioms: [propext, Classical.choice, Quot.sound]

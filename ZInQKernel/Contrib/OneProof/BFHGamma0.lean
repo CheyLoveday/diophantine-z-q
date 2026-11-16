@@ -15,6 +15,9 @@ file states the clause over the classical newform on `Γ₀(N)` (`BFHClauseIIGam
   The one identification needed, that `f.toCuspFormGamma0 hχ` is a classical `Γ₀(N)`-newform with
   the same Fourier coefficients, is `isGamma0Newform_toCuspFormGamma0` and
   `coeffGamma0_toCuspFormGamma0`;
+* `bfhClauseIIGamma0_iff : BFHClauseIIGamma0 ↔ BFHClauseIIKronecker` (the converse through
+  `IsGamma0Newform.toNewform`), so the leaf over `Γ₀(N)` is no stronger than bfh-kronecker's, and
+  `bfhClauseIIGamma0_iff_bfhClauseII` (equivalent to bfh-leaf's);
 * `frozenTarget_of_sixContactMin_tyzThm35ReadingA_bfhGamma0`: the assembly with the leaf in place of
   `FHNonvanishing` (the leaf used once, at `B = 4`, through bfh-kronecker's
   `exists_heegnerDisc_of_bfhClauseIIKronecker`);
@@ -117,6 +120,38 @@ theorem bfhClauseIIKronecker_of_bfhClauseIIGamma0 (h : BFHClauseIIGamma0) :
       ((isFESignGamma0_toCuspFormGamma0_iff f hχ ε).mpr hε) S hSp hS
   exact ⟨D, hfd, hD1, hsign, hsplit,
     (kroneckerCentralValueNeZeroGamma0_toCuspFormGamma0_iff f hχ D).mp hL⟩
+
+/-! ## The converse: the two leaves are equivalent -/
+
+/-- The coefficients of the Tau Ceti newform attached to a classical newform `F` are `F`'s. -/
+theorem coeff_toNewform {N : ℕ} [NeZero N] {F : CuspForm ((Gamma0 N).map (mapGL ℝ)) 2}
+    (hF : IsGamma0Newform F) : coeff hF.toNewform = coeffGamma0 F := by
+  rw [← coeffGamma0_toCuspFormGamma0_eq_coeff hF.toNewform hF.toNewform_χ,
+    hF.toCuspFormGamma0_toNewform]
+
+/-- **bfh-kronecker's leaf implies the leaf over `Γ₀(N)`**: apply it to `hF.toNewform`, the
+restriction of `F` to `Γ₁(N)`, a Tau Ceti newform of trivial nebentypus
+(`restrict_mem_cuspFormsNew_of_isGamma0New`). -/
+theorem bfhClauseIIGamma0_of_bfhClauseIIKronecker (h : BFHClauseIIKronecker) :
+    BFHClauseIIGamma0 := by
+  intro N _ F hF ε hε S hSp hS
+  have hc := coeff_toNewform hF
+  obtain ⟨D, hfd, hD1, hsign, hsplit, hL⟩ :=
+    h N hF.toNewform hF.toNewform_χ ε (by rw [IsFESign, hc]; exact hε) S hSp hS
+  refine ⟨D, hfd, hD1, hsign, hsplit, ?_⟩
+  have hk : kroneckerTwistCoeffGamma0 F D = kroneckerTwistCoeff hF.toNewform D := by
+    funext n
+    rw [kroneckerTwistCoeffGamma0, kroneckerTwistCoeff, hc]
+  rw [KroneckerCentralValueNeZeroGamma0, hk]
+  exact hL
+
+/-- **The leaf over the classical `Γ₀(N)`-newform is equivalent to bfh-kronecker's leaf.** -/
+theorem bfhClauseIIGamma0_iff : BFHClauseIIGamma0 ↔ BFHClauseIIKronecker :=
+  ⟨bfhClauseIIKronecker_of_bfhClauseIIGamma0, bfhClauseIIGamma0_of_bfhClauseIIKronecker⟩
+
+/-- **…and to bfh-leaf's leaf** (`χ_D` from local components, `S ⊇` primes dividing `2N`). -/
+theorem bfhClauseIIGamma0_iff_bfhClauseII : BFHClauseIIGamma0 ↔ BFHClauseII :=
+  bfhClauseIIGamma0_iff.trans bfhClauseIIKronecker_iff
 
 /-! ## The assembly -/
 
