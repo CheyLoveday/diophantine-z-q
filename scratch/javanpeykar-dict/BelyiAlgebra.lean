@@ -112,4 +112,121 @@ theorem belyi_unram (ι : F →ₐ[K] FL) [IsAlgClosed L] [Algebra.IsAlgebraic K
 
 end Unram
 
+section Degree
+
+variable {K F L FL : Type} [Field K] [Field F] [Field L] [Field FL] [Algebra K F] [Algebra K L]
+  [Algebra L FL] [Algebra K FL] [IsScalarTower K L FL]
+
+open IntermediateField
+
+/-- `L` inside `FL`, as an intermediate field over `K`. -/
+abbrev Lr (K L FL : Type) [Field K] [Field L] [Field FL] [Algebra K L] [Algebra L FL] [Algebra K FL]
+    [IsScalarTower K L FL] : IntermediateField K FL :=
+  (IsScalarTower.toAlgHom K L FL).fieldRange
+
+theorem adjoin_toSubfield_eq (x : FL) :
+    (adjoin L {x}).toSubfield = (adjoin (Lr K L FL) {x}).toSubfield := by
+  rw [adjoin_toSubfield, adjoin_toSubfield]
+  congr 2
+  ext y
+  constructor
+  · rintro ⟨l, rfl⟩
+    exact ⟨⟨algebraMap L FL l, ⟨l, rfl⟩⟩, rfl⟩
+  · rintro ⟨⟨z, ⟨l, rfl⟩⟩, rfl⟩
+    exact ⟨l, rfl⟩
+
+theorem ι_mem_adjoin (ι : F →ₐ[K] FL) (t : F) (c : K⟮t⟯) :
+    ι (c : F) ∈ IntermediateField.adjoin L {ι t} := by
+  have h1 : ι (c : F) ∈ (K⟮t⟯).map ι := ⟨c, c.2, rfl⟩
+  rw [adjoin_map, Set.image_singleton] at h1
+  have h2 : K⟮ι t⟯ ≤ (IntermediateField.adjoin L {ι t}).restrictScalars K :=
+    adjoin_le_iff.mpr (Set.singleton_subset_iff.mpr (subset_adjoin L {ι t} rfl))
+  exact h2 h1
+
+/-- Every element of `L⟮ι t⟯` is `∑ⱼ ι(eⱼ) ℓⱼ` with `eⱼ ∈ K⟮t⟯`, for a `K`-basis `ℓ` of `L` (`L/K`
+algebraic). -/
+theorem mem_adjoin_repr (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L] (t : F) {κ : Type}
+    (ℓ : Module.Basis κ K L) (y : FL) (hy : y ∈ IntermediateField.adjoin L {ι t}) :
+    ∃ e : κ →₀ K⟮t⟯, y = e.sum fun j c => ι (c : F) * algebraMap L FL (ℓ j) := by
+  have hy1 : y ∈ (adjoin (Lr K L FL) {ι t}).restrictScalars K := by
+    change y ∈ (adjoin (Lr K L FL) {ι t}).toSubfield
+    rw [← adjoin_toSubfield_eq]
+    exact hy
+  rw [restrictScalars_adjoin_eq_sup] at hy1
+  haveI : Algebra.IsAlgebraic K (Lr K L FL) :=
+    (AlgEquiv.ofInjectiveField (IsScalarTower.toAlgHom K L FL)).isAlgebraic
+  have hy2 : y ∈ (Lr K L FL).toSubalgebra ⊔ (K⟮ι t⟯).toSubalgebra := by
+    rw [← sup_toSubalgebra_of_isAlgebraic_left]
+    exact hy1
+  have hy3 : y ∈ Subalgebra.toSubmodule (Lr K L FL).toSubalgebra *
+      Subalgebra.toSubmodule (K⟮ι t⟯).toSubalgebra := by
+    rw [Subalgebra.mul_toSubmodule]
+    exact hy2
+  induction hy3 using Submodule.mul_induction_on with
+  | mem m hm n hn =>
+    obtain ⟨l, rfl⟩ := hm
+    have hn' : n ∈ (K⟮t⟯).map ι := by
+      rw [adjoin_map, Set.image_singleton]; exact hn
+    obtain ⟨c, hc, rfl⟩ := hn'
+    refine ⟨(ℓ.repr l).mapRange (fun a => a • (⟨c, hc⟩ : K⟮t⟯)) (zero_smul _ _), ?_⟩
+    rw [Finsupp.sum_mapRange_index (by intro j; simp)]
+    conv_lhs => rw [← ℓ.linearCombination_repr l]
+    simp only [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finset.sum_mul,
+      IsScalarTower.coe_toAlgHom', map_smul, IntermediateField.coe_smul, smul_mul_assoc,
+      Algebra.smul_def, AlgHom.commutes, mul_comm, mul_left_comm, mul_assoc]
+    rfl
+  | add a b _ _ ha hb =>
+    obtain ⟨e₁, rfl⟩ := ha
+    obtain ⟨e₂, rfl⟩ := hb
+    refine ⟨e₁ + e₂, ?_⟩
+    rw [Finsupp.sum_add_index' (by intro j; simp) (by intro j c₁ c₂; simp [add_mul])]
+
+/-- The tensor product `F ⊗_K L` is a field when it maps bijectively onto the field `FL`. -/
+theorem isField_tensor (ι : F →ₐ[K] FL)
+    (hbij : Function.Bijective (Algebra.TensorProduct.productMap ι (IsScalarTower.toAlgHom K L FL))) :
+    IsField (TensorProduct K F L) :=
+  MulEquiv.isField (Field.toIsField FL) (RingEquiv.ofBijective _ hbij).toMulEquiv
+
+/-- **Degree under the constant field extension (glue, proved).** If `F ⊗_K L ≅ FL` through `ι` and
+`L/K` is algebraic, a `K⟮t⟯`-basis of `F` maps to an `L⟮ι t⟯`-basis of `FL`, so
+`[FL : L⟮ι t⟯] = [F : K⟮t⟯]`. -/
+theorem finrank_adjoin_eq (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L]
+    (hbij : Function.Bijective (Algebra.TensorProduct.productMap ι (IsScalarTower.toAlgHom K L FL)))
+    (t : F) [FiniteDimensional K⟮t⟯ F] :
+    Module.finrank (IntermediateField.adjoin L {ι t}) FL = Module.finrank K⟮t⟯ F := by
+  set L' := IntermediateField.adjoin L {ι t}
+  set n := Module.finrank K⟮t⟯ F
+  let b := Module.finBasis K⟮t⟯ F
+  let v : Fin n → FL := fun i => ι (b i)
+  let ℓ := Module.Basis.ofVectorSpace K L
+  have H := IntermediateField.LinearDisjoint.of_isField' (isField_tensor ι hbij) ι
+    (IsScalarTower.toAlgHom K L FL)
+  let ℓ' : Module.Basis.ofVectorSpaceIndex K L → (Lr K L FL) :=
+    fun j => ⟨algebraMap L FL (ℓ j), ⟨ℓ j, rfl⟩⟩
+  have hℓ' : LinearIndependent K ℓ' := by
+    have := ℓ.linearIndependent.map' (IsScalarTower.toAlgHom K L FL).toLinearMap
+      (LinearMap.ker_eq_bot.mpr (IsScalarTower.toAlgHom K L FL).injective)
+    refine LinearIndependent.of_comp (Lr K L FL).val ?_
+    exact this
+  have hind := H.linearIndependent_right hℓ'
+  -- linear independence of `v` over `L'`
+  have hli : LinearIndependent L' v := by
+    rw [Fintype.linearIndependent_iff]
+    intro g hg i
+    choose e he using fun i => mem_adjoin_repr ι t ℓ (g i : FL) (g i).2
+    set S := Finset.univ.biUnion fun i => (e i).support
+    have hsum : ∀ i, (g i : FL) = ∑ j ∈ S, ι ((e i j : K⟮t⟯) : F) * algebraMap L FL (ℓ j) := by
+      intro i
+      rw [he i]
+      exact Finsupp.sum_of_support_subset _ (fun j hj => Finset.mem_biUnion.mpr ⟨i, by simp, hj⟩)
+        _ (fun j _ => by simp)
+    have hg' : ∑ j ∈ S, ι (∑ i, (e i j : K⟮t⟯) • b i) * algebraMap L FL (ℓ j) = 0 := by
+      rw [← hg]
+      simp only [map_sum, Finset.sum_mul, IntermediateField.coe_smul_def' ]
+      sorry
+    sorry
+  sorry
+
+end Degree
+
 end JavanpeykarDict
