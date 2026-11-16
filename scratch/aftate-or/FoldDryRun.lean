@@ -123,5 +123,3 @@ end HSyn
 end HDec
 
 #print axioms HDec.HSyn.sixContactMin_of_open31
-
-#print axioms HDec.HSyn.sixContactMin_of_open31

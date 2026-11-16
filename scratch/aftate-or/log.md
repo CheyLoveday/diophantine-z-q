@@ -19,17 +19,19 @@ Target: make weber-field's `R16IsJ1Dict.AfTateCharPolyPicZero` printed (base wip
 - Mathlib: `ModularForm.levelOne_weight_two_rank_zero` (no weight-2 level-one forms), for the `N = 1` case.
 
 ## Lean (scratch/aftate-or/AfTateOr.lean, `lake env lean`)
-- 11-16 06:45 defs `IsX1AlgDS`, `AfTateOrAt`, leaf `AfTateDSOr`; `weakOddAt_of_orAt`, `orAt_of_afTateAt`,
+- 11-16 06:39 defs `IsX1AlgDS`, `AfTateOrAt`, leaf `AfTateDSOr`; `weakOddAt_of_orAt`, `orAt_of_afTateAt`,
   `orAt_of_weakOddAt` compile. VERIFIED.
-- 11-16 07:05 `isX1AlgDS_of_isX1Model` (kernel model ⇒ DS's X₁(N)_alg, N ≥ 2; uses weberFieldComparison, adjoin_wOf,
+- 11-16 06:42 `isX1AlgDS_of_isX1Model` (kernel model ⇒ DS's X₁(N)_alg, N ≥ 2; uses weberFieldComparison, adjoin_wOf,
   fieldX1Equiv, X1PointsConjugate) compiles; axioms standard. VERIFIED.
-- 11-16 07:15 `not_isNewform_one` (Mathlib `levelOne_weight_two_rank_zero`), `weakOdd_of_dsOr`,
+- 11-16 06:44 `not_isNewform_one` (Mathlib `levelOne_weight_two_rank_zero`), `weakOdd_of_dsOr`,
   `r16CoreY_of_dsOr_igusaDS : AfTateDSOr → IgusaGL2DS → MumfordTorsionAlgClosed → R16CoreY` compile; axioms
   [propext, Classical.choice, Quot.sound]. VERIFIED.
-- 11-16 07:50 contribution ZInQKernel/Contrib/OneProof/AfTateOr.lean (same declarations + docstrings): `lake build ZInQKernel.Contrib.OneProof.AfTateOr` Build completed successfully (11357 jobs; only the new module compiled, 9.7 s). VERIFIED.
-- 11-16 07:55 #discharges (scratch/aftate-or/Discharges.lean -> Discharges-output.txt): `DISCHARGES [OpenResearchLeaves23.r16CoreY] by AfTateOr.r16CoreY_of_dsOr_igusaDS still assumes: [AfTateOr.AfTateDSOr, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed] axioms: [propext, Classical.choice, Quot.sound]`; all #print axioms standard. VERIFIED.
-- 11-16 08:00 autofold spec scratch/aftate-or/autofold.json (field r16CoreY; leaves afTateDSOr NEW, igusaGL2DS unchanged
+- 11-16 06:47 contribution ZInQKernel/Contrib/OneProof/AfTateOr.lean (same declarations + docstrings): `lake build ZInQKernel.Contrib.OneProof.AfTateOr` Build completed successfully (11357 jobs; only the new module compiled, 9.7 s). VERIFIED.
+- 11-16 06:47 #discharges (scratch/aftate-or/Discharges.lean -> Discharges-output.txt): `DISCHARGES [OpenResearchLeaves23.r16CoreY] by AfTateOr.r16CoreY_of_dsOr_igusaDS still assumes: [AfTateOr.AfTateDSOr, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed] axioms: [propext, Classical.choice, Quot.sound]`; all #print axioms standard. VERIFIED.
+- 11-16 06:48 autofold spec scratch/aftate-or/autofold.json (field r16CoreY; leaves afTateDSOr NEW, igusaGL2DS unchanged
   from weber-field). `python3 scripts/one_proof/autofold.py scratch/aftate-or/autofold.json --dry-run`:
   `strict count: 45/10 on 55 -> 47/9 on 56; strictest 43/12 -> 45/11`. Output (line 1 stripped) =
   scratch/aftate-or/FoldDryRun.lean; `lake env lean` compiles; `HDec.HSyn.sixContactMin_of_open31` axioms
   [propext, Classical.choice, Quot.sound]. VERIFIED.
+- 11-16 06:45 `isX1Model_of_isX1AlgDS` (converse dictionary via `nonempty_ringEquiv_of_rel`), `dsOr_of_picZero`,
+  `dsOr_of_weakPicZero`, `weakPicZero_of_dsOr` compile; axioms standard (Discharges-output.txt). VERIFIED.
