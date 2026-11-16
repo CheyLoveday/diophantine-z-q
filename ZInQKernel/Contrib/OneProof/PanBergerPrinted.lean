@@ -850,6 +850,47 @@ theorem localDistinctHTU_dualHom (ρ : GaloisRep p 2)
   rw [htMult, neg_neg] at h1
   rw [htMultU, htU, finrank_tensorInv_dualHom, homInv_ht, h1, count_neg_pair]
 
+/-! ### Sanity: the printed predicates against pb-bypass's Hom forms -/
+
+omit [FiniteDimensional ℚ_[p] E] in
+/-- pb-bypass's `dstSpace` is `Hom_{G_K}(V, B_st)`. -/
+theorem homInv_st (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (ρ : GQp p →* GL (Fin n) E) :
+    homInv p (stLin p) K.fixingSubgroup ρ = dstSpace p K ρ := by
+  ext φ
+  exact Iff.rfl
+
+/-- The printed semistability of the contragredient is pb-bypass's Hom form of `V^∨`, now with
+Fontaine's `[K_0 : ℚ_p]` (`K_0 = W(k_K)[1/p]`) in place of `dim B_st^{G_K}`. -/
+theorem isSemistableOverU_dualHom_iff (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    (ρ : GQp p →* GL (Fin n) E) :
+    IsSemistableOverU p K (dualHom ρ) ↔
+      finrank ℚ_[p] (dstSpace p K ρ) = finrank ℚ_[p] (K0W p K) * (n * finrank ℚ_[p] E) := by
+  rw [IsSemistableOverU, dstU, finrank_tensorInv_dualHom, homInv_st, finrank_fun]
+
+theorem dualHom_one {G : Type*} [Group G] {R : Type*} [CommRing R] {m : ℕ} :
+    dualHom (1 : G →* GL (Fin m) R) = 1 := by
+  ext σ i j
+  simp only [dualHom_val, MonoidHom.one_apply, Units.val_one, Matrix.transpose_one]
+
+/-- **Normalization of the printed semistability on the trivial representation**: the trivial
+one-dimensional representation is semistable over `K` exactly when
+`dim_{ℚ_p} B_st^{G_K} = [K_0 : ℚ_p]`, i.e. exactly when Fontaine's `B_st^{G_K} = K_0` holds in
+dimension form (not proved in Lean; pb-sanity proves `≥ [ℚ_p(μ) : ℚ_p]` for roots of unity
+`μ ∈ K` of order prime to `p`). -/
+theorem isSemistableOverU_trivial_iff (K : IntermediateField ℚ_[p] (PadicAlgCl p)) :
+    IsSemistableOverU p K (1 : GQp p →* GL (Fin 1) ℚ_[p]) ↔
+      finrank ℚ_[p] (bstInv p K) = finrank ℚ_[p] (K0W p K) := by
+  have h := isSemistableOver_trivial p K
+  rw [IsSemistableOver] at h
+  rw [← dualHom_one, isSemistableOverU_dualHom_iff, h, finrank_self]
+  simp
+
+/-- Given Fontaine's `B_st^{G_{ℚ_p}} = ℚ_p` in dimension form, the trivial representation is
+potentially semistable in the printed sense (take `K = ℚ_p`, `[K_0 : ℚ_p] = 1`). -/
+theorem isPstU_trivial (hF : finrank ℚ_[p] (bstInv p ⊥) = 1) :
+    IsPstU p (1 : GQp p →* GL (Fin 1) ℚ_[p]) :=
+  ⟨⊥, inferInstance, (isSemistableOverU_trivial_iff p ⊥).mpr (hF.trans (finrank_K0W_bot p).symm)⟩
+
 end Predicates
 
 /-! ## §7. The two printed leaves -/
