@@ -32,11 +32,6 @@ r17	r17-bypass	host task running	2026-11-15		project	project	https://github.com/
 eigenformHTNew	ht-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass	held
 r11r12	pb-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pb-bypass	held
 shimuraIntegralModelRep	sir-printed	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/sir-printed	held
-igusaGL2	flt-cqj2	host task flt-cqj2 running (replaces flt-cqj)	2026-11-15	elliotglazer/diophantine-z-q#83	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638	held
-mumfordRigidityCore	rigid-prune; cloud batch 3 (on MumfordGroupLaw, which replaces this field in leaf-fold23)	host task reported: not prunable without a field change (two consumers need it); weakening to MumfordGroupLaw (GIT Thm 6.14 alone) proposed	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/rigid-prune	held
-r16	r16-split	host task r16-split running (printed sources of Eichler-Shimura in J1(N))	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/r16-split	held
-elkiesX6StarPrinted	elkies-coord	host task elkies-coord running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/elkies-coord	held
-hL2	gz-fh	host task gz-fh running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-fh	held
 neronSchemeModelExistsDVR	neron-dvr, r6-nf	host task neron-dvr done: the number-field form proved from N1 (NeronDVR.lean); r6-nf restricts r6 to number fields so that the field can go	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-dvr	held
 shimuraTaniyamaQbar	st-qbar	host task st-qbar running: STQM, the only use, for the six CM objects by the fixed-point route (gap-triage L08)	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/st-qbar	held
 faltingsLemma5Printed	faltings5-lower	host task faltings5-lower running: the lower half of Lemma 5, the only half the chain uses, from the kernel's height (gap-triage W02)	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/faltings5-lower	held
