@@ -22,7 +22,6 @@ Changes for this contribution:
 - The spectrum-of-field module equivalence is reused from the existing
   Jacobian contribution; no quasi-coherence or finite-type sheaf cone is
   duplicated.
-- Stalk/base-change foundations reuse the folded MulEtale contribution;
-  morphism finite-presentation foundations reuse CloudW01Spread.
+- Stalk/base-change foundations reuse the folded MulEtale contribution.
 
 All compatibility repairs are mathematical proof/API changes only.

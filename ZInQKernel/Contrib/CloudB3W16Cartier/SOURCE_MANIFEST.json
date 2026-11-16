@@ -304,8 +304,6 @@
     }
   ],
   "reuse": {
-    "StacksFrontier.AlgebraicGeometry.Morphisms.FinitePresentationPoint": "ZInQKernel.Contrib.CloudW01Spread.StacksFrontier.AlgebraicGeometry.Morphisms.FinitePresentationPoint",
-    "StacksFrontier.AlgebraicGeometry.Morphisms.FinitePresentation.Basic": "ZInQKernel.Contrib.CloudW01Spread.StacksFrontier.AlgebraicGeometry.Morphisms.FinitePresentation.Basic",
     "StacksFrontier.AlgebraicGeometry.Perfect.BaseChangeStalk": "ZInQKernel.Contrib.MulEtale.Direct.Shared.StacksFrontier.AlgebraicGeometry.Perfect.BaseChangeStalk"
   }
 }
