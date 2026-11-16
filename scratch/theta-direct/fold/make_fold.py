@@ -1,25 +1,24 @@
 """theta-direct: the manual fold, as a patch (NOT applied to the worktree; the fold stays with the integration lead).
 
 Run from the repository root: `python3 scratch/theta-direct/fold/make_fold.py`. It copies the base's
-ZInQKernel/OneProof/H/*.lean and ZInQKernel/OneProof/Main.lean to /tmp/td_fold_out/{a,b}, edits the copy b, and writes
-scratch/theta-direct/fold/fold.patch (`diff -ruN a b`) and fold-deleted.txt. The edits:
+ZInQKernel/OneProof/H/*.lean, ZInQKernel/OneProof/Main.lean and ZInQKernel/Contrib/OneProof/ThetaDirect/{UseForm,Split}.lean
+to /tmp/td_fold_out/{a,b}, edits the copy b, and writes scratch/theta-direct/fold/fold.patch (`diff -ruN a b`) and
+fold-deleted.txt. The edits:
 1. theta-fold's plumb.py (origin/wip/theta-fold 8e3dbdea, copied as plumb_theta_fold.py), UNCHANGED: moves theta-split's
    `ThetaRatiosAtQM`, `Jmap_ne_zero`, `thetaPointOfFibre_of_qm_atQM` into TailK (namespace
    `HDec.HSyn.G0Split.ThetaPt.ThetaSplit`), gives `gluePieces_of_open4` the binder
    `hθ : PkgI1.QMHauptmodul → ThetaSplit.ThetaRatiosAtQM` (thetaPoint := thetaPointOfFibre_of_qm_atQM … (hθ l.qmHauptmodul)),
-   threads `hθ` through `sixContactMin_of_open4`, `_open6` … `_open28`.
-   Then the moved block's header comment is reworded (it named theta-fold's leaves).
-2. `sixContactMin_of_open29` (TailZ35) also takes and passes `hθ` (on this base it is the top; theta-fold's top was a new
-   `_open29` in TailZ41).
-3. theta-fold's prune_edit.py (copied as prune_edit_theta_fold.py) with its TailZ41 rows dropped (no generation 18
-   carries the field here): deletes the fields `OpenAddedLeaves4/6/7/8/9/12/13/14/15/16/17.thetaRatiosAlgebraic`, the
-   assignments into them, the element in TailO's `openAddedLeaves4_of_Q5`, and the dead readers
-   `addedLeaves5_of_open6` (TailO), `addedLeaves11_of_open12`, `sixContactMin_of_open16` (TailZ22).
-4. New module TailZ36.lean: `OpenAddedLeaves18` = `OpenAddedLeaves17` (pruned) + `igusaThetaExpressions`, the conversion,
-   and `sixContactMin_of_open30`, which supplies `hθ := HDec.ThetaDirect.thetaRatiosAtQM_of_igusa' l.igusaThetaExpressions`.
-5. Main.lean: import TailZ36; `l : OpenAddedLeaves17` → `OpenAddedLeaves18`; `sixContactMin_of_open29` → `_open30`.
-Not in the patch (contributor modules, for the lead): delete ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean (its
-block is now in TailK) and change Split.lean's import from `…ThetaDirect.UseForm` to `ZInQKernel.OneProof.H.TailZ19`.
+   threads `hθ` through `sixContactMin_of_open4`, `_open6` … `_open28`. The moved block's header comment is reworded.
+2. `sixContactMin_of_open29` (TailZ35, the top on this base) also takes and passes `hθ`.
+3. theta-fold's prune_edit.py (copied as prune_edit_theta_fold.py) with its TailZ41 rows dropped: deletes the fields
+   `OpenAddedLeaves4/6/7/8/9/12/13/14/15/16/17.thetaRatiosAlgebraic`, the assignments into them, the element in TailO's
+   `openAddedLeaves4_of_Q5`, and the dead readers `addedLeaves5_of_open6` (TailO), `addedLeaves11_of_open12`,
+   `sixContactMin_of_open16` (TailZ22).
+4. Main.lean: `import ZInQKernel.Contrib.OneProof.ThetaDirect`; frozenTarget's call
+   `sixContactMin_of_open29 r t l g` becomes `sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul`.
+   No new hypothesis: `thetaRatiosAtQM_of_qmHauptmodul` is a theorem (`fun _ => thetaRatiosAtQM_proof`).
+5. Contributor modules: delete ThetaDirect/UseForm.lean (its block is now in TailK); Split.lean imports
+   `ZInQKernel.OneProof.H.TailZ19` in place of `…ThetaDirect.UseForm`.
 """
 import os, re, shutil, subprocess, sys
 ROOT = os.getcwd()
@@ -31,6 +30,9 @@ for side in ('a', 'b'):
         if f.endswith('.lean'):
             shutil.copy(f'ZInQKernel/OneProof/H/{f}', f'{OUT}/{side}/ZInQKernel/OneProof/H/{f}')
     shutil.copy('ZInQKernel/OneProof/Main.lean', f'{OUT}/{side}/ZInQKernel/OneProof/Main.lean')
+    os.makedirs(f'{OUT}/{side}/ZInQKernel/Contrib/OneProof/ThetaDirect')
+    for f in ('UseForm.lean', 'Split.lean'):
+        shutil.copy(f'ZInQKernel/Contrib/OneProof/ThetaDirect/{f}', f'{OUT}/{side}/ZInQKernel/Contrib/OneProof/ThetaDirect/{f}')
 B = f'{OUT}/b'
 # plumb.py reads theta-split's block from linyang-printed's file (the same text as ThetaDirect/UseForm.lean)
 os.makedirs(f'{B}/scratch/theta-fold/src')
@@ -45,8 +47,8 @@ def sub1(f, old, new):
     s = open(f).read(); assert s.count(old) == 1, (f, old[:70], s.count(old)); open(f, 'w').write(s.replace(old, new))
 sub1(H + 'TailK.lean', """linyang-printed prove it from the printed leaves `IgusaThetaExpressions` and `LinYangEx29All` (with `QMHauptmodul`;
 `ZInQKernel/Contrib/OneProof/LinYangPrinted.lean`), which replace the universal field `thetaRatiosAlgebraic`. -/""",
-"""theta-direct proves it from the printed leaf `IgusaThetaExpressions` alone (`HDec.ThetaDirect.thetaRatiosAtQM_of_igusa`,
-`ZInQKernel/Contrib/OneProof/ThetaDirect.lean`), which replaces the universal field `thetaRatiosAlgebraic`. -/""")
+"""theta-direct proves it with no hypotheses (`HDec.ThetaDirect.thetaRatiosAtQM_proof`,
+`ZInQKernel/Contrib/OneProof/ThetaDirect.lean`), so the universal field `thetaRatiosAlgebraic` is dropped. -/""")
 sub1(H + 'TailK.lean', '/-! ### theta-fold: the use form', '/-! ### theta-direct (theta-fold\'s plumbing): the use form')
 BINDER = '(hθ : PkgI1.QMHauptmodul → G0Split.ThetaPt.ThetaSplit.ThetaRatiosAtQM)'
 sub1(H + 'TailZ35.lean',
@@ -63,51 +65,14 @@ buf = io.StringIO()
 with contextlib.redirect_stdout(buf):
     exec(pr, {'__name__': '__main__'})
 open(f'{ROOT}/scratch/theta-direct/fold/fold-deleted.txt', 'w').write(buf.getvalue())
-# TailZ36: the new generation
-s17 = open(H + 'TailZ34.lean').read()
-m = re.search(r'structure OpenAddedLeaves17 : Prop where\n((?:  .*\n|\n(?=  ))*)', s17)
-fields = m.group(1)
-names = re.findall(r'^  (\w+) : ', fields, re.M)
-assert 'thetaRatiosAlgebraic' not in names and len(names) == 13, names
-assigns = ''.join(f'  {n} := l.{n}\n' for n in names)
-open(H + 'TailZ36.lean', 'w').write(f'''import ZInQKernel.OneProof.H.TailZ35
-import ZInQKernel.Contrib.OneProof.ThetaDirect
-
-/-! # OneProof H, theta-direct fold: `thetaRatiosAlgebraic` replaced by the printed leaf `IgusaThetaExpressions`
-
-The added composite field `thetaRatiosAlgebraic` (GLUE) is gone (pruned from `OpenAddedLeaves4` … `17`); its only
-reader, TailK's `gluePieces_of_open4`, takes the use form `ThetaSplit.ThetaRatiosAtQM`, which
-`HDec.ThetaDirect.thetaRatiosAtQM_of_igusa` proves from Igusa's theta expressions (docs/research/theta-direct.md). -/
-
-namespace HDec
-
-namespace HSyn
-
-/-- `OpenAddedLeaves17` with the leaf `igusaThetaExpressions` (theta-direct). -/
-structure OpenAddedLeaves18 : Prop where
-{fields}  /-- theta-direct, LEAF (Igusa, Amer. J. Math. 86 (1964), 89 (1967) p. 848; locators UNVERIFIED): on `𝔥₂` the
-  Siegel Eisenstein series `ψ₄`, `ψ₆` and Igusa's `χ₁₀`, `χ₁₂` equal their theta expressions. -/
-  igusaThetaExpressions : G0Split.ThetaPt.LinYangPrinted.IgusaThetaExpressions
-
-/-- `OpenAddedLeaves17` from `OpenAddedLeaves18`. -/
-theorem openAddedLeaves17_of_OpenAddedLeaves18 (l : OpenAddedLeaves18) : OpenAddedLeaves17 where
-{assigns}
-/-- **G0 with only the open leaves and the open glue** (theta-direct fold). -/
-theorem sixContactMin_of_open30 (r : OpenResearchLeaves22) (t : OpenTextbookLeaves11) (l : OpenAddedLeaves18)
-    (g : OpenGlue7) : ZInQ.SixContactMin :=
-  sixContactMin_of_open29 r t (openAddedLeaves17_of_OpenAddedLeaves18 l) g
-    (HDec.ThetaDirect.thetaRatiosAtQM_of_igusa' l.igusaThetaExpressions)
-
-end HSyn
-
-end HDec
-
-#print axioms HDec.HSyn.sixContactMin_of_open30
-''')
 M = 'ZInQKernel/OneProof/Main.lean'
-sub1(M, 'import ZInQKernel.OneProof.H.TailZ35\n', 'import ZInQKernel.OneProof.H.TailZ36\n')
-sub1(M, '(l : HDec.HSyn.OpenAddedLeaves17)', '(l : HDec.HSyn.OpenAddedLeaves18)')
-sub1(M, '(HDec.HSyn.sixContactMin_of_open29 r t l g)', '(HDec.HSyn.sixContactMin_of_open30 r t l g)')
+sub1(M, 'import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8\n',
+     'import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8\nimport ZInQKernel.Contrib.OneProof.ThetaDirect\n')
+sub1(M, '(HDec.HSyn.sixContactMin_of_open29 r t l g)',
+     '(HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)')
+C = 'ZInQKernel/Contrib/OneProof/ThetaDirect/'
+os.remove(C + 'UseForm.lean')
+sub1(C + 'Split.lean', 'import ZInQKernel.Contrib.OneProof.ThetaDirect.UseForm\n', 'import ZInQKernel.OneProof.H.TailZ19\n')
 os.chdir(OUT)
 d = subprocess.run(['diff', '-ruN', 'a', 'b'], capture_output=True, text=True)
 open(f'{ROOT}/scratch/theta-direct/fold/fold.patch', 'w').write(d.stdout)

@@ -49,3 +49,16 @@ Task theta-direct, started 2026-11-16 00:00 PST. Base a40d5c4d (wip/theta-direct
   `GapTheta.Mat4` in the §6 copy.
 * Fold dry run (python only, on a /tmp copy of the base's ZInQKernel/OneProof/H): theta-fold's plumb.py applies
   unchanged to a40d5c4d (24 files edited, all assertions pass).
+
+## Step 3 (VERIFIED): leaf-free
+* py/psi6_check.py (exact, sympy): psi6T and chi12T are invariant under the signed permutations of gt-theta's
+  squared laws at M4 and M6, formally in the ten t_m = θ_m² (and in the four second-order theta constants).
+* ThetaDirect/Modular.lean compiles: `psi6Th_M4/M6`, `chi12Th_M4/M6` from `GapTheta.sq4/sq6` (no leaf).
+* Relations/ThetaDirect rebased on Modular: no `IgusaThetaExpressions` anywhere. Printed.lean deleted;
+  Analytic.lean keeps `thetaConst_omega_analyticAt` (theta-fold LinYangPrinted l.139-210, namespace HDec.ThetaDirect).
+* MAIN: `HDec.ThetaDirect.thetaRatiosAtQM_proof : ThetaRatiosAtQM` (no hypotheses); `thetaRatiosAtQM_of_qmHauptmodul`,
+  `thetaPointOfFibre_of_qmPeriod`. `lake build ZInQKernel.Contrib.OneProof.ThetaDirect` OK (12138 jobs); axioms
+  standard (axioms.txt).
+* #discharges (Main + Discharges + ThetaDirect, 13007 jobs): 62 open hypotheses, 2804 theorems checked, 7 discharge
+  one; no line for thetaRatiosAlgebraic (expected: use form). Saved: discharges.txt.
+* Fold patch: fold/make_fold.py → fold/fold.patch (867 lines, 29 files), fold-deleted.txt; not built.

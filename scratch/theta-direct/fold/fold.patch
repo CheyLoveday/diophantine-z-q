@@ -1,6 +1,111 @@
+diff -ruN a/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean b/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean
+--- a/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean	2026-11-16 00:57:24.348372202 -0800
++++ b/ZInQKernel/Contrib/OneProof/ThetaDirect/Split.lean	2026-11-16 00:57:24.428693548 -0800
+@@ -1,4 +1,4 @@
+-import ZInQKernel.Contrib.OneProof.ThetaDirect.UseForm
++import ZInQKernel.OneProof.H.TailZ19
+ 
+ /-! theta-direct: copied verbatim from origin/wip/theta-fold (8e3dbdea) `ZInQKernel/Contrib/OneProof/LinYangSplit.lean`;
+    only the import lines are changed (this base has no theta-fold modules). -/
+diff -ruN a/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean b/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean
+--- a/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean	2026-11-16 00:57:24.348314035 -0800
++++ b/ZInQKernel/Contrib/OneProof/ThetaDirect/UseForm.lean	1969-12-31 16:00:00.000000000 -0800
+@@ -1,92 +0,0 @@
+-import ZInQKernel.OneProof.H.TailZ19
+-
+-/-! # theta-direct (helper 1/5): the use form `ThetaRatiosAtQM` (copied verbatim)
+-
+-Copied verbatim from origin/wip/theta-fold (8e3dbdea) `ZInQKernel/OneProof/H/TailK.lean` lines 281-346
+-(theta-split's `ThetaRatiosAtQM`, `Jmap_ne_zero`, `thetaPointOfFibre_of_qm_atQM`; scratch/theta-split/ThetaUse.lean §1).
+-They are not on this base (fork main a40d5c4d): theta-fold moved them into TailK, which this task does not edit.
+-The enclosing `namespace HDec`, `set_option maxHeartbeats 1000000`, `noncomputable section`, `namespace HSyn` and
+-`open CategoryTheory AlgebraicGeometry G0Split` are those of TailK at that point (its lines 7, 9, 29, 31, 33). -/
+-
+-namespace HDec
+-
+-set_option maxHeartbeats 1000000
+-
+-noncomputable section
+-
+-namespace HSyn
+-
+-open CategoryTheory AlgebraicGeometry G0Split
+-
+-/-! ### theta-fold: the use form of `ThetaRatiosAlgebraic` (theta-split, moved here unchanged)
+-
+-theta-split's `ThetaRatiosAtQM` (scratch/theta-split/ThetaUse.lean §1, via igusa-alg and linyang-printed) is how
+-`gluePieces_of_open4` uses the theta algebraicity: only along pkg-I1's QM period matrices `Ω(τ)`. igusa-alg and
+-linyang-printed prove it from the printed leaves `IgusaThetaExpressions` and `LinYangEx29All` (with `QMHauptmodul`;
+-`ZInQKernel/Contrib/OneProof/LinYangPrinted.lean`), which replace the universal field `thetaRatiosAlgebraic`. -/
+-
+-namespace G0Split.ThetaPt.ThetaSplit
+-
+-open _root_.ZInQ ZInQ ZInQ.JHeight LeafQM.AV ZInQ.DefFaltings
+-open _root_.ZInQ.LeafPush2 (CPts cptObj IsUniformization IsSiegel IsPeriodMatrix Char2 thetaConst
+-  absLogHeight)
+-open Complex Polynomial
+-
+-/-- **GLUE (G19 / F1, the use of `ThetaRatiosAlgebraic`; theta-null ratios on the QM curve).**
+-For `τ` in the upper half-plane with `j_θ(Ω(τ)) = jNum(Ω(τ))/jDen(Ω(τ)) = q ∈ ℚ \ {0}` (pkg-I1's
+-`Ω(τ) = (F₀(τ)P⁻¹)⁻¹E(τ)`, the period matrix of the QM lattice `ι(𝒪)(τ, 1)ᵀ` for N5's maximal order
+-of the quaternion algebra of discriminant 6): some theta constant `θ_{m₀}(0, Ω(τ))` is nonzero and every
+-ratio `θ_m(0, Ω(τ))/θ_{m₀}(0, Ω(τ))` is an algebraic number. (In fact `m₀ = (0,0)` works and all ten
+-even theta constants are nonzero, since `jNum ≠ 0`.)
+-
+-This is exactly how the bundle field `ThetaRatiosAlgebraic` is used (at `Ω(τ)` with `j_θ = J(u)`,
+-`u ∉ 𝒞`): `thetaPointOfFibre_of_qm_atQM`. It is a statement about explicit holomorphic functions of
+-one variable `τ`; no abelian variety or polarization occurs. Why true: `QMThetaSymmetric` (below) and
+-`thetaRatiosAtQM_of_symmetric`. -/
+-def ThetaRatiosAtQM : Prop :=
+-  ∀ τ : ℂ, 0 < τ.im → ∀ q : ℚ, q ≠ 0 →
+-    PkgI1.jNum (PkgI1.Omega τ) / PkgI1.jDen (PkgI1.Omega τ) = (q : ℂ) →
+-    ∃ m₀ : Char2, thetaConst (BPAnalytic.QM.Omega τ) m₀ ≠ 0 ∧
+-      ∀ m, IsAlgebraic ℚ (thetaConst (BPAnalytic.QM.Omega τ) m / thetaConst (BPAnalytic.QM.Omega τ) m₀)
+-
+-/-- `J(u) ≠ 0` off the contact set (as kernel `J_ne_zero`, PRArith l.131, reproved). -/
+-theorem Jmap_ne_zero {u : ℚ} (hu : u ∉ contactSet) : Jmap u ≠ 0 := by
+-  unfold Jmap
+-  have hG := G_ne_zero u
+-  simp only [contactSet, Finset.mem_insert, Finset.mem_singleton, not_or] at hu
+-  obtain ⟨h0, h1, h2, h3, h4, h5⟩ := hu
+-  have hF : u * (u + 15) * (u + 20) * (u + 24) * (u + 30) * (u + 60) ≠ 0 := by
+-    refine mul_ne_zero (mul_ne_zero (mul_ne_zero (mul_ne_zero (mul_ne_zero h0 ?_) ?_) ?_) ?_) ?_
+-    · intro h; exact h1 (by linarith)
+-    · intro h; exact h2 (by linarith)
+-    · intro h; exact h3 (by linarith)
+-    · intro h; exact h4 (by linarith)
+-    · intro h; exact h5 (by linarith)
+-  exact div_ne_zero (mul_ne_zero (by norm_num) (pow_ne_zero _ hF)) (pow_ne_zero _ hG)
+-
+-/-- **Missing piece 9, `ThetaPointOfFibre`, from `FibreQMPeriod` and the use form (proved).**
+-Replaces `thetaPointOfFibre_of_qm_ratios hQM hAlg` (same proof, with `ThetaRatiosAtQM` applied at the
+-`τ` of `FibreQMPeriod` instead of `ThetaRatiosAlgebraic` at `Ω(τ)`). -/
+-theorem thetaPointOfFibre_of_qm_atQM (hQM : FibreQMPeriod) (hT : ThetaRatiosAtQM) :
+-    ThetaPointOfFibre := by
+-  intro Y Φ π h1 h2 u hu K A hFib
+-  obtain ⟨σ, Λ, Φu, hΦu, τ, hτ, F, hF, hJ⟩ := hQM Y Φ π h1 h2 u hu K A hFib
+-  have hS : IsSiegel (BPAnalytic.QM.Omega τ) := isSiegel_Omega hτ
+-  have hP : IsPeriodMatrix Λ (BPAnalytic.QM.Omega τ) :=
+-    isPeriodMatrix_of_comap (isPeriodMatrix_qmLattice hτ.ne') F hF
+-  have hJθ : jTheta (BPAnalytic.QM.Omega τ) = ((Jmap u : ℚ) : ℂ) := by
+-    rw [jTheta_eq, ← omega_eq]; exact hJ
+-  obtain ⟨m₀, h0, halg⟩ := hT τ hτ (Jmap u) (Jmap_ne_zero hu) hJ
+-  obtain ⟨L, emb, z, hz⟩ := exists_nf_of_isAlgebraic _ halg
+-  have hz' : ∀ m, emb (z m) = (thetaConst (BPAnalytic.QM.Omega τ) m₀)⁻¹ *
+-      thetaConst (BPAnalytic.QM.Omega τ) m := fun m => by rw [hz m, div_eq_inv_mul]
+-  exact ⟨σ, Λ, Φu, hΦu, BPAnalytic.QM.Omega τ, hS, hP, L, emb, z, _, inv_ne_zero h0, hz', L,
+-    fun i => z (evenEnum i), f1_of_theta emb _ z _ (inv_ne_zero h0) hz' (Jmap u) hJθ, height_even z⟩
+-
+-end G0Split.ThetaPt.ThetaSplit
+-
+-end HSyn
+-
+-end
+-
+-end HDec
 diff -ruN a/ZInQKernel/OneProof/H/TailK.lean b/ZInQKernel/OneProof/H/TailK.lean
---- a/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 00:48:31.789643815 -0800
-+++ b/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 00:48:31.862987263 -0800
+--- a/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 00:57:24.346743234 -0800
++++ b/ZInQKernel/OneProof/H/TailK.lean	2026-11-16 00:57:24.423809033 -0800
 @@ -188,7 +188,6 @@
    leaves (for `AbVarSpreadsOut`). -/
  structure OpenAddedLeaves4 : Prop where
@@ -17,8 +122,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailK.lean b/ZInQKernel/OneProof/H/TailK.lean
 +
 +theta-split's `ThetaRatiosAtQM` (scratch/theta-split/ThetaUse.lean §1, via igusa-alg and linyang-printed) is how
 +`gluePieces_of_open4` uses the theta algebraicity: only along pkg-I1's QM period matrices `Ω(τ)`. igusa-alg and
-+theta-direct proves it from the printed leaf `IgusaThetaExpressions` alone (`HDec.ThetaDirect.thetaRatiosAtQM_of_igusa`,
-+`ZInQKernel/Contrib/OneProof/ThetaDirect.lean`), which replaces the universal field `thetaRatiosAlgebraic`. -/
++theta-direct proves it with no hypotheses (`HDec.ThetaDirect.thetaRatiosAtQM_proof`,
++`ZInQKernel/Contrib/OneProof/ThetaDirect.lean`), so the universal field `thetaRatiosAlgebraic` is dropped. -/
 +
 +namespace G0Split.ThetaPt.ThetaSplit
 +
@@ -120,8 +225,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailK.lean b/ZInQKernel/OneProof/H/TailK.lean
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailN.lean b/ZInQKernel/OneProof/H/TailN.lean
---- a/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 00:48:31.789703595 -0800
-+++ b/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 00:48:31.865721914 -0800
+--- a/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 00:57:24.346798206 -0800
++++ b/ZInQKernel/OneProof/H/TailN.lean	2026-11-16 00:57:24.427271769 -0800
 @@ -229,7 +229,6 @@
  /-- leaf-fold4's added-leaves bundle from leaf-fold5's (`serreRigidity3` from T35 and `HomLatticeCorr`). -/
  theorem addedLeaves4_of_open5 (t : OpenTextbookLeaves5) (l : OpenAddedLeaves5) : OpenAddedLeaves4 where
@@ -131,8 +236,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailN.lean b/ZInQKernel/OneProof/H/TailN.lean
    qmClassNumberOne := l.qmClassNumberOne
    senTwist := l.senTwist
 diff -ruN a/ZInQKernel/OneProof/H/TailO.lean b/ZInQKernel/OneProof/H/TailO.lean
---- a/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 00:48:31.789762163 -0800
-+++ b/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 00:48:31.863597010 -0800
+--- a/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 00:57:24.346850775 -0800
++++ b/ZInQKernel/OneProof/H/TailO.lean	2026-11-16 00:57:24.424541915 -0800
 @@ -2592,7 +2592,7 @@
    egaIV_17_7_8_ii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii
  
@@ -214,8 +319,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailO.lean b/ZInQKernel/OneProof/H/TailO.lean
 -#print axioms HDec.HSyn.addedLeaves5_of_open6
  #print axioms HDec.HSyn.sixContactMin_of_open6
 diff -ruN a/ZInQKernel/OneProof/H/TailX.lean b/ZInQKernel/OneProof/H/TailX.lean
---- a/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 00:48:31.789858799 -0800
-+++ b/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 00:48:31.864349461 -0800
+--- a/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 00:57:24.346955262 -0800
++++ b/ZInQKernel/OneProof/H/TailX.lean	2026-11-16 00:57:24.425395149 -0800
 @@ -150,7 +150,6 @@
  `ShimuraTaniyamaQbar`, `isogenyQuasiInverse` by `MilneIsogenyQuasiInverse`, `senTwist`, `finiteImageHT` by
  Tate's two theorems, and `shimuraGoodReduction` by its guard-free form. 16 fields. -/
@@ -246,8 +351,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailX.lean b/ZInQKernel/OneProof/H/TailX.lean
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ11.lean b/ZInQKernel/OneProof/H/TailZ11.lean
---- a/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 00:48:31.789920872 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 00:48:31.844845430 -0800
+--- a/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 00:57:24.347010445 -0800
++++ b/ZInQKernel/OneProof/H/TailZ11.lean	2026-11-16 00:57:24.404540075 -0800
 @@ -53,8 +53,9 @@
  leaf-fold8's `OpenAddedLeaves8` (14) and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every
  field is `docs/research/leaf-fold10.md` §2. -/
@@ -261,8 +366,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ11.lean b/ZInQKernel/OneProof/H/TailZ11.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ13.lean b/ZInQKernel/OneProof/H/TailZ13.lean
---- a/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 00:48:31.789971508 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 00:48:31.864668071 -0800
+--- a/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 00:57:24.347058978 -0800
++++ b/ZInQKernel/OneProof/H/TailZ13.lean	2026-11-16 00:57:24.425955171 -0800
 @@ -17,7 +17,6 @@
  /-- **The added leaves still open** (leaf-fold10): leaf-fold8's `OpenAddedLeaves8` with `y3Connected` replaced by
  shimura-glue's `DeligneComponentsY3Printed`. 14 fields. -/
@@ -292,8 +397,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ13.lean b/ZInQKernel/OneProof/H/TailZ13.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ15.lean b/ZInQKernel/OneProof/H/TailZ15.lean
---- a/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 00:48:31.790020762 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 00:48:31.844916919 -0800
+--- a/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 00:57:24.347107701 -0800
++++ b/ZInQKernel/OneProof/H/TailZ15.lean	2026-11-16 00:57:24.404604461 -0800
 @@ -130,9 +130,10 @@
  and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
  `docs/research/leaf-fold10.md` §2. -/
@@ -308,8 +413,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ15.lean b/ZInQKernel/OneProof/H/TailZ15.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ17.lean b/ZInQKernel/OneProof/H/TailZ17.lean
---- a/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 00:48:31.790072019 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 00:48:31.865878419 -0800
+--- a/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 00:57:24.347160220 -0800
++++ b/ZInQKernel/OneProof/H/TailZ17.lean	2026-11-16 00:57:24.427504049 -0800
 @@ -253,7 +253,6 @@
  /-- leaf-fold10's added-leaf bundle from route-a-fold's: Deligne's printed theorem on `Y₃` from its
  abelian-scheme form and the research field `mumfordRigidityCore`. -/
@@ -331,8 +436,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ17.lean b/ZInQKernel/OneProof/H/TailZ17.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ18.lean b/ZInQKernel/OneProof/H/TailZ18.lean
---- a/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 00:48:31.790123126 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 00:48:31.845258231 -0800
+--- a/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 00:57:24.347213900 -0800
++++ b/ZInQKernel/OneProof/H/TailZ18.lean	2026-11-16 00:57:24.404964273 -0800
 @@ -1248,8 +1248,9 @@
  `ZInQ.SixContactMin` from `OpenResearchLeaves11` (29), `OpenTextbookLeaves10` (15), `OpenAddedLeaves11` (13) and
  `OpenGlue7` (1). -/
@@ -346,8 +451,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ18.lean b/ZInQKernel/OneProof/H/TailZ18.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ19.lean b/ZInQKernel/OneProof/H/TailZ19.lean
---- a/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 00:48:31.790190898 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 00:48:31.845688248 -0800
+--- a/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 00:57:24.347282996 -0800
++++ b/ZInQKernel/OneProof/H/TailZ19.lean	2026-11-16 00:57:24.405429212 -0800
 @@ -1911,8 +1911,9 @@
  `ZInQ.SixContactMin` from `OpenResearchLeaves12` (32), `OpenTextbookLeaves10` (15), `OpenAddedLeaves11` (13) and
  `OpenGlue7` (1). -/
@@ -361,8 +466,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ19.lean b/ZInQKernel/OneProof/H/TailZ19.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ22.lean b/ZInQKernel/OneProof/H/TailZ22.lean
---- a/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 00:48:31.790265861 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 00:48:31.864741301 -0800
+--- a/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 00:57:24.347366661 -0800
++++ b/ZInQKernel/OneProof/H/TailZ22.lean	2026-11-16 00:57:24.426031866 -0800
 @@ -230,7 +230,6 @@
  /-- **The added leaves still open** (x6-fold): leaf-fold12's `OpenAddedLeaves11` without `x6ConicModel` (proved by
  x6-glue's `x6ConicModel_of_published`), with two of its leaves added. 14 fields. -/
@@ -409,8 +514,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ22.lean b/ZInQKernel/OneProof/H/TailZ22.l
 -#print axioms HDec.HSyn.addedLeaves11_of_open12
 -#print axioms HDec.HSyn.sixContactMin_of_open16
 diff -ruN a/ZInQKernel/OneProof/H/TailZ23.lean b/ZInQKernel/OneProof/H/TailZ23.lean
---- a/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 00:48:31.790325590 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 00:48:31.866091370 -0800
+--- a/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 00:57:24.347422725 -0800
++++ b/ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 00:57:24.427746513 -0800
 @@ -738,7 +738,6 @@
  `addedLeaves10_of_open11` and `addedLeaves9_of_open10`). -/
  theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
@@ -433,8 +538,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ23.lean b/ZInQKernel/OneProof/H/TailZ23.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ24.lean b/ZInQKernel/OneProof/H/TailZ24.lean
---- a/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 00:48:31.790391349 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 00:48:31.864995943 -0800
+--- a/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 00:57:24.347484518 -0800
++++ b/ZInQKernel/OneProof/H/TailZ24.lean	2026-11-16 00:57:24.426325797 -0800
 @@ -767,7 +767,6 @@
  `t09SymmIsogenyExists` (t09-pic's `T09Pic.t09SymmIsogenyExists_of_four`), with its four printed leaves added.
  17 fields. -/
@@ -464,8 +569,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ24.lean b/ZInQKernel/OneProof/H/TailZ24.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ25.lean b/ZInQKernel/OneProof/H/TailZ25.lean
---- a/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 00:48:31.790457548 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 00:48:31.846988802 -0800
+--- a/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 00:57:24.347576045 -0800
++++ b/ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 00:57:24.406778982 -0800
 @@ -134,8 +134,9 @@
    strictHenselizationPair := n.strictHenselizationPair
  
@@ -479,8 +584,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ25.lean b/ZInQKernel/OneProof/H/TailZ25.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ26.lean b/ZInQKernel/OneProof/H/TailZ26.lean
---- a/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 00:48:31.790508955 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 00:48:31.865331097 -0800
+--- a/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 00:57:24.347641083 -0800
++++ b/ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 00:57:24.426672319 -0800
 @@ -130,7 +130,6 @@
  
  /-- `OpenAddedLeaves13` without `shimizuCovolumeO1` (leaf-fold16). -/
@@ -510,8 +615,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ26.lean b/ZInQKernel/OneProof/H/TailZ26.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ27.lean b/ZInQKernel/OneProof/H/TailZ27.lean
---- a/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 00:48:31.790559052 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 00:48:31.847231698 -0800
+--- a/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 00:57:24.347693982 -0800
++++ b/ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 00:57:24.407159623 -0800
 @@ -122,8 +122,9 @@
    strictHenselizationPair := n.strictHenselizationPair
  
@@ -525,8 +630,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ27.lean b/ZInQKernel/OneProof/H/TailZ27.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ28.lean b/ZInQKernel/OneProof/H/TailZ28.lean
---- a/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 00:48:31.790608466 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 00:48:31.847330286 -0800
+--- a/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 00:57:24.347745780 -0800
++++ b/ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 00:57:24.407384771 -0800
 @@ -121,8 +121,9 @@
    gonzalezRotgerProp56X6 := n.gonzalezRotgerProp56X6
  
@@ -540,8 +645,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ28.lean b/ZInQKernel/OneProof/H/TailZ28.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ29.lean b/ZInQKernel/OneProof/H/TailZ29.lean
---- a/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 00:48:31.790658131 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 00:48:31.847419630 -0800
+--- a/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 00:57:24.347794614 -0800
++++ b/ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 00:57:24.407519835 -0800
 @@ -118,8 +118,9 @@
    neronBaseChangeStrictHenselization := n.neronBaseChangeStrictHenselization
  
@@ -555,8 +660,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ29.lean b/ZInQKernel/OneProof/H/TailZ29.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ30.lean b/ZInQKernel/OneProof/H/TailZ30.lean
---- a/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 00:48:31.790708716 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 00:48:31.865482024 -0800
+--- a/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 00:57:24.347847213 -0800
++++ b/ZInQKernel/OneProof/H/TailZ30.lean	2026-11-16 00:57:24.426950356 -0800
 @@ -12,7 +12,6 @@
  
  /-- `OpenAddedLeaves14` without `qmCentralizerCMC` (leaf-fold18). -/
@@ -587,8 +692,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ30.lean b/ZInQKernel/OneProof/H/TailZ30.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ31.lean b/ZInQKernel/OneProof/H/TailZ31.lean
---- a/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 00:48:31.790759012 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 00:48:31.865522235 -0800
+--- a/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 00:57:24.347910088 -0800
++++ b/ZInQKernel/OneProof/H/TailZ31.lean	2026-11-16 00:57:24.427033572 -0800
 @@ -12,7 +12,6 @@
  
  /-- `OpenAddedLeaves15` without `valenceFormulaCocompactEq` (leaf-fold18). -/
@@ -618,8 +723,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ31.lean b/ZInQKernel/OneProof/H/TailZ31.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ32.lean b/ZInQKernel/OneProof/H/TailZ32.lean
---- a/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 00:48:31.790808356 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 00:48:31.847572320 -0800
+--- a/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 00:57:24.347957800 -0800
++++ b/ZInQKernel/OneProof/H/TailZ32.lean	2026-11-16 00:57:24.407705494 -0800
 @@ -42,8 +42,9 @@
    neronSchemeExtensionExists := n.neronSchemeExtensionExists
  
@@ -633,8 +738,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ32.lean b/ZInQKernel/OneProof/H/TailZ32.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ33.lean b/ZInQKernel/OneProof/H/TailZ33.lean
---- a/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 00:48:31.790856088 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 00:48:31.847601654 -0800
+--- a/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 00:57:24.348005482 -0800
++++ b/ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 00:57:24.407734037 -0800
 @@ -119,8 +119,9 @@
    elkiesX6StarPrinted := n.elkiesX6StarPrinted
  
@@ -648,8 +753,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ33.lean b/ZInQKernel/OneProof/H/TailZ33.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ34.lean b/ZInQKernel/OneProof/H/TailZ34.lean
---- a/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 00:48:31.790921236 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 00:48:31.865574903 -0800
+--- a/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 00:57:24.348055266 -0800
++++ b/ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 00:57:24.427097848 -0800
 @@ -115,7 +115,6 @@
  
  /-- `OpenAddedLeaves16` without `shimuraGoodReductionNoGuard`, with the leaves `shimuraIntegralModelRep` (leaf-fold22). -/
@@ -679,8 +784,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ34.lean b/ZInQKernel/OneProof/H/TailZ34.l
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ35.lean b/ZInQKernel/OneProof/H/TailZ35.lean
---- a/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 00:48:31.789297245 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 00:48:31.849678867 -0800
+--- a/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 00:57:24.346384494 -0800
++++ b/ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 00:57:24.410252243 -0800
 @@ -113,8 +113,9 @@
    shimuraMainThmIDeligneY3AbU := n.shimuraMainThmIDeligneY3AbU
  
@@ -693,93 +798,9 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ35.lean b/ZInQKernel/OneProof/H/TailZ35.l
  
  end HSyn
  
-diff -ruN a/ZInQKernel/OneProof/H/TailZ36.lean b/ZInQKernel/OneProof/H/TailZ36.lean
---- a/ZInQKernel/OneProof/H/TailZ36.lean	1969-12-31 16:00:00.000000000 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ36.lean	2026-11-16 00:48:31.866902519 -0800
-@@ -0,0 +1,80 @@
-+import ZInQKernel.OneProof.H.TailZ35
-+import ZInQKernel.Contrib.OneProof.ThetaDirect
-+
-+/-! # OneProof H, theta-direct fold: `thetaRatiosAlgebraic` replaced by the printed leaf `IgusaThetaExpressions`
-+
-+The added composite field `thetaRatiosAlgebraic` (GLUE) is gone (pruned from `OpenAddedLeaves4` … `17`); its only
-+reader, TailK's `gluePieces_of_open4`, takes the use form `ThetaSplit.ThetaRatiosAtQM`, which
-+`HDec.ThetaDirect.thetaRatiosAtQM_of_igusa` proves from Igusa's theta expressions (docs/research/theta-direct.md). -/
-+
-+namespace HDec
-+
-+namespace HSyn
-+
-+/-- `OpenAddedLeaves17` with the leaf `igusaThetaExpressions` (theta-direct). -/
-+structure OpenAddedLeaves18 : Prop where
-+  tateTwistInvariants : _root_.ZInQ.Contrib.HodgeSplit.TateTwistInvariants
-+  axSenTate : _root_.ZInQ.Contrib.HodgeSplit.AxSenTate
-+  milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
-+  shimuraTaniyamaQbar : G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar
-+  egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
-+  /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-+  components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-+  389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED). -/
-+  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
-+  /-- x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
-+  Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
-+  `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean). -/
-+  deligneComponentsX6PrintedAb : _root_.ShimuraGlue.DeligneComponentsX6PrintedAb
-+  /-- x6-glue (shimura-split), textbook, weakened: for a proper `X → Spec k`, `char k = 0`, connectedness of
-+  `X ×_k k̄` gives geometric connectedness (EGA IV 4.5; Stacks 0389; locators UNVERIFIED). -/
-+  geomConnOfAlgClosure : QMSplit.Moduli.GeomConnOfAlgClosure
-+  /-- t09-pic, L1, printed form: the relative Picard fppf sheaf of an abelian variety over a field is representable
-+  (Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, *The Picard scheme*, Thm 9.4.8 with 9.2.5; locators
-+  UNVERIFIED). With the next three replaces `t09SymmIsogenyExists`. -/
-+  picRepresentableAbVar : _root_.T09Pic.PicRepresentableAbVar
-+  /-- t09-pic, L2, printed form: for every representation of `Pic_{A/K}`, its identity component with the induced
-+  group law is an abelian variety (`IsPicZero`; Mumford §13, Kleiman 9.5.1 and 9.5.3, SGA 3 VI_A 2.4; locators
-+  UNVERIFIED). -/
-+  picZeroAbVar : _root_.T09Pic.PicZeroAbVar
-+  /-- t09-pic, L3, printed form: for ample `L`, the lift `λ_L : A → Pic⁰` of `φ_L` is an isogeny (Mumford §6
-+  Application 1 and §8 Thm 1; locators UNVERIFIED). -/
-+  phiAmpleIsogeny : _root_.T09Pic.PhiAmpleIsogeny
-+  /-- t09-pic, L4, printed form (single leaf): there is a pairing `A[n] × Pic⁰[n] → μ_n`, `n` invertible in `K`, with
-+  the values of Mumford's `ē_n` (`weilScalar`), perfect, Galois-equivariant, compatible in `n`, adjoint for the
-+  genuine dual `f^∨`, and trivial on `(x, λ_L x)` for ample `L` (Mumford §20 and §23; Milne 1986 §16; locators
-+  UNVERIFIED). -/
-+  weilPairingMumford : _root_.T09Pic.WeilPairingMumford
-+  /-- Representability over Z_(p), p > 324, of the moduli problem of QM abelian surfaces (disc 6) with full level 3, by a proper smooth curve (printed form on QMAbScheme): Kottwitz, J. AMS 5 (1992) 5; Buzzard, Duke 87 (1997) 1-4; Morita, Hokkaido 10 (1981); locators UNVERIFIED -/
-+  shimuraIntegralModelRep : _root_.SGRSplit.ShimuraIntegralModelRep
-+  /-- theta-direct, LEAF (Igusa, Amer. J. Math. 86 (1964), 89 (1967) p. 848; locators UNVERIFIED): on `𝔥₂` the
-+  Siegel Eisenstein series `ψ₄`, `ψ₆` and Igusa's `χ₁₀`, `χ₁₂` equal their theta expressions. -/
-+  igusaThetaExpressions : G0Split.ThetaPt.LinYangPrinted.IgusaThetaExpressions
-+
-+/-- `OpenAddedLeaves17` from `OpenAddedLeaves18`. -/
-+theorem openAddedLeaves17_of_OpenAddedLeaves18 (l : OpenAddedLeaves18) : OpenAddedLeaves17 where
-+  tateTwistInvariants := l.tateTwistInvariants
-+  axSenTate := l.axSenTate
-+  milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
-+  shimuraTaniyamaQbar := l.shimuraTaniyamaQbar
-+  egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
-+  deligneComponentsY3PrintedAb := l.deligneComponentsY3PrintedAb
-+  deligneComponentsX6PrintedAb := l.deligneComponentsX6PrintedAb
-+  geomConnOfAlgClosure := l.geomConnOfAlgClosure
-+  picRepresentableAbVar := l.picRepresentableAbVar
-+  picZeroAbVar := l.picZeroAbVar
-+  phiAmpleIsogeny := l.phiAmpleIsogeny
-+  weilPairingMumford := l.weilPairingMumford
-+  shimuraIntegralModelRep := l.shimuraIntegralModelRep
-+
-+/-- **G0 with only the open leaves and the open glue** (theta-direct fold). -/
-+theorem sixContactMin_of_open30 (r : OpenResearchLeaves22) (t : OpenTextbookLeaves11) (l : OpenAddedLeaves18)
-+    (g : OpenGlue7) : ZInQ.SixContactMin :=
-+  sixContactMin_of_open29 r t (openAddedLeaves17_of_OpenAddedLeaves18 l) g
-+    (HDec.ThetaDirect.thetaRatiosAtQM_of_igusa' l.igusaThetaExpressions)
-+
-+end HSyn
-+
-+end HDec
-+
-+#print axioms HDec.HSyn.sixContactMin_of_open30
 diff -ruN a/ZInQKernel/OneProof/H/TailZ4.lean b/ZInQKernel/OneProof/H/TailZ4.lean
---- a/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 00:48:31.790978532 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 00:48:31.864539277 -0800
+--- a/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 00:57:24.348107685 -0800
++++ b/ZInQKernel/OneProof/H/TailZ4.lean	2026-11-16 00:57:24.425733787 -0800
 @@ -126,7 +126,6 @@
  `qmHauptmodulBase3` replaced by the valence formula, Shimizu's covolume and the CM value at `−24` (qm-glue). 14
  fields. -/
@@ -810,8 +831,8 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ4.lean b/ZInQKernel/OneProof/H/TailZ4.lea
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/H/TailZ9.lean b/ZInQKernel/OneProof/H/TailZ9.lean
---- a/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 00:48:31.791038923 -0800
-+++ b/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 00:48:31.844747724 -0800
+--- a/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 00:57:24.348170590 -0800
++++ b/ZInQKernel/OneProof/H/TailZ9.lean	2026-11-16 00:57:24.404406404 -0800
 @@ -141,8 +141,9 @@
  `OpenAddedLeaves8` (14) and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
  `docs/research/leaf-fold9.md` §2. -/
@@ -825,29 +846,22 @@ diff -ruN a/ZInQKernel/OneProof/H/TailZ9.lean b/ZInQKernel/OneProof/H/TailZ9.lea
  end HSyn
  
 diff -ruN a/ZInQKernel/OneProof/Main.lean b/ZInQKernel/OneProof/Main.lean
---- a/ZInQKernel/OneProof/Main.lean	2026-11-16 00:48:31.791094336 -0800
-+++ b/ZInQKernel/OneProof/Main.lean	2026-11-16 00:48:31.867936644 -0800
-@@ -1,4 +1,4 @@
--import ZInQKernel.OneProof.H.TailZ35
-+import ZInQKernel.OneProof.H.TailZ36
- import ZInQKernel.OneProof.TYZSplit
- import ZInQKernel.OneProof.TopChain
- import ZInQKernel.Contrib.TYZChain.Main
-@@ -59,7 +59,7 @@
+--- a/ZInQKernel/OneProof/Main.lean	2026-11-16 00:57:24.348223539 -0800
++++ b/ZInQKernel/OneProof/Main.lean	2026-11-16 00:57:24.428531673 -0800
+@@ -5,6 +5,7 @@
+ import ZInQKernel.Contrib.OneProof.RingClassLattice
+ import ZInQKernel.Contrib.OneProof.FHNonvanishing
+ import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
++import ZInQKernel.Contrib.OneProof.ThetaDirect
  
- /-- **Theorem 1.1, from every statement still open.** -/
- theorem _root_.ZInQ.OneProof.frozenTarget
--    (r : HDec.HSyn.OpenResearchLeaves22) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves17)
-+    (r : HDec.HSyn.OpenResearchLeaves22) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves18)
-     (g : HDec.HSyn.OpenGlue7)
-     (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
-     (hCM : _root_.T5Glue.ShimuraMainCM)
-@@ -67,7 +67,7 @@
+ /-!
+ # The whole proof in one theorem
+@@ -67,7 +68,7 @@
      (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
      ZInQ.FrozenTarget :=
    ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
 -    (HDec.HSyn.sixContactMin_of_open29 r t l g)
-+    (HDec.HSyn.sixContactMin_of_open30 r t l g)
++    (HDec.HSyn.sixContactMin_of_open29 r t l g HDec.ThetaDirect.thetaRatiosAtQM_of_qmHauptmodul)
      (ThetaWP8.tyzThm35ReadingA_noHX h11 h29 hCM h33)
      ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
  
