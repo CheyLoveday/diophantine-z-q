@@ -19,3 +19,9 @@ i.e. `GrossConjugationAt (shortCurve (-(d:ℚ)^2))` for d ≡ 5 (mod 8) squarefr
    conj L = L for a period lattice of E/ℚ; hence conj(weierPt z) = weierPt(conj z).
 5. ψ τ_Q = τ_{Q*}, Q* = [N C, B, A/N] (residue β, same D); Q ↦ Q* permutes Γ0(N)-classes; so conj fixes heegnerC.
 6. ι∘σ = conj∘ι; map ι injective ⇒ σ y = y.
+
+## Compile results
+- Lattice.lean: `lattice_eq_of_g` (g2, g3 determine the lattice, any PeriodPair), `conjPP`, `G_conjPP`,
+  `conj_mem_iff_of_isPeriodLattice`, `weierstrassP_conj`, `map_conj_weierPt`: compiles, no sorry (VERIFIED).
+- Fricke.lean: `fricke_apply` (f(-1/(Nz)) = ε N z² f(z)), `eichler_fricke` (ε=+1 ⇒ φ_f∘W_N = φ_f),
+  `conj_eichler`, `conj_eichler_psi` (conj φ_f(τ) = φ_f(1/(N τ̄))): compiles (VERIFIED).
