@@ -167,7 +167,10 @@ theorem hasSemiAbelianIdCompTorus_of_split {k : Type} [Field k] (G : Over (Spec 
   exact ⟨U, hU, inc, hoi, hmh, hcon, B, π, hπm, hfl, hsu, r,
     fun R _ _ => @e R _ (algK (φbar k) R), fun R _ _ => @he_inj R _ (algK (φbar k) R),
     fun R _ _ => @he_ker R _ (algK (φbar k) R),
-    fun R S _ _ _ _ f t => @he_nat R S _ (algK (φbar k) R) _ (algK (φbar k) S) _ t⟩
+    fun R S _ _ _ _ f t =>
+      letI := algK (φbar k) R
+      letI := algK (φbar k) S
+      he_nat R S ({ (f : R →+* S) with commutes' := fun a => f.commutes (φbar k a) } : R →ₐ[k] S) t⟩
 
 /-! ## §3. Ascent to `k̄` -/
 
@@ -213,11 +216,10 @@ theorem hasSemiAbelian_pullback_bar (hGC : AVGlue.GeomConnOfRationalPoint) {k : 
       geomInt := by change GeometricallyIntegral (pullback.snd B.X.hom (sφ φ)); infer_instance }
   refine ⟨F.obj U, inferInstance, F.map inc, ?_, inferInstance, ?_, B', F.map π, inferInstance, ?_,
     ?_, r, fun R _ _ => (Φ φ U R).symm.toMonoidHom.comp (e R), ?_, ?_, ?_⟩
-  · exact MorphismProperty.of_isPullback (P := @IsOpenImmersion) (pbmap_isPullback _ _ _ inc).flip hoi
-  · change ConnectedSpace (pullback U.hom (sφ φ))
-    exact GeometricallyConnected.connectedSpace_of_subsingleton (pullback.snd U.hom (sφ φ))
-  · exact MorphismProperty.of_isPullback (P := @Flat) (pbmap_isPullback _ _ _ π).flip hfl
-  · exact MorphismProperty.of_isPullback (P := @Surjective) (pbmap_isPullback _ _ _ π).flip hsu
+  · exact MorphismProperty.of_isPullback (P := @IsOpenImmersion) (pbmap_isPullback _ _ _ inc) hoi
+  · exact GeometricallyConnected.connectedSpace_of_subsingleton (pullback.snd U.hom (sφ φ))
+  · exact MorphismProperty.of_isPullback (P := @Flat) (pbmap_isPullback _ _ _ π) hfl
+  · exact MorphismProperty.of_isPullback (P := @Surjective) (pbmap_isPullback _ _ _ π) hsu
   · intro R _ _
     exact (Φ φ U R).symm.injective.comp (he_inj R)
   · intro R _ _ u

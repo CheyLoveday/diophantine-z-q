@@ -54,15 +54,15 @@ theorem conn_of_field (h : ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw) : Mumfo
 
 section Glue
 
-variable {S : Scheme.{0}} {ι : Type} (U : ι → S.Opens) (hcov : ∀ s : S, ∃ i, s ∈ U i)
+variable {S : Scheme.{0}} {Idx : Type} (U : Idx → S.Opens) (hcov : ∀ s : S, ∃ i, s ∈ U i)
   (hdisj : ∀ i j, i ≠ j → ∀ s : S, s ∈ U i → s ∉ U j)
 
-theorem pbmap_left_fst {i : ι} {X Y : Over S} (f : X ⟶ Y) :
+theorem pbmap_left_fst {i : Idx} {X Y : Over S} (f : X ⟶ Y) :
     ((Over.pullback (U i).ι).map f).left ≫ pullback.fst Y.hom (U i).ι =
       pullback.fst X.hom (U i).ι ≫ f.left := by
   simp only [Over.pullback_map_left, pullback.lift_fst]
 
-theorem pbmap_left_snd {i : ι} {X Y : Over S} (f : X ⟶ Y) :
+theorem pbmap_left_snd {i : Idx} {X Y : Over S} (f : X ⟶ Y) :
     ((Over.pullback (U i).ι).map f).left ≫ pullback.snd Y.hom (U i).ι = pullback.snd X.hom (U i).ι := by
   simp only [Over.pullback_map_left, pullback.lift_snd]
 
@@ -78,58 +78,88 @@ theorem glue_ext {X Y : Over S} (f g : X ⟶ Y)
   rw [← pullbackRestrictIsoRestrict_inv_fst, Category.assoc, Category.assoc, ← pbmap_left_fst,
     ← pbmap_left_fst, h i]
 
+include hcov in
+theorem isOpenCover_pre (X : Over S) : TopologicalSpace.IsOpenCover (fun i => X.hom ⁻¹ᵁ U i) := by
+  rw [TopologicalSpace.IsOpenCover, eq_top_iff]
+  intro x _
+  obtain ⟨i, hi⟩ := hcov (X.hom x)
+  exact TopologicalSpace.Opens.mem_iSup.mpr ⟨i, hi⟩
+
+/-- The cover of `X` by the preimages of the `U i`. -/
+def cov (X : Over S) : X.left.OpenCover :=
+  X.left.openCoverOfIsOpenCover (fun i => X.hom ⁻¹ᵁ U i) (isOpenCover_pre U hcov X)
+
+/-- The pieces of the glued morphism. -/
+def piece {X Y : Over S} (g : ∀ i, (Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y)
+    (i : Idx) : (X.hom ⁻¹ᵁ U i).toScheme ⟶ Y.left :=
+  (pullbackRestrictIsoRestrict X.hom (U i)).inv ≫ (g i).left ≫ pullback.fst Y.hom (U i).ι
+
+include hdisj in
+theorem piece_compat {X Y : Over S}
+    (g : ∀ i, (Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y) (i j : Idx) :
+    pullback.fst (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι ≫ piece U g i =
+      pullback.snd (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι ≫ piece U g j := by
+  by_cases hij : i = j
+  · subst hij
+    have : pullback.fst (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U i).ι =
+        pullback.snd (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U i).ι := by
+      rw [← cancel_mono (X.hom ⁻¹ᵁ U i).ι]; exact pullback.condition
+    rw [this]
+  · apply Scheme.hom_ext_of_forall
+    intro z
+    exfalso
+    have hz : (X.hom ⁻¹ᵁ U i).ι (pullback.fst (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι z) =
+        (X.hom ⁻¹ᵁ U j).ι (pullback.snd (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι z) := by
+      rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+    have h1 : (X.hom ⁻¹ᵁ U i).ι (pullback.fst (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι z) ∈
+        X.hom ⁻¹ᵁ U i := by
+      have : (X.hom ⁻¹ᵁ U i).ι (pullback.fst (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι z) ∈
+          Set.range (X.hom ⁻¹ᵁ U i).ι := ⟨_, rfl⟩
+      rwa [Scheme.Opens.range_ι] at this
+    have h2 : (X.hom ⁻¹ᵁ U j).ι (pullback.snd (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι z) ∈
+        X.hom ⁻¹ᵁ U j := by
+      have : (X.hom ⁻¹ᵁ U j).ι (pullback.snd (X.hom ⁻¹ᵁ U i).ι (X.hom ⁻¹ᵁ U j).ι z) ∈
+          Set.range (X.hom ⁻¹ᵁ U j).ι := ⟨_, rfl⟩
+      rwa [Scheme.Opens.range_ι] at this
+    rw [hz] at h1
+    exact hdisj i j hij _ h1 h2
+
+/-- The glued morphism of schemes. -/
+def glued {X Y : Over S} (g : ∀ i, (Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y) :
+    X.left ⟶ Y.left :=
+  (cov U hcov X).glueMorphisms (piece U g) (piece_compat U hdisj g)
+
+theorem ι_glued {X Y : Over S}
+    (g : ∀ i, (Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y) (i : Idx) :
+    (X.hom ⁻¹ᵁ U i).ι ≫ glued U hcov hdisj g = piece U g i :=
+  (cov U hcov X).ι_glueMorphisms (piece U g) (piece_compat U hdisj g) i
+
+theorem glued_w {X Y : Over S}
+    (g : ∀ i, (Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y) :
+    glued U hcov hdisj g ≫ Y.hom = X.hom := by
+  apply (cov U hcov X).hom_ext
+  rintro (i : Idx)
+  change (X.hom ⁻¹ᵁ U i).ι ≫ glued U hcov hdisj g ≫ Y.hom = (X.hom ⁻¹ᵁ U i).ι ≫ X.hom
+  rw [← Category.assoc, ι_glued]
+  have e1 : (g i).left ≫ pullback.snd Y.hom (U i).ι = pullback.snd X.hom (U i).ι := Over.w (g i)
+  rw [piece, Category.assoc, Category.assoc, pullback.condition, ← Category.assoc ((g i).left), e1,
+    ← pullback.condition, ← Category.assoc, pullbackRestrictIsoRestrict_inv_fst]
+
 include hcov hdisj in
 /-- Morphisms in `Over S` glue from their base changes to the `U i`. -/
 theorem glue_exists {X Y : Over S} (g : ∀ i, (Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y) :
     ∃ f : X ⟶ Y, ∀ i, (Over.pullback (U i).ι).map f = g i := by
-  let V : ι → X.left.Opens := fun i => X.hom ⁻¹ᵁ U i
-  have hV : IsOpenCover V := by
-    rw [IsOpenCover, eq_top_iff]
-    intro x _
-    obtain ⟨i, hi⟩ := hcov (X.hom x)
-    exact TopologicalSpace.Opens.mem_iSup.mpr ⟨i, hi⟩
-  let 𝒰 := X.left.openCoverOfIsOpenCover V hV
-  let fi : ∀ i, 𝒰.X i ⟶ Y.left := fun i =>
-    (pullbackRestrictIsoRestrict X.hom (U i)).inv ≫ (g i).left ≫ pullback.fst Y.hom (U i).ι
-  have hf : ∀ i j, pullback.fst (𝒰.f i) (𝒰.f j) ≫ fi i = pullback.snd _ _ ≫ fi j := by
-    intro i j
-    by_cases hij : i = j
-    · subst hij
-      have : pullback.fst (𝒰.f i) (𝒰.f i) = pullback.snd (𝒰.f i) (𝒰.f i) := by
-        rw [← cancel_mono (𝒰.f i)]; exact pullback.condition
-      rw [this]
-    · apply Scheme.hom_ext_of_forall
-      intro z
-      exfalso
-      have hz : (𝒰.f i) (pullback.fst (𝒰.f i) (𝒰.f j) z) = (𝒰.f j) (pullback.snd (𝒰.f i) (𝒰.f j) z) := by
-        rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
-      have h1 : (𝒰.f i) (pullback.fst (𝒰.f i) (𝒰.f j) z) ∈ V i := by
-        have : (V i).ι (pullback.fst (𝒰.f i) (𝒰.f j) z) ∈ Set.range (V i).ι := ⟨_, rfl⟩
-        rwa [Scheme.Opens.range_ι] at this
-      have h2 : (𝒰.f j) (pullback.snd (𝒰.f i) (𝒰.f j) z) ∈ V j := by
-        have : (V j).ι (pullback.snd (𝒰.f i) (𝒰.f j) z) ∈ Set.range (V j).ι := ⟨_, rfl⟩
-        rwa [Scheme.Opens.range_ι] at this
-      rw [hz] at h1
-      exact hdisj i j hij _ h1 h2
-  let f0 : X.left ⟶ Y.left := 𝒰.glueMorphisms fi hf
-  have hf0 : ∀ i, (V i).ι ≫ f0 = fi i := fun i => 𝒰.ι_glueMorphisms fi hf i
-  have hw : f0 ≫ Y.hom = X.hom := by
-    apply 𝒰.hom_ext
-    intro i
-    change (V i).ι ≫ f0 ≫ Y.hom = (V i).ι ≫ X.hom
-    rw [← Category.assoc, hf0]
-    simp only [fi, Category.assoc, pullback.condition]
-    have e1 : (g i).left ≫ pullback.snd Y.hom (U i).ι = pullback.snd X.hom (U i).ι := Over.w (g i)
-    rw [← Category.assoc ((g i).left), e1, ← pullback.condition, ← Category.assoc,
-      pullbackRestrictIsoRestrict_inv_fst]
-  refine ⟨Over.homMk f0 hw, fun i => ?_⟩
+  refine ⟨Over.homMk (glued U hcov hdisj g) (glued_w U hcov hdisj g), fun i => ?_⟩
   apply Over.OverMorphism.ext
   apply pullback.hom_ext
-  · rw [pbmap_left_fst, Over.homMk_left, ← pullbackRestrictIsoRestrict_hom_ι, Category.assoc, hf0]
-    simp only [fi, Iso.hom_inv_id_assoc]
+  · rw [pbmap_left_fst]
+    change pullback.fst X.hom (U i).ι ≫ glued U hcov hdisj g = _
+    rw [← pullbackRestrictIsoRestrict_hom_ι, Category.assoc, ι_glued, piece]
+    exact Iso.hom_inv_id_assoc _ _
   · rw [pbmap_left_snd]
     exact (Over.w (g i)).symm
 
+include hcov hdisj in
 /-- The bijection `(T ⟶ F) ≃ ∀ i, (P i T ⟶ P i F)`. -/
 def Ψ (X Y : Over S) : (X ⟶ Y) ≃ ∀ i, ((Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y) :=
   Equiv.ofBijective (fun f i => (Over.pullback (U i).ι).map f)
@@ -138,52 +168,50 @@ def Ψ (X Y : Over S) : (X ⟶ Y) ≃ ∀ i, ((Over.pullback (U i).ι).obj X ⟶
 
 variable (F : Over S) [∀ i, GrpObj ((Over.pullback (U i).ι).obj F)]
 
+include hcov hdisj
+
+theorem Ψ_apply {X Y : Over S} (f : X ⟶ Y) (i : Idx) :
+    Ψ U hcov hdisj X Y f i = (Over.pullback (U i).ι).map f := rfl
+
+theorem map_Ψ_symm {X Y : Over S}
+    (x : ∀ i, ((Over.pullback (U i).ι).obj X ⟶ (Over.pullback (U i).ι).obj Y)) (i : Idx) :
+    (Over.pullback (U i).ι).map ((Ψ U hcov hdisj X Y).symm x) = x i :=
+  congrFun ((Ψ U hcov hdisj X Y).apply_symm_apply x) i
+
 /-- The group `Hom(T, F)`, transported from `∏ᵢ Hom(P i T, P i F)`. -/
 abbrev grpT (T : Over S) : Group (T ⟶ F) := (Ψ U hcov hdisj T F).group
 
-theorem comp_mul_T {T T' : Over S} (h : T' ⟶ T) (f g : T ⟶ F) :
-    h ≫ (letI := grpT U hcov hdisj F T; f * g) =
-      (letI := grpT U hcov hdisj F T'; (h ≫ f) * (h ≫ g)) := by
-  letI := grpT U hcov hdisj F T
-  letI := grpT U hcov hdisj F T'
+/-- Its multiplication. -/
+def mulT (T : Over S) (f g : T ⟶ F) : T ⟶ F :=
+  (Ψ U hcov hdisj T F).symm (Ψ U hcov hdisj T F f * Ψ U hcov hdisj T F g)
+
+theorem comp_mulT {T T' : Over S} (h : T' ⟶ T) (f g : T ⟶ F) :
+    h ≫ mulT U hcov hdisj F T f g = mulT U hcov hdisj F T' (h ≫ f) (h ≫ g) := by
   apply (Ψ U hcov hdisj T' F).injective
   funext i
-  have e1 : Ψ U hcov hdisj T' F (h ≫ f * g) i =
-      (Over.pullback (U i).ι).map h ≫ Ψ U hcov hdisj T F (f * g) i := by
-    simp [Ψ]
-  rw [e1]
-  change _ = (Ψ U hcov hdisj T' F) ((Ψ U hcov hdisj T' F).symm
-    (Ψ U hcov hdisj T' F (h ≫ f) * Ψ U hcov hdisj T' F (h ≫ g))) i
-  change _ ≫ (Ψ U hcov hdisj T F) ((Ψ U hcov hdisj T F).symm
-    (Ψ U hcov hdisj T F f * Ψ U hcov hdisj T F g)) i = _
-  rw [Equiv.apply_symm_apply, Equiv.apply_symm_apply, Pi.mul_apply, Pi.mul_apply, MonObj.comp_mul]
-  simp [Ψ]
+  simp only [mulT, Ψ_apply, Functor.map_comp, map_Ψ_symm, Pi.mul_apply]
+  exact MonObj.comp_mul _ _ _
+
+theorem comp_oneT {T T' : Over S} (h : T' ⟶ T) :
+    h ≫ (Ψ U hcov hdisj T F).symm 1 = (Ψ U hcov hdisj T' F).symm 1 := by
+  apply (Ψ U hcov hdisj T' F).injective
+  funext i
+  simp only [Ψ_apply, Functor.map_comp, map_Ψ_symm, Pi.one_apply]
+  exact MonObj.comp_one _
 
 /-- The presheaf of groups `T ↦ Hom(T, F)`. -/
 def homGrp : (Over S)ᵒᵖ ⥤ GrpCat.{0} where
-  obj T := @GrpCat.of (T.unop ⟶ F) (grpT U hcov hdisj F T.unop)
-  map {T T'} h := @GrpCat.ofHom (T.unop ⟶ F) (T'.unop ⟶ F) (grpT U hcov hdisj F T.unop)
-    (grpT U hcov hdisj F T'.unop)
+  obj T := letI := grpT U hcov hdisj F T.unop; GrpCat.of (T.unop ⟶ F)
+  map {T T'} h :=
+    letI := grpT U hcov hdisj F T.unop
+    letI := grpT U hcov hdisj F T'.unop
+    GrpCat.ofHom
     { toFun := fun f => h.unop ≫ f
-      map_one' := by
-        letI := grpT U hcov hdisj F T.unop
-        letI := grpT U hcov hdisj F T'.unop
-        apply (Ψ U hcov hdisj T'.unop F).injective
-        funext i
-        change (Over.pullback (U i).ι).map (h.unop ≫ (Ψ U hcov hdisj T.unop F).symm 1) =
-          (Ψ U hcov hdisj T'.unop F) ((Ψ U hcov hdisj T'.unop F).symm 1) i
-        rw [Equiv.apply_symm_apply, Functor.map_comp]
-        have : (Over.pullback (U i).ι).map ((Ψ U hcov hdisj T.unop F).symm 1) = 1 := by
-          change (Ψ U hcov hdisj T.unop F) ((Ψ U hcov hdisj T.unop F).symm 1) i = 1
-          rw [Equiv.apply_symm_apply]; rfl
-        rw [this, Pi.one_apply, MonObj.comp_one]
-      map_mul' := fun f g => comp_mul_T U hcov hdisj F h.unop f g }
-  map_id T := by
-    ext f
-    exact Category.id_comp f
-  map_comp {T T' T''} h h' := by
-    ext f
-    exact Category.assoc _ _ _
+      map_one' := comp_oneT U hcov hdisj F h.unop
+      map_mul' := fun f g => comp_mulT U hcov hdisj F h.unop f g }
+  map_id T := GrpCat.ext fun f => Category.id_comp f
+  map_comp {T T' T''} h h' := GrpCat.ext fun f =>
+    show (h'.unop ≫ h.unop) ≫ f = h'.unop ≫ h.unop ≫ f from Category.assoc _ _ _
 
 /-- `F` represents `homGrp ⋙ forget`. -/
 def homGrpRep : (homGrp U hcov hdisj F ⋙ forget GrpCat).RepresentableBy F where
@@ -195,7 +223,7 @@ abbrev grpObj_of_pieces : GrpObj F :=
   GrpObj.ofRepresentableBy F (homGrp U hcov hdisj F) (homGrpRep U hcov hdisj F)
 
 /-- The base changes of the glued identity are the given identities. -/
-theorem pb_eta (i : ι) :
+theorem pb_eta (i : Idx) :
     letI := grpObj_of_pieces U hcov hdisj F
     (Over.pullback (U i).ι).map (η[F] : 𝟙_ (Over S) ⟶ F) =
       toUnit _ ≫ η[(Over.pullback (U i).ι).obj F] := by
@@ -215,11 +243,11 @@ theorem mumfordGroupLaw_of_conn (hC : MumfordGroupLawConn) : MumfordGroupLaw := 
   intro S F e hS hP hSm hGC he hfib
   haveI := hS
   -- the cover by connected components
-  let ι := ConnectedComponents S
-  let rep : ι → S := fun c => c.out
-  let U : ι → S.Opens := fun c =>
+  let Idx := _root_.ConnectedComponents S
+  let rep : Idx → S := fun c => c.out
+  let U : Idx → S.Opens := fun c =>
     ⟨connectedComponent (rep c), isOpen_connectedComponent_of_isLocallyNoetherian S (rep c)⟩
-  have hrep : ∀ c : ι, (ConnectedComponents.mk (rep c) : ι) = c := fun c => Quotient.out_eq c
+  have hrep : ∀ c : Idx, (_root_.ConnectedComponents.mk (rep c) : Idx) = c := fun c => Quotient.out_eq c
   have hcov : ∀ s : S, ∃ i, s ∈ U i := by
     intro s
     refine ⟨ConnectedComponents.mk s, ?_⟩
@@ -234,7 +262,7 @@ theorem mumfordGroupLaw_of_conn (hC : MumfordGroupLawConn) : MumfordGroupLaw := 
     apply ConnectedComponents.coe_eq_coe.mpr
     change s ∈ connectedComponent (rep i) at hi
     change s ∈ connectedComponent (rep j) at hj
-    rw [← connectedComponent_eq hi, ← connectedComponent_eq hj]
+    rw [connectedComponent_eq hi, connectedComponent_eq hj]
   -- the leaf on each component
   have piece : ∀ i, ∃ _G : GrpObj ((Over.pullback (U i).ι).obj F),
       η[(Over.pullback (U i).ι).obj F].left =
@@ -247,7 +275,7 @@ theorem mumfordGroupLaw_of_conn (hC : MumfordGroupLawConn) : MumfordGroupLaw := 
     haveI : Smooth F.hom := hSm
     haveI : GeometricallyConnected F.hom := hGC
     have hconn : ConnectedSpace (U i).toScheme := by
-      have : IsConnected (connectedComponent (rep i)) := isConnected_connectedComponent
+      have : _root_.IsConnected (connectedComponent (rep i)) := isConnected_connectedComponent
       exact Subtype.connectedSpace this
     refine hC (U i).toScheme Fi ei inferInstance hconn
       (by change IsProper (pullback.snd F.hom (U i).ι); infer_instance)
@@ -261,14 +289,14 @@ theorem mumfordGroupLaw_of_conn (hC : MumfordGroupLawConn) : MumfordGroupLaw := 
     · refine IsPullback.of_right ?_ (pullback.lift_snd _ _ _) (IsPullback.of_hasPullback F.hom (U i).ι)
       rw [pullback.lift_fst]
       exact hpb
-    · apply pullback.hom_ext
-      · rw [Category.assoc, pullback.lift_fst, hone, Category.assoc, Category.assoc]
-        change s ≫ (U i).ι ≫ e = s ≫ ei ≫ pullback.fst F.hom (U i).ι
-        rw [pullback.lift_fst]
-      · rw [Category.assoc, pullback.lift_snd, ← Category.assoc, Category.assoc s, pullback.lift_snd,
-          Category.comp_id]
-        have h1 : (1 : A.Pt K).left ≫ A.X.hom = 𝟙 _ := Over.w (1 : A.Pt K)
-        rw [h1, Category.id_comp]
+    · have h1 : (1 : A.Pt K).left ≫ A.X.hom = 𝟙 _ := by
+        rw [Over.w (1 : A.Pt K)]; simp [AbVar.ptObj, Algebra.algebraMap_self]
+      have hei1 : ei ≫ pullback.fst F.hom (U i).ι = (U i).ι ≫ e := pullback.lift_fst _ _ _
+      have hei2 : ei ≫ pullback.snd F.hom (U i).ι = 𝟙 _ := pullback.lift_snd _ _ _
+      apply pullback.hom_ext
+      · erw [Category.assoc, pullback.lift_fst, hone, Category.assoc s ei, hei1, Category.assoc]
+      · erw [Category.assoc, pullback.lift_snd, Category.assoc s ei, hei2, Category.comp_id,
+          ← Category.assoc, h1, Category.id_comp]
   choose G hG using piece
   letI : ∀ i, GrpObj ((Over.pullback (U i).ι).obj F) := G
   letI := grpObj_of_pieces U hcov hdisj F
@@ -280,17 +308,15 @@ theorem mumfordGroupLaw_of_conn (hC : MumfordGroupLawConn) : MumfordGroupLaw := 
     rw [pb_eta]
     apply Over.OverMorphism.ext
     apply pullback.hom_ext
-    · rw [Over.comp_left, Category.assoc, hG i, pullback.lift_fst, pbmap_left_fst, Over.homMk_left]
+    · rw [Over.comp_left, Category.assoc, hG i, pullback.lift_fst, pbmap_left_fst]
+      change _ = pullback.fst (𝟙_ (Over S)).hom (U i).ι ≫ e
       have h1 : (toUnit ((Over.pullback (U i).ι).obj (𝟙_ (Over S)))).left ≫ 𝟙 _ =
           pullback.snd (𝟙_ (Over S)).hom (U i).ι := Over.w _
       rw [Category.comp_id] at h1
-      rw [← Category.assoc, h1, ← pullback.condition_assoc]
-      rfl
-    · rw [Over.comp_left, Category.assoc, hG i, pullback.lift_snd, Category.comp_id, pbmap_left_snd]
-      have h1 : (toUnit ((Over.pullback (U i).ι).obj (𝟙_ (Over S)))).left ≫ 𝟙 _ =
-          pullback.snd (𝟙_ (Over S)).hom (U i).ι := Over.w _
-      rw [Category.comp_id] at h1
-      exact h1
+      rw [← Category.assoc, h1, ← pullback.condition]
+      exact congrArg (· ≫ e) (Category.comp_id _)
+    · rw [Over.comp_left, Category.assoc, hG i, pullback.lift_snd, pbmap_left_snd]
+      exact Over.w _
   rw [key]
   rfl
 
