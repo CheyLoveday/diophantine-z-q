@@ -233,4 +233,66 @@ theorem homFreeConcl_of_emb (HL : BPAnalytic.Uniformization.UniformizationLeafAl
     rw [key, hz]
     rfl
 
+/-! ## 4. Corollaries: the narrowed statements -/
+
+/-- **Mumford §19 Thm 3 (T6, `PkgI3.HomFreeFinite`) over every field that embeds into `ℂ`.** The
+body of `PkgI3.HomFreeFinite`, quantified over fields `k` with a ring homomorphism `σ : k → ℂ`. -/
+def HomFreeFiniteC : Prop :=
+  ∀ (k : Type) [Field k] (_ : k →+* ℂ) (A B : PkgI3.AbVar k),
+    Module.Free ℤ (PkgI3.AbVar.Hom A B) ∧ Module.Finite ℤ (PkgI3.AbVar.Hom A B) ∧
+      ((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ∞) : WithBot ℕ∞) ≤ 4 * A.dim * B.dim ∧
+      ∀ (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+        Function.Injective (PkgI3.AbVar.tateHomZl ℓ A B)
+
+/-- **`HomFreeFiniteAlgClosed` over algebraically closed fields that embed into `ℂ`.** The field's
+statement with the extra hypothesis `σ : k → ℂ`. -/
+def HomFreeFiniteAlgClosedC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (_ : k →+* ℂ) (A B : PkgI3.AbVar k),
+    Module.Free ℤ (PkgI3.AbVar.Hom A B) ∧ Module.Finite ℤ (PkgI3.AbVar.Hom A B) ∧
+      ((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ∞) : WithBot ℕ∞) ≤ 4 * A.dim * B.dim ∧
+      ∀ (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+        Function.Injective (PkgI3.AbVar.tateHomZl ℓ A B)
+
+/-- `σ : k → ℂ` extends to `k̄ → ℂ`. -/
+theorem exists_emb (σ : K →+* ℂ) : Nonempty (AlgebraicClosure K →+* ℂ) := by
+  letI : Algebra K ℂ := σ.toAlgebra
+  exact ⟨(IsAlgClosed.lift : AlgebraicClosure K →ₐ[K] ℂ).toRingHom⟩
+
+/-- **`HomFreeFiniteC` (proved) from `uniformizationLeafAll` and `mumfordTorsionAlgClosed`.** -/
+theorem homFreeFiniteC (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) : HomFreeFiniteC := by
+  intro k _ σ A B
+  obtain ⟨emb⟩ := exists_emb σ
+  obtain ⟨h1, h2, h3, h4⟩ := homFreeConcl_of_emb HL HT emb A B
+  exact ⟨h1, h2, h3, fun ℓ _ _ => h4 ℓ⟩
+
+/-- **`HomFreeFiniteAlgClosedC` (proved).** -/
+theorem homFreeFiniteAlgClosedC (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) : HomFreeFiniteAlgClosedC :=
+  fun k _ _ σ A B => homFreeFiniteC HL HT k σ A B
+
+/-- **The remainder of Mumford §19 Thm 3: algebraically closed fields with no embedding into
+`ℂ`** (characteristic `p > 0`, or characteristic `0` and transcendence degree over `ℚ` larger than
+the continuum). The field's statement restricted to them. -/
+def HomFreeFiniteAlgClosedNoEmb : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k], IsEmpty (k →+* ℂ) → ∀ (A B : PkgI3.AbVar k),
+    Module.Free ℤ (PkgI3.AbVar.Hom A B) ∧ Module.Finite ℤ (PkgI3.AbVar.Hom A B) ∧
+      ((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ∞) : WithBot ℕ∞) ≤ 4 * A.dim * B.dim ∧
+      ∀ (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+        Function.Injective (PkgI3.AbVar.tateHomZl ℓ A B)
+
+/-- **The field from the two bundle fields and the remainder (proved).** -/
+theorem homFreeFiniteAlgClosed_of_noEmb (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) (HR : HomFreeFiniteAlgClosedNoEmb) :
+    ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed := by
+  intro k _ _ A B
+  rcases isEmpty_or_nonempty (k →+* ℂ) with he | hne
+  · exact HR k he A B
+  · obtain ⟨σ⟩ := hne
+    exact homFreeFiniteC HL HT k σ A B
+
 end ZInQ.Contrib.OneProof.HomFreeC
+
+#print axioms ZInQ.Contrib.OneProof.HomFreeC.homFreeConcl_of_emb
+#print axioms ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteC
+#print axioms ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteAlgClosed_of_noEmb
