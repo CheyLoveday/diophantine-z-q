@@ -133,7 +133,7 @@ section SpreadGen
 
 variable {L : Type} [Field L] [NumberField L]
 
-instance isLocalization_bot : IsLocalization.AtPrime L (⊥ : Ideal (𝓞 L)) := by
+theorem isLocalization_bot : IsLocalization.AtPrime L (⊥ : Ideal (𝓞 L)) := by
   have h : (⊥ : Ideal (𝓞 L)).primeCompl = nonZeroDivisors (𝓞 L) := by
     ext x
     simp [Ideal.primeCompl, mem_nonZeroDivisors_iff_ne_zero]
@@ -187,6 +187,7 @@ theorem isAffineHom_bcDiag_map {R : Type} [CommRing R] {𝔭 : Ideal R} [𝔭.Is
 theorem spread_generic (V X : Over (S L)) [QuasiCompact V.hom] [QuasiSeparated V.hom]
     [LocallyOfFinitePresentation X.hom] (a : (gf L).obj V ⟶ (gf L).obj X) :
     ∃ (s : GIdx L) (g : res V (Dg s) ⟶ X), (gf L).map g = (gf L).map (resι V (Dg s)) ≫ a := by
+  haveI := isLocalization_bot (L := L)
   let v := V.hom
   let 𝔭 : Ideal (𝓞 L) := ⊥
   let jR := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L))
