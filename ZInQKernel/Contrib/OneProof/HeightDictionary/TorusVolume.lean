@@ -500,6 +500,99 @@ theorem volume_eq_of_normalized (h : IsUnif Λ Φ) (μ : Measure G) [IsFiniteMea
   rw [hμ, Measure.smul_apply, h.piMeasure_univ, ENNReal.smul_def, smul_eq_mul, ENNReal.toReal_mul,
     ENNReal.coe_toReal, hc, hcov]
 
+
+/-- **Existence: `‖det D‖² π` has density `1` at `F(1)`** (so `a ‖det D‖² π` has density `a`), for
+`π = Φ_*(Lebesgue|_D)` and a fundamental domain `D` containing a ball, when `det D ≠ 0`. -/
+theorem piMeasure_normalized (h : IsUnif Λ Φ) {DD : Set (Fin g → ℂ)} {r₀ : ℝ} (hr₀ : 0 < r₀)
+    (hBD : ball 0 r₀ ⊆ DD) (hsep : ∀ x ∈ DD, ∀ y ∈ ball (0 : Fin g → ℂ) r₀, x - y ∈ Λ → x = y)
+    (F : G → (Fin g → ℂ)) (D : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))
+    (hψ : HasStrictFDerivAt (F ∘ Φ) (D.restrictScalars ℝ) 0)
+    (hD : LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) ≠ 0) (a : ℝ) (ha : 0 ≤ a) :
+    ∀ ε : ℝ, 0 < ε → ∃ W ∈ 𝓝 (1 : G), ∀ E ⊆ W, MeasurableSet E →
+      |a * ‖LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))‖ ^ 2 * (piMeasure Φ DD E).toReal -
+        a * (volume (F '' E)).toReal| ≤ ε * (volume (F '' E)).toReal := by
+  intro ε hε
+  set d : ℝ := ‖LinearMap.det (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))‖ ^ 2 with hd
+  have hdpos : 0 < d := by positivity
+  set A : (Fin g → ℂ) →L[ℝ] (Fin g → ℂ) := D.restrictScalars ℝ
+  have hAd : |A.det| = d := by rw [det_restrictScalars_eq, abs_of_nonneg hdpos.le]
+  set δ' : ℝ := min (d / 2) (ε * d / (2 * (a + 1))) with hδ'
+  have hδ'pos : 0 < δ' := lt_min (by positivity) (by positivity)
+  have hδ'1 : δ' ≤ d / 2 := min_le_left _ _
+  have hδ'2 : δ' ≤ ε * d / (2 * (a + 1)) := min_le_right _ _
+  have hup : ∀ᶠ δ in 𝓝[>] (0 : ℝ≥0), ∀ (s : Set (Fin g → ℂ)) (f : (Fin g → ℂ) → (Fin g → ℂ)),
+      ApproximatesLinearOn f A s δ → volume (f '' s) ≤ ENNReal.ofReal (d + δ') * volume s :=
+    addHaar_image_le_mul_of_det_lt (volume : Measure (Fin g → ℂ)) A
+      (m := Real.toNNReal (d + δ')) (by
+        rw [hAd]; exact (ENNReal.ofReal_lt_ofReal_iff (by positivity)).mpr (by linarith))
+  have hlow : ∀ᶠ δ in 𝓝[>] (0 : ℝ≥0), ∀ (s : Set (Fin g → ℂ)) (f : (Fin g → ℂ) → (Fin g → ℂ)),
+      ApproximatesLinearOn f A s δ → ENNReal.ofReal (d - δ') * volume s ≤ volume (f '' s) :=
+    mul_le_addHaar_image_of_lt_det (volume : Measure (Fin g → ℂ)) A
+      (m := Real.toNNReal (d - δ')) (by
+        rw [hAd]; exact (ENNReal.ofReal_lt_ofReal_iff hdpos).mpr (by linarith))
+  obtain ⟨δ, ⟨hδu, hδl⟩, hδpos⟩ := ((hup.and hlow).and self_mem_nhdsWithin).exists
+  obtain ⟨s₀, hs₀, hsA⟩ := hψ.approximates_deriv_on_nhds (c := δ) (Or.inr hδpos)
+  obtain ⟨r₁, hr₁, hr₁s⟩ := Metric.mem_nhds_iff.mp hs₀
+  set r := min r₁ r₀
+  have hr : 0 < r := lt_min hr₁ hr₀
+  set B := ball (0 : Fin g → ℂ) r
+  have hBs : B ⊆ s₀ := (ball_subset_ball (min_le_left _ _)).trans hr₁s
+  have hBr₀ : B ⊆ ball 0 r₀ := ball_subset_ball (min_le_right _ _)
+  refine ⟨Φ '' B, (h.isOpenMap _ isOpen_ball).mem_nhds ⟨0, mem_ball_self hr, h.map_zero⟩, ?_⟩
+  intro E hEW hE
+  set E' := Φ ⁻¹' E ∩ B
+  have hE'B : E' ⊆ B := inter_subset_right
+  have hΦE' : Φ '' E' = E := by
+    apply Subset.antisymm
+    · rintro _ ⟨x, hx, rfl⟩; exact hx.1
+    · intro p hp
+      obtain ⟨y, hy, rfl⟩ := hEW hp
+      exact ⟨y, ⟨hp, hy⟩, rfl⟩
+  have hπE : piMeasure Φ DD E = volume E' := by
+    rw [h.piMeasure_apply DD hE]
+    congr 1
+    ext x
+    constructor
+    · rintro ⟨hx, hxD⟩
+      obtain ⟨y, hy, hyx⟩ := hEW hx
+      have := hsep x hxD y (hBr₀ hy) ((h.eq_iff x y).mp hyx.symm)
+      exact ⟨hx, this ▸ hy⟩
+    · rintro ⟨hx, hxB⟩
+      exact ⟨hx, hBD (hBr₀ hxB)⟩
+  have hFE : F '' E = (F ∘ Φ) '' E' := by rw [← hΦE', image_comp]
+  rw [hπE, hFE]
+  have hsE : ApproximatesLinearOn (F ∘ Φ) A E' δ := hsA.mono_set (hE'B.trans hBs)
+  have hX1 := hδu E' (F ∘ Φ) hsE
+  have hX2 := hδl E' (F ∘ Φ) hsE
+  have hVt : volume E' ≠ ⊤ := (measure_mono hE'B).trans_lt measure_ball_lt_top |>.ne
+  have hXt : volume ((F ∘ Φ) '' E') ≠ ⊤ :=
+    ne_top_of_le_ne_top (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hVt) hX1
+  set V := (volume E').toReal
+  set X := (volume ((F ∘ Φ) '' E')).toReal
+  have hV0 : 0 ≤ V := ENNReal.toReal_nonneg
+  have hXu : X ≤ (d + δ') * V := by
+    have := ENNReal.toReal_mono (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hVt) hX1
+    rwa [ENNReal.toReal_mul, ENNReal.toReal_ofReal (by positivity)] at this
+  have hXl : (d - δ') * V ≤ X := by
+    have := ENNReal.toReal_mono hXt hX2
+    rwa [ENNReal.toReal_mul, ENNReal.toReal_ofReal (by linarith)] at this
+  have h1 : |a * d * V - a * X| ≤ a * (δ' * V) := by
+    rw [show a * d * V - a * X = a * (d * V - X) by ring, abs_mul, abs_of_nonneg ha]
+    refine mul_le_mul_of_nonneg_left ?_ ha
+    rw [abs_le]; constructor <;> nlinarith
+  have hVX : V ≤ 2 / d * X := by
+    rw [div_mul_eq_mul_div, le_div_iff₀ hdpos]
+    nlinarith
+  calc |a * d * V - a * X| ≤ a * (δ' * V) := h1
+    _ ≤ a * (ε * d / (2 * (a + 1)) * (2 / d * X)) := by
+        apply mul_le_mul_of_nonneg_left _ ha
+        exact mul_le_mul hδ'2 hVX hV0 (by positivity)
+    _ = ε * X * (a / (a + 1)) := by field_simp
+    _ ≤ ε * X * 1 := by
+        apply mul_le_mul_of_nonneg_left _ (by positivity)
+        rw [div_le_one (by linarith)]; linarith
+    _ = ε * X := mul_one _
+
 end Main
 
 end ZInQ.HeightDict.TorusVolume
