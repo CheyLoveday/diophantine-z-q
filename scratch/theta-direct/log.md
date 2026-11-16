@@ -32,3 +32,20 @@ Task theta-direct, started 2026-11-16 00:00 PST. Base a40d5c4d (wip/theta-direct
   even w).
 * ThetaDirect/Nodes.lean compiles: `nodeAlg_om24` (θ_m/θ_00 algebraic at Ω₂₄ = Ω(τ₂₄)), `nodeAlg_cm4`
   (θ_m/θ_00 algebraic at Ω₀ = Ω(√2+i)), via genus-one values at i (θ01(i) = θ10(i), Jacobi).
+
+## Step 2 (compiled, VERIFIED)
+* ThetaDirect/Relations.lean: `psi6Th_modular`, `chi12Th_modular` (from IgusaThetaExpressions + siegelEis_modular +
+  spAct_mem); `auto6`, `auto12` (Γ*-automorphy of ψ₆∘Ω, χ₁₂∘Ω normalized); analyticity by fun_prop; nodes
+  `tau4 = √2+i`, `tau24` (G20 vanishes at tau4, not at tau24 ⇒ inequivalent);
+  `rel1 : ψ₆(Ω z)·Σθ⁸(Ω z) = c₁·∏θ²(Ω z)` (weight 20, node τ₂₄), `rel2 : (Σθ⁸)²χ₁₂ = c₂(Σθ⁸)⁵ + c₃(∏θ²)²`
+  (weight 40, nodes √2+i, τ₂₄), for all z with Im z > 0.
+* ThetaDirect.lean: `c1_mem`, `c2_mem`, `c3_mem` (algebraic), `qmThetaSymmetricAlg_of`,
+  `thetaRatiosAtQM_of_symAlg`, MAIN `thetaRatiosAtQM_of_igusa : IgusaThetaExpressions → ThetaRatiosAtQM`,
+  `thetaRatiosAtQM_of_igusa'` (consumer form `QMHauptmodul → ThetaRatiosAtQM`), `thetaPointOfFibre_of_igusa`.
+* `lake build ZInQKernel.Contrib.OneProof.ThetaDirect`: OK (12137 jobs). `#print axioms` of all main theorems:
+  [propext, Classical.choice, Quot.sound] (scratch/theta-direct/axioms.txt).
+* No macro/notation/#eval in the contributor files (CONTRIBUTING.md bar): the membership tactic is an inline
+  `repeat (first | ...)` block; `𝔸` written out as `algebraicClosure ℚ ℂ`; linyang-printed's `SpMat` renamed to
+  `GapTheta.Mat4` in the §6 copy.
+* Fold dry run (python only, on a /tmp copy of the base's ZInQKernel/OneProof/H): theta-fold's plumb.py applies
+  unchanged to a40d5c4d (24 files edited, all assertions pass).
