@@ -145,4 +145,106 @@ theorem local25 {p : ℕ} [Fact p.Prime] (hp : p = 2) {z : ℍ[ℚ_[p]]} (hz : I
     simpa using this
   exact ⟨key _ _ he.1, key _ _ he.2.1, key _ _ he.2.2.1, key _ _ he.2.2.2⟩
 
+/-! ## The global step -/
+
+theorem unitList_nrdH : ∀ μ ∈ unitList, nrdH μ = 1 := by decide
+
+theorem quarter_conj {p : ℕ} [Fact p.Prime] {A z : ℍ[ℚ_[p]]} (hA : IsHur (Zp p) A)
+    (hnA : ‖Quaternion.normSq A‖ = 1) (h : IsHur (Zp p) (((1 / 4 : ℚ) : ℚ_[p]) • (z - A))) :
+    IsHur (Zp p) (((1 / 4 : ℚ) : ℚ_[p]) • ((Quaternion.normSq A)⁻¹ • star A * z - 1)) := by
+  have hA0 := normSq_ne_zero_of hnA
+  have h1 : (Quaternion.normSq A)⁻¹ • star A * A = 1 := by
+    rw [smul_mul_assoc, Quaternion.star_mul_self, ← Quaternion.coe_mul_eq_smul,
+      ← Quaternion.coe_mul, inv_mul_cancel₀ hA0, Quaternion.coe_one]
+  have e : (Quaternion.normSq A)⁻¹ • star A * z - 1 = (Quaternion.normSq A)⁻¹ • star A * (z - A) := by
+    rw [mul_sub, h1]
+  rw [e, ← mul_smul_comm]
+  exact (isHur_inv_star hA hnA).mul h
+
+theorem quarter_conj2 {p : ℕ} [Fact p.Prime] {A z Z' : ℍ[ℚ_[p]]} (hZ' : IsHur (Zp p) Z')
+    (hZz : Z' * z = 1) (h : IsHur (Zp p) (((1 / 4 : ℚ) : ℚ_[p]) • (z - A))) :
+    IsHur (Zp p) (((1 / 4 : ℚ) : ℚ_[p]) • (Z' * A - 1)) := by
+  have e : ((1 / 4 : ℚ) : ℚ_[p]) • (Z' * A - 1) = (-Z') * (((1 / 4 : ℚ) : ℚ_[p]) • (z - A)) := by
+    rw [mul_smul_comm, neg_mul, mul_sub, hZz, neg_sub]
+  rw [e]
+  exact (by simpa using hZ'.smul ((Zp p).neg_mem (Zp p).one_mem) : IsHur (Zp p) (-Z')).mul h
+
+theorem hurZ_mulH {R : Type*} [Field R] [CharZero R] (a b : H4 ℤ) :
+    (hurZ (mulH a b) : ℍ[R]) = hurZ a * hurZ b := by
+  apply hc_injective; rw [hc_mul_hurZ, hc_hurZ]
+
+/-- **TYZ Lemma 2.5, surjectivity, for `Ô_B^×`.** -/
+theorem exists_twoRep_of_unit {n : ℕ} [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) {v : HeightOneSpectrum (𝓞 ℚ)}
+    (hv : IsPlaceTwo v) {u : ℍ[AQ]ˣ} (hu : LH u) (hu' : LH ((u⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ])) :
+    ∃ t, (u : ℍ[AQ]) ∈ DC n τ (twoRep v t) := by
+  have hzz : piQ v ((u⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) * piQ v (u : ℍ[AQ]) = 1 := by
+    rw [← map_mul, Units.inv_mul, map_one]
+  have hn : ‖Quaternion.normSq (piQ v (u : ℍ[AQ]))‖ = 1 :=
+    norm_eq_one_of_mul (hu v).normSq_mem (hu' v).normSq_mem (by
+      rw [← map_mul, ← map_mul, Units.mul_inv, map_one, map_one])
+  obtain ⟨μ, hμ, s, t, hloc⟩ := local25 (Pw_eq_two hv) (hu v) hn
+  set ε : ℍ[ℚ] := ((sg s : ℤ) : ℚ) • hurZ μ with hεdef
+  have hεn : Quaternion.normSq ε = 1 := by
+    rw [hεdef, Quaternion.normSq_smul, normSq_hurZ, unitList_nrdH μ hμ]
+    have : ((sg s : ℤ) : ℚ) ^ 2 = 1 := by have := sg_sq s; exact_mod_cast this
+    rw [this]; simp
+  have hε0 : ε ≠ 0 := fun h => by rw [h, map_zero] at hεn; exact zero_ne_one hεn
+  have hεZ : IsHurZ ε := by
+    rw [hεdef]
+    refine IsHur.smul (mem_ZS.mpr ⟨_, rfl⟩) ?_
+    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp only [hc_hurZ, mapH] <;> exact mem_ZS.mpr ⟨_, rfl⟩
+  have hσ : ε * twoRepQ t = hurZ (smulH (sg s) (mulH μ (βZ t))) := by
+    rw [twoRepQ_eq, hurZ_smulH, hurZ_mulH, hεdef, smul_mul_assoc]
+  set a : ℍ[AQ]ˣ := qιU ε hε0 * twoRepU v t with hadef
+  have hac : (a : ℍ[AQ]) = qι ε * twoRep v t := rfl
+  set w : ℍ[AQ]ˣ := a⁻¹ * u with hwdef
+  have hεnorm : ∀ w', ‖Quaternion.normSq (qp (Pw w' : ℕ) ε)‖ = 1 := fun w' => by
+    rw [normSq_qp, hεn]; simp
+  -- the local condition `(1/4)(u - a) ∈ O_B` at every place
+  have hA : ∀ w', IsHur (Zp (Pw w' : ℕ)) (piQ w' (a : ℍ[AQ])) ∧
+      ‖Quaternion.normSq (piQ w' (a : ℍ[AQ]))‖ = 1 ∧
+      IsHur (Zp (Pw w' : ℕ)) (((1 / 4 : ℚ) : ℚ_[Pw w']) • (piQ w' (u : ℍ[AQ]) - piQ w' (a : ℍ[AQ]))) := by
+    intro w'
+    rw [hac, map_mul, piQ_qι]
+    by_cases hw : w' = v
+    · subst hw
+      rw [twoRep, piQ_ιAt_self, ← map_mul, hσ]
+      refine ⟨isHur_qp_hurZ _, ?_, hloc⟩
+      · have hsg : (sg s : ℤ) ^ 2 = 1 := by have := sg_sq s; exact_mod_cast this
+        have hσn : nrdH (smulH (sg s) (mulH μ (βZ t))) = nrdH (βZ t) := by
+          rw [nrdH_smulH, nrdH_mulH, unitList_nrdH μ hμ, hsg, one_mul, one_mul]
+        rw [normSq_qp, normSq_hurZ, hσn]
+        obtain ⟨r, hr⟩ := nrdH_βZ_odd t
+        rw [hr]
+        have h2 : (2 : ℕ) = (Pw w' : ℕ) := (Pw_eq_two hv).symm
+        refine le_antisymm (by exact_mod_cast Padic.norm_int_le_one (p := (Pw w' : ℕ)) _) ?_
+        refine not_lt.mp fun hlt => ?_
+        have := Padic.norm_intCast_lt_one_iff.mp (by exact_mod_cast hlt)
+        rw [← h2] at this
+        omega
+    · rw [twoRep, piQ_ιAt_ne hw, mul_one]
+      refine ⟨isHur_qp_hurZ' hεZ, hεnorm w', IsHur.smul (quarter_mem (Pw_ne_two hv hw)) ?_⟩
+      exact (hu w').sub (isHur_qp_hurZ' hεZ)
+  have hw1 : LH ((1 / 4 : ℚ) • ((w : ℍ[AQ]) - 1)) := by
+    intro w'
+    rw [piQ_qsmul, map_sub, map_one, hwdef, Units.val_mul, map_mul, piQ_unit_inv]
+    exact quarter_conj (hA w').1 (hA w').2.1 (hA w').2.2
+  have hw2 : LH ((1 / 4 : ℚ) • (((w⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) - 1)) := by
+    intro w'
+    rw [piQ_qsmul, map_sub, map_one, hwdef, mul_inv_rev, inv_inv, Units.val_mul, map_mul]
+    exact quarter_conj2 (hu' w') (by rw [← map_mul, Units.inv_mul, map_one]) (hA w').2.2
+  refine ⟨t, ε, hε0, w, mem_HgrpN_of τ hw1 hw2, ?_⟩
+  rw [← hac, hwdef, ← Units.val_mul, mul_inv_cancel_left]
+
+/-- **TYZ Lemma 2.5, surjectivity**: every unit of `B̂` lies in one of the 8 double cosets. -/
+theorem exists_twoRep {n : ℕ} [NeZero n] (τ : QNeg n →ₐ[ℚ] ℍ[ℚ]) {v : HeightOneSpectrum (𝓞 ℚ)}
+    (hv : IsPlaceTwo v) (x : ℍ[AQ]ˣ) : ∃ t, (x : ℍ[AQ]) ∈ DC n τ (twoRep v t) := by
+  obtain ⟨γ, hγ, h1, h2⟩ := exists_global_mul_unit x
+  obtain ⟨t, ht⟩ := exists_twoRep_of_unit τ hv h1 h2
+  refine ⟨t, ?_⟩
+  have e : (x : ℍ[AQ]) = qι γ * (((qιU γ hγ)⁻¹ * x : ℍ[AQ]ˣ) : ℍ[AQ]) := by
+    show _ = qι γ * (qι γ⁻¹ * x)
+    rw [← mul_assoc, ← map_mul, mul_inv_cancel₀ hγ, map_one, one_mul]
+  rw [e, qι_mul_mem_DC hγ]; exact ht
+
 end ZInQ.Contrib.HfxProof
