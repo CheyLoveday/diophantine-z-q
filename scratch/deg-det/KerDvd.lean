@@ -128,4 +128,58 @@ theorem eq_id_of_σ_eq {S : Scheme} (s : X ⟶ S) [IsSeparated s] (f : X ⟶ X) 
 
 end Stalk
 
+section Kernel
+
+open PkgI3.AbVar
+
+theorem σ_congr {X : Scheme} [IsIntegral X] (f g : X ⟶ X) (h : f = g)
+    (hf : f (genericPoint X) = genericPoint X) (hg : g (genericPoint X) = genericPoint X) :
+    σ f hf = σ g hg := by
+  subst h; rfl
+
+variable {A}
+
+theorem τ_left_genericPoint (P : A.Pt Kb) :
+    (τ A P).left (genericPoint A.X.left) = genericPoint A.X.left := by
+  apply ZInQ.Contrib.OneProof.DegDet.map_genericPoint
+  intro y
+  refine ⟨(τ A P⁻¹).left y, ?_⟩
+  have h : (τ A P⁻¹ ≫ τ A P) = 𝟙 _ := by rw [← τ_mul, _root_.mul_inv_cancel, τ_one]
+  have h2 := congrArg (fun t => t.left) h
+  simp only [Over.comp_left, Over.id_left] at h2
+  rw [← Scheme.Hom.comp_apply, h2]
+  rfl
+
+/-- The action of a `k̄`-point on the function field. -/
+def σP (P : A.Pt Kb) :
+    A.X.left.presheaf.stalk (genericPoint A.X.left) ⟶ A.X.left.presheaf.stalk (genericPoint A.X.left) :=
+  σ (τ A P).left (τ_left_genericPoint P)
+
+theorem σP_mul (P Q : A.Pt Kb) : σP (P * Q) = σP P ≫ σP Q := by
+  have h := σ_comp (τ A Q).left (τ A P).left (τ_left_genericPoint Q) (τ_left_genericPoint P)
+    (by rw [Scheme.Hom.comp_apply, τ_left_genericPoint, τ_left_genericPoint])
+  rw [σP, σ_congr (τ A (P * Q)).left ((τ A Q).left ≫ (τ A P).left)
+    (by rw [τ_mul]; rfl) _ (by rw [Scheme.Hom.comp_apply, τ_left_genericPoint, τ_left_genericPoint]), h]
+  rfl
+
+theorem σP_one : σP (1 : A.Pt Kb) = 𝟙 _ := by
+  have h1 : (𝟙 A.X.left : A.X.left ⟶ A.X.left) (genericPoint A.X.left) = genericPoint A.X.left := rfl
+  rw [σP, σ_congr (τ A 1).left (𝟙 _) (by rw [τ_one]; rfl) _ h1, σ_id h1]
+
+theorem stalkMap_comp_σP (ψ : End A) (P : A.Pt Kb) (hP : P ≫ ψ.hom = 1) :
+    ψ.hom.left.stalkMap (genericPoint A.X.left) ≫ σP P = ψ.hom.left.stalkMap (genericPoint A.X.left) := by
+  apply eq_of_Spec_comp
+  rw [Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkMap_fromSpecStalk, ← Category.assoc, σP,
+    Spec_σ, Category.assoc]
+  congr 1
+  have := congrArg (fun t => t.left) (τ_comp_hom A P hP)
+  simpa only [Over.comp_left] using this
+
+theorem eq_one_of_σP_eq (P : A.Pt Kb) (h : σP P = 𝟙 _) : P = 1 := by
+  apply eq_one_of_τ_eq_id A P
+  apply Over.OverMorphism.ext
+  exact eq_id_of_σ_eq A.X.hom (τ A P).left (Over.w (τ A P)) _ h
+
+end Kernel
+
 end DegDet.KerDvd
