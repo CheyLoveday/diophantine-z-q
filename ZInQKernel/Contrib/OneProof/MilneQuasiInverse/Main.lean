@@ -42,6 +42,11 @@ namespace ZInQ.Contrib.MilneQuasiInverse
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open scoped CategoryTheory.MonObj
 
+-- The bundled kernel `Kernel.kernelGrp f.hom` carries the group structure `Kernel.kernelGroup`;
+-- `kernelGrp` is reducible, so its `.X` is seen as `kernelObject f.hom` and instance search needs
+-- `kernelGroup` as a local instance (as in `Kernel.lean`).
+attribute [local instance] ZInQ.Contrib.MilneQuasiInverse.Kernel.kernelGroup
+
 /-- **Kernel annihilation for an isogeny of abelian varieties.** Some `n > 0` satisfies
 `x ^ n = 1` for every test object `T` over `Spec K` and every `x : T ⟶ A.X` with
 `x ≫ f.hom = 1`. -/

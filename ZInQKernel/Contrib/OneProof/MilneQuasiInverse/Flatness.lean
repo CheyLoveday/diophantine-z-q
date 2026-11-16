@@ -117,7 +117,7 @@ theorem flat_of_kernelPair (φ : X ⟶ Y) [IsFinite φ] [Surjective φ]
     exact this (pullback.snd φ (Y.affineCover.f i)) hfl' hfin' hN' ⟨_, rfl⟩
   obtain ⟨R, rfl⟩ := hY
   wlog hX : ∃ S, X = Spec S generalizing X
-  · have : IsAffine X := isAffine_of_isAffineHom φ
+  · have hXaff : IsAffine X := isAffine_of_isAffineHom φ
     rw [← MorphismProperty.cancel_left_of_respectsIso @Flat X.isoSpec.inv]
     have hsq : IsPullback X.isoSpec.inv (X.isoSpec.inv ≫ φ) φ (𝟙 _) :=
       IsPullback.of_horiz_isIso ⟨(Category.comp_id _).symm⟩
