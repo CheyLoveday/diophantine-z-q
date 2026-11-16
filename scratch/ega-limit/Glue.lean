@@ -90,4 +90,46 @@ theorem hasChowModification_of_isAffine {X T : Scheme.{0}} (f : X ⟶ T) [IsAffi
     (IsPullback.of_horiz_isIso (fst := 𝟙 X) (snd := f) (f := f') (g := e.hom)
       (CommSq.mk (by simp [f']))) hchow'
 
+section Cube
+
+variable {S T Y₀ : Scheme.{u}} (q : T ⟶ S) (Z : Over S) (p : Y₀ ⟶ S)
+
+/-- The object `Z ×_S Y₀` of `Over S`. -/
+noncomputable abbrev prodObj : Over S := Over.mk (pullback.snd Z.hom p ≫ p)
+
+/-- The projection `Z ×_S Y₀ ⟶ Y₀`, a morphism in `Over S`. -/
+noncomputable abbrev prodSnd : prodObj Z p ⟶ Over.mk p := Over.homMk (pullback.snd Z.hom p) rfl
+
+/-- **The base change of `Z ×_S Y₀ ⟶ Y₀` along `q : T ⟶ S` is the base change of `Z_T ⟶ T` along
+`Y₀ ×_S T ⟶ T`** (glue: pasting of cartesian squares). -/
+theorem isPullback_prodSnd :
+    IsPullback ((Over.pullback q).map (prodSnd Z p)).left
+      (pullback.map (pullback.snd Z.hom p ≫ p) q Z.hom q (pullback.fst Z.hom p) (𝟙 T) (𝟙 S)
+        (by simp [pullback.condition]) (by simp))
+      (pullback.snd p q) (pullback.snd Z.hom q) := by
+  set m := ((Over.pullback q).map (prodSnd Z p)).left with hm
+  set n := pullback.map (pullback.snd Z.hom p ≫ p) q Z.hom q (pullback.fst Z.hom p) (𝟙 T) (𝟙 S)
+        (by simp [pullback.condition]) (by simp) with hn
+  have hm1 : m ≫ pullback.fst p q = pullback.fst _ q ≫ pullback.snd Z.hom p := by
+    simp [hm]
+  have hm2 : m ≫ pullback.snd p q = pullback.snd (pullback.snd Z.hom p ≫ p) q := by
+    simp [hm]
+  have hn1 : n ≫ pullback.fst Z.hom q = pullback.fst _ q ≫ pullback.fst Z.hom p := by
+    simp [hn]
+  have hn2 : n ≫ pullback.snd Z.hom q = pullback.snd (pullback.snd Z.hom p ≫ p) q := by
+    simp [hn]
+  -- top square: `A → W`, `A → B` over `W → Y₀`, `B → Y₀`
+  have P1 : IsPullback (pullback.fst (pullback.snd Z.hom p ≫ p) q) m (pullback.snd Z.hom p)
+      (pullback.fst p q) := by
+    refine IsPullback.of_bot ?_ hm1.symm (IsPullback.of_hasPullback p q)
+    rw [hm2]
+    exact IsPullback.of_hasPullback _ q
+  have P12 := P1.paste_horiz (IsPullback.of_hasPullback Z.hom p)
+  have hrect : IsPullback (n ≫ pullback.fst Z.hom q) m Z.hom (pullback.snd p q ≫ q) := by
+    rw [hn1, ← (pullback.condition : pullback.fst p q ≫ p = _)]
+    exact P12
+  exact (IsPullback.of_right hrect (by rw [hn2, hm2]) (IsPullback.of_hasPullback Z.hom q)).flip
+
+end Cube
+
 end ZInQ.Contrib.EGAProperLimit
