@@ -723,4 +723,15 @@ theorem degree_eq (ht : letI := ZInQ.LeafPush2.ffAlgebra C; Transcendental k t)
 
 end Degree
 
+
+/-- **`BelyiMapOfFunction` (step (b), glue, proved).** -/
+theorem belyiMapOfFunction_proof : BelyiMapOfFunction := by
+  intro k _ _ _ C _ _ _ t hB d hd hd0
+  letI := ZInQ.LeafPush2.ffAlgebra C
+  obtain ⟨β, hβo, hβ⟩ := exists_extension C t
+  exact ⟨β, hβo, isFinite_beta C t hB.1 hβo hβ, fun x hx hy => unramified C t hB hβ x hx hy,
+    degree_eq C t hB.1 hβ d hd⟩
+
 end JavanpeykarFix
+
+#print axioms JavanpeykarFix.belyiMapOfFunction_proof
