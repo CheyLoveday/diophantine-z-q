@@ -8,3 +8,7 @@ Verbatim statement: scratch/javanpeykar-dict/Statement.lean.txt.
 
 ## Findings
 - 05:40 VERIFIED (compiled, scratch/javanpeykar-dict/JavanpeykarDict.lean §1): `isStableFaltingsHeight_of_iso`: IsStableFaltingsHeight J x → IsStableFaltingsHeight J' x for an isomorphism e : J.X ≅ J'.X with IsMonHom e.hom (transport of group models / metrized models through e_L; height, Néron property, semistability preserved).
+- 06:00 VERIFIED (compiled, standard axioms; scratch/javanpeykar-dict/JavanpeykarDict.lean, Axioms-output.txt):
+  - §2 `abVarIso_picZero_of_isJacobian` (copied from isj1-dict R16IsJ1Dict.lean): kernel Jacobian ≅ every tensor-compatible Pic⁰ representative (ofVendored V).
+  - §3 `dim_eq_genusK`: IsJacobian X P₀ J aj → J.dim = arithmeticGenus_K(X) (vendored Pic⁰ smooth of genus dimension + vendored topologicalKrullDim_eq_of_smoothOfRelativeDimension + homeomorphism invariance); `genusBar_eq`: genus of X_{K̄} = genus of X (vendored arithmeticGenus_pullback).
+  - §4 new leaf `JavanpeykarPrinted` (X₀/K, X = X₀ ×_K K̄, Jac = Pic⁰ representative V over K, g = h¹(X_{K̄}, O), Belyi function t ∈ K̄(X_{K̄}) over K̄, d = [K̄(X):K̄(t)], published stable height of V); glue `BelyiBaseChange` (K-rational Belyi function → Belyi function of X_{K̄}, same degree; not proved); `javanpeykarBound_of_printed : JavanpeykarPrinted → BelyiBaseChange → JavanpeykarBound`.
