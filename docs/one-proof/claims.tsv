@@ -1,13 +1,6 @@
 field	task	status	since	issue	holder_kind	public_holder	claim_url	hold
 mumfordTorsionAlgClosed	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
-cartierSmooth	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
-geomConnOfRationalPoint	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
-groupSchemeEquidim	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
-tateTwistInvariants	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#84	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335	held
-axSenTate	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#84	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335	held
-uniformizationLeafAll	unif-topology; cloud batch 2	host task unif-topology running: classicalTopology = analytic topology, so unif-printed four leaves rate printed	2026-11-15	elliotglazer/diophantine-z-q#82	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149	held
 gagaMorphism	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#82	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149	held
-milneIsogenyQuasiInverse	cloud batch 2	briefed (characteristic-zero form); the batch-2 comment of 2026-11-15 02:14Z mentions it only as a possible follow-on	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6893816394	held
 egaIV_8_10_5_xii	cloud round 2	in progress: repairing round 1's vendored port (H-65)	2026-11-14	elliotglazer/diophantine-z-q#80	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942	held
 homFreeFiniteAlgClosed	cloud round 2	in progress (H-70)	2026-11-14	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564	held
 charPolyIndepOfEllAlgClosed	cloud round 2	in progress (H-71); supplier PR Deicyde/diophantine-z-q#13 held until it lands	2026-11-14	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564	held
@@ -16,7 +9,6 @@ neronSchemeExtensionExists	cloud round 2	in progress (H-77)	2026-11-14	elliotgla
 r7a	cloud round 2	in progress (H-5, Néron–Ogg–Shafarevich)	2026-11-14	elliotglazer/diophantine-z-q#37	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130	held
 h11	cloud round 2	in progress (T-1); new base case TYZLcalOne proved	2026-11-14	elliotglazer/diophantine-z-q#74	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859	held
 mumfordGroupLaw	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
-sga3_VIB_3_10	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
 neronBaseChangeStrictHenselization	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#85	project	project		interest
 picRepresentableAbVar	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
 picZeroAbVar	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
