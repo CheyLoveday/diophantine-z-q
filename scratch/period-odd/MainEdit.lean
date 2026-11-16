@@ -4,8 +4,9 @@ import ZInQKernel.Contrib.OneProof.GrossConjugationCd
 import ZInQKernel.Contrib.OneProof.PeriodOdd
 
 /-! period-odd: cd-optimal's `Main.lean` edit (`scratch/cd-optimal/MainEdit.lean`, `frozenTarget_cdoptimal`)
-with `CdOpt.CdTwistedPeriodOdd` removed: `GrossZagierFormulaCd` from `GrossZagierModuliOptCd`,
-`EtaW32Character` and `PeriodOdd.LamCdNeZero` (`PeriodOdd.grossZagierFormulaCd_of_etaW32`). -/
+with `CdOpt.CdTwistedPeriodOdd` removed: `GrossZagierFormulaCd` from `GrossZagierModuliOptCd` and
+`EtaW32Character` alone (`PeriodOdd.grossZagierFormulaCd_of_etaW32`). So `hL3` is replaced by these two
+printed leaves (with heegner-32's `hCM`, already an argument, and gz-conj's proved conjugation relation). -/
 
 namespace ZInQ.Contrib.TYZChain
 open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
@@ -17,8 +18,7 @@ theorem frozenTarget_periododd
     (hCM : _root_.T5Glue.ShimuraMainCM)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE)
-    (hGZ : ZInQ.GZOptimal.GrossZagierModuliOptCd) (hW : ZInQ.CdOpt.EtaW32Character)
-    (hne : ZInQ.PeriodOdd.LamCdNeZero) :
+    (hGZ : ZInQ.GZOptimal.GrossZagierModuliOptCd) (hW : ZInQ.CdOpt.EtaW32Character) :
     ZInQ.FrozenTarget :=
   ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
     (HDec.HSyn.sixContactMin_of_open30 r t l g)
@@ -26,7 +26,7 @@ theorem frozenTarget_periododd
     (ZInQ.GZStatements.fhNonvanishingCd_of_fhNonvanishing
       (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH))
     (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed hCM
-      (ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 hGZ hW hne) ZInQ.GZConj.grossConjugationCd)
+      (ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 hGZ hW) ZInQ.GZConj.grossConjugationCd)
 
 end ZInQ.Contrib.TYZChain
 
