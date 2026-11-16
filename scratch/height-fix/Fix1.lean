@@ -355,6 +355,95 @@ theorem isPrintedMetricSq_iff {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* 
 
 end Metrized
 
+/-! ## §3b. The translated algebraic coordinates are charts of `A_τ(ℂ)` (inverse function theorem) -/
+
+section Charts
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- **Charts.** Let `η ≠ 0` and `η = l · df₁ ∧ ⋯ ∧ df_g` at the origin. Then for every point `p` the
+translated algebraic coordinates `q ↦ F(p⁻¹ q)` (`chartAt`) are a chart of `A_τ(ℂ)` at `p`: they agree,
+on an open neighbourhood of `p`, with a homeomorphism onto an open subset of `ℂ^g`. Proof: `F ∘ Φ`
+is holomorphic (`Holomorphic.hasStrictFDerivAt`) with derivative of determinant `jacDet Φ f ≠ 0` at
+`0`, so the inverse function theorem applies; `Φ` is injective and open on a small ball. -/
+theorem exists_chart {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
+    (eta : M.model.hodgeSpace g) (heta : eta ≠ 0) (U : Fin g → M.model.G.left.Opens)
+    (hU : ∀ i, M.model.genericUnit ∈ U i) (s : ∀ i, Γ(M.model.G.left, U i))
+    (hm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal M.model.genStalk) (l : L)
+    (hrep : eta = l • M.model.wedge (fun i => ⟨_, hm i⟩)) (p : M.model.Pts τ) :
+    letI := anTop M.model τ
+    ∃ e : OpenPartialHomeomorph (M.model.Pts τ) (Fin g → ℂ), p ∈ e.source ∧
+      Set.EqOn (chartAt M.model τ U s p) e e.source := by
+  obtain ⟨Φ, hΦ, hc⟩ := M.arch τ
+  letI := anTop M.model τ
+  haveI : T2Space (M.model.Pts τ) := analyticPointsT2 K A L M.model τ
+  haveI := M.hodge.periods_discrete τ
+  haveI := M.hodge.periods_isZLattice τ
+  have hUnif : TorusVolume.IsUnif (M.hodge.periods τ) Φ :=
+    ⟨continuous_of_isAnalyticUniformization M.model τ hΦ, hΦ.1, hΦ.2.1, hΦ.2.2.1⟩
+  haveI := hUnif.isTopologicalGroup
+  set F := coordMap M.model τ U s
+  -- the derivative of `F ∘ Φ` at `0` is invertible
+  have hdet := det_fderiv_coordMap M.model hΦ U hU s hm
+  have hcoeff : M.hodge.coeff τ eta = τ l * M.model.jacDet Φ (fun i => ⟨_, hm i⟩) := by
+    rw [hrep, map_smulₛₗ, hc, smul_eq_mul]
+  have hdet0 : LinearMap.det ((fderiv ℂ (F ∘ Φ) 0 : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+      (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) ≠ 0 := by
+    rw [hdet]
+    intro h0
+    apply M.hodge.coeff_apply_ne_zero τ heta
+    rw [hcoeff, h0, mul_zero]
+  set D := fderiv ℂ (F ∘ Φ) 0
+  let De : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ) :=
+    (LinearMap.equivOfIsUnitDet (isUnit_iff_ne_zero.mpr hdet0)).toContinuousLinearEquiv
+  have hDe : (De : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) = D := by
+    ext x
+    simp [De]
+  set V := ⋂ i, M.model.dom Φ (U i)
+  have hVo : IsOpen V := isOpen_iInter_of_finite fun i => hΦ.2.2.2.1 (U i)
+  have h0V : (0 : Fin g → ℂ) ∈ V :=
+    mem_iInter.mpr fun i => ZInQ.Metrization.zero_mem_dom M.model hΦ (U i) (hU i)
+  have hψd : DifferentiableOn ℂ (F ∘ Φ) V :=
+    differentiableOn_pi.mpr fun i => (hΦ.2.2.2.2 (U i) (s i)).mono (iInter_subset _ i)
+  have hstrict : HasStrictFDerivAt (F ∘ Φ) (De : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) 0 := by
+    rw [hDe]; exact Holomorphic.hasStrictFDerivAt hVo hψd h0V
+  let e := hstrict.toOpenPartialHomeomorph (F ∘ Φ)
+  -- `Φ` on a small ball
+  obtain ⟨r₀, hr₀, hsep⟩ := TorusVolume.exists_ball_sub_mem (M.hodge.periods τ)
+  have hinj : Set.InjOn Φ (Metric.ball 0 r₀) := fun x hx y hy hxy =>
+    hsep x hx y hy ((hUnif.eq_iff x y).mp hxy)
+  let Φl := OpenPartialHomeomorph.ofContinuousOpen (hinj.toPartialEquiv Φ (Metric.ball 0 r₀))
+    hUnif.cont.continuousOn hUnif.isOpenMap Metric.isOpen_ball
+  have hΦl : ∀ z, Φl z = Φ z := fun z => rfl
+  have hΦls : Φl.source = Metric.ball 0 r₀ := rfl
+  have h0s : (0 : Fin g → ℂ) ∈ Φl.source := by rw [hΦls]; exact Metric.mem_ball_self hr₀
+  let c := Φl.symm.trans e
+  have h1 : (1 : M.model.Pts τ) ∈ c.source := by
+    have h1t : (1 : M.model.Pts τ) ∈ Φl.target := by
+      rw [← hUnif.map_zero, ← hΦl]; exact Φl.map_source h0s
+    have hsym : Φl.symm 1 = 0 := by
+      rw [← hUnif.map_zero, ← hΦl]; exact Φl.left_inv h0s
+    refine ⟨by simpa using h1t, ?_⟩
+    show Φl.symm 1 ∈ e.source
+    rw [hsym]; exact hstrict.mem_toOpenPartialHomeomorph_source
+  have hc' : Set.EqOn F c c.source := by
+    intro q hq
+    have hqt : q ∈ Φl.target := by
+      have := hq.1; simpa using this
+    show F q = e (Φl.symm q)
+    rw [hstrict.toOpenPartialHomeomorph_coe, Function.comp_apply, ← hΦl, Φl.right_inv hqt]
+  -- translate to `p`
+  let T := (Homeomorph.mulLeft p⁻¹).toOpenPartialHomeomorph
+  refine ⟨T.trans c, ?_, ?_⟩
+  · refine ⟨mem_univ _, ?_⟩
+    show p⁻¹ * p ∈ c.source
+    rw [inv_mul_cancel]; exact h1
+  · intro q hq
+    exact hc' hq.2
+
+end Charts
+
 /-! ## §4. Existence of the measure `(i/2)^g η ∧ η̄` for every group model (from T35) -/
 
 section Existence
