@@ -191,5 +191,5 @@ DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.On
   `strict count: 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11`; the printed module
   (`scratch/deg-det/FoldDryRun.lean`, line 1 stripped) compiles: `'HDec.HSyn.sixContactMin_of_open36' depends on
   axioms: [propext, Classical.choice, Quot.sound]`.
-* File sizes: `DegEqDetTate.lean` 7 KB, `Algebra.lean` 52 KB, `TateIndex.lean` 16 KB, `Reduction.lean` 15 KB,
-  `KerDvd.lean` 12 KB (all under 150 KB).
+* File sizes: `DegEqDetTate.lean` 7 KB, `Algebra.lean` 62 KB, `TateIndex.lean` 16 KB, `Reduction.lean` 15 KB,
+  `KerDvd.lean` 13 KB (all under 150 KB).
