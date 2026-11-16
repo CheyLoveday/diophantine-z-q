@@ -1,0 +1,20 @@
+import ZInQKernel.OneProof.Main
+import ZInQKernel.OneProof.Discharges
+import ZInQKernel.Contrib.OneProof.BFHGamma0
+
+#discharges
+
+#print axioms ZInQ.BFHPrinted.restrict_levelRaise_gamma0
+#print axioms ZInQ.BFHPrinted.relIndex_gamma1_gamma0_ne_zero
+#print axioms ZInQ.BFHPrinted.isGamma0New_toCuspFormGamma0
+#print axioms ZInQ.BFHPrinted.heckeGamma0_single
+#print axioms ZInQ.BFHPrinted.coe_heckeGamma0
+#print axioms ZInQ.BFHPrinted.coeffGamma0_toCuspFormGamma0
+#print axioms ZInQ.BFHPrinted.isGamma0Newform_toCuspFormGamma0
+#print axioms ZInQ.BFHPrinted.coeffGamma0_toCuspFormGamma0_eq_coeff
+#print axioms ZInQ.BFHPrinted.isFESignGamma0_toCuspFormGamma0_iff
+#print axioms ZInQ.BFHPrinted.kroneckerCentralValueNeZeroGamma0_toCuspFormGamma0_iff
+#print axioms ZInQ.BFHPrinted.bfhClauseIIKronecker_of_bfhClauseIIGamma0
+#print axioms ZInQ.BFHPrinted.grossZagierCd_of_bfhClauseIIGamma0
+#print axioms ZInQ.BFHPrinted.frozenTarget_of_sixContactMin_tyzThm35ReadingA_bfhGamma0
+#print axioms ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0
