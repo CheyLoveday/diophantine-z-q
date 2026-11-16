@@ -30,3 +30,6 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
   `tame_at` (e | N via Galois `ncard_primesOver_mul_ramificationIdxIn_mul_inertiaDegIn`, residue separability),
   `unram_of_baseChange` (from `TsKummer.unramBaseChange`)). Generic height-one primes done; the (f)/(g) case is the
   new named glue `KummerUnramBranch` (T2 at A_(f)). Contributor file: `tameBranchNormal_of_branch` COMPILED.
+- 07:10 `branch_e` COMPILED (KummerBranch.lean): primes of the integral closure of A₁ = A[t₁, g] in Ω₁ = L(t₁) over (t₁)
+  have index 1 over A₁ (T2 = `HDec.HSyn.t2_proved` at A_(f), adapted from `TsKummer.abhyankar_core`; freeness from
+  `TPurity3.normalFreeDim2`).
