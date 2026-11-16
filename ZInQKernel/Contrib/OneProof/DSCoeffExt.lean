@@ -23,7 +23,7 @@ Two coefficient-field dictionary steps are removed from the leaves `dsThm965Weak
   diamond operators) with `a₁ = 1`. `isNormalizedEigenform_iff_DS` proves it equivalent to the kernel's
   coefficient form `ZInQ.Contrib.G9.PkgI4.IsNormalizedEigenform`; the `U_p` half is
   `heckeTCuspNat_eq_coeff_smul_all` (every prime `p`, from Tau Ceti's
-  `heckeTCuspNat_eq_smul_iff_forall_qExpansion_coeff_prime_mul_ofUnitHom`). Both new 9.6.5/9.6.6 leaves use
+  `heckeTCuspNat_eq_smul_iff_forall_qExpansion_coeff_prime_mul_ofUnitHom`). Both new printed leaves (DS 9.6.5, Deligne–Serre 4.1) use
   this definition, so they are direct instances of their prints.
 * **Deligne–Serre.** `DSThm966Printed` is `ZInQ.Contrib.HodgeSplit.DSThm966` with the definition above,
   located at Deligne–Serre 1974 Thm 4.1 (4.1.1); `dsThm966_of_printed` and `dsThm966Printed_of_dsThm966`
@@ -462,8 +462,8 @@ def EigenformCoeffFieldFinite : Prop :=
     2 ≤ k → IsNormalizedEigenformDS f χ → FiniteDimensional ℚ (coeffField f)
 
 /-- **LEAF (Deligne–Serre, printed form).** Deligne–Serre, *Formes modulaires de poids 1*, Ann. Sci. ÉNS (4) 7
-(1974), Thm 4.1 with display (4.1.1), p. 514 (locator from the task brief, not read here: UNVERIFIED);
-Diamond–Shurman Thm 9.6.6 states the same. For a normalized eigenform `f ∈ S_1(N, χ)` (Diamond–Shurman
+(1974), Thm 4.1 with display (4.1.1), p. 514 (locator from the task brief, not read here: UNVERIFIED).
+For a normalized eigenform `f ∈ S_1(N, χ)` (Diamond–Shurman
 Def. 5.8.1; Deligne–Serre's hypothesis, a nonzero form of type `(1, χ)` that is an eigenvector of the `T_p`,
 `p ∤ N`, with eigenvalues `a_p`, holds for it since `a₁ = 1`) there is a continuous
 `ρ_f : G_ℚ → GL₂(ℂ)` with finite image, unramified at every `p ∤ N`, with `tr ρ_f(Frob_𝔭) = a_p(f)` and

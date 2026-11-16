@@ -91,10 +91,7 @@ p. 514.** The locator comes from the brief; I have not read the page (no network
 **Reading risk and fallback.** Thm 4.1 might be printed for newforms only (I could not check). The
 consumer needs only full eigenforms, so the file also states `DSThm966PrintedFull`, the same leaf over Tau
 Ceti's full `Eigenform N 1`. Two facts are proved: `printedFull_of_printed : DSThm966Printed →
-DSThm966PrintedFull`, and `dsThm966_of_printedFull`. `DSThm966PrintedFull` is a consequence of Diamond–Shurman
-GTM 228 Thm 9.6.6 as printed (normalized eigenforms, Def. 5.8.1). The reason: a full eigenform has
-`a_n = λ_n a₁` with `a₁ ≠ 0`, so it is a nonzero multiple of a normalized eigenform with the same eigenvalues.
-If a reader finds the print narrower, the fold can use `DSThm966PrintedFull` with
+DSThm966PrintedFull`, and `dsThm966_of_printedFull`. If a reader finds the print narrower, the fold can use `DSThm966PrintedFull` with
 `dsThm966_of_printedFull` and nothing else changes.
 
 ## 3. The glue (all proved, `DSThm966EV.lean`)

@@ -15,7 +15,7 @@ The field `ZInQ.Contrib.HodgeSplit.DSThm966` (bundle field `OpenResearchLeaves26
 * **trace over the eigenvalue**: `tr ρ(Frob_p) = a_p`, with `a_p` the `T_p`-eigenvalue `F.eigenvalue p`.
 
 `DSThm966PrintedFull` is the same statement for Tau Ceti's full `Eigenform N 1`; it follows from
-`DSThm966Printed` and from Diamond–Shurman Thm 9.6.6, and it is all that `dsThm966` uses.
+`DSThm966Printed`, and it is all that `dsThm966` uses.
 
 The glue (proved here): a normalized eigenform in the kernel's coefficient form is a full eigenform
 (`DSCoeffExt.isNormalizedEigenformDS_of`), hence an eigenform away from the level; its `T_p`-eigenvalue is its
@@ -35,8 +35,7 @@ theorem coprime_of_not_dvd {N p : ℕ} (hp : p.Prime) (hpN : ¬ p ∣ N) :
   (Nat.Prime.coprime_iff_not_dvd hp).2 hpN
 
 /-- **LEAF (Deligne–Serre 1974 Thm 4.1, printed form).** Deligne–Serre, *Formes modulaires de poids 1*,
-Ann. Sci. ÉNS (4) 7 (1974), Thm 4.1 with display (4.1.1), p. 514 (locator from the task brief, not read here:
-UNVERIFIED; Diamond–Shurman GTM 228 Thm 9.6.6 restates it). Let `f ≠ 0` be a modular form of type `(1, ε)` on
+Ann. Sci. ÉNS (4) 7 (1974), Thm 4.1 with display (4.1.1), p. 514 (AI-read only: W24, cloud-checks 6912455099). Let `f ≠ 0` be a modular form of type `(1, ε)` on
 `Γ₀(N)` (here a cusp form), with `ε(-1) = -1`, that is an eigenvector of the Hecke operators `T_p`, `p ∤ N`,
 with eigenvalues `a_p`. There is a representation `ρ : G_ℚ → GL₂(ℂ)` (continuous, finite image), unramified
 at every `p ∤ N`, with `tr ρ(Frob_p) = a_p` and `det ρ(Frob_p) = ε(p)` for `p ∤ N`.
@@ -60,10 +59,7 @@ def DSThm966Printed : Prop :=
 
 /-- **Fallback form (full eigenforms).** `DSThm966Printed` restricted to Tau Ceti's full `Eigenform N 1`
 (an eigenvector of every `T_n`, the `U_p`, `p ∣ N`, included). It follows from `DSThm966Printed`
-(`printedFull_of_printed`), and it is also a consequence of Diamond–Shurman GTM 228 Thm 9.6.6 (normalized
-eigenforms, Def. 5.8.1), because a full eigenform has `a_n = λ_n a₁` with `a₁ ≠ 0`
-(`Eigenform.qExpansion_coeff_eq_eigenvalue_mul_coeff_one`), so it is a nonzero multiple of a normalized one with
-the same eigenvalues. It is all that `dsThm966` needs. -/
+(`printedFull_of_printed`). It is all that `dsThm966` needs. -/
 def DSThm966PrintedFull : Prop :=
   ∀ (N : ℕ) [NeZero N] (ε : DirichletCharacter ℂ N) (F : Eigenform N 1),
     F.χ = MulChar.toUnitHom ε → ε (-1) = -1 →

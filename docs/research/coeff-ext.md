@@ -99,7 +99,7 @@ New leaves, each with its rating:
    is a finite ℚ-algebra" and should be re-flagged "pending reading".
 3. **`DSThm966Printed`** (LEAF, published). Source: Deligne–Serre, *Formes modulaires de poids 1*, Ann. Sci.
    ÉNS (4) 7 (1974), Thm 4.1, display (4.1.1), p. 514. The locator comes from the brief and I have not read
-   it (UNVERIFIED); Diamond–Shurman Thm 9.6.6 restates the theorem. It is `DSThm966` with
+   it (UNVERIFIED). It is `DSThm966` with
    `IsNormalizedEigenformDS`.
    **Rating: printed form (a direct instance).** Deligne–Serre's hypothesis is a nonzero form of type
    `(1, χ)` that is an eigenvector of the `T_p`, `p ∤ N`, with eigenvalues `a_p`. A DS-normalized

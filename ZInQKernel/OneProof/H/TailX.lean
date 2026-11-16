@@ -98,8 +98,7 @@ structure OpenResearchLeaves7 : Prop where
   eigenformHTNew : _root_.ZInQ.Contrib.HodgeSplit.EigenformHTNew
   /-- hodge-split, H-22: Diamond–Shurman Thm 9.6.5 (`k ≥ 2`, Deligne; with `dsThm966`, replaces `r14`). -/
   dsThm965 : _root_.ZInQ.Contrib.HodgeSplit.DSThm965
-  /-- hodge-split, H-22: Deligne–Serre 1974 Thm 4.1 (4.1.1), p. 514 (`k = 1`; Diamond–Shurman Thm 9.6.6
-  restates it). -/
+  /-- hodge-split, H-22: Deligne–Serre 1974 Thm 4.1 (4.1.1), p. 514 (`k = 1`). -/
   dsThm966 : _root_.ZInQ.Contrib.HodgeSplit.DSThm966
   r15 : DeligneSerreConseq
   r16 : _root_.LeafModCurves.R16_EichlerShimuraJ1'
