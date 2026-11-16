@@ -61,3 +61,12 @@ Base: origin/main 2880fef1 (leaf-fold31, TailZ42, sixContactMin_of_open35). Mark
 - With the two GR rows re-rated GLUE/GLUE (copy of kinds.tsv in /tmp/grsim, as the 11-16 dictionary pass rates them):
   X6: `32/13 -> 33/12`; Eichler: `32/13 -> 33/12`; Prop56CM: `32/13 -> 32/13`; X6 + Eichler: `32/13 -> 34/11`
   (VERIFIED, simulation; the tree's kinds.tsv untouched).
+
+## Step 4: combined demonstration (07:00)
+- gen_bypass.py now also writes `OpenResearchLeaves26F` (= 26E with `gonzalezRotgerX6Ab` replaced by
+  `gonzalezRotgerThm512X6`), `openResearchLeaves26E_of_26F` (`GRDict.gonzalezRotgerX6Ab_of_printed`),
+  `sixContactMin_of_open35F`, `frozenTarget_F`. Compiled: open35E, open35F, frozenTarget_E, frozenTarget_F all
+  `[propext, Classical.choice, Quot.sound]` (VERIFIED, bypass-reach.txt).
+- Closure of frozenTarget_F (112744 constants): no R5fpCount / GonzalezRotgerProp56X6 / GonzalezRotgerCountX6(Ab);
+  GonzalezRotgerX6Ab only as the value built by gonzalezRotgerX6Ab_of_printed and read by x6Rows_of_open14_S
+  (VERIFIED). Neither GR field is an input of frozenTarget_F.
