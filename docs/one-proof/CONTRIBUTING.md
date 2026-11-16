@@ -164,17 +164,17 @@ DISCHARGES [OpenResearchLeaves22.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves22.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
-  still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
+DISCHARGES [OpenGlue8.nvLocalInertia] by t1
+  still assumes: [SGRDirect.NVLocalInertia]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 63 open hypotheses, 1806 theorems checked, 9 discharge one
+#discharges: 61 open hypotheses, 2176 theorems checked, 9 discharge one
 ```
 <!-- worked-example:end -->
 
-`t1` assumes the hypothesis it proves (`quotientP1Coordinate`), so it reduces nothing; `t2 : True` matches
+`t1` assumes the hypothesis it proves (`nvLocalInertia`), so it reduces nothing; `t2 : True` matches
 nothing; `t3` matches an open hypothesis but uses `sorry`, so it is flagged. The count of theorems checked also
 includes the theorems of the contributions already folded in (`#discharges` checks the current file and every
 imported module under `ZInQKernel.Contrib.OneProof`); they discharge nothing, since their hypotheses are no

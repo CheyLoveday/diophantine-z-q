@@ -11,14 +11,14 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**56 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue7`, `OpenResearchLeaves22`, `OpenTextbookLeaves11`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**55 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue8`, `OpenResearchLeaves22`, `OpenTextbookLeaves11`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 43 published / 13 glue** (the strictest flagged reading; 45/11 without the two strictest-reading flags).
+* **Strict count: 43 published / 12 glue** (the strictest flagged reading; 45/10 without the two strictest-reading flags).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: composite 4, consequence 5, project glue 1, published 46.
+* By kind: composite 4, consequence 4, project glue 1, published 46.
 
 ## How to help
 
@@ -66,8 +66,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6893816394)) | 2026-11-15 |
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942)) | 2026-11-14 |
 | [`geomConnOfAlgClosure`](#geomconnofalgclosure) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957)) | 2026-11-15 |
-| [`shimuraIntegralModelRep`](#shimuraintegralmodelrep) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sir-printed)) | 2026-11-15 |
-| [`quotientP1Coordinate`](#quotientp1coordinate) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot)) | 2026-11-15 |
+| [`nvLocalInertia`](#nvlocalinertia) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/nv-local)) | 2026-11-15 |
 | [`h11`](#h11) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) | 2026-11-14 |
 | [`h29`](#h29) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) | 2026-11-15 |
 | [`hL3`](#hl3) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-hl3)) | 2026-11-15 |
@@ -154,10 +153,9 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | hypothesis | bundle | kind | strict | flag class | label | tier | area | human reads | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`deligneComponentsY3PrintedAb`](#delignecomponentsy3printedab) | added | published | GLUE | pending-reading, unverified-locator | bigger | T4 | [elliotglazer #79](https://github.com/elliotglazer/diophantine-z-q/issues/79) | 0 | open |
-| [`shimuraIntegralModelRep`](#shimuraintegralmodelrep) | added | consequence | GLUE | pending-reading |  |  | [elliotglazer #79](https://github.com/elliotglazer/diophantine-z-q/issues/79) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sir-printed)) |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | added | composite | GLUE |  |  | T2 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg)) |
 | [`weilPairingMumford`](#weilpairingmumford) | added | published | GLUE | strictest, pending-review, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | project interest, free to claim |
-| [`quotientP1Coordinate`](#quotientp1coordinate) | glue | project glue | GLUE |  | wave | T3 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot)) |
+| [`nvLocalInertia`](#nvlocalinertia) | glue | project glue | GLUE |  |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/nv-local)) |
 | [`dsThm965`](#dsthm965) | research | published | GLUE | strictest | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`eigenformHTNew`](#eigenformhtnew) | research | consequence | GLUE |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass)) |
 | [`elkiesX6StarPrinted`](#elkiesx6starprinted) | research | consequence | GLUE | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/elkies-coord)) |
@@ -234,20 +232,6 @@ ShimuraGlue.DeligneComponentsY3PrintedAb
 > components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
 > 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED).
 
-### shimuraIntegralModelRep
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves17.shimuraIntegralModelRep`; kind **consequence**, strict **GLUE**; flag: pending reading: Kottwitz 1992 section 5 is the PEL functor; the polarization-free integral form needs a relative Lemma P over every locally noetherian base and the rational-to-integral level comparison; Buzzard and Morita may require level prime to D (level 3 at 3 | 6); locators UNVERIFIED.
-* Source: Kottwitz, J. AMS 5 (1992) section 5; Buzzard, Duke Math. J. 87 (1997) sections 1-4; Morita, Hokkaido Math. J. 10 (1981); Carayol, Compositio 59 (1986) secondary (locators UNVERIFIED); Lan 2013, Thms 1.4.1.11 and 5.3.3.1 (second locators)
-* discussion: [elliotglazer #79](https://github.com/elliotglazer/diophantine-z-q/issues/79).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sir-printed)).
-
-```lean
-SGRSplit.ShimuraIntegralModelRep
-```
-
-> Representability over Z_(p), p > 324, of the moduli problem of QM abelian surfaces (disc 6) with full level 3, by a proper smooth curve (printed form on QMAbScheme): Kottwitz, J. AMS 5 (1992) 5; Buzzard, Duke 87 (1997) 1-4; Morita, Hokkaido 10 (1981); locators UNVERIFIED
-
 ### thetaRatiosAlgebraic
 
 * Bundle field `HDec.HSyn.OpenAddedLeaves17.thetaRatiosAlgebraic`; kind **composite**, strict **GLUE**.
@@ -289,20 +273,22 @@ T09Pic.WeilPairingMumford
 > genuine dual `f^∨`, and trivial on `(x, λ_L x)` for ample `L` (Mumford §20 and §23; Milne 1986 §16; locators
 > UNVERIFIED).
 
-### quotientP1Coordinate
+### nvLocalInertia
 
-* Bundle field `HDec.HSyn.OpenGlue7.quotientP1Coordinate`; kind **project glue**, strict **GLUE**.
-* Source: a finite q : Y -> Z over Z_(p) and Z = P^1_{Z_(p)} by charts with R2fp's fibre relation for the composite: the tame quotient Y/Gamma' = P^1 (SGA 1 Exp. V); no quotient schemes or P^1_{Z_(p)} in Mathlib 4.35
-* label wave (taken by the project's gap push); tier T3 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
+* Bundle field `HDec.HSyn.OpenGlue8.nvLocalInertia`; kind **project glue**, strict **GLUE**.
+* Source: h-b1 section 3 Lemma NV step 3 (local inertia of tame covers of P^1_{Z_(p)}: unramified residue fields over a rational branch point force each vertical inertia element into a conjugate of an inertia group over it); a consequence of Abhyankar's lemma (SGA 1 XIII 5.3) and Zariski-Nagata purity (SGA 1 X 3.1; purity in dimension 2 proved in the chain, PropTSGlue.PurityGlobalDim2), locators UNVERIFIED; no published statement of this form
+* discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot)).
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/nv-local)).
 
 ```lean
-HDec.MCRGlue.QuotientP1Coordinate
+SGRDirect.NVLocalInertia
 ```
 
-> mcr-glue: a finite `q : 𝒴 → 𝒵` over `ℤ_(p)` and an isomorphism `𝒵 ≅ P¹_{ℤ_(p)}` by charts whose composite
-> has R2fp's fibre relation (replaces `modelCoordinateResidue`).
+> sgr-direct, GLUE (h-b1 §3 Lemma NV step 3; consequence of Abhyankar's lemma and Zariski–Nagata purity): for
+> `E/ℚ(X)` finite Galois of degree `< p` with branch data in `S ∪ {∞}`, `S` `p`-integral and distinct mod `p`, and
+> `b ∈ S` whose residue fields are unramified at `p`, every vertical inertia element at `p` has a conjugate in an
+> inertia group over `X − b`.
 
 ### dsThm965
 

@@ -324,18 +324,12 @@
    "docstring":
    "t09-pic, L4, printed form (single leaf): there is a pairing `A[n] × Pic⁰[n] → μ_n`, `n` invertible in `K`, with\nthe values of Mumford's `ē_n` (`weilScalar`), perfect, Galois-equivariant, compatible in `n`, adjoint for the\ngenuine dual `f^∨`, and trivial on `(x, λ_L x)` for ample `L` (Mumford §20 and §23; Milne 1986 §16; locators\nUNVERIFIED). ",
    "bundle": "OpenAddedLeaves17"},
-  {"type": "SGRSplit.ShimuraIntegralModelRep",
-   "statement": "SGRSplit.ShimuraIntegralModelRep",
-   "field": "shimuraIntegralModelRep",
+  {"type": "SGRDirect.NVLocalInertia",
+   "statement": "SGRDirect.NVLocalInertia",
+   "field": "nvLocalInertia",
    "docstring":
-   "Representability over Z_(p), p > 324, of the moduli problem of QM abelian surfaces (disc 6) with full level 3, by a proper smooth curve (printed form on QMAbScheme): Kottwitz, J. AMS 5 (1992) 5; Buzzard, Duke 87 (1997) 1-4; Morita, Hokkaido 10 (1981); locators UNVERIFIED ",
-   "bundle": "OpenAddedLeaves17"},
-  {"type": "HDec.MCRGlue.QuotientP1Coordinate",
-   "statement": "HDec.MCRGlue.QuotientP1Coordinate",
-   "field": "quotientP1Coordinate",
-   "docstring":
-   "mcr-glue: a finite `q : 𝒴 → 𝒵` over `ℤ_(p)` and an isomorphism `𝒵 ≅ P¹_{ℤ_(p)}` by charts whose composite\nhas R2fp's fibre relation (replaces `modelCoordinateResidue`). ",
-   "bundle": "OpenGlue7"},
+   "sgr-direct, GLUE (h-b1 §3 Lemma NV step 3; consequence of Abhyankar's lemma and Zariski–Nagata purity): for\n`E/ℚ(X)` finite Galois of degree `< p` with branch data in `S ∪ {∞}`, `S` `p`-integral and distinct mod `p`, and\n`b ∈ S` whose residue fields are unramified at `p`, every vertical inertia element at `p` has a conjugate in an\ninertia group over `X − b`. ",
+   "bundle": "OpenGlue8"},
   {"type": "ZInQ.Contrib.TYZDecomp.TYZThm11Integral",
    "statement": "ZInQ.Contrib.TYZDecomp.TYZThm11Integral",
    "field": "h11",
@@ -372,4 +366,4 @@
    "docstring":
    "**(L3) Gross–Zagier with Gross's conjugation relation, in the form that can be stated today.**\nLet `E/ℚ` be an elliptic curve whose L-series is that of a weight-2 newform `f` of level `N` and\ntrivial nebentypus (`aₙ(f) = aₙ(E)` for all `n ≥ 1`). Let `D < −4` be an odd fundamental\ndiscriminant with the Heegner hypothesis for `N`, and suppose `L(f, s)` has a simple zero at\n`s = 1` while `L(f ⊗ χ_D, 1) ≠ 0` (so `L'(E/K, 1) = L'(f, 1) L(f ⊗ χ_D, 1) ≠ 0`). Then for every\nfield `K ≅ ℚ(√D)` the group `E(K)` has a point `y` of infinite order (the Heegner point `y_K`)\nwith `σ y − y` torsion for every `σ ∈ Aut(K/ℚ)` (`ȳ_K = −ε y_K` up to torsion, `ε = −1`).\n\nLiterature: B. Gross, D. Zagier, Invent. Math. 84 (1986), 225-320, Theorem I.6.3 and its\ncorollaries in Ch. V (UNVERIFIED numbers): `L'(E/K, 1) = c ĥ(y_K)` with `c ≠ 0`; B. Gross,\n*Heegner points on X₀(N)*, Modular forms (Durham 1983), 1984, for `ȳ_K = −ε y_K` mod torsion\n(UNVERIFIED). Folded in, because the modular curve `X₀(N)`, the parametrization and the Heegner\npoint cannot be stated in Lean today: the modular parametrization `X₀(N) → E` (Eichler–Shimura\nconstruction of the strong Weil curve `E_f`, Shimura 1971, Thm 7.14-7.15, UNVERIFIED, plus\nFaltings 1983 Korollar 2 (`L(E) = L(E_f)` ⇒ `E ∼ E_f`), or for CM curves Shimura, Nagoya Math. J.\n43 (1971)); and nondegeneracy of `ĥ` on `E(K)` (proved in Tau Ceti:\n`Affine.Point.canonicalHeight_eq_zero_iff_isOfFinAddOrder`). ",
    "bundle": "frozenTarget"}],
- "count": 62}
+ "count": 61}

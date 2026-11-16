@@ -1,6 +1,6 @@
 field	task	status	since	issue	holder_kind	public_holder	claim_url	hold
+nvLocalInertia	nv-local	host task nv-local running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/nv-local	held
 thetaRatiosAlgebraic	linyang-printed; igusa-alg	linyang-printed done (two printed leaves; fold queued); in progress: theta-glue reduced it to one leaf and five polynomial identities	2026-11-14		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg	held
-quotientP1Coordinate	p1-quot	host task p1-quot running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/mcr-quot	held
 mumfordTorsionAlgClosed	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 cartierSmooth	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 geomConnOfRationalPoint	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
@@ -33,4 +33,3 @@ hL3	gz-hl3	host task gz-hl3 running	2026-11-15		project	project	https://github.c
 r17	r17-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/r17-bypass	held
 eigenformHTNew	ht-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass	held
 r11r12	pb-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pb-bypass	held
-shimuraIntegralModelRep	sir-printed	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/sir-printed	held
