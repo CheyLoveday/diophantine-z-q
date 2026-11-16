@@ -19,9 +19,34 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.CharPolyEll.charPolyIndepOfEllAlgClosed_of_degEqDetTate
+  still assumes: [ZInQ.Contrib.OneProof.CharPolyEll.DegEqDetTate, ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.CharPolyLattice.charPolyIndepOfEllAlgClosed_of_noEmb
   still assumes: [BPAnalytic.Uniformization.UniformizationLeafAll,
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.Contrib.OneProof.CharPolyLattice.CharPolyIndepOfEllAlgClosedNoEmb]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2878 theorems checked, 8 discharge one
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly
+  still assumes: [ZInQ.Contrib.OneProof.DegDet.DegHomogPoly,
+ ZInQ.Contrib.OneProof.DegDet.DegLadicIsogeny,
+ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford
+  still assumes: [ZInQ.Contrib.OneProof.DegDet.DegHomogPoly,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_printed
+  still assumes: [ZInQ.Contrib.OneProof.DegDet.DegHomogPoly,
+ ZInQ.Contrib.OneProof.DegDet.SepDegKernel,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.DegPolyC.charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb
+  still assumes: [BPAnalytic.Uniformization.UniformizationLeafAll,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.Contrib.OneProof.DegPolyC.DegHomogPolyNoEmb,
+ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 3095 theorems checked, 13 discharge one

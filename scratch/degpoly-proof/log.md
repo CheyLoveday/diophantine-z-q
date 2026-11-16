@@ -79,3 +79,12 @@ lattice representation, `HomFreeC.homFreeFiniteC`). Build dir copied (reflink) f
   `lake build ZInQKernel.Contrib.OneProof.DegHomogPolyC`: OK (11768 jobs).
 - VERIFIED: scratch/degpoly-proof/CheckAxioms.lean (output CheckAxioms-output.txt): every theorem above
   `[propext, Classical.choice, Quot.sound]`; two `example`s check the exact types of the two discharge theorems.
+- VERIFIED: `lake build +Main +Discharges +CharPolyLattice +DegHomogPolyC` OK (13706 jobs). #discharges (Discharges-output.txt;
+  56 open hypotheses, 3095 theorems checked, 13 discharge one) lists for the field:
+  `CharPolyLattice.charPolyIndepOfEllAlgClosed_of_noEmb` still assumes [UniformizationLeafAll, MumfordTorsionAlgClosed,
+  CharPolyIndepOfEllAlgClosedNoEmb]; `DegPolyC.charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb` still assumes
+  [UniformizationLeafAll, MumfordTorsionAlgClosed, DegHomogPolyNoEmb, HomFreeFiniteAlgClosed]; all standard axioms.
+- VERIFIED: second spec scratch/degpoly-proof/autofold-degpoly.json (deg-det route, leaf degHomogPolyNoEmb): dry run
+  `strict count: 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11`; FoldDryRun-degpoly.lean compiles
+  (sixContactMin_of_open36 standard axioms). Third spec autofold-after-degdet.json (discharges deg-det's future field
+  degHomogPoly) UNCHECKED (field not on this base).
