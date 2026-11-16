@@ -125,6 +125,144 @@ theorem inert_of_noint (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.
     · left; exact dvd_of_PP Bs hR hc Ψ hℓ h x h1
     · right; exact dvd_of_PP Bs hR hc Ψ hℓ h y h1
 
+theorem PP_sub_coe_star {ℓ : ℤ} {x : B} {m : ℤ} (h : PP ℓ (x - ((m : ℚ) : B))) :
+    PP ℓ (star x - ((m : ℚ) : B)) := by
+  have := PP_star h; rwa [star_sub, QuaternionAlgebra.star_coe] at this
+
+include Bs in
+/-- If `ℓ` is not inert, every optimal embedding has the type of `Ψ₀` at `ℓ`. -/
+theorem same_type_of_not_inert (hR : R ≤ (integralClosure ℤ k).toSubring)
+    (hc : Nat.Coprime (conductor R) 6) (Ψ0 : OptEmb k R) {ℓ : ℤ} (hℓ : L6 ℓ)
+    (hni : ¬ (Ideal.span {((ℓ : ℤ) : 𝓞 k)}).IsPrime) (Φ : OptEmb k R) :
+    PP ℓ (Φ.1 Bs.ω - Ψ0.1 Bs.ω) := by
+  have hm : ∃ m : ℤ, PP ℓ (Ψ0.1 Bs.ω - ((m : ℚ) : B)) := by
+    by_contra hcon; push Not at hcon; exact hni (inert_of_noint Bs hR hc Ψ0 hℓ hcon)
+  obtain ⟨m, hm⟩ := hm
+  rcases type_dichotomy Bs hℓ Ψ0 Φ with h | h
+  · exact h
+  · have := PP_sub hℓ (PP_add hℓ h (PP_sub_coe_star hm)) hm
+    rwa [show Φ.1 Bs.ω - star (Ψ0.1 Bs.ω) + (star (Ψ0.1 Bs.ω) - ((m : ℚ) : B)) -
+      (Ψ0.1 Bs.ω - ((m : ℚ) : B)) = Φ.1 Bs.ω - Ψ0.1 Bs.ω by abel] at this
+
+/-- Two embeddings with the same type relative to `Ψ₀` have the same type. -/
+theorem same_of_iff {ℓ : ℤ} (hℓ : L6 ℓ) (Ψ0 Φ Φ' : OptEmb k R)
+    (h : PP ℓ (Φ.1 Bs.ω - Ψ0.1 Bs.ω) ↔ PP ℓ (Φ'.1 Bs.ω - Ψ0.1 Bs.ω)) :
+    PP ℓ (Φ'.1 Bs.ω - Φ.1 Bs.ω) := by
+  by_cases hA : PP ℓ (Φ.1 Bs.ω - Ψ0.1 Bs.ω)
+  · have := PP_sub hℓ (h.mp hA) hA
+    rwa [show Φ'.1 Bs.ω - Ψ0.1 Bs.ω - (Φ.1 Bs.ω - Ψ0.1 Bs.ω) = Φ'.1 Bs.ω - Φ.1 Bs.ω by abel] at this
+  · have hA' : ¬ PP ℓ (Φ'.1 Bs.ω - Ψ0.1 Bs.ω) := fun h' => hA (h.mpr h')
+    have h1 := (type_dichotomy Bs hℓ Ψ0 Φ).resolve_left hA
+    have h2 := (type_dichotomy Bs hℓ Ψ0 Φ').resolve_left hA'
+    have := PP_sub hℓ h2 h1
+    rwa [show Φ'.1 Bs.ω - star (Ψ0.1 Bs.ω) - (Φ.1 Bs.ω - star (Ψ0.1 Bs.ω)) = Φ'.1 Bs.ω - Φ.1 Bs.ω by
+      abel] at this
+
+/-- A chosen nonzero intertwiner. -/
+def cfp (hk : Module.finrank ℚ k = 2) (Ψ Φ : OptEmb k R) : B := (exists_Jo Bs hk Ψ Φ).choose
+
+theorem cfp_spec (hk : Module.finrank ℚ k = 2) (Ψ Φ : OptEmb k R) :
+    cfp Bs hk Ψ Φ ∈ Jo Ψ Φ ∧ cfp Bs hk Ψ Φ ≠ 0 := (exists_Jo Bs hk Ψ Φ).choose_spec
+
+open Classical in
+/-- The class in `Pic R` of the lattice of the chosen intertwiner. -/
+def pcp (hk : Module.finrank ℚ k = 2) (Ψ Φ : OptEmb k R) : CommRing.Pic R :=
+  if h : IsUnit (latA Ψ (cfp Bs hk Ψ Φ)) then Submodule.unitsToPic R k h.unit else 1
+
+/-- **Injectivity**: embeddings without bad primes relative to `Ψ` with the same class are conjugate. -/
+theorem conj_of_pcp (hk : Module.finrank ℚ k = 2) {Ψ Φ Φ' : OptEmb k R}
+    (hNB : ∀ p : ℕ, p.Prime → ¬ Bad Ψ Φ p) (hNB' : ∀ p : ℕ, p.Prime → ¬ Bad Ψ Φ' p)
+    (h : pcp Bs hk Ψ Φ = pcp Bs hk Ψ Φ') : ConjRel R Φ Φ' := by
+  obtain ⟨hc, hne⟩ := cfp_spec Bs hk Ψ Φ
+  obtain ⟨hc', hne'⟩ := cfp_spec Bs hk Ψ Φ'
+  have hu := latA_isUnit Bs hk hc hne hNB
+  have hu' := latA_isUnit Bs hk hc' hne' hNB'
+  unfold pcp at h
+  rw [dif_pos hu, dif_pos hu'] at h
+  obtain ⟨x, hx⟩ := eq_smul_of_pic h
+  simp only [IsUnit.unit_spec] at hx
+  refine conj_of_lat Bs hk hc hne hc' hne' (unitCrit_of Bs hk Ψ Φ hNB) (unitCrit_of Bs hk Ψ Φ' hNB')
+    (x : k) x.ne_zero (fun a => ?_)
+  rw [← mem_latA, ← mem_latA, hx]
+  constructor
+  · rintro ⟨b, hb, hxb⟩
+    have : b = a := mul_left_cancel₀ x.ne_zero hxb
+    rwa [← this]
+  · intro ha; exact ⟨a, ha, rfl⟩
+
+theorem card_types (k : Type) [Field k] [NumberField k] :
+    Nat.card {τ : Bool × Bool // (¬ (Ideal.span {(2 : 𝓞 k)}).IsPrime → τ.1 = true) ∧
+      (¬ (Ideal.span {(3 : 𝓞 k)}).IsPrime → τ.2 = true)} = 2 ^ inertCount6 k := by
+  classical
+  unfold inertCount6
+  split_ifs with h2 h3 h3 <;> simp only [h2, h3, not_true_eq_false, not_false_eq_true, false_implies,
+    true_implies, true_and, and_true] <;> rw [Nat.card_eq_fintype_card] <;> decide
+
+/-- **The count**: `#(Emb(R, 𝒪)/𝒪^×) ≤ 2^{b(k)} · #Pic(R)` for an order `R` of conductor prime to `6` in a
+quadratic field, without Eichler's formula. -/
+theorem conjRel_card_le (k : Type) [Field k] [NumberField k] (hk : Module.finrank ℚ k = 2) (R : Subring k)
+    (hR : R ≤ (integralClosure ℤ k).toSubring) (hc : Nat.Coprime (conductor R) 6)
+    (hh : Nat.card (CommRing.Pic R) ≠ 0) :
+    Finite (Quot (ConjRel R)) ∧ Nat.card (Quot (ConjRel R)) ≤ 2 ^ inertCount6 k * Nat.card (CommRing.Pic R) := by
+  classical
+  obtain ⟨Bs⟩ := exists_qbasis hk hR hc
+  haveI : Finite (CommRing.Pic R) := Nat.finite_of_card_ne_zero hh
+  by_cases hE : IsEmpty (OptEmb k R)
+  · haveI : IsEmpty (Quot (ConjRel R)) := ⟨fun q => Quot.inductionOn q (fun a => hE.false a)⟩
+    exact ⟨inferInstance, by rw [Nat.card_of_isEmpty]; exact Nat.zero_le _⟩
+  rw [not_isEmpty_iff] at hE
+  obtain ⟨Ψ0⟩ := hE
+  have hni2 : ¬ (Ideal.span {(2 : 𝓞 k)}).IsPrime → ∀ Φ : OptEmb k R, PP 2 (Φ.1 Bs.ω - Ψ0.1 Bs.ω) :=
+    fun h Φ => same_type_of_not_inert Bs hR hc Ψ0 (Or.inl rfl) (by simpa using h) Φ
+  have hni3 : ¬ (Ideal.span {(3 : 𝓞 k)}).IsPrime → ∀ Φ : OptEmb k R, PP 3 (Φ.1 Bs.ω - Ψ0.1 Bs.ω) :=
+    fun h Φ => same_type_of_not_inert Bs hR hc Ψ0 (Or.inr rfl) (by simpa using h) Φ
+  let T := {τ : Bool × Bool // (¬ (Ideal.span {(2 : 𝓞 k)}).IsPrime → τ.1 = true) ∧
+      (¬ (Ideal.span {(3 : 𝓞 k)}).IsPrime → τ.2 = true)}
+  let τ : OptEmb k R → T := fun Φ =>
+    ⟨(decide (PP 2 (Φ.1 Bs.ω - Ψ0.1 Bs.ω)), decide (PP 3 (Φ.1 Bs.ω - Ψ0.1 Bs.ω))),
+      fun h => by simpa using hni2 h Φ, fun h => by simpa using hni3 h Φ⟩
+  let rep : T → OptEmb k R := fun t => if h : ∃ Φ, τ Φ = t then h.choose else Ψ0
+  have hrep : ∀ Φ, τ (rep (τ Φ)) = τ Φ := by
+    intro Φ
+    have h : ∃ Φ', τ Φ' = τ Φ := ⟨Φ, rfl⟩
+    simp only [rep, dif_pos h]; exact h.choose_spec
+  have hsame : ∀ Φ, ∀ ℓ : ℤ, L6 ℓ → PP ℓ (Φ.1 Bs.ω - (rep (τ Φ)).1 Bs.ω) := by
+    intro Φ ℓ hℓ
+    have h := hrep Φ
+    rcases hℓ with rfl | rfl
+    · apply same_of_iff Bs (Or.inl rfl) Ψ0
+      have := congrArg (fun t : T => t.1.1) h
+      simpa [τ] using this
+    · apply same_of_iff Bs (Or.inr rfl) Ψ0
+      have := congrArg (fun t : T => t.1.2) h
+      simpa [τ] using this
+  have hNB : ∀ Φ, ∀ p : ℕ, p.Prime → ¬ Bad (rep (τ Φ)) Φ p := by
+    intro Φ p hp
+    by_cases h6 : (p : ℤ) ∣ 6
+    · have h6' : p ∣ 6 := by exact_mod_cast h6
+      have : p = 2 ∨ p = 3 := by
+        have hle : p ≤ 6 := Nat.le_of_dvd (by norm_num) h6'
+        interval_cases p <;> simp_all <;> norm_num at hp
+      rcases this with rfl | rfl
+      · exact not_bad6 Bs hk hc (Or.inl rfl) (hsame Φ 2 (Or.inl rfl))
+      · exact not_bad6 Bs hk hc (Or.inr rfl) (hsame Φ 3 (Or.inr rfl))
+    · exact not_bad_coprime Bs hk _ _ (Nat.prime_iff_prime_int.mp hp) h6
+  let G : Quot (ConjRel R) → CommRing.Pic R × T := fun q => (pcp Bs hk (rep (τ q.out)) q.out, τ q.out)
+  have hG : Function.Injective G := by
+    intro q1 q2 h12
+    have hτ : τ q1.out = τ q2.out := congrArg Prod.snd h12
+    have hp : pcp Bs hk (rep (τ q1.out)) q1.out = pcp Bs hk (rep (τ q2.out)) q2.out := congrArg Prod.fst h12
+    rw [← hτ] at hp
+    have hNB2 := hNB q2.out
+    rw [← hτ] at hNB2
+    have hconj := conj_of_pcp Bs hk (hNB q1.out) hNB2 hp
+    rw [← Quot.out_eq q1, ← Quot.out_eq q2]
+    exact Quot.sound hconj
+  refine ⟨Finite.of_injective G hG, ?_⟩
+  have := Nat.card_le_card_of_injective G hG
+  rw [Nat.card_prod, card_types k, mul_comm] at this
+  exact this
+
 end Emb
 
 end EichlerBound
