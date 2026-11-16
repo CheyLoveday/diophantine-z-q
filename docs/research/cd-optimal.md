@@ -172,9 +172,15 @@ So no computation with congruence subgroups, eta quotients or cusp values can de
 3. So `CdTwistedPeriodOdd(d)` follows from: **some `γ ∈ Γ₀(32d²)` has `Σ_{e∣d} ρ(γ^{(e²)}) ∉ (1+i)L₁`**. This is a
    statement about `f₁` and the degeneracy maps `X₀(32d²) → X₀(32)` alone.
 
-Numerically (`py/twn_mod2.gp`, output `py/twn_mod2_out.txt`):
-- with `γ∞ = A/(32d²)`, a small odd `A` always works, for every squarefree `d ≡ 5 (mod 8)` tested (list in §6);
-- this is consistent with gz-optimal's direct computation `Λ_d = L` for the 18 values `d ≤ 165`.
+Numerically (`py/twn_mod2.gp`, output `py/twn_mod2_out.txt`, VERIFIED as a computation; it relies on the derived
+reduction 1–3):
+- with `γ∞ = A/(32d²)`, an odd `A ≤ 23` works for **all 32 squarefree `d ≡ 5 (mod 8)` with `5 ≤ d ≤ 301`**. The
+  coordinates are integral to within `4·10⁻¹⁸`. This also checks that the `χ₈` parts cancel, as 2.4 predicts;
+- this is consistent with gz-optimal's direct computation `Λ_d = L` for the 18 values `d ≤ 165`, and it extends the
+  evidence to `d ≤ 301` using level-32 periods only;
+- `py/twn_table_out.txt` gives, for the primes `p ≡ 5 (mod 8)` up to 109 and all odd `A ≤ 31`, the parity bit of
+  `ρ(A/(32p²)) + ρ(A/32)`. Every row has a `1`. For `A = 5` the bit is `1` exactly when `(p/5) = −1` (8 primes).
+  For `A = 13` no such Legendre rule holds (`p = 61`). A quartic-residue law may lie behind the bits (SPECULATIVE).
 
 **A possible proof (SPECULATIVE).** For `d = p` prime, the criterion says that `ψ = ρ mod (1+i)L₁` on `Γ'` is not
 invariant under conjugation by `diag(p², 1)` on `Γ₀(32p²)`. Suppose it were. Then `ψ` would extend to the group
@@ -198,7 +204,8 @@ This is close in spirit to Ihara's lemma (Ihara 1975; Ribet 1984 and 1990). Thre
 | `scratch/cd-optimal/Discharges.lean`, `discharges-output.txt` | `#discharges` | below |
 | `scratch/cd-optimal/autofold.json` | field `cdOptimal` ← `cdOptimal_of`, leaves `etaW32Character` (published), `cdTwistedPeriodOdd` (project glue) | JSON checked |
 | `scratch/cd-optimal/autofold-formula.json` | field `grossZagierFormulaCd` ← `grossZagierFormulaCd_of_cdLeaves` (alternative to gz-optimal's spec) | JSON checked |
-| `scratch/cd-optimal/py/` | PARI scripts and outputs (level-32 periods, eta fits, `w` character, mod-2 check) | computed |
+| `scratch/cd-optimal/Target.lean`, `out_target.txt` | verbatim copy of `CdOptimal`, `rfl` against the original; `cdOptimal_target` | standard axioms (VERIFIED) |
+| `scratch/cd-optimal/py/` | PARI scripts and outputs (level-32 periods `lev32b_out.txt`, eta fits, `w` character `wchar.gp`, mod-2 check `twn_mod2_out.txt`, parity table `twn_table_out.txt`) | computed |
 
 **`#discharges`** (`scratch/cd-optimal/discharges-output.txt`, VERIFIED):
 - command: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
@@ -216,5 +223,6 @@ Proposed `locators.md` row (for the integrator): `EtaW32Character` → Ono, *The
   route is a sketch only.
 * **`EtaW32Character` in Lean** (optional; it is a printed leaf). This needs the eta multiplier for odd powers. The
   kernel has only the `η²` multiplier (`GZTheta/Eta.lean`).
-* Numerical range of the mod-2 check (`py/twn_mod2_out.txt`): see the file. Every squarefree `d ≡ 5 (mod 8)` in the
-  range found an `A` with odd parity.
+* The mod-2 reduction of §4 (Hecke relation, Möbius inversion) is derived on paper, not in Lean. Formalizing it
+  would restate the residual at level 32 (about `f₁` and the degeneracy maps only). It would not make the residual
+  easier to prove.

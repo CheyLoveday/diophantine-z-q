@@ -33,3 +33,4 @@ Base wip/gz-optimal 2631cd0b. Build tree copied from ~/dzq-wt/gz-optimal (.lake/
 * Target.lean: verbatim copy of CdOptimal, rfl against the original; cdOptimal_target standard axioms (VERIFIED).
 * py/twn_mod2.gp: mod-2 level-32 criterion (sum_{e|d} rho(A/(32d^2/e^2)) not in (1+i)L_1) found an odd A for every
   squarefree d = 5 mod 8 tested (output py/twn_mod2_out.txt) (VERIFIED, computed; relies on the derived reduction).
+* py/twn_mod2_out.txt complete: all 32 squarefree d = 5 mod 8, 5 <= d <= 301, have an odd A <= 23 (VERIFIED computed). py/twn_table_out.txt: parity table, primes p <= 109, A <= 31; every row has a 1.
