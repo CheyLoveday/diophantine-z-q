@@ -832,9 +832,9 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
 `OpenGlue7` (1). -/
 theorem sixContactMin_of_open18 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves13)
     (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) (h6 : PkgI2.RaynaudCriterionNF.{0})
-    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
-    ZInQ.SixContactMin :=
-  sixContactMin_of_open17 r t (addedLeaves12_of_open13 l) g hYu h6 hSS
+    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists)
+    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
+  sixContactMin_of_open17 r t (addedLeaves12_of_open13 l) g hYu h6 hSS hY3
 
 end HSyn
 

@@ -201,12 +201,13 @@ theorem ss1_ss3_of14NF (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l 
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold16; generated; r6-nf: supplies r6 at number fields
 and SS1/SS3 to `sixContactMin_of_open19`). -/
-theorem sixContactMin_of_open20 (r : OpenResearchLeaves16) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves14) (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
+theorem sixContactMin_of_open20 (r : OpenResearchLeaves16) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves14) (g : OpenGlue7) (hYu : QMLattice.YuB6Alg)
+    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
   sixContactMin_of_open19 (openResearchLeaves15_of_OpenResearchLeaves16 r) t (openAddedLeaves13_of_OpenAddedLeaves14 l) g hYu
     (raynaudCriterionNF_of14
       (openResearchLeaves14_of_OpenResearchLeaves15 (openResearchLeaves15_of_OpenResearchLeaves16 r)) t)
     (ss1_ss3_of14NF (openResearchLeaves14_of_OpenResearchLeaves15 (openResearchLeaves15_of_OpenResearchLeaves16 r)) t
-      (addedLeaves12_of_open13 (openAddedLeaves13_of_OpenAddedLeaves14 l)))
+      (addedLeaves12_of_open13 (openAddedLeaves13_of_OpenAddedLeaves14 l))) hY3
 
 end HSyn
 

@@ -43,7 +43,7 @@ structure OpenAddedLeaves9 : Prop where
 /-! ## From the new bundle to leaf-fold8's -/
 
 /-- leaf-fold8's added-leaf bundle from leaf-fold10's: `y3Connected` from the printed Deligne leaf. -/
-theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) : OpenAddedLeaves8 where
+theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) (hY3 : TSHecke.Y3Connected) : OpenAddedLeaves8 where
   thetaRatiosAlgebraic := l.thetaRatiosAlgebraic
   qmCentralizerCMC := l.qmCentralizerCMC
   tateTwistInvariants := l.tateTwistInvariants
@@ -51,8 +51,7 @@ theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) : OpenAddedLeaves8 where
   t09SymmIsogenyExists := l.t09SymmIsogenyExists
   milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
   x6ConicModel := l.x6ConicModel
-  y3Connected := _root_.ShimuraSplit.y3Connected_of_deligne
-    (_root_.ShimuraGlue.deligneComponentsY3_of_printed l.deligneComponentsY3Printed)
+  y3Connected := hY3
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
@@ -64,8 +63,9 @@ theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) : OpenAddedLeaves8 where
 `OpenAddedLeaves9` (14) and leaf-fold7's `OpenGlue7` (1, `QuotientP1Coordinate`). The table of every field is
 `docs/research/leaf-fold10.md` §2. -/
 theorem sixContactMin_of_open11 (r : OpenResearchLeaves9) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves9)
-    (g : OpenGlue7) (hF5 : _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower) (hYu : QMLattice.YuB6Alg) : ZInQ.SixContactMin :=
-  sixContactMin_of_open10 r t (addedLeaves8_of_open9 l) g hF5 hYu
+    (g : OpenGlue7) (hF5 : _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower) (hYu : QMLattice.YuB6Alg)
+    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
+  sixContactMin_of_open10 r t (addedLeaves8_of_open9 l hY3) g hF5 hYu
 
 end HSyn
 

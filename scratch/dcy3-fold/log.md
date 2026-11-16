@@ -20,3 +20,4 @@
   0 unused (prunescan-base-out.txt, used-fields-base.txt, unused-all-base.txt, prune-set-base.txt).
   kinds.tsv before (kinds-counts-before.txt): H rows 51, strict 41 LEAF / 10 GLUE, strictest 39 / 12; all 62 rows strict
   49 / 13, strictest 47 / 15. The field's row: added, GLUE / GLUE.
+- 23:41 step 1 (thread.py: hY3 binder on addedLeaves8_of_open9, open11-open27; supplied in open28 by DCY3Used.y3Connected_of_leaves; TailZ34 imports DeligneComponentsY3Used): build OK first try (13686 jobs), frozenTarget axioms standard.
