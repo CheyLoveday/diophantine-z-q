@@ -277,4 +277,54 @@ theorem isSmoothConnAffineKer_of_torus {U B : Over (Spec (CommRingCat.of K))} [G
 
 end Ker
 
+/-! ## §5. A faithfully flat homomorphism with smooth kernel onto a smooth group has smooth source -/
+
+section Shear
+
+variable {K : Type} [Field K]
+
+/-- The shear square `U × ker π ⇉ U` (`(u, t) ↦ u` and `(u, t) ↦ u t`) is a pullback of `π` along `π`. -/
+theorem isPullback_shear {U B : Over (Spec (CommRingCat.of K))} [GrpObj U] [GrpObj B] (π : U ⟶ B)
+    [IsMonHom π] :
+    IsPullback (fst U (kerObj π)) (fst U (kerObj π) * (snd U (kerObj π) ≫ pullback.fst π η[B]))
+      π π := by
+  set ιk := pullback.fst π η[B]
+  have hιk : ιk ≫ π = 1 := by
+    rw [pullback.condition, toUnit_unique (pullback.snd π η[B]) (toUnit _)]; rfl
+  have hcomm : fst U (kerObj π) ≫ π = (fst U (kerObj π) * (snd U (kerObj π) ≫ ιk)) ≫ π := by
+    rw [MonObj.mul_comp, Category.assoc, hιk, MonObj.comp_one, _root_.mul_one]
+  refine ⟨⟨hcomm⟩, ⟨PullbackCone.IsLimit.mk hcomm (fun c => lift c.fst
+      (pullback.lift (c.fst⁻¹ * c.snd) (toUnit _) ?_)) ?_ ?_ ?_⟩⟩
+  · rw [MonObj.mul_comp, GrpObj.inv_comp, c.condition, _root_.inv_mul_cancel]; rfl
+  · intro c; simp
+  · intro c
+    rw [MonObj.comp_mul, lift_fst, ← Category.assoc, lift_snd, pullback.lift_fst, _root_.mul_inv_cancel_left]
+  · intro c m h1 h2
+    apply CartesianMonoidalCategory.hom_ext
+    · rw [lift_fst]; exact h1
+    · rw [lift_snd]
+      apply pullback.hom_ext
+      · rw [pullback.lift_fst]
+        rw [MonObj.comp_mul, h1] at h2
+        rw [← h2, Category.assoc, _root_.inv_mul_cancel_left]
+      · exact toUnit_unique _ _
+
+/-- **Smoothness of an extension**: if `π : U → B` is a faithfully flat quasi-compact homomorphism onto a smooth
+`K`-group with smooth kernel, then `U` is smooth (flat descent of smoothness along `π`, through the shear
+isomorphism `U ×_B U ≅ U × ker π`). -/
+theorem smooth_of_smoothKer {U B : Over (Spec (CommRingCat.of K))} [GrpObj U] [GrpObj B] (π : U ⟶ B)
+    [IsMonHom π] (hfl : Flat π.left) (hsu : Surjective π.left) (hqc : QuasiCompact π.left)
+    [Smooth B.hom] (hK : Smooth (kerObj π).hom) : Smooth U.hom := by
+  have hP := (isPullback_shear π).map (Over.forget _)
+  have hfst : Smooth ((Over.forget _).map (fst U (kerObj π))) := by
+    change Smooth (pullback.fst U.hom (kerObj π).hom)
+    infer_instance
+  have hπ : Smooth π.left :=
+    MorphismProperty.of_isPullback_of_descendsAlong (P := @Smooth)
+      (Q := @Surjective ⊓ @Flat ⊓ @QuasiCompact) hP ⟨⟨hsu, hfl⟩, hqc⟩ hfst
+  rw [← Over.w π]
+  infer_instance
+
+end Shear
+
 end ZInQ.SemiAbDescend
