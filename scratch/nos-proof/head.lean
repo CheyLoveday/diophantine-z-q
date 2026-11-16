@@ -21,6 +21,7 @@ The chain's field `r7a : PkgI2.NeronOggShafarevich.{0}` (`ZInQKernel/HDecomp/Obj
 -/
 
 set_option linter.style.longLine false
+set_option linter.style.haveILetI false
 
 noncomputable section
 

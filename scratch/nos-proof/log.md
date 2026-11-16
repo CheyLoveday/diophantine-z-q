@@ -18,3 +18,8 @@ Copied in scratch/nos-proof/OldStatements.lean.
   algebra (ℓ = 2, 3 for B = (2,-3)), so the round trip cannot be bypassed without the converse.
 - (a) ⇒ (b) PROVED (scratch/nos-proof/T1.lean compiles, 13:05): from the proved row PkgI2.ReductionTorsionBijective
   (AvSplit.T4.reductionTorsionBijective_of_mulEtale + MulEtale.mulEtaleAbelianScheme_proof).
+- (b) ⇒ (c) PROVED (`infinite_natCast_isUnit`: m = (N+1)·char k + 1, or N+1 in residue char 0).
+- (c) ⇒ (a) from new leaf `NOSProof.NOSConverseSep` (Serre–Tate Thm 1 (c) ⇒ (a) over any IsSepClosure Ks), via
+  K^s = separableClosure K K̄ and dict-galois's `isInertia_extend` (copied verbatim from wip/dict-galois 81d1f67f).
+- scratch/nos-proof/T2.lean compiles (13:12): `NOSProof.neronOggShafarevich_of_converse : NOSConverseSep →
+  PkgI2.NeronOggShafarevich.{0}`, axioms [propext, Classical.choice, Quot.sound] (VERIFIED).

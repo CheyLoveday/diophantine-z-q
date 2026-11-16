@@ -88,5 +88,3 @@ theorem inertiaTrivialOn_of_goodReduction (O : ValuationSubring K) [IsDiscreteVa
   exact (huniq _ ⟨hσx, hred⟩).trans (huniq _ ⟨hx, ⟨x', hx1, hx2⟩⟩).symm
 
 end Forward
-
-end NOSProof
