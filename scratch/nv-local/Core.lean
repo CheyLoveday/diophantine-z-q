@@ -284,6 +284,39 @@ theorem nvLocalInertia_of_branchRegular (h : BranchRegular) : NVLocalInertia := 
       rw [h3] at hc₃𝔓
       have := 𝔓.add_mem hc₃𝔓 h2
       simpa using this
+  -- `Q` is maximal, `κ = B/Q` is a field
+  have hspan : (Ideal.span {X - C b} : Ideal ℚ[X]).IsMaximal :=
+    PrincipalIdealRing.isMaximal_of_irreducible (irreducible_X_sub_C b)
+  haveI : Q.LiesOver (Ideal.span {X - C b}) := ⟨hQu.symm⟩
+  haveI hQmax : Q.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal Q (Ideal.span {X - C b})
+  letI : Field (integralClosure ℚ[X] E ⧸ Q) := Ideal.Quotient.field Q
+  -- an embedding `φ : κ → ℚ̄`
+  have key : ∀ f : ℚ[X], Ideal.Quotient.mk Q (algebraMap ℚ[X] (integralClosure ℚ[X] E) f) =
+      Ideal.Quotient.mk Q (algebraMap ℚ[X] (integralClosure ℚ[X] E) (C (f.eval b))) := by
+    intro f
+    rw [Ideal.Quotient.eq, ← map_sub, ← Ideal.mem_comap, ← Ideal.under_def, hQu,
+      Ideal.mem_span_singleton]
+    exact X_sub_C_dvd_sub_C_eval
+  obtain ⟨φ⟩ : Nonempty (integralClosure ℚ[X] E ⧸ Q →+* Qbar) := by
+    letI alg : Algebra ℚ (integralClosure ℚ[X] E ⧸ Q) :=
+      ((Ideal.Quotient.mk Q).comp ((algebraMap ℚ[X] (integralClosure ℚ[X] E)).comp C)).toAlgebra
+    haveI : Algebra.IsAlgebraic ℚ (integralClosure ℚ[X] E ⧸ Q) := by
+      refine ⟨fun z => ?_⟩
+      obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective z
+      obtain ⟨f, hf, hy0⟩ := Algebra.IsIntegral.isIntegral (R := ℚ[X]) y
+      have hcomp : (Ideal.Quotient.mk Q).comp (algebraMap ℚ[X] (integralClosure ℚ[X] E)) =
+          (algebraMap ℚ (integralClosure ℚ[X] E ⧸ Q)).comp (Polynomial.evalRingHom b) := by
+        ext f
+        · simp only [RingHom.comp_apply, RingHom.algebraMap_toAlgebra, coe_evalRingHom, eval_C]
+        · simp only [RingHom.comp_apply, RingHom.algebraMap_toAlgebra, coe_evalRingHom, eval_X]
+          rw [key X, eval_X]
+      refine (IsIntegral.isAlgebraic ⟨f.map (Polynomial.evalRingHom b), hf.map _, ?_⟩)
+      rw [eval₂_map, ← hcomp, ← Polynomial.hom_eval₂, hy0, map_zero]
+    haveI : Module.IsTorsionFree ℚ (integralClosure ℚ[X] E ⧸ Q) :=
+      Module.isTorsionFree_iff_algebraMap_injective.mpr (RingHom.injective _)
+    haveI : Module.IsTorsionFree ℚ Qbar :=
+      Module.isTorsionFree_iff_algebraMap_injective.mpr (RingHom.injective _)
+    exact ⟨(IsAlgClosed.lift (R := ℚ) (M := Qbar) (S := integralClosure ℚ[X] E ⧸ Q)).toRingHom⟩
   sorry
 
 end SGRDirect.NVLocal
