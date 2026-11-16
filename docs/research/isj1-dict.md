@@ -198,4 +198,56 @@ theorem R16IsJ1Dict.weakOddPicZero_of_afTate (h : R16Used.AfTateCharPoly) (hT : 
 
 ## 5. Objections to `AfTateCharPoly` that remain
 
-(See §5 below.)
+The review gave several reasons; the dictionary ones are taken first.
+
+1. **`K_N = ℚ(j, f₁)` (open, not statable in Lean today).** The print concerns DS's `X₁(N)_alg`, which is
+   defined through the Weber function `f₁`, a complex-analytic object. The kernel's `IsX1Model` uses
+   `ℚ(j)(x(P))` on `E_j = ofJNe0Or1728 j`.
+   - What is needed is the comparison at one point `P`: `ℚ(j, f₁) ≃ ℚ(j)(x(P))`. Here `f₁` is
+     `(g₂g₃/Δ)·℘(1/N)` up to normalization, and `x(P)` is an `x`-coordinate on the generic curve. The two
+     differ by a `ℚ(j)`-affine change of coordinates. The comparison is classical (DS §7.5–7.7, Shimura 1971
+     Ch. 6; UNVERIFIED).
+   - Stating it needs `f₁`, either as a meromorphic function or through its `q`-expansion, which has
+     coefficients in `ℚ(μ_N)`. The tree has `℘` (gz-hl3) and the `X₀(N)` field of the vendored FLT project
+     (q-expansions), but no `X₁(N)` analogue.
+   - Two ways to close it: (a) a future task defines `f₁` and states the comparison as a leaf;
+     (b) cite a moduli-theoretic Eichler–Shimura statement in which `X₁(N)` is the moduli space of
+     `(E, P)`, for instance Conrad's appendix to Ribet–Stein or Diamond–Im §12 (UNVERIFIED). There the
+     comparison is "the function field of the moduli space is `ℚ(j)(x(P))`", which again needs moduli spaces
+     in Lean.
+   - This is the only remaining point at which the print does not apply as a direct instance of
+     `AfTateCharPolyPicZero`.
+2. **A curve is determined by its function field.** This is now the separate leaf `CurveIsoOfFunctionFieldIso`,
+   rated published (object part of the Stacks/Hartshorne equivalence).
+   - A Lean proof is a reasonable crowdsourcing item. It needs: extension of the generic point through the
+     valuative criterion at each (DVR) stalk; spreading out from `Spec 𝒪_{X,x}` to a neighbourhood (Mathlib's
+     EGA IV 8.8.2 in `AffineTransitionLimit.lean`); and gluing by uniqueness on the reduced, separated
+     schemes.
+   - The kernel already has "a bijective morphism of smooth curves is an isomorphism" (curve-split).
+3. **Pic⁰ is the Albanese.** **Closed**: proved in Lean.
+4. **Choice of `P`** (Igusa). Not on the review's list, but needed. It is now the separate leaf
+   `X1PointsConjugate`, rated consequence: transitivity is a consequence of the printed Galois group
+   `GL₂(ℤ/N)` (or `GL₂(ℤ/N)/±1` on `x`-coordinates). A printed-form version would state "the image of
+   Galois in `Aut(E[N])/±1` is everything". Deriving transitivity from it then needs `E[N] ≅ (ℤ/N)²` over an
+   algebraically closed field of characteristic 0, which is not in Mathlib 4.35 for Weierstrass curves.
+5. **DS 9.5.4 wording.** If the print gives only the equation `x² − a_p x + χ(p)p = 0`, then
+   `AfTateWeakOddPicZero` with `r16CoreY_of_dict` works. It adds oddness of `ρ_{A_f,ℓ}` (`det ρ(c) = −1`).
+   Oddness follows from `det ρ_{A_f,ℓ} = χχ_ℓ`, which Shimura 1971 Thm 7.14 and Ribet 1977 print
+   (UNVERIFIED). Under the characteristic-polynomial reading, the weak-odd form is a Lean-proved consequence.
+6. **`A_f` as an existential, newforms only, unramifiedness dropped.** Unchanged from r16-used. All three make
+   the statement weaker than the print. `A_f` has no Lean definition, since there are no Hecke correspondences
+   on `X₁(N)`.
+7. **The converse of r16-used** (`AfTateCharPoly` from `r16` plus glue) is still not formalized. It is no longer
+   needed for the "never stronger" claims made here, which are proved directly:
+   - `afTateCharPolyPicZero_of_afTate` and `weakOddPicZero_of_afTate` derive the new forms from r16-used's
+     leaf;
+   - r16-used's leaf is the print at DS's objects, modulo point 1.
+
+## 6. Leaf ratings
+
+| leaf | Lean | printed form? | kind / flag | reason |
+|---|---|---|---|---|
+| `afTateCharPolyPicZero` | `R16IsJ1Dict.AfTateCharPolyPicZero` | **yes, modulo the `K_N` dictionary step** | published, unread (dictionary step and DS wording noted) | It is DS Lemma 9.5.3 + Thm 9.5.4 at DS's objects: one model of `X₁(N)`, its `J₁(N) = Pic⁰`, `A_f` a quotient. `A_f` is existential, and only one representative of `Pic⁰` and one model are asserted. It is not stronger than r16-used's leaf (`afTateCharPolyPicZero_of_afTate`). The print applies as a direct instance once DS's `X₁(N)_alg` is a model in the kernel's sense (§5.1). |
+| `afTateWeakOddPicZero` (alternative) | `R16IsJ1Dict.AfTateWeakOddPicZero` | no: weak reading plus oddness | published, pending reading | Under the characteristic-polynomial reading it is a consequence (proved). Under the weak reading it needs oddness from a second source. |
+| `x1PointsConjugate` | `R16IsJ1Dict.X1PointsConjugate` | no | consequence | It is transitivity, a consequence of Igusa / Shimura 1971 Thm 6.6 (Galois group `GL₂(ℤ/N)`, resp. `/±1`). False for `N = 0`, hence `0 < N`. |
+| `curveIsoOfFunctionFieldIso` | `R16IsJ1Dict.CurveIsoOfFunctionFieldIso` | yes | published | It is the object part of the equivalence between normal proper curves over `k` and function fields (Stacks, Hartshorne I.6.12). |

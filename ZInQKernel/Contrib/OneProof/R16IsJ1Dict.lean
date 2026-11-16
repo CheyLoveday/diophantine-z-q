@@ -265,7 +265,7 @@ theorem afTateCharPoly_of_exists (h : AfTateCharPolyJ1Exists) (hI : X1PointsConj
 /-- **LEAF candidate: `AfTateCharPoly` over `Pic⁰` of one model of `X₁(N)`.** For `N ≥ 1` and a
 newform `f ∈ S₂(Γ₁(N))` with nebentypus `χ` there is a model `X` of `X₁(N)` over `ℚ` (`IsX1Model`:
 smooth proper geometrically connected integral, function field `ℚ(j)(x(P))`, `P` of exact order
-`N`) such that the degree-zero Picard scheme `J₁(N) = Pic⁰_{X/ℚ}` (any representing abelian
+`N`) such that the degree-zero Picard scheme `J₁(N) = Pic⁰_{X/ℚ}` (some representing abelian
 variety with the tensor group law) satisfies the conclusion of `AfTateCharPoly`. -/
 def AfTateCharPolyPicZero : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 0 < N → IsNewform f χ →
