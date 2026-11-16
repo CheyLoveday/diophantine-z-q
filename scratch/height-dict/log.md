@@ -23,3 +23,21 @@ Base: origin/main 2880fef1e. Build tree copied from ~/dzq-check2 (same commit).
   (Φ_*(Lebesgue|_D) is a Haar measure), and the core
   `volume_eq_of_normalized : IsUnif Λ Φ → μ finite left-invariant → F∘Φ strictly differentiable at 0 with ℂ-linear
   derivative D → (F_*μ has density a at F(1)) → (μ univ).toReal = a * ‖det D‖² * covol Λ`.
+- VERIFIED (compiled): `ZInQKernel/Contrib/OneProof/HeightDictionary/Holomorphic.lean` (Mathlib only):
+  `Holomorphic.hasStrictFDerivAt` — ℂ-differentiable on an open set of ℂ^g ⇒ strictly differentiable (partial
+  derivatives as Cauchy circle integrals, continuous in the point). Needed because the kernel's
+  `IsAnalyticUniformization` only gives `DifferentiableOn ℂ` and Mathlib 4.35 has holomorphic ⇒ C¹ only for ℂ → E.
+- VERIFIED (compiled): `TorusVolume.piMeasure_normalized` (existence: ‖det D‖²·Φ_*(Lebesgue|_D) has density 1 at F(1)).
+- VERIFIED (compiled, standard axioms): `ZInQKernel/Contrib/OneProof/HeightDictionary.lean`:
+  defs `anBorel`, `coordMap`, `IsNormalizedBy`, `IsFaltingsMetricSq`, `IsPrintedStableHeight`,
+  leaves `BostLowerBoundPrinted`, `GaudronRemondThm14Printed`;
+  theorems `isFaltingsMetricSq_of_metrized`, `exists_isNormalizedBy`, `isFaltingsMetricSq_iff`,
+  `isPrintedStableHeight_of`, `isStableFaltingsHeight_of_printed`, `isPrintedStableHeight_iff`,
+  `bostLowerBound_of_printed(')`, `gaudronRemondThm14_of_printed(')`.
+- VERIFIED: `#discharges` (scratch/height-dict/discharges.txt): bostLowerBound by
+  `ZInQ.HeightDict.bostLowerBound_of_printed`, still assumes [BostLowerBoundPrinted, UniformizationLeafAll,
+  MumfordTorsionAlgClosed]; gaudronRemondThm14 by `gaudronRemondThm14_of_printed`, still assumes
+  [GaudronRemondThm14Printed, UniformizationLeafAll, MumfordTorsionAlgClosed]; axioms standard.
+- VERIFIED: autofold dry run (scratch/height-dict/autofold.json): exit 0, strict 34/11 on 45 -> 34/11 on 45 (both
+  rows LEAF in this base's kinds.tsv; -2 GLUE if the 11-16 consequence rating is applied); the dry-run module
+  (scratch/height-dict/FoldDryRun.lean) compiles, `sixContactMin_of_open36` standard axioms.
