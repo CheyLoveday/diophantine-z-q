@@ -106,4 +106,113 @@ theorem norm_quad_form {N : ℤ} (hN : Odd N) (t : ℤ_[2]) :
     simp only [map_add, map_pow, map_intCast, hN1]
     exact h2 _
 
+/-! ## Integer congruences from residues -/
+
+theorem mapH_sub {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (a b : H4 A) :
+    mapH f ⟨a.a0 - b.a0, a.a1 - b.a1, a.a2 - b.a2, a.a3 - b.a3⟩ =
+      ⟨f a.a0 - f b.a0, f a.a1 - f b.a1, f a.a2 - f b.a2, f a.a3 - f b.a3⟩ := by
+  simp [mapH]
+
+theorem exists_smulH_of_mod {E : H4 ℤ} {m : ℕ} (h : mapH (Int.castRingHom (ZMod m)) E = ⟨0, 0, 0, 0⟩) :
+    ∃ C : H4 ℤ, E = smulH m C := by
+  simp only [mapH, H4.mk.injEq, eq_intCast, ZMod.intCast_zmod_eq_zero_iff_dvd] at h
+  obtain ⟨⟨c0, h0⟩, ⟨c1, h1⟩, ⟨c2, h2⟩, ⟨c3, h3⟩⟩ := h
+  exact ⟨⟨c0, c1, c2, c3⟩, by ext <;> simp [smulH, h0, h1, h2, h3]⟩
+
+theorem getD_mem_unitList (i : Fin 24) : unitList.getD i.val ⟨1, 0, 0, 0⟩ ∈ unitList := by
+  rw [List.getD_eq_getElem _ _ (by simp [unitList])]
+  exact List.getElem_mem _
+
+theorem nrdH_odd_of_mod4 {x : H4 ℤ} (h0 : nrdH (mapH (Int.castRingHom (ZMod 4)) x) ≠ 0) : nrdH x ≠ 0 := by
+  intro h; apply h0; rw [← map_nrdH, h, map_zero]
+
+/-! ## The local condition and `H ≤ SgC` -/
+
+/-- `ℚ_2^× R_2^×` for `ω` with `ω² = ω − N`. -/
+def C3 (ω : ℍ[ℚ]) (N : ℤ) (hωZ : IsHurZ ω) (h2 : ω * ω = ω - (N : ℚ) • 1)
+    (hst : star ω = 1 - ω) : LocCond where
+  P p _ y := Loc2OK (qp p ω) y
+  one p _ _ := Loc2OK.one
+  mul p _ _ y z hy hz := by
+    have h2' : qp p ω * qp p ω = (1 : ℚ_[p]) • qp p ω - ((N : ℚ) : ℚ_[p]) • 1 := by
+      rw [← map_mul, h2, map_sub, qp_smul, map_one, one_smul]
+    exact Loc2OK.mul' (isHur_qp_hurZ' hωZ) (Zp p).one_mem
+      (by rw [Rat.cast_intCast]; exact mem_Zp.mpr (Padic.norm_int_le_one N)) h2' hy hz
+  inv p _ _ y z hy h := by
+    have hst' : star (qp p ω) = (1 : ℚ_[p]) • 1 - qp p ω := by
+      rw [qp, ← qmap_star, ← qp, hst, map_sub, map_one, one_smul]
+    exact Loc2OK.of_mul_eq_one' (Zp p).one_mem hst' hy h
+
+/-- **The centralizer of `τ(√−n)` at `2`, `n ≡ 3 (mod 8)`**, lies in `ℚ_2^× R_2^×`. -/
+theorem loc2OK_of_commute3 {p : ℕ} [Fact p.Prime] (hp : p = 2) {a' b' c' N : ℤ}
+    (hN : 4 * N = (2 * a' + 1) ^ 2 + (2 * b' + 1) ^ 2 + (2 * c' + 1) ^ 2 + 1) (hNo : Odd N)
+    {y : ℍ[ℚ_[p]]} (hy : y ≠ 0)
+    (hc : y * qp p ⟨0, ((2 * a' + 1 : ℤ) : ℚ), ((2 * b' + 1 : ℤ) : ℚ), ((2 * c' + 1 : ℤ) : ℚ)⟩ =
+      qp p ⟨0, ((2 * a' + 1 : ℤ) : ℚ), ((2 * b' + 1 : ℤ) : ℚ), ((2 * c' + 1 : ℤ) : ℚ)⟩ * y) :
+    Loc2OK (qp p (hurZ (ωH3 a' b' c'))) y := by
+  subst hp
+  set A : ℚ_[2] := ((2 * a' + 1 : ℤ) : ℚ_[2])
+  set B : ℚ_[2] := ((2 * b' + 1 : ℤ) : ℚ_[2])
+  set C : ℚ_[2] := ((2 * c' + 1 : ℤ) : ℚ_[2])
+  have hv : qp 2 (⟨0, ((2 * a' + 1 : ℤ) : ℚ), ((2 * b' + 1 : ℤ) : ℚ), ((2 * c' + 1 : ℤ) : ℚ)⟩ : ℍ[ℚ]) =
+      ⟨0, A, B, C⟩ := by ext <;> simp [qp, A, B, C]
+  have hω : qp 2 (hurZ (ωH3 a' b' c') : ℍ[ℚ]) = ⟨1 / 2, A / 2, B / 2, C / 2⟩ := by
+    rw [hurZ_ωH3]; ext <;> simp [qp, A, B, C] <;> ring
+  rw [hv] at hc
+  rw [hω]
+  have e1 := congrArg (·.imJ) hc
+  have e2 := congrArg (·.imK) hc
+  simp at e1 e2
+  have hA : A ≠ 0 := by
+    have : ‖A‖ = 1 := norm_odd_int ⟨a', rfl⟩
+    intro h; rw [h, norm_zero] at this; exact zero_ne_one this
+  set lam := y.imI / A with hlam
+  have hJ : y.imJ = lam * B := by rw [hlam]; field_simp; linear_combination (-1 / 2 : ℚ_[2]) * e2
+  have hK : y.imK = lam * C := by rw [hlam]; field_simp; linear_combination (1 / 2 : ℚ_[2]) * e1
+  have hdec : y = (y.re - lam) • (1 : ℍ[ℚ_[2]]) + (2 * lam) • (⟨1 / 2, A / 2, B / 2, C / 2⟩ : ℍ[ℚ_[2]]) := by
+    ext
+    · simp; ring
+    · simp; rw [hlam]; field_simp
+    · simp; rw [hJ]; ring
+    · simp; rw [hK]; ring
+  set X := y.re - lam
+  set Y := 2 * lam
+  have hN' : (4 : ℚ_[2]) * N = A ^ 2 + B ^ 2 + C ^ 2 + 1 := by
+    simp only [A, B, C]; exact_mod_cast congrArg (fun z : ℤ => (z : ℚ_[2])) hN
+  have hnorm : ∀ x z : ℚ_[2], Quaternion.normSq (x • (1 : ℍ[ℚ_[2]]) + z • (⟨1 / 2, A / 2, B / 2, C / 2⟩ : ℍ[ℚ_[2]])) =
+      x ^ 2 + x * z + (N : ℚ_[2]) * z ^ 2 := by
+    intro x z
+    rw [Quaternion.normSq_def']; simp
+    linear_combination (-(z ^ 2) / 4) * hN'
+  have hωH : IsHur (Zp 2) (⟨1 / 2, A / 2, B / 2, C / 2⟩ : ℍ[ℚ_[2]]) := by
+    rw [← hω]; exact isHur_qp_hurZ' (isHurZ_hurZ _)
+  have hXY : X ≠ 0 ∨ Y ≠ 0 := by
+    by_contra h; push_neg at h
+    apply hy; rw [hdec, h.1, h.2, zero_smul, zero_smul, add_zero]
+  rcases le_total ‖Y‖ ‖X‖ with hle | hle
+  · have hX : X ≠ 0 := by
+      rcases hXY with h | h
+      · exact h
+      · intro hX0; rw [hX0, norm_zero] at hle; exact h (norm_le_zero_iff.mp hle)
+    have hYX : ‖Y / X‖ ≤ 1 := by rw [norm_div]; exact div_le_one_of_le₀ hle (norm_nonneg _)
+    refine ⟨X, hX, (1 : ℚ_[2]) • 1 + (Y / X) • ⟨1 / 2, A / 2, B / 2, C / 2⟩, ?_, ?_, ?_, ?_⟩
+    · rw [hdec, smul_add, smul_smul, smul_smul, mul_one, mul_div_cancel₀ _ hX]
+    · exact (isHur_one.smul (by simp [mem_Zp])).add (hωH.smul (mem_Zp.mpr hYX))
+    · rw [hnorm, one_pow, one_mul]
+      have := (norm_quad_form hNo ⟨Y / X, hYX⟩).1
+      exact this
+    · exact ⟨1, Y / X, by simp, hYX, 0, isHur_zero, by simp⟩
+  · have hY : Y ≠ 0 := by
+      rcases hXY with h | h
+      · intro hY0; rw [hY0, norm_zero] at hle; exact h (norm_le_zero_iff.mp hle)
+      · exact h
+    have hXY' : ‖X / Y‖ ≤ 1 := by rw [norm_div]; exact div_le_one_of_le₀ hle (norm_nonneg _)
+    refine ⟨Y, hY, (X / Y) • 1 + (1 : ℚ_[2]) • ⟨1 / 2, A / 2, B / 2, C / 2⟩, ?_, ?_, ?_, ?_⟩
+    · rw [hdec, smul_add, smul_smul, smul_smul, mul_one, mul_div_cancel₀ _ hY]
+    · exact (isHur_one.smul (mem_Zp.mpr hXY')).add (hωH.smul (by simp [mem_Zp]))
+    · rw [hnorm, one_pow, mul_one, mul_one]
+      have := (norm_quad_form hNo ⟨X / Y, hXY'⟩).2
+      exact this
+    · exact ⟨X / Y, 1, hXY', by simp, 0, isHur_zero, by simp⟩
+
 end ZInQ.Contrib.HfxProof
