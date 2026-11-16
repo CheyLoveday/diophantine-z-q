@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.DegEqDetTate
+import ZInQKernel.Contrib.OneProof.DegEqDetTate.Reduction
 
 /-!
 # deg-det: `#ker ψ ∣ deg ψ` (translations by the kernel act on the function field; Artin)
