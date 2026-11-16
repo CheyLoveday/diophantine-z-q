@@ -31,3 +31,13 @@ MumfordGroupLawRed.
   `DCY3Used.y3Connected_of_leaves` (via TailZ34); user of mumfordGroupLaw_of_conn: only
   `openResearchLeaves27_of_OpenResearchLeaves28` (TailZ45). So the chain still needs only QMFamilyGroupLaw, and
   `mumfordGroupLaw_of_conn` is the only route from the field into the chain (as the task said).
+
+## Lean: ZInQKernel/Contrib/OneProof/MumfordGroupLawNeron.lean (VERIFIED compiles, `lake env lean`, 11-16 ~16:10)
+- LEAF `NeronSchemeExtensionDedekind` (BLR 1.4 Thm 3 over affine Dedekind schemes, existence half),
+  LEAF `NeronSchemeExtensionDVR` (its DVR case), `dvr_of_dedekind`,
+  `neronSchemeExtensionExists_of_dedekind : NeronSchemeExtensionDedekind → NeronC.NeronSchemeExtensionExists`.
+- GLUE `NeronGoodModelIso` (ψ : F → N, F as in MumfordGroupLawDVR, N smooth separated, ψ_K iso ⇒ ψ iso).
+- `mumfordGroupLawDVR_of_neron : NeronSchemeExtensionDVR → NeronGoodModelIso → MumfordGroupLawDVR`
+  (group law = grpObjOfNeron on N transported along ψ; η = e by pullback_map_injective).
+- `qmFamilyGroupLaw_of_neron`, `qmFamilyGroupLaw_of_neronDedekind`, `dvr_of_conn : MumfordGroupLawConn → MumfordGroupLawDVR`.
+- `#print axioms`: all [propext, Classical.choice, Quot.sound].
