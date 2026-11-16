@@ -14,3 +14,4 @@ import ZInQKernel.Contrib.OneProof.GrossZagierOptimal.NonVacuous
 #print axioms ZInQ.GZOptimal.exists_int_mul_mem
 #print axioms ZInQ.GZOptimal.exists_optimalParam_cd
 #print axioms ZInQ.GZOptimal.exists_optimalParam_of_sw
+#print axioms ZInQ.GZOptimal.grossZagierModuliCd_of_selfOptimal

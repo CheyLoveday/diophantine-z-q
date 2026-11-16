@@ -9,3 +9,4 @@
 'ZInQ.GZOptimal.exists_int_mul_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.GZOptimal.exists_optimalParam_cd' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.GZOptimal.exists_optimalParam_of_sw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZOptimal.grossZagierModuliCd_of_selfOptimal' depends on axioms: [propext, Classical.choice, Quot.sound]

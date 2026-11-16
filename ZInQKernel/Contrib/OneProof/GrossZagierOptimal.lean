@@ -3,11 +3,32 @@ import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_P
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_PeriodPair_discriminant_ne_zero
 
 /-!
-# gz-optimal: the Gross–Zagier leaf for the optimal (strong Weil) parametrization only
+# gz-optimal: the Gross–Zagier leaf for the strong Weil (optimal) parametrization only
 
 Task gz-optimal (2026-11-16). Report: `docs/research/gz-optimal.md`; scratch and log: `scratch/gz-optimal/`.
 
-Work in progress.
+gz-moduli's leaf `GZModuli.GrossZagierModuliCd` states the Gross–Zagier formula (positive constant
+forgotten) for every modular parametrization `φ : X₀(N) → C_d`. Gross–Zagier Ch. V may print it
+only for the strong Weil curve with its strong Weil parametrization. This file states the formula
+for that case only (`GrossZagierModuliOptAt`: `φ` optimal, i.e. `φ_*` onto `H₁(E(ℂ), ℤ)`, i.e.
+`J₀(N) → E` with connected kernel; `IsOptimalParam`), which is printed under either reading, and
+proves the consumer `GZHL3.GrossZagierFormulaCd` (every analytic parametrization
+`weierPt C_d L (c φ_f)`, `c ∈ ℚ^×`, `c Λ_f ⊆ L`) from it:
+
+* route A (`grossZagierFormulaCd_of_selfOptimal`): with `CdOptimal` (GLUE, a period computation:
+  `L(C_d) = c₀ Λ_f`, checked numerically for 13 values of `d`), every admissible `φ` is `[n] ∘ φ_opt`;
+* route B (`grossZagierFormulaCd_of_transfer`): with `StrongWeilOptimalCd` (the strong Weil curve
+  `E'` with `L(E') = c' Λ_f`) and `AnalyticIsogenyRational` (the isogeny `z ↦ μ z`, `μ ∈ ℚ`, is defined
+  over `ℚ`), both textbook and composite, `φ = ψ ∘ φ'`; the formula transfers along `ψ̂ : C_d → E'`
+  because `y` and `ψ̂(y)` are torsion together.
+
+Also proved: the new leaf follows from gz-moduli's (`grossZagierModuliOptCd_of_moduli`), so it is
+weaker; gz-moduli's all-`φ` leaf follows from it given `ModularParamAnalyticCd` (every modular
+parametrization is analytic; composite; not needed by the consumer). Glue proved here: additivity of
+`weierPt` for models `y² = x³ + a₄x + a₆` (from the vendored uniformization theorem), torsion of a
+`K`-point read off from its complex parameter, rational multipliers of lattices, finite index.
+
+No `sorry`, no `axiom`.
 -/
 
 noncomputable section
@@ -673,5 +694,29 @@ theorem grossZagierModuliCd_of_transfer (hGZ : GrossZagierModuliOptCd)
     ZInQ.GZModuli.GrossZagierModuliCd := fun d hd hsq => by
   have := shortCurve_cd_isElliptic (d := d) (by omega)
   exact grossZagierModuliAt_of_transfer (short_cd d) (hGZ d hd hsq) (hSW d hd hsq) hI (hMP d hd hsq)
+
+/-- **gz-moduli's `GrossZagierModuliAt E` from the optimal case, route A** (`E` its own strong Weil
+curve), given that every modular parametrization is analytic. -/
+theorem grossZagierModuliAt_of_selfOptimal {E : WeierstrassCurve ℚ} [E.IsElliptic]
+    (hE : IsShortModel E) (hGZ : GrossZagierModuliOptAt E)
+    (hOpt : ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+      (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
+      ∀ L : PeriodPair, ZInQ.GZHL3.IsPeriodLattice E L →
+        ∃ c₀ : ℚ, L.lattice = (periodLattice f).map (LinearMap.mulLeft ℤ (c₀ : ℂ)))
+    (hMP : ModularParamAnalyticAt E) : ZInQ.GZModuli.GrossZagierModuliAt E := by
+  intro N _ f hχ hcoeff X Y hXY D β hD hD4 hH hβ R _ τ hτ K _ _ _ hK δ hδ ι hι y hy F G hF hG
+  obtain ⟨L, c, hL, hc, hP, hmod⟩ := hMP N f hχ hcoeff X Y hXY
+  obtain ⟨c₀, hlat⟩ := hOpt N f hχ hcoeff L hL
+  refine core_selfOptimal hE hχ hcoeff hL hc hP hD hD4 hH hβ hτ hK hδ hι y ?_ hF hG hGZ hlat
+  rw [hy, Finset.mul_sum, ← weierPt_sum hE hL]
+  exact Finset.sum_congr rfl fun r _ => hmod (τ r)
+
+/-- **gz-moduli's leaf `GZModuli.GrossZagierModuliCd` from the optimal case, route A**, given
+`CdOptimal` and `ModularParamAnalyticCd`. -/
+theorem grossZagierModuliCd_of_selfOptimal (hGZ : GrossZagierModuliOptCd) (hOpt : CdOptimal)
+    (hMP : ModularParamAnalyticCd) : ZInQ.GZModuli.GrossZagierModuliCd := fun d hd hsq => by
+  have := shortCurve_cd_isElliptic (d := d) (by omega)
+  exact grossZagierModuliAt_of_selfOptimal (short_cd d)
+    (hGZ d hd hsq _ (short_cd d) fun _ _ => rfl) (hOpt d hd hsq) (hMP d hd hsq)
 
 end ZInQ.GZOptimal
