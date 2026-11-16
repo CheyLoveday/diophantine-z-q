@@ -37,3 +37,17 @@
   open30.
 - 23:25 build after B+C: `lake build +ZInQKernel.OneProof.Main` OK first try (13000 jobs, 9.3 min); axioms of
   heckeSqrtBranchAny_of_open29, openGlue7_of_nvLocalInertia, sixContactMin_of_open30, frozenTarget standard.
+- 23:35 PruneScan after (prunescan-after-out.txt): OpenResearchLeaves22 29, OpenTextbookLeaves11 12,
+  OpenAddedLeaves17 13, OpenGlue8 1 = 55 fields, 0 unused, prune set empty.
+- DumpCompact after: 16335 constants (hashes_after.txt); frozenTarget type differs only in g : OpenGlue7 -> OpenGlue8
+  (frozenTarget_before/after.txt). cmp_hashes_out.txt: removed 15 (14 pruned projections + addedLeaves5_of_open6),
+  new 92 (SGRDirectNV 69, SGRDirectElkies 6 now in Main's closure; SGRFold 4; TailZ36 9; TailO/TailX 2 each),
+  changed 137 (122 bundle auxiliaries, 14 conversions incl. glue4_of_open6, frozenTarget); no stack theorem changed.
+- scratch/sgr-fold/Discharges.lean: 61 open hypotheses, 2173 theorems checked, 7 discharge one (the base's seven);
+  axioms of SGRFold theorems, glue4_of_open6, open30, frozenTarget standard.
+- kinds.tsv: rows shimuraIntegralModelRep, quotientP1Coordinate removed; glue nvLocalInertia (project glue, GLUE/GLUE,
+  area #37) added. claims.tsv: p1-quot / sir-printed rows removed; nvLocalInertia (nv-local, held) added.
+- scratch/contrib-kit/DischargesTest.lean control t1 moved to SGRDirect.NVLocalInertia; output: 61 / 2176 / 9
+  (t1 discharges OpenGlue8.nvLocalInertia). OpenStatements.lean -> 61 hypotheses; render_open.py: 55 H hypotheses,
+  strictest 43/12 (strict 45/10); --check ok.
+- `lake build` of all 3202 modules under ZInQKernel/OneProof and ZInQKernel/Contrib: OK (13129 jobs).
