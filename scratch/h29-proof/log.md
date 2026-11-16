@@ -26,3 +26,16 @@ n ∈ {11,17,33,35,41,51,57,73,105,113,123,145,195,219}, 2 admissible τ each (2
 primes of n, P_T = Σ_{t∈Cl_n} χ_T(t) f_n(t), d₂ = ∏T, d₁ = n/d₂:
 (V) d₁, d₂ ≢ 1 (8) ⇒ P_T = 0; (F) d₂ ≡ 1 (8) ⇒ P_T² = 4^{k-1} w_K² 𝓛(d₁)²𝓛(d₂)²;
 (S) n ≡ 1 (8) ⇒ P_T = P_{T^c}; (C) n ≡ 3 (8) ⇒ χ_T = χ_{T^c}; (PQ) Σ_T P_T = 2^k Q(n). ALL OK.
+
+## Step 3. Lean: hL29 from TYZThm21Pairs + TYZLemma28Sym (VERIFIED, compiled)
+`scratch/h29-proof/TYZLemma29Genus.lean` (namespace `ZInQ.Contrib.TYZDecomp.H29Genus`), checked with
+`lake env lean` against the build tree copied (reflink) from ~/dzq-check2 (same sources for every imported
+module: TYZLemma29Mod2, Redei/{Genus,FourRank}, TYZChain/Thm35, TYZDecomp/Leaves — `cmp` VERIFIED).
+`H29GenusCheck.lean` (= the file + `#print axioms`): all of
+`tyzLemma29PrintedNe3_of_genus : TYZThm21Pairs → TYZLemma28Sym → TYZLemma29PrintedNe3`,
+`tyzLemma29Printed_of_genus` (w_K form, all n incl. 3), `tyzThm21At31_of_thm21Pairs`,
+`tyzLemma29Mod2_of_genusLeaves`, `torsionOrder_qNeg_eq_two` depend on [propext, Classical.choice, Quot.sound].
+Glue proved: `sum_gchar_cl` (Σ_T χ_T = 2^k·[Cl²], from Redei.range_sq_eq_ker_chi), `sum_quadPeriod` ((PQ):
+Σ_{d∣n} P = 2^k Q), `quadPeriod_div` (n≡3 (4): P(d₁,d₂) = P(d₂,d₁), product formula), `unit_eq_one_or_neg_one`
+and `torsionOrder_qNeg_eq_two` (#μ(ℚ(√−n)) = 2 for squarefree 1 < n ≠ 3), `sum_divisors_three`,
+`sum_divisors_one` (the pairings), `sum_formula` (sign choice), `lemma29_core`.

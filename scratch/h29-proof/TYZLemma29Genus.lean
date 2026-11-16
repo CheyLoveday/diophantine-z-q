@@ -169,4 +169,310 @@ theorem quadPeriod_div (h4 : n % 4 = 3) (hsq : Squarefree n) (h1 : 1 < n) (τ : 
 
 end Glue
 
+/-! ## §3. `w_K = 1` for `n ≠ 3`: the units of `ℚ(√−n)` -/
+
+section Units
+
+theorem eq_three_of_sq_eq_three_mul {d k : ℤ} (hsq : Squarefree d) (h : k ^ 2 = 3 * d) : d = 3 := by
+  have h3 : (3 : ℤ) ∣ k := Int.prime_three.dvd_of_dvd_pow (n := 2) ⟨d, h⟩
+  obtain ⟨j, rfl⟩ := h3
+  have hd : d = 3 * j ^ 2 := by linarith [h, show (3 * j) ^ 2 = 9 * j ^ 2 by ring]
+  have hj : IsUnit j := hsq j ⟨3, by rw [hd]; ring⟩
+  rcases Int.isUnit_iff.mp hj with rfl | rfl <;> simpa using hd
+
+theorem eq_one_of_sq_eq_four_mul {d k : ℤ} (hsq : Squarefree d) (h : k ^ 2 = 4 * d) : d = 1 := by
+  have h2 : (2 : ℤ) ∣ k := Int.prime_two.dvd_of_dvd_pow (n := 2) ⟨2 * d, by rw [h]; ring⟩
+  obtain ⟨j, rfl⟩ := h2
+  have hd : d = j ^ 2 := by linarith [h, show (2 * j) ^ 2 = 4 * j ^ 2 by ring]
+  have hj : IsUnit j := hsq j ⟨1, by rw [hd]; ring⟩
+  rcases Int.isUnit_iff.mp hj with rfl | rfl <;> simpa using hd
+
+open ZInQ.Contrib.TYZGenus.RingClass (exists_two_re normZ_eq_re_im normZ_unit coe_sqrtNeg) in
+/-- For squarefree `d > 1`, `d ≠ 3`, the units of `𝓞_{ℚ(√−d)}` are `±1` (adapted from
+`TYZGenus.RingClass.unit_eq`, the case `d ≡ 5 (mod 8)`). -/
+theorem unit_eq_one_or_neg_one {d : ℕ} [NeZero d] (hsq : Squarefree d) (h1 : 1 < d) (h3 : d ≠ 3)
+    (u : (𝓞 (QNeg d))ˣ) : (u : 𝓞 (QNeg d)) = 1 ∨ (u : 𝓞 (QNeg d)) = -1 := by
+  obtain ⟨m, hm⟩ := exists_two_re (u : 𝓞 (QNeg d))
+  obtain ⟨k, hk⟩ := exists_two_re ((u : 𝓞 (QNeg d)) * ZInQ.Contrib.TYZGenus.RingClass.sqrtNeg d)
+  have hN := normZ_eq_re_im (u : 𝓞 (QNeg d))
+  rw [normZ_unit] at hN
+  set x := ((u : 𝓞 (QNeg d)) : QNeg d).re
+  set y := ((u : 𝓞 (QNeg d)) : QNeg d).im
+  have hre : (((u : 𝓞 (QNeg d)) * ZInQ.Contrib.TYZGenus.RingClass.sqrtNeg d : 𝓞 (QNeg d)) :
+      QNeg d).re = -(d : ℚ) * y := by
+    simp [RingOfIntegers.coe_eq_algebraMap, coe_sqrtNeg, y]
+  rw [hre] at hk
+  have hZ : (d : ℤ) * m ^ 2 + k ^ 2 = 4 * d := by
+    have : (d : ℚ) * (m : ℚ) ^ 2 + (k : ℚ) ^ 2 = 4 * d := by
+      rw [← hm, ← hk]; linear_combination (4 * (d : ℚ)) * hN.symm
+    exact_mod_cast this
+  have hd0 : (1 : ℤ) < d := by exact_mod_cast h1
+  have hm2 : m ^ 2 ≤ 4 := by
+    by_contra h; push Not at h; nlinarith [sq_nonneg k]
+  have hmlo : -2 ≤ m := by nlinarith [sq_nonneg (m + 2)]
+  have hmhi : m ≤ 2 := by nlinarith [sq_nonneg (m - 2)]
+  have hsqZ : Squarefree (d : ℤ) := Int.squarefree_natCast.mpr hsq
+  have hd3 : (d : ℤ) ≠ 3 := by exact_mod_cast h3
+  have hu : ∀ e : ℚ, (e = 1 ∨ e = -1) → x = e → y = 0 →
+      (u : 𝓞 (QNeg d)) = 1 ∨ (u : 𝓞 (QNeg d)) = -1 := by
+    rintro e (rfl | rfl) hx hy
+    · left; apply RingOfIntegers.ext; ext
+      · change x = _; rw [hx]; simp only [map_neg, map_one, QuadraticAlgebra.re_neg]; rfl
+      · change y = _; rw [hy]; simp only [map_neg, map_one, QuadraticAlgebra.im_neg, neg_zero]; rfl
+    · right; apply RingOfIntegers.ext; ext
+      · change x = _; rw [hx]; simp only [map_neg, map_one, QuadraticAlgebra.re_neg]; rfl
+      · change y = _; rw [hy]; simp only [map_neg, map_one, QuadraticAlgebra.im_neg, neg_zero]; rfl
+  have hk0 : ∀ mm : ℤ, (mm = 2 ∨ mm = -2) → m = mm → k = 0 := by
+    rintro mm (rfl | rfl) rfl <;> nlinarith [sq_nonneg k]
+  have hdq : (d : ℚ) ≠ 0 := by exact_mod_cast NeZero.ne d
+  rcases (show m = -2 ∨ m = -1 ∨ m = 0 ∨ m = 1 ∨ m = 2 by omega) with h | h | h | h | h
+  · have hkz := hk0 _ (Or.inr rfl) h
+    refine hu (-1) (Or.inr rfl) ?_ ?_
+    · rw [h] at hm; push_cast at hm; linarith
+    · rw [hkz] at hk; push_cast at hk
+      have : (d : ℚ) * y = 0 := by linarith
+      exact (mul_eq_zero.1 this).resolve_left hdq
+  · exact absurd (eq_three_of_sq_eq_three_mul hsqZ (k := k) (by subst h; linarith)) hd3
+  · have := eq_one_of_sq_eq_four_mul hsqZ (k := k) (by subst h; linarith)
+    omega
+  · exact absurd (eq_three_of_sq_eq_three_mul hsqZ (k := k) (by subst h; linarith)) hd3
+  · have hkz := hk0 _ (Or.inl rfl) h
+    refine hu 1 (Or.inl rfl) ?_ ?_
+    · rw [h] at hm; push_cast at hm; linarith
+    · rw [hkz] at hk; push_cast at hk
+      have : (d : ℚ) * y = 0 := by linarith
+      exact (mul_eq_zero.1 this).resolve_left hdq
+
+/-- **`#μ(ℚ(√−n)) = 2`** for squarefree `n > 1`, `n ≠ 3`, so TYZ's `w_K` is `1` there. -/
+theorem torsionOrder_qNeg_eq_two {n : ℕ} [NeZero n] (hsq : Squarefree n) (h1 : 1 < n) (h3 : n ≠ 3) :
+    NumberField.Units.torsionOrder (QNeg n) = 2 := by
+  classical
+  let := Fintype.ofFinite (NumberField.Units.torsion (QNeg n))
+  rw [NumberField.Units.torsionOrder, Nat.card_eq_fintype_card]
+  refine (Finset.card_eq_two.2 ⟨1, ⟨-1, neg_one_mem_torsion⟩,
+    by simp [← Subtype.coe_ne_coe], Finset.ext fun x ↦ ⟨fun _ ↦ ?_, fun _ ↦ Finset.mem_univ _⟩⟩)
+  rw [Finset.mem_insert, Finset.mem_singleton, ← Subtype.val_inj, ← Subtype.val_inj]
+  rcases unit_eq_one_or_neg_one hsq h1 h3 (x : (𝓞 (QNeg n))ˣ) with h | h
+  · left; exact Units.ext h
+  · right; exact Units.ext h
+
+end Units
+
+/-! ## §4. Divisor sums -/
+
+section Divisors
+
+theorem mod8_eq_of_dvd {n e : ℕ} (he : e ∣ n) (h : (n / e) % 8 = 1) : e % 8 = n % 8 := by
+  obtain ⟨m, rfl⟩ := he
+  rcases Nat.eq_zero_or_pos e with rfl | he0
+  · simp at h
+  · rw [Nat.mul_div_cancel_left _ he0] at h
+    rw [Nat.mul_mod, h, mul_one, Nat.mod_mod]
+
+theorem mod8_iff_of_dvd {n e : ℕ} (hn : n % 8 = 1 ∨ n % 8 = 3) (he : e ∣ n) :
+    (n / e) % 8 = 1 ↔ e % 8 = n % 8 := by
+  obtain ⟨m, rfl⟩ := he
+  have he0 : 0 < e := by
+    rcases Nat.eq_zero_or_pos e with rfl | h
+    · simp at hn
+    · exact h
+  rw [Nat.mul_div_cancel_left _ he0]
+  rw [Nat.mul_mod] at hn ⊢
+  have ha := Nat.mod_lt e (by norm_num : 8 > 0)
+  have hb := Nat.mod_lt m (by norm_num : 8 > 0)
+  generalize e % 8 = a at *
+  generalize m % 8 = b at *
+  interval_cases a <;> interval_cases b <;> simp_all
+
+theorem mul_self_ne_of_squarefree {n e : ℕ} (hsq : Squarefree n) (h1 : 1 < n) : e * e ≠ n := by
+  intro h
+  have := Nat.isUnit_iff.mp (hsq e ⟨1, by rw [mul_one, h]⟩)
+  subst this; omega
+
+theorem lt_mul_div_iff {n e : ℕ} (he : e ∣ n) (hn : 0 < n) : n < (n / e) * (n / e) ↔ e * e < n := by
+  obtain ⟨m, rfl⟩ := he
+  have he0 : 0 < e := Nat.pos_of_mul_pos_right hn
+  have hm0 : 0 < m := Nat.pos_of_mul_pos_left hn
+  rw [Nat.mul_div_cancel_left _ he0]
+  constructor
+  · intro h
+    by_contra h'
+    push Not at h'
+    have : m ≤ e := by nlinarith
+    nlinarith
+  · intro h
+    have : e < m := by nlinarith
+    nlinarith
+
+/-- The pairing for `n ≡ 3 (mod 8)`: `d₂ ≡ 3` with `d₁ ≡ 1`; the others vanish. -/
+theorem sum_divisors_three {n : ℕ} (hn : n % 8 = 3) (P : ℕ → ℤ)
+    (hV : ∀ e ∈ n.divisors, (n / e) % 8 ≠ 1 → e % 8 ≠ 1 → P e = 0)
+    (hS : ∀ e ∈ n.divisors, P (n / e) = P e) :
+    ∑ e ∈ n.divisors, P e = 2 * ∑ e ∈ pairIdx n, P e := by
+  classical
+  have hA : ∀ e ∈ n.divisors,
+      P e = (if e % 8 = 1 then P e else 0) + (if e % 8 = 3 then P e else 0) := by
+    intro e he
+    have hiff := mod8_iff_of_dvd (Or.inr hn) (Nat.dvd_of_mem_divisors he)
+    by_cases h1 : e % 8 = 1
+    · simp [h1]
+    · by_cases h3 : e % 8 = 3
+      · simp [h3]
+      · rw [if_neg h1, if_neg h3, hV e he (fun h => h3 (hn ▸ hiff.1 h)) h1]; simp
+  have hB : ∑ e ∈ n.divisors, (if e % 8 = 3 then P e else 0) =
+      ∑ e ∈ n.divisors, (if e % 8 = 1 then P e else 0) := by
+    rw [← Nat.sum_div_divisors n (fun e => if e % 8 = 1 then P e else 0)]
+    refine Finset.sum_congr rfl fun e he => ?_
+    have hiff := mod8_iff_of_dvd (Or.inr hn) (Nat.dvd_of_mem_divisors he)
+    rw [hn] at hiff
+    simp only [hiff, hS e he]
+  rw [Finset.sum_congr rfl hA, Finset.sum_add_distrib, hB, ← two_mul, pairIdx, Finset.sum_filter]
+  congr 1
+  refine Finset.sum_congr rfl fun e _ => ?_
+  simp [hn]
+
+/-- The pairing for `n ≡ 1 (mod 8)`: `(d₁, d₂)` with `(d₂, d₁)`, both `≡ 1`; the others vanish. -/
+theorem sum_divisors_one {n : ℕ} (hn : n % 8 = 1) (hsq : Squarefree n) (h1 : 1 < n) (P : ℕ → ℤ)
+    (hV : ∀ e ∈ n.divisors, (n / e) % 8 ≠ 1 → e % 8 ≠ 1 → P e = 0)
+    (hS : ∀ e ∈ n.divisors, e % 8 = 1 → P (n / e) = P e) :
+    ∑ e ∈ n.divisors, P e = 2 * ∑ e ∈ pairIdx n, P e := by
+  classical
+  have hA : ∀ e ∈ n.divisors, P e = (if e % 8 = 1 ∧ e * e < n then P e else 0) +
+      (if e % 8 = 1 ∧ n < e * e then P e else 0) := by
+    intro e he
+    have hiff := mod8_iff_of_dvd (Or.inl hn) (Nat.dvd_of_mem_divisors he)
+    by_cases h8 : e % 8 = 1
+    · rcases lt_or_gt_of_ne (mul_self_ne_of_squarefree (e := e) hsq h1) with h | h
+      · rw [if_pos ⟨h8, h⟩, if_neg (fun h' => absurd h'.2 (by omega))]; simp
+      · rw [if_neg (fun h' => absurd h'.2 (by omega)), if_pos ⟨h8, h⟩]; simp
+    · rw [if_neg (fun h' => h8 h'.1), if_neg (fun h' => h8 h'.1),
+        hV e he (fun h => h8 (hn ▸ hiff.1 h)) h8]; simp
+  have hB : ∑ e ∈ n.divisors, (if e % 8 = 1 ∧ n < e * e then P e else 0) =
+      ∑ e ∈ n.divisors, (if e % 8 = 1 ∧ e * e < n then P e else 0) := by
+    rw [← Nat.sum_div_divisors n (fun e => if e % 8 = 1 ∧ n < e * e then P e else 0)]
+    refine Finset.sum_congr rfl fun e he => ?_
+    have hiff := mod8_iff_of_dvd (Or.inl hn) (Nat.dvd_of_mem_divisors he)
+    rw [hn] at hiff
+    have hlt := lt_mul_div_iff (Nat.dvd_of_mem_divisors he) (by omega : 0 < n)
+    by_cases h8 : e % 8 = 1
+    · simp only [hiff, hlt, h8, true_and, hS e he h8]
+    · simp only [hiff, h8, false_and, if_false]
+  rw [Finset.sum_congr rfl hA, Finset.sum_add_distrib, hB, ← two_mul, pairIdx, Finset.sum_filter]
+  congr 1
+  refine Finset.sum_congr rfl fun e _ => ?_
+  simp [hn]
+
+/-- Choosing the signs. -/
+theorem sum_formula {n : ℕ} (s : Finset ℕ) (P : ℕ → ℤ) (c : ℤ) (ℓ : ℕ → ℤ)
+    (hF : ∀ e ∈ s, ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧ P e = ε * c * (ℓ (n / e) * ℓ e)) :
+    ∃ ε : ℕ → ℤ, (∀ d, ε d = 1 ∨ ε d = -1) ∧
+      ∑ e ∈ s, P e = c * ∑ e ∈ s, ε e * (ℓ (n / e) * ℓ e) := by
+  classical
+  choose! ε hε hP using hF
+  refine ⟨fun d => if d ∈ s then ε d else 1, fun d => ?_, ?_⟩
+  · by_cases h : d ∈ s
+    · simp only [h, if_true]; exact hε d h
+    · simp only [h, if_false]; left; trivial
+  · rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun e he => ?_
+    simp only [he, if_true]
+    rw [hP e he]; ring
+
+end Divisors
+
+/-! ## §5. TYZ Lemma 2.9 from Theorem 2.1 and Lemma 2.8 -/
+
+/-- **TYZ's proof of Lemma 2.9** (L1068–1077), with `w_K = #μ(K)/2`: from Theorem 2.1 for every pair and
+Lemma 2.8, `w_K Σ_{n = d₁d₂, d₂ ≡ 1} ε 𝓛(d₁)𝓛(d₂) = Q(n)`. -/
+theorem lemma29_core (h21 : TYZThm21Pairs) (h28 : TYZLemma28Sym) {n : ℕ} [NeZero n]
+    (hsq : Squarefree n) (h1 : 1 < n) (hcl : n % 8 = 1 ∨ n % 8 = 3) {τ : QNeg n →ₐ[ℚ] ℍ[ℚ]}
+    (hτ : AdmissibleTau n τ) {f : ℍ[AQ] → ℤ} (hf : IsTestVector n τ f) {ℓ : ℕ → ℤ}
+    (hℓ : IsLcalSign ℓ) :
+    ∃ ε : ℕ → ℤ, (∀ d, ε d = 1 ∨ ε d = -1) ∧
+      ((NumberField.Units.torsionOrder (QNeg n) / 2 : ℕ) : ℤ) *
+        ∑ d ∈ pairIdx n, ε d * (ℓ (n / d) * ℓ d) = genusPeriodTV n τ f := by
+  set k := n.primeFactors.card with hkdef
+  set w : ℤ := ((NumberField.Units.torsionOrder (QNeg n) / 2 : ℕ) : ℤ) with hwdef
+  have hn : Odd n := Nat.odd_iff.mpr (by omega)
+  have hk : 1 ≤ k := Finset.card_pos.mpr (Nat.nonempty_primeFactors.mpr h1)
+  have hdm : ∀ e ∈ n.divisors, n / e * e = n := fun e he =>
+    Nat.div_mul_cancel (Nat.dvd_of_mem_divisors he)
+  have hV : ∀ e ∈ n.divisors, (n / e) % 8 ≠ 1 → e % 8 ≠ 1 → quadPeriod n τ f e = 0 := fun e he h h' =>
+    (h21 n hsq h1 hcl τ hτ f hf ℓ hℓ (n / e) e (hdm e he)).1 h h'
+  have hsum : ∑ e ∈ n.divisors, quadPeriod n τ f e = 2 * ∑ e ∈ pairIdx n, quadPeriod n τ f e := by
+    rcases hcl with h | h
+    · exact sum_divisors_one h hsq h1 (quadPeriod n τ f) hV fun e he he1 =>
+        (h28 n hsq h1 h τ hτ f hf (n / e) e (hdm e he) he1).symm
+    · exact sum_divisors_three h (quadPeriod n τ f) hV fun e he =>
+        quadPeriod_div (by omega) hsq h1 τ f (Nat.dvd_of_mem_divisors he)
+  have hF : ∀ e ∈ pairIdx n, ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
+      quadPeriod n τ f e = ε * (2 ^ (k - 1) * w) * (ℓ (n / e) * ℓ e) := by
+    intro e he
+    have hmem := Finset.mem_filter.mp he
+    obtain ⟨ε, hε, heq⟩ :=
+      (h21 n hsq h1 hcl τ hτ f hf ℓ hℓ (n / e) e (hdm e hmem.1)).2 hmem.2.1
+    exact ⟨ε, hε, by rw [heq]; ring⟩
+  obtain ⟨ε, hε, hP⟩ := sum_formula (n := n) _ (quadPeriod n τ f) _ ℓ hF
+  refine ⟨ε, hε, ?_⟩
+  have hPQ := sum_quadPeriod hn hsq h1 τ f
+  rw [hsum, hP] at hPQ
+  have h2k : (2 : ℤ) ^ k = 2 * 2 ^ (k - 1) := by
+    rw [← pow_succ']; congr 1; omega
+  rw [h2k] at hPQ
+  have hne : (2 : ℤ) * 2 ^ (k - 1) ≠ 0 := by positivity
+  apply mul_left_cancel₀ hne
+  linear_combination hPQ
+
+/-- **`hL29` (TYZ Lemma 2.9 as printed, `n ≠ 3`) from TYZ Theorem 2.1 for every pair and TYZ Lemma 2.8.** -/
+theorem tyzLemma29PrintedNe3_of_genus (h21 : TYZThm21Pairs) (h28 : TYZLemma28Sym) :
+    TYZLemma29PrintedNe3 := by
+  intro n _ hsq h1 h3 hcl τ hτ f hf ℓ hℓ
+  obtain ⟨ε, hε, h⟩ := lemma29_core h21 h28 hsq h1 hcl hτ hf hℓ
+  refine ⟨ε, hε, ?_⟩
+  rw [torsionOrder_qNeg_eq_two hsq h1 h3] at h
+  norm_num at h
+  exact h
+
+/-- The `w_K` form of TYZ Lemma 2.9 (`H29Split.TYZLemma29Printed`, every `n` including `3`) from the same two
+leaves. -/
+theorem tyzLemma29Printed_of_genus (h21 : TYZThm21Pairs) (h28 : TYZLemma28Sym) :
+    TYZLemma29Printed := by
+  intro n _ hsq h1 hcl τ hτ f hf ℓ hℓ
+  obtain ⟨ε, hε, h⟩ := lemma29_core h21 h28 hsq h1 hcl hτ hf hℓ
+  refine ⟨ε, hε, ?_⟩
+  by_cases h3 : n = 3
+  · subst h3
+    rw [wK_three_eq_torsionOrder]
+    exact h
+  · rw [torsionOrder_qNeg_eq_two hsq h1 h3] at h
+    rw [show wK n = 1 by simp [wK, h3]]
+    norm_num at h ⊢
+    exact h
+
+/-- `TYZThm21Pairs` contains `H29Split.TYZThm21At31` (its instance `n = 3`, `(d₁, d₂) = (3, 1)`). -/
+theorem tyzThm21At31_of_thm21Pairs (h21 : TYZThm21Pairs) : TYZThm21At31 := by
+  intro τ hτ f hf ℓ hℓ
+  have hsq3 : Squarefree 3 := Nat.prime_three.prime.squarefree
+  obtain ⟨ε, hε, heq⟩ :=
+    (h21 3 hsq3 (by norm_num) (Or.inr rfl) τ hτ f hf ℓ hℓ 3 1 (by norm_num)).2 (by norm_num)
+  refine ⟨ε, hε, ?_⟩
+  have hd : divSet 3 1 = ∅ := by
+    ext q
+    simp only [ZInQ.Contrib.TYZGenus.TYZ35.divSet, Finset.mem_filter, Finset.mem_univ, true_and,
+      Finset.notMem_empty, iff_false, Nat.dvd_one]
+    exact (Nat.prime_of_mem_primeFactors q.2).one_lt.ne'
+  have hk : (Nat.primeFactors 3).card = 1 := by
+    rw [Nat.Prime.primeFactors Nat.prime_three, Finset.card_singleton]
+  unfold quadPeriod at heq
+  simp only [hd, gchar, Finset.prod_empty, one_mul, hk] at heq
+  rw [heq]
+  norm_num
+
+/-- **`h29 = TYZLemma29Mod2` from five printed statements**: Legendre, Jones–Pall, TYZ's test vector,
+TYZ Theorem 2.1 for every pair, TYZ Lemma 2.8, TYZ Proposition 2.3. -/
+theorem tyzLemma29Mod2_of_genusLeaves (hL : LegendreThreeSquares) (hJ : JonesPallX2Y2Z16)
+    (hfx : TYZTestVectorExists) (h21 : TYZThm21Pairs) (h28 : TYZLemma28Sym)
+    (h23 : TYZProp23Printed) : ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2 :=
+  tyzLemma29Mod2_of_printedLeaves_legendre hL hJ hfx (tyzLemma29Printed_of_genus h21 h28) h23
+
 end ZInQ.Contrib.TYZDecomp.H29Genus
