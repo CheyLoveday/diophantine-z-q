@@ -664,10 +664,65 @@ theorem lift_linearIndependent [Algebra (ZMod p) (resField p K)] {ι : Type*} [F
   rw [hj1, map_one] at h1
   exact one_ne_zero h1
 
+
+/-- `[k_K : 𝔽_p] ≤ [K : ℚ_p]`: an `𝔽_p`-independent family in `k_K` has at most `[K : ℚ_p]`
+members. -/
+theorem card_le_finrank_of_resField [Algebra (ZMod p) (resField p K)] [FiniteDimensional ℚ_[p] K]
+    {ι : Type*} [Fintype ι] (v : ι → resField p K) (hv : LinearIndependent (ZMod p) v) :
+    Fintype.card ι ≤ finrank ℚ_[p] K := by
+  have hsurj := Ideal.Quotient.mk_surjective (I := maxIdeal p K)
+  choose lift hlift using hsurj
+  have hli := lift_linearIndependent p K (fun i => lift (v i)) (by
+    simp only [hlift]
+    exact hv)
+  exact hli.fintype_card_le_finrank
+
+/-- **The residue field of a finite `K/ℚ_p` is finite.** -/
+instance resField_finite [FiniteDimensional ℚ_[p] K] : Finite (resField p K) := by
+  letI := ZMod.algebra (resField p K) p
+  have hrk : Module.rank (ZMod p) (resField p K) ≤ finrank ℚ_[p] K :=
+    rank_le fun s hs => by
+      have := card_le_finrank_of_resField p K (fun i : s => (i : resField p K)) hs
+      rwa [Fintype.card_coe] at this
+  have : Module.Finite (ZMod p) (resField p K) :=
+    Module.rank_lt_aleph0_iff.mp (hrk.trans_lt Cardinal.natCast_lt_aleph0)
+  exact Module.finite_of_finite (ZMod p)
+
 /-- **`K_0 = W(k_K)[1/p]`**, Fontaine's `K_0` for `K` (Berger 2002, §0: `K_0 = W(k)[1/p]`;
 Fontaine, Astérisque 223 (1994), Exp. III; numbers UNVERIFIED): the Witt vectors of the residue
 field of `K` with `p` inverted (Mathlib's `WittVector`, `Localization.Away`; `WittLoc` below). -/
 abbrev K0W : Type := WittLoc p (resField p K)
+
+/-- **`[K_0 : ℚ_p]` is the residue degree `f(K/ℚ_p)`**: `|k_K| = p^{[K_0 : ℚ_p]}`. -/
+theorem card_resField [FiniteDimensional ℚ_[p] K] :
+    Nat.card (resField p K) = p ^ finrank ℚ_[p] (K0W p K) := by
+  letI := ZMod.algebra (resField p K) p
+  exact card_eq_pow_finrank_wittLoc p (resField p K)
+
+/-- `[K_0 : ℚ_p] ≤ [K : ℚ_p]`. -/
+theorem finrank_K0W_le [FiniteDimensional ℚ_[p] K] : finrank ℚ_[p] (K0W p K) ≤ finrank ℚ_[p] K := by
+  letI := ZMod.algebra (resField p K) p
+  change finrank ℚ_[p] (WittLoc p (resField p K)) ≤ _
+  rw [finrank_wittLoc]
+  have : Module.Free (ZMod p) (resField p K) := Module.Free.of_divisionRing _ _
+  have : Module.Finite (ZMod p) (resField p K) := Module.Finite.of_finite
+  let b := Module.finBasis (ZMod p) (resField p K)
+  rw [Module.finrank_eq_card_basis b]
+  exact card_le_finrank_of_resField p K b b.linearIndependent
+
+/-- `[K_0 : ℚ_p] ≥ 1`. -/
+theorem finrank_K0W_pos [FiniteDimensional ℚ_[p] K] : 0 < finrank ℚ_[p] (K0W p K) := by
+  letI := ZMod.algebra (resField p K) p
+  change 0 < finrank ℚ_[p] (WittLoc p (resField p K))
+  rw [finrank_wittLoc]
+  have : Module.Free (ZMod p) (resField p K) := Module.Free.of_divisionRing _ _
+  have : Module.Finite (ZMod p) (resField p K) := Module.Finite.of_finite
+  exact Module.finrank_pos
+
+/-- `K_0(ℚ_p) = ℚ_p`: `[K_0 : ℚ_p] = 1` for `K = ℚ_p`. -/
+theorem finrank_K0W_bot : finrank ℚ_[p] (K0W p ⊥) = 1 :=
+  le_antisymm ((finrank_K0W_le p ⊥).trans_eq (IntermediateField.finrank_bot))
+    (finrank_K0W_pos p ⊥)
 
 end K0
 
