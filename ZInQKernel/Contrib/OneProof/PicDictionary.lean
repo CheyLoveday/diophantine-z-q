@@ -1,7 +1,21 @@
 import ZInQKernel.OneProof.H.TailZ24
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.FreeGeneratorPullback
 
-/-! # pic-dict core: the Pic dictionary at `K̄` (glue), Mumford's statements at `A_K̄` (leaves) -/
+/-! # pic-dict: the Pic dictionary at `K̄`, and the rows `weilPairingMumford` and `phiAmpleIsogeny` from printed leaves
+
+Task pic-dict (report `docs/research/pic-dict.md`).
+
+* §1 proves L5, `T09Pic.PicPointsAlgClosed`: at `T = Spec K̄` every fppf covering sieve is maximal, by the
+  Nullstellensatz, so `toPicardFunctor` is bijective there.
+* §2–§3 prove the dictionary between the kernel's `B(K̄)` (`IsPicZero`) and Mumford's objects on `A_K̄`:
+  `picClass` is an injective homomorphism, and `φ_L`, `f^∨` and `σ ∈ G_K` act on points.
+* §4 defines Mumford's formula `weilFormula`, the right side of `T09Pic.weilScalar_spec`.
+* The transport section proves that the formula is carried along any automorphism commuting with `n_A` and
+  intertwining translations (`Transport.wf_transport`). This gives the Galois clause (`weilFormulaGaloisEx`) and
+  the adjoint clause (`mumfordWeilDual_of_pairing`).
+* §5 states the leaves: Mumford's displays for the abelian variety `A_K̄` over `K̄`.
+* §6 assembles `T09Pic.WeilPairingMumford` (`weilPairingMumford_of_printed`).
+* §7 assembles `T09Pic.PhiAmpleIsogeny` (`phiAmpleIsogeny_of_printed`), with `finiteOfFiniteKerPts` proved. -/
 
 noncomputable section
 
@@ -481,7 +495,6 @@ lemma pOU_inv_congr {f f' : X ⟶ Y} (e : f = f') :
     (pOU f).inv ≫ (pullbackCongr e).hom.app (unit _) = (pOU f').inv := by
   subst e; simp [pullbackCongr]
 
-set_option maxHeartbeats 1600000 in
 /-- **Coherence (I).** -/
 lemma coherence_I (t' g t : X ⟶ X) (ha : t' ≫ g = g ≫ t) :
     (pOU t').inv ≫ (Scheme.Modules.pullback t').map (pOU g).inv ≫
