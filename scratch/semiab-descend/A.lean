@@ -327,4 +327,118 @@ theorem smooth_of_smoothKer {U B : Over (Spec (CommRingCat.of K))} [GrpObj U] [G
 
 end Shear
 
+/-! ## §6. Open subgroups of group schemes over an algebraically closed field are closed -/
+
+section OpenSubgroup
+
+variable {K : Type} [Field K]
+
+local notation "𝟙K" => 𝟙_ (Over (Spec (CommRingCat.of K)))
+
+instance subsingleton_unitLeft : Subsingleton (𝟙K).left :=
+  inferInstanceAs (Subsingleton (Spec (CommRingCat.of K)))
+
+/-- A `K`-point of `X` whose image lies in an open subscheme factors through it. -/
+theorem factor_point {X Y : Over (Spec (CommRingCat.of K))} (i : Y ⟶ X) [IsOpenImmersion i.left]
+    (a : 𝟙K ⟶ X) (s : (𝟙K).left) (ha : a.left s ∈ Set.range i.left) :
+    ∃ a' : 𝟙K ⟶ Y, a' ≫ i = a := by
+  have hr : Set.range a.left ⊆ Set.range i.left := by
+    rintro _ ⟨s', rfl⟩; rwa [Subsingleton.elim s' s]
+  refine ⟨Over.homMk (IsOpenImmersion.lift i.left a.left hr) ?_, ?_⟩
+  · have : Y.hom = i.left ≫ X.hom := (Over.w i).symm
+    rw [this, ← Category.assoc, IsOpenImmersion.lift_fac]
+    exact Over.w a
+  · apply Over.OverMorphism.ext
+    simp [IsOpenImmersion.lift_fac]
+
+/-- Left translation by a `K`-point. -/
+def transl {X : Over (Spec (CommRingCat.of K))} [GrpObj X] (s : 𝟙K ⟶ X) : X ⟶ X :=
+  (toUnit X ≫ s) * 𝟙 X
+
+theorem comp_transl {X : Over (Spec (CommRingCat.of K))} [GrpObj X] (s : 𝟙K ⟶ X) {T : Over _}
+    (a : T ⟶ X) : a ≫ transl s = (toUnit T ≫ s) * a := by
+  rw [transl, MonObj.comp_mul, ← Category.assoc, toUnit_unique (a ≫ toUnit X) (toUnit T),
+    Category.comp_id]
+
+theorem transl_comp_transl {X : Over (Spec (CommRingCat.of K))} [GrpObj X] (s t : 𝟙K ⟶ X) :
+    transl s ≫ transl t = transl (t * s) := by
+  rw [comp_transl, transl, transl, ← _root_.mul_assoc, ← MonObj.comp_mul]
+
+theorem transl_one {X : Over (Spec (CommRingCat.of K))} [GrpObj X] : transl (1 : 𝟙K ⟶ X) = 𝟙 X := by
+  rw [transl, MonObj.comp_one, _root_.one_mul]
+
+theorem point_comp_transl {X : Over (Spec (CommRingCat.of K))} [GrpObj X] (s a : 𝟙K ⟶ X) :
+    a ≫ transl s = s * a := by
+  rw [comp_transl, toUnit_unique (toUnit 𝟙K) (𝟙 _), Category.id_comp]
+
+/-- **An open subgroup scheme of a group scheme locally of finite type over an algebraically closed field is
+closed** (SGA 3 VI_A 0.5-type statement). Proof: a closed point `x` outside `U` is a `K`-point `s`, and
+`s · U` is an open neighbourhood of `x` disjoint from `U` (if it met `U`, it would meet it in a `K`-point, and
+`s ∈ U(K)`); closed points are dense in every closed set (Jacobson). -/
+theorem isClosed_range_openSubgroup [IsAlgClosed K] {X Y : Over (Spec (CommRingCat.of K))} [GrpObj X]
+    [GrpObj Y] [LocallyOfFiniteType X.hom] (i : Y ⟶ X) [IsOpenImmersion i.left] [IsMonHom i] :
+    IsClosed (Set.range i.left) := by
+  haveI : JacobsonSpace X.left := LocallyOfFiniteType.jacobsonSpace X.hom
+  set O := Set.range i.left with hOdef
+  have hO : IsOpen O := i.left.isOpenEmbedding.isOpen_range
+  let pt : (𝟙K).left := (default : Spec (CommRingCat.of K))
+  -- the `K`-point at a closed point
+  have hpt : ∀ x : X.left, IsClosed {x} → ∃ a : 𝟙K ⟶ X, a.left pt = x := by
+    intro x hx
+    refine ⟨Over.homMk (pointOfClosedPoint X.hom x hx) (pointOfClosedPoint_comp _ _ _), ?_⟩
+    exact pointOfClosedPoint_apply _ _ _ _
+  have hmem : ∀ a : 𝟙K ⟶ X, a.left pt ∈ O ↔ ∃ a' : 𝟙K ⟶ Y, a' ≫ i = a := by
+    intro a
+    refine ⟨factor_point i a pt, ?_⟩
+    rintro ⟨a', rfl⟩
+    exact ⟨a'.left pt, rfl⟩
+  have key : ∀ x ∈ closedPoints X.left, x ∉ O → ∃ V : Set X.left, IsOpen V ∧ x ∈ V ∧ Disjoint V O := by
+    intro x hx hxO
+    obtain ⟨s, rfl⟩ := hpt x hx
+    have hinv : IsIso (transl s) :=
+      ⟨transl s⁻¹, by rw [transl_comp_transl, _root_.inv_mul_cancel, transl_one],
+        by rw [transl_comp_transl, _root_.mul_inv_cancel, transl_one]⟩
+    haveI : IsIso (transl s).left := by
+      change IsIso ((Over.forget _).map (transl s)); infer_instance
+    refine ⟨(transl s).left '' O, (transl s).left.isOpenEmbedding.isOpenMap _ hO, ?_, ?_⟩
+    · refine ⟨(η[X] : 𝟙K ⟶ X).left pt, ?_, ?_⟩
+      · rw [hmem]; exact ⟨η[Y], IsMonHom.one_hom i⟩
+      · rw [← Scheme.Hom.comp_apply, ← Over.comp_left, point_comp_transl]
+        rw [show (η[X] : 𝟙K ⟶ X) = 1 from (toUnit_unique (toUnit 𝟙K) (𝟙 _) ▸ (Category.id_comp _)).symm,
+          _root_.mul_one]
+    · rw [Set.disjoint_iff]
+      rintro y ⟨⟨z, hz, rfl⟩, hyO⟩
+      -- a closed point in the nonempty open `sU ∩ U`
+      have hVo : IsOpen ((transl s).left '' O ∩ O) :=
+        ((transl s).left.isOpenEmbedding.isOpenMap _ hO).inter hO
+      obtain ⟨y', ⟨⟨z', hz', rfl⟩, hy'O⟩, hy'c⟩ :=
+        nonempty_inter_closedPoints
+          (show ((transl s).left '' O ∩ O).Nonempty from ⟨_, ⟨z, hz, rfl⟩, hyO⟩) hVo.isLocallyClosed
+      obtain ⟨t, ht⟩ := hpt _ hy'c
+      obtain ⟨t', ht'⟩ := (hmem t).mp (ht ▸ hy'O)
+      have hz'' : (t ≫ transl s⁻¹).left pt = z' := by
+        rw [Over.comp_left, Scheme.Hom.comp_apply, ht, ← Scheme.Hom.comp_apply, ← Over.comp_left,
+          transl_comp_transl, _root_.inv_mul_cancel, transl_one]
+        rfl
+      rw [point_comp_transl] at hz''
+      obtain ⟨u', hu'⟩ := (hmem (s⁻¹ * t)).mp (hz'' ▸ hz')
+      apply hxO
+      rw [hmem]
+      refine ⟨t' * u'⁻¹, ?_⟩
+      rw [MonObj.mul_comp, GrpObj.inv_comp, ht', hu', _root_.mul_inv_rev, _root_.inv_inv,
+        _root_.mul_inv_cancel_left]
+  -- conclude with the Jacobson property
+  rw [← isOpen_compl_iff]
+  have hD : IsClosed (Oᶜ \ interior Oᶜ) := hO.isClosed_compl.inter isOpen_interior.isClosed_compl
+  have hDe : Oᶜ \ interior Oᶜ = ∅ := by
+    by_contra hne
+    obtain ⟨x, ⟨hxO, hxi⟩, hxc⟩ := nonempty_inter_closedPoints (Set.nonempty_iff_ne_empty.mpr hne)
+      hD.isLocallyClosed
+    obtain ⟨V, hV, hxV, hVO⟩ := key x hxc hxO
+    exact hxi (interior_maximal (fun v hv => Set.disjoint_left.mp hVO hv) hV hxV)
+  rw [← interior_eq_iff_isOpen]
+  exact (interior_subset).antisymm (Set.sdiff_eq_empty.mp hDe)
+
+end OpenSubgroup
+
 end ZInQ.SemiAbDescend

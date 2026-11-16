@@ -21,3 +21,4 @@ Base: wip/height-fix 49e6d97d + origin/main (merge 530ef0e7) + origin/wip/leaf-f
 ## Findings / compile outcomes
 - A.lean §1-§4 COMPILED (VERIFIED): isIso_of_bijective_affine (Yoneda on affine points over any S), exists_algPtMap, exists_iso_algPt, isSmoothConnAffineKer_of_torus (functor-of-points split torus kernel ≅ Spec K[x^±1], hence smooth/affine/connected).
 - A.lean §5 COMPILED (VERIFIED): isPullback_shear, smooth_of_smoothKer (faithfully flat qc hom with smooth kernel onto smooth group => smooth source; Mathlib DescendsAlong @Smooth).
+- A.lean §6 COMPILED (VERIFIED): isClosed_range_openSubgroup (open subgroup scheme of lft group over alg. closed field is closed; Jacobson + K-points + translations).
