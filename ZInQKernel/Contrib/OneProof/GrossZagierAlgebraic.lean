@@ -144,4 +144,163 @@ def GrossZagierAlgOptCd : Prop :=
 theorem grossZagierAlgOptCd_of (h : GrossZagierAlgOpt) : GrossZagierAlgOptCd :=
   fun _ _ _ E' _ _ _ => h E'
 
+/-! ## §2. Algebra: a pair `(x, y)` in `ℚ(X₀(N))` on `E` with `ord x < 0` defines `φ^*` -/
+
+/-- The Weierstrass equation of `E` for a pair of Laurent series. -/
+def WEq (E : WeierstrassCurve ℚ) (x y : LaurentSeries ℚ) : Prop :=
+  y ^ 2 + algebraMap ℚ _ E.a₁ * x * y + algebraMap ℚ _ E.a₃ * y =
+    x ^ 3 + algebraMap ℚ _ E.a₂ * x ^ 2 + algebraMap ℚ _ E.a₄ * x + algebraMap ℚ _ E.a₆
+
+/-- **A Laurent series of negative order is transcendental over `ℚ`.** -/
+theorem aeval_ne_zero_of_order_neg {x : LaurentSeries ℚ} (hx : x.order < 0) {p : ℚ[X]}
+    (hp : p ≠ 0) : aeval x p ≠ 0 := by
+  have hx0 : x ≠ 0 := by rintro rfl; simp at hx
+  have hcst : ∀ c : ℚ, algebraMap ℚ (LaurentSeries ℚ) c = HahnSeries.single 0 c := fun c =>
+    (RingHom.congr_fun (Subsingleton.elim (algebraMap ℚ (LaurentSeries ℚ)) HahnSeries.C) c).trans rfl
+  set v := HahnSeries.addVal ℤ ℚ
+  set z := x⁻¹
+  have hz0 : z ≠ 0 := inv_ne_zero hx0
+  have hvz : (0 : WithTop ℤ) < v z := by
+    have h1 : v x + v z = 0 := by
+      rw [← AddValuation.map_mul, mul_inv_cancel₀ hx0, AddValuation.map_one]
+    rw [HahnSeries.addVal_apply_of_ne hx0] at h1
+    rw [HahnSeries.addVal_apply_of_ne hz0] at h1 ⊢
+    have h2 : x.order + z.order = 0 := by exact_mod_cast h1
+    exact_mod_cast (show (0 : ℤ) < z.order by omega)
+  set n := p.natDegree
+  -- `z^n p(x) = c_n + w` with `v w > 0`
+  have hsplit : z ^ n * aeval x p = algebraMap ℚ _ (p.coeff n) +
+      ∑ i ∈ Finset.range n, algebraMap ℚ _ (p.coeff i) * z ^ (n - i) := by
+    rw [aeval_eq_sum_range, Finset.mul_sum, Finset.sum_range_succ, add_comm]
+    congr 1
+    · rw [Algebra.smul_def, mul_left_comm, ← mul_pow, inv_mul_cancel₀ hx0, one_pow, mul_one]
+    · refine Finset.sum_congr rfl fun i hi => ?_
+      rw [Finset.mem_range] at hi
+      rw [Algebra.smul_def, mul_left_comm]
+      congr 1
+      rw [show n = (n - i) + i by omega, pow_add, mul_assoc, ← mul_pow, inv_mul_cancel₀ hx0,
+        one_pow, mul_one, show n - i + i - i = n - i by omega]
+  have hw : (0 : WithTop ℤ) < v (∑ i ∈ Finset.range n, algebraMap ℚ _ (p.coeff i) * z ^ (n - i)) := by
+    have : v z ≤ v (∑ i ∈ Finset.range n, algebraMap ℚ _ (p.coeff i) * z ^ (n - i)) := by
+      refine AddValuation.map_le_sum v fun i hi => ?_
+      rw [Finset.mem_range] at hi
+      rw [AddValuation.map_mul, AddValuation.map_pow]
+      have hc : 0 ≤ v (algebraMap ℚ (LaurentSeries ℚ) (p.coeff i)) := by
+        by_cases hc : p.coeff i = 0
+        · rw [hc, map_zero, AddValuation.map_zero]; exact le_top
+        · rw [hcst, HahnSeries.addVal_apply_of_ne (by simpa using hc), HahnSeries.order_single hc]
+          rfl
+      obtain ⟨m, hm⟩ : ∃ m, n - i = m + 1 := ⟨n - i - 1, by omega⟩
+      rw [hm, succ_nsmul]
+      have : 0 ≤ m • v z := nsmul_nonneg hvz.le m
+      calc v z = 0 + (0 + v z) := by simp
+        _ ≤ _ := add_le_add hc (add_le_add this le_rfl)
+    exact lt_of_lt_of_le hvz this
+  intro h0
+  have h1 := hsplit
+  rw [h0, mul_zero] at h1
+  set w := ∑ i ∈ Finset.range n, algebraMap ℚ (LaurentSeries ℚ) (p.coeff i) * z ^ (n - i)
+  have hcw : w.coeff 0 = 0 := by
+    by_cases hw0 : w = 0
+    · simp [hw0]
+    · rw [HahnSeries.addVal_apply_of_ne hw0] at hw
+      exact HahnSeries.coeff_eq_zero_of_lt_order (by exact_mod_cast hw)
+  have h2 := congrArg (fun s : LaurentSeries ℚ => s.coeff 0) h1
+  simp only [HahnSeries.coeff_zero, HahnSeries.coeff_add, hcw, add_zero] at h2
+  rw [hcst, HahnSeries.coeff_single_same] at h2
+  exact (leadingCoeff_ne_zero.2 hp) h2.symm
+
+section Phi
+
+variable {E : WeierstrassCurve ℚ} {K : Type*} [Field K] [Algebra ℚ K]
+
+/-- `(x, y)` satisfies the equation of `E`, in the form `AdjoinRoot.lift` reads. -/
+abbrev OnCurve (E : WeierstrassCurve ℚ) (x y : K) : Prop :=
+  E.toAffine.polynomial.eval₂ (aeval (R := ℚ) x).toRingHom y = 0
+
+/-- `(x, y)` on `E` defines a `ℚ`-algebra map from the coordinate ring of `E`. -/
+def psi0 (x y : K) (h : OnCurve E x y) :
+    E.toAffine.CoordinateRing →ₐ[ℚ] K :=
+  { AdjoinRoot.lift (aeval (R := ℚ) x).toRingHom y h with
+    commutes' := fun c => by
+      simp only [RingHom.toMonoidHom_eq_coe, OneHom.toFun_eq_coe, MonoidHom.toOneHom_coe,
+        MonoidHom.coe_ofClass]
+      rw [IsScalarTower.algebraMap_apply ℚ (Polynomial ℚ) E.toAffine.CoordinateRing,
+        AdjoinRoot.algebraMap_eq, AdjoinRoot.lift_of h, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
+        Polynomial.algebraMap_apply, aeval_C, Algebra.algebraMap_self, RingHom.id_apply] }
+
+theorem psi0_mk (x y : K) (h : OnCurve E x y) (g : ℚ[X][X]) :
+    psi0 (E := E) x y h (Affine.CoordinateRing.mk E.toAffine g) =
+      g.eval₂ (aeval (R := ℚ) x).toRingHom y :=
+  AdjoinRoot.lift_mk h g
+
+theorem psi0_X (x y : K) (h : OnCurve E x y) :
+    psi0 (E := E) x y h (Affine.CoordinateRing.mk E.toAffine (C X)) = x := by
+  rw [psi0_mk, eval₂_C, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, aeval_X]
+
+theorem psi0_Y (x y : K) (h : OnCurve E x y) :
+    psi0 (E := E) x y h (Affine.CoordinateRing.mk E.toAffine X) = y := by
+  rw [psi0_mk, eval₂_X]
+
+theorem psi0_algebraMap (x y : K) (h : OnCurve E x y) (p : ℚ[X]) :
+    psi0 (E := E) x y h (algebraMap ℚ[X] E.toAffine.CoordinateRing p) = aeval x p := by
+  change AdjoinRoot.lift _ _ h (AdjoinRoot.of _ p) = _
+  rw [AdjoinRoot.lift_of h]; rfl
+
+/-- **`psi0` is injective if `x` is transcendental**: a nonzero prime of the coordinate ring
+(integral over `ℚ[X]`) meets `ℚ[X]` (going up), which would give `p(x) = 0`, `p ≠ 0`. -/
+theorem psi0_injective (x y : K) (h : OnCurve E x y) (hx : ∀ p : ℚ[X], p ≠ 0 → aeval x p ≠ 0) :
+    Function.Injective (psi0 (E := E) x y h) := by
+  rw [injective_iff_map_eq_zero]
+  intro a ha
+  by_contra ha0
+  set P := RingHom.ker (psi0 (E := E) x y h)
+  have hP : P ≠ ⊥ := fun hP => ha0 (by
+    have : a ∈ P := ha
+    rw [hP] at this; exact this)
+  have hu : P.under ℚ[X] ≠ ⊥ := fun hu => hP (Ideal.eq_bot_of_under_eq_bot hu)
+  obtain ⟨p, hpP, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hu
+  have : psi0 (E := E) x y h (algebraMap ℚ[X] E.toAffine.CoordinateRing p) = 0 := hpP
+  rw [psi0_algebraMap] at this
+  exact hx p hp0 this
+
+/-- **`φ^* : ℚ(E) →ₐ[ℚ] K`** from a pair `(x, y)` on `E` with `x` transcendental. -/
+def phiOf (x y : K) (h : OnCurve E x y) (hx : ∀ p : ℚ[X], p ≠ 0 → aeval x p ≠ 0) :
+    E.toAffine.FunctionField →ₐ[ℚ] K :=
+  IsFractionRing.liftAlgHom (psi0_injective (E := E) x y h hx)
+
+theorem phiOf_genX (x y : K) (h : OnCurve E x y) (hx) : phiOf (E := E) x y h hx (genX E) = x := by
+  rw [phiOf, IsFractionRing.liftAlgHom_apply, genX, IsFractionRing.lift_algebraMap]
+  exact psi0_X x y h
+
+theorem phiOf_genY (x y : K) (h : OnCurve E x y) (hx) : phiOf (E := E) x y h hx (genY E) = y := by
+  rw [phiOf, IsFractionRing.liftAlgHom_apply, genY, IsFractionRing.lift_algebraMap]
+  exact psi0_Y x y h
+
+end Phi
+
+/-- The Weierstrass equation for `(x, y) ∈ ℚ(X₀(N))²` in the form `AdjoinRoot.lift` reads. -/
+theorem eval₂_polynomial_of_wEq {E : WeierstrassCurve ℚ} {F : IntermediateField ℚ (LaurentSeries ℚ)}
+    (x y : F) (h : WEq E x y) : OnCurve E x y := by
+  unfold OnCurve
+  apply (algebraMap F (LaurentSeries ℚ)).injective
+  simp only [Affine.polynomial, eval₂_sub, eval₂_add, eval₂_mul, eval₂_pow, eval₂_C, eval₂_X,
+    AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add, map_mul, map_pow, map_sub, map_zero,
+    aeval_C, aeval_X]
+  unfold WEq at h
+  have hc : ∀ c : ℚ, ((algebraMap ℚ F c : F) : LaurentSeries ℚ) = algebraMap ℚ _ c := fun c =>
+    RingHom.congr_fun (Subsingleton.elim ((F.val : F →+* LaurentSeries ℚ).comp (algebraMap ℚ F))
+      (algebraMap ℚ (LaurentSeries ℚ))) c
+  simp only [IntermediateField.algebraMap_apply, hc]
+  linear_combination h
+
+theorem transcendental_of_order_neg {F : IntermediateField ℚ (LaurentSeries ℚ)} (x : F)
+    (hx : (x : LaurentSeries ℚ).order < 0) : ∀ p : ℚ[X], p ≠ 0 → aeval x p ≠ 0 := by
+  intro p hp h0
+  apply aeval_ne_zero_of_order_neg hx hp
+  have h1 := Polynomial.hom_eval₂ p (algebraMap ℚ F) (F.val : F →+* LaurentSeries ℚ) x
+  rw [← aeval_def, h0, map_zero, Subsingleton.elim ((F.val : F →+* LaurentSeries ℚ).comp
+    (algebraMap ℚ F)) (algebraMap ℚ (LaurentSeries ℚ)), ← aeval_def] at h1
+  exact h1.symm
+
 end ZInQ.GZAlg

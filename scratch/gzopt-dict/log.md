@@ -9,3 +9,4 @@ Base: wip/period-odd 6382ef59, merged origin/main e41a7169 (merge 812b36c0). Bui
 - Leaf `GrossZagierAlgOptAt E`: φ : E.toAffine.FunctionField →ₐ[ℚ] X0Field N, ord φ(x) < 0, X Y meromorphic with q-expansions φ(x), φ(y), IsOptimalParam, rest as GZOptimal.GrossZagierModuliOptAt.
 - `GrossZagierAlgOptCd` (restriction to short models in the isogeny class of C_d).
 - compile: `lake env lean` OK, no errors (VERIFIED).
+- §2 algebra (aeval_ne_zero_of_order_neg, psi0, psi0_injective via Ideal.eq_bot_of_under_eq_bot, phiOf via IsFractionRing.liftAlgHom, eval₂_polynomial_of_wEq): compiles (VERIFIED). Pitfall: Algebra ℚ (LaurentSeries ℚ) diamond between IntermediateField's instance and default; bridge with Subsingleton.elim on ℚ →+* L.
