@@ -123,7 +123,10 @@ It implies the integer form (`tyzLemma29PrintedNe3_of_R`). Flag: as `hL29` (rest
 * `lake env lean ZInQKernel/Contrib/OneProof/TYZThm11Integral.lean`: no errors, no warnings, no `sorry`
   (VERIFIED). `#print axioms` of `tyzThm11Integral_of_leaves`, `tyzLemma29Mod2_of_tunnellR`,
   `tyzLemma29PrintedNe3_of_R`: `[propext, Classical.choice, Quot.sound]` (`scratch/h11-reduce/Axioms-output.txt`).
-* `#discharges` and the manual fold `MainEdit.lean`: see §5 (filled in after the build of `OneProof.Main`).
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.TYZThm11Integral`:
+  success (13,699 jobs, 12 min, partial rebuild over a copied build tree). `MainEdit.lean` compiles;
+  `#print axioms h11reduce_frozenTarget`: `[propext, Classical.choice, Quot.sound]` (VERIFIED,
+  `MainEdit-output.txt`).
 * Fold (by hand; `h11`, `hL29`, `hT21` are frozenTarget arguments, which `autofold.py` does not fold):
   1. add `import ZInQKernel.Contrib.OneProof.TYZThm11Integral` to `Main.lean`;
   2. in `frozenTarget`, replace the binders `(h11 : TYZThm11Integral)`, `(hL29 : H29Split.TYZLemma29PrintedNe3)`,
@@ -139,7 +142,26 @@ It implies the integer form (`tyzLemma29PrintedNe3_of_R`). Flag: as `hL29` (rest
 
 ## 5. Discharge check
 
-(see below; filled in after the build)
+`scratch/h11-reduce/DischargesH11.lean` (imports `Main`, `Discharges` and the new file), output
+`DischargesH11-output.txt` (VERIFIED), the two lines for this file:
+
+```
+DISCHARGES [hL29] by ZInQ.Contrib.TYZDecomp.H11Reduce.tyzLemma29PrintedNe3_of_R
+  still assumes: [ZInQ.Contrib.TYZDecomp.H11Reduce.TYZLemma29PrintedNe3R]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [h11] by ZInQ.Contrib.TYZDecomp.H11Reduce.tyzThm11Integral_of_leaves
+  still assumes: [ZInQ.Contrib.TYZDecomp.H29Split.LegendreThreeSquares,
+ ZInQ.Contrib.TYZDecomp.H29Split.JonesPallX2Y2Z16,
+ ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists,
+ ZInQ.Contrib.TYZDecomp.H11Reduce.TYZLemma29PrintedNe3R,
+ ZInQ.Contrib.TYZDecomp.H11Reduce.TunnellOddL1]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 2915 theorems checked, 9 discharge one
+```
+
+(`hT21` is not discharged by a theorem of its type; it drops because the new `h29` glue,
+`tyzLemma29Mod2_of_tunnellR`, does not read it, as `h11reduce_frozenTarget` shows. The other seven lines of the output are the
+contributions already in the tree.)
 
 ## 6. What remains
 

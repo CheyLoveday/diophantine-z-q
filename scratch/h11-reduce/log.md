@@ -37,3 +37,11 @@ Base origin/main 0caafe66. TYZ source Period7.tex: NOT on this host (~/tyz-src a
   - `tyzThm11Integral_of_leaves hL3s hJP hfx hL29R hTun : TYZThm11Integral`.
   - `tyzLemma29Mod2_of_tunnell(R) hL3s hJP hfx hL29(R) hP23 hTun : TYZLemma29Mod2` (no `TYZThm21At31`).
   - `lcalSq_one_of_tunnell`, `lcalSq_three_of_tunnell` (A(1)=B(1)=2, A(3)=B(3)=4 computed in Lean).
+* `lake build +Main +Discharges +Contrib.OneProof.TYZThm11Integral`: success, 13699 jobs, 11m55s (TailK, TailS and
+  downstream rebuilt over the copied tree). VERIFIED.
+* `MainEdit.lean` (`h11reduce_frozenTarget`: frozenTarget minus h11, hL29, hT21, plus hL29R, hTun): compiles,
+  standard axioms (MainEdit-output.txt). VERIFIED.
+* `#discharges` (DischargesH11-output.txt): `DISCHARGES [h11] by tyzThm11Integral_of_leaves` (still assumes
+  LegendreThreeSquares, JonesPallX2Y2Z16, TYZTestVectorExists, TYZLemma29PrintedNe3R, TunnellOddL1) and
+  `DISCHARGES [hL29] by tyzLemma29PrintedNe3_of_R` (still assumes TYZLemma29PrintedNe3R); standard axioms.
+  VERIFIED. Net: frozenTarget TYZ arguments 9 -> 8 (h11, hL29, hT21 out; hL29R, hTun in), all LEAF.
