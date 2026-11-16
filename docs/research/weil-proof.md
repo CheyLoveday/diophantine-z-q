@@ -3,119 +3,142 @@
 Task weil-proof. Base `0caafe66` (fork main 2880fef1 + STATUS w80), with `origin/wip/pic-dict` (4e95795b) and
 `origin/wip/pic-fix` (be79cb5b) merged (both clean; their `PicDictionary.lean` and `PhiAmpleIsogeny.lean` are the
 same blobs as in `origin/wip/leaf-fold32b`). Field `HDec.HSyn.OpenAddedLeaves17.weilPairingMumford :
-T09Pic.WeilPairingMumford` (`ZInQKernel/OneProof/H/TailZ24.lean:708`).
+T09Pic.WeilPairingMumford` (`ZInQKernel/OneProof/H/TailZ24.lean:708`). pic-dict had reduced it to seven of
+Mumford's displays over an algebraically closed field (`PicDict.weilPairingMumford_final`).
 
-## 1. Verdict
+## 1. Result
 
-**The field is not removed outright**, but one of pic-dict's seven Mumford displays is now a Lean theorem with
-no hypotheses, and the field rests on five displays plus an open field.
+**The field is not removed outright.** It now rests on **four** Mumford displays and one open field, against
+pic-dict's seven; **three of pic-dict's seven displays are Lean theorems with no hypotheses**:
 
-* Its perfectness clause is Mumford's nondegeneracy of `ē_n` (§20, through the duality of §15 and
-  `deg n_X = n^{2g}`) and its alternation clause is Mumford §23 (`e^L(x, x) = 1`). Neither has Lean
-  infrastructure in the tree (no Cartier duality of `ker n_X` and `ker n̂`, no theorem of the cube or seesaw), so
-  nondegeneracy stays a leaf; §23 is attacked in §6.
+| pic-dict leaf | Mumford | status here |
+|---|---|---|
+| `MumfordWeilPairingAC` | §20: `ē_n(x, M) = t_x^*ψ ∘ ψ⁻¹` well defined, `μ_n`-valued, bilinear | **proved** (`WeilProof.mumfordWeilPairingAC_proof`) |
+| `MumfordWeilAltAC` | §23: `e^L_n(x, x) = 1` | **proved** (`WeilProof.Theta.mumfordWeilAltAC_proof`) |
+| `MumfordKLFiniteAC` | §6 App. 1 | no longer used: replaced by the open field `phiAmpleIsogeny` (its only use) |
+| `MumfordSquareAC`, `MumfordMulNPicZeroAC`, `MumfordPhiSurjectiveAC` | §6 Cor. 4, §8 (iv), §8 Thm 1 | still leaves (line-bundle statements, no `ē_n`) |
+| `MumfordWeilNondegAC` | §20 nondegeneracy | still a leaf |
 
-**What is new (all VERIFIED: compiled, `#print axioms` = `[propext, Classical.choice, Quot.sound]`):**
+All VERIFIED: compiled, `#print axioms` = `[propext, Classical.choice, Quot.sound]` (`scratch/weil-proof/Axioms.lean`).
 
-1. **`WeilProof.mumfordWeilPairingAC_proof : PicDict.MumfordWeilPairingAC`.** Mumford's §20 display as pic-dict
-   stated it: the formula `ē_n(x, M) = t_x^*ψ ∘ ψ⁻¹` is independent of `ψ`, is a constant `n`-th root of unity,
-   and is bilinear. Three conjuncts are proved from the cocycle relation of the formula over any field; the
-   fourth (multiplicativity in `M`) from `PullbackCompMonoidal`.
-2. **`WeilProof.pullbackCompMonoidal_proof : PullbackCompMonoidal`**: Mathlib's `Scheme.Modules.pullbackComp`
-   commutes with the tensorators of the vendored monoidal structure of `Scheme.Modules.pullback` (pull-back of
-   sheaves of modules is a monoidal pseudofunctor). New general lemma on the way: `Mates.leftAdjointCompIso_δ`
-   (the left-adjoint comparison of a monoidal right-adjoint comparison is oplax monoidal).
-3. **The field**:
+```lean
+theorem WeilProof.Theta.weilPairingMumford_final (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
+    (h8 : MumfordPhiSurjectiveAC) (h20b : MumfordWeilNondegAC) (h3 : T09Pic.PhiAmpleIsogeny) :
+    T09Pic.WeilPairingMumford
+```
 
-   ```lean
-   theorem WeilProof.weilPairingMumford_proof (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
-       (h8 : MumfordPhiSurjectiveAC) (h20b : MumfordWeilNondegAC) (h23 : MumfordWeilAltAC)
-       (h3 : T09Pic.PhiAmpleIsogeny) : T09Pic.WeilPairingMumford
-   ```
+`h3` is the open field `phiAmpleIsogeny` of the same bundle; in leaf-fold32 it is
+`PicFix.phiAmpleIsogeny_of_printed` of the two leaves `mumfordKLFiniteSectionAC`, `mumfordPhiSurjectiveAC`
+(spec `scratch/weil-proof/autofold-lf32.json`, untested).
 
-   `h3` is the open field `phiAmpleIsogeny` (it replaces pic-dict's `MumfordKLFiniteAC`, whose only use was to
-   produce it; in leaf-fold32 the field is `PicFix.phiAmpleIsogeny_of_printed` of two printed leaves).
-   Variant `weilPairingMumford_of_six`: `MumfordKLFiniteAC` in place of `h3`.
+**Count** (autofold dry runs on this base; each printed module compiles to `sixContactMin_of_open36` with the
+standard axioms):
 
-**Count** (dry runs on this base, `scratch/weil-proof/autofold*.json`; each printed module compiles):
+| spec | flag of `mumfordWeilNondegAC` | dry run |
+|---|---|---|
+| `scratch/weil-proof/autofold.json` (**recommended, honest**) | pending reading (stated for the formula; §5) | `34/11 on 45 -> 37/11 on 48; strictest 34/11 -> 37/11` (no rise) |
+| `scratch/weil-proof/autofold-unread.json` | unread (pic-dict's rating) | `34/11 on 45 -> 38/10 on 48; strictest 34/11 -> 38/10` |
 
-| flags of `mumfordWeilNondegAC`, `mumfordWeilAltAC` | dry run |
-|---|---|
-| pending reading (honest: they are stated for the formula, see §5) | `34/11 on 45 -> 37/12 on 49; strictest 34/11 -> 37/12` (needs `--allow-rise`) |
-| unread (pic-dict's rating) | `34/11 on 45 -> 39/10 on 49; strictest 34/11 -> 39/10` |
+So the fold is GLUE-neutral now and −1 once a reading confirms that Mumford §20 states `ē_n` by the formula.
 
-So the fold is −1 once the §20/§23 readings confirm that Mumford states `ē_n` by the formula; with honest flags
-it is +1 now. pic-dict's own reduction had seven leaves (four of them pending readings); this one has five
-(two pending readings).
+**Why the rest is out of reach.** §20 nondegeneracy needs descent along `n_X` (right kernel) and
+`#X̂[n] = #X[n]` (left kernel; dimension of `Pic⁰` and degree of `n`); §6 Cor. 4 and §8 (iv) need the seesaw /
+theorem of the cube (cohomology and base change); §8 Thm 1 needs cohomology of nontrivial `Pic⁰` bundles. None of
+these is in the tree.
 
 ## 2. Files
 
 * `ZInQKernel/Contrib/OneProof/WeilFormula.lean` (namespace `WeilProof`; imports
   `ZInQKernel.OneProof.H.TailZ24`, the module that defines the statement, and
-  `ZInQKernel.Contrib.OneProof.PicDictionary`). `lake build ZInQKernel.Contrib.OneProof.WeilFormula` succeeds. No
-  build-time code.
-* `scratch/weil-proof/Generic.lean`: the development copy (same content, compiled with `lake env lean`).
-* `scratch/weil-proof/Discharges.lean`, output `scratch/weil-proof/discharges.txt`.
-* `scratch/weil-proof/autofold.json`, dry-run module `scratch/weil-proof/FoldDryRun.lean` (compiles;
-  `sixContactMin_of_open36` has the standard axioms).
-* `scratch/weil-proof/log.md`.
+  `ZInQKernel.Contrib.OneProof.PicDictionary`): the formula calculus, §20 (`mumfordWeilPairingAC_proof`),
+  `pullbackCompMonoidal_proof`.
+* `ZInQKernel/Contrib/OneProof/WeilFormulaTheta.lean` (imports `WeilFormula` and the tree's
+  `Contrib.OneProof.MulEtale`): the theta-group calculus, §23 (`mumfordWeilAltAC_proof`), divisibility
+  (`divisibleAC`), and the final theorem `weilPairingMumford_final` (**the theorem for the fold**).
+* Both build with `lake build`; no build-time code. They need pic-dict's `PicDictionary.lean` (merged here,
+  identical to leaf-fold32b's).
+* `scratch/weil-proof/`: `Discharges.lean` + `discharges.txt`, `Axioms.lean`, the specs, `FoldDryRun*.lean`,
+  development copies (`Generic.lean`, `PBM.lean`, `Mates.lean`, `Theta.lean`, `Alt.lean`, `Div.lean`), `log.md`.
+
+`#discharges` (excerpt of `scratch/weil-proof/discharges.txt`):
+
+```
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by WeilProof.Theta.weilPairingMumford_final
+  still assumes: [PicDict.MumfordSquareAC,
+ PicDict.MumfordMulNPicZeroAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.MumfordWeilNondegAC,
+ T09Pic.PhiAmpleIsogeny]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 3185 theorems checked, 23 discharge one
+```
+
+(The other `WeilProof.*` lines are intermediate forms: `weilPairingMumford_proof`, `_of_div`, `_of_six`,
+`_of_bilinRight`, `_of_pullbackCompMonoidal`.)
 
 ## 3. The proofs
 
-Notation: `X` a scheme, `m, t : X ⟶ X` with `t ≫ m = m`, `M` a module, `ψ : 𝒪_X ≅ m^*M`;
-`wf t m h M ψ = (pOU t)⁻¹ ≫ t^*ψ ≫ θ_t ≫ ψ⁻¹ ∈ End(𝒪_X) = Γ(X, 𝒪)` (pic-dict's `Transport.wf`;
-`θ_t = pullbackComp ≫ pullbackCongr`). `AC.formula x hx c ψ = wf (t_x) (n_X) _ (M_c) ψ`.
+Notation: `X` a scheme, `m, t : X ⟶ X`, `t ≫ m = m`, `ψ : 𝒪 ≅ m^*M`; pic-dict's
+`wf t m h M ψ = (pOU t)⁻¹ ≫ t^*ψ ≫ θ_t ≫ ψ⁻¹ ∈ End(𝒪) = Γ(X, 𝒪)`, `θ_t = pullbackComp ≫ pullbackCongr`.
 
-* `comp_val`: composition in `End(𝒪_X)` is multiplication of values (`Hom.app_smul`).
-* `wf_comp` (**cocycle**): `wf (t₁ ≫ t₂) = t₁^*(wf t₂) · wf t₁`. Proof: `pOU_inv_comp`, naturality of
-  `pullbackComp`, and `theta_comp` (`θ_{t₁t₂} = t₁^*θ_{t₂} ∘ θ_{t₁}`, from pic-dict's `pullbackComp_assoc_app`).
-* `wf_id`: `wf 𝟙 = 1` (cocycle at `𝟙 ≫ 𝟙` and `wf_isUnit`).
-* `wf_change`: replacing `ψ` by `ψ'` multiplies by `t^*(a)·a⁻¹`, `a = ψ' ψ⁻¹`; equal if `t^*a = a`.
-* `tr_appTop`: on an abelian variety translations act trivially on `Γ(X, 𝒪)` (every global function is a
-  constant: vendored `bijective_appTop_of_isProper_of_geometricallyIntegral`; `t_x` is a `k`-morphism).
-* (i) `formula_indep` = `wf_change` + `tr_appTop`. (iii) `formula_mul` = `wf_comp` + `t_{xx'} = t_x ≫ t_{x'}` +
-  `tr_appTop`. `formula_pow`, and (ii) `formula_root`: `ē(x)^n = ē(x^n) = ē(1) = 1`, and the value is `const u` with
-  `u^n = 1` by bijectivity of constants.
-* Tensor part (`alpha_tensor`, `wf_tensor_ratio`): with `ψ'' = λ⁻¹ ≫ (ψ ⊗ ψ') ≫ μ_m`,
-  `α(ψ'') = r_t · λ⁻¹ (β ⊗ β') λ`, where `β = ε_t ≫ t^*ψ ≫ θ_t ≫ ψ⁻¹` and `r_t = (pOU t)⁻¹ ε_t⁻¹`; uses
-  `PullbackCompMonoidal` (for `θ_t` on `M ⊗ M'`), `μ_natural`, the left unitality of `t^*` and
-  Eckmann–Hilton (`unitor_tensor`). So `wf(ψ'') · r_t = wf ψ · wf ψ'`.
-* `unitRatio_tr`: `r_t = 1` for translations: apply the previous line to `M = M' = 𝒪` with `ψ = ψ' = pOU_m⁻¹`
-  (`wf_unit`: value 1), and compare `ψ''` with `pOU_m⁻¹` by `wf_iso` (unitor) and `wf_change`.
-* `mumfordWeilBilinRightAC_of_pullbackCompMonoidal`: `formula_indep` to choose `ψ''`, `wf_iso` along
-  `Scheme.Pic.mulIso`, `wf_tensor_ratio`, `unitRatio_tr`.
+### 3.1 §20, the formula (`WeilFormula.lean`)
+
+* `wf_comp` (cocycle `wf(t₁ ≫ t₂) = t₁^*(wf t₂) · wf t₁`), `wf_id`, `wf_change` (another `ψ'` changes the
+  value by `t^*(a)/a`, `a = ψ'ψ⁻¹`), `tr_appTop` (translations fix `Γ(X, 𝒪)`: every global function is
+  constant, vendored `bijective_appTop_of_isProper_of_geometricallyIntegral`).
+* (i) `formula_indep`, (ii) `formula_root`, (iii) `formula_mul` follow.
+* (iv) multiplicativity in `M`: `alpha_tensor`/`wf_tensor_ratio` compute the formula of `λ⁻¹(ψ ⊗ ψ')μ` from
+  `PullbackCompMonoidal`, Eckmann–Hilton and the left unitality of `t^*`; the ratio of `pOU⁻¹` and `ε` is shown to
+  be `1` for translations (`unitRatio_tr`), so no unit coherence is assumed.
+* `pullbackCompMonoidal_proof` (section `PullbackCompMonoidalSec`): the vendored monoidal structure of
+  `pullback` comes from `Localization.Monoidal.functorMonoidalOfComp` (`mu_sheafified`). On sheafified objects
+  the identity reduces (`main_sheafified`) to (E) `ee_comp` — Mathlib's `pullbackComp` versus
+  `sheafificationCompPullback` and the presheaf `pullbackComp` (a unit chase: `unit_leftAdjointUniq_hom_app`,
+  `unit_conjugateEquiv_symm`) — and (P) `pcP_monoidal` — the presheaf `pullbackComp` is monoidal, from the new
+  general lemma `Mates.leftAdjointCompIso_δ` (via `Adjunction.isMonoidal_comp`) and `eF_monoidal` (presheaf
+  `pushforwardComp`, a `tmul` computation). All modules follow by the counit `L(M.val) ≅ M` and naturality.
+
+### 3.2 §23 (`WeilFormulaTheta.lean`)
+
+The theta-group argument: `e_n(x, φ_L(x))` is the commutator of two lifts to `N = n^*L`, and the second lift's
+`n`-th power lies over `x`.
+
+* Lifts `α : t^*N → N` over endomorphisms, products `prod` (associative, `prod_assoc`), the commutator relation
+  `Comm` (multiplicative in the first variable, `comm_prod_left`), `comm_pw` (a lift commutes with its powers).
+* `theta_rho`: pseudofunctor coherence transporting `θ_t` along `m^*t^*L ≅ s^*m^*L` (`m ≫ t = s ≫ m`).
+* `tensor_relation`: tensoring `ψ` with `N` conjugates `θ_t(Φ ⊗ L)` into `θ_t(L)` times `λ⁻¹(α ▷ N)λ`.
+* `alt_core` (any scheme): from `y` with `t = s^n` (`s = t_y`), `Φ ⊗ L ≅ t^*L`, `N` invertible with a tensor
+  inverse: the formula is `1`. The commutator scalar is `λ⁻¹(α ▷ N)λ`; the theta argument and the vendored
+  `exists_eq_smulHom` make it `1`; monoidal faithfulness (`unit_endo_eq_id_of_whisker`) gives `α = 1`.
+* `divisibleAC`: `[n]` is étale (the tree's `mulEtaleAbelianScheme_proof`), so open
+  (`isOpenMap_of_generalizingMap`, `Flat.generalizingMap`); proper, so closed; `X` connected, so `[n]` is surjective;
+  the fibre over a `k`-point is a nonempty proper `k`-scheme, with a `k`-point (`pointOfClosedPoint`).
+* `mumfordWeilAltAC_proof := mumfordWeilAltAC_of_div divisibleAC`.
 
 ## 4. Consumers and narrowing
 
-* The field is read once on the route, at `TailZ24.lean:808` (`t09SymmIsogenyExists_of_four`, in
-  `addedLeaves12_of_open13`) — VERIFIED by grep on this base. weil-used (origin/wip/weil-used, probe over the
-  closure of `frozenTarget`) found that below `T09_SymmIsogenyExists` only the left half of perfectness, Galois,
-  compatibility and `e_n(x, λ_L x) = 0` for very ample `L` are read; clause 6 (`weilScalar` pin), the adjoint
-  clause and the right half of perfectness are inert.
-* A narrower form (characteristic 0, number fields, the abelian varieties used) does **not** help: the left half of
-  perfectness and §23 are as deep in characteristic 0 as in general (they are the same Mumford arguments), so no
-  narrowing makes the field provable today. The narrowing that would reduce trust is weil-used's read set
-  (`WeilUsed.WeilPairingRead`); it requires rerouting through older bundle generations (weil-used §3) and was not
-  done.
+* The field is read once on the route, at `TailZ24.lean:808` (`t09SymmIsogenyExists_of_four`), VERIFIED by grep.
+  weil-used (origin/wip/weil-used, probe over the closure of `frozenTarget`): below `T09_SymmIsogenyExists` only
+  the left half of perfectness, Galois, compatibility and `e_n(x, λ_L x) = 0` (very ample `L`) are read; the
+  `weilScalar` pin, the adjoint clause and the right half of perfectness are inert.
+* No narrowing (characteristic 0, number fields, the abelian varieties used) makes the remaining leaves provable:
+  the four displays are as deep in characteristic 0. A narrower field (weil-used's `WeilPairingRead`) would drop
+  only the inert clauses and needs a reroute through older bundles; not done.
 
-## 5. New statements and their rating
+## 5. Leaves of the fold and their rating
 
-| statement | kind | printed form? | reason |
+| leaf | kind | printed form? | reason |
 |---|---|---|---|
-| `WeilProof.PullbackCompMonoidal` | **proved** (`pullbackCompMonoidal_proof`) | n/a | Not a leaf. |
-| `WeilProof.MumfordWeilBilinRightAC` (variant only) | published | yes, as a conjunct | Mumford §20 bilinearity, second variable, for the formula; same reading caveat as the next rows. Not used by `weilPairingMumford_proof`. |
-| `PicDict.MumfordWeilNondegAC` (pic-dict's) | published | **pending reading** | Stated for the formula; it is the print only if §20 states `ē_n` by `t_x^*ψ ∘ ψ⁻¹` and not only through the duality of §15 (pic-fix's note). |
-| `PicDict.MumfordWeilAltAC` (pic-dict's) | published | **pending reading** | Mumford §23, same caveat. |
-| `PicDict.MumfordSquareAC`, `MumfordMulNPicZeroAC`, `MumfordPhiSurjectiveAC` (pic-dict's) | published | yes (unread) | Statements about line bundles only (no `ē_n`), Mumford §6 Cor. 4, §8 (iv), §8 Thm 1; locators UNVERIFIED. `MumfordPhiSurjectiveAC` is already a field in leaf-fold32. |
+| `mumfordSquareAC` (pic-dict) | published | yes (unread) | Mumford §6 Cor. 4 over `k = k̄`; line bundles only |
+| `mumfordMulNPicZeroAC` (pic-dict) | published | yes (unread) | Mumford §8 (iv); line bundles only |
+| `mumfordPhiSurjectiveAC` (pic-dict) | published | yes (unread; already a field in leaf-fold32) | Mumford §8 Thm 1 |
+| `mumfordWeilNondegAC` (pic-dict) | published | **pending reading** | stated for the formula `t_x^*ψ ∘ ψ⁻¹`; it is the print only if §20 states `ē_n` by this formula and not only through the duality of §15 (pic-fix's note) |
 
-pic-dict's `MumfordWeilPairingAC` is a theorem and `MumfordKLFiniteAC` is no longer an assumption of the field (it enters only through the open field `phiAmpleIsogeny`).
+No new leaf. Locators UNVERIFIED (no copy of Mumford on the host).
 
 ## 6. What remains
 
-* `PullbackCompMonoidal` (see the plan in the log): reduce to sheafified objects `L A, L B`
-  (`functorMonoidalOfComp_μ`), then two facts: (E) `c_{f,g}` at `L A` equals `f^*e_g ∘ e_f ∘ L(pc_{f,g}) ∘ e_{fg}⁻¹`
-  (conjugate computation: every right adjoint involved is a pushforward and the comparisons are identities), and
-  (P) the presheaf `pullbackComp` is oplax monoidal for the `leftAdjointOplaxMonoidal` structures (mates of the
-  presheaf pushforward's `μ`, which is `m ⊗ m' ↦ m ⊗ m'`, and `pushforwardComp = Iso.refl`).
-* Readings of Mumford §20 and §23 for the two pending leaves; all locators UNVERIFIED (no copy of Mumford on the
-  host).
+* `mumfordWeilNondegAC`: right kernel by descent of the `X[n]`-invariant trivialization along the finite étale
+  `n_X` (the vendored fpqc section descent may suffice); left kernel needs `#X̂[n] = #X[n]`.
+* A reading of Mumford §20 for the formula (clears the flag; the fold is then −1).
+* The other three displays need the seesaw / theorem of the cube.
