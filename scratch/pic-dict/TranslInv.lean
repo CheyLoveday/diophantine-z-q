@@ -248,6 +248,72 @@ theorem picZeroPtsTranslInv_of_leaves (hU : PushforwardUnitUniversal) (hGI : Geo
     have hc : Scheme.Pic.map (zT A B.X) c.1 = 1 := c.2
     rw [CartesianMonoidalCategory.lift_fst]
     exact dT_zero c.1 hc
-  sorry
+  -- `Ψ(0) = 0`
+  have hηAB : η[A.X ⊗ B.X] = η[A.X] ≫ CartesianMonoidalCategory.lift (𝟙 A.X)
+      (CartesianMonoidalCategory.toUnit A.X ≫ η[B.X]) := by
+    apply CartesianMonoidalCategory.hom_ext
+    · rw [IsMonHom.one_hom (CartesianMonoidalCategory.fst A.X B.X)]; simp
+    · rw [IsMonHom.one_hom (CartesianMonoidalCategory.snd A.X B.X)]
+      simp only [Category.assoc, CartesianMonoidalCategory.lift_snd]
+      rw [← Category.assoc, CartesianMonoidalCategory.toUnit_unique (η[A.X] ≫ _) (𝟙 _),
+        Category.id_comp]
+  have hη : η[A.X ⊗ B.X] ≫ Ψ = η[P] := by
+    rw [hηAB, Category.assoc, haxA, ← Category.assoc,
+      CartesianMonoidalCategory.toUnit_unique (η[A.X] ≫ _) (𝟙 _), Category.id_comp]
+  -- `Ψ` factors through `Pic⁰ = B`
+  haveI : IsIntegral (A.X ⊗ B.X).left := GeometricallyIntegral.isIntegral_of_subsingleton (A.X ⊗ B.X).hom
+  have hsub : Set.range Ψ.left ⊆ Set.range j.left := by
+    rw [hrange]
+    rintro _ ⟨a, rfl⟩
+    refine ⟨(A.X ⊗ B.X).hom a, ?_⟩
+    have he : η[P].left ((A.X ⊗ B.X).hom a) = Ψ.left (η[A.X ⊗ B.X].left ((A.X ⊗ B.X).hom a)) := by
+      rw [← hη]; rfl
+    rw [he]
+    exact (isPreconnected_range Ψ.left.continuous).subset_connectedComponent ⟨_, rfl⟩ ⟨a, rfl⟩
+  let l : (A.X ⊗ B.X).left ⟶ B.X.left := IsOpenImmersion.lift j.left Ψ.left hsub
+  have hl : l ≫ j.left = Ψ.left := IsOpenImmersion.lift_fac _ _ _
+  have hw : l ≫ B.X.hom = (A.X ⊗ B.X).hom := by
+    rw [← Over.w j, ← Category.assoc, hl, Over.w]
+  let Ψ' : A.X ⊗ B.X ⟶ B.X := Over.homMk l hw
+  have hΨ' : Ψ' ≫ j = Ψ := Over.OverMorphism.ext hl
+  have hjm : Mono j := (Over.forget _).mono_of_mono_map (inferInstanceAs (Mono j.left))
+  have hη' : η[A.X ⊗ B.X] ≫ Ψ' = η[B.X] := by
+    rw [← cancel_mono j, Category.assoc, hΨ', hη, hjη]
+  haveI : IsMonHom Ψ' := MulRigidity.isMonHom_of_geometricallyIntegral (A.X ⊗ B.X) B.X Ψ' hη'
+  have hA' : CartesianMonoidalCategory.lift (𝟙 A.X) (CartesianMonoidalCategory.toUnit A.X ≫ η[B.X]) ≫ Ψ' =
+      CartesianMonoidalCategory.toUnit A.X ≫ η[B.X] := by
+    rw [← cancel_mono j, Category.assoc, hΨ', haxA, Category.assoc, hjη]
+  have hB' : CartesianMonoidalCategory.lift (CartesianMonoidalCategory.toUnit B.X ≫ η[A.X]) (𝟙 B.X) ≫ Ψ' =
+      CartesianMonoidalCategory.toUnit B.X ≫ η[B.X] := by
+    rw [← cancel_mono j, Category.assoc, hΨ', haxB, Category.assoc, hjη]
+  -- at `K̄`-points
+  have hpt : CartesianMonoidalCategory.lift x y ≫ Ψ = CartesianMonoidalCategory.toUnit _ ≫ η[P] := by
+    have hxy : CartesianMonoidalCategory.lift x y =
+        (x ≫ CartesianMonoidalCategory.lift (𝟙 A.X) (CartesianMonoidalCategory.toUnit A.X ≫ η[B.X])) *
+        (y ≫ CartesianMonoidalCategory.lift (CartesianMonoidalCategory.toUnit B.X ≫ η[A.X]) (𝟙 B.X)) := by
+      simp only [CartesianMonoidalCategory.comp_lift, Category.comp_id, lift_mul_lift]
+      congr 1
+      · rw [← Category.assoc, CartesianMonoidalCategory.toUnit_unique (y ≫ _) (CartesianMonoidalCategory.toUnit _),
+          ← CategoryTheory.Hom.one_def, mul_one]
+      · rw [← Category.assoc, CartesianMonoidalCategory.toUnit_unique (x ≫ _) (CartesianMonoidalCategory.toUnit _),
+          ← CategoryTheory.Hom.one_def, one_mul]
+    rw [← hΨ', ← Category.assoc, hxy, MonObj.mul_comp, Category.assoc, Category.assoc, hA', hB',
+      ← Category.assoc, ← Category.assoc,
+      CartesianMonoidalCategory.toUnit_unique (x ≫ _) (CartesianMonoidalCategory.toUnit _),
+      CartesianMonoidalCategory.toUnit_unique (y ≫ _) (CartesianMonoidalCategory.toUnit _),
+      ← CategoryTheory.Hom.one_def, mul_one, MonObj.one_comp, CategoryTheory.Hom.one_def]
+  rw [PsiT_natural, CartesianMonoidalCategory.lift_fst] at hpt
+  have hd := dT_eq_one_of_PsiT rep hU x _ hpt
+  have hcy : ((Nrm A).toFunctor.map (CartesianMonoidalCategory.lift x y).op c₀).1 = picClass rep j y := by
+    have h0 := (Θ_hom_app A hU _ ((Nrm A).toFunctor.map (CartesianMonoidalCategory.lift x y).op c₀)).symm.trans
+      ((hΘc (CartesianMonoidalCategory.lift x y)).trans
+        (by rw [CartesianMonoidalCategory.lift_snd_assoc]))
+    exact ((picClass_eq_iff rep j y _).2 h0).symm
+  rw [hcy] at hd
+  have hS : Scheme.Pic.map (zT A (ptK K)) (Scheme.Pic.map (trT A x) (picClass rep j y)) = 1 :=
+    Subsingleton.elim (α := (Spec (CommRingCat.of (AlgebraicClosure K))).Pic) _ _
+  rw [dT, hS, Scheme.Pic.map_one, inv_one, mul_one, mul_inv_eq_one] at hd
+  exact hd
 
 end PicDict
+#print axioms PicDict.picZeroPtsTranslInv_of_leaves
