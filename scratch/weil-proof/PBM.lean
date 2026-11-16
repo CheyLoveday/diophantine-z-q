@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.PicDictionary
+import ZInQKernel.Contrib.OneProof.WeilFormula
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -103,12 +103,114 @@ def pcP (f : X ⟶ Y) (g : Y ⟶ Z) : PP g ⋙ PP f ≅ PP (f ≫ g) :=
 
 local notation "L" => Scheme.Modules.sheafification
 
+abbrev shA (X : Scheme.{u}) := PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)
+
+abbrev adjS (f : X ⟶ Y) := Scheme.Modules.pullbackPushforwardAdjunction f
+
+abbrev RS (X : Scheme.{u}) := SheafOfModules.forget X.ringCatSheaf ⋙
+  PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)
+
+lemma push_RS (g : Y ⟶ Z) {M N : Y.Modules} (h : M ⟶ N) :
+    (PresheafOfModules.restrictScalars (𝟙 Z.ringCatSheaf.obj)).map
+        ((SheafOfModules.forget Z.ringCatSheaf).map ((pushforward g).map h)) =
+      (PF g).map ((PresheafOfModules.restrictScalars (𝟙 Y.ringCatSheaf.obj)).map
+        ((SheafOfModules.forget Y.ringCatSheaf).map h)) := rfl
+
+lemma push_push (f : X ⟶ Y) (g : Y ⟶ Z) {M N : X.Modules} (h : M ⟶ N) :
+    (pushforward g).map ((pushforward f).map h) = (pushforward (f ≫ g)).map h := rfl
+
+lemma PF_PF (f : X ⟶ Y) (g : Y ⟶ Z) {M N : PresheafOfModules (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)}
+    (h : M ⟶ N) : (PF g).map ((PF f).map h) = (PF (f ≫ g)).map h := rfl
+
+/-- (U1) -/
+lemma unit_ee (f : X ⟶ Y) (P : Y.PresheafOfModules) :
+    (shA Y).unit.app P ≫ (RS Y).map ((adjS f).unit.app ((L Y).obj P)) ≫
+        (RS Y).map ((pushforward f).map ((ee f).hom.app P)) =
+      (AD f).unit.app P ≫ (PF f).map ((shA X).unit.app ((PP f).obj P)) := by
+  have h := Adjunction.unit_leftAdjointUniq_hom_app ((shA Y).comp (adjS f)) ((AD f).comp (shA X)) P
+  simp only [Adjunction.comp_unit_app, Functor.comp_map, Category.assoc] at h
+  exact h
+
+/-- (U3) -/
+lemma unit_pcP (f : X ⟶ Y) (g : Y ⟶ Z) (A : Z.PresheafOfModules) :
+    (AD g).unit.app A ≫ (PF g).map ((AD f).unit.app ((PP g).obj A)) ≫
+        (PF g).map ((PF f).map ((pcP f g).hom.app A)) = (AD (f ≫ g)).unit.app A := by
+  have h := unit_conjugateEquiv_symm (AD (f ≫ g)) ((AD g).comp (AD f)) (eF f g).inv A
+  simp only [Adjunction.comp_unit_app, Functor.comp_map, Category.assoc] at h
+  rw [← Functor.map_comp]
+  exact h.symm
+
+/-- (U2) -/
+lemma unit_pullbackComp (f : X ⟶ Y) (g : Y ⟶ Z) (M : Z.Modules) :
+    (adjS g).unit.app M ≫ (pushforward g).map ((adjS f).unit.app ((Scheme.Modules.pullback g).obj M)) ≫
+        (pushforward g).map ((pushforward f).map ((pullbackComp f g).hom.app M)) =
+      (adjS (f ≫ g)).unit.app M := by
+  have h := unit_conjugateEquiv_symm (adjS (f ≫ g)) ((adjS g).comp (adjS f))
+    (Scheme.Modules.pushforwardComp f g).inv M
+  simp only [Adjunction.comp_unit_app, Functor.comp_map, Category.assoc] at h
+  rw [← Functor.map_comp]
+  exact h.symm
+
+set_option maxHeartbeats 1000000 in
 /-- (E) -/
 lemma ee_comp (f : X ⟶ Y) (g : Y ⟶ Z) (A : Z.PresheafOfModules) :
     (Scheme.Modules.pullback f).map ((ee g).hom.app A) ≫ (ee f).hom.app ((PP g).obj A) ≫
         (L X).map ((pcP f g).hom.app A) =
       (pullbackComp f g).hom.app ((L Z).obj A) ≫ (ee (f ≫ g)).hom.app A := by
-  sorry
+  apply (((shA Z).comp ((adjS g).comp (adjS f))).homEquiv _ _).injective
+  rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit]
+  simp only [Adjunction.comp_unit_app, Functor.map_comp, Category.assoc, Functor.comp_map, Functor.comp_obj]
+  -- right side
+  have u2 := congrArg (fun φ => (RS Z).map φ) (unit_pullbackComp f g ((L Z).obj A))
+  simp only [Functor.map_comp, Functor.comp_map] at u2
+  dsimp only [Scheme.Modules.sheafification] at u2 ⊢
+  rw [reassoc_of% u2, push_push f g ((ee (f ≫ g)).hom.app A)]
+  have u1fg := unit_ee (f ≫ g) A
+  simp only [Functor.comp_map] at u1fg
+  dsimp only [Scheme.Modules.sheafification] at u1fg
+  rw [u1fg]
+  -- left side
+  have nat := (adjS f).unit.naturality ((ee g).hom.app A)
+  have n2 : (PresheafOfModules.restrictScalars (𝟙 Z.ringCatSheaf.obj)).map
+        ((SheafOfModules.forget Z.ringCatSheaf).map ((pushforward g).map
+          ((adjS f).unit.app ((Scheme.Modules.pullback g).obj
+            ((PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)).obj A))))) ≫
+      (PresheafOfModules.restrictScalars (𝟙 Z.ringCatSheaf.obj)).map
+        ((SheafOfModules.forget Z.ringCatSheaf).map ((pushforward g).map ((pushforward f).map
+          ((Scheme.Modules.pullback f).map ((ee g).hom.app A))))) =
+      (PresheafOfModules.restrictScalars (𝟙 Z.ringCatSheaf.obj)).map
+        ((SheafOfModules.forget Z.ringCatSheaf).map ((pushforward g).map ((ee g).hom.app A))) ≫
+      (PresheafOfModules.restrictScalars (𝟙 Z.ringCatSheaf.obj)).map
+        ((SheafOfModules.forget Z.ringCatSheaf).map ((pushforward g).map
+          ((adjS f).unit.app ((PresheafOfModules.sheafification (𝟙 Y.ringCatSheaf.obj)).obj
+            ((PP g).obj A))))) := by
+    simp only [← Functor.map_comp]
+    congr 3
+    exact nat.symm
+  rw [reassoc_of% n2]
+  have u1g := unit_ee g A
+  simp only [Functor.comp_map] at u1g
+  dsimp only [Scheme.Modules.sheafification] at u1g
+  rw [reassoc_of% u1g]
+  rw [push_RS g, push_RS g, push_RS g]
+  have u1f := unit_ee f ((PP g).obj A)
+  simp only [Functor.comp_map] at u1f
+  dsimp only [Scheme.Modules.sheafification] at u1f
+  have natX := (shA X).unit.naturality ((pcP f g).hom.app A)
+  simp only [Functor.comp_map, Functor.id_map, Functor.comp_obj] at natX
+  have key : (shA Y).unit.app ((PP g).obj A) ≫
+      (PresheafOfModules.restrictScalars (𝟙 Y.ringCatSheaf.obj)).map ((SheafOfModules.forget Y.ringCatSheaf).map
+        ((adjS f).unit.app ((PresheafOfModules.sheafification (𝟙 Y.ringCatSheaf.obj)).obj ((PP g).obj A)))) ≫
+      (PresheafOfModules.restrictScalars (𝟙 Y.ringCatSheaf.obj)).map ((SheafOfModules.forget Y.ringCatSheaf).map
+        ((pushforward f).map ((ee f).hom.app ((PP g).obj A)))) ≫
+      (PresheafOfModules.restrictScalars (𝟙 Y.ringCatSheaf.obj)).map ((SheafOfModules.forget Y.ringCatSheaf).map
+        ((pushforward f).map ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).map
+          ((pcP f g).hom.app A)))) =
+      (AD f).unit.app ((PP g).obj A) ≫ (PF f).map ((pcP f g).hom.app A) ≫
+        (PF f).map ((shA X).unit.app ((PP (f ≫ g)).obj A)) := by
+    rw [reassoc_of% u1f, push_RS f, ← Functor.map_comp, ← natX, Functor.map_comp]
+  rw [← Functor.map_comp (PF g), ← Functor.map_comp (PF g), ← Functor.map_comp (PF g), key,
+    Functor.map_comp, Functor.map_comp, reassoc_of% (unit_pcP f g A), PF_PF f g]
 
 lemma mu_tmul (f : X ⟶ Y) (M N : PresheafOfModules (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat))
     (U : (TopologicalSpace.Opens Y)ᵒᵖ) (m : M.obj ((TopologicalSpace.Opens.map f.base).op.obj U))
@@ -243,3 +345,8 @@ theorem pullbackComp_monoidal (f : X ⟶ Y) (g : Y ⟶ Z) (M N : Z.Modules) :
   rw [reassoc_of% (main_sheafified f g M.val N.val)]
 
 end WeilProof.PBM
+
+theorem WeilProof.pullbackCompMonoidal_proof : WeilProof.PullbackCompMonoidal :=
+  fun f g M N => WeilProof.PBM.pullbackComp_monoidal f g M N
+
+#print axioms WeilProof.pullbackCompMonoidal_proof
