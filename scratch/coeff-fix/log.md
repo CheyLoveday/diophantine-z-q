@@ -22,3 +22,11 @@ Base wip/coeff-ext bca51e5c; `git merge origin/main`: already up to date. Build 
   `printedFull_of_printed`, `dsThm966_of_printedFull`; `dsThm966_of_printed` now via the fallback.
 - Build: copying coeff-ext's .lake/build with `cp -r` (mtimes not preserved) made `lake build` recompile
   modules (TailZ22, FaltingsLemma5Lower/Reduction seen at 08:09); first attempt stopped, rerun in progress.
+- VERIFIED: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DSThm966EV`
+  succeeded, 13700 jobs, 6m18s (scratch/coeff-fix/build.log); frozenTarget standard axioms.
+- VERIFIED: `#discharges` (scratch/coeff-fix/discharges-output.txt, full in discharges-full.txt):
+  dsThm966 by DSThm966EV.dsThm966_of_printed, still assumes [DSThm966EV.DSThm966Printed]; also by
+  dsThm966_of_printedFull [DSThm966EV.DSThm966PrintedFull]; dsThm965Weak by DSCoeffExt.dsThm965Weak_of_printed
+  [DSThm965Printed, EigenformCoeffFieldFinite]; all standard axioms.
+- VERIFIED: autofold dry run strict 34/11 on 45 -> 35/11 on 46, strictest 34/11 -> 35/11 (as coeff-ext: the
+  script already counted the old dsThm966Printed LEAF); FoldCheck.lean compiles, sixContactMin_of_open36 standard axioms.

@@ -30,7 +30,15 @@ theorem DSThm966EV.dsThm966_of_printed (h : DSThm966EV.DSThm966Printed) : ZInQ.C
 `#discharges` output (`scratch/coeff-fix/discharges-output.txt`):
 
 ```
-DISCHARGES_PLACEHOLDER
+DISCHARGES [OpenResearchLeaves26.dsThm965Weak] by DSCoeffExt.dsThm965Weak_of_printed
+  still assumes: [DSCoeffExt.DSThm965Printed, DSCoeffExt.EigenformCoeffFieldFinite]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.dsThm966] by DSThm966EV.dsThm966_of_printed
+  still assumes: [DSThm966EV.DSThm966Printed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.dsThm966] by DSThm966EV.dsThm966_of_printedFull
+  still assumes: [DSThm966EV.DSThm966PrintedFull]
+  axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 **dsThm965Weak and `k = 2`: left unchanged.** Not every consumer is at weight 2 (VERIFIED, read in the
@@ -106,10 +114,15 @@ Lean pitfall (VERIFIED): `(⟨p, h⟩ : ℕ+)` elaborates as `Subtype.mk` at typ
 
 * `scratch/coeff-fix/DSThm966EV.lean` compiles with `lake env lean` (a copy of the contribution).
 * `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DSThm966EV`:
-  BUILD_PLACEHOLDER
+  succeeded (13700 jobs, 6 min; `scratch/coeff-fix/build.log`). Because the build tree was copied
+  with `cp -r`, modules were recompiled. `ZInQ.OneProof.frozenTarget`: standard axioms.
 * `#discharges` (`scratch/coeff-fix/DischargesRun.lean`): the output is above.
 * Autofold (`scratch/coeff-fix/autofold.json`, which supersedes `scratch/coeff-ext/autofold.json`: the same
-  dsThm965Weak discharge, and dsThm966 from the new leaf): FOLD_PLACEHOLDER
+  dsThm965Weak discharge, and dsThm966 from the new leaf): the dry run (`scratch/coeff-fix/autofold-dryrun.txt`) gives
+  strict 34/11 on 45 → 35/11 on 46, strictest 34/11 → 35/11. That is the same as coeff-ext's spec: the
+  script already counted coeff-ext's `dsThm966Printed` as a LEAF ("unread"), so this task's −1 GLUE is in the
+  review's rating, not in kinds.tsv. The generated module, with line 1 stripped (`scratch/coeff-fix/FoldCheck.lean`),
+  compiles: `HDec.HSyn.sixContactMin_of_open36` uses `propext`, `Classical.choice` and `Quot.sound`.
 
 ## 5. For the integrator
 
