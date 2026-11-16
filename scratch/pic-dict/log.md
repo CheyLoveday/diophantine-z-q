@@ -90,3 +90,11 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   Spec scratch/pic-dict/autofold-all.json (three rows): this base `40/8 on 48 -> 49/9 on 58; strictest 39/9 -> 49/9`
   (needs --allow-rise); lf31 rating `37/11 -> 49/9; strictest 37/11 -> 49/9` (same as both-rows: the
   pending-reading leaf replaces the row). Dry-run module compiles. #discharges: 15 lines.
+- ~06:20 `pushforwardUnitUniversal` proved (vendored `isIso_pushforwardUnitMap_pullback_snd_of_geometricallyIntegral`,
+  Modules/StructureSheaf.lean) and `geomIntegralProd` proved (smooth ⇒ geometrically reduced, proved here; Mathlib's
+  `GeometricallyIrreducible.comp`). Final theorems: `phiAmpleIsogeny_final (MumfordKLFiniteAC)
+  (MumfordPhiSurjectiveAC)` and `weilPairingMumford_final` (7 Mumford leaves, no dependence on the field
+  phiAmpleIsogeny). VERIFIED, module builds, standard axioms. #discharges: 17 lines (all forms).
+  Dry-runs (this base / lf31 rating): weil only `40/8 -> 46/8 on 54; strictest 39/9 -> 46/8` /
+  `37/11 -> 44/10; 37/11 -> 44/10`; both `40/8 -> 45/8 on 53; 39/9 -> 45/8` / `37/11 -> 44/9; 37/11 -> 44/9`;
+  all three `40/8 -> 47/9 on 56; 39/9 -> 47/9` / `37/11 -> 47/9; 37/11 -> 47/9`. All three dry-run modules compile.
