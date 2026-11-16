@@ -48,3 +48,12 @@ lattice representation, `HomFreeC.homFreeFiniteC`). Build dir copied (reflink) f
   embedding into ℂ can remove the field. The R16 branch is over ℚ (covered by CharPolyIndepOfEllC).
 - Consequence: the new leaf `CharPolyIndepOfEllAlgClosedNoEmb` is live (used in char p); "-1, no new leaf" is out of reach
   for this field by narrowing, and so is a proof of `DegHomogPoly` outright (char p needs cube + Riemann-Roch or similar).
+
+## DegHomogPoly over fields embedding into ℂ (in progress)
+
+- VERIFIED compiled (scratch/degpoly-proof/KerFibre.lean): `eq_of_closed` (two `Spec L → X` over `Spec k`, `k` alg. closed,
+  through the same closed point are equal; Mathlib's `residueFieldIsoBase` + `descResidueField_stalkClosedPointTo_fromSpecResidueField`),
+  `isClosed_of_mem_fibre` (points of the fibre of a locally quasi-finite map over a closed point are closed),
+  `pt_eq_of_closed`, `e0`, `one_left_apply`, `isClosed_e0`, and for `ψ` with `IsFinite ψ.hom.left`:
+  `card_ker_eq L : Nat.card (ptMap (L := L) ψ).ker = Nat.card (Fibre ψ)` for EVERY field `L` with `Algebra k L`
+  (Fibre ψ = ψ⁻¹(e₀), finite), `finite_ker`.
