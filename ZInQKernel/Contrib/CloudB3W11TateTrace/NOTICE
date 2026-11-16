@@ -32,6 +32,10 @@ Changes made for this contribution:
   - The whole-group theorem stated with the local cyclotomicCharacter on
     PadicAlgCl p; irrelevant global-Qbar transport removed.
   - Lean 4.35 compatibility adjustments, notably the closure-inclusion proof.
+  - Duplicate primitive-root/fixing/congruence/power-action helpers removed
+    from TraceNormBound and reused from Author D's compiled TowerDefinition.
+    The whole-group adapter reuses Author D's InfiniteImage finishing theorem;
+    its copied TH0 arithmetic block is removed.
 
 UPSTREAM_ATTRIBUTION.md is the upstream attribution document recovered by
 this task's scout. UPSTREAM_NOTICE preserves the upstream NOTICE (its first
