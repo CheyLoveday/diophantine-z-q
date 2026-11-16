@@ -185,4 +185,69 @@ lemma dT_eq_one_of_PsiT {T : Over (Spec (CommRingCat.of K))} (a : T ⟶ A.X)
 
 end Psi
 
+lemma dT_zero {A : AbVar K} {T : Over (Spec (CommRingCat.of K))} (c : (pullback A.X.hom T.hom).Pic)
+    (hc : Scheme.Pic.map (zT A T) c = 1) : dT A (CartesianMonoidalCategory.toUnit T ≫ η[A.X]) c = 1 := by
+  have e : trT A (CartesianMonoidalCategory.toUnit T ≫ η[A.X]) = 𝟙 _ := by
+    rw [trT, translT_zero]; rfl
+  rw [dT, e, Scheme.Pic.map_id, hc, Scheme.Pic.map_one, inv_one, mul_one, mul_inv_cancel]
+
+lemma lift_mul_lift {G H T : Over (Spec (CommRingCat.of K))} [GrpObj G] [GrpObj H] (f f' : T ⟶ G)
+    (g g' : T ⟶ H) :
+    CartesianMonoidalCategory.lift f g * CartesianMonoidalCategory.lift f' g' =
+      CartesianMonoidalCategory.lift (f * f') (g * g') := by
+  apply CartesianMonoidalCategory.hom_ext
+  · rw [MonObj.mul_comp]; simp
+  · rw [MonObj.mul_comp]; simp
+
+/-- **`PicZeroPtsTranslInv` from two printed leaves** (rigidity on `A × Pic⁰`). -/
+theorem picZeroPtsTranslInv_of_leaves (hU : PushforwardUnitUniversal) (hGI : GeomIntegralProd) :
+    PicZeroPtsTranslInv := by
+  intro K _ A P rep B j hj y x
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  obtain ⟨hopen, hrange, hmon⟩ := hj
+  haveI : IsOpenImmersion j.left := hopen
+  haveI : IsMonHom j := hmon
+  haveI : GeometricallyIntegral (A.X ⊗ B.X).hom := hGI K A B
+  haveI : IsProper (A.X ⊗ B.X).hom := by dsimp; infer_instance
+  let c₀ : (Nrm A).toFunctor.obj (op (A.X ⊗ B.X)) :=
+    (Θ A hU).inv.app (op (A.X ⊗ B.X)) (rep.homEquiv (CartesianMonoidalCategory.snd A.X B.X ≫ j))
+  let Ψ := PsiT rep hU (CartesianMonoidalCategory.fst A.X B.X) c₀
+  -- the class of `g ≫ snd ≫ j` along any `g`
+  have hΘc : ∀ {T : Over (Spec (CommRingCat.of K))} (g : T ⟶ A.X ⊗ B.X),
+      (Θ A hU).hom.app (op T) ((Nrm A).toFunctor.map g.op c₀) =
+        rep.homEquiv (g ≫ CartesianMonoidalCategory.snd A.X B.X ≫ j) := by
+    intro T g
+    rw [NatTrans.naturality_apply, Iso.inv_hom_id_app_apply]
+    exact (rep.homEquiv_comp g _).symm
+  have hjη : η[B.X] ≫ j = η[P] := IsMonHom.one_hom j
+  -- axis `A × {0}`
+  have haxA : CartesianMonoidalCategory.lift (𝟙 A.X) (CartesianMonoidalCategory.toUnit A.X ≫ η[B.X]) ≫ Ψ =
+      CartesianMonoidalCategory.toUnit A.X ≫ η[P] := by
+    rw [PsiT_natural]
+    apply PsiT_eq_one
+    have h1 : ((Nrm A).toFunctor.map (CartesianMonoidalCategory.lift (𝟙 A.X)
+        (CartesianMonoidalCategory.toUnit A.X ≫ η[B.X])).op c₀).1 =
+        (1 : (pullback A.X.hom A.X.hom).Pic) := by
+      have h3 : Scheme.Pic.map (zT A A.X) (1 : (pullback A.X.hom A.X.hom).Pic) = 1 :=
+        Scheme.Pic.map_one _
+      have := Θ_inj hU (x := (Nrm A).toFunctor.map (CartesianMonoidalCategory.lift (𝟙 A.X)
+        (CartesianMonoidalCategory.toUnit A.X ≫ η[B.X])).op c₀)
+        (y := ⟨(1 : (pullback A.X.hom A.X.hom).Pic), h3⟩) (by
+          rw [hΘc, Θ_hom_app]
+          simp only [CartesianMonoidalCategory.lift_snd_assoc, Category.assoc, hjη]
+          rw [← homEquiv_symm_one rep, Equiv.apply_symm_apply])
+      exact congrArg Subtype.val this
+    rw [h1]; exact dT_one _
+  -- axis `{0} × B`
+  have haxB : CartesianMonoidalCategory.lift (CartesianMonoidalCategory.toUnit B.X ≫ η[A.X]) (𝟙 B.X) ≫ Ψ =
+      CartesianMonoidalCategory.toUnit B.X ≫ η[P] := by
+    rw [PsiT_natural]
+    apply PsiT_eq_one
+    set c := (Nrm A).toFunctor.map (CartesianMonoidalCategory.lift
+      (CartesianMonoidalCategory.toUnit B.X ≫ η[A.X]) (𝟙 B.X)).op c₀
+    have hc : Scheme.Pic.map (zT A B.X) c.1 = 1 := c.2
+    rw [CartesianMonoidalCategory.lift_fst]
+    exact dT_zero c.1 hc
+  sorry
+
 end PicDict
