@@ -16,11 +16,12 @@ Route (no smoothness of `f`, no regularity, no miracle flatness, no algebraic cl
    statement is `RingFlatness.flat_of_rankAtStalk_tensor_self`.
 3. `B` is reduced because it is geometrically integral over `K`.
 
-Status: SOURCE ONLY. Written against the declarations of Mathlib
+Status: compiled by milne-compile on 2026-11-16 at Lean 4.35.0 / Mathlib v4.35.0 (one fix: a
+shadowed `this` in `flat_of_kernelPair`, renamed `hXaff`). Written against the declarations of Mathlib
 56a005855ea17e0b0958f73ec801ae140b0a1679 read in source form (Morphisms/{Flat,Finite,FlatRank,
 Basic,UnderlyingMap}, Pullbacks, PullbackCarrier, Properties, Geometrically/Integral, Scheme,
 Monoidal/Cartesian/{Over,Mon,Grp}, Limits/Shapes/Pullback/{HasPullback,PullbackCone,IsPullback},
-Limits/Constructions/Over/Connected, MorphismProperty/Limits). Not compiled. No proof
+Limits/Constructions/Over/Connected, MorphismProperty/Limits). No proof
 placeholders, no added axioms, no native evaluation, no reflection and no build-time code.
 -/
 import ZInQKernel.HDecomp.Objects

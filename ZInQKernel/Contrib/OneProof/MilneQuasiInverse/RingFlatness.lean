@@ -7,11 +7,12 @@ the same at every prime is flat (Hartshorne II Ex. 5.8(c); the Stacks Project st
 equivalence "finite locally free iff locally constant rank" over reduced rings), and its use for
 `S ⊗[R] S` over `S`.
 
-Status: SOURCE ONLY. Written against the declarations of Mathlib
+Status: compiled by milne-compile on 2026-11-16 at Lean 4.35.0 / Mathlib v4.35.0 (no change needed;
+only standard axioms). Written against the declarations of Mathlib
 56a005855ea17e0b0958f73ec801ae140b0a1679 read in source form (FreeLocus, LocalRing/Module,
 LocalRing/ResidueField/{Basic,Ideal,Fiber}, Flat/{Basic,Localization,Stability},
 TensorProduct/Tower, Dimension/{Constructions,Free}, FiniteDimensional/Lemmas, Nilpotent/Lemmas).
-Not compiled. No proof placeholders, no added axioms, no native evaluation, no reflection and no
+No proof placeholders, no added axioms, no native evaluation, no reflection and no
 build-time code.
 -/
 import Mathlib.RingTheory.Spectrum.Prime.FreeLocus

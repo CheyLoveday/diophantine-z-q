@@ -9,7 +9,7 @@ See LICENSE and NOTICE.md in this contribution directory.
 
 The group scheme and every test object are actual Mathlib objects in `Over (Spec K)`.
 No reducedness, characteristic, flatness, quotient, or supplied-annihilator premise is added.
-This is source-only: target-pin elaboration and axiom inspection have not been run.
+Status: compiled by milne-compile on 2026-11-16 at Lean 4.35.0 / Mathlib v4.35.0 (no change needed).
 -/
 
 namespace ZInQ.Contrib.MilneQuasiInverse

@@ -11,8 +11,10 @@ _root_.AvSplit.MilneIsogenyQuasiInverse`.
 It uses the original all-fields `PkgI3.AbVar`/`Hom` objects and both scheme-morphism
 multiplication equations. No new premise or copy of the target is introduced here.
 Helpers and attributed source ports are in the adjacent `MilneQuasiInverse/` directory.
-See its NOTICE.md for immutable sources, adaptations and the unrun validation boundary.
+See its NOTICE.md for immutable sources, adaptations and the compile record.
 
-This is a source entry point for isolated hosted validation, not an assertion of
-compilation, allowed axioms, native kernel admission or completion of Z-in-Q.
+Compiled by milne-compile (2026-11-16, Lean 4.35.0 / Mathlib v4.35.0): `#discharges` reports
+`DISCHARGES [OpenAddedLeaves17.milneIsogenyQuasiInverse]`, still assumes `[]`, axioms
+`[propext, Classical.choice, Quot.sound]` (scratch/milne-compile/discharges-output.txt).
+This does not complete Z-in-Q.
 -/

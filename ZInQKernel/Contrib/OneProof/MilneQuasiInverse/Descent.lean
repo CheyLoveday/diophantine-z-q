@@ -27,8 +27,8 @@
 -- Mathlib/AlgebraicGeometry/Morphisms/UnderlyingMap.lean); the GroupDescent file-level
 -- `set_option backward.isDefEq.respectTransparency.types false` is kept, scoped to the
 -- GroupDescent section. Proof bodies are otherwise verbatim.
--- Status: SOURCE ONLY. Not compiled at this repository's pins (Lean 4.35.0, Mathlib 56a0058);
--- upstream was written against Lean 4.34.1 / Mathlib d13f23b.
+-- Status: compiled by milne-compile on 2026-11-16 at Lean 4.35.0 / Mathlib v4.35.0
+-- (no change to this file needed); upstream was written against Lean 4.34.1 / Mathlib d13f23b.
 import Mathlib.AlgebraicGeometry.Sites.Fpqc
 import Mathlib.AlgebraicGeometry.Morphisms.Finite
 import Mathlib.AlgebraicGeometry.Morphisms.Flat

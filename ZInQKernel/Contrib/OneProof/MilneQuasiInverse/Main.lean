@@ -31,9 +31,9 @@ Proof (descent along `f`):
    `f.hom ≫ r = (𝟙 A.X) ^ n` and `r ≫ f.hom = (𝟙 B.X) ^ n` (epi cancellation and group laws).
 5. **Packaging.** `g := Hom.mk' r`, `d := n`; `(𝟙 _) ^ n = [n]` by `AvSplit.comp_natCast_hom'`.
 
-Status: SOURCE ONLY. Not compiled. `Flatness.lean` and `GroupAnnihilator.lean` are other
-contributors' files in this directory; at the time of writing `Flatness.lean` did not yet exist,
-so this module has an uncompiled dependency. This file imports `TailQ` (the module declaring the
+Status: compiled by milne-compile on 2026-11-16 at Lean 4.35.0 / Mathlib v4.35.0; one fix (the local
+instance `Kernel.kernelGroup` below). `milneIsogenyQuasiInverse_proof` depends only on `propext`,
+`Classical.choice` and `Quot.sound`. This file imports `TailQ` (the module declaring the
 target), never `ZInQKernel.OneProof.Main`.
 -/
 

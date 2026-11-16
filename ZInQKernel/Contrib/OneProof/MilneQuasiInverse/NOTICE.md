@@ -149,3 +149,25 @@ The final export is exactly `ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInv
 `#check`/`#print axioms` test scratch and the additional whole-declaration/negative-control checker are kept outside the published mathematical source; they do not provide proof axioms or native proof shortcuts. Pinned Lean computational primitives are trusted only under the documented base/source boundary, with their logical bodies audited; project/vendor custom native delegation remains disallowed. No compiler, checker or control outcome is claimed by this notice.
 
 The Z-is-Diophantine-in-Q goal remains open. Finishing this intermediate source graph, compiling a helper or receiving green CI does not finish the intended theorem.
+
+## Compile record (milne-compile, 2026-11-16)
+
+Compiled on Lean 4.35.0 / Mathlib v4.35.0 (this repository's pins) on a project build machine, on branch
+`wip/milne-compile` (base `proof/milne-quasiinverse-20261115` 0eab413d merged with fork `main` 2880fef1e).
+The nine vendor modules, `GroupAnnihilator`, `Kernel`, `Descent` and `RingFlatness` compiled with no change.
+Two compatibility edits, both outside the vendor subtree, no statement changed:
+
+1. `Flatness.lean`, `flat_of_kernelPair`: the anonymous `have : IsAffine X` shadowed the `wlog`
+   hypothesis `this`; renamed `hXaff`.
+2. `Main.lean`: `attribute [local instance] ZInQ.Contrib.MilneQuasiInverse.Kernel.kernelGroup`, so that
+   instance search finds the group structure on `(Kernel.kernelGrp f.hom).X` (the reducible `kernelGrp`
+   unfolds to `kernelObject f.hom`, as in `Kernel.lean`, which declares the same local instance).
+
+Status comments in the non-vendor files were updated. The vendor files are byte-unchanged (their added banners
+still say "elaboration at the target pins has not been run"; this record supersedes that line).
+
+`#print axioms ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInverse_proof`: `[propext, Classical.choice,
+Quot.sound]`. `#discharges` (with `ZInQKernel.OneProof.Main` at fork `main` 2880fef1e):
+`DISCHARGES [OpenAddedLeaves17.milneIsogenyQuasiInverse] by
+ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInverse_proof`, still assumes `[]`. Full output:
+`scratch/milne-compile/discharges-output.txt`; report `docs/research/milne-compile.md`.
