@@ -26,3 +26,13 @@ Glue left: `BrandtValueAt3` (∀ admissible τ, ∀ test vector f, f 1 = ±3), `
   IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion` needed (ℚ-algebra diamond).
 Cross-check (classes.py, python): for each of the 8 τ, the classes in B^×H are exactly {0, t*}
 (matches scratch/h29-fix/brandt.py's −3 classes).
+
+## Step 3: BrandtValueAt3 PROVED — VERIFIED (compiles; axioms propext, Classical.choice, Quot.sound)
+`ZInQ.Contrib.T21Proof.testVector_one : AdmissibleTau 3 τ → IsTestVector 3 τ f → f 1 = 3 ∨ f 1 = -3`
+(ZInQKernel/Contrib/OneProof/T21Proof/BrandtValue.lean; scratch/t21-proof/AxBrandt.lean prints axioms).
+Files: Tau.lean (signs of τ, 𝓞 = ℤ[ω], τ̂(Ô_K) ⊂ ℤ_p+ℤ_pω, place 2), K2.lean (centralizer of ω at 2),
+Brandt.lean (subgroup Sg, H ≤ Sg, twoRep_ne for the 6 classes), Brandt2.lean (partner ∈ R̂_3^×),
+BrandtValue.lean (gT = −3·[B^×H] + 1·[else] ∈ InPiZ; generator ⇒ f(1) = ±3).
+Route: g defined by membership in the double coset B^×H (invariances free); sums need exactly
+{0, t*} ⊂ B^×H among TYZ's 8 representatives: positive by explicit R̂_3^× element, negative by the
+local invariant (global content argument + 2-adic mod-4 obstruction, decide).
