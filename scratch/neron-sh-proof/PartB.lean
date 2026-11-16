@@ -193,6 +193,18 @@ theorem π_toC (i : ιᵒᵖ) : (specCone B hB).π.app i ≫ toC B hB C hC i = �
   refine (Spec.map_comp _ _).symm.trans ?_
   rfl
 
+/-- `Spec R₁ → Spec Bᵢ` (explicitly typed). -/
+noncomputable abbrev πB (i : ιᵒᵖ) : Spec (CommRingCat.of R₁) ⟶ (specDiag B hB).obj i :=
+  Spec.map (CommRingCat.ofHom (B i.unop).val.toRingHom)
+
+theorem πB_toC (i : ιᵒᵖ) : πB B hB i ≫ toC B hB C hC i = πC C := by
+  refine (Spec.map_comp _ _).symm.trans ?_
+  rfl
+
+theorem πB_ej (i : ιᵒᵖ) : πB B hB i ≫ ej B hB i = Spec.map (CommRingCat.ofHom (algebraMap R R₁)) := by
+  refine (Spec.map_comp _ _).symm.trans ?_
+  rfl
+
 /-- `Spec R₁` as a cone over `oD`. -/
 noncomputable def oC : Cone (oD B hB C hC) where
   pt := Over.mk (πC C)
@@ -322,6 +334,53 @@ theorem descend_ext (hsm : ∀ i, Algebra.Smooth R (B i)) (hcov : ∀ x : R₁, 
       isAffineHom_pullback_map_left W.hom ((oD B hB C hC).map f)
     haveI : IsAffineHom (D.map f).left := ‹IsAffineHom ((Over.pullback W.hom).map ((oD B hB C hC).map f)).left›
     exact isAffineHom_pullback_map_left jK (D.map f)
+  -- the apex `cE.pt = (Spec R₁ ×_C W) ×_R K` and the comparison with `V ×_{R₁} K₁`
+  let e := Hφ.flip.isoPullback
+  have he1 : e.inv ≫ v = pullback.fst (πC C) W.hom := IsPullback.isoPullback_inv_fst _
+  have he2 : e.inv ≫ φ = pullback.snd (πC C) W.hom := IsPullback.isoPullback_inv_snd _
+  have he3 : e.hom ≫ pullback.fst (πC C) W.hom = v := IsPullback.isoPullback_hom_fst _
+  have he4 : e.hom ≫ pullback.snd (πC C) W.hom = φ := IsPullback.isoPullback_hom_snd _
+  let h2 : pullback (πC C) W.hom ⟶ Spec (CommRingCat.of R) := pullback.snd (πC C) W.hom ≫ W.hom ≫ eC
+  have hh2 : pullback.fst (πC C) W.hom ≫ πC C ≫ eC = h2 := by
+    rw [← Category.assoc, pullback.condition, Category.assoc]
+  let P : Scheme.{0} := pullback h2 jK
+  have hP : (pullback.fst h2 jK ≫ pullback.fst (πC C) W.hom) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R R₁)) = pullback.snd h2 jK ≫ jK := by
+    rw [← πC_eC C, Category.assoc, hh2, pullback.condition]
+  let κ : P ⟶ Spec (CommRingCat.of K₁) := hsq.lift _ _ hP
+  have hκ1 : κ ≫ kK₁ = pullback.fst h2 jK ≫ pullback.fst (πC C) W.hom := hsq.lift_fst _ _ _
+  have hκ2 : κ ≫ Spec.map (CommRingCat.ofHom (algebraMap K K₁)) = pullback.snd h2 jK :=
+    hsq.lift_snd _ _ _
+  let α : P ⟶ pullback v kK₁ := pullback.lift (pullback.fst h2 jK ≫ e.inv) κ (by
+    rw [Category.assoc, he1, hκ1])
+  have hab : (α ≫ b) ≫ X.hom = pullback.snd h2 jK ≫ jK := by
+    rw [Category.assoc, hb, ← Category.assoc, pullback.lift_snd, ← specK_comp (R := R) (K := K) (K₁ := K₁),
+      ← Category.assoc, hκ2]
+  let a : cE.pt ⟶ pullback X.hom jK := (pullback.lift (α ≫ b) (pullback.snd h2 jK) hab : P ⟶ _)
+  have ha2 : a ≫ pullback.snd X.hom jK = pullback.snd h2 jK := pullback.lift_snd _ _ _
+  let t : E ⟶ (Functor.const _).obj (Spec (CommRingCat.of K)) :=
+    NatTrans.mk (fun j => ((Over.pullback jK).obj (D.obj j)).hom) (by
+      intro j k f; exact Over.w ((Over.pullback jK).map (D.map f)))
+  have ha : cE.π ≫ t = (Functor.const _).map (a ≫ pullback.snd X.hom jK) := by
+    ext j
+    simp only [NatTrans.comp_app, Functor.const_map_app]
+    rw [ha2]
+    exact Over.w ((Over.pullback jK).map (cD.π.app j))
+  obtain ⟨j, g, hg1, hg2⟩ := Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation E t
+    (pullback.snd X.hom jK) cE hcE a ha
+  -- the Néron extension on the stage `Y = Spec Bⱼ ×_C W`
+  let Y := D.obj j
+  let g' : pullback Y.hom jK ⟶ pullback X.hom jK := g
+  have hg2' : g' ≫ pullback.snd X.hom jK = pullback.snd Y.hom jK := hg2
+  obtain ⟨f0, hf0, hpf⟩ := GapBLR.neron_ext hX Y (pullback.fst Y.hom jK) (pullback.snd Y.hom jK)
+    (IsPullback.of_hasPullback _ _) (g' ≫ pullback.fst X.hom jK)
+    (by rw [Category.assoc, pullback.condition, ← Category.assoc, hg2'])
+  let f0' : pullback (toC B hB C hC j) W.hom ⟶ X.left := f0
+  have hf0' : f0' ≫ X.hom = pullback.fst (toC B hB C hC j) W.hom ≫ ej B hB j := hf0.trans (hDhom j)
+  let ψV : V ⟶ pullback (toC B hB C hC j) W.hom :=
+    pullback.lift (v ≫ πB B hB j) φ (by rw [Category.assoc, πB_toC, Hφ.w])
+  refine ⟨ψV ≫ f0', ?_, ?_⟩
+  · rw [Category.assoc, hf0', ← Category.assoc, pullback.lift_fst, Category.assoc, πB_ej]
   sorry
 
 end Descend
