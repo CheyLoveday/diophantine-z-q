@@ -11,7 +11,7 @@ For `d ≡ 5 (mod 8)` squarefree, `g = gaussD d` (`g² = d`), `L` a period latti
 
 `weierPt C_d L (2 Φ_d(τ)) = S_{λg}(Z(τ)) + S_{λ̄g}(Z(τ))`,  `Z(τ) = Σ_{a mod d} (a/d) · (x(τ + a/d), y(τ + a/d))`,
 
-where `(x, y)` is x0-32's eta-quotient parametrization `X0.phiC` of `X₀(32) = 32a1 : y² = x³ + 4x`,
+where `(x, y)` is x0-32's eta-quotient parametrization `ZInQ.Contrib.TYZGenus.X0.phiC` of `X₀(32) = 32a1 : y² = x³ + 4x`,
 `λ = (1 + i)/2`, and `S_μ(x, y) = (μ²x, μ³y)` maps `32a1` to `C_d` when `4μ⁴ = −d²`.
 -/
 
@@ -24,7 +24,6 @@ namespace ZInQ.Heegner32
 
 open ZInQ.GZWeil (eichlerCd gaussD scalePP mem_scalePP g₂_scalePP g₃_scalePP isPeriodLattice_cd_iff)
 open ZInQ.GZTheta (jacobiChar)
-open ZInQ.Contrib.TYZGenus (X0.xC X0.yC X0.fC X0.phiC X0.curveAC)
 open ZInQ.Contrib.TYZDecomp.CurveA (curveA)
 
 /-! ## §1. Additivity of `weierPt` for short Weierstrass curves (from the uniformization theorem) -/
@@ -45,13 +44,13 @@ theorem fun_add_of_eq (L : PeriodPair) {W : WeierstrassCurve ℂ} (h : L.weierst
   exact (L.isUniformization_toPoint hD).1 z w
 
 theorem short_b₂ (A : ℚ) : ((shortCurve A)⁄ℂ).b₂ = 0 := by
-  simp [WeierstrassCurve.b₂, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map]
+  simp [WeierstrassCurve.b₂, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
 
 theorem short_a₁ (A : ℚ) : ((shortCurve A)⁄ℂ).a₁ = 0 := by
-  simp [shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map]
+  simp [shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
 
 theorem short_a₃ (A : ℚ) : ((shortCurve A)⁄ℂ).a₃ = 0 := by
-  simp [shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map]
+  simp [shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
 
 /-- For a period lattice of `y² = x³ + Ax`, the curve of `L` is `E⁄ℂ`. -/
 theorem weierstrassCurve_eq_short {A : ℚ} {L : PeriodPair}
@@ -71,15 +70,9 @@ theorem weierPt_short_add {A : ℚ} [(shortCurve A).IsElliptic] {L : PeriodPair}
   refine fun_add_of_eq L (weierstrassCurve_eq_short hL) _ (fun u hu => ?_) (fun u hu => ?_) z w
   · exact ZInQ.GZHeegner.weierPt_eq_zero _ L hu
   · rw [ZInQ.GZHeegner.weierPt_eq_some _ hL hu]
-    have hx : L.weierstrassP u - ((shortCurve A)⁄ℂ).b₂ / 12 = L.weierstrassP u := by
-      rw [short_b₂]; ring
-    have hy : (L.derivWeierstrassP u - ((shortCurve A)⁄ℂ).a₁ *
-        (L.weierstrassP u - ((shortCurve A)⁄ℂ).b₂ / 12) - ((shortCurve A)⁄ℂ).a₃) / 2 =
-        L.derivWeierstrassP u / 2 := by
-      rw [short_a₁, short_a₃]; ring
     have hns := ZInQ.GZHL3.weierPt_some (shortCurve A) hL hu
-    rw [hx, hy] at hns
-    exact ⟨hns, by simp only [Affine.Point.some.injEq]; exact ⟨hx, hy⟩⟩
+    simp only [short_b₂, short_a₁, short_a₃, zero_div, sub_zero, zero_mul] at hns ⊢
+    exact ⟨hns, by first | rfl | trivial⟩
 
 /-- `weierPt E L` as an additive map. -/
 def weierHom {A : ℚ} [(shortCurve A).IsElliptic] {L : PeriodPair}
@@ -108,14 +101,14 @@ instance : (shortCurve (4 : ℚ)).IsElliptic := shortCurve_isElliptic (by norm_n
 
 /-- `S_μ(x, y) = (μ²x, μ³y)` from `32a1 : y² = x³ + 4x` to `C_d : y² = x³ − d²x`, for `4μ⁴ = −d²`. -/
 def sMap (d : ℕ) [NeZero d] (μ : ℂ) (hμ : 4 * μ ^ 4 = -(d : ℂ) ^ 2) :
-    ((shortCurve (4 : ℚ))⁄ℂ).toAffine.Point → ((shortCurve (-(d : ℚ) ^ 2))⁄ℂ).toAffine.Point
+    ZInQ.Contrib.TYZGenus.X0.PtAC → ((shortCurve (-(d : ℚ) ^ 2))⁄ℂ).toAffine.Point
   | .zero => 0
   | .some x y h => .some (μ ^ 2 * x) (μ ^ 3 * y) (by
       rw [← Affine.equation_iff_nonsingular]
       have he := (Affine.equation_iff_nonsingular.mpr h)
       rw [Affine.equation_iff] at he ⊢
-      simp only [shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map, map_zero, zero_mul,
-        add_zero, mul_zero, zero_add] at he ⊢
+      simp only [ZInQ.Contrib.TYZGenus.X0.curveAC, curveA, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map,
+        map_zero, zero_mul, add_zero, map_neg, map_pow, map_natCast, map_ofNat] at he ⊢
       push_cast at he ⊢
       linear_combination μ ^ 6 * he + μ ^ 2 * x * hμ)
 
@@ -128,18 +121,18 @@ theorem isPeriodLattice_scale {d : ℕ} [NeZero d] {L : PeriodPair}
     (hμ : 4 * μ ^ 4 = -(d : ℂ) ^ 2) :
     ZInQ.GZHL3.IsPeriodLattice curveA (scalePP L μ hμ0) := by
   obtain ⟨h2, h3⟩ := (isPeriodLattice_cd_iff d L).1 hL
-  have hd2 : (d : ℂ) ^ 2 = -4 * μ ^ 4 := by linear_combination -hμ
+  have hd2 : (d : ℂ) ^ 2 = -4 * μ ^ 4 := by linear_combination hμ
   have hμ4 : μ ^ 4 ≠ 0 := pow_ne_zero 4 hμ0
   refine ⟨?_, ?_⟩
   · rw [g₂_scalePP, h2, hd2]
     simp only [WeierstrassCurve.c₄, WeierstrassCurve.b₂, WeierstrassCurve.b₄, curveA, shortCurve,
-      WeierstrassCurve.baseChange, WeierstrassCurve.map]
+      WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
     push_cast
     field_simp
     ring
   · rw [g₃_scalePP, h3]
     simp only [WeierstrassCurve.c₆, WeierstrassCurve.b₂, WeierstrassCurve.b₄, WeierstrassCurve.b₆,
-      curveA, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map]
+      curveA, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
     push_cast
     ring
 
@@ -167,30 +160,30 @@ theorem weierPt_scale {d : ℕ} [NeZero d] {L : PeriodPair}
     have f2 : (curveA⁄ℂ).a₁ = 0 := short_a₁ 4
     have f3 : (curveA⁄ℂ).a₃ = 0 := short_a₃ 4
     rw [e1, e2, e3, f1, f2, f3, hw, hw']
-    constructor <;> field_simp
+    constructor <;> field_simp <;> ring
 
 /-! ## §3. `x0-32`'s parametrization is `℘` of a lattice of `32a1` at `Φ₁ + c₀` -/
 
 /-- For a period lattice `L` of `32a1`, `(x(σ), y(σ)) = weierPt 32a1 L (Φ₁(σ) + c₀)` on `ℍ`. -/
 theorem exists_c0 {L : PeriodPair} (hL : ZInQ.GZHL3.IsPeriodLattice curveA L) :
-    ∃ c₀ : ℂ, ∀ σ : ℍ, ZInQ.GZHL3.weierPt curveA L (eichlerCd 1 σ + c₀) = X0.phiC σ := by
+    ∃ c₀ : ℂ, ∀ σ : ℍ, ZInQ.GZHL3.weierPt curveA L (eichlerCd 1 σ + c₀) = ZInQ.Contrib.TYZGenus.X0.phiC σ := by
   have hg2 : L.g₂ = -16 := by
     rw [hL.1]
     simp only [WeierstrassCurve.c₄, WeierstrassCurve.b₂, WeierstrassCurve.b₄, curveA, shortCurve,
-      WeierstrassCurve.baseChange, WeierstrassCurve.map]
+      WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
     push_cast; ring
   have hg3 : L.g₃ = 0 := by
     rw [hL.2]
     simp only [WeierstrassCurve.c₆, WeierstrassCurve.b₂, WeierstrassCurve.b₄, WeierstrassCurve.b₆,
-      curveA, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map]
+      curveA, shortCurve, WeierstrassCurve.baseChange, WeierstrassCurve.map, map_ofNat]
     push_cast; ring
   set τ0 : ℍ := UpperHalfPlane.I
-  obtain ⟨z1, hz1, hx1⟩ := ZInQ.GZWeil.weierstrassP_surjective L (X0.xC τ0)
+  obtain ⟨z1, hz1, hx1⟩ := ZInQ.GZWeil.weierstrassP_surjective L (ZInQ.Contrib.TYZGenus.X0.xC τ0)
   have hrel := ZInQ.GZWeil.relation_A L hg2 hg3 hz1
   have heqτ := ZInQ.Contrib.TYZGenus.Shimura.etaModelEquation τ0
-  obtain ⟨z0, hz0, hx, hy⟩ : ∃ z0, z0 ∉ L.lattice ∧ L.weierstrassP z0 = X0.xC τ0 ∧
-      L.derivWeierstrassP z0 = 2 * X0.yC τ0 := by
-    have hsq : (L.derivWeierstrassP z1 - 2 * X0.yC τ0) * (L.derivWeierstrassP z1 + 2 * X0.yC τ0) = 0 := by
+  obtain ⟨z0, hz0, hx, hy⟩ : ∃ z0, z0 ∉ L.lattice ∧ L.weierstrassP z0 = ZInQ.Contrib.TYZGenus.X0.xC τ0 ∧
+      L.derivWeierstrassP z0 = 2 * ZInQ.Contrib.TYZGenus.X0.yC τ0 := by
+    have hsq : (L.derivWeierstrassP z1 - 2 * ZInQ.Contrib.TYZGenus.X0.yC τ0) * (L.derivWeierstrassP z1 + 2 * ZInQ.Contrib.TYZGenus.X0.yC τ0) = 0 := by
       rw [hx1] at hrel
       linear_combination hrel - 4 * heqτ
     rcases mul_eq_zero.mp hsq with h | h
@@ -203,30 +196,30 @@ theorem exists_c0 {L : PeriodPair} (hL : ZInQ.GZHL3.IsPeriodLattice curveA L) :
   have hG := fun {s : ℂ} (hs : 0 < s.im) => ZInQ.GZWeil.global_eq L hg2 hg3 hD τ0 hz0 hx hy hs
   obtain ⟨hnot, hxeq⟩ := hG σ.im_pos
   -- `℘'(Φ₁(σ) + c₀) = 2 y(σ)`, by differentiating `℘(Φ₁ + c₀) = x` near `σ`
-  have hcomp : HasDerivAt (fun s => L.weierstrassP (eichlerCd 1 s + c0))
-      (L.derivWeierstrassP (eichlerCd 1 σ + c0) * (2 * Real.pi * Complex.I * X0.fC σ)) σ :=
+  have hcomp : HasDerivAt (L.weierstrassP ∘ fun s => eichlerCd 1 s + c0)
+      (L.derivWeierstrassP (eichlerCd 1 σ + c0) * (2 * Real.pi * Complex.I * ZInQ.Contrib.TYZGenus.X0.fC σ)) σ :=
     (ZInQ.GZWeil.hasDerivAt_wp L hnot).comp (σ : ℂ)
       ((ZInQ.GZWeil.hasDerivAt_eichlerCd_one σ.im_pos).add_const c0)
-  have hev : X0.xC =ᶠ[𝓝 (σ : ℂ)] fun s => L.weierstrassP (eichlerCd 1 s + c0) := by
+  have hev : ZInQ.Contrib.TYZGenus.X0.xC =ᶠ[𝓝 (σ : ℂ)] (L.weierstrassP ∘ fun s => eichlerCd 1 s + c0) := by
     filter_upwards [ZInQ.GZWeil.U_open.mem_nhds σ.im_pos] with s hs
     exact (hG hs).2.symm
   have hxd := hcomp.congr_of_eventuallyEq hev
   have huniq := hxd.unique (hD σ)
-  have hf : (2 * Real.pi * Complex.I * X0.fC σ : ℂ) ≠ 0 := by
-    refine mul_ne_zero (mul_ne_zero (mul_ne_zero two_ne_zero ?_) Complex.I_ne_zero) (X0.fC_ne_zero σ)
+  have hf : (2 * Real.pi * Complex.I * ZInQ.Contrib.TYZGenus.X0.fC σ : ℂ) ≠ 0 := by
+    refine mul_ne_zero (mul_ne_zero (mul_ne_zero two_ne_zero ?_) Complex.I_ne_zero) (ZInQ.Contrib.TYZGenus.X0.fC_ne_zero σ)
     exact_mod_cast Real.pi_ne_zero
-  have hyeq : L.derivWeierstrassP (eichlerCd 1 σ + c0) = 2 * X0.yC σ := by
+  have hyeq : L.derivWeierstrassP (eichlerCd 1 σ + c0) = 2 * ZInQ.Contrib.TYZGenus.X0.yC σ := by
     apply mul_right_cancel₀ hf
     linear_combination huniq
   rw [ZInQ.GZHeegner.weierPt_eq_some _ hL hnot]
-  have hns : curveAC.toAffine.Nonsingular (X0.xC σ) (X0.yC σ) := by
+  have hns : ZInQ.Contrib.TYZGenus.X0.curveAC.toAffine.Nonsingular (ZInQ.Contrib.TYZGenus.X0.xC σ) (ZInQ.Contrib.TYZGenus.X0.yC σ) := by
     have h := ZInQ.GZHL3.weierPt_some curveA hL hnot
     have e1 : (curveA⁄ℂ).b₂ = 0 := short_b₂ 4
     have e2 : (curveA⁄ℂ).a₁ = 0 := short_a₁ 4
     have e3 : (curveA⁄ℂ).a₃ = 0 := short_a₃ 4
     rw [e1, e2, e3, hxeq, hyeq] at h
     convert h using 1 <;> ring
-  unfold X0.phiC
+  unfold ZInQ.Contrib.TYZGenus.X0.phiC
   rw [dif_pos hns]
   simp only [Affine.Point.some.injEq]
   have e1 : (curveA⁄ℂ).b₂ = 0 := short_b₂ 4
@@ -249,8 +242,8 @@ theorem coe_shiftH (d : ℕ) [NeZero d] (τ : ℍ) (a : ZMod d) :
     ((shiftH d τ a : ℍ) : ℂ) = (τ : ℂ) + (a.val : ℂ) / d := rfl
 
 /-- **The twisted sum** `Z(τ) = Σ_{a mod d} (a/d) · (x(τ + a/d), y(τ + a/d)) ∈ 32a1(ℂ)`. -/
-def zTw (d : ℕ) [NeZero d] (τ : ℍ) : X0.PtAC :=
-  ∑ a : ZMod d, (jacobiSym (a.val : ℤ) d) • X0.phiC (shiftH d τ a)
+def zTw (d : ℕ) [NeZero d] (τ : ℍ) : ZInQ.Contrib.TYZGenus.X0.PtAC :=
+  ∑ a : ZMod d, (jacobiSym (a.val : ℤ) d) • ZInQ.Contrib.TYZGenus.X0.phiC (shiftH d τ a)
 
 theorem jacobiChar_apply (d : ℕ) [NeZero d] (a : ZMod d) :
     jacobiChar d a = ((jacobiSym (a.val : ℤ) d : ℤ) : ℂ) := rfl
@@ -262,7 +255,7 @@ theorem jacobiChar_ne_one {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squarefr
   rw [h] at hp
   have := hp
   unfold DirichletCharacter.IsPrimitive at this
-  rw [DirichletCharacter.conductor_one (NeZero.ne d)] at this
+  rw [DirichletCharacter.conductor_one] at this
   exact hd1 this.symm
 
 theorem sum_jacobiChar {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squarefree d) (hd1 : d ≠ 1) :
@@ -295,17 +288,17 @@ theorem weierPt_sum_eq_zTw {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squaref
       ∑ a : ZMod d, (jacobiSym (a.val : ℤ) d) • (eichlerCd 1 ((shiftH d τ a : ℍ) : ℂ) + c0) := by
     have h0 : ∑ a : ZMod d, jacobiChar d a * c0 = 0 := by
       rw [← Finset.sum_mul, sum_jacobiChar hd4 hsq hd1, zero_mul]
-    rw [← sub_zero (∑ a : ZMod d, jacobiChar d a * eichlerCd 1 ((shiftH d τ a : ℍ) : ℂ)), ← h0,
-      ← Finset.sum_sub_distrib]
+    rw [← add_zero (∑ a : ZMod d, jacobiChar d a * eichlerCd 1 ((shiftH d τ a : ℍ) : ℂ)), ← h0,
+      ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [zsmul_eq_mul, ← jacobiChar_apply]; ring
   rw [hsum]
-  have := weierHom_apply (A := 4) hL
-  show weierHom (A := 4) hL _ = _
+  have hL4 : ZInQ.GZHL3.IsPeriodLattice (shortCurve 4) L := hL
+  show weierHom hL4 _ = _
   rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_zsmul, weierHom_apply]
-  exact congrArg _ (hc0 (shiftH d τ a))
+  exact congrArg (fun P => jacobiSym (a.val : ℤ) d • P) (hc0 (shiftH d τ a))
 
 /-- `λ = (1 + i)/2`, `λ̄ = (1 − i)/2`. -/
 def lam : ℂ := (1 + Complex.I) / 2
@@ -349,9 +342,9 @@ theorem weierPt_two_eichlerCd {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squa
   have h1 : lam * gaussD d ≠ 0 := mul_ne_zero lam_ne_zero hg
   have h2 : lamb * gaussD d ≠ 0 := mul_ne_zero lamb_ne_zero hg
   have hsplit : 2 * eichlerCd d τ = 2 * lamb / gaussD d * w + 2 * lam / gaussD d * w := by
-    rw [hwg]; field_simp
-    have : lam + lamb = 1 := by unfold lam lamb; ring
-    linear_combination (-(2 : ℂ) * gaussD d * eichlerCd d τ) * this
+    rw [hwg, show lam = 1 - lamb by unfold lam lamb; ring]
+    field_simp
+    ring
   rw [hsplit, weierPt_short_add hL,
     weierPt_scale hL h1 (mu_pow hd4 hsq lam_pow_four) (2 * lamb / gaussD d * w),
     weierPt_scale hL h2 (mu_pow hd4 hsq lamb_pow_four) (2 * lam / gaussD d * w)]
@@ -359,7 +352,7 @@ theorem weierPt_two_eichlerCd {d : ℕ} [NeZero d] (hd4 : d % 4 = 1) (hsq : Squa
     field_simp; linear_combination (2 * w) * lam_mul_lamb
   have e2 : lamb * gaussD d * (2 * lam / gaussD d * w) = w := by
     field_simp; linear_combination (2 * w) * lam_mul_lamb
-  rw [e1, e2, weierPt_sum_eq_zTw hd4 hsq hd1 (isPeriodLattice_scale hL h1 _),
-    weierPt_sum_eq_zTw hd4 hsq hd1 (isPeriodLattice_scale hL h2 _)]
+  rw [e1, e2, weierPt_sum_eq_zTw hd4 hsq hd1 (isPeriodLattice_scale hL h1 (mu_pow hd4 hsq lam_pow_four)),
+    weierPt_sum_eq_zTw hd4 hsq hd1 (isPeriodLattice_scale hL h2 (mu_pow hd4 hsq lamb_pow_four))]
 
 end ZInQ.Heegner32
