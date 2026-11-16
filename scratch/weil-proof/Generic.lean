@@ -134,3 +134,97 @@ theorem wf_change (t m : X ⟶ X) (h : t ≫ m = m) (M : X.Modules)
     _ = _ := by rw [hab, mul_one]
 
 end WeilProof
+
+/-! ## Step 2: over an algebraically closed field, parts (i)-(iii) of `MumfordWeilPairingAC` -/
+
+namespace WeilProof
+
+open PicDict PkgI3 PkgI3.AbVar Scheme.Modules PicDict.Transport MonoidalCategory
+open scoped CategoryTheory.MonObj
+
+variable {k : Type} [Field k]
+
+/-- Constants `k → Γ(X, 𝒪)` as a ring homomorphism. -/
+def constHom (X : AbVar k) : k →+* Γ(X.X.left, ⊤) :=
+  X.X.hom.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom
+
+lemma const_eq (X : AbVar k) (u : k) : AC.const X u = constHom X u := rfl
+
+lemma constHom_bijective (X : AbVar k) : Function.Bijective (constHom X) :=
+  (bijective_appTop_of_isProper_of_geometricallyIntegral X.X.hom).comp
+    (Scheme.ΓSpecIso (CommRingCat.of k)).commRingCatIsoToRingEquiv.symm.bijective
+
+/-- Translations act trivially on `Γ(X, 𝒪)` (every global function is constant). -/
+lemma tr_appTop (X : AbVar k) (y : AC.Kpt X) (r : Γ(X.X.left, ⊤)) :
+    (AC.tr y).left.appTop r = r := by
+  obtain ⟨u, rfl⟩ := (constHom_bijective X).2 r
+  change ((AC.tr y).left ≫ X.X.hom).appTop.hom _ = _
+  rw [Over.w (AC.tr y)]
+  rfl
+
+lemma tr_one (X : AbVar k) : AC.tr (1 : AC.Kpt X) = 𝟙 X.X := by
+  simp only [AC.tr, ← CategoryTheory.Hom.mul_def]
+  rw [MonObj.comp_one, mul_one]
+
+
+/-- (i) independence of the trivialization. -/
+theorem formula_indep (X : AbVar k) {n : ℕ} (x : AC.Kpt X) (hx : x ^ n = 1) (c : X.X.left.Pic)
+    (ψ ψ' : AC.Triv X n c) : AC.formula x hx c ψ = AC.formula x hx c ψ' := by
+  have ha := tr_appTop X x (val (ψ.hom ≫ ψ'.inv))
+  exact wf_change (AC.tr x).left (AC.mul X n).left _ (AC.modX c) ψ' ψ ha
+
+lemma formula_congr_x (X : AbVar k) {n : ℕ} {y y' : AC.Kpt X} (e : y = y') (hy : y ^ n = 1)
+    (hy' : y' ^ n = 1) (c : X.X.left.Pic) (ψ : AC.Triv X n c) :
+    AC.formula y hy c ψ = AC.formula y' hy' c ψ := by
+  subst e; rfl
+
+lemma formula_one (X : AbVar k) {n : ℕ} (h1 : (1 : AC.Kpt X) ^ n = 1) (c : X.X.left.Pic)
+    (ψ : AC.Triv X n c) : AC.formula 1 h1 c ψ = 1 := by
+  unfold AC.formula
+  have e : (AC.tr (1 : AC.Kpt X)).left = 𝟙 _ := by rw [tr_one]; rfl
+  rw [wf_congr_t e _ (by simp), wf_id]
+
+/-- (iii) multiplicativity in `x`. -/
+theorem formula_mul (X : AbVar k) {n : ℕ} (x x' : AC.Kpt X) (hx : x ^ n = 1) (hx' : x' ^ n = 1)
+    (c : X.X.left.Pic) (ψ : AC.Triv X n c) :
+    AC.formula (x * x') (by rw [mul_pow, hx, hx', mul_one]) c ψ =
+      AC.formula x hx c ψ * AC.formula x' hx' c ψ := by
+  have e : (AC.tr x).left ≫ (AC.tr x').left = (AC.tr (x * x')).left := by
+    rw [← Over.comp_left, AC.tr_comp_tr]
+  have h₁ : (AC.tr x).left ≫ (AC.mul X n).left = (AC.mul X n).left := by
+    rw [← Over.comp_left, AC.tr_comp_mul x hx]
+  have h₂ : (AC.tr x').left ≫ (AC.mul X n).left = (AC.mul X n).left := by
+    rw [← Over.comp_left, AC.tr_comp_mul x' hx']
+  have h₁₂ : ((AC.tr x).left ≫ (AC.tr x').left) ≫ (AC.mul X n).left = (AC.mul X n).left := by
+    rw [Category.assoc, h₂, h₁]
+  unfold AC.formula
+  rw [← wf_congr_t e h₁₂, wf_comp _ _ _ h₁ h₂ h₁₂, tr_appTop, mul_comm]
+
+/-- Powers: `ē(x^j) = ē(x)^j`. -/
+theorem formula_pow (X : AbVar k) {n : ℕ} (x : AC.Kpt X) (hx : x ^ n = 1) (c : X.X.left.Pic)
+    (ψ : AC.Triv X n c) (j : ℕ) :
+    AC.formula (x ^ j) (by rw [← pow_mul, mul_comm, pow_mul, hx, one_pow]) c ψ =
+      AC.formula x hx c ψ ^ j := by
+  have hp : ∀ i : ℕ, (x ^ i) ^ n = 1 := fun i => by rw [← pow_mul, mul_comm, pow_mul, hx, one_pow]
+  induction j with
+  | zero =>
+    rw [formula_congr_x X (pow_zero x) _ (one_pow n), formula_one, pow_zero]
+  | succ j ih =>
+    have := formula_mul X (x ^ j) x (hp j) hx c ψ
+    rw [formula_congr_x X (pow_succ x j) _ (by rw [← pow_succ]; exact hp (j + 1)), this, ih, pow_succ]
+
+/-- (ii) the value is a constant `n`-th root of unity. -/
+theorem formula_root (X : AbVar k) {n : ℕ} (hn : 0 < n) (x : AC.Kpt X) (hx : x ^ n = 1)
+    (c : X.X.left.Pic) (ψ : AC.Triv X n c) :
+    ∃ u : kˣ, u ^ n = 1 ∧ AC.const X (u : k) = AC.formula x hx c ψ := by
+  obtain ⟨v, hv⟩ := (constHom_bijective X).2 (AC.formula x hx c ψ)
+  have h1 : AC.formula x hx c ψ ^ n = 1 := by
+    rw [← formula_pow X x hx c ψ n, formula_congr_x X hx _ (one_pow n), formula_one]
+  have hvn : v ^ n = 1 := by
+    apply (constHom_bijective X).1
+    rw [map_pow, hv, h1, map_one]
+  refine ⟨Units.ofPowEqOne v n hvn hn.ne', ?_, ?_⟩
+  · ext; simp
+  · rw [const_eq]; simpa using hv
+
+end WeilProof
