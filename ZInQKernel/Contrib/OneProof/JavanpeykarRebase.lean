@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.JavanpeykarFix
 import ZInQKernel.Contrib.OneProof.PrintedStableHeight
+import ZInQKernel.Contrib.OneProof.UniformizationLeafAll
 
 /-! # javanpeykar-rebase: `JavanpeykarBound` over height-fix's printed stable height
 
@@ -21,6 +22,7 @@ UniformizationLeafAll → MumfordTorsionAlgClosed → ZInQ.HeightFix.SemiAbelian
   algebraic case used by the consumer (`K' = K̄`) is proved from it (`full_of_finite`: an element of
   `F ⊗_K K̄` comes from `F ⊗_K K'` with `K'/K` finite, and the place restricts to the compositum `F K'`);
   `finite_of_full` gives the converse, so the two leaves are equivalent;
+* `javanpeykarBound_of_printed_rebase_final` fills `UniformizationLeafAll` with `uniformizationLeafAll_proof`;
 * `SemiAbelianDescendsPerfect` is height-fix's glue (descent of semi-abelian identity components from `k̄` to a
   perfect field), the only unproved step between the print and the kernel; it is shared with height-fix's
   `bostLowerBound_of_printed` and `gaudronRemondThm14_of_printed`.
@@ -279,6 +281,14 @@ theorem javanpeykarBound_of_printed_rebase (hJ : JavanpeykarPrintedMap)
   -- (d) `V_K̄ = Jac(X_K̄)`
   obtain ⟨W, repW, htcW, hVW⟩ := exists_jacBar X hX V rep htc (AlgebraicClosure K)
   exact hJ K X hproj W repW htcW V hVW hg1 β d hβ hd0 x hx'
+
+/-- **`JavanpeykarBound` with `uniformizationLeafAll` filled by its proof** (`uniformizationLeafAll_proof`,
+folded at TailZ44): the remaining hypotheses are the two new leaves, the textbook field
+`mumfordTorsionAlgClosed` and height-fix's glue `SemiAbelianDescendsPerfect`. -/
+theorem javanpeykarBound_of_printed_rebase_final (hJ : JavanpeykarPrintedMap)
+    (hS : ConstantFieldExtensionUnramifiedFinite) (hMT : AvSplit.MumfordTorsionAlgClosed)
+    (hD : ZInQ.HeightFix.SemiAbelianDescendsPerfect) : ZInQ.HeightSplit.JavanpeykarBound :=
+  javanpeykarBound_of_printed_rebase hJ hS uniformizationLeafAll_proof hMT hD
 
 end Printed
 

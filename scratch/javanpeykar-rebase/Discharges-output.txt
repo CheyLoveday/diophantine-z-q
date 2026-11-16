@@ -69,6 +69,12 @@ DISCHARGES [OpenResearchLeaves28.javanpeykarBound] by JavanpeykarRebase.javanpey
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.HeightFix.SemiAbelianDescendsPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves28.javanpeykarBound] by JavanpeykarRebase.javanpeykarBound_of_printed_rebase_final
+  still assumes: [JavanpeykarRebase.JavanpeykarPrintedMap,
+ JavanpeykarRebase.ConstantFieldExtensionUnramifiedFinite,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.HeightFix.SemiAbelianDescendsPerfect]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves19.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
   still assumes: [PicDict.PicLocFinType, PicDict.IdentityComponentLFT, PicDict.PicZeroSmooth, PicDict.PicZeroProper]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -173,8 +179,9 @@ DISCHARGES [OpenResearchLeaves28.pazukiCor13Upper] by ZInQ.HeightFix.pazukiCor13
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.HeightFix.SemiAbelianDescendsPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 45 open hypotheses, 6997 theorems checked, 28 discharge one
+#discharges: 45 open hypotheses, 6998 theorems checked, 29 discharge one
 'JavanpeykarRebase.javanpeykarBound_of_printed_rebase' depends on axioms: [propext, Classical.choice, Quot.sound]
 'JavanpeykarRebase.full_of_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
 'JavanpeykarRebase.finite_of_full' depends on axioms: [propext, Classical.choice, Quot.sound]
 'JavanpeykarRebase.javanpeykarPrintedMap_of_fix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'JavanpeykarRebase.javanpeykarBound_of_printed_rebase_final' depends on axioms: [propext, Classical.choice, Quot.sound]
