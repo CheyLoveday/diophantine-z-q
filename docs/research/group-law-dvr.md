@@ -24,7 +24,7 @@ theorem ZInQ.Contrib.GroupLawNeron.mumfordGroupLawDVR_of_neron
     (hN : NeronSchemeExtensionDVR) (hI : NeronGoodModelIso) : ZInQ.Contrib.GroupLaw.MumfordGroupLawDVR
 ```
 
-File: `ZInQKernel/Contrib/OneProof/MumfordGroupLawNeron.lean` (new; 210 lines).
+File: `ZInQKernel/Contrib/OneProof/MumfordGroupLawNeron.lean` (new; 207 lines).
 * `NeronSchemeExtensionDVR` (LEAF, printed form) is Bosch–Lütkebohmert–Raynaud, *Néron models*, §1.4 Thm 3 at
   `S = Spec R` (numbers UNVERIFIED). It is the DVR case of `NeronSchemeExtensionDedekind`, the same theorem over any
   affine Dedekind scheme.
@@ -160,11 +160,41 @@ Edits specific to each fold (TailZ45):
   `neronGoodModelIso : NeronGoodModelIso` and `neronSchemeExtensionDedekind : NeronSchemeExtensionDedekind`. Set
   `mumfordGroupLaw := mumfordGroupLawDVR_of_neron (dvr_of_dedekind n.neronSchemeExtensionDedekind) n.neronGoodModelIso`.
 
-Check: see §6 (filled after the overlay runs).
+## 6. Fold check (VERIFIED, 11-16 ~16:05–16:25)
 
-## 6. Fold check
+No file under `ZInQKernel/` was edited for the check. Script: scratch/group-law-dvr/fold/compile_overlay.sh.
+* It builds a symlink tree of the worktree's build at /tmp/gldfold/<V>/lib, first on `LEAN_PATH`.
+* It recompiles the 42 modules of `Main`'s import closure downstream of TailZ23 (fold/downstream-modules.txt) in
+  topological order with `lean -R <root> -o`.
 
-(pending)
+* **F1**: 42/42 modules, no errors (fold/compile-F1.txt).
+  * `Main`: `frozenTarget` depends on `[propext, Classical.choice, Quot.sound]`.
+  * fold/FoldCheck.lean (output in foldcheck-F1.txt): `OpenResearchLeaves28` has `mumfordGroupLawDVR : MumfordGroupLawDVR` and no
+    `mumfordGroupLawConn`.
+  * In `frozenTarget`'s closure: `MumfordGroupLawDVR`, `qmFamilyGroupLaw_of_dvr`.
+  * Not in it: `MumfordGroupLawConn`, `mumfordGroupLaw_of_conn`, `MumfordGroupLaw`, `qmFamilyGroupLaw_of_groupLaw`.
+* **F2**: F1's overlay, with modules 39–42 (TailZ45 to `Main`) recompiled, no errors (fold/compile-F2.txt).
+  * `frozenTarget` has standard axioms.
+  * `OpenResearchLeaves28` has `neronGoodModelIso` and `neronSchemeExtensionDedekind`.
+  * In the closure: `NeronGoodModelIso`, `NeronSchemeExtensionDedekind`, `mumfordGroupLawDVR_of_neron`,
+    `MumfordGroupLawDVR`.
+  * Not in it: `MumfordGroupLawConn`, `MumfordGroupLaw`.
+
+The integrator should also update the docstrings of the narrowed fields (unchanged in the patch), and the kinds.tsv and
+OPEN.md rows.
+
+### `#discharges` (VERIFIED, scratch/group-law-dvr/discharges.txt)
+
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.MumfordGroupLawNeron`
+built 14,108 jobs. `#discharges` reports 45 open hypotheses, 6,825 theorems checked, and 14 discharges. One of them
+is new:
+
+```
+DISCHARGES [OpenTextbookLeaves13.neronSchemeExtensionExists] by ZInQ.Contrib.GroupLawNeron.neronSchemeExtensionExists_of_dedekind
+```
+
+That is the widening, from `NeronSchemeExtensionDedekind`. No discharge of `mumfordGroupLawConn` comes from the new
+file (expected). All new theorems have axioms `[propext, Classical.choice, Quot.sound]`.
 
 ## 7. The new statements, rated
 

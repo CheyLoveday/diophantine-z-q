@@ -56,3 +56,8 @@ MumfordGroupLawRed.
   MumfordGroupLaw not in closure; NeronGoodModelIso, NeronSchemeExtensionDedekind, mumfordGroupLawDVR_of_neron IN.
 - (The trailing "unexpected EOF" lines in compile-F1.txt come from editing the script while it ran; all 42 modules
   had finished.)
+
+## #discharges (VERIFIED, Discharges.lean -> discharges.txt, 11-16 ~16:35)
+- lake build Main + Discharges + MumfordGroupLawNeron: 14108 jobs OK.
+- 45 open hypotheses, 6825 theorems checked, 14 discharge one; new: OpenTextbookLeaves13.neronSchemeExtensionExists
+  by neronSchemeExtensionExists_of_dedekind (still assumes NeronSchemeExtensionDedekind). New theorems: standard axioms.
