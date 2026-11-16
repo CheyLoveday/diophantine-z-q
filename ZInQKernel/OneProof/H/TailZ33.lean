@@ -42,9 +42,6 @@ structure OpenResearchLeaves20 : Prop where
   identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
   `ι(a)` is a homomorphism from the field points). -/
   mumfordGroupLaw : _root_.ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw
-  /-- c-to-printed, printed form: Faltings 1983, Lemma 5 (the change of the Faltings height under an isogeny
-  through `log #s*Ω¹` of its kernel; locator UNVERIFIED). With `raynaudKernelBound` replaces `faltingsLemma5BC`. -/
-  faltingsLemma5Printed : _root_.CToPrinted.FaltingsLemma5Printed
   /-- c-to-printed, printed form: SGA 3 VI_B 3.10 (the identity component `G⁰` of a smooth group scheme is open;
   number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
   sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
@@ -103,7 +100,6 @@ theorem openResearchLeaves19_of_OpenResearchLeaves20 (n : OpenResearchLeaves20) 
   gaudronRemondThm14 := n.gaudronRemondThm14
   semistableUnipotent := _root_.UnipotentForward.semistableUnipotent_of_forwardGeom n.sga7_IX_3_5_ForwardGeom _root_.ZInQ.Contrib.OneProof.MulEtale.mulEtaleAbelianScheme_proof n.neronBaseChangeStrictHenselization
   mumfordGroupLaw := n.mumfordGroupLaw
-  faltingsLemma5Printed := n.faltingsLemma5Printed
   sga3_VIB_3_10 := n.sga3_VIB_3_10
   sga7_IX_3_3 := _root_.SGA7PersistsNF.sga7_IX_3_3_of_SH n.sga7_IX_3_3_SH n.neronBaseChangeStrictHenselization n.sga3_VIB_3_10 t.geomConnOfRationalPoint
   babaGranathRationalAb := n.babaGranathRationalAb

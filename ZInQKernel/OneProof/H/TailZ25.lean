@@ -53,9 +53,6 @@ structure OpenResearchLeaves15 : Prop where
   domain, a smooth separated model of finite type is a Néron model iff its localizations at the closed points are;
   locator UNVERIFIED). Replaces `neronLocalizesDVR`. -/
   blr_1_2_4 : _root_.CToPrinted.BLR_1_2_4
-  /-- c-to-printed, printed form: Faltings 1983, Lemma 5 (the change of the Faltings height under an isogeny
-  through `log #s*Ω¹` of its kernel; locator UNVERIFIED). With `raynaudKernelBound` replaces `faltingsLemma5BC`. -/
-  faltingsLemma5Printed : _root_.CToPrinted.FaltingsLemma5Printed
   /-- c-to-printed, printed form: SGA 3 VI_B 3.10 (the identity component `G⁰` of a smooth group scheme is open;
   number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
   sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
@@ -118,7 +115,6 @@ theorem openResearchLeaves14_of_OpenResearchLeaves15 (n : OpenResearchLeaves15) 
   gonzalezRotgerCountX6Ab := n.gonzalezRotgerCountX6Ab
   mumfordGroupLaw := n.mumfordGroupLaw
   blr_1_2_4 := n.blr_1_2_4
-  faltingsLemma5Printed := n.faltingsLemma5Printed
   sga3_VIB_3_10 := n.sga3_VIB_3_10
   sga7_IX_3_3 := n.sga7_IX_3_3
   egaIV_8_10_5_openImm := _root_.ZInQ.Contrib.EGAOpenImm.egaIV_8_10_5_openImm_proof

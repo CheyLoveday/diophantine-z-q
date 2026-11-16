@@ -1,5 +1,6 @@
 import ZInQKernel.OneProof.H.TailZ22
 import ZInQKernel.OneProof.H.TailZ40
+import ZInQKernel.Contrib.OneProof.FaltingsLemma5Lower
 
 /-! # OneProof H, leaf-fold14 (1/2): the reduct fold, `OpenResearchLeaves14` and `sixContactMin_of_open17`
 
@@ -654,9 +655,6 @@ structure OpenResearchLeaves14 : Prop where
   domain, a smooth separated model of finite type is a Néron model iff its localizations at the closed points are;
   locator UNVERIFIED). Replaces `neronLocalizesDVR`. -/
   blr_1_2_4 : _root_.CToPrinted.BLR_1_2_4
-  /-- c-to-printed, printed form: Faltings 1983, Lemma 5 (the change of the Faltings height under an isogeny
-  through `log #s*Ω¹` of its kernel; locator UNVERIFIED). With `raynaudKernelBound` replaces `faltingsLemma5BC`. -/
-  faltingsLemma5Printed : _root_.CToPrinted.FaltingsLemma5Printed
   /-- c-to-printed, printed form: SGA 3 VI_B 3.10 (the identity component `G⁰` of a smooth group scheme is open;
   number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
   sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
@@ -801,7 +799,7 @@ theorem sixContactMin_of_open17 (r : OpenResearchLeaves14) (t : OpenTextbookLeav
     (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
     ZInQ.SixContactMin :=
   sixContactMin_of_open11 (researchLeaves9_of_open14 r t l h6 hSS) t (addedLeaves9_of_open14 r t l) g
-    (_root_.CToPrinted.faltingsLemma5BCLower_of_printed r.faltingsLemma5Printed) hYu
+    (_root_.ReductSplit.faltingsLemma5BCLower_final _root_.GapHeight.faltingsLemma5Lower) hYu
 
 end HSyn
 
