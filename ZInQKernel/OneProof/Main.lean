@@ -8,6 +8,7 @@ import ZInQKernel.Contrib.OneProof.FHNonvanishing
 import ZInQKernel.Contrib.OneProof.BFHGamma0
 import ZInQKernel.Contrib.OneProof.LegendreThreeSquares
 import ZInQKernel.Contrib.OneProof.TYZThm21At31
+import ZInQKernel.Contrib.OneProof.JonesPall
 import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
 
 /-!
@@ -73,7 +74,6 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves28) (t : HDec.HSyn.OpenTextbookLeaves13) (l : HDec.HSyn.OpenAddedLeaves19)
     (h11 : TYZThm11Integral)
-    (hJP : H29Split.JonesPallX2Y2Z16)
     (hfx : H29Split.TYZTestVectorExists) (hL29 : H29Split.TYZLemma29PrintedNe3)
     (hP23 : H29Split.TYZProp23Printed)
     (hCM : _root_.T5Glue.ShimuraMainCM)
@@ -83,7 +83,7 @@ theorem _root_.ZInQ.OneProof.frozenTarget
   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
     (HDec.HSyn.sixContactMin_of_open38 r t l)
     (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
-      hJP hfx hL29 ZInQ.Contrib.T21Proof.tyzThm21At31 hP23) hCM h33)
+      ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof hfx hL29 ZInQ.Contrib.T21Proof.tyzThm21At31 hP23) hCM h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0 hBFH) hL3
 
 end ZInQ.Contrib.TYZChain
