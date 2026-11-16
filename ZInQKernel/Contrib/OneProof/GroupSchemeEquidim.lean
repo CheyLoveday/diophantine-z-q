@@ -21,6 +21,9 @@ theorem groupSchemeEquidim_proof : AVGlue.GroupSchemeEquidim := by
   letI : GrpObj (G.left.asOver (Spec (CommRingCat.of k))) := by
     change GrpObj G
     infer_instance
+  letI : LocallyOfFiniteType (G.left ↘ Spec (CommRingCat.of k)) := by
+    change LocallyOfFiniteType G.hom
+    exact hft
   have he := equidimensional_of_groupScheme k G.left
   obtain ⟨W, hW, -, hd⟩ :=
     exists_mem_irreducibleComponents_topologicalKrullDim_eq_topologicalKrullDimAt
