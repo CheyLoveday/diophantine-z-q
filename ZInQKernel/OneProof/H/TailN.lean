@@ -74,9 +74,8 @@ structure OpenResearchLeaves5 : Prop where
   r4 : PkgI1.ThetaModularity
   r5 : LeafQM.AV.R5fp
   r5count : LeafQM.AV.R5fpCount
-  r6 : _root_.PkgI2.RaynaudCriterion.{0}
+  r6 : PkgI2.RaynaudCriterionNF.{0}
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
-  r8 : _root_.PkgI2.GrothendieckMonodromy.{0}
   r9a : _root_.PkgI3.FaltingsSemisimple
   r9b : _root_.PkgI3.FaltingsTate
   /-- R10 corrected (with multiplicity `0` off `{0, −1}`). -/
@@ -106,7 +105,6 @@ theorem researchLeaves2_of_open5 (r : OpenResearchLeaves5) : OpenResearchLeaves2
   r5count := r.r5count
   r6 := raynaudCriterion_ofK5 r.r6
   r7a := neronOggShafarevich_ofK5 r.r7a
-  r8 := grothendieckMonodromy_ofK5 r.r8
   r9a := faltingsSemisimple_ofK5 r.r9a
   r9b := faltingsTate_ofK5 r.r9b
   r10 := r.r10

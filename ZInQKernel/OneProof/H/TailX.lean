@@ -80,9 +80,8 @@ structure OpenResearchLeaves7 : Prop where
   igusaChi10 : QMSplit.Theta.IgusaChi10
   r5 : LeafQM.AV.R5fp
   r5count : LeafQM.AV.R5fpCount
-  r6 : _root_.PkgI2.RaynaudCriterion.{0}
+  r6 : PkgI2.RaynaudCriterionNF.{0}
   r7a : _root_.PkgI2.NeronOggShafarevich.{0}
-  r8 : _root_.PkgI2.GrothendieckMonodromy.{0}
   r9a : _root_.PkgI3.FaltingsSemisimple
   r9b : _root_.PkgI3.FaltingsTate
   /-- hodge-split, H-8: the Hodge–Tate decomposition `ℂ_p ⊗ V_p(A) ≅ ℂ_p(1)^g ⊕ ℂ_p^g` (Fontaine 1982; Tate 1967;
@@ -194,7 +193,6 @@ theorem researchLeaves5_of_open7 (r : OpenResearchLeaves7) (l : OpenAddedLeaves7
   r5count := r.r5count
   r6 := r.r6
   r7a := r.r7a
-  r8 := r.r8
   r9a := r.r9a
   r9b := r.r9b
   r10 := HodgeLF7.r10 (_root_.ZInQ.Contrib.HodgeSplit.deRhamComparisonHT_of_leavesT r.hodgeTateDecompAbVar

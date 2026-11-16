@@ -37,8 +37,6 @@ structure OpenResearchLeaves17 : Prop where
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
   /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest reading). -/
   semistableUnipotent : _root_.ReductSplit.SemistableUnipotent
-  /-- reduct-split, r8: BLR §1.4 Thm 3 over a DVR (scheme form). -/
-  neronSchemeModelExistsDVR : _root_.ReductSplit.NeronSchemeModelExistsDVR
   /-- gt-rigidity, rigid-prune (leaf-fold23): **Mumford's GIT Thm 6.14 over a base** (on each connected component;
   numbers UNVERIFIED): a proper smooth geometrically connected family over a locally noetherian `S` with a section
   `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
@@ -107,7 +105,6 @@ theorem openResearchLeaves16_of_OpenResearchLeaves17 (n : OpenResearchLeaves17) 
   pazukiCor13Upper := n.pazukiCor13Upper
   gaudronRemondThm14 := n.gaudronRemondThm14
   semistableUnipotent := n.semistableUnipotent
-  neronSchemeModelExistsDVR := n.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6Ab := _root_.GRCountX6.gonzalezRotgerCountX6Ab_of_printed n.gonzalezRotgerProp56X6 n.gonzalezRotgerX6Ab
   mumfordGroupLaw := n.mumfordGroupLaw
   faltingsLemma5Printed := n.faltingsLemma5Printed

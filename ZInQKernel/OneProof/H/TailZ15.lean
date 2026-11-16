@@ -97,8 +97,8 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
   shimuraFamily := r.shimuraFamily
   igusaPsi4 := r.igusaPsi4
   igusaChi10 := r.igusaChi10
-  r6 := _root_.ReductGlue.raynaudCriterion_leaves r.raynaudSemistable r.semistableUnipotent
-    r.neronSchemeModelExistsDVR t.mumfordTorsionAlgClosed t.mulEtaleAbelianScheme
+  r6 := PkgI2.raynaudCriterionNF_of_general (_root_.ReductGlue.raynaudCriterion_leaves r.raynaudSemistable
+    r.semistableUnipotent r.neronSchemeModelExistsDVR t.mumfordTorsionAlgClosed t.mulEtaleAbelianScheme)
   r7a := r.r7a
   r9a := r.r9a
   r9b := r.r9b
@@ -120,9 +120,6 @@ theorem researchLeaves9_of_open10 (r : OpenResearchLeaves10) (t : OpenTextbookLe
   javanpeykarBound := r.javanpeykarBound
   pazukiCor13Upper := r.pazukiCor13Upper
   gaudronRemondThm14 := r.gaudronRemondThm14
-  semistableReductionDVR := r.semistableReductionDVR
-  semistableUnipotent := r.semistableUnipotent
-  neronSchemeModelExistsDVR := r.neronSchemeModelExistsDVR
   gonzalezRotgerCountX6 := r.gonzalezRotgerCountX6
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold10; no `sorry`, standard axioms).

@@ -788,11 +788,31 @@ noncomputable def endPts (A : Grp (Over (Spec (.of K)))) {L : Type u} [CommRing 
   map_one' := MonObj.one_comp _
   map_mul' x y := MonObj.mul_comp x y _
 
+/-- **R6 at number fields** (r6-nf): `PkgI2.RaynaudCriterion` (HDecomp/Objects.lean L1436, verbatim) with
+`[NumberField K]` added; at `.{0}` the same statement as neron-dvr's `GapNeron.RaynaudCriterionNF`. The chain applies
+R6 only at number fields (docs/research/neron-dvr.md §3.3), so the old bundles carry this form. -/
+def RaynaudCriterionNF : Prop :=
+  ∀ (K : Type u) [Field K] [NumberField K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (w : ValuationSubring (AlgebraicClosure K)),
+    w.comap (algebraMap K (AlgebraicClosure K)) = O →
+    ∀ (A : Grp (Over (Spec (.of K)))) [IsAbelianVariety A] (m : ℕ), 3 ≤ m → IsUnit (m : O) →
+      (∀ σ : AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K,
+          ∀ x ∈ torsion A (AlgebraicClosure K) m, galAct A σ x = x) →
+      ∀ σ : AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K, IsInertia w σ →
+        ∀ ℓ : ℕ, ℓ.Prime → IsUnit (ℓ : O) →
+          ∀ n : ℕ, ∀ x ∈ torsion A (AlgebraicClosure K) (ℓ ^ n), UnipSq A σ x
+
+/-- R6 over every field gives R6 at number fields (r6-nf; used where an off-chain bundle still has the general
+form). -/
+theorem raynaudCriterionNF_of_general (h : RaynaudCriterion.{u}) : RaynaudCriterionNF.{u} :=
+  fun K _ _ O _ w hw A _ m hm hmO hrat σ hσ ℓ hℓ hℓO n x hx =>
+    h K O w hw A m hm hmO hrat σ hσ ℓ hℓ hℓO n x hx
+
 /-- **Glue A6 (Lemma PR(ii), Raynaud route), proved from the leaves `NeronOggShafarevich`,
 `RaynaudCriterion`, `TorsionStructure` and the pure-algebra glue `QuatUnipotentTrivial`.**
 Same statement as `PkgI2.goodReduction_of_QM_rational3` (scratch/pkg-I2/I2.lean). -/
-theorem goodReduction_of_QM_rational3_of_alg (hNOS : NeronOggShafarevich.{u})
-    (hRay : RaynaudCriterion.{u}) (hTors : TorsionStructure.{u})
+theorem goodReduction_of_QM_rational3_of_alg [NumberField K] (hNOS : NeronOggShafarevich.{u})
+    (hRay : RaynaudCriterionNF.{u}) (hTors : TorsionStructure.{u})
     (hAlg : QuatUnipotentTrivial.{u})
     (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (w : ValuationSubring (AlgebraicClosure K))
@@ -846,8 +866,8 @@ theorem goodReduction_of_QM_rational3_of_alg (hNOS : NeronOggShafarevich.{u})
 `NeronOggShafarevich`, `RaynaudCriterion` and `TorsionStructure` alone** (the pure-algebra glue
 `QuatUnipotentTrivial` is now a theorem). Same statement as
 `PkgI2.goodReduction_of_QM_rational3` (scratch/pkg-I2/I2.lean). -/
-theorem goodReduction_of_QM_rational3 (hNOS : NeronOggShafarevich.{u})
-    (hRay : RaynaudCriterion.{u}) (hTors : TorsionStructure.{u})
+theorem goodReduction_of_QM_rational3 [NumberField K] (hNOS : NeronOggShafarevich.{u})
+    (hRay : RaynaudCriterionNF.{u}) (hTors : TorsionStructure.{u})
     (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (w : ValuationSubring (AlgebraicClosure K))
     (hw : w.comap (algebraMap K (AlgebraicClosure K)) = O)
@@ -867,8 +887,8 @@ theorem goodReduction_of_QM_rational3 (hNOS : NeronOggShafarevich.{u})
 
 /-- **A6 without the auxiliary `w`**: the valuation subring of `K̄` over `O` exists
 (`GlueA6Alg.Alg.exists_valuationSubring_comap_eq`), so it is not a hypothesis. -/
-theorem goodReduction_of_QM_rational3' (hNOS : NeronOggShafarevich.{u})
-    (hRay : RaynaudCriterion.{u}) (hTors : TorsionStructure.{u})
+theorem goodReduction_of_QM_rational3' [NumberField K] (hNOS : NeronOggShafarevich.{u})
+    (hRay : RaynaudCriterionNF.{u}) (hTors : TorsionStructure.{u})
     (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (A : Grp (Over (Spec (.of K)))) [IsAbelianVariety A]
     (hdim : topologicalKrullDim A.X.left = ((2 : ℕ) : WithBot ℕ∞))
@@ -4226,8 +4246,8 @@ local notation "Kb" => AlgebraicClosure K
 `NeronOggShafarevich`, `RaynaudCriterion`, `TorsionStructure` (via
 `PkgI2.goodReduction_of_QM_rational3'`). With R1fp, this applies to the fibre object over
 `J(u)` (A4 + A6). -/
-theorem QML3.goodReduction [CharZero K] (hNOS : PkgI2.NeronOggShafarevich.{0})
-    (hRay : PkgI2.RaynaudCriterion.{0}) (hTors : PkgI2.TorsionStructure.{0})
+theorem QML3.goodReduction [NumberField K] (hNOS : PkgI2.NeronOggShafarevich.{0})
+    (hRay : PkgI2.RaynaudCriterionNF.{0}) (hTors : PkgI2.TorsionStructure.{0})
     (Ov : ValuationSubring K) [IsDiscreteValuationRing Ov] (h3 : IsUnit (3 : Ov)) :
     PkgI2.HasGoodReduction (toGrp P.A) Ov := by
   have hdim : topologicalKrullDim (toGrp P.A).X.left = ((2 : ℕ) : WithBot ℕ∞) := P.surface
