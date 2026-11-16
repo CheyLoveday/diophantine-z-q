@@ -511,6 +511,11 @@ theorem evalB_congr {x y : AinfP p} (hx : x ∈ Ith p) (hxy : x = y) (f : (AinfP
   subst hxy
   rfl
 
+theorem evalB_congr' {x y : AinfP p} (hx : x ∈ Ith p) (hy : y ∈ Ith p) (hxy : x = y)
+    (f : (AinfP p)⟦X⟧) : evalB p hx f = evalB p hy f := by
+  subst hxy
+  rfl
+
 theorem locAct_mem (σ : GQp p) {x : AinfP p} (hx : x ∈ Ith p) : locAct p σ x ∈ Ith p :=
   DR.ker_le_comap_locMap p (oAct p σ) hx
 
@@ -910,6 +915,87 @@ theorem logPlus_add {y z : AinfP p} (hy : y ∈ Ith p) (hz : z ∈ Ith p) :
   ring
 
 end LogAdd
+
+/-! ## §9. `σ(log [p̃]) = log [p̃] + log [u_σ]`: `B_st` is `G_{ℚ_p}`-stable -/
+
+section BstStable
+
+variable (p : ℕ) [hp : Fact p.Prime]
+
+open PanBergerSplit (Ainf AinfP locAct flatAct)
+
+local notation "pF" => ZInQ.Contrib.G9.BdrKer.Cp.pFlat p
+
+/-- `σ(p̃) = p̃ · u` with `u^♯ = 1` (`u = σ(p̃)/p̃`, the Kummer cocycle of `p` at `σ`). -/
+theorem exists_uSigma (σ : GQp p) :
+    ∃ u : PreTilt 𝓞_ℂ_[p] p, flatAct p σ pF = pF * u ∧ PreTilt.untilt u = 1 := by
+  have hσp : PreTilt.untilt (flatAct p σ pF) = (p : 𝓞_ℂ_[p]) := by
+    rw [DR.untilt_preTiltMap, ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat, map_natCast]
+  obtain ⟨u, hu⟩ := ZInQ.Contrib.G9.BdrKer.Cp.dvd_of_coeff_zero p pF
+    (ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat p) (flatAct p σ pF) (by
+      rw [← PreTilt.mk_untilt_eq_coeff_zero, hσp]
+      exact Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_span_singleton_self _))
+  refine ⟨u, hu, ?_⟩
+  have h1 : (p : 𝓞_ℂ_[p]) * (PreTilt.untilt u - 1) = 0 := by
+    have := congrArg PreTilt.untilt hu
+    rw [hσp, map_mul, ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat] at this
+    linear_combination -this
+  exact sub_eq_zero.mp (ZInQ.Contrib.G9.BdrKer.Cp.p_regular p _ h1)
+
+theorem locAct_pTildeArg (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ pF = pF * u) :
+    locAct p σ (pTildeArg p) =
+      algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p u - 1) + pTildeArg p +
+        algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p u - 1) * pTildeArg p := by
+  have hq := natCast_mul_qp p p hp.out.ne_zero
+  simp only [pTildeArg, omegaP, map_neg, map_mul, PanBergerSplit.locAct_qpToLoc,
+    ZInQ.Contrib.G9.BdrKer.Cp.xi', PanBergerSplit.locAct_algebraMap, ZInQ.Contrib.G9.BdrKer.Cp.xi,
+    map_sub, map_natCast, WittVector.map_teichmuller, hu, map_one]
+  linear_combination
+    (algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p u) - 1) * hq
+
+theorem logPTilde_eq : logPTilde p = evalB p (pTildeArg_mem p) (logSeries p) := rfl
+
+theorem logTeich_eq {u : PreTilt 𝓞_ℂ_[p] p} (hu1 : PreTilt.untilt u = 1) :
+    logTeich p hu1 = evalB p (teich_sub_one_mem p hu1) (logSeries p) := rfl
+
+theorem logPTilde_step_B (σ : GQp p) :
+    bdrAct p σ (toBdR p (logPTilde p)) =
+      toBdR p (evalB p (locAct_mem p σ (pTildeArg_mem p)) (logSeries p)) := by
+  have h := bdrAct_evalB p σ (pTildeArg_mem p) (logSeries p)
+  rw [map_locAct_logSeries] at h
+  rw [logPTilde_eq]
+  exact h
+
+theorem logPTilde_step_A (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ pF = pF * u)
+    (hu1 : PreTilt.untilt u = 1) :
+    evalB p (locAct_mem p σ (pTildeArg_mem p)) (logSeries p) = logTeich p hu1 + logPTilde p := by
+  exact (evalB_congr' p _ _ (locAct_pTildeArg p σ hu) _).trans
+    (logPlus_add p (teich_sub_one_mem p hu1) (pTildeArg_mem p))
+
+/-- **`σ(log [p̃]) = log [p̃] + log [u_σ]`** in `B_dR` (`log [u_σ] = c(σ)·t`). -/
+theorem bdrAct_logPTilde (σ : GQp p) {u : PreTilt 𝓞_ℂ_[p] p} (hu : flatAct p σ pF = pF * u)
+    (hu1 : PreTilt.untilt u = 1) :
+    bdrAct p σ (toBdR p (logPTilde p)) = toBdR p (logTeich p hu1) + toBdR p (logPTilde p) := by
+  rw [logPTilde_step_B, logPTilde_step_A p σ hu hu1, map_add]
+
+/-- **`B_st` is `G_{ℚ_p}`-stable.** -/
+theorem bst_stable (σ : GQp p) : Bst p ≤ (Bst p).comap (bdrAlg p σ) := by
+  rw [Bst, Algebra.adjoin_le_iff]
+  intro z hz
+  rw [SetLike.mem_coe, Subalgebra.mem_comap, bdrAlg_apply]
+  rcases hz with (⟨y, hy, rfl⟩ | hz) | hz
+  · obtain ⟨y', hy', he⟩ := bdrAct_amax p σ hy
+    rw [he]
+    exact Algebra.subset_adjoin (Or.inl (Or.inl ⟨y', hy', rfl⟩))
+  · exact Algebra.subset_adjoin (Or.inl (Or.inr (tInvSet_stable p σ hz)))
+  · rw [Set.mem_singleton_iff] at hz
+    rw [hz]
+    obtain ⟨u, hu, hu1⟩ := exists_uSigma p σ
+    rw [bdrAct_logPTilde p σ hu hu1]
+    exact Subalgebra.add_mem _ (Algebra.subset_adjoin (Or.inl (Or.inl
+      ⟨_, logTeich_mem_amax p hu1, rfl⟩))) (logPTilde_mem_bst p)
+
+end BstStable
 
 end BergerBst
 end PkgI4

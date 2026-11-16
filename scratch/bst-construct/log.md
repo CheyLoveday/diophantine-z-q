@@ -18,3 +18,10 @@ checked with cmp); PanBerger, PanBergerFix, PanBergerPrinted built here (VERIFIE
 - §5 `isAdmissible_trivial` (trivial rep admissible for every B ⊆ B_dR, H; unconditional), `isPstB_trivial`. COMPILED.
 - §6 `bdrAct_evalB` (σ Σ a_k x^k = Σ σ(a_k) σ(x)^k), `bdrAct_amax`, `bdrAct_logTeich` (σ log[ε] = log[σε]),
   `bmaxPlus_stable`, `bmax_stable`: A_max, B_max^+, B_max are G_Qp-stable. COMPILED.
+- §7 `logTeich_mem_amax`: log [ε] ∈ A_max for ε^♯ = 1 ([ε]−1 = ξc; coefficients (p^n/n)c^n → 0). COMPILED.
+- §8 `logPlus_add`: log(1+y+z+yz) = log(1+y) + log(1+z) in B_dR^+ for y, z ∈ ker θ. Proof: T^N ∣ P_N(W)−P_N(Y)−P_N(Z)
+  in A[T] (derivative + (1+X)P_N' = 1−(−X)^{N−1}), membership in Mathlib's `reesAlgebra`, evaluate at T = 1. COMPILED.
+- §9 `exists_uSigma` (σ(p̃) = p̃u, u^♯ = 1, via bdr-kertheta's `dvd_of_coeff_zero`), `bdrAct_logPTilde`
+  (σ log[p̃] = log[p̃] + log[u_σ]), `bst_stable`: B_st is G_Qp-stable. COMPILED.
+  Pitfall: `rw [evalB_congr ...]` (with `▸` on the point) followed by `exact` gave a kernel deterministic timeout;
+  `evalB_congr'` with both membership proofs explicit fixed it.
