@@ -276,3 +276,36 @@ lemma unit_endo_eq_id_of_whisker {C : Type*} [Category C] [MonoidalCategory C] (
   rw [← cancel_epi (ρ_ (𝟙_ C)).hom, ← h3, Category.comp_id]
 
 end WeilProof.Theta
+
+/-! ## The §23 leaf from divisibility -/
+
+namespace WeilProof.Theta
+
+open PicDict PkgI3 PkgI3.AbVar MonoidalCategory Scheme.Modules PicDict.Transport
+open scoped CategoryTheory.MonObj
+
+/-- **Divisibility of `X(k)`** for `n` invertible in `k` (Mumford §4, Application 2: `n_X` is surjective;
+UNVERIFIED numbering). -/
+def DivisibleAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (n : ℕ), 0 < n → (n : k) ≠ 0 →
+    ∀ x : AC.Kpt X, ∃ y : AC.Kpt X, y ^ n = x
+
+variable {k : Type} [Field k]
+
+lemma tr_mul_comm (X : AbVar k) (y : AC.Kpt X) (n : ℕ) :
+    AC.tr y ≫ AC.mul X n = AC.mul X n ≫ AC.tr (y ^ n) := by
+  simp only [AC.tr, AC.mul, ← CategoryTheory.Hom.mul_def]
+  rw [MonObj.comp_pow, Category.comp_id, mul_pow, ← MonObj.comp_pow, MonObj.comp_mul,
+    Category.comp_id, ← Category.assoc,
+    CartesianMonoidalCategory.toUnit_unique (_ ≫ CartesianMonoidalCategory.toUnit X.X)
+      (CartesianMonoidalCategory.toUnit X.X)]
+
+lemma powM_tr (X : AbVar k) (y : AC.Kpt X) : ∀ j, powM (AC.tr y).left j = (AC.tr (y ^ (j + 1))).left
+  | 0 => by
+    change (AC.tr y).left = (AC.tr (y ^ (0 + 1))).left
+    rw [zero_add, pow_one]
+  | j + 1 => by
+    change powM (AC.tr y).left j ≫ (AC.tr y).left = _
+    rw [powM_tr X y j, ← Over.comp_left, AC.tr_comp_tr, ← pow_succ]
+
+end WeilProof.Theta
