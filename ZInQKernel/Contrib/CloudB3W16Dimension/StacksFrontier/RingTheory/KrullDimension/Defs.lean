@@ -11,7 +11,7 @@ public import Mathlib.RingTheory.Ideal.Height
 
 @[expose] public section
 
--- The former  declaration is now the Mathlib definition.
+-- The former @[stacks 00KE] declaration is now the Mathlib definition.
 
 
 
@@ -20,7 +20,7 @@ public import Mathlib.RingTheory.Ideal.Height
 
 
 
--- The former  declaration is now the Mathlib theorem.
+-- The former @[stacks 00KF] declaration is now the Mathlib theorem.
 
 
 /-- The Krull dimension of `R` equals the supremum of the heights of its prime ideals. -/
@@ -45,7 +45,7 @@ theorem ringKrullDim_eq_iSup_height_maximal (R : Type*) [CommRing R] :
     (le_iSup (fun K : {K : PrimeSpectrum R // K.asIdeal.IsMaximal} ↦
       (K.val.asIdeal.height : WithBot ℕ∞)) ⟨⟨m, hm.isPrime⟩, hm⟩)
 
---  is already attached to Mathlib's equivalence.
+-- @[stacks 00KH] is already attached to Mathlib's equivalence.
 
 -- The former @[stacks_fixed 0GIE] structure is represented by Mathlib's series.
 

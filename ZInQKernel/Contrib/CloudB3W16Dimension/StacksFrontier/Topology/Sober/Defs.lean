@@ -119,4 +119,3 @@ theorem stacksSober_iff_t0_and_quasiSober :
     refine ⟨ξ, ⟨hξ ▸ subset_closure rfl, hξ.symm⟩, ?_⟩
     rintro y ⟨_, hyZ⟩
     exact (inseparable_iff_closure_eq.mpr (by rw [← hyZ, hξ])).eq
-

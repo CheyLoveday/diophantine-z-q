@@ -468,8 +468,7 @@ quasi-regular sequence: the canonical map of graded `κ[X_1, …, X_d]`-modules
 `κ[X_1, …, X_d] ⊗_κ (R/m) → ⨁_{n ≥ 0} m^n/m^(n + 1)`, `X^e ⊗ 1 ↦ x^e mod m^(|e| + 1)`, is
 bijective. Equivalently, the graded ring `⨁_{n ≥ 0} m^n/m^(n + 1)` is the graded polynomial
 algebra `κ[X_1, …, X_d]` over the residue field. -/
- → ⨁ m^n/m^(n+1)`, `X_i ↦ x_i mod m^2`, is an isomorphism. See the module \
-docstring."]
+
 public theorem IsRegularLocalRing.isQuasiRegular {R : Type*} [CommRing R] [IsRegularLocalRing R]
     (xs : List R) (hxs : Ideal.ofList xs = maximalIdeal R)
     (hmin : xs.length = (maximalIdeal R).spanFinrank) :

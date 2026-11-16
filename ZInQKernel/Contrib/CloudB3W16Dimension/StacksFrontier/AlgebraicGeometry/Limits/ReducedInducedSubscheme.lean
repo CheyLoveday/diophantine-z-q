@@ -42,7 +42,7 @@ than as an instance because an ideal sheaf carries no `IsRadical` typeclass; the
 specialisations that do dispatch by instance search are given separately.
 
 This is the "reduced induced closed subscheme structure" of Stacks tag 01J3. That tag covers
-more than is proved here (the universal property, and functoriality in `Z`), so no ``
+more than is proved here (the universal property, and functoriality in `Z`), so no `@[stacks]`
 attribute is attached.
 
 ## References

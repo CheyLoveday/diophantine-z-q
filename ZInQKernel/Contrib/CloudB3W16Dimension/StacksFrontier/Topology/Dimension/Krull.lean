@@ -193,4 +193,3 @@ theorem topologicalKrullDim_preimage_val (Y A : Set X) (hA : A ⊆ Y) :
   e.isHomeomorph.topologicalKrullDim_eq
 
 end Subspace
-

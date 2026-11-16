@@ -161,10 +161,7 @@ quasi-finite algebra, Krull dimension, polynomial ring, affine space, finite typ
 /-- **Stacks 00QG.** Let `k` be a field and let `S` be a quasi-finite algebra over the polynomial
 ring `k[t_i ; i ∈ σ]` in `n = #σ` variables. Then `dim(S) ≤ n`: a quasi-finite cover of
 affine `n`-space has dimension at most `n`. -/
- ⊂ S` with `S` of finite type over `k` and the map
-quasi-finite is weakened to `Algebra.QuasiFinite (MvPolynomial σ k) S` with `Finite σ`, which the
-source's hypotheses imply (tag 00PM); neither finite type nor injectivity is used. See the module
-docstring."]
+
 public theorem ringKrullDim_le_natCard_of_quasiFinite_mvPolynomial (k : Type*) [Field k]
     {σ S : Type*} [Finite σ] [CommRing S] [Algebra (MvPolynomial σ k) S]
     [Algebra.QuasiFinite (MvPolynomial σ k) S] : ringKrullDim S ≤ Nat.card σ :=

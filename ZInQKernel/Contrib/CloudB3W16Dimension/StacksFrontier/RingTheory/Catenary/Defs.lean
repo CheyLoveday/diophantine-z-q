@@ -198,4 +198,3 @@ open Order TopologicalSpace
 @[expose] public section
 
 open Ring
-

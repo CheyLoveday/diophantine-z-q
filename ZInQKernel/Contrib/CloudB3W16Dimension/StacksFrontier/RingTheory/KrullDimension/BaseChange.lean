@@ -874,4 +874,3 @@ public theorem height_fiber_add_height_eq_and_add_trdeg_eq (k K S T : Type*) [Fi
   Stacks.KrullDimension.FibreHeight.solution k K S T
 
 end Algebra.IsPushout
-

@@ -67,6 +67,9 @@ filtration, an `(R/J)[X]`-module in which `X_i` acts by multiplication by the cl
 
 open scoped Finset
 
+set_option backward.isDefEq.respectTransparency false
+set_option maxHeartbeats 1200000
+
 @[expose] public section
 
 variable {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M]
@@ -292,7 +295,8 @@ noncomputable instance tgtAlgComm {c : ℕ} (f : Fin c → R) :
     CommRing (Algebra.adjoin (qrRbar f) (Set.range (tgtMul (M := M) f))) :=
   letI := Algebra.isMulCommutative_adjoin (qrRbar f)
     (fun a ha b hb _ => tgtMul_pairwise_comm (M := M) f a ha b hb)
-  { mul_comm := fun a b => IsMulCommutative.is_comm.comm a b }
+  { toRing := inferInstance
+    mul_comm := fun a b => IsMulCommutative.is_comm.comm a b }
 
 /-- The variable action `tgtMul f i` as an element of the commutative subalgebra. -/
 noncomputable def tgtGen {c : ℕ} (f : Fin c → R) (i : Fin c) :
