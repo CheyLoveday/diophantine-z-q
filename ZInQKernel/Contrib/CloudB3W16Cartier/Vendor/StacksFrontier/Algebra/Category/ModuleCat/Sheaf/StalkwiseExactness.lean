@@ -213,6 +213,7 @@ theorem shortExact_iff_stalkFunctor_map_shortExact
     S.ShortExact ↔ ∀ x : X, (S.map (stalkFunctor O x)).ShortExact := by
   constructor
   · intro hS x
+    letI : PreservesColimits (stalkFunctor O x) := stalkFunctor_preservesColimits O x
     have := hS.mono_f
     have := hS.epi_g
     refine ShortComplex.ShortExact.mk' (hS.exact.map _) ?_ ?_
