@@ -243,6 +243,12 @@ theorem trace_det_frobOn
   · exact AddMonoidHom.map_trace (R16Used.liftHom (k := ℚ_[ℓ]) emb).toAddMonoidHom _
   · exact RingHom.map_det _ _
 
+theorem esPoly_map (emb : F →+* PadicAlgCl ℓ) (a d : F) :
+    (R16Used.esPoly ℓ a d).map (R16Used.liftHom (k := ℚ_[ℓ]) emb) =
+      Polynomial.X ^ 2 - C (emb a) * Polynomial.X + C (emb d) := by
+  simp [R16Used.esPoly, Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul,
+    Polynomial.map_pow, R16Used.liftHom_one_tmul]
+
 /-- The weak relation over `ℚ_ℓ ⊗ F` gives the weak relation on each `ι`-component. -/
 theorem aeval_compMat
     (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
@@ -308,7 +314,7 @@ open ZInQ.Contrib.HodgeSplit in
 /-- **The trace-and-determinant argument on one `ι`-component (glue).** Let `V_ℓ(A)` be free of
 rank 2 over `ℚ_ℓ ⊗ F` (basis `b`), `ι : F → ℚ̄_ℓ`, and suppose (weak reading) that every arithmetic
 Frobenius at `p ∤ Nℓ` satisfies `X² − a_p X + χ(p)p` over `ℚ_ℓ ⊗ F`, and (oddness) that complex
-conjugation has determinant `−1` over `ℚ_ℓ ⊗ F`. Then on the `ι`-component every such Frobenius has
+conjugation has determinant `−1` on the `ι`-component. Then on the `ι`-component every such Frobenius has
 characteristic polynomial `X² − ι(a_p) X + ι(χ(p)p)`. Proof: complex conjugation is non-scalar on
 the component; on the open non-scalar locus the determinant agrees with `ε₀ χ_ℓ` at Frobenius
 elements, hence everywhere there (Chebotarev, T18), hence on `G_ℚ` (translate by complex
@@ -319,7 +325,7 @@ theorem component_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ
     (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] Fd) (A.V ℓ))
     (emb : Fd →+* PadicAlgCl ℓ) (N : ℕ) (hN : 0 < N) (χ : DirichletCharacter ℂ N) (a : ℕ → Fd)
     (hodd : ∀ c : ZInQ.Contrib.G9.PkgI4.GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c →
-      (R16Used.frobMat ℓ A θ b c).det = -1)
+      (compMat ℓ A θ b emb c).det = -1)
     (hweak : ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p →
       ∃ c : Fd, (c : ℂ) = χ (p : ZMod N) ∧
         aeval (R16Used.frobMat ℓ A θ b σ) (R16Used.esPoly ℓ (a p) (c * (p : Fd))) = 0) :
@@ -373,11 +379,7 @@ theorem component_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ
       ((isOpen_ne_fun (hMc 1 0) continuous_const).union (isOpen_ne_fun (hMc 0 0) (hMc 1 1)))
   obtain ⟨c0, hc0⟩ := exists_isComplexConj
   have hc0sq : c0 * c0 = 1 := IsComplexConj.mul_self hc0
-  have hdc0 : D c0 = -1 := by
-    simp only [D, hM, compMat]
-    rw [show (R16Used.frobMat ℓ A θ b c0).map (R16Used.liftHom (k := ℚ_[ℓ]) emb) =
-      (R16Used.liftHom (k := ℚ_[ℓ]) emb).mapMatrix (R16Used.frobMat ℓ A θ b c0) from rfl,
-      ← RingHom.map_det, hodd c0 hc0, map_neg, map_one]
+  have hdc0 : D c0 = -1 := hodd c0 hc0
   have hNS0 : DS965Weak.NonScalar (M c0) := by
     by_contra hns
     simp only [DS965Weak.NonScalar, not_or, not_not] at hns
@@ -435,7 +437,7 @@ open PkgI4 (Qbar GQ CF coeff IsNewform)
 
 /-- The conclusion of the weak-reading leaf at one abelian variety `J`: a quotient `π : J ↠ A`
 with `θ : K_f → End⁰(A)` such that, for every prime `ℓ`, `V_ℓ(A)` is free of rank 2 over
-`ℚ_ℓ ⊗ K_f`, complex conjugation has determinant `−1` over `ℚ_ℓ ⊗ K_f` (oddness), and every
+`ℚ_ℓ ⊗ K_f`, complex conjugation has determinant `−1` on every `ι`-component (oddness), and every
 arithmetic Frobenius at `p ∤ Nℓ` **satisfies** `X² − a_p X + χ(p) p` over `ℚ_ℓ ⊗ K_f`. -/
 def AfTateWeakOddAt (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (J : AbVar ℚ) : Prop :=
   ∃ (A : AbVar ℚ) (π : Hom J A) (θ : coeffField f →+* A.End0),
@@ -443,7 +445,8 @@ def AfTateWeakOddAt (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (J : 
     ∀ (ℓ : ℕ) [Fact ℓ.Prime],
       ∃ b : (letI := R16Used.tensorModule ℓ A θ;
           Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] coeffField f) (A.V ℓ)),
-        (∀ c : GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c → (R16Used.frobMat ℓ A θ b c).det = -1) ∧
+        (∀ (emb : coeffField f →+* PadicAlgCl ℓ) (c : GQ), ZInQ.Contrib.G9.PkgI4.IsComplexConj c →
+          LinearMap.det (frobOn ℓ A θ emb c) = -1) ∧
         ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
           ∃ c : coeffField f, (c : ℂ) = χ (p : ZMod N) ∧
             aeval (R16Used.frobMat ℓ A θ b σ)
@@ -477,8 +480,11 @@ theorem r16_of_weakOdd (h : AfTateWeakOdd) (hT : PkgI3.TateModuleFree) :
     obtain ⟨h2, -⟩ := R16Used.iota_component ℓ A θ b emb
     refine ⟨h2, fun p hp hpN σ hσ => ?_⟩
     obtain ⟨c, hc, -⟩ := hweak p hp hpN σ hσ
+    have hodd' : ∀ c : ZInQ.Contrib.G9.PkgI4.GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c →
+        (compMat ℓ A θ b emb c).det = -1 := fun c hc =>
+      (trace_det_frobOn ℓ A θ b emb c).2.symm.trans (hodd emb c hc)
     have hcp := component_charpoly ℓ A hT (coeffField f) θ b emb N hN χ
-      (fun p => ⟨PkgI4.coeff f p, coeff_mem_coeffField f p⟩) hodd hweak p hp hpN σ hσ c hc
+      (fun p => ⟨PkgI4.coeff f p, coeff_mem_coeffField f p⟩) hodd' hweak p hp hpN σ hσ c hc
     obtain ⟨htr, hdet⟩ := R16Used.trace_det_of_charpoly _ _ _ hcp
     obtain ⟨htr', hdet'⟩ := trace_det_frobOn ℓ A θ b emb σ
     refine ⟨fun a ha => ?_, fun c' hc' => ?_⟩
@@ -498,6 +504,186 @@ theorem r16CoreY_of_weakOdd (h : AfTateWeakOdd) (hM : AvSplit.MumfordTorsionAlgC
 
 end Leaf
 
+/-! ## 7. The weak-reading leaf is a consequence of the strong-reading leaf `AfTateCharPoly` -/
+
+section Strong
+
+variable (ℓ : ℕ) [Fact ℓ.Prime] (A : AbVar ℚ)
+
+open scoped MatrixGroups ModularForm
+open PkgI4 (CF coeff IsNewform)
+
+/-- For a weight-2 newform with nebentypus `χ`, `χ(−1) = 1` (`−1 ∈ Γ₀(N)` acts trivially in even
+weight, and `f ≠ 0`). -/
+theorem chi_neg_one_of_newform {N : ℕ} {χ : DirichletCharacter ℂ N} {f : CF N 2}
+    (hf : IsNewform f χ) : χ (-1) = 1 := by
+  obtain ⟨⟨hneb, h1, -⟩, -⟩ := hf
+  have hmem : (-1 : SL(2, ℤ)) ∈ CongruenceSubgroup.Gamma0 N := by
+    rw [CongruenceSubgroup.Gamma0_mem]; simp
+  have h := hneb (-1) hmem
+  have hd : ((((-1 : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) 1 1 : ℤ) : ZMod N) = -1 := by simp
+  rw [hd] at h
+  by_contra hχ
+  have hz : (⇑f : UpperHalfPlane → ℂ) = 0 := by
+    funext τ
+    have e := congrFun h τ
+    rw [ModularForm.SL_slash_apply] at e
+    simp only [Pi.smul_apply, smul_eq_mul] at e
+    have hden : UpperHalfPlane.denom ((-1 : SL(2, ℤ)) : GL (Fin 2) ℝ) τ = -1 := by
+      simp [UpperHalfPlane.denom]
+    have hact : ((-1 : SL(2, ℤ)) • τ) = τ := by
+      rw [ModularGroup.SL_neg_smul, one_smul]
+    rw [hact] at e
+    rw [show UpperHalfPlane.denom (-1 : SL(2, ℤ)) τ = -1 from hden] at e
+    have e2 : (1 - χ (-1)) * f τ = 0 := by
+      have : ((-1 : ℂ) ^ (-(2 : ℤ))) = 1 := by norm_num
+      rw [this, mul_one] at e
+      linear_combination e
+    exact (mul_eq_zero.mp e2).resolve_left (sub_ne_zero.mpr (Ne.symm hχ))
+  have : PkgI4.coeff f 1 = 0 := by
+    simp only [PkgI4.coeff]
+    rw [hz, UpperHalfPlane.qExpansion_zero]
+    simp
+  rw [this] at h1
+  exact zero_ne_one h1
+
+open ZInQ.Contrib.G9.PkgI4 in
+/-- Complex conjugation inverts roots of unity. -/
+theorem complexConj_rootOfUnity {c : GQ} (hc : IsComplexConj c) {ζ : Qbar} {m : ℕ} (hm : m ≠ 0)
+    (hζ : ζ ^ m = 1) : c ζ = ζ⁻¹ := by
+  obtain ⟨ι, hι⟩ := hc
+  apply ι.toRingHom.injective
+  change ι (c ζ) = ι ζ⁻¹
+  rw [hι, map_inv₀]
+  have hn : ‖ι ζ‖ = 1 :=
+    Complex.norm_eq_one_of_pow_eq_one (by rw [← map_pow, hζ, map_one]) hm
+  rw [Complex.inv_def, Complex.normSq_eq_norm_sq, hn]
+  simp
+
+theorem pow_neg_one_val {M : Type*} [Group M] {t : M} {n : ℕ} [NeZero n] (ht : t ^ n = 1) :
+    t ^ ((-1 : ZMod n)).val = t⁻¹ := by
+  rcases Nat.lt_or_ge n 2 with h | h
+  · have hn1 : n = 1 := by have := NeZero.ne n; omega
+    subst hn1
+    have : t = 1 := by simpa using ht
+    simp [this]
+  · haveI : Fact (1 < n) := ⟨by omega⟩
+    have hv : ((-1 : ZMod n)).val = n - 1 := by
+      rw [ZMod.neg_val, ite_eq_right_iff.mpr (fun h => absurd h one_ne_zero), ZMod.val_one]
+    rw [hv, eq_inv_iff_mul_eq_one, ← pow_succ, Nat.sub_add_cancel (by omega), ht]
+
+open ZInQ.Contrib.G9.PkgI4 ZInQ.Contrib.HodgeSplit in
+theorem cycQ_complexConj {ℓ : ℕ} [Fact ℓ.Prime] {c : GQ} (hc : IsComplexConj c) :
+    ((G0Galois.cycQ ℓ c : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) = -1 := by
+  have hcy : ((cyclotomicCharacter Qbar ℓ c.toRingEquiv : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) = -1 := by
+    refine PadicInt.ext_of_toZModPow.mp fun n => ?_
+    rw [cyclotomicCharacter.toZModPow, map_neg, map_one]
+    have hl : (ℓ ^ n) ≠ 0 := pow_ne_zero _ (Fact.out : ℓ.Prime).ne_zero
+    haveI : NeZero (ℓ ^ n) := ⟨hl⟩
+    refine (modularCyclotomicCharacter.unique Qbar _ c.toRingEquiv fun t ht => ?_).symm
+    have htn : t ^ (ℓ ^ n) = 1 := (mem_rootsOfUnity _ _).mp ht
+    have htn' : (t : Qbar) ^ (ℓ ^ n) = 1 := by
+      rw [← Units.val_pow_eq_pow_val, htn, Units.val_one]
+    change c (t : Qbar) = ((t ^ ((-1 : ZMod (ℓ ^ n))).val : Qbarˣ) : Qbar)
+    rw [complexConj_rootOfUnity hc hl htn', pow_neg_one_val htn, Units.val_inv_eq_inv_val]
+  change algebraMap ℚ_[ℓ] (PadicAlgCl ℓ)
+    (((cyclotomicCharacter Qbar ℓ c.toRingEquiv : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) : ℚ_[ℓ]) = _
+  rw [hcy]
+  simp
+
+open ZInQ.Contrib.G9.PkgI4 ZInQ.Contrib.HodgeSplit in
+theorem eps0_complexConj {ℓ : ℕ} [Fact ℓ.Prime] (ιC : Qbar →ₐ[ℚ] ℂ) (ιL : Qbar →ₐ[ℚ] PadicAlgCl ℓ)
+    {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (hχ : χ (-1) = 1) {c : GQ}
+    (hc : IsComplexConj c) :
+    ((eps0 ιC ιL χ c : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) = 1 := by
+  obtain ⟨γ, hγ, hval⟩ := chiL_spec ιC ιL χ (modCycQ c)
+  have hm : ((modCycQ (N := N) c : (ZMod N)ˣ) : ZMod N) = -1 := by
+    refine (modularCyclotomicCharacter.unique Qbar _ c.toRingEquiv fun t ht => ?_).symm
+    have htn : t ^ N = 1 := (mem_rootsOfUnity _ _).mp ht
+    have htn' : (t : Qbar) ^ N = 1 := by rw [← Units.val_pow_eq_pow_val, htn, Units.val_one]
+    change c (t : Qbar) = ((t ^ ((-1 : ZMod N)).val : Qbarˣ) : Qbar)
+    rw [complexConj_rootOfUnity hc (NeZero.ne N) htn', pow_neg_one_val htn,
+      Units.val_inv_eq_inv_val]
+  rw [hm, hχ] at hγ
+  have hγ1 : γ = 1 := ιC.toRingHom.injective (by rw [map_one]; exact hγ)
+  change ((chiL ιC ιL χ (modCycQ c) : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) = 1
+  rw [hval, hγ1, map_one]
+
+open ZInQ.Contrib.HodgeSplit in
+/-- **Oddness from the characteristic-polynomial reading (glue).** If every arithmetic Frobenius
+at `p ∤ Nℓ` has characteristic polynomial `X² − a_p X + χ(p)p` over `ℚ_ℓ ⊗ F` and `χ(−1) = 1`,
+then complex conjugation has determinant `−1` on every `ι`-component: the determinant is the
+character `ε₀ χ_ℓ` (Chebotarev, T18), which is `χ(−1) · (−1) = −1` at complex conjugation. -/
+theorem odd_of_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ) (θ : Fd →+* A.End0)
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] Fd) (A.V ℓ))
+    (emb : Fd →+* PadicAlgCl ℓ) (N : ℕ) (hN : 0 < N) (χ : DirichletCharacter ℂ N) (a : ℕ → Fd)
+    (hχ : χ (-1) = 1)
+    (hstrong : ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p →
+      ∃ c : Fd, (c : ℂ) = χ (p : ZMod N) ∧
+        (R16Used.frobMat ℓ A θ b σ).charpoly = R16Used.esPoly ℓ (a p) (c * (p : Fd))) :
+    ∀ c : ZInQ.Contrib.G9.PkgI4.GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c →
+      (compMat ℓ A θ b emb c).det = -1 := by
+  haveI : NeZero N := ⟨hN.ne'⟩
+  obtain ⟨ιC⟩ : Nonempty (ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] ℂ) := ⟨IsAlgClosed.lift⟩
+  obtain ⟨ιL, hιL⟩ := exists_iotaL ℓ Fd emb ιC
+  set M := compMat ℓ A θ b emb with hM
+  let Fc : PkgI4.GQ → PadicAlgCl ℓ := fun σ =>
+    ((eps0 ιC ιL χ σ : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) *
+      ((G0Galois.cycQ ℓ σ : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ)
+  have hFc : Continuous Fc :=
+    (Units.continuous_val.comp (eps0_continuous ιC ιL χ)).mul
+      (Units.continuous_val.comp (continuous_cycQ ℓ))
+  have hMc : ∀ i j, Continuous fun σ => M σ i j := continuous_compMat_entry ℓ A θ hT b emb
+  let D : PkgI4.GQ → PadicAlgCl ℓ := fun σ => (M σ).det
+  have hDc : Continuous D := by
+    have : D = fun σ => M σ 0 0 * M σ 1 1 - M σ 0 1 * M σ 1 0 := by
+      funext σ; exact Matrix.det_fin_two _
+    rw [this]
+    exact ((hMc 0 0).mul (hMc 1 1)).sub ((hMc 0 1).mul (hMc 1 0))
+  have hDF : ∀ σ ∈ (Set.univ : Set PkgI4.GQ), D σ = Fc σ := by
+    refine DS965Weak.eq_on_open_of_eq_on_arithFrob (N * ℓ).primeFactors D Fc hDc hFc _
+      isOpen_univ ?_
+    intro p hp hpS v τ hv hτ _
+    have hpN : ¬ p ∣ N * ℓ := fun h => hpS (Nat.mem_primeFactors.mpr
+      ⟨hp, h, Nat.mul_ne_zero hN.ne' (Fact.out : ℓ.Prime).ne_zero⟩)
+    have hτ' : IsFrobAt τ p := isFrobAt_of_isArithFrob τ v p hp hv hτ
+    obtain ⟨c, hc, hcp⟩ := hstrong p hp hpN τ hτ'
+    have hcp' : (M τ).charpoly =
+        Polynomial.X ^ 2 - C (emb (a p)) * Polynomial.X + C (emb (c * (p : Fd))) := by
+      rw [hM, compMat, Matrix.charpoly_map, hcp, esPoly_map]
+    obtain ⟨-, hdet⟩ := R16Used.trace_det_of_charpoly _ _ _ hcp'
+    have hpN' : ¬ p ∣ N := fun h => hpN (dvd_mul_of_dvd_left h ℓ)
+    have hpl : p ≠ ℓ := by rintro rfl; exact hpN (dvd_mul_left p N)
+    obtain ⟨γ, hγ, he⟩ := eps0_frobAt ιC ιL χ hp hpN' hτ'
+    change (M τ).det = _ * _
+    rw [hdet, he, cycQ_frobAt hp hpl hτ', hιL γ c (hc.trans hγ.symm), map_mul, map_natCast]
+  intro c hc
+  have h := hDF c (Set.mem_univ _)
+  change (M c).det = -1
+  change (M c).det = _ at h
+  rw [h]
+  change ((eps0 ιC ιL χ c : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) *
+      ((G0Galois.cycQ ℓ c : (PadicAlgCl ℓ)ˣ) : PadicAlgCl ℓ) = -1
+  rw [eps0_complexConj ιC ιL χ hχ hc, cycQ_complexConj hc, one_mul]
+
+/-- **The weak-reading leaf is never stronger than `AfTateCharPoly` (glue, proved).** The weak
+relation is Cayley–Hamilton; oddness follows from the characteristic polynomials at Frobenius by
+`odd_of_charpoly` and `χ(−1) = 1`. -/
+theorem weakOdd_of_afTate (h : R16Used.AfTateCharPoly) (hT : TateModuleFree) : AfTateWeakOdd := by
+  intro N χ f J hN hf hJ
+  obtain ⟨A, π, θ, hπ, hb⟩ := h N χ f J hN hf hJ
+  refine ⟨A, π, θ, hπ, fun ℓ _ => ?_⟩
+  obtain ⟨b, hcp⟩ := hb ℓ
+  refine ⟨b, fun emb c hc => ?_, fun p hp hpN σ hσ => ?_⟩
+  · rw [(trace_det_frobOn ℓ A θ b emb c).2]
+    exact odd_of_charpoly ℓ A hT (coeffField f) θ b emb N hN χ
+      (fun p => ⟨PkgI4.coeff f p, coeff_mem_coeffField f p⟩) (chi_neg_one_of_newform hf) hcp c hc
+  · obtain ⟨c, hc, hch⟩ := hcp p hp hpN σ hσ
+    exact ⟨c, hc, by rw [← hch]; exact Matrix.aeval_self_charpoly _⟩
+
+end Strong
+
 end ISJ1Weak
 
 #print axioms ISJ1Weak.r16CoreY_of_weakOdd
+#print axioms ISJ1Weak.weakOdd_of_afTate
