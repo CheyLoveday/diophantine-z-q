@@ -573,7 +573,8 @@ def RingClassJd : Prop :=
     ∃ (J : integralIdealsPrimeTo (conductorOrder (QNeg m) d).conductorModulus) (a b : ℤ),
       (conductorOrder (QNeg m) d).picClass J = cl ∧ 0 < a ∧ 4 * a ∣ b ^ 2 - (-(m : ℤ)) ∧
       IsCoprime a M ∧ IsCoprime a b ∧ Ideal.absNorm (J : Ideal (𝓞 (QNeg m))) = a.natAbs ∧
-      idealLat m d J = jLatd (-(m : ℤ)) a b d
+      idealLat m d J = jLatd (-(m : ℤ)) a b d ∧
+      (((J : Ideal (𝓞 (QNeg m))) = ⊤ ∧ a = 1) ∨ ((J : Ideal (𝓞 (QNeg m))).IsMaximal ∧ a.natAbs.Prime))
 
 /-- **(Genus theory: the Artin symbol of `√d` in the ring class field of conductor `d`.)** For `d ≡ 1 (mod 4)`
 squarefree, `K(√d)` lies in the ring class field of `𝒪_d = ℤ + d𝒪_K`, and the Artin symbol of an ideal `J` prime
@@ -587,7 +588,8 @@ def GenusSqrtD : Prop :=
     ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
       Complex.I * (Real.sqrt m : ℂ) →
   ∀ (σ : ℂ ≃+* ℂ) (J : integralIdealsPrimeTo (conductorOrder (QNeg m) d).conductorModulus) (a : ℤ),
-    0 < a → Ideal.absNorm (J : Ideal (𝓞 (QNeg m))) = a.natAbs →
+    0 < a → Ideal.absNorm (J : Ideal (𝓞 (QNeg m))) = a.natAbs → IsCoprime a (2 * d) →
+    (((J : Ideal (𝓞 (QNeg m))) = ⊤ ∧ a = 1) ∨ ((J : Ideal (𝓞 (QNeg m))).IsMaximal ∧ a.natAbs.Prime)) →
     (∀ x : ringClassField (conductorOrder (QNeg m) d),
       σ (ιC (e x)) = ιC (e (ringClassArtinEquiv (conductorOrder (QNeg m) d)
         ((conductorOrder (QNeg m) d).picClass J) x))) →
@@ -608,11 +610,12 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
   set O := conductorOrder (QNeg m) d with hO
   set cl : Pic O := (ringClassArtinEquiv O).symm
     (AlgEquiv.restrictNormalHom (ringClassField O) τg) with hcl
-  set M : ℤ := d * m * ∏ Q ∈ S, Q.A with hMdef
+  set M : ℤ := 2 * d * m * ∏ Q ∈ S, Q.A with hMdef
   have hM : M ≠ 0 := by
-    refine mul_ne_zero (mul_ne_zero (by exact_mod_cast hd0.ne') (by exact_mod_cast NeZero.ne m)) ?_
+    refine mul_ne_zero (mul_ne_zero (mul_ne_zero two_ne_zero (by exact_mod_cast hd0.ne'))
+      (by exact_mod_cast NeZero.ne m)) ?_
     exact Finset.prod_ne_zero_iff.2 fun Q _ => Q.A_pos.ne'
-  obtain ⟨J, a₀, b, hJc, ha₀, hab, hcopM, hcopb, hNJ, hJlat⟩ := hJ m hmsq hm3 d M hM cl
+  obtain ⟨J, a₀, b, hJc, ha₀, hab, hcopM, hcopb, hNJ, hJlat, hcase⟩ := hJ m hmsq hm3 d M hM cl
   have hArt : ∀ x : ringClassField O, ρ (e x) = e (ringClassArtinEquiv O (O.picClass J) x) := by
     intro x
     rw [hJc, hρe, hcl, MulEquiv.apply_symm_apply]
@@ -620,9 +623,9 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
     exact (AlgEquiv.restrictNormalHom_apply _ τg x).symm
   have hart : ∀ x : ringClassField O, σ (ιC (e x)) = ιC (e (ringClassArtinEquiv O (O.picClass J) x)) :=
     fun x => by rw [hρ, hArt]
-  have hgen := hG m hmsq hm3 d hd4 hsq e he σ J a₀ ha₀ hNJ hart
-  have hcopd : IsCoprime a₀ d := hcopM.of_mul_right_left.of_mul_right_left
-  have hcopm : IsCoprime a₀ m := hcopM.of_mul_right_left.of_mul_right_right
+  have hcop2d : IsCoprime a₀ (2 * d) := hcopM.of_mul_right_left.of_mul_right_left
+  have hgen := hG m hmsq hm3 d hd4 hsq e he σ J a₀ ha₀ hNJ hcop2d hcase hart
+  have hcopd : IsCoprime a₀ d := hcop2d.of_mul_right_right
   -- the level-32 transport at conductor `d` (hx-used's eta route, theta-wp8)
   have hsrx := X0EtaRoute.srAt_x_theta ThetaWP8.thetaWeierstrass8 hCM
   have hsry := X0EtaRoute.srAt_y_theta ThetaWP8.thetaWeierstrass8 hCM
@@ -914,7 +917,8 @@ theorem ringClassJd : RingClassJd := by
       (conductorOrder (QNeg m) f).conductorModulus) (a b : ℤ),
       (conductorOrder (QNeg m) f).picClass J = cl ∧ 0 < a ∧ 4 * a ∣ b ^ 2 - (-(m : ℤ)) ∧
       IsCoprime a M ∧ IsCoprime a b ∧ Ideal.absNorm (J : Ideal (𝓞 (QNeg m))) = a.natAbs ∧
-      idealLat m f J = jLatd (-(m : ℤ)) a b f := by
+      idealLat m f J = jLatd (-(m : ℤ)) a b f ∧
+      (((J : Ideal (𝓞 (QNeg m))) = ⊤ ∧ a = 1) ∨ ((J : Ideal (𝓞 (QNeg m))).IsMaximal ∧ a.natAbs.Prime)) := by
     intro hN
     obtain ⟨r, hr⟩ := exists_int_sub_mem_of_absNorm 𝔭.asIdeal hp hN (thetaO m h3)
     have hpMm : ¬ (p : ℤ) ∣ M * m :=
@@ -930,7 +934,8 @@ theorem ringClassJd : RingClassJd := by
       refine ⟨t, ?_⟩
       have hm : (m : ℤ) = 4 * k + 3 := by exact_mod_cast hk
       rw [hm]; linear_combination 4 * ht
-    refine ⟨⟨𝔭.asIdeal, hJ⟩, p, 2 * r - 1, h𝔭c hJ, by exact_mod_cast hp.pos, hdiv, ?_, ?_, ?_, ?_⟩
+    refine ⟨⟨𝔭.asIdeal, hJ⟩, p, 2 * r - 1, h𝔭c hJ, by exact_mod_cast hp.pos, hdiv, ?_, ?_, ?_, ?_,
+      Or.inr ⟨𝔭.isMaximal, by simpa using hp⟩⟩
     · exact (Prime.irreducible hpZ).coprime_iff_not_dvd.2 (fun h => hpMm (dvd_mul_of_dvd_left h _))
     · refine (Prime.irreducible hpZ).coprime_iff_not_dvd.2 (fun hb => hpMm (dvd_mul_of_dvd_right ?_ _))
       have h4 : (p : ℤ) ∣ (2 * r - 1) ^ 2 - (-(m : ℤ)) := dvd_trans ⟨4, by ring⟩ hdiv
@@ -961,7 +966,7 @@ theorem ringClassJd : RingClassJd := by
     rw [h𝔭c hJ] at h1
     subst h1
     refine ⟨1, 1, 1, map_one _, one_pos, ⟨((m : ℤ) + 1) / 4, by omega⟩, isCoprime_one_left,
-      isCoprime_one_left, by simp [Ideal.one_eq_top], ?_⟩
+      isCoprime_one_left, by simp [Ideal.one_eq_top], ?_, Or.inl ⟨by simp [Ideal.one_eq_top], rfl⟩⟩
     have h := idealLat_eq_jLatd (f := f) hsq h3 (⊤ : Ideal (𝓞 (QNeg m))) 1 1 Submodule.mem_top
       Submodule.mem_top (fun y _ => by
         obtain ⟨x₀, x₁, rfl⟩ := exists_coords_theta hsq h3 y
