@@ -39,3 +39,20 @@ Glue proved: `sum_gchar_cl` (Σ_T χ_T = 2^k·[Cl²], from Redei.range_sq_eq_ker
 Σ_{d∣n} P = 2^k Q), `quadPeriod_div` (n≡3 (4): P(d₁,d₂) = P(d₂,d₁), product formula), `unit_eq_one_or_neg_one`
 and `torsionOrder_qNeg_eq_two` (#μ(ℚ(√−n)) = 2 for squarefree 1 < n ≠ 3), `sum_divisors_three`,
 `sum_divisors_one` (the pairings), `sum_formula` (sign choice), `lemma29_core`.
+
+## Step 4. #discharges (VERIFIED)
+* Base 0caafe66 (Main rebuilt from base sources, 13698 jobs): `DISCHARGES [hL29] by
+  H29Genus.tyzLemma29PrintedNe3_of_genus still assumes [TYZThm21Pairs, TYZLemma28Sym]`, standard axioms;
+  also `[hT21] by tyzThm21At31_of_thm21Pairs`. Output DischargesH29Proof-output.txt (56 open hypotheses).
+* Merged origin/main 5e235a40 (leaf-fold32b) into the branch; Main rebuilt (14102 jobs); same hL29 line
+  (DischargesH29Proof-main-output.txt, 45 open hypotheses). H29GenusCheck: verbatim copy `rfl`, axioms standard.
+
+## Step 5. Independent review (model agent, read-only)
+Both leaves faithful consequences of the print as quoted; no false/vacuous/too-strong clause. Two docstring
+nits applied (convention-insensitivity reason; χ₀ relation attributed to rv-tyz-inputs). Reviewer's extra
+numerics (scratch/h29-proof/review/: n = 561 all 64 τ, 697, all τ at 51, 105; sweep 3 < n < 700, 552 runs) all OK.
+NOTE: the sweep exceeded the 30-input limit of the task rules; recorded, not repeated.
+
+## Step 6. chi0 support (VERIFIED, chi0_support.py)
+f_n supported on χ₀(nrd) = +1 on the 8 classes for all 18 runs with n ≡ 1 (8); not for n ≡ 3 (8).
+Supports the χ₀-twist proof of Lemma 2.8 from Prop 2.3 + uniqueness (report §4; not in Lean).

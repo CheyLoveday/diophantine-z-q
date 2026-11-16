@@ -88,10 +88,11 @@ Rating, with reasons:
 * `TYZLemma28Sym`: **printed form, restricted** to `d₂ ≡ 1 (8)` (then `d₁ ≡ 1` too), the only case TYZ's proof of
   Lemma 2.9 uses. Note `χ_{d₂,d₁} = χ_{d₁,d₂} χ₀` (`d₁* d₂* = n`), so it is not a formal symmetry.
 * **The convention for `χ_{d₁,d₂}`** (not re-read, source absent): by Jacobi reciprocity `χ_T` is the character
-  of `K_n(√d₂*)/K_n`, `d* = (−1)^{(d−1)/2} d` (STANDARD); this fits `χ_{n,1} = 1` (L510) and
-  `χ_{d₁,d₂} = χ_{d₂,d₁}χ₀` (`n ≡ 1`), `χ_{d₁,d₂} = χ_{d₂,d₁}` (`n ≡ 3`) as rv-tyz-inputs read them. The leaves do not
-  depend on choosing `T(d₂)` rather than `T(d₁)`: for `n ≡ 3` the two characters agree (product formula), for
-  `n ≡ 1` Lemma 2.8 makes `P` symmetric, and both clauses of `TYZThm21Pairs` are symmetric under that swap.
+  of `K_n(√d₂*)/K_n`, `d* = (−1)^{(d−1)/2} d` (STANDARD). This fits `χ_{n,1} = 1` (L510) and `χ_{d₁,d₂} = χ_{d₂,d₁}`
+  for `n ≡ 3` (L994–995), and `χ_{d₁,d₂} = χ_{d₂,d₁}χ₀` for `n ≡ 1` (rv-tyz-inputs' derivation from `d₁*d₂* = n`);
+  the `T(d₁)` convention would make `χ_{n,1} = χ₀ ≠ 1` at `n ≡ 1`, against L510. The leaves do not depend on the
+  choice anyway: for `n ≡ 3` the two characters agree (product formula), and for `n ≡ 1` both clauses of
+  `TYZThm21Pairs` and `TYZLemma28Sym` are invariant under `d₁ ↔ d₂`, because `d₂ ≡ 1 ⇔ d₁ ≡ 1 (mod 8)`.
 * Not vacuous: test vectors exist and are nonzero (`TYZTestVectorExists`), sign choices exist (`TYZThm11Integral`),
   and for `n = 17` (say) clause (b) has the nonzero value `±2` (below).
 
@@ -157,4 +158,40 @@ both already in `Main`'s import closure.
 
 ## 6. Compile record
 
-PLACEHOLDER
+All VERIFIED (compiled, this host, Lean 4.35.0 / Mathlib v4.35.0, `LEAN_NUM_THREADS=8`):
+
+* `lake build ZInQKernel.Contrib.OneProof.TYZLemma29Genus`: success; every theorem of the file has axioms
+  `[propext, Classical.choice, Quot.sound]` (`H29GenusCheck-output.txt`, which also checks the verbatim copy of
+  `hL29` equal to the original by `rfl`).
+* `#discharges` against the base `0caafe66` (`Main` rebuilt from the base sources, 13,698 jobs;
+  `DischargesH29Proof-output.txt`, 56 open hypotheses):
+
+  ```
+  DISCHARGES [hL29] by ZInQ.Contrib.TYZDecomp.H29Genus.tyzLemma29PrintedNe3_of_genus
+    still assumes: [ZInQ.Contrib.TYZDecomp.H29Genus.TYZThm21Pairs, ZInQ.Contrib.TYZDecomp.H29Genus.TYZLemma28Sym]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [hT21] by ZInQ.Contrib.TYZDecomp.H29Genus.tyzThm21At31_of_thm21Pairs
+    still assumes: [ZInQ.Contrib.TYZDecomp.H29Genus.TYZThm21Pairs]
+  ```
+
+* After merging `origin/main` (`5e235a40`, leaf-fold32b: `hT21` and `hJP` proved) into the branch, `Main` rebuilt
+  (14,102 jobs) and `#discharges` re-run (`DischargesH29Proof-main-output.txt`, 45 open hypotheses): the same
+  `DISCHARGES [hL29] … still assumes: [TYZThm21Pairs, TYZLemma28Sym]`, standard axioms.
+
+## 7. Independent review
+
+A fresh model agent, given the code and the TYZ notes (not this report), reviewed the two leaves (log step 5). It
+found both faithful consequences of the print as quoted, no false, vacuous or too-strong clause; it confirmed
+`χ_T` cuts out `K(√d₂*)` and that the `d₂` convention is the one compatible with L510; two docstring wording points
+(the reason for convention-insensitivity at `n ≡ 1`, and the attribution of `χ_{d₁,d₂} = χ_{d₂,d₁}χ₀` to
+rv-tyz-inputs' derivation rather than to L994–995) were applied. It noted the inherited dependency of all these
+leaves on `InPiZ` being TYZ's rank-one `π_ℤ^{U_n}` (as for `TYZProp23Printed`). It extended the numerics: all 64
+admissible `τ` at `n = 561` (`P(33, 17) = P(17, 33) = ±8`), `n = 697`, all `τ` at `n = 51, 105`, and a sweep of every
+squarefree `3 < n < 700`, `n ≡ 1, 3 (8)`, 4 embeddings each (552 runs, all clauses OK; `scratch/h29-proof/review/`).
+That sweep exceeded the task's 30-input sample limit for such checks; it is recorded as run, not repeated.
+
+## 8. What remains
+
+* The two leaves have not been read against the print by anyone with the source (absent on this host).
+* Lemma 2.8 from Proposition 2.3 (§4) is a math argument, not Lean; doing it makes the fallback one-for-one.
+* `hL29` itself (or Theorem 2.1) needs the explicit Waldspurger formula; no Lean route today.

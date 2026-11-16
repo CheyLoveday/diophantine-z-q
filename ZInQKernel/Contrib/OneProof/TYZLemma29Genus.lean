@@ -41,10 +41,11 @@ Waldspurger formula, which is not in Lean (see the report).
 **`χ_{d₁,d₂}`.** The leaves use the project's genus characters
 `TYZ35.gchar n T = Π_{q ∈ T} χ_q`, `χ_q([𝔞]) = (N𝔞/q)` (`RouteK.Redei.chi`), with `T` the primes of `d₂`
 (`TYZ35.divSet n d₂`). By Jacobi reciprocity `χ_T` is the character of `K_n(√d₂*)/K_n`,
-`d* = (−1)^{(d−1)/2} d` (STANDARD); TYZ's convention `χ_{n,1} = 1` (L510) and `χ_{d₁,d₂} = χ_{d₂,d₁}χ₀`
-(`n ≡ 1`), `χ_{d₁,d₂} = χ_{d₂,d₁}` (`n ≡ 3`) (L994–995, as read in `rv-tyz-inputs.md` §1.2) fit this. The two
-leaves are insensitive to the choice between `χ_{T(d₂)}` and `χ_{T(d₁)}`: for `n ≡ 3` the two agree, and for
-`n ≡ 1` Lemma 2.8 makes `P` symmetric; both conditions in `TYZThm21Pairs` are then symmetric too.
+`d* = (−1)^{(d−1)/2} d` (STANDARD); TYZ's convention `χ_{n,1} = 1` (L510) and `χ_{d₁,d₂} = χ_{d₂,d₁}` for `n ≡ 3` (L994–995) fit this, as does
+`χ_{d₁,d₂} = χ_{d₂,d₁}χ₀` for `n ≡ 1` (derived in `rv-tyz-inputs.md` §1.2 from `d₁*d₂* = n`). The two leaves
+are insensitive to the choice between `χ_{T(d₂)}` and `χ_{T(d₁)}`: for `n ≡ 3` the two characters agree
+(product formula), and for `n ≡ 1` both clauses of `TYZThm21Pairs` and `TYZLemma28Sym` are invariant under
+`d₁ ↔ d₂`, since `d₂ ≡ 1 ⇔ d₁ ≡ 1 (mod 8)`. (Independent model review, h29-proof log step 5.)
 
 No `sorry`, no `axiom`.
 -/
