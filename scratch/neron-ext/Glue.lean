@@ -50,24 +50,25 @@ theorem mem_of_supp {U : (S L).Opens} {X : Over (S L)} (h : Supp L U X) (x : X.l
   have : x ∈ X.hom ⁻¹ᵁ U := by rw [h]; trivial
   exact this
 
-/-- An open immersion of `S`-schemes which is surjective over an open `U` containing the generic
-point induces an isomorphism of generic fibres. -/
-theorem isIso_gf_map {X X' : Over (S L)} (ι : X' ⟶ X) [IsOpenImmersion ι.left] (U : (S L).Opens)
-    (hU : (jL L) ⁻¹ᵁ U = ⊤) (hr : ∀ x : X.left, X.hom x ∈ U → x ∈ Set.range ι.left) :
-    IsIso ((gf L).map ι) := by
-  have hrange : Set.range (pullback.fst X.hom (jL L)) ⊆ Set.range ι.left := by
+/-- An open immersion of `Z`-schemes which is surjective over an open `U ⊆ Z` induces an isomorphism
+after base change along any `j : T → Z` landing in `U`. -/
+theorem isIso_pb_map {Z T : Scheme.{0}} (j : T ⟶ Z) {X X' : Over Z} (ι : X' ⟶ X)
+    [IsOpenImmersion ι.left] (U : Z.Opens)
+    (hU : j ⁻¹ᵁ U = ⊤) (hr : ∀ x : X.left, X.hom x ∈ U → x ∈ Set.range ι.left) :
+    IsIso ((Over.pullback j).map ι) := by
+  have hrange : Set.range (pullback.fst X.hom j) ⊆ Set.range ι.left := by
     rintro _ ⟨z, rfl⟩
     apply hr
-    have h1 : X.hom (pullback.fst X.hom (jL L) z) = jL L (pullback.snd X.hom (jL L) z) := by
+    have h1 : X.hom (pullback.fst X.hom j z) = j (pullback.snd X.hom j z) := by
       rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
     rw [h1]
-    have : pullback.snd X.hom (jL L) z ∈ (jL L) ⁻¹ᵁ U := by rw [hU]; trivial
+    have : pullback.snd X.hom j z ∈ j ⁻¹ᵁ U := by rw [hU]; trivial
     exact this
-  let a : pullback X.hom (jL L) ⟶ X'.left := IsOpenImmersion.lift ι.left _ hrange
-  have ha : a ≫ ι.left = pullback.fst X.hom (jL L) := IsOpenImmersion.lift_fac _ _ _
-  have hc : a ≫ X'.hom = pullback.snd X.hom (jL L) ≫ jL L := by
+  let a : pullback X.hom j ⟶ X'.left := IsOpenImmersion.lift ι.left _ hrange
+  have ha : a ≫ ι.left = pullback.fst X.hom j := IsOpenImmersion.lift_fac _ _ _
+  have hc : a ≫ X'.hom = pullback.snd X.hom j ≫ j := by
     rw [← Over.w ι, ← Category.assoc, ha, pullback.condition]
-  let inv : (gf L).obj X ⟶ (gf L).obj X' :=
+  let inv : (Over.pullback j).obj X ⟶ (Over.pullback j).obj X' :=
     Over.homMk (pullback.lift a (pullback.snd _ _) hc) (pullback.lift_snd _ _ _)
   refine ⟨inv, ?_, ?_⟩
   · apply Over.OverMorphism.ext
@@ -83,6 +84,11 @@ theorem isIso_gf_map {X X' : Over (S L)} (ι : X' ⟶ X) [IsOpenImmersion ι.lef
         pullback.lift_fst, pullback.lift_fst_assoc, ha, Over.id_left, Category.id_comp]
     · simp only [inv, Over.comp_left, Over.pullback_map_left, Over.homMk_left, Category.assoc,
         pullback.lift_snd, Over.id_left, Category.id_comp]
+
+theorem isIso_gf_map {X X' : Over (S L)} (ι : X' ⟶ X) [IsOpenImmersion ι.left] (U : (S L).Opens)
+    (hU : (jL L) ⁻¹ᵁ U = ⊤) (hr : ∀ x : X.left, X.hom x ∈ U → x ∈ Set.range ι.left) :
+    IsIso ((gf L).map ι) :=
+  isIso_pb_map (jL L) ι U hU hr
 
 end Setup
 
