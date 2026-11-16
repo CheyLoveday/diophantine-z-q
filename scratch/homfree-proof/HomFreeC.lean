@@ -103,4 +103,134 @@ theorem eq_zero_of_lift_lattice [DiscreteTopology ΛA] [IsZLattice ℝ ΛA] (hA 
 
 end Lift
 
+/-! ## 3. The main theorem over a field whose algebraic closure embeds into `ℂ` -/
+
+/-- The conclusion of Mumford §19 Thm 3 for `A, B` (the body of `PkgI3.HomFreeFinite`, without
+the hypothesis `ℓ ≠ char K`, which is automatic in characteristic `0`). -/
+def HomFreeConcl (A B : PkgI3.AbVar K) : Prop :=
+  Module.Free ℤ (PkgI3.AbVar.Hom A B) ∧ Module.Finite ℤ (PkgI3.AbVar.Hom A B) ∧
+    ((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ∞) : WithBot ℕ∞) ≤ 4 * A.dim * B.dim ∧
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], Function.Injective (PkgI3.AbVar.tateHomZl ℓ A B)
+
+theorem finrank_lattice {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ)) [DiscreteTopology Λ]
+    [IsZLattice ℝ Λ] : Module.finrank ℤ Λ = 2 * g := by
+  rw [ZLattice.rank ℝ Λ, Module.finrank_pi_fintype]
+  simp [Complex.finrank_real_complex, mul_comm]
+
+/-- **Mumford §19 Thm 3 when `K̄` embeds into `ℂ` (proved from AN3 and Mumford §4 App. 2).**
+`f ↦ ρ(f)|_{Λ_A}` embeds `Hom(A, B)` into `Hom_ℤ(Λ_A, Λ_B) ≅ ℤ^{4gh}`; the comparison
+`α_B : ℤ_ℓ ⊗ Λ_B ↪ T_ℓ(B)` (conj-twist's `TateLatticeInj`) and flatness of `ℤ_ℓ` give the
+injectivity of `ℤ_ℓ ⊗ Hom(A, B) → Hom(T_ℓ A, T_ℓ B)`. -/
+theorem homFreeConcl_of_emb (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) (emb : AlgebraicClosure K →+* ℂ)
+    (A B : PkgI3.AbVar K) : HomFreeConcl A B := by
+  classical
+  set σ : K →+* ℂ := emb.comp (algebraMap K (AlgebraicClosure K)) with hσ
+  have h35 := AvSplit.Final.h38 HL HT
+  have hN2 := ZInQ.HomLattice.homLinearLift_of_analyticHomLift
+    (AvSplit.HomLatticeAN3.analyticHomLift_of_C (ZInQ.HomLattice.analyticHomLiftC_of_leaf HL))
+  obtain ⟨g, hg⟩ := PkgI3.AbVar.dim_finite A
+  obtain ⟨h, hh⟩ := PkgI3.AbVar.dim_finite B
+  obtain ⟨ΛA, ΦA, hdA, hlatA, hA⟩ := h35 K A σ g hg
+  obtain ⟨ΛB, ΦB, hdB, hlatB, hB⟩ := h35 K B σ h hh
+  choose M hM using fun f => hN2 K A B σ g h ΛA ΛB ΦA ΦB hg hh hA hB f
+  have hMlat : ∀ (f : PkgI3.AbVar.Hom A B) (lam : ΛA), M f lam ∈ ΛB := fun f lam =>
+    HDec.G0Galois.lift_mem_lattice hA hB f (M f) (hM f) lam
+  let u : PkgI3.AbVar.Hom A B → (ΛA →ₗ[ℤ] ΛB) := fun f =>
+    { toFun := fun lam => ⟨M f lam, hMlat f lam⟩
+      map_add' := fun x y => Subtype.ext (by simp)
+      map_smul' := fun n x => Subtype.ext (by
+        simp only [RingHom.id_apply, Submodule.coe_smul]; exact map_zsmul (M f) n _) }
+  let U : PkgI3.AbVar.Hom A B →ₗ[ℤ] (ΛA →ₗ[ℤ] ΛB) :=
+    (AddMonoidHom.mk' u (fun f f' => by
+      apply LinearMap.ext; intro lam; apply Subtype.ext
+      change M (f + f') lam = M f lam + M f' lam
+      rw [lift_add hB f f' (M f) (M f') (M (f + f')) (hM f) (hM f') (hM (f + f'))]
+      rfl)).toIntLinearMap
+  have hUapp : ∀ f lam, ((U f lam : ΛB) : Fin h → ℂ) = M f lam := fun f lam => rfl
+  have hU : Function.Injective U := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro f hf
+    refine eq_zero_of_lift_lattice hA hB f (M f) (hM f) fun lam hlam => ?_
+    have := congrArg Subtype.val (LinearMap.congr_fun hf ⟨lam, hlam⟩)
+    rw [hUapp] at this
+    exact this
+  haveI := ZLattice.module_finite ℝ ΛA
+  haveI := ZLattice.module_free ℝ ΛA
+  haveI := ZLattice.module_finite ℝ ΛB
+  haveI := ZLattice.module_free ℝ ΛB
+  haveI : Module.Finite ℤ (ΛA →ₗ[ℤ] ΛB) := Module.Finite.linearMap ℤ ℤ ΛA ΛB
+  haveI : Module.Free ℤ (ΛA →ₗ[ℤ] ΛB) := Module.Free.linearMap ℤ ℤ ΛA ΛB
+  haveI : Module.Finite ℤ (PkgI3.AbVar.Hom A B) := Module.Finite.of_injective U hU
+  haveI : Module.IsTorsionFree ℤ (PkgI3.AbVar.Hom A B) :=
+    Function.Injective.moduleIsTorsionFree U hU (fun r m => map_zsmul U r m)
+  refine ⟨inferInstance, inferInstance, ?_, ?_⟩
+  · -- the rank bound
+    have h1 := LinearMap.finrank_le_finrank_of_injective hU
+    rw [Module.finrank_linearMap, finrank_lattice ΛA, finrank_lattice ΛB] at h1
+    have h2 : Module.finrank ℤ (PkgI3.AbVar.Hom A B) ≤ 4 * g * h := by nlinarith
+    rw [hg, hh]
+    have h3 : (((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ) : ℕ∞) : WithBot ℕ∞) ≤
+        (((4 * g * h : ℕ) : ℕ∞) : WithBot ℕ∞) := by exact_mod_cast h2
+    refine h3.trans (le_of_eq ?_)
+    push_cast
+    rfl
+  · -- injectivity of `ℤ_ℓ ⊗ Hom(A, B) → Hom(T_ℓ A, T_ℓ B)`
+    intro ℓ _
+    have hTL := HDec.G0Galois.tateLatticeInj_of_T5 (AvSplit.Final.h25 HT)
+    obtain ⟨αA, -, hαA⟩ := hTL K A emb g ΛA ΦA hg hlatA hA ℓ
+    obtain ⟨αB, hαBinj, hαB⟩ := hTL K B emb h ΛB ΦB hh hlatB hB ℓ
+    let χ : ΛA → (PkgI3.AbVar.Hom A B →ₗ[ℤ] ΛB) := fun lam => LinearMap.applyₗ lam ∘ₗ U
+    have hnat : ∀ (x : ℤ_[ℓ] ⊗[ℤ] PkgI3.AbVar.Hom A B) (lam : ΛA),
+        αB (LinearMap.lTensor ℤ_[ℓ] (χ lam) x) = PkgI3.AbVar.tateHomZl ℓ A B x (αA (1 ⊗ₜ lam)) := by
+      intro x lam
+      induction x using TensorProduct.induction_on with
+      | zero => simp
+      | tmul a f =>
+        rw [LinearMap.lTensor_tmul]
+        have e1 : PkgI3.AbVar.tateHomZl ℓ A B (a ⊗ₜ f) = a • PkgI3.AbVar.tateHom ℓ A B f := rfl
+        rw [e1, LinearMap.smul_apply]
+        change _ = a • PkgI3.AbVar.homT f (αA (1 ⊗ₜ lam))
+        rw [HDec.G0Galois.homT_tateLattice emb ℓ αA hαA αB hαB f (M f) (hM f) lam (hMlat f lam)]
+        have e2 : a ⊗ₜ[ℤ] (χ lam f) = a • ((1 : ℤ_[ℓ]) ⊗ₜ[ℤ] (χ lam f)) := by
+          rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
+        rw [e2, map_smul]
+        rfl
+      | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, LinearMap.add_apply]
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro x hx
+    have hz : ∀ lam, LinearMap.lTensor ℤ_[ℓ] (χ lam) x = 0 := fun lam =>
+      hαBinj (by rw [hnat, hx, LinearMap.zero_apply, map_zero])
+    let bA := Module.Free.chooseBasis ℤ ΛA
+    let E : (ΛA →ₗ[ℤ] ΛB) →ₗ[ℤ] (Module.Free.ChooseBasisIndex ℤ ΛA → ΛB) :=
+      LinearMap.pi (fun i => LinearMap.applyₗ (bA i))
+    have hE : Function.Injective E := by
+      rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+      intro v hv
+      apply bA.ext
+      intro i
+      exact congrFun hv i
+    haveI := ZInQ.Contrib.AVB1.flat_int_padicInt ℓ
+    have hW : Function.Injective (LinearMap.lTensor ℤ_[ℓ] (E ∘ₗ U)) :=
+      Module.Flat.lTensor_preserves_injective_linearMap _ (hE.comp hU)
+    apply hW
+    rw [map_zero]
+    apply (TensorProduct.piRight ℤ ℤ_[ℓ] ℤ_[ℓ]
+      (fun _ : Module.Free.ChooseBasisIndex ℤ ΛA => ΛB)).injective
+    rw [map_zero]
+    funext i
+    have key : ∀ y : ℤ_[ℓ] ⊗[ℤ] PkgI3.AbVar.Hom A B,
+        TensorProduct.piRight ℤ ℤ_[ℓ] ℤ_[ℓ] (fun _ : Module.Free.ChooseBasisIndex ℤ ΛA => ΛB)
+          (LinearMap.lTensor ℤ_[ℓ] (E ∘ₗ U) y) i = LinearMap.lTensor ℤ_[ℓ] (χ (bA i)) y := by
+      intro y
+      induction y using TensorProduct.induction_on with
+      | zero => simp
+      | tmul a f =>
+        rw [LinearMap.lTensor_tmul, LinearMap.lTensor_tmul, TensorProduct.piRight_apply,
+          TensorProduct.piRightHom_tmul]
+        rfl
+      | add y y' hy hy' => rw [map_add, map_add, Pi.add_apply, hy, hy', map_add]
+    rw [key, hz]
+    rfl
+
 end ZInQ.Contrib.OneProof.HomFreeC
