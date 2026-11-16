@@ -20,3 +20,13 @@ Verbatim copies: OldField.lean.txt (JavanpeykarBound), JavanpeykarPrinted.lean.t
   extension), `isClosed_of_ne_genericPoint`, `finite_of_isClosed_of_genericPoint_notMem`, `isFinite_beta` (proper + finite fibres),
   chart preimages of `D₊(X₀)`, `D₊(X₀−X₁)`, main identity `stalkMap_secR`, `exists_sub_const_mem` (residueFieldIsoBase),
   `wOf` (valuation subring `𝒪_{C,x}`), `unramified` (ramification index 1 at closed points over ℙ¹∖{0,1,∞}).
+- `degree_rep`, `degree_eq` (stalk map at generic point identifies k(P1) with k(t)); `belyiMapOfFunction_proof : BelyiMapOfFunction`
+  COMPILED, standard axioms (VERIFIED).
+- Contrib: `JavanpeykarFix/BelyiMap.lean` (copy of BelyiMap1 minus #print), `JavanpeykarFix.lean`
+  (`javanpeykarBound_of_printed_fix`). `lake build ZInQKernel.Contrib.OneProof.JavanpeykarFix` OK (12760 jobs).
+- `#discharges` (Discharges.lean → Discharges-output.txt): javanpeykarBound by `javanpeykarBound_of_printed_fix`, still assumes
+  [JavanpeykarPrintedMap, ConstantFieldExtensionUnramifiedFull, UniformizationLeafAll, MumfordTorsionAlgClosed], standard axioms;
+  "56 open hypotheses, 3119 theorems checked, 17 discharge one".
+- autofold.json; `autofold.py --dry-run` exit 0, "strict count: 34/11 on 45 -> 35/11 on 46; strictest 34/11 -> 35/11";
+  FoldDryRun.lean compiles, `sixContactMin_of_open36` standard axioms.
+- Report docs/research/javanpeykar-fix.md written.
