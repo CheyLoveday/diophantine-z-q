@@ -186,6 +186,104 @@ theorem isFaltingsMetricSq_of_metrized {g : ℕ} (M : MetrizedModel A L g) (τ :
     rw [← hl, map_smulₛₗ, hc f, smul_eq_mul]
   rw [torusMetricSq, hcoeff, hdet, norm_mul, mul_pow]
 
+
+/-- `det (fderiv (F ∘ Φ) 0) = jacDet Φ f` for any representatives of the germs `fᵢ`. -/
+theorem det_fderiv_coordMap {g : ℕ} (𝒢 : GroupModel A L) {τ : L →+* ℂ}
+    {Λ : Submodule ℤ (Fin g → ℂ)} {Φ : (Fin g → ℂ) → 𝒢.Pts τ}
+    (hΦ : 𝒢.IsAnalyticUniformization τ Λ Φ) (U : Fin g → 𝒢.G.left.Opens)
+    (hU : ∀ i, 𝒢.genericUnit ∈ U i) (s : ∀ i, Γ(𝒢.G.left, U i))
+    (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal 𝒢.genStalk) :
+    LinearMap.det ((fderiv ℂ (coordMap 𝒢 τ U s ∘ Φ) 0 : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+      (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) = 𝒢.jacDet Φ (fun i => ⟨_, hm i⟩) := by
+  have hev : coordMap 𝒢 τ U s ∘ Φ =ᶠ[𝓝 0]
+      fun z i => 𝒢.germAlong Φ (𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i)) z := by
+    have h := Filter.eventually_all.mpr fun i =>
+      ZInQ.Metrization.germAlong_eventuallyEq 𝒢 hΦ (U i) (hU i) (s i)
+    filter_upwards [h] with z hz
+    funext i
+    exact (hz i).symm
+  rw [hev.fderiv_eq, ← LinearMap.det_toMatrix', GroupModel.jacDet]
+  congr 1
+  ext i j
+  rw [LinearMap.toMatrix'_apply,
+    fderiv_pi fun i => ZInQ.Metrization.germAlong_differentiableAt 𝒢 hΦ _]
+  rfl
+
+/-- `F ∘ Φ` is strictly differentiable at `0` (holomorphic in several variables). -/
+theorem hasStrictFDerivAt_coordMap {g : ℕ} (𝒢 : GroupModel A L) {τ : L →+* ℂ}
+    {Λ : Submodule ℤ (Fin g → ℂ)} {Φ : (Fin g → ℂ) → 𝒢.Pts τ}
+    (hΦ : 𝒢.IsAnalyticUniformization τ Λ Φ) (U : Fin g → 𝒢.G.left.Opens)
+    (hU : ∀ i, 𝒢.genericUnit ∈ U i) (s : ∀ i, Γ(𝒢.G.left, U i)) :
+    HasStrictFDerivAt (coordMap 𝒢 τ U s ∘ Φ)
+      ((fderiv ℂ (coordMap 𝒢 τ U s ∘ Φ) 0).restrictScalars ℝ) 0 := by
+  set V := ⋂ i, 𝒢.dom Φ (U i)
+  have hVo : IsOpen V := isOpen_iInter_of_finite fun i => hΦ.2.2.2.1 (U i)
+  have h0V : (0 : Fin g → ℂ) ∈ V :=
+    mem_iInter.mpr fun i => ZInQ.Metrization.zero_mem_dom 𝒢 hΦ (U i) (hU i)
+  have hψd : DifferentiableOn ℂ (coordMap 𝒢 τ U s ∘ Φ) V :=
+    differentiableOn_pi.mpr fun i => (hΦ.2.2.2.2 (U i) (s i)).mono (iInter_subset _ i)
+  exact (Holomorphic.hasStrictFDerivAt hVo hψd h0V).restrictScalars ℝ
+
+/-- **Non-vacuity of the printed metric.** For `η ≠ 0` there is a finite left-invariant Borel measure
+on `A_τ(ℂ)` that is `(i/2)^g η ∧ η̄` at the identity (namely `|c_τ η|² Φ_*(Lebesgue|_D)`). -/
+theorem exists_isNormalizedBy {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
+    (eta : M.model.hodgeSpace g) (heta : eta ≠ 0) :
+    letI := anBorel M.model τ
+    ∃ mu : Measure (M.model.Pts τ), IsFiniteMeasure mu ∧ mu.IsMulLeftInvariant ∧
+      IsNormalizedBy M.model τ mu eta := by
+  obtain ⟨Φ, hΦ, hc⟩ := M.arch τ
+  letI := anTop M.model τ
+  letI := anBorel M.model τ
+  haveI : BorelSpace (M.model.Pts τ) := ⟨rfl⟩
+  haveI : T2Space (M.model.Pts τ) := analyticPointsT2 K A L M.model τ
+  haveI := M.hodge.periods_discrete τ
+  haveI := M.hodge.periods_isZLattice τ
+  have hUnif : TorusVolume.IsUnif (M.hodge.periods τ) Φ :=
+    ⟨continuous_of_isAnalyticUniformization M.model τ hΦ, hΦ.1, hΦ.2.1, hΦ.2.2.1⟩
+  haveI := hUnif.isTopologicalGroup
+  obtain ⟨r₀, hr₀, DD, -, hfd, hB, hsep, hfin⟩ :=
+    TorusVolume.exists_fundamentalDomain_ball (M.hodge.periods τ)
+  set π := TorusVolume.piMeasure Φ DD
+  haveI : IsFiniteMeasure π := ⟨by rw [hUnif.piMeasure_univ]; exact hfin⟩
+  haveI := hUnif.piMeasure_leftInvariant hfd
+  set c : ℝ := ‖M.hodge.coeff τ eta‖ ^ 2
+  refine ⟨Real.toNNReal c • π, inferInstance, inferInstance, ?_⟩
+  intro U hU s hm l hrep ε hε
+  have hdet := det_fderiv_coordMap M.model hΦ U hU s hm
+  have hcoeff : M.hodge.coeff τ eta = τ l * M.model.jacDet Φ (fun i => ⟨_, hm i⟩) := by
+    rw [hrep, map_smulₛₗ, hc, smul_eq_mul]
+  have hdet0 : LinearMap.det ((fderiv ℂ (coordMap M.model τ U s ∘ Φ) 0 :
+      (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) ≠ 0 := by
+    rw [hdet]
+    intro h0
+    apply M.hodge.coeff_apply_ne_zero τ heta
+    rw [hcoeff, h0, mul_zero]
+  obtain ⟨W, hW, hWn⟩ := TorusVolume.piMeasure_normalized hUnif hr₀ hB hsep _ _
+    (hasStrictFDerivAt_coordMap M.model hΦ U hU s) hdet0 (‖τ l‖ ^ 2) (sq_nonneg _) ε hε
+  refine ⟨W, hW, fun E hEW hE => ?_⟩
+  have hc' : c = ‖τ l‖ ^ 2 * ‖LinearMap.det ((fderiv ℂ (coordMap M.model τ U s ∘ Φ) 0 :
+      (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))‖ ^ 2 := by
+    rw [hdet, ← mul_pow, ← norm_mul, ← hcoeff]
+  have hmuE : ((Real.toNNReal c • π) E).toReal = c * (π E).toReal := by
+    rw [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul, ENNReal.toReal_mul, ENNReal.coe_toReal,
+      Real.coe_toNNReal _ (by positivity)]
+  rw [hmuE, hc']
+  exact hWn E hEW hE
+
+/-- **The printed metric is the kernel's metric** (for `η ≠ 0`, the printed metric is well defined
+and equals `torusMetricSq`). -/
+theorem isFaltingsMetricSq_iff {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
+    (eta : M.model.hodgeSpace g) (heta : eta ≠ 0) (r : ℝ) :
+    IsFaltingsMetricSq M.model τ eta r ↔
+      r = torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta) := by
+  constructor
+  · intro h
+    obtain ⟨mu, h1, h2, h3⟩ := exists_isNormalizedBy M τ eta heta
+    rw [← h mu h1 h2 h3, isFaltingsMetricSq_of_metrized M τ eta mu h1 h2 h3]
+  · rintro rfl
+    exact isFaltingsMetricSq_of_metrized M τ eta
+
 end Dict
 
 /-! ## The identification and the consumer forms -/
@@ -221,6 +319,36 @@ theorem isPrintedStableHeight_of (hU : AnalyticUniformizationUnique) (hDim : Uni
     fun τ => torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta),
     fun τ => isFaltingsMetricSq_of_metrized M τ eta, ?_⟩
   rw [hxM, M.hodge.modelHeight_eq hetaM heta0, M.lattice_eq]
+
+/-- **The converse identification** `IsPrintedStableHeight A x → IsStableFaltingsHeight A x`, given
+that Néron models are metrizable (`NeronMetrizable`, from T35). With `isPrintedStableHeight_of`, the
+printed height and the kernel's coincide. -/
+theorem isStableFaltingsHeight_of_printed (hU : AnalyticUniformizationUnique)
+    (hDim : UniformizationDim) (hMet : NeronMetrizable) {K : Type} [Field K] [NumberField K]
+    {A : PkgI3.AbVar K} {x : ℝ} (hx : IsPrintedStableHeight A x) : IsStableFaltingsHeight A x := by
+  obtain ⟨L, iF, iN, iA, 𝒩, g, hN, hS, hdim, eta, hetaM, heta0, hsec, r, hr, hxr⟩ := hx
+  obtain ⟨g', M, rfl⟩ := hMet K A L 𝒩 hN
+  obtain ⟨τ₀⟩ : Nonempty (L →+* ℂ) := ⟨(IsAlgClosed.lift : L →ₐ[ℚ] ℂ).toRingHom⟩
+  obtain ⟨Φ₀, hΦ₀, -⟩ := M.arch τ₀
+  have hdim' : A.dim = (g' : WithBot ℕ∞) := hDim K A L M.model τ₀ g' _ Φ₀
+    (M.hodge.periods_discrete τ₀) (M.hodge.periods_isZLattice τ₀) hΦ₀
+  have hgg : g = g' := by
+    have := hdim.symm.trans hdim'
+    exact_mod_cast this
+  subst hgg
+  have hrτ : ∀ τ, r τ = torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta) := fun τ =>
+    (isFaltingsMetricSq_iff M τ eta heta0 (r τ)).mp (hr τ)
+  have hetaL : eta ∈ M.hodge.lattice := M.lattice_eq ▸ hetaM
+  refine ⟨L, iF, iN, iA, M.model, hN, hS, ?_⟩
+  rw [groupModel_height_eq hU metrizedDimUnique M, M.hodge.modelHeight_eq hetaL heta0, hxr,
+    M.lattice_eq]
+  simp only [hrτ]
+
+/-- **The printed stable height and the kernel's coincide** (given the T35 glue). -/
+theorem isPrintedStableHeight_iff (hU : AnalyticUniformizationUnique) (hDim : UniformizationDim)
+    (hMet : NeronMetrizable) {K : Type} [Field K] [NumberField K] (A : PkgI3.AbVar K) (x : ℝ) :
+    IsPrintedStableHeight A x ↔ IsStableFaltingsHeight A x :=
+  ⟨isStableFaltingsHeight_of_printed hU hDim hMet, isPrintedStableHeight_of hU hDim⟩
 
 /-- **`BostLowerBound` from Bost's bound over the printed height**, given the kernel's uniqueness of
 analytic uniformizations and `UniformizationDim`. -/
