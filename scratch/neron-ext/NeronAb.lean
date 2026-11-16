@@ -109,12 +109,12 @@ theorem isNeronModelOver_of_bundle (X : Over (Spec (CommRingCat.of R)))
   have : (fun f : Y ⟶ X => (Over.pullback ιK).map f) = e2.symm ∘ genericFibreRestrict R K X.hom Y.hom ∘ e1 := by
     funext f
     apply Over.OverMorphism.ext
-    show (Over.pullback ιK).map f |>.left = (genericFibreRestrict R K X.hom Y.hom ⟨f.left, Over.w f⟩).1
+    show ((Over.pullback ιK).map f).left = (genericFibreRestrict R K X.hom Y.hom ⟨f.left, Over.w f⟩).1
     apply pullback.hom_ext
-    · simp only [Over.pullback_map_left, pullback.lift_fst, genericFibreRestrict_coe_comp_fst]
-      rfl
+    · simp only [Over.pullback_map_left, pullback.lift_fst]
+      exact (genericFibreRestrict_coe_comp_fst (R := R) (K := K) X.hom Y.hom ⟨f.left, Over.w f⟩).symm
     · simp only [Over.pullback_map_left, pullback.lift_snd]
-      exact (genericFibreRestrict_coe_comp_snd X.hom Y.hom _).symm
+      exact (genericFibreRestrict_coe_comp_snd (R := R) (K := K) X.hom Y.hom ⟨f.left, Over.w f⟩).symm
   rw [this]
   exact e2.symm.bijective.comp (hb.comp e1.bijective)
 
