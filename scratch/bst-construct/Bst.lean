@@ -738,6 +738,179 @@ theorem logTeich_mem_amax {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε =
 
 end TMem
 
+/-! ## §8. `log` is additive on `1 + ker θ` (Rees-algebra argument) -/
+
+section LogAdd
+
+variable (p : ℕ) [hp : Fact p.Prime]
+
+open PanBergerSplit (Ainf AinfP)
+
+theorem natCast_mul_qp (k : ℕ) (hk : k ≠ 0) : (k : AinfP p) * qpToLoc p ((k : ℚ_[p])⁻¹) = 1 := by
+  rw [← map_natCast (qpToLoc p) k, ← map_mul, mul_inv_cancel₀ (Nat.cast_ne_zero.mpr hk), map_one]
+
+/-- The truncated logarithm `P_N = Σ_{1 ≤ n < N} (−1)^{n+1} X^n/n`. -/
+abbrev logPoly (N : ℕ) : Polynomial (AinfP p) := trunc N (logSeries p)
+
+theorem derivative_logPoly (M : ℕ) :
+    Polynomial.derivative (logPoly p (M + 1)) =
+      ∑ i ∈ Finset.range M, Polynomial.C ((-1 : AinfP p) ^ i) * Polynomial.X ^ i := by
+  ext m
+  rw [Polynomial.coeff_derivative, coeff_trunc, Polynomial.finsetSum_coeff]
+  simp only [Polynomial.coeff_C_mul_X_pow]
+  rw [Finset.sum_ite_eq (Finset.range M) m]
+  by_cases hm : m < M
+  · rw [if_pos (by omega), if_pos (Finset.mem_range.mpr hm), logSeries, PowerSeries.coeff_mk,
+      if_neg (by omega)]
+    have h := natCast_mul_qp p (m + 1) (by omega)
+    rw [← Nat.cast_succ]
+    linear_combination (-1 : AinfP p) ^ m * h
+  · rw [if_neg (by omega), if_neg (by simpa using hm), zero_mul]
+
+theorem one_add_X_mul_derivative_logPoly (M : ℕ) :
+    (1 + Polynomial.X) * Polynomial.derivative (logPoly p (M + 1)) = 1 - (-Polynomial.X) ^ M := by
+  rw [derivative_logPoly, ← mul_neg_geom_sum, sub_neg_eq_add]
+  congr 1
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [map_pow, map_neg, map_one, neg_pow (Polynomial.X : Polynomial (AinfP p)) i]
+
+theorem dvd_of_one_add_X_mul {R : Type*} [CommRing R] (M : ℕ) (V F : Polynomial R)
+    (h : Polynomial.X ^ M ∣ (1 + Polynomial.X * V) * F) : Polynomial.X ^ M ∣ F := by
+  have hg := mul_neg_geom_sum (-(Polynomial.X * V)) M
+  rw [sub_neg_eq_add] at hg
+  have hF : F = ((1 + Polynomial.X * V) * F) * ∑ i ∈ Finset.range M, (-(Polynomial.X * V)) ^ i +
+      F * (-(Polynomial.X * V)) ^ M := by
+    linear_combination (-F) * hg
+  rw [hF]
+  refine dvd_add (Dvd.dvd.mul_right h _) (Dvd.dvd.mul_left ?_ _)
+  rw [neg_pow, mul_pow]
+  exact Dvd.dvd.mul_left (Dvd.dvd.mul_right dvd_rfl _) _
+
+theorem coeff_zero_logPoly (N : ℕ) : (logPoly p N).coeff 0 = 0 := by
+  rw [coeff_trunc]
+  split_ifs
+  · rw [logSeries, PowerSeries.coeff_mk, if_pos rfl]
+  · rfl
+
+/-- **The key polynomial identity**: with `Y = yT`, `Z = zT`, `W = Y + Z + YZ` in `A[T]`,
+`T^N ∣ P_N(W) − P_N(Y) − P_N(Z)` (`A` a `ℚ`-algebra). -/
+theorem X_pow_dvd_logPoly (N : ℕ) (y z : AinfP p) :
+    Polynomial.X ^ N ∣
+      (logPoly p N).comp (Polynomial.C y * Polynomial.X + Polynomial.C z * Polynomial.X +
+          Polynomial.C y * Polynomial.X * (Polynomial.C z * Polynomial.X)) -
+        (logPoly p N).comp (Polynomial.C y * Polynomial.X) -
+        (logPoly p N).comp (Polynomial.C z * Polynomial.X) := by
+  rcases N with _ | M
+  · simp
+  set Y : Polynomial (AinfP p) := Polynomial.C y * Polynomial.X
+  set Z : Polynomial (AinfP p) := Polynomial.C z * Polynomial.X
+  set W := Y + Z + Y * Z
+  set P := logPoly p (M + 1)
+  set Q := P.comp W - P.comp Y - P.comp Z
+  have hP := one_add_X_mul_derivative_logPoly p M
+  have hcomp : ∀ R : Polynomial (AinfP p), (1 + R) * (Polynomial.derivative P).comp R =
+      1 - (-R) ^ M := fun R => by
+    have := congrArg (fun F => F.comp R) hP
+    simpa [Polynomial.mul_comp, Polynomial.add_comp, Polynomial.sub_comp, Polynomial.pow_comp,
+      Polynomial.neg_comp] using this
+  have hDQ : Polynomial.derivative Q = Polynomial.derivative W * (Polynomial.derivative P).comp W -
+      Polynomial.derivative Y * (Polynomial.derivative P).comp Y -
+      Polynomial.derivative Z * (Polynomial.derivative P).comp Z := by
+    simp only [Q, Polynomial.derivative_sub, Polynomial.derivative_comp]
+  have hDW : Polynomial.derivative W = Polynomial.derivative Y * (1 + Z) +
+      Polynomial.derivative Z * (1 + Y) := by
+    simp only [W, Polynomial.derivative_add, Polynomial.derivative_mul]
+    ring
+  set V : Polynomial (AinfP p) := Polynomial.C y + Polynomial.C z +
+    Polynomial.C y * Polynomial.C z * Polynomial.X
+  have hU : (1 + Y) * (1 + Z) = 1 + Polynomial.X * V := by simp only [Y, Z, V]; ring
+  have hW : W = Polynomial.X * V := by simp only [W, Y, Z, V]; ring
+  have hUDQ : (1 + Polynomial.X * V) * Polynomial.derivative Q =
+      -(-W) ^ M * Polynomial.derivative W + (1 + Z) * (-Y) ^ M * Polynomial.derivative Y +
+        (1 + Y) * (-Z) ^ M * Polynomial.derivative Z := by
+    rw [← hU, hDQ]
+    have h1 := hcomp W
+    have h2 := hcomp Y
+    have h3 := hcomp Z
+    have hW1 : 1 + W = (1 + Y) * (1 + Z) := by simp only [W]; ring
+    rw [hW1] at h1
+    linear_combination (Polynomial.derivative W) * h1 - (1 + Z) * Polynomial.derivative Y * h2 -
+      (1 + Y) * Polynomial.derivative Z * h3 + hDW
+  have hdvd : Polynomial.X ^ M ∣ Polynomial.derivative Q := by
+    apply dvd_of_one_add_X_mul M V
+    have hXW : Polynomial.X ∣ -W := by rw [hW]; exact (dvd_mul_right _ _).neg_right
+    have hXY : Polynomial.X ∣ -Y := (dvd_mul_left _ _).neg_right
+    have hXZ : Polynomial.X ∣ -Z := (dvd_mul_left _ _).neg_right
+    rw [hUDQ]
+    refine dvd_add (dvd_add ?_ ?_) ?_
+    · exact Dvd.dvd.mul_right (pow_dvd_pow_of_dvd hXW M).neg_right _
+    · exact Dvd.dvd.mul_right (Dvd.dvd.mul_left (pow_dvd_pow_of_dvd hXY M) _) _
+    · exact Dvd.dvd.mul_right (Dvd.dvd.mul_left (pow_dvd_pow_of_dvd hXZ M) _) _
+  rw [Polynomial.X_pow_dvd_iff] at hdvd ⊢
+  intro d hd
+  rcases d with _ | e
+  · rw [Polynomial.coeff_zero_eq_eval_zero]
+    simp only [Q, Polynomial.eval_sub, Polynomial.eval_comp, W, Y, Z, Polynomial.eval_add,
+      Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_X, mul_zero, add_zero,
+      ← Polynomial.coeff_zero_eq_eval_zero, P, coeff_zero_logPoly, sub_zero]
+  · have h := hdvd e (by omega)
+    rw [Polynomial.coeff_derivative] at h
+    have hu := natCast_mul_qp p (e + 1) (by omega)
+    push_cast at hu
+    calc Q.coeff (e + 1) = Q.coeff (e + 1) * (((e : AinfP p) + 1) * qpToLoc p ((e + 1 : ℚ_[p]))⁻¹) := by
+          rw [hu, mul_one]
+      _ = (Q.coeff (e + 1) * ((e : AinfP p) + 1)) * qpToLoc p ((e + 1 : ℚ_[p]))⁻¹ := by ring
+      _ = 0 := by rw [h, zero_mul]
+
+theorem eval_one_mem_of_rees {R : Type*} [CommRing R] (I : Ideal R) (N : ℕ) (Q : Polynomial R)
+    (hQ : Q ∈ reesAlgebra I) (hN : Polynomial.X ^ N ∣ Q) : Q.eval 1 ∈ I ^ N := by
+  rw [Polynomial.eval_eq_sum_range]
+  refine Ideal.sum_mem _ fun k _ => ?_
+  rw [one_pow, mul_one]
+  by_cases hk : k < N
+  · rw [(Polynomial.X_pow_dvd_iff.mp hN) k hk]
+    exact Ideal.zero_mem _
+  · exact Ideal.pow_le_pow_right (by omega) ((mem_reesAlgebra_iff I Q).mp hQ k)
+
+theorem C_mul_X_mem_rees {R : Type*} [CommRing R] (I : Ideal R) {y : R} (hy : y ∈ I) :
+    Polynomial.C y * Polynomial.X ∈ reesAlgebra I := by
+  rw [mem_reesAlgebra_iff]
+  intro i
+  rw [Polynomial.coeff_C_mul_X]
+  split_ifs with h
+  · subst h; rwa [pow_one]
+  · exact Ideal.zero_mem _
+
+theorem comp_mem_rees {R : Type*} [CommRing R] (I : Ideal R) (P : Polynomial R) {W : Polynomial R}
+    (hW : W ∈ reesAlgebra I) : P.comp W ∈ reesAlgebra I := by
+  rw [Polynomial.comp_eq_aeval]
+  exact Algebra.adjoin_le (Set.singleton_subset_iff.mpr hW)
+    (Polynomial.aeval_mem_adjoin_singleton _ _)
+
+/-- **`log((1+y)(1+z)) = log(1+y) + log(1+z)`** in `B_dR^+`, for `y, z ∈ ker θ`. -/
+theorem logPlus_add {y z : AinfP p} (hy : y ∈ Ith p) (hz : z ∈ Ith p) :
+    logPlus p (show y + z + y * z ∈ Ith p from
+      Ideal.add_mem _ (Ideal.add_mem _ hy hz) (Ideal.mul_mem_right _ _ hy)) =
+      logPlus p hy + logPlus p hz := by
+  show psEval (Ith p) _ (logSeries p) =
+    psEval (Ith p) hy (logSeries p) + psEval (Ith p) hz (logSeries p)
+  refine AdicCompletion.ext_evalₐ fun N => ?_
+  rw [map_add, evalₐ_psEval, evalₐ_psEval, evalₐ_psEval, ← map_add, Ideal.Quotient.eq]
+  have hY := C_mul_X_mem_rees (Ith p) hy
+  have hZ := C_mul_X_mem_rees (Ith p) hz
+  have hW : Polynomial.C y * Polynomial.X + Polynomial.C z * Polynomial.X +
+      Polynomial.C y * Polynomial.X * (Polynomial.C z * Polynomial.X) ∈ reesAlgebra (Ith p) :=
+    Subalgebra.add_mem _ (Subalgebra.add_mem _ hY hZ) (Subalgebra.mul_mem _ hY hZ)
+  have hQ := eval_one_mem_of_rees (Ith p) N _
+    (Subalgebra.sub_mem _ (Subalgebra.sub_mem _ (comp_mem_rees _ _ hW) (comp_mem_rees _ _ hY))
+      (comp_mem_rees _ _ hZ)) (X_pow_dvd_logPoly p N y z)
+  simp only [Polynomial.eval_sub, Polynomial.eval_comp, Polynomial.eval_add, Polynomial.eval_mul,
+    Polynomial.eval_C, Polynomial.eval_X, mul_one] at hQ
+  convert hQ using 1
+  ring
+
+end LogAdd
+
 end BergerBst
 end PkgI4
 end HDec
