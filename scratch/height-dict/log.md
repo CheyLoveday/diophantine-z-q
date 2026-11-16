@@ -41,3 +41,12 @@ Base: origin/main 2880fef1e. Build tree copied from ~/dzq-check2 (same commit).
 - VERIFIED: autofold dry run (scratch/height-dict/autofold.json): exit 0, strict 34/11 on 45 -> 34/11 on 45 (both
   rows LEAF in this base's kinds.tsv; -2 GLUE if the 11-16 consequence rating is applied); the dry-run module
   (scratch/height-dict/FoldDryRun.lean) compiles, `sixContactMin_of_open36` standard axioms.
+- VERIFIED (compiled, standard axioms): `ZInQKernel/Contrib/OneProof/HeightDictionary/Conormal.lean`
+  (imports `ZInQKernel.Contrib.HeightBC.OmegaBC`): stalk maps `stalkAlg`, `baseStalk`, `unitStalk`, `specMap` and
+  compatibilities; `theta : 𝔪_ξ/𝔪_ξ² → 𝒪_{S,η} ⊗ Ω[𝒪_{𝒢,ξ}/𝓞_L]` (Mathlib `kerCotangentToTensor ∘ mapCotangent`);
+  `printedOmegaAt s` = image of `𝒪_{S,s} ⊗ Ω[𝒪_{𝒢,e(s)}/𝓞_L]`; `omegaAt_map` (kernel `omegaAt s` ↦ `printedOmegaAt s`);
+  `theta_injective` (section of `𝒪_{𝒢,ξ}/I² → 𝒪_{S,η}` via `IsLocalization.liftAlgHom`, then Mathlib
+  `retractionKerCotangentToTensorEquivSection`); `omega_map`; `printedOmega_eq : printedOmega 𝒢 = 𝒢.omega`.
+- `IsPrintedStableHeight` now uses `printedDetLattice` (⋀^g of `Conormal.printedOmega`); `printedDetLattice_eq`
+  proved; all theorems re-checked; `#discharges` and autofold dry run re-run (same output, 34/11 -> 34/11,
+  `sixContactMin_of_open36` standard axioms).
