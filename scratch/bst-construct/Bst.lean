@@ -95,6 +95,138 @@ theorem psEval_C (hx : x ∈ I) (a : A) :
 
 end PSEval
 
+/-! ## §2. `A_max`, `B_max^+`, `log`, `t`, `log [p̃]`, `B_max` and `B_st` inside `B_dR` -/
+
+section Rings
+
+variable (p : ℕ) [Fact p.Prime]
+
+open PanBergerSplit (Ainf AinfP)
+
+/-- `ker θ ⊆ W(𝓞_ℂ_p♭)[1/p]` (`θ` with `p` inverted), the ideal Mathlib's `B_dR^+` completes at. -/
+abbrev Ith : Ideal (AinfP p) := RingHom.ker (fontaineThetaInvertP 𝓞_ℂ_[p] p)
+
+/-- `B_dR^+ → B_dR`. -/
+abbrev toBdR : BDeRhamPlus 𝓞_ℂ_[p] p →+* BdR p := algebraMap (BDeRhamPlus 𝓞_ℂ_[p] p) (BdR p)
+
+/-- Evaluation of a power series over `W(𝓞_ℂ_p♭)[1/p]` at `x ∈ ker θ`, as an element of `B_dR^+`
+(Mathlib's `BDeRhamPlus` is by definition the `ker θ`-adic completion). -/
+def evalB {x : AinfP p} (hx : x ∈ Ith p) : (AinfP p)⟦X⟧ →+* BDeRhamPlus 𝓞_ℂ_[p] p :=
+  psEval (Ith p) hx
+
+theorem xi'_mem : ZInQ.Contrib.G9.BdrKer.Cp.xi' p ∈ Ith p := by
+  rw [Ith, ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineThetaInvertP_Cp]
+  exact Ideal.mem_span_singleton_self _
+
+/-- `ω/p` with `ω = ξ = p − [p̃]`, the generator of `ker θ ⊆ A_inf` of bdr-kertheta. -/
+def omegaP : AinfP p := ZInQ.Contrib.G9.BdrKer.Cp.xi' p * qpToLoc p ((p : ℚ_[p])⁻¹)
+
+theorem omegaP_mem : omegaP p ∈ Ith p := Ideal.mul_mem_right _ _ (xi'_mem p)
+
+/-- `a_n → 0` `p`-adically in `A_inf = W(𝓞_ℂ_p♭)`. -/
+def PAdicNull (a : ℕ → Ainf p) : Prop :=
+  ∀ k : ℕ, ∃ N : ℕ, ∀ n ≥ N, (p : Ainf p) ^ k ∣ a n
+
+/-- Power series over `A_inf` whose coefficients tend to `0` `p`-adically. -/
+def restricted : Subring (Ainf p)⟦X⟧ where
+  carrier := {f | PAdicNull p fun n => PowerSeries.coeff n f}
+  one_mem' k := ⟨1, fun n hn => by
+    beta_reduce
+    rw [PowerSeries.coeff_one, if_neg (by omega)]
+    exact dvd_zero _⟩
+  zero_mem' k := ⟨0, fun n _ => by beta_reduce; rw [map_zero]; exact dvd_zero _⟩
+  add_mem' {f g} hf hg k := by
+    obtain ⟨N, hN⟩ := hf k
+    obtain ⟨M, hM⟩ := hg k
+    exact ⟨max N M, fun n hn => by
+      beta_reduce
+      rw [map_add]
+      exact dvd_add (hN n (le_of_max_le_left hn)) (hM n (le_of_max_le_right hn))⟩
+  neg_mem' {f} hf k := by
+    obtain ⟨N, hN⟩ := hf k
+    exact ⟨N, fun n hn => by beta_reduce; rw [map_neg]; exact (dvd_neg).mpr (hN n hn)⟩
+  mul_mem' {f g} hf hg k := by
+    obtain ⟨N, hN⟩ := hf k
+    obtain ⟨M, hM⟩ := hg k
+    refine ⟨N + M, fun n hn => ?_⟩
+    beta_reduce
+    rw [PowerSeries.coeff_mul]
+    refine Finset.dvd_sum fun ij hij => ?_
+    rw [Finset.HasAntidiagonal.mem_antidiagonal] at hij
+    by_cases hi : N ≤ ij.1
+    · exact Dvd.dvd.mul_right (hN _ hi) _
+    · exact Dvd.dvd.mul_left (hM _ (by omega)) _
+
+/-- **`A_max`** (Berger 2002 §1.2 / Colmez, UNVERIFIED wording): the series `Σ a_n (ω/p)^n`,
+`a_n ∈ Ã^+ = A_inf` tending to `0` `p`-adically, `ω` a generator of `ker(θ : A_inf → 𝓞_ℂ_p)`,
+as a subring of `B_dR^+`. -/
+def Amax : Subring (BDeRhamPlus 𝓞_ℂ_[p] p) :=
+  (restricted p).map ((evalB p (omegaP_mem p)).comp
+    (PowerSeries.map (algebraMap (Ainf p) (AinfP p))))
+
+/-- The logarithm series `log(1 + X) = Σ_{n ≥ 1} (−1)^{n+1} X^n / n` over `W(𝓞_ℂ_p♭)[1/p]`. -/
+def logSeries : (AinfP p)⟦X⟧ :=
+  PowerSeries.mk fun n => if n = 0 then 0 else (-1) ^ (n + 1) * qpToLoc p ((n : ℚ_[p])⁻¹)
+
+/-- **`log(1 + y) ∈ B_dR^+`** for `y ∈ ker θ`, the `ker θ`-adically convergent series. -/
+def logPlus {y : AinfP p} (hy : y ∈ Ith p) : BDeRhamPlus 𝓞_ℂ_[p] p := evalB p hy (logSeries p)
+
+theorem teich_sub_one_mem {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε = 1) :
+    algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p ε - 1) ∈ Ith p := by
+  have hk : WittVector.teichmuller p ε - 1 ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) :=
+    PanBergerSplit.theta_teich_sub_one p h
+  rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp, Ideal.mem_span_singleton'] at hk
+  obtain ⟨c, hc⟩ := hk
+  rw [← hc, map_mul, mul_comm]
+  exact Ideal.mul_mem_right _ _ (xi'_mem p)
+
+/-- **`log [ε] ∈ B_dR^+`** for `ε ∈ 𝓞_ℂ_p♭` with `ε^♯ = 1`: `log(1 + ([ε] − 1))`. -/
+def logTeich {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε = 1) : BDeRhamPlus 𝓞_ℂ_[p] p :=
+  logPlus p (teich_sub_one_mem p h)
+
+/-- The inverses in `B_dR` of `log [ε]`, `ε^♯ = 1`, `ε ≠ 1`. Each is `a·t` with `a ∈ ℤ_p ∖ 0`
+(`t = log [ε₀]` for a generator `ε₀` of `ℤ_p(1)`), so adjoining them to a `ℚ_p`-algebra
+containing `t` is adjoining `1/t`. `Ring.inverse` is the inverse in the field `B_dR`. -/
+def tInvSet : Set (BdR p) :=
+  {z | ∃ (ε : PreTilt 𝓞_ℂ_[p] p) (h : PreTilt.untilt ε = 1), ε ≠ 1 ∧
+    z = Ring.inverse (toBdR p (logTeich p h))}
+
+/-- `[p̃]/p − 1 = −ω/p` (`ω = p − [p̃]`). -/
+def pTildeArg : AinfP p := -omegaP p
+
+theorem pTildeArg_mem : pTildeArg p ∈ Ith p := Submodule.neg_mem _ (omegaP_mem p)
+
+/-- **`log [p̃] := log([p̃]/p) ∈ B_dR^+`**, `p̃ = (p, p^{1/p}, …) ∈ 𝓞_ℂ_p♭` (bdr-kertheta's `pFlat`):
+`Σ_{n ≥ 1} (−1)^{n+1} ([p̃]/p − 1)^n / n`. -/
+def logPTilde : BDeRhamPlus 𝓞_ℂ_[p] p := logPlus p (pTildeArg_mem p)
+
+/-- **`B_max^+ = A_max[1/p]`**, inside `B_dR`. -/
+def BmaxPlus : Subalgebra ℚ_[p] (BdR p) := Algebra.adjoin ℚ_[p] (toBdR p '' Amax p)
+
+/-- **`B_max = B_max^+[1/t]`**, inside `B_dR`. -/
+def Bmax : Subalgebra ℚ_[p] (BdR p) := Algebra.adjoin ℚ_[p] (toBdR p '' Amax p ∪ tInvSet p)
+
+/-- **`B_st = B_max[log [p̃]]`**, inside `B_dR` (Berger 2002 §1.2, UNVERIFIED wording). -/
+def Bst : Subalgebra ℚ_[p] (BdR p) :=
+  Algebra.adjoin ℚ_[p] (toBdR p '' Amax p ∪ tInvSet p ∪ {toBdR p (logPTilde p)})
+
+theorem bmaxPlus_le_bmax : BmaxPlus p ≤ Bmax p :=
+  Algebra.adjoin_mono Set.subset_union_left
+
+theorem bmax_le_bst : Bmax p ≤ Bst p :=
+  Algebra.adjoin_mono Set.subset_union_left
+
+theorem logPTilde_mem_bst : toBdR p (logPTilde p) ∈ Bst p :=
+  Algebra.subset_adjoin (Set.mem_union_right _ rfl)
+
+/-- `B_st` is the `B_max`-algebra generated by `log [p̃]`. -/
+theorem bst_eq_adjoin :
+    Bst p = (Algebra.adjoin (Bmax p) {toBdR p (logPTilde p)}).restrictScalars ℚ_[p] := by
+  rw [Bst, Algebra.adjoin_union_eq_adjoin_adjoin]
+  rfl
+
+end Rings
+
 end BergerBst
 end PkgI4
 end HDec
