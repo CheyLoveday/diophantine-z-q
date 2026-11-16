@@ -592,6 +592,94 @@ theorem Nt_mul (hR : R.Monic) (h1 : NtZ N 1 = 1)
   change f ab = f a * f b
   rw [hab, map_mul]
 
+/-- Degree and top coefficient of a product of powers of linear polynomials. -/
+theorem prod_lin_pow {σ : Type*} (L : σ → ℚ[X]) (u : σ → ℚ) (hL : ∀ i, (L i).natDegree ≤ 1)
+    (hLu : ∀ i, (L i).coeff 1 = u i) (k : σ → ℕ) (s : Finset σ) :
+    (∏ i ∈ s, L i ^ k i).natDegree ≤ ∑ i ∈ s, k i ∧
+      (∏ i ∈ s, L i ^ k i).coeff (∑ i ∈ s, k i) = ∏ i ∈ s, u i ^ k i := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert a s ha ih =>
+    rw [Finset.prod_insert ha, Finset.sum_insert ha, Finset.prod_insert ha]
+    have hpa : (L a ^ k a).natDegree ≤ k a := by
+      have := natDegree_pow_le_of_le (k a) (hL a)
+      rwa [mul_one] at this
+    refine ⟨(natDegree_mul_le).trans (add_le_add hpa ih.1), ?_⟩
+    rw [coeff_mul_add_eq_of_natDegree_le hpa ih.1, ih.2]
+    congr 1
+    have := coeff_pow_of_natDegree_le (m := k a) (hL a)
+    rw [mul_one] at this
+    rw [this, hLu]
+
+/-- `N(u X - v)` is monic of degree `n` for `N` homogeneous of degree `n` with `N(u) = 1`. -/
+theorem monic_aeval_lin {σ : Type*} {M : MvPolynomial σ ℚ} {n : ℕ} (hM : M.IsHomogeneous n)
+    (u v : σ → ℚ) (hu : MvPolynomial.eval u M = 1) :
+    (MvPolynomial.aeval (fun i => C (u i) * X - C (v i)) M).Monic ∧
+      (MvPolynomial.aeval (fun i => C (u i) * X - C (v i)) M).natDegree = n := by
+  classical
+  set L : σ → ℚ[X] := fun i => C (u i) * X - C (v i) with hLdef
+  have hL : ∀ i, (L i).natDegree ≤ 1 := fun i => by
+    rw [hLdef]; exact (natDegree_sub_le _ _).trans (max_le ((natDegree_C_mul_le _ _).trans natDegree_X_le) (by simp))
+  have hLu : ∀ i, (L i).coeff 1 = u i := fun i => by simp [hLdef]
+  have hexp : MvPolynomial.aeval L M = ∑ d ∈ M.support, C (M.coeff d) * ∏ i ∈ d.support, L i ^ d i := by
+    conv_lhs => rw [M.as_sum]
+    rw [map_sum]
+    refine Finset.sum_congr rfl fun d _ => ?_
+    rw [MvPolynomial.aeval_monomial, Polynomial.algebraMap_eq, Finsupp.prod]
+  have hterm : ∀ d ∈ M.support, (C (M.coeff d) * ∏ i ∈ d.support, L i ^ d i).natDegree ≤ n ∧
+      (C (M.coeff d) * ∏ i ∈ d.support, L i ^ d i).coeff n =
+        M.coeff d * ∏ i ∈ d.support, u i ^ d i := by
+    intro d hd
+    have hdeg := hM.degree_eq_sum_deg_support hd
+    obtain ⟨h1, h2⟩ := prod_lin_pow L u hL hLu d d.support
+    rw [← hdeg] at h1 h2
+    exact ⟨(natDegree_C_mul_le _ _).trans h1, by rw [coeff_C_mul, h2]⟩
+  have hdeg : (MvPolynomial.aeval L M).natDegree ≤ n := by
+    rw [hexp]; exact natDegree_sum_le_of_forall_le _ _ fun d hd => (hterm d hd).1
+  have hcoeff : (MvPolynomial.aeval L M).coeff n = 1 := by
+    rw [hexp, finsetSum_coeff, ← hu, MvPolynomial.eval_eq]
+    exact Finset.sum_congr rfl fun d hd => (hterm d hd).2
+  have hnd : (MvPolynomial.aeval L M).natDegree = n :=
+    natDegree_eq_of_le_of_coeff_ne_zero hdeg (by rw [hcoeff]; exact one_ne_zero)
+  exact ⟨by rw [Monic, leadingCoeff, hnd, hcoeff], hnd⟩
+
+/-- The characteristic polynomial of `N` along `t - X`: `P₀(t) = N(t - X)`. -/
+def P0 : ℚ[X] := Nt R N ℚ[X] (C X - X)
+
+theorem Nt_C_sub_X (hR : R.Monic) (S : Type*) [CommRing S] [Algebra ℚ S] (t : S) :
+    Nt R N S (C t - X) = ((P0 N).map (algebraMap ℚ S)).eval t := by
+  have h := Nt_map N hR (Polynomial.aeval t : ℚ[X] →ₐ[ℚ] S) (C X - X)
+  rw [Polynomial.map_sub, map_C, map_X] at h
+  simp only [AlgHom.coe_toRingHom, aeval_X] at h
+  rw [h, P0, aeval_def, eval₂_eq_eval_map]
+
+theorem P0_monic (hR : R.Monic) {n : ℕ} (hN : N.IsHomogeneous n) (h1 : NtZ N 1 = 1) :
+    (P0 N).Monic ∧ (P0 N).natDegree = n := by
+  set u : Fin R.natDegree → ℚ := fun i => (((1 : ℤ[X]) %ₘ R).coeff i : ℚ)
+  set v : Fin R.natDegree → ℚ := fun i => (((X : ℤ[X]) %ₘ R).coeff i : ℚ)
+  have hu : MvPolynomial.eval u N = 1 := by
+    rw [← h1, NtZ, Nt, Polynomial.map_one, ← MvPolynomial.coe_aeval_eq_eval]
+    refine congrArg (fun x => MvPolynomial.aeval x N) (funext fun i => ?_)
+    have := map_modByMonic (Int.castRingHom ℚ) (p := (1 : ℤ[X])) hR
+    rw [Polynomial.map_one] at this
+    rw [← this, coeff_map]
+    rfl
+  have hcoord : ∀ i : Fin R.natDegree,
+      ((C X - X : ℚ[X][X]) %ₘ R.map (Int.castRingHom ℚ[X])).coeff i = C (u i) * X - C (v i) := by
+    intro i
+    have h1' := map_modByMonic (Int.castRingHom ℚ[X]) (p := (1 : ℤ[X])) hR
+    have hX' := map_modByMonic (Int.castRingHom ℚ[X]) (p := (X : ℤ[X])) hR
+    rw [Polynomial.map_one] at h1'
+    rw [map_X] at hX'
+    rw [sub_modByMonic, ← mul_one (C X : ℚ[X][X]), ← smul_eq_C_mul, smul_modByMonic, ← h1', ← hX',
+      coeff_sub, coeff_smul, coeff_map, coeff_map, smul_eq_mul, mul_comm]
+    simp [u, v]
+  have := monic_aeval_lin hN u v hu
+  unfold P0 Nt
+  simp_rw [hcoord]
+  exact this
+
 end PolyFn
 
 end DegDet
