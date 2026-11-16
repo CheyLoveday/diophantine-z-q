@@ -34,3 +34,14 @@ Base: wip/coeff-fix 496c1f75, merged origin/main 0caafe66 (STATUS.md only) → a
   𝕋_ℤ preserves S_k(Γ₁(N), ℤ)). Lean pitfall: `group` does not use commutativity; finish with
   `simp only [zpow_neg_one]; rw [mul_comm e, mul_inv_cancel_right]`. Kernel deterministic timeout when
   `map_smul' := fun _ _ => rfl` for ℚ-linear maps between subalgebras of ℂ; `Subtype.ext (by simp)` fixes it.
+
+## Final form (VERIFIED: compiled; lake build of Main + Discharges + contribution OK, 13700 jobs; standard axioms)
+- Leaves: `Gamma1IntegralSpan` (ℤ-coefficient span of S_k(Γ₁(N)), k ≥ 2), `DiamondIntegralToRational`
+  (⟨d⟩: integral q-expansion ↦ rational q-expansion, k ≥ 2); one-leaf variants `CharSpaceRationalSpan`
+  (ℚ(χ)) and `CharSpaceNumberFieldSpan` (some number field; weakest).
+- #discharges (scratch/coeff-field/discharges-output.txt): dsThm965Weak by `CoeffFieldFinite.dsThm965Weak_of_printed`
+  still assumes [DSThm965Printed, Gamma1IntegralSpan, DiamondIntegralToRational]; also `_charSpace`,
+  `_numberField` variants; all standard axioms. 56 open hypotheses, 2991 theorems checked.
+- autofold dry run: strict 34/11 on 45 → 36/11 on 47 (strictest same); GLUE unchanged. FoldCheck.lean compiles,
+  `sixContactMin_of_open36` standard axioms.
+- PARI sanity check not run: ~/pyenv is absent on this host and system python3 has no cypari2.

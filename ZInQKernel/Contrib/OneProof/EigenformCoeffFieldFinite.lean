@@ -13,8 +13,10 @@ coeff-ext's leaf `DSCoeffExt.EigenformCoeffFieldFinite` (for a normalized eigenf
 * `eigenformCoeffFieldFinite_of : CharSpaceRationalSpan → DSCoeffExt.EigenformCoeffFieldFinite`, from the
   one-leaf variant: `S_k(N, χ)` is spanned by forms with coefficients in `ℚ(χ)`
   (`charSpaceRationalSpan_of` derives it from the two leaves above);
-* `dsThm965Weak_of_printed`, `dsThm965Weak_of_printed_charSpace`: the field `dsThm965Weak` from
-  Diamond–Shurman 9.6.5 as printed (`DSCoeffExt.DSThm965Printed`) and these leaves.
+* `eigenformCoeffFieldFinite_of_numberField : CharSpaceNumberFieldSpan → ...`, the weakest one-leaf form:
+  `S_k(N, χ)` is spanned by forms with coefficients in some number field;
+* `dsThm965Weak_of_printed`, `dsThm965Weak_of_printed_charSpace`, `dsThm965Weak_of_printed_numberField`: the
+  field `dsThm965Weak` from Diamond–Shurman 9.6.5 as printed (`DSCoeffExt.DSThm965Printed`) and these leaves.
 
 The glue, all proved here:
 
@@ -257,12 +259,13 @@ theorem ofUnitHom_mem_charField (χ : (ZMod N)ˣ →* ℂˣ) (d : ℕ) :
   · rw [MulChar.map_nonunit _ h]
     exact zero_mem _
 
-/-- The Hecke operators `T_n` preserve `ℚ(χ)`-rationality of `q`-expansions on `S_k(N, χ)`. -/
-theorem hecke_coeff_mem (χ : (ZMod N)ˣ →* ℂˣ) {n : ℕ} (hn : n ≠ 0) (F : cuspFormCharSpace k χ)
-    (hF : ∀ m, coeffL χ m F ∈ charField χ) (m : ℕ) :
-    coeffL χ m (heckeRingHomCuspCharSpace k χ (heckeTCompositeGamma0 N n) F) ∈ charField χ := by
+/-- The Hecke operators `T_n` preserve `L`-rationality of `q`-expansions on `S_k(N, χ)` for every field
+`L ⊇ ℚ(χ)`. -/
+theorem hecke_coeff_mem (χ : (ZMod N)ˣ →* ℂˣ) (L : IntermediateField ℚ ℂ) (hL : charField χ ≤ L) {n : ℕ}
+    (hn : n ≠ 0) (F : cuspFormCharSpace k χ) (hF : ∀ m, coeffL χ m F ∈ L) (m : ℕ) :
+    coeffL χ m (heckeRingHomCuspCharSpace k χ (heckeTCompositeGamma0 N n) F) ∈ L := by
   rw [coeffL_apply, qExpansion_coeff_heckeRingHomCuspCharSpace_heckeTCompositeGamma0 hn]
-  refine sum_mem fun d _ => mul_mem (mul_mem (ofUnitHom_mem_charField χ d)
+  refine sum_mem fun d _ => mul_mem (mul_mem (hL (ofUnitHom_mem_charField χ d))
     (zpow_mem (natCast_mem _ d) _)) (hF _)
 
 /-- **LEAF (rational structure of `S_k(N, χ)`; one-leaf variant).** For `k ≥ 2`, the space `S_k(Γ₁(N), χ)` of
@@ -278,22 +281,36 @@ def CharSpaceRationalSpan : Prop :=
     Submodule.span ℂ {F : cuspFormCharSpace k χ | ∀ n : ℕ,
       (qExpansion 1 (F : CuspForm ((Gamma1 N).map (mapGL ℝ)) k)).coeff n ∈ charField χ} = ⊤
 
-theorem isRat_iff (χ : (ZMod N)ˣ →* ℂˣ) (F : cuspFormCharSpace k χ) :
-    IsRat (F := charField χ) (coeffL χ) F ↔ ∀ n, coeffL χ n F ∈ charField χ := by
+/-- **LEAF (one-leaf variant, weakest form).** For `k ≥ 2`, `S_k(Γ₁(N), χ)` is spanned over `ℂ` by forms whose
+`q`-expansion coefficients all lie in one number field `L ⊆ ℂ`. A consequence of `CharSpaceRationalSpan`
+(`L = ℚ(χ)`, `charSpaceNumberFieldSpan_of`) and of every printed variant of it (`ℤ[χ]`, `ℚ(χ)`, `ℚ(ζ_N)`
+coefficients). -/
+def CharSpaceNumberFieldSpan : Prop :=
+  ∀ (N : ℕ) [NeZero N] (k : ℤ) (χ : (ZMod N)ˣ →* ℂˣ), 2 ≤ k →
+    ∃ L : IntermediateField ℚ ℂ, FiniteDimensional ℚ L ∧
+      Submodule.span ℂ {F : cuspFormCharSpace k χ | ∀ n : ℕ,
+        (qExpansion 1 (F : CuspForm ((Gamma1 N).map (mapGL ℝ)) k)).coeff n ∈ L} = ⊤
+
+theorem charSpaceNumberFieldSpan_of (hR : CharSpaceRationalSpan) : CharSpaceNumberFieldSpan :=
+  fun N _ k χ hk => ⟨charField χ, charField_finiteDimensional χ, hR N k χ hk⟩
+
+theorem isRat_iff (χ : (ZMod N)ˣ →* ℂˣ) (L : IntermediateField ℚ ℂ) (F : cuspFormCharSpace k χ) :
+    IsRat (F := L) (coeffL χ) F ↔ ∀ n, coeffL χ n F ∈ L := by
   refine forall_congr' fun n => ⟨?_, fun h => ⟨⟨_, h⟩, rfl⟩⟩
   rintro ⟨y, hy⟩
   rw [← hy]
   exact y.2
 
-/-- For a full eigenform `F` with `a₁ = 1` in `S_k(N, χ)`, the coefficients generate a finite-dimensional
-`ℚ(χ)`-algebra. -/
-theorem finiteDimensional_adjoin_coeff (hR : CharSpaceRationalSpan) (F : Eigenform N k) (hk : 2 ≤ k) :
-    FiniteDimensional (charField F.χ)
-      (Algebra.adjoin (charField F.χ) (Set.range fun n : ℕ+ => F.eigenvalue n)) := by
+/-- For a full eigenform `F` in `S_k(N, χ)` and a field `L ⊇ ℚ(χ)` such that `S_k(N, χ)` is spanned by
+`L`-rational forms, the eigenvalues generate a finite-dimensional `L`-algebra. -/
+theorem finiteDimensional_adjoin_coeff (F : Eigenform N k) (L : IntermediateField ℚ ℂ)
+    (hL : charField F.χ ≤ L)
+    (hR : Submodule.span ℂ {G : cuspFormCharSpace k F.χ | ∀ n : ℕ,
+        (qExpansion 1 (G : CuspForm ((Gamma1 N).map (mapGL ℝ)) k)).coeff n ∈ L} = ⊤) :
+    FiniteDimensional L (Algebra.adjoin L (Set.range fun n : ℕ+ => F.eigenvalue n)) := by
   set χ := F.χ
-  have hspan : Submodule.span ℂ {v | IsRat (F := charField χ) (coeffL (k := k) χ) v} = ⊤ := by
-    have := hR N k χ hk
-    convert this using 3
+  have hspan : Submodule.span ℂ {v | IsRat (F := L) (coeffL (k := k) χ) v} = ⊤ := by
+    convert hR using 3
     ext v
     rw [isRat_iff]
     rfl
@@ -303,17 +320,23 @@ theorem finiteDimensional_adjoin_coeff (hR : CharSpaceRationalSpan) (F : Eigenfo
   rintro _ ⟨n, rfl⟩
   refine ⟨heckeRingHomCuspCharSpace k χ (heckeTCompositeGamma0 N n), fun v hv => ?_, F.isEigen n⟩
   rw [isRat_iff] at hv ⊢
-  exact hecke_coeff_mem χ n.ne_zero v hv
+  exact hecke_coeff_mem χ L hL n.ne_zero v hv
 
-/-- **`EigenformCoeffFieldFinite` from the rational structure of `S_k(N, χ)`.** -/
-theorem eigenformCoeffFieldFinite_of (hR : CharSpaceRationalSpan) :
+/-- **`EigenformCoeffFieldFinite` from a number-field structure on `S_k(N, χ)`.** -/
+theorem eigenformCoeffFieldFinite_of_numberField (hR : CharSpaceNumberFieldSpan) :
     DSCoeffExt.EigenformCoeffFieldFinite := by
   intro N _ k χ f hk hf
   obtain ⟨F, rfl, -, h1⟩ := hf
-  set L := charField F.χ
-  haveI : FiniteDimensional ℚ L := charField_finiteDimensional F.χ
+  obtain ⟨L0, hL0, hspan0⟩ := hR N k F.χ hk
+  haveI := charField_finiteDimensional F.χ
+  set L := L0 ⊔ charField F.χ
+  haveI : FiniteDimensional ℚ L := IntermediateField.finiteDimensional_sup _ _
+  have hspan : Submodule.span ℂ {G : cuspFormCharSpace k F.χ | ∀ n : ℕ,
+      (qExpansion 1 (G : CuspForm ((Gamma1 N).map (mapGL ℝ)) k)).coeff n ∈ L} = ⊤ := by
+    rw [eq_top_iff, ← hspan0]
+    exact Submodule.span_mono fun G hG n => le_sup_left (a := L0) (hG n)
   set A := Algebra.adjoin L (Set.range fun n : ℕ+ => F.eigenvalue n) with hAdef
-  haveI hA : FiniteDimensional L A := finiteDimensional_adjoin_coeff hR F hk
+  haveI hA : FiniteDimensional L A := finiteDimensional_adjoin_coeff F L le_sup_right hspan
   have hmem : ∀ n, ZInQ.Contrib.G9.PkgI4.coeff F.toCuspForm n ∈ A := by
     intro n
     rcases Nat.eq_zero_or_pos n with rfl | hn
@@ -352,6 +375,11 @@ theorem eigenformCoeffFieldFinite_of (hR : CharSpaceRationalSpan) :
       map_add' := fun _ _ => Subtype.ext (by simp)
       map_smul' := fun _ _ => Subtype.ext (by simp) }
   exact Module.Finite.of_injective iK (fun x y h => Subtype.ext (congrArg (fun z : B => (z : ℂ)) h))
+
+/-- **`EigenformCoeffFieldFinite` from the `ℚ(χ)`-rational structure of `S_k(N, χ)`.** -/
+theorem eigenformCoeffFieldFinite_of (hR : CharSpaceRationalSpan) :
+    DSCoeffExt.EigenformCoeffFieldFinite :=
+  eigenformCoeffFieldFinite_of_numberField (charSpaceNumberFieldSpan_of hR)
 
 /-! ## The rational structure of `S_k(N, χ)` from the `Γ₁(N)`-level statements -/
 
@@ -482,5 +510,11 @@ theorem dsThm965Weak_of_printed (h1 : DSCoeffExt.DSThm965Printed) (hA : Gamma1In
 theorem dsThm965Weak_of_printed_charSpace (h1 : DSCoeffExt.DSThm965Printed)
     (hR : CharSpaceRationalSpan) : DS965Weak.DSThm965Weak :=
   DSCoeffExt.dsThm965Weak_of_printed h1 (eigenformCoeffFieldFinite_of hR)
+
+/-- **`dsThm965Weak` from Diamond–Shurman 9.6.5 as printed and a number-field structure on `S_k(N, χ)`**
+(one-leaf variant, weakest form). -/
+theorem dsThm965Weak_of_printed_numberField (h1 : DSCoeffExt.DSThm965Printed)
+    (hR : CharSpaceNumberFieldSpan) : DS965Weak.DSThm965Weak :=
+  DSCoeffExt.dsThm965Weak_of_printed h1 (eigenformCoeffFieldFinite_of_numberField hR)
 
 end CoeffFieldFinite
