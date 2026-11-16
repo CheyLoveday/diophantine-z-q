@@ -245,7 +245,7 @@ is the one defining `AlgebraicGeometry.Scheme.Hom.toRelativeDifferentials`. -/
 theorem relativeDifferentialsMap_comp_toRelativeDifferentials {X' X Y S : Scheme.{u}}
     (r : X' ⟶ X) (p : X ⟶ S) (s : X' ⟶ Y) (f : Y ⟶ S) (hcomm : r ≫ p = s ≫ f) :
     relativeDifferentialsMap r p (s ≫ f) (𝟙 S) (hcomm.trans (Category.comp_id (s ≫ f)).symm) ≫
-        s.toRelativeDifferentials f =
+        toRelativeDifferentials s f =
       relativeDifferentialsMap r p s f hcomm :=
   relativeDifferentialsMap_comp r p (s ≫ f) s f hcomm rfl
 

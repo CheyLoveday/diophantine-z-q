@@ -12,7 +12,7 @@ import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheav
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheaves.Modules.Differentials.InverseImage
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
-open _root_.CategoryTheory
+open _root_.AlgebraicGeometry _root_.CategoryTheory
 
 
 /-!

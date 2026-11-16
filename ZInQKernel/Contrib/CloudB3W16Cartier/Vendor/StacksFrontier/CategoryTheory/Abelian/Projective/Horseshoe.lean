@@ -328,7 +328,7 @@ lemma iota_comp_proj : iota PA PC hS ≫ proj PA PC hS = 0 := by
 def splitting (n : ℕ) :
     (ShortComplex.mk ((iota PA PC hS).f n) ((proj PA PC hS).f n)
       (by rw [← HomologicalComplex.comp_f, iota_comp_proj]; simp)).Splitting :=
-  Splitting.ofHasBinaryBiproduct (PA.complex.X n) (PC.complex.X n)
+  _root_.CategoryTheory.ShortComplex.Splitting.ofHasBinaryBiproduct (PA.complex.X n) (PC.complex.X n)
 
 /-- The degree-zero augmentation `(εᴬ ≫ S.f, σ)` of the middle complex. -/
 def e0 : (Tcx PA PC hS).X 0 ⟶ S.X₂ :=
@@ -455,7 +455,6 @@ structure Horseshoe (S : ShortComplex C) where
 projectives lifts to a degreewise split short exact sequence of projective resolutions of
 its three terms: the chosen resolutions `PA` of `S.X₁` and `PC` of `S.X₃`, and in the middle
 `Tₙ := (PA)ₙ ⊞ (PC)ₙ` with a twisted lower-triangular differential `[[dᴬ, sₙ], [0, dᶜ]]`. -/
-@[no_expose, ega "0 11.6.1" "special case"]
 def horseshoe [EnoughProjectives C] {S : ShortComplex C} (hS : S.ShortExact) :
     Horseshoe S :=
   { PA := ProjectiveResolution.of S.X₁
@@ -766,22 +765,22 @@ lemma leftDerived_exact {S : ShortComplex C} (hS : S.ShortExact) (n : ℕ) :
 
 /-- The map into a connecting morphism composes to zero. -/
 lemma leftDerived_map_g_comp_δ {S : ShortComplex C} (hS : S.ShortExact) (n : ℕ) :
-    (F.leftDerived (n + 1)).map S.g ≫ F.leftDerivedδ hS n = 0 :=
+    (F.leftDerived (n + 1)).map S.g ≫ leftDerivedδ F hS n = 0 :=
   (horseshoe hS).map_g_comp_δ F n
 
 /-- A connecting morphism followed by the next map composes to zero. -/
 lemma leftDerivedδ_comp_map_f {S : ShortComplex C} (hS : S.ShortExact) (n : ℕ) :
-    F.leftDerivedδ hS n ≫ (F.leftDerived n).map S.f = 0 :=
+    leftDerivedδ F hS n ≫ (F.leftDerived n).map S.f = 0 :=
   (horseshoe hS).δ_comp_map_f F n
 
 /-- Exactness of `Lₙ₊₁ F (S.X₂) ⟶ Lₙ₊₁ F (S.X₃) ⟶ Lₙ F (S.X₁)`. -/
 lemma leftDerived_exact_δ₁ {S : ShortComplex C} (hS : S.ShortExact) (n : ℕ) :
-    (ShortComplex.mk _ _ (F.leftDerived_map_g_comp_δ hS n)).Exact :=
+    (ShortComplex.mk _ _ (leftDerived_map_g_comp_δ F hS n)).Exact :=
   (horseshoe hS).exact_δ₁ F n
 
 /-- Exactness of `Lₙ₊₁ F (S.X₃) ⟶ Lₙ F (S.X₁) ⟶ Lₙ F (S.X₂)`. -/
 lemma leftDerived_exact_δ₂ {S : ShortComplex C} (hS : S.ShortExact) (n : ℕ) :
-    (ShortComplex.mk _ _ (F.leftDerivedδ_comp_map_f hS n)).Exact :=
+    (ShortComplex.mk _ _ (leftDerivedδ_comp_map_f F hS n)).Exact :=
   (horseshoe hS).exact_δ₂ F n
 
 /-- The degree-zero end of the long exact sequence: `L₀ F (S.g)` is an epimorphism. -/
@@ -792,8 +791,8 @@ lemma epi_leftDerivedZero_map_g {S : ShortComplex C} (hS : S.ShortExact) :
 /-- **Naturality of the connecting morphism** in the short exact sequence. -/
 lemma leftDerivedδ_naturality {S T : ShortComplex C} (hS : S.ShortExact) (hT : T.ShortExact)
     (φ : S ⟶ T) (n : ℕ) :
-    (F.leftDerived (n + 1)).map φ.τ₃ ≫ F.leftDerivedδ hT n
-      = F.leftDerivedδ hS n ≫ (F.leftDerived n).map φ.τ₁ :=
+    (F.leftDerived (n + 1)).map φ.τ₃ ≫ leftDerivedδ F hT n
+      = leftDerivedδ F hS n ≫ (F.leftDerived n).map φ.τ₁ :=
   Horseshoe.δ_naturality (horseshoe hS) (horseshoe hT) φ F n
 
 end CategoryTheory.Functor

@@ -122,7 +122,7 @@ namespace Stacks.SheafifyStalk
 
 section Presheaves
 
-open TopCat.Presheaf
+open _root_.TopCat.Presheaf
 
 attribute [local implicit_reducible] TopCat.Presheaf.stalk
 
@@ -250,7 +250,7 @@ end SheafUnit
 
 section SheafPullback
 
-open TopCat.Presheaf
+open _root_.TopCat.Presheaf
 
 attribute [local implicit_reducible] TopCat.Presheaf.stalk
 
@@ -324,7 +324,7 @@ end SheafPullback
 
 section Schemes
 
-open TopCat.Presheaf
+open _root_.TopCat.Presheaf
 
 attribute [local implicit_reducible] TopCat.Presheaf.stalk
 

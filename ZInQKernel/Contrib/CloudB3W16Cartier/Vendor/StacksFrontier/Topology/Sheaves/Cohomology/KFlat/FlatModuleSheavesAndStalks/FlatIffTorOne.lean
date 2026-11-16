@@ -549,7 +549,7 @@ the precomposition of the underlying presheaf of abelian groups. -/
 theorem pushforward_presheaf {C : Type u} [Category.{v} C] {D : Type w} [Category.{v} D]
     {F : C ⥤ D} {R : Dᵒᵖ ⥤ RingCat.{u}} {S : Cᵒᵖ ⥤ RingCat.{u}} (φ : S ⟶ F.op ⋙ R)
     (M : PresheafOfModules.{u} R) :
-    ((pushforward φ).obj M).presheaf = F.op ⋙ M.presheaf := rfl
+    ((_root_.PresheafOfModules.pushforward φ).obj M).presheaf = F.op ⋙ M.presheaf := rfl
 
 end PresheafOfModules
 

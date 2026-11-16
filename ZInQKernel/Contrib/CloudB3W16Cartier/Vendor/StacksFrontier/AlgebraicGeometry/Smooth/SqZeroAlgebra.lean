@@ -8,7 +8,6 @@ Changes: isolated vendor namespaces and import paths; citation attributes remove
 import Mathlib.Algebra.TrivSqZeroExt.Basic
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
-open _root_.CategoryTheory
 
 
 /-!

@@ -10,7 +10,10 @@ import Mathlib.Topology.Sheaves.Functors
 import Mathlib.Topology.Sheaves.Sheafify
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
-open _root_.CategoryTheory
+open _root_.CategoryTheory _root_.TopCat _root_.TopCat.Presheaf _root_.TopCat.Sheaf
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+set_option backward.isDefEq.respectTransparency.instanceSearchTypes false
 
 
 /-!

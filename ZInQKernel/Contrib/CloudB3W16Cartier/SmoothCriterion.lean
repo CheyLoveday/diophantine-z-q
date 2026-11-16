@@ -26,7 +26,7 @@ relative differentials is a free module over the local ring of the source at tha
 spelling `Ω[𝒪_{X,x}⁄𝒪_{S,f x}]` of the Kähler differentials of the stalk map. -/
 private theorem free_kaehlerDifferential_stalkMap_of_isLocallyFree
     {X S : Scheme.{u}} (f : X ⟶ S)
-    (hΩ : _root_.SheafOfModules.IsLocallyFree.{u, u, u} f.relativeDifferentials) (x : X) :
+    (hΩ : _root_.SheafOfModules.IsLocallyFree.{u, u, u} (Scheme.Hom.relativeDifferentials f)) (x : X) :
     let _ := algebraStalkMap f x
     Module.Free (ToType (X.sheaf.presheaf.stalk x))
       (KaehlerDifferential (ToType (S.presheaf.stalk (f x)))
@@ -35,7 +35,7 @@ private theorem free_kaehlerDifferential_stalkMap_of_isLocallyFree
   let := algebraStalkMap f x
   have := hΩ
   exact (Stacks.StalkFreeBridge.free_stalk_of_isLocallyFree.{u}
-    f.relativeDifferentials x).of_equiv (relativeDifferentialsStalkKaehlerEquiv f x)
+    (Scheme.Hom.relativeDifferentials f) x).of_equiv (relativeDifferentialsStalkKaehlerEquiv f x)
 
 /-- The stalk map of a morphism from a scheme locally of finite type over a characteristic-zero
 field with locally free relative differentials is formally smooth at every point.
@@ -47,7 +47,7 @@ at the prime, which is formal smoothness of the stalk map. -/
 private theorem formallySmooth_stalkMap_of_isLocallyFree_relativeDifferentials
     {k : Type u} [Field k] [CharZero k] {X : Scheme.{u}} (f : X ⟶ Spec (.of k))
     [LocallyOfFiniteType f]
-    (hΩ : _root_.SheafOfModules.IsLocallyFree.{u, u, u} f.relativeDifferentials) (x : X) :
+    (hΩ : _root_.SheafOfModules.IsLocallyFree.{u, u, u} (Scheme.Hom.relativeDifferentials f)) (x : X) :
     (f.stalkMap x).hom.FormallySmooth := by
   classical
   let U : (Spec (.of k)).Opens := ⊤
@@ -96,7 +96,7 @@ characteristic zero is smooth if its sheaf of relative differentials is locally 
 theorem smooth_of_isLocallyFree_relativeDifferentials_of_charZero
     {k : Type u} [Field k] [CharZero k] {X : Scheme.{u}} (f : X ⟶ Spec (.of k))
     [LocallyOfFiniteType f]
-    (hΩ : _root_.SheafOfModules.IsLocallyFree.{u, u, u} f.relativeDifferentials) :
+    (hΩ : _root_.SheafOfModules.IsLocallyFree.{u, u, u} (Scheme.Hom.relativeDifferentials f)) :
     Smooth f :=
   f.smoothLocus_eq_top_iff.mp (top_le_iff.mp fun x _ =>
     Scheme.Hom.mem_smoothLocus.mpr

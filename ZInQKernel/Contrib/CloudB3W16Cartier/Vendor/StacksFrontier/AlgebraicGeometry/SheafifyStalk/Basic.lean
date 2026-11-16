@@ -9,7 +9,7 @@ import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheaves.OpenImmersion.ExtensionByInitial
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
-open _root_.AlgebraicGeometry _root_.CategoryTheory
+open _root_.AlgebraicGeometry _root_.CategoryTheory _root_.TopCat.Presheaf
 
 
 /-!

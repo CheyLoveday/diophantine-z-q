@@ -151,7 +151,7 @@ resolution whose terms are *not* projective arises in practice: apply an exact f
 projective resolution. -/
 instance quasiIso_mapAugmentation (F : C ⥤ D) [F.Additive] [F.PreservesHomology]
     (ε : Q ⟶ (ChainComplex.single₀ C).obj Z) [QuasiIso ε] :
-    QuasiIso (F.mapAugmentation ε) := by
+    QuasiIso (mapAugmentation F ε) := by
   dsimp only [mapAugmentation]
   infer_instance
 
@@ -160,7 +160,7 @@ component of the original augmentation. -/
 @[simp]
 lemma mapAugmentation_f_zero (F : C ⥤ D) [F.Additive]
     (ε : Q ⟶ (ChainComplex.single₀ C).obj Z) :
-    (F.mapAugmentation ε).f 0 = F.map (ε.f 0) := by
+    (mapAugmentation F ε).f 0 = F.map (ε.f 0) := by
   simp [mapAugmentation]
 
 end CategoryTheory.Functor
