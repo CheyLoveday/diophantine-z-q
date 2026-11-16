@@ -89,20 +89,20 @@ open Nat
 variable {k : Type*} [Field k] {n : ℕ} (f : MvPolynomial (Fin (n + 1)) k)
 variable (v w : Fin (n + 1) →₀ ℕ)
 
-/-- A bound strictly larger than every exponent occurring in `f`. -/
-local notation3 "up" => 2 + f.totalDegree
-
+/- The bound `2 + f.totalDegree` is strictly larger than every exponent occurring in `f`. -/
 variable {f v} in
-private lemma lt_up (vlt : ∀ i, v i < up) : ∀ l ∈ ofFn v, l < up := by
+private lemma lt_up (vlt : ∀ i, v i < 2 + f.totalDegree) :
+    ∀ l ∈ ofFn v, l < 2 + f.totalDegree := by
   grind
 
-/-- The exponents of Nagata's substitution: `i ↦ up ^ i`. -/
-local notation3 "r" => fun (i : Fin (n + 1)) ↦ up ^ i.1
+/- Nagata's substitution uses exponents `i ↦ (2 + f.totalDegree) ^ i.1`.
+The expressions are written explicitly rather than through local notation. -/
 
-/-- Nagata's substitution `X i ↦ X i + c • X 0 ^ r i` for `i ≠ 0`, fixing `X 0`. -/
+/-- Nagata's substitution `X i ↦ X i + c • X 0 ^ ((2 + f.totalDegree) ^ i.1)` for
+`i ≠ 0`, fixing `X 0`. -/
 private noncomputable abbrev tilt1 (c : k) :
     MvPolynomial (Fin (n + 1)) k →ₐ[k] MvPolynomial (Fin (n + 1)) k :=
-  aeval fun i ↦ if i = 0 then X 0 else X i + c • X 0 ^ r i
+  aeval fun i ↦ if i = 0 then X 0 else X i + c • X 0 ^ ((2 + f.totalDegree) ^ i.1)
 
 private lemma tilt1_comp_tilt1_neg (c : k) :
     (tilt1 f c).comp (tilt1 f (-c)) = AlgHom.id _ _ := by
@@ -114,8 +114,10 @@ private lemma tilt1_comp_tilt1_neg (c : k) :
 private noncomputable abbrev tilt := AlgEquiv.ofAlgHom (tilt1 f 1) (tilt1 f (-1))
   (tilt1_comp_tilt1_neg f 1) (by simpa using tilt1_comp_tilt1_neg f (-1))
 
-private lemma sum_r_mul_ne (vlt : ∀ i, v i < up) (wlt : ∀ i, w i < up) (ne : v ≠ w) :
-    ∑ x : Fin (n + 1), r x * v x ≠ ∑ x : Fin (n + 1), r x * w x := by
+private lemma sum_r_mul_ne (vlt : ∀ i, v i < 2 + f.totalDegree)
+    (wlt : ∀ i, w i < 2 + f.totalDegree) (ne : v ≠ w) :
+    ∑ x : Fin (n + 1), (2 + f.totalDegree) ^ x.1 * v x ≠
+      ∑ x : Fin (n + 1), (2 + f.totalDegree) ^ x.1 * w x := by
   intro h
   refine ne <| Finsupp.ext <| congrFun <| ofFn_inj.mp ?_
   apply ofDigits_inj_of_len_eq (Nat.lt_add_right f.totalDegree one_lt_two)
@@ -124,14 +126,15 @@ private lemma sum_r_mul_ne (vlt : ∀ i, v i < up) (wlt : ∀ i, w i < up) (ne :
     Fin.val_cast, mul_comm, sum_ofFn] using! h
 
 private lemma degreeOf_zero_tilt {a : k} (ha : a ≠ 0) : ((tilt f) (monomial v a)).degreeOf 0 =
-    ∑ i : Fin (n + 1), (r i) * v i := by
+    ∑ i : Fin (n + 1), ((2 + f.totalDegree) ^ i.1) * v i := by
   rw [← natDegree_finSuccEquiv, monomial_eq, Finsupp.prod_pow v fun a ↦ X a]
   simp only [Fin.prod_univ_succ, Fin.sum_univ_succ, map_mul, map_prod, map_pow,
     AlgEquiv.ofAlgHom_apply, MvPolynomial.aeval_C, MvPolynomial.aeval_X, ite_eq_left,
     Fin.succ_ne_zero, ite_false, one_smul, map_add, finSuccEquiv_X_zero, finSuccEquiv_X_succ,
     algebraMap_eq]
   have h (i : Fin n) :
-      (Polynomial.C (X (R := k) i) + Polynomial.X ^ r i.succ) ^ v i.succ ≠ 0 :=
+      (Polynomial.C (X (R := k) i) + Polynomial.X ^ ((2 + f.totalDegree) ^ (i.succ).1)) ^
+        v i.succ ≠ 0 :=
     pow_ne_zero (v i.succ) (leadingCoeff_ne_zero.mp <| by simp [add_comm, leadingCoeff_X_pow_add_C])
   rw [natDegree_mul (by simp [ha]) (mul_ne_zero (by simp) (Finset.prod_ne_zero_iff.mpr
     (fun i _ ↦ h i))), natDegree_mul (by simp) (Finset.prod_ne_zero_iff.mpr (fun i _ ↦ h i)),

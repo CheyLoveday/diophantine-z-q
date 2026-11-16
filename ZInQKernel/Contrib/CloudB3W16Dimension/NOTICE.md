@@ -18,6 +18,9 @@ compiled from source alongside the modules that the proof uses.
 Imports are routed under `ZInQKernel.Contrib.CloudB3W16Dimension`. Citation-only
 `stacks`/`ega`/`sga` attributes and `add_to_*` commands are removed, and their two
 registration modules are omitted; no new macros or elaborators are introduced.
+The retained `MvPolynomial/PrimeStandardForm.lean` module expands the original
+local `up` and `r` notation directly as `2 + f.totalDegree` and its indexed powers;
+its mathematical declarations and public theorem types are unchanged.
 The mathematical declarations retain their upstream names unless a documented
 current-Mathlib compatibility repair requires otherwise. Each ported module
 carries upstream's `autoImplicit = false`, `relaxedAutoImplicit = false` and
