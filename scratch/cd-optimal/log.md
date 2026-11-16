@@ -20,3 +20,4 @@ Base wip/gz-optimal 2631cd0b. Build tree copied from ~/dzq-wt/gz-optimal (.lake/
   of the Goellnitz-Gordon (octic) continued fraction at q^4 -- a generalized eta quotient. x1 - 1/x1 = x.
   Identity: s = -y/w with w := eta(16)^3/(eta(8)eta(32)^2), w^2 = x (monomial identity from x = eta16^6/(eta8^2 eta32^4)).
   w has character (2/d) on Gamma0(32) by Gordon-Hughes/Newman (prod delta^r = 2^-1); all exponent sums OK.
+* Unif.lean: general gz-weil uniformization (local_eq_gen, global_eq_gen, period_mem_gen) and lattice uniqueness lattice_eq_of_g₂_g₃ — compiled, no errors (VERIFIED).
