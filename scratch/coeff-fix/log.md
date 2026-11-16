@@ -18,3 +18,7 @@ Base wip/coeff-ext bca51e5c; `git merge origin/main`: already up to date. Build 
 - VERIFIED (read in source): consumers of dsThm965Weak are general weight: DSThm965Weak -> DSThm965 (TailZ38:83)
   -> r14DetWtGe2_of_ds (all k >= 2, TailS:1185) -> R14Det / EigenformHT (fields r14, r13, TailX:200-202),
   passed whole to TailD:137, TailA:3718, TailK:323. So `EigenformCoeffFieldFinite` is NOT restated at k = 2.
+- VERIFIED (compiled, 08:00): fallback `DSThm966PrintedFull` (Tau Ceti full `Eigenform N 1`),
+  `printedFull_of_printed`, `dsThm966_of_printedFull`; `dsThm966_of_printed` now via the fallback.
+- Build: copying coeff-ext's .lake/build with `cp -r` (mtimes not preserved) made `lake build` recompile
+  modules (TailZ22, FaltingsLemma5Lower/Reduction seen at 08:09); first attempt stopped, rerun in progress.

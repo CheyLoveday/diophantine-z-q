@@ -14,8 +14,11 @@ The field `ZInQ.Contrib.HodgeSplit.DSThm966` (bundle field `OpenResearchLeaves26
 * **`ε(-1) = -1`** as a hypothesis, as Deligne–Serre assume;
 * **trace over the eigenvalue**: `tr ρ(Frob_p) = a_p`, with `a_p` the `T_p`-eigenvalue `F.eigenvalue p`.
 
-The glue (proved here): a normalized eigenform in the kernel's coefficient form is such an eigenform
-(`DSCoeffExt.isNormalizedEigenformDS_of`, via Tau Ceti's full `Eigenform`); its `T_p`-eigenvalue is its
+`DSThm966PrintedFull` is the same statement for Tau Ceti's full `Eigenform N 1`; it follows from
+`DSThm966Printed` and from Diamond–Shurman Thm 9.6.6, and it is all that `dsThm966` uses.
+
+The glue (proved here): a normalized eigenform in the kernel's coefficient form is a full eigenform
+(`DSCoeffExt.isNormalizedEigenformDS_of`), hence an eigenform away from the level; its `T_p`-eigenvalue is its
 coefficient `a_p` because `a₁ = 1` (`Eigenform.qExpansion_coeff_eq_eigenvalue`); `ε(-1) = -1` by the parity
 lemma (`TauCeti.char_neg_one_of_mem_cuspFormCharSpace`, Parity.lean:113, weight `1`, nonzero form). -/
 
@@ -51,8 +54,31 @@ def DSThm966Printed : Prop :=
         (∀ v : ValuationSubring Qbar, LiesOver v p →
           ∀ σ ∈ v.inertiaSubgroup ℚ, ρ ((σ : v.decompositionSubgroup ℚ) : GQ) = 1) ∧
         ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
-          (ρ σ : Matrix (Fin 2) (Fin 2) ℂ).trace = F.eigenvalue (p.toPNat hp.pos) (coprime_of_not_dvd hp hpN) ∧
+          (ρ σ : Matrix (Fin 2) (Fin 2) ℂ).trace =
+              F.eigenvalue (p.toPNat hp.pos) (coprime_of_not_dvd hp hpN) ∧
           (ρ σ : Matrix (Fin 2) (Fin 2) ℂ).det = ε (p : ZMod N)
+
+/-- **Fallback form (full eigenforms).** `DSThm966Printed` restricted to Tau Ceti's full `Eigenform N 1`
+(an eigenvector of every `T_n`, the `U_p`, `p ∣ N`, included). It follows from `DSThm966Printed`
+(`printedFull_of_printed`), and it is also a consequence of Diamond–Shurman GTM 228 Thm 9.6.6 (normalized
+eigenforms, Def. 5.8.1), because a full eigenform has `a_n = λ_n a₁` with `a₁ ≠ 0`
+(`Eigenform.qExpansion_coeff_eq_eigenvalue_mul_coeff_one`), so it is a nonzero multiple of a normalized one with
+the same eigenvalues. It is all that `dsThm966` needs. -/
+def DSThm966PrintedFull : Prop :=
+  ∀ (N : ℕ) [NeZero N] (ε : DirichletCharacter ℂ N) (F : Eigenform N 1),
+    F.χ = MulChar.toUnitHom ε → ε (-1) = -1 →
+    ∃ ρ : GQ →* GL (Fin 2) ℂ, Continuous ρ ∧ (Set.range ρ).Finite ∧
+      ∀ (p : ℕ) (hp : p.Prime), ¬ p ∣ N →
+        (∀ v : ValuationSubring Qbar, LiesOver v p →
+          ∀ σ ∈ v.inertiaSubgroup ℚ, ρ ((σ : v.decompositionSubgroup ℚ) : GQ) = 1) ∧
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          (ρ σ : Matrix (Fin 2) (Fin 2) ℂ).trace = F.eigenvalue (p.toPNat hp.pos) ∧
+          (ρ σ : Matrix (Fin 2) (Fin 2) ℂ).det = ε (p : ZMod N)
+
+theorem printedFull_of_printed (h : DSThm966Printed) : DSThm966PrintedFull := by
+  intro N _ ε F hFχ hε
+  obtain ⟨ρ, hc, hfin, hρ⟩ := h N ε F.toEigenformAwayFromLevel hFχ hε
+  exact ⟨ρ, hc, hfin, hρ⟩
 
 /-! ## Glue -/
 
@@ -66,27 +92,29 @@ theorem char_neg_one {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} {g : C
   rw [MulChar.coe_toUnitHom, zpow_one] at h
   simpa using h
 
-/-- A normalized eigenform (kernel coefficient form) as an eigenform away from the level, with its
-`T_p`-eigenvalue equal to its coefficient `a_p` (from `a₁ = 1`). -/
-theorem exists_awayFromLevel {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} {g : CF N 1}
+/-- A normalized eigenform (kernel coefficient form) as a full eigenform (Diamond–Shurman Def. 5.8.1),
+with its `T_p`-eigenvalue equal to its coefficient `a_p` (from `a₁ = 1`). -/
+theorem exists_eigenform {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} {g : CF N 1}
     (hg : IsNormalizedEigenform g χ) :
-    ∃ F : EigenformAwayFromLevel N 1, F.χ = MulChar.toUnitHom χ ∧
-      ∀ (p : ℕ) (hp : p.Prime) (hpN : ¬ p ∣ N),
-        F.eigenvalue (p.toPNat hp.pos) (coprime_of_not_dvd hp hpN) = coeff g p := by
+    ∃ F : Eigenform N 1, F.χ = MulChar.toUnitHom χ ∧
+      ∀ (p : ℕ) (hp : p.Prime), F.eigenvalue (p.toPNat hp.pos) = coeff g p := by
   obtain ⟨F, hFg, hFχ, h1⟩ := DSCoeffExt.isNormalizedEigenformDS_of hg
-  refine ⟨F.toEigenformAwayFromLevel, hFχ, fun p hp hpN => ?_⟩
-  show F.eigenvalue (p.toPNat hp.pos) = coeff g p
+  refine ⟨F, hFχ, fun p hp => ?_⟩
   subst hFg
   exact (F.qExpansion_coeff_eq_eigenvalue h1 (p.toPNat hp.pos)).symm
 
-/-- **`dsThm966` from Deligne–Serre's Thm 4.1 as printed.** -/
-theorem dsThm966_of_printed (h : DSThm966Printed) : ZInQ.Contrib.HodgeSplit.DSThm966 := by
+/-- `dsThm966` from the full-eigenform form. -/
+theorem dsThm966_of_printedFull (h : DSThm966PrintedFull) : ZInQ.Contrib.HodgeSplit.DSThm966 := by
   intro N χ g hN hg
   have : NeZero N := ⟨hN.ne'⟩
-  obtain ⟨F, hFχ, hev⟩ := exists_awayFromLevel hg
+  obtain ⟨F, hFχ, hev⟩ := exists_eigenform hg
   obtain ⟨ρ, hc, hfin, hρ⟩ := h N χ F hFχ (char_neg_one hg)
   refine ⟨ρ, hc, hfin, fun p hp hpN => ⟨(hρ p hp hpN).1, fun v σ hv hσ => ?_⟩⟩
   obtain ⟨htr, hdet⟩ := (hρ p hp hpN).2 v σ hv hσ
-  exact ⟨htr.trans (hev p hp hpN), hdet⟩
+  exact ⟨htr.trans (hev p hp), hdet⟩
+
+/-- **`dsThm966` from Deligne–Serre's Thm 4.1 as printed.** -/
+theorem dsThm966_of_printed (h : DSThm966Printed) : ZInQ.Contrib.HodgeSplit.DSThm966 :=
+  dsThm966_of_printedFull (printedFull_of_printed h)
 
 end DSThm966EV
