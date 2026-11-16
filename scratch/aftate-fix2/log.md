@@ -40,3 +40,4 @@ Review objections to `AfTateOr.AfTateDSOr` and the response:
   34/11 -> 38/10`; generated `sixContactMin_of_open36` compiles with standard axioms (`FoldDryRun-output.txt`, VERIFIED).
   The afTateDSLambda flag is class "reading risk" (counts LEAF, precedent raynaudSemistableSH); with "pending reading"
   instead the count would be 37/11 (GLUE unchanged).
+- 14:15 `scratch/aftate-fix2/Target.lean`: verbatim copy of `R16Split.R16CoreY`, `copy_iff : R16CoreY ↔ R16Split.R16CoreY := Iff.rfl`, discharge at the copy; standard axioms (VERIFIED).
