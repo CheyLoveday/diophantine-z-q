@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.PanBergerPrinted
+import ZInQKernel.Contrib.OneProof.DSThm965Weak
 
 noncomputable section
 
@@ -415,6 +416,12 @@ theorem panBerger_of_printedB (hP : PanPrintedB) (hB : BergerPrintedB)
   change Φ.symm.symm (coeff g q) = Φ (ιC α)
   rw [hα]
   rfl
+
+/-- **`r11r12` from the current bundle's fields**: as `panBerger_of_printedB`, with Diamond–Shurman 9.6.5
+in ds965-weak's weakest printed reading (`DS965Weak.DSThm965Weak`, the field of `OpenResearchLeaves26`). -/
+theorem panBerger_of_printedB_weak (hP : PanPrintedB) (hB : BergerPrintedB)
+    (hW : DS965Weak.DSThm965Weak) (hDS : ZInQ.Contrib.HodgeSplit.DSThm966) : PanBerger :=
+  panBerger_of_printedB hP hB (DS965Weak.dsThm965_of_weak hW) hDS
 
 /-! ## §5. Sanity: the trivial representation is admissible for every `B` and `H` -/
 
