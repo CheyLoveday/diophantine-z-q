@@ -55,3 +55,4 @@ Base: origin/main 2880fef1e. Build tree copied from ~/dzq-check2 (same commit).
   13 discharge one (four HeightDict rows + primes); optional spec `scratch/height-dict/autofold-all4.json` dry run
   exit 0, 34/11 -> 34/11, `FoldDryRunAll4.lean` compiles (standard axioms). Main spec `autofold.json` (two rows)
   re-run: same.
+- Final: report docs/research/height-dict.md, fleet note .fleet/height-dict.md.
