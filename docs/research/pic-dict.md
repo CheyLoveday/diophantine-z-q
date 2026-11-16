@@ -9,7 +9,7 @@ three are rated `consequence`, GLUE/GLUE.
 
 | row | result | new leaves | glue | strict / strictest GLUE change on the lf31 rating |
 |---|---|---|---|---|
-| `weilPairingMumford` | **replaced by leaves + Lean glue** | 9 instances of Mumford's displays at `X = A_K̄` (one also Milne), plus the existing field `phiAmpleIsogeny` | all proved, including L5, the dictionary and the Galois clause | **−1 / −1** |
+| `weilPairingMumford` | **replaced by leaves + Lean glue** | 8 instances of single displays at `X = A_K̄` (Mumford §§6, 8, 20, 23; EGA II 4.6.13), plus the existing field `phiAmpleIsogeny` | all proved, including L5, the dictionary, the Galois clause and the adjoint clause | **−1 / −1** |
 | `phiAmpleIsogeny` | reduced; **one combined step remains** | `mumfordKLFinite`, `picZeroPtsTranslInv` (composite); shares `mumfordPhiSurjective`, `ampleBaseChangeAlgClosure` | all proved (finiteness, surjectivity, dictionary) | 0 / 0 |
 | `picZeroAbVar` | not reduced; **combined step identified** (§5) | none | none | unchanged |
 
@@ -20,14 +20,17 @@ All of the following is VERIFIED (compiled; `#print axioms` gives `[propext, Cla
   ZInQKernel.Contrib.OneProof.PicDictionary` succeeds.
 * `theorem PicDict.weilPairingMumford_of_printed (hsq : MumfordSquare) (h8iv : MumfordMulNPicZero)
   (h8 : MumfordPhiSurjective) (hamp : AmpleBaseChangeAlgClosure) (h20a : MumfordWeilPairing)
-  (h20b : MumfordWeilNondeg) (h20c : MumfordWeilCompat) (h20d : MumfordWeilDual) (h23 : MumfordWeilAlt)
-  (h3 : PhiAmpleIsogeny) : T09Pic.WeilPairingMumford`
+  (h20b : MumfordWeilNondeg) (h20c : MumfordWeilCompat) (h23 : MumfordWeilAlt) (h3 : PhiAmpleIsogeny) :
+  T09Pic.WeilPairingMumford`
 * `theorem PicDict.phiAmpleIsogeny_of_printed (hKL : MumfordKLFinite) (h8 : MumfordPhiSurjective)
   (hamp : AmpleBaseChangeAlgClosure) (hsub : PicZeroPtsTranslInv) : T09Pic.PhiAmpleIsogeny`
 * `theorem PicDict.picPointsAlgClosed : T09Pic.PicPointsAlgClosed`: **L5 is a theorem.**
 * `theorem PicDict.weilFormulaGaloisEx`: the Galois clause by transport of structure. With L5 and
   `T09Pic.weilScalar_spec`, the hypothesis `T09Pic.MulNTrivialPicZero` (L6) is no longer needed; the proof derives
   it from `MumfordMulNPicZero` and the dictionary (step `htriv`).
+* `theorem PicDict.mumfordWeilDual_of_pairing : MumfordWeilPairing → MumfordWeilDual`: the adjoint clause
+  `ē_n(x, f^*M) = ē_n(fx, M)`, for every endomorphism, by the same transport along `f × 1`. Mumford's print for
+  isogenies is no longer needed.
 * `theorem PicDict.finiteOfFiniteKerPts`: a homomorphism of abelian varieties over `K` whose kernel has finitely many
   `K̄`-points is a finite morphism.
 
@@ -51,7 +54,6 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilPairing,
  PicDict.MumfordWeilNondeg,
  PicDict.MumfordWeilCompat,
- PicDict.MumfordWeilDual,
  PicDict.MumfordWeilAlt,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -60,23 +62,25 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_
 
 ### Autofold
 
-The recommended spec is `scratch/pic-dict/autofold.json`. It discharges `weilPairingMumford` and adds 9 published
+(`MumfordWeilDual` was a leaf in a first version and is now proved, so the counts below have 8 new leaves.)
+
+The recommended spec is `scratch/pic-dict/autofold.json`. It discharges `weilPairingMumford` and adds 8 published
 leaves. Its proof uses `{n}.phiAmpleIsogeny`, which stays a field.
 
 * On this base, `python3 scripts/one_proof/autofold.py scratch/pic-dict/autofold.json --dry-run` prints
-  `strict count: 40/8 on 48 -> 48/8 on 56; strictest 39/9 -> 48/8`. No `--allow-rise` is needed, because this
+  `strict count: 40/8 on 48 -> 47/8 on 55; strictest 39/9 -> 47/8`. No `--allow-rise` is needed, because this
   base still rates the row strict LEAF.
 * On the lf31 rating (the three rows set to consequence GLUE/GLUE in a temporary copy of `kinds.tsv`, then
-  restored) it prints `strict count: 37/11 on 48 -> 46/10 on 56; strictest 37/11 -> 46/10`.
+  restored) it prints `strict count: 37/11 on 48 -> 45/10 on 55; strictest 37/11 -> 45/10`.
 * The printed module compiles: `scratch/pic-dict/FoldDryRun.lean`, line 1 stripped, gives
   `sixContactMin_of_open35` with the standard axioms.
 
 The alternative spec `scratch/pic-dict/autofold-both.json` also discharges `phiAmpleIsogeny`, with
 `mumfordKLFinite` (published) and `picZeroPtsTranslInv` (kind composite).
 
-* On this base it prints `strict count: 40/8 on 48 -> 48/9 on 57; strictest 39/9 -> 48/9` and needs
+* On this base it prints `strict count: 40/8 on 48 -> 47/9 on 56; strictest 39/9 -> 47/9` and needs
   `--allow-rise`.
-* On the lf31 rating it prints `37/11 on 48 -> 47/10 on 57; strictest 37/11 -> 47/10`.
+* On the lf31 rating it prints `37/11 on 48 -> 46/10 on 56; strictest 37/11 -> 46/10`.
 * Its dry-run module also compiles (`scratch/pic-dict/FoldDryRunBoth.lean`).
 * Folding `phiAmpleIsogeny` gains nothing until `picZeroPtsTranslInv` is read as one print (§4).
 
@@ -156,7 +160,7 @@ All locators are UNVERIFIED: there is no copy of Mumford, Kleiman or Milne on th
 | `mumfordWeilPairing` | `MumfordWeilPairing` | Mumford §20: `ē_n` well defined, `μ_n`-valued, bilinear | yes, with a note | definition plus bilinearity on one page of §20. Well-definedness (independence of `ψ`) is part of the definition; the clause `∀ ψ ψ'` states it |
 | `mumfordWeilNondeg` | `MumfordWeilNondeg` | Mumford §20: `ē_n` nondegenerate, `p ∤ n` | yes (instance) | "both kernels trivial" is a consequence of "perfect" |
 | `mumfordWeilCompat` | `MumfordWeilCompat` | Mumford §20: `ē_{nm}(x, L) = ē_n(mx, L)` | yes (instance) | |
-| `mumfordWeilDual` | `MumfordWeilDual` | Mumford §20 (5) for isogenies; Milne 1986 16.2(c) for homomorphisms | yes, with a note | stated for every `f ∈ End_K(A)`, base-changed; Mumford's print covers isogenies, Milne's every homomorphism (but Milne's `e_n` is the Cartier-duality pairing). A direct Lean proof exists in principle (same transport as Galois, with `g = f × 1`); not done |
+| (`mumfordWeilDual`) | `MumfordWeilDual` | Mumford §20 (5) | not a leaf | **proved** from `mumfordWeilPairing` (`mumfordWeilDual_of_pairing`, transport along `f × 1`) |
 | `mumfordWeilAlt` | `MumfordWeilAlt` | Mumford §23: `e^L_n(x, x) = 1`, `e^L_n(x, y) = ē_n(x, φ_L(y))` | yes (instance) | for every `L` (a special case is used: `L_K̄` for `L` ample over `K`) |
 | `mumfordKLFinite` | `MumfordKLFinite` | Mumford §6 App. 1: `K(L)` finite | yes, with a note | printed for `L = 𝒪(D)` with `D` effective; for ample `L`, `L^m` is effective and `K(L) ⊆ K(L^m)` (one standard step) |
 | `picZeroPtsTranslInv` | `PicZeroPtsTranslInv` | Kleiman 9.5.10 + Mumford §8 | **no (composite)** | it identifies the `K̄`-points of the identity component of the fppf `Pic_{A/K}` with Mumford's `Pic⁰`. It would clear with one print in identity-component form; candidates are Milne 1986 §10 and BLR 8.4 (pending reading) |
@@ -226,7 +230,7 @@ composite (Z3) would leave the strict GLUE count unchanged, at the cost of Lean 
   `picZeroAbVar` in identity-component form. Every locator in §3.
 * Optional Lean, none needed for the `weilPairingMumford` fold:
   * a proof of `AmpleBaseChangeAlgClosure` (one leaf fewer);
-  * `mumfordWeilDual` and `mumfordWeilCompat` by `Transport.wf_transport` (two leaves fewer);
+  * `mumfordWeilCompat` by a variant of `Transport.wf_transport` along `m_A` (one leaf fewer);
   * the `k`-algebraically-closed restatement with the base-change bridge;
   * the dimension route of §4.
 
