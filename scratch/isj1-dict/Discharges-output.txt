@@ -19,8 +19,14 @@ DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero
  R16IsJ1Dict.CurveIsoOfFunctionFieldIso,
  AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero_igusa
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, R16IsJ1Dict.X1PointsConjugate, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakOdd
   still assumes: [R16IsJ1Dict.AfTateWeakOdd, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, R16IsJ1Dict.X1PointsConjugate, AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
@@ -37,8 +43,10 @@ DISCHARGES [OpenResearchLeaves23.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves23.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 61 open hypotheses, 2400 theorems checked, 11 discharge one
-'R16IsJ1Dict.r16CoreY_of_picZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 61 open hypotheses, 2410 theorems checked, 13 discharge one
+'R16IsJ1Dict.r16CoreY_of_picZero_igusa' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R16IsJ1Dict.curveIsoOfFunctionFieldIso_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
 'R16IsJ1Dict.r16CoreY_of_dict' depends on axioms: [propext, Classical.choice, Quot.sound]
 'R16IsJ1Dict.weakOdd_of_afTate' depends on axioms: [propext, Classical.choice, Quot.sound]
 'R16IsJ1Dict.weakOddPicZero_of_afTate' depends on axioms: [propext, Classical.choice, Quot.sound]

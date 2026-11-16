@@ -1,4 +1,6 @@
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.JacobianExists
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Birational.ValuativeExtension
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Curve.Dimension
 import ZInQKernel.Contrib.OneProof.R16Used
 import ZInQKernel.Contrib.OneProof.DSThm965Weak
 
@@ -18,8 +20,10 @@ field `ℚ(j)(x(P))`, `P` of exact order `N`). Proved here:
   representative of `Pic⁰_{X/ℚ}` (vendored Jacobian-Challenge library): "`Pic⁰` is the Albanese";
 * `abVarIso_of_isJacobian`: independence of the base point; `IsJacobian.of_iso`: transport along curve
   isomorphisms; `AfTateAt.of_iso`: the conclusion of the leaf is invariant under isomorphism of `J`;
-* `abVarIso_of_isJ1`: any two `IsJ1 N` abelian varieties are isomorphic, from two printed leaves
-  `X1PointsConjugate` (Igusa) and `CurveIsoOfFunctionFieldIso` (a curve is determined by its function field);
+* `curveIsoOfFunctionFieldIso_proof`: a smooth proper curve over `ℚ` is determined by its function field
+  (vendored valuative extension of rational maps and valuation stalks of smooth curves);
+* `abVarIso_of_isJ1'`: any two `IsJ1 N` abelian varieties are isomorphic, from the leaf
+  `X1PointsConjugate` (Igusa);
 * `afTateCharPoly_of_picZero`: `AfTateCharPoly` from its form over `Pic⁰` of one model.
 
 **Part 2 (the weak reading, proved).** `AfTateWeakOdd` replaces "characteristic polynomial" by
@@ -28,8 +32,9 @@ field `ℚ(j)(x(P))`, `P` of exact order `N`). Proved here:
 trace-and-determinant method with Chebotarev, T18, and the scalar case excluded by complex conjugation);
 `weakOdd_of_afTate` shows the new statement is a consequence of `AfTateCharPoly`.
 
-**Discharge.** `r16CoreY_of_dict : AfTateWeakOddPicZero → X1PointsConjugate →
-CurveIsoOfFunctionFieldIso → AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY`.
+**Discharge.** `r16CoreY_of_picZero_igusa : AfTateCharPolyPicZero → X1PointsConjugate →
+AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY`; under the weak reading
+`r16CoreY_of_weakPicZero_igusa` with `AfTateWeakOddPicZero`.
 
 No `sorry`, no `axiom`. -/
 
@@ -215,7 +220,8 @@ def X1PointsConjugate : Prop :=
   ∀ (N : ℕ) (P P' : EjBar.toAffine.Point), 0 < N → addOrderOf P = N → addOrderOf P' = N →
     ∃ σ : Kbar ≃ₐ[Qj] Kbar, σ (xCoord P) = xCoord P'
 
-/-- **LEAF (a smooth proper curve over a field is determined by its function field).** Two integral
+/-- **A smooth proper curve over `ℚ` is determined by its function field** (stated as a `Prop`; proved below,
+`curveIsoOfFunctionFieldIso_proof`). Two integral
 smooth proper geometrically connected curves over `ℚ` with isomorphic function fields are isomorphic
 over `ℚ` (a ring isomorphism of fields of characteristic `0` is `ℚ`-linear).
 
@@ -228,6 +234,95 @@ UNVERIFIED. -/
 def CurveIsoOfFunctionFieldIso : Prop :=
   ∀ (X X' : Over SpecQ) [IsIntegral X.left] [IsIntegral X'.left], IsCurve X → IsCurve X' →
     Nonempty (X.left.functionField ≃+* X'.left.functionField) → Nonempty (X ≅ X')
+
+/-! ### The curve leaf, proved -/
+
+/-- Any two morphisms `Spec K → Spec ℚ` agree. -/
+theorem spec_to_specQ_eq {K : Type} [Field K] (a b : Spec (CommRingCat.of K) ⟶ SpecQ) : a = b := by
+  rw [← Spec.map_preimage a, ← Spec.map_preimage b]
+  congr 1
+  ext1
+  exact RingHom.ext_rat _ _
+
+/-- The generic point is dense: `Spec K(X) → X` is dominant. -/
+theorem isDominant_fromSpecFunctionField (X : Scheme) [IsIntegral X] :
+    IsDominant X.fromSpecFunctionField := by
+  constructor
+  rw [DenseRange, dense_iff_closure_eq]
+  apply Set.eq_univ_of_univ_subset
+  have h : genericPoint X ∈ Set.range X.fromSpecFunctionField :=
+    ⟨IsLocalRing.closedPoint _, Scheme.fromSpecStalk_closedPoint⟩
+  have := closure_mono (Set.singleton_subset_iff.mpr h)
+  rw [(genericPoint_spec X).def] at this
+  exact this
+
+/-- A scheme proper over `Spec ℚ` is separated. -/
+theorem isSeparated_of_over (Y : Scheme) (f : Y ⟶ SpecQ) [IsSeparated f] : Y.IsSeparated := by
+  constructor
+  rw [show terminal.from Y = f ≫ terminal.from SpecQ from (terminal.hom_ext _ _)]
+  infer_instance
+
+/-- The morphism `X → X'` extending a function-field isomorphism (vendored
+`exists_hom_of_valuationRing_stalk`). -/
+theorem exists_hom (X X' : Over SpecQ) [IsIntegral X.left] [IsIntegral X'.left] (hX : IsCurve X)
+    (hX' : IsCurve X') (φ : X'.left.functionField →+* X.left.functionField) :
+    ∃ f : X ⟶ X', X.left.fromSpecFunctionField ≫ f.left =
+      Spec.map (CommRingCat.ofHom φ) ≫ X'.left.fromSpecFunctionField := by
+  have : IsProper X'.hom := hX'.proper
+  have : SmoothOfRelativeDimension 1 X.hom := hX.smooth
+  let _ : X.left.Over SpecQ := ⟨X.hom⟩
+  let _ : X'.left.Over SpecQ := ⟨X'.hom⟩
+  have : IsProper (X'.left ↘ SpecQ) := inferInstanceAs (IsProper X'.hom)
+  have : X'.left.IsSeparated := isSeparated_of_over X'.left X'.hom
+  have hval : ∀ x : X.left, ValuationRing (X.left.presheaf.stalk x) := fun x =>
+    AlgebraicGeometry.Scheme.valuationRing_stalk X.hom x
+  obtain ⟨f, hfo, hf⟩ := Scheme.exists_hom_of_valuationRing_stalk (base := SpecQ) hval
+    (Spec.map (CommRingCat.ofHom φ) ≫ X'.left.fromSpecFunctionField) (spec_to_specQ_eq _ _)
+  exact ⟨Over.homMk f hfo.comp_over, hf⟩
+
+theorem curveIsoOfFunctionFieldIso_proof : CurveIsoOfFunctionFieldIso := by
+  intro X X' _ _ hX hX' ⟨e⟩
+  obtain ⟨f, hf⟩ := exists_hom X X' hX hX' e.symm.toRingHom
+  obtain ⟨g, hg⟩ := exists_hom X' X hX' hX e.toRingHom
+  have : IsProper X.hom := hX.proper
+  have : IsProper X'.hom := hX'.proper
+  let _ : X.left.Over SpecQ := ⟨X.hom⟩
+  let _ : X'.left.Over SpecQ := ⟨X'.hom⟩
+  have : IsSeparated (X.left ↘ SpecQ) := inferInstanceAs (IsSeparated X.hom)
+  have : IsSeparated (X'.left ↘ SpecQ) := inferInstanceAs (IsSeparated X'.hom)
+  have : IsDominant X.left.fromSpecFunctionField := isDominant_fromSpecFunctionField X.left
+  have : IsDominant X'.left.fromSpecFunctionField := isDominant_fromSpecFunctionField X'.left
+  have hfg : f ≫ g = 𝟙 X := by
+    apply Over.OverMorphism.ext
+    rw [Over.comp_left, Over.id_left]
+    have : f.left.IsOver SpecQ := ⟨Over.w f⟩
+    have : g.left.IsOver SpecQ := ⟨Over.w g⟩
+    refine ext_of_isDominant_of_isSeparated' SpecQ X.left.fromSpecFunctionField ?_
+    rw [← Category.assoc, hf, Category.assoc, hg, ← Category.assoc,
+      ← Spec.map_comp, Category.comp_id]
+    conv_rhs => rw [← Category.id_comp X.left.fromSpecFunctionField]
+    congr 1
+    rw [← Spec.map_id]
+    congr 1
+    ext x
+    simp
+    rfl
+  have hgf : g ≫ f = 𝟙 X' := by
+    apply Over.OverMorphism.ext
+    rw [Over.comp_left, Over.id_left]
+    have : g.left.IsOver SpecQ := ⟨Over.w g⟩
+    have : f.left.IsOver SpecQ := ⟨Over.w f⟩
+    refine ext_of_isDominant_of_isSeparated' SpecQ X'.left.fromSpecFunctionField ?_
+    rw [← Category.assoc, hg, Category.assoc, hf, ← Category.assoc,
+      ← Spec.map_comp, Category.comp_id]
+    conv_rhs => rw [← Category.id_comp X'.left.fromSpecFunctionField]
+    congr 1
+    rw [← Spec.map_id]
+    congr 1
+    ext x
+    simp
+    rfl
+  exact ⟨⟨f, g, hfg, hgf⟩⟩
 
 /-- `K_N` does not depend on the point (glue): a `ℚ(j)`-automorphism carrying `x(P)` to `x(P')`
 carries `ℚ(j)(x(P))` onto `ℚ(j)(x(P'))`. -/
@@ -1047,6 +1142,22 @@ theorem weakOddPicZero_of_afTate (h : R16Used.AfTateCharPoly) (hT : PkgI3.TateMo
   refine ⟨X, hX, V, rep, htc, ?_⟩
   obtain ⟨aj, hJ⟩ := isJacobian_picZero X hX.1 V rep htc P₀
   exact weakOdd_of_afTate h hT N χ f (ofVendored V) hN hf ⟨X, P₀, aj, hX, hJ⟩
+
+/-- **Uniqueness of `J₁(N)` from Igusa alone** (the curve leaf is proved). -/
+theorem abVarIso_of_isJ1' (hI : X1PointsConjugate) {N : ℕ} (hN : 0 < N) {J J' : AbVar ℚ}
+    (h : IsJ1 N J) (h' : IsJ1 N J') : AbVarIso J J' :=
+  abVarIso_of_isJ1 hI curveIsoOfFunctionFieldIso_proof hN h h'
+
+/-- **The discharge of `r16CoreY`** from the `Pic⁰` form of r16-used's leaf, Igusa's theorem, and the
+bundle's `mumfordTorsionAlgClosed` (the curve leaf is proved, `curveIsoOfFunctionFieldIso_proof`). -/
+theorem r16CoreY_of_picZero_igusa (h : AfTateCharPolyPicZero) (hI : X1PointsConjugate)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY :=
+  r16CoreY_of_picZero h hI curveIsoOfFunctionFieldIso_proof hM
+
+/-- The same under the weak reading of DS 9.5.4 (with oddness). -/
+theorem r16CoreY_of_weakPicZero_igusa (h : AfTateWeakOddPicZero) (hI : X1PointsConjugate)
+    (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY :=
+  r16CoreY_of_dict h hI curveIsoOfFunctionFieldIso_proof hM
 
 end Final
 

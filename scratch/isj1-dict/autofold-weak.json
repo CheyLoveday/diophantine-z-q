@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "r16CoreY",
-   "proof": "_root_.R16IsJ1Dict.r16CoreY_of_dict {n}.afTateWeakOddPicZero {n}.x1PointsConjugate {n}.curveIsoOfFunctionFieldIso {t}.mumfordTorsionAlgClosed",
+   "proof": "_root_.R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa {n}.afTateWeakOddPicZero {n}.x1PointsConjugate {t}.mumfordTorsionAlgClosed",
    "leaves": [
     {
      "name": "afTateWeakOddPicZero",
@@ -23,14 +23,6 @@
      "kind": "consequence",
      "flag": "consequence of the printed theorem (Galois group GL_2(Z/N), resp. GL_2(Z/N)/{+-1} on x-coordinates); locator UNVERIFIED",
      "source": "Igusa, Amer. J. Math. 81 (1959); Shimura 1971, Thm 6.6; Lang, Elliptic Functions, Ch. 6 section 3; Diamond-Shurman section 7.5; numbers UNVERIFIED"
-    },
-    {
-     "name": "curveIsoOfFunctionFieldIso",
-     "type": "_root_.R16IsJ1Dict.CurveIsoOfFunctionFieldIso",
-     "doc": "isj1-dict: a smooth proper curve is determined by its function field. Two integral smooth proper geometrically connected curves over Q with ring-isomorphic function fields are isomorphic over Q (the object part of the equivalence between normal proper curves over k and finitely generated extensions of k of transcendence degree 1).",
-     "kind": "published",
-     "flag": "",
-     "source": "Stacks Project, Algebraic Curves, section 'Curves and function fields' (tag UNVERIFIED); Hartshorne, Algebraic Geometry, I Cor. 6.12 (algebraically closed field; the proof via I Prop. 6.8 works over any field); numbers UNVERIFIED"
     }
    ]
   }

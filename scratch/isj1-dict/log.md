@@ -58,3 +58,8 @@ Build: .lake/build copied from ~/dzq-wt/ds965-weak; `lake build R16Used Jacobian
   valuation rings) give X → X' and X' → X extending the function-field isomorphism; composites are identities by
   Mathlib ext_of_isDominant_of_isSeparated' (Spec K(X) → X dominant, proved). Any two maps Spec K → Spec ℚ agree.
 - So the dictionary step 'a curve is determined by its function field' is no longer a leaf.
+- Contribution updated: curve leaf proved inside R16IsJ1Dict.lean (`curveIsoOfFunctionFieldIso_proof`); new discharges
+  `r16CoreY_of_picZero_igusa` (leaves AfTateCharPolyPicZero, X1PointsConjugate) and `r16CoreY_of_weakPicZero_igusa`.
+  lake build +R16IsJ1Dict OK; #discharges: both discharge r16CoreY, standard axioms ("61 open hypotheses, 2410 theorems
+  checked, 13 discharge one"). autofold.json (2 leaves) dry run: strict 45/10 on 55 -> 46/10 on 56; strictest 43/12 ->
+  44/12; FoldDryRun.lean compiles (sixContactMin_of_open31 standard axioms). Weak spec: 45/10 -> 45/11 (pending reading).

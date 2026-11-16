@@ -4,7 +4,9 @@ import ZInQKernel.Contrib.OneProof.R16IsJ1Dict
 
 #discharges
 
-#print axioms R16IsJ1Dict.r16CoreY_of_picZero
+#print axioms R16IsJ1Dict.r16CoreY_of_picZero_igusa
+#print axioms R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa
+#print axioms R16IsJ1Dict.curveIsoOfFunctionFieldIso_proof
 #print axioms R16IsJ1Dict.r16CoreY_of_dict
 #print axioms R16IsJ1Dict.weakOdd_of_afTate
 #print axioms R16IsJ1Dict.weakOddPicZero_of_afTate
