@@ -184,7 +184,6 @@ opens = ['open CategoryTheory AlgebraicGeometry Limits MonoidalCategory Cartesia
 
 hdr = '\n'.join(MAIN_IMPORTS) + '''
 import ZInQKernel.Contrib.OneProof.GR56Lattice
-import ZInQKernel.Contrib.OneProof.GRDict
 import ZInQKernel.Contrib.OneProof.R5fpCountLe
 
 /-! # eichler-bound: the bypass fold that removes `gonzalezRotgerProp56X6` with no new leaf
@@ -257,8 +256,7 @@ def _ft(suffix, doc):
     t = t.replace('HDec.HSyn.' + TOP + ' r t l g', 'HDec.HSyn.' + TOP + suffix + ' r t l g')
     return doc + '\n' + t
 FT_BLOCK = ('namespace ZInQ.Contrib.TYZChain\n\n' + MAIN_OPENS + '\n' +
-    _ft('E', '/-- `ZInQ.OneProof.frozenTarget` (Main.lean, verbatim) with the research bundle `E` (no `gonzalezRotgerProp56X6`). -/') + '\n' +
-    _ft('F', '/-- `frozenTarget` with the research bundle `F` (neither González–Rotger field). -/') + '\n')
+    _ft('E', '/-- `ZInQ.OneProof.frozenTarget` (Main.lean, verbatim) with the research bundle `E` (no `gonzalezRotgerProp56X6`). -/') + '\n')
 parts.append('''/-- **The next research bundle** (eichler-bound): `OpenResearchLeaves26` without `gonzalezRotgerProp56X6`
 (no replacement field: the bound the chain reads is `EichlerBound.r5fpCountLe_proof`, from textbook fields). -/''')
 L = struct_copy(TOPR).split('\n')
@@ -280,54 +278,10 @@ for f in fields26:
         lines.append(f'  {f} := n.{f}')
 parts.append('\n'.join(lines) + '\n')
 
-# combined demonstration: 26F = 26E with gonzalezRotgerX6Ab replaced by gonzalezRotgerThm512X6
-L26E = txt.split('\n')
-out26F = []
-i = 0
-pend = []
-while i < len(L26E):
-    l = L26E[i]
-    if l.lstrip().startswith('/--') and i > 0:
-        doc = [l]
-        while '-/' not in L26E[i]:
-            i += 1
-            doc.append(L26E[i])
-        pend = doc
-        i += 1
-        continue
-    if re.match(r'^  gonzalezRotgerX6Ab :', l):
-        out26F.append("  /-- gr-dict, printed form: González–Rotger 2006 Thm 5.12 (p. 946) over its own CM points, on every witness")
-        out26F.append("  (`GRDict.GonzalezRotgerThm512X6`). Replaces `gonzalezRotgerX6Ab` (witness from `elkiesX6StarFunctionField`). -/")
-        out26F.append("  gonzalezRotgerThm512X6 : _root_.GRDict.GonzalezRotgerThm512X6")
-        pend = []
-        i += 1
-        continue
-    out26F += pend + [l]
-    pend = []
-    i += 1
-out26F[0] = 'structure OpenResearchLeaves26F : Prop where'
-parts.append("/-- **Both GR fields replaced** (gr-dict, combined demonstration): `OpenResearchLeaves26E` with\n`gonzalezRotgerX6Ab` replaced by `gonzalezRotgerThm512X6`. -/")
-parts.append('\n'.join(out26F) + '\n')
-fields26E = re.findall(r'^  ([A-Za-z_][\w\']*) :', txt, re.M)
-lines = ['/-- `OpenResearchLeaves26E` from `OpenResearchLeaves26F` (`GRDict.gonzalezRotgerX6Ab_of_printed`). -/',
-         'theorem openResearchLeaves26E_of_26F (n : OpenResearchLeaves26F) (t : OpenTextbookLeaves12) :',
-         '    OpenResearchLeaves26E where']
-for f in fields26E:
-    if f == 'gonzalezRotgerX6Ab':
-        lines.append('  gonzalezRotgerX6Ab := _root_.GRDict.gonzalezRotgerX6Ab_of_printed n.gonzalezRotgerThm512X6')
-        lines.append('    n.elkiesX6StarFunctionField t.uniformizationLeafAll t.gagaMorphism t.mumfordTorsionAlgClosed')
-    else:
-        lines.append(f'  {f} := n.{f}')
-parts.append('\n'.join(lines) + '\n')
 parts.append('''/-- **G0 without `gonzalezRotgerProp56X6` and with no new leaf** (eichler-bound bypass fold). -/
 theorem sixContactMin_of_open35E (r : OpenResearchLeaves26E) (t : OpenTextbookLeaves12) (l : OpenAddedLeaves17)
     (g : OpenGlue8) : ZInQ.SixContactMin :=
   sixContactMin_of_open35_S (openResearchLeaves26S_of_26E r t) t l g
-
-/-- **G0 without either González–Rotger field** (eichler-bound bypass fold plus gr-dict's `gonzalezRotgerX6Ab` discharge). -/
-theorem sixContactMin_of_open35F (r : OpenResearchLeaves26F) (t : OpenTextbookLeaves12) (l : OpenAddedLeaves17)
-    (g : OpenGlue8) : ZInQ.SixContactMin :=
-  sixContactMin_of_open35E (openResearchLeaves26E_of_26F r t) t l g
 
 end HSyn
 
@@ -335,8 +289,6 @@ end HDec
 
 ''' + FT_BLOCK + '''end ZInQ.Contrib.TYZChain
 
-#print axioms HDec.HSyn.sixContactMin_of_open35F
-#print axioms ZInQ.Contrib.TYZChain.frozenTarget_F
 #print axioms HDec.HSyn.sixContactMin_of_open35E
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_E
 ''')

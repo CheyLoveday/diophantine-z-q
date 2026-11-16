@@ -29,11 +29,13 @@ theorem EichlerBound.r5fpCountLe_proof (hU : BPAnalytic.Uniformization.Uniformiz
 * `r5fpCountLe_proof` combines it with gr56-prove's `GR56.card_cmSet_le` (`#CM(R) ≤ #(Emb(R,𝒪)/𝒪^×)`, from
   `uniformizationLeafAll`, `gagaMorphism` and `mumfordTorsionAlgClosed`, all already in `OpenTextbookLeaves12`).
 
-**Count.** gr-dict's bypass replaced `gonzalezRotgerProp56X6` by the leaf `eichlerOptEmbCount6`, which counts
-the same against kinds.tsv. This task's bypass (§4) replaces it by nothing. Against the base kinds.tsv
-(prop56 rated LEAF) the research bundle loses one LEAF row: `34/11 on 45 -> 33/11 on 44`. Against the 11-16
-re-rating (prop56 GLUE) the glue drops by one: `32/13 -> 32/12` on `45 -> 44`. These counts come from
-`autofold.py --dry-run` (§5).
+**Count** (`autofold.py --dry-run` with the count-only spec of §5, VERIFIED).
+* gr-dict's bypass replaced `gonzalezRotgerProp56X6` by the leaf `eichlerOptEmbCount6`, which is neutral in the
+  count. This task's bypass (§4) replaces it by nothing.
+* Against the tree's kinds.tsv (prop56 rated LEAF): `34/11 on 45 -> 33/11 on 44`, the same under the
+  strictest column.
+* Against the 11-16 re-rating of this row as GLUE (simulated on a copy in `/tmp/ebsim`; the tree's file is
+  untouched): `33/12 on 45 -> 33/11 on 44`. **−1 GLUE, no new leaf.**
 
 ## 2. The mathematics (an explicit injection, no trace formula)
 
@@ -109,9 +111,13 @@ is a bypass:
 * `scratch/eichler-bound/gen_bypass.py` is gr-dict's generator with two changes:
   * `OpenResearchLeaves26E` is `OpenResearchLeaves26` minus `gonzalezRotgerProp56X6`, with no replacement field.
   * `r5le := EichlerBound.r5fpCountLe_proof t.uniformizationLeafAll t.gagaMorphism t.mumfordTorsionAlgClosed`.
-* The generator writes `scratch/eichler-bound/BypassFold.lean`, with `frozenTarget_E` (no GR field
-  `gonzalezRotgerProp56X6` and no Eichler leaf) and `frozenTarget_F` (also gr-dict's `gonzalezRotgerX6Ab`
-  replacement).
+* The generator writes `scratch/eichler-bound/BypassFold.lean` with `sixContactMin_of_open35E` and
+  `ZInQ.Contrib.TYZChain.frozenTarget_E`: Main's `frozenTarget` over `OpenResearchLeaves26E`, which has neither
+  `gonzalezRotgerProp56X6` nor an Eichler leaf. gr-dict's `F` variant (its `gonzalezRotgerX6Ab` replacement) is
+  left out, so that the module does not import `GRDict`; the two reroutes are independent and combine as in
+  gr-dict's generator.
+* For the integrator: landing it is the same as gr-dict's (a) or (b). Rerun the generator against the top that is
+  current at fold time, and add its output as the next `TailZ` module.
 * Compile status: see §6.
 
 ## 5. Autofold spec and rating
