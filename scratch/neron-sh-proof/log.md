@@ -12,7 +12,7 @@ statement in ZInQKernel/Contrib/OneProof/StrictHenselizationPair.lean:1527, bund
   Spec K₁ = Spec R₁ ×_R Spec K, a Néron model over R base-changes to a Néron model over R₁ (BLRLocalizes pattern).
 
 ## Build setup
-- copied .lake/build and lean/.lake/build from ~/dzq-wt/poincare-proof (same base 0caafe66).
+- copied .lake/build and lean/.lake/build from the poincare-proof worktree (same base 0caafe66).
 
 ## Part A (VERIFIED, compiled: scratch/neron-sh-proof/PartA.lean, Mathlib only)
 - `NeronSH.exists_etale_subalgebra`: O DVR with fraction field K, O' a valuation subring of K', K'/K separable,
