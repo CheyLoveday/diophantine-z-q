@@ -21,7 +21,7 @@ namespace ZInQ.Heegner32
 
 open ZInQ.GZWeil (gaussD)
 open ZInQ.GZDecomp (HeegnerHyp)
-open ZInQ.Contrib.TYZGenus.CM (HeegnerForm)
+open ZInQ.Contrib.TYZGenus.CM (HeegnerForm ιC)
 open ZInQ.Contrib.TYZGenus.RingClass ZInQ.RouteK.Rank5b ZInQ.Contrib.TYZGenus.Shimura
   ZInQ.Contrib.TYZDecomp.CurveA NumberField
 
@@ -84,7 +84,7 @@ def TwistLatticeCd : Prop :=
     ZInQ.GZHL3.IsHeegnerReps (32 * d ^ 2) (-(m : ℤ)) β S →
   ∀ (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar),
     ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
-      I * (Real.sqrt m : ℂ) →
+      Complex.I * (Real.sqrt m : ℂ) →
   ∀ (σ : ℂ ≃+* ℂ) (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)), T5Glue.ArtinCond m e σ s →
   ∃ π : HeegnerForm (32 * d ^ 2) (-(m : ℤ)) → HeegnerForm (32 * d ^ 2) (-(m : ℤ)),
     Set.MapsTo π S S ∧ Set.InjOn π S ∧ ∀ Q ∈ S,
@@ -102,7 +102,7 @@ def TwistLatticeCd : Prop :=
 theorem phiC_transport (hCM : T5Glue.ShimuraMainCM) {m : ℕ} [NeZero m] {f : ℕ} [NeZero f] {D : ℤ}
     (T : X0EtaRoute.TData m f D) (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar)
     (he : ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
-      I * (Real.sqrt m : ℂ))
+      Complex.I * (Real.sqrt m : ℂ))
     (σ : ℂ ≃+* ℂ) (hs : T5Glue.ArtinCond m e σ T.s) :
     Affine.Point.map (ZInQ.GZHeegner.sigA σ) (ZInQ.Contrib.TYZGenus.X0.phiC T.Q.tauH) =
       ZInQ.Contrib.TYZGenus.X0.phiC T.Q'.tauH := by
@@ -129,7 +129,7 @@ theorem twistTransportCd_of (hCM : T5Glue.ShimuraMainCM) (hL : TwistLatticeCd) :
       rw [hνχ a, ← mul_assoc, hε2, one_mul]
     rw [hc]
     by_cases ha : jacobiSym (a.val : ℤ) d = 0
-    · rw [ha, zero_smul, zero_smul]
+    · rw [ha]; simp
     · obtain ⟨T, hTs, ⟨γ, hγ, hγe⟩, ⟨γ', hγ', hγe'⟩⟩ := hT a ha
       rw [← hγe, ← hγe', phiC_gamma0 hγ, phiC_gamma0 hγ']
       congr 1
