@@ -64,6 +64,7 @@ import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.CategoryTheory
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheaves.Cohomology.KFlat.FlatModuleSheavesAndStalks.StalkTensor
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

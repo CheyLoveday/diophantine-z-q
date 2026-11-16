@@ -11,6 +11,7 @@ import Mathlib.Topology.Sheaves.Functors
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheaves.Functors.Module.PullbackPresheaf
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

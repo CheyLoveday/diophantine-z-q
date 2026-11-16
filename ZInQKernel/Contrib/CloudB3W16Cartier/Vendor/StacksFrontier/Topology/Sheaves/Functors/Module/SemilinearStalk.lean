@@ -10,6 +10,7 @@ import Mathlib.Topology.Sheaves.Sheafify
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheaves.Functors.Module.InverseImage
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

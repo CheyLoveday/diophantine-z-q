@@ -17,6 +17,7 @@ import Mathlib.CategoryTheory.Preadditive.LeftExact
 import Mathlib.CategoryTheory.Sites.Abelian
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

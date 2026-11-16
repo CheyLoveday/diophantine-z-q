@@ -11,6 +11,7 @@ import Mathlib.CategoryTheory.Sites.Spaces
 import Mathlib.Combinatorics.Quiver.ReflQuiver
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

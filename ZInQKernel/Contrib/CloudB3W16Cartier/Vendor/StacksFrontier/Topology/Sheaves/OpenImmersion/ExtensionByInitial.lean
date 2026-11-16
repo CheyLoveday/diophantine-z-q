@@ -10,6 +10,7 @@ import Mathlib.Topology.Sheaves.Functors
 import Mathlib.Topology.Sheaves.Sheafify
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

@@ -14,6 +14,7 @@ import Mathlib.Combinatorics.Quiver.ReflQuiver
 import Mathlib.Geometry.RingedSpace.Basic
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

@@ -13,6 +13,7 @@ import Mathlib.Combinatorics.Quiver.ReflQuiver
 import Mathlib.Topology.Sheaves.SheafCondition.Sites
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

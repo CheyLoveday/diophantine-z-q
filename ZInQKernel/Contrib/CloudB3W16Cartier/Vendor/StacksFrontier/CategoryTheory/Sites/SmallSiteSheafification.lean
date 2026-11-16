@@ -9,6 +9,7 @@ import Mathlib.Algebra.Category.Grp.AB
 import Mathlib.CategoryTheory.Sites.LocallyBijective
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

@@ -63,6 +63,7 @@ import Std.Tactic.BVDecide.Normalize.Prop
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.CategoryTheory.Abelian.Projective.Horseshoe
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

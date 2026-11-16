@@ -12,6 +12,7 @@ import Mathlib.Algebra.Category.ModuleCat.Sheaf
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Algebra.Category.ModuleCat.Sheaf.ToposPushforwardModules.HasSheafComposeForget
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

@@ -13,6 +13,7 @@ import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheav
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.Topology.Sheaves.Modules.SquareZeroExtension
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

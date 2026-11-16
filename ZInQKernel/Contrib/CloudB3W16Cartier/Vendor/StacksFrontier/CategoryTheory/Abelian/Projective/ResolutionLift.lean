@@ -9,6 +9,7 @@ import Mathlib.Algebra.Homology.HomotopyCategory
 import Mathlib.CategoryTheory.Abelian.Projective.Resolution
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

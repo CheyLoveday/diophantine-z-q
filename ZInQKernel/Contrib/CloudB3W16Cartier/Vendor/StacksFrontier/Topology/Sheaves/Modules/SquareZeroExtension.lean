@@ -10,6 +10,7 @@ import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.AlgebraicGeome
 import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

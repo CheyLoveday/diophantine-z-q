@@ -12,6 +12,7 @@ import Mathlib.Algebra.Category.Ring.Limits
 import Mathlib.CategoryTheory.Sites.Whiskering
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

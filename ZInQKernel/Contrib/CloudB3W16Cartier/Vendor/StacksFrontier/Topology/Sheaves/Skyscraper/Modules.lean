@@ -11,6 +11,7 @@ import Mathlib.Topology.Sheaves.CommRingCat
 import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!

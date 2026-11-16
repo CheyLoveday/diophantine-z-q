@@ -15,6 +15,7 @@ import Mathlib.Topology.Sheaves.Sheaf
 import ZInQKernel.Contrib.CloudB3W16Cartier.Vendor.StacksFrontier.CategoryTheory.Sites.Modules.Differentials
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
+open _root_.CategoryTheory
 
 
 /-!
