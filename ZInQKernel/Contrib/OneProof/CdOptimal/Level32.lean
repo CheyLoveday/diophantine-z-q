@@ -209,4 +209,45 @@ theorem hasDerivAt_x1C {σ : ℂ} (hσ : 0 < σ.im) :
   unfold x1C
   exact hd.congr_deriv hgoal
 
+/-! ## §4. The periods of `Φ₁` over `Γ₀(32) ∩ {(2/d) = 1}` lie in every lattice of `C₁` -/
+
+/-- `x₁` is invariant under the `γ ∈ Γ₀(32)` with `(2/d) = 1`. -/
+theorem x1C_inv (hW : EtaW32Character) {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32)
+    (hχ : ZMod.χ₈ ((γ 1 1 : ℤ) : ZMod 8) = 1) (τ : ℍ) : x1C ((γ • τ : ℍ) : ℂ) = x1C τ := by
+  have hinv := ZInQ.Contrib.TYZGenus.Shimura.etaModelInvariant γ hγ τ
+  have hw := hW γ hγ τ
+  rw [hχ] at hw
+  simp only [Int.cast_one, one_mul] at hw
+  unfold x1C sC
+  rw [hinv.1, hinv.2, hw]
+
+/-- **The periods of `Φ₁` over the `γ ∈ Γ₀(32)` with `(2/d) = 1` lie in every period lattice of
+`C₁ : y² = x³ − x`** (`g₂ = 4`, `g₃ = 0`), given the eta-quotient transformation law for `w`. -/
+theorem period_mem_C1 (hW : EtaW32Character) {L : PeriodPair} (hg2 : L.g₂ = 4) (hg3 : L.g₃ = 0)
+    {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32) (hχ : ZMod.χ₈ ((γ 1 1 : ℤ) : ZMod 8) = 1) (τ : ℍ) :
+    eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 τ ∈ L.lattice := by
+  have hpi : (2 * Real.pi * I : ℂ) ≠ 0 := by
+    refine mul_ne_zero (mul_ne_zero two_ne_zero ?_) I_ne_zero
+    exact_mod_cast Real.pi_ne_zero
+  refine period_mem_gen L (A := -1) (B := 0) (by rw [hg2]; ring) (by rw [hg3]; ring)
+    ZInQ.GZWeil.U_open (X := x1C) (Y := y1C) (Φ := eichlerCd 1)
+    (F := fun σ => 2 * Real.pi * I * X0.fC σ)
+    (fun σ hσ => analyticAt_of_diff (fun _ h => differentiableAt_x1C h) hσ)
+    (fun σ hσ => analyticAt_of_diff (fun _ h => differentiableAt_y1C h) hσ)
+    (fun σ hσ => analyticAt_const.mul (ZInQ.GZWeil.analyticAt_fC hσ))
+    (fun σ hσ => ZInQ.GZWeil.hasDerivAt_eichlerCd_one hσ)
+    (fun σ hσ => hasDerivAt_x1C hσ)
+    (fun σ hσ => by have := y1_sq ⟨σ, hσ⟩; simp only at this; rw [this]; ring)
+    (convex_halfSpace_im_gt 0).isPreconnected
+    (fun σ hσ => mul_ne_zero hpi (X0.fC_ne_zero ⟨σ, hσ⟩))
+    ⟨τ, τ.im_pos, y1_ne_zero τ⟩ (g := moeb γ) (fun σ hσ => ZInQ.GZWeil.im_moeb_pos γ hσ)
+    (fun σ hσ => by
+      have := x1C_inv hW hγ hχ ⟨σ, hσ⟩
+      rwa [ZInQ.GZWeil.coe_smul_eq_moeb] at this)
+    (fun σ hσ => by
+      have := ZInQ.GZWeil.period_const hγ ⟨σ, hσ⟩ τ
+      rw [ZInQ.GZWeil.coe_smul_eq_moeb] at this
+      simp only at this
+      linear_combination this)
+
 end ZInQ.CdOpt
