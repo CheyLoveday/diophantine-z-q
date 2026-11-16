@@ -186,6 +186,68 @@ theorem exists_avoid (v : Ideal (𝓞 L)) [hv : v.IsMaximal] (k : 𝓞 L) (hk : 
     rw [hc]
     exact Ideal.mul_mem_right c _ (hxw w' hw'T)
 
+/-- Inclusion `res X U → res X U'` for `U ≤ U'`. -/
+noncomputable def incl (X : Over (S L)) {U U' : (S L).Opens} (h : U ≤ U') : res X U ⟶ res X U' :=
+  liftRes (supp_mono h (supp_res X U)) (resι X U)
+
+@[simp] theorem incl_ι (X : Over (S L)) {U U' : (S L).Opens} (h : U ≤ U') :
+    incl X h ≫ resι X U' = resι X U := liftRes_ι _ _
+
+theorem mono_left_resι (X : Over (S L)) (U : (S L).Opens) {Y : Over (S L)} {f g : Y ⟶ res X U}
+    (h : f ≫ resι X U = g ≫ resι X U) : f = g := by
+  apply Over.OverMorphism.ext
+  have h' := congrArg (fun t => t.left) h
+  simp only [Over.comp_left] at h'
+  exact (cancel_mono (resι X U).left).mp h'
+
+/-- **Comparison near the generic point.** Two smooth separated quasi-compact models with the same
+generic fibre agree over some `D(s₁) ∩ D(s₂)`: the Néron property at a maximal ideal there passes from
+one to the other. -/
+theorem isoNear (B : Over (Spec (CommRingCat.of L))) (X 𝒜 : Over (S L)) [Smooth X.hom]
+    [IsSeparated X.hom] [QuasiCompact X.hom] [Smooth 𝒜.hom] [IsSeparated 𝒜.hom]
+    [QuasiCompact 𝒜.hom] (eX : (gf L).obj X ≅ B) (eA : (gf L).obj 𝒜 ≅ B) :
+    ∃ s₁ s₂ : GIdx L, ∀ (w : Ideal (𝓞 L)) [w.IsPrime], w ∈ maxIn (Dg s₁ ⊓ Dg s₂) →
+      LocNeron L w 𝒜 → LocNeron L w X := by
+  obtain ⟨s₁, α, hα⟩ := spread_generic X 𝒜 (eX.hom ≫ eA.inv)
+  obtain ⟨s₂, β, hβ⟩ := spread_generic 𝒜 X (eA.hom ≫ eX.inv)
+  refine ⟨s₁, s₂, fun w _ hw h𝒜 => ?_⟩
+  let D := Dg s₁ ⊓ Dg s₂
+  have hD : (jL L) ⁻¹ᵁ D = ⊤ := by
+    obtain ⟨x, hxD, -⟩ := hw
+    exact jL_preimage_eq_top L ⟨x, hxD⟩
+  haveI := isIso_gf_resι X hD
+  haveI := isIso_gf_resι 𝒜 hD
+  let α' : res X D ⟶ res 𝒜 D := liftRes (supp_res X D) (incl X inf_le_left ≫ α)
+  let β' : res 𝒜 D ⟶ res X D := liftRes (supp_res 𝒜 D) (incl 𝒜 inf_le_right ≫ β)
+  have gα : (gf L).map α' ≫ (gf L).map (resι 𝒜 D) = (gf L).map (resι X D) ≫ eX.hom ≫ eA.inv := by
+    rw [← CategoryTheory.Functor.map_comp, liftRes_ι, CategoryTheory.Functor.map_comp, hα,
+      ← Category.assoc, ← CategoryTheory.Functor.map_comp, incl_ι]
+  have gβ : (gf L).map β' ≫ (gf L).map (resι X D) = (gf L).map (resι 𝒜 D) ≫ eA.hom ≫ eX.inv := by
+    rw [← CategoryTheory.Functor.map_comp, liftRes_ι, CategoryTheory.Functor.map_comp, hβ,
+      ← Category.assoc, ← CategoryTheory.Functor.map_comp, incl_ι]
+  have h1 : α' ≫ β' = 𝟙 _ := by
+    apply mono_left_resι X D
+    apply ZInQ.Contrib.NeronC.neron_extension_injective L X eX (res X D)
+    simp only [CategoryTheory.Functor.map_comp, Category.assoc, Category.id_comp]
+    show (gf L).map α' ≫ (gf L).map β' ≫ (gf L).map (resι X D) ≫ eX.hom =
+      (gf L).map (resι X D) ≫ eX.hom
+    rw [← Category.assoc ((gf L).map β'), gβ, Category.assoc, Category.assoc,
+      ← Category.assoc ((gf L).map α'), gα]
+    simp
+  have h2 : β' ≫ α' = 𝟙 _ := by
+    apply mono_left_resι 𝒜 D
+    apply ZInQ.Contrib.NeronC.neron_extension_injective L 𝒜 eA (res 𝒜 D)
+    simp only [CategoryTheory.Functor.map_comp, Category.assoc, Category.id_comp]
+    show (gf L).map β' ≫ (gf L).map α' ≫ (gf L).map (resι 𝒜 D) ≫ eA.hom =
+      (gf L).map (resι 𝒜 D) ≫ eA.hom
+    rw [← Category.assoc ((gf L).map α'), gα, Category.assoc, Category.assoc,
+      ← Category.assoc ((gf L).map β'), gβ]
+    simp
+  let i : res X D ≅ res 𝒜 D := ⟨α', β', h1, h2⟩
+  rw [← locNeron_res_iff hw X]
+  rw [← locNeron_res_iff hw 𝒜] at h𝒜
+  exact locNeron_of_iso i h𝒜
+
 end Near
 
 end NeronExt
