@@ -310,4 +310,35 @@ theorem homFreeFiniteAlgClosed_of_noEmb (HL : BPAnalytic.Uniformization.Uniformi
   · obtain ⟨σ⟩ := hne
     exact homFreeFiniteC HL HT k σ A B
 
+/-! ## 5. Forms for rerouting the consumers of T6 -/
+
+/-- **T6 over fields algebraic over `ℚ`** (number fields, `ℚ̄`, `K̄` for a number field `K`). The
+body of `PkgI3.HomFreeFinite`. -/
+def HomFreeFiniteAlgQ : Prop :=
+  ∀ (k : Type) [Field k] [CharZero k] [Algebra.IsAlgebraic ℚ k] (A B : PkgI3.AbVar k),
+    Module.Free ℤ (PkgI3.AbVar.Hom A B) ∧ Module.Finite ℤ (PkgI3.AbVar.Hom A B) ∧
+      ((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ∞) : WithBot ℕ∞) ≤ 4 * A.dim * B.dim ∧
+      ∀ (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+        Function.Injective (PkgI3.AbVar.tateHomZl ℓ A B)
+
+/-- **T6 over number fields.** -/
+def HomFreeFiniteNF : Prop :=
+  ∀ (k : Type) [Field k] [NumberField k] (A B : PkgI3.AbVar k),
+    Module.Free ℤ (PkgI3.AbVar.Hom A B) ∧ Module.Finite ℤ (PkgI3.AbVar.Hom A B) ∧
+      ((Module.finrank ℤ (PkgI3.AbVar.Hom A B) : ℕ∞) : WithBot ℕ∞) ≤ 4 * A.dim * B.dim ∧
+      ∀ (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+        Function.Injective (PkgI3.AbVar.tateHomZl ℓ A B)
+
+/-- **`HomFreeFiniteAlgQ` (proved).** A field algebraic over `ℚ` embeds into `ℂ`. -/
+theorem homFreeFiniteAlgQ (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) : HomFreeFiniteAlgQ := by
+  intro k _ _ _ A B
+  exact homFreeFiniteC HL HT k (IsAlgClosed.lift : k →ₐ[ℚ] ℂ).toRingHom A B
+
+/-- **`HomFreeFiniteNF` (proved).** -/
+theorem homFreeFiniteNF (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) : HomFreeFiniteNF := by
+  intro k _ _ A B
+  exact homFreeFiniteAlgQ HL HT k A B
+
 end ZInQ.Contrib.OneProof.HomFreeC

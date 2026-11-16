@@ -24,7 +24,7 @@ DISCHARGES [OpenTextbookLeaves12.homFreeFiniteAlgClosed] by ZInQ.Contrib.OneProo
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteAlgClosedNoEmb]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2877 theorems checked, 8 discharge one
+#discharges: 56 open hypotheses, 2879 theorems checked, 8 discharge one
 'ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteAlgClosed_of_noEmb' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
