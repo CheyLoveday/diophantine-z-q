@@ -121,7 +121,8 @@ change of a smooth scheme over some `Spec Bᵢ`. -/
 theorem exists_spread (hcov : ∀ x : R₁, ∃ i, x ∈ B i) (V : Scheme.{0}) [IsAffine V]
     (v : V ⟶ Spec (CommRingCat.of R₁)) [Smooth v] :
     ∃ (a : ιᵒᵖ) (W : Over ((specDiag B hB).obj a)) (φ : V ⟶ W.left),
-      Smooth W.hom ∧ IsPullback φ v W.hom ((specCone B hB).π.app a) := by
+      Smooth W.hom ∧ QuasiCompact W.hom ∧ QuasiSeparated W.hom ∧
+        IsPullback φ v W.hom ((specCone B hB).π.app a) := by
   haveI : IsAffineHom v := inferInstance
   haveI : LocallyOfFinitePresentation (Over.mk v).hom := (inferInstance : LocallyOfFinitePresentation v)
   haveI : QuasiCompact (Over.mk v).hom := (inferInstance : QuasiCompact v)
@@ -145,7 +146,9 @@ theorem exists_spread (hcov : ∀ x : R₁, ∃ i, x ∈ B i) (V : Scheme.{0}) [
       (v ≫ (specCone B hB).π.app j) ≫ (specDiag B hB).map a :=
     hc0.trans ((congrArg (fun t => v ≫ t) hπ.symm).trans (Category.assoc _ _ _).symm)
   let φ : V ⟶ pullback Xi.hom ((specDiag B hB).map a) := pullback.lift _ _ hcomm
-  refine ⟨j, (Over.pullback ((specDiag B hB).map a)).obj Xi, φ, hj, ?_⟩
+  refine ⟨j, (Over.pullback ((specDiag B hB).map a)).obj Xi, φ, hj,
+    show QuasiCompact (pullback.snd Xi.hom _) from inferInstance,
+    show QuasiSeparated (pullback.snd Xi.hom _) from inferInstance, ?_⟩
   have houter : IsPullback (e.inv.left ≫ pullback.fst Xi.hom ((specCone B hB).π.app i)) v Xi.hom
       ((specCone B hB).π.app i) :=
     IsPullback.of_iso_pullback ⟨hc0⟩ ((Over.forget _).mapIso e.symm) rfl hw
@@ -157,5 +160,78 @@ theorem exists_spread (hcov : ∀ x : R₁, ∃ i, x ∈ B i) (V : Scheme.{0}) [
 
 end Family
 
+
+/-! ## The diagram over a fixed stage `Spec C` -/
+
+section OverDiag
+
+variable {R R₁ : Type} [CommRing R] [CommRing R₁] [Algebra R R₁]
+  {ι : Type} [Preorder ι] [IsDirectedOrder ι] [Nonempty ι] (B : ι → Subalgebra R R₁) (hB : Monotone B)
+  (C : Subalgebra R R₁) (hC : ∀ i, C ≤ B i)
+
+/-- `Spec Bᵢ → Spec C`. -/
+noncomputable def toC (i : ιᵒᵖ) : (specDiag B hB).obj i ⟶ Spec (CommRingCat.of C) :=
+  Spec.map (CommRingCat.ofHom (Subalgebra.inclusion (hC i.unop)).toRingHom)
+
+theorem map_toC {i j : ιᵒᵖ} (f : i ⟶ j) :
+    (specDiag B hB).map f ≫ toC B hB C hC j = toC B hB C hC i := by
+  refine (Spec.map_comp _ _).symm.trans ?_
+  rfl
+
+/-- `i ↦ (Spec Bᵢ → Spec C)`. -/
+noncomputable def oD : ιᵒᵖ ⥤ Over (Spec (CommRingCat.of C)) where
+  obj i := Over.mk (toC B hB C hC i)
+  map f := Over.homMk ((specDiag B hB).map f) (map_toC B hB C hC f)
+  map_id i := by ext1; exact (specDiag B hB).map_id i
+  map_comp f g := by ext1; exact (specDiag B hB).map_comp f g
+
+/-- `Spec R₁ → Spec C`. -/
+noncomputable abbrev πC : Spec (CommRingCat.of R₁) ⟶ Spec (CommRingCat.of C) :=
+  Spec.map (CommRingCat.ofHom C.val.toRingHom)
+
+theorem π_toC (i : ιᵒᵖ) : (specCone B hB).π.app i ≫ toC B hB C hC i = πC C := by
+  refine (Spec.map_comp _ _).symm.trans ?_
+  rfl
+
+/-- `Spec R₁` as a cone over `oD`. -/
+noncomputable def oC : Cone (oD B hB C hC) where
+  pt := Over.mk (πC C)
+  π := { app i := Over.homMk ((specCone B hB).π.app i) (π_toC B hB C hC i)
+         naturality i j f := by ext1; exact (specCone B hB).π.naturality f }
+
+/-- `Spec R₁ = lim Spec Bᵢ` in `Over (Spec C)`. -/
+noncomputable def oCIsLimit (hcov : ∀ x : R₁, ∃ i, x ∈ B i) : IsLimit (oC B hB C hC) := by
+  haveI : IsConnected ιᵒᵖ := IsCofiltered.isConnected _
+  apply isLimitOfReflects (Over.forget _)
+  refine (IsLimit.equivOfNatIsoOfIso (NatIso.ofComponents (fun _ => Iso.refl _) ?_) _ _
+    (Cone.ext (Iso.refl _) ?_)) (specConeIsLimit B hB hcov)
+  · intro m n f
+    simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]
+  · intro n
+    simp only [Iso.refl_hom, Category.id_comp]
+
+end OverDiag
+
+section PullbackMap
+
+variable {X Y : Scheme.{0}} (f : X ⟶ Y)
+
+/-- The map `(Over.pullback f).map k` is the base change of `k`. -/
+theorem isPullback_pullback_map_left {g h : Over Y} (k : g ⟶ h) :
+    IsPullback ((Over.pullback f).map k).left (pullback.fst g.hom f) (pullback.fst h.hom f) k.left := by
+  refine IsPullback.of_right (h₁₂ := pullback.snd h.hom f) (h₂₂ := h.hom) (v₁₃ := f) ?_ ?_
+    (IsPullback.of_hasPullback h.hom f).flip
+  · have e1 : ((Over.pullback f).map k).left ≫ pullback.snd h.hom f = pullback.snd g.hom f := by
+      simp [Over.pullback_map_left]
+    have e2 : k.left ≫ h.hom = g.hom := Over.w k
+    rw [e1, e2]
+    exact (IsPullback.of_hasPullback g.hom f).flip
+  · simp [Over.pullback_map_left]
+
+instance isAffineHom_pullback_map_left {g h : Over Y} (k : g ⟶ h) [IsAffineHom k.left] :
+    IsAffineHom ((Over.pullback f).map k).left :=
+  MorphismProperty.of_isPullback (isPullback_pullback_map_left f k).flip ‹_›
+
+end PullbackMap
 
 end NeronSH
