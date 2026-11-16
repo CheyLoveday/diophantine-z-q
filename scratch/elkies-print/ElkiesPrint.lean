@@ -98,4 +98,158 @@ theorem ffMap_congr {X Z : Scheme.{0}} [IsIntegral X] [IsIntegral Z] {h h' : X �
 
 end FFMap
 
+/-! ## 3. Transport of Elkies' clauses along an isomorphism of coarse witnesses -/
+
+section Transport
+
+open X6Glue
+
+instance isOpenImmersion_hom_left {A B : Over (Spec (CommRingCat.of ℚ))} (f : A ≅ B) :
+    IsOpenImmersion f.hom.left := by
+  have : IsIso f.hom.left := (inferInstance : IsIso ((Over.forget _).map f.hom))
+  infer_instance
+
+instance isOpenImmersion_inv_left {A B : Over (Spec (CommRingCat.of ℚ))} (f : A ≅ B) :
+    IsOpenImmersion f.inv.left := by
+  have : IsIso f.inv.left := (inferInstance : IsIso ((Over.forget _).map f.inv))
+  infer_instance
+
+variable {X X₀ : Over (Spec (CommRingCat.of ℚ))}
+  {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)}
+  {Ψ₀ : (fieldPt Qbar ⟶ X₀) ≃ Quotient (pairSetoid Qbar)}
+
+theorem isAtkinLehner_conj (k : X ≅ X₀) (hk : ∀ x : fieldPt Qbar ⟶ X, Ψ₀ (x ≫ k.hom) = Ψ x)
+    {j : Fin 4} {g : X ≅ X} (hg : ElkiesX6Star.IsAtkinLehner X Ψ j g) :
+    ElkiesX6Star.IsAtkinLehner X₀ Ψ₀ j (k.symm ≪≫ g ≪≫ k) := by
+  intro x₀ P hP
+  have hx : Ψ (x₀ ≫ k.inv) = Quotient.mk _ P := by
+    rw [← hk, Category.assoc, k.inv_hom_id, Category.comp_id]; exact hP
+  have := hg (x₀ ≫ k.inv) P hx
+  rw [← hk] at this
+  simpa only [Iso.trans_hom, Iso.symm_hom, Category.assoc] using this
+
+theorem isAtkinLehner_conj' (k : X ≅ X₀) (hk : ∀ x : fieldPt Qbar ⟶ X, Ψ₀ (x ≫ k.hom) = Ψ x)
+    {j : Fin 4} {g₀ : X₀ ≅ X₀} (hg : ElkiesX6Star.IsAtkinLehner X₀ Ψ₀ j g₀) :
+    ElkiesX6Star.IsAtkinLehner X Ψ j (k ≪≫ g₀ ≪≫ k.symm) := by
+  intro x P hP
+  have := hg (x ≫ k.hom) P ((hk x).trans hP)
+  rw [← hk]
+  simpa only [Iso.trans_hom, Iso.symm_hom, Category.assoc, Iso.inv_hom_id, Category.comp_id] using this
+
+theorem ffPullback_eq {Z : Over (Spec (CommRingCat.of ℚ))} [IsIntegral Z.left] (g : Z ≅ Z) :
+    ElkiesCoord.ffPullback (Z := Z.left) ((Over.forget _).mapIso g) = ffMap g.hom.left := rfl
+
+/-- `ℚ(X)^W` is the image of `ℚ(X₀)^W` under the comorphism of a compatible isomorphism `k : X ≅ X₀`. -/
+theorem fixedByW_eq_image [IsIntegral X.left] [IsIntegral X₀.left] (k : X ≅ X₀)
+    (hk : ∀ x : fieldPt Qbar ⟶ X, Ψ₀ (x ≫ k.hom) = Ψ x) :
+    ElkiesCoord.fixedByW Ψ = ffMap k.hom.left '' ElkiesCoord.fixedByW Ψ₀ := by
+  have e1 : k.hom.left ≫ k.inv.left = 𝟙 _ := by rw [← Over.comp_left, k.hom_inv_id]; rfl
+  have e2 : k.inv.left ≫ k.hom.left = 𝟙 _ := by rw [← Over.comp_left, k.inv_hom_id]; rfl
+  have hκκ' : ∀ a, ffMap k.hom.left (ffMap k.inv.left a) = a := by
+    intro a
+    rw [← RingHom.comp_apply, ← ffMap_comp, ffMap_congr e1, ffMap_id]; rfl
+  ext φ
+  constructor
+  · intro hφ
+    refine ⟨ffMap k.inv.left φ, ?_, hκκ' φ⟩
+    rintro g₀ ⟨j, hj⟩
+    have hφg : ffMap (k ≪≫ g₀ ≪≫ k.symm).hom.left φ = φ := hφ (k ≪≫ g₀ ≪≫ k.symm) ⟨j, isAtkinLehner_conj' k hk hj⟩
+    show ffMap g₀.hom.left (ffMap k.inv.left φ) = ffMap k.inv.left φ
+    have m : k.inv.left ≫ (k ≪≫ g₀ ≪≫ k.symm).hom.left = g₀.hom.left ≫ k.inv.left := by
+      change k.inv.left ≫ k.hom.left ≫ g₀.hom.left ≫ k.inv.left = _
+      rw [reassoc_of% e2]
+    calc ffMap g₀.hom.left (ffMap k.inv.left φ) = ffMap (g₀.hom.left ≫ k.inv.left) φ := by
+          rw [ffMap_comp]; rfl
+      _ = ffMap (k.inv.left ≫ (k ≪≫ g₀ ≪≫ k.symm).hom.left) φ := by rw [ffMap_congr m]
+      _ = ffMap k.inv.left φ := by rw [ffMap_comp, RingHom.comp_apply, hφg]
+  · rintro ⟨ψ, hψ, rfl⟩ g ⟨j, hj⟩
+    have hψg : ffMap (k.symm ≪≫ g ≪≫ k).hom.left ψ = ψ := hψ (k.symm ≪≫ g ≪≫ k) ⟨j, isAtkinLehner_conj k hk hj⟩
+    show ffMap g.hom.left (ffMap k.hom.left ψ) = ffMap k.hom.left ψ
+    have m : k.hom.left ≫ (k.symm ≪≫ g ≪≫ k).hom.left = g.hom.left ≫ k.hom.left := by
+      change k.hom.left ≫ k.inv.left ≫ g.hom.left ≫ k.hom.left = _
+      rw [reassoc_of% e1]
+    calc ffMap g.hom.left (ffMap k.hom.left ψ) = ffMap (g.hom.left ≫ k.hom.left) ψ := by
+          rw [ffMap_comp]; rfl
+      _ = ffMap (k.hom.left ≫ (k.symm ≪≫ g ≪≫ k).hom.left) ψ := by rw [ffMap_congr m]
+      _ = ffMap k.hom.left ψ := by rw [ffMap_comp, RingHom.comp_apply, hψg]
+
+/-- The function-field clause transported along `k`. -/
+theorem ff_transport (k : X ≅ X₀) (hk : ∀ x : fieldPt Qbar ⟶ X, Ψ₀ (x ≫ k.hom) = Ψ x) (t₀ : ToP1 X₀.left)
+    (hff : ∀ (_ : IsIntegral X₀.left) (hη : genericPoint X₀.left ∈ t₀.U),
+      ElkiesCoord.fixedByW Ψ₀ =
+        (Subfield.closure {X₀.left.presheaf.germ t₀.U _ hη t₀.f} : Set X₀.left.functionField)) :
+    ∀ (_ : IsIntegral X.left) (hη : genericPoint X.left ∈ (t₀.comp k.hom.left).U),
+      ElkiesCoord.fixedByW Ψ =
+        (Subfield.closure {X.left.presheaf.germ (t₀.comp k.hom.left).U _ hη (t₀.comp k.hom.left).f} :
+          Set X.left.functionField) := by
+  intro hI hη
+  have : Nonempty X₀.left := ⟨k.hom.left (genericPoint X.left)⟩
+  have : IsIntegral X₀.left := isIntegral_of_isOpenImmersion k.inv.left
+  have hη₀ : genericPoint X₀.left ∈ t₀.U := by
+    have : k.hom.left (genericPoint X.left) ∈ t₀.U := hη
+    rwa [genericPoint_eq_of_isOpenImmersion] at this
+  rw [fixedByW_eq_image k hk, hff _ hη₀]
+  rw [← Subfield.coe_map, RingHom.map_field_closure, Set.image_singleton,
+    ffMap_germ k.hom.left t₀.U hη₀ hη]
+  rfl
+
+/-- The CM clause transported along `k`. -/
+theorem cm_transport (k : X ≅ X₀) (hk : ∀ x : fieldPt Qbar ⟶ X, Ψ₀ (x ≫ k.hom) = Ψ x) (t₀ : ToP1 X₀.left)
+    (hcm : ∀ (x : fieldPt Qbar ⟶ X₀) (P : QMPair Qbar), Ψ₀ x = Quotient.mk _ P →
+        (HasCM24 P.q → t₀.val (K := Qbar) x.left = OnePoint.some 0) ∧
+        (HasCM4 P.q → t₀.val (K := Qbar) x.left = OnePoint.some 1) ∧
+        (HasCM3 P.q → t₀.val (K := Qbar) x.left = OnePoint.infty)) :
+    ∀ (x : fieldPt Qbar ⟶ X) (P : QMPair Qbar), Ψ x = Quotient.mk _ P →
+        (HasCM24 P.q → (t₀.comp k.hom.left).val (K := Qbar) x.left = OnePoint.some 0) ∧
+        (HasCM4 P.q → (t₀.comp k.hom.left).val (K := Qbar) x.left = OnePoint.some 1) ∧
+        (HasCM3 P.q → (t₀.comp k.hom.left).val (K := Qbar) x.left = OnePoint.infty) := by
+  intro x P hP
+  have e : (t₀.comp k.hom.left).val (K := Qbar) x.left = t₀.val (K := Qbar) (x ≫ k.hom).left :=
+    ToP1.val_comp_right (K := Qbar) t₀ k.hom.left x.left
+  rw [e]
+  exact hcm (x ≫ k.hom) P ((hk x).trans hP)
+
+/-- Elkies' charts transported along `k`. -/
+theorem charts_transport (k : X ≅ X₀) (t₀ : ToP1 X₀.left) (hc : X6Glue.ElkiesCharts X₀ t₀) :
+    X6Glue.ElkiesCharts X (t₀.comp k.hom.left) := by
+  obtain ⟨hU, hV, φU, φV, hT, hTg, hg1, hg2⟩ := hc
+  have : IsIso k.hom.left := (inferInstance : IsIso ((Over.forget _).map k.hom))
+  set h := k.hom.left with hh
+  have nL : ∀ a : Γ(X₀.left, t₀.U),
+      h.app (t₀.U ⊓ t₀.V) (X₀.left.presheaf.map (homOfLE (inf_le_left : t₀.U ⊓ t₀.V ≤ t₀.U)).op a) =
+        X.left.presheaf.map (homOfLE (inf_le_left : h ⁻¹ᵁ t₀.U ⊓ h ⁻¹ᵁ t₀.V ≤ h ⁻¹ᵁ t₀.U)).op
+          (h.app t₀.U a) := by
+    intro a
+    have n := ConcreteCategory.congr_hom
+      (h.naturality (homOfLE (inf_le_left : t₀.U ⊓ t₀.V ≤ t₀.U)).op) a
+    simp only [ConcreteCategory.comp_apply] at n
+    exact n
+  have nR : ∀ a : Γ(X₀.left, t₀.V),
+      h.app (t₀.U ⊓ t₀.V) (X₀.left.presheaf.map (homOfLE (inf_le_right : t₀.U ⊓ t₀.V ≤ t₀.V)).op a) =
+        X.left.presheaf.map (homOfLE (inf_le_right : h ⁻¹ᵁ t₀.U ⊓ h ⁻¹ᵁ t₀.V ≤ h ⁻¹ᵁ t₀.V)).op
+          (h.app t₀.V a) := by
+    intro a
+    have n := ConcreteCategory.congr_hom
+      (h.naturality (homOfLE (inf_le_right : t₀.U ⊓ t₀.V ≤ t₀.V)).op) a
+    simp only [ConcreteCategory.comp_apply] at n
+    exact n
+  refine ⟨hU.preimage_of_isIso h, hV.preimage_of_isIso h,
+    φU.trans (asIso (h.app t₀.U)).commRingCatIsoToRingEquiv,
+    φV.trans (asIso (h.app t₀.V)).commRingCatIsoToRingEquiv, ?_, ?_, ?_, ?_⟩
+  · change h.app t₀.U (φU eT) = h.app t₀.U t₀.f
+    rw [hT]
+  · change h.app t₀.V (φV eT) = h.app t₀.V t₀.g
+    rw [hTg]
+  · change X.left.presheaf.map _ (h.app t₀.U (φU eS)) * X.left.presheaf.map _ (h.app t₀.V (φV eS)) = 1
+    have e := congrArg (h.app (t₀.U ⊓ t₀.V)) hg1
+    rw [map_mul, map_one, nL, nR] at e
+    exact e
+  · change X.left.presheaf.map _ (h.app t₀.U (φU eR)) * X.left.presheaf.map _ (h.app t₀.V (φV eS)) =
+      X.left.presheaf.map _ (h.app t₀.V (φV eR))
+    have e := congrArg (h.app (t₀.U ⊓ t₀.V)) hg2
+    rw [map_mul, nL, nR, nR] at e
+    exact e
+
+end Transport
+
 end HDec.QMSplit.Moduli.ElkiesPrint

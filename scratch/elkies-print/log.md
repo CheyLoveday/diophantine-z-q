@@ -24,3 +24,4 @@ elsewhere (queue2 verdict)". VERIFIED (read).
 
 ## Compile log
 - C1 ElkiesPrint.lean v1 (leaf ElkiesX6StarEvery, X6WitnessAb, discharge, ffMap/ffMap_germ/ffMap_comp/ffMap_id): compiles (VERIFIED).
+- C2 transport section (AL conjugation, fixedByW_eq_image, ff_transport, cm_transport, charts_transport): compiles (VERIFIED).
