@@ -115,4 +115,78 @@ theorem pairs1_cover : ∀ i j : Fin 3, i ≠ j →
   intro i j h
   fin_cases i <;> fin_cases j <;> simp_all [root1, pairs1]
 
+/-! ## The centralizer at `2` -/
+
+theorem loc_of_commute1 {k : ℕ} {A B C : ℚ_[2]}
+    (hABC : A ^ 2 + B ^ 2 + C ^ 2 = ((8 * k + 1 : ℕ) : ℚ_[2]))
+    (hω : IsHur (Zp 2) (⟨0, A, B, C⟩ : ℍ[ℚ_[2]])) {y : ℍ[ℚ_[2]]} (hy : y ≠ 0)
+    (hc : y * ⟨0, A, B, C⟩ = ⟨0, A, B, C⟩ * y) :
+    Loc2OK (⟨0, A, B, C⟩ : ℍ[ℚ_[2]]) y ∨ Loc2OK (⟨0, A, B, C⟩ : ℍ[ℚ_[2]]) (y * (1 + ⟨0, A, B, C⟩)) := by
+  set ω' : ℍ[ℚ_[2]] := ⟨0, A, B, C⟩ with hω'
+  set N : ℚ_[2] := ((8 * k + 1 : ℕ) : ℚ_[2]) with hNdef
+  have hN0 : N ≠ 0 := by
+    have : ‖N‖ = 1 := by
+      rw [hNdef, show ((8 * k + 1 : ℕ) : ℚ_[2]) = (((8 * k + 1 : ℕ) : ℤ) : ℚ_[2]) by push_cast; rfl]
+      exact norm_odd_int ⟨4 * k, by push_cast; ring⟩
+    intro h; rw [h, norm_zero] at this; exact zero_ne_one this
+  have e1 := congrArg (·.imI) hc
+  have e2 := congrArg (·.imJ) hc
+  have e3 := congrArg (·.imK) hc
+  simp [hω'] at e1 e2 e3
+  set lam := (A * y.imI + B * y.imJ + C * y.imK) / N with hlam
+  have kI : y.imI * N = (A * y.imI + B * y.imJ + C * y.imK) * A := by
+    linear_combination (-y.imI) * hABC + (B / 2) * e3 - (C / 2) * e2
+  have kJ : y.imJ * N = (A * y.imI + B * y.imJ + C * y.imK) * B := by
+    linear_combination (-y.imJ) * hABC - (A / 2) * e3 + (C / 2) * e1
+  have kK : y.imK * N = (A * y.imI + B * y.imJ + C * y.imK) * C := by
+    linear_combination (-y.imK) * hABC + (A / 2) * e2 - (B / 2) * e1
+  have hdec : y = y.re • (1 : ℍ[ℚ_[2]]) + lam • ω' := by
+    ext
+    · simp [hω']
+    · simp only [hω', QuaternionAlgebra.imI_add, QuaternionAlgebra.imI_smul, QuaternionAlgebra.imI_one,
+        smul_eq_mul, mul_zero, zero_add]
+      rw [hlam, div_mul_eq_mul_div, eq_div_iff hN0]; exact kI
+    · simp only [hω', QuaternionAlgebra.imJ_add, QuaternionAlgebra.imJ_smul, QuaternionAlgebra.imJ_one,
+        smul_eq_mul, mul_zero, zero_add]
+      rw [hlam, div_mul_eq_mul_div, eq_div_iff hN0]; exact kJ
+    · simp only [hω', QuaternionAlgebra.imK_add, QuaternionAlgebra.imK_smul, QuaternionAlgebra.imK_one,
+        smul_eq_mul, mul_zero, zero_add]
+      rw [hlam, div_mul_eq_mul_div, eq_div_iff hN0]; exact kK
+  have hω2 : ω' * ω' = -N • 1 := by
+    rw [hω']; ext <;> simp
+    · linear_combination (-1 : ℚ_[2]) * hABC
+    all_goals ring
+  have hnrd : ∀ x z : ℚ_[2], Quaternion.normSq (x • (1 : ℍ[ℚ_[2]]) + z • ω') = x ^ 2 + N * z ^ 2 := by
+    intro x z; rw [Quaternion.normSq_def', hω']; simp; linear_combination z ^ 2 * hABC
+  set X := y.re
+  set Y := lam
+  have hXY : X ≠ 0 ∨ Y ≠ 0 := by
+    by_contra h; push_neg at h
+    apply hy; rw [hdec, h.1, h.2, zero_smul, zero_smul, add_zero]
+  have hfin : ∀ (c : ℚ_[2]) (u : ℍ[ℚ_[2]]), c ≠ 0 → y = c • u →
+      (Loc2OK ω' u ∨ Loc2OK ω' (u * (1 + ω'))) → Loc2OK ω' y ∨ Loc2OK ω' (y * (1 + ω')) := by
+    rintro c u hc0 rfl (h | h)
+    · exact Or.inl (Loc2OK.smul_left hc0 h)
+    · right; rw [smul_mul_assoc]; exact Loc2OK.smul_left hc0 h
+  have h1Z : PadicInt.toZMod (1 : ℤ_[2]) ≠ 0 := by rw [map_one]; exact one_ne_zero
+  rcases le_total ‖Y‖ ‖X‖ with hle | hle
+  · have hX : X ≠ 0 := by
+      rcases hXY with h | h
+      · exact h
+      · intro hX0; rw [hX0, norm_zero] at hle; exact h (norm_le_zero_iff.mp hle)
+    have hYX : ‖Y / X‖ ≤ 1 := by rw [norm_div]; exact div_le_one_of_le₀ hle (norm_nonneg _)
+    refine hfin X (((1 : ℤ_[2]) : ℚ_[2]) • 1 + ((⟨Y / X, hYX⟩ : ℤ_[2]) : ℚ_[2]) • ω') hX ?_
+      (core1 hω hω2 hnrd 1 ⟨Y / X, hYX⟩ (Or.inl h1Z))
+    rw [hdec]; simp only [PadicInt.coe_one, smul_add, smul_smul, mul_one]
+    congr 2; field_simp
+  · have hY : Y ≠ 0 := by
+      rcases hXY with h | h
+      · intro hY0; rw [hY0, norm_zero] at hle; exact h (norm_le_zero_iff.mp hle)
+      · exact h
+    have hXY' : ‖X / Y‖ ≤ 1 := by rw [norm_div]; exact div_le_one_of_le₀ hle (norm_nonneg _)
+    refine hfin Y (((⟨X / Y, hXY'⟩ : ℤ_[2]) : ℚ_[2]) • 1 + ((1 : ℤ_[2]) : ℚ_[2]) • ω') hY ?_
+      (core1 hω hω2 hnrd ⟨X / Y, hXY'⟩ 1 (Or.inr h1Z))
+    rw [hdec]; simp only [PadicInt.coe_one, smul_add, smul_smul, mul_one]
+    congr 2; field_simp
+
 end ZInQ.Contrib.HfxProof
