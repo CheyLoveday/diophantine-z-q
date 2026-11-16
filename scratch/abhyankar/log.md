@@ -15,3 +15,6 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
   Assembly.lean: `exists_kummer_field` (Ω = L(a^{1/N}, b^{1/N}) in an algebraic closure, separable, [Ω:L] prime to primes > N)
   and `tbnLocal_of_pieces : KummerBase → KummerUnram → EtaleBranch → BranchDescent → TBNLocal` COMPILED (no sorry),
   using `TPurity3.purityGlobalDim2'`.
+- 02:15 `etaleBranch : EtaleBranch` COMPILED (EtaleBranch.lean): C = S'_𝔓' has maximal ideal (t,u)C
+  (`Algebra.FormallyUnramified.map_maximalIdeal`), C/tC has principal maximal ideal, ū not nilpotent ⇒ DVR
+  (`principal_local_structure`, adapted copy of `CurveGlueCI.isDomain_of_dim_one`).
