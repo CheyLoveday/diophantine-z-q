@@ -20,3 +20,6 @@ DegLadicIsogeny / SepDegKernel). Spec: scratch/deg-det/autofold.json.
 **Remains.** `DegHomogPoly` (crowdsourcing target: cube, χ(f*L) = deg f·χ(L), Riemann–Roch on abelian varieties);
 locator to be read. If homfree-proof's fold lands first, take homFreeFiniteAlgClosed from its theorem in the proof
 expression. Report: docs/research/deg-det.md.
+
+Scratch checks (scratch/deg-det/Algebra.lean, TateIndex.lean, KerDvd.lean, CheckAxioms.lean, Discharges.lean, FoldDryRun.lean)
+all compile; log in scratch/deg-det/log.md.
