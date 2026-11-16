@@ -682,4 +682,47 @@ theorem grossZagierFormulaCd_of_alg (hGZ : GrossZagierAlgOptCd) (hQ : Gamma0QExp
     (hW : ZInQ.CdOpt.EtaW32Character) : ZInQ.GZHL3.GrossZagierFormulaCd :=
   ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 (grossZagierModuliOptCd_of_alg hQ hGZ) hW
 
+/-! ## §5. Sanity: the generators of `X0Field N` are the `q`-expansions of `j(τ)` and `j(Nτ)` -/
+
+theorem qParam_one (z : ℂ) : Function.Periodic.qParam 1 z = Complex.exp (2 * Real.pi * Complex.I * z) := by
+  simp [Function.Periodic.qParam]
+
+/-- `jq` is the `q`-expansion of `j = E₄³/Δ` (from the vendored `ModularCurve.hasSum_jq_qParam`). -/
+theorem hasQExp_j :
+    HasQExp (fun τ => ModularForm.E₄ τ ^ 3 / ModularForm.discriminant τ) ModularCurve.jq :=
+  ⟨0, fun τ _ => by simpa [qParam_one, qPar] using ModularCurve.hasSum_jq_qParam τ⟩
+
+/-- `Nτ ∈ ℍ`. -/
+def scaleN (N : ℕ) [NeZero N] (τ : ℍ) : ℍ :=
+  ⟨(N : ℂ) * τ, by
+    have h1 : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+    have h2 := τ.im_pos
+    simp only [Complex.mul_im, Complex.natCast_re, Complex.natCast_im, zero_mul, add_zero]
+    exact mul_pos h1 h2⟩
+
+/-- `jq(q^N)` (the second generator of `X0Field N`) is the `q`-expansion of `j(Nτ)`. -/
+theorem hasQExp_jN (N : ℕ) [NeZero N] :
+    HasQExp (fun τ => ModularForm.E₄ (scaleN N τ) ^ 3 / ModularForm.discriminant (scaleN N τ))
+      (ModularCurve.qExpand ℚ N ModularCurve.jq) := by
+  refine ⟨0, fun τ _ => ?_⟩
+  have h := ModularCurve.hasSum_jq_qParam (scaleN N τ)
+  have hq : Function.Periodic.qParam 1 ((scaleN N τ : ℍ) : ℂ) = qPar τ ^ N := by
+    rw [qParam_one, qPar, ← Complex.exp_nat_mul]
+    congr 1
+    simp only [scaleN, UpperHalfPlane.coe_mk]
+    ring
+  rw [hq] at h
+  have hN : (N : ℤ) ≠ 0 := by exact_mod_cast NeZero.ne N
+  set g : ℤ → ℤ := fun k => (N : ℤ) * k
+  have hg : Function.Injective g := fun a b e => by
+    simp only [g] at e; exact mul_left_cancel₀ hN e
+  rw [← hg.hasSum_iff]
+  · convert h using 1
+    funext k
+    simp only [Function.comp_apply, g, ModularCurve.qExpand_coeff_mul, ← zpow_natCast, ← zpow_mul]
+  · intro m hm
+    have : ¬ (N : ℤ) ∣ m := fun ⟨k, hk⟩ => hm ⟨k, hk.symm⟩
+    rw [ModularCurve.qExpand_coeff_of_not_dvd N _ this]
+    simp
+
 end ZInQ.GZAlg
