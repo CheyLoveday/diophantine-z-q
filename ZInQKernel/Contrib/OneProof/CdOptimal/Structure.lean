@@ -364,4 +364,121 @@ theorem conj_mem_of_cd {d : ℕ} {L : PeriodPair}
   rw [← heq]
   exact mem_conjPP.mpr ⟨y, hy, rfl⟩
 
+/-! ## §6. The classification -/
+
+/-- The four possibilities for a Gaussian integer `p + q i` with `(p + qi)` stable under
+conjugation up to units: `q = 0`, `p = 0`, `p = −q`, `p = q`. -/
+theorem gauss_conj_cases {p q m₀ n₀ m₁ n₁ : ℤ} (h₀ : m₀ ^ 2 + n₀ ^ 2 = 1)
+    (h₁ : m₁ ^ 2 + n₁ ^ 2 = 1) (e1 : p * m₀ + q * n₀ = m₁ * p - n₁ * q)
+    (e2 : p * n₀ - q * m₀ = m₁ * q + n₁ * p) : q = 0 ∨ p = 0 ∨ p = -q ∨ p = q := by
+  rcases unit_cases h₀ with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
+  rcases unit_cases h₁ with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> omega
+
+/-- **Classification.** Let `L` be a period lattice of `C_d`. If every period of `f_d` lies in `L`
+(`Λ_d ⊆ L`) and some period is not in `(1 + i) L`, then `L = c₀ Λ_d` for a rational `c₀`.
+
+Both lattices are `ℤ[i]`-modules (`I_mul_mem_LamCd`, `I_mul_mem_of_cd`), so `L = ℤ[i] ω`,
+`Λ_d = ℤ[i] μ` for shortest vectors, `μ = (p + q i) ω`; both are stable under conjugation
+(`conj_mem_LamCd`, `conj_mem_of_cd`), which forces `p + qi ∈ ℤ · {1, i, 1 ± i}`; the last two
+cases put `Λ_d` inside `(1 + i) L`. -/
+theorem lattice_eq_of_periods {d : ℕ} (hd4 : d % 4 = 1) (hsq : Squarefree d) {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L)
+    (hU : LamCd d ≤ L.lattice)
+    (hN : ∃ l ∈ LamCd d, l ∉ L.lattice.map (LinearMap.mulLeft ℤ (1 + I))) :
+    ∃ c₀ : ℚ, L.lattice = (LamCd d).map (LinearMap.mulLeft ℤ (c₀ : ℂ)) := by
+  obtain ⟨l, hl, hlN⟩ := hN
+  have hl0 : l ≠ 0 := by
+    rintro rfl; exact hlN ⟨0, L.lattice.zero_mem, by simp⟩
+  have hLI : ∀ y ∈ L.lattice, I * y ∈ L.lattice := fun y hy => I_mul_mem_of_cd hL hy
+  have hΛI : ∀ y ∈ LamCd d, I * y ∈ LamCd d := fun y hy => I_mul_mem_LamCd d hy
+  -- shortest vectors
+  obtain ⟨μ, hμ, hμ0, hμmin⟩ := exists_min L (LamCd d) hU hl hl0
+  have hω₁0 : L.ω₁ ≠ 0 := ZInQ.GZOptimal.ω₁_ne_zero L
+  obtain ⟨ω, hω, hω0, hωmin⟩ := exists_min L L.lattice le_rfl L.ω₁_mem_lattice hω₁0
+  have repL := fun {ν : ℂ} (hν : ν ∈ L.lattice) => gauss_rep hLI hω hω0 hωmin hν
+  have repΛ := fun {ν : ℂ} (hν : ν ∈ LamCd d) => gauss_rep hΛI hμ hμ0 hμmin hν
+  -- conjugates
+  obtain ⟨m₀, n₀, hc₀⟩ := repL (conj_mem_of_cd hL hω)
+  obtain ⟨m₁, n₁, hc₁⟩ := repΛ (conj_mem_LamCd hd4 hsq hμ)
+  have hu₀ : m₀ ^ 2 + n₀ ^ 2 = 1 :=
+    gauss_norm_eq_one hω0 (by rw [← hc₀, Complex.norm_conj])
+  have hu₁ : m₁ ^ 2 + n₁ ^ 2 = 1 :=
+    gauss_norm_eq_one hμ0 (by rw [← hc₁, Complex.norm_conj])
+  obtain ⟨p, q, hpq⟩ := repL (hU hμ)
+  -- `(p − q i)(m₀ + n₀ i) = (m₁ + n₁ i)(p + q i)`
+  have hrel : ((p : ℂ) - q * I) * ((m₀ : ℂ) + n₀ * I) = ((m₁ : ℂ) + n₁ * I) * ((p : ℂ) + q * I) := by
+    have h1 : conj μ = ((p : ℂ) - q * I) * ((m₀ : ℂ) + n₀ * I) * ω := by
+      rw [hpq, map_mul, hc₀]; simp only [map_add, map_mul, map_intCast, Complex.conj_I]; ring
+    have h2 : conj μ = ((m₁ : ℂ) + n₁ * I) * ((p : ℂ) + q * I) * ω := by rw [hc₁, hpq]; ring
+    exact mul_right_cancel₀ hω0 (h1.symm.trans h2)
+  have e1 : p * m₀ + q * n₀ = m₁ * p - n₁ * q := by
+    have := congrArg Complex.re hrel
+    simp at this
+    exact_mod_cast this
+  have e2 : p * n₀ - q * m₀ = m₁ * q + n₁ * p := by
+    have := congrArg Complex.im hrel
+    simp at this
+    exact_mod_cast this
+  -- `μ = k u ω` with `u ∈ {1, i}`
+  obtain ⟨k, u, hk0, hu, hμku⟩ : ∃ (k : ℤ) (u : ℂ), k ≠ 0 ∧ (u = 1 ∨ u = I) ∧ μ = k * u * ω := by
+    rcases gauss_conj_cases hu₀ hu₁ e1 e2 with hq | hp | hpq' | hpq'
+    · refine ⟨p, 1, ?_, Or.inl rfl, by rw [hpq, hq]; push_cast; ring⟩
+      rintro rfl; apply hμ0; rw [hpq, hq]; simp
+    · refine ⟨q, I, ?_, Or.inr rfl, by rw [hpq, hp]; push_cast; ring⟩
+      rintro rfl; apply hμ0; rw [hpq, hp]; simp
+    · exfalso
+      obtain ⟨r, s, hrs⟩ := repΛ hl
+      apply hlN
+      refine ⟨-I * (((r : ℂ) + s * I) * (p * ω)), ?_, ?_⟩
+      · have h1 : ((r : ℂ) + s * I) * (p * ω) ∈ L.lattice :=
+          gauss_mul_mem hLI r s (by have := L.lattice.smul_mem p hω; rwa [zsmul_eq_mul] at this)
+        have h2 := hLI _ (hLI _ (hLI _ h1))
+        have hI3 : I * (I * (I * (((r : ℂ) + s * I) * (p * ω)))) =
+            -I * (((r : ℂ) + s * I) * (p * ω)) := by
+          linear_combination (I * (((r : ℂ) + s * I) * (p * ω))) * Complex.I_sq
+        rw [← hI3]; exact h2
+      · simp only [LinearMap.mulLeft_apply]
+        rw [hrs, hpq]
+        subst hpq'
+        push_cast
+        linear_combination (((r : ℂ) + s * I) * q * ω) * Complex.I_sq
+    · exfalso
+      obtain ⟨r, s, hrs⟩ := repΛ hl
+      apply hlN
+      refine ⟨((r : ℂ) + s * I) * (p * ω), ?_, ?_⟩
+      · exact gauss_mul_mem hLI r s (by have := L.lattice.smul_mem p hω; rwa [zsmul_eq_mul] at this)
+      · simp only [LinearMap.mulLeft_apply]
+        rw [hrs, hpq, hpq']; ring
+  -- `u⁻¹ = conj u` is a Gaussian integer
+  obtain ⟨a, b, hab⟩ : ∃ a b : ℤ, ((a : ℂ) + b * I) * u = 1 := by
+    rcases hu with rfl | rfl
+    · exact ⟨1, 0, by simp⟩
+    · exact ⟨0, -1, by push_cast; ring_nf; rw [Complex.I_sq]; ring⟩
+  obtain ⟨a', b', hab'⟩ : ∃ a b : ℤ, ∀ m n : ℤ, ((m : ℂ) + n * I) * u = (a * m - b * n : ℤ) +
+      (b * m + a * n : ℤ) * I := by
+    rcases hu with rfl | rfl
+    · exact ⟨1, 0, fun m n => by push_cast; ring⟩
+    · exact ⟨0, 1, fun m n => by push_cast; ring_nf; rw [Complex.I_sq]; ring⟩
+  have hkC : (k : ℂ) ≠ 0 := by exact_mod_cast hk0
+  refine ⟨(1 / k : ℚ), ?_⟩
+  ext x
+  simp only [Submodule.mem_map, LinearMap.mulLeft_apply]
+  constructor
+  · intro hx
+    obtain ⟨m, n, rfl⟩ := repL hx
+    refine ⟨((m : ℂ) + n * I) * ((a + b * I) * μ), ?_, ?_⟩
+    · have h1 : ((a : ℂ) + b * I) * μ ∈ LamCd d := gauss_mul_mem hΛI a b hμ
+      exact gauss_mul_mem hΛI m n h1
+    · rw [hμku]
+      have : ((m : ℂ) + n * I) * ((a + b * I) * (k * u * ω)) =
+          k * ((m + n * I) * ω) * (((a : ℂ) + b * I) * u) := by ring
+      rw [this, hab]; push_cast; field_simp
+  · rintro ⟨y, hy, rfl⟩
+    obtain ⟨m, n, rfl⟩ := repΛ hy
+    rw [hμku]
+    have : (((1 / k : ℚ) : ℂ)) * (((m : ℂ) + n * I) * (k * u * ω)) =
+        (((m : ℂ) + n * I) * u) * ω := by push_cast; field_simp
+    rw [this, hab' m n]
+    exact gauss_mul_mem hLI _ _ hω
+
 end ZInQ.CdOpt
