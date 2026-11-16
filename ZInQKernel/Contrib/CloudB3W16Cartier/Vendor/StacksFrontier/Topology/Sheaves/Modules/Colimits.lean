@@ -83,8 +83,6 @@ open CategoryTheory CategoryTheory.Limits TopCat TopologicalSpace Opposite
 
 universe w' w v v' u' u
 
-add_to_stacks 01AH "colimits_exist"
-  SheafOfModules.instHasColimitsOfSizeOfPresheafOfModulesObjFunctorOppositeRingCatIsSheaf
 
 namespace AlgebraicGeometry.SheafOfModules
 
@@ -338,4 +336,5 @@ end Stalks
 
 end AlgebraicGeometry.SheafOfModules
 
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

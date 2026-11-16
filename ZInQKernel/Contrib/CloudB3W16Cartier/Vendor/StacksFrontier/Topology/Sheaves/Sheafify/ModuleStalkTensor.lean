@@ -1202,4 +1202,5 @@ noncomputable instance tensorSheafStalkModule :
 end SheafStatements
 
 end Stacks.Sheafify.ModuleStalkTensor
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

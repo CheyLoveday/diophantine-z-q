@@ -1280,4 +1280,5 @@ lemma exists_modulePullbackStalkLinearEquiv {X Y : RingedSpace.{u, u}} (f : X ‚ü
     exact (asIso k).hom_inv_id_apply _)
 
 end RingedSpaceModuleAdjunction
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

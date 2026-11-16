@@ -740,4 +740,5 @@ theorem extendByInitialSheaf_full_faithful_and_mem_essImage_iff :
 end EssImage
 
 end TopCat.Presheaf
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

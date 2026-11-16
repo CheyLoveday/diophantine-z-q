@@ -232,4 +232,6 @@ theorem inducedMap_comp {O₁ O₂ O₁' O₂' O₁'' O₂'' : PreRing X}
   rfl
 
 end SheafDifferentials
+end
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

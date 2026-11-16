@@ -121,4 +121,5 @@ theorem IsFiniteLocallyFreeOfRank.of_iso {M N : _root_.SheafOfModules.{u} R} {r 
     (q.generators i) ((_root_.SheafOfModules.overFunctor R (q.X i)).mapIso e).hom)) h₁
 
 end AlgebraicGeometry.SheafOfModules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

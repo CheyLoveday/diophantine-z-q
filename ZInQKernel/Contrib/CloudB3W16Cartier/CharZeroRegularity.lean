@@ -241,6 +241,25 @@ private lemma free_and_finrank_kaehlerDifferential_quotient_span_singleton (k R 
   rw [e.finrank_eq, hrank]
   exact Module.finrank_baseChange ..
 
+/-- Conormal injectivity for a formally smooth quotient, with no
+formal-smoothness assumption on the source algebra. Adapted from Stacks
+`RingTheory/Smooth/Conormal.lean`, lines 1110–1120 (06A6/06A8). -/
+private theorem conormal_injective_of_formallySmooth (R P S : Type*)
+    [CommRing R] [CommRing P] [CommRing S] [Algebra R P] [Algebra P S] [Algebra R S]
+    [IsScalarTower R P S] [Algebra.FormallySmooth R S]
+    (hf : Function.Surjective (algebraMap P S)) :
+    Function.Injective (kerCotangentToTensor R P S) := by
+  let f : P →ₐ[R] S := IsScalarTower.toAlgHom R P S
+  have hs : Function.Surjective f.kerSquareLift :=
+    Ideal.Quotient.lift_surjective_of_surjective _ _ hf
+  have hn : IsNilpotent (RingHom.ker f.kerSquareLift) :=
+    f.ker_kerSquareLift ▸ ⟨2, Ideal.cotangentIdeal_square _⟩
+  let g := Algebra.FormallySmooth.liftOfSurjective (AlgHom.id R S) f.kerSquareLift hs hn
+  have hg : f.kerSquareLift.comp g = AlgHom.id R S :=
+    Algebra.FormallySmooth.comp_liftOfSurjective (AlgHom.id R S) f.kerSquareLift hs hn
+  let p := (retractionKerCotangentToTensorEquivSection hf).symm ⟨g, hg⟩
+  exact Function.LeftInverse.injective (g := p.1) (LinearMap.congr_fun p.2)
+
 /-- **Stacks 00TU**, in the form the induction uses. Let `R` be a local `k`-algebra with a
 surjection onto a field `κ` which is a finitely generated separable extension of `k`. If `f ∈ 𝔪`
 has nonzero class in `𝔪/𝔪²`, then `1 ⊗ d f` is nonzero in the fibre `κ ⊗_R Ω_{R/k}`. -/
@@ -253,8 +272,7 @@ private lemma one_tmul_D_ne_zero_of_notMem_sq (k R κ : Type*) [Field k] [CommRi
   have hfk : f ∈ RingHom.ker (algebraMap R κ) := hker ▸ hfm
   intro hc
   have h0 : (RingHom.ker (algebraMap R κ)).toCotangent ⟨f, hfk⟩ = 0 := by
-    refine ((Algebra.FormallySmooth.kerCotangentToTensor_injective_iff hsurj).2
-      inferInstance) ?_
+    refine (conormal_injective_of_formallySmooth k R κ hsurj) ?_
     rw [map_zero, kerCotangentToTensor_toCotangent]
     exact hc
   have h1 : f ∈ RingHom.ker (algebraMap R κ) ^ 2 := (Ideal.toCotangent_eq_zero _ _).mp h0
@@ -392,6 +410,12 @@ theorem isSmoothAt_of_free_kaehlerDifferential
       (finrank Sq Ω[Sq⁄k]) Sq Ideal.Quotient.mk_surjective rfl
   have : IsRegularLocalRing (Localization.AtPrime q) :=
     hreg.of_ringEquiv (IsLocalization.algEquiv q.primeCompl (Localization.AtPrime q) Sq).symm.toRingEquiv
+  have : Algebra.EssFiniteType S (Localization.AtPrime q) :=
+    Algebra.EssFiniteType.of_isLocalization (Localization.AtPrime q) q.primeCompl
+  have : Algebra.EssFiniteType k (Localization.AtPrime q) :=
+    Algebra.EssFiniteType.comp k S (Localization.AtPrime q)
+  have : Algebra.EssFiniteType k (ResidueField (Localization.AtPrime q)) :=
+    Algebra.EssFiniteType.comp k (Localization.AtPrime q) (ResidueField (Localization.AtPrime q))
   exact _root_.Algebra.FormallySmooth.localization_of_isRegularLocalRing q
 
 end ZInQ.Contrib.CloudB3W16Cartier

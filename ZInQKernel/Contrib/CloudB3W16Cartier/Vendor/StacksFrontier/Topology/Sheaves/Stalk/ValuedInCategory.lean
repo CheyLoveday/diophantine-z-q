@@ -170,4 +170,5 @@ noncomputable def stalkFunctorObjIso
   exact Iso.refl _
 
 end Stacks.Topology.CategoryStalk
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

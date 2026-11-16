@@ -957,4 +957,5 @@ theorem main_theorem_031g (hsq : IsCompatible fR fS)
   ⟨Theta_injective fR fS hsq hdirS, Theta_surjective fR fS hsq hdirS⟩
 
 end Stacks.KaehlerDifferential.Colimit
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

@@ -992,4 +992,5 @@ theorem tor1IsZero_iff_stalk (F G : OXModule X) :
       (F.stalk x)).obj (G.stalk x)) := Iff.rfl
 
 end OXModule
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

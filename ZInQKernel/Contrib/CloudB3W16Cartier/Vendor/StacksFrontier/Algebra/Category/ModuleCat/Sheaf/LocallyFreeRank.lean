@@ -1272,4 +1272,5 @@ theorem exists_locallyConstant_rank
     exact Trivialization.rank_eq_of_mem X O hO F x hxU (hxUx x) t (tx x)
 
 end LocallyFreeRank
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

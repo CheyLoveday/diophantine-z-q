@@ -424,4 +424,5 @@ instance derivationsFunctor_isCorepresentable {C : Type u₁} [Category.{v₁} C
   exact (universalDerivationCorepresentableBy O₁ O₂ φ dS hUniversal).isCorepresentable
 
 end AlgebraicGeometry.SheafOfModules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

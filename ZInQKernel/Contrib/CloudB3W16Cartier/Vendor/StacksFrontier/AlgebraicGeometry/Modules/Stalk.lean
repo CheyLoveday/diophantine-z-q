@@ -50,4 +50,5 @@ noncomputable instance moduleStalkPresheaf {X : Scheme.{u}} (F : X.Modules) (x :
   Scheme.Modules.moduleStalk F x
 
 end AlgebraicGeometry.Scheme.Modules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

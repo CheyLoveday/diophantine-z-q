@@ -207,4 +207,5 @@ lemma coversTop_preimage {X Y : RingedSpace.{u, u}} (f : X ⟶ Y) {I : Type u}
   exact ⟨ULift.up i, by simpa [Opens.map] using hi⟩
 
 end RingedSpaceModuleAdjunction
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

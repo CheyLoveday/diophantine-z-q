@@ -250,4 +250,5 @@ theorem moduleOfDifferentialsIsoSectionwise_compatible {X : TopCat.{u}}
     (universalDerivation_isUniversal φ _ (sectionwiseDerivation φ))).1
 
 end AlgebraicGeometry.SheafOfModules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

@@ -250,4 +250,5 @@ theorem relativeDifferentialsMap_comp_toRelativeDifferentials {X' X Y S : Scheme
   relativeDifferentialsMap_comp r p (s ≫ f) s f hcomm rfl
 
 end AlgebraicGeometry.Scheme.Hom
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

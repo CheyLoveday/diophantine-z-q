@@ -328,4 +328,5 @@ theorem comm_smul_eq (M : PresheafOfModules.{u} (R ⋙ forget₂ CommRingCat.{u}
 end CommRing
 
 end SemilinearStalk
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

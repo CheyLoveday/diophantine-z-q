@@ -636,4 +636,5 @@ noncomputable def presheafTensorStalkFwd (M N : OXModule X) (x : X.carrier) :
             (ptsFwd_fwdAdd_germ M N x (U ⊓ V) hxW restrictedTensor)).symm))
 
 end OXModule
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

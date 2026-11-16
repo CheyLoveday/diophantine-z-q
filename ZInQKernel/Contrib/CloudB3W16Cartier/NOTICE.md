@@ -5,7 +5,8 @@ https://github.com/AxiomMath/Stacks, immutable revision
 `c496df0d9beea9deaeabcea8492605f9a0a2313b`, under Apache-2.0.
 The complete upstream license is reproduced in LICENSE. Upstream source
 notices, credits, documentation, and references are retained in the selected
-sources. SOURCE_MANIFEST.json records original paths and source SHA256 hashes.
+sources. SOURCE_MANIFEST.json and EXTRACTED_SOURCES.json record original
+paths, source SHA256 hashes, and extracted line ranges.
 
 Changes for this contribution:
 - New module paths lie under ZInQKernel.Contrib.CloudB3W16Cartier.

@@ -603,4 +603,5 @@ theorem inverseImageDifferentialMap_eq {X' X S' S : RingedSpace.{u, u}}
         (differentialMap f h h' g hcomm) := rfl
 
 end AlgebraicGeometry.SheafOfModules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

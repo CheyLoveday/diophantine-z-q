@@ -123,26 +123,6 @@ an arbitrary pushout square `Algebra.IsPushout R R' S S'`. The variant over `S'`
 `S' ⊗[S] Ω[S⁄R] ≅ Ω[S'⁄R']`, is `KaehlerDifferential.tensorKaehlerEquiv`.
 -/
 
-add_to_stacks 00RV "for an arbitrary pushout square, with the tensor factors in the other
-  order" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_sga "3 III 0.12" "special case" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_sga "3 III 4.8" "(iii), special case" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_sga "3 VIA 1.3.2" "Differentials clause" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_sga "5 III 6.9" "special case" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_sga "7 VI 5.5" "special case" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_ega "0 21.3.6" "partial" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_ega "0 22.4.4.7" "more general" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_ega "0 22.4.8" "more general" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_ega "IV 16.4.5" "special case" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_ega "IV 16.5.10" "(16.5.10.1) affine case" KaehlerDifferential.tensorKaehlerEquivBase
-add_to_stacks 00RV "the variant over the base-changed algebra"
-  KaehlerDifferential.tensorKaehlerEquiv
-add_to_ega "0 20.5.5" KaehlerDifferential.tensorKaehlerEquiv
-add_to_ega "0 21.3.6" "partial" KaehlerDifferential.tensorKaehlerEquiv
-add_to_ega "0 22.4.4.7" "more general" KaehlerDifferential.tensorKaehlerEquiv
-add_to_ega "0 22.4.8" "more general" KaehlerDifferential.tensorKaehlerEquiv
-add_to_ega "IV 16.5.10" "(16.5.10.1) affine case" KaehlerDifferential.tensorKaehlerEquiv
-add_to_ega "0 20.5.5" KaehlerDifferential.tensorKaehlerEquivBase
 
 open TensorProduct
 
@@ -195,5 +175,7 @@ theorem KaehlerDifferential.exists_retraction_mapBaseChange (R : Type*) [CommRin
       r ∘ₗ KaehlerDifferential.mapBaseChange R A B = LinearMap.id :=
   Stacks.KaehlerDifferential.TowerSplitting.solution R A B
 
+end
+end
 end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

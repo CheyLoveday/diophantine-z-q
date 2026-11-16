@@ -64,9 +64,6 @@ section
 
 open CategoryTheory CategoryTheory.Limits Opposite
 
-add_to_stacks 03DB "existence of limits" SheafOfModules.hasLimitsOfSize
-add_to_stacks 03DB "existence of colimits"
-  SheafOfModules.instHasColimitsOfSizeOfPresheafOfModulesObjFunctorOppositeRingCatIsSheaf
 
 universe v v' u' u w'
 
@@ -250,4 +247,5 @@ theorem toSheaf_preservesColimits
 attribute [instance] toSheaf_preservesLimits toSheaf_preservesColimits
 
 end AlgebraicGeometry.SheafOfModules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor

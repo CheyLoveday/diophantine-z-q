@@ -93,7 +93,6 @@ noncomputable def toSectionwiseDifferentialsSheaf {X : TopCat.{u}}
       (PresheafOfModulesOfCommRing.DifferentialsConstruction.relativeDifferentials' φ.hom)
 
 -- The former `` definition is `moduleOfDifferentialsIsoSectionwise`.
-add_to_stacks 08TD AlgebraicGeometry.SheafOfModules.moduleOfDifferentialsIsoSectionwise
 
 /-- On a local section, the sectionwise presentation of the sheaf of relative differentials sends
 the universal differential `d f` to the image of the sectionwise differential of `f` under the
@@ -697,4 +696,5 @@ noncomputable instance moduleStalkModuleOfDifferentials {X : TopCat.{u}}
         (moduleOfDifferentials.{u, u, u} phi).val).presheaf x)))
 
 end AlgebraicGeometry.SheafOfModules
+end
 end ZInQ.Contrib.CloudB3W16Cartier.Vendor
