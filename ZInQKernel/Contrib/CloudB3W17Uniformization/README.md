@@ -15,15 +15,15 @@ unchanged. Lean 4.35.0; Mathlib **56a005855ea17e0b0958f73ec801ae140b0a1679**.
 
 ## Exact prescribed verification
 
-On dedicated `devvm54793.nha0.facebook.com`, in the PRIVATE author checkout:
+On a dedicated internal build host, in the private author checkout:
 
 ```sh
 env LEAN_NUM_THREADS=1 lake build \
   +ZInQKernel.OneProof.Main \
   +ZInQKernel.OneProof.Discharges \
   +ZInQKernel.Contrib.OneProof.UniformizationLeafAll
-lake env lean -M24000 -j4 /home/jackmccarthy/cloud-b3/w17/scout/ExactUniformizationDischarges.lean
-lake env lean -M24000 -j4 /home/jackmccarthy/cloud-b3/w17/scout/H103AllAxioms.lean
+lake env lean -M24000 -j4 scratch/ExactUniformizationDischarges.lean
+lake env lean -M24000 -j4 scratch/H103AllAxioms.lean
 ```
 
 The named build exits **0**, **13,776 Lake jobs**, **23:04.45** elapsed.

@@ -2,7 +2,7 @@
 
 Verified proof head: `97df90e7d2412d45f44c2ca2143579fe4ad8b5b7`.
 Rebased on fetched main `e22df37cdef936f5b0f29ec09501854bea6c7316`.
-Host: `devvm54793.nha0.facebook.com`; own checkout `proper-compact-author`.
+Host: a dedicated internal build host; own author checkout.
 Lean `4.35.0`; Mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`.
 
 ## Results
