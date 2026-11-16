@@ -179,7 +179,7 @@ reduction 1–3):
 - this is consistent with gz-optimal's direct computation `Λ_d = L` for the 18 values `d ≤ 165`, and it extends the
   evidence to `d ≤ 301` using level-32 periods only;
 - `py/twn_table_out.txt` gives, for the primes `p ≡ 5 (mod 8)` up to 109 and all odd `A ≤ 31`, the parity bit of
-  `ρ(A/(32p²)) + ρ(A/32)`. Every row has a `1`. For `A = 5` the bit is `1` exactly when `(p/5) = −1` (8 primes).
+  `ρ(A/(32p²)) + ρ(A/32)`. Every row has a `1`. For `A = 5` the bit is `1` exactly when `(p/5) = −1` (the 7 primes `13 ≤ p ≤ 109`; consistent with the primes up to 293 in the run above, where `A = 5` succeeded exactly for `(p/5) = −1`).
   For `A = 13` no such Legendre rule holds (`p = 61`). A quartic-residue law may lie behind the bits (SPECULATIVE).
 
 **A possible proof (SPECULATIVE).** For `d = p` prime, the criterion says that `ψ = ρ mod (1+i)L₁` on `Γ'` is not
