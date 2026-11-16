@@ -13,7 +13,7 @@ standard axioms (`ZInQKernel/Contrib/OneProof/R16IsJ1Dict.lean`, namespace `R16I
   transitivity on `x(P)`, a consequence of Shimura 6.6). **Finding:** it is false for `N = 0`, so it is stated
   with `0 < N`.
 - **Restated leaf.** `AfTateCharPolyPicZero` is `AfTateCharPoly` for `J₁(N) = Pic⁰` of one model, DS's
-  shape. Two directions are proved: it gives `AfTateCharPoly` (with the two leaves), and it follows from
+  shape. Two directions are proved: it gives `AfTateCharPoly` (with Igusa), and it follows from
   `AfTateCharPoly` and `X1ModelExists`.
 - **Weak reading.** `AfTateWeakOdd` asks only that Frobenius satisfies `X² − a_p X + χ(p)p` over
   `ℚ_ℓ ⊗ K_f`, plus oddness on each ι-component. Proved:
