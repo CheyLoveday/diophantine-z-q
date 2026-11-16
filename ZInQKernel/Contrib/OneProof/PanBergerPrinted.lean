@@ -364,6 +364,7 @@ theorem mem_pow_smul_top {R : Type*} [CommRing R] (I : Ideal R) (m : ℕ) (x : R
 
 variable [Algebra (ZMod p) k] [Finite k]
 
+omit [CharP k p] [Finite k] in
 theorem algebraMap_zmod (c : ZMod p) : algebraMap (ZMod p) k c = ((c.val : ℕ) : k) := by
   conv_lhs => rw [← ZMod.natCast_zmod_val c]
   rw [map_natCast]
@@ -599,6 +600,69 @@ instance resField_charP : CharP (resField p K) p :=
   (CharP.charP_iff_prime_eq_zero (Fact.out : p.Prime)).mpr (by
     rw [← map_natCast (Ideal.Quotient.mk (maxIdeal p K)) p, Ideal.Quotient.eq_zero_iff_mem]
     exact natCast_p_mem_maxIdeal p K)
+
+
+/-- `ℤ_p → 𝓞_K`. -/
+def zpToInt : ℤ_[p] →+* intRing p K where
+  toFun z := ⟨algebraMap ℚ_[p] (PadicAlgCl p) z, K.algebraMap_mem _, by
+    rw [norm_algebraMap']; exact z.2⟩
+  map_one' := Subtype.ext (by simp)
+  map_mul' a b := Subtype.ext (by simp)
+  map_zero' := Subtype.ext (by simp)
+  map_add' a b := Subtype.ext (by simp)
+
+theorem mk_zpToInt (a : ℤ_[p]) :
+    Ideal.Quotient.mk (maxIdeal p K) (zpToInt p K a) = (((PadicInt.toZMod a).val : ℕ) : resField p K) := by
+  have h := PadicInt.toZMod_spec a
+  rw [PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton'] at h
+  obtain ⟨b, hb⟩ := h
+  have ha : a = (((PadicInt.toZMod a).val : ℕ) : ℤ_[p]) + b * p := by
+    rw [hb, ZMod.cast_eq_val]
+    ring
+  conv_lhs => rw [ha]
+  rw [map_add, map_mul, map_natCast, map_natCast, map_add, map_mul, map_natCast, map_natCast,
+    CharP.cast_eq_zero (resField p K) p, mul_zero, add_zero]
+
+/-- Lifts to `𝓞_K` of `𝔽_p`-independent elements of `k_K` are `ℚ_p`-independent in `K`. -/
+theorem lift_linearIndependent [Algebra (ZMod p) (resField p K)] {ι : Type*} [Fintype ι]
+    (x : ι → intRing p K)
+    (hx : LinearIndependent (ZMod p) (fun i => Ideal.Quotient.mk (maxIdeal p K) (x i))) :
+    LinearIndependent ℚ_[p] (fun i => (⟨(x i : PadicAlgCl p), (x i).2.1⟩ : K)) := by
+  rw [Fintype.linearIndependent_iff] at hx ⊢
+  intro g hg i
+  by_contra hne
+  have : Nonempty ι := ⟨i⟩
+  obtain ⟨j, hj⟩ := Finite.exists_max (fun i => ‖g i‖)
+  have hgj : g j ≠ 0 := by
+    intro h
+    apply hne
+    have := hj i
+    rw [h, norm_zero] at this
+    exact norm_le_zero_iff.mp this
+  let h' : ι → ℤ_[p] := fun i => ⟨g i / g j, (PadicInt.mem_subring_iff p).mpr (by
+    rw [norm_div]; exact div_le_one_of_le₀ (hj i) (norm_nonneg _))⟩
+  have hrel : ∑ i, zpToInt p K (h' i) * x i = 0 := by
+    apply Subtype.ext
+    have hg' := congrArg (fun y : K => (y : PadicAlgCl p)) hg
+    simp only [IntermediateField.coe_sum, IntermediateField.coe_smul, IntermediateField.coe_zero]
+      at hg'
+    rw [AddSubmonoidClass.coe_finsetSum, ZeroMemClass.coe_zero]
+    have hc : ∀ l, (((zpToInt p K (h' l) * x l : intRing p K)) : PadicAlgCl p) =
+        (g j)⁻¹ • (g l • (x l : PadicAlgCl p)) := fun l => by
+      rw [Subring.coe_mul, smul_smul, Algebra.smul_def]
+      congr 1
+      change algebraMap ℚ_[p] (PadicAlgCl p) (g l / g j) = _
+      rw [div_eq_inv_mul]
+    simp only [hc, ← Finset.smul_sum, hg', smul_zero]
+  have h1 := hx (fun i => PadicInt.toZMod (h' i)) (by
+    have := congrArg (Ideal.Quotient.mk (maxIdeal p K)) hrel
+    rw [map_sum, map_zero] at this
+    rw [← this]
+    refine Finset.sum_congr rfl fun l _ => ?_
+    rw [map_mul, mk_zpToInt, Algebra.smul_def, algebraMap_zmod]) j
+  have hj1 : h' j = 1 := Subtype.ext (div_self hgj)
+  rw [hj1, map_one] at h1
+  exact one_ne_zero h1
 
 /-- **`K_0 = W(k_K)[1/p]`**, Fontaine's `K_0` for `K` (Berger 2002, §0: `K_0 = W(k)[1/p]`;
 Fontaine, Astérisque 223 (1994), Exp. III; numbers UNVERIFIED): the Witt vectors of the residue
