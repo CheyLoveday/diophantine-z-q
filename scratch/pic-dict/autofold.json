@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_ac {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
+   "proof": "_root_.PicDict.weilPairingMumford_of_mumford {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilPairingAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
    "leaves": [
     {
      "name": "mumfordSquareAC",
@@ -31,14 +31,6 @@
      "kind": "published",
      "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 8 Thm 1"
-    },
-    {
-     "name": "ampleBaseChangeAlgClosure",
-     "type": "_root_.PicDict.AmpleBaseChangeAlgClosure",
-     "doc": "pic-dict: ampleness is preserved by the base change K -> Kbar (EGA II 4.6.13 (iii); locator UNVERIFIED).",
-     "kind": "published",
-     "flag": "unread: new printed leaf; locator UNVERIFIED",
-     "source": "EGA II 4.6.13 (iii): L ample on X/K => L_K' ample on X_K'"
     },
     {
      "name": "mumfordWeilPairingAC",

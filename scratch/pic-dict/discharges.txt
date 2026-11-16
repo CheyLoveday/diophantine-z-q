@@ -20,6 +20,12 @@ DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_lea
  PicDict.PushforwardUnitUniversal,
  PicDict.GeomIntegralProd]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_mumford
+  still assumes: [PicDict.MumfordKLFiniteAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.PushforwardUnitUniversal,
+ PicDict.GeomIntegralProd]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_printed
   still assumes: [PicDict.MumfordKLFinite,
  PicDict.MumfordPhiSurjective,
@@ -31,6 +37,15 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordMulNPicZeroAC,
  PicDict.MumfordPhiSurjectiveAC,
  PicDict.AmpleBaseChangeAlgClosure,
+ PicDict.MumfordWeilPairingAC,
+ PicDict.MumfordWeilNondegAC,
+ PicDict.MumfordWeilAltAC,
+ T09Pic.PhiAmpleIsogeny]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by PicDict.weilPairingMumford_of_mumford
+  still assumes: [PicDict.MumfordSquareAC,
+ PicDict.MumfordMulNPicZeroAC,
+ PicDict.MumfordPhiSurjectiveAC,
  PicDict.MumfordWeilPairingAC,
  PicDict.MumfordWeilNondegAC,
  PicDict.MumfordWeilAltAC,
@@ -58,4 +73,4 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 3040 theorems checked, 12 discharge one
+#discharges: 59 open hypotheses, 3047 theorems checked, 14 discharge one

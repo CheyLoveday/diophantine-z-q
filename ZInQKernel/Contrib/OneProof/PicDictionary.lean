@@ -1,6 +1,8 @@
 import ZInQKernel.OneProof.H.TailZ24
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.FreeGeneratorPullback
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Picard.Descent
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.PullbackMonoidal
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.IdealSheaf.Image
 
 /-! # pic-dict: the Pic dictionary at `K̄`, and the rows `weilPairingMumford` and `phiAmpleIsogeny` from printed leaves
 
@@ -2064,6 +2066,90 @@ theorem phiAmpleIsogeny_of_leaves (hKL : MumfordKLFiniteAC) (h8 : MumfordPhiSurj
     (hamp : AmpleBaseChangeAlgClosure) (hU : PushforwardUnitUniversal) (hGI : GeomIntegralProd) :
     PhiAmpleIsogeny :=
   phiAmpleIsogeny_of_ac hKL h8 hamp (picZeroPtsTranslInv_of_leaves hU hGI)
+
+end PicDict
+
+namespace PicDict
+
+open T09Pic PkgI3 PkgI3.AbVar
+
+
+/-- Pull-back of a tensor power. -/
+def pullbackTensorPowIso {X Y : Scheme.{0}} (f : X ⟶ Y) (M : Y.Modules) :
+    ∀ n : ℕ, (Scheme.Modules.pullback f).obj (M.tensorPow n) ≅
+      ((Scheme.Modules.pullback f).obj M).tensorPow n
+  | 0 => (Functor.Monoidal.εIso (Scheme.Modules.pullback f)).symm
+  | n + 1 => Scheme.Modules.pullbackTensorObjIso f M (M.tensorPow n) ≪≫
+      (Iso.refl _ ⊗ᵢ pullbackTensorPowIso f M n)
+
+/-- Tensor powers of an isomorphism. -/
+def tensorPowIso {X : Scheme.{0}} {M N : X.Modules} (e : M ≅ N) : ∀ n : ℕ, M.tensorPow n ≅ N.tensorPow n
+  | 0 => Iso.refl _
+  | n + 1 => e ⊗ᵢ tensorPowIso e n
+
+/-- **Ampleness pulls back along an affine morphism** (for the EGA/Stacks notion `IsAmple`). -/
+theorem isAmple_pullback {X Y : Scheme.{0}} (f : X ⟶ Y) [IsAffineHom f] [CompactSpace X]
+    (L : Y.Pic) (hL : IsAmple Y L) : IsAmple X (Scheme.Pic.map f L) := by
+  refine ⟨inferInstance, fun x => ?_⟩
+  obtain ⟨n, hn, s, hx, haff⟩ := hL.2 (f x)
+  let M := (fromSkeleton Y.Modules).obj L.val
+  let e1 : (fromSkeleton X.Modules).obj (Scheme.Pic.map f L).val ≅ (Scheme.Modules.pullback f).obj M :=
+    Scheme.Pic.mkIso _
+  let eT : (Scheme.Modules.pullback f).obj (M.tensorPow n) ≅
+      ((fromSkeleton X.Modules).obj (Scheme.Pic.map f L).val).tensorPow n :=
+    pullbackTensorPowIso f M n ≪≫ tensorPowIso e1.symm n
+  let s' : 𝟙_ X.Modules ⟶ ((fromSkeleton X.Modules).obj (Scheme.Pic.map f L).val).tensorPow n :=
+    (Functor.Monoidal.εIso (Scheme.Modules.pullback f)).hom ≫ (Scheme.Modules.pullback f).map s ≫ eT.hom
+  have hz : Scheme.Modules.Hom.zeroLocus s' = Scheme.Modules.Hom.zeroLocus ((Scheme.Modules.pullback f).map s) :=
+    Scheme.Modules.Hom.zeroLocus_eq_of_arrowIso _ _
+      (Arrow.isoMk (Functor.Monoidal.εIso (Scheme.Modules.pullback f)) eT.symm (by simp only [s', Arrow.mk_hom, Iso.symm_hom, Category.assoc, Iso.hom_inv_id, Category.comp_id]))
+  have hU : (Scheme.Modules.Hom.zeroLocus s').support.compl = f ⁻¹ᵁ (Scheme.Modules.Hom.zeroLocus s).support.compl := by
+    rw [hz, ← Scheme.Modules.Hom.comap_zeroLocus]
+    ext y
+    simp only [TopologicalSpace.Closeds.compl, TopologicalSpace.Opens.map_coe]
+    have h := Scheme.IdealSheafData.coe_support_comap (Scheme.Modules.Hom.zeroLocus s) f
+    change y ∈ (((Scheme.Modules.Hom.zeroLocus s).comap f).support : Set X)ᶜ ↔
+      f y ∈ ((Scheme.Modules.Hom.zeroLocus s).support : Set Y)ᶜ
+    rw [h]
+    rfl
+  refine ⟨n, hn, s', ?_, ?_⟩
+  · rw [hU]; exact hx
+  · rw [hU]; exact haff.preimage f
+
+end PicDict
+
+namespace PicDict
+
+open T09Pic PkgI3 PkgI3.AbVar
+
+/-- **`AmpleBaseChangeAlgClosure` is a theorem.** -/
+theorem ampleBaseChangeAlgClosure : AmpleBaseChangeAlgClosure := by
+  intro K _ A L hL
+  haveI : CompactSpace (ptK K).left :=
+    inferInstanceAs (CompactSpace (Spec (CommRingCat.of (AlgebraicClosure K))))
+  haveI : IsAffineHom (ptK K).hom :=
+    inferInstanceAs (IsAffineHom (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K)))))
+  haveI : IsAffineHom (pullback.fst A.X.hom (ptK K).hom) :=
+    MorphismProperty.of_isPullback (P := @IsAffineHom) (IsPullback.of_hasPullback _ _).flip inferInstance
+  haveI : CompactSpace (AK A) :=
+    QuasiCompact.compactSpace_of_compactSpace (pullback.snd A.X.hom (ptK K).hom)
+  exact isAmple_pullback (pullback.fst A.X.hom (ptK K).hom) L hL
+
+
+/-! ## Final results: printed leaves only -/
+
+/-- **`WeilPairingMumford` from Mumford's statements over an algebraically closed field** (§6 Cor. 4, §8 (iv),
+§8 Thm 1, §20 twice, §23) and the row `PhiAmpleIsogeny`. -/
+theorem weilPairingMumford_of_mumford (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
+    (h8 : MumfordPhiSurjectiveAC) (h20a : MumfordWeilPairingAC) (h20b : MumfordWeilNondegAC)
+    (h23 : MumfordWeilAltAC) (h3 : PhiAmpleIsogeny) : WeilPairingMumford :=
+  weilPairingMumford_of_ac hsq h8iv h8 ampleBaseChangeAlgClosure h20a h20b h23 h3
+
+/-- **`PhiAmpleIsogeny` from printed leaves** (Mumford §6 App. 1 and §8 Thm 1 over `k̄`; `𝒪 = f_*𝒪` universally;
+products of geometrically integral schemes). -/
+theorem phiAmpleIsogeny_of_mumford (hKL : MumfordKLFiniteAC) (h8 : MumfordPhiSurjectiveAC)
+    (hU : PushforwardUnitUniversal) (hGI : GeomIntegralProd) : PhiAmpleIsogeny :=
+  phiAmpleIsogeny_of_leaves hKL h8 ampleBaseChangeAlgClosure hU hGI
 
 end PicDict
 
