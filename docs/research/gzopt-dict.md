@@ -1,8 +1,9 @@
 # gzopt-dict: the Gross–Zagier leaf of route A over the algebraic curve `X₀(N)`
 
 Status: research note (task gzopt-dict, 2026-11-16/17), branch `wip/gzopt-dict`, base wip/period-odd 6382ef59 with
-origin/main e41a7169 merged. Lean: one new file `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic.lean`
-(namespace `ZInQ.GZAlg`). Nothing else under `ZInQKernel/` was edited. Scratch, checks and log: `scratch/gzopt-dict/`.
+origin/main e41a7169 merged. Lean: the new file `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic.lean`
+(namespace `ZInQ.GZAlg`: the leaves and the bridge) and the helper `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic/X0Model.lean`
+(`ℚ(X₀(N)) = Frac(ℚ[X, Y]/(Φ_N))`, not needed by the bridge). Nothing else under `ZInQKernel/` was edited. Scratch, checks and log: `scratch/gzopt-dict/`.
 
 Marks. **VERIFIED**: read in a source named here, computed, or compiled. **STANDARD**: a published theorem with an
 exact reference. **SPECULATIVE**: an assessment. This host has no network, so **every theorem number and locator
