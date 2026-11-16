@@ -1,6 +1,33 @@
 import ZInQKernel.Contrib.OneProof.AfTateOr
 import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.LocalGlobal.Completion
 
+/-! # aftate-fix2: `r16CoreY` from Diamond–Shurman's `A_f`, universally, over `K_{f,λ}`
+
+Task aftate-fix2 (2026-11-16), report `docs/research/aftate-fix2.md`, scratch `scratch/aftate-fix2/`.
+
+**Target.** The bundle field `r16CoreY : R16Split.R16CoreY`. aftate-or discharged it from the leaf
+`AfTateOr.AfTateDSOr`, which the review rated GLUE: (1) `A_f` was existential; (2) the "satisfies" reading
+of DS 9.5.4; (3) the leaf was stated over `ℚ_ℓ ⊗ K_f`, the print over `K_{f,λ}`.
+
+**New leaves** (§5), all over genuine definitions (§§1–4):
+* `HeckeJ1DS` (Diamond–Shurman §6.3, §7.9): the Hecke operators `T_p` and `⟨d⟩` on `J₁(N)` exist over `ℚ`,
+  with DS's double-coset action on divisor classes of the points `x_τ` (`IsHeckeT`, `IsDiamond`; the
+  points `x_τ ∈ X(ℂ)` are cut out by the values of `K(X) = ℚ(j, f₁)` at `τ`, `AtTau`).
+* `AfShimura` (Shimura 1973 Thm 1): `K_f` is a number field and `A_f = J₁(N)/I_f J₁(N)` exists over `ℚ`
+  with its `K_f`-action (`IsAfQuotient`: surjective, kills `I_f J`, universal; `IsAfAction`:
+  `θ(a_p) = T_p|A_f`, `θ(χ(d)) = ⟨d⟩|A_f`; `I_f` = kernel of `T_p ↦ a_p`, `⟨d⟩ ↦ χ(d)` on the free algebra).
+* `AfTateDSLambda` (DS Thm 9.5.4): **for every** `(A, π, θ)` as in `AfShimura`, every `ℓ` and every place
+  `λ ∣ ℓ` of `K_f`, Frobenius at `p ∤ Nℓ` on `V_λ = K_{f,λ} ⊗_{ℚ_ℓ ⊗ K_f} V_ℓ(A)` has characteristic
+  polynomial `X² − a_p X + χ(p) p` over `K_{f,λ} = λ.adicCompletion K_f`.
+
+**Glue proved here.** §0: precomposition by `g` on the functionals `V → Ω` semilinear along
+`ε ∘ ρ_L : R → L → Ω` has trace and determinant `ε(tr, det of L ⊗_R g)` (basis `1 ⊗ v_i` of `L ⊗_R V`);
+§0b: coeff-ext's place `λ_ι` and `ι̂ : K_λ → ℚ̄_ℓ` (copied); §6: `λ_ι ∣ ℓ`, `ι̂` restricted to `ℚ_ℓ` is the
+structure map (density of `ℚ`), and `component`: the kernel's `ι`-component `frobOn` has the dimension of
+`V_λ` and trace/determinant `ι̂(tr/det ρ_{f,λ})`; §7: `r16CoreY_of_printed`.
+
+No `sorry`, no `axiom`, no build-time code. -/
+
 noncomputable section
 
 set_option maxHeartbeats 400000

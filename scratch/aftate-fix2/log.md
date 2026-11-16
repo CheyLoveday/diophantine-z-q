@@ -17,3 +17,16 @@ Review objections to `AfTateOr.AfTateDSOr` and the response:
 ## Log
 
 - 13:28 `lake build ZInQKernel.Contrib.OneProof.AfTateOr` started (AfTateOr and its deps were not built in this tree).
+- 13:51–13:54 generic base-change section (`scratch/aftate-fix2/BaseChange.lean`, `import Mathlib`): compiles
+  (VERIFIED, EXIT 0, 8 s). First attempt with the AfTateOr import was stopped at the 10-min tool limit (cause not
+  isolated; the reorganized file compiles in seconds).
+- 13:55 `Defs.lean` (Hecke/A_f/K_λ definitions): compiles (VERIFIED). Pitfalls: `γ`, `ι` are reserved tokens under
+  the project opens (renamed `g`, `io`); `MonObj` open makes `one_mul`/`mul_assoc` ambiguous (generic section
+  placed before the opens); `ℚ`-algebra instance clash on `v.adicCompletion ℚ` (`DivisionRing.toRatAlgebra` vs
+  `instAlgebraAdicCompletion`) avoided by using `adicCompletionExtension` and `RingHomClass.toRingHom`.
+- 14:02 `AfTateLambda.lean`: leaves `HeckeJ1DS`, `AfShimura`, `AfTateDSLambda`; glue `liesOver_place`,
+  `τhat_algQl`, `τhat_rhoLam`, `component`, `lin_trace_det` compile (VERIFIED).
+- 14:03 `r16CoreY_of_printed : HeckeJ1DS → AfShimura → AfTateDSLambda → X1Igusa.IgusaGL2DS →
+  AvSplit.MumfordTorsionAlgClosed → R16Split.R16CoreY` compiles (VERIFIED, EXIT 0, 18 s).
+- 14:06 contribution copied to `ZInQKernel/Contrib/OneProof/AfTateLambda.lean`; `lake build +Main +Discharges
+  +AfTateLambda` started.
