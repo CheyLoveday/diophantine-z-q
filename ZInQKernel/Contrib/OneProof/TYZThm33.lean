@@ -752,4 +752,26 @@ theorem tyzThm33_of_printed (hCM : T5Glue.ShimuraMainCM) (h : TYZThm33Printed) :
     rw [e]
     exact toC_heegnerPt _ (hI.alg _ _)
 
+
+/-- **The leaf's hypotheses are satisfiable** (so `TYZThm33Printed` is not vacuous): the eta model is an
+identification and, given `hCM`, its values at the CM points `τ_n` are algebraic. -/
+theorem tyzThm33Printed_hyps_satisfiable (hCM : T5Glue.ShimuraMainCM) :
+    ∃ X Y : UpperHalfPlane → ℂ, IsX0Identification X Y ∧ ∃ w : ℕ → PtA,
+      (∀ n : ℕ, ∀ hn : n % 8 = 5, Squarefree n → toC (w n) = ptOf X Y (tyzForm n hn).tauH) ∧
+      (∀ n : ℕ, ∀ hn : n % 8 = 7, Squarefree n → toC (w n) = ptOf X Y (tyzForm7 n hn).tauH) := by
+  have hI := cmInputs hCM
+  refine ⟨_, _, isX0Identification_eta etaCuspBounds,
+    fun n => if n % 8 = 5 then tyzHeegnerPt n else tyzZ7 n, fun n hn _ => ?_, fun n hn _ => ?_⟩
+  · have e : (if n % 8 = 5 then tyzHeegnerPt n else tyzZ7 n) = heegnerPt (tyzForm n hn) := by
+      simp [hn, tyzHeegnerPt]
+    beta_reduce
+    rw [e]
+    exact toC_heegnerPt _ (hI.alg _ _)
+  · have h5 : n % 8 ≠ 5 := by omega
+    have e : (if n % 8 = 5 then tyzHeegnerPt n else tyzZ7 n) = heegnerPt (tyzForm7 n hn) := by
+      simp [h5, tyzZ7, hn]
+    beta_reduce
+    rw [e]
+    exact toC_heegnerPt _ (hI.alg _ _)
+
 end ZInQ.Contrib.TYZGenus.H33Dict
