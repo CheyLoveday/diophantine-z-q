@@ -95,7 +95,7 @@ it**: the twisted invariants form a closed `ℚ_p`-subspace, and a closed subspa
 dense subset only in `0` need not be `0`. That input is Tate's normalised trace on the
 cyclotomic tower, owned by C; its tower hypotheses are the lemmas above.
 
-A scratch file proving that `tateTwistInvariants_algebraic` plus that one statement gives the
-target verbatim, together with a `rfl` statement lock against the real constant, is at
-`/home/jackmccarthy/cloud-b3/w11/author-cyclotomic/Verify.lean` (not part of the
-contribution: `#check`/`#print` live only there).
+A local verification scratch file, not part of the contribution, proves that
+`tateTwistInvariants_algebraic` plus that one statement gives the target verbatim
+and carries a `rfl` statement lock against the real constant. `#check`/`#print`
+live only in that local scratch file.
