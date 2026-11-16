@@ -20,3 +20,4 @@ f = [d] - i phi' psi : A -> A; C = image of f (Cartier), f = g . h. m = i + g : 
 m' ; m = [d]_A (surjective), m ; m' = [d]_B x [d]_C (finite) so m finite (IsFinite.of_comp, m' separated).
 
 ## Compile log
+- 13:05 PoincareComplement.lean §1-§2 (algebraic step) compiled except mul_one/one_mul ambiguity (fixed).
