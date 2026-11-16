@@ -170,6 +170,11 @@ lemma comm_smul_left {t s : X ⟶ X} (hs : ∀ r : Γ(X, ⊤), s.appTop r = r) {
   rw [← cancel_mono (N.smulHom (u : Γ(X, ⊤))), c, Category.assoc, Category.assoc, ← smulHom_mul,
     ← smulHom_mul, mul_comm]
 
+/-- `θ_t(F) = pullbackComp ≫ pullbackCongr : t^* m^* F → m^* F` for `t ≫ m = m`. -/
+def thetaT {t m : X ⟶ X} (h : t ≫ m = m) (F : X.Modules) :
+    (Scheme.Modules.pullback t).obj ((Scheme.Modules.pullback m).obj F) ⟶ (Scheme.Modules.pullback m).obj F :=
+  (pullbackComp t m).hom.app F ≫ (pullbackCongr h).hom.app F
+
 /-! ### The coherence (C**) -/
 
 lemma assoc_hom' (f g h : X ⟶ X) (M : X.Modules) :
@@ -183,11 +188,6 @@ section Coherence
 
 variable {a b m : X ⟶ X} (ha : a ≫ m = m) (hb : m ≫ a = b ≫ m) (hab : a ≫ b = b ≫ a)
 
-/-- `θ_a(F) : a^* m^* F → m^* F`. -/
-def thetaA (F : X.Modules) : (Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback m).obj F) ⟶
-    (Scheme.Modules.pullback m).obj F :=
-  (pullbackComp a m).hom.app F ≫ (pullbackCongr ha).hom.app F
-
 /-- `ρ : m^*(a^* L) ≅ b^*(m^* L)` from `m ≫ a = b ≫ m`. -/
 def rhoAB (L : X.Modules) : (Scheme.Modules.pullback m).obj ((Scheme.Modules.pullback a).obj L) ⟶
     (Scheme.Modules.pullback b).obj ((Scheme.Modules.pullback m).obj L) :=
@@ -200,11 +200,11 @@ def swapAB (F : X.Modules) : (Scheme.Modules.pullback a).obj ((Scheme.Modules.pu
 
 /-- **(C**)**: transporting `θ_a` along `ρ`. -/
 lemma theta_rho (L : X.Modules) :
-    thetaA ha ((Scheme.Modules.pullback a).obj L) ≫ rhoAB hb L =
+    thetaT ha ((Scheme.Modules.pullback a).obj L) ≫ rhoAB hb L =
       (Scheme.Modules.pullback a).map (rhoAB hb L) ≫ swapAB hab ((Scheme.Modules.pullback m).obj L) ≫
-        (Scheme.Modules.pullback b).map (thetaA ha L) := by
+        (Scheme.Modules.pullback b).map (thetaT ha L) := by
   rw [← cancel_mono ((pullbackComp b m).hom.app L)]
-  simp only [thetaA, rhoAB, swapAB, Category.assoc, Iso.inv_hom_id_app, Category.comp_id,
+  simp only [thetaT, rhoAB, swapAB, Category.assoc, Iso.inv_hom_id_app, Category.comp_id,
     pullbackCongr_hom_app, Functor.map_comp]
   -- left side
   rw [reassoc_of% (eqToHom_comp_pullbackComp ha a L _), reassoc_of% (assoc_hom' a m a L)]
@@ -223,11 +223,6 @@ end Coherence
 section TensorRel
 
 open MonoidalCategory
-
-/-- `θ_t(F) = pullbackComp ≫ pullbackCongr : t^* m^* F → m^* F` for `t ≫ m = m`. -/
-def thetaT {t m : X ⟶ X} (h : t ≫ m = m) (F : X.Modules) :
-    (Scheme.Modules.pullback t).obj ((Scheme.Modules.pullback m).obj F) ⟶ (Scheme.Modules.pullback m).obj F :=
-  (pullbackComp t m).hom.app F ≫ (pullbackCongr h).hom.app F
 
 /-- **(G5a)** Tensoring a trivialization `ψ` of `m^*Φ` with `N = m^*L`. -/
 lemma tensor_relation (hA : PullbackCompMonoidal) {t m : X ⟶ X} (h : t ≫ m = m)
