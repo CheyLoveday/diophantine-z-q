@@ -180,4 +180,61 @@ theorem admissible_signs {τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]} (hτ : AdmissibleTau
   push_cast
   refine ⟨by linarith, by ring, by ring, by ring⟩
 
+/-! ## `τ̂(Ô_K) ⊂ ℤ_p + ℤ_p ω` -/
+
+theorem qp_int_add {p : ℕ} [Fact p.Prime] (m n : ℤ) (ω : ℍ[ℚ]) :
+    qp p ((m : ℍ[ℚ]) + (n : ℍ[ℚ]) * ω) = (m : ℚ_[p]) • (1 : ℍ[ℚ_[p]]) + (n : ℚ_[p]) • qp p ω := by
+  rw [map_add, map_mul, map_intCast, map_intCast]
+  rw [← Quaternion.coe_mul_eq_smul]
+  ext <;> simp
+
+/-- **`τ̂(Ô_K)` lies in `ℤ_p + ℤ_p ω_s` at every place.** -/
+theorem piQ_tauHat_mem {τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]} {s : Signs}
+    (hs : τ ((ωK : 𝓞 (QNeg 3)) : QNeg 3) = ωq s)
+    {a : FiniteAdeleRing (𝓞 (QNeg 3)) (QNeg 3)}
+    (ha : a ∈ FiniteAdeleRing.integralAdeles (𝓞 (QNeg 3)) (QNeg 3))
+    (w : HeightOneSpectrum (𝓞 ℚ)) :
+    InR (qp (Pw w : ℕ) (ωq s)) (piQ w (tauHat 3 τ a)) := by
+  obtain ⟨c, hc, he⟩ := tauHat_integral 3 τ ha w
+  choose m n hmn using fun i => int_basis (RingOfIntegers.basis (QNeg 3) i)
+  have hτb : ∀ i, qp (Pw w : ℕ) (τ (bK 3 i)) =
+      (m i : ℚ_[Pw w]) • (1 : ℍ[ℚ_[Pw w]]) + (n i : ℚ_[Pw w]) • qp (Pw w : ℕ) (ωq s) := by
+    intro i
+    rw [bK, hmn i, map_add, map_mul, map_intCast, map_intCast, hs, qp_int_add]
+  refine ⟨∑ i, c i * m i, ∑ i, c i * n i, ?_, ?_, 0, isHur_zero, ?_⟩
+  · exact (Zp _).sum_mem fun i _ => (Zp _).mul_mem (hc i) (Padic.norm_int_le_one _)
+  · exact (Zp _).sum_mem fun i _ => (Zp _).mul_mem (hc i) (Padic.norm_int_le_one _)
+  · rw [he, smul_zero, add_zero, Finset.sum_smul, Finset.sum_smul, ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [hτb, smul_add, smul_smul, smul_smul]
+
+/-! ## The place `2` -/
+
+theorem Pw_coe (w : HeightOneSpectrum (𝓞 ℚ)) :
+    (Pw w : ℕ) = Rat.HeightOneSpectrum.natGenerator w := rfl
+
+theorem Pw_eq_two {v : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPlaceTwo v) : (Pw v : ℕ) = 2 := by
+  rw [Pw_coe]
+  have hd : Rat.HeightOneSpectrum.natGenerator v ∣ 2 := by
+    rw [Rat.HeightOneSpectrum.natGenerator_dvd_iff]
+    have := Ideal.mem_map_of_mem (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)) hv
+    rw [map_ofNat] at this
+    exact_mod_cast this
+  exact (Nat.prime_dvd_prime_iff_eq (Rat.HeightOneSpectrum.prime_natGenerator v)
+    Nat.prime_two).mp hd
+
+theorem eq_of_Pw_eq {v w : HeightOneSpectrum (𝓞 ℚ)} (h : (Pw w : ℕ) = (Pw v : ℕ)) : w = v :=
+  Rat.HeightOneSpectrum.primesEquiv.injective (Subtype.ext h)
+
+theorem not_isPlaceTwo_of_ne {v w : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPlaceTwo v) (hw : w ≠ v) :
+    ¬ IsPlaceTwo w := fun h => hw (eq_of_Pw_eq (by rw [Pw_eq_two h, Pw_eq_two hv]))
+
+theorem Pw_ne_two {v w : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPlaceTwo v) (hw : w ≠ v) :
+    (Pw w : ℕ) ≠ 2 := fun h => hw (eq_of_Pw_eq (by rw [h, Pw_eq_two hv]))
+
+theorem exists_place_of_prime (p : ℕ) (hp : p.Prime) :
+    ∃ w : HeightOneSpectrum (𝓞 ℚ), (Pw w : ℕ) = p :=
+  ⟨Rat.HeightOneSpectrum.primesEquiv.symm (⟨p, hp⟩ : Nat.Primes),
+    congrArg Subtype.val (Rat.HeightOneSpectrum.primesEquiv.apply_symm_apply (⟨p, hp⟩ : Nat.Primes))⟩
+
 end ZInQ.Contrib.T21Proof
