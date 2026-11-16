@@ -1,13 +1,12 @@
 # pic-dict (the three Pic-dictionary rows), status
 
 **Main result.** `weilPairingMumford` and `phiAmpleIsogeny` are **each replaced by printed leaves plus Lean glue**.
-Folding both gives −2 strict and −2 strictest GLUE on the lf31 rating (autofold dry-run `37/11 -> 47/9; strictest
-37/11 -> 47/9`; on this base `40/8 -> 48/8; strictest 39/9 -> 48/8`, no `--allow-rise`; spec
+Folding both gives −2 strict and −2 strictest GLUE on the lf31 rating (autofold dry-run `37/11 -> 46/9; strictest
+37/11 -> 46/9`; on this base `40/8 -> 47/8; strictest 39/9 -> 47/8`, no `--allow-rise`; spec
 `scratch/pic-dict/autofold-both.json`, dry-run module compiles).
-- **Leaves (10):**
+- **Leaves (9):**
   - Mumford's displays over an algebraically closed field (`X : AbVar k`, `Pic⁰` = translation-invariant classes,
     `ē_n` by its formula): §6 Cor. 4, §6 App. 1, §8 (iv), §8 Thm 1, §20 ×2, §23;
-  - EGA II 4.6.13 (ample under field extension);
   - EGA III 7.8.6 / Kleiman Ex. 9.3.11 (`𝒪 = f_*𝒪` universally);
   - EGA IV 4.6.5 (products of geometrically integral schemes).
   - All are rated printed form in the report; locators UNVERIFIED.
@@ -18,6 +17,7 @@ Folding both gives −2 strict and −2 strictest GLUE on the lf31 rating (autof
   - **transport of Mumford's formula** (pseudofunctor coherence). This proves the Galois, adjoint and
     compatibility clauses;
   - `finiteOfFiniteKerPts`;
+  - ampleness under base change to `K̄` (EGA II 4.6.13);
   - **`K̄`-points of `Pic⁰` are translation-invariant**, by vendored Kleiman 9.2.5 plus rigidity on `A × Pic⁰`.
     This removes the composite step of `phiAmpleIsogeny`.
   - Consumers unchanged.
@@ -27,7 +27,6 @@ Folding both gives −2 strict and −2 strictest GLUE on the lf31 rating (autof
   Smooth: two theorem steps, nonsingular to smooth and descent.
 
 **Remains.** Reading the locators (all UNVERIFIED), and BLR 8.4 / Milne 1986 §10 for a one-print form of
-`picZeroAbVar`. Optional Lean: `AmpleBaseChangeAlgClosure`, `GeomIntegralProd` (a Mathlib gap), and the open
-subgroup glue for `picZeroAbVar`.
+`picZeroAbVar`. Optional Lean: `GeomIntegralProd` (a Mathlib gap), and the open subgroup glue for `picZeroAbVar`.
 
 Report: `docs/research/pic-dict.md`; log `scratch/pic-dict/log.md`.
