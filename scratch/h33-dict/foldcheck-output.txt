@@ -1,5 +1,1 @@
 'ZInQ.Contrib.TYZChain.frozenTarget_h33Printed' depends on axioms: [propext, Classical.choice, Quot.sound]
-
-real	0m7.900s
-user	0m3.288s
-sys	0m3.319s

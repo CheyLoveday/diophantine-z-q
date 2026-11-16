@@ -26,12 +26,8 @@ DISCHARGES [h33] by ZInQ.Contrib.TYZGenus.H33Dict.tyzThm33_of_epsAfter
 DISCHARGES [h33] by ZInQ.Contrib.TYZGenus.H33Dict.tyzThm33_of_printed
   still assumes: [T5Glue.ShimuraMainCM, ZInQ.Contrib.TYZGenus.H33Dict.TYZThm33Printed]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2933 theorems checked, 9 discharge one
+#discharges: 56 open hypotheses, 2935 theorems checked, 9 discharge one
 'ZInQ.Contrib.TYZGenus.H33Dict.tyzThm33_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZGenus.H33Dict.tyzProp324Used_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZGenus.H33Dict.isX0Identification_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZGenus.H33Dict.etaCuspBounds' depends on axioms: [propext, Classical.choice, Quot.sound]
-
-real	0m10.187s
-user	0m5.407s
-sys	0m3.089s
