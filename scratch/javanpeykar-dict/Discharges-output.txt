@@ -10,6 +10,9 @@ DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by GapSHPai
 DISCHARGES [OpenResearchLeaves26.javanpeykarBound] by JavanpeykarDict.javanpeykarBound_of_printed
   still assumes: [JavanpeykarDict.JavanpeykarPrinted, JavanpeykarDict.BelyiBaseChange]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.javanpeykarBound] by JavanpeykarDict.javanpeykarBound_of_printed_stichtenoth
+  still assumes: [JavanpeykarDict.JavanpeykarPrinted, JavanpeykarDict.ConstantFieldExtensionUnramified]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves26.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
   axioms: [propext, Classical.choice, Quot.sound]
@@ -22,5 +25,8 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 2893 theorems checked, 8 discharge one
+#discharges: 56 open hypotheses, 2926 theorems checked, 9 discharge one
+'JavanpeykarDict.javanpeykarBound_of_printed_stichtenoth' depends on axioms: [propext, Classical.choice, Quot.sound]
 'JavanpeykarDict.javanpeykarBound_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'JavanpeykarDict.belyiBaseChange_of_unramified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'JavanpeykarDict.functionField_baseChange' depends on axioms: [propext, Classical.choice, Quot.sound]

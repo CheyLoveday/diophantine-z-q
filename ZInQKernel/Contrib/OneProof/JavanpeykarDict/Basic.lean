@@ -3,6 +3,33 @@ import ZInQKernel.Contrib.CloudW07JacobiansCurves.JacobianExists
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Cohomology.FieldExtension
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Curve.Dimension
 
+/-! # javanpeykar-dict (part 1): Jacobian and genus dictionary, the printed leaf, the Belyi glue
+
+Task javanpeykar-dict (2026-11-16), report `docs/research/javanpeykar-dict.md`, scratch
+`scratch/javanpeykar-dict/`.
+
+**Target.** The bundle field `javanpeykarBound : ZInQ.HeightSplit.JavanpeykarBound`
+(`ZInQKernel/OneProof/H/TailY.lean`). The 11-16 dictionary pass rated it a consequence of
+Javanpeykar 2014 Thm 1.1.1 through three dictionary steps: (1) the kernel's Jacobian (`IsJacobian`, an
+Albanese predicate over `PkgI3.AbVar`) against the print's `Jac(X)`; (2) `dim J` against the genus;
+(3) the kernel's `K`-rational `IsBelyiFunction` against a Belyi map of `X` over `ℚ̄`.
+
+**Results.**
+* §1 `isStableFaltingsHeight_of_iso`: the published stable height is invariant under isomorphism of
+  abelian varieties (transport of Néron models and metrized models through `e_L`). Proved.
+* §2 `abVarIso_picZero_of_isJacobian` (copied from isj1-dict, `R16IsJ1Dict.lean`): every kernel Jacobian
+  is isomorphic to every tensor-compatible representative of `Pic⁰_{X/K}` (vendored Jacobian-Challenge
+  library: Milne's Albanese property of the Abel–Jacobi map). Step (1), proved.
+* §3 `dim_eq_genusK`, `genusBar_eq`: `dim J = dim_K H¹(X, 𝒪) = dim_ℚ̄ H¹(X_ℚ̄, 𝒪)` (vendored: `Pic⁰` is
+  smooth of genus dimension, smooth schemes have the expected Krull dimension, flat base change of
+  cohomology). Step (2), proved.
+* §4 the restated leaf `JavanpeykarPrinted` (the print for `X = X₀ ×_K ℚ̄`: `Jac(X)` as `Pic⁰`, `g` the
+  genus of `X_ℚ̄`, a Belyi function of `X_ℚ̄` over `ℚ̄`), the glue `BelyiBaseChange` (step (3): a
+  `K`-rational Belyi function stays a Belyi function over `ℚ̄`, same degree; stated, not proved), and
+  `javanpeykarBound_of_printed : JavanpeykarPrinted → BelyiBaseChange → JavanpeykarBound`.
+
+No `sorry`, no `axiom`. -/
+
 noncomputable section
 
 set_option linter.unusedSectionVars false

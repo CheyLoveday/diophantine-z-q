@@ -1,8 +1,16 @@
-import ZInQKernel.Contrib.OneProof.JavanpeykarDict
+import ZInQKernel.Contrib.OneProof.JavanpeykarDict.Basic
 import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import ZInQKernel.Contrib.OneProof.JavanpeykarDict.BelyiAlgebra
 
-/-! # javanpeykar-dict: the function field of a base change (draft) -/
+/-! # javanpeykar-dict (part 3): the function field of a base change, and `BelyiBaseChange`
+
+* `functionField_baseChange`: for an integral `K`-scheme `X` with `X_L` integral and `L/K` algebraic,
+  `K(X) ⊗_K L → L(X_L)` is bijective (Mathlib `isIso_pushoutSection_of_isAffineOpen` on an affine open
+  through the generic point, as in the vendored Jacobian-Challenge `free_finite_app`, then
+  `productMap_bijective_of_fraction`);
+* `belyiBaseChange_of_unramified : ConstantFieldExtensionUnramified → BelyiBaseChange`.
+
+No `sorry`, no `axiom`. -/
 
 noncomputable section
 
@@ -181,4 +189,26 @@ theorem functionField_baseChange [IsIntegral X.left] [IsIntegral (baseChangeCurv
     rw [hβtmul, map_one, one_mul]
     exact RingHom.congr_fun hLB l
 
+/-- **`BelyiBaseChange` from Stichtenoth's theorem (glue, proved).** -/
+theorem belyiBaseChange_of_unramified (hS : ConstantFieldExtensionUnramified) : BelyiBaseChange := by
+  intro K _ _ X hX _ t ht d hd hd0
+  have : SmoothOfRelativeDimension 1 X.hom := hX.smooth
+  have : GeometricallyConnected X.hom := hX.geomConnected
+  have : Smooth X.hom := SmoothOfRelativeDimension.smooth 1 X.hom
+  have : GeometricallyIntegral X.hom :=
+    TauCeti.AlgebraicGeometry.Smooth.geometricallyIntegral X.hom
+  haveI hint : IsIntegral (baseChangeCurve X (AlgebraicClosure K)).left :=
+    GeometricallyIntegral.geometrically_isIntegral _ _ _ (isPullback_pr X (AlgebraicClosure K))
+  obtain ⟨ι, hbij⟩ := functionField_baseChange X (AlgebraicClosure K)
+  letI := ZInQ.LeafPush2.ffAlgebra X
+  letI := ZInQ.LeafPush2.ffAlgebra (baseChangeCurve X (AlgebraicClosure K))
+  letI iKM : Algebra K (baseChangeCurve X (AlgebraicClosure K)).left.functionField :=
+    ((algebraMap (AlgebraicClosure K) _).comp (algebraMap K (AlgebraicClosure K))).toAlgebra
+  haveI : IsScalarTower K (AlgebraicClosure K)
+      (baseChangeCurve X (AlgebraicClosure K)).left.functionField :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  obtain ⟨h1, h2⟩ := isBelyiFunction_baseChange hS ι hbij t ht d hd hd0
+  exact ⟨hint, ι t, h1, h2⟩
+
 end JavanpeykarDict
+
