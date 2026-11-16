@@ -147,7 +147,20 @@ is a bypass:
 
 ## 7. Status of the bypass compile
 
-PENDING (filled in at the end of the run).
+`lake env lean scratch/eichler-bound/BypassFold.lean` compiles. VERIFIED, output in
+`scratch/eichler-bound/bypass-compile.txt`:
+
+```
+'HDec.HSyn.sixContactMin_of_open35E' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.TYZChain.frozenTarget_E' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+* `frozenTarget_E` is Main's `frozenTarget` with `OpenResearchLeaves26E`, the research bundle minus
+  `gonzalezRotgerProp56X6`, with nothing added.
+* The module never mentions `EichlerOptEmbCount6` (`grep` count 0). Its only use of the count is
+  `r5le := EichlerBound.r5fpCountLe_proof t.uniformizationLeafAll t.gagaMorphism t.mumfordTorsionAlgClosed`.
+* To compile it, the build tree was taken from a sibling worktree, the deps were rebuilt with
+  `lake build <the 10 imports>` (13709 jobs), and `lean/.lake/build` was copied.
 
 ## 8. What remains
 

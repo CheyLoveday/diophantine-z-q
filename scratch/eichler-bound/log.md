@@ -42,3 +42,8 @@ GR56.R5fpCountLe`.
 ## Fold counts (autofold --dry-run, count-only spec scratch/eichler-bound/autofold.json, no new leaf)
 * tree kinds.tsv (prop56 rated LEAF): 34/11 on 45 -> 33/11 on 44 (strictest same). VERIFIED.
 * simulated re-rating of the prop56 row to GLUE (/tmp/ebsim copy): 33/12 on 45 -> 33/11 on 44. VERIFIED.
+* Final module R5fpCountLe.lean (imports GR56Lattice; Defs imports GRCountX6, dev copies removed): lake build OK
+  (12938 jobs). VERIFIED. Axioms of eichlerOptEmbBound6 and r5fpCountLe_proof: standard. VERIFIED.
+* #discharges: 56 open, 3322 checked, 10 discharge one (none from this task: R5fpCountLe is weaker; bypass). VERIFIED.
+* BypassFold.lean (gen_bypass.py, E-variant only): compiles; sixContactMin_of_open35E and frozenTarget_E use
+  standard axioms; no EichlerOptEmbCount6, no gonzalezRotgerProp56X6 field. VERIFIED.
