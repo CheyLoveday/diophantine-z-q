@@ -37,3 +37,10 @@ Base: wip/gz-moduli 85111fc7. Build tree: reflink copy of ~/dzq-wt/gz-moduli/.la
 - §5 `grossZagierModuliOptAt_of_moduliAt` (short E), `grossZagierModuliOptCd_of_moduli`: new leaf ⇐ gz-moduli's leaf.
 - §6 `core_selfOptimal`, `core_transfer`; §7 `grossZagierFormulaCd_of_selfOptimal` (route A),
   `grossZagierFormulaCd_of_transfer` (route B); §8 `ModularParamAnalyticAt/Cd`, `grossZagierModuliCd_of_transfer`.
+- `lake build ZInQKernel.Contrib.OneProof.GrossZagierOptimal(.NonVacuous)` OK; Check.lean: standard axioms for all main
+  theorems (out_check.txt); Target.lean: verbatim copy of GrossZagierModuliAt/Cd, `rfl` (VERIFIED).
+- #discharges (discharges-output.txt): 61 open, 3011 theorems checked; no GZOptimal line (hL3 is a top-level frozenTarget
+  argument for all E; the C_d theorems are not field types), as for heegner-32/gz-conj/gz-moduli (VERIFIED).
+- Merged origin/wip/heegner-32 (718d8d4c) and origin/wip/gz-conj (2c7ce521): clean. MainEdit.lean:
+  `frozenTarget_gzoptimal` (hL3 → GrossZagierModuliOptCd + CdOptimal) and `frozenTarget_gzoptimal_transfer`
+  (hL3 → GrossZagierModuliOptCd + StrongWeilOptimalCd + AnalyticIsogenyRational), standard axioms (VERIFIED).
