@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.HeightDictionary
+import ZInQKernel.Contrib.OneProof.RaynaudSemistableOr
 
 open CategoryTheory AlgebraicGeometry MeasureTheory Topology Set MonObj
 open MonoidalCategory CartesianMonoidalCategory
@@ -353,5 +354,91 @@ theorem isPrintedMetricSq_iff {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* 
     exact ⟨hex, hmass⟩
 
 end Metrized
+
+/-! ## §4. Existence of the measure `(i/2)^g η ∧ η̄` for every group model (from T35) -/
+
+section Existence
+
+variable {K : Type} [Field K] [NumberField K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L]
+  [Algebra K L]
+
+/-- Every group model of `A_L` of dimension `g = dim A` carries a metrization (T35). -/
+theorem exists_metrized (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L) (g : ℕ)
+    (hg : A.dim = (g : WithBot ℕ∞)) : ∃ M : MetrizedModel A L g, M.model = 𝒢 :=
+  metrizationOfUniformization K A L 𝒢 g hg fun τ =>
+    ZInQ.Metrization2.analyticUniformizationOfDim_of_uniformizationExists hT35 K A L 𝒢 τ g hg
+
+/-- **Existence (soundness of the printed metric).** For every group model `𝒢` of `A_L` (in particular
+every Néron model), `g = dim A`, every `τ : L → ℂ` and every `η ≠ 0` in `L ⊗ ⋀^g ω`, the measure
+`(i/2)^g η ∧ η̄` on `A_τ(ℂ)` exists (`|c_τ η|²` times the Haar measure `Φ_*(Lebesgue|_D)` of the
+compact group `A_τ(ℂ)`), and its total mass is well defined. -/
+theorem existsUnique_isPrintedMetricSq (hT35 : ZInQ.LeafPush2.UniformizationExists)
+    (𝒢 : GroupModel A L) (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (eta : 𝒢.hodgeSpace g) (heta : eta ≠ 0) : ∃! r : ℝ, IsPrintedMetricSq 𝒢 τ eta r := by
+  obtain ⟨M, rfl⟩ := exists_metrized hT35 𝒢 g hg
+  exact ⟨_, (isPrintedMetricSq_iff M τ eta heta _).mpr rfl,
+    fun r hr => (isPrintedMetricSq_iff M τ eta heta r).mp hr⟩
+
+theorem exists_isFormMeasure (hT35 : ZInQ.LeafPush2.UniformizationExists)
+    (𝒢 : GroupModel A L) (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (eta : 𝒢.hodgeSpace g) (heta : eta ≠ 0) :
+    letI := anBorel 𝒢 τ
+    ∃ nu : Measure (𝒢.Pts τ), IsFormMeasure 𝒢 τ nu eta := by
+  obtain ⟨r, hr, -⟩ := existsUnique_isPrintedMetricSq hT35 𝒢 g hg τ eta heta
+  exact hr.1
+
+end Existence
+
+/-! ## §5. Semistable reduction over `k(𝔭)` (SGA 7 IX Déf. 2.2/3.2 as printed) -/
+
+section Semistable
+
+open DictModels.RaynaudOr ReductGlue
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- `Spec k(𝔭) → Spec 𝓞_L`. -/
+noncomputable abbrev sResP (𝔭 : Ideal (𝓞 L)) [𝔭.IsPrime] :
+    Spec (CommRingCat.of 𝔭.ResidueField) ⟶ Spec (CommRingCat.of (𝓞 L)) :=
+  Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) 𝔭.ResidueField))
+
+/-- The special fibre `𝒢 ×_{𝓞_L} k(𝔭)` of a group model at `𝔭`, over the residue field itself. -/
+noncomputable def resFibre (𝒢 : GroupModel A L) (𝔭 : Ideal (𝓞 L)) [𝔭.IsPrime] :
+    Over (Spec (CommRingCat.of 𝔭.ResidueField)) :=
+  (Over.pullback (sResP 𝔭)).obj 𝒢.G
+
+noncomputable instance (𝒢 : GroupModel A L) (𝔭 : Ideal (𝓞 L)) [𝔭.IsPrime] :
+    GrpObj (resFibre 𝒢 𝔭) :=
+  Functor.grpObjObj
+
+/-- **Semistable reduction everywhere, as SGA 7 IX Déf. 2.2/3.2 print it** (over the residue field
+`k(𝔭)`; locators UNVERIFIED): at every maximal ideal `𝔭` of `𝓞_L`, the identity component of the
+special fibre `𝒩 ×_{𝓞_L} k(𝔭)` is an extension of an abelian variety over `k(𝔭)` by a torus
+(a group with `T_{k̄} ≅ 𝔾_m^r`): `HasSemiAbelianIdCompTorus` (dict-models). -/
+def IsSemistableRes (𝒢 : GroupModel A L) : Prop :=
+  ∀ (𝔭 : Ideal (𝓞 L)) [𝔭.IsMaximal], HasSemiAbelianIdCompTorus (resFibre 𝒢 𝔭)
+
+theorem spec_bar_compP (𝔭 : Ideal (𝓞 L)) [𝔭.IsPrime] :
+    sφ (φbar 𝔭.ResidueField) ≫ sResP 𝔭 =
+      Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (ResBar 𝔭))) := by
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  congr 2
+
+/-- **Ascent: the `k(𝔭)` form gives the geometric form** `IsSemistable` (the kernel's, on
+`𝒢 ×_{𝓞_L} κ̄(𝔭)`), from Stacks 04KV (`GeomConnOfRationalPoint`, a textbook field) through
+dict-models' `hasSemiAbelian_pullback_bar`. -/
+theorem isSemistable_of_res (hGC : AVGlue.GeomConnOfRationalPoint) (𝒢 : GroupModel A L)
+    (h : IsSemistableRes 𝒢) : IsSemistable 𝒢 := by
+  intro 𝔭 _
+  haveI : LocallyOfFiniteType (resFibre 𝒢 𝔭).hom := by
+    change LocallyOfFiniteType (Limits.pullback.snd 𝒢.G.hom (sResP 𝔭)); infer_instance
+  haveI : QuasiCompact (resFibre 𝒢 𝔭).hom := by
+    change QuasiCompact (Limits.pullback.snd 𝒢.G.hom (sResP 𝔭)); infer_instance
+  have h2 := hasSemiAbelian_pullback_bar hGC (resFibre 𝒢 𝔭) (h 𝔭)
+  let E := pbCompIso _ _ _ (spec_bar_compP 𝔭) (Grp.mk 𝒢.G)
+  exact @hasSemiAbelian_of_iso _ _ _ (geomFibre 𝒢 𝔭) Functor.grpObjObj _
+      (isoX E) (inferInstanceAs (IsMonHom E.hom.hom.hom)) h2
+
+end Semistable
 
 end ZInQ.HeightFix
