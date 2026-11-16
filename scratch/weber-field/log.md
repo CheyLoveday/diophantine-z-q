@@ -20,3 +20,4 @@ Ideal `I = {F ∈ ℚ[J][T] : F(j(τ), f₁(τ)) = 0 on ℍ}` with `f₁ = g₂g
 identity theorem; `I ∩ ℚ[J] = 0` since `j(i) = 1728`, `j(ρ) = 0`; contains the cleared universal division polynomial
 `Φ_N`; algebraic lemma (localization at `ℚ[J]∖0`, PID `ℚ(j)[T]`) gives `θ` with `I = ker(T ↦ θ)`; `θ = w(P)`, `P` of
 exact order `N` by the division-polynomial criterion on both sides.
+- 03:08 PartA.lean (algebraic lemma exists_root_of_isPrime, clearing exists_clears, ev2_ΨSq, evK_clears) compiles, no sorry.
