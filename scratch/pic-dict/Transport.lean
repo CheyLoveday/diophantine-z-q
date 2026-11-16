@@ -252,3 +252,82 @@ theorem wf_iso (t m : X ⟶ X) (h : t ≫ m = m) {M₁ M₂ : X.Modules} (e : M�
   simp
 
 end PicDict.Transport
+
+namespace PicDict
+
+open T09Pic PkgI3 PkgI3.AbVar HDec.WeilPairing CategoryTheory.MonoidalCategory
+open scoped CategoryTheory.MonObj
+
+variable {K : Type} [Field K]
+
+/-- `1 × Spec σ` on `A_K̄`. -/
+abbrev gal (A : AbVar K) (σ : Gal K) : AK A ⟶ AK A :=
+  JacobianChallenge.baseChangeMap A.X.hom (galHom σ)
+
+lemma gal_eq (A : AbVar K) (σ : Gal K) : gal A σ = (A.X ◁ galHom σ).left := by
+  apply Limits.pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+
+lemma transl_gal (A : AbVar K) (σ : Gal K) (x : A.Pt (AlgebraicClosure K)) :
+    transl (galHom σ ≫ x) ≫ (A.X ◁ galHom σ) = (A.X ◁ galHom σ) ≫ transl x := by
+  apply CartesianMonoidalCategory.hom_ext
+  · simp [transl, CartesianMonoidalCategory.comp_lift_assoc]
+  · simp [transl]
+
+lemma gal_transl (A : AbVar K) (σ : Gal K) (x : A.Pt (AlgebraicClosure K)) :
+    trl (galHom σ ≫ x) ≫ gal A σ = gal A σ ≫ trl x := by
+  rw [gal_eq, ← Over.comp_left, ← Over.comp_left, transl_gal]
+
+lemma gal_mulN (A : AbVar K) (σ : Gal K) (n : ℕ) : gal A σ ≫ mlN A n = mlN A n ≫ gal A σ := by
+  rw [gal_eq, ← Over.comp_left, ← Over.comp_left]
+  congr 1
+  unfold mulN
+  exact whisker_exchange _ _
+
+lemma gal_constK (A : AbVar K) (σ : Gal K) (u : AlgebraicClosure K) :
+    (gal A σ).appTop (constK A u) = constK A (σ u) := by
+  have hs : gal A σ ≫ Limits.pullback.snd A.X.hom (ptK K).hom =
+      Limits.pullback.snd A.X.hom (ptK K).hom ≫ (galHom σ).left := Limits.pullback.lift_snd _ _ _
+  simp only [constK, RingHom.comp_apply]
+  rw [← CommRingCat.comp_apply, ← Scheme.Hom.comp_appTop, hs, Scheme.Hom.comp_appTop,
+    CommRingCat.comp_apply]
+  congr 1
+  have := Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom (σ : AlgebraicClosure K →+* AlgebraicClosure K))
+  exact (congrArg (fun φ => φ.hom u) this).symm
+
+lemma weilFormula_eq_wf {A : AbVar K} {n : ℕ} (x : tors A n) (c : (AK A).Pic) (ψ : Triv A n c) :
+    weilFormula x c ψ = Transport.wf (trl (Additive.toMul (x : P A))) (mlN A n)
+      (transl_left_comp_mulN_left x) (mod c) ψ := rfl
+
+/-- **GLUE, proved form**: transport along `σ ∈ G_K`. -/
+def WeilFormulaGaloisEx : Prop :=
+  ∀ (K : Type) [Field K] (A : AbVar K) (n : ℕ) (σ : Gal K) (x : tors A n) (c c' : (AK A).Pic),
+      c' = Scheme.Pic.map (gal A σ) c →
+      ∀ (ψ : Triv A n c) (u : AlgebraicClosure K),
+        weilFormula x c ψ = constK A u →
+          ∃ ψ' : Triv A n c', weilFormula (galTors A n σ x) c' ψ' = constK A (σ u)
+
+theorem weilFormulaGaloisEx : WeilFormulaGaloisEx := by
+  intro K _ A n σ x c c' hc ψ u hu
+  subst hc
+  let e : (Scheme.Modules.pullback (gal A σ)).obj (mod c) ≅ mod (Scheme.Pic.map (gal A σ) c) :=
+    (Scheme.Pic.mkIso _).symm
+  refine ⟨Transport.transTriv (gal A σ) (mlN A n) (gal_mulN A σ n) (mod c) ψ ≪≫
+    (Scheme.Modules.pullback (mlN A n)).mapIso e, ?_⟩
+  have ha : (transl (Additive.toMul ((galTors A n σ x : tors A n) : P A))).left ≫ gal A σ =
+      gal A σ ≫ trl (Additive.toMul (x : P A)) := gal_transl A σ _
+  have h1 := Transport.wf_iso (transl (Additive.toMul ((galTors A n σ x : tors A n) : P A))).left (mlN A n)
+    (transl_left_comp_mulN_left (galTors A n σ x)) e
+    (Transport.transTriv (gal A σ) (mlN A n) (gal_mulN A σ n) (mod c) ψ)
+  have h2 := Transport.wf_transport (transl (Additive.toMul ((galTors A n σ x : tors A n) : P A))).left
+    (gal A σ) (mlN A n) (trl (Additive.toMul (x : P A))) ha (gal_mulN A σ n)
+    (transl_left_comp_mulN_left x) (transl_left_comp_mulN_left (galTors A n σ x)) (mod c) ψ
+  have h3 : weilFormula x c ψ = Transport.wf (trl (Additive.toMul (x : P A))) (mlN A n)
+    (transl_left_comp_mulN_left x) (mod c) ψ := rfl
+  have h4 := weilFormula_eq_wf (galTors A n σ x) (Scheme.Pic.map (gal A σ) c)
+      (Transport.transTriv (gal A σ) (mlN A n) (gal_mulN A σ n) (mod c) ψ ≪≫
+        (Scheme.Modules.pullback (mlN A n)).mapIso e)
+  rw [h4, h1, h2, ← h3, hu]
+  exact gal_constK A σ u
+
+end PicDict
+#print axioms PicDict.weilFormulaGaloisEx
