@@ -388,4 +388,146 @@ theorem PP_eq_pi_mul {ℓ : ℤ} (hℓ : L6 ℓ) {x : B} (hx : PP ℓ x) :
     refine ⟨ofInt ![n 2 + a, -(n 3 + b), -(n 2 + 2 * a), n 3 + 2 * b], ofInt_mem _, ?_⟩
     rw [piL_three, ofInt_mul]; congr 1; funext i; fin_cases i <;> simp [mulCoord] <;> linarith
 
+/-- **Conjugation by `π_ℓ` is the quaternion conjugation modulo `P_ℓ`**:
+`π̄ z π = nrd(π) z̄ + ℓ w` with `w ∈ P_ℓ`, for `z ∈ 𝒪`. -/
+theorem frob {ℓ : ℤ} (hℓ : L6 ℓ) {z : B} (hz : z ∈ LeafQM.O) :
+    ∃ w, PP ℓ w ∧ star (piL ℓ) * z * piL ℓ = nrd (piL ℓ) • star z + (ℓ : ℚ) • w := by
+  obtain ⟨n, rfl⟩ := hz
+  rcases hℓ with rfl | rfl
+  · refine ⟨ofInt ![0, -2 * n 1 - n 3, 0, 0], ⟨_, rfl, (dvd2_nrdZ _).2 ⟨by simp, by simp⟩⟩, ?_⟩
+    rw [nrd_piL (Or.inl rfl), piL_two]
+    ext <;> simp [ofInt, epsL] <;> ring
+  · refine ⟨ofInt ![-n 2, 0, 2 * n 2, 0], ⟨_, rfl, (dvd3_nrdZ _).2 ⟨⟨-n 2, by simp; ring⟩, by simp⟩⟩, ?_⟩
+    rw [nrd_piL (Or.inr rfl), piL_three]
+    ext <;> simp [ofInt, epsL] <;> ring
+
+/-! ## A.5 The minor certificate (primes `ℓ ∤ 6`) -/
+
+theorem dvd_lin {ℓ : ℤ} {X Y : Fin 4 → ℤ} (hX : ∀ k, ℓ ∣ X k) (hY : ∀ k, ℓ ∣ Y k) (c d : Fin 4 → ℤ) :
+    ℓ ∣ ∑ k, (c k * X k + d k * Y k) :=
+  Finset.dvd_sum fun k _ => dvd_add (dvd_mul_of_dvd_right (hX k) _) (dvd_mul_of_dvd_right (hY k) _)
+
+/-- **Lemma (L)**: if `c̄d ∈ ℓ𝒪` and `cd̄ ∈ ℓ𝒪` with `ℓ ∤ 6` prime, the coordinate vectors of `c` and `d`
+are proportional mod `ℓ` (each `2 × 2` minor is divisible by `ℓ`). Certificate: `6 · minor` is an integer
+combination of the coordinates of `c̄d` and `cd̄` (found by sympy, `cert2.py`). -/
+theorem minor_dvd {ℓ : ℤ} (hℓ : Prime ℓ) (h6 : ¬ ℓ ∣ 6) (a b : Fin 4 → ℤ)
+    (h1 : LO ℓ (star (ofInt a) * ofInt b)) (h2 : LO ℓ (ofInt a * star (ofInt b))) :
+    ∀ i j, ℓ ∣ a i * b j - a j * b i := by
+  rw [star_ofInt, ofInt_mul, LO_ofInt_iff] at h1
+  rw [star_ofInt, ofInt_mul, LO_ofInt_iff] at h2
+  have key : ∀ (m : ℤ) (c d : Fin 4 → ℤ),
+      6 * m = ∑ k, (c k * mulCoord (conjZ a) b k + d k * mulCoord a (conjZ b) k) → ℓ ∣ m := by
+    intro m c d e
+    have := dvd_lin h1 h2 c d
+    rw [← e] at this
+    rcases hℓ.dvd_or_dvd this with h | h
+    · exact absurd h h6
+    · exact h
+  have e01 : ℓ ∣ a 0 * b 1 - a 1 * b 0 := key _ ![0, 2, 0, -2] ![0, -4, 0, -2] (by
+    simp [Fin.sum_univ_four, mulCoord, conjZ]; ring)
+  have e02 : ℓ ∣ a 0 * b 2 - a 2 * b 0 := key _ ![-6, 0, 0, 0] ![6, 0, 0, 0] (by
+    simp [Fin.sum_univ_four, mulCoord, conjZ]; ring)
+  have e03 : ℓ ∣ a 0 * b 3 - a 3 * b 0 := key _ ![0, 2, 0, 4] ![0, 2, 0, -2] (by
+    simp [Fin.sum_univ_four, mulCoord, conjZ]; ring)
+  have e12 : ℓ ∣ a 1 * b 2 - a 2 * b 1 := key _ ![0, -2, 0, -4] ![0, -2, 0, -4] (by
+    simp [Fin.sum_univ_four, mulCoord, conjZ]; ring)
+  have e13 : ℓ ∣ a 1 * b 3 - a 3 * b 1 := key _ ![-3, 0, -3, 0] ![3, 0, 0, 0] (by
+    simp [Fin.sum_univ_four, mulCoord, conjZ]; ring)
+  have e23 : ℓ ∣ a 2 * b 3 - a 3 * b 2 := key _ ![0, -4, 0, -2] ![0, -4, 0, -2] (by
+    simp [Fin.sum_univ_four, mulCoord, conjZ]; ring)
+  have neg : ∀ x y : ℤ, ℓ ∣ x - y → ℓ ∣ y - x := fun x y h => by
+    have := dvd_neg.2 h; rwa [neg_sub] at this
+  have n01 := neg _ _ e01; have n02 := neg _ _ e02; have n03 := neg _ _ e03
+  have n12 := neg _ _ e12; have n13 := neg _ _ e13; have n23 := neg _ _ e23
+  intro i j
+  fin_cases i <;> fin_cases j <;> simp only [Fin.zero_eta, Fin.mk_one, Fin.reduceFinMk, sub_self,
+    dvd_zero] <;> assumption
+
+/-! ## A.6 Class number one: `𝒪` is left norm-Euclidean (copied from `TailU`, `HDec.QMSplit.CNO`) -/
+
+theorem sq_le_of_abs_le {e c : ℚ} (h : |e| ≤ c) : e ^ 2 ≤ c ^ 2 := by
+  have := abs_nonneg e
+  rw [← sq_abs]; exact pow_le_pow_left₀ this h 2
+
+theorem div_mul_cancel' (β α : B) (hα : α ≠ 0) : ((nrd α)⁻¹ • (β * star α)) * α = β := by
+  rw [smul_mul_assoc, mul_assoc, star_mul_self', QuaternionAlgebra.mul_coe_eq_smul, smul_smul,
+    inv_mul_cancel₀ (nrd_ne_zero hα), one_smul]
+
+theorem nrd_ofInt' (n : Fin 4 → ℤ) :
+    nrd (LeafQM.ofInt n) = ((n 0 ^ 2 + n 0 * n 2 + n 2 ^ 2 - 2 * (n 1 ^ 2 + n 1 * n 3 + n 3 ^ 2) : ℤ) : ℚ) := by
+  simp [nrd, LeafQM.ofInt]; ring
+
+/-- **`𝒪` is left norm-Euclidean**: every `x ∈ B` is within `|nrd| < 1` of `𝒪`. -/
+theorem euclid (x : B) : ∃ q ∈ LeafQM.O, |nrd (x - q)| < 1 := by
+  set c : ℤ := round (2 * x.imJ)
+  set d : ℤ := round (2 * x.imK)
+  set a : ℤ := round (x.re - c / 2)
+  set b : ℤ := round (x.imI - d / 2)
+  refine ⟨LeafQM.ofInt ![a, b, c, d], ⟨![a, b, c, d], rfl⟩, ?_⟩
+  have hc := abs_sub_round (2 * x.imJ)
+  have hd := abs_sub_round (2 * x.imK)
+  have ha := abs_sub_round (x.re - c / 2)
+  have hb := abs_sub_round (x.imI - d / 2)
+  set e0 := x.re - c / 2 - a
+  set e1 := x.imI - d / 2 - b
+  set e2 := x.imJ - c / 2
+  set e3 := x.imK - d / 2
+  have h0 : e0 ^ 2 ≤ (1/2) ^ 2 := sq_le_of_abs_le ha
+  have h1 : e1 ^ 2 ≤ (1/2) ^ 2 := sq_le_of_abs_le hb
+  have h2' : (2 * e2) ^ 2 ≤ (1/2) ^ 2 := sq_le_of_abs_le (by
+    have : 2 * e2 = 2 * x.imJ - c := by simp only [e2]; ring
+    rw [this]; exact hc)
+  have h3' : (2 * e3) ^ 2 ≤ (1/2) ^ 2 := sq_le_of_abs_le (by
+    have : 2 * e3 = 2 * x.imK - d := by simp only [e3]; ring
+    rw [this]; exact hd)
+  have hn : nrd (x - LeafQM.ofInt ![a, b, c, d]) = e0 ^ 2 - 2 * e1 ^ 2 + 3 * e2 ^ 2 - 6 * e3 ^ 2 := by
+    simp only [nrd, LeafQM.ofInt, e0, e1, e2, e3]
+    simp; ring
+  rw [hn, abs_lt]
+  constructor <;> nlinarith [sq_nonneg e0, sq_nonneg e1, sq_nonneg e2, sq_nonneg e3]
+
+/-- **Class number one of `𝒪`** (copied from `HDec.QMSplit.CNO.principal_of_lattice`, `TailU`). -/
+theorem principal_of_lattice (I : AddSubgroup B) (hI : ∀ q ∈ LeafQM.O, ∀ x ∈ I, q * x ∈ I)
+    (d : ℕ) (hd : 0 < d) (hdI : ∀ x ∈ I, (d : ℚ) • x ∈ LeafQM.O) :
+    ∃ α ∈ I, ∀ β ∈ I, ∃ q ∈ LeafQM.O, β = q * α := by
+  by_cases hI0 : ∀ x ∈ I, x = 0
+  · exact ⟨0, I.zero_mem, fun β hβ => ⟨0, LeafQM.O.zero_mem, by simp [hI0 β hβ]⟩⟩
+  push Not at hI0
+  have hint : ∀ x ∈ I, ∃ n : ℕ, ((d : ℚ) ^ 2) * |nrd x| = n := by
+    intro x hx
+    obtain ⟨z, hz⟩ := nrd_int (hdI x hx)
+    refine ⟨z.natAbs, ?_⟩
+    have e : nrd ((d : ℚ) • x) = (d : ℚ) ^ 2 * nrd x := by simp [nrd]; ring
+    rw [e] at hz
+    have hd2 : (0 : ℚ) ≤ (d : ℚ) ^ 2 := by positivity
+    rw [← abs_of_nonneg hd2, ← abs_mul, hz]
+    rw [Nat.cast_natAbs, Int.cast_abs]
+  have hex : ∃ n : ℕ, ∃ x ∈ I, x ≠ 0 ∧ ((d : ℚ) ^ 2) * |nrd x| = n := by
+    obtain ⟨x, hx, hx0⟩ := hI0
+    obtain ⟨n, hn⟩ := hint x hx
+    exact ⟨n, x, hx, hx0, hn⟩
+  classical
+  obtain ⟨α, hαI, hα0, hαn⟩ := Nat.find_spec hex
+  refine ⟨α, hαI, fun β hβ => ?_⟩
+  set x : B := (nrd α)⁻¹ • (β * star α)
+  obtain ⟨q, hq, hlt⟩ := euclid x
+  refine ⟨q, hq, ?_⟩
+  by_contra hne
+  have hmem : β - q * α ∈ I := I.sub_mem hβ (hI q hq α hαI)
+  have hne' : β - q * α ≠ 0 := sub_ne_zero.mpr hne
+  have hfac : β - q * α = (x - q) * α := by
+    rw [sub_mul, div_mul_cancel' β α hα0]
+  obtain ⟨m, hm⟩ := hint _ hmem
+  have hmin := Nat.find_min' hex ⟨β - q * α, hmem, hne', hm⟩
+  have hpos : 0 < |nrd α| := abs_pos.mpr (nrd_ne_zero hα0)
+  have hd2 : (0 : ℚ) < (d : ℚ) ^ 2 := by positivity
+  have hlt' : ((d : ℚ) ^ 2) * |nrd (β - q * α)| < ((d : ℚ) ^ 2) * |nrd α| := by
+    rw [hfac, nrd_mul, abs_mul]
+    have := mul_lt_mul_of_pos_right hlt hpos
+    rw [one_mul] at this
+    exact mul_lt_mul_of_pos_left this hd2
+  rw [hm, hαn] at hlt'
+  have : m < Nat.find hex := by exact_mod_cast hlt'
+  omega
+
 end EichlerBound
