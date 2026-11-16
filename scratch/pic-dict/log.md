@@ -81,3 +81,4 @@ Base e22df37cd (leaf-fold30). Rows: `T09Pic.PicZeroAbVar` (TailZ24:302), `T09Pic
   GeomIntegralProd). Dry-runs: weil only `40/8 -> 45/8 on 53; strictest 39/9 -> 45/8` (lf31 `37/11 -> 43/10`);
   both `40/8 -> 47/8 on 55; strictest 39/9 -> 47/8` (lf31 `37/11 -> 46/9; strictest 37/11 -> 46/9`). Both dry-run
   modules compile. #discharges: 14 discharge lines (all intermediate forms).
+- Verbatim copies of the three rows (scratch/pic-dict/Verbatim.lean) compile and equal the originals by rfl (VERIFIED).
