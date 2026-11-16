@@ -176,4 +176,98 @@ theorem IsComplexConj.mul_self {c : ZInQ.Contrib.G9.PkgI4.GQ}
   change ι (c (c x)) = ι x
   rw [hι, hι, Complex.conj_conj]
 
+
+/-! ## 4. Matrices of Galois on a free rank-two `ℚ_ℓ ⊗ F`-module and its `ι`-components -/
+
+section Mat
+
+variable (ℓ : ℕ) [Fact ℓ.Prime] (A : AbVar ℚ) {F : Type} [Field F] [Algebra ℚ F]
+  (θ : F →+* A.End0)
+
+/-- `frobMat` is multiplicative (`G_ℚ` acts `ℚ_ℓ ⊗ F`-linearly). -/
+theorem frobMat_mul
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (σ τ : PkgI4.GQ) :
+    R16Used.frobMat ℓ A θ b (σ * τ) = R16Used.frobMat ℓ A θ b σ * R16Used.frobMat ℓ A θ b τ := by
+  letI := R16Used.tensorModule ℓ A θ
+  ext i j
+  simp only [R16Used.frobMat, Matrix.of_apply, Matrix.mul_apply]
+  have h : A.galRep ℓ (σ * τ) (b j) = A.galRep ℓ σ (A.galRep ℓ τ (b j)) :=
+    LinearMap.congr_fun (map_mul (A.galRep ℓ) σ τ) (b j)
+  rw [h]
+  conv_lhs => rw [← b.sum_repr (A.galRep ℓ τ (b j))]
+  rw [map_sum]
+  simp_rw [R16Used.galRep_tsmul]
+  rw [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [LinearEquiv.map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
+
+theorem frobMat_one
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ)) :
+    R16Used.frobMat ℓ A θ b 1 = 1 := by
+  letI := R16Used.tensorModule ℓ A θ
+  ext i j
+  have h1 : A.galRep ℓ 1 (b j) = b j := LinearMap.congr_fun (map_one (A.galRep ℓ)) (b j)
+  simp only [R16Used.frobMat, Matrix.of_apply]
+  erw [h1]
+  rw [b.repr_self, Matrix.one_apply, Finsupp.single_apply]
+  by_cases hij : i = j
+  · simp [hij]
+  · simp [hij, Ne.symm hij]
+
+/-- The matrix of `σ` on the `ι`-component: `ι_R` applied to `frobMat`. -/
+def compMat
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) (σ : PkgI4.GQ) : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ) :=
+  (R16Used.frobMat ℓ A θ b σ).map (R16Used.liftHom (k := ℚ_[ℓ]) emb)
+
+theorem compMat_mul
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) (σ τ : PkgI4.GQ) :
+    compMat ℓ A θ b emb (σ * τ) = compMat ℓ A θ b emb σ * compMat ℓ A θ b emb τ := by
+  rw [compMat, frobMat_mul, Matrix.map_mul]; rfl
+
+theorem compMat_one
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) : compMat ℓ A θ b emb 1 = 1 := by
+  rw [compMat, frobMat_one, Matrix.map_one _ (map_zero _) (map_one _)]
+
+theorem trace_det_frobOn
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) (σ : PkgI4.GQ) :
+    LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) = (compMat ℓ A θ b emb σ).trace ∧
+      LinearMap.det (frobOn ℓ A θ emb σ) = (compMat ℓ A θ b emb σ).det := by
+  obtain ⟨-, h⟩ := R16Used.iota_component ℓ A θ b emb
+  obtain ⟨h1, h2⟩ := h σ
+  refine ⟨h1.trans ?_, h2.trans ?_⟩
+  · exact AddMonoidHom.map_trace (R16Used.liftHom (k := ℚ_[ℓ]) emb).toAddMonoidHom _
+  · exact RingHom.map_det _ _
+
+/-- The weak relation over `ℚ_ℓ ⊗ F` gives the weak relation on each `ι`-component. -/
+theorem aeval_compMat
+    (b : letI := R16Used.tensorModule ℓ A θ; Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F) (A.V ℓ))
+    (emb : F →+* PadicAlgCl ℓ) (σ : PkgI4.GQ) (a d : F)
+    (h : aeval (R16Used.frobMat ℓ A θ b σ) (R16Used.esPoly ℓ a d) = 0) :
+    aeval (compMat ℓ A θ b emb σ) (Polynomial.X ^ 2 - C (emb a) * Polynomial.X + C (emb d)) = 0 := by
+  set φ := R16Used.liftHom (k := ℚ_[ℓ]) emb
+  have hcomp : φ.mapMatrix.comp (algebraMap (ℚ_[ℓ] ⊗[ℚ] F) (Matrix (Fin 2) (Fin 2) (ℚ_[ℓ] ⊗[ℚ] F))) =
+      (algebraMap (PadicAlgCl ℓ) (Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ))).comp φ := by
+    refine RingHom.ext fun r => ?_
+    ext i j
+    simp only [RingHom.comp_apply, Matrix.algebraMap_eq_diagonal, RingHom.mapMatrix_apply,
+      Matrix.map_apply, Matrix.diagonal_apply, Pi.algebraMap_apply, Algebra.algebraMap_self,
+      RingHom.id_apply]
+    split_ifs <;> simp
+  have key : ∀ P : (ℚ_[ℓ] ⊗[ℚ] F)[X],
+      aeval (compMat ℓ A θ b emb σ) (P.map φ) = φ.mapMatrix (aeval (R16Used.frobMat ℓ A θ b σ) P) := by
+    intro P
+    rw [aeval_def, aeval_def, eval₂_map, hom_eval₂, hcomp]
+    rfl
+  have hmap : (R16Used.esPoly ℓ a d).map φ = Polynomial.X ^ 2 - C (emb a) * Polynomial.X + C (emb d) := by
+    simp [R16Used.esPoly, Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul,
+      Polynomial.map_pow, φ, R16Used.liftHom_one_tmul]
+  rw [← hmap, key, h, map_zero]
+
+end Mat
+
 end ISJ1Weak
