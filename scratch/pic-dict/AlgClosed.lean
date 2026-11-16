@@ -197,4 +197,98 @@ lemma pts_surjective {A : AbVar K} : Function.Surjective (pts (A := A)) :=
 def ptsHom (A : AbVar K) : A.Pt (AlgebraicClosure K) →* AC.Kpt (AKbar A) :=
   MonoidHom.mk' pts pts_mul
 
+/-! ## Mumford's statements over an algebraically closed field (leaves) -/
+
+/-- **LEAF (theorem of the square).** Mumford, *Abelian varieties*, §6, Cor. 4: for `X` an abelian variety
+over an algebraically closed field `k`, `L ∈ Pic(X)` and `x, y ∈ X(k)`, `t_{x+y}^*L ⊗ L ≅ t_x^*L ⊗ t_y^*L`
+(UNVERIFIED numbering). -/
+def MumfordSquareAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (c : X.X.left.Pic) (x y : AC.Kpt X),
+    Scheme.Pic.map (AC.tr (x * y)).left c * c =
+      Scheme.Pic.map (AC.tr x).left c * Scheme.Pic.map (AC.tr y).left c
+
+/-- **LEAF (`n_X^*L ≅ Lⁿ` for `L ∈ Pic⁰`).** Mumford §8 (iv) (UNVERIFIED numbering). -/
+def MumfordMulNPicZeroAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (c : X.X.left.Pic), AC.IsTI c →
+    ∀ n : ℕ, Scheme.Pic.map (AC.mul X n).left c = c ^ n
+
+/-- **LEAF (`φ_L` maps onto `Pic⁰` for `L` ample).** Mumford §8, Thm 1 (UNVERIFIED numbering). -/
+def MumfordPhiSurjectiveAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (c₀ : X.X.left.Pic), IsAmple X.X.left c₀ →
+    ∀ c : X.X.left.Pic, AC.IsTI c → ∃ x : AC.Kpt X, c = AC.phi c₀ x
+
+/-- **LEAF (`ē_n` well defined, `μ_n`-valued, bilinear).** Mumford §20 (definition of `ē_n` by
+`t_x^*ψ ∘ ψ⁻¹` and its bilinearity), for `n` prime to the characteristic (UNVERIFIED numbering). -/
+def MumfordWeilPairingAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (n : ℕ), 0 < n → (n : k) ≠ 0 →
+    ∀ (x x' : AC.Kpt X) (hx : x ^ n = 1) (hx' : x' ^ n = 1) (c c' : X.X.left.Pic),
+      AC.IsDT n c → AC.IsDT n c' →
+      (∀ ψ ψ' : AC.Triv X n c, AC.formula x hx c ψ = AC.formula x hx c ψ') ∧
+      (∀ ψ : AC.Triv X n c, ∃ u : kˣ, u ^ n = 1 ∧ AC.const X (u : k) = AC.formula x hx c ψ) ∧
+      (∀ ψ : AC.Triv X n c, AC.formula (x * x') (by rw [mul_pow, hx, hx', mul_one]) c ψ =
+        AC.formula x hx c ψ * AC.formula x' hx' c ψ) ∧
+      (∀ (ψ : AC.Triv X n c) (ψ' : AC.Triv X n c') (ψ'' : AC.Triv X n (c * c')),
+        AC.formula x hx (c * c') ψ'' = AC.formula x hx c ψ * AC.formula x hx c' ψ')
+
+/-- **LEAF (`ē_n` nondegenerate).** Mumford §20, `n` prime to the characteristic (UNVERIFIED numbering). -/
+def MumfordWeilNondegAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (n : ℕ), 0 < n → (n : k) ≠ 0 →
+    (∀ (x : AC.Kpt X) (hx : x ^ n = 1),
+      (∀ c : X.X.left.Pic, AC.IsDT n c → ∀ ψ : AC.Triv X n c, AC.formula x hx c ψ = 1) → x = 1) ∧
+    (∀ c : X.X.left.Pic, AC.IsDT n c →
+      (∀ (x : AC.Kpt X) (hx : x ^ n = 1) (ψ : AC.Triv X n c), AC.formula x hx c ψ = 1) → c = 1)
+
+/-- **LEAF (`e^L_n(x, x) = 1`).** Mumford §23 (UNVERIFIED numbering). -/
+def MumfordWeilAltAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (n : ℕ), 0 < n → (n : k) ≠ 0 →
+    ∀ (c₀ : X.X.left.Pic) (x : AC.Kpt X) (hx : x ^ n = 1) (ψ : AC.Triv X n (AC.phi c₀ x)),
+      AC.formula x hx (AC.phi c₀ x) ψ = 1
+
+/-- **LEAF (`K(L)` finite for `L` ample).** Mumford §6, Application 1 (printed for `L = 𝒪(D)`, `D` effective;
+UNVERIFIED numbering). -/
+def MumfordKLFiniteAC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (X : AbVar k) (c₀ : X.X.left.Pic), IsAmple X.X.left c₀ →
+    {x : AC.Kpt X | AC.phi c₀ x = 1}.Finite
+
+/-! ## The bridge: each leaf at `A_K̄` from the leaf over `K̄` -/
+
+lemma isTI_iff {A : AbVar K} (c : (AK A).Pic) : AC.IsTI (X := AKbar A) c ↔ IsTranslInv c := by
+  constructor
+  · intro h x
+    have := h (pts x)
+    rwa [tr_pts] at this
+  · intro h σ
+    obtain ⟨x, rfl⟩ := pts_surjective σ
+    rw [tr_pts]
+    exact h x
+
+lemma phi_pts {A : AbVar K} (c₀ : (AK A).Pic) (x : A.Pt (AlgebraicClosure K)) :
+    AC.phi (X := AKbar A) c₀ (pts x) = phiPt c₀ x := by
+  show (Scheme.Pic.map (AC.tr (pts x)).left c₀ : (AK A).Pic) * c₀⁻¹ = _
+  rw [tr_pts]; rfl
+
+theorem mumfordSquare_of_ac (h : MumfordSquareAC) : MumfordSquare := by
+  intro K _ A c x y
+  have := h (AlgebraicClosure K) (AKbar A) c (pts x) (pts y)
+  rw [← pts_mul, tr_pts, tr_pts, tr_pts] at this
+  exact this
+
+theorem mumfordMulNPicZero_of_ac (h : MumfordMulNPicZeroAC) : MumfordMulNPicZero := by
+  intro K _ A c hc n
+  have := h (AlgebraicClosure K) (AKbar A) c ((isTI_iff c).2 hc) n
+  rwa [mul_AKbar] at this
+
+theorem mumfordPhiSurjective_of_ac (h : MumfordPhiSurjectiveAC) : MumfordPhiSurjective := by
+  intro K _ A c₀ hc₀ c hc
+  obtain ⟨σ, hσ⟩ := h (AlgebraicClosure K) (AKbar A) c₀ hc₀ c ((isTI_iff c).2 hc)
+  obtain ⟨x, rfl⟩ := pts_surjective σ
+  exact ⟨x, hσ.trans (phi_pts c₀ x)⟩
+
+theorem mumfordKLFinite_of_ac (h : MumfordKLFiniteAC) : MumfordKLFinite := by
+  intro K _ A c₀ hc₀
+  refine ((h (AlgebraicClosure K) (AKbar A) c₀ hc₀).preimage pts_injective.injOn).subset ?_
+  intro x hx
+  change AC.phi c₀ (pts x) = 1
+  rw [phi_pts]; exact hx
+
 end PicDict
