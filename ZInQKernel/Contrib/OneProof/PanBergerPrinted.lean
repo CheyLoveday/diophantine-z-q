@@ -297,6 +297,43 @@ theorem homInv_ht (ρ : GQp p →* GL (Fin n) E) (i : ℤ) :
 
 end Actions
 
+/-! ## §5a. `W(k)[1/p]` for a field `k` of characteristic `p`, as a `ℚ_p`-algebra -/
+
+section WittLoc
+
+variable (p : ℕ) [Fact p.Prime] (k : Type*) [Field k] [CharP k p]
+
+/-- `ℤ_p = W(𝔽_p) → W(k)` (Mathlib's `WittVector.equiv` and functoriality). -/
+def zpToWitt : ℤ_[p] →+* WittVector p k :=
+  (WittVector.map (ZMod.castHom (dvd_refl p) k)).comp (WittVector.equiv p).symm.toRingHom
+
+/-- **`W(k)[1/p]`** (Mathlib's `Localization.Away`), as a type with its instances. -/
+def WittLoc : Type _ := Localization.Away (p : WittVector p k)
+
+instance : CommRing (WittLoc p k) :=
+  inferInstanceAs (CommRing (Localization.Away (p : WittVector p k)))
+
+instance : Algebra (WittVector p k) (WittLoc p k) :=
+  inferInstanceAs (Algebra (WittVector p k) (Localization.Away (p : WittVector p k)))
+
+instance : IsLocalization (Submonoid.powers (p : WittVector p k)) (WittLoc p k) :=
+  inferInstanceAs (IsLocalization (Submonoid.powers (p : WittVector p k))
+    (Localization.Away (p : WittVector p k)))
+
+/-- `ℚ_p = ℤ_p[1/p] → W(k)[1/p]`. -/
+def qpToWittLoc : ℚ_[p] →+* WittLoc p k :=
+  IsLocalization.lift (M := Submonoid.powers (p : ℤ_[p]))
+    (g := (algebraMap _ _).comp (zpToWitt p k)) (by
+      rintro ⟨_, j, rfl⟩
+      have := (IsLocalization.Away.algebraMap_isUnit (S := WittLoc p k)
+        (p : WittVector p k)).pow j
+      rw [map_natCast] at this
+      simpa only [RingHom.comp_apply, map_pow, map_natCast] using this)
+
+instance : Algebra ℚ_[p] (WittLoc p k) := (qpToWittLoc p k).toAlgebra
+
+end WittLoc
+
 /-! ## §5. `K_0 = W(k)[1/p]` -/
 
 section K0
@@ -359,27 +396,10 @@ instance resField_charP : CharP (resField p K) p :=
     rw [← map_natCast (Ideal.Quotient.mk (maxIdeal p K)) p, Ideal.Quotient.eq_zero_iff_mem]
     exact natCast_p_mem_maxIdeal p K)
 
-/-- `ℤ_p = W(𝔽_p) → W(k_K)` (Mathlib's `WittVector.equiv` and functoriality). -/
-def zpToWK : ℤ_[p] →+* WittVector p (resField p K) :=
-  (WittVector.map (ZMod.castHom (dvd_refl p) (resField p K))).comp
-    (WittVector.equiv p).symm.toRingHom
-
 /-- **`K_0 = W(k_K)[1/p]`**, Fontaine's `K_0` for `K` (Berger 2002, §0: `K_0 = W(k)[1/p]`;
 Fontaine, Astérisque 223 (1994), Exp. III; numbers UNVERIFIED): the Witt vectors of the residue
-field of `K` with `p` inverted (Mathlib's `WittVector`, `Localization.Away`). -/
-abbrev K0W : Type := Localization.Away (p : WittVector p (resField p K))
-
-/-- `ℚ_p = ℤ_p[1/p] → W(k_K)[1/p]`. -/
-def qpToK0W : ℚ_[p] →+* K0W p K :=
-  IsLocalization.lift (M := Submonoid.powers (p : ℤ_[p]))
-    (g := (algebraMap _ _).comp (zpToWK p K)) (by
-      rintro ⟨_, k, rfl⟩
-      have := (IsLocalization.Away.algebraMap_isUnit (S := K0W p K)
-        (p : WittVector p (resField p K))).pow k
-      rw [map_natCast] at this
-      simpa only [RingHom.comp_apply, map_pow, map_natCast] using this)
-
-instance : Algebra ℚ_[p] (K0W p K) := (qpToK0W p K).toAlgebra
+field of `K` with `p` inverted (Mathlib's `WittVector`, `Localization.Away`; `WittLoc` below). -/
+abbrev K0W : Type := WittLoc p (resField p K)
 
 end K0
 
