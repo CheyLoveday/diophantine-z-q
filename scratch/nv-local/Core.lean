@@ -187,4 +187,103 @@ theorem galC_mem (g : Gal(E/RatFunc ℚ)) :
   intro c
   exact ⟨⟨g c, c.2.map ((g : E →ₐ[RatFunc ℚ] E).restrictScalars ℤ[X])⟩, rfl⟩
 
+
+end SGRDirect.NVLocal
+
+namespace SGRDirect.NVLocal
+
+/-- **GLUE (local geometry of tame covers at a closed point; h-b1 §3 Lemma NV step 3, geometric half).**
+Hypotheses as in `NVLocalInertia` minus the residue fields. Let `C` and `B` be the integral closures of `ℤ[X]`
+and `ℚ[X]` in `E`, and `𝔓` a maximal ideal of `C` over `m_b = (p, dX − a)` (`b = a/d`). Then the branch of
+`X = b` through `𝔓` is unique and normal there: exactly one prime `Q` of `B` over `X − b` has `Q ∩ C ⊆ 𝔓`,
+and every element of `B/Q` integral over `ℤ` is a quotient `c₁/c₂` of images of `c₁, c₂ ∈ C` with `c₂ ∉ 𝔓`
+(the localization of `C/(Q ∩ C)` at `𝔓` contains the ring of integers of the number field `B/Q`).
+*Proof route* (not compiled): Abhyankar's lemma (SGA 1 XIII 5.2–5.3, UNVERIFIED numbers) at the closed point:
+after the Kummer base change `A' = ℤ_(p)[ζ_N, p^{1/N}][r]_{(p^{1/N}, r)}`, `r^N = X − b`, `N = |G|`, the
+normalization is unramified in codimension one (the kernel's T2 at both divisors; base change of the
+unramified horizontal primes, by `BranchData` and distinctness mod `p`), hence étale by purity
+(`PropTSGlue.purityGlobalDim2`, proved); its specialization along `r = 0` is étale over the DVR
+`ℤ_(p)[ζ_N, p^{1/N}]`, hence normal, which gives a unique and normal branch upstairs; going down and
+invariants under the tame group `Gal(E(ζ_N, r, p^{1/N})/E)` descend both to `E`. -/
+def BranchRegular : Prop :=
+  ∀ (E : Type) [Field E] [Algebra (RatFunc ℚ) E] [Algebra ℚ[X] E]
+    [IsScalarTower ℚ[X] (RatFunc ℚ) E] [FiniteDimensional (RatFunc ℚ) E]
+    [IsGalois (RatFunc ℚ) E] (S : Finset ℚ) (n : ℚ → ℕ) (nInf : ℕ) (p : ℕ), p.Prime →
+    BranchData E S n nInf → Module.finrank (RatFunc ℚ) E < p →
+    (∀ b ∈ S, 0 ≤ padicValRat p b) →
+    (∀ b ∈ S, ∀ b' ∈ S, b ≠ b' → padicValRat p (b - b') = 0) →
+    ∀ b ∈ S,
+    letI := intPolyAlg E
+    ∀ 𝔓 : Ideal (integralClosure ℤ[X] E), 𝔓.IsMaximal →
+      C (p : ℤ) ∈ 𝔓.under ℤ[X] → C (b.den : ℤ) * X - C b.num ∈ 𝔓.under ℤ[X] →
+      ∃ Q : Ideal (integralClosure ℚ[X] E), Q.IsPrime ∧ Q.under ℚ[X] = Ideal.span {X - C b} ∧
+        Q.comap (zqIncl E) ≤ 𝔓 ∧
+        (∀ Q' : Ideal (integralClosure ℚ[X] E), Q'.IsPrime →
+          Q'.under ℚ[X] = Ideal.span {X - C b} → Q'.comap (zqIncl E) ≤ 𝔓 → Q' = Q) ∧
+        (∀ z : integralClosure ℚ[X] E ⧸ Q, IsIntegral ℤ z →
+          ∃ c₁ c₂ : integralClosure ℤ[X] E, c₂ ∉ 𝔓 ∧
+            Ideal.Quotient.mk Q (zqIncl E c₂) * z = Ideal.Quotient.mk Q (zqIncl E c₁))
+
+set_option maxHeartbeats 1600000 in
+/-- **`NVLocalInertia` from `BranchRegular`** (compiled). `τ` in the inertia of a vertical prime `q` fixes a
+maximal ideal `𝔓 ⊇ q` over `m_b`, hence the unique branch `Q` through `𝔓`; it acts on the number field `B/Q`
+inside the inertia group of the prime `{c₁/c₂ : c₁ ∈ 𝔓}` of its ring of integers, which is unramified; so it acts
+trivially on `B/Q`, i.e. `τ ∈ I_Q` (`g = 1`). -/
+theorem nvLocalInertia_of_branchRegular (h : BranchRegular) : NVLocalInertia := by
+  intro E _ _ _ _ _ _ S n nInf p hp hB hdeg hint hdist b hb hres
+  letI := intPolyAlg E
+  intro q hq hqu τ hτ
+  haveI : Fact p.Prime := ⟨hp⟩
+  -- the maximal ideal `𝔓 ⊇ q` over `m_b`
+  obtain ⟨m, hm, hpm, hbm⟩ := exists_secIdeal p b (hint b hb)
+  have hqm : q.under ℤ[X] ≤ m := by
+    rw [hqu, vertPrime, Ideal.map_le_iff_le_comap, Ideal.span_le, Set.singleton_subset_iff]
+    exact hpm
+  obtain ⟨𝔓, hq𝔓, h𝔓p, h𝔓u⟩ := Ideal.exists_ideal_over_prime_of_isIntegral m q hqm
+  haveI := h𝔓p
+  haveI : 𝔓.LiesOver m := ⟨h𝔓u.symm⟩
+  have h𝔓max : 𝔓.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal 𝔓 m
+  obtain ⟨Q, hQ, hQu, hQ𝔓, hUB, hN⟩ :=
+    h E S n nInf p hp hB hdeg hint hdist b hb 𝔓 h𝔓max (h𝔓u ▸ hpm) (h𝔓u ▸ hbm)
+  haveI := hQ
+  have hq𝔓' : ∀ x, x ∈ q → x ∈ 𝔓 := fun x hx => hq𝔓 hx
+  -- `τ` maps `Q` to itself (unibranch)
+  have hτC : ∀ c : integralClosure ℤ[X] E, ∃ c' : integralClosure ℤ[X] E,
+      (c' : E) = τ c ∧ c' - c ∈ 𝔓 := by
+    intro c
+    obtain ⟨c', hc', hcq⟩ := hτ c
+    exact ⟨c', hc', hq𝔓' _ hcq⟩
+  have hQτ : Q = Q.map (galB τ : integralClosure ℚ[X] E →+* integralClosure ℚ[X] E) := by
+    symm
+    haveI : (Q.map (galB τ : integralClosure ℚ[X] E →+* integralClosure ℚ[X] E)).IsPrime :=
+      Ideal.map_isPrime_of_equiv (galB τ)
+    refine hUB _ inferInstance ?_ ?_
+    · ext f
+      have : (galB τ).symm (algebraMap ℚ[X] (integralClosure ℚ[X] E) f) =
+          algebraMap ℚ[X] (integralClosure ℚ[X] E) f := by
+        apply Subtype.ext
+        show τ⁻¹ (algebraMap ℚ[X] E f) = algebraMap ℚ[X] E f
+        exact gal_fix τ⁻¹ f
+      rw [Ideal.under_def, Ideal.mem_comap, Ideal.map_comap_of_equiv, Ideal.mem_comap, this, ← hQu,
+        Ideal.under_def, Ideal.mem_comap]
+    · intro c hc
+      rw [Ideal.mem_comap, Ideal.map_comap_of_equiv, Ideal.mem_comap] at hc
+      obtain ⟨c'', hc''⟩ := galC_mem τ⁻¹ c
+      have h1 : (galB τ).symm (zqIncl E c) = zqIncl E c'' := by
+        apply Subtype.ext
+        show τ⁻¹ (c : E) = c''
+        rw [hc'']
+      rw [h1] at hc
+      have h2 : c'' ∈ 𝔓 := hQ𝔓 hc
+      obtain ⟨c₃, hc₃, hc₃𝔓⟩ := hτC c''
+      have h3 : c₃ = c := by
+        apply Subtype.ext
+        rw [hc₃, hc'']
+        show τ (τ⁻¹ (c : E)) = c
+        rw [← AlgEquiv.mul_apply, mul_inv_cancel, AlgEquiv.one_apply]
+      rw [h3] at hc₃𝔓
+      have := 𝔓.add_mem hc₃𝔓 h2
+      simpa using this
+  sorry
+
 end SGRDirect.NVLocal
