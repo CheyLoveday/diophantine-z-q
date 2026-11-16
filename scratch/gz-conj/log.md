@@ -28,3 +28,9 @@ i.e. `GrossConjugationAt (shortCurve (-(d:ℚ)^2))` for d ≡ 5 (mod 8) squarefr
 - Main.lean (all parts + `rootNumber_cd`, `iota_comp_sigma`, `map_conj_heegnerC`, `conj_clause`,
   `grossConjugationCd : ZInQ.GZHL3.GrossConjugationCd`): compiles; `#print axioms` for
   grossConjugationCd, conj_clause, lattice_eq_of_g: [propext, Classical.choice, Quot.sound] (VERIFIED).
+- Contributor file ZInQKernel/Contrib/OneProof/GrossConjugationCd.lean: `lake build` success (VERIFIED).
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: success, 13667 jobs (VERIFIED).
+- MainEdit.lean (frozenTarget with hL3 → HeegnerPointRationalCd + GrossZagierFormulaCd, and → X0ModuliGaloisMero +
+  GrossZagierFormulaCd): compiles, standard axioms (out_mainedit.txt) (VERIFIED).
+- Discharges.lean: 61 open hypotheses, 2958 theorems, 8 discharge one; no GZConj line (GrossConjugationCd is not
+  an open field at 60a3fac7; hL3 must first be replaced by the C_d chain) (VERIFIED).

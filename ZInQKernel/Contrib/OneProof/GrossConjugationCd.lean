@@ -689,7 +689,7 @@ theorem iota_comp_sigma {K : Type} [Field K] [NumberField K] {D : ℤ} (hD : D <
   · simp [b]
   · simp only [b, coe_basisOfLinearIndependentOfCardEqFinrank]
     simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero, AlgHom.toLinearMap_apply,
-      AlgHom.comp_apply, AlgEquiv.coe_algHom, hσ, map_neg, hι, cq_apply,
+      AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, hσ, map_neg, hι, cq_apply,
       map_mul, Complex.conj_I, Complex.conj_ofReal]
     ring
 

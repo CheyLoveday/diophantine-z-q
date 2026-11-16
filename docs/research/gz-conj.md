@@ -136,5 +136,15 @@ The leaves of the `C_d` split of `hL3` that remain are unchanged, and are outsid
   (VERIFIED).
 * `scratch/gz-conj/Main.lean` (the same content as a scratch file): `#print axioms` for `grossConjugationCd`,
   `conj_clause` and `lattice_eq_of_g` gives `[propext, Classical.choice, Quot.sound]` (VERIFIED).
-* `scratch/gz-conj/MainEdit.lean` and `scratch/gz-conj/Discharges.lean`: outputs in
-  `scratch/gz-conj/out_mainedit.txt` and `scratch/gz-conj/discharges-output.txt`; see the log for the outcome.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` at this branch: success, 13,667 jobs;
+  `frozenTarget` uses only the standard axioms (VERIFIED).
+* `scratch/gz-conj/MainEdit.lean` compiles. `frozenTarget_gzconj` (`hL3` replaced by `HeegnerPointRationalCd`
+  and `GrossZagierFormulaCd`) and `frozenTarget_gzconj_printed` (`hL3` replaced by `X0ModuliGaloisMero` and
+  `GrossZagierFormulaCd`) both use only the standard axioms, as do `grossConjugationCd`, `conj_clause`,
+  `rootNumber_cd`, `lattice_eq_of_g` and `grossZagierHeegnerCd_of_printed`. Output:
+  `scratch/gz-conj/out_mainedit.txt` (VERIFIED).
+* `scratch/gz-conj/Discharges.lean` (`#discharges`, output in `scratch/gz-conj/discharges-output.txt`): "61 open
+  hypotheses, 2958 theorems checked, 8 discharge one". None of the eight is a `ZInQ.GZConj` theorem, as expected:
+  `GrossConjugationCd` is not a field of `frozenTarget` at 60a3fac7. The two `hL3` lines come from older files
+  (gz-hl3's general split and gz-heegner's). The discharge appears only once `hL3` has been replaced by the
+  `C_d` chain, as in `MainEdit.lean` (VERIFIED).
