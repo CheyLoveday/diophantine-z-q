@@ -22,7 +22,7 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
   P' = {c1/c2 : c1 in P} of O_kappa (normality); kappa(Q) unramified at p => tau trivial on kappa(Q)
   (|I(P'|P'_0)| = e(P'|P'_0) for the fixed field of tau, tower e(P'|p)=1).
 
-## 2026-11-16 00:00 compiled (scratch/nv-local/Core.lean, `lake env lean`, standard axioms) VERIFIED
+## 2026-11-15 23:19 compiled (scratch/nv-local/Core.lean, `lake env lean`, standard axioms) VERIFIED
 - `SGRDirect.NVLocal.eq_one_of_inertia_of_unram`: K number field, P prime of O_K with e(P|Z)=1, sigma in
   Aut(K) with sigma x - x in P for all x in O_K  =>  sigma = 1 (fixed field of <sigma>, card_inertia =
   ramificationIdxIn, ramificationIdx_tower).
@@ -43,7 +43,7 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
   listed theorems: [propext, Classical.choice, Quot.sound].
 - scratch/nv-local/autofold.json (no fold; bypass as sgr-direct with branchRegular in place of nvLocalInertia).
 
-## 2026-11-16 00:30 existence clause proved; BranchRegular restated VERIFIED
+## 2026-11-15 23:34 existence clause proved; BranchRegular restated VERIFIED
 - `exists_int_mul_mem` (every y in the Q[X]-closure has k*y in the Z[X]-closure, k != 0; Mathlib
   `IsIntegral.exists_multiple_integral_of_isLocalization` with `Polynomial.isLocalization`) and
   `exists_branch` (a prime Q of B over X-b with Q cap C <= P, for P maximal over (p, dX-a): going down
@@ -58,7 +58,7 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
 - scratch/nv-local/NVLocal.lean = copy of the Contrib file; Core-first.lean = the first compiled version
   (old BranchRegular with existence clause).
 
-## 2026-11-16 02:30 TameBranchNormal (general form) VERIFIED
+## 2026-11-15 23:56 TameBranchNormal (general form) VERIFIED
 - New GLUE Prop `TameBranchNormal` (no project definitions): R noetherian domain, m maximal, R_m regular local
   of dim 2, m = (f, g), (f) prime, p in m, L/Frac R Galois of degree < p, e = 1 at height-one P <= m with
   f, g notin P; then for every maximal P of the integral closure over m and every prime Q over (f) inside P:
