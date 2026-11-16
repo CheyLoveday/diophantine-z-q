@@ -17,3 +17,11 @@
   left on this base (addedLeaves5_of_open6, addedLeaves11_of_open12, sixContactMin_of_open16 already gone).
   Module docs of TailK's moved block and TailZ25 updated. kinds.tsv/claims.tsv rows deleted (removed-rows.txt).
   kinds after: H rows 44, strict 34 LEAF / 10 GLUE, strictest 34 / 10.
+- 02:45 after step 2: PruneScan 25 + 10 + 8 + 1 = 44 fields, 0 unused, prune set empty (prunescan-out.txt).
+  DumpCompact 18176 constants; frozenTarget axioms standard, pp.all type text identical, frozenTarget hash unchanged.
+  cmp_hashes_out.txt: removed 11 (the projections OpenAddedLeaves{4,6,7,8,9,12..17}.thetaRatiosAlgebraic);
+  new 888 (882 ThetaDirect contributor constants, now in Main's closure via TailZ25; 6 in TailK: the moved
+  ThetaRatiosAtQM, Jmap_ne_zero (+3 simp aux), thetaPointOfFibre_of_qm_atQM); changed 206: 178 generated
+  auxiliaries/projections of the 11 edited structures, 13 conversions (V), gluePieces_of_open4 (T),
+  sixContactMin_of_open4,6..15,17,18 (T), sixContactMin_of_open19 (V). open20..open35, frozenTarget, X0ModuliUsed
+  tops keep their hashes.
