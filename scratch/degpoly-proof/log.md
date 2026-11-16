@@ -31,3 +31,20 @@ lattice representation, `HomFreeC.homFreeFiniteC`). Build dir copied (reflink) f
   CharPolyIndepOfEllAlgClosedNoEmb], axioms standard. (56 open hypotheses, 2878 theorems checked, 8 discharge one.)
 - VERIFIED: autofold dry run (scratch/degpoly-proof/autofold.json): `strict count: 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11`;
   module scratch/degpoly-proof/FoldDryRun.lean (line 1 stripped) compiles, `HDec.HSyn.sixContactMin_of_open36` standard axioms.
+
+## Consumers of the field / T7 (VERIFIED, `scratch/degpoly-proof/Closure.lean` over frozenTarget's closure, 259,568 constants; output closure_out.txt)
+
+- Constants with T7/the field in their type (non-bundle): `t7_of_algClosed5`, `charPolyIndepOfEll_of_algClosed`,
+  `PkgI3.trace_indep_of_ell`, `GlueC10Link.trace_endE_indep`, `GlueC10Link.trace_T_of_frobCompare`,
+  `G14Trace.common_trace`, `G14Trace.g14TraceCompat_of_link`, `G0AssembleMod.linkedTateData_of_local`,
+  `R16Split.trace_endV_rat`, `rank_two_of_dim`, `r16_of_coreY`, `r16_of_printed`. Call graph: `gluePieces_of_open4` uses
+  `OpenTextbookLeaves4.t7` only through `linkedTateData_of_local` -> `g14TraceCompat_of_link` -> `common_trace` ->
+  `trace_T_of_frobCompare` -> `trace_endE_indep` -> `trace_indep_of_ell`; `openResearchLeaves21_of_OpenResearchLeaves22` uses
+  the field through `r16_of_printed` -> ... -> `trace_endV_rat` (A : AbVar ℚ).
+- F3 (VERIFIED, read TailC L8718-8742 and FrobChain/LinkedStatement.lean L43-49): `common_trace` applies T7
+  (`trace_T_of_frobCompare hM Ab α`) to `Ab : PkgI3.AbVar k` where `k` comes from `FrobTraceLink`:
+  `∃ (k : Type) (_ : Field k), CharP k p ∧ ∃ Ab α N, ...` — a field of CHARACTERISTIC p (the reduction of A mod p and
+  its Frobenius). So the characteristic-p case of Mumford §19 Thm 4 is genuinely consumed; no narrowing to fields
+  embedding into ℂ can remove the field. The R16 branch is over ℚ (covered by CharPolyIndepOfEllC).
+- Consequence: the new leaf `CharPolyIndepOfEllAlgClosedNoEmb` is live (used in char p); "-1, no new leaf" is out of reach
+  for this field by narrowing, and so is a proof of `DegHomogPoly` outright (char p needs cube + Riemann-Roch or similar).
