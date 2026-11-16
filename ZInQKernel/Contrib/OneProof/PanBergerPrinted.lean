@@ -334,6 +334,169 @@ instance : Algebra ℚ_[p] (WittLoc p k) := (qpToWittLoc p k).toAlgebra
 
 end WittLoc
 
+
+/-! ## §5b. `[W(k)[1/p] : ℚ_p] = [k : 𝔽_p]` for a finite field `k`
+
+The Teichmüller lifts of an `𝔽_p`-basis of `k` form a `ℤ_p`-basis of `W(k)` (independence by
+reduction mod `p` and `p`-torsion-freeness; spanning by successive approximation, using that
+`ℤ_p` is `p`-adically complete and `W(k)` is `p`-adically separated, both in Mathlib), hence a
+`ℚ_p`-basis of `W(k)[1/p]`. -/
+
+section WittBasis
+
+variable (p : ℕ) [Fact p.Prime] (k : Type*) [Field k] [CharP k p]
+
+theorem constantCoeff_zpToWitt (a : ℤ_[p]) :
+    WittVector.constantCoeff (zpToWitt p k a) = (((PadicInt.toZMod a).val : ℕ) : k) := by
+  have h := PadicInt.toZMod_spec a
+  rw [PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton'] at h
+  obtain ⟨b, hb⟩ := h
+  have ha : a = (((PadicInt.toZMod a).val : ℕ) : ℤ_[p]) + b * p := by
+    rw [hb, ZMod.cast_eq_val]
+    ring
+  conv_lhs => rw [ha]
+  rw [map_add, map_mul, map_natCast, map_natCast, map_add, map_mul, map_natCast, map_natCast,
+    CharP.cast_eq_zero k p, mul_zero, add_zero]
+
+theorem mem_pow_smul_top {R : Type*} [CommRing R] (I : Ideal R) (m : ℕ) (x : R) :
+    x ∈ (I ^ m • ⊤ : Submodule R R) ↔ x ∈ I ^ m := by
+  rw [smul_eq_mul, Ideal.mul_top]
+
+variable [Algebra (ZMod p) k] [Finite k]
+
+theorem algebraMap_zmod (c : ZMod p) : algebraMap (ZMod p) k c = ((c.val : ℕ) : k) := by
+  conv_lhs => rw [← ZMod.natCast_zmod_val c]
+  rw [map_natCast]
+
+/-- A relation `Σ g_i [b_i] = 0` over `ℤ_p` among Teichmüller lifts of an `𝔽_p`-basis is
+trivial. -/
+theorem teich_relation_trivial {ι : Type*} [Fintype ι] (b : Basis ι (ZMod p) k) :
+    ∀ g : ι → ℤ_[p], ∑ i, zpToWitt p k (g i) * WittVector.teichmuller p (b i) = 0 →
+      ∀ i, g i = 0 := by
+  have hb := b.linearIndependent
+  rw [Fintype.linearIndependent_iff] at hb
+  have key : ∀ m : ℕ, ∀ g : ι → ℤ_[p],
+      ∑ i, zpToWitt p k (g i) * WittVector.teichmuller p (b i) = 0 →
+        ∀ i, g i ∈ Ideal.span {(p : ℤ_[p]) ^ m} := by
+    intro m
+    induction m with
+    | zero => intro g _ i; simp
+    | succ m ih =>
+      intro g hg i
+      have hc : ∑ i, (PadicInt.toZMod (g i)) • b i = 0 := by
+        have := congrArg WittVector.constantCoeff hg
+        simp only [map_sum, map_mul, constantCoeff_zpToWitt, map_zero] at this
+        rw [← this]
+        refine Finset.sum_congr rfl fun j _ => ?_
+        rw [Algebra.smul_def, algebraMap_zmod]
+        rfl
+      have hdiv : ∀ j, ∃ h : ℤ_[p], g j = h * p := by
+        intro j
+        have h0 : g j ∈ RingHom.ker (PadicInt.toZMod : ℤ_[p] →+* ZMod p) := hb _ hc j
+        rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton'] at h0
+        obtain ⟨h, hh⟩ := h0
+        exact ⟨h, hh.symm⟩
+      choose h hh using hdiv
+      have hrel : ∑ i, zpToWitt p k (h i) * WittVector.teichmuller p (b i) = 0 := by
+        apply WittVector.eq_zero_of_p_mul_eq_zero
+        rw [← hg, Finset.sum_mul]
+        refine Finset.sum_congr rfl fun j _ => ?_
+        rw [hh j, map_mul, map_natCast]
+        ring
+      have := ih h hrel i
+      rw [Ideal.mem_span_singleton'] at this ⊢
+      obtain ⟨c, hc⟩ := this
+      exact ⟨c, by rw [hh i, ← hc, pow_succ]; ring⟩
+  intro g hg i
+  by_contra hne
+  have h1 := key ((g i).valuation + 1) g hg i
+  rw [PadicInt.mem_span_pow_iff_le_valuation _ hne] at h1
+  omega
+
+/-- Every `x ∈ W(k)` is `Σ g_i [b_i]` with `g_i ∈ ℤ_p`. -/
+theorem teich_span {ι : Type*} [Fintype ι] (b : Basis ι (ZMod p) k) (x : WittVector p k) :
+    ∃ g : ι → ℤ_[p], x = ∑ i, zpToWitt p k (g i) * WittVector.teichmuller p (b i) := by
+  -- one approximation step
+  have step : ∀ y : WittVector p k, ∃ d : ι → ℤ_[p], ∃ z : WittVector p k,
+      y = ∑ i, zpToWitt p k (d i) * WittVector.teichmuller p (b i) + p * z := by
+    intro y
+    refine ⟨fun i => (((b.repr (WittVector.constantCoeff y) i).val : ℕ) : ℤ_[p]), ?_⟩
+    have hmem : y - ∑ i, zpToWitt p k (((b.repr (WittVector.constantCoeff y) i).val : ℕ) : ℤ_[p]) *
+        WittVector.teichmuller p (b i) ∈ Ideal.span {(p : WittVector p k)} := by
+      rw [WittVector.mem_span_p_iff_coeff_zero_eq_zero]
+      rw [show ∀ z : WittVector p k, z.coeff 0 = WittVector.constantCoeff z from fun _ => rfl]
+      rw [map_sub, map_sum, sub_eq_zero]
+      conv_lhs => rw [← b.sum_repr (WittVector.constantCoeff y)]
+      refine Finset.sum_congr rfl fun j _ => ?_
+      rw [map_mul, map_natCast, map_natCast, Algebra.smul_def, algebraMap_zmod]
+      rfl
+    rw [Ideal.mem_span_singleton'] at hmem
+    obtain ⟨z, hz⟩ := hmem
+    exact ⟨z, by rw [mul_comm, hz]; ring⟩
+  choose dstep zstep hstep using step
+  let Y : ℕ → WittVector p k := fun n => zstep^[n] x
+  let D : ℕ → ι → ℤ_[p] := fun n i => ∑ j ∈ Finset.range n, (p : ℤ_[p]) ^ j * dstep (Y j) i
+  have hinv : ∀ n, x = ∑ i, zpToWitt p k (D n i) * WittVector.teichmuller p (b i) +
+      (p : WittVector p k) ^ n * Y n := by
+    intro n
+    induction n with
+    | zero => simp [D, Y]
+    | succ n ih =>
+      have hY : Y (n + 1) = zstep (Y n) := Function.iterate_succ_apply' _ _ _
+      have hD : ∀ i, D (n + 1) i = D n i + (p : ℤ_[p]) ^ n * dstep (Y n) i := fun i =>
+        Finset.sum_range_succ _ _
+      rw [hY]
+      simp only [hD, map_add, map_mul, map_pow, map_natCast, add_mul, Finset.sum_add_distrib]
+      conv_lhs => rw [ih, hstep (Y n)]
+      rw [mul_add, Finset.mul_sum, pow_succ]
+      simp only [mul_assoc]
+      ring
+  -- the coefficients converge in `ℤ_p`
+  have hcau : ∀ i, ∀ {m n : ℕ}, m ≤ n → D m i ≡ D n i
+      [SMOD ((IsLocalRing.maximalIdeal ℤ_[p]) ^ m • ⊤ : Submodule ℤ_[p] ℤ_[p])] := by
+    intro i m n hmn
+    rw [SModEq.sub_mem, mem_pow_smul_top, PadicInt.maximalIdeal_eq_span_p,
+      Ideal.span_singleton_pow]
+    induction n, hmn using Nat.le_induction with
+    | base => simp
+    | succ n hmn ih =>
+      have hD : D (n + 1) i = D n i + (p : ℤ_[p]) ^ n * dstep (Y n) i := Finset.sum_range_succ _ _
+      rw [hD, sub_add_eq_sub_sub]
+      refine Ideal.sub_mem _ ih ?_
+      rw [Ideal.mem_span_singleton']
+      exact ⟨(p : ℤ_[p]) ^ (n - m) * dstep (Y n) i, by
+        rw [show n = (n - m) + m from (Nat.sub_add_cancel hmn).symm, pow_add]
+        simp only [Nat.add_sub_cancel]
+        ring⟩
+  have hlim : ∀ i, ∃ L : ℤ_[p], ∀ n, D n i ≡ L
+      [SMOD ((IsLocalRing.maximalIdeal ℤ_[p]) ^ n • ⊤ : Submodule ℤ_[p] ℤ_[p])] :=
+    fun i => IsPrecomplete.prec' (I := IsLocalRing.maximalIdeal ℤ_[p]) (fun n => D n i) (hcau i)
+  choose L hL using hlim
+  refine ⟨L, ?_⟩
+  rw [← sub_eq_zero]
+  refine IsHausdorff.haus' (I := Ideal.span {(p : WittVector p k)}) _ fun n => ?_
+  rw [SModEq.sub_mem, sub_zero, mem_pow_smul_top, Ideal.span_singleton_pow,
+    Ideal.mem_span_singleton']
+  have he : ∀ i, ∃ e : ℤ_[p], D n i - L i = (p : ℤ_[p]) ^ n * e := by
+    intro i
+    have := hL i n
+    rw [SModEq.sub_mem, mem_pow_smul_top, PadicInt.maximalIdeal_eq_span_p,
+      Ideal.span_singleton_pow, Ideal.mem_span_singleton'] at this
+    obtain ⟨e, he⟩ := this
+    exact ⟨e, by rw [← he, mul_comm]⟩
+  choose e he using he
+  refine ⟨∑ i, zpToWitt p k (e i) * WittVector.teichmuller p (b i) + Y n, ?_⟩
+  conv_rhs => rw [hinv n]
+  have hL' : ∀ i, L i = D n i - (p : ℤ_[p]) ^ n * e i := fun i => by rw [← he i]; ring
+  simp only [hL', map_sub, map_mul, map_pow, map_natCast, sub_mul, Finset.sum_sub_distrib]
+  rw [add_mul, Finset.sum_mul]
+  simp only [mul_assoc]
+  ring_nf
+  congr 1
+  exact Finset.sum_congr rfl fun i _ => by ring
+
+end WittBasis
+
 /-! ## §5. `K_0 = W(k)[1/p]` -/
 
 section K0
