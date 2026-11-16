@@ -26,3 +26,4 @@ Target: make weber-field's `R16IsJ1Dict.AfTateCharPolyPicZero` printed (base wip
 - 11-16 07:15 `not_isNewform_one` (Mathlib `levelOne_weight_two_rank_zero`), `weakOdd_of_dsOr`,
   `r16CoreY_of_dsOr_igusaDS : AfTateDSOr → IgusaGL2DS → MumfordTorsionAlgClosed → R16CoreY` compile; axioms
   [propext, Classical.choice, Quot.sound]. VERIFIED.
+- 11-16 07:50 contribution ZInQKernel/Contrib/OneProof/AfTateOr.lean (same declarations + docstrings): `lake build ZInQKernel.Contrib.OneProof.AfTateOr` Build completed successfully (11357 jobs; only the new module compiled, 9.7 s). VERIFIED.
