@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilCompat {n}.mumfordWeilAlt (_root_.PicDict.phiAmpleIsogeny_of_printed {n}.mumfordKLFinite {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.picZeroPtsTranslInv)",
+   "proof": "_root_.PicDict.weilPairingMumford_of_printed {n}.mumfordSquare {n}.mumfordMulNPicZero {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.mumfordWeilPairing {n}.mumfordWeilNondeg {n}.mumfordWeilAlt (_root_.PicDict.phiAmpleIsogeny_of_printed {n}.mumfordKLFinite {n}.mumfordPhiSurjective {n}.ampleBaseChangeAlgClosure {n}.picZeroPtsTranslInv)",
    "leaves": [
     {
      "name": "mumfordSquare",
@@ -55,14 +55,6 @@
      "kind": "published",
      "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 20: e_n is nondegenerate (n prime to p)"
-    },
-    {
-     "name": "mumfordWeilCompat",
-     "type": "_root_.PicDict.MumfordWeilCompat",
-     "doc": "pic-dict: e_{mn}(x,L) = e_n(mx,L) for L in Xhat_n (Mumford section 20; locator UNVERIFIED).",
-     "kind": "published",
-     "flag": "unread: new printed leaf (instance X = A_Kbar of a statement printed over an algebraically closed field); locator UNVERIFIED",
-     "source": "Mumford, Abelian varieties, 20: e_{nm}(x,L) = e_n(mx,L)"
     },
     {
      "name": "mumfordWeilAlt",
