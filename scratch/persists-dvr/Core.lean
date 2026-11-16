@@ -1,7 +1,9 @@
 import ZInQKernel.Contrib.OneProof.NeronDVR
 import ZInQKernel.Contrib.OneProof.SGA7PersistsNF
 
-open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory
+
+set_option linter.style.haveILetI false
 
 namespace GapPersists
 
@@ -32,7 +34,7 @@ theorem isAlgebraic_resMap {K K' : Type} [Field K] [Field K'] [Algebra K K'] [Fi
       rw [inv_mul_le_iff₀ (zero_lt_iff.mpr hvc), mul_one]
       exact this
     · rw [Polynomial.notMem_support_iff.mp hj, map_zero, mul_zero]
-      exact zero_le'
+      exact zero_le
   let b : ℕ → O := fun j => ⟨c⁻¹ * p.coeff j, hmem j⟩
   let n := p.natDegree
   let q : Polynomial (IsLocalRing.ResidueField O) :=
@@ -43,7 +45,7 @@ theorem isAlgebraic_resMap {K K' : Type} [Field K] [Field K'] [Algebra K K'] [Fi
   have hq0 : q ≠ 0 := by
     intro h
     have h1 : q.coeff i = 1 := by
-      simp only [q, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial]
+      simp only [q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial]
       rw [Finset.sum_ite_eq' (Finset.range (n + 1)) i, if_pos hin, hbi, map_one]
     rw [h, Polynomial.coeff_zero] at h1
     exact zero_ne_one h1
@@ -56,7 +58,7 @@ theorem isAlgebraic_resMap {K K' : Type} [Field K] [Field K'] [Algebra K K'] [Fi
       push_cast
       refine Finset.sum_congr rfl fun j _ => ?_
       show algebraMap K K' (c⁻¹ * p.coeff j) * (x : K') ^ j = _
-      rw [map_mul, Algebra.smul_def, mul_assoc]
+      rw [map_mul, Algebra.smul_def, mul_assoc, map_inv₀]
     rw [h2, hpx, mul_zero]
     rfl
   simp only [q, map_sum, Polynomial.aeval_monomial]
@@ -78,10 +80,11 @@ theorem isMonHom_of_comp_mono {C : Type*} [Category C] [CartesianMonoidalCategor
     rw [Category.assoc, IsMonHom.one_hom (f ≫ g), IsMonHom.one_hom g]
   · apply (cancel_mono g).1
     rw [Category.assoc, IsMonHom.mul_hom (f ≫ g), Category.assoc, IsMonHom.mul_hom g, ← Category.assoc,
-      ← tensor_comp]
+      tensorHom_comp_tensorHom]
 
 /-! ### §3 The transfer lemma -/
 
+open MonObj in
 /-- If `V` is an open subgroup scheme of `G` with image `G⁰` and also an open subgroup scheme of `H`, then a
 semi-abelian identity component of a fibre `G_k` gives one of `H_k`. -/
 theorem hasSemiAbelian_transfer {S : Scheme.{0}} {k : Type} [Field k] (p : Spec (CommRingCat.of k) ⟶ S)
@@ -123,7 +126,7 @@ theorem hasSemiAbelian_transfer {S : Scheme.{0}} {k : Type} [Field k] (p : Spec 
     rw [← Scheme.Hom.comp_apply, Category.assoc, pullback.condition, ← Category.assoc,
       Scheme.Hom.comp_apply]
     exact congrArg p (hpt _)
-  have hTc : IsPreconnected (Set.range F) := isPreconnected_range F.continuous
+  have hTc : _root_.IsPreconnected (Set.range F) := isPreconnected_range F.continuous
   have hTe : (η[G] : 𝟙_ (Over S) ⟶ G).left s ∈ Set.range F := by
     refine ⟨(η[U] : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ U).left t₀, ?_⟩
     have h1 : (η[U] : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ U).left ≫ inc.left =

@@ -17,3 +17,13 @@ Base: wip/r6-nf 0bc2446d.
 
 ## Build notes
 - Copied build tree is stale (oleans 11-15 05:46, before r6-nf; NeronDVR.olean missing): first build rebuilds.
+
+## Compile outcomes
+- 11-15 23:3x: scratch/persists-dvr/Core.lean compiles (VERIFIED). `#print axioms`:
+  `semistablePersistsDVR_of_printed`, `ss1_ss3_of_printedNF`, `semistablePersistsSHcp_of_SH`:
+  [propext, Classical.choice, Quot.sound].
+- `lake build ZInQKernel.Contrib.OneProof.PersistsDVR` succeeds (VERIFIED; only warning: deprecated `if_pos`).
+- Finding: `ReductB.SemistablePersistsSHcp` is a specialization of `SemistablePersistsDVR`, so the field is
+  discharged outright (`semistablePersistsSHcp_of_SH`); autofold applies, no consumer reroute needed.
+- GeomConnOfRationalPoint is used only inside the chain's `idCompSubgroup_of`, `idCompBaseChangeDVR_of`,
+  `identityComponentBaseChangeDVRRange_of`; the fibre step needs no field change (no torus transport).
