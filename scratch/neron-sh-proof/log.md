@@ -29,3 +29,10 @@ statement in ZInQKernel/Contrib/OneProof/StrictHenselizationPair.lean:1527, bund
   Mathlib `Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation`, gt-blr's `uqA`, `glue_cover`, `neron_ext`.
   Stages: smooth subalgebras B ⊆ R₁ (directed by IndSmooth); second limit over B ⊇ B_i for descending
   V_{K₁} → X_K to (Spec B_j ×_{B_i} W) ×_R K.
+
+## Part C / result (VERIFIED, compiled: scratch/neron-sh-proof/Full.lean = Parts A+B+C)
+- `NeronSH.neronBaseChangeUnramifiedDVR_proof : ReductGlue.NeronBaseChangeUnramifiedDVR` (BLR 7.2 Thm 1 form).
+- `NeronSH.neronBaseChangeStrictHenselization_proof : GapSHPair.NeronBaseChangeStrictHenselization` (the field).
+- `#print axioms`: both [propext, Classical.choice, Quot.sound].
+- K' = localization of O' at image of O∖0 (π irreducible in O' ⇒ uniformizer), so Spec K' = Spec O' ×_O Spec K
+  (`isPullback_spec`, Mathlib `Algebra.isPushout_of_isLocalization`, `isPullback_SpecMap_of_isPushout`).
