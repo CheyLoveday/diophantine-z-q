@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Heegner
 
 /-! gz-conj, part 1: a lattice is determined by `g₂, g₃`; the conjugate lattice. -/
 
@@ -150,5 +151,127 @@ theorem lattice_eq_of_g (h2 : L.g₂ = L'.g₂) (h3 : L.g₃ = L'.g₃) : L.latt
   le_antisymm (lattice_le_of_g L L' h2 h3) (lattice_le_of_g L' L h2.symm h3.symm)
 
 end Lattice
+
+
+section ConjLattice
+
+open scoped ComplexConjugate
+
+/-- The complex conjugate `L̄` of a period pair. -/
+def conjPP (L : PeriodPair) : PeriodPair where
+  ω₁ := conj L.ω₁
+  ω₂ := conj L.ω₂
+  indep := by
+    have := L.indep.map' Complex.conjLIE.toLinearEquiv.toLinearMap
+      Complex.conjLIE.toLinearEquiv.ker
+    convert this using 1
+    ext i; fin_cases i <;> rfl
+
+theorem mem_conjPP {L : PeriodPair} {x : ℂ} : x ∈ (conjPP L).lattice ↔ conj x ∈ L.lattice := by
+  rw [PeriodPair.mem_lattice, PeriodPair.mem_lattice]
+  constructor
+  · rintro ⟨m, n, e⟩
+    refine ⟨m, n, ?_⟩
+    rw [← e]; simp [conjPP]
+  · rintro ⟨m, n, e⟩
+    refine ⟨m, n, ?_⟩
+    have := congrArg conj e
+    simp only [map_add, map_mul, map_intCast, Complex.conj_conj] at this
+    simpa [conjPP] using this
+
+/-- `l ↦ l̄`, `L → L̄`. -/
+def conjEquiv (L : PeriodPair) : L.lattice ≃ (conjPP L).lattice where
+  toFun l := ⟨conj (l : ℂ), mem_conjPP.2 (by simp)⟩
+  invFun l := ⟨conj (l : ℂ), mem_conjPP.1 l.2⟩
+  left_inv l := by ext; simp
+  right_inv l := by ext; simp
+
+theorem G_conjPP (L : PeriodPair) (n : ℕ) : (conjPP L).G n = conj (L.G n) := by
+  rw [PeriodPair.G, PeriodPair.G, Complex.conj_tsum, ← (conjEquiv L).tsum_eq]
+  congr 1
+  ext l
+  simp [conjEquiv]
+
+theorem g₂_conjPP (L : PeriodPair) : (conjPP L).g₂ = conj L.g₂ := by
+  rw [PeriodPair.g₂, PeriodPair.g₂, G_conjPP, map_mul, map_ofNat]
+
+theorem g₃_conjPP (L : PeriodPair) : (conjPP L).g₃ = conj L.g₃ := by
+  rw [PeriodPair.g₃, PeriodPair.g₃, G_conjPP, map_mul, map_ofNat]
+
+/-- **A lattice with real `g₂, g₃` is stable under complex conjugation.** -/
+theorem conj_mem_iff_of_real {L : PeriodPair} (h2 : conj L.g₂ = L.g₂) (h3 : conj L.g₃ = L.g₃)
+    (x : ℂ) : conj x ∈ L.lattice ↔ x ∈ L.lattice := by
+  have h := lattice_eq_of_g (conjPP L) L (by rw [g₂_conjPP, h2]) (by rw [g₃_conjPP, h3])
+  rw [← mem_conjPP, h]
+
+variable {L : PeriodPair} (hc : ∀ x, conj x ∈ L.lattice ↔ x ∈ L.lattice)
+
+/-- `l ↦ l̄` on a conjugation-stable lattice. -/
+def conjSelf : L.lattice ≃ L.lattice where
+  toFun l := ⟨conj (l : ℂ), (hc l).2 l.2⟩
+  invFun l := ⟨conj (l : ℂ), (hc l).2 l.2⟩
+  left_inv l := by ext; simp
+  right_inv l := by ext; simp
+
+include hc in
+theorem weierstrassP_conj (z : ℂ) : L.weierstrassP (conj z) = conj (L.weierstrassP z) := by
+  rw [PeriodPair.weierstrassP, PeriodPair.weierstrassP, Complex.conj_tsum,
+    ← (conjSelf hc).tsum_eq]
+  congr 1
+  ext l
+  simp [conjSelf]
+
+include hc in
+theorem derivWeierstrassP_conj (z : ℂ) :
+    L.derivWeierstrassP (conj z) = conj (L.derivWeierstrassP z) := by
+  rw [PeriodPair.derivWeierstrassP, PeriodPair.derivWeierstrassP, map_neg, Complex.conj_tsum,
+    ← (conjSelf hc).tsum_eq]
+  congr 2
+  ext l
+  simp [conjSelf, map_ofNat]
+
+end ConjLattice
+
+section WeierPtConj
+
+open scoped ComplexConjugate WeierstrassCurve.Affine
+open WeierstrassCurve
+
+/-- Complex conjugation as a `ℚ`-algebra map. -/
+abbrev cq : ℂ →ₐ[ℚ] ℂ := (starRingEnd ℂ).toRatAlgHom
+
+theorem cq_apply (z : ℂ) : cq z = conj z := rfl
+
+theorem conj_algebraMap (q : ℚ) : conj (algebraMap ℚ ℂ q) = algebraMap ℚ ℂ q := cq.commutes q
+
+/-- The period lattice of `E/ℚ` is stable under complex conjugation. -/
+theorem conj_mem_iff_of_isPeriodLattice {E : WeierstrassCurve ℚ} {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice E L) (x : ℂ) : conj x ∈ L.lattice ↔ x ∈ L.lattice := by
+  refine conj_mem_iff_of_real ?_ ?_ x
+  · rw [hL.1, show (E⁄ℂ).c₄ = algebraMap ℚ ℂ E.c₄ from E.map_c₄ _, map_div₀, conj_algebraMap,
+      map_ofNat]
+  · rw [hL.2, show (E⁄ℂ).c₆ = algebraMap ℚ ℂ E.c₆ from E.map_c₆ _, map_div₀, conj_algebraMap,
+      map_ofNat]
+
+/-- **Complex conjugation commutes with `z ↦ (℘(z) − b₂/12, …)`** for the period lattice of a
+curve over `ℚ`. -/
+theorem map_conj_weierPt (E : WeierstrassCurve ℚ) [E.IsElliptic] {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice E L) (z : ℂ) :
+    Affine.Point.map cq (ZInQ.GZHL3.weierPt E L z) = ZInQ.GZHL3.weierPt E L (conj z) := by
+  have hc := conj_mem_iff_of_isPeriodLattice hL
+  by_cases hz : z ∈ L.lattice
+  · rw [GZHeegner.weierPt_eq_zero E L hz, GZHeegner.weierPt_eq_zero E L ((hc z).2 hz),
+      Affine.Point.map_zero]
+  · have hz' : conj z ∉ L.lattice := fun h => hz ((hc z).1 h)
+    rw [GZHeegner.weierPt_eq_some E hL hz, GZHeegner.weierPt_eq_some E hL hz',
+      Affine.Point.map_some]
+    have hb : conj (E⁄ℂ).b₂ = (E⁄ℂ).b₂ := by
+      rw [show (E⁄ℂ).b₂ = algebraMap ℚ ℂ E.b₂ from E.map_b₂ _, conj_algebraMap]
+    have ha1 : conj (E⁄ℂ).a₁ = (E⁄ℂ).a₁ := conj_algebraMap _
+    have ha3 : conj (E⁄ℂ).a₃ = (E⁄ℂ).a₃ := conj_algebraMap _
+    simp only [cq_apply, map_sub, map_div₀, map_mul, map_ofNat, hb, ha1,
+      ha3, weierstrassP_conj hc, derivWeierstrassP_conj hc]
+
+end WeierPtConj
 
 end ZInQ.GZConj
