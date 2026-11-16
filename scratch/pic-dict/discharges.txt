@@ -13,6 +13,13 @@ DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_ac
  PicDict.AmpleBaseChangeAlgClosure,
  PicDict.PicZeroPtsTranslInv]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_leaves
+  still assumes: [PicDict.MumfordKLFiniteAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ PicDict.AmpleBaseChangeAlgClosure,
+ PicDict.PushforwardUnitUniversal,
+ PicDict.GeomIntegralProd]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves17.phiAmpleIsogeny] by PicDict.phiAmpleIsogeny_of_printed
   still assumes: [PicDict.MumfordKLFinite,
  PicDict.MumfordPhiSurjective,
@@ -51,4 +58,4 @@ DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 3007 theorems checked, 11 discharge one
+#discharges: 59 open hypotheses, 3040 theorems checked, 12 discharge one
