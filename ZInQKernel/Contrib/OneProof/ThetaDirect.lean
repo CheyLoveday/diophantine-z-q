@@ -134,4 +134,180 @@ theorem c3_mem : c3 ∈ 𝔸 := by
     field_simp
   rw [e]; alg_mem
 
+
+/-! ## Symmetric functions of the `θ⁸` on the rational fibres of `j_θ` -/
+
+/-- **GLUE (proved: `qmThetaSymmetricAlg_of`).** Where `j_θ(Ω(τ)) = q ∈ ℚ ∖ 0`, every elementary symmetric function
+of the ten `θ_m(Ω(τ))⁸`, divided by the matching power of `Σθ_m⁸`, is an algebraic number. (theta-split's
+`QMThetaSymmetric` with algebraic in place of explicit rational coefficients, and only on the rational fibres.) -/
+def QMThetaSymmetricAlg : Prop :=
+  ∀ τ : ℂ, 0 < τ.im → ∀ q : ℚ, q ≠ 0 →
+    PkgI1.jNum (PkgI1.Omega τ) / PkgI1.jDen (PkgI1.Omega τ) = (q : ℂ) →
+    ∀ k ≤ 10, (thetaEight (PkgI1.Omega τ)).esymm k / PkgI1.thetaSum8 (PkgI1.Omega τ) ^ k ∈
+      algebraicClosure ℚ ℂ
+
+/-- Weighted homogeneity of Igusa's `P_k` (weights `2, 3, 5, 6`). -/
+theorem igusaP_hom (k : ℕ) (hk3 : 3 ≤ k) (hk9 : k ≤ 9) (ρ a b c d : ℂ) :
+    igusaP k (ρ ^ 2 * a) (ρ ^ 3 * b) (ρ ^ 5 * c) (ρ ^ 6 * d) = ρ ^ (2 * k) * igusaP k a b c d := by
+  interval_cases k <;> simp only [igusaP] <;> ring
+
+theorem igusaP_mem (k : ℕ) (hk3 : 3 ≤ k) (hk9 : k ≤ 9) {a b c d : ℂ} (ha : a ∈ 𝔸) (hb : b ∈ 𝔸)
+    (hc : c ∈ 𝔸) (hd : d ∈ 𝔸) : igusaP k a b c d ∈ 𝔸 := by
+  interval_cases k <;> simp only [igusaP] <;> alg_mem
+
+theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAlg := by
+  intro τ hτ q hq hJ k hk
+  set Ω := PkgI1.Omega τ with hΩdef
+  have hDen : PkgI1.jDen Ω ≠ 0 := by
+    intro h0; rw [h0, div_zero] at hJ; exact hq (by exact_mod_cast hJ.symm)
+  have hNum : PkgI1.jNum Ω ≠ 0 := by
+    intro h0; rw [h0, zero_div] at hJ; exact hq (by exact_mod_cast hJ.symm)
+  have hS : PkgI1.thetaSum8 Ω ≠ 0 := by
+    intro h0; apply hDen; rw [PkgI1.jDen, h0]; ring
+  have hP : PkgI1.thetaProd2 Ω ≠ 0 := by
+    intro h0; apply hNum; rw [PkgI1.jNum, h0]; ring
+  set S := PkgI1.thetaSum8 Ω with hSdef
+  set P := PkgI1.thetaProd2 Ω with hPdef
+  have hq' : 3779136 * P ^ 2 = (q : ℂ) * S ^ 5 := by
+    rw [div_eq_iff hDen, PkgI1.jNum, PkgI1.jDen] at hJ; exact hJ
+  obtain ⟨ρ, hρ⟩ : ∃ ρ : ℂ, ρ ^ 2 = S := IsAlgClosed.exists_pow_nat_eq S (by norm_num)
+  have hρ0 : ρ ≠ 0 := by rintro rfl; apply hS; rw [← hρ]; ring
+  set ξ := P / ρ ^ 5 with hξdef
+  have hPξ : P = ρ ^ 5 * ξ := by rw [hξdef]; field_simp
+  have hξ2 : ξ ^ 2 = (q : ℂ) / 3779136 := by
+    rw [hξdef, div_pow, ← pow_mul, eq_div_iff (by norm_num), div_mul_eq_mul_div, div_eq_iff (pow_ne_zero _ hρ0)]
+    rw [show ρ ^ (5 * 2) = (ρ ^ 2) ^ 5 by ring, hρ]
+    linear_combination hq'
+  have hξ : ξ ∈ 𝔸 := mem_of_pow_mem (n := 2) (by norm_num) (by rw [hξ2]; alg_mem)
+  have hΩ : ZInQ.LeafPush2.IsSiegel Ω := HDec.HSyn.G0Split.ThetaPt.isSiegel_Omega hτ
+  rcases Nat.lt_or_ge k 3 with h3 | h3
+  · interval_cases k
+    · simp
+    · rw [esymm_one, ← hSdef, pow_one, div_self hS]; exact one_mem _
+    · have hsq := HDec.HSyn.G0Split.ThetaPt.ThetaGlue.thetaEightSquare Ω hΩ
+      have h := two_esymm_two (thetaEight Ω)
+      have hsum : (thetaEight Ω).sum = S := by
+        rw [← HDec.HSyn.G0Split.ThetaPt.ThetaSplit.esymm_one', esymm_one]
+      have hsq' : ((thetaEight Ω).map (· ^ 2)).sum = ∑ m ∈ PkgI1.evenChars, PkgI1.thetaConst m Ω ^ 16 := by
+        rw [thetaEight, Multiset.map_map, Finset.sum_map_val]
+        exact Finset.sum_congr rfl (fun m _ => by simp only [Function.comp_apply]; ring)
+      rw [hsum, hsq', hsq] at h
+      have e : (thetaEight Ω).esymm 2 = 3 / 8 * S ^ 2 := by
+        unfold S PkgI1.thetaSum8 at *
+        linear_combination h / 2
+      rw [e, mul_div_assoc, div_self (pow_ne_zero _ hS), mul_one]; alg_mem
+  · rcases Nat.lt_or_ge k 10 with h10 | h10
+    · have hk9 : k ≤ 9 := by omega
+      rw [HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaThetaSymmetric_of_alg
+        HDec.HSyn.G0Split.ThetaPt.IgusaAlgFinal.igusaAlg_all Ω hΩ k h3 hk9]
+      have r1 := rel1 hI hτ
+      have r2 := rel2 hI hτ
+      rw [← hΩdef, ← hSdef, ← hPdef] at r1 r2
+      have e4 : psi4Th Ω = ρ ^ 2 * (1 / 4) := by
+        unfold psi4Th; rw [← hSdef, ← hρ]; ring
+      have e6 : psi6Th Ω = ρ ^ 3 * (c1 * ξ) := by
+        have : psi6Th Ω = c1 * P / S := by rw [eq_div_iff hS]; exact r1
+        rw [this, hPξ, ← hρ]; field_simp
+      have e10 : chi10Th Ω = ρ ^ 5 * (-ξ / 2 ^ 14) := by
+        unfold chi10Th; rw [← hPdef, hPξ]; ring
+      have e12 : chi12Th Ω = ρ ^ 6 * (c2 + c3 * ξ ^ 2) := by
+        have hS2 : S ^ 2 ≠ 0 := pow_ne_zero _ hS
+        have : chi12Th Ω = (c2 * S ^ 5 + c3 * P ^ 2) / S ^ 2 := by rw [eq_div_iff hS2]; linear_combination r2
+        rw [this, hPξ, ← hρ]; field_simp
+      rw [e4, e6, e10, e12, igusaP_hom k h3 hk9, ← hρ, ← pow_mul, mul_comm, mul_div_assoc,
+        div_self (pow_ne_zero _ hρ0), mul_one]
+      exact igusaP_mem k h3 hk9 (by alg_mem) (mul_mem c1_mem hξ) (by alg_mem)
+        (add_mem c2_mem (mul_mem c3_mem (pow_mem hξ 2)))
+    · have hk10 : k = 10 := by omega
+      subst hk10
+      rw [esymm_ten Ω hS, hJ, mul_div_assoc, div_self (pow_ne_zero _ hS), mul_one]
+      alg_mem
+
+/-! ## The use form -/
+
+/-- A root of a monic polynomial whose elementary symmetric functions are algebraic is algebraic (copied verbatim
+from origin/wip/theta-split `scratch/theta-split/ThetaUse.lean` l.368-391, theta-split's `mem_of_esymm_mem`). -/
+theorem mem_of_esymm_mem (s : Multiset ℂ) (hs : ∀ k ≤ Multiset.card s, s.esymm k ∈ 𝔸) {y : ℂ}
+    (hy : y ∈ s) : y ∈ 𝔸 := by
+  have hmon : (s.map (fun t => X - C t)).prod.Monic :=
+    monic_multiset_prod_of_monic _ _ (fun t _ => monic_X_sub_C t)
+  have hlift : (s.map (fun t => X - C t)).prod ∈ lifts (algebraMap 𝔸 ℂ) := by
+    rw [lifts_iff_coeff_lifts]
+    intro n
+    by_cases hn : n ≤ Multiset.card s
+    · rw [Multiset.prod_X_sub_C_coeff s hn]
+      have : (-1 : ℂ) ^ (Multiset.card s - n) * s.esymm (Multiset.card s - n) ∈ 𝔸 :=
+        mul_mem (pow_mem (neg_mem (one_mem _)) _) (hs _ (Nat.sub_le _ _))
+      exact ⟨⟨_, this⟩, rfl⟩
+    · rw [coeff_eq_zero_of_natDegree_lt]
+      · exact ⟨0, by simp⟩
+      · rw [natDegree_multiset_prod_X_sub_C_eq_card]; omega
+  obtain ⟨Q, hQ, -, hQm⟩ := lifts_and_degree_eq_and_monic hlift hmon
+  have hA : IsAlgebraic 𝔸 y := by
+    refine ⟨Q, hQm.ne_zero, ?_⟩
+    rw [aeval_def, eval₂_eq_eval_map, hQ, eval_multiset_prod]
+    apply Multiset.prod_eq_zero
+    rw [Multiset.map_map]
+    exact Multiset.mem_map.mpr ⟨y, hy, by simp⟩
+  exact mem_algebraicClosure_iff.mpr (hA.restrictScalars ℚ)
+
+/-- **`ThetaRatiosAtQM` from `QMThetaSymmetricAlg` (proved)** (theta-split's `thetaRatiosAtQM_of_symmetric`, with
+algebraic in place of rational symmetric functions). -/
+theorem thetaRatiosAtQM_of_symAlg (h : QMThetaSymmetricAlg) : ThetaRatiosAtQM := by
+  intro τ hτ q hq hJ
+  have hDen : PkgI1.jDen (PkgI1.Omega τ) ≠ 0 := by
+    intro h0; rw [h0, div_zero] at hJ; exact hq (by exact_mod_cast hJ.symm)
+  have hNum : PkgI1.jNum (PkgI1.Omega τ) ≠ 0 := by
+    intro h0; rw [h0, zero_div] at hJ; exact hq (by exact_mod_cast hJ.symm)
+  have hS : PkgI1.thetaSum8 (PkgI1.Omega τ) ≠ 0 := by
+    intro h0; apply hDen; rw [PkgI1.jDen, h0]; ring
+  have hProd : PkgI1.thetaProd2 (PkgI1.Omega τ) ≠ 0 := by
+    intro h0; apply hNum; rw [PkgI1.jNum, h0]; ring
+  set S := PkgI1.thetaSum8 (PkgI1.Omega τ) with hSdef
+  have hconv : ∀ m, ZInQ.LeafPush2.thetaConst (BPAnalytic.QM.Omega τ) m = PkgI1.thetaConst m (PkgI1.Omega τ) :=
+    fun m => by
+      rw [HDec.HSyn.G0Split.ThetaPt.thetaConst_eq_pkgI1, HDec.HSyn.G0Split.ThetaPt.omega_eq]
+  have h00 : PkgI1.thetaConst (0, 0) (PkgI1.Omega τ) ≠ 0 := thetaConst_ne_of_prod hProd zero_mem_evenChars
+  set s' := (thetaEight (PkgI1.Omega τ)).map (fun t => S⁻¹ • t) with hs'
+  have hcard : Multiset.card s' = 10 := by rw [hs', Multiset.card_map, card_thetaEight]
+  have hesymm : ∀ k ≤ Multiset.card s', s'.esymm k ∈ 𝔸 := by
+    intro k hk
+    rw [hcard] at hk
+    rw [hs', ← Multiset.pow_smul_esymm, smul_eq_mul, inv_pow, ← div_eq_inv_mul]
+    exact h τ hτ q hq hJ k hk
+  have halg8 : ∀ m ∈ PkgI1.evenChars, S⁻¹ * PkgI1.thetaConst m (PkgI1.Omega τ) ^ 8 ∈ 𝔸 :=
+    fun m hm => mem_of_esymm_mem s' hesymm
+      (Multiset.mem_map.mpr ⟨_, Multiset.mem_map.mpr ⟨m, hm, rfl⟩, rfl⟩)
+  refine ⟨(0, 0), by rw [hconv]; exact h00, fun m => ?_⟩
+  rw [hconv, hconv, ← mem_algebraicClosure_iff]
+  by_cases hm : m ∈ PkgI1.evenChars
+  · refine mem_of_pow_mem (n := 8) (by norm_num) ?_
+    have : (PkgI1.thetaConst m (PkgI1.Omega τ) / PkgI1.thetaConst (0, 0) (PkgI1.Omega τ)) ^ 8 =
+        (S⁻¹ * PkgI1.thetaConst m (PkgI1.Omega τ) ^ 8) *
+          (S⁻¹ * PkgI1.thetaConst (0, 0) (PkgI1.Omega τ) ^ 8)⁻¹ := by
+      field_simp
+    rw [this]
+    exact mul_mem (halg8 m hm) (inv_mem (halg8 _ zero_mem_evenChars))
+  · rw [thetaConst_odd' _ hm, zero_div]
+    exact zero_mem _
+
+/-! ## Main theorems -/
+
+/-- **Main theorem (proved).** The use form `ThetaRatiosAtQM` of the field `thetaRatiosAlgebraic` from the LEAF
+`IgusaThetaExpressions` (Igusa) alone: for `τ ∈ ℍ` with `j_θ(Ω(τ)) = q ∈ ℚ ∖ 0`, some `θ_{m₀}(Ω(τ)) ≠ 0` and
+every `θ_m(Ω(τ))/θ_{m₀}(Ω(τ))` is algebraic. -/
+theorem thetaRatiosAtQM_of_igusa (hI : IgusaThetaExpressions) : ThetaRatiosAtQM :=
+  thetaRatiosAtQM_of_symAlg (qmThetaSymmetricAlg_of hI)
+
+/-- **The consumer form** (theta-fold's rethread of `gluePieces_of_open4` takes
+`hθ : PkgI1.QMHauptmodul → ThetaRatiosAtQM`). -/
+theorem thetaRatiosAtQM_of_igusa' (hI : IgusaThetaExpressions) :
+    PkgI1.QMHauptmodul → ThetaRatiosAtQM := fun _ => thetaRatiosAtQM_of_igusa hI
+
+/-- **Missing piece 9, `ThetaPointOfFibre`, from `FibreQMPeriod` and the LEAF (proved)**: a drop-in replacement
+for `ThetaPt.thetaPointOfFibre_of_qm_ratios hQM l.thetaRatiosAlgebraic` in TailK's `gluePieces_of_open4`. -/
+theorem thetaPointOfFibre_of_igusa (hQM : HDec.HSyn.G0Split.ThetaPt.FibreQMPeriod)
+    (hI : IgusaThetaExpressions) : HDec.HSyn.G0Split.ThetaPointOfFibre :=
+  thetaPointOfFibre_of_qm_atQM hQM (thetaRatiosAtQM_of_igusa hI)
+
 end HDec.ThetaDirect
