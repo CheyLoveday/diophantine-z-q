@@ -470,4 +470,99 @@ theorem grossZagierFormulaCd_of_selfOptimal (hGZ : GrossZagierModuliOptCd) (hOpt
   exact grossZagierFormulaAt_of_selfOptimal (short_cd d) (hGZ d hd hsq _ (short_cd d) fun _ _ => rfl)
     (hOpt d hd hsq)
 
+/-- **Route B (through the strong Weil curve `E'` of `f`).** The parametrization
+`weierPt E L (c φ_f)` of `E` is `ψ ∘ φ'` with `φ' = weierPt E' L' (c' φ_f)` the strong Weil
+parametrization and `ψ : E' → E`, `z ↦ (c/c') z`. With `M L ⊆ (c/c') L'` (`M ∈ ℤ ∖ {0}`, finite
+index), the isogeny `ψ̂ : E → E'`, `z ↦ μ z`, `μ = M c'/c ∈ ℚ`, maps `y` to `P' ∈ E'(K)` with
+`ι(P') = M · y_K(φ')`. The optimal leaf at `E'` gives `L'(E/K, 1) = κ' ĥ(P')`, and `y`, `P'` are
+torsion together (read off from their complex parameters), so `L'(E/K, 1) = κ ĥ(y)`. -/
+theorem grossZagierFormulaAt_of_transfer {E : WeierstrassCurve ℚ} [E.IsElliptic]
+    (hE : IsShortModel E)
+    (hGZ : ∀ (E' : WeierstrassCurve ℚ) [E'.IsElliptic], IsShortModel E' →
+      (∀ n : ℕ, n ≠ 0 → E'.LFunction n = E.LFunction n) → GrossZagierModuliOptAt E')
+    (hSW : ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+      (∀ n : ℕ, n ≠ 0 → coeff f n = (E.LFunction n : ℂ)) →
+      ∃ E' : WeierstrassCurve ℚ, E'.IsElliptic ∧ IsShortModel E' ∧
+        (∀ n : ℕ, n ≠ 0 → coeff f n = (E'.LFunction n : ℂ)) ∧
+        ∃ (L' : PeriodPair) (c : ℚ), ZInQ.GZHL3.IsPeriodLattice E' L' ∧
+          L'.lattice = (periodLattice f).map (LinearMap.mulLeft ℤ (c : ℂ)))
+    (hI : AnalyticIsogenyRational) : ZInQ.GZHL3.GrossZagierFormulaAt E := by
+  intro N _ f hχ hcoeff D β hD hD4 hH hβ S hS L c hL hc hP K _ _ _ hK δ hδ ι hι y hy F G hF hG
+  obtain ⟨E', hE'e, hE's, hcoeff', L', c', hL', hlat'⟩ := hSW N f hχ hcoeff
+  have := hE'e
+  have hc' := ne_zero_of_lattice hlat'
+  have hs' : ParamSetting E' f L' c' := ⟨hχ, hcoeff', hL', hc', periodsIn_of_lattice hlat'⟩
+  have hcC : (c : ℂ) ≠ 0 := by exact_mod_cast hc
+  have hc'C : (c' : ℂ) ≠ 0 := by exact_mod_cast hc'
+  -- `m L' ⊆ L` for `m = c / c'`
+  have hmL : ∀ z ∈ L'.lattice, ((c : ℂ) / c') * z ∈ L.lattice := by
+    intro z hz
+    rw [hlat'] at hz
+    obtain ⟨w, hw, rfl⟩ := hz
+    have : (c : ℂ) / c' * (LinearMap.mulLeft ℤ (c' : ℂ) w) = c * w := by
+      simp only [LinearMap.mulLeft_apply]; field_simp
+    rw [this]
+    exact mul_mem_of_periodsIn hP hw
+  obtain ⟨M, hM0, hM⟩ := exists_int_mul_mem L L' (div_ne_zero hcC hc'C) hmL
+  have hMC : (M : ℂ) ≠ 0 := by exact_mod_cast hM0
+  -- `μ L ⊆ L'` for `μ = M c' / c`
+  set μ : ℚ := M * c' / c with hμ
+  have hμ0 : μ ≠ 0 := div_ne_zero (mul_ne_zero (by exact_mod_cast hM0) hc') hc
+  have hμC : (μ : ℂ) = M * c' / c := by rw [hμ]; push_cast; rfl
+  have hμL : ∀ z ∈ L.lattice, (μ : ℂ) * z ∈ L'.lattice := by
+    intro z hz
+    obtain ⟨w, hw, hMw⟩ := hM z hz
+    have : (μ : ℂ) * z = w := by
+      rw [hμC]
+      have e : (M : ℂ) * z * c' = c * w := by rw [hMw]; field_simp
+      field_simp
+      linear_combination e
+    rw [this]; exact hw
+  obtain ⟨P', hP'⟩ := hI E E' L L' hL hL' μ hμ0 hμL K ι y
+  set u : ℂ := ∑ r : S, ZInQ.GZHL3.eichler f r.1.tauH with hu
+  have hyu : Affine.Point.map ι y = ZInQ.GZHL3.weierPt E L (c * u) := by
+    rw [hy, heegnerC_eq hE hL]
+  have hP'u : Affine.Point.map ι P' = ZInQ.GZHL3.weierPt E' L' (M * (c' * u)) := by
+    rw [hP' _ hyu, hμC]
+    congr 1
+    field_simp
+  have hLF : ∀ n : ℕ, n ≠ 0 → E'.LFunction n = E.LFunction n := fun n hn => by
+    have := (hcoeff' n hn).symm.trans (hcoeff n hn)
+    exact_mod_cast this
+  obtain ⟨κ', hκ', hA⟩ := hGZ E' hE's hLF N f hχ hcoeff' _ _ (ZInQ.GZModuli.isModularParam_of hs')
+    ⟨L', c', hL', hlat', ZInQ.GZModuli.modPt_eq hs'⟩ D β hD hD4 hH hβ S (fun Q => Q.1.tauH)
+    (ZInQ.GZModuli.isHeegnerPointReps_of hD hS) K hK δ hδ ι hι M hM0 P'
+    (by rw [hP'u, sum_modPt_eq hE's hs', weierPt_zsmul hE's hL']) F G hF hG
+  refine exists_pos_of_torsion_iff y P' hκ' hA ?_
+  rw [isOfFinAddOrder_iff hE hL ι y hyu, isOfFinAddOrder_iff hE's hL' ι P' hP'u]
+  constructor
+  · rintro ⟨k, hk, hmem⟩
+    refine ⟨k, hk, ?_⟩
+    have := hμL _ hmem
+    have e : (μ : ℂ) * (k * (c * u)) = k * (M * (c' * u)) := by rw [hμC]; field_simp
+    rwa [e] at this
+  · rintro ⟨k, hk, hmem⟩
+    have h1 := hmL _ hmem
+    have e : (c : ℂ) / c' * (k * (M * (c' * u))) = ((k * M : ℤ) : ℂ) * (c * u) := by
+      push_cast; field_simp
+    rw [e] at h1
+    obtain ⟨j, hj, hjeq⟩ : ∃ j : ℕ, 0 < j ∧ ((k * M : ℤ) = j ∨ (k * M : ℤ) = -j) :=
+      ⟨_, Int.natAbs_pos.2 (mul_ne_zero (by exact_mod_cast hk.ne') hM0), Int.natAbs_eq _⟩
+    refine ⟨j, hj, ?_⟩
+    rcases hjeq with h | h
+    · rw [h] at h1; exact_mod_cast h1
+    · rw [h] at h1
+      have := L.lattice.neg_mem h1
+      rw [Int.cast_neg, neg_mul, neg_neg] at this
+      exact_mod_cast this
+
+/-- **`GZHL3.GrossZagierFormulaCd` from the optimal-parametrization leaf, the strong Weil curve with
+its period lattice, and the rationality of analytic isogenies** (route B: no assumption on which
+curve of the isogeny class of `C_d` is optimal). -/
+theorem grossZagierFormulaCd_of_transfer (hGZ : GrossZagierModuliOptCd)
+    (hSW : StrongWeilOptimalCd) (hI : AnalyticIsogenyRational) :
+    ZInQ.GZHL3.GrossZagierFormulaCd := fun d hd hsq => by
+  have := shortCurve_cd_isElliptic (d := d) (by omega)
+  exact grossZagierFormulaAt_of_transfer (short_cd d) (hGZ d hd hsq) (hSW d hd hsq) hI
+
 end ZInQ.GZOptimal
