@@ -1,5 +1,9 @@
-import Mathlib.Topology.KrullDimension
-import Mathlib.Topology.Homeomorph.Lemmas
+module
+
+public import Mathlib.Topology.KrullDimension
+public import Mathlib.Topology.Homeomorph.Lemmas
+
+public section
 
 /-! Universal subspaces have the ambient dimension, by the actual Mathlib
 homeomorphism. No scheme presentation or extra geometric hypothesis is involved. -/
