@@ -36,3 +36,13 @@ statement in ZInQKernel/Contrib/OneProof/StrictHenselizationPair.lean:1527, bund
 - `#print axioms`: both [propext, Classical.choice, Quot.sound].
 - K' = localization of O' at image of O∖0 (π irreducible in O' ⇒ uniformizer), so Spec K' = Spec O' ×_O Spec K
   (`isPullback_spec`, Mathlib `Algebra.isPushout_of_isLocalization`, `isPullback_SpecMap_of_isPushout`).
+
+## Deliverable checks (VERIFIED)
+- `ZInQKernel/Contrib/OneProof/NeronBaseChangeStrictHenselization.lean` (56 KB) built by
+  `lake build +ZInQKernel.Contrib.OneProof.NeronBaseChangeStrictHenselization` (68 s; Main/Discharges up to date).
+- `#discharges` (scratch/neron-sh-proof/Discharges.lean, output discharges.txt, module-system warnings stripped):
+  `DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by NeronSH.neronBaseChangeStrictHenselization_proof`,
+  `still assumes: []`, axioms [propext, Classical.choice, Quot.sound]; 56 open hypotheses, 2965 theorems, 8 discharge one.
+- autofold spec scratch/neron-sh-proof/autofold.json; `--dry-run`: strict count 34/11 on 45 -> 33/11 on 44,
+  strictest 34/11 -> 33/11. The dry-run module (FoldCheck.lean = dry run minus line 1) compiles:
+  `HDec.HSyn.sixContactMin_of_open36` depends on [propext, Classical.choice, Quot.sound].
