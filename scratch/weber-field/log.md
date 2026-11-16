@@ -20,6 +20,10 @@ Ideal `I = {F ∈ ℚ[J][T] : F(j(τ), f₁(τ)) = 0 on ℍ}` with `f₁ = g₂g
 identity theorem; `I ∩ ℚ[J] = 0` since `j(i) = 1728`, `j(ρ) = 0`; contains the cleared universal division polynomial
 `Φ_N`; algebraic lemma (localization at `ℚ[J]∖0`, PID `ℚ(j)[T]`) gives `θ` with `I = ker(T ↦ θ)`; `θ = w(P)`, `P` of
 exact order `N` by the division-polynomial criterion on both sides.
-- 03:08 PartA.lean (algebraic lemma exists_root_of_isPrime, clearing exists_clears, ev2_ΨSq, evK_clears) compiles, no sorry.
-- 03:20 PartA.lean + points: exists_point_of_root (Kbar side), curveC_smul, eval_ΨSq_weber_eq_zero_iff (ℂ side, via vendored uniformization) compile.
-- 03:50 WeberField.lean: X1Igusa.Weber.weberFieldComparison : WeberFieldComparison COMPILES; #print axioms: [propext, Classical.choice, Quot.sound]. VERIFIED.
+- 11-16 ~03:00 PartA.lean (algebraic lemma exists_root_of_isPrime, clearing exists_clears, ev2_ΨSq, evK_clears) compiles, no sorry.
+- 11-16 ~03:03 PartA.lean + points: exists_point_of_root (Kbar side), curveC_smul, eval_ΨSq_weber_eq_zero_iff (ℂ side, via vendored uniformization) compile.
+- 11-16 ~03:10 WeberField.lean: X1Igusa.Weber.weberFieldComparison : WeberFieldComparison COMPILES; #print axioms: [propext, Classical.choice, Quot.sound]. VERIFIED.
+- 11-16 03:13 `ZInQKernel/Contrib/OneProof/WeberField.lean` (new module; verbatim copies of `wOf`, `evAn`, `evAlg`,
+  `WeberFieldComparison`, `adjoin_wOf` from scratch/x1-igusa/WeberComparison.lean, checked by string match):
+  `lake build ZInQKernel.Contrib.OneProof.WeberField` OK (11356 jobs, all replayed but the new one, 7.3 s). VERIFIED.
+- 11-16 03:14 #discharges (scratch/weber-field/Discharges.lean -> Discharges-output.txt): 61 open, 2609 theorems checked, 16 discharge one; r16CoreY by X1Igusa.r16CoreY_of_picZero_igusaDS (imported); weberFieldComparison and its main lemmas: standard axioms. VERIFIED.

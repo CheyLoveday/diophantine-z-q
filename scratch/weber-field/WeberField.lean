@@ -913,6 +913,35 @@ theorem weberFieldComparison : WeberFieldComparison := by
       rw [evAn_eq F τ h2 h3]
       exact h τ τ.coe_im_pos
 
+
+/-! ## F. `ℚ(j)(w(P)) = ℚ(j)(x(P))` (x1-igusa, verbatim) -/
+
+/-- `ℚ(j)(w(P)) = ℚ(j)(x(P))`: `w` is a `ℚ(j)`-affine function of `x` with nonzero slope. -/
+theorem adjoin_wOf (P : EjBar.toAffine.Point) :
+    IntermediateField.adjoin Qj {wOf P} = fieldX1 P := by
+  have hα : algebraMap Qj Kbar alpha ≠ 0 := by
+    rw [ne_eq, map_eq_zero_iff _ (algebraMap Qj Kbar).injective]; exact alpha_ne_zero
+  have hg : algebraMap Qj Kbar (gDS - 27) ≠ 0 := by
+    rw [ne_eq, map_eq_zero_iff _ (algebraMap Qj Kbar).injective, gDS_sub]
+    exact div_ne_zero (by norm_num) X_sub_1728_ne_zero
+  apply le_antisymm
+  · rw [IntermediateField.adjoin_simple_le_iff]
+    have hx : xCoord P ∈ fieldX1 P := IntermediateField.mem_adjoin_simple_self Qj _
+    unfold wOf
+    refine div_mem (add_mem (mul_mem (IntermediateField.algebraMap_mem _ _) hx)
+      (IntermediateField.algebraMap_mem _ _)) (IntermediateField.algebraMap_mem _ _)
+  · unfold fieldX1
+    rw [IntermediateField.adjoin_simple_le_iff]
+    have hw : wOf P ∈ IntermediateField.adjoin Qj {wOf P} := IntermediateField.mem_adjoin_simple_self Qj _
+    have hx : xCoord P = (wOf P * algebraMap Qj Kbar (gDS - 27) - algebraMap Qj Kbar (-3 / 2)) /
+        algebraMap Qj Kbar alpha := by
+      unfold wOf
+      field_simp
+      ring
+    rw [hx]
+    exact div_mem (sub_mem (mul_mem hw (IntermediateField.algebraMap_mem _ _))
+      (IntermediateField.algebraMap_mem _ _)) (IntermediateField.algebraMap_mem _ _)
+
 end X1Igusa.Weber
 
 #print axioms X1Igusa.Weber.weberFieldComparison
