@@ -1,0 +1,19 @@
+{"name": "deg-det",
+ "imports": ["ZInQKernel.Contrib.OneProof.DegEqDetTate"],
+ "discharges": [
+   {"field": "charPolyIndepOfEllAlgClosed",
+    "proof": "_root_.ZInQ.Contrib.OneProof.DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly {n}.degHomogPoly {n}.degLadicIsogeny {n}.homFreeFiniteAlgClosed",
+    "leaves": [
+      {"name": "degHomogPoly",
+       "type": "_root_.ZInQ.Contrib.OneProof.DegDet.DegHomogPoly",
+       "doc": "Mumford, Abelian varieties (1970), section 19 (locator UNVERIFIED; the statement used in the proof of 19 Thm 4): deg is a homogeneous polynomial function of degree 2g on End(X), X an abelian variety of dimension g over an algebraically closed field. Read in coordinates: for every finite family e_1..e_r in End(A) there is a homogeneous N in Q[x_1..x_r] of degree 2 dim A with degEnd(sum x_i e_i) = N(x) for all x in Z^r; degEnd is the genuine function-field degree (0 for non-isogenies).",
+       "kind": "published",
+       "flag": "unread: new printed leaf (Mumford 19: deg homogeneous polynomial of degree 2g on End X; theorem of the cube + Riemann-Roch); locator UNVERIFIED",
+       "source": "Mumford, Abelian varieties, section 19 (deg is a homogeneous polynomial function of degree 2g on End(X)); also Milne, Abelian varieties (2008), section 12"},
+      {"name": "degLadicIsogeny",
+       "type": "_root_.ZInQ.Contrib.OneProof.DegDet.DegLadicIsogeny",
+       "doc": "|det V_l(psi)|_l = |deg psi|_l for an isogeny psi of an abelian variety over an algebraically closed field and l != char k (same V_l, basis convention and degEnd as DegEqDetTate). Step of Mumford's proof of 19 Thm 4: the l-part of deg psi is the l-part of #ker psi(k) (inseparable degree a power of char k, separable degree = #kernel, Mumford 4 and 7) and #(ker psi on A[l^infty]) = |det T_l psi|_l^{-1} (l-adic elementary divisors, A[l^n] = (Z/l^n)^{2g}). A consequence of the printed DegEqDetTate.",
+       "kind": "consequence",
+       "flag": "pending reading: consequence of Mumford 19 Thm 4 (first assertion) and a step of its proof; provable glue from deg_s = #ker (Mumford 4, 7) and mumfordTorsionAlgClosed; locator UNVERIFIED",
+       "source": "Mumford, Abelian varieties, section 19, proof of Theorem 4 (|deg psi|_l = |det T_l psi|_l); consequence of 19 Thm 4"}]}],
+ "note": "deg-det: charPolyIndepOfEllAlgClosed (via charpoly-ell's DegEqDetTate) from degHomogPoly (printed leaf), degLadicIsogeny (consequence/glue) and the bundle's homFreeFiniteAlgClosed. Proved in Lean: the whole algebraic part of Mumford's proof (multiplicative polynomial functions on Z[phi] extended to Qbar_l[X]/(R) by the Combinatorial Nullstellensatz, det F(M) = prod F(roots), the l-adic comparison lemma for monic polynomials over Q_l), and deg(psi chi) = deg psi deg chi for isogenies (tower law). Net count: -1 field +1 leaf +1 glue (strict GLUE +1); not recommended over charpoly-ell's fold unless degLadicIsogeny is proved. Report docs/research/deg-det.md."}

@@ -20,18 +20,18 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
 
 ## Lean (scratch/deg-det/Algebra.lean, Mathlib only)
 
-- 13:20 VERIFIED compiled: `DegDet.eq_Rs_of_mul` (multiplicative φ with φ(c)=c^n, φ(X-r)=(-1)^n P(r) is F ↦ ∏_{P(a)=0} F(a)),
+- VERIFIED compiled: `DegDet.eq_Rs_of_mul` (multiplicative φ with φ(c)=c^n, φ(X-r)=(-1)^n P(r) is F ↦ ∏_{P(a)=0} F(a)),
   `DegDet.det_aeval_eq_Rs` (det F(M) = ∏_{χ_M(a)=0} F(a)), `DegDet.mult_eq_of_norm_Rs` and
   `DegDet.eq_of_norm_RsZ` (comparison lemma: monic P, Q over ℚ_ℓ with |∏_{P(a)=0}F(a)| = |∏_{Q(b)=0}F(b)| in
   PadicAlgCl ℓ for every F ∈ ℤ[X] with nonzero left side are equal).
-- 14:05 VERIFIED compiled (817 lines, axioms [propext, Classical.choice, Quot.sound]):
+- VERIFIED compiled (817 lines, axioms [propext, Classical.choice, Quot.sound]):
   `DegDet.Nt_mul` (generic multiplicativity: a polynomial function N on ℤ[X]/(R), multiplicative on pairs with nonzero
   values and N(1)=1, is multiplicative on S[X]/(R) for every ℚ-algebra S; Combinatorial Nullstellensatz on ℕ-points),
   `DegDet.P0_monic` (N(t − X) is monic of degree n for N homogeneous of degree n),
   `DegDet.det_eq_deg_abstract`: E ring, φ ∈ E with R(φ)=0 (R ∈ ℤ[X] monic), deg : E → ℕ homogeneous polynomial of
   degree n on ℤ[φ] (coordinates Σ x_i φ^i, i < deg R), deg 1 = 1, deg multiplicative on pairs with nonzero degree,
   ρ : E →+* M_I(ℚ_ℓ) with |det ρ ψ|_ℓ = |deg ψ|_ℓ when deg ψ ≠ 0  ⇒  det ρ(φ) = deg φ.
-- 14:35 VERIFIED compiled (`lake build ZInQKernel.Contrib.OneProof.DegEqDetTate`, axioms standard; scratch/deg-det/CheckAxioms.lean):
+- VERIFIED compiled (`lake build ZInQKernel.Contrib.OneProof.DegEqDetTate`, axioms standard; scratch/deg-det/CheckAxioms.lean):
   ZInQKernel/Contrib/OneProof/DegEqDetTate/Algebra.lean (copy of scratch Algebra.lean, namespace ZInQ.Contrib.OneProof.DegDet) and
   ZInQKernel/Contrib/OneProof/DegEqDetTate.lean:
   `DegDet.degEnd_mul_of_isIsogeny` (deg(ψχ) = deg ψ deg χ for isogenies; generic point preserved by surjective maps,
@@ -39,3 +39,11 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
   HomFreeFiniteAlgClosed → CharPolyEll.DegEqDetTate`, `DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly`.
   New Props: `DegHomogPoly` (LEAF, printed form, Mumford §19 deg homogeneous polynomial of degree 2g, locator UNVERIFIED),
   `DegLadicIsogeny` (GLUE, |det V_ℓ ψ|_ℓ = |deg ψ|_ℓ for isogenies).
+- VERIFIED: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DegEqDetTate` OK
+  (13701 jobs, all but the new modules replayed; frozenTarget standard axioms). `#discharges` (scratch/deg-det/Discharges.lean,
+  output Discharges-output.txt): DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by
+  DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly, still assumes [DegHomogPoly, DegLadicIsogeny, HomFreeFiniteAlgClosed],
+  axioms standard.
+- VERIFIED: autofold dry run (scratch/deg-det/autofold.json): `strict count: 34/11 on 45 -> 34/12 on 46; strictest 34/11 -> 34/12`
+  (refused without --allow-rise). With --allow-rise --dry-run the module (scratch/deg-det/FoldDryRun.lean, line 1 stripped) compiles:
+  'HDec.HSyn.sixContactMin_of_open36' standard axioms.
