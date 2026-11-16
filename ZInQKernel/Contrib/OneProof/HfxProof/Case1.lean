@@ -235,4 +235,42 @@ theorem loc2OK_varpi_sq (hωZ : IsHurZ ω) (h2 : ω * ω = -(((8 * k + 1 : ℕ) 
 
 end C1def
 
+/-- `ℚ_2^× R_2^× ∪ ℚ_2^× R_2^× ϖ⁻¹` for `ω² = −n`, `ϖ = 1 + ω`. -/
+def C1 (ω : ℍ[ℚ]) (k : ℕ) (hωZ : IsHurZ ω) (h2 : ω * ω = -(((8 * k + 1 : ℕ) : ℚ)) • 1)
+    (hst : star ω = -ω) (hϖn : Quaternion.normSq (1 + ω) = ((2 * (4 * k + 1) : ℕ) : ℚ))
+    (hnrd : ∀ x z : ℚ_[2], Quaternion.normSq (x • (1 : ℍ[ℚ_[2]]) + z • qp 2 ω) =
+      x ^ 2 + ((8 * k + 1 : ℕ) : ℚ_[2]) * z ^ 2) : LocCond where
+  P p _ y := Loc2OK (qp p ω) y ∨ Loc2OK (qp p ω) (y * qp p (1 + ω))
+  one p _ _ := Or.inl Loc2OK.one
+  mul p _ hp y z hy hz := by
+    subst hp
+    have hn := norm_qp_varpi hϖn
+    have h0 : Quaternion.normSq (qp 2 (1 + ω)) ≠ 0 := by
+      intro h; rw [h, norm_zero] at hn; norm_num at hn
+    have hNZ : ((((8 * k + 1 : ℕ) : ℚ)) : ℚ_[2]) ∈ Zp 2 := by
+      rw [mem_Zp]; have := Padic.norm_int_le_one (p := 2) ((8 * k + 1 : ℕ) : ℤ)
+      push_cast at this ⊢; exact this
+    exact P1_mul (L := Loc2OK (qp 2 ω))
+      (fun y z hy hz => Loc2OK.mul' (isHur_qp_hurZ' hωZ) (Zp 2).zero_mem hNZ (qp_omega_sq h2) hy hz)
+      (fun y z hy h => Loc2OK.of_mul_eq_one' (Zp 2).zero_mem (qp_star_omega hst) hy h)
+      (fun z hz => loc2OK_conj (isHur_qp_hurZ' hωZ)
+        (isHur_qp_hurZ' (isHur_one.add hωZ)) hn
+        (by rw [← map_mul, ← map_mul, mul_add, add_mul, mul_one, one_mul]) hz)
+      (loc2OK_varpi_sq hωZ h2 hnrd) (qinv_mul_self h0) (mul_qinv_self h0) hy hz
+  inv p _ hp y z hy h := by
+    subst hp
+    have hn := norm_qp_varpi hϖn
+    have h0 : Quaternion.normSq (qp 2 (1 + ω)) ≠ 0 := by
+      intro h; rw [h, norm_zero] at hn; norm_num at hn
+    have hNZ : ((((8 * k + 1 : ℕ) : ℚ)) : ℚ_[2]) ∈ Zp 2 := by
+      rw [mem_Zp]; have := Padic.norm_int_le_one (p := 2) ((8 * k + 1 : ℕ) : ℤ)
+      push_cast at this ⊢; exact this
+    exact P1_inv (L := Loc2OK (qp 2 ω))
+      (fun y z hy h => Loc2OK.of_mul_eq_one' (Zp 2).zero_mem (qp_star_omega hst) hy h)
+      (fun y z hy hz => Loc2OK.mul' (isHur_qp_hurZ' hωZ) (Zp 2).zero_mem hNZ (qp_omega_sq h2) hy hz)
+      (fun z hz => loc2OK_conj (isHur_qp_hurZ' hωZ)
+        (isHur_qp_hurZ' (isHur_one.add hωZ)) hn
+        (by rw [← map_mul, ← map_mul, mul_add, add_mul, mul_one, one_mul]) hz)
+      (loc2OK_varpi_sq hωZ h2 hnrd) (mul_qinv_self h0) hy h
+
 end ZInQ.Contrib.HfxProof
