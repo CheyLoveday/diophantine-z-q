@@ -41,7 +41,7 @@ the development fork, and from nothing else. It composes three compiled chains:
   reads it only as `TSHecke.Y3Connected`, now proved by dcy3-used's `DCY3Used.y3Connected_of_leaves` from
   `mumfordGroupLaw` and `shimuraMainThmIDeligneY3AbU` and passed from `sixContactMin_of_open28` down to
   `addedLeaves8_of_open9`; docs/research/dcy3-fold.md); `TailZ41` is leaf-fold30's persists-dvr fold (`sixContactMin_of_open34`; written
-  as TailZ40 by leaf-fold30's autofold over rigid-prune's module and moved to TailZ60 by pi0-fold); pi0-fold removed
+  as TailZ40 by leaf-fold30's autofold over rigid-prune's module and moved to TailZ41); pi0-fold removed
   the added fields `deligneComponentsX6PrintedAb` and `geomConnOfAlgClosure`: they fed only the clause `R1pi0Props` of
   the row `LeafAdopt.R1R2fpRep`, which no consumer reads, so the chain carries the weak row `LeafAdopt.R1R2fpRepW`, whose
   base witness comes from González–Rotger's `GonzalezRotgerX6` (`QMSplit.Moduli.x6Rows_of_leavesW`, TailZ21;
