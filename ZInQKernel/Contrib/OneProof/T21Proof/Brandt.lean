@@ -166,4 +166,112 @@ theorem K2Units_sub_Sg {v : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPlaceTwo v) {s
   · rw [piQ_eq_one_of_comps (hk.2 w (not_isPlaceTwo_of_ne hv hw))]
     exact LocOK.one
 
+theorem hurwitzHat_isHur (w : HeightOneSpectrum (𝓞 ℚ)) {h : ℍ[AQ]} (hh : h ∈ hurwitzHat) :
+    IsHur (Zp (Pw w : ℕ)) (piQ w h) := by
+  obtain ⟨a, b, c, d, e, ha, hb, hc, hd, he, rfl⟩ := hh
+  have A := ev_mem_Zp_of_integral w ha
+  have B := ev_mem_Zp_of_integral w hb
+  have C := ev_mem_Zp_of_integral w hc
+  have D := ev_mem_Zp_of_integral w hd
+  have E := ev_mem_Zp_of_integral w he
+  have h2 : ev w (algebraMap ℚ AQ (1 / 2)) = 1 / 2 := by rw [ev_algebraMap]; push_cast; ring
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · convert (Zp _).add_mem (mem_Zp.mpr A) (mem_Zp.mpr D) using 1
+    simp only [ZInQ.Contrib.T21Proof.hc, piQ, qmap_re, qmap_imK, map_sub, map_add, map_mul, h2]; ring
+  · convert (Zp _).sub_mem (mem_Zp.mpr B) (mem_Zp.mpr D) using 1
+    simp only [ZInQ.Contrib.T21Proof.hc, piQ, qmap_imI, qmap_imK, map_add, map_mul, h2]; ring
+  · convert (Zp _).sub_mem (mem_Zp.mpr C) (mem_Zp.mpr D) using 1
+    simp only [ZInQ.Contrib.T21Proof.hc, piQ, qmap_imJ, qmap_imK, map_add, map_mul, h2]; ring
+  · convert (Zp _).add_mem ((Zp _).add_mem (mem_Zp.mpr D) (mem_Zp.mpr D)) (mem_Zp.mpr E) using 1
+    simp only [ZInQ.Contrib.T21Proof.hc, piQ, qmap_imK, map_add, map_mul, h2]; ring
+
+/-- **`R̂_3 ⊂ ∏_w R_w`**: every element of `R̂_3 = τ̂(Ô_K) + 4Ô_B` lies in `ℤ_p + ℤ_p ω + 4O_{B,p}`. -/
+theorem RnHat_InR {τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]} {s : Signs}
+    (hs : τ ((ωK : 𝓞 (QNeg 3)) : QNeg 3) = ωq s) (w : HeightOneSpectrum (𝓞 ℚ)) {y : ℍ[AQ]}
+    (hy : y ∈ RnHat 3 τ) : InR (qp (Pw w : ℕ) (ωq s)) (piQ w y) := by
+  induction hy using AddSubgroup.closure_induction with
+  | mem x hx =>
+    rcases hx with ⟨a, ha, rfl⟩ | ⟨h, hh, rfl⟩
+    · exact piQ_tauHat_mem hs ha w
+    · refine ⟨0, 0, by simp, by simp, piQ w h, hurwitzHat_isHur w hh, ?_⟩
+      rw [map_mul, map_ofNat, zero_smul, zero_smul, zero_add, zero_add,
+        ← Quaternion.coe_mul_eq_smul]
+      rfl
+  | zero => rw [map_zero]; exact InR.zero
+  | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+  | neg x _ hx => rw [map_neg]; exact hx.neg
+
+theorem norm_eq_one_of_mul {p : ℕ} [Fact p.Prime] {a b : ℚ_[p]} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
+    (h : a * b = 1) : ‖a‖ = 1 := by
+  have := congrArg norm h
+  rw [norm_mul, norm_one] at this
+  refine le_antisymm ha (not_lt.mp fun hlt => ?_)
+  have : ‖a‖ * ‖b‖ < 1 := by
+    calc ‖a‖ * ‖b‖ ≤ ‖a‖ * 1 := by gcongr
+      _ < 1 := by rw [mul_one]; exact hlt
+  linarith
+
+theorem RnUnits_sub_Sg {τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]} {v : HeightOneSpectrum (𝓞 ℚ)} {s : Signs}
+    (hs : τ ((ωK : 𝓞 (QNeg 3)) : QNeg 3) = ωq s) : RnUnits 3 τ ⊆ Sg v s := by
+  intro r hr w
+  have h1 := RnHat_InR hs w hr.1
+  have h2 := RnHat_InR hs w hr.2
+  have hω := isHur_qp_hurZ (p := (Pw w : ℕ)) (ωH s)
+  rw [← ωq] at hω
+  have hu1 := h1.isHur hω
+  have hu2 := h2.isHur hω
+  have hprod : piQ w (r : ℍ[AQ]) * piQ w ((r⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) = 1 := by
+    rw [← map_mul, Units.mul_inv, map_one]
+  have hn : ‖Quaternion.normSq (piQ w (r : ℍ[AQ]))‖ = 1 := by
+    refine norm_eq_one_of_mul hu1.normSq_mem hu2.normSq_mem ?_
+    rw [← map_mul, hprod, map_one]
+  exact ⟨fun _ => ⟨1, one_ne_zero, _, by simp, hu1, hn, h1⟩,
+    fun _ => ⟨1, one_ne_zero, _, by simp, hu1, hn⟩⟩
+
+/-- **`H τ ≤ Sg v s`.** -/
+theorem Hgrp_le_Sg {τ : QNeg 3 →ₐ[ℚ] ℍ[ℚ]} {v : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPlaceTwo v)
+    {s : Signs} (hs : τ ((ωK : 𝓞 (QNeg 3)) : QNeg 3) = ωq s) : Hgrp τ ≤ Sg v s := by
+  refine (Subgroup.closure_le _).mpr (Set.union_subset ?_ ?_)
+  · exact (Subgroup.closure_le _).mpr (Set.union_subset (RnUnits_sub_Sg hs) (K2Units_sub_Sg hv hs))
+  · rintro _ ⟨z, rfl⟩
+    exact centre_mem_Sg v s z
+
+/-! ## Non-membership -/
+
+theorem twoRepQ_eq (t : Fin 2 × Fin 2 × Fin 2) : twoRepQ t = hurZ (βZ t) := by
+  apply hc_injective
+  rw [hurZ, hc_hur]
+  ext <;> simp [twoRepQ, βZ, hc, mapH] <;> ring
+
+theorem two_adic_step' {p : ℕ} [Fact p.Prime] (hp : p = 2) (q : ℚ) (hq : q ≠ 0) (n : H4 ℤ)
+    (k : ℕ) (hk : nrdH n = 2 ^ k) (β : H4 ℤ) (hβ : Odd (nrdH β)) (ωc : H4 ℤ) (c : ℚ_[p])
+    (hc0 : c ≠ 0) (u : ℍ[ℚ_[p]]) (hu : IsHur (Zp p) u) (hnu : ‖Quaternion.normSq u‖ = 1)
+    (hR : InR (hurZ ωc) u) (heq : qp p (q • hurZ n) * (c • u) = hurZ β) :
+    ∃ μ : H4 ℤ, nrdH μ = 1 ∧ ∃ X Y : ZMod 4, Mod4Rel ωc (mulH μ β) X Y := by
+  subst hp
+  exact two_adic_step q hq n k hk β hβ ωc c hc0 u hu hnu hR heq
+
+/-- **The six classes `t ∉ {0, t*(s)}` are not in `B^× Sg`** (hence not in `B^× H`). -/
+theorem twoRep_ne {v : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPlaceTwo v) (s : Signs)
+    (t : Fin 2 × Fin 2 × Fin 2) (ht0 : t ≠ (0, 0, 0)) (hts : t ≠ tstar s) {γ : ℍ[ℚ]} (hγ : γ ≠ 0)
+    {h : ℍ[AQ]ˣ} (hh : h ∈ Sg v s) : twoRep v t ≠ qι γ * ↑h := by
+  intro heq
+  have hodd : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → LocOK (qp p γ) := by
+    intro p hpp hp2
+    obtain ⟨w, hw⟩ := exists_place_of_prime p hpp.out
+    subst hw
+    have hwv : w ≠ v := fun h => hp2 (by rw [h]; exact Pw_eq_two hv)
+    have e := congrArg (piQ w) heq
+    rw [twoRep, piQ_ιAt_ne hwv, map_mul, piQ_qι] at e
+    exact ((hh w).2 hwv).of_mul_eq_one' e.symm
+  obtain ⟨q, n, k, hq, hγq, hk⟩ := global_step γ hγ hodd
+  have e := congrArg (piQ v) heq
+  rw [twoRep, piQ_ιAt_self, map_mul, piQ_qι, twoRepQ_eq, qp_hurZ] at e
+  obtain ⟨c, hc0, u, hcu, hu, hnu, hR⟩ := (hh v).1 rfl
+  rw [hcu, hγq] at e
+  rw [ωq, qp_hurZ] at hR
+  obtain ⟨μ, hμ, X, Y, hrel⟩ := two_adic_step' (Pw_eq_two hv) q hq n k hk (βZ t) (nrdH_βZ_odd t)
+    (ωH s) c hc0 u hu hnu hR e.symm
+  exact mod4_check s t ht0 hts μ (mem_unitList hμ) X Y hrel
+
 end ZInQ.Contrib.T21Proof
