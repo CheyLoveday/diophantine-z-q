@@ -42,3 +42,18 @@ Task: prove `SGRDirect.NVLocalInertia` (ZInQKernel/Contrib/OneProof/SGRDirectNV.
   checked, 7 discharge one" (none from this file, as expected: HeckeVertWitness is not an open field); all six
   listed theorems: [propext, Classical.choice, Quot.sound].
 - scratch/nv-local/autofold.json (no fold; bypass as sgr-direct with branchRegular in place of nvLocalInertia).
+
+## 2026-11-16 00:30 existence clause proved; BranchRegular restated VERIFIED
+- `exists_int_mul_mem` (every y in the Q[X]-closure has k*y in the Z[X]-closure, k != 0; Mathlib
+  `IsIntegral.exists_multiple_integral_of_isLocalization` with `Polynomial.isLocalization`) and
+  `exists_branch` (a prime Q of B over X-b with Q cap C <= P, for P maximal over (p, dX-a): going down
+  `Ideal.exists_ideal_le_liesOver_of_le` for C/Z[X], ker(Z[X] -> Q, X -> b) <= m via the chain's `mem_m_iff`,
+  then Q = {y : k*y in Q_C}). Both compiled, standard axioms.
+- `BranchRegular` restated without the existence clause: for every Q (prime of B over X-b, Q cap C <= P),
+  (UB) every such Q' equals Q, and (N) every z in B/Q integral over Z is c1/c2 with c2 notin P.
+  `nvLocalInertia_of_branchRegular` and `heckeVertWitness_of_branchRegular` recompiled.
+- `lake build +ZInQKernel.Contrib.OneProof.SGRDirectNVLocal` OK; Discharges-output.txt regenerated:
+  "63 open hypotheses, 1906 theorems checked, 7 discharge one" (none from this file); seven theorems with
+  [propext, Classical.choice, Quot.sound].
+- scratch/nv-local/NVLocal.lean = copy of the Contrib file; Core-first.lean = the first compiled version
+  (old BranchRegular with existence clause).

@@ -215,12 +215,161 @@ theorem galC_mem (g : Gal(E/RatFunc ℚ)) :
 
 
 
+omit [Algebra (RatFunc ℚ) E] [IsScalarTower ℚ[X] (RatFunc ℚ) E] in
+/-- Clearing denominators: every element of the `ℚ[X]`-closure has a nonzero integer multiple in the
+`ℤ[X]`-closure. -/
+theorem exists_int_mul_mem (y : integralClosure ℚ[X] E) :
+    letI := intPolyAlg E
+    ∃ k : ℤ, k ≠ 0 ∧ ∃ c : integralClosure ℤ[X] E, (c : E) = (k : E) * y := by
+  letI := intPolyAlg E
+  letI : Algebra ℤ[X] ℚ[X] := Polynomial.algebra ℤ ℚ
+  haveI : IsLocalization ((nonZeroDivisors ℤ).map (C : ℤ →+* ℤ[X])) ℚ[X] :=
+    Polynomial.isLocalization (nonZeroDivisors ℤ) ℚ
+  haveI : IsScalarTower ℤ[X] ℚ[X] E := IsScalarTower.of_algebraMap_eq (fun x => by
+    show algebraMap ℚ[X] E (x.map (Int.castRingHom ℚ)) = algebraMap ℚ[X] E (algebraMap ℤ[X] ℚ[X] x)
+    rw [Polynomial.algebraMap_def ℤ ℚ]
+    congr 2)
+  obtain ⟨⟨_, ⟨k, hk, rfl⟩⟩, hint⟩ :=
+    IsIntegral.exists_multiple_integral_of_isLocalization
+      ((nonZeroDivisors ℤ).map (C : ℤ →+* ℤ[X])) (y : E) y.2
+  refine ⟨k, nonZeroDivisors.ne_zero hk, ⟨_, hint⟩, ?_⟩
+  show (C k : ℤ[X]) • (y : E) = (k : E) * y
+  rw [Algebra.smul_def]
+  congr 1
+  show algebraMap ℚ[X] E ((C k).map (Int.castRingHom ℚ)) = (k : E)
+  simp
+
+
+
+/-- **A branch of `X = b` through every closed point over `(p, dX − a)`** (going down for the integral
+closure of `ℤ[X]`, then the localization `B = (ℤ ∖ 0)⁻¹ C`). -/
+theorem exists_branch (p : ℕ) [Fact p.Prime] (b : ℚ) (hb : 0 ≤ padicValRat p b) :
+    letI := intPolyAlg E
+    ∀ 𝔓 : Ideal (integralClosure ℤ[X] E), 𝔓.IsMaximal →
+      C (p : ℤ) ∈ 𝔓.under ℤ[X] → C (b.den : ℤ) * X - C b.num ∈ 𝔓.under ℤ[X] →
+      ∃ Q : Ideal (integralClosure ℚ[X] E), Q.IsPrime ∧ Q.under ℚ[X] = Ideal.span {X - C b} ∧
+        Q.comap (zqIncl E) ≤ 𝔓 := by
+  letI := intPolyAlg E
+  intro 𝔓 h𝔓 hp𝔓 hb𝔓
+  set m := 𝔓.under ℤ[X] with hmdef
+  haveI : m.IsMaximal := Ideal.IsMaximal.under ℤ[X] 𝔓
+  have hspan : (Ideal.span {X - C b} : Ideal ℚ[X]).IsMaximal :=
+    PrincipalIdealRing.isMaximal_of_irreducible (irreducible_X_sub_C b)
+  set h : Ideal ℤ[X] := (Ideal.span {X - C b}).comap (Polynomial.mapRingHom (Int.castRingHom ℚ))
+    with hhdef
+  haveI : h.IsPrime := Ideal.comap_isPrime _ _
+  have hhm : h ≤ m := by
+    intro u hu
+    rw [hhdef, Ideal.mem_comap, Ideal.mem_span_singleton, coe_mapRingHom, dvd_iff_isRoot] at hu
+    rw [mem_m_iff p b hb m hp𝔓 hb𝔓]
+    have h0 : (nval b u : ℚ) = 0 := by
+      rw [nval_cast, IsRoot.def.mp hu, mul_zero]
+    rw [Int.cast_eq_zero.mp h0]
+    exact dvd_zero _
+  haveI : 𝔓.LiesOver m := ⟨rfl⟩
+  have hinjE : Function.Injective (algebraMap ℤ[X] (integralClosure ℤ[X] E)) := by
+    intro x y hxy
+    apply algebraMap_int_injective (E := E)
+    have := congrArg (fun z : integralClosure ℤ[X] E => (z : E)) hxy
+    simpa using this
+  haveI : FaithfulSMul ℤ[X] (integralClosure ℤ[X] E) :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr hinjE
+  obtain ⟨QC, hQC𝔓, hQCp, hQCl⟩ := Ideal.exists_ideal_le_liesOver_of_le (p := h) (q := m) 𝔓 hhm
+  have hQCu : QC.under ℤ[X] = h := hQCl.over.symm
+  -- nonzero integers are not in `QC`
+  have hint_not : ∀ k : ℤ, k ≠ 0 → (k : integralClosure ℤ[X] E) ∉ QC := by
+    intro k hk hkQ
+    have h1 : (C k : ℤ[X]) ∈ h := by
+      rw [← hQCu, Ideal.under_def, Ideal.mem_comap]
+      simpa using hkQ
+    rw [hhdef, Ideal.mem_comap, Ideal.mem_span_singleton, coe_mapRingHom, Polynomial.map_C,
+      eq_intCast] at h1
+    have h2 := Polynomial.natDegree_le_of_dvd h1 (by simpa using hk)
+    simp at h2
+  -- the prime `Q` of `B` above `QC`
+  let Q : Ideal (integralClosure ℚ[X] E) :=
+    { carrier := {y | ∃ k : ℤ, k ≠ 0 ∧ ∃ c ∈ QC, (c : E) = (k : E) * y}
+      zero_mem' := ⟨1, one_ne_zero, 0, QC.zero_mem, by simp⟩
+      add_mem' := by
+        rintro y₁ y₂ ⟨k₁, hk₁, c₁, hc₁, e₁⟩ ⟨k₂, hk₂, c₂, hc₂, e₂⟩
+        refine ⟨k₁ * k₂, mul_ne_zero hk₁ hk₂, (k₂ : integralClosure ℤ[X] E) * c₁ + k₁ * c₂,
+          QC.add_mem (QC.mul_mem_left _ hc₁) (QC.mul_mem_left _ hc₂), ?_⟩
+        simp only [AddMemClass.coe_add,
+          MulMemClass.coe_mul, SubringClass.coe_intCast, e₁, e₂, Int.cast_mul]
+        ring
+      smul_mem' := by
+        rintro z y ⟨k, hk, c, hc, e⟩
+        obtain ⟨k₀, hk₀, c₀, e₀⟩ := exists_int_mul_mem z
+        refine ⟨k₀ * k, mul_ne_zero hk₀ hk, c₀ * c, QC.mul_mem_left _ hc, ?_⟩
+        simp only [smul_eq_mul, MulMemClass.coe_mul, e, e₀, Int.cast_mul]
+        ring }
+  have hmemQ : ∀ y, y ∈ Q ↔ ∃ k : ℤ, k ≠ 0 ∧ ∃ c ∈ QC, (c : E) = (k : E) * y := fun _ => Iff.rfl
+  have hQprime : Q.IsPrime := by
+    refine ⟨?_, ?_⟩
+    · rw [Ne, Ideal.eq_top_iff_one, hmemQ]
+      rintro ⟨k, hk, c, hc, e⟩
+      apply hint_not k hk
+      have : c = (k : integralClosure ℤ[X] E) := Subtype.ext (by simpa using e)
+      rwa [← this]
+    · intro y z hyz
+      rw [hmemQ] at hyz
+      obtain ⟨k, hk, c, hc, e⟩ := hyz
+      obtain ⟨k₁, hk₁, c₁, e₁⟩ := exists_int_mul_mem y
+      obtain ⟨k₂, hk₂, c₂, e₂⟩ := exists_int_mul_mem z
+      have hmul : (k : integralClosure ℤ[X] E) * (c₁ * c₂) =
+          ((k₁ * k₂ : ℤ) : integralClosure ℤ[X] E) * c := by
+        apply Subtype.ext
+        simp only [MulMemClass.coe_mul, SubringClass.coe_intCast, e₁, e₂, e, Int.cast_mul]
+        ring
+      have hin : (k : integralClosure ℤ[X] E) * (c₁ * c₂) ∈ QC := by
+        rw [hmul]; exact QC.mul_mem_left _ hc
+      rcases hQCp.mem_or_mem hin with h1 | h1
+      · exact absurd h1 (hint_not k hk)
+      rcases hQCp.mem_or_mem h1 with h2 | h2
+      · exact Or.inl ⟨k₁, hk₁, c₁, h2, e₁⟩
+      · exact Or.inr ⟨k₂, hk₂, c₂, h2, e₂⟩
+  refine ⟨Q, hQprime, ?_, ?_⟩
+  · -- `Q` lies over `X − b`
+    have hle : Ideal.span {X - C b} ≤ Q.under ℚ[X] := by
+      rw [Ideal.span_le, Set.singleton_subset_iff]
+      show algebraMap ℚ[X] (integralClosure ℚ[X] E) (X - C b) ∈ Q
+      refine ⟨b.den, by exact_mod_cast b.den_nz, algebraMap ℤ[X] (integralClosure ℤ[X] E)
+        (C (b.den : ℤ) * X - C b.num), ?_, ?_⟩
+      · rw [← Ideal.mem_comap, ← Ideal.under_def, hQCu, hhdef, Ideal.mem_comap,
+          Ideal.mem_span_singleton]
+        refine ⟨C (b.den : ℚ), ?_⟩
+        rw [coe_mapRingHom, Polynomial.map_sub, Polynomial.map_mul, Polynomial.map_C,
+          Polynomial.map_C, Polynomial.map_X]
+        simp only [eq_intCast, Int.cast_natCast]
+        rw [← Rat.mul_den_eq_num b, C_mul]
+        ring
+      · show algebraMap ℚ[X] E ((C (b.den : ℤ) * X - C b.num).map (Int.castRingHom ℚ)) =
+          ((b.den : ℤ) : E) * algebraMap ℚ[X] E (X - C b)
+        rw [show (((b.den : ℤ) : E)) = algebraMap ℚ[X] E (C (b.den : ℚ)) by simp, ← map_mul]
+        congr 1
+        rw [Polynomial.map_sub, Polynomial.map_mul, Polynomial.map_C,
+          Polynomial.map_C, Polynomial.map_X]
+        simp only [eq_intCast, Int.cast_natCast]
+        rw [← Rat.mul_den_eq_num b, C_mul]
+        ring
+    haveI : (Q.under ℚ[X]).IsPrime := Ideal.IsPrime.under _ Q
+    exact (hspan.eq_of_le (Ideal.IsPrime.ne_top inferInstance) hle).symm
+  · intro c hc
+    rw [Ideal.mem_comap, hmemQ] at hc
+    obtain ⟨k, hk, c', hc', e⟩ := hc
+    have : c' = (k : integralClosure ℤ[X] E) * c := Subtype.ext (e.trans (by push_cast; rfl))
+    rw [this] at hc'
+    rcases hQCp.mem_or_mem hc' with h1 | h1
+    · exact absurd h1 (hint_not k hk)
+    · exact hQC𝔓 h1
+
 /-- **GLUE (local geometry of tame covers at a closed point; h-b1 §3 Lemma NV step 3, geometric half).**
 Hypotheses as in `NVLocalInertia` minus the residue fields. Let `C` and `B` be the integral closures of `ℤ[X]`
 and `ℚ[X]` in `E`, and `𝔓` a maximal ideal of `C` over `m_b = (p, dX − a)` (`b = a/d`). Then the branch of
-`X = b` through `𝔓` is unique and normal there: exactly one prime `Q` of `B` over `X − b` has `Q ∩ C ⊆ 𝔓`,
-and every element of `B/Q` integral over `ℤ` is a quotient `c₁/c₂` of images of `c₁, c₂ ∈ C` with `c₂ ∉ 𝔓`
-(the localization of `C/(Q ∩ C)` at `𝔓` contains the ring of integers of the number field `B/Q`).
+`X = b` through `𝔓` is unique and normal there: for every prime `Q` of `B` over `X − b` with `Q ∩ C ⊆ 𝔓`
+(one exists: `exists_branch`), every other such prime equals `Q`, and every element of `B/Q` integral over `ℤ`
+is a quotient `c₁/c₂` of images of `c₁, c₂ ∈ C` with `c₂ ∉ 𝔓` (the localization of `C/(Q ∩ C)` at `𝔓` contains
+the ring of integers of the number field `B/Q`, i.e. it is normal).
 *Proof route* (not compiled): Abhyankar's lemma (SGA 1 XIII 5.2–5.3, UNVERIFIED numbers) at the closed point:
 after the Kummer base change `A' = ℤ_(p)[ζ_N, p^{1/N}][r]_{(p^{1/N}, r)}`, `r^N = X − b`, `N = |G|`, the
 normalization is unramified in codimension one (the kernel's T2 at both divisors; base change of the
@@ -239,8 +388,8 @@ def BranchRegular : Prop :=
     letI := intPolyAlg E
     ∀ 𝔓 : Ideal (integralClosure ℤ[X] E), 𝔓.IsMaximal →
       C (p : ℤ) ∈ 𝔓.under ℤ[X] → C (b.den : ℤ) * X - C b.num ∈ 𝔓.under ℤ[X] →
-      ∃ Q : Ideal (integralClosure ℚ[X] E), Q.IsPrime ∧ Q.under ℚ[X] = Ideal.span {X - C b} ∧
-        Q.comap (zqIncl E) ≤ 𝔓 ∧
+      ∀ Q : Ideal (integralClosure ℚ[X] E), Q.IsPrime → Q.under ℚ[X] = Ideal.span {X - C b} →
+        Q.comap (zqIncl E) ≤ 𝔓 →
         (∀ Q' : Ideal (integralClosure ℚ[X] E), Q'.IsPrime →
           Q'.under ℚ[X] = Ideal.span {X - C b} → Q'.comap (zqIncl E) ≤ 𝔓 → Q' = Q) ∧
         (∀ z : integralClosure ℚ[X] E ⧸ Q, IsIntegral ℤ z →
@@ -266,8 +415,9 @@ theorem nvLocalInertia_of_branchRegular (h : BranchRegular) : NVLocalInertia := 
   haveI := h𝔓p
   haveI : 𝔓.LiesOver m := ⟨h𝔓u.symm⟩
   have h𝔓max : 𝔓.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal 𝔓 m
-  obtain ⟨Q, hQ, hQu, hQ𝔓, hUB, hN⟩ :=
-    h E S n nInf p hp hB hdeg hint hdist b hb 𝔓 h𝔓max (h𝔓u ▸ hpm) (h𝔓u ▸ hbm)
+  obtain ⟨Q, hQ, hQu, hQ𝔓⟩ := exists_branch p b (hint b hb) 𝔓 h𝔓max (h𝔓u ▸ hpm) (h𝔓u ▸ hbm)
+  obtain ⟨hUB, hN⟩ :=
+    h E S n nInf p hp hB hdeg hint hdist b hb 𝔓 h𝔓max (h𝔓u ▸ hpm) (h𝔓u ▸ hbm) Q hQ hQu hQ𝔓
   haveI := hQ
   have hq𝔓' : ∀ x, x ∈ q → x ∈ 𝔓 := fun x hx => hq𝔓 hx
   -- `τ` maps `Q` to itself (unibranch)

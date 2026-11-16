@@ -5,6 +5,7 @@ import ZInQKernel.Contrib.OneProof.SGRDirectNVLocal
 #discharges
 
 #print axioms SGRDirect.NVLocal.eq_one_of_inertia_of_unram
+#print axioms SGRDirect.NVLocal.exists_branch
 #print axioms SGRDirect.NVLocal.primeOf_isPrime
 #print axioms SGRDirect.NVLocal.inertia_primeOf
 #print axioms SGRDirect.NVLocal.eq_one_of_primeOf
