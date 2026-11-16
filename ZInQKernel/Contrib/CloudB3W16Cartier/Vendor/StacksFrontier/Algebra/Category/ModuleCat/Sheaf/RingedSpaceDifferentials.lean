@@ -12,7 +12,7 @@ import Mathlib.Algebra.Category.ModuleCat.Sheaf.Abelian
 import Mathlib.Algebra.Homology.ShortComplex.Exact
 
 namespace ZInQ.Contrib.CloudB3W16Cartier.Vendor
-open _root_.CategoryTheory
+open _root_.AlgebraicGeometry _root_.CategoryTheory
 
 
 /-!
@@ -906,8 +906,9 @@ end Descent
 `f^* Ω_{Y/S} ⟶ Ω_{X/S}`. -/
 noncomputable def isColimitCokernelCoforkToRelativeDifferentials (f : X ⟶ Y) (g : Y ⟶ S) :
     Limits.IsColimit (Limits.CokernelCofork.ofπ (toRelativeDifferentials f g)
-      (differentialMap_comp_toRelativeDifferentials f g)) :=
-  Limits.CokernelCofork.IsColimit.ofπ' _ _ fun k hk =>
+      (differentialMap_comp_toRelativeDifferentials f g)) := by
+  letI : Epi (toRelativeDifferentials f g) := triangleDifferentials_epi f g
+  exact Limits.CokernelCofork.IsColimit.ofπ' _ _ fun k hk =>
     ⟨descOfCompEqZero f g k hk, toRelativeDifferentials_comp_descOfCompEqZero f g k hk⟩
 
 /-- For morphisms of ringed spaces `f : X ⟶ Y` and `g : Y ⟶ S` the canonical maps form a complex
