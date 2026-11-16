@@ -50,3 +50,11 @@ Build: .lake/build copied from ~/dzq-wt/ds965-weak; `lake build R16Used Jacobian
   "61 open hypotheses, 2400 theorems checked, 11 discharge one".
 - autofold dry run (autofold.json): strict 45/10 on 55 -> 47/10 on 57; strictest 43/12 -> 45/12; FoldDryRun.lean
   compiles, sixContactMin_of_open31 standard axioms. Weak spec: 45/10 -> 46/11 (rise; pending-reading flag).
+
+## Part 3: CurveIsoOfFunctionFieldIso PROVED (scratch/isj1-dict/CurveIso.lean) — VERIFIED, standard axioms
+
+- Proof: vendored Scheme.exists_hom_of_valuationRing_stalk (rational maps from integral schemes with valuation stalks
+  to proper separated targets extend) + vendored Scheme.valuationRing_stalk (stalks of integral smooth curves are
+  valuation rings) give X → X' and X' → X extending the function-field isomorphism; composites are identities by
+  Mathlib ext_of_isDominant_of_isSeparated' (Spec K(X) → X dominant, proved). Any two maps Spec K → Spec ℚ agree.
+- So the dictionary step 'a curve is determined by its function field' is no longer a leaf.
