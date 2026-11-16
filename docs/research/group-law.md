@@ -43,7 +43,12 @@ than the field (`dvr_of_field : MumfordGroupLaw → MumfordGroupLawDVR`). At a f
 
 The swap is **not autofold-compatible**: the old generations' field type is `MumfordGroupLaw`, and no theorem can fill
 it from the DVR leaf. It needs an in-place fold like rigid-prune's: four consumer sites and one field type per bundle
-generation (§5). No fold has been compiled; §5 lists the edits.
+generation (§5). **That fold compiles (VERIFIED, in an olean overlay outside the repository).**
+* `frozenTarget` builds with field type `MumfordGroupLawDVR`.
+* `#print axioms` gives `[propext, Classical.choice, Quot.sound]`.
+* `MumfordGroupLaw` is no longer in `frozenTarget`'s closure.
+
+Evidence: scratch/group-law/fold/ (narrowing.patch, foldcheck.txt).
 
 ## 2. The field and its consumers (VERIFIED)
 
@@ -139,9 +144,10 @@ reduced.
   neronSchemeExtensionExists, picRepresentableAbVar, …) do not imply group laws on families over a curve. So no −1 by
   reuse of existing leaves (VERIFIED by reading their statements in OPEN.md).
 
-## 5. Proposed narrowing fold (manual; not compiled here)
+## 5. The narrowing fold (manual; compiled in an overlay, VERIFIED)
 
-Leaf count unchanged; the new leaf is strictly weaker. In place, like rigid-prune's fold:
+Leaf count unchanged; the new leaf is strictly weaker. In place, like rigid-prune's fold (the exact edits are
+scratch/group-law/fold/narrowing.patch, 13 modules):
 1. In every bundle generation with the field (OpenResearchLeaves14 to OpenResearchLeaves26, structures in TailZ23,
    TailZ25 to TailZ29, TailZ33 to TailZ38 and TailZ41), change the field type
    `_root_.ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw` to `_root_.ZInQ.Contrib.GroupLaw.MumfordGroupLawDVR`. Keep the
@@ -156,6 +162,19 @@ Leaf count unchanged; the new leaf is strictly weaker. In place, like rigid-prun
 4. kinds.tsv row: kind published; source "MFK *GIT* Thm 6.14 with `S = Spec R`, `R` a DVR" (numbers UNVERIFIED); flag
    "unread: new printed leaf …, locator UNVERIFIED". The row in scratch/group-law/autofold.json is in autofold's format,
    but marked manual: autofold cannot run it, because there is no proof of `MumfordGroupLaw`.
+
+**Check (VERIFIED, 11-16 ~15:40).** No file under `ZInQKernel/` was edited.
+* The 13 patched sources are in /tmp/glfold/src.
+* The 31 modules downstream of TailZ23 in `Main`'s import closure (fold/downstream-modules.txt) were recompiled in
+  topological order with `lean -R <root> -o` into an olean overlay: a symlink tree of the worktree's build with those
+  31 modules replaced, first on `LEAN_PATH` (fold/compile_overlay.sh). No errors.
+* `ZInQKernel.OneProof.Main` compiled: `frozenTarget` depends on `[propext, Classical.choice, Quot.sound]`.
+* fold/FoldCheck.lean (foldcheck.txt) shows:
+  * `OpenResearchLeaves26.mumfordGroupLaw : … → ZInQ.Contrib.GroupLaw.MumfordGroupLawDVR`;
+  * in `frozenTarget`'s closure: `MumfordGroupLawDVR` and `qmFamilyGroupLaw_of_dvr`;
+  * not in it: `MumfordGroupLaw` and `qmFamilyGroupLaw_of_groupLaw`.
+
+The integrator should also update the fields' docstrings (unchanged in the patch) and the kinds.tsv and OPEN.md rows.
 
 If an autofold-compatible swap is preferred: dict-models' `MumfordGroupLawConn` (origin/wip/dict-models ca225d00) is one,
 since it adds only `ConnectedSpace S`.
@@ -179,5 +198,6 @@ since it adds only `ConnectedSpace S`.
 ## 7. What remains
 
 * The field over non-reduced bases (not used by the chain) and the DVR leaf itself: open; inputs as in §4.
-* The narrowing fold of §5 has not been compiled.
+* The narrowing fold of §5 is compiled only in an overlay: no integration build, no hash comparison, no
+  OPEN.md regeneration.
 * The re-typing prune of §2 (−1 with no leaf) is possible in principle but conflicts with the fold contract.

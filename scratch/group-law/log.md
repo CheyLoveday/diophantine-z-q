@@ -55,3 +55,12 @@ replayed 13698 jobs, frozenTarget standard axioms (VERIFIED, 11-16 12:31).
   is not proved. The chain's need (QMFamilyGroupLaw) is proved from GIT 6.14 over a DVR (`MumfordGroupLawDVR`),
   a strictly weaker leaf (dvr_of_field). Replacing the field by it is a narrowing (count 0) that autofold cannot
   express (the old generations' field type is `MumfordGroupLaw`); manual fold like rigid-prune's.
+
+## Narrowing fold check (VERIFIED, olean overlay outside the repo, 11-16 ~15:40)
+- 13 patched modules (field type MumfordGroupLaw → MumfordGroupLawDVR in OpenResearchLeaves14..26; TailZ23 3 sites
+  qmFamilyGroupLaw_of_dvr; TailZ34 y3Connected_of_ab_gl ... qmFamilyGroupLaw_of_dvr ...): scratch/group-law/fold/narrowing.patch.
+- 31 downstream modules recompiled with `lean -R root -o` into /tmp/glfold/lib (symlink tree of the build,
+  rebuilt modules replaced); all rc=0, 5-28 s each.
+- Main: 'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound].
+- FoldCheck: OpenResearchLeaves26.mumfordGroupLaw : … → MumfordGroupLawDVR; MumfordGroupLaw not in closure;
+  MumfordGroupLawDVR, qmFamilyGroupLaw_of_dvr in closure.
