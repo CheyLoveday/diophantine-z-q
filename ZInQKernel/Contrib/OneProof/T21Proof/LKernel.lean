@@ -318,4 +318,161 @@ theorem thetaMain_eq (a b x : ℝ) :
   simp only [mul_add, add_mul, Complex.exp_add]
   ring
 
+/-- **`‖θ_{a,b}(x) − θ_main‖ ≤ 15.2 e^{−πx}`** (`0 ≤ a, b < 1`, `x ≥ 1`). -/
+theorem norm_theta_sub_main_le {a b x : ℝ} (ha0 : 0 ≤ a) (ha1 : a < 1) (hb0 : 0 ≤ b) (hb1 : b < 1)
+    (hx : 1 ≤ x) :
+    ‖gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x - thetaMain a b x‖ ≤
+      15.2 * Real.exp (-π * x) := by
+  set X := Real.exp (-π * x)
+  have hX0 : 0 ≤ X := (Real.exp_pos _).le
+  have hX : X ≤ 1 / 20 := by
+    refine le_trans (Real.exp_le_exp.mpr ?_) exp_neg_pi_le
+    nlinarith [Real.pi_pos]
+  set O := oddKernel (a : UnitAddCircle) x
+  set E := evenKernel (b : UnitAddCircle) x
+  set O' := oddKernel (b : UnitAddCircle) x
+  set E' := evenKernel (a : UnitAddCircle) x
+  have h1 := abs_odd_sub_main_le ha0 ha1 hx
+  have h2 := abs_even_sub_main_le hb0 hb1 hx
+  have h3 := abs_odd_sub_main_le hb0 hb1 hx
+  have h4 := abs_even_sub_main_le ha0 ha1 hx
+  have m1 := abs_oddMain_le ha0 ha1 hx
+  have m2 := abs_evenMain_le hb0 hb1 hx
+  have m3 := abs_oddMain_le hb0 hb1 hx
+  have m4 := abs_evenMain_le ha0 ha1 hx
+  have hE : |E| ≤ 1.581 := by
+    have := abs_sub_abs_le_abs_sub E (evenMain b x); linarith
+  have hO' : |O'| ≤ 0.8005 := by
+    have := abs_sub_abs_le_abs_sub O' (oddMain b x); linarith
+  have hA : |O * E - oddMain a x * evenMain b x| ≤ 7.546 * X := by
+    have e : O * E - oddMain a x * evenMain b x =
+        (O - oddMain a x) * E + oddMain a x * (E - evenMain b x) := by ring
+    rw [e]
+    calc |(O - oddMain a x) * E + oddMain a x * (E - evenMain b x)|
+        ≤ |O - oddMain a x| * |E| + |oddMain a x| * |E - evenMain b x| := by
+          rw [← abs_mul, ← abs_mul]; exact abs_add_le _ _
+      _ ≤ (4.01 * X) * 1.581 + 0.6 * (2.01 * X) := by gcongr
+      _ = 7.54581 * X := by ring
+      _ ≤ 7.546 * X := by nlinarith
+  have hB : |E' * O' - evenMain a x * oddMain b x| ≤ 7.545 * X := by
+    have e : E' * O' - evenMain a x * oddMain b x =
+        (E' - evenMain a x) * O' + evenMain a x * (O' - oddMain b x) := by ring
+    rw [e]
+    calc |(E' - evenMain a x) * O' + evenMain a x * (O' - oddMain b x)|
+        ≤ |E' - evenMain a x| * |O'| + |evenMain a x| * |O' - oddMain b x| := by
+          rw [← abs_mul, ← abs_mul]; exact abs_add_le _ _
+      _ ≤ (2.01 * X) * 0.8005 + 1.48 * (4.01 * X) := by gcongr
+      _ = 7.543805 * X := by ring
+      _ ≤ 7.545 * X := by nlinarith
+  rw [thetaMain_eq]
+  have e : gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x -
+      (((oddMain a x * evenMain b x : ℝ) : ℂ) + I * ((evenMain a x * oddMain b x : ℝ) : ℂ)) =
+      ((O * E - oddMain a x * evenMain b x : ℝ) : ℂ) +
+        I * ((E' * O' - evenMain a x * oddMain b x : ℝ) : ℂ) := by
+    simp only [gaussTheta, O, E, O', E']; push_cast; ring
+  rw [e]
+  calc ‖((O * E - oddMain a x * evenMain b x : ℝ) : ℂ) +
+        I * ((E' * O' - evenMain a x * oddMain b x : ℝ) : ℂ)‖
+      ≤ |O * E - oddMain a x * evenMain b x| + |E' * O' - evenMain a x * oddMain b x| := by
+        refine (norm_add_le _ _).trans ?_
+        rw [norm_mul, Complex.norm_I, one_mul, Complex.norm_real, Complex.norm_real,
+          Real.norm_eq_abs, Real.norm_eq_abs]
+    _ ≤ 7.546 * X + 7.545 * X := add_le_add hA hB
+    _ ≤ 15.2 * X := by nlinarith
+
+theorem integrableOn_tm (u v : ℝ) : IntegrableOn (tm u v) (Ioi 1) := by
+  by_cases h : u ^ 2 + v ^ 2 = 0
+  · have hu : u = 0 := by nlinarith [sq_nonneg u, sq_nonneg v]
+    have hv : v = 0 := by nlinarith [sq_nonneg u, sq_nonneg v]
+    have : tm u v = fun _ => 0 := by funext x; simp [tm, hu, hv]
+    rw [this]; exact integrableOn_zero
+  · have hc : -π * (u ^ 2 + v ^ 2) < 0 := by
+      have : 0 < u ^ 2 + v ^ 2 := lt_of_le_of_ne (by positivity) (Ne.symm h)
+      nlinarith [Real.pi_pos]
+    have := ((integrableOn_exp_mul_Ioi hc 1).ofReal (𝕜 := ℂ)).const_mul ((u : ℂ) + I * v)
+    exact this
+
+theorem integral_tm (u v : ℝ) : ∫ x in Ioi (1 : ℝ), tm u v x = tmL u v := by
+  by_cases h : u ^ 2 + v ^ 2 = 0
+  · have hu : u = 0 := by nlinarith [sq_nonneg u, sq_nonneg v]
+    have hv : v = 0 := by nlinarith [sq_nonneg u, sq_nonneg v]
+    simp [tm, tmL, hu, hv]
+  · have hpos : 0 < u ^ 2 + v ^ 2 := lt_of_le_of_ne (by positivity) (Ne.symm h)
+    have hc : -π * (u ^ 2 + v ^ 2) < 0 := by nlinarith [Real.pi_pos]
+    have e : (fun x => tm u v x) =
+        fun x => ((u : ℂ) + I * v) * ((Real.exp ((-π * (u ^ 2 + v ^ 2)) * x) : ℝ) : ℂ) := rfl
+    rw [e, integral_const_mul, integral_complex_ofReal, integral_exp_mul_Ioi hc 1, tmL]
+    congr 2
+    rw [mul_one, neg_mul, neg_div_neg_eq]
+
+/-- `‖θ^dual_{a,b}(x)‖ ≤ 0.2487 e^{−π(x−1)}` for `x ≥ 1`. -/
+theorem norm_thetaDual_le (a b : ℝ) {x : ℝ} (hx : 1 ≤ x) :
+    ‖gaussThetaDual (a : UnitAddCircle) (b : UnitAddCircle) x‖ ≤
+      0.2487 * Real.exp (-π * (x - 1)) := by
+  have s1 := abs_sinKernel_le a hx
+  have s2 := abs_sinKernel_le b hx
+  have c1 := abs_cosKernel_le a hx
+  have c2 := abs_cosKernel_le b hx
+  have hE := (Real.exp_pos (-π * (x - 1))).le
+  rw [gaussThetaDual]
+  calc ‖(sinKernel (a : UnitAddCircle) x : ℂ) * cosKernel (b : UnitAddCircle) x +
+        I * ((cosKernel (a : UnitAddCircle) x : ℂ) * sinKernel (b : UnitAddCircle) x)‖
+      ≤ |sinKernel (a : UnitAddCircle) x| * |cosKernel (b : UnitAddCircle) x| +
+        |cosKernel (a : UnitAddCircle) x| * |sinKernel (b : UnitAddCircle) x| := by
+        refine (norm_add_le _ _).trans ?_
+        rw [norm_mul, norm_mul, norm_mul, Complex.norm_I, one_mul, Complex.norm_real,
+          Complex.norm_real, Complex.norm_real, Complex.norm_real, Real.norm_eq_abs,
+          Real.norm_eq_abs, Real.norm_eq_abs, Real.norm_eq_abs]
+    _ ≤ (0.112 * Real.exp (-π * (x - 1))) * 1.11 + 1.11 * (0.112 * Real.exp (-π * (x - 1))) := by
+        gcongr
+    _ ≤ 0.2487 * Real.exp (-π * (x - 1)) := by nlinarith
+
+/-- **`Λ_{a,b}(1) = mainL a b + O(1)`** with an explicit error. -/
+theorem norm_gaussLambda_sub_mainL_le {a b : ℝ} (ha0 : 0 ≤ a) (ha1 : a < 1) (hb0 : 0 ≤ b)
+    (hb1 : b < 1) :
+    ‖gaussLambda (a : UnitAddCircle) (b : UnitAddCircle) 1 - mainL a b‖ ≤
+      (15.2 * Real.exp (-π) + 0.2487) / π := by
+  have hpi := Real.pi_pos
+  rw [gaussLambda_one_eq]
+  have hθ : IntegrableOn (gaussTheta (a : UnitAddCircle) (b : UnitAddCircle)) (Ioi 1) :=
+    (integrableOn_gaussTheta _ _).mono_set (Ioi_subset_Ioi zero_le_one)
+  have hm : IntegrableOn (thetaMain a b) (Ioi 1) := by
+    unfold thetaMain
+    exact (((integrableOn_tm _ _).add (integrableOn_tm _ _)).add (integrableOn_tm _ _)).add
+      (integrableOn_tm _ _)
+  have hint : ∫ x in Ioi (1 : ℝ), thetaMain a b x = mainL a b := by
+    unfold thetaMain mainL
+    rw [integral_add (f := fun x => tm a b x + tm a (b - 1) x + tm (a - 1) b x)
+        (g := tm (a - 1) (b - 1))
+        (((integrableOn_tm _ _).add (integrableOn_tm _ _)).add (integrableOn_tm _ _))
+        (integrableOn_tm _ _),
+      integral_add (f := fun x => tm a b x + tm a (b - 1) x) (g := tm (a - 1) b)
+        ((integrableOn_tm _ _).add (integrableOn_tm _ _)) (integrableOn_tm _ _),
+      integral_add (f := tm a b) (g := tm a (b - 1)) (integrableOn_tm _ _) (integrableOn_tm _ _),
+      integral_tm, integral_tm, integral_tm, integral_tm]
+  have hsplit : (∫ x in Ioi (1 : ℝ), gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x) =
+      (∫ x in Ioi (1 : ℝ), (gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x - thetaMain a b x)) +
+        mainL a b := by
+    rw [integral_sub hθ hm, hint]; ring
+  rw [hsplit]
+  have e1 : ‖∫ x in Ioi (1 : ℝ), (gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x -
+      thetaMain a b x)‖ ≤ 15.2 * Real.exp (-π) / π := by
+    refine norm_integral_Ioi_one_le hpi fun x hx => ?_
+    refine (norm_theta_sub_main_le ha0 ha1 hb0 hb1 hx.le).trans (le_of_eq ?_)
+    rw [mul_assoc, ← Real.exp_add]; ring_nf
+  have e2 : ‖∫ x in Ioi (1 : ℝ), gaussThetaDual (a : UnitAddCircle) (b : UnitAddCircle) x‖ ≤
+      0.2487 / π := by
+    refine norm_integral_Ioi_one_le hpi fun x hx => ?_
+    have := norm_thetaDual_le a b hx.le
+    simpa [neg_mul] using this
+  calc ‖(∫ x in Ioi (1 : ℝ), (gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x -
+          thetaMain a b x)) + mainL a b +
+        (∫ x in Ioi (1 : ℝ), gaussThetaDual (a : UnitAddCircle) (b : UnitAddCircle) x) - mainL a b‖
+      = ‖(∫ x in Ioi (1 : ℝ), (gaussTheta (a : UnitAddCircle) (b : UnitAddCircle) x -
+          thetaMain a b x)) +
+        (∫ x in Ioi (1 : ℝ), gaussThetaDual (a : UnitAddCircle) (b : UnitAddCircle) x)‖ := by
+        congr 1; ring
+    _ ≤ 15.2 * Real.exp (-π) / π + 0.2487 / π := (norm_add_le _ _).trans (add_le_add e1 e2)
+    _ = (15.2 * Real.exp (-π) + 0.2487) / π := by ring
+
 end ZInQ.Contrib.T21Proof
