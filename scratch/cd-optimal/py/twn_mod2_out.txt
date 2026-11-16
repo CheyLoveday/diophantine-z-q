@@ -1,0 +1,15 @@
+d=5 tried=3 found_A=7 coords=[1, 0] err=1.1 e-18
+d=13 tried=3 found_A=5 coords=[1, 0] err=1.3 e-18
+d=21 tried=4 found_A=13 coords=[0, 1] err=3.2 e-19
+d=29 tried=5 found_A=9 coords=[1, 0] err=1.6 e-18
+d=37 tried=3 found_A=5 coords=[1, 0] err=6.5 e-19
+d=53 tried=3 found_A=5 coords=[1, 0] err=6.5 e-20
+d=61 tried=4 found_A=7 coords=[1, 0] err=5.0 e-19
+d=69 tried=3 found_A=7 coords=[1, 0] err=1.1 e-18
+d=77 tried=5 found_A=13 coords=[0, -1] err=1.5 e-18
+d=85 tried=3 found_A=7 coords=[1, 0] err=3.0 e-18
+d=93 tried=3 found_A=7 coords=[1, 0] err=1.0 e-18
+d=101 tried=5 found_A=9 coords=[1, 0] err=4.1 e-19
+d=109 tried=7 found_A=13 coords=[-1, 0] err=8.5 e-19
+d=133 tried=9 found_A=23 coords=[0, 1] err=6.9 e-19
+d=141 tried=3 found_A=7 coords=[1, 0] err=5.4 e-19
