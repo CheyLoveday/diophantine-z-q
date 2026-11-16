@@ -13,12 +13,15 @@ and `a a' ≡ α (mod d)` (`nb_lat`, `nb_latN`). With hx-used's level-32 Shimura
 
 noncomputable section
 
+set_option maxRecDepth 20000
+
 open UpperHalfPlane Complex WeierstrassCurve
 open scoped WeierstrassCurve.Affine MatrixGroups
 
 namespace ZInQ.Heegner32
 
 open ZInQ.GZWeil (gaussD)
+open ZInQ.GZTheta (jacobiChar)
 open ZInQ.GZDecomp (HeegnerHyp)
 open ZInQ.Contrib.TYZGenus.CM (HeegnerForm cmPoint ιC)
 open ZInQ.GZHeegner (sD jLat mem_span_pair_of span_pair_mul_span_pair mul_mem_span_pair_mul)
@@ -56,16 +59,17 @@ theorem nb_lat {d : ℕ} (hd : (d : ℂ) ≠ 0) {τ τ' w : ℂ} {A B C' a k l �
   apply le_antisymm
   · apply span_pair_mul_span_pair
     · exact mem_span_pair_of a 0 (by simp)
-    · exact mem_span_pair_of (j - k) 1 (by rw [p2]; ring)
-    · exact mem_span_pair_of _ _ (by rw [mul_one, p3]; ring)
-    · exact mem_span_pair_of _ _ (by rw [p4]; ring)
+    · exact mem_span_pair_of (j - k) 1 (by rw [p2] <;> ring)
+    · exact mem_span_pair_of (d * (A * k + B - a * l) - A * α) (d * A) (by rw [mul_one, p3] <;> ring)
+    · exact mem_span_pair_of (d * (k * l - C') + a' * (A * k + B - a * l) - (a' * A₃ * α - l * α))
+        (a' * A - d * l) (by rw [p4] <;> ring)
   · set M := Submodule.span ℤ {(a : ℂ), (d : ℂ) * w} * Submodule.span ℤ {1, τ' + (a' : ℂ) / d}
-    have m1 : (a : ℂ) ∈ M := by simpa using mul_mem_span_pair_mul (a : ℂ) ((d : ℂ) * w) 1
-      (τ' + (a' : ℂ) / d) (Or.inl rfl) (Or.inl rfl)
+    have m1 : (a : ℂ) * 1 ∈ M := mul_mem_span_pair_mul _ _ _ _ (Or.inl rfl) (Or.inl rfl)
+    rw [mul_one] at m1
     have m2 : (a : ℂ) * (τ' + (a' : ℂ) / d) ∈ M :=
       mul_mem_span_pair_mul _ _ _ _ (Or.inl rfl) (Or.inr rfl)
-    have m3 : (d : ℂ) * w ∈ M := by simpa using mul_mem_span_pair_mul (a : ℂ) ((d : ℂ) * w) 1
-      (τ' + (a' : ℂ) / d) (Or.inr rfl) (Or.inl rfl)
+    have m3 : (d : ℂ) * w * 1 ∈ M := mul_mem_span_pair_mul _ _ _ _ (Or.inr rfl) (Or.inl rfl)
+    rw [mul_one] at m3
     have hone : (1 : ℂ) ∈ M := by
       have hbezC : (u : ℂ) * a + v * (d * (2 * A * k + B - a * l) - A * a * a') = 1 := by
         exact_mod_cast hbez
@@ -109,10 +113,11 @@ theorem nb_latN {d : ℕ} (hd : (d : ℂ) ≠ 0) {τ τ' w : ℂ} {A B C' a k l 
     rw [this, e3, e2]; push_cast; rw [hA3C]; field_simp; ring
   apply le_antisymm
   · apply span_pair_mul_span_pair
-    · exact mem_span_pair_of a 0 (by rw [p1]; ring)
-    · exact mem_span_pair_of (32 * (j - k)) 1 (by rw [p2]; ring)
-    · exact mem_span_pair_of _ _ (by rw [p3]; ring)
-    · exact mem_span_pair_of _ _ (by rw [p4]; ring)
+    · exact mem_span_pair_of a 0 (by rw [p1] <;> ring)
+    · exact mem_span_pair_of (32 * (j - k)) 1 (by rw [p2] <;> ring)
+    · exact mem_span_pair_of (d * (A * k + B - a * l) - A * α) (d * A₂) (by rw [p3] <;> ring)
+    · exact mem_span_pair_of (32 * (d * (k * l - C') + a' * (A * k + B - a * l) - (a' * A₃ * α - l * α)))
+        (a' * A - d * l) (by rw [p4] <;> ring)
   · set M := Submodule.span ℤ {(a : ℂ), (d : ℂ) * w} * Submodule.span ℤ {1 / 32, τ' + (a' : ℂ) / d}
     have m1 : (a : ℂ) * (1 / 32) ∈ M := mul_mem_span_pair_mul _ _ _ _ (Or.inl rfl) (Or.inl rfl)
     have m2 : (a : ℂ) * (τ' + (a' : ℂ) / d) ∈ M :=
@@ -327,11 +332,12 @@ theorem exists_nbForm {M : ℕ} {D : ℤ} (Q : HeegnerForm M D) {d : ℕ} (hd0 :
     {α : ℤ} (hα : IsCoprime α d) :
     ∃ Q₁ : HeegnerForm 32 D₁, Q₁.tau = Q.tau + (α : ℂ) / d := by
   obtain ⟨A₃, hA₃⟩ := hdd
+  have hQd := Q.disc
   set A := Q.A with hAdef
   set B := Q.B with hBdef
   set C := Q.C with hCdef
   have hdisc : ((B - 2 * (d * A₃) * α) * d) ^ 2 - 4 * (A * d) * (d * C - B * α + d * A₃ * α ^ 2) = D₁ := by
-    rw [hD₁, ← Q.disc, hA₃]; ring
+    rw [hD₁, ← hQd, hA₃]; ring
   have hdpos : (0 : ℤ) < d := by exact_mod_cast hd0
   have hprim : Int.gcd (Int.gcd (A * d) ((B - 2 * (d * A₃) * α) * d)) (d * C - B * α + d * A₃ * α ^ 2) = 1 := by
     rw [Nat.eq_one_iff_not_exists_prime_dvd]
@@ -392,10 +398,11 @@ theorem exists_nbForm {M : ℕ} {D : ℤ} (Q : HeegnerForm M D) {d : ℕ} (hd0 :
   have hAC : (A : ℂ) = (d : ℂ) ^ 2 * A₃ := by exact_mod_cast hA₃
   show cmPoint (A * d) ((B - 2 * (d * A₃) * α) * d) D₁ = Q.tau
     + (α : ℂ) / d
-  rw [ZInQ.GZHeegner.tau_eq]
+  rw [ZInQ.GZHeegner.tau_eq, ← hBdef, ← hAdef]
   simp only [cmPoint]
-  rw [show (I * (Real.sqrt (-(D₁ : ℝ)) : ℂ)) = sD D₁ from rfl, hs]
+  rw [show (Complex.I * (Real.sqrt (-(D₁ : ℝ)) : ℂ)) = sD D₁ from rfl, hs]
   push_cast
+  have hA3ne : (A₃ : ℂ) ≠ 0 := by intro h; apply hA0; rw [hAC, h, mul_zero]
   rw [hAC]
   field_simp
   ring
@@ -437,16 +444,15 @@ theorem phiC_shift_gamma0 {d : ℕ} [NeZero d] {γ : SL(2, ℤ)}
     simp [a'', a']
   -- the conjugated matrix
   set P : ℤ := p + 32 * d * r₀ * a''
-  set R : ℤ := r
   set S : ℤ := s - 32 * d * r₀ * a'
   set Qe : ℤ := q + p * a' * q * 32 * d * r₀ + n * s - 32 * r₀ * a' * a''
-  have hdetM : P * S - Qe * R = 1 := by
-    simp only [P, R, S, Qe]
+  have hdetM : P * S - Qe * r = 1 := by
+    simp only [P, S, Qe]
     rw [hr₀] at hdet ⊢
     have hn' : a'' = p ^ 2 * a' + d * n := by linarith
     rw [hn']
     linear_combination (32 * a' * d * p * r₀ + 1) * hdet
-  let γ' : SL(2, ℤ) := ⟨!![P, Qe; R, S], by rw [Matrix.det_fin_two_of]; exact hdetM⟩
+  let γ' : SL(2, ℤ) := ⟨!![P, Qe; r, S], by rw [Matrix.det_fin_two_of]; exact hdetM⟩
   have hγ' : γ' ∈ CongruenceSubgroup.Gamma0 32 := by
     rw [CongruenceSubgroup.Gamma0_mem]
     show ((r : ℤ) : ZMod 32) = 0
@@ -464,9 +470,9 @@ theorem phiC_shift_gamma0 {d : ℕ} [NeZero d] {γ : SL(2, ℤ)}
   have hden : ((r : ℤ) : ℂ) * (τ : ℂ) + (s : ℤ) ≠ 0 := by
     have := UpperHalfPlane.denom_ne_zero γ τ
     simpa [UpperHalfPlane.denom] using this
-  have hden' : ((R : ℤ) : ℂ) * ((τ : ℂ) + (x.val : ℂ) / d) + (S : ℤ) ≠ 0 := by
-    have e : ((R : ℤ) : ℂ) * ((τ : ℂ) + (x.val : ℂ) / d) + (S : ℤ) = (r : ℂ) * τ + s := by
-      simp only [R, S, a']; push_cast; rw [hr₀]; push_cast; field_simp; ring
+  have hden' : ((r : ℤ) : ℂ) * ((τ : ℂ) + (x.val : ℂ) / d) + (S : ℤ) ≠ 0 := by
+    have e : ((r : ℤ) : ℂ) * ((τ : ℂ) + (x.val : ℂ) / d) + (S : ℤ) = (r : ℂ) * τ + s := by
+      simp only [S, a']; push_cast; rw [hr₀]; push_cast; field_simp; ring
     rw [e]; exact_mod_cast hden
   have hdetC : (p : ℂ) * s - q * r = 1 := by exact_mod_cast hdet
   have hr₀C : (r : ℂ) = 32 * (d : ℂ) ^ 2 * r₀ := by exact_mod_cast hr₀
@@ -474,9 +480,13 @@ theorem phiC_shift_gamma0 {d : ℕ} [NeZero d] {γ : SL(2, ℤ)}
   have hxa : ((x.val : ℕ) : ℂ) = (a' : ℂ) := by simp [a']
   have hxa'' : ((((p : ZMod d) ^ 2 * x).val : ℕ) : ℂ) = (a'' : ℂ) := by simp [a'']
   rw [hxa, hxa'']
-  simp only [P, R, S, Qe]
+  simp only [P, S, Qe]
   push_cast
-  rw [div_add_div _ _ hden (by exact hd0), div_eq_div_iff hden' (mul_ne_zero hden hd0)]
+  rw [show ((γ 0 0 : ℤ) : ℂ) = (p : ℂ) from rfl, show ((γ 0 1 : ℤ) : ℂ) = (q : ℂ) from rfl,
+    show ((γ 1 0 : ℤ) : ℂ) = (r : ℂ) from rfl, show ((γ 1 1 : ℤ) : ℂ) = (s : ℂ) from rfl]
+  rw [show ((r : ℂ) * ((τ : ℂ) + (a' : ℂ) / d) + ((s : ℂ) - 32 * d * r₀ * a')) = (r : ℂ) * τ + s by
+    rw [hr₀C]; field_simp; ring]
+  rw [div_add_div _ _ hden hd0, div_eq_div_iff hden (mul_ne_zero hden hd0)]
   rw [hnC]
   rw [hr₀C] at hdetC ⊢
   field_simp
@@ -507,11 +517,11 @@ theorem chiZ_sq_unit (d : ℕ) [NeZero d] {x : ZMod d} (hx : IsUnit x) : chiZ d 
 
 theorem chiZ_intCast (d : ℕ) [NeZero d] (a : ℤ) : chiZ d (a : ZMod d) = jacobiSym a d := by
   unfold chiZ
-  rw [ZMod.val_intCast, jacobiSym.mod_left]
+  rw [ZMod.val_intCast]; exact (jacobiSym.mod_left a d).symm
 
 theorem isUnit_of_isCoprime {d : ℕ} [NeZero d] {a : ℤ} (h : IsCoprime a d) : IsUnit (a : ZMod d) := by
   obtain ⟨u, v, huv⟩ := h
-  refine isUnit_of_mul_eq_one _ (u : ZMod d) ?_
+  refine IsUnit.of_mul_eq_one (u : ZMod d) ?_
   have := congrArg (fun z : ℤ => (z : ZMod d)) huv
   simp only [Int.cast_add, Int.cast_mul, Int.cast_natCast, ZMod.natCast_self, mul_zero, add_zero,
     Int.cast_one] at this
@@ -526,7 +536,7 @@ theorem isCoprime_of_primes {x y : ℤ} (h : ∀ p : ℕ, p.Prime → (p : ℤ) 
     ((Int.natCast_dvd_natCast.2 hpd).trans (Int.gcd_dvd_right _ _))
 
 /-- Under the Heegner hypothesis for `32 d²`, `B` is prime to `d` for every form of discriminant `−m` with `d ∣ A`. -/
-theorem isCoprime_B_d {d m : ℕ} {A B C : ℤ} (hHH : HeegnerHyp (32 * d ^ 2) (-(m : ℤ)))
+theorem isCoprime_B_d {d m : ℕ} [NeZero m] {A B C : ℤ} (hHH : HeegnerHyp (32 * d ^ 2) (-(m : ℤ)))
     (hdisc : B ^ 2 - 4 * A * C = -(m : ℤ)) (hdA : (d : ℤ) ∣ A) : IsCoprime B d := by
   apply isCoprime_of_primes
   intro p hp hpB hpd
@@ -537,6 +547,7 @@ theorem isCoprime_B_d {d m : ℕ} {A B C : ℤ} (hHH : HeegnerHyp (32 * d ^ 2) (
     rw [this]
     exact dvd_sub (dvd_mul_of_dvd_left (dvd_mul_of_dvd_right (hpd.trans hdA) _) _)
       (dvd_pow hpB two_ne_zero)
+  have : NeZero (-(m : ℤ)).natAbs := ⟨by simp [NeZero.ne m]⟩
   have h0 : jacobiSym (p : ℤ) (-(m : ℤ)).natAbs = 0 := by
     rw [jacobiSym.eq_zero_iff_not_coprime]
     rw [Int.natAbs_neg, Int.natAbs_natCast]
@@ -582,6 +593,7 @@ def GenusSqrtD : Prop :=
         ((conductorOrder (QNeg m) d).picClass J) x))) →
     σ (gaussD d) = (jacobiSym a d : ℂ) * gaussD d
 
+set_option maxHeartbeats 4000000 in
 /-- **`TwistTransportCd` from the main theorem of CM, Chebotarev at conductor `d` and genus theory.** -/
 theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd) (hG : GenusSqrtD) :
     TwistTransportCd := by
@@ -625,14 +637,18 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
     obtain ⟨y, y', hy, hy', hyy⟩ := hsry m d hmsq e he J ρ hArt (discOf m d) rfl Q₁ Q₂ 1
       (by rw [ZInQ.GZHeegner.map_mulLeft_one]; exact h1)
       (by rw [ZInQ.GZHeegner.map_mulLeft_one]; exact h2)
+    beta_reduce at hx hx' hy hy'
     apply map_phiC
     · rw [← hx, hρ, hxx, hx']
     · rw [← hy, hρ, hyy, hy']
   have hsqD : Squarefree (-(m : ℤ)) :=
     ZInQ.GZHeegner.squarefree_neg_iff.2 (Int.squarefree_natCast.2 hmsq)
-  have hdisc : discOf m d = (d : ℤ) ^ 2 * (-(m : ℤ)) := by simp [discOf, hm3]; ring
+  have hdisc : discOf m d = (d : ℤ) ^ 2 * (-(m : ℤ)) := by
+    simp only [discOf, if_pos hm3]; ring
   have hdC : (d : ℂ) ≠ 0 := by exact_mod_cast hd0.ne'
   have hunit0 : IsUnit (a₀ : ZMod d) := isUnit_of_isCoprime hcopd
+  have hinvu : IsUnit ((a₀ : ZMod d)⁻¹) := by
+    rw [← IsUnit.unit_spec hunit0, ZMod.inv_coe_unit]; exact Units.isUnit _
   -- per form
   have step : ∀ Q ∈ S, ∃ Q' : HeegnerForm (32 * d ^ 2) (-(m : ℤ)), ZInQ.GZHL3.HasResidue β Q' ∧
       jLat (-(m : ℤ)) a₀ b * Q'.lat = Q.lat ∧ jLat (-(m : ℤ)) a₀ b * Q'.latN = Q.latN ∧
@@ -662,7 +678,7 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
     have hB'd : IsCoprime Q'.B d :=
       isCoprime_B_d hHH Q'.disc (dvd_trans (dvd_pow_self _ two_ne_zero) hdd')
     set y : ZMod d := x * (a₀ : ZMod d)⁻¹ with hy
-    have hyu : IsUnit y := hx.mul hunit0.unit⁻¹.isUnit.ne_zero.isUnit
+    have hyu : IsUnit y := hx.mul hinvu
     have hxc : IsCoprime (x.val : ℤ) d := by
       obtain ⟨u, rfl⟩ := hx
       exact Nat.isCoprime_iff_coprime.2 (ZMod.val_coe_unit_coprime u)
@@ -726,13 +742,13 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
     have hdet : γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
       have := γ.det_coe; rw [Matrix.det_fin_two] at this; exact this
     obtain ⟨r₀, hr₀⟩ : ((32 * d ^ 2 : ℕ) : ℤ) ∣ γ 1 0 := ZInQ.GZHeegner.gamma0_dvd hγ
-    refine isUnit_of_mul_eq_one _ ((γ 1 1 : ℤ) : ZMod d) ?_
+    refine IsUnit.of_mul_eq_one ((γ 1 1 : ℤ) : ZMod d) ?_
     have h := congrArg (fun z : ℤ => (z : ZMod d)) hdet
     simp only [Int.cast_sub, Int.cast_mul, Int.cast_one, hr₀] at h
     push_cast at h
     simpa using h
   set c : ZMod d := p ^ 2 * (a₀ : ZMod d)⁻¹ with hc
-  have hcu : IsUnit c := (hpu.pow 2).mul hunit0.unit⁻¹.isUnit.ne_zero.isUnit
+  have hcu : IsUnit c := (hpu.pow 2).mul hinvu
   -- each summand
   have hsum : ∀ x : ZMod d, chiZ d x • Affine.Point.map (ZInQ.GZHeegner.sigA σ)
         (ZInQ.Contrib.TYZGenus.X0.phiC (shiftH d Q.tauH x)) =
@@ -741,21 +757,21 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
     intro x
     by_cases hx : IsUnit x
     · have hχ : chiZ d x = chiZ d (a₀ : ZMod d) * chiZ d (c * x) := by
-        rw [chiZ_mul, chiZ_mul, chiZ_mul, show p ^ 2 = p * p by ring, chiZ_mul, hc]
+        rw [chiZ_mul, chiZ_mul, show p ^ 2 = p * p by ring, chiZ_mul]
         have h1 := chiZ_sq_unit d hpu
         have h2 := chiZ_sq_unit d hunit0
         have h3 : chiZ d (a₀ : ZMod d) * chiZ d ((a₀ : ZMod d)⁻¹) = 1 := by
           rw [← chiZ_mul, ZMod.mul_inv_of_unit _ hunit0]
-          unfold chiZ; simp [ZMod.val_one]
+          unfold chiZ; rw [ZMod.val_one'' (by omega)]; simp
         linear_combination (-chiZ d x) * h1 - (chiZ d x * chiZ d p * chiZ d p) * h3
       rw [hχ, hQ'pt Q hQ x hx, phiC_shift_gamma0 hγ, hγe]
       congr 2
-      rw [hc]; ring
+      simp only [hc, hpdef]; ring
     · have h0 : chiZ d x = 0 := chiZ_nonunit d hx
       have h0' : chiZ d (c * x) = 0 := chiZ_nonunit d (fun h => hx (by
         have := (hcu.unit⁻¹.isUnit).mul h
         rwa [← mul_assoc, IsUnit.val_inv_mul, one_mul] at this))
-      rw [h0, h0', zero_smul, mul_zero, zero_smul]
+      rw [h0, h0']; simp
   unfold zTw
   rw [map_sum]
   simp_rw [map_zsmul]
@@ -764,7 +780,7 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
   rw [← Finset.smul_sum]
   have hre : ∑ x : ZMod d, chiZ d (c * x) • ZInQ.Contrib.TYZGenus.X0.phiC (shiftH d (π Q).tauH (c * x)) =
       ∑ x : ZMod d, chiZ d x • ZInQ.Contrib.TYZGenus.X0.phiC (shiftH d (π Q).tauH x) :=
-    Equiv.sum_comp (Units.mulLeft hcu.unit).toEquiv
+    Equiv.sum_comp (Units.mulLeft hcu.unit)
       (fun x => chiZ d x • ZInQ.Contrib.TYZGenus.X0.phiC (shiftH d (π Q).tauH x))
   rw [hre, chiZ_intCast]
   change jacobiSym a₀ d • zTw d (π Q).tauH = _
@@ -777,9 +793,9 @@ theorem twistTransportCd_of_genus (hCM : T5Glue.ShimuraMainCM) (hJ : RingClassJd
     · exact Or.inr h
   have hg0 := ZInQ.GZWeil.gaussD_ne_zero hd4 hsq
   rcases hJs with h | h
-  · rw [h, one_smul, if_pos (by rw [hgen, h]; simp)]
-  · rw [h, if_neg (by rw [hgen, h]; intro h'; exact hg0 (by push_cast at h'; linear_combination -h' / 2))]
-    simp
+  · rw [h, one_smul, if_pos (by rw [hgen, h]; simp)]; rfl
+  · rw [h, if_neg (by rw [hgen, h]; intro h'; exact hg0 (by push_cast at h'; linear_combination -h' / 2)),
+      neg_one_zsmul]; rfl
 
 /-- **`GZStatements.GrossZagierHeegnerCd` from `hCM`, Chebotarev at conductor `d`, genus theory and the two
 printed Gross–Zagier statements.** -/
