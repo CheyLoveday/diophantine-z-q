@@ -806,4 +806,14 @@ theorem grossZagierFormulaCd_of_moduli (h : GrossZagierModuliCd) :
   have := shortCurve_cd_isElliptic (d := d) (by omega)
   exact grossZagierFormulaAt_of_moduli _ (h d hd hsq)
 
+/-- **`hL3` (all `E`) with `GrossZagierFormula` replaced by its moduli form**: gz-heegner's
+`grossZagierHeegner_of_printed` with `GrossZagierModuli` in place of `GZHL3.GrossZagierFormula`
+(so that `#discharges` records the replacement against the current `frozenTarget`). -/
+theorem grossZagierHeegner_of_moduli (hU : ZInQ.GZHL3.WeierstrassUniformization)
+    (hSW : ZInQ.GZHL3.StrongWeilCurve) (hI : ZInQ.GZHL3.IsogenyLattice)
+    (hGZM : GrossZagierModuli) (hGC : ZInQ.GZHL3.GrossConjugation)
+    (hCM : T5Glue.ShimuraMainCM) (hX : ZInQ.GZHeegner.X0ModuliGaloisMero) :
+    ZInQ.GZDecomp.GrossZagierHeegner :=
+  ZInQ.GZHeegner.grossZagierHeegner_of_printed hU hSW hI (grossZagierFormula_of_moduli hGZM) hGC hCM hX
+
 end ZInQ.GZModuli

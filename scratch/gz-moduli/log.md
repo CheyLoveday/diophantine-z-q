@@ -30,3 +30,4 @@ Base: 60a3fac7 + merge of wip/gz-weil ad22e947 (commit 6cf5853f).
 - §4 `grossZagierFormulaAt_of_moduli`, `grossZagierFormula_of_moduli`, `grossZagierFormulaCd_of_moduli`.
 - NonVacuous.lean: `exists_heegnerPointReps`, `exists_modularParam_cd` (written; compile pending).
 - Finding: GAGA (`gagaMorphism`) is not needed: algebraicity of φ = coordinates in ℚ(X₀(N)), proved by gz-heegner.
+- lake build (13703 jobs) OK; Check.lean standard axioms; MainEdit frozenTarget_gzmoduli standard axioms; #discharges: [hL3] by GZModuli.grossZagierHeegner_of_moduli (VERIFIED).

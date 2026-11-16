@@ -1,7 +1,7 @@
 # gz-moduli: `GrossZagierFormulaCd` from the Gross–Zagier formula in its printed moduli form
 
 Status: research note (task gz-moduli, 2026-11-16), branch `wip/gz-moduli` (base 60a3fac7 with wip/gz-weil ad22e947
-merged). Lean: `ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean` (new, 46 KB) and
+merged). Lean: `ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean` (new, 47 KB) and
 `ZInQKernel/Contrib/OneProof/GrossZagierModuli/NonVacuous.lean` (new). Nothing else under `ZInQKernel/` was edited.
 Scratch and log: `scratch/gz-moduli/`.
 
@@ -222,10 +222,28 @@ Then `Σ_{r ∈ S} modPt(τ_r) = Σ_{Q ∈ S} weierPt E L (c φ_f(τ_Q)) = ι(y)
 
 ## 4. `#discharges`
 
-See `scratch/gz-moduli/discharges-output.txt`. At 60a3fac7, `GrossZagierFormulaCd` is not a bundle field: `hL3` is a
-`frozenTarget` argument stated for all `E`. So `#discharges` reports no discharge for this file, as for gz-weil. The
-integrator must first fold the `C_d` split of `hL3` (gz-weil's `MainEdit.lean`, or this task's `MainEdit.lean`), with
-the field name `grossZagierFormulaCd`; then `autofold.json` applies.
+`scratch/gz-moduli/discharges-output.txt` (VERIFIED, `lake env lean scratch/gz-moduli/Discharges.lean` after
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.GrossZagierModuli`;
+61 open hypotheses, 2950 theorems checked). At 60a3fac7 `GrossZagierFormulaCd` is not a bundle field: `hL3` is a
+`frozenTarget` argument stated for all `E`. So the `C_d` theorem `grossZagierFormulaCd_of_moduli` is not listed, as
+with gz-weil. To record the replacement against the current `frozenTarget`, the file also proves the all-`E` form
+`grossZagierHeegner_of_moduli`: gz-heegner's `grossZagierHeegner_of_printed` with `GrossZagierModuli` in place of
+`GZHL3.GrossZagierFormula`. `#discharges` lists it:
+
+```
+DISCHARGES [hL3] by ZInQ.GZModuli.grossZagierHeegner_of_moduli
+  still assumes: [ZInQ.GZHL3.WeierstrassUniformization,
+ ZInQ.GZHL3.StrongWeilCurve,
+ ZInQ.GZHL3.IsogenyLattice,
+ ZInQ.GZModuli.GrossZagierModuli,
+ ZInQ.GZHL3.GrossConjugation,
+ T5Glue.ShimuraMainCM,
+ ZInQ.GZHeegner.X0ModuliGaloisMero]
+  axioms: [propext, Classical.choice, Quot.sound]
+```
+
+For the `C_d` route, the integrator should first fold the `C_d` split of `hL3` (gz-weil's `MainEdit.lean`, or this
+task's `MainEdit.lean`) with the field name `grossZagierFormulaCd`. After that, `autofold.json` applies.
 
 ## 5. What remains
 
