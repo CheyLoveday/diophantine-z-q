@@ -171,4 +171,112 @@ theorem lattice_cases {d : ℕ} (hd4 : d % 4 = 1) (hsq : Squarefree d) {L : Peri
     exact Or.inr ⟨_, latP_eq_of_mu hLI hΛI hω hμ repL' repΛ' hp0
       (Or.inl (by rw [hpq, ← hpq']; ring))⟩
 
+/-! ## §2. The formula at `C_d` from the optimal leaf at `E'_d` -/
+
+open ZInQ.GZHeegner (ParamSetting)
+open ZInQ.Contrib.TYZGenus.CM (HeegnerForm)
+
+section Core
+
+variable {d : ℕ} (hd0 : d ≠ 0) (hodd : Odd d) (hsq : Squarefree d) {N : ℕ} [NeZero N]
+  {f : Newform N 2} (hχ : f.χ = 1)
+  (hcoeff : ∀ n : ℕ, n ≠ 0 → coeff f n = ((shortCurve (-(d : ℚ) ^ 2)).LFunction n : ℂ))
+  {L : PeriodPair} (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) {c : ℚ}
+  (hc : c ≠ 0) (hP : ZInQ.GZHL3.PeriodsIn f c L) {D β : ℤ} (hD : IsOddImagFundDisc D)
+  (hD4 : D < -4) (hH : HeegnerHyp N D) (hβ : (4 * N : ℤ) ∣ D - β ^ 2) {R : Type} [Fintype R]
+  {τ : R → UpperHalfPlane} (hτ : ZInQ.GZModuli.IsHeegnerPointReps N D β τ) {K : Type} [Field K]
+  [NumberField K] [DecidableEq K] (hK : Module.finrank ℚ K = 2) {δ : K} (hδ : δ ^ 2 = (D : K))
+  {ι : K →ₐ[ℚ] ℂ} (hι : ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ))
+  (y : ((shortCurve (-(d : ℚ) ^ 2))⁄K).Point)
+  (hy : Affine.Point.map ι y = ZInQ.GZHL3.weierPt (shortCurve (-(d : ℚ) ^ 2)) L
+    (c * ∑ r, ZInQ.GZHL3.eichler f (τ r)))
+  {F G : ℂ → ℂ} (hF : IsEntireCont (coeff f) 2 F) (hG : IsEntireCont (twistCoeff f D) 2 G)
+include hd0 hodd hsq hχ hcoeff hL hc hP hD hD4 hH hβ hτ hK hδ hι hy hF hG
+
+/-- **Core of the `E'_d` case**: `E'_d` is optimal (`L' = c' Λ_f`). With `P' = φ(y) ∈ E'_d(K)`,
+`ι(P') = weierPt E'_d L' (c u) = n · y_K(φ_opt)` (`c = n c'`), the leaf at `E'_d` gives
+`L'(E/K, 1) = κ' ĥ(P')`, and `y`, `P'` are torsion together (`L ⊆ L' ⊆ ½ L`). -/
+theorem core_isog (hGZ : GrossZagierModuliOptAt (ePrime d)) {c' : ℚ}
+    (hlat' : (latP L).lattice = (periodLattice f).map (LinearMap.mulLeft ℤ (c' : ℂ))) :
+    ∃ κ : ℝ, 0 < κ ∧ deriv (fun s => F s * G s) 1 = κ * y.canonicalHeight := by
+  have hEc := ZInQ.GZDecomp.shortCurve_cd_isElliptic hd0
+  have hEe := ePrime_isElliptic hd0
+  have hLI : ∀ y ∈ L.lattice, I * y ∈ L.lattice := fun y hy => I_mul_mem_of_cd hL hy
+  have hL' := isPeriodLattice_ePrime hL
+  have hc' := ne_zero_of_lattice hlat'
+  have hcoeff' : ∀ n : ℕ, n ≠ 0 → coeff f n = ((ePrime d).LFunction n : ℂ) := fun n hn => by
+    rw [hcoeff n hn, LFunction_ePrime_eq hodd hsq]
+  have hs' : ParamSetting (ePrime d) f (latP L) c' :=
+    ⟨hχ, hcoeff', hL', hc', periodsIn_of_lattice hlat'⟩
+  obtain ⟨n, hn⟩ : ∃ n : ℤ, c / c' = n := by
+    apply rat_mem_int (L := latP L)
+    have h1 := (latP L).ω₁_mem_lattice
+    rw [hlat'] at h1
+    obtain ⟨w, hw, hw1⟩ := h1
+    have : ((c / c' : ℚ) : ℂ) * (latP L).ω₁ = c * w := by
+      rw [← hw1]; simp only [LinearMap.mulLeft_apply]; push_cast; field_simp
+    rw [this]
+    exact le_latP hLI (mul_mem_of_periodsIn hP hw)
+  have hcn : (c : ℂ) = n * c' := by
+    have : c = n * c' := by rw [← hn]; field_simp
+    exact_mod_cast this
+  have hn0 : n ≠ 0 := by
+    rintro rfl; apply hc; simpa using hcn
+  set u : ℂ := ∑ r, ZInQ.GZHL3.eichler f (τ r) with hu
+  have hP'w : Affine.Point.map ι (isogPt hd0 y) = ZInQ.GZHL3.weierPt (ePrime d) (latP L) (c * u) := by
+    rw [map_isogPt, hy, weierPt_ePrime_eq hd0 hL]
+  have hP'u : Affine.Point.map ι (isogPt hd0 y) =
+      ZInQ.GZHL3.weierPt (ePrime d) (latP L) (n * (c' * u)) := by
+    rw [hP'w, hcn, mul_assoc]
+  obtain ⟨κ', hκ', hA⟩ := hGZ N f hχ hcoeff' _ _ (ZInQ.GZModuli.isModularParam_of hs')
+    ⟨latP L, c', hL', hlat', ZInQ.GZModuli.modPt_eq hs'⟩ D β hD hD4 hH hβ R τ hτ K hK δ hδ ι hι n
+    hn0 (isogPt hd0 y)
+    (by rw [hP'u, sum_modPt_eq' (short_ePrime d) hs', weierPt_zsmul (short_ePrime d) hL'])
+    F G hF hG
+  refine exists_pos_of_torsion_iff y (isogPt hd0 y) hκ' hA ?_
+  rw [isOfFinAddOrder_iff (short_cd d) hL ι y hy,
+    isOfFinAddOrder_iff (short_ePrime d) hL' ι (isogPt hd0 y) hP'w]
+  constructor
+  · rintro ⟨k, hk, hm⟩
+    exact ⟨k, hk, le_latP hLI hm⟩
+  · rintro ⟨k, hk, hm⟩
+    refine ⟨2 * k, by omega, ?_⟩
+    obtain ⟨y', hy', e⟩ := (ZInQ.GZWeil.mem_scalePP lam_ne_zero).mp hm
+    have e2 : ((2 * k : ℕ) : ℂ) * (c * u) = y' + I * y' := by
+      push_cast
+      rw [mul_assoc, e, lam]; ring
+    rw [e2]
+    exact add_mem hy' (hLI y' hy')
+
+end Core
+
+/-! ## §3. The consumer -/
+
+/-- **`GZHL3.GrossZagierFormulaCd` from gz-optimal's optimal-parametrization leaf, the eta-quotient
+transformation law and `Λ_d ≠ 0`**: cd-optimal's route A without `CdTwistedPeriodOdd`. Either
+`C_d` is optimal (route A, `core_selfOptimal`) or `E'_d` is (`core_isog`). -/
+theorem grossZagierFormulaCd_of_etaW32 (hGZ : GrossZagierModuliOptCd) (hW : EtaW32Character)
+    (hne : LamCdNeZero) : ZInQ.GZHL3.GrossZagierFormulaCd := fun d hd8 hsq => by
+  have hd0 : d ≠ 0 := by omega
+  have hd4 : d % 4 = 1 := by omega
+  have hd1 : 1 < d := by omega
+  have hodd : Odd d := Nat.odd_iff.mpr (by omega)
+  have := ZInQ.GZDecomp.shortCurve_cd_isElliptic hd0
+  intro N _ f hχ hcoeff D β hD hD4 hH hβ S hS L c hL hc hP K _ _ _ hK δ hδ ι hι y hy F G hF hG
+  have hΛ := periodLattice_eq_LamCd hd4 hsq f hχ hcoeff
+  have hU := LamCd_le_of_etaW32 hW hd4 hd1 hsq hL
+  have hτ := ZInQ.GZModuli.isHeegnerPointReps_of hD hS
+  have hy' := (by rw [hy, heegnerC_eq (short_cd d) hL] :
+    Affine.Point.map ι y = ZInQ.GZHL3.weierPt (shortCurve (-(d : ℚ) ^ 2)) L
+      (c * ∑ r : S, ZInQ.GZHL3.eichler f r.1.tauH))
+  rcases lattice_cases hd4 hsq hL hU (hne d hd8 hsq) with ⟨c₀, hlat⟩ | ⟨c', hlat'⟩
+  · rw [← hΛ] at hlat
+    exact core_selfOptimal (short_cd d) hχ hcoeff hL hc hP hD hD4 hH hβ hτ hK hδ hι y hy' hF hG
+      (hGZ d hd8 hsq _ (short_cd d) fun _ _ => rfl) hlat
+  · rw [← hΛ] at hlat'
+    have hEe := ePrime_isElliptic hd0
+    exact core_isog hd0 hodd hsq hχ hcoeff hL hc hP hD hD4 hH hβ hτ hK hδ hι y hy' hF hG
+      (hGZ d hd8 hsq (ePrime d) (short_ePrime d) fun n _ => by
+        rw [LFunction_ePrime_eq hodd hsq]) hlat'
+
 end ZInQ.PeriodOdd

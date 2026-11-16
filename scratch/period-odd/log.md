@@ -31,3 +31,11 @@ target: hL3 replaced by `GrossZagierModuliOptCd` + `EtaW32Character` only.
   `(0,0), O ↦ O`; `map_isogPt` (commutes with ℚ-algebra maps); `isPeriodLattice_ePrime`;
   `weierstrassP_split`/`derivWeierstrassP_split` (℘ over L' = L ⊔ (h+L)); `weierstrassP_I_mul` (℘(iz) = −℘(z)).
   Axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
+- (D)+(E) DONE: `ZInQKernel/Contrib/OneProof/PeriodOdd.lean` builds (`lake build ZInQKernel.Contrib.OneProof.PeriodOdd`).
+  `ZInQ.PeriodOdd.grossZagierFormulaCd_of_etaW32 : GrossZagierModuliOptCd → EtaW32Character → LamCdNeZero →
+  GZHL3.GrossZagierFormulaCd`, axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
+  * `lattice_cases`: Λ_d ⊆ L, Λ_d ≠ 0 ⇒ L = c₀Λ_d (c₀ ∈ ℚ) or L' = ((1+i)/2)L = cΛ_d (c ∈ ℚ).
+  * `core_isog`: GZ leaf at E'_d + φ ⇒ formula at C_d.
+  New residual: `LamCdNeZero` (∃ nonzero period of Φ_d for Γ₀(32d²)); CdTwistedPeriodOdd is no longer needed.
+  Finding: the bypass needs Λ_d ≠ 0, which CdTwistedPeriodOdd implied; the tree has no proof of it (searched
+  ZInQKernel/Contrib for periodLattice/LamCd nonvanishing: none).
