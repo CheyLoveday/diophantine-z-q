@@ -5,6 +5,52 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 open CategoryTheory AlgebraicGeometry MonoidalCategory Limits
 
+section MatesSec
+open Functor.LaxMonoidal Functor.OplaxMonoidal
+namespace WeilProof.Mates
+
+variable {C₀ C₁ C₂ : Type*} [Category C₀] [Category C₁] [Category C₂]
+  [MonoidalCategory C₀] [MonoidalCategory C₁] [MonoidalCategory C₂]
+  {F₁ : C₀ ⥤ C₁} {G₁ : C₁ ⥤ C₀} {F₂ : C₁ ⥤ C₂} {G₂ : C₂ ⥤ C₁} {F₃ : C₀ ⥤ C₂} {G₃ : C₂ ⥤ C₀}
+  (adj₁ : F₁ ⊣ G₁) (adj₂ : F₂ ⊣ G₂) (adj₃ : F₃ ⊣ G₃)
+  [G₁.LaxMonoidal] [G₂.LaxMonoidal] [G₃.LaxMonoidal]
+
+set_option backward.defeqAttrib.useBackward true in
+/-- **The left adjoint comparison of a monoidal right adjoint comparison is oplax monoidal.** -/
+theorem leftAdjointCompIso_δ (e : G₂ ⋙ G₁ ≅ G₃)
+    (he : ∀ X Y : C₂, μ G₁ (G₂.obj X) (G₂.obj Y) ≫ G₁.map (μ G₂ X Y) ≫ e.hom.app (X ⊗ Y) =
+      (e.hom.app X ⊗ₘ e.hom.app Y) ≫ μ G₃ X Y) (X Y : C₀) :
+    letI := adj₁.leftAdjointOplaxMonoidal
+    letI := adj₂.leftAdjointOplaxMonoidal
+    letI := adj₃.leftAdjointOplaxMonoidal
+    δ F₃ X Y ≫ ((Adjunction.leftAdjointCompIso adj₁ adj₂ adj₃ e).inv.app X ⊗ₘ
+        (Adjunction.leftAdjointCompIso adj₁ adj₂ adj₃ e).inv.app Y) =
+      (Adjunction.leftAdjointCompIso adj₁ adj₂ adj₃ e).inv.app (X ⊗ Y) ≫
+        F₂.map (δ F₁ X Y) ≫ δ F₂ (F₁.obj X) (F₁.obj Y) := by
+  let _ := adj₁.leftAdjointOplaxMonoidal
+  let _ := adj₂.leftAdjointOplaxMonoidal
+  let _ := adj₃.leftAdjointOplaxMonoidal
+  set ψ := Adjunction.leftAdjointCompIso adj₁ adj₂ adj₃ e
+  have hu : ∀ Z : C₀, adj₃.unit.app Z ≫ G₃.map (ψ.inv.app Z) =
+      (adj₁.comp adj₂).unit.app Z ≫ e.hom.app ((F₁ ⋙ F₂).obj Z) := by
+    intro Z
+    rw [← unit_conjugateEquiv (adj₁.comp adj₂) adj₃ ψ.inv Z,
+      Adjunction.conjugateEquiv_leftAdjointCompIso_inv]
+  have hC := Adjunction.unit_app_tensor_comp_map_δ (adj₁.comp adj₂) X Y
+  simp only [Functor.comp_map, Functor.OplaxMonoidal.comp_δ] at hC
+  apply (adj₃.homEquiv _ _).injective
+  rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit, Functor.map_comp,
+    Adjunction.unit_app_tensor_comp_map_δ_assoc, ← μ_natural, tensorHom_comp_tensorHom_assoc, hu, hu,
+    ← tensorHom_comp_tensorHom_assoc, ← he, Functor.map_comp, reassoc_of% (hu (X ⊗ Y))]
+  have hn := e.hom.naturality (F₂.map (δ F₁ X Y) ≫ δ F₂ (F₁.obj X) (F₁.obj Y))
+  simp only [Functor.comp_map] at hn
+  rw [← hn, reassoc_of% hC]
+  simp [Functor.LaxMonoidal.comp_μ]
+
+end WeilProof.Mates
+
+end MatesSec
+
 namespace WeilProof.PBM
 open Scheme.Modules
 
@@ -40,12 +86,20 @@ lemma mu_sheafified (f : X ⟶ Y) (A B : Y.PresheafOfModules) :
   exact Localization.Monoidal.functorMonoidalOfComp_μ (sheafification Y) _ (Scheme.Modules.pullback f)
     (GG f) A B
 
-abbrev PQ (f : X ⟶ Y) := PresheafOfModules.pullback f.toRingCatSheafHom.hom
+abbrev PF (f : X ⟶ Y) := PresheafOfModules.pushforwardOfCommRingCat
+  (F := TopologicalSpace.Opens.map f.base) (R := X.sheaf.obj) (S := Y.sheaf.obj) f.toRingCatPresheafHom
 
-def pcQ (f : X ⟶ Y) (g : Y ⟶ Z) : PQ g ⋙ PQ f ≅ PQ (f ≫ g) :=
-  PresheafOfModules.pullbackComp _ _
+abbrev AD (f : X ⟶ Y) : PP f ⊣ PF f := PresheafOfModules.adjunctionOfCommRingCat
+  (F := TopologicalSpace.Opens.map f.base) (R := X.sheaf.obj) (S := Y.sheaf.obj) f.toRingCatPresheafHom
 
-def pcP (f : X ⟶ Y) (g : Y ⟶ Z) : PP g ⋙ PP f ≅ PP (f ≫ g) := pcQ f g
+abbrev PFQ (f : X ⟶ Y) := PresheafOfModules.pushforward f.toRingCatSheafHom.hom
+
+def eQ (f : X ⟶ Y) (g : Y ⟶ Z) : PFQ f ⋙ PFQ g ≅ PFQ (f ≫ g) := PresheafOfModules.pushforwardComp _ _
+
+def eF (f : X ⟶ Y) (g : Y ⟶ Z) : PF f ⋙ PF g ≅ PF (f ≫ g) := eQ f g
+
+def pcP (f : X ⟶ Y) (g : Y ⟶ Z) : PP g ⋙ PP f ≅ PP (f ≫ g) :=
+  Adjunction.leftAdjointCompIso (AD g) (AD f) (AD (f ≫ g)) (eF f g)
 
 local notation "L" => Scheme.Modules.sheafification
 
@@ -56,12 +110,49 @@ lemma ee_comp (f : X ⟶ Y) (g : Y ⟶ Z) (A : Z.PresheafOfModules) :
       (pullbackComp f g).hom.app ((L Z).obj A) ≫ (ee (f ≫ g)).hom.app A := by
   sorry
 
+lemma mu_tmul (f : X ⟶ Y) (M N : PresheafOfModules (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat))
+    (U : (TopologicalSpace.Opens Y)ᵒᵖ) (m : M.obj ((TopologicalSpace.Opens.map f.base).op.obj U))
+    (n : N.obj ((TopologicalSpace.Opens.map f.base).op.obj U)) :
+    ModuleCat.Hom.hom ((Functor.LaxMonoidal.μ (PF f) M N).app U) (m ⊗ₜ n) = m ⊗ₜ n :=
+  PresheafOfModules.pushforward_μ_app_tmul _ M N U m n
+
+/-- presheaf pushforward composition is monoidal -/
+lemma eF_monoidal (f : X ⟶ Y) (g : Y ⟶ Z) (M N : PresheafOfModules (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)) :
+    Functor.LaxMonoidal.μ (PF g) ((PF f).obj M) ((PF f).obj N) ≫ (PF g).map (Functor.LaxMonoidal.μ (PF f) M N) ≫
+        (eF f g).hom.app (M ⊗ N) =
+      ((eF f g).hom.app M ⊗ₘ (eF f g).hom.app N) ≫ Functor.LaxMonoidal.μ (PF (f ≫ g)) M N := by
+  apply PresheafOfModules.hom_ext
+  intro U
+  apply ModuleCat.MonoidalCategory.tensor_ext
+  intro m n
+  simp only [PresheafOfModules.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]
+  have h1 := mu_tmul g ((PF f).obj M) ((PF f).obj N) U m n
+  erw [h1]
+  change ModuleCat.Hom.hom ((Functor.LaxMonoidal.μ (PF f) M N).app _) (m ⊗ₜ n) =
+    ModuleCat.Hom.hom ((Functor.LaxMonoidal.μ (PF (f ≫ g)) M N).app U) (m ⊗ₜ n)
+  rw [mu_tmul, mu_tmul]
+  rfl
+
+/-- (P), δ-form -/
+lemma pcP_delta (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) :
+    Functor.OplaxMonoidal.δ (PP (f ≫ g)) A B ≫ ((pcP f g).inv.app A ⊗ₘ (pcP f g).inv.app B) =
+      (pcP f g).inv.app (A ⊗ B) ≫ (PP f).map (Functor.OplaxMonoidal.δ (PP g) A B) ≫
+        Functor.OplaxMonoidal.δ (PP f) ((PP g).obj A) ((PP g).obj B) := by
+  exact Mates.leftAdjointCompIso_δ (AD g) (AD f) (AD (f ≫ g)) (eF f g) (eF_monoidal f g) A B
+
 /-- (P) -/
 lemma pcP_monoidal (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) :
     Functor.LaxMonoidal.μ (PP f) ((PP g).obj A) ((PP g).obj B) ≫
         (PP f).map (Functor.LaxMonoidal.μ (PP g) A B) ≫ (pcP f g).hom.app (A ⊗ B) =
       ((pcP f g).hom.app A ⊗ₘ (pcP f g).hom.app B) ≫ Functor.LaxMonoidal.μ (PP (f ≫ g)) A B := by
-  sorry
+  rw [← cancel_mono (Functor.OplaxMonoidal.δ (PP (f ≫ g)) A B ≫
+    ((pcP f g).inv.app A ⊗ₘ (pcP f g).inv.app B))]
+  conv_lhs => rw [pcP_delta]
+  simp only [Category.assoc, Iso.hom_inv_id_app_assoc, Functor.Monoidal.μ_δ_assoc,
+    tensorHom_comp_tensorHom, Iso.hom_inv_id_app]
+  rw [← Functor.map_comp_assoc, Functor.Monoidal.μ_δ, CategoryTheory.Functor.map_id, Category.id_comp,
+    Functor.Monoidal.μ_δ]
+  simp
 
 /-- The main identity on sheafified objects. -/
 theorem main_sheafified (f : X ⟶ Y) (g : Y ⟶ Z) (A B : Z.PresheafOfModules) :
