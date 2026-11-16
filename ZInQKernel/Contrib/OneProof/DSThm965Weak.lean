@@ -35,18 +35,18 @@ open ZInQ.Contrib.HodgeSplit (eps0 eps0_arithFrob eps0_continuous cycQ_arithFrob
 
 /-! ## 1. The leaf -/
 
-/-- **LEAF (Deligne's theorem in its weakest printed reading: Frobenius *satisfies* the Hecke
+/-- **The `aeval` form (Deligne's theorem in its weakest printed reading: Frobenius *satisfies* the Hecke
 polynomial).** Diamond–Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Thm 9.6.5
 (`k ≥ 2`; from Deligne, Sém. Bourbaki 355 (1969, publ. 1971), and Shimura 1971 Thm 7.14 for
 `k = 2`; numbering UNVERIFIED): for a normalized eigenform `f ∈ S_k(N, χ)`, `k ≥ 2`, and `λ ∣ ℓ` in
 `K_f`, there is a continuous `ρ_{f,λ} : G_ℚ → GL₂(K_{f,λ})`, unramified at every `p ∤ ℓN`, such that
-for every maximal ideal `𝔭` of `ℤ̄` over `p`, `ρ_{f,λ}(Frob_𝔭)` satisfies the polynomial equation
+for every maximal ideal `𝔭` of `ℤ̄` over `p`, `ρ_{f,λ}(Frob_𝔭)` satisfies (this wording UNVERIFIED; it may print "characteristic polynomial") the polynomial equation
 `x² − a_p(f) x + χ(p) p^{k−1} = 0`. Lean form as `ZInQ.Contrib.HodgeSplit.DSThm965` (coefficients
 extended along `K_{f,λ} → ℚ̄_ℓ` given by `ιL ∘ ιC⁻¹`, places of `ℚ̄` as valuation subrings,
 arithmetic Frobenius as pkg-I4's `IsArithFrob`), with the conclusion
 `P(ρ(σ)) = 0` (`Polynomial.aeval`) in place of `charpoly ρ(σ) = P`. It is the print under the
 weakest reading, and a consequence of the print under every stronger one (Cayley–Hamilton). -/
-def DSThm965Weak : Prop :=
+def DSThm965WeakAeval : Prop :=
   ∀ (ℓ : ℕ) [Fact ℓ.Prime] (ιC : ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] ℂ) (ιL : ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] PadicAlgCl ℓ)
     (N : ℕ) (k : ℤ) (χ : DirichletCharacter ℂ N) (g : ZInQ.Contrib.G9.PkgI4.CF N k),
     0 < N → 2 ≤ k → ZInQ.Contrib.G9.PkgI4.IsNormalizedEigenform g χ →
@@ -57,15 +57,41 @@ def DSThm965Weak : Prop :=
           ZInQ.Contrib.G9.PkgI4.IsArithFrob σ v p →
           aeval (ρ.mat σ) (X ^ 2 - C (ιL α) * X + C (ιL β)) = 0
 
-/-- The weak leaf is a consequence of `DSThm965` (Cayley–Hamilton): it is never stronger. -/
-theorem dsThm965Weak_of_dsThm965 (h : ZInQ.Contrib.HodgeSplit.DSThm965) : DSThm965Weak := by
+/-- **LEAF (Deligne's theorem, either printed wording).** As `DSThm965WeakAeval`, with the per-Frobenius conclusion
+`charpoly ρ(σ) = P ∨ P(ρ(σ)) = 0`: both printed wordings of Diamond–Shurman Thm 9.6.5 ("characteristic polynomial"
+or "satisfies") give it by or-introduction, so it is a direct instance of the print under either reading. The
+`α` clause rests on Diamond–Shurman printing the theorem with the number field `K_f` (page check pending). -/
+def DSThm965Weak : Prop :=
+  ∀ (ℓ : ℕ) [Fact ℓ.Prime] (ιC : ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] ℂ) (ιL : ZInQ.Contrib.G9.PkgI4.Qbar →ₐ[ℚ] PadicAlgCl ℓ)
+    (N : ℕ) (k : ℤ) (χ : DirichletCharacter ℂ N) (g : ZInQ.Contrib.G9.PkgI4.CF N k),
+    0 < N → 2 ≤ k → ZInQ.Contrib.G9.PkgI4.IsNormalizedEigenform g χ →
+    ∃ ρ : ZInQ.Contrib.G9.PkgI4.GaloisRep ℓ 2, ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ →
+      ρ.UnramifiedAt p ∧ ∃ α β : ZInQ.Contrib.G9.PkgI4.Qbar, ιC α = ZInQ.Contrib.G9.PkgI4.coeff g p ∧
+        ιC β = χ (p : ZMod N) * (p : ℂ) ^ (k - 1) ∧
+        ∀ (v : ValuationSubring ZInQ.Contrib.G9.PkgI4.Qbar) (σ : ZInQ.Contrib.G9.PkgI4.GQ), ZInQ.Contrib.G9.PkgI4.LiesOver v p →
+          ZInQ.Contrib.G9.PkgI4.IsArithFrob σ v p →
+          (ρ.mat σ).charpoly = X ^ 2 - C (ιL α) * X + C (ιL β) ∨
+            aeval (ρ.mat σ) (X ^ 2 - C (ιL α) * X + C (ιL β)) = 0
+
+/-- The disjunctive leaf gives the `aeval` form (left disjunct: Cayley–Hamilton). -/
+theorem dsThm965WeakAeval_of_weak (h : DSThm965Weak) : DSThm965WeakAeval := by
   intro ℓ _ ιC ιL N k χ g hN hk hg
   obtain ⟨ρ, hρ⟩ := h ℓ ιC ιL N k χ g hN hk hg
   refine ⟨ρ, fun p hp hpN => ?_⟩
   obtain ⟨hu, α, β, hα, hβ, hc⟩ := hρ p hp hpN
   refine ⟨hu, α, β, hα, hβ, fun v σ hv hσ => ?_⟩
-  rw [← hc v σ hv hσ]
-  exact Matrix.aeval_self_charpoly _
+  rcases hc v σ hv hσ with hc | hc
+  · rw [← hc]
+    exact Matrix.aeval_self_charpoly _
+  · exact hc
+
+/-- The leaf is a consequence of `DSThm965` (or-introduction): it is never stronger. -/
+theorem dsThm965Weak_of_dsThm965 (h : ZInQ.Contrib.HodgeSplit.DSThm965) : DSThm965Weak := by
+  intro ℓ _ ιC ιL N k χ g hN hk hg
+  obtain ⟨ρ, hρ⟩ := h ℓ ιC ιL N k χ g hN hk hg
+  refine ⟨ρ, fun p hp hpN => ?_⟩
+  obtain ⟨hu, α, β, hα, hβ, hc⟩ := hρ p hp hpN
+  exact ⟨hu, α, β, hα, hβ, fun v σ hv hσ => Or.inl (hc v σ hv hσ)⟩
 
 /-! ## 2. `2 × 2` matrices satisfying a monic quadratic -/
 
@@ -412,7 +438,7 @@ open ZInQ.Contrib.G9.PkgI4
 
 /-- **`DSThm965` from its weakest printed reading** (GLUE proved: the kernel's T18 and Mathlib's
 cyclotomic characters; no other leaf). -/
-theorem dsThm965_of_weak (hW : DSThm965Weak) : ZInQ.Contrib.HodgeSplit.DSThm965 := by
+theorem dsThm965_of_weakAeval (hW : DSThm965WeakAeval) : ZInQ.Contrib.HodgeSplit.DSThm965 := by
   intro ℓ _ ιC ιL N k χ g hN hk hg
   haveI : NeZero N := ⟨hN.ne'⟩
   obtain ⟨ρ, hρ⟩ := hW ℓ ιC ιL N k χ g hN hk hg
@@ -536,5 +562,9 @@ theorem dsThm965_of_weak (hW : DSThm965Weak) : ZInQ.Contrib.HodgeSplit.DSThm965 
       rw [e1, e2]
 
 end Main
+
+/-- **`DSThm965` from the disjunctive leaf.** -/
+theorem dsThm965_of_weak (hW : DSThm965Weak) : ZInQ.Contrib.HodgeSplit.DSThm965 :=
+  dsThm965_of_weakAeval (dsThm965WeakAeval_of_weak hW)
 
 end DS965Weak

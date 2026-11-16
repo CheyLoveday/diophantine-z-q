@@ -74,7 +74,7 @@ H-80		ZInQ.Contrib.CurvesG.NormalModelOfFunctionFieldQ	f6df5fa32,cba8157f7	no
 H-81		ZInQ.Contrib.CurvesG.NormalCurveSmoothQ	f6df5fa32,cba8157f7	no
 H-82		ZInQ.Contrib.CurvesG.GeomConnectedOfConstantFieldQ	f6df5fa32,cba8157f7	no
 H-83		VertWitness.ShimuraGoodReduction	f6df5fa32,cba8157f7	no
-H-84	quotientP1Coordinate	ModelGlue.ModelCoordinateResidue	f6df5fa32,cba8157f7	no
+H-84		ModelGlue.ModelCoordinateResidue	f6df5fa32,cba8157f7	no
 H-85		ModelGlue.CurveBijIso	f6df5fa32,cba8157f7	no
 H-86		STQM	cba8157f7	no
 H-87		ValenceFormulaGammaStar	cba8157f7	no
@@ -108,19 +108,19 @@ H-114		ZInQ.HeightSplit.R5.EichlerOptimalEmbeddingCount	5fd81e870	no
 H-115		ZInQ.HeightGlue.QM.CMDescent	5fd81e870	no
 H-116		ZInQ.HeightGlue.QM.QMUniformizationC	5fd81e870	no
 H-117		ZInQ.RLeaf.IgusaGL2	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
-H-118	regularSmoothPerfect	CurveSplit.RegularSmoothPerfect	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-118		CurveSplit.RegularSmoothPerfect	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-119		CurveSplit.ShimuraGoodReductionNoGuard	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-120	tateTwistInvariants	ZInQ.Contrib.HodgeSplit.TateTwistInvariants	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-121	axSenTate	ZInQ.Contrib.HodgeSplit.AxSenTate	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-122	hodgeTateDecompAbVar	ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-123	deRhamH1AbVarT	ZInQ.Contrib.HodgeSplit.DeRhamH1AbVarT	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-124		ZInQ.Contrib.HodgeSplit.BdRInvariants	5fd81e870,085a7a53a,f18bcb904,3691994d4	no
-H-125	dsThm965	ZInQ.Contrib.HodgeSplit.DSThm965	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-125		ZInQ.Contrib.HodgeSplit.DSThm965	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-126	dsThm966	ZInQ.Contrib.HodgeSplit.DSThm966	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-127	eigenformHTNew	ZInQ.Contrib.HodgeSplit.EigenformHTNew	5fd81e870	no
 H-128		HDec.QMSplit.Yu.YuThm11	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-129		HDec.QMSplit.Aut.QMCentralizerCMC	5fd81e870,085a7a53a,f18bcb904,3691994d4	no
-H-130	shimuraTaniyamaQbar	HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-130		HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-131		HDec.QMSplit.Theta.IgusaPsi4	5fd81e870,085a7a53a,f18bcb904,3691994d4	no
 H-132		HDec.QMSplit.Theta.IgusaChi10	5fd81e870,085a7a53a,f18bcb904,3691994d4	no
 H-133	thetaRatiosAlgebraic	HDec.HSyn.G0Split.ThetaPt.QMSplitTheta.ThetaNullNonvanishing	5fd81e870,085a7a53a	no
@@ -138,9 +138,9 @@ H-144		HDec.LeafQCheck.HM.QMSplit.Value24.IgusaCMValue24	5fd81e870,085a7a53a	no
 H-145		ShimuraSplit.GonzalezRotgerCountX6	085a7a53a	no
 H-146		ReductSplit.SemistableReductionDVR	085a7a53a	no
 H-147		ReductSplit.SemistableUnipotent	085a7a53a	no
-H-148	neronSchemeModelExistsDVR	ReductSplit.NeronSchemeModelExistsDVR	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-148		ReductSplit.NeronSchemeModelExistsDVR	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-149		HDec.QMSplit.Moduli.DeligneComponentsX6	085a7a53a	no
-H-150	geomConnOfAlgClosure	HDec.QMSplit.Moduli.GeomConnOfAlgClosure	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+H-150		HDec.QMSplit.Moduli.GeomConnOfAlgClosure	085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 H-151		HDec.QMSplit.Moduli.BabaGranathX6'	085a7a53a	no
 H-152		HDec.QMSplit.Moduli.ReciprocityCanonical	085a7a53a	no
 H-153		HDec.QMSplit.Moduli.ElkiesConicX6	085a7a53a	no
@@ -159,10 +159,10 @@ H-165		ReductSplit.IdentityComponentBaseChangeDVR	085a7a53a	no
 H-166		ReductSplit.SemistableNeronBaseChangeLocalGlobal	085a7a53a	no
 H-167		ZInQ.HeightSplit.FaltingsLemma5	085a7a53a	no
 H-168		ShimuraSplit.GonzalezRotgerCountX6Ab	f18bcb904,3691994d4	no
-H-169	deligneComponentsY3PrintedAb	ShimuraGlue.DeligneComponentsY3PrintedAb	f18bcb904,3691994d4,f96b7323d	yes
+H-169		ShimuraGlue.DeligneComponentsY3PrintedAb	f18bcb904,3691994d4,f96b7323d	yes
 H-170		LeafQM.AV.R1UnivRigid.MumfordRigidityCore	f18bcb904,3691994d4,f96b7323d	yes
 H-171		CToPrinted.BLR_1_2_4	f18bcb904,3691994d4	no
-H-172	faltingsLemma5Printed	CToPrinted.FaltingsLemma5Printed	f18bcb904,3691994d4,f96b7323d	yes
+H-172		CToPrinted.FaltingsLemma5Printed	f18bcb904,3691994d4,f96b7323d	yes
 H-173		CToPrinted.RaynaudKernelBound	f18bcb904,3691994d4	no
 H-174	sga3_VIB_3_10	CToPrinted.SGA3_VIB_3_10	f18bcb904,3691994d4,f96b7323d	yes
 H-175		CToPrinted.SGA7_IX_3_3	f18bcb904,3691994d4,f96b7323d	yes
@@ -182,8 +182,8 @@ H-188		ReductGlue.StrictHenselizationInside	f18bcb904,3691994d4,f96b7323d	yes
 H-189		ReductGlue.ReductionFromSH	f18bcb904	no
 H-190		HDec.HSyn.G0Split.ThetaPt.ThetaGlue.LinYangThetaCurve	f18bcb904,3691994d4,f96b7323d	yes
 H-191	thetaRatiosAlgebraic	HDec.HSyn.G0Split.ThetaPt.ThetaGlue.IgusaAlg	f18bcb904	no
-H-192	deligneComponentsX6PrintedAb	ShimuraGlue.DeligneComponentsX6PrintedAb	3691994d4,f96b7323d	yes
-H-193	babaGranathRationalAb	HDec.QMSplit.Moduli.BabaGranathRationalAb	3691994d4,f96b7323d	yes
+H-192		ShimuraGlue.DeligneComponentsX6PrintedAb	3691994d4,f96b7323d	yes
+H-193		HDec.QMSplit.Moduli.BabaGranathRationalAb	3691994d4,f96b7323d	yes
 H-194	gonzalezRotgerX6Ab	HDec.QMSplit.Moduli.GonzalezRotgerX6Ab	3691994d4,f96b7323d	yes
 H-195		HDec.QMSplit.Moduli.ElkiesEquationsX6Ab	3691994d4	no
 H-196		ShimuraGlue.Ray.RayClassCMAb	3691994d4,f96b7323d	yes
@@ -193,13 +193,13 @@ H-199	picRepresentableAbVar	T09Pic.PicRepresentableAbVar	3691994d4,f96b7323d	yes
 H-200	picZeroAbVar	T09Pic.PicZeroAbVar	3691994d4,f96b7323d	yes
 H-201	phiAmpleIsogeny	T09Pic.PhiAmpleIsogeny	3691994d4,f96b7323d	yes
 H-202	weilPairingMumford	T09Pic.WeilPairingMumford	3691994d4,f96b7323d	yes
-H-203	semistablePersistsSHcp	ReductB.SemistablePersistsSHcp	f96b7323d	yes
+H-203		ReductB.SemistablePersistsSHcp	f96b7323d	yes
 H-204	gonzalezRotgerProp56X6	GRCountX6.GonzalezRotgerProp56X6	f96b7323d	yes
 H-205	neronBaseChangeStrictHenselization	GapSHPair.NeronBaseChangeStrictHenselization	f96b7323d	yes
 H-206		HDec.QMSplit.Moduli.ElkiesX6Star.ElkiesX6StarPrinted	f96b7323d	yes
 T-1	h11	ZInQ.Contrib.TYZDecomp.TYZThm11Integral	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 T-2		ZInQ.Contrib.TYZDecomp.TYZLcalOne	249195fd0	no
-T-3	h29	ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
+T-3		ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	yes
 T-4		ZInQ.Contrib.TYZGenus.Package.Lemma318Literal	249195fd0,f6df5fa32	no
 T-5		ZInQ.Contrib.TYZGenus.Shimura.ShimuraReciprocityModFn	249195fd0,f6df5fa32,cba8157f7	no
 T-6		ZInQ.Contrib.TYZGenus.Package.Thm35First	249195fd0	no
