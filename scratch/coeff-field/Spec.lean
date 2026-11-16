@@ -320,4 +320,112 @@ theorem eigenformCoeffFieldFinite_of (hR : CharSpaceRationalSpan) :
       map_smul' := fun _ _ => Subtype.ext (by simp) }
   exact Module.Finite.of_injective iK (fun x y h => Subtype.ext (congrArg (fun z : B => (z : ℂ)) h))
 
+/-! ## The rational structure of `S_k(N, χ)` from the `Γ₁(N)`-level statements -/
+
+/-- The `n`-th coefficient on `S_k(Γ₁(N))` as a linear functional. -/
+def coeffG (n : ℕ) : CuspForm ((Gamma1 N).map (mapGL ℝ)) k →ₗ[ℂ] ℂ where
+  toFun g := (qExpansion 1 g).coeff n
+  map_add' F G := by
+    rw [FunLike.coe_add,
+      ModularForm.qExpansion_add one_pos (TauCeti.one_mem_strictPeriods_Gamma1_map N), map_add]
+  map_smul' a F := by
+    rw [FunLike.coe_smul,
+      ModularForm.qExpansion_smul one_pos (TauCeti.one_mem_strictPeriods_Gamma1_map N),
+      PowerSeries.coeff_smul, smul_eq_mul, RingHom.id_apply, smul_eq_mul]
+
+theorem coeffG_apply (n : ℕ) (g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k) :
+    coeffG n g = (qExpansion 1 g).coeff n := rfl
+
+/-- **LEAF (Shimura's rational basis of `S_k(Γ₁(N))`).** For `k ≥ 2`, `S_k(Γ₁(N))` is spanned over `ℂ` by
+cusp forms whose `q`-expansion coefficients at `∞` are all rational. -/
+def Gamma1RationalSpan : Prop :=
+  ∀ (N : ℕ) [NeZero N] (k : ℤ), 2 ≤ k →
+    Submodule.span ℂ {g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k |
+      ∀ n : ℕ, ∃ q : ℚ, (qExpansion 1 g).coeff n = q} = ⊤
+
+/-- **LEAF (the diamond operators are defined over `ℚ`).** For `k ≥ 2` and `d ∈ (ℤ/Nℤ)ˣ`, the diamond
+operator `⟨d⟩` (slash by any `γ ∈ Γ₀(N)` with lower-right entry `≡ d`, Tau Ceti's `diamondOpCusp`) maps a cusp
+form on `Γ₁(N)` with rational `q`-expansion to one with rational `q`-expansion. -/
+def DiamondPreservesRational : Prop :=
+  ∀ (N : ℕ) [NeZero N] (k : ℤ) (d : (ZMod N)ˣ) (g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k), 2 ≤ k →
+    (∀ n : ℕ, ∃ q : ℚ, (qExpansion 1 g).coeff n = q) →
+    ∀ n : ℕ, ∃ q : ℚ, (qExpansion 1 (diamondOpCusp k d g)).coeff n = q
+
+/-- The (unnormalized) projector `Σ_d χ(d)⁻¹ ⟨d⟩` onto `S_k(N, χ)`. -/
+def proj (χ : (ZMod N)ˣ →* ℂˣ) :
+    CuspForm ((Gamma1 N).map (mapGL ℝ)) k →ₗ[ℂ] CuspForm ((Gamma1 N).map (mapGL ℝ)) k :=
+  ∑ d : (ZMod N)ˣ, ((χ d⁻¹ : ℂˣ) : ℂ) • diamondOpCusp k d
+
+theorem proj_apply (χ : (ZMod N)ˣ →* ℂˣ) (g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k) :
+    proj χ g = ∑ d : (ZMod N)ˣ, ((χ d⁻¹ : ℂˣ) : ℂ) • diamondOpCusp k d g := by
+  simp [proj, LinearMap.sum_apply]
+
+theorem proj_mem (χ : (ZMod N)ˣ →* ℂˣ) (g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k) :
+    proj χ g ∈ cuspFormCharSpace k χ := by
+  rw [mem_cuspFormCharSpace_iff]
+  intro e
+  rw [proj_apply, map_sum, Finset.smul_sum]
+  simp only [map_smul, diamondOpCuspHom_apply]
+  refine Fintype.sum_equiv (Equiv.mulLeft e) _ _ (fun d => ?_)
+  rw [Equiv.coe_mulLeft, diamondOpCusp_mul, LinearMap.comp_apply, smul_smul, ← Units.val_mul,
+    ← map_mul]
+  congr 3
+  group
+  simp only [zpow_neg_one]
+  rw [mul_comm e, mul_inv_cancel_right]
+
+theorem proj_of_mem (χ : (ZMod N)ˣ →* ℂˣ) {F : CuspForm ((Gamma1 N).map (mapGL ℝ)) k}
+    (hF : F ∈ cuspFormCharSpace k χ) :
+    proj χ F = (Fintype.card (ZMod N)ˣ : ℂ) • F := by
+  rw [mem_cuspFormCharSpace_iff] at hF
+  rw [proj_apply]
+  have : ∀ d : (ZMod N)ˣ, ((χ d⁻¹ : ℂˣ) : ℂ) • diamondOpCusp k d F = F := by
+    intro d
+    rw [← diamondOpCuspHom_apply, hF d, smul_smul, ← Units.val_mul, ← map_mul, inv_mul_cancel,
+      map_one, Units.val_one, one_smul]
+  simp only [this, Finset.sum_const, Finset.card_univ, Nat.cast_smul_eq_nsmul]
+
+theorem proj_coeff_mem (hB : DiamondPreservesRational) (χ : (ZMod N)ˣ →* ℂˣ) (hk : 2 ≤ k)
+    {g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k} (hg : ∀ n : ℕ, ∃ q : ℚ, (qExpansion 1 g).coeff n = q)
+    (n : ℕ) : (qExpansion 1 (proj χ g)).coeff n ∈ charField χ := by
+  rw [← coeffG_apply, proj_apply, map_sum]
+  refine sum_mem fun d _ => ?_
+  rw [map_smul, smul_eq_mul]
+  refine mul_mem (IntermediateField.subset_adjoin ℚ _ ⟨d⁻¹, rfl⟩) ?_
+  obtain ⟨q, hq⟩ := hB N k d g hk hg n
+  rw [coeffG_apply, hq]
+  exact SubfieldClass.ratCast_mem _ q
+
+/-- **`CharSpaceRationalSpan` from the two `Γ₁(N)`-level leaves.** -/
+theorem charSpaceRationalSpan_of (hA : Gamma1RationalSpan) (hB : DiamondPreservesRational) :
+    CharSpaceRationalSpan := by
+  intro N _ k χ hk
+  rw [eq_top_iff]
+  rintro F -
+  set R := {g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k | ∀ n : ℕ, ∃ q : ℚ, (qExpansion 1 g).coeff n = q}
+  set X := {F : cuspFormCharSpace k χ | ∀ n : ℕ,
+      (qExpansion 1 (F : CuspForm ((Gamma1 N).map (mapGL ℝ)) k)).coeff n ∈ charField χ}
+  let P' : CuspForm ((Gamma1 N).map (mapGL ℝ)) k →ₗ[ℂ] cuspFormCharSpace k χ :=
+    (proj χ).codRestrict _ (proj_mem χ)
+  have hR : (F : CuspForm ((Gamma1 N).map (mapGL ℝ)) k) ∈ Submodule.span ℂ R := by
+    rw [hA N k hk]; exact Submodule.mem_top
+  have hPX : P' '' R ⊆ X := by
+    rintro _ ⟨g, hg, rfl⟩ n
+    exact proj_coeff_mem hB χ hk hg n
+  have h1 : P' F ∈ Submodule.span ℂ X := by
+    have hmap := Submodule.mem_map_of_mem (f := P') hR
+    rw [Submodule.map_span] at hmap
+    exact Submodule.span_mono hPX hmap
+  have h2 : P' F = (Fintype.card (ZMod N)ˣ : ℂ) • F := Subtype.ext (proj_of_mem χ F.2)
+  have hc : (Fintype.card (ZMod N)ˣ : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
+  have : F = ((Fintype.card (ZMod N)ˣ : ℂ))⁻¹ • P' F := by
+    rw [h2, smul_smul, inv_mul_cancel₀ hc, one_smul]
+  rw [this]
+  exact Submodule.smul_mem _ _ h1
+
+/-- **`EigenformCoeffFieldFinite` from the two `Γ₁(N)`-level leaves.** -/
+theorem eigenformCoeffFieldFinite_of_gamma1 (hA : Gamma1RationalSpan) (hB : DiamondPreservesRational) :
+    DSCoeffExt.EigenformCoeffFieldFinite :=
+  eigenformCoeffFieldFinite_of (charSpaceRationalSpan_of hA hB)
+
 end CoeffField
