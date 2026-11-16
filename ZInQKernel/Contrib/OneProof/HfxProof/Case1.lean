@@ -341,6 +341,129 @@ theorem testVector_one8 {n : ℕ} [NeZero n] (hsq : Squarefree n) (h1 : n % 8 = 
         rw [← hn, hk]; push_cast; rw [show (8 : ZMod 8) = 0 from rfl]; ring
       push_cast at h8 ⊢; linear_combination h8)
   have her' : e.r = r := her
-  sorry
+  have hqω' : qp 2 ω = hurZ ωZ := qp_hurZ ωZ
+  -- merges
+  have hM0 : ∀ t, twoRep v t ∈ DC n τ (twoRep v (e.root t)) := by
+    intro t
+    obtain ⟨hm1, hm2⟩ := tab1_merge e he t
+    set w := e.wit.getD (idx8 t) (0, 0, 0, 0, 0)
+    set μ := unitList.getD w.2.2.1.val ⟨1, 0, 0, 0⟩ with hμdef
+    have hμ1 : nrdH μ = 1 := unitList_nrdH μ (getD_mem_unitList _)
+    have hsg : (sg w.2.2.2.1 : ℤ) ^ 2 = 1 := by have := sg_sq w.2.2.2.1; exact_mod_cast this
+    set ρZ : H4 ℤ := if w.2.2.2.2 = 0 then smulH (sg w.2.2.2.1) μ
+      else mulH oneI (smulH (sg w.2.2.2.1) μ) with hρZ
+    set αZ : H4 ℤ := ⟨(w.1.val : ℤ) + (w.2.1.val : ℤ) * ωZ.a0, (w.2.1.val : ℤ) * ωZ.a1,
+      (w.2.1.val : ℤ) * ωZ.a2, (w.2.1.val : ℤ) * ωZ.a3⟩ with hαZ
+    have hα8 : mapH (Int.castRingHom (ZMod 8)) αZ = alpha8 e.r w.1 w.2.1 := by
+      rw [her', hrdef]; simp only [hαZ, mapH, alpha8, map_add, map_mul, eq_intCast, natCast_val_zmod8]
+    set A : H4 ℤ := rhoBetaZ w.2.2.1 w.2.2.2.1 w.2.2.2.2 (e.root t) with hAdef
+    set B : H4 ℤ := mulH (βZ t) αZ with hBdef
+    have hE : DivB w.2.2.2.2 (mapH (Int.castRingHom (ZMod 8))
+        (mulH (starH A) ⟨B.a0 - A.a0, B.a1 - A.a1, B.a2 - A.a2, B.a3 - A.a3⟩)) := by
+      rw [mapH_mulH, mapH_starH, mapH_sub]
+      have hB8 : mapH (Int.castRingHom (ZMod 8)) B =
+          mulH (mapH (Int.castRingHom (ZMod 8)) (βZ t)) (alpha8 e.r w.1 w.2.1) := by
+        rw [hBdef, mapH_mulH, hα8]
+      show DivB _ (mulH (starH (mapH (Int.castRingHom (ZMod 8)) A))
+        (sub8 (mapH (Int.castRingHom (ZMod 8)) B) (mapH (Int.castRingHom (ZMod 8)) A)))
+      rw [hB8]; exact hm1
+    obtain ⟨Cc, hCc⟩ := exists_smulH_of_divB hE
+    have hα0 : (hurZ αZ : ℍ[ℚ]) ≠ 0 := by
+      intro h0
+      have := congrArg Quaternion.normSq h0
+      rw [normSq_hurZ, map_zero] at this
+      apply hm2; rw [← hα8, ← map_nrdH]
+      have : nrdH αZ = 0 := by exact_mod_cast this
+      rw [this, map_zero]
+    have hαω : (hurZ αZ : ℍ[ℚ]) = ((w.1.val : ℚ)) • 1 + ((w.2.1.val : ℚ)) • ω := by
+      apply hc_injective
+      rw [hc_hurZ, hc_add, hc_smul, hc_smul, hc_one, hωdef, hc_hurZ]
+      ext <;> simp [hαZ, mapH]
+    have hαc : (hurZ αZ : ℍ[ℚ]) * τ (sqrtNeg n) = τ (sqrtNeg n) * hurZ αZ := by
+      rw [hαω, ← hωv, add_mul, mul_add, smul_mul_assoc, smul_mul_assoc, mul_smul_comm, mul_smul_comm,
+        one_mul, mul_one]
+    have hρn : Quaternion.normSq (hurZ ρZ : ℍ[ℚ]) = 1 ∨ Quaternion.normSq (hurZ ρZ : ℍ[ℚ]) = 2 := by
+      rw [normSq_hurZ, hρZ]
+      split_ifs
+      · left; rw [nrdH_smulH, hμ1, hsg]; simp
+      · right; rw [nrdH_mulH, nrdH_smulH, hμ1, hsg, show nrdH oneI = 2 from rfl]; simp
+    have hρ0 : (hurZ ρZ : ℍ[ℚ]) ≠ 0 := by
+      intro h0; rw [h0, map_zero] at hρn; rcases hρn with h | h <;> norm_num at h
+    have hAq : hurZ ρZ * twoRepQ (e.root t) = (hurZ A : ℍ[ℚ]) := by
+      rw [hAdef, hurZ_rhoBetaZ]
+    have hBq : twoRepQ t * hurZ αZ = (hurZ B : ℍ[ℚ]) := by rw [twoRepQ_eq, hBdef, hurZ_mulH]
+    have hnA : nrdH A = 2 ^ w.2.2.2.2.val * nrdH (βZ (e.root t)) := by
+      rw [hAdef, rhoBetaZ]
+      split_ifs with hb
+      · rw [hb, nrdH_smulH, nrdH_mulH, hμ1, hsg]; simp
+      · have hb1 : w.2.2.2.2 = 1 := by omega
+        rw [hb1, nrdH_mulH, nrdH_smulH, nrdH_mulH, hμ1, hsg, show nrdH oneI = 2 from rfl]; simp
+    have hloc := local_merge_cond (p := (Pw v : ℕ)) (Pw_eq_two hv) A B Cc w.2.2.2.2.val _
+      (nrdH_βZ_odd _) hnA hCc
+    rw [← hAq, ← hBq] at hloc
+    exact twoRep_mem_DC_of hv hα0 hαc hρ0 (isHurZ_hurZ _) hρn hloc
+  -- the obstruction, for the three pairs of roots
+  have hS0 : ∀ pr ∈ pairs1, twoRep v pr.1 ∉ DC n τ (twoRep v pr.2) := by
+    intro pr hpr
+    refine twoRep_not_mem_DC hv C hH ?_
+    intro p _ hp q nn k' hq hk' y hy heq
+    subst hp
+    rcases hy with hy | hy
+    · obtain ⟨cc, hcc, u, rfl, hu, hnu, hR⟩ := hy
+      rw [hqω'] at hR
+      obtain ⟨μ, hμ, X, Y, hrel⟩ := two_adic_b1 q hq nn k' hk' (βZ pr.1) (βZ pr.2) ωZ (nrdH_βZ_odd _)
+        (nrdH_βZ_odd _) cc hcc u hnu hR heq
+      refine tab1_sep1 e he pr hpr μ hμ X Y ?_
+      rw [her', hrdef]; simp only [mapH, eq_intCast, to4_intCast]; exact hrel
+    · obtain ⟨cc, hcc, u, hyu, hu, hnu, hR⟩ := hy
+      rw [hqω'] at hR
+      set ϖZ : H4 ℤ := ⟨1 + 4 * c', a - 4 * c', b - 4 * c', 2 * (4 * c')⟩ with hϖZ
+      have hϖq : qp 2 (1 + ω) = hurZ ϖZ := by
+        rw [map_add, map_one, hqω']; apply hc_injective
+        rw [hc_add, hc_one, hc_hurZ, hc_hurZ]; ext <;> simp [hϖZ, hωZ, ωH1, mapH]
+      have hϖn' : nrdH ϖZ = 2 * ((4 * k + 1 : ℕ) : ℤ) := by
+        have h := hϖn
+        rw [show (1 + ω : ℍ[ℚ]) = hurZ ϖZ by
+          apply hc_injective; rw [hc_add, hc_one, hωdef, hc_hurZ, hc_hurZ]
+          ext <;> simp [hϖZ, hωZ, ωH1, mapH], normSq_hurZ] at h
+        have : ((nrdH ϖZ : ℤ) : ℚ) = ((2 * ((4 * k + 1 : ℕ) : ℤ) : ℤ) : ℚ) := by rw [h]; push_cast; ring
+        exact_mod_cast this
+      rw [hϖq] at hyu
+      have heq' : qp 2 (q • hurZ nn) * hurZ (βZ pr.2) * (cc • u) = hurZ (βZ pr.1) * hurZ ϖZ := by
+        rw [← hyu, ← heq]; simp only [mul_assoc]
+      obtain ⟨μ, hμ, X, Y, hrel⟩ := two_adic_b2 q hq nn k' hk' (βZ pr.1) (βZ pr.2) ωZ ϖZ
+        (nrdH_βZ_odd _) (nrdH_βZ_odd _) _ ⟨2 * k, by push_cast; ring⟩ hϖn' cc hcc u hnu hR heq'
+      refine tab1_sep2 e he pr hpr μ hμ (to4 X) (to4 Y) ?_
+      have hL : mulH (mapH (Int.castRingHom (ZMod 8)) oneMI) (mulH (mapH (Int.castRingHom (ZMod 8))
+          (βZ pr.1)) ⟨1 + e.r.a0, e.r.a1, e.r.a2, e.r.a3⟩) =
+          mapH (Int.castRingHom (ZMod 8)) (mulH oneMI (mulH (βZ pr.1) ϖZ)) := by
+        rw [mapH_mulH, mapH_mulH]; congr 2
+        rw [her', hrdef]; simp [mapH, hϖZ, hωZ, ωH1]
+      have hR' : (⟨dbl (to4 X) + dbl (to4 Y) * e.r.a0, dbl (to4 Y) * e.r.a1, dbl (to4 Y) * e.r.a2,
+          dbl (to4 Y) * e.r.a3⟩ : H4 (ZMod 8)) = ⟨2 * X + 2 * Y * (ωZ.a0 : ZMod 8),
+          2 * Y * (ωZ.a1 : ZMod 8), 2 * Y * (ωZ.a2 : ZMod 8), 2 * Y * (ωZ.a3 : ZMod 8)⟩ := by
+        rw [dbl_to4, dbl_to4, her', hrdef]; rfl
+      rw [hL, hR']; exact hrel
+  -- assembly
+  obtain ⟨hs1, hs2, hN0, hN1, hN2, hM0', hM1, hM2, hc0, hc1, hc2⟩ := tab1_sums e he
+  have hroot : ∀ t t', e.F t = e.F t' → e.root t = e.root t' := by
+    intro t t' h
+    simp only [E1.F] at h
+    simp only [E1.root, val1_inj _ _ h]
+  refine testVector_of_partition hv e.F (exists_twoRep τ hv) ?_ ?_ ⟨hs1, hs2⟩ ?_
+    ⟨(0, 0, 0), by simp only [E1.F, hc0]; decide⟩
+  · intro t t' h
+    have h2 := hM0 t'
+    rw [← hroot t t' h] at h2
+    exact DC_trans (DC_symm h2) (hM0 t)
+  · intro t t' h hmem
+    have h4 : twoRep v (e.root t) ∈ DC n τ (twoRep v (e.root t')) :=
+      DC_trans (DC_trans (hM0 t') hmem) (DC_symm (hM0 t))
+    have hne : e.c t ≠ e.c t' := fun hc => h (by simp only [E1.F, hc])
+    rcases pairs1_cover _ _ hne with hp | hp
+    · exact hS0 _ hp h4
+    · exact hS0 _ hp (DC_symm h4)
+  · intro G hG hGs hGc
+    exact rank1_three e.c G hc0 hc1 hc2 hN0 hN1 hN2 hM0' hM1 hM2 hG hGs hGc
 
 end ZInQ.Contrib.HfxProof
