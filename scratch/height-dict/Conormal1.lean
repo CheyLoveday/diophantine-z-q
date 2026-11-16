@@ -192,4 +192,106 @@ theorem omegaAt_map (s : Spec (CommRingCat.of (𝓞 L))) :
     rw [key]
     exact Submodule.subset_span ⟨_, ⟨b - c, hf, hm, rfl⟩, rfl⟩
 
+
+/-! ## `θ` is injective, hence the global lattices correspond -/
+
+theorem isLocalization_Reta :
+    IsLocalization.AtPrime (Reta L) (⊥ : Ideal (𝓞 L)) := by
+  have h := StructureSheaf.IsLocalization.to_stalk (CommRingCat.of (𝓞 L)) (genericPt L)
+  exact h
+
+theorem structMap_isUnit (t : 𝓞 L) (ht : t ≠ 0) : IsUnit (𝒢.structMap t) := by
+  haveI := isLocalization_Reta (L := L)
+  have h1 : IsUnit (unitStalk 𝒢 (genericPt L) (𝒢.structMap t)) := by
+    rw [show 𝒢.structMap t = stalkAlg 𝒢 (𝒢.unitSection (genericPt L)) t from rfl,
+      unitStalk_stalkAlg]
+    exact IsLocalization.map_units (Reta L) (⟨t, Ideal.mem_primeCompl_iff.mpr (by simpa using ht)⟩ :
+      (⊥ : Ideal (𝓞 L)).primeCompl)
+  exact isUnit_of_map_unit (unitStalk 𝒢 (genericPt L)) _ h1
+
+theorem ker_eq_maximalIdeal :
+    RingHom.ker (algebraMap 𝒢.genStalk (Reta L)) = IsLocalRing.maximalIdeal 𝒢.genStalk := by
+  apply le_antisymm
+  · intro x hx hu
+    have h0 : unitStalk 𝒢 (genericPt L) x = 0 := hx
+    haveI : Nontrivial (Reta L) := (isField_Reta (L := L)).nontrivial
+    apply not_isUnit_zero (M₀ := Reta L)
+    rw [← h0]
+    exact hu.map _
+  · intro x hx
+    exact maximalIdeal_le_ker 𝒢 hx
+
+theorem algebraMap_surjective : Function.Surjective (algebraMap 𝒢.genStalk (Reta L)) := by
+  haveI := isLocalization_Reta (L := L)
+  intro y
+  obtain ⟨⟨a, t⟩, rfl⟩ := IsLocalization.mk'_surjective (⊥ : Ideal (𝓞 L)).primeCompl y
+  have ht : (t : 𝓞 L) ≠ 0 := fun h =>
+    (Ideal.mem_primeCompl_iff.mp t.2) (by rw [h]; exact Ideal.zero_mem _)
+  have hu := structMap_isUnit 𝒢 t ht
+  refine ⟨𝒢.structMap a * ↑hu.unit⁻¹, ?_⟩
+  rw [IsLocalization.eq_mk'_iff_mul_eq, map_mul, _root_.mul_assoc]
+  have e1 : ∀ c : 𝓞 L, algebraMap 𝒢.genStalk (Reta L) (𝒢.structMap c) = algebraMap (𝓞 L) (Reta L) c :=
+    fun c => unitStalk_stalkAlg 𝒢 (genericPt L) c
+  rw [← e1 t, ← map_mul]
+  have h0 := hu.unit.inv_mul
+  rw [hu.unit_spec] at h0
+  rw [h0, map_one, _root_.mul_one, e1]
+
+/-- **`θ` is injective** (Mathlib's `retractionKerCotangentToTensorEquivSection`, from the section
+`𝒪_{S,η} → 𝒪_{𝒢,ξ}/I²` given by the structure map). -/
+theorem theta_injective : Function.Injective (theta 𝒢) := by
+  haveI := isLocalization_Reta (L := L)
+  set I := RingHom.ker (algebraMap 𝒢.genStalk (Reta L))
+  -- the section
+  let f₀ : 𝓞 L →ₐ[𝓞 L] 𝒢.genStalk ⧸ I ^ 2 :=
+    (Ideal.Quotient.mkₐ (𝓞 L) (I ^ 2)).comp (Algebra.ofId (𝓞 L) 𝒢.genStalk)
+  have hf₀ : ∀ y : (⊥ : Ideal (𝓞 L)).primeCompl, IsUnit (f₀ y) := by
+    intro y
+    have hy : (y : 𝓞 L) ≠ 0 := fun h =>
+      (Ideal.mem_primeCompl_iff.mp y.2) (by rw [h]; exact Ideal.zero_mem _)
+    exact (structMap_isUnit 𝒢 y hy).map (Ideal.Quotient.mk (I ^ 2))
+  let g : Reta L →ₐ[𝓞 L] 𝒢.genStalk ⧸ I ^ 2 :=
+    IsLocalization.liftAlgHom (M := (⊥ : Ideal (𝓞 L)).primeCompl) hf₀
+  have hg : (IsScalarTower.toAlgHom (𝓞 L) 𝒢.genStalk (Reta L)).kerSquareLift.comp g =
+      AlgHom.id (𝓞 L) (Reta L) := by
+    apply AlgHom.toRingHom_injective
+    apply IsLocalization.ringHom_ext (⊥ : Ideal (𝓞 L)).primeCompl
+    ext a
+    show (IsScalarTower.toAlgHom (𝓞 L) 𝒢.genStalk (Reta L)).kerSquareLift
+      (g (algebraMap (𝓞 L) (Reta L) a)) = algebraMap (𝓞 L) (Reta L) a
+    rw [show g (algebraMap (𝓞 L) (Reta L) a) = f₀ a from IsLocalization.lift_eq hf₀ a]
+    show unitStalk 𝒢 (genericPt L) (𝒢.structMap a) = _
+    exact unitStalk_stalkAlg 𝒢 (genericPt L) a
+  obtain ⟨l, hl⟩ := (retractionKerCotangentToTensorEquivSection (R := 𝓞 L)
+    (algebraMap_surjective 𝒢)).symm ⟨g, hg⟩
+  have hinj1 : Function.Injective (kerCotangentToTensor (𝓞 L) 𝒢.genStalk (Reta L)) := by
+    intro x y hxy
+    have h := congrArg l hxy
+    have h1 := LinearMap.congr_fun hl x
+    have h2 := LinearMap.congr_fun hl y
+    simp only [LinearMap.comp_apply, LinearMap.id_apply] at h1 h2
+    rw [← h1, ← h2]
+    exact h
+  have hinj2 : Function.Injective (Ideal.mapCotangent (IsLocalRing.maximalIdeal 𝒢.genStalk) I
+      (AlgHom.id 𝒢.genStalk 𝒢.genStalk) (maximalIdeal_le_ker 𝒢)) := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro x hx
+    obtain ⟨y, rfl⟩ := Ideal.toCotangent_surjective _ x
+    rw [Ideal.mapCotangent_toCotangent, Ideal.toCotangent_eq_zero] at hx
+    rw [Ideal.toCotangent_eq_zero]
+    have hI : I = IsLocalRing.maximalIdeal 𝒢.genStalk := ker_eq_maximalIdeal 𝒢
+    have hx' : (y : 𝒢.genStalk) ∈ I ^ 2 := hx
+    rw [hI] at hx'
+    exact hx'
+  exact hinj1.comp hinj2
+
+/-- **`ω_𝒢 = Γ(S, e*Ω¹_{𝒢/S})` (EGA IV 17.2.5 with global sections as the intersection of the stalks
+of a lattice):** under the injective `θ`, the kernel's `omega` is the intersection over `s` of the
+images of the stalks `(e*Ω¹)_s`. -/
+theorem omega_map : 𝒢.omega.map (theta' 𝒢) = ⨅ s, printedOmegaAt 𝒢 s := by
+  unfold GroupModel.omega
+  haveI : Nonempty (Spec (CommRingCat.of (𝓞 L))) := ⟨genericPt L⟩
+  rw [Submodule.map_iInf (theta' 𝒢) (theta_injective 𝒢)]
+  exact iInf_congr fun s => omegaAt_map 𝒢 s
+
 end ZInQ.HeightDict.Conormal
