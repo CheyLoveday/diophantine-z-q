@@ -40,7 +40,7 @@ USED   gagaMorphism : ZInQ.HomLattice.GAGAMorphism
 USED   neronSchemeExtensionExists : ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 ## HDec.HSyn.OpenAddedLeaves17
-USED   thetaRatiosAlgebraic : HDec.HSyn.G0Split.ThetaPt.ThetaRatiosAlgebraic
+UNUSED thetaRatiosAlgebraic : HDec.HSyn.G0Split.ThetaPt.ThetaRatiosAlgebraic
 USED   tateTwistInvariants : ZInQ.Contrib.HodgeSplit.TateTwistInvariants
 USED   axSenTate : ZInQ.Contrib.HodgeSplit.AxSenTate
 USED   milneIsogenyQuasiInverse : AvSplit.MilneIsogenyQuasiInverse

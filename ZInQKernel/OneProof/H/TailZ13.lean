@@ -60,8 +60,9 @@ theorem addedLeaves8_of_open9 (l : OpenAddedLeaves9) (hY3 : TSHecke.Y3Connected)
 `docs/research/leaf-fold10.md` §2. -/
 theorem sixContactMin_of_open11 (r : OpenResearchLeaves9) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves9)
     (g : OpenGlue7) (hF5 : _root_.ZInQ.HeightSplit.FaltingsLemma5BCLower) (hYu : QMLattice.YuB6Alg)
-    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
-  sixContactMin_of_open10 r t (addedLeaves8_of_open9 l hY3) g hF5 hYu
+    (hY3 : TSHecke.Y3Connected)
+    (hθ : PkgI1.QMHauptmodul → G0Split.ThetaPt.ThetaSplit.ThetaRatiosAtQM) : ZInQ.SixContactMin :=
+  sixContactMin_of_open10 r t (addedLeaves8_of_open9 l hY3) g hF5 hYu hθ
 
 end HSyn
 

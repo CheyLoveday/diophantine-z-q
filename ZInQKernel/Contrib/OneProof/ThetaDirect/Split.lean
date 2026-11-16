@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.ThetaDirect.UseForm
+import ZInQKernel.OneProof.H.TailZ19
 
 /-! theta-direct: copied verbatim from origin/wip/theta-fold (8e3dbdea) `ZInQKernel/Contrib/OneProof/LinYangSplit.lean`;
    only the import lines are changed (this base has no theta-fold modules). -/
