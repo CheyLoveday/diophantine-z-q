@@ -243,6 +243,106 @@ theorem exists_basis (hk : Module.finrank ℚ k = 2) (R : Subring k)
     have hw' : x - q * xω = (w : ℚ) := by linarith
     rw [hw']; push_cast; ring
 
+/-- `f • z ∈ R` for `z ∈ 𝒪_k`, `f` the conductor. -/
+theorem conductor_smul_mem (R : Subring k) {z : k} (hz : IsIntegral ℤ z) : (conductor R : ℤ) • z ∈ R := by
+  have hmem : z ∈ (integralClosure ℤ k).toSubring.toAddSubgroup := hz
+  have := R.toAddSubgroup.nsmul_relIndex_mem hmem
+  rw [natCast_zsmul]; exact this
+
+/-- If `z ∈ 𝒪_k` and `ℓ z ∈ R` with `ℓ ∈ {2, 3}` prime to the conductor, then `z ∈ R`. -/
+theorem mem_of_ell_mul (R : Subring k) (hc : Nat.Coprime (conductor R) 6) {ℓ : ℤ} (hℓ : L6 ℓ) {z : k}
+    (hz : IsIntegral ℤ z) (hℓz : (ℓ : k) * z ∈ R) : z ∈ R := by
+  have hcop : IsCoprime (conductor R : ℤ) ℓ := by
+    rw [Int.isCoprime_iff_gcd_eq_one]
+    rcases hℓ with rfl | rfl
+    · have : Nat.Coprime (conductor R) 2 := Nat.Coprime.coprime_dvd_right (by norm_num) hc
+      exact_mod_cast this
+    · have : Nat.Coprime (conductor R) 3 := Nat.Coprime.coprime_dvd_right (by norm_num) hc
+      exact_mod_cast this
+  obtain ⟨u, v, huv⟩ := hcop
+  have h1 := conductor_smul_mem R hz
+  have : z = (u : k) * ((conductor R : ℤ) • z) + (v : k) * ((ℓ : k) * z) := by
+    rw [zsmul_eq_mul]
+    have : ((u * (conductor R : ℤ) + v * ℓ : ℤ) : k) = 1 := by rw [huv]; simp
+    push_cast at this
+    simp only [Int.cast_natCast] at this ⊢
+    linear_combination -z * this
+  rw [this]
+  exact R.add_mem (R.mul_mem (_root_.intCast_mem R u) h1) (R.mul_mem (_root_.intCast_mem R v) hℓz)
+
+/-- **The ramified element**: if `ℓ ∈ {2, 3}` divides `Δ = t² − 4n` and not the conductor, some `ω − a ∈ R` has
+norm `a² − t a + n` exactly divisible by `ℓ`. -/
+theorem exists_l (R : Subring k) (hc : Nat.Coprime (conductor R) 6) {ω : k} (hωR : ω ∈ R)
+    (hω : ∀ q : ℚ, ω ≠ algebraMap ℚ k q) (hbasis : ∀ r ∈ R, ∃ x y : ℤ, r = (x : k) + (y : k) * ω)
+    {t n : ℤ} (htn : ω * ω - (t : k) * ω + (n : k) = 0) {ℓ : ℤ} (hℓ : L6 ℓ) (hΔ : ℓ ∣ t ^ 2 - 4 * n) :
+    ∃ a : ℤ, ℓ ∣ a ^ 2 - t * a + n ∧ ¬ ℓ ^ 2 ∣ a ^ 2 - t * a + n := by
+  obtain ⟨a, hT, hN⟩ : ∃ a : ℤ, ℓ ∣ t - 2 * a ∧ ℓ ∣ a ^ 2 - t * a + n := by
+    rcases hℓ with rfl | rfl
+    · have ht : (2 : ℤ) ∣ t := by
+        have : (2 : ℤ) ∣ t ^ 2 := by
+          have := dvd_add hΔ (dvd_mul_of_dvd_left (by norm_num : (2 : ℤ) ∣ 4) n); simpa using this
+        exact Int.prime_two.dvd_of_dvd_pow this
+      obtain ⟨t', rfl⟩ := ht
+      refine ⟨n, ⟨t' - n, by ring⟩, ?_⟩
+      have : (2 : ℤ) ∣ n * (n + 1) := by
+        rcases Int.even_or_odd n with ⟨m, hm⟩ | ⟨m, hm⟩
+        · exact ⟨m * (n + 1), by rw [hm]; ring⟩
+        · exact ⟨n * (m + 1), by rw [hm]; ring⟩
+      obtain ⟨w, hw⟩ := this
+      exact ⟨w - t' * n, by linear_combination hw⟩
+    · refine ⟨2 * t, ⟨-t, by ring⟩, ?_⟩
+      obtain ⟨w, hw⟩ := hΔ
+      exact ⟨3 * n + 2 * w, by linear_combination 2 * hw⟩
+  refine ⟨a, hN, ?_⟩
+  rintro ⟨M, hM⟩
+  obtain ⟨T, hT⟩ := hT
+  have hℓ0 : (ℓ : k) ≠ 0 := by rcases hℓ with rfl | rfl <;> norm_num
+  set z : k := (ω - a) / ℓ with hz
+  have hquad : z * z - (T : k) * z + (M : k) = 0 := by
+    have e1 : (ℓ : k) * z = ω - a := by rw [hz]; field_simp
+    have hT' : (t : k) - 2 * a = ℓ * T := by exact_mod_cast hT
+    have hM' : (a : k) ^ 2 - t * a + n = ℓ ^ 2 * M := by exact_mod_cast hM
+    have : (ℓ : k) ^ 2 * (z * z - (T : k) * z + (M : k)) = ω * ω - (t : k) * ω + (n : k) := by
+      have h2 : (ℓ : k) ^ 2 * (z * z - (T : k) * z + (M : k)) =
+          ((ℓ : k) * z) * ((ℓ : k) * z) - ((ℓ : k) * T) * ((ℓ : k) * z) + (ℓ : k) ^ 2 * M := by ring
+      rw [h2, e1, ← hT', ← hM']; ring
+    rw [htn] at this
+    have hℓ2 : (ℓ : k) ^ 2 ≠ 0 := pow_ne_zero 2 hℓ0
+    exact (mul_eq_zero.mp this).resolve_left hℓ2
+  have hzR : z ∈ R := by
+    refine mem_of_ell_mul R hc hℓ (isIntegral_of_quad hquad) ?_
+    have : (ℓ : k) * z = ω - a := by rw [hz]; field_simp
+    rw [this]; exact R.sub_mem hωR (_root_.intCast_mem R a)
+  obtain ⟨x, y, hxy⟩ := hbasis z hzR
+  have e : ((-a : ℚ) : k) + ((1 : ℚ) : k) * ω = (((ℓ * x : ℤ) : ℚ) : k) + (((ℓ * y : ℤ) : ℚ) : k) * ω := by
+    have : (ℓ : k) * z = ω - a := by rw [hz]; field_simp
+    push_cast
+    rw [← sub_eq_zero]
+    have h' := congrArg (fun w => (ℓ : k) * w) hxy
+    rw [this] at h'
+    linear_combination h'
+  obtain ⟨-, e2⟩ := coord_unique hω e
+  have : ℓ * y = 1 := by exact_mod_cast e2.symm
+  have hd : ℓ ∣ 1 := ⟨y, this.symm⟩
+  rcases hℓ with rfl | rfl <;> norm_num at hd
+
+theorem zmod2_aux : ∀ x y x' y' t n : ZMod 2, 2 * x + t * y = 0 → x ^ 2 + t * x * y + n * y ^ 2 = 0 →
+    2 * x' + t * y' = 0 → x' ^ 2 + t * x' * y' + n * y' ^ 2 = 0 →
+    x * x' - n * y * y' = 0 ∧ x * y' + x' * y + t * y * y' = 0 := by
+  intro x y x' y' t n
+  fin_cases x <;> fin_cases y <;> fin_cases x' <;> fin_cases y' <;> fin_cases t <;> fin_cases n <;> decide
+
+/-- **Lemma D at `2`**: products of two elements of `R = ℤ[ω]` with even trace and norm lie in `2R`. -/
+theorem two_mul_cond (x y x' y' t n : ℤ) (h1 : (2 : ℤ) ∣ 2 * x + t * y)
+    (h2 : (2 : ℤ) ∣ x ^ 2 + t * x * y + n * y ^ 2) (h3 : (2 : ℤ) ∣ 2 * x' + t * y')
+    (h4 : (2 : ℤ) ∣ x' ^ 2 + t * x' * y' + n * y' ^ 2) :
+    (2 : ℤ) ∣ x * x' - n * y * y' ∧ (2 : ℤ) ∣ x * y' + x' * y + t * y * y' := by
+  have key : ∀ w : ℤ, (2 : ℤ) ∣ w ↔ ((w : ZMod 2) = 0) := fun w =>
+    (ZMod.intCast_zmod_eq_zero_iff_dvd w 2).symm
+  simp only [key] at *
+  push_cast at *
+  exact zmod2_aux _ _ _ _ _ _ h1 h2 h3 h4
+
 end NT
 
 end EichlerBound
