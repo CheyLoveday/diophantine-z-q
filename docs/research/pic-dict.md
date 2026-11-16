@@ -167,6 +167,14 @@ locators are UNVERIFIED: there is no copy of Mumford, Kleiman, EGA or Milne on t
 | `pushforwardUnitUniversal` | EGA III 7.8.6; Kleiman, *The Picard scheme*, Ex. 9.3.11: `𝒪_S = f_*𝒪_X` universally for `f` proper flat with geometrically integral fibres | yes (instance `f = A → Spec K`, base change `T`), with a note | over a field it is also flat base change (Stacks 02KH) with `Γ(A, 𝒪) = K`; the cited prints state it universally |
 | `geomIntegralProd` | EGA IV 4.6.5 (products of geometrically integral schemes over a field) | yes (instance `A × B`) | Mathlib v4.35 lacks it (noted in `HDecomp/Faltings/H5Neron.lean`) |
 
+Notes on the statements:
+
+* Each formula-based leaf quantifies over trivializations `ψ : 𝒪 ≅ n^*M`. Such a `ψ` exists for every
+  `M ∈ X̂_n` by `mumfordMulNPicZeroAC` (Mumford §8 (iv)). Given that, "for every `ψ`" and "for some `ψ`" agree
+  with Mumford's `ē_n(x, M)`, so every leaf is the print and never stronger.
+* `mumfordMulNPicZeroAC` at `n = 0` is true: `0_X` factors through `Spec k`, and `Pic(Spec k) = 1`.
+* For `docs/research/locators.md`, each new leaf is a row with the locator of the table above, verdict UNVERIFIED.
+
 Statements that were leaves in a first version and are now proved in Lean:
 
 * the adjoint clause (Mumford §20 (5), printed only for isogenies) and compatibility (§20);
