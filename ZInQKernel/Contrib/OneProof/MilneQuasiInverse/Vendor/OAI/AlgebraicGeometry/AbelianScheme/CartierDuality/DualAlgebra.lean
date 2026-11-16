@@ -5,6 +5,7 @@ Revision: 4eaee87548250b2682affda7d05d947c05554bae
 Git blob SHA-1: aa2c37f5d27e1dad01e055b20431a624a666fcec
 SHA-256: e1879f7703fea7b2cc43b4622add65e25363a50dbd6a9f5062258a63c9f2c5f7
 Adaptation: import and namespace relocation only; proof bodies preserved.
+Modified for the Z-in-Q kernel (milne-compile): import paths and namespaces relocated; proof bodies unchanged.
 -/
 import Mathlib.LinearAlgebra.Contraction
 import Mathlib.LinearAlgebra.Dual.BaseChange

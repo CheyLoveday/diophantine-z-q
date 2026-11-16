@@ -5,6 +5,7 @@ Revision: 4eaee87548250b2682affda7d05d947c05554bae
 Git blob SHA-1: d9d48cbc25cdc384659463feea48a4ee1a0215a2
 SHA-256: e4fa11e3c6ae05ec92e2072a2544ee5dcd0869be457b6d110e72978394a69408
 Adaptation: import and namespace relocation only; proof bodies preserved.
+Modified for the Z-in-Q kernel (milne-compile): import paths and namespaces relocated; proof bodies unchanged.
 -/
 import ZInQKernel.Contrib.OneProof.MilneQuasiInverse.Vendor.OAI.AlgebraicGeometry.AbelianScheme.CartierDuality.DualAlgebra
 import Mathlib.Algebra.Category.CommAlgCat.Basic

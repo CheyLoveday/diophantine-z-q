@@ -5,6 +5,7 @@ Revision: 4eaee87548250b2682affda7d05d947c05554bae
 Git blob SHA-1: bce73e78700f482ddcbd354a3bc95aa6c653fb26
 SHA-256: 834beed44e7298b8bdbbb772894dedaaf37f7a8ac3dd5ca596cdd08efd93a1a7
 Adaptation: import and namespace relocation only; proof bodies preserved.
+Modified for the Z-in-Q kernel (milne-compile): import paths and namespaces relocated; proof bodies unchanged.
 -/
 import Mathlib.RingTheory.Norm.Basic
 

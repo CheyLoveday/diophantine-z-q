@@ -1,7 +1,9 @@
 /-
 ZInQKernel/Contrib/OneProof/MilneQuasiInverse/Flatness.lean
 
-New code for this repository (not vendored). The flatness input of
+New code for this repository (not vendored).
+Modified for the Z-in-Q kernel (milne-compile, fix 1): in `flat_of_kernelPair` an anonymous `have : IsAffine X`
+shadowed the `wlog` hypothesis `this`; renamed `hXaff`. The flatness input of
 `AvSplit.MilneIsogenyQuasiInverse`: a homomorphism of abelian varieties over any field whose
 underlying morphism is finite and surjective is flat.
 

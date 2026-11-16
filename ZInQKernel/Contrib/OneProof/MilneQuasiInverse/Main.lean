@@ -1,3 +1,5 @@
+/- Modified for the Z-in-Q kernel (milne-compile, fix 2): `attribute [local instance] Kernel.kernelGroup` added,
+since instance search could not find `MonObj` / `IsCommMonObj` on `(Kernel.kernelGrp f.hom).X` (as in `Kernel.lean`). -/
 import ZInQKernel.OneProof.H.TailQ
 import ZInQKernel.Contrib.OneProof.MilneQuasiInverse.Kernel
 import ZInQKernel.Contrib.OneProof.MilneQuasiInverse.Descent
