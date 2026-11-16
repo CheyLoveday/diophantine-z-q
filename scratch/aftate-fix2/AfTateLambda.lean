@@ -794,4 +794,75 @@ theorem lin_trace_det {F M : Type*} [Field F] [AddCommGroup M] [Module F M] [Fin
   · rw [← LinearMap.det_toMatrix b, Matrix.det_eq_sign_charpoly_coeff, hM, Fintype.card_fin, hn]
     simp [Polynomial.coeff_X_pow, Polynomial.coeff_C, Polynomial.coeff_X]
 
+/-! ## 7. The discharge of `r16CoreY` -/
+
+section Discharge
+
+open IsDedekindDomain NumberField
+
+/-- A Frobenius element at some prime not dividing `S ≠ 0` (Chebotarev, T18, proved). -/
+theorem exists_frob (S : ℕ) (hS : S ≠ 0) : ∃ (p : ℕ) (σ : GQ), p.Prime ∧ ¬ p ∣ S ∧ IsFrobAt σ p := by
+  obtain ⟨p, hp, hpS, v, τ, hv, hτ, -⟩ :=
+    ZInQ.Contrib.frobeniusDense ⊤ isOpen_univ 1 S.primeFactors
+  refine ⟨p, τ, hp, fun h => hpS (Nat.mem_primeFactors.2 ⟨hp, h, hS⟩), ?_⟩
+  exact isFrobAt_of_isArithFrob τ v p hp hv hτ
+
+theorem finiteDimensional_V (hT : TateModuleFree) (A : AbVar ℚ) (ℓ : ℕ) [Fact ℓ.Prime] :
+    FiniteDimensional ℚ_[ℓ] (A.V ℓ) := by
+  obtain ⟨hfree, hfinT, -⟩ := hT ℚ A ℓ (Nat.cast_ne_zero.2 (Fact.out : ℓ.Prime).ne_zero)
+  exact Module.Finite.base_change ℤ_[ℓ] ℚ_[ℓ] (A.T ℓ)
+
+/-- **`r16CoreY` from the three printed leaves, Igusa and Mumford (glue, proved).** -/
+theorem r16CoreY_of_printed (h1 : HeckeJ1DS) (h2 : AfShimura) (h3 : AfTateDSLambda)
+    (hI : X1Igusa.IgusaGL2DS) (hM : AvSplit.MumfordTorsionAlgClosed) : R16Split.R16CoreY := by
+  have hT : TateModuleFree := T5Torsion.TateFree.tateModuleFree_of_torsionStructure
+    (AvSplit.torsionStructure_of_mumford hM)
+  intro N χ f J hN hf hJ
+  rcases Nat.lt_or_ge N 2 with hN1 | hN2
+  · have h1 : N = 1 := by omega
+    subst h1
+    exact absurd hf (AfTateOr.not_isNewform_one χ f)
+  obtain ⟨X, P₀, aj, hX, hJac⟩ := hJ
+  obtain ⟨hC, hInt, jX, tX, hgen, hrel⟩ :=
+    AfTateOr.isX1AlgDS_of_isX1Model (X1Igusa.x1PointsConjugate_of_igusaGL2DS hI) hN2 hX
+  have hG : IsX1Gen N X jX tX := ⟨hgen, hrel⟩
+  obtain ⟨tp, δ, htp, hδ⟩ := h1 N hN2 X jX tX hC hG P₀ J aj hJac
+  obtain ⟨hfin, A, π, θ, hQ, hAct⟩ := h2 N χ f hN2 hf X jX tX hC hG P₀ J aj hJac tp δ htp hδ
+  haveI : NumberField (coeffField f) := @NumberField.mk _ _ inferInstance hfin
+  have hL := h3 N χ f hN2 hf X jX tX hC hG P₀ J aj hJac tp δ htp hδ A π θ hQ hAct
+  have key : ∀ (ℓ : ℕ) [Fact ℓ.Prime] (emb : coeffField f →+* PadicAlgCl ℓ),
+      Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) = 2 ∧
+        ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
+          (∀ a : coeffField f, (a : ℂ) = coeff f p →
+              LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) = emb a) ∧
+          (∀ c : coeffField f, (c : ℂ) = χ (p : ZMod N) →
+              LinearMap.det (frobOn ℓ A θ emb σ) = emb c * p) := by
+    intro ℓ _ emb
+    haveI := finiteDimensional_V hT A ℓ
+    letI := R16Used.tensorModule ℓ A θ
+    haveI := liesOver_place emb
+    letI := (rhoLam ℓ (place emb)).toAlgebra
+    have hfrob : ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
+        Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) = 2 ∧
+        (∀ a : coeffField f, (a : ℂ) = coeff f p →
+            LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) = emb a) ∧
+        (∀ c : coeffField f, (c : ℂ) = χ (p : ZMod N) →
+            LinearMap.det (frobOn ℓ A θ emb σ) = emb c * p) := by
+      intro p hp hpN σ hσ
+      obtain ⟨hfinL, hrk, htr, hdet⟩ := component A θ emb σ
+      obtain ⟨c, hc, hcp⟩ := @hL ℓ _ (place emb) _ hfinL p hp hpN σ hσ
+      obtain ⟨h2, htr', hdet'⟩ := lin_trace_det _ _ _ hcp
+      refine ⟨hrk.trans h2, fun a ha => ?_, fun c' hc' => ?_⟩
+      · have : a = ⟨coeff f p, coeff_mem_coeffField f p⟩ := Subtype.ext ha
+        rw [htr, htr', this, τhat_algebraMap]
+      · have : c' = c := Subtype.ext (hc'.trans hc.symm)
+        rw [hdet, hdet', this, τhat_algebraMap, map_mul, map_natCast]
+    obtain ⟨p, σ, hp, hpN, hσ⟩ := exists_frob (N * ℓ)
+      (Nat.mul_ne_zero (by omega) (Fact.out : ℓ.Prime).ne_zero)
+    exact ⟨(hfrob p hp hpN σ hσ).1, fun p hp hpN σ hσ => (hfrob p hp hpN σ hσ).2⟩
+  refine ⟨hfin, A, π, θ, hQ.1, ?_, fun ℓ _ emb => (key ℓ emb).2⟩
+  exact R16Split.dim_eq_of_rank_two hT A θ (fun emb => (key 2 emb).1)
+
+end Discharge
+
 end AfTateLam
