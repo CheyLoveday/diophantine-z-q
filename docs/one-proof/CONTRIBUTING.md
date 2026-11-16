@@ -143,31 +143,34 @@ hypotheses. Its output (generated from `scratch/contrib-kit/DischargesTest-outpu
 <!-- worked-example:begin -->
 ```
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
-DISCHARGES [OpenResearchLeaves24.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+DISCHARGES [OpenResearchLeaves26.dsThm965Weak] by DS965Weak.dsThm965Weak_of_dsThm965
+  still assumes: [ZInQ.Contrib.HodgeSplit.DSThm965]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves24.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
+DISCHARGES [OpenResearchLeaves26.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
   still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves24.r16CoreY] by R16Split.coreY_of_r16
+DISCHARGES [OpenResearchLeaves26.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves24.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_SH_of_field
+DISCHARGES [OpenResearchLeaves26.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_SH_of_field
   still assumes: [CToPrinted.SGA7_IX_3_3]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves24.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
+DISCHARGES [OpenResearchLeaves26.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves24.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
+DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenGlue7.quotientP1Coordinate] by t1
-  still assumes: [HDec.MCRGlue.QuotientP1Coordinate]
+DISCHARGES [OpenGlue8.nvLocalInertia] by t1
+  still assumes: [SGRDirect.NVLocalInertia]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 62 open hypotheses, 2628 theorems checked, 8 discharge one
+#discharges: 59 open hypotheses, 2861 theorems checked, 9 discharge one
 ```
 <!-- worked-example:end -->
 
