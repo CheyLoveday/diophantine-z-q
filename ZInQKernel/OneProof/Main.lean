@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ40
+import ZInQKernel.OneProof.H.TailZ41
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
