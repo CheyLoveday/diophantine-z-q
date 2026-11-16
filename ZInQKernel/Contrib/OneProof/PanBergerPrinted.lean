@@ -483,6 +483,74 @@ theorem localDistinctHTU_dualHom (ρ : GaloisRep p 2)
 
 end Predicates
 
+/-! ## §7. The two printed leaves -/
+
+/-- Berger (leaf). -/
+def BergerPrintedU : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)),
+    Continuous ρ → LocalIsDeRhamU p n ρ → LocalIsPstU p n ρ
+
+/-- Pan (leaf). -/
+def PanPrintedU : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime], 5 ≤ p → ∀ (ιp : PadicAlgCl p ≃+* ℂ) (ρ : GaloisRep p 2),
+    ρ.IsIrreducible → ρ.FinitelyRamified → LocalIsPstU p 2 (ρ.restrictLocal p) → ρ.IsOdd →
+    LocalDistinctHTU p (ρ.restrictLocal p) →
+    ∃ (N : ℕ) (k : ℤ) (χ : DirichletCharacter ℂ N) (g : CF N k), 0 < N ∧ 1 ≤ k ∧
+      IsNormalizedEigenform g χ ∧
+      ∃ (ψ : GaloisChar p) (S : Finset ℕ), ∀ q : ℕ, q.Prime → q ∉ S →
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v q → IsArithFrob σ v q →
+          (ρ.mat σ⁻¹).trace = (ψ.toHom σ⁻¹ : PadicAlgCl p) * ιp.symm (coeff g q)
+
+/-! ## §8. Glue: `PanBerger` -/
+
+/-- The inverse of a continuous character. -/
+def charInv {ℓ : ℕ} [Fact ℓ.Prime] (ψ : GaloisChar ℓ) : GaloisChar ℓ where
+  toHom := ψ.toHom⁻¹
+  continuous_toHom := ψ.continuous_toHom.inv
+
+theorem charInv_apply {ℓ : ℕ} [Fact ℓ.Prime] (ψ : GaloisChar ℓ) (σ : GQ) :
+    (charInv ψ).toHom σ = ψ.toHom σ⁻¹ := by
+  rw [map_inv]
+  rfl
+
+theorem panBerger_of_printedU (hP : PanPrintedU) (hB : BergerPrintedU)
+    (hD : ZInQ.Contrib.HodgeSplit.DSThm965) (hDS : ZInQ.Contrib.HodgeSplit.DSThm966) :
+    PanBerger := by
+  intro p _ hp ρ hirr hfr hdr hodd hdist
+  have hdr' : LocalIsDeRhamU p 2 ((dualRep ρ).restrictLocal p) := by
+    rw [dualRep_restrictLocal]
+    exact localIsDeRhamU_dualHom p _ hdr
+  have hpst' := hB p 2 _ ((dualRep ρ).continuous_toHom.comp
+    (Field.absoluteGaloisGroup.map (algebraMap ℚ ℚ_[p])).continuous) hdr'
+  have hht' : LocalDistinctHTU p ((dualRep ρ).restrictLocal p) := by
+    rw [dualRep_restrictLocal]
+    exact localDistinctHTU_dualHom p ρ hdist
+  obtain ⟨Φ⟩ := exists_complex_equiv p
+  obtain ⟨N, k, χ, g, hN, hk, hg, ψ, S, htr⟩ := hP p hp Φ.symm (dualRep ρ)
+    (dualRep_isIrreducible ρ hirr) (dualRep_finitelyRamified ρ hfr) hpst'
+    (dualRep_isOdd ρ hodd) hht'
+  obtain ⟨Sr, hSr⟩ := hfr
+  let ιC : Qbar →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let ιL : Qbar →ₐ[ℚ] PadicAlgCl p := (Φ : ℂ →+* PadicAlgCl p).toRatAlgHom.comp ιC
+  refine ⟨N, k, χ, g, hN, hk, hg, charInv ψ, ιC, ιL, S ∪ Sr ∪ Finset.range (N * p + 1), ?_⟩
+  intro q hq hqS
+  simp only [Finset.mem_union, Finset.mem_range, not_or, not_lt] at hqS
+  obtain ⟨⟨hqS, hqSr⟩, hqNp⟩ := hqS
+  have hNp : 0 < N * p := Nat.mul_pos hN (Fact.out : p.Prime).pos
+  have hqdvd : ¬ q ∣ N * p := fun h => by
+    have := Nat.le_of_dvd hNp h
+    omega
+  refine ⟨hSr q hq hqSr, ?_⟩
+  obtain ⟨α, hα⟩ := coeff_mem_range hD hDS p ιC ιL hN hk hg hq hqdvd
+  refine ⟨α, hα, fun v σ hv hσ => ?_⟩
+  have h1 := htr q hq hqS v σ hv hσ
+  rw [trace_dualRep_inv] at h1
+  rw [h1, charInv_apply]
+  congr 1
+  change Φ.symm.symm (coeff g q) = Φ (ιC α)
+  rw [hα]
+  rfl
+
 end PanBergerSplit
 end PkgI4
 end HDec
