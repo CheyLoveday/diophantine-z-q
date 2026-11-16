@@ -37,3 +37,10 @@ polynomial being roots of a monic integer polynomial annihilating φ (Mathlib `i
   (roots of charpoly are roots of a monic integer polynomial; isIntegral_coeff_of_factors; ℤ integrally closed),
   charpoly_eq_map_int, int_poly_ext. `degEnd` (function-field degree via stalk map at the generic point,
   0 unless finite surjective), leaf `DegEqDetTate`.
+- 10:24: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.CharPolyIndepOfEllAlgClosed`
+  OK (13699 jobs); frozenTarget standard axioms. VERIFIED.
+- `#discharges`: DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by
+  ZInQ.Contrib.OneProof.CharPolyEll.charPolyIndepOfEllAlgClosed_of_degEqDetTate; still assumes [DegEqDetTate,
+  HomFreeFiniteAlgClosed]; axioms standard. VERIFIED (Discharges-output.txt).
+- autofold dry run: strict 34/11 on 45 -> 34/11 on 45; strictest 34/11 -> 34/11. FoldDryRun.lean compiles,
+  sixContactMin_of_open36 standard axioms. VERIFIED.

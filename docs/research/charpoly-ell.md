@@ -147,5 +147,22 @@ the printed `DegEqDetTate` is the leaf recommended for crowdsourcing.
 
 ## 6. `#discharges` and the dry-run fold
 
-(pending: filled in after `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
-+ZInQKernel.Contrib.OneProof.CharPolyIndepOfEllAlgClosed`)
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
++ZInQKernel.Contrib.OneProof.CharPolyIndepOfEllAlgClosed`: OK (13699 jobs, about 70 minutes on a shared host). It
+prints `frozenTarget` with axioms `[propext, Classical.choice, Quot.sound]`.
+
+`lake env lean scratch/charpoly-ell/Discharges.lean` (full output in `scratch/charpoly-ell/Discharges-output.txt`),
+the line for this file:
+
+```
+DISCHARGES [OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.CharPolyEll.charPolyIndepOfEllAlgClosed_of_degEqDetTate
+  still assumes: [ZInQ.Contrib.OneProof.CharPolyEll.DegEqDetTate, ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 56 open hypotheses, 2890 theorems checked, 8 discharge one
+```
+
+(`HomFreeFiniteAlgClosed` is an open field of the same bundle, so it stays as it is. `DegEqDetTate` is the new
+leaf.)
+
+`lake env lean scratch/charpoly-ell/FoldDryRun.lean` (the autofold dry-run module, line 1 stripped): OK. It prints
+`'HDec.HSyn.sixContactMin_of_open36' depends on axioms: [propext, Classical.choice, Quot.sound]`.
