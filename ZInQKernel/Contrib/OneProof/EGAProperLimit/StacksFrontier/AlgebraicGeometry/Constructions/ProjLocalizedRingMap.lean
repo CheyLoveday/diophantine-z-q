@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/Constructions/ProjLocalizedRingMap.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 

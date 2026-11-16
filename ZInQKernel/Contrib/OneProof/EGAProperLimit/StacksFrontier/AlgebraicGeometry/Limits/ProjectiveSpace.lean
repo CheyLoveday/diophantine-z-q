@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/Limits/ProjectiveSpace.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -31,25 +32,25 @@ The main result is that `ℙⁿ_S ⟶ S` is proper.
 
 * `AlgebraicGeometry.ProjectiveSpaceZ` is the integral model of projective `n`-space, placed
   in the universe of the base scheme.
-* `AlgebraicGeometry.ProjectiveSpace` is projective `n`-space over a base scheme.
-* `AlgebraicGeometry.ProjectiveSpace.toProjectiveSpaceZ` is the projection to the integral
+* `AlgebraicGeometry.StacksProjectiveSpace` is projective `n`-space over a base scheme.
+* `AlgebraicGeometry.StacksProjectiveSpace.toProjectiveSpaceZ` is the projection to the integral
   model.
-* `AlgebraicGeometry.ProjectiveSpace.gradeZeroEquiv` identifies the coefficient ring of a
+* `AlgebraicGeometry.StacksProjectiveSpace.gradeZeroEquiv` identifies the coefficient ring of a
   polynomial ring with the degree-zero part of its total-degree grading.
-* `AlgebraicGeometry.ProjectiveSpace.baseChangeIso` identifies `ℙⁿ_T ×_T S` with `ℙⁿ_S`.
+* `AlgebraicGeometry.StacksProjectiveSpace.baseChangeIso` identifies `ℙⁿ_T ×_T S` with `ℙⁿ_S`.
 
 ## Main results
 
-* `AlgebraicGeometry.ProjectiveSpace.isProper_terminal_from` states that the integral model of
+* `AlgebraicGeometry.StacksProjectiveSpace.isProper_terminal_from` states that the integral model of
   projective space is proper over the terminal scheme.
-* `AlgebraicGeometry.ProjectiveSpace.instIsProperOver` states that `ℙⁿ_S ⟶ S` is proper.
+* `AlgebraicGeometry.StacksProjectiveSpace.instIsProperOver` states that `ℙⁿ_S ⟶ S` is proper.
 
 ## Implementation notes
 
-`ProjectiveSpace n S` is by construction the pullback of `terminal.from S` along
+`StacksProjectiveSpace n S` is by construction the pullback of `terminal.from S` along
 `terminal.from (ProjectiveSpaceZ n)`, which is the same shape as Mathlib's
 `AlgebraicGeometry.AffineSpace`. Variables are indexed by `Fin (n + 1)`, so that
-`ProjectiveSpace n S` is projective space of dimension `n`.
+`StacksProjectiveSpace n S` is projective space of dimension `n`.
 
 The total-degree grading `MvPolynomial.gradedAlgebra` is not a global instance in Mathlib, so
 it is installed here as a `local instance`; the definitions below therefore do not export it to
@@ -80,10 +81,10 @@ def ProjectiveSpaceZ (n : ℕ) : Scheme.{u} :=
 
 /-- Projective `n`-space over a scheme `S`, defined as the base change of the integral model
 `ProjectiveSpaceZ n` along `S ⟶ Spec ℤ`, with `Spec ℤ` realised as the terminal scheme. -/
-def ProjectiveSpace (n : ℕ) (S : Scheme.{u}) : Scheme.{u} :=
+def StacksProjectiveSpace (n : ℕ) (S : Scheme.{u}) : Scheme.{u} :=
   pullback (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} n))
 
-namespace ProjectiveSpace
+namespace StacksProjectiveSpace
 
 section GradeZero
 
@@ -119,16 +120,16 @@ end GradeZero
 variable (n : ℕ) (S : Scheme.{u})
 
 /-- Projective space over `S` is canonically a scheme over `S`. -/
-instance over : (ProjectiveSpace n S).CanonicallyOver S where
+instance over : (StacksProjectiveSpace n S).CanonicallyOver S where
   hom := pullback.fst _ _
 
 /-- The structure morphism of projective space over `S` is the first pullback projection. -/
-lemma over_hom : (ProjectiveSpace n S ↘ S) =
+lemma over_hom : (StacksProjectiveSpace n S ↘ S) =
     pullback.fst (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} n)) :=
   rfl
 
 /-- The projection from projective space over `S` to the integral model. -/
-def toProjectiveSpaceZ : ProjectiveSpace n S ⟶ ProjectiveSpaceZ.{u} n :=
+def toProjectiveSpaceZ : StacksProjectiveSpace n S ⟶ ProjectiveSpaceZ.{u} n :=
   pullback.snd _ _
 
 /-- `Spec` of the degree-zero part of `ULift ℤ[X₀, …, Xₙ]` is a terminal scheme, because that
@@ -150,19 +151,19 @@ theorem isProper_terminal_from : IsProper (terminal.from (ProjectiveSpaceZ.{u} n
 
 /-- **Projective space is proper over its base.** The structure morphism `ℙⁿ_S ⟶ S` is proper,
 being the base change of `ℙⁿ_ℤ ⟶ Spec ℤ`. -/
-instance instIsProperOver : IsProper (ProjectiveSpace n S ↘ S) := by
+instance instIsProperOver : IsProper (StacksProjectiveSpace n S ↘ S) := by
   rw [over_hom]
   exact MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsProper)
     (IsPullback.of_hasPullback (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} n))).flip
     (isProper_terminal_from n)
 
 /-- Projective space over a quasi-compact base is quasi-compact. -/
-instance [CompactSpace S] : CompactSpace (ProjectiveSpace n S) :=
-  QuasiCompact.compactSpace_of_compactSpace (ProjectiveSpace n S ↘ S)
+instance [CompactSpace S] : CompactSpace (StacksProjectiveSpace n S) :=
+  QuasiCompact.compactSpace_of_compactSpace (StacksProjectiveSpace n S ↘ S)
 
 /-- Projective space over `T`, base changed along `g : S ⟶ T`, is projective space over `S`. -/
 def baseChangeIso {S T : Scheme.{u}} (g : S ⟶ T) :
-    pullback (ProjectiveSpace n T ↘ T) g ≅ ProjectiveSpace n S :=
+    pullback (StacksProjectiveSpace n T ↘ T) g ≅ StacksProjectiveSpace n S :=
   (pullbackSymmetry (pullback.fst (terminal.from T)
       (terminal.from (ProjectiveSpaceZ.{u} n))) g).trans
     ((pullbackRightPullbackFstIso
@@ -172,8 +173,8 @@ def baseChangeIso {S T : Scheme.{u}} (g : S ⟶ T) :
 /-- The identification `ℙⁿ_T ×_T S ≅ ℙⁿ_S` is compatible with the two structure morphisms
 down to `S`. -/
 theorem baseChangeIso_hom_over {S T : Scheme.{u}} (g : S ⟶ T) :
-    (baseChangeIso n g).hom ≫ (ProjectiveSpace n S ↘ S) =
-      pullback.snd (ProjectiveSpace n T ↘ T) g := by
+    (baseChangeIso n g).hom ≫ (StacksProjectiveSpace n S ↘ S) =
+      pullback.snd (StacksProjectiveSpace n T ↘ T) g := by
   change ((pullbackSymmetry (pullback.fst (terminal.from T)
       (terminal.from (ProjectiveSpaceZ.{u} n))) g).hom ≫
     (pullbackRightPullbackFstIso
@@ -186,7 +187,7 @@ theorem baseChangeIso_hom_over {S T : Scheme.{u}} (g : S ⟶ T) :
     pullback.lift_fst, Category.comp_id,
     pullbackRightPullbackFstIso_hom_fst, pullbackSymmetry_hom_comp_fst]
 
-end ProjectiveSpace
+end StacksProjectiveSpace
 
 end AlgebraicGeometry
 

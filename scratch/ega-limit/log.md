@@ -54,3 +54,16 @@ Target: field `egaIV_8_10_5_xii : ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii`
   'AlgebraicGeometry.ProjectiveSpace' from ZInQKernel.Contrib.CloudW07JacobiansCurves...ProjectiveSpace.Relative"
   — vendored Stacks `Limits/ProjectiveSpace.lean` clashes with CloudW07's vendored Jacobian-Challenge
   (different definition: `ProjectiveSpace (coordinates : Type u)`). Name-clash scan running (DumpMine/DumpMain).
+- Name-clash scan (DumpMain.lean: all constants of Main+Discharges env, 951,938; DumpMine.lean: 1,950 constants
+  of the vendored modules + contribution): 6 clashes, 4 distinct names, all with CloudW07JacobiansCurves
+  (frenzymath/Jacobian-Challenge): `AlgebraicGeometry.ProjectiveSpace` (+ `.over`, `._proof_1`),
+  `AlgebraicGeometry.Scheme.Hom.isSchemeTheoreticallyDominant_toImage`, `HomogeneousLocalization.val_algebraMap`,
+  `HomogeneousLocalization.val_fromZeroRingHom`. VERIFIED. Fix in vendor.py (RENAMES; import lines untouched):
+  `ProjectiveSpace` -> `StacksProjectiveSpace` in all vendored files; the other three get suffix `_stacks` in their
+  defining file (no other vendored file names them).
+- build4: `lake build +Main +Discharges +EGAIV_8_10_5_xii` success (1m27s).
+- `#discharges` (scratch/ega-limit/Discharges-output.txt), VERIFIED:
+  DISCHARGES [OpenAddedLeaves17.egaIV_8_10_5_xii] by ZInQ.Contrib.EGAProperLimit.egaIV_8_10_5_xii_proof
+    still assumes: []
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 56 open hypotheses, 4398 theorems checked, 8 discharge one

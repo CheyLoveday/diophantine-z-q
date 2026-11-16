@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/Limits/ChowLemma.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -58,8 +59,8 @@ is Noetherian, which is what lets the Noetherian-approximation step of the Stack
 
 ## Implementation notes
 
-`HasChowModification` is stated with `AlgebraicGeometry.ProjectiveSpace` and its canonical
-structure morphism, so that `AlgebraicGeometry.ProjectiveSpace.instIsProperOver` applies to it
+`HasChowModification` is stated with `AlgebraicGeometry.StacksProjectiveSpace` and its canonical
+structure morphism, so that `AlgebraicGeometry.StacksProjectiveSpace.instIsProperOver` applies to it
 directly.
 
 Finite type is expressed, as elsewhere in this development, by `LocallyOfFiniteType` together
@@ -86,7 +87,7 @@ the projective embedding of an affine chart: the Stacks proof obtains that from 
 (ample sheaves), but for an affine chart it also follows from
 `AlgebraicGeometry.exists_immersion_affineSpace` (Stacks 04II) together with an open immersion
 of `𝔸ⁿ_S` into `ℙⁿ_S` over `S`, which this development does not yet have — only the absolute
-chart `AlgebraicGeometry.ProjectiveSpace.basicOpenXIsoAffineSpace` over the integers.
+chart `AlgebraicGeometry.StacksProjectiveSpace.basicOpenXIsoAffineSpace` over the integers.
 
 ## References
 
@@ -106,14 +107,14 @@ universe u
 `X'`, a proper surjective morphism `π : X' ⟶ X` and an immersion `i : X' ⟶ ℙⁿ_S` such that the
 triangle over `S` commutes. -/
 def HasChowModification {X S : Scheme.{u}} (f : X ⟶ S) : Prop :=
-  ∃ (n : ℕ) (X' : Scheme.{u}) (π : X' ⟶ X) (i : X' ⟶ ProjectiveSpace n S),
-    IsProper π ∧ Surjective π ∧ IsImmersion i ∧ π ≫ f = i ≫ (ProjectiveSpace n S ↘ S)
+  ∃ (n : ℕ) (X' : Scheme.{u}) (π : X' ⟶ X) (i : X' ⟶ StacksProjectiveSpace n S),
+    IsProper π ∧ Surjective π ∧ IsImmersion i ∧ π ≫ f = i ≫ (StacksProjectiveSpace n S ↘ S)
 
 /-- **Chow's lemma is trivial for a morphism that is already projectively immersed.** If `f`
 factors as an immersion `i : X ⟶ ℙⁿ_S` followed by the structure morphism of `ℙⁿ_S`, then `f`
 admits a Chow modification, namely the identity of `X`. -/
 theorem HasChowModification.of_isImmersion {X S : Scheme.{u}} {n : ℕ} {f : X ⟶ S}
-    (i : X ⟶ ProjectiveSpace n S) [IsImmersion i] (h : i ≫ (ProjectiveSpace n S ↘ S) = f) :
+    (i : X ⟶ StacksProjectiveSpace n S) [IsImmersion i] (h : i ≫ (StacksProjectiveSpace n S ↘ S) = f) :
     HasChowModification f :=
   ⟨n, X, 𝟙 X, i, inferInstance, inferInstance, inferInstance, by rw [Category.id_comp, h]⟩
 
@@ -152,12 +153,12 @@ theorem HasChowModification.of_isPullback {X S X' S' : Scheme.{u}} {f : X ⟶ S}
   have hs : IsPullback (pullback.snd π p ≫ f') (pullback.fst π p) g (π ≫ f) :=
     hYsq.flip.paste_horiz hsq.flip
   rw [hcomm] at hs
-  have t : IsPullback (pullback.snd (ProjectiveSpace n S ↘ S) g)
-      (pullback.fst (ProjectiveSpace n S ↘ S) g) g (ProjectiveSpace n S ↘ S) :=
-    (IsPullback.of_hasPullback (ProjectiveSpace n S ↘ S) g).flip
+  have t : IsPullback (pullback.snd (StacksProjectiveSpace n S ↘ S) g)
+      (pullback.fst (StacksProjectiveSpace n S ↘ S) g) g (StacksProjectiveSpace n S ↘ S) :=
+    (IsPullback.of_hasPullback (StacksProjectiveSpace n S ↘ S) g).flip
   refine ⟨n, pullback π p, pullback.snd π p,
     t.lift (pullback.snd π p ≫ f') (pullback.fst π p ≫ i) (by rw [hs.w, Category.assoc]) ≫
-      (ProjectiveSpace.baseChangeIso n g).hom, ?_, ?_, ?_, ?_⟩
+      (StacksProjectiveSpace.baseChangeIso n g).hom, ?_, ?_, ?_, ?_⟩
   · infer_instance
   · infer_instance
   · have : IsImmersion (t.lift (pullback.snd π p ≫ f') (pullback.fst π p ≫ i)
@@ -165,7 +166,7 @@ theorem HasChowModification.of_isPullback {X S X' S' : Scheme.{u}} {f : X ⟶ S}
       MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsImmersion)
         (IsPullback.of_right' hs t).flip himm
     infer_instance
-  · rw [Category.assoc, ProjectiveSpace.baseChangeIso_hom_over, t.lift_fst]
+  · rw [Category.assoc, StacksProjectiveSpace.baseChangeIso_hom_over, t.lift_fst]
 
 /-- A quasi-compact scheme that is locally of finite type over the terminal scheme is
 Noetherian. The terminal scheme is `Spec (ULift ℤ)`, so this says that a scheme of finite type

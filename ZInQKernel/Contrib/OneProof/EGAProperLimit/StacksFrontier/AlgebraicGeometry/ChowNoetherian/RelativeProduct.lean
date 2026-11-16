@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/ChowNoetherian/RelativeProduct.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -82,10 +83,10 @@ Stated with the target dimension existential, so that assuming it is weaker than
 Stacks 01WD itself, which produces `n * m + n + m`. -/
 def HasSegreEmbedding (S : Scheme.{u}) : Prop :=
   ∀ n m : ℕ, ∃ (N : ℕ)
-      (e : pullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ⟶ ProjectiveSpace N S),
-      IsClosedImmersion e ∧ e ≫ (ProjectiveSpace N S ↘ S) =
-        pullback.fst (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
-          (ProjectiveSpace n S ↘ S)
+      (e : pullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ⟶ StacksProjectiveSpace N S),
+      IsClosedImmersion e ∧ e ≫ (StacksProjectiveSpace N S ↘ S) =
+        pullback.fst (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
+          (StacksProjectiveSpace n S ↘ S)
 
 /-- **A nonempty list of projective charts of `X` over `S` factors through a single scheme
 projective over `S`.** Granted the Segre embedding for `S`, there are a scheme `P`, a closed
@@ -97,14 +98,14 @@ This is the fibre product `ℙ^{n₁}_S ×_S … ×_S ℙ^{n_m}_S` of the Stacks
 over a Noetherian base, presented as an existential so that the projections do not have a type
 depending on the list. -/
 theorem exists_chartEnvelope (hsegre : HasSegreEmbedding S) {f : X ⟶ S} {I : Type v} (n : I → ℕ)
-    (j : ∀ i, X ⟶ ProjectiveSpace (n i) S) (hj : ∀ i, IsImmersion (j i))
-    (hcomm : ∀ i, j i ≫ (ProjectiveSpace (n i) S ↘ S) = f) :
+    (j : ∀ i, X ⟶ StacksProjectiveSpace (n i) S) (hj : ∀ i, IsImmersion (j i))
+    (hcomm : ∀ i, j i ≫ (StacksProjectiveSpace (n i) S ↘ S) = f) :
     ∀ l : List I, l ≠ [] →
-      ∃ (P : Scheme.{u}) (q : P ⟶ S) (N : ℕ) (c : P ⟶ ProjectiveSpace N S) (a : X ⟶ P),
-        IsClosedImmersion c ∧ c ≫ (ProjectiveSpace N S ↘ S) = q ∧
+      ∃ (P : Scheme.{u}) (q : P ⟶ S) (N : ℕ) (c : P ⟶ StacksProjectiveSpace N S) (a : X ⟶ P),
+        IsClosedImmersion c ∧ c ≫ (StacksProjectiveSpace N S ↘ S) = q ∧
           IsImmersion a ∧ a ≫ q = f ∧
-          ∀ i ∈ l, ∃ ri : P ⟶ ProjectiveSpace (n i) S,
-            ri ≫ (ProjectiveSpace (n i) S ↘ S) = q ∧ a ≫ ri = j i := by
+          ∀ i ∈ l, ∃ ri : P ⟶ StacksProjectiveSpace (n i) S,
+            ri ≫ (StacksProjectiveSpace (n i) S ↘ S) = q ∧ a ≫ ri = j i := by
   intro l
   induction l with
   | nil => simp
@@ -112,15 +113,15 @@ theorem exists_chartEnvelope (hsegre : HasSegreEmbedding S) {f : X ⟶ S} {I : T
       intro _
       cases rest with
       | nil =>
-          refine ⟨ProjectiveSpace (n i₀) S, ProjectiveSpace (n i₀) S ↘ S, n i₀, 𝟙 _, j i₀,
+          refine ⟨StacksProjectiveSpace (n i₀) S, StacksProjectiveSpace (n i₀) S ↘ S, n i₀, 𝟙 _, j i₀,
             inferInstance, Category.id_comp _, hj i₀, hcomm i₀, fun i hi => ?_⟩
           obtain rfl : i = i₀ := by simpa using hi
           exact ⟨𝟙 _, Category.id_comp _, Category.comp_id _⟩
       | cons i₁ tail =>
           obtain ⟨P, q, N, c, a, hc, hcq, -, haq, hr⟩ := ih (List.cons_ne_nil _ _)
           -- the fibre product of `ℙ^{n i₀}_S` with the envelope of the tail
-          let p : ProjectiveSpace (n i₀) S ⟶ S := ProjectiveSpace (n i₀) S ↘ S
-          let d : ProjectiveSpace N S ⟶ S := ProjectiveSpace N S ↘ S
+          let p : StacksProjectiveSpace (n i₀) S ⟶ S := StacksProjectiveSpace (n i₀) S ↘ S
+          let d : StacksProjectiveSpace N S ⟶ S := StacksProjectiveSpace N S ↘ S
           let a' : X ⟶ pullback p q := pullback.lift (j i₀) a ((hcomm i₀).trans haq.symm)
           have ha'fst : a' ≫ pullback.fst p q = j i₀ := pullback.lift_fst _ _ _
           have ha'snd : a' ≫ pullback.snd p q = a := pullback.lift_snd _ _ _
@@ -154,13 +155,13 @@ theorem exists_chartEnvelope (hsegre : HasSegreEmbedding S) {f : X ⟶ S} {I : T
 scheme projective over `S`.** The form of `AlgebraicGeometry.exists_chartEnvelope` used in the
 proof of Chow's lemma over a Noetherian base. -/
 theorem exists_chartEnvelope_of_finite (hsegre : HasSegreEmbedding S) {f : X ⟶ S} {I : Type v}
-    [Finite I] [Nonempty I] (n : I → ℕ) (j : ∀ i, X ⟶ ProjectiveSpace (n i) S)
-    (hj : ∀ i, IsImmersion (j i)) (hcomm : ∀ i, j i ≫ (ProjectiveSpace (n i) S ↘ S) = f) :
-    ∃ (P : Scheme.{u}) (q : P ⟶ S) (N : ℕ) (c : P ⟶ ProjectiveSpace N S) (a : X ⟶ P),
-      IsClosedImmersion c ∧ c ≫ (ProjectiveSpace N S ↘ S) = q ∧
+    [Finite I] [Nonempty I] (n : I → ℕ) (j : ∀ i, X ⟶ StacksProjectiveSpace (n i) S)
+    (hj : ∀ i, IsImmersion (j i)) (hcomm : ∀ i, j i ≫ (StacksProjectiveSpace (n i) S ↘ S) = f) :
+    ∃ (P : Scheme.{u}) (q : P ⟶ S) (N : ℕ) (c : P ⟶ StacksProjectiveSpace N S) (a : X ⟶ P),
+      IsClosedImmersion c ∧ c ≫ (StacksProjectiveSpace N S ↘ S) = q ∧
         IsImmersion a ∧ a ≫ q = f ∧
-        ∀ i, ∃ ri : P ⟶ ProjectiveSpace (n i) S,
-          ri ≫ (ProjectiveSpace (n i) S ↘ S) = q ∧ a ≫ ri = j i := by
+        ∀ i, ∃ ri : P ⟶ StacksProjectiveSpace (n i) S,
+          ri ≫ (StacksProjectiveSpace (n i) S ↘ S) = q ∧ a ≫ ri = j i := by
   classical
   let : Fintype I := Fintype.ofFinite I
   have hne : (Finset.univ : Finset I).toList ≠ [] := by

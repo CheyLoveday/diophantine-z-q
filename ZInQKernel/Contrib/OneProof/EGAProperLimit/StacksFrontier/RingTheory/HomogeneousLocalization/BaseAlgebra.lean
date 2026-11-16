@@ -4,8 +4,9 @@ Source: StacksFrontier/RingTheory/HomogeneousLocalization/BaseAlgebra.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -34,7 +35,7 @@ changed along a map of base rings.
 * `HomogeneousLocalization.algebraMap_eq_fromZeroRingHom_comp`: the structure map is the
   composite `R → 𝒜 0 → HomogeneousLocalization 𝒜 x`, so the `R`-algebra structure is the one
   induced by the `𝒜 0`-algebra structure; nothing new is being chosen.
-* `HomogeneousLocalization.val_algebraMap`: the structure map is compatible with the embedding
+* `HomogeneousLocalization.val_algebraMap_stacks`: the structure map is compatible with the embedding
   into the ordinary localization; `HomogeneousLocalization.isScalarTower_localization` is the
   same statement as a tower.
 
@@ -80,7 +81,7 @@ variable {ι : Type u} {R : Type v} {A : Type w} [CommRing R] [CommRing A] [Alge
 variable {x} in
 /-- A degree-zero element is the fraction with that numerator and denominator `1`. -/
 @[simp]
-public theorem val_fromZeroRingHom (f : 𝒜 0) :
+public theorem val_fromZeroRingHom_stacks (f : 𝒜 0) :
     (fromZeroRingHom 𝒜 x f).val = Localization.mk (f : A) 1 := rfl
 
 /-- The `R`-algebra structure on a homogeneous localization of a graded `R`-algebra: the
@@ -93,7 +94,7 @@ public instance instAlgebra : Algebra R (HomogeneousLocalization 𝒜 x) where
   smul_def' r z := val_injective x <| by
     have h : (((fromZeroRingHom 𝒜 x).comp (algebraMap R (𝒜 0))) r).val =
         algebraMap R (Localization x) r := by
-      rw [RingHom.comp_apply, val_fromZeroRingHom, SetLike.GradeZero.coe_algebraMap,
+      rw [RingHom.comp_apply, val_fromZeroRingHom_stacks, SetLike.GradeZero.coe_algebraMap,
         Localization.mk_one_eq_algebraMap, ← IsScalarTower.algebraMap_apply R A (Localization x)]
     rw [val_mul, h, ← Algebra.smul_def]
     exact val_smul x r z
@@ -108,9 +109,9 @@ public theorem algebraMap_eq_fromZeroRingHom_comp :
 /-- The structure map of a homogeneous localization is compatible with the embedding into the
 ordinary localization. -/
 @[simp]
-public theorem val_algebraMap (r : R) :
+public theorem val_algebraMap_stacks (r : R) :
     (algebraMap R (HomogeneousLocalization 𝒜 x) r).val = algebraMap R (Localization x) r := by
-  rw [algebraMap_eq_fromZeroRingHom_comp, RingHom.comp_apply, val_fromZeroRingHom,
+  rw [algebraMap_eq_fromZeroRingHom_comp, RingHom.comp_apply, val_fromZeroRingHom_stacks,
     SetLike.GradeZero.coe_algebraMap, Localization.mk_one_eq_algebraMap,
     ← IsScalarTower.algebraMap_apply R A (Localization x)]
 

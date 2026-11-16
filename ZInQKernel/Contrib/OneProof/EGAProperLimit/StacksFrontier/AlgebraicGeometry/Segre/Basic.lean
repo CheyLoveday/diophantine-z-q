@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/Segre/Basic.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -35,9 +36,9 @@ no local condition: *there is a monomorphism of schemes
 `ℙⁿ_ℤ ×_{Spec ℤ} ℙᵐ_ℤ ⟶ ℙ^{nm+n+m}_ℤ`.* Nothing beyond the morphism itself and its injectivity
 has to be checked — in particular none of the affine-chart surjectivity of the source's proof.
 
-`AlgebraicGeometry.ProjectiveSpace n S` is by construction the base change `S ×_{⊤} ℙⁿ_ℤ` of the
+`AlgebraicGeometry.StacksProjectiveSpace n S` is by construction the base change `S ×_{⊤} ℙⁿ_ℤ` of the
 integral model along the structure morphism of `S`
-(`StacksFrontier/AlgebraicGeometry/Limits/ProjectiveSpace.lean`), so the fibre product
+(`StacksFrontier/AlgebraicGeometry/Limits/StacksProjectiveSpace.lean`), so the fibre product
 `ℙⁿ_S ×_S ℙᵐ_S` is the base change of `ℙⁿ_ℤ ×_{⊤} ℙᵐ_ℤ`, and the relative Segre morphism is the
 base change of the absolute one. Closed immersions are stable under base change, which is the
 whole content of the first reduction. The integral models live over the *terminal* scheme, so
@@ -100,8 +101,8 @@ part (2)) applied to the surjection of `ℤ[Z₀, …, Z_N]` onto the Segre subr
 product, and the graded subring itself does not exist in this library: there is no bigraded ring
 and no `GradedRing` structure on a tensor product of two graded rings anywhere.
 
-The projective space used here is the capital `AlgebraicGeometry.ProjectiveSpace` of
-`StacksFrontier/AlgebraicGeometry/Limits/ProjectiveSpace.lean`, because that is the one
+The projective space used here is the capital `AlgebraicGeometry.StacksProjectiveSpace` of
+`StacksFrontier/AlgebraicGeometry/Limits/StacksProjectiveSpace.lean`, because that is the one
 `AlgebraicGeometry.HasSegreEmbedding` and `AlgebraicGeometry.HasChowModification` are stated
 against. The repository's lowercase `AlgebraicGeometry.projectiveSpaceOver` is *definitionally
 the same scheme* (`StacksFrontier/AlgebraicGeometry/HProjectiveProper/Basic.lean`), so no
@@ -197,11 +198,11 @@ closed immersion into `ℙ^{nm + n + m}_S` over `S`.
 This is `AlgebraicGeometry.HasSegreEmbedding` with the existential over the target dimension
 replaced by the dimension Stacks 01WD actually produces, so it is strictly stronger. -/
 def HasSegreEmbeddingSharp (S : Scheme.{u}) : Prop :=
-  ∀ n m : ℕ, ∃ e : pullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ⟶
-      ProjectiveSpace (n * m + n + m) S,
-    IsClosedImmersion e ∧ e ≫ (ProjectiveSpace (n * m + n + m) S ↘ S) =
-      pullback.fst (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
-        (ProjectiveSpace n S ↘ S)
+  ∀ n m : ℕ, ∃ e : pullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ⟶
+      StacksProjectiveSpace (n * m + n + m) S,
+    IsClosedImmersion e ∧ e ≫ (StacksProjectiveSpace (n * m + n + m) S ↘ S) =
+      pullback.fst (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
+        (StacksProjectiveSpace n S ↘ S)
 
 /-- A closed immersion `ℙⁿ_ℤ ×_{Spec ℤ} ℙᵐ_ℤ ⟶ ℙ^{nm + n + m}_ℤ` for all `n` and `m` gives
 `AlgebraicGeometry.HasSegreEmbeddingZ`, with `N = n * m + n + m`. -/
@@ -231,8 +232,8 @@ theorem HasSegreEmbeddingSharp.hasSegreEmbedding {S : Scheme.{u}}
 theorem isProper_terminal_from_pullback (n m : ℕ) :
     IsProper (terminal.from (pullback (terminal.from (ProjectiveSpaceZ.{u} n))
       (terminal.from (ProjectiveSpaceZ.{u} m)))) := by
-  have hn := ProjectiveSpace.isProper_terminal_from.{u} n
-  have hm := ProjectiveSpace.isProper_terminal_from.{u} m
+  have hn := StacksProjectiveSpace.isProper_terminal_from.{u} n
+  have hm := StacksProjectiveSpace.isProper_terminal_from.{u} m
   have h : terminal.from (pullback (terminal.from (ProjectiveSpaceZ.{u} n))
       (terminal.from (ProjectiveSpaceZ.{u} m))) =
       pullback.fst (terminal.from (ProjectiveSpaceZ.{u} n))
@@ -250,7 +251,7 @@ theorem isClosedImmersion_of_mono_projectiveSpaceZ {n m N : ℕ}
       (terminal.from (ProjectiveSpaceZ.{u} m)) ⟶ ProjectiveSpaceZ.{u} N) [Mono e] :
     IsClosedImmersion e := by
   have := isProper_terminal_from_pullback.{u} n m
-  have := ProjectiveSpace.isProper_terminal_from.{u} N
+  have := StacksProjectiveSpace.isProper_terminal_from.{u} N
   exact isClosedImmersion_of_mono_of_isProper_of_comp
     (terminal.from (pullback (terminal.from (ProjectiveSpaceZ.{u} n))
       (terminal.from (ProjectiveSpaceZ.{u} m))))
@@ -282,48 +283,48 @@ theorem exists_isClosedImmersion_pullback_projectiveSpace_of_projectiveSpaceZ {n
     (e₀ : pullback (terminal.from (ProjectiveSpaceZ.{u} n))
       (terminal.from (ProjectiveSpaceZ.{u} m)) ⟶ ProjectiveSpaceZ.{u} N)
     (he₀ : IsClosedImmersion e₀) (S : Scheme.{u}) :
-    ∃ e : pullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ⟶ ProjectiveSpace N S,
-      IsClosedImmersion e ∧ e ≫ (ProjectiveSpace N S ↘ S) =
-        pullback.fst (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
-          (ProjectiveSpace n S ↘ S) := by
+    ∃ e : pullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ⟶ StacksProjectiveSpace N S,
+      IsClosedImmersion e ∧ e ≫ (StacksProjectiveSpace N S ↘ S) =
+        pullback.fst (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
+          (StacksProjectiveSpace n S ↘ S) := by
   -- the defining cartesian squares of the three relative projective spaces
-  have hA : IsPullback (ProjectiveSpace n S ↘ S)
+  have hA : IsPullback (StacksProjectiveSpace n S ↘ S)
       (pullback.snd (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} n)))
       (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} n)) :=
     IsPullback.of_hasPullback _ _
-  have hB : IsPullback (ProjectiveSpace m S ↘ S)
+  have hB : IsPullback (StacksProjectiveSpace m S ↘ S)
       (pullback.snd (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} m)))
       (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} m)) :=
     IsPullback.of_hasPullback _ _
-  have hN : IsPullback (ProjectiveSpace N S ↘ S)
+  have hN : IsPullback (StacksProjectiveSpace N S ↘ S)
       (pullback.snd (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} N)))
       (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} N)) :=
     IsPullback.of_hasPullback _ _
   -- the morphism from `ℙⁿ_S ×_S ℙᵐ_S` to the absolute fibre product
   obtain ⟨ρ, hρX, hρY⟩ :
-      ∃ ρ : pullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ⟶
+      ∃ ρ : pullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ⟶
         pullback (terminal.from (ProjectiveSpaceZ.{u} n))
           (terminal.from (ProjectiveSpaceZ.{u} m)),
         ρ ≫ pullback.fst (terminal.from (ProjectiveSpaceZ.{u} n))
               (terminal.from (ProjectiveSpaceZ.{u} m)) =
-            pullback.fst (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
+            pullback.fst (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
               pullback.snd (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} n)) ∧
         ρ ≫ pullback.snd (terminal.from (ProjectiveSpaceZ.{u} n))
               (terminal.from (ProjectiveSpaceZ.{u} m)) =
-            pullback.snd (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
+            pullback.snd (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
               pullback.snd (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} m)) :=
     ⟨pullback.lift _ _ (terminal.hom_ext _ _), pullback.lift_fst _ _ _, pullback.lift_snd _ _ _⟩
   -- `ℙⁿ_S ×_S ℙᵐ_S = S ×_{⊤} (ℙⁿ_ℤ ×_{⊤} ℙᵐ_ℤ)`
   have hW := IsPullback.of_isPullback_four hA hB
     (IsPullback.of_hasPullback (terminal.from (ProjectiveSpaceZ.{u} n))
       (terminal.from (ProjectiveSpaceZ.{u} m)))
-    (IsPullback.of_hasPullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S)) hρX hρY
+    (IsPullback.of_hasPullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S)) hρX hρY
   -- the relative Segre morphism, as a lift into `ℙᴺ_S = S ×_{⊤} ℙᴺ_ℤ`
   obtain ⟨e, hefst, hesnd⟩ :
-      ∃ e : pullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ⟶ ProjectiveSpace N S,
-        e ≫ (ProjectiveSpace N S ↘ S) =
-            pullback.fst (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
-              (ProjectiveSpace n S ↘ S) ∧
+      ∃ e : pullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ⟶ StacksProjectiveSpace N S,
+        e ≫ (StacksProjectiveSpace N S ↘ S) =
+            pullback.fst (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
+              (StacksProjectiveSpace n S ↘ S) ∧
           e ≫ pullback.snd (terminal.from S) (terminal.from (ProjectiveSpaceZ.{u} N)) =
             ρ ≫ e₀ :=
     ⟨pullback.lift _ _ (terminal.hom_ext _ _), pullback.lift_fst _ _ _, pullback.lift_snd _ _ _⟩
@@ -332,7 +333,7 @@ theorem exists_isClosedImmersion_pullback_projectiveSpace_of_projectiveSpaceZ {n
       pullback.fst (terminal.from (ProjectiveSpaceZ.{u} n))
         (terminal.from (ProjectiveSpaceZ.{u} m)) ≫ terminal.from (ProjectiveSpaceZ.{u} n) :=
     terminal.hom_ext _ _
-  have hs : IsPullback ρ (e ≫ (ProjectiveSpace N S ↘ S))
+  have hs : IsPullback ρ (e ≫ (StacksProjectiveSpace N S ↘ S))
       (e₀ ≫ terminal.from (ProjectiveSpaceZ.{u} N)) (terminal.from S) := by
     rw [hefst, heq]
     exact hW.flip

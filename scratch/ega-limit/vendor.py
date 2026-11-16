@@ -11,6 +11,25 @@ TOPS = ['StacksFrontier.AlgebraicGeometry.ProperLimitStage.Basic',
         'StacksFrontier.AlgebraicGeometry.Limits.ChowLemmaNoetherian0200',
         'StacksFrontier.AlgebraicGeometry.SegreProdIso.Main',
         'StacksFrontier.AlgebraicGeometry.Limits.DescendingMorphisms.Diagonal']
+# Renames that avoid clashes with declarations already in the project's `Main` environment
+# (CloudW07JacobiansCurves vendors frenzymath/Jacobian-Challenge, which declares the same four names).
+# (file or '*', identifier token, replacement); applied as whole-identifier replacements.
+RENAMES = [
+    ('*', 'ProjectiveSpace', 'StacksProjectiveSpace'),
+    ('StacksFrontier/AlgebraicGeometry/LimitMorphismAt/Dominant.lean',
+     'isSchemeTheoreticallyDominant_toImage', 'isSchemeTheoreticallyDominant_toImage_stacks'),
+    ('StacksFrontier/RingTheory/HomogeneousLocalization/BaseAlgebra.lean',
+     'val_algebraMap', 'val_algebraMap_stacks'),
+    ('StacksFrontier/RingTheory/HomogeneousLocalization/BaseAlgebra.lean',
+     'val_fromZeroRingHom', 'val_fromZeroRingHom_stacks'),
+]
+def apply_renames(rel, body):
+    lines = body.split('\n')
+    for f, tok, new in RENAMES:
+        if f == '*' or f == rel:
+            pat = re.compile(r"(?<![\w'])" + re.escape(tok) + r"(?![\w'!?])")
+            lines = [l if IMP.match(l) else pat.sub(new, l) for l in lines]
+    return '\n'.join(lines)
 IMP = re.compile(r'^(\s*(?:public\s+)?(?:meta\s+)?import\s+)(\S+)(.*)$')
 def path(root, m): return os.path.join(root, m.replace('.', '/') + '.lean')
 seen = {}; stack = list(TOPS)
@@ -45,9 +64,10 @@ for m, k in sorted(seen.items()):
            'Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.\n'
            'Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already\n'
            'vendored in CloudW01Spread are imported from there); the upstream lakefile option\n'
-           '`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs\n'
-           'are unchanged.\n-/\n') % (REV, rel)
-    body = '\n'.join(out)
+           '`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with\n'
+           'CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three\n'
+           'lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.\n-/\n') % (REV, rel)
+    body = apply_renames(rel, '\n'.join(out))
     files.append(dict(module=m, source_path=rel,
         source_url='https://raw.githubusercontent.com/AxiomMath/Stacks/%s/%s' % (REV, rel),
         source_sha256=hashlib.sha256(raw).hexdigest(), source_bytes=len(raw), destination=dst))

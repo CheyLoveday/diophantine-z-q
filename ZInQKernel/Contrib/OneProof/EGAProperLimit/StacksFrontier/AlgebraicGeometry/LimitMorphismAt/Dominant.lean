@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/LimitMorphismAt/Dominant.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -24,7 +25,7 @@ scheme-theoretic images needs.
 
 ## Main results
 
-* `AlgebraicGeometry.Scheme.Hom.isSchemeTheoreticallyDominant_toImage`: for a quasi-compact `f`,
+* `AlgebraicGeometry.Scheme.Hom.isSchemeTheoreticallyDominant_toImage_stacks`: for a quasi-compact `f`,
   the canonical morphism `X ⟶ f.image` is scheme-theoretically dominant, that is, has trivial
   kernel ideal sheaf. Mathlib has the topological statement
   (`AlgebraicGeometry.Scheme.instIsDominantToImageOfQuasiCompact`) and the class
@@ -121,7 +122,7 @@ lemma Scheme.Hom.iSup_imageAffineOpens (f : X ⟶ Y) :
 /-- The canonical morphism from the source to the scheme-theoretic image has trivial kernel:
 the image is the smallest closed subscheme of the target through which `f` factors, so no
 proper closed subscheme of it absorbs `f`. -/
-instance Scheme.Hom.isSchemeTheoreticallyDominant_toImage (f : X ⟶ Y) [QuasiCompact f] :
+instance Scheme.Hom.isSchemeTheoreticallyDominant_toImage_stacks (f : X ⟶ Y) [QuasiCompact f] :
     IsSchemeTheoreticallyDominant f.toImage := by
   rw [isSchemeTheoreticallyDominant_iff]
   refine Scheme.IdealSheafData.ext_of_iSup_eq_top f.imageAffineOpens

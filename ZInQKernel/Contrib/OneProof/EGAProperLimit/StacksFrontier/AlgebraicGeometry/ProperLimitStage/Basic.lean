@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/ProperLimitStage/Basic.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -139,24 +140,24 @@ theorem exists_isProper_baseChange_of_isLimit_of_hasChowModification
   classical
   obtain ⟨n, X', π, jimm, hproper, hsurj, himm, hcomm⟩ := hchow
   -- Projective space over `Y₀` and the modification `X'`, as schemes over `D.obj i₀`.
-  set P : Over (D.obj i₀) := Over.mk ((ProjectiveSpace n Y₀.left ↘ Y₀.left) ≫ Y₀.hom) with hP
+  set P : Over (D.obj i₀) := Over.mk ((StacksProjectiveSpace n Y₀.left ↘ Y₀.left) ≫ Y₀.hom) with hP
   set Xp : Over (D.obj i₀) := Over.mk (π ≫ X₀.hom) with hXp
-  set pr : P ⟶ Y₀ := Over.homMk (ProjectiveSpace n Y₀.left ↘ Y₀.left) rfl with hpr
+  set pr : P ⟶ Y₀ := Over.homMk (StacksProjectiveSpace n Y₀.left ↘ Y₀.left) rfl with hpr
   set ρ : Xp ⟶ X₀ := Over.homMk π rfl with hρ
   have hu : jimm ≫ P.hom = Xp.hom := by
-    change jimm ≫ (ProjectiveSpace n Y₀.left ↘ Y₀.left) ≫ Y₀.hom = π ≫ X₀.hom
+    change jimm ≫ (StacksProjectiveSpace n Y₀.left ↘ Y₀.left) ≫ Y₀.hom = π ≫ X₀.hom
     rw [← Category.assoc, ← hcomm, Category.assoc, Over.w f₀]
   set u : Xp ⟶ P := Over.homMk jimm hu with hu'
   -- The Chow triangle, as an identity of morphisms over `D.obj i₀`.
   have hupr : u ≫ pr = ρ ≫ f₀ := by
     ext
-    change jimm ≫ (ProjectiveSpace n Y₀.left ↘ Y₀.left) = π ≫ f₀.left
+    change jimm ≫ (StacksProjectiveSpace n Y₀.left ↘ Y₀.left) = π ≫ f₀.left
     exact hcomm.symm
   have : CompactSpace Xp.left := QuasiCompact.compactSpace_of_compactSpace π
   have : QuasiSeparatedSpace Xp.left := (quasiSeparated_iff_quasiSeparatedSpace π).mp inferInstance
-  have : CompactSpace P.left := inferInstanceAs (CompactSpace (ProjectiveSpace n Y₀.left))
+  have : CompactSpace P.left := inferInstanceAs (CompactSpace (StacksProjectiveSpace n Y₀.left))
   have : QuasiSeparatedSpace P.left :=
-    (quasiSeparated_iff_quasiSeparatedSpace (ProjectiveSpace n Y₀.left ↘ Y₀.left)).mp inferInstance
+    (quasiSeparated_iff_quasiSeparatedSpace (StacksProjectiveSpace n Y₀.left ↘ Y₀.left)).mp inferInstance
   have hlft : LocallyOfFiniteType u.left := inferInstanceAs (LocallyOfFiniteType jimm)
   -- Base change preserves the Chow triangle.
   have hcompose : ∀ {T : Scheme.{u}} (q : T ⟶ D.obj i₀),
@@ -166,7 +167,7 @@ theorem exists_isProper_baseChange_of_isLimit_of_hasChowModification
     rw [← Over.comp_left, ← Over.comp_left, ← Functor.map_comp, ← Functor.map_comp, hupr]
   have hprop : ∀ {T : Scheme.{u}} (q : T ⟶ D.obj i₀), IsProper ((Over.pullback q).map pr).left :=
     fun q => MorphismProperty.overPullbackMap (P := @IsProper) q pr
-      (inferInstanceAs (IsProper (ProjectiveSpace n Y₀.left ↘ Y₀.left)))
+      (inferInstanceAs (IsProper (StacksProjectiveSpace n Y₀.left ↘ Y₀.left)))
   -- Over the limit, `X' ⟶ ℙⁿ_Y` is a proper monomorphism, hence a closed immersion.
   have hciLimit : IsClosedImmersion ((Over.pullback (c.π.app i₀)).map u).left := by
     have h1 : IsImmersion ((Over.pullback (c.π.app i₀)).map u).left :=

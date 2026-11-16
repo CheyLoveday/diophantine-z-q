@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/Limits/AffineIntoProjective.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -21,12 +22,12 @@ set_option maxSynthPendingDepth 3
 
 Projective `n`-space over a base `S` is covered by `n + 1` copies of affine `n`-space over `S`.
 This file constructs the chart at the first coordinate,
-`AlgebraicGeometry.ProjectiveSpace.affineChart`, as an open immersion `𝔸ⁿ_S ⟶ ℙⁿ_S` over `S`.
+`AlgebraicGeometry.StacksProjectiveSpace.affineChart`, as an open immersion `𝔸ⁿ_S ⟶ ℙⁿ_S` over `S`.
 
 Over the integers the chart is Mathlib's `AlgebraicGeometry.Proj.awayι`, the open immersion
 `Spec (A_f)₀ ⟶ Proj A` at a homogeneous element `f` of positive degree, taken at `f = X 0`. What
 this file supplies is the identification of the degree-zero part of the away-localization with a
-polynomial ring, `AlgebraicGeometry.ProjectiveSpace.awayChartEquiv`, i.e. the statement that
+polynomial ring, `AlgebraicGeometry.StacksProjectiveSpace.awayChartEquiv`, i.e. the statement that
 dehomogenizing at `X 0` is a bijection from the fractions `a / X 0 ^ d` with `a` homogeneous of
 degree `d` onto the polynomial ring in the remaining `n` variables. The chart over a general
 base is then the base change of the integral chart along `S ⟶ Spec ℤ`, which is an open
@@ -43,26 +44,26 @@ with the chart gives an immersion into a projective space over the target, which
 
 ## Main definitions
 
-* `AlgebraicGeometry.ProjectiveSpace.dehomogenize` sets the first variable of a polynomial ring
+* `AlgebraicGeometry.StacksProjectiveSpace.dehomogenize` sets the first variable of a polynomial ring
   to `1`.
-* `AlgebraicGeometry.ProjectiveSpace.awayChartEquiv` identifies the polynomial ring in `n`
+* `AlgebraicGeometry.StacksProjectiveSpace.awayChartEquiv` identifies the polynomial ring in `n`
   variables with the degree-zero part of the localization of the polynomial ring in `n + 1`
   variables away from its first variable.
-* `AlgebraicGeometry.ProjectiveSpace.affineChartZ` is the standard affine chart of the integral
+* `AlgebraicGeometry.StacksProjectiveSpace.affineChartZ` is the standard affine chart of the integral
   model of projective space.
-* `AlgebraicGeometry.ProjectiveSpace.affineChart` is the standard affine chart `𝔸ⁿ_S ⟶ ℙⁿ_S`.
+* `AlgebraicGeometry.StacksProjectiveSpace.affineChart` is the standard affine chart `𝔸ⁿ_S ⟶ ℙⁿ_S`.
 
 ## Main results
 
-* `AlgebraicGeometry.ProjectiveSpace.affineChart_over`: the chart is a morphism over `S`.
-* `AlgebraicGeometry.ProjectiveSpace.isPullback_affineChart`: the chart is the base change of the
+* `AlgebraicGeometry.StacksProjectiveSpace.affineChart_over`: the chart is a morphism over `S`.
+* `AlgebraicGeometry.StacksProjectiveSpace.isPullback_affineChart`: the chart is the base change of the
   integral chart, whence it is an open immersion.
 * `AlgebraicGeometry.HasChowModification.of_isAffine`: Chow's lemma holds for an affine scheme of
   finite type over an affine base.
 
 ## Implementation notes
 
-The chart is stated against `AlgebraicGeometry.ProjectiveSpace`, the model of projective space
+The chart is stated against `AlgebraicGeometry.StacksProjectiveSpace`, the model of projective space
 used by `AlgebraicGeometry.HasChowModification`, and against `AlgebraicGeometry.AffineSpace`
 indexed by `ULift (Fin n)`, which is the index type produced by
 `AlgebraicGeometry.exists_isClosedImmersion_affineSpace`. Variables of the integral model are
@@ -89,7 +90,7 @@ namespace AlgebraicGeometry
 
 universe u
 
-namespace ProjectiveSpace
+namespace StacksProjectiveSpace
 
 attribute [local instance] MvPolynomial.gradedAlgebra
 
@@ -278,14 +279,14 @@ variable (S : Scheme.{u})
 /-- **The standard affine chart of projective space.** Affine `n`-space over `S` is the open
 subscheme of projective `n`-space over `S` where the first coordinate is invertible; this is the
 base change of `affineChartZ` along `S ⟶ Spec ℤ`. -/
-def affineChart : AffineSpace (ULift.{u} (Fin n)) S ⟶ ProjectiveSpace n S :=
+def affineChart : AffineSpace (ULift.{u} (Fin n)) S ⟶ StacksProjectiveSpace n S :=
   pullback.lift (AffineSpace (ULift.{u} (Fin n)) S ↘ S)
     (AffineSpace.toSpecMvPoly (ULift.{u} (Fin n)) S ≫ affineChartZ.{u} n)
     (terminal.hom_ext _ _)
 
 /-- The chart is a morphism over `S`. -/
 @[reassoc (attr := simp)]
-theorem affineChart_over : affineChart n S ≫ (ProjectiveSpace n S ↘ S) =
+theorem affineChart_over : affineChart n S ≫ (StacksProjectiveSpace n S ↘ S) =
     AffineSpace (ULift.{u} (Fin n)) S ↘ S :=
   pullback.lift_fst _ _ _
 
@@ -301,7 +302,7 @@ integral models is cartesian. -/
 theorem isPullback_affineChart :
     IsPullback (AffineSpace.toSpecMvPoly (ULift.{u} (Fin n)) S) (affineChart n S)
       (affineChartZ.{u} n) (toProjectiveSpaceZ n S) := by
-  have t : IsPullback (toProjectiveSpaceZ n S) (ProjectiveSpace n S ↘ S)
+  have t : IsPullback (toProjectiveSpaceZ n S) (StacksProjectiveSpace n S ↘ S)
       (terminal.from (ProjectiveSpaceZ.{u} n)) (terminal.from S) :=
     (IsPullback.of_hasPullback _ _).flip
   refine IsPullback.of_bot ?_ (toSpecMvPoly_affineChartZ n S) t
@@ -313,7 +314,7 @@ instance isOpenImmersion_affineChart : IsOpenImmersion (affineChart n S) :=
   MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsOpenImmersion)
     (isPullback_affineChart n S) inferInstance
 
-end ProjectiveSpace
+end StacksProjectiveSpace
 
 /-- **Chow's lemma for an affine scheme of finite type over an affine base.** Such a scheme
 immerses into a projective space over the base, so it is its own Chow modification.
@@ -326,8 +327,8 @@ theorem HasChowModification.of_isAffine {X S : Scheme.{u}} [IsAffine X] [IsAffin
     [LocallyOfFiniteType f] : HasChowModification f := by
   obtain ⟨m, i, hi, hcomm⟩ := exists_isClosedImmersion_affineSpace f
   have : IsClosedImmersion i := hi
-  refine HasChowModification.of_isImmersion (i ≫ ProjectiveSpace.affineChart m S) ?_
-  rw [Category.assoc, ProjectiveSpace.affineChart_over]
+  refine HasChowModification.of_isImmersion (i ≫ StacksProjectiveSpace.affineChart m S) ?_
+  rw [Category.assoc, StacksProjectiveSpace.affineChart_over]
   exact hcomm
 
 end AlgebraicGeometry

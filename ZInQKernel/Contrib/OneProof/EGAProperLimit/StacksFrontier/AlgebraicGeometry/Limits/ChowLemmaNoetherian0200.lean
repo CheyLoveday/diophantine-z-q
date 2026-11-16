@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/Limits/ChowLemmaNoetherian0200.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -40,7 +41,7 @@ named as an explicit hypothesis:
   is available. Over an **affine** base it is proved here, in
   `AlgebraicGeometry.hasAffineProjectiveImmersions_of_isAffine`, from the affine-space
   factorization `AlgebraicGeometry.exists_isClosedImmersion_affineSpace` and the standard
-  affine chart `AlgebraicGeometry.ProjectiveSpace.affineChart`.
+  affine chart `AlgebraicGeometry.StacksProjectiveSpace.affineChart`.
 * `AlgebraicGeometry.HasSegreEmbeddings S` -- the fibre product over `S` of two projective
   spaces over `S` closed-immerses into a projective space over `S`. This is Stacks 01WD, the
   Segre embedding, which is not available.
@@ -79,10 +80,10 @@ schemes:
 
 ## Implementation notes
 
-Projective space is `AlgebraicGeometry.ProjectiveSpace`, the model
+Projective space is `AlgebraicGeometry.StacksProjectiveSpace`, the model
 `AlgebraicGeometry.HasChowModification` is written with, and its structure morphism is `↘ S`.
 That morphism is `pullback.fst (terminal.from S) (terminal.from (ProjectiveSpaceZ n))` by
-`AlgebraicGeometry.ProjectiveSpace.over_hom`, which is how the conclusion here matches the
+`AlgebraicGeometry.StacksProjectiveSpace.over_hom`, which is how the conclusion here matches the
 phrasing of Stacks 0200 in terms of `AlgebraicGeometry.projectiveSpaceOver`; see
 `AlgebraicGeometry.hasChowModification_iff_projectiveSpaceOver`.
 
@@ -143,7 +144,7 @@ structure ChowModification {X S : Scheme.{u}} (f : X ⟶ S) where
   /-- The modification itself, a proper surjection onto `X`. -/
   toX : scheme ⟶ X
   /-- The immersion of the modification into a projective space over `S`. -/
-  toProjectiveSpace : scheme ⟶ ProjectiveSpace n S
+  toProjectiveSpace : scheme ⟶ StacksProjectiveSpace n S
   /-- The dense open of `X` over which the modification is an isomorphism. -/
   denseOpen : X.Opens
   /-- The morphism `toX` is proper. -/
@@ -153,7 +154,7 @@ structure ChowModification {X S : Scheme.{u}} (f : X ⟶ S) where
   /-- The morphism `toProjectiveSpace` is an immersion. -/
   isImmersion : IsImmersion toProjectiveSpace
   /-- The maps of `scheme` to `S` through `X` and through the projective space agree. -/
-  commutes : toX ≫ f = toProjectiveSpace ≫ (ProjectiveSpace n S ↘ S)
+  commutes : toX ≫ f = toProjectiveSpace ≫ (StacksProjectiveSpace n S ↘ S)
   /-- The open `denseOpen` is dense in `X`. -/
   dense : Dense (denseOpen : Set X)
   /-- The restriction of `toX` over `denseOpen` is an isomorphism. -/
@@ -169,19 +170,19 @@ sheaf embeds the scheme in a projective space over the base). Over an affine bas
 below as `AlgebraicGeometry.hasAffineProjectiveImmersions_of_isAffine`. -/
 def HasAffineProjectiveImmersions (S : Scheme.{u}) : Prop :=
   ∀ (Y : Scheme.{u}) (g : Y ⟶ S), IsAffine Y → LocallyOfFiniteType g →
-    ∃ (n : ℕ) (i : Y ⟶ ProjectiveSpace n S),
-      IsImmersion i ∧ i ≫ (ProjectiveSpace n S ↘ S) = g
+    ∃ (n : ℕ) (i : Y ⟶ StacksProjectiveSpace n S),
+      IsImmersion i ∧ i ≫ (StacksProjectiveSpace n S ↘ S) = g
 
 /-- **The second input of Chow's lemma over a Noetherian base**: the fibre product over `S` of
 two projective spaces over `S` admits a closed immersion over `S` into a projective space over
 `S`. This is Stacks 01WD, the Segre embedding, except that only the existence of a receiving
 projective space is asked for, not that its dimension is `n * m + n + m`. -/
 def HasSegreEmbeddings (S : Scheme.{u}) : Prop :=
-  ∀ n m : ℕ, ∃ (N : ℕ) (e : pullback (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ⟶
-      ProjectiveSpace N S), IsClosedImmersion e ∧
-    e ≫ (ProjectiveSpace N S ↘ S) =
-      pullback.fst (ProjectiveSpace n S ↘ S) (ProjectiveSpace m S ↘ S) ≫
-        (ProjectiveSpace n S ↘ S)
+  ∀ n m : ℕ, ∃ (N : ℕ) (e : pullback (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ⟶
+      StacksProjectiveSpace N S), IsClosedImmersion e ∧
+    e ≫ (StacksProjectiveSpace N S ↘ S) =
+      pullback.fst (StacksProjectiveSpace n S ↘ S) (StacksProjectiveSpace m S ↘ S) ≫
+        (StacksProjectiveSpace n S ↘ S)
 
 /-- **The first input holds over an affine base.** An affine scheme locally of finite type over
 an affine base factors as a closed immersion into an affine space over the base followed by the
@@ -199,8 +200,8 @@ theorem hasAffineProjectiveImmersions_of_isAffine (S : Scheme.{u}) [IsAffine S] 
   have : LocallyOfFiniteType g := hg
   obtain ⟨m, i, hi, hcomm⟩ := exists_isClosedImmersion_affineSpace g
   have : IsClosedImmersion i := hi
-  refine ⟨m, i ≫ ProjectiveSpace.affineChart m S, inferInstance, ?_⟩
-  rw [Category.assoc, ProjectiveSpace.affineChart_over]
+  refine ⟨m, i ≫ StacksProjectiveSpace.affineChart m S, inferInstance, ?_⟩
+  rw [Category.assoc, StacksProjectiveSpace.affineChart_over]
   exact hcomm
 
 /-- **A proper morphism whose image contains a dense open is surjective.** If `π` is proper and
@@ -265,9 +266,9 @@ structure ProjectiveFactor {X S : Scheme.{u}} (f : X ⟶ S) where
   /-- The dimension of the projective space. -/
   n : ℕ
   /-- The immersion into it. -/
-  map : X ⟶ ProjectiveSpace n S
+  map : X ⟶ StacksProjectiveSpace n S
   isImmersion : IsImmersion map
-  commutes : map ≫ (ProjectiveSpace n S ↘ S) = f
+  commutes : map ≫ (StacksProjectiveSpace n S ↘ S) = f
 
 /-- A scheme over `S`, used as the value of the recursion building the finite fibre product of a
 list of projective spaces over `S`. -/
@@ -283,10 +284,10 @@ below about the product carries `l ≠ []`. -/
 noncomputable def relativeProjectiveProductData {X S : Scheme.{u}} (f : X ⟶ S) :
     List (ProjectiveFactor f) → RelativeProjectiveProductData S
   | [] => ⟨S, 𝟙 S⟩
-  | [a] => ⟨ProjectiveSpace a.n S, ProjectiveSpace a.n S ↘ S⟩
+  | [a] => ⟨StacksProjectiveSpace a.n S, StacksProjectiveSpace a.n S ↘ S⟩
   | a :: b :: rest =>
       let d := relativeProjectiveProductData f (b :: rest)
-      let p := ProjectiveSpace a.n S ↘ S
+      let p := StacksProjectiveSpace a.n S ↘ S
       ⟨pullback p d.toBase, pullback.fst p d.toBase ≫ p⟩
 
 /-- The finite fibre product over `S` of a list of projective spaces over `S`. -/
@@ -309,7 +310,7 @@ noncomputable def relativeProjectiveProductMap {X S : Scheme.{u}} (f : X ⟶ S) 
   | [a] => ⟨a.map, a.commutes⟩
   | a :: b :: rest =>
       let t := relativeProjectiveProductMap f (b :: rest)
-      let p := ProjectiveSpace a.n S ↘ S
+      let p := StacksProjectiveSpace a.n S ↘ S
       let q := relativeProjectiveProductBase (f := f) (b :: rest)
       have hcond : a.map ≫ p = t.1 ≫ q := a.commutes.trans t.2.symm
       ⟨pullback.lift a.map t.1 hcond, by
@@ -329,17 +330,17 @@ same argument out at the product itself does not elaborate, because
 definitionally, not reducibly, a `pullback`. -/
 theorem exists_isClosedImmersion_pullback_projectiveSpace {S : Scheme.{u}}
     (hsegre : HasSegreEmbeddings S) (n m : ℕ) {Z : Scheme.{u}} (q : Z ⟶ S)
-    (i : Z ⟶ ProjectiveSpace m S) (hi : IsClosedImmersion i)
-    (hcomm : i ≫ (ProjectiveSpace m S ↘ S) = q) :
-    ∃ (N : ℕ) (j : pullback (ProjectiveSpace n S ↘ S) q ⟶ ProjectiveSpace N S),
-      IsClosedImmersion j ∧ j ≫ (ProjectiveSpace N S ↘ S) =
-        pullback.fst (ProjectiveSpace n S ↘ S) q ≫ (ProjectiveSpace n S ↘ S) := by
+    (i : Z ⟶ StacksProjectiveSpace m S) (hi : IsClosedImmersion i)
+    (hcomm : i ≫ (StacksProjectiveSpace m S ↘ S) = q) :
+    ∃ (N : ℕ) (j : pullback (StacksProjectiveSpace n S ↘ S) q ⟶ StacksProjectiveSpace N S),
+      IsClosedImmersion j ∧ j ≫ (StacksProjectiveSpace N S ↘ S) =
+        pullback.fst (StacksProjectiveSpace n S ↘ S) q ≫ (StacksProjectiveSpace n S ↘ S) := by
   have hcomp : MorphismProperty.IsStableUnderComposition @IsClosedImmersion :=
     (inferInstance :
       MorphismProperty.IsMultiplicative @IsClosedImmersion).toIsStableUnderComposition
   obtain ⟨N, e, he, hbase⟩ := hsegre n m
-  refine ⟨N, pullback.map (ProjectiveSpace n S ↘ S) q (ProjectiveSpace n S ↘ S)
-    (ProjectiveSpace m S ↘ S) (𝟙 _) i (𝟙 _) (by simp) (by simp [hcomm]) ≫ e, ?_, ?_⟩
+  refine ⟨N, pullback.map (StacksProjectiveSpace n S ↘ S) q (StacksProjectiveSpace n S ↘ S)
+    (StacksProjectiveSpace m S ↘ S) (𝟙 _) i (𝟙 _) (by simp) (by simp [hcomm]) ≫ e, ?_, ?_⟩
   · exact hcomp.comp_mem _ _
       (MorphismProperty.pullbackMap (P := @IsClosedImmersion) inferInstance hi rfl hcomm.symm) he
   · rw [Category.assoc, hbase, ← Category.assoc, pullback.lift_fst, Category.comp_id]
@@ -350,16 +351,16 @@ of the remaining factors is already closed-immersed in a projective space, so th
 is closed-immersed in a product of two projective spaces, and Segre finishes. -/
 theorem exists_isClosedImmersion_relativeProjectiveProduct {X S : Scheme.{u}} {f : X ⟶ S}
     (hsegre : HasSegreEmbeddings S) (l : List (ProjectiveFactor f)) (hne : l ≠ []) :
-    ∃ (n : ℕ) (i : relativeProjectiveProduct l ⟶ ProjectiveSpace n S),
+    ∃ (n : ℕ) (i : relativeProjectiveProduct l ⟶ StacksProjectiveSpace n S),
       IsClosedImmersion i ∧
-        i ≫ (ProjectiveSpace n S ↘ S) = relativeProjectiveProductBase l := by
+        i ≫ (StacksProjectiveSpace n S ↘ S) = relativeProjectiveProductBase l := by
   induction l with
   | nil => simp at hne
   | cons a rest ih =>
       cases rest with
       | nil =>
-          exact ⟨a.n, 𝟙 (ProjectiveSpace a.n S),
-            (inferInstance : IsClosedImmersion (𝟙 (ProjectiveSpace a.n S))),
+          exact ⟨a.n, 𝟙 (StacksProjectiveSpace a.n S),
+            (inferInstance : IsClosedImmersion (𝟙 (StacksProjectiveSpace a.n S))),
             Category.id_comp _⟩
       | cons b tail =>
           obtain ⟨m, i, hi, hcomm⟩ := ih (by simp)
@@ -379,7 +380,7 @@ theorem isImmersion_relativeProjectiveProductMap {X S : Scheme.{u}} (f : X ⟶ S
       | nil => exact a.isImmersion
       | cons b tail =>
           set t := relativeProjectiveProductMap f (b :: tail) with htdef
-          set p := ProjectiveSpace a.n S ↘ S with hp
+          set p := StacksProjectiveSpace a.n S ↘ S with hp
           set q := relativeProjectiveProductBase (f := f) (b :: tail) with hq
           have hfst : (relativeProjectiveProductMap f (a :: b :: tail)).1 ≫
               pullback.fst p q = a.map := pullback.lift_fst _ _ _
@@ -393,8 +394,8 @@ theorem isImmersion_relativeProjectiveProductMap {X S : Scheme.{u}} (f : X ⟶ S
 projection over `S` through which the diagonal morphism recovers that factor's immersion. -/
 theorem exists_relativeProjectiveProductProjection {X S : Scheme.{u}} (f : X ⟶ S)
     (l : List (ProjectiveFactor f)) (b : ProjectiveFactor f) (hb : b ∈ l) :
-    ∃ r : relativeProjectiveProduct l ⟶ ProjectiveSpace b.n S,
-      r ≫ (ProjectiveSpace b.n S ↘ S) = relativeProjectiveProductBase l ∧
+    ∃ r : relativeProjectiveProduct l ⟶ StacksProjectiveSpace b.n S,
+      r ≫ (StacksProjectiveSpace b.n S ↘ S) = relativeProjectiveProductBase l ∧
         (relativeProjectiveProductMap f l).1 ≫ r = b.map := by
   induction l with
   | nil => simp at hb
@@ -409,26 +410,26 @@ theorem exists_relativeProjectiveProductProjection {X S : Scheme.{u}} (f : X ⟶
             exact ⟨pullback.fst _ _, rfl, pullback.lift_fst _ _ _⟩
           · obtain ⟨r, hr, hm⟩ := ih h
             have hsnd : (relativeProjectiveProductMap f (a :: c :: tail)).1 ≫
-                pullback.snd (ProjectiveSpace a.n S ↘ S)
+                pullback.snd (StacksProjectiveSpace a.n S ↘ S)
                   (relativeProjectiveProductBase (f := f) (c :: tail)) =
                 (relativeProjectiveProductMap f (c :: tail)).1 :=
               pullback.lift_snd _ _ _
-            refine ⟨pullback.snd (ProjectiveSpace a.n S ↘ S)
+            refine ⟨pullback.snd (StacksProjectiveSpace a.n S ↘ S)
               (relativeProjectiveProductBase (f := f) (c :: tail)) ≫ r, ?_, ?_⟩
-            · have key : (pullback.snd (ProjectiveSpace a.n S ↘ S)
+            · have key : (pullback.snd (StacksProjectiveSpace a.n S ↘ S)
                   (relativeProjectiveProductBase (f := f) (c :: tail)) ≫ r) ≫
-                    (ProjectiveSpace b.n S ↘ S) =
-                  pullback.fst (ProjectiveSpace a.n S ↘ S)
+                    (StacksProjectiveSpace b.n S ↘ S) =
+                  pullback.fst (StacksProjectiveSpace a.n S ↘ S)
                     (relativeProjectiveProductBase (f := f) (c :: tail)) ≫
-                      (ProjectiveSpace a.n S ↘ S) := by
+                      (StacksProjectiveSpace a.n S ↘ S) := by
                 rw [Category.assoc, hr]
                 exact pullback.condition.symm
               exact key
             · calc (relativeProjectiveProductMap f (a :: c :: tail)).1 ≫
-                    (pullback.snd (ProjectiveSpace a.n S ↘ S)
+                    (pullback.snd (StacksProjectiveSpace a.n S ↘ S)
                       (relativeProjectiveProductBase (f := f) (c :: tail)) ≫ r)
                   = ((relativeProjectiveProductMap f (a :: c :: tail)).1 ≫
-                      pullback.snd (ProjectiveSpace a.n S ↘ S)
+                      pullback.snd (StacksProjectiveSpace a.n S ↘ S)
                         (relativeProjectiveProductBase (f := f) (c :: tail))) ≫ r :=
                     (Category.assoc _ _ _).symm
                 _ = (relativeProjectiveProductMap f (c :: tail)).1 ≫ r := by rw [hsnd]
@@ -451,9 +452,9 @@ immersion there, but that fact is not needed here. Dropping it is the only diffe
 prime. -/
 theorem exists_chart_of_image' {X S P : Scheme.{u}} (f : X ⟶ S) (q : P ⟶ S) [IsProper q]
     (U V : X.Opens) (hUV : U ≤ V) (a : U.toScheme ⟶ P) [QuasiCompact a]
-    (n : ℕ) (j : V.toScheme ⟶ ProjectiveSpace n S) [IsImmersion j] [QuasiCompact j]
-    (hj : j ≫ (ProjectiveSpace n S ↘ S) = V.ι ≫ f) (r : P ⟶ ProjectiveSpace n S)
-    (hr : r ≫ (ProjectiveSpace n S ↘ S) = q) (har : a ≫ r = X.homOfLE hUV ≫ j) :
+    (n : ℕ) (j : V.toScheme ⟶ StacksProjectiveSpace n S) [IsImmersion j] [QuasiCompact j]
+    (hj : j ≫ (StacksProjectiveSpace n S ↘ S) = V.ι ≫ f) (r : P ⟶ StacksProjectiveSpace n S)
+    (hr : r ≫ (StacksProjectiveSpace n S ↘ S) = q) (har : a ≫ r = X.homOfLE hUV ≫ j) :
     ∃ (W : Scheme.{u}) (e : W ⟶ a.image) (p : W ⟶ V.toScheme) (s : U.toScheme ⟶ W),
       IsOpenImmersion e ∧ IsProper p ∧ s ≫ e = a.toImage ∧ s ≫ p = X.homOfLE hUV ∧
         e ≫ a.imageι ≫ q = p ≫ V.ι ≫ f := by
@@ -467,11 +468,11 @@ theorem exists_chart_of_image' {X S P : Scheme.{u}} (f : X ⟶ S) (q : P ⟶ S) 
     exact Scheme.Hom.le_ker_comp _ _
   let r' : a.image ⟶ j.image := IsClosedImmersion.lift j.imageι (a.imageι ≫ r) hk
   have hr' : r' ≫ j.imageι = a.imageι ≫ r := IsClosedImmersion.lift_fac _ _ _
-  have hr'base : r' ≫ (j.imageι ≫ (ProjectiveSpace n S ↘ S)) = a.imageι ≫ q := by
+  have hr'base : r' ≫ (j.imageι ≫ (StacksProjectiveSpace n S ↘ S)) = a.imageι ≫ q := by
     rw [← Category.assoc, hr', Category.assoc, hr]
-  have : IsProper (r' ≫ (j.imageι ≫ (ProjectiveSpace n S ↘ S))) := by
+  have : IsProper (r' ≫ (j.imageι ≫ (StacksProjectiveSpace n S ↘ S))) := by
     rw [hr'base]; infer_instance
-  have : IsProper r' := IsProper.of_comp r' (j.imageι ≫ (ProjectiveSpace n S ↘ S))
+  have : IsProper r' := IsProper.of_comp r' (j.imageι ≫ (StacksProjectiveSpace n S ↘ S))
   have ha : a.toImage ≫ r' = X.homOfLE hUV ≫ j.toImage := by
     apply (cancel_mono j.imageι).mp
     rw [Category.assoc, hr', ← Category.assoc, a.toImage_imageι, Category.assoc,
@@ -515,8 +516,8 @@ theorem nonempty_chowModification {X S : Scheme.{u}} (hemb : HasAffineProjective
       exact ⟨⟨V, hV⟩⟩
     have hnoeth : ∀ V : I, NoetherianSpace (V.1 : Scheme.{u}) :=
       fun V => V.1.ι.isOpenEmbedding.isInducing.noetherianSpace
-    have hcharts (V : I) : ∃ (n : ℕ) (i : (V.1 : Scheme.{u}) ⟶ ProjectiveSpace n S),
-        IsImmersion i ∧ i ≫ (ProjectiveSpace n S ↘ S) = V.1.ι ≫ f :=
+    have hcharts (V : I) : ∃ (n : ℕ) (i : (V.1 : Scheme.{u}) ⟶ StacksProjectiveSpace n S),
+        IsImmersion i ∧ i ≫ (StacksProjectiveSpace n S ↘ S) = V.1.ι ≫ f :=
       hemb _ (V.1.ι ≫ f) (hAffine V.1 V.2) inferInstance
     choose n j hj hcomm using hcharts
     have hjI : ∀ V, IsImmersion (j V) := hj
@@ -540,7 +541,7 @@ theorem nonempty_chowModification {X S : Scheme.{u}} (hemb : HasAffineProjective
     obtain ⟨N, e, he, heq⟩ := exists_isClosedImmersion_relativeProjectiveProduct hsegre l hl
     have : IsClosedImmersion e := he
     have hqproper : IsProper q := by
-      have : q = e ≫ (ProjectiveSpace N S ↘ S) := heq.symm
+      have : q = e ≫ (StacksProjectiveSpace N S ↘ S) := heq.symm
       rw [this]
       infer_instance
     have hr (V : I) := exists_relativeProjectiveProductProjection (U.ι ≫ f) l (A V) (hmem V)

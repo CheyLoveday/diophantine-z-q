@@ -4,8 +4,9 @@ Source: StacksFrontier/AlgebraicGeometry/ChowNoetherian/Gluing.lean
 Upstream license: Apache-2.0; see EGAProperLimit/LICENSE.
 Modification notice (2026-11-16): import paths remapped into EGAProperLimit (modules already
 vendored in CloudW01Spread are imported from there); the upstream lakefile option
-`maxSynthPendingDepth = 3` is set in the file. The mathematical declarations and proofs
-are unchanged.
+`maxSynthPendingDepth = 3` is set in the file; four declaration names that clash with
+CloudW07JacobiansCurves are renamed (ProjectiveSpace -> StacksProjectiveSpace, and three
+lemmas get the suffix _stacks; see NOTICE.md). The mathematical content and proofs are unchanged.
 -/
 module
 
@@ -68,9 +69,9 @@ of `X` containing it.** Here `a : U ⟶ P` is the chart of `U` in a scheme `P` p
 that projective space through which `a` factors. -/
 theorem exists_chart_of_image {X S P : Scheme.{u}} (f : X ⟶ S) (q : P ⟶ S) [IsProper q]
     (U V : X.Opens) (hUV : U ≤ V) (a : U.toScheme ⟶ P) [IsImmersion a] [QuasiCompact a] (n : ℕ)
-    (j : V.toScheme ⟶ ProjectiveSpace n S) [IsImmersion j] [QuasiCompact j]
-    (hj : j ≫ (ProjectiveSpace n S ↘ S) = V.ι ≫ f) (r : P ⟶ ProjectiveSpace n S)
-    (hr : r ≫ (ProjectiveSpace n S ↘ S) = q) (har : a ≫ r = X.homOfLE hUV ≫ j) :
+    (j : V.toScheme ⟶ StacksProjectiveSpace n S) [IsImmersion j] [QuasiCompact j]
+    (hj : j ≫ (StacksProjectiveSpace n S ↘ S) = V.ι ≫ f) (r : P ⟶ StacksProjectiveSpace n S)
+    (hr : r ≫ (StacksProjectiveSpace n S ↘ S) = q) (har : a ≫ r = X.homOfLE hUV ≫ j) :
     ∃ (W : Scheme.{u}) (e : W ⟶ a.image) (p : W ⟶ V.toScheme) (s : U.toScheme ⟶ W),
       IsOpenImmersion e ∧ IsProper p ∧ s ≫ e = a.toImage ∧ s ≫ p = X.homOfLE hUV ∧
         e ≫ a.imageι ≫ q = p ≫ V.ι ≫ f := by
@@ -83,11 +84,11 @@ theorem exists_chart_of_image {X S P : Scheme.{u}} (f : X ⟶ S) (q : P ⟶ S) [
     exact Scheme.Hom.le_ker_comp _ _
   let r' : a.image ⟶ j.image := IsClosedImmersion.lift j.imageι (a.imageι ≫ r) hk
   have hr' : r' ≫ j.imageι = a.imageι ≫ r := IsClosedImmersion.lift_fac _ _ _
-  have hr'base : r' ≫ (j.imageι ≫ (ProjectiveSpace n S ↘ S)) = a.imageι ≫ q := by
+  have hr'base : r' ≫ (j.imageι ≫ (StacksProjectiveSpace n S ↘ S)) = a.imageι ≫ q := by
     rw [← Category.assoc, hr', Category.assoc, hr]
-  have : IsProper (r' ≫ (j.imageι ≫ (ProjectiveSpace n S ↘ S))) := by
+  have : IsProper (r' ≫ (j.imageι ≫ (StacksProjectiveSpace n S ↘ S))) := by
     rw [hr'base]; infer_instance
-  have : IsProper r' := IsProper.of_comp r' (j.imageι ≫ (ProjectiveSpace n S ↘ S))
+  have : IsProper r' := IsProper.of_comp r' (j.imageι ≫ (StacksProjectiveSpace n S ↘ S))
   have ha : a.toImage ≫ r' = X.homOfLE hUV ≫ j.toImage := by
     apply (cancel_mono j.imageι).mp
     rw [Category.assoc, hr', ← Category.assoc, a.toImage_imageι, Category.assoc,
