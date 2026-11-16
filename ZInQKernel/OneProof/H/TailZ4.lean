@@ -133,7 +133,6 @@ structure OpenAddedLeaves8 : Prop where
   x6ConicModel : X6Kummer.X6ConicModel
   y3Connected : TSHecke.Y3Connected
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
-  shimuraGoodReductionNoGuard : CurveSplitGR.ShimuraGoodReductionNoGuard
   /-- qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
   Thm 2.20; Rankin Thm 4.1.4). -/
   valenceFormulaCocompactEq : LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq
@@ -242,7 +241,6 @@ theorem addedLeaves7_of_open8 (r : OpenResearchLeaves8) (l : OpenAddedLeaves8) :
   egaIV_8_8_2_ii := _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_8_2_ii_proof
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   egaIV_17_7_8_ii := _root_.ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii_proof
-  shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold8; no `sorry`, standard axioms).
 `ZInQ.SixContactMin` follows from `OpenResearchLeaves8` (31), `OpenTextbookLeaves8` (20), `OpenAddedLeaves8` (14)

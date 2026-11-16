@@ -773,7 +773,6 @@ structure OpenAddedLeaves13 : Prop where
   axSenTate : _root_.ZInQ.Contrib.HodgeSplit.AxSenTate
   milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
-  shimuraGoodReductionNoGuard : CurveSplitGR.ShimuraGoodReductionNoGuard
   /-- qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
   Thm 2.20; Rankin Thm 4.1.4). -/
   valenceFormulaCocompactEq : LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq
@@ -820,7 +819,6 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
     l.phiAmpleIsogeny l.weilPairingMumford
   milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
-  shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   deligneComponentsY3PrintedAb := l.deligneComponentsY3PrintedAb

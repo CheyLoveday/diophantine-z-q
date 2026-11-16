@@ -237,7 +237,6 @@ structure OpenAddedLeaves12 : Prop where
   t09SymmIsogenyExists : WeilPairing.T09_SymmIsogenyExists
   milneIsogenyQuasiInverse : _root_.AvSplit.MilneIsogenyQuasiInverse
   egaIV_8_10_5_xii : _root_.ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
-  shimuraGoodReductionNoGuard : CurveSplitGR.ShimuraGoodReductionNoGuard
   /-- qm-split, H-87/H-88: the valence formula for a cocompact Fuchsian group (Shimura 1971 Prop. 2.16,
   Thm 2.20; Rankin Thm 4.1.4). -/
   valenceFormulaCocompactEq : LeafQCheck.HM.QMSplit.ValenceFormulaCocompactEq
@@ -321,7 +320,6 @@ theorem addedLeaves11_of_open12 (r : OpenResearchLeaves13) (t : OpenTextbookLeav
   t09SymmIsogenyExists := l.t09SymmIsogenyExists
   milneIsogenyQuasiInverse := l.milneIsogenyQuasiInverse
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
-  shimuraGoodReductionNoGuard := l.shimuraGoodReductionNoGuard
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   deligneComponentsY3PrintedAb := l.deligneComponentsY3PrintedAb
