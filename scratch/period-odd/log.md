@@ -25,3 +25,9 @@ target: hL3 replaced by `GrossZagierModuliOptCd` + `EtaW32Character` only.
   (shortCurve (-(d : ℚ) ^ 2)).LFunction`, `ePrime d := shortCurve (4 * d^2)`; axioms
   [propext, Classical.choice, Quot.sound]. VERIFIED. Ingredients: `charSum_isog` (Σχ(x³+ax) = Σχ(X³−4aX), a ≠ 0),
   minimality of y² = x³+4d²x at 2 from c₄ (v₂(c₄) = 6), additive at p | 2d, good at p ∤ 2d.
+- (C) DONE: `ZInQKernel/Contrib/OneProof/PeriodOdd/Isogeny.lean` builds (`lake build`, 7 s).
+  `weierPt_ePrime_eq (hd : d ≠ 0) (hL : IsPeriodLattice C_d L) (z) : isogPt hd (weierPt C_d L z) =
+  weierPt (ePrime d) (latP L) z` with `latP L = scalePP L ((1+i)/2)`, `isogPt (x,y) = (x − d²/x, y(x²+d²)/x²)`,
+  `(0,0), O ↦ O`; `map_isogPt` (commutes with ℚ-algebra maps); `isPeriodLattice_ePrime`;
+  `weierstrassP_split`/`derivWeierstrassP_split` (℘ over L' = L ⊔ (h+L)); `weierstrassP_I_mul` (℘(iz) = −℘(z)).
+  Axioms [propext, Classical.choice, Quot.sound]. VERIFIED.

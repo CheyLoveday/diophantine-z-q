@@ -298,6 +298,96 @@ theorem isPeriodLattice_ePrime {d : ℕ} {L : PeriodPair}
     simp [ePrime, shortCurve, WeierstrassCurve.c₆, WeierstrassCurve.b₂, WeierstrassCurve.b₄,
       WeierstrassCurve.b₆]
 
+/-- **The 2-isogeny on the analytic parametrization.** For a period lattice `L` of `C_d`
+(`d ≠ 0`) and `L' = ((1 + i)/2) L`: `φ(weierPt C_d L z) = weierPt E'_d L' z` for every `z`. -/
+theorem weierPt_ePrime_eq {d : ℕ} (hd : d ≠ 0) {L : PeriodPair}
+    (hL : IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) (z : ℂ) :
+    isogPt hd (weierPt (shortCurve (-(d : ℚ) ^ 2)) L z) = weierPt (ePrime d) (latP L) z := by
+  have hEc := ZInQ.GZDecomp.shortCurve_cd_isElliptic hd
+  have hEe := ePrime_isElliptic hd
+  have hLI : ∀ y ∈ L.lattice, I * y ∈ L.lattice := fun y hy => ZInQ.CdOpt.I_mul_mem_of_cd hL hy
+  obtain ⟨ω, hω, hω0, hωmin⟩ :=
+    ZInQ.CdOpt.exists_min L L.lattice le_rfl L.ω₁_mem_lattice (ω₁_ne_zero L)
+  have hrep : ∀ ν ∈ L.lattice, ∃ m n : ℤ, ν = ((m : ℂ) + n * I) * ω :=
+    fun ν hν => ZInQ.CdOpt.gauss_rep hLI hω hω0 hωmin hν
+  have hL' : IsPeriodLattice (ePrime d) (latP L) := isPeriodLattice_ePrime hL
+  set h : ℂ := lam * ω with hh
+  have hsplitP := weierstrassP_split L (latP L) h (latPEquiv hLI hω hω0 hrep)
+    (latPEquiv_inl hLI hω hω0 hrep) (latPEquiv_inr hLI hω hω0 hrep)
+  have hsplitD := derivWeierstrassP_split L (latP L) h (latPEquiv hLI hω hω0 hrep)
+    (latPEquiv_inl hLI hω hω0 hrep) (latPEquiv_inr hLI hω hω0 hrep)
+  -- `℘_L(h) = 0`
+  have hIh : I * h = h - ω := by
+    rw [hh, lam]; linear_combination (ω / 2) * Complex.I_sq
+  have hPh : L.weierstrassP h = 0 := by
+    have h1 := weierstrassP_I_mul L hLI h
+    rw [hIh, show h - ω = h - ((⟨ω, hω⟩ : L.lattice) : ℂ) from rfl, L.weierstrassP_sub_coe] at h1
+    linear_combination h1 / 2
+  have hPmh : L.weierstrassP (-h) = 0 := by rw [L.weierstrassP_neg, hPh]
+  have hhL : h ∉ L.lattice := h_notMem hω0 hrep
+  have hmh : -h ∉ L.lattice := fun hm => hhL (by simpa using L.lattice.neg_mem hm)
+  obtain ⟨hns0, hW0⟩ := weierPt_short (short_cd d) hL hmh
+  have hy0 : L.derivWeierstrassP (-h) / 2 = 0 := by
+    have := (cd_equation_iff d _ _).mp hns0.1
+    rw [hPmh] at this
+    simpa using this
+  by_cases hzL : z ∈ L.lattice
+  · rw [ZInQ.GZHeegner.weierPt_eq_zero _ _ hzL,
+      ZInQ.GZHeegner.weierPt_eq_zero _ _ (le_latP hLI hzL)]
+    rfl
+  obtain ⟨hns, hW⟩ := weierPt_short (short_cd d) hL hzL
+  have hxy := (cd_equation_iff d _ _).mp hns.1
+  by_cases hx : L.weierstrassP z = 0
+  · -- `z ∈ h + L ⊆ L'`: both sides are `O`
+    have hy : L.derivWeierstrassP z / 2 = 0 := by
+      rw [hx] at hxy; simpa using hxy
+    have heq : weierPt (shortCurve (-(d : ℚ) ^ 2)) L z =
+        weierPt (shortCurve (-(d : ℚ) ^ 2)) L (-h) := by
+      rw [hW, hW0]
+      simp only [Affine.Point.some.injEq]
+      exact ⟨by rw [hx, hPmh], by rw [hy, hy0]⟩
+    have hzh : z + h ∈ L.lattice := by
+      rw [← weierPt_eq_zero_iff _ hL, weierPt_add' (short_cd d) hL, heq,
+        ← weierPt_add' (short_cd d) hL, neg_add_cancel]
+      exact ZInQ.GZHeegner.weierPt_eq_zero _ _ L.lattice.zero_mem
+    have hzP : z ∈ (latP L).lattice := by
+      have := sub_mem (le_latP hLI hzh) (h_mem_latP hω)
+      rwa [add_sub_cancel_right] at this
+    rw [hW, ZInQ.GZHeegner.weierPt_eq_zero _ _ hzP]
+    simp only [isogPt, hx, ↓reduceDIte]
+  · -- `z ∉ L'`
+    have hzP : z ∉ (latP L).lattice := by
+      intro hzP
+      rcases (mem_latP_iff hLI hω hrep).mp hzP with h1 | h1
+      · exact hzL h1
+      · apply hx
+        have e : z = h + ((⟨z - h, h1⟩ : L.lattice) : ℂ) := by simp
+        rw [e, L.weierstrassP_add_coe, hPh]
+    have hzh : z - h ∉ L.lattice := fun h1 => hzP ((mem_latP_iff hLI hω hrep).mpr (Or.inr h1))
+    obtain ⟨hns', hW'⟩ := weierPt_short (short_ePrime d) hL' hzP
+    obtain ⟨hns2, hW2⟩ := weierPt_short (short_cd d) hL hzh
+    have hadd : weierPt (shortCurve (-(d : ℚ) ^ 2)) L (z - h) =
+        weierPt (shortCurve (-(d : ℚ) ^ 2)) L z + weierPt (shortCurve (-(d : ℚ) ^ 2)) L (-h) := by
+      rw [sub_eq_add_neg, weierPt_add' (short_cd d) hL]
+    rw [hW2, hW, hW0, Affine.Point.add_some (fun hc => hx (hc.1.trans hPmh))] at hadd
+    simp only [Affine.Point.some.injEq] at hadd
+    obtain ⟨hX2, hY2⟩ := hadd
+    rw [hW, hW']
+    simp only [isogPt, hx, ↓reduceDIte, Affine.Point.some.injEq]
+    rw [hPmh, hy0, Affine.slope_of_X_ne hx] at hX2 hY2
+    simp [shortCurve, Affine.addX, Affine.addY, Affine.negAddY, Affine.negY] at hX2 hY2
+    set x := L.weierstrassP z with hxdef
+    set y := L.derivWeierstrassP z / 2 with hydef
+    constructor
+    · rw [hsplitP z, hPmh, hX2]
+      field_simp
+      linear_combination (-1 : ℂ) * hxy
+    · have e2 : (latP L).derivWeierstrassP z / 2 = y + L.derivWeierstrassP (z - h) / 2 := by
+        rw [hsplitD z, hydef]; ring
+      rw [e2, hY2]
+      field_simp
+      linear_combination y * hxy
+
 end Analytic
 
 end ZInQ.PeriodOdd
