@@ -24,3 +24,12 @@ Base: wip/height-dict 15cc5a60, merged origin/main (0caafe66, STATUS.md only) ->
   (descent from kbar to the finite residue field: Chevalley over perfect fields). Not provable here; stated as
   glue `SemiAbelianDescendsPerfect`. dict-models' step is the ascent k(p) => kbar, used for printed => kernel.
 - ZInQKernel/Contrib/OneProof/PrintedStableHeight.lean (42 KB): `lake build` OK (12770 jobs). VERIFIED.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK (13698 jobs; frozenTarget standard axioms).
+- PrintedStableHeight.lean with `chartAt_comp`, `chartAt_comp_hasStrictFDerivAt`, optional Javanpeykar/Pazuki rows:
+  build OK. VERIFIED.
+- `#discharges` (scratch/height-fix/discharges.txt): bostLowerBound, gaudronRemondThm14 (and optional
+  javanpeykarBound, pazukiCor13Upper) discharged by ZInQ.HeightFix.*_of_printed, still assuming the printed leaf,
+  UniformizationLeafAll, MumfordTorsionAlgClosed, SemiAbelianDescendsPerfect; standard axioms; no sorry. VERIFIED.
+- autofold dry run: without --allow-rise refuses (34/11 -> 34/12 on this base, where both rows are still LEAF);
+  with --allow-rise exit 0. FoldDryRun.lean (output minus line 1) compiles, sixContactMin_of_open36 standard
+  axioms. VERIFIED. Against the re-rated base (rows GLUE): 32/13 -> 34/12, i.e. -1 GLUE.

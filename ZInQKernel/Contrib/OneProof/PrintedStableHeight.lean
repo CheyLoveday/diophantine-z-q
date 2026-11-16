@@ -509,7 +509,7 @@ theorem chartAt_comp_hasStrictFDerivAt {g : ℕ} (𝒢 : GroupModel A L) {τ : L
     simpa only [sub_self] using hψ
   refine ⟨(fderiv ℂ (coordMap 𝒢 τ U s ∘ Φ) 0).comp (ContinuousLinearMap.id ℂ _), ?_, ?_⟩
   · rw [chartAt_comp 𝒢 hΦ U s z₀]
-    exact hψ'.comp z₀ hsub
+    exact HasStrictFDerivAt.comp (f := fun z : Fin g → ℂ => z - z₀) z₀ hψ' hsub
   · rw [ContinuousLinearMap.comp_id]
     exact det_fderiv_coordMap 𝒢 hΦ U hU s hm
 

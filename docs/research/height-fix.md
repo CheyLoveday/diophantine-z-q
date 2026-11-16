@@ -226,6 +226,47 @@ Proposed `docs/research/locators.md` rows (not added, since locators.md is a sha
 the same rows as `bostLowerBound` and `gaudronRemondThm14`. For the glue: SGA 7 I Exp. IX §2.1-2.2 (the `k̄`
 criterion, to read) and Conrad 2002 Thm 1.1 (Chevalley over a perfect field).
 
-## 6. Checks
+## 6. Checks (all VERIFIED)
 
-Filled in below as each check ran.
+- `lake build ZInQKernel.Contrib.OneProof.PrintedStableHeight` succeeds. The file is 47 KB, imports
+  `ZInQKernel.Contrib.OneProof.HeightDictionary` and `ZInQKernel.Contrib.OneProof.RaynaudSemistableOr`, and has no
+  code that runs at build time.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` succeeds (13698 jobs).
+- `#discharges` (`scratch/height-fix/DischargesCheck.lean`; full output in `scratch/height-fix/discharges.txt`):
+
+```
+DISCHARGES [OpenResearchLeaves26.bostLowerBound] by ZInQ.HeightFix.bostLowerBound_of_printed
+  still assumes: [ZInQ.HeightFix.BostLowerBoundPrinted,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.HeightFix.SemiAbelianDescendsPerfect]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.gaudronRemondThm14] by ZInQ.HeightFix.gaudronRemondThm14_of_printed
+  still assumes: [ZInQ.HeightFix.GaudronRemondThm14Printed,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ AvSplit.MumfordTorsionAlgClosed,
+ ZInQ.HeightFix.SemiAbelianDescendsPerfect]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves26.javanpeykarBound] by ZInQ.HeightFix.javanpeykarBound_of_printed
+DISCHARGES [OpenResearchLeaves26.pazukiCor13Upper] by ZInQ.HeightFix.pazukiCor13Upper_of_printed
+#discharges: 56 open hypotheses, 3035 theorems checked, 18 discharge one
+```
+
+  The last two (optional, §7 of the file) assume their printed leaf, the same two textbook fields and the
+  glue. The count of 18 also includes height-dict's and dict-models' theorems, which are in the build.
+- **Autofold.** The spec is `scratch/height-fix/autofold.json`. It has two discharges:
+  - `bostLowerBound` gets the new leaves `bostLowerBoundPrinted` (published, flag "locator UNVERIFIED (see the
+    source)") and `semiAbelianDescendsPerfect` (project glue);
+  - `gaudronRemondThm14` gets `gaudronRemondThm14Printed` (published, no flag, so the default "unread") and
+    reuses `{n}.semiAbelianDescendsPerfect`.
+- **Dry run on this base.** It reports `strict count: 34/11 on 45 -> 34/12 on 46; strictest 34/11 -> 34/12`
+  and refuses without `--allow-rise`, because this base's `kinds.tsv` still rates both rows LEAF.
+  - With `--allow-rise` it exits 0, and the module (`scratch/height-fix/FoldDryRun.lean`, the output without
+    its first line) compiles; `HDec.HSyn.sixContactMin_of_open36` has the standard axioms.
+  - On the re-rated base (both rows GLUE: 32/13) the same fold gives 34/12, i.e. −1 GLUE.
+
+**Fold order.** This contribution imports dict-models' `RaynaudSemistableOr.lean`, so dict-models must be folded,
+or at least its Contrib files merged, first. It replaces height-dict's spec (`scratch/height-dict/autofold.json`
+and `autofold-all4.json`). Height-dict's `HeightDict.IsPrintedStableHeight` has the soundness defect and should
+not be folded. Its lemmas (`isFaltingsMetricSq_of_metrized`, `exists_isNormalizedBy`, `TorusVolume`,
+`Conormal`) are reused here.
