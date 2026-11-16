@@ -425,4 +425,79 @@ theorem component_charpoly (hT : TateModuleFree) (Fd : IntermediateField ℚ ℂ
 
 end Main
 
+
+/-! ## 6. The leaf under the weak reading, and `r16CoreY` from it -/
+
+section Leaf
+
+open scoped MatrixGroups ModularForm
+open PkgI4 (Qbar GQ CF coeff IsNewform)
+
+/-- The conclusion of the weak-reading leaf at one abelian variety `J`: a quotient `π : J ↠ A`
+with `θ : K_f → End⁰(A)` such that, for every prime `ℓ`, `V_ℓ(A)` is free of rank 2 over
+`ℚ_ℓ ⊗ K_f`, complex conjugation has determinant `−1` over `ℚ_ℓ ⊗ K_f` (oddness), and every
+arithmetic Frobenius at `p ∤ Nℓ` **satisfies** `X² − a_p X + χ(p) p` over `ℚ_ℓ ⊗ K_f`. -/
+def AfTateWeakOddAt (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (J : AbVar ℚ) : Prop :=
+  ∃ (A : AbVar ℚ) (π : Hom J A) (θ : coeffField f →+* A.End0),
+    AlgebraicGeometry.Surjective π.hom.left ∧
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime],
+      ∃ b : (letI := R16Used.tensorModule ℓ A θ;
+          Module.Basis (Fin 2) (ℚ_[ℓ] ⊗[ℚ] coeffField f) (A.V ℓ)),
+        (∀ c : GQ, ZInQ.Contrib.G9.PkgI4.IsComplexConj c → (R16Used.frobMat ℓ A θ b c).det = -1) ∧
+        ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : GQ, IsFrobAt σ p →
+          ∃ c : coeffField f, (c : ℂ) = χ (p : ZMod N) ∧
+            aeval (R16Used.frobMat ℓ A θ b σ)
+              (R16Used.esPoly ℓ (⟨coeff f p, coeff_mem_coeffField f p⟩ : coeffField f)
+                (c * (p : coeffField f))) = 0
+
+/-- **The weak-reading leaf over every Jacobian of `X₁(N)`** (`IsJ1`). -/
+def AfTateWeakOdd : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (J : AbVar ℚ),
+    0 < N → IsNewform f χ → IsJ1 N J → AfTateWeakOddAt N χ f J
+
+/-- **R16 from the weak-reading leaf (glue, proved).** -/
+theorem r16_of_weakOdd (h : AfTateWeakOdd) (hT : PkgI3.TateModuleFree) :
+    LeafModCurves.R16_EichlerShimuraJ1' := by
+  intro N χ f J hN hf hJ
+  obtain ⟨A, π, θ, hπ, hb⟩ := h N χ f J hN hf hJ
+  have hfin : FiniteDimensional ℚ (coeffField f) := by
+    obtain ⟨b, -⟩ := hb 2
+    obtain ⟨hfree, hfinT, -⟩ := hT ℚ A 2 (by norm_num)
+    have := hfree; have := hfinT
+    exact R16Used.finiteDimensional_of_basis (R16Split.rhoV 2 A θ) b
+  have key : ∀ (ℓ : ℕ) [Fact ℓ.Prime] (emb : coeffField f →+* PadicAlgCl ℓ),
+      Module.finrank (PadicAlgCl ℓ) (eigenFun ℓ A θ emb) = 2 ∧
+        ∀ (p : ℕ), p.Prime → ¬ p ∣ N * ℓ → ∀ σ : PkgI4.GQ, IsFrobAt σ p →
+          (∀ a : coeffField f, (a : ℂ) = PkgI4.coeff f p →
+              LinearMap.trace (PadicAlgCl ℓ) _ (frobOn ℓ A θ emb σ) = emb a) ∧
+          (∀ c : coeffField f, (c : ℂ) = χ (p : ZMod N) →
+              LinearMap.det (frobOn ℓ A θ emb σ) = emb c * p) := by
+    intro ℓ _ emb
+    obtain ⟨b, hodd, hweak⟩ := hb ℓ
+    obtain ⟨h2, -⟩ := R16Used.iota_component ℓ A θ b emb
+    refine ⟨h2, fun p hp hpN σ hσ => ?_⟩
+    obtain ⟨c, hc, -⟩ := hweak p hp hpN σ hσ
+    have hcp := component_charpoly ℓ A hT (coeffField f) θ b emb N hN χ
+      (fun p => ⟨PkgI4.coeff f p, coeff_mem_coeffField f p⟩) hodd hweak p hp hpN σ hσ c hc
+    obtain ⟨htr, hdet⟩ := R16Used.trace_det_of_charpoly _ _ _ hcp
+    obtain ⟨htr', hdet'⟩ := trace_det_frobOn ℓ A θ b emb σ
+    refine ⟨fun a ha => ?_, fun c' hc' => ?_⟩
+    · have : a = ⟨PkgI4.coeff f p, coeff_mem_coeffField f p⟩ := Subtype.ext ha
+      rw [htr', htr, this]
+    · have : c' = c := Subtype.ext (hc'.trans hc.symm)
+      rw [hdet', hdet, this, map_mul, map_natCast]
+  refine ⟨hfin, A, π, θ, hπ, ?_, key⟩
+  exact R16Split.dim_eq_of_rank_two hT A θ (fun emb => (key 2 emb).1)
+
+/-- **The field `r16CoreY` from the weak-reading leaf and the bundle's
+`mumfordTorsionAlgClosed`.** -/
+theorem r16CoreY_of_weakOdd (h : AfTateWeakOdd) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    R16Split.R16CoreY :=
+  R16Split.coreY_of_r16 (r16_of_weakOdd h
+    (T5Torsion.TateFree.tateModuleFree_of_torsionStructure (AvSplit.torsionStructure_of_mumford hM)))
+
+end Leaf
+
 end ISJ1Weak
+
+#print axioms ISJ1Weak.r16CoreY_of_weakOdd
