@@ -269,6 +269,46 @@ theorem finrank_adjoin_eq (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L]
     | add x y hx hy => rw [map_add]; exact add_mem hx hy
   rw [Module.finrank_eq_card_basis (Module.Basis.mk hli hsp), Fintype.card_fin]
 
+theorem transcendental_ι (ι : F →ₐ[K] FL) [Algebra.IsAlgebraic K L] (t : F)
+    (ht : Transcendental K t) : Transcendental L (ι t) :=
+  Transcendental.extendScalars L (fun h => ht ((isAlgebraic_algHom_iff ι ι.injective).mp h))
+
 end Degree
+
+/-- **Leaf: a constant field extension of an algebraic function field is unramified** (H. Stichtenoth,
+*Algebraic Function Fields and Codes*, 2nd ed., GTM 254 (2009), Thm 3.6.3(a); number UNVERIFIED, not
+read). Printed: for an algebraic function field `F/K` (`K` perfect) and an algebraic constant field
+extension `F' = FK'`, `F'/F` is unramified: `e(P'|P) = 1` for every place `P'` of `F'` over a place `P`
+of `F`. Stated with `F' = FL ≅ F ⊗_K L` (`ι`, `L/K` algebraic; `F/K` of transcendence degree `1` and
+finitely generated: `F/K(t)` finite for a transcendental `t`), places as valuation subrings, and
+`e = 1` in the form: a generator `π` of the maximal ideal at `P = P' ∩ F` generates the maximal ideal at
+`P'` (`v_{P'}(π) = e · v_P(π) = 1`). For the trivial valuation ring both sides say `0 = 0`. -/
+def ConstantFieldExtensionUnramified : Prop :=
+  ∀ (K F L FL : Type) [Field K] [Field F] [Field L] [Field FL] [Algebra K F] [Algebra K L]
+    [Algebra L FL] [Algebra K FL] [IsScalarTower K L FL] [CharZero K] [Algebra.IsAlgebraic K L]
+    (ι : F →ₐ[K] FL),
+    (∃ t : F, Transcendental K t ∧ FiniteDimensional (IntermediateField.adjoin K {t}) F) →
+    Function.Bijective (Algebra.TensorProduct.productMap ι (IsScalarTower.toAlgHom K L FL)) →
+    ∀ w : ValuationSubring FL, (∀ c : L, algebraMap L FL c ∈ w) → ∀ π : F,
+      π ∈ (w.comap (ι : F →+* FL)).nonunits →
+      (∀ x ∈ (w.comap (ι : F →+* FL)).nonunits, ∃ y ∈ w.comap (ι : F →+* FL), x = π * y) →
+      ∀ x ∈ w.nonunits, ∃ y ∈ w, x = ι π * y
+
+/-- **A Belyi function stays a Belyi function under the constant field extension (glue, proved
+from the leaf).** -/
+theorem isBelyiFunction_baseChange (hS : ConstantFieldExtensionUnramified)
+    {K F L FL : Type} [Field K] [Field F] [Field L] [Field FL] [Algebra K F] [Algebra K L]
+    [Algebra L FL] [Algebra K FL] [IsScalarTower K L FL] [CharZero K] [IsAlgClosed L]
+    [Algebra.IsAlgebraic K L] (ι : F →ₐ[K] FL)
+    (hbij : Function.Bijective (Algebra.TensorProduct.productMap ι (IsScalarTower.toAlgHom K L FL)))
+    (t : F) (hB : LeafModCurves.IsBelyiFunction K F t) (d : ℕ)
+    (hd : Module.finrank (IntermediateField.adjoin K {t}) F = d) (hd0 : 0 < d) :
+    LeafModCurves.IsBelyiFunction L FL (ι t) ∧
+      Module.finrank (IntermediateField.adjoin L {ι t}) FL = d := by
+  haveI : FiniteDimensional (IntermediateField.adjoin K {t}) F :=
+    Module.finite_of_finrank_pos (hd ▸ hd0)
+  refine ⟨⟨transcendental_ι ι t hB.1, belyi_unram ι t hB.2 ?_⟩, ?_⟩
+  · exact hS K F L FL ι ⟨t, hB.1, inferInstance⟩ hbij
+  · rw [finrank_adjoin_eq ι hbij t, hd]
 
 end JavanpeykarDict
