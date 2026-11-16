@@ -22,3 +22,8 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
    - `render_open.py` then `render_open.py --check`: ok, 43 open hypotheses, all classified (35 H, strictest 15/20, 8 others).
    - `frontier_crosswalk.py` regenerated (H-72 poincareComplement unmatched now), `--check` ok.
    - `scratch/contrib-kit/DischargesTest.lean` rerun after the fold (output saved).
+4. Branch: pushed as wip/leaf-fold33b, because wip/leaf-fold33 already existed on the fork (a parallel, unfinished
+   fold made before this one: the same two discharges plus pic-smooth's picZeroAbVar, autofold count
+   16/21 on 37 -> 18/20 on 38, with no regeneration of the docs). pic-smooth's part is left out here: it replaces the
+   GLUE field picZeroAbVar by four leaves, one of them pending reading (picZeroSmoothPosChar, GLUE), so it neither
+   removes a field nor lowers the strict GLUE count (this fold: 15/20 on 35; with pic-smooth: 18/20 on 38).
