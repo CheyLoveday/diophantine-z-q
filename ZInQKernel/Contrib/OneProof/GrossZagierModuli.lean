@@ -515,4 +515,114 @@ theorem normalize_pair {N : ℕ} (hN0 : 0 < N) {Λ₁ Λ₂ : Submodule ℤ ℂ}
         exact Submodule.mem_sup_left (mem_span_pair_of (-y) x (by
           push_cast; linear_combination hudef))
 
+/-- **A normalized Heegner pair `(⟨1, τ⟩, ⟨1/N, τ⟩)` comes from a Heegner form of residue `β`**:
+from `α₀ = (D + √D)/2 ∈ End⟨1, τ⟩` (`α₀ = m + nτ`, `α₀τ = p + qτ`), `τ` is a root of
+`[n, 2m − D, −p]` of discriminant `D`; `α₀ ∈ End⟨1/N, τ⟩` gives `N ∣ n`, and
+`(−β + √D)/2 · (1/N) ∈ ⟨1, τ⟩` gives `2m − D ≡ β (mod 2N)`. -/
+theorem form_of_normalized {N : ℕ} (hN : (N : ℂ) ≠ 0) {D β : ℤ} (hD : D < 0) (hsq : Squarefree D)
+    (τ : ℍ) (h1 : ((D : ℂ) + sD D) / 2 ∈ latEnd (pairOf N τ).1)
+    (h2 : ((D : ℂ) + sD D) / 2 ∈ latEnd (pairOf N τ).2)
+    (h3 : ∀ z ∈ (pairOf N τ).2, (-(β : ℂ) + sD D) / 2 * z ∈ (pairOf N τ).1) :
+    ∃ Q : HeegnerForm N D, HasResidue β Q ∧ Q.tauH = τ := by
+  have hs2 := sD_sq hD
+  have hτ := τ.im_pos
+  obtain ⟨m, n, hmn⟩ := exists_coords (h1 1 (Submodule.subset_span (by simp)))
+  obtain ⟨p, q, hpq⟩ := exists_coords (h1 τ (Submodule.subset_span (by simp)))
+  have hαim : 0 < (((D : ℂ) + sD D) / 2).im := by
+    have := sD_im hD
+    simp only [Complex.div_ofNat_im, Complex.add_im, Complex.intCast_im, zero_add]
+    linarith
+  have e : ((-D ^ 2 + D - 4 * n * p + 4 * q * m : ℤ) : ℂ) +
+      ((4 * (D - m - q) : ℤ) : ℂ) * (((D : ℂ) + sD D) / 2) = 0 := by
+    push_cast
+    linear_combination (4 * (n : ℂ)) * hpq + (4 * (((D : ℂ) + sD D) / 2) - 4 * q) * hmn - hs2
+  obtain ⟨i1, i2⟩ := int_indep hαim e
+  -- `n > 0`
+  have hnpos : 0 < n := by
+    have him := congrArg Complex.im hmn
+    simp only [mul_one, Complex.add_im, Complex.intCast_im, Complex.mul_im, Complex.intCast_re,
+      zero_mul, zero_add] at him
+    have h0 : (0 : ℝ) < (n : ℝ) * (τ : ℂ).im := by
+      rw [him, add_zero] at hαim
+      exact hαim
+    by_contra hn
+    push Not at hn
+    have : (n : ℝ) * (τ : ℂ).im ≤ 0 :=
+      mul_nonpos_of_nonpos_of_nonneg (by exact_mod_cast hn) (le_of_lt hτ)
+    linarith
+  -- `N ∣ n`
+  obtain ⟨x, y, hxy⟩ := exists_coords (h2 (1 / (N : ℂ)) (Submodule.subset_span (by simp)))
+  have hxy' : ((D : ℂ) + sD D) / 2 = x + N * y * τ := by
+    have h := congrArg (fun z => (N : ℂ) * z) hxy
+    simp only [mul_add] at h
+    have e1 : (N : ℂ) * (((D : ℂ) + sD D) / 2 * (1 / N)) = ((D : ℂ) + sD D) / 2 := by field_simp
+    have e2 : (N : ℂ) * (x * (1 / N)) = x := by field_simp
+    rw [e1, e2] at h
+    linear_combination h
+  have e2 : ((m - x : ℤ) : ℂ) + ((n - N * y : ℤ) : ℂ) * (τ : ℂ) = 0 := by
+    push_cast; linear_combination hxy' - hmn
+  obtain ⟨-, i4⟩ := int_indep hτ e2
+  -- the residue
+  obtain ⟨x', y', hxy2⟩ := exists_coords (h3 (1 / (N : ℂ)) (Submodule.subset_span (by simp)))
+  have hxy2' : (-(β : ℂ) + sD D) / 2 = N * x' + N * y' * τ := by
+    have h := congrArg (fun z => (N : ℂ) * z) hxy2
+    simp only [mul_add, mul_one] at h
+    have e1 : (N : ℂ) * ((-(β : ℂ) + sD D) / 2 * (1 / N)) = (-(β : ℂ) + sD D) / 2 := by field_simp
+    rw [e1] at h
+    linear_combination h
+  have e3 : ((2 * m - D - β - 2 * N * x' : ℤ) : ℂ) + ((2 * n - 2 * N * y' : ℤ) : ℂ) * (τ : ℂ) = 0 := by
+    push_cast; linear_combination 2 * hxy2' - 2 * hmn
+  obtain ⟨i5, -⟩ := int_indep hτ e3
+  have hdisc : (2 * m - D) ^ 2 - 4 * n * (-p) = D := by linear_combination (-1 : ℤ) * i1 - m * i2
+  refine ⟨⟨n, 2 * m - D, -p, hnpos, ⟨y, by linarith⟩, hdisc, hD,
+    gcd_eq_one_of_squarefree hsq hdisc⟩, ⟨x', by simp only; linarith⟩, ?_⟩
+  apply UpperHalfPlane.ext
+  show ZInQ.Contrib.TYZGenus.CM.cmPoint n (2 * m - D) D = (τ : ℂ)
+  rw [ZInQ.Contrib.TYZGenus.CM.cmPoint, sD_def, div_eq_iff (by
+    have : (n : ℂ) ≠ 0 := by exact_mod_cast hnpos.ne'
+    exact mul_ne_zero two_ne_zero this)]
+  push_cast
+  linear_combination 2 * hmn
+
+/-- **Completeness**: every Heegner point is homothetic to the lattice pair of a form in `S`. -/
+theorem exists_rep {N : ℕ} [NeZero N] {D β : ℤ} (hD : IsOddImagFundDisc D)
+    {S : Finset (HeegnerForm N D)} (hS : IsHeegnerReps N D β S) {Λ₁ Λ₂ : Submodule ℤ ℂ}
+    (h : IsHeegnerPair N D β Λ₁ Λ₂) : ∃ Q : S, Homothetic (pairOf N Q.1.tauH) (Λ₁, Λ₂) := by
+  have hN0 : 0 < N := Nat.pos_of_ne_zero (NeZero.ne N)
+  have hNc : (N : ℂ) ≠ 0 := by exact_mod_cast hN0.ne'
+  obtain ⟨τ, μ, hμ, e1, e2⟩ := normalize_pair hN0 h.lattice h.cyclic
+  simp only at e1 e2
+  have hα : ((D : ℂ) + sD D) / 2 ∈ cmOrder D := ⟨0, 1, by simp [sD_def]⟩
+  have h1 : ((D : ℂ) + sD D) / 2 ∈ latEnd (pairOf N τ).1 := by
+    rw [← latEnd_map hμ, ← e1, h.end₁]; exact hα
+  have h2 : ((D : ℂ) + sD D) / 2 ∈ latEnd (pairOf N τ).2 := by
+    rw [← latEnd_map hμ, ← e2, h.end₂]; exact hα
+  have h3 : ∀ z ∈ (pairOf N τ).2, (-(β : ℂ) + sD D) / 2 * z ∈ (pairOf N τ).1 := by
+    rw [← rel_map_iff hμ, ← e1, ← e2]
+    simpa only [sD_def] using h.orient
+  obtain ⟨Q₀, hres, hQτ⟩ := form_of_normalized hNc hD.1 hD.2.2 τ h1 h2 h3
+  subst hQτ
+  obtain ⟨Q', ⟨hQ'S, hequiv⟩, -⟩ := hS.2 Q₀ hres
+  obtain ⟨j, hj, hp1, hp2⟩ := ZInQ.GZHeegner.pairHom_of_equiv hequiv
+  refine ⟨⟨Q', hQ'S⟩, μ * j, mul_ne_zero hμ hj, ?_, ?_⟩
+  · show Λ₁ = Q'.lat.map (LinearMap.mulLeft ℤ (μ * j))
+    rw [e1, ← map_mulLeft_map, ← hp1]; rfl
+  · show Λ₂ = Q'.latN.map (LinearMap.mulLeft ℤ (μ * j))
+    rw [e2, ← map_mulLeft_map, ← hp2]; rfl
+
+/-- **The lattice pairs of a complete set of Heegner forms of residue `β` are a complete set of
+Heegner points of residue `β`.** -/
+theorem isHeegnerPointReps_of {N : ℕ} [NeZero N] {D β : ℤ} (hD : IsOddImagFundDisc D)
+    {S : Finset (HeegnerForm N D)} (hS : IsHeegnerReps N D β S) :
+    IsHeegnerPointReps N D β (fun Q : S => Q.1.tauH) := by
+  refine ⟨fun Q => isHeegnerPair_of_form hD.2.2 Q.1 (hS.1 Q.1 Q.2), fun Q Q' h => ?_,
+    fun Λ₁ Λ₂ h => exists_rep hD hS h⟩
+  obtain ⟨μ, -, h1, h2⟩ := h
+  have hpair : ZInQ.GZHeegner.PairHom Q'.1 Q.1 μ := ⟨h1, h2⟩
+  have heq := ZInQ.GZHeegner.equiv_of_pairHom hpair
+  obtain ⟨R, -, huniq⟩ := hS.2 Q'.1 (hS.1 Q'.1 Q'.2)
+  have a := huniq Q'.1 ⟨Q'.2, ZInQ.GZHL3.Reps.equiv_refl _⟩
+  have b := huniq Q.1 ⟨Q.2, heq⟩
+  exact Subtype.ext (b.trans a.symm)
+
 end ZInQ.GZModuli
