@@ -17,3 +17,10 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
 - F3: so the target (-1, no new leaf) is not reachable; plan: prove the algebra of Mumford's argument in Lean and isolate the
   two inputs: (P1) deg homogeneous polynomial function (LEAF), (L) |deg psi|_l = |det V_l psi|_l for isogenies (GLUE,
   = separable-degree/kernel count P3 + l-adic elementary divisors P4).
+
+## Lean (scratch/deg-det/Algebra.lean, Mathlib only)
+
+- 13:20 VERIFIED compiled: `DegDet.eq_Rs_of_mul` (multiplicative φ with φ(c)=c^n, φ(X-r)=(-1)^n P(r) is F ↦ ∏_{P(a)=0} F(a)),
+  `DegDet.det_aeval_eq_Rs` (det F(M) = ∏_{χ_M(a)=0} F(a)), `DegDet.mult_eq_of_norm_Rs` and
+  `DegDet.eq_of_norm_RsZ` (comparison lemma: monic P, Q over ℚ_ℓ with |∏_{P(a)=0}F(a)| = |∏_{Q(b)=0}F(b)| in
+  PadicAlgCl ℓ for every F ∈ ℤ[X] with nonzero left side are equal).
