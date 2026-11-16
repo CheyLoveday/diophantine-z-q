@@ -1,0 +1,9 @@
+# theta-fold2 results log
+
+- 11-16 01:46 start. Base 47aaf586 (wip/leaf-fold31). Merged origin/wip/theta-direct (584bbb24, includes 311bd23a).
+  Tools (DumpCompact, PruneScan, DeadCascade, cmp_hashes, prune_lib, kinds_counts) copied from scratch/pi0-fold, paths changed.
+  lean/.lake/build copied from ~/dzq-wt/pi0-fold (lean/ZInQ identical).
+- Plan: ThetaDirect's import closure reaches TailZ24 (via ThetaModularityM46, GammaStarArea; TailK not importable from it),
+  so TailK cannot import the proof. But TailZ25 (sixContactMin_of_open19) is outside the closure: thread hθ only through
+  gluePieces_of_open4 and sixContactMin_of_open4..open18, and supply the proof in TailZ25. open19..open35, Main and
+  Contrib callers (X0ModuliUsed calls open29) keep their signatures. No Contrib file calls open4..open18 (grep).
