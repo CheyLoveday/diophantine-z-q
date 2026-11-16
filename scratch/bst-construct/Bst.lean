@@ -1074,11 +1074,11 @@ theorem isField_fixedSub (H : Subgroup (GQp p)) (hfin : 0 < finrank ℚ_[p] (fix
   exact isField_of_isIntegral_of_isField' (R := ℚ_[p]) (S := fixedSub p (Bst p) H)
     (Field.toIsField ℚ_[p])
 
+omit [FiniteDimensional ℚ_[p] E] in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **The admissibility definition in `ℚ_p`-dimensions.** If `B_st^{G_K}` is finite-dimensional
 over `ℚ_p` and nonzero-dimensional, semistability over `K` (`dim_{B_st^{G_K}} D_st,K(V) = dim V`)
 is `dim_{ℚ_p} D_st,K(V) = dim_{ℚ_p} B_st^{G_K} · dim_{ℚ_p} V`. -/
-omit [FiniteDimensional ℚ_[p] E] in
 theorem isSemistableB_iff_finrank (K : IntermediateField ℚ_[p] (PadicAlgCl p))
     (ρ : GQp p →* GL (Fin n) E)
     (hfin : 0 < finrank ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup)) :
@@ -1105,6 +1105,7 @@ theorem isSemistableB_iff_finrank (K : IntermediateField ℚ_[p] (PadicAlgCl p))
     (fixedSub p (Bst p) K.fixingSubgroup) (dB p (Bst p) K.fixingSubgroup ρ)]
   exact ⟨fun h => by rw [h], fun h => Nat.eq_of_mul_eq_mul_left hfin h⟩
 
+omit [FiniteDimensional ℚ_[p] E] in
 /-- **Given Fontaine's `B_st^{G_K} = K_0`, semistability by admissibility is pb-fix2's
 normalization** `dim_{ℚ_p} D_st,K(V) = [K_0 : ℚ_p] · dim_{ℚ_p} V` (now over Berger's `B_st`). -/
 theorem isSemistableB_iff_K0 (hF : FontaineBstInvariants) (K : IntermediateField ℚ_[p] (PadicAlgCl p))
@@ -1116,6 +1117,64 @@ theorem isSemistableB_iff_K0 (hF : FontaineBstInvariants) (K : IntermediateField
   rw [isSemistableB_iff_finrank p K ρ (by rw [h]; exact PanBergerSplit.finrank_K0W_pos p K), h]
 
 end Normalization
+
+/-! ## §12. `A_max` does not depend on the generator `ω` of `ker θ` -/
+
+section Generator
+
+variable (p : ℕ) [Fact p.Prime]
+
+open PanBergerSplit (Ainf AinfP)
+
+theorem alg_mem_of_theta {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) :
+    algebraMap (Ainf p) (AinfP p) w * qpToLoc p ((p : ℚ_[p])⁻¹) ∈ Ith p := by
+  have hk : w ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) := hw
+  rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp, Ideal.mem_span_singleton'] at hk
+  obtain ⟨c, rfl⟩ := hk
+  rw [map_mul, mul_comm (algebraMap _ _ c), mul_assoc]
+  exact Ideal.mul_mem_right _ _ (xi'_mem p)
+
+/-- `A_max` built with an arbitrary `ω ∈ ker θ`: `{Σ a_n (ω/p)^n : a_n ∈ A_inf, a_n → 0}`. -/
+def AmaxOf (w : Ainf p) (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) :
+    Subring (BDeRhamPlus 𝓞_ℂ_[p] p) :=
+  (restricted p).map ((evalB p (alg_mem_of_theta p hw)).comp
+    (PowerSeries.map (algebraMap (Ainf p) (AinfP p))))
+
+theorem amaxOf_le {w w' : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0)
+    (hw' : WittVector.fontaineTheta 𝓞_ℂ_[p] p w' = 0) (c : Ainf p) (hc : w' = w * c) :
+    AmaxOf p w' hw' ≤ AmaxOf p w hw := by
+  rintro _ ⟨f, hf, rfl⟩
+  refine ⟨PowerSeries.rescale c f, restricted_rescale p c hf, ?_⟩
+  simp only [RingHom.comp_apply]
+  apply psEval_eq_of_terms
+  intro k
+  rw [PowerSeries.coeff_map, PowerSeries.coeff_rescale, PowerSeries.coeff_map, hc, map_mul, map_mul,
+    map_pow]
+  ring
+
+/-- **`A_max` is the same for every generator `ω` of `ker(θ : A_inf → 𝓞_ℂ_p)`** (e.g. Fontaine's
+`[p̃] − p` or `ξ = p − [p̃]`). -/
+theorem amaxOf_eq_amax {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0)
+    (hgen : RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) = Ideal.span {w}) :
+    AmaxOf p w hw = Amax p := by
+  have hxi : WittVector.fontaineTheta 𝓞_ℂ_[p] p (ZInQ.Contrib.G9.BdrKer.Cp.xi p) = 0 := by
+    have : ZInQ.Contrib.G9.BdrKer.Cp.xi p ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) := by
+      rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]
+      exact Ideal.mem_span_singleton_self _
+    exact this
+  have hA : Amax p = AmaxOf p _ hxi := rfl
+  rw [hA]
+  apply le_antisymm
+  · have : w ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) := hw
+    rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp, Ideal.mem_span_singleton'] at this
+    obtain ⟨c, hc⟩ := this
+    exact amaxOf_le p hxi hw c (by rw [← hc, mul_comm])
+  · have : ZInQ.Contrib.G9.BdrKer.Cp.xi p ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) := hxi
+    rw [hgen, Ideal.mem_span_singleton'] at this
+    obtain ⟨c, hc⟩ := this
+    exact amaxOf_le p hw hxi c (by rw [← hc, mul_comm])
+
+end Generator
 
 end BergerBst
 end PkgI4
