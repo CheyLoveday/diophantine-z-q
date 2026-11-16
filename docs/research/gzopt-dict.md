@@ -212,4 +212,36 @@ UNVERIFIED:
 
 ## 5. Checks
 
-See the table in §5 of the log (`scratch/gzopt-dict/log.md`); filled in below after the runs.
+| File | Content | Check |
+| --- | --- | --- |
+| `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic.lean` | §1 objects and leaves, §2 algebra, §3 analysis, §4 bridge, §5 sanity (`hasQExp_j`, `hasQExp_jN`) | `lake build` with no errors and no warnings in the file (VERIFIED) |
+| `scratch/gzopt-dict/AxMain.lean`, `MainEdit.lean` → `out_axioms.txt` | `#print axioms` for the bridge theorems and for `frozenTarget_gzoptdict` | `[propext, Classical.choice, Quot.sound]` for all (VERIFIED) |
+| `scratch/gzopt-dict/Discharges.lean` → `discharges-output.txt` | `#discharges` | below |
+| `scratch/gzopt-dict/autofold.json`, `autofold-formula.json` | fold specs | dry run: below |
+
+**Build.** The command was `lake build ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic ZInQKernel.OneProof.Main
+ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd ZInQKernel.Contrib.OneProof.GrossConjugationCd`.
+It completed: 13752 jobs in 25 min 47 s, on a build tree copied from `~/dzq-wt/period-odd`. The new file builds in
+about 11 s.
+
+**`#discharges`** (VERIFIED): `56 open hypotheses, 3984 theorems checked, 10 discharge one`. None of the 10 is by a
+`GZAlg` theorem, as for period-odd and cd-optimal. `hL3` is still a `frozenTarget` argument stated for every `E`.
+The fields `grossZagierFormulaCd` and `grossZagierModuliOptCd` appear only once the `C_d` split of `hL3`
+(heegner-32 + gz-conj + period-odd) is folded. `MainEdit.lean` shows the composite.
+
+**autofold dry run** (VERIFIED): `autofold.json` stops with `not a field of the current bundles:
+['grossZagierModuliOptCd']`, and `autofold-formula.json` stops the same way with `['grossZagierFormulaCd']`. This is
+expected until the `C_d` split is folded.
+
+## 6. Remaining
+
+* **Folding.** The `C_d` split of `hL3` and period-odd's spec have to land first. Then `autofold.json` applies, or
+  `autofold-formula.json` if the split lands without period-odd's spec.
+* **`X0Field N ≅ Frac(ℚ[X, Y]/(Φ_N))` in Lean.** The FLT tree has all three ingredients (§1), but the iso is not
+  written out. The leaf does not need it: `X0Field N` is by definition `ℚ(j, j_N)` read through `q`-expansions, and
+  §5 checks its generators.
+* **Optimality is still analytic** (`IsOptimalParam`, gz-optimal's form; §2.1). An algebraic form would need
+  `J₀(N)` and its optimal quotients, which Mathlib does not have.
+* **`Gamma0QExpansion` is a leaf.** A Lean proof would need the function field of a compact Riemann surface and
+  degree theory (not in Mathlib), or a Hecke/trace argument from the vendored level-1 statement
+  `mem_adjoin_jq_of_hasSum_of_slash_invariant` extended to meromorphic functions. Neither was attempted.
