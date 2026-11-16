@@ -297,4 +297,102 @@ theorem exists_descent_local {p : ℕ} [Fact p.Prime] {z : ℍ[ℚ_[p]]} (hz : I
     rw [this]
     exact (isHur_qp_hurZ' hγβ).add ((isHur_qp_hurZ' hγp).mul hz')
 
+theorem qιU_one : qιU 1 one_ne_zero = 1 := Units.ext (map_one qι)
+
+theorem qιU_mul (γ γ' : ℍ[ℚ]) (h : γ ≠ 0) (h' : γ' ≠ 0) :
+    qιU (γ * γ') (mul_ne_zero h h') = qιU γ h * qιU γ' h' := Units.ext (map_mul qι γ γ')
+
+theorem LH_inv_of_norm_one {y : ℍ[AQ]ˣ} (hy : LH y)
+    (hn : ∀ w, ‖Quaternion.normSq (piQ w (y : ℍ[AQ]))‖ = 1) : LH ((y⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) :=
+  fun w => by rw [piQ_unit_inv]; exact isHur_inv_star (hy w) (hn w)
+
+/-- **The induction on `m`.** -/
+theorem exists_global_aux : ∀ m : ℕ, 0 < m → ∀ y : ℍ[AQ]ˣ, LH y → Cond m y →
+    ∃ γ : ℍ[ℚ], ∃ hγ : γ ≠ 0, LH (((qιU γ hγ)⁻¹ * y : ℍ[AQ]ˣ) : ℍ[AQ]) ∧
+      LH ((((qιU γ hγ)⁻¹ * y)⁻¹ : ℍ[AQ]ˣ) : ℍ[AQ]) := by
+  intro m
+  induction m using Nat.strong_induction_on with
+  | _ m ih =>
+  intro hm0 y hy hc
+  by_cases hall : ∀ w, ‖Quaternion.normSq (piQ w (y : ℍ[AQ]))‖ = 1
+  · refine ⟨1, one_ne_zero, ?_, ?_⟩ <;> rw [qιU_one, inv_one, one_mul]
+    · exact hy
+    · exact LH_inv_of_norm_one hy hall
+  · push_neg at hall
+    obtain ⟨w₀, hw₀⟩ := hall
+    have hlt : ‖Quaternion.normSq (piQ w₀ (y : ℍ[AQ]))‖ < 1 :=
+      lt_of_le_of_ne (hy w₀).normSq_mem hw₀
+    obtain ⟨γ, hγ0, hγZ, e, he1, hγn, hloc, hdvd⟩ := exists_descent_local (hy w₀) hlt (hc w₀)
+    obtain ⟨hLH', hC'⟩ := descent_step hy hc hγ0 hγZ hγn hloc hdvd
+    have hp2 : 2 ≤ (Pw w₀ : ℕ) := (Pw w₀).2.two_le
+    have hpe : 2 ≤ (Pw w₀ : ℕ) ^ e :=
+      le_trans hp2 (by simpa using Nat.pow_le_pow_right (by omega : 0 < (Pw w₀ : ℕ)) he1)
+    obtain ⟨k, hk⟩ := hdvd
+    have hdiv : m / (Pw w₀ : ℕ) ^ e = k := by
+      rw [hk]; exact Nat.mul_div_cancel_left _ (by omega)
+    have hk0 : 0 < k := by
+      rcases Nat.eq_zero_or_pos k with h | h
+      · rw [h, mul_zero] at hk; omega
+      · exact h
+    have hklt : k < m := by rw [hk]; nlinarith
+    rw [hdiv] at hC'
+    obtain ⟨γ', hγ', h1, h2⟩ := ih k hklt hk0 _ hLH' hC'
+    have e : (qιU γ hγ0 * qιU γ' hγ')⁻¹ * y = (qιU γ' hγ')⁻¹ * ((qιU γ hγ0)⁻¹ * y) := by group
+    refine ⟨γ * γ', mul_ne_zero hγ0 hγ', ?_, ?_⟩
+    · rw [qιU_mul _ _ hγ0 hγ', e]; exact h1
+    · rw [qιU_mul _ _ hγ0 hγ', e]; exact h2
+
+/-! ## Denominators -/
+
+theorem ev_algebraMap_O (w : HeightOneSpectrum (𝓞 ℚ)) (b : 𝓞 ℚ) :
+    ev w (algebraMap (𝓞 ℚ) AQ b) = (((Rat.ringOfIntegersEquiv b : ℤ) : ℚ) : ℚ_[Pw w]) := by
+  rw [IsScalarTower.algebraMap_apply (𝓞 ℚ) ℚ AQ b, ev_algebraMap, Rat.ringOfIntegersEquiv_apply_coe]
+
+/-- **A common denominator**: `N y ∈ Ô_B` for some positive integer `N`. -/
+theorem exists_nat_LH (y : ℍ[AQ]) : ∃ N : ℕ, 0 < N ∧ LH (qι (N : ℍ[ℚ]) * y) := by
+  obtain ⟨b0, hb0, h0⟩ := FiniteAdeleRing.mul_nonZeroDivisor_mem_integralAdeles y.re
+  obtain ⟨b1, hb1, h1⟩ := FiniteAdeleRing.mul_nonZeroDivisor_mem_integralAdeles y.imI
+  obtain ⟨b2, hb2, h2⟩ := FiniteAdeleRing.mul_nonZeroDivisor_mem_integralAdeles y.imJ
+  obtain ⟨b3, hb3, h3⟩ := FiniteAdeleRing.mul_nonZeroDivisor_mem_integralAdeles y.imK
+  set b := b0 * b1 * b2 * b3 with hbdef
+  have hb : b ≠ 0 := by
+    have := mul_mem (mul_mem (mul_mem hb0 hb1) hb2) hb3
+    exact nonZeroDivisors.ne_zero this
+  set z : ℤ := Rat.ringOfIntegersEquiv b
+  have hz : z ≠ 0 := by
+    intro h; apply hb; apply Rat.ringOfIntegersEquiv.injective; rw [map_zero]; exact h
+  have hint : ∀ (a : AQ) (c : 𝓞 ℚ), a * algebraMap (𝓞 ℚ) AQ c ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ →
+      ∀ d : 𝓞 ℚ, a * algebraMap (𝓞 ℚ) AQ (c * d) ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ := by
+    intro a c hc d
+    rw [map_mul, ← mul_assoc]
+    exact Subalgebra.mul_mem _ hc (Subalgebra.algebraMap_mem _ d)
+  have i0 : y.re * algebraMap (𝓞 ℚ) AQ b ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ := by
+    rw [hbdef, mul_assoc, mul_assoc]; exact hint _ _ h0 _
+  have i1 : y.imI * algebraMap (𝓞 ℚ) AQ b ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ := by
+    rw [hbdef, mul_comm b0 b1, mul_assoc, mul_assoc]; exact hint _ _ h1 _
+  have i2 : y.imJ * algebraMap (𝓞 ℚ) AQ b ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ := by
+    rw [hbdef, show b0 * b1 * b2 * b3 = b2 * (b0 * b1 * b3) by ring]; exact hint _ _ h2 _
+  have i3 : y.imK * algebraMap (𝓞 ℚ) AQ b ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ := by
+    rw [hbdef, show b0 * b1 * b2 * b3 = b3 * (b0 * b1 * b2) by ring]; exact hint _ _ h3 _
+  refine ⟨z.natAbs, Int.natAbs_pos.mpr hz, fun w => ?_⟩
+  have key : ∀ a : AQ, a * algebraMap (𝓞 ℚ) AQ b ∈ FiniteAdeleRing.integralAdeles (𝓞 ℚ) ℚ →
+      ‖(z.natAbs : ℚ_[Pw w]) * ev w a‖ ≤ 1 := by
+    intro a ha
+    have := ev_mem_Zp_of_integral w ha
+    rw [map_mul, ev_algebraMap_O] at this
+    rw [norm_mul, mul_comm]
+    have hn : ‖((z.natAbs : ℕ) : ℚ_[Pw w])‖ = ‖(((z : ℤ) : ℚ) : ℚ_[Pw w])‖ := by
+      rw [Rat.cast_intCast]
+      rcases Int.natAbs_eq z with h | h
+      · nth_rewrite 2 [h]; simp
+      · nth_rewrite 2 [h]; simp
+    rw [hn, ← norm_mul]; exact this
+  rw [map_mul, piQ_qι, qp_natCast, natCast_mul_eq_smul']
+  refine isHur_of_norm_coords ?_ ?_ ?_ ?_ <;> simp only [Quaternion.re_smul, Quaternion.imI_smul,
+    Quaternion.imJ_smul, Quaternion.imK_smul, smul_eq_mul, piQ, qmap_re, qmap_imI, qmap_imJ, qmap_imK]
+  · exact key _ i0
+  · exact key _ i1
+  · exact key _ i2
+  · exact key _ i3
+
 end ZInQ.Contrib.HfxProof
