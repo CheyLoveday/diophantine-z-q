@@ -647,6 +647,80 @@ theorem degree_rep (ht : letI := ZInQ.LeafPush2.ffAlgebra C; Transcendental k t)
     show IsLocalization.mk' _ (secR 0) b = 0
     rw [map_zero, IsLocalization.mk'_zero]
 
+theorem rhoEta_secR {β : C.left ⟶ P1 k} (hβ : C.left.fromSpecFunctionField ≫ β = ptT C t)
+    (r : Rk k) : ∃ o, (β.stalkMap (genericPoint C.left)).hom o = psi C t r := by
+  have hyU : β (genericPoint C.left) ∈ (chart k) ''ᵁ ⊤ := by
+    rw [beta_genericPoint C t hβ]; exact ⟨_, trivial, rfl⟩
+  refine ⟨(P1 k).presheaf.germ _ _ hyU (secR r), ?_⟩
+  have := stalkMap_secR C t hβ (genericPoint C.left) hyU r
+  rwa [TopCat.Presheaf.stalkSpecializes_refl] at this
+
+/-- **The degree of `β` is `[k(C) : k(t)]`**: the stalk map at the generic point identifies the
+function field of `ℙ¹` with `k(t) ⊆ k(C)`. -/
+theorem degree_eq (ht : letI := ZInQ.LeafPush2.ffAlgebra C; Transcendental k t)
+    {β : C.left ⟶ P1 k} (hβ : C.left.fromSpecFunctionField ≫ β = ptT C t) (d : ℕ)
+    (hd : letI := ZInQ.LeafPush2.ffAlgebra C
+      Module.finrank (IntermediateField.adjoin k {t}) C.left.functionField = d) :
+    @Module.finrank ((P1 k).presheaf.stalk (β (genericPoint C.left))) C.left.functionField _ _
+      (β.stalkMap (genericPoint C.left)).hom.toModule = d := by
+  letI := ZInQ.LeafPush2.ffAlgebra C
+  set ρ := (β.stalkMap (genericPoint C.left)).hom
+  have hinj : Function.Injective ρ := by
+    rw [injective_iff_map_eq_zero]
+    intro o ho
+    obtain ⟨r₁, r₂, h1, -, h3⟩ := degree_rep C t ht hβ o
+    apply h3
+    apply psi_injective C t ht
+    rw [map_zero, ← h1]
+    rw [show ρ o = 0 from ho, zero_mul]
+  have hmem : ∀ o, ρ o ∈ IntermediateField.adjoin k {t} := by
+    intro o
+    obtain ⟨r₁, r₂, h1, h2, -⟩ := degree_rep C t ht hβ o
+    have : ρ o = psi C t r₁ * (psi C t r₂)⁻¹ := by
+      rw [← h1, mul_assoc, mul_inv_cancel₀ h2, mul_one]
+    rw [this]
+    exact mul_mem (psi_mem_adjoin C t r₁) (inv_mem (psi_mem_adjoin C t r₂))
+  have hunit : ∀ o : (P1 k).presheaf.stalk (β (genericPoint C.left)), o ≠ 0 → IsUnit o := by
+    intro o ho
+    by_contra hnu
+    have hm : o ∈ IsLocalRing.maximalIdeal _ := (IsLocalRing.mem_maximalIdeal _).mpr hnu
+    have h1 := map_nonunit ρ o hm
+    have h0 : ρ o = 0 := by
+      by_contra hne
+      exact ((IsLocalRing.mem_maximalIdeal _).mp h1)
+        (show IsUnit (ρ o : C.left.functionField) from isUnit_iff_ne_zero.mpr hne)
+    exact ho (hinj (h0.trans (map_zero ρ).symm))
+  let S : IntermediateField k C.left.functionField :=
+    { carrier := Set.range ρ
+      mul_mem' := by rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩; exact ⟨a * b, map_mul ρ a b⟩
+      one_mem' := ⟨1, map_one ρ⟩
+      add_mem' := by rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩; exact ⟨a + b, map_add ρ a b⟩
+      zero_mem' := ⟨0, map_zero ρ⟩
+      algebraMap_mem' := fun c => by
+        obtain ⟨o, ho⟩ := rhoEta_secR C t hβ (MvPolynomial.C c)
+        exact ⟨o, ho.trans (psi_C C t c)⟩
+      inv_mem' := by
+        rintro _ ⟨a, rfl⟩
+        by_cases ha : a = 0
+        · exact ⟨0, by rw [ha, map_zero, inv_zero]⟩
+        · refine ⟨((hunit a ha).unit⁻¹ : (Units _)), ?_⟩
+          apply eq_inv_of_mul_eq_one_left
+          rw [← map_mul]
+          have : (((hunit a ha).unit⁻¹ : Units _) : (P1 k).presheaf.stalk (β (genericPoint C.left))) * a = 1 :=
+            (hunit a ha).val_inv_mul
+          rw [this, map_one] }
+  have hle : IntermediateField.adjoin k {t} ≤ S := by
+    rw [IntermediateField.adjoin_simple_le_iff]
+    obtain ⟨o, ho⟩ := rhoEta_secR C t hβ (MvPolynomial.X i0)
+    exact ⟨o, ho.trans (psi_X C t)⟩
+  let i := RingEquiv.ofBijective (ρ.codRestrict (IntermediateField.adjoin k {t}) hmem)
+    ⟨fun a b h => hinj (congrArg Subtype.val h), fun ⟨f, hf⟩ => by
+      obtain ⟨o, ho⟩ := hle hf
+      exact ⟨o, Subtype.ext ho⟩⟩
+  letI := ρ.toAlgebra
+  rw [← hd]
+  exact Algebra.finrank_eq_of_equiv_equiv i (RingEquiv.refl _) (RingHom.ext fun o => rfl)
+
 end Degree
 
 end JavanpeykarFix
