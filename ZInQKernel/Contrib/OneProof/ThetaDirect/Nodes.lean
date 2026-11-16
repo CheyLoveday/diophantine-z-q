@@ -20,32 +20,15 @@ namespace HDec.ThetaDirect
 open Complex
 open scoped Real
 
-local notation "𝔸" => algebraicClosure ℚ ℂ
-
 /-! ## Membership in the field of algebraic numbers -/
 
-theorem ofNat_mem' (n : ℕ) [n.AtLeastTwo] : (OfNat.ofNat n : ℂ) ∈ 𝔸 := by
-  have := natCast_mem 𝔸 n
+theorem ofNat_mem' (n : ℕ) [n.AtLeastTwo] : (OfNat.ofNat n : ℂ) ∈ (algebraicClosure ℚ ℂ) := by
+  have := natCast_mem (algebraicClosure ℚ ℂ) n
   simpa using this
 
-theorem ratCast_mem' (q : ℚ) : (q : ℂ) ∈ 𝔸 := SubfieldClass.ratCast_mem 𝔸 q
+theorem ratCast_mem' (q : ℚ) : (q : ℂ) ∈ (algebraicClosure ℚ ℂ) := SubfieldClass.ratCast_mem (algebraicClosure ℚ ℂ) q
 
-/-- Closure of `𝔸` under the field operations and numerals. -/
-macro "alg_mem" : tactic => `(tactic| repeat (first
-  | assumption
-  | with_reducible exact one_mem _
-  | with_reducible exact zero_mem _
-  | with_reducible exact ofNat_mem' _
-  | with_reducible exact ratCast_mem' _
-  | with_reducible apply div_mem
-  | with_reducible apply inv_mem
-  | with_reducible apply add_mem
-  | with_reducible apply sub_mem
-  | with_reducible apply mul_mem
-  | with_reducible apply pow_mem
-  | with_reducible apply neg_mem))
-
-theorem mem_of_pow_mem {x : ℂ} {n : ℕ} (hn : n ≠ 0) (h : x ^ n ∈ 𝔸) : x ∈ 𝔸 := by
+theorem mem_of_pow_mem {x : ℂ} {n : ℕ} (hn : n ≠ 0) (h : x ^ n ∈ (algebraicClosure ℚ ℂ)) : x ∈ (algebraicClosure ℚ ℂ) := by
   rw [mem_algebraicClosure_iff] at *
   exact IsAlgebraic.of_pow (Nat.pos_of_ne_zero hn) h
 
@@ -55,7 +38,7 @@ def NodeAlg (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Prop :=
     ∀ m, PkgI1.thetaConst m Ω / PkgI1.thetaConst m0 Ω ∈ algebraicClosure ℚ ℂ
 
 theorem nodeAlg_of_sq {Ω : Matrix (Fin 2) (Fin 2) ℂ} (K : ℂ)
-    (h : ∀ m, ∃ a ∈ 𝔸, PkgI1.thetaConst m Ω ^ 2 = K * a) (m0 : PkgI1.Char2)
+    (h : ∀ m, ∃ a ∈ (algebraicClosure ℚ ℂ), PkgI1.thetaConst m Ω ^ 2 = K * a) (m0 : PkgI1.Char2)
     (h0 : PkgI1.thetaConst m0 Ω ≠ 0) : NodeAlg Ω := by
   refine ⟨m0, h0, fun m => ?_⟩
   obtain ⟨a, ha, hsq⟩ := h m
@@ -66,7 +49,7 @@ theorem nodeAlg_of_sq {Ω : Matrix (Fin 2) (Fin 2) ℂ} (K : ℂ)
   exact div_mem ha ha0
 
 theorem nodeAlg_of_mul {Ω : Matrix (Fin 2) (Fin 2) ℂ} (X : ℂ)
-    (h : ∀ m, ∃ a ∈ 𝔸, PkgI1.thetaConst m Ω = a * X) (m0 : PkgI1.Char2)
+    (h : ∀ m, ∃ a ∈ (algebraicClosure ℚ ℂ), PkgI1.thetaConst m Ω = a * X) (m0 : PkgI1.Char2)
     (h0 : PkgI1.thetaConst m0 Ω ≠ 0) : NodeAlg Ω := by
   refine ⟨m0, h0, fun m => ?_⟩
   obtain ⟨a, ha, he⟩ := h m
@@ -118,7 +101,7 @@ theorem nodeAlg_om24 : NodeAlg Om24 := by
       - A1 ^ 4 * (B2 ^ 2 + 2 * A0 * A2) * rB2 + 4 * A0 ^ 2 * A2 ^ 2 * rJ
       + (-4 * A0 ^ 6 + 4 * A0 ^ 2 * (A2 ^ 4 + k * A0 ^ 2 * A2 ^ 2 + k ^ 2 * A0 ^ 4)) * hk
   -- `k` is algebraic (a root of `mpoly`)
-  have hkA : k ∈ 𝔸 := by
+  have hkA : k ∈ (algebraicClosure ℚ ℂ) := by
     rw [mem_algebraicClosure_iff]
     refine ⟨Polynomial.X ^ 4 + Polynomial.C 12 * Polynomial.X ^ 3 + Polynomial.C 2 * Polynomial.X ^ 2 -
       Polynomial.C 12 * Polynomial.X + 1, ?_, ?_⟩
@@ -136,22 +119,22 @@ theorem nodeAlg_om24 : NodeAlg Om24 := by
   set u0 := U 0 0 / A0 ^ 2
   set u1 := U (1 / 2) 0 / A0 ^ 2
   set u2 := U 0 (1 / 2) / A0 ^ 2
-  have hu0 : u0 ∈ 𝔸 := by
+  have hu0 : u0 ∈ (algebraicClosure ℚ ℂ) := by
     refine mem_of_pow_mem (n := 2) (by norm_num) ?_
     have : u0 ^ 2 = 1 - k := by
       simp only [u0, div_pow, hx, ← pow_mul]; field_simp; ring
-    rw [this]; alg_mem
-  have hu1 : u1 ∈ 𝔸 := by
+    rw [this]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
+  have hu1 : u1 ∈ (algebraicClosure ℚ ℂ) := by
     refine mem_of_pow_mem (n := 2) (by norm_num) ?_
     have : u1 ^ 2 = -k * (1 + k) := by
       simp only [u1, div_pow, hy, ← pow_mul]; field_simp; ring
-    rw [this]; alg_mem
-  have hu2 : u2 ∈ 𝔸 := by
+    rw [this]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
+  have hu2 : u2 ∈ (algebraicClosure ℚ ℂ) := by
     refine mem_of_pow_mem (n := 4) (by norm_num) ?_
     have : u2 ^ 4 = -4 * k * (1 - k ^ 2) := by
       have e : u2 ^ 4 = (U 0 (1 / 2) ^ 2) ^ 2 / A0 ^ 8 := by simp only [u2]; field_simp
       rw [e, hz]; field_simp
-    rw [this]; alg_mem
+    rw [this]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
   have eU0 : U 0 0 = u0 * A0 ^ 2 := by simp only [u0]; field_simp
   have eU1 : U (1 / 2) 0 = u1 * A0 ^ 2 := by simp only [u1]; field_simp
   have eU2 : U 0 (1 / 2) = u2 * A0 ^ 2 := by simp only [u2]; field_simp
@@ -166,16 +149,16 @@ theorem nodeAlg_om24 : NodeAlg Om24 := by
   · rw [CM24.evenChars_eq] at hmE
     simp only [Finset.mem_insert, Finset.mem_singleton] at hmE
     rcases hmE with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
-    · exact ⟨u0 ^ 2 + u1 ^ 2 + u2 ^ 2, by alg_mem, by rw [sqc0]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨u0 ^ 2 + u1 ^ 2 - u2 ^ 2, by alg_mem, by rw [sqc1]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨u0 ^ 2 - u1 ^ 2 + u2 ^ 2, by alg_mem, by rw [sqc2]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨u0 ^ 2 - u1 ^ 2 - u2 ^ 2, by alg_mem, by rw [sqc3]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨2 * u0 * u1, by alg_mem, by rw [sqc4]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨2 * u0 * u1, by alg_mem, by rw [sqc5]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨2 * u0 * u2, by alg_mem, by rw [sqc6]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨2 * u0 * u2, by alg_mem, by rw [sqc7]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨2 * u2 * u1, by alg_mem, by rw [sqc8]; simp only [eU0, eU1, eU2]; ring⟩
-    · exact ⟨-(2 * u2 * u1), by alg_mem, by rw [sqc9]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨u0 ^ 2 + u1 ^ 2 + u2 ^ 2, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc0]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨u0 ^ 2 + u1 ^ 2 - u2 ^ 2, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc1]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨u0 ^ 2 - u1 ^ 2 + u2 ^ 2, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc2]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨u0 ^ 2 - u1 ^ 2 - u2 ^ 2, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc3]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨2 * u0 * u1, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc4]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨2 * u0 * u1, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc5]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨2 * u0 * u2, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc6]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨2 * u0 * u2, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc7]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨2 * u2 * u1, by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc8]; simp only [eU0, eU1, eU2]; ring⟩
+    · exact ⟨-(2 * u2 * u1), by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem), by rw [sqc9]; simp only [eU0, eU1, eU2]; ring⟩
   · exact ⟨0, zero_mem _, by rw [thetaConst_odd' _ hmE]; ring⟩
 
 /-- The node `τ₂₄` in the form used below. -/
@@ -230,13 +213,13 @@ theorem th1_add_one_half (τ : ℂ) (d : ℝ) :
     push_cast; ring
   rw [e, Complex.exp_add, Complex.exp_add, h, mul_one]
 
-theorem exp_pi4_mem : cexp (π * I / 4) ∈ 𝔸 := by
+theorem exp_pi4_mem : cexp (π * I / 4) ∈ (algebraicClosure ℚ ℂ) := by
   refine mem_of_pow_mem (n := 8) (by norm_num) ?_
   rw [← Complex.exp_nat_mul, show ((8 : ℕ) : ℂ) * (π * I / 4) = ((1 : ℤ) : ℂ) * (2 * π * I) by push_cast; ring,
     exp_int_mul_two_pi_mul_I]
   exact one_mem _
 
-theorem exp_neg_pi4_mem : cexp (-(π * I / 4)) ∈ 𝔸 := by
+theorem exp_neg_pi4_mem : cexp (-(π * I / 4)) ∈ (algebraicClosure ℚ ℂ) := by
   rw [Complex.exp_neg]; exact inv_mem exp_pi4_mem
 
 /-- The values at `i`. -/
@@ -263,11 +246,11 @@ theorem V01_pow4 : V01 ^ 4 * 2 = V00 ^ 4 := by
   rw [← V01_eq_V10] at hJ
   linear_combination -hJ
 
-theorem V01_ratio_mem : V01 / V00 ∈ 𝔸 := by
+theorem V01_ratio_mem : V01 / V00 ∈ (algebraicClosure ℚ ℂ) := by
   refine mem_of_pow_mem (n := 4) (by norm_num) ?_
   have : (V01 / V00) ^ 4 = 1 / 2 := by
     rw [div_pow, div_eq_iff (pow_ne_zero _ V00_ne)]; linear_combination (1 / 2 : ℂ) * V01_pow4
-  rw [this]; alg_mem
+  rw [this]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
 theorem V01_ne : V01 ≠ 0 := by
   intro h; have := V01_pow4; rw [h] at this; simp at this
@@ -309,9 +292,9 @@ theorem th1_d1' (τ : ℂ) : CM24.th1 τ 0 1 = CM24.th1 τ 0 0 := by
 theorem th1_d1'' (τ : ℂ) : CM24.th1 τ (1 / 2) 1 = -CM24.th1 τ (1 / 2) 0 := by
   rw [CM24.th1_d1, CM24.exp_half]; ring
 
-/-- `θ_{(a,b)}(τ₁) ∈ 𝔸·Kτ·θ₀₀(i)`. -/
+/-- `θ_{(a,b)}(τ₁) ∈ (algebraicClosure ℚ ℂ)·Kτ·θ₀₀(i)`. -/
 theorem th1_τ1_mem (a b : ℕ) (ha : a ≤ 1) (hb : b ≤ 2) :
-    ∃ α ∈ 𝔸, HDec.HSyn.G0Split.FibreQM.PeriodGlue.th1 a b HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1 =
+    ∃ α ∈ (algebraicClosure ℚ ℂ), HDec.HSyn.G0Split.FibreQM.PeriodGlue.th1 a b HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1 =
       α * (Kτ * V00) := by
   have r00 : CM24.th1 HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1 0 0 = Kτ * V01 := by
     rw [CM24.sA, neg_inv_τ1, th1_add_one_zero]; norm_num
@@ -320,7 +303,7 @@ theorem th1_τ1_mem (a b : ℕ) (ha : a ≤ 1) (hb : b ≤ 2) :
     rw [CM24.sB τ1_ne, neg_inv_τ1, th1_add_one_half]
   have r10 : CM24.th1 HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1 (1 / 2) 0 = Kτ * V00 := by
     rw [CM24.sC τ1_ne, neg_inv_τ1, th1_add_one_zero, show (1 / 2 : ℝ) + 1 / 2 = 1 by norm_num, th1_d1']
-  have c00 : ∃ α ∈ 𝔸, CM24.th1 HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1 0 0 = α * (Kτ * V00) :=
+  have c00 : ∃ α ∈ (algebraicClosure ℚ ℂ), CM24.th1 HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1 0 0 = α * (Kτ * V00) :=
     ⟨V01 / V00, V01_ratio_mem, by rw [r00]; field_simp [V00_ne]⟩
   obtain ⟨p1, p2, p3, p4, p5, p6⟩ := pg_cases HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ1
   interval_cases a <;> interval_cases b
@@ -335,9 +318,9 @@ theorem th1_τ1_mem (a b : ℕ) (ha : a ≤ 1) (hb : b ≤ 2) :
 theorem τ2_add_one : HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ2 + 1 = I := by
   unfold HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ2; ring
 
-/-- `θ_{(a,b)}(τ₂) ∈ 𝔸·θ₀₀(i)`. -/
+/-- `θ_{(a,b)}(τ₂) ∈ (algebraicClosure ℚ ℂ)·θ₀₀(i)`. -/
 theorem th1_τ2_mem (a b : ℕ) (ha : a ≤ 1) (hb : b ≤ 2) :
-    ∃ β ∈ 𝔸, HDec.HSyn.G0Split.FibreQM.PeriodGlue.th1 a b HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ2 =
+    ∃ β ∈ (algebraicClosure ℚ ℂ), HDec.HSyn.G0Split.FibreQM.PeriodGlue.th1 a b HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ2 =
       β * V00 := by
   set t2 := HDec.HSyn.G0Split.FibreQM.PeriodGlue.τ2
   have r00 : CM24.th1 t2 0 0 = V01 := by
@@ -353,9 +336,9 @@ theorem th1_τ2_mem (a b : ℕ) (ha : a ≤ 1) (hb : b ≤ 2) :
     rw [τ2_add_one] at h
     rw [show V10 = CM24.th1 I (1 / 2) 0 from rfl, h, ← mul_assoc, ← Complex.exp_add, neg_add_cancel,
       Complex.exp_zero, one_mul]
-  have c00 : ∃ β ∈ 𝔸, CM24.th1 t2 0 0 = β * V00 :=
+  have c00 : ∃ β ∈ (algebraicClosure ℚ ℂ), CM24.th1 t2 0 0 = β * V00 :=
     ⟨V01 / V00, V01_ratio_mem, by rw [r00]; field_simp [V00_ne]⟩
-  have c10 : ∃ β ∈ 𝔸, CM24.th1 t2 (1 / 2) 0 = β * V00 :=
+  have c10 : ∃ β ∈ (algebraicClosure ℚ ℂ), CM24.th1 t2 (1 / 2) 0 = β * V00 :=
     ⟨cexp (-(π * I / 4)) * (V01 / V00), mul_mem exp_neg_pi4_mem V01_ratio_mem, by
       rw [r10, ← V01_eq_V10]; field_simp [V00_ne]⟩
   obtain ⟨p1, p2, p3, p4, p5, p6⟩ := pg_cases t2
@@ -371,7 +354,7 @@ theorem th1_τ2_mem (a b : ℕ) (ha : a ≤ 1) (hb : b ≤ 2) :
 
 theorem fin2_le (x : Fin 2) : (x : ℕ) ≤ 1 := Nat.lt_succ_iff.mp x.isLt
 
-theorem phase_mem (x y : ℕ) : cexp (-(π * I * (x : ℂ) * (y : ℂ) / 2)) ∈ 𝔸 := by
+theorem phase_mem (x y : ℕ) : cexp (-(π * I * (x : ℂ) * (y : ℂ) / 2)) ∈ (algebraicClosure ℚ ℂ) := by
   refine mem_of_pow_mem (n := 4) (by norm_num) ?_
   have : cexp (-(π * I * (x : ℂ) * (y : ℂ) / 2)) ^ 4 = 1 := by
     rw [← Complex.exp_nat_mul, Complex.exp_eq_one_iff]

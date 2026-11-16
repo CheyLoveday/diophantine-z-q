@@ -9,8 +9,8 @@ modularity of the Eisenstein series
   `IgusaThetaExpressions`), and its lines 139-210 (`thetaConst_omega_analyticAt`). theta-fold's second leaf `LinYangEx29All` and everything after it are NOT copied
   (`LinYangEx29All` is false: wip/leaf-audit 8040661a, `LeafAudit1115.not_linYangEx29All`).
 * §6 of origin/wip/linyang-printed `scratch/linyang-printed/LinYangPrintedFull.lean` (lines 2993-3310), verbatim,
-  with linyang-printed's `SpMat` (its line 2470, `Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ`) as a local notation
-  for gt-theta's `GapTheta.Mat4` (the same type; theta-fold's dedupe), and the modularity of Igusa's `χ₁₀`
+  with linyang-printed's `SpMat` (its line 2470, `Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℤ`) renamed to
+  gt-theta's `GapTheta.Mat4` (the same type; theta-fold's dedupe), and the modularity of Igusa's `χ₁₀`
   (linyang-printed lines 3330-3338, `igusaChi10E_modular`). -/
 
 /-! # theta-fold (4/4): the printed leaves `IgusaThetaExpressions`, `LinYangEx29All` and Route 1 from them
@@ -186,7 +186,6 @@ theorem thetaConst_omega_analyticAt {τ₀ : ℂ} (hτ₀ : τ₀ ∈ U) (m : Pk
   exact hdon.analyticAt (Metric.ball_mem_nhds τ₀ hε)
 
 
-local notation "SpMat" => GapTheta.Mat4
 
 /-! ## 6. Modularity of the Siegel Eisenstein series (proved) -/
 
@@ -237,9 +236,9 @@ theorem omega_form {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hs : Ωᵀ = Ω) (v : Fin 
 /-! ### Symplectic invariance of `ω(a, b) = a·Jb` -/
 
 /-- Integer matrices cast to `ℂ`. -/
-abbrev cM (M : SpMat) : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℂ := M.map (Int.cast : ℤ → ℂ)
+abbrev cM (M : GapTheta.Mat4) : Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℂ := M.map (Int.cast : ℤ → ℂ)
 
-theorem cM_mul (M N : SpMat) : cM (M * N) = cM M * cM N := by
+theorem cM_mul (M N : GapTheta.Mat4) : cM (M * N) = cM M * cM N := by
   have := Matrix.map_mul (f := Int.castRingHom ℂ) (L := M) (M := N)
   simpa using this
 
@@ -247,19 +246,19 @@ theorem J_map : (Matrix.J (Fin 2) ℤ).map (Int.cast : ℤ → ℂ) = Matrix.J (
   ext i j
   rcases i with i | i <;> rcases j with j | j <;> simp [Matrix.J, Matrix.one_apply] <;> split_ifs <;> simp
 
-theorem sp_transpose_J {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) :
+theorem sp_transpose_J {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) :
     (cM M)ᵀ * Matrix.J (Fin 2) ℂ * cM M = Matrix.J (Fin 2) ℂ := by
   have h := (SymplecticGroup.mem_iff').mp hM
-  have h2 := congrArg (fun X : SpMat => cM X) h
+  have h2 := congrArg (fun X : GapTheta.Mat4 => cM X) h
   simp only [cM_mul] at h2
   rw [← J_map]
   convert h2 using 2
   · ext i j; rfl
 
-theorem cM_conjTranspose (M : SpMat) : (cM M)ᴴ = (cM M)ᵀ := by
+theorem cM_conjTranspose (M : GapTheta.Mat4) : (cM M)ᴴ = (cM M)ᵀ := by
   ext i j; simp [Matrix.conjTranspose_apply]
 
-theorem bil_inv {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) (a b : Fin 2 ⊕ Fin 2 → ℂ) :
+theorem bil_inv {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) (a b : Fin 2 ⊕ Fin 2 → ℂ) :
     (cM M *ᵥ a) ⬝ᵥ (Matrix.J (Fin 2) ℂ *ᵥ (cM M *ᵥ b)) = a ⬝ᵥ (Matrix.J (Fin 2) ℂ *ᵥ b) := by
   calc (cM M *ᵥ a) ⬝ᵥ (Matrix.J (Fin 2) ℂ *ᵥ (cM M *ᵥ b))
       = a ⬝ᵥ ((cM M)ᵀ *ᵥ (Matrix.J (Fin 2) ℂ *ᵥ (cM M *ᵥ b))) := by
@@ -268,16 +267,16 @@ theorem bil_inv {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) (a b
         rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, Matrix.mul_assoc]
     _ = a ⬝ᵥ (Matrix.J (Fin 2) ℂ *ᵥ b) := by rw [sp_transpose_J hM]
 
-theorem star_cM_mulVec (M : SpMat) (a : Fin 2 ⊕ Fin 2 → ℂ) : star (cM M *ᵥ a) = cM M *ᵥ star a := by
+theorem star_cM_mulVec (M : GapTheta.Mat4) (a : Fin 2 ⊕ Fin 2 → ℂ) : star (cM M *ᵥ a) = cM M *ᵥ star a := by
   rw [Matrix.star_mulVec, cM_conjTranspose, Matrix.vecMul_transpose]
 
-theorem herm_inv {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) (a b : Fin 2 ⊕ Fin 2 → ℂ) :
+theorem herm_inv {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) (a b : Fin 2 ⊕ Fin 2 → ℂ) :
     star (cM M *ᵥ a) ⬝ᵥ (Matrix.J (Fin 2) ℂ *ᵥ (cM M *ᵥ b)) = star a ⬝ᵥ (Matrix.J (Fin 2) ℂ *ᵥ b) := by
   rw [star_cM_mulVec, bil_inv hM]
 
 /-! ### Block form of `cM M` acting on `(p, q)` -/
 
-theorem cM_mulVec_elim (M : SpMat) (p q : Fin 2 → ℂ) :
+theorem cM_mulVec_elim (M : GapTheta.Mat4) (p q : Fin 2 → ℂ) :
     cM M *ᵥ Sum.elim p q = Sum.elim ((cM M).toBlocks₁₁ *ᵥ p + (cM M).toBlocks₁₂ *ᵥ q)
       ((cM M).toBlocks₂₁ *ᵥ p + (cM M).toBlocks₂₂ *ᵥ q) := by
   conv_lhs => rw [← Matrix.fromBlocks_toBlocks (cM M)]
@@ -296,20 +295,20 @@ theorem form_elim (p q p' q' : Fin 2 → ℂ) :
   rw [J_mulVec_elim, sumElim_dotProduct_sumElim]
 
 /-- `W = AΩ + B`, `X = CΩ + D`. -/
-def Wm (M : SpMat) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+def Wm (M : GapTheta.Mat4) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   (cM M).toBlocks₁₁ * Ω + (cM M).toBlocks₁₂
-def Xm (M : SpMat) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+def Xm (M : GapTheta.Mat4) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   (cM M).toBlocks₂₁ * Ω + (cM M).toBlocks₂₂
 
-theorem spFactor_eq (M : SpMat) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : PkgI1.spFactor M Ω = (Xm M Ω).det := rfl
-theorem spAct_eq (M : SpMat) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : PkgI1.spAct M Ω = Wm M Ω * (Xm M Ω)⁻¹ := rfl
+theorem spFactor_eq (M : GapTheta.Mat4) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : PkgI1.spFactor M Ω = (Xm M Ω).det := rfl
+theorem spAct_eq (M : GapTheta.Mat4) (Ω : Matrix (Fin 2) (Fin 2) ℂ) : PkgI1.spAct M Ω = Wm M Ω * (Xm M Ω)⁻¹ := rfl
 
-theorem cM_mulVec_u (M : SpMat) (Ω : Matrix (Fin 2) (Fin 2) ℂ) (v : Fin 2 → ℂ) :
+theorem cM_mulVec_u (M : GapTheta.Mat4) (Ω : Matrix (Fin 2) (Fin 2) ℂ) (v : Fin 2 → ℂ) :
     cM M *ᵥ Sum.elim (Ω *ᵥ v) v = Sum.elim (Wm M Ω *ᵥ v) (Xm M Ω *ᵥ v) := by
   rw [cM_mulVec_elim, Wm, Xm, Matrix.add_mulVec, Matrix.add_mulVec, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]
 
 /-- The fundamental identity: `ω((Wv, Xv), (Wv, Xv)) = 2i·v̄ᵀ(Im Ω)v`. -/
-theorem key_form {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) {Ω : Matrix (Fin 2) (Fin 2) ℂ}
+theorem key_form {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) {Ω : Matrix (Fin 2) (Fin 2) ℂ}
     (hs : Ωᵀ = Ω) (v : Fin 2 → ℂ) :
     star (Wm M Ω *ᵥ v) ⬝ᵥ (-(Xm M Ω *ᵥ v)) + star (Xm M Ω *ᵥ v) ⬝ᵥ (Wm M Ω *ᵥ v) =
       2 * Complex.I * (qIm Ω v : ℂ) := by
@@ -318,7 +317,7 @@ theorem key_form {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) {Ω
   rw [h, omega_form hs v]
 
 /-- **`det(CΩ + D) ≠ 0` on `𝔥₂` (proved).** -/
-theorem spFactor_ne_zero {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+theorem spFactor_ne_zero {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
     {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) : PkgI1.spFactor M Ω ≠ 0 := by
   intro h0
   rw [spFactor_eq] at h0
@@ -332,7 +331,7 @@ theorem spFactor_ne_zero {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) 
     exact (mul_eq_zero.mp h.symm).resolve_left hI
   exact hq.ne' (by exact_mod_cast h2)
 
-theorem isUnit_Xm {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+theorem isUnit_Xm {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
     {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) : IsUnit (Xm M Ω).det :=
   isUnit_iff_ne_zero.mpr (spFactor_ne_zero hM hΩ)
 
@@ -344,7 +343,7 @@ theorem real_form (Z : Matrix (Fin 2) (Fin 2) ℂ) (a : Fin 2 → ℝ) :
     simp [dotProduct, mulVec, Fin.sum_univ_two, Complex.mul_re, Complex.mul_im] <;> ring
 
 /-- **`Sp₄(ℤ)` preserves `𝔥₂` (proved).** -/
-theorem spAct_mem {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+theorem spAct_mem {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
     {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) : PkgI1.spAct M Ω ∈ PkgI1.SiegelH2 := by
   have hX := isUnit_Xm hM hΩ
   set W := Wm M Ω
@@ -412,7 +411,7 @@ theorem cocycle_aux (P Q W X : Matrix (Fin 2) (Fin 2) ℂ) (hX : X⁻¹ * X = 1)
   rw [Matrix.add_mul, Matrix.mul_assoc P, Matrix.mul_assoc W, hX, Matrix.mul_one]
 
 /-- **The automorphy cocycle (proved).** -/
-theorem spFactor_mul (N : SpMat) {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+theorem spFactor_mul (N : GapTheta.Mat4) {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
     {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) :
     PkgI1.spFactor (N * M) Ω = PkgI1.spFactor N (PkgI1.spAct M Ω) * PkgI1.spFactor M Ω := by
   have hX := isUnit_Xm hM hΩ
@@ -430,9 +429,9 @@ theorem botRel_mul {N N' : Matrix.symplecticGroup (Fin 2) ℤ} (h : botRel N N')
     (M : Matrix.symplecticGroup (Fin 2) ℤ) : botRel (N * M) (N' * M) := by
   obtain ⟨U, h1, h2⟩ := h
   refine ⟨U, ?_, ?_⟩
-  · show ((N' : SpMat) * (M : SpMat)).toBlocks₂₁ = _ * ((N : SpMat) * (M : SpMat)).toBlocks₂₁
+  · show ((N' : GapTheta.Mat4) * (M : GapTheta.Mat4)).toBlocks₂₁ = _ * ((N : GapTheta.Mat4) * (M : GapTheta.Mat4)).toBlocks₂₁
     rw [toBlocks₂₁_mul', toBlocks₂₁_mul', h1, h2, Matrix.mul_add, Matrix.mul_assoc, Matrix.mul_assoc]
-  · show ((N' : SpMat) * (M : SpMat)).toBlocks₂₂ = _ * ((N : SpMat) * (M : SpMat)).toBlocks₂₂
+  · show ((N' : GapTheta.Mat4) * (M : GapTheta.Mat4)).toBlocks₂₂ = _ * ((N : GapTheta.Mat4) * (M : GapTheta.Mat4)).toBlocks₂₂
     rw [toBlocks₂₂_mul', toBlocks₂₂_mul', h1, h2, Matrix.mul_add, Matrix.mul_assoc, Matrix.mul_assoc]
 
 def rightAct (M : Matrix.symplecticGroup (Fin 2) ℤ) : SiegelCosets → SiegelCosets :=
@@ -454,18 +453,18 @@ def rightEquiv (M : Matrix.symplecticGroup (Fin 2) ℤ) : SiegelCosets ≃ Siege
 /-- The summand does not depend on the coset representative (even weight). -/
 theorem spFactor_botRel {N N' : Matrix.symplecticGroup (Fin 2) ℤ} (h : botRel N N')
     (Ω : Matrix (Fin 2) (Fin 2) ℂ) {k : ℕ} (hk : Even k) :
-    (PkgI1.spFactor (N' : SpMat) Ω)⁻¹ ^ k = (PkgI1.spFactor (N : SpMat) Ω)⁻¹ ^ k := by
+    (PkgI1.spFactor (N' : GapTheta.Mat4) Ω)⁻¹ ^ k = (PkgI1.spFactor (N : GapTheta.Mat4) Ω)⁻¹ ^ k := by
   obtain ⟨U, h1, h2⟩ := h
   have hc : ∀ P : Matrix (Fin 2) (Fin 2) ℤ, (((U : Matrix (Fin 2) (Fin 2) ℤ) * P).map (Int.cast : ℤ → ℂ)) =
       (U : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ℂ) * P.map (Int.cast : ℤ → ℂ) := by
     intro P
     have := Matrix.map_mul (f := Int.castRingHom ℂ) (L := (U : Matrix (Fin 2) (Fin 2) ℤ)) (M := P)
     simpa using this
-  have hX : Xm (N' : SpMat) Ω = (U : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ℂ) * Xm (N : SpMat) Ω := by
-    have e1 : (cM (N' : SpMat)).toBlocks₂₁ = ((N' : SpMat).toBlocks₂₁).map (Int.cast : ℤ → ℂ) := rfl
-    have e2 : (cM (N' : SpMat)).toBlocks₂₂ = ((N' : SpMat).toBlocks₂₂).map (Int.cast : ℤ → ℂ) := rfl
-    have e3 : (cM (N : SpMat)).toBlocks₂₁ = ((N : SpMat).toBlocks₂₁).map (Int.cast : ℤ → ℂ) := rfl
-    have e4 : (cM (N : SpMat)).toBlocks₂₂ = ((N : SpMat).toBlocks₂₂).map (Int.cast : ℤ → ℂ) := rfl
+  have hX : Xm (N' : GapTheta.Mat4) Ω = (U : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ℂ) * Xm (N : GapTheta.Mat4) Ω := by
+    have e1 : (cM (N' : GapTheta.Mat4)).toBlocks₂₁ = ((N' : GapTheta.Mat4).toBlocks₂₁).map (Int.cast : ℤ → ℂ) := rfl
+    have e2 : (cM (N' : GapTheta.Mat4)).toBlocks₂₂ = ((N' : GapTheta.Mat4).toBlocks₂₂).map (Int.cast : ℤ → ℂ) := rfl
+    have e3 : (cM (N : GapTheta.Mat4)).toBlocks₂₁ = ((N : GapTheta.Mat4).toBlocks₂₁).map (Int.cast : ℤ → ℂ) := rfl
+    have e4 : (cM (N : GapTheta.Mat4)).toBlocks₂₂ = ((N : GapTheta.Mat4).toBlocks₂₂).map (Int.cast : ℤ → ℂ) := rfl
     simp only [Xm, e1, e2, e3, e4, h1, h2, hc, Matrix.mul_add, Matrix.mul_assoc]
   have hdet : ((U : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ℂ)).det =
       (((U : Matrix (Fin 2) (Fin 2) ℤ).det : ℤ) : ℂ) := by
@@ -479,18 +478,18 @@ theorem spFactor_botRel {N N' : Matrix.symplecticGroup (Fin 2) ℤ} (h : botRel 
 /-- **Modularity of the Siegel Eisenstein series (proved, no convergence needed).** For `M ∈ Sp₄(ℤ)`, `Ω ∈ 𝔥₂` and
 even `k`: `ψ_k(M·Ω) = det(CΩ + D)^k ψ_k(Ω)`. The proof reindexes the `tsum` by the bijection `c ↦ c·M` of
 `Γ_∞\Sp₄(ℤ)` and uses the cocycle; it holds for the `tsum` whether or not the series converges. -/
-theorem siegelEis_modular {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+theorem siegelEis_modular {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
     {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) {k : ℕ} (hk : Even k) :
     siegelEis k (PkgI1.spAct M Ω) = PkgI1.spFactor M Ω ^ k * siegelEis k Ω := by
   set Ms : Matrix.symplecticGroup (Fin 2) ℤ := ⟨M, hM⟩
   have hj : PkgI1.spFactor M Ω ≠ 0 := spFactor_ne_zero hM hΩ
   have step : ∀ c : SiegelCosets,
-      (PkgI1.spFactor ((Quotient.out c : Matrix.symplecticGroup (Fin 2) ℤ) : SpMat) (PkgI1.spAct M Ω))⁻¹ ^ k =
+      (PkgI1.spFactor ((Quotient.out c : Matrix.symplecticGroup (Fin 2) ℤ) : GapTheta.Mat4) (PkgI1.spAct M Ω))⁻¹ ^ k =
         PkgI1.spFactor M Ω ^ k *
-          (PkgI1.spFactor ((Quotient.out (rightEquiv Ms c) : Matrix.symplecticGroup (Fin 2) ℤ) : SpMat) Ω)⁻¹ ^ k := by
+          (PkgI1.spFactor ((Quotient.out (rightEquiv Ms c) : Matrix.symplecticGroup (Fin 2) ℤ) : GapTheta.Mat4) Ω)⁻¹ ^ k := by
     intro c
-    have h1 : PkgI1.spFactor (((Quotient.out c * Ms : Matrix.symplecticGroup (Fin 2) ℤ)) : SpMat) Ω =
-        PkgI1.spFactor ((Quotient.out c : Matrix.symplecticGroup (Fin 2) ℤ) : SpMat) (PkgI1.spAct M Ω) *
+    have h1 : PkgI1.spFactor (((Quotient.out c * Ms : Matrix.symplecticGroup (Fin 2) ℤ)) : GapTheta.Mat4) Ω =
+        PkgI1.spFactor ((Quotient.out c : Matrix.symplecticGroup (Fin 2) ℤ) : GapTheta.Mat4) (PkgI1.spAct M Ω) *
           PkgI1.spFactor M Ω :=
       spFactor_mul _ hM hΩ
     have hrel : botRel (Quotient.out (rightEquiv Ms c)) (Quotient.out c * Ms) := by
@@ -505,11 +504,11 @@ theorem siegelEis_modular {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2)
   rw [tsum_congr step, tsum_mul_left]
   congr 1
   exact (rightEquiv Ms).tsum_eq
-    (fun c => (PkgI1.spFactor ((Quotient.out c : Matrix.symplecticGroup (Fin 2) ℤ) : SpMat) Ω)⁻¹ ^ k)
+    (fun c => (PkgI1.spFactor ((Quotient.out c : Matrix.symplecticGroup (Fin 2) ℤ) : GapTheta.Mat4) Ω)⁻¹ ^ k)
 
 
 /-- Igusa's `χ₁₀` (a combination of Eisenstein series) is modular of weight 10. -/
-theorem igusaChi10E_modular {M : SpMat} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
+theorem igusaChi10E_modular {M : GapTheta.Mat4} (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ)
     {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) :
     igusaChi10E (PkgI1.spAct M Ω) = PkgI1.spFactor M Ω ^ 10 * igusaChi10E Ω := by
   unfold igusaChi10E

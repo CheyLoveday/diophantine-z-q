@@ -39,24 +39,6 @@ open HDec.HSyn.G0Split.ThetaPt.ThetaGlue (psi4Th psi6Th chi10Th chi12Th psi4T ps
 open HDec.HSyn.G0Split.ThetaPt.ThetaSplit (ThetaRatiosAtQM thetaEight card_thetaEight esymm_one esymm_ten
   two_esymm_two zero_mem_evenChars isOddChar_of_not_even thetaPointOfFibre_of_qm_atQM)
 
-local notation "𝔸" => algebraicClosure ℚ ℂ
-
-/-- `alg_mem` with a family of memberships `h : ∀ m, f m ∈ 𝔸`. -/
-macro "alg_mem_with " h:term : tactic => `(tactic| repeat (first
-  | assumption
-  | with_reducible exact $h _
-  | with_reducible exact one_mem _
-  | with_reducible exact zero_mem _
-  | with_reducible exact ofNat_mem' _
-  | with_reducible exact ratCast_mem' _
-  | with_reducible apply div_mem
-  | with_reducible apply inv_mem
-  | with_reducible apply add_mem
-  | with_reducible apply sub_mem
-  | with_reducible apply mul_mem
-  | with_reducible apply pow_mem
-  | with_reducible apply neg_mem))
-
 /-! ## Node values -/
 
 theorem psi6T_smul (c : ℂ) (s : PkgI1.Char2 → ℂ) : psi6T (fun m => c * s m) = c ^ 6 * psi6T s := by
@@ -67,7 +49,7 @@ theorem chi12T_smul (c : ℂ) (s : PkgI1.Char2 → ℂ) : chi12T (fun m => c * s
 
 /-- At a node, `Σθ⁸`, `∏θ²`, `ψ₆`, `χ₁₂` are algebraic multiples of `t⁸, t²⁰, t¹², t²⁴` for one `t ≠ 0`. -/
 theorem node_vals {Ω : Matrix (Fin 2) (Fin 2) ℂ} (h : NodeAlg Ω) :
-    ∃ t : ℂ, t ≠ 0 ∧ ∃ s8 p20 p6 p12 : ℂ, s8 ∈ 𝔸 ∧ p20 ∈ 𝔸 ∧ p6 ∈ 𝔸 ∧ p12 ∈ 𝔸 ∧
+    ∃ t : ℂ, t ≠ 0 ∧ ∃ s8 p20 p6 p12 : ℂ, s8 ∈ (algebraicClosure ℚ ℂ) ∧ p20 ∈ (algebraicClosure ℚ ℂ) ∧ p6 ∈ (algebraicClosure ℚ ℂ) ∧ p12 ∈ (algebraicClosure ℚ ℂ) ∧
       PkgI1.thetaSum8 Ω = t ^ 8 * s8 ∧ PkgI1.thetaProd2 Ω = t ^ 20 * p20 ∧
       psi6Th Ω = t ^ 12 * p6 ∧ chi12Th Ω = t ^ 24 * p12 := by
   obtain ⟨m0, h0, hr⟩ := h
@@ -80,8 +62,8 @@ theorem node_vals {Ω : Matrix (Fin 2) (Fin 2) ℂ} (h : NodeAlg Ω) :
     ∏ m ∈ PkgI1.evenChars, (PkgI1.thetaConst m Ω / t) ^ 2,
     psi6T (fun m => (PkgI1.thetaConst m Ω / t) ^ 2), chi12T (fun m => (PkgI1.thetaConst m Ω / t) ^ 2),
     sum_mem fun m _ => pow_mem (hr m) 8, prod_mem fun m _ => pow_mem (hr m) 2, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · simp only [psi6T]; alg_mem_with hr
-  · simp only [chi12T]; alg_mem_with hr
+  · simp only [psi6T]; repeat (first | assumption | with_reducible exact hr _ | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
+  · simp only [chi12T]; repeat (first | assumption | with_reducible exact hr _ | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
   · rw [PkgI1.thetaSum8, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     conv_lhs => rw [hθ m]
@@ -94,7 +76,7 @@ theorem node_vals {Ω : Matrix (Fin 2) (Fin 2) ℂ} (h : NodeAlg Ω) :
   · rw [psi6Th_eq, hsq, psi6T_smul, ← pow_mul]
   · rw [chi12Th_eq, hsq, chi12T_smul, ← pow_mul]
 
-theorem c1_mem : c1 ∈ 𝔸 := by
+theorem c1_mem : c1 ∈ (algebraicClosure ℚ ℂ) := by
   obtain ⟨t, ht, s8, p20, p6, p12, hs8, hp20, hp6, hp12, e8, e20, e6, e12⟩ :=
     node_vals nodeAlg_om24
   have hP : p20 ≠ 0 := by
@@ -105,9 +87,9 @@ theorem c1_mem : c1 ∈ 𝔸 := by
     rw [G8_eq', G20_eq', tau24_omega, e8, e20, e6]
     generalize ((tau24 : ℂ) - 3) * ((tau24 : ℂ) + 1) = Z at hZ
     field_simp
-  rw [e]; alg_mem
+  rw [e]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
-theorem c2_mem : c2 ∈ 𝔸 := by
+theorem c2_mem : c2 ∈ (algebraicClosure ℚ ℂ) := by
   obtain ⟨t, ht, s8, p20, p6, p12, hs8, hp20, hp6, hp12, e8, e20, e6, e12⟩ := node_vals nodeAlg_cm4
   have hS : s8 ≠ 0 := by
     intro h0; apply sum8_tau4; rw [tau4_omega, e8, h0, mul_zero]
@@ -117,9 +99,9 @@ theorem c2_mem : c2 ∈ 𝔸 := by
     rw [G8_eq', tau4_omega, e8, e12]
     generalize ((tau4 : ℂ) - 3) * ((tau4 : ℂ) + 1) = Z at hZ
     field_simp
-  rw [e]; alg_mem
+  rw [e]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
-theorem c3_mem : c3 ∈ 𝔸 := by
+theorem c3_mem : c3 ∈ (algebraicClosure ℚ ℂ) := by
   obtain ⟨t, ht, s8, p20, p6, p12, hs8, hp20, hp6, hp12, e8, e20, e6, e12⟩ :=
     node_vals nodeAlg_om24
   have hP : p20 ≠ 0 := by
@@ -132,7 +114,7 @@ theorem c3_mem : c3 ∈ 𝔸 := by
     rw [G8_eq', G20_eq', tau24_omega, e8, e20, e12]
     generalize ((tau24 : ℂ) - 3) * ((tau24 : ℂ) + 1) = Z at hZ
     field_simp
-  rw [e]; alg_mem
+  rw [e]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
 
 /-! ## Symmetric functions of the `θ⁸` on the rational fibres of `j_θ` -/
@@ -151,9 +133,9 @@ theorem igusaP_hom (k : ℕ) (hk3 : 3 ≤ k) (hk9 : k ≤ 9) (ρ a b c d : ℂ) 
     igusaP k (ρ ^ 2 * a) (ρ ^ 3 * b) (ρ ^ 5 * c) (ρ ^ 6 * d) = ρ ^ (2 * k) * igusaP k a b c d := by
   interval_cases k <;> simp only [igusaP] <;> ring
 
-theorem igusaP_mem (k : ℕ) (hk3 : 3 ≤ k) (hk9 : k ≤ 9) {a b c d : ℂ} (ha : a ∈ 𝔸) (hb : b ∈ 𝔸)
-    (hc : c ∈ 𝔸) (hd : d ∈ 𝔸) : igusaP k a b c d ∈ 𝔸 := by
-  interval_cases k <;> simp only [igusaP] <;> alg_mem
+theorem igusaP_mem (k : ℕ) (hk3 : 3 ≤ k) (hk9 : k ≤ 9) {a b c d : ℂ} (ha : a ∈ (algebraicClosure ℚ ℂ)) (hb : b ∈ (algebraicClosure ℚ ℂ))
+    (hc : c ∈ (algebraicClosure ℚ ℂ)) (hd : d ∈ (algebraicClosure ℚ ℂ)) : igusaP k a b c d ∈ (algebraicClosure ℚ ℂ) := by
+  interval_cases k <;> simp only [igusaP] <;> repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
 theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAlg := by
   intro τ hτ q hq hJ k hk
@@ -178,7 +160,7 @@ theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAl
     rw [hξdef, div_pow, ← pow_mul, eq_div_iff (by norm_num), div_mul_eq_mul_div, div_eq_iff (pow_ne_zero _ hρ0)]
     rw [show ρ ^ (5 * 2) = (ρ ^ 2) ^ 5 by ring, hρ]
     linear_combination hq'
-  have hξ : ξ ∈ 𝔸 := mem_of_pow_mem (n := 2) (by norm_num) (by rw [hξ2]; alg_mem)
+  have hξ : ξ ∈ (algebraicClosure ℚ ℂ) := mem_of_pow_mem (n := 2) (by norm_num) (by rw [hξ2]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem))
   have hΩ : ZInQ.LeafPush2.IsSiegel Ω := HDec.HSyn.G0Split.ThetaPt.isSiegel_Omega hτ
   rcases Nat.lt_or_ge k 3 with h3 | h3
   · interval_cases k
@@ -195,7 +177,7 @@ theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAl
       have e : (thetaEight Ω).esymm 2 = 3 / 8 * S ^ 2 := by
         unfold S PkgI1.thetaSum8 at *
         linear_combination h / 2
-      rw [e, mul_div_assoc, div_self (pow_ne_zero _ hS), mul_one]; alg_mem
+      rw [e, mul_div_assoc, div_self (pow_ne_zero _ hS), mul_one]; repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
   · rcases Nat.lt_or_ge k 10 with h10 | h10
     · have hk9 : k ≤ 9 := by omega
       rw [HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaThetaSymmetric_of_alg
@@ -216,34 +198,34 @@ theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAl
         rw [this, hPξ, ← hρ]; field_simp
       rw [e4, e6, e10, e12, igusaP_hom k h3 hk9, ← hρ, ← pow_mul, mul_comm, mul_div_assoc,
         div_self (pow_ne_zero _ hρ0), mul_one]
-      exact igusaP_mem k h3 hk9 (by alg_mem) (mul_mem c1_mem hξ) (by alg_mem)
+      exact igusaP_mem k h3 hk9 (by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)) (mul_mem c1_mem hξ) (by repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem))
         (add_mem c2_mem (mul_mem c3_mem (pow_mem hξ 2)))
     · have hk10 : k = 10 := by omega
       subst hk10
       rw [esymm_ten Ω hS, hJ, mul_div_assoc, div_self (pow_ne_zero _ hS), mul_one]
-      alg_mem
+      repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
 /-! ## The use form -/
 
 /-- A root of a monic polynomial whose elementary symmetric functions are algebraic is algebraic (copied verbatim
 from origin/wip/theta-split `scratch/theta-split/ThetaUse.lean` l.368-391, theta-split's `mem_of_esymm_mem`). -/
-theorem mem_of_esymm_mem (s : Multiset ℂ) (hs : ∀ k ≤ Multiset.card s, s.esymm k ∈ 𝔸) {y : ℂ}
-    (hy : y ∈ s) : y ∈ 𝔸 := by
+theorem mem_of_esymm_mem (s : Multiset ℂ) (hs : ∀ k ≤ Multiset.card s, s.esymm k ∈ (algebraicClosure ℚ ℂ)) {y : ℂ}
+    (hy : y ∈ s) : y ∈ (algebraicClosure ℚ ℂ) := by
   have hmon : (s.map (fun t => X - C t)).prod.Monic :=
     monic_multiset_prod_of_monic _ _ (fun t _ => monic_X_sub_C t)
-  have hlift : (s.map (fun t => X - C t)).prod ∈ lifts (algebraMap 𝔸 ℂ) := by
+  have hlift : (s.map (fun t => X - C t)).prod ∈ lifts (algebraMap (algebraicClosure ℚ ℂ) ℂ) := by
     rw [lifts_iff_coeff_lifts]
     intro n
     by_cases hn : n ≤ Multiset.card s
     · rw [Multiset.prod_X_sub_C_coeff s hn]
-      have : (-1 : ℂ) ^ (Multiset.card s - n) * s.esymm (Multiset.card s - n) ∈ 𝔸 :=
+      have : (-1 : ℂ) ^ (Multiset.card s - n) * s.esymm (Multiset.card s - n) ∈ (algebraicClosure ℚ ℂ) :=
         mul_mem (pow_mem (neg_mem (one_mem _)) _) (hs _ (Nat.sub_le _ _))
       exact ⟨⟨_, this⟩, rfl⟩
     · rw [coeff_eq_zero_of_natDegree_lt]
       · exact ⟨0, by simp⟩
       · rw [natDegree_multiset_prod_X_sub_C_eq_card]; omega
   obtain ⟨Q, hQ, -, hQm⟩ := lifts_and_degree_eq_and_monic hlift hmon
-  have hA : IsAlgebraic 𝔸 y := by
+  have hA : IsAlgebraic (algebraicClosure ℚ ℂ) y := by
     refine ⟨Q, hQm.ne_zero, ?_⟩
     rw [aeval_def, eval₂_eq_eval_map, hQ, eval_multiset_prod]
     apply Multiset.prod_eq_zero
@@ -270,12 +252,12 @@ theorem thetaRatiosAtQM_of_symAlg (h : QMThetaSymmetricAlg) : ThetaRatiosAtQM :=
   have h00 : PkgI1.thetaConst (0, 0) (PkgI1.Omega τ) ≠ 0 := thetaConst_ne_of_prod hProd zero_mem_evenChars
   set s' := (thetaEight (PkgI1.Omega τ)).map (fun t => S⁻¹ • t) with hs'
   have hcard : Multiset.card s' = 10 := by rw [hs', Multiset.card_map, card_thetaEight]
-  have hesymm : ∀ k ≤ Multiset.card s', s'.esymm k ∈ 𝔸 := by
+  have hesymm : ∀ k ≤ Multiset.card s', s'.esymm k ∈ (algebraicClosure ℚ ℂ) := by
     intro k hk
     rw [hcard] at hk
     rw [hs', ← Multiset.pow_smul_esymm, smul_eq_mul, inv_pow, ← div_eq_inv_mul]
     exact h τ hτ q hq hJ k hk
-  have halg8 : ∀ m ∈ PkgI1.evenChars, S⁻¹ * PkgI1.thetaConst m (PkgI1.Omega τ) ^ 8 ∈ 𝔸 :=
+  have halg8 : ∀ m ∈ PkgI1.evenChars, S⁻¹ * PkgI1.thetaConst m (PkgI1.Omega τ) ^ 8 ∈ (algebraicClosure ℚ ℂ) :=
     fun m hm => mem_of_esymm_mem s' hesymm
       (Multiset.mem_map.mpr ⟨_, Multiset.mem_map.mpr ⟨m, hm, rfl⟩, rfl⟩)
   refine ⟨(0, 0), by rw [hconv]; exact h00, fun m => ?_⟩

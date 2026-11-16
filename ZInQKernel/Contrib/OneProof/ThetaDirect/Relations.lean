@@ -28,8 +28,6 @@ open HDec.HSyn.G0Split.ThetaPt.LinYangPrinted (siegelEis siegelEis_modular spAct
 open HDec.HSyn.G0Split.ThetaPt.ThetaGlue (psi4Th psi6Th chi10Th chi12Th psi4T psi6T chi10T chi12T psi6Th_eq
   chi12Th_eq)
 
-local notation "𝔸" => algebraicClosure ℚ ℂ
-
 /-- `G20 = ∏θ²∘Ω/((z−3)(z+1))¹⁰` (the kernel's). -/
 abbrev G20 : ℂ → ℂ := HDec.HSyn.G0Split.FibreQM.PeriodGlue.LQ20.G20
 
