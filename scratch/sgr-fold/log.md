@@ -19,3 +19,21 @@
   (B) PruneScan, prune. (C) TailZ36: OpenGlue8 {nvLocalInertia}; openGlue7_of_OpenGlue8 r t l g fills
   heckeSqrtBranchAny by SGRDirect.heckeSqrtBranchAny_of_elkies at the top (R1R2fp from x6Rows_of_open14 on the
   composed down-conversions, T5 from mumfordTorsionAlgClosed, r.elkiesX6StarPrinted); sixContactMin_of_open30.
+- 23:02 step A (TailO import SGRDirectNV; OpenGlue6/7 + nvLocalInertia, heckeSqrtBranchAny; glue4_of_open6 by
+  SGRDirect.heckeVertWitness_of_nvSqrtAny; glue6_of_open7 copies): TailX built alone OK, then
+  `lake build +ZInQKernel.OneProof.Main` OK (12997 jobs, 7.5 min); frozenTarget axioms standard.
+- 23:13 PruneScan after step A (prunescan-stepA-out.txt): exactly OpenAddedLeaves17.shimuraIntegralModelRep and
+  OpenGlue7.quotientP1Coordinate unused; prune set 12 FIELD lines (prune-set-stepA.txt): OpenAddedLeaves6
+  .shimuraGoodReduction, OpenGlue6.modelCoordinateResidue, OpenGlue7.quotientP1Coordinate, shimuraGoodReductionNoGuard
+  in OpenAddedLeaves7/8/9/12/13/14/15/16, OpenAddedLeaves17.shimuraIntegralModelRep. No other field became unused
+  (curveBijIso of gen 6 is filled by the proof curveBijIso_lf7).
+- step B (prune_sgr.py, prune_sgr_out.txt, 64 deleted lines): the 12 fields and their assignments; off-chain
+  cascade: OpenAddedLeaves10/11 (wholly unused off-chain generations) also lose shimuraGoodReductionNoGuard because
+  addedLeaves11_of_open12 (read by the off-chain sixContactMin_of_open16) reads gen 12's; addedLeaves5_of_open6
+  (TailO, referenced only by its #print) deleted as a dead reader.
+- step C: ZInQKernel/Contrib/OneProof/SGRFold.lean (imports TailZ35 + SGRDirectElkies): research14_of_open29,
+  added12_of_open29, heckeSqrtBranchAny_of_open29, openGlue7_of_nvLocalInertia. ZInQKernel/OneProof/H/TailZ36.lean:
+  OpenGlue8 {nvLocalInertia}, openGlue7_of_OpenGlue8, sixContactMin_of_open30. Main imports TailZ36, g : OpenGlue8,
+  open30.
+- 23:25 build after B+C: `lake build +ZInQKernel.OneProof.Main` OK first try (13000 jobs, 9.3 min); axioms of
+  heckeSqrtBranchAny_of_open29, openGlue7_of_nvLocalInertia, sixContactMin_of_open30, frozenTarget standard.

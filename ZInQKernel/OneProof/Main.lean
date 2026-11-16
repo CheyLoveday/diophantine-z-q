@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ35
+import ZInQKernel.OneProof.H.TailZ36
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
@@ -60,14 +60,14 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 /-- **Theorem 1.1, from every statement still open.** -/
 theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves22) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves17)
-    (g : HDec.HSyn.OpenGlue7)
+    (g : HDec.HSyn.OpenGlue8)
     (h11 : TYZThm11Integral) (h29 : TYZLemma29Mod2)
     (hCM : _root_.T5Glue.ShimuraMainCM)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
     ZInQ.FrozenTarget :=
   ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
-    (HDec.HSyn.sixContactMin_of_open29 r t l g)
+    (HDec.HSyn.sixContactMin_of_open30 r t l g)
     (ThetaWP8.tyzThm35ReadingA_noHX h11 h29 hCM h33)
     ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH) hL3
 

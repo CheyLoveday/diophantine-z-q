@@ -148,8 +148,6 @@ structure OpenAddedLeaves17 : Prop where
   genuine dual `f^∨`, and trivial on `(x, λ_L x)` for ample `L` (Mumford §20 and §23; Milne 1986 §16; locators
   UNVERIFIED). -/
   weilPairingMumford : _root_.T09Pic.WeilPairingMumford
-  /-- Representability over Z_(p), p > 324, of the moduli problem of QM abelian surfaces (disc 6) with full level 3, by a proper smooth curve (printed form on QMAbScheme): Kottwitz, J. AMS 5 (1992) 5; Buzzard, Duke 87 (1997) 1-4; Morita, Hokkaido 10 (1981); locators UNVERIFIED -/
-  shimuraIntegralModelRep : _root_.SGRSplit.ShimuraIntegralModelRep
 
 /-- `OpenAddedLeaves16` from `OpenAddedLeaves17`: `shimuraGoodReductionNoGuard` by the contributions. -/
 theorem openAddedLeaves16_of_OpenAddedLeaves17 (n : OpenAddedLeaves17) : OpenAddedLeaves16 where
@@ -159,7 +157,6 @@ theorem openAddedLeaves16_of_OpenAddedLeaves17 (n : OpenAddedLeaves17) : OpenAdd
   milneIsogenyQuasiInverse := n.milneIsogenyQuasiInverse
   shimuraTaniyamaQbar := n.shimuraTaniyamaQbar
   egaIV_8_10_5_xii := n.egaIV_8_10_5_xii
-  shimuraGoodReductionNoGuard := _root_.SGRSplit.shimuraGoodReductionNoGuard_of_printed n.shimuraIntegralModelRep
   deligneComponentsY3PrintedAb := n.deligneComponentsY3PrintedAb
   deligneComponentsX6PrintedAb := n.deligneComponentsX6PrintedAb
   geomConnOfAlgClosure := n.geomConnOfAlgClosure

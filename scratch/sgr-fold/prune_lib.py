@@ -1,7 +1,7 @@
 """Helpers copied from scratch/yu-prune/prune_edit.py (sem-prune/genus-fold lineage); drop_assign also removes
 continuation lines indented deeper than the assignment."""
 import re
-H = 'ZInQKernel/OneProof/H/'
+H = "ZInQKernel/OneProof/H/"
 files = {}
 def get(f):
     if f not in files:
