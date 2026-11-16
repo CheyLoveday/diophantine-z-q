@@ -30,3 +30,28 @@ replayed 13698 jobs, frozenTarget standard axioms (VERIFIED, 11-16 12:31).
   reduced overlaps (`hom_ext_pts`).
 - `exists_grpObj_of_localLaws`: [IsReduced F, F⊗F, (F⊗F)⊗F], e section, FibreHyp, local laws through every
   point ⇒ ∃ GrpObj F, η[F].left = e. No sorry.
+
+## Lean: spreading, stalks, final (VERIFIED compile, 11-16 13:00-14:45)
+- GroupLawStage.lean: `exists_grp_stage_Q` (spread-out's exists_grp_stage carrying a stage invariant).
+  Needs `set_option backward.isDefEq.respectTransparency false` (as Spread.lean) or the Over.pullback
+  monoidal instance is not found.
+- GroupLawSpread.lean: `exists_stage_law` (generic cofiltered limit), `localLaw_of_stalk`
+  (group law on F ×_S Spec Γ(S,V)_𝔭 with identity e ⇒ LocalLaw through the point 𝔭).
+- GroupLawStalks.lean: `grpObj_of_stalkLaws` (gluing), `stalkData`, `grpObj_of_isField` (field base: outright),
+  `isDomain_of_maximalIdeal_eq_span`, `stalk_field_or_dvr` (smooth rel. dim 1 over a field: stalks are
+  fields or DVRs), `field_or_dvr_localization` (same for Γ(S,V)_𝔭).
+- MumfordGroupLawRed.lean (final): leaves `MumfordGroupLawDVR`, `MumfordGroupLawLocal`;
+  `local_of_field`, `dvr_of_local`, `dvr_of_field` (new leaves never stronger than the field);
+  narrowed forms `MumfordGroupLawCurve`, `MumfordGroupLawRed` (+ `curve_of_field`, `red_of_field`);
+  `mumfordGroupLawCurve_of_dvr`, `mumfordGroupLawRed_of_local`;
+  `LeafQM.AV.R1UnivRigid.exists_qmAbScheme_of` (rigid-prune's proof, verbatim, hypothesis = group law over S),
+  `qmFamilyGroupLaw_of_curve`, `qmFamilyGroupLaw_of_dvr`, `qmFamilyGroupLaw_of_local`.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.MumfordGroupLawRed`:
+  13703 jobs OK. scratch/group-law/Discharges.lean → discharges.txt: `#discharges` finds 7 discharges, none by the
+  new file (expected: no new theorem has type `MumfordGroupLaw`); all new main theorems standard axioms.
+
+## Verdict so far
+- `mumfordGroupLaw` NOT removed (no −1). The field as stated (all locally noetherian S, non-reduced included)
+  is not proved. The chain's need (QMFamilyGroupLaw) is proved from GIT 6.14 over a DVR (`MumfordGroupLawDVR`),
+  a strictly weaker leaf (dvr_of_field). Replacing the field by it is a narrowing (count 0) that autofold cannot
+  express (the old generations' field type is `MumfordGroupLaw`); manual fold like rigid-prune's.
