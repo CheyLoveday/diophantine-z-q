@@ -35,7 +35,7 @@
 - 01:25 after step 2: PruneScan 25 + 11 + 9 + 1 = 46 fields, 0 unused, prune set empty (prunescan-out.txt).
   DumpCompact 17276 constants; cmp_hashes_out.txt: removed 16 (12 projections of the pruned fields, 4 dead readers),
   new 38 (helpers: LPrefix 2, TailO 1, TailZ21 33 incl. X6LeavesW's auxiliaries, Pi0FoldSTQM 2), changed 157
-  (110 generated auxiliaries/projections of the 23 edited structures; 47 consumers/conversions, listed in the report).
+  (110 generated auxiliaries/projections of the 18 edited structures; 47 consumers/conversions, listed in the report).
   frozenTarget's pp.all type text identical (binder types keep their names); frozenTarget hash unchanged.
 - DischargesTest: t1 discharges OpenGlue8.nvLocalInertia (still assumes it), t2 nothing, t3 cartierSmooth flagged
   sorry; 7 real discharges of existing contributions; 57 open hypotheses. Saved to scratch/contrib-kit/.
@@ -44,3 +44,4 @@
   which is why leaf-fold30's tip ddbcfd61 regenerated only the json). Those rows deleted (rows of removed fields;
   saved in stale-claims-rows-removed.txt), then render_open.py wrote OPEN.md, pages-wanted.md, CONTRIBUTING.md,
   STATUS.md and --check says "ok: 57 open hypotheses, all classified; 4 generated files up to date".
+- 01:35 report docs/research/pi0-fold.md written.
