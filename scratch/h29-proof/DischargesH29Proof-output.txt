@@ -1,0 +1,1 @@
+scratch/h29-proof/DischargesH29Proof.lean:1:0: error: object file '/home/jackmccarthy/dzq-wt/h29-proof/.lake/build/lib/lean/ZInQKernel/Contrib/OneProof/X0ModuliUsed.olean' of module ZInQKernel.Contrib.OneProof.X0ModuliUsed does not exist
