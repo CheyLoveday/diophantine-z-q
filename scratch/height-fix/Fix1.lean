@@ -695,4 +695,17 @@ theorem gaudronRemondThm14_of_printed (hGR : GaudronRemondThm14Printed)
   fun K _ _ A B g x hg hx hiso =>
     hGR K A B g x hg (isPrintedStableHeight_of (AvSplit.Final.h38 hUL hMT) hD hx) hiso
 
+/-- The new leaf is implied by the old kernel row (given T35 and Stacks 04KV): it is never stronger than
+`BostLowerBound`. -/
+theorem bostLowerBoundPrinted_of_kernel (h : BostLowerBound)
+    (hT35 : ZInQ.LeafPush2.UniformizationExists) (hGC : AVGlue.GeomConnOfRationalPoint) :
+    BostLowerBoundPrinted :=
+  fun K _ _ A g hg x hx => h K A g hg x (isStableFaltingsHeight_of_printed hT35 hGC hx)
+
+/-- The new leaf is implied by the old kernel row (given T35 and Stacks 04KV). -/
+theorem gaudronRemondThm14Printed_of_kernel (h : GaudronRemondThm14)
+    (hT35 : ZInQ.LeafPush2.UniformizationExists) (hGC : AVGlue.GeomConnOfRationalPoint) :
+    GaudronRemondThm14Printed :=
+  fun K _ _ A B g x hg hx hiso => h K A B g x hg (isStableFaltingsHeight_of_printed hT35 hGC hx) hiso
+
 end ZInQ.HeightFix
