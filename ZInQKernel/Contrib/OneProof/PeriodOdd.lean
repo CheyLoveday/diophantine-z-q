@@ -244,6 +244,26 @@ theorem core_isog (hGZ : GrossZagierModuliOptAt (ePrime d)) {c' : ℚ}
 
 end Core
 
+/-- **`C_d` or its 2-isogenous curve `E'_d : y² = x³ + 4d² x` is the strong Weil curve** (up to a
+rational factor), from the eta-quotient law alone: for the newform `f` of `C_d` and a period lattice
+`L` of `C_d`, either `L = c₀ Λ_f`, or `L' = ((1 + i)/2) L`, a period lattice of `E'_d`, is `c Λ_f`
+(`c₀, c ∈ ℚ`). cd-optimal's `CdTwistedPeriodOdd` is what selects the first case; it is not needed for
+the Gross–Zagier formula (`grossZagierFormulaCd_of_etaW32`). -/
+theorem cd_or_ePrime_optimal (hW : EtaW32Character) {d : ℕ} (hd8 : d % 8 = 5) (hsq : Squarefree d)
+    {N : ℕ} [NeZero N] (f : Newform N 2) (hχ : f.χ = 1)
+    (hcoeff : ∀ n : ℕ, n ≠ 0 → coeff f n = ((shortCurve (-(d : ℚ) ^ 2)).LFunction n : ℂ))
+    {L : PeriodPair} (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) :
+    (∃ c₀ : ℚ, L.lattice = (periodLattice f).map (LinearMap.mulLeft ℤ (c₀ : ℂ))) ∨
+      (ZInQ.GZHL3.IsPeriodLattice (ePrime d) (latP L) ∧
+        ∃ c : ℚ, (latP L).lattice = (periodLattice f).map (LinearMap.mulLeft ℤ (c : ℂ))) := by
+  have hd4 : d % 4 = 1 := by omega
+  have hΛ := periodLattice_eq_LamCd hd4 hsq f hχ hcoeff
+  have hne : ∃ l ∈ LamCd d, l ≠ 0 := by rw [← hΛ]; exact periodLattice_ne_zero f
+  rw [hΛ]
+  rcases lattice_cases hd4 hsq hL (LamCd_le_of_etaW32 hW hd4 (by omega) hsq hL) hne with h | h
+  · exact Or.inl h
+  · exact Or.inr ⟨isPeriodLattice_ePrime hL, h⟩
+
 /-! ## §3. The consumer -/
 
 /-- **`GZHL3.GrossZagierFormulaCd` from gz-optimal's optimal-parametrization leaf, the eta-quotient
