@@ -349,4 +349,65 @@ theorem artin_sqrtH (hsq : Squarefree m) (h3 : m % 4 = 3) {d : ℕ} [NeZero d] (
 
 end Artin
 
+/-! ## §5. `GenusSqrtD`, proved, and the main theorem -/
+
+open ZInQ.Contrib.TYZGenus.CM (ιC)
+open ZInQ.GZWeil (gaussD)
+
+/-- **`GenusSqrtD`, proved.** -/
+theorem genusSqrtD : GenusSqrtD := by
+  intro m _ hmsq hm3 d _ hd4 hdsq e he σ J a ha hNJ hcop2d hcase hart
+  set w := sqrtH hmsq hm3 d hd4 with hw
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne d
+  have hg2 := ZInQ.GZWeil.gaussD_sq hd4 hdsq
+  have hz2 : (ιC (e (w : SeparableClosure (QNeg m)))) ^ 2 = (d : ℂ) := by
+    rw [← map_pow, ← map_pow]
+    have : ((w : SeparableClosure (QNeg m))) ^ 2 = (d : SeparableClosure (QNeg m)) := by
+      have := congrArg (fun x : ringClassField (conductorOrder (QNeg m) d) =>
+        (x : SeparableClosure (QNeg m))) (sqrtH_sq hmsq hm3 d hd4)
+      simpa using this
+    rw [this]; simp
+  have hzg : ιC (e (w : SeparableClosure (QNeg m))) = gaussD d ∨
+      ιC (e (w : SeparableClosure (QNeg m))) = -gaussD d := by
+    apply sq_eq_sq_iff_eq_or_eq_neg.1; rw [hz2, hg2]
+  -- `σ z = χ z` gives `σ g = χ g`
+  have conclude : ∀ χ : ℤ, σ (ιC (e (w : SeparableClosure (QNeg m)))) =
+      (χ : ℂ) * ιC (e (w : SeparableClosure (QNeg m))) → σ (gaussD d) = (χ : ℂ) * gaussD d := by
+    intro χ h
+    rcases hzg with hz | hz
+    · rw [hz] at h; exact h
+    · rw [hz, map_neg] at h; linear_combination -h
+  rcases hcase with ⟨hJ1, rfl⟩ | ⟨hmax, hprime⟩
+  · -- `J = 𝒪_K`: the Artin symbol is trivial
+    have hJ : J = 1 := Subtype.ext (by rw [hJ1]; simp [Ideal.one_eq_top])
+    apply conclude
+    rw [hart w, hJ, map_one, map_one, AlgEquiv.one_apply, jacobiSym.one_left]; simp
+  · set p := a.natAbs with hp
+    have hap : a = p := by rw [hp]; exact (Int.natAbs_of_nonneg ha.le).symm
+    have hp2d : ¬ (p : ℤ) ∣ 2 * d := by
+      intro h
+      rw [← hap] at h
+      have := hcop2d.isUnit_of_dvd' (dvd_refl a) h
+      rw [Int.isUnit_iff] at this
+      have : p = 1 := by omega
+      exact hprime.one_lt.ne' this
+    have hA := artin_sqrtH hmsq hm3 hd4 J hprime hNJ hp2d
+    apply conclude
+    rw [hart w, hA, hap]
+    first
+      | (simp; exact Or.inl rfl)
+      | (simp [hw])
+      | (simp; rfl)
+
+/-- **`GZStatements.GrossZagierHeegnerCd` (the `C_d` form of `hL3`) from the main theorem of CM and the two printed
+Gross–Zagier statements alone.** Chebotarev at conductor `d` and genus theory are proved. -/
+theorem grossZagierHeegnerCd_of_hCM (hCM : T5Glue.ShimuraMainCM)
+    (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd) (hGC : ZInQ.GZHL3.GrossConjugationCd) :
+    ZInQ.GZStatements.GrossZagierHeegnerCd :=
+  grossZagierHeegnerCd_of_genus' hCM genusSqrtD hGZ hGC
+
+/-- **The even-`c` Heegner point of `C_d` from the main theorem of CM alone.** -/
+theorem heegnerPointRationalCdEven_of_hCM (hCM : T5Glue.ShimuraMainCM) : HeegnerPointRationalCdEven :=
+  heegnerPointRationalCdEven_of_twist (twistTransportCd_of_genus hCM ringClassJd genusSqrtD)
+
 end ZInQ.Heegner32
