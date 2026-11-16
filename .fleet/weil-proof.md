@@ -14,7 +14,8 @@ Lean theorems with no hypotheses:
 `WeilFormulaTheta.lean` (build; `#discharges` lists it). No new leaf.
 
 **Count.** `scratch/weil-proof/autofold.json` (nondegeneracy flagged pending reading): 34/11 -> 37/11, no rise;
-with pic-dict's "unread" flag: 34/11 -> 38/10. Dry-run modules compile.
+with pic-dict's "unread" flag: 34/11 -> 38/10. Dry-run modules compile. On origin/wip/leaf-fold32b
+(`autofold-lf32.json`, tested in a temporary worktree): 16/21 -> 18/21, module compiles.
 
 **Not done.** The field is not removed: nondegeneracy (descent + `#X̂[n] = #X[n]`) and the three line-bundle
 displays (seesaw / cube) stay leaves.
