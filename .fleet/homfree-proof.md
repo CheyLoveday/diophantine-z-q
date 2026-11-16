@@ -26,3 +26,5 @@ published (a ∀-specialization of the print), not the printed form. The count i
 - So "-1, no new leaf" needs a re-assembly of the T6 branch onto `HomFreeFiniteC`/`AlgQ`. That is not an autofold;
   the plan is in docs/research/homfree-proof.md §5.3.
 - Note for faltings-cm's pending r9b fold: use `homFreeFiniteNF` instead of `{t}.homFreeFiniteAlgClosed`.
+
+Final commit of the task: report docs/research/homfree-proof.md, scratch/homfree-proof/ (log.md, checks), contribution ZInQKernel/Contrib/OneProof/HomFreeFiniteAlgClosed.lean.
