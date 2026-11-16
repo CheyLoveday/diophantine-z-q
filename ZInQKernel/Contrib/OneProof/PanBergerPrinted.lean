@@ -204,6 +204,7 @@ def trPair : (Fin n → E) →ₗ[ℚ_[p]] Module.Dual ℚ_[p] (Fin n → E) :=
     (fun w v v' => by rw [add_dotProduct, map_add])
     (fun c w v => by rw [smul_dotProduct, map_smul])
 
+omit [FiniteDimensional ℚ_[p] E] in
 theorem trPair_apply (w v : Fin n → E) : trPair p w v = Algebra.trace ℚ_[p] E (v ⬝ᵥ w) := rfl
 
 theorem trPair_injective : Function.Injective (trPair p (E := E) (n := n)) := by
@@ -227,6 +228,7 @@ def trEquiv : (Fin n → E) ≃ₗ[ℚ_[p]] Module.Dual ℚ_[p] (Fin n → E) :=
 
 theorem trEquiv_apply (w v : Fin n → E) : trEquiv p w v = Algebra.trace ℚ_[p] E (v ⬝ᵥ w) := rfl
 
+omit [FiniteDimensional ℚ_[p] E] in
 /-- The trace pairing intertwines the contragredient matrix action with the dual action:
 `⟨ρ(σ⁻¹)ᵀ w, v⟩ = ⟨w, ρ(σ⁻¹) v⟩`. -/
 theorem trPair_dual (ρ : GQp p →* GL (Fin n) E) (σ : GQp p) (w v : Fin n → E) :
@@ -525,7 +527,7 @@ theorem teich_span {ι : Type*} [Fintype ι] (b : Basis ι (ZMod p) k) (x : Witt
 /-- **`[W(k)[1/p] : ℚ_p] = [k : 𝔽_p]`** for a finite field `k` of characteristic `p`. -/
 theorem finrank_wittLoc : finrank ℚ_[p] (WittLoc p k) = finrank (ZMod p) k := by
   let b := Module.finBasis (ZMod p) k
-  letI : Algebra ℤ_[p] (WittVector p k) := (zpToWitt p k).toAlgebra
+  let : Algebra ℤ_[p] (WittVector p k) := (zpToWitt p k).toAlgebra
   have hsmul : ∀ (a : ℤ_[p]) (w : WittVector p k), a • w = zpToWitt p k a * w := fun _ _ => rfl
   have hli : LinearIndependent ℤ_[p] (fun i => WittVector.teichmuller p (b i)) := by
     rw [Fintype.linearIndependent_iff]
@@ -539,17 +541,17 @@ theorem finrank_wittLoc : finrank ℚ_[p] (WittLoc p k) = finrank (ZMod p) k := 
     rw [← hsmul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   let B := Basis.mk hli hsp
-  letI : Algebra ℤ_[p] (WittLoc p k) :=
+  let : Algebra ℤ_[p] (WittLoc p k) :=
     ((algebraMap (WittVector p k) (WittLoc p k)).comp (zpToWitt p k)).toAlgebra
-  haveI : IsScalarTower ℤ_[p] ℚ_[p] (WittLoc p k) := IsScalarTower.of_algebraMap_eq fun z => by
+  have : IsScalarTower ℤ_[p] ℚ_[p] (WittLoc p k) := IsScalarTower.of_algebraMap_eq fun z => by
     rw [RingHom.algebraMap_toAlgebra, RingHom.algebraMap_toAlgebra]
     exact (IsLocalization.lift_eq (M := Submonoid.powers (p : ℤ_[p])) _ z).symm
-  haveI : IsScalarTower ℤ_[p] (WittVector p k) (WittLoc p k) :=
+  have : IsScalarTower ℤ_[p] (WittVector p k) (WittLoc p k) :=
     IsScalarTower.of_algebraMap_eq fun z => rfl
   have hsub : Algebra.algebraMapSubmonoid (WittVector p k) (Submonoid.powers (p : ℤ_[p])) =
       Submonoid.powers (p : WittVector p k) := by
     rw [Algebra.algebraMapSubmonoid, Submonoid.map_powers, map_natCast]
-  haveI : IsLocalization (Algebra.algebraMapSubmonoid (WittVector p k)
+  have : IsLocalization (Algebra.algebraMapSubmonoid (WittVector p k)
       (Submonoid.powers (p : ℤ_[p]))) (WittLoc p k) := by
     rw [hsub]
     infer_instance
@@ -705,7 +707,7 @@ theorem card_le_finrank_of_resField [Algebra (ZMod p) (resField p K)] [FiniteDim
 
 /-- **The residue field of a finite `K/ℚ_p` is finite.** -/
 instance resField_finite [FiniteDimensional ℚ_[p] K] : Finite (resField p K) := by
-  letI := ZMod.algebra (resField p K) p
+  let := ZMod.algebra (resField p K) p
   have hrk : Module.rank (ZMod p) (resField p K) ≤ finrank ℚ_[p] K :=
     rank_le fun s hs => by
       have := card_le_finrank_of_resField p K (fun i : s => (i : resField p K)) hs
@@ -722,12 +724,12 @@ abbrev K0W : Type := WittLoc p (resField p K)
 /-- **`[K_0 : ℚ_p]` is the residue degree `f(K/ℚ_p)`**: `|k_K| = p^{[K_0 : ℚ_p]}`. -/
 theorem card_resField [FiniteDimensional ℚ_[p] K] :
     Nat.card (resField p K) = p ^ finrank ℚ_[p] (K0W p K) := by
-  letI := ZMod.algebra (resField p K) p
+  let := ZMod.algebra (resField p K) p
   exact card_eq_pow_finrank_wittLoc p (resField p K)
 
 /-- `[K_0 : ℚ_p] ≤ [K : ℚ_p]`. -/
 theorem finrank_K0W_le [FiniteDimensional ℚ_[p] K] : finrank ℚ_[p] (K0W p K) ≤ finrank ℚ_[p] K := by
-  letI := ZMod.algebra (resField p K) p
+  let := ZMod.algebra (resField p K) p
   change finrank ℚ_[p] (WittLoc p (resField p K)) ≤ _
   rw [finrank_wittLoc]
   have : Module.Free (ZMod p) (resField p K) := Module.Free.of_divisionRing _ _
@@ -738,7 +740,7 @@ theorem finrank_K0W_le [FiniteDimensional ℚ_[p] K] : finrank ℚ_[p] (K0W p K)
 
 /-- `[K_0 : ℚ_p] ≥ 1`. -/
 theorem finrank_K0W_pos [FiniteDimensional ℚ_[p] K] : 0 < finrank ℚ_[p] (K0W p K) := by
-  letI := ZMod.algebra (resField p K) p
+  let := ZMod.algebra (resField p K) p
   change 0 < finrank ℚ_[p] (WittLoc p (resField p K))
   rw [finrank_wittLoc]
   have : Module.Free (ZMod p) (resField p K) := Module.Free.of_divisionRing _ _
