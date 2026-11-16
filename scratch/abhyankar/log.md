@@ -33,3 +33,7 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
 - 07:10 `branch_e` COMPILED (KummerBranch.lean): primes of the integral closure of A₁ = A[t₁, g] in Ω₁ = L(t₁) over (t₁)
   have index 1 over A₁ (T2 = `HDec.HSyn.t2_proved` at A_(f), adapted from `TsKummer.abhyankar_core`; freeness from
   `TPurity3.normalFreeDim2`).
+- 08:25 `kummerUnramBranch : KummerUnramBranch` COMPILED (KummerBranchFinal.lean: `finrank_le_of_adjoin`, `branch_final`).
+  Contributor file: `Abhyankar.tameBranchNormal : SGRDirect.NVLocal.TameBranchNormal` and
+  `Abhyankar.nvLocalInertia : SGRDirect.NVLocalInertia` COMPILED, axioms [propext, Classical.choice, Quot.sound]
+  (VERIFIED, scratch/abhyankar/axioms.txt). TameBranchNormal is PROVED outright: no new leaf.
