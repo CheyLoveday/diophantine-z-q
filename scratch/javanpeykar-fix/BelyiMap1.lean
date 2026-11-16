@@ -270,4 +270,45 @@ theorem isFinite_beta (ht : letI := ZInQ.LeafPush2.ffAlgebra C; Transcendental k
 
 end Finite
 
+
+section ChartOpens
+
+variable (k : Type) [Field k]
+
+theorem opensRange_chart : (chart k).opensRange =
+    Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin 2) k) (MvPolynomial.X 1) := by
+  unfold chart
+  rw [Scheme.Hom.opensRange_comp_of_isIso, Scheme.Opens.opensRange_ι]
+
+theorem chart_mem_basicOpen_X0 (z : Spec (CommRingCat.of (Rk k))) :
+    chart k z ∈ Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin 2) k) (MvPolynomial.X 0) ↔
+      (MvPolynomial.X i0 : Rk k) ∉ z.asIdeal := by
+  rw [show chart k = _ from Proj.standardOpenIso_inv_ι (Fin 2) k 1, Scheme.Hom.comp_apply]
+  have key := Proj.awayι_preimage_basicOpen (MvPolynomial.homogeneousSubmodule (Fin 2) k)
+    (MvPolynomial.X_mem_homogeneousSubmodule_one k 1) Nat.one_pos
+    (MvPolynomial.X_mem_homogeneousSubmodule_one k 0) Nat.one_pos
+  rw [← SetLike.mem_coe, ← Set.mem_preimage, ← TopologicalSpace.Opens.map_coe, key]
+  erw [SetLike.mem_coe, PrimeSpectrum.mem_basicOpen, Spec.map_apply, PrimeSpectrum.comap_asIdeal,
+    Ideal.mem_comap]
+  erw [MvPolynomial.homogeneousLocalizationAwayXEquiv_awayMk]
+  simp only [pow_one, MvPolynomial.dehomogenizeX, MvPolynomial.aeval_X]
+  simp [i0]
+
+theorem chart_mem_basicOpen_X0_sub_X1 (z : Spec (CommRingCat.of (Rk k))) :
+    chart k z ∈ Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin 2) k)
+      (MvPolynomial.X 0 - MvPolynomial.X 1) ↔ (MvPolynomial.X i0 - 1 : Rk k) ∉ z.asIdeal := by
+  rw [show chart k = _ from Proj.standardOpenIso_inv_ι (Fin 2) k 1, Scheme.Hom.comp_apply]
+  have key := Proj.awayι_preimage_basicOpen (MvPolynomial.homogeneousSubmodule (Fin 2) k)
+    (MvPolynomial.X_mem_homogeneousSubmodule_one k 1) Nat.one_pos
+    (Submodule.sub_mem _
+      (MvPolynomial.X_mem_homogeneousSubmodule_one k 0) (MvPolynomial.X_mem_homogeneousSubmodule_one k 1)) Nat.one_pos
+  rw [← SetLike.mem_coe, ← Set.mem_preimage, ← TopologicalSpace.Opens.map_coe, key]
+  erw [SetLike.mem_coe, PrimeSpectrum.mem_basicOpen, Spec.map_apply, PrimeSpectrum.comap_asIdeal,
+    Ideal.mem_comap]
+  erw [MvPolynomial.homogeneousLocalizationAwayXEquiv_awayMk]
+  simp only [pow_one, MvPolynomial.dehomogenizeX, MvPolynomial.aeval_X, map_sub]
+  simp [i0]
+
+end ChartOpens
+
 end JavanpeykarFix
