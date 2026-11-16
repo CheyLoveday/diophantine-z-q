@@ -29,3 +29,11 @@ weil-used (origin/wip/weil-used 8ea3eaf3): consumers read only left kernel, Galo
   (Modules/PullbackMonoidal.lean, built by Localization.Monoidal.functorMonoidalOfComp). Not proved: needs the
   presheaf-level pullbackComp monoidal + compatibility of `sheafificationCompPullback` with pullbackComp
   (conjugate computation). Rated GLUE (formal, STANDARD in the theory: pullback is a monoidal pseudofunctor).
+- VERIFIED: `ZInQKernel/Contrib/OneProof/WeilFormula.lean` builds (lake build); `#discharges`
+  (scratch/weil-proof/discharges.txt): `weilPairingMumford` by `WeilProof.weilPairingMumford_proof`, still assumes
+  [MumfordSquareAC, MumfordMulNPicZeroAC, MumfordPhiSurjectiveAC, PullbackCompMonoidal, MumfordWeilNondegAC,
+  MumfordWeilAltAC, T09Pic.PhiAmpleIsogeny (open field)], standard axioms.
+- Merged origin/wip/pic-fix (PhiAmpleIsogeny.lean identical blob to leaf-fold32b's; PicDictionary.lean identical too).
+- VERIFIED: autofold dry run (scratch/weil-proof/autofold.json; Nondeg/Alt flagged pending reading, PullbackCompMonoidal
+  project glue): `strict count: 34/11 on 45 -> 37/13 on 50; strictest 34/11 -> 37/13` (needs --allow-rise);
+  FoldDryRun.lean compiles, sixContactMin_of_open36 standard axioms.

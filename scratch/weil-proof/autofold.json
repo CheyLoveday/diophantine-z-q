@@ -1,0 +1,62 @@
+{
+ "name": "weil-proof",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.WeilFormula"
+ ],
+ "discharges": [
+  {
+   "field": "weilPairingMumford",
+   "proof": "_root_.WeilProof.weilPairingMumford_proof {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.pullbackCompMonoidal {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
+   "leaves": [
+    {
+     "name": "mumfordSquareAC",
+     "type": "_root_.PicDict.MumfordSquareAC",
+     "doc": "pic-dict: theorem of the square over an algebraically closed field (Mumford, Abelian varieties, section 6 Cor. 4; locator UNVERIFIED).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 6 Cor. 4: t_{x+y}^*L (x) L = t_x^*L (x) t_y^*L"
+    },
+    {
+     "name": "mumfordMulNPicZeroAC",
+     "type": "_root_.PicDict.MumfordMulNPicZeroAC",
+     "doc": "pic-dict: n_X^*L = L^n for L in Pic0(X), k algebraically closed (Mumford section 8 (iv); locator UNVERIFIED).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 8 (iv): n_X^*L = L^n for L in Pic0"
+    },
+    {
+     "name": "mumfordPhiSurjectiveAC",
+     "type": "_root_.PicDict.MumfordPhiSurjectiveAC",
+     "doc": "pic-dict: for L ample every L' in Pic0(X) is t_x^*L (x) L^-1 (Mumford section 8 Thm 1; locator UNVERIFIED).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 8 Thm 1"
+    },
+    {
+     "name": "pullbackCompMonoidal",
+     "type": "_root_.WeilProof.PullbackCompMonoidal",
+     "doc": "weil-proof: Mathlib's Scheme.Modules.pullbackComp commutes with the tensorators of the vendored monoidal structure of Scheme.Modules.pullback (pull-back of sheaves of modules is a monoidal pseudofunctor). Formal glue about the library's constructions; with it, Mumford's section 20 display (e_n by its formula is well defined, mu_n-valued and bilinear) is a theorem (WeilProof.mumfordWeilPairingAC_of_pullbackCompMonoidal).",
+     "kind": "project glue",
+     "flag": "",
+     "source": "project glue (weil-proof): monoidality of pullbackComp for the vendored Modules/PullbackMonoidal structure"
+    },
+    {
+     "name": "mumfordWeilNondegAC",
+     "type": "_root_.PicDict.MumfordWeilNondegAC",
+     "doc": "pic-dict: e_n nondegenerate for n prime to char (Mumford section 20; locator UNVERIFIED).",
+     "kind": "published",
+     "flag": "pending reading: stated for the formula e_n(x, M) = t_x^*psi o psi^-1; it is Mumford's print only if section 20 states e_n by this formula (and not only through the duality of section 15); sign immaterial; locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 20: e_n nondegenerate"
+    },
+    {
+     "name": "mumfordWeilAltAC",
+     "type": "_root_.PicDict.MumfordWeilAltAC",
+     "doc": "pic-dict: e_n(x, phi_L(x)) = 1 (Mumford section 23; locator UNVERIFIED).",
+     "kind": "published",
+     "flag": "pending reading: stated for the formula e_n(x, M) = t_x^*psi o psi^-1; it is Mumford's print only if section 20 states e_n by this formula (and not only through the duality of section 15); sign immaterial; locator UNVERIFIED",
+     "source": "Mumford, Abelian varieties, 23: e^L_n(x,x) = 1"
+    }
+   ]
+  }
+ ]
+}

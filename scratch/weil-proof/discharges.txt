@@ -103,7 +103,16 @@ DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by WeilProof.weilPairingMumfor
  PicDict.MumfordWeilAltAC,
  PicDict.MumfordKLFiniteAC]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves17.weilPairingMumford] by WeilProof.weilPairingMumford_proof
+  still assumes: [PicDict.MumfordSquareAC,
+ PicDict.MumfordMulNPicZeroAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ WeilProof.PullbackCompMonoidal,
+ PicDict.MumfordWeilNondegAC,
+ PicDict.MumfordWeilAltAC,
+ T09Pic.PhiAmpleIsogeny]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
   still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 56 open hypotheses, 3111 theorems checked, 19 discharge one
+#discharges: 56 open hypotheses, 3112 theorems checked, 20 discharge one

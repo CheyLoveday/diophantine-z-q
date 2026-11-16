@@ -448,3 +448,19 @@ theorem mumfordWeilPairingAC_of_pullbackCompMonoidal (hA : PullbackCompMonoidal)
 
 end WeilProof
 
+
+namespace WeilProof
+
+open PicDict
+
+/-- **The field `weilPairingMumford` (fold form).** From five of pic-dict's Mumford leaves, the glue
+`PullbackCompMonoidal` (which replaces pic-dict's §20 leaf `MumfordWeilPairingAC`) and the open field
+`T09Pic.PhiAmpleIsogeny` (which replaces `MumfordKLFiniteAC`: it is the only use of that leaf; in
+leaf-fold32 the field is `PicFix.phiAmpleIsogeny_of_printed` of two printed leaves). -/
+theorem weilPairingMumford_proof (hsq : MumfordSquareAC) (h8iv : MumfordMulNPicZeroAC)
+    (h8 : MumfordPhiSurjectiveAC) (hA : PullbackCompMonoidal) (h20b : MumfordWeilNondegAC)
+    (h23 : MumfordWeilAltAC) (h3 : T09Pic.PhiAmpleIsogeny) : T09Pic.WeilPairingMumford :=
+  PicDict.weilPairingMumford_of_mumford hsq h8iv h8 (mumfordWeilPairingAC_of_pullbackCompMonoidal hA)
+    h20b h23 h3
+
+end WeilProof
