@@ -118,4 +118,58 @@ lemma liftV_comp {T : Over (Spec (CommRingCat.of K))} (f : T ⟶ P) (h : ∀ t, 
 
 end OpenSub
 
+/-- **`PicZeroAbVar` from four statements**: the Picard scheme is locally of finite type (Kleiman 9.4.8), the
+identity component of a group scheme locally of finite type is an open geometrically irreducible subgroup (SGA 3
+VI_A 2.4), and `Pic⁰` is smooth and proper. -/
+theorem picZeroAbVar_of_leaves (h1 : PicLocFinType) (h2 : IdentityComponentLFT) (h3a : PicZeroSmooth)
+    (h3b : PicZeroProper) : PicZeroAbVar := by
+  intro K _ A P rep
+  letI := picardFunctorCommGrpObj A.X.hom rep
+  obtain ⟨V, hV, hmulV, hinvV, hirr⟩ := h2 K P (h1 K A P rep)
+  let j := subι V
+  have hmem : ∀ x : P.left, x ∈ identityComponent P → x ∈ V := fun x hx => by
+    rw [← SetLike.mem_coe, hV]; exact hx
+  have hιV : ∀ y, V.ι y ∈ V := fun y => by
+    rw [← SetLike.mem_coe, ← Scheme.Opens.range_ι V]; exact ⟨y, rfl⟩
+  -- multiplication
+  let pj : subX V ⊗ subX V ⟶ P ⊗ P := CartesianMonoidalCategory.lift
+    (CartesianMonoidalCategory.fst (subX V) (subX V) ≫ j) (CartesianMonoidalCategory.snd (subX V) (subX V) ≫ j)
+  have hm : ∀ t, (pj ≫ μ[P]).left t ∈ V := fun t => by
+    rw [Over.comp_left]
+    apply hmulV
+    · change (pj ≫ CartesianMonoidalCategory.fst P P).left t ∈ V
+      rw [CartesianMonoidalCategory.lift_fst, Over.comp_left, Scheme.Hom.comp_apply]
+      exact hιV _
+    · change (pj ≫ CartesianMonoidalCategory.snd P P).left t ∈ V
+      rw [CartesianMonoidalCategory.lift_snd, Over.comp_left, Scheme.Hom.comp_apply]
+      exact hιV _
+  let mulY := liftV V (pj ≫ μ[P]) hm
+  have hmul : mulY ≫ j = CartesianMonoidalCategory.fst (subX V) (subX V) ≫ j *
+      CartesianMonoidalCategory.snd (subX V) (subX V) ≫ j := by
+    rw [liftV_comp, CategoryTheory.Hom.mul_def]
+  -- unit
+  have ho : ∀ t, (η[P]).left t ∈ V := fun t => hmem _ ⟨t, mem_connectedComponent⟩
+  let oneY := liftV V η[P] ho
+  have hone : oneY ≫ j = η[P] := liftV_comp V _ _
+  -- inverse
+  have hi : ∀ t, (j ≫ (𝟙 P)⁻¹).left t ∈ V := fun t => by
+    rw [Over.comp_left, Scheme.Hom.comp_apply]
+    exact hinvV _ (hιV t)
+  let invY := liftV V (j ≫ (𝟙 P)⁻¹) hi
+  have hinv : invY ≫ j = j⁻¹ := by
+    rw [liftV_comp, GrpObj.comp_inv, Category.comp_id]
+  letI : GrpObj (subX V) := AVGlue.grpObjOfMono j mulY hmul oneY hone invY hinv
+  have hjmon : IsMonHom j := AVGlue.isMonHom_grpObjOfMono j mulY hmul oneY hone invY hinv
+  haveI : IsProper (subX V).hom := h3b K A P rep V hV
+  haveI : Smooth (subX V).hom := h3a K A P rep V hV
+  haveI : GeometricallyReduced (subX V).hom := geometricallyReduced_of_smooth _
+  haveI : GeometricallyIrreducible (subX V).hom := hirr
+  haveI : GeometricallyIntegral (subX V).hom :=
+    GeometricallyIntegral.of_geometricallyReduced_of_geometricallyIrreducible _
+  refine ⟨AbVar.mk (subX V), j, ?_, ?_, hjmon⟩
+  · exact inferInstanceAs (IsOpenImmersion V.ι)
+  · change Set.range V.ι = _
+    rw [Scheme.Opens.range_ι, hV]
+
 end PicDict
+#print axioms PicDict.picZeroAbVar_of_leaves
