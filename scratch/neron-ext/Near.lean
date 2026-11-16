@@ -397,6 +397,31 @@ theorem extension_of_dvrLocal (hpr : EGAIV_8_10_5_xii) (hloc : NeronDVRLocal) :
   let n := glued B hcov
   exact ⟨n.X, n.smooth, n.sep, n.qc, n.e, fun Y _ => n.ext Y (Scheme.Hom.preimage_top _)⟩
 
+/-- **The local leaf is not stronger than the field**: `NeronSchemeExtensionExists` gives `NeronDVRLocal`
+(localize the Néron model over `𝓞_L`: gt-blr's `GapBLR.isNeronModelOver_localization`). -/
+theorem dvrLocal_of_extension (h : ZInQ.Contrib.NeronC.NeronSchemeExtensionExists) : NeronDVRLocal := by
+  intro K _ A L _ _ _ v _ Rv _ _ _ _ _
+  obtain ⟨N, hS, hSep, hQC, e, hN⟩ := ZInQ.Contrib.NeronC.neronSchemeModelExists_of_extension h K A L
+  haveI := hS; haveI := hSep; haveI := hQC
+  have hX : CToPrinted.IsNeronModelOver (𝓞 L) L N := by
+    refine ⟨hS, hSep, inferInstance, hQC, fun Y _ => ?_⟩
+    have hb := hN Y
+    have heq : (fun f : Y ⟶ N => (Over.pullback (jL L)).map f) =
+        (fun g => g ≫ e.inv) ∘ (fun f : Y ⟶ N => (Over.pullback (jL L)).map f ≫ e.hom) := by
+      funext f; simp
+    rw [heq]
+    have b2 : Function.Bijective (fun g : (Over.pullback (jL L)).obj Y ⟶ _ => g ≫ e.inv) :=
+      ⟨fun a b hab => by simpa using congrArg (· ≫ e.hom) hab, fun g => ⟨g ≫ e.hom, by simp⟩⟩
+    exact b2.comp hb
+  have hloc := GapBLR.isNeronModelOver_localization (𝔭 := v) Rv hX
+  refine ⟨_, hloc, ⟨?_⟩⟩
+  have hk : Spec.map (CommRingCat.ofHom (algebraMap Rv L)) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) Rv)) = jL L := by
+    simp only [jL, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    rw [← IsScalarTower.algebraMap_eq]
+  exact ((Over.pullbackComp _ _).app N).symm ≪≫ pbCongr hk N ≪≫ e
+
 end NeronExt
 
 #print axioms NeronExt.extension_of_dvrLocal
+#print axioms NeronExt.dvrLocal_of_extension
