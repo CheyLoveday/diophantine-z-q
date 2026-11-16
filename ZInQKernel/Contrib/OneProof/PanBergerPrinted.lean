@@ -259,6 +259,230 @@ theorem finrank_tensorInv_dualHom (act : GQp p → B →ₗ[ℚ_[p]] B) (H : Sub
 
 end Tensor
 
+/-! ## §4. The actions on `B_dR` and `ℂ_p(i)`, and pkg-I4's spaces as `Hom` forms -/
+
+section Actions
+
+variable (p : ℕ) [Fact p.Prime]
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E] {n : ℕ}
+
+/-- `σ` on `B_dR`, as a `ℚ_p`-linear map. -/
+def bdrLin (σ : GQp p) : BdR p →ₗ[ℚ_[p]] BdR p where
+  toFun := bdrAct p σ
+  map_add' := map_add _
+  map_smul' := bdrAct_smul p σ
+
+/-- `σ` on `ℂ_p`, as a `ℚ_p`-linear map. -/
+def cpLin (σ : GQp p) : ℂ_[p] →ₗ[ℚ_[p]] ℂ_[p] where
+  toFun := cpAct p σ
+  map_add' := map_add _
+  map_smul' c x := by
+    rw [RingHom.id_apply, Algebra.smul_def, map_mul, cpAct_algebraMap, ← Algebra.smul_def]
+
+/-- `σ` on the Tate twist `ℂ_p(i)`: `x ↦ χ(σ)^i σ(x)`. -/
+def htLin (i : ℤ) (σ : GQp p) : ℂ_[p] →ₗ[ℚ_[p]] ℂ_[p] := cycPow p σ i • cpLin p σ
+
+omit [FiniteDimensional ℚ_[p] E] in
+/-- pkg-I4's `ddrSpace` is `Hom_{G_{ℚ_p}}(V, B_dR)`. -/
+theorem homInv_bdr (ρ : GQp p →* GL (Fin n) E) : homInv p (bdrLin p) ⊤ ρ = ddrSpace p ρ := by
+  ext φ
+  exact ⟨fun h σ v => h σ (Subgroup.mem_top σ) v, fun h σ _ v => h σ v⟩
+
+omit [FiniteDimensional ℚ_[p] E] in
+/-- pkg-I4's `htSpace ρ i` is `Hom_{G_{ℚ_p}}(V, ℂ_p(i))`. -/
+theorem homInv_ht (ρ : GQp p →* GL (Fin n) E) (i : ℤ) :
+    homInv p (htLin p i) ⊤ ρ = htSpace p ρ i := by
+  ext φ
+  exact ⟨fun h σ v => h σ (Subgroup.mem_top σ) v, fun h σ _ v => h σ v⟩
+
+end Actions
+
+/-! ## §5. `K_0 = W(k)[1/p]` -/
+
+section K0
+
+variable (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+
+/-- **`𝓞_K`**, the valuation ring of `K ⊆ ℚ̄_p`: the elements of `K` of norm `≤ 1` (the norm of
+`ℚ̄_p` is the unique extension of `|·|_p`). -/
+def intRing : Subring (PadicAlgCl p) where
+  carrier := {x | x ∈ K ∧ ‖x‖ ≤ 1}
+  mul_mem' := fun ha hb => ⟨K.mul_mem ha.1 hb.1, by
+    rw [norm_mul]; exact (mul_le_mul ha.2 hb.2 (norm_nonneg _) zero_le_one).trans_eq (mul_one 1)⟩
+  one_mem' := ⟨K.one_mem, by rw [norm_one]⟩
+  add_mem' := fun ha hb => ⟨K.add_mem ha.1 hb.1,
+    (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha.2 hb.2)⟩
+  zero_mem' := ⟨K.zero_mem, by rw [norm_zero]; exact zero_le_one⟩
+  neg_mem' := fun ha => ⟨K.neg_mem ha.1, by rw [norm_neg]; exact ha.2⟩
+
+/-- **`𝔪_K`**, the maximal ideal of `𝓞_K`: the elements of norm `< 1`. -/
+def maxIdeal : Ideal (intRing p K) where
+  carrier := {x | ‖(x : PadicAlgCl p)‖ < 1}
+  add_mem' := fun {a b} ha hb => by
+    show ‖(a : PadicAlgCl p) + b‖ < 1
+    exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
+  zero_mem' := by
+    show ‖((0 : intRing p K) : PadicAlgCl p)‖ < 1
+    rw [ZeroMemClass.coe_zero, norm_zero]; exact zero_lt_one
+  smul_mem' := fun c x hx => by
+    show ‖(c : PadicAlgCl p) * x‖ < 1
+    rw [norm_mul]
+    exact lt_of_le_of_lt (mul_le_of_le_one_left (norm_nonneg _) c.2.2) hx
+
+instance maxIdeal_isMaximal : (maxIdeal p K).IsMaximal := by
+  rw [Ideal.isMaximal_iff]
+  refine ⟨fun h => ?_, fun J x hle hx hxJ => ?_⟩
+  · change ‖((1 : intRing p K) : PadicAlgCl p)‖ < 1 at h
+    rw [OneMemClass.coe_one, norm_one] at h
+    exact lt_irrefl _ h
+  · have hx1 : ‖(x : PadicAlgCl p)‖ = 1 := le_antisymm x.2.2 (not_lt.mp hx)
+    have hx0 : (x : PadicAlgCl p) ≠ 0 := by
+      intro h; rw [h, norm_zero] at hx1; exact zero_ne_one hx1
+    let y : intRing p K := ⟨(x : PadicAlgCl p)⁻¹, K.inv_mem x.2.1, by rw [norm_inv, hx1, inv_one]⟩
+    have hxy : x * y = 1 := Subtype.ext (mul_inv_cancel₀ hx0)
+    rw [← hxy]
+    exact J.mul_mem_right y hxJ
+
+/-- **`k_K = 𝓞_K / 𝔪_K`**, the residue field of `K`. -/
+abbrev resField : Type := intRing p K ⧸ maxIdeal p K
+
+instance : Field (resField p K) := Ideal.Quotient.field _
+
+theorem natCast_p_mem_maxIdeal : (p : intRing p K) ∈ maxIdeal p K := by
+  show ‖((p : intRing p K) : PadicAlgCl p)‖ < 1
+  rw [show ((p : intRing p K) : PadicAlgCl p) = (p : PadicAlgCl p) by simp]
+  rw [← map_natCast (algebraMap ℚ_[p] (PadicAlgCl p)) p, norm_algebraMap', Padic.norm_p]
+  exact inv_lt_one_of_one_lt₀ (by exact_mod_cast (Fact.out : p.Prime).one_lt)
+
+instance resField_charP : CharP (resField p K) p :=
+  (CharP.charP_iff_prime_eq_zero (Fact.out : p.Prime)).mpr (by
+    rw [← map_natCast (Ideal.Quotient.mk (maxIdeal p K)) p, Ideal.Quotient.eq_zero_iff_mem]
+    exact natCast_p_mem_maxIdeal p K)
+
+/-- `ℤ_p = W(𝔽_p) → W(k_K)` (Mathlib's `WittVector.equiv` and functoriality). -/
+def zpToWK : ℤ_[p] →+* WittVector p (resField p K) :=
+  (WittVector.map (ZMod.castHom (dvd_refl p) (resField p K))).comp
+    (WittVector.equiv p).symm.toRingHom
+
+/-- **`K_0 = W(k_K)[1/p]`**, Fontaine's `K_0` for `K` (Berger 2002, §0: `K_0 = W(k)[1/p]`;
+Fontaine, Astérisque 223 (1994), Exp. III; numbers UNVERIFIED): the Witt vectors of the residue
+field of `K` with `p` inverted (Mathlib's `WittVector`, `Localization.Away`). -/
+abbrev K0W : Type := Localization.Away (p : WittVector p (resField p K))
+
+/-- `ℚ_p = ℤ_p[1/p] → W(k_K)[1/p]`. -/
+def qpToK0W : ℚ_[p] →+* K0W p K :=
+  IsLocalization.lift (M := Submonoid.powers (p : ℤ_[p]))
+    (g := (algebraMap _ _).comp (zpToWK p K)) (by
+      rintro ⟨_, k, rfl⟩
+      have := (IsLocalization.Away.algebraMap_isUnit (S := K0W p K)
+        (p : WittVector p (resField p K))).pow k
+      rw [map_natCast] at this
+      simpa only [RingHom.comp_apply, map_pow, map_natCast] using this)
+
+instance : Algebra ℚ_[p] (K0W p K) := (qpToK0W p K).toAlgebra
+
+end K0
+
+/-! ## §6. Fontaine's de Rham, Hodge–Tate and semistable conditions on the underlying space -/
+
+section Predicates
+
+variable (p : ℕ) [Fact p.Prime]
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E] {n : ℕ}
+
+/-- **`D_dR(V) = (B_dR ⊗_{ℚ_p} V)^{G_{ℚ_p}}`** for `V = E^n` with the action `ρ`. -/
+def ddrU (ρ : GQp p →* GL (Fin n) E) : Submodule ℚ_[p] (BdR p ⊗[ℚ_[p]] (Fin n → E)) :=
+  tensorInv p (bdrLin p) ⊤ ρ
+
+/-- **`V` is de Rham** (Fontaine): `dim_{ℚ_p} D_dR(V) = dim_{ℚ_p} V` (`K = K_0 = ℚ_p`). -/
+def IsDeRhamU (ρ : GQp p →* GL (Fin n) E) : Prop :=
+  finrank ℚ_[p] (ddrU p ρ) = finrank ℚ_[p] (Fin n → E)
+
+/-- A `ℚ̄_p`-valued representation of `G_{ℚ_p}` is de Rham: it takes values in `GL_n(E)` for a
+finite `E/ℚ_p` inside `ℚ̄_p`, and the `ℚ_p`-representation `E^n` is de Rham. -/
+def LocalIsDeRhamU (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) : Prop :=
+  ∃ (E : IntermediateField ℚ_[p] (PadicAlgCl p)) (_ : FiniteDimensional ℚ_[p] E)
+    (ρE : GQp p →* GL (Fin n) E),
+    (∀ σ, Matrix.GeneralLinearGroup.map (algebraMap E (PadicAlgCl p)) (ρE σ) = ρ σ) ∧
+    IsDeRhamU p ρE
+
+/-- **`(ℂ_p(w) ⊗_{ℚ_p} V)^{G_{ℚ_p}}`**. -/
+def htU (ρ : GQp p →* GL (Fin n) E) (w : ℤ) : Submodule ℚ_[p] (ℂ_[p] ⊗[ℚ_[p]] (Fin n → E)) :=
+  tensorInv p (htLin p w) ⊤ ρ
+
+/-- **Multiplicity of the Hodge–Tate weight `w`** of the `E`-linear `V = E^n`:
+`dim_E (ℂ_p(w) ⊗_{ℚ_p} V)^{G_{ℚ_p}}` (cyclotomic character of weight `−1`, Pan's convention). -/
+def htMultU (ρ : GQp p →* GL (Fin n) E) (w : ℤ) : ℕ :=
+  finrank ℚ_[p] (htU p ρ w) / finrank ℚ_[p] E
+
+/-- **`ρ|_{G_{ℚ_p}}` is Hodge–Tate with distinct Hodge–Tate weights** (2-dimensional case): in a
+model over a finite `E ⊆ ℚ̄_p`, the weights (with multiplicity, over `E`) are two distinct
+integers `a ≠ b`. -/
+def LocalDistinctHTU (ρ : GQp p →* GL (Fin 2) (PadicAlgCl p)) : Prop :=
+  ∃ a b : ℤ, a ≠ b ∧ ∃ (E : IntermediateField ℚ_[p] (PadicAlgCl p)) (_ : FiniteDimensional ℚ_[p] E)
+    (ρE : GQp p →* GL (Fin 2) E),
+    (∀ σ, Matrix.GeneralLinearGroup.map (algebraMap E (PadicAlgCl p)) (ρE σ) = ρ σ) ∧
+    ∀ w : ℤ, htMultU p ρE w = Multiset.count w {a, b}
+
+/-- **`D_st,K(V) = (B_st ⊗_{ℚ_p} V)^{G_K}`**. -/
+def dstU (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (ρ : GQp p →* GL (Fin n) E) :
+    Submodule ℚ_[p] (Bst p ⊗[ℚ_[p]] (Fin n → E)) :=
+  tensorInv p (stLin p) K.fixingSubgroup ρ
+
+/-- **`V` is semistable over `K`** (Fontaine): `dim_{K_0} D_st,K(V) = dim_{ℚ_p} V`, written in
+`ℚ_p`-dimensions with `K_0 = W(k_K)[1/p]` (`K0W`):
+`dim_{ℚ_p} D_st,K(V) = [K_0 : ℚ_p] · dim_{ℚ_p} V`. -/
+def IsSemistableOverU (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (ρ : GQp p →* GL (Fin n) E) :
+    Prop :=
+  finrank ℚ_[p] (dstU p K ρ) = finrank ℚ_[p] (K0W p K) * finrank ℚ_[p] (Fin n → E)
+
+/-- **`V` is potentially semistable** (Fontaine): semistable over some finite `K/ℚ_p`. -/
+def IsPstU (ρ : GQp p →* GL (Fin n) E) : Prop :=
+  ∃ K : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] K ∧
+    IsSemistableOverU p K ρ
+
+/-- A `ℚ̄_p`-valued representation of `G_{ℚ_p}` is potentially semistable: it takes values in
+`GL_n(E)` for a finite `E/ℚ_p` inside `ℚ̄_p`, and the `ℚ_p`-representation `E^n` is potentially
+semistable. -/
+def LocalIsPstU (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) : Prop :=
+  ∃ (E : IntermediateField ℚ_[p] (PadicAlgCl p)) (_ : FiniteDimensional ℚ_[p] E)
+    (ρE : GQp p →* GL (Fin n) E),
+    (∀ σ, Matrix.GeneralLinearGroup.map (algebraMap E (PadicAlgCl p)) (ρE σ) = ρ σ) ∧
+    IsPstU p ρE
+
+theorem finrank_fun :
+    finrank ℚ_[p] (Fin n → E) = n * finrank ℚ_[p] E := by
+  have : Module.Free ℚ_[p] E := Module.Free.of_divisionRing _ _
+  rw [Module.finrank_pi_fintype, Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul]
+
+/-- pkg-I4's `LocalIsDeRham ρ` (computed on `Hom_G(V, B_dR)`) is the printed de Rham condition for
+the contragredient. -/
+theorem localIsDeRhamU_dualHom (ρ : GQp p →* GL (Fin n) (PadicAlgCl p))
+    (h : LocalIsDeRham p n ρ) : LocalIsDeRhamU p n (dualHom ρ) := by
+  obtain ⟨E, hE, ρE, hmod, hdr⟩ := h
+  refine ⟨E, hE, dualHom ρE, dualHom_model _ ρE ρ hmod, ?_⟩
+  rw [IsDeRhamU, ddrU, finrank_tensorInv_dualHom, homInv_bdr, finrank_fun]
+  exact hdr
+
+theorem count_neg_pair (a b w : ℤ) :
+    Multiset.count w ({-a, -b} : Multiset ℤ) = Multiset.count (-w) ({a, b} : Multiset ℤ) := by
+  have h : ({-a, -b} : Multiset ℤ) = Multiset.map Neg.neg {a, b} := by simp
+  rw [h, ← Multiset.count_map_eq_count' Neg.neg _ neg_injective (-w), neg_neg]
+
+/-- pkg-I4's `DistinctHTWeights ρ` (computed on `Hom_G(V, ℂ_p(i))`) gives the printed condition
+"Hodge–Tate with distinct weights" for the contragredient (weights `−a ≠ −b`). -/
+theorem localDistinctHTU_dualHom (ρ : GaloisRep p 2)
+    (h : GaloisRep.DistinctHTWeights (ρ := ρ) p) :
+    LocalDistinctHTU p (dualHom (ρ.restrictLocal p)) := by
+  obtain ⟨a, b, hab, E, hE, ρE, hmod, hw⟩ := h
+  refine ⟨-a, -b, fun h => hab (neg_inj.mp h), E, hE, dualHom ρE,
+    dualHom_model _ ρE _ hmod, fun w => ?_⟩
+  have h1 := hw (-w)
+  rw [htMult, neg_neg] at h1
+  rw [htMultU, htU, finrank_tensorInv_dualHom, homInv_ht, h1, count_neg_pair]
+
+end Predicates
+
 end PanBergerSplit
 end PkgI4
 end HDec
