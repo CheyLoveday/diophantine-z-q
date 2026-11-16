@@ -4,8 +4,8 @@ import ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd
 /-! The `Main.lean` edit for heegner-32, checked out of tree: `frozenTarget` with `hL3` replaced by the `C_d`
 chain (gz-statements' `GrossZagierHeegnerCd`), whose Heegner point now needs no canonical model of `X₀(32 d²)`:
 
-* `frozenTarget_heegner32`: `hL3` replaced by `TwistLatticeCd` (GLUE: lattice combinatorics at conductor `d` and the
-  genus character), `GrossZagierFormulaCd`, `GrossConjugationCd` (printed);
+* `frozenTarget_heegner32`: `hL3` replaced by `GenusSqrtD` (genus theory for the ring class field of conductor `d`),
+  `GrossZagierFormulaCd`, `GrossConjugationCd` (printed);
 * `frozenTarget_heegner32_used`: `hL3` replaced by the used instance `X0ModuliGaloisParamCd` of the canonical model
   (consequence), `GrossZagierFormulaCd`, `GrossConjugationCd`. -/
 
@@ -19,7 +19,7 @@ theorem frozenTarget_heegner32
     (hCM : _root_.T5Glue.ShimuraMainCM)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
     (hFH : ZInQ.GZFH.FriedbergHoffsteinB_FE)
-    (hTL : ZInQ.Heegner32.TwistLatticeCd) (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd)
+    (hG : ZInQ.Heegner32.GenusSqrtD) (hGZ : ZInQ.GZHL3.GrossZagierFormulaCd)
     (hGC : ZInQ.GZHL3.GrossConjugationCd) :
     ZInQ.FrozenTarget :=
   ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
@@ -27,7 +27,7 @@ theorem frozenTarget_heegner32
     (ThetaWP8.tyzThm35ReadingA_noHX h11 h29 hCM h33)
     (ZInQ.GZStatements.fhNonvanishingCd_of_fhNonvanishing
       (ZInQ.GZFH.fhNonvanishing_of_friedbergHoffsteinB_FE hFH))
-    (ZInQ.Heegner32.grossZagierHeegnerCd_of_lattice hCM hTL hGZ hGC)
+    (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed hCM hG hGZ hGC)
 
 theorem frozenTarget_heegner32_used
     (r : HDec.HSyn.OpenResearchLeaves23) (t : HDec.HSyn.OpenTextbookLeaves11) (l : HDec.HSyn.OpenAddedLeaves17)

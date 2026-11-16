@@ -38,3 +38,22 @@
   requested, ~15 digits reached at Im τ ≈ 0.0035). The polynomials `∏_Q (X − x(Z_Q))` and `∏_Q (X − √5·y(Z_Q))`
   have rational coefficients to ~15 digits (e.g. constant term of the second `3182911.1197037037… = (3182911·3375 + 404)/3375`;
   the others found by `algdep` as degree-1 or squares). Consistent with `σ(Z_Q) = (σ(√5)/√5)·Z_{πQ}` (VERIFIED, numerical).
+
+## Lean results (2026-11-16 ~01:30 PST), all VERIFIED (compiled; axioms in out_check.txt / out_mainedit.txt)
+- `Recip.lean`: `TwistLatticeCd` (GLUE), `twistTransportCd_of (hCM) (hL)`; uses hx-used's `X0EtaRoute.x_conj/y_conj`
+  with theta-wp8's `ThetaWP8.thetaWeierstrass8`.
+- `Compose.lean`:
+  * `exists_compose'` (gz-heegner's composition with its data), `nb_lat`, `nb_latN`: `J_d·⟨1, τ' + a'/d⟩ = ⟨1, τ + α/d⟩`
+    and with `1/32` (`J_d = ⟨a, d(−b+√D)/2⟩`, `a a' ≡ α mod d`);
+  * `exists_nbForm`: the primitive form of level 32 and discriminant `d²D` with root `τ_Q + α/d`;
+  * `phiC_shift_gamma0`: `(x, y)(τ + a'/d) = (x, y)(γτ + p²a'/d)` for `γ = [p, q; r, s] ∈ Γ₀(32 d²)`;
+  * `RingClassJd` (Chebotarev at conductor `d`, Hermite basis) — **proved** (`ringClassJd`);
+  * `GenusSqrtD` (genus theory: `σ(√d) = (N J/d)√d` when `σ = Art(J)` on the ring class field of conductor `d`) — open;
+  * `twistTransportCd_of_genus (hCM) (hJ) (hG)`, `grossZagierHeegnerCd_of_genus'`.
+- Contributor files: `ZInQKernel/Contrib/OneProof/HeegnerPointRationalCd.lean` (+ `HeegnerPointRationalCd/{Used,Twist,
+  Recip,Compose}.lean`), build OK (`lake build ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd`).
+- `scratch/heegner-32/MainEdit.lean`: `frozenTarget_heegner32` (hL3 → GenusSqrtD + GrossZagierFormulaCd +
+  GrossConjugationCd) and `frozenTarget_heegner32_used` (hL3 → X0ModuliGaloisParamCd + the same two), standard axioms.
+- `#discharges` (scratch/heegner-32/discharges-output.txt): 61 open hypotheses, 3062 theorems checked; the new
+  theorems discharge no field directly (they prove the `C_d` form `GZStatements.GrossZagierHeegnerCd`, not `hL3`),
+  as for gz-weil.
