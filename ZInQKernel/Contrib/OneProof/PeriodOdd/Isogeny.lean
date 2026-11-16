@@ -207,4 +207,97 @@ theorem latPEquiv_inr (l : L.lattice) :
 
 end Lattice
 
+/-! ## §3. The isogeny on points -/
+
+section Points
+
+variable {K : Type*} [Field K] [Algebra ℚ K] [DecidableEq K]
+
+omit [DecidableEq K] in
+theorem cd_equation_iff (d : ℕ) (x y : K) :
+    ((shortCurve (-(d : ℚ) ^ 2))⁄K).Equation x y ↔ y ^ 2 = x ^ 3 - (d : K) ^ 2 * x := by
+  rw [Affine.equation_iff]
+  simp [shortCurve]
+  constructor <;> intro h <;> linear_combination h
+
+omit [DecidableEq K] in
+theorem ePrime_equation_iff (d : ℕ) (x y : K) :
+    ((ePrime d)⁄K).Equation x y ↔ y ^ 2 = x ^ 3 + 4 * (d : K) ^ 2 * x := by
+  rw [Affine.equation_iff]
+  simp [ePrime, shortCurve, map_mul, map_pow, map_natCast, map_ofNat]
+
+theorem ePrime_isElliptic {d : ℕ} (hd : d ≠ 0) : (ePrime d).IsElliptic :=
+  shortCurve_isElliptic (mul_ne_zero (by norm_num) (pow_ne_zero 2 (Nat.cast_ne_zero.mpr hd)))
+
+theorem short_ePrime (d : ℕ) : ZInQ.GZOptimal.IsShortModel (ePrime d) := ⟨rfl, rfl, rfl⟩
+
+omit [DecidableEq K] in
+/-- The image of a point under `φ` satisfies the equation of `E'_d`. -/
+theorem isog_nonsingular {d : ℕ} (hd : d ≠ 0) {x y : K}
+    (h : ((shortCurve (-(d : ℚ) ^ 2))⁄K).Nonsingular x y) (hx : x ≠ 0) :
+    ((ePrime d)⁄K).Nonsingular (x - (d : K) ^ 2 / x) (y * (x ^ 2 + (d : K) ^ 2) / x ^ 2) := by
+  have := ePrime_isElliptic hd
+  rw [← Affine.equation_iff_nonsingular, ePrime_equation_iff]
+  have h1 := (cd_equation_iff d x y).mp h.1
+  have key : (y * (x ^ 2 + (d : K) ^ 2) / x ^ 2) ^ 2 - ((x - (d : K) ^ 2 / x) ^ 3 +
+      4 * (d : K) ^ 2 * (x - (d : K) ^ 2 / x)) =
+      (x ^ 2 + (d : K) ^ 2) ^ 2 / x ^ 4 * (y ^ 2 - (x ^ 3 - (d : K) ^ 2 * x)) := by
+    field_simp; ring
+  rw [h1, sub_self, mul_zero, sub_eq_zero] at key
+  exact key
+
+open Classical in
+/-- **The 2-isogeny `φ : C_d → E'_d`** with kernel `{O, (0, 0)}`:
+`(x, y) ↦ (x − d²/x, y (x² + d²)/x²)` for `x ≠ 0`, `(0, 0) ↦ O`, `O ↦ O`. -/
+def isogPt {d : ℕ} (hd : d ≠ 0) : ((shortCurve (-(d : ℚ) ^ 2))⁄K).Point → ((ePrime d)⁄K).Point
+  | .zero => 0
+  | .some x _ h => if hx : x = 0 then 0 else .some _ _ (isog_nonsingular hd h hx)
+
+/-- `φ` is defined over `ℚ`: it commutes with every `ℚ`-algebra map. -/
+theorem map_isogPt {F : Type*} [Field F] [Algebra ℚ F] [DecidableEq F] {d : ℕ} (hd : d ≠ 0) (ι : K →ₐ[ℚ] F)
+    (P : ((shortCurve (-(d : ℚ) ^ 2))⁄K).Point) :
+    Affine.Point.map ι (isogPt hd P) = isogPt hd (Affine.Point.map ι P) := by
+  rcases P with _ | ⟨x, y, h⟩
+  · rfl
+  · rw [Affine.Point.map_some]
+    by_cases hx : x = 0
+    · simp only [isogPt, hx, ↓reduceDIte, map_zero]
+    · have hx' : ι x ≠ 0 := fun h0 => hx (ι.injective (h0.trans (map_zero ι).symm))
+      simp only [isogPt, hx, hx', ↓reduceDIte, Affine.Point.map_some, Affine.Point.some.injEq]
+      constructor
+      · simp [map_sub, map_div₀, map_pow, map_natCast]
+      · simp [map_mul, map_div₀, map_add, map_pow, map_natCast]
+
+end Points
+
+/-! ## §4. `φ` on the analytic parametrization -/
+
+section Analytic
+
+open ZInQ.GZOptimal ZInQ.GZHL3
+
+/-- `weierPt` of a short model off the lattice. -/
+theorem weierPt_short {E : WeierstrassCurve ℚ} [E.IsElliptic] (hE : IsShortModel E)
+    {L : PeriodPair} (hL : IsPeriodLattice E L) {z : ℂ} (hz : z ∉ L.lattice) :
+    ∃ hns, weierPt E L z = .some (L.weierstrassP z) (L.derivWeierstrassP z / 2) hns := by
+  rw [ZInQ.GZHeegner.weierPt_eq_some _ hL hz]
+  have hns := weierPt_some E hL hz
+  simp only [bc_b₂ hE, bc_a₁ hE, bc_a₃ hE, zero_div, sub_zero, zero_mul] at hns ⊢
+  exact ⟨hns, trivial⟩
+
+/-- **`L' = ((1 + i)/2) L` is a period lattice of `E'_d`**: `g₂(L') = (λ⁴)⁻¹ 4d² = −16 d²`,
+`g₃(L') = 0`. -/
+theorem isPeriodLattice_ePrime {d : ℕ} {L : PeriodPair}
+    (hL : IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) : IsPeriodLattice (ePrime d) (latP L) := by
+  obtain ⟨h2, h3⟩ := (ZInQ.GZWeil.isPeriodLattice_cd_iff d L).mp hL
+  constructor
+  · rw [ZInQ.GZWeil.g₂_scalePP, h2, lam_pow_four]
+    simp [ePrime, shortCurve, WeierstrassCurve.c₄, WeierstrassCurve.b₂, WeierstrassCurve.b₄]
+    ring
+  · rw [ZInQ.GZWeil.g₃_scalePP, h3]
+    simp [ePrime, shortCurve, WeierstrassCurve.c₆, WeierstrassCurve.b₂, WeierstrassCurve.b₄,
+      WeierstrassCurve.b₆]
+
+end Analytic
+
 end ZInQ.PeriodOdd
