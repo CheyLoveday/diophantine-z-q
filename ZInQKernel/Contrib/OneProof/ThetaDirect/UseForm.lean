@@ -2,7 +2,7 @@ import ZInQKernel.OneProof.H.TailZ19
 
 /-! # theta-direct (helper 1/5): the use form `ThetaRatiosAtQM` (copied verbatim)
 
-Copied verbatim from origin/wip/theta-fold (8e3dbdea) `ZInQKernel/OneProof/H/TailK.lean` lines 283-346
+Copied verbatim from origin/wip/theta-fold (8e3dbdea) `ZInQKernel/OneProof/H/TailK.lean` lines 281-346
 (theta-split's `ThetaRatiosAtQM`, `Jmap_ne_zero`, `thetaPointOfFibre_of_qm_atQM`; scratch/theta-split/ThetaUse.lean §1).
 They are not on this base (fork main a40d5c4d): theta-fold moved them into TailK, which this task does not edit.
 The enclosing `namespace HDec`, `set_option maxHeartbeats 1000000`, `noncomputable section`, `namespace HSyn` and
@@ -17,6 +17,8 @@ noncomputable section
 namespace HSyn
 
 open CategoryTheory AlgebraicGeometry G0Split
+
+/-! ### theta-fold: the use form of `ThetaRatiosAlgebraic` (theta-split, moved here unchanged)
 
 theta-split's `ThetaRatiosAtQM` (scratch/theta-split/ThetaUse.lean §1, via igusa-alg and linyang-printed) is how
 `gluePieces_of_open4` uses the theta algebraicity: only along pkg-I1's QM period matrices `Ω(τ)`. igusa-alg and
