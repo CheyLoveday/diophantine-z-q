@@ -1,5 +1,5 @@
 import ZInQKernel.Contrib.OneProof.TYZLemma29Mod2
-import ZInQKernel.Contrib.OneProof.T21Proof.Hurwitz
+import ZInQKernel.Contrib.OneProof.T21Proof.LocalPred
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 
 /-!
@@ -28,39 +28,6 @@ open scoped Quaternion
 
 local instance (p : Nat.Primes) : Fact p.1.Prime := ⟨p.2⟩
 
-/-! ## Quaternions over a ring hom -/
-
-/-- Coordinatewise image of quaternions under a ring hom. -/
-def qmap {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) : ℍ[A] →+* ℍ[B] where
-  toFun q := ⟨f q.re, f q.imI, f q.imJ, f q.imK⟩
-  map_one' := by ext <;> simp
-  map_mul' a b := by
-    ext <;> simp only [Quaternion.re_mul, Quaternion.imI_mul, Quaternion.imJ_mul,
-      Quaternion.imK_mul, map_mul, map_add, map_sub]
-  map_zero' := by ext <;> simp
-  map_add' a b := by ext <;> simp
-
-@[simp] theorem qmap_re {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (q : ℍ[A]) :
-    (qmap f q).re = f q.re := rfl
-@[simp] theorem qmap_imI {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (q : ℍ[A]) :
-    (qmap f q).imI = f q.imI := rfl
-@[simp] theorem qmap_imJ {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (q : ℍ[A]) :
-    (qmap f q).imJ = f q.imJ := rfl
-@[simp] theorem qmap_imK {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (q : ℍ[A]) :
-    (qmap f q).imK = f q.imK := rfl
-
-theorem qmap_coe {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (a : A) :
-    qmap f (a : ℍ[A]) = (f a : ℍ[B]) := by
-  ext <;> simp
-
-theorem qmap_star {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (q : ℍ[A]) :
-    qmap f (star q) = star (qmap f q) := by
-  ext <;> simp
-
-theorem hc_qmap {A B : Type*} [Field A] [CharZero A] [Field B] [CharZero B] (f : A →+* B)
-    (q : ℍ[A]) : hc (qmap f q) = mapH f (hc q) := by
-  ext <;> simp [hc, mapH, map_ofNat]
-
 /-! ## Components at a place -/
 
 /-- The prime of a place `w` of `ℚ`. -/
@@ -88,10 +55,7 @@ theorem ev_algebraMap (w : HeightOneSpectrum (𝓞 ℚ)) (q : ℚ) :
 /-- The component at `w` of an element of `ℍ[𝔸ᶠ_ℚ]`. -/
 def piQ (w : HeightOneSpectrum (𝓞 ℚ)) : ℍ[AQ] →+* ℍ[ℚ_[Pw w]] := qmap (ev w)
 
-/-- `B → ℍ[ℚ_p]`. -/
-def qp (p : Nat.Primes) : ℍ[ℚ] →+* ℍ[ℚ_[p]] := qmap (Rat.castHom ℚ_[p])
-
-theorem piQ_qι (w : HeightOneSpectrum (𝓞 ℚ)) (γ : ℍ[ℚ]) : piQ w (qι γ) = qp (Pw w) γ := by
+theorem piQ_qι (w : HeightOneSpectrum (𝓞 ℚ)) (γ : ℍ[ℚ]) : piQ w (qι γ) = qp (Pw w : ℕ) γ := by
   ext <;> simp [piQ, qp, qι]
 
 theorem piQ_algebraMap (w : HeightOneSpectrum (𝓞 ℚ)) (z : AQ) :
@@ -107,7 +71,7 @@ theorem ev_eAt_ne {w v : HeightOneSpectrum (𝓞 ℚ)} (h : w ≠ v) : ev w (eAt
   rw [ev_apply, this, map_zero]
 
 theorem piQ_ιAt_self (v : HeightOneSpectrum (𝓞 ℚ)) (α : ℍ[ℚ]) :
-    piQ v (ιAt v α) = qp (Pw v) α := by
+    piQ v (ιAt v α) = qp (Pw v : ℕ) α := by
   simp only [ιAt, map_add, map_mul, piQ_algebraMap, piQ_qι, map_sub, map_one, ev_eAt_self]
   simp
 
