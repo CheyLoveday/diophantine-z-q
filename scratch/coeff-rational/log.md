@@ -11,3 +11,11 @@
   * TailA:3497 `g14` / `iso_R14`: R14 at a weight-2 newform f from g13 (`newform_of_pan`).
 - So the chain reads K_f finite for an eigenform g of a priori arbitrary weight k >= 2, level and character, produced existentially by Pan's theorem. Nothing in the tree makes its coefficients rational (the QM abelian surface's newform has [K_f:Q] = 2 typically; an elliptic-curve newform would give dim 1). Narrowing to rational f or fixed (N, k): IMPOSSIBLE.
 - R16 (`R16_EichlerShimuraJ1'`, now `R16CoreY`, TailZ45:47) already gives `FiniteDimensional Q (coeffField f)` for weight-2 NEWFORMS, but G12Weight needs R14/R13 at weight k before k = 2 is known, so it cannot supply the weight-k case.
+
+## Lean (VERIFIED, compiled)
+- scratch/coeff-rational/HeckePrime.lean compiles; `#print axioms` standard for dsThm965Weak_of_printed_rationalHeckeSpan, dsThm965Weak_of_printed_heckePrime, rationalHeckeSpan_of_diamond.
+- ZInQKernel/Contrib/OneProof/CoeffRational.lean (copy scratch/coeff-rational/CoeffRational.lean): `lake build ZInQKernel.Contrib.OneProof.CoeffRational` ok, `lake env lean` on it: no warnings.
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges`: ok (14101 jobs; only Main rebuilt); frozenTarget standard axioms.
+- #discharges (DischargesRun.lean; discharges-output.txt / discharges-full.txt): eigenformCoeffFieldFinite discharged by
+  CoeffRational.eigenformCoeffFieldFinite_of_heckePrime still assuming [Gamma1IntegralSpan, HeckePrimeIntegralToRational], and by
+  CoeffRational.eigenformCoeffFieldFinite_of_rationalHeckeSpan still assuming [RationalHeckeSpan]; standard axioms. 45 open hypotheses, 6751 theorems checked, 18 discharge one.
