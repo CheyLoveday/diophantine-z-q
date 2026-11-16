@@ -234,4 +234,96 @@ instance isAffineHom_pullback_map_left {g h : Over Y} (k : g ⟶ h) [IsAffineHom
 
 end PullbackMap
 
+/-! ## Descent of the generic-fibre morphism and the Néron extension -/
+
+section Descend
+
+variable {R R₁ K K₁ : Type} [CommRing R] [CommRing R₁] [Field K] [Field K₁] [Algebra R R₁] [Algebra R K]
+  [Algebra R₁ K₁] [Algebra K K₁] [Algebra R K₁] [IsScalarTower R R₁ K₁] [IsScalarTower R K K₁]
+  {ι : Type} [Preorder ι] [IsDirectedOrder ι] [Nonempty ι] (B : ι → Subalgebra R R₁) (hB : Monotone B)
+  (C : Subalgebra R R₁) (hC : ∀ i, C ≤ B i)
+
+theorem πC_eC : πC C ≫ Spec.map (CommRingCat.ofHom (algebraMap R C)) =
+    Spec.map (CommRingCat.ofHom (algebraMap R R₁)) := by
+  refine (Spec.map_comp _ _).symm.trans ?_
+  rfl
+
+theorem toC_eC (i : ιᵒᵖ) : toC B hB C hC i ≫ Spec.map (CommRingCat.ofHom (algebraMap R C)) = ej B hB i := by
+  refine (Spec.map_comp _ _).symm.trans ?_
+  rfl
+
+theorem specK_comp : Spec.map (CommRingCat.ofHom (algebraMap K K₁)) ≫ Spec.map (CommRingCat.ofHom (algebraMap R K)) =
+    Spec.map (CommRingCat.ofHom (algebraMap R K₁)) := by
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]
+
+theorem specK₁_comp : Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁)) ≫
+    Spec.map (CommRingCat.ofHom (algebraMap R R₁)) = Spec.map (CommRingCat.ofHom (algebraMap R K₁)) := by
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]
+
+include hB hC in
+/-- **Descent and extension.** -/
+theorem descend_ext (hsm : ∀ i, Algebra.Smooth R (B i)) (hcov : ∀ x : R₁, ∃ i, x ∈ B i)
+    (hsq : IsPullback (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap K K₁)))
+      (Spec.map (CommRingCat.ofHom (algebraMap R R₁))) (Spec.map (CommRingCat.ofHom (algebraMap R K))))
+    {X : Over (Spec (CommRingCat.of R))} (hX : CToPrinted.IsNeronModelOver R K X)
+    (W : Over (Spec (CommRingCat.of C))) [Smooth W.hom] [QuasiCompact W.hom] [QuasiSeparated W.hom]
+    (V : Scheme.{0}) (v : V ⟶ Spec (CommRingCat.of R₁)) (φ : V ⟶ W.left)
+    (Hφ : IsPullback φ v W.hom (πC C))
+    (b : pullback v (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ⟶ X.left)
+    (hb : b ≫ X.hom = pullback.snd v (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫
+      Spec.map (CommRingCat.ofHom (algebraMap R K₁))) :
+    ∃ g : V ⟶ X.left, g ≫ X.hom = v ≫ Spec.map (CommRingCat.ofHom (algebraMap R R₁)) ∧
+      pullback.fst v (Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))) ≫ g = b := by
+  haveI : IsConnected ιᵒᵖ := IsCofiltered.isConnected _
+  haveI : Smooth X.hom := hX.1
+  let eC : Spec (CommRingCat.of C) ⟶ Spec (CommRingCat.of R) := Spec.map (CommRingCat.ofHom (algebraMap R C))
+  let jK : Spec (CommRingCat.of K) ⟶ Spec (CommRingCat.of R) := Spec.map (CommRingCat.ofHom (algebraMap R K))
+  let kK₁ := Spec.map (CommRingCat.ofHom (algebraMap R₁ K₁))
+  let D := (oD B hB C hC ⋙ Over.pullback W.hom) ⋙ Over.map (W.hom ≫ eC)
+  let cD := (Over.map (W.hom ≫ eC)).mapCone ((Over.pullback W.hom).mapCone (oC B hB C hC))
+  have hcD : IsLimit cD := by
+    apply isLimitOfReflects (Over.forget _)
+    exact isLimitOfPreserves (Over.forget W.left)
+      (isLimitOfPreserves (Over.pullback W.hom) (oCIsLimit B hB C hC hcov))
+  let E := (D ⋙ Over.pullback jK) ⋙ Over.forget (Spec (CommRingCat.of K))
+  let cE := (Over.forget _).mapCone ((Over.pullback jK).mapCone cD)
+  have hcE : IsLimit cE := isLimitOfPreserves _ (isLimitOfPreserves _ hcD)
+  -- finiteness of the stages
+  have hDhom : ∀ j, (D.obj j).hom = pullback.fst (toC B hB C hC j) W.hom ≫ ej B hB j := fun j => by
+    change pullback.snd (toC B hB C hC j) W.hom ≫ W.hom ≫ eC = _
+    rw [← Category.assoc, ← pullback.condition, Category.assoc, toC_eC]
+  haveI : QuasiCompact eC := show QuasiCompact (Spec.map _) from inferInstance
+  haveI : QuasiSeparated eC := show QuasiSeparated (Spec.map _) from inferInstance
+  haveI : ∀ j, QuasiCompact (D.obj j).hom := fun j => by
+    haveI : QuasiCompact (toC B hB C hC j) := show QuasiCompact (Spec.map _) from inferInstance
+    haveI : QuasiCompact (pullback.snd (toC B hB C hC j) W.hom) := inferInstance
+    change QuasiCompact (pullback.snd (toC B hB C hC j) W.hom ≫ W.hom ≫ eC); infer_instance
+  haveI : ∀ j, QuasiSeparated (D.obj j).hom := fun j => by
+    haveI : QuasiSeparated (toC B hB C hC j) := show QuasiSeparated (Spec.map _) from inferInstance
+    haveI : QuasiSeparated (pullback.snd (toC B hB C hC j) W.hom) := inferInstance
+    change QuasiSeparated (pullback.snd (toC B hB C hC j) W.hom ≫ W.hom ≫ eC); infer_instance
+  haveI : ∀ j, Smooth (D.obj j).hom := fun j => by
+    haveI := hsm j.unop
+    haveI := smooth_ej B hB j
+    haveI : Smooth (pullback.fst (toC B hB C hC j) W.hom) :=
+      MorphismProperty.of_isPullback (IsPullback.of_hasPullback (toC B hB C hC j) W.hom).flip ‹Smooth W.hom›
+    rw [hDhom j]
+    exact MorphismProperty.comp_mem @Smooth _ _ ‹_› (smooth_ej B hB j)
+  haveI : ∀ j, CompactSpace (E.obj j) := fun j => by
+    have : CompactSpace ((pullback (D.obj j).hom jK : Scheme.{0})) := inferInstance
+    exact this
+  haveI : ∀ j, QuasiSeparatedSpace (E.obj j) := fun j =>
+    quasiSeparatedSpace_of_quasiSeparated (pullback.snd (D.obj j).hom jK)
+  haveI : ∀ {j k : ιᵒᵖ} (f : j ⟶ k), IsAffineHom (E.map f) := fun {j k} f => by
+    haveI : IsAffineHom ((oD B hB C hC).map f).left :=
+      show IsAffineHom ((specDiag B hB).map f) from inferInstance
+    haveI : IsAffineHom ((Over.pullback W.hom).map ((oD B hB C hC).map f)).left :=
+      isAffineHom_pullback_map_left W.hom ((oD B hB C hC).map f)
+    haveI : IsAffineHom (D.map f).left := ‹IsAffineHom ((Over.pullback W.hom).map ((oD B hB C hC).map f)).left›
+    exact isAffineHom_pullback_map_left jK (D.map f)
+  sorry
+
+end Descend
+
 end NeronSH
