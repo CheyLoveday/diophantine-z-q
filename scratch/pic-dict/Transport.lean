@@ -30,7 +30,7 @@ lemma unitToPushforward_comp (f : X ⟶ Y) (h : Y ⟶ Z) :
 
 /-- **`pullbackObjUnitIso` is compatible with `pullbackComp`.** -/
 lemma pullbackObjUnitIso_comp (f : X ⟶ Y) (h : Y ⟶ Z) :
-    (pullbackComp f h).inv.app (unit Z) ≫ (Scheme.Modules.pullback f).map (pullbackObjUnitIso h).hom ≫
+    (pullbackComp f h).inv.app _ ≫ (Scheme.Modules.pullback f).map (pullbackObjUnitIso h).hom ≫
       (pullbackObjUnitIso f).hom = (pullbackObjUnitIso (f ≫ h)).hom := by
   haveI : (SheafOfModules.pushforward f.toRingCatSheafHom).IsRightAdjoint :=
     (pullbackPushforwardAdjunction f).isRightAdjoint
@@ -55,7 +55,7 @@ lemma pullbackObjUnitIso_comp (f : X ⟶ Y) (h : Y ⟶ Z) :
   have hc := conjugateEquiv_pullbackComp_inv f h
   have hu := unit_conjugateEquiv adj₁ adj₂ (pullbackComp f h).inv (unit Z)
   rw [hc] at hu
-  have key : adj₂.homEquiv _ _ ((pullbackComp f h).inv.app (unit Z) ≫ Yf) =
+  have key : adj₂.homEquiv _ _ ((pullbackComp f h).inv.app _ ≫ Yf) =
       adj₁.homEquiv _ _ Yf ≫ (pushforwardComp f h).hom.app (unit X) := by
     rw [adj₂.homEquiv_unit, adj₁.homEquiv_unit, Functor.map_comp, ← Category.assoc, ← hu,
       Category.assoc, Category.assoc]
@@ -165,6 +165,90 @@ lemma coherence_II (t' g m t : X ⟶ X) (ha : t' ≫ g = g ≫ t) (hb : g ≫ m 
   rw [reassoc_of% (map_eqToHom_comp_pullbackComp t' hb M)]
   rw [reassoc_of% (pullbackComp_assoc_inv₂ t' g m M)]
   rw [reassoc_of% (eqToHom_comp_pullbackComp ha.symm m M)]
+  simp
+
+/-- `pullbackObjUnitIso` with its type stated through `Scheme.Modules.unit`. -/
+def pOU (f : X ⟶ Y) : (Scheme.Modules.pullback f).obj (unit Y) ≅ unit X := pullbackObjUnitIso f
+
+lemma pOU_comp (f : X ⟶ Y) (h : Y ⟶ Z) :
+    (pullbackComp f h).inv.app (unit Z) ≫ (Scheme.Modules.pullback f).map (pOU h).hom ≫
+      (pOU f).hom = (pOU (f ≫ h)).hom :=
+  pullbackObjUnitIso_comp f h
+
+lemma pOU_conj (h : Y ⟶ X) (f : unit X ⟶ unit X) :
+    ((pOU h).inv ≫ (Scheme.Modules.pullback h).map f ≫ (pOU h).hom).app ⊤ (1 : Γ(Y, ⊤)) =
+      h.appTop (f.app ⊤ (1 : Γ(X, ⊤))) :=
+  pullbackObjUnitIso_conj_app_top h f
+
+lemma pOU_inv_comp (f : X ⟶ Y) (h : Y ⟶ Z) :
+    (pOU (f ≫ h)).inv = (pOU f).inv ≫
+      (Scheme.Modules.pullback f).map (pOU h).inv ≫ (pullbackComp f h).hom.app (unit _) := by
+  refine Iso.inv_ext ?_
+  rw [← pOU_comp f h]
+  simp only [Category.assoc, Iso.hom_inv_id_assoc]
+  rw [← Functor.map_comp_assoc, Iso.hom_inv_id, CategoryTheory.Functor.map_id, Category.id_comp]
+  exact Iso.inv_hom_id_app _ _
+
+lemma pOU_inv_congr {f f' : X ⟶ Y} (e : f = f') :
+    (pOU f).inv ≫ (pullbackCongr e).hom.app (unit _) = (pOU f').inv := by
+  subst e; simp [pullbackCongr]
+
+set_option maxHeartbeats 1600000 in
+/-- **Coherence (I).** -/
+lemma coherence_I (t' g t : X ⟶ X) (ha : t' ≫ g = g ≫ t) :
+    (pOU t').inv ≫ (Scheme.Modules.pullback t').map (pOU g).inv ≫
+        (Niso t' g t ha).hom.app (unit _) =
+      (pOU g).inv ≫ (Scheme.Modules.pullback g).map (pOU t).inv := by
+  simp only [Niso, Iso.trans_hom, Iso.symm_hom, NatTrans.comp_app]
+  rw [← reassoc_of% (pOU_inv_comp t' g), reassoc_of% (pOU_inv_congr ha), pOU_inv_comp g t]
+  simp
+
+/-- The generic Weil formula. -/
+def wf (t m : X ⟶ X) (h : t ≫ m = m) (M : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) : Γ(X, ⊤) :=
+  unitHomAddEquiv (unit X) ((pOU t).inv ≫ (Scheme.Modules.pullback t).map ψ.hom ≫
+    (pullbackComp t m).hom.app M ≫ (pullbackCongr h).hom.app M ≫ ψ.inv)
+
+/-- The transported trivialization. -/
+def transTriv (g m : X ⟶ X) (hb : g ≫ m = m ≫ g) (M : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) :
+    unit X ≅ (Scheme.Modules.pullback m).obj ((Scheme.Modules.pullback g).obj M) :=
+  (pOU g).symm ≪≫ (Scheme.Modules.pullback g).mapIso ψ ≪≫ Qiso g m hb M
+
+/-- **Transport of Mumford's formula along `g`.** -/
+theorem wf_transport (t' g m t : X ⟶ X) (ha : t' ≫ g = g ≫ t) (hb : g ≫ m = m ≫ g)
+    (h : t ≫ m = m) (h' : t' ≫ m = m) (M : X.Modules)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M) :
+    wf t' m h' ((Scheme.Modules.pullback g).obj M) (transTriv g m hb M ψ) =
+      g.appTop (wf t m h M ψ) := by
+  simp only [wf, unitHomAddEquiv_apply]
+  rw [← pOU_conj g]
+  congr 2
+  have nat := (Niso t' g t ha).hom.naturality ψ.hom
+  have e1 : (Scheme.Modules.pullback t').map ((Scheme.Modules.pullback g).map ψ.hom) =
+      (Niso t' g t ha).hom.app _ ≫ (Scheme.Modules.pullback g).map ((Scheme.Modules.pullback t).map ψ.hom) ≫
+        (Niso t' g t ha).inv.app _ := by
+    simp only [Functor.comp_map] at nat
+    rw [← Category.assoc, ← nat]; simp
+  simp only [transTriv, Iso.trans_hom, Iso.trans_inv, Iso.symm_hom, Iso.symm_inv, Functor.mapIso_hom,
+    Functor.mapIso_inv, Functor.map_comp, Category.assoc]
+  rw [e1]
+  simp only [Category.assoc]
+  rw [reassoc_of% (coherence_I t' g t ha)]
+  have h2 := coherence_II t' g m t ha hb h h' M
+  simp only [Functor.map_comp] at h2
+  rw [reassoc_of% h2]
+
+/-- Invariance under isomorphisms of the module. -/
+theorem wf_iso (t m : X ⟶ X) (h : t ≫ m = m) {M₁ M₂ : X.Modules} (e : M₁ ≅ M₂)
+    (ψ : unit X ≅ (Scheme.Modules.pullback m).obj M₁) :
+    wf t m h M₂ (ψ ≪≫ (Scheme.Modules.pullback m).mapIso e) = wf t m h M₁ ψ := by
+  have n1 := (pullbackComp t m).hom.naturality e.hom
+  have n2 := (pullbackCongr h).hom.naturality e.hom
+  simp only [Functor.comp_map] at n1
+  simp only [wf, Iso.trans_hom, Iso.trans_inv, Functor.mapIso_hom, Functor.mapIso_inv,
+    Functor.map_comp, Category.assoc]
+  rw [reassoc_of% n1, reassoc_of% n2]
   simp
 
 end PicDict.Transport
