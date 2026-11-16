@@ -193,10 +193,10 @@ which `TailK`, `TailD`, `TailI` and `TailE` consume. The T6 call graph (`callers
 
 | top consumer (no T6-typed caller) | reaches T6 through | where the field becomes concrete (reading) |
 |---|---|---|
-| `FS5NoCM.fibreComTrivialFull_of_leaves''` | `comIntOrQuadOrder_of(_leaves)`, `com_int_of_end0_quat`, `comOfMatrixEnd0_of_homFree` | `FibreComTrivial`: fibres `P : QML3 ℚ̄` (`TailA.lean` L1159) |
+| `FS5NoCM.fibreComTrivialFull_of_leaves''` | `comIntOrQuadOrder_of(_leaves)`, `com_int_of_end0_quat`, `comOfMatrixEnd0_of_homFree` | `FibreComTrivial`: fibres `P : QML3 ℚ̄` (`TailA.lean` L1159); `comIntOrQuadOrder_of` applies T6 through `hYu Qbar P.A` (`TailC` L1700) |
 | `G0FibreSimple.fibreSimple_of_pieces''` | `centralizerOfMatrixEnd0_of_homFree`, `end0Division_of_homFree` (generic `[CharZero k]`) | applied at `LeafQM.AV.Qbar = AlgebraicClosure ℚ` (`TailA` L1182, L1186) |
 | `G0Galois.g8_g12` | `g8_g11`, `g8`, `PkgI3.C2_absolutelyIrreducible`, `PkgI3.finrank_equivEnd` | `K` a number field (`TailA` L2110, L2236, L2263); `L'` a number field (`TailD` L162) |
-| `G0ModField.KernelField.kernelFieldExists_of_split''` | `endEqOFibre_of`, `kernelFieldExists_of_*`, `kernelField_of_model`, `G4WeilRes.homLattice_free`, `inertiaFixesHomsMon(_of_leaves)`, `tateHom_injective` | `AbVar Qbar`, `K : IntermediateField ℚ Qbar` finite (`TailC` L4197, L5302) |
+| `G0ModField.KernelField.kernelFieldExists_of_split''` | `endEqOFibre_of`, `kernelFieldExists_of_*`, `kernelField_of_model`, `G4WeilRes.homLattice_free`, `inertiaFixesHomsMon(_of_leaves)`, `tateHom_injective` | `AbVar Qbar`, `K : IntermediateField ℚ Qbar` finite (`TailC` L4197, L5302); `endEqOFibre_of` at `Qbar` (`TailC` L6829) |
 | `HSyn.linkedTateLocal_of_leaves3` | `qmEndRank_of_leaves3`, `LTGoodRed.QM.qmEndRank_of(_leaves)`, `qmSplitCaseRank`, `four_le_finrank`, `finrank_le_baseChange`, `finrank_end0` | `QMEndRank`: `L' : IntermediateField ℚ Qbar` finite, and `Ω = AlgebraicClosure L'` (`TailF` L2432, L4038) |
 
 Two caveats on coverage:
