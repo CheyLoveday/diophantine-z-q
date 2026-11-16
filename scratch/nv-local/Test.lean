@@ -1,9 +1,12 @@
 import ZInQKernel.Contrib.OneProof.SGRDirectNV
-open Polynomial
-#check @SGRDirect.NVLocalInertia
-#check @Ideal.exists_ideal_over_prime_of_isIntegral
-#check @Ideal.exists_ideal_le_liesOver_of_le
-#check @Algebra.HasGoingDown
-#check @Ideal.isMaximal_of_isIntegral_of_isMaximal_comap
-#check @HDec.PropTSGlue.exists_secIdeal
-#check @Ideal.ramificationIdx_tower
+open Polynomial CategoryTheory AlgebraicGeometry
+open GlueDescent.B2Q NumberField
+open HDec HDec.G0ModField HDec.PropTSRed HDec.PropTSGlue HDec.HeckeRestNV HDec.TSHecke LeafQM LeafQM.AV
+#check @UnramifiedAt
+#print UnramifiedAt
+#check @intPolyAlg
+example (E : Type) [Field E] [Algebra ℚ[X] E] : letI := intPolyAlg E; Algebra.IsIntegral ℤ[X] (integralClosure ℤ[X] E) := by
+  letI := intPolyAlg E
+  infer_instance
+example : IsAlgClosed Qbar := inferInstance
+example (K : Type) [Field K] (L : IntermediateField ℚ K) [CharZero K] : CharZero L := inferInstance
