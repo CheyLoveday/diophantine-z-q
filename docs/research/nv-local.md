@@ -4,7 +4,7 @@ Task nv-local, 2026-11-15/16. Base `56478c75` (sgr-direct on main `43513d87`).
 
 - **Lean** (new): `ZInQKernel/Contrib/OneProof/SGRDirectNVLocal.lean`, namespace `SGRDirect.NVLocal`, importing
   `ZInQKernel.Contrib.OneProof.SGRDirectElkies` (which imports `SGRDirectNV`, where `NVLocalInertia` is declared).
-- **Scratch** (`scratch/nv-local/`): `log.md`; `Core.lean` (the proof as first compiled, with `#print axioms`);
+- **Scratch** (`scratch/nv-local/`): `log.md`; `NVLocal.lean` (a copy of the Contrib file); `Core-first.lean` (the first compiled version, whose `BranchRegular` still had an existence clause);
   `Discharges.lean` with `Discharges-output.txt`; `autofold.json`.
 - **Marks:** **VERIFIED** (compiled, read, or computed), **STANDARD** (published; locators from memory are
   **UNVERIFIED**, there is no network), **SPECULATIVE**.
@@ -43,7 +43,7 @@ theorem SGRDirect.NVLocal.heckeVertWitness_of_branchRegular (hRR : R1R2fp) (hT :
 
 ## 1. What compiles (VERIFIED)
 
-The file `ZInQKernel/Contrib/OneProof/SGRDirectNVLocal.lean` (about 430 lines) contains:
+The file `ZInQKernel/Contrib/OneProof/SGRDirectNVLocal.lean` (about 580 lines) contains:
 
 | declaration | content |
 |---|---|
@@ -51,15 +51,17 @@ The file `ZInQKernel/Contrib/OneProof/SGRDirectNVLocal.lean` (about 430 lines) c
 | `primeOf`, `primeOf_isPrime`, `mem_primeOf_of_mem` | for `ψ : C → L` with `ker ψ ⊆ 𝔓` and `𝓞 L` inside the localization `{ψ c₁ / ψ c₂ : c₂ ∉ 𝔓}`: the prime `{y : y·ψ(d₂) = ψ(d₁), d₁ ∈ 𝔓, d₂ ∉ 𝔓}` of `𝓞 L`, which contains `p` when `p ∈ 𝔓` |
 | `inertia_primeOf`, `eq_one_of_primeOf` | an automorphism `σ` of `L` with `σ(ψ c) = ψ(c')` and `c' ≡ c mod 𝔓` lies in the inertia of `primeOf`; if that prime is unramified then `σ = 1` |
 | `zqIncl`, `galB`, `galC_mem` | the inclusion of the `ℤ[X]`-closure in the `ℚ[X]`-closure, and the Galois action on both |
+| `exists_int_mul_mem` | every element of the `ℚ[X]`-closure has a nonzero integer multiple in the `ℤ[X]`-closure (Mathlib's `IsIntegral.exists_multiple_integral_of_isLocalization`) |
+| `exists_branch` | through every maximal `𝔓 ⊂ C` over `(p, dX − a)` passes a branch: a prime `Q` of `B` over `X − b` with `Q ∩ C ⊆ 𝔓` (going down for `C/ℤ[X]`, then `Q = {y : ky ∈ Q_C for some integer k ≠ 0}`) |
 | `BranchRegular` | the new GLUE Prop (§2) |
 | `nvLocalInertia_of_branchRegular` | `BranchRegular → NVLocalInertia` |
 | `heckeVertWitness_of_branchRegular` | `HeckeVertWitness` from the bundle fields of `heckeVertWitness_of_nvElkies` and `BranchRegular` |
 
 **Checks.**
 - `lake build +ZInQKernel.Contrib.OneProof.SGRDirectNVLocal` succeeds (12 s on the copied build tree).
-- `#print axioms` gives `[propext, Classical.choice, Quot.sound]` for the six main theorems.
+- `#print axioms` gives `[propext, Classical.choice, Quot.sound]` for the seven main theorems.
   - The commands are in `scratch/nv-local/Discharges.lean`; the output is in `Discharges-output.txt`.
-- `#discharges` reports "63 open hypotheses, 1904 theorems checked, 7 discharge one".
+- `#discharges` reports "63 open hypotheses, 1906 theorems checked, 7 discharge one".
   - None of the seven is from this file, as expected: `HeckeVertWitness` and `NVLocalInertia` are not open
     fields of the current bundles.
   - The seven are the same as in sgr-direct's run.
@@ -71,7 +73,8 @@ The file `ZInQKernel/Contrib/OneProof/SGRDirectNVLocal.lean` (about 430 lines) c
    - `exists_secIdeal` gives the maximal ideal `m = (p, dX − a)` of `ℤ[X]`, where `b = a/d`.
    - `vertPrime p ⊆ m`, so going up (`Ideal.exists_ideal_over_prime_of_isIntegral`) gives a maximal `𝔓 ⊇ q`
      over `m`.
-2. **The branch.** `BranchRegular` gives the unique prime `Q` of `B` over `X − b` with `Q ∩ C ⊆ 𝔓`.
+2. **The branch.** `exists_branch` gives a prime `Q` of `B` over `X − b` with `Q ∩ C ⊆ 𝔓`. `BranchRegular` says it
+   is the only one and is normal at `𝔓`.
 3. **`τQ = Q`.** The prime `τQ` lies over `X − b`. It also has `τQ ∩ C ⊆ 𝔓`:
    - if `c ∈ τQ ∩ C` then `τ⁻¹c ∈ Q ∩ C ⊆ 𝔓`;
    - and `c − τ⁻¹c = τ(τ⁻¹c) − τ⁻¹c ∈ q ⊆ 𝔓`.
@@ -105,16 +108,16 @@ Notation:
 - `C` and `B` are the integral closures of `ℤ[X]` and `ℚ[X]` in `E`;
 - `𝔓` is a maximal ideal of `C` with `p, dX − a ∈ 𝔓`, where `b = a/d`.
 
-Then there is a prime `Q` of `B` over `X − b` with `Q ∩ C ⊆ 𝔓` such that:
+Let `Q` be any prime of `B` over `X − b` with `Q ∩ C ⊆ 𝔓`. One exists: this is `exists_branch`, which is
+compiled. Then:
 - **(UB)** every prime `Q'` of `B` over `X − b` with `Q' ∩ C ⊆ 𝔓` equals `Q`;
 - **(N)** every `z ∈ B/Q` integral over `ℤ` is `c₁/c₂` for some `c₁, c₂ ∈ C` with `c₂ ∉ 𝔓`.
   - In other words, the local ring of the branch `C/(Q ∩ C)` at `𝔓` contains the ring of integers of the number
     field `B/Q`.
   - Its fraction field is `B/Q`, so (N) says that this local ring is normal (a DVR).
 
-The existence of `Q` is going down for `C/ℤ[X]` (Mathlib has the instance for integral extensions of an
-integrally closed domain). It is kept in the Prop: moving the prime from `C` to `B` needs the localization
-`B = (ℤ∖0)⁻¹C`, which is not compiled here.
+The Prop is exactly the geometric content of h-b1's step 3: uniqueness and normality of the branch. Its
+existence is proved. Earlier, in `scratch/nv-local/Core-first.lean`, it was a clause of the Prop.
 
 ### 2.2 Rating
 
@@ -227,6 +230,4 @@ Notation: `R = ℤ[X]_m`, `S` the integral closure of `R` in `E` (the localizati
 ## 5. What remains
 
 1. **`BranchRegular`** (GLUE): a self-contained commutative-algebra target; route in §2.3 and §4.
-   - A cosmetic improvement is to drop the existence clause from the Prop, which is going down plus
-     `B = (ℤ∖0)⁻¹C`.
 2. **The deep fold** (sgr-direct §5), with `branchRegular` in place of `nvLocalInertia`.
