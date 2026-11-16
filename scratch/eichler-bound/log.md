@@ -24,3 +24,21 @@ algorithm), the intertwiner lattice `J = {c in O : c Phi0(a) = Phi(a) c}`, and a
 * Embed.lean (embeddings, conjugation sk, centralizer, intertwiners J, Skolem-Noether-lite): compiles. VERIFIED.
 * Unit.lean (Bad, conjugation trick Bad => Bad'): compiles. VERIFIED.
 * Crit.lean (unit criterion J O = O and O J = O from no bad prime, via principal_of_lattice): compiles. VERIFIED.
+* Key.lean (no bad prime l not dividing 6: minor certificate + descent): compiles. VERIFIED.
+* Key6.lean (l | 6: ramified element contradiction, unramified type argument, type dichotomy): compiles. VERIFIED.
+* Inv.lean (lattices a, b; Lemma D): compiles. VERIFIED.
+* Count.lean (a*b = R, injectivity, unitsToPic kernel): compiles. VERIFIED.
+* Bound.lean (inertness, types card = 2^b, conjRel_card_le): compiles. VERIFIED 14:27.
+* `#print axioms EichlerBound.conjRel_card_le` = [propext, Classical.choice, Quot.sound] (with the development copy
+  of OptEmb/ConjRel, verbatim from GRCountX6). VERIFIED.
+
+## Statement proved
+`EichlerBound.conjRel_card_le : finrank 2 -> R <= O_k -> Coprime (conductor R) 6 -> Nat.card (Pic R) != 0 ->
+ Finite (Quot (ConjRel R)) /\ Nat.card (Quot (ConjRel R)) <= 2^inertCount6 k * Nat.card (Pic R)`.
+Final file ZInQKernel/Contrib/OneProof/R5fpCountLe.lean: `eichlerOptEmbBound6` (= the above over GRCountX6's
+definitions) and `r5fpCountLe_proof : UniformizationLeafAll -> GAGAMorphism -> MumfordTorsionAlgClosed ->
+GR56.R5fpCountLe`.
+
+## Fold counts (autofold --dry-run, count-only spec scratch/eichler-bound/autofold.json, no new leaf)
+* tree kinds.tsv (prop56 rated LEAF): 34/11 on 45 -> 33/11 on 44 (strictest same). VERIFIED.
+* simulated re-rating of the prop56 row to GLUE (/tmp/ebsim copy): 33/12 on 45 -> 33/11 on 44. VERIFIED.
