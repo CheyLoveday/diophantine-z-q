@@ -37,3 +37,18 @@ weil-used (origin/wip/weil-used 8ea3eaf3): consumers read only left kernel, Galo
 - VERIFIED: autofold dry run (scratch/weil-proof/autofold.json; Nondeg/Alt flagged pending reading, PullbackCompMonoidal
   project glue): `strict count: 34/11 on 45 -> 37/13 on 50; strictest 34/11 -> 37/13` (needs --allow-rise);
   FoldDryRun.lean compiles, sixContactMin_of_open36 standard axioms.
+
+## 11-16 afternoon: PullbackCompMonoidal proved (scratch/weil-proof/PBM.lean)
+- VERIFIED (compiles, `#print axioms WeilProof.pullbackCompMonoidal_proof` = [propext, Classical.choice, Quot.sound]).
+- Structure: `mu_sheafified` (Localization.Monoidal.functorMonoidalOfComp_μ for the vendored instance);
+  `main_sheafified` (the identity at L A, L B from (E) and (P)); `pullbackComp_monoidal` (all M, N via the counit
+  L(M.val) ≅ M and naturality); (E) `ee_comp` (sheaf pullbackComp vs presheaf pullbackComp through
+  sheafificationCompPullback: unit chase with unit_leftAdjointUniq_hom_app and unit_conjugateEquiv_symm);
+  (P) `pcP_monoidal` from the general lemma `Mates.leftAdjointCompIso_δ` (oplax monoidality of leftAdjointCompIso
+  for leftAdjointOplaxMonoidal structures, via Adjunction.isMonoidal_comp) and `eF_monoidal` (presheaf
+  pushforwardComp monoidal: tmul computation).
+- Pitfall: presheaf pullback in the vendored `pullbackOfCommRingCat ... f.toRingCatPresheafHom` form: the
+  composite defeq for `PresheafOfModules.pullbackComp` times out (2M heartbeats); in Mathlib's
+  `pullback f.toRingCatSheafHom.hom` form it is instant, and the two forms are rfl-equal. Define the
+  composite iso via `Adjunction.leftAdjointCompIso (AD g) (AD f) (AD (f ≫ g)) (eF f g)` with eF typed through the
+  sheaf-hom form.
