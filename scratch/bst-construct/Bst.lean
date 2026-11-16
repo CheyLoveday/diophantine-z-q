@@ -300,6 +300,106 @@ def IsAdmissible (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p))
 
 end Admissible
 
+/-! ## §4. Semistable and potentially semistable over Berger's `B_st`; the two leaves -/
+
+section Predicates
+
+variable (p : ℕ) [Fact p.Prime]
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E] {n : ℕ}
+
+/-- **`V|_{G_K}` is semistable** (Fontaine; Berger 2002 §1.2): `B_st`-admissible as a
+representation of `G_K`, i.e. `dim_{B_st^{G_K}} (B_st ⊗_{ℚ_p} V)^{G_K} = dim_{ℚ_p} V`, with
+`B_st = B_max[log [p̃]] ⊆ B_dR` (`Bst`). -/
+def IsSemistableB (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (ρ : GQp p →* GL (Fin n) E) :
+    Prop :=
+  IsAdmissible p (Bst p) K.fixingSubgroup ρ
+
+/-- **`V` is potentially semistable**: semistable over some finite `K/ℚ_p` inside `ℚ̄_p`. -/
+def IsPstB (ρ : GQp p →* GL (Fin n) E) : Prop :=
+  ∃ K : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] K ∧ IsSemistableB p K ρ
+
+/-- A `ℚ̄_p`-valued representation of `G_{ℚ_p}` is potentially semistable: it has a model over a
+finite `E ⊆ ℚ̄_p` whose underlying `ℚ_p`-representation `E^n` is potentially semistable. -/
+def LocalIsPstB (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) : Prop :=
+  ∃ (E : IntermediateField ℚ_[p] (PadicAlgCl p)) (_ : FiniteDimensional ℚ_[p] E)
+    (ρE : GQp p →* GL (Fin n) E),
+    (∀ σ, Matrix.GeneralLinearGroup.map (algebraMap E (PadicAlgCl p)) (ρE σ) = ρ σ) ∧
+    IsPstB p ρE
+
+end Predicates
+
+open PanBergerSplit in
+/-- **Berger, Théorème 0.7** (L. Berger, *Représentations p-adiques et équations
+différentielles*, Invent. Math. 148 (2002), 219-284; Théorème 0.7 = Corollaire 5.22 of the
+published version (locator audit row R11) = Théorème 0.6 = Théorème 5.19 of
+arXiv:math/0102179v3), at `K = ℚ_p`: every de Rham representation of `G_{ℚ_p}` is potentially
+semistable. Applied to the `ℚ_p`-representation `V = E^n` underlying a continuous `ρ` with
+values in `GL_n(E)`, `E/ℚ_p` finite inside `ℚ̄_p`, both conditions computed on `V`:
+
+* de Rham: `dim_{ℚ_p} (B_dR ⊗_{ℚ_p} V)^{G_{ℚ_p}} = dim_{ℚ_p} V` (`LocalIsDeRhamU`; `K = ℚ_p`);
+* potentially semistable: for some finite `K/ℚ_p` in `ℚ̄_p`,
+  `dim_{B_st^{G_K}} (B_st ⊗_{ℚ_p} V)^{G_K} = dim_{ℚ_p} V` (`LocalIsPstB`), with Berger's
+  `B_st = B_max[log [p̃]] ⊆ B_dR`, `B_max = B_max^+[1/t]`, `B_max^+ = A_max[1/p]`,
+  `A_max = {Σ a_n (ω/p)^n : a_n ∈ A_inf, a_n → 0}` (`Bst`, `Bmax`, `BmaxPlus`, `Amax`). -/
+def BergerPrintedB : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)),
+    Continuous ρ → LocalIsDeRhamU p n ρ → LocalIsPstB p n ρ
+
+open PanBergerSplit in
+/-- **Pan, Theorem 1.0.4**, as pb-fix2's `PanPrintedU` with potential semistability computed
+over Berger's `B_st ⊆ B_dR` (`LocalIsPstB`) instead of pb-bypass's abstract `B_cris[X]`.
+Everything else is `PanPrintedU` verbatim (eigenform reading flagged there). -/
+def PanPrintedB : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime], 5 ≤ p → ∀ (ιp : PadicAlgCl p ≃+* ℂ) (ρ : GaloisRep p 2),
+    ρ.IsIrreducible → ρ.FinitelyRamified → LocalIsPstB p 2 (ρ.restrictLocal p) → ρ.IsOdd →
+    LocalDistinctHTU p (ρ.restrictLocal p) →
+    ∃ (N : ℕ) (k : ℤ) (χ : DirichletCharacter ℂ N) (g : CF N k), 0 < N ∧ 1 ≤ k ∧
+      IsNormalizedEigenform g χ ∧
+      ∃ (ψ : GaloisChar p) (S : Finset ℕ), ∀ q : ℕ, q.Prime → q ∉ S →
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v q → IsArithFrob σ v q →
+          (ρ.mat σ⁻¹).trace = (ψ.toHom σ⁻¹ : PadicAlgCl p) * ιp.symm (coeff g q)
+
+open PanBergerSplit in
+/-- **`PanBerger` (the research field `r11r12`) from Pan's and Berger's theorems, potential
+semistability over Berger's `B_st ⊆ B_dR`**: pb-fix2's proof verbatim. -/
+theorem panBerger_of_printedB (hP : PanPrintedB) (hB : BergerPrintedB)
+    (hD : ZInQ.Contrib.HodgeSplit.DSThm965) (hDS : ZInQ.Contrib.HodgeSplit.DSThm966) :
+    PanBerger := by
+  intro p _ hp ρ hirr hfr hdr hodd hdist
+  have hdr' : LocalIsDeRhamU p 2 ((dualRep ρ).restrictLocal p) := by
+    rw [dualRep_restrictLocal]
+    exact localIsDeRhamU_dualHom p _ hdr
+  have hpst' := hB p 2 _ ((dualRep ρ).continuous_toHom.comp
+    (Field.absoluteGaloisGroup.map (algebraMap ℚ ℚ_[p])).continuous) hdr'
+  have hht' : LocalDistinctHTU p ((dualRep ρ).restrictLocal p) := by
+    rw [dualRep_restrictLocal]
+    exact localDistinctHTU_dualHom p ρ hdist
+  obtain ⟨Φ⟩ := exists_complex_equiv p
+  obtain ⟨N, k, χ, g, hN, hk, hg, ψ, S, htr⟩ := hP p hp Φ.symm (dualRep ρ)
+    (dualRep_isIrreducible ρ hirr) (dualRep_finitelyRamified ρ hfr) hpst'
+    (dualRep_isOdd ρ hodd) hht'
+  obtain ⟨Sr, hSr⟩ := hfr
+  let ιC : Qbar →ₐ[ℚ] ℂ := IsAlgClosed.lift
+  let ιL : Qbar →ₐ[ℚ] PadicAlgCl p := (Φ : ℂ →+* PadicAlgCl p).toRatAlgHom.comp ιC
+  refine ⟨N, k, χ, g, hN, hk, hg, charInv ψ, ιC, ιL, S ∪ Sr ∪ Finset.range (N * p + 1), ?_⟩
+  intro q hq hqS
+  simp only [Finset.mem_union, Finset.mem_range, not_or, not_lt] at hqS
+  obtain ⟨⟨hqS, hqSr⟩, hqNp⟩ := hqS
+  have hNp : 0 < N * p := Nat.mul_pos hN (Fact.out : p.Prime).pos
+  have hqdvd : ¬ q ∣ N * p := fun h => by
+    have := Nat.le_of_dvd hNp h
+    omega
+  refine ⟨hSr q hq hqSr, ?_⟩
+  obtain ⟨α, hα⟩ := coeff_mem_range hD hDS p ιC ιL hN hk hg hq hqdvd
+  refine ⟨α, hα, fun v σ hv hσ => ?_⟩
+  have h1 := htr q hq hqS v σ hv hσ
+  rw [trace_dualRep_inv] at h1
+  rw [h1, charInv_apply]
+  congr 1
+  change Φ.symm.symm (coeff g q) = Φ (ιC α)
+  rw [hα]
+  rfl
+
 end BergerBst
 end PkgI4
 end HDec
