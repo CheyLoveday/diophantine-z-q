@@ -13,3 +13,15 @@ leaf for Bump–Friedberg–Hoffstein 1990, opening theorem clause (ii), and pro
   `Ideal.sum_ramification_inertia_eq_finrank`), `exists_int_sub_mem` (f = 1), `natCast_not_mem_sq` (e = 1, via
   `ramificationIdx'_eq_ramificationIdx`), `zmod_isSquare_of_splitsIn` (p² ∤ d, √d ∈ K, p split ⇒ d nonzero square mod p),
   `mod_eight_of_splitsIn_two` (d fundamental discriminant, √d ∈ K, 2 split ⇒ d ≡ 1 mod 8). No deprecated API.
+
+## Leaf and glue — VERIFIED (compiled, standard axioms)
+- `ZInQKernel/Contrib/OneProof/BFHNonvanishing.lean` (copy: scratch/bfh-leaf/BFHNonvanishing.lean.txt):
+  `IsFESign f ε` (FE Λ_N(2−s) = ε Λ_N(s) over `ZInQ.Literature.completedL N`), `SplitsInQuadratic d S`
+  (∃ quadratic number field K ∋ √d, every p ∈ S has two distinct primes of 𝓞K above it), leaf `BFHClauseII`;
+  `fhNonvanishing_of_bfhClauseII : BFHClauseII → FHNonvanishing`; `isFESign_iff : IsFESign f ε ↔ ε = rootNumber f hχ`.
+- `lake env lean` on the file: no errors, no warnings. `lake build ZInQKernel.Contrib.OneProof.BFHNonvanishing`: OK.
+- FoldCheck.lean: `frozenTarget_bfh` = Main's body with hFH ↦ hBFH; axioms [propext, Classical.choice, Quot.sound].
+- Discharges.lean: #discharges does not list the new file (its theorem has type FHNonvanishing, not an open
+  hypothesis; hFH's type FriedbergHoffsteinB_FE is not derivable from BFH (ii)); output recorded. The `hFH` line in
+  the output is fh-printed's theorem (imported transitively through FriedbergHoffsteinBFE).
+- autofold.json written (hand fold note).
