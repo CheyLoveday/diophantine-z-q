@@ -21,3 +21,12 @@ Base: 60a3fac7 + merge of wip/gz-weil ad22e947 (commit 6cf5853f).
   End(Λ₁) = End(Λ₂) = O_D, n = (N, (−β+√D)/2) kills Λ₂/Λ₁; complete set of homothety classes.
 - φ at a point: via limits in punctured neighbourhoods (independent of junk values).
 - Target.lean: verbatim copy, `rfl` against the original: COMPILED (VERIFIED).
+
+## Lean results (ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean), all `lake env lean`, COMPILED (VERIFIED)
+- §1 objects + leaf `GrossZagierModuliAt` / `GrossZagierModuli` / `GrossZagierModuliCd`, `grossZagierModuliCd_of`.
+- §2 lattice algebra: `latEnd_span_root` (End⟨1,σ⟩ = O_D), `isHeegnerPair_of_form`, `exists_coprime_lift`,
+  `normalize_pair` (adapted basis), `form_of_normalized`, `exists_rep`, `isHeegnerPointReps_of`.
+- §3 analysis: `frequently_zPar_notMem`, `not_tendsto_xPar`, `modPt_eq`, `tendsto_norm_xPar`, `isModularParam_of`.
+- §4 `grossZagierFormulaAt_of_moduli`, `grossZagierFormula_of_moduli`, `grossZagierFormulaCd_of_moduli`.
+- NonVacuous.lean: `exists_heegnerPointReps`, `exists_modularParam_cd` (written; compile pending).
+- Finding: GAGA (`gagaMorphism`) is not needed: algebraicity of φ = coordinates in ℚ(X₀(N)), proved by gz-heegner.
