@@ -21,6 +21,19 @@ noncomputable section
 
 namespace CharPolyEll
 
+/-! ## 0. The field, copied verbatim from `ZInQKernel/Contrib/AVB1/AlgClosed.lean` -/
+
+/-- Verbatim copy of `ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed`. -/
+def CharPolyIndepOfEllAlgClosedCopy : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (A : _root_.PkgI3.AbVar k)
+    (φ : _root_.PkgI3.AbVar.End A), ∃ P : ℤ[X], P.Monic ∧
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+      ∀ (I : Type) [Fintype I] [DecidableEq I] (b : Module.Basis I ℚ_[ℓ] (A.V ℓ)),
+        (LinearMap.toMatrix b b ((_root_.PkgI3.AbVar.homT (ℓ := ℓ) φ).baseChange ℚ_[ℓ])).charpoly =
+          P.map (Int.castRingHom ℚ_[ℓ])
+
+example : CharPolyIndepOfEllAlgClosedCopy = ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed := rfl
+
 /-! ## 1. Pure algebra -/
 
 section Algebra
@@ -135,8 +148,10 @@ open PkgI3 PkgI3.AbVar
 variable {k : Type} [Field k]
 
 /-- The underlying scheme of an abelian variety is integral (it is geometrically integral over a field). -/
-instance isIntegral_left (A : PkgI3.AbVar k) : IsIntegral A.X.left :=
+theorem isIntegral_left (A : PkgI3.AbVar k) : IsIntegral A.X.left :=
   GeometricallyIntegral.isIntegral_of_subsingleton A.X.hom
+
+attribute [local instance] isIntegral_left
 
 /-- **The degree of an endomorphism** (Mumford, *Abelian varieties*, §4 and §19, UNVERIFIED locators): for
 `ψ : A → A` finite and surjective (an isogeny), `deg ψ = [K(A) : ψ^* K(A)]`, the degree of the extension of
@@ -197,6 +212,35 @@ theorem rho_apply {I : Type} [Fintype I] [DecidableEq I] (b : Module.Basis I ℚ
   rw [LinearMap.toMatrix_apply]
   exact LinearMap.toMatrixAlgEquiv_apply' _ _ _ _
 
+omit [Fact ℓ.Prime] in
+/-- A ring endomorphism equal to the identity makes `R` an `R`-module of rank `1`. -/
+theorem finrank_toAlgebra_id {R : CommRingCat} [StrongRankCondition R] (e : R ⟶ R) (he : e = 𝟙 R) :
+    @Module.finrank R R _ _ e.hom.toAlgebra.toModule = 1 := by
+  subst he
+  exact Module.finrank_self R
+
+omit [Fact ℓ.Prime] in
+/-- Sanity check of `degEnd`: the identity has degree `1`. -/
+theorem degEnd_one (A : PkgI3.AbVar k) : degEnd (1 : PkgI3.AbVar.End A) = 1 := by
+  have h1 : PkgI3.AbVar.IsIsogenyMor (1 : PkgI3.AbVar.End A).hom :=
+    ⟨by change IsFinite (𝟙 A.X.left); infer_instance,
+      by change Surjective (𝟙 A.X.left); infer_instance⟩
+  have hs : (1 : PkgI3.AbVar.End A).hom.left.stalkMap (genericPoint A.X.left) =
+      𝟙 (A.X.left.presheaf.stalk (genericPoint A.X.left)) :=
+    Scheme.Hom.stalkMap_id A.X.left _
+  have : StrongRankCondition (A.X.left.presheaf.stalk (genericPoint A.X.left)) :=
+    inferInstanceAs (StrongRankCondition A.X.left.functionField)
+  unfold degEnd
+  split_ifs
+  · exact finrank_toAlgebra_id _ hs
+
+/-- Sanity check of the leaf: at `ψ = 1` both sides are `1`. -/
+theorem degEqDetTate_one (A : PkgI3.AbVar k) {I : Type} [Fintype I]
+    [DecidableEq I] (b : Module.Basis I ℚ_[ℓ] (A.V ℓ)) :
+    (LinearMap.toMatrix b b ((PkgI3.AbVar.homT (ℓ := ℓ) (1 : PkgI3.AbVar.End A)).baseChange
+      ℚ_[ℓ])).det = (degEnd (1 : PkgI3.AbVar.End A) : ℚ_[ℓ]) := by
+  rw [degEnd_one, ← rho_apply, map_one, Matrix.det_one, Nat.cast_one]
+
 end AbVar
 
 /-! ## 4. The reduction -/
@@ -243,3 +287,4 @@ theorem charPolyIndepOfEllAlgClosed_of_degEqDetTate (hD : DegEqDetTate)
 end CharPolyEll
 
 #print axioms CharPolyEll.charPolyIndepOfEllAlgClosed_of_degEqDetTate
+#print axioms CharPolyEll.degEqDetTate_one
