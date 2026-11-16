@@ -21,3 +21,7 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
 - 03:00 `branchDescent : BranchDescent` COMPILED (Descent.lean): uniqueness by going down; normality by the
   colon ideal I' = (bS' + J) : a, prime avoidance over the finitely many primes over Q (minimal primes of QS'),
   and Tr_{Ω/L} as Reynolds operator (`trace_eq_sum_embeddings` into AlgebraicClosure L; J ↦ Q).
+- 03:20 `kummerBase : KummerBase` COMPILED (KummerBase.lean).
+- 04:00 `tameBranchNormal_of_local : TBNLocal → TameBranchNormal` COMPILED (Transport.lean).
+- 04:05 contributor file ZInQKernel/Contrib/OneProof/Abhyankar.lean: `tameBranchNormal_of_kummerUnram : KummerUnram → TameBranchNormal`,
+  `nvLocalInertia_of_kummerUnram` COMPILED. Only `KummerUnram` (step 2) remains open.
