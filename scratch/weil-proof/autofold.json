@@ -6,7 +6,7 @@
  "discharges": [
   {
    "field": "weilPairingMumford",
-   "proof": "_root_.WeilProof.weilPairingMumford_proof {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.pullbackCompMonoidal {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
+   "proof": "_root_.WeilProof.weilPairingMumford_proof {n}.mumfordSquareAC {n}.mumfordMulNPicZeroAC {n}.mumfordPhiSurjectiveAC {n}.mumfordWeilNondegAC {n}.mumfordWeilAltAC {n}.phiAmpleIsogeny",
    "leaves": [
     {
      "name": "mumfordSquareAC",
@@ -31,14 +31,6 @@
      "kind": "published",
      "flag": "unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED",
      "source": "Mumford, Abelian varieties, 8 Thm 1"
-    },
-    {
-     "name": "pullbackCompMonoidal",
-     "type": "_root_.WeilProof.PullbackCompMonoidal",
-     "doc": "weil-proof: Mathlib's Scheme.Modules.pullbackComp commutes with the tensorators of the vendored monoidal structure of Scheme.Modules.pullback (pull-back of sheaves of modules is a monoidal pseudofunctor). Formal glue about the library's constructions; with it, Mumford's section 20 display (e_n by its formula is well defined, mu_n-valued and bilinear) is a theorem (WeilProof.mumfordWeilPairingAC_of_pullbackCompMonoidal).",
-     "kind": "project glue",
-     "flag": "",
-     "source": "project glue (weil-proof): monoidality of pullbackComp for the vendored Modules/PullbackMonoidal structure"
     },
     {
      "name": "mumfordWeilNondegAC",
