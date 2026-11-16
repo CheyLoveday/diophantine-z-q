@@ -267,7 +267,70 @@ theorem exists_rep (s : Finset O') (x : O') (hx : x ∈ s) :
   rw [← hψ]
   exact ψ_mk' (O := O) (K := K) O' s c t
 
+variable (O K) in
+/-- `ι` as an `O`-algebra map. -/
+noncomputable def ιa (s : Finset O') : Df O K O' s →ₐ[O] O' :=
+  { ι O K O' s with commutes' := ι_algebraMap (O := O) (K := K) O' s }
+
+variable (K) in
+include K hunr in
+/-- **Ind-étaleness.** Every finite subset of `O'` lies in an `O`-subalgebra of `O'` étale over `O`. -/
+theorem exists_etale_subalgebra (s : Finset O') :
+    ∃ B : Subalgebra O O', Algebra.Etale O B ∧ (s : Set O') ⊆ B := by
+  classical
+  obtain ⟨f, hf, hfe⟩ := exists_etale_away (O := O) (K := K) O' hunr s
+  choose c t ht hct using fun x : s => exists_rep (O := O) (K := K) O' hunr s x.1 x.2
+  let P := (nI O K O' s).primeCompl
+  let h : Df O K O' s := f * ∏ x : s, t x
+  have hP : h ∈ P := P.mul_mem hf (Submonoid.prod_mem P (fun x _ => ht x))
+  -- `D[1/h]` is étale over `O`
+  haveI : Algebra.Etale O (Localization.Away h) := by
+    rw [← Algebra.basicOpen_subset_etaleLocus_iff_etale]
+    exact (show (PrimeSpectrum.basicOpen h : Set (PrimeSpectrum (Df O K O' s))) ⊆
+      PrimeSpectrum.basicOpen f from PrimeSpectrum.basicOpen_mul_le_left f _).trans
+      (Algebra.basicOpen_subset_etaleLocus_iff_etale.mpr hfe)
+  have hunit : ∀ y : Submonoid.powers h, IsUnit (ιa O K O' s y) := by
+    rintro ⟨_, n, rfl⟩
+    exact (IsLocalRing.notMem_maximalIdeal.mp hP).pow n
+  let φ : Localization.Away h →ₐ[O] O' := IsLocalization.liftAlgHom hunit
+  have hφ : ∀ z : Df O K O' s, φ (algebraMap _ _ z) = ι O K O' s z :=
+    fun z => IsLocalization.lift_eq _ _
+  have hinj : Function.Injective φ := by
+    rw [injective_iff_map_eq_zero]
+    intro z hz
+    obtain ⟨⟨a, b⟩, rfl⟩ := IsLocalization.mk'_surjective (Submonoid.powers h) z
+    have h1 := congrArg φ (IsLocalization.mk'_spec (Localization.Away h) a b)
+    rw [map_mul, hz, zero_mul, hφ] at h1
+    have ha : a = 0 := ι_injective (O := O) (K := K) O' s (by rw [← h1, map_zero])
+    show IsLocalization.mk' (Localization.Away h) a b = 0
+    rw [ha, IsLocalization.mk'_zero]
+  refine ⟨φ.range, Algebra.Etale.of_equiv (A := Localization.Away h) (B := φ.range)
+    (AlgEquiv.ofInjective φ hinj), ?_⟩
+  intro x hx
+  let xs : s := ⟨x, hx⟩
+  have htu : IsUnit (algebraMap _ (Localization.Away h) (t xs)) :=
+    isUnit_of_dvd_unit (map_dvd _
+      (Dvd.dvd.mul_left (Finset.dvd_prod_of_mem t (Finset.mem_univ xs)) f))
+      (IsLocalization.Away.algebraMap_isUnit h)
+  obtain ⟨u, hu⟩ := htu
+  refine ⟨algebraMap _ _ (c xs) * ↑u⁻¹, ?_⟩
+  have hιt : ι O K O' s (t xs) ≠ 0 := by
+    intro h0
+    exact (IsLocalRing.notMem_maximalIdeal.mp (ht xs)).ne_zero h0
+  have e1 : φ ↑u = ι O K O' s (t xs) := by rw [hu, hφ]
+  have key : φ (algebraMap _ _ (c xs) * ↑u⁻¹) = x := by
+    apply mul_left_cancel₀ hιt
+    calc ι O K O' s (t xs) * φ (algebraMap _ _ (c xs) * ↑u⁻¹)
+        = φ ↑u * φ (algebraMap _ _ (c xs) * ↑u⁻¹) := by rw [e1]
+      _ = φ (↑u * (algebraMap _ _ (c xs) * ↑u⁻¹)) := (map_mul φ _ _).symm
+      _ = φ (algebraMap _ _ (c xs)) := by
+          congr 1; rw [mul_comm, mul_assoc, Units.inv_mul, mul_one]
+      _ = ι O K O' s (c xs) := hφ _
+      _ = ι O K O' s (t xs) * x := by rw [← hct xs, mul_comm]
+  exact key
+
 end KeyLemma
+
 
 
 end NeronSH
