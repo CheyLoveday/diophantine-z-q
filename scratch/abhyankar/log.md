@@ -18,3 +18,6 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
 - 02:15 `etaleBranch : EtaleBranch` COMPILED (EtaleBranch.lean): C = S'_𝔓' has maximal ideal (t,u)C
   (`Algebra.FormallyUnramified.map_maximalIdeal`), C/tC has principal maximal ideal, ū not nilpotent ⇒ DVR
   (`principal_local_structure`, adapted copy of `CurveGlueCI.isDomain_of_dim_one`).
+- 03:00 `branchDescent : BranchDescent` COMPILED (Descent.lean): uniqueness by going down; normality by the
+  colon ideal I' = (bS' + J) : a, prime avoidance over the finitely many primes over Q (minimal primes of QS'),
+  and Tr_{Ω/L} as Reynolds operator (`trace_eq_sum_embeddings` into AlgebraicClosure L; J ↦ Q).
