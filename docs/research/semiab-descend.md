@@ -161,5 +161,51 @@ printed (UNVERIFIED, as height-fix noted). Here it is not needed: the remark's c
 - `lake build ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect` succeeds (12787 jobs). The development copy
   `scratch/semiab-descend/A.lean` compiles with `lake env lean` in about 20 s, and
   `#print axioms semiAbelianDescendsPerfect_of_chevalley` = `[propext, Classical.choice, Quot.sound]`.
-- `#discharges`: see `scratch/semiab-descend/discharges.txt` (filled in below).
-- Autofold: see below.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect`
+  succeeds.
+- `#discharges` (`scratch/semiab-descend/Discharges.lean`, output in `discharges.txt`):
+
+  ```
+  DISCHARGES [OpenResearchLeaves28.bostLowerBound] by ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley
+    still assumes: [ZInQ.HeightFix.BostLowerBoundPrinted,
+   BPAnalytic.Uniformization.UniformizationLeafAll,
+   AvSplit.MumfordTorsionAlgClosed,
+   ZInQ.SemiAbDescend.ChevalleyPerfect]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [OpenResearchLeaves28.gaudronRemondThm14] by ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley
+    still assumes: [ZInQ.HeightFix.GaudronRemondThm14Printed,
+   BPAnalytic.Uniformization.UniformizationLeafAll,
+   AvSplit.MumfordTorsionAlgClosed,
+   ZInQ.SemiAbDescend.ChevalleyPerfect]
+    axioms: [propext, Classical.choice, Quot.sound]
+  ```
+
+  The optional `javanpeykarBound` and `pazukiCor13Upper` are discharged likewise, by
+  `javanpeykarBound_of_printed_chevalley` and `pazukiCor13Upper_of_printed_chevalley`. The full output ends
+  "45 open hypotheses, 6883 theorems checked, 27 discharge one". The count includes other contributions in the
+  build.
+  - `UniformizationLeafAll` is proved on this base (`_root_.uniformizationLeafAll_proof`), so it is not a new
+    assumption.
+  - `MumfordTorsionAlgClosed` is a textbook field.
+  - The printed leaves are height-fix's.
+  - `ChevalleyPerfect` is the only new leaf.
+- `scratch/semiab-descend/Statements.lean`: verbatim copies of `SemiAbelianDescendsPerfect`,
+  `HasSemiAbelianIdCompTorus` and `HasSemiAbelianIdentityComponent` equal the originals by `rfl`.
+- **Autofold.**
+  - **Combined spec** (`scratch/semiab-descend/autofold.json`, height-fix's fold with the glue replaced by
+    `chevalleyPerfect`).
+    - It discharges `bostLowerBound` and `gaudronRemondThm14` and adds the leaves `bostLowerBoundPrinted`,
+      `chevalleyPerfect` (both published, flag "locator UNVERIFIED (see the source)") and
+      `gaudronRemondThm14Printed` (published, no flag).
+    - Change from height-fix's spec: on this base `uniformizationLeafAll` is no longer a textbook field, so
+      `{t}.uniformizationLeafAll` does not compile. The spec uses `_root_.uniformizationLeafAll_proof` and imports
+      `ZInQKernel.Contrib.OneProof.UniformizationLeafAll`.
+  - **Dry run** (`autofold-dryrun.txt`): `strict count: 16/21 on 37 -> 19/19 on 38; strictest 16/21 -> 19/19`,
+    i.e. **−2 GLUE**, accepted without `--allow-rise`.
+    - The printed module (`FoldDryRun.lean`, output minus line 1) compiles (`FoldDryRunCheck.lean`).
+    - `HDec.HSyn.sixContactMin_of_open39` has the standard axioms.
+  - **If height-fix is folded first** (with `semiAbelianDescendsPerfect` as a field),
+    `scratch/semiab-descend/autofold-after-height-fix.json` discharges that field by
+    `semiAbelianDescendsPerfect_of_chevalley {n}.chevalleyPerfect`. On the present base it is correctly refused:
+    the field does not exist yet.
+  - The fold itself was not run: `ZInQKernel/OneProof/` is not this task's to edit.

@@ -1,12 +1,13 @@
 {
  "name": "height-fix+semiab-descend",
  "imports": [
-  "ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect"
+  "ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect",
+  "ZInQKernel.Contrib.OneProof.UniformizationLeafAll"
  ],
  "discharges": [
   {
    "field": "bostLowerBound",
-   "proof": "_root_.ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley {n}.bostLowerBoundPrinted {t}.uniformizationLeafAll {t}.mumfordTorsionAlgClosed {n}.chevalleyPerfect",
+   "proof": "_root_.ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley {n}.bostLowerBoundPrinted _root_.uniformizationLeafAll_proof {t}.mumfordTorsionAlgClosed {n}.chevalleyPerfect",
    "leaves": [
     {
      "name": "bostLowerBoundPrinted",
@@ -28,7 +29,7 @@
   },
   {
    "field": "gaudronRemondThm14",
-   "proof": "_root_.ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley {n}.gaudronRemondThm14Printed {t}.uniformizationLeafAll {t}.mumfordTorsionAlgClosed {n}.chevalleyPerfect",
+   "proof": "_root_.ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley {n}.gaudronRemondThm14Printed _root_.uniformizationLeafAll_proof {t}.mumfordTorsionAlgClosed {n}.chevalleyPerfect",
    "leaves": [
     {
      "name": "gaudronRemondThm14Printed",
