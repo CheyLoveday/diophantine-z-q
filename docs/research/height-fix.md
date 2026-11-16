@@ -228,7 +228,7 @@ criterion, to read) and Conrad 2002 Thm 1.1 (Chevalley over a perfect field).
 
 ## 6. Checks (all VERIFIED)
 
-- `lake build ZInQKernel.Contrib.OneProof.PrintedStableHeight` succeeds. The file is 47 KB, imports
+- `lake build ZInQKernel.Contrib.OneProof.PrintedStableHeight` succeeds. The file is 49 KB, imports
   `ZInQKernel.Contrib.OneProof.HeightDictionary` and `ZInQKernel.Contrib.OneProof.RaynaudSemistableOr`, and has no
   code that runs at build time.
 - `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` succeeds (13698 jobs).
