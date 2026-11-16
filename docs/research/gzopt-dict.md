@@ -70,6 +70,7 @@ What is proved in Lean (all VERIFIED: compiled, standard axioms):
 | `grossZagierModuliOptAt_of_alg` | **the bridge** for one curve |
 | `grossZagierModuliOptCd_of_alg`, `grossZagierFormulaCd_of_alg` | the `C_d` forms; the second composes with period-odd |
 | `hasQExp_j`, `hasQExp_jN` | sanity check: the two generators of `X0Field N` are the `q`-expansions of `E₄³/Δ = j` at `τ` and at `Nτ` |
+| `ker_evJ`, `nonempty_ringEquiv_fractionRing` (helper `GrossZagierAlgebraic/X0Model.lean`) | `X0Field N ≃+* Frac(ℚ[X, Y]/(Φ_N))` for the classical modular polynomial `Φ_N` (FLT's `ModularPolynomialData`) |
 
 ## 1. The objects
 
@@ -86,8 +87,16 @@ What is proved in Lean (all VERIFIED: compiled, standard axioms):
   - its irreducibility (`irreducible_map_ratFunc_of_natCast_ne_zero`);
   - `[ℚ(jq)(jq(q^N)) : ℚ(jq)] = ψ(N)` (`finrank_adjoin_jqN_eq_dedekindPsi`).
 
-  So `X0Field N ≅ Frac(ℚ[X, Y]/(Φ_N))`, the function field of the plane model of the canonical model of `X₀(N)`
-  over `ℚ`. The Lean iso is not written out (SPECULATIVE: routine from those three facts).
+  From these facts, `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic/X0Model.lean` proves in Lean (VERIFIED,
+  standard axioms):
+  - `ker_evJ`: the kernel of `ℚ[X][Y] → ℚ((q))`, `(X, Y) ↦ (jq, jq(q^N))`, is `(Φ_N)`;
+  - `nonempty_ringEquiv_fractionRing`: `X0Field N ≃+* Frac(ℚ[X][Y]/(Φ_N))`. This is a ring isomorphism of
+    `ℚ`-algebras, so it is automatically `ℚ`-linear.
+
+  So `X0Field N` is the function field of the plane model `Φ_N(X, Y) = 0` of the canonical model of `X₀(N)` over
+  `ℚ`. Those proofs use only the finrank fact and `Φ_N(jq, jq(q^N)) = 0`, not irreducibility, together with the
+  transcendence of `jq` (its order is `−1`). The helper file is kept separate from the leaf's file because the
+  vendored theorem modules it imports change global instance and simp attributes.
 * **`genX E`, `genY E`**: the classes of `x` and `y` in `ℚ(E) = Frac(ℚ[x, y]/(W_E))` (Mathlib's
   `Affine.FunctionField`).
 
@@ -216,6 +225,7 @@ UNVERIFIED:
 | --- | --- | --- |
 | `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic.lean` | §1 objects and leaves, §2 algebra, §3 analysis, §4 bridge, §5 sanity (`hasQExp_j`, `hasQExp_jN`) | `lake build` with no errors and no warnings in the file (VERIFIED) |
 | `scratch/gzopt-dict/AxMain.lean`, `MainEdit.lean` → `out_axioms.txt` | `#print axioms` for the bridge theorems and for `frozenTarget_gzoptdict` | `[propext, Classical.choice, Quot.sound]` for all (VERIFIED) |
+| `ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic/X0Model.lean`, `scratch/gzopt-dict/AxModel.lean` → `out_axioms_model.txt` | `ker_evJ`, `nonempty_ringEquiv_fractionRing`, `hasQExp_j`, `hasQExp_jN` | `lake build`; standard axioms (VERIFIED) |
 | `scratch/gzopt-dict/Discharges.lean` → `discharges-output.txt` | `#discharges` | below |
 | `scratch/gzopt-dict/autofold.json`, `autofold-formula.json` | fold specs | dry run: below |
 
@@ -237,9 +247,6 @@ expected until the `C_d` split is folded.
 
 * **Folding.** The `C_d` split of `hL3` and period-odd's spec have to land first. Then `autofold.json` applies, or
   `autofold-formula.json` if the split lands without period-odd's spec.
-* **`X0Field N ≅ Frac(ℚ[X, Y]/(Φ_N))` in Lean.** The FLT tree has all three ingredients (§1), but the iso is not
-  written out. The leaf does not need it: `X0Field N` is by definition `ℚ(j, j_N)` read through `q`-expansions, and
-  §5 checks its generators.
 * **Optimality is still analytic** (`IsOptimalParam`, gz-optimal's form; §2.1). An algebraic form would need
   `J₀(N)` and its optimal quotients, which Mathlib does not have.
 * **`Gamma0QExpansion` is a leaf.** A Lean proof would need the function field of a compact Riemann surface and
