@@ -40,8 +40,9 @@ theorem openTextbookLeaves10_of_OpenTextbookLeaves11 (n : OpenTextbookLeaves11) 
   neronSchemeExtensionExists := n.neronSchemeExtensionExists
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold19; generated). -/
-theorem sixContactMin_of_open26 (r : OpenResearchLeaves19) (t : OpenTextbookLeaves11) (l : OpenAddedLeaves16) (g : OpenGlue7) : ZInQ.SixContactMin :=
-  sixContactMin_of_open25 r (openTextbookLeaves10_of_OpenTextbookLeaves11 t) l g
+theorem sixContactMin_of_open26 (r : OpenResearchLeaves19) (t : OpenTextbookLeaves11) (l : OpenAddedLeaves16) (g : OpenGlue7)
+    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
+  sixContactMin_of_open25 r (openTextbookLeaves10_of_OpenTextbookLeaves11 t) l g hY3
 
 end HSyn
 

@@ -779,10 +779,6 @@ structure OpenAddedLeaves13 : Prop where
   /-- qm-split, H-87/H-88: `ι(𝒪¹)` is cocompact Fuchsian with covolume `2π/3` (Shimura 1971 Prop. 9.2;
   Shimizu 1965). -/
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
-  /-- shimura-glue, printed form, on abelian schemes (route-a-fold): Deligne's theorem on the connected
-  components of a Shimura variety for `G = B^×` at level `K₃` on one fine witness `Y₃` (Deligne, Sém. Bourbaki
-  389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.1.3, 2.6.3; locators UNVERIFIED). -/
-  deligneComponentsY3PrintedAb : _root_.ShimuraGlue.DeligneComponentsY3PrintedAb
   /-- x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
   Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
   `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean). -/
@@ -821,7 +817,6 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
-  deligneComponentsY3PrintedAb := l.deligneComponentsY3PrintedAb
   deligneComponentsX6PrintedAb := l.deligneComponentsX6PrintedAb
   geomConnOfAlgClosure := l.geomConnOfAlgClosure
 
@@ -830,9 +825,9 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
 `OpenGlue7` (1). -/
 theorem sixContactMin_of_open18 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves13)
     (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) (h6 : PkgI2.RaynaudCriterionNF.{0})
-    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
-    ZInQ.SixContactMin :=
-  sixContactMin_of_open17 r t (addedLeaves12_of_open13 l) g hYu h6 hSS
+    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists)
+    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
+  sixContactMin_of_open17 r t (addedLeaves12_of_open13 l) g hYu h6 hSS hY3
 
 end HSyn
 

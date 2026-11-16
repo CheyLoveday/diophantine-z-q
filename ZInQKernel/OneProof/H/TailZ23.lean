@@ -745,10 +745,6 @@ theorem addedLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeave
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
   igusaCMValue24 := _root_.CM24.igusaCMValue24_field
-  deligneComponentsY3Printed :=
-    (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsY3Printed_iff_ab_gl
-      (_root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw)).mpr
-      l.deligneComponentsY3PrintedAb
 
 /-- leaf-fold9's research bundle from leaf-fold14's (the composite of `researchLeaves12_of_open13`,
 `researchLeaves11_of_open12`, `researchLeaves10_of_open11` and `researchLeaves9_of_open10`, with the three reduct
@@ -795,10 +791,10 @@ theorem researchLeaves9_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLe
 `OpenGlue7` (1). -/
 theorem sixContactMin_of_open17 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12)
     (g : OpenGlue7) (hYu : QMLattice.YuB6Alg) (h6 : PkgI2.RaynaudCriterionNF.{0})
-    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists) :
-    ZInQ.SixContactMin :=
+    (hSS : _root_.ZInQ.HeightSplit.SemistableReductionThm ∧ _root_.ZInQ.HeightSplit.SemistablePersists)
+    (hY3 : TSHecke.Y3Connected) : ZInQ.SixContactMin :=
   sixContactMin_of_open11 (researchLeaves9_of_open14 r t l h6 hSS) t (addedLeaves9_of_open14 r t l) g
-    (_root_.ReductSplit.faltingsLemma5BCLower_final _root_.GapHeight.faltingsLemma5Lower) hYu
+    (_root_.ReductSplit.faltingsLemma5BCLower_final _root_.GapHeight.faltingsLemma5Lower) hYu hY3
 
 end HSyn
 
