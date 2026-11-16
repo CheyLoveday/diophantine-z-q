@@ -234,4 +234,102 @@ theorem shift_bound (τ : UpperHalfPlane) {v : Fin 2 → ℤ} (hv : v ≠ 0) {c 
       mul_le_mul_of_nonneg_left hb (abs_nonneg _)
     nlinarith [abs_nonneg ((v 1 : ℝ) - c)]
 
+
+/-- The summable majorant on a vertical strip. -/
+theorem wTerm_bound {c : ℝ} (hc : |c| ≤ 1 / 2) {A B : ℝ} (hB : 0 < B) {v : Fin 2 → ℤ} (hv : v ≠ 0)
+    {w : ℂ} (hw : |w.re| < A ∧ B < w.im) :
+    ‖wTerm c v w‖ ≤ 4 * (2 / EisensteinSeries.r ⟨⟨A, B⟩, hB⟩ ^ 3 + 1 / EisensteinSeries.r ⟨⟨A, B⟩, hB⟩ ^ 4) *
+      ‖v‖ ^ (-3 : ℝ) := by
+  set r₀ := EisensteinSeries.r ⟨⟨A, B⟩, hB⟩ with hr₀
+  have hr₀p : 0 < r₀ := EisensteinSeries.r_pos _
+  have hwH : 0 < w.im := lt_trans hB hw.2
+  set τ : UpperHalfPlane := ⟨w, hwH⟩ with hτ
+  have hstrip : τ ∈ verticalStrip A B := ⟨hw.1.le, hw.2.le⟩
+  have hrr : r₀ ≤ EisensteinSeries.r τ := EisensteinSeries.r_lower_bound_on_verticalStrip τ hB hstrip
+  have hm := one_le_norm_vec hv
+  set m := ‖v‖ with hmdef
+  have hωb : r₀ * m ≤ ‖(v 0 : ℂ) * w + v 1‖ := by
+    have := EisensteinSeries.r_mul_max_le τ hv
+    calc r₀ * m ≤ EisensteinSeries.r τ * m := by gcongr
+      _ ≤ _ := this
+  have hδb : r₀ * m ≤ 2 * ‖(c : ℂ) - ((v 0 : ℂ) * w + v 1)‖ := by
+    have := shift_bound τ hv hc
+    calc r₀ * m ≤ EisensteinSeries.r τ * m := by gcongr
+      _ ≤ _ := this
+  have hcn : ‖(c : ℂ)‖ ≤ 1 := by
+    rw [Complex.norm_real, Real.norm_eq_abs]; linarith
+  have key := key_bound (mul_pos hr₀p (by linarith)) hωb hδb (by ring) hcn
+  unfold wTerm
+  refine key.trans ?_
+  have h3 : m ^ (3 : ℝ) = m ^ (3 : ℕ) := by rw [← Real.rpow_natCast]; norm_num
+  rw [Real.rpow_neg (by linarith), h3]
+  have hm0 : 0 < m := by linarith
+  have e1 : 4 * (2 / (r₀ * m) ^ 3 + 1 / (r₀ * m) ^ 4) =
+      4 * (2 / r₀ ^ 3 + 1 / (r₀ ^ 4 * m)) * (m ^ 3)⁻¹ := by
+    field_simp
+  rw [e1]
+  gcongr
+  calc r₀ ^ 4 = r₀ ^ 4 * 1 := by ring
+    _ ≤ r₀ ^ 4 * m := by gcongr
+
+/-- `z ↦ ∑ v, wTerm c v z` is holomorphic on `ℍ`. -/
+theorem diffOn_tsum_wTerm {c : ℝ} (hc : |c| ≤ 1 / 2) (hcZ : ∀ m : ℤ, c ≠ m) :
+    DifferentiableOn ℂ (fun z => ∑' v : Fin 2 → ℤ, wTerm c v z) Hs := by
+  intro z₀ hz₀
+  have hz₀' : 0 < z₀.im := hz₀
+  set A := |z₀.re| + 1
+  set B := z₀.im / 2
+  have hB : 0 < B := by positivity
+  set U : Set ℂ := {w | |w.re| < A ∧ B < w.im} with hU
+  have hUo : IsOpen U :=
+    (isOpen_lt (continuous_abs.comp Complex.continuous_re) continuous_const).inter
+      (isOpen_lt continuous_const Complex.continuous_im)
+  have hz₀U : z₀ ∈ U := ⟨by simp [A], by simp only [B]; linarith⟩
+  have hUH : U ⊆ Hs := fun w hw => lt_trans hB hw.2
+  set K := 4 * (2 / EisensteinSeries.r ⟨⟨A, B⟩, hB⟩ ^ 3 + 1 / EisensteinSeries.r ⟨⟨A, B⟩, hB⟩ ^ 4)
+  classical
+  set u : (Fin 2 → ℤ) → ℝ := Function.update (fun v => K * ‖v‖ ^ (-3 : ℝ)) 0 ‖1 / (c : ℂ) ^ 2‖
+  have hu : Summable u :=
+    ((EisensteinSeries.summable_one_div_norm_rpow (k := 3) (by norm_num)).mul_left K).update _ _
+  have hd : DifferentiableOn ℂ (fun z => ∑' v : Fin 2 → ℤ, wTerm c v z) U := by
+    refine Complex.differentiableOn_tsum_of_summable_norm hu (fun v => (diffOn_wTerm hcZ v).mono hUH) hUo ?_
+    intro v w hw
+    by_cases hv : v = 0
+    · subst hv
+      simp [u, wTerm]
+    · simp only [u, Function.update_of_ne hv]
+      exact wTerm_bound hc hB hv hw
+  exact (hd.differentiableAt (hUo.mem_nhds hz₀U)).differentiableWithinAt
+
+/-- `℘_τ(1/N)` on `ℍ`. -/
+def Pf (N : ℕ) (z : ℂ) : ℂ := (pp (ofComplex z)).weierstrassP (1 / N)
+
+theorem diffOn_Pf {N : ℕ} (hN : 2 ≤ N) : DifferentiableOn ℂ (Pf N) Hs := by
+  have hN' : (2 : ℝ) ≤ N := by exact_mod_cast hN
+  have hc : |(1 / N : ℝ)| ≤ 1 / 2 := by
+    rw [abs_of_pos (by positivity)]
+    exact one_div_le_one_div_of_le (by norm_num) hN'
+  have hcZ : ∀ m : ℤ, (1 / N : ℝ) ≠ m := by
+    intro m hm
+    have h0 : (0 : ℝ) < 1 / N := by positivity
+    have h1 : (1 / N : ℝ) < 1 := by rw [div_lt_one (by positivity)]; linarith
+    rw [hm] at h0 h1
+    have : (0 : ℤ) < m := by exact_mod_cast h0
+    have : m < (1 : ℤ) := by exact_mod_cast h1
+    omega
+  refine (diffOn_tsum_wTerm hc hcZ).congr fun z hz => ?_
+  simp only [Pf]
+  rw [weierstrassP_pp_eq, ofComplex_coe hz]
+  push_cast; rfl
+
+/-- `f₁ = g₂g₃℘(1/N)/Δ` on `ℍ` (Weber's function where `g₂g₃ ≠ 0`). -/
+def Wf (N : ℕ) (z : ℂ) : ℂ := G2f z * G3f z / Dlf z * Pf N z
+
+theorem diffOn_Wf {N : ℕ} (hN : 2 ≤ N) : DifferentiableOn ℂ (Wf N) Hs :=
+  ((diffOn_G2f.mul diffOn_G3f).div diffOn_Dlf fun z _ => Dlf_ne z).mul (diffOn_Pf hN)
+
+theorem weber_eq_Wf {N : ℕ} (τ : UpperHalfPlane) (h2 : (pp τ).g₂ ≠ 0) (h3 : (pp τ).g₃ ≠ 0) :
+    weber (pp τ) (1 / (N : ℂ)) = Wf N τ := by
+  simp only [weber, h3, h2, ↓reduceIte, Wf, G2f, G3f, Dlf, Pf, ofComplex_apply]
+
 end X1Igusa.Weber
