@@ -13,7 +13,7 @@ module
 public import Mathlib.AlgebraicGeometry.Limits
 public import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
-public import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.RingTheory.MinimalPrimes.Reduced
+public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.MinimalPrimes.Reduced
 public import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.Topology.Dimension.CounterexampleCodimension
 
 -- Port: the upstream lakefile sets `maxSynthPendingDepth = 3` for every file.

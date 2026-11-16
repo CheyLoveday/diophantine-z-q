@@ -12,7 +12,7 @@ module
 
 public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
-public import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.AlgebraicGeometry.Limits.ReducedInducedSubscheme
+public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Limits.ReducedInducedSubscheme
 
 -- Port: the upstream lakefile sets `maxSynthPendingDepth = 3` for every file.
 set_option maxSynthPendingDepth 3

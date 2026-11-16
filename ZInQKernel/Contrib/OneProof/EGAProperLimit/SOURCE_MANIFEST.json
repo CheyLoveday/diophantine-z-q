@@ -188,14 +188,6 @@
       "destination": "ZInQKernel/Contrib/OneProof/EGAProperLimit/StacksFrontier/AlgebraicGeometry/Limits/ProjectiveSpace.lean"
     },
     {
-      "module": "StacksFrontier.AlgebraicGeometry.Limits.ReducedInducedSubscheme",
-      "source_path": "StacksFrontier/AlgebraicGeometry/Limits/ReducedInducedSubscheme.lean",
-      "source_url": "https://raw.githubusercontent.com/AxiomMath/Stacks/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/AlgebraicGeometry/Limits/ReducedInducedSubscheme.lean",
-      "source_sha256": "5fb076c4302fa100ad5467583a14bfb98e983ffa96f12662d87b4477d05b9409",
-      "source_bytes": 5897,
-      "destination": "ZInQKernel/Contrib/OneProof/EGAProperLimit/StacksFrontier/AlgebraicGeometry/Limits/ReducedInducedSubscheme.lean"
-    },
-    {
       "module": "StacksFrontier.AlgebraicGeometry.Morphisms.Closure.ImmersionImage",
       "source_path": "StacksFrontier/AlgebraicGeometry/Morphisms/Closure/ImmersionImage.lean",
       "source_url": "https://raw.githubusercontent.com/AxiomMath/Stacks/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/AlgebraicGeometry/Morphisms/Closure/ImmersionImage.lean",
@@ -570,14 +562,6 @@
       "source_sha256": "4976753434d77c0bfa1a33793bc863e9822732de4bd8865b9edf581013edbeb0",
       "source_bytes": 38037,
       "destination": "ZInQKernel/Contrib/OneProof/EGAProperLimit/StacksFrontier/RingTheory/HomogeneousLocalization/DegreeZero/Finiteness.lean"
-    },
-    {
-      "module": "StacksFrontier.RingTheory.MinimalPrimes.Reduced",
-      "source_path": "StacksFrontier/RingTheory/MinimalPrimes/Reduced.lean",
-      "source_url": "https://raw.githubusercontent.com/AxiomMath/Stacks/c496df0d9beea9deaeabcea8492605f9a0a2313b/StacksFrontier/RingTheory/MinimalPrimes/Reduced.lean",
-      "source_sha256": "7adf61e18d20cb6d8b1eb757e3833dd87ba0e88cf064730083e0c9a04bc05a72",
-      "source_bytes": 16005,
-      "destination": "ZInQKernel/Contrib/OneProof/EGAProperLimit/StacksFrontier/RingTheory/MinimalPrimes/Reduced.lean"
     },
     {
       "module": "StacksFrontier.RingTheory.Module.Localization.Exactness",

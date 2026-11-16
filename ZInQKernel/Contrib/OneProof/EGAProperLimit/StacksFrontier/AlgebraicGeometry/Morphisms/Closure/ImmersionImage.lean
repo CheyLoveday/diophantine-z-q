@@ -12,7 +12,7 @@ module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 public import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
-public import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.AlgebraicGeometry.Limits.ReducedInducedSubscheme
+public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.AlgebraicGeometry.Limits.ReducedInducedSubscheme
 public import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.AlgebraicGeometry.Morphisms.Closure.SchemeTheoreticallyDense
 public import ZInQKernel.Contrib.OneProof.EGAProperLimit.StacksFrontier.AlgebraicGeometry.SchemeTheoreticImage.Reduced
 public import ZInQKernel.Contrib.CloudW01Spread.StacksCore.Tactic.StacksAttribute
