@@ -246,6 +246,40 @@ theorem degEnd_le_card_fibre [CharZero k] (ψ : PkgI3.AbVar.End A)
   rw [hfr]
   exact this
 
+/-- **An isogeny has nonzero degree** (`K(A)` is finite over `ψ^*K(A)`: finite morphisms are
+quasi-finite at the generic point, and a quasi-finite algebra over a field is finite). -/
+theorem degEnd_ne_zero (ψ : PkgI3.AbVar.End A) (hiso : PkgI3.AbVar.IsIsogenyMor ψ.hom) :
+    degEnd ψ ≠ 0 := by
+  classical
+  haveI : IsFinite ψ.hom.left := hiso.1
+  set X := A.X.left with hXdef
+  set gp := genericPoint X with hgp
+  have hψe : ψ.hom.left gp = gp :=
+    ZInQ.Contrib.OneProof.DegDet.map_genericPoint _ hiso.2.surj
+  letI fB : Field (X.presheaf.stalk (ψ.hom.left gp)) :=
+    (ZInQ.Contrib.OneProof.DegDet.isField_stalk _ hψe).toField
+  letI fK : Field (X.presheaf.stalk gp) :=
+    (ZInQ.Contrib.OneProof.DegDet.isField_stalk _ rfl).toField
+  letI alg : Algebra (X.presheaf.stalk (ψ.hom.left gp)) (X.presheaf.stalk gp) :=
+    (ψ.hom.left.stalkMap gp).hom.toAlgebra
+  have hfr : degEnd ψ = Module.finrank (X.presheaf.stalk (ψ.hom.left gp)) (X.presheaf.stalk gp) := by
+    unfold degEnd; rw [if_pos hiso]
+  haveI : Algebra.QuasiFinite (X.presheaf.stalk (ψ.hom.left gp)) (X.presheaf.stalk gp) :=
+    ψ.hom.left.quasiFiniteAt gp
+  haveI : Module.Finite (X.presheaf.stalk (ψ.hom.left gp)) (X.presheaf.stalk gp) :=
+    Module.Finite.of_quasiFinite
+  rw [hfr]
+  exact (Module.finrank_pos).ne'
+
+/-- **`deg ψ = #ψ⁻¹(e₀) = #ker ψ(L)` for an isogeny in characteristic `0`.** -/
+theorem degEnd_eq_card_fibre [CharZero k] (ψ : PkgI3.AbVar.End A)
+    (hiso : PkgI3.AbVar.IsIsogenyMor ψ.hom) : degEnd ψ = Nat.card (Fibre ψ) := by
+  haveI : IsFinite ψ.hom.left := hiso.1
+  have hd := degEnd_ne_zero ψ hiso
+  obtain ⟨-, hdvd⟩ := ZInQ.Contrib.OneProof.DegDet.KerDvd.kerDvdDeg ψ hd
+  rw [card_ker_eq ψ (AlgebraicClosure k)] at hdvd
+  exact le_antisymm (degEnd_le_card_fibre ψ hiso) (Nat.le_of_dvd (Nat.pos_of_ne_zero hd) hdvd)
+
 end Upper
 
 end DegPolyScratch

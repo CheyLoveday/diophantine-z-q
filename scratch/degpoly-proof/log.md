@@ -57,3 +57,8 @@ lattice representation, `HomFreeC.homFreeFiniteC`). Build dir copied (reflink) f
   `pt_eq_of_closed`, `e0`, `one_left_apply`, `isClosed_e0`, and for `ψ` with `IsFinite ψ.hom.left`:
   `card_ker_eq L : Nat.card (ptMap (L := L) ψ).ker = Nat.card (Fibre ψ)` for EVERY field `L` with `Algebra k L`
   (Fibre ψ = ψ⁻¹(e₀), finite), `finite_ker`.
+- VERIFIED compiled (KerFibre.lean): `degEnd_le_card_fibre [CharZero k]` (deg ψ ≤ #ψ⁻¹(e₀): ψ^*K(A)-embeddings τ of K(A)
+  into Ω = AlgebraicClosure K(A) give Ω-points P_τ = Spec τ ≫ fromSpecStalk with equal ψ-image; τ ↦ P_τ P_τ0⁻¹ injects
+  into ker ψ(Ω); #embeddings = deg by `AlgHom.card` + separability in char 0), `degEnd_ne_zero` (isogeny ⇒ deg ≠ 0:
+  `Scheme.Hom.quasiFiniteAt` + `Module.Finite.of_quasiFinite`), `degEnd_eq_card_fibre [CharZero k]`
+  (deg ψ = #ψ⁻¹(e₀), with deg-det's KerDvd for the other inequality).
