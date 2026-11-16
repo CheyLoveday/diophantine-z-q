@@ -25,3 +25,8 @@ checked with cmp); PanBerger, PanBergerFix, PanBergerPrinted built here (VERIFIE
   (σ log[p̃] = log[p̃] + log[u_σ]), `bst_stable`: B_st is G_Qp-stable. COMPILED.
   Pitfall: `rw [evalB_congr ...]` (with `▸` on the point) followed by `exact` gave a kernel deterministic timeout;
   `evalB_congr'` with both membership proofs explicit fixed it.
+- §10 `toBdR_injective`; named Prop `LogPTildeTranscendental` (Transcendental (Bmax p) log[p̃]) with
+  `logPTildeTranscendental_iff` (⇔ B_max[X] → B_dR injective) and `bstEquivPolynomial` (B_max[X] ≃ B_max[log p̃]). COMPILED.
+- §11 named Prop `FontaineBstInvariants` (dim_ℚp B_st^{G_K} = [K_0:ℚ_p], K_0 = W(k_K)[1/p]); `isField_fixedSub`
+  (B_st^{G_K} is a field once finite-dim, positive), `isSemistableB_iff_finrank`, `isSemistableB_iff_K0`
+  (admissibility ⇔ pb-fix2's normalization dim_ℚp D_st = [K_0:ℚ_p]·dim V, over Berger's B_st, given Fontaine). COMPILED.

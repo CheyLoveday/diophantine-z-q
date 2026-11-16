@@ -294,6 +294,20 @@ def dB (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* 
 instance (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E) :
     Module (fixedSub p B H) (dB p B H ρ) := Submodule.module _
 
+instance isScalarTower_fixedSub (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) :
+    IsScalarTower ℚ_[p] (fixedSub p B H) (B ⊗[ℚ_[p]] (Fin n → E)) :=
+  ⟨fun c e x => by
+    change ((c • e : fixedSub p B H) : B) • x = c • ((e : B) • x)
+    rw [Subalgebra.coe_smul, smul_assoc]⟩
+
+set_option synthInstance.maxHeartbeats 400000 in
+instance (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E) :
+    Module ℚ_[p] (dB p B H ρ) := Submodule.module' _
+
+set_option synthInstance.maxHeartbeats 400000 in
+instance (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E) :
+    IsScalarTower ℚ_[p] (fixedSub p B H) (dB p B H ρ) := Submodule.isScalarTower _
+
 /-- **`V` is `B`-admissible as a representation of `H`** (Fontaine's definition):
 `dim_{B^H} (B ⊗_{ℚ_p} V)^H = dim_{ℚ_p} V`. -/
 def IsAdmissible (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p))
@@ -1034,6 +1048,74 @@ theorem bstEquivPolynomial_X (h : LogPTildeTranscendental) :
   simp [bstEquivPolynomial]
 
 end Transcendence
+
+/-! ## §11. Fontaine's `B_st^{G_K} = K_0` (named input) and the `ℚ_p`-dimension normalization -/
+
+section Normalization
+
+variable (p : ℕ) [Fact p.Prime]
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] [FiniteDimensional ℚ_[p] E] {n : ℕ}
+
+/-- **Fontaine: `B_st^{G_K} = K_0`, in dimension form**, for Berger's `B_st ⊆ B_dR`:
+`dim_{ℚ_p} B_st^{G_K} = [K_0 : ℚ_p]` with `K_0 = W(k_K)[1/p]` (pb-fix2's `K0W`). (Fontaine,
+Astérisque 223 (1994), Exp. II §§4-5 / Exp. III §1, numbering UNVERIFIED.) Used only to compare
+the admissibility definition with pb-fix2's normalization; not used by `panBerger_of_printedB`. -/
+def FontaineBstInvariants : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p)), FiniteDimensional ℚ_[p] K →
+    finrank ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup) = finrank ℚ_[p] (PanBergerSplit.K0W p K)
+
+set_option synthInstance.maxHeartbeats 400000 in
+theorem isField_fixedSub (H : Subgroup (GQp p)) (hfin : 0 < finrank ℚ_[p] (fixedSub p (Bst p) H)) :
+    IsField (fixedSub p (Bst p) H) := by
+  have : IsDomain (BdR p) := (ZInQ.Contrib.G9.BdrKer.Cp.isField_BDeRham p).isDomain
+  have : Module.Free ℚ_[p] (fixedSub p (Bst p) H) := Module.Free.of_divisionRing ℚ_[p] (fixedSub p (Bst p) H)
+  have : Module.Finite ℚ_[p] (fixedSub p (Bst p) H) := Module.finite_of_finrank_pos hfin
+  have : Algebra.IsIntegral ℚ_[p] (fixedSub p (Bst p) H) := Algebra.IsIntegral.of_finite _ _
+  exact isField_of_isIntegral_of_isField' (R := ℚ_[p]) (S := fixedSub p (Bst p) H)
+    (Field.toIsField ℚ_[p])
+
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **The admissibility definition in `ℚ_p`-dimensions.** If `B_st^{G_K}` is finite-dimensional
+over `ℚ_p` and nonzero-dimensional, semistability over `K` (`dim_{B_st^{G_K}} D_st,K(V) = dim V`)
+is `dim_{ℚ_p} D_st,K(V) = dim_{ℚ_p} B_st^{G_K} · dim_{ℚ_p} V`. -/
+omit [FiniteDimensional ℚ_[p] E] in
+theorem isSemistableB_iff_finrank (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    (ρ : GQp p →* GL (Fin n) E)
+    (hfin : 0 < finrank ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup)) :
+    IsSemistableB p K ρ ↔
+      finrank ℚ_[p] (dB p (Bst p) K.fixingSubgroup ρ) =
+        finrank ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup) * finrank ℚ_[p] (Fin n → E) := by
+  have : Module.Free ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup) :=
+    Module.Free.of_divisionRing ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup)
+  let hM : Module (fixedSub p (Bst p) K.fixingSubgroup) (dB p (Bst p) K.fixingSubgroup ρ) :=
+    inferInstance
+  have : Nontrivial (fixedSub p (Bst p) K.fixingSubgroup) :=
+    ⟨(isField_fixedSub p _ hfin).exists_pair_ne⟩
+  have : StrongRankCondition (fixedSub p (Bst p) K.fixingSubgroup) :=
+    by exact commRing_strongRankCondition (fixedSub p (Bst p) K.fixingSubgroup)
+  have hT : IsScalarTower ℚ_[p] (fixedSub p (Bst p) K.fixingSubgroup)
+      (dB p (Bst p) K.fixingSubgroup ρ) := Submodule.isScalarTower _
+  let hA0 : AddCommGroup ((dB p (Bst p) K.fixingSubgroup ρ).restrictScalars ℚ_[p]) :=
+    @Submodule.addCommGroup ℚ_[p] (↥(Bst p) ⊗[ℚ_[p]] (Fin n → E)) _ inferInstance _ _
+  let hA : AddCommGroup (dB p (Bst p) K.fixingSubgroup ρ) := hA0
+  have : Module.Free (fixedSub p (Bst p) K.fixingSubgroup) (dB p (Bst p) K.fixingSubgroup ρ) := by
+    let F : Field (fixedSub p (Bst p) K.fixingSubgroup) := (isField_fixedSub p _ hfin).toField
+    exact @Module.Free.of_divisionRing _ _ F.toDivisionRing hA hM
+  rw [IsSemistableB, IsAdmissible, ← Module.finrank_mul_finrank ℚ_[p]
+    (fixedSub p (Bst p) K.fixingSubgroup) (dB p (Bst p) K.fixingSubgroup ρ)]
+  exact ⟨fun h => by rw [h], fun h => Nat.eq_of_mul_eq_mul_left hfin h⟩
+
+/-- **Given Fontaine's `B_st^{G_K} = K_0`, semistability by admissibility is pb-fix2's
+normalization** `dim_{ℚ_p} D_st,K(V) = [K_0 : ℚ_p] · dim_{ℚ_p} V` (now over Berger's `B_st`). -/
+theorem isSemistableB_iff_K0 (hF : FontaineBstInvariants) (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    [FiniteDimensional ℚ_[p] K] (ρ : GQp p →* GL (Fin n) E) :
+    IsSemistableB p K ρ ↔
+      finrank ℚ_[p] (dB p (Bst p) K.fixingSubgroup ρ) =
+        finrank ℚ_[p] (PanBergerSplit.K0W p K) * finrank ℚ_[p] (Fin n → E) := by
+  have h := hF p K inferInstance
+  rw [isSemistableB_iff_finrank p K ρ (by rw [h]; exact PanBergerSplit.finrank_K0W_pos p K), h]
+
+end Normalization
 
 end BergerBst
 end PkgI4
