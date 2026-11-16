@@ -16,3 +16,9 @@ Base origin/main 2880fef1. Build copied from ~/dzq-check2 (same commit) 2026-11-
   extension to K_{f,λ} (completion), charpoly_map.
 
 ## Findings / compile outcomes
+- VERIFIED (compiled, Dict.lean): `IsNormalizedEigenformDS` (Tau Ceti `HeckeRing.GL2.Eigenform`, DS Def 5.8.1, a_1 = 1)
+  ⟺ kernel `IsNormalizedEigenform`; the `U_p` part (`heckeTCuspNat_eq_coeff_smul_all`, every prime p) via Tau Ceti
+  `heckeTCuspNat_eq_smul_iff_forall_qExpansion_coeff_prime_mul_ofUnitHom`. Axioms standard.
+- VERIFIED (compiled, Transfer.lean §1-4): algebraic elements of ℂ lie in ιC(ℚ̄); place λ_τ = {a ∈ 𝓞_K : ‖τ a‖ < 1}
+  is a HeightOneSpectrum over ℓ; v_λ(x) ≤ v_λ(y) ⇒ ‖τx‖ ≤ ‖τy‖; τ continuous on WithVal v_λ; finite ℚ_ℓ-field
+  tgt τ ⊇ τ(K) is complete; continuous extension τhat : K_λ → ℚ̄_ℓ with τhat ∘ algebraMap = τ.
