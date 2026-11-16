@@ -779,13 +779,6 @@ structure OpenAddedLeaves13 : Prop where
   /-- qm-split, H-87/H-88: `ι(𝒪¹)` is cocompact Fuchsian with covolume `2π/3` (Shimura 1971 Prop. 9.2;
   Shimizu 1965). -/
   shimizuCovolumeO1 : LeafQCheck.HM.QMSplit.ShimizuCovolumeO1
-  /-- x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
-  Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
-  `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean). -/
-  deligneComponentsX6PrintedAb : _root_.ShimuraGlue.DeligneComponentsX6PrintedAb
-  /-- x6-glue (shimura-split), textbook, weakened: for a proper `X → Spec k`, `char k = 0`, connectedness of
-  `X ×_k k̄` gives geometric connectedness (EGA IV 4.5; Stacks 0389; locators UNVERIFIED). -/
-  geomConnOfAlgClosure : QMSplit.Moduli.GeomConnOfAlgClosure
   /-- t09-pic, L1, printed form: the relative Picard fppf sheaf of an abelian variety over a field is representable
   (Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, *The Picard scheme*, Thm 9.4.8 with 9.2.5; locators
   UNVERIFIED). With the next three replaces `t09SymmIsogenyExists`. -/
@@ -817,8 +810,6 @@ theorem addedLeaves12_of_open13 (l : OpenAddedLeaves13) : OpenAddedLeaves12 wher
   egaIV_8_10_5_xii := l.egaIV_8_10_5_xii
   valenceFormulaCocompactEq := l.valenceFormulaCocompactEq
   shimizuCovolumeO1 := l.shimizuCovolumeO1
-  deligneComponentsX6PrintedAb := l.deligneComponentsX6PrintedAb
-  geomConnOfAlgClosure := l.geomConnOfAlgClosure
 
 /-- **G0 with only the open leaves and the open glue** (leaf-fold14; no `sorry`, standard axioms).
 `ZInQ.SixContactMin` from `OpenResearchLeaves14` (35), `OpenTextbookLeaves10` (15), `OpenAddedLeaves13` (17) and

@@ -35,7 +35,7 @@ part e10, with `SmoothFibreReduced` the kernel's theorem `ZInQ.SmoothFibre.smoot
 `ShimuraGoodReduction` (a smooth proper model of `Y₃` over `ℤ_(p)` for `p > 324`), R1fp/R1hecke/R2fp (the bundle
 field `r1r2`), T5, the textbook leaf `CurveBijIso` and the glue `ModelCoordinateResidue` (the tame quotient
 `𝒴/Γ' ≅ P¹_{ℤ_(p)}`). -/
-theorem heckeVertWitness_of_leaves5 (hL : VertWitness.ShimuraGoodReduction) (h : LeafAdopt.R1R2fpRep)
+theorem heckeVertWitness_of_leaves5 (hL : VertWitness.ShimuraGoodReduction) (h : LeafAdopt.R1R2fpRepW)
     (hT : PkgI2.TorsionStructure.{0}) (hD : ModelGlue.ModelCoordinateResidue)
     (hC : ModelGlue.CurveBijIso) : HeckeRestNV.HeckeVertWitness :=
   ModelGlue.heckeVertWitness_of_curveBijIso hL (LeafAdopt.R1R2fp_of_rep h)
@@ -64,9 +64,9 @@ restated over the kernel's own Props (`ZInQKernel/HDecomp/Objects.lean`; the cha
 the chain's from the kernel's): `r3` (LeafPush2), `r6`, `r7a`, `r7b`, `r8` (PkgI2), `r9a`, `r9b` (PkgI3), `r16` (ModCurves), `r17` (LadicCond). Same
 statements. -/
 structure OpenResearchLeaves5 : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   /-- R1(b), concrete (family form), for the triple of the leaf bundle. -/
-  r1b : ∀ h : LeafAdopt.R1R2fpRep,
+  r1b : ∀ h : LeafAdopt.R1R2fpRepW,
     G0Split.FibreQM.R1bFamily (G0Split.FibreQM.ownY (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))

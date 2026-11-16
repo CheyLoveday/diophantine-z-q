@@ -40,7 +40,12 @@ the development fork, and from nothing else. It composes three compiled chains:
   `MumfordGroupLaw` without Cor. 6.4; docs/research/rigid-prune.md); dcy3-fold removed the added field `deligneComponentsY3PrintedAb`: the chain
   reads it only as `TSHecke.Y3Connected`, now proved by dcy3-used's `DCY3Used.y3Connected_of_leaves` from
   `mumfordGroupLaw` and `shimuraMainThmIDeligneY3AbU` and passed from `sixContactMin_of_open28` down to
-  `addedLeaves8_of_open9`; docs/research/dcy3-fold.md).
+  `addedLeaves8_of_open9`; docs/research/dcy3-fold.md); `TailZ41` is leaf-fold30's persists-dvr fold (`sixContactMin_of_open34`; written
+  as TailZ40 by leaf-fold30's autofold over rigid-prune's module and moved to TailZ60 by pi0-fold); pi0-fold removed
+  the added fields `deligneComponentsX6PrintedAb` and `geomConnOfAlgClosure`: they fed only the clause `R1pi0Props` of
+  the row `LeafAdopt.R1R2fpRep`, which no consumer reads, so the chain carries the weak row `LeafAdopt.R1R2fpRepW`, whose
+  base witness comes from González–Rotger's `GonzalezRotgerX6` (`QMSplit.Moduli.x6Rows_of_leavesW`, TailZ21;
+  docs/research/pi0-fold.md).
 * TYZ: `ZInQ.Contrib.TYZChain.tyzThm35ReadingA_of_leaves` proves reading A of Tian–Yuan–Zhang from four leaves; the
   fourth, tyz-35's pinned form of TYZ Theorem 3.3, is derived from TYZ Theorem 3.3 in its printed form
   (`ZInQ.Contrib.TYZGenus.TYZSplit.tyzThm33Pinned_of_tyzThm33`, `OneProof/TYZSplit.lean`, task tyz-split), and the

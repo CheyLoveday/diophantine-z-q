@@ -23,7 +23,7 @@ namespace HSyn
 `semistableReductionThm` and `semistablePersists`, with `raynaudSemistable`, `semistablePersistsDVR` and
 `neronLocalizesDVR` added (reduct-glue). 30 fields. -/
 structure OpenResearchLeaves10 : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   igusaChi10 : QMSplit.Theta.IgusaChi10

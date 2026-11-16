@@ -6457,9 +6457,9 @@ theorem unramifiedConjugates_proved : G0ModField.UnramifiedConjugates :=
 * `r17`: R17 concretely (`LadicCond.CarayolR17'`, Carayol 1986 Thm (A); was
   `GluePieces3.carayolR17` and, before that, the `opaque` `r17`). -/
 structure OpenResearchLeaves2 : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   /-- R1(b), concrete (family form), for the triple of the leaf bundle. -/
-  r1b : ∀ h : LeafAdopt.R1R2fpRep,
+  r1b : ∀ h : LeafAdopt.R1R2fpRepW,
     G0Split.FibreQM.R1bFamily (G0Split.FibreQM.ownY (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))
@@ -6552,7 +6552,7 @@ final theorem needs neither). -/
 structure OpenGlue2 : Prop where
   hodgeBCInjective : ZInQ.HeightBC.HodgeBCInjective
   omegaBaseChange : ZInQ.HeightBC.OmegaBaseChange
-  periodMapGlue : ∀ h : LeafAdopt.R1R2fpRep,
+  periodMapGlue : ∀ h : LeafAdopt.R1R2fpRepW,
     G0Split.FibreQM.PeriodMapGlue (G0Split.FibreQM.ownY (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownΦ (LeafAdopt.R1R2fp_of_rep h))
       (G0Split.FibreQM.ownπ (LeafAdopt.R1R2fp_of_rep h))
