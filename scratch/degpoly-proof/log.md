@@ -62,3 +62,20 @@ lattice representation, `HomFreeC.homFreeFiniteC`). Build dir copied (reflink) f
   into ker ψ(Ω); #embeddings = deg by `AlgHom.card` + separability in char 0), `degEnd_ne_zero` (isogeny ⇒ deg ≠ 0:
   `Scheme.Hom.quasiFiniteAt` + `Module.Finite.of_quasiFinite`), `degEnd_eq_card_fibre [CharZero k]`
   (deg ψ = #ψ⁻¹(e₀), with deg-det's KerDvd for the other inequality).
+- VERIFIED compiled (scratch/degpoly-proof/LatticeDet.lean): `card_ker_eq_det` (ker ψ(ℂ) finite ⇒ M_ψ injective (finite
+  group exponent + `eq_zero_of_real_smul_mem`), `#ker ψ(ℂ) = #(Λ/M_ψΛ) = |det_ℤ(M_ψ|_Λ)|` (`QuotientAddGroup.quotientKerEquivOfSurjective`,
+  `Submodule.natAbs_det_equiv`), `det_ℤ = det_ℝ(M_ψ) = normSq(det_ℂ M_ψ) > 0` (`LinearMap.det_restrictScalars`,
+  `Algebra.norm_complex_apply`, `Basis.ofZLatticeBasis_repr_apply`)).
+- VERIFIED compiled (scratch/degpoly-proof/LatticeRing.lean): `latRep` (End A →+* End_ℤ Λ), `latRep_injective`,
+  `isIsogeny_of_det_ne_zero [CharZero K]` (Cayley–Hamilton through latRep: ψ q(ψ) = q(ψ) ψ = [n], n = ±det ≠ 0;
+  `HSyn.mulIsogeny_proved`, `IsFinite.of_comp`, `IsSeparated.of_comp`).
+- VERIFIED compiled: contribution `ZInQKernel/Contrib/OneProof/DegHomogPolyC.lean` (imports CharPolyLattice and deg-det's
+  DegEqDetTate; parts A–D copied from the scratch files, namespace ZInQ.Contrib.OneProof.DegPolyC):
+  `degEnd_eq_det` (deg ψ = det_ℤ(M_ψ|_Λ) for EVERY ψ, char 0, k alg. closed), `det_isHomogeneous`,
+  `DegHomogPolyC` (def) + `degHomogPolyC (HL) (HT) : DegHomogPolyC`, `DegHomogPolyNoEmb` (def),
+  `degHomogPoly_of_noEmb (HL) (HT) (HR : DegHomogPolyNoEmb) : DegDet.DegHomogPoly`,
+  `charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb (HL) (HT) (HR) (HH)`, `DegEqDetTateC` + `degEqDetTateC (HL) (HT)`
+  (Mumford §19 Thm 4 first assertion over alg. closed fields embedding into ℂ).
+  `lake build ZInQKernel.Contrib.OneProof.DegHomogPolyC`: OK (11768 jobs).
+- VERIFIED: scratch/degpoly-proof/CheckAxioms.lean (output CheckAxioms-output.txt): every theorem above
+  `[propext, Classical.choice, Quot.sound]`; two `example`s check the exact types of the two discharge theorems.

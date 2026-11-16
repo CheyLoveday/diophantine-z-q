@@ -778,4 +778,50 @@ theorem degHomogPoly_of_noEmb (HL : BPAnalytic.Uniformization.UniformizationLeaf
   · obtain ⟨σ⟩ := hne
     exact degHomogPolyC HL HT k σ A r e
 
+/-- **The field `charPolyIndepOfEllAlgClosed` through deg-det's route**, from the open fields
+`uniformizationLeafAll`, `mumfordTorsionAlgClosed`, `homFreeFiniteAlgClosed` and the remainder
+`DegHomogPolyNoEmb`. -/
+theorem charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb
+    (HL : BPAnalytic.Uniformization.UniformizationLeafAll) (HT : AvSplit.MumfordTorsionAlgClosed)
+    (HR : DegHomogPolyNoEmb) (HH : ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed) :
+    ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed :=
+  DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford (degHomogPoly_of_noEmb HL HT HR) HT HH
+
+/-- **Mumford §19 Thm 4, first assertion (`deg ψ = det V_ℓ(ψ)`), over algebraically closed fields
+that embed into `ℂ`** (charpoly-ell's `DegEqDetTate` with `σ : k → ℂ` added). -/
+def DegEqDetTateC : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (_ : k →+* ℂ) (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A)
+    (ℓ : ℕ) [Fact ℓ.Prime], (ℓ : k) ≠ 0 →
+      ∀ (I : Type) [Fintype I] [DecidableEq I] (b : Module.Basis I ℚ_[ℓ] (A.V ℓ)),
+        (LinearMap.toMatrix b b ((PkgI3.AbVar.homT (ℓ := ℓ) ψ).baseChange ℚ_[ℓ])).det =
+          (CharPolyEll.degEnd ψ : ℚ_[ℓ])
+
+/-- **`DegEqDetTateC` (proved)**: `det V_ℓ(ψ) = det_ℤ(M_ψ|_Λ) = deg ψ`. -/
+theorem degEqDetTateC (HL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (HT : AvSplit.MumfordTorsionAlgClosed) : DegEqDetTateC := by
+  intro k _ _ σ A ψ ℓ _ hℓ I _ _ b
+  classical
+  haveI : CharZero k := RingHom.charZero σ
+  obtain ⟨emb⟩ := exists_emb σ
+  set σ' : k →+* ℂ := emb.comp (algebraMap k (AlgebraicClosure k)) with hσ'
+  have h35 := AvSplit.Final.h38 HL HT
+  have hN2 := ZInQ.HomLattice.homLinearLift_of_analyticHomLift
+    (AvSplit.HomLatticeAN3.analyticHomLift_of_C (ZInQ.HomLattice.analyticHomLiftC_of_leaf HL))
+  obtain ⟨g, hg⟩ := PkgI3.AbVar.dim_finite A
+  obtain ⟨Λ, Φ, hd, hlat, hA⟩ := h35 k A σ' g hg
+  choose M hM using fun f => hN2 k A A σ' g g Λ Λ Φ Φ hg hg hA hA f
+  have hMlat : ∀ f (lam : Λ), M f lam ∈ Λ := fun f lam =>
+    HDec.G0Galois.lift_mem_lattice hA hA f (M f) (hM f) lam
+  haveI := ZLattice.module_finite ℝ Λ
+  haveI := ZLattice.module_free ℝ Λ
+  have hcp := charpoly_V_eq HT emb A ψ g hg Λ hlat Φ hA (M ψ) (hM ψ) (hMlat ψ) ℓ hℓ I b
+  have hdeg := degEnd_eq_det emb hA M hM hMlat ψ
+  have hI := DegDet.card_basis_V HT A ℓ hℓ g hg b
+  rw [Matrix.det_eq_sign_charpoly_coeff, hcp, Polynomial.coeff_map, hI, pow_mul, neg_one_sq,
+    one_pow, _root_.one_mul]
+  have hX := LinearMap.det_eq_sign_charpoly_coeff (latEnd Λ (M ψ) (hMlat ψ))
+  rw [finrank_lattice Λ, pow_mul, neg_one_sq, one_pow, _root_.one_mul] at hX
+  rw [← hX, ← hdeg]
+  simp
+
 end ZInQ.Contrib.OneProof.DegPolyC
