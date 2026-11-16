@@ -356,4 +356,163 @@ theorem isHeegnerPair_of_form {N : ℕ} {D β : ℤ} (hsq : Squarefree D) (Q : H
         push_cast
         linear_combination tau_root Q + Q.tau / 2 * hec)
 
+/-! ### Every Heegner point is the lattice pair of a Heegner form of residue `β` -/
+
+/-- From `gcd(a, b, N) = 1`: a coprime pair `(a', b') ≡ (a, b) (mod N)`. -/
+theorem exists_coprime_lift {a b N : ℤ} (hN : N ≠ 0) (h : Int.gcd (Int.gcd a b) N = 1) :
+    ∃ s t : ℤ, IsCoprime (a + N * s) (b + N * t) := by
+  by_cases hb : b = 0
+  · subst hb
+    refine ⟨0, 1, ?_⟩
+    simp only [mul_zero, add_zero, zero_add, mul_one]
+    rw [Int.isCoprime_iff_gcd_eq_one]
+    simpa [Int.gcd, Int.natAbs_abs] using h
+  · classical
+    set P : Finset ℕ := b.natAbs.primeFactors.filter (fun p : ℕ => ¬ (p : ℤ) ∣ a)
+    set T : ℤ := ∏ p ∈ P, (p : ℤ)
+    refine ⟨T, 0, ?_⟩
+    rw [mul_zero, add_zero, Int.isCoprime_iff_gcd_eq_one]
+    by_contra hg
+    obtain ⟨p, hp, hpd⟩ := Nat.exists_prime_and_dvd hg
+    have hpz : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
+    have hpd' : (p : ℤ) ∣ ((Int.gcd (a + N * T) b : ℕ) : ℤ) := Int.natCast_dvd_natCast.mpr hpd
+    have h1 : (p : ℤ) ∣ a + N * T := hpd'.trans (Int.gcd_dvd_left _ _)
+    have h2 : (p : ℤ) ∣ b := hpd'.trans (Int.gcd_dvd_right _ _)
+    have hpb : p ∈ b.natAbs.primeFactors :=
+      Nat.mem_primeFactors.mpr ⟨hp, Int.natCast_dvd.mp h2, Int.natAbs_ne_zero.mpr hb⟩
+    by_cases hpa : (p : ℤ) ∣ a
+    · have hpN : ¬ (p : ℤ) ∣ N := by
+        intro hpN
+        have h3 : p ∣ Int.gcd (Int.gcd a b) N := by
+          unfold Int.gcd
+          refine Nat.dvd_gcd ?_ (Int.natCast_dvd.mp hpN)
+          simpa using Nat.dvd_gcd (Int.natCast_dvd.mp hpa) (Int.natCast_dvd.mp h2)
+        rw [h] at h3
+        exact hp.ne_one (Nat.dvd_one.mp h3)
+      have hpT : ¬ (p : ℤ) ∣ T := by
+        intro hpT
+        obtain ⟨q, hq, hpq⟩ := (Prime.dvd_finsetProd_iff hpz _).mp hpT
+        rw [Finset.mem_filter] at hq
+        have hqp : q.Prime := (Nat.mem_primeFactors.mp hq.1).1
+        have : p = q := (Nat.prime_dvd_prime_iff_eq hp hqp).mp (Int.natCast_dvd_natCast.mp hpq)
+        subst this
+        exact hq.2 hpa
+      have h4 : (p : ℤ) ∣ N * T := by
+        have := dvd_sub h1 hpa
+        simpa using this
+      rcases hpz.dvd_or_dvd h4 with h5 | h5
+      · exact hpN h5
+      · exact hpT h5
+    · have hpT : (p : ℤ) ∣ T := Finset.dvd_prod_of_mem _ (Finset.mem_filter.mpr ⟨hpb, hpa⟩)
+      apply hpa
+      have := dvd_sub h1 (dvd_mul_of_dvd_right hpT N)
+      simpa using this
+
+/-- **Adapted basis**: a pair `Λ₁ ⊂ Λ₂` with `Λ₁` a lattice and `Λ₂/Λ₁` cyclic of order `N` is
+homothetic to `(⟨1, τ⟩, ⟨1/N, τ⟩)` for some `τ ∈ ℍ`. -/
+theorem normalize_pair {N : ℕ} (hN0 : 0 < N) {Λ₁ Λ₂ : Submodule ℤ ℂ} (hL : IsCLattice Λ₁)
+    (hc : ∃ v : ℂ, Λ₂ = Λ₁ ⊔ Submodule.span ℤ {v} ∧ ∀ k : ℤ, (k : ℂ) * v ∈ Λ₁ ↔ (N : ℤ) ∣ k) :
+    ∃ τ : ℍ, Homothetic (pairOf N τ) (Λ₁, Λ₂) := by
+  obtain ⟨ω₁, ω₂, hω₁, him, rfl⟩ := hL
+  obtain ⟨v, rfl, hv⟩ := hc
+  have hNc : (N : ℂ) ≠ 0 := by exact_mod_cast hN0.ne'
+  have hNz : (N : ℤ) ≠ 0 := by exact_mod_cast hN0.ne'
+  obtain ⟨a, b, hab⟩ := exists_coords ((hv N).2 dvd_rfl)
+  have hg : Int.gcd (Int.gcd a b) N = 1 := by
+    set g := Int.gcd (Int.gcd a b) N with hgdef
+    obtain ⟨a₁, ha₁⟩ : (g : ℤ) ∣ a := (Int.gcd_dvd_left _ _).trans (Int.gcd_dvd_left _ _)
+    obtain ⟨b₁, hb₁⟩ : (g : ℤ) ∣ b := (Int.gcd_dvd_left _ _).trans (Int.gcd_dvd_right _ _)
+    obtain ⟨N₁, hN₁⟩ : (g : ℤ) ∣ N := Int.gcd_dvd_right _ _
+    have hg0 : (g : ℂ) ≠ 0 := by
+      intro h0
+      have : (g : ℤ) = 0 := by exact_mod_cast h0
+      rw [this, zero_mul] at hN₁; exact hNz hN₁
+    have hmem : ((N₁ : ℤ) : ℂ) * v ∈ Submodule.span ℤ {ω₁, ω₂} := by
+      refine mem_span_pair_of a₁ b₁ ?_
+      have e1 : ((N : ℤ) : ℂ) = g * N₁ := by exact_mod_cast hN₁
+      have e2 : (a : ℂ) = g * a₁ := by exact_mod_cast ha₁
+      have e3 : (b : ℂ) = g * b₁ := by exact_mod_cast hb₁
+      rw [e1, e2, e3] at hab
+      apply mul_left_cancel₀ hg0
+      linear_combination hab
+    obtain ⟨k, hk⟩ := (hv N₁).1 hmem
+    have h1 : (g : ℤ) * k = 1 := by
+      have : (N : ℤ) * 1 = N * (g * k) := by rw [mul_one]; nth_rewrite 1 [hN₁, hk]; ring
+      exact (mul_left_cancel₀ hNz this).symm
+    have := Int.eq_one_of_mul_eq_one_right (by positivity) h1
+    exact_mod_cast this
+  obtain ⟨s, t, x, y, hxy⟩ : ∃ s t x y : ℤ, x * (a + N * s) + y * (b + N * t) = 1 := by
+    obtain ⟨s, t, ⟨x, y, h⟩⟩ := exists_coprime_lift hNz hg
+    exact ⟨s, t, x, y, h⟩
+  set a' := a + N * s with ha'
+  set b' := b + N * t with hb'
+  let t₀ : ℍ := ⟨ω₂ / ω₁, him⟩
+  let γ : SL(2, ℤ) := ⟨!![x, -y; b', a'], by simp [Matrix.det_fin_two]; linarith⟩
+  have hden : (b' : ℂ) * (ω₂ / ω₁) + a' ≠ 0 := by
+    intro h0
+    have h1 : (b' : ℝ) * (ω₂ / ω₁).im = 0 := by
+      have := congrArg Complex.im h0; simpa using this
+    have hb0 : (b' : ℝ) = 0 := by
+      rcases mul_eq_zero.1 h1 with h | h
+      · exact h
+      · linarith
+    have hb0' : b' = 0 := by exact_mod_cast hb0
+    have h2 : (b' : ℂ) * (ω₂ / ω₁) + a' = a' := by rw [hb0']; simp
+    rw [h2] at h0
+    have ha0 : a' = 0 := by exact_mod_cast h0
+    rw [ha0, hb0'] at hxy; simp at hxy
+  have hτ : ((γ • t₀ : ℍ) : ℂ) = (x * (ω₂ / ω₁) + (-y)) / (b' * (ω₂ / ω₁) + a') := by
+    rw [UpperHalfPlane.coe_specialLinearGroup_apply]
+    simp [γ, t₀]
+  set τ : ℍ := γ • t₀
+  set w : ℂ := a' * ω₁ + b' * ω₂ with hwdef
+  have hw : w = ω₁ * (b' * (ω₂ / ω₁) + a') := by rw [hwdef]; field_simp; ring
+  have hw0 : w ≠ 0 := by rw [hw]; exact mul_ne_zero hω₁ hden
+  have hwτ : w * (τ : ℂ) = -y * ω₁ + x * ω₂ := by
+    calc w * (τ : ℂ) = ω₁ * ((b' * (ω₂ / ω₁) + a') * ((x * (ω₂ / ω₁) + -y) / (b' * (ω₂ / ω₁) + a'))) := by
+          rw [hτ, hw]; ring
+      _ = ω₁ * (x * (ω₂ / ω₁) + -y) := by rw [← mul_div_assoc, mul_div_cancel_left₀ _ hden]
+      _ = -y * ω₁ + x * ω₂ := by field_simp; ring
+  have hxy' : (x : ℂ) * a' + y * b' = 1 := by exact_mod_cast hxy
+  set u : ℂ := -y * ω₁ + x * ω₂ with hudef
+  have hω₁' : ω₁ = x * w - b' * u := by rw [hwdef, hudef]; linear_combination (-ω₁) * hxy'
+  have hω₂' : ω₂ = y * w + a' * u := by rw [hwdef, hudef]; linear_combination (-ω₂) * hxy'
+  have hv' : v = w * (1 / N) - s * ω₁ - t * ω₂ := by
+    have hab' : (N : ℂ) * v = a * ω₁ + b * ω₂ := by exact_mod_cast hab
+    rw [hwdef, ha', hb']; push_cast; field_simp; linear_combination hab'
+  refine ⟨τ, w, hw0, ?_, ?_⟩
+  · show Submodule.span ℤ {ω₁, ω₂} =
+      (Submodule.span ℤ {1, (τ : ℂ)}).map (LinearMap.mulLeft ℤ w)
+    rw [map_mulLeft_span_pair, mul_one, hwτ]
+    apply span_pair_eq
+    · exact mem_span_pair_of x (-b') (by push_cast; linear_combination hω₁')
+    · exact mem_span_pair_of y a' (by push_cast; linear_combination hω₂')
+    · exact mem_span_pair_of a' b' (by linear_combination hwdef)
+    · exact mem_span_pair_of (-y) x (by push_cast; linear_combination hudef)
+  · show Submodule.span ℤ {ω₁, ω₂} ⊔ Submodule.span ℤ {v} =
+      (Submodule.span ℤ {1 / (N : ℂ), (τ : ℂ)}).map (LinearMap.mulLeft ℤ w)
+    rw [map_mulLeft_span_pair, hwτ]
+    set wN : ℂ := w * (1 / (N : ℂ)) with hwN
+    have hwN' : w = N * wN := by rw [hwN]; field_simp
+    apply le_antisymm
+    · refine sup_le ?_ ?_
+      · rw [Submodule.span_le]
+        rintro _ (rfl | h)
+        · exact mem_span_pair_of (x * N) (-b') (by
+            push_cast; linear_combination hω₁' + (x : ℂ) * hwN')
+        · rw [Set.mem_singleton_iff] at h; subst h
+          exact mem_span_pair_of (y * N) a' (by
+            push_cast; linear_combination hω₂' + (y : ℂ) * hwN')
+      · rw [Submodule.span_le, Set.singleton_subset_iff]
+        exact mem_span_pair_of (1 - s * x * N - t * y * N) (s * b' - t * a') (by
+          push_cast
+          linear_combination hv' - (s : ℂ) * hω₁' - (t : ℂ) * hω₂' - ((s : ℂ) * x + t * y) * hwN')
+    · rw [Submodule.span_le]
+      rintro _ (rfl | h)
+      · exact Submodule.mem_sup.mpr ⟨s * ω₁ + t * ω₂, mem_span_pair_of s t rfl, v,
+          Submodule.subset_span rfl, by linear_combination hv'⟩
+      · rw [Set.mem_singleton_iff] at h; subst h
+        exact Submodule.mem_sup_left (mem_span_pair_of (-y) x (by
+          push_cast; linear_combination hudef))
+
 end ZInQ.GZModuli
