@@ -7,9 +7,9 @@ Task coeff-field (2026-11-16), report `docs/research/coeff-field.md`, scratch `s
 coeff-ext's leaf `DSCoeffExt.EigenformCoeffFieldFinite` (for a normalized eigenform `f ∈ S_k(N, χ)`, `k ≥ 2`,
 `K_f = ℚ(a_n(f))` is finite over `ℚ`) is proved here from the rational structure of the space of cusp forms:
 
-* `eigenformCoeffFieldFinite_of_gamma1 : Gamma1IntegralSpan → DiamondPreservesIntegral →
+* `eigenformCoeffFieldFinite_of_gamma1 : Gamma1IntegralSpan → DiamondIntegralToRational →
   DSCoeffExt.EigenformCoeffFieldFinite`, from two `Γ₁(N)`-level leaves: `S_k(Γ₁(N))` is spanned by forms with
-  integral `q`-expansions (Shimura 1971 Thm 3.52), and the diamond operators preserve integral `q`-expansions;
+  integral `q`-expansions (Shimura 1971 Thm 3.52), and the diamond operators map integral `q`-expansions to rational ones;
 * `eigenformCoeffFieldFinite_of : CharSpaceRationalSpan → DSCoeffExt.EigenformCoeffFieldFinite`, from the
   one-leaf variant: `S_k(N, χ)` is spanned by forms with coefficients in `ℚ(χ)`
   (`charSpaceRationalSpan_of` derives it from the two leaves above);
@@ -29,7 +29,7 @@ The glue, all proved here:
 3. *Coefficients are eigenvalues*: `a_n(f) = λ_n` for a full eigenform with `a₁ = 1` (Tau Ceti), so `K_f` lies in a
    finite extension of the number field `ℚ(χ)`.
 4. *The `χ`-projector* `Σ_d χ(d)⁻¹ ⟨d⟩` (`proj`) maps `S_k(Γ₁(N))` onto `S_k(N, χ)`, is `φ(N)` on `S_k(N, χ)`,
-   and sends integral forms to `ℚ(χ)`-rational forms when the `⟨d⟩` preserve integrality.
+   and sends integral forms to `ℚ(χ)`-rational forms when the `⟨d⟩` send them to rational forms.
 -/
 
 noncomputable section
@@ -272,7 +272,7 @@ coefficients at `∞` all lie in `ℚ(χ)` (`charField χ`). Sources (numbers UN
 statement "`S_k(N, χ)` has a basis of forms with coefficients in `ℚ(χ)` (or `ℤ[χ]`)" is attributed to Shimura,
 *Introduction to the arithmetic theory of automorphic functions* (1971), Thm 3.52 and §3.5, and to Diamond–Im,
 *Modular forms and modular curves* (1995), §12.3–12.4; a basis gives the span. It follows in Lean from the
-two `Γ₁(N)`-level leaves `Gamma1IntegralSpan` and `DiamondPreservesIntegral` (`charSpaceRationalSpan_of`). -/
+two `Γ₁(N)`-level leaves `Gamma1IntegralSpan` and `DiamondIntegralToRational` (`charSpaceRationalSpan_of`). -/
 def CharSpaceRationalSpan : Prop :=
   ∀ (N : ℕ) [NeZero N] (k : ℤ) (χ : (ZMod N)ˣ →* ℂˣ), 2 ≤ k →
     Submodule.span ℂ {F : cuspFormCharSpace k χ | ∀ n : ℕ,
@@ -380,17 +380,18 @@ def Gamma1IntegralSpan : Prop :=
     Submodule.span ℂ {g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k |
       ∀ n : ℕ, ∃ z : ℤ, (qExpansion 1 g).coeff n = z} = ⊤
 
-/-- **LEAF (the diamond operators preserve integral `q`-expansions).** For `k ≥ 2` and `d ∈ (ℤ/Nℤ)ˣ`, the
+/-- **LEAF (the diamond operators are defined over `ℚ`, weakest form).** For `k ≥ 2` and `d ∈ (ℤ/Nℤ)ˣ`, the
 diamond operator `⟨d⟩` (Tau Ceti's `diamondOpCusp k d`: slash by any `γ ∈ Γ₀(N)` whose lower-right entry is
-`≡ d (mod N)`) maps a cusp form on `Γ₁(N)` with integral `q`-expansion to one with integral `q`-expansion.
+`≡ d (mod N)`) maps a cusp form on `Γ₁(N)` with integral `q`-expansion to one with rational `q`-expansion.
 Source: the Hecke algebra `𝕋_ℤ = ℤ[T_n, ⟨d⟩]` preserves `S_k(Γ₁(N), ℤ)` (Diamond–Im 1995 §12.3–12.4; Shimura 1971
 §3.5 with Thm 3.52; Diamond–Shurman §6.5 for `k = 2`; all locators UNVERIFIED); geometrically `⟨d⟩` is an
 automorphism over `ℚ` of the `μ_N`-model of `X₁(N)` fixing its rational cusp `∞`, so it commutes with the
-`q`-expansion principle. Consequence taken: the `⟨d⟩` part of that statement, for `k ≥ 2`. -/
-def DiamondPreservesIntegral : Prop :=
+`q`-expansion principle. Consequence taken: integral input, rational output, `k ≥ 2`, so the leaf follows from
+any of the printed variants (stability of `S_k(Γ₁(N), A)` for `A = ℤ`, `ℤ[1/N]` or `ℚ`). -/
+def DiamondIntegralToRational : Prop :=
   ∀ (N : ℕ) [NeZero N] (k : ℤ) (d : (ZMod N)ˣ) (g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k), 2 ≤ k →
     (∀ n : ℕ, ∃ z : ℤ, (qExpansion 1 g).coeff n = z) →
-    ∀ n : ℕ, ∃ z : ℤ, (qExpansion 1 (diamondOpCusp k d g)).coeff n = z
+    ∀ n : ℕ, ∃ q : ℚ, (qExpansion 1 (diamondOpCusp k d g)).coeff n = q
 
 /-- The (unnormalized) projector `Σ_d χ(d)⁻¹ ⟨d⟩` onto `S_k(N, χ)`. -/
 def proj (χ : (ZMod N)ˣ →* ℂˣ) :
@@ -426,19 +427,19 @@ theorem proj_of_mem (χ : (ZMod N)ˣ →* ℂˣ) {F : CuspForm ((Gamma1 N).map (
       map_one, Units.val_one, one_smul]
   simp only [this, Finset.sum_const, Finset.card_univ, Nat.cast_smul_eq_nsmul]
 
-theorem proj_coeff_mem (hB : DiamondPreservesIntegral) (χ : (ZMod N)ˣ →* ℂˣ) (hk : 2 ≤ k)
+theorem proj_coeff_mem (hB : DiamondIntegralToRational) (χ : (ZMod N)ˣ →* ℂˣ) (hk : 2 ≤ k)
     {g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k} (hg : ∀ n : ℕ, ∃ z : ℤ, (qExpansion 1 g).coeff n = z)
     (n : ℕ) : (qExpansion 1 (proj χ g)).coeff n ∈ charField χ := by
   rw [← coeffG_apply, proj_apply, map_sum]
   refine sum_mem fun d _ => ?_
   rw [map_smul, smul_eq_mul]
   refine mul_mem (IntermediateField.subset_adjoin ℚ _ ⟨d⁻¹, rfl⟩) ?_
-  obtain ⟨z, hz⟩ := hB N k d g hk hg n
-  rw [coeffG_apply, hz]
-  exact intCast_mem _ z
+  obtain ⟨q, hq⟩ := hB N k d g hk hg n
+  rw [coeffG_apply, hq]
+  exact SubfieldClass.ratCast_mem _ q
 
 /-- **`CharSpaceRationalSpan` from the two `Γ₁(N)`-level leaves.** -/
-theorem charSpaceRationalSpan_of (hA : Gamma1IntegralSpan) (hB : DiamondPreservesIntegral) :
+theorem charSpaceRationalSpan_of (hA : Gamma1IntegralSpan) (hB : DiamondIntegralToRational) :
     CharSpaceRationalSpan := by
   intro N _ k χ hk
   rw [eq_top_iff]
@@ -465,7 +466,7 @@ theorem charSpaceRationalSpan_of (hA : Gamma1IntegralSpan) (hB : DiamondPreserve
   exact Submodule.smul_mem _ _ h1
 
 /-- **`EigenformCoeffFieldFinite` from the two `Γ₁(N)`-level leaves.** -/
-theorem eigenformCoeffFieldFinite_of_gamma1 (hA : Gamma1IntegralSpan) (hB : DiamondPreservesIntegral) :
+theorem eigenformCoeffFieldFinite_of_gamma1 (hA : Gamma1IntegralSpan) (hB : DiamondIntegralToRational) :
     DSCoeffExt.EigenformCoeffFieldFinite :=
   eigenformCoeffFieldFinite_of (charSpaceRationalSpan_of hA hB)
 
@@ -473,7 +474,7 @@ theorem eigenformCoeffFieldFinite_of_gamma1 (hA : Gamma1IntegralSpan) (hB : Diam
 
 /-- **`dsThm965Weak` from Diamond–Shurman 9.6.5 as printed and the rational structure of `S_k(Γ₁(N))`.** -/
 theorem dsThm965Weak_of_printed (h1 : DSCoeffExt.DSThm965Printed) (hA : Gamma1IntegralSpan)
-    (hB : DiamondPreservesIntegral) : DS965Weak.DSThm965Weak :=
+    (hB : DiamondIntegralToRational) : DS965Weak.DSThm965Weak :=
   DSCoeffExt.dsThm965Weak_of_printed h1 (eigenformCoeffFieldFinite_of_gamma1 hA hB)
 
 /-- **`dsThm965Weak` from Diamond–Shurman 9.6.5 as printed and the `ℚ(χ)`-rational structure of

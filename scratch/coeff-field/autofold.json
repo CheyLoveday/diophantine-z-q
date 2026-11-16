@@ -7,7 +7,7 @@
  "discharges": [
   {
    "field": "dsThm965Weak",
-   "proof": "_root_.CoeffFieldFinite.dsThm965Weak_of_printed {n}.dsThm965Printed {n}.gamma1IntegralSpan {n}.diamondPreservesIntegral",
+   "proof": "_root_.CoeffFieldFinite.dsThm965Weak_of_printed {n}.dsThm965Printed {n}.gamma1IntegralSpan {n}.diamondIntegralToRational",
    "leaves": [
     {
      "name": "dsThm965Printed",
@@ -26,11 +26,11 @@
      "source": "Shimura 1971, Introduction to the arithmetic theory of automorphic functions, Thm 3.52: S_k(Gamma_1(N)) has a basis with rational integral Fourier coefficients"
     },
     {
-     "name": "diamondPreservesIntegral",
-     "type": "_root_.CoeffFieldFinite.DiamondPreservesIntegral",
-     "doc": "The diamond operators preserve integral q-expansions on S_k(Gamma_1(N)), k >= 2: the Hecke algebra Z[T_n, <d>] preserves S_k(Gamma_1(N), Z) (Diamond-Im 1995 sections 12.3-12.4; Shimura 1971 section 3.5 with Thm 3.52; Diamond-Shurman section 6.5 for k = 2; all locators UNVERIFIED). Lean form: Tau Ceti's diamondOpCusp k d (slash by gamma in Gamma_0(N) with lower-right entry = d mod N) maps a form with integral q-expansion to one with integral q-expansion. Consequence taken: the <d> part, k >= 2 (coeff-field).",
+     "name": "diamondIntegralToRational",
+     "type": "_root_.CoeffFieldFinite.DiamondIntegralToRational",
+     "doc": "The diamond operators are defined over Q, weakest form: for k >= 2 and d in (Z/NZ)^x, Tau Ceti's diamondOpCusp k d (slash by gamma in Gamma_0(N) with lower-right entry = d mod N) maps a cusp form on Gamma_1(N) with integral q-expansion to one with rational q-expansion. Source: the Hecke algebra Z[T_n, <d>] preserves S_k(Gamma_1(N), Z) (Diamond-Im 1995 sections 12.3-12.4; Shimura 1971 section 3.5 with Thm 3.52; Diamond-Shurman section 6.5 for k = 2; all locators UNVERIFIED). Consequence taken: integral input, rational output, k >= 2, so it follows from the print whether it states stability of S_k(Gamma_1(N), A) for A = Z, Z[1/N] or Q (coeff-field).",
      "kind": "published",
-     "flag": "unread: new printed leaf (T_Z = Z[T_n, <d>] preserves S_k(Gamma_1(N), Z), the <d> part); locator UNVERIFIED",
+     "flag": "unread: new printed leaf (the <d> part of 'T_Z = Z[T_n, <d>] preserves S_k(Gamma_1(N), Z)', weakened to integral input, rational output); locator UNVERIFIED",
      "source": "Diamond-Im 1995, Modular forms and modular curves, sections 12.3-12.4 (Shimura 1971 section 3.5; Diamond-Shurman section 6.5 for k = 2): the diamond operators preserve S_k(Gamma_1(N), Z)"
     }
    ]
