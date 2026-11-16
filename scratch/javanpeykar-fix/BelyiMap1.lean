@@ -392,4 +392,48 @@ theorem stalkMap_secR {β : C.left ⟶ P1 k} (hβ : C.left.fromSpecFunctionField
 
 end MainIdentity
 
+
+section Unramified
+
+variable {k : Type} [Field k] (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+
+/-- The structure map `k → 𝒪_{C,x}`. -/
+def iotaX (x : C.left) : CommRingCat.of k ⟶ C.left.presheaf.stalk x :=
+  (Scheme.ΓSpecIso _).inv ≫ C.hom.appTop ≫ C.left.presheaf.germ ⊤ x trivial
+
+theorem fromSpecStalk_hom (x : C.left) :
+    C.left.fromSpecStalk x ≫ C.hom = Spec.map (iotaX C x) := by
+  apply ext_of_isAffine
+  rw [← cancel_mono (Scheme.ΓSpecIso _).hom, Scheme.ΓSpecIso_naturality,
+    ← cancel_epi (Scheme.ΓSpecIso _).inv]
+  simp only [Scheme.Hom.comp_appTop, Scheme.fromSpecStalk_appTop, iotaX, Category.assoc,
+    Iso.inv_hom_id_assoc]
+  ext c
+  simp
+
+theorem algebraMap_iotaX (x : C.left) (c : k) :
+    algebraMap (C.left.presheaf.stalk x) C.left.functionField (iotaX C x c) =
+      ZInQ.LeafPush2.ffStructMap C c := by
+  simp only [iotaX, ZInQ.LeafPush2.ffStructMap, CommRingCat.hom_comp, RingHom.comp_apply]
+  erw [Scheme.algebraMap_germ_eq_germToFunctionField]
+
+/-- **The residue field of a closed point is `k`** (Mathlib `residueFieldIsoBase`, `k` algebraically
+closed): every `b ∈ 𝒪_{C,x}` is congruent to a constant mod `𝔪_x`. -/
+theorem exists_sub_const_mem [IsAlgClosed k] [LocallyOfFiniteType C.hom] (x : C.left)
+    (hx : IsClosed ({x} : Set C.left)) (b : C.left.presheaf.stalk x) :
+    ∃ c : k, b - iotaX C x c ∈ IsLocalRing.maximalIdeal (C.left.presheaf.stalk x) := by
+  set e := residueFieldIsoBase C.hom x hx
+  have hφ : e.inv = iotaX C x ≫ C.left.residue x := by
+    apply Spec.map_injective
+    rw [SpecMap_residueFieldIsoBase_inv, Spec.map_comp, Scheme.fromSpecResidueField,
+      Category.assoc, fromSpecStalk_hom]
+  refine ⟨e.hom (C.left.residue x b), ?_⟩
+  rw [← IsLocalRing.residue_eq_zero_iff]
+  have : C.left.residue x (iotaX C x (e.hom (C.left.residue x b))) = C.left.residue x b := by
+    rw [← CommRingCat.comp_apply, ← hφ, ← CommRingCat.comp_apply, e.hom_inv_id]
+    rfl
+  rw [map_sub]; exact sub_eq_zero.mpr this.symm
+
+end Unramified
+
 end JavanpeykarFix
