@@ -167,10 +167,10 @@ DISCHARGES [OpenResearchLeaves26.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidit
 DISCHARGES [OpenGlue8.nvLocalInertia] by t1
   still assumes: [SGRDirect.NVLocalInertia]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves11.cartierSmooth] by t3 (uses sorry: not a proof)
+DISCHARGES [OpenTextbookLeaves12.cartierSmooth] by t3 (uses sorry: not a proof)
   still assumes: []
   axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-#discharges: 59 open hypotheses, 2861 theorems checked, 9 discharge one
+#discharges: 56 open hypotheses, 2865 theorems checked, 9 discharge one
 ```
 <!-- worked-example:end -->
 

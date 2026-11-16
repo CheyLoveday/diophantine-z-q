@@ -64,7 +64,7 @@ theorem t11bExists_lf8 : AVB2.T11bExists := _root_.ZInQ.Contrib.CloudW06Poincare
 /-- **The research leaves still open** (leaf-fold8): leaf-fold7's `OpenResearchLeaves7` with the six height rows
 `r18`-`r22`, `h5fin` replaced by height-split's leaves over the published stable height. 31 fields. -/
 structure OpenResearchLeaves8 : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
   r1rec : LeafQM.AV.R1rec
   igusaPsi4 : QMSplit.Theta.IgusaPsi4

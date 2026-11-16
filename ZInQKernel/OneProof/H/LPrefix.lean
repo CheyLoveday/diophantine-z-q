@@ -5242,11 +5242,27 @@ def R1R2fpRep : Prop :=
     R1fpProps Y Φ ∧ R1heckeProps Y Φ ∧ X6Props Y Φ X Ψ fY ∧ R2X6PropsIff X Ψ π₆ ∧
       R1recProps Y Φ ∧ X6Surj Y X fY π₆ ∧ R5ptProps X Ψ ∧ R1pi0Props X
 
+/-- **`R1R2fpRep` without its last clause `R1pi0Props X`** (pi0-fold, from pi0-prune). On the single proof the clause
+(`X₆` geometrically connected) was produced from the two added leaves `deligneComponentsX6PrintedAb` and
+`geomConnOfAlgClosure` and read by no consumer; the chain carries this weak row instead (`R1R2fpRepW_of_rep`). -/
+def R1R2fpRepW : Prop :=
+  ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar))
+    (fY : Y ⟶ X) (π₆ : ToP1 X.left),
+    R1fpProps Y Φ ∧ R1heckeProps Y Φ ∧ X6Props Y Φ X Ψ fY ∧ R2X6PropsIff X Ψ π₆ ∧
+      R1recProps Y Φ ∧ X6Surj Y X fY π₆ ∧ R5ptProps X Ψ
+
+/-- The row `R1R2fpRep` implies its weak form (pi0-fold). -/
+theorem R1R2fpRepW_of_rep (h : R1R2fpRep) : R1R2fpRepW := by
+  obtain ⟨Y, Φ, X, Ψ, fY, π₆, h1, hh, h6, h2, hr, hs, h5, -⟩ := h
+  exact ⟨Y, Φ, X, Ψ, fY, π₆, h1, hh, h6, h2, hr, hs, h5⟩
+
 /-- **Glue (proved)**: the repaired bundle implies leaf-qm-fp's `R1R2fp`, so every glue theorem
 of leaf-qm-fp (`conj_iso_of_rational`, `cm_of_val`, `residue_unramified_over_branch`,
-`exists_fibre_object`, `leaves_on_one_witness`, ...) applies to it. -/
-theorem R1R2fp_of_rep (h : R1R2fpRep) : R1R2fp := by
-  obtain ⟨Y, Φ, X, Ψ, fY, π₆, h1, hh, h6, h2, hr, hs, h5, -⟩ := h
+`exists_fibre_object`, `leaves_on_one_witness`, ...) applies to it. pi0-fold: stated on the weak row `R1R2fpRepW`
+(the clause `R1pi0Props` was never used here). -/
+theorem R1R2fp_of_rep (h : R1R2fpRepW) : R1R2fp := by
+  obtain ⟨Y, Φ, X, Ψ, fY, π₆, h1, hh, h6, h2, hr, hs, h5⟩ := h
   exact ⟨Y, Φ, X, Ψ, fY, π₆, h1, hh, h6, r2X6Props_of_iff h2, cmExists_of_iff h2 hs.1, hr, hs, h5⟩
 
 /-- **R5fpStrong (rv-blueprints Q2)**, transcribed from `scratch/rv-blueprints/R5Repair.lean`
@@ -11607,7 +11623,7 @@ structure ResearchLeaves : Prop where
   principal polarization whose Rosati involution is `x ↦ μ⁻¹x̄μ` on `ι(𝒪)` (`μ = 2j + ij`, the
   type fixed by the PEL datum); see the definition. Checked by model reviews (rv-qm-polar), no
   human review. -/
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   /-- R1(b), complex uniformization in family form (Q3): still a placeholder. -/
   r1an : R01b_ComplexUniformization
   /-- R1(d), Shimura reciprocity, object form (leaf-qm-fp; premise Lemma QP, rv-qm-polar). -/
@@ -13641,7 +13657,7 @@ theorem eigenformRepExists_of_r14Det (h : G0Galois.R14Det) : EigenformRepExists 
 Both imply the old fields (`PkgI4.deRhamComparison_of_HT`, `eigenformRepExists_of_r14Det`).
 Still `opaque` placeholders: `r1an` (R1(b)) and `r17` (R17). -/
 structure OpenResearchLeaves : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   r1an : R01b_ComplexUniformization
   r1rec : LeafQM.AV.R1rec
   r3 : ZInQ.LeafPush2.R03_LinYang

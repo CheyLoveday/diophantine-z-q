@@ -23,7 +23,7 @@ open CategoryTheory AlgebraicGeometry Limits
 (`ReductSplit.serreTatePotentialGood_final`, `grothendieckMonodromy_final'`), and `r5count` replaced by shimura-split's
 `GonzalezRotgerCountX6` (`ShimuraSplit.r5fpCount_of_points`). 30 fields. -/
 structure OpenResearchLeaves9 : Prop where
-  r1r2 : LeafAdopt.R1R2fpRep
+  r1r2 : LeafAdopt.R1R2fpRepW
   shimuraFamily : QMSplit.Moduli.ShimuraFamily
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   igusaChi10 : QMSplit.Theta.IgusaChi10

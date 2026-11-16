@@ -11,14 +11,14 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**48 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue8`, `OpenResearchLeaves26`, `OpenTextbookLeaves11`), plus 11 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**45 hypotheses of the H part** (in the bundles `OpenAddedLeaves17`, `OpenGlue8`, `OpenResearchLeaves26`, `OpenTextbookLeaves12`), plus 11 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 39 published / 9 glue** (the strictest flagged reading; 40/8 without the one strictest-reading flag).
+* **Strict count: 34 published / 11 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: composite 4, consequence 3, project glue 1, published 40.
+* By kind: composite 4, consequence 6, project glue 1, published 34.
 
 ## How to help
 
@@ -61,15 +61,12 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`groupSchemeEquidim`](#groupschemeequidim) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) | 2026-11-15 |
 | [`uniformizationLeafAll`](#uniformizationleafall) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
 | [`gagaMorphism`](#gagamorphism) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
-| [`regularSmoothPerfect`](#regularsmoothperfect) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) | 2026-11-15 |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289)) | 2026-11-14 |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg)) | 2026-11-16 |
 | [`tateTwistInvariants`](#tatetwistinvariants) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335)) | 2026-11-15 |
 | [`axSenTate`](#axsentate) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335)) | 2026-11-15 |
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6893816394)) | 2026-11-15 |
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942)) | 2026-11-14 |
-| [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pi0-prune)) | 2026-11-15 |
-| [`geomConnOfAlgClosure`](#geomconnofalgclosure) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957)) | 2026-11-15 |
 | [`weilPairingMumford`](#weilpairingmumford) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/weil-used)) | 2026-11-15 |
 | [`nvLocalInertia`](#nvlocalinertia) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/nv-local)) | 2026-11-16 |
 | [`h11`](#h11) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) | 2026-11-14 |
@@ -118,8 +115,6 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 The discriminant-6 Shimura curve. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
 * [`gonzalezRotgerX6Ab`](#gonzalezrotgerx6ab) (LEAF; unverified-locator): Gonzalez-Rotger 2006 on X6 (printed form; locator UNVERIFIED)
-* [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) (LEAF; unverified-locator): Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and section 3; PSPM 33 (1979) 2.1.3, 2.6.3, at level O-hat^x on X6 (locators UNVERIFIED)
-* [`geomConnOfAlgClosure`](#geomconnofalgclosure) (LEAF; restricted): textbook: geometric connectedness from connectedness over the algebraic closure (weakened)
 
 ### Packet R5
 
@@ -150,16 +145,18 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
 * [`picRepresentableAbVar`](#picrepresentableabvar) (LEAF; pending-review): Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
-* [`picZeroAbVar`](#piczeroabvar) (LEAF; pending-review): Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
-* [`phiAmpleIsogeny`](#phiampleisogeny) (LEAF; pending-review, unverified-locator): Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED)
-* [`weilPairingMumford`](#weilpairingmumford) (GLUE; strictest, pending-review, unverified-locator): Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED)
+* [`picZeroAbVar`](#piczeroabvar) (GLUE; unverified-locator): Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
+* [`phiAmpleIsogeny`](#phiampleisogeny) (GLUE; unverified-locator): Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED)
+* [`weilPairingMumford`](#weilpairingmumford) (GLUE; unverified-locator): Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED)
 
 ## Index
 
 | hypothesis | bundle | kind | strict | flag class | label | tier | area | human reads | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [`phiAmpleIsogeny`](#phiampleisogeny) | added | consequence | GLUE | note, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | project interest, free to claim |
+| [`picZeroAbVar`](#piczeroabvar) | added | consequence | GLUE | note, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | project interest, free to claim |
 | [`thetaRatiosAlgebraic`](#thetaratiosalgebraic) | added | composite | GLUE |  |  | T2 | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg)) |
-| [`weilPairingMumford`](#weilpairingmumford) | added | published | GLUE | strictest, pending-review, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/weil-used)) |
+| [`weilPairingMumford`](#weilpairingmumford) | added | consequence | GLUE | note, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/weil-used)) |
 | [`nvLocalInertia`](#nvlocalinertia) | glue | project glue | GLUE |  |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/nv-local)) |
 | [`eigenformHTNew`](#eigenformhtnew) | research | consequence | GLUE |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass)) |
 | [`r11r12`](#r11r12) | research | composite | GLUE |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pb-bypass)) |
@@ -168,13 +165,9 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`shimuraMainThmIDeligneY3AbU`](#shimuramainthmideligney3abu) | research | composite | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`uniformizationLeafAll`](#uniformizationleafall) | textbook | consequence | GLUE | note |  | T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
 | [`axSenTate`](#axsentate) | added | published | LEAF |  |  | T2 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335)) |
-| [`deligneComponentsX6PrintedAb`](#delignecomponentsx6printedab) | added | published | LEAF | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pi0-prune)) |
 | [`egaIV_8_10_5_xii`](#egaiv_8_10_5_xii) | added | published | LEAF |  |  | T2 | [elliotglazer #80](https://github.com/elliotglazer/diophantine-z-q/issues/80) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/80#issuecomment-6885320942)) |
-| [`geomConnOfAlgClosure`](#geomconnofalgclosure) | added | published | LEAF | restricted |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957)) |
 | [`milneIsogenyQuasiInverse`](#milneisogenyquasiinverse) | added | published | LEAF |  | project-interest | T2 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6893816394)) |
-| [`phiAmpleIsogeny`](#phiampleisogeny) | added | published | LEAF | note, pending-review, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | project interest, free to claim |
 | [`picRepresentableAbVar`](#picrepresentableabvar) | added | published | LEAF | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | project interest, free to claim |
-| [`picZeroAbVar`](#piczeroabvar) | added | published | LEAF | note, pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | project interest, free to claim |
 | [`tateTwistInvariants`](#tatetwistinvariants) | added | published | LEAF |  |  | T2-T3 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335)) |
 | [`bostLowerBound`](#bostlowerbound) | research | published | LEAF | unverified-locator | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`deRhamH1AbVarT`](#derhamh1abvart) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
@@ -205,7 +198,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289)) |
 | [`poincareComplement`](#poincarecomplement) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6885321564)) |
-| [`regularSmoothPerfect`](#regularsmoothperfect) | textbook | published | LEAF |  |  | T2 | [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)) |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator, note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859)) |
 | [`hL3s`](#hl3s) | frozenTarget | published | LEAF | unread, unverified-locator |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hJP`](#hjp) | frozenTarget | published | LEAF | restricted, unread, unverified-locator |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
@@ -219,6 +211,37 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`hL3`](#hl3) | frozenTarget | composite | GLUE |  | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-hl3)) |
 
 ## The hypotheses
+
+### phiAmpleIsogeny
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves17.phiAmpleIsogeny`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): Mumford 6 Application 1 and 8 Thm 1 are over an algebraically closed field and about points; the Lean's finite surjective lam into the identity component of the fppf Pic_{A/K} needs Mumford's dual identified with IsPicZero's B (Mumford 8 Thm 1 / 13), fpqc descent from Kbar (EGA IV 2.7.1), proper plus quasi-finite implies finite, and effective D to general ample L; locators UNVERIFIED.
+* Source: Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED)
+* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
+* Human readings recorded: none.
+* Status: project interest, free to claim.
+
+```lean
+T09Pic.PhiAmpleIsogeny
+```
+
+> t09-pic, L3, printed form: for ample `L`, the lift `λ_L : A → Pic⁰` of `φ_L` is an isogeny (Mumford §6
+> Application 1 and §8 Thm 1; locators UNVERIFIED).
+
+### picZeroAbVar
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves17.picZeroAbVar`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): Mumford 13 builds the dual over Kbar; identifying it with the identity component of the Lean's fppf Pic_{A/K} (IsPicZero) and descending to K (Kleiman 9.5.1, SGA 3 VI_A 2.4) are theorem steps; also a composite of three sources; would clear with one print over an arbitrary field in identity-component form (BLR 8.4, FGA Explained 9.5, Milne 1986 10); locators UNVERIFIED.
+* Source: Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
+* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
+* Human readings recorded: none.
+* Status: project interest, free to claim.
+
+```lean
+T09Pic.PicZeroAbVar
+```
+
+> t09-pic, L2, printed form: for every representation of `Pic_{A/K}`, its identity component with the induced
+> group law is an abelian variety (`IsPicZero`; Mumford §13, Kleiman 9.5.1 and 9.5.3, SGA 3 VI_A 2.4; locators
+> UNVERIFIED).
 
 ### thetaRatiosAlgebraic
 
@@ -246,7 +269,7 @@ HDec.HSyn.G0Split.ThetaPt.ThetaRatiosAlgebraic
 
 ### weilPairingMumford
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves17.weilPairingMumford`; kind **published**, strict **GLUE**; flag: strictest reading: composite (one leaf bundling several printed properties of e_n: perfect, Galois, compatible, dual-adjoint, alternating on lambda_L, with values pinned to weilScalar via Kleiman 9.2.5 and Mumford 8 (iv)); sign convention immaterial; pending review (one model review, no errors).
+* Bundle field `HDec.HSyn.OpenAddedLeaves17.weilPairingMumford`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): the weilScalar pin reads Mumford's e_n on the Lean Pic0 only through Kleiman 9.2.5, Mumford 8 (iv) and 8 Thm 1 / 13, with base change to Kbar; also a composite (Mumford 20 and 23, Milne 1986 16); sign convention immaterial; locators UNVERIFIED.
 * Source: Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED)
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -362,7 +385,7 @@ RayClassCFT.ShimuraMainThmIDeligneY3AbU
 
 ### uniformizationLeafAll
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.uniformizationLeafAll`; kind **consequence**, strict **GLUE**; flag: re-rated 11-15 under the dictionary ruling: coordinate form of Mumford 1 reached through analytification and GAGA.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.uniformizationLeafAll`; kind **consequence**, strict **GLUE**; flag: re-rated 11-15 under the dictionary ruling: coordinate form of Mumford 1 reached through analytification and GAGA.
 * Source: Mumford, Abelian varieties 1 (A^an = C^g/Lambda), in bp-analytic's coordinate form (kernel leaf AN3)
 * tier T4 (model triage, unreviewed); discussion: [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82).
 * Human readings recorded: none.
@@ -392,22 +415,6 @@ ZInQ.Contrib.HodgeSplit.AxSenTate
 > `K` finite over `ℚ_p` inside `ℚ̄_p`; the inclusion `K ⊆ ℂ_p^{G_K}` is trivial, the published
 > content is `ℂ_p^{G_K} ⊆ K`.
 
-### deligneComponentsX6PrintedAb
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves17.deligneComponentsX6PrintedAb`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED (see the source).
-* Source: Deligne, Sem. Bourbaki 389 (1971) Thm 2.4 and section 3; PSPM 33 (1979) 2.1.3, 2.6.3, at level O-hat^x on X6 (locators UNVERIFIED)
-* packet [R4](#packet-r4); discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pi0-prune)).
-
-```lean
-ShimuraGlue.DeligneComponentsX6PrintedAb
-```
-
-> x6-glue (shimura-glue), printed form (on abelian schemes): Deligne's theorem on the connected components of a
-> Shimura variety (Sém. Bourbaki 389 (1971) Thm 2.4, §3; PSPM 33 (1979) 2.6.3; locators UNVERIFIED) for
-> `G = B^×` at level `𝒪̂^×` on one canonical coarse witness `X₆` (the double coset is computed in Lean).
-
 ### egaIV_8_10_5_xii
 
 * Bundle field `HDec.HSyn.OpenAddedLeaves17.egaIV_8_10_5_xii`; kind **published**, strict **LEAF**.
@@ -424,21 +431,6 @@ ZInQ.Contrib.SpreadOut.EGAIV_8_10_5_xii
 > Stacks, Tag 081F, UNVERIFIED).**  In the setting of `EGAIV_8_8_2_ii`, let `Xᵢ` be of finite
 > presentation over `Dᵢ`.  If the base change of `Xᵢ` to `lim D` is proper, then the base change
 > of `Xᵢ` to some `Dⱼ` (`j → i`) is proper.
-
-### geomConnOfAlgClosure
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves17.geomConnOfAlgClosure`; kind **published**, strict **LEAF**; flag: weakened form.
-* Source: textbook: geometric connectedness from connectedness over the algebraic closure (weakened)
-* packet [R4](#packet-r4); discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957)).
-
-```lean
-HDec.QMSplit.Moduli.GeomConnOfAlgClosure
-```
-
-> x6-glue (shimura-split), textbook, weakened: for a proper `X → Spec k`, `char k = 0`, connectedness of
-> `X ×_k k̄` gives geometric connectedness (EGA IV 4.5; Stacks 0389; locators UNVERIFIED).
 
 ### milneIsogenyQuasiInverse
 
@@ -463,21 +455,6 @@ AvSplit.MilneIsogenyQuasiInverse
 > `d`-fold sum of the identity in `Hom(A, A)`. Over an algebraically closed field this is also
 > Mumford, *Abelian varieties* (1970), §7, Remark after Thm 4 (UNVERIFIED).
 
-### phiAmpleIsogeny
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves17.phiAmpleIsogeny`; kind **published**, strict **LEAF**; flag: finiteness over a non-closed K descends from Kbar (fpqc descent); Mumford's Application 1 is stated for effective D (general ample L via L^m); pending review (one model review, no errors).
-* Source: Mumford, Abelian varieties, 6 Application 1 and 8 Thm 1: for ample L, phi_L : A -> Pic0 is an isogeny (locators UNVERIFIED)
-* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
-* Human readings recorded: none.
-* Status: project interest, free to claim.
-
-```lean
-T09Pic.PhiAmpleIsogeny
-```
-
-> t09-pic, L3, printed form: for ample `L`, the lift `λ_L : A → Pic⁰` of `φ_L` is an isogeny (Mumford §6
-> Application 1 and §8 Thm 1; locators UNVERIFIED).
-
 ### picRepresentableAbVar
 
 * Bundle field `HDec.HSyn.OpenAddedLeaves17.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
@@ -493,22 +470,6 @@ T09Pic.PicRepresentableAbVar
 > t09-pic, L1, printed form: the relative Picard fppf sheaf of an abelian variety over a field is representable
 > (Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, *The Picard scheme*, Thm 9.4.8 with 9.2.5; locators
 > UNVERIFIED). With the next three replaces `t09SymmIsogenyExists`.
-
-### picZeroAbVar
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves17.picZeroAbVar`; kind **published**, strict **LEAF**; flag: combines Mumford 13 (over Kbar) with descent to K (Kleiman 9.5.1) and geometric connectedness of the identity component (SGA 3 VI_A 2.4); pending review (one model review, no errors).
-* Source: Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
-* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
-* Human readings recorded: none.
-* Status: project interest, free to claim.
-
-```lean
-T09Pic.PicZeroAbVar
-```
-
-> t09-pic, L2, printed form: for every representation of `Pic_{A/K}`, its identity component with the induced
-> group law is an abelian variety (`IsPicZero`; Mumford §13, Kleiman 9.5.1 and 9.5.3, SGA 3 VI_A 2.4; locators
-> UNVERIFIED).
 
 ### tateTwistInvariants
 
@@ -849,7 +810,7 @@ UnipotentForward.SGA7_IX_3_5_ForwardGeom
 
 ### cartierSmooth
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.cartierSmooth`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.cartierSmooth`; kind **published**, strict **LEAF**.
 * Source: Cartier 1962; Oort 1966; Mumford 11 Thm 1; Milne, Algebraic Groups Thm 3.23; Stacks 047N
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -871,7 +832,7 @@ AVGlue.CartierSmooth
 
 ### charPolyIndepOfEllAlgClosed
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.charPolyIndepOfEllAlgClosed`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 4 (specialization)
 * tier T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -890,7 +851,7 @@ ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
 
 ### gagaMorphism
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.gagaMorphism`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.gagaMorphism`; kind **published**, strict **LEAF**.
 * Source: Serre, GAGA (1956), for homomorphisms of complex abelian varieties (homlattice 3.2)
 * tier T3-T4 (model triage, unreviewed); discussion: [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82).
 * Human readings recorded: none.
@@ -908,7 +869,7 @@ ZInQ.HomLattice.GAGAMorphism
 
 ### geomConnOfRationalPoint
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.geomConnOfRationalPoint`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.geomConnOfRationalPoint`; kind **published**, strict **LEAF**.
 * Source: Stacks 04KV (Varieties 33.7.14), with finite type and a rational point added
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -926,7 +887,7 @@ AVGlue.GeomConnOfRationalPoint
 
 ### groupSchemeEquidim
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.groupSchemeEquidim`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.groupSchemeEquidim`; kind **published**, strict **LEAF**.
 * Source: Stacks, groupoid schemes, properties of group schemes over a field; SGA 3 VI_A 2.4 (finite type)
 * tier T2 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -945,7 +906,7 @@ AVGlue.GroupSchemeEquidim
 
 ### homFreeFiniteAlgClosed
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.homFreeFiniteAlgClosed`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.homFreeFiniteAlgClosed`; kind **published**, strict **LEAF**.
 * Source: Mumford 19 Thm 3
 * tier T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -964,7 +925,7 @@ ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed
 
 ### mumfordTorsionAlgClosed
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.mumfordTorsionAlgClosed`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.mumfordTorsionAlgClosed`; kind **published**, strict **LEAF**.
 * Source: A(k)[n] = (Z/n)^{2g} over k algebraically closed, char k not dividing n: Mumford, Abelian varieties 4, Application 2 (iv)
 * tier T2-T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -984,7 +945,7 @@ AvSplit.MumfordTorsionAlgClosed
 
 ### neronSchemeExtensionExists
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.neronSchemeExtensionExists`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.neronSchemeExtensionExists`; kind **published**, strict **LEAF**.
 * Source: BLR 1.4 Thm 3
 * packet [R2](#packet-r2); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
@@ -1003,7 +964,7 @@ ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
 
 ### poincareComplement
 
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.poincareComplement`; kind **published**, strict **LEAF**.
+* Bundle field `HDec.HSyn.OpenTextbookLeaves12.poincareComplement`; kind **published**, strict **LEAF**.
 * Source: Poincare's complete reducibility, complement form: Milne 1986 Prop. 12.1; Mumford 19 Thm 1
 * tier T3 (model triage, unreviewed); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -1021,28 +982,6 @@ ZInQ.Contrib.AVB1.PoincareComplement
 > (UNVERIFIED locator: `B ∩ Z` finite and `B + Z = J`). Stated here with "abelian subvariety" as a
 > homomorphism `i : B → J` that is a closed immersion, in characteristic `0`, and without the
 > conclusion that `g : Z → J` is a closed immersion (so weaker than the published statement).
-
-### regularSmoothPerfect
-
-* Bundle field `HDec.HSyn.OpenTextbookLeaves11.regularSmoothPerfect`; kind **published**, strict **LEAF**.
-* Source: Stacks 00TV (S_q regular implies S smooth at q over a perfect field)
-* tier T2 (model triage, unreviewed); discussion: [elliotglazer #83](https://github.com/elliotglazer/diophantine-z-q/issues/83).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638)).
-
-```lean
-CurveSplit.RegularSmoothPerfect
-```
-
-> **Leaf: regular points are smooth over a perfect field** (published).
-> Let `k` be a perfect field, `S` a finite type `k`-algebra and `q` a prime of `S`. If `S_q` is a
-> regular local ring, then `S` is smooth at `q` over `k`: there is `g ∉ q` with `S_g` smooth over
-> `k`. Source: Stacks Project, Tag 00TV (Algebra, Lemma 10.140.5 in the numbering of 2024;
-> UNVERIFIED, no network), "Let k be a perfect field. Let S be a finite type k-algebra. Let q be a
-> prime of S. Then S is smooth at q over k iff S_q is a regular local ring" (paraphrase); the
-> definition of "smooth at q" is Stacks Tag 00T6/00TB (some `g ∉ q` with `S_g` smooth). The `⇐`
-> direction, with `k`, `S` in `Type`. `IsRegularLocalRing` is Mathlib's (Stacks 00KU), `Algebra.Smooth`
-> Mathlib's (equivalent to Stacks' smoothness, Stacks 00T7 / 00TA).
 
 ## Tian–Yuan–Zhang and Gross–Zagier hypotheses
 

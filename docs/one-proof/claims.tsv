@@ -1,12 +1,11 @@
 field	task	status	since	issue	holder_kind	public_holder	claim_url	hold
-thetaRatiosAlgebraic	theta-direct	host task theta-direct running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg	held
+thetaRatiosAlgebraic	theta-direct; linyang-printed; igusa-alg	host task theta-direct running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/igusa-alg	held
 mumfordTorsionAlgClosed	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 cartierSmooth	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 geomConnOfRationalPoint	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 groupSchemeEquidim	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791	held
 tateTwistInvariants	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#84	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335	held
 axSenTate	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#84	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/84#issuecomment-6887798335	held
-regularSmoothPerfect	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#83	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/83#issuecomment-6887798638	held
 uniformizationLeafAll	unif-topology; cloud batch 2	host task unif-topology running: classicalTopology = analytic topology, so unif-printed four leaves rate printed	2026-11-15	elliotglazer/diophantine-z-q#82	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149	held
 gagaMorphism	cloud batch 2	claimed on the issue 2026-11-15 02:14Z, in progress	2026-11-15	elliotglazer/diophantine-z-q#82	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149	held
 milneIsogenyQuasiInverse	cloud batch 2	briefed (characteristic-zero form); the batch-2 comment of 2026-11-15 02:14Z mentions it only as a possible follow-on	2026-11-15	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6893816394	held
@@ -17,7 +16,6 @@ poincareComplement	cloud round 2	in progress (H-72)	2026-11-14	elliotglazer/diop
 neronSchemeExtensionExists	cloud round 2	in progress (H-77)	2026-11-14	elliotglazer/diophantine-z-q#85	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/85#issuecomment-6885321289	held
 r7a	cloud round 2	in progress (H-5, Néron–Ogg–Shafarevich)	2026-11-14	elliotglazer/diophantine-z-q#37	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/37#issuecomment-6885322130	held
 h11	cloud round 2	in progress (T-1); new base case TYZLcalOne proved	2026-11-14	elliotglazer/diophantine-z-q#74	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/74#issuecomment-6885321859	held
-geomConnOfAlgClosure	pi0-prune; cloud batch 2	host task pi0-prune running: semantic prune (feeds only the unread clause R1pi0Props)	2026-11-15	elliotglazer/diophantine-z-q#86	project	project	https://github.com/elliotglazer/diophantine-z-q/issues/86#issuecomment-6887798957	held
 mumfordGroupLaw	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
 sga3_VIB_3_10	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
 neronBaseChangeStrictHenselization	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#85	project	project		interest
@@ -29,7 +27,6 @@ hL3	gz-weil; gz-heegner; jacobi-lambda; gz-hl3	gz-weil, jacobi-lambda and gz-hee
 r17	r17-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/r17-bypass	held
 eigenformHTNew	ht-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass	held
 r11r12	pb-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pb-bypass	held
-deligneComponentsX6PrintedAb	pi0-prune	host task pi0-prune running: semantic prune (feeds only the unread clause R1pi0Props)	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pi0-prune	held
 gaudronRemondThm14	gr14-narrow	host task gr14-narrow running: forward direction only; reverse existence from milneIsogenyQuasiInverse	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/gr14-narrow	held
 r9a	faltings-cm	host task faltings-cm running: whether every live instance is CM, then semisimplicity and the Tate property from the CM leaves	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/faltings-cm	held
 r9b	faltings-cm	host task faltings-cm running: whether every live instance is CM, then semisimplicity and the Tate property from the CM leaves	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/faltings-cm	held

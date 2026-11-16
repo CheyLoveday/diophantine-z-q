@@ -702,15 +702,14 @@ The terms are those of `researchLeaves12_of_open13`, `addedLeaves11_of_open12` (
 `addedLeaves9_of_open10` (`TailZ17`) and `researchLeaves9_of_open10` (`TailZ15`), composed; only the three reduct
 fields change. -/
 
-/-- **The two `X₆` rows from the new bundles** (the term of `x6Rows_of_open13`). -/
+/-- **The two `X₆` rows from the new bundles** (the term of `x6Rows_of_open13`). pi0-fold: the weak row
+`R1R2fpRepW` from `x6Rows_of_leavesW`, whose base witness is González–Rotger's (`GonzalezRotgerX6`); the added leaves
+`deligneComponentsX6PrintedAb` and `geomConnOfAlgClosure` are no longer read. -/
 theorem x6Rows_of_open14 (r : OpenResearchLeaves14) (t : OpenTextbookLeaves10) (l : OpenAddedLeaves12) :
-    LeafAdopt.R1R2fpRep ∧ X6Kummer.X6ConicModel :=
+    LeafAdopt.R1R2fpRepW ∧ X6Kummer.X6ConicModel :=
   have hR := _root_.LeafQM.AV.R1UnivRigid.qmFamilyGroupLaw_of_groupLaw r.mumfordGroupLaw
-  QMSplit.Moduli.x6Rows_of_leaves
-    { deligneX6P := (_root_.LeafQM.AV.R1UnivRigid.deligneComponentsX6Printed_iff_ab_gl hR).mpr
-        l.deligneComponentsX6PrintedAb
-      geomConn := l.geomConnOfAlgClosure
-      t5 := _root_.AvSplit.torsionStructure_of_mumford t.mumfordTorsionAlgClosed
+  QMSplit.Moduli.x6Rows_of_leavesW
+    { t5 := _root_.AvSplit.torsionStructure_of_mumford t.mumfordTorsionAlgClosed
       babaGranathR := (_root_.LeafQM.AV.R1UnivRigid.babaGranathRational_iff_ab_gl hR).mpr r.babaGranathRationalAb
       rayClass := (_root_.LeafQM.AV.R1UnivRigid.rayClassCM_iff_ab_gl hR).mpr r.rayClassCMAb
       gonzalezRotger := (_root_.LeafQM.AV.R1UnivRigid.gonzalezRotgerX6_iff_ab_gl hR).mpr r.gonzalezRotgerX6Ab

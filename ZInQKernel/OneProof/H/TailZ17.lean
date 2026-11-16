@@ -211,7 +211,8 @@ theorem mumfordRigidity_of11 (r : OpenResearchLeaves11) : _root_.LeafQM.AV.R1Uni
 
 /-- leaf-fold10's research bundle from route-a-fold's: the three moduli leaves from their printed forms. -/
 theorem researchLeaves10_of_open11 (r : OpenResearchLeaves11) : OpenResearchLeaves10 where
-  r1r2 := (_root_.LeafQM.AV.R1UnivRigid.r1R2fpRep_iff_ab (mumfordRigidity_of11 r)).mpr r.r1r2Ab
+  r1r2 := LeafAdopt.R1R2fpRepW_of_rep
+    ((_root_.LeafQM.AV.R1UnivRigid.r1R2fpRep_iff_ab (mumfordRigidity_of11 r)).mpr r.r1r2Ab)
   shimuraFamily := (_root_.LeafQM.AV.R1UnivRigid.shimuraFamily_iff_ab (mumfordRigidity_of11 r)).mpr
     r.shimuraFamilyAb
   igusaPsi4 := r.igusaPsi4
