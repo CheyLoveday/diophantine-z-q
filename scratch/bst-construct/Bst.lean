@@ -291,12 +291,14 @@ def dB (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* 
     have h1 : inclT p B (e • x) = ((e : B) : BdR p) • inclT p B x := inclT_smul p B (e : B) x
     rw [h1, tensorAct_smul, hx σ hσ, e.2 σ hσ]
 
+instance (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E) :
+    Module (fixedSub p B H) (dB p B H ρ) := Submodule.module _
+
 /-- **`V` is `B`-admissible as a representation of `H`** (Fontaine's definition):
 `dim_{B^H} (B ⊗_{ℚ_p} V)^H = dim_{ℚ_p} V`. -/
 def IsAdmissible (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p))
     (ρ : GQp p →* GL (Fin n) E) : Prop :=
-  @finrank (fixedSub p B H) (dB p B H ρ) _ (Submodule.addCommMonoid _)
-    (Submodule.module (dB p B H ρ)) = finrank ℚ_[p] (Fin n → E)
+  finrank (fixedSub p B H) (dB p B H ρ) = finrank ℚ_[p] (Fin n → E)
 
 end Admissible
 
@@ -399,6 +401,91 @@ theorem panBerger_of_printedB (hP : PanPrintedB) (hB : BergerPrintedB)
   change Φ.symm.symm (coeff g q) = Φ (ιC α)
   rw [hα]
   rfl
+
+/-! ## §5. Sanity: the trivial representation is admissible for every `B` and `H` -/
+
+section Trivial
+
+variable (p : ℕ) [Fact p.Prime]
+
+/-- `M ⊗_{ℚ_p} ℚ_p^1 ≅ M`, `m ⊗ v ↦ v₀ m`. -/
+def ev1 (M : Type*) [AddCommGroup M] [Module ℚ_[p] M] : (M ⊗[ℚ_[p]] (Fin 1 → ℚ_[p])) ≃ₗ[ℚ_[p]] M :=
+  (TensorProduct.congr (LinearEquiv.refl ℚ_[p] M)
+    (LinearEquiv.funUnique (Fin 1) ℚ_[p] ℚ_[p])).trans (TensorProduct.rid ℚ_[p] M)
+
+theorem ev1_tmul (M : Type*) [AddCommGroup M] [Module ℚ_[p] M] (m : M) (v : Fin 1 → ℚ_[p]) :
+    ev1 p M (m ⊗ₜ v) = v 0 • m := rfl
+
+theorem ev1_inclT (B : Subalgebra ℚ_[p] (BdR p)) (x : B ⊗[ℚ_[p]] (Fin 1 → ℚ_[p])) :
+    ((ev1 p B x : B) : BdR p) = ev1 p (BdR p) (inclT p B x) := by
+  induction x using TensorProduct.inductionOn with
+  | tmul b v =>
+    rw [ev1_tmul, inclT, TensorProduct.map_tmul, ev1_tmul]
+    rfl
+  | add x y hx hy => rw [map_add, map_add, map_add, Subalgebra.coe_add, hx, hy]
+
+theorem ev1_act (σ : GQp p) (y : BdR p ⊗[ℚ_[p]] (Fin 1 → ℚ_[p])) :
+    ev1 p (BdR p) (TensorProduct.map (PanBergerSplit.bdrLin p σ)
+      (PanBergerSplit.vAct p (1 : GQp p →* GL (Fin 1) ℚ_[p]) σ) y) =
+      bdrAct p σ (ev1 p (BdR p) y) := by
+  induction y using TensorProduct.inductionOn with
+  | tmul b v =>
+    rw [TensorProduct.map_tmul, ev1_tmul, ev1_tmul, PanBergerSplit.vAct_apply]
+    simp only [MonoidHom.one_apply, Units.val_one, Matrix.one_mulVec]
+    rw [bdrAct_smul]
+    rfl
+  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, map_add]
+
+theorem ev1_smul (B : Subalgebra ℚ_[p] (BdR p)) (c : B) (x : B ⊗[ℚ_[p]] (Fin 1 → ℚ_[p])) :
+    ev1 p B (c • x) = c * ev1 p B x := by
+  induction x using TensorProduct.inductionOn with
+  | tmul b v =>
+    rw [TensorProduct.smul_tmul', ev1_tmul, ev1_tmul, smul_eq_mul, mul_smul_comm]
+  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, mul_add]
+
+/-- `D_B,H(ℚ_p) → B^H`, `x ↦ ev₁ x`. -/
+def dBTrivialMap (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) :
+    dB p B H (1 : GQp p →* GL (Fin 1) ℚ_[p]) →ₗ[fixedSub p B H] fixedSub p B H where
+  toFun x := ⟨ev1 p B (x : B ⊗[ℚ_[p]] (Fin 1 → ℚ_[p])), fun σ hσ => by
+    rw [ev1_inclT, ← ev1_act]
+    exact congrArg (ev1 p (BdR p)) (x.2 σ hσ)⟩
+  map_add' x y := Subtype.ext (by
+    change ev1 p B ((x : B ⊗[ℚ_[p]] (Fin 1 → ℚ_[p])) + y) = ev1 p B x + ev1 p B y
+    rw [map_add])
+  map_smul' c x := Subtype.ext (by
+    change ev1 p B ((c : B) • (x : B ⊗[ℚ_[p]] (Fin 1 → ℚ_[p]))) = (c : B) * ev1 p B x
+    rw [ev1_smul])
+
+theorem dBTrivialMap_bijective (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) :
+    Function.Bijective (dBTrivialMap p B H) := by
+  constructor
+  · intro x y h
+    apply Subtype.ext
+    apply (ev1 p B).injective
+    exact congrArg (fun z : fixedSub p B H => (z : B)) h
+  · intro f
+    refine ⟨⟨(ev1 p B).symm f, fun σ hσ => ?_⟩, ?_⟩
+    · apply (ev1 p (BdR p)).injective
+      rw [ev1_act, ← ev1_inclT, LinearEquiv.apply_symm_apply]
+      exact f.2 σ hσ
+    · apply Subtype.ext
+      change ev1 p B ((ev1 p B).symm f) = f
+      rw [LinearEquiv.apply_symm_apply]
+
+/-- **Normalization check (unconditional).** The trivial one-dimensional representation is
+`B`-admissible for every `ℚ_p`-subalgebra `B ⊆ B_dR` and every `H`; in particular it is
+semistable over every `K` and potentially semistable for Berger's `B_st`. -/
+theorem isAdmissible_trivial (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) :
+    IsAdmissible p B H (1 : GQp p →* GL (Fin 1) ℚ_[p]) := by
+  have : Nontrivial (BdR p) := ZInQ.Contrib.G9.BdrKer.Cp.nontrivial_BDeRham p
+  rw [IsAdmissible, LinearEquiv.finrank_eq
+    (LinearEquiv.ofBijective _ (dBTrivialMap_bijective p B H)), finrank_self,
+    finrank_fin_fun]
+
+theorem isPstB_trivial : IsPstB p (1 : GQp p →* GL (Fin 1) ℚ_[p]) :=
+  ⟨⊥, inferInstance, isAdmissible_trivial p _ _⟩
+
+end Trivial
 
 end BergerBst
 end PkgI4
