@@ -14,3 +14,21 @@
   parametrization of 32a1 (gz-weil's twist, `g Φ_d(τ) = Σ_a χ(a) Φ₁(τ + a/d)`, g² = d) reaches only `c ∈ 2ℤ`:
   the lattice of 32a1 is `L' = ((1+i)/2) Λ₁` (Λ₁ = gL the lattice of C₁), and `z ↦ c z` maps `ℂ/g⁻¹L'` to `ℂ/L`
   iff `c ∈ 2ℤ`.
+
+## Lean results (2026-11-16 ~01:00 PST)
+- `scratch/heegner-32/Used.lean` compiles (VERIFIED, `lake env lean`): `X0ModuliGaloisParamCd` (the used instance of
+  `X0ModuliGaloisMero`: level `N` of the newform of `C_d`, functions `x∘φ, y∘φ, 1/(x∘φ − t)`, Heegner points of one odd
+  fundamental discriminant), `x0ModuliGaloisParamCd_of_mero`, `heegnerPointRationalCd_of_used (hCM) (hX)`.
+  Copied to `ZInQKernel/Contrib/OneProof/HeegnerPointRationalCd/Used.lean` (builds).
+- `scratch/heegner-32/Twist.lean` compiles (VERIFIED):
+  * `weierPt_short_add` (additivity of `weierPt` for `y² = x³ + Ax`, from the vendored uniformization theorem
+    `PeriodPair.isUniformization_toPoint`);
+  * `exists_c0`: for every lattice `L'` of 32a1, `(x, y)(σ) = weierPt 32a1 L' (Φ₁(σ) + c₀)` on ℍ (℘' sign by
+    differentiating with `etaModelDifferential`);
+  * **`weierPt_two_eichlerCd`**: `weierPt C_d L (2Φ_d(τ)) = S_{λg}(Z(τ)) + S_{λ̄g}(Z(τ))`,
+    `Z(τ) = Σ_{a mod d} (a/d)(x, y)(τ + a/d)`, `S_μ(x, y) = (μ²x, μ³y)`, `λ = (1+i)/2`, `g = gaussD d`;
+  * `map_psiMap`: `σ ∘ Ψ = Ψ ∘ (±σ)`, sign `σ(g)/g`;
+  * `TwistTransportCd` (GLUE Prop), `HeegnerPointRationalCdEven`, `heegnerPointRationalCdEven_of_twist`;
+  * `heegner_at_even`, `grossZagierHeegnerCd_of_even`, `grossZagierHeegnerCd_of_twist`:
+    `GZStatements.GrossZagierHeegnerCd` from `TwistTransportCd`, `GrossZagierFormulaCd`, `GrossConjugationCd`
+    (the constant `c` of the parametrization replaced by `2·num(c)`).
