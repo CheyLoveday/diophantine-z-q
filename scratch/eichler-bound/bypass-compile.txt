@@ -1,0 +1,2 @@
+scratch/eichler-bound/BypassFold.lean:1:0: error: object file '/home/jackmccarthy/dzq-wt/eichler-bound/.lake/build/lib/lean/ZInQKernel/RouteK/Rank5b/Sec3/DetAlg.olean' of module ZInQKernel.RouteK.Rank5b.Sec3.DetAlg does not exist
+EXIT 1

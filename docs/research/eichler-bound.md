@@ -132,4 +132,26 @@ is a bypass:
 
 ## 6. Checks
 
-(filled in below as they complete)
+* `lake build ZInQKernel.Contrib.OneProof.R5fpCountLe`: builds (12938 jobs), with GRCountX6's own definitions.
+  VERIFIED, log `scratch/eichler-bound/build-final.log`.
+* `#print axioms` (in `scratch/eichler-bound/Discharges.lean`): `EichlerBound.eichlerOptEmbBound6` and
+  `EichlerBound.r5fpCountLe_proof` use `[propext, Classical.choice, Quot.sound]`. VERIFIED.
+* `#discharges` (`scratch/eichler-bound/discharges.txt`): 56 open hypotheses, 3322 theorems checked.
+  * No theorem of this task discharges a field outright, because `R5fpCountLe` is weaker than
+    `gonzalezRotgerProp56X6`. The reroute is the bypass of §4.
+  * The ten listed discharges come from imported modules: GR56's three `gonzalezRotgerProp56X6_of_*` (with the
+    Eichler leaf), `GRCountX6.prop56X6_of_r5fpCount` and six others.
+* `autofold.py --dry-run`: `scratch/eichler-bound/autofold-dryrun.txt` (tree) and
+  `autofold-dryrun-rerated.txt` (simulated GLUE rating of the row). The counts are in §1. VERIFIED.
+* `BypassFold.lean`: see `scratch/eichler-bound/bypass-compile.txt` (status recorded in §7).
+
+## 7. Status of the bypass compile
+
+PENDING (filled in at the end of the run).
+
+## 8. What remains
+
+* Folding the bypass, which is the integrator's step (§4).
+* Optionally, the lower half of Eichler's count, which would give equality and `R5fpCount` itself. The chain does
+  not need it. The injection of §2 is in fact a bijection onto `Pic(R) × {occurring types}`, but surjectivity
+  (the twist action `Φ ↦ Φ^𝔞`) is not formalized.
