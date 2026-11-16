@@ -52,3 +52,7 @@ weil-used (origin/wip/weil-used 8ea3eaf3): consumers read only left kernel, Galo
   `pullback f.toRingCatSheafHom.hom` form it is instant, and the two forms are rfl-equal. Define the
   composite iso via `Adjunction.leftAdjointCompIso (AD g) (AD f) (AD (f ≫ g)) (eF f g)` with eF typed through the
   sheaf-hom form.
+- §23 attempt (scratch/weil-proof/Theta.lean, VERIFIED compiles): generic lifts over endomorphisms
+  (`prod`, `mv`), associativity `prod_assoc` (from pic-dict's pullbackComp_assoc_app), commutator relation
+  `Comm`, `comm_prod_left` (multiplicative in the first variable, needs t^* to fix Γ), `comm_pw` (a lift
+  commutes with its powers), `comm_mv_left`, `comm_smul_left`.
