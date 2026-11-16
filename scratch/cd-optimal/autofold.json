@@ -11,7 +11,7 @@
     {
      "name": "etaW32Character",
      "type": "_root_.ZInQ.CdOpt.EtaW32Character",
-     "doc": "Transformation law of the eta quotient w = eta(16t)^3/(eta(8t) eta(32t)^2) on Gamma0(32): w(gamma t) = (2/d) w(t) (k = 0, sum delta r = -24, sum (32/delta) r = 0, s = 2^-1); an instance of the Newman / Gordon-Hughes theorem (Ono, Web of modularity, Thm 1.64; locator UNVERIFIED); numerically checked for 602 matrices (scratch/cd-optimal/py/wchar.gp)",
+     "doc": "Transformation law of the eta quotient v = eta(8t) eta(32t)^2 / eta(16t)^3 on Gamma0(32): v(gamma t) = (2/d) v(t) (k = 0, sum delta r = 24, sum (32/delta) r = 0, s = prod delta^r = 2); an instance of the Newman / Gordon-Hughes theorem (Ono, Web of modularity, Thm 1.64; locator UNVERIFIED); numerically checked for 602 matrices (scratch/cd-optimal/py/wchar.gp)",
      "kind": "published",
      "flag": "",
      "source": "M. Newman, Construction and application of a class of modular functions (I, II), Proc. LMS 1957/1959; B. Gordon, K. Hughes, Multiplicative properties of eta-products II (1981); K. Ono, The web of modularity (CBMS 102, 2004), Thm 1.64 (all UNVERIFIED locators)"

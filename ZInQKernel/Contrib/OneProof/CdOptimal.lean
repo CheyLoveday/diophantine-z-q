@@ -11,7 +11,7 @@ gz-optimal's `ZInQ.GZOptimal.CdOptimal` says that for `d ≡ 5 (mod 8)` squarefr
 of `C_d`. Proved here (`cdOptimal_of`) from
 
 * **`EtaW32Character`** (printed leaf; the Newman / Gordon–Hughes transformation law of eta
-  quotients, for `w = η(16τ)³/(η(8τ)η(32τ)²)` on `Γ₀(32)`, character `(2/d)`), and
+  quotients, for `v = η(8τ)η(32τ)²/η(16τ)³` on `Γ₀(32)`, character `(2/d)`), and
 * **`CdTwistedPeriodOdd`** (glue; some period of `f` is not in `(1 + i) L`).
 
 The proof (files in `CdOptimal/`):

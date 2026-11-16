@@ -10,7 +10,7 @@ On x0-32's eta model `y² = x³ + 4x` of `X₀(32) = 32a1`, `w = η(16τ)³/(η(
 `w² = x` (tyz-cm's `xC_eq_even`), so `s = −y/w` satisfies `s² = x² + 4` and `x₁ = (x + s)/2`,
 `y₁ = y x₁²/(1 + x₁²)` satisfy `y₁² = x₁³ − x₁` (`C₁ = 32a2`) and `dx₁/2y₁ = dx/2y = 2πi f₁ dτ`
 (`x₁ ↦ x₁ − 1/x₁` is the 2-isogeny `C₁ → 32a1`). `w` has the character `(2/d)` on `Γ₀(32)` (the
-eta-quotient transformation law; printed leaf `EtaW32Character`), so `x₁, y₁` are invariant under
+eta-quotient transformation law for `v = 1/w`; printed leaf `EtaW32Character`), so `x₁, y₁` are invariant under
 the `γ ∈ Γ₀(32)` with `(2/d) = 1`, and gz-weil's argument (`Unif.lean`, `period_mem_gen`) puts the
 periods of `Φ₁` over those `γ` into every lattice `L₁` of `C₁` (`period_mem_C1`).
 
@@ -35,19 +35,27 @@ namespace ZInQ.CdOpt
 /-- `w(τ) = η(16τ)³ / (η(8τ) η(32τ)²)`. -/
 def wC (z : ℂ) : ℂ := X0.etaD 16 z ^ 3 / (X0.etaD 8 z * X0.etaD 32 z ^ 2)
 
-/-- **The transformation law of the eta quotient `w = η(16τ)³/(η(8τ)η(32τ)²)` on `Γ₀(32)`**
-(printed leaf; Gordon–Hughes–Newman): `w(γτ) = (2/d) w(τ)` for `γ = [a, b; c, d] ∈ Γ₀(32)`.
+/-- `v(τ) = 1/w(τ) = η(8τ) η(32τ)² / η(16τ)³`. -/
+def vC (z : ℂ) : ℂ := X0.etaD 8 z * X0.etaD 32 z ^ 2 / X0.etaD 16 z ^ 3
+
+theorem wC_eq_inv (z : ℂ) : wC z = (vC z)⁻¹ := by
+  rw [wC, vC, inv_div]
+
+/-- **The transformation law of the eta quotient `v = η(8τ)η(32τ)²/η(16τ)³` on `Γ₀(32)`**
+(printed leaf; Newman, Gordon–Hughes): `v(γτ) = (2/d) v(τ)` for `γ = [a, b; c, d] ∈ Γ₀(32)`.
 
 The theorem of Newman (1957, 1959) and Gordon–Hughes (1981), as stated in K. Ono, *The web of
-modularity*, Thm 1.64 (UNVERIFIED locator): for `f = ∏_{δ ∣ N} η(δτ)^{r_δ}` with `k = ½ Σ r_δ ∈ ℤ`,
-`Σ δ r_δ ≡ 0` and `Σ (N/δ) r_δ ≡ 0 (mod 24)`, `f(γτ) = χ(d) (cτ + d)^k f(τ)` for `γ ∈ Γ₀(N)`, with
-`χ(d) = ((−1)^k s / d)`, `s = ∏ δ^{r_δ}`. Here `N = 32`, `r₈ = −1`, `r₁₆ = 3`, `r₃₂ = −2`: `k = 0`,
-`Σ δ r_δ = −24`, `Σ (32/δ) r_δ = 0`, `s = 2⁻¹`, so `χ(d) = (2/d)` (the symbol of `s = 2⁻¹ · 2²`;
-`d` odd). Stated with Mathlib's `χ₈ = (2/·)` on `ℤ/8`, for every `γ` including `d < 0` (`χ₈` is even,
-and `−γ` acts as `γ`). Checked numerically for 602 matrices (`scratch/cd-optimal/py/wchar.gp`). -/
+modularity* (CBMS 102, 2004), Thm 1.64 (UNVERIFIED locator): if `f = ∏_{δ ∣ N} η(δτ)^{r_δ}` with
+`k = ½ Σ r_δ ∈ ℤ`, `Σ δ r_δ ≡ 0 (mod 24)` and `Σ (N/δ) r_δ ≡ 0 (mod 24)`, then
+`f(γτ) = χ(d) (cτ + d)^k f(τ)` for every `γ ∈ Γ₀(N)`, with `χ(d) = ((−1)^k s / d)`,
+`s = ∏ δ^{r_δ}`. Here `N = 32`, `r₈ = 1`, `r₁₆ = −3`, `r₃₂ = 2`: `k = 0`, `Σ δ r_δ = 24`,
+`Σ (32/δ) r_δ = 0`, `s = 8 · 32² / 16³ = 2`, so `χ(d) = (2/d)`. Stated with Mathlib's `χ₈ = (2/·)`
+on `ℤ/8` (the Kronecker symbol `(2/d)` for odd `d`, even in `d`, so `−γ` and `γ` agree). A
+consequence of the print (one instance). Checked numerically for 602 matrices
+(`scratch/cd-optimal/py/wchar.gp`, for `w = 1/v`). -/
 def EtaW32Character : Prop :=
   ∀ γ : SL(2, ℤ), γ ∈ Gamma0 32 → ∀ τ : ℍ,
-    wC ((γ • τ : ℍ) : ℂ) = ((ZMod.χ₈ ((γ 1 1 : ℤ) : ZMod 8) : ℤ) : ℂ) * wC τ
+    vC ((γ • τ : ℍ) : ℂ) = ((ZMod.χ₈ ((γ 1 1 : ℤ) : ZMod 8) : ℤ) : ℂ) * vC τ
 
 theorem wC_ne_zero (τ : ℍ) : wC τ ≠ 0 := by
   unfold wC
@@ -215,9 +223,10 @@ theorem hasDerivAt_x1C {σ : ℂ} (hσ : 0 < σ.im) :
 theorem x1C_inv (hW : EtaW32Character) {γ : SL(2, ℤ)} (hγ : γ ∈ Gamma0 32)
     (hχ : ZMod.χ₈ ((γ 1 1 : ℤ) : ZMod 8) = 1) (τ : ℍ) : x1C ((γ • τ : ℍ) : ℂ) = x1C τ := by
   have hinv := ZInQ.Contrib.TYZGenus.Shimura.etaModelInvariant γ hγ τ
-  have hw := hW γ hγ τ
-  rw [hχ] at hw
-  simp only [Int.cast_one, one_mul] at hw
+  have hv := hW γ hγ τ
+  rw [hχ] at hv
+  simp only [Int.cast_one, one_mul] at hv
+  have hw : wC ((γ • τ : ℍ) : ℂ) = wC τ := by rw [wC_eq_inv, wC_eq_inv, hv]
   unfold x1C sC
   rw [hinv.1, hinv.2, hw]
 
