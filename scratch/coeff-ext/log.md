@@ -35,3 +35,7 @@ Base origin/main 2880fef1. Build copied from ~/dzq-check2 (same commit) 2026-11-
 - VERIFIED: autofold dry run (scratch/coeff-ext/autofold-dryrun.txt): strict 34/11 on 45 -> 35/11 on 46, strictest
   34/11 -> 35/11 (GLUE unchanged, one more LEAF: `eigenformCoeffFieldFinite`). The generated fold (line 1 stripped,
   scratch/coeff-ext/FoldCheck.lean) compiles: `HDec.HSyn.sixContactMin_of_open36` standard axioms.
+- Locator move (dsThm966 -> Deligne-Serre 1974 Thm 4.1 (4.1.1), p. 514): 6 comment-only docstring edits by
+  scratch/coeff-ext/locator_patch.py in TailS (l.1120), TailT (l.1531, l.1991), TailX (l.30, l.101), TailZ6 (l.122).
+  VERIFIED: `lake env lean` on each of the four files, no errors.
+- Report docs/research/coeff-ext.md written.

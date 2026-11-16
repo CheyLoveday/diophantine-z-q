@@ -27,7 +27,7 @@ from the new ones. Folded (docs/research/leaf-fold7.md lists every field):
   `IgusaPsi4` and `IgusaChi10`, `r1b` from `ShimuraFamily`;
 * hodge-split (`TailS`, `TailT`, transports in `TailV`): `r10` from the Hodge–Tate decomposition, the de Rham
   property of `H¹_ét` and Tate's two theorems, `r13` from its newform case `EigenformHTNew` (with T25, proved in
-  the kernel), `r14` from Diamond–Shurman's Thms 9.6.5-9.6.6, `t23` from
+  the kernel), `r14` from Diamond–Shurman's Thm 9.6.5 and Deligne–Serre 1974 Thm 4.1 (4.1.1), `t23` from
   `B_dR^{G_{ℚ_p}} = ℚ_p`, `senTwist` and `finiteImageHT` from Tate's two theorems on `ℂ_p(i)^{G_K}`;
 * mcr-glue (`TailW`): the glue `ModelCoordinateResidue` from the smaller glue `QuotientP1Coordinate`.
 
@@ -98,7 +98,8 @@ structure OpenResearchLeaves7 : Prop where
   eigenformHTNew : _root_.ZInQ.Contrib.HodgeSplit.EigenformHTNew
   /-- hodge-split, H-22: Diamond–Shurman Thm 9.6.5 (`k ≥ 2`, Deligne; with `dsThm966`, replaces `r14`). -/
   dsThm965 : _root_.ZInQ.Contrib.HodgeSplit.DSThm965
-  /-- hodge-split, H-22: Diamond–Shurman Thm 9.6.6 (`k = 1`, Deligne–Serre Thm 4.1). -/
+  /-- hodge-split, H-22: Deligne–Serre 1974 Thm 4.1 (4.1.1), p. 514 (`k = 1`; Diamond–Shurman Thm 9.6.6
+  restates it). -/
   dsThm966 : _root_.ZInQ.Contrib.HodgeSplit.DSThm966
   r15 : DeligneSerreConseq
   r16 : _root_.LeafModCurves.R16_EichlerShimuraJ1'
