@@ -645,6 +645,99 @@ theorem bmax_stable (σ : GQp p) : Bmax p ≤ (Bmax p).comap (bdrAlg p σ) := by
 
 end Action
 
+/-! ## §7. `t = log [ε]` lies in `A_max` (so `B_max = B_max^+[1/t]` inverts an element of `B_max^+`) -/
+
+section TMem
+
+variable (p : ℕ) [hp : Fact p.Prime]
+
+open PanBergerSplit (Ainf AinfP)
+
+theorem exists_logCoeff (n : ℕ) (hn : n ≠ 0) :
+    ∃ (e : ℤ_[p]) (v : ℕ), (e : ℚ_[p]) * n = (p : ℚ_[p]) ^ n ∧ p ^ v ≤ n ∧
+      (p : ℤ_[p]) ^ (n - v) ∣ e := by
+  obtain ⟨v, m, hpm, rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hn p hp.out.ne_one
+  have hm0 : m ≠ 0 := by rintro rfl; exact hpm (dvd_zero p)
+  have hu : IsUnit (m : ℤ_[p]) := PadicInt.isUnit_iff.mpr
+    (PadicInt.norm_natCast_eq_one_iff.mpr ((Nat.Prime.coprime_iff_not_dvd hp.out).mpr hpm))
+  have hvle : p ^ v ≤ p ^ v * m := Nat.le_mul_of_pos_right _ (Nat.pos_of_ne_zero hm0)
+  have hv : v ≤ p ^ v * m := le_trans (Nat.lt_pow_self hp.out.one_lt).le hvle
+  refine ⟨(p : ℤ_[p]) ^ (p ^ v * m - v) * ((hu.unit⁻¹ : ℤ_[p]ˣ) : ℤ_[p]), v, ?_, hvle,
+    Dvd.intro _ rfl⟩
+  have hum : ((hu.unit⁻¹ : ℤ_[p]ˣ) : ℤ_[p]) * (m : ℤ_[p]) = 1 := hu.val_inv_mul
+  have hum' : (((hu.unit⁻¹ : ℤ_[p]ˣ) : ℤ_[p]) : ℚ_[p]) * (m : ℚ_[p]) = 1 := by
+    have := congrArg (fun z : ℤ_[p] => (z : ℚ_[p])) hum
+    rwa [PadicInt.coe_mul, PadicInt.coe_natCast, PadicInt.coe_one] at this
+  push_cast
+  calc ((p : ℚ_[p]) ^ (p ^ v * m - v) * (((hu.unit⁻¹ : ℤ_[p]ˣ) : ℤ_[p]) : ℚ_[p])) *
+        ((p : ℚ_[p]) ^ v * (m : ℚ_[p]))
+      = (p : ℚ_[p]) ^ (p ^ v * m - v) * (p : ℚ_[p]) ^ v *
+          ((((hu.unit⁻¹ : ℤ_[p]ˣ) : ℤ_[p]) : ℚ_[p]) * (m : ℚ_[p])) := by ring
+    _ = (p : ℚ_[p]) ^ (p ^ v * m) := by rw [hum', mul_one, ← pow_add, Nat.sub_add_cancel hv]
+
+theorem val_bound (k n v : ℕ) (hn : 2 * k ≤ n) (hv : p ^ v ≤ n) : k + v ≤ n := by
+  by_contra h
+  have h2 : 2 ^ v ≤ p ^ v := Nat.pow_le_pow_left hp.out.two_le v
+  have hm : n - k + 1 ≤ v := by omega
+  have h3 : 2 ^ (n - k + 1) ≤ 2 ^ v := Nat.pow_le_pow_right (by norm_num) hm
+  have h4 : n - k < 2 ^ (n - k) := Nat.lt_two_pow_self
+  rw [pow_succ] at h3
+  omega
+
+/-- `p^n/n ∈ ℤ_p` (`0` at `n = 0`). -/
+def logCoeff (n : ℕ) : ℤ_[p] :=
+  if hn : n = 0 then 0 else Classical.choose (exists_logCoeff p n hn)
+
+theorem logCoeff_spec {n : ℕ} (hn : n ≠ 0) :
+    (logCoeff p n : ℚ_[p]) * n = (p : ℚ_[p]) ^ n ∧ ∀ k, 2 * k ≤ n → (p : ℤ_[p]) ^ k ∣ logCoeff p n := by
+  obtain ⟨v, h1, h2, h3⟩ := Classical.choose_spec (exists_logCoeff p n hn)
+  rw [logCoeff, dif_neg hn]
+  refine ⟨h1, fun k hk => dvd_trans (pow_dvd_pow _ ?_) h3⟩
+  have := val_bound p k n v hk h2
+  omega
+
+/-- **`log [ε] ∈ A_max`** for `ε^♯ = 1`: with `[ε] − 1 = ω c` (`ker θ = ω A_inf`),
+`log [ε] = Σ_{n ≥ 1} (−1)^{n+1} (p^n/n) c^n (ω/p)^n` and `p^n/n → 0` in `ℤ_p`. -/
+theorem logTeich_mem_amax {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε = 1) :
+    logTeich p h ∈ Amax p := by
+  have hk : WittVector.teichmuller p ε - 1 ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) :=
+    PanBergerSplit.theta_teich_sub_one p h
+  rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp, Ideal.mem_span_singleton'] at hk
+  obtain ⟨c, hc⟩ := hk
+  let f : (Ainf p)⟦X⟧ := PowerSeries.mk fun n =>
+    if n = 0 then 0 else (-1) ^ (n + 1) * zpToW p (logCoeff p n) * c ^ n
+  have hf : f ∈ restricted p := fun k => ⟨2 * k + 1, fun n hn => by
+    change (p : Ainf p) ^ k ∣ PowerSeries.coeff n f
+    rw [PowerSeries.coeff_mk, if_neg (by omega)]
+    obtain ⟨d, hd⟩ := (logCoeff_spec p (show n ≠ 0 by omega)).2 k (by omega)
+    refine Dvd.dvd.mul_right (Dvd.dvd.mul_left ⟨zpToW p d, ?_⟩ _) _
+    rw [hd, map_mul, map_pow, map_natCast]⟩
+  refine ⟨f, hf, ?_⟩
+  rw [RingHom.comp_apply, logTeich, logPlus]
+  apply psEval_eq_of_terms
+  intro n
+  rw [PowerSeries.coeff_map, PowerSeries.coeff_mk, logSeries, PowerSeries.coeff_mk]
+  by_cases hn : n = 0
+  · simp [hn]
+  · rw [if_neg hn, if_neg hn, ← hc]
+    have key : ((n : ℚ_[p]))⁻¹ = (logCoeff p n : ℚ_[p]) * ((p : ℚ_[p])⁻¹) ^ n := by
+      have h1 := (logCoeff_spec p hn).1
+      have hn' : (n : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hn
+      have hp' : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
+      have he : (logCoeff p n : ℚ_[p]) ≠ 0 := by
+        intro h0
+        rw [h0, zero_mul] at h1
+        exact pow_ne_zero _ hp' h1.symm
+      rw [inv_pow, ← h1, mul_inv, ← mul_assoc, mul_inv_cancel₀ he, one_mul]
+    have hq : qpToLoc p (logCoeff p n : ℚ_[p]) = algebraMap _ _ (zpToW p (logCoeff p n)) :=
+      qpToLoc_algebraMap p _
+    rw [key]
+    simp only [map_mul, map_pow, map_neg, map_one]
+    rw [← hq, omegaP, ZInQ.Contrib.G9.BdrKer.Cp.xi']
+    ring
+
+end TMem
+
 end BergerBst
 end PkgI4
 end HDec
