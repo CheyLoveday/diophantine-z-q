@@ -20,3 +20,13 @@ replayed 13698 jobs, frozenTarget standard axioms (VERIFIED, 11-16 12:31).
   Ab clause: fine on abelian schemes) and GapST.cm_pointW (destructures R1fpProps; no univ application in
   its source text). Non-Ab R1fpProps occurs in field types only of old generations (OpenResearchLeaves<=9,
   OpenAddedLeaves<=8, OpenGlue<=7): current bundles carry only Ab forms.
+
+## Lean: ZInQKernel/Contrib/OneProof/GroupLawGlue.lean (VERIFIED compiles, `lake env lean`, 11-16 ~15:30)
+- `isAbVarFibre_of_isPullback`, `fibreHyp_of_isPullback`: fibre hypothesis passes to base changes.
+- `LocalLaw F e`: open immersion j : T → S, base change P of F along j with GrpObj, identity = base change of e.
+- `mulP_pt`, `invP_pt`: on field points the local law is the fibre abelian variety's law
+  (via the chain's `isGrpFibre_of_rigidity`).
+- `glue_of_rel`: gluing over the cover by preimages of the local opens, compatibility on field points of
+  reduced overlaps (`hom_ext_pts`).
+- `exists_grpObj_of_localLaws`: [IsReduced F, F⊗F, (F⊗F)⊗F], e section, FibreHyp, local laws through every
+  point ⇒ ∃ GrpObj F, η[F].left = e. No sorry.
