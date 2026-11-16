@@ -1,28 +1,30 @@
 import ZInQKernel.Contrib.OneProof.ThetaDirect.Relations
 
-/-! # theta-direct: `ThetaRatiosAtQM` (the use of `thetaRatiosAlgebraic`) from Igusa's theta expressions alone
+/-! # theta-direct: `ThetaRatiosAtQM` (the use of `thetaRatiosAlgebraic`) proved, with no hypotheses
 
 Task theta-direct (docs/research/theta-direct.md). The added composite field `thetaRatiosAlgebraic`
 (`G0Split.ThetaPt.ThetaRatiosAlgebraic`, GLUE) has one reader, TailK's `gluePieces_of_open4`, which needs only
 theta-split's use form `ThetaRatiosAtQM` (theta-fold, wip/theta-fold 8e3dbdea; its verbatim copy is in
-`ThetaDirect/UseForm.lean`). This file proves
+`ThetaDirect/UseForm.lean`). This file proves, with no hypotheses (only `propext`, `Classical.choice`, `Quot.sound`):
 
-* `thetaRatiosAtQM_of_igusa : IgusaThetaExpressions → ThetaRatiosAtQM`,
-* `thetaPointOfFibre_of_igusa : FibreQMPeriod → IgusaThetaExpressions → ThetaPointOfFibre`
+* `thetaRatiosAtQM_proof : ThetaRatiosAtQM`;
+* `thetaRatiosAtQM_of_qmHauptmodul : PkgI1.QMHauptmodul → ThetaRatiosAtQM` (theta-fold's consumer binder);
+* `thetaPointOfFibre_of_qmPeriod : FibreQMPeriod → ThetaPointOfFibre` (drop-in for
+  `thetaPointOfFibre_of_qm_ratios hQM l.thetaRatiosAlgebraic`).
 
-with the single hypothesis the LEAF `IgusaThetaExpressions` (Igusa 1964/1967: on `𝔥₂` the Siegel Eisenstein
-series `ψ₄`, `ψ₆` and Igusa's `χ₁₀`, `χ₁₂` equal their theta expressions; theta-fold's statement, verbatim in
-`ThetaDirect/Printed.lean`). No Lin–Yang input, no `QMHauptmodul`, no new leaf. Everything else is the kernel's
-proved theorems: the valence formula for `Γ*` (`valenceFormulaCocompactEq_proof`, `shimizuCovolumeO1_proof`),
-`ellipticOrderDvd_proof`, `ellipticOrderLe6_proof`, `gammaStarGen_proof`, gt-theta's `thetaModularity_proof`,
-cm24-value's theta constants at `Ω₂₄`, period-glue's factorization at `Ω₀`, theta-glue's duplication formula and
-igusa-alg's Kronecker-checked identities `IgusaAlg 3..9`.
+No Lin–Yang input, no `QMHauptmodul`, no leaf (not even Igusa's theta expressions). Used, all proved in the kernel or
+in the copied helper modules: the valence formula for `Γ*` (`valenceFormulaCocompactEq_proof`,
+`shimizuCovolumeO1_proof`), `ellipticOrderDvd_proof`, `ellipticOrderLe6_proof`, `gammaStarGen_proof`, gt-theta's
+squared theta transformation laws at `M4`, `M6` and `thetaModularity_proof`, cm24-value's theta constants at `Ω₂₄`,
+period-glue's factorization at `Ω₀`, theta-glue's duplication formula and igusa-alg's Kronecker-checked identities
+`IgusaAlg 3..9` (theta-glue's theta expressions `ψ₄ … χ₁₂` are used only as explicit polynomials in the `θ_m`).
 
-Proof. (R1) `ψ₆Σθ⁸ = c₁∏θ²` and (R2) `(Σθ⁸)²χ₁₂ = c₂(Σθ⁸)⁵ + c₃(∏θ²)²` hold along `Ω(z)` with algebraic
-`c_i` (`ThetaDirect/Relations.lean`: dimension counts by the valence formula, constants read off at the CM points
-`√2 + i` and `τ₂₄`, where the theta ratios are algebraic, `ThetaDirect/Nodes.lean`). Where
-`j_θ(Ω(τ)) = q ∈ ℚ ∖ 0`, write `Σθ⁸ = ρ²`, `∏θ² = ρ⁵ξ` (`ξ² = q/3779136`); then
-`ψ₄, ψ₆, χ₁₀, χ₁₂ = ρ²·¼, ρ³·c₁ξ, ρ⁵·(−ξ/2¹⁴), ρ⁶(c₂ + c₃ξ²)`, so by weighted homogeneity
+Proof. Igusa's theta expressions `ψ₆`, `χ₁₂` transform with weights 6, 12 under `M4`, `M6` (`Modular.lean`: a signed
+permutation of their terms). Hence (R1) `ψ₆Σθ⁸ = c₁∏θ²` and (R2) `(Σθ⁸)²χ₁₂ = c₂(Σθ⁸)⁵ + c₃(∏θ²)²` hold along
+`Ω(z)` with algebraic `c_i` (`Relations.lean`: weights 20 and 40 for `Γ*`, vanishing at one, resp. two,
+inequivalent nodes forced by the valence formula; constants read off at the CM points `√2 + i` and `τ₂₄`, where the
+theta ratios are algebraic, `Nodes.lean`). Where `j_θ(Ω(τ)) = q ∈ ℚ ∖ 0`, write `Σθ⁸ = ρ²`, `∏θ² = ρ⁵ξ`
+(`ξ² = q/3779136`); then `ψ₄, ψ₆, χ₁₀, χ₁₂ = ρ²·¼, ρ³·c₁ξ, ρ⁵·(−ξ/2¹⁴), ρ⁶(c₂ + c₃ξ²)`, so by weighted homogeneity
 `e_k(θ⁸)/(Σθ⁸)^k = P_k(¼, c₁ξ, −ξ/2¹⁴, c₂ + c₃ξ²)` is algebraic (`IgusaAlg k`, `3 ≤ k ≤ 9`; `k = 2` is the global
 `Σθ¹⁶ = (Σθ⁸)²/4`), and the `θ_m⁸/Σθ⁸` are roots of a monic polynomial with algebraic coefficients. -/
 
@@ -33,7 +35,6 @@ noncomputable section
 namespace HDec.ThetaDirect
 
 open Complex Polynomial
-open HDec.HSyn.G0Split.ThetaPt.LinYangPrinted (IgusaThetaExpressions)
 open HDec.HSyn.G0Split.ThetaPt.ThetaGlue (psi4Th psi6Th chi10Th chi12Th psi4T psi6T chi10T chi12T psi6Th_eq
   chi12Th_eq igusaP)
 open HDec.HSyn.G0Split.ThetaPt.ThetaSplit (ThetaRatiosAtQM thetaEight card_thetaEight esymm_one esymm_ten
@@ -137,7 +138,7 @@ theorem igusaP_mem (k : ℕ) (hk3 : 3 ≤ k) (hk9 : k ≤ 9) {a b c d : ℂ} (ha
     (hc : c ∈ (algebraicClosure ℚ ℂ)) (hd : d ∈ (algebraicClosure ℚ ℂ)) : igusaP k a b c d ∈ (algebraicClosure ℚ ℂ) := by
   interval_cases k <;> simp only [igusaP] <;> repeat (first | assumption | with_reducible exact one_mem _ | with_reducible exact zero_mem _ | with_reducible exact ofNat_mem' _ | with_reducible exact ratCast_mem' _ | with_reducible apply div_mem | with_reducible apply inv_mem | with_reducible apply add_mem | with_reducible apply sub_mem | with_reducible apply mul_mem | with_reducible apply pow_mem | with_reducible apply neg_mem)
 
-theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAlg := by
+theorem qmThetaSymmetricAlg_proof : QMThetaSymmetricAlg := by
   intro τ hτ q hq hJ k hk
   set Ω := PkgI1.Omega τ with hΩdef
   have hDen : PkgI1.jDen Ω ≠ 0 := by
@@ -182,8 +183,8 @@ theorem qmThetaSymmetricAlg_of (hI : IgusaThetaExpressions) : QMThetaSymmetricAl
     · have hk9 : k ≤ 9 := by omega
       rw [HDec.HSyn.G0Split.ThetaPt.ThetaGlue.igusaThetaSymmetric_of_alg
         HDec.HSyn.G0Split.ThetaPt.IgusaAlgFinal.igusaAlg_all Ω hΩ k h3 hk9]
-      have r1 := rel1 hI hτ
-      have r2 := rel2 hI hτ
+      have r1 := rel1 hτ
+      have r2 := rel2 hτ
       rw [← hΩdef, ← hSdef, ← hPdef] at r1 r2
       have e4 : psi4Th Ω = ρ ^ 2 * (1 / 4) := by
         unfold psi4Th; rw [← hSdef, ← hρ]; ring
@@ -275,21 +276,20 @@ theorem thetaRatiosAtQM_of_symAlg (h : QMThetaSymmetricAlg) : ThetaRatiosAtQM :=
 
 /-! ## Main theorems -/
 
-/-- **Main theorem (proved).** The use form `ThetaRatiosAtQM` of the field `thetaRatiosAlgebraic` from the LEAF
-`IgusaThetaExpressions` (Igusa) alone: for `τ ∈ ℍ` with `j_θ(Ω(τ)) = q ∈ ℚ ∖ 0`, some `θ_{m₀}(Ω(τ)) ≠ 0` and
-every `θ_m(Ω(τ))/θ_{m₀}(Ω(τ))` is algebraic. -/
-theorem thetaRatiosAtQM_of_igusa (hI : IgusaThetaExpressions) : ThetaRatiosAtQM :=
-  thetaRatiosAtQM_of_symAlg (qmThetaSymmetricAlg_of hI)
+/-- **Main theorem (proved, no hypotheses).** The use form `ThetaRatiosAtQM` of the field `thetaRatiosAlgebraic`:
+for `τ ∈ ℍ` with `j_θ(Ω(τ)) = jNum(Ω(τ))/jDen(Ω(τ)) = q ∈ ℚ ∖ 0`, some `θ_{m₀}(Ω(τ)) ≠ 0` and every
+`θ_m(Ω(τ))/θ_{m₀}(Ω(τ))` is an algebraic number. -/
+theorem thetaRatiosAtQM_proof : ThetaRatiosAtQM :=
+  thetaRatiosAtQM_of_symAlg qmThetaSymmetricAlg_proof
 
 /-- **The consumer form** (theta-fold's rethread of `gluePieces_of_open4` takes
 `hθ : PkgI1.QMHauptmodul → ThetaRatiosAtQM`). -/
-theorem thetaRatiosAtQM_of_igusa' (hI : IgusaThetaExpressions) :
-    PkgI1.QMHauptmodul → ThetaRatiosAtQM := fun _ => thetaRatiosAtQM_of_igusa hI
+theorem thetaRatiosAtQM_of_qmHauptmodul : PkgI1.QMHauptmodul → ThetaRatiosAtQM := fun _ => thetaRatiosAtQM_proof
 
-/-- **Missing piece 9, `ThetaPointOfFibre`, from `FibreQMPeriod` and the LEAF (proved)**: a drop-in replacement
-for `ThetaPt.thetaPointOfFibre_of_qm_ratios hQM l.thetaRatiosAlgebraic` in TailK's `gluePieces_of_open4`. -/
-theorem thetaPointOfFibre_of_igusa (hQM : HDec.HSyn.G0Split.ThetaPt.FibreQMPeriod)
-    (hI : IgusaThetaExpressions) : HDec.HSyn.G0Split.ThetaPointOfFibre :=
-  thetaPointOfFibre_of_qm_atQM hQM (thetaRatiosAtQM_of_igusa hI)
+/-- **Missing piece 9, `ThetaPointOfFibre`, from `FibreQMPeriod` alone (proved)**: a drop-in replacement for
+`ThetaPt.thetaPointOfFibre_of_qm_ratios hQM l.thetaRatiosAlgebraic` in TailK's `gluePieces_of_open4`. -/
+theorem thetaPointOfFibre_of_qmPeriod (hQM : HDec.HSyn.G0Split.ThetaPt.FibreQMPeriod) :
+    HDec.HSyn.G0Split.ThetaPointOfFibre :=
+  thetaPointOfFibre_of_qm_atQM hQM thetaRatiosAtQM_proof
 
 end HDec.ThetaDirect

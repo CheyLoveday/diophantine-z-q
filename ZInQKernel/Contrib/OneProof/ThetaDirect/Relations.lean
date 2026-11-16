@@ -1,9 +1,10 @@
-import ZInQKernel.Contrib.OneProof.ThetaDirect.Nodes
+import ZInQKernel.Contrib.OneProof.ThetaDirect.Modular
 
 /-! # theta-direct (helper): the two relations among Igusa's theta expressions on the QM curve
 
-From the LEAF `IgusaThetaExpressions` (Igusa) only, with the kernel's proved valence formula, elliptic-order
-divisibility and generation of `Γ*`, and the algebraic theta ratios at the nodes `√2 + i` and `τ₂₄`:
+With no leaf: from the modularity of the theta expressions `ψ₆`, `χ₁₂` at `M4`, `M6` (`Modular.lean`, from
+gt-theta's transformation laws), the kernel's proved valence formula, elliptic-order divisibility and generation of
+`Γ*`, and the algebraic theta ratios at the nodes `√2 + i` and `τ₂₄`:
 
 * (R1) there is an algebraic `c₁` with `ψ₆(Ω(z))·Σθ⁸(Ω(z)) = c₁·∏θ²(Ω(z))` for all `z ∈ ℍ`
   (weight 20 for `Γ*`, one node `τ₂₄`);
@@ -23,40 +24,21 @@ open Complex
 open HDec.LeafQCheck.HM.QMSplit (Auto)
 open HDec.HSyn.G0Split.FibreQM.PeriodMap (G8 U omegaSiegel_proof)
 open HDec.HSyn.G0Split.FibreQM.PeriodGlue (M4 M6 M4_symp M6_symp zz_ne)
-open HDec.HSyn.G0Split.ThetaPt.LinYangPrinted (siegelEis siegelEis_modular spAct_mem IgusaThetaExpressions
-  igusaChi12E thetaConst_omega_analyticAt)
 open HDec.HSyn.G0Split.ThetaPt.ThetaGlue (psi4Th psi6Th chi10Th chi12Th psi4T psi6T chi10T chi12T psi6Th_eq
   chi12Th_eq)
 
 /-- `G20 = ∏θ²∘Ω/((z−3)(z+1))¹⁰` (the kernel's). -/
 abbrev G20 : ℂ → ℂ := HDec.HSyn.G0Split.FibreQM.PeriodGlue.LQ20.G20
 
-/-! ## Modularity of `ψ₆` and `χ₁₂` (theta expressions) from the LEAF -/
-
-theorem psi6Th_modular (hI : IgusaThetaExpressions) {M : GapTheta.Mat4}
-    (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) :
-    psi6Th (PkgI1.spAct M Ω) = PkgI1.spFactor M Ω ^ 6 * psi6Th Ω := by
-  rw [← (hI _ (spAct_mem hM hΩ)).2.1, ← (hI _ hΩ).2.1]
-  exact siegelEis_modular hM hΩ ⟨3, rfl⟩
-
-theorem chi12Th_modular (hI : IgusaThetaExpressions) {M : GapTheta.Mat4}
-    (hM : M ∈ Matrix.symplecticGroup (Fin 2) ℤ) {Ω : Matrix (Fin 2) (Fin 2) ℂ} (hΩ : Ω ∈ PkgI1.SiegelH2) :
-    chi12Th (PkgI1.spAct M Ω) = PkgI1.spFactor M Ω ^ 12 * chi12Th Ω := by
-  rw [← (hI _ (spAct_mem hM hΩ)).2.2.2, ← (hI _ hΩ).2.2.2]
-  unfold igusaChi12E
-  rw [siegelEis_modular hM hΩ (k := 4) ⟨2, rfl⟩, siegelEis_modular hM hΩ (k := 6) ⟨3, rfl⟩,
-    siegelEis_modular hM hΩ (k := 12) ⟨6, rfl⟩]
-  ring
-
 /-! ## The four automorphic forms for `Γ*` -/
 
-theorem auto6 (hI : IgusaThetaExpressions) : Auto 6 (GS 6 psi6Th) :=
-  autoGS ⟨3, rfl⟩ (fun z hz => psi6Th_modular hI M4_symp (omegaSiegel_proof z hz))
-    (fun z hz => psi6Th_modular hI M6_symp (omegaSiegel_proof z hz))
+theorem auto6 : Auto 6 (GS 6 psi6Th) :=
+  autoGS ⟨3, rfl⟩ (fun z hz => psi6Th_M4 (omegaSiegel_proof z hz))
+    (fun z hz => psi6Th_M6 (omegaSiegel_proof z hz))
 
-theorem auto12 (hI : IgusaThetaExpressions) : Auto 12 (GS 12 chi12Th) :=
-  autoGS ⟨6, rfl⟩ (fun z hz => chi12Th_modular hI M4_symp (omegaSiegel_proof z hz))
-    (fun z hz => chi12Th_modular hI M6_symp (omegaSiegel_proof z hz))
+theorem auto12 : Auto 12 (GS 12 chi12Th) :=
+  autoGS ⟨6, rfl⟩ (fun z hz => chi12Th_M4 (omegaSiegel_proof z hz))
+    (fun z hz => chi12Th_M6 (omegaSiegel_proof z hz))
 
 theorem auto8' : Auto 4 G8 := HDec.LeafQCheck.HM.QMSplit.auto8 GapTheta.thetaModularity_proof
 
@@ -151,10 +133,10 @@ theorem pairwise_nodes : (({tau4, tau24} : Finset UpperHalfPlane) : Set UpperHal
 /-- The constant of (R1), read off at `τ₂₄`. -/
 def c1 : ℂ := GS 6 psi6Th (tau24 : ℂ) * G8 (tau24 : ℂ) / G20 (tau24 : ℂ)
 
-theorem rel1_G (hI : IgusaThetaExpressions) : ∀ z ∈ U, GS 6 psi6Th z * G8 z = c1 * G20 z := by
+theorem rel1_G : ∀ z ∈ U, GS 6 psi6Th z * G8 z = c1 * G20 z := by
   have key := eq_zero_of_nodes (m := 10) (F := fun z => GS 6 psi6Th z * G8 z - c1 * G20 z) (F₂ := G20)
     (fun z hz => ((analytic_psi6 z hz).mul (analytic_G8 z hz)).sub (analyticAt_const.mul (analytic_G20 z hz)))
-    analytic_G20 (auto_sub (auto_mul (auto6 hI) auto8') (auto_const_mul c1 auto20')) auto20' {tau24}
+    analytic_G20 (auto_sub (auto_mul auto6 auto8') (auto_const_mul c1 auto20')) auto20' {tau24}
     (by simp) (by
       intro z hz
       rw [Finset.mem_singleton] at hz
@@ -166,9 +148,9 @@ theorem rel1_G (hI : IgusaThetaExpressions) : ∀ z ∈ U, GS 6 psi6Th z * G8 z 
   exact sub_eq_zero.mp (key z hz)
 
 /-- **(R1) in theta form.** -/
-theorem rel1 (hI : IgusaThetaExpressions) {z : ℂ} (hz : 0 < z.im) :
+theorem rel1 {z : ℂ} (hz : 0 < z.im) :
     psi6Th (PkgI1.Omega z) * PkgI1.thetaSum8 (PkgI1.Omega z) = c1 * PkgI1.thetaProd2 (PkgI1.Omega z) := by
-  have h := rel1_G hI z hz
+  have h := rel1_G z hz
   rw [G8_eq', G20_eq'] at h
   unfold GS at h
   have hZ := zz_ne hz
@@ -182,10 +164,10 @@ theorem rel1 (hI : IgusaThetaExpressions) {z : ℂ} (hz : 0 < z.im) :
 def c2 : ℂ := GS 12 chi12Th (tau4 : ℂ) / G8 (tau4 : ℂ) ^ 3
 def c3 : ℂ := (G8 (tau24 : ℂ) ^ 2 * GS 12 chi12Th (tau24 : ℂ) - c2 * G8 (tau24 : ℂ) ^ 5) / G20 (tau24 : ℂ) ^ 2
 
-theorem rel2_G (hI : IgusaThetaExpressions) :
+theorem rel2_G :
     ∀ z ∈ U, G8 z ^ 2 * GS 12 chi12Th z - c2 * G8 z ^ 5 - c3 * G20 z ^ 2 = 0 := by
   have hA : Auto 20 (fun z => G8 z ^ 2 * GS 12 chi12Th z - c2 * G8 z ^ 5 - c3 * G20 z ^ 2) :=
-    auto_sub (auto_sub (auto_mul (auto_pow auto8' 2) (auto12 hI)) (auto_const_mul c2 (auto_pow auto8' 5)))
+    auto_sub (auto_sub (auto_mul (auto_pow auto8' 2) auto12) (auto_const_mul c2 (auto_pow auto8' 5)))
       (auto_const_mul c3 (auto_pow auto20' 2))
   exact eq_zero_of_nodes (m := 20) (F₂ := fun z => G8 z ^ 5)
     (fun z hz => ((((analytic_G8 z hz).pow 2).mul (analytic_chi12 z hz)).sub
@@ -212,10 +194,10 @@ theorem rel2_G (hI : IgusaThetaExpressions) :
     (by rw [Finset.card_pair tau4_ne_tau24]; norm_num)
 
 /-- **(R2) in theta form.** -/
-theorem rel2 (hI : IgusaThetaExpressions) {z : ℂ} (hz : 0 < z.im) :
+theorem rel2 {z : ℂ} (hz : 0 < z.im) :
     PkgI1.thetaSum8 (PkgI1.Omega z) ^ 2 * chi12Th (PkgI1.Omega z) =
       c2 * PkgI1.thetaSum8 (PkgI1.Omega z) ^ 5 + c3 * PkgI1.thetaProd2 (PkgI1.Omega z) ^ 2 := by
-  have h := rel2_G hI z hz
+  have h := rel2_G z hz
   rw [G8_eq', G20_eq'] at h
   unfold GS at h
   have hZ := zz_ne hz

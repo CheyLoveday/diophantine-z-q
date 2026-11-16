@@ -1,4 +1,5 @@
-import ZInQKernel.Contrib.OneProof.ThetaDirect.Printed
+import ZInQKernel.Contrib.OneProof.ThetaDirect.Analytic
+import ZInQKernel.Contrib.OneProof.ThetaModularityM46
 import ZInQKernel.Contrib.OneProof.ValenceCocompact
 import ZInQKernel.Contrib.OneProof.GammaStarArea
 
