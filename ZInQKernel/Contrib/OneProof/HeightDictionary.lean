@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.HeightDictionary.TorusVolume
 import ZInQKernel.Contrib.OneProof.HeightDictionary.Holomorphic
 import ZInQKernel.Contrib.OneProof.HeightDictionary.Conormal
 
-/-! # height-dict: the kernel's Faltings height is the printed one (archimedean dictionary)
+/-! # height-dict: the kernel's Faltings height is the printed one
 
 `ZInQ.HeightSplit.BostLowerBound` and `ZInQ.HeightSplit.GaudronRemondThm14` are stated over
 `IsStableFaltingsHeight A x`, whose archimedean data is the kernel's coordinate form: the metric of
@@ -17,14 +17,17 @@ i.e. the total mass of the measure `(i/2)^g η ∧ η̄` on the compact group `A
 analytic topology (`HeightGlue.anTop`): a finite left-invariant Borel measure `μ` whose density at the
 identity, in any algebraic local coordinates `f₁, …, f_g` (regular functions vanishing at `0`) with
 `η = l · df₁ ∧ ⋯ ∧ df_g`, is `|τ(l)|²` with respect to Lebesgue measure `dx₁dy₁⋯dx_gdy_g`
-(`IsFaltingsMetricSq`). No uniformization enters the definition.
+(`IsFaltingsMetricSq`). No uniformization enters the definition. The lattice is
+`ω = ⋀^g Γ(S, e*Ω¹)` built from the stalks `𝒪_{S,s} ⊗ Ω[𝒪_{𝒩,e(s)}/𝓞_L]` (`printedDetLattice`,
+`Conormal.printedOmega`), proved equal to the kernel's `detLattice` (`printedDetLattice_eq`).
 
 It proves (`isFaltingsMetricSq_of_metrized`, from `TorusVolume.volume_eq_of_normalized`: Haar
 uniqueness, the fundamental domain of `Λ`, and the Jacobian estimates of change of variables) that
 every metrized model computes this printed metric, hence `IsStableFaltingsHeight A x →
 IsPrintedStableHeight A x` (`isPrintedStableHeight_of`, using the kernel's uniqueness of analytic
-uniformizations and `UniformizationDim`, both from T35), and the two consumer forms from the restated
-leaves. -/
+uniformizations and `UniformizationDim`, both from T35), the converse (`isPrintedStableHeight_iff`),
+non-vacuity of the printed metric (`exists_isNormalizedBy`), and the consumer forms from the restated
+leaves (also for `JavanpeykarBound` and `PazukiCor13Upper`). -/
 
 open CategoryTheory AlgebraicGeometry MeasureTheory Topology Set MonObj
 open MonoidalCategory CartesianMonoidalCategory
