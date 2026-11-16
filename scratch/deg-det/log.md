@@ -31,3 +31,11 @@ Base: wip/charpoly-ell 0d75311f + merge origin/main 0caafe66 (STATUS.md only). B
   `DegDet.det_eq_deg_abstract`: E ring, φ ∈ E with R(φ)=0 (R ∈ ℤ[X] monic), deg : E → ℕ homogeneous polynomial of
   degree n on ℤ[φ] (coordinates Σ x_i φ^i, i < deg R), deg 1 = 1, deg multiplicative on pairs with nonzero degree,
   ρ : E →+* M_I(ℚ_ℓ) with |det ρ ψ|_ℓ = |deg ψ|_ℓ when deg ψ ≠ 0  ⇒  det ρ(φ) = deg φ.
+- 14:35 VERIFIED compiled (`lake build ZInQKernel.Contrib.OneProof.DegEqDetTate`, axioms standard; scratch/deg-det/CheckAxioms.lean):
+  ZInQKernel/Contrib/OneProof/DegEqDetTate/Algebra.lean (copy of scratch Algebra.lean, namespace ZInQ.Contrib.OneProof.DegDet) and
+  ZInQKernel/Contrib/OneProof/DegEqDetTate.lean:
+  `DegDet.degEnd_mul_of_isIsogeny` (deg(ψχ) = deg ψ deg χ for isogenies; generic point preserved by surjective maps,
+  tower law of stalk fields), `DegDet.degEqDetTate_of_degHomogPoly : DegHomogPoly → DegLadicIsogeny →
+  HomFreeFiniteAlgClosed → CharPolyEll.DegEqDetTate`, `DegDet.charPolyIndepOfEllAlgClosed_of_degHomogPoly`.
+  New Props: `DegHomogPoly` (LEAF, printed form, Mumford §19 deg homogeneous polynomial of degree 2g, locator UNVERIFIED),
+  `DegLadicIsogeny` (GLUE, |det V_ℓ ψ|_ℓ = |deg ψ|_ℓ for isogenies).
