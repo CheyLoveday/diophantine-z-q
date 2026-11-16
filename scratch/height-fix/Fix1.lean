@@ -189,4 +189,169 @@ theorem isMulLeftInvariant_of_densAt [CompactSpace G] (nu : Measure G) [IsFinite
 
 end Generic
 
+/-! ## §3. The printed metric: the measure of `(i/2)^g η ∧ η̄` defined chart by chart -/
+
+section Defs
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- The chart at `p` obtained by translating algebraic coordinates `F = (f₁, …, f_g)` at the origin:
+`q ↦ F(p⁻¹ q)`. -/
+noncomputable def chartAt (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (U : Fin g → 𝒢.G.left.Opens) (s : ∀ i, Γ(𝒢.G.left, U i)) (p : 𝒢.Pts τ) :
+    𝒢.Pts τ → (Fin g → ℂ) :=
+  fun q => coordMap 𝒢 τ U s (p⁻¹ * q)
+
+/-- **`nu` is the measure `(i/2)^g η ∧ η̄` near `p`**, for the invariant `g`-form `η` with value
+`η(1) = η`. Let `fᵢ ∈ Γ(Uᵢ, 𝒪_𝒢)` be regular functions defined and vanishing at the origin `ξ` of
+the generic fibre with `η = l · df₁ ∧ ⋯ ∧ df_g` at the origin. In the chart `q ↦ F(p⁻¹ q)` at `p`
+(`chartAt`), the invariant form has coefficient `l` at `p` (it is the translate of its value at
+`1`), so `(i/2)^g η ∧ η̄` has density `|τ(l)|²` relative to Lebesgue measure
+`dx₁dy₁⋯dx_gdy_g` at the centre of the chart: near `p`,
+`|nu(E) − |τ l|² λ(chart(E))| ≤ ε λ(chart(E))`. -/
+def HasFormDensityAt (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (p : 𝒢.Pts τ) : Prop :=
+  letI := anTop 𝒢 τ
+  letI := anBorel 𝒢 τ
+  ∀ (U : Fin g → 𝒢.G.left.Opens) (hU : ∀ i, 𝒢.genericUnit ∈ U i) (s : ∀ i, Γ(𝒢.G.left, U i))
+    (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal 𝒢.genStalk)
+    (l : L), eta = l • 𝒢.wedge (fun i => ⟨_, hm i⟩) →
+    ∀ ε : ℝ, 0 < ε → ∃ W ∈ 𝓝 p, ∀ E ⊆ W, MeasurableSet E →
+      |(nu E).toReal - ‖τ l‖ ^ 2 * (volume (chartAt 𝒢 τ U s p '' E)).toReal| ≤
+        ε * (volume (chartAt 𝒢 τ U s p '' E)).toReal
+
+/-- **`nu` is the measure `(i/2)^g η ∧ η̄` on `A_τ(ℂ)`**: a finite Borel measure (analytic
+topology) with the density of `(i/2)^g η ∧ η̄` at every point, in the charts of `HasFormDensityAt`.
+No invariance of `nu` is assumed (it is proved: `isFormMeasure_iff`). -/
+def IsFormMeasure (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) : Prop :=
+  @IsFiniteMeasure _ (anBorel 𝒢 τ) nu ∧ ∀ p, HasFormDensityAt 𝒢 τ nu eta p
+
+/-- **The printed archimedean Faltings metric** `‖η‖²_τ = (i/2)^g ∫_{A_τ(ℂ)} η ∧ η̄ = r`: the measure
+`(i/2)^g η ∧ η̄` exists, and every such measure has total mass `r`. -/
+def IsPrintedMetricSq (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ} (eta : 𝒢.hodgeSpace g) (r : ℝ) :
+    Prop :=
+  letI := anBorel 𝒢 τ
+  (∃ nu : Measure (𝒢.Pts τ), IsFormMeasure 𝒢 τ nu eta) ∧
+    ∀ nu : Measure (𝒢.Pts τ), IsFormMeasure 𝒢 τ nu eta → (nu univ).toReal = r
+
+theorem hasFormDensityAt_iff (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (p : 𝒢.Pts τ) :
+    HasFormDensityAt 𝒢 τ nu eta p ↔
+      ∀ (U : Fin g → 𝒢.G.left.Opens) (hU : ∀ i, 𝒢.genericUnit ∈ U i)
+        (s : ∀ i, Γ(𝒢.G.left, U i))
+        (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+          IsLocalRing.maximalIdeal 𝒢.genStalk)
+        (l : L), eta = l • 𝒢.wedge (fun i => ⟨_, hm i⟩) →
+        @DensAt _ _ (anTop 𝒢 τ) (anBorel 𝒢 τ) g nu (coordMap 𝒢 τ U s) (‖τ l‖ ^ 2) p :=
+  Iff.rfl
+
+theorem isNormalizedBy_iff (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) :
+    IsNormalizedBy 𝒢 τ nu eta ↔ HasFormDensityAt 𝒢 τ nu eta 1 := by
+  rw [hasFormDensityAt_iff]
+  letI := anTop 𝒢 τ
+  letI := anBorel 𝒢 τ
+  simp only [densAt_one_iff]
+  rfl
+
+end Defs
+
+section Metrized
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- The archimedean setup of a metrized model: `A_τ(ℂ)` is a compact topological group, and a
+nonzero `η` has a representation `η = l · df₁ ∧ ⋯ ∧ df_g` with `τ(l) ≠ 0`. -/
+theorem metrized_setup {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
+    (eta : M.model.hodgeSpace g) (heta : eta ≠ 0) :
+    @IsTopologicalGroup (M.model.Pts τ) (anTop M.model τ) _ ∧
+    @CompactSpace (M.model.Pts τ) (anTop M.model τ) ∧
+    ∃ (U : Fin g → M.model.G.left.Opens) (hU : ∀ i, M.model.genericUnit ∈ U i)
+      (s : ∀ i, Γ(M.model.G.left, U i))
+      (hm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) ∈
+        IsLocalRing.maximalIdeal M.model.genStalk) (l : L),
+      eta = l • M.model.wedge (fun i => ⟨_, hm i⟩) ∧ τ l ≠ 0 := by
+  obtain ⟨Φ, hΦ, hc⟩ := M.arch τ
+  letI := anTop M.model τ
+  haveI : T2Space (M.model.Pts τ) := analyticPointsT2 K A L M.model τ
+  haveI := M.hodge.periods_discrete τ
+  haveI := M.hodge.periods_isZLattice τ
+  have hUnif : TorusVolume.IsUnif (M.hodge.periods τ) Φ :=
+    ⟨continuous_of_isAnalyticUniformization M.model τ hΦ, hΦ.1, hΦ.2.1, hΦ.2.2.1⟩
+  refine ⟨hUnif.isTopologicalGroup, hUnif.compactSpace, ?_⟩
+  have hw : ∃ f : Fin g → IsLocalRing.maximalIdeal M.model.genStalk, M.model.wedge f ≠ 0 := by
+    by_contra hcon
+    push Not at hcon
+    apply M.hodge.coeff_ne_zero τ
+    refine GroupModel.semilinear_ext_wedge M.model _ _ fun f => ?_
+    rw [hcon f, map_zero, LinearMap.zero_apply]
+  obtain ⟨f, hf⟩ := hw
+  obtain ⟨l, hl⟩ := (finrank_eq_one_iff_of_nonzero' _ hf).mp M.hodge.finrank_eq_one eta
+  let U : Fin g → M.model.G.left.Opens := fun i => (M.model.exists_rep (f i)).choose
+  have hU : ∀ i, M.model.genericUnit ∈ U i := fun i =>
+    (M.model.exists_rep (f i)).choose_spec.choose
+  let s : ∀ i, Γ(M.model.G.left, U i) := fun i =>
+    (M.model.exists_rep (f i)).choose_spec.choose_spec.choose
+  have hgerm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) =
+      (f i : M.model.genStalk) := fun i =>
+    (M.model.exists_rep (f i)).choose_spec.choose_spec.choose_spec
+  have hm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal M.model.genStalk := fun i => by rw [hgerm]; exact (f i).2
+  have hwf : M.model.wedge (fun i => ⟨_, hm i⟩) = M.model.wedge f := by
+    congr 1; funext i; exact Subtype.ext (hgerm i)
+  refine ⟨U, hU, s, hm, l, by rw [hwf, hl], ?_⟩
+  intro h0
+  apply heta
+  rw [← hl, (map_eq_zero_iff τ τ.injective).mp h0, zero_smul]
+
+/-- **The measure `(i/2)^g η ∧ η̄`, characterized.** For `η ≠ 0`, a Borel measure on `A_τ(ℂ)` has the
+density of `(i/2)^g η ∧ η̄` at every point (in translated algebraic charts) iff it is finite,
+left-invariant and has that density at the identity. Invariance is proved, from the uniqueness of
+measures with given local densities. -/
+theorem isFormMeasure_iff {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
+    (eta : M.model.hodgeSpace g) (heta : eta ≠ 0) (nu : @Measure (M.model.Pts τ) (anBorel M.model τ)) :
+    IsFormMeasure M.model τ nu eta ↔
+      @IsFiniteMeasure _ (anBorel M.model τ) nu ∧ @Measure.IsMulLeftInvariant _ (anBorel M.model τ) _ nu ∧
+        IsNormalizedBy M.model τ nu eta := by
+  obtain ⟨hTG, hC, U, hU, s, hm, l, hrep, hl⟩ := metrized_setup M τ eta heta
+  letI := anTop M.model τ
+  letI := anBorel M.model τ
+  haveI : BorelSpace (M.model.Pts τ) := ⟨rfl⟩
+  constructor
+  · rintro ⟨hfin, hden⟩
+    refine ⟨hfin, ?_, (isNormalizedBy_iff _ _ _ _).mpr (hden 1)⟩
+    exact isMulLeftInvariant_of_densAt nu (coordMap M.model τ U s) (‖τ l‖ ^ 2)
+      (by positivity) fun p => (hasFormDensityAt_iff _ _ _ _ _).mp (hden p) U hU s hm l hrep
+  · rintro ⟨hfin, hinv, hnorm⟩
+    refine ⟨hfin, fun p => (hasFormDensityAt_iff _ _ _ _ _).mpr fun U' hU' s' hm' l' hrep' => ?_⟩
+    exact densAt_of_invariant nu _ _
+      ((hasFormDensityAt_iff _ _ _ _ _).mp ((isNormalizedBy_iff _ _ _ _).mp hnorm) U' hU' s' hm' l'
+        hrep') p
+
+/-- **The printed metric is the kernel's metric**: for `η ≠ 0`, the measure `(i/2)^g η ∧ η̄` exists and
+`(i/2)^g ∫_{A_τ(ℂ)} η ∧ η̄ = |c_τ η|² covol(Λ_τ)` (`torusMetricSq`). -/
+theorem isPrintedMetricSq_iff {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ)
+    (eta : M.model.hodgeSpace g) (heta : eta ≠ 0) (r : ℝ) :
+    IsPrintedMetricSq M.model τ eta r ↔
+      r = torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta) := by
+  letI := anBorel M.model τ
+  have hmass : ∀ nu : Measure (M.model.Pts τ), IsFormMeasure M.model τ nu eta →
+      (nu univ).toReal = torusMetricSq (M.hodge.periods τ) (M.hodge.coeff τ eta) := by
+    intro nu hnu
+    obtain ⟨h1, h2, h3⟩ := (isFormMeasure_iff M τ eta heta nu).mp hnu
+    exact isFaltingsMetricSq_of_metrized M τ eta nu h1 h2 h3
+  have hex : ∃ nu : Measure (M.model.Pts τ), IsFormMeasure M.model τ nu eta := by
+    obtain ⟨nu, h1, h2, h3⟩ := exists_isNormalizedBy M τ eta heta
+    exact ⟨nu, (isFormMeasure_iff M τ eta heta nu).mpr ⟨h1, h2, h3⟩⟩
+  constructor
+  · rintro ⟨-, hall⟩
+    obtain ⟨nu, hnu⟩ := hex
+    rw [← hall nu hnu, hmass nu hnu]
+  · rintro rfl
+    exact ⟨hex, hmass⟩
+
+end Metrized
+
 end ZInQ.HeightFix
