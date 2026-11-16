@@ -25,3 +25,8 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
 - 04:00 `tameBranchNormal_of_local : TBNLocal → TameBranchNormal` COMPILED (Transport.lean).
 - 04:05 contributor file ZInQKernel/Contrib/OneProof/Abhyankar.lean: `tameBranchNormal_of_kummerUnram : KummerUnram → TameBranchNormal`,
   `nvLocalInertia_of_kummerUnram` COMPILED. Only `KummerUnram` (step 2) remains open.
+- 06:15 `kummerUnram_of_branch : KummerUnramBranch → KummerUnram` COMPILED (KummerUnram.lean, with helpers in
+  KummerUnramBasic.lean: `height_under_eq_one`, `dvr_atPrime`, `unramifiedAt_of_local`; KummerUnramTame.lean:
+  `tame_at` (e | N via Galois `ncard_primesOver_mul_ramificationIdxIn_mul_inertiaDegIn`, residue separability),
+  `unram_of_baseChange` (from `TsKummer.unramBaseChange`)). Generic height-one primes done; the (f)/(g) case is the
+  new named glue `KummerUnramBranch` (T2 at A_(f)). Contributor file: `tameBranchNormal_of_branch` COMPILED.

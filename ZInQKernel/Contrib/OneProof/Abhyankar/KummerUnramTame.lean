@@ -95,4 +95,47 @@ theorem tame_at {A K L : Type} [CommRing A] [IsDomain A] [IsLocalRing A] [Field 
         Algebra.IsIntegral.isAlgebraic
       exact Algebra.IsAlgebraic.isSeparable_of_perfectField
 
+/-- **Base change of an unramified DVR extension to `B_P`**, then `unramifiedAt_of_local`. -/
+theorem unram_of_baseChange {A₀ K₀ B Ω : Type} [CommRing A₀] [IsDomain A₀] [Field K₀]
+    [Algebra A₀ K₀] [IsFractionRing A₀ K₀] [CommRing B] [IsDomain B] [IsNoetherianRing B]
+    [IsIntegrallyClosed B] [Field Ω] [Algebra A₀ B] [Algebra B Ω] [Algebra A₀ Ω] [Algebra K₀ Ω]
+    [IsScalarTower A₀ B Ω] [IsScalarTower A₀ K₀ Ω] [FiniteDimensional K₀ Ω] [Algebra.IsSeparable K₀ Ω]
+    (hBΩ : Function.Injective (algebraMap B Ω))
+    (Q : Ideal (integralClosure B Ω)) [Q.IsPrime] (hP : (Q.under B).height = 1)
+    (T : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [Algebra B T]
+    [IsLocalization.AtPrime T (Q.under B)] [Algebra T Ω] [IsScalarTower B T Ω]
+    (R KR LR : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [Field KR] [Algebra R KR]
+    [IsFractionRing R KR] [Field LR] [Algebra KR LR] [Algebra R LR] [IsScalarTower R KR LR]
+    [FiniteDimensional KR LR] [Algebra.IsSeparable KR LR]
+    (ι : LR →+* Ω) (σ : R →+* T) (hσ : ∀ x, algebraMap T Ω (σ x) = ι (algebraMap R LR x))
+    (hgen : letI := ι.toAlgebra; IntermediateField.adjoin LR (Set.range (algebraMap B Ω)) = ⊤)
+    (hL : ∀ (Q₀ : Ideal (integralClosure R LR)) [Q₀.IsPrime] [Q₀.LiesOver (maximalIdeal R)],
+      Q₀.ramificationIdx R = 1 ∧
+      Algebra.IsSeparable (R ⧸ maximalIdeal R) (integralClosure R LR ⧸ Q₀)) :
+    Algebra.IsUnramifiedAt B Q := by
+  have hTΩ : Function.Injective (algebraMap T Ω) := by
+    rw [injective_iff_map_eq_zero]
+    intro x hx
+    obtain ⟨⟨b, s⟩, rfl⟩ := IsLocalization.mk'_surjective (Q.under B).primeCompl x
+    have h1 : algebraMap T Ω (IsLocalization.mk' T b s) * algebraMap B Ω s = algebraMap B Ω b := by
+      rw [IsScalarTower.algebraMap_apply B T Ω s, IsScalarTower.algebraMap_apply B T Ω b, ← map_mul,
+        IsLocalization.mk'_spec]
+    simp only at hx
+    rw [hx, zero_mul] at h1
+    have hb : b = 0 := hBΩ (by rw [← h1, map_zero])
+    simp [hb]
+  haveI : FaithfulSMul T Ω := (faithfulSMul_iff_algebraMap_injective _ _).mpr hTΩ
+  letI : Algebra (FractionRing T) Ω := FractionRing.liftAlgebra T Ω
+  haveI : IsScalarTower T (FractionRing T) Ω := FractionRing.isScalarTower_liftAlgebra _ _
+  have hadj : letI := ι.toAlgebra;
+      IntermediateField.adjoin LR (Set.range (algebraMap (FractionRing T) Ω)) = ⊤ := by
+    letI := ι.toAlgebra
+    rw [eq_top_iff, ← hgen]
+    apply IntermediateField.adjoin.mono
+    rintro _ ⟨b, rfl⟩
+    refine ⟨algebraMap T (FractionRing T) (algebraMap B T b), ?_⟩
+    rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
+  have key := TsKummer.unramBaseChange R KR LR Ω T (FractionRing T) ι σ hσ hadj hL
+  exact unramifiedAt_of_local (A₀ := A₀) (K₀ := K₀) hBΩ Q hP T key
+
 end Abhyankar

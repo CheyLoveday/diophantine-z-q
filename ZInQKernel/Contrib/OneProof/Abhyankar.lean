@@ -3,6 +3,7 @@ import ZInQKernel.Contrib.OneProof.Abhyankar.Transport
 import ZInQKernel.Contrib.OneProof.Abhyankar.KummerBase
 import ZInQKernel.Contrib.OneProof.Abhyankar.EtaleBranch
 import ZInQKernel.Contrib.OneProof.Abhyankar.Descent
+import ZInQKernel.Contrib.OneProof.Abhyankar.KummerUnram
 
 /-!
 # abhyankar: `SGRDirect.NVLocal.TameBranchNormal`
@@ -30,5 +31,13 @@ theorem tameBranchNormal_of_kummerUnram (hU : KummerUnram) : SGRDirect.NVLocal.T
 /-- **`NVLocalInertia` from `KummerUnram`** (compiled). -/
 theorem nvLocalInertia_of_kummerUnram (hU : KummerUnram) : SGRDirect.NVLocalInertia :=
   SGRDirect.NVLocal.nvLocalInertia_of_tame (tameBranchNormal_of_kummerUnram hU)
+
+/-- **`TameBranchNormal` from `KummerUnramBranch`** (compiled). -/
+theorem tameBranchNormal_of_branch (hBr : KummerUnramBranch) : SGRDirect.NVLocal.TameBranchNormal :=
+  tameBranchNormal_of_kummerUnram (kummerUnram_of_branch hBr)
+
+/-- **`NVLocalInertia` from `KummerUnramBranch`** (compiled). -/
+theorem nvLocalInertia_of_branch (hBr : KummerUnramBranch) : SGRDirect.NVLocalInertia :=
+  SGRDirect.NVLocal.nvLocalInertia_of_tame (tameBranchNormal_of_branch hBr)
 
 end Abhyankar
