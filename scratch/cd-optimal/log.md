@@ -24,3 +24,4 @@ Base wip/gz-optimal 2631cd0b. Build tree copied from ~/dzq-wt/gz-optimal (.lake/
 * py/wchar.gp: w(gamma tau)/w(tau) = (2/d) for 602 gamma in Gamma0(32) (c <= 384, a <= 60, both signs): VERIFIED (computed), 0 failures.
 * Structure.lean: lattice_eq_of_periods (Lambda_d <= L and some period not in (1+i)L => L = c0 Lambda_d, c0 in Q) compiled, axioms standard (Check0.lean).
 * Level32.lean: period_mem_C1 (EtaW32Character => periods of Phi_1 over gamma in Gamma0(32), chi_8(gamma_11)=1, lie in every lattice of C_1) compiled.
+* Level32.lean: LamCd_le_of_etaW32 (EtaW32Character => Lambda_d ⊆ L for every period lattice L of C_d, d = 1 mod 4 squarefree > 1) compiled. Sharpens gz-weil's 2 Lambda ⊆ L.
