@@ -41,3 +41,18 @@ MumfordGroupLawRed.
   (group law = grpObjOfNeron on N transported along ψ; η = e by pullback_map_injective).
 - `qmFamilyGroupLaw_of_neron`, `qmFamilyGroupLaw_of_neronDedekind`, `dvr_of_conn : MumfordGroupLawConn → MumfordGroupLawDVR`.
 - `#print axioms`: all [propext, Classical.choice, Quot.sound].
+
+## Folds, compiled in an olean overlay outside the repo (VERIFIED, 11-16 ~16:05-16:25)
+- Generator fold/make_patch.py (F1 / F2), patches fold/F1-narrowing.patch, fold/F2-neron.patch (15 modules each);
+  specs fold/autofold-F1.json, fold/autofold-F2.json (manual).
+- fold/compile_overlay.sh: symlink tree of .lake/build (cp -as) in /tmp/gldfold/<V>/lib, the 42 modules of
+  fold/downstream-modules.txt (Main's closure downstream of TailZ23) recompiled with `lean -R root -o` in order.
+- F1: 42/42 rc=0 (compile-F1.txt); Main: frozenTarget [propext, Classical.choice, Quot.sound].
+  FoldCheck (foldcheck-F1.txt): ORL28 has `mumfordGroupLawDVR : MumfordGroupLawDVR`, no mumfordGroupLawConn;
+  MumfordGroupLawConn, mumfordGroupLaw_of_conn, MumfordGroupLaw, qmFamilyGroupLaw_of_groupLaw NOT in closure;
+  MumfordGroupLawDVR, qmFamilyGroupLaw_of_dvr IN closure.
+- F2: F1's overlay copied, modules 39-42 (TailZ45..Main) recompiled, rc=0 (compile-F2.txt); frozenTarget standard
+  axioms. FoldCheck (foldcheck-F2.txt): ORL28 has `neronGoodModelIso`, `neronSchemeExtensionDedekind`; Conn /
+  MumfordGroupLaw not in closure; NeronGoodModelIso, NeronSchemeExtensionDedekind, mumfordGroupLawDVR_of_neron IN.
+- (The trailing "unexpected EOF" lines in compile-F1.txt come from editing the script while it ran; all 42 modules
+  had finished.)

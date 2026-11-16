@@ -1,5 +1,5 @@
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 15:13:07.352290476 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 15:31:32.203612493 -0800
++++ ./ZInQKernel/OneProof/H/TailZ23.lean	2026-11-16 15:32:16.926814729 -0800
 @@ -1,5 +1,6 @@
  import ZInQKernel.OneProof.H.TailZ22
  import ZInQKernel.OneProof.H.TailZ40
@@ -44,7 +44,7 @@
  
  /-- **G0 with only the open leaves and the open glue** (leaf-fold14, reduct fold; no `sorry`, standard axioms).
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 15:13:07.354355439 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 15:31:32.204006609 -0800
++++ ./ZInQKernel/OneProof/H/TailZ25.lean	2026-11-16 15:32:16.926916963 -0800
 @@ -54,7 +54,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -55,7 +55,7 @@
    domain, a smooth separated model of finite type is a Néron model iff its localizations at the closed points are;
    locator UNVERIFIED). Replaces `neronLocalizesDVR`. -/
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 15:13:07.354481038 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 15:31:32.204063356 -0800
++++ ./ZInQKernel/OneProof/H/TailZ26.lean	2026-11-16 15:32:16.926966948 -0800
 @@ -49,7 +49,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -66,7 +66,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 15:12:33.042991773 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 15:31:32.204113030 -0800
++++ ./ZInQKernel/OneProof/H/TailZ27.lean	2026-11-16 15:32:16.927010825 -0800
 @@ -42,7 +42,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -77,7 +77,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 15:12:33.042991773 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 15:31:32.204157817 -0800
++++ ./ZInQKernel/OneProof/H/TailZ28.lean	2026-11-16 15:32:16.927050685 -0800
 @@ -42,7 +42,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -88,7 +88,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 15:12:33.042991773 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 15:31:32.204199561 -0800
++++ ./ZInQKernel/OneProof/H/TailZ29.lean	2026-11-16 15:32:16.927102342 -0800
 @@ -42,7 +42,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -99,7 +99,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 15:12:33.043991782 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 15:31:32.204243237 -0800
++++ ./ZInQKernel/OneProof/H/TailZ33.lean	2026-11-16 15:32:16.927143123 -0800
 @@ -41,7 +41,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -110,7 +110,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 15:13:07.354872218 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 15:31:32.204297808 -0800
++++ ./ZInQKernel/OneProof/H/TailZ34.lean	2026-11-16 15:32:16.927183675 -0800
 @@ -39,7 +39,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -131,7 +131,7 @@
  end HSyn
  
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 15:12:33.043991782 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 15:31:32.204343237 -0800
++++ ./ZInQKernel/OneProof/H/TailZ35.lean	2026-11-16 15:32:16.927225538 -0800
 @@ -36,7 +36,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -142,7 +142,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ36.lean	2026-11-16 15:12:33.044991791 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ36.lean	2026-11-16 15:31:32.204387955 -0800
++++ ./ZInQKernel/OneProof/H/TailZ36.lean	2026-11-16 15:32:16.927273710 -0800
 @@ -36,7 +36,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -153,7 +153,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ37.lean	2026-11-16 15:12:33.044991791 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ37.lean	2026-11-16 15:31:32.204432101 -0800
++++ ./ZInQKernel/OneProof/H/TailZ37.lean	2026-11-16 15:32:16.927314422 -0800
 @@ -36,7 +36,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -164,7 +164,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ38.lean	2026-11-16 15:12:33.044991791 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ38.lean	2026-11-16 15:31:32.204478031 -0800
++++ ./ZInQKernel/OneProof/H/TailZ38.lean	2026-11-16 15:32:16.927356105 -0800
 @@ -35,7 +35,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -175,7 +175,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ41.lean	2026-11-16 15:12:33.044991791 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ41.lean	2026-11-16 15:31:32.204544731 -0800
++++ ./ZInQKernel/OneProof/H/TailZ41.lean	2026-11-16 15:32:16.927396355 -0800
 @@ -35,7 +35,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -186,7 +186,7 @@
    number UNVERIFIED). With the next two and `geomConnOfRationalPoint` replaces `semistableNeronBaseChange`. -/
    sga3_VIB_3_10 : _root_.CToPrinted.SGA3_VIB_3_10
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ44.lean	2026-11-16 15:13:07.355269027 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ44.lean	2026-11-16 15:31:32.204610019 -0800
++++ ./ZInQKernel/OneProof/H/TailZ44.lean	2026-11-16 15:32:16.927437697 -0800
 @@ -42,7 +42,7 @@
    `e`, all of whose field fibres are abelian varieties with identity `e(s)`, is a group object in `Over S` with
    identity `e`. Replaces `mumfordRigidityCore`, which also asked Cor. 6.4 (not needed: rigid-prune proves that each
@@ -197,7 +197,7 @@
    the locator audit), residue fields of CM points, on one canonical coarse witness `X₆`. -/
    gonzalezRotgerX6Ab : QMSplit.Moduli.GonzalezRotgerX6Ab
 --- /home/jackmccarthy/dzq-wt/group-law-dvr/./ZInQKernel/OneProof/H/TailZ45.lean	2026-11-16 15:13:07.355416319 -0800
-+++ ./ZInQKernel/OneProof/H/TailZ45.lean	2026-11-16 15:31:32.204664051 -0800
++++ ./ZInQKernel/OneProof/H/TailZ45.lean	2026-11-16 15:32:16.927481033 -0800
 @@ -54,8 +54,8 @@
    sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
    /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
