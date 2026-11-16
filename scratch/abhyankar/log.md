@@ -11,3 +11,7 @@ Target: `SGRDirect.NVLocal.TameBranchNormal` (ZInQKernel/Contrib/OneProof/SGRDir
   `Ideal.ramificationIdx` is the length of `S_q/(q∩R)S_q` (VERIFIED, RamificationInertia/Ramification.lean:53);
   `Algebra.trace_eq_sum_embeddings` (VERIFIED).
 - Assessment: statement plausibly TRUE (toric description of tame covers along a normal crossings divisor; SPECULATIVE until compiled).
+- 01:40 Defs.lean (named Props: BranchConcl, TBNLocal, KummerBase, KummerUnram, EtaleBranch, BranchDescent) builds.
+  Assembly.lean: `exists_kummer_field` (Ω = L(a^{1/N}, b^{1/N}) in an algebraic closure, separable, [Ω:L] prime to primes > N)
+  and `tbnLocal_of_pieces : KummerBase → KummerUnram → EtaleBranch → BranchDescent → TBNLocal` COMPILED (no sorry),
+  using `TPurity3.purityGlobalDim2'`.
