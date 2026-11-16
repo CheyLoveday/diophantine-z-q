@@ -250,4 +250,171 @@ theorem period_mem_C1 (hW : EtaW32Character) {L : PeriodPair} (hg2 : L.g₂ = 4)
       simp only at this
       linear_combination this)
 
+/-! ## §5. The twist: `Λ_d ⊆ L` -/
+
+open ZInQ.GZTheta (jacobiChar jacobiChar_natCast jacobiChar_sq_unit)
+
+/-- gz-weil's `period_identity`, with the entries of the `γ'_a`: for `γ ∈ Γ₀(32 d²)`,
+`γ 1 0 = 32 d² k`, there are `γ'_a ∈ SL₂(ℤ)` with `γ'_a 1 0 = γ 1 0`,
+`γ'_a 0 0 = γ 0 0 + a·d·32k`, `γ'_a 1 1 = γ 1 1 − t_a·d·32k`, and
+`d (Φ_d(γτ) − Φ_d(τ)) = Σ_a 𝓕χ_d(a) (Φ₁(γ'_a τ'_a) − Φ₁(τ'_a))`. -/
+theorem period_identity' (d : ℕ) [NeZero d] {γ : SL(2, ℤ)}
+    {k : ℤ} (hk : γ 1 0 = 32 * d ^ 2 * k) (τ : ℍ) :
+    ∃ (γ' : ZMod d → SL(2, ℤ)) (τ' : ZMod d → ℍ) (t : ZMod d → ℤ),
+      (∀ a, γ' a 1 0 = γ 1 0) ∧ (∀ a, γ' a 0 0 = γ 0 0 + (a.val : ℤ) * d * (32 * k)) ∧
+      (∀ a, γ' a 1 1 = γ 1 1 - t a * d * (32 * k)) ∧ t 0 = 0 ∧
+      (d : ℂ) * (eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ)) =
+        ∑ a : ZMod d, 𝓕 (jacobiChar d) a *
+          (eichlerCd 1 ((γ' a • τ' a : ℍ) : ℂ) - eichlerCd 1 (τ' a : ℂ)) := by
+  have hc : γ 1 0 = d * d * (32 * k) := by rw [hk]; ring
+  set D : ZMod d := ((γ 1 1 : ℤ) : ZMod d) with hDdef
+  have hdet : γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
+    have h := γ.det_coe
+    rwa [Matrix.det_fin_two] at h
+  have hAD : ((γ 0 0 : ℤ) : ZMod d) * D = 1 := by
+    have := congrArg (Int.cast : ℤ → ZMod d) hdet
+    push_cast [hc, ZMod.natCast_self] at this
+    simpa [hDdef] using this
+  have hD : IsUnit D := IsUnit.of_mul_eq_one_right _ hAD
+  set w : (ZMod d)ˣ := hD.unit with hw
+  set v : (ZMod d)ˣ := w ^ 2 with hv
+  have hvD : (v : ZMod d) = D ^ 2 := by simp [hv, hw]
+  have hχv : jacobiChar d ((v⁻¹ : (ZMod d)ˣ) : ZMod d) = 1 := by
+    rw [hv, ← inv_pow, Units.val_pow_eq_pow_val, map_pow]
+    exact jacobiChar_sq_unit d _
+  have hex : ∀ a : ZMod d, ∃ γ' : SL(2, ℤ), γ' 0 0 = γ 0 0 + (a.val : ℤ) * d * (32 * k) ∧
+      γ' 1 0 = γ 1 0 ∧ γ' 1 1 = γ 1 1 - (((a * D ^ 2).val : ℕ) : ℤ) * d * (32 * k) ∧
+      upperRightHom (((a.val : ℤ) : ℝ) / d) * mapGL ℝ γ =
+        mapGL ℝ γ' * upperRightHom (((((a * D ^ 2).val : ℕ) : ℤ) : ℝ) / d) := fun a =>
+    TauCeti.exists_upperRightHom_mul_mapGL_eq_mapGL_mul_upperRightHom γ hc (by
+      rw [Int.cast_natCast, Int.cast_natCast, ZMod.natCast_zmod_val, ZMod.natCast_zmod_val])
+  choose γ' hγ'0 hγ'1 hγ'2 hγ'eq using hex
+  set τ' : ZMod d → ℍ := fun a => ((((((a * D ^ 2).val : ℕ) : ℤ) : ℝ) / d) +ᵥ τ) with hτ'
+  refine ⟨γ', τ', fun a => (((a * D ^ 2).val : ℕ) : ℤ), hγ'1, hγ'0, hγ'2, by simp, ?_⟩
+  have hmove : ∀ a : ZMod d, ((γ • τ : ℍ) : ℂ) + (a.val : ℂ) / d = ((γ' a • τ' a : ℍ) : ℂ) := by
+    intro a
+    have h := congrArg (fun g : GL (Fin 2) ℝ => g • τ) (hγ'eq a)
+    simp only [mul_smul, TauCeti.Matrix.GeneralLinearGroup.upperRightHom_smul] at h
+    have h' := congrArg (fun z : ℍ => (z : ℂ)) h
+    simp only [UpperHalfPlane.coe_vadd] at h'
+    rw [ModularGroup.sl_moeb, ModularGroup.sl_moeb, TauCeti.Matrix.SpecialLinearGroup.coe_GL_eq_mapGL,
+      TauCeti.Matrix.SpecialLinearGroup.coe_GL_eq_mapGL, ← h']
+    push_cast
+    ring
+  have hz : 0 < ((γ • τ : ℍ) : ℂ).im := (γ • τ).im_pos
+  rw [mul_sub, ZInQ.GZWeil.twist_formula d hz, ZInQ.GZWeil.twist_formula d τ.im_pos,
+    ← Finset.sum_sub_distrib]
+  have hre : ∑ b : ZMod d, 𝓕 (jacobiChar d) b * eichlerCd 1 ((τ : ℂ) + (b.val : ℂ) / d) =
+      ∑ a : ZMod d, 𝓕 (jacobiChar d) a * eichlerCd 1 ((τ' a : ℍ) : ℂ) := by
+    refine (Fintype.sum_equiv (Units.mulRight v) _ _ fun a => ?_).symm
+    simp only [Units.mulRight_apply, hτ', UpperHalfPlane.coe_vadd]
+    rw [ZInQ.GZWeil.dft_mul_unit d (jacobiChar d) v hχv a, hvD]
+    congr 2
+    push_cast
+    ring
+  rw [Finset.sum_sub_distrib, hre, ← Finset.sum_sub_distrib]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  rw [hmove a, mul_sub]
+
+/-- `ρ(δ γ) = ρ(δ) + ρ(γ)` at the base point: `Φ₁(γ τ) − Φ₁(γ' τ) = Φ₁(δ σ) − Φ₁(σ)`,
+`δ = γ γ'⁻¹`, `σ = γ' τ`. -/
+theorem eichler_mul_sub (γ γ' : SL(2, ℤ)) (τ : ℍ) :
+    eichlerCd 1 ((γ • τ : ℍ) : ℂ) - eichlerCd 1 ((γ' • τ : ℍ) : ℂ) =
+      eichlerCd 1 (((γ * γ'⁻¹) • (γ' • τ) : ℍ) : ℂ) - eichlerCd 1 ((γ' • τ : ℍ) : ℂ) := by
+  rw [← mul_smul, inv_mul_cancel_right]
+
+theorem sum_dft_jacobiChar_eq_zero {d : ℕ} [NeZero d] (hd : 1 < d) :
+    ∑ a : ZMod d, 𝓕 (jacobiChar d) a = 0 := by
+  have h := ZInQ.GZWeil.sum_dft_mul_stdAddChar d (jacobiChar d) 0
+  simp only [mul_zero, AddChar.map_zero_eq_one, mul_one] at h
+  rw [h, ZInQ.GZTheta.jacobiChar_apply, ZMod.val_zero, Nat.cast_zero, jacobiSym.zero_left hd]
+  simp
+
+/-- **`Λ_d ⊆ L` for every period lattice `L` of `C_d`** (`d ≡ 1 mod 4` squarefree, `d > 1`), given the
+eta-quotient transformation law (`EtaW32Character`). This sharpens gz-weil's `2 Λ_d ⊆ L`. -/
+theorem LamCd_le_of_etaW32 (hW : EtaW32Character) {d : ℕ} (hd4 : d % 4 = 1) (hd1 : 1 < d)
+    (hsq : Squarefree d) {L : PeriodPair}
+    (hL : ZInQ.GZHL3.IsPeriodLattice (shortCurve (-(d : ℚ) ^ 2)) L) : LamCd d ≤ L.lattice := by
+  have : NeZero d := ⟨by omega⟩
+  set g := ZInQ.GZWeil.gaussD d with hgdef
+  have hg : g ≠ 0 := ZInQ.GZWeil.gaussD_ne_zero hd4 hsq
+  have hg2 : g ^ 2 = d := ZInQ.GZWeil.gaussD_sq hd4 hsq
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne d
+  obtain ⟨h2, h3⟩ := (ZInQ.GZWeil.isPeriodLattice_cd_iff d L).mp hL
+  set L₁ := ZInQ.GZWeil.scalePP L g hg with hL₁
+  have hL₁2 : L₁.g₂ = 4 := by
+    rw [ZInQ.GZWeil.g₂_scalePP, h2]
+    have : g ^ 4 = (d : ℂ) ^ 2 := by rw [show g ^ 4 = (g ^ 2) ^ 2 by ring, hg2]
+    rw [this]; field_simp
+  have hL₁3 : L₁.g₃ = 0 := by rw [ZInQ.GZWeil.g₃_scalePP, h3, mul_zero]
+  rw [LamCd, Submodule.span_le]
+  rintro w ⟨γ, hγ, τ, rfl⟩
+  obtain ⟨k, hk, hodd⟩ := gamma0_data hγ
+  obtain ⟨γ', τ', t, h10, h00, h11, ht0, heq⟩ := period_identity' d hk τ
+  -- each period of `Φ₁` at `γ'_a`, moved to the base point `τ`
+  have hbase : ∀ a, eichlerCd 1 ((γ' a • τ' a : ℍ) : ℂ) - eichlerCd 1 (τ' a : ℂ) =
+      eichlerCd 1 ((γ' a • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ) := by
+    intro a
+    have hγa : γ' a ∈ Gamma0 32 := by
+      rw [Gamma0_mem, h10 a, hk]; push_cast
+      rw [show (32 : ZMod 32) = 0 from rfl]; ring
+    exact ZInQ.GZWeil.period_const hγa (τ' a) τ
+  -- `ρ(γ'_a) − ρ(γ'_0) ∈ L₁`
+  have hdiff : ∀ a, (eichlerCd 1 ((γ' a • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) -
+      (eichlerCd 1 ((γ' 0 • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) ∈ L₁.lattice := by
+    intro a
+    have e : (eichlerCd 1 ((γ' a • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) -
+        (eichlerCd 1 ((γ' 0 • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) =
+        eichlerCd 1 ((γ' a • τ : ℍ) : ℂ) - eichlerCd 1 ((γ' 0 • τ : ℍ) : ℂ) := by ring
+    rw [e, eichler_mul_sub]
+    set δ := γ' a * (γ' 0)⁻¹ with hδ
+    have hδ10 : δ 1 0 = γ 1 0 * (γ' 0 1 1 - γ' a 1 1) := by
+      rw [hδ, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv,
+        Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
+      simp [h10]; try ring
+    have hδ11 : δ 1 1 = -(γ 1 0 * γ' 0 0 1) + γ' a 1 1 * γ' 0 0 0 := by
+      rw [hδ, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv,
+        Matrix.adjugate_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
+      simp [h10]; try ring
+    have hdet : γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
+      have h := γ.det_coe; rwa [Matrix.det_fin_two] at h
+    have hδΓ : δ ∈ Gamma0 32 := by
+      rw [Gamma0_mem, hδ10, hk]; push_cast
+      rw [show (32 : ZMod 32) = 0 from rfl]; ring
+    have hδχ : ZMod.χ₈ ((δ 1 1 : ℤ) : ZMod 8) = 1 := by
+      have e1 : δ 1 1 = 1 + 8 * (γ 0 1 * 4 * d ^ 2 * k - 4 * d ^ 2 * k * γ' 0 0 1 -
+          t a * d * 4 * k * γ 0 0) := by
+        rw [hδ11, h11 a, h00 0, hk]
+        simp only [ZMod.val_zero, Nat.cast_zero, zero_mul, add_zero]
+        linear_combination hdet + (γ 0 1) * hk
+      rw [e1]; push_cast
+      rw [show (8 : ZMod 8) = 0 from rfl, zero_mul, add_zero, map_one]
+    exact period_mem_C1 hW hL₁2 hL₁3 hδΓ hδχ (γ' 0 • τ)
+  choose m hmL hmeq using fun a => (ZInQ.GZWeil.mem_scalePP hg).mp (hdiff a)
+  set ρ0 := eichlerCd 1 ((γ' 0 • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)
+  have hsum0 := sum_dft_jacobiChar_eq_zero hd1
+  have key : eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ) =
+      ∑ a : ZMod d, ((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * m a := by
+    have e1 : eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ) =
+        (d : ℂ)⁻¹ * ((d : ℂ) * (eichlerCd d ((γ • τ : ℍ) : ℂ) - eichlerCd d (τ : ℂ))) := by
+      field_simp
+    rw [e1, heq]
+    simp_rw [hbase]
+    have e2 : ∑ a : ZMod d, 𝓕 (jacobiChar d) a *
+        (eichlerCd 1 ((γ' a • τ : ℍ) : ℂ) - eichlerCd 1 (τ : ℂ)) =
+        ∑ a : ZMod d, 𝓕 (jacobiChar d) a * (g * m a) + (∑ a : ZMod d, 𝓕 (jacobiChar d) a) * ρ0 := by
+      rw [Finset.sum_mul, ← Finset.sum_add_distrib]
+      refine Finset.sum_congr rfl fun a _ => ?_
+      rw [← hmeq a]; ring
+    rw [e2, hsum0, zero_mul, add_zero, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun a _ => ?_
+    rw [ZInQ.GZWeil.dft_jacobiChar hd4 hsq, ZInQ.GZTheta.jacobiChar_apply]
+    calc (d : ℂ)⁻¹ * (((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * g * (g * m a))
+        = (d : ℂ)⁻¹ * (((jacobiSym ((a.val : ℕ) : ℤ) d : ℤ) : ℂ) * g ^ 2 * m a) := by ring
+      _ = _ := by rw [hg2]; field_simp
+  rw [SetLike.mem_coe, key]
+  refine Submodule.sum_mem _ fun a _ => ?_
+  have := Submodule.smul_mem L.lattice (jacobiSym ((a.val : ℕ) : ℤ) d) (hmL a)
+  rwa [zsmul_eq_mul] at this
+
 end ZInQ.CdOpt
