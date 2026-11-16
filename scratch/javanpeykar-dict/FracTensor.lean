@@ -19,8 +19,8 @@ variable {K A KA L B M : Type} [Field K] [CommRing A] [IsDomain A] [Algebra K A]
 with `β`. -/
 theorem productMap_bijective_of_fraction (β : A ⊗[K] L →ₐ[K] B) (hβ : Function.Bijective β)
     (ι : KA →ₐ[K] M) (s : L →ₐ[K] M) [Algebra.IsAlgebraic K L]
-    (hι : ∀ a : A, ι (algebraMap A KA a) = algebraMap B M (β (a ⊗ₜ 1)))
-    (hs : ∀ l : L, s l = algebraMap B M (β (1 ⊗ₜ l))) :
+    (hι : ∀ a : A, ι (algebraMap A KA a) = algebraMap B M (β (a ⊗ₜ[K] 1)))
+    (hs : ∀ l : L, s l = algebraMap B M (β (1 ⊗ₜ[K] l))) :
     Function.Bijective (Algebra.TensorProduct.productMap ι s) := by
   set Ψ := Algebra.TensorProduct.productMap ι s
   set incl : A ⊗[K] L →ₐ[K] KA ⊗[K] L :=
@@ -35,32 +35,32 @@ theorem productMap_bijective_of_fraction (β : A ⊗[K] L →ₐ[K] B) (hβ : Fu
         Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
     | add x y hx hy => simp [hx, hy]
   have hden : ∀ w : KA ⊗[K] L, ∃ a ∈ nonZeroDivisors A, ∃ w' : A ⊗[K] L,
-      (algebraMap A KA a ⊗ₜ (1 : L)) * w = incl w' := by
+      (algebraMap A KA a ⊗ₜ[K] (1 : L)) * w = incl w' := by
     intro w
     induction w using TensorProduct.induction_on with
     | zero => exact ⟨1, one_mem _, 0, by simp⟩
     | tmul x l =>
       obtain ⟨⟨a, b⟩, h⟩ := IsLocalization.surj (nonZeroDivisors A) x
-      refine ⟨b, b.2, a ⊗ₜ l, ?_⟩
+      refine ⟨b, b.2, a ⊗ₜ[K] l, ?_⟩
       simp only [Algebra.TensorProduct.tmul_mul_tmul, one_mul, incl,
         Algebra.TensorProduct.map_tmul, IsScalarTower.coe_toAlgHom', AlgHom.id_apply]
       rw [mul_comm, h]
     | add x y hx hy =>
       obtain ⟨a₁, ha₁, w₁, h₁⟩ := hx
       obtain ⟨a₂, ha₂, w₂, h₂⟩ := hy
-      refine ⟨a₁ * a₂, mul_mem ha₁ ha₂, (a₂ ⊗ₜ 1) * w₁ + (a₁ ⊗ₜ 1) * w₂, ?_⟩
-      have e1 : (algebraMap A KA (a₁ * a₂) ⊗ₜ (1 : L)) =
-          (algebraMap A KA a₂ ⊗ₜ (1 : L)) * (algebraMap A KA a₁ ⊗ₜ (1 : L)) := by
+      refine ⟨a₁ * a₂, mul_mem ha₁ ha₂, (a₂ ⊗ₜ[K] 1) * w₁ + (a₁ ⊗ₜ[K] 1) * w₂, ?_⟩
+      have e1 : (algebraMap A KA (a₁ * a₂) ⊗ₜ[K] (1 : L)) =
+          (algebraMap A KA a₂ ⊗ₜ[K] (1 : L)) * (algebraMap A KA a₁ ⊗ₜ[K] (1 : L)) := by
         rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, map_mul, mul_comm]
-      have e2 : (algebraMap A KA (a₁ * a₂) ⊗ₜ (1 : L)) =
-          (algebraMap A KA a₁ ⊗ₜ (1 : L)) * (algebraMap A KA a₂ ⊗ₜ (1 : L)) := by
+      have e2 : (algebraMap A KA (a₁ * a₂) ⊗ₜ[K] (1 : L)) =
+          (algebraMap A KA a₁ ⊗ₜ[K] (1 : L)) * (algebraMap A KA a₂ ⊗ₜ[K] (1 : L)) := by
         rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, map_mul]
-      rw [mul_add, map_add, map_mul, map_mul]
+      rw [mul_add, map_add, map_mul incl, map_mul incl]
       congr 1
       · rw [e1, mul_assoc, h₁]; rfl
       · rw [e2, mul_assoc, h₂]; rfl
   have hunit : ∀ a ∈ nonZeroDivisors A,
-      (algebraMap A KA a)⁻¹ ⊗ₜ (1 : L) * (algebraMap A KA a ⊗ₜ (1 : L)) = 1 := by
+      (algebraMap A KA a)⁻¹ ⊗ₜ[K] (1 : L) * (algebraMap A KA a ⊗ₜ[K] (1 : L)) = 1 := by
     intro a ha
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one,
       inv_mul_cancel₀ (IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors ha)]
@@ -75,7 +75,7 @@ theorem productMap_bijective_of_fraction (β : A ⊗[K] L →ₐ[K] B) (hβ : Fu
       have := (IsFractionRing.injective B M) (h1.trans (map_zero _).symm)
       exact hβ.1 (this.trans (map_zero β).symm)
     rw [h2, map_zero] at h
-    calc w = ((algebraMap A KA a)⁻¹ ⊗ₜ (1 : L) * (algebraMap A KA a ⊗ₜ (1 : L))) * w := by
+    calc w = ((algebraMap A KA a)⁻¹ ⊗ₜ[K] (1 : L) * (algebraMap A KA a ⊗ₜ[K] (1 : L))) * w := by
           rw [hunit a ha, one_mul]
       _ = 0 := by rw [mul_assoc, h, mul_zero]
   haveI : IsDomain (KA ⊗[K] L) := hinj.isDomain Ψ.toRingHom
