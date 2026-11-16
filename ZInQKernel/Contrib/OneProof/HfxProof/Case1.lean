@@ -273,4 +273,74 @@ def C1 (ω : ℍ[ℚ]) (k : ℕ) (hωZ : IsHurZ ω) (h2 : ω * ω = -(((8 * k + 
         (by rw [← map_mul, ← map_mul, mul_add, add_mul, mul_one, one_mul]) hz)
       (loc2OK_varpi_sq hωZ h2 hnrd) (mul_qinv_self h0) hy h
 
+/-! ## The main theorem for `n ≡ 1 (mod 8)` -/
+
+theorem hurZ_rhoBetaZ (i : Fin 24) (s b : Fin 2) (t' : T8) :
+    (hurZ (rhoBetaZ i s b t') : ℍ[ℚ]) =
+      hurZ (if b = 0 then smulH (sg s) (unitList.getD i.val ⟨1, 0, 0, 0⟩)
+        else mulH oneI (smulH (sg s) (unitList.getD i.val ⟨1, 0, 0, 0⟩))) * twoRepQ t' := by
+  rw [twoRepQ_eq, rhoBetaZ]
+  split_ifs
+  · rw [hurZ_smulH, hurZ_mulH, hurZ_smulH, smul_mul_assoc]
+  · rw [hurZ_mulH, hurZ_smulH, hurZ_mulH, hurZ_mulH, hurZ_smulH]
+    simp only [mul_smul_comm, smul_mul_assoc, mul_assoc]
+
+/-- **The test vector for `n ≡ 1 (mod 8)`.** -/
+theorem testVector_one8 {n : ℕ} [NeZero n] (hsq : Squarefree n) (h1 : n % 8 = 1)
+    {τ : QNeg n →ₐ[ℚ] ℍ[ℚ]} (hτ : AdmissibleTau n τ) :
+    ∃ f : ℍ[AQ] → ℤ, IsTestVector n τ f ∧ ∃ x : ℍ[AQ]ˣ, f x ≠ 0 := by
+  classical
+  obtain ⟨v, hv⟩ := exists_isPlaceTwo
+  obtain ⟨a, b, c, hvq, hn, h4⟩ := exists_abc hτ (Or.inl h1)
+  obtain ⟨c', rfl⟩ := h4 h1
+  set k := n / 8 with hkdef
+  have hk : n = 8 * k + 1 := by have := Nat.div_add_mod n 8; rw [h1] at this; omega
+  have hnk : ((8 * k + 1 : ℕ) : ℚ) = (a : ℚ) ^ 2 + (b : ℚ) ^ 2 + ((4 * c' : ℤ) : ℚ) ^ 2 := by
+    rw [← hk]; exact_mod_cast hn
+  set ωZ := ωH1 a b (4 * c') with hωZ
+  set ω : ℍ[ℚ] := hurZ ωZ with hωdef
+  have hωv : ω = τ (sqrtNeg n) := by rw [hvq, hωdef, hurZ_ωH1]
+  have hω2 : ω * ω = -(((8 * k + 1 : ℕ) : ℚ)) • 1 := by
+    rw [hωdef, hurZ_ωH1, hnk]; ext <;> simp <;> ring
+  have hst : star ω = -ω := by rw [hωdef, hurZ_ωH1]; ext <;> simp
+  have hϖn : Quaternion.normSq (1 + ω) = ((2 * (4 * k + 1) : ℕ) : ℚ) := by
+    rw [hωdef, hurZ_ωH1, Quaternion.normSq_def']
+    have : ((2 * (4 * k + 1) : ℕ) : ℚ) = 1 + ((8 * k + 1 : ℕ) : ℚ) := by push_cast; ring
+    rw [this, hnk]; simp; ring
+  have hqω : qp 2 ω = ⟨0, ((a : ℚ) : ℚ_[2]), ((b : ℚ) : ℚ_[2]), (((4 * c' : ℤ) : ℚ) : ℚ_[2])⟩ := by
+    rw [hωdef, hurZ_ωH1]; ext <;> simp [qp]
+  have hABC : ((a : ℚ) : ℚ_[2]) ^ 2 + ((b : ℚ) : ℚ_[2]) ^ 2 + (((4 * c' : ℤ) : ℚ) : ℚ_[2]) ^ 2 =
+      ((8 * k + 1 : ℕ) : ℚ_[2]) := by
+    have := congrArg (fun q : ℚ => (q : ℚ_[2])) hnk; push_cast at this ⊢; rw [this]
+  have hnrd : ∀ x z : ℚ_[2], Quaternion.normSq (x • (1 : ℍ[ℚ_[2]]) + z • qp 2 ω) =
+      x ^ 2 + ((8 * k + 1 : ℕ) : ℚ_[2]) * z ^ 2 := by
+    intro x z; rw [hqω, Quaternion.normSq_def', ← hABC]; simp; ring
+  have hspan : ∀ x : 𝓞 (QNeg n), ∃ m s : ℤ, τ x = (m : ℍ[ℚ]) + (s : ℚ) • ω := by
+    intro x; rw [hωv]; exact tau_span1 hsq h1 τ x
+  set C := C1 ω k (isHurZ_hurZ _) hω2 hst hϖn hnrd with hCdef
+  have hH : HgrpN n τ ≤ SgC v hv C := by
+    refine HgrpN_le_SgC hv C (isHurZ_hurZ _) hspan ?_ ?_ ?_
+    · intro p _ _ cc hcc; exact Or.inl ⟨cc, hcc, 1, by simp, isHur_one, by simp, InR.one⟩
+    · intro p _ _ u hu hnu hR; exact Or.inl ⟨1, one_ne_zero, u, by simp, hu, hnu, hR⟩
+    · intro p _ hp y hy hcomm
+      subst hp
+      rw [← hωv, hqω] at hcomm
+      have h := loc_of_commute1 hABC (by rw [← hqω]; exact isHur_qp_hurZ' (isHurZ_hurZ _)) hy hcomm
+      show Loc2OK (qp 2 ω) y ∨ Loc2OK (qp 2 ω) (y * qp 2 (1 + ω))
+      rw [map_add, map_one, hqω]; exact h
+  -- the table entry
+  set r := mapH (Int.castRingHom (ZMod 8)) ωZ with hrdef
+  obtain ⟨e, he, her⟩ := tab1_complete r.a0 r.a1 r.a2 r.a3
+    (by show ((2 * (4 * c') : ℤ) : ZMod 8) = 2 * ((4 * c' : ℤ) : ZMod 8); push_cast; ring)
+    (by show ((4 * c' : ℤ) : ZMod 8) = 0 ∨ ((4 * c' : ℤ) : ZMod 8) = 4
+        push_cast; exact zmod8_four_mul _)
+    (by
+      show (((a - 4 * c' : ℤ) : ZMod 8) + ((4 * c' : ℤ) : ZMod 8)) ^ 2 +
+        (((b - 4 * c' : ℤ) : ZMod 8) + ((4 * c' : ℤ) : ZMod 8)) ^ 2 + ((4 * c' : ℤ) : ZMod 8) ^ 2 = 1
+      have h8 : (((a ^ 2 + b ^ 2 + (4 * c') ^ 2 : ℤ)) : ZMod 8) = 1 := by
+        rw [← hn, hk]; push_cast; rw [show (8 : ZMod 8) = 0 from rfl]; ring
+      push_cast at h8 ⊢; linear_combination h8)
+  have her' : e.r = r := her
+  sorry
+
 end ZInQ.Contrib.HfxProof
