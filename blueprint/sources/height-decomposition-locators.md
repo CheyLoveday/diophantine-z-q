@@ -41,22 +41,24 @@ representations* (2004), I.3, records it. Locators unverified.
 
 L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc.
 (2022), Theorem 1.0.4; L. Berger, *Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002),
-Théorème 0.7. The arXiv text of Pan's theorem (1901.07166v2) was read by an AI reader; the journal
-locators are unverified.
+Théorème 0.7, which is Corollaire 5.22 of the published version. An AI reader read the arXiv text of
+Pan's theorem (1901.07166v2) and the author's copy of Berger's paper; Pan's journal locators are
+unverified, and no person has read either.
 
 ## Kato Hodge-Tate weights
 
 The existence form, as recorded by R. Taylor, *Galois representations*, Ann. Fac. Sci. Toulouse
-Math. (6) 13 (2004), and T. Gee, *Modularity lifting theorems*, Essent. Number Theory 1 (2022),
-section 2; the content is due to Deligne, Faltings, T. Saito and K. Kato (Astérisque 295 (2004),
+Math. (6) 13 (2004), Theorem 3.6, and T. Gee, *Modularity lifting theorems*, Essent. Number Theory 1
+(2022), Fact 4.20, both for automorphic representations; the content is due to Deligne, Faltings, T. Saito and K. Kato (Astérisque 295 (2004),
 9.2–9.4). Locators unverified.
 
 ## Carayol conductor
 
 H. Carayol, *Sur les représentations $\ell$-adiques associées aux formes modulaires de Hilbert*,
 Ann. Sci. ÉNS 19 (1986), Théorème (A), read by the locator audit; with W. Casselman, Math. Ann. 201
-(1973), for the conductor of a newform, and K. Ribet, LNM 601 (1977), Theorem 2.3, for
-irreducibility. These locators are unverified.
+(1973), for the conductor of a newform, and K. Ribet, LNM 601 (1977), for irreducibility. These
+locators are unverified. The package is H. Darmon, F. Diamond and R. Taylor, *Fermat's Last
+Theorem*, Theorem 3.1, read in the authors' copy by an AI reader.
 
 ## Bost lower bound
 

@@ -18,7 +18,9 @@ and $k-1$. The cyclotomic character has weight $-1$.
 
 The project classes it as a published statement; its reading against the print is still pending.
 The two alternatives are the two normalizations in which the literature states the theorem (Deligne
-for the representation; Faltings, Saito and Kato for its Hodge–Tate weights). The project's earlier
+for the representation; Faltings, Saito and Kato for its Hodge–Tate weights); the surveys that
+record it state it for automorphic representations, and the statement is its translation to
+newforms. The project's earlier
 form, for every semisimple representation attached to $f$, is proved here from this one, with the
 Chebotarev density theorem and the Brauer–Nesbitt theorem. It is a hypothesis, not proved here.
 

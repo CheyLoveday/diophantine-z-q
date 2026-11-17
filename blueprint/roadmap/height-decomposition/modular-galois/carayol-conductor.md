@@ -16,10 +16,10 @@ every prime $p\nmid N\ell$ with the trace of an arithmetic Frobenius equal to $a
 conductor has exponent $v_p(N)$ at every prime $p\ne\ell$.
 
 The project classes it as a published statement; its reading against the print is still pending.
-No single source prints the package: it puts together the representation of Shimura and Deligne,
-Carayol's Théorème (A) with Casselman's theorem on the conductor of a newform, and Ribet's
-irreducibility. The conductor is the Serre–Tate conductor of the restriction to a decomposition
-group. The project's earlier form, for every semisimple representation over
+Darmon, Diamond and Taylor print the package as Theorem 3.1 of their survey of Fermat's Last
+Theorem, crediting the representation to Shimura and Deligne, irreducibility to Ribet and the
+conductor to Carayol; the statement is a weakening of it. The conductor is the Serre–Tate conductor
+of the restriction to a decomposition group. The project's earlier form, for every semisimple representation over
 $\overline{\mathbb Q}_\ell$ attached to $f$, is proved here from this one. It is a hypothesis, not proved here.
 
 ## Depends on
