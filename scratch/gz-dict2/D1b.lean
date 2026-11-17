@@ -153,4 +153,67 @@ theorem wEqR_phi {E : WeierstrassCurve ℚ} {N : ℕ} [NeZero N]
   ((wEqR_gen E).map (φ : E.toAffine.FunctionField →+* X0Field N)).map
     ((X0Field N).val : X0Field N →+* LaurentSeries ℚ)
 
+
+/-- **The rational map `(Px/Qx, Py/Qy)` satisfies the equation of `E` on a punctured neighbourhood of
+every `τ ∈ ℍ`.** -/
+theorem eventually_equation_ratFn {E : WeierstrassCurve ℚ} {N : ℕ} [NeZero N]
+    (φ : E.toAffine.FunctionField →ₐ[ℚ] X0Field N) {Px Qx Py Qy : MvPolynomial (Fin 2) ℚ}
+    (hrx : IsRatRep N (φ (genX E) : LaurentSeries ℚ) Px Qx)
+    (hry : IsRatRep N (φ (genY E) : LaurentSeries ℚ) Py Qy) (τ : ℍ) :
+    ∀ᶠ z in 𝓝[≠] (τ : ℂ),
+      (E⁄ℂ).Equation (ratFn N Px Qx (ofComplex z)) (ratFn N Py Qy (ofComplex z)) := by
+  obtain ⟨hQx, hx⟩ := hrx
+  obtain ⟨hQy, hy⟩ := hry
+  have hW := wEqR_phi φ
+  rw [hx, hy] at hW
+  open MvPolynomial in
+  set Wt : MvPolynomial (Fin 2) ℚ :=
+    (Py ^ 2 * Qx ^ 3 + C E.a₁ * Px * Py * Qx ^ 2 * Qy + C E.a₃ * Py * Qx ^ 3 * Qy) -
+    (Px ^ 3 * Qy ^ 2 + C E.a₂ * Px ^ 2 * Qx * Qy ^ 2 + C E.a₄ * Px * Qx ^ 2 * Qy ^ 2 +
+      C E.a₆ * Qx ^ 3 * Qy ^ 2) with hWt
+  have hWQ : polyQ N Wt = 0 := by
+    have e : polyQ N Wt = polyQ N Qx ^ 3 * polyQ N Qy ^ 2 *
+        (((polyQ N Py / polyQ N Qy) ^ 2 + (E.a₁ : LaurentSeries ℚ) * (polyQ N Px / polyQ N Qx) *
+          (polyQ N Py / polyQ N Qy) + (E.a₃ : LaurentSeries ℚ) * (polyQ N Py / polyQ N Qy)) -
+         ((polyQ N Px / polyQ N Qx) ^ 3 + (E.a₂ : LaurentSeries ℚ) * (polyQ N Px / polyQ N Qx) ^ 2 +
+          (E.a₄ : LaurentSeries ℚ) * (polyQ N Px / polyQ N Qx) + (E.a₆ : LaurentSeries ℚ))) := by
+      have hQx' : MvPolynomial.aeval (ptQ N) Qx ≠ 0 := hQx
+      have hQy' : MvPolynomial.aeval (ptQ N) Qy ≠ 0 := hQy
+      simp only [hWt, polyQ, map_sub, map_add, map_mul, map_pow, MvPolynomial.aeval_C, eq_ratCast]
+      field_simp
+    rw [e, sub_eq_zero.2 hW, mul_zero]
+  have hq := hasQExp_polyFn N Wt
+  rw [hWQ] at hq
+  obtain ⟨T, hT⟩ := HasQExp.eq_zero hq
+  have hz := eventuallyEq_zero_of_im_gt (fun τ => (holoH_polyFn N Wt τ).meromorphicAt) hT τ
+  obtain ⟨Tx, hTx⟩ := HasQExp.exists_ne_zero (hasQExp_polyFn N Qx) hQx
+  obtain ⟨Ty, hTy⟩ := HasQExp.exists_ne_zero (hasQExp_polyFn N Qy) hQy
+  have hnx := eventually_ne_zero_of_im_gt (fun τ => (holoH_polyFn N Qx τ).meromorphicAt) hTx τ
+  have hny := eventually_ne_zero_of_im_gt (fun τ => (holoH_polyFn N Qy τ).meromorphicAt) hTy τ
+  filter_upwards [hz, hnx, hny] with z h0 h1 h2
+  simp only [Function.comp_apply, Pi.zero_apply, hWt, polyFn, map_sub, map_add, map_mul, map_pow,
+    MvPolynomial.aeval_C, eq_ratCast] at h0
+  simp only [polyFn] at h1 h2
+  rw [WeierstrassCurve.Affine.equation_iff]
+  simp only [ratFn, polyFn, WeierstrassCurve.Affine.baseChange, WeierstrassCurve.baseChange,
+    WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
+    WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, eq_ratCast]
+  field_simp
+  linear_combination h0
+
+/-- **The value of the leaf's `φ` at every `τ ∈ ℍ` is the center of `ord_τ`** (no junk values):
+`modPt_cases` for `(ratFn Px Qx, ratFn Py Qy)`. -/
+theorem modPt_plane_cases (E : WeierstrassCurve ℚ) [E.IsElliptic] {N : ℕ} [NeZero N]
+    (φ : E.toAffine.FunctionField →ₐ[ℚ] X0Field N) {Px Qx Py Qy : MvPolynomial (Fin 2) ℚ}
+    (hrx : IsRatRep N (φ (genX E) : LaurentSeries ℚ) Px Qx)
+    (hry : IsRatRep N (φ (genY E) : LaurentSeries ℚ) Py Qy) (τ : ℍ) :
+    (∃ (x₀ y₀ : ℂ) (h : (E⁄ℂ).Nonsingular x₀ y₀),
+        Tendsto (ratFn N Px Qx ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 x₀) ∧
+        Tendsto (ratFn N Py Qy ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 y₀) ∧
+        ZInQ.GZModuli.modPt E (ratFn N Px Qx) (ratFn N Py Qy) τ = .some x₀ y₀ h) ∨
+    (Tendsto (fun z => ‖ratFn N Px Qx (ofComplex z)‖) (𝓝[≠] (τ : ℂ)) atTop ∧
+        ZInQ.GZModuli.modPt E (ratFn N Px Qx) (ratFn N Py Qy) τ = 0) :=
+  modPt_cases E (meromorphic_ratFn N Px Qx τ) (meromorphic_ratFn N Py Qy τ)
+    (eventually_equation_ratFn φ hrx hry τ)
+
 end ZInQ.GZDict2
