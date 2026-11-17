@@ -12,7 +12,7 @@ uses, tex 2987–3002 (the derivative class `c_{I,a} = δ_a(C_π D_I y_{f n_I})`
 3111–3113.
 
 RC10 records the Kummer map as the interface `KummerSequence Γ P HV HE a` (file
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`, commit 7481834f): `δ_a : P → HV`,
+`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`): `δ_a : P → HV`,
 `j : HV → HE`, `δ_a` equivariant for the group `Γ`, `ker δ_a = 2^a P`, and `ker j = im δ_a`, with
 `P = E(F)`, `HV = H¹(F, E[2^a])`, `HE = H¹(F, E)` and `Γ = Gal(M_I/H_f)` (consumed by RC10's
 `H7_assembled`).  This file discharges that interface over genuine continuous cohomology:
@@ -37,21 +37,7 @@ theorems over genuine objects).
 namespace ZInQ.Contrib.CloudB3RC53.HeegnerCohomology
 
 open TauCeti.ContCohomology
-
-/-- Verbatim copy of `ZInQ.Manuscript.RC.HeegnerAlgebra.KummerSequence` (RC10,
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`, commit 7481834f).  `GLUE` (Kummer
-theory): the Kummer map `δ_a : E(F) → H¹(F, E[2^a])` of the multiplication-by-`2^a` sequence,
-Galois-equivariant, with kernel `2^a E(F)`, followed by `H¹(F, E[2^a]) → H¹(F, E)`, exact in the
-middle. -/
-structure KummerSequence (Γ P HV HE : Type*) [Group Γ] [AddCommGroup P] [AddCommGroup HV]
-    [AddCommGroup HE] [DistribMulAction Γ P] [DistribMulAction Γ HV] (a : ℕ) where
-  /-- the Kummer map `δ_a` -/
-  δ : P →+ HV
-  /-- `H¹(F, E[2^a]) → H¹(F, E)` -/
-  j : HV →+ HE
-  equivariant : ∀ γ : Γ, ∀ x, δ (γ • x) = γ • δ x
-  ker_δ : ∀ x, δ x = 0 ↔ ∃ y, x = ((2 : ℤ) ^ a) • y
-  exact : ∀ v, j v = 0 ↔ ∃ x, δ x = v
+open ZInQ.Manuscript.RC.HeegnerAlgebra (KummerSequence)
 
 section Conj
 

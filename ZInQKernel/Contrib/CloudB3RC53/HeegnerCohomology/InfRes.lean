@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.TauCeti.RepresentationTheory.Homological.ContCohomology.Transgression
 import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.GaloisCohomology.Coefficients
+import ZInQKernel.Contrib.OneProof.RC.HeegnerAlgebra.Interfaces
 
 /-!
 # HeegnerCohomology, part 1: the five-term sequence (H8) and the descent `d_a` (H9)
@@ -31,43 +32,14 @@ coefficients (the explicit low-degree model of Tau Ceti: `H1`, `H2`, `explicitIn
   ((H2) for `V_a^{G_M} = E(M)[2^a]`).  Status `PROVED` (from (H2), which is RC10's
   `H2_assembled`).
 
-To keep the result plug-compatible with RC10, the two structures `FiveTerm` and `InfResInput`
-are copied verbatim (Lean text unchanged) from the RC10 drafts at commit 7481834f; when the RC10
-files are on the base, these copies are deleted and the definitions below type-check against the
-originals unchanged.
+The constructions produce RC10's own structures `ZInQ.Manuscript.RC.HeegnerAlgebra.FiveTerm`
+and `ZInQ.Manuscript.RC.HeegnerAlgebra.InfResInput`.
 -/
 
 namespace ZInQ.Contrib.CloudB3RC53.HeegnerCohomology
 
 open TauCeti.ContCohomology
-
-/-! ## Verbatim copies of the RC10 interfaces (commit 7481834f) -/
-
-/-- Verbatim copy of `ZInQ.Manuscript.RC.HeegnerAlgebra.FiveTerm` (RC10,
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Descent.lean`, commit 7481834f).
-The five-term inflation–restriction sequence (H8) as exactness data:
-`0 → H¹(Γ, V^{G_M}) → H¹(B, V) → H¹(M, V)^Γ → H²(Γ, V^{G_M})`. -/
-structure FiveTerm (A B C D : Type*) [AddCommGroup A] [AddCommGroup B] [AddCommGroup C]
-    [AddCommGroup D] where
-  /-- inflation `H¹(Γ, V^{G_M}) → H¹(B, V)` -/
-  inf : A →+ B
-  /-- restriction `H¹(B, V) → H¹(M, V)^Γ` -/
-  res : B →+ C
-  /-- transgression `H¹(M, V)^Γ → H²(Γ, V^{G_M})` -/
-  tg : C →+ D
-  inf_injective : Function.Injective inf
-  exact_B : ∀ b, res b = 0 ↔ ∃ x, inf x = b
-  exact_C : ∀ c, tg c = 0 ↔ ∃ b, res b = c
-
-/-- Verbatim copy of `ZInQ.Manuscript.RC.HeegnerAlgebra.InfResInput` (RC10,
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`, commit 7481834f): the five-term
-sequence (H8) and the vanishing of multiplication by `2^e` on the outer groups. -/
-structure InfResInput (A B C D : Type*) [AddCommGroup A] [AddCommGroup B] [AddCommGroup C]
-    [AddCommGroup D] (e : ℕ) where
-  /-- the five-term sequence (H8) -/
-  seq : FiveTerm A B C D
-  killA : ∀ x : A, ((2 : ℤ) ^ e) • x = 0
-  killD : ∀ x : D, ((2 : ℤ) ^ e) • x = 0
+open ZInQ.Manuscript.RC.HeegnerAlgebra (FiveTerm InfResInput)
 
 /-! ## The genuine five-term sequence -/
 

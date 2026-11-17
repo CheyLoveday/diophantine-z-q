@@ -11,8 +11,8 @@ tex 3058–3086: "If a class `v ∈ H¹(F, B[2^a])` becomes Kummer over `F'`, it
 (H10)."
 
 RC10 records this as the interface `LocalDescentInput` (file
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`, commit 7481834f; the structure is
-copied verbatim below) and proves the diagram chase (`LocalDescentInput.kummer`).  Here every
+`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`, the structure is used
+directly) and proves the diagram chase (`LocalDescentInput.kummer`).  Here every
 field is constructed from genuine objects, for a topological group `G` (for `G_F`), a normal
 subgroup `N` (for `G_{F'}`), and a short exact sequence `0 → A → B → B → 0` of discrete
 `G`-modules with second map `2^a` (for `0 → E[2^a] → E → E → 0`):
@@ -29,29 +29,7 @@ subgroup `N` (for `G_{F'}`), and a short exact sequence `0 → A → B → B →
 namespace ZInQ.Contrib.CloudB3RC53.HeegnerCohomology
 
 open TauCeti.ContCohomology groupCohomology
-
-/-- Verbatim copy of `ZInQ.Manuscript.RC.HeegnerAlgebra.LocalDescentInput` (RC10,
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/Interfaces.lean`, commit 7481834f).
-`PRINT`/`GLUE` (H10), tex 3034–3062: for an unramified extension `F'/F` of local fields at an old
-place, the Kummer sequences over `F` and `F'`, restriction, inflation from
-`H¹(Gal(F'/F), B(F'))` onto the kernel of restriction, and `c_B H¹(Gal(F'/F), B(F')) = 0`. -/
-structure LocalDescentInput (Pt Pt' HV HV' HB HB' Hinf : Type*) [AddCommGroup Pt]
-    [AddCommGroup Pt'] [AddCommGroup HV] [AddCommGroup HV'] [AddCommGroup HB] [AddCommGroup HB']
-    [AddCommGroup Hinf] where
-  κ : Pt →+ HV
-  j : HV →+ HB
-  exK : ∀ v, j v = 0 → ∃ x, κ x = v
-  κ' : Pt' →+ HV'
-  j' : HV' →+ HB'
-  hκ' : ∀ x', j' (κ' x') = 0
-  res : HV →+ HV'
-  resB : HB →+ HB'
-  hcomm : ∀ v, j' (res v) = resB (j v)
-  infl : Hinf →+ HB
-  exInf : ∀ w, resB w = 0 → ∃ z, infl z = w
-  /-- the geometric component-group order `c_B` (or a common multiple `C_bad`) -/
-  cB : ℤ
-  hH10 : ∀ z : Hinf, cB • z = 0
+open ZInQ.Manuscript.RC.HeegnerAlgebra (LocalDescentInput)
 
 variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {A : Type*} [AddCommGroup A] [TopologicalSpace A] [DiscreteTopology A]
