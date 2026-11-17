@@ -1,7 +1,6 @@
 import ZInQKernel.HDecomp.Textbook.T10Etale
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.HodgeTateDecompOrH1
-import ZInQKernel.Contrib.OneProof.MumfordTorsionAlgClosed
 
 /-!
 # derham-scholze: `V_p(A)` is de Rham by Scholze's comparison (manuscript `lem:de-rham-descent`)
@@ -28,7 +27,7 @@ set_option warn.classDefReducibility false
 
 namespace DeRhamScholze
 
-open CategoryTheory AlgebraicGeometry Limits
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open ZInQ.Contrib.G9 ZInQ.Contrib.G9.PkgI4 ZInQ.Contrib.HodgeSplit Module
 open scoped TensorProduct
 
@@ -91,8 +90,6 @@ end Gal
 /-! ## §2. `D_dR` and its Hodge filtration -/
 
 section DR
-
-attribute [local instance] algPlus
 
 variable (p : ℕ) [Fact p.Prime] {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
 variable {W : Type*} [AddCommGroup W] [Module ℚ_[p] W]
@@ -170,8 +167,6 @@ def ScholzeDeRhamAlg : Prop :=
 
 section Transport
 
-attribute [local instance] algPlus
-
 variable (p : ℕ) [Fact p.Prime] {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
 variable {W W' : Type*} [AddCommGroup W] [Module ℚ_[p] W] [AddCommGroup W'] [Module ℚ_[p] W']
 variable {ρ : Field.absoluteGaloisGroup F → W →ₗ[ℚ_[p]] W} {ρ' : Field.absoluteGaloisGroup F → W' →ₗ[ℚ_[p]] W'}
@@ -184,10 +179,9 @@ theorem tEquiv_comm (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ'
     (y : BdR p ⊗[ℚ_[p]] W) :
     TensorProduct.map (drAct p (gfToGqp p F σ)) (ρ' σ) (tEquiv p e y) =
       tEquiv p e (TensorProduct.map (drAct p (gfToGqp p F σ)) (ρ σ) y) := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul b w => simp [he]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+  | add x y hx hy => simp only [map_add, hx, hy]
 
 theorem map_ddrFam (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' σ (e w)) :
     (ddrFam p ρ).map (tEquiv p e).toLinearMap = ddrFam p ρ' := by
@@ -197,7 +191,7 @@ theorem map_ddrFam (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' 
     change TensorProduct.map _ _ (tEquiv p e y) = tEquiv p e y
     rw [tEquiv_comm p e he, hy σ]
   · intro hz
-    refine ⟨(tEquiv p e).symm z, fun σ => ?_, by simp⟩
+    refine ⟨(tEquiv p e).symm z, fun σ => ?_, (tEquiv p e).apply_symm_apply z⟩
     apply (tEquiv p e).injective
     rw [← tEquiv_comm p e he, LinearEquiv.apply_symm_apply]
     exact hz σ
@@ -251,8 +245,7 @@ def dualBC (T : Type*) [AddCommGroup T] [Module ℤ_[p] T] [Module.Free ℤ_[p] 
 theorem dualBC_comm {T : Type*} [AddCommGroup T] [Module ℤ_[p] T] [Module.Free ℤ_[p] T] [Module.Finite ℤ_[p] T]
     (f : T →ₗ[ℤ_[p]] T) (y : ℚ_[p] ⊗[ℤ_[p]] Module.Dual ℤ_[p] T) :
     dualBC p T ((f.dualMap).baseChange ℚ_[p] y) = (f.baseChange ℚ_[p]).dualMap (dualBC p T y) := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a g =>
     apply (TensorProduct.isBaseChange ℤ_[p] T ℚ_[p]).algHom_ext
     intro t
@@ -262,7 +255,7 @@ theorem dualBC_comm {T : Type*} [AddCommGroup T] [Module ℤ_[p] T] [Module.Free
     rw [LinearMap.baseChange_tmul]
     erw [IsBaseChange.toDualBaseChange_tmul (TensorProduct.isBaseChange ℤ_[p] T ℚ_[p]) a g (f t)]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+  | add x y hx hy => simp only [map_add, hx, hy]
 
 end Milne
 
@@ -279,47 +272,68 @@ theorem evalEquiv_comm {F : Type*} [Field F] {V : Type*} [AddCommGroup V] [Modul
   ext f
   simp [Representation.dual_apply, Module.Dual.transpose_apply]
 
+/-- The Galois representation of pkg-I4's copy `A` is that of the kernel's copy `toKer A` (AbVarBC's
+`vToI4_galRep`, definitional). -/
+theorem galRep_apply_toKer {F : Type} [Field F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F)
+    (σ : Field.absoluteGaloisGroup F) (v : A.V p) :
+    A.galRep p σ v = ((DeRhamPrint.toKer A).galT (ℓ := p) σ).baseChange ℚ_[p] v :=
+  (ZInQ.Contrib.AbVarBC.vToI4_galRep p (DeRhamPrint.toKer A) σ v).trans rfl
+
+/-- `H¹(A_{F̄}, ℚ_p) ≅ V_p(A)^∨` from Milne's `ℤ_p`-isomorphism `φ : H¹(A_{F̄}, ℤ_p) ≅ Hom(T_p A, ℤ_p)`. -/
+def milneE {F : Type} [Field F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F)
+    [Module.Free ℤ_[p] ((DeRhamPrint.toKer A).T p)] [Module.Finite ℤ_[p] ((DeRhamPrint.toKer A).T p)]
+    (φ : ((DeRhamPrint.toKer A).baseChange (AlgebraicClosure F)).X.left.EllAdicCohomology p 1 ≃ₗ[ℤ_[p]]
+      Module.Dual ℤ_[p] ((DeRhamPrint.toKer A).T p)) :
+    HQ A.X p 1 ≃ₗ[ℚ_[p]] Module.Dual ℚ_[p] (A.V p) :=
+  (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ).trans (dualBC p ((DeRhamPrint.toKer A).T p))
+
+set_option maxHeartbeats 4000000 in
+theorem milneE_comm {F : Type} [Field F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F)
+    [Module.Free ℤ_[p] ((DeRhamPrint.toKer A).T p)] [Module.Finite ℤ_[p] ((DeRhamPrint.toKer A).T p)]
+    (φ : ((DeRhamPrint.toKer A).baseChange (AlgebraicClosure F)).X.left.EllAdicCohomology p 1 ≃ₗ[ℤ_[p]]
+      Module.Dual ℤ_[p] ((DeRhamPrint.toKer A).T p))
+    (hφ : ∀ (σ : Field.absoluteGaloisGroup F) x,
+      φ (T10Etale.galH (DeRhamPrint.toKer A) p σ x) = ((DeRhamPrint.toKer A).galT (ℓ := p) σ⁻¹).dualMap (φ x))
+    (σ : Field.absoluteGaloisGroup F) (w : HQ A.X p 1) :
+    milneE p A φ (rhoH A.X p 1 σ w) = (A.galRep p).dual σ (milneE p A φ w) := by
+  have hcomp : φ.toLinearMap ∘ₗ T10Etale.galH (DeRhamPrint.toKer A) p σ =
+      ((DeRhamPrint.toKer A).galT (ℓ := p) σ⁻¹).dualMap ∘ₗ φ.toLinearMap := LinearMap.ext (hφ σ)
+  have h1 : LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ (rhoH A.X p 1 σ w) =
+      ((((DeRhamPrint.toKer A).galT (ℓ := p) σ⁻¹).dualMap).baseChange ℚ_[p])
+        (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ w) := by
+    have h := LinearMap.congr_fun (congrArg (LinearMap.baseChange ℚ_[p]) hcomp) w
+    rw [LinearMap.baseChange_comp, LinearMap.baseChange_comp] at h
+    exact h
+  rw [show milneE p A φ (rhoH A.X p 1 σ w) =
+      dualBC p _ (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ (rhoH A.X p 1 σ w)) from rfl, h1, dualBC_comm]
+  refine LinearMap.ext fun v => ?_
+  rw [Representation.dual_apply, Module.Dual.transpose_apply, LinearMap.dualMap_apply]
+  erw [LinearMap.comp_apply, galRep_apply_toKer]
+
 /-- **Step C3, first paragraph and Milne's identification** (manuscript L10953-10972): for an abelian variety
 `A` over a finite `F/ℚ_p`, `V_p(A)^∨ ≅ H¹_ét(A_{F̄}, ℚ_p)` is de Rham, and its `D_dR` has Hodge jumps in `[0, 1]`. -/
-theorem dual_deRham_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+theorem dual_deRham_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) (hM : AvSplit.MumfordTorsionAlgClosed)
     (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) :
     IsDeRhamFam p (fun σ => (A.galRep p).dual σ) ∧ HodgeRange p (fun σ => (A.galRep p).dual σ) 1 := by
   have hp : (p : F) ≠ 0 := DeRhamPrint.natCast_p_ne_zero p F
-  obtain ⟨hfree, hfin, -⟩ := DeRhamPrint.tateModuleFree_of_mumford ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof F
-    (DeRhamPrint.toKer A) p hp
+  obtain ⟨hfree, hfin, -⟩ := DeRhamPrint.tateModuleFree_of_mumford hM F (DeRhamPrint.toKer A) p hp
   obtain ⟨φ, hφ⟩ := hT F (DeRhamPrint.toKer A) p hp
-  let e : HQ A.X p 1 ≃ₗ[ℚ_[p]] Module.Dual ℚ_[p] (A.V p) :=
-    (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ).trans (dualBC p ((DeRhamPrint.toKer A).T p))
-  have he : ∀ σ w, e (rhoH A.X p 1 σ w) = (A.galRep p).dual σ (e w) := by
-    intro σ w
-    have h1 : LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ (rhoH A.X p 1 σ w) =
-        ((((DeRhamPrint.toKer A).galT (ℓ := p) σ⁻¹).dualMap).baseChange ℚ_[p])
-          (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ w) := by
-      induction w using TensorProduct.induction_on with
-      | zero => simp
-      | tmul a h =>
-        change a ⊗ₜ φ (T10Etale.galH (DeRhamPrint.toKer A) p σ h) = _
-        rw [hφ σ h]
-        rfl
-      | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
-    change dualBC p _ (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ (rhoH A.X p 1 σ w)) = _
-    rw [h1, dualBC_comm]
-    rfl
   haveI : IsProper A.X.hom := A.proper
   haveI : Smooth A.X.hom := A.smooth
   obtain ⟨h1, h2⟩ := hS p F A.X 1
-  exact ⟨isDeRhamFam_of_equiv p e he h1, hodgeRange_of_equiv p e he 1 h2⟩
+  exact ⟨isDeRhamFam_of_equiv p (milneE p A φ) (milneE_comm p A φ hφ) h1,
+    hodgeRange_of_equiv p (milneE p A φ) (milneE_comm p A φ hφ) 1 h2⟩
 
 /-- **`V_p(A)` is de Rham** (manuscript L10966-10974: Milne's identification, then closure under duals,
 Brinon–Conrad 5.2.1 and 6.3.3; here the duality is `DeRhamPrint.isDeRhamTensorOver_dual`, proved from `B_dR` a
 field and `B_dR^{G_F} = F`, `bdRInvariantsPrinted_proof`). -/
-theorem isDeRhamTensorOver_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+theorem isDeRhamTensorOver_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) (hM : AvSplit.MumfordTorsionAlgClosed)
     (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) :
     IsDeRhamTensorOver p (A.galRep p) := by
-  obtain ⟨⟨-, hD⟩, -⟩ := dual_deRham_of_scholze p hS hT F A
+  obtain ⟨⟨-, hD⟩, -⟩ := dual_deRham_of_scholze p hS hT hM F A
   obtain ⟨g, hg⟩ := dim_finite_I4 A
   haveI := (DeRhamPrint.finrank_V_of_tateModuleFree p (DeRhamPrint.tateModuleFree_of_mumford
-    ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof) (DeRhamPrint.natCast_p_ne_zero p F) A g hg).1
+    hM) (DeRhamPrint.natCast_p_ne_zero p F) A g hg).1
   have hDD : IsDeRhamTensorOver p (A.galRep p).dual.dual :=
     DeRhamPrint.isDeRhamTensorOver_dual p (BdRInv.bdRInvariantsPrinted_proof p F) _ hD
   have hfam : IsDeRhamFam p (fun σ => (A.galRep p).dual.dual σ) := ⟨inferInstance, hDD⟩
@@ -334,43 +348,45 @@ end Main
 
 /-- **The research field `deRhamVpAbVarDirect`** (Berger's form, `DeRhamPrintDirect.lean`) from the manuscript's
 route: Scholze's comparison (`ScholzeDeRhamAlg`) and Milne's identification (`T10_TateDuality`). -/
-theorem deRhamVpAbVarDirect_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) :
+theorem deRhamVpAbVarDirect_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (hM : AvSplit.MumfordTorsionAlgClosed) :
     DeRhamPrint.Direct.DeRhamVpAbVarDirect :=
   fun p _ F _ _ _ A => (DeRhamPrint.Direct.isDeRhamTensorOver_iff p (A.galRep p)).mp
-    (isDeRhamTensorOver_of_scholze p hS hT F A)
+    (isDeRhamTensorOver_of_scholze p hS hT hM F A)
 
 /-! ## §7. The Hodge–Tate row: weights read off the filtered de Rham comparison -/
 
 /-- **GLUE (on-the-spot: the manuscript's "Consequently the Tate module has weights 0,0,−1,−1", L10995-10996;
 Fontaine's theorem that a de Rham representation is Hodge–Tate with `gr D_dR ≅ D_HT`).** A finite-dimensional
 de Rham representation `W` of `G_F` whose Hodge filtration has its jumps in `[0, 1]` (`HodgeRange … 1`) is
-Hodge–Tate with weights in `{0, 1}` (cohomological convention): `ℂ_p ⊗ W ≅ ℂ_p^a ⊕ ℂ_p(−1)^b`, `G_F`-equivariantly.
+Hodge–Tate with weights in `{0, 1}` (cohomological convention). Stated for `W = V^∨` in the Hom form:
+`Hom_{ℚ_p}(V, ℂ_p) ≅ ℂ_p^a ⊕ ℂ_p(−1)^b`, `G_F`-equivariantly (`G_F` acting by `f ↦ σ ∘ f ∘ ρ(σ)⁻¹`; this is
+`ℂ_p ⊗ V^∨` for finite-dimensional `V`, htdecomp-or's `thetaEquiv`).
 Proof sketch (report §4): `gr^j D_dR(W) ↪ (ℂ_p(j) ⊗ W)^{G_F}` (`gr^j B_dR ≅ ℂ_p(j)`), so `Σ_j dim_F (ℂ_p(j) ⊗ W)^{G_F}
 ≥ dim_F D_dR = dim W`; Tate's theorem gives `≤` and the injectivity of `⊕_j ℂ_p(−j) ⊗_F (ℂ_p(j) ⊗ W)^{G_F} → ℂ_p ⊗ W`,
 hence an isomorphism, with only `j ∈ {0, 1}` occurring. -/
 def DeRhamHodgeTate01 : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
-    (W : Type) [AddCommGroup W] [Module ℚ_[p] W] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) W),
-    IsDeRhamFam p (fun σ => ρ σ) → HodgeRange p (fun σ => ρ σ) 1 →
-    ∃ (a b : ℕ) (e : ℂ_[p] ⊗[ℚ_[p]] W ≃ₗ[ℂ_[p]] (Fin a → ℂ_[p]) × (Fin b → ℂ_[p])),
-      ∀ (σ : Field.absoluteGaloisGroup F) (x : ℂ_[p] ⊗[ℚ_[p]] W),
-        e (TensorProduct.map (cpLin p (gfToGqp p F σ)) (ρ σ) x) =
-          ((fun k => cpAct p (gfToGqp p F σ) ((e x).1 k)),
-            (fun k => cycPow p (gfToGqp p F σ) (-1) • cpAct p (gfToGqp p F σ) ((e x).2 k)))
+    (V : Type) [AddCommGroup V] [Module ℚ_[p] V] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V),
+    IsDeRhamFam p (fun σ => ρ.dual σ) → HodgeRange p (fun σ => ρ.dual σ) 1 →
+    ∃ (a b : ℕ) (e : (V →ₗ[ℚ_[p]] ℂ_[p]) ≃ₗ[ℂ_[p]] (Fin a → ℂ_[p]) × (Fin b → ℂ_[p])),
+      ∀ (σ : Field.absoluteGaloisGroup F) (f : V →ₗ[ℚ_[p]] ℂ_[p]),
+        e (cpLin p (gfToGqp p F σ) ∘ₗ f ∘ₗ ρ σ⁻¹) =
+          ((fun k => cpAct p (gfToGqp p F σ) ((e f).1 k)),
+            (fun k => cycPow p (gfToGqp p F σ) (-1) • cpAct p (gfToGqp p F σ) ((e f).2 k)))
 
-/-- **The Hodge–Tate decomposition of `H¹_ét(A_{F̄}, ℚ_p) = V_p(A)^∨`** (htdecomp-or's `HodgeTateDecompH1`) from
-Scholze's comparison, Milne's identification and `DeRhamHodgeTate01`. -/
-theorem hodgeTateDecompH1_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
-    (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompH1 := by
+/-- **The Hodge–Tate decomposition of `V_p(A)`, Hom form** (htdecomp-or's `HodgeTateDecompHom`) from Scholze's
+comparison, Milne's identification and `DeRhamHodgeTate01`. -/
+theorem hodgeTateDecompHom_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompHom := by
   intro p _ F _ _ _ A
-  obtain ⟨h1, h2⟩ := dual_deRham_of_scholze p hS hT F A
-  obtain ⟨a, b, e, he⟩ := hW p F (Module.Dual ℚ_[p] (A.V p)) (A.galRep p).dual h1 h2
-  exact ⟨a, b, e, fun σ x => he σ x⟩
+  obtain ⟨h1, h2⟩ := dual_deRham_of_scholze p hS hT hM F A
+  exact hW p F (A.V p) (A.galRep p) h1 h2
 
 /-- **The research field `hodgeTateDecompOr`** from the manuscript's route. -/
 theorem hodgeTateDecompOr_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
-    (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr :=
-  ZInQ.Contrib.HodgeTateOr.or_of_h1 (hodgeTateDecompH1_of_scholze hS hT hW)
+    (hM : AvSplit.MumfordTorsionAlgClosed) (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr :=
+  ZInQ.Contrib.HodgeTateOr.or_of_hom (hodgeTateDecompHom_of_scholze hS hT hM hW)
 
 end
 

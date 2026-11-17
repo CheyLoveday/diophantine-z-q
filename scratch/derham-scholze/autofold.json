@@ -1,0 +1,24 @@
+{"name": "derham-scholze",
+ "imports": ["ZInQKernel.Contrib.OneProof.DeRhamScholze"],
+ "discharges": [
+  {"field": "deRhamVpAbVarDirect",
+   "proof": "_root_.DeRhamScholze.deRhamVpAbVarDirect_of_leaves {n}.scholzeDeRhamAlg {n}.t10TateDuality",
+   "leaves": [
+    {"name": "scholzeDeRhamAlg", "type": "_root_.DeRhamScholze.ScholzeDeRhamAlg",
+     "doc": "Scholze, p-adic Hodge theory for rigid-analytic varieties, Forum Math. Pi 1 (2013), Cor. 1.8 with Thms 9.1 and 9.3 and the corrigendum Forum Math. Pi 4 (2016) e6, applied as in diophantine_zq.tex lem:de-rham-descent L10953-10965 (step C3): for F finite over Q_p and X proper smooth over F, H^i_et(X_Fbar, Q_p) is de Rham and the Hodge filtration of D_dR has its jumps in [0, i] (the filtered comparison D_dR = H^i_dR(X) with Fil^0 H^i_dR = H^i_dR, Fil^{i+1} = 0). Lean form: H^i = Q_p (x)_{Z_p} Scheme.EllAdicCohomology (X x_F Spec Fbar) p i (Mathlib's pro-etale l-adic cohomology), sigma acting by transport along 1 x Spec(sigma^-1) (DeRhamScholze.galHX = t10-etale's galH); D_dR = (B_dR (x) W)^{G_F}, Fil^j = D_dR meet (t^j B_dR^+ (x) W). Consequence, not printed form: the print is for rigid-analytic varieties (not in Mathlib); dictionary steps analytification + Thms 9.1/9.3 (in the manuscript), Fbar vs C_p and pro-etale vs etale (on-the-spot, derham-scholze report section 3)",
+     "kind": "consequence",
+     "flag": "pending review: new leaf (derham-scholze), consequence of Scholze 2013 Cor. 1.8 + Thms 9.1, 9.3 (the manuscript's own citation for step C3) over Mathlib's pro-etale l-adic cohomology; journal numbering of Scholze UNVERIFIED here (arXiv v2 and journal locators read by the locator audit, locators.md R10)",
+     "source": "Scholze, Forum Math. Pi 1 (2013), Cor. 1.8, Thms 9.1, 9.3, corrigendum Forum Math. Pi 4 (2016) e6 (manuscript lem:de-rham-descent, L10953-10965): H^i_et(X_Fbar, Q_p) de Rham with Hodge jumps in [0, i], over Mathlib's EllAdicCohomology (derham-scholze)"},
+    {"name": "t10TateDuality", "type": "_root_.T10Etale.T10_TateDuality",
+     "doc": "Milne, Abelian varieties, v2.00 (2008), Part I, Thm 12.1(a), as the manuscript cites it (lem:de-rham-descent L10966-10970; unrefereed notes, h-trust C3); refereed form Milne 1986 (Cornell-Silverman) Thm 15.1(a): H^1(A_Kbar, Z_l) = Hom(T_l A, Z_l), Galois-equivariantly, over Mathlib's pro-etale EllAdicCohomology (t10-etale's leaf T10Etale.T10_TateDuality, unchanged)",
+     "kind": "published",
+     "flag": "unread: t10-etale's leaf reused (av-b2 section 2.6: leaf, confirmed); Milne v2.00 Part I Thm 12.1(a) and Milne 1986 Thm 15.1(a) not read here; equivariance from canonicity and the pro-etale/etale comparison (Bhatt-Scholze 2015 section 5.6) are dictionary steps; locator UNVERIFIED",
+     "source": "Milne, Abelian varieties v2.00 Part I Thm 12.1(a) (manuscript's citation) / Milne 1986 Thm 15.1(a): V_l(A) = H^1_et(A_Kbar, Q_l)^dual, Galois-equivariantly, over Mathlib's pro-etale l-adic cohomology (T10Etale.T10_TateDuality)"}]},
+  {"field": "hodgeTateDecompOr",
+   "proof": "_root_.DeRhamScholze.hodgeTateDecompOr_of_leaves {n}.scholzeDeRhamAlg {n}.t10TateDuality {n}.deRhamHodgeTate01",
+   "leaves": [
+    {"name": "deRhamHodgeTate01", "type": "_root_.DeRhamScholze.DeRhamHodgeTate01",
+     "doc": "GLUE (on-the-spot; the manuscript's 'Consequently the Tate module has weights 0,0,-1,-1', lem:de-rham-descent L10995-10996): a finite-dimensional de Rham representation of G_F whose Hodge filtration has its jumps in [0, 1] is Hodge-Tate with weights in {0, 1}: C_p (x) W = C_p^a + C_p(-1)^b, G_F-equivariantly (Fontaine: de Rham implies Hodge-Tate with gr D_dR = D_HT). Proof sketch in docs/research/derham-scholze.md section 4",
+     "kind": "consequence",
+     "flag": "pending review: on-the-spot glue (derham-scholze), Fontaine's de Rham => Hodge-Tate with jumps in [0, 1]; not cited at this step by the manuscript; not proved in Lean",
+     "source": "on-the-spot glue for lem:de-rham-descent L10995-10996 (weights read off the filtered de Rham comparison): de Rham with Hodge jumps in [0,1] => C_p (x) W = C_p^a + C_p(-1)^b (derham-scholze)"}]}]}
