@@ -109,3 +109,5 @@ end HDec
 
 #print axioms HDec.HSyn.sixContactMin_of_open56
 
+
+#print axioms HDec.HSyn.sixContactMin_of_open56

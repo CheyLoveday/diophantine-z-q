@@ -49,7 +49,9 @@ It runs `CarayolDDT31 → CarayolThmAIrrDDT` (this task) `→ CarayolThmAIrr` (c
 CarayolThmA` (r17-rebase, Burnside). A variant `CarayolDDT31Cond` states the conductor as `condExp`;
 `carayolDDT31_iff_cond` proves the two variants equivalent.
 
-* **`#discharges` against main** (TailZ62, `OpenResearchLeaves38`): see §3.
+* **`#discharges` against main** (TailZ62, `OpenResearchLeaves38`): `DISCHARGES [OpenResearchLeaves38.carayolThmA] by
+  CarayolDDT.carayolThmA_of_DDT31`, still assuming `[CarayolDDT.CarayolDDT31]`, with axioms `[propext,
+  Classical.choice, Quot.sound]` (§3).
 * **Fold dry run**, on main's `kinds.tsv`: `strict count: 16/18 on 34 -> 17/17 on 34; strictest 16/18 -> 17/17`,
   so **GLUE −1** for `carayolThmA` (now `consequence`, GLUE/GLUE), with the leaf flagged `unread`.
 
@@ -121,7 +123,23 @@ the kit prescribes), with the clause-level items for the statement check in the 
 
 ## 3. `#discharges` (VERIFIED, `scratch/carirr-odd/discharges.txt`)
 
-PENDING
+Build: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
++ZInQKernel.Contrib.OneProof.CarayolDDTOdd` succeeded with 14276 jobs (`build-main.txt`). It reports
+`frozenTarget` on the standard axioms. Then:
+
+```
+DISCHARGES [OpenResearchLeaves38.carayolThmA] by CarayolDDT.carayolThmA_of_DDT31
+  still assumes: [CarayolDDT.CarayolDDT31]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves38.carayolThmA] by CarayolDDT.carayolThmA_of_DDT31Cond
+  still assumes: [CarayolDDT.CarayolDDT31Cond]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves38.carayolThmA] by CarayolPrinted.carayolThmA_of_irr
+  still assumes: [CarayolPrinted.CarayolThmAIrr]
+  axioms: [propext, Classical.choice, Quot.sound]
+```
+
+The remaining lines of the output concern other tasks' contributions already on main.
 
 ## 4. The fold
 
@@ -137,7 +155,7 @@ Dry runs on main's `kinds.tsv`, both VERIFIED (`autofold-dryrun.txt`, `autofold-
 
 | spec | leaf | strict | strictest | module |
 | --- | --- | --- | --- | --- |
-| `autofold.json` (recommended, needs carayol-herbrand's `CarayolHerbrand.lean`) | `carayolDDT31` (published, unread) | 16/18 on 34 → **17/17 on 34** | 16/18 → **17/17** | PENDING |
+| `autofold.json` (recommended, needs carayol-herbrand's `CarayolHerbrand.lean`) | `carayolDDT31` (published, unread) | 16/18 on 34 → **17/17 on 34** | 16/18 → **17/17** | compiles: `sixContactMin_of_open56` on the standard axioms (`AutofoldDryRun.lean`, `autofold-dryrun-compile.txt`) |
 | `autofold-cond.json` (conductor as `condExp`) | `carayolDDT31Cond` (published, unread) | 16/18 → 17/17 | 16/18 → 17/17 | (same shape) |
 
 The recommended spec makes `carayolThmA` a direct instance of DDT 3.1, which gives the target **GLUE −1**. It
@@ -175,6 +193,6 @@ Fold recipe:
 * `scratch/carirr-odd/`:
   * `Odd1.lean` (the first compiled draft of the lemmas);
   * `Axioms.lean`, `axioms.txt`;
-  * `Discharges.lean`, `discharges.txt`;
+  * `Discharges.lean`, `discharges.txt`, `build-main.txt`;
   * `autofold.json`, `autofold-cond.json` and their dry runs, `AutofoldDryRun.lean` and its compile output;
   * `log.md`.

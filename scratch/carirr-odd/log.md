@@ -13,3 +13,14 @@
   `DSCoeffExt.mem_fieldRange_of_isIntegral`.
 - COMPILED scratch/carirr-odd/Odd1.lean (6 s, no errors): cycN, cycL, exists_complexConj, cycL_eq_neg_one,
   cycN_eq_neg_one, chi_neg_one_eq_one, irreducible_of_absIrreducible, padicInt_ringHom_ext.
+- COMPILED ZInQKernel/Contrib/OneProof/CarayolDDTOdd.lean (lake build OK, no warnings from the file). Axioms of all 13
+  declarations standard (axioms.txt). Leaves: CarayolDDT.CarayolDDT31 (absolutely irreducible over
+  AlgebraicClosure K_λ; ∃ continuous ι : ℤ_ℓ → K_λ with det ρ(σ) = ψ(cycN σ)·ι(cycL σ) where ψ(cycN σ) ∈ K_f;
+  unramified/trace; DDT-integral conductor), CarayolDDT31Cond (condExp conductor). carayolDDT31_iff_cond proved.
+- autofold dry runs (autofold.json, autofold-cond.json; field carayolThmA): strict 16/18 on 34 -> 17/17 on 34,
+  strictest 16/18 -> 17/17.
+- COMPILED lake build +OneProof.Main +OneProof.Discharges +CarayolDDTOdd: 14276 jobs OK (build-main.txt; first attempt
+  stopped by the harness's background time limit, rerun resumed).
+- #discharges (discharges.txt): DISCHARGES [OpenResearchLeaves38.carayolThmA] by CarayolDDT.carayolThmA_of_DDT31,
+  still assumes [CarayolDDT.CarayolDDT31], standard axioms; same for ..._of_DDT31Cond.
+- COMPILED AutofoldDryRun.lean (dry-run output minus line 1): sixContactMin_of_open56 standard axioms.
