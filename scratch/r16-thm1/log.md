@@ -31,3 +31,8 @@
 - FoldCheck.lean (dry-run module, line 1 stripped): compiles; sixContactMin_of_open68 standard axioms.
 - #discharges (DischargesCheck-output.txt): afShimura by R16Thm1.afShimura_of_shimura73 (still assumes
   ShimuraThm1Printed, ShimuraQuotientIsAf); heckeJ1DS by R16Thm1.heckeJ1DS_of_bSh (still assumes BShStandardModel).
+
+## kinds rows (VERIFIED, 11:15): real autofold on a git-archive copy in /tmp (worktree untouched); diff in
+  kinds-diff.txt: -afShimura, -heckeJ1DS, +bShStandardModel, +shimuraQuotientIsAf, +shimuraThm1Printed (all GLUE).
+  render_open --check there: only "OpenStatements not regenerated" (needs Lean build).
+## Report docs/research/r16-thm1.md written (Manuscript check, Known issues incl. Shimura misprint a_n^sigma f).
