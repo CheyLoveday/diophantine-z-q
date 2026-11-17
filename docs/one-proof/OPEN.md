@@ -20,7 +20,7 @@ removes it. See
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: consequence 17, published 12.
+* By kind: consequence 18, published 11.
 
 ## Kernel-wide readings
 
@@ -60,7 +60,7 @@ Readings that apply to every statement built on a shared kernel definition.
 * [`r9a`](#r9a): a good first target; published, tier T4, [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * [`dsThm965Printed`](#dsthm965printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * [`dsThm966Printed`](#dsthm966printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
-* [`faltingsSemistableHeightBC`](#faltingssemistableheightbc): a good first target; published, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
+* [`faltingsSemistableHeightBC`](#faltingssemistableheightbc): a good first target; consequence, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * [`silverbergZarhinThm35`](#silverbergzarhinthm35): a good first target; published, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 
 ## Held
@@ -141,7 +141,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`dsThm965Printed`](#dsthm965printed) | research | published | GLUE | unread, unverified-locator | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`elkiesX6StarEveryIdeal`](#elkiesx6stareveryideal) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`faltingsSemistableHeightBC`](#faltingssemistableheightbc) | research | published | GLUE | pending-reading | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`faltingsSemistableHeightBC`](#faltingssemistableheightbc) | research | consequence | GLUE | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`gaudronRemondSec9LowerAnSS`](#gaudronremondsec9loweranss) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`gaudronRemondThm14AnSS`](#gaudronremondthm14anss) | research | published | GLUE | pending-review | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`gonzalezRotgerThm512X6RCF`](#gonzalezrotgerthm512x6rcf) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
@@ -295,8 +295,8 @@ X6ALIdeal.ElkiesX6StarEveryIdeal
 
 ### faltingsSemistableHeightBC
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves58.faltingsSemistableHeightBC`; kind **published**, strict **GLUE**; flag: pending reading: Faltings 1983 section 1 not read by this task (no network access): the statement 'the height of a semistable abelian variety is invariant under finite extension' is recalled, with the locator (section 1, page) UNVERIFIED; the print gives it with SGA 7 IX 3.3 as the reason; stated over the kernel's GroupModel.height and height-split's IsSemistable.
-* Source: Faltings, Invent. Math. 73 (1983), 349-366, section 1 (locator UNVERIFIED; bibliography faltings1983, diophantine_zq.tex L11084-11086; the manuscript cites the paper at L621 and L733, and uses this statement uncited at L596-598); ZInQ.SSFaltings.FaltingsSemistableHeightBC; ss-faltings
+* Bundle field `HDec.HSyn.OpenResearchLeaves58.faltingsSemistableHeightBC`; kind **consequence**, strict **GLUE**; flag: Faltings 1983 §3 p. 354 (invariance of h of a semiabelian scheme under extension of the base field; AI page read 11-17; also p. 351 Bem. b), p. 350 Lemma 1); deciding step: the leaf is stated for the Neron model, which needs N'^0 = (N^0)_{R'} under semistability (SGA 7 IX Cor. 3.3 / BLR 7.4/3; neither cited in the manuscript); height normalization matches GroupModel.height up to definitional steps (metric (i/2)^g, p. 351).
+* Source: Faltings, Invent. Math. 73 (1983), 349-366, §3, p. 354 (bibliography faltings1983, diophantine_zq.tex L11084-11086; the manuscript cites the paper at L621 and L733, and uses this statement uncited at L596-598); ZInQ.SSFaltings.FaltingsSemistableHeightBC; ss-faltings
 * label good-first (a good first target); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
 * Status: open.
@@ -305,7 +305,7 @@ X6ALIdeal.ElkiesX6StarEveryIdeal
 ZInQ.SSFaltings.FaltingsSemistableHeightBC
 ```
 
-> Faltings, Endlichkeitssaetze fuer abelsche Varietaeten ueber Zahlkoerpern, Invent. Math. 73 (1983), 349-366 (bibliography faltings1983, diophantine_zq.tex L11084-11086), section 1 (locator UNVERIFIED, pending reading): the height of an abelian variety with semistable reduction everywhere does not change under finite extension of the ground field. Stated over the kernel's objects (ZInQ.SSFaltings.FaltingsSemistableHeightBC): if the Neron model N of A_L over O_L is semistable (height-split's IsSemistable), the Neron model N' of A_{L'} for L'/L finite has N'.height = N.height (metrized Hodge line, Faltings' normalization (i/2)^g, degree normalized). The manuscript uses it uncited at L596-598 ('This extension does not change its stable Faltings height') and throughout through the stable height (L598, L876). A consequence of SS2 (faltingsSemistableHeightBC_of_ss2). With Raynaud's criterion (SemistableReductionThmIF, proved) it gives the height rows R18, R19, R21, R22, StableHeightFinite and R20's lower half (Contrib/OneProof/SSFaltings.lean) in place of SGA 7 IX Cor. 3.3 (ss-faltings).
+> Faltings, Endlichkeitssaetze fuer abelsche Varietaeten ueber Zahlkoerpern, Invent. Math. 73 (1983), 349-366 (bibliography faltings1983, diophantine_zq.tex L11084-11086), §3, p. 354 (page read 11-17): the height of a semiabelian scheme does not change under extension of the base field; read for Neron models, which needs N'^0 = (N^0)_{R'} under semistability (SGA 7 IX Cor. 3.3 / BLR 7.4/3, cited neither there nor in the manuscript; that content is part of this leaf). Stated over the kernel's objects (ZInQ.SSFaltings.FaltingsSemistableHeightBC): if the Neron model N of A_L over O_L is semistable (height-split's IsSemistable), the Neron model N' of A_{L'} for L'/L finite has N'.height = N.height (metrized Hodge line, Faltings' normalization (i/2)^g, degree normalized). The manuscript uses it uncited at L596-598 ('This extension does not change its stable Faltings height') and throughout through the stable height (L598, L876). A consequence of SS2 (faltingsSemistableHeightBC_of_ss2). With Raynaud's criterion (SemistableReductionThmIF, proved) it gives the height rows R18, R19, R21, R22, StableHeightFinite and R20's lower half (Contrib/OneProof/SSFaltings.lean) in place of SGA 7 IX Cor. 3.3 (ss-faltings).
 
 ### gaudronRemondSec9LowerAnSS
 

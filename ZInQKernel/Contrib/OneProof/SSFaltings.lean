@@ -11,8 +11,9 @@ proof `GapNeron.ss1_ss3_of_cpNF` uses persistence twice). Their readers are the 
 
 * SS2 only through `stableFaltingsHeight_eq_of_semistable` (TailY): the kernel's stable height is the height of any
   semistable Néron model. That needs only the **invariance of the height of a semistable Néron model under finite
-  extension**, which is Faltings' statement (Faltings 1983 §1; the manuscript uses it uncited at
-  diophantine_zq.tex L596-598): the leaf `FaltingsSemistableHeightBC` (§1), weaker than SS2
+  extension**, which is Faltings' statement for semiabelian schemes (Faltings 1983 §3, p. 354; the manuscript
+  uses it uncited at diophantine_zq.tex L596-598) read for Néron models: the leaf
+  `FaltingsSemistableHeightBC` (§1 of this file), weaker than SS2
   (`faltingsSemistableHeightBC_of_ss2`);
 * SS1 and SS3 only to find, for two abelian varieties, one field over which both are semistable (`r20Lower`), or one
   semistable field (identification). Raynaud's criterion (the bundle's Raynaud leaf, Silverberg–Zarhin Thm 3.5 as
@@ -31,12 +32,17 @@ open NumberField ZInQ.DefFaltings ZInQ.H5Neron ZInQ.HeightSplit
 
 /-! ## §1. The leaf: Faltings' invariance of the semistable height -/
 
-/-- **Leaf (Faltings 1983 §1; locator UNVERIFIED, pending reading).** If `A_L` has semistable reduction everywhere
+/-- **Leaf (Faltings 1983 §3, p. 354; page read 11-17 by the reading desk).** If `A_L` has semistable reduction
+everywhere
 (its Néron model `𝒩` over `𝓞_L` is semistable, height-split's `IsSemistable`), then for every finite extension `L'/L`
 the Néron model `𝒩'` of `A_{L'}` has the same height (the kernel's `GroupModel.height`: the metrized Hodge line
-`⋀^g ω`, metric `(i/2)^g ∫ η ∧ η̄`, degree normalized by `[L:ℚ]`, Faltings' normalization). Faltings states that
-the height of a semistable abelian variety does not change under finite extension of the ground field (the reason he
-gives is SGA 7 IX 3.3; the statement, not its proof, is the leaf). The manuscript uses it uncited at
+`⋀^g ω`, metric `(i/2)^g ∫ η ∧ η̄`, degree normalized by `[L:ℚ]`, Faltings' normalization, p. 351). Faltings
+prints, for a semiabelian scheme over the ring of integers, that its height is invariant under extension of the
+base field (§3, p. 354, without a citation; see also p. 351 Bem. b) and p. 350 Lemma 1). The leaf is stated for
+the Néron models `𝒩`, `𝒩'`, assuming semistability only of `𝒩`; linking it to the print needs
+`𝒩'^0 ≅ (𝒩^0)_{𝓞_{L'}}` under semistability, which is SGA 7 IX Cor. 3.3 (or BLR 7.4/3), cited neither by
+Faltings there nor by the manuscript: that content is part of this leaf (consequence, GLUE).
+The manuscript uses it uncited at
 diophantine_zq.tex L596-598 and cites Faltings 1983 (bibitem `faltings1983`, L11084-11086) at L621 and L733. Weaker
 than SS2 (`faltingsSemistableHeightBC_of_ss2`). -/
 def FaltingsSemistableHeightBC : Prop :=
