@@ -1,4 +1,6 @@
 import ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic
+import ZInQKernel.Contrib.OneProof.Gamma0QExpansion
+import ZInQKernel.Contrib.OneProof.EtaW32Character
 
 noncomputable section
 
@@ -402,5 +404,77 @@ theorem isOptimalParam_congr {N : ℕ} [NeZero N] {f : Newform N 2} {E : Weierst
     {X Y X' Y' : ℍ → ℂ} (h : ∀ τ, ZInQ.GZModuli.modPt E X Y τ = ZInQ.GZModuli.modPt E X' Y' τ) :
     ZInQ.GZOptimal.IsOptimalParam N f E X Y ↔ ZInQ.GZOptimal.IsOptimalParam N f E X' Y' := by
   simp only [ZInQ.GZOptimal.IsOptimalParam, h]
+
+
+/-! ## §6. The leaf with `φ` read on the plane model, and the bridge -/
+
+open scoped WeierstrassCurve.Affine in
+/-- **The Gross–Zagier formula for the strong Weil parametrization, `φ` over `ℚ(X₀(N)) = ℚ(j, j_N)`
+and its values read on the plane model (Gross–Zagier 1986, Thm I.6.3 and Ch. V Thm 2.1; positive
+constant forgotten).** As `GZAlg.GrossZagierAlgOptAt E`, except that the auxiliary functions `X, Y`
+on `ℍ` are gone: the value of `φ` at `τ ∈ ℍ` is that of the rational map `(Px/Qx, Py/Qy)`
+representing `φ^*(x), φ^*(y) ∈ ℚ(j, j_N)` at the point `(j(τ), j(Nτ))` of the plane model
+`Φ_N(X, Y) = 0` (with limits at the finitely many points of indeterminacy near `τ`: `modPt`). Every
+representation is allowed (they give the same point: `modPt_eq_ratFn`).
+
+Source: B. Gross, D. Zagier, *Heegner points and derivatives of L-series*, Invent. Math. 84
+(1986), 225–320, Thm I.6.3 and Ch. V Thm 2.1 (locators and the exact hypotheses on `φ` UNVERIFIED:
+no copy on this host). -/
+def GrossZagierPlaneOptAt (E : WeierstrassCurve ℚ) : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2), f.χ = 1 →
+    (∀ n : ℕ, n ≠ 0 → ZInQ.GZDecomp.coeff f n = (E.LFunction n : ℂ)) →
+    ∀ φ : E.toAffine.FunctionField →ₐ[ℚ] X0Field N,
+    ((φ (genX E) : LaurentSeries ℚ)).order < 0 →
+    ∀ Px Qx Py Qy : MvPolynomial (Fin 2) ℚ,
+    IsRatRep N (φ (genX E) : LaurentSeries ℚ) Px Qx →
+    IsRatRep N (φ (genY E) : LaurentSeries ℚ) Py Qy →
+    ZInQ.GZOptimal.IsOptimalParam N f E (ratFn N Px Qx) (ratFn N Py Qy) →
+    ∀ D β : ℤ, ZInQ.GZDecomp.IsOddImagFundDisc D → D < -4 → ZInQ.GZDecomp.HeegnerHyp N D →
+    (4 * N : ℤ) ∣ D - β ^ 2 →
+    ∀ (R : Type) [Fintype R] (τ : R → ℍ), ZInQ.GZModuli.IsHeegnerPointReps N D β τ →
+    ∀ (K : Type) [Field K] [NumberField K] [DecidableEq K], Module.finrank ℚ K = 2 →
+    ∀ δ : K, δ ^ 2 = (D : K) →
+    ∀ ι : K →ₐ[ℚ] ℂ, ι δ = Complex.I * (Real.sqrt (-(D : ℝ)) : ℂ) →
+    ∀ n : ℤ, n ≠ 0 →
+    ∀ y : (E⁄K).Point, WeierstrassCurve.Affine.Point.map ι y =
+      n • ∑ r, ZInQ.GZModuli.modPt E (ratFn N Px Qx) (ratFn N Py Qy) (τ r) →
+    ∀ F G : ℂ → ℂ, ZInQ.GZDecomp.IsEntireCont (ZInQ.GZDecomp.coeff f) 2 F →
+      ZInQ.GZDecomp.IsEntireCont (ZInQ.GZDecomp.twistCoeff f D) 2 G →
+      ∃ κ : ℝ, 0 < κ ∧ deriv (fun s => F s * G s) 1 = κ * y.canonicalHeight
+
+/-- **The leaf of the `C_d` route, plane-model form**: `GrossZagierPlaneOptAt E'` for every short
+model `E'` in the isogeny class of `C_d : y² = x³ − d²x`, `d ≡ 5 (mod 8)` squarefree. -/
+def GrossZagierPlaneOptCd : Prop :=
+  ∀ d : ℕ, d % 8 = 5 → Squarefree d →
+    ∀ (E' : WeierstrassCurve ℚ) [E'.IsElliptic], ZInQ.GZOptimal.IsShortModel E' →
+      (∀ n : ℕ, n ≠ 0 → E'.LFunction n =
+        (ZInQ.shortCurve (-(d : ℚ) ^ 2)).LFunction n) →
+      GrossZagierPlaneOptAt E'
+
+/-- **The bridge (D2 in Lean)**: gzopt-dict's leaf from the plane-model leaf. Given `X, Y`
+meromorphic with `q`-expansions `φ^*(x), φ^*(y)`, pick representations `P/Q` (`exists_isRatRep`);
+then `modPt E X Y = modPt E (ratFn Px Qx) (ratFn Py Qy)` everywhere (`modPt_eq_ratFn`), so the
+optimality hypothesis and the Heegner point transfer. -/
+theorem grossZagierAlgOptAt_of_plane {E : WeierstrassCurve ℚ} (h : GrossZagierPlaneOptAt E) :
+    GZAlg.GrossZagierAlgOptAt E := by
+  intro N _ f hχ hf φ hord X Y hmX hmY hqX hqY hopt D β hD hD4 hH hβ R _ τ hτ K _ _ _ hK δ hδ ι hι
+    n hn y hy F G hF hG
+  obtain ⟨Px, Qx, hrx⟩ := exists_isRatRep N (φ (genX E))
+  obtain ⟨Py, Qy, hry⟩ := exists_isRatRep N (φ (genY E))
+  have hpt := modPt_eq_ratFn E hmX hmY hqX hqY hrx hry
+  refine h N f hχ hf φ hord Px Qx Py Qy hrx hry ((isOptimalParam_congr hpt).1 hopt) D β hD hD4 hH
+    hβ R τ hτ K hK δ hδ ι hι n hn y ?_ F G hF hG
+  rw [hy]
+  simp only [hpt]
+
+/-- The `C_d` form of the bridge. -/
+theorem grossZagierAlgOptCd_of_plane (h : GrossZagierPlaneOptCd) : GZAlg.GrossZagierAlgOptCd :=
+  fun d hd hsq E' _ hE' hL => grossZagierAlgOptAt_of_plane (h d hd hsq E' hE' hL)
+
+/-- **What the chain reads** (`grossZagierFormulaCd_of_alg`'s input), from the plane-model leaf. -/
+theorem grossZagierFormulaCd_of_plane (h : GrossZagierPlaneOptCd) : ZInQ.GZHL3.GrossZagierFormulaCd :=
+  GZAlg.grossZagierFormulaCd_of_alg (grossZagierAlgOptCd_of_plane h)
+    ZInQ.Contrib.Gamma0QExp.gamma0QExpansion_proof
+    ZInQ.Contrib.OneProof.EtaW32Character.etaW32Character_proof
 
 end ZInQ.GZDict2
