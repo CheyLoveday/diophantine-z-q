@@ -2,7 +2,8 @@ import ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic
 
 noncomputable section
 
-open UpperHalfPlane Filter Topology
+open UpperHalfPlane HeckeRing.GL2 Filter Topology
+open scoped Manifold
 
 namespace ZInQ.GZDict2
 
@@ -222,5 +223,184 @@ theorem exists_isRatRep (N : ℕ) [NeZero N] (x : X0Field N) :
     rw [he]
     simp [hQ]
   · exact ⟨P, Q, hQ, he⟩
+
+
+/-! ## §4. Holomorphy on `ℍ` and the identity theorem -/
+
+/-- `F : ℍ → ℂ` is holomorphic: `F ∘ ofComplex` is analytic at every point of `ℍ`. -/
+def HoloH (F : ℍ → ℂ) : Prop := ∀ τ : ℍ, AnalyticAt ℂ (F ∘ ofComplex) (τ : ℂ)
+
+theorem holoH_of_mdiff {F : ℍ → ℂ} (h : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) F) : HoloH F := fun τ =>
+  (UpperHalfPlane.mdifferentiable_iff.1 h).analyticAt (isOpen_upperHalfPlaneSet.mem_nhds τ.2)
+
+theorem HoloH.comp_scaleN {F : ℍ → ℂ} (h : HoloH F) (N : ℕ) [NeZero N] :
+    HoloH (fun τ => F (GZAlg.scaleN N τ)) := by
+  intro τ
+  have hN : AnalyticAt ℂ (fun z : ℂ => (N : ℂ) * z) (τ : ℂ) := by fun_prop
+  have h1 := (h (GZAlg.scaleN N τ)).comp_of_eq hN (by simp [GZAlg.scaleN])
+  apply h1.congr
+  filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds τ.2] with z hz
+  have hz' : 0 < z.im := hz
+  have hNz : 0 < ((N : ℂ) * z).im := by
+    have : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+    simpa using mul_pos this hz'
+  simp only [Function.comp_apply]
+  congr 1
+  apply UpperHalfPlane.ext
+  simp [GZAlg.scaleN, ofComplex_apply_of_im_pos hz', ofComplex_apply_of_im_pos hNz]
+
+theorem holoH_jFun : HoloH jFun := by
+  intro τ
+  have h4 := holoH_of_mdiff (ModularFormClass.holo ModularForm.E₄) τ
+  have hD := holoH_of_mdiff (CuspFormClass.holo CuspForm.discriminant) τ
+  rw [CuspForm.coe_discriminant] at hD
+  have hne : (ModularForm.discriminant ∘ ofComplex) (τ : ℂ) ≠ 0 := by
+    simpa using ModularForm.discriminant_ne_zero _
+  exact (h4.pow 3).div hD hne
+
+theorem holoH_polyFn (N : ℕ) [NeZero N] (P : MvPolynomial (Fin 2) ℚ) : HoloH (polyFn N P) := by
+  have hc : ∀ i : Fin 2, HoloH (fun τ => pt2 N τ i) := by
+    intro i; fin_cases i
+    · exact holoH_jFun
+    · exact holoH_jFun.comp_scaleN N
+  induction P using MvPolynomial.induction_on with
+  | C a => intro τ; simpa [polyFn, Function.comp_def] using analyticAt_const
+  | add p q hp hq =>
+    intro τ
+    exact ((hp τ).add (hq τ)).congr (Filter.Eventually.of_forall fun z => by simp [polyFn])
+  | mul_X p i hp =>
+    intro τ
+    exact ((hp τ).mul (hc i τ)).congr (Filter.Eventually.of_forall fun z => by simp [polyFn])
+
+theorem meromorphic_ratFn (N : ℕ) [NeZero N] (P Q : MvPolynomial (Fin 2) ℚ) (τ : ℍ) :
+    MeromorphicAt (ratFn N P Q ∘ ofComplex) (τ : ℂ) :=
+  (holoH_polyFn N P τ).meromorphicAt.div (holoH_polyFn N Q τ).meromorphicAt
+
+theorem meromorphicOn_upper {F : ℍ → ℂ} (hF : ∀ τ : ℍ, MeromorphicAt (F ∘ ofComplex) (τ : ℂ)) :
+    MeromorphicOn (F ∘ ofComplex) {z : ℂ | 0 < z.im} := fun z hz => hF ⟨z, hz⟩
+
+theorem isPreconnected_upper : IsPreconnected {z : ℂ | 0 < z.im} :=
+  (convex_halfSpace_im_gt 0).isPreconnected
+
+/-- **Identity theorem on `ℍ`**: a meromorphic function on `ℍ` vanishing on a punctured
+neighbourhood of one point vanishes on a punctured neighbourhood of every point. -/
+theorem eventuallyEq_zero_transfer {F : ℍ → ℂ} (hF : ∀ τ : ℍ, MeromorphicAt (F ∘ ofComplex) (τ : ℂ))
+    {τ₀ : ℍ} (h₀ : F ∘ ofComplex =ᶠ[𝓝[≠] (τ₀ : ℂ)] 0) (τ : ℍ) :
+    F ∘ ofComplex =ᶠ[𝓝[≠] (τ : ℂ)] 0 := by
+  have := (meromorphicOn_upper hF).meromorphicOrderAt_eq_top_of_isPreconnected isPreconnected_upper
+    τ₀.2 τ.2 (meromorphicOrderAt_eq_top_iff.2 h₀)
+  exact meromorphicOrderAt_eq_top_iff.1 this
+
+/-- The point `i t ∈ ℍ`, `t > 0`. -/
+def iPt (t : ℝ) (ht : 0 < t) : ℍ := ⟨Complex.I * t, by simpa using ht⟩
+
+theorem iPt_im (t : ℝ) (ht : 0 < t) : (iPt t ht).im = t := by simp [iPt, UpperHalfPlane.im]
+
+/-- Points of a punctured neighbourhood of `i t`, `t > T`, lie in `Im > T`. -/
+theorem eventually_im_gt {T t : ℝ} (ht : 0 < t) (hT : T < t) :
+    ∀ᶠ z in 𝓝[≠] ((iPt t ht : ℍ) : ℂ), T < z.im ∧ 0 < z.im := by
+  have hopen : IsOpen {z : ℂ | max T 0 < z.im} := isOpen_lt continuous_const Complex.continuous_im
+  have hmem : ((iPt t ht : ℍ) : ℂ) ∈ {z : ℂ | max T 0 < z.im} := by
+    change max T 0 < (iPt t ht).im
+    rw [iPt_im]; exact max_lt hT ht
+  filter_upwards [nhdsWithin_le_nhds (hopen.mem_nhds hmem)] with z hz
+  exact ⟨lt_of_le_of_lt (le_max_left _ _) hz, lt_of_le_of_lt (le_max_right _ _) hz⟩
+
+/-- A meromorphic function on `ℍ` vanishing on `Im τ > T` vanishes on a punctured neighbourhood of
+every point. -/
+theorem eventuallyEq_zero_of_im_gt {F : ℍ → ℂ}
+    (hF : ∀ τ : ℍ, MeromorphicAt (F ∘ ofComplex) (τ : ℂ)) {T : ℝ}
+    (h0 : ∀ τ : ℍ, T < τ.im → F τ = 0) (τ : ℍ) : F ∘ ofComplex =ᶠ[𝓝[≠] (τ : ℂ)] 0 := by
+  have ht : (0 : ℝ) < max T 0 + 1 := by linarith [le_max_right T 0]
+  refine eventuallyEq_zero_transfer hF (τ₀ := iPt _ ht) ?_ τ
+  filter_upwards [eventually_im_gt ht (show T < max T 0 + 1 by linarith [le_max_left T 0])]
+    with z hz
+  simp only [Function.comp_apply, Pi.zero_apply]
+  apply h0
+  change T < (ofComplex z : ℂ).im
+  rw [ofComplex_apply_of_im_pos hz.2]; exact hz.1
+
+/-- A meromorphic function on `ℍ` with no zeros on `Im τ > T` is nonzero on a punctured
+neighbourhood of every point. -/
+theorem eventually_ne_zero_of_im_gt {F : ℍ → ℂ}
+    (hF : ∀ τ : ℍ, MeromorphicAt (F ∘ ofComplex) (τ : ℂ)) {T : ℝ}
+    (h0 : ∀ τ : ℍ, T < τ.im → F τ ≠ 0) (τ : ℍ) : ∀ᶠ z in 𝓝[≠] (τ : ℂ), F (ofComplex z) ≠ 0 := by
+  rcases (hF τ).eventually_eq_zero_or_eventually_ne_zero with h | h
+  · exfalso
+    have ht : (0 : ℝ) < max T 0 + 1 := by linarith [le_max_right T 0]
+    have h1 := eventuallyEq_zero_transfer hF (τ₀ := τ) h (iPt _ ht)
+    obtain ⟨z, hz1, hz2⟩ := (h1.and (eventually_im_gt ht
+      (show T < max T 0 + 1 by linarith [le_max_left T 0]))).exists
+    apply h0 (ofComplex z) (by
+      change T < (ofComplex z : ℂ).im
+      rw [ofComplex_apply_of_im_pos hz2.2]; exact hz2.1)
+    simpa using hz1
+  · exact h
+
+/-! ## §5. D2: the meromorphic function with `q`-expansion `x` is `P(j, j_N)/Q(j, j_N)` -/
+
+/-- **D2 (values of `φ` through `q`-expansions = values on the plane model).** Let `X` be meromorphic
+on `ℍ` with `q`-expansion `x`, and `x = P(j, j_N)/Q(j, j_N)` in `ℚ((q))`. Then
+`X(τ') = P(j(τ'), j(Nτ'))/Q(j(τ'), j(Nτ'))` for all `τ' ≠ τ` near any `τ ∈ ℍ`. -/
+theorem eventuallyEq_ratFn {N : ℕ} [NeZero N] {X : ℍ → ℂ} {x : LaurentSeries ℚ}
+    (hm : ∀ τ : ℍ, MeromorphicAt (X ∘ ofComplex) (τ : ℂ)) (hq : HasQExp X x)
+    {P Q : MvPolynomial (Fin 2) ℚ} (hr : IsRatRep N x P Q) (τ : ℍ) :
+    X ∘ ofComplex =ᶠ[𝓝[≠] (τ : ℂ)] ratFn N P Q ∘ ofComplex := by
+  obtain ⟨hQ0, hx⟩ := hr
+  have h1 := hasQExp_add (hasQExp_mul hq (hasQExp_polyFn N Q))
+    (hasQExp_mul (hasQExp_const (-1)) (hasQExp_polyFn N P))
+  have h2 : x * polyQ N Q + algebraMap ℚ (LaurentSeries ℚ) (-1) * polyQ N P = 0 := by
+    rw [hx, div_mul_cancel₀ _ hQ0, map_neg, map_one]; ring
+  obtain ⟨T, hT⟩ := HasQExp.eq_zero (h2 ▸ h1)
+  have hmF : ∀ τ : ℍ, MeromorphicAt ((fun τ => X τ * polyFn N Q τ +
+      ((-1 : ℚ) : ℂ) * polyFn N P τ) ∘ ofComplex) (τ : ℂ) := fun τ =>
+    ((hm τ).mul (holoH_polyFn N Q τ).meromorphicAt).add
+      ((MeromorphicAt.const _ _).mul (holoH_polyFn N P τ).meromorphicAt)
+  have hz := eventuallyEq_zero_of_im_gt hmF hT τ
+  obtain ⟨T', hT'⟩ := HasQExp.exists_ne_zero (hasQExp_polyFn N Q) hQ0
+  have hQne := eventually_ne_zero_of_im_gt (fun τ => (holoH_polyFn N Q τ).meromorphicAt) hT' τ
+  filter_upwards [hz, hQne] with z h1 h2
+  simp only [Function.comp_apply, Pi.zero_apply, ratFn] at h1 ⊢
+  field_simp
+  push_cast at h1
+  linear_combination h1
+
+/-- **`modPt` depends only on the germs of `X, Y` on punctured neighbourhoods.** -/
+theorem modPt_congr (E : WeierstrassCurve ℚ) {X Y X' Y' : ℍ → ℂ} {τ : ℍ}
+    (hX : X ∘ ofComplex =ᶠ[𝓝[≠] (τ : ℂ)] X' ∘ ofComplex)
+    (hY : Y ∘ ofComplex =ᶠ[𝓝[≠] (τ : ℂ)] Y' ∘ ofComplex) :
+    ZInQ.GZModuli.modPt E X Y τ = ZInQ.GZModuli.modPt E X' Y' τ := by
+  have hX' : ∀ a : ℂ, Tendsto (X ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 a) ↔
+      Tendsto (X' ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 a) := fun a => tendsto_congr' hX
+  have hY' : ∀ a : ℂ, Tendsto (Y ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 a) ↔
+      Tendsto (Y' ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 a) := fun a => tendsto_congr' hY
+  unfold ZInQ.GZModuli.modPt
+  split_ifs
+  next h h' =>
+    have e1 := tendsto_nhds_unique ((hX' _).1 h.choose_spec.2.1) h'.choose_spec.2.1
+    have e2 := tendsto_nhds_unique ((hY' _).1 h.choose_spec.2.2) h'.choose_spec.2.2
+    simp only [WeierstrassCurve.Affine.Point.some.injEq]
+    exact ⟨e1, e2⟩
+  next h h' => exact absurd (let ⟨p, hp⟩ := h; ⟨p, hp.1, (hX' _).1 hp.2.1, (hY' _).1 hp.2.2⟩) h'
+  next h h' => exact absurd (let ⟨p, hp⟩ := h'; ⟨p, hp.1, (hX' _).2 hp.2.1, (hY' _).2 hp.2.2⟩) h
+  next => rfl
+
+/-- **D2, pointwise form**: for `X, Y` meromorphic with `q`-expansions `x, y`, and representations
+`x = Px/Qx`, `y = Py/Qy`, the point `modPt E X Y τ` is the value at `τ` of the rational map
+`(Px/Qx, Py/Qy)` on the plane model. -/
+theorem modPt_eq_ratFn (E : WeierstrassCurve ℚ) {N : ℕ} [NeZero N] {X Y : ℍ → ℂ}
+    {x y : LaurentSeries ℚ}
+    (hmX : ∀ τ : ℍ, MeromorphicAt (X ∘ ofComplex) (τ : ℂ))
+    (hmY : ∀ τ : ℍ, MeromorphicAt (Y ∘ ofComplex) (τ : ℂ))
+    (hqX : HasQExp X x) (hqY : HasQExp Y y) {Px Qx Py Qy : MvPolynomial (Fin 2) ℚ}
+    (hrx : IsRatRep N x Px Qx) (hry : IsRatRep N y Py Qy) (τ : ℍ) :
+    ZInQ.GZModuli.modPt E X Y τ = ZInQ.GZModuli.modPt E (ratFn N Px Qx) (ratFn N Py Qy) τ :=
+  modPt_congr E (eventuallyEq_ratFn hmX hqX hrx τ) (eventuallyEq_ratFn hmY hqY hry τ)
+
+/-- `IsOptimalParam` reads `φ = (X, Y)` only through `modPt`. -/
+theorem isOptimalParam_congr {N : ℕ} [NeZero N] {f : Newform N 2} {E : WeierstrassCurve ℚ}
+    {X Y X' Y' : ℍ → ℂ} (h : ∀ τ, ZInQ.GZModuli.modPt E X Y τ = ZInQ.GZModuli.modPt E X' Y' τ) :
+    ZInQ.GZOptimal.IsOptimalParam N f E X Y ↔ ZInQ.GZOptimal.IsOptimalParam N f E X' Y' := by
+  simp only [ZInQ.GZOptimal.IsOptimalParam, h]
 
 end ZInQ.GZDict2
