@@ -108,4 +108,38 @@ theorem exists_fraction {T : CommRingCat} (γ : T ⟶ CommRingCat.of ℂ) (O : (
     rw [map_mul, hev, map_pow, hev, evHom_apply, ← evS_res _ hDO σ h1] at this
     exact this
 
+/-- A complex point of an affine open factors through `fromSpec`. -/
+theorem exists_spec_factor {X : Scheme} {V : X.Opens} (hV : IsAffineOpen V)
+    (b : Spec (CommRingCat.of ℂ) ⟶ X) (hb : ⊤ ≤ b ⁻¹ᵁ V) :
+    ∃ β : Γ(X, V) ⟶ CommRingCat.of ℂ, b = Spec.map β ≫ hV.fromSpec := by
+  have hr : Set.range b ⊆ Set.range hV.fromSpec := by
+    rw [hV.range_fromSpec]; rintro _ ⟨z, rfl⟩; exact hb (show z ∈ (⊤ : (Spec (CommRingCat.of ℂ)).Opens) from trivial)
+  refine ⟨Spec.preimage (IsOpenImmersion.lift hV.fromSpec b hr), ?_⟩
+  rw [Spec.map_preimage, IsOpenImmersion.lift_fac]
+
+/-- Evaluation of a section of an affine open at a point factored through `fromSpec`. -/
+theorem evS_fromSpec {X : Scheme} {V : X.Opens} (hV : IsAffineOpen V)
+    (β : Γ(X, V) ⟶ CommRingCat.of ℂ) (c : Γ(X, V)) :
+    evS (Spec.map β ≫ hV.fromSpec) V c = β c := by
+  have h' : ⊤ ≤ (Spec.map β) ⁻¹ᵁ (hV.fromSpec ⁻¹ᵁ V) := by
+    rw [hV.fromSpec_preimage_self]; exact le_top
+  have h : ⊤ ≤ (Spec.map β ≫ hV.fromSpec) ⁻¹ᵁ V := h'
+  rw [evS_comp _ _ _ _ h, hV.fromSpec_app_self_apply]
+  have hle : hV.fromSpec ⁻¹ᵁ V ≤ ⊤ := le_top
+  rw [← evS_spec_top β c, evS_res _ hle _ h']
+  congr 2
+
+theorem tensor_sum_repr {R A B : Type*} [CommRing R] [CommRing A] [CommRing B] [Algebra R A]
+    [Algebra R B] (t : TensorProduct R A B) :
+    ∃ (m : ℕ) (x : Fin m → A) (y : Fin m → B), t = ∑ k, x k ⊗ₜ[R] y k := by
+  induction t using TensorProduct.induction_on with
+  | zero => exact ⟨0, Fin.elim0, Fin.elim0, by simp⟩
+  | tmul a b => exact ⟨1, fun _ => a, fun _ => b, by simp⟩
+  | add t₁ t₂ h₁ h₂ =>
+    obtain ⟨m₁, x₁, y₁, rfl⟩ := h₁
+    obtain ⟨m₂, x₂, y₂, rfl⟩ := h₂
+    refine ⟨m₁ + m₂, Fin.append x₁ x₂, Fin.append y₁ y₂, ?_⟩
+    rw [Fin.sum_univ_add]
+    simp
+
 end ZInQ.R3Etale
