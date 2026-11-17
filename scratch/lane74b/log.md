@@ -56,3 +56,49 @@ Warm build copied (reflink) from ~/dzq-wt/lane74-int/.lake/build and lean/.lake/
   axioms [propext, Classical.choice, Quot.sound]. VERIFIED (scratch/lane74b/build1b.txt).
 - Hash dump f558b164 vs lane74b-after (every ZInQKernel constant of ZInQKernel + OneProof.Main): 179119 = 179119,
   0 changed, 0 removed, 0 added (docstring-only revert). VERIFIED (scratch/lane74b/hashcmp-f558-after.txt).
+
+## Item 4: print_axioms / STATUS recipe
+
+- scripts/print_axioms.lean already lane74's (463 #print lines, headline `..._of_sixContactMin_poleCompleteness` first).
+  Run after the rebuild: EXIT 0, 463 "depends on axioms", ~/dzq-runs/axcheck.py: decls 463, nonstandard 0, no sorry.
+  Defining modules (from the hash dump): 462 in ZInQKernel modules + Submission.green_tao (ThirdParty); none in RouteK,
+  TYZ*, GZ*, Hecke*, CR3*, CertifiedRank, PSide, GaussFE or the 79 kept modules
+  (scratch/lane74b/print_axioms-modules.txt). VERIFIED.
+- Added a header note (comment only): frozenTarget is checked by the `+ZInQKernel.OneProof.Main` build (the file imports
+  only ZInQKernel, and the chain runs it before the OneProof build, so no import was added).
+- STATUS.md recipe ("To build and check"): build `ZInQKernel +ZInQKernel.OneProof.Main`, frozenTarget's axioms printed by
+  the build, print_axioms' 463 declarations described with the new headline. The 5e235a40 verification paragraph
+  ("542 declarations") is a dated record and was left. check_target.py: ok. VERIFIED.
+
+## Item 2 (part): H reach and hash waiver
+
+- reach.py / paths.py over the import graph (lane74's graph.py): H closure (OneProof/H/**, HDecomp/**, OneProof/Main)
+  2131 modules, 58 RouteK (scratch/lane74b/h-reach-routek.txt); all files exist and build. Every path enters through
+  OneProof/H/TailZ34 -> Contrib/OneProof/RayClassShimura -> Contrib/TYZGenus/ShimuraModFn. LPrefix ->
+  ConstantsProperties -> Hypotheses/Pole and RouteK.Slots.Theta -> Certificate.Parity -> Pole intact. VERIFIED.
+- Uses.lean: frozenTarget closure 292948 constants; from the 79 kept modules (scratch/lane74b/kept-mods.txt = lane74's
+  78 + RouteK.Selmer.CharSum) only TYZGenus.Shimura.sqrt_mul_self_C, TYZGenus.X0.instDecidableEqComplex_zInQKernel,
+  plus 12 RouteK.Selmer.CharSum constants via Density.CharSum. VERIFIED (compiled, 3m22).
+- Uses2.lean: all constants of the 86 H-reach modules that import a kept module (sees-kept.txt): 7304 scanned, 180
+  (module, kept constant) pairs; H-side (outside the HeckeAll/GaussFE/PSide cone) 62 kept constants from
+  TYZGenus.{CM,RingClass,ShimuraField,ShimuraMain,ShimuraModFn,ShimuraRecip,ShimuraZn,X0}, TYZDecomp.CurveA,
+  RouteK.Rank5b.Sec3.RedeiStatement (QNeg x3), RouteK.Selmer.CharSum; referenced by RingClassLattice (55),
+  RayClassShimura (7), DeligneComponentsY3Used, GR56Lattice, WeberField (1 each), Density.CharSum (6). VERIFIED.
+- No file moved (nothing cut; moving would rename private constants and not let anything go).
+- HashDump.lean (DumpCompact record for every ZInQKernel constant, env ZInQKernel + OneProof.Main) at be9a6ba4a (detached
+  worktree ~/l74b-base, build reflinked from ~/dzq-check2, lake build replayed 16314 jobs, nothing rebuilt): 188726;
+  f558b164: 179119; lane74b after rebuild: 179119. cmp_hashes_full.py: base->f558 changed 20 (list in HASH-WAIVER.md),
+  only-before 9613 (8538 deleted files, 1055 unimported Tau Ceti files, 20 in surviving modules), only-after 6;
+  f558->after 0/0/0; OneProof.H 17686 records byte-identical base vs f558. VERIFIED.
+- PoleRefs.lean (pole-module constants mentioned by OneProof constants): killed after 10.5 min without output; not
+  needed (OneProof/H records unchanged). UNCHECKED.
+- Waiver: scratch/lane74/HASH-WAIVER.md.
+
+## Checks after the last Lean change
+
+- gate.sh: AUTOFOLD-DRYRUN-EXIT=0, TREE-UNCHANGED=yes, GATEFOLD-EXIT=0, GATEFOLD-AXIOMS=standard, GATE=ok. VERIFIED.
+- render_open.py --check: ok, 30 open hypotheses, 4 generated files up to date. frontier_crosswalk.py --check: ok.
+- DischargesTest.lean (scratch/contrib-kit): EXIT 0, "#discharges: 30 open hypotheses, 11256 theorems checked, 16
+  discharge one" (output scratch/lane74b/DischargesTest-output.txt). Its controls t1 (nvLocalInertia) and t3
+  (cartierSmooth) name fields no longer open, so they print nothing; the file's saved output in scratch/contrib-kit is
+  stale (owner: contrib-kit). VERIFIED.
