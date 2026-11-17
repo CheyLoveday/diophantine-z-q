@@ -32,3 +32,14 @@
 - Pitfalls: chain namespaces are HDec.ZInQ.Metrization/G0HeightAdd/UnifDims (not _root_); μ, γ tokens under open MonObj;
   IsMonHom (Over.pullback.map f) needs `Functor.map.instIsMonHom (F := F) (f := f)` + `open scoped CategoryTheory.Obj`
   (instance search fails against AbVar.baseChange's grp field).
+- 09:50-11:50 R5ptProps prune: scratch/cm-branch2/Dirty.lean (dirty set: 955 constants, structures marked dirty with
+  their mk) -> dirty.tsv -> gen/gen_r5.py -> ZInQKernel/Contrib/OneProof/CMBranch/R5Prune.lean (192 copies, 6282 lines,
+  R5ptProps X Ψ := True, renames _root_.<name>_r5, 9 hand patches at the producers). COMPILED: 0 errors, no sorry
+  (6 compile iterations; generator fixes: comment-aware context, `open … in` not context, Polynomial.X in SGRDirectNV,
+  S.x members renamed S_r5.x, structures deduped). lake build R5Prune EXIT 0.
+  New top HDec.HSyn.sixContactMin_of_open72_cm2_r5 (alias sixContactMin_of_open72_cmbranch2 in CMBranch2.lean).
+- Closure scan (scratch/cm-branch2/GRUse.lean, output gruse-out.txt; 130539 constants): LeafQM.AV.R5ptProps NOT in the
+  closure; GRDict.r5ptProps_of_thm512, GRX6AbPrint.gonzalezRotgerX6Ab_of_print, FS5NoCM.R1R2fpFullProps NOT in it;
+  OpenResearchLeaves35EBCF.gonzalezRotgerThm512X6 (the last carrier's projection) NOT read; 53.gonzalezRotgerThm512X6RCF and
+  36EBCF.gonzalezRotgerThm512X6 occur only to fill the carried field of 36/35 (bundle conversions). => GR carried, unread:
+  PruneScan target. x6CoarseModuliIdeal, elkiesX6StarEveryIdeal stay (read).

@@ -10,11 +10,11 @@ def closureZ (env : Environment) (root : Name) : Std.HashSet Name := Id.run do
     let n := stack.back
     stack := stack.pop
     if seen.contains n then continue
+    seen := seen.insert n
     let inZ := match env.getModuleIdxFor? n with
       | some i => (env.header.moduleNames[i.toNat]!.toString.startsWith "ZInQKernel")
       | none => false
     if !inZ then continue
-    seen := seen.insert n
     match env.find? n with
     | some ci =>
       let v := match ci with | .thmInfo t => t.value | .defnInfo d => d.value | _ => default
@@ -25,7 +25,7 @@ def closureZ (env : Environment) (root : Name) : Std.HashSet Name := Id.run do
 
 #eval show MetaM Unit from do
   let env ← getEnv
-  for root in [`HDec.HSyn.sixContactMin_of_open72_cm2, `HDec.HSyn.sixContactMin_of_open72_cm2_r5] do
+  for root in [`HDec.HSyn.sixContactMin_of_open72_cm2_r5] do
     let s := closureZ env root
     IO.println s!"== {root}: {s.size} constants"
     let probes : List Name := [`LeafQM.AV.R5ptProps, `GRDict.r5ptProps_of_thm512, `GRX6AbPrint.gonzalezRotgerX6Ab_of_print,
@@ -36,13 +36,3 @@ def closureZ (env : Environment) (root : Name) : Std.HashSet Name := Id.run do
       `HDec.QMSplit.Moduli.gonzalezRotgerX6Ab_r5_of_coarse]
     for p in probes do
       IO.println s!"  {p}: {s.contains p}"
-    -- which constants in the closure mention GonzalezRotgerThm512X6 in their value
-    let mut users : Array Name := #[]
-    for n in s.toList do
-      match env.find? n with
-      | some ci =>
-        let v := match ci with | .thmInfo t => t.value | .defnInfo d => d.value | _ => default
-        if v.getUsedConstants.contains `GRDict.GonzalezRotgerThm512X6 || ci.type.getUsedConstants.contains `GRDict.GonzalezRotgerThm512X6 then
-          users := users.push n
-      | none => pure ()
-    IO.println s!"  mentions GonzalezRotgerThm512X6: {users.toList}"
