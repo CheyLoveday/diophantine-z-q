@@ -222,11 +222,12 @@ open Classical in
 noncomputable def sg (b : ℤ) : ZMod 2 := if b < 0 then 1 else 0
 
 /-- **The local conditions at the primes of `ℓ` give `E1` and `E2`** (lines 1063–1066). -/
-theorem eqs_of_localBad (hq : LocalBad) (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) {a b : ℤ}
+theorem eqs_of_localBad (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) {a b : ℤ}
     (ha : Squarefree a) (hb : Squarefree b) (ha0 : 0 < a)
     (hsa : a.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors)
     (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors)
-    (hloc : ∀ i : Supp ℓ, haveI := Fact.mk (supp_prime i); LocM ℚ_[(i : ℕ)] ℓ a b) :
+    (hcls : ∀ i : Supp ℓ, ∃ e₁ e₂ : ZMod 2, qcls i a = e₁ • qcls i ℓ + e₂ • qcls i 3 ∧
+      qcls i b = e₂ • qcls i (-(ℓ : ℤ))) :
     Kmat ℓ *ᵥ ind ℓ a + lam ℓ * ind ℓ b = dlt a • lam ℓ ∧
       Kmat ℓ *ᵥ ind ℓ b + sgn ℓ * ind ℓ b = sg b • sgn ℓ := by
   have hsb' : b.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors :=
@@ -239,9 +240,7 @@ theorem eqs_of_localBad (hq : LocalBad) (hsf : Squarefree ℓ) (h12 : ℓ % 12 =
         e₂ * (sgn ℓ i + Kmat ℓ i i) := by
     intro i
     have := Fact.mk (supp_prime i)
-    obtain ⟨e₁, e₂, h1, h2⟩ := (hq ℓ i a b hsf (supp_dvd i)
-      (by have := supp_mod_two (ℓ := ℓ) (by omega) i; omega) (supp_ne_three (by omega) i)
-      ha hb).mp (hloc i)
+    obtain ⟨e₁, e₂, h1, h2⟩ := hcls i
     rw [qcls_formula h12 ha hsa i, qcls_ell i hsf h12, qcls_three i h12] at h1
     rw [qcls_formula h12 hb hsb' i, qcls_negell i hsf h12] at h2
     simp only [Prod.ext_iff, Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
@@ -394,22 +393,37 @@ theorem prime_dvd_six_mul {p : ℕ} (hp : p.Prime) (h : p ∣ 6 * ℓ) :
     · exact Or.inr (Or.inl ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_three).mp h3))
   · exact Or.inr (Or.inr hl)
 
-theorem sel_necessary (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad)
-    (hg : LocalGood) {β : ℕ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11)
+/-- The "only if" halves of the local images, at every class of `SelM ℓ`. -/
+def NecAt (ℓ : ℕ) : Prop :=
+  ∀ a b : ℤ, (a, b) ∈ SelM ℓ → (a % 2 = 1 ∧ b % 4 = 1) ∧ b % 3 = 1 ∧
+    (∀ p : ℕ, p.Prime → ¬ p ∣ 6 * ℓ → ¬ (p : ℤ) ∣ a ∧ ¬ (p : ℤ) ∣ b) ∧
+    (∀ i : Supp ℓ, ∃ e₁ e₂ : ZMod 2, qcls i a = e₁ • qcls i ℓ + e₂ • qcls i 3 ∧
+      qcls i b = e₂ • qcls i (-(ℓ : ℤ)))
+
+theorem necAt_of_local (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad)
+    (hg : LocalGood) (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) : NecAt ℓ := by
+  intro a b hab
+  obtain ⟨ha, hb, -, hp⟩ := hab
+  simp only at ha hb hp
+  refine ⟨(hTwo ℓ a b hsf (by omega) ha hb).mp (hp 2),
+    (hThree ℓ a b hsf (by omega) ha hb).mp (hp 3), fun p hpp hnd => ?_, fun i => ?_⟩
+  · have := Fact.mk hpp
+    exact (hg ℓ p a b hsf hnd ha hb).mp (hp p)
+  · have := Fact.mk (supp_prime i)
+    exact (hq ℓ i a b hsf (supp_dvd i)
+      (by have := supp_mod_two (ℓ := ℓ) (by omega) i; omega) (supp_ne_three (by omega) i)
+      ha hb).mp (hp i)
+
+theorem sel_necessary (hN : NecAt ℓ) {β : ℕ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11)
     (hM : MatrixConditions ℓ β) {a b : ℤ} (hab : (a, b) ∈ SelM ℓ) :
     0 < a ∧ a.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors ∧
       b.natAbs.primeFactors ⊆ ℓ.primeFactors ∧
       ind ℓ b = sg b • 1 ∧ dlt a = sg b ∧ Kmat ℓ *ᵥ ind ℓ a = 0 := by
-  obtain ⟨ha, hb, hR, hp⟩ := hab
-  simp only at ha hb hR hp
+  obtain ⟨⟨ha2, hb4⟩, hb3, hgood, hcls⟩ := hN a b hab
+  obtain ⟨ha, hb, hR, -⟩ := hab
+  simp only at ha hb hR
   have hℓ : 0 < ℓ := by omega
   have ha0 : 0 < a := (localReal ℓ a b hℓ ha.ne_zero hb.ne_zero).mp hR
-  obtain ⟨ha2, hb4⟩ := (hTwo ℓ a b hsf (by omega) ha hb).mp (hp 2)
-  have hb3 := (hThree ℓ a b hsf (by omega) ha hb).mp (hp 3)
-  have hgood : ∀ p : ℕ, p.Prime → ¬ p ∣ 6 * ℓ → ¬ (p : ℤ) ∣ a ∧ ¬ (p : ℤ) ∣ b := by
-    intro p hpp hnd
-    have := Fact.mk hpp
-    exact (hg ℓ p a b hsf hnd ha hb).mp (hp p)
   have hsupp : ∀ x : ℤ, x % 2 = 1 → (∀ p : ℕ, p.Prime → ¬ p ∣ 6 * ℓ → ¬ (p : ℤ) ∣ x) →
       x.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors := by
     intro x hx2 hxg p hpx
@@ -430,9 +444,7 @@ theorem sel_necessary (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad)
       have : (3 : ℤ) ∣ b := Int.natCast_dvd.mpr (Nat.mem_primeFactors.mp hpx).2.1
       omega
     · exact h
-  have hloc : ∀ i : Supp ℓ, haveI := Fact.mk (supp_prime i); LocM ℚ_[(i : ℕ)] ℓ a b :=
-    fun i => by have := Fact.mk (supp_prime i); exact hp i
-  obtain ⟨E1, E2⟩ := eqs_of_localBad hq hsf h12 ha hb ha0 hsa hsb hloc
+  obtain ⟨E1, E2⟩ := eqs_of_localBad hsf h12 ha hb ha0 hsa hsb hcls
   have E3 := e3_of_mod4 h12 hb hsb hb4
   have E4 := e4_of_mod3 h12 hb hsb hb3
   obtain ⟨h1, h2, h3⟩ := kmat_forces hsf h12 hM (ind ℓ a) (ind ℓ b) (dlt a) (sg b) E1 E2 E3 E4
@@ -479,14 +491,13 @@ theorem dlt_of_subset (h12 : ℓ % 12 = 11) {x : ℤ} (hx : x.natAbs.primeFactor
 
 /-- **Upper bound data**: on `SelM ℓ`, the map `(a, b) ↦ (ind a, σ(b))` is injective with values in
 `ker K × 𝔽₂`. -/
-theorem sel_injOn (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (hg : LocalGood)
-    {β : ℕ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) (hM : MatrixConditions ℓ β) :
+theorem sel_injOn (hN : NecAt ℓ) {β : ℕ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) (hM : MatrixConditions ℓ β) :
     Set.InjOn (fun ab : ℤ × ℤ => (ind ℓ ab.1, sg ab.2)) (SelM ℓ) := by
   rintro ⟨a, b⟩ hab ⟨a', b'⟩ hab' h
   simp only [Prod.mk.injEq] at h
   obtain ⟨hia, hsg⟩ := h
-  obtain ⟨ha0, hsa, hsb, hvb, hda, -⟩ := sel_necessary hTwo hThree hq hg hsf h12 hM hab
-  obtain ⟨ha0', hsa', hsb', hvb', hda', -⟩ := sel_necessary hTwo hThree hq hg hsf h12 hM hab'
+  obtain ⟨ha0, hsa, hsb, hvb, hda, -⟩ := sel_necessary hN hsf h12 hM hab
+  obtain ⟨ha0', hsa', hsb', hvb', hda', -⟩ := sel_necessary hN hsf h12 hM hab'
   have ha := hab.1
   have hb := hab.2.1
   have ha' := hab'.1
@@ -718,13 +729,14 @@ theorem dimThreeCount_of_local (hTwo : LocalTwo) (hThree : LocalThree) (hq : Loc
     | true =>
       simp only [if_true]
       rw [ind_three_mul h12 (hposZ c hc).ne', sg_negell hℓ]
+  have hN := necAt_of_local hTwo hThree hq hg hsf h12
   have himage : (fun ab : ℤ × ℤ => (ind ℓ ab.1, sg ab.2)) '' SelM ℓ = ↑T := by
     ext ⟨u, σ⟩
     simp only [T, Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_insert,
       Finset.mem_singleton]
     constructor
     · rintro ⟨⟨a, b⟩, hab, he⟩
-      obtain ⟨-, -, -, -, -, hKa⟩ := sel_necessary hTwo hThree hq hg hsf h12 hM hab
+      obtain ⟨-, -, -, -, -, hKa⟩ := sel_necessary hN hsf h12 hM hab
       simp only [Prod.mk.injEq] at he
       rw [← he.1, ← he.2]
       exact ⟨hker _ hKa, zmod2_cases _⟩
@@ -741,7 +753,7 @@ theorem dimThreeCount_of_local (hTwo : LocalTwo) (hThree : LocalThree) (hq : Loc
       · exact hget ℓ dvd_rfl ind_ell kmat_mulVec_one
       · exact hget β hβℓ hindβ hKb
       · exact hget ℓ' hℓ'd hindℓ' hK1
-  have hinj := sel_injOn hTwo hThree hq hg hsf h12 hM
+  have hinj := sel_injOn hN hsf h12 hM
   refine ⟨?_, ?_⟩
   · rw [← hinj.ncard_image, himage, Set.ncard_coe_finset, Finset.card_product]
     obtain ⟨⟨h01, h0b, h01b⟩, ⟨h1b, h11b⟩, hb1b⟩ := vec4_ne hb0 hb1
