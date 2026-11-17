@@ -46,3 +46,20 @@ Issues #74/#76-#79 not readable (gh: connection reset; no network). Worked from 
   FINDING for #81.
 - FINDING: scratch/contrib-check/Check.lean (the chain's CONTRIB-CHECK step) imports deleted modules
   (MainLiterature, GaussFE.Headline, PSide.*, GZDecomp, GZTheta, GZStatements, TYZChain.*).
+
+## #76 (commit 2)
+
+- Parity.lean, Assembly/Local/PoleObstruction.lean, Syntax/Templates/Core.lean restored byte for byte
+  from b570b14ee (= git rev-parse 2d8a1fe51^; none changed after 2d8a1fe51). VERIFIED (git checkout).
+- Hypotheses/Pole.lean: polePoly T₁ = A(A-e)(A+3e), T₂ = A(Az²-eH)(Az²+3eH); docstrings updated.
+  Manuscript lines VERIFIED by grep -n in diophantine_zq.tex: Q_pole align 976-982, Theorem 5.2 (hyp:PC)
+  1001-1004, Theorem 5.3 (hyp:RC) 1005-1011 (the brief's "L996-1001" is off by a few lines).
+- PoleManuscript.lean: Manuscript.polePoly / PoleSoluble / PoleCompleteness are abbrevs of the ZInQ ones;
+  Manuscript.polePoly_eq (rfl) writes out Q_pole. curve/AnalyticRankOne/RestrictedConverse unchanged.
+- Builds: lake build ZInQKernel OK (9923 jobs, 7m22s); +OneProof.Main +Discharges + AllContrib OK
+  (16104 jobs, 34m46s: the H chain rebuilt because RouteK.Slots.Basic, on the H path, imports Pole.lean);
+  every tracked Contrib file OK (15533 jobs); print_axioms 463 decls 0 nonstandard, check_target ok;
+  frozenTarget [propext, Classical.choice, Quot.sound]. VERIFIED.
+- scratch/lane74/contrib-check-Check.lean (copy of the chain's scratch/contrib-check/Check.lean without the
+  20 deleted imports, contribCheck_headline and 112 #print lines of deleted constants): compiles, 117 decls,
+  0 nonstandard. VERIFIED.

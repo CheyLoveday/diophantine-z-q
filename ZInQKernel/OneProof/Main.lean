@@ -6,7 +6,7 @@ import ZInQKernel.MainGreenTao
 
 `ZInQ.OneProof.frozenTarget` derives the frozen target `ZInQ.FrozenTarget` from every statement that is still open on
 the development fork, and from nothing else: the open bundles of the H chain and pole completeness PC
-(`ZInQ.PoleCompleteness`, Theorem 5.2 of the 11/5 manuscript, `diophantine_zq.tex` lines 997–1000, for the manuscript's pole polynomial).
+(`ZInQ.PoleCompleteness`, Theorem 5.2 of the 11/5 manuscript, `diophantine_zq.tex` lines 1001–1004, for the manuscript's pole polynomial).
 It composes the compiled H chain with the headline
 `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
 (`ZInQKernel/MainGreenTao.lean`: the assembly with route AP, Green–Tao in its dense form and Proposition D proved).

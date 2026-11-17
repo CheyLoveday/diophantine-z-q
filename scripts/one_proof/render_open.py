@@ -302,7 +302,8 @@ def render(m):
     count_lines = [
         f'**{n} hypotheses of the H part** (in the bundles '
         f'`{"`, `".join(sorted({h["bundle"] for h in hyps if h["bundle"] != "frozenTarget"}))}`), '
-        f'plus {len(tops)} hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.',
+        f'plus {words(len(tops))} manuscript hypothes{"is" if len(tops) == 1 else "es"} outside the H part '
+        f'(`{"`, `".join(tops)}`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.',
         '',
         f'* **Strict count: {strictest["LEAF"]} published / {strictest["GLUE"]} glue** (the strictest flagged reading; '
         + (f'{strict["LEAF"]}/{strict["GLUE"]} without the {words(n_flags)} strictest-reading '
@@ -478,9 +479,12 @@ def render(m):
     w('')
     for f in order:
         section(f)
-    w('## Tian–Yuan–Zhang and Gross–Zagier hypotheses')
+    w('## Manuscript hypotheses outside the H part')
     w('')
     w("These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.")
+    w('Pole completeness PC (`ZInQ.PoleCompleteness`) is Theorem 5.2 of the 11/5 manuscript for its own pole')
+    w('polynomial; the manuscript derives it from its restricted converse, Theorem 5.3. The former Route K inputs')
+    w('(Tian–Yuan–Zhang and Gross–Zagier) are no longer hypotheses.')
     w('')
     for f in tops:
         section(f, top=True)
