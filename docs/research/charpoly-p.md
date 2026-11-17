@@ -121,9 +121,67 @@ is now in Lean, and so is the field over every field that embeds into `ℂ`.
 - Below it, given the tree's AnthropicFLT results, the only further published input needed is M1. The rest is
   glue G1–G6.
 
-## 4. What compiles
+## 4. What compiles (all VERIFIED; axioms `propext`, `Classical.choice`, `Quot.sound`)
 
-(Filled in from the log once the build finishes.)
+New files under `ZInQKernel/Contrib/OneProof/`:
+
+- **`CharPolyCharP/Algebra.lean`** (imports deg-det's `DegEqDetTate/Algebra.lean`, which imports only Mathlib).
+  - `eq_Rs_of_mul_trunc`: a function `L[X] → L`, multiplicative on pairs of total degree `≤ D`, with `Φ(c) = cⁿ`
+    and `Φ(X − r) = (−1)ⁿ P(r)`, equals `F ↦ ∏_{P(a)=0} F(a)` on polynomials of degree `≤ D`.
+  - `NtD`, `NtD_mul`: a polynomial function `N` on the coefficients `0..D`. If it is multiplicative on integer
+    polynomials of degrees `≤ a, ≤ b` (`a + b ≤ D`, nonzero values), then it is multiplicative on such pairs over
+    every `ℚ`-algebra (Combinatorial Nullstellensatz, as in deg-det's `Nt_mul`).
+  - `P0D_monic`: `P₀(t) = N(t − X)` is monic of degree `n`.
+  - `mult_le_of_norm_Rs_le_bdd`, `eq_of_norm_RsZ_le_bdd`: deg-det's one-sided comparison lemma, with test
+    polynomials of degree `≤ deg Q` only (they approximate `ℓ^s μ + ℓⁿ`, `μ ∣ Q`).
+  - `norm_roots_le_one`, `exists_int_poly_of_Rs`: if `∏_{P(a)=0}(a^m − q)` is an integer for all primes `q` and
+    all `m`, the monic `P ∈ ℚ[X]` lies in `ℤ[X]`. Roots in `ℚ̄_q` of absolute value `> 1` would give `q`-adic
+    absolute value `≥ |a₀|^m |q|^K → ∞`. The step from coefficients to `ℤ` goes through `PadicInt.isUnit_den`.
+  - `charpoly_eq_P0D`: `charpoly ρ(φ) = P₀` with no relation for `φ` (any `D ≥ n`).
+  - `P0D_int`: `P₀ ∈ ℤ[X]` from `N` on polynomials of every degree in `φ` (`deg(φ^m − q) ∈ ℕ`).
+- **`CharPolyCharP.lean`** (imports the above, degpoly-proof's `DegHomogPolyC`, `MumfordTorsionAlgClosed`,
+  `UniformizationLeafAll`).
+  - `DegPolyAt A` (deg-det's `DegHomogPoly` at one `k, A`).
+  - `charPoly_of_degPoly : DegPolyAt A → ∀ φ, ∃ P ∈ ℤ[X] monic, ∀ ℓ ≠ char k, charpoly V_ℓ(φ) = P`. It uses deg-det's
+    `card_basis_V`, `norm_deg_le_norm_det` (KerDvd + TateIndex), `degEnd_mul_of_isIsogeny`, charpoly-ell's
+    `rho`, `degEnd_one`, and `mumfordTorsionAlgClosed_proof`.
+  - `charPolyIndepOfEllAlgClosed_of_degHomogPoly'`, `charPolyIndepOfEllAlgClosedNoEmb_of_degHomogPolyNoEmb`,
+    `charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb'`.
+
+Checks:
+
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.CharPolyCharP`
+  exits 0.
+- `#discharges` (`scratch/charpoly-p/Discharges.lean`, output `Discharges-output.txt`):
+
+  ```
+  DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb'
+    still assumes: [ZInQ.Contrib.OneProof.DegPolyC.DegHomogPolyNoEmb]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by ZInQ.Contrib.OneProof.CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly'
+    still assumes: [ZInQ.Contrib.OneProof.DegDet.DegHomogPoly]
+    axioms: [propext, Classical.choice, Quot.sound]
+  ```
+
+- Autofold spec `scratch/charpoly-p/autofold.json`: field `charPolyIndepOfEllAlgClosed` out, leaf
+  `degHomogPolyNoEmb` in.
+  - Kind: published.
+  - Flag: unread; ∀-specialization of deg-det's printed `DegHomogPoly`; the characteristic-`p` case is used;
+    locator UNVERIFIED.
+  - Dry run: `strict count: 15/16 on 31 -> 15/16 on 31; strictest 15/16 -> 15/16` (count-neutral).
+    `FoldDryRun.lean` (`sixContactMin_of_open59` over TailZ65) compiles with standard axioms.
+  - The fold needs the files of charpoly-ell (`CharPolyIndepOfEllAlgClosed.lean`), deg-det (`DegEqDetTate.lean`
+    and `DegEqDetTate/`) and degpoly-proof (`CharPolyLattice.lean`, `DegHomogPolyC.lean`). This branch carries
+    them through its merge of origin/wip/degpoly-proof, unchanged.
+- `scratch/charpoly-p/M1Statement.lean` compiles. It states M1 (`NonIsogPullbackEulerZero`) and
+  `EulerPullbackDeg` over CW07's `Scheme.Modules.eulerChar`, AnthropicFLT's `Scheme.Modules.IsInvertible`,
+  Mathlib's `Scheme.Modules.pullback` and `CharPolyEll.degEnd`.
+
+**Rating of the new leaf** `DegHomogPolyNoEmb`: printed form. It is a ∀-instance (fields with no embedding into
+`ℂ`) of deg-det's `DegHomogPoly`, which reads Mumford §19's "deg is a homogeneous polynomial function of degree
+`2g` on `End X`" in the coordinates of a finite family. That is a composite with a linear map `ℤ^r → End X`, so a
+consequence, never stronger. Locator UNVERIFIED (Milne, *Abelian varieties*, §12 has the same statement;
+UNVERIFIED).
 
 ## 5. Why M1 is not avoidable by the tree's leading-coefficient tools
 
