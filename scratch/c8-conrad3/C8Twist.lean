@@ -172,6 +172,122 @@ theorem linIndep_two (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimen
     have h1 : a 1 = 0 := ha0 1 (by rw [h0, zero_smul, zero_add] at hs; exact hs)
     exact Fin.forall_fin_two.mpr ⟨h0, h1⟩
 
+/-- **The square root step** (on-the-spot): if `σ(y) = ψ(σ)² y` on `G_E` with `y ≠ 0`, a square root `c` of `y` in the
+algebraically closed `ℂ_p` satisfies `σ(c) = ±ψ(σ) c` on `G_E`; the sign is continuous (`continuous_cpAct_orbit`),
+so `σ(c) = ψ(σ) c` on an open subgroup, which contains `G_{E'}` for a finite Galois `E' ⊇ E`. -/
+theorem exists_sqrt_twist (E : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E]
+    (ψL : ZInQ.Contrib.G9.PkgI4.GQp p →* (PadicAlgCl p)ˣ) (hψc : Continuous fun σ => (ψL σ : PadicAlgCl p))
+    (y : ℂ_[p]) (hy0 : y ≠ 0)
+    (hy : ∀ σ ∈ E.fixingSubgroup,
+      ZInQ.Contrib.G9.PkgI4.cpAct p σ y = ((ψL σ : PadicAlgCl p) : ℂ_[p]) ^ 2 * y) :
+    ∃ E' : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] E' ∧ IsGalois ℚ_[p] E' ∧
+      E ≤ E' ∧ ∃ c : ℂ_[p], c ≠ 0 ∧ ∀ σ ∈ E'.fixingSubgroup,
+        ZInQ.Contrib.G9.PkgI4.cpAct p σ c = ((ψL σ : PadicAlgCl p) : ℂ_[p]) * c := by
+  obtain ⟨c, hc⟩ := IsAlgClosed.exists_pow_nat_eq y two_pos
+  have hc0 : c ≠ 0 := by
+    rintro rfl
+    rw [zero_pow two_ne_zero] at hc
+    exact hy0 hc.symm
+  let ψC : ZInQ.Contrib.G9.PkgI4.GQp p → ℂ_[p] := fun σ => ((ψL σ : PadicAlgCl p) : ℂ_[p])
+  have hψCc : Continuous ψC := (UniformSpace.Completion.continuous_coe _).comp hψc
+  have hpm : ∀ σ ∈ E.fixingSubgroup, ZInQ.Contrib.G9.PkgI4.cpAct p σ c = ψC σ * c ∨
+      ZInQ.Contrib.G9.PkgI4.cpAct p σ c = -(ψC σ * c) := by
+    intro σ hσ
+    have h2 : (ZInQ.Contrib.G9.PkgI4.cpAct p σ c) ^ 2 = (ψC σ * c) ^ 2 := by
+      rw [← map_pow, hc, hy σ hσ, mul_pow, hc]
+    exact sq_eq_sq_iff_eq_or_eq_neg.mp h2
+  let Um : Set (ZInQ.Contrib.G9.PkgI4.GQp p) := {σ | ZInQ.Contrib.G9.PkgI4.cpAct p σ c = -(ψC σ * c)}
+  have hUm : IsClosed Um := isClosed_eq (continuous_cpAct_orbit p c) (hψCc.mul continuous_const).neg
+  have hG : IsOpen (E.fixingSubgroup : Set (ZInQ.Contrib.G9.PkgI4.GQp p)) :=
+    IntermediateField.fixingSubgroup_isOpen E
+  have hopen : IsOpen ((E.fixingSubgroup : Set (ZInQ.Contrib.G9.PkgI4.GQp p)) ∩ Umᶜ) :=
+    hG.inter hUm.isOpen_compl
+  have h1 : (1 : ZInQ.Contrib.G9.PkgI4.GQp p) ∈ (E.fixingSubgroup : Set (ZInQ.Contrib.G9.PkgI4.GQp p)) ∩ Umᶜ := by
+    refine ⟨E.fixingSubgroup.one_mem, fun h => ?_⟩
+    have h' : ZInQ.Contrib.G9.PkgI4.cpAct p 1 c = -(ψC 1 * c) := h
+    have hψ1 : ψC 1 = 1 := by simp [ψC]
+    have hone : ZInQ.Contrib.G9.PkgI4.cpAct p 1 c = c := ZInQ.Contrib.G9.cpAct_one p c
+    rw [hone, hψ1, one_mul] at h'
+    have h2 : (2 : ℂ_[p]) * c = 0 := by linear_combination h'
+    exact hc0 ((mul_eq_zero.mp h2).resolve_left two_ne_zero)
+  obtain ⟨L, hLfd, hLn, hLsub⟩ :=
+    (krullTopology_mem_nhds_one_iff_of_normal ℚ_[p] (PadicAlgCl p) _).mp (hopen.mem_nhds h1)
+  haveI := hLfd
+  let EL : IntermediateField ℚ_[p] (PadicAlgCl p) := E ⊔ L
+  let E' : IntermediateField ℚ_[p] (PadicAlgCl p) := IntermediateField.normalClosure ℚ_[p] EL (PadicAlgCl p)
+  have hle : EL ≤ E' := IntermediateField.le_normalClosure EL
+  refine ⟨E', normalClosure.is_finiteDimensional ℚ_[p] EL (PadicAlgCl p),
+    IsGalois.normalClosure ℚ_[p] EL (PadicAlgCl p), le_sup_left.trans hle, c, hc0, ?_⟩
+  intro σ hσ
+  have hσL : σ ∈ L.fixingSubgroup := IntermediateField.fixingSubgroup_le (le_sup_right.trans hle) hσ
+  obtain ⟨hσE, hσm⟩ := hLsub hσL
+  rcases hpm σ hσE with h | h
+  · exact h
+  · exact absurd h hσm
+
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
+/-- **The conclusion**: a character with values in a finite Galois `E'` and a nonzero `c ∈ ℂ_p` with `σ(c) = ψ(σ) c` on
+`G_{E'}` is Hodge–Tate of weight `0` (`htMult_eq_finrank_Ysp`, Tate–Sen independence). -/
+theorem hasHTWeights_zero_of_twist (E' : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E']
+    [IsGalois ℚ_[p] E'] (ψL : ZInQ.Contrib.G9.PkgI4.GQp p →* (PadicAlgCl p)ˣ)
+    (hψE : ∀ σ, (ψL σ : PadicAlgCl p) ∈ E') (c : ℂ_[p]) (hc0 : c ≠ 0)
+    (hc : ∀ σ ∈ E'.fixingSubgroup,
+      ZInQ.Contrib.G9.PkgI4.cpAct p σ c = ((ψL σ : PadicAlgCl p) : ℂ_[p]) * c) :
+    ∃ ψE : PkgI4.GQp p →* E'ˣ, (∀ σ, (((ψE σ : E'ˣ) : E') : PadicAlgCl p) = ψL σ) ∧
+      PkgI4.HasHTWeights p (charRep ψE) {0} := by
+  let ψE : PkgI4.GQp p →* E'ˣ :=
+    { toFun := fun σ => Units.mk0 ⟨ψL σ, hψE σ⟩ (fun h => (ψL σ).ne_zero (congrArg Subtype.val h))
+      map_one' := Units.ext (Subtype.ext (by simp))
+      map_mul' := fun a b => Units.ext (Subtype.ext (by simp)) }
+  refine ⟨ψE, fun σ => rfl, fun w => ?_⟩
+  have hbr : PkgI4.htMult p (charRep ψE) w = ZInQ.Contrib.G9.PkgI4.htMult p (charRep ψE) w := rfl
+  rw [hbr, htMult_eq_finrank_Ysp p ZInQ.Contrib.CloudB3W11.tateTwistInvariants_proof
+    ZInQ.Contrib.CloudB3W11.axSenTate_proof E' (charRep ψE) w]
+  let cv : Fin 1 → ℂ_[p] := fun _ => c
+  have hcv0 : cv ≠ 0 := fun h => hc0 (congrFun h 0)
+  have hcv : cv ∈ Ysp p (charRep ψE) 0 E' := by
+    intro σ hσ
+    ext i
+    have hi : i = 0 := Subsingleton.elim i 0
+    subst hi
+    have hval : algebraMap E' ℂ_[p] ((ψE σ : E'ˣ) : E') = ((ψL σ : PadicAlgCl p) : ℂ_[p]) := rfl
+    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_one, Matrix.transpose_apply, matC, Matrix.map_apply,
+      Pi.smul_apply, vAct, cycPow_zero, one_smul]
+    have hm : ((charRep ψE σ : GL (Fin 1) E') : Matrix (Fin 1) (Fin 1) E') 0 0 = ((ψE σ : E'ˣ) : E') := by
+      simp [charRep, Matrix.algebraMap_matrix_apply]
+    rw [hm, hval]
+    exact (hc σ hσ).symm
+  haveI : ∀ i : ℤ, FiniteDimensional E' (Ysp p (charRep ψE) i E') := fun i =>
+    Ysp_finiteDimensional p ZInQ.Contrib.CloudB3W11.tateTwistInvariants_proof
+      ZInQ.Contrib.CloudB3W11.axSenTate_proof E' (charRep ψE) i
+  have hle : ∀ i : ℤ, Module.finrank E' (Ysp p (charRep ψE) i E') ≤ 1 := fun i =>
+    finrank_Ysp_le p E' (charRep ψE) i
+  by_cases hw : w = 0
+  · subst hw
+    rw [neg_zero, Multiset.count_singleton_self]
+    have hne0 : Ysp p (charRep ψE) 0 E' ≠ ⊥ := by
+      intro h
+      have : cv ∈ (⊥ : Submodule E' (Fin 1 → ℂ_[p])) := h ▸ hcv
+      exact hcv0 ((Submodule.mem_bot E').mp this)
+    have hpos : 0 < Module.finrank E' (Ysp p (charRep ψE) 0 E') := by
+      rcases Nat.eq_zero_or_pos (Module.finrank E' (Ysp p (charRep ψE) 0 E')) with h0 | h0
+      · exact absurd (Submodule.finrank_eq_zero.mp h0) hne0
+      · exact h0
+    have := hle 0
+    omega
+  · rw [Multiset.count_singleton, if_neg hw]
+    by_contra hne
+    have hne' : Ysp p (charRep ψE) (-w) E' ≠ ⊥ := by
+      intro h
+      rw [h, finrank_bot] at hne
+      exact hne rfl
+    obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne'
+    have hli := linIndep_two p E' (charRep ψE) 0 (-w) (by omega) cv z hcv hz hcv0 hz0
+    have := hli.fintype_card_le_finrank
+    rw [Fintype.card_fin, Module.finrank_fin_fun] at this
+    omega
+
 end Local
 
 end TwistHT
