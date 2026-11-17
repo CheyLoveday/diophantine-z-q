@@ -24,3 +24,13 @@
     isHeckeT_unique, isDiamond_unique.
 - New Props: X1TauPoints (leaf candidate, DS §7.7), AbelJacobiX1 (leaf candidate, DS Thm 6.1.2 + Milne JV),
   EichlerPrimitive (GLUE), EichlerHecke (GLUE), ConstOnTauPoints (GLUE).
+- 02:16 EichlerPrimitive PROVED (eichlerPrimitive: Morera on unit disc for dslope(cuspFunction) + q-substitution).
+- EichlerHecke PROVED (eichlerHecke): hecke_eigen_fun (T_p f = a_p f from q-expansion, sum_exp_shift, reindex
+  m ↦ pm, coeff_rec_prime), eichler_heckeT / eichler_diamond (derivative zero on ℍ, nebentypus, SL_slash_apply).
+- evF_eq_zero_of_heckeJ_eq_zero_of_leaves, killsIf_iff_IfDS_of_leaves: gap 1 from X1TauPoints + AbelJacobiX1 only.
+- Axioms (scratch/hecke-pin/Axioms-output.txt): all main theorems [propext, Classical.choice, Quot.sound]. VERIFIED.
+- Target.lean: verbatim copies of HeckeJ1DS, AfShimura, AfCharpolyDS965 + dependencies; Iff.rfl. VERIFIED.
+- Discharges-output.txt: r16CoreY still by r16CoreY_of_ds965; HeckePin discharges no field (audit lemmas). VERIFIED.
+- autofold.json = r16-det spec + audit docs + audit_props; dry run 11/18 on 29 -> 15/17 on 32 (unchanged);
+  FoldDryRun.lean sixContactMin_of_open49 standard axioms. VERIFIED.
+- Leaf docstrings (HeckeJ1DS, AfShimura, AfCharpolyDS965) now point at HeckePin.lean (text only); build OK.
