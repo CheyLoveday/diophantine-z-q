@@ -10,7 +10,7 @@ Task bdr-inv (2026-11-17). The statement `DeRhamPrint.BdRInvariantsPrinted`
 
 Proof (Brinon–Conrad, *CMI notes* (2009), Prop. 4.3.1 / Thm. 4.3.2-type argument; Fontaine, Astérisque 223,
 Exp. II; locators UNVERIFIED):
-1. `σ([ε] - 1) = ([ε] - 1) · c_σ` in `B_dR^+` with `θ(c_σ) = χ(σ)` (`bdrPlus_xe`): `σ(ε) = ε^a ρ^{p^m}` in the
+1. `σ([ε] - 1) = ([ε] - 1) · c_σ` in `B_dR^+` with `θ(c_σ) = χ(σ)` (`bdrPlus_T`): `σ(ε) = ε^a ρ^{p^m}` in the
    tilt with `ρ^♯ = 1`, `a ≡ χ(σ) mod p^m`, and `[ρ] - 1 ∈ ξ W(O♭)` gives `θ(c_σ) ≡ a mod p^m` (bounded error).
 2. `[ε] - 1` is a uniformizer of the DVR `B_dR^+`; a `G_K`-invariant `x = T^{j-k} u` gives
    `χ^{j-k} σ(θ u) = θ u`, so `j = k` by Tate's theorem (`tateTwistInvariants_proof`): `x ∈ (B_dR^+)^×`.
