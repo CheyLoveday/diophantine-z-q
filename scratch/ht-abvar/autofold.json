@@ -1,0 +1,129 @@
+{
+ "name": "ht-abvar",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.C8Poincare",
+  "ZInQKernel.Contrib.OneProof.HTAbVarScholze"
+ ],
+ "discharges": [],
+ "handfold": {
+  "kind": "copy reroute (not an autofold: hodgeTateDecompAbVar is not an open field; it is filled inside openResearchLeaves35_of_OpenResearchLeaves36_eb_k954_cf from the open field hodgeTateDecompOr and the Picard rows)",
+  "status": "dry run compiled (scratch/ht-abvar/HTDryRun.lean, tops sixContactMin_of_open73HT and frozenTarget_ht, standard axioms); fold together with c8-conrad2's handfold (consumers (i), (ii)); not folded here",
+  "base_generator": "c8-conrad2's generated copy (scratch/c8-conrad2/C8DryRun.lean up to its handwritten top) verbatim, then scratch/ht-abvar/gen/top_a.lean + gen/r35.lean + gen/top_b.lean",
+  "iii_swap": {
+   "at": "HDec.HSyn.openResearchLeaves35_of_OpenResearchLeaves36_eb_k954_cf (TailZ74 L378)",
+   "replace": "hodgeTateDecompAbVar := hodgeTateDecompAbVar_of_open_k954 n.hodgeTateDecompExists t.mumfordTorsionAlgClosed l.picRepresentableAbVar l.kleimanPicZeroProper954",
+   "by": "hodgeTateDecompAbVar := _root_.DeRhamScholze.HTAbVar.hodgeTateDecompAbVar_of_scholze {l}.scholzeDeRhamAlg {l}.t10TateDuality {l}.hodgeNumberH1AbVar",
+   "and": "the copy openResearchLeaves35_..._cf_ht takes neither t nor l; openAddedLeaves18_ht and sixContactMin_of_open45_pz_eb_ht drop c8-conrad2's unused added-bundle argument"
+  },
+  "new_top": "HDec.HSyn.sixContactMin_of_open73HT (r : OpenResearchLeaves53) (t : OpenTextbookLeaves19HT) (l : OpenAddedLeaves28HT)",
+  "rows_removed": [
+   "picRepresentableAbVar (added, GLUE)",
+   "kleimanPicZeroProper954SiteQ (added, GLUE)",
+   "hodgeTateDecompOr (research, GLUE): no longer read (field taint: its only flow is into OpenResearchLeaves36EBCF.hodgeTateDecompExists, which the rerouted map ignores)"
+  ],
+  "rows_added": [
+   "poincareComplement",
+   "conradAppBQp",
+   "tateTwistInvariantsInertia",
+   "twistCharHTWt0",
+   "inertiaAtPDecomp",
+   "minkowskiInertiaQ",
+   "scholzeDeRhamAlg",
+   "t10TateDuality",
+   "hodgeNumberH1AbVar"
+  ],
+  "count": "H rows of kinds.tsv: strict 5/24 on 29 -> 5/30 on 35 (all nine new rows GLUE at entry: unread or consequence); net GLUE +6, of which consumer (iii) contributes +2 (-hodgeTateDecompOr, +scholzeDeRhamAlg, +t10TateDuality, +hodgeNumberH1AbVar)",
+  "field_taint": "scratch/ht-abvar/dryrun_taint_out.txt (seeds picRepresentableAbVar, kleimanPicZeroProper954SiteQ, hodgeTateDecompOr from frozenTarget_ht: no terminal consumer; the Picard rows are not read at all)"
+ },
+ "new_leaves": [
+  {
+   "bundle": "textbook",
+   "name": "poincareComplement",
+   "type": "_root_.ZInQ.Contrib.AVB1.PoincareComplement",
+   "kind": "consequence",
+   "class": "ELLIOT (uncited manuscript step, diophantine_zq.tex L865)",
+   "flag": "unread: restored printed leaf (was LEAF/LEAF before poincare-proof); locator UNVERIFIED: Milne, Abelian varieties (Cornell-Silverman 1986) Prop. 12.1 over any field; Milne AV notes v2.00 number not checked (jmilne.org not fetchable on host); Mumford 19 Thm 1 is over an algebraically closed field only",
+   "source": "Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (1986), Prop. 12.1 (Poincare's complete reducibility); weaker form (char 0, no closed-immersion conclusion for Z -> J)",
+   "from_task": "c8-conrad2"
+  },
+  {
+   "bundle": "added",
+   "name": "conradAppBQp",
+   "type": "_root_.HDec.G0Galois.C8Conrad.ConradAppBQp",
+   "kind": "consequence",
+   "flag": "unread; unrefereed source (author preprint); statement as reported by the theorem-application audit",
+   "source": "Conrad, Lifting global representations with local properties, author preprint Dec. 11 2011, App. B pp. 32-33 (diophantine_zq.tex L761, cited)",
+   "from_task": "c8-conrad2"
+  },
+  {
+   "bundle": "added",
+   "name": "tateTwistInvariantsInertia",
+   "type": "_root_.HDec.G0Galois.C8Conrad.TateTwistInvariantsInertia",
+   "kind": "consequence",
+   "flag": "locator UNVERIFIED; dictionary step G_{completion of K^ur} = I_K; not cited by the manuscript (used to prove the manuscript's uncited step L763-764)",
+   "source": "Tate, p-divisible groups, Proc. Conf. Local Fields (Driebergen 1966), Springer 1967, sec. 3.3 Thm 2, for L = completion of K^ur",
+   "from_task": "c8-conrad2"
+  },
+  {
+   "bundle": "added",
+   "name": "twistCharHTWt0",
+   "type": "_root_.HDec.G0Galois.C8Conrad.TwistCharHTWt0",
+   "kind": "glue",
+   "flag": "on-the-spot glue (N5 L758-760, L765-766), unproved; the Hodge-Tate half of c8-conrad's TwistCharHT0",
+   "source": "project glue",
+   "from_task": "c8-conrad2"
+  },
+  {
+   "bundle": "added",
+   "name": "inertiaAtPDecomp",
+   "type": "_root_.HDec.G0Galois.C8Conrad.InertiaAtPDecomp",
+   "kind": "glue",
+   "flag": "dictionary glue (global inertia groups of Qbar vs decomp(I_{Q_q})), unproved, STANDARD",
+   "source": "project glue",
+   "from_task": "c8-conrad2"
+  },
+  {
+   "bundle": "added",
+   "name": "minkowskiInertiaQ",
+   "type": "_root_.HDec.G0Galois.C8Conrad.MinkowskiInertiaQ",
+   "kind": "glue",
+   "flag": "dictionary glue over Mathlib's Minkowski theorem (NumberField.exists_not_isUnramifiedIn), unproved",
+   "source": "project glue",
+   "from_task": "c8-conrad2"
+  },
+  {
+   "name": "scholzeDeRhamAlg",
+   "type": "_root_.DeRhamScholze.ScholzeDeRhamAlg",
+   "doc": "Scholze, p-adic Hodge theory for rigid-analytic varieties, Forum Math. Pi 1 (2013), Cor. 1.8 with Thms 9.1 and 9.3 and the corrigendum Forum Math. Pi 4 (2016) e6, applied as in diophantine_zq.tex lem:de-rham-descent L10953-10965 (step C3): for F finite over Q_p and X proper smooth over F, H^i_et(X_Fbar, Q_p) is de Rham and the Hodge filtration of D_dR has its jumps in [0, i] (the filtered comparison D_dR = H^i_dR(X) with Fil^0 H^i_dR = H^i_dR, Fil^{i+1} = 0). Lean form: H^i = Q_p (x)_{Z_p} Scheme.EllAdicCohomology (X x_F Spec Fbar) p i (Mathlib's pro-etale l-adic cohomology), sigma acting by transport along 1 x Spec(sigma^-1) (DeRhamScholze.galHX = t10-etale's galH); D_dR = (B_dR (x) W)^{G_F}, Fil^j = D_dR meet (t^j B_dR^+ (x) W). Consequence, not printed form: the print is for rigid-analytic varieties (not in Mathlib); dictionary steps analytification + Thms 9.1/9.3 (in the manuscript), Fbar vs C_p and pro-etale vs etale (on-the-spot, derham-scholze report section 3)",
+   "kind": "consequence",
+   "flag": "pending review: new leaf (derham-scholze), consequence of Scholze 2013 Cor. 1.8 + Thms 9.1, 9.3 (the manuscript's own citation for step C3) over Mathlib's pro-etale l-adic cohomology; journal numbering of Scholze UNVERIFIED here (arXiv v2 and journal locators read by the locator audit, locators.md R10)",
+   "source": "Scholze, Forum Math. Pi 1 (2013), Cor. 1.8, Thms 9.1, 9.3, corrigendum Forum Math. Pi 4 (2016) e6 (manuscript lem:de-rham-descent, L10953-10965): H^i_et(X_Fbar, Q_p) de Rham with Hodge jumps in [0, i], over Mathlib's EllAdicCohomology (derham-scholze)",
+   "bundle": "added",
+   "from_task": "derham-scholze",
+   "class": "CITED (diophantine_zq.tex L736-737, L10953-10965)"
+  },
+  {
+   "name": "t10TateDuality",
+   "type": "_root_.T10Etale.T10_TateDuality",
+   "doc": "Milne, Abelian varieties, v2.00 (2008), Part I, Thm 12.1(a), as the manuscript cites it (lem:de-rham-descent L10966-10970; unrefereed notes, h-trust C3); refereed form Milne 1986 (Cornell-Silverman) Thm 15.1(a): H^1(A_Kbar, Z_l) = Hom(T_l A, Z_l), Galois-equivariantly, over Mathlib's pro-etale EllAdicCohomology (t10-etale's leaf T10Etale.T10_TateDuality, unchanged)",
+   "kind": "published",
+   "flag": "unread: t10-etale's leaf reused (av-b2 section 2.6: leaf, confirmed); Milne v2.00 Part I Thm 12.1(a) and Milne 1986 Thm 15.1(a) not read here; equivariance from canonicity and the pro-etale/etale comparison (Bhatt-Scholze 2015 section 5.6) are dictionary steps; locator UNVERIFIED",
+   "source": "Milne, Abelian varieties v2.00 Part I Thm 12.1(a) (manuscript's citation) / Milne 1986 Thm 15.1(a): V_l(A) = H^1_et(A_Kbar, Q_l)^dual, Galois-equivariantly, over Mathlib's pro-etale l-adic cohomology (T10Etale.T10_TateDuality)",
+   "bundle": "added",
+   "from_task": "derham-scholze",
+   "class": "CITED (diophantine_zq.tex L10966-10970, milne-av Part I Thm 12.1(a))"
+  },
+  {
+   "bundle": "added",
+   "name": "hodgeNumberH1AbVar",
+   "type": "_root_.DeRhamScholze.HTAbVar.HodgeNumberH1AbVar",
+   "doc": "The Hodge numbers of H^1_dR(A/F) (diophantine_zq.tex lem:de-rham-descent L10993, uncited: 2,2 for the abelian surface) carried to D_dR(H^1_et) by Scholze's filtered comparison (Forum Math. Pi 1 (2013) Cor. 1.8 with Thms 9.1, 9.3; cited L736-737, applied L10953-10965): for A/F an abelian variety of dimension g over a finite F/Q_p, dim_{Q_p} Fil^1 D_dR(H^1_et(A_Fbar, Q_p)) = [F:Q_p] g (Fil^1 H^1_dR = H^0(A, Omega^1), of dimension g). Lean form over the objects of DeRhamScholze.ScholzeDeRhamAlg (Mathlib's pro-etale EllAdicCohomology, filD = D_dR meet (t B_dR^+ (x) W)).",
+   "kind": "consequence",
+   "class": "ELLIOT (Hodge numbers, L10993, no citation) through CITED (Scholze Cor. 1.8 filtered comparison, L736-737, L10955-10957)",
+   "flag": "pending review: new leaf (ht-abvar), consequence: H^1_dR is not in Mathlib, so the Hodge number h^{1,0} = g is stated on the etale side of Scholze's filtered comparison; general g (the manuscript states g = 2); locators of h^{1,0} = g (Mumford, Abelian varieties, section 4) UNVERIFIED",
+   "source": "diophantine_zq.tex lem:de-rham-descent L10993-10994 (Hodge numbers 2,2 of H^1_dR(A/F)) with Scholze, Forum Math. Pi 1 (2013), Cor. 1.8, Thms 9.1, 9.3 (filtered comparison D_dR(H^1_et) = H^1_dR(A/F)); h^{1,0}(A) = g: Mumford, Abelian varieties, section 4 (UNVERIFIED)",
+   "from_task": "ht-abvar"
+  }
+ ],
+ "note": "Needs --allow-rise or a ruling: the Picard rows leave the route but the GLUE count rises by 6 (report docs/research/ht-abvar.md section 5)."
+}
