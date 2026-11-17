@@ -38,3 +38,10 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   `frozenTarget_hCMLocal` axioms: [propext, Classical.choice, Quot.sound]. `#discharges` lists no hCM row
   (the binder type is now `HCMDict.ShimuraThm54`, and shimuraMainCM_of_local concludes `ShimuraMainCM`) — next:
   prove `HCMDict.ShimuraThm54` from `ShimuraThm54Local` (needs: sInvLat is a period lattice).
+- HCMLattice.lean + §O and old-from-new: COMPILED, 0 errors, no sorry. VERIFIED:
+  - `exists_periodPair_sInvLat`: for every lattice 𝔞 and idele s, κ(sInvLat s 𝔞) is the lattice of a period pair
+    (c₀𝓞 ⊆ s⁻¹𝔞 ⊆ c₁⁻¹𝓞 from Tau Ceti's `mul_nonZeroDivisor_mem_integralAdeles`, then a ℤ-basis of a discrete
+    full-rank ℤ-submodule of ℂ by `ZLattice.rank` / `ofZLatticeBasis_span`);
+  - `IsImmersion.comp_mul`, `isAnalyticIso_of_unif` (IsAnalyticUnif on a short model ⇒ IsAnalyticIso);
+  - `shimuraThm54_of_local : ShimuraThm54Local → HCMDict.ShimuraThm54` (the old leaf from the new one);
+    axioms [propext, Classical.choice, Quot.sound].

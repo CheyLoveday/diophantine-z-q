@@ -1160,6 +1160,202 @@ theorem rep_local_of_global (hsq : Squarefree m) (L : PeriodPair) {𝔞 : Set (Q
   exact h'
 
 
+/-! ## §O. `s⁻¹𝔞 = K ∩ s_f⁻¹𝔞̂` is a lattice -/
+
+/-- `N·𝒪̂_K ⊆ 𝔞̂` when `N·𝒪_K ⊆ 𝔞`. -/
+theorem natMul_integral_mem_latHat {𝔞 : Set (QNeg m)} {N : ℕ}
+    (hN𝔞 : ∀ y : 𝓞 (QNeg m), (N : QNeg m) * y ∈ 𝔞) {z : AfK m}
+    (hz : z ∈ FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m)) :
+    algebraMap (QNeg m) (AfK m) (N : QNeg m) * z ∈ latHat m 𝔞 := by
+  have hcl := FiniteAdeleRing.closure_range_algebraMap (𝓞 (QNeg m)) (QNeg m)
+  have hz' : z ∈ closure (Set.range (algebraMap (𝓞 (QNeg m)) (AfK m))) := (Set.ext_iff.1 hcl z).2 hz
+  refine map_mem_closure (continuous_const.mul continuous_id) hz' ?_
+  rintro _ ⟨r, rfl⟩
+  refine ⟨(N : QNeg m) * (r : QNeg m), hN𝔞 r, ?_⟩
+  show algebraMap (QNeg m) (AfK m) ((N : QNeg m) * (r : QNeg m)) = _
+  rw [map_mul]; rfl
+
+theorem algebraMap_integers_eq (y : 𝓞 (QNeg m)) :
+    algebraMap (𝓞 (QNeg m)) (AfK m) y = algebraMap (QNeg m) (AfK m) (y : QNeg m) := rfl
+
+theorem linIndep_mul_I_sqrt {w : ℂ} (hw : w ≠ 0) :
+    LinearIndependent ℝ ![w, w * (I * (Real.sqrt m : ℂ))] := by
+  rw [LinearIndependent.pair_iff]
+  intro a b hab
+  have hsqrt : (0 : ℝ) < Real.sqrt m := Real.sqrt_pos.2 (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne m))
+  have h1 : w * ((a : ℂ) + (b : ℂ) * (I * (Real.sqrt m : ℂ))) = 0 := by
+    rw [Complex.real_smul, Complex.real_smul] at hab; linear_combination hab
+  have h2 := (mul_eq_zero.1 h1).resolve_left hw
+  have hre := congrArg Complex.re h2
+  have him := congrArg Complex.im h2
+  simp at hre him
+  refine ⟨hre, ?_⟩
+  rcases him with h | h
+  · exact h
+  · exact absurd h (NeZero.ne m)
+
+/-- **`s⁻¹𝔞` is a lattice**: for a lattice `𝔞 ⊂ K` and an idele `s`, `κ(K ∩ s_f⁻¹𝔞̂)` is the lattice of a period
+pair (it lies between `c₀𝒪_K` and `c₁⁻¹𝒪_K`). -/
+theorem exists_periodPair_sInvLat (hsq : Squarefree m) (L : PeriodPair) {𝔞 : Set (QNeg m)}
+    (h𝔞 : (L.lattice : Set ℂ) = kappa m '' 𝔞) (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)) :
+    ∃ L' : PeriodPair, (L'.lattice : Set ℂ) = kappa m '' sInvLat m s 𝔞 := by
+  set alg := algebraMap (QNeg m) (AfK m) with halg
+  have hM := eq_kappaComap L h𝔞
+  set M := kappaComap (m := m) L.lattice
+  have hadd : ∀ x y, x ∈ sInvLat m s 𝔞 → y ∈ sInvLat m s 𝔞 → x + y ∈ sInvLat m s 𝔞 := by
+    intro x y hx hy
+    show finPart s * alg (x + y) ∈ latHat m 𝔞
+    rw [map_add, mul_add]
+    rw [hM] at hx hy ⊢
+    exact latHat_add_mem M hx hy
+  have hzero : (0 : QNeg m) ∈ sInvLat m s 𝔞 := by
+    show finPart s * alg 0 ∈ latHat m 𝔞
+    rw [map_zero, mul_zero, ← map_zero alg]
+    exact mem_latHat_of_mem (by rw [hM]; exact zero_mem M)
+  have hzsmul : ∀ (n : ℤ) x, x ∈ sInvLat m s 𝔞 → n • x ∈ sInvLat m s 𝔞 := by
+    intro n x hx
+    show finPart s * alg (n • x) ∈ latHat m 𝔞
+    rw [map_zsmul, mul_smul_comm]
+    have hx' : finPart s * alg x ∈ latHat m 𝔞 := hx
+    rw [hM] at hx' ⊢
+    rw [latHat_eq_closure] at hx' ⊢
+    exact zsmul_mem hx' n
+  let b : Submodule ℤ (QNeg m) :=
+    { carrier := sInvLat m s 𝔞
+      add_mem' := fun hx hy => hadd _ _ hx hy
+      zero_mem' := hzero
+      smul_mem' := fun n x hx => hzsmul n x hx }
+  -- lower bound `N c 𝒪 ⊆ s⁻¹𝔞`
+  obtain ⟨N, hN, hN𝔞⟩ := exists_nat_mul_integers_mem hsq L h𝔞
+  obtain ⟨c, hc0, hc⟩ := FiniteAdeleRing.mul_nonZeroDivisor_mem_integralAdeles (finPart s)
+  have hcK : (c : QNeg m) ≠ 0 := by
+    intro h; exact nonZeroDivisors.ne_zero hc0 (by exact_mod_cast h)
+  have hlow : ∀ y : 𝓞 (QNeg m), (N : QNeg m) * c * y ∈ sInvLat m s 𝔞 := by
+    intro y
+    show finPart s * alg ((N : QNeg m) * c * y) ∈ latHat m 𝔞
+    have e : finPart s * alg ((N : QNeg m) * c * y) = alg (N : QNeg m) *
+        ((finPart s * algebraMap (𝓞 (QNeg m)) (AfK m) c) * algebraMap (𝓞 (QNeg m)) (AfK m) y) := by
+      rw [algebraMap_integers_eq, algebraMap_integers_eq, map_mul, map_mul]; ring
+    rw [e]
+    exact natMul_integral_mem_latHat hN𝔞 (Subalgebra.mul_mem _ hc (Subalgebra.algebraMap_mem _ y))
+  -- upper bound `c' d (s⁻¹𝔞) ⊆ 𝒪`
+  obtain ⟨a₁, -, ha₁⟩ : L.ω₁ ∈ kappa m '' 𝔞 := h𝔞 ▸ L.ω₁_mem_lattice
+  obtain ⟨a₂, -, ha₂⟩ : L.ω₂ ∈ kappa m '' 𝔞 := h𝔞 ▸ L.ω₂_mem_lattice
+  obtain ⟨⟨r₁, d₁⟩, hd₁⟩ := IsLocalization.surj (nonZeroDivisors (𝓞 (QNeg m))) a₁
+  obtain ⟨⟨r₂, d₂⟩, hd₂⟩ := IsLocalization.surj (nonZeroDivisors (𝓞 (QNeg m))) a₂
+  simp only at hd₁ hd₂
+  set d : 𝓞 (QNeg m) := (d₁ : 𝓞 (QNeg m)) * d₂
+  have hdK : (d : QNeg m) ≠ 0 := by
+    have h1 := nonZeroDivisors.ne_zero d₁.2
+    have h2 := nonZeroDivisors.ne_zero d₂.2
+    intro h; exact mul_ne_zero h1 h2 (by exact_mod_cast h)
+  have hd𝔞 : ∀ x ∈ 𝔞, (d : QNeg m) * x ∈ (algebraMap (𝓞 (QNeg m)) (QNeg m)).range := by
+    intro x hx
+    obtain ⟨p, q, hpq⟩ := PeriodPair.mem_lattice.1 ((mem_of_kappa L h𝔞 x).1 hx)
+    have hx' : x = (p : QNeg m) * a₁ + (q : QNeg m) * a₂ := by
+      apply kappa_injective
+      rw [kappa_add, kappa_intCast_mul, kappa_intCast_mul, ha₁, ha₂, hpq]
+    refine ⟨p * (d₂ : 𝓞 (QNeg m)) * r₁ + q * (d₁ : 𝓞 (QNeg m)) * r₂, ?_⟩
+    rw [hx']
+    simp only [map_add, map_mul, map_intCast, ← hd₁, ← hd₂, d]
+    push_cast; ring
+  have hhat : ∀ z ∈ latHat m 𝔞,
+      alg (d : QNeg m) * z ∈ FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m) := by
+    intro z hz
+    have hcl : IsClosed {z : AfK m | alg (d : QNeg m) * z ∈
+        FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m)} :=
+      (FiniteAdeleRing.isClosed_integralAdeles _ _).preimage (continuous_const.mul continuous_id)
+    refine closure_minimal ?_ hcl hz
+    rintro _ ⟨x, hx, rfl⟩
+    simp only [Set.mem_setOf_eq]
+    rw [← map_mul]
+    exact (FiniteAdeleRing.algebraMap_mem_integralAdeles_iff _).2 (hd𝔞 x hx)
+  obtain ⟨c', hc'0, hc'⟩ := FiniteAdeleRing.mul_nonZeroDivisor_mem_integralAdeles (finPart s⁻¹)
+  have hc'K : (c' : QNeg m) ≠ 0 := by
+    intro h; exact nonZeroDivisors.ne_zero hc'0 (by exact_mod_cast h)
+  have hup : ∀ x ∈ sInvLat m s 𝔞,
+      (c' : QNeg m) * d * x ∈ (algebraMap (𝓞 (QNeg m)) (QNeg m)).range := by
+    intro x hx
+    rw [← FiniteAdeleRing.algebraMap_mem_integralAdeles_iff (R := 𝓞 (QNeg m))]
+    have e : alg ((c' : QNeg m) * d * x) =
+        (finPart s⁻¹ * algebraMap (𝓞 (QNeg m)) (AfK m) c') * (alg (d : QNeg m) * (finPart s * alg x)) := by
+      rw [algebraMap_integers_eq, map_mul, map_mul]
+      have h1 := finPart_inv_mul s
+      linear_combination (-(alg (c' : QNeg m) * alg (d : QNeg m) * alg x)) * h1
+    rw [e]
+    exact Subalgebra.mul_mem _ hc' (hhat _ hx)
+  -- the period pair
+  set c₀ : QNeg m := (N : QNeg m) * c
+  set c₁ : QNeg m := (c' : QNeg m) * d
+  have hc₀ : c₀ ≠ 0 := mul_ne_zero (by exact_mod_cast hN.ne') hcK
+  have hc₁ : c₁ ≠ 0 := mul_ne_zero hc'K hdK
+  set Lb : Submodule ℤ ℂ := b.map (kappaLin m)
+  have hLb : (Lb : Set ℂ) = kappa m '' sInvLat m s 𝔞 := by
+    ext z; simp only [Lb, Submodule.map_coe, kappaLin_apply]; rfl
+  have hkc₁ : kappa m c₁ ≠ 0 := fun h => hc₁ (kappa_injective (h.trans (by simp [kappa])))
+  set w : ℂ := (kappa m c₁)⁻¹ with hwdef
+  have hw0 : w ≠ 0 := inv_ne_zero hkc₁
+  have hind0 : LinearIndependent ℝ ![w / 2, w / 2 * (I * (Real.sqrt m : ℂ))] :=
+    linIndep_mul_I_sqrt (div_ne_zero hw0 two_ne_zero)
+  let P₀ : PeriodPair := ⟨w / 2, w / 2 * (I * (Real.sqrt m : ℂ)), hind0⟩
+  have hsub : (Lb : Set ℂ) ⊆ P₀.lattice := by
+    rw [hLb]
+    rintro _ ⟨x, hx, rfl⟩
+    obtain ⟨y, hy⟩ := hup x hx
+    obtain ⟨a, t, -, ha, ht, -⟩ := two_coords hsq y
+    rw [SetLike.mem_coe, PeriodPair.mem_lattice]
+    refine ⟨a, t, ?_⟩
+    have hx' : x = c₁⁻¹ * (y : QNeg m) := by
+      have : (y : QNeg m) = c₁ * x := hy
+      rw [this, ← mul_assoc, inv_mul_cancel₀ hc₁, one_mul]
+    have hky : kappa m (y : QNeg m) = (a : ℂ) / 2 + (t : ℂ) / 2 * (I * (Real.sqrt m : ℂ)) := by
+      simp only [kappa]
+      have ha' : ((y : QNeg m).re : ℂ) = (a : ℂ) / 2 := by
+        have : ((y : QNeg m).re : ℚ) = a / 2 := by rw [← ha]; ring
+        rw [this]; push_cast; ring
+      have ht' : ((y : QNeg m).im : ℂ) = (t : ℂ) / 2 := by
+        have : ((y : QNeg m).im : ℚ) = t / 2 := by rw [← ht]; ring
+        rw [this]; push_cast; ring
+      rw [ha', ht']
+    have hkx : kappa m x = w * kappa m (y : QNeg m) := by
+      rw [hwdef, hx', ← kappaAlg_apply, ← kappaAlg_apply, ← kappaAlg_apply, map_mul, map_inv₀]
+    show (a : ℂ) * (w / 2) + (t : ℂ) * (w / 2 * (I * (Real.sqrt m : ℂ))) = kappa m x
+    rw [hkx, hky]; ring
+  have hdisc : DiscreteTopology Lb := DiscreteTopology.of_subset (inferInstance : DiscreteTopology P₀.lattice) hsub
+  have hv1 : kappa m c₀ ∈ (Lb : Set ℂ) := by
+    rw [hLb]; exact ⟨c₀, by simpa [c₀] using hlow 1, rfl⟩
+  have hv2 : kappa m c₀ * (I * (Real.sqrt m : ℂ)) ∈ (Lb : Set ℂ) := by
+    rw [hLb]
+    refine ⟨(N : QNeg m) * c * (sqrtNeg m : QNeg m), hlow (sqrtNeg m), ?_⟩
+    rw [coe_sqrtNeg, ← kappaAlg_apply, map_mul, kappaAlg_apply, kappaAlg_apply, kappa_omega]
+  have hkc₀ : kappa m c₀ ≠ 0 := fun h => hc₀ (kappa_injective (h.trans (by simp [kappa])))
+  have hspan : Submodule.span ℝ (Lb : Set ℂ) = ⊤ := by
+    have hli := linIndep_mul_I_sqrt (m := m) hkc₀
+    have htop : Submodule.span ℝ (Set.range ![kappa m c₀, kappa m c₀ * (I * (Real.sqrt m : ℂ))]) = ⊤ :=
+      hli.span_eq_top_of_card_eq_finrank' (by simp)
+    rw [eq_top_iff, ← htop]
+    apply Submodule.span_mono
+    rintro _ ⟨i, rfl⟩
+    fin_cases i
+    · exact hv1
+    · exact hv2
+  have : IsZLattice ℝ Lb := ⟨hspan⟩
+  have hrank : Module.finrank ℤ Lb = 2 := by
+    rw [ZLattice.rank ℝ Lb, Complex.finrank_real_complex]
+  let B := Module.finBasisOfFinrankEq ℤ Lb hrank
+  have hBind : LinearIndependent ℝ ![((B 0 : Lb) : ℂ), ((B 1 : Lb) : ℂ)] := by
+    have := (B.ofZLatticeBasis ℝ Lb).linearIndependent
+    convert this using 1
+    funext i; fin_cases i <;> simp
+  refine ⟨⟨(B 0 : ℂ), (B 1 : ℂ), hBind⟩, ?_⟩
+  rw [← hLb]
+  have hspanZ := B.ofZLatticeBasis_span ℝ Lb
+  have hr : Set.range (B.ofZLatticeBasis ℝ Lb) = {((B 0 : Lb) : ℂ), ((B 1 : Lb) : ℂ)} := by
+    ext z; simp [Fin.exists_fin_two, eq_comm]
+  rw [hr] at hspanZ
+  show ((Submodule.span ℤ {((B 0 : Lb) : ℂ), ((B 1 : Lb) : ℂ)} : Submodule ℤ ℂ) : Set ℂ) = Lb
+  rw [hspanZ]
+
 end LatticeSec
 
 /-! ## §P. Shimura 1971 Thm 5.4 with the print's hypotheses and the print's `s⁻¹𝔞`, and `ShimuraMainCM` -/
@@ -1257,11 +1453,87 @@ theorem shimuraMainCM_of_local (h : ShimuraThm54Local) : ShimuraMainCM := by
     refine ⟨hc.1, ?_⟩
     linear_combination 2 * hc.2
 
+/-- Composition with `z ↦ αz` (`α ≠ 0`) preserves nonvanishing differentials. -/
+theorem IsImmersion.comp_mul {W : WeierstrassCurve ℂ} {ξ : ℂ → W.toAffine.Point} (h : IsImmersion W ξ)
+    {α : ℂ} (hα : α ≠ 0) : IsImmersion W (fun z => ξ (α * z)) := by
+  intro z₀
+  obtain ⟨U, X, Y, Z, hz, ⟨hUo, hX, hY, hZ, hc⟩, hw⟩ := h (α * z₀)
+  have hAd : Differentiable ℂ fun z : ℂ => α * z := differentiable_id.const_mul α
+  refine ⟨(fun z => α * z) ⁻¹' U, fun z => X (α * z), fun z => Y (α * z), fun z => Z (α * z), hz,
+    ⟨hUo.preimage hAd.continuous, hX.comp hAd.differentiableOn fun z hz => hz,
+      hY.comp hAd.differentiableOn fun z hz => hz, hZ.comp hAd.differentiableOn fun z hz => hz,
+      fun z hz => hc _ hz⟩, ?_⟩
+  have hU : U ∈ 𝓝 (α * z₀) := hUo.mem_nhds hz
+  have dcomp : ∀ F : ℂ → ℂ, DifferentiableOn ℂ F U →
+      deriv (fun z => F (α * z)) z₀ = deriv F (α * z₀) * α := by
+    intro F hF
+    have h1 : HasDerivAt (fun z : ℂ => α * z) α z₀ := by simpa using (hasDerivAt_id z₀).const_mul α
+    exact (HasDerivAt.comp (h := fun z : ℂ => α * z) z₀ (hF.differentiableAt hU).hasDerivAt h1).deriv
+  intro h0
+  apply hw
+  have e0 := congrFun h0 0
+  have e1 := congrFun h0 1
+  have e2 := congrFun h0 2
+  simp only [wedge, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.tail_cons,
+    Matrix.head_cons, Pi.zero_apply, dcomp X hX, dcomp Y hY, dcomp Z hZ] at e0 e1 e2
+  have k : ∀ t : ℂ, α * t = 0 → t = 0 := fun t ht => (mul_eq_zero.1 ht).resolve_left hα
+  have k0 : Y (α * z₀) * deriv Z (α * z₀) - Z (α * z₀) * deriv Y (α * z₀) = 0 :=
+    k _ (by linear_combination e0)
+  have k1 : Z (α * z₀) * deriv X (α * z₀) - X (α * z₀) * deriv Z (α * z₀) = 0 :=
+    k _ (by linear_combination e1)
+  have k2 : X (α * z₀) * deriv Y (α * z₀) - Y (α * z₀) * deriv X (α * z₀) = 0 :=
+    k _ (by linear_combination e2)
+  funext i
+  fin_cases i <;> simp [wedge, k0, k1, k2]
+
+/-- hcm-dict's `IsAnalyticUnif` on a short model implies `IsAnalyticIso` (through the dictionary). -/
+theorem isAnalyticIso_of_unif (W : WeierstrassCurve ℂ) [W.IsElliptic] (h₁ : W.a₁ = 0) (h₂ : W.a₂ = 0)
+    (h₃ : W.a₃ = 0) (L : PeriodPair) (ξ : ℂ → W.toAffine.Point)
+    (hξ : ZInQ.Contrib.HCMDict.IsAnalyticUnif W L.lattice ξ) : IsAnalyticIso W L.lattice ξ := by
+  have hb : InducesBij W L.lattice ξ := by
+    let f : ℂ →+ W.toAffine.Point := AddMonoidHom.mk' ξ hξ.1
+    refine ⟨fun z l hl => ?_, fun z w h => ?_, hξ.2.1⟩
+    · rw [hξ.1, (hξ.2.2.1 l).2 hl, add_zero]
+    · rw [← hξ.2.2.1]
+      have : f (z - w) = f z - f w := map_sub f z w
+      simp only [f, AddMonoidHom.mk'_apply] at this
+      rw [this, h, sub_self]
+  obtain ⟨L₀, rfl⟩ := ZInQ.Contrib.HCMDict.exists_lattice_eq W h₁ h₂ h₃
+  obtain ⟨α, hsc, hα⟩ := ZInQ.Contrib.HCMDict.exists_isScale_eq L₀ L ξ hξ
+  have e : ξ = fun z => L₀.toPoint L₀.discriminant_ne_zero (α * z) := funext hα
+  have hI := (toPoint_isImmersion L₀).comp_mul hsc.1
+  rw [← e] at hI
+  exact ⟨hb, hI.isHolomorphicMap, hI⟩
+
+/-- **The old leaf from the new one**: hcm-dict's `HCMDict.ShimuraThm54` follows from `ShimuraThm54Local`. -/
+theorem shimuraThm54_of_local (h : ShimuraThm54Local) : ZInQ.Contrib.HCMDict.ShimuraThm54 := by
+  intro m _ hm e he σ s hs 𝔞 h𝔞 E _ h₁ h₂ h₃ ξ hξ
+  obtain ⟨L, hL⟩ := h𝔞
+  obtain ⟨L', hL'⟩ := exists_periodPair_sInvLat hm L hL s
+  have hξL : ZInQ.Contrib.HCMDict.IsAnalyticUnif E L.lattice ξ := by rw [hL]; exact hξ
+  have hI := isAnalyticIso_of_unif E h₁ h₂ h₃ L ξ hξL
+  rw [hL] at hI
+  obtain ⟨ξ', hb', hh', hcomm⟩ := h m hm e he σ s hs 𝔞 ⟨L, hL⟩ (sInvLat m s 𝔞) ⟨L', hL'⟩
+    (fun p _ => locLat_sInvLat hm L hL s p) E h₁ h₂ h₃ ξ hI hξ.1
+  have hk0 : kappa m 0 = 0 := by simp [kappa]
+  have h0 : ξ' 0 = 0 := by
+    have hrep : finPart s * algebraMap (QNeg m) (AfK m) 0 - algebraMap (QNeg m) (AfK m) 0 ∈ latHat m 𝔞 := by
+      rw [map_zero, mul_zero, sub_zero, ← map_zero (algebraMap (QNeg m) (AfK m))]
+      exact mem_latHat_of_mem ((mem_of_kappa L hL 0).2 (by rw [hk0]; exact zero_mem _))
+    have := hcomm 0 0 fun p _ => rep_local_of_global hm L hL s hrep p
+    have hξ0 : ξ 0 = 0 := (hξ.2.2.1 0).2 ⟨0, (mem_of_kappa L hL 0).2 (by rw [hk0]; exact zero_mem _), hk0⟩
+    rw [hk0, hξ0] at this
+    rw [← this]; rfl
+  refine ⟨ξ', ?_, fun u v huv => hcomm u v fun p _ => rep_local_of_global hm L hL s huv p⟩
+  rw [← hL'] at hb' ⊢
+  exact isAnalyticUnif_of_holo _ (by simp [h₁]) (by simp [h₂]) (by simp [h₃]) L' ξ' hb' hh' h0
+
 end Printed
 
 end ZInQ.Contrib.HCMLattice
 
 #print axioms ZInQ.Contrib.HCMLattice.shimuraMainCM_of_local
+#print axioms ZInQ.Contrib.HCMLattice.shimuraThm54_of_local
 #print axioms ZInQ.Contrib.HCMLattice.eq_toPoint_of_holo
 #print axioms ZInQ.Contrib.HCMLattice.locLat_sInvLat
 #print axioms ZInQ.Contrib.HCMLattice.toPoint_isAnalyticIso
