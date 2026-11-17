@@ -275,6 +275,206 @@ theorem xi_mem_span_omega : ∃ v, v * omega Z = xi p := by
     exact Ideal.mem_span_singleton_self _
   exact Ideal.mem_span_singleton'.mp this
 
+
+/-! ## 5. In `B_dR^+`: `[ε] - 1 = ω · unit`, so `[ε] - 1 ∈ (ξ) \ (ξ²)` -/
+
+local notation "Bp" => BDeRhamPlus O p
+
+variable (p) in
+/-- The canonical ring map `W(O♭) → W(O♭)[1/p] → B_dR^+`. -/
+def plus : W →+* Bp :=
+  (algebraMap (Localization.Away (p : W))
+    (AdicCompletion (RingHom.ker (fontaineThetaInvertP O p)) (Localization.Away (p : W)))).comp
+    (algebraMap W (Localization.Away (p : W)))
+
+theorem plus_apply (w : W) :
+    plus p w = ofPlus O p (algebraMap W (Localization.Away (p : W)) w) := rfl
+
+theorem plus_xi : plus p (xi p) = ofPlus O p (xi' p) := rfl
+
+theorem thetaPlus_plus (w : W) :
+    thetaPlus p (plus p w) = algebraMap O (Localization.Away (p : O)) (fontaineTheta O p w) := by
+  rw [plus_apply, thetaPlus_ofPlus, fontaineThetaInvertP, Localization.awayLift,
+    IsLocalization.Away.lift_eq]
+  rfl
+
+theorem mem_max_iff (x : Bp) : x ∈ IsLocalRing.maximalIdeal Bp ↔ thetaPlus p x = 0 := by
+  rw [maximalIdeal_BDeRhamPlus, ← ker_thetaPlus, RingHom.mem_ker]
+
+theorem plus_mem_max_iff (w : W) :
+    plus p w ∈ IsLocalRing.maximalIdeal Bp ↔ fontaineTheta O p w = 0 := by
+  rw [mem_max_iff, thetaPlus_plus]
+  exact map_eq_zero_iff _ (IsFractionRing.injective O (Localization.Away (p : O)))
+
+variable (p) in
+/-- `ξ ∈ B_dR^+`. -/
+abbrev varpi : Bp := ofPlus O p (xi' p)
+
+theorem varpi_ne_zero : varpi p ≠ 0 := by simpa using ofPlus_xi'_pow_ne_zero p 1
+
+theorem varpi_mem_max : varpi p ∈ IsLocalRing.maximalIdeal Bp := by
+  rw [maximalIdeal_BDeRhamPlus]; exact Ideal.mem_span_singleton_self _
+
+theorem varpi_not_mem_sq : varpi p ∉ (span {varpi p ^ 2} : Ideal Bp) := by
+  intro h
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp h
+  have h1 : varpi p * (1 - varpi p * c) = 0 := by linear_combination -hc
+  have h2 : varpi p * c = 1 :=
+    (sub_eq_zero.mp ((mul_eq_zero.mp h1).resolve_left varpi_ne_zero)).symm
+  exact (IsLocalRing.notMem_maximalIdeal.mpr (isUnit_iff_exists_inv.mpr ⟨c, h2⟩)) varpi_mem_max
+
+theorem isUnit_u1 : IsUnit (plus p (teichmuller p (eps1 Z) - 1)) := by
+  rw [← IsLocalRing.notMem_maximalIdeal, plus_mem_max_iff, map_sub, fontaineTheta_teichmuller,
+    untilt_eps1, map_one]
+  exact sub_ne_zero.mpr Z.one_ne
+
+theorem plus_omega_mem : plus p (omega Z) ∈ IsLocalRing.maximalIdeal Bp :=
+  (plus_mem_max_iff _).mpr (theta_omega Z)
+
+theorem plus_omega_not_mem_sq : plus p (omega Z) ∉ (span {varpi p ^ 2} : Ideal Bp) := by
+  intro h
+  obtain ⟨v, hv⟩ := xi_mem_span_omega Z
+  apply varpi_not_mem_sq (p := p)
+  show plus p (xi p) ∈ (span {varpi p ^ 2} : Ideal Bp)
+  rw [← hv, map_mul]
+  exact Ideal.mul_mem_left _ _ h
+
+/-- The variable of the logarithm, `[ε] - 1 ∈ B_dR^+`. -/
+def xe : Bp := plus p (teichmuller p (eps Z)) - 1
+
+theorem xe_eq : xe Z = plus p (omega Z) * plus p (teichmuller p (eps1 Z) - 1) := by
+  rw [xe, ← eps1_pow Z, map_pow, map_pow, omega, map_sum, map_sub, map_one]
+  simp only [map_pow]
+  rw [geom_sum_mul]
+
+theorem xe_mem : xe Z ∈ IsLocalRing.maximalIdeal Bp := by
+  rw [xe_eq]; exact Ideal.mul_mem_right _ _ (plus_omega_mem Z)
+
+theorem xe_not_mem_sq : xe Z ∉ (span {varpi p ^ 2} : Ideal Bp) := by
+  intro h
+  obtain ⟨u, hu⟩ := isUnit_u1 Z
+  apply plus_omega_not_mem_sq Z
+  have : plus p (omega Z) = xe Z * ↑u⁻¹ := by rw [xe_eq, ← hu, Units.mul_inv_cancel_right]
+  rw [this]
+  exact Ideal.mul_mem_right _ _ h
+
+/-! ## 6. `t = log[ε] = Σ_{n ≥ 1} (-1)^{n+1} ([ε] - 1)^n / n` in `B_dR^+` -/
+
+theorem isUnit_natCast (n : ℕ) (hn : n ≠ 0) : IsUnit (n : Bp) := by
+  rw [← IsLocalRing.notMem_maximalIdeal, maximalIdeal_BDeRhamPlus, ← ker_thetaPlusCp,
+    RingHom.mem_ker, map_natCast]
+  exact Nat.cast_ne_zero.mpr hn
+
+/-- The `n`-th term `(-1)^{n+1} xⁿ/n` of `log(1 + x)`. -/
+def logTerm (x : Bp) (n : ℕ) : Bp := (-1) ^ (n + 1) * Ring.inverse (n : Bp) * x ^ n
+
+/-- The partial sum `Σ_{n=1}^{k} (-1)^{n+1} xⁿ/n`. -/
+def logPartial (x : Bp) (k : ℕ) : Bp := ∑ i ∈ Finset.range k, logTerm x (i + 1)
+
+theorem logTerm_mem {x : Bp} (hx : x ∈ IsLocalRing.maximalIdeal Bp) (n : ℕ) :
+    logTerm x n ∈ (span {varpi p} : Ideal Bp) ^ n := by
+  rw [maximalIdeal_BDeRhamPlus] at hx
+  exact Ideal.mul_mem_left _ _ (Ideal.pow_mem_pow hx n)
+
+theorem smul_top_eq (n : ℕ) :
+    ((span {varpi p} : Ideal Bp) ^ n • ⊤ : Submodule Bp Bp) = (span {varpi p} : Ideal Bp) ^ n := by
+  rw [smul_eq_mul, Ideal.mul_top]
+
+theorem logPartial_cauchy {x : Bp} (hx : x ∈ IsLocalRing.maximalIdeal Bp) {m n : ℕ} (h : m ≤ n) :
+    logPartial x m ≡ logPartial x n [SMOD ((span {varpi p} : Ideal Bp) ^ m • ⊤ : Submodule Bp Bp)] := by
+  rw [SModEq.sub_mem, smul_top_eq, logPartial, logPartial, Finset.range_eq_Ico, Finset.range_eq_Ico,
+    ← Finset.sum_Ico_consecutive _ (Nat.zero_le m) h, sub_add_cancel_left]
+  refine neg_mem (Ideal.sum_mem _ fun i hi => ?_)
+  exact Ideal.pow_le_pow_right (by have := (Finset.mem_Ico.mp hi).1; omega) (logTerm_mem hx (i + 1))
+
+variable (p) in
+/-- **`log(1 + x)`** for `x` in the maximal ideal `(ξ)` of `B_dR^+`: the `ξ`-adic limit of the partial sums
+(it exists because `B_dR^+` is `ξ`-adically complete, bdr-kertheta). -/
+def logPlus (x : Bp) (hx : x ∈ IsLocalRing.maximalIdeal Bp) : Bp :=
+  Classical.choose (IsPrecomplete.prec (I := (span {varpi p} : Ideal Bp)) inferInstance
+    (fun h => logPartial_cauchy hx h))
+
+theorem logPlus_spec (x : Bp) (hx : x ∈ IsLocalRing.maximalIdeal Bp) (n : ℕ) :
+    logPartial x n ≡ logPlus p x hx [SMOD ((span {varpi p} : Ideal Bp) ^ n • ⊤ : Submodule Bp Bp)] :=
+  Classical.choose_spec (IsPrecomplete.prec (I := (span {varpi p} : Ideal Bp)) inferInstance
+    (fun h => logPartial_cauchy hx h)) n
+
+/-- The limit is unique (`B_dR^+` is `ξ`-adically separated), so `logPlus` is *the* sum of the series. -/
+theorem logPlus_unique (x : Bp) (hx : x ∈ IsLocalRing.maximalIdeal Bp) (L : Bp)
+    (hL : ∀ n, logPartial x n ≡ L [SMOD ((span {varpi p} : Ideal Bp) ^ n • ⊤ : Submodule Bp Bp)]) :
+    L = logPlus p x hx := by
+  rw [IsHausdorff.eq_iff_smodEq (I := (span {varpi p} : Ideal Bp))]
+  intro n
+  exact (hL n).symm.trans (logPlus_spec x hx n)
+
+theorem logPlus_sub_mem (x : Bp) (hx : x ∈ IsLocalRing.maximalIdeal Bp) :
+    logPlus p x hx - x ∈ (span {varpi p ^ 2} : Ideal Bp) := by
+  have h2 := logPlus_spec x hx 2
+  rw [SModEq.sub_mem, smul_top_eq] at h2
+  have hp2 : logPartial x 2 = x + logTerm x 2 := by
+    simp [logPartial, logTerm, Finset.sum_range_succ, one_add_one_eq_two]
+  have h3 := logTerm_mem (p := p) hx 2
+  rw [← Ideal.span_singleton_pow]
+  have : logPlus p x hx - x = -(logPartial x 2 - logPlus p x hx) + logTerm x 2 := by
+    rw [hp2]; ring
+  rw [this]
+  exact Ideal.add_mem _ (neg_mem h2) h3
+
+variable (p) in
+/-- **Fontaine's `t = log[ε]`** in the kernel's `B_dR^+`. -/
+def tt : Bp := logPlus p (xe Z) (xe_mem Z)
+
+theorem tt_mem : tt p Z ∈ IsLocalRing.maximalIdeal Bp := by
+  have h := logPlus_sub_mem (xe Z) (xe_mem Z)
+  have h1 : (span {varpi p ^ 2} : Ideal Bp) ≤ IsLocalRing.maximalIdeal Bp := by
+    rw [Ideal.span_le, Set.singleton_subset_iff]
+    exact Ideal.pow_mem_of_mem _ varpi_mem_max 2 (by norm_num)
+  have : tt p Z = xe Z + (tt p Z - xe Z) := by ring
+  rw [this]
+  exact Ideal.add_mem _ (xe_mem Z) (h1 h)
+
+theorem tt_not_mem_sq : tt p Z ∉ (span {varpi p ^ 2} : Ideal Bp) := by
+  intro h
+  apply xe_not_mem_sq Z
+  have h1 := logPlus_sub_mem (xe Z) (xe_mem Z)
+  have : xe Z = tt p Z - (tt p Z - xe Z) := by ring
+  rw [this]
+  exact Ideal.sub_mem _ h h1
+
+theorem tt_ne_zero : tt p Z ≠ 0 := fun h => tt_not_mem_sq Z (h ▸ Ideal.zero_mem _)
+
+/-- **`t = ξ · unit`** in `B_dR^+`. -/
+theorem tt_eq_varpi_mul_unit : ∃ u : Bp, IsUnit u ∧ tt p Z = varpi p * u := by
+  obtain ⟨n, u, hu, h⟩ := eq_xi_pow_mul_unit p (tt p Z) (tt_ne_zero Z)
+  rcases n with _ | _ | n
+  · exfalso
+    rw [pow_zero, one_mul] at h
+    exact (IsLocalRing.notMem_maximalIdeal.mpr hu) (h ▸ tt_mem Z)
+  · exact ⟨u, hu, by rw [h, zero_add, pow_one]⟩
+  · exfalso
+    apply tt_not_mem_sq Z
+    rw [h, Ideal.mem_span_singleton']
+    exact ⟨varpi p ^ n * u, by ring⟩
+
+/-! ## 7. The dictionary `B_dR ≅ B_dR^+[1/t]` -/
+
+theorem isFractionRing_away_tt : IsFractionRing Bp (Localization.Away (tt p Z)) := by
+  obtain ⟨u, hu, htu⟩ := tt_eq_varpi_mul_unit Z
+  refine IsLocalization.of_le_of_exists_dvd (Submonoid.powers (tt p Z)) (nonZeroDivisors _)
+    (powers_le_nonZeroDivisors_of_noZeroDivisors (tt_ne_zero Z)) ?_
+  intro n hn
+  obtain ⟨k, v, hv, rfl⟩ := eq_xi_pow_mul_unit p n (nonZeroDivisors.ne_zero hn)
+  refine ⟨tt p Z ^ k, ⟨k, rfl⟩, ?_⟩
+  rw [htu, mul_pow]
+  exact mul_dvd_mul_left _ hv.dvd
+
+/-- **`B_dR(𝓞_ℂ_p) ≅ B_dR^+[1/t]`**, `t = log[ε]`, as `B_dR^+`-algebras: a print that defines
+`B_dR = B_dR^+[1/t]` (Berger) defines the kernel's `B_dR` up to a canonical isomorphism over `B_dR^+`. -/
+def bdREquivAwayT : BdR O p ≃ₐ[Bp] Localization.Away (tt p Z) :=
+  haveI := isFractionRing_away_tt Z
+  haveI := isFractionRing_BDeRham p
+  IsLocalization.algEquiv (nonZeroDivisors Bp) (BdR O p) (Localization.Away (tt p Z))
+
 end
 
 end DeRhamPrint.TDict
