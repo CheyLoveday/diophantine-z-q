@@ -24,7 +24,22 @@ Autofold dry-run (`scratch/elkies-print/autofold.json`):
 `strict count: 16/21 on 37 -> 17/20 on 37; strictest 16/21 -> 17/20`, i.e. **one GLUE field fewer** in both
 columns, provided the new leaf is rated published (§4 discusses that rating). VERIFIED.
 
-`#discharges` output: see §6 (filled in after the build).
+```
+DISCHARGES [OpenResearchLeaves28.elkiesX6StarFunctionField] by HDec.QMSplit.Moduli.ElkiesPrint.elkiesX6StarFunctionField_of_every
+  still assumes: [HDec.QMSplit.Moduli.ElkiesPrint.ElkiesX6StarEvery, HDec.QMSplit.Moduli.ElkiesPrint.X6WitnessAb]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves28.elkiesX6StarFunctionField] by HDec.QMSplit.Moduli.ElkiesPrint.elkiesX6StarFunctionField_of_every_gr
+  still assumes: [HDec.QMSplit.Moduli.ElkiesPrint.ElkiesX6StarEvery, HDec.QMSplit.Moduli.GonzalezRotgerX6Ab]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 45 open hypotheses, 6702 theorems checked, 15 discharge one
+```
+
+This was run after `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
++ZInQKernel.Contrib.OneProof.ElkiesX6StarEvery` (14102 jobs, success; `frozenTarget` uses the standard axioms),
+output in `scratch/elkies-print/discharges.txt`. `X6WitnessAb` is not a new field: the fold fills it from
+`{n}.gonzalezRotgerX6Ab`, the second line. The generated fold module (`scratch/elkies-print/FoldDryRun.lean`,
+`OpenResearchLeaves29`, `sixContactMin_of_open39`) compiles, and `#print axioms HDec.HSyn.sixContactMin_of_open39`
+gives the standard three. VERIFIED.
 
 ## 2. The statements (namespace `HDec.QMSplit.Moduli.ElkiesPrint`)
 

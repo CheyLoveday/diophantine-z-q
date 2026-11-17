@@ -29,3 +29,9 @@ elsewhere (queue2 verdict)". VERIFIED (read).
   ElkiesX6StarFunctionField → ObjBridge.TorsionStructure → ElkiesX6StarEvery`, `every_iff_functionField`: compile.
   #print axioms on elkiesX6StarFunctionField_of_every, every_of_functionField, every_iff_functionField:
   [propext, Classical.choice, Quot.sound] (VERIFIED, scratch/elkies-print/Axioms.lean).
+- C4 contribution ZInQKernel/Contrib/OneProof/ElkiesX6StarEvery.lean compiles (lake env lean, no warnings).
+- C5 lake build +Main +Discharges +ElkiesX6StarEvery: 14102 jobs, success; frozenTarget standard axioms.
+- C6 #discharges: elkiesX6StarFunctionField discharged by elkiesX6StarFunctionField_of_every (assumes ElkiesX6StarEvery,
+  X6WitnessAb) and by ..._of_every_gr (assumes ElkiesX6StarEvery, GonzalezRotgerX6Ab); standard axioms (discharges.txt).
+- C7 autofold dry-run: strict 16/21 on 37 -> 17/20; strictest 16/21 -> 17/20. FoldDryRun.lean (line 1 stripped) compiles;
+  sixContactMin_of_open39 standard axioms.
