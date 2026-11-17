@@ -62,6 +62,10 @@ Base: fork main d435851d (branch wip/ss-faltings). Task: reroute SS2/SS3 off SGA
   copied `OpenResearchLeaves5xSF` onto their own field `sga7_IX_3_5_ForwardGeom_Def34` (self-matches, they still
   assume the copied bundle). So no autofold spec.
 - Dead-field probe (BypassCheck.lean, bypass-check-out.txt): every field of OpenResearchLeaves58SF,
-  OpenTextbookLeaves18, OpenAddedLeaves27 is read by the new top except none; only difference: 58SF's
+  OpenTextbookLeaves18, OpenAddedLeaves27 is read by both tops; only difference: 58SF's
   `faltingsSemistableHeightBC` is read by the new top (new) and not by the old. No field becomes dead.
 - Build logs truncated to their axiom/error lines (the full logs were 9 MB).
+
+## 8. Deliverables written
+- docs/research/ss-faltings.md (result, trace, Lean, checks, leaf rating, manuscript check, known issues, files);
+  .fleet/ss-faltings.md.
