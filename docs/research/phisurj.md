@@ -1,4 +1,4 @@
-# phisurj: `mumfordPhiSurjectiveAC` removed (−1, no new leaf) by rerouting its readers to a proof of `PhiAmpleIsogeny` from L1, L2 and the torsion leaf; the Prop itself stays unproved
+# phisurj: `mumfordPhiSurjectiveAC` removed (rerouted) and `weilPairingMumford` proved — −2, no new leaf; both from L1, L2 and the torsion leaf, with a Lean proof of Mumford §20 nondegeneracy
 
 Task phisurj. Base wip/leaf-fold33b 0e3c31258 (`git merge origin/main`: already up to date); origin/wip/weil-proof
 merged (clean, only adds files). Field `mumfordPhiSurjectiveAC : PicDict.MumfordPhiSurjectiveAC` of
@@ -7,8 +7,18 @@ Mumford §8 Thm 1 over `k = k̄`).
 
 ## 1. Result
 
-**The field leaves the open hypotheses with no new leaf; its readers are rerouted (as homfree-noemb did for
-`homFreeFiniteAlgClosed`). The Prop `MumfordPhiSurjectiveAC` itself is not proved (§2).**
+**Two fields of `OpenAddedLeaves20` leave the open hypotheses, with no new leaf (H: `13/20 on 33 -> 12/19 on 31`):**
+
+* `mumfordPhiSurjectiveAC` is **rerouted** (as homfree-noemb did for `homFreeFiniteAlgClosed`): its readers only
+  need `PhiAmpleIsogeny`, now a theorem. The Prop `MumfordPhiSurjectiveAC` itself is not proved (§2).
+* `weilPairingMumford` is **proved** (autofoldable; §1b):
+
+  ```lean
+  theorem PhiSurj.weilPairingMumford_of_open (h1 : T09Pic.PicRepresentableAbVar) (h2 : T09Pic.PicZeroAbVar)
+      (hT : AvSplit.MumfordTorsionAlgClosed) : T09Pic.WeilPairingMumford
+  ```
+
+Details of the reroute:
 
 * All three readers of the field (`TailZ45.lean:123`, `TailZ46.lean:104`, `HomFreeFiniteAlgClosedReroute.lean:2082`;
   VERIFIED by grep) use it only through `PicFix.phiAmpleIsogeny_of_printed l.mumfordKLFiniteSectionAC
@@ -33,9 +43,28 @@ Mumford §8 Thm 1 over `k = k̄`).
   `scratch/phisurj/FrozenTargetDryRun.lean` proves `ZInQ.FrozenTarget` from Main's hypotheses with `OpenAddedLeaves21`
   in place of `OpenAddedLeaves20`. Both compile with `[propext, Classical.choice, Quot.sound]`.
 
-Count: one LEAF/LEAF row (`mumfordPhiSurjectiveAC`, `docs/one-proof/kinds.tsv:31`) leaves; no row enters. On this
-base H goes from `13/20 on 33` to `12/20 on 32` (strict and strictest; computed from kinds.tsv, since autofold cannot
-express a reroute).
+Count: the LEAF/LEAF row `mumfordPhiSurjectiveAC` (`docs/one-proof/kinds.tsv:31`) and the GLUE/GLUE row
+`weilPairingMumford` leave; no row enters. On this base H goes from `13/20 on 33` to `12/19 on 31` (strict and
+strictest). The `weilPairingMumford` part alone is an autofold (`scratch/phisurj/autofold-weil.json`, dry run
+`13/20 on 33 -> 13/19 on 32`); the reroute part is computed from kinds.tsv (autofold cannot express a reroute).
+
+## 1b. `weilPairingMumford` (VERIFIED: compiled, standard axioms)
+
+File `ZInQKernel/Contrib/OneProof/WeilPairingMumfordOpen.lean` (imports `PhiAmpleIsogenyOpen`; `lake build` ok).
+The proof is pic-dict's assembly `PicDict.weilPairingMumford_of_printed` (copied) with every input now a theorem:
+
+| pic-dict input | now |
+|---|---|
+| `MumfordSquare` (§6 Cor. 4) | `mumfordSquare_of_ac (mumfordSquareAC_of_open h1 h2)` (this task) |
+| `MumfordMulNPicZero` (§8 (iv)) | `mumfordMulNPicZero_of_ac (mumfordMulNPicZeroAC_of_open h1 h2)` (this task) |
+| `MumfordWeilPairing` (§20) | weil-proof's `mumfordWeilPairingAC_proof` |
+| `MumfordWeilAlt` (§23) | weil-proof's `mumfordWeilAltAC_proof` |
+| `PhiAmpleIsogeny` | `phiAmpleIsogeny_of_open h1 h2 hT` (this task, §3) |
+| `MumfordWeilNondeg`, right kernel | `weilNondegRight_of_open` from `AVDesc.formula_nondeg_right` (descent, §3) |
+| `MumfordWeilNondeg`, left kernel, and `MumfordPhiSurjective` (used there only for the left kernel) | `left_kernel_of_open`: `y ↦ e(·, y)` embeds `B[n]` into `Hom(A[n], μ_n)`; `#B[n] = n^{2 dim B} = n^{2 dim A} ≥ #Hom(A[n], μ_n)` (torsion leaf; `dim A ≤ dim B` from the finite `λ_L`, `dim_le_of_lqf`); so the embedding is onto, and characters `(ℤ/n)^{2g} → μ_n` separate points (a primitive root, Mathlib's `HasEnoughRootsOfUnity`) |
+
+`#discharges`: `DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PhiSurj.weilPairingMumford_of_open still
+assumes: [T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar, AvSplit.MumfordTorsionAlgClosed]`, standard axioms.
 
 By-products (VERIFIED, compiled, standard axioms; §6): the second conjunct (right kernel) of pic-dict's leaf
 `MumfordWeilNondegAC` in the form "formula ≡ 1 ⇒ c = 1"; `MumfordSquareAC` (Mumford §6 Cor. 4) and
@@ -113,21 +142,32 @@ replaces steps 2–3 by the right-kernel clause of `weilPairingMumford`; it is n
 | `Contrib/OneProof/PhiSurjDescent.lean` | `WeilFormula` (weil-proof), vendored descent | generic descent `Desc.nonempty_iso_of_invariant` | ok |
 | `Contrib/OneProof/PhiAmpleIsogenyOpen.lean` (**the theorem for the fold**) | `PhiSurjDescent`, `WeilFormulaTheta`, `MumfordSquareMulN` | `formula_nondeg_right`, `card_isDT_le`, `dim_le_of_open`, `phiAmpleIsogeny_of_open`, `mumfordPhiSurjectiveAC_of_ti_open` | ok (12861 jobs) |
 | `Contrib/OneProof/MumfordSquareMulN.lean` | `PhiAmpleIsogenyWeil` | `mumfordSquareAC_of_open`, `mumfordMulNPicZeroAC_of_open` | ok |
+| `Contrib/OneProof/WeilPairingMumfordOpen.lean` (**the theorem for the `weilPairingMumford` fold**) | `PhiAmpleIsogenyOpen` | `left_kernel_of_open`, `weilNondegRight_of_open`, `weilPairingMumford_of_open` | ok (12862 jobs) |
 
 Dependency: `WeilFormula.lean`, `WeilFormulaTheta.lean` are weil-proof's (merged into this branch); the fold needs
 them on the integration branch.
 
 ## 5. Fold
 
-* **Not autofoldable**: autofold fills a field with a proof of the field's type, and `MumfordPhiSurjectiveAC` is not
+* **`weilPairingMumford`: autofold** `scratch/phisurj/autofold-weil.json` (`proof`:
+  `_root_.PhiSurj.weilPairingMumford_of_open {n}.picRepresentableAbVar {n}.picZeroAbVar {t}.mumfordTorsionAlgClosed`,
+  no leaves). Dry run on this base: `strict count: 13/20 on 33 -> 13/19 on 32; strictest 13/20 -> 13/19`; the printed
+  module (`scratch/phisurj/FoldDryRunWeil.lean`, line 1 stripped) compiles to `sixContactMin_of_open42`, standard
+  axioms.
+* **Both fields: hand fold** `scratch/phisurj/FoldTailZ49.lean` (recommended): `OpenAddedLeaves21 =
+  {picRepresentableAbVar, picZeroAbVar}`; `openAddedLeaves18_of_OpenAddedLeaves21` fills `phiAmpleIsogeny` with
+  `phiAmpleIsogeny_of_open` and `weilPairingMumford` with `weilPairingMumford_of_open`; compiles, standard axioms;
+  `FrozenTargetDryRun.lean` likewise. Count `13/20 on 33 -> 12/19 on 31`.
+* **`mumfordPhiSurjectiveAC` alone: not autofoldable**: autofold fills a field with a proof of the field's type, and `MumfordPhiSurjectiveAC` is not
   proved. `scratch/phisurj/autofold.json` records the reroute (empty `discharges`).
-* **Hand fold** (`scratch/phisurj/FoldTailZ49.lean`, compiles against the built `TailZ48`): new module importing
-  `TailZ48` and `PhiAmpleIsogenyOpen`; `OpenAddedLeaves21`; `openAddedLeaves18_of_OpenAddedLeaves21`
+* The hand fold in detail (compiles against the built `TailZ48`): new module importing `TailZ48` and
+  `WeilPairingMumfordOpen`; `OpenAddedLeaves21`; `openAddedLeaves18_of_OpenAddedLeaves21`
   (`phiAmpleIsogeny := PhiSurj.phiAmpleIsogeny_of_open n.picRepresentableAbVar n.picZeroAbVar
-  t.mumfordTorsionAlgClosed`, other fields as in `TailZ45:119`); `openTextbookLeaves13HF_of_open15_21` (as
-  `openTextbookLeaves13_of_OpenTextbookLeaves14_hf`, poincare from the same term); `sixContactMin_of_open42` through
-  `sixContactMin_of_open37_hf`. Main's `frozenTarget` then takes `l : OpenAddedLeaves21`
-  (`FrozenTargetDryRun.lean`). kinds.tsv/claims.tsv: drop the `mumfordPhiSurjectiveAC` rows; no rows added.
+  t.mumfordTorsionAlgClosed`, `weilPairingMumford := PhiSurj.weilPairingMumford_of_open …`, `egaIV_8_10_5_xii` as in
+  `TailZ45:120`); `openTextbookLeaves13HF_of_open15_21` (as `openTextbookLeaves13_of_OpenTextbookLeaves14_hf`, poincare
+  from the same term); `sixContactMin_of_open42` through `sixContactMin_of_open37_hf`. Main's `frozenTarget` then takes
+  `l : OpenAddedLeaves21` (`FrozenTargetDryRun.lean`). kinds.tsv/claims.tsv: drop the `mumfordPhiSurjectiveAC` and
+  `weilPairingMumford` rows; no rows added.
 * **Alternative, not recommended**: fill the field from (a) (`scratch/phisurj/autofold-ti.json`, written for the older
   `_of_ti`; dry run `13/20 on 33 -> 12/21 on 33`, refused since GLUE rises: (a) flagged pending reading).
   `#discharges` matches `PhiSurj.mumfordPhiSurjectiveAC_of_ti_open` (still assumes `[PhiSurj.TIClassesInPicZeroAC,
@@ -135,14 +175,14 @@ them on the integration branch.
   **no, pending reading** — Mumford's `Pic⁰` is by definition the translation-invariant classes; that they are the
   points of the identity component of the fppf Picard scheme is §8 Thm 1 with §13 and Kleiman §9.5, not one print.
   It is a consequence of the replaced leaf (`tiClassesInPicZeroAC_of_phiSurjective`), never stronger.
-* `#discharges` (`scratch/phisurj/discharges.txt`): `43 open hypotheses, 8799 theorems checked, 56 discharge one`;
-  `phiAmpleIsogeny_of_open` has no line (expected: it proves the readers' `PhiAmpleIsogeny`, no longer an open
-  hypothesis type); the `PhiSurj` lines are the (a)-alternatives.
+* `#discharges` (`scratch/phisurj/discharges.txt`): `43 open hypotheses, 8809 theorems checked, 57 discharge one`;
+  the `PhiSurj` lines are `weilPairingMumford_of_open` (§1b) and the (a)-alternatives; `phiAmpleIsogeny_of_open` has
+  no line (expected: it proves the readers' `PhiAmpleIsogeny`, no longer an open hypothesis type).
 
 ## 6. By-products (not needed for the count)
 
-* `formula_nondeg_right` (the right-kernel conjunct of pic-dict's leaf `MumfordWeilNondegAC`, Mumford §20). The left
-  conjunct is not attempted; it would follow from the counts here plus (a) for torsion classes (UNVERIFIED in Lean).
+* `formula_nondeg_right` (the right-kernel conjunct of pic-dict's leaf `MumfordWeilNondegAC`, Mumford §20); the left
+  kernel at the level of `weilPairingMumford` is `left_kernel_of_open` (§1b).
 * `mumfordSquareAC_of_open` (Mumford §6 Cor. 4): `φ_c = λ_c ≫ j` with `λ_c` a homomorphism
   (`exists_hom_comp_eq_phiL`), `kClass` injective and multiplicative.
 * `mumfordMulNPicZeroAC_of_open` (Mumford §8 (iv)): `λ_c = 0` for translation-invariant `c` (`hom_ext_kpt`), so `Λ(c)`
@@ -161,13 +201,14 @@ None (recommended reroute). The alternative of §5 would add (a), rated printed 
   stays unproved; its readers no longer need it.
 * `mumfordTorsionAlgClosed` disappears as a textbook field once origin/proof/picard-fibres-20261116 lands; then
   `PhiAmpleIsogeny` rests on L1, L2 alone.
-* The left conjunct of `MumfordWeilNondegAC` (and with it weil-proof's route to `weilPairingMumford`) now looks within
-  reach; not attempted.
+* `weilPairingMumford` is done (§1b). The AC-level statement `MumfordWeilNondegAC` (left conjunct) is not proved as
+  stated; the K-level left kernel needed for `weilPairingMumford` is (`left_kernel_of_open`).
 
 ## 9. Scratch
 
 `scratch/phisurj/`: development copies (`DimSurj.lean`, `PhiSurj.lean`, `TIReduction.lean`, `SquareAC.lean`,
 `MulNAC.lean`, `Descent.lean`, `AVDescent.lean`), copies of the contributions (`PhiAmpleIsogenyWeil.lean.txt`,
-`PhiAmpleIsogenyOpen.lean.txt`), the fold (`FoldTailZ49.lean`, `FrozenTargetDryRun.lean`), `Discharges.lean`,
+`PhiAmpleIsogenyOpen.lean.txt`, `WeilPairingMumfordOpen.lean.txt`), `WeilOpen.lean`, `autofold-weil.json`,
+`autofold-weil-dryrun.txt`, `FoldDryRunWeil.lean`, the fold (`FoldTailZ49.lean`, `FrozenTargetDryRun.lean`), `Discharges.lean`,
 `discharges.txt`, `Axioms.lean`, `axioms.txt`, `AxiomsByproducts.lean`, `axioms-byproducts.txt`, `autofold.json`,
 `autofold-ti.json`, `autofold-ti-dryrun.txt`, `log.md`.
