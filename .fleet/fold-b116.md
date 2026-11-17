@@ -1,8 +1,8 @@
 # fold-b116 (fleet note)
 
 **Verdict: all five items are folded, built and checked. No SGA 7 statement is left anywhere in the proof.** The count
-is unchanged: 30 open, H strict 5/24 on 29, strictest 5/24. Branch wip/fold-b116 = wip/leaf-fold33b d804d07d plus 10
-commits (fast-forward). Report: docs/research/fold-b116.md. Log: scratch/fold-b116/log.md. Replay:
+is unchanged: 30 open, H strict 5/24 on 29, strictest 5/24. Branch wip/fold-b116 = wip/leaf-fold33b d804d07d plus this
+task's commits, including the merges of d2a6b and r16-shimura73 (fast-forward). Report: docs/research/fold-b116.md. Log: scratch/fold-b116/log.md. Replay:
 scratch/fold-b116/REPLAY.md.
 
 1. **inbox 83: `faltingsSemistableHeightBC`.**
