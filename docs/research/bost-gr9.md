@@ -99,7 +99,9 @@ facts bear on it:
 It imports `ZInQKernel.Contrib.OneProof.AnalyticStableHeight`, which defines `IsAnStableHeight` and
 `BostLowerBoundAn`, and `ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect`. It does not import
 `OneProof.Main`. No `sorry`, no `axiom`, no code that runs at build time. It compiles in 7.5 s against the built
-tree (VERIFIED).
+tree (VERIFIED). `scratch/bost-gr9/axioms.txt`: `r21_of_sec9An`,
+`gaudronRemondSec9LowerAn_of_bostLowerBoundAn`, `bostAn_iff_faltings`, `deligne_heightFormula_shift`,
+`sec9_bound_lt_bost`, `sec9An_of_printed` depend on `[propext, Classical.choice, Quot.sound]` (VERIFIED).
 
 | declaration | statement | role |
 | --- | --- | --- |
@@ -148,7 +150,7 @@ original `namespace`/`open`/`set_option` context. The only edits:
   path from `HSyn.GR9.SGRFold`.
 
 **Checks (in `GR9Bypass-compile.txt`):**
-- `lake env lean scratch/bost-gr9/GR9Bypass.lean` (4045 lines): no error.
+- `lake env lean scratch/bost-gr9/GR9Bypass.lean` (4037 lines): no error.
 - `'HDec.HSyn.sixContactMin_of_open67_gr9' depends on axioms: [propext, Classical.choice, Quot.sound]`.
 - The field check in the same file prints: `original fields: 29, copy fields: 29`, `only in original:
   [bostLowerBoundAn]; only in copy: [gaudronRemondSec9LowerAn]`, and no other field type differs.

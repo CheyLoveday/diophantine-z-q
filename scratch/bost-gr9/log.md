@@ -26,7 +26,7 @@
   half_log_two_pi_sq_lt, sec9_bound_lt_bost (old row strictly stronger); gaudronRemondSec9LowerAn_of_bostLowerBoundAn;
   sec9Printed_of_an(')/sec9An_of_printed; grBostBound_of_sec9Printed(_chevalley); r21_of_grBost('); r21_of_sec9An.
 - Closure.lean: 114 affected structures; 110 decls to copy (TailZ74 33, TailZ69 1, EichlerBoundCopy 76).
-- GR9Bypass.lean (gen_bypass.py, 4045 lines): compiles; sixContactMin_of_open67_gr9 axioms [propext,
+- GR9Bypass.lean (gen_bypass.py, 4037 lines): compiles; sixContactMin_of_open67_gr9 axioms [propext,
   Classical.choice, Quot.sound]; field check: 29 vs 29 fields, only bostLowerBoundAn <-> gaudronRemondSec9LowerAn,
   no other type differs (VERIFIED). One fix needed: SGRFold sibling added12_of_open29_hf_pz qualified with _root_.
 - `#discharges` (Main + Discharges + GaudronRemondSection9, 16216 jobs): 19 discharges, none by ZInQ.BostGR9
