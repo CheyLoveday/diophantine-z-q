@@ -28,3 +28,5 @@ module compiles (`scratch/piclft/FoldDryRun.lean.txt`).
 **Remaining.** Nothing for this field. The integrator runs autofold (without `--dry-run`) and the usual fold
 checks. After the fold, piczero-char0's `picZeroAbVar0_of_leaves` rests only on `kleimanPicZeroProper` (host task
 kleiman-proper). Report: docs/research/piclft.md.
+
+Commits: 756791df3 (criterion) … 48ee2ca3d (contribution file, discharges, autofold), b2ca8e83d (report).
