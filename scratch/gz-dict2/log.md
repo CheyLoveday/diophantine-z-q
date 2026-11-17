@@ -14,3 +14,5 @@ from ~/dzq-wt/leaf-fold33b (.lake/build, lean/.lake).
 - D1a.lean (WEqK, center_of_wEq: valuative criterion for E ⊂ P² in valuation form; center_of_wEq_subring for ValuationSubring ⊇ ℚ): compiles (VERIFIED).
 - D1b.lean (modPt_cases: for E elliptic and X, Y meromorphic at τ satisfying W_E near τ, modPt is (lim X, lim Y) when X has a finite limit — then Y does too — and O exactly when ‖X‖ → ∞): compiles (VERIFIED).
 - ZInQKernel/Contrib/OneProof/GrossZagierPlane/Extension.lean (= scratch Extension.lean: D1a with WEqR/ratCast coefficients + D1b; adds phi_center): `lake build` OK (6.9 s); axioms standard for center_of_wEq, phi_center, modPt_cases, modPt_plane_cases, eventually_equation_ratFn (AxExt-output.txt) (VERIFIED).
+- ZInQKernel/Contrib/OneProof/GrossZagierPlane/OptimalUnique.lean (= scratch D3.lean + doc): isOptimalParam_unique (two parametrizations with IsOptimalParam for the same f, E agree or are opposite at every τ), weierPt_congr, weierPt_neg: `lake build` OK (5.0 s), no warnings in the file; axioms standard (AxD3-output.txt) (VERIFIED).
+- docs/research/gz-dict2.md drafted; scratch fold-spec.md, kinds-row.tsv written.
