@@ -184,4 +184,108 @@ theorem exists_local_lift (L₀ : PeriodPair) {Λ : Set ℂ}
     rw [L₀.toPoint_of_notMem _ hGzΛ, hcoordz, Point.some.injEq]
     exact ⟨hPGz, hPGy⟩
 
+/-! ## §5. A holomorphic group isomorphism `ℂ/Λ → E(ℂ)` is `z ↦ ξ_{L₀}(αz)` -/
+
+theorem exists_lattice_small (L : PeriodPair) :
+    ∃ ε > 0, ∀ l ∈ L.lattice, ‖l‖ < ε → l = 0 := by
+  have ho : IsOpen ({0} : Set L.lattice) := isOpen_discrete _
+  obtain ⟨ε, hε, hball⟩ := Metric.isOpen_iff.mp ho 0 rfl
+  refine ⟨ε, hε, fun l hl hlε => ?_⟩
+  have : (⟨l, hl⟩ : L.lattice) ∈ Metric.ball (0 : L.lattice) ε := by
+    rw [Metric.mem_ball, Subtype.dist_eq]; simpa using hlε
+  have h0 := hball this
+  simpa using congrArg Subtype.val (Set.mem_singleton_iff.mp h0)
+
+theorem exists_eq_toPoint_mul (L₀ : PeriodPair) {Λ : Set ℂ}
+    (ξ : ℂ → L₀.weierstrassCurve.toAffine.Point) (hξ : IsAnalyticUnif L₀.weierstrassCurve Λ ξ) :
+    ∃ α : ℂ, ∀ z, ξ z = L₀.toPoint L₀.discriminant_ne_zero (α * z) := by
+  set D := L₀.discriminant_ne_zero
+  have hU := L₀.isUniformization_toPoint D
+  let ξh : ℂ →+ L₀.weierstrassCurve.toAffine.Point := AddMonoidHom.mk' ξ hξ.1
+  let ξ₀h : ℂ →+ L₀.weierstrassCurve.toAffine.Point := AddMonoidHom.mk' (L₀.toPoint D) hU.1
+  have hξh : ∀ z, ξh z = ξ z := fun _ => rfl
+  have hξ₀h : ∀ z, ξ₀h z = L₀.toPoint D z := fun _ => rfl
+  obtain ⟨z₁, r, hr, G, hGd, hGeq⟩ := exists_local_lift L₀ ξ hξ
+  set g : ℂ → ℂ := fun t => G (z₁ + t) - G z₁ with hgdef
+  have hmem : ∀ t, ‖t‖ < r → z₁ + t ∈ Metric.ball z₁ r := fun t ht => by
+    simpa [Metric.mem_ball, dist_eq_norm] using ht
+  have hgξ : ∀ t, ‖t‖ < r → ξ t = L₀.toPoint D (g t) := fun t ht => by
+    have h1 : ξ (z₁ + t) = ξ z₁ + ξ t := hξ.1 z₁ t
+    have h2 : ξ t = ξ (z₁ + t) - ξ z₁ := by rw [h1]; abel
+    rw [h2, ← hGeq _ (hmem t ht), ← hGeq _ (Metric.mem_ball_self hr), ← hξ₀h, ← hξ₀h, ← map_sub]
+    rfl
+  have hgd : ∀ t, ‖t‖ < r → DifferentiableAt ℂ g t := fun t ht => by
+    have hG : DifferentiableAt ℂ G (z₁ + t) :=
+      hGd.differentiableAt (Metric.isOpen_ball.mem_nhds (hmem t ht))
+    exact (hG.comp t ((differentiableAt_id).const_add z₁)).sub_const _
+  have hg0 : g 0 = 0 := by simp [hgdef]
+  obtain ⟨ε, hε, hsmall⟩ := exists_lattice_small L₀
+  have hgc : ContinuousAt g 0 := (hgd 0 (by simpa using hr)).continuousAt
+  obtain ⟨δ₁, hδ₁, hδ₁g⟩ := Metric.continuousAt_iff.mp hgc (ε / 3) (by positivity)
+  set δ := min (δ₁ / 2) (r / 2) with hδdef
+  have hδ : 0 < δ := lt_min (by positivity) (by positivity)
+  have hδr2 : δ ≤ r / 2 := min_le_right _ _
+  have hδr : δ < r := lt_of_le_of_lt hδr2 (by linarith)
+  have hgsmall : ∀ t, ‖t‖ < δ₁ → ‖g t‖ < ε / 3 := fun t ht => by
+    have := hδ₁g (x := t) (by simpa [dist_eq_norm] using ht)
+    simpa [dist_eq_norm, hg0] using this
+  have hadd : ∀ t t', ‖t‖ < δ → ‖t'‖ < δ → g (t + t') = g t + g t' := by
+    intro t t' ht ht'
+    have hδ₁' : δ ≤ δ₁ / 2 := min_le_left _ _
+    have htt' : ‖t + t'‖ < 2 * δ := lt_of_le_of_lt (norm_add_le _ _) (by linarith)
+    have hl : g (t + t') - (g t + g t') ∈ L₀.lattice := by
+      apply hU.2.2
+      rw [← hξ₀h, map_sub, map_add, hξ₀h, hξ₀h, hξ₀h, ← hgξ _ (by linarith), ← hgξ _ (by linarith),
+        ← hgξ _ (by linarith), hξ.1, sub_self]
+    have hn : ‖g (t + t') - (g t + g t')‖ < ε := by
+      have a1 := hgsmall (t + t') (by linarith)
+      have a2 := hgsmall t (by linarith)
+      have a3 := hgsmall t' (by linarith)
+      have b1 := norm_sub_le (g (t + t')) (g t + g t')
+      have b2 := norm_add_le (g t) (g t')
+      linarith
+    exact sub_eq_zero.mp (hsmall _ hl hn)
+  set α := deriv g 0 with hαdef
+  have hderiv : ∀ t, ‖t‖ < δ → deriv g t = α := by
+    intro t ht
+    have h1 : HasDerivAt (fun s => g (t + s)) (deriv g t) 0 := by
+      have := (hgd t (by linarith)).hasDerivAt
+      exact HasDerivAt.comp_const_add t 0 (by simpa using this)
+    have h2 : HasDerivAt (fun s => g t + g s) α 0 :=
+      ((hgd 0 (by simpa using hr)).hasDerivAt).const_add _
+    have hev : (fun s => g (t + s)) =ᶠ[𝓝 0] fun s => g t + g s := by
+      filter_upwards [Metric.ball_mem_nhds (0 : ℂ) hδ] with s hs
+      exact hadd t s ht (by simpa using hs)
+    exact (h1.congr_of_eventuallyEq hev.symm).unique h2
+  have hlin : ∀ t, ‖t‖ < δ → g t = α * t := by
+    intro t ht
+    have hk : ∀ s ∈ Metric.ball (0 : ℂ) δ, HasDerivAt (fun s => g s - α * s) 0 s := by
+      intro s hs
+      have hs' : ‖s‖ < δ := by simpa using hs
+      have h1 : HasDerivAt g α s := by rw [← hderiv s hs']; exact (hgd s (by linarith)).hasDerivAt
+      have h2 : HasDerivAt (fun s => α * s) α s := by
+        simpa using (hasDerivAt_id s).const_mul α
+      have := h1.sub h2
+      rwa [sub_self] at this
+    have := IsOpen.is_const_of_deriv_eq_zero (f := fun s => g s - α * s) Metric.isOpen_ball
+      (convex_ball (0 : ℂ) δ).isPreconnected
+      (fun s hs => (hk s hs).differentiableAt.differentiableWithinAt)
+      (fun s hs => (hk s hs).deriv) (Metric.mem_ball_self hδ) (show t ∈ Metric.ball (0 : ℂ) δ by simpa using ht)
+    simp only [hg0, mul_zero, sub_zero] at this
+    exact (sub_eq_zero.mp this.symm)
+  refine ⟨α, fun z => ?_⟩
+  obtain ⟨n, hn⟩ := exists_nat_gt (‖z‖ / δ)
+  have hnpos : (0 : ℝ) < n := lt_of_le_of_lt (by positivity) hn
+  have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast hnpos.ne'
+  have hzn : ‖z / n‖ < δ := by
+    rw [norm_div, Complex.norm_natCast, div_lt_iff₀ hnpos]
+    rw [div_lt_iff₀ hδ] at hn; linarith
+  have hz : z = n • (z / n) := by rw [nsmul_eq_mul]; field_simp
+  have hαz : α * z = n • (α * (z / n)) := by rw [nsmul_eq_mul]; field_simp
+  calc ξ z = ξh (n • (z / n)) := by rw [hξh, ← hz]
+    _ = n • ξh (z / n) := map_nsmul _ _ _
+    _ = n • ξ₀h (α * (z / n)) := by rw [hξh, hξ₀h, hgξ _ (by linarith), hlin _ hzn]
+    _ = ξ₀h (n • (α * (z / n))) := (map_nsmul _ _ _).symm
+    _ = _ := by rw [← hαz, hξ₀h]
+
 end ZInQ.Contrib.HCMDict
