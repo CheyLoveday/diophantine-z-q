@@ -7,6 +7,8 @@ after a fold. -->
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) is a Lean theorem, checked by the kernel with no
 `sorry` and only the standard axioms, that proves the frozen target `ZInQ.FrozenTarget`, the theorem that Z is
 Diophantine in Q (the 11/5 manuscript, Theorem 1.1), from the hypotheses below. Everything else is proved.
+It is the headline `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
+(`SixContactMin` and the manuscript's Theorem 5.2, `PoleCompleteness`, the argument `hPC`) applied to the H bundles.
 Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to statements printed in the literature,
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
