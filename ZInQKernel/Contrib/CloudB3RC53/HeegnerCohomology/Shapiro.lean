@@ -128,6 +128,46 @@ theorem coeff_shapiro_eq_transfer (n : ℕ) (c : (Fin n → H) → M) (g : Fin n
       exact hb (inv_mul_eq_one.mp h).symm
   · simp
 
+omit [Fintype (G ⧸ H)] in
+theorem tprod_mem : ∀ (n : ℕ) (x : Fin n → H), tprod n (fun k => (x k : G)) ∈ H
+  | 0, _ => H.one_mem
+  | n + 1, x => by
+    rw [tprod_succ]
+    exact H.mul_mem (x 0).2 (tprod_mem n (Fin.tail x))
+
+omit [Fintype (G ⧸ H)] in
+include hr in
+/-- On `H`-tuples, with `r_1 = 1`, the `h`-tuple at the trivial coset is the tuple itself. -/
+theorem hTuple_of_mem (hr1 : r 1 = 1) : ∀ (n : ℕ) (x : Fin n → H),
+    hTuple H r hr n 1 (fun k => (x k : G)) = x
+  | 0, x => funext fun k => k.elim0
+  | n + 1, x => by
+    symm
+    apply hTuple_ext
+    · have hP : ((tprod n (Fin.tail fun k => (x k : G)) : G) : G ⧸ H) = 1 :=
+        (QuotientGroup.eq_one_iff _).mpr (tprod_mem H n (Fin.tail x))
+      have hx : (((x 0 : H) : G) : G ⧸ H) = 1 := (QuotientGroup.eq_one_iff _).mpr (x 0).2
+      rw [hP, one_mul, hc, hx, one_mul, hr1, inv_one, one_mul, mul_one]
+    · exact (hTuple_of_mem hr1 n (Fin.tail x)).symm
+
+/-- **`Sh` is a section of Shapiro's map** (restriction to `H` followed by evaluation at the
+trivial coset, the map inducing Shapiro's isomorphism `H*(G, Ind M) ≅ H*(H, M)`), `PROVED` at the
+level of cochains, in every degree, for a section with `r_1 = 1`.  Hence `Sh` induces the inverse of
+Shapiro's isomorphism, and `coeff_shapiro_eq_transfer` says that the explicit transfer (H21) is
+Shapiro's isomorphism (inverted) followed by the coefficient map (H20), as Elliot states
+(tex 3203–3206, 3245–3247). -/
+theorem shapiro_section (hr1 : r 1 = 1) (n : ℕ) (c : (Fin n → H) → M) (x : Fin n → H) :
+    Sh H r hr ρ n c (fun k => (x k : G)) 1 = c x := by
+  classical
+  have hP : ((tprod n fun k => (x k : G) : G) : G ⧸ H) = 1 :=
+    (QuotientGroup.eq_one_iff _).mpr (tprod_mem H n x)
+  simp only [Sh, T, R_trivial, Finset.sum_apply, indRep_apply, hr, hP, one_mul, iota_apply]
+  rw [Finset.sum_eq_single 1]
+  · simp [hr1, hTuple_of_mem H r hr hr1]
+  · intro b _ hb
+    rw [if_neg (by simpa [inv_mul_eq_one] using fun h => hb h), map_zero]
+  · simp
+
 end TwistedTransfer
 
 /-- **Node (H20)–(H21): Shapiro followed by the coefficient map**, tex 3202–3249, `PROVED`: for
