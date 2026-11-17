@@ -108,3 +108,10 @@ Hash dumps (`DumpCompact.lean`, ~1.7 MB each) are kept out of the commit; the co
     cited print of Berger's theorem, cited in the manuscript as berger2002, l. 739/11037). Both cited prints; neither
     on-the-spot. The B1 sketch (pb-p1 report section 4, on-the-spot) is not folded.
     **render_open count after fold 3: 35 open (H 30, strictest 4/26), count-neutral.**
+
+## Replay
+
+19. Text-only replay test (VERIFIED; `REPLAY.md`): temporary worktree at d67ea55f + Contrib files; fake autofold
+    (neronOggShafarevichSep, proof with `{t}`), then gen_chev_bypass.py, autofold-semistab.json, gen_pbp1_bypass.py:
+    TailZ76/77/78 written, stop bundle 36EBCF each time, readers as above, the fake proof inlined; counts
+    4/26 on 30 -> 4/25 on 29 -> 4/25 -> 4/25. Worktree removed (`git worktree remove`).
