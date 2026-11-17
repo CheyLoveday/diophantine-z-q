@@ -19,3 +19,28 @@
    biholomorphic; every analytic uniformization is a local biholomorphism; `IsAnFormMeasure ↔ IsFormMeasure`
    (Jacobian change of variables, Mathlib `addHaar_image_le_mul_of_det_lt`).
 3. Leaves over `IsAnStableHeight`; consumers through `isAnStableHeight_iff`.
+
+## Results (all VERIFIED: compiled with `lake env lean`, standard axioms)
+- 01:35 `exists_chart_of_lift` (generic IFT chart on a uniformized group) compiles.
+- 01:40 `IsHolChart` (Φ-free def) + `chart_comp_unif` + `exists_holChart` compile; axioms standard.
+- 01:45 `jacobian_bounds` (Mathlib `addHaar_image_le_mul_of_det_lt` / `mul_le_addHaar_image_of_lt_det`),
+  `HasAnFormDensityAt`, `IsAnFormMeasure`, `IsAnMetricSq`, `IsAnStableHeight` compile.
+- 01:50 `hasAnFormDensityAt_iff`, `isAnFormMeasure_iff`, `isAnMetricSq_iff`, `isAnStableHeight_iff` compile
+  (hypotheses: T35, `A.dim = g`, `η ≠ 0`).
+- leaves `BostLowerBoundAn`, `GaudronRemondThm14An`, `JavanpeykarAnMap`, `JavanpeykarAnMin`; consumers
+  `bostLowerBoundPrinted_of_an`, `gaudronRemondThm14Printed_of_an`, `javanpeykarPrintedMap_of_an(_min)`;
+  converses `*_of_printed`, `javanpeykarAnMin_of_map` compile.
+- `chart_comp_of`, `exists_algCoord`, `exists_holChart_at`, `holChart_transition`, `unif_holChart`,
+  `holo_in_chart_of_lift`, `regular_holo_in_holChart` compile.
+- 02:10 `ZInQKernel/Contrib/OneProof/AnalyticStableHeight.lean` = scratch R3.lean + header; `lake build
+  +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.AnalyticStableHeight`
+  OK (14274 jobs, 12 min). `#discharges` (discharges.txt):
+  bostLowerBoundPrinted by bostLowerBoundPrinted_of_an, assumes [BostLowerBoundAn, MumfordTorsionAlgClosed];
+  gaudronRemondThm14Printed by gaudronRemondThm14Printed_of_an, assumes [GaudronRemondThm14An, MumfordTorsionAlgClosed];
+  javanpeykarPrintedMapHF by javanpeykarPrintedMap_of_an_min, assumes [JavanpeykarAnMin, MumfordTorsionAlgClosed];
+  all axioms [propext, Classical.choice, Quot.sound].
+- autofold dry run: `strict count: 16/18 on 34 -> 17/17 on 34; strictest 16/18 -> 17/17` (this base rates
+  bost/GR Printed LEAF; against the 11-17 re-rating, all three GLUE, the fold is -3 GLUE). Dry-run module
+  (FoldDryRun.lean) compiles; `sixContactMin_of_open56` standard axioms.
+- Not done: GR `isogDeg = #ker(K̄)` vs printed degree (needs `#ker(K̄) ≤ deg`, finite flat group schemes);
+  link of `IsHolChart` with the vendored Paul-Lez `ComplexPoint` manifold (bridge Pts τ ≃ CPt(𝒢_τ)).
