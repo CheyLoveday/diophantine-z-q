@@ -192,4 +192,46 @@ and the new local conditions there are the unramified ones (and the old conditio
 the support comparison `j : C_S(U) → C_{S∪q}(U⁺)` is a quasi-isomorphism. -/
 def Nekovar788ii (T : SupportChangeData S) : Prop := QuasiIso (GHom.toCC (supportMap T))
 
+/-! ### Non-vacuity -/
+
+/-- The identity chain map. -/
+def idGHom (A : GCx S) : GHom A A where
+  f i j h := h ▸ LinearMap.id
+  comm i i₁ j j₁ hij h₁ h₂ hj x := by
+    subst hij hj
+    rfl
+
+/-- The zero chain map. -/
+def zeroGHom (A B : GCx S) : GHom A B where
+  f _ _ _ := 0
+  comm _ _ _ _ _ _ _ _ x := by simp
+
+/-- The trivial support change (no new place): `g, λ, μ` the identities and `r = 0`. -/
+abbrev idSupportData (D : SelData S) : SupportChangeData S where
+  D := D
+  Dp := D
+  g := idGHom D.G
+  lam := idGHom D.L
+  mu := idGHom D.U
+  r := zeroGHom D.G D.U
+  hres i j h a := by
+    subst h
+    change D.res.f i i rfl a = D.res.f i i rfl a + D.ι.f i i rfl 0
+    rw [map_zero, add_zero]
+  hι i j h u := by
+    subst h
+    rfl
+
+/-- **Non-vacuity of `Nekovar788ii`**: for the trivial support change the comparison is the
+identity, hence a quasi-isomorphism. PROVED. -/
+theorem nekovar788ii_id (D : SelData S) : Nekovar788ii (idSupportData D) := by
+  have h : GHom.toCC (supportMap (idSupportData D)) = 𝟙 _ := by
+    ext i c
+    obtain ⟨a, u, x⟩ := c
+    change ((a, u + 0, x) : D.G.X i × D.U.X i × D.L.X (i - 1)) = (a, u, x)
+    rw [add_zero]
+  unfold Nekovar788ii
+  rw [h]
+  infer_instance
+
 end ZInQ.Contrib.CloudB3RC53.SelmerDuality
