@@ -57,7 +57,7 @@
    "type": "_root_.HDec.G0Galois.C8Conrad.ConradAppBQp",
    "kind": "consequence",
    "class": "CITED (diophantine_zq.tex L760-762: 'Local algebraicity \\cite[Appendix B, pp.~32--33]{conrad-local-characters}'; bibitem L11046-11049, author preprint Dec. 11, 2011)",
-   "flag": "unread; unrefereed source (author preprint); statement as reported by the theorem-application audit",
+   "flag": "consequence of Conrad App. B p. 32 (Dec 11 2011 preprint; AI page read 11-17): HT => locally algebraic, L = Q_p, arithmetic normalization (allowed); unproved bridges: (1) HasHTWeights{w} => print-HT (ingredients proved in TailT.lean: Ysp_linearIndependent, htMult_eq_finrank_Ysp, exists_basis_Ysp; missing: print predicate, Galois enlargement of E, G_E -> G_Qp); (2) Q_p-homs G_m -> R_{E/Q_p}G_m are x -> x^n (no Weil restriction in the repo; Mathlib isGroupLikeElem_iff_mem_range_of at the pin, vendored groupLikeEquivSchemeCharacters); equivalence attributed to Tate via Serre [S6, III, A6, Cor. 2], Serre not cited by the manuscript; nothing stronger than the print. Strict leaf review queue28 (11-17): GLUE/GLUE",
    "source": "Conrad, Lifting global representations with local properties, author preprint Dec. 11 2011, App. B pp. 32-33, base field Q_p"
   },
   {

@@ -228,8 +228,10 @@ checked, 19 discharge one. **None of them is in `C8Conrad`**: as expected, no op
   * the coefficient field;
   * the Artin normalization;
   * whether the weights are tied to the exponents, which would let `LocAlgExponentEqWeight` be read off the print.
-* **Unrefereed source.** The project's LEAF definition requires a published, refereed theorem. Conrad's paper is an
-  author preprint (h-leaves L581; h-v14 L567), so `ConradAppBQp` counts as GLUE in the strict reading, even once read.
+* **Unrefereed source.** Conrad's paper is an author preprint. (An earlier version of this note said the project's LEAF
+  definition requires a published, refereed theorem, citing h-leaves L581 and h-v14 L567; neither line says that, and it
+  is not a rule, so the claim is withdrawn, 11-17.) The strict leaf review (queue28, 11-17) rates `ConradAppBQp`
+  GLUE/GLUE for two unproved bridges, not for the source's status: see the leaf's flag in scratch/c8-conrad3/autofold.json.
   The refereed statements the project's notes name for the same content are Serre 1968 Ch. III App. and Tate 1967 §3.3.
   Switching to them would leave the manuscript's citation. The rules allow that only for a known defect, so it is
   recorded here as an option, not taken.
