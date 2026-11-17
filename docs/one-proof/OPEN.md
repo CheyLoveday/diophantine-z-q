@@ -7,11 +7,13 @@ after a fold. -->
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) is a Lean theorem, checked by the kernel with no
 `sorry` and only the standard axioms, that proves the frozen target `ZInQ.FrozenTarget`, the theorem that Z is
 Diophantine in Q (the 11/5 manuscript, Theorem 1.1), from the hypotheses below. Everything else is proved.
+It is the headline `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
+(`SixContactMin` and the manuscript's Theorem 5.2, `PoleCompleteness`, the argument `hPC`) applied to the H bundles.
 Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to statements printed in the literature,
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**29 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves53`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**29 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves53`), plus one manuscript hypothesis outside the H part (`hPC`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
 * **Strict count: 5 published / 24 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -60,7 +62,6 @@ Readings that apply to every statement built on a shared kernel definition.
 * [`dsThm965Printed`](#dsthm965printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * [`dsThm966Printed`](#dsthm966printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * [`sga7_IX_Cor3_3_Def34`](#sga7_ix_cor3_3_def34): a good first target; consequence, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
-* [`hCM`](#hcm): a good first target; consequence, tier T2, [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
 
 ## Held
 
@@ -90,16 +91,6 @@ Unread locators: SGA 3, EGA IV, Faltings 1983 Lemma 5, GIT, BLR 1.4, 7.2, 7.3. C
 
 * [`neronSchemeExtensionDedekind`](#neronschemeextensiondedekind) (GLUE; unverified-locator): Bosch-Lutkebohmert-Raynaud, Neron models (1990), 1.4 Thm 3 with 1.2 Def 1: an abelian variety over the fraction field of a Dedekind domain D has a Neron model over Spec D (existence half; smooth, separated, quasi-compact, extension property for smooth D-schemes); numbers UNVERIFIED; group-law-dvr, goodmodel-iso. Replaces mumfordGroupLawConn (GIT 6.14 over a DVR follows: GoodModelIso.mumfordGroupLawDVR_of_dedekind) and the textbook field neronSchemeExtensionExists (its case D = O_L)
 
-### Packet R3
-
-Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
-
-* [`h21S`](#h21s) (GLUE): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Theorem 2.1 (L554-559), with P(d1, d2) at L551-552 and pi^U from Theorem 2.4(1) (L615-623)
-* [`hCM`](#hcm) (GLUE; pending-review): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, as printed with p-component lattices; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
-* [`h33c`](#h33c) (GLUE; pending-review): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for the identification i0 : (X0(32), oo) = (A, O) of curves over Q (arXiv:1411.4728v1 L1173-1174, L1296-1311; journal number UNVERIFIED)
-* [`hBFH`](#hbfh) (GLUE; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
-* [`hGZss`](#hgzss) (GLUE; pending-review): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V section 2 Thm 2.1 (pi fixed on p. 310 per the queue9 reading); any modular parametrization with pi(infty) = 0
-
 ### Packet R4
 
 The discriminant-6 Shimura curve. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
@@ -114,7 +105,7 @@ Heights. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/is
 * [`pazukiCor13Upper`](#pazukicor13upper) (GLUE): Pazuki, Bull. SMF 140 (2012) Cor. 1.3(2), upper half (read by the audit; RISK: Pazuki's level-2 coordinates, height-split §8)
 * [`bostLowerBoundAnSS`](#bostlowerboundanss) (GLUE; pending-review, unverified-locator): Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), over the stable height with the metric on A_tau(C)^an (r3-residual), semistability as printed (geometric and k(s) readings; semistab-assembly)
 * [`gaudronRemondThm14AnSS`](#gaudronremondthm14anss) (GLUE; pending-review): Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4, over the stable height with the metric on A_tau(C)^an (r3-residual), semistability as printed (geometric and k(s) readings; semistab-assembly)
-* [`javanpeykarThm111An`](#javanpeykarthm111an) (GLUE; reading-risk): Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1) and section 2.3, p. 98 (arXiv p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); cited at diophantine_zq.tex L870; over the stable height with the metric on A_tau(C)^an (r3-residual), semistability as printed (semistab-assembly)
+* [`javanpeykarThm111An`](#javanpeykarthm111an) (GLUE; reading-risk): Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1) and section 2.3, p. 98 (arXiv p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); cited at diophantine_zq.tex L870; over the stable height with the metric on A_tau(C)^an (r3-residual), semistability of the Jacobian's Neron model (semistab-assembly; not the print's Def. 2.2.1)
 
 ### Packet R7
 
@@ -170,11 +161,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`raynaudSemistableSHOr`](#raynaudsemistableshor) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`h21S`](#h21s) | frozenTarget | consequence | GLUE | note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
-| [`hCM`](#hcm) | frozenTarget | consequence | GLUE | pending-review | good-first | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
-| [`h33c`](#h33c) | frozenTarget | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
-| [`hBFH`](#hbfh) | frozenTarget | published | GLUE | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hGZss`](#hgzss) | frozenTarget | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
+| [`hPC`](#hpc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
 
 ## The hypotheses
 
@@ -378,8 +365,8 @@ ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr
 
 ### javanpeykarThm111An
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves53.javanpeykarThm111An`; kind **consequence**, strict **GLUE**; flag: reading risk: R3' (the IsHolChart atlas is the complex structure of A(C)^an) is the one step left inside the height predicate, the same step as bostLowerBoundAnSS and gaudronRemondThm14AnSS; the leaf is the composite of Thm 1.1.1 with the Section 2.3 identification h_Fal(X) = h_Fal(Jac X), stated with the Jacobian's height since h_Fal(X) of a curve is not defined in Lean (lead's ruling wanted on the composite); semistability clause as printed (equivalent to IsSemistableRes, jp-an-retype).
-* Source: Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1) and section 2.3, p. 98 (arXiv p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); cited at diophantine_zq.tex L870; over the stable height with the metric on A_tau(C)^an (r3-residual), semistability as printed (semistab-assembly)
+* Bundle field `HDec.HSyn.OpenResearchLeaves53.javanpeykarThm111An`; kind **consequence**, strict **GLUE**; flag: reading risk: R3' (the IsHolChart atlas is the complex structure of A(C)^an) is the one step left inside the height predicate, the same step as bostLowerBoundAnSS and gaudronRemondThm14AnSS; the leaf is the composite of Thm 1.1.1 with the Section 2.3 identification h_Fal(X) = h_Fal(Jac X), stated with the Jacobian's height since h_Fal(X) of a curve is not defined in Lean (lead's ruling wanted on the composite); semistability clause: semi-abelian reduction of the Jacobian's Neron model (IsSemistablePrinted, equivalent to IsSemistableRes, jp-an-retype), not the print's curve-model semistability (Def. 2.2.1, which the row does not use); step outside the print: the Faltings height of a model with semi-abelian reduction everywhere does not depend on the number field or the model (Faltings 1983 section 1, Deligne Sem. Bourbaki 616 section 1; locators UNVERIFIED), so x is the stable height of W = Jac X, which Section 2.3 identifies with h_Fal(X); curve-to-Jacobian semistability enters only inside the print's Section 2.3 citation (Szpiro, Asterisque 127, Lemme 3.2.1, Ch. I).
+* Source: Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1) and section 2.3, p. 98 (arXiv p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); cited at diophantine_zq.tex L870; over the stable height with the metric on A_tau(C)^an (r3-residual), semistability of the Jacobian's Neron model (semistab-assembly; not the print's Def. 2.2.1)
 * packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
 * Status: open.
@@ -589,162 +576,27 @@ DictModels.RaynaudOr.RaynaudSemistableSHOr
 
 > dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH.
 
-## Tian–Yuan–Zhang and Gross–Zagier hypotheses
+## Manuscript hypotheses outside the H part
 
 These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.
+Pole completeness PC (`ZInQ.PoleCompleteness`) is Theorem 5.2 of the 11/5 manuscript for its own pole
+polynomial; the manuscript derives it from its restricted converse, Theorem 5.3. The former Route K inputs
+(Tian–Yuan–Zhang and Gross–Zagier) are no longer hypotheses.
 
-### h21S
+### hPC
 
-* Argument `h21S` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: reviewer verdict queue13-15 (11-17; notes crowd-kit/ckpt/leaf-review/queue13..15-verdict.md): consequence, GLUE/GLUE; earlier: pending review (inbox 20: consequence until rated; steps (a) and (b) of the h21C verdict still apply: lcalSq = script-L^2 needs root number and functional equation; Legendre gchar vs TYZ's CFT character); pending review (new printed leaf, h21c-steps); replaces h21C (h21C = H21CSteps.tyzThm21PairsC_of_span h21S, and conversely): TYZ Theorem 2.1 as h21C (complex sign choices, the sign absorbed by epsilon) with f_n a Z-generator of pi_Z^{U_n} where pi^U = sum_delta C f_delta is read as printed in Theorem 2.4(1) (L615-623); f_delta, Lemma 2.5 bijectivity and the dictionary InPiZ <-> span proved in Lean (no measure, no L715-727); composite of Theorem 2.1 and Theorem 2.4(1) at definition level (pi, the JL transfer of f_E, has no Lean definition, so the two cannot be stated separately); restricted: odd classes, n > 1, first assertion for pairs with no factor = 1 mod 8; unread; clause 1 rests on the corrected symmetric reading, not the print (readings/gee-tyz.md); variant B (h11 and hL29 from h21C) is Lean-proved (inbox 26a).
-* Source: Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Theorem 2.1 (L554-559), with P(d1, d2) at L551-552 and pi^U from Theorem 2.4(1) (L615-623)
-* packet [R3](#packet-r3); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
+* Argument `hPC` of `frozenTarget`; kind **manuscript hypothesis**, strict **GLUE**; flag: ELLIOT: Theorem 5.3 route in progress (#83).
+* Source: Glazer, 11/5 manuscript (diophantine_zq.tex), Theorem 5.2 (Pole completeness, hyp:PC), lines 1001-1004, for the manuscript's pole polynomial Q_pole (lines 976-982, curves y^2 = x(x - l)(x + 3l)); the manuscript proves it from Theorem 5.3 (restricted converse, hyp:RC, lines 1005-1011)
+* discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 * Human readings recorded: none.
 * Status: open.
 
 ```lean
-ZInQ.Contrib.H21CSteps.TYZThm21Span
+ZInQ.PoleCompleteness
 ```
 
-> **TYZ Theorem 2.1 (L554–559), with `π^U` as printed in Theorem 2.4(1) (L615–623), for every
-> decomposition, odd classes, complex sign choices.** For squarefree `1 < n ≡ 1, 3 (mod 8)`, every admissible
-> embedding `τ` (L527–534), every test vector `f_n` (a `ℤ`-generator of `π_ℤ^{U_n}`, `IsTestVectorSpan`), every
-> complex sign choice `ℓ` of `𝓛` (`ℓ(m)² = 𝓛(m)²`, L338–353) and every `n = d₁d₂`: the quadratic period
-> `P(d₁, d₂) = Σ_{t ∈ Cl_n} f_n(t)χ_{d₁,d₂}(t)` (L551–552, `quadPeriod`) vanishes when neither factor is `≡ 1 (mod 8)`,
-> and for `d₂ ≡ 1 (mod 8)`, `P(d₁, d₂) = ±2^{k−a} w_K 𝓛(d₁)𝓛(d₂)` (`k − a = #{p ∣ n} − 1` for odd `n`, `2w_K` the
-> number of roots of unity of `K_n`, Mathlib's `torsionOrder`). The same statement as `TYZThm21PairsC` (tyz-genus),
-> whose restrictions it keeps (odd classes, `n > 1`, the first assertion only for pairs with no factor
-> `≡ 1 (mod 8)`), with `π_ℤ^{U_n}` read through Theorem 2.4(1) instead of through `InPiZ`.
-
-### hCM
-
-* Argument `hCM` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: pending review (hcm-lattice: hCM is now ZInQ.Contrib.HCMLattice.ShimuraThm54Local, Shimura 1971 Thm 5.4 with IsAnalyticIso and the p-component lattices s^-1 a, s^-1 u; the Weierstrass-map step and the lattice lemma proved in Lean; GLUE until the reviewer rates it); earlier: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; unread: new printed leaf (Shimura 1971 Thm 5.4 as printed: analytic isomorphism xi : C/a -> E(C) gives xi' : C/s^-1 a -> E^sigma(C) with xi(u)^sigma = xi'(s^-1 u); E restricted to short Weierstrass models, uniqueness dropped; "analytic isomorphism" = IsAnalyticUnif, dictionary proved in Lean (isAnalyticUnif_iff)); locator UNVERIFIED (numbers).
-* Source: Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, as printed with p-component lattices; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
-* packet [R3](#packet-r3); label good-first (a good first target); tier T2 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.Contrib.HCMLattice.ShimuraThm54Local
-```
-
-> **LEAF SHIMURA-5.4-LOCAL (the main theorem of complex multiplication, Shimura 1971 Thm 5.4, with the print's
-> hypotheses and the print's `s⁻¹𝔞` and `s⁻¹u`).** Let `K = ℚ(√−m) ⊂ ℂ` (through `κ`, `√−m ↦ i√m`), `e : Kˢ → ℚ̄`
-> normalized (`ιC ∘ e = κ` on `K`), `σ ∈ Aut(ℂ)` and `s ∈ 𝔸_K^×` with `σ = [s, K]` on `K^ab` (`ArtinCond`). Let `𝔞`
-> be a lattice in `K` (`κ(𝔞)` is the lattice of a period pair) and `𝔟 = s⁻¹𝔞`, the lattice of `K` whose
-> `p`-components are `𝔟_p = s_p⁻¹𝔞_p` for every prime `p` (`K_p = K ⊗ ℚ_p = ∏_{v∣p} K_v`, `𝔞_p = 𝔞 ⊗ ℤ_p` the closure
-> of `𝔞` in `K_p`, `s_p` the `p`-component of `s`; `locLat`, `ideleComp`). Let `E` be an elliptic curve over `ℂ`
-> in short Weierstrass form (`E(ℂ) = E.toAffine.Point`) and `ξ : ℂ/𝔞 → E(ℂ)` an analytic isomorphism
-> (`IsAnalyticIso`: a bijection `ℂ/κ(𝔞) → E(ℂ)`, holomorphic into `E(ℂ) ⊂ ℙ²(ℂ)` with nowhere vanishing differential;
-> and a group homomorphism). Then there is an analytic map `ξ' : ℂ/𝔟 → E^σ(ℂ)` (`E^σ = E.map σ`) inducing a bijection
-> `ℂ/κ(𝔟) → E^σ(ℂ)` and holomorphic into `ℙ²(ℂ)`, with `ξ(u)^σ = ξ'(s⁻¹u)` for all `u ∈ K/𝔞`; here `v ∈ K`
-> represents `s⁻¹u ∈ K/𝔟 = ⊕_p K_p/𝔟_p` when `v ≡ s_p⁻¹u (mod 𝔟_p)` for every prime `p`, and `P ↦ P^σ` is `conjPt σ`.
-> 
-> Source: G. Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971), Thm. 5.4 (the
-> definitions of `s𝔞` and `su` through `p`-components in the same section); S. Lang, *Elliptic functions*, Ch. 10,
-> Thm. 3 (numbers UNVERIFIED, from memory; not read here). This is the print restricted, each change a special case
-> or a weakening of the conclusion: `E` ranges over short Weierstrass models; `ξ` is in addition a group homomorphism
-> (so the hypothesis implies the print's in either reading of "analytic isomorphism"); the uniqueness of `ξ'`, the
-> group-law and the holomorphy of its inverse are dropped from the conclusion. The setting (`ArtinCond`, the
-> normalization of `e`) is that of `T5Glue.ShimuraMainCM` and `HCMDict.ShimuraThm54`.
-
-### h33c
-
-* Argument `h33c` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: pending review (inbox 27a: consequence until rated); G5/G2 (TYZ's adelic X_U against classical Gamma0(32)\H: strong approximation) are steps, ruling 11-17; unread: new printed leaf (h33-d1: ZInQ.H33D1.TYZThm33CurveSome, i0 a morphism of Q-schemes; D1 proved in Lean in both directions: model uniqueness (CurveModel.exists_iso_of_functionField) and A normal at every point including O (valuationRing_stalk_ESch); equivalent to the all-models form TYZThm33Curve in Lean; hypotheses satisfiable given hCM); journal version (Asian J. Math. 21 (2017)) not checked; readings kept: X_U = X0(32)_Q(i) with P_n -> tau_n (G5, L1191-1193), sign of [i] (alpha = -i, L1564-1566), model y^2 = x^3 + 4x for 2y^2 = x^3 + x.
-* Source: Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for the identification i0 : (X0(32), oo) = (A, O) of curves over Q (arXiv:1411.4728v1 L1173-1174, L1296-1311; journal number UNVERIFIED)
-* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.H33D1.TYZThm33CurveSome
-```
-
-> **Leaf TYZ-3.3 (curve form, one model): Tian–Yuan–Zhang Theorem 3.3 for TYZ's isomorphism of
-> curves `i₀ : (X₀(32), ∞) ≅ (A, O)` over `ℚ`, for `n ≡ 5, 7 (mod 8)`.**
-> 
-> Source: Tian–Yuan–Zhang, *Genus periods, genus points and congruent number problem*,
-> arXiv:1411.4728v1, Theorem 3.3 (Period7.tex L1296–1311), with §3.1: `A` "is isomorphic to
-> `(X₀(32), ∞)`. Fix an identification `i₀`" (L1173–1174), `f_n = f₀ − f₀∘[i]` for `n ≡ 5` and
-> `f_n = i₀` for `n ≡ 7` (L1195–1198), the CM points `P_n` (L1203–1295). Journal version: Asian J.
-> Math. 21 (2017), NOT checked.
-> 
-> The objects:
-> * `X₀(32)` is the canonical model over `ℚ` (Shimura 1971 §6.7, UNVERIFIED locator): an integral
-> normal scheme `X`, proper of dimension `1` over `ℚ`, with function field
-> `ι : K(X) ≅ ℚ(X₀(32)) = ℚ(j, j₃₂) ⊂ ℚ((q))` (FLT's `modularFunctionField 32`, embedded by
-> `q`-expansion at `∞`). The leaf asks the statement for **some** such `(X, ι)`: weaker than for
-> all of them (`TYZThm33Curve`), and the canonical model is one. Any two are isomorphic
-> compatibly with `ι` (`CurveModel.exists_iso_of_functionField`, proved).
-> * `A` is the projective scheme `ESch curveA = Proj ℚ[X, Y, Z]/(Y²Z − X³ − 4XZ²)` (`y² = x³ + 4x`,
-> `ℚ`-isomorphic to TYZ's `2y² = x³ + x` by `(x, y) ↦ (2x, 4y)`).
-> * `i₀ : X ⟶ ESch curveA` is an isomorphism of `ℚ`-schemes with `i₀(∞) = O`: the cusp `∞`
-> (`IsCuspInfty`, the center of `ord_q`) maps to the point `O = ptO curveA` (the `ℚ`-point
-> `[0 : 1 : 0]` of the chart `D₊(Y)`, `chiO`), the unique point outside the chart `D₊(Z)`
-> (G4(b), `not_mem_chartZ_iff`).
-> * `P_n` is the CM point `τ_n` of `tyzForm n` (`n ≡ 5`) resp. `tyzForm7 n` (`n ≡ 7`): the
-> `ℂ`-points `x` of `X` at `τ_n` (`IsPointAt`), and `i₀(P_n) ∈ A(ℂ)` is `ptOf curveA (x ≫ i₀)`.
-> * `w n ∈ A(ℚ̄)` with `w n = i₀(P_n)` in `A(ℂ)`; then `TYZThm33EpsAfter (zOfLift w)` (h33-dict's
-> display: `P_χ` torsion unless `χ = χ_{d₀,d₁}`, and then `P_χ = ε(d₀, d₁) 2^{h₂(n)} 𝓛(d₁) 𝒫(d₀)`
-> in `A(ℚ̄) ⊗ ℚ`, `ε` chosen after `Φ`, `χ`), with `z_n = w n − [i](w n)` for `n ≡ 5` and
-> `z_n = w n` for `n ≡ 7`.
-> 
-> Readings (not Lean): `X_U ≅ X₀(32)_{ℚ(i)}` with `P_n ↦ τ_n` (L1191–1193, G5) and the sign of `[i]`
-> (h33-sign), unchanged from h33-fix; the weakenings of h33-dict.
-
-### hBFH
-
-* Argument `hBFH` of `frozenTarget`; kind **published**, strict **GLUE**; flag: BFH clause (ii) over the classical Gamma0(N) newform with the Kronecker symbol as printed (bfh-gamma0); definition-level readings: the Petersson coset sum read as the fundamental-domain integral, the Atkin-Lehner newform, epsilon over completedL, L(1) as the value of every continuation, k = 2; reading risk: under BFH's newform convention it is LEAF with Atkin-Lehner (eigen at good n), under Diamond-Shurman 5.8.1 the U_p-eigen property for the Gamma0 action is not proved; cloud read W25 matched it clause by clause (fork #14 comment 6912030919); unread by a human.
-* Source: Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
-* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.BFHPrinted.BFHClauseIIGamma0
-```
-
-> **Bump–Friedberg–Hoffstein 1990, opening theorem, clause (ii), at weight `k = 2`: the
-> classical newform on `Γ₀(N)`, `χ_D(n) = (D / n)` the Kronecker symbol.**
-> 
-> Printed statement (the statement-check read of D. Bump, S. Friedberg, J. Hoffstein, Invent. Math.
-> 102 (1990), opening theorem, pp. 543–544; paraphrase): let `f` be a newform of even weight `k` and
-> trivial character on `Γ₀(N)`, `ε` the sign of the functional equation of `L(s, f)`, and `S` a
-> finite set of primes containing the primes dividing `N`. Then there is a fundamental
-> discriminant `D` of a quadratic field with `ε D > 0`, every `p ∈ S` split in `ℚ(√D)`, and
-> `L(k/2, f, χ_D) ≠ 0`, where `χ_D(n) = (D / n)` and `L(s, f, χ_D) = ∑ aₙ χ_D(n) n^{−s}` (centre
-> `s = k/2`). No CM exclusion, no level condition.
-> 
-> Here, the direct instance at `k = 2` (centre `s = 1`):
-> * `F : CuspForm ((Gamma0 N).map (mapGL ℝ)) 2` with `IsGamma0Newform F` (a cusp form of weight 2
-> on `Γ₀(N)` that is an eigenform of the Hecke operators `T_n`, `(n, N) = 1`, lies in the new
-> subspace of `S_2(Γ₀(N))`, the Petersson complement of the `V_d S_2(Γ₀(M))`, `dM ∣ N`,
-> `M ≠ N`, and has `a₁ = 1`); trivial character is built into `Γ₀(N)`;
-> * `IsFESignGamma0 F ε`: `ε` is the sign of the functional equation of the completed `L(s, F)` at
-> level `N`;
-> * `S : Finset ℕ` of primes containing every prime dividing `N`;
-> * `Int.IsFundamentalDiscr D` (Mathlib) with `D ≠ 1`; `0 < ε * D`; `SplitsInQuadratic D S` (two
-> distinct primes of `𝓞 K` above each `p ∈ S`, `K` a quadratic number field containing `√D`);
-> * `KroneckerCentralValueNeZeroGamma0 F D`: `L(1, F, χ_D) ≠ 0` with `χ_D(n) = (D / n)`
-> (`kroneckerSym`, the Kronecker symbol).
-> 
-> Source: D. Bump, S. Friedberg, J. Hoffstein, *Nonvanishing theorems for L-functions of modular
-> forms and their derivatives*, Invent. Math. 102 (1990), 543–618, opening theorem (pp. 543–544),
-> clause (ii).
-
-### hGZss
-
-* Argument `hGZss` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: pending review (inbox 27a: consequence until rated); unread: new printed leaf (h33-d1: GZSplitUnique.GrossZagierCurveCdSplitSome; S1 removed: the statement is asked on one model and transferred to every model in Lean by model uniqueness (GZSplitUnique.gzSplitBody_transfer, GZUnique.model_transfer); eps step removed by eps-splitting; D1, D2 in Lean and D3 cleared as in hgz-steps); locator UNVERIFIED.
-* Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V section 2 Thm 2.1 (pi fixed on p. 310 per the queue9 reading); any modular parametrization with pi(infty) = 0
-* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.GZSplitUnique.GrossZagierCurveCdSplitSome
-```
-
-> **Leaf of the `C_d` route**: `GrossZagierCurveAtSplitSome E'` for every short model `E'` in the
-> isogeny class of `C_d : y² = x³ − d²x`, `d ≡ 5 (mod 8)` squarefree.
+> **Hypothesis PC** (Theorem 5.2, pole completeness). Every rational `B` with square
+> reduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies `Φ(B)`.
 
 ## Credits
 
