@@ -19,3 +19,20 @@
   m = r0 f / gcd(r0,f)^2, beta = f r1, theta = sqfree part of T = D^2 - N/m, H = T (mB/D)^2.
 - `Reduction.lean`: `poleCompleteness_of_crm : CRM -> SimultaneousConstruction -> Manuscript.PoleCompleteness`.
   COMPILED, axioms [propext, Classical.choice, Quot.sound].
+
+## Lean, second deliverable (statement level)
+- `CRM.lean`: `crm_of_restrictedConverse P (hRC : RestrictedConverse P) (h54 : Lemma54At P)
+  (hK : KolyvaginRankOne) (hMW : MordellWeil) (hD : DescentGlueM) : CRM`. COMPILED.
+
+## Numerics (plain python3, scratch/pc-from-rc/{selmer,compare,construct,batch}.py)
+- compare.py: for all 55 squarefree l < 700, l = 11 mod 12, the brute-force explicit 2-Selmer set
+  (local searches at p | 6l and R; good primes assumed unramified) EQUALS the set predicted by the local
+  image formulas: R: a > 0; Q_2: a, b odd, b = 1 mod 4; Q_3: 3 does not divide b, b = 1 mod 3;
+  q | l: (a,b) in span of torsion classes (l,1), (3,-l) mod Q_q^*2. 0 mismatches. VERIFIED (computed).
+- selmer.py: l = 323 = 17*19: matrix conditions (ker K = <1,1_beta>, lambda not in im K) hold for
+  beta = 17, and brute-force #Sel = 8 with (17,1) in Sel. VERIFIED (computed).
+- batch.py: for 30 random beta (1-3 primes < 400, beta = 17 mod 24), theta = 1 (the random theta
+  generator produced no theta > 1 -- weak test for theta), a random search over n = beta*q0*p_1..p_{d-1}
+  (q0 = 7 mod 12, p_k = 1 mod 12, the slot types of L1042) found n with the matrix conditions for n
+  in all 30 cases (within <= 308 tries); for n = 5627 = 17*331 brute force gives #Sel = 8, (17,1) in Sel.
+  construct.py: (beta, theta) = (65, 97*193) also succeeded (n = 308487335).
