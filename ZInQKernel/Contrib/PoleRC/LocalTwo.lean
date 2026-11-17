@@ -316,10 +316,6 @@ theorem localTwo_nec {ℓ a b : ℤ} (h4 : ℓ % 4 = 3) (ha : Squarefree a) (hb 
 
 /-! ### Sufficiency at `2` -/
 
-/-- Closes the identities `q = m / n * c²` of the witness table (as Route K's `Two.lean`). -/
-local macro "wit2" : tactic =>
-  `(tactic| first | (push_cast; field_simp; done) | (push_cast; field_simp; ring))
-
 /-- **The four classes `τ · (5, 5)`** (`τ` a torsion class) are in the image over `ℚ₂`, for any
 odd `ℓ`, with the rational witnesses `x = 1/4`, `ℓ + 80ℓ²`, `−3ℓ + 112ℓ²`, `20ℓ²` (DEPARTURE:
 S12 asserts no sufficiency at `2`). -/
@@ -333,24 +329,36 @@ theorem locM_two_five {ℓ : ℤ} (hℓ : ℓ % 2 = 1) :
   refine ⟨?_, ?_, ?_, ?_⟩
   · -- `(5, 5)`, `x = 1/4`
     refine Or.inr ⟨1 / 4, ?_, ?_, ?_⟩
-    · exact sq (1 + 12 * ℓ) 5 (1 / 2) _ rfl (by omega) (by wit2)
-    · exact sq (1 - 4 * ℓ) 5 (1 / 2) _ rfl (by omega) (by wit2)
-    · exact sq 1 1 (1 / 10) _ rfl rfl (by wit2)
+    · exact sq (1 + 12 * ℓ) 5 (1 / 2) _ rfl (by omega)
+        (by push_cast; field_simp; ring)
+    · exact sq (1 - 4 * ℓ) 5 (1 / 2) _ rfl (by omega)
+        (by push_cast; field_simp; ring)
+    · exact sq 1 1 (1 / 10) _ rfl rfl
+        (by push_cast; field_simp; ring)
   · -- `(5ℓ, 5)`, `x = ℓ + 80ℓ²`
     refine Or.inr ⟨ℓ + 80 * ℓ ^ 2, ?_, ?_, ?_⟩
-    · exact sq (1 + 20 * ℓ) 5 2 _ rfl (by omega) (by wit2)
-    · exact sq 1 1 (4 * ℓ) _ rfl rfl (by wit2)
-    · exact sq (1 + 80 * ℓ) 1 (1 / 5) _ rfl (by omega) (by wit2)
+    · exact sq (1 + 20 * ℓ) 5 2 _ rfl (by omega)
+        (by push_cast; field_simp; ring)
+    · exact sq 1 1 (4 * ℓ) _ rfl rfl
+        (by push_cast; field_simp; ring)
+    · exact sq (1 + 80 * ℓ) 1 (1 / 5) _ rfl (by omega)
+        (by push_cast; field_simp)
   · -- `(15, −5ℓ)`, `x = −3ℓ + 112ℓ²`
     refine Or.inr ⟨-3 * ℓ + 112 * ℓ ^ 2, ?_, ?_, ?_⟩
-    · exact sq 7 15 (4 * ℓ) _ rfl rfl (by wit2)
-    · exact sq (1 - 28 * ℓ) 5 2 _ rfl (by omega) (by wit2)
-    · exact sq (3 - 112 * ℓ) 3 (1 / 5) _ rfl (by omega) (by wit2)
+    · exact sq 7 15 (4 * ℓ) _ rfl rfl
+        (by push_cast; field_simp; ring)
+    · exact sq (1 - 28 * ℓ) 5 2 _ rfl (by omega)
+        (by push_cast; field_simp; ring)
+    · exact sq (3 - 112 * ℓ) 3 (1 / 5) _ rfl (by omega)
+        (by push_cast; field_simp; ring)
   · -- `(15ℓ, −5ℓ)`, `x = 20ℓ²`
     refine Or.inr ⟨20 * ℓ ^ 2, ?_, ?_, ?_⟩
-    · exact sq (20 * ℓ + 3) 15 1 _ rfl (by omega) (by wit2)
-    · exact sq (1 - 20 * ℓ) 5 1 _ rfl (by omega) (by wit2)
-    · exact sq (-1) 15 2 _ rfl rfl (by wit2)
+    · exact sq (20 * ℓ + 3) 15 1 _ rfl (by omega)
+        (by push_cast; field_simp)
+    · exact sq (1 - 20 * ℓ) 5 1 _ rfl (by omega)
+        (by push_cast; field_simp; ring)
+    · exact sq (-1) 15 2 _ rfl rfl
+        (by push_cast; field_simp; ring)
 
 /-- The residue bookkeeping mod `8`: for `ℓ ≡ 3 (mod 4)`, every pair (`a` odd, `b ≡ 1 (mod 4)`)
 of residues is the residue pair of one of the eight classes. -/
