@@ -38,11 +38,11 @@ def FibreSimpleNC : Prop :=
 def ModularConstituentNC : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (π : ToP1 Y.left),
     R1fpProps Y Φ → R2fpProps Y Φ π → ∀ u : ℚ, u ∉ contactSet → NoCMAt Y Φ π u →
-    ∀ (y : fieldPt Qbar ⟶ Y) (P : QML3 Qbar), Φ Qbar y = M3.mk P →
-      π.val (K := Qbar) y.left = OnePoint.some (algebraMap ℚ Qbar (Jmap u)) →
-    ∃ (L : GlueAssembly.NF) (emb : L.K →+* Qbar) (A : ZInQ.DefFaltings.AbVar L.K) (N : ℕ)
+    ∀ (y : fieldPt LeafQM.AV.Qbar ⟶ Y) (P : QML3 LeafQM.AV.Qbar), Φ LeafQM.AV.Qbar y = M3.mk P →
+      π.val (K := LeafQM.AV.Qbar) y.left = OnePoint.some (algebraMap ℚ LeafQM.AV.Qbar (Jmap u)) →
+    ∃ (L : GlueAssembly.NF) (emb : L.K →+* LeafQM.AV.Qbar) (A : ZInQ.DefFaltings.AbVar L.K) (N : ℕ)
       (J : PkgI3.AbVar ℚ),
-      (letI : Algebra L.K Qbar := emb.toAlgebra; Nonempty ((A.baseChange Qbar).X ≅ P.A.X)) ∧
+      (letI : Algebra L.K LeafQM.AV.Qbar := emb.toAlgebra; Nonempty ((A.baseChange LeafQM.AV.Qbar).X ≅ P.A.X)) ∧
       0 < N ∧ LeafModCurves.IsJ1 N J ∧
       (N : ℝ) ≤ heightQ heightD * (contactSupport Mult.S_mul u : ℝ) ^ 2 ∧
       (Module.finrank ℚ L.K : ℝ) ≤ heightQ heightD * (contactSupport Mult.S_mul u : ℝ) ∧
@@ -93,7 +93,7 @@ theorem nonCMBranch_of (r : HSyn.ResearchLeaves3EB) (t : HSyn.TextbookLeavesHFPZ
   have hR18 : R18_JavanpeykarConcrete := r18Concrete_of r.r18 hCopies
   have hR22 : R22_PazukiConcrete := r22Concrete_of r.r22 hCopies
   intro Y Φ π h1 h2 hfib u hu hNC
-  obtain ⟨y, P, hP, hy⟩ := hfib (OnePoint.some (algebraMap ℚ Qbar (ZInQ.JHeight.Jmap u)))
+  obtain ⟨y, P, hP, hy⟩ := hfib (OnePoint.some (algebraMap ℚ LeafQM.AV.Qbar (ZInQ.JHeight.Jmap u)))
   obtain ⟨L, emb, A, N, J, hiso, hN0, hJ1, hNQ, hdQ, hCC⟩ := hMod Y Φ π h1 h2 u hu hNC y P hP hy
   have hFib : FibreOver Y Φ π u L A := ⟨emb, y, P, hP, hy, hiso⟩
   have hA2 : A.dim = 2 := model_dim hDim emb A P.A hiso P.surface
