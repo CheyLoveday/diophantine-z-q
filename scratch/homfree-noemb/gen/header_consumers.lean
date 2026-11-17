@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ45
+import ZInQKernel.OneProof.H.TailZ47
 import ZInQKernel.Contrib.OneProof.HomFreeFiniteAlgClosed
 
 /-! # homfree-noemb, part 1: the consumers of T6 over fields that embed into `ℂ`

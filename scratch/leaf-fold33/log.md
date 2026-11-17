@@ -53,3 +53,18 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
    render_open --check ok (34 H, strictest 14/20, 10 others); crosswalk --check ok; DischargesTest rerun; autoform
    check blueprint --lean-root . ok. Scratch copies of HDec.HSyn bundles (phi-ample's FoldDryRun.lean,
    neron-sh-proof's FoldCheck.lean) renamed .lean.txt, as in step 6.
+8. homfree-noemb (homFreeFiniteAlgClosed rerouted away, no new leaf; manual fold, scratch/homfree-noemb/FOLD.md):
+   merged wip/homfree-noemb; reran `scratch/homfree-noemb/Taint.lean` on this tree and regenerated the two
+   contribution files with `gen/gen.py` (patched to read the top module from Main.lean instead of TailZ45, and the
+   consumers header to import TailZ47): 39 + 96 declarations, top `sixContactMin_of_open40_hf` over
+   `OpenTextbookLeaves14HF`. `#discharges`/OpenStatements read bundles only from ZInQKernel.OneProof modules, so a
+   hand-written `OneProof/H/TailZ48.lean` (autofold's pattern) defines `OpenTextbookLeaves15` (= OpenTextbookLeaves14
+   without the field, docstrings kept), its map to `OpenTextbookLeaves14HF`, and `sixContactMin_of_open41`; Main uses
+   it (autofold parses the new Main). kinds/claims rows of homFreeFiniteAlgClosed dropped. Checks (VERIFIED): build
+   +Main +Discharges; frozenTarget standard axioms; hash guard against step 7 (only frozenTarget changed, 12 new
+   constants, all in TailZ48); closure of frozenTarget (270264 constants) has no AVB1.HomFreeFiniteAlgClosed,
+   PkgI3.HomFreeFinite, HomFreeFiniteAlgClosedNoEmb or sorryAx; OpenStatements 43; render_open --check ok (33 H,
+   strictest 13/20, 10 others); crosswalk --check ok; DischargesTest rerun; autoform check and render ok after
+   renaming scratch/homfree-proof/FoldDryRun.lean to .lean.txt (it redeclared OpenTextbookLeaves13).
+   Note for later folds: deg-det's DegEqDetTate route reads homFreeFiniteAlgClosed in characteristic p and no longer
+   fits; degpoly-proof's recommended spec does not read it.

@@ -9,7 +9,7 @@ Base: origin/main 0caafe66. Field: `homFreeFiniteAlgClosed : ZInQ.Contrib.AVB1.H
   ∀ ℓ [Fact ℓ.Prime], (ℓ : k) ≠ 0 → Injective (tateHomZl ℓ A B)
 
 ## Setup
-- .lake/build and lean/.lake/build copied (reflink) from ~/dzq-wt/nos-proof (same HEAD 0caafe66).
+- .lake/build and lean/.lake/build copied (reflink) from the nos-proof worktree (same HEAD 0caafe66).
 
 ## Inputs found in the tree (VERIFIED, read + #check in Probe.lean)
 - `AvSplit.Final.h38 HL HT : ZInQ.LeafPush2.UniformizationExists` (TailQ.lean:2371), HL = uniformizationLeafAll, HT = mumfordTorsionAlgClosed.

@@ -2015,6 +2015,7 @@ namespace HSyn
 /-- `OpenTextbookLeaves12HF` without `geomConnOfRationalPoint`, `groupSchemeEquidim`, `cartierSmooth`, `uniformizationLeafAll` (leaf-fold32). -/
 structure OpenTextbookLeaves13HF : Prop where
   mumfordTorsionAlgClosed : _root_.AvSplit.MumfordTorsionAlgClosed
+  homFreeFiniteAlgClosed : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC
   charPolyIndepOfEllAlgClosed : _root_.ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
   poincareComplement : _root_.ZInQ.Contrib.AVB1.PoincareComplement
   gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
@@ -2028,7 +2029,7 @@ namespace HSyn
 /-- `OpenTextbookLeaves12HF` from `OpenTextbookLeaves13HF`: `geomConnOfRationalPoint`, `groupSchemeEquidim`, `cartierSmooth`, `uniformizationLeafAll` by the contributions. -/
 theorem openTextbookLeaves12_of_OpenTextbookLeaves13_hf (n : OpenTextbookLeaves13HF) : OpenTextbookLeaves12HF where
   mumfordTorsionAlgClosed := n.mumfordTorsionAlgClosed
-  homFreeFiniteAlgClosed := _root_.ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteC _root_.uniformizationLeafAll_proof n.mumfordTorsionAlgClosed
+  homFreeFiniteAlgClosed := n.homFreeFiniteAlgClosed
   charPolyIndepOfEllAlgClosed := n.charPolyIndepOfEllAlgClosed
   poincareComplement := n.poincareComplement
   cartierSmooth := _root_.ZInQ.Contrib.OneProof.CartierSmooth.cartierSmooth_proof
@@ -2055,5 +2056,49 @@ namespace HSyn
 /-- **G0 with only the open leaves and the open glue** (leaf-fold32-dict; generated). -/
 theorem sixContactMin_of_open38_hf (r : OpenResearchLeaves28) (t : OpenTextbookLeaves13HF) (l : OpenAddedLeaves19) : ZInQ.SixContactMin :=
   sixContactMin_of_open37_hf (openResearchLeaves27_of_OpenResearchLeaves28 r) t (openAddedLeaves18_of_OpenAddedLeaves19 l)
+end HSyn
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/TailZ46.lean:92 (OpenTextbookLeaves14)
+namespace HDec
+namespace HSyn
+/-- `OpenTextbookLeaves13HF` without `poincareComplement` (leaf-fold33). -/
+structure OpenTextbookLeaves14HF : Prop where
+  mumfordTorsionAlgClosed : _root_.AvSplit.MumfordTorsionAlgClosed
+  charPolyIndepOfEllAlgClosed : _root_.ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
+  gagaMorphism : _root_.ZInQ.HomLattice.GAGAMorphism
+  neronSchemeExtensionExists : _root_.ZInQ.Contrib.NeronC.NeronSchemeExtensionExists
+end HSyn
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/TailZ46.lean:100 (openTextbookLeaves13_of_OpenTextbookLeaves14)
+namespace HDec
+namespace HSyn
+/-- `OpenTextbookLeaves13HF` from `OpenTextbookLeaves14HF`: `poincareComplement` by the contributions. -/
+theorem openTextbookLeaves13_of_OpenTextbookLeaves14_hf (n : OpenTextbookLeaves14HF) (l : OpenAddedLeaves19) : OpenTextbookLeaves13HF where
+  mumfordTorsionAlgClosed := n.mumfordTorsionAlgClosed
+  homFreeFiniteAlgClosed := _root_.ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteC _root_.uniformizationLeafAll_proof n.mumfordTorsionAlgClosed
+  charPolyIndepOfEllAlgClosed := n.charPolyIndepOfEllAlgClosed
+  poincareComplement := _root_.ZInQ.Contrib.OneProof.PoincareComplement.poincareComplement_of_open l.picRepresentableAbVar l.picZeroAbVar (_root_.PicFix.phiAmpleIsogeny_of_printed l.mumfordKLFiniteSectionAC l.mumfordPhiSurjectiveAC) _root_.ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInverse_proof _root_.ZInQ.Contrib.OneProof.CartierSmooth.cartierSmooth_proof
+  gagaMorphism := n.gagaMorphism
+  neronSchemeExtensionExists := n.neronSchemeExtensionExists
+end HSyn
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/TailZ46.lean:109 (sixContactMin_of_open39)
+namespace HDec
+namespace HSyn
+/-- **G0 with only the open leaves and the open glue** (leaf-fold33; generated). -/
+theorem sixContactMin_of_open39_hf (r : OpenResearchLeaves29) (t : OpenTextbookLeaves14HF) (l : OpenAddedLeaves19) : ZInQ.SixContactMin :=
+  sixContactMin_of_open38_hf (openResearchLeaves28_of_OpenResearchLeaves29 r) (openTextbookLeaves13_of_OpenTextbookLeaves14_hf t l) l
+end HSyn
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/TailZ47.lean:40 (sixContactMin_of_open40)
+namespace HDec
+namespace HSyn
+/-- **G0 with only the open leaves and the open glue** (phi-ample; generated). -/
+theorem sixContactMin_of_open40_hf (r : OpenResearchLeaves29) (t : OpenTextbookLeaves14HF) (l : OpenAddedLeaves20) : ZInQ.SixContactMin :=
+  sixContactMin_of_open39_hf r t (openAddedLeaves19_of_OpenAddedLeaves20 l)
 end HSyn
 end HDec

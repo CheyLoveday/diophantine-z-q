@@ -31,7 +31,8 @@ def visit(m):
         if i.startswith("ZInQKernel"): visit(i)
     order.append(f)
 sys.setrecursionlimit(100000)
-visit("ZInQKernel.OneProof.H.TailZ45")
+TOPMOD = max(re.findall(r"^import (ZInQKernel\.OneProof\.H\.TailZ\d+)$", open("ZInQKernel/OneProof/Main.lean").read(), re.M), key=lambda m: int(m.rsplit("TailZ", 1)[1]))
+visit(TOPMOD)  # leaf-fold33: the top module from Main.lean (was TailZ45)
 rank = {f: i for i, f in enumerate(order)}
 
 # ---- part A: taint list ----
