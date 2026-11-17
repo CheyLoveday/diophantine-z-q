@@ -20,7 +20,9 @@ by DS's double-coset action on divisor classes of the points `x_τ` (`IsHeckeT`,
   `Σ n_τ[τ] ↦ Σ n_τ F(τ)` (`F` a primitive of `f`) multiplies by `evF` (`psi_heckeD`, Claim B); Abel's
   theorem puts `evF(h)(F(τ) − F(τ₀))` in a countable set for all `τ`, while `F` is continuous and
   non-constant on the connected `ℍ`. Inputs: the leaf candidates `X1TauPoints` (DS §7.7) and
-  `AbelJacobiX1` (DS Thm 6.1.2), and the glue `EichlerPrimitive`, `EichlerHecke` (analytic, provable).
+  `AbelJacobiX1` (DS Thm 6.1.2); the glue `EichlerPrimitive`, `EichlerHecke` is proved here
+  (`eichlerPrimitive`, `eichlerHecke`: `T_p f = a_p f` from the `q`-expansion), so the final forms
+  `evF_eq_zero_of_heckeJ_eq_zero_of_leaves`, `killsIf_iff_IfDS_of_leaves` take only the two leaf candidates.
 * **Gap 2 (pinning).** `isHeckeT_unique`, `isDiamond_unique`: two endomorphisms with DS's action on the
   classes of the `x_τ` are equal (given `X1TauPoints` and the glue `ConstOnTauPoints`; through the
   Albanese property). `isAfQuotient_unique`: `A_f` is unique up to unique isomorphism compatible with `π`
@@ -472,9 +474,9 @@ theorem psi_pt (F : UpperHalfPlane → ℂ) (τ : UpperHalfPlane) : psi F (pt τ
   simp [psi]
 
 /-- **GLUE (Eichler integral, existence).** Every weight-2 cusp form on `Γ₁(N)` has a holomorphic primitive
-on `ℍ` (Diamond–Shurman §6.1–6.3 integrate `f(τ) dτ` along paths in `ℍ`; `ℍ` is simply connected). Provable
-in Lean: e.g. `G(q) = ∫ (cuspFunction f)(q)/q` on the unit disc (Mathlib's primitives on discs) and
-`F(τ) = G(e^{2πiτ})/(2πi)`. -/
+on `ℍ` (Diamond–Shurman §6.1–6.3 integrate `f(τ) dτ` along paths in `ℍ`; `ℍ` is simply connected). Proved
+below (`eichlerPrimitive`): `G` a primitive of `(cuspFunction f)(q)/q` on the unit disc (Mathlib's Morera
+theorem on discs) and `F(τ) = G(e^{2πiτ})/(2πi)`. -/
 def EichlerPrimitive : Prop := ∀ (N : ℕ) (f : CF N 2), ∃ F, IsPrimitive f F
 
 /-- **GLUE (Hecke and diamond operators on the Eichler integral).** For a normalized eigenform `f` of weight
@@ -484,7 +486,7 @@ entry `≡ p`), and `F(γτ) − χ(d)F(τ)` is constant (`γ ∈ Γ₀(N)`, low
 (glue, provable in Lean): differentiate; the derivative of the left side is `T_p f` in DS's weight-2
 normalization (Prop. 5.2.1: `(1/p)Σ f((τ+j)/p) + p (f|γ)(pτ)`), which is `a_p f` by the coefficient
 relations of `IsNormalizedEigenform` and the `q`-expansion; `(f|₂γ) = χ(d) f` is `HasNebentypus`;
-`ℍ` is connected. -/
+`ℍ` is connected. Proved below (`eichlerHecke`). -/
 def EichlerHecke : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → PkgI4.IsNormalizedEigenform f χ →
     ∀ F, IsPrimitive f F →
