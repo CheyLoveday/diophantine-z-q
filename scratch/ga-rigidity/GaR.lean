@@ -526,4 +526,53 @@ theorem gaHom_factors_open {G U : Over (Spec (CommRingCat.of k))} [GrpObj G] [Gr
 
 end OpenSubgroup
 
+
+/-! ## §8. Step (3): a semi-abelian identity component contains no `𝔾_a` -/
+
+section SemiAbelian
+
+variable [IsAlgClosed k]
+
+/-- **Step (3), homomorphism form**: if the identity component of `G` is an extension of an abelian variety by a split
+torus (`HasSemiAbelianIdentityComponent`), every homomorphism `𝔾_a → G` is trivial. Proof: it factors through the open
+subgroup `U` (§7); its image in the abelian variety `B` is trivial (Step (2)), so it lands in `ker(U → B) = 𝔾_m^r`, where
+it is trivial (Step (1)). -/
+theorem gaHom_trivial_of_semiAbelian (G : Over (Spec (CommRingCat.of k))) [GrpObj G]
+    (hG : HasSemiAbelianIdentityComponent G) (g : algPt k (Polynomial k) ⟶ G) (h : IsGaHom G g) : g = 1 := by
+  obtain ⟨U, iU, inc, hopen, hmon, -, B, π, hπ, -, -, r, e, hinj, hker, hnat⟩ := hG
+  have : IsOpenImmersion inc.left := hopen
+  obtain ⟨g', hg'⟩ := gaHom_factors_open inc g h
+  have hmono : Mono inc := Over.mono_of_mono_left inc
+  have h' : IsGaHom U g' := by
+    unfold IsGaHom
+    apply (cancel_mono inc).mp
+    rw [mul_comp, Category.assoc, Category.assoc, Category.assoc, hg']
+    exact h
+  have hπg : g' ≫ π = 1 := by
+    apply gaHom_abVar_trivial B
+    unfold IsGaHom
+    rw [← Category.assoc, h', mul_comp, Category.assoc, Category.assoc]
+  obtain ⟨t, ht⟩ := (hker _ g').mp hπg
+  rw [← ht] at h'
+  rw [← hg', ← ht, gaHom_torus_trivial U r e hinj hnat t h', one_comp]
+
+/-- **Step (3)**: if the identity component of `G` (over an algebraically closed field) is an extension of an abelian
+variety by a split torus, `G` contains no subgroup scheme isomorphic to `𝔾_a`. -/
+theorem noGaSubgroup_of_semiAbelian (G : Over (Spec (CommRingCat.of k))) [GrpObj G]
+    (hG : HasSemiAbelianIdentityComponent G) : NoGaSubgroup G := by
+  intro g h hci
+  have h1 := gaHom_trivial_of_semiAbelian G hG g h
+  have hm : Mono g.left := inferInstance
+  have e0 : (algPtMap (Polynomial.aeval (0 : k))).left ≫ g.left =
+      (algPtMap (Polynomial.aeval (1 : k))).left ≫ g.left := by
+    rw [← Over.comp_left, ← Over.comp_left, h1, comp_one, comp_one]
+  have e1' := (cancel_mono g.left).mp e0
+  have e1 : Spec.map (CommRingCat.ofHom ((Polynomial.aeval (0 : k) : Polynomial k →ₐ[k] k) : Polynomial k →+* k)) =
+      Spec.map (CommRingCat.ofHom ((Polynomial.aeval (1 : k) : Polynomial k →ₐ[k] k) : Polynomial k →+* k)) := e1'
+  rw [Spec.map_inj] at e1
+  have e2 := congrArg (fun φ => φ.hom Polynomial.X) e1
+  simp at e2
+
+end SemiAbelian
+
 end GaRigidity
