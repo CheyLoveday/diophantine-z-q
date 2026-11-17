@@ -208,11 +208,17 @@ DISCHARGES [h11] by ZInQ.Contrib.TYZDecomp.H11Reduce.tyzThm11Integral_of_leaves
 DISCHARGES [hL29] by ZInQ.Contrib.TYZDecomp.H29Genus.tyzLemma29PrintedNe3_of_genus
   still assumes: [ZInQ.Contrib.TYZDecomp.H29Genus.TYZThm21Pairs, ZInQ.Contrib.TYZDecomp.H29Genus.TYZLemma28Sym]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [hL29] by ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_C1
+  still assumes: [ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC1]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hL29] by ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21C
   still assumes: [ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hL29] by ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21Pairs
   still assumes: [ZInQ.Contrib.TYZDecomp.H29Genus.TYZThm21Pairs]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [h11] by ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_C1
+  still assumes: [ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC1]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [h11] by ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_thm21C
   still assumes: [ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC, ZInQ.Contrib.TYZDecomp.TYZLcalOne]
@@ -220,5 +226,5 @@ DISCHARGES [h11] by ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_thm21C
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 9381 theorems checked, 54 discharge one
+#discharges: 39 open hypotheses, 9399 theorems checked, 56 discharge one
 'ZInQ.Contrib.TYZGenusFold.tyzLemma28Sym' depends on axioms: [propext, Classical.choice, Quot.sound]

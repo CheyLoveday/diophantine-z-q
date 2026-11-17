@@ -67,3 +67,17 @@ with N I prime to 2n and α ∈ I with (α) = I M, M + (N I) = O; the idele aK (
   [TYZThm21PairsC, TYZLcalOne]`; `DISCHARGES [hL29] by ...tyzLemma29PrintedNe3_of_thm21C still assumes:
   [TYZThm21PairsC]`; all standard axioms.
 * FoldCheck variant B `frozenTarget_thm21C` (h11, hL29 → h21C, hL1): standard axioms. Count 2 → 2 (neutral).
+
+## Step 4: variant C (−1, pending reading of TYZ Thm 2.1 at n = 1) — VERIFIED (compiled)
+
+* ZInQKernel/Contrib/OneProof/TYZGenusFold/QI.lean: `isCyclotomicExtension_four` (QNeg 1 is the 4th cyclotomic
+  field), `torsionOrder_one` (#μ(ℚ(i)) = 4), `pid_one` (Minkowski, |d| = 4 < π²), `classGroup_one_subsingleton`.
+* ZInQKernel/Contrib/OneProof/TYZThm21PairsOne.lean: `TYZThm21PairsC1` (Thm 2.1, complex ℓ, every squarefree
+  n ≥ 1 in the odd classes, formula as 2^a P = ±2^k w_K ℓℓ, a = 1), `tyzThm21PairsC_of_C1`, `tyzLcalOne_of_C1`
+  (n = 1: P(1,1) = f_1(1) = ±F(0) odd, so 𝓛(1)^2 is an odd integer; t21-proof's bounds Re L(C_1,1) ≥ 0.09,
+  ‖L(C_1,1)‖ ≤ 1.26, ∫ ≥ 2 give 0 < 𝓛(1)^2 < 3, so = 1), `tyzThm11Integral_of_C1`, `tyzLemma29PrintedNe3_of_C1`.
+* #discharges: `DISCHARGES [h11] by ...tyzThm11Integral_of_C1 still assumes: [TYZThm21PairsC1]`,
+  `DISCHARGES [hL29] by ...tyzLemma29PrintedNe3_of_C1 still assumes: [TYZThm21PairsC1]`; standard axioms.
+* FoldCheck `frozenTarget_thm21One` (h11, hL29 → h21 : TYZThm21PairsC1): standard axioms. Count 2 → 1 (−1), but
+  the n = 1 instance of the leaf is not verified against the print (source absent; TYZ assert 𝓛(1) = 1 separately
+  at L1082). Under CONTRIBUTING's rule a leaf pending reading counts as glue until a check clears it.

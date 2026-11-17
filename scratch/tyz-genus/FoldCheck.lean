@@ -1,6 +1,7 @@
 import ZInQKernel.OneProof.Main
 import ZInQKernel.Contrib.OneProof.TYZLemma28Sym
 import ZInQKernel.Contrib.OneProof.TYZThm11Genus
+import ZInQKernel.Contrib.OneProof.TYZThm21PairsOne
 
 /-! tyz-genus: the manual fold (`hL29` is a top-level argument of `frozenTarget`, so autofold does not apply):
 `frozenTarget` with `hL29 : H29Split.TYZLemma29PrintedNe3` (TYZ Lemma 2.9 as printed, `n ≠ 3`) replaced by
@@ -64,8 +65,26 @@ theorem frozenTarget_thm21C
   ZInQ.OneProof.frozenTarget r t l (ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_thm21C h21C hL1)
     (ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21C h21C) hCM h33 hBFH hGZ
 
+/-- **Variant C (−1, pending a reading of TYZ Theorem 2.1 at `n = 1`): `h11` and `hL29` replaced by the one
+statement `TYZThm21PairsC1`.** For `Main.lean`: replace the binders `(h11 : TYZThm11Integral)` and
+`(hL29 : H29Split.TYZLemma29PrintedNe3)` by `(h21 : ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC1)`, and the arguments
+`h11`, `hL29` by `(ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_C1 h21)` and
+`(ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_C1 h21)`; add the import
+`ZInQKernel.Contrib.OneProof.TYZThm21PairsOne`. -/
+theorem frozenTarget_thm21One
+    (r : HDec.HSyn.OpenResearchLeaves29) (t : HDec.HSyn.OpenTextbookLeaves15) (l : HDec.HSyn.OpenAddedLeaves20)
+    (h21 : ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC1)
+    (hCM : _root_.T5Glue.ShimuraMainCM)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
+    (hBFH : ZInQ.BFHPrinted.BFHClauseIIGamma0)
+    (hGZ : ZInQ.GZAlg.GrossZagierAlgOptCd) :
+    ZInQ.FrozenTarget :=
+  ZInQ.OneProof.frozenTarget r t l (ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_C1 h21)
+    (ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_C1 h21) hCM h33 hBFH hGZ
+
 end ZInQ.Contrib.TYZChain
 
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_thm21
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_thm21'
 #print axioms ZInQ.Contrib.TYZChain.frozenTarget_thm21C
+#print axioms ZInQ.Contrib.TYZChain.frozenTarget_thm21One
