@@ -735,7 +735,6 @@ namespace FS5NoCM
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM.AV LeafQM.AV.Pin PkgI3
 open scoped Quaternion TensorProduct
-local notation "Kd[" d "]" => AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d : Polynomial ℚ)
 /-- **N1a-CM proved from T6.** If `End⁰(A) ≅ M₂(ℚ(√d))`, `d < 0`, then `End_𝒪(A)` is isomorphic
 to a subring of finite index of `𝒪_k`, `k = ℚ(√d)`: `1 ⊗ φ` (`φ ∈ End_𝒪(A)`) commutes with the
 images `I, J` of `i, j ∈ 𝒪` (`I² = 2`, `J² = −3`, `JI = −IJ`), hence is a scalar
@@ -755,10 +754,10 @@ theorem comOfMatrixEnd0_of_homFree_hf (hHF : _root_.ZInQ.Contrib.OneProof.HomFre
   have e1 : ∀ a b : AbVar.End A,
       (1 : ℚ) ⊗ₜ[ℤ] (a * b) = ((1 : ℚ) ⊗ₜ[ℤ] a) * ((1 : ℚ) ⊗ₜ[ℤ] b) := by
     intro a b; rw [Algebra.TensorProduct.tmul_mul_tmul, _root_.mul_one]
-  have hI : e (g oi) * e (g oi) = (2 : Kd[d]) • (1 : Matrix (Fin 2) (Fin 2) Kd[d]) := by
+  have hI : e (g oi) * e (g oi) = (2 : (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) • (1 : Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) := by
     rw [← map_mul, ← map_mul, oi_mul_oi, map_ofNat, map_ofNat, Algebra.smul_def, mul_one,
       map_ofNat]
-  have hJ : e (g oj) * e (g oj) = (-3 : Kd[d]) • (1 : Matrix (Fin 2) (Fin 2) Kd[d]) := by
+  have hJ : e (g oj) * e (g oj) = (-3 : (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) • (1 : Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) := by
     rw [← map_mul, ← map_mul, oj_mul_oj, map_neg, map_neg, map_ofNat, map_ofNat,
       Algebra.smul_def, mul_one, map_neg, map_ofNat]
   have hJI : e (g oj) * e (g oi) = -(e (g oi) * e (g oj)) := by
@@ -770,7 +769,7 @@ theorem comOfMatrixEnd0_of_homFree_hf (hHF : _root_.ZInQ.Contrib.OneProof.HomFre
     show ((1 : ℚ) ⊗ₜ[ℤ] φ) * ((1 : ℚ) ⊗ₜ[ℤ] q.iota a) = ((1 : ℚ) ⊗ₜ[ℤ] q.iota a) * _
     rw [← e1, ← e1, hφ _ ⟨a, rfl⟩]
   have hsc : ∀ φ ∈ com q, e ((1 : ℚ) ⊗ₜ[ℤ] φ) =
-      (e ((1 : ℚ) ⊗ₜ[ℤ] φ) 0 0) • (1 : Matrix (Fin 2) (Fin 2) Kd[d]) := by
+      (e ((1 : ℚ) ⊗ₜ[ℤ] φ) 0 0) • (1 : Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) := by
     intro φ hφ
     obtain ⟨a, ha⟩ := commute_quat_scalar (e (g oi)) (e (g oj)) hI hJ hJI two_ne_zero
       three_ne_zero (e ((1 : ℚ) ⊗ₜ[ℤ] φ))
@@ -778,7 +777,7 @@ theorem comOfMatrixEnd0_of_homFree_hf (hHF : _root_.ZInQ.Contrib.OneProof.HomFre
       (by rw [← map_mul, ← map_mul, hcommφ φ hφ oj])
     rw [ha]; simp
   -- the scalar map `ψ : End_𝒪(A) → ℚ(√d)`
-  let ψ : com q →+* Kd[d] :=
+  let ψ : com q →+* (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)) :=
     { toFun := fun φ => e ((1 : ℚ) ⊗ₜ[ℤ] (φ : AbVar.End A)) 0 0
       map_one' := by
         simp only [OneMemClass.coe_one]
@@ -799,7 +798,7 @@ theorem comOfMatrixEnd0_of_homFree_hf (hHF : _root_.ZInQ.Contrib.OneProof.HomFre
   -- an element `s√d` in the image (FS4's localization step)
   set c' : AbVar.End0 A :=
     e.symm ((AdjoinRoot.root (Polynomial.X ^ 2 - Polynomial.C d : Polynomial ℚ)) •
-      (1 : Matrix (Fin 2) (Fin 2) Kd[d])) with hc'
+      (1 : Matrix (Fin 2) (Fin 2) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)))) with hc'
   have hcen : ∀ x : AbVar.End0 A, c' * x = x * c' := by
     intro x
     apply e.injective
@@ -825,20 +824,20 @@ theorem comOfMatrixEnd0_of_homFree_hf (hHF : _root_.ZInQ.Contrib.OneProof.HomFre
     rw [hs', map_zsmul, hc', e.apply_symm_apply]
     simp
   -- the order `R = ψ(End_𝒪(A))`
-  have hRint : ψ.range ≤ (integralClosure ℤ Kd[d]).toSubring := by
+  have hRint : ψ.range ≤ (integralClosure ℤ (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))).toSubring := by
     rintro _ ⟨φ, rfl⟩
     have h1 : IsIntegral ℤ (φ : AbVar.End A) := Algebra.IsIntegral.isIntegral _
     have h2 : IsIntegral ℤ φ :=
       (isIntegral_algHom_iff ((com q).subtype.toIntAlgHom) Subtype.val_injective).mp h1
     exact h2.map ψ.toIntAlgHom
-  refine ⟨Kd[d], inferInstance, hNF, hTC, finrank_adjRoot d, ψ.range, hRint, ?_,
+  refine ⟨(AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)), inferInstance, hNF, hTC, finrank_adjRoot d, ψ.range, hRint, ?_,
     ⟨RingEquiv.ofBijective ψ.rangeRestrict
       ⟨fun a b h => hψinj (congrArg Subtype.val h), ψ.rangeRestrict_surjective⟩⟩⟩
   -- finite index: `R ∩ 𝒪_k` has rank 2 (it contains `1` and `s√d`)
-  let fO : NumberField.RingOfIntegers Kd[d] →+ Kd[d] :=
-    (algebraMap (NumberField.RingOfIntegers Kd[d]) Kd[d]).toAddMonoidHom
-  have hrange : (integralClosure ℤ Kd[d]).toSubring.toAddSubgroup =
-      (⊤ : AddSubgroup (NumberField.RingOfIntegers Kd[d])).map fO := by
+  let fO : NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)) →+ (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)) :=
+    (algebraMap (NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))).toAddMonoidHom
+  have hrange : (integralClosure ℤ (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))).toSubring.toAddSubgroup =
+      (⊤ : AddSubgroup (NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)))).map fO := by
     ext x
     constructor
     · intro hx; exact ⟨⟨x, hx⟩, trivial, rfl⟩
@@ -848,30 +847,30 @@ theorem comOfMatrixEnd0_of_homFree_hf (hHF : _root_.ZInQ.Contrib.OneProof.HomFre
     convert hsuff using 1
     rw [← AddSubgroup.relIndex_top_right, AddSubgroup.relIndex_comap, ← hrange]
     rfl
-  let N' : Submodule ℤ (NumberField.RingOfIntegers Kd[d]) :=
+  let N' : Submodule ℤ (NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) :=
     (ψ.range.toAddSubgroup.comap fO).toIntSubmodule
   have hw' : IsIntegral ℤ ((s : ℤ) •
       AdjoinRoot.root (Polynomial.X ^ 2 - Polynomial.C d : Polynomial ℚ)) := by
     rw [← hw]; exact hRint ⟨_, rfl⟩
-  let w' : NumberField.RingOfIntegers Kd[d] := ⟨_, hw'⟩
-  have h1N : (1 : NumberField.RingOfIntegers Kd[d]) ∈ N' := by
+  let w' : NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)) := ⟨_, hw'⟩
+  have h1N : (1 : NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) ∈ N' := by
     show fO 1 ∈ ψ.range
-    rw [show fO 1 = 1 from map_one (algebraMap (NumberField.RingOfIntegers Kd[d]) Kd[d])]
+    rw [show fO 1 = 1 from map_one (algebraMap (NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)))]
     exact ψ.range.one_mem
   have hwN : w' ∈ N' := ⟨⟨φ₀, hφ₀⟩, hw⟩
   have hv : LinearIndependent ℤ ![(⟨1, h1N⟩ : N'), ⟨w', hwN⟩] := by
     rw [LinearIndependent.pair_iff]
     intro a b hab
-    have hK := congrArg (fun z : N' => fO (z : NumberField.RingOfIntegers Kd[d])) hab
+    have hK := congrArg (fun z : N' => fO (z : NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)))) hab
     simp only [Submodule.coe_add, Submodule.coe_smul, map_add, map_zsmul, Submodule.coe_zero,
       map_zero] at hK
-    have e1' : fO 1 = 1 := map_one (algebraMap (NumberField.RingOfIntegers Kd[d]) Kd[d])
+    have e1' : fO 1 = 1 := map_one (algebraMap (NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ)))
     have e2' : fO w' = (s : ℤ) •
         AdjoinRoot.root (Polynomial.X ^ 2 - Polynomial.C d : Polynomial ℚ) := rfl
     rw [e1', e2', smul_smul] at hK
     obtain ⟨ha, hbs⟩ := root_lin_indep_int d hd _ _ hK
     exact ⟨ha, (mul_eq_zero.mp hbs).resolve_right hs0⟩
-  have hfr : Module.finrank ℤ N' = Module.finrank ℤ (NumberField.RingOfIntegers Kd[d]) := by
+  have hfr : Module.finrank ℤ N' = Module.finrank ℤ (NumberField.RingOfIntegers (AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (d) : Polynomial ℚ))) := by
     apply le_antisymm (Submodule.finrank_le N')
     rw [NumberField.RingOfIntegers.rank, finrank_adjRoot]
     simpa using hv.fintype_card_le_finrank
@@ -891,7 +890,6 @@ namespace FS5NoCM
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM.AV LeafQM.AV.Pin PkgI3
 open scoped Quaternion TensorProduct
-local notation "Kd[" d "]" => AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d : Polynomial ℚ)
 /-- **N1a proved from the leaves T27 (Yu) and T6.** -/
 theorem comIntOrQuadOrder_of_leaves_hf (hYu : QMLattice.YuB6Alg) (t6 : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC) :
     ComIntOrQuadOrder :=
@@ -910,7 +908,6 @@ namespace FS5NoCM
 open CategoryTheory AlgebraicGeometry Limits
 open LeafQM.AV LeafQM.AV.Pin PkgI3
 open scoped Quaternion TensorProduct
-local notation "Kd[" d "]" => AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C d : Polynomial ℚ)
 /-- **FS5 with the repaired clauses, from the leaves and named glue**: the bundle, R5fpCount,
 T27, T6 and N1b (leaves), and `MobiusGlue` and N2 (glue). -/
 theorem fibreComTrivialFull_of_leaves_hf' (hL : R1R2fpFull) (hM : MobiusGlue)

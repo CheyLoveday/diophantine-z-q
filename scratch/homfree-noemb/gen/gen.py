@@ -175,6 +175,11 @@ for _, _, f, s, k, e, w in sorted(uniq.values()):
         if a not in txt:
             raise SystemExit(f"edit not applicable in {s}: {a!r}")
         txt = txt.replace(a, b)
+    # no notation commands in a contribution: expand the local notation `Kd[d]` (TailC)
+    txt = re.sub(r'^local notation "Kd\[" d "\]" => .*\n', "", txt, flags=re.M)
+    txt = re.sub(r"Kd\[([^\]]+)\]", r"(AdjoinRoot (Polynomial.X ^ 2 - Polynomial.C (\1) : Polynomial ℚ))", txt)
+    if "notation" in txt and re.search(r"^\s*(local |scoped )?notation", txt, re.M):
+        raise SystemExit(f"notation left in {s}")
     (bblocks if (f, s) in BSET else blocks).append(txt)
 d = os.path.dirname(__file__)
 hdrB = open(os.path.join(d, "header_consumers.lean")).read()
