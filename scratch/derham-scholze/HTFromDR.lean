@@ -472,6 +472,206 @@ theorem linIndep_two {a b : ℕ} (x : Fin a → htF ρ 0) (y : Fin b → htF ρ 
 
 end TateSen
 
+/-! ## §4. Assembly: `DeRhamHodgeTate01` from `FontaineTwistT` -/
+
+section Assembly
+
+variable {p}
+variable {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+variable {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDimensional ℚ_[p] V]
+  (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
+
+/-- `B_dR ⊗ V^∨ ≅ Hom(V, B_dR)` carries `D_dR(V^∨)` onto `Hom_{G_F}(V, B_dR)` (hodge-split's argument). -/
+theorem map_ddrFam_dual :
+    Submodule.map (tensorDualEquiv p).toLinearMap (ddrFam p (fun σ => ρ.dual σ)) = ddrSpaceOver p ρ := by
+  ext φ
+  constructor
+  · rintro ⟨x, hx, rfl⟩ σ w
+    have h := congrArg (fun y => tensorDualEquiv p y (ρ σ w)) (hx σ)
+    simp only at h
+    rw [tensorDualEquiv_map, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one,
+      Module.End.one_apply] at h
+    exact h.symm
+  · intro hφ
+    refine ⟨(tensorDualEquiv p).symm φ, fun σ => ?_, by simp⟩
+    apply (tensorDualEquiv p).injective
+    refine LinearMap.ext fun v => ?_
+    rw [tensorDualEquiv_map, LinearEquiv.apply_symm_apply]
+    have := hφ σ (ρ σ⁻¹ v)
+    rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at this
+    rw [this]
+    rfl
+
+/-- ... and `Fil^j B_dR ⊗ V^∨` onto `Hom(V, Fil^j B_dR)`. -/
+theorem map_filRange_dual (j : ℕ) :
+    Submodule.map (tensorDualEquiv p).toLinearMap
+        (LinearMap.range (TensorProduct.map (filB p j).subtype
+          (LinearMap.id : Module.Dual ℚ_[p] V →ₗ[ℚ_[p]] Module.Dual ℚ_[p] V))) = filH p j := by
+  apply le_antisymm
+  · rintro _ ⟨_, ⟨y, rfl⟩, rfl⟩ v
+    induction y using TensorProduct.inductionOn with
+    | tmul b f =>
+      change tensorDualEquiv p ((b : BdR p) ⊗ₜ f) v ∈ filB p j
+      rw [tensorDualEquiv_tmul]
+      exact (filB p j).smul_mem _ b.2
+    | add y y' hy hy' =>
+      rw [map_add, map_add, LinearMap.add_apply]
+      exact add_mem hy hy'
+  · intro φ hφ
+    classical
+    let bV := Module.finBasis ℚ_[p] V
+    refine ⟨∑ i, ((φ (bV i) : BdR p) ⊗ₜ bV.dualBasis i),
+      ⟨∑ i, (⟨φ (bV i), hφ (bV i)⟩ : filB p j) ⊗ₜ bV.dualBasis i, by simp [map_sum]⟩, ?_⟩
+    apply bV.ext
+    intro k
+    simp only [LinearEquiv.coe_coe, map_sum, LinearMap.coeFn_sum, Finset.sum_apply, tensorDualEquiv_tmul,
+      Basis.dualBasis_apply_self, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+
+section Final
+
+variable {p}
+variable {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+variable {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDimensional ℚ_[p] V]
+  (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
+
+attribute [local instance] algCp
+
+/-- `Hom_{ℚ_p}(V, ℂ_p)` has `ℂ_p`-dimension `dim V`. -/
+theorem finrank_hom : finrank ℂ_[p] (V →ₗ[ℚ_[p]] ℂ_[p]) = finrank ℚ_[p] V := by
+  rw [← ((Module.finBasis ℚ_[p] V).constr ℂ_[p]).finrank_eq, Module.finrank_fin_fun]
+
+theorem fd_hom : FiniteDimensional ℂ_[p] (V →ₗ[ℚ_[p]] ℂ_[p]) :=
+  LinearEquiv.finiteDimensional ((Module.finBasis ℚ_[p] V).constr ℂ_[p])
+
+/-- The bound `dim_{F'} Hom_{G_F}(V, ℂ_p(i)) ≤ dim V` (`i = 0, 1`), with finiteness. -/
+theorem fd_htF (hT : TateTwistInvariants) (hA : AxSenTate) (i : Fin 2) :
+    FiniteDimensional (fieldF p F) (htF ρ (i : ℤ)) ∧
+      finrank (fieldF p F) (htF ρ (i : ℤ)) ≤ finrank ℚ_[p] V := by
+  haveI := fd_hom (p := p) (V := V)
+  have hb : ∀ s : Finset (htF ρ (i : ℤ)), (LinearIndependent (fieldF p F) fun k : s => (k : htF ρ (i : ℤ))) →
+      s.card ≤ finrank ℚ_[p] V := by
+    intro s hs
+    let e := s.equivFin
+    have hs' : LinearIndependent (fieldF p F) (fun k : Fin s.card => ((e.symm k : s) : htF ρ (i : ℤ))) :=
+      hs.comp e.symm e.symm.injective
+    rw [← finrank_hom (p := p)]
+    fin_cases i
+    · have h := (linIndep_two ρ hT hA (fun k : Fin s.card => ((e.symm k : s) : htF ρ 0))
+        (Fin.elim0 : Fin 0 → htF ρ 1) hs' (linearIndependent_empty_type)).fintype_card_le_finrank
+      simpa using h
+    · have h := (linIndep_two ρ hT hA (Fin.elim0 : Fin 0 → htF ρ 0)
+        (fun k : Fin s.card => ((e.symm k : s) : htF ρ 1)) (linearIndependent_empty_type) hs').fintype_card_le_finrank
+      simpa using h
+  have hrank := rank_le hb
+  have hfin : FiniteDimensional (fieldF p F) (htF ρ (i : ℤ)) :=
+    Module.rank_lt_aleph0_iff.mp (lt_of_le_of_lt hrank (Cardinal.natCast_lt_aleph0))
+  exact ⟨hfin, Module.finrank_le_of_rank_le hrank⟩
+
+theorem fd_htSpaceOver (i : ℤ) [FiniteDimensional (fieldF p F) (htF ρ i)] :
+    FiniteDimensional ℚ_[p] (htSpaceOver p ρ i) := by
+  haveI : Module.Finite ℚ_[p] (htF ρ i) := Module.Finite.trans (fieldF p F) (htF ρ i)
+  rw [← restrictScalars_htF]
+  exact LinearEquiv.finiteDimensional
+    (((htF ρ i).restrictScalarsEquiv ℚ_[p] (fieldF p F)).restrictScalars ℚ_[p]).symm
+
+/-- The semilinear action `T_σ f = σ ∘ f ∘ ρ(σ)⁻¹` on `Hom_{ℚ_p}(V, ℂ_p)`. -/
+abbrev tAct (σ : Field.absoluteGaloisGroup F) (f : V →ₗ[ℚ_[p]] ℂ_[p]) : V →ₗ[ℚ_[p]] ℂ_[p] :=
+  cpLin p (gfToGqp p F σ) ∘ₗ f ∘ₗ ρ σ⁻¹
+
+theorem tAct_sum {ι : Type*} [Fintype ι] (σ : Field.absoluteGaloisGroup F) (c : ι → ℂ_[p])
+    (z : ι → V →ₗ[ℚ_[p]] ℂ_[p]) :
+    tAct ρ σ (∑ k, c k • z k) = ∑ k, cpAct p (gfToGqp p F σ) (c k) • tAct ρ σ (z k) := by
+  refine LinearMap.ext fun w => ?_
+  simp only [LinearMap.comp_apply, LinearMap.coeFn_sum, Finset.sum_apply, LinearMap.smul_apply,
+    cpLin_apply, map_sum, smul_eq_mul, map_mul]
+
+theorem tAct_of_mem {i : ℤ} {f : V →ₗ[ℚ_[p]] ℂ_[p]} (hf : f ∈ htSpaceOver p ρ i) (σ : Field.absoluteGaloisGroup F) :
+    tAct ρ σ f = algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-i)) • f := by
+  refine LinearMap.ext fun w => ?_
+  obtain ⟨v, rfl⟩ : ∃ v, ρ σ v = w := ⟨ρ σ⁻¹ w, by
+    rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]⟩
+  have hv : ρ σ⁻¹ (ρ σ v) = v := by
+    rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
+  simp only [LinearMap.comp_apply, cpLin_apply, hv, LinearMap.smul_apply, smul_eq_mul]
+  rw [hf σ v, Algebra.smul_def, ← mul_assoc, ← map_mul, ← cycPow_add, neg_add_cancel,
+    cycPow_zero, map_one, one_mul]
+
+/-- **`DeRhamHodgeTate01` from `FontaineTwistT`** (with Tate's two theorems, proved in the tree). -/
+theorem deRhamHodgeTate01_of_fontaineT (hF : FontaineTwistT) : DeRhamHodgeTate01 := by
+  intro p _ F _ _ _ V _ _ ρ h1 h2
+  obtain ⟨t, ht, hσ⟩ := hF p
+  obtain ⟨hfdD, hrank⟩ := h1
+  haveI : FiniteDimensional ℚ_[p] V := Module.finite_dual_iff.mp hfdD
+  have hT := ZInQ.Contrib.CloudB3W11.tateTwistInvariants_proof
+  have hA := ZInQ.Contrib.CloudB3W11.axSenTate_proof
+  -- `dim_{ℚ_p} Hom_{G_F}(V, B_dR) = [F:ℚ_p] dim V`
+  have hD : finrank ℚ_[p] (ddrSpaceOver p ρ) = finrank ℚ_[p] F * finrank ℚ_[p] V := by
+    rw [← map_ddrFam_dual ρ, LinearEquiv.finrank_map_eq, hrank, Subspace.dual_finrank_eq]
+  -- the Hodge filtration in Hom form
+  have hfil : ∀ j, Submodule.map (tensorDualEquiv p).toLinearMap (filD p (fun σ => ρ.dual σ) j) =
+      ddrSpaceOver p ρ ⊓ filH p j := by
+    intro j
+    rw [filD, Submodule.map_inf _ (tensorDualEquiv p).injective, map_ddrFam_dual, map_filRange_dual]
+  obtain ⟨hf0, hf2⟩ := h2
+  have h0 : ddrSpaceOver p ρ ≤ filH p 0 := by
+    have := hfil 0
+    rw [hf0, map_ddrFam_dual] at this
+    exact inf_eq_left.mp this.symm
+  have h2' : ddrSpaceOver p ρ ⊓ filH p 2 = ⊥ := by
+    rw [← hfil 2]
+    exact (congrArg _ hf2).trans (Submodule.map_bot _)
+  -- the `F'`-dimensions `a`, `b`
+  obtain ⟨hfa, hale⟩ := fd_htF ρ hT hA 0
+  obtain ⟨hfb, hble⟩ := fd_htF ρ hT hA 1
+  simp only [Fin.isValue, Fin.val_zero, Nat.cast_zero, Fin.val_one, Nat.cast_one] at hfa hale hfb hble
+  haveI := hfa
+  haveI := hfb
+  haveI := fd_htSpaceOver ρ (0 : ℤ)
+  haveI := fd_htSpaceOver ρ (1 : ℤ)
+  haveI := fd_hom (p := p) (V := V)
+  set a := finrank (fieldF p F) (htF ρ 0)
+  set b := finrank (fieldF p F) (htF ρ 1)
+  have hle := finrank_ddr_le ρ ht hσ h0 h2'
+  rw [hD, finrank_htSpaceOver_eq, finrank_htSpaceOver_eq, ← mul_add] at hle
+  have hdab : finrank ℚ_[p] V ≤ a + b := Nat.le_of_mul_le_mul_left hle Module.finrank_pos
+  -- the `ℂ_p`-basis
+  let bx := Module.finBasis (fieldF p F) (htF ρ 0)
+  let by' := Module.finBasis (fieldF p F) (htF ρ 1)
+  have hz := linIndep_two ρ hT hA (fun i => bx i) (fun i => by' i) bx.linearIndependent by'.linearIndependent
+  have hcard : Fintype.card (Fin a ⊕ Fin b) = finrank ℂ_[p] (V →ₗ[ℚ_[p]] ℂ_[p]) := by
+    rw [Fintype.card_sum, Fintype.card_fin, Fintype.card_fin, finrank_hom]
+    exact le_antisymm (by have := hz.fintype_card_le_finrank; rwa [Fintype.card_sum, Fintype.card_fin,
+      Fintype.card_fin, finrank_hom] at this) hdab
+  let B := basisOfLinearIndependentOfCardEqFinrank' _ hz hcard
+  refine ⟨a, b, B.equivFun.trans (LinearEquiv.sumArrowLequivProdArrow (Fin a) (Fin b) ℂ_[p] ℂ_[p]), ?_⟩
+  intro σ f
+  -- `T_σ f = Σ_k σ(c_k) χ(σ)^{-wt k} z_k`
+  have hB : ∀ k, (B k) ∈ htSpaceOver p ρ (wt k) := by
+    rintro (i | i)
+    · simp only [B, coe_basisOfLinearIndependentOfCardEqFinrank', Sum.elim_inl]; exact (bx i).2
+    · simp only [B, coe_basisOfLinearIndependentOfCardEqFinrank', Sum.elim_inr]; exact (by' i).2
+  have hexp : tAct ρ σ f = ∑ k, (cpAct p (gfToGqp p F σ) (B.repr f k) *
+      algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-wt k))) • B k := by
+    conv_lhs => rw [← B.sum_repr f]
+    rw [tAct_sum]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [tAct_of_mem ρ (hB k), smul_smul, mul_comm]
+  have hrep : B.repr (tAct ρ σ f) = fun k => cpAct p (gfToGqp p F σ) (B.repr f k) *
+      algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-wt k)) := by
+    rw [hexp]
+    ext k
+    rw [B.repr_sum_self]
+  change (LinearEquiv.sumArrowLequivProdArrow (Fin a) (Fin b) ℂ_[p] ℂ_[p]) (B.equivFun (tAct ρ σ f)) = _
+  rw [Basis.equivFun_apply, hrep]
+  ext k
+  · simp only [LinearEquiv.sumArrowLequivProdArrow_apply_fst, Function.comp_apply, wt, Sum.elim_inl, neg_zero,
+      cycPow_zero, map_one, mul_one, LinearEquiv.trans_apply, Basis.equivFun_apply]
+  · simp only [LinearEquiv.sumArrowLequivProdArrow_apply_snd, Function.comp_apply, wt, Sum.elim_inr,
+      LinearEquiv.trans_apply, Basis.equivFun_apply, Algebra.smul_def]
+    ring
+
+end Final
+
 end
 
 end DeRhamScholze.HT
