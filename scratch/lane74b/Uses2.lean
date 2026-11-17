@@ -10,17 +10,23 @@ elab "#kept_refs" : command => do
   let env ← getEnv
   let kept ← IO.FS.lines "scratch/lane74b/kept-mods.txt"
   let keptSet : NameHashSet := kept.foldl (fun s m => s.insert m.toName) {}
+  -- the modules of the H reach (and Main) that import a kept module, directly or not (scratch/lane74b/sees-kept.txt,
+  -- from the import graph); no other module can mention a kept constant
+  let sees ← IO.FS.lines "scratch/lane74b/sees-kept.txt"
+  let seesSet : NameHashSet := sees.foldl (fun s m => s.insert m.toName) {}
   let modOf (n : Name) : Option Name := (env.getModuleIdxFor? n).map fun i => env.header.moduleNames[i.toNat]!
-  let mut out : Array String := #[]
+  let mut hits : Std.HashMap (Name × Name) Name := {}
+  let mut nconst : Nat := 0
   for (n, ci) in env.constants.map₁.toList do
     let some m := modOf n | continue
-    if !(`ZInQKernel).isPrefixOf m || keptSet.contains m then continue
+    if !seesSet.contains m then continue
+    nconst := nconst + 1
     let mut cs := ci.type.getUsedConstants
     if let some v := ci.value? (allowOpaque := true) then cs := cs ++ v.getUsedConstants
     for c in cs do
       if let some mc := modOf c then
-        if keptSet.contains mc then out := out.push s!"{m} {n} -> {mc} {c}"
-  out := out.qsort (· < ·)
-  logInfo m!"references into kept modules: {out.size}\n{String.intercalate "\n" (out.toList.eraseDups)}"
+        if keptSet.contains mc && !hits.contains (m, c) then hits := hits.insert (m, c) n
+  let out := (hits.toArray.map fun ((m, c), n) => s!"{m} : {c} (e.g. in {n})").qsort (· < ·)
+  logInfo m!"kernel constants scanned: {nconst}; (module, kept constant) pairs: {out.size}\n{String.intercalate "\n" out.toList}"
 
 #kept_refs
