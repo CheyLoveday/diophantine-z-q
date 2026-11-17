@@ -637,4 +637,225 @@ theorem print_iff_hodge (P : QML3 ℂ) (τ : UpperHalfPlane) : IsHodgeH1Print P 
 
 end Dict
 
+/-! ## 5. `ℍ^±` with `B^×` versus `ℍ` with `B^×_+` (the print's `X = ℍ^±` and the leaf's `ℍ`) -/
+
+section HPM
+
+open ShimuraCFT UpperHalfPlane
+
+/-- `ℍ^± = ℂ ∖ ℝ`, the print's `X` for `G = B^×` (the `B^×_ℝ = GL₂(ℝ)`-conjugacy class of `h`). -/
+abbrev HPM : Type := {z : ℂ // z.im ≠ 0}
+
+theorem im_num_div_denom (g : GL (Fin 2) ℝ) (z : ℂ) :
+    (num g z / denom g z).im = (g.det : ℝ) * z.im / Complex.normSq (denom g z) := by
+  rw [Complex.div_im, Matrix.GeneralLinearGroup.val_det_apply, Matrix.det_fin_two]
+  simp only [num, denom, Complex.add_im, Complex.mul_im, Complex.add_re, Complex.mul_re,
+    Complex.ofReal_re, Complex.ofReal_im]
+  ring
+
+theorem normSq_denom_pos (g : GL (Fin 2) ℝ) {z : ℂ} (hz : z.im ≠ 0) : 0 < Complex.normSq (denom g z) :=
+  Complex.normSq_pos.mpr (denom_ne_zero_of_im g hz)
+
+/-- The Möbius action of `GL₂(ℝ)` on `ℍ^±`, `z ↦ (az + b)/(cz + d)`. -/
+def mobPM (g : GL (Fin 2) ℝ) (z : HPM) : HPM :=
+  ⟨num g z / denom g z, by
+    rw [im_num_div_denom]
+    exact div_ne_zero (mul_ne_zero g.det.ne_zero z.2) (normSq_denom_pos g z.2).ne'⟩
+
+/-- **The print's relation on `ℍ^± × G(𝔸_f)`**: `(z, g) ~ (γz, γ g k)` with `γ ∈ B^×` (any sign of `nrd γ`),
+`k ∈ K₃`: the double coset space `B^× \ (ℍ^± × (B ⊗ 𝔸_f)^× / K₃)` of the print. -/
+def DCRelPM (z : HPM) (g : BAQˣ) (z' : HPM) (g' : BAQˣ) : Prop :=
+  ∃ (gm : LeafQM.B) (hγ : ShimuraGlue.nrdQ ℚ gm ≠ 0), mobPM (RayClassCFT.iotaGL gm hγ) z = z' ∧
+    ∃ k ∈ K3Q, (g' : BAQ) = bEmb gm * (g : BAQ) * (k : BAQ)
+
+/-- `ℍ ⊆ ℍ^±`. -/
+def toPM (τ : UpperHalfPlane) : HPM := ⟨τ, τ.im_pos.ne'⟩
+
+theorem det_iotaGL (gm : LeafQM.B) (hγ : ShimuraGlue.nrdQ ℚ gm ≠ 0) :
+    ((RayClassCFT.iotaGL gm hγ).det : ℝ) = (ShimuraGlue.nrdQ ℚ gm : ℝ) := by
+  rw [Matrix.GeneralLinearGroup.val_det_apply, RayClassCFT.iotaGL_coe, RayClassCFT.det_iota]
+
+/-- **On `ℍ ⊆ ℍ^±` the print's relation is the leaf's `DCRel`** (only `γ ∈ B^×_+` can map `ℍ` into `ℍ`). -/
+theorem dcRelPM_iff (τ τ' : UpperHalfPlane) (g g' : BAQˣ) :
+    DCRelPM (toPM τ) g (toPM τ') g' ↔ DCRel τ g τ' g' := by
+  constructor
+  · rintro ⟨gm, hγ, hmob, k, hk, hg⟩
+    have him := congrArg (fun z : HPM => z.1.im) hmob
+    simp only [mobPM, toPM] at him
+    rw [im_num_div_denom, det_iotaGL] at him
+    have hpos : 0 < (ShimuraGlue.nrdQ ℚ gm : ℝ) := by
+      have h1 : 0 < (τ' : ℂ).im := τ'.im_pos
+      have h2 : 0 < (τ : ℂ).im := τ.im_pos
+      have h3 := normSq_denom_pos (RayClassCFT.iotaGL gm hγ) τ.im_pos.ne'
+      rw [← him] at h1
+      by_contra hn
+      push_neg at hn
+      have : (ShimuraGlue.nrdQ ℚ gm : ℝ) * (τ : ℂ).im / Complex.normSq (denom (RayClassCFT.iotaGL gm hγ) τ) ≤ 0 :=
+        div_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonpos_of_nonneg hn h2.le) h3.le
+      linarith
+    refine ⟨gm, by exact_mod_cast hpos, ⟨RayClassCFT.iotaGL gm hγ, rfl, ?_⟩, k, hk, hg⟩
+    apply UpperHalfPlane.ext
+    rw [coe_smul_of_det_pos (by rw [det_iotaGL]; exact hpos)]
+    exact congrArg Subtype.val hmob
+  · rintro ⟨gm, hpos, ⟨M, hM, hMτ⟩, k, hk, hg⟩
+    have hγ : ShimuraGlue.nrdQ ℚ gm ≠ 0 := hpos.ne'
+    have hMeq : M = RayClassCFT.iotaGL gm hγ := Matrix.GeneralLinearGroup.ext fun i j => by
+      rw [RayClassCFT.iotaGL_coe, ← hM]
+    refine ⟨gm, hγ, Subtype.ext ?_, k, hk, hg⟩
+    show num (RayClassCFT.iotaGL gm hγ) τ / denom (RayClassCFT.iotaGL gm hγ) τ = τ'
+    rw [← hMeq, ← coe_smul_of_det_pos (by rw [hMeq, det_iotaGL]; exact_mod_cast hpos), hMτ]
+
+/-- **Every point of `ℍ^± × G(𝔸_f)` is related to one in `ℍ × G(𝔸_f)`**: for `z ∈ ℍ⁻` use `μ = 1 + i ∈ 𝒪^×`,
+`nrd μ = −1` (`RayClassCFT.nrd_mu`), which swaps the two half planes. With `dcRelPM_iff`, the inclusion
+`ℍ × G(𝔸_f) → ℍ^± × G(𝔸_f)` identifies the leaf's `B^×_+ \ (ℍ × G(𝔸_f) / K₃)` with the print's
+`B^× \ (ℍ^± × G(𝔸_f) / K₃)`. -/
+theorem exists_upper (z : HPM) (g : BAQˣ) : ∃ (τ : UpperHalfPlane) (g' : BAQˣ), DCRelPM z g (toPM τ) g' := by
+  rcases lt_or_gt_of_ne z.2 with hneg | hpos
+  · have hμ : ShimuraGlue.nrdQ ℚ RayClassCFT.mu ≠ 0 := by rw [RayClassCFT.nrd_mu]; norm_num
+    set w := mobPM (RayClassCFT.iotaGL RayClassCFT.mu hμ) z with hw
+    have hwpos : 0 < w.1.im := by
+      rw [hw]
+      simp only [mobPM]
+      rw [im_num_div_denom, det_iotaGL, RayClassCFT.nrd_mu]
+      have h3 := normSq_denom_pos (RayClassCFT.iotaGL RayClassCFT.mu hμ) z.2
+      push_cast
+      exact div_pos (by nlinarith) h3
+    let u : BAQˣ := ⟨bEmb RayClassCFT.mu, bEmb RayClassCFT.muInv,
+      by rw [← map_mul, RayClassCFT.mu_mul, map_one], by rw [← map_mul, RayClassCFT.mul_mu, map_one]⟩
+    refine ⟨⟨w.1, hwpos⟩, u * g, RayClassCFT.mu, hμ, Subtype.ext rfl, 1, RayClassCFT.K3Q_one, ?_⟩
+    simp [u]
+  · refine ⟨⟨z.1, hpos⟩, g, 1, by simp [ShimuraGlue.nrdQ_apply], Subtype.ext ?_, 1, RayClassCFT.K3Q_one, by simp⟩
+    show num _ z.1 / denom _ z.1 = z.1
+    simp [num, denom, RayClassCFT.iotaGL_coe, BPAnalytic.QM.iota]
+
+end HPM
+
+/-! ## 6. The sign of `h` and `B` versus `B^op` (checks against Deligne's conventions) -/
+
+section Sign
+
+open Complex
+
+/-- `(τ, 1)ᵀ`. -/
+def vτ (τ : UpperHalfPlane) : Fin 2 → ℂ := ![(τ : ℂ), 1]
+
+/-- `J_τ` as a complex matrix. -/
+def JC (τ : UpperHalfPlane) : Matrix (Fin 2) (Fin 2) ℂ := (Y3Fix.Jmat τ).map (fun r : ℝ => (r : ℂ))
+
+theorem JC_mulVec (τ : UpperHalfPlane) : (JC τ).mulVec (vτ τ) = Complex.I • vτ τ := by
+  have h := Y3Fix.ellE_J τ 1
+  rw [_root_.one_mul] at h
+  funext i
+  have hi := congrFun h i
+  simp only [Y3Fix.ellE_apply, Y3Fix.ellF, Pi.smul_apply, smul_eq_mul] at hi
+  fin_cases i <;> simp [JC, vτ, Matrix.mulVec, dotProduct, Fin.sum_univ_two] at hi ⊢ <;>
+    simp [Matrix.one_apply] at hi <;> linear_combination hi
+
+/-- `J_τ² = −1`. -/
+theorem Jmat_sq (τ : UpperHalfPlane) : Y3Fix.Jmat τ * Y3Fix.Jmat τ = -1 := by
+  have hy : (τ : ℂ).im ≠ 0 := τ.im_pos.ne'
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [Y3Fix.Jmat, Matrix.mul_apply, Fin.sum_univ_two] <;> field_simp <;> ring
+
+/-- `J_τ` has trace `0`, so its canonical conjugate (the adjugate) is `−J_τ`: under the canonical involution
+`x ↦ x̄` of `B_ℝ = M₂(ℝ)` (which turns left multiplications into right ones), right multiplication by `J_τ` becomes
+left multiplication by `J̄_τ = −J_τ`. -/
+theorem adjugate_Jmat (τ : UpperHalfPlane) : (Y3Fix.Jmat τ).adjugate = -Y3Fix.Jmat τ := by
+  rw [Matrix.adjugate_fin_two]
+  ext i j; fin_cases i <;> fin_cases j <;> simp [Y3Fix.Jmat] <;> ring
+
+/-- Two real matrices agreeing on `(τ, 1)ᵀ`, `τ ∉ ℝ`, are equal. -/
+theorem real_mat_eq_of_vτ (τ : UpperHalfPlane) {X Y : Matrix (Fin 2) (Fin 2) ℝ}
+    (h : (X.map (fun r : ℝ => (r : ℂ))).mulVec (vτ τ) = (Y.map (fun r : ℝ => (r : ℂ))).mulVec (vτ τ)) :
+    X = Y := by
+  have hy : (τ : ℂ).im ≠ 0 := τ.im_pos.ne'
+  ext i j
+  have hi := congrFun h i
+  simp only [vτ, Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.map_apply,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, mul_one] at hi
+  have him := congrArg Complex.im hi
+  have hre := congrArg Complex.re hi
+  simp only [Complex.add_im, Complex.add_re, Complex.mul_im, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, Complex.one_re, Complex.one_im, mul_zero, zero_mul, add_zero, zero_add, sub_zero,
+    mul_one] at him hre
+  have h0 : X i 0 = Y i 0 := by
+    have : (X i 0 - Y i 0) * (τ : ℂ).im = 0 := by linear_combination him
+    exact sub_eq_zero.mp ((mul_eq_zero.mp this).resolve_right hy)
+  have h1 : X i 1 = Y i 1 := by rw [h0] at hre; linarith
+  fin_cases j
+  · exact h0
+  · exact h1
+
+/-- `ι(γ)(τ, 1)ᵀ = j(γ, τ)(γτ, 1)ᵀ`. -/
+theorem iota_mulVec_vτ (gm : LeafQM.B) (hγ : 0 < ShimuraGlue.nrdQ ℚ gm) (τ : UpperHalfPlane) :
+    ((BPAnalytic.QM.iota gm).map (fun r : ℝ => (r : ℂ))).mulVec (vτ τ) =
+      UpperHalfPlane.denom (RayClassCFT.iotaGL gm hγ.ne') τ •
+        vτ (RayClassCFT.iotaGL gm hγ.ne' • τ) := by
+  have hd := UpperHalfPlane.denom_ne_zero (RayClassCFT.iotaGL gm hγ.ne') τ
+  have hdet : 0 < (RayClassCFT.iotaGL gm hγ.ne').det.val := by
+    rw [det_iotaGL]; exact_mod_cast hγ
+  funext i
+  fin_cases i
+  · simp only [vτ, Matrix.mulVec, dotProduct, Fin.sum_univ_two, Pi.smul_apply, smul_eq_mul]
+    rw [UpperHalfPlane.coe_smul_of_det_pos hdet]
+    have hd' : (τ : ℂ) * ((BPAnalytic.QM.iota gm 1 0 : ℝ) : ℂ) + ((BPAnalytic.QM.iota gm 1 1 : ℝ) : ℂ) ≠ 0 := by
+      simpa [UpperHalfPlane.denom, RayClassCFT.iotaGL_coe, mul_comm] using hd
+    have hd'' : ((BPAnalytic.QM.iota gm 1 0 : ℝ) : ℂ) * (τ : ℂ) + ((BPAnalytic.QM.iota gm 1 1 : ℝ) : ℂ) ≠ 0 := by
+      simpa [UpperHalfPlane.denom, RayClassCFT.iotaGL_coe] using hd
+    simp [UpperHalfPlane.num, UpperHalfPlane.denom, RayClassCFT.iotaGL_coe]
+    field_simp
+  · simp [vτ, Matrix.mulVec, dotProduct, Fin.sum_univ_two, UpperHalfPlane.denom, RayClassCFT.iotaGL_coe]
+
+/-- **`B^×_+`-equivariance of `τ ↦ h_τ`**: `ι(γ) J_τ = J_{γτ} ι(γ)` for `nrd γ > 0`. So right multiplication by
+`ι(γ)⁻¹` carries `(B_ℝ, ·J_τ, 𝒪)` to `(B_ℝ, ·J_{γτ}, 𝒪γ⁻¹)`: the Hodge datum at `(τ, g)` to the one at `(γτ, γg)`
+(`L_{γg} = L_g γ⁻¹`), compatibly with `DCRel`. -/
+theorem iota_mul_Jmat (gm : LeafQM.B) (hγ : 0 < ShimuraGlue.nrdQ ℚ gm) (τ : UpperHalfPlane) :
+    BPAnalytic.QM.iota gm * Y3Fix.Jmat τ =
+      Y3Fix.Jmat (RayClassCFT.iotaGL gm hγ.ne' • τ) * BPAnalytic.QM.iota gm := by
+  apply real_mat_eq_of_vτ τ
+  have hm : ∀ X Y : Matrix (Fin 2) (Fin 2) ℝ, (X * Y).map (fun r : ℝ => (r : ℂ)) =
+      X.map (fun r : ℝ => (r : ℂ)) * Y.map (fun r : ℝ => (r : ℂ)) := fun X Y =>
+    Matrix.map_mul (f := Complex.ofRealHom)
+  rw [hm, hm, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
+  change _ = (JC _).mulVec _
+  change ((BPAnalytic.QM.iota gm).map (fun r : ℝ => (r : ℂ))).mulVec ((JC τ).mulVec (vτ τ)) = _
+  rw [JC_mulVec, Matrix.mulVec_smul, iota_mulVec_vτ gm hγ, Matrix.mulVec_smul, JC_mulVec, smul_comm]
+
+/-- **The Hodge filtration varies holomorphically** (Deligne's convention `h(z)` acts on `V^{p,q}` by
+`z^{-p} z̄^{-q}`, so `F⁰ = V^{0,-1}` is the `−i`-eigenspace of `h(i)` on `V_ℂ`): with `h_τ(i)` acting on
+`V = B` by right multiplication by `J_τ`, `F⁰ = {M ∈ M₂(ℂ) : M J_τ = −i M} = {M : M (τ, 1)ᵀ = 0}`, which depends
+holomorphically on `τ`; and `V_ℂ/F⁰ ≅ ℂ²` by `M ↦ M (τ, 1)ᵀ` restricts on `V_ℝ` to `ℓ_τ`, which is `ℂ`-linear for
+`J_τ` (`Y3Fix.ellE_J`): `Lie A = V_ℂ/F⁰` with `H₁(A, ℤ) = ℓ_τ(𝒪) = Λ_τ`. So the leaf's sign `β(M J_τ) = i β(M)`
+is the one for which `τ ↦ [h_τ]` is holomorphic (the complex structure of `X⁺` in the print). -/
+theorem F0_iff (τ : UpperHalfPlane) (M : Matrix (Fin 2) (Fin 2) ℂ) :
+    M * JC τ = -Complex.I • M ↔ M.mulVec (vτ τ) = 0 := by
+  have hy : (τ : ℂ).im ≠ 0 := τ.im_pos.ne'
+  have hyc : ((τ : ℂ).im : ℂ) ≠ 0 := by exact_mod_cast hy
+  constructor
+  · intro h
+    have h1 : (M * JC τ).mulVec (vτ τ) = Complex.I • M.mulVec (vτ τ) := by
+      rw [← Matrix.mulVec_mulVec, JC_mulVec, Matrix.mulVec_smul]
+    rw [h, Matrix.smul_mulVec] at h1
+    have h2 : (2 * Complex.I) • M.mulVec (vτ τ) = 0 := by
+      rw [two_mul, add_smul]; nth_rewrite 1 [← h1]; rw [neg_smul, neg_add_cancel]
+    exact (smul_eq_zero.mp h2).resolve_left (mul_ne_zero two_ne_zero Complex.I_ne_zero)
+  · intro h
+    -- `J_τ + i = (τ, 1)ᵀ (1/y, −τ̄/y)`
+    set w : Fin 2 → ℂ := ![1 / ((τ : ℂ).im : ℂ), -(starRingEnd ℂ (τ : ℂ)) / ((τ : ℂ).im : ℂ)] with hw
+    have hJ : JC τ + Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ) = Matrix.vecMulVec (vτ τ) w := by
+      have hτ : (τ : ℂ) = (((τ : ℂ).re : ℝ) : ℂ) + (((τ : ℂ).im : ℝ) : ℂ) * Complex.I :=
+        (Complex.re_add_im _).symm
+      ext i j; fin_cases i <;> fin_cases j <;>
+        simp [JC, Y3Fix.Jmat, Matrix.vecMulVec, vτ, hw, Matrix.one_apply] <;>
+        (apply Complex.ext <;> simp [Complex.div_re, Complex.div_im, Complex.normSq, pow_two, Complex.mul_re, Complex.mul_im] <;> field_simp <;> ring)
+    have h3 : M * (JC τ + Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 0 := by
+      rw [hJ, Matrix.mul_vecMulVec, h]
+      ext i j
+      simp [Matrix.vecMulVec_apply]
+    rw [Matrix.mul_add, Matrix.mul_smul, Matrix.mul_one] at h3
+    rw [neg_smul]
+    exact eq_neg_of_add_eq_zero_left h3
+
+end Sign
+
 end Y3Hodge

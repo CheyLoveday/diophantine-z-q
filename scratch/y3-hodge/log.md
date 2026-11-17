@@ -21,3 +21,12 @@ unrelated TYZThm21Span files).
   Y3Fix.IsHodgeH1 P τ` (uses uniformizationLeafAll_proof): compiles, 0 errors. Item (1) VERIFIED (compiled).
   Key step: 𝒪-linearity on H₁ (ι_A(a)_* c(b) = c(ab)) ⇒ ι-compatibility of Φu, via monodromy of straight loops
   (Θ = IsAddQuotientCoveringMap.fundamentalGroupToMulOpposite) + LinearMap.ext_on over the full lattice Λ_τ.
+- Hodge.lean stage 4 (item 3 + sign): compiles, 0 errors.
+  * `dcRelPM_iff`: on ℍ ⊂ ℍ^± the print's relation (γ ∈ B^×, any sign) is `DCRel` (γ ∈ B^×_+).
+  * `exists_upper`: every (z, g), z ∈ ℍ^±, is related to some (τ, g'), τ ∈ ℍ (μ = 1+i, nrd μ = −1).
+  * `Jmat_sq` (J_τ² = −1), `adjugate_Jmat` (J̄_τ = −J_τ), `iota_mul_Jmat` (ι(γ)J_τ = J_{γτ}ι(γ), nrd γ > 0),
+    `F0_iff` (M J_τ = −i M ↔ M(τ,1)ᵀ = 0: F⁰ = V^{0,−1} holomorphic in τ in Deligne's convention).
+  Sign verdict (VERIFIED as Lean + STANDARD convention): the leaf's `β(M J_τ) = i β(M)` is the holomorphic choice;
+  the docstring's "h_τ(i) = J_τ" holds for G = B^{op×} acting on V = B by right multiplication; for Deligne's
+  G = B^× acting on V = B by left multiplication (𝒪 on the right), transport by the canonical involution gives
+  h_x(i) = J̄_τ = −J_τ (adjugate_Jmat). No statement change needed.
