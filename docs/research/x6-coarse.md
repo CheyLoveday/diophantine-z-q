@@ -137,8 +137,57 @@ and `[𝒪 : 𝒪μ] = nrd(μ)²`. Counted by hand from the congruence condition
   Table 1 together with the uniqueness of the CM point of each discriminant on `X*(1)`. That uniqueness is
   implicit in Elkies' "the CM point of discriminant `D`" (p. 17 and Table 1, per the lead's reading).
 
-### 4.2 `gonzalezRotgerThm512X6` (priority 2) — (filled in below)
+### 4.2 `gonzalezRotgerThm512X6` (priority 2): analysed, not reduced
 
-### 4.3 The Galois clause of `x6CoarseModuli` — (filled in below)
+The leaf (`GRDict.GonzalezRotgerThm512X6`) is GR Thm 5.12 at `(6, 1)`, weakened by and-elimination, on every
+witness, over `IsGRCMPoint`. The lead names two unprinted transport steps.
+
+* **T1, the moduli dictionary `Γ∖ℍ ∋ [z] ↦ (ℂ²/Λ_z, ι)`.** `IsGRCMPoint Ψ R x` builds it into the definition: the
+  pair of `x`, base-changed to `ℂ` along `σQ`, is the torus `ℂ²/ι(𝒪)(z, 1)ᵀ` with `z` the CM point of an optimal
+  embedding. GR's `CM(R)` lives on `X₀(D,N)(ℂ) = Γ∖ℍ`, and GR's uniformization (Thm 5.1 per the lead) carries no
+  moduli statement. The missing fact is Shimura's moduli interpretation of the complex uniformization: the point
+  `[z]` of the canonical model is the moduli point of `(A_z, ι_z)` (Shimura, Ann. of Math. 78 (1963) and 85
+  (1967); STANDARD, locators UNVERIFIED). **It cannot be proved as glue**, for two reasons. The tree has no Lean
+  object for `Γ∖ℍ → X(ℂ)`, and `Ψ` is a bijection on `ℚ̄`-points only, not on `ℂ`-points. Removing T1 needs a new
+  printed leaf (the moduli interpretation of the uniformization) stated over such an object. That is outside this
+  task's reach today (SPECULATIVE).
+* **T2, the Galois equivariance of `Ψ`.** The Lean statement uses the residue field `ℚ(x) = residueImage x`
+  directly, so the field of moduli never enters. What is needed is that a witness's residue fields are those of
+  GR's canonical model. That follows from three facts:
+  1. the canonical model with its moduli map is itself a coarse witness; this is the content of `x6CoarseModuli`,
+     whose Galois clause is the naturality square of §4.3;
+  2. any two coarse witnesses are isomorphic over `ℚ` compatibly with `Ψ`; this is a Lean proof
+     (`ElkiesPrint.coarse_compare_ab`, from T5);
+  3. residue fields and `IsGRCMPoint` are invariant under such an isomorphism (`IsGRCMPoint` depends on `Ψ x`
+     only).
+
+  So T2 is covered by `x6CoarseModuli` together with proved glue. It is not an additional reading of GR.
+* **Docstring correction** (`GRDict.lean` may not be edited). "`R` of conductor prime to `DN`" is not in GR (lead's
+  reading: Thm 5.8 p. 16 for `ℚ(P)`, Def. 5.5 p. 14 for `CM(R)`, p. 15 for `D(R), N(R), N*(R)`, Thm 5.12
+  pp. 18–19 of arXiv v2). The Lean hypothesis `Nat.Coprime (conductor R) 6` only weakens the leaf, so the
+  statement is fine; only the docstring's "Published statement" should drop the clause. Proposed replacement
+  for the docstring's second paragraph: "*Published statement* (arXiv math/0612732v2, Thm 5.12 pp. 18–19; the
+  print's numbering unconfirmed): for `P ∈ CM(R) ⊂ X₀(D,N)` (Def. 5.5), `ℚ(P) = H_R` if `D(R)N*(R) ≠ 1`, and
+  otherwise a specified subfield of `H_R` of index two. The Lean form adds the hypothesis that the conductor is
+  prime to 6, which only weakens it."
+
+Net for priority 2: no change to the leaf. T2 is not an extra risk, and T1 is a genuine extra printed input
+(Shimura's moduli interpretation of `Γ∖ℍ`), which should be recorded in the row's flag.
+
+### 4.3 The Galois clause of `x6CoarseModuli`
+
+`GaloisClause X Ψ` (the clause verbatim) says: for `σ ∈ Aut(ℚ̄/ℚ)` and `Ψ x = [P]`, some `Q` with
+`IsBaseChangeOfPair σ P Q` has `Ψ(Spec σ ≫ x) = [Q]`. `GaloisNatural X Ψ` says: for every base change `Q` of `P`
+along `σ`, `Ψ(Spec σ ≫ x) = [Q]`. That is literally the naturality square of the coarse map `Φ : M → Hom(−, X)` at
+the morphism `Spec σ : Spec ℚ̄ → Spec ℚ̄` over `ℚ` (Mumford, GIT Def. 5.6). Proved:
+`galoisNatural_of_clause` (via the chain's `bc_uniquePair`). The converse `clause_of_galoisNatural` needs the
+existence of a base change of `P` along `σ`. That is a construction (`AbVar.baseChange` along `σ.toAlgebra`, with
+`endBC`), and it is not done here.
+
+So the Galois clause adds nothing to "the canonical model over `ℚ` is a coarse moduli scheme over `ℚ`" (the
+natural transformation is defined on all `ℚ`-schemes and `Spec σ` is one of their morphisms). The remaining
+question is the locator of the coarse-moduli statement over `ℚ` (Deligne 1971 §§4–5; Buzzard 1997 §1; Milne,
+*Introduction to Shimura varieties* §14, UNVERIFIED). That question is the leaf's own locator, not a reading risk
+of the clause.
 
 ## 5. Discharges and fold — (filled in below)

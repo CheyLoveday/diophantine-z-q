@@ -19,3 +19,12 @@
   twist, no hypothesis), iso_of_quotient / alIdeal_of_alTwist (twist => printed from IsogenyQuotient),
   hom_ext_qbar, atkinLehnerW_eq_of_clause, x6CoarseModuli_of_ideal, x6CoarseModuliIdeal_of_twist,
   elkiesX6StarEvery_of_ideal(') , ideal_of_elkiesX6StarEvery, galoisNatural_of_clause, clause_of_galoisNatural.
+- VERIFIED: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` (14273 jobs, success, build2.log).
+  `#discharges` (scratch/x6-coarse/Discharges.lean -> discharges.txt): x6CoarseModuli by
+  X6ALIdeal.x6CoarseModuli_of_ideal (still assumes X6CoarseModuliIdeal); elkiesX6StarEvery by
+  X6ALIdeal.elkiesX6StarEvery_of_ideal' (still assumes ElkiesX6StarEveryIdeal, X6CoarseModuliIdeal,
+  ShimuraMainThmIDeligneY3AbU, MumfordTorsionAlgClosed); axioms standard. 39 open hypotheses, 11167 theorems.
+- VERIFIED: autofold dry-run (scratch/x6-coarse/autofold.json): strict 16/18 on 34 -> 16/18 on 34 (new leaves
+  flagged GLUE until review: x6CoarseModuliIdeal 'pending reading (Addendum 1 ...)', elkiesX6StarEveryIdeal kind
+  consequence). Fold module FoldDryRun.lean (OpenResearchLeaves39, sixContactMin_of_open56) compiles;
+  `#print axioms HDec.HSyn.sixContactMin_of_open56` standard (foldcheck.txt).
