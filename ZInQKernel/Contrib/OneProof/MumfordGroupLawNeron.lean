@@ -52,10 +52,10 @@ separated `S`-scheme `N` of finite type with `N_K ≅ A_K` such that every `K`-m
 fibre of a smooth `S`-scheme `Y` extends uniquely to an `S`-morphism `Y → N`. *Lean form*: `S = Spec D` affine,
 `L` a fraction field of `D`; finite type as smooth (locally of finite presentation) and quasi-compact; only the
 existence of the extension (uniqueness is automatic, `NeronC.pullback_map_injective`). No group structure is asked
-for. The existing field `NeronSchemeExtensionExists` is its case `D = 𝓞_L` (`neronSchemeExtensionExists_of_dedekind`). -/
+for. `D` is not a field (BLR's Dedekind schemes are one-dimensional; reviewer fix 11-16). The existing field `NeronSchemeExtensionExists` is its case `D = 𝓞_L` (`neronSchemeExtensionExists_of_dedekind`). -/
 def NeronSchemeExtensionDedekind : Prop :=
   ∀ (D : Type) [CommRing D] [IsDedekindDomain D] (L : Type) [Field L] [Algebra D L] [IsFractionRing D L]
-    (A : AbVar L),
+    (A : AbVar L) (_ : ¬ IsField D),
     ∃ (N : Over (Spec (CommRingCat.of D))) (_ : Smooth N.hom) (_ : IsSeparated N.hom)
       (_ : QuasiCompact N.hom) (ε : (Over.pullback (genMap D L)).obj N ≅ A.X),
       ∀ (Y : Over (Spec (CommRingCat.of D))) [Smooth Y.hom],
@@ -72,12 +72,12 @@ def NeronSchemeExtensionDVR : Prop :=
         Function.Surjective fun f : Y ⟶ N => (Over.pullback (genMap R K)).map f ≫ ε.hom
 
 theorem dvr_of_dedekind (h : NeronSchemeExtensionDedekind) : NeronSchemeExtensionDVR :=
-  fun R _ _ _ K _ _ _ A => h R K A
+  fun R _ _ _ K _ _ _ A => h R K A (IsDiscreteValuationRing.not_isField R)
 
 /-- The existing field (BLR §1.4 Thm 3 over `𝓞_L`) is the case `D = 𝓞_L` of the Dedekind form. -/
 theorem neronSchemeExtensionExists_of_dedekind (h : NeronSchemeExtensionDedekind) :
     ZInQ.Contrib.NeronC.NeronSchemeExtensionExists :=
-  fun K _ A L _ _ _ => h (NumberField.RingOfIntegers L) L (A.baseChange L)
+  fun K _ A L _ _ _ => h (NumberField.RingOfIntegers L) L (A.baseChange L) (NumberField.RingOfIntegers.not_isField L)
 
 /-! ## §2 The glue -/
 

@@ -1,0 +1,22 @@
+{
+ "name": "r16-used",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.R16Used"
+ ],
+ "discharges": [
+  {
+   "field": "r16CoreY",
+   "proof": "_root_.R16Used.r16CoreY_of_printed {n}.afTateCharPoly {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "afTateCharPoly",
+     "type": "_root_.R16Used.AfTateCharPoly",
+     "doc": "r16-used: Eichler-Shimura for A_f, existence form of Diamond-Shurman Lemma 9.5.3 and Thm 9.5.4. For a newform f in S_2(Gamma_1(N)) with nebentypus chi and J = J_1(N): a Q-quotient pi : J ->> A with theta : K_f -> End^0(A) such that for every l, V_l(A) is free of rank 2 over Q_l (x)_Q K_f (module through theta), and for p not dividing N*l and every arithmetic Frobenius sigma at p, chi(p) lies in K_f and the characteristic polynomial over Q_l (x) K_f of the matrix of sigma is X^2 - a_p X + chi(p) p. The witness is Shimura's A_f = J_1(N)/I_f J_1(N), which has no Lean definition. Replaces r16CoreY: [K_f:Q] < infinity, the rank-two clause, the iota-component trace and determinant, and dim A = [K_f:Q] (with mumfordTorsionAlgClosed) are proved in Lean (R16Used.r16_of_afTate).",
+     "kind": "published",
+     "flag": "",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005): Def. 6.6.3 (A_f), Lemma 9.5.3 (V_l(A_f) free of rank 2 over K_f (x) Q_l), Thm 9.5.4 (characteristic polynomial of rho_{A_f,l}(Frob_p) is x^2 - a_p x + chi(p) p for p not dividing lN); Shimura 1971 Thms 7.9-7.14; numbers UNVERIFIED (unread)"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+Build completed successfully (12818 jobs).
+real	12m36.860s
+user	21m31.268s
+sys	2m34.030s

@@ -195,3 +195,9 @@ Citation repairs should come before a claim that the literal leaf decomposition 
 - Legitimate publisher, author, preprint and alternate-format routes were tried. Access pages, search snippets and bibliographic covers were not counted as theorem verification. Mirrors were identified by the version/page markers actually visible; byte-identity with an inaccessible canonical download was not asserted.
 
 No Lean source, manuscript, blueprint, existing research note or repository branch was changed by this audit. The report is limited to this Markdown file; it supplies a reproducible source map and explicit remaining gaps, not certification of the full mathematical argument.
+
+## Rows added by folds (after the audit)
+
+| statement | source | status |
+| --- | --- | --- |
+| `GZSch.GrossZagierCurveCd` | B. Gross, D. Zagier, *Heegner points and derivatives of L-series*, Invent. Math. 84 (1986), 225–320: Thm I.6.3 (p. 230) and Ch. V §2 Thm 2.1 (the covering π : X₀(N) → E with π(∞) = 0 is fixed on p. 310, per the queue9 reading); the factorization L(E/K, s) = L(f, s) L(f ⊗ ε, s) at IV (0.4), p. 268 | locator from the queue9 reading (not re-read by hgz-steps; no copy on this host) |

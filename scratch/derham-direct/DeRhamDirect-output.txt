@@ -1,0 +1,7 @@
+'DeRhamPrint.Direct.deRhamVpAbVarPrinted_of_direct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamPrint.Direct.direct_of_deRhamVpAbVarPrinted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamPrint.Direct.iotaPlusF_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+real	1m11.775s
+user	0m19.935s
+sys	0m5.418s

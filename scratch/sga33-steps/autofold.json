@@ -1,0 +1,10 @@
+{"name": "sga33-steps",
+ "imports": ["ZInQKernel.Contrib.OneProof.SGA7IX33Cor"],
+ "discharges": [
+   {"field": "sga7_IX_3_3_SHpre",
+    "proof": "_root_.SGA33Steps.shpre_of_cor33 {n}.sga7_IX_Cor3_3",
+    "leaves": [{"name": "sga7_IX_Cor3_3", "type": "_root_.SGA33Steps.SGA7_IX_Cor3_3",
+                "doc": "sga33-steps, printed form (specialized to traits): SGA 7 I, Exp. IX, Cor. 3.3, p. 348 (semistable reduction: Def. 3.4, p. 349; locator from the 11-16 reading in the task brief): for an extension of DVRs O in O' (O' meet K = O, any K'/K, no henselian condition), Neron models N, N' with N semistable, the canonical u : N x_O O' -> N' (generic fibre the identification, bcDVR) induces an isomorphism N0 x_O O' = N'0 (an iso of open subschemes over N'). Replaces sga7_IX_3_3_SHpre: steps 1-3 (specialization; dictionary and Neron uniqueness; c = u . alpha with alpha an automorphism of N' fixing the unit) proved in SGA33Steps.shpre_of_cor33.",
+                "kind": "published",
+                "flag": "unread: printed form per a reading reported in the sga33-steps task brief (Cor. 3.3 p. 348, Def. 3.4 p. 349), not recorded in reviews.tsv; semistable read on the geometric special fibre (GroupModelO.IsSemistable)",
+                "source": "SGA 7 I, Exp. IX, Cor. 3.3, p. 348 (N0 x_S S' = N'0 under the canonical map, semistable reduction Def. 3.4 p. 349), specialized to S = Spec O, S' = Spec O' discrete valuation rings with O' meet K = O; sga33-steps"}]}]}

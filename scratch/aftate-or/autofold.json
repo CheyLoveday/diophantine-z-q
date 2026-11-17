@@ -1,0 +1,31 @@
+{
+ "name": "aftate-or",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.AfTateOr"
+ ],
+ "discharges": [
+  {
+   "field": "r16CoreY",
+   "proof": "_root_.AfTateOr.r16CoreY_of_dsOr_igusaDS {n}.afTateDSOr {n}.igusaGL2DS {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "afTateDSOr",
+     "type": "_root_.AfTateOr.AfTateDSOr",
+     "doc": "aftate-or: Eichler-Shimura for A_f over J_1(N) = Pic^0(X_1(N)_alg), Diamond-Shurman Lemma 9.5.3 + Thm 9.5.4 at DS's own X_1(N)_alg, in a form printed under either wording of 9.5.4. For N >= 2 and a newform f in S_2(Gamma_1(N)) with nebentypus chi: for EVERY model X of DS's X_1(N)_alg (IsX1AlgDS: smooth proper geometrically connected integral curve over Q whose function field is Q(j, f_1), stated by two generators with exactly the integer relations of (j(tau), f_1(tau)) on the upper half plane, f_1 = T5Glue.weber <1,tau> (1/N) = g2 g3 wp(1/N)/Delta) with a rational point, and EVERY representative V of Pic^0_{X/Q} with the tensor group law (vendored Jacobian-Challenge library), there are a Q-quotient pi : V ->> A and theta : K_f -> End^0(A) such that for every prime l, V_l(A) has a basis over Q_l (x) K_f (free of rank 2) and EITHER every arithmetic Frobenius at p not dividing N*l has characteristic polynomial X^2 - a_p X + chi(p) p (isj1-dict's AfTateAt) OR every such Frobenius satisfies X^2 - a_p X + chi(p) p and complex conjugation has determinant -1 on every iota-component (isj1-dict's AfTateWeakOddAt). Replaces r16CoreY together with igusaGL2DS: AfTateOr.r16CoreY_of_dsOr_igusaDS (dictionary IsX1Model -> IsX1AlgDS proved from weber-field's weberFieldComparison and Igusa; consumers' form from either disjunct by Cayley-Hamilton and isj1-dict's odd_of_charpoly / component_charpoly; N = 1 excluded by Mathlib's S_2(SL_2(Z)) = 0). Never stronger than isj1-dict's leaves: AfTateOr.dsOr_of_picZero, AfTateOr.dsOr_of_weakPicZero (the converse dictionary IsX1AlgDS -> IsX1Model is proved).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (DS Lemma 9.5.3 + Thm 9.5.4 at DS's X_1(N)_alg, any model with a rational point, any Pic^0 representative; the characteristic-polynomial reading gives the first disjunct by or-introduction, the 'satisfies' reading gives the second together with oddness of rho_{A_f,l}, a consequence of the printed det rho_{A_f,l} = chi chi_l for the same A_f, Shimura 1971 Thm 7.14 / Ribet 1977, numbers UNVERIFIED); A_f existential (no Hecke correspondences in Lean); locators UNVERIFIED",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005): 7.5-7.7 (X_1(N)_alg via Q(j, f_1), J_1(N) = Pic^0), 6.6 (A_f), Lemma 9.5.3, Thm 9.5.4; Shimura 1971 Thms 7.9-7.14 (congruence relation, characteristic polynomial, determinant); numbers UNVERIFIED (unread)"
+    },
+    {
+     "name": "igusaGL2DS",
+     "type": "_root_.X1Igusa.IgusaGL2DS",
+     "doc": "x1-igusa: Igusa's theorem in its printed form, Gal(Q(j, E_j[N])/Q(j)) = GL_2(Z/N) for Diamond-Shurman's E_j : y^2 = 4x^3 - g x - g, g = 27j/(j-1728), j transcendental. For N >= 1, every basis e : (Z/N)^2 = E_j[N] over an algebraic closure of Q(j) and every g in GL_2(Z/N), some sigma in Aut(Q(j)bar/Q(j)) acts on E_j[N] as g in the basis e (the Galois representation on E_j[N] is onto GL_2(Z/N)). E_j is written in Mathlib's normal form y'^2 = x^3 - (g/4)x - g/4 (y = 2y', a Q(j)-isomorphism of plane cubics fixing infinity). Replaces isj1-dict's consequence-rated x1PointsConjugate: X1Igusa.x1PointsConjugate_of_igusaGL2DS proves it, with E[N] = (Z/N)^2 (t36_torsionStructure, Tau Ceti), SL_2(Z/N) transitive on vectors of order N (exists_SL2_first_column) and an explicit change of variables over Q(j)bar from Diamond-Shurman's model to the kernel's E_j with x_DS = u^2 x - 3/2, u^2 = -18/(j-1728)^2 in Q(j) (cDS_smul). Fallback if the print is read on x-coordinates only (Shimura 1971 Thm 6.6, GL_2(Z/N)/{+-1}): X1Igusa.IgusaGL2DSX (r16CoreY_of_picZero_igusaDSX).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman section 7.5, Galois group of Q(j, E_j[N])/Q(j) = GL_2(Z/N)); locator UNVERIFIED (theorem number and model y^2 = 4x^3 - g_j x - g_j recalled, not read)",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), section 7.5; Igusa, Fibre systems of Jacobian varieties III, Amer. J. Math. 81 (1959); Lang, Elliptic Functions, Ch. 6 section 3; Shimura 1971 Thm 6.6 (GL_2(Z/N)/{+-1}); numbers UNVERIFIED (unread)"
+    }
+   ]
+  }
+ ],
+ "note": "aftate-or: report docs/research/aftate-or.md. Replaces weber-field's afTateCharPolyPicZero (review: GLUE for the DS 9.5.4 wording, the existential over models and the K_N dictionary step) by afTateDSOr: disjunctive conclusion (charpoly or satisfies+odd), universal over models of DS's X_1(N)_alg defined by its function field Q(j, f_1) (Weber function), universal over Pic^0 representatives. Same field, same second leaf (igusaGL2DS) as x1-igusa/weber-field."
+}
