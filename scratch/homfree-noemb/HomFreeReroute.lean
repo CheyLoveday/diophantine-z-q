@@ -286,6 +286,59 @@ end HSyn
 end
 end HDec
 
+-- copied from ZInQKernel/OneProof/H/LPrefix.lean:11764 (TextbookLeaves.frobeniusDense)
+namespace HDec
+set_option maxHeartbeats 1000000
+noncomputable section
+namespace HSyn
+open scoped MatrixGroups ModularForm
+/-- T18's density form from the narrowed field `t18 : ChebotarevExists` (t-skolem-kw). -/
+theorem TextbookLeavesHF.frobeniusDense (t : TextbookLeavesHF) : FrobeniusDense :=
+  TSkolemKW.hsyn_t18_of_chebotarev t.t18
+end HSyn
+end
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/LPrefix.lean:11768 (TextbookLeaves.leafSqrtCrit)
+namespace HDec
+set_option maxHeartbeats 1000000
+noncomputable section
+namespace HSyn
+open scoped MatrixGroups ModularForm
+/-- T30 from T16(a) (t30-adelic). -/
+theorem TextbookLeavesHF.leafSqrtCrit (t : TextbookLeavesHF) : GlueDescent.B2Q.LeafSqrtCrit :=
+  T30.leafSqrtCrit_of_t16a t.t16a
+end HSyn
+end
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/LPrefix.lean:11772 (TextbookLeaves.x1ModelExists)
+namespace HDec
+set_option maxHeartbeats 1000000
+noncomputable section
+namespace HSyn
+open scoped MatrixGroups ModularForm
+/-- `X₁(N)` has a model over `ℚ` (leaf-modcurves' glue target, x1-belyi; from T36, T38-T40). -/
+theorem TextbookLeavesHF.x1ModelExists (t : TextbookLeavesHF) : LeafModCurves.X1ModelExists :=
+  (X1Belyi.x1ModelExists_and_belyiX1 t.x1).1
+end HSyn
+end
+end HDec
+
+-- copied from ZInQKernel/OneProof/H/LPrefix.lean:11777 (TextbookLeaves.belyiX1)
+namespace HDec
+set_option maxHeartbeats 1000000
+noncomputable section
+namespace HSyn
+open scoped MatrixGroups ModularForm
+/-- `j/1728` is a Belyi function of degree `≤ N²` on `K_N` (E2's Belyi half, x1-belyi; from T36,
+T37). -/
+theorem TextbookLeavesHF.belyiX1 (t : TextbookLeavesHF) : LeafModCurves.BelyiX1 :=
+  (X1Belyi.x1ModelExists_and_belyiX1 t.x1).2
+end HSyn
+end
+end HDec
+
 -- copied from ZInQKernel/OneProof/H/TailA.lean:1132 (EndDivisionOfEnd0Division)
 namespace HDec
 set_option maxHeartbeats 1000000

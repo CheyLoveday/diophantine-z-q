@@ -138,6 +138,12 @@ B = [
 ]
 items += B
 
+# dot-notation helpers on carriers (renamed through the structure name, not the short name)
+NOREN = set()
+for s_ in ["belyiX1", "frobeniusDense", "leafSqrtCrit", "x1ModelExists"]:
+    items.append((H + "LPrefix.lean", "TextbookLeaves." + s_, ("theorem",), []))
+    NOREN.add("TextbookLeaves." + s_)
+
 # part-A edits
 extra = {
  "textbookLeaves4_of_open6": [("t6 := t6_of_algClosed5 t.homFreeFiniteAlgClosed", "t6 := t.homFreeFiniteAlgClosed")],
@@ -146,7 +152,7 @@ extra = {
 }
 
 WHICH = {("ZInQKernel/HDecomp/Objects.lean", "finrank_equivEnd"): 0}
-ren = {s: newname(s) for (_, s, _, _) in items}
+ren = {s: newname(s) for (_, s, _, _) in items if s not in NOREN}
 # dedupe and order
 uniq = {}
 for f, s, k, e in items:
@@ -158,6 +164,8 @@ for f, s, k, e in items:
         raise SystemExit(f"{s} in {f}: {len(hits)} hits")
     uniq[key] = (rank[f], hits[w or 0], f, s, k, e + extra.get(s, []), w or 0)
 blocks = []
+bblocks = []
+BSET = {(f, n) for (f, n, _, _) in B}
 TYPAT = re.compile(r"(?<![\w.'])(_root_\.)?(PkgI3\.)?HomFreeFinite(?![\w'])")
 for _, _, f, s, k, e, w in sorted(uniq.values()):
     txt = emit(f, s, ren, (), k, w)
@@ -167,7 +175,10 @@ for _, _, f, s, k, e, w in sorted(uniq.values()):
         if a not in txt:
             raise SystemExit(f"edit not applicable in {s}: {a!r}")
         txt = txt.replace(a, b)
-    blocks.append(txt)
-hdr = open(os.path.join(os.path.dirname(__file__), "header.lean")).read()
-open(sys.argv[1], "w").write(hdr + "\n" + "\n".join(blocks))
-print(len(blocks), "blocks")
+    (bblocks if (f, s) in BSET else blocks).append(txt)
+d = os.path.dirname(__file__)
+hdrB = open(os.path.join(d, "header_consumers.lean")).read()
+hdrA = open(os.path.join(d, "header.lean")).read()
+open(sys.argv[1], "w").write(hdrB + "\n" + "\n".join(bblocks))
+open(sys.argv[2], "w").write(hdrA + "\n" + "\n".join(blocks))
+print(len(bblocks), len(blocks), "blocks")
