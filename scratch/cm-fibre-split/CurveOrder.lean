@@ -335,6 +335,44 @@ def trEquiv : PkgI3.AbVar.End (X.baseChange Ω) ≃+* PkgI3.AbVar.End (X.baseCha
 
 end Transport
 
+/-! ## Rank-one idempotents of `M₂(k)` -/
+
+section Idem
+
+theorem idem_two {K : Type*} [Field K] (ε : Matrix (Fin 2) (Fin 2) K) (h : ε * ε = ε) (h0 : ε ≠ 0)
+    (h1 : ε ≠ 1) : Matrix.trace ε = 1 ∧ ∀ y : Matrix (Fin 2) (Fin 2) K, ε * y * ε = Matrix.trace (y * ε) • ε := by
+  have e00 := congrFun (congrFun h 0) 0
+  have e01 := congrFun (congrFun h 0) 1
+  have e10 := congrFun (congrFun h 1) 0
+  have e11 := congrFun (congrFun h 1) 1
+  simp only [Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
+  have htr : ε 0 0 + ε 1 1 = 1 := by
+    by_contra hne
+    have hne' : ε 0 0 + ε 1 1 - 1 ≠ 0 := sub_ne_zero.mpr hne
+    have hb : ε 0 1 = 0 := by
+      have : ε 0 1 * (ε 0 0 + ε 1 1 - 1) = 0 := by linear_combination e01
+      exact (mul_eq_zero.mp this).resolve_right hne'
+    have hc : ε 1 0 = 0 := by
+      have : ε 1 0 * (ε 0 0 + ε 1 1 - 1) = 0 := by linear_combination e10
+      exact (mul_eq_zero.mp this).resolve_right hne'
+    have ha : ε 0 0 * (ε 0 0 - 1) = 0 := by rw [hb] at e00; linear_combination e00
+    have hd : ε 1 1 * (ε 1 1 - 1) = 0 := by rw [hb] at e11; linear_combination e11
+    rcases mul_eq_zero.mp ha with ha | ha <;> rcases mul_eq_zero.mp hd with hd | hd
+    · apply h0; ext i j; fin_cases i <;> fin_cases j <;> simp [ha, hb, hc, hd]
+    · exact hne (by linear_combination ha + hd)
+    · exact hne (by linear_combination ha + hd)
+    · apply h1; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply, hb, hc] <;>
+        [linear_combination ha; linear_combination hd]
+  have hdet : ε 0 0 * ε 1 1 = ε 0 1 * ε 1 0 := by linear_combination (-1 : K) * e00 + ε 0 0 * htr
+  refine ⟨by simpa [Matrix.trace, Fin.sum_univ_two] using htr, fun y => ?_⟩
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.smul_apply, Matrix.trace, Matrix.diag,
+      smul_eq_mul, Fin.isValue, Fin.zero_eta, Fin.mk_one] <;>
+    [linear_combination (-y 1 1) * hdet; linear_combination (y 0 1) * hdet;
+      linear_combination (y 1 0) * hdet; linear_combination (-y 0 0) * hdet]
+end Idem
+
 end FibreSplit
 end CMBranch
 end HDec
