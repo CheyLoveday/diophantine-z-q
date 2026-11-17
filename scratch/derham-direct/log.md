@@ -29,3 +29,10 @@ files vs base); `lake build ZInQKernel.Contrib.OneProof.DeRhamPrint` replayed in
 - `isDeRhamTensorOver_iff`: `IsDeRhamTensorOver p ρW ↔ finrank F' (ddrF p ρW) = finrank ℚ_p W`.
 - New leaf `DeRhamVpAbVarDirect` (∀ p F A, `finrank F' (ddrF p (A.galRep p)) = finrank ℚ_p (A.V p)`);
   `deRhamVpAbVarPrinted_of_direct` and the converse (equivalent Props).
+- 01:01 `lake build ZInQKernel.Contrib.OneProof.DeRhamPrintDirect` (new Contrib module = scratch file minus
+  `#print axioms`, new header): built (76 s) (VERIFIED).
+- 01:02 `python3 scripts/one_proof/autofold.py scratch/derham-direct/autofold.json --dry-run`: `strict count: 16/15
+  on 31 -> 17/14 on 31; strictest 16/15 -> 17/14` (autofold rates a published leaf LEAF unless its flag starts
+  with "pending reading"; the flag says "pending review", the integrator's ruling is LEAF). Output (line 1 stripped)
+  in FoldDryRun.lean.txt (renamed from .lean: it redeclares HDec.HSyn bundles); `lake env lean` on it:
+  `HDec.HSyn.sixContactMin_of_open59` depends on [propext, Classical.choice, Quot.sound] (VERIFIED).
