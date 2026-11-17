@@ -201,6 +201,18 @@ theorem det_comp_symm_ne {g : ℕ} (A : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ
   rw [hco, LinearMap.det_comp]
   exact mul_ne_zero hA (LinearEquiv.isUnit_det' D.symm.toLinearEquiv).ne_zero
 
+theorem det_symm_comp_ne {g : ℕ} (A : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))
+    (D : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ)) (hA : A.det ≠ 0) :
+    (((D.symm : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))).comp A).det ≠ 0 := by
+  show LinearMap.det ((((D.symm : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))).comp A :
+    (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) ≠ 0
+  have hco : ((((D.symm : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))).comp A : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+      (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) =
+      (D.symm.toLinearEquiv : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)).comp (A : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) :=
+    rfl
+  rw [hco, LinearMap.det_comp]
+  exact mul_ne_zero (LinearEquiv.isUnit_det' D.symm.toLinearEquiv).ne_zero hA
+
 /-- **Algebraic coordinates are holomorphic charts (Φ-free statement).** For every group model `𝒢`
 of `A_L` with `g = dim A`, every `τ`, every system of algebraic coordinates `F` at the origin
 (`df₁ ∧ ⋯ ∧ df_g ≠ 0`) and every point `p`, the translated coordinates `chartAt F p = F(p⁻¹ ·)` agree
@@ -254,6 +266,220 @@ theorem exists_holChart [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExi
     rw [hdet2]; exact jacDet_ne_zero M hc _ hw'
 
 end AlgCharts
+
+/-! ## §3b. The holomorphic charts form a complex atlas; uniformizations are local biholomorphisms -/
+
+section Generic2
+
+variable {g : ℕ} {X : Type*} [TopologicalSpace X]
+
+/-- **Maps into `X` read in a holomorphic chart.** Let `φ` be a chart of `X`, `q ∈ φ.source`, and
+`k : X → ℂ^g` such that `k ∘ φ⁻¹` is holomorphic near `φ q` with invertible derivative there. If
+`ψ : ℂ^g → X` is continuous on an open `O ∋ z`, `ψ z = q`, and `k ∘ ψ` is holomorphic on `O`, then
+`φ ∘ ψ` is holomorphic near `z`, with derivative `D(k ∘ φ⁻¹)(φ q)⁻¹ ∘ D(k ∘ ψ)(z)` at `z`
+(inverse function theorem). -/
+theorem chart_comp_of (φ : OpenPartialHomeomorph X (Fin g → ℂ)) (k : X → (Fin g → ℂ)) {q : X}
+    (hq : q ∈ φ.source) {V : Set (Fin g → ℂ)} (hV : IsOpen V) (hqV : φ q ∈ V)
+    (hkd : DifferentiableOn ℂ (k ∘ φ.symm) V) (hdet : (fderiv ℂ (k ∘ φ.symm) (φ q)).det ≠ 0)
+    (ψ : (Fin g → ℂ) → X) {O : Set (Fin g → ℂ)} (hO : IsOpen O) {z : Fin g → ℂ} (hz : z ∈ O)
+    (hψc : ContinuousOn ψ O) (hψz : ψ z = q) (hkψ : DifferentiableOn ℂ (k ∘ ψ) O) :
+    ∃ O' : Set (Fin g → ℂ), IsOpen O' ∧ z ∈ O' ∧ DifferentiableOn ℂ (φ ∘ ψ) O' ∧
+      fderiv ℂ (φ ∘ ψ) z = ((equivOfDet _ hdet).symm : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)).comp
+        (fderiv ℂ (k ∘ ψ) z) := by
+  set G := k ∘ φ.symm with hGdef
+  have hstrict : HasStrictFDerivAt G
+      ((equivOfDet _ hdet : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) (φ q) := by
+    rw [equivOfDet_coe]; exact Holomorphic.hasStrictFDerivAt hV hkd hqV
+  let P := hstrict.toOpenPartialHomeomorph G
+  have hPcoe : (P : (Fin g → ℂ) → (Fin g → ℂ)) = G := hstrict.toOpenPartialHomeomorph_coe
+  have hcont : ContinuousOn (fun w => (fderiv ℂ G w).det) V := fun w hw =>
+    (ContinuousLinearMap.continuous_det.continuousAt.comp
+      (Holomorphic.continuousAt_fderiv hV hkd hw)).continuousWithinAt
+  set N := V ∩ (fun w => (fderiv ℂ G w).det) ⁻¹' {0}ᶜ
+  have hNo : IsOpen N := hcont.isOpen_inter_preimage hV isOpen_compl_singleton
+  let P' := P.restrOpen N hNo
+  have hP'coe : (P' : (Fin g → ℂ) → (Fin g → ℂ)) = G := hPcoe
+  have hP'src : P'.source = P.source ∩ N := P.restrOpen_source N hNo
+  have hqP : φ q ∈ P'.source := by
+    rw [hP'src]; exact ⟨hstrict.mem_toOpenPartialHomeomorph_source, hqV, hdet⟩
+  set S := φ.source ∩ φ ⁻¹' P'.source
+  have hSo : IsOpen S := φ.isOpen_inter_preimage P'.open_source
+  set O' := O ∩ ψ ⁻¹' S
+  have hO'o : IsOpen O' := hψc.isOpen_inter_preimage hO hSo
+  have hzO' : z ∈ O' := ⟨hz, by show ψ z ∈ S; rw [hψz]; exact ⟨hq, hqP⟩⟩
+  -- `φ ∘ ψ = P'⁻¹ ∘ (k ∘ ψ)` on `O'`
+  have hfun : EqOn (φ ∘ ψ) (P'.symm ∘ (k ∘ ψ)) O' := by
+    intro y hy
+    have hyS : ψ y ∈ S := hy.2
+    have h1 : P' (φ (ψ y)) = k (ψ y) := by
+      rw [hP'coe, hGdef, Function.comp_apply, φ.left_inv hyS.1]
+    simp only [Function.comp_apply]
+    rw [← h1, P'.left_inv hyS.2]
+  have hsymm : ∀ y ∈ O', ∃ hx : (fderiv ℂ G (P'.symm (k (ψ y)))).det ≠ 0,
+      HasFDerivAt P'.symm ((equivOfDet _ hx).symm : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) (k (ψ y)) := by
+    intro y hy
+    have hyS : ψ y ∈ S := hy.2
+    have hxt : k (ψ y) ∈ P'.target := by
+      have h1 : P' (φ (ψ y)) = k (ψ y) := by
+        rw [hP'coe, hGdef, Function.comp_apply, φ.left_inv hyS.1]
+      rw [← h1]; exact P'.map_source hyS.2
+    have hσs : P'.symm (k (ψ y)) ∈ P'.source := P'.map_target hxt
+    rw [hP'src] at hσs
+    have hσN := hσs.2
+    refine ⟨hσN.2, ?_⟩
+    have hfd : HasFDerivAt (P' : (Fin g → ℂ) → (Fin g → ℂ))
+        ((equivOfDet _ hσN.2 : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))
+        (P'.symm (k (ψ y))) := by
+      rw [hP'coe]
+      convert (hkd.differentiableAt (hV.mem_nhds hσN.1)).hasFDerivAt using 1
+      exact equivOfDet_coe _ _
+    exact P'.hasFDerivAt_symm hxt hfd
+  refine ⟨O', hO'o, hzO', ?_, ?_⟩
+  · refine DifferentiableOn.congr (fun y hy => ?_) hfun
+    obtain ⟨_, hd⟩ := hsymm y hy
+    exact ((HasFDerivAt.differentiableAt (𝕜 := ℂ) hd).comp y
+      (hkψ.differentiableAt (hO.mem_nhds hy.1))).differentiableWithinAt
+  · have hev : (φ ∘ ψ) =ᶠ[𝓝 z] (P'.symm ∘ (k ∘ ψ)) :=
+      Filter.eventually_of_mem (hO'o.mem_nhds hzO') hfun
+    obtain ⟨hx, hd⟩ := hsymm z hzO'
+    have hσz : P'.symm (k (ψ z)) = φ q := by
+      rw [hψz, ← P'.left_inv hqP, hP'coe, hGdef, Function.comp_apply, φ.left_inv hq]
+    rw [hev.fderiv_eq, (hd.comp z (hkψ.differentiableAt (hO.mem_nhds hz)).hasFDerivAt).fderiv]
+    have key : ∀ (a b : Fin g → ℂ) (ha : (fderiv ℂ G a).det ≠ 0) (hb : (fderiv ℂ G b).det ≠ 0),
+        a = b → (equivOfDet _ ha).symm = (equivOfDet _ hb).symm := by
+      rintro a b ha hb rfl; rfl
+    rw [key _ _ hx hdet hσz]
+
+end Generic2
+
+section Atlas
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- Algebraic coordinates exist: regular functions `f₁, …, f_g` at the origin with
+`df₁ ∧ ⋯ ∧ df_g ≠ 0` (for a metrized model, whose Hodge line is nonzero). -/
+theorem exists_algCoord {g : ℕ} (M : MetrizedModel A L g) (τ : L →+* ℂ) :
+    ∃ (U : Fin g → M.model.G.left.Opens) (hU : ∀ i, M.model.genericUnit ∈ U i)
+      (s : ∀ i, Γ(M.model.G.left, U i))
+      (hm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) ∈
+        IsLocalRing.maximalIdeal M.model.genStalk),
+      M.model.wedge (fun i => ⟨_, hm i⟩) ≠ 0 := by
+  have hw : ∃ f : Fin g → IsLocalRing.maximalIdeal M.model.genStalk, M.model.wedge f ≠ 0 := by
+    by_contra hcon
+    push Not at hcon
+    apply M.hodge.coeff_ne_zero τ
+    refine GroupModel.semilinear_ext_wedge M.model _ _ fun f => ?_
+    rw [hcon f, map_zero, LinearMap.zero_apply]
+  obtain ⟨f, hf⟩ := hw
+  let U : Fin g → M.model.G.left.Opens := fun i => (M.model.exists_rep (f i)).choose
+  have hU : ∀ i, M.model.genericUnit ∈ U i := fun i =>
+    (M.model.exists_rep (f i)).choose_spec.choose
+  let s : ∀ i, Γ(M.model.G.left, U i) := fun i =>
+    (M.model.exists_rep (f i)).choose_spec.choose_spec.choose
+  have hgerm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) =
+      (f i : M.model.genStalk) := fun i =>
+    (M.model.exists_rep (f i)).choose_spec.choose_spec.choose_spec
+  have hm : ∀ i, M.model.G.left.presheaf.germ (U i) M.model.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal M.model.genStalk := fun i => by rw [hgerm]; exact (f i).2
+  have hwf : M.model.wedge (fun i => ⟨_, hm i⟩) = M.model.wedge f := by
+    congr 1; funext i; exact Subtype.ext (hgerm i)
+  exact ⟨U, hU, s, hm, by rw [hwf]; exact hf⟩
+
+/-- **Holomorphic charts exist at every point** (Φ-free statement, through T35). -/
+theorem exists_holChart_at [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExists)
+    (𝒢 : GroupModel A L) (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ) (p : 𝒢.Pts τ) :
+    letI := anTop 𝒢 τ
+    ∃ e : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ), p ∈ e.source ∧ IsHolChart 𝒢 τ e := by
+  obtain ⟨M, rfl⟩ := exists_metrized hT35 𝒢 g hg
+  obtain ⟨U, hU, s, hm, hw⟩ := exists_algCoord M τ
+  obtain ⟨e, hp, -, he⟩ := exists_holChart hT35 M.model g hg τ U hU s hm hw p
+  exact ⟨e, hp, he⟩
+
+/-- **The holomorphic charts form a complex atlas (Φ-free statement, through T35).** Any two holomorphic
+charts of `A_τ(ℂ)^an` are biholomorphically compatible: near every common point the transition map is
+holomorphic with invertible derivative. With `exists_holChart_at`, `A_τ(ℂ)` with its analytic topology
+is a complex manifold of dimension `g` whose charts are the algebraic coordinates. -/
+theorem holChart_transition [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExists)
+    (𝒢 : GroupModel A L) (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    : letI := anTop 𝒢 τ
+    ∀ (φ₁ φ₂ : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ)), IsHolChart 𝒢 τ φ₁ → IsHolChart 𝒢 τ φ₂ →
+    ∀ q ∈ φ₁.source, q ∈ φ₂.source →
+    ∃ O : Set (Fin g → ℂ), IsOpen O ∧ φ₁ q ∈ O ∧ DifferentiableOn ℂ (φ₂ ∘ φ₁.symm) O ∧
+      (fderiv ℂ (φ₂ ∘ φ₁.symm) (φ₁ q)).det ≠ 0 := by
+  letI := anTop 𝒢 τ
+  intro φ₁ φ₂ h₁ h₂ q hq₁ hq₂
+  obtain ⟨M, rfl⟩ := exists_metrized hT35 𝒢 g hg
+  obtain ⟨U, hU, s, hm, hw⟩ := exists_algCoord M τ
+  obtain ⟨V₁, hV₁o, hV₁, hd₁, hdet₁⟩ := h₁ q hq₁ U hU s hm hw
+  obtain ⟨V₂, hV₂o, hV₂, hd₂, hdet₂⟩ := h₂ q hq₂ U hU s hm hw
+  obtain ⟨O', hO'o, hzO', hdO', hfd⟩ := chart_comp_of φ₂ (chartAt M.model τ U s q) hq₂ hV₂o hV₂
+    hd₂ hdet₂ φ₁.symm (hV₁o.inter φ₁.open_target) ⟨hV₁, φ₁.map_source hq₁⟩
+    (φ₁.continuousOn_symm.mono inter_subset_right) (φ₁.left_inv hq₁)
+    (hd₁.mono inter_subset_left)
+  refine ⟨O', hO'o, hzO', hdO', ?_⟩
+  rw [hfd]
+  exact det_symm_comp_ne _ _ hdet₁
+
+/-- **Every analytic uniformization is a local biholomorphism onto `A_τ(ℂ)^an`** (through T35). For
+any analytic uniformization `Φ : ℂ^g → A_τ(ℂ)` (the kernel's `IsAnalyticUniformization`, any lattice)
+and any holomorphic chart `φ`, `φ ∘ Φ` is holomorphic with invertible derivative near every `z` with
+`Φ z ∈ φ.source`. So the uniformization clauses give the biholomorphic statement, and any two
+uniformizations differ by biholomorphic transition maps. -/
+theorem unif_holChart [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExists)
+    (𝒢 : GroupModel A L) (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    {Λ : Submodule ℤ (Fin g → ℂ)} {Φ : (Fin g → ℂ) → 𝒢.Pts τ}
+    (hΦ : 𝒢.IsAnalyticUniformization τ Λ Φ)
+    : letI := anTop 𝒢 τ
+    ∀ (φ : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ)), IsHolChart 𝒢 τ φ →
+    ∀ z : Fin g → ℂ, Φ z ∈ φ.source →
+    ∃ O : Set (Fin g → ℂ), IsOpen O ∧ z ∈ O ∧ DifferentiableOn ℂ (φ ∘ Φ) O ∧
+      (fderiv ℂ (φ ∘ Φ) z).det ≠ 0 := by
+  letI := anTop 𝒢 τ
+  intro φ hφ z hz
+  obtain ⟨M, rfl⟩ := exists_metrized hT35 𝒢 g hg
+  obtain ⟨Φ₀, hΦ₀, hc⟩ := M.arch τ
+  obtain ⟨T, hT, -⟩ := analyticUniformizationUnique_of_t35 hT35 K A L M.model τ g _ Λ Φ₀ Φ hΦ₀ hΦ
+  obtain ⟨U, hU, s, hm, hw⟩ := exists_algCoord M τ
+  set q := Φ z
+  set k := chartAt M.model τ U s q
+  have hTq : Φ₀ (T z) = q := (hT z).symm
+  obtain ⟨V₀, hV₀o, hV₀, hd₀, hdet₀⟩ := chart_comp_unif M.model hΦ₀ U hU s hm (T z)
+  rw [hTq] at hd₀ hdet₀
+  have hΦT : Φ = Φ₀ ∘ T := funext hT
+  have hTc : Continuous (T : (Fin g → ℂ) → (Fin g → ℂ)) :=
+    (LinearMap.continuous_of_finiteDimensional (T : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)))
+  set Tc : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ) := ⟨(T : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)), hTc⟩
+  have hTd : ∀ w, HasFDerivAt (T : (Fin g → ℂ) → (Fin g → ℂ)) Tc w := fun w => Tc.hasFDerivAt
+  set O := T ⁻¹' V₀
+  have hOo : IsOpen O := hV₀o.preimage hTc
+  have hkΦ : DifferentiableOn ℂ (k ∘ Φ) O := by
+    rw [hΦT]
+    exact hd₀.comp (fun w _ => (hTd w).differentiableAt.differentiableWithinAt) (fun w hw => hw)
+  have hkΦdet : (fderiv ℂ (k ∘ Φ) z).det ≠ 0 := by
+    have hcomp : HasFDerivAt (k ∘ Φ) ((fderiv ℂ (k ∘ Φ₀) (T z)).comp Tc) z := by
+      rw [hΦT]
+      exact (hd₀.differentiableAt (hV₀o.mem_nhds hV₀)).hasFDerivAt.comp z (hTd z)
+    rw [hcomp.fderiv]
+    show LinearMap.det (((fderiv ℂ (k ∘ Φ₀) (T z)).comp Tc : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+      (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) ≠ 0
+    have hco : (((fderiv ℂ (k ∘ Φ₀) (T z)).comp Tc : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+        (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) =
+        ((fderiv ℂ (k ∘ Φ₀) (T z) : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) :
+          (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)).comp (T : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) := rfl
+    rw [hco, LinearMap.det_comp]
+    refine mul_ne_zero ?_ (LinearEquiv.isUnit_det' T).ne_zero
+    have h' : (fderiv ℂ (k ∘ Φ₀) (T z)).det ≠ 0 := by
+      rw [hdet₀]; exact jacDet_ne_zero M hc _ hw
+    exact h'
+  obtain ⟨V, hVo, hV, hdV, hdetV⟩ := hφ q hz U hU s hm hw
+  obtain ⟨O', hO'o, hzO', hdO', hfd⟩ := chart_comp_of φ k hz hVo hV hdV hdetV Φ hOo
+    (show z ∈ O from by simpa [O] using hV₀) (continuous_of_isAnalyticUniformization M.model τ hΦ).continuousOn
+    rfl hkΦ
+  refine ⟨O', hO'o, hzO', hdO', ?_⟩
+  rw [hfd]
+  exact det_symm_comp_ne _ _ hkΦdet
+
+end Atlas
 
 /-! ## §4. Change of variables for densities (Mathlib's Jacobian estimates) -/
 
