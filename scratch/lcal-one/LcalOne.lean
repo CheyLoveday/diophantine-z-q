@@ -104,7 +104,7 @@ theorem Xr_deriv_pos {t : ℝ} (ht : 0 < t) : 0 < -4 * π * Fr t * Yr t := by
   have : 0 < Fr t * (-Yr t) := mul_pos h1 (neg_pos.mpr h2)
   nlinarith
 
-theorem continuousOn_Xr : ContinuousOn Xr (Ioi 0) := fun t ht =>
+theorem continuousOn_Xr : ContinuousOn Xr (Ioi 0) := fun _ ht =>
   (hasDerivAt_Xr ht).continuousAt.continuousWithinAt
 
 theorem strictMonoOn_Xr : StrictMonoOn Xr (Ioi 0) := by
