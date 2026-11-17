@@ -1,4 +1,5 @@
 import Mathlib
+import ZInQKernel.Contrib.OneProof.RC.Determinant.Clearing
 
 /-!
 # RankCounts: the Smith count behind the budget (5.7), in the form consumed by (5.9)
@@ -47,9 +48,8 @@ diagonal central entries `s i j` of these disks. In these bases `D_c` *is* the e
   one"). These replace RC7's `hsmith`: they force one free generator in each of degrees one and
   two (tex 5379–5380) via `H¹(D_c) ≅ H¹(C_K)` and `H²(C_K) ↪ H²(D_c)`.
 
-`SmithBlocks`, `Lam`, `mTot`, `hSmith` are copied verbatim from RC7's
-`Determinant/Clearing.lean` (draft commit 7481834f) so that the target statements have RC7's exact
-Lean text; at integration they are to be replaced by RC7's.
+`SmithBlocks`, `Lam`, `mTot`, `hSmith` are RC7's own (`Determinant/Clearing.lean`, imported), so the
+target statements are in RC7's exact types.
 
 Kinds: all theorems PROVED. The identification of `D_c` with `SmithCx.Cx` in the bases of
 `SmithBlocks` is the content of RC7's `SmithBlocks` input (GLUE/ELLIOT, tex 5522–5527).
@@ -58,6 +58,8 @@ Kinds: all theorems PROVED. The identification of `D_c` with `SmithCx.Cx` in the
 noncomputable section
 
 namespace ZInQ.Contrib.CloudB3RC53.RankCounts
+
+open ZInQ.Manuscript.RC.Determinant (Lam SmithBlocks)
 
 /-! ## The explicit Smith complex over a commutative ring
 
@@ -322,96 +324,85 @@ end SmithCx
 
 open SmithCx
 
-abbrev Lam : Type := PowerSeries ℤ_[2]
-structure SmithBlocks (S O : Type*) [CommRing S] [CommRing O] [Algebra Lam O] where
-  n : ℕ
-  m : ℕ → ℕ
-  A : (i : ℕ) → Matrix (Fin (m i)) (Fin (m i)) S
-  A0 : (i : ℕ) → Matrix (Fin (m i)) (Fin (m i)) Lam
-  s : (i : ℕ) → Fin (m i) → ℤ_[2]
-  s_ne : ∀ i j, s i j ≠ 0
-  central : ∀ i, (A0 i).map PowerSeries.constantCoeff = Matrix.diagonal (s i)
-namespace SmithBlocks
+section SmithData
 variable {S O : Type*} [CommRing S] [CommRing O] [Algebra Lam O] (B : SmithBlocks S O)
-def mTot : ℕ := ∑ i ∈ Finset.range B.n, B.m i
-noncomputable def hSmith : ℕ := ∑ i ∈ Finset.range B.n, ∑ j, (B.s i j).valuation
 /-- disk sizes, padded by zero beyond `n` -/
 def dd (i : ℕ) : ℕ := if i < B.n then B.m i else 0
-theorem dd_of_lt {i : ℕ} (h : i < B.n) : B.dd i = B.m i := by simp [dd, h]
-theorem dd_of_ge {i : ℕ} (h : ¬ i < B.n) : B.dd i = 0 := by simp [dd, h]
+theorem dd_of_lt {i : ℕ} (h : i < B.n) : (dd B) i = B.m i := by simp [dd, h]
+theorem dd_of_ge {i : ℕ} (h : ¬ i < B.n) : (dd B) i = 0 := by simp [dd, h]
 /-- central Smith entries, padded -/
-noncomputable def σ (i : ℕ) (j : Fin (B.dd i)) : ℤ_[2] :=
-  if h : i < B.n then B.s i (Fin.cast (B.dd_of_lt h) j) else 1
-theorem σ_ne (i : ℕ) (j : Fin (B.dd i)) : B.σ i j ≠ 0 := by
+noncomputable def σ (i : ℕ) (j : Fin ((dd B) i)) : ℤ_[2] :=
+  if h : i < B.n then B.s i (Fin.cast ((dd_of_lt B) h) j) else 1
+theorem σ_ne (i : ℕ) (j : Fin ((dd B) i)) : (σ B) i j ≠ 0 := by
   unfold σ; split_ifs with h
   · exact B.s_ne _ _
   · exact one_ne_zero
-theorem sum_dd (hn : B.n ≤ 3) : ∑ i ∈ Finset.range 3, B.dd i = B.mTot := by
-  unfold mTot
+theorem sum_dd (hn : B.n ≤ 3) : ∑ i ∈ Finset.range 3, (dd B) i = B.mTot := by
+  unfold SmithBlocks.mTot
   rw [← Finset.sum_subset (Finset.range_subset_range.mpr hn) (fun i hi3 hin => ?_)]
-  · exact Finset.sum_congr rfl fun i hi => B.dd_of_lt (Finset.mem_range.mp hi)
-  · exact B.dd_of_ge (fun h => hin (Finset.mem_range.mpr h))
+  · exact Finset.sum_congr rfl fun i hi => (dd_of_lt B) (Finset.mem_range.mp hi)
+  · exact (dd_of_ge B) (fun h => hin (Finset.mem_range.mpr h))
 theorem sum_val_σ (i : ℕ) (h : i < B.n) :
-    ∑ j, (B.σ i j).valuation = ∑ j, (B.s i j).valuation := by
-  refine Fintype.sum_equiv (finCongr (B.dd_of_lt h)) _ _ (fun j => ?_)
+    ∑ j, ((σ B) i j).valuation = ∑ j, (B.s i j).valuation := by
+  refine Fintype.sum_equiv (finCongr ((dd_of_lt B) h)) _ _ (fun j => ?_)
   simp [σ, h, finCongr]
-theorem sum_val_σ_ge (i : ℕ) (h : ¬ i < B.n) : ∑ j, (B.σ i j).valuation = 0 := by
-  have : IsEmpty (Fin (B.dd i)) := by rw [B.dd_of_ge h]; infer_instance
+theorem sum_val_σ_ge (i : ℕ) (h : ¬ i < B.n) : ∑ j, ((σ B) i j).valuation = 0 := by
+  have : IsEmpty (Fin ((dd B) i)) := by rw [(dd_of_ge B) h]; infer_instance
   simp
 theorem sum_sum_val_σ (hn : B.n ≤ 3) :
-    ∑ i ∈ Finset.range 3, ∑ j, (B.σ i j).valuation = B.hSmith := by
-  unfold hSmith
+    ∑ i ∈ Finset.range 3, ∑ j, ((σ B) i j).valuation = B.hSmith := by
+  unfold SmithBlocks.hSmith
   rw [← Finset.sum_subset (Finset.range_subset_range.mpr hn) (fun i hi3 hin => ?_)]
-  · exact Finset.sum_congr rfl fun i hi => B.sum_val_σ i (Finset.mem_range.mp hi)
-  · exact B.sum_val_σ_ge i (fun h => hin (Finset.mem_range.mpr h))
-end SmithBlocks
-namespace SmithBlocks
+  · exact Finset.sum_congr rfl fun i hi => (sum_val_σ B) i (Finset.mem_range.mp hi)
+  · exact (sum_val_σ_ge B) i (fun h => hin (Finset.mem_range.mpr h))
+end SmithData
+section SmithData
 variable {S O : Type*} [CommRing S] [CommRing O] [Algebra Lam O] (B : SmithBlocks S O)
 /-- `H^i(D_c)` of the central Smith complex -/
-abbrev centralH (fr : ℕ → ℕ) (i : ℕ) : Type := H (f := fr) B.σ i
+abbrev centralH (fr : ℕ → ℕ) (i : ℕ) : Type := H (f := fr) (σ B) i
 /-- `H^i(D_c ⊗ 𝔽₂)` -/
 abbrev centralRed (fr : ℕ → ℕ) (i : ℕ) : Type :=
-  H (f := fr) (fun i j => PadicInt.toZMod (B.σ i j)) i
+  H (f := fr) (fun i j => PadicInt.toZMod ((σ B) i j)) i
 
-theorem toZMod_σ_eq_zero (hpos : ∀ i j, 1 ≤ (B.s i j).valuation) (i : ℕ) (j : Fin (B.dd i)) :
-    PadicInt.toZMod (B.σ i j) = (0 : ZMod 2) := by
+theorem toZMod_σ_eq_zero (hpos : ∀ i j, 1 ≤ (B.s i j).valuation) (i : ℕ) (j : Fin ((dd B) i)) :
+    PadicInt.toZMod ((σ B) i j) = (0 : ZMod 2) := by
   by_cases h : i < B.n
-  · have hv : 1 ≤ (B.σ i j).valuation := by simp only [σ, h, dite_true]; exact hpos _ _
-    have hm : B.σ i j ∈ Ideal.span {(2 : ℤ_[2]) ^ 1} :=
-      (PadicInt.mem_span_pow_iff_le_valuation _ (B.σ_ne i j) 1).mpr hv
+  · have hv : 1 ≤ ((σ B) i j).valuation := by simp only [σ, h, dite_true]; exact hpos _ _
+    have hm : (σ B) i j ∈ Ideal.span {(2 : ℤ_[2]) ^ 1} :=
+      (PadicInt.mem_span_pow_iff_le_valuation _ ((σ_ne B) i j) 1).mpr hv
     rw [pow_one] at hm
-    have : B.σ i j ∈ RingHom.ker (PadicInt.toZMod (p := 2)) := by
+    have : (σ B) i j ∈ RingHom.ker (PadicInt.toZMod (p := 2)) := by
       rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p]; exact_mod_cast hm
     exact this
-  · exact ((show Fin 0 from (B.dd_of_ge h) ▸ j).elim0)
+  · exact ((show Fin 0 from ((dd_of_ge B) h) ▸ j).elim0)
 
 theorem sum_finrank_centralRed (fr : ℕ → ℕ) (hn : B.n ≤ 3)
     (hpos : ∀ i j, 1 ≤ (B.s i j).valuation) :
-    ∑ k : Fin 4, Module.finrank (ZMod 2) (B.centralRed fr k) =
+    ∑ k : Fin 4, Module.finrank (ZMod 2) ((centralRed B) fr k) =
       ∑ k : Fin 4, fr k + 2 * B.mTot := by
-  have h := fun k : ℕ => finrank_H_of_zero (f := fr) (fun i j => PadicInt.toZMod (B.σ i j))
-    (B.toZMod_σ_eq_zero hpos) k
+  have h := fun k : ℕ => finrank_H_of_zero (f := fr) (fun i j => PadicInt.toZMod ((σ B) i j))
+    ((toZMod_σ_eq_zero B) hpos) k
   simp only [Fin.sum_univ_four, Fin.val_zero, Fin.val_one, Fin.val_two]
   rw [h 0, h 1, h 2, show ((3 : Fin 4) : ℕ) = 3 from rfl, h 3]
-  have h3 : B.dd 3 = 0 := B.dd_of_ge (by omega)
-  have hs := B.sum_dd hn
+  have h3 : (dd B) 3 = 0 := (dd_of_ge B) (by omega)
+  have hs := (sum_dd B) hn
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add] at hs
   simp only [db, h3]
   omega
 
 theorem sum_length_torsion_centralH (fr : ℕ → ℕ) (hn : B.n ≤ 3) :
-    ∑ k : Fin 4, Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr k)) =
+    ∑ k : Fin 4, Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr k)) =
       (B.hSmith : ℕ∞) := by
-  have h := fun k : ℕ => length_torsion_H (f := fr) B.σ B.σ_ne k
+  have h := fun k : ℕ => length_torsion_H (f := fr) (σ B) (σ_ne B) k
   simp only [Fin.sum_univ_four, Fin.val_zero, Fin.val_one, Fin.val_two]
   rw [h 0, h 1, h 2, show ((3 : Fin 4) : ℕ) = 3 from rfl, h 3, length_Q_zero,
-    length_Q_succ B.σ B.σ_ne 0, length_Q_succ B.σ B.σ_ne 1, length_Q_succ B.σ B.σ_ne 2,
-    ← B.sum_sum_val_σ hn]
+    length_Q_succ (σ B) (σ_ne B) 0, length_Q_succ (σ B) (σ_ne B) 1, length_Q_succ (σ B) (σ_ne B) 2,
+    ← (sum_sum_val_σ B) hn]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, Nat.cast_add]
 
 theorem finrank_centralH (fr : ℕ → ℕ) (i : ℕ) :
-    Module.finrank ℤ_[2] (B.centralH fr i) = fr i := finrank_H B.σ B.σ_ne i
-end SmithBlocks
+    Module.finrank ℤ_[2] ((centralH B) fr i) = fr i := finrank_H (σ B) (σ_ne B) i
+end SmithData
 section Budget
 theorem finrank_le_of_exact' {k : Type} [Field k] {V₁ V₂ V₃ : Type} [AddCommGroup V₁] [Module k V₁]
     [AddCommGroup V₂] [Module k V₂] [AddCommGroup V₃] [Module k V₃]
@@ -466,23 +457,23 @@ theorem length_torsion_le_length (M : Type) [AddCommGroup M] [Module R M] :
   Module.length_le_of_injective _ (Submodule.torsion R M).subtype_injective
 end Budget
 
-namespace SmithBlocks
+section SmithData
 variable {S O : Type*} [CommRing S] [CommRing O] [Algebra Lam O] (B : SmithBlocks S O)
 
 theorem budget (fr : ℕ → ℕ) (hn : B.n ≤ 3) (hpos : ∀ i j, 1 ≤ (B.s i j).valuation)
     {HC HQ : Fin 4 → Type} [∀ k, AddCommGroup (HC k)] [∀ k, Module (ZMod 2) (HC k)]
     [∀ k, AddCommGroup (HQ k)] [∀ k, Module (ZMod 2) (HQ k)]
     [∀ k, FiniteDimensional (ZMod 2) (HC k)] [∀ k, FiniteDimensional (ZMod 2) (HQ k)]
-    (fm : ∀ k : Fin 4, HC k →ₗ[ZMod 2] B.centralRed fr k)
-    (gm : ∀ k : Fin 4, B.centralRed fr k →ₗ[ZMod 2] HQ k)
+    (fm : ∀ k : Fin 4, HC k →ₗ[ZMod 2] (centralRed B) fr k)
+    (gm : ∀ k : Fin 4, (centralRed B) fr k →ₗ[ZMod 2] HQ k)
     (hfg : ∀ k, Function.Exact (fm k) (gm k))
     {dK : ℕ} (h57a : ∀ k, Module.finrank (ZMod 2) (HC k) = (![2, dK, dK, 2] : Fin 4 → ℕ) k)
     (hQ : ∑ k, Module.finrank (ZMod 2) (HQ k) ≤ 8)
     {H1C H2C J H3C : Type} [AddCommGroup H1C] [Module ℤ_[2] H1C] [AddCommGroup H2C]
     [Module ℤ_[2] H2C] [AddCommGroup J] [Module ℤ_[2] J] [AddCommGroup H3C] [Module ℤ_[2] H3C]
-    (e : B.centralH fr 1 ≃ₗ[ℤ_[2]] H1C)
-    (i : H2C →ₗ[ℤ_[2]] B.centralH fr 2) (j : B.centralH fr 2 →ₗ[ℤ_[2]] J)
-    (δ : J →ₗ[ℤ_[2]] H3C) (l : H3C →ₗ[ℤ_[2]] B.centralH fr 3)
+    (e : (centralH B) fr 1 ≃ₗ[ℤ_[2]] H1C)
+    (i : H2C →ₗ[ℤ_[2]] (centralH B) fr 2) (j : (centralH B) fr 2 →ₗ[ℤ_[2]] J)
+    (δ : J →ₗ[ℤ_[2]] H3C) (l : H3C →ₗ[ℤ_[2]] (centralH B) fr 3)
     (h57d : Function.Injective i ∧ Function.Exact i j ∧ Function.Exact j δ ∧
       Function.Exact δ l ∧ Function.Surjective l)
     {tK hK cE : ℕ} (ht₁ : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] H1C) = tK)
@@ -493,29 +484,29 @@ theorem budget (fr : ℕ → ℕ) (hn : B.n ≤ 3) (hpos : ∀ i j, 1 ≤ (B.s i
     B.mTot ≤ dK + 5 ∧ B.hSmith ≤ hK + 2 * cE + 2 * tK := by
   obtain ⟨hi, hij, -, -, hl⟩ := h57d
   constructor
-  · have hsum := B.sum_finrank_centralRed fr hn hpos
-    have hle : ∑ k : Fin 4, Module.finrank (ZMod 2) (B.centralRed fr k) ≤
+  · have hsum := (sum_finrank_centralRed B) fr hn hpos
+    have hle : ∑ k : Fin 4, Module.finrank (ZMod 2) ((centralRed B) fr k) ≤
         ∑ k : Fin 4, (Module.finrank (ZMod 2) (HC k) + Module.finrank (ZMod 2) (HQ k)) :=
       Finset.sum_le_sum fun k _ => finrank_le_of_exact' (fm k) (gm k) (hfg k)
     rw [Finset.sum_add_distrib] at hle
     have hC : ∑ k, Module.finrank (ZMod 2) (HC k) = 2 * dK + 4 := by
       simp only [Fin.sum_univ_four, h57a]; simp; ring
-    have hf1 : fr 1 = 1 := by rw [← B.finrank_centralH fr 1, e.finrank_eq, hr₁]
+    have hf1 : fr 1 = 1 := by rw [← (finrank_centralH B) fr 1, e.finrank_eq, hr₁]
     have hf2 : 1 ≤ fr 2 := by
       have := LinearMap.finrank_le_finrank_of_injective hi
-      rw [hr₂, B.finrank_centralH fr 2] at this
+      rw [hr₂, (finrank_centralH B) fr 2] at this
       exact this
     have hfr : fr 1 + fr 2 ≤ ∑ k : Fin 4, fr k := by
       simp only [Fin.sum_univ_four]; simp; omega
     omega
-  · have hS := B.sum_length_torsion_centralH fr hn
-    have h0 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 0)) = 0 := by
-      rw [length_torsion_H B.σ B.σ_ne 0, length_Q_zero]
-    have h1 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 1)) = tK := by
+  · have hS := (sum_length_torsion_centralH B) fr hn
+    have h0 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 0)) = 0 := by
+      rw [length_torsion_H (σ B) (σ_ne B) 0, length_Q_zero]
+    have h1 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 1)) = tK := by
       rw [length_torsion_eq_of_equiv e, ht₁]
-    have h2 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 2)) ≤ hK + 2 * cE :=
+    have h2 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 2)) ≤ hK + 2 * cE :=
       (length_torsion_le_of_exact i j hi hij).trans (by rw [hh]; exact add_le_add le_rfl hJ)
-    have h3 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 3)) ≤ tK :=
+    have h3 : Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 3)) ≤ tK :=
       (length_torsion_le_length _).trans ((Module.length_le_of_surjective l hl).trans ht₃.le)
     simp only [Fin.sum_univ_four] at hS
     have : (B.hSmith : ℕ∞) ≤ (hK + 2 * cE + 2 * tK : ℕ) := by
@@ -528,7 +519,7 @@ theorem budget (fr : ℕ → ℕ) (hn : B.n ≤ 3) (hpos : ∀ i j, 1 ≤ (B.s i
               · exact h3
         _ = ((hK + 2 * cE + 2 * tK : ℕ) : ℕ∞) := by push_cast; ring
     exact_mod_cast this
-end SmithBlocks
+end SmithData
 
 /-! ## The nodes -/
 
@@ -542,10 +533,10 @@ equality) and `hsmith : rankTotal = 2 + 2 * m` for `m = B.mTot`. -/
 def SmithReducedTotalDim : Prop :=
   ∀ (S O : Type) [CommRing S] [CommRing O] [Algebra Lam O] (B : SmithBlocks S O) (fr : ℕ → ℕ),
     B.n ≤ 3 → (∀ i j, 1 ≤ (B.s i j).valuation) →
-    ∑ k : Fin 4, Module.finrank (ZMod 2) (B.centralRed fr k) = ∑ k : Fin 4, fr k + 2 * B.mTot
+    ∑ k : Fin 4, Module.finrank (ZMod 2) ((centralRed B) fr k) = ∑ k : Fin 4, fr k + 2 * B.mTot
 
 theorem smithReducedTotalDim_proof : SmithReducedTotalDim :=
-  fun _ _ _ _ _ B fr hn hpos => B.sum_finrank_centralRed fr hn hpos
+  fun _ _ _ _ _ B fr hn hpos => (sum_finrank_centralRed B) fr hn hpos
 
 /-- **Tex 5382–5383, 5539–5541 (PROVED): total torsion length of `H^*(D_c)`.** The torsion
 lengths of the cohomology of the central Smith complex add up to `B.hSmith`, the sum of the
@@ -553,20 +544,20 @@ valuations of all central Smith entries. This is RC7's `hh₁` (with `h₁ = B.h
 def SmithTorsionLength : Prop :=
   ∀ (S O : Type) [CommRing S] [CommRing O] [Algebra Lam O] (B : SmithBlocks S O) (fr : ℕ → ℕ),
     B.n ≤ 3 →
-    ∑ k : Fin 4, Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr k)) =
+    ∑ k : Fin 4, Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr k)) =
       (B.hSmith : ℕ∞)
 
 theorem smithTorsionLength_proof : SmithTorsionLength :=
-  fun _ _ _ _ _ B fr hn => B.sum_length_torsion_centralH fr hn
+  fun _ _ _ _ _ B fr hn => (sum_length_torsion_centralH B) fr hn
 
 /-- **Tex 5375–5381 (PROVED): free ranks.** `H^i(D_c)` of the central Smith complex has rank
 `f_i` (its free cohomology generators). -/
 def SmithFreeRank : Prop :=
   ∀ (S O : Type) [CommRing S] [CommRing O] [Algebra Lam O] (B : SmithBlocks S O) (fr : ℕ → ℕ)
-    (i : ℕ), Module.finrank ℤ_[2] (B.centralH fr i) = fr i
+    (i : ℕ), Module.finrank ℤ_[2] ((centralH B) fr i) = fr i
 
 theorem smithFreeRank_proof : SmithFreeRank :=
-  fun _ _ _ _ _ B fr i => B.finrank_centralH fr i
+  fun _ _ _ _ _ B fr i => (finrank_centralH B) fr i
 
 /-- **The budget (5.7) in the form consumed by (5.9) (tex 5355–5387; PROVED).** For RC7's
 central Smith data `B` (disks in degrees `< 3`, central entries in `(2)`) and `f_i` free
@@ -583,16 +574,16 @@ def FixedFieldBudgetSmith : Prop :=
     ∀ (HC HQ : Fin 4 → Type) [∀ k, AddCommGroup (HC k)] [∀ k, Module (ZMod 2) (HC k)]
       [∀ k, AddCommGroup (HQ k)] [∀ k, Module (ZMod 2) (HQ k)]
       [∀ k, FiniteDimensional (ZMod 2) (HC k)] [∀ k, FiniteDimensional (ZMod 2) (HQ k)]
-      (fm : ∀ k : Fin 4, HC k →ₗ[ZMod 2] B.centralRed fr k)
-      (gm : ∀ k : Fin 4, B.centralRed fr k →ₗ[ZMod 2] HQ k),
+      (fm : ∀ k : Fin 4, HC k →ₗ[ZMod 2] (centralRed B) fr k)
+      (gm : ∀ k : Fin 4, (centralRed B) fr k →ₗ[ZMod 2] HQ k),
       (∀ k, Function.Exact (fm k) (gm k)) →
     ∀ (dK : ℕ), (∀ k, Module.finrank (ZMod 2) (HC k) = (![2, dK, dK, 2] : Fin 4 → ℕ) k) →
       ∑ k, Module.finrank (ZMod 2) (HQ k) ≤ 8 →
     ∀ (H1C H2C J H3C : Type) [AddCommGroup H1C] [Module ℤ_[2] H1C] [AddCommGroup H2C]
       [Module ℤ_[2] H2C] [AddCommGroup J] [Module ℤ_[2] J] [AddCommGroup H3C] [Module ℤ_[2] H3C]
-      (_e : B.centralH fr 1 ≃ₗ[ℤ_[2]] H1C)
-      (i : H2C →ₗ[ℤ_[2]] B.centralH fr 2) (j : B.centralH fr 2 →ₗ[ℤ_[2]] J)
-      (δ : J →ₗ[ℤ_[2]] H3C) (l : H3C →ₗ[ℤ_[2]] B.centralH fr 3),
+      (_e : (centralH B) fr 1 ≃ₗ[ℤ_[2]] H1C)
+      (i : H2C →ₗ[ℤ_[2]] (centralH B) fr 2) (j : (centralH B) fr 2 →ₗ[ℤ_[2]] J)
+      (δ : J →ₗ[ℤ_[2]] H3C) (l : H3C →ₗ[ℤ_[2]] (centralH B) fr 3),
       (Function.Injective i ∧ Function.Exact i j ∧ Function.Exact j δ ∧
         Function.Exact δ l ∧ Function.Surjective l) →
     ∀ (tK hK cE : ℕ), Module.length ℤ_[2] (Submodule.torsion ℤ_[2] H1C) = tK →
@@ -605,7 +596,7 @@ def FixedFieldBudgetSmith : Prop :=
 theorem fixedFieldBudgetSmith_proof : FixedFieldBudgetSmith := by
   intro S O _ _ _ B fr hn hpos HC HQ _ _ _ _ _ _ fm gm hfg dK h57a hQ H1C H2C J H3C _ _ _ _ _ _ _ _
     e i j δ l h57d tK hK cE ht₁ ht₃ hh hJ hr₁ hr₂
-  exact B.budget fr hn hpos fm gm hfg h57a hQ e i j δ l h57d ht₁ ht₃ hh hJ hr₁ hr₂
+  exact (budget B) fr hn hpos fm gm hfg h57a hQ e i j δ l h57d ht₁ ht₃ hh hJ hr₁ hr₂
 
 /-! ## The inputs of RC7's `budget_57`
 
@@ -625,12 +616,12 @@ RC7's `budget_57` (`ZInQKernel/Contrib/OneProof/RC/Determinant/Budget.lean`, dra
         LinearMap.range (Matrix.diagonal (B.s i)).mulVecLin))
 
 `RC7Budget57Inputs` proves them for the central Smith complex, with `k = 𝔽₂`,
-`HD n = B.centralRed fr n`, `H^n D = B.centralH fr n`, `rankTotal = 2 + 2 * B.mTot` and the free
+`HD n = (centralRed B) fr n`, `H^n D = (centralH B) fr n`, `rankTotal = 2 + 2 * B.mTot` and the free
 generators `fr = (0, 1, 1, 0)` of tex 5379–5380. -/
 
 /-- The cokernel of the central Smith block `diag(s_i)` has length `∑_j v₂(s_ij)`; summed over the
 blocks this is `B.hSmith` (tex 5375–5383). PROVED. -/
-theorem SmithBlocks.sum_length_coker {S O : Type*} [CommRing S] [CommRing O] [Algebra Lam O]
+theorem sum_length_coker {S O : Type*} [CommRing S] [CommRing O] [Algebra Lam O]
     (B : SmithBlocks S O) :
     ∑ i ∈ Finset.range B.n, Module.length ℤ_[2] ((Fin (B.m i) → ℤ_[2]) ⧸
       LinearMap.range (Matrix.diagonal (B.s i)).mulVecLin) = (B.hSmith : ℕ∞) := by
@@ -641,14 +632,14 @@ theorem SmithBlocks.sum_length_coker {S O : Type*} [CommRing S] [CommRing O] [Al
 
 /-- `H⁰(D_c) = 0` when there is no free generator in degree zero (tex 5285–5287, 5379–5380).
 PROVED. -/
-theorem SmithBlocks.subsingleton_centralH_zero {S O : Type*} [CommRing S] [CommRing O]
+theorem subsingleton_centralH_zero {S O : Type*} [CommRing S] [CommRing O]
     [Algebra Lam O] (B : SmithBlocks S O) (fr : ℕ → ℕ) (h0 : fr 0 = 0) :
-    Subsingleton (B.centralH fr 0) := by
-  have e := Hequiv (f := fr) B.σ B.σ_ne 0
-  have : Subsingleton ((Fin (fr 0) → ℤ_[2]) × Q B.σ 0) := by
+    Subsingleton ((centralH B) fr 0) := by
+  have e := Hequiv (f := fr) (σ B) (σ_ne B) 0
+  have : Subsingleton ((Fin (fr 0) → ℤ_[2]) × Q (σ B) 0) := by
     have h1 : Subsingleton (Fin (fr 0) → ℤ_[2]) := by
       rw [h0]; infer_instance
-    have h2 : Subsingleton (Q B.σ 0) := by
+    have h2 : Subsingleton (Q (σ B) 0) := by
       refine ⟨fun a b => ?_⟩
       obtain ⟨y, rfl⟩ := Submodule.mkQ_surjective _ a
       obtain ⟨z, rfl⟩ := Submodule.mkQ_surjective _ b
@@ -668,25 +659,25 @@ def RC7Budget57Inputs : Prop :=
     B.n ≤ 3 → (∀ i j, 1 ≤ (B.s i j).valuation) →
     fr 0 = 0 → fr 1 = 1 → fr 2 = 1 → fr 3 = 0 →
     let rankTotal := 2 + 2 * B.mTot
-    (rankTotal ≤ ∑ n : Fin 4, Module.finrank (ZMod 2) (B.centralRed fr n)) ∧
+    (rankTotal ≤ ∑ n : Fin 4, Module.finrank (ZMod 2) ((centralRed B) fr n)) ∧
     (rankTotal = 2 + 2 * B.mTot) ∧
-    Subsingleton (B.centralH fr 0) ∧
-    (Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 0)) +
-        Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 1)) +
-        Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 2)) +
-        Module.length ℤ_[2] (Submodule.torsion ℤ_[2] (B.centralH fr 3)) =
+    Subsingleton ((centralH B) fr 0) ∧
+    (Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 0)) +
+        Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 1)) +
+        Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 2)) +
+        Module.length ℤ_[2] (Submodule.torsion ℤ_[2] ((centralH B) fr 3)) =
       ∑ i ∈ Finset.range B.n, Module.length ℤ_[2] ((Fin (B.m i) → ℤ_[2]) ⧸
         LinearMap.range (Matrix.diagonal (B.s i)).mulVecLin))
 
 theorem rc7Budget57Inputs_proof : RC7Budget57Inputs := by
   intro S O _ _ _ B fr hn hpos h0 h1 h2 h3 rankTotal
-  refine ⟨?_, rfl, B.subsingleton_centralH_zero fr h0, ?_⟩
-  · rw [B.sum_finrank_centralRed fr hn hpos]
+  refine ⟨?_, rfl, (subsingleton_centralH_zero B) fr h0, ?_⟩
+  · rw [(sum_finrank_centralRed B) fr hn hpos]
     simp only [Fin.sum_univ_four, Fin.val_zero, Fin.val_one, Fin.val_two,
       show ((3 : Fin 4) : ℕ) = 3 from rfl, h0, h1, h2, h3, rankTotal]
     omega
-  · have hS := B.sum_length_torsion_centralH fr hn
+  · have hS := (sum_length_torsion_centralH B) fr hn
     simp only [Fin.sum_univ_four, Fin.val_zero, Fin.val_one, Fin.val_two] at hS
-    exact hS.trans B.sum_length_coker.symm
+    exact hS.trans (sum_length_coker B).symm
 
 end ZInQ.Contrib.CloudB3RC53.RankCounts
