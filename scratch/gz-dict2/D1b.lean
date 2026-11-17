@@ -111,4 +111,46 @@ theorem modPt_cases (E : WeierstrassCurve ℚ) [E.IsElliptic] {X Y : ℍ → ℂ
     simp only [WeierstrassCurve.Affine.Point.some.injEq]
     exact ⟨tendsto_nhds_unique hex.choose_spec.2.1 hx₀, tendsto_nhds_unique hex.choose_spec.2.2 hy₀⟩
 
+
+/-! ## The leaf's `φ`: the equation on `ℍ` and the value at every `τ` -/
+
+/-- The Weierstrass equation of `E` for a pair `(x, y)` of elements of a field (coefficients `ℚ → K`
+by the cast). -/
+def WEqR {K : Type*} [Field K] (E : WeierstrassCurve ℚ) (x y : K) : Prop :=
+  y ^ 2 + (E.a₁ : K) * x * y + (E.a₃ : K) * y =
+    x ^ 3 + (E.a₂ : K) * x ^ 2 + (E.a₄ : K) * x + (E.a₆ : K)
+
+theorem WEqR.map {K L : Type*} [Field K] [Field L] {E : WeierstrassCurve ℚ} {x y : K}
+    (h : WEqR E x y) (f : K →+* L) : WEqR E (f x) (f y) := by
+  have := congrArg f h
+  simp only [map_add, map_mul, map_pow, map_ratCast] at this
+  exact this
+
+/-- The generic point `(x, y)` of `E` satisfies the equation of `E` in `ℚ(E)`. -/
+theorem wEqR_gen (E : WeierstrassCurve ℚ) : WEqR E (genX E) (genY E) := by
+  set CR := E.toAffine.CoordinateRing
+  have hmk : ∀ a : ℚ, WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine
+      (Polynomial.C (Polynomial.C a)) = algebraMap ℚ CR a := by
+    intro a
+    rw [IsScalarTower.algebraMap_apply ℚ (Polynomial ℚ) CR]
+    rfl
+  have h0 : WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine E.toAffine.polynomial = 0 :=
+    AdjoinRoot.mk_self
+  simp only [WeierstrassCurve.Affine.polynomial, map_sub, map_add, map_mul, map_pow, hmk] at h0
+  have h1 := congrArg (algebraMap CR E.toAffine.FunctionField) h0
+  have hc : ∀ a : ℚ, algebraMap CR E.toAffine.FunctionField (algebraMap ℚ CR a) =
+      (a : E.toAffine.FunctionField) := fun a =>
+    eq_ratCast ((algebraMap CR E.toAffine.FunctionField).comp (algebraMap ℚ CR)) a
+  simp only [map_sub, map_add, map_mul, map_pow, map_zero, hc] at h1
+  unfold WEqR genX genY
+  linear_combination h1
+
+/-- `φ^*(x), φ^*(y)` satisfy the equation of `E` in `ℚ((q))`. -/
+theorem wEqR_phi {E : WeierstrassCurve ℚ} {N : ℕ} [NeZero N]
+    (φ : E.toAffine.FunctionField →ₐ[ℚ] X0Field N) :
+    WEqR E ((φ (genX E) : X0Field N) : LaurentSeries ℚ)
+      ((φ (genY E) : X0Field N) : LaurentSeries ℚ) :=
+  ((wEqR_gen E).map (φ : E.toAffine.FunctionField →+* X0Field N)).map
+    ((X0Field N).val : X0Field N →+* LaurentSeries ℚ)
+
 end ZInQ.GZDict2
