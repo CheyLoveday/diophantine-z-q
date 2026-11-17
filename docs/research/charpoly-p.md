@@ -49,6 +49,10 @@ is UNVERIFIED.
    between the tree's `degEnd` and AnthropicFLT's `RelativeGroupLaw.endDegree` and Čech `eulerChar`, the
    quadratic formula in `Pic` from the cube, and joint polynomiality in several exponents.
 
+   §6 compiles a finer split of `DegHomogPoly` into four Euler-characteristic statements over genuine tree
+   definitions (`ChiDecomp.lean`, `charPolyIndepOfEllAlgClosed_of_chi`). Three of them are in the tree up to
+   framework bridges; the fourth contains M1.
+
    So the first milestone ("`deg(nφ − m)` is a polynomial of degree `2g` in `(n, m)`, in characteristic `p`") is
    not reachable in this task. Per the pivot signal, §3 reports the missing inputs, what the tree has, and the
    smallest printed statements that would close the gap.
