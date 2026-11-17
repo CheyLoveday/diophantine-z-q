@@ -1,0 +1,23 @@
+{
+ "name": "hgz-steps",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.GrossZagierScheme"
+ ],
+ "discharges": [
+  {
+   "field": "hGZ",
+   "proof": "_root_.ZInQ.GZSch.grossZagierAlgOptCd_of_curve {n}.grossZagierCurveCd",
+   "leaves": [
+    {
+     "name": "grossZagierCurveCd",
+     "type": "_root_.ZInQ.GZSch.GrossZagierCurveCd",
+     "doc": "Gross-Zagier, Invent. Math. 84 (1986), Thm I.6.3 and Ch. V section 2 Thm 2.1, for any modular parametrization pi : X0(N) -> E over Q with pi(infty) = O (V section 2, p. 310): X a normal proper integral curve over Q with K(X) = Q(j, j_N) (the canonical model), E = Proj Q[X,Y,Z]/(F_E), pi a nonconstant morphism of Q-schemes with the cusp infty (ord_q >= 0) outside D+(Z), Heegner points the C-points tau_r of X (IsPointAt: functions take the values of their modular functions at tau_r), twist and Heegner hypothesis by epsilon_D (Kronecker symbol); short models in the isogeny class of C_d; y = n y_K (n != 0); positive constant forgotten (hgz-steps)",
+     "kind": "published",
+     "flag": "unread: new printed leaf (hgz-steps: GZSch.GrossZagierCurveCd, pi a morphism of Q-schemes X0(N) -> E; D1, D2, model and point existence, epsilon_D = (./|D|) proved in Lean (grossZagierAlgOptCd_of_curve); D3 cleared by the queue9 reading of GZ V section 2, p. 310); locator UNVERIFIED",
+     "source": "Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V section 2 Thm 2.1 (pi fixed on p. 310 per the queue9 reading; p.312 per locators.md); any modular parametrization with pi(infty) = 0"
+    }
+   ]
+  }
+ ],
+ "note": "hGZ is a binder of ZInQ.OneProof.frozenTarget, not a bundle field, so autofold.py does not apply (as for gz-dict2): apply scratch/hgz-steps/fold-spec.md by hand. Replaces the leaf GZAlg.GrossZagierAlgOptCd (rated GLUE pending reading after fold33-review: D1-D3) by the printed-form leaf GZSch.GrossZagierCurveCd: GLUE -1 in both columns, no glue added."
+}

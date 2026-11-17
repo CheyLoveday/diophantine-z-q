@@ -1,0 +1,5 @@
+'ZInQ.GZDict2.center_of_wEq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.phi_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.modPt_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.modPt_plane_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.eventually_equation_ratFn' depends on axioms: [propext, Classical.choice, Quot.sound]
