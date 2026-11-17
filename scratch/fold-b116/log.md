@@ -123,3 +123,34 @@ Base wip/leaf-fold33b d804d07d (= fork main + fold-b115). H top `HDec.HSyn.sixCo
    with the on-the-spot pieces B1, B4 and the three flagged steps; L771-773 ("therefore show that r_5 is a constituent
    of the Tate module of A_f") unverified (gap, not filled: the G1 Prop is kept out; the Lean route uses DS 9.6.5,
    afCharpolyDS965); no errors.
+
+## Item 4: logp-transc (inbox 82; proof-only, count-neutral)
+1. Files taken from origin/wip/logp-transc 707e4799 (the SHA in the inbox) with `git checkout 707e4799 -- ...`:
+   Contrib/OneProof/LogPTranscendence.lean, LogPTranscendenceBdR.lean, docs/research/logp-transc.md,
+   scratch/logp-transc/, .fleet/logp-transc.md. Not a merge: the branch also carries htmult-model's commits (already
+   cherry-picked on this base) and its dependencies (PanBergerFontaine, PstModel, HTModel, BdRInvariants) are
+   identical to this base's (`git diff HEAD 707e4799` empty on them). The branch has three later commits (bbd0679d,
+   14:47: "units analogue", +217 lines in LogPTranscendence.lean); not taken (not in the inbox). Hygiene: no host
+   paths; scratch copies of the Contrib files do not declare HDec.HSyn bundles.
+2. Build (VERIFIED): `lake build ZInQKernel.Contrib.OneProof.LogPTranscendence
+   ZInQKernel.Contrib.OneProof.LogPTranscendenceBdR` ok (10718 jobs; build-logp.txt). Axioms (AxiomsLogP-output.txt):
+   logPTildeTranscendental_iff_notInFrac, _of_notInFrac, transcendental_bcris_of_notInFrac, bcrisOf_le_bmax,
+   bstFOf_eq_adjoin, bcrisPolyEquiv, transcendental_bcrisOf: all [propext, Classical.choice, Quot.sound].
+3. AllContrib: NOT added. Appending both imports makes `lake build ZInQKernel.Contrib.AllContrib` fail with the same
+   pre-existing clash as HTModel: `import ZInQKernel.HDecomp.Textbook.Different failed, environment already contains
+   'PkgI6.TraceContainsRamificationIdx' from ZInQKernel.Contrib.Different.Local` (allcontrib-logp-attempt.txt);
+   reverted. Add both lines once wip/contrib-clashes is folded.
+4. Flag narrowing (optional, applied; `rows_items45.py logp`): in the panPrintedF and bergerSurveyF flags,
+   "(BergerBst.LogPTildeTranscendental is an open Prop)" -> "(... is an open Prop, reduced in Lean to log[p~] not in
+   Frac(B_max) (LogPTransc.logPTildeTranscendental_iff_notInFrac, Contrib/OneProof/LogPTranscendenceBdR.lean))".
+   The inbox wrote the name as `LogPTranscendence.logPTildeTranscendental_iff_notInFrac`; the declaration is
+   `HDec.PkgI4.LogPTransc.logPTildeTranscendental_iff_notInFrac` in LogPTranscendenceBdR.lean, so the flag uses that.
+   Ratings unchanged (GLUE/GLUE, note).
+5. Checks (`run_checks.sh 4 hashes_fold3.txt`, VERIFIED): hash guard 21041 -> 21041, nothing changed or new
+   (nothing under OneProof imports the new files). Closure as after item 3. OpenStatements 30, render_open and
+   `--check` ok, DischargesTest 18, crosswalk ok, autoform exit 0, GATE=ok.
+   **render_open count after item 4: 30 open (H 29, strictest 5/24, 1 other); 5/24 on 29.**
+6. Manuscript check: L739-741 (Berger's p-adic monodromy theorem [berger2002] makes the de Rham representation
+   potentially semistable) unchanged from fold-b115 (gap filled for the citation; the BC 9.2.10 identification remains
+   GLUE, now reduced in Lean to the one Prop log[p~] not in Frac(B_max)); the Galois half of Fontaine's argument is an
+   on-the-spot (c) fill, proved (logp-transc §1). No errors.
