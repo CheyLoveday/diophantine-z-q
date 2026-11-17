@@ -1,0 +1,4 @@
+'ZInQ.OneProof.frozenTarget_gzdict2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.grossZagierAlgOptCd_of_plane' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.grossZagierFormulaCd_of_plane' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.GZDict2.modPt_eq_ratFn' depends on axioms: [propext, Classical.choice, Quot.sound]
