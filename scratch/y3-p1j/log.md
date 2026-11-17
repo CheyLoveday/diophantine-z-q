@@ -56,3 +56,4 @@
   Corollaries: `hauptmodulOfX6_of_y3ToP1j' : Y3ToP1j -> HauptmodulOfX6`, `r1r2W_of_y3ToP1j'` (no new glue).
   `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1jDescent` OK; axioms in scratch/y3-p1j/axioms.txt.
 - #discharges rerun with Y3ToP1jDescent imported: still no line mentioning Y3P1j (VERIFIED).
+- Scratch Lean drafts (Action.lean, P1.lean, Descent.lean, T1.lean) removed after promotion to ZInQKernel/Contrib/OneProof/Y3ToP1j.lean and Y3ToP1jDescent.lean (the canonical sources); build log trimmed to build-main.tail.txt.

@@ -47,7 +47,8 @@ is in neither the manuscript nor a print read here.
      axioms). So `hauptmodulOfX6_of_y3ToP1j' : Y3ToP1j → HauptmodulOfX6` and `r1r2W_of_y3ToP1j'` rest on
      `Y3ToP1j` alone, with no new glue.
    * **Neither `x6CoarseModuliIdeal` nor `elkiesX6StarEveryIdeal` can be dropped on this base** (grep over the
-     whole tree, §5.2). R2 was their only use on the cm-branch base, not on this one:
+     whole tree, §5.2). Re-sourcing R2 removes only the Baba–Granath use (through `babaGranathRationalAb`). Other
+     readers remain, here and also on the cm-branch base (§5.2):
      * `x6CoarseModuliIdeal` still supplies the row's `X₆` witness (`X6Props`, `CoarseX6OfFineW`) and
        González–Rotger's `R5ptProps`;
      * `elkiesX6StarEveryIdeal` still supplies Elkies' model to `x6ConicModel` (→ NoCM) and to
