@@ -475,6 +475,75 @@ def bdREquivAwayT : BdR O p ≃ₐ[Bp] Localization.Away (tt p Z) :=
   haveI := isFractionRing_BDeRham p
   IsLocalization.algEquiv (nonZeroDivisors Bp) (BdR O p) (Localization.Away (tt p Z))
 
+
+/-- **The `G_{ℚ_p}`-action on `B_dR^+[1/t]` is determined by the action on `B_dR^+`**: two ring endomorphisms of
+`B_dR^+[1/t]` extending the same `g : B_dR^+ → B_dR^+` are equal. So the print's action on `B_dR^+[1/t]` (the
+extension of the action on `B_dR^+`) is the transport of any extension on the kernel's `B_dR`, e.g. `bdrAct`
+(`transport_extends`). -/
+theorem ext_of_extends {g : Bp →+* Bp} (f₁ f₂ : Localization.Away (tt p Z) →+* Localization.Away (tt p Z))
+    (h₁ : f₁.comp (algebraMap Bp _) = (algebraMap Bp _).comp g)
+    (h₂ : f₂.comp (algebraMap Bp _) = (algebraMap Bp _).comp g) : f₁ = f₂ :=
+  IsLocalization.ringHom_ext (Submonoid.powers (tt p Z)) (h₁.trans h₂.symm)
+
+/-- The transport of an extension `φ` of `g` to `B_dR` along `bdREquivAwayT` extends `g` on `B_dR^+[1/t]`. -/
+theorem transport_extends {g : Bp →+* Bp} (φ : BdR O p →+* BdR O p)
+    (hφ : φ.comp (algebraMap Bp (BdR O p)) = (algebraMap Bp (BdR O p)).comp g) :
+    (((bdREquivAwayT Z).toRingEquiv.toRingHom.comp φ).comp
+      (bdREquivAwayT Z).symm.toRingEquiv.toRingHom).comp (algebraMap Bp _) =
+      (algebraMap Bp _).comp g := by
+  ext x
+  simp only [RingHom.comp_apply]
+  have h1 : (bdREquivAwayT Z).symm.toRingEquiv.toRingHom (algebraMap Bp _ x) = algebraMap Bp (BdR O p) x :=
+    (bdREquivAwayT Z).symm.commutes x
+  rw [h1]
+  have h2 := congrArg (fun f => f x) hφ
+  simp only [RingHom.comp_apply] at h2
+  rw [h2]
+  exact (bdREquivAwayT Z).commutes (g x)
+
+/-! ## 8. Such systems exist -/
+
+variable (p) in
+theorem exists_primitiveRoot : ∃ ζ : ℂ_[p], IsPrimitiveRoot ζ p := by
+  have : NeZero (p : ℂ_[p]) := ⟨Nat.cast_ne_zero.mpr hp.out.ne_zero⟩
+  obtain ⟨ζ, hζ⟩ := IsAlgClosed.exists_root (Polynomial.cyclotomic p ℂ_[p])
+    (Polynomial.degree_cyclotomic_pos p ℂ_[p] hp.out.pos).ne'
+  exact ⟨ζ, Polynomial.isRoot_cyclotomic_iff.mp hζ⟩
+
+variable (p) in
+/-- `1, ζ_p, ζ_{p²}, …` in `ℂ_p`. -/
+def zetaSeq : ℕ → ℂ_[p]
+  | 0 => 1
+  | 1 => Classical.choose (exists_primitiveRoot p)
+  | n + 2 => Classical.choose (IsAlgClosed.exists_pow_nat_eq (zetaSeq (n + 1)) hp.out.pos)
+
+theorem zetaSeq_succ_pow (n : ℕ) : zetaSeq p (n + 1) ^ p = zetaSeq p n := by
+  rcases n with _ | n
+  · exact (Classical.choose_spec (exists_primitiveRoot p)).pow_eq_one
+  · exact Classical.choose_spec (IsAlgClosed.exists_pow_nat_eq (zetaSeq p (n + 1)) hp.out.pos)
+
+theorem zetaSeq_mem (n : ℕ) : zetaSeq p n ∈ 𝓞_ℂ_[p] := by
+  have h : zetaSeq p n ^ p ^ n = 1 := by
+    induction n with
+    | zero => simp [zetaSeq]
+    | succ n ih => rw [pow_succ', pow_mul, zetaSeq_succ_pow, ih]
+  rw [mem_O_iff]
+  have h1 : ‖zetaSeq p n‖ ^ p ^ n = 1 := by rw [← norm_pow, h, norm_one]
+  have h2 : ‖zetaSeq p n‖ = 1 :=
+    (pow_eq_one_iff_of_nonneg (norm_nonneg _) (pow_ne_zero _ hp.out.ne_zero)).mp h1
+  exact h2.le
+
+variable (p) in
+/-- **A compatible system of `p`-power roots of unity exists** (so `RootSystem p` is inhabited and the
+hypotheses of §§4-7 are satisfiable). -/
+def rootSystem : RootSystem p where
+  z n := ⟨zetaSeq p n, zetaSeq_mem n⟩
+  pow_succ n := Subtype.ext (by push_cast; exact zetaSeq_succ_pow n)
+  zero := Subtype.ext rfl
+  one_ne h := by
+    have h1 := congrArg Subtype.val h
+    exact (Classical.choose_spec (exists_primitiveRoot p)).ne_one hp.out.one_lt h1
+
 end
 
 end DeRhamPrint.TDict
