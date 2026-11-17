@@ -156,3 +156,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
     OneProof modules; OpenStatements 36; DischargesTest rerun; render_open --check ok (30 H, strictest 13/17, 6
     others); crosswalk --check ok; autoform check ok. AutofoldDryRun.lean renamed .lean.txt.
+20. deRhamH1AbVarT (consequence, GLUE) replaced by derham-print's two printed-form leaves deRhamVpAbVarPrinted
+    (Fontaine: V_p(A) de Rham with the printed D_dR, as in Berger 2004 I.3) and bdRInvariantsPrinted (B_dR^{G_K} = K,
+    dimension form), with mumfordTorsionAlgClosed; t = log[eps] and B_dR = B_dR^+[1/t] proved in Lean
+    (DeRhamPrintTDict): merged wip/derham-print ccb19bd3, autofold scratch/leaf-fold33/autofold-derham.json
+    (derham-print's spec, flags "pending review") with --allow-rise -> TailZ58, `sixContactMin_of_open51`. Both rows
+    count GLUE until a reviewer rates them (integrator's rule), so H 13/17 on 30 -> 13/18 on 31 (GLUE +1 until the
+    review; -1 against the base if both are rated LEAF). Checks (VERIFIED): build +Main +Discharges; frozenTarget
+    standard axioms; check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements 37;
+    DischargesTest rerun; render_open --check ok (31 H, strictest 13/18, 6 others); crosswalk --check ok; autoform
+    check ok. FoldDryRun.lean renamed .lean.txt.
