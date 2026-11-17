@@ -213,4 +213,50 @@ theorem ite_mul_eq (P : Prop) [Decidable P] (x : ZMod 2) :
     (if P then x else 0) = (if P then 1 else 0) * x := by
   split_ifs <;> simp
 
+open Classical in
+/-- `δ(a) = 1` iff `3 ∣ a`. -/
+noncomputable def dlt (a : ℤ) : ZMod 2 := if 3 ∈ a.natAbs.primeFactors then 1 else 0
+
+open Classical in
+/-- `σ(b) = 1` iff `b < 0`. -/
+noncomputable def sg (b : ℤ) : ZMod 2 := if b < 0 then 1 else 0
+
+/-- **The local conditions at the primes of `ℓ` give `E1` and `E2`** (lines 1063–1066). -/
+theorem eqs_of_localBad (hq : LocalBad) (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) {a b : ℤ}
+    (ha : Squarefree a) (hb : Squarefree b) (ha0 : 0 < a)
+    (hsa : a.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors)
+    (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors)
+    (hloc : ∀ i : Supp ℓ, haveI := Fact.mk (supp_prime i); LocM ℚ_[(i : ℕ)] ℓ a b) :
+    Kmat ℓ *ᵥ ind ℓ a + lam ℓ * ind ℓ b = dlt a • lam ℓ ∧
+      Kmat ℓ *ᵥ ind ℓ b + sgn ℓ * ind ℓ b = sg b • sgn ℓ := by
+  have hsb' : b.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors :=
+    hsb.trans (Finset.subset_insert _ _)
+  have h3b : 3 ∉ b.natAbs.primeFactors := fun h => three_not_mem h12 (hsb h)
+  have key : ∀ i : Supp ℓ, ∃ e₁ e₂ : ZMod 2, ind ℓ a i = e₁ ∧ ind ℓ b i = e₂ ∧
+      dlt a * lam ℓ i + 0 + ((Kmat ℓ *ᵥ ind ℓ a) i + Kmat ℓ i i * ind ℓ a i) =
+        e₁ * Kmat ℓ i i + e₂ * lam ℓ i ∧
+      0 + sg b * sgn ℓ i + ((Kmat ℓ *ᵥ ind ℓ b) i + Kmat ℓ i i * ind ℓ b i) =
+        e₂ * (sgn ℓ i + Kmat ℓ i i) := by
+    intro i
+    have := Fact.mk (supp_prime i)
+    obtain ⟨e₁, e₂, h1, h2⟩ := (hq ℓ i a b hsf (supp_dvd i)
+      (by have := supp_mod_two (ℓ := ℓ) (by omega) i; omega) (supp_ne_three (by omega) i)
+      ha hb).mp (hloc i)
+    rw [qcls_formula h12 ha hsa i, qcls_ell i hsf h12, qcls_three i h12] at h1
+    rw [qcls_formula h12 hb hsb' i, qcls_negell i hsf h12] at h2
+    simp only [Prod.ext_iff, Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
+      smul_eq_mul, mul_one, mul_zero, add_zero] at h1 h2
+    refine ⟨e₁, e₂, h1.1, h2.1, ?_, ?_⟩
+    · rw [← h1.2, if_neg (not_lt.mpr ha0.le), dlt]; split_ifs <;> simp
+    · rw [← h2.2, if_neg h3b, sg]; split_ifs <;> simp
+  constructor
+  · funext i
+    obtain ⟨e₁, e₂, hu, hv, hA, -⟩ := key i
+    simp only [Pi.add_apply, Pi.mul_apply, Pi.smul_apply, smul_eq_mul]
+    exact alg_a _ _ _ _ _ _ e₁ e₂ hu hv hA
+  · funext i
+    obtain ⟨e₁, e₂, -, hv, -, hB⟩ := key i
+    simp only [Pi.add_apply, Pi.mul_apply, Pi.smul_apply, smul_eq_mul]
+    exact alg_b _ _ _ _ _ e₂ hv hB
+
 end ZInQ.Manuscript.PoleRC
