@@ -951,4 +951,153 @@ theorem shimuraMainThmIDeligneY3AbU_of_printPM (hM : AvSplit.MumfordTorsionAlgCl
 
 end Leaf
 
+/-! ## 8. Lemma P on the genuine `H₁(A(ℂ), ℤ)`
+
+y3abu-strict's helpers (`ZInQKernel/Contrib/OneProof/ShimuraY3StrictLemmaP.lean` on `wip/y3abu-strict`, not on this
+base; copied verbatim): the real embedding `ι_ℝ : B_ℝ → M₂(ℝ)` and the complex structure `j_τ ∈ B_ℝ`. -/
+
+namespace LP
+
+open RvQMPolar Matrix
+open LeafQM (B)
+
+
+/-- The real embedding `ι_ℝ : B_ℝ → M₂(ℝ)` (the extension of `BPAnalytic.QM.iota`). -/
+def iotaR (y : BR) : Matrix (Fin 2) (Fin 2) ℝ :=
+  y.re • 1 + y.imI • BPAnalytic.QM.Mi + y.imJ • BPAnalytic.QM.Mj + y.imK • (BPAnalytic.QM.Mi * BPAnalytic.QM.Mj)
+
+theorem iotaR_mul (x y : BR) : iotaR (x * y) = iotaR x * iotaR y := by
+  have h2 : (√2 : ℝ) * √2 = 2 := Real.mul_self_sqrt (by norm_num)
+  ext a b <;> fin_cases a <;> fin_cases b <;>
+    simp [iotaR, BPAnalytic.QM.Mi, BPAnalytic.QM.Mj, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    ring_nf <;> simp only [Real.sq_sqrt (show (0:ℝ) ≤ 2 by norm_num)] <;> ring
+
+/-- `ι_ℝ` extends N5's `ι` (`BPAnalytic.QM.iota`) on `B ⊆ B_ℝ`. -/
+theorem iotaR_ofB (x : LeafQM.B) :
+    iotaR ⟨(x.re : ℝ), (x.imI : ℝ), (x.imJ : ℝ), (x.imK : ℝ)⟩ = BPAnalytic.QM.iota x := by
+  simp [iotaR, BPAnalytic.QM.iota]
+
+/-- **The complex structure of `ℂ²/Λ_τ` on `H₁ ⊗ ℝ = B_ℝ`**: for `τ = s + it`,
+`j_τ = (s√2/(2t)) i + ((3 + |τ|²)/(6t)) j + ((|τ|² − 3)√2/(12t)) k`, so that `ι(j_τ)(τ, 1)ᵀ = i (τ, 1)ᵀ`. -/
+def jτ (τ : UpperHalfPlane) : BR :=
+  ⟨0, τ.re * √2 / (2 * τ.im), (3 + τ.re ^ 2 + τ.im ^ 2) / (6 * τ.im),
+    (τ.re ^ 2 + τ.im ^ 2 - 3) * √2 / (12 * τ.im)⟩
+
+theorem jτ_sq (τ : UpperHalfPlane) : jτ τ * jτ τ = -1 := by
+  have ht : τ.im ≠ 0 := τ.im_pos.ne'
+  have h2 : (√2 : ℝ) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  ext <;> simp [jτ] <;> field_simp <;> ring_nf <;> simp only [h2] <;> ring
+
+theorem jτ_imJ_pos (τ : UpperHalfPlane) : 0 < (jτ τ).imJ := by
+  simp only [jτ]
+  have := τ.im_pos
+  positivity
+
+theorem iotaR_jτ (τ : UpperHalfPlane) : iotaR (jτ τ) =
+    !![τ.re / τ.im, -(τ.re ^ 2 + τ.im ^ 2) / τ.im; 1 / τ.im, -τ.re / τ.im] := by
+  have ht : τ.im ≠ 0 := τ.im_pos.ne'
+  have h2 : (√2 : ℝ) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  ext a b <;> fin_cases a <;> fin_cases b <;>
+    simp [iotaR, jτ, BPAnalytic.QM.Mi, BPAnalytic.QM.Mj, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    field_simp <;> ring_nf <;> (try simp only [h2]) <;> ring
+
+end LP
+
+section LemmaP
+
+open HDec.HSyn.G0Split.FibreQM (qmMat IotaCompatible)
+
+/-- `P ↦ P ≫ f` on `A(ℂ)`, a continuous map. -/
+def ptMapC {A : AbVar ℂ} (f : AbVar.End A) : C(A.Pt ℂ, A.Pt ℂ) :=
+  ⟨fun P => P ≫ f.hom, continuous_postcomp (X := A.X) (Y := A.X) f.hom⟩
+
+theorem ptMapC_one {A : AbVar ℂ} (f : AbVar.End A) : ptMapC f 1 = 1 :=
+  map_one (AbVar.ptMap (L := ℂ) f)
+
+/-- **`f_* : H₁(A(ℂ), ℤ) → H₁(A(ℂ), ℤ)`**, functoriality of `π₁` (Mathlib's `FundamentalGroup.mapOfEq`) and of the
+abelianization, for an endomorphism `f` of `A`. -/
+def h1Act {A : AbVar ℂ} (f : AbVar.End A) : H1 A →* H1 A :=
+  Abelianization.map (FundamentalGroup.mapOfEq (ptMapC f) (ptMapC_one f))
+
+theorem h1Act_loopClass {A : AbVar ℂ} (f : AbVar.End A) (lp : Path (1 : A.Pt ℂ) 1) :
+    h1Act f (loopClass lp) = loopClass (pushLoop f lp) := by
+  have h := Abelianization.map_of (FundamentalGroup.mapOfEq (ptMapC f) (ptMapC_one f))
+    (FundamentalGroup.fromPath (Path.Homotopic.Quotient.mk lp))
+  refine h.trans (congrArg Abelianization.of ?_)
+  rw [FundamentalGroup.mapOfEq_apply]
+  rfl
+
+/-- Straight loops add: `[t ↦ e(t(u + v))] = [t ↦ e(tu)] · [t ↦ e(tv)]` in `H₁` (monodromy is a homomorphism and
+injective). -/
+theorem loopClass_add (hU : Uniformization.UniformizationLeafAll) {A : AbVar ℂ} {n : ℕ}
+    {e : (Fin n → ℂ) → CPts A (RingHom.id ℂ)} (he : IsAnalyticHom (RingHom.id ℂ) e)
+    {u v : Fin n → ℂ} (lu lv luv : Path (1 : A.Pt ℂ) 1)
+    (hu : ∀ t : unitInterval, lu t = e (((t : ℝ) : ℂ) • u))
+    (hv : ∀ t : unitInterval, lv t = e (((t : ℝ) : ℂ) • v))
+    (huv : ∀ t : unitInterval, luv t = e (((t : ℝ) : ℂ) • (u + v))) :
+    loopClass luv = loopClass lu * loopClass lv := by
+  obtain ⟨g, Λ', hd, hz, φ, hφ⟩ := hU A
+  obtain ⟨D, hD⟩ := ZInQ.HomLattice.exists_complexLinear_of_analytic_strong
+    (ZInQ.HomLattice.isStrongUnif_of_bp hφ) he
+  have hD' : ∀ w, pmap φ (D w) = e w := hD
+  have hcov := isCov hφ
+  set Θ := hcov.fundamentalGroupToMulOpposite e0 with hΘ
+  have hΘinj : Function.Injective Θ := hcov.fundamentalGroupToMulOpposite_injective e0
+  let Θ' : H1 A →* (Multiplicative Λ'.toAddSubgroup)ᵐᵒᵖ := Abelianization.lift Θ
+  have hΘ' : ∀ x, Θ' (Abelianization.of x) = Θ x := fun x => Abelianization.lift_apply_of Θ x
+  have hΘ'inj : Function.Injective Θ' := by
+    intro x y hxy
+    obtain ⟨x0, rfl⟩ := QuotientGroup.mk_surjective x
+    obtain ⟨y0, rfl⟩ := QuotientGroup.mk_surjective y
+    have h2 : Θ' (Abelianization.of x0) = Θ' (Abelianization.of y0) := hxy
+    rw [hΘ', hΘ'] at h2
+    show Abelianization.of x0 = Abelianization.of y0
+    rw [hΘinj h2]
+  have mem : ∀ (w : Fin n → ℂ) (l : Path (1 : A.Pt ℂ) 1),
+      (∀ t : unitInterval, l t = e (((t : ℝ) : ℂ) • w)) → D w ∈ Λ' := by
+    intro w l hl
+    refine (pmap_eq_one_iff (φ := φ) _).mp ?_
+    have h1 := hl 1
+    simp only [Set.Icc.coe_one, Complex.ofReal_one, one_smul] at h1
+    rw [hD', ← h1]; exact l.target
+  have key : ∀ (w : Fin n → ℂ) (l : Path (1 : A.Pt ℂ) 1) (hl : ∀ t : unitInterval, l t = e (((t : ℝ) : ℂ) • w)),
+      Θ' (loopClass l) = MulOpposite.op (Multiplicative.ofAdd (⟨D w, mem w l hl⟩ : Λ'.toAddSubgroup)) := by
+    intro w l hl
+    simp only [loopClass, hΘ']
+    refine monodromy_line hφ (D w) (mem w l hl) l fun t => ?_
+    rw [hl t, ← hD', map_smul, Complex.coe_smul]
+  apply hΘ'inj
+  rw [map_mul, key _ _ huv, key _ _ hu, key _ _ hv, ← MulOpposite.op_mul, ← ofAdd_add]
+  congr 2
+  apply Subtype.ext
+  simp [map_add, add_comm]
+
+/-- The print's data `(n, e, β, c)` of `IsHodgeH1Print`. -/
+def HodgeData (P : QML3 ℂ) (τ : UpperHalfPlane) (n : ℕ) (e : (Fin n → ℂ) → CPts P.A (RingHom.id ℂ))
+    (β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ)) (c : O → Path (1 : P.A.Pt ℂ) 1) : Prop :=
+  IsAnalyticHom (RingHom.id ℂ) e ∧
+    (∀ (b : O) (t : unitInterval), c b t = e (((t : ℝ) : ℂ) • β (BPAnalytic.QM.iota (b : B)))) ∧
+    Function.Bijective (fun b => loopClass (c b)) ∧
+    (∀ a b : O, loopClass (pushLoop (P.q.iota a) (c b)) = loopClass (c (a * b))) ∧
+    (∀ M, β (M * Y3Fix.Jmat τ) = Complex.I • β M)
+
+theorem isHodgeH1Print_iff (P : QML3 ℂ) (τ : UpperHalfPlane) :
+    IsHodgeH1Print P τ ↔ ∃ n e β c, HodgeData P τ n e β c := Iff.rfl
+
+theorem iota_add (x y : B) : BPAnalytic.QM.iota (x + y) = BPAnalytic.QM.iota x + BPAnalytic.QM.iota y := by
+  simp only [BPAnalytic.QM.iota, QuaternionAlgebra.re_add, QuaternionAlgebra.imI_add,
+    QuaternionAlgebra.imJ_add, QuaternionAlgebra.imK_add, Rat.cast_add, add_smul]
+  abel
+
+/-- The iso `c : 𝒪 → H₁(A, ℤ)` of the print's data is additive. -/
+theorem cl_add (hU : Uniformization.UniformizationLeafAll) {P : QML3 ℂ} {τ : UpperHalfPlane} {n : ℕ}
+    {e : (Fin n → ℂ) → CPts P.A (RingHom.id ℂ)} {β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ)}
+    {c : O → Path (1 : P.A.Pt ℂ) 1} (hD : HodgeData P τ n e β c) (b b' : O) :
+    loopClass (c (b + b')) = loopClass (c b) * loopClass (c b') := by
+  obtain ⟨he, hc, -, -, -⟩ := hD
+  refine loopClass_add hU he (c b) (c b') (c (b + b')) (hc b) (hc b') fun t => ?_
+  rw [hc, Subring.coe_add, iota_add, map_add]
+
+end LemmaP
+
 end Y3Hodge
