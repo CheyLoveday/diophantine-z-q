@@ -40,3 +40,4 @@ Base: main bf737bfe7; merged origin/wip/degpoly-proof (0a9e6698) for `DegDet.Deg
   W13's `respectTransparency.types false` + `.instanceSearchTypes false`.
 No statement changed.
 - VERIFIED: lake build of Thm_..._exists_isHomogeneous_eval_eq_endDegree_of_abelianSchemePropertyBundle (new vendor) OK, 10647 jobs (build3.log).
+- VERIFIED: lake build ZInQKernel.Contrib.OneProof.DegHomogPolyFLT OK (10796 jobs, build5.log); #print axioms of degHomogPolyEndDegree, degHomogPoly_of_degEndEq, degEndEqEndDegree_of_glue, degHomogPoly_of_glue: [propext, Classical.choice, Quot.sound] (Axioms-output.txt).

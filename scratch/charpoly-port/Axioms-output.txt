@@ -1,0 +1,4 @@
+'ZInQ.Contrib.OneProof.DegPolyFLT.degHomogPolyEndDegree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.OneProof.DegPolyFLT.degHomogPoly_of_degEndEq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.OneProof.DegPolyFLT.degEndEqEndDegree_of_glue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.OneProof.DegPolyFLT.degHomogPoly_of_glue' depends on axioms: [propext, Classical.choice, Quot.sound]
