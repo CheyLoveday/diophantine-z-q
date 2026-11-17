@@ -40,3 +40,5 @@ compiles, and the stop rule was not triggered.** The work is on fork main f3402e
   - Have Faltings 1983 §1 read: the statement, the height normalization, and "semistable".
   - Known issue: the leaf moves the citation from SGA 7 IX 3.3 to Faltings, who gives SGA 7 IX 3.3 as the reason
     (recalled, UNVERIFIED). The mathematics still rests on it inside the cited print.
+
+Report: docs/research/ss-faltings.md (commit f2a1a8bc); results log scratch/ss-faltings/log.md.
