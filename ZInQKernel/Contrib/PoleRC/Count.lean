@@ -438,4 +438,74 @@ theorem sel_necessary (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad)
   obtain ⟨h1, h2, h3⟩ := kmat_forces hsf h12 hM (ind ℓ a) (ind ℓ b) (dlt a) (sg b) E1 E2 E3 E4
   exact ⟨ha0, hsa, hsb, h1, h2, h3⟩
 
+/-! ### A squarefree integer is determined by its sign and its prime factors -/
+
+theorem eq_of_primeFactors {x y : ℤ} (hx : Squarefree x) (hy : Squarefree y)
+    (hpf : x.natAbs.primeFactors = y.natAbs.primeFactors) (hs : x < 0 ↔ y < 0) : x = y := by
+  have hn : x.natAbs = y.natAbs := by rw [natAbs_eq_prod hx, natAbs_eq_prod hy, hpf]
+  have ex := intCast_eq_sign_mul ℤ x
+  have ey := intCast_eq_sign_mul ℤ y
+  simp only [Int.cast_id] at ex ey
+  rw [ex, ey, hn]
+  by_cases h : x < 0
+  · rw [if_pos h, if_pos (hs.mp h)]
+  · rw [if_neg h, if_neg (fun h' => h (hs.mpr h'))]
+
+theorem primeFactors_eq_of_ind {x y : ℤ} (hx : x.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors)
+    (hy : y.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors) (hd : dlt x = dlt y)
+    (hi : ind ℓ x = ind ℓ y) : x.natAbs.primeFactors = y.natAbs.primeFactors := by
+  classical
+  have key : ∀ z : ℤ, z.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors → ∀ p : ℕ,
+      p ∈ z.natAbs.primeFactors ↔ (p = 3 ∧ dlt z = 1) ∨
+        (∃ h : p ∈ ℓ.primeFactors, ind ℓ z ⟨p, h⟩ = 1) := by
+    intro z hz p
+    constructor
+    · intro hp
+      rcases Finset.mem_insert.mp (hz hp) with h | h
+      · subst h; left; exact ⟨rfl, by simp [dlt, hp]⟩
+      · right; exact ⟨h, by simp [ind, hp]⟩
+    · rintro (⟨rfl, h⟩ | ⟨h, h'⟩)
+      · by_contra hc; simp [dlt, hc] at h
+      · by_contra hc; simp [ind, hc] at h'
+  ext p
+  rw [key x hx p, key y hy p, hd, hi]
+
+theorem ind_eq_of_smul {x : ℤ} (hx : x.natAbs.primeFactors ⊆ ℓ.primeFactors) :
+    x.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors := hx.trans (Finset.subset_insert _ _)
+
+theorem dlt_of_subset (h12 : ℓ % 12 = 11) {x : ℤ} (hx : x.natAbs.primeFactors ⊆ ℓ.primeFactors) :
+    dlt x = 0 := by
+  simp only [dlt]; rw [if_neg (fun h => three_not_mem h12 (hx h))]
+
+/-- **Upper bound data**: on `SelM ℓ`, the map `(a, b) ↦ (ind a, σ(b))` is injective with values in
+`ker K × 𝔽₂`. -/
+theorem sel_injOn (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (hg : LocalGood)
+    {β : ℕ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) (hM : MatrixConditions ℓ β) :
+    Set.InjOn (fun ab : ℤ × ℤ => (ind ℓ ab.1, sg ab.2)) (SelM ℓ) := by
+  rintro ⟨a, b⟩ hab ⟨a', b'⟩ hab' h
+  simp only [Prod.mk.injEq] at h
+  obtain ⟨hia, hsg⟩ := h
+  obtain ⟨ha0, hsa, hsb, hvb, hda, -⟩ := sel_necessary hTwo hThree hq hg hsf h12 hM hab
+  obtain ⟨ha0', hsa', hsb', hvb', hda', -⟩ := sel_necessary hTwo hThree hq hg hsf h12 hM hab'
+  have ha := hab.1
+  have hb := hab.2.1
+  have ha' := hab'.1
+  have hb' := hab'.2.1
+  simp only at ha hb ha' hb'
+  have e1 : a = a' := eq_of_primeFactors ha ha'
+    (primeFactors_eq_of_ind hsa hsa' (by rw [hda, hda', hsg]) hia)
+    ⟨fun h => absurd h (not_lt.mpr ha0.le), fun h => absurd h (not_lt.mpr ha0'.le)⟩
+  have e2 : b = b' := by
+    refine eq_of_primeFactors hb hb' (primeFactors_eq_of_ind (ind_eq_of_smul hsb)
+      (ind_eq_of_smul hsb') (by rw [dlt_of_subset h12 hsb, dlt_of_subset h12 hsb'])
+      (by rw [hvb, hvb', hsg])) ?_
+    have : sg b = sg b' := hsg
+    unfold sg at this
+    by_cases h1 : b < 0 <;> by_cases h2 : b' < 0
+    · exact ⟨fun _ => h2, fun _ => h1⟩
+    · rw [if_pos h1, if_neg h2] at this; exact absurd this (by decide)
+    · rw [if_neg h1, if_pos h2] at this; exact absurd this (by decide)
+    · exact ⟨fun h => absurd h h1, fun h => absurd h h2⟩
+  rw [e1, e2]
+
 end ZInQ.Manuscript.PoleRC
