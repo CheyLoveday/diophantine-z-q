@@ -249,4 +249,161 @@ theorem locM_of_deltaM (hF2 : (2 : F) ≠ 0) (hF3 : (3 : F) ≠ 0) (hℓ : ℓ �
   exact (sqc_mul_eq_of hxa' hxb (div_ne_zero hy hx0) (by
     field_simp; linear_combination -heq)).symm
 
+theorem ker_two_nsmul_eq_F (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) (hℓ : ℓ ≠ 0) :
+    (((nsmulAddMonoidHom 2 : (curveF ℓ).toAffine.Point →+ _).ker :
+        AddSubgroup _) : Set (curveF ℓ).toAffine.Point) =
+      {0, tPt h2 h3 hℓ (isRootM_zero ℓ), tPt h2 h3 hℓ (isRootM_ell ℓ), tPt h2 h3 hℓ (isRootM_neg3 ℓ)} := by
+  ext P
+  simp only [SetLike.mem_coe, AddMonoidHom.mem_ker, nsmulAddMonoidHom_apply, Set.mem_insert_iff,
+    Set.mem_singleton_iff]
+  rcases P with _ | ⟨x, y, h⟩
+  · exact iff_of_true (nsmul_zero 2) (Or.inl rfl)
+  rw [two_nsmul_some_eq_zero_iff h2]
+  constructor
+  · intro hy
+    have e := (curve_equation_iff x y).mp h.1
+    rw [hy] at e
+    have : x * (x - ℓ) * (x + 3 * ℓ) = 0 := by linear_combination -e
+    right
+    rcases mul_eq_zero.mp this with h' | h'
+    · rcases mul_eq_zero.mp h' with h'' | h''
+      · left; exact some_eq_tPt h2 h3 hℓ (isRootM_zero ℓ) h h''
+      · right; left; exact some_eq_tPt h2 h3 hℓ (isRootM_ell ℓ) h (sub_eq_zero.mp h'')
+    · right; right
+      exact some_eq_tPt h2 h3 hℓ (isRootM_neg3 ℓ) h (by linear_combination h')
+  · rintro (h0 | h0 | h0 | h0)
+    · exact absurd h0 (by simp)
+    all_goals
+      unfold tPt at h0
+      simp only [Point.some.injEq] at h0
+      exact h0.2
+
+theorem card_ker_two_nsmul_eq_four_F (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) (hℓ : ℓ ≠ 0) :
+    Nat.card (nsmulAddMonoidHom 2 : (curveF ℓ).toAffine.Point →+ _).ker = 4 := by
+  have hx : ∀ {e e' : F} (he : IsRootM ℓ e) (he' : IsRootM ℓ e'),
+      tPt h2 h3 hℓ he = tPt h2 h3 hℓ he' → e = e' := by
+    intro e e' he he' h
+    unfold tPt at h
+    simp only [Point.some.injEq] at h
+    exact h.1
+  have hz : ∀ {e : F} (he : IsRootM ℓ e), (0 : (curveF ℓ).toAffine.Point) ≠ tPt h2 h3 hℓ he := by
+    intro e he h
+    unfold tPt at h
+    exact Point.some_ne_zero _ h.symm
+  have h4ℓ : (4 : F) * ℓ ≠ 0 :=
+    mul_ne_zero (by rw [show (4 : F) = 2 ^ 2 by norm_num]; exact pow_ne_zero 2 h2) hℓ
+  have h3ℓ : (3 : F) * ℓ ≠ 0 := mul_ne_zero h3 hℓ
+  rw [← SetLike.coe_sort_coe, ker_two_nsmul_eq_F h2 h3 hℓ, Nat.card_coe_set_eq]
+  rw [Set.ncard_insert_of_notMem, Set.ncard_insert_of_notMem, Set.ncard_pair]
+  · intro h; have := hx _ _ h; apply h4ℓ; linear_combination this
+  · simp only [Set.mem_insert_iff, Set.mem_singleton_iff, not_or]
+    exact ⟨fun h => hℓ (hx _ _ h).symm, fun h => h3ℓ (by linear_combination hx _ _ h)⟩
+  · simp only [Set.mem_insert_iff, Set.mem_singleton_iff, not_or]
+    exact ⟨hz _, hz _, hz _⟩
+
+
+/-! ### Over a finite field: the Kummer map is onto, so every pair is a local class -/
+
+section Finite
+
+variable [Fintype F]
+
+/-- The points over a finite field form a finite set. -/
+theorem finite_points (ℓ : F) : Finite (curveF ℓ).toAffine.Point := by
+  refine Finite.of_injective (β := Option (F × F))
+    (fun P => match P with
+      | .zero => none
+      | .some x y _ => some (x, y)) ?_
+  intro P Q h
+  rcases P with _ | ⟨x, y, hP⟩ <;> rcases Q with _ | ⟨x', y', hQ⟩
+  · rfl
+  · simp at h
+  · simp at h
+  · simp only [Option.some.injEq, Prod.mk.injEq] at h
+    obtain ⟨rfl, rfl⟩ := h
+    rfl
+
+/-- `#(G/2G) = #G[2]` for a finite abelian group. -/
+theorem card_quotient_two_eq {G : Type*} [AddCommGroup G] [Finite G] :
+    Nat.card (G ⧸ (nsmulAddMonoidHom 2 : G →+ G).range) =
+      Nat.card (nsmulAddMonoidHom 2 : G →+ G).ker := by
+  have e1 := AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup
+    (nsmulAddMonoidHom 2 : G →+ G).range
+  have e2 := AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup
+    (nsmulAddMonoidHom 2 : G →+ G).ker
+  rw [Nat.card_congr (QuotientAddGroup.quotientKerEquivRange _).toEquiv] at e2
+  have hpos : 0 < Nat.card (nsmulAddMonoidHom 2 : G →+ G).range := Nat.card_pos
+  have : Nat.card (G ⧸ (nsmulAddMonoidHom 2 : G →+ G).range) *
+      Nat.card (nsmulAddMonoidHom 2 : G →+ G).range =
+      Nat.card (nsmulAddMonoidHom 2 : G →+ G).ker *
+      Nat.card (nsmulAddMonoidHom 2 : G →+ G).range := by
+    rw [← e1, e2, mul_comm]
+  exact Nat.eq_of_mul_eq_mul_right hpos this
+
+/-- In a finite field of odd characteristic, the square classes are `1` and the class of a fixed
+nonsquare. -/
+theorem sqc_eq_one_or (hc : ringChar F ≠ 2) {g : F} (hg : ¬ IsSquare g) (c : SqClass F) :
+    c = 1 ∨ c = sqc g := by
+  obtain ⟨x, hx, rfl⟩ := SqClass.exists_eq_sqc c
+  have hg0 : g ≠ 0 := by rintro rfl; exact hg ⟨0, by ring⟩
+  by_cases hsx : IsSquare x
+  · exact Or.inl ((sqc_eq_one_iff hx).mpr hsx)
+  · right
+    have hm : quadraticChar F (x * g) = 1 := by
+      rw [map_mul, quadraticChar_neg_one_iff_not_isSquare.mpr hsx,
+        quadraticChar_neg_one_iff_not_isSquare.mpr hg]
+      norm_num
+    obtain ⟨r, hr⟩ := (quadraticChar_one_iff_isSquare (mul_ne_zero hx hg0)).mp hm
+    have hr0 : r ≠ 0 := by
+      rintro rfl; rw [mul_zero] at hr; exact mul_ne_zero hx hg0 hr
+    refine (sqc_eq_sqc_iff hx hg0).mpr ⟨r / g, div_ne_zero hr0 hg0, ?_⟩
+    rw [div_pow, ← mul_div_assoc, eq_div_iff (pow_ne_zero 2 hg0)]
+    linear_combination g * hr
+
+/-- **Every pair of nonzero elements of a finite field of characteristic `≠ 2, 3` is a local
+Kummer class of `y² = x(x − ℓ)(x + 3ℓ)`** (`ℓ ≠ 0`): the Kummer map `E(F) → (F*/F*²)²` has
+kernel `2E(F)`, so its image has `#E(F)[2] = 4` elements, the whole target. -/
+theorem locM_finite (hc : ringChar F ≠ 2) (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) (hℓ : ℓ ≠ 0)
+    {α β : F} (hα : α ≠ 0) (hβ : β ≠ 0) : LocM F ℓ α β := by
+  haveI := finite_points ℓ
+  obtain ⟨g, hg⟩ := FiniteField.exists_nonsquare hc
+  set δ := deltaHomM h2 h3 hℓ
+  -- `ker δ = 2E`
+  have hker : δ.ker = (nsmulAddMonoidHom 2 : (curveF ℓ).toAffine.Point →+ _).range := by
+    ext P
+    rw [AddMonoidHom.mem_ker, AddMonoidHom.mem_range]
+    simp only [nsmulAddMonoidHom_apply]
+    constructor
+    · intro h; exact deltaM_eq_one_imp h2 h3 hℓ P (congrArg Additive.toMul h)
+    · rintro ⟨Q, rfl⟩; exact congrArg Additive.ofMul (deltaM_two_nsmul h2 h3 hℓ Q)
+  -- `#range δ = 4`
+  have hrange : Nat.card δ.range = 4 := by
+    rw [← Nat.card_congr (QuotientAddGroup.quotientKerEquivRange δ).toEquiv, hker,
+      card_quotient_two_eq, card_ker_two_nsmul_eq_four_F h2 h3 hℓ]
+  -- the target has at most four elements
+  have hsurj : Function.Surjective (fun b : Bool => if b then sqc g else (1 : SqClass F)) := by
+    intro c
+    rcases sqc_eq_one_or hc hg c with h | h
+    · exact ⟨false, by simp [h]⟩
+    · exact ⟨true, by simp [h]⟩
+  haveI : Finite (SqClass F) := Finite.of_surjective _ hsurj
+  have hcard2 : Nat.card (SqClass F) ≤ 2 := by
+    have := Nat.card_le_card_of_surjective _ hsurj
+    simpa using this
+  have hcardT : Nat.card (Additive (SqClass F × SqClass F)) ≤ 4 := by
+    show Nat.card (SqClass F × SqClass F) ≤ 4
+    rw [Nat.card_prod]
+    nlinarith [Nat.zero_le (Nat.card (SqClass F))]
+  have htop : δ.range = ⊤ := by
+    refine AddSubgroup.eq_top_of_card_eq _ (le_antisymm ?_ ?_)
+    · haveI : Finite (Additive (SqClass F × SqClass F)) :=
+        inferInstanceAs (Finite (SqClass F × SqClass F))
+      exact Nat.card_le_card_of_injective _ Subtype.val_injective
+    · rw [hrange]; exact hcardT
+  obtain ⟨P, hP⟩ : Additive.ofMul (sqc α, sqc β) ∈ δ.range := by rw [htop]; trivial
+  have hP' : deltaM ℓ P = (sqc α, sqc β) := congrArg Additive.toMul hP
+  exact locM_of_deltaM h2 h3 hℓ hα hβ P (by rw [hP']) (by rw [hP'])
+
+end Finite
+
 end ZInQ.Manuscript.PoleS12.GoodF
