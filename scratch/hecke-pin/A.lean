@@ -337,4 +337,93 @@ theorem heckeD_D0 (N : ℕ) [NeZero N] (h : HeckeFree N) {D : Dv} (hD : D ∈ D0
   | mul a b ha hb => rw [map_mul, Module.End.mul_apply]; exact ha (hb hD)
   | add a b ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem (ha hD) (hb hD)
 
+/-! ## The class map `Div(ℍ) → J(ℂ)` through the points `x_τ`, and its Hecke equivariance -/
+
+/-- `Σ n_τ [τ] ↦ Σ n_τ aj(x_τ)` (written additively in `J(ℂ)`). -/
+def cls (aj : X ⟶ J.X) (x : UpperHalfPlane → CPt X) : Dv →ₗ[ℤ] Additive (J.Pt ℂ) :=
+  Finsupp.linearCombination ℤ (fun τ => Additive.ofMul (ajC aj (x τ)))
+
+/-- An endomorphism on `J(ℂ)`, additively. -/
+def endA (t : AbVar.End J) : Additive (J.Pt ℂ) →ₗ[ℤ] Additive (J.Pt ℂ) :=
+  (MonoidHom.toAdditive (ptMap (L := ℂ) t)).toIntLinearMap
+
+theorem endA_apply (t : AbVar.End J) (y : J.Pt ℂ) :
+    endA t (Additive.ofMul y) = Additive.ofMul (endC t y) := rfl
+
+theorem cls_pt_sub (aj : X ⟶ J.X) (x : UpperHalfPlane → CPt X) (τ τ' : UpperHalfPlane) :
+    cls aj x (pt τ - pt τ') = Additive.ofMul (ajC aj (x τ) / ajC aj (x τ')) := by
+  simp [cls, ofMul_div]
+
+theorem cls_pt (aj : X ⟶ J.X) (x : UpperHalfPlane → CPt X) (τ : UpperHalfPlane) :
+    cls aj x (pt τ) = Additive.ofMul (ajC aj (x τ)) := by
+  simp [cls]
+
+theorem endA_mul (t s : AbVar.End J) (y : Additive (J.Pt ℂ)) :
+    endA (t * s) y = endA t (endA s y) := rfl
+
+theorem endA_intCast (n : ℤ) (y : Additive (J.Pt ℂ)) : endA (n : AbVar.End J) y = n • y := by
+  change Additive.ofMul (Additive.toMul y ≫ (n : AbVar.End J).hom) = n • y
+  have : (n : AbVar.End J).hom = (𝟙 J.X) ^ n := by
+    rw [show (n : AbVar.End J) = n • (1 : AbVar.End J) by simp]
+    rfl
+  rw [this, GrpObj.comp_zpow, Category.comp_id]
+  rfl
+
+theorem endA_add (t s : AbVar.End J) (y : Additive (J.Pt ℂ)) :
+    endA (t + s) y = endA t y + endA s y := by
+  change Additive.ofMul (Additive.toMul y ≫ (t + s).hom) = _
+  rw [Hom.hom_add, MonObj.comp_mul]; rfl
+
+variable (N) in
+/-- **Every `τ ∈ ℍ` has a point `x_τ`** (see `X1TauPoints`). -/
+def TauPts (jX tX : X.left.functionField) : Prop := ∀ τ : UpperHalfPlane, ∃ x : CPt X, AtTau N jX tX x τ
+
+/-- **Claim A.** The class map intertwines the lifted operators on degree-0 divisors with the
+endomorphisms `heckeJ h` of `J`, for any choice of points `x_τ`. -/
+theorem cls_heckeD [NeZero N] {jX tX : X.left.functionField} (aj : X ⟶ J.X)
+    (x : UpperHalfPlane → CPt X) (hx : ∀ τ, AtTau N jX tX (x τ) τ)
+    {tp : Nat.Primes → AbVar.End J} {δ : (ZMod N)ˣ → AbVar.End J}
+    (htp : ∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p))
+    (hδ : ∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) (h : HeckeFree N) :
+    ∀ D ∈ D0, cls aj x (heckeD N h D) = endA (heckeJ tp δ h) (cls aj x D) := by
+  have τ₀ : UpperHalfPlane := UpperHalfPlane.I
+  induction h using FreeAlgebra.induction with
+  | grade0 r =>
+    intro D _
+    rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply, map_zsmul]
+    rw [show algebraMap ℤ (AbVar.End J) r = (r : AbVar.End J) from rfl, endA_intCast]
+  | grade1 g =>
+    rcases g with p | d
+    · simp only [heckeD, heckeJ, FreeAlgebra.lift_ι_apply, Sum.elim_inl]
+      refine eqOn_D0 τ₀ (cls aj x ∘ₗ tOp N p (gT N p)) (endA (tp p) ∘ₗ cls aj x) ?_
+      intro τ
+      simp only [LinearMap.comp_apply, cls_pt_sub, endA_apply]
+      obtain ⟨hT1, hT2⟩ := htp p τ τ₀ (x τ) (x τ₀) (fun i => x (shiftDiv p i τ))
+        (fun i => x (shiftDiv p i τ₀)) (hx τ) (hx τ₀) (fun i => hx _) (fun i => hx _)
+      simp only [map_sub, tOp, Finsupp.linearCombination_single, one_smul, tDiv, map_add, map_sum,
+        cls_pt]
+      by_cases hpN : (p : ℕ) ∣ N
+      · simp only [hpN, ite_true, map_zero, add_zero]
+        rw [hT1 hpN, ← Finset.sum_sub_distrib]
+        simp only [← ofMul_div, ← ofMul_prod]
+      · simp only [hpN, ite_false, cls_pt]
+        have hg : (N : ℤ) ∣ (gT N p) 1 0 ∧ (((gT N p) 1 1 : ℤ) : ZMod N) = ((p : ℕ) : ZMod N) := by
+          simp only [gT, hpN, dite_false]; exact (exists_gamma_prime N p hpN).choose_spec
+        rw [hT2 hpN (gT N p) hg.1 hg.2 _ _ (hx _) (hx _)]
+        simp only [ofMul_mul, ofMul_div, ofMul_prod, Finset.sum_sub_distrib]
+        abel
+    · simp only [heckeD, heckeJ, FreeAlgebra.lift_ι_apply, Sum.elim_inr]
+      refine eqOn_D0 τ₀ (cls aj x ∘ₗ dOp (gD N d)) (endA (δ d) ∘ₗ cls aj x) ?_
+      intro τ
+      simp only [LinearMap.comp_apply, cls_pt_sub, endA_apply]
+      simp only [map_sub, dOp, Finsupp.linearCombination_single, one_smul, dDiv, cls_pt]
+      have hg := (exists_gamma_unit N d).choose_spec
+      rw [hδ d (gD N d) hg.1 hg.2 τ τ₀ (x τ) (x τ₀) _ _ (hx τ) (hx τ₀) (hx _) (hx _), ofMul_div]
+  | mul a b ha hb =>
+    intro D hD
+    rw [map_mul, Module.End.mul_apply, ha _ (heckeD_D0 N b hD), hb D hD, map_mul, endA_mul]
+  | add a b ha hb =>
+    intro D hD
+    rw [map_add, LinearMap.add_apply, map_add, ha D hD, hb D hD, map_add, endA_add]
+
 end AfTateLam.HeckePin
