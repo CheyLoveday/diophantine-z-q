@@ -19,3 +19,8 @@
   `isCuspInfty_map`, `isPointAt_comp`; `gzModelBody_transfer`; new leaf `ZInQ.GZUnique.GrossZagierCurveCdSome`
   (GZ on SOME normal proper model of X₀(N)); `grossZagierCurveCd_of_some`, `grossZagierAlgOptCd_of_some`.
   S1 discharged: the ∀-model leaf follows from the ∃-model leaf in Lean.
+- 11-17 03:05 VERIFIED (compiled, axioms standard): `TYZThm33Curve/Charts.lean` (ESch E integral,
+  `ffEquiv : K(ESch E) ≃ ℚ(E)`, `azEquiv : A_(Z) ≃ ℚ[x,y]/(W)`, G4(b) `mem_basicOpen_Y_of_not_mem_Z`) and
+  `TYZThm33Curve/Normal.lean`: `valuationRing_stalk_ESch [E.IsElliptic] : ∀ p, ValuationRing 𝒪_{ESch E,p}`
+  (D₊(Z): localization of the Dedekind domain ℚ[x,y]/(W); off D₊(Z): chart D₊(Y), prime ⊇ (u,v) = it,
+  v·w = u³ with w ≡ 1, maximal ideal (u), noetherian local domain ⇒ valuation ring).
