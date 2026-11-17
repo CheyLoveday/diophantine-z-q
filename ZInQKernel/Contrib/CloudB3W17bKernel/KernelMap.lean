@@ -144,12 +144,3 @@ theorem exists_analytic_kernelHom_original (A B : AbVar ℂ) {g : ℕ}
 
 end ZInQ.Contrib.CloudB3W17bKernel
 
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.fstPointHom
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.sndPointHom
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.differenceHom
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.differenceHom_apply
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.differenceHom_eq_one_iff
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.graph_iff_exists_kernelPoint
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.lieGroup_canonical
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.contMDiff_differenceHom
-#print axioms ZInQ.Contrib.CloudB3W17bKernel.exists_analytic_kernelHom_original

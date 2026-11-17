@@ -283,19 +283,3 @@ theorem exists_closed_compact_analytic_graph_canonical (A B : AbVar â„‚) {g : â„
 
 end ZInQ.Contrib.CloudB3W17bGAGA
 
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.compactSpace_canonical
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.isZLattice_of_strongUnif
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.contMDiff_pointDescentHom_canonical
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.existsUnique_analytic_descent_canonical
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.t2Space_canonical
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.graphSubgroup
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.closedGraph
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.mem_closedGraph
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.range_graphMap
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.graphHomeomorph
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.isCompact_closedGraph
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.graph_mfderiv_leftInverse
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.isDiffImmersionAt_graphMap
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.graph_locally_zero_coordinate_differences
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.isClosedEmbedding_graphMap
-#print axioms ZInQ.Contrib.CloudB3W17bGAGA.exists_closed_compact_analytic_graph_canonical
