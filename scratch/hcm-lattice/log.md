@@ -17,3 +17,7 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   - `locLat_sInvLat` : `(sInvLat s 𝔞)_p = s_p⁻¹ • 𝔞_p` for every lattice 𝔞, idele s, p (K_p = ∏_{v∣p} K_v,
     𝔞_p = closure of 𝔞 in K_p, s_p = p-component of s). Proof: U = s_f⁻¹𝔞̂ open, K dense in 𝔸_{K,f}.
   - `rep_local_of_global` : `s_f v − u ∈ 𝔞̂ → ∀ p, v − s_p⁻¹u ∈ (s⁻¹𝔞)_p`.
+- Analytic.lean: COMPILED. VERIFIED: defs `IsProjCoord`, `IsHoloLift`, `IsHolomorphicMap`, `wedge`, `IsImmersion`,
+  `InducesBij`, `IsAnalyticIso`; `deriv_derivWeierstrassP_ne` (℘'(z₀)=0 ⇒ ℘''(z₀)≠0, via disc ≠ 0 and isolated zeros);
+  `toPoint_isImmersion`, `toPoint_isAnalyticIso` (Weierstrass map z ↦ [℘ : ℘'/2 : 1] is an analytic isomorphism
+  ℂ/L → E_L(ℂ); at lattice points the lift [w + w³h : (−2 + w³k)/2 : w³] from Mathlib's ℘[L - l₀]).
