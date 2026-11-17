@@ -12,3 +12,9 @@
 - GaR.lean §5-§6 (closedPoint_eq_ev, ext_of_points; gaHom_proper_trivial and gaHom_abVar_trivial = Step (2)): compiles. VERIFIED.
 - GaR.lean §7 (factor_openImm, gaHom_add, gaHom_factors_open: a hom 𝔾_a → G factors through every open subgroup U ⊆ G, k alg. closed): compiles. VERIFIED.
 - GaR.lean §8 (gaHom_trivial_of_semiAbelian, noGaSubgroup_of_semiAbelian = Step (3)): compiles, whole file no errors. VERIFIED.
+- Contribution files: ZInQKernel/Contrib/OneProof/GaRigidity.lean (= GaR.lean with module doc) and GaRigiditySGA7.lean
+  (NoGaInIdComp, IsSemistableDef34, HasSemistableReductionDef34; leaves SGA7_IX_Cor3_3_Def34, SGA7_IX_3_5_ForwardGeom_Def34;
+  discharges sga7_IX_Cor3_3_of_def34, sga7_IX_3_5_ForwardGeom_of_def34). Compile pending dependency build.
+- autofold.json written; `autofold.py --dry-run` succeeds: strict count 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22
+  (-1 GLUE in this base: sga7_IX_3_5_ForwardGeom is LEAF in this base's kinds.tsv; -2 if queue11 re-rated it GLUE). VERIFIED (ran).
+- queue11 verdict file absent locally; SGA 7 not read (no network): reading of Déf. 3.4 as "no 𝔾_a" taken from the brief. UNVERIFIED.
