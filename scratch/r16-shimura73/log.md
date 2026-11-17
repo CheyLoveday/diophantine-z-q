@@ -15,3 +15,16 @@
   field action, dimension; "final total Euler-factor clause has an extra Gamma0/Fricke-stability condition";
   "Individual-embedding rank-two Tate realization and Frobenius-Hecke relation must still be supplied; total
   characteristic-polynomial divisibility alone is insufficient."
+
+## Consumers of r16CoreY (step 3) — VERIFIED (read TailA.lean:3404-3453, R16Used.lean:7-13, R16Split.lean:549-576)
+- r16CoreY -> R16_EichlerShimuraJ1' (R16Split.r16_of_printed; dim used only to derive rank two via rank_two_of_dim)
+  -> one consumer: G0ModNewform.g13 -> commonConstituent_of_attached (TailA.lean:3404), at l = 5 only,
+  one embedding emb = embOf 5 iotaC iota5, and it uses: surjectivity of pi, the rank-two clause at emb, and the
+  trace clause `tr(Frob_p | emb-component) = emb(a_p)` at every p not dividing 5N outside a finite set S (fed to
+  c9_core: Brauer-Nesbitt + Frobenius density). Not used: determinant clause, dim (except to get rank two),
+  [K_f:Q] < oo (bound, unused), other l, other embeddings.
+- So the Lean consumer needs: a per-embedding trace identity at l = 5 for the embedding attached to iota5 at
+  cofinitely many p — exactly the clause the known gap leaves unproved. The manuscript (L774-794) uses the same
+  thing ("equality with its modular trace at five", for all p outside T u {3,5} and the level) plus the analogous
+  modular Tate representation at 3 (r_3 identified by Chebotarev). Lean asks more than the manuscript only in:
+  determinant (in R16CoreY, unused), all l (R16CoreY quantifies over every l), dim A = [K_f:Q] (used for rank two).
