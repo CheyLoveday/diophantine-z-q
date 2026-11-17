@@ -6,9 +6,7 @@ import ZInQKernel.Contrib.OneProof.MumfordTorsionAlgClosed
 import ZInQKernel.Contrib.OneProof.MulEtale
 
 /-!
-# sz-raynaud: the manuscript's route at diophantine_zq.tex L814-818
-
-See the module doc of `ZInQKernel/Contrib/OneProof/SZRaynaud.lean` (this is its development copy).
+# sz-raynaud: development copy of `ZInQKernel/Contrib/OneProof/SZRaynaud.lean` (identical body; see its module doc).
 -/
 
 set_option linter.style.longLine false
@@ -34,62 +32,77 @@ def IsWildInertia {K : Type} [Field K] {Ω : Type} [Field Ω] [Algebra K Ω] (w 
 
 /-! ## §2. Raynaud's criterion as Silverberg–Zarhin Theorem 3.5 states it -/
 
-/-- **LEAF `SilverbergZarhinThm35`** (Raynaud's criterion as cited by the manuscript, diophantine_zq.tex L816,
-`\cite[Theorem 3.5]{silverbergzarhin}`: A. Silverberg, Yu. G. Zarhin, *Semistable reduction and torsion subgroups of
-abelian varieties*, Ann. Inst. Fourier 45 (1995), 403-420, Theorem 3.5, p. 406, which cites SGA 7 IX Prop. 4.7).
-Provenance (b): a cited print, cited by the manuscript's bibliography (L11077). Wording UNVERIFIED (Silverberg–
-Zarhin's page not re-read, no network). *As the manuscript and the notes give it*: `F` a field with a discrete
-valuation, `n ≥ 3` not divisible by the residue characteristic, `A/F` an abelian variety whose points of order `n`
-are defined over an unramified extension of `F`; then `A` has semistable reduction.
+/-- **Semistable reduction in Silverberg–Zarhin's sense** (*Semistable reduction and torsion subgroups of abelian
+varieties*, Ann. Inst. Fourier 45 (1995), §3, p. 405, read from the page image, scratch/sz-raynaud/sz-thm35-reading.md):
+`A` has a Néron model over `O` whose special fibre over the residue field `k` has identity component an extension of
+an abelian variety by a torus, not necessarily split (`DictModels.RaynaudOr.IsSemistableResT`). -/
+def HasSemistableReductionSZ {K : Type} [Field K] (A : PkgI3.AbVar K) (O : ValuationSubring K) : Prop :=
+  ∃ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel ∧ DictModels.RaynaudOr.IsSemistableResT 𝒩
 
-*Lean form* (a specialization): the unramified extension is `F` itself (the `m`-torsion is rational over `K`, which
-is how the manuscript uses it: `F = L_v(A[3])`); "semistable reduction" is the disjunction of its two readings,
-over the residue field `k` (`IsSemistableResT`: the identity component of `𝒩_k` is an extension of an abelian
-variety by a torus, for every Néron model) and on the geometric special fibre (`SemistableNeronModels`, the kernel's
-form), so either reading of the print gives this by or-introduction (as dict-models' `RaynaudSemistableSHOr`).
-Known issues (docs/research/sz-raynaud.md §4): the printed threshold at `n = 3` is unconfirmed (locators R6: the
-extraction reads like `> 3`); the printed base (any discretely valued field, or complete/henselian) is unconfirmed;
-Silverberg–Zarhin's definition of semistable reduction is unconfirmed (if it is "no unipotent subgroup", use
-`SilverbergZarhinThm35Def34`). -/
+/-- **LEAF `SilverbergZarhinThm35`** (Raynaud's criterion as the manuscript cites it, diophantine_zq.tex L816,
+`\cite[Theorem 3.5]{silverbergzarhin}`: A. Silverberg, Yu. G. Zarhin, *Semistable reduction and torsion subgroups of
+abelian varieties*, Ann. Inst. Fourier 45 (1995), 403-420, Theorem 3.5, p. 406; its proof is "see SGA 7 IX Prop. 4.7").
+Provenance (b): a cited print, in the manuscript's bibliography (L11077). Read from the page image by the fleet's
+print reader (11-17; scratch/sz-raynaud/sz-thm35-reading.md): `X` an abelian variety over a field `F` with a discrete
+valuation `v`, `n` a positive integer not divisible by the residue characteristic, the points of `X_n` defined over
+an extension of `F` unramified over `v`; if `n ≥ 3`, `X` has semistable reduction at `v` (§3, p. 405: the identity
+component of the special fibre of the Néron model is an extension of an abelian variety by a torus, not necessarily
+split).
+
+*Lean form* (a specialization): `F = K` with the valuation ring `O`; the unramified extension is `K` itself (all of
+`A(K̄)[m]` is `K`-rational, which is how the manuscript uses it, `F = L_v(A[3])`); "not divisible by the residue
+characteristic" is `IsUnit (m : O)`; the conclusion is Silverberg–Zarhin's semistability over the residue field
+(`IsSemistableResT`, torus not necessarily split) for every Néron model (Néron models are unique up to unique
+isomorphism, so "the" Néron model is "every" Néron model). -/
 def SilverbergZarhinThm35 : Prop :=
   ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (A : PkgI3.AbVar K) (m : ℕ), 3 ≤ m → IsUnit (m : O) →
     (∀ x : A.Pt (AlgebraicClosure K), x ^ m = 1 →
       ∃ y : A.Pt K, ZInQ.Contrib.AbVarBC.extPt A (Algebra.ofId K (AlgebraicClosure K)) y = x) →
-    (∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel → DictModels.RaynaudOr.IsSemistableResT 𝒩) ∨
-      SemistableNeronModels A O
+    ∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel → DictModels.RaynaudOr.IsSemistableResT 𝒩
+
+/-- **The step from Silverberg–Zarhin's semistability to the kernel's** (geometric special fibre, split torus,
+`GroupModelO.IsSemistable`): base change `k → k̄`, with connectedness of the identity component after base change
+from Stacks 04KV (`AVGlue.GeomConnOfRationalPoint`, proved `geomConnOfRationalPoint_proof`); this is dict-models'
+`DictModels.RaynaudOr.isSemistable_of_resT`. -/
+theorem isSemistable_of_sz {K : Type} [Field K] {A : PkgI3.AbVar K} {O : ValuationSubring K}
+    (𝒩 : GroupModelO A O) (h : DictModels.RaynaudOr.IsSemistableResT 𝒩) : 𝒩.IsSemistable :=
+  DictModels.RaynaudOr.isSemistable_of_resT geomConnOfRationalPoint_proof 𝒩 h
+
+theorem hasSemistableReduction_of_sz {K : Type} [Field K] {A : PkgI3.AbVar K} {O : ValuationSubring K}
+    (h : HasSemistableReductionSZ A O) : HasSemistableReduction A O := by
+  obtain ⟨𝒩, h1, h2⟩ := h
+  exact ⟨𝒩, h1, isSemistable_of_sz 𝒩 h2⟩
 
 /-- **Raynaud's criterion over every DVR, the kernel's form** (`ReductSplit.RaynaudSemistable`, statement
-unchanged) from Silverberg–Zarhin 3.5 and the proved ascent `k → k̄` (Stacks 04KV,
-`geomConnOfRationalPoint_proof`). No strict henselization, no base change: the manuscript's route. -/
-theorem raynaudSemistable_of_sz35 (h : SilverbergZarhinThm35) : ReductSplit.RaynaudSemistable := by
-  intro K _ O _ A m hm hu ht
-  rcases h K O A m hm hu ht with h1 | h2
-  · exact fun 𝒩 h𝒩 =>
-      DictModels.RaynaudOr.isSemistable_of_resT geomConnOfRationalPoint_proof 𝒩 (h1 𝒩 h𝒩)
-  · exact h2
+unchanged) from Silverberg–Zarhin 3.5 and the step `isSemistable_of_sz`. No strict henselization, no base change of
+the DVR: the manuscript's route. -/
+theorem raynaudSemistable_of_sz35 (h : SilverbergZarhinThm35) : ReductSplit.RaynaudSemistable :=
+  fun K _ O _ A m hm hu ht 𝒩 h𝒩 => isSemistable_of_sz 𝒩 (h K O A m hm hu ht 𝒩 h𝒩)
 
-/-- **The field `raynaudSemistableSHOr`, statement unchanged** (SGA 7 IX 4.7 over a strictly henselian DVR), as
-the specialization of Silverberg–Zarhin 3.5 to strictly henselian discrete valuation rings. -/
+/-- **The field `raynaudSemistableSHOr`, statement unchanged** (SGA 7 IX 4.7 over a strictly henselian DVR, with the
+or-conclusion), as the specialization of Silverberg–Zarhin 3.5 to strictly henselian discrete valuation rings (left
+disjunct). -/
 theorem raynaudSemistableSHOr_of_sz35 (h : SilverbergZarhinThm35) :
     DictModels.RaynaudOr.RaynaudSemistableSHOr :=
-  fun K _ O _ _ A m hm hu ht => h K O A m hm hu ht
+  fun K _ O _ _ A m hm hu ht => Or.inl (h K O A m hm hu ht)
 
 /-! ## §3. The manuscript's sentence at L817-818 -/
 
-/-- **LEAF `ElliotWildInertiaTrivial`** (ELLIOT: uncited manuscript sentence, diophantine_zq.tex:817-818, "Its wild
-inertia acts trivially on each `V_ℓ(A)` with `ℓ ≠ p`", said of `F = L_v(A[3])` right after semistable reduction
-over `F`). Provenance (a): in diophantine_zq.tex, no citation. *Lean form*: `O ⊆ K` a discrete valuation ring,
-`Ω` an algebraic closure of `K`, `w` a valuation ring of `Ω` over `O`, `ℓ` a prime invertible in `O`; if `A` has
-semistable reduction at `O` (the kernel's form, `HasSemistableReduction`), every wild inertia element `σ` of `w`
-(`IsInertia`, `IsWildInertia`) acts trivially on `T_ℓ(A) = lim A(Ω)[ℓⁿ]` (`galTΩ`). `T_ℓ` for `V_ℓ = T_ℓ ⊗ ℚ_ℓ`:
-`T_ℓ` is torsion-free, so trivial on `V_ℓ` is trivial on `T_ℓ` (a consequence of the sentence). Standard
-(mathematically: SGA 7 IX 3.5 (unipotence) with wild inertia pro-`p`; `elliot_of_semistableUnipotent` proves it
-from those), but the manuscript cites nothing for it. -/
+/-- **LEAF `ElliotWildInertiaTrivial`** (ELLIOT: uncited manuscript sentence, diophantine_zq.tex:817-818: wild inertia
+of `F` acts trivially on each `V_ℓ(A)` with `ℓ ≠ p`, said of `F = L_v(A[3])` right after "Raynaud's criterion gives
+semistable reduction there"). Provenance (a): in diophantine_zq.tex, no citation. *Lean form*: `O ⊆ K` a discrete
+valuation ring, `Ω` an algebraic closure of `K`, `w` a valuation ring of `Ω` over `O`, `ℓ` a prime invertible in `O`;
+if `A` has semistable reduction at `O` in the sense the manuscript takes from Silverberg–Zarhin
+(`HasSemistableReductionSZ`), every wild inertia element `σ` of `w` (`IsInertia`, `IsWildInertia`) acts trivially on
+`T_ℓ(A) = lim A(Ω)[ℓⁿ]` (`galTΩ`). `T_ℓ` for `V_ℓ = T_ℓ ⊗ ℚ_ℓ`: `T_ℓ` is torsion-free and embeds in `V_ℓ`, so
+trivial on `V_ℓ` gives trivial on `T_ℓ` (a consequence of the sentence). True and standard (SGA 7 IX 3.5's
+unipotence with wild inertia pro-`p`; `elliot_of_semistableUnipotent` proves it from those), but the manuscript cites
+nothing for it. -/
 def ElliotWildInertiaTrivial : Prop :=
   ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (w : ValuationSubring Ω),
-    w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K, HasSemistableReduction A O →
+    w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K, HasSemistableReductionSZ A O →
     ∀ (ℓ : ℕ) [Fact ℓ.Prime], IsUnit (ℓ : O) → ∀ σ : Ω ≃ₐ[K] Ω, IsInertia w σ → IsWildInertia w σ →
       ∀ t : TΩ A Ω ℓ, galTΩ A ℓ σ t = t
 
@@ -119,9 +132,8 @@ theorem fix_of_tate {K : Type} [Field K] {Ω : Type} [Field Ω] [Algebra K Ω] (
   exact h'
 
 /-- **L814-818 proved from its two leaves** (Silverberg–Zarhin 3.5 and the ELLIOT sentence), the Néron field at
-number fields (as r6's proof `GapNeron.raynaudCriterion_leavesNF`), and proved glue: Galois-fixed `m`-torsion is
-rational (`[m]` étale, `mulEtaleAbelianScheme_proof`), the ascent `k → k̄` (`geomConnOfRationalPoint_proof`), and
-the lift of `A(K̄)[ℓⁿ]` to `T_ℓ` (Mumford's torsion count, `mumfordTorsionAlgClosed_proof`). -/
+number fields (existence of a Néron model, as in r6's proof `GapNeron.raynaudCriterion_leavesNF`), and proved glue:
+Galois-fixed `m`-torsion is rational (`[m]` étale, `mulEtaleAbelianScheme_proof`) and the lift of `A(K̄)[ℓⁿ]` to `T_ℓ` (Mumford's torsion count, `mumfordTorsionAlgClosed_proof`). -/
 theorem raynaudWildNF_of_leaves (hSZ : SilverbergZarhinThm35) (hE : ElliotWildInertiaTrivial)
     (hN : GapNeron.NeronSchemeModelExistsDVRNF) : RaynaudWildNF := by
   intro K _ _ O _ w hw A _ m hm hmO hrat σ hσ hwild ℓ hℓ hℓO n x hx
@@ -131,13 +143,12 @@ theorem raynaudWildNF_of_leaves (hSZ : SilverbergZarhinThm35) (hE : ElliotWildIn
     ZInQ.Contrib.OneProof.MulEtale.mulEtaleAbelianScheme_proof
   have hT := AvSplit.torsionStructure_of_mumford
     ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof
-  have hss : SemistableNeronModels B O :=
-    raynaudSemistable_of_sz35 hSZ K O B m hm hmO
-      (hF K B m (natCast_ne_zero_of_isUnit O hmO) (fun σ x hx => hrat σ x hx))
+  have hss := hSZ K O B m hm hmO
+    (hF K B m (natCast_ne_zero_of_isUnit O hmO) (fun σ x hx => hrat σ x hx))
+  obtain ⟨𝒩, h𝒩⟩ := GapNeron.exists_neron_groupModelNF hN O B
   obtain ⟨t, ht⟩ := exists_tate_lift A hT ℓ (natCast_ne_zero_of_isUnit O hℓO) n x hx
   exact fix_of_tate B ℓ σ t n x ht
-    (hE K O (AlgebraicClosure K) w hw B (GapNeron.hasSemistableReduction_ofNF hN O B hss) ℓ hℓO σ hσ
-      hwild t)
+    (hE K O (AlgebraicClosure K) w hw B ⟨𝒩, h𝒩, hss 𝒩 h𝒩⟩ ℓ hℓO σ hσ hwild t)
 
 /-! ## §5. The ELLIOT sentence from SGA 7 IX 3.5 (sanity: what the kernel's old route used) -/
 
@@ -167,6 +178,7 @@ about tame inertia), so the manuscript's route does not give `SemistableUnipoten
 theorem elliot_of_semistableUnipotent (hU : SemistableUnipotent) (hP : WildPeriodCoprime) :
     ElliotWildInertiaTrivial := by
   intro K _ O _ Ω _ _ _ w hw A hA ℓ _ hℓO σ hσ hwild t
+  have hA' := hasSemistableReduction_of_sz hA
   apply Subtype.ext
   funext n
   set x : A.Pt Ω := Additive.toMul (t.1 n) with hxdef
@@ -175,7 +187,7 @@ theorem elliot_of_semistableUnipotent (hU : SemistableUnipotent) (hP : WildPerio
     have := pow_smul_tate t n
     rw [ht] at this
     exact this
-  have hu := unipSq_of_tate A ℓ σ t n x ht (hU K O Ω w hw A hA ℓ hℓO σ hσ t)
+  have hu := unipSq_of_tate A ℓ σ t n x ht (hU K O Ω w hw A hA' ℓ hℓO σ hσ t)
   obtain ⟨N, hcop, hit⟩ := hP K O Ω w hw A ℓ hℓO σ hσ hwild n x hx
   have hfix : A.galAct σ x = x :=
     PkgI2.fixed_of_unipSq_of_iterate (ObjBridge.toGrp A) σ x ℓ n N 1 (by rwa [pow_one]) hx hu
@@ -184,60 +196,30 @@ theorem elliot_of_semistableUnipotent (hU : SemistableUnipotent) (hP : WildPerio
   rw [← hxdef, hfix]
   rfl
 
-/-! ## §6. Reading-robust pair: semistability as "no `𝔾_a`" (GaRigidity) -/
+/-! ## §6. Silverberg–Zarhin's output meets the hypothesis of the two Déf. 3.4 rows (GaRigidity) -/
 
-/-- **LEAF variant `SilverbergZarhinThm35Def34`** (same source and provenance as `SilverbergZarhinThm35`, wording
-UNVERIFIED): the conclusion also admits the reading "the identity component of the geometric special fibre of the
-Néron model contains no `𝔾_a`" (`GaRigidity.SGA7.IsSemistableDef34`), should Silverberg–Zarhin define semistable
-reduction by the absence of a unipotent part. Implied by `SilverbergZarhinThm35` (`sz35Def34_of_sz35`). -/
-def SilverbergZarhinThm35Def34 : Prop :=
-  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
-    (A : PkgI3.AbVar K) (m : ℕ), 3 ≤ m → IsUnit (m : O) →
-    (∀ x : A.Pt (AlgebraicClosure K), x ^ m = 1 →
-      ∃ y : A.Pt K, ZInQ.Contrib.AbVarBC.extPt A (Algebra.ofId K (AlgebraicClosure K)) y = x) →
-    (∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel → DictModels.RaynaudOr.IsSemistableResT 𝒩) ∨
-      SemistableNeronModels A O ∨
-      (∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel → GaRigidity.SGA7.IsSemistableDef34 𝒩)
+/-- **Silverberg–Zarhin's semistability gives Déf. 3.4's** ("no `𝔾_a` in the identity component of the geometric
+special fibre", `GaRigidity.SGA7.IsSemistableDef34`, the hypothesis of the rows `SGA7_IX_Cor3_3_Def34` and
+`SGA7_IX_3_5_ForwardGeom_Def34`): the step `isSemistable_of_sz` (Stacks 04KV), then rigidity for `𝔾_a`
+(`GaRigidity.SGA7.isSemistableDef34_of_isSemistable`, from `GaRigidity.noGaSubgroup_of_semiAbelian`). -/
+theorem isSemistableDef34_of_sz {K : Type} [Field K] {A : PkgI3.AbVar K} {O : ValuationSubring K}
+    (𝒩 : GroupModelO A O) (h : DictModels.RaynaudOr.IsSemistableResT 𝒩) :
+    GaRigidity.SGA7.IsSemistableDef34 𝒩 :=
+  GaRigidity.SGA7.isSemistableDef34_of_isSemistable 𝒩 (isSemistable_of_sz 𝒩 h)
 
-theorem sz35Def34_of_sz35 (h : SilverbergZarhinThm35) : SilverbergZarhinThm35Def34 :=
-  fun K _ O _ A m hm hu ht => (h K O A m hm hu ht).imp_right Or.inl
+theorem hasSemistableReductionDef34_of_sz {K : Type} [Field K] {A : PkgI3.AbVar K} {O : ValuationSubring K}
+    (h : HasSemistableReductionSZ A O) : GaRigidity.SGA7.HasSemistableReductionDef34 A O :=
+  GaRigidity.SGA7.hasSemistableReductionDef34_of_has (hasSemistableReduction_of_sz h)
 
-/-- **LEAF variant `ElliotWildInertiaTrivialDef34`** (ELLIOT, diophantine_zq.tex:817-818, as
-`ElliotWildInertiaTrivial`) with semistable reduction read as "no `𝔾_a` in the identity component of the geometric
-special fibre" (`GaRigidity.SGA7.HasSemistableReductionDef34`). Implies `ElliotWildInertiaTrivial` by rigidity for
-`𝔾_a` (`elliot_of_def34`). -/
-def ElliotWildInertiaTrivialDef34 : Prop :=
-  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
-    (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (w : ValuationSubring Ω),
-    w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K, GaRigidity.SGA7.HasSemistableReductionDef34 A O →
-    ∀ (ℓ : ℕ) [Fact ℓ.Prime], IsUnit (ℓ : O) → ∀ σ : Ω ≃ₐ[K] Ω, IsInertia w σ → IsWildInertia w σ →
-      ∀ t : TΩ A Ω ℓ, galTΩ A ℓ σ t = t
-
-theorem elliot_of_def34 (h : ElliotWildInertiaTrivialDef34) : ElliotWildInertiaTrivial :=
-  fun K _ O _ Ω _ _ _ w hw A hA ℓ _ hℓO σ hσ hwild t =>
-    h K O Ω w hw A (GaRigidity.SGA7.hasSemistableReductionDef34_of_has hA) ℓ hℓO σ hσ hwild t
-
-/-- **L814-818 from the "no `𝔾_a`" pair**: under that reading both leaves are literal, and the composite is proved
-with rigidity for `𝔾_a` (`GaRigidity.SGA7.isSemistableDef34_of_isSemistable`) on the extension disjuncts. -/
-theorem raynaudWildNF_of_def34 (hSZ : SilverbergZarhinThm35Def34) (hE : ElliotWildInertiaTrivialDef34)
-    (hN : GapNeron.NeronSchemeModelExistsDVRNF) : RaynaudWildNF := by
-  intro K _ _ O _ w hw A _ m hm hmO hrat σ hσ hwild ℓ hℓ hℓO n x hx
-  haveI : Fact ℓ.Prime := ⟨hℓ⟩
-  let B := ObjBridge.ofGrp A
-  have hF := ReductGlue.fixedTorsionRational_of_mulEtale
-    ZInQ.Contrib.OneProof.MulEtale.mulEtaleAbelianScheme_proof
-  have hT := AvSplit.torsionStructure_of_mumford
-    ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof
-  have h34 : ∀ 𝒩 : GroupModelO B O, 𝒩.IsNeronModel → GaRigidity.SGA7.IsSemistableDef34 𝒩 := by
-    rcases hSZ K O B m hm hmO
-      (hF K B m (natCast_ne_zero_of_isUnit O hmO) (fun σ x hx => hrat σ x hx)) with h1 | h2 | h3
-    · exact fun 𝒩 h𝒩 => GaRigidity.SGA7.isSemistableDef34_of_isSemistable 𝒩
-        (DictModels.RaynaudOr.isSemistable_of_resT geomConnOfRationalPoint_proof 𝒩 (h1 𝒩 h𝒩))
-    · exact fun 𝒩 h𝒩 => GaRigidity.SGA7.isSemistableDef34_of_isSemistable 𝒩 (h2 𝒩 h𝒩)
-    · exact h3
-  obtain ⟨𝒩, h𝒩⟩ := GapNeron.exists_neron_groupModelNF hN O B
-  obtain ⟨t, ht⟩ := exists_tate_lift A hT ℓ (natCast_ne_zero_of_isUnit O hℓO) n x hx
-  exact fix_of_tate B ℓ σ t n x ht
-    (hE K O (AlgebraicClosure K) w hw B ⟨𝒩, h𝒩, h34 𝒩 h𝒩⟩ ℓ hℓO σ hσ hwild t)
+/-- **Raynaud's criterion with Déf. 3.4's conclusion** from Silverberg–Zarhin 3.5: when `A[m]` (`m ≥ 3` invertible) is
+rational, every Néron model has no `𝔾_a` in the identity component of its geometric special fibre, which is what the
+two Déf. 3.4 rows take as hypothesis. -/
+theorem def34_of_sz35 (h : SilverbergZarhinThm35) :
+    ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+      (A : PkgI3.AbVar K) (m : ℕ), 3 ≤ m → IsUnit (m : O) →
+      (∀ x : A.Pt (AlgebraicClosure K), x ^ m = 1 →
+        ∃ y : A.Pt K, ZInQ.Contrib.AbVarBC.extPt A (Algebra.ofId K (AlgebraicClosure K)) y = x) →
+      ∀ 𝒩 : GroupModelO A O, 𝒩.IsNeronModel → GaRigidity.SGA7.IsSemistableDef34 𝒩 :=
+  fun K _ O _ A m hm hu ht 𝒩 h𝒩 => isSemistableDef34_of_sz 𝒩 (h K O A m hm hu ht 𝒩 h𝒩)
 
 end SZRaynaud
