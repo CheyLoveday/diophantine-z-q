@@ -18,7 +18,8 @@ proves A6 from that leaf, so that `ShimuraIntegralModelRep` is not needed:
   `Y3Fix.ofKer` (proved; the printed level structure from the kernel's over `ℚ`-schemes, through the proved
   `mumfordTorsionAlgClosed`), and the universal family is read in the kernel form by `Y3Fix.toKer` (proved; the
   same `QMFamily`);
-* `qmModelG3U_of_z30`, `modelG3G6_of_leavesU_z30`, `good_of_z30` (proved): the readers, with `p > 324 ⇒ p ∤ 30`.
+* `qmModelG3U_of_z30`, `modelG3G6_of_leavesU_z30` (proved): the A6 readers, with `p > 324 ⇒ p ∤ 30`; the kernel
+  field's reader is `good_of_QML3U` in `D2A6Wrap.lean`.
 
 No `sorry`; never imports `ZInQKernel.OneProof.Main`. Report: docs/research/d2a6b.md.
 -/

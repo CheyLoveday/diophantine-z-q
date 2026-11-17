@@ -69,3 +69,16 @@ Base: fork main d435851d; merged origin/wip/d2a6-reroute (698c8c9e) and origin/w
   originals in base (prunescan-summary.txt): no field lost its last reader. `mulEtaleAbelianScheme` is a field only
   of the old textbook generations OpenTextbookLeaves7-10, unused in base and bypass alike (on this base the live
   textbook bundle OpenTextbookLeaves18 has 0 fields); nothing to prune.
+
+## Step 4 and #discharges on f3402e89 (VERIFIED)
+
+- `lake build Main Discharges D2A6Chain`: success (15992 jobs). Discharges.lean (`lake env lean`): 34 `#print axioms`,
+  all [propext, Classical.choice, Quot.sound] (D2WildNF 12, A6IntModel 10, wrappers 5, A6Z30 6, chain top 1).
+- `#discharges`: 150 lines; 135 are projections of the copied `…U` structures (noise); the other 15 are pre-existing
+  conditional discharges of base fields (carayolThmAFrob, dsThm965Printed, deRhamVpAbVarDirect, pazukiCor13Upper, …),
+  none about this task's fields. The IX 3.5 bypass is not a discharge.
+- Strict dry run: no field is discharged outright on f3402e89 (raynaudSemistableSHOr and y3FineModuliAbP were the two
+  outright discharges on TailZ79; both are folded on this base, TailZ81/82). `autofold.py tailz79/autofold.json
+  --dry-run` now refuses: "not a field of the current bundles" (strict-dryrun-f3402e89.txt). The bypass count uses
+  autofold.py's own `counts` and `render_open.must_be_glue` (gen_bypass imports autofold.py): 5/24 on 29 → 5/24 on 29.
+- TailZ79-era dry runs and bypass variants archived in scratch/d2a6b/tailz79/.

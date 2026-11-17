@@ -17,7 +17,9 @@ next research bundle from the current top one, `R0`, field by field:
   `y3FineModuliAbP := Y3RouteA.y3FineModuliAbP_of_z30 n.y3FullThreeRepZ30`), and `--mode add` keeps
   `y3FineModuliAbP` and adds `y3FullThreeRepZ30` (this base alone without y3-route-a's discharge);
 
-then the conversion to `OpenResearchLeaves54U` and the next top theorem. Options:
+then the conversion to `OpenResearchLeaves54U` and the next top theorem. On fork main f3402e89 (sz-raynaud and
+y3-route-a folded, TailZ81/TailZ82) only `--mode post` applies; `absorb`/`add` were for the TailZ79 base (their
+outputs are archived in scratch/d2a6b/tailz79/). Options:
 
     python3 scratch/d2a6b/gen/gen_bypass.py [--mode absorb|add|post] [--base FILE] [--out FILE] [--rows FILE]
 
