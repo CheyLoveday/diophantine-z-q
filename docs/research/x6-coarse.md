@@ -17,25 +17,35 @@ Marks: **VERIFIED** = compiled, computed, or read in a file. **STANDARD** = publ
 Canad. J. Math. 60 (2008) §2, as recorded in docs/research/gt-elkies.md §3; locators UNVERIFIED. It is also
 Elkies' p. 10 form `A ↦ A/ker I_p`, per the lead's reading of arXiv math/0005160.
 
-The new file states the printed form over genuine definitions and proves both directions (all VERIFIED, compiled,
-standard axioms only):
+The new file states the printed form over genuine definitions and proves **both directions from the bundle's
+existing fields** (all VERIFIED, compiled, standard axioms only). It adds no new textbook leaf.
 
 | statement | content | hypotheses |
 |---|---|---|
 | `mem_idealI_iff` | `I_m := {a ∈ 𝒪 : m ∣ nrd a} = 𝒪 μ_m`, `μ_m = 1, i, j, ij` (the ideals are principal at `D = 6`) | none |
 | `canonical` | `ι(μ_m) : (A, ι) → (A, ι ∘ Ad μ_m)` is a quotient of `A` by `A[I_m]` (`IsIdealQuotient`: equivariant isogeny whose kernel, as a functor of points on all `K`-schemes, is `A[I_m]`) | none |
-| `alTwist_of_alIdeal` | printed clause ⇒ twist clause of `X6CoarseModuli`/`X6Props` (every `α ∈ Aut 𝒪`, via `rep_cover` and inner twists) | none |
-| `x6CoarseModuli_of_ideal` | `X6CoarseModuliIdeal → GRX6AbPrint.X6CoarseModuli` | none |
-| `iso_of_quotient`, `alIdeal_of_alTwist`, `x6CoarseModuliIdeal_of_twist`, `x6CoarseModuliIdeal_iff` | twist ⇒ printed: every quotient of `(A, ι)` by `A[I_m]` is isomorphic to `(A, ι ∘ Ad μ_m)` | the textbook fact `IsogenyQuotient` (an isogeny is the quotient by its kernel) |
+| `iso_of_quotient_lat` | **every** quotient of `(A, ι)` by `A[I_m]` is isomorphic to `(A, ι ∘ Ad μ_m)` ("A/A[I] ≅ A with the conjugated action when `I` is principal", the fact the tree lacked) | textbook fields `gagaMorphism`, `mumfordTorsionAlgClosed` (and `uniformizationLeafAll`, proved) |
+| `alTwist_of_alIdeal`, `x6CoarseModuli_of_ideal` | printed clause ⇒ twist clause of `X6CoarseModuli`/`X6Props` (every `α ∈ Aut 𝒪`, via `rep_cover` and inner twists); printed leaf ⇒ `X6CoarseModuli` | none |
+| `alIdeal_of_alTwist`, `x6CoarseModuliIdeal_of_twist`, `x6CoarseModuliIdeal_iff` | twist ⇒ printed; the two leaves are equivalent | `gagaMorphism`, `mumfordTorsionAlgClosed` |
 | `atkinLehnerWIdeal_subset`, `atkinLehnerW_eq_of_clause` | Elkies' isogeny-form `W` ⊆ the twist-form `W`; equal on every witness carrying the printed clause | none (`hom_ext_qbar`: maps of proper smooth curves over `ℚ` agree if they agree on `ℚ̄`-points) |
-| `atkinLehnerW_eq_of_isogenyQuotient` | the two `W`'s are equal on every witness | `IsogenyQuotient` |
+| `atkinLehnerW_eq` | the two `W`'s are equal on every witness | `gagaMorphism`, `mumfordTorsionAlgClosed` |
+| `galoisClause_iff_natural` | the Galois clause ⇔ the naturality square of the coarse map at `Spec σ` (Mumford GIT Def. 5.6); uses the base change `bcAut` of a QM pair along `σ` | none |
 | `elkiesX6StarEvery_of_ideal'` | `ElkiesX6StarEvery` from `ElkiesX6StarEveryIdeal` (Elkies with his isogeny-form `W`), `X6CoarseModuliIdeal`, `shimuraMainThmIDeligneY3AbU`, `mumfordTorsionAlgClosed` | — |
-| `ideal_of_elkiesX6StarEvery` | converse | `IsogenyQuotient` |
-| `galoisNatural_of_clause`, `clause_of_galoisNatural` | the Galois clause ⇔ naturality of the coarse map at `Spec σ` (Mumford GIT Def. 5.6) | converse needs a base change of `P` along `σ` |
+| `ideal_of_elkiesX6StarEvery` | converse | `gagaMorphism`, `mumfordTorsionAlgClosed` |
 
-So the leaf holds under either reading. The direction that the consumers use, printed ⇒ twist, needs nothing. The
-converse needs only the textbook fact `IsogenyQuotient`, and serves only to show that the printed form is not
-stronger.
+So the leaf holds under either reading, and both readings are equivalent given two textbook fields already in the
+bundle. The direction that the consumers use, printed ⇒ twist, needs nothing.
+
+**How `iso_of_quotient_lat` is proved** (lattice model, §3 of the file). Let `φ : (A, ι) → (A', ι')` be a quotient
+by `A[I_m]`.
+1. Base-change to `ℂ` along `σQ` (`GR56.bcQ`) and take lattice data `D, D'` (`GR56.datQ`).
+2. Lift `φ` to a linear `F`, and `ι(μ)` to `M = ρ(ι(μ))` (`HomLatticeCorr`, `AvSplit.Final.h69`).
+3. The kernel hypothesis, transported to `ℂ`-points by the adjunction `Over.map ⊣ Over.pullback` (`ker_bc`), says
+   `F z ∈ Λ' ⟺ M z ∈ Λ`.
+4. `G F = n` (lift uniqueness, from `ψ φ = [n]`) and `M² = μ²` make `F` and `M` invertible.
+5. So `M F⁻¹ : Λ' → Λ` and `F M⁻¹ : Λ → Λ'` are mutually inverse lattice maps, realized over `ℂ` (`HomLatticeCorr`)
+   and equivariant (lift uniqueness).
+6. The isomorphism descends to `ℚ̄` (`GR56.qmIso_descend`, T11(b)).
 
 (Discharge output and fold: §5.)
 
@@ -48,7 +58,7 @@ stronger.
   would need quotients of abelian varieties by finite subgroup schemes, which the chain does not have."
 * **The lead's reading of Elkies** (task statement): p. 10, `w_p : A ↦ A/ker I_p`, the same form.
 * **The twist form is not printed** (SPECULATIVE, consistent with all of the above). It is the standard
-  identification when `I_m = μ_m𝒪`, and it is now proved in Lean (`canonical`, `iso_of_quotient`).
+  identification when `I_m = μ_m𝒪`, and it is now proved in Lean (`canonical`, `iso_of_quotient_lat`).
 
 Verdict: **the print uses the ideal-quotient (isogeny) form** (reading as recorded in the repository; the primary
 sources were not available on this host, UNVERIFIED).
@@ -67,7 +77,6 @@ def IsAtkinLehnerIdeal X Ψ k g : Prop :=
   ∀ x P, Ψ x = ⟦P⟧ → ∀ P' φ, IsIdealQuotient P (idealI k) P' φ → Ψ (x ≫ g.hom) = ⟦P'⟧
 def ALIdealClause X Ψ : Prop := ∀ k : Fin 4, ∃ g : X ≅ X, IsAtkinLehnerIdeal X Ψ k g
 def X6CoarseModuliIdeal : Prop := -- X6CoarseModuli with its Atkin–Lehner clause replaced by ALIdealClause X Ψ
-def IsogenyQuotient : Prop :=     -- textbook: an isogeny f (g f = [n], f g = [n]) is the quotient by its kernel over ℚ̄
 def ElkiesX6StarEveryIdeal : Prop := -- ElkiesX6StarEvery with W := atkinLehnerWIdeal, on witnesses with ALIdealClause
 ```
 
@@ -98,7 +107,7 @@ and `[𝒪 : 𝒪μ] = nrd(μ)²`. Counted by hand from the congruence condition
   no further published input (`elkiesX6StarEvery_of_ideal'`). On the witness built from `X6CoarseModuliIdeal` the
   two `W`'s coincide (`atkinLehnerW_eq_of_clause`). Transport to every witness is the existing
   `ElkiesPrint.every_of_functionField`, i.e. step (d), which needs T5 from `mumfordTorsionAlgClosed`. The converse
-  holds given `IsogenyQuotient` (`ideal_of_elkiesX6StarEvery`). Its docstring cites `X*(1)` with `Σ = {2, 3}` and
+  holds given the textbook fields `gagaMorphism` and `mumfordTorsionAlgClosed` (`ideal_of_elkiesX6StarEvery`). Its docstring cites `X*(1)` with `Σ = {2, 3}` and
   the verified page numbers. The old docstring is in `ElkiesX6StarEvery.lean`, which may not be edited: integrator,
   please carry the citation of the new leaf's docstring.
 * **(d) Transport to every witness: already a Lean proof** (`every_of_functionField`, elkies-print).
@@ -180,9 +189,10 @@ Net for priority 2: no change to the leaf. T2 is not an extra risk, and T1 is a 
 `IsBaseChangeOfPair σ P Q` has `Ψ(Spec σ ≫ x) = [Q]`. `GaloisNatural X Ψ` says: for every base change `Q` of `P`
 along `σ`, `Ψ(Spec σ ≫ x) = [Q]`. That is literally the naturality square of the coarse map `Φ : M → Hom(−, X)` at
 the morphism `Spec σ : Spec ℚ̄ → Spec ℚ̄` over `ℚ` (Mumford, GIT Def. 5.6). Proved:
-`galoisNatural_of_clause` (via the chain's `bc_uniquePair`). The converse `clause_of_galoisNatural` needs the
-existence of a base change of `P` along `σ`. That is a construction (`AbVar.baseChange` along `σ.toAlgebra`, with
-`endBC`), and it is not done here.
+`galoisNatural_of_clause` (via the chain's `bc_uniquePair`). The converse `clause_of_galoisNatural` uses the base
+change `bcAut σ P` of a QM pair along `σ` (`AbVar.baseChange` along `σ.toAlgebra`, `ι_σ = endBC ∘ ι`;
+`isBaseChange_bcAut`). So `galoisClause_iff_natural` holds with no hypothesis, and the new leaf states the clause in
+the literal naturality form `GaloisNatural`.
 
 So the Galois clause adds nothing to "the canonical model over `ℚ` is a coarse moduli scheme over `ℚ`" (the
 natural transformation is defined on all `ℚ`-schemes and `Spec σ` is one of their morphisms). The remaining
@@ -207,11 +217,12 @@ DISCHARGES [OpenResearchLeaves38.elkiesX6StarEvery] by X6ALIdeal.elkiesX6StarEve
 DISCHARGES [OpenResearchLeaves38.x6CoarseModuli] by X6ALIdeal.x6CoarseModuli_of_ideal
   still assumes: [X6ALIdeal.X6CoarseModuliIdeal]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 11173 theorems checked, 52 discharge one
+#discharges: 39 open hypotheses, 11185 theorems checked, 52 discharge one
 ```
 
 (`elkiesX6StarEvery_of_ideal`, the same with `ObjBridge.TorsionStructure` instead of `mumfordTorsionAlgClosed`, is
-also listed.) `#print axioms` on every theorem of the file (41) gives the standard three
+also listed; the run reports `11185 theorems checked`.) `#print axioms` on every theorem of the file (52) gives the
+standard three
 (`scratch/x6-coarse/axioms.txt`).
 
 **Autofold spec** `scratch/x6-coarse/autofold.json`: `x6CoarseModuli` → leaf `x6CoarseModuliIdeal` (kind
@@ -230,7 +241,6 @@ gives the standard three (`scratch/x6-coarse/foldcheck.txt`).
 |---|---|---|---|
 | `X6CoarseModuliIdeal` | published (replaces `x6CoarseModuli`) | **printed form**, pending review | Each clause is the coarse-moduli theorem's own content: the moduli bijection on `ℚ̄`-points; the naturality square at `Spec σ`, literally (`GaloisNatural`); Rotger's `w_m` in his ideal-quotient form; the classifying map, a specialization of the natural transformation as before. No twist-form reading is left. The remaining flag is the locator (Shimura/Deligne/Buzzard, UNVERIFIED). If the reviewer accepts, strict count −1. |
 | `ElkiesX6StarEveryIdeal` | consequence (replaces `elkiesX6StarEvery`) | **not printed form**: consequence | Its `W` is now Elkies' p. 10 isogeny form, so step (b) is gone. Steps (a) `ℚ(X/W) = ℚ(X)^W` and (c) "every point with that CM" remain (§4.1). |
-| `IsogenyQuotient` | textbook (Mumford §7, §12; Milne Prop. 8.1, UNVERIFIED) | not added to the bundle | Used only for the converse directions (`x6CoarseModuliIdeal_of_twist`, `ideal_of_elkiesX6StarEvery`), which show the new leaves are not stronger. |
 | `idealI`, `InTors`, `IsIdealQuotient`, `IsAtkinLehnerIdeal`, `ALIdealClause`, `GaloisNatural`, `atkinLehnerWIdeal`, `fixedByWIdeal`, `bcAut` | definitions over genuine objects (`LeafQM.O`, `PkgI3.AbVar`, Mathlib schemes) | — | — |
 | everything else in `X6AtkinLehnerIdeal.lean` | glue | proved | — |
 
@@ -241,7 +251,5 @@ gives the standard three (`scratch/x6-coarse/foldcheck.txt`).
   facts for `ℚ(√−6)` (c).
 * González–Rotger T1 (§4.2): Shimura's moduli interpretation of `Γ∖ℍ` is a genuine extra printed input; the
   `GRDict.lean` docstring correction is in §4.2.
-* Optional: prove `IsogenyQuotient` (or just `iso_of_quotient`) from the bundle's textbook fields
-  `uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed`. The lattice route: `HomLatticeCorr`, the
-  lifts of `φ` and `ι(μ)` have the same lattice preimage, then realize `ι(μ) ∘ φ⁻¹` over `ℂ` and descend with
-  GR56's `qmIso_descend`. Not done (see §8 if attempted).
+* Done after the first draft: the fact "every quotient by `A[I_m]` is the twist" is proved from the bundle's
+  textbook fields (`iso_of_quotient_lat`), so the draft's textbook leaf `IsogenyQuotient` was dropped.
