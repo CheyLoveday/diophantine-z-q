@@ -21,3 +21,16 @@ Base wip/leaf-fold33b 0595e253c; `git merge origin/main`: already up to date. Bu
   (Jacobson), translations by rational points (= closed points, Nullstellensatz) act transitively on closed
   points, so S contains every closed point, so Sᶜ (closed, Jacobson) is empty; V_L ⊆ G_L open (base change of
   an open immersion), connected (04KV) ⇒ irreducible.
+
+## Step 2: contributor-kit deliverable
+- `ZInQKernel/Contrib/OneProof/IdentityComponentLFT.lean` (18.9 KB; imports PicDictionary, the vendored
+  CloudB3W16 ConnectedPoint, CloudW07 Group/Translations and Geometrically/Irreducible; no build-time code):
+  `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.IdentityComponentLFT`
+  succeeded (14224 jobs, module 5.7 s, no warnings) — VERIFIED.
+- `#discharges` (scratch/idcomp-lft/Discharges.lean, output scratch/idcomp-lft/discharges-output.txt):
+  `DISCHARGES [OpenAddedLeaves23.identityComponentLFT] by IdCompLFT.identityComponentLFT_proof`,
+  `still assumes: []`, axioms [propext, Classical.choice, Quot.sound] — VERIFIED.
+- `scratch/idcomp-lft/autofold.json`; `autofold.py --dry-run`: "strict count: 13/18 on 31 -> 12/18 on 30;
+  strictest 13/18 -> 12/18"; generated `OpenAddedLeaves24` (= 23 without the field, no new leaf) and
+  `sixContactMin_of_open47`; scratch/idcomp-lft/FoldDryRun.lean (line 1 stripped) compiles, axioms standard —
+  VERIFIED.
