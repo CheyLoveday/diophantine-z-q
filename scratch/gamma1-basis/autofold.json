@@ -1,0 +1,23 @@
+{
+ "name": "gamma1-basis",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.Gamma1IntegralBasis"
+ ],
+ "discharges": [
+  {
+   "field": "gamma1IntegralSpan",
+   "proof": "_root_.Gamma1Basis.gamma1IntegralSpan_of_basis {n}.gamma1IntegralBasis",
+   "leaves": [
+    {
+     "name": "gamma1IntegralBasis",
+     "type": "_root_.Gamma1Basis.Gamma1IntegralBasis",
+     "doc": "Shimura, Introduction to the arithmetic theory of automorphic functions (1971), section 3.5, Thm 3.52 (number UNVERIFIED; also Diamond-Im 1995 section 12.3, Diamond-Shurman section 6.5 for k = 2), printed form: for every N >= 1 and every weight k >= 2, S_k(Gamma_1(N)) (Mathlib CuspForm on Gamma1 N: a = d = 1, c = 0 mod N) has a basis over C of cusp forms whose Fourier coefficients at infinity (q-expansion, period 1) are rational integers. Replaces gamma1IntegralSpan, which follows by basis => span (Gamma1Basis.gamma1IntegralSpan_of_basis, proved; the converse gamma1IntegralBasis_of_span is also proved, so the two are equivalent).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Shimura 1971 Thm 3.52 as printed: a basis of S_k(Gamma_1(N)), every k >= 2, with rational integral Fourier coefficients; replaces gamma1IntegralSpan, basis => span now proved glue, gamma1-basis); locator UNVERIFIED",
+     "source": "Shimura 1971, Introduction to the arithmetic theory of automorphic functions, section 3.5, Thm 3.52: S_k(Gamma_1(N)) has a basis with rational integral Fourier coefficients"
+    }
+   ]
+  }
+ ],
+ "note": "Restates the leaf gamma1IntegralSpan (LEAF strict, GLUE strictest: basis => span inside the statement, queue10 verdict 11-17) in the printed form, the existence of an integral basis; the span statement is derived in proved glue, so every consumer is unchanged. Proofs: ZInQKernel/Contrib/OneProof/Gamma1IntegralBasis.lean (#discharges: scratch/gamma1-basis/discharges-output.txt). Report docs/research/gamma1-basis.md."
+}
