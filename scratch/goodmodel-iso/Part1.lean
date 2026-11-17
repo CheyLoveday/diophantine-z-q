@@ -259,4 +259,82 @@ lemma isIso_of_injective (F N : Over (Spec (CommRingCat.of R))) [IsProper F.hom]
       · rw [Category.assoc, Category.assoc, Category.assoc, h1, morphismRestrict_ι, Category.assoc]
   exact (MorphismProperty.isomorphisms.iff _).mpr ⟨⟨φ', ha, hb⟩⟩
 
+/-- The closed point of `Spec R` through the residue field. -/
+abbrev resMap (R : Type) [CommRing R] [IsLocalRing R] :
+    Spec (CommRingCat.of (IsLocalRing.ResidueField R)) ⟶ Spec (CommRingCat.of R) :=
+  Spec.map (CommRingCat.ofHom (algebraMap R (IsLocalRing.ResidueField R)))
+
+lemma resMap_apply (t : Spec (CommRingCat.of (IsLocalRing.ResidueField R))) :
+    (resMap R).base t = IsLocalRing.closedPoint R := by
+  apply PrimeSpectrum.ext
+  show Ideal.comap _ t.asIdeal = IsLocalRing.maximalIdeal R
+  have : t.asIdeal = ⊥ := by
+    have := t.isPrime
+    exact Ideal.eq_bot_of_prime t.asIdeal
+  rw [this, ← RingHom.ker_eq_comap_bot]
+  exact IsLocalRing.ker_residue
+
+/-- The base change of `ψ` to a field fibre, as a morphism out of the abelian variety `A`. -/
+def fibreMap {F N : Over (Spec (CommRingCat.of R))} (ψ : F ⟶ N) {k : Type} [Field k]
+    {s : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R)} (A : PkgI3.AbVar k) (g : A.X.left ⟶ F.left)
+    (hw : g ≫ F.hom = A.X.hom ≫ s) : A.X ⟶ (Over.pullback s).obj N :=
+  Over.homMk (pullback.lift (g ≫ ψ.left) A.X.hom (by rw [Category.assoc, Over.w ψ, hw]))
+    (pullback.lift_snd _ _ _)
+
+@[reassoc]
+lemma fibreMap_fst {F N : Over (Spec (CommRingCat.of R))} (ψ : F ⟶ N) {k : Type} [Field k]
+    {s : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R)} (A : PkgI3.AbVar k) (g : A.X.left ⟶ F.left)
+    (hw : g ≫ F.hom = A.X.hom ≫ s) :
+    (fibreMap ψ A g hw).left ≫ pullback.fst N.hom s = g ≫ ψ.left :=
+  pullback.lift_fst _ _ _
+
+@[reassoc]
+lemma fibreMap_hom {F N : Over (Spec (CommRingCat.of R))} (ψ : F ⟶ N) {k : Type} [Field k]
+    {s : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R)} (A : PkgI3.AbVar k) (g : A.X.left ⟶ F.left)
+    (hw : g ≫ F.hom = A.X.hom ≫ s) :
+    (fibreMap ψ A g hw).left ≫ ((Over.pullback s).obj N).hom = A.X.hom :=
+  Over.w (fibreMap ψ A g hw)
+
+/-- **Rigidity on a field fibre.** The base change of `ψ` is a homomorphism. -/
+lemma fibreMap_isMonHom {F N : Over (Spec (CommRingCat.of R))} [IsSeparated N.hom] [LocallyOfFiniteType N.hom]
+    [GrpObj N] (ψ : F ⟶ N) (e : Spec (CommRingCat.of R) ⟶ F.left) (hη : e ≫ ψ.left = η[N].left)
+    {k : Type} [Field k] {s : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R)} (A : PkgI3.AbVar k)
+    (g : A.X.left ⟶ F.left) (hw : g ≫ F.hom = A.X.hom ≫ s) (hone : (1 : A.Pt k).left ≫ g = s ≫ e) :
+    letI : GrpObj ((Over.pullback s).obj N) := Functor.grpObjObj
+    IsMonHom (fibreMap ψ A g hw) := by
+  letI : GrpObj ((Over.pullback s).obj N) := Functor.grpObjObj
+  haveI : IsSeparated ((Over.pullback s).obj N).hom := by
+    change IsSeparated (pullback.snd N.hom s); infer_instance
+  haveI : LocallyOfFiniteType ((Over.pullback s).obj N).hom := by
+    change LocallyOfFiniteType (pullback.snd N.hom s); infer_instance
+  refine MulRigidity.isMonHom_of_geometricallyIntegral A.X _ _ ?_
+  have h2 := hone
+  rw [Hom.one_def, Over.comp_left, Over.toUnit_left] at h2
+  simp only [PkgI3.AbVar.ptObj, Over.mk_hom, spec_algebraMap_self] at h2
+  have h4 : Over.Hom.left η[A.X] ≫ g = s ≫ e := by
+    rw [← h2, Category.assoc]; exact (Category.id_comp _).symm
+  rw [Functor.obj.η_def]
+  ext1
+  apply pullback.hom_ext
+  · have e1 : ((Over.pullback s).map η[N]).left ≫ pullback.fst N.hom s =
+        pullback.fst (𝟙_ (Over (Spec (CommRingCat.of R)))).hom s ≫ η[N].left := by simp
+    have e2 : (Functor.LaxMonoidal.ε (Over.pullback s)).left ≫
+        pullback.fst (𝟙_ (Over (Spec (CommRingCat.of R)))).hom s = s := by
+      have hw := Over.w (Functor.LaxMonoidal.ε (Over.pullback s))
+      have hc := pullback.condition (f := (𝟙_ (Over (Spec (CommRingCat.of R)))).hom) (g := s)
+      have h1 : pullback.fst (𝟙_ (Over (Spec (CommRingCat.of R)))).hom s =
+          pullback.fst (𝟙_ (Over (Spec (CommRingCat.of R)))).hom s ≫ (𝟙_ (Over (Spec (CommRingCat.of R)))).hom :=
+        (Category.comp_id _).symm
+      rw [h1, hc, ← Category.assoc]
+      erw [hw]
+      exact Category.id_comp _
+    rw [Over.comp_left, Category.assoc, fibreMap_fst, ← Category.assoc, h4, Category.assoc, hη,
+      Over.comp_left, Category.assoc, e1, ← Category.assoc, e2]
+  · rw [Over.comp_left, Category.assoc]
+    erw [fibreMap_hom]
+    rw [Over.comp_left, Category.assoc]
+    erw [Over.w ((Over.pullback s).map η[N])]
+    erw [Over.w (Functor.LaxMonoidal.ε (Over.pullback s))]
+    exact Over.w η[A.X]
+
 end ZInQ.Contrib.GoodModelIso
