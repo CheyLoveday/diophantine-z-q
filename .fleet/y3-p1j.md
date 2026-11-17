@@ -43,4 +43,9 @@ the GLUE count is unchanged at 4/27 on 31. The kinds row for a later fold is in 
   Thm 2.1/Lemma 3.1; the bibliography cites the BG preprint; the polarization point from y3-route-a.
 
 **Remains.**
-* Drop the X₆ fields: restate the row over Y₃ (`R2fpProps`) and re-route its consumers on top of cm-branch.
+* Dropping the X₆ fields needs more than this task:
+  * restate the row over Y₃ (`R2fpProps`) so that it carries no `X₆` witness;
+  * re-route its consumers on top of cm-branch;
+  * re-route sgr-direct's `HeckeSqrtBranchAny`, which reads Elkies' `√−t`, to the manuscript's tame local
+    equation (L517-526).
+* Optional: the adelic ↔ moduli orbit dictionary (ON THE SPOT in the report) in Lean.
