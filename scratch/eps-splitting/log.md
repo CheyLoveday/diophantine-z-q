@@ -15,3 +15,13 @@ Base: wip/hgz-steps 92fd272e, merged origin/main (e1b31749) as dc6321558.
   - `splitType_of_irreducible`, `splitType_of_eq_mul`, `splitType_of_eq_mul_self`. VERIFIED.
   - `splitType_epsD`: `SplitType K p (epsD D p)` for every prime `p`, i.e.
     `(IsSplitIn K p ↔ ε_D(p) = 1) ∧ (IsInertIn K p ↔ ε_D(p) = −1) ∧ (IsRamifiedIn K p ↔ ε_D(p) = 0)`. VERIFIED (compiles, 01:5x).
+  - `epsD_eq_one_iff_isSplitIn`, `epsD_eq_neg_one_iff_isInertIn`, `epsD_eq_zero_iff_isRamifiedIn`,
+    `epsD_prime_trichotomy`, `quadCharPrime_eq_epsD`, `quadChar_eq_epsD` (`quadChar K n = epsD D n` for all `n`). VERIFIED.
+- `ZInQKernel/Contrib/OneProof/GrossZagierSplit/QuadSplit.lean` = reorganized `QuadInt.lean` (definitions only need
+  `[Field K]`); `lake env lean`: no errors, no warnings. VERIFIED. Copy: `scratch/eps-splitting/QuadSplit.lean`.
+- `ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean`: leaf `GZSplit.GrossZagierCurveAtSplit` / `GrossZagierCurveCdSplit`
+  (Heegner hypothesis `IsSplitIn K p`, twist `quadChar K`), bridges `grossZagierCurveAt_of_split`,
+  `grossZagierCurveAtSplit_of_curveAt` (equivalence), `grossZagierCurveCd_of_split`, `grossZagierCurveCdSplit_of_curveCd`,
+  `grossZagierAlgOptCd_of_split : GrossZagierCurveCdSplit → GZAlg.GrossZagierAlgOptCd`.
+  - build1 (`lake build ZInQKernel.Contrib.OneProof.GrossZagierSplit`): GrossZagierScheme tree built; GrossZagierSplit
+    failed only on a missing `open HeckeRing.GL2` (`Newform`). Fixed; `lake env lean` on the file: no errors. VERIFIED.
