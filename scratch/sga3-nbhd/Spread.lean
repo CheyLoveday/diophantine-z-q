@@ -8,6 +8,7 @@ set_option linter.unusedVariables false
 noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits NumberField Topology
+open MonoidalCategory CartesianMonoidalCategory MonObj CToPrinted
 
 namespace SGA3Nbhd
 
@@ -251,5 +252,159 @@ theorem mem_idCompSet_bc (hG : AVGlue.GeomConnOfRationalPoint) {S S' : Scheme.{0
     exact he _
   · rintro w ⟨-, hw⟩
     exact hw
+
+open MonoidalCategory CartesianMonoidalCategory MonObj CToPrinted in
+/-- **SGA 3 VI_B 3.3, the easy inclusion** (any base change, no hypothesis): `pr₁` maps `(G ×_S S')⁰` into
+`G⁰` (the second half of `CToPrinted.idComp_baseChange`). -/
+theorem mem_idCompSet_of_bc {S S' : Scheme.{0}} (g : S' ⟶ S) (G : Over S) [GrpObj G]
+    (z : ((Over.pullback g).obj G).left) :
+    letI : GrpObj ((Over.pullback g).obj G) := Functor.grpObjObj
+    z ∈ idCompSet ((Over.pullback g).obj G) → pullback.fst G.hom g z ∈ idCompSet G := by
+  letI : GrpObj ((Over.pullback g).obj G) := Functor.grpObjObj
+  intro hz
+  let e' := (η[(Over.pullback g).obj G] : 𝟙_ (Over S') ⟶ _).left
+  let e := (η[G] : 𝟙_ (Over S) ⟶ G).left
+  have hu1 : ∀ s', pullback.fst G.hom g (e' s') = e (g s') := by
+    intro s'
+    rw [← Scheme.Hom.comp_apply, unit_bc_fst g G, Scheme.Hom.comp_apply]
+  have hu2 : ∀ s', pullback.snd G.hom g (e' s') = s' := by
+    intro s'
+    show ((Over.pullback g).obj G).hom (e' s') = s'
+    rw [← Scheme.Hom.comp_apply, Over.w]
+    rfl
+  have hfib : ∀ w : ((Over.pullback g).obj G).left, G.hom (pullback.fst G.hom g w) = g (pullback.snd G.hom g w) := by
+    intro w
+    rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+  let s' := pullback.snd G.hom g z
+  have hz' : z ∈ connectedComponentIn (pullback.snd G.hom g ⁻¹' {s'}) (e' s') := hz
+  set C := connectedComponentIn (pullback.snd G.hom g ⁻¹' {s'}) (e' s')
+  have hC : _root_.IsPreconnected (pullback.fst G.hom g '' C) :=
+    isPreconnected_connectedComponentIn.image _ (pullback.fst G.hom g).continuous.continuousOn
+  have hsub : pullback.fst G.hom g '' C ⊆ G.hom ⁻¹' {g s'} := by
+    rintro _ ⟨w, hw, rfl⟩
+    show G.hom (pullback.fst G.hom g w) = g s'
+    rw [hfib]
+    exact congrArg g (connectedComponentIn_subset (pullback.snd G.hom g ⁻¹' {s'}) _ hw)
+  have hmem : e (g s') ∈ pullback.fst G.hom g '' C :=
+    ⟨e' s', mem_connectedComponentIn (hu2 s'), hu1 s'⟩
+  have := hC.subset_connectedComponentIn hmem hsub ⟨z, hz', rfl⟩
+  show pullback.fst G.hom g z ∈ connectedComponentIn (G.hom ⁻¹' {G.hom (pullback.fst G.hom g z)})
+    (e (G.hom (pullback.fst G.hom g z)))
+  rw [hfib]
+  exact this
+/-- Over a DVR, a fibre over a non-closed point is preconnected if `pullback G.hom (Spec F → Spec R)` is. -/
+theorem isPreconnected_fibre_dvr {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+    (G : Over (Spec (CommRingCat.of R))) {F : Type} [Field F] (φ : R →+* F) (hφ : Function.Injective φ)
+    (hc : _root_.IsPreconnected
+      (Set.univ : Set ↥(pullback (C := Scheme.{0}) G.hom (Spec.map (CommRingCat.ofHom φ)))))
+    (t : Spec (CommRingCat.of R)) (ht : t ≠ IsLocalRing.closedPoint R) :
+    _root_.IsPreconnected (G.hom ⁻¹' {t}) := by
+  have ht0 : t.asIdeal = ⊥ := by
+    by_contra h
+    have hm : t.asIdeal.IsMaximal := Ring.DimensionLEOne.maximalOfPrime h t.isPrime
+    exact ht (PrimeSpectrum.ext (IsLocalRing.eq_maximalIdeal hm))
+  have hr : G.hom ⁻¹' {t} = Set.range (pullback.fst G.hom (Spec.map (CommRingCat.ofHom φ))) := by
+    rw [Scheme.Pullback.range_fst]
+    congr 1
+    ext u
+    simp only [Set.mem_singleton_iff, Set.mem_range]
+    constructor
+    · rintro rfl
+      refine ⟨(⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum F), ?_⟩
+      apply PrimeSpectrum.ext
+      rw [ht0]
+      show Ideal.comap φ ⊥ = ⊥
+      exact Ideal.comap_bot_of_injective _ hφ
+    · rintro ⟨v, rfl⟩
+      apply PrimeSpectrum.ext
+      rw [ht0]
+      have hv : v.asIdeal = ⊥ := (Ideal.eq_bot_or_top _).resolve_right v.isPrime.ne_top
+      show Ideal.comap φ v.asIdeal = ⊥
+      rw [hv]
+      exact Ideal.comap_bot_of_injective _ hφ
+  rw [hr, ← Set.image_univ]
+  exact hc.image _ (pullback.fst G.hom (Spec.map (CommRingCat.ofHom φ))).continuous.continuousOn
+
+open ReductSplit in
+/-- In a group model over a DVR, every point over the generic point lies in `G⁰`. -/
+theorem mem_idCompSet_groupModelO_generic {K : Type} [Field K] {A : PkgI3.AbVar K} {O : ValuationSubring K}
+    [IsDiscreteValuationRing O] (𝒩 : GroupModelO A O) (z : 𝒩.G.left)
+    (hz : 𝒩.G.hom z ≠ IsLocalRing.closedPoint O) : z ∈ idCompSet 𝒩.G := by
+  have hc : _root_.IsPreconnected (Set.univ : Set ↥(pullback (C := Scheme.{0}) 𝒩.G.hom
+      (Spec.map (CommRingCat.ofHom (algebraMap O K))))) := by
+    haveI : IsIntegral A.X.left := GeometricallyIntegral.isIntegral_of_subsingleton A.X.hom
+    let e : pullback 𝒩.G.hom (Spec.map (CommRingCat.ofHom (algebraMap O K))) ≅ A.X.left :=
+      (Over.forget _).mapIso 𝒩.gen
+    have h1 : _root_.IsPreconnected (Set.univ : Set A.X.left) :=
+      (IrreducibleSpace.isIrreducible_univ _).2.isPreconnected
+    have h2 := h1.image _ (Scheme.homeoOfIso e.symm).continuous.continuousOn
+    rwa [Set.image_univ_of_surjective (Scheme.homeoOfIso e.symm).surjective] at h2
+  have hp := isPreconnected_fibre_dvr 𝒩.G (algebraMap O K) (FaithfulSMul.algebraMap_injective O K) hc _ hz
+  show z ∈ connectedComponentIn (𝒩.G.hom ⁻¹' {𝒩.G.hom z}) ((η[𝒩.G] : 𝟙_ (Over _) ⟶ 𝒩.G).left (𝒩.G.hom z))
+  exact hp.subset_connectedComponentIn (SGA3IdComp.hom_e 𝒩.G _) le_rfl rfl
+
+open ZInQ.HeightSplit ZInQ.DefFaltings in
+/-- **An open subgroup `W` of a group model over `𝓞_L` containing the generic fibre is a group model** (the
+construction of `identityComponentOLRange_of` with `𝒢⁰` replaced by `W`); original doc: from the bundle leaf
+`AVGlue.GeomConnOfRationalPoint` (the construction of `identityComponentGroupModel_of`). -/
+theorem openSubgroupModel_at {K : Type} [Field K]
+    {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L] (𝒢 : GroupModel A L)
+    (W : 𝒢.G.left.Opens) (hW : OpenSub.IsSubgroupOpen 𝒢.G W)
+    (hgen : ∀ x : 𝒢.G.left, (𝒢.G.hom x).asIdeal = ⊥ → x ∈ (W : Set 𝒢.G.left)) :
+    ∃ (𝒢₀ : GroupModel A L) (i : 𝒢₀.G ⟶ 𝒢.G), IsOpenImmersion i.left ∧
+      IsMonHom i ∧ Set.range i.left = (W : Set 𝒢.G.left) := by
+  letI : GrpObj (OpenSub.G0 W) := OpenSub.grpG0 hW
+  have hmon : IsMonHom (OpenSub.incl W) := OpenSub.isMonHom_incl hW
+  haveI : Smooth (OpenSub.G0 W).hom := show Smooth (W.ι ≫ 𝒢.G.hom) from inferInstance
+  haveI : IsSeparated (OpenSub.G0 W).hom := show IsSeparated (W.ι ≫ 𝒢.G.hom) from inferInstance
+  haveI : QuasiCompact (OpenSub.G0 W).hom := by
+    haveI : IsLocallyNoetherian 𝒢.G.left := LocallyOfFiniteType.isLocallyNoetherian 𝒢.G.hom
+    haveI : CompactSpace 𝒢.G.left := QuasiCompact.compactSpace_of_compactSpace 𝒢.G.hom
+    haveI : IsNoetherian 𝒢.G.left := {}
+    show QuasiCompact (W.ι ≫ 𝒢.G.hom)
+    infer_instance
+  let jL := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L))
+  have hmap : ((Over.pullback jL).map (OpenSub.incl W)).left =
+      pullback.map (W.ι ≫ 𝒢.G.hom) jL 𝒢.G.hom jL W.ι (𝟙 _) (𝟙 _) (by simp) (by simp) := by
+    apply pullback.hom_ext <;> simp [Over.pullback_map_left]
+  haveI : IsOpenImmersion (OpenSub.incl W).left := show IsOpenImmersion W.ι from inferInstance
+  have hiso : IsIso ((Over.pullback jL).map (OpenSub.incl W)).left := by
+    rw [isIso_iff_isOpenImmersion_and_surjective]
+    refine ⟨ZInQ.H5Glue.isOpenImmersion_pullback_map _ _, ⟨fun z => ?_⟩⟩
+    have hz : z ∈ Set.range ((Over.pullback jL).map (OpenSub.incl W)).left := by
+      rw [hmap, Scheme.Pullback.range_map]
+      refine ⟨?_, ⟨pullback.snd 𝒢.G.hom jL z, rfl⟩⟩
+      show pullback.fst 𝒢.G.hom jL z ∈ Set.range W.ι
+      rw [Scheme.Opens.range_ι]
+      apply hgen
+      have h1 : 𝒢.G.hom (pullback.fst 𝒢.G.hom jL z) = jL (pullback.snd 𝒢.G.hom jL z) := by
+        rw [← Scheme.Hom.comp_apply, pullback.condition, Scheme.Hom.comp_apply]
+      rw [h1]
+      set p := pullback.snd 𝒢.G.hom jL z
+      have hp : p.asIdeal = ⊥ :=
+        (Ideal.eq_bot_or_top p.asIdeal).resolve_right p.isPrime.ne_top
+      show Ideal.comap (algebraMap (𝓞 L) L) p.asIdeal = ⊥
+      rw [hp]
+      exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective (𝓞 L) L)
+    exact hz
+  haveI : IsIso ((Over.forget _).map ((Over.pullback jL).map (OpenSub.incl W))) := hiso
+  haveI : IsIso ((Over.pullback jL).map (OpenSub.incl W)) :=
+    isIso_of_reflects_iso _ (Over.forget _)
+  let e := asIso ((Over.pullback jL).map (OpenSub.incl W))
+  haveI := hmon
+  let 𝒢₀ : GroupModel A L :=
+    { G := OpenSub.G0 W
+      gen := e ≪≫ 𝒢.gen
+      gen_hom := by
+        letI : GrpObj (genericFibre L (OpenSub.G0 W)) := Functor.grpObjObj
+        letI : GrpObj (genericFibre L 𝒢.G) := Functor.grpObjObj
+        letI : GrpObj ((Over.pullback jL).obj (OpenSub.G0 W)) := Functor.grpObjObj
+        letI : GrpObj ((Over.pullback jL).obj 𝒢.G) := Functor.grpObjObj
+        have h1 : IsMonHom ((Over.pullback jL).map (OpenSub.incl W)) := inferInstance
+        exact @instIsMonHomComp _ _ _ _ _ _ _ _ _ _ _ h1 𝒢.gen_hom }
+  exact ⟨𝒢₀, OpenSub.incl W, inferInstanceAs (IsOpenImmersion W.ι), hmon, Scheme.Opens.range_ι W⟩
+
+
+
 
 end SGA3Nbhd
