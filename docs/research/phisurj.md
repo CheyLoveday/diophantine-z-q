@@ -30,8 +30,9 @@ statement `ZInQKernel/Contrib/OneProof/PicDictionary.lean:1564`, Mumford §8 Thm
   and `scratch/phisurj/FrozenTargetDryRun.lean` proves `ZInQ.FrozenTarget` from Main's hypotheses with
   `OpenAddedLeaves21` in place of `OpenAddedLeaves20`. Both compile with `[propext, Classical.choice, Quot.sound]`.
 
-Count: one LEAF row (`mumfordPhiSurjectiveAC`, printed Mumford §8 Thm 1) leaves; no row enters. 33 → 32 hypotheses
-of H on this base.
+Count: one LEAF/LEAF row (`mumfordPhiSurjectiveAC`, printed Mumford §8 Thm 1, `docs/one-proof/kinds.tsv:31`)
+leaves; no row enters. On this base H goes from `13/20 on 33` to `12/20 on 32` (strict and strictest; computed
+from kinds.tsv, not an autofold run, since autofold cannot express a reroute).
 
 Why not prove the Prop itself: §2.
 
@@ -45,7 +46,18 @@ classes, not the identity component `B` of the Picard scheme. So the Prop is the
   `picZeroPtsTranslInv_of_leaves`), and
 * **(b)** `λ_L : A → B` is onto (the surjective half of `PhiAmpleIsogeny`).
 
-(b) is proved here (§3). (a) is not: it says that the Néron–Severi class of a translation-invariant bundle is
+(b) is proved here (§3). (a) is not, and it is exactly what is missing (VERIFIED, compiled, in the same file):
+
+```lean
+def PhiSurj.TIClassesInPicZeroAC : Prop :=   -- over k = k̄: every IsTI class c is kClass rep c = y ≫ j, y : X(k) → B
+theorem PhiSurj.mumfordPhiSurjectiveAC_of_ti (ha : TIClassesInPicZeroAC) (h1 : PicRepresentableAbVar)
+    (h2 : PicZeroAbVar) (h4 : WeilPairingMumford) (hT : AvSplit.MumfordTorsionAlgClosed) : MumfordPhiSurjectiveAC
+theorem PhiSurj.tiClassesInPicZeroAC_of_phiSurjective (h8 : MumfordPhiSurjectiveAC) : TIClassesInPicZeroAC
+```
+
+(the first lifts `y` along the surjective `λ` to a `k`-point `x`, `exists_lift_kpt`, and compares classes with
+Kleiman 9.2.5 at `Spec k̄`, `kClass_injective`, as pic-dict's L5; the second uses the proved
+`exists_isAmple_of_isAlgClosed`). (a) itself: it says that the Néron–Severi class of a translation-invariant bundle is
 zero, i.e. `NS(A) → Hom(A, Â)` is injective on the classes with `φ_c = 0`. Every argument I know goes through
 Mumford's proof of §8 Thm 1 (vanishing of `H^*(A, M)` for nontrivial `M ∈ Pic⁰` and the Künneth/Leray
 comparison of the two projections of `m^*L ⊗ p₁^*L⁻¹ ⊗ p₂^*(L ⊗ M)⁻¹`), or through Weil's theory of algebraic
@@ -98,6 +110,18 @@ The theorem of the square, the seesaw, the Weil pairing's left kernel and cohomo
 
 ## 5. Fold
 
+Alternative, not recommended: fill the field from (a) (`scratch/phisurj/autofold-ti.json`, leaf
+`tiClassesInPicZeroAC`, flagged pending reading). `#discharges` matches it (`DISCHARGES
+[OpenAddedLeaves20.mumfordPhiSurjectiveAC] by PhiSurj.mumfordPhiSurjectiveAC_of_ti still assumes:
+[PhiSurj.TIClassesInPicZeroAC, T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar, T09Pic.WeilPairingMumford,
+AvSplit.MumfordTorsionAlgClosed]`), and the dry run gives `13/20 on 33 -> 12/21 on 33` (refused: GLUE rises).
+Rating of (a): printed form **no, pending reading** — Mumford's `Pic⁰` is by definition the translation-invariant
+classes; that these are the points of the identity component of the fppf Picard scheme is §8 Thm 1 with §13 and
+Kleiman §9.5, not one print. It is a consequence of the replaced leaf (`tiClassesInPicZeroAC_of_phiSurjective`),
+never stronger.
+
+Recommended:
+
 * **Not autofoldable**: autofold fills a field with a proof of the field's type, and `MumfordPhiSurjectiveAC` is
   not proved. `scratch/phisurj/autofold.json` records this (empty `discharges`, with the reroute described).
 * **Hand fold** (`scratch/phisurj/FoldTailZ49.lean`, compiles against the built `TailZ48` in 34 s): new module
@@ -108,9 +132,11 @@ The theorem of the square, the seesaw, the Weil pairing's left kernel and cohomo
   through `sixContactMin_of_open37_hf`. Main's `frozenTarget` then takes `l : OpenAddedLeaves21` and calls
   `sixContactMin_of_open42 r t l` (`scratch/phisurj/FrozenTargetDryRun.lean`). kinds.tsv/claims.tsv: drop the
   `mumfordPhiSurjectiveAC` rows; no rows added.
-* `#discharges` (`scratch/phisurj/discharges.txt`): `43 open hypotheses, 8602 theorems checked, 48 discharge one`,
-  no line for `PhiSurj.*` — expected, since the theorem proves the readers' `PhiAmpleIsogeny`, which is no longer an
-  open hypothesis type.
+* `#discharges` (`scratch/phisurj/discharges.txt`): `43 open hypotheses, 8612 theorems checked, 49 discharge one`.
+  The reroute theorem `phiAmpleIsogeny_of_weil` has no line (expected: it proves the readers' `PhiAmpleIsogeny`,
+  which is no longer an open hypothesis type); the only `PhiSurj` line is the (a)-alternative above.
+* Axioms of every main theorem, of `sixContactMin_of_open42` and of `frozenTarget_phisurj`: standard
+  (`scratch/phisurj/axioms.txt`).
 
 ## 6. New leaves and their rating
 
@@ -119,5 +145,18 @@ None.
 ## 7. Files
 
 * `ZInQKernel/Contrib/OneProof/PhiAmpleIsogenyWeil.lean` (the contribution).
-* `scratch/phisurj/`: `DimSurj.lean`, `PhiSurj.lean` (development copies), `FoldTailZ49.lean`,
-  `FrozenTargetDryRun.lean`, `Discharges.lean`, `discharges.txt`, `autofold.json`, `log.md`.
+* `scratch/phisurj/`: `DimSurj.lean`, `PhiSurj.lean`, `TIReduction.lean` (development copies),
+  `PhiAmpleIsogenyWeil.lean.txt` (copy of the contribution), `FoldTailZ49.lean`, `FrozenTargetDryRun.lean`,
+  `Discharges.lean`, `discharges.txt`, `Axioms.lean`, `axioms.txt`, `autofold.json`, `autofold-ti.json`,
+  `autofold-ti-dryrun.txt`, `log.md`.
+
+## 8. What remains
+
+* (a) `TIClassesInPicZeroAC`: not needed by the proof (rerouted), but it is what separates `PhiAmpleIsogeny` from the
+  printed Mumford §8 Thm 1. No cohomology-free route found (§2).
+* The right-kernel clause of `weilPairingMumford` could itself be proved by fpqc descent along `ℓ_A` (the vendored
+  `bijective_toDescentData_map_of_mem_fpqcTopology` / `nonempty_iso_of_toDescentData_iso` give the descent step;
+  missing: `ℓ_A^*M_y ≅ 𝒪` for `y ∈ B[ℓ]` (pic-dict's L6), the decomposition of `A ×_{ℓ,A,ℓ} A` along the étale
+  `A[ℓ]`, and the bridge from pic-dict's `formula` to the pseudofunctor's `mapComp'`). Not attempted here; it would
+  make the reroute independent of `weilPairingMumford`.
+* `mumfordTorsionAlgClosed` disappears as a textbook field once origin/proof/picard-fibres-20261116 lands.

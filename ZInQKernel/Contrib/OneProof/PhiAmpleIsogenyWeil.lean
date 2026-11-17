@@ -131,8 +131,7 @@ lemma ptEquiv_mul (A : AbVar K) (x y : A.Pt (AlgebraicClosure K)) :
 lemma ptEquiv_pow (A : AbVar K) (x : A.Pt (AlgebraicClosure K)) (n : ℕ) :
     ptEquiv A (x ^ n) = ptEquiv A x ^ n := by
   change unitIso.hom ≫ pts (x ^ n) = (unitIso.hom ≫ pts x) ^ n
-  rw [map_pow (ptsHom A) x n |>.symm.trans rfl |> fun h => (show pts (x ^ n) = pts x ^ n from map_pow (ptsHom A) x n)]
-  rw [MonObj.comp_pow]
+  rw [show pts (x ^ n) = pts x ^ n from map_pow (ptsHom A) x n, MonObj.comp_pow]
 
 lemma ptEquiv_one (A : AbVar K) : ptEquiv A 1 = 1 := by
   simpa using ptEquiv_pow A 1 0
@@ -221,7 +220,7 @@ open T09Pic PkgI3 PkgI3.AbVar PicDict HDec.WeilPairing
 
 variable {K : Type} [Field K]
 
-lemma exists_prime_ne_zero : ∃ ℓ : ℕ, 2 ≤ ℓ ∧ (ℓ : K) ≠ 0 := by
+lemma exists_two_le_natCast_ne_zero : ∃ ℓ : ℕ, 2 ≤ ℓ ∧ (ℓ : K) ≠ 0 := by
   by_cases h2 : (2 : K) = 0
   · refine ⟨3, by norm_num, ?_⟩
     have : ((3 : ℕ) : K) = 2 + 1 := by push_cast; ring
@@ -235,7 +234,7 @@ theorem dim_le_of_weil (h4 : WeilPairingMumford) (hT : AvSplit.MumfordTorsionAlg
     {P : Over (Spec (CommRingCat.of K))} (rep : (picardFunctor A.X.hom).obj.RepresentableBy P)
     {B : AbVar K} {j : B.X ⟶ P} (hj : IsPicZero rep B j) (a b : ℕ)
     (ha : topologicalKrullDim A.X.left = a) (hb : topologicalKrullDim B.X.left = b) : b ≤ a := by
-  obtain ⟨ℓ, hℓ2, hℓK⟩ := exists_prime_ne_zero (K := K)
+  obtain ⟨ℓ, hℓ2, hℓK⟩ := exists_two_le_natCast_ne_zero (K := K)
   have hℓ0 : 0 < ℓ := by omega
   have : NeZero ℓ := ⟨by omega⟩
   obtain ⟨e, hperf, -⟩ := h4 K A P rep B j hj
