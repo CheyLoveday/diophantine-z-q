@@ -641,4 +641,115 @@ theorem cand_mem (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (hg : L
         mul_one, one_smul]
     · rw [ind_negell, sg_negell hℓ, kmat_mulVec_one, mul_one, zero_add, one_smul]
 
+theorem ind_natCast_of_dvd {c : ℕ} (hc : c ≠ 0) :
+    ind ℓ (c : ℤ) = fun i : Supp ℓ => if (i : ℕ) ∣ c then (1 : ZMod 2) else 0 := by
+  funext i
+  simp only [ind, Int.natAbs_natCast]
+  have hp := supp_prime i
+  by_cases h : (i : ℕ) ∣ c
+  · rw [if_pos (Nat.mem_primeFactors.mpr ⟨hp, h, hc⟩), if_pos h]
+  · rw [if_neg (fun h' => h (Nat.mem_primeFactors.mp h').2.1), if_neg h]
+
+theorem primeFactors_natCast_subset {c : ℕ} (hcl : c ∣ ℓ) (hℓ : ℓ ≠ 0) :
+    (c : ℤ).natAbs.primeFactors ⊆ ℓ.primeFactors := by
+  rw [Int.natAbs_natCast]; exact Nat.primeFactors_mono hcl hℓ
+
+theorem vec4_ne {b : Supp ℓ → ZMod 2} (h0 : b ≠ 0) (h1 : b ≠ 1) :
+    ((0 : Supp ℓ → ZMod 2) ≠ 1 ∧ (0 : Supp ℓ → ZMod 2) ≠ b ∧ (0 : Supp ℓ → ZMod 2) ≠ 1 + b) ∧
+      ((1 : Supp ℓ → ZMod 2) ≠ b ∧ (1 : Supp ℓ → ZMod 2) ≠ 1 + b) ∧ b ≠ 1 + b := by
+  have h10 : (1 : Supp ℓ → ZMod 2) ≠ 0 := fun h => h0 (funext fun i =>
+    absurd (congrFun h i) one_ne_zero)
+  refine ⟨⟨Ne.symm h10, Ne.symm h0, fun h => h1 ?_⟩, ⟨Ne.symm h1, fun h => h0 ?_⟩, fun h => h10 ?_⟩
+  · have : b = 1 + b + 1 := by rw [add_comm (1 : Supp ℓ → ZMod 2) b, add_assoc, vec_add_self,
+      add_zero]
+    rw [this, ← h, zero_add]
+  · have : b = 1 + b + 1 := by rw [add_comm (1 : Supp ℓ → ZMod 2) b, add_assoc, vec_add_self,
+      add_zero]
+    rw [this, ← h, vec_add_self]
+  · have : (1 : Supp ℓ → ZMod 2) = 1 + b + b := by rw [add_assoc, vec_add_self, add_zero]
+    rw [this, ← h, vec_add_self]
+
+/-- **The dimension-three count from the local images** (lines 1061–1074). -/
+theorem dimThreeCount_of_local (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad)
+    (hg : LocalGood) : DimThreeCount := by
+  classical
+  intro ℓ β hℓ hsf h12 hβℓ hβ8 hM
+  have hℓ0 : ℓ ≠ 0 := by omega
+  have hβ0 : β ≠ 0 := by rintro rfl; rw [zero_dvd_iff] at hβℓ; omega
+  obtain ⟨hb0, hb1, hKb, hker, -⟩ := id hM
+  -- the four `c`
+  have hsfZ : ∀ c : ℕ, c ∣ ℓ → Squarefree (c : ℤ) := fun c hc =>
+    Int.squarefree_natCast.mpr (Squarefree.squarefree_of_dvd hc hsf)
+  have hposZ : ∀ c : ℕ, c ∣ ℓ → (0 : ℤ) < c := fun c hc => by
+    have : 0 < c := Nat.pos_of_dvd_of_pos hc (by omega)
+    exact_mod_cast this
+  set ℓ' := ℓ / β with hℓ'
+  have hℓ'd : ℓ' ∣ ℓ := Nat.div_dvd_of_dvd hβℓ
+  have hℓeq : ℓ = β * ℓ' := (Nat.mul_div_cancel' hβℓ).symm
+  have hcop : Nat.Coprime β ℓ' := (Nat.squarefree_mul_iff.mp (hℓeq ▸ hsf)).1
+  have hindβ : ind ℓ (β : ℤ) = oneB ℓ β := by
+    rw [ind_natCast_of_dvd hβ0]; rfl
+  have hindℓ' : ind ℓ (ℓ' : ℤ) = 1 + oneB ℓ β := by
+    rw [ind_natCast_of_dvd (Nat.pos_of_dvd_of_pos hℓ'd (by omega)).ne']
+    funext i
+    have hi : (i : ℕ) ∣ β * ℓ' := hℓeq ▸ supp_dvd i
+    simp only [Pi.add_apply, Pi.one_apply, oneB]
+    by_cases h : (i : ℕ) ∣ β
+    · have : ¬ (i : ℕ) ∣ ℓ' := fun h' => (supp_prime i).one_lt.ne'
+        ((Nat.Coprime.coprime_dvd_left h hcop).eq_one_of_dvd h')
+      rw [if_neg this, if_pos h]; decide
+    · have : (i : ℕ) ∣ ℓ' := ((supp_prime i).dvd_mul.mp hi).resolve_left h
+      rw [if_pos this, if_neg h]; decide
+  have hK1 : Kmat ℓ *ᵥ (1 + oneB ℓ β) = 0 := by
+    rw [mulVec_add, kmat_mulVec_one, hKb, add_zero]
+  have hind1 : ind ℓ ((1 : ℕ) : ℤ) = 0 := by rw [Nat.cast_one]; exact ind_one
+  -- the map and its image
+  let T : Finset ((Supp ℓ → ZMod 2) × ZMod 2) :=
+    ({0, 1, oneB ℓ β, 1 + oneB ℓ β} : Finset (Supp ℓ → ZMod 2)) ×ˢ ({0, 1} : Finset (ZMod 2))
+  have hcand : ∀ c : ℕ, c ∣ ℓ → Kmat ℓ *ᵥ ind ℓ (c : ℤ) = 0 → ∀ σ : Bool,
+      ((if σ then 3 else 1) * (c : ℤ), if σ then -(ℓ : ℤ) else 1) ∈ SelM ℓ ∧
+        (ind ℓ ((if σ then 3 else 1) * (c : ℤ)), sg (if σ then -(ℓ : ℤ) else 1)) =
+          (ind ℓ (c : ℤ), if σ then 1 else 0) := by
+    intro c hc hK σ
+    refine ⟨cand_mem hTwo hThree hq hg hsf h12 (hsfZ c hc) (hposZ c hc)
+      (primeFactors_natCast_subset hc hℓ0) hK σ, ?_⟩
+    cases σ with
+    | false => simp [sg_one]
+    | true =>
+      simp only [if_true]
+      rw [ind_three_mul h12 (hposZ c hc).ne', sg_negell hℓ]
+  have himage : (fun ab : ℤ × ℤ => (ind ℓ ab.1, sg ab.2)) '' SelM ℓ = ↑T := by
+    ext ⟨u, σ⟩
+    simp only [T, Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_insert,
+      Finset.mem_singleton]
+    constructor
+    · rintro ⟨⟨a, b⟩, hab, he⟩
+      obtain ⟨-, -, -, -, -, hKa⟩ := sel_necessary hTwo hThree hq hg hsf h12 hM hab
+      simp only [Prod.mk.injEq] at he
+      rw [← he.1, ← he.2]
+      exact ⟨hker _ hKa, zmod2_cases _⟩
+    · rintro ⟨hu, hσ⟩
+      have hget : ∀ c : ℕ, c ∣ ℓ → ind ℓ (c : ℤ) = u → Kmat ℓ *ᵥ u = 0 →
+          (u, σ) ∈ (fun ab : ℤ × ℤ => (ind ℓ ab.1, sg ab.2)) '' SelM ℓ := by
+        intro c hc hcu hK
+        rw [← hcu] at hK
+        rcases hσ with rfl | rfl
+        · exact ⟨_, (hcand c hc hK false).1, (hcand c hc hK false).2.trans (by rw [hcu]; rfl)⟩
+        · exact ⟨_, (hcand c hc hK true).1, (hcand c hc hK true).2.trans (by rw [hcu]; rfl)⟩
+      rcases hu with rfl | rfl | rfl | rfl
+      · exact hget 1 (one_dvd _) hind1 (mulVec_zero _)
+      · exact hget ℓ dvd_rfl ind_ell kmat_mulVec_one
+      · exact hget β hβℓ hindβ hKb
+      · exact hget ℓ' hℓ'd hindℓ' hK1
+  have hinj := sel_injOn hTwo hThree hq hg hsf h12 hM
+  refine ⟨?_, ?_⟩
+  · rw [← hinj.ncard_image, himage, Set.ncard_coe_finset, Finset.card_product]
+    obtain ⟨⟨h01, h0b, h01b⟩, ⟨h1b, h11b⟩, hb1b⟩ := vec4_ne hb0 hb1
+    rw [Finset.card_insert_of_notMem (by simp [h01, h0b, h01b]),
+      Finset.card_insert_of_notMem (by simp [h1b, h11b]),
+      Finset.card_insert_of_notMem (by simp [hb1b])]
+    rfl
+  · have := (hcand β hβℓ (by rw [hindβ]; exact hKb) false).1
+    simpa using this
+
 end ZInQ.Manuscript.PoleRC

@@ -52,3 +52,14 @@
   and the 2-adic equation it leaves implicit (ELLIOT), and both signs of b.
 - #discharges (scratch/pc-from-rc/discharges-output.txt): 34 open hypotheses, 12080 theorems checked;
   no PoleRC theorem discharges an open hypothesis (Manuscript.PoleCompleteness is not a bundle field). VERIFIED.
+
+## Lean: the dimension-three count from the local images
+- `QClass.lean`: `qcls q x` (square class at odd q of a squarefree integer), `lsym_mul`, `qcls_mul`,
+  `qcls_eq_sum`. COMPILED.
+- `Count.lean`: five local-image Props (`LocalReal`, `LocalTwo`, `LocalThree`, `LocalBad`, `LocalGood`);
+  `localReal : LocalReal` PROVED; `dimThreeCount_of_local : LocalTwo -> LocalThree -> LocalBad ->
+  LocalGood -> DimThreeCount` PROVED (standard axioms). Steps: necessity (local conditions -> E1..E4 ->
+  kmat_forces), injectivity of (a,b) -> (ind a, sign b) on SelM, the 8 candidates (3^s c, (-l)^s),
+  c in {1, l, beta, l/beta}, are in SelM (sufficiency), image = {0,1,1_beta,1+1_beta} x F_2.
+- `Contrib/OneProof/PoleCompletenessFromRC.lean`: `poleCompleteness_of_restrictedConverse_local`
+  (DimThreeCount replaced by the four local Props). COMPILED, axioms [propext, Classical.choice, Quot.sound].
