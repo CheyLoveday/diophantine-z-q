@@ -13,12 +13,12 @@ removes it. See
 
 **33 hypotheses of the H part** (in the bundles `OpenAddedLeaves25`, `OpenResearchLeaves39`, `OpenTextbookLeaves16`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 16 published / 17 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 17 published / 16 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: composite 3, consequence 5, published 25.
+* By kind: composite 3, consequence 6, published 24.
 
 ## Kernel-wide readings
 
@@ -54,7 +54,7 @@ Readings that apply to every statement built on a shared kernel definition.
 ## Good first targets
 
 * [`r9a`](#r9a): a good first target; published, tier T4, [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
-* [`sga7_IX_3_3_SHpre`](#sga7_ix_3_3_shpre): a good first target; published, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
+* [`sga7_IX_3_3_SHpre`](#sga7_ix_3_3_shpre): a good first target; consequence, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * [`raynaudSemistableSHOr`](#raynaudsemistableshor): a good first target; published, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * [`dsThm965Printed`](#dsthm965printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * [`dsThm966Printed`](#dsthm966printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
@@ -84,7 +84,7 @@ A packet is a set of statements decided by reading one block of the literature. 
 
 Reduction block: SGA 7 I Exp. IX, BLR 1.2 Prop. 4, Serre-Tate 1968. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
-* [`raynaudSemistableSHOr`](#raynaudsemistableshor) (LEAF; reading-risk): SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible and A[m] rational imply semistable reduction, read over k(s) or over kbar (number UNVERIFIED); dict-models
+* [`raynaudSemistableSHOr`](#raynaudsemistableshor) (LEAF): SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible and A[m] rational imply semistable reduction, read over k(s) or over kbar (number UNVERIFIED); dict-models
 * [`neronOggShafarevichSep`](#neronoggshafarevichsep) (LEAF; unread): Serre-Tate 1968 Thm 1 over IsSepClosure K Ks (as printed); the Kbar form proved in Lean from MulEtaleAbelianScheme (dict-galois)
 
 ### Packet R2
@@ -160,8 +160,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pazuki-inputs)) |
 | [`r11r12`](#r11r12) | research | composite | GLUE |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r16CoreY`](#r16corey) | research | composite | GLUE |  |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/r16-det)) |
-| [`sga7_IX_3_3_SHpre`](#sga7_ix_3_3_shpre) | research | published | GLUE | pending-reading, unverified-locator | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`sga7_IX_3_5_ForwardGeom`](#sga7_ix_3_5_forwardgeom) | research | published | GLUE | pending-reading, unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sga735-finish)) |
+| [`sga7_IX_3_3_SHpre`](#sga7_ix_3_3_shpre) | research | consequence | GLUE | unverified-locator | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`shimuraMainThmIDeligneY3AbU`](#shimuramainthmideligney3abu) | research | composite | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`x6CoarseModuli`](#x6coarsemoduli) | research | published | GLUE | pending-review, unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gagaMorphism`](#gagamorphism) | textbook | consequence | GLUE | note, unverified-locator |  | T3-T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
@@ -178,7 +177,8 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`neronSchemeExtensionDedekind`](#neronschemeextensiondedekind) | research | published | LEAF | unverified-locator |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
-| [`raynaudSemistableSHOr`](#raynaudsemistableshor) | research | published | LEAF | reading-risk | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`raynaudSemistableSHOr`](#raynaudsemistableshor) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`sga7_IX_3_5_ForwardGeom`](#sga7_ix_3_5_forwardgeom) | research | published | LEAF | unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sga735-finish)) |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`h21C`](#h21c) | frozenTarget | published | GLUE | pending-review, restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
@@ -369,8 +369,8 @@ R16Split.R16CoreY
 
 ### sga7_IX_3_3_SHpre
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves39.sga7_IX_3_3_SHpre`; kind **published**, strict **GLUE**; flag: pending reading: locator UNVERIFIED: SGA 7 IX 3.3 may assume an algebraically closed residue field (then the print is the restriction to such O, as for sga7_IX_3_3_SH).
-* Source: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction), over strictly henselian traits, U = pullback.fst^-1(N0) as printed (number UNVERIFIED); dict-models
+* Bundle field `HDec.HSyn.OpenResearchLeaves39.sga7_IX_3_3_SHpre`; kind **consequence**, strict **GLUE**; flag: three steps from Cor. 3.3: specialize the base; dictionary plus Neron uniqueness; arbitrary c = alpha . u by the Neron property (reading 11-17, inbox 3: SGA 7 IX 3.3 is a Corollaire, p. 348).
+* Source: SGA 7 I, Exp. IX, Cor. 3.3 (p. 348), second assertion (N0 x_S S' = N'0 for semistable reduction), over strictly henselian traits, U = pullback.fst^-1(N0) as printed (number UNVERIFIED); dict-models
 * label good-first (a good first target); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
 * Status: open.
@@ -380,20 +380,6 @@ DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
 ```
 
 > dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10).
-
-### sga7_IX_3_5_ForwardGeom
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves39.sga7_IX_3_5_ForwardGeom`; kind **published**, strict **GLUE**; flag: pending reading: two recorded readings make it a consequence (k(s) definition, through SemiAbelianDescendsSepClosed, proved only for perfect k; no echelon clause in 3.5, through IX 2.4) (dictionary pass 11-16).
-* Source: SGA 7 I Exp. IX Prop. 3.5, forward direction at sigma = tau, over a strictly henselian DVR with K^s (number UNVERIFIED)
-* discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sga735-finish)).
-
-```lean
-UnipotentForward.SGA7_IX_3_5_ForwardGeom
-```
-
-> gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved.
 
 ### shimuraMainThmIDeligneY3AbU
 
@@ -630,7 +616,7 @@ PkgI3.FaltingsTate
 
 ### raynaudSemistableSHOr
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves39.raynaudSemistableSHOr`; kind **published**, strict **LEAF**; flag: reading risk: the print may assume an algebraically closed residue field or require m > 3 (locators.md R6); the k(s)/kbar reading of 'semistable' is covered by the disjunction.
+* Bundle field `HDec.HSyn.OpenResearchLeaves39.raynaudSemistableSHOr`; kind **published**, strict **LEAF**; flag: reading 11-17 (inbox 3, notes readings/sga7-ix.md): 4.7 (Proposition, p. 366) is printed over any trait, n > 1 prime to p with the only exception n = 2, no algebraically closed residue field; the m >= 3 and residue-field reading flags cleared.
 * Source: SGA 7 I Exp. IX Prop. 4.7 (Raynaud's criterion) over a strictly henselian DVR: m >= 3 invertible and A[m] rational imply semistable reduction, read over k(s) or over kbar (number UNVERIFIED); dict-models
 * packet [R1](#packet-r1); label good-first (a good first target); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
@@ -641,6 +627,20 @@ DictModels.RaynaudOr.RaynaudSemistableSHOr
 ```
 
 > dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH.
+
+### sga7_IX_3_5_ForwardGeom
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves39.sga7_IX_3_5_ForwardGeom`; kind **published**, strict **LEAF**; flag: reading 11-17 (inbox 3, notes readings/sga7-ix.md): direct instance of SGA 7 I Exp. IX Prop. 3.5 (p. 350), (i) implies (iv); the echelon-2 clause is printed inside 3.5(iv), so IX 2.4 is not needed; both recorded consequence readings refuted.
+* Source: SGA 7 I Exp. IX Prop. 3.5, forward direction at sigma = tau, over a strictly henselian DVR with K^s (Proposition, p. 350, per the 11-17 reading)
+* discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
+* Human readings recorded: none.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sga735-finish)).
+
+```lean
+UnipotentForward.SGA7_IX_3_5_ForwardGeom
+```
+
+> gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved.
 
 ### charPolyIndepOfEllAlgClosed
 
@@ -834,7 +834,7 @@ ZInQ.BFHPrinted.BFHClauseIIGamma0
 
 ### hGZ
 
-* Argument `hGZ` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; pending reading: fold33-review: three steps between Gross-Zagier's morphism phi : X0(N) -> E and the Lean pull-back phi^* : Q(E) -> Q(X0(N)) are not proved in Lean (D1: Q-embeddings of function fields are morphisms of the curves, Hartshorne I.6.12; D2: phi at Heegner points read through q-expansions; D3: IsOptimalParam is the strong Weil parametrization, which matters if GZ V section 2 is restricted to it); counts GLUE until they are proved or a reading removes them; locator UNVERIFIED.
+* Argument `hGZ` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; reading 11-17 (inbox 3, notes readings/gz-d3-d5.md): D3 cleared (GZ V section 2, p. 310, fixes an arbitrary covering pi with pi(infinity) = 0 and Thm 2.1 holds for it) and D5 cleared (printed at IV (0.4), p. 268); stays GLUE until D1 (Q-embeddings of function fields are morphisms of the curves, Hartshorne I.6.12), D2 (phi at Heegner points read through q-expansions) and the identity jacobiSym = epsilon_D are proved in Lean; locator UNVERIFIED.
 * Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
 * packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
 * Human readings recorded: none.
