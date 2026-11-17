@@ -184,7 +184,7 @@ H-190		HDec.HSyn.G0Split.ThetaPt.ThetaGlue.LinYangThetaCurve	f18bcb904,3691994d4
 H-191		HDec.HSyn.G0Split.ThetaPt.ThetaGlue.IgusaAlg	f18bcb904	no
 H-192		ShimuraGlue.DeligneComponentsX6PrintedAb	3691994d4,f96b7323d,8342c2eb7	yes
 H-193		HDec.QMSplit.Moduli.BabaGranathRationalAb	3691994d4,f96b7323d	no
-H-194	gonzalezRotgerX6Ab	HDec.QMSplit.Moduli.GonzalezRotgerX6Ab	3691994d4,f96b7323d,8342c2eb7	yes
+H-194		HDec.QMSplit.Moduli.GonzalezRotgerX6Ab	3691994d4,f96b7323d,8342c2eb7	yes
 H-195		HDec.QMSplit.Moduli.ElkiesEquationsX6Ab	3691994d4	no
 H-196		ShimuraGlue.Ray.RayClassCMAb	3691994d4,f96b7323d	no
 H-197		UnipotentB.SemistableUnipotentPrintedGen	3691994d4,f96b7323d	no
@@ -203,7 +203,7 @@ H-209	shimuraMainThmIDeligneY3AbU	RayClassCFT.ShimuraMainThmIDeligneY3AbU	8342c2
 H-210		SGRSplit.ShimuraIntegralModelRep	8342c2eb7	yes
 H-211		ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw	8342c2eb7	yes
 H-212	r16CoreY	R16Split.R16CoreY	8342c2eb7	yes
-H-213	elkiesX6StarFunctionField	HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField	8342c2eb7	yes
+H-213		HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField	8342c2eb7	yes
 T-1	h11	ZInQ.Contrib.TYZDecomp.TYZThm11Integral	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-2		ZInQ.Contrib.TYZDecomp.TYZLcalOne	249195fd0	no
 T-3		ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no

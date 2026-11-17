@@ -166,3 +166,16 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     standard axioms; check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements 37;
     DischargesTest rerun; render_open --check ok (31 H, strictest 13/18, 6 others); crosswalk --check ok; autoform
     check ok. FoldDryRun.lean renamed .lean.txt.
+21. gonzalezRotgerX6Ab (composite, GLUE) and elkiesX6StarFunctionField (consequence, GLUE) replaced by grx6ab-print's
+    and elkies-print's printed-form leaves gonzalezRotgerThm512X6 (GR 2006 Thm 5.12, gr-dict's statement),
+    x6CoarseModuli (X0(6,1) coarse moduli, reading risk on the Atkin-Lehner clause) and elkiesX6StarEvery (Elkies 1998
+    section 3 for every witness), with shimuraMainThmIDeligneY3AbU, gagaMorphism, mumfordTorsionAlgClosed: merged
+    wip/grx6ab-print b047ce25 (it contains wip/elkies-print 168bbb39 and gr-dict), autofold
+    scratch/leaf-fold33/autofold-grx6ab-elkies.json (grx6ab-print's autofold-combined.json, flags "pending review")
+    with --allow-rise -> TailZ59, `sixContactMin_of_open52`. The three rows count GLUE until reviewed: H 13/18 on 31
+    -> 13/19 on 32 (GLUE +1 until the review; -2 against the base if all three are rated LEAF). Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; OpenStatements 38; DischargesTest rerun; render_open --check ok (32 H, strictest 13/19, 6
+    others); crosswalk --check ok; autoform check ok. Scratch files that redeclare bundles renamed .lean.txt
+    (grx6ab-print FoldCheck, FoldCheckCombined; elkies-print FoldDryRun; gr-dict BypassFold, BypassReach,
+    FoldCheck); host paths removed from scratch/grx6ab-print/build1.txt.

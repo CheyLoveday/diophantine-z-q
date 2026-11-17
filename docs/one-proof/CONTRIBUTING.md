@@ -143,7 +143,7 @@ hypotheses. Its output (generated from `scratch/contrib-kit/DischargesTest-outpu
 <!-- worked-example:begin -->
 ```
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
-DISCHARGES [OpenResearchLeaves34.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
+DISCHARGES [OpenResearchLeaves35.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
   still assumes: [∀ (N : ℕ) [inst : NeZero N] (k : ℤ) (χ : DirichletCharacter ℂ N) (f : ZInQ.Contrib.G9.PkgI4.CF N k),
    2 ≤ k →
      DSCoeffExt.IsNormalizedEigenformDS f χ →
@@ -176,14 +176,47 @@ DISCHARGES [OpenResearchLeaves34.dsThm965Printed] by DSCoeffExt.dsThm965Printed_
                                              (↥(DSCoeffExt.coeffField f)) lam))
                                          b)]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
+DISCHARGES [OpenResearchLeaves35.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
   still assumes: [ReductGlue.RaynaudSemistableSH]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of_SH
+DISCHARGES [OpenResearchLeaves35.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of_SH
   still assumes: [SGA7PersistsNF.SGA7_IX_3_3_SH, CToPrinted.SGA3_VIB_3_10, AVGlue.GeomConnOfRationalPoint]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+DISCHARGES [OpenResearchLeaves35.gonzalezRotgerProp56X6] by GR56.gonzalezRotgerProp56X6_of_leaves
+  still assumes: [GRCountX6.EichlerOptEmbCount6,
+ GR56.QMTorusAbelian,
+ GR56.CMPairDescendsQbar,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves35.gonzalezRotgerProp56X6] by GR56.gonzalezRotgerProp56X6_of_main
+  still assumes: [GRCountX6.EichlerOptEmbCount6,
+ RayClassCFT.ShimuraMainThmIDeligneY3AbU,
+ HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves35.gonzalezRotgerProp56X6] by GR56.gonzalezRotgerProp56X6_of_st
+  still assumes: [GRCountX6.EichlerOptEmbCount6,
+ GR56.QMTorusAbelian,
+ HDec.HSyn.G0Split.FibreQM.PeriodMapH.QMSplitSTQM.ShimuraTaniyamaQbar,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves35.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves35.gonzalezRotgerProp56X6] by GRDict.gonzalezRotgerProp56X6_of_cm
+  still assumes: [GRDict.GonzalezRotgerProp56X6CM,
+ BPAnalytic.Uniformization.UniformizationLeafAll,
+ ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves35.x6CoarseModuli] by GRX6AbPrint.x6CoarseModuli_of_witness
+  still assumes: [GRDict.X6ModuliWitness]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves10HF]
@@ -260,16 +293,19 @@ DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves9H
 DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.mumfordTorsionAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.eigenformHTNew] by NewformDict.eigenformHTNew_of_newform
+DISCHARGES [OpenResearchLeaves35.elkiesX6StarEvery] by HDec.QMSplit.Moduli.ElkiesPrint.every_of_functionField
+  still assumes: [HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField, ObjBridge.TorsionStructure]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves35.eigenformHTNew] by NewformDict.eigenformHTNew_of_newform
   still assumes: [NewformDict.EigenformHTNewNewform]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.r16CoreY] by NewformDict.r16CoreY_of_newform
+DISCHARGES [OpenResearchLeaves35.r16CoreY] by NewformDict.r16CoreY_of_newform
   still assumes: [NewformDict.R16CoreYNewform]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.r16CoreY] by R16Split.coreY_of_r16
+DISCHARGES [OpenResearchLeaves35.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves34.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
+DISCHARGES [OpenResearchLeaves35.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
@@ -278,7 +314,7 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 37 open hypotheses, 10089 theorems checked, 35 discharge one
+#discharges: 38 open hypotheses, 10308 theorems checked, 41 discharge one
 ```
 <!-- worked-example:end -->
 
