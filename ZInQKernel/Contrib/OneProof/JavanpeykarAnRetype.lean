@@ -38,6 +38,7 @@ open ZInQ.DefFaltings ZInQ.HeightGlue ZInQ.HeightDict
 open scoped NumberField
 
 set_option linter.unusedSectionVars false
+set_option linter.style.haveILetI false
 
 namespace JavanpeykarAnRetype
 
@@ -56,7 +57,7 @@ theorem isSemistableRes_of_resPrinted (𝒢 : GroupModel A L) (h : IsSemistableR
   obtain ⟨U, hU, inc, hoi, hmh, hcc, rest⟩ := h 𝔭
   refine ⟨U, hU, inc, hoi, hmh, ?_, rest⟩
   haveI := hoi
-  have hc : IsConnected (inc.left '' Set.univ) := by
+  have hc : _root_.IsConnected (inc.left '' Set.univ) := by
     rw [Set.image_univ, hcc]; exact isConnected_connectedComponent
   rw [connectedSpace_iff_univ]
   exact ⟨hc.nonempty.of_image,
