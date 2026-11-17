@@ -29,3 +29,8 @@
   ∃ V ∋ b₀, c_j ∈ Γ(Y,V), u_j, v_j ∈ ℂ, N with σ(a,b)·(Σ v_j c_j(b))^N = Σ u_j c_j(b) for b ∈ V(ℂ), Σ v_j c_j(b) ≠ 0
   (nonzero at b₀). Proof: affine V₁ ∋ a, V₂ ∋ b₀, V₁×V₂ = Spec(Γ(V₁)⊗Γ(V₂)) via Mathlib `pullbackSpecIso`,
   basic-open fraction (`exists_fraction`, Mathlib `isLocalization_basicOpen`), tensor decomposition.
+
+## 08:25 R3' PROVED (VERIFIED: R3Etale.lean compiles; axioms propext, Classical.choice, Quot.sound)
+- `translationAnHol : TranslationAnHol` (from `exists_tensor_formula` with X = Y = 𝒢, μ^*s).
+- `isHolChart_iff_isSerreChart' (hT35) 𝒢 g hg τ φ : IsHolChart 𝒢 τ φ ↔ IsSerreChart 𝒢 τ φ` — only T35
+  (the consumers' existing hypothesis) remains.
