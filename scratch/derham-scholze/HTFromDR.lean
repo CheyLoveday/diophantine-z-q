@@ -78,10 +78,11 @@ def theta0 : filB p 0 →ₗ[ℚ_[p]] ℂ_[p] where
   toFun x := theta p (pre p x)
   map_add' x y := by
     rw [pre_eq p (show iota p (pre p x + pre p y) = ((x + y : filB p 0) : BdR p) by
-      rw [map_add, iota_pre, iota_pre]; rfl), map_add]
+      rw [map_add, iota_pre, iota_pre, Submodule.coe_add]), map_add]
   map_smul' c x := by
     rw [pre_eq p (show iota p (qpToPlus p c * pre p x) = ((c • x : filB p 0) : BdR p) by
-      rw [iota_qpToPlus_mul, iota_pre]; rfl), map_mul, theta_qpToPlus, RingHom.id_apply, Algebra.smul_def]
+      rw [iota_qpToPlus_mul, iota_pre, Submodule.coe_smul]), map_mul, theta_qpToPlus, RingHom.id_apply,
+      Algebra.smul_def]
 
 theorem theta0_spec {x : filB p 0} {b : BDeRhamPlus 𝓞_ℂ_[p] p} (h : iota p b = x) : theta0 p x = theta p b := by
   change theta p (pre p x) = _
@@ -147,10 +148,10 @@ def theta1 : filB p 1 →ₗ[ℚ_[p]] ℂ_[p] where
   toFun x := theta p (pre1 ht x)
   map_add' x y := by
     rw [pre1_eq ht (show iota p (t * (pre1 ht x + pre1 ht y)) = ((x + y : filB p 1) : BdR p) by
-      rw [mul_add, map_add, iota_pre1, iota_pre1]; rfl), map_add]
+      rw [mul_add, map_add, iota_pre1, iota_pre1, Submodule.coe_add]), map_add]
   map_smul' c x := by
     rw [pre1_eq ht (show iota p (t * (qpToPlus p c * pre1 ht x)) = ((c • x : filB p 1) : BdR p) by
-      rw [mul_left_comm, iota_qpToPlus_mul, iota_pre1]; rfl), map_mul, theta_qpToPlus, RingHom.id_apply,
+      rw [mul_left_comm, iota_qpToPlus_mul, iota_pre1, Submodule.coe_smul]), map_mul, theta_qpToPlus, RingHom.id_apply,
       Algebra.smul_def]
 
 theorem theta1_spec {x : filB p 1} {c : BDeRhamPlus 𝓞_ℂ_[p] p} (h : iota p (t * c) = x) :
