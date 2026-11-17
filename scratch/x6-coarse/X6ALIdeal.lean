@@ -121,22 +121,28 @@ theorem mem_idealI_iff (k : Fin 4) (a : O) : a ∈ idealI k ↔ ∃ c : O, a = c
     have hnz : (nrdZ n : ℚ) = (N k : ℚ) * c := by rw [← nrd_ofInt', ← hn, hc]
     fin_cases k
     · exact ⟨a, by apply Subtype.ext; simp [mu, tt]⟩
-    · have h2 : nrdZ n = -2 * c := by simp [N] at hnz; exact_mod_cast hnz
+    · have h2 : nrdZ n = -2 * c := by
+        have : (nrdZ n : ℚ) = ((-2 * c : ℤ) : ℚ) := by rw [hnz]; push_cast; simp [N]
+        exact_mod_cast this
       obtain ⟨w, hw⟩ := left_i n ⟨-c, by rw [h2]; ring⟩
       refine ⟨⟨ofInt w, ⟨w, rfl⟩⟩, Subtype.ext ?_⟩
       rw [MulMemClass.coe_mul, hn, hw]
       rfl
-    · have h3 : nrdZ n = 3 * c := by simp [N] at hnz; exact_mod_cast hnz
+    · have h3 : nrdZ n = 3 * c := by
+        have : (nrdZ n : ℚ) = ((3 * c : ℤ) : ℚ) := by rw [hnz]; push_cast; simp [N]
+        exact_mod_cast this
       obtain ⟨w, hw⟩ := left_j n ⟨c, h3⟩
       refine ⟨⟨ofInt w, ⟨w, rfl⟩⟩, Subtype.ext ?_⟩
       rw [MulMemClass.coe_mul, hn, hw]
       rfl
-    · have h6 : nrdZ n = -6 * c := by simp [N] at hnz; exact_mod_cast hnz
+    · have h6 : nrdZ n = -6 * c := by
+        have : (nrdZ n : ℚ) = ((-6 * c : ℤ) : ℚ) := by rw [hnz]; push_cast; simp [N]
+        exact_mod_cast this
       obtain ⟨w, hw⟩ := left_j n ⟨-2 * c, by rw [h6]; ring⟩
       have hw3 := nrdZ_ofInt_mul_ej w n hw
       obtain ⟨w', hw'⟩ := left_i w ⟨-c, by omega⟩
       refine ⟨⟨ofInt w', ⟨w', rfl⟩⟩, Subtype.ext ?_⟩
-      rw [MulMemClass.coe_mul, hn, hw, hw', mul_assoc]
+      rw [MulMemClass.coe_mul, hn, hw, hw', _root_.mul_assoc]
       rfl
   · rintro ⟨c, rfl⟩
     obtain ⟨z, hz⟩ := nrd_O c
@@ -157,13 +163,13 @@ theorem mu_mul_mu (k : Fin 4) : mu k * mu k = (sq k : O) := by
   · simp [tt, sq]
   · change ofInt ei * ofInt ei = _
     rw [ofInt_mul]
-    ext <;> simp [ofInt, mulCoord, ei, sq]
+    ext <;> simp [ofInt, mulCoord, ei, sq, QuaternionAlgebra.re_ofNat, QuaternionAlgebra.imI_ofNat, QuaternionAlgebra.imJ_ofNat, QuaternionAlgebra.imK_ofNat]
   · change ofInt ej * ofInt ej = _
     rw [ofInt_mul]
-    ext <;> simp [ofInt, mulCoord, ej, sq]
+    ext <;> simp [ofInt, mulCoord, ej, sq, QuaternionAlgebra.re_ofNat, QuaternionAlgebra.imI_ofNat, QuaternionAlgebra.imJ_ofNat, QuaternionAlgebra.imK_ofNat]
   · change (ofInt ei * ofInt ej) * (ofInt ei * ofInt ej) = _
     rw [ofInt_mul, ofInt_mul]
-    ext <;> simp [ofInt, mulCoord, ei, ej, sq]
+    ext <;> simp [ofInt, mulCoord, ei, ej, sq, QuaternionAlgebra.re_ofNat, QuaternionAlgebra.imI_ofNat, QuaternionAlgebra.imJ_ofNat, QuaternionAlgebra.imK_ofNat]
 
 theorem sq_ne_zero (k : Fin 4) : sq k ≠ 0 := by
   fin_cases k <;> simp [sq]
@@ -174,7 +180,7 @@ theorem rep_mul_mu (k : Fin 4) (a : O) : rep k a * mu k = mu k * a := by
   rw [MulMemClass.coe_mul, MulMemClass.coe_mul]
   change ((rep k a : O) : B) * (tt k : B) = (tt k : B) * a
   rw [rep, conjO_apply]
-  simp [mul_assoc]
+  simp [_root_.mul_assoc]
 
 /-! ## 2. `A[I]` on points, and quotients by `A[I]` -/
 
@@ -201,26 +207,36 @@ def IsIdealQuotient (P : QMPair K) (I : Set O) (P' : QMPair K) (φ : PkgI3.AbVar
     ψ.hom ≫ φ.hom = ((n : PkgI3.AbVar.End P'.A)).hom) ∧
   (∀ (T : Over (Spec (CommRingCat.of K))) (x : T ⟶ P.A.X), x ≫ φ.hom = 1 ↔ InTors P.q I x)
 
+/-- `ker ι(μ_m) = A[I_m]` on `T`-points. -/
+theorem ker_mu (P : QMPair K) (k : Fin 4) (T : Over (Spec (CommRingCat.of K))) (x : T ⟶ P.A.X) :
+    x ≫ (P.q.iota (mu k)).hom = 1 ↔ InTors P.q (idealI k) x := by
+  constructor
+  · intro h a ha
+    obtain ⟨c, rfl⟩ := (mem_idealI_iff k a).1 ha
+    rw [map_mul]
+    change x ≫ ((P.q.iota (mu k)).hom ≫ (P.q.iota c).hom) = 1
+    rw [← Category.assoc, h, MonObj.one_comp]
+  · intro h
+    exact h (mu k) (mu_mem k)
+
+theorem mu_equiv (P : QMPair K) (k : Fin 4) (a : O) :
+    (P.q.iota a).hom ≫ (P.q.iota (mu k)).hom = (P.q.iota (mu k)).hom ≫ (P.q.iota (rep k a)).hom := by
+  change (P.q.iota (mu k) * P.q.iota a).hom = (P.q.iota (rep k a) * P.q.iota (mu k)).hom
+  rw [← map_mul, ← map_mul, rep_mul_mu]
+
+theorem mu_isog (P : QMPair K) (k : Fin 4) :
+    ∃ (ψ : PkgI3.AbVar.Hom P.A P.A) (n : ℤ), n ≠ 0 ∧
+      (P.q.iota (mu k)).hom ≫ ψ.hom = ((n : PkgI3.AbVar.End P.A)).hom ∧
+      ψ.hom ≫ (P.q.iota (mu k)).hom = ((n : PkgI3.AbVar.End P.A)).hom := by
+  refine ⟨P.q.iota (mu k), sq k, sq_ne_zero k, ?_, ?_⟩ <;>
+  · change (P.q.iota (mu k) * P.q.iota (mu k)).hom = _
+    rw [← map_mul, mu_mul_mu, map_intCast]
+
 /-- **At `D = 6` the quotient by `A[I_m]` is the twist**: `ι(μ_m) : (A, ι) → (A, ι ∘ Ad μ_m)` is a quotient of `A`
 by `A[I_m]` (kernel `ker ι(μ_m) = A[𝒪 μ_m] = A[I_m]`, quasi-inverse `ι(μ_m)` with `μ_m² ∈ ℤ`). -/
 theorem canonical (P : QMPair K) (k : Fin 4) :
-    IsIdealQuotient P (idealI k) (P.twist (rep k)) (P.q.iota (mu k)) := by
-  refine ⟨fun a => ?_, ⟨P.q.iota (mu k), sq k, sq_ne_zero k, ?_, ?_⟩, fun T x => ?_⟩
-  · change (P.q.iota (mu k) * P.q.iota a).hom = (P.q.iota (rep k a) * P.q.iota (mu k)).hom
-    rw [← map_mul, ← map_mul, rep_mul_mu]
-  · change (P.q.iota (mu k) * P.q.iota (mu k)).hom = _
-    rw [← map_mul, mu_mul_mu, map_intCast]
-  · change (P.q.iota (mu k) * P.q.iota (mu k)).hom = _
-    rw [← map_mul, mu_mul_mu, map_intCast]
-    rfl
-  · constructor
-    · intro h a ha
-      obtain ⟨c, rfl⟩ := (mem_idealI_iff k a).1 ha
-      rw [map_mul]
-      change x ≫ ((P.q.iota (mu k)).hom ≫ (P.q.iota c).hom) = 1
-      rw [← Category.assoc, h, MonObj.one_comp]
-    · intro h
-      exact h (mu k) (mu_mem k)
+    IsIdealQuotient P (idealI k) (P.twist (rep k)) (P.q.iota (mu k)) :=
+  ⟨mu_equiv P k, mu_isog P k, ker_mu P k⟩
 
 end Quot
 
@@ -247,7 +263,9 @@ theorem iso_of_quotient (hF : IsogenyQuotient) (P P' : QMPair Qbar) (k : Fin 4)
     (φ : PkgI3.AbVar.Hom P.A P'.A) (hφ : IsIdealQuotient P (idealI k) P' φ) :
     Nonempty (QMIso (P.twist (rep k)).q P'.q) := by
   obtain ⟨hφe, hφi, hφk⟩ := hφ
-  obtain ⟨hμe, hμi, hμk⟩ := canonical P k
+  have hμe := mu_equiv P k
+  have hμi := mu_isog P k
+  have hμk := ker_mu P k
   obtain ⟨χ1, h1⟩ := (hF P.A P'.A P.A φ hφi).1 (P.q.iota (mu k))
     (fun T x hx => (hμk T x).2 ((hφk T x).1 hx))
   obtain ⟨χ2, h2⟩ := (hF P.A P.A P'.A (P.q.iota (mu k)) hμi).1 φ
@@ -258,20 +276,19 @@ theorem iso_of_quotient (hF : IsogenyQuotient) (P P' : QMPair Qbar) (k : Fin 4)
     have := u1 (PkgI3.AbVar.Hom.mk' (χ1.hom ≫ χ2.hom)) (PkgI3.AbVar.Hom.mk' (𝟙 _)) (by
       simp only [PkgI3.AbVar.Hom.hom_mk']
       rw [reassoc_of% h1, h2, Category.comp_id])
-    simpa using congrArg PkgI3.AbVar.Hom.hom this
+    exact congrArg PkgI3.AbVar.Hom.hom this
   have e21 : χ2.hom ≫ χ1.hom = 𝟙 _ := by
     have := u2 (PkgI3.AbVar.Hom.mk' (χ2.hom ≫ χ1.hom)) (PkgI3.AbVar.Hom.mk' (𝟙 _)) (by
       simp only [PkgI3.AbVar.Hom.hom_mk']
       rw [reassoc_of% h2, h1, Category.comp_id])
-    simpa using congrArg PkgI3.AbVar.Hom.hom this
+    exact congrArg PkgI3.AbVar.Hom.hom this
+  have u3 := (hF P.A P.A P'.A (P.q.iota (mu k)) hμi).2
   refine ⟨⟨χ2, χ1, e21, e12, fun a => ?_⟩⟩
-  have := u2 (PkgI3.AbVar.Hom.mk' ((P.q.iota (rep k a)).hom ≫ χ2.hom))
+  have := u3 (PkgI3.AbVar.Hom.mk' ((P.q.iota (rep k a)).hom ≫ χ2.hom))
     (PkgI3.AbVar.Hom.mk' (χ2.hom ≫ (P'.q.iota a).hom)) (by
       simp only [PkgI3.AbVar.Hom.hom_mk']
-      have e := hμe a
-      change (P.q.iota a).hom ≫ (P.q.iota (mu k)).hom = (P.q.iota (mu k)).hom ≫ (P.q.iota (rep k a)).hom at e
-      rw [← reassoc_of% e, h2, hφe a, reassoc_of% h2])
-  simpa using congrArg PkgI3.AbVar.Hom.hom this
+      rw [← reassoc_of% (hμe a), h2, hφe a, reassoc_of% h2])
+  exact congrArg PkgI3.AbVar.Hom.hom this
 
 /-! ## 4. The printed Atkin–Lehner clause, and the two directions -/
 
@@ -364,9 +381,9 @@ end Clause
 theorem hom_ext_qbar {Y Z : Over (Spec (CommRingCat.of ℚ))} (hP : IsProper Y.hom)
     (hS : SmoothOfRelativeDimension 1 Y.hom) [IsSeparated Z.hom] (f g : Y ⟶ Z)
     (h : ∀ y : fieldPt Qbar ⟶ Y, y ≫ f = y ≫ g) : f = g := by
-  haveI : Smooth Y.hom := hS.smooth
-  haveI : IsReduced Y.left := HDec.QMSplit.Moduli.isReduced_of_smooth_domain Y.hom
-  haveI : JacobsonSpace Y.left := LocallyOfFiniteType.jacobsonSpace Y.hom
+  have : Smooth Y.hom := hS.smooth
+  have : IsReduced Y.left := HDec.QMSplit.Moduli.isReduced_of_smooth_domain Y.hom
+  have : JacobsonSpace Y.left := LocallyOfFiniteType.jacobsonSpace Y.hom
   apply Over.OverMorphism.ext
   refine ext_of_fromSpecResidueField_eq f.left g.left Z.hom (closedPoints Y.left) ?_ ?_
     (by rw [Over.w f, Over.w g])
@@ -377,15 +394,18 @@ theorem hom_ext_qbar {Y Z : Over (Spec (CommRingCat.of ℚ))} (hP : IsProper Y.h
     have e := congrArg CommaMorphism.left (h y0)
     simp only [Over.comp_left] at e
     rw [hy0, Scheme.SpecToEquivOfField_symm_apply] at e
-    haveI : Surjective (Spec.map emb) := ⟨fun _ => ⟨IsLocalRing.closedPoint _, Subsingleton.elim _ _⟩⟩
-    haveI : Flat (Spec.map emb) := by
+    dsimp only at e
+    have : Surjective (Spec.map emb) := ⟨fun _ => ⟨IsLocalRing.closedPoint _, Subsingleton.elim _ _⟩⟩
+    have : Flat (Spec.map emb) := by
       rw [HasRingHomProperty.Spec_iff (P := @Flat)]
       algebraize [emb.hom]
       change Module.Flat _ _
       infer_instance
-    haveI : Epi (Spec.map emb) := Flat.epi_of_flat_of_surjective _
-    rw [Category.assoc, Category.assoc] at e
-    exact (cancel_epi _).1 e
+    have : Epi (Spec.map emb) := Flat.epi_of_flat_of_surjective _
+    have e2 : (Spec.map emb ≫ Y.left.fromSpecResidueField x) ≫ f.left =
+        (Spec.map emb ≫ Y.left.fromSpecResidueField x) ≫ g.left := e
+    rw [Category.assoc, Category.assoc] at e2
+    exact (cancel_epi _).1 e2
 
 /-- **On a witness carrying the printed clause, the two Atkin–Lehner groups coincide (no hypothesis).** Each
 `g ∈ W` of index `k` acts on `ℚ̄`-points as the `w_m` given by the printed clause, so equals it. -/

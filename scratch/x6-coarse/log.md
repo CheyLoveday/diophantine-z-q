@@ -13,3 +13,9 @@
 - Draft scratch/x6-coarse/X6ALIdeal.lean: idealI, mem_idealI_iff (I_m = O mu_m), InTors, IsIdealQuotient,
   canonical, IsogenyQuotient (textbook leaf), iso_of_quotient, ALIdealClause, alTwist_of_alIdeal,
   alIdeal_of_alTwist, hom_ext_qbar, atkinLehnerW_eq_of_clause, X6CoarseModuliIdeal and the two directions.
+- 01:34 VERIFIED (compiled): ZInQKernel/Contrib/OneProof/X6AtkinLehnerIdeal.lean (= scratch/x6-coarse/X6ALIdeal.lean)
+  builds (lake build, 17 s); `#print axioms` of all 38 theorems: [propext, Classical.choice, Quot.sound]
+  (scratch/x6-coarse/axioms.txt). Proved: mem_idealI_iff (I_m = O mu_m), canonical, alTwist_of_alIdeal (printed =>
+  twist, no hypothesis), iso_of_quotient / alIdeal_of_alTwist (twist => printed from IsogenyQuotient),
+  hom_ext_qbar, atkinLehnerW_eq_of_clause, x6CoarseModuli_of_ideal, x6CoarseModuliIdeal_of_twist,
+  elkiesX6StarEvery_of_ideal(') , ideal_of_elkiesX6StarEvery, galoisNatural_of_clause, clause_of_galoisNatural.
