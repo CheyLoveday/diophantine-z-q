@@ -1,6 +1,6 @@
 # phi-ample results log
 
-Base c1e4ed1b8 (wip/phi-ample). Build tree reflink-copied from ~/dzq-wt/sga3-nbhd (no ZInQKernel diff vs base).
+Base c1e4ed1b8 (wip/phi-ample). Build tree reflink-copied from the sga3-nbhd worktree (no ZInQKernel diff vs base).
 
 ## Route chosen: (a), K(L) finite, proved over any field K inside PhiAmpleIsogeny's context
 
