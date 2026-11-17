@@ -61,14 +61,14 @@ calibration, common coordinate, central specialization, base zero; RC16 switches
 | ex:sec7-one/two-symbol-address | 2222–2271 | ex:app-simultaneous-address | RC2 | finite cores OPEN |
 | ex:sec7-even-upper (3.3b) | 2295–2318 | (3.2), seeds, Boolean bit degree | RC11 | inequality core OPEN |
 | ex:sec7-rough-companion (3.3) | 2343–2401 | HL, forward rank zero, (3.3b) | RC13 | STATED-DEFS (`L_*`) |
-| ex:sec7-genus-lower (3.4)–(3.6) | 2418–2458 | CST ×2, index-≤2 glue, (3.5) | GenusOdd | (3.4) STATED-DEFS (genus and ring-class points, `j_gen`, `j_rc`, `L_*`); (3.3)+(3.4)+(3.5)⇒(3.6) inequality core L6 |
+| ex:sec7-genus-lower (3.4)–(3.6) | 2418–2458 | CST ×2, index-≤2 glue, (3.5) | GenusOdd | (3.4) STATED-DEFS (genus and ring-class points, `j_gen`, `j_rc`, `L_*`); (3.3)+(3.4)+(3.5)⇒(3.6) inequality core OPEN |
 | fixed witness, theta forms, (3.7), (3.8) | 2460–2551 | App F, Cornut–Jetchev, CST | GenusOdd (D_w, (3.7), δ) / RC12 ((3.8)) | STATED-DEFS |
 | common family (Waldspurger) | 2553–2591 | Waldspurger Cor 2 | GenusOdd | STATED-DEFS |
 | Branch 1 (empty unit) | 2587–2592 | (O.8) at `D = 1` | RC0 | inside BranchPackageNode (left disjunct) |
 | final companion, `s₂(E/K) = 1` | 2595–2628 | forward rank zero (Kolyvagin), isogeny `Res E → E × E^{(k)}` | RC0 | STATED-DEFS (`s₂(E/K)`) |
 | ex:sec7-ksplit-seed | 2628–2655 | App G mod-8 computation; `#E_ℓ(𝔽_p)[2^∞] = 4` | RC3 | OPEN (finite, genuine: points over `𝔽_p`) |
 | packet realization | 2657–2672 | grounded Laplacian minors | RC2 | finite core OPEN |
-| ex:sec7-final-family (3.9) | 2674–2713 | address lemmas, (3.4), (3.8) | AppGEndpoints | STATED-DEFS; `2j_rc ≤ 4ω + C_J` inequality core L6 |
+| ex:sec7-final-family (3.9) | 2674–2713 | address lemmas, (3.4), (3.8) | AppGEndpoints | STATED-DEFS; `2j_rc ≤ 4ω + C_J` inequality core OPEN |
 
 ## Section 8 (sec:arithmetic), L2718–4380
 
@@ -103,7 +103,7 @@ calibration, common coordinate, central specialization, base zero; RC16 switches
 
 | node | tex | depends on | owner | status |
 |---|---|---|---|---|
-| ex:app-kato-system (K1)–(K16) | 6846–7356 | Kato (8.1.3), 8.9, 8.11, Prop 8.12, Thm 6.6, 9.7, 13.4, 13.5; Stacks 03Q9/03QA; Nekovář Cor 4.1.3 | RC11 | STATED-DEFS (Kato Euler system); smoothing `v₂ s_F = 2e` arithmetic L6 |
+| ex:app-kato-system (K1)–(K16) | 6846–7356 | Kato (8.1.3), 8.9, 8.11, Prop 8.12, Thm 6.6, 9.7, 13.4, 13.5; Stacks 03Q9/03QA; Nekovář Cor 4.1.3 | RC11 | STATED-DEFS (Kato Euler system); smoothing `v₂ s_F = 2e` arithmetic OPEN |
 | ex:app-even-scalar (E.3)–(E.5) | 7367–7612 | positive complex; `Q(ζ_{2^n})⁺` | RC11 | unit `1+ζ+ζ⁻¹` norm `−1` and sign-count cores OPEN |
 | ex:app-central-calibration (E.6)–(E.9) | 7614–7787 | Nekovář 5.7.1.4–5.7.1.7; forward rank | RC11 | STATED-DEFS |
 | ex:app-even-phase (E.10)–(E.12) | 7792–8205 | Waldspurger, Ramsey | RC11 | `T(p²)` recurrence closed form (E.12) algebra OPEN |
