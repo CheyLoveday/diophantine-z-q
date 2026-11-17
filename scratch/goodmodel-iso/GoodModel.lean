@@ -5,6 +5,33 @@ import ZInQKernel.Contrib.CloudW03NeronSurj.Vendor.Theorems.Thm_AlgebraicGeometr
 import ZInQKernel.Contrib.CloudW03NeronSurj.Vendor.Theorems.Thm_AlgebraicGeometry_mem_of_ringKrullDim_stalk_le_one_of_isDiscreteValuationRing
 import ZInQKernel.Contrib.CloudW03NeronSurj.Vendor.Theorems.Thm_AlgebraicGeometry_Smooth_isDomain_and_isIntegrallyClosed_stalk_of_isDiscreteValuationRing
 
+/-!
+# goodmodel-iso: the comparison glue `NeronGoodModelIso` from BLR 1.4 Thm 3 over a DVR
+
+Task goodmodel-iso (2026-11-16); report docs/research/goodmodel-iso.md. group-law-dvr reduced *GIT* Thm 6.14 over a
+DVR to the Néron existence leaf and one glue Prop, `ZInQ.Contrib.GroupLawNeron.NeronGoodModelIso`
+(`MumfordGroupLawNeron.lean`). This file proves that glue from the DVR case of the leaf, with no purity theorem:
+
+* `neronGoodModelIso_of_dvr : NeronSchemeExtensionDVR → NeronGoodModelIso` (and `_of_dedekind`);
+* `mumfordGroupLawDVR_of_dedekind : NeronSchemeExtensionDedekind → MumfordGroupLawDVR`.
+
+Proof. Group case (`isIso_of_grp`: `N` smooth, separated, quasi-compact, with a group law whose identity is
+`e ≫ ψ`):
+1. (`exists_inverse_open`) the inverse of `ψ_K` extends to an open `V ⊆ N` containing the generic fibre and
+   meeting every component of the special fibre (the vendored FLT lemma
+   `NeronModelInfra.exists_opens_extension_of_isProper_of_smooth`, target `F` proper); on `V` and on `ψ⁻¹ V` it
+   inverts `ψ` (density of the generic fibre in a flat scheme).
+2. (`fibre_injective`) `ψ` is injective on the special fibre: its base change `ψ_k : A → N_k` is a homomorphism
+   by rigidity (`MulRigidity.isMonHom_of_geometricallyIntegral`), and if `ψ_k x = ψ_k y` for field-valued points,
+   translating by a point `w` with `xw, yw` in the (dense open) locus where `ψ` is invertible gives `xw = yw`.
+3. (`isIso_of_injective`) for `z ∈ N` the fibre `ψ⁻¹ z` lies in an affine open `Y`; an affine `U' ∋ z` has
+   `ψ⁻¹ U' ⊆ Y`, and `v|_{U' ∩ V}` extends to `U' → Y` by Hartogs (vendored
+   `existsUnique_extension_to_affine_of_isIntegrallyClosed_stalk`; stalks of a scheme smooth over a DVR are normal
+   domains, points of dimension ≤ 1 lie in `V`). So `ψ` is an isomorphism over each `U'`.
+General `N`: compose `ψ` with the extension `χ : N → N'` into the Néron model `N'` (which carries the Néron group
+law); `ψ ≫ χ` is an isomorphism by the group case, so `ψ` has a left inverse, a right inverse by density.
+-/
+
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 set_option linter.style.longLine false
@@ -31,7 +58,7 @@ lemma genMap_ne_closedPoint (K : Type) [Field K] [Algebra R K] [IsFractionRing R
   rw [h, h2, Ideal.comap_bot_of_injective _ (IsFractionRing.injective R K)] at h1
   exact IsDiscreteValuationRing.not_a_field R h1
 
-instance (K : Type) [Field K] [Algebra R K] [IsFractionRing R K] :
+theorem genMap_isSchemeTheoreticallyDominant (K : Type) [Field K] [Algebra R K] [IsFractionRing R K] :
     IsSchemeTheoreticallyDominant (genMap R K) :=
   NeronC.isSchemeTheoreticallyDominant_spec_map _ (IsFractionRing.injective R K)
 
@@ -41,6 +68,7 @@ lemma ext_of_generic_open {X Y : Scheme.{0}} (p : X ⟶ Spec (CommRingCat.of R))
     (s : Y ⟶ Spec (CommRingCat.of R)) [IsSeparated s] {f g : X ⟶ Y} (hfs : f ≫ s = g ≫ s)
     (O : X.Opens) (hO : ∀ x, p.base x ≠ IsLocalRing.closedPoint R → x ∈ O)
     (hfg : O.ι ≫ f = O.ι ≫ g) : f = g := by
+  haveI := genMap_isSchemeTheoreticallyDominant (R := R) (FractionRing R)
   let j := pullback.fst p (genMap R (FractionRing R))
   have hr : Set.range j.base ⊆ Set.range O.ι.base := by
     rintro _ ⟨z, rfl⟩
@@ -68,6 +96,7 @@ lemma exists_inverse_open (F N : Over (Spec (CommRingCat.of R))) [IsProper F.hom
       v ≫ ψ.left = V.ι ∧ (ψ.left ∣_ V) ≫ v = (ψ.left ⁻¹ᵁ V).ι := by
   let K := FractionRing R
   let s0 := genMap R K
+  haveI := genMap_isSchemeTheoreticallyDominant (R := R) K
   let ψK := ((Over.pullback s0).map ψ).left
   haveI : IsIso ψK := by
     have : IsIso ((Over.pullback s0).map ψ) := hK
@@ -426,8 +455,7 @@ lemma fibre_injective {F N : Over (Spec (CommRingCat.of R))} [IsSeparated N.hom]
     rw [MonObj.comp_mul, GrpObj.comp_inv] at hc1
     exact mul_inv_eq_one.mp hc1
   have := congrArg (fun f => f.base (IsLocalRing.closedPoint _)) (congrArg Over.Hom.left hc2)
-  simp only [Over.comp_left, x', y', Over.homMk_left, xb, yb, q0, Scheme.Hom.comp_base, TopCat.coe_comp,
-    Scheme.fromSpecResidueField_apply] at this
+  simp only [Over.comp_left, x', y', Over.homMk_left, xb, yb, q0, Scheme.Hom.comp_base, TopCat.coe_comp] at this
   dsimp only [Function.comp] at this
   rw [Scheme.fromSpecResidueField_apply, hz1, hz2] at this
   exact this.symm
@@ -515,6 +543,7 @@ theorem neronGoodModelIso_of_dvr (hN : NeronSchemeExtensionDVR) : NeronGoodModel
   haveI := hP; haveI := hS; haveI := hNS; haveI := hNsep
   let K := FractionRing R
   let s0 := genMap R K
+  haveI := genMap_isSchemeTheoreticallyDominant (R := R) K
   obtain ⟨A, g, hpb, hone⟩ := hfib K s0
   obtain ⟨N', hN'S, hN'sep, hN'qc, ε, hext⟩ := hN R K A
   haveI := hN'S; haveI := hN'sep; haveI := hN'qc
