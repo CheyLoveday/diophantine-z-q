@@ -347,4 +347,80 @@ theorem quadratic_eq_mul {A c r₁ r₂ : F} (h1 : r₁ + r₂ = A) (h2 : r₁ *
 
 end Poly
 
+/-! ## The three splitting types -/
+
+section Types
+
+open RingOfIntegers NumberField.Ideal UniqueFactorizationMonoid
+
+variable (K) in
+/-- `v ∈ {1, -1, 0}` records whether `p` splits, is inert or ramifies in `K`. -/
+def SplitType (p : ℕ) (v : ℤ) : Prop :=
+  (IsSplitIn K p ↔ v = 1) ∧ (IsInertIn K p ↔ v = -1) ∧ (IsRamifiedIn K p ↔ v = 0)
+
+variable [NumberField K] {θ : 𝓞 K} {p : ℕ} [Fact p.Prime]
+
+theorem splitType_of_irreducible (hp : ¬ p ∣ exponent θ)
+    (h : Irreducible ((minpoly ℤ θ).map (Int.castRingHom (ZMod p)))) : SplitType K p (-1) := by
+  have hm : ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))).Monic :=
+    (minpoly.monic θ.isIntegral).map _
+  have hg0 : (minpoly ℤ θ).map (Int.castRingHom (ZMod p)) ≠ 0 := hm.ne_zero
+  have hnf := normalizedFactors_of_irreducible h hm
+  refine ⟨?_, ?_, ?_⟩
+  · rw [isSplitIn_iff hp]
+    simp only [monicFactorsMod, hnf, Multiset.toFinset_singleton, Finset.mem_singleton]
+    simp
+  · rw [isInertIn_iff hp]; simp [h]
+  · rw [isRamifiedIn_iff hp]
+    simp only [monicFactorsMod, hnf, Multiset.toFinset_singleton, Finset.mem_singleton,
+      exists_eq_left]
+    rw [multiplicity_eq_count (by rw [hnf]; exact Multiset.mem_singleton_self _) hg0, hnf]
+    simp
+
+theorem splitType_of_eq_mul (hp : ¬ p ∣ exponent θ) {a b : ZMod p} (hab : a ≠ b)
+    (h : (minpoly ℤ θ).map (Int.castRingHom (ZMod p)) = (X - C a) * (X - C b)) :
+    SplitType K p 1 := by
+  have hg0 : (minpoly ℤ θ).map (Int.castRingHom (ZMod p)) ≠ 0 := by
+    rw [h]; exact mul_ne_zero (X_sub_C_ne_zero a) (X_sub_C_ne_zero b)
+  have hnf : normalizedFactors ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) =
+      {X - C a, X - C b} := by rw [h, normalizedFactors_X_sub_C_mul]
+  have hne : X - C a ≠ X - C b := fun h' => hab (C_inj.mp (sub_right_injective h'))
+  refine ⟨?_, ?_, ?_⟩
+  · rw [isSplitIn_iff hp]
+    simp only [iff_true]
+    refine ⟨X - C a, ?_, X - C b, ?_, hne⟩ <;> simp [monicFactorsMod, hnf]
+  · rw [isInertIn_iff hp, h]; simp [not_irreducible_X_sub_C_mul]
+  · rw [isRamifiedIn_iff hp]
+    simp only [show (1 : ℤ) ≠ 0 from one_ne_zero, iff_false, not_exists, not_and, not_lt]
+    intro Q hQ
+    have hQ' : Q ∈ normalizedFactors ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) :=
+      Multiset.mem_toFinset.mp hQ
+    rw [multiplicity_eq_count hQ' hg0, hnf]
+    rw [hnf] at hQ'
+    simp only [Multiset.insert_eq_cons, Multiset.mem_cons, Multiset.mem_singleton] at hQ'
+    rcases hQ' with rfl | rfl <;> simp [hne, hne.symm]
+
+theorem splitType_of_eq_mul_self (hp : ¬ p ∣ exponent θ) {a : ZMod p}
+    (h : (minpoly ℤ θ).map (Int.castRingHom (ZMod p)) = (X - C a) * (X - C a)) :
+    SplitType K p 0 := by
+  have hg0 : (minpoly ℤ θ).map (Int.castRingHom (ZMod p)) ≠ 0 := by
+    rw [h]; exact mul_ne_zero (X_sub_C_ne_zero a) (X_sub_C_ne_zero a)
+  have hnf : normalizedFactors ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) =
+      {X - C a, X - C a} := by rw [h, normalizedFactors_X_sub_C_mul]
+  refine ⟨?_, ?_, ?_⟩
+  · rw [isSplitIn_iff hp]
+    simp only [show (0 : ℤ) ≠ 1 from zero_ne_one, iff_false, not_exists, not_and, not_not]
+    intro Q₁ h₁ Q₂ h₂
+    simp only [monicFactorsMod, hnf, Multiset.insert_eq_cons, Multiset.toFinset_cons,
+      Multiset.toFinset_singleton, Finset.mem_insert, Finset.mem_singleton, or_self] at h₁ h₂
+    rw [h₁, h₂]
+  · rw [isInertIn_iff hp, h]; simp [not_irreducible_X_sub_C_mul]
+  · rw [isRamifiedIn_iff hp]
+    simp only [iff_true]
+    refine ⟨X - C a, by simp [monicFactorsMod, hnf], ?_⟩
+    rw [multiplicity_eq_count (by rw [hnf]; simp) hg0, hnf]
+    simp
+
+end Types
+
 end ZInQ.EpsSplit
