@@ -62,7 +62,7 @@ H-67		ZariskiConn.ZariskiConnectedness	249195fd0,f6df5fa32,cba8157f7	no
 H-69		HomUnify.HomLatticeCorr	249195fd0,f6df5fa32,cba8157f7	no
 H-70	homFreeFiniteAlgClosed	ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-71	charPolyIndepOfEllAlgClosed	ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
-H-72	poincareComplement	ZInQ.Contrib.AVB1.PoincareComplement	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+H-72		ZInQ.Contrib.AVB1.PoincareComplement	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-73		ZInQ.Contrib.AVB1.ImageFactorization	f6df5fa32,cba8157f7	no
 H-74		ZInQ.Contrib.AVB1.SimpleSurjIsogeny	f6df5fa32,cba8157f7	no
 H-75		AVB2.T11bExists	f6df5fa32,cba8157f7	no
@@ -225,7 +225,7 @@ T-21	hL29	ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3	8342c2eb7	yes
 T-22		ZInQ.Contrib.TYZDecomp.H29Split.TYZThm21At31	8342c2eb7	yes
 T-23	hP23	ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed	8342c2eb7	yes
 Z-1		ZInQ.GZDecomp.FHNonvanishing	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no
-Z-2	hL3	ZInQ.GZDecomp.GrossZagierHeegner	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no
+Z-2		ZInQ.GZDecomp.GrossZagierHeegner	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no
 Z-3		ZInQ.GZFH.FriedbergHoffsteinB_FE	8342c2eb7	yes
 Z-4		ZInQ.GZHL3.WeierstrassUniformization	8342c2eb7	yes
 Z-5		ZInQ.GZHL3.GrossZagierFormulaCd	8342c2eb7	yes
