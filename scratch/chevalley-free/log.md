@@ -59,3 +59,17 @@ coassociativity by epi cancellation), effectivity from vendored `isEffective_of_
 - `exists_grpObj` (group structure through an fpqc quotient map under a congruence), `cong_of_faithful`
   (congruence from a faithful monoidal base change), `isMonHom_pullbackComp`, `isMonHom_pullbackEq`.
 - Property descent along field extensions (copies of vendored privates), `finite_affine_of_grp`.
+
+## 6. Main result (VERIFIED, compiled 02:27)
+
+`scratch/chevalley-free/ChevFree.lean` (one file, imports only `ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect`,
+vendored CloudW07 modules, `MilneQuasiInverse.Descent` and Mathlib):
+
+- `ZInQ.ChevFree.semiAbelianDescendsPerfect_proof : ZInQ.HeightFix.SemiAbelianDescendsPerfect`, axioms
+  [propext, Classical.choice, Quot.sound]. No hypothesis; `ChevalleyPerfect` is not used.
+- `bostLowerBound_of_printed_free`, `gaudronRemondThm14_of_printed_free`, `javanpeykarBound_of_printed_free`,
+  `pazukiCor13Upper_of_printed_free`: the fields from height-fix's printed leaves and the T35 textbook fields only.
+- Route: `spread` (finite stage k₁ ⊆ k̄ via vendored `exists_finiteSubext_isPullback` and Mathlib
+  `exists_π_app_comp_eq_of_locallyOfFinitePresentation`) → `fsd` (KI from rigidity, descent datum, effective
+  finite flat descent, group law through fpqc quotient, property descent, kernel comparison) →
+  `quotientDescendsPerfect_proof` → semiab-descend's assembly with step (e) replaced.
