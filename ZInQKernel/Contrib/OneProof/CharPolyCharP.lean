@@ -27,7 +27,8 @@ integrality of `P₀` from `deg(φ^m − q) ∈ ℤ`), so that
   `mumfordTorsionAlgClosed_proof`).
 -/
 
-open CategoryTheory AlgebraicGeometry Limits Polynomial
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj Polynomial
+open scoped TensorProduct
 
 noncomputable section
 
@@ -78,7 +79,6 @@ theorem charPoly_of_degPoly (A : PkgI3.AbVar k) (hP : DegPolyAt A) (φ : PkgI3.A
       exact norm_deg_le_norm_det ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof A χ hχ ℓ hℓ b)
   rw [← h, ← hZ, Polynomial.map_map]
   congr 1
-  exact RingHom.ext_int _ _
 
 /-- **The field from deg-det's `DegHomogPoly` alone** (no `homFreeFiniteAlgClosed`). -/
 theorem charPolyIndepOfEllAlgClosed_of_degHomogPoly' (hP : DegHomogPoly) :

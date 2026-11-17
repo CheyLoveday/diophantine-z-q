@@ -36,3 +36,13 @@ deg-det's route needs `End(A)` finite over ℤ only for (i) integrality of φ (t
 test polynomials have degree ≤ deg μ ≤ 2g), and get p-integrality of P₀ from ∏(a_i^m − q) = deg(φ^m − q) ∈ ℤ for
 all m (a root with |a|_q > 1 makes the q-adic norm grow like |a|_q^m). So
 CharPolyIndepOfEllAlgClosed ⇐ DegHomogPolyNoEmb alone (char 0 with σ : k → ℂ from CharPolyLattice).
+
+## Compile log (11-17)
+- `lake build` of the merged chain (DegHomogPolyC, CharPolyLattice, MumfordTorsionAlgClosed, UniformizationLeafAll):
+  EXIT 0 (rebuilt H chain + vendored AnthropicFLT, ~13.4k jobs). VERIFIED.
+- `ZInQKernel/Contrib/OneProof/CharPolyCharP/Algebra.lean` (Mathlib + deg-det Algebra): compiles, no sorry;
+  `charpoly_eq_P0D`, `P0D_int` axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
+- `ZInQKernel/Contrib/OneProof/CharPolyCharP.lean`: compiles; `charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb'`
+  (HR : DegPolyC.DegHomogPolyNoEmb) : CharPolyIndepOfEllAlgClosed and `charPolyIndepOfEllAlgClosed_of_degHomogPoly'`
+  (hP : DegDet.DegHomogPoly), axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
+  Pitfall: `A.V ℓ` instances need `open … MonoidalCategory CartesianMonoidalCategory MonObj`.
