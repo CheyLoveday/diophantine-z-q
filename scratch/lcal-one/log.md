@@ -39,3 +39,14 @@ Task: prove `ZInQ.Contrib.TYZDecomp.TYZLcalOne : lcalSq 1 = 1` (Leaves.lean:266)
   (grouping by the norm + gz-theta `etaThetaIdentity`: it is `4 f(ix/32)`), `sum_cU_gaussTheta`
   (`Σ_j cU_j Θ_{j/4}(x) = ¼ f(ix/32)`), `lValOne_one_eq_integral : lValOne 1 = 2π ∫_{(0,∞)} f(it) dt`.
 - `lValOne_one : lValOne 1 = Ω/4`; `tyzLcalOne` from `TYZLcal.lcalSq_one`.
+
+## Contribution and checks (VERIFIED, 2026-11-17 ~00:00)
+- `ZInQKernel/Contrib/OneProof/TYZLcalOne.lean` (633 lines): `tyzLcalOne_proof`, `lValOne_one`,
+  `tyzThm11Integral_of_thm21C_only`; `lake build ZInQKernel.Contrib.OneProof.TYZLcalOne` OK.
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ...`: OK (14237 jobs, 5 min).
+- `#discharges` (`Discharges-output.txt`): `DISCHARGES [h11] by LcalOne.tyzThm11Integral_of_thm21C_only still
+  assumes [TYZGenusFold.TYZThm21PairsC]`; with tyz-genus's `DISCHARGES [hL29] by tyzLemma29PrintedNe3_of_thm21C
+  still assumes [TYZThm21PairsC]`; axioms standard. 35 open hypotheses.
+- `FoldCheck.lean`: `frozenTarget_lcalOne` (h11, hL29 → h21C; new body written out) and `frozenTarget_lcalOne'`
+  (through current frozenTarget): both `[propext, Classical.choice, Quot.sound]`. Net −1 (35 → 34), TYZ 2 → 1.
+- No new leaf. grep: no sorry/axiom/native_decide/decide/#eval in the contribution.
