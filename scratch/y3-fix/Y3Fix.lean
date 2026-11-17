@@ -532,6 +532,72 @@ theorem deligneP_of_field (hT : ObjBridge.TorsionStructure) (h : ShimuraMainThmI
   obtain ⟨k, hk⟩ := compare_iso_np (np_of_ab h1) (np_of_P hT h')
   exact ⟨_, Y3ABUPrint.body_transport k hk hb hU⟩
 
+/-! ## 7. The canonical-model leaf in the print's form, and the final discharge -/
+
+section Final
+
+open NumberField IsDedekindDomain TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+
+/-- `IsShimuraHolFamily` with its moduli clause in the `H₁`/Hodge form (`IsHodgeH1`) instead of the lattice form. -/
+def IsShimuraHolFamilyH (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (yτ : UpperHalfPlane → (fieldPt ℂ ⟶ Y)) : Prop :=
+  (∀ τ : UpperHalfPlane, ∃ P : QML3 ℂ, Φ ℂ (yτ τ) = M3.mk P ∧ IsHodgeH1 P τ) ∧
+  ShimuraSplit.IsHolFamily (X := Y.left) (fun τ => (yτ τ).left)
+
+/-- `DeligneBodyAt` with the moduli clause at `g = 1` in the `H₁`/Hodge form (all other clauses verbatim). -/
+def DeligneBodyAtH (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)) : Prop :=
+    (∀ y : fieldPt ℂ ⟶ Y, ∃ τ g, Ψ τ g = y) ∧
+    (∀ τ g τ' g', Ψ τ g = Ψ τ' g' ↔ DCRel τ g τ' g') ∧
+    (∀ g, ShimuraSplit.IsHolFamily (X := Y.left) (fun τ => (Ψ τ g).left)) ∧
+    IsShimuraHolFamilyH Y Φ (fun τ => Ψ τ 1) ∧
+    ∃ (ε : ℤˣ) (δ : Bool),
+      ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 →
+      ∀ (κ : K →+* ℂ) (q : K →ₐ[ℚ] LeafQM.B) (z : UpperHalfPlane),
+        IsCMPoint q (if δ then κ else (starRingEnd ℂ).comp κ) z →
+      ∀ (σ : ℂ ≃+* ℂ) (s : IdeleGroup (𝓞 K) K), ArtinCondC κ σ s →
+      ∀ g : BAQˣ, galPt σ (Ψ z g) = Ψ z (qHatU q s ^ (ε : ℤ) * g)
+
+/-- `ModuliAtUnits` in the `H₁`/Hodge form: at `Ψ(τ, u)`, `u ∈ 𝒪̂^×`, `(H₁(A, ℤ), h_A) ≅ (𝒪, h_τ)`. -/
+def ModuliAtUnitsH (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)) : Prop :=
+  ∀ u ∈ OhatU, ∀ τ : UpperHalfPlane, ∃ P : QML3 ℂ, Φ ℂ (Ψ τ u) = M3.mk P ∧ IsHodgeH1 P τ
+
+/-- **LEAF `DeligneCanonicalModelY3EveryH`** (printed form; see the module docstring). -/
+def DeligneCanonicalModelY3EveryH : Prop :=
+  ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), R1fpPropsAbP Y Φ →
+    ∃ Ψ, DeligneBodyAtH Y Φ Ψ ∧ ModuliAtUnitsH Y Φ Ψ
+
+theorem body_of_H {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)} (h : DeligneBodyAtH Y Φ Ψ) : DeligneBodyAt Y Φ Ψ := by
+  obtain ⟨h1, h2, h3, ⟨hm, hh⟩, h5⟩ := h
+  refine ⟨h1, h2, h3, ⟨fun τ => ?_, hh⟩, h5⟩
+  obtain ⟨P, hP, hH⟩ := hm τ
+  exact ⟨P, hP, lattice_of_hodge hH⟩
+
+theorem units_of_H {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)} (h : ModuliAtUnitsH Y Φ Ψ) : ModuliAtUnits Y Φ Ψ := by
+  intro u hu τ
+  obtain ⟨P, hP, hH⟩ := h u hu τ
+  exact ⟨P, hP, lattice_of_hodge hH⟩
+
+/-- The `H₁`-form leaf gives the lattice-form leaf (the uniformization dictionary, clause by clause). -/
+theorem deligneP_of_H (h : DeligneCanonicalModelY3EveryH) : DeligneCanonicalModelY3EveryP := by
+  intro Y Φ hY
+  obtain ⟨Ψ, hb, hU⟩ := h Y Φ hY
+  exact ⟨Ψ, body_of_H hb, units_of_H hU⟩
+
+/-- **The discharge**: `ShimuraMainThmIDeligneY3AbU` from the two printed-form leaves and the textbook leaf
+`mumfordTorsionAlgClosed` (Mumford, *Abelian varieties*, §4, Application 2 (iv), already a field of the
+textbook bundle). -/
+theorem shimuraMainThmIDeligneY3AbU_of_print (hM : AvSplit.MumfordTorsionAlgClosed)
+    (h1 : Y3FineModuliAbP) (h2 : DeligneCanonicalModelY3EveryH) : ShimuraMainThmIDeligneY3AbU :=
+  field_of_printP (AvSplit.torsionStructure_of_mumford hM) h1 (deligneP_of_H h2)
+
+end Final
+
 end Y3Fix
-#print axioms Y3Fix.field_of_printP
+
+#print axioms Y3Fix.shimuraMainThmIDeligneY3AbU_of_print
+#print axioms Y3Fix.y3FineModuliAbP_of_field
 #print axioms Y3Fix.deligneP_of_field
