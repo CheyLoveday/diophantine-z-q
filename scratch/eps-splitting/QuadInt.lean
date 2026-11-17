@@ -547,6 +547,79 @@ theorem splitType_epsD (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
           simp only [IsRoot, eval_add, eval_sub, eval_mul, eval_pow, eval_X, eval_C] at hr
           exact hsq ⟨2 * r - D, by linear_combination (-4) * hr + h4⟩
 
+/-- The three statements of `splitType_epsD`, separately. -/
+theorem epsD_eq_one_iff_isSplitIn (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) {p : ℕ} (hp : p.Prime) :
+    ZInQ.HGZSteps.epsD D p = 1 ↔ IsSplitIn K p :=
+  (splitType_epsD hD hneg hK hδ hp).1.symm
+
+theorem epsD_eq_neg_one_iff_isInertIn (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) {p : ℕ} (hp : p.Prime) :
+    ZInQ.HGZSteps.epsD D p = -1 ↔ IsInertIn K p :=
+  (splitType_epsD hD hneg hK hδ hp).2.1.symm
+
+theorem epsD_eq_zero_iff_isRamifiedIn (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) {p : ℕ} (hp : p.Prime) :
+    ZInQ.HGZSteps.epsD D p = 0 ↔ IsRamifiedIn K p :=
+  (splitType_epsD hD hneg hK hδ hp).2.2.symm
+
+theorem epsD_prime_trichotomy (D : ℤ) {p : ℕ} (hp : p.Prime) :
+    ZInQ.HGZSteps.epsD D p = 0 ∨ ZInQ.HGZSteps.epsD D p = 1 ∨ ZInQ.HGZSteps.epsD D p = -1 := by
+  rw [ZInQ.HGZSteps.epsD_prime D hp, ZInQ.HGZSteps.kronPrime]
+  split_ifs
+  · rw [χ₈_int_eq_if_mod_eight]; split_ifs <;> simp
+  · exact jacobiSym.trichotomy D p
+
 end Main
+
+/-! ## The quadratic character of `K` -/
+
+section Char
+
+variable (K)
+
+open Classical in
+/-- **The quadratic character of `K` at a prime `p`**: `1` if `p` splits in `K`, `−1` if `p` is
+inert, `0` otherwise (`p` ramifies). -/
+noncomputable def quadCharPrime (p : ℕ) : ℤ :=
+  if IsSplitIn K p then 1 else if IsInertIn K p then -1 else 0
+
+/-- **The quadratic character `ε_K` of a quadratic field `K`** as a function on `ℕ`: completely
+multiplicative, `quadCharPrime K p` at a prime `p`, and `0` at `0` (the Dirichlet character of
+`K/ℚ`). -/
+noncomputable def quadChar (n : ℕ) : ℤ :=
+  if n = 0 then 0 else n.factorization.prod fun p e => quadCharPrime K p ^ e
+
+variable {K} [NumberField K]
+
+theorem quadCharPrime_eq_epsD (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) {p : ℕ} (hp : p.Prime) :
+    quadCharPrime K p = ZInQ.HGZSteps.epsD D p := by
+  obtain ⟨hs, hi, hr⟩ := splitType_epsD hD hneg hK hδ hp
+  unfold quadCharPrime
+  split_ifs with h1 h2
+  · exact (hs.mp h1).symm
+  · exact (hi.mp h2).symm
+  · rcases epsD_prime_trichotomy D hp with h | h | h
+    · exact h.symm
+    · exact absurd (hs.mpr h) h1
+    · exact absurd (hi.mpr h) h2
+
+/-- **`ε_K = ε_D`**: the quadratic character of `K = ℚ(√D)` is the Kronecker symbol `(D/·)`. -/
+theorem quadChar_eq_epsD (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) (n : ℕ) :
+    quadChar K n = ZInQ.HGZSteps.epsD D n := by
+  unfold quadChar ZInQ.HGZSteps.epsD
+  split_ifs with hn h1
+  · exfalso
+    have := hD.1
+    omega
+  · rfl
+  · refine Finsupp.prod_congr fun p hp => ?_
+    rw [Nat.support_factorization] at hp
+    rw [quadCharPrime_eq_epsD hD hneg hK hδ (Nat.prime_of_mem_primeFactors hp),
+      ZInQ.HGZSteps.epsD_prime D (Nat.prime_of_mem_primeFactors hp)]
+
+end Char
 
 end ZInQ.EpsSplit
