@@ -46,3 +46,4 @@
 - lake build HodgeTatePairing +Main +Discharges: 14105 jobs, success.
 - #discharges: both theorems discharge OpenResearchLeaves28.hodgeTateDecompAbVar; standard axioms; 45 open, 6739 checked, 15 discharge one.
 - autofold --dry-run: strict 16/21 -> 17/20, strictest 16/21 -> 17/20 (GLUE -1). Dry-run module compiles; sixContactMin_of_open39 standard axioms.
+- Statement.lean (verbatim copy of the field, Iff.rfl against TailS) compiles (VERIFIED).
