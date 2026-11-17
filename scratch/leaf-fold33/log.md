@@ -209,3 +209,19 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     review). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean
     changed among existing OneProof modules; OpenStatements 40; DischargesTest rerun; render_open --check ok (34 H,
     strictest 17/17, 6 others); crosswalk --check ok; autoform check ok. FoldDryRun{,HF}.lean renamed .lean.txt.
+25. lcal-one (Addendum 2 item 4): h11 (TYZThm11Integral) and hL29 (TYZLemma29PrintedNe3) replaced by the one printed
+    leaf h21C (TYZGenusFold.TYZThm21PairsC, TYZ Thm 2.1 for pairs, tyz-genus variant B), with TYZLcalOne proved by
+    lcal-one; merged wip/lcal-one, manual Main fold. h21C is a new printed leaf: "pending review", GLUE until rated.
+    Same step, Addendum 2 item 2 reviewer ratings in kinds.tsv: hGZ, hCM and carayolThmA kind consequence GLUE/GLUE
+    (hGZ's flag has no D4 entry on this head, nothing to drop); kleimanPicZeroProper flag "pending reading" (GLUE);
+    neronSchemeExtensionDedekind restated with the hypothesis `¬ IsField D` (consumers dvr_of_dedekind and
+    neronSchemeExtensionExists_of_dedekind supply IsDiscreteValuationRing.not_isField and
+    NumberField.RingOfIntegers.not_isField), stays LEAF/LEAF. Y3FineModuliAb and DeligneCanonicalModelY3Every are not
+    in this tree (y3abu not folded): nothing to rate. Item 3: docs/research/leaf-fold33.md line 1 corrected (landed as
+    c0f3d085). claims.tsv rows h11, hL29 dropped. Count: 40 open -> 39 open; H 17/17 on 34 -> 16/18 on 34
+    (kleimanPicZeroProper re-rated), others 6 (GLUE h33, hGZ) -> 5 (h21C, hCM, h33, hGZ GLUE; hBFH LEAF). Strict GLUE
+    over all hypotheses 19 -> 22: +2 from the reviewer ratings, +1 from h21C pending review (one field fewer).
+    Checks (VERIFIED): build +Main +Discharges +TYZLcalOne (14273 jobs); frozenTarget standard axioms;
+    check_target.py; among existing OneProof modules only Main.lean changed (Contrib MumfordGroupLawNeron.lean changed
+    by the reviewer fix, as intended); OpenStatements 39; DischargesTest rerun; render_open --check ok (34 H,
+    strictest 16/18, 5 others); crosswalk --check ok; autoform check ok.

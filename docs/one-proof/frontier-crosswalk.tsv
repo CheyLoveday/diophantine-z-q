@@ -204,7 +204,7 @@ H-210		SGRSplit.ShimuraIntegralModelRep	8342c2eb7	yes
 H-211		ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw	8342c2eb7	yes
 H-212	r16CoreY	R16Split.R16CoreY	8342c2eb7	yes
 H-213		HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField	8342c2eb7	yes
-T-1	h11	ZInQ.Contrib.TYZDecomp.TYZThm11Integral	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+T-1		ZInQ.Contrib.TYZDecomp.TYZThm11Integral	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-2		ZInQ.Contrib.TYZDecomp.TYZLcalOne	249195fd0	no
 T-3		ZInQ.Contrib.TYZDecomp.TYZLemma29Mod2	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no
 T-4		ZInQ.Contrib.TYZGenus.Package.Lemma318Literal	249195fd0,f6df5fa32	no
@@ -221,7 +221,7 @@ T-17		T5Glue.RingClassLattice	f18bcb904,3691994d4	no
 T-18		ZInQ.Contrib.TYZDecomp.H29Split.LegendreThreeSquares	8342c2eb7	yes
 T-19		ZInQ.Contrib.TYZDecomp.H29Split.JonesPallX2Y2Z16	8342c2eb7	yes
 T-20		ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists	8342c2eb7	yes
-T-21	hL29	ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3	8342c2eb7	yes
+T-21		ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3	8342c2eb7	yes
 T-22		ZInQ.Contrib.TYZDecomp.H29Split.TYZThm21At31	8342c2eb7	yes
 T-23		ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed	8342c2eb7	yes
 Z-1		ZInQ.GZDecomp.FHNonvanishing	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no

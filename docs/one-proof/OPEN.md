@@ -11,14 +11,14 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**34 hypotheses of the H part** (in the bundles `OpenAddedLeaves25`, `OpenResearchLeaves38`, `OpenTextbookLeaves16`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**34 hypotheses of the H part** (in the bundles `OpenAddedLeaves25`, `OpenResearchLeaves38`, `OpenTextbookLeaves16`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 17 published / 17 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 16 published / 18 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: composite 3, consequence 5, published 26.
+* By kind: composite 3, consequence 6, published 25.
 
 ## Kernel-wide readings
 
@@ -76,8 +76,6 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/deg-det)) | 2026-11-16 |
 | [`gagaMorphism`](#gagamorphism) | the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) | 2026-11-15 |
 | [`picRepresentableAbVar`](#picrepresentableabvar) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr)) | 2026-11-16 |
-| [`h11`](#h11) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) | 2026-11-16 |
-| [`hL29`](#hl29) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) | 2026-11-16 |
 | [`hCM`](#hcm) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) | 2026-11-16 |
 
 ## Packets
@@ -102,9 +100,8 @@ Unread locators: SGA 3, EGA IV, Faltings 1983 Lemma 5, GIT, BLR 1.4, 7.2, 7.3. C
 
 Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
-* [`h11`](#h11) (LEAF; unverified-locator): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
-* [`hL29`](#hl29) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Lemma 2.9 (L1062-1066)
-* [`hCM`](#hcm) (LEAF; unread, unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
+* [`h21C`](#h21c) (GLUE; pending-review, restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Theorem 2.1 (L554-559), with P(d1, d2) defined at L551-552
+* [`hCM`](#hcm) (GLUE; unread, unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
 * [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
 * [`hGZ`](#hgz) (GLUE; pending-reading, unverified-locator): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
@@ -148,14 +145,15 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
 * [`picRepresentableAbVar`](#picrepresentableabvar) (LEAF; pending-review): Murre 1964, Oort 1962 (BLR Neron Models 8.2 Thm 3, number UNVERIFIED: Pic_{X/k} representable for X proper over a field, Pic as the fppf sheafification); dictionary pass 11-16: Murre-Oort is the print; the Kleiman 9.4.8 route would need projectivity and 9.2.5 (a consequence), so Murre-Oort is cited first. Earlier source text: Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
-* [`kleimanPicZeroProper`](#kleimanpiczeroproper) (LEAF; unread, unverified-locator): Kleiman, The Picard scheme, 9.5.4
+* [`kleimanPicZeroProper`](#kleimanpiczeroproper) (GLUE; pending-reading, unread, unverified-locator): Kleiman, The Picard scheme, 9.5.4
 
 ## Index
 
 | hypothesis | bundle | kind | strict | flag class | label | tier | area | human reads | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [`kleimanPicZeroProper`](#kleimanpiczeroproper) | added | published | GLUE | pending-reading, unread, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`bdRInvariantsPrinted`](#bdrinvariantsprinted) | research | published | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
-| [`carayolThmA`](#carayolthma) | research | published | GLUE | pending-review, reading-risk, unverified-locator | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
+| [`carayolThmA`](#carayolthma) | research | consequence | GLUE | pending-review, reading-risk, unverified-locator | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`constantFieldExtensionUnramifiedFinite`](#constantfieldextensionunramifiedfinite) | research | published | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`deRhamVpAbVarPrinted`](#derhamvpabvarprinted) | research | published | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`eigenformHTNew`](#eigenformhtnew) | research | consequence | GLUE |  | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass)) |
@@ -171,7 +169,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`shimuraMainThmIDeligneY3AbU`](#shimuramainthmideligney3abu) | research | composite | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`x6CoarseModuli`](#x6coarsemoduli) | research | published | GLUE | pending-review, unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gagaMorphism`](#gagamorphism) | textbook | consequence | GLUE | note, unverified-locator |  | T3-T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
-| [`kleimanPicZeroProper`](#kleimanpiczeroproper) | added | published | LEAF | unread, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`picRepresentableAbVar`](#picrepresentableabvar) | added | published | LEAF | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr)) |
 | [`bostLowerBoundPrinted`](#bostlowerboundprinted) | research | published | LEAF | unread, unverified-locator | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`chevalleyPerfect`](#chevalleyperfect) | research | published | LEAF | unread, unverified-locator | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -188,14 +185,28 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`raynaudSemistableSHOr`](#raynaudsemistableshor) | research | published | LEAF | reading-risk |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/raynaud-proof)) |
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/deg-det)) |
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
-| [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator, note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) |
-| [`hL29`](#hl29) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) |
-| [`hCM`](#hcm) | frozenTarget | published | LEAF | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
+| [`h21C`](#h21c) | frozenTarget | published | GLUE | pending-review, restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
+| [`hCM`](#hcm) | frozenTarget | consequence | GLUE | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
 | [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hGZ`](#hgz) | frozenTarget | published | GLUE | pending-reading, unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
+| [`hGZ`](#hgz) | frozenTarget | consequence | GLUE | pending-reading, unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 
 ## The hypotheses
+
+### kleimanPicZeroProper
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves25.kleimanPicZeroProper`; kind **published**, strict **GLUE**; flag: pending reading (Addendum 2: GLUE under strict until read); unread: new printed leaf (Kleiman 9.5.4, X proper and geometrically normal over a field, every representing object); locator UNVERIFIED.
+* Source: Kleiman, The Picard scheme, 9.5.4
+* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+PicFix.KleimanPicZeroProper
+```
+
+> pic-fix: for `X` proper and geometrically normal over a field `K`, the identity component of `Pic_{X/K}` is
+> proper (Kleiman, *The Picard scheme*, Thm 9.5.4; locator UNVERIFIED); stated for every representing scheme.
 
 ### bdRInvariantsPrinted
 
@@ -213,7 +224,7 @@ DeRhamPrint.BdRInvariantsPrinted
 
 ### carayolThmA
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves38.carayolThmA`; kind **published**, strict **GLUE**; flag: pending review (Addendum 1: new printed leaf, GLUE until a reviewer rates it); unread: new printed leaf (Carayol 1986 Theoreme (A) for F = Q, weight 2, in the packaging 'rho_{f,lambda} is irreducible, has Frobenius traces a_p and conductor N away from l', as quoted e.g. in Darmon-Diamond-Taylor 1997 Thm 3.1, with irreducibility from Ribet 1977 Thm 2.3); reading risk: Carayol's own Theoreme (A) is local-global compatibility through pi_p, from which the conductor clause follows with Casselman 1973, so the check should confirm that the conductor packaging and absolute irreducibility are printed for rho_{f,lambda}; locators UNVERIFIED.
+* Bundle field `HDec.HSyn.OpenResearchLeaves38.carayolThmA`; kind **consequence**, strict **GLUE**; flag: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; pending review (Addendum 1: new printed leaf, GLUE until a reviewer rates it); unread: new printed leaf (Carayol 1986 Theoreme (A) for F = Q, weight 2, in the packaging 'rho_{f,lambda} is irreducible, has Frobenius traces a_p and conductor N away from l', as quoted e.g. in Darmon-Diamond-Taylor 1997 Thm 3.1, with irreducibility from Ribet 1977 Thm 2.3); reading risk: Carayol's own Theoreme (A) is local-global compatibility through pi_p, from which the conductor clause follows with Casselman 1973, so the check should confirm that the conductor packaging and absolute irreducibility are printed for rho_{f,lambda}; locators UNVERIFIED.
 * Source: Carayol, Ann. Sci. ENS (4) 19 (1986) 409-468, Theoreme (A), pp. 409-411 and section 0.8 p. 411 (coverage read by the locator audit); Casselman, Math. Ann. 201 (1973) (a(pi_p) = v_p(N)); Ribet, LNM 601 (1977) Thm 2.3 (irreducibility); Darmon-Diamond-Taylor, Fermat's Last Theorem (1997) Thm 3.1 (packaging); locators UNVERIFIED
 * label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
@@ -448,21 +459,6 @@ ZInQ.HomLattice.GAGAMorphism
 > `ψ : ℂ^g → B(ℂ)` an analytic homomorphism killing `Λ` (= a holomorphic homomorphism
 > `A^an → B^an`). Then `ψ` comes from an algebraic morphism `f : A → B`.
 
-### kleimanPicZeroProper
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves25.kleimanPicZeroProper`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Kleiman 9.5.4, X proper and geometrically normal over a field, every representing object); locator UNVERIFIED.
-* Source: Kleiman, The Picard scheme, 9.5.4
-* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-PicFix.KleimanPicZeroProper
-```
-
-> pic-fix: for `X` proper and geometrically normal over a field `K`, the identity component of `Pic_{X/K}` is
-> proper (Kleiman, *The Picard scheme*, Thm 9.5.4; locator UNVERIFIED); stated for every representing scheme.
-
 ### picRepresentableAbVar
 
 * Bundle field `HDec.HSyn.OpenAddedLeaves25.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
@@ -607,7 +603,7 @@ NOSSepDict.NeronOggShafarevichSep
 
 ### neronSchemeExtensionDedekind
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves38.neronSchemeExtensionDedekind`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED (BLR, Neron models, 1.4 Thm 3 with 1.2 Def 1, existence half, affine Dedekind base).
+* Bundle field `HDec.HSyn.OpenResearchLeaves38.neronSchemeExtensionDedekind`; kind **published**, strict **LEAF**; flag: leaf restated with the hypothesis not IsField D (Addendum 2 reviewer fix; BLR Dedekind schemes are one-dimensional), stays LEAF/LEAF; locator UNVERIFIED (BLR, Neron models, 1.4 Thm 3 with 1.2 Def 1, existence half, affine Dedekind base).
 * Source: Bosch-Lutkebohmert-Raynaud, Neron models (1990), 1.4 Thm 3 with 1.2 Def 1: an abelian variety over the fraction field of a Dedekind domain D has a Neron model over Spec D (existence half; smooth, separated, quasi-compact, extension property for smooth D-schemes); numbers UNVERIFIED; group-law-dvr, goodmodel-iso. Replaces mumfordGroupLawConn (GIT 6.14 over a DVR follows: GoodModelIso.mumfordGroupLawDVR_of_dedekind) and the textbook field neronSchemeExtensionExists (its case D = O_L)
 * packet [R2](#packet-r2); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
@@ -707,54 +703,25 @@ AvSplit.MumfordTorsionAlgClosed
 
 These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.
 
-### h11
+### h21C
 
-* Argument `h11` of `frozenTarget`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED (see the source); reading note: TYZ's printed proof of integrality and of Theorem 1.1 (L1081-1088) goes through the misprinted Lemma 2.9 display at n = 3; the statement stays true (script-L(3) = +-1).
-* Source: Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
+* Argument `h21C` of `frozenTarget`; kind **published**, strict **GLUE**; flag: pending review (Addendum 2: new printed leaf, GLUE until a reviewer rates it); variant B (replaces h11 and hL29: hL29 by tyzLemma29PrintedNe3_of_thm21C, h11 by tyzThm11Integral_of_thm21C_only, TYZLcalOne being proved by lcal-one): as h21 with complex sign choices l(m)^2 = script-L(m)^2 (TYZ's script-L is real, L338-353, so l = +-script-L and the sign is absorbed by epsilon: the print); not vacuous without Theorem 1.1; restricted: odd classes, n > 1, first assertion for pairs with no factor = 1 mod 8; unread.
+* Source: Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Theorem 2.1 (L554-559), with P(d1, d2) defined at L551-552
 * packet [R3](#packet-r3); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)).
+* Status: open.
 
 ```lean
-ZInQ.Contrib.TYZDecomp.TYZThm11Integral
+ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC
 ```
 
-> **Leaf TYZ-1.1a (TYZ Theorem 1.1, first assertion, odd case)**: for odd squarefree
-> `m ≡ 1, 3 (mod 8)`, `𝓛(m)` is an integer. TYZ Theorem 1.1 (L371–380, for `n ≡ 1, 2, 3`);
-> refereed (journal number of Theorem 1.1 UNVERIFIED: §1 was renumbered).
-
-### hL29
-
-* Argument `hL29` of `frozenTarget`; kind **published**, strict **LEAF**; flag: restricted: printed Lemma 2.9 for squarefree 1 < n = 1, 3 mod 8, n != 3 (TYZ: n = 1, 2, 3; the print is false at n = 3, Q(3) = +-3 while L(3) = +-1, h29-fix brandt.py, lcal_small.py; for n != 3, w_K = 1 and the print agrees with its proof L1068-1077); unread.
-* Source: Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Lemma 2.9 (L1062-1066)
-* packet [R3](#packet-r3); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)).
-
-```lean
-ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3
-```
-
-> **TYZ Lemma 2.9 (L1062–1066) as printed, for squarefree `1 < n ≡ 1, 3 (mod 8)`, `n ≠ 3`.** For every
-> admissible embedding `τ` (L527–534), every test vector `f_n` (a `ℤ`-generator of `π_ℤ^{U_n}`, L550) and every
-> sign choice `ℓ` of `𝓛` on the squarefree classes `1, 3 (mod 8)` (`ℓ(m)² = 𝓛(m)²`, `lcalSq`, TYZ L336–353),
-> there are signs `ε = ±1` with `Σ_{n = d₁d₂} ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)`, the sum over the non-ordered
-> decompositions `n = d₁d₂`, `d₁, d₂ > 0`, `d₂ ≡ 1 (mod 8)` (`pairIdx n`, the pair indexed by `d = d₂` when
-> `n ≡ 3`, by its smaller member when `n ≡ 1`), and `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L566–568, `genusPeriodTV`).
-> 
-> Restrictions of the print (each a weakening): odd classes `n ≡ 1, 3 (mod 8)` only (TYZ: `n ≡ 1, 2, 3`),
-> `n > 1`, and `n ≠ 3`. At `n = 3` the print is false: `Cl_3 = 1`, `Q(3) = f_3(1) = ±3` for each of the 8
-> admissible `τ` (h29-fix, `scratch/h29-fix/brandt.py`, exact; also by hand from Theorem 2.6), while
-> `𝓛(3)² = 1` (`lcal_small.py`, PARI), so the print would read `±1 = ±3`. TYZ's proof (L1068–1077, through
-> Theorem 2.1) carries a factor `w_K` that the print drops; `w_K = 1` for squarefree `1 < n ≠ 3` (then
-> `μ(ℚ(√−n)) = {±1}`, STANDARD), so for `n ≠ 3` the print and the proof agree. The case `n = 3`
-> is the separate leaf `TYZThm21At31`. Quantifying over every sign choice `ℓ` is harmless: changing the sign
-> of `ℓ(m)` is absorbed by `ε`. Checked (h29-fix, `brandt2.py`) on 18 values `n ≠ 3`, two embeddings each:
-> `Q(n)` is one of the values `Σ ε𝓛𝓛`.
+> **TYZ Theorem 2.1 (L554–559) for every decomposition, odd classes, complex sign choices.** As
+> `H29Genus.TYZThm21Pairs` (same quadratic periods, same two clauses, same restrictions: odd classes, `n > 1`; the
+> first clause only for pairs with no factor `≡ 1 (mod 8)`), with `ℓ : ℕ → ℂ`, `ℓ(m)² = 𝓛(m)²`.
 
 ### hCM
 
-* Argument `hCM` of `frozenTarget`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Shimura 1971 Thm 5.4 as printed: analytic isomorphism xi : C/a -> E(C) gives xi' : C/s^-1 a -> E^sigma(C) with xi(u)^sigma = xi'(s^-1 u); E restricted to short Weierstrass models, uniqueness dropped; "analytic isomorphism" = IsAnalyticUnif, dictionary proved in Lean (isAnalyticUnif_iff)); locator UNVERIFIED (numbers).
+* Argument `hCM` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; unread: new printed leaf (Shimura 1971 Thm 5.4 as printed: analytic isomorphism xi : C/a -> E(C) gives xi' : C/s^-1 a -> E^sigma(C) with xi(u)^sigma = xi'(s^-1 u); E restricted to short Weierstrass models, uniqueness dropped; "analytic isomorphism" = IsAnalyticUnif, dictionary proved in Lean (isAnalyticUnif_iff)); locator UNVERIFIED (numbers).
 * Source: Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
 * packet [R3](#packet-r3); tier T2 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
 * Human readings recorded: none.
@@ -885,7 +852,7 @@ ZInQ.BFHPrinted.BFHClauseIIGamma0
 
 ### hGZ
 
-* Argument `hGZ` of `frozenTarget`; kind **published**, strict **GLUE**; flag: pending reading: fold33-review: three steps between Gross-Zagier's morphism phi : X0(N) -> E and the Lean pull-back phi^* : Q(E) -> Q(X0(N)) are not proved in Lean (D1: Q-embeddings of function fields are morphisms of the curves, Hartshorne I.6.12; D2: phi at Heegner points read through q-expansions; D3: IsOptimalParam is the strong Weil parametrization, which matters if GZ V section 2 is restricted to it); counts GLUE until they are proved or a reading removes them; locator UNVERIFIED.
+* Argument `hGZ` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; pending reading: fold33-review: three steps between Gross-Zagier's morphism phi : X0(N) -> E and the Lean pull-back phi^* : Q(E) -> Q(X0(N)) are not proved in Lean (D1: Q-embeddings of function fields are morphisms of the curves, Hartshorne I.6.12; D2: phi at Heegner points read through q-expansions; D3: IsOptimalParam is the strong Weil parametrization, which matters if GZ V section 2 is restricted to it); counts GLUE until they are proved or a reading removes them; locator UNVERIFIED.
 * Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
 * packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
 * Human readings recorded: none.
