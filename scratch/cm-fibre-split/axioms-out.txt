@@ -1,8 +1,16 @@
-FibreSplit.cmFibreSplit_of_curveOrder : HDec.QMLattice.YuB6Alg →
+FibreSplit.cmFibreSplit_of_leaves : HDec.QMLattice.YuB6Alg →
   ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC →
     G0ModField.FibreCoverExists →
-      PkgI2.NeronOggShafarevich →
-        HDec.PkgI2.RaynaudCriterionNF → PkgI2.TorsionStructure → FibreSplit.CMCurveOrder → CMFibreSplit
+      PkgI2.NeronOggShafarevich → HDec.PkgI2.RaynaudCriterionNF → PkgI2.TorsionStructure → CMFibreSplit
+FibreSplit.cmCurveOrder_of : ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC → FibreSplit.CMCurveOrder
+@FibreSplit.trEquiv : {L : Type} →
+  [inst : Field L] →
+    {X : PkgI3.AbVar L} →
+      {Ω Ω' : Type} →
+        [inst_1 : Field Ω] →
+          [inst_2 : Field Ω'] →
+            [inst_3 : Algebra L Ω] →
+              [inst_4 : Algebra L Ω'] → {σ : Ω ≃ₐ[L] Ω'} → (X.baseChange Ω).End ≃+* (X.baseChange Ω').End
 FibreSplit.cmFibreSplit_of : HDec.QMLattice.YuB6Alg →
   ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC →
     FibreSplit.CMHomFieldModel → FibreSplit.CMMatrixUnitSplit → CMFibreSplit
@@ -23,7 +31,12 @@ FibreSplit.matrixUnit_isogeny : ∀ (L : Type) [inst : Field L] [NumberField L] 
                     E.dim = 1 ∧
                       PkgI3.AbVar.dim Pr = ↑2 ∧
                         HDec.HSyn.G0Split.IsProductOf Pr.X E.X E.X ∧ ∃ φ, ZInQ.DefFaltings.IsIsogeny φ
+'HDec.CMBranch.FibreSplit.cmFibreSplit_of_leaves' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmCurveOrder_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.trEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.idem_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.conductor_ne_zero_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FibreSplit.cmFibreSplit_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FibreSplit.cmHomFieldModel_of' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FibreSplit.endBC_surjective_of_homField' depends on axioms: [propext, Classical.choice, Quot.sound]
