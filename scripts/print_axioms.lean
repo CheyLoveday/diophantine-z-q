@@ -7,6 +7,9 @@ hypotheses. From the repository root, after `lake build ZInQKernel`:
     lake env lean scripts/print_axioms.lean
 
 Each declaration should depend on `[propext, Classical.choice, Quot.sound]` only.
+
+The whole proof from the open statements, `ZInQ.OneProof.frozenTarget`, is not listed here (this file imports only
+`ZInQKernel`): `lake build +ZInQKernel.OneProof.Main` prints its axioms (`ZInQKernel/OneProof/Main.lean`, last line).
 -/
 
 -- The main theorem from H and PC (`MainGreenTao.lean`), and its variants (`Main.lean`).

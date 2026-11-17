@@ -592,7 +592,10 @@ reductions are now folded in, and https://github.com/Deicyde/diophantine-z-q/iss
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) takes exactly the open
 statements as hypotheses: a proof of one is folded in by replacing that hypothesis with the proof. The status column of docs/one-proof/OPEN.md shows who
 holds each statement. To build and check: `lake exe cache get`, then
-`lake build ZInQKernel`; then `lake env lean scripts/print_axioms.lean` (every declaration listed must depend only on
+`lake build ZInQKernel +ZInQKernel.OneProof.Main`; the build prints the axioms of `ZInQ.OneProof.frozenTarget`, which
+must be the three standard axioms; then `lake env lean scripts/print_axioms.lean` (463 declarations: the headline
+`ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness` and its variants, the
+theorems that replace former hypotheses, and the glue lemmas of the decomposition of H; every one must depend only on
 the three standard axioms) and `python3 scripts/check_target.py`.
 
 ## Verification
