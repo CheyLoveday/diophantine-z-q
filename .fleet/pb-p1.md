@@ -34,3 +34,5 @@ without comparing rings and without B1:
 * B1 is not formalized. Berger's §1.2 formula for `log[π̄]` divides by `π̄^(0) ∈ C_p`, which is not literal in
   `B_dR^+`. An on-the-spot sketch is in the report §4. B1 is not needed on the route.
 * Report: `docs/research/pb-p1.md`.
+
+Final commit 2026-11-17 ~05:20 PST; build logs trimmed to their tails.
