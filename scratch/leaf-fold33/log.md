@@ -137,3 +137,128 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 16 (only frozenTarget
     changed, 10 new constants in TailZ55); OpenStatements 35; render_open --check ok (29 H, strictest 11/18, 6
     others); crosswalk --check ok; DischargesTest rerun; autoform check ok.
+18. eigenformCoeffFieldFinite (composite, GLUE) proved by coeff-rational (wip/coeff-rational e85590b8, taken over
+    coeff-field: same field, its diamond leaf replaced by the T_p leaf) from two printed-form leaves
+    gamma1IntegralSpan (Shimura 1971 Thm 3.52) and heckePrimeIntegralToRational (T_p part of the Hecke stability of
+    S_k(Gamma_1(N), Z)), both "unread: new printed leaf", locators UNVERIFIED: merged wip/coeff-rational, autofold
+    scratch/coeff-rational/autofold.json -> TailZ56, `sixContactMin_of_open49`; strict 11/18 on 29 -> 13/17 on 30
+    (GLUE -1, +1 hypothesis). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms;
+    check_target.py; only Main.lean changed among existing OneProof modules (TailZ56 new); OpenStatements 36;
+    render_open --check ok (30 H, strictest 13/17, 6 others); crosswalk --check ok; DischargesTest rerun; autoform
+    check ok. scratch FoldCheck.lean of coeff-rational and coeff-field renamed .lean.txt (they redeclare bundles).
+19. r17 (consequence, GLUE) replaced by r17-print's printed-form leaf carayolThmA (Carayol 1986 Theoreme (A), F = Q,
+    weight 2, packaged form, over printed newforms; dictionary steps proved): merged wip/r17-print 785e3f29, autofold
+    scratch/leaf-fold33/autofold-r17.json (r17-print's spec with eigenformCoeffFieldFinite, removed in step 18, taken
+    from CoeffRational.eigenformCoeffFieldFinite_of_heckePrime) -> TailZ57, `sixContactMin_of_open50`. Per the
+    integrator's rule for printed-form restatements, carayolThmA is flagged "pending review" and counts GLUE (strict
+    and strictest) until a reviewer rates it: 13/17 on 30 -> 13/17 on 30 (count-neutral; another session's
+    wip/leaf-fold34r folds the same result with the row LEAF, on c0f3d085 without step 18). Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; OpenStatements 36; DischargesTest rerun; render_open --check ok (30 H, strictest 13/17, 6
+    others); crosswalk --check ok; autoform check ok. AutofoldDryRun.lean renamed .lean.txt.
+20. deRhamH1AbVarT (consequence, GLUE) replaced by derham-print's two printed-form leaves deRhamVpAbVarPrinted
+    (Fontaine: V_p(A) de Rham with the printed D_dR, as in Berger 2004 I.3) and bdRInvariantsPrinted (B_dR^{G_K} = K,
+    dimension form), with mumfordTorsionAlgClosed; t = log[eps] and B_dR = B_dR^+[1/t] proved in Lean
+    (DeRhamPrintTDict): merged wip/derham-print ccb19bd3, autofold scratch/leaf-fold33/autofold-derham.json
+    (derham-print's spec, flags "pending review") with --allow-rise -> TailZ58, `sixContactMin_of_open51`. Both rows
+    count GLUE until a reviewer rates them (integrator's rule), so H 13/17 on 30 -> 13/18 on 31 (GLUE +1 until the
+    review; -1 against the base if both are rated LEAF). Checks (VERIFIED): build +Main +Discharges; frozenTarget
+    standard axioms; check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements 37;
+    DischargesTest rerun; render_open --check ok (31 H, strictest 13/18, 6 others); crosswalk --check ok; autoform
+    check ok. FoldDryRun.lean renamed .lean.txt.
+21. gonzalezRotgerX6Ab (composite, GLUE) and elkiesX6StarFunctionField (consequence, GLUE) replaced by grx6ab-print's
+    and elkies-print's printed-form leaves gonzalezRotgerThm512X6 (GR 2006 Thm 5.12, gr-dict's statement),
+    x6CoarseModuli (X0(6,1) coarse moduli, reading risk on the Atkin-Lehner clause) and elkiesX6StarEvery (Elkies 1998
+    section 3 for every witness), with shimuraMainThmIDeligneY3AbU, gagaMorphism, mumfordTorsionAlgClosed: merged
+    wip/grx6ab-print b047ce25 (it contains wip/elkies-print 168bbb39 and gr-dict), autofold
+    scratch/leaf-fold33/autofold-grx6ab-elkies.json (grx6ab-print's autofold-combined.json, flags "pending review")
+    with --allow-rise -> TailZ59, `sixContactMin_of_open52`. The three rows count GLUE until reviewed: H 13/18 on 31
+    -> 13/19 on 32 (GLUE +1 until the review; -2 against the base if all three are rated LEAF). Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; OpenStatements 38; DischargesTest rerun; render_open --check ok (32 H, strictest 13/19, 6
+    others); crosswalk --check ok; autoform check ok. Scratch files that redeclare bundles renamed .lean.txt
+    (grx6ab-print FoldCheck, FoldCheckCombined; elkies-print FoldDryRun; gr-dict BypassFold, BypassReach,
+    FoldCheck); host paths removed from scratch/grx6ab-print/build1.txt.
+22. hodgeTateDecompAbVar (consequence, GLUE) proved by hodgetate-from-dr from one new printed-form leaf
+    hodgeTateDecompExists (Fontaine 1982 with both exponents unnamed), adapted by the integration task fold34-ht to the
+    characteristic-0 T9 data of this tree (HodgeTatePairing{Weil0,Core0,CharZero}: hodgeTateDecompAbVar_of_open from
+    hodgeTateDecompExists, mumfordTorsionAlgClosed, picRepresentableAbVar, kleimanPicZeroProper): merged wip/fold34-ht
+    up to its Contrib commits (316c8da2, without its fold commit), autofold scratch/fold34-ht/autofold.json -> TailZ60,
+    `sixContactMin_of_open53`; H 13/19 on 32 -> 14/18 on 32 (GLUE -1; the leaf rated as the task reports it,
+    "unread: new printed leaf", LEAF). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms;
+    check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements 38; DischargesTest rerun;
+    render_open --check ok (32 H, strictest 14/18, 6 others); crosswalk --check ok; autoform check ok.
+    AutofoldDry.lean renamed .lean.txt.
+23. bostLowerBound and gaudronRemondThm14 (consequence, GLUE) replaced by height-fix's printed-form leaves
+    bostLowerBoundPrinted and gaudronRemondThm14Printed over the printed stable height, with height-fix's glue
+    SemiAbelianDescendsPerfect proved by semiab-descend from the new leaf chevalleyPerfect (Chevalley over perfect
+    fields), integrated by fold34-semiab: merged wip/fold34-semiab up to its Contrib and spec commit (0eca20f0, which
+    merges wip/height-fix 49e6d97d and wip/semiab-descend 6a6de248, hygiene included), autofold
+    scratch/fold34-semiab/autofold.json -> TailZ61, `sixContactMin_of_open54`; H 14/18 on 32 -> 17/16 on 33 (GLUE -2,
+    +1 field; the three leaves rated as the tasks report them, "unread: new printed leaf", LEAF). Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; OpenStatements 39; DischargesTest rerun; render_open --check ok (33 H, strictest 17/16, 6
+    others); crosswalk --check ok; autoform check ok.
+24. javanpeykarBound (consequence, GLUE) replaced by javanpeykar-rebase's leaves over height-fix's printed stable
+    height: javanpeykarPrintedMapHF (Javanpeykar 2014 Thm 1.1.1 at X0 x_K Qbar; kind consequence, pending reading) and
+    constantFieldExtensionUnramifiedFinite (Stichtenoth 3.6.3(a), finite K'/K), with mumfordTorsionAlgClosed and
+    height-fix's glue, now proved (step 23): merged wip/javanpeykar-rebase 4cb6a008, autofold
+    scratch/leaf-fold33/autofold-javanpeykar.json (the task's spec with semiAbelianDescendsPerfect taken from
+    SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley {n}.chevalleyPerfect; flags "pending review") -> TailZ62,
+    `sixContactMin_of_open55`. Both rows count GLUE until reviewed: H 17/16 on 33 -> 17/17 on 34 (GLUE +1 until the
+    review). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean
+    changed among existing OneProof modules; OpenStatements 40; DischargesTest rerun; render_open --check ok (34 H,
+    strictest 17/17, 6 others); crosswalk --check ok; autoform check ok. FoldDryRun{,HF}.lean renamed .lean.txt.
+25. lcal-one (Addendum 2 item 4): h11 (TYZThm11Integral) and hL29 (TYZLemma29PrintedNe3) replaced by the one printed
+    leaf h21C (TYZGenusFold.TYZThm21PairsC, TYZ Thm 2.1 for pairs, tyz-genus variant B), with TYZLcalOne proved by
+    lcal-one; merged wip/lcal-one, manual Main fold. h21C is a new printed leaf: "pending review", GLUE until rated.
+    Same step, Addendum 2 item 2 reviewer ratings in kinds.tsv: hGZ, hCM and carayolThmA kind consequence GLUE/GLUE
+    (hGZ's flag has no D4 entry on this head, nothing to drop); kleimanPicZeroProper flag "pending reading" (GLUE);
+    neronSchemeExtensionDedekind restated with the hypothesis `¬ IsField D` (consumers dvr_of_dedekind and
+    neronSchemeExtensionExists_of_dedekind supply IsDiscreteValuationRing.not_isField and
+    NumberField.RingOfIntegers.not_isField), stays LEAF/LEAF. Y3FineModuliAb and DeligneCanonicalModelY3Every are not
+    in this tree (y3abu not folded): nothing to rate. Item 3: docs/research/leaf-fold33.md line 1 corrected (landed as
+    c0f3d085). claims.tsv rows h11, hL29 dropped. Count: 40 open -> 39 open; H 17/17 on 34 -> 16/18 on 34
+    (kleimanPicZeroProper re-rated), others 6 (GLUE h33, hGZ) -> 5 (h21C, hCM, h33, hGZ GLUE; hBFH LEAF). Strict GLUE
+    over all hypotheses 19 -> 22: +2 from the reviewer ratings, +1 from h21C pending review (one field fewer).
+    Checks (VERIFIED): build +Main +Discharges +TYZLcalOne (14273 jobs); frozenTarget standard axioms;
+    check_target.py; among existing OneProof modules only Main.lean changed (Contrib MumfordGroupLawNeron.lean changed
+    by the reviewer fix, as intended); OpenStatements 39; DischargesTest rerun; render_open --check ok (34 H,
+    strictest 16/18, 5 others); crosswalk --check ok; autoform check ok.
+26. gonzalezRotgerProp56X6 (consequence, GLUE) removed by eichler-bound's bypass, integrated by fold34-eichler: merged
+    wip/fold34-eichler up to its Contrib commit b6645db0 (R5fpCountLeHF; merges wip/eichler-bound 09896d1f, hygiene
+    included), its scratch tools from fd1377d8, then scratch/fold34-eichler/replay.sh on this head: copy
+    OneProof/H/EichlerBoundCopy.lean (gen.py from the taint run of this head) + TailZ63 (OpenResearchLeaves39,
+    `sixContactMin_of_open56`), Main patched, kinds row dropped (claims row already dropped by inbox 1). No new leaf:
+    39 open -> 38 open; H 16/18 on 34 -> 16/17 on 33. Checks (VERIFIED): build +Main +Discharges + copy + TailZ63
+    (14288 jobs); frozenTarget standard axioms; check_target.py; among existing OneProof modules only Main.lean
+    changed; closure check (bundle without the field, count Props supplied by EichlerBound.r5fpCountLe_of_two);
+    OpenStatements 38; DischargesTest rerun (the 5 gonzalezRotgerProp56X6 lines gone); render_open --check ok (33 H,
+    strictest 16/17, 5 others); crosswalk --check ok; autoform check ok.
+27. Inbox 3 readings (kinds.tsv: sga7_IX_3_5_ForwardGeom LEAF/LEAF; raynaudSemistableSHOr reading flags cleared;
+    sga7_IX_3_3_SHpre consequence GLUE with the three-step flag; hGZ flag names D1, D2, jacobiSym = epsilon_D) and the
+    SGA 7 IX locators in docstrings (144 comment-only edits: Prop. 3.3 -> Cor. 3.3, semistable reduction Def. 3.4).
+    H 16/17 on 33 -> 17/16 on 33.
+28. Fork PRs #54 (mumfordTorsionAlgClosed_proof, 9f54c2cc) and #55 (gagaMorphism_proof, d81efece), both verified by
+    fold34-pr and by the reviewer's second compile (inbox 2, 4): merged, one autofold
+    scratch/leaf-fold33/autofold-pr54-55.json (fold34-pr's two specs combined) -> TailZ64, `sixContactMin_of_open57`;
+    vendored LICENSE/NOTICE kept; no new leaf. 38 open -> 36 open; H 17/16 on 33 -> 16/15 on 31. Checks (VERIFIED):
+    build +Main +Discharges (16038 jobs, PR libraries included); frozenTarget standard axioms; check_target.py; only
+    Main.lean changed among existing OneProof modules; closure (no sorryAx, the two fields gone from the bundles);
+    OpenStatements 36; DischargesTest rerun, no error; render_open --check ok (31 H, strictest 16/15, 5 others);
+    crosswalk --check ok; autoform check ok.
+29. Batch for w96 (inbox 6, 7, 9 and cfext-proof), one autofold scratch/leaf-fold33/autofold-batch-w96.json -> TailZ65,
+    `sixContactMin_of_open58`: merged wip/cfext-proof 3849bd80, wip/r17-rebase 4095ce12, wip/htnew-print 8f700a64,
+    wip/pb-fix3 6a2187dd (hygiene: 10 scratch dry-run files renamed .lean.txt). Spec: constantFieldExtensionUnramifiedFinite
+    := CFExtProof.constantFieldExtensionUnramifiedFinite_proof (outright, cfext-proof); carayolThmA (r17-print's leaf)
+    := CarayolPrinted.carayolThmA_of_irr from r17-rebase's leaf carayolThmAIrr (Burnside clause proved), flagged
+    "pending reading: conductor clause (DDT 1997 Thm 3.1 / Carayol 1986 0.8)" (inbox 6); eigenformHTNew := htnew-print's
+    eigenformHTNew_of_printed from modularHTPrinted; r11r12 := pb-fix3's panBerger_of_printedPV from panPrintedP and
+    bergerPrintedV; eigenformCoeffFieldFinite in both proof terms replaced by coeff-rational's
+    eigenformCoeffFieldFinite_of_heckePrime {n}.gamma1IntegralSpan {n}.heckePrimeIntegralToRational. New printed leaves
+    "pending review" (inbox 7), all four new rows GLUE/GLUE. Inbox 9: dsThm966Printed locator pp. 513-514 in kinds.tsv
+    and both docstrings (DSCoeffExt.lean, DSThm966EV.lean). Count: 36 open -> 36 open; H 16/15 on 31 -> 16/15 on 31
+    (cfext -1 field -1 GLUE; r11r12 one GLUE -> two GLUE; the other two GLUE for GLUE). Checks (VERIFIED): build
+    +Main +Discharges (16047 jobs); frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; closure (no sorryAx); OpenStatements 36; DischargesTest rerun, no error; render_open --check ok
+    (31 H, strictest 16/15, 5 others); crosswalk --check ok; autoform check ok.
