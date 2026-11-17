@@ -26,6 +26,45 @@ namespace Y3Audit
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open LeafQM LeafQM.AV LeafQM.AV.R1UnivRigid
 open Y3Fix SGRSplit HDec.VertWitness HDec.ModelGlue
+open scoped CategoryTheory.Obj
+
+/-! ## Generic pullback lemmas (all objects abstract, to avoid defeq-only object mismatches) -/
+
+theorem map_left_fst' {S T : Scheme.{0}} (j : T ⟶ S) {X Z : Over S} (u : X ⟶ Z) :
+    ((Over.pullback j).map u).left ≫ pullback.fst Z.hom j = pullback.fst X.hom j ≫ u.left := by
+  simp [Over.pullback_map_left]
+
+theorem lift_compat_iota {A P X Y Z : Scheme.{0}} {fst : P ⟶ X} {snd : P ⟶ Y} {f : X ⟶ Z} {j : Y ⟶ Z}
+    (hP : IsPullback fst snd f j) (k : A ⟶ P) (i' : A ⟶ A) (iP : P ⟶ P) (iX : X ⟶ X) (h₀ : A ⟶ X)
+    (sA : A ⟶ Y) (hk1 : k ≫ fst = h₀) (hk2 : k ≫ snd = sA) (hι : i' ≫ h₀ = h₀ ≫ iX)
+    (hiP : iP ≫ fst = fst ≫ iX) (hi's : i' ≫ sA = sA) (hiPs : iP ≫ snd = snd) : i' ≫ k = k ≫ iP := by
+  apply hP.hom_ext
+  · rw [Category.assoc, hk1, hι, Category.assoc, hiP, ← Category.assoc, hk1]
+  · rw [Category.assoc, hk2, hi's, Category.assoc, hiPs, hk2]
+
+theorem lift_compat_eta {A P X Y Z U : Scheme.{0}} {fst : P ⟶ X} {snd : P ⟶ Y} {f : X ⟶ Z} {j : Y ⟶ Z}
+    (hP : IsPullback fst snd f j) (k : A ⟶ P) (e' : U ⟶ A) (g : U ⟶ Y) (eP : Y ⟶ P) (eX : Z ⟶ X)
+    (h₀ : A ⟶ X) (sA : A ⟶ U) (hk1 : k ≫ fst = h₀) (hk2 : k ≫ snd = sA ≫ g) (hη : e' ≫ h₀ = (g ≫ j) ≫ eX)
+    (heP : eP ≫ fst = j ≫ eX) (he's : e' ≫ sA = 𝟙 U) (hePs : eP ≫ snd = 𝟙 Y) : e' ≫ k = g ≫ eP := by
+  apply hP.hom_ext
+  · rw [Category.assoc, hk1, hη, Category.assoc, Category.assoc, heP]
+  · rw [Category.assoc, hk2, ← Category.assoc, he's, Category.id_comp, Category.assoc, hePs,
+      Category.comp_id]
+
+theorem sec_eq_iff {P X Y Z W : Scheme.{0}} {fst : P ⟶ X} {snd : P ⟶ Y} {f : X ⟶ Z} {j : Y ⟶ Z}
+    (hP : IsPullback fst snd f j) (s : W ⟶ Y) (ea eb : Y ⟶ P) (xa xb : Z ⟶ X)
+    (ha : ea ≫ fst = j ≫ xa) (hb : eb ≫ fst = j ≫ xb) (hsa : ea ≫ snd = 𝟙 Y) (hsb : eb ≫ snd = 𝟙 Y) :
+    s ≫ ea = s ≫ eb ↔ (s ≫ j) ≫ xa = (s ≫ j) ≫ xb := by
+  constructor
+  · intro h
+    have := congrArg (· ≫ fst) h
+    simp only [Category.assoc] at this
+    rw [ha, hb] at this
+    simpa only [Category.assoc] using this
+  · intro h
+    apply hP.hom_ext
+    · rw [Category.assoc, Category.assoc, ha, hb, ← Category.assoc, ← Category.assoc, h]
+    · rw [Category.assoc, Category.assoc, hsa, hsb]
 
 section BC
 
@@ -37,10 +76,9 @@ abbrev epsBC : 𝟙_ (Over T) ⟶ (Over.pullback j).obj (𝟙_ (Over S)) :=
 
 theorem epsBC_fst : (epsBC j).left ≫ pullback.fst (𝟙_ (Over S)).hom j = j := by
   have h1 : (epsBC j).left ≫ pullback.snd (𝟙_ (Over S)).hom j = 𝟙 T := Over.w (epsBC j)
-  have h2 : pullback.fst (𝟙_ (Over S)).hom j ≫ (𝟙_ (Over S)).hom = pullback.snd (𝟙_ (Over S)).hom j ≫ j :=
-    pullback.condition
-  have h3 : (𝟙_ (Over S)).hom = 𝟙 S := rfl
-  rw [h3, Category.comp_id] at h2
+  have h2 : pullback.fst (𝟙_ (Over S)).hom j = pullback.snd (𝟙_ (Over S)).hom j ≫ j := by
+    have := pullback.condition (f := (𝟙_ (Over S)).hom) (g := j)
+    exact (Category.comp_id _).symm.trans this
   rw [h2, ← Category.assoc, h1, Category.id_comp]
 
 theorem fa_one : fa 𝒜 1 = 𝟙 _ := Over.OverMorphism.ext 𝒜.iota_one
@@ -59,7 +97,7 @@ abbrev secBC (a : O) : 𝟙_ (Over T) ⟶ (Over.pullback j).obj 𝒜.F :=
 theorem secBC_fst (a : O) :
     (secBC 𝒜 j a).left ≫ pullback.fst 𝒜.F.hom j = j ≫ 𝒜.eta a := by
   change (epsBC j).left ≫ ((Over.pullback j).map (sec 𝒜 a)).left ≫ pullback.fst 𝒜.F.hom j = _
-  rw [map_left_fst, ← Category.assoc, epsBC_fst]
+  rw [map_left_fst', ← Category.assoc, epsBC_fst]
   rfl
 
 theorem secBC_snd (a : O) : (secBC 𝒜 j a).left ≫ pullback.snd 𝒜.F.hom j = 𝟙 T :=
@@ -68,7 +106,7 @@ theorem secBC_snd (a : O) : (secBC 𝒜 j a).left ≫ pullback.snd 𝒜.F.hom j 
 theorem iotaBC_fst (a : O) :
     ((Over.pullback j).map (fa 𝒜 a)).left ≫ pullback.fst 𝒜.F.hom j =
       pullback.fst 𝒜.F.hom j ≫ 𝒜.iota a :=
-  map_left_fst j (fa 𝒜 a)
+  map_left_fst' j (fa 𝒜 a)
 
 /-- **The base change of a `QMAbScheme`** along `j : T ⟶ S`. -/
 def abBC : QMAbScheme T :=
@@ -131,16 +169,8 @@ def abBC : QMAbScheme T :=
       rw [sec_three]
     eta_ker := fun K _ s a => by
       rw [← 𝒜.eta_ker K (s ≫ j) a]
-      constructor
-      · intro h
-        have := congrArg (· ≫ pullback.fst 𝒜.F.hom j) h
-        simp only [Category.assoc] at this
-        rw [secBC_fst, secBC_fst] at this
-        simpa only [Category.assoc] using this
-      · intro h
-        apply pullback.hom_ext
-        · rw [Category.assoc, Category.assoc, secBC_fst, secBC_fst, ← Category.assoc, h, Category.assoc]
-        · rw [Category.assoc, Category.assoc, secBC_snd, secBC_snd] }
+      exact sec_eq_iff (IsPullback.of_hasPullback 𝒜.F.hom j) s _ _ (𝒜.eta a) (𝒜.eta 0)
+        (secBC_fst 𝒜 j a) (secBC_fst 𝒜 j 0) (secBC_snd 𝒜 j a) (secBC_snd 𝒜 j 0) }
 
 theorem abBC_F : (abBC 𝒜 j).F = (Over.pullback j).obj 𝒜.F := rfl
 
@@ -180,17 +210,11 @@ theorem qmFamFibre_abBC_of {U : Scheme.{0}} {𝒜' : QMFamily U} {g : U ⟶ T}
     have hs : IsPullback (k ≫ pullback.fst 𝒜.F.hom j) 𝒜'.F.hom 𝒜.F.hom (g ≫ j) := by
       rw [hk1]; exact hpb
     exact IsPullback.of_right hs hk2 hR
-  · apply pullback.hom_ext
-    · rw [Category.assoc, Category.assoc, abBC_iota_fst, hk1, ← Category.assoc, hk1]
-      exact hι a
-    · have e1 : (abBC 𝒜 j).iota a ≫ pullback.snd 𝒜.F.hom j = pullback.snd 𝒜.F.hom j :=
-        (abBC 𝒜 j).iota_over a
-      rw [Category.assoc, Category.assoc, e1, hk2, ← Category.assoc, 𝒜'.iota_over]
-  · apply pullback.hom_ext
-    · rw [Category.assoc, Category.assoc, abBC_eta_fst, hk1, hη a, Category.assoc]
-    · have e1 : (abBC 𝒜 j).eta a ≫ pullback.snd 𝒜.F.hom j = 𝟙 T := (abBC 𝒜 j).eta_sec a
-      rw [Category.assoc, Category.assoc, e1, hk2, ← Category.assoc, 𝒜'.eta_sec, Category.id_comp,
-        Category.comp_id]
+  · exact lift_compat_iota (IsPullback.of_hasPullback 𝒜.F.hom j) k (𝒜'.iota a) ((abBC 𝒜 j).iota a)
+      (𝒜.iota a) h₀ (𝒜'.F.hom ≫ g) hk1 hk2 (hι a) (abBC_iota_fst 𝒜 j a)
+      (by rw [← Category.assoc, 𝒜'.iota_over]) ((abBC 𝒜 j).iota_over a)
+  · exact lift_compat_eta (IsPullback.of_hasPullback 𝒜.F.hom j) k (𝒜'.eta a) g ((abBC 𝒜 j).eta a)
+      (𝒜.eta a) h₀ 𝒜'.F.hom hk1 hk2 (hη a) (abBC_eta_fst 𝒜 j a) (𝒜'.eta_sec a) ((abBC 𝒜 j).eta_sec a)
 
 end BC
 
