@@ -383,4 +383,59 @@ theorem e4_of_mod3 (h12 : ℓ % 12 = 11) {b : ℤ} (hb : Squarefree b)
   rw [hdot, sg_eq_cast]
   exact zmod2_eq_of_even hpar
 
+/-! ### Necessity: a Selmer class gives a solution of the local equations -/
+
+theorem prime_dvd_six_mul {p : ℕ} (hp : p.Prime) (h : p ∣ 6 * ℓ) :
+    p = 2 ∨ p = 3 ∨ p ∣ ℓ := by
+  rcases (Nat.Prime.dvd_mul hp).mp h with h6 | hl
+  · rw [show (6 : ℕ) = 2 * 3 by norm_num] at h6
+    rcases (Nat.Prime.dvd_mul hp).mp h6 with h2 | h3
+    · exact Or.inl ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp h2)
+    · exact Or.inr (Or.inl ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_three).mp h3))
+  · exact Or.inr (Or.inr hl)
+
+theorem sel_necessary (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad)
+    (hg : LocalGood) {β : ℕ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11)
+    (hM : MatrixConditions ℓ β) {a b : ℤ} (hab : (a, b) ∈ SelM ℓ) :
+    0 < a ∧ a.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors ∧
+      b.natAbs.primeFactors ⊆ ℓ.primeFactors ∧
+      ind ℓ b = sg b • 1 ∧ dlt a = sg b ∧ Kmat ℓ *ᵥ ind ℓ a = 0 := by
+  obtain ⟨ha, hb, hR, hp⟩ := hab
+  simp only at ha hb hR hp
+  have hℓ : 0 < ℓ := by omega
+  have ha0 : 0 < a := (localReal ℓ a b hℓ ha.ne_zero hb.ne_zero).mp hR
+  obtain ⟨ha2, hb4⟩ := (hTwo ℓ a b hsf (by omega) ha hb).mp (hp 2)
+  have hb3 := (hThree ℓ a b hsf (by omega) ha hb).mp (hp 3)
+  have hgood : ∀ p : ℕ, p.Prime → ¬ p ∣ 6 * ℓ → ¬ (p : ℤ) ∣ a ∧ ¬ (p : ℤ) ∣ b := by
+    intro p hpp hnd
+    have := Fact.mk hpp
+    exact (hg ℓ p a b hsf hnd ha hb).mp (hp p)
+  have hsupp : ∀ x : ℤ, x % 2 = 1 → (∀ p : ℕ, p.Prime → ¬ p ∣ 6 * ℓ → ¬ (p : ℤ) ∣ x) →
+      x.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors := by
+    intro x hx2 hxg p hpx
+    have hpp := (Nat.mem_primeFactors.mp hpx).1
+    have hpd : (p : ℤ) ∣ x := Int.natCast_dvd.mpr (Nat.mem_primeFactors.mp hpx).2.1
+    by_cases h6 : p ∣ 6 * ℓ
+    · rcases prime_dvd_six_mul hpp h6 with h | h | h
+      · subst h; omega
+      · subst h; exact Finset.mem_insert_self _ _
+      · exact Finset.mem_insert_of_mem (Nat.mem_primeFactors.mpr ⟨hpp, h, by omega⟩)
+    · exact absurd hpd (hxg p hpp h6)
+  have hsa := hsupp a ha2 (fun p hpp hnd => (hgood p hpp hnd).1)
+  have hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors := by
+    intro p hpx
+    rcases Finset.mem_insert.mp (hsupp b (by omega) (fun p hpp hnd => (hgood p hpp hnd).2) hpx)
+      with h | h
+    · subst h
+      have : (3 : ℤ) ∣ b := Int.natCast_dvd.mpr (Nat.mem_primeFactors.mp hpx).2.1
+      omega
+    · exact h
+  have hloc : ∀ i : Supp ℓ, haveI := Fact.mk (supp_prime i); LocM ℚ_[(i : ℕ)] ℓ a b :=
+    fun i => by have := Fact.mk (supp_prime i); exact hp i
+  obtain ⟨E1, E2⟩ := eqs_of_localBad hq hsf h12 ha hb ha0 hsa hsb hloc
+  have E3 := e3_of_mod4 h12 hb hsb hb4
+  have E4 := e4_of_mod3 h12 hb hsb hb3
+  obtain ⟨h1, h2, h3⟩ := kmat_forces hsf h12 hM (ind ℓ a) (ind ℓ b) (dlt a) (sg b) E1 E2 E3 E4
+  exact ⟨ha0, hsa, hsb, h1, h2, h3⟩
+
 end ZInQ.Manuscript.PoleRC
