@@ -22,3 +22,18 @@
 ## Coordination
 - elkies-print (same round) agreed: their fold consumes a witness Prop with the same body as GRDict.X6ModuliWitness;
   source swap to GRX6AbPrint.x6ModuliWitness_of_coarse is a one-token change.
+
+## Lean (VERIFIED, 2026-11-16 16:00-16:25 PST, load < 25)
+- `lake build +ZInQKernel.Contrib.OneProof.GRX6AbPrint`: first run 1 error (h1 consumed by obtain; fixed with `id h1`);
+  second run OK (build2.txt). GR56Lattice, GRDict (gr-dict) compile on c1e4ed1b unchanged.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK, 0 errors (build3.txt).
+- discharges.txt: `DISCHARGES [OpenResearchLeaves28.gonzalezRotgerX6Ab] by GRX6AbPrint.gonzalezRotgerX6Ab_of_print
+  still assumes: [GRDict.GonzalezRotgerThm512X6, RayClassCFT.ShimuraMainThmIDeligneY3AbU, GRX6AbPrint.X6CoarseModuli,
+  ZInQ.HomLattice.GAGAMorphism, AvSplit.MumfordTorsionAlgClosed]; axioms: [propext, Classical.choice, Quot.sound]`.
+  All four GRX6AbPrint theorems: standard axioms.
+- autofold --dry-run (autofold.json): strict 16/21 on 37 -> 18/20 on 38; strictest 16/21 -> 18/20 (-1 GLUE).
+  FoldCheck.lean (dry-run minus line 1) compiles; sixContactMin_of_open39 standard axioms.
+- Merged origin/wip/elkies-print 168bbb39 (ElkiesX6StarEvery.lean). Combined spec autofold-combined.json (both fields;
+  Elkies' witness from x6ModuliWitness_of_coarse): strict 16/21 on 37 -> 19/19 on 38 (-2 GLUE);
+  FoldCheckCombined.lean compiles, sixContactMin_of_open39 standard axioms. X6WitnessAb and GRDict.X6ModuliWitness
+  unify (same body) — VERIFIED by this compile.
