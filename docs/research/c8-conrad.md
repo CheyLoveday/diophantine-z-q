@@ -33,8 +33,7 @@ reference given. **SPECULATIVE** means not checked. Theorem numbers given from m
    This is ready for the day consumers (ii) and (iii) are rerouted too. At the call site
    (`g8_g12_of_leaves3_hf_pz_eb`) it is a one-term replacement (§5).
 4. **Conrad App. B is unread on this host (Known limitation, not a Known issue).** WebFetch of
-   `math.stanford.edu/~conrad/papers/locchar.pdf` was refused by the sandbox's domain check, and no copy is on the
-   host. The statement used here is the one reported by Glazer's theorem-application audit
+   `math.stanford.edu/~conrad/papers/locchar.pdf` was refused by the sandbox's domain check, and no copy was found. The statement used here is the one reported by Glazer's theorem-application audit
    (`docs/theorem-application-audit/evidence/parallel-galois-height-report.md` L94-104; §1.2). It keeps the flag
    **unread**.
 
@@ -67,9 +66,9 @@ integral power of the cyclotomic character. The weight comparison then forces `k
 entry is at L11046-11049 (author preprint, December 11, 2011).
 
 **Not read on this host.** WebFetch of the PDF was refused by the sandbox ("Unable to verify if domain
-math.stanford.edu is safe to fetch"). No copy is on the host; the audit's pinned copy, `work/theorem-application-audit-20261105/…/conrad-locchar.pdf`,
-SHA256 `782fe71a…`, is not in this repository. The statement below is **as reported by the theorem-application
-audit** (report L102, an AI reading by Glazer's audit, not a human one):
+math.stanford.edu is safe to fetch"). The audit's pinned copy (`work/theorem-application-audit-20261105/…/conrad-locchar.pdf`, SHA256 `782fe71a…`) is not in
+this repository, and no `*locchar*` file was found in the worktree (a host-wide search was blocked by the sandbox). The statement below is **as reported by the theorem-application
+audit** (report L102; the report does not say whether its reader was a person or a model):
 
 > "The paragraph after Definition B.1 states that a continuous character with values in a finite extension of Q_p is
 > locally algebraic exactly when its underlying Q_p-representation is Hodge-Tate. It explicitly covers coefficient
@@ -80,3 +79,89 @@ The audit applies it with base field `L = ℚ₅`: "a locally algebraic characte
 mapped to x^n for a single integer n" (L104). Definition B.1's exact wording, and whether the paragraph also ties the
 exponent to the Hodge–Tate weight, remain **unread** (UNVERIFIED). This is why the weight dictionary is a separate glue
 Prop below.
+
+## 2. The consumers of the two Picard rows
+
+### 2.1 By reading the source (VERIFIED by grep on the base)
+
+| # | path from `OpenAddedLeaves27` | consumer | manuscript step |
+|---|---|---|---|
+| 0 | TailZ72 `openAddedLeaves26_of_OpenAddedLeaves27`: `kleimanPicZeroProper954 := KleimanSite.kleimanPicZeroProper954_of_siteQ …` | (bundle map) | — |
+| 1 | TailZ69 `openAddedLeaves22PZ_of_OpenAddedLeaves26` (both rows ↦ `PicZeroAbVar0`) → EichlerBoundCopy `sixContactMin_of_open45_pz_eb` → PicZeroCharZeroCopy `openAddedLeaves18_of_OpenAddedLeaves22_pz` (`phiAmpleIsogeny`, `weilPairingMumford`) → `t09SymmIsogenyExists` → `detTate_of_leaves4_pz` (EichlerBoundCopy L2703, in `gluePieces_of_open4_hf_pz_eb`) → `GaloisPieces.detTate` → `g12Det_of_pz` (L2485) → `G12DetPZ` | (i) **C8**, the twist's finiteness | L758-766 |
+| 2 | same entry → PicZeroCharZeroCopy `openTextbookLeaves13HF_of_open16_22_pz`: `poincareComplement := PicZeroChar0.Poincare.poincareComplement_of_open0 l.picRepresentableAbVar l.picZeroAbVar …` → `t8` → EichlerBoundCopy L2602 `obtain ⟨Z, g, hisoZ⟩ := t.t8 …` (in `glueOutputs_of_leaves3_hf_pz_eb`) | (ii) **E1-E2**, Poincaré reducibility | L865 ("Absolute simplicity and Poincaré reducibility give an L'-isogeny A×Z→J") |
+| 3 | TailZ74 L381 (the current top's research map): `hodgeTateDecompAbVar := hodgeTateDecompAbVar_of_open_k954 n.hodgeTateDecompExists t.mumfordTorsionAlgClosed l.picRepresentableAbVar l.kleimanPicZeroProper954` (TailZ69: through `t09SymmIsogenyExists0_of_open_k954`) | (iii) **C3/G9**, Hodge–Tate multiplicities `a = b` by the Weil pairing | L734-738 and lemma `lem:de-rham-descent` (L10940-11003) |
+
+Consumers (ii) and (iii) are not at C8, and the manuscript does not use a Picard scheme at either step:
+* at (ii) it says "Poincaré reducibility" with no citation;
+* at (iii) it cites Scholze Cor. 1.8 and Faltings 1988 Ch. III Thm 4.1.
+
+The Picard rows reach (ii) and (iii) because of how the project proved those steps (piczero-char0, homfree,
+hodgetate-from-dr), not because of anything in the manuscript. Rerouting them is outside this task's scope (step C8),
+and §5 lists them as recommendations.
+
+## 3. The Lean statements (`ZInQKernel/Contrib/OneProof/C8Conrad.lean`, namespace `HDec.G0Galois.C8Conrad`)
+
+### 3.1 Objects
+
+All objects are genuine definitions already in the tree; none is invented for the leaf:
+* `G_{ℚ_p}` is `PkgI4.GQp p`;
+* the Hodge–Tate multiplicities are `PkgI4.htMult` and `PkgI4.HasHTWeights` (the consumer's own definitions; the
+  cyclotomic character has weight `−1`);
+* `G_ℚ`, `decomp`, `GaloisChar` are `PkgI4`'s;
+* the local Artin map is Tau Ceti's absolute local Artin map
+  `TauCeti.ClassFieldTheory.artinMap ℚ_[p] : ℚ_[p]ˣ →* Field.absoluteGaloisGroupAbelianization ℚ_[p]`
+  (vendored, `ZInQKernel/Contrib/TauCeti/NumberTheory/ClassFieldTheory/Local/ArtinMap.lean`). It is arithmetically
+  normalized: `χ_cyc(Art(pᵏu)) = u⁻¹` (`abelianizedLocalCyclotomicCharacter_artinMap_padic`), which matches the
+  "arithmetic-Artin normalization" the audit reports right after Conrad's Def. B.1. It is already used by
+  `ZInQ.Contrib.localKroneckerWeber` (leaf T16, proved).
+
+New definitions:
+* `IsArtinLift p σ x`: the class of `σ` in `G_{ℚ_p}^{ab}` is `artinMap ℚ_[p] x`;
+* `IsLocallyAlgebraic p ψ n`: for some `k`, `ψ(σ) = u^n` for every unit `u ≡ 1 mod pᵏ` and every Artin lift `σ` of
+  `u`. This is Conrad's Def. B.1 for base field `ℚ_p`, where the algebraic characters of `𝔾_m` are `x ↦ xⁿ` (the
+  audit's reading). The open subgroups `1 + pᵏℤ_p` are cofinal among open subgroups of `ℤ_p^×`.
+
+### 3.2 The new leaf
+
+| name | statement (Lean) | source | rating |
+|---|---|---|---|
+| `ConradAppBQp` | for every prime `p`, every finite `E/ℚ_p` inside `ℚ̄_p` and every `ψ : G_{ℚ_p} →* Eˣ` that is continuous (into `ℚ̄_p`) and has `HasHTWeights p (charRep ψ) {w}` for some `w`: `∃ n, IsLocallyAlgebraic p ψ n` | Conrad, *Lifting global representations with local properties*, author preprint Dec. 11, 2011, App. B, pp. 32-33, paragraph after Def. B.1 (as reported by the audit; **unread here**), base field `L = ℚ_p` | **printed form for `L = ℚ_p` (a direct instance), flagged unread; not a LEAF by the strict definition because the source is an unrefereed preprint.** One dictionary step separates it from the print: the hypothesis `HasHTWeights … {w}` says `dim_{ℚ_p} H_{−w} ≥ [E:ℚ_p]`, which implies that the underlying `ℚ_p`-representation is Hodge–Tate by the Serre–Tate bound `Σᵢ dim Hᵢ ≤ [E:ℚ_p]` (Tate 1967 §3.3, STANDARD). So read strictly it is a consequence of the print (GLUE). The refereed sources the project's notes name for the same content are Serre 1968 Ch. III App. and Tate 1967 §3.3 (h-trust §2.4, rv-h-c8 §4); the rule against swapping in a different source applies only to a known defect, and none exists. |
+
+### 3.3 The glue (each a `def … : Prop` with a docstring naming its step)
+
+| name | content | step / source | status |
+|---|---|---|---|
+| `TwistCharHT0` | if `r` has weights `{0, −1}` at 5 and is attached up to `ψ` to a weight-2 normalized eigenform, then `ψ` is unramified outside a finite set, and `ψ|G_{ℚ₅}` takes values in a finite `E/ℚ₅` and has `HasHTWeights {0}` (inputs R14 `EigenformRepExists` and R13 `EigenformHT` as hypotheses) | N5 L758-760 and the weight comparison L765-766. Plan: `AttachedConj` (proved, TailS §13) gives `r ≅ ψ ⊗ ρ_g`; `HTCharOfTwist` (TailS GLUE S1, unproved); `HTTwistShift`; `HTWeightsUnique` (proved); Baire for the finite coefficient field | GLUE, unproved |
+| `LocAlgExponentEqWeight` | the exponent of a locally algebraic character of `G_{ℚ_p}` is its Hodge–Tate weight | N5 L763-764 ("removing its integral local Hodge–Tate weight"); STANDARD (Serre 1968 Ch. III App.; Tate 1967 §3.3) | GLUE, unproved. **On-the-spot sketch:** if `ψ(Art u) = uⁿ` on `1 + pᵏℤ_p`, then `φ = ψ·χ_cycⁿ` is trivial on an open subgroup of the inertia of `G_{ℚ_p}^{ab}` (the closure of `Art(ℤ_p^×)`, local class field theory), so `φ` is a finite character times an unramified one, and both have Hodge–Tate weight `0` (Ax–Sen–Tate with Hilbert 90). So `ψ = φ·χ^{−n}` has weight `n`, and a Hodge–Tate character has one weight. |
+| `FiniteOfLocAlgTrivialQ` | a continuous `ψ : G_ℚ → ℚ̄_p^×`, unramified outside a finite set and trivial on the Artin lifts (through `decomp`) of the units `1 + pᵏℤ_p`, has finite image | N5 L761-765 ("class field theory over ℚ … finite inertia at five and at every other prime, hence a finite ray-class character") | GLUE, unproved. Plan: Kronecker–Weber (proved, `ZInQKernel/Contrib/KroneckerWeber`) gives `G_ℚ^{ab} ≅ ℤ̂^×`; Tau Ceti's `localArtinMap_cyclotomic_padic_primePow` handles `q = p`; at `q ≠ p`, the image of the virtually pro-`q` group `ℤ_q^×` in the virtually pro-`p` group `O_E^×` is finite (rv-h-c8 §4 item 3; **on-the-spot**, elementary, not stated in N5). |
+| `C8TwistFinite` | C8's conclusion: the twist `ψ` has finite image | N5 L758-766 | proved from the above (§4) |
+
+## 5. Fold: none proposed (dry-run reasoning; SPECULATIVE counts, VERIFIED premises)
+
+* **No bundle field is discharged.** `G12DetPZ` and `DetTate` are not hypotheses of `frozenTarget`. They are proved
+  inside the chain from `t09SymmIsogenyExists`, which comes from the two Picard rows. `#discharges` on the new file
+  lists none of the open hypotheses (§4), so `autofold.py` has no field to remove, and `scratch/c8-conrad/autofold.json`
+  records this (`"fields": []`, with the would-be new leaf and glue for reference).
+* **What a reroute would do.** It would be a copy reroute, not an autofold:
+  * in a copy of `HDec.G0Galois.g8_g12_of_leaves3_hf_pz_eb` (EichlerBoundCopy L2473-2486), replace
+    `(g12Det_of_pz m.r14det m.detTate m.finIndex (frobeniusDenseQ_of t.frobeniusDense))` by
+    `(C8Conrad.g12DetPZ_of_conrad r.r14 r.r13 hC hT hW hF h9 r.r10)`. Every input is already at that call site
+    (`r.r14 : EigenformRepExists`, `r.r13 : PkgI4.EigenformHT`, `r.r10 : PkgI4.DeRhamComparison`, `h9`);
+  * use a copy of `GaloisPieces` without `detTate`;
+  * re-copy the generations up to the top, as fold-kleiman2's generator does.
+* **Effect on the counts.** Both Picard rows stay, because consumers (ii) and (iii) still read them. So the reroute
+  would **add** `ConradAppBQp` (unrefereed, GLUE by the strict reading) and the three glue Props, and remove nothing:
+  H would go from 31 to at most 35 hypotheses. The reroute pays only together with reroutes of (ii) and (iii).
+* **What would take the rows off the route** (recommendations, SPECULATIVE; outside this task's scope):
+  1. **C8:** this file;
+  2. **E1-E2 (Poincaré reducibility, manuscript L865):** restore `AVB1.PoincareComplement` as a printed textbook leaf
+     (Mumford, *Abelian varieties*, §19 Thm 1, p. 173, UNVERIFIED), instead of proving it from `PicZeroAbVar0`
+     (piczero-char0's `poincareComplement_of_open0`). The manuscript names the theorem without a citation;
+  3. **C3/G9 (multiplicities, lemma `lem:de-rham-descent`, L10940-11006):** state the multiplicities `g`, `g` in the
+     printed Hodge–Tate decomposition (Faltings 1988 Ch. III Thm 4.1, cited at L11003; or Tate 1967 for good
+     reduction) as a leaf over `Lie A` and `Lie A^∨`, instead of getting `a = b` from the Weil pairing
+     (hodgetate-from-dr). This needs `dim A^∨ = g`, which is the Picard theory again unless the leaf states it.
+
+  Only if all three are rerouted do `picRepresentableAbVar` and `kleimanPicZeroProper954SiteQ` leave the route:
+  −2 GLUE, +1 to +3 leaves, +3 glue from C8. Even then the net strict count does not improve unless the C8 glue is
+  proved. This is why the task's target is not met.

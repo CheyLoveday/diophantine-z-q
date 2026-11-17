@@ -23,7 +23,7 @@ No statement of the chain is changed. -/
 
 set_option linter.style.longLine false
 
-open TauCeti TauCeti.ClassFieldTheory
+
 
 noncomputable section
 
@@ -44,7 +44,7 @@ def unitsQp (u : ℤ_[p]ˣ) : ℚ_[p]ˣ := Units.map (PadicInt.Coe.ringHom : ℤ
 `G_{ℚ_p}` is Tau Ceti's absolute local Artin map at `x` (normalization: `χ_cyc(Art(p^k u)) = u⁻¹`, Tau Ceti's
 `abelianizedLocalCyclotomicCharacter_artinMap_padic`). -/
 def IsArtinLift (σ : PkgI4.GQp p) (x : ℚ_[p]ˣ) : Prop :=
-  ((σ : Field.absoluteGaloisGroup ℚ_[p]) : Field.absoluteGaloisGroupAbelianization ℚ_[p]) = artinMap ℚ_[p] x
+  ((σ : Field.absoluteGaloisGroup ℚ_[p]) : Field.absoluteGaloisGroupAbelianization ℚ_[p]) = TauCeti.ClassFieldTheory.artinMap ℚ_[p] x
 
 variable {p}
 
