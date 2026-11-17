@@ -1,0 +1,3 @@
+'HDec.HSyn.sixContactMin_of_open60' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open60' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.openResearchLeaves41_of_OpenResearchLeaves42' depends on axioms: [propext, Classical.choice, Quot.sound]
