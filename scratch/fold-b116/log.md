@@ -89,3 +89,37 @@ Base wip/leaf-fold33b d804d07d (= fork main + fold-b115). H top `HDec.HSyn.sixCo
    gap filled (citation: the ELLIOT field elliotWildInertiaTrivial); L443-453, L464-472, L472-477 unverified
    (inside the leaf y3FullThreeRepZ30; not re-read); L453-462 OK per d2a6b (not re-checked here: unverified by this
    task). No errors.
+
+## Item 3: r16-thm1b (inbox 79; afShimura + heckeJ1DS -> shimuraThm1Af + bShStandardModel; autofold)
+1. Merged origin/wip/r16-shimura73 aa28045a (clean; commit 42e13ffc). Hygiene: scratch/r16-shimura73/FoldCheck.lean,
+   TailZ75R16.lean, scratch/r16-thm1/FoldCheck.lean, scratch/r16-thm1b/FoldCheck.lean (redeclare HDec.HSyn bundles)
+   renamed `.lean.txt`; scratch/r16-thm1b/build-main.txt (114841 lines) truncated to first/result lines (commit
+   0478c133); no host paths; no vendored code.
+2. `lake build ZInQKernel.Contrib.OneProof.R16Thm1b` ok (11363 jobs). Spec copied unchanged to
+   `scratch/fold-b116/autofold-r16thm1b.json` (= scratch/r16-thm1b/autofold.json). Dry run: exit 0, strict 5/24 on 29 ->
+   5/24 on 29, strictest 5/24 -> 5/24 (no --allow-rise).
+3. `python3 scripts/one_proof/autofold.py scratch/fold-b116/autofold-r16thm1b.json`: TailZ86 (`OpenResearchLeaves60`,
+   27 fields: heckeJ1DS, afShimura out; bShStandardModel, shimuraThm1Af in), top `sixContactMin_of_open79`; Main
+   switched; kinds rows: afShimura, heckeJ1DS dropped, bShStandardModel and shimuraThm1Af added (both consequence
+   GLUE/GLUE, pending-review), each byte-identical to scratch/r16-thm1b/kinds-diff.txt; claims.tsv: no row for either
+   field. The G1 Prop `R16ShimuraLi.ShimuraTotalToComponents` is not in the spec.
+4. Build (VERIFIED): `lake build ZInQKernel.OneProof.H.TailZ86 ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges`
+   ok (16002 jobs); frozenTarget standard.
+5. Checks (`run_checks.sh 3 hashes_fold2.txt`, VERIFIED): hash guard 21006 -> 21041, only after 35 (TailZ86), changed
+   only `ZInQ.OneProof.frozenTarget`. Closure (292708): sorryAx absent; `R16ShimuraLi.ShimuraTotalToComponents` absent
+   (G1 kept out); `R16Thm1b.ShimuraThm1Af`, `R16Thm1.BShStandardModel` present; `AfTateLam.AfShimura`, `HeckeJ1DS`
+   present only as conclusions (filled by `afShimura_of_thm1Af`, `heckeJ1DS_of_bSh`; not fields); SGA7-named
+   constants 0. Field check: 27 vs 27, only in old [heckeJ1DS, afShimura], only in new [bShStandardModel,
+   shimuraThm1Af], no other type differs. OpenStatements 30. render_open, `--check` ok. DischargesTest 18 lines
+   (renames only). crosswalk ok. autoform exit 0. gate.sh GATE=ok.
+   **render_open count after item 3: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
+6. On-the-spot pieces (labelled, from the merged branch, none added): (B1) the kernel's IsX1Gen model is Shimura's
+   standard model; (B4) the double-coset convention dictionary (Shimura's xi_p, <d> act by DS's formulas); both inside
+   the leaf bShStandardModel. shimuraThm1Af's three on-the-spot steps (C = I_f J; (ii) for all n from p, p^2;
+   nu-compatible isomorphisms) are flagged in its row.
+7. Manuscript check (VERIFIED by reading diophantine_zq.tex L764-775): L767-768 (absorb the character, primitive
+   newform) OK; L768-770 (Li's Fricke formula) unverified here (not on the fold's route: the Euler clause is not in
+   the row); L770-771 (Shimura's quotient construction [shimura-factors, Thm 1], bibitem L11053) OK as a citation,
+   with the on-the-spot pieces B1, B4 and the three flagged steps; L771-773 ("therefore show that r_5 is a constituent
+   of the Tate module of A_f") unverified (gap, not filled: the G1 Prop is kept out; the Lean route uses DS 9.6.5,
+   afCharpolyDS965); no errors.

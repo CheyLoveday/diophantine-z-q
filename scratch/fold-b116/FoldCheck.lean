@@ -34,7 +34,7 @@ run_cmd do
     `HDec.G0ModField.KernelField.good_of_QML3, `SGRSplit.ShimuraIntegralModelRep,
     `GaRigidity.SGA7.SGA7_IX_Cor3_3_Def34, `SGA33Steps.SGA7_IX_Cor3_3, `GaRigidity.SGA7.SGA7_IX_Cor3_3,
     `CToPrinted.SGA7_IX_3_3, `ZInQ.HeightSplit.SemistableNeronBaseChange, `ZInQ.HeightSplit.SemistablePersists,
-    `HDec.HSyn.OpenResearchLeaves58, `HDec.HSyn.sixContactMin_of_open77,
+    `HDec.HSyn.OpenResearchLeaves58, `HDec.HSyn.sixContactMin_of_open77, `HDec.HSyn.OpenResearchLeaves59, `HDec.HSyn.sixContactMin_of_open78, `HDec.HSyn.OpenResearchLeaves60, `HDec.HSyn.sixContactMin_of_open79,
     -- the new route (must be true)
     `SZRaynaud.RaynaudWildNF, `SZRaynaud.ElliotWildInertiaTrivial, `SZRaynaud.SilverbergZarhinThm35,
     `Y3RouteA.Y3FullThreeRepZ30, `ZInQ.SSFaltings.FaltingsSemistableHeightBC, `HDec.D2A6.R6U,
@@ -58,8 +58,8 @@ run_cmd do
 open Lean Elab Command in
 run_cmd do
   let env ← getEnv
-  let o := `HDec.HSyn.OpenResearchLeaves58
-  let n := `HDec.HSyn.OpenResearchLeaves59
+  let o := `HDec.HSyn.OpenResearchLeaves59
+  let n := `HDec.HSyn.OpenResearchLeaves60
   let fo := getStructureFields env o
   let fn := getStructureFields env n
   logInfo m!"field check: {o} {fo.size} fields, {n} {fn.size} fields; only in old: {fo.filter (!fn.contains ·)}; only in new: {fn.filter (!fo.contains ·)}"

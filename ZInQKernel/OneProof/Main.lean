@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ85
+import ZInQKernel.OneProof.H.TailZ86
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 
@@ -147,11 +147,11 @@ namespace ZInQ.OneProof
 /-- **Theorem 1.1, from every statement still open:** the open H bundles and pole completeness PC
 (the manuscript's Theorem 5.2). -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves59) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves27)
+    (r : HDec.HSyn.OpenResearchLeaves60) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves27)
     (hPC : ZInQ.PoleCompleteness) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
-    (HDec.HSyn.sixContactMin_of_open78 r t l) hPC
+    (HDec.HSyn.sixContactMin_of_open79 r t l) hPC
 
 end ZInQ.OneProof
 
