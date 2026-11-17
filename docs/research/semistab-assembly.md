@@ -71,8 +71,23 @@ IsSemistableRes ⇒ G⁰ semi-abelian over k(𝔭) and over k(𝔭)bar, proved);
 * `gaudronRemondThm14An`: R3'; the no-`𝔾_a` reading (ga-rigidity).
 
 Autofold spec: `scratch/semistab-assembly/autofold.json`. It discharges both fields with the new leaves (kind
-consequence, flag_class pending review) and is count-neutral.
+consequence, flag_class `pending-review,unverified-locator`) and is count-neutral.
 
-## 4. Checks
+## 4. Checks (VERIFIED)
 
-See `scratch/semistab-assembly/log.md` and `scratch/semistab-assembly/discharges-output.txt`.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.SemistablePrintedReadings`:
+  build completed successfully (16094 jobs).
+* `#discharges` (`scratch/semistab-assembly/Discharges.lean`, output `discharges-output.txt`):
+
+```
+DISCHARGES [OpenResearchLeaves45.bostLowerBoundAn] by ZInQ.SemistabAssembly.bostLowerBoundAn_of_ss
+  still assumes: [ZInQ.SemistabAssembly.BostLowerBoundAnSS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.gaudronRemondThm14An] by ZInQ.SemistabAssembly.gaudronRemondThm14An_of_ss
+  still assumes: [ZInQ.SemistabAssembly.GaudronRemondThm14AnSS]
+  axioms: [propext, Classical.choice, Quot.sound]
+```
+
+* `#print axioms` for `isClosed_range_openSubgroup_field`, `isSemistableGeomPrinted_of_res`, and
+  `isSemistableResPrinted_of_res`: standard axioms only.
+* `autofold.py … --dry-run`: exit 0. GLUE counts are unchanged: strict 5/29 → 5/29, strictest 5/29 → 5/29.

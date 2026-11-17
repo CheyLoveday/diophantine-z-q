@@ -22,3 +22,15 @@
   `isSemistableResPrinted_of_res` (reading 2), `isSemistablePrinted_of_res`, `isAnStableHeightSS_of`,
   `bostLowerBoundAn_of_ss`, `gaudronRemondThm14An_of_ss`.
 - autofold spec scratch/semistab-assembly/autofold.json (count-neutral: GLUE consequence -> GLUE consequence).
+
+## 11-17 04:57 checks
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.SemistablePrintedReadings`:
+  VERIFIED "Build completed successfully (16094 jobs)", 0 errors.
+- `#discharges` (scratch/semistab-assembly/Discharges.lean, output discharges-output.txt): VERIFIED
+  `DISCHARGES [OpenResearchLeaves45.bostLowerBoundAn] by ZInQ.SemistabAssembly.bostLowerBoundAn_of_ss`
+  (still assumes BostLowerBoundAnSS) and `[OpenResearchLeaves45.gaudronRemondThm14An] by
+  ZInQ.SemistabAssembly.gaudronRemondThm14An_of_ss` (still assumes GaudronRemondThm14AnSS); axioms standard.
+- `#print axioms` of the closedness lemma and both bridges: [propext, Classical.choice, Quot.sound].
+- `autofold.py scratch/semistab-assembly/autofold.json --dry-run`: VERIFIED exit 0,
+  "strict count: 5/29 on 34 -> 5/29 on 34; strictest 5/29 -> 5/29" (count-neutral). flag_class set to
+  `pending-review,unverified-locator` (the render_open vocabulary).
