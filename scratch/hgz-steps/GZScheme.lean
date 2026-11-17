@@ -199,4 +199,154 @@ theorem exists_center (X : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Spec (CommRing
     CommRingCat.hom_ofHom] at this
   exact this
 
+
+/-- `ℚ → 𝒪_{X,p}` for a scheme over `ℚ`. -/
+def ratToStalk {X : Scheme.{0}} (s : X ⟶ Spec (CommRingCat.of ℚ)) (p : X) :
+    ℚ →+* X.presheaf.stalk p :=
+  ((Scheme.ΓSpecIso (CommRingCat.of ℚ)).inv ≫ s.appTop ≫ X.presheaf.germ ⊤ p trivial).hom
+
+/-! ## §5. D2: the value of `π` at the point `τ` is `modPt` of the plane model -/
+
+theorem eventually_polyFn_ne_zero {N : ℕ} [NeZero N] {P : MvPolynomial (Fin 2) ℚ}
+    (hP : polyQ N P ≠ 0) (τ : ℍ) : ∀ᶠ z in 𝓝[≠] (τ : ℂ), polyFn N P (ofComplex z) ≠ 0 := by
+  obtain ⟨T, hT⟩ := HasQExp.exists_ne_zero (hasQExp_polyFn N P) hP
+  exact eventually_ne_zero_of_im_gt (fun τ => (holoH_polyFn N P τ).meromorphicAt) hT τ
+
+theorem polyQ_ne_zero_of_rep {N : ℕ} [NeZero N] {g : LaurentSeries ℚ} {P Q : MvPolynomial (Fin 2) ℚ}
+    (h : IsRatRep N g P Q) (hg : g ≠ 0) : polyQ N P ≠ 0 := by
+  intro h0; apply hg; rw [h.2, h0, zero_div]
+
+theorem isRatRep_inv {N : ℕ} [NeZero N] {g : LaurentSeries ℚ} {P Q : MvPolynomial (Fin 2) ℚ}
+    (h : IsRatRep N g P Q) (hg : g ≠ 0) : IsRatRep N g⁻¹ Q P :=
+  ⟨polyQ_ne_zero_of_rep h hg, by rw [h.2, inv_div]⟩
+
+/-- A function with a finite limit at `τ` is regular at a point `x` above `τ` (the local ring at
+`x` is a valuation ring, and `ev_x` kills its maximal ideal). -/
+theorem mem_range_of_tendsto {N : ℕ} [NeZero N] {X : Scheme.{0}} [IsIntegral X]
+    (hv : ∀ p : X, ValuationRing (X.presheaf.stalk p)) (ι : X.functionField ≃+* X0Field N) {τ : ℍ}
+    {x : Spec (CommRingCat.of ℂ) ⟶ X} (hx : IsPointAt N ι τ x) (g : X.functionField)
+    {P Q : MvPolynomial (Fin 2) ℚ} (hr : IsRatRep N ((ι g : X0Field N) : LaurentSeries ℚ) P Q)
+    {c : ℂ} (hc : Tendsto (ratFn N P Q ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 c)) :
+    g ∈ Set.range (algebraMap (X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ))))
+      X.functionField) := by
+  set O := X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ)))
+  haveI := hv (x (IsLocalRing.closedPoint (CommRingCat.of ℂ)))
+  by_cases hg0 : g = 0
+  · exact ⟨0, by rw [hg0, map_zero]⟩
+  rcases ValuationRing.isInteger_or_isInteger O g with ⟨t, ht⟩ | ⟨t, ht⟩
+  · exact ⟨t, ht⟩
+  by_cases hu : IsUnit t
+  · refine ⟨(hu.unit⁻¹ : Oˣ), ?_⟩
+    have h1 : algebraMap O X.functionField (hu.unit⁻¹ : Oˣ) * algebraMap O X.functionField t = 1 := by
+      rw [← map_mul]; simp
+    rw [ht] at h1
+    exact (eq_inv_of_mul_eq_one_left h1).trans (inv_inv g)
+  · exfalso
+    have hev : (Scheme.stalkClosedPointTo x).hom t = 0 := by
+      by_contra hne
+      exact hu ((isUnit_map_iff (Scheme.stalkClosedPointTo x).hom t).mp (Ne.isUnit hne))
+    have hιg : ((ι g : X0Field N) : LaurentSeries ℚ) ≠ 0 := by
+      simpa using hg0
+    have hr' : IsRatRep N ((ι (algebraMap O X.functionField t) : X0Field N) : LaurentSeries ℚ) Q P := by
+      rw [ht, map_inv₀, IntermediateField.coe_inv]
+      exact isRatRep_inv hr hιg
+    have h0 := hx t Q P hr'
+    rw [hev] at h0
+    have hprod := hc.mul h0
+    rw [mul_zero] at hprod
+    have hone : (fun z => (ratFn N P Q ∘ ofComplex) z * (ratFn N Q P ∘ ofComplex) z) =ᶠ[𝓝[≠] (τ : ℂ)]
+        fun _ => (1 : ℂ) := by
+      filter_upwards [eventually_polyFn_ne_zero hr.1 τ,
+        eventually_polyFn_ne_zero (polyQ_ne_zero_of_rep hr hιg) τ] with z h1 h2
+      simp only [Function.comp_apply, ratFn]
+      field_simp
+    have := tendsto_nhds_unique (hprod.congr' hone) tendsto_const_nhds
+    exact zero_ne_one this
+
+variable {E : WeierstrassCurve ℚ} {N : ℕ} [NeZero N] (φ : E.toAffine.FunctionField →ₐ[ℚ] X0Field N)
+  {X : Scheme.{0}} [IsIntegral X] (hv : ∀ p : X, ValuationRing (X.presheaf.stalk p))
+  (e : X.functionField ≃+* X0Field N) (π : X ⟶ ESch E)
+  (hπ : X.fromSpecFunctionField ≫ π = Spec.map (CommRingCat.ofHom (uOf φ e)) ≫ chartZ E)
+
+include hπ in
+/-- **`π(∞) = O`.** -/
+theorem cusp_not_mem_chart (hord : ((φ (genX E) : X0Field N) : LaurentSeries ℚ).order < 0)
+    (p : X) (hp : IsCuspInfty N e p) : π p ∉ (chartZ E).opensRange := by
+  intro hmem
+  obtain ⟨s, hs⟩ := mem_range_of_mem_chart π (uOf φ e) hπ p hmem (xz E)
+  rw [uOf_xz] at hs
+  have h := hp s
+  rw [hs, RingEquiv.apply_symm_apply] at h
+  have hne : ((φ (genX E) : X0Field N) : LaurentSeries ℚ) ≠ 0 := by
+    intro h0; rw [h0] at hord; simp at hord
+  rw [HahnSeries.addVal_apply_of_ne hne] at h
+  have : (0 : ℤ) ≤ ((φ (genX E) : X0Field N) : LaurentSeries ℚ).order := by exact_mod_cast h
+  omega
+
+include hπ in
+/-- **The generic point maps into the chart.** -/
+theorem generic_mem_chart : π (genericPoint X) ∈ (chartZ E).opensRange := by
+  have h := congrArg (fun f => f (IsLocalRing.closedPoint (CommRingCat.of X.functionField))) hπ
+  simp only [Scheme.Hom.comp_apply] at h
+  have h0 : X.fromSpecFunctionField (IsLocalRing.closedPoint (CommRingCat.of X.functionField)) =
+      genericPoint X := Scheme.fromSpecStalk_closedPoint
+  rw [h0] at h
+  rw [h]
+  exact ⟨_, rfl⟩
+
+set_option backward.isDefEq.respectTransparency true in
+include hπ hv in
+/-- **D2 in the scheme model: the value of `π` at the point `τ` is gz-dict2's `modPt` of the
+plane-model functions.** -/
+theorem ptOf_eq_modPt [E.IsElliptic] {Px Qx Py Qy : MvPolynomial (Fin 2) ℚ}
+    (hrx : IsRatRep N (φ (genX E) : LaurentSeries ℚ) Px Qx)
+    (hry : IsRatRep N (φ (genY E) : LaurentSeries ℚ) Py Qy) (τ : ℍ)
+    (x : Spec (CommRingCat.of ℂ) ⟶ X) (hx : IsPointAt N e τ x) :
+    ptOf E (x ≫ π) = ZInQ.GZModuli.modPt E (ratFn N Px Qx) (ratFn N Py Qy) τ := by
+  have hrx' : IsRatRep N ((e (e.symm (φ (genX E))) : X0Field N) : LaurentSeries ℚ) Px Qx := by
+    rw [RingEquiv.apply_symm_apply]; exact hrx
+  have hry' : IsRatRep N ((e (e.symm (φ (genY E))) : X0Field N) : LaurentSeries ℚ) Py Qy := by
+    rw [RingEquiv.apply_symm_apply]; exact hry
+  rcases modPt_plane_cases E φ hrx hry τ with ⟨x₀, y₀, hns, hlx, hly, hmod⟩ | ⟨hpole, hmod⟩
+  · rw [hmod]
+    letI : Algebra ℚ (X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ)))) :=
+      (ratToStalk (π ≫ toSpecQ E) _).toAlgebra
+    letI : Algebra ℚ X.functionField :=
+      ((e.symm : X0Field N →+* X.functionField).comp (algebraMap ℚ (X0Field N))).toAlgebra
+    obtain ⟨sx, hsx⟩ := mem_range_of_tendsto hv e hx _ hrx' hlx
+    obtain ⟨sy, hsy⟩ := mem_range_of_tendsto hv e hx _ hry' hly
+    have hinj : Function.Injective (algebraMap (X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ)))) X.functionField) :=
+      IsFractionRing.injective _ X.functionField
+    have hW : WEqA E sx sy := by
+      refine WEqA.of_map (algebraMap (X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ)))) X.functionField) hinj ?_
+      rw [hsx, hsy]
+      exact (wEqA_phi φ).map (e.symm : X0Field N →+* X.functionField)
+    have hθ : (algebraMap (X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ)))) X.functionField).comp (chartHom E sx sy (affEq_of_wEqA hW)) = uOf φ e := by
+      have h2 := comp_chartHom E (e.symm : X0Field N →+* X.functionField) (φ (genX E))
+        (φ (genY E)) (affEq_of_wEqA (wEqA_phi φ))
+        (affEq_of_wEqA ((wEqA_phi φ).map (e.symm : X0Field N →+* X.functionField)))
+      rw [comp_chartHom E _ sx sy _ (affEq_of_wEqA (hW.map _))]
+      unfold uOf
+      rw [h2]
+      exact chartHom_congr E _ _ hsx hsy
+    have hcomp := comp_eq_of_factor π (uOf φ e) hπ hv x (chartHom E sx sy (affEq_of_wEqA hW)) hθ
+    have hex : (Scheme.stalkClosedPointTo x).hom sx = x₀ := by
+      have := hx sx Px Qx (by rw [hsx]; exact hrx')
+      exact tendsto_nhds_unique this hlx
+    have hey : (Scheme.stalkClosedPointTo x).hom sy = y₀ := by
+      have := hx sy Py Qy (by rw [hsy]; exact hry')
+      exact tendsto_nhds_unique this hly
+    have hc2 : (Scheme.stalkClosedPointTo x).hom.comp (chartHom E sx sy (affEq_of_wEqA hW)) = chartHom E x₀ y₀ hns.1 := by
+      rw [comp_chartHom E _ sx sy _ (affEq_of_wEqA (hW.map _))]
+      exact chartHom_congr E _ _ hex hey
+    rw [hcomp, hc2, ptOf_chart]
+  · rw [hmod]
+    apply ptOf_eq_zero
+    intro hmem
+    have hmem' : π (x (IsLocalRing.closedPoint (CommRingCat.of ℂ))) ∈ (chartZ E).opensRange := hmem
+    obtain ⟨s, hs⟩ := mem_range_of_mem_chart π (uOf φ e) hπ _ hmem' (xz E)
+    rw [uOf_xz] at hs
+    have := hx s Px Qx (by rw [hs]; exact hrx')
+    exact not_tendsto_atTop_of_tendsto_nhds this.norm hpole
+
 end ZInQ.GZSch
