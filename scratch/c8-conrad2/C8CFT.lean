@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.OneProof.C8LocAlg
 
 set_option linter.style.longLine false
+set_option linter.style.haveILetI false
 
 noncomputable section
 
@@ -166,5 +167,112 @@ theorem isOpen_smallUnits : IsOpen ((smallUnits p : Subgroup (PadicAlgCl p)ˣ) :
   exact Metric.isOpen_ball.preimage Units.continuous_val
 
 end Torsion
+
+/-! ## `CFTFiniteQ` from Minkowski's theorem -/
+
+/-- **GLUE over Mathlib's Minkowski theorem (C8, "class field theory over ℚ", N5 L761-765).** An algebraic number
+fixed by every inertia group of every place of `ℚ̄` is rational: `ℚ` has no nontrivial extension unramified at every
+prime (Minkowski; in Mathlib `NumberField.exists_not_isUnramifiedIn`, `NumberField.finrank_eq_one_of_unramified`,
+`Mathlib/NumberTheory/NumberField/ExistsRamified.lean`). The step from Mathlib's statement is a dictionary: if every
+inertia group of `ℚ̄` fixes `x`, the Galois closure `L` of `ℚ(x)` has trivial inertia groups at every prime of `𝓞_L`
+(the inertia groups of places of `ℚ̄` surject onto those of `L`), so `L/ℚ` is unramified (STANDARD; Neukirch,
+*Algebraic Number Theory*, I §9 and III §2, UNVERIFIED locators). -/
+def MinkowskiInertiaQ : Prop :=
+  ∀ x : PkgI4.Qbar, (∀ q : ℕ, q.Prime → ∀ v : ValuationSubring PkgI4.Qbar, PkgI4.LiesOver v q →
+    ∀ τ : v.inertiaSubgroup ℚ, ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) x = x) →
+    x ∈ Set.range (algebraMap ℚ PkgI4.Qbar)
+
+theorem finite_quot_open (H : OpenSubgroup PkgI4.GQ) : Finite (PkgI4.GQ ⧸ (H : Subgroup PkgI4.GQ)) :=
+  inferInstance
+
+/-- A continuous homomorphism out of `G_ℚ` into a `T₁` group that kills every inertia group is trivial (Krull's
+Galois correspondence and `MinkowskiInertiaQ`). -/
+theorem eq_one_of_inertia_trivial (hM : MinkowskiInertiaQ) {G' : Type*} [Group G'] [TopologicalSpace G']
+    [T1Space G'] (φ : PkgI4.GQ →* G') (hφ : Continuous φ)
+    (h : ∀ q : ℕ, q.Prime → ∀ v : ValuationSubring PkgI4.Qbar, PkgI4.LiesOver v q →
+      ∀ τ : v.inertiaSubgroup ℚ, φ ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) = 1)
+    (g : PkgI4.GQ) : φ g = 1 := by
+  by_contra hg
+  have hclosed : IsClosed (φ.ker : Set PkgI4.GQ) := by
+    have : (φ.ker : Set PkgI4.GQ) = φ ⁻¹' {1} := by ext; simp
+    rw [this]; exact isClosed_singleton.preimage hφ
+  let N : ClosedSubgroup PkgI4.GQ := ⟨φ.ker, hclosed⟩
+  have hK := InfiniteGalois.fixingSubgroup_fixedField (k := ℚ) (K := PkgI4.Qbar) N
+  have hgN : g ∉ (IntermediateField.fixedField (N : Subgroup PkgI4.GQ)).fixingSubgroup := by
+    rw [hK]; exact hg
+  rw [IntermediateField.mem_fixingSubgroup_iff] at hgN
+  push Not at hgN
+  obtain ⟨x, hx, hgx⟩ := hgN
+  have hfix : ∀ σ ∈ φ.ker, σ x = x := fun σ hσ =>
+    (IntermediateField.mem_fixedField_iff (N : Subgroup PkgI4.GQ) x).1 hx σ hσ
+  obtain ⟨c, rfl⟩ := hM x fun q hq v hv τ => hfix _ (h q hq v hv τ)
+  exact hgx (AlgEquiv.commutes g c)
+
+/-- **`CFTFiniteQ` from Minkowski's theorem** (`MinkowskiInertiaQ`): `ψ^m` (with `m` the index of `ψ⁻¹(V)`) takes
+values in the torsion-free open subgroup `V = {‖u - 1‖ < ‖p‖}` of `ℚ̄_p^×`, so it kills every inertia group (finite
+images), hence is trivial, so `ψ` takes values in the `m`-th roots of unity. The hypothesis "unramified outside a
+finite set" is not needed. -/
+theorem cftFiniteQ_of_minkowski (hM : MinkowskiInertiaQ) : CFTFiniteQ := by
+  intro p _ ψ hfin _hram
+  let H : Subgroup PkgI4.GQ := (smallUnits p).comap ψ.toHom
+  have hHopen : IsOpen (H : Set PkgI4.GQ) := (isOpen_smallUnits p).preimage ψ.continuous_toHom
+  haveI hHnormal : H.Normal := ⟨fun n hn g => by
+    change ψ.toHom (g * n * g⁻¹) ∈ smallUnits p
+    rw [map_mul, map_mul, mul_comm (ψ.toHom g), mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one]
+    exact hn⟩
+  haveI : Finite (PkgI4.GQ ⧸ H) := finite_quot_open ⟨H, hHopen⟩
+  haveI : H.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
+  set m := H.index with hm_def
+  have hm : 0 < m := Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero
+  have hV : ∀ g, ψ.toHom g ^ m ∈ smallUnits p := fun g => by
+    have := Subgroup.pow_index_mem H g
+    change ψ.toHom (g ^ H.index) ∈ smallUnits p at this
+    rwa [map_pow] at this
+  let φ : PkgI4.GQ →* (PadicAlgCl p)ˣ := ψ.toHom ^ m
+  have hφ : ∀ g, φ g = ψ.toHom g ^ m := fun g => rfl
+  have hφc : Continuous φ := by
+    have : (φ : PkgI4.GQ → (PadicAlgCl p)ˣ) = fun g => ψ.toHom g ^ m := funext hφ
+    rw [this]; exact ψ.continuous_toHom.pow m
+  have hinert : ∀ q : ℕ, q.Prime → ∀ v : ValuationSubring PkgI4.Qbar, PkgI4.LiesOver v q →
+      ∀ τ : v.inertiaSubgroup ℚ, φ ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) = 1 := by
+    intro q hq v hv τ
+    -- `ψ(τ)` has finite order: its powers lie in the finite set `ψ(I_v)`
+    have hS := hfin q hq v hv
+    obtain ⟨i, j, hij, hEq⟩ : ∃ i j : ℕ, i ≠ j ∧ ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) ^ i =
+        ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) ^ j := by
+      have hmaps : ∀ n : ℕ, ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) ^ n ∈
+          Set.range fun σ : v.inertiaSubgroup ℚ => ψ.toHom ((σ : v.decompositionSubgroup ℚ) : PkgI4.GQ) :=
+        fun n => ⟨τ ^ n, by simp⟩
+      haveI := hS.to_subtype
+      obtain ⟨i, j, hij, h⟩ := Finite.exists_ne_map_eq_of_infinite
+        (fun n : ℕ => (⟨_, hmaps n⟩ : Set.range fun σ : v.inertiaSubgroup ℚ =>
+          ψ.toHom ((σ : v.decompositionSubgroup ℚ) : PkgI4.GQ)))
+      exact ⟨i, j, hij, congrArg Subtype.val h⟩
+    set y := ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ)
+    have hy : ∃ n, 0 < n ∧ y ^ n = 1 := by
+      rcases lt_or_gt_of_ne hij with hlt | hlt
+      · refine ⟨j - i, Nat.sub_pos_of_lt hlt, ?_⟩
+        have := hEq; rw [← Nat.add_sub_cancel' hlt.le, pow_add] at this
+        exact (mul_eq_left.1 this.symm)
+      · refine ⟨i - j, Nat.sub_pos_of_lt hlt, ?_⟩
+        have := hEq; rw [← Nat.add_sub_cancel' hlt.le, pow_add] at this
+        exact (mul_eq_left.1 this)
+    obtain ⟨n, hn, hyn⟩ := hy
+    rw [hφ]
+    apply Units.ext
+    have hmem := hV ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ)
+    refine eq_one_of_pow_eq_one_small p hmem hn ?_
+    rw [← Units.val_pow_eq_pow_val, ← pow_mul, mul_comm, pow_mul, hyn, one_pow, Units.val_one]
+  have htriv := eq_one_of_inertia_trivial hM φ hφc hinert
+  have hfinR : (rootsOfUnity m (PadicAlgCl p) : Set (PadicAlgCl p)ˣ).Finite := by
+    haveI : NeZero m := ⟨hm.ne'⟩
+    exact Set.finite_coe_iff.mp (inferInstance : Finite (rootsOfUnity m (PadicAlgCl p)))
+  refine hfinR.subset ?_
+  rintro _ ⟨g, rfl⟩
+  change _ ∈ rootsOfUnity m (PadicAlgCl p)
+  rw [mem_rootsOfUnity, ← hφ]
+  exact htriv g
+
+#print axioms cftFiniteQ_of_minkowski
 
 end HDec.G0Galois.C8Conrad
