@@ -8,3 +8,8 @@
 
 ## Findings
 - (math, STANDARD) The quotient map T ↦ Pic(X_T) → Pic(X_T)/Pic(T) is surjective, and locally injective for any topology finer than Zariski (Pic(T)-classes are Zariski-locally trivial). Hence its sheafification is an isomorphism, with NO section hypothesis.
+
+## Compile outcomes (VERIFIED)
+- scratch/kleiman-section/Quot.lean: compiles; `#print axioms` of kleimanPicZeroProper_of_Q, picZeroAbVar0_of_printed, picardFunctorIsoKleiman: [propext, Classical.choice, Quot.sound].
+- ZInQKernel/Contrib/OneProof/KleimanPicZeroProperQuot.lean: `lake build ZInQKernel.Contrib.OneProof.KleimanPicZeroProperQuot` succeeded (linter warnings only), no sorry.
+- Proved: picardFunctorIsoKleiman (fppf sheafification of T ↦ Pic(X_T) ≅ that of T ↦ Pic(X_T)/Pic(T), any f, no section); eta_repKleiman / identityComponent_repKleiman; kleimanPicZeroProper_of_Q; kleimanPicZeroProperPrinted_of_Q; picZeroProperAt_of_printed; picZeroAbVar0_of_printed.
