@@ -15,3 +15,7 @@
   `ZInQ.CurveModel.exists_iso_of_functionField` (X, Y integral, proper over ℚ, stalks valuation rings,
   e : K(X) ≃ K(Y) ⇒ ∃ f : X ⟶ Y iso with Spec K(X) → X → Y = Spec(e⁻¹) ≫ Spec K(Y) → Y),
   `ext_of_fromSpecFunctionField` (uniqueness), `algebraMap_stalkMap` (stalk maps induce c on K).
+- 11-17 02:15 VERIFIED (compiled): `ZInQKernel/Contrib/OneProof/GrossZagierModelUnique.lean`: transport lemmas
+  `isCuspInfty_map`, `isPointAt_comp`; `gzModelBody_transfer`; new leaf `ZInQ.GZUnique.GrossZagierCurveCdSome`
+  (GZ on SOME normal proper model of X₀(N)); `grossZagierCurveCd_of_some`, `grossZagierAlgOptCd_of_some`.
+  S1 discharged: the ∀-model leaf follows from the ∃-model leaf in Lean.
