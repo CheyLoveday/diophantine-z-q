@@ -28,3 +28,15 @@
   thing ("equality with its modular trace at five", for all p outside T u {3,5} and the level) plus the analogous
   modular Tate representation at 3 (r_3 identified by Chebotarev). Lean asks more than the manuscript only in:
   determinant (in R16CoreY, unused), all l (R16CoreY quantifies over every l), dim A = [K_f:Q] (used for rank two).
+
+## Lean (VERIFIED, compiled)
+- ZInQKernel/Contrib/OneProof/R16ShimuraLi.lean: compiles clean (fixes: bound `ι` reserved token -> `io`;
+  `open Polynomial` removed for X/coeff ambiguity). Leaves LiFrickePrinted, ShimuraThm1Printed; steps ConjNewform,
+  ShimuraTotalToComponents (known issue). Proved: frickeStable_of_li, r16CoreYTotal_of_shimura_li,
+  r16CoreY_of_total, r16CoreY_of_shimura_li. Axioms standard.
+- lake build R16ShimuraLi + Main + Discharges: success, frozenTarget standard axioms.
+- FoldCheck.lean (step-1 module TailZ75R16 + step-2 autofold dry-run module): compiles; open68, open69 standard.
+- #discharges: 36 open, 19 discharge one, none by R16ShimuraLi (r16CoreY is not a top field).
+- autofold dry run on /tmp/r16af (step 1 applied): strict 4/24 on 28 -> 4/27 on 31 (net vs base 4/27 on 31: unchanged).
+## Finding (known issue): Shimura Euler identity (total charpoly) does not give the per-embedding trace that the
+  only Lean consumer (g13, l = 5, one embedding) needs. Stopped there; ShimuraTotalToComponents named, not proved.

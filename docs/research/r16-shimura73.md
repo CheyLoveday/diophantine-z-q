@@ -121,4 +121,25 @@ steps:
     the owner rules" (GLUE).
 * `#discharges`: see section 6.
 
-COMPILE-SECTION
+## 6. Compile outcomes (VERIFIED, 2026-11-17)
+
+* `lake env lean ZInQKernel/Contrib/OneProof/R16ShimuraLi.lean`: no errors, no warnings (after renaming a bound `ι`,
+  a reserved token here, and dropping `open Polynomial`). `lake build ZInQKernel.Contrib.OneProof.R16ShimuraLi
+  ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges`: success (16216 jobs); `frozenTarget` standard axioms.
+* `scratch/r16-shimura73/FoldCheck.lean` (imports TailZ74 and R16ShimuraLi; contains the step-1 module and the
+  step-2 dry-run module verbatim): compiles; `sixContactMin_of_open68`, `sixContactMin_of_open69`,
+  `r16CoreY_of_shimura_li`, `r16CoreYTotal_of_shimura_li` depend on `[propext, Classical.choice, Quot.sound]`
+  (`FoldCheck-output.txt`).
+* `#discharges` (`scratch/r16-shimura73/DischargesCheck.lean`, output `DischargesCheck-output.txt`): "36 open
+  hypotheses, 15748 theorems checked, 19 discharge one"; **none by `R16ShimuraLi`**, as expected: `r16CoreY` is not an
+  open hypothesis of the current `frozenTarget` (it sits below the top, section 1). The discharge against the step-1
+  top is checked by FoldCheck instead (open69 fills `r16CoreY := R16ShimuraLi.r16CoreY_of_shimura_li ...`).
+
+## 7. What remains
+
+* Jack's ruling on Known issues 1 (and 2). If the ruling is to keep the manuscript's sources, a reader of Shimura 1973
+  pp. 523-529 should check whether Thm 1 (or §0, or Thm 2) states the Frobenius-Hecke relation or a per-factor Euler
+  identity; then `ShimuraTotalToComponents` could be replaced. Otherwise the Diamond-Shurman route (afCharpolyDS965)
+  stays, and this fold should not be applied.
+* Readings: Li 1975 p. 296 (statement, normalization of `W_N` and `\bar f`), Shimura 1973 Thm 1 (the Euler clause's
+  premise and exceptional set), a print for `ConjNewform`.

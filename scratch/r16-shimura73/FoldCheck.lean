@@ -714,3 +714,5 @@ end HDec
 
 #print axioms HDec.HSyn.sixContactMin_of_open69
 
+#print axioms R16ShimuraLi.r16CoreY_of_shimura_li
+#print axioms R16ShimuraLi.r16CoreYTotal_of_shimura_li
