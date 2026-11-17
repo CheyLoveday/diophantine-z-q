@@ -1,6 +1,25 @@
+import ZInQKernel.Contrib.OneProof.PicDictionary
 import ZInQKernel.Contrib.OneProof.PhiAmpleIsogeny
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.ZeroLocusTensor
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.Endomorphism
+import ZInQKernel.Contrib.CloudW02Connectedness.Vendor.AnthropicFLT.Theorems.Thm_AlgebraicGeometry_Scheme_isIntegral_subscheme_vanishingIdeal
+
+/-!
+# `K(L)` is finite for ample `L` (Mumford §6, Application 1), proved (phi-ample)
+
+For `A` an abelian variety over any field `K`, `L` ample, a representation `P` of `Pic_{A/K}` with identity
+component `(B, j)` and the lift `λ_L : A → B` of `φ_L`, the kernel of `λ_L` has finitely many `K̄`-points
+(`finite_ker_pts`). Mumford's argument, on irreducible closed subsets of the kernel: if `λ_L` vanishes on an
+integral closed `Z ⊆ A`, then `(1 × i)^*Λ(L)` is classified by the constant map, so it is trivial (Kleiman 9.2.5,
+the vendored normalized Picard functor); restricting along `z ↦ (−z, z)` gives `i^*L ⊗ i^*(−1)^*L ≅ 𝒪_Z`; both
+factors are ample, so `Z` is affine; an integral affine proper `K`-scheme is a point.
+
+Main results:
+* `PhiAmple.phiAmpleIsogeny_of_phiSurjective : PicDict.MumfordPhiSurjectiveAC → T09Pic.PhiAmpleIsogeny`;
+* `PhiAmple.mumfordKLFiniteSectionAC_of_open : T09Pic.PicRepresentableAbVar → T09Pic.PicZeroAbVar →
+  PicFix.MumfordKLFiniteSectionAC` (pic-fix's printed leaf from L1 and L2, the fields beside it);
+* `PhiAmple.mumfordKLFiniteAC_of_open` (the same for pic-dict's `MumfordKLFiniteAC`).
+-/
 
 set_option backward.isDefEq.respectTransparency false
 
@@ -335,5 +354,90 @@ theorem phiAmpleIsogeny_of_phiSurjective (h8 : MumfordPhiSurjectiveAC) : PhiAmpl
   exact ⟨x, picClass_injective rep hj (by rw [picClass_phiL rep L lam'.hom hlam x, hx])⟩
 
 end Finite
+
+section KPoints
+
+open T09Pic PkgI3 PkgI3.AbVar PicDict
+
+variable {k : Type} [Field k]
+
+/-- `X ◁ x ≫ μ = pr₁ ≫ t_x` for a `k`-point `x`. -/
+lemma whisker_mu_kpt {X : AbVar k} (x : AC.Kpt X) :
+    (X.X ◁ x) ≫ μ[X.X] = CartesianMonoidalCategory.fst X.X _ ≫ AC.tr x := by
+  simp only [AC.tr, CartesianMonoidalCategory.comp_lift_assoc, Category.comp_id]
+  congr 1
+  apply CartesianMonoidalCategory.hom_ext
+  · simp
+  · simp only [CartesianMonoidalCategory.whiskerLeft_snd, CartesianMonoidalCategory.lift_snd]
+    rw [← Category.assoc]
+    congr 1
+    exact CartesianMonoidalCategory.toUnit_unique _ _
+
+/-- **`Λ(L)` restricted along a `k`-point `x`** is `φ_L(x)` (transported to `X ×_k k`). -/
+theorem map_mumfordBundle_kpt {X : AbVar k} (c : X.X.left.Pic) (x : AC.Kpt X) :
+    Scheme.Pic.map (JacobianChallenge.baseChangeMap X.X.hom x) (mumfordBundle X c) =
+      Scheme.Pic.map (pullback.fst X.X.hom (𝟙_ (Over (Spec (CommRingCat.of k)))).hom) (AC.phi c x) := by
+  have e : JacobianChallenge.baseChangeMap X.X.hom x = (X.X ◁ x).left := by
+    apply pullback.hom_ext <;> simp [JacobianChallenge.baseChangeMap]
+  have hμ : JacobianChallenge.baseChangeMap X.X.hom x ≫ (μ[X.X]).left =
+      pullback.fst X.X.hom (𝟙_ (Over (Spec (CommRingCat.of k)))).hom ≫ (AC.tr x).left := by
+    rw [e, ← Over.comp_left, whisker_mu_kpt]
+    simp
+  have hfst : JacobianChallenge.baseChangeMap X.X.hom x ≫ pullback.fst X.X.hom X.X.hom =
+      pullback.fst X.X.hom (𝟙_ (Over (Spec (CommRingCat.of k)))).hom := pullback.lift_fst _ _ _
+  have hsnd : JacobianChallenge.baseChangeMap X.X.hom x ≫ pullback.snd X.X.hom X.X.hom =
+      pullback.snd _ _ ≫ x.left := pullback.lift_snd _ _ _
+  have hS : Scheme.Pic.map x.left c = 1 :=
+    Subsingleton.elim (α := (Spec (CommRingCat.of k)).Pic) _ _
+  rw [mumfordBundle, ← Scheme.Pic.mapHom_apply]
+  simp only [map_mul, map_inv, Scheme.Pic.mapHom_apply, ← Scheme.Pic.map_comp, hμ, hsnd, hfst]
+  rw [Scheme.Pic.map_comp (pullback.snd _ _) x.left, hS, Scheme.Pic.map_one, Scheme.Pic.map_comp]
+  simp only [AC.phi, inv_one, mul_one]
+  rw [Scheme.Pic.map_mul]
+  congr 1
+  rw [eq_comm, eq_inv_iff_mul_eq_one, ← Scheme.Pic.map_mul, inv_mul_cancel, Scheme.Pic.map_one]
+
+/-- **`K(L)` is finite for every ample `L`** (pic-dict's `MumfordKLFiniteAC`, Mumford §6 Application 1), from
+the Picard scheme (L1) and `Pic⁰` (L2): a `k`-point of `K(L)` lies in `ker λ_L`, and `X(k) ↪ X(k̄)`. -/
+theorem mumfordKLFiniteAC_of_open (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar) :
+    MumfordKLFiniteAC := by
+  intro k _ _ X c₀ hc₀
+  obtain ⟨P, ⟨rep⟩⟩ := h1 k X
+  obtain ⟨B, j, hj⟩ := h2 k X P rep
+  obtain ⟨lam, hlam⟩ := exists_hom_comp_eq_phiL rep hj c₀
+  letI := picardFunctorCommGrpObj X.X.hom rep
+  have hmon : IsMonHom j := hj.2.2
+  have hjm : Mono j := by
+    haveI : IsOpenImmersion j.left := hj.1
+    exact (Over.forget _).mono_of_mono_map (inferInstanceAs (Mono j.left))
+  have hF := finite_ker_pts rep hj hc₀ hlam
+  let u : ptK k ⟶ 𝟙_ (Over (Spec (CommRingCat.of k))) := CartesianMonoidalCategory.toUnit _
+  haveI : Epi u := by
+    haveI : Epi u.left := by
+      haveI : Surjective u.left := ⟨fun _ => ⟨IsLocalRing.closedPoint _, Subsingleton.elim _ _⟩⟩
+      haveI : Flat u.left := by
+        change Flat (Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k))))
+        rw [HasRingHomProperty.Spec_iff (P := @Flat), CommRingCat.hom_ofHom]
+        exact RingHom.flat_algebraMap_iff.mpr inferInstance
+      exact Flat.epi_of_flat_of_surjective u.left
+    exact (Over.forget _).epi_of_epi_map this
+  refine (hF.preimage (f := fun x : AC.Kpt X => u ≫ x) fun a _ b _ h => cancel_epi u |>.1 h).subset ?_
+  intro x hx
+  change AC.phi c₀ x = 1 at hx
+  change (u ≫ x) ≫ lam.hom = 1
+  have hx1 : x ≫ lam.hom = CartesianMonoidalCategory.toUnit _ ≫ η[B.X] := by
+    rw [← cancel_mono j, Category.assoc, hlam, phiL, comp_classify, map_mumfordBundle_kpt, hx,
+      Scheme.Pic.map_one, homEquiv_symm_one rep, Category.assoc, IsMonHom.one_hom j]
+  rw [Category.assoc, hx1, ← Category.assoc, CartesianMonoidalCategory.toUnit_unique (u ≫ _)
+    (CartesianMonoidalCategory.toUnit _)]
+  rfl
+
+/-- **pic-fix's printed leaf `MumfordKLFiniteSectionAC` is a theorem** given L1 and L2 (both fields of the
+bundle that carries it). -/
+theorem mumfordKLFiniteSectionAC_of_open (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar) :
+    PicFix.MumfordKLFiniteSectionAC :=
+  fun k _ _ X c₀ hc₀ _ => mumfordKLFiniteAC_of_open h1 h2 k X c₀ hc₀
+
+end KPoints
 
 end PhiAmple

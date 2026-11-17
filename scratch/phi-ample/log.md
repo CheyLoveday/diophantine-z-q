@@ -25,3 +25,12 @@ Target theorem: PhiAmpleIsogeny from MumfordPhiSurjectiveAC alone (removes mumfo
 - KL3.lean: finite_ker_pts (ker λ_L has finitely many K̄-points, any field, any ample L) and
   phiAmpleIsogeny_of_phiSurjective (h8 : MumfordPhiSurjectiveAC) : PhiAmpleIsogeny COMPILED, no sorry.
   #print axioms: [propext, Classical.choice, Quot.sound] for both (axioms.txt). VERIFIED.
+- ZInQKernel/Contrib/OneProof/MumfordKLFinite.lean (copy scratch/phi-ample/MumfordKLFinite.lean): adds
+  mumfordKLFiniteAC_of_open, mumfordKLFiniteSectionAC_of_open (L1, L2 ⇒ pic-fix's printed leaf).
+  `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.MumfordKLFinite`:
+  Build completed successfully (14102 jobs). VERIFIED.
+- #discharges (Discharges.lean → discharges.txt): DISCHARGES [OpenAddedLeaves19.mumfordKLFiniteSectionAC] by
+  PhiAmple.mumfordKLFiniteSectionAC_of_open, still assumes [T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar]
+  (both fields of OpenAddedLeaves19), axioms standard. VERIFIED.
+- autofold.json dry run: `strict count: 16/21 on 37 -> 15/21 on 36; strictest 16/21 -> 15/21` (−1, no new leaf).
+  FoldDryRun.lean (line 1 stripped) compiles; sixContactMin_of_open39 axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
