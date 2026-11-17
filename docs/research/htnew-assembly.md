@@ -1,7 +1,8 @@
 # htnew-assembly: `modularHTPrinted` from the printed form over the print's coefficient field
 
 Task htnew-assembly, branch `wip/htnew-assembly`, base `origin/wip/leaf-fold33b` 4dfb7e58 (contains 8ba86099 and
-`origin/main`), 2026-11-17. Lean: `ZInQKernel/Contrib/OneProof/ModularHTCoeff.lean` (same text in
+`origin/main` at the start), 2026-11-17; `origin/wip/leaf-fold33b` beafc63d (top TailZ71, `sixContactMin_of_open64`,
+bundle `OpenResearchLeaves45`) merged in afterwards and every check re-run on it. Lean: `ZInQKernel/Contrib/OneProof/ModularHTCoeff.lean` (same text in
 `scratch/htnew-assembly/ModularHTCoeff.lean`). Log: `scratch/htnew-assembly/log.md`. Nothing else under `ZInQKernel/` was
 edited. Model work, no human review.
 
@@ -16,8 +17,9 @@ Marks: **VERIFIED** = compiled, or read in a file on this host. **STANDARD** = p
 print's own terms: coefficients in the print's finite coefficient field (`K_{f,λ}`, Kato's `F_λ`, embedded in
 `ℚ̄_ℓ`), Hodge–Tate weights in the print's definition (`dim_E (V ⊗_{ℚ_ℓ} ℂ_ℓ(w))^{G_{ℚ_ℓ}}`, Mathlib's tensor product),
 and the print's Frobenius/sign conventions as a disjunction. Every step from the leaf to the field is proved
-(VERIFIED, standard axioms). Dry-run fold: strict count 12/22 → 13/21, strictest 11/23 → 12/22 (GLUE −1, no new
-glue), if the leaf enters as `published` flagged `unread`.** No statement was changed. The field is not false,
+(VERIFIED, standard axioms). Dry-run fold on the current top (TailZ71): strict count 10/24 → 11/23, strictest 10/24 → 11/23
+(GLUE −1, no new glue), if the leaf enters as `published` flagged `unread` (on the earlier top TailZ67: 12/22 → 13/21,
+strictest 11/23 → 12/22).** No statement was changed. The field is not false,
 vacuous or inert (it follows from the new leaf; the leaf holds by Deligne–Faltings–Saito–Kato).
 
 Review grounds (strict leaf review, 2026-11-17, as quoted in the task; the review notes themselves,
@@ -162,15 +164,20 @@ One Lean process at a time; load 35-57 (below the host's 150), at least 120 GB a
 | contribution | `lake env lean ZInQKernel/Contrib/OneProof/ModularHTCoeff.lean`; `lake build +ZInQKernel.Contrib.OneProof.ModularHTCoeff` | success (~21 s), warnings only |
 | axioms | `lake env lean scratch/htnew-assembly/Axioms.lean` | `modularHTPrinted_of_coeff`, `eigenformHTNew_of_coeff`, `printHTMult_eq`, `kernel_of_print`, `reading_arith`, `reading_geom`: `[propext, Classical.choice, Quot.sound]` (`axioms.txt`) |
 | `#discharges` | `lake env lean scratch/htnew-assembly/Discharges.lean` | `Discharges-output.txt` (below) |
-| fold | `python3 scripts/one_proof/autofold.py scratch/htnew-assembly/autofold.json --dry-run`; line 1 stripped → `FoldDryRun.lean` (kept as `FoldDryRun.lean.txt`); `lake env lean` | `strict count: 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22`; `HDec.HSyn.sixContactMin_of_open61` compiles, `[propext, Classical.choice, Quot.sound]` |
+| fold (top TailZ67) | `python3 scripts/one_proof/autofold.py scratch/htnew-assembly/autofold.json --dry-run`; line 1 stripped → `FoldDryRun.lean`; `lake env lean` | `strict count: 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22`; `sixContactMin_of_open61` compiles, standard axioms |
+| rebuild after merging `origin/wip/leaf-fold33b` beafc63d | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.ModularHTCoeff` | success, 16094 jobs, 3.6 min; axioms re-run: unchanged |
+| `#discharges` (top TailZ71) | as above | `DISCHARGES [OpenResearchLeaves45.modularHTPrinted] by HTNewAssembly.modularHTPrinted_of_coeff`, still assumes `[HTNewAssembly.ModularHTCoeff]`, standard axioms; `39 open hypotheses, 14068 theorems checked, 30 discharge one` |
+| fold (top TailZ71) | same spec, dry run (kept as `FoldDryRun.lean.txt`, output `FoldDryRun-output.txt`) | `strict count: 10/24 on 34 -> 11/23 on 34; strictest 10/24 -> 11/23`; `HDec.HSyn.sixContactMin_of_open65` compiles, `[propext, Classical.choice, Quot.sound]` |
 
 ```
-DISCHARGES [OpenResearchLeaves42.modularHTPrinted] by HTNewAssembly.modularHTPrinted_of_coeff
+DISCHARGES [OpenResearchLeaves45.modularHTPrinted] by HTNewAssembly.modularHTPrinted_of_coeff
   still assumes: [HTNewAssembly.ModularHTCoeff]
   axioms: [propext, Classical.choice, Quot.sound]
 ...
-#discharges: 39 open hypotheses, 13436 theorems checked, 26 discharge one
+#discharges: 39 open hypotheses, 14068 theorems checked, 30 discharge one
 ```
+(On the earlier top TailZ67 the same entry read `OpenResearchLeaves42.modularHTPrinted`; footer `13436 theorems
+checked, 26 discharge one`.)
 
 **Autofold spec** (`scratch/htnew-assembly/autofold.json`): discharges `modularHTPrinted` with proof
 `_root_.HTNewAssembly.modularHTPrinted_of_coeff {n}.modularHTCoeff`; new leaf `modularHTCoeff :

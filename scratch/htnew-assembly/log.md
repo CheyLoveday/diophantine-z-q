@@ -29,3 +29,8 @@ EigenformHTPrinted.ModularHTPrinted` (verbatim copy: `ModularHTPrinted-copy.lean
 - The three helper instances made `local instance` (no global instance added by the contribution); recompiled: module build
   success, axioms unchanged (standard), `#discharges` unchanged, FoldDryRun recompiled: standard axioms. VERIFIED.
 - Scan of ModularHTCoeff.lean for #eval/run_cmd/initialize/syntax/notation/macro/elab/axiom/sorry: none (only the word in comments: none). VERIFIED.
+- Merged origin/wip/leaf-fold33b beafc63d (top TailZ71, OpenResearchLeaves45). Rebuild `+Main +Discharges +ModularHTCoeff`:
+  success, 16094 jobs, 3.6 min. Axioms unchanged (standard). `#discharges`: `[OpenResearchLeaves45.modularHTPrinted] by
+  HTNewAssembly.modularHTPrinted_of_coeff`, still assumes [HTNewAssembly.ModularHTCoeff], standard axioms; footer 39 open,
+  14068 checked, 30 discharge one. Dry-run: `strict count: 10/24 on 34 -> 11/23 on 34; strictest 10/24 -> 11/23`;
+  `sixContactMin_of_open65` compiles, standard axioms. VERIFIED.
