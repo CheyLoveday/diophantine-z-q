@@ -33,11 +33,13 @@ section Roots
 
 variable {L : Type*} [Field L] [IsAlgClosed L]
 
+omit [IsAlgClosed L] in
 theorem Rs_mul_right (P F G : L[X]) : Rs P (F * G) = Rs P F * Rs P G := by
   unfold Rs
   simp only [eval_mul]
   exact Multiset.prod_map_mul
 
+omit [IsAlgClosed L] in
 theorem Rs_C (P : L[X]) (c : L) : Rs P (C c) = c ^ (Multiset.card P.roots) := by
   unfold Rs
   simp only [eval_C, Multiset.map_const', Multiset.prod_replicate]
@@ -79,7 +81,7 @@ theorem eq_Rs_of_mul_trunc (Φ : L[X] → L) (D n : ℕ) (P : L[X]) (hPm : P.Mon
       have hdeg : (X - C r : L[X]).natDegree + (C c * (s.map (fun r => X - C r)).prod).natDegree
           ≤ D := by
         rw [natDegree_X_sub_C]; omega
-      rw [hmul _ _ hdeg, ih (by omega) c, Rs_mul_right, hlin, Rs_X_sub_C P hPm, hcard]
+      rw [hmul _ _ hdeg, ih (by omega) c, Rs_mul_right P (X - C r), hlin, Rs_X_sub_C P hPm, hcard]
   rw [(IsAlgClosed.splits F).eq_prod_roots]
   apply key
   rw [← (IsAlgClosed.splits F).natDegree_eq_card_roots]
@@ -128,7 +130,7 @@ abbrev NtDZ (F : ℤ[X]) : ℚ := NtD N ℚ (F.map (Int.castRingHom ℚ))
 theorem NtD_mul (a b : ℕ) (hab : a + b ≤ D) (h1 : NtDZ N 1 = 1)
     (hmulZ : ∀ F G : ℤ[X], F.natDegree ≤ a → G.natDegree ≤ b → NtDZ N F ≠ 0 → NtDZ N G ≠ 0 →
       NtDZ N (F * G) = NtDZ N F * NtDZ N G)
-    (S : Type*) [CommRing S] [Algebra ℚ S] (F G : S[X]) (hF : F.natDegree ≤ a)
+    (S : Type) [CommRing S] [Algebra ℚ S] (F G : S[X]) (hF : F.natDegree ≤ a)
     (hG : G.natDegree ≤ b) : NtD N S (F * G) = NtD N S F * NtD N S G := by
   classical
   let σ := Fin (a + 1) ⊕ Fin (b + 1)
@@ -190,30 +192,33 @@ theorem NtD_mul (a b : ℕ) (hab : a + b ≤ D) (h1 : NtDZ N 1 = 1)
     (eq_sum_fin (1 : ℚ[X]) c (by rw [natDegree_one]; exact Nat.zero_le _)).symm
   have hNt1 : NtD N ℚ (1 : ℚ[X]) = 1 := by
     rw [← h1, NtDZ, Polynomial.map_one]
+  set x1 : σ → ℚ := Sum.elim (fun i => u (i : ℕ)) (fun i => u (i : ℕ)) with hx1
   have hA : A ≠ 0 := by
     intro hA0
-    have := hev (Sum.elim (fun i => u i) (fun i => u i)) Fg
+    have := hev x1 Fg
     rw [hmapF] at this
-    simp only [Sum.elim_inl] at this
-    rw [hone, hNt1, hA0, map_zero] at this
-    exact zero_ne_one this
+    simp only [x1, Sum.elim_inl] at this
+    rw [hone, hNt1] at this
+    have h2 : MvPolynomial.eval x1 A = 1 := this
+    rw [hA0, map_zero] at h2
+    exact zero_ne_one h2
   have hB : B ≠ 0 := by
     intro hB0
-    have := hev (Sum.elim (fun i => u i) (fun i => u i)) Gg
+    have := hev x1 Gg
     rw [hmapG] at this
-    simp only [Sum.elim_inr] at this
-    rw [hone, hNt1, hB0, map_zero] at this
-    exact zero_ne_one this
+    simp only [x1, Sum.elim_inr] at this
+    rw [hone, hNt1] at this
+    have h2 : MvPolynomial.eval x1 B = 1 := this
+    rw [hB0, map_zero] at h2
+    exact zero_ne_one h2
   have hAB : AB = A * B := by
     rcases mul_eq_zero.mp hK with h | h
     · exact sub_eq_zero.mp h
     · exact absurd h (mul_ne_zero hA hB)
   set x : σ → S := Sum.elim (fun i => F.coeff i) (fun i => G.coeff i)
   set f : S2 →ₐ[ℚ] S := MvPolynomial.aeval x
-  have hFx : Fg.map f.toRingHom = F := by
-    rw [hmapF]; exact (eq_sum_fin F a hF).symm
-  have hGx : Gg.map f.toRingHom = G := by
-    rw [hmapG]; exact (eq_sum_fin G b hG).symm
+  have hFx : Fg.map f.toRingHom = F := (hmapF S x).trans (eq_sum_fin F a hF).symm
+  have hGx : Gg.map f.toRingHom = G := (hmapG S x).trans (eq_sum_fin G b hG).symm
   rw [← hFx, ← hGx, ← Polynomial.map_mul]
   change NtD N S ((Fg * Gg).map (f : S2 →+* S)) = NtD N S (Fg.map (f : S2 →+* S)) *
     NtD N S (Gg.map (f : S2 →+* S))
@@ -237,6 +242,7 @@ theorem P0D_monic {n : ℕ} (hN : N.IsHomogeneous n) (h1 : NtDZ N 1 = 1) :
   set v : Fin (D + 1) → ℚ := fun i => (X : ℚ[X]).coeff i
   have hu : MvPolynomial.eval u N = 1 := by
     rw [← h1, NtDZ, NtD, Polynomial.map_one, ← MvPolynomial.coe_aeval_eq_eval]
+    rfl
   have hcoord : ∀ i : Fin (D + 1), (C X - X : ℚ[X][X]).coeff i = C (u i) * X - C (v i) := by
     intro i
     simp only [u, v, coeff_sub, coeff_C, coeff_X, coeff_one]
@@ -555,6 +561,7 @@ theorem norm_multiset_sum_le_one {s : Multiset W} (h : ∀ x ∈ s, ‖x‖ ≤ 
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h a (Multiset.mem_cons_self a s))
       (ih fun x hx => h x (Multiset.mem_cons_of_mem hx)))
 
+omit [IsUltrametricDist W] in
 theorem norm_multiset_prod_le_one {s : Multiset W} (h : ∀ x ∈ s, ‖x‖ ≤ 1) : ‖s.prod‖ ≤ 1 := by
   induction s using Multiset.induction_on with
   | empty => simp
@@ -737,7 +744,7 @@ theorem NtD_eq_Rs {D n : ℕ} {N : MvPolynomial (Fin (D + 1)) ℚ} (hN : N.IsHom
       (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
     (hdeg1 : deg 1 = 1)
     (hmul : ∀ ψ χ : E, deg ψ ≠ 0 → deg χ ≠ 0 → deg (ψ * χ) = deg ψ * deg χ)
-    (W : Type*) [Field W] [IsAlgClosed W] [CharZero W] (F : W[X]) (hF : F.natDegree ≤ D) :
+    (W : Type) [Field W] [IsAlgClosed W] [CharZero W] (F : W[X]) (hF : F.natDegree ≤ D) :
     NtD N W F = Rs ((P0D N).map (algebraMap ℚ W)) F := by
   have hDN := deg_eq_NtDZ φ deg N hpoly
   have h1 : NtDZ N 1 = 1 := NtD_one hpoly hdeg1
@@ -882,3 +889,6 @@ theorem P0D_int {D n : ℕ} (hD1 : 1 ≤ D) {N : MvPolynomial (Fin (D + 1)) ℚ}
 end Main
 
 end ZInQ.Contrib.OneProof.CharPolyCharP
+
+#print axioms ZInQ.Contrib.OneProof.CharPolyCharP.charpoly_eq_P0D
+#print axioms ZInQ.Contrib.OneProof.CharPolyCharP.P0D_int
