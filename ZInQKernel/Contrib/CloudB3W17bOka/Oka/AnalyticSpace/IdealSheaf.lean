@@ -163,6 +163,7 @@ theorem isCoherent_cokernel_sectionsHom (h : Y.IsCoherentStructureSheaf) {I : Ty
   haveI : (SheafOfModules.unit Y.ringSheaf).IsCoherent := h
   SheafOfModules.IsCoherent.cokernel _
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The morphism `𝒪_Y ^ I ⟶ 𝒪_Y` is not an epimorphism if the `f i` all vanish at a common
 point** — that is, if their germs at some `y` all lie in the maximal ideal of `𝒪_{Y,y}`.
 
@@ -219,6 +220,7 @@ theorem not_isZero_cokernel_sectionsHom_of_germ_mem {I : Type u} [Finite I]
     ¬ IsZero (cokernel (Y.sectionsHom f)) := fun h ↦
   Y.not_epi_sectionsHom_of_germ_mem f y hf (Preadditive.epi_of_isZero_cokernel _ h)
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The quotient by the unit ideal is the zero sheaf.**
 
 This is the sharpness half of

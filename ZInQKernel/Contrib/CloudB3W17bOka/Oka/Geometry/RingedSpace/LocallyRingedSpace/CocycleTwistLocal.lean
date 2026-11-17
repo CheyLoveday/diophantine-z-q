@@ -31,7 +31,12 @@ universe u
 
 namespace AlgebraicGeometry.LocallyRingedSpace
 
-set_option hygiene false in
+/-- Use the actual evaluated module-sheaf scalar action on local sections. -/
+noncomputable local instance cloudB3W17bOka_localTwistSectionsModule
+    (Y : LocallyRingedSpace.{u}) (N : SheafOfModules.{u} Y.ringSheaf) (W : Opens Y) :
+    Module (Y.presheaf.obj (op W)) (N.val.obj (op W)) :=
+  (N.val.obj (op W)).isModule
+
 /- Sections of the structure sheaf of `Y` over `W`. -/
 
 
@@ -97,6 +102,8 @@ lemma modTwistComp_modTwistMulSection_app {W : Opens Y.toPresheafedSpace}
       ((TopCat.Presheaf.restrictOpen (h i) ((W ⊓ V i)) (by order))) • modTwistComp s i :=
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 @[reassoc]
 lemma modTwistMulSection_naturality {M : SheafOfModules.{u} Y.ringSheaf} (φ : N ⟶ M) :
     modTwistMap c φ ≫ modTwistMulSection M c d h hh =
@@ -149,6 +156,8 @@ end Over
 
 section Stalk
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **Vanishing of a stalk in terms of sections**: `P_y = 0` if and only if every section of `P`
 over an open `W ∋ y` inside a fixed neighbourhood `O` of `y` vanishes near `y`. -/
 lemma subsingleton_stalk_iff (P : SheafOfModules.{u} Y.ringSheaf) {y : Y}

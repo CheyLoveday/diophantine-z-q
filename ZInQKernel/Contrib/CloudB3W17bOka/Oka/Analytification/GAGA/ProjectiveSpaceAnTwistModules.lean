@@ -137,6 +137,7 @@ def mulXMod (m : ℤ) (l : Fin (n + 1)) : twistMod M m ⟶ twistMod M (m + 1) :=
   modTwistMulSection M (twistModCocycle n m) (twistModCocycle n 1) (fun k ↦ xDivAn n k l)
     (xDivAn_compat l) ≫ (modTwistFunctorCongr (twistModCocycle_add m 1).symm).hom.app M
 
+set_option backward.isDefEq.respectTransparency false in
 @[simp]
 lemma modTwistComp_mulXMod_app (m : ℤ) (l : Fin (n + 1)) {W : Opens _}
     (s : (twistMod M m).val.obj (op W)) (k : Fin (n + 1)) :
@@ -144,6 +145,7 @@ lemma modTwistComp_mulXMod_app (m : ℤ) (l : Fin (n + 1)) {W : Opens _}
       ((TopCat.Presheaf.restrictOpen (xDivAn n k l) ((W ⊓ stdOpenAn n k)) (by order))) • modTwistComp s k :=
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- In the chart `k`, multiplication by `X_l` is multiplication by `π^♯ (X_l / Xₖ)`. -/
 lemma modTwistSectionsEquiv_mulXMod (m : ℤ) (l k : Fin (n + 1)) {W : Opens _}
     (hW : W ≤ stdOpenAn n k) (s : (twistMod M m).val.obj (op W)) :

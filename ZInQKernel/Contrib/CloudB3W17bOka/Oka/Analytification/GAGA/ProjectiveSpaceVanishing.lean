@@ -210,6 +210,7 @@ theorem subsingleton_H_analytificationTildeAb {k : Type u} [Field k] {m : ℕ}
       exact TopCat.Sheaf.subsingleton_H_of_iso (analytificationTildeAbSelfIso e) _) M q
 
 include e in
+set_option backward.isDefEq.respectTransparency false in
 /-- **Acyclicity of `F^an` on `π⁻¹ U` for a coherent `F`**, when `U` is an affine open whose
 coordinate ring is a localisation of a polynomial ring over a field, given acyclicity of
 `𝒪_{X^an}` on `π⁻¹ U`. On `U ≅ Spec R`, `F|_U ≅ M^~` with `M = Γ(U, F)` finitely generated

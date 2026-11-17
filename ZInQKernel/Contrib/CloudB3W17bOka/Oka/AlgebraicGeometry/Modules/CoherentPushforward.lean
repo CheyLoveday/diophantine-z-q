@@ -35,6 +35,11 @@ noncomputable section
 
 namespace AlgebraicGeometry
 
+/-- Use the canonical module action on the evaluated scheme-module sections. -/
+noncomputable local instance cloudB3W17bOka_coherentPushforwardSectionsModule
+    (X : Scheme.{u}) (N : X.Modules) (W : X.Opens) : Module Γ(X, W) Γ(N, W) :=
+  (N.val.obj (op W)).isModule
+
 open LocallyRingedSpace Scheme.Modules
 
 namespace IsAffineOpen
@@ -76,6 +81,9 @@ end Scheme.Hom
 
 variable {Z P : Scheme.{u}} (i : Z ⟶ P) (F : SheafOfModules.{u} Z.toLocallyRingedSpace.ringSheaf)
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- Local generation of `i_* F` over an affine open `W₀` of `P` whose preimage carries finitely
 many generators of the sections of `F`. -/
 theorem pushforward_exists_generators [IsClosedImmersion i]
