@@ -102,3 +102,57 @@ theorem qcls_neg_one (q : ℕ) [hq : Fact q.Prime] : qcls q (-1) = (0, lsym (-1)
   exact hq.out.one_lt.ne' (Nat.dvd_one.mp this)
 
 end ZInQ.Manuscript.PoleRC
+
+namespace ZInQ.Manuscript.PoleRC
+
+theorem qcls_one (q : ℕ) [hq : Fact q.Prime] : qcls q 1 = 0 := by
+  have h := qcls_mul q (x := 1) (y := 1) (by simp)
+  rw [mul_one] at h
+  have : qcls q 1 + qcls q 1 = 0 := Prod.ext (zmod2_add_self _) (zmod2_add_self _)
+  rw [← h] at this
+  exact this
+
+/-- `qcls` of a product of distinct primes dividing a squarefree `N`. -/
+theorem qcls_prod (q : ℕ) [Fact q.Prime] (N : ℕ) (hN : Squarefree N) :
+    ∀ T ⊆ N.primeFactors, qcls q (∏ p ∈ T, (p : ℤ)) = ∑ p ∈ T, qcls q p := by
+  intro T
+  induction T using Finset.induction_on with
+  | empty => intro _; simp [qcls_one]
+  | insert p T hpT ih =>
+    intro hsub
+    rw [Finset.prod_insert hpT, Finset.sum_insert hpT]
+    have hsq : Squarefree ((p : ℤ) * ∏ p ∈ T, (p : ℤ)) := by
+      have hdvd : (∏ p ∈ insert p T, p) ∣ N := by
+        conv_rhs => rw [← Nat.prod_primeFactors_of_squarefree hN]
+        exact Finset.prod_dvd_prod_of_subset _ _ _ hsub
+      rw [Finset.prod_insert hpT] at hdvd
+      have : Squarefree (p * ∏ p ∈ T, p) := Squarefree.squarefree_of_dvd hdvd hN
+      have h' : ((p * ∏ p ∈ T, p : ℕ) : ℤ) = (p : ℤ) * ∏ p ∈ T, (p : ℤ) := by push_cast; rfl
+      rw [← h']
+      exact Int.squarefree_natCast.mpr this
+    rw [qcls_mul q hsq, ih (fun x hx => hsub (Finset.mem_insert_of_mem hx))]
+
+open Classical in
+/-- **`qcls` of a squarefree integer**: the class of its sign plus the classes of its primes. -/
+theorem qcls_eq_sum (q : ℕ) [Fact q.Prime] {x : ℤ} (hx : Squarefree x) :
+    qcls q x = (if x < 0 then qcls q (-1) else 0) + ∑ p ∈ x.natAbs.primeFactors, qcls q p := by
+  have hN : Squarefree x.natAbs := Int.squarefree_natAbs.mpr hx
+  have hprod : (x.natAbs : ℤ) = ∏ p ∈ x.natAbs.primeFactors, (p : ℤ) := by
+    conv_lhs => rw [← Nat.prod_primeFactors_of_squarefree hN]
+    push_cast; rfl
+  have habs := qcls_prod q x.natAbs hN _ (subset_refl _)
+  rw [← hprod] at habs
+  by_cases hneg : x < 0
+  · rw [if_pos hneg]
+    have hx' : x = -1 * (x.natAbs : ℤ) := by
+      rw [Int.natCast_natAbs, abs_of_neg hneg]; ring
+    have hsq : Squarefree (-1 * (x.natAbs : ℤ)) := by rw [← hx']; exact hx
+    conv_lhs => rw [hx']
+    rw [qcls_mul q hsq, habs]
+  · rw [if_neg hneg, zero_add]
+    have hx' : x = (x.natAbs : ℤ) := by
+      rw [Int.natCast_natAbs, abs_of_nonneg (not_lt.mp hneg)]
+    conv_lhs => rw [hx']
+    rw [habs]
+
+end ZInQ.Manuscript.PoleRC
