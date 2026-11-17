@@ -24,6 +24,9 @@ Shimura's Thm 5.4 with the print's own hypotheses and definitions:
   `K_p = ∏_{v∣p} K_v` and `𝔞_p` is the closure of `𝔞` in `K_p`.
 * **The element `s⁻¹u`** is the print's: `v` represents `s⁻¹u` when `v ≡ s_p⁻¹u (mod 𝔟_p)` for every prime `p`.
 
+Lean also proves that these local data pin down a single lattice and a single class: a lattice is determined by its
+`p`-components, and `s⁻¹u` is well defined (the local–global principle, §Q).
+
 **Theorems.**
 
 ```
@@ -121,9 +124,13 @@ Every difference from the print is a special case or a weakening of the conclusi
    It also restates the print's fact that `s⁻¹𝔞` is a lattice.
 5. **`s⁻¹𝔞` and `s⁻¹u` are the print's definitions through `p`-components**, in Shimura's §5 notation (UNVERIFIED,
    from memory). The leaf quantifies over every lattice `𝔟` with those components, and over every `v` that satisfies
-   the local congruences. Reading this as the print's single `s⁻¹𝔞` and single class `s⁻¹u` uses the local–global
-   principle for lattices of `K`: `𝔟 = {x ∈ K : x ∈ 𝔟_p for all p}`. This principle is part of the definition the
-   print uses (STANDARD). It is the one point in this list that is not proved in Lean here (section 5).
+   the local congruences. Lean proves that this is the print's single `s⁻¹𝔞` and single class `s⁻¹u`, through the
+   local–global principle for lattices of `K` (§Q, compiled):
+   * `lattice_eq_of_locLat_eq`: a lattice is determined by its `p`-components, so there is exactly one such `𝔟`;
+     `sInvLat s 𝔞` is one (`locLat_sInvLat`, `exists_periodPair_sInvLat`);
+   * `rep_sub_mem`: two `v`'s satisfying the local congruences differ by an element of `𝔟`, so `s⁻¹u ∈ K/𝔟` is well
+     defined;
+   * both rest on `mem_of_forall_locLat`: `x ∈ 𝔟_p` for every prime `p` implies `x ∈ 𝔟`.
 6. **The setting is the one hcm-dict and `ShimuraMainCM` already use, unchanged.** This covers `ArtinCond`, Tau Ceti's
    arithmetic-Frobenius normalization of the Artin map, the normalization of `e`, and `conjPt`.
 
@@ -197,6 +204,20 @@ satisfy `ξ(0) = O`. Then `ξ = ξ_{L₀}(α·)` with `IsScale L₀ L α`.
   `algebraMap_mem_integralAdeles_iff`. So `κ(sInvLat s 𝔞)` is a discrete, full-rank `ℤ`-submodule of `ℂ`. A basis from
   `ZLattice.rank` and `Basis.ofZLatticeBasis_span` gives the period pair.
 
+### §Q. The local–global principle (`mem_of_forall_locLat`)
+
+* **`mem_of_mem_latHat`.** `K ∩ 𝔟̂ = 𝔟` holds for every lattice. It follows from the tree's
+  `latHat_inter_of_sandwich`, because every lattice satisfies `n𝒪 ⊆ 𝔟` and `D𝔟 ⊆ 𝒪`.
+* **`mem_of_prime_mul_mem`, one prime at a time.** Suppose `p y ∈ 𝔟` and `y ∈ 𝔟_p`.
+  * The places above `p` are finite in number (`Ideal.finite_factors`). So there is `b ∈ 𝔟` with `n⁻¹(y − b)` integral
+    at every `v ∣ p`.
+  * Write `nD = p^j M` with `p ∤ M`, and take `t p + s M = 1`.
+  * Then `z = y − b − t(py − pb)` lies in `n𝒪̂`. At the places above `p` it equals `(1 − tp)(y − b)`. At the other
+    places it equals `s(D(py − pb))/p^{j+1}`.
+  * Hence `y ∈ K ∩ 𝔟̂ = 𝔟`.
+* **`mem_of_forall_locLat`.** Take the least `r` with `r x ∈ 𝔟`. If `r > 1`, the previous step at `p = minFac r` gives
+  `(r/p) x ∈ 𝔟`, which contradicts the minimality of `r`.
+
 ### §P. From the new leaf to the uses
 
 * **`shimuraMainCM_of_local`.** Apply the leaf with:
@@ -213,22 +234,16 @@ satisfy `ξ(0) = O`. Then `ξ = ξ_{L₀}(α·)` with `IsScale L₀ L α`.
 
 ## 5. Open points
 
-* **Local–global principle for lattices (item 5 of section 2).** The statement is:
-  `𝔟 = {x ∈ K : diagP p x ∈ 𝔟_p for every prime p}` for every lattice `𝔟`.
-  * It is not needed by any Lean proof here.
-  * It is needed only for the informal argument that the leaf's "every `𝔟` / every `v` with these local data" is
-    the print's single `s⁻¹𝔞` and single class `s⁻¹u`.
-  * Ingredients:
-    * `K ∩ 𝔟̂ = 𝔟` for general lattices. This follows from the tree's `latHat_inter_of_sandwich`, since every
-      lattice has `n𝒪 ⊆ 𝔟 ⊆ d⁻¹𝒪`.
-    * Local membership at every `p` gives `𝔟̂` membership, by a CRT argument with valuations at the places above
-      the primes dividing `nd`.
-
-  I did not formalize it (see the log for the status at the deadline).
 * **Theorem numbers** for Shimura Thm 5.4 and Lang Ch. 10 Thm 3 are UNVERIFIED. The new leaf enters as "unread" until
   someone compares it with the print. The facts that need checking: whether Shimura's "analytic isomorphism" includes
   the group law (the leaf covers both readings), and whether the `p`-component definitions of `s𝔞` and `su` appear as
   stated.
+* **Reading of "analytic isomorphism".** `IsAnalyticIso` says that `ξ` is a bijective holomorphic map with nowhere
+  vanishing differential, all in `ℙ²` coordinates. "Holomorphic with holomorphic inverse" is equivalent to this by the
+  holomorphic inverse function theorem (STANDARD). Lean cannot state the inverse directly: Mathlib has no
+  complex-manifold structure on `E(ℂ)` or on `ℙ²(ℂ)`. The conclusion asks only for "holomorphic and bijective", so
+  this reading matters only for the hypothesis. There, Lean proves the hypothesis for the map the consumers use, the
+  Weierstrass map (`toPoint_isAnalyticIso`).
 * **Integration.**
   * Move `HCMLattice.lean` to `ZInQKernel/Contrib/OneProof/HCMLattice.lean`.
   * In `Main.lean`, add `import ZInQKernel.Contrib.OneProof.HCMLattice`, change the binder to
@@ -237,8 +252,13 @@ satisfy `ξ(0) = O`. Then `ξ = ξ_{L₀}(α·)` with `IsScale L₀ L α`.
   * Proposed new kinds.tsv `hCM` row: `frozenTarget hCM published "hcm-lattice: printed Shimura 1971 Thm 5.4 with the
     print's hypotheses (IsAnalyticIso over P^2 coordinates) and s^-1 a by p-components; pending review" LEAF LEAF`.
 * **Deliverables** (in `scratch/hcm-lattice/`):
-  * `HCMLattice.lean`, the contribution (1.5k lines);
+  * `HCMLattice.lean`, the contribution;
   * `FoldCheck.lean` with `FoldCheck-output.txt`;
   * `MainFolded.lean` with `MainFolded-output.txt`;
   * `log.md`;
   * the development copies `Lattice.lean` and `Analytic.lean`.
+
+  `HCMLattice.lean` is about 1.8k lines. Its `#print axioms` lines cover `shimuraMainCM_of_local`,
+  `shimuraThm54_of_local`, `eq_toPoint_of_holo`, `locLat_sInvLat`, `toPoint_isAnalyticIso`,
+  `exists_periodPair_sInvLat`, `mem_of_forall_locLat`, `lattice_eq_of_locLat_eq` and `rep_sub_mem`. All of them give
+  `[propext, Classical.choice, Quot.sound]`.

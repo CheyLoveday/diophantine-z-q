@@ -22,6 +22,28 @@ import ZInQKernel.Contrib.OneProof.TYZLcalOne
 
 -- hcm-lattice: inlined scratch/hcm-lattice/HCMLattice.lean (in the fold: `import ZInQKernel.Contrib.OneProof.HCMLattice`)
 
+/-!
+# hcm-lattice: `hCM` as a direct instance of Shimura 1971 Thm 5.4
+
+Task hcm-lattice (2026-11-17). Report: `docs/research/hcm-lattice.md`; log: `scratch/hcm-lattice/log.md`.
+Proposed path: `ZInQKernel/Contrib/OneProof/HCMLattice.lean` (imports only `ShimuraMainCM`, not `Main`).
+
+hcm-dict's leaf `HCMDict.ShimuraThm54` differs from the print in two steps: its hypothesis on `ξ` is the surrogate
+`IsAnalyticUnif`, and its `s⁻¹𝔞` is `K ∩ s_f⁻¹𝔞̂` rather than Shimura's lattice with `p`-components `s_p⁻¹𝔞_p`. This file
+
+* §A–§B: defines analytic isomorphisms `ℂ/Λ → E(ℂ) ⊂ ℙ²(ℂ)` over homogeneous coordinates (`IsAnalyticIso`) and
+  proves that the Weierstrass map `z ↦ [℘(z) : ℘'(z)/2 : 1]` is one (`toPoint_isAnalyticIso`);
+* §C: proves the Weierstrass-map step: a holomorphic map `ℂ → E_{L₀}(ℂ)` inducing a bijection `ℂ/L → E_{L₀}(ℂ)` with
+  `0 ↦ O` is `z ↦ ξ_{L₀}(αz)`, `L₀ = αL` (`eq_toPoint_of_holo`; Liouville applied to `x'/(2y)`);
+* §L–§O: proves Shimura's localization form `(s⁻¹𝔞)_p = s_p⁻¹𝔞_p` of hcm-dict's `sInvLat` for every lattice `𝔞`
+  (`locLat_sInvLat`; `K_p = ∏_{v ∣ p} K_v`), and that `sInvLat s 𝔞` is a lattice (`exists_periodPair_sInvLat`);
+* §P: states `ShimuraThm54Local` (the print's hypotheses, the print's `s⁻¹𝔞` and `s⁻¹u`) and proves
+  `shimuraMainCM_of_local : ShimuraThm54Local → T5Glue.ShimuraMainCM` and
+  `shimuraThm54_of_local : ShimuraThm54Local → HCMDict.ShimuraThm54`.
+
+No `sorry`, no `axiom`; only `propext`, `Classical.choice`, `Quot.sound`.
+-/
+
 noncomputable section
 
 open Complex Topology Filter
@@ -1377,6 +1399,266 @@ theorem exists_periodPair_sInvLat (hsq : Squarefree m) (L : PeriodPair) {𝔞 : 
   rw [hr] at hspanZ
   show ((Submodule.span ℤ {((B 0 : Lb) : ℂ), ((B 1 : Lb) : ℂ)} : Submodule ℤ ℂ) : Set ℂ) = Lb
   rw [hspanZ]
+
+/-! ## §Q. The local–global principle for lattices: `𝔟 = {x ∈ K : x ∈ 𝔟_p for every prime p}` -/
+
+/-- Every element of `K` has a positive integer multiple in `𝒪_K`. -/
+theorem exists_nat_mul_mem_integers (x : QNeg m) :
+    ∃ D : ℕ, 0 < D ∧ (D : QNeg m) * x ∈ (algebraMap (𝓞 (QNeg m)) (QNeg m)).range := by
+  refine ⟨x.re.den * x.im.den, Nat.mul_pos x.re.den_pos x.im.den_pos, ?_⟩
+  refine ⟨((x.re.num * x.im.den : ℤ) : 𝓞 (QNeg m)) + ((x.im.num * x.re.den : ℤ) : 𝓞 (QNeg m)) * sqrtNeg m, ?_⟩
+  rw [map_add, map_mul, map_intCast, map_intCast]
+  have hs : algebraMap (𝓞 (QNeg m)) (QNeg m) (sqrtNeg m) = QuadraticAlgebra.omega := coe_sqrtNeg
+  rw [hs]
+  have e1 := Rat.mul_den_eq_num x.re
+  have e2 := Rat.mul_den_eq_num x.im
+  ext
+  · simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_mul, QuadraticAlgebra.re_intCast,
+      QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_omega, QuadraticAlgebra.im_omega,
+      QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast]
+    push_cast
+    linear_combination -(x.im.den : ℚ) * e1
+  · simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_mul, QuadraticAlgebra.re_intCast,
+      QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_omega, QuadraticAlgebra.im_omega,
+      QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast]
+    push_cast
+    linear_combination -(x.re.den : ℚ) * e2
+
+/-- A lattice is the `ℤ`-span of `κ⁻¹ω₁, κ⁻¹ω₂`, and `K ∩ 𝔟̂ = 𝔟` (from the tree's `latHat_inter_of_sandwich`). -/
+theorem mem_of_mem_latHat (hsq : Squarefree m) (L : PeriodPair) {𝔟 : Set (QNeg m)}
+    (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟) {x : QNeg m}
+    (hx : algebraMap (QNeg m) (AfK m) x ∈ latHat m 𝔟) : x ∈ 𝔟 := by
+  obtain ⟨a₁, -, ha₁⟩ : L.ω₁ ∈ kappa m '' 𝔟 := h𝔟 ▸ L.ω₁_mem_lattice
+  obtain ⟨a₂, -, ha₂⟩ : L.ω₂ ∈ kappa m '' 𝔟 := h𝔟 ▸ L.ω₂_mem_lattice
+  have hspan : 𝔟 = (Submodule.span ℤ {a₁, a₂} : Set (QNeg m)) := by
+    ext y
+    rw [mem_of_kappa L h𝔟, PeriodPair.mem_lattice, SetLike.mem_coe, Submodule.mem_span_pair]
+    constructor
+    · rintro ⟨p, q, hpq⟩
+      refine ⟨p, q, kappa_injective ?_⟩
+      rw [kappa_add, kappa_zsmul, kappa_zsmul, ha₁, ha₂, ← hpq, zsmul_eq_mul, zsmul_eq_mul]
+    · rintro ⟨p, q, hpq⟩
+      refine ⟨p, q, ?_⟩
+      rw [← hpq, kappa_add, kappa_zsmul, kappa_zsmul, ha₁, ha₂, zsmul_eq_mul, zsmul_eq_mul]
+  obtain ⟨n, hn, hn𝔟⟩ := exists_nat_mul_integers_mem hsq L h𝔟
+  obtain ⟨D₁, hD₁, hd₁⟩ := exists_nat_mul_mem_integers a₁
+  obtain ⟨D₂, hD₂, hd₂⟩ := exists_nat_mul_mem_integers a₂
+  have hda₁ : ((D₁ * D₂ : ℕ) : QNeg m) * a₁ ∈ Set.range (algebraMap (𝓞 (QNeg m)) (QNeg m)) := by
+    obtain ⟨r, hr⟩ := hd₁
+    exact ⟨(D₂ : 𝓞 (QNeg m)) * r, by rw [map_mul, hr, map_natCast]; push_cast; ring⟩
+  have hda₂ : ((D₁ * D₂ : ℕ) : QNeg m) * a₂ ∈ Set.range (algebraMap (𝓞 (QNeg m)) (QNeg m)) := by
+    obtain ⟨r, hr⟩ := hd₂
+    exact ⟨(D₁ : 𝓞 (QNeg m)) * r, by rw [map_mul, hr, map_natCast]; push_cast; ring⟩
+  have key := latHat_inter_of_sandwich a₁ a₂ n (D₁ * D₂) hn (Nat.mul_pos hD₁ hD₂)
+    (fun y => by have := hn𝔟 y; rw [hspan] at this; exact this) hda₁ hda₂
+  rw [hspan] at hx ⊢
+  have : x ∈ {x : QNeg m | algebraMap (QNeg m) (AfK m) x ∈
+      latHat m (Submodule.span ℤ {a₁, a₂} : Set (QNeg m))} := hx
+  rw [key] at this
+  exact this
+
+/-- Only finitely many places lie above a prime. -/
+theorem finite_placesAbove {p : ℕ} (hp : p.Prime) : Finite (PlacesAbove m p) := by
+  have hp0 : (p : 𝓞 (QNeg m)) ≠ 0 := by exact_mod_cast hp.ne_zero
+  have hI : Ideal.span {(p : 𝓞 (QNeg m))} ≠ 0 := by
+    rw [Ideal.zero_eq_bot, Ne, Ideal.span_singleton_eq_bot]; exact hp0
+  have hf := Ideal.finite_factors hI
+  have : {v : HeightOneSpectrum (𝓞 (QNeg m)) | (p : 𝓞 (QNeg m)) ∈ v.asIdeal} =
+      {v : HeightOneSpectrum (𝓞 (QNeg m)) | v.asIdeal ∣ Ideal.span {(p : 𝓞 (QNeg m))}} := by
+    ext v; simp only [Set.mem_ofPred_eq, Ideal.dvd_span_singleton]
+  rw [← this] at hf
+  exact hf.to_subtype
+
+theorem valuation_intCast_le_one (v : HeightOneSpectrum (𝓞 (QNeg m))) (k : ℤ) :
+    v.valuation (QNeg m) (k : QNeg m) ≤ 1 := by
+  have := v.valuation_le_one (K := QNeg m) (k : 𝓞 (QNeg m))
+  simpa using this
+
+theorem valuation_natCast_eq_one {v : HeightOneSpectrum (𝓞 (QNeg m))} {p : ℕ}
+    (hv : (p : 𝓞 (QNeg m)) ∉ v.asIdeal) : v.valuation (QNeg m) (p : QNeg m) = 1 := by
+  rw [show (p : QNeg m) = algebraMap (𝓞 (QNeg m)) (QNeg m) (p : 𝓞 (QNeg m)) by simp,
+    HeightOneSpectrum.valuation_of_algebraMap]
+  exact HeightOneSpectrum.intValuation_eq_one_iff.2 hv
+
+/-- **One prime at a time.** If `p y ∈ 𝔟` and `y ∈ 𝔟_p`, then `y ∈ 𝔟`. -/
+theorem mem_of_prime_mul_mem (hsq : Squarefree m) (L : PeriodPair) {𝔟 : Set (QNeg m)}
+    (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟) {p : ℕ} (hp : p.Prime) {y : QNeg m}
+    (hpy : (p : QNeg m) * y ∈ 𝔟) (hy : diagP p y ∈ locLat p 𝔟) : y ∈ 𝔟 := by
+  have hm := mem_of_kappa L h𝔟
+  have hM := eq_kappaComap L h𝔟
+  set M := kappaComap (m := m) L.lattice
+  set alg := algebraMap (QNeg m) (AfK m) with halg
+  have := finite_placesAbove (m := m) hp
+  obtain ⟨n, hn, hn𝔟⟩ := exists_nat_mul_integers_mem hsq L h𝔟
+  have hn0 : (n : QNeg m) ≠ 0 := by exact_mod_cast hn.ne'
+  -- `D 𝔟 ⊆ 𝒪`
+  obtain ⟨a₁, -, ha₁⟩ : L.ω₁ ∈ kappa m '' 𝔟 := h𝔟 ▸ L.ω₁_mem_lattice
+  obtain ⟨a₂, -, ha₂⟩ : L.ω₂ ∈ kappa m '' 𝔟 := h𝔟 ▸ L.ω₂_mem_lattice
+  obtain ⟨D₁, hD₁, r₁, hr₁⟩ := exists_nat_mul_mem_integers a₁
+  obtain ⟨D₂, hD₂, r₂, hr₂⟩ := exists_nat_mul_mem_integers a₂
+  set D : ℕ := D₁ * D₂
+  have hD : 0 < D := Nat.mul_pos hD₁ hD₂
+  have hD𝔟 : ∀ b ∈ 𝔟, ∀ v : HeightOneSpectrum (𝓞 (QNeg m)),
+      v.valuation (QNeg m) ((D : QNeg m) * b) ≤ 1 := by
+    intro b hb v
+    obtain ⟨p', q', hpq⟩ := PeriodPair.mem_lattice.1 ((hm b).1 hb)
+    have hb' : b = (p' : QNeg m) * a₁ + (q' : QNeg m) * a₂ := by
+      apply kappa_injective
+      rw [kappa_add, kappa_intCast_mul, kappa_intCast_mul, ha₁, ha₂, hpq]
+    have e : (D : QNeg m) * b = algebraMap (𝓞 (QNeg m)) (QNeg m)
+        (p' * (D₂ : 𝓞 (QNeg m)) * r₁ + q' * (D₁ : 𝓞 (QNeg m)) * r₂) := by
+      rw [hb']
+      simp only [map_add, map_mul, map_intCast, map_natCast, hr₁, hr₂, D]
+      push_cast; ring
+    rw [e]; exact v.valuation_le_one _
+  -- step (i): `b ∈ 𝔟` with `n⁻¹(b − y)` integral at the places above `p`
+  set W : Set (Kp m p) := ⋂ v : PlacesAbove m p,
+    (fun z : Kp m p => (alg ((n : QNeg m)⁻¹)) v.1 * (z v - diagP p y v)) ⁻¹'
+      {w : v.1.adicCompletion (QNeg m) | Valued.v w ≤ 1}
+  have hWo : IsOpen W := isOpen_iInter_of_finite fun v => by
+    refine IsOpen.preimage (continuous_const.mul ((continuous_apply v).sub continuous_const)) ?_
+    exact Valued.isOpen_integer (v.1.adicCompletion (QNeg m))
+  have hyW : diagP p y ∈ W := by
+    simp only [W, Set.mem_iInter, Set.mem_preimage, sub_self, mul_zero, Set.mem_ofPred_eq]
+    intro v; simp
+  obtain ⟨_, hbW, b, hb, rfl⟩ := mem_closure_iff.1 hy W hWo hyW
+  have hbv : ∀ v : PlacesAbove m p, v.1.valuation (QNeg m) ((n : QNeg m)⁻¹ * (b - y)) ≤ 1 := by
+    intro v
+    have h1 := Set.mem_iInter.1 hbW v
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq] at h1
+    rw [← val_algebraMap_apply]
+    convert h1 using 2
+    rw [map_mul, map_sub]; rfl
+  -- step (ii): one Bézout step removes the other primes
+  have hp0 : (p : QNeg m) ≠ 0 := by exact_mod_cast hp.ne_zero
+  have hnD0 : n * D ≠ 0 := Nat.mul_ne_zero hn.ne' hD.ne'
+  set j := (n * D).factorization p
+  set M' := ordCompl[p] (n * D)
+  have hnD : p ^ j * M' = n * D := Nat.ordProj_mul_ordCompl_eq_self (n * D) p
+  have hpM : ¬ p ∣ M' := Nat.not_dvd_ordCompl hp hnD0
+  obtain ⟨t, s', hts⟩ := Nat.isCoprime_iff_coprime.2 ((Nat.Prime.coprime_iff_not_dvd hp).2 hpM)
+  set c : QNeg m := (p : QNeg m) * y - (p : QNeg m) * b
+  have hpb : (p : QNeg m) * b ∈ 𝔟 := by
+    rw [hM] at hb ⊢
+    have := zsmul_mem hb (p : ℤ)
+    rwa [zsmul_eq_mul, Int.cast_natCast] at this
+  have hc : c ∈ 𝔟 := by
+    rw [hM] at hpy hpb ⊢; exact sub_mem hpy hpb
+  set z : QNeg m := y - b - (t : QNeg m) * c
+  have hts' : (t : QNeg m) * p + (s' : QNeg m) * M' = 1 := by exact_mod_cast hts
+  have hz : z = (s' : QNeg m) * M' * (y - b) := by
+    simp only [z, c]; linear_combination (-(y - b)) * hts'
+  have hzint : ∀ v : HeightOneSpectrum (𝓞 (QNeg m)),
+      v.valuation (QNeg m) ((n : QNeg m)⁻¹ * z) ≤ 1 := by
+    intro v
+    by_cases hv : (p : 𝓞 (QNeg m)) ∈ v.asIdeal
+    · have e : (n : QNeg m)⁻¹ * z = ((-(1 - t * p) : ℤ) : QNeg m) * ((n : QNeg m)⁻¹ * (b - y)) := by
+        simp only [z, c]; push_cast; ring
+      rw [e, Valuation.map_mul]
+      exact mul_le_one' (valuation_intCast_le_one v _) (hbv ⟨v, hv⟩)
+    · have hnD' : (p : QNeg m) ^ j * M' = (n : QNeg m) * D := by exact_mod_cast hnD
+      have e : (n : QNeg m)⁻¹ * z = (s' : QNeg m) * ((D : QNeg m) * c) * ((p : QNeg m) ^ (j + 1))⁻¹ := by
+        rw [hz]; simp only [c]
+        field_simp
+        linear_combination (s' : QNeg m) * (y - b) * (p : QNeg m) * hnD'
+      rw [e, Valuation.map_mul, Valuation.map_mul, map_inv₀, map_pow, valuation_natCast_eq_one hv,
+        one_pow, inv_one, mul_one]
+      exact mul_le_one' (valuation_intCast_le_one v s') (hD𝔟 c hc v)
+  have hzhat : alg z ∈ latHat m 𝔟 := by
+    have hint : alg ((n : QNeg m)⁻¹ * z) ∈ FiniteAdeleRing.integralAdeles (𝓞 (QNeg m)) (QNeg m) := by
+      rw [mem_intAdeles_iff]; intro v; rw [val_algebraMap_apply]; exact hzint v
+    have := natMul_integral_mem_latHat hn𝔟 hint
+    rwa [← map_mul, ← mul_assoc, mul_inv_cancel₀ hn0, one_mul] at this
+  have hyz : y = z + b + (t : QNeg m) * c := by simp only [z]; ring
+  apply mem_of_mem_latHat hsq L h𝔟
+  rw [hyz, map_add, map_add]
+  have htc : (t : QNeg m) * c ∈ 𝔟 := by
+    rw [hM] at hc ⊢
+    have := zsmul_mem hc t
+    rwa [zsmul_eq_mul] at this
+  rw [hM] at hb htc hzhat ⊢
+  exact latHat_add_mem M (latHat_add_mem M hzhat (mem_latHat_of_mem hb)) (mem_latHat_of_mem htc)
+
+/-- `𝔟_p` is closed under integer multiples. -/
+theorem zsmul_mem_locLat (L : PeriodPair) {𝔟 : Set (QNeg m)} (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟)
+    (p : ℕ) (k : ℤ) {z : Kp m p} (hz : z ∈ locLat p 𝔟) : k • z ∈ locLat p 𝔟 := by
+  have hM := eq_kappaComap L h𝔟
+  refine map_mem_closure (continuous_const_smul k) hz ?_
+  rintro _ ⟨x, hx, rfl⟩
+  refine ⟨k • x, ?_, ?_⟩
+  · rw [hM] at hx ⊢; exact zsmul_mem hx k
+  · show projP p (algebraMap (QNeg m) (AfK m) (k • x)) = k • projP p (algebraMap (QNeg m) (AfK m) x)
+    rw [map_zsmul]; rfl
+
+/-- `𝔟_p` is an additive subgroup: closed under subtraction. -/
+theorem sub_mem_locLat (L : PeriodPair) {𝔟 : Set (QNeg m)} (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟)
+    (p : ℕ) {z w : Kp m p} (hz : z ∈ locLat p 𝔟) (hw : w ∈ locLat p 𝔟) : z - w ∈ locLat p 𝔟 := by
+  have hM := eq_kappaComap L h𝔟
+  refine map_mem_closure₂ continuous_sub hz hw ?_
+  rintro _ ⟨x, hx, rfl⟩ _ ⟨y, hy, rfl⟩
+  refine ⟨x - y, ?_, ?_⟩
+  · rw [hM] at hx hy ⊢; exact sub_mem hx hy
+  · show projP p (algebraMap (QNeg m) (AfK m) (x - y)) = _
+    rw [map_sub]; rfl
+
+/-- **The local–global principle for lattices of `K`**: `x ∈ K` lies in the lattice `𝔟` as soon as `x ∈ 𝔟_p`
+for every prime `p`. -/
+theorem mem_of_forall_locLat (hsq : Squarefree m) (L : PeriodPair) {𝔟 : Set (QNeg m)}
+    (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟) {x : QNeg m}
+    (hx : ∀ p : ℕ, p.Prime → diagP p x ∈ locLat p 𝔟) : x ∈ 𝔟 := by
+  classical
+  have hex : ∃ r : ℕ, 0 < r ∧ ((r : ℤ) • x) ∈ 𝔟 := exists_nat_mul_mem L h𝔟 x
+  set r := Nat.find hex with hr
+  obtain ⟨hr0, hrx⟩ := Nat.find_spec hex
+  by_cases h1 : r = 1
+  · rw [← hr, h1] at hrx; simpa using hrx
+  · exfalso
+    have hr1 : 1 < r := by omega
+    set p := r.minFac
+    have hp : p.Prime := Nat.minFac_prime (by omega)
+    obtain ⟨r', hr'⟩ := Nat.minFac_dvd r
+    have hr'0 : 0 < r' := by
+      rcases Nat.eq_zero_or_pos r' with h | h
+      · rw [h, mul_zero] at hr'; omega
+      · exact h
+    have hr'lt : r' < r := by
+      rw [hr']; exact lt_mul_left hr'0 hp.one_lt
+    have hy : ((r' : ℤ) • x) ∈ 𝔟 := by
+      apply mem_of_prime_mul_mem hsq L h𝔟 hp
+      · have : (p : QNeg m) * ((r' : ℤ) • x) = (r : ℤ) • x := by
+          rw [hr', zsmul_eq_mul, zsmul_eq_mul]; push_cast; ring
+        rw [this]; exact hrx
+      · have := zsmul_mem_locLat L h𝔟 p (r' : ℤ) (hx p hp)
+        convert this using 1
+        show projP p (algebraMap (QNeg m) (AfK m) ((r' : ℤ) • x)) = _
+        rw [map_zsmul]; rfl
+    exact Nat.find_min hex hr'lt ⟨hr'0, hy⟩
+
+/-- **Lattices are determined by their `p`-components** (so `ShimuraThm54Local`'s `𝔟` is Shimura's `s⁻¹𝔞`). -/
+theorem lattice_eq_of_locLat_eq (hsq : Squarefree m) {L L' : PeriodPair} {𝔟 𝔟' : Set (QNeg m)}
+    (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟) (h𝔟' : (L'.lattice : Set ℂ) = kappa m '' 𝔟')
+    (h : ∀ p : ℕ, p.Prime → locLat p 𝔟 = locLat p 𝔟') : 𝔟 = 𝔟' := by
+  ext x
+  constructor
+  · intro hx
+    exact mem_of_forall_locLat hsq L' h𝔟' fun p hp => h p hp ▸ subset_closure ⟨x, hx, rfl⟩
+  · intro hx
+    exact mem_of_forall_locLat hsq L h𝔟 fun p hp => (h p hp).symm ▸ subset_closure ⟨x, hx, rfl⟩
+
+/-- **`s⁻¹u` is well defined**: two `v`'s satisfying the local congruences differ by an element of `𝔟`
+(so `K/𝔟 → ⊕_p K_p/𝔟_p` is injective). -/
+theorem rep_sub_mem (hsq : Squarefree m) {L : PeriodPair} {𝔟 : Set (QNeg m)}
+    (h𝔟 : (L.lattice : Set ℂ) = kappa m '' 𝔟) (c : (p : ℕ) → Kp m p) {u v v' : QNeg m}
+    (hv : ∀ p : ℕ, p.Prime → diagP p v - c p * diagP p u ∈ locLat p 𝔟)
+    (hv' : ∀ p : ℕ, p.Prime → diagP p v' - c p * diagP p u ∈ locLat p 𝔟) : v - v' ∈ 𝔟 := by
+  apply mem_of_forall_locLat hsq L h𝔟
+  intro p hp
+  have := sub_mem_locLat L h𝔟 p (hv p hp) (hv' p hp)
+  convert this using 1
+  show projP p (algebraMap (QNeg m) (AfK m) (v - v')) = _
+  rw [map_sub, projP_sub]
+  simp only [diagP]
+  ring
 
 end LatticeSec
 

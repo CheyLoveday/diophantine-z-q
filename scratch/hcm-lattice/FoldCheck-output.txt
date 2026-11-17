@@ -208,11 +208,11 @@ DISCHARGES [OpenResearchLeaves38.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 11229 theorems checked, 50 discharge one
+#discharges: 39 open hypotheses, 11253 theorems checked, 50 discharge one
 'ZInQ.Contrib.TYZChain.frozenTarget_hCMLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.TYZChain.frozenTarget_hCMLocal'' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.HCMLattice.shimuraMainCM_of_local' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.HCMLattice.shimuraThm54_of_local' depends on axioms: [propext, Classical.choice, Quot.sound]
-real	0m33.267s
-user	0m28.899s
-sys	0m4.028s
+real	1m12.176s
+user	0m34.620s
+sys	0m6.061s
