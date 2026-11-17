@@ -137,3 +137,12 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 16 (only frozenTarget
     changed, 10 new constants in TailZ55); OpenStatements 35; render_open --check ok (29 H, strictest 11/18, 6
     others); crosswalk --check ok; DischargesTest rerun; autoform check ok.
+18. eigenformCoeffFieldFinite (composite, GLUE) proved by coeff-rational (wip/coeff-rational e85590b8, taken over
+    coeff-field: same field, its diamond leaf replaced by the T_p leaf) from two printed-form leaves
+    gamma1IntegralSpan (Shimura 1971 Thm 3.52) and heckePrimeIntegralToRational (T_p part of the Hecke stability of
+    S_k(Gamma_1(N), Z)), both "unread: new printed leaf", locators UNVERIFIED: merged wip/coeff-rational, autofold
+    scratch/coeff-rational/autofold.json -> TailZ56, `sixContactMin_of_open49`; strict 11/18 on 29 -> 13/17 on 30
+    (GLUE -1, +1 hypothesis). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms;
+    check_target.py; only Main.lean changed among existing OneProof modules (TailZ56 new); OpenStatements 36;
+    render_open --check ok (30 H, strictest 13/17, 6 others); crosswalk --check ok; DischargesTest rerun; autoform
+    check ok. scratch FoldCheck.lean of coeff-rational and coeff-field renamed .lean.txt (they redeclare bundles).
