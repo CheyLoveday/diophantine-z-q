@@ -16,9 +16,9 @@ The Galois clause is proved to be exactly the naturality square of the coarse ma
 Elkies (1) step (b) is done: `ElkiesX6StarEveryIdeal` uses Elkies' isogeny-form `W`. On the coarse witness the two
 `W`'s coincide (`atkinLehnerW_eq_of_clause`, via `hom_ext_qbar`), and `elkiesX6StarEvery_of_ideal'` discharges
 `elkiesX6StarEvery`. Steps (a) and (c), and GR's transport step T1, are analysed but not proved
-(docs/research/x6-coarse.md §4). GR's T2 is covered by `x6CoarseModuli` plus the proved coarse comparison.
+(docs/research/x6-coarse.md §4). GR's T2 is covered by `x6CoarseModuli` plus proved glue (`gonzalezRotgerThm512X6_of_one`: GR's statement transports from one witness to every witness, given T5).
 
-**Compiles (VERIFIED).** The contribution builds; all 52 theorems use the standard axioms. `#discharges` shows
+**Compiles (VERIFIED).** The contribution builds; all 56 theorems use the standard axioms. `#discharges` shows
 `x6CoarseModuli` and `elkiesX6StarEvery` discharged. The autofold dry run (`scratch/x6-coarse/autofold.json`) gives
 16/18 → 16/18, since the new leaves are flagged GLUE until review; if `X6CoarseModuliIdeal` is rated printed, −1.
 The fold module `sixContactMin_of_open56` compiles with the standard axioms.

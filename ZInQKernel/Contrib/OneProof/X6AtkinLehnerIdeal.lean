@@ -29,7 +29,9 @@ This file
 7. proves that the Galois clause of `X6CoarseModuli` is exactly the naturality square of the coarse map at
    `Spec σ` (`galoisClause_iff_natural`, with the base change `bcAut` of a pair along `σ`);
 8. restates Elkies' leaf with Elkies' isogeny-form `W` (`ElkiesX6StarEveryIdeal`) and proves
-   `ElkiesPrint.ElkiesX6StarEvery` from it (`elkiesX6StarEvery_of_ideal'`).
+   `ElkiesPrint.ElkiesX6StarEvery` from it (`elkiesX6StarEvery_of_ideal'`);
+9. proves that González–Rotger's Thm 5.12 statement transports between witnesses (`gr512At_of_iso`,
+   `gonzalezRotgerThm512X6_of_one`): its every-witness form is its form on one (the canonical) witness, given T5.
 
 No `sorry`; standard axioms only.
 -/
@@ -807,5 +809,71 @@ theorem ideal_of_elkiesX6StarEvery (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvS
 
 end Elkies
 
+
+/-! ## 9. González–Rotger Thm 5.12 is the same statement on every witness (the transport step T2) -/
+
+section GR
+
+open HDec.QMSplit.Moduli
+
+/-- Residue fields of `ℚ̄`-points are unchanged by an isomorphism of schemes. -/
+theorem residueImage_comp_iso {X X' : Scheme.{0}} (h : X ⟶ X') [IsIso h]
+    (y : Spec (CommRingCat.of Qbar) ⟶ X) : residueImage (y ≫ h) = residueImage y := by
+  unfold residueImage
+  rw [specToEquivOfField_comp_right]
+  congr 1
+  ext t
+  constructor
+  · rintro ⟨s, rfl⟩
+    exact ⟨_, rfl⟩
+  · rintro ⟨s, rfl⟩
+    obtain ⟨s', rfl⟩ := (ConcreteCategory.bijective_of_isIso
+      (h.residueFieldMap (Scheme.SpecToEquivOfField Qbar X y).1)).2 s
+    exact ⟨s', rfl⟩
+
+/-- The conclusion of `GRDict.GonzalezRotgerThm512X6` at one coarse witness `(X, Ψ)`. -/
+def GR512At (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) : Prop :=
+  ∀ (k : Type) [Field k] [NumberField k] [NumberField.IsTotallyComplex k],
+    Module.finrank ℚ k = 2 →
+    ∀ R : Subring k, R ≤ (integralClosure ℤ k).toSubring → Nat.Coprime (conductor R) 6 →
+      ∀ x : fieldPt Qbar ⟶ X, GRDict.IsGRCMPoint Ψ R x →
+        Module.finrank ℚ (residueImage (X := X.left) x.left) =
+          (if inertCount6 k = 0 then 1 else 2) * Nat.card (CommRing.Pic R) ∧
+        (inertCount6 k ≠ 0 → Nonempty (k →ₐ[ℚ] residueImage (X := X.left) x.left))
+
+/-- **Transport along a `Ψ`-compatible isomorphism of coarse witnesses.** -/
+theorem gr512At_of_iso {X X₀ : Over (Spec (CommRingCat.of ℚ))}
+    {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {Ψ₀ : (fieldPt Qbar ⟶ X₀) ≃ Quotient (pairSetoid Qbar)}
+    (κ : X ≅ X₀) (hκ : ∀ x : fieldPt Qbar ⟶ X, Ψ₀ (x ≫ κ.hom) = Ψ x) (h : GR512At X₀ Ψ₀) : GR512At X Ψ := by
+  intro k _ _ _ hk R hR hc x hx
+  have hx0 : GRDict.IsGRCMPoint Ψ₀ R (x ≫ κ.hom) := by
+    obtain ⟨P, hP, rest⟩ := hx
+    exact ⟨P, (hκ x).trans hP, rest⟩
+  have e : residueImage (X := X.left) x.left = residueImage (X := X₀.left) (x ≫ κ.hom).left :=
+    (residueImage_comp_iso κ.hom.left x.left).symm
+  obtain ⟨hdeg, hemb⟩ := h k hk R hR hc _ hx0
+  refine ⟨(congrArg (fun F : IntermediateField ℚ Qbar => Module.finrank ℚ F) e).trans hdeg, fun hi => ?_⟩
+  obtain ⟨φ⟩ := hemb hi
+  exact ⟨((IntermediateField.equivOfEq e).symm.toAlgHom).comp φ⟩
+
+/-- **González–Rotger's statement on one witness gives it on every witness** (given T5): any two witnesses have
+`Ψ`-compatibly isomorphic coarse curves (`ElkiesPrint.compare_iso_ab`, `ElkiesPrint.coarse_compare_ab`), residue
+fields and González–Rotger's CM points correspond. So the every-witness form asserts nothing beyond the canonical
+model's. -/
+theorem gonzalezRotgerThm512X6_of_one (hT : ObjBridge.TorsionStructure) {Y₀ : Over (Spec (CommRingCat.of ℚ))}
+    {Φ₀ : PtEquiv Y₀} {X₀ : Over (Spec (CommRingCat.of ℚ))} {Ψ₀ : (fieldPt Qbar ⟶ X₀) ≃ Quotient (pairSetoid Qbar)}
+    {fY₀ : Y₀ ⟶ X₀} (h1 : LeafQM.AV.R1UnivRigid.R1fpPropsAb Y₀ Φ₀) (h6 : X6Props Y₀ Φ₀ X₀ Ψ₀ fY₀)
+    (h : GR512At X₀ Ψ₀) : GRDict.GonzalezRotgerThm512X6 := by
+  intro Y Φ X Ψ fY h1' h6'
+  obtain ⟨g, hg⟩ := ElkiesPrint.compare_iso_ab h1 h1'
+  obtain ⟨κ, hκ⟩ := ElkiesPrint.coarse_compare_ab hT h1' h6' (x6Props_transport g hg h6)
+  exact gr512At_of_iso κ hκ h
+
+theorem gr512At_of_thm512 (h : GRDict.GonzalezRotgerThm512X6) {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {X : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X}
+    (h1 : LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ) (h6 : X6Props Y Φ X Ψ fY) : GR512At X Ψ :=
+  h Y Φ X Ψ fY h1 h6
+
+end GR
 
 end X6ALIdeal

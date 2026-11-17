@@ -41,3 +41,6 @@
   removed; the converses (alIdeal_of_alTwist, x6CoarseModuliIdeal_of_twist, ideal_of_elkiesX6StarEvery,
   atkinLehnerW_eq) now take gagaMorphism and mumfordTorsionAlgClosed. Rebuilt; 52 theorems, all standard axioms;
   #discharges unchanged; autofold dry-run 16/18 -> 16/18; fold module compiles (standard axioms).
+- VERIFIED (compiled): §9 residueImage_comp_iso, GR512At, gr512At_of_iso, gonzalezRotgerThm512X6_of_one (GR's
+  Thm 5.12 statement on one witness => on every witness, given T5), gr512At_of_thm512. 56 theorems, standard
+  axioms; #discharges unchanged (11194 theorems checked); FoldDryRun.lean recompiled, standard axioms.

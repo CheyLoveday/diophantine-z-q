@@ -51,3 +51,7 @@ import ZInQKernel.Contrib.OneProof.X6AtkinLehnerIdeal
 #print axioms X6ALIdeal.elkiesX6StarEvery_of_ideal
 #print axioms X6ALIdeal.elkiesX6StarEvery_of_ideal'
 #print axioms X6ALIdeal.ideal_of_elkiesX6StarEvery
+#print axioms X6ALIdeal.residueImage_comp_iso
+#print axioms X6ALIdeal.gr512At_of_iso
+#print axioms X6ALIdeal.gonzalezRotgerThm512X6_of_one
+#print axioms X6ALIdeal.gr512At_of_thm512

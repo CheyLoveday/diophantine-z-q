@@ -30,6 +30,7 @@ existing fields** (all VERIFIED, compiled, standard axioms only). It adds no new
 | `atkinLehnerWIdeal_subset`, `atkinLehnerW_eq_of_clause` | Elkies' isogeny-form `W` ⊆ the twist-form `W`; equal on every witness carrying the printed clause | none (`hom_ext_qbar`: maps of proper smooth curves over `ℚ` agree if they agree on `ℚ̄`-points) |
 | `atkinLehnerW_eq` | the two `W`'s are equal on every witness | `gagaMorphism`, `mumfordTorsionAlgClosed` |
 | `galoisClause_iff_natural` | the Galois clause ⇔ the naturality square of the coarse map at `Spec σ` (Mumford GIT Def. 5.6); uses the base change `bcAut` of a QM pair along `σ` | none |
+| `gr512At_of_iso`, `gonzalezRotgerThm512X6_of_one` | GR Thm 5.12's conclusion transports between coarse witnesses (residue fields, CM points); one witness ⇒ every witness | T5 |
 | `elkiesX6StarEvery_of_ideal'` | `ElkiesX6StarEvery` from `ElkiesX6StarEveryIdeal` (Elkies with his isogeny-form `W`), `X6CoarseModuliIdeal`, `shimuraMainThmIDeligneY3AbU`, `mumfordTorsionAlgClosed` | — |
 | `ideal_of_elkiesX6StarEvery` | converse | `gagaMorphism`, `mumfordTorsionAlgClosed` |
 
@@ -170,7 +171,11 @@ witness, over `IsGRCMPoint`. The lead names two unprinted transport steps.
   3. residue fields and `IsGRCMPoint` are invariant under such an isomorphism (`IsGRCMPoint` depends on `Ψ x`
      only).
 
-  So T2 is covered by `x6CoarseModuli` together with proved glue. It is not an additional reading of GR.
+  Items 2 and 3 are now Lean proofs. `residueImage_comp_iso` and `gr512At_of_iso` transport GR's conclusion
+  (`GR512At X Ψ`) along a `Ψ`-compatible isomorphism. `gonzalezRotgerThm512X6_of_one` then gives: GR's statement
+  on one witness (with `R1fpPropsAb`, `X6Props`) implies `GRDict.GonzalezRotgerThm512X6` on every witness, given
+  T5. The converse is `gr512At_of_thm512`. VERIFIED, compiled. So T2 is covered by `x6CoarseModuli` together with
+  proved glue. It is not an additional reading of GR.
 * **Docstring correction** (`GRDict.lean` may not be edited). "`R` of conductor prime to `DN`" is not in GR (lead's
   reading: Thm 5.8 p. 16 for `ℚ(P)`, Def. 5.5 p. 14 for `CM(R)`, p. 15 for `D(R), N(R), N*(R)`, Thm 5.12
   pp. 18–19 of arXiv v2). The Lean hypothesis `Nat.Coprime (conductor R) 6` only weakens the leaf, so the
@@ -221,7 +226,7 @@ DISCHARGES [OpenResearchLeaves38.x6CoarseModuli] by X6ALIdeal.x6CoarseModuli_of_
 ```
 
 (`elkiesX6StarEvery_of_ideal`, the same with `ObjBridge.TorsionStructure` instead of `mumfordTorsionAlgClosed`, is
-also listed; the run reports `11185 theorems checked`.) `#print axioms` on every theorem of the file (52) gives the
+also listed; the run reports `11185 theorems checked`.) `#print axioms` on every theorem of the file gives the
 standard three
 (`scratch/x6-coarse/axioms.txt`).
 
