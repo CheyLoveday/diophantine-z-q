@@ -301,3 +301,19 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     frozenTarget standard axioms; check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements
     39; DischargesTest rerun, no error; render_open --check ok (34 H, strictest 11/23, 5 others); crosswalk --check ok;
     autoform check ok.
+34. Reviewer verdicts queue11/queue12 and the sga7_IX_3_5 ruling (inbox 18, 19): afCharpolyDS965, afShimura,
+    heckeJ1DS, y3FineModuliAbP, deligneCanonicalModelY3EveryH, sga7_IX_Cor3_3, sga7_IX_3_5_ForwardGeom, hGZ, h33a
+    kind consequence GLUE/GLUE; TYZThm33Alg.lean docstring constant 8. Check of every row folded since c0f3d085: none
+    scores LEAF without a reviewer's LEAF rating. H strictest 11/23 -> 10/24 on 34.
+35. h21c-steps (inbox 20), manual Main fold: h21C -> h21S (ZInQ.Contrib.H21CSteps.TYZThm21Span, Thm 2.1 with pi^U
+    through Thm 2.4(1) as span of the six f_delta; injectivity and the 8-sum equivalence proved), via
+    H21CSteps.tyzThm21PairsC_of_span; kind consequence, pending review. r3-residual (inbox 23, wip/r3-residual
+    73ac1620, build logs left out, scratch R3*.lean renamed .lean.txt): autofold scratch/leaf-fold33/autofold-r3.json
+    -> TailZ68, `sixContactMin_of_open61`: bostLowerBoundPrinted := R3Residual.bostLowerBoundPrinted_of_an from
+    bostLowerBoundAn, gaudronRemondThm14Printed := R3Residual.gaudronRemondThm14Printed_of_an from
+    gaudronRemondThm14An (R3 "uniformization clauses imply biholomorphic" proved), mumfordTorsionAlgClosed by PR #54's
+    proof; both new leaves kind consequence, pending review. Its third retype (javanpeykarPrintedMapHF ->
+    javanpeykarAnMin) not applied: that field was already replaced by javanpeykar-direct's javanpeykarThm111 (step 33).
+    Count unchanged: 39 open; H strictest 10/24 on 34; others h21S, hCM, h33a, hGZ GLUE, hBFH LEAF. Checks (VERIFIED):
+    build +Main +Discharges (16077 jobs); frozenTarget standard axioms; check_target.py; OpenStatements 39;
+    DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
