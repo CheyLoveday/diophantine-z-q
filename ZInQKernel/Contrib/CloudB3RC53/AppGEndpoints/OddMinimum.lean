@@ -184,31 +184,18 @@ theorem neg_le_of_visible {M : ℕ} {ω : ℕ} {Cc : ℚ} {n : ℤ}
   · rw [h'] at h; linarith
   · rw [h'] at h; linarith
 
-theorem oddMinimumF6_proof : OddMinimumF6 := by
+/-- **(F.6) at the attained minimum** (tex L10194–10207, L2543–2546; PROVED). If `δ` is the least
+element of `DepthSet` and (F.5) holds at every stage, then for every weight bound `W`, on a set of
+stages in the ultrafilter, every visible admissible `D` with `ω(D) ≤ W` has
+`v₂a_M(D) ≥ ω(D) + δ`. -/
+theorem f6_of_isLeast {U : Ultrafilter ℕ} {M : ℕ → ℕ} {v : ℕ → ℤ → WithTop ℤ}
+    {adm : ℕ → ℤ → Prop} {Cc : ℚ} {δ : ℤ}
+    (hF5 : ∀ θ D, adm θ D → QLe (min (M θ : ℚ) (omega D - Cc)) (v θ D))
+    (hδ : IsLeast (DepthSet U M v adm) δ) (W : ℕ) :
+    ∀ᶠ θ in (U : Filter ℕ), ∀ D, adm θ D → omega D ≤ W → v θ D < M θ →
+      (((omega D : ℤ) + δ : ℤ) : WithTop ℤ) ≤ v θ D := by
   classical
-  intro U M v adm Cc hF5 hw
-  -- bounded below by `⌈−C_coarse⌉`
-  have hbdd : ∃ b : ℤ, ∀ r, r ∈ DepthSet U M v adm → b ≤ r := by
-    refine ⟨⌈-Cc⌉, fun r hr => ?_⟩
-    obtain ⟨W, Ds, hev⟩ := hr
-    obtain ⟨θ, hadm, -, hvis, heq⟩ := hev.exists
-    rw [heq] at hvis
-    have hlt : (omega (Ds θ) : ℤ) + r < M θ := by exact_mod_cast hvis
-    have hq := hF5 θ (Ds θ) hadm
-    rw [heq] at hq
-    have h := neg_le_of_visible hq hlt
-    have h' : -Cc ≤ (r : ℚ) := by push_cast at h; linarith
-    exact Int.ceil_le.mpr h'
-  -- nonempty by the witness
-  have hne : ∃ r, r ∈ DepthSet U M v adm := by
-    obtain ⟨Dw, c, hev⟩ := hw
-    refine ⟨c - omega Dw, omega Dw, fun _ => Dw, hev.mono fun θ ⟨ha, hv, hlt⟩ => ?_⟩
-    refine ⟨ha, le_rfl, hv ▸ hlt, ?_⟩
-    rw [hv]
-    congr 1
-    ring
-  obtain ⟨δ, hδ, hmin⟩ := Int.exists_least_of_bdd hbdd hne
-  refine ⟨δ, ⟨hδ, fun r hr => hmin r hr⟩, fun W => ?_⟩
+  have hmin : ∀ r, r ∈ DepthSet U M v adm → δ ≤ r := fun r hr => hδ.2 hr
   by_contra hbad
   have hbad' : ∀ᶠ θ in (U : Filter ℕ), ∃ D, adm θ D ∧ omega D ≤ W ∧ v θ D < M θ ∧
       ¬ (((omega D : ℤ) + δ : ℤ) : WithTop ℤ) ≤ v θ D := by
@@ -247,6 +234,32 @@ theorem oddMinimumF6_proof : OddMinimumF6 := by
   obtain ⟨r, hrI, hr⟩ := (Ultrafilter.finite_biUnion_mem_iff hI).mp hcover
   have hrD : r ∈ DepthSet U M v adm := ⟨W, Ds, hr⟩
   exact absurd (hmin r hrD) (not_le.mpr hrI.2)
+
+theorem oddMinimumF6_proof : OddMinimumF6 := by
+  classical
+  intro U M v adm Cc hF5 hw
+  -- bounded below by `⌈−C_coarse⌉`
+  have hbdd : ∃ b : ℤ, ∀ r, r ∈ DepthSet U M v adm → b ≤ r := by
+    refine ⟨⌈-Cc⌉, fun r hr => ?_⟩
+    obtain ⟨W, Ds, hev⟩ := hr
+    obtain ⟨θ, hadm, -, hvis, heq⟩ := hev.exists
+    rw [heq] at hvis
+    have hlt : (omega (Ds θ) : ℤ) + r < M θ := by exact_mod_cast hvis
+    have hq := hF5 θ (Ds θ) hadm
+    rw [heq] at hq
+    have h := neg_le_of_visible hq hlt
+    have h' : -Cc ≤ (r : ℚ) := by push_cast at h; linarith
+    exact Int.ceil_le.mpr h'
+  -- nonempty by the witness
+  have hne : ∃ r, r ∈ DepthSet U M v adm := by
+    obtain ⟨Dw, c, hev⟩ := hw
+    refine ⟨c - omega Dw, omega Dw, fun _ => Dw, hev.mono fun θ ⟨ha, hv, hlt⟩ => ?_⟩
+    refine ⟨ha, le_rfl, hv ▸ hlt, ?_⟩
+    rw [hv]
+    congr 1
+    ring
+  obtain ⟨δ, hδ, hmin⟩ := Int.exists_least_of_bdd hbdd hne
+  exact ⟨δ, ⟨hδ, fun r hr => hmin r hr⟩, fun W => f6_of_isLeast hF5 ⟨hδ, fun r hr => hmin r hr⟩ W⟩
 
 /-- **Invisible coefficients** (tex L10208–10209; PROVED). "Invisible coefficients satisfy the
 required truncated inequality once `M > W + δ_o`." With the stage precision tending to infinity
