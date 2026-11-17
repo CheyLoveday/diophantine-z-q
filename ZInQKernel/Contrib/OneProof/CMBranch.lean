@@ -21,13 +21,11 @@ The case split (`glueOutputs_of_branches`) is then a Lean proof: `GlueOutputs` f
 branch restricted to fibres without CM (`NonCMBranch`) and the CM branch (`CMBranchOut`).
 -/
 
-open Real
-
 namespace HDec
 namespace CMBranch
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
-open _root_.ZInQ ZInQ ZInQ.JHeight LeafQM.AV ZInQ.DefFaltings
+open _root_.ZInQ ZInQ ZInQ.JHeight HDec.LeafQM.AV HDec.ZInQ.DefFaltings
 open HSyn HSyn.G0Split
 open _root_.CMBranch
 
@@ -42,7 +40,7 @@ def IsImagQuadOrder (k : Type) [Field k] [NumberField k] (R : Subring k) : Prop 
 /-- The discriminant of the order `R`: `Δ_R = f² d_k`, `f = [𝓞_k : R]` (STANDARD: the order of
 conductor `f` in a quadratic field has discriminant `f² d_k`; Cox, *Primes of the form x²+ny²*,
 Lemma 7.2, UNVERIFIED number). -/
-def orderDisc {k : Type} [Field k] [NumberField k] (R : Subring k) : ℤ :=
+noncomputable def orderDisc {k : Type} [Field k] [NumberField k] (R : Subring k) : ℤ :=
   (LeafQM.AV.conductor R : ℤ) ^ 2 * NumberField.discr k
 
 /-! ## 2. The printed leaves -/
@@ -154,8 +152,12 @@ def CMFibreSplit : Prop :=
 
 /-! ## 4. `h_F(E) ≤ B_cm` (manuscript L586-612) -/
 
-theorem cast_heightBcm : (heightBcm : ℝ) = (heightD : ℝ) ^ 2 * 3 ^ (21000 * heightD ^ 2) + 1 := by
-  unfold heightBcm; push_cast; ring
+theorem cast_bcm {B D : ℕ} (h : B = D ^ 2 * 3 ^ (21000 * D ^ 2) + 1) :
+    (B : ℝ) = (D : ℝ) ^ 2 * 3 ^ (21000 * D ^ 2) + 1 := by
+  rw [h]; push_cast; ring
+
+theorem cast_heightBcm : (heightBcm : ℝ) = (heightD : ℝ) ^ 2 * 3 ^ (21000 * heightD ^ 2) + 1 :=
+  cast_bcm _root_.ZInQ.Compiler.Precision.heightBcm_eq
 
 theorem one_le_heightD_nat : 1 ≤ heightD := by
   have := ZInQ.Compiler.Precision.ten_pow_twelve_le_heightD
@@ -181,20 +183,20 @@ theorem faltingsHeight_le_bcm (hfin : StableHeightFinite) (hF : FowlerProp27) (h
   have h3 : (0 : ℝ) < Real.sqrt 3 / 2 := by positivity
   have hpos : ∀ σ, 0 < (τ σ).im := fun σ => lt_of_lt_of_le h3 (hτ σ).2.1
   have hle := h62 L L₁ E hE1 𝒢 h𝒢 τ (fun σ => ⟨hpos σ, (hτ σ).1⟩)
-  have hterm : ∀ σ, summand62 (τ σ) ≤ π * s / 12 + 1 := by
+  have hterm : ∀ σ, summand62 (τ σ) ≤ Real.pi * s / 12 + 1 := by
     intro σ
     rw [summand62_eq_archSummand (hpos σ)]
     have h1 := archSummand_le (hτ σ).2.1
-    have h2 : π * (τ σ).im / 6 ≤ π * (s / 2) / 6 := by
+    have h2 : Real.pi * (τ σ).im / 6 ≤ Real.pi * (s / 2) / 6 := by
       have := mul_le_mul_of_nonneg_left (hτ σ).2.2 Real.pi_pos.le; linarith
     linarith
   have hn : (0 : ℝ) < Module.finrank ℚ L₁ := by exact_mod_cast Module.finrank_pos
   have hcard : (Finset.univ : Finset (L₁ →+* ℂ)).card = Module.finrank ℚ L₁ := by
     rw [Finset.card_univ]; exact NumberField.Embeddings.card L₁ ℂ
-  have havg : (∑ σ, summand62 (τ σ)) / Module.finrank ℚ L₁ ≤ π * s / 12 + 1 := by
+  have havg : (∑ σ, summand62 (τ σ)) / Module.finrank ℚ L₁ ≤ Real.pi * s / 12 + 1 := by
     rw [div_le_iff₀ hn]
-    calc ∑ σ, summand62 (τ σ) ≤ ∑ _σ : L₁ →+* ℂ, (π * s / 12 + 1) := Finset.sum_le_sum fun σ _ => hterm σ
-      _ = (π * s / 12 + 1) * Module.finrank ℚ L₁ := by
+    calc ∑ σ, summand62 (τ σ) ≤ ∑ _σ : L₁ →+* ℂ, (Real.pi * s / 12 + 1) := Finset.sum_le_sum fun σ _ => hterm σ
+      _ = (Real.pi * s / 12 + 1) * Module.finrank ℚ L₁ := by
           rw [Finset.sum_const, hcard, nsmul_eq_mul]; ring
   have hfow : s ≤ 2 * (heightD : ℝ) ^ 2 * Real.exp (21000 * (heightD : ℝ) ^ 2) :=
     hF k R hR heightD one_le_heightD_nat ((hJ L E hE1 k R hR hCM).trans hd)
@@ -221,7 +223,7 @@ theorem cmOutput_of (hfin : StableHeightFinite) (hAddU : HeightAdditivityUpper)
     (hE : faltingsHeight E ≤ (heightBcm : ℝ)) (hPr2 : Pr.dim = (2 : ℕ))
     (hprod : IsProductOf Pr.X E.X E.X) (hiso : ∃ φ : Pr.X ⟶ A.X, IsIsogeny φ) :
     GlueAssembly.CMOutput (faltingsHeight A) := by
-  set d : ℝ := Module.finrank ℚ L with hddef
+  set d : ℝ := (Module.finrank ℚ L : ℝ) with hddef
   set e := faltingsHeight E
   set x := faltingsHeight Pr
   set a := faltingsHeight A
@@ -261,15 +263,16 @@ theorem cmOutput_of (hfin : StableHeightFinite) (hAddU : HeightAdditivityUpper)
           push_cast; ring
       _ ≤ 8192 * (256 * Real.log 28 + Real.log d + 2 * Real.log M) := by
           have := Real.log_le_log (by linarith) hm
-          nlinarith
+          linarith
   · linarith
 
 /-- **`h_F(A) ≤ C_cm` for the CM fibre**, the manuscript's conclusion (L622-625), from `CMOutput` by
 glue-assembly's proved `cm_branch_nat`. -/
 theorem le_heightCcm_of_cmOutput {hA : ℝ} (h : GlueAssembly.CMOutput hA) : hA ≤ heightCcm := by
   obtain ⟨d, hE, L, hd1, hd, hEB, hL, hvar⟩ := h
-  exact GlueAssembly.cm_branch_nat (D := heightD) (B := heightBcm) (C := heightCcm) rfl rfl
-    one_le_heightD_nat hd1 hd hEB hL hvar
+  have hcm := GlueAssembly.cm_branch_nat _root_.ZInQ.Compiler.Precision.heightBcm_eq
+    _root_.ZInQ.Compiler.Precision.heightCcm_eq one_le_heightD_nat hd1 hd hEB hL hvar
+  exact hcm
 
 /-! ## 6. The CM branch on the fibre, and the case split -/
 
