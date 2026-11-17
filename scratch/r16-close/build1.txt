@@ -57349,3 +57349,525 @@ warning: ZInQKernel/RouteK/Rank5b/Sec3/Genus.lean:298:17: `if_pos` has been depr
 
 Hint: Replace the deprecated name:
   i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [13995/14233] Built ZInQKernel.RouteK.Rank5b.Sec3.Thm36 (9.5s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:64:24: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:65:38: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:158:33: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:158:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:164:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:164:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:175:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:191:63: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:200:64: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:201:66: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:221:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:222:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:226:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:226:22: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:227:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:231:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:231:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:232:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:253:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:258:63: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:260:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:158:15: This simp argument is unused:
+  eq_self_iff_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [if_true, if_neg hne, hP7, hP3, Finset.card_singleton, Finset.sum_singleton, Finset.prod_singleton]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:291:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:310:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:340:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:340:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:342:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:342:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:355:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Thm36.lean:356:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [13996/14233] Built ZInQKernel.Compiler.NodeBound.Top (10s)
+✔ [13997/14233] Built ZInQKernel.Compiler.Translation.Rational (35s)
+✔ [13998/14233] Built ZInQKernel.Syntax.Recipes.Accounting (43s)
+✔ [13999/14233] Built ZInQKernel.RouteK.Rank5b.Sec3.TYZ (41s)
+✔ [14000/14233] Built ZInQKernel.Syntax.Recipes.Polynomial (11s)
+⚠ [14001/14233] Built ZInQKernel.Assembly.Values.Outer (11s)
+warning: ZInQKernel/Assembly/Values/Outer.lean:220:162: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ (List.ofFn K ++ [t])).length = (closeRecipe w).parameterCount by simp; rfl),
+    ofFn_eleven (show (closeRecipe w).parameterCount = 11 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:221:4: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ (List.ofFn K ++ [t])).length = (closeRecipe w).parameterCount by simp; rfl),
+    ofFn_eleven (show (closeRecipe w).parameterCount = 11 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:274:51: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (mainRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (mainRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:274:66: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (mainRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (mainRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:322:51: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueUnionRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueUnionRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:322:66: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueUnionRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueUnionRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:358:51: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Assembly/Values/Outer.lean:358:66: This simp argument is unused:
+  List.map_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [forall_fin_getD_iff _ _
+        (show (List.ofFn N ++ [t]).length = (valueRecipe w).parameterCount by simp; rfl),
+    ofFn_six (show (valueRecipe w).parameterCount = 6 from rfl), ofFn_append_eq_iff, List.cons.injEq, and_true,
+    List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [14002/14233] Built ZInQKernel.RouteK.Rank5b.Sec3.Props (42s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:110:20: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:168:15: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:180:43: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:240:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:240:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:241:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:241:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:259:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:261:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:261:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:262:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:262:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:263:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:263:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:306:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:306:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:307:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:307:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:310:39: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:331:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:331:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:332:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:332:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:335:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Props.lean:352:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [14003/14233] Built ZInQKernel.Contrib.OneProof.PhiAmpleIsogenyOpen (126s)
+✔ [14004/14233] Built ZInQKernel.Compiler.NodeBound.Check (63s)
+✔ [14005/14233] Built ZInQKernel.Assembly.Values (27s)
+✔ [14006/14233] Built ZInQKernel.Compiler.NodeBound (6.2s)
+✔ [14007/14233] Built ZInQKernel.Multiplication.Certificate.Spec (28s)
+⚠ [14008/14233] Built ZInQKernel.RouteK.Rank5b.Sec3.Check (28s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Check.lean:35:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [14009/14233] Built ZInQKernel.Syntax.Recipes.Literal (28s)
+✔ [14010/14233] Built ZInQKernel.RouteK.Rank5b.Sec3.RedeiStatement (28s)
+⚠ [14011/14233] Built ZInQKernel.RouteK.Rank5b.Sec3.Prop34 (28s)
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:40:26: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:41:16: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:47:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:57:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:62:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:98:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:98:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:105:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:105:59: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:106:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:106:59: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:109:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:109:19: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:146:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:146:54: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:151:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:151:55: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:168:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:196:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:197:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:220:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:221:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/RouteK/Rank5b/Sec3/Prop34.lean:221:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [14012/14233] Built ZInQKernel.Multiplication.Certificate (4.3s)
+✔ [14013/14233] Built ZInQKernel.Syntax.Recipes (4.3s)
+✔ [14014/14233] Built ZInQKernel.RouteK.Rank.Statements (4.5s)
+✔ [14015/14233] Built ZInQKernel.Assembly.Close.Relation (5.4s)
+✔ [14016/14233] Built ZInQKernel.RouteK.Redei.Field (6.2s)
+✔ [14017/14233] Built ZInQKernel.RouteK.Rank (4.4s)
+⚠ [14018/14233] Built ZInQKernel.Hypotheses.CR3Literature (4.9s)
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.AlgebraicGeometry.EllipticCurve.LFunction` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.Analysis.Analytic.Order` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.Analysis.Analytic.Uniqueness` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Hypotheses/CR3Literature.lean: imports `Mathlib.Analysis.Complex.CauchyIntegral` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [14019/14233] Built ZInQKernel.Assembly.Top.Spec (4.3s)
+✔ [14020/14233] Built ZInQKernel.Size.Majorants.RecipeHeights (5.5s)
+⚠ [14021/14233] Built ZInQKernel.Assembly.Close.Soundness (4.8s)
+warning: ZInQKernel/Assembly/Close/Soundness.lean: imports `Mathlib.Analysis.Complex.ExponentialBounds` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [14022/14233] Built ZInQKernel.Multiplication.Soundness.CommonGroup (6.2s)
+✔ [14023/14233] Built ZInQKernel.Assembly.Close.Completeness (6.3s)
+⚠ [14024/14233] Built ZInQKernel.Hypotheses.TYZInputs (4.6s)
+warning: ZInQKernel/Hypotheses/TYZInputs.lean: imports `Mathlib.NumberTheory.Zsqrtd.GaussianInt` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [14025/14233] Built ZInQKernel.Size.Majorants.Cutoff (4.5s)
+✔ [14026/14233] Built ZInQKernel.Multiplication.Soundness.TestsToCongruence (5.8s)
+✔ [14027/14233] Built ZInQKernel.RouteK.Redei.Primes (7.3s)
+✔ [14028/14233] Built ZInQKernel.Assembly.Close (4.4s)
+✔ [14029/14233] Built ZInQKernel.Size.Majorants.Bound (4.6s)
+✔ [14030/14233] Built ZInQKernel.Multiplication.Soundness.LocalCongruence (4.4s)
+✔ [14031/14233] Built ZInQKernel.RouteK.Redei.Entry (4.2s)
+⚠ [14032/14233] Built ZInQKernel.Contrib.HeckeFE.Basic (11s)
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.NumberTheory.LSeries.HurwitzZetaEven` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.NumberTheory.LSeries.HurwitzZetaOdd` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.NumberTheory.LSeries.MellinEqDirichlet` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean: imports `Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean:2552:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.HeckeFE.norm_piZ`:
+  hp
+  hp1
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hp hp1 in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/HeckeFE/Basic.lean:2555:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.HeckeFE.norm_conj_piZ`:
+  hp
+  hp1
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hp hp1 in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [14033/14233] Built ZInQKernel.Multiplication.Completeness.PoleValuationsAux (4.8s)
+⚠ [14034/14233] Built ZInQKernel.Contrib.OneProof.WeilPairingMumfordOpen (49s)
+warning: ZInQKernel/Contrib/OneProof/WeilPairingMumfordOpen.lean:244:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [14035/14233] Built ZInQKernel.RouteK.Redei.Ambiguous (6.5s)
+✔ [14036/14233] Built ZInQKernel.Multiplication.Soundness.ContactSupport (4.7s)
+⚠ [14037/14233] Built ZInQKernel.RouteK.PropN (11s)
+warning: ZInQKernel/RouteK/PropN.lean: imports `Mathlib.NumberTheory.Zsqrtd.GaussianInt` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/RouteK/PropN.lean:1097:59: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [14038/14233] Built ZInQKernel.RouteK.Redei.Bridge (5.1s)
+✔ [14039/14233] Built ZInQKernel.Multiplication.Completeness.TestsLocal (5.1s)
+✔ [14040/14233] Built ZInQKernel.RouteK.Redei.Genus (6.1s)
+⚠ [14041/14233] Built ZInQKernel.Contrib.GZTheta.HeckeComb (5.1s)
+warning: ZInQKernel/Contrib/GZTheta/HeckeComb.lean:164:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/HeckeComb.lean:169:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [14042/14233] Built ZInQKernel.Multiplication.Completeness.TwoSlope (6.1s)
+✔ [14043/14233] Built ZInQKernel.Contrib.GaussFE.FunctionalEquation5 (4.7s)
+✔ [14044/14233] Built ZInQKernel.Contrib.HeckeAll.Continuation (4.9s)
+✔ [14045/14233] Built ZInQKernel.Contrib.PSide.TYZInputsIff (4.4s)
+✔ [14046/14233] Built ZInQKernel.Multiplication.Completeness.PoleValuations (10s)
+✔ [14047/14233] Built ZInQKernel.Multiplication.Soundness.FiniteBox (6.5s)
+✔ [14048/14233] Built ZInQKernel.Multiplication.Completeness.SelectedReduction (4.6s)
+✔ [14049/14233] Built ZInQKernel.Multiplication.Completeness.SbIntegrality (5.2s)
+✔ [14050/14233] Built ZInQKernel.RouteK.Redei.Dirichlet (5.2s)
+✔ [14051/14233] Built ZInQKernel.Contrib.HeckeAll.Provider (4.3s)
+✔ [14052/14233] Built ZInQKernel.Multiplication.Completeness.AP.LemmaP (5.4s)
+✔ [14053/14233] Built ZInQKernel.Multiplication.Soundness.MultiplySound (4.3s)
+⚠ [14054/14233] Built ZInQKernel.Contrib.TYZDecomp.Leaves (4.9s)
+warning: ZInQKernel/Contrib/TYZDecomp/Leaves.lean: imports `Mathlib.Analysis.SpecialFunctions.ImproperIntegrals` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/TYZDecomp/Leaves.lean: imports `Mathlib.Analysis.SpecialFunctions.Integrability.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [14055/14233] Built ZInQKernel.Multiplication.Completeness.AP.GoodSlope (4.6s)
+✔ [14056/14233] Built ZInQKernel.Multiplication.Completeness.SelectedPrecision (6.9s)
+✔ [14057/14233] Built ZInQKernel.RouteK.Redei.FourRank (5.5s)
+✔ [14058/14233] Built ZInQKernel.Multiplication.Completeness.SlopeCompleteness (6.1s)
+✔ [14059/14233] Built ZInQKernel.Multiplication.Completeness.AP.PoleValuations (8.5s)
+⚠ [14060/14233] Built ZInQKernel.Contrib.TYZChain.Lcal (12s)
+warning: ZInQKernel/Contrib/TYZChain/Lcal.lean: imports `Mathlib.NumberTheory.NumberField.Cyclotomic.PID` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [14061/14233] Built ZInQKernel.Contrib.OneProof.PhiSurjCharZero (33s)
+warning: ZInQKernel/Contrib/OneProof/PhiSurjCharZero.lean:528:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+info: ZInQKernel/Contrib/OneProof/PhiSurjCharZero.lean:631:0: 'PhiSurj.phiAmpleIsogeny0_of_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/OneProof/PhiSurjCharZero.lean:632:0: 'PhiSurj.weilPairingMumford0_of_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/OneProof/PhiSurjCharZero.lean:633:0: 'PhiSurj.t09SymmIsogenyExists0_of_four0' depends on axioms: [propext, Classical.choice, Quot.sound]
