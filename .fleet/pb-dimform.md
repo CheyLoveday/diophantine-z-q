@@ -42,3 +42,5 @@ predicate was the basis form.
   L756-757, L10973-74 (direct sum) and the bibitems are OK. Closure under duals and subquotients is unverified.
 
 Report: `docs/research/pb-dimform.md`.
+
+Commits: 977d924d (in-place restatement), 6201cf6b (report); this note is the last commit.
