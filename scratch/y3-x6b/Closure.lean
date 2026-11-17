@@ -44,7 +44,9 @@ def closureZ (env : Environment) (root : Name) : Std.HashSet Name := Id.run do
     let mut hits : Array Name := #[]
     for n in s.toList do
       let str := n.toString
-      if str.endsWith "_r5" || str.endsWith "_cm" then r5 := r5 + 1
+      if str.endsWith "_r5" || str.endsWith "_cm" then
+        r5 := r5 + 1
+        IO.println s!"  suffix: {n}"
       if (str.splitOn "X6").length > 1 || (str.splitOn "x6").length > 1 || (str.splitOn "lkies").length > 1 ||
          (str.splitOn "abaGranath").length > 1 then hits := hits.push n
     IO.println s!"  _r5 or _cm constants in closure: {r5}"
