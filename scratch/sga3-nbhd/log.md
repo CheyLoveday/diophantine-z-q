@@ -47,3 +47,19 @@ many closed points the elementary argument does not apply.
   - `SGA3_VIB_3_10_NeronOL` (narrowed leaf: Néron model with semistable reduction over 𝓞_L, 𝒩⁰ open);
     `FiniteDisconnectedFibresOL ⇒ SGA3_VIB_3_10_NeronOL` (`sga3_VIB_3_10_NeronOL_of_finite`);
     `SGA3_VIB_3_10 ⇒ NeronOL`, `Nbhd ⇒ NeronOL`.
+
+## Manual fold (narrowing) — VERIFIED compiled
+- scratch/sga3-nbhd/fold/gen_fold.py generates fold/FoldCheck.lean: copies of the 60 HSyn declarations of
+  TailZ23–TailZ45 that mention OpenResearchLeaves14..28 (plus SGRFold's three theorems), in namespace
+  HDec.HSyn.NOL, with field `sga3_VIB_3_10`/`sga3_VIB_3_10_Nbhd` → `sga3_VIB_3_10_NeronOL` and the five readers
+  replaced by the SGA3NbhdOL variants; top `HDec.HSyn.OpenResearchLeaves29`, `sixContactMin_of_open39`, and
+  `ZInQ.OneProof.frozenTargetNOL` (Main's frozenTarget with r : OpenResearchLeaves29).
+- `lake env lean scratch/sga3-nbhd/fold/FoldCheck.lean`: frozenTargetNOL axioms [propext, Classical.choice,
+  Quot.sound]; closure (268669 constants) contains neither CToPrinted.SGA3_VIB_3_10 nor
+  SGA3IdComp.SGA3_VIB_3_10_Nbhd nor sga3_VIB_3_10_of_nbhd; contains SGA3Nbhd.SGA3_VIB_3_10_NeronOL.
+
+## Idea under test (for -1): avoid 𝒩⁰ open over 𝓞_L in SS2
+SS2 only needs SOME open subgroup 𝒰 ⊆ 𝒱 = 𝒩 ×_{𝓞_L} 𝓞_L' with 𝒰 → 𝒩' an open immersion. c : 𝒱 → 𝒩' (Néron
+property) is an iso on generic fibres, so (EGA IV 8.10.5 open-immersion item, PROVED in tree:
+egaIV_8_10_5_openImm_proof) an open immersion over some D(s); take 𝒰 = 𝒱 minus (𝒱_q \ 𝒱_q⁰) for the finitely many
+q | s (open by isClosed_fibre_diff); at q | s use SGA 7 IX 3.3 on (𝒩 ×O)⁰ (open: DVR lemma).

@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ45
+import ZInQKernel.OneProof.Main
 import ZInQKernel.Contrib.OneProof.SGA3NbhdOL
 
 /-! # sga3-nbhd manual fold check: the research chain TailZ23–TailZ45 with `sga3_VIB_3_10(_Nbhd)` replaced by
@@ -1776,10 +1776,42 @@ theorem sixContactMin_of_open38 (r : OpenResearchLeaves28) (t : OpenTextbookLeav
 
 end NOL
 
+/-- The new top research bundle: `OpenResearchLeaves28` with `sga3_VIB_3_10_Nbhd` replaced by
+`sga3_VIB_3_10_NeronOL : SGA3Nbhd.SGA3_VIB_3_10_NeronOL` (sga3-nbhd). -/
+abbrev OpenResearchLeaves29 : Prop := NOL.OpenResearchLeaves28
+
+/-- **G0 with only the open leaves** (sga3-nbhd manual fold). -/
+theorem sixContactMin_of_open39 (r : OpenResearchLeaves29) (t : OpenTextbookLeaves13) (l : OpenAddedLeaves19) :
+    ZInQ.SixContactMin :=
+  NOL.sixContactMin_of_open38 r t l
+
 end HSyn
 
 end HDec
 
+namespace ZInQ.Contrib.TYZChain
+
+open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
+
+/-- **Theorem 1.1, from every statement still open.** -/
+theorem _root_.ZInQ.OneProof.frozenTargetNOL
+    (r : HDec.HSyn.OpenResearchLeaves29) (t : HDec.HSyn.OpenTextbookLeaves13) (l : HDec.HSyn.OpenAddedLeaves19)
+    (h11 : TYZThm11Integral)
+    (hfx : H29Split.TYZTestVectorExists) (hL29 : H29Split.TYZLemma29PrintedNe3)
+    (hP23 : H29Split.TYZProp23Printed)
+    (hCM : _root_.T5Glue.ShimuraMainCM)
+    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
+    (hBFH : ZInQ.BFHPrinted.BFHClauseIIGamma0) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+    ZInQ.FrozenTarget :=
+  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+    (HDec.HSyn.sixContactMin_of_open39 r t l)
+    (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
+      ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof hfx hL29 ZInQ.Contrib.T21Proof.tyzThm21At31 hP23) hCM h33)
+    ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0 hBFH) hL3
+
+end ZInQ.Contrib.TYZChain
+
+#print axioms ZInQ.OneProof.frozenTargetNOL
 #print axioms HDec.HSyn.NOL.sixContactMin_of_open38
 
 open Lean Elab Command in
@@ -1799,7 +1831,7 @@ partial def nolClosure (env : Environment) (root : Name) : Std.HashSet Name := I
 open Lean Elab Command in
 elab "#nolcheck" : command => do
   let env ← getEnv
-  let cl := nolClosure env ``HDec.HSyn.NOL.sixContactMin_of_open38
+  let cl := nolClosure env ``ZInQ.OneProof.frozenTargetNOL
   IO.println s!"closure size {cl.size}"
   for t in [``CToPrinted.SGA3_VIB_3_10, ``SGA3IdComp.SGA3_VIB_3_10_Nbhd, ``SGA3IdComp.sga3_VIB_3_10_of_nbhd,
       ``SGA3Nbhd.SGA3_VIB_3_10_NeronOL] do
