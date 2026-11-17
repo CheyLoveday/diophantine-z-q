@@ -65,3 +65,46 @@ Hash dumps (`DumpCompact.lean`, ~1.7 MB each) are kept out of the commit; the co
     old row with semistability as printed; neither is on-the-spot; neither is in diophantine_zq.tex as a Lean-level
     statement (the manuscript cites both results).
     **render_open count after fold 2: 35 open (H 30, strictest 4/26), count-neutral.**
+
+## Fold 3: pb-p1 (panPrintedP, bergerPrintedVT -> panPrintedF, bergerSurveyF; count-neutral)
+
+13. Merged origin/wip/pb-p1 0d4cf145 (no conflicts). Hygiene: `scratch/pb-p1/BypassFold.lean` (redeclares HDec.HSyn
+    bundles in `HSyn.PBP1`) and `scratch/pb-p1/FontaineSt.lean` (the source of the Contrib file, same declarations)
+    renamed `.lean.txt` (`mkcontrib.py` reads the `.lean.txt`); pb-p1's build-log tails `build1..3.txt` removed; no host
+    paths; no vendored code. Contribution `ZInQKernel/Contrib/OneProof/PanBergerFontaine.lean` kept separate (commit
+    before the fold).
+14. R11 docstring of `PanDict.BergerSurveyF` (PanBergerFontaine.lean, was line 632): "whose Theoreme 0.7 is the same
+    theorem" -> "whose Theoreme 0.6 (= Theoreme 5.19 of arXiv:math/0102179v3) is the same theorem (Theoreme 0.7 there is
+    Sen's theorem)" (lead's correction; edited in FontaineSt.lean.txt and regenerated with mkcontrib.py; UNVERIFIED by me,
+    no network). FINDING: the retired audit row of bergerPrintedV (docs/one-proof/reviews-retired.tsv) records
+    "Theoreme 0.7 = Corollaire 5.22" for the Inventiones author copy; pb-p1 read arXiv v3 Thm 0.6 p. 7 as
+    "de Rham => potentiellement semi-stable". The two numberings disagree; left for the lead.
+15. `lake build ZInQKernel.Contrib.OneProof.PanBergerFontaine` ok; `#discharges` on the fold-2 head (`DischargesPBP1.lean`,
+    output `DischargesPBP1-output.txt`, VERIFIED): `OpenResearchLeaves50.bergerPrintedVT` DISCHARGED by
+    `PanDict.bergerPrintedVT_of_survey` (still assumes `BergerSurveyF`); `panPrintedP` only by `panPrintedP_of_F` (still
+    assumes `BmaxStToFontaine`, not a leaf) or `panPrintedP_of_t`, so the fold is a bypass.
+16. Generator `scratch/fold-b105/gen_pbp1_bypass.py` (imports gen_chev_bypass.py's helpers): walk
+    `sixContactMin_of_open69 -> openResearchLeaves49_of_OpenResearchLeaves50 -> sixContactMin_of_open68 ->
+    openResearchLeaves36EBCF_of_OpenResearchLeaves49`, stop bundle `OpenResearchLeaves36EBCF`; the one reader `r11r12`
+    (`panBerger_of_printedPV X.panPrintedP (bergerPrintedV_of_T X.bergerPrintedVT) ...`) rewritten to
+    `panBerger_of_F X.panPrintedF X.bergerSurveyF ...` (same DS arguments). Output `TailZ77.lean` (copy
+    `TailZ77.lean.txt`): `OpenResearchLeaves51` (28 fields; the two fields replaced in place),
+    `openResearchLeaves36EBCF_of_OpenResearchLeaves51`, `sixContactMin_of_open70`; Main switched with a docstring
+    paragraph; kinds rows replaced: panPrintedF (published, "pending review; unread: ...", GLUE/GLUE, flag_class
+    pending-review,unread), bergerSurveyF (published, "pending review (pb-p1; fold-b105): cited print; ...", no
+    'unread', GLUE/GLUE, flag_class pending-review); packet/label/tier/area_issue taken from the replaced rows,
+    rated_by "pb-p1 (unreviewed)"; no claims rows. Count 4/26 on 30 -> 4/26 on 30.
+17. Build (VERIFIED): `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.OneProof.H.TailZ77
+    ZInQKernel.Contrib.OneProof.PanBergerFontaine` ok (16221 jobs); `sixContactMin_of_open70`, `frozenTarget` standard.
+18. Checks (`run_checks.sh 3`, VERIFIED): hash guard 18056 -> 18092, only after 36 (all TailZ77), changed only
+    `frozenTarget` (`cmp_fold3.txt`); closure 304575, no sorryAx, no `PanPrintedP`, `BergerPrintedVT`, `BergerPrintedV`;
+    contains `PanPrintedF`, `BergerSurveyF`, `panBerger_of_F`; open-statements.json lists panPrintedF and bergerSurveyF;
+    OpenStatements 35. render_open first failed its row check ("reviews.tsv: 'panPrintedP' is not a hypothesis"): the
+    audit's panPrintedP row moved to `reviews-retired.tsv` (note line in reviews-retired.md), as for bergerPrintedV in
+    batch TailZ72; then render_open 30 H, strictest 4/26, `--check` ok; DischargesTest rerun (17 DISCHARGES lines, no
+    error); crosswalk `--check` ok; autoform check exit 0 (776 articles, 701 fully proved).
+    New statements: `PanPrintedF` (Pan, arXiv:1901.07166v2 Thm 1.0.4 with Conj. 1.0.1 = the manuscript's bibitem
+    pan2022, diophantine_zq.tex l. 11041-11045, VERIFIED) and `BergerSurveyF` (Berger, arXiv:math/0210184v1 IV.5.1, a
+    cited print of Berger's theorem, cited in the manuscript as berger2002, l. 739/11037). Both cited prints; neither
+    on-the-spot. The B1 sketch (pb-p1 report section 4, on-the-spot) is not folded.
+    **render_open count after fold 3: 35 open (H 30, strictest 4/26), count-neutral.**
