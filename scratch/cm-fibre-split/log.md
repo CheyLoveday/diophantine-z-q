@@ -37,3 +37,14 @@ diophantine_zq.tex L581-586. Base: origin/wip/cox-lattice 6298e108 + origin/main
 - Remaining glue for CMFibreSplit: `CMMatrixUnitSplit` only.
 - Pitfalls: `ι` is GrpObj-inverse notation (rename); HSyn.Qbar vs LeafQM.AV.Qbar ambiguity; rewrite motive
   failures between `X.left` and `pullback ...` forms — fix with typed `let`s and `show`.
+
+## 2026-11-17 15:00 fold dry run + #discharges (VERIFIED)
+- `lake build +ZInQKernel.Contrib.OneProof.CMFibreSplit +ZInQKernel.Contrib.OneProof.CMFibreSplit.Fold`: success.
+- Axioms (scratch/cm-fibre-split/Axioms.lean -> axioms-out.txt): cmFibreSplit_of, cmHomFieldModel_of,
+  endBC_surjective_of_homField, paste_iso, end0Matrix_of_noncentral, sixContactMin_of_open4_hf_pz_eb_cmfs,
+  sixContactMin_of_open73_cmfs: [propext, Classical.choice, Quot.sound].
+- #discharges (Discharges.lean -> discharges.txt), against Main at this base (top bundle OpenResearchLeaves57; main
+  moved past cm-branch2's OpenResearchLeaves53): 171 lines "DISCHARGES": 156 are projections of copied bundle
+  structures (54CMFS/54CM/_r5/_cm; noise, as in cm-branch2), 15 pre-existing reductions of OpenResearchLeaves57 fields.
+  None by this task's theorems: expected, `cmFibreSplit` is a field of cm-branch2's fold bundle (54CM), not of Main's
+  top; the fold onto Main's current top is cm-fold-rebase's job.
