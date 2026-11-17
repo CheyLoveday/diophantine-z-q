@@ -23,7 +23,7 @@ noncomputable def evS {Y : Scheme} (y : Spec (CommRingCat.of ℂ) ⟶ Y) (U : Y.
 theorem evS_of_le {Y : Scheme} (y : Spec (CommRingCat.of ℂ) ⟶ Y) (U : Y.Opens) (s : Γ(Y, U))
     (h : ⊤ ≤ y ⁻¹ᵁ U) :
     evS y U s = (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom (y.appLE U ⊤ h s) := by
-  unfold evS; rw [dif_pos h]
+  rw [evS, dite_eq_left_of_eq_true (eq_true h)]
 
 /-- Functoriality of evaluation. -/
 theorem evS_comp {Y Z : Scheme} (y : Spec (CommRingCat.of ℂ) ⟶ Y) (f : Y ⟶ Z) (U : Z.Opens)
@@ -139,8 +139,7 @@ theorem evS_fromSpec {X : Scheme} {V : X.Opens} (hV : IsAffineOpen V)
 theorem tensor_sum_repr {R A B : Type*} [CommRing R] [CommRing A] [CommRing B] [Algebra R A]
     [Algebra R B] (t : TensorProduct R A B) :
     ∃ (m : ℕ) (x : Fin m → A) (y : Fin m → B), t = ∑ k, x k ⊗ₜ[R] y k := by
-  induction t using TensorProduct.induction_on with
-  | zero => exact ⟨0, Fin.elim0, Fin.elim0, by simp⟩
+  induction t using TensorProduct.inductionOn with
   | tmul a b => exact ⟨1, fun _ => a, fun _ => b, by simp⟩
   | add t₁ t₂ h₁ h₂ =>
     obtain ⟨m₁, x₁, y₁, rfl⟩ := h₁
@@ -645,9 +644,81 @@ theorem isHolChart_iff_isSerreChart' (hT35 : ZInQ.LeafPush2.UniformizationExists
     IsHolChart 𝒢 τ φ ↔ IsSerreChart 𝒢 τ φ :=
   isHolChart_iff_isSerreChart hT35 translationAnHol 𝒢 g hg τ φ
 
+/-- Serre charts exist at every point (T35). -/
+theorem exists_serreChart_at (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ) (p : 𝒢.Pts τ) :
+    letI := anTop 𝒢 τ
+    ∃ e : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ), p ∈ e.source ∧ IsSerreChart 𝒢 τ e := by
+  obtain ⟨e, hp, he⟩ := exists_holChart_at hT35 𝒢 g hg τ p
+  exact ⟨e, hp, (isHolChart_iff_isSerreChart' hT35 𝒢 g hg τ e).mp he⟩
+
 end Main
+
+/-! ## §5. The print's metric read in Serre's charts -/
+
+section SerreMetric
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- r3-residual's `HasAnFormDensityAt` verbatim with `IsHolChart` replaced by `IsSerreChart` (the charts of
+Serre's complex space `(A_τ(ℂ), 𝒪^an)`). -/
+def HasSerreFormDensityAt (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (p : 𝒢.Pts τ) : Prop :=
+  letI := anTop 𝒢 τ
+  letI := anBorel 𝒢 τ
+  ∀ φ : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ), IsSerreChart 𝒢 τ φ → p ∈ φ.source →
+  ∀ (U : Fin g → 𝒢.G.left.Opens) (hU : ∀ i, 𝒢.genericUnit ∈ U i) (s : ∀ i, Γ(𝒢.G.left, U i))
+    (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal 𝒢.genStalk)
+    (l : L), eta = l • 𝒢.wedge (fun i => ⟨_, hm i⟩) →
+    ∀ ε : ℝ, 0 < ε → ∃ W ∈ 𝓝 p, ∀ E ⊆ W, MeasurableSet E →
+      |(nu E).toReal - ‖τ l‖ ^ 2 * ‖(fderiv ℂ (chartAt 𝒢 τ U s p ∘ φ.symm) (φ p)).det‖ ^ 2 *
+          (volume (φ '' E)).toReal| ≤ ε * (volume (φ '' E)).toReal
+
+/-- `IsAnFormMeasure` with Serre's charts. -/
+def IsSerreFormMeasure (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) : Prop :=
+  @IsFiniteMeasure _ (anBorel 𝒢 τ) nu ∧ ∀ p, HasSerreFormDensityAt 𝒢 τ nu eta p
+
+/-- `IsAnMetricSq` with Serre's charts: `‖η‖²_τ = (i/2)^g ∫_{(A_τ(ℂ), 𝒪^an)} η̃ ∧ η̄̃ = r`. -/
+def IsSerreMetricSq (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ} (eta : 𝒢.hodgeSpace g) (r : ℝ) :
+    Prop :=
+  letI := anBorel 𝒢 τ
+  (∃ nu : Measure (𝒢.Pts τ), IsSerreFormMeasure 𝒢 τ nu eta) ∧
+    ∀ nu : Measure (𝒢.Pts τ), IsSerreFormMeasure 𝒢 τ nu eta → (nu univ).toReal = r
+
+variable [NumberField K]
+
+theorem hasSerreFormDensityAt_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (p : 𝒢.Pts τ) :
+    HasSerreFormDensityAt 𝒢 τ nu eta p ↔ HasAnFormDensityAt 𝒢 τ nu eta p := by
+  constructor
+  · intro h φ hφ
+    exact h φ ((isHolChart_iff_isSerreChart' hT35 𝒢 g hg τ φ).mp hφ)
+  · intro h φ hφ
+    exact h φ ((isHolChart_iff_isSerreChart' hT35 𝒢 g hg τ φ).mpr hφ)
+
+theorem isSerreFormMeasure_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) :
+    IsSerreFormMeasure 𝒢 τ nu eta ↔ IsAnFormMeasure 𝒢 τ nu eta :=
+  and_congr Iff.rfl (forall_congr' fun p => hasSerreFormDensityAt_iff hT35 𝒢 g hg τ nu eta p)
+
+/-- **The heights' archimedean metric is the integral over Serre's complex space.** For `g = dim A`,
+r3-residual's `IsAnMetricSq` (densities in the `IsHolChart` atlas), on which `IsAnStableHeight`,
+`IsAnStableHeightSS` and `IsStableHeightBarAn` are built, is `IsSerreMetricSq` (densities in the charts of
+Serre's `(A_τ(ℂ), 𝒪^an)`). -/
+theorem isSerreMetricSq_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ) (eta : 𝒢.hodgeSpace g) (r : ℝ) :
+    IsSerreMetricSq 𝒢 τ eta r ↔ IsAnMetricSq 𝒢 τ eta r := by
+  unfold IsSerreMetricSq IsAnMetricSq
+  simp only [isSerreFormMeasure_iff hT35 𝒢 g hg τ]
+
+end SerreMetric
 
 end ZInQ.R3Etale
 
 #print axioms ZInQ.R3Etale.isHolChart_iff_isSerreChart'
 #print axioms ZInQ.R3Etale.translationAnHol
+#print axioms ZInQ.R3Etale.isSerreMetricSq_iff
