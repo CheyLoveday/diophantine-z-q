@@ -33,5 +33,8 @@ kleiman-section's draft. `autofold.json` records the leaf row and is not runnabl
 
 **Remains.** Kleiman's numbering and hypotheses are as reported in the brief; there is no copy on the host, so they
 are UNVERIFIED. The claim that restricting the fppf sheafification to locally Noetherian schemes gives the
-sheafification there is argued, not formalized. FoldCheck and `#discharges` outcomes are in
-`scratch/kleiman-section2/log.md`.
+sheafification there is argued, not formalized.
+
+**Checks.** `FoldCheck.lean` compiles `frozenTarget` with the hand fold, using only the standard axioms. The
+`Main`/`Discharges` build completed (14228 jobs). `#discharges` lists nothing from `KleimanSection2`. That is expected,
+because the leaf is weaker than the frontier field. Report: `docs/research/kleiman-section2.md`.
