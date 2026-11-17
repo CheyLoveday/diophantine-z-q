@@ -115,7 +115,7 @@ GR512Bridge.N1.O_maximal (O' : Subring B) (hle : LeafQM.O ≤ O') (hint : ∀ x 
 
 * `int_of_isIntegral`: `x ∈ B` integral over `ℤ` has `trd x, nrd x ∈ ℤ` (if `x ∈ ℚ`, `ℤ` is integrally closed;
   otherwise `minpoly ℚ x = X² − trd(x) X + nrd(x)` divides a monic integer polynomial, and Gauss's lemma
-  `IsIntegrally­Closed.eq_map_mul_C_of_dvd` makes its coefficients integers).
+  `IsIntegrallyClosed.eq_map_mul_C_of_dvd` makes its coefficients integers).
 * `mem_O_of_int`: `trd(x e) ∈ ℤ` for `e = 1, i, (1+j)/2, (i+k)/2` and `nrd(x) ∈ ℤ` imply `x ∈ 𝒪`: with
   `A = 2r, B = 4s, C = r − 3t, D = 2s + 6u` one has `36A² − 18B² + 12(A−2C)² − 6(2D−B)² = 144·nrd(x)`, and
   the congruence mod 144 (576 residues, `decide`) gives `2t, 2u, r − t, s − u ∈ ℤ`. A Python scan (2304 points of
