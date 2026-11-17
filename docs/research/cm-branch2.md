@@ -7,22 +7,27 @@ numbers from memory; this host has no network), SPECULATIVE.
 
 ## 1. Result
 
-**The CM-branch fold reaches net zero in the GLUE column, and González–Rotger leaves the route.** VERIFIED, compiled with
-only `propext`, `Classical.choice`, `Quot.sound`:
+**The CM-branch fold reaches net zero in the GLUE column, and González–Rotger leaves the route.** The fold's next
+generation is written and compiled (§7): `sixContactMin_of_open73_cm (r : OpenResearchLeaves54CM) t l : SixContactMin`,
+where `OpenResearchLeaves54CM` is the current research bundle without `gonzalezRotgerThm512X6RCF` and with the 5 CM-branch
+inputs. A closure scan of it (`scratch/cm-branch2/gruse73-out.txt`) finds neither `GR512Bridge.GonzalezRotgerThm512X6RCF`
+nor `GRDict.GonzalezRotgerThm512X6` nor `R5ptProps`. VERIFIED, compiled with only `propext`, `Classical.choice`,
+`Quot.sound`. The same route with the CM inputs as a separate argument:
 
 ```lean
 theorem HDec.HSyn.sixContactMin_of_open72_cmbranch2 (r : OpenResearchLeaves53) (t : OpenTextbookLeaves18)
-    (l : OpenAddedLeaves27) (c : CMBranch.CMInputs2) : ZInQ.SixContactMin
+    (l : OpenAddedLeaves27) (c : CMBranch.CMInputs3) : ZInQ.SixContactMin
 ```
 
-(`ZInQKernel/Contrib/OneProof/CMBranch2.lean`, = `sixContactMin_of_open72_cm2_r5` of `CMBranch/R5Prune.lean`): the current top
-theorem with one extra hypothesis `c : CMBranch.CMInputs2`, the chain's NoCM base replaced by the manuscript's CM branch
+(`ZInQKernel/Contrib/OneProof/CMBranch2.lean`, via `sixContactMin_of_open72_cm2_r5` of `CMBranch/R5Prune.lean`): the current
+top theorem with one extra hypothesis `c : CMBranch.CMInputs3`, the chain's NoCM base replaced by the manuscript's CM branch
 (cm-branch), and
 
 1. **`HeightAdditivityUpper` proved** (glue −1): from the chain's textbook field `t35` and proved tree results (§2.1);
-2. **`ReducedCMPeriod` proved from one new textbook leaf** (glue −1, leaf +1): `CMPeriodLattice` (the period lattice of a
-   CM curve has multiplier ring `≅ R`) is proved from the textbook fields `t35`, `homLatticeCorr`, `t11b`; the reduced basis
-   and the bound `√3/2 ≤ Im τ ≤ √|Δ|/2` are proved; only Cox's lemma on proper ideals (`CoxProperLattice`) is a leaf (§2.2);
+2. **`ReducedCMPeriod` proved** (glue −1): `CMPeriodLattice` (the period lattice of a CM curve has multiplier ring `≅ R`)
+   is proved from the textbook fields `t35`, `homLatticeCorr`, `t11b`. Also proved: the reduced basis, the bound
+   `√3/2 ≤ Im τ ≤ √|Δ|/2`, and Cox's lemma on proper ideals, `CoxProperLattice`, including the discriminant formula
+   `disc ℤ[θ] = [𝓞_k : ℤ[θ]]² d_k` (§2.2). No new leaf;
 3. **`R5ptProps` pruned** (§3): the whole route, bundles from `OpenResearchLeaves34EBCF` down included, re-run with the conjunct
    replaced by `True` (`CMBranch/R5Prune.lean`, generated, 6282 lines). It compiles, so no consumer reads `R5ptProps`. The
    field `gonzalezRotgerX6Ab` is filled without González–Rotger (from `x6CoarseModuli` and `shimuraMainThmIDeligneY3AbU`).
@@ -31,13 +36,12 @@ theorem with one extra hypothesis `c : CMBranch.CMInputs2`, the chain's NoCM bas
    bundle carrying González–Rotger is never read. **The top field `gonzalezRotgerThm512X6RCF` is now only carried by the
    bundle conversions (53 → 36EBCF → 35EBCF), so PruneScan can drop it at the fold.**
 
-**Count.** `CMInputs2` has 6 fields: the glue `CMFibreSplit` and the leaves `FowlerProp27`, `CMHeight62`, `CMjDegree`,
-`CMPotentialGood`, `CoxProperLattice`. The fold adds 1 GLUE (`CMFibreSplit`) and removes 1 GLUE
-(`gonzalezRotgerThm512X6RCF`, consequence GLUE/GLUE in kinds.tsv), so the GLUE column is **net 0**. It also adds 5 leaves.
-Four are consequence form (`CMHeight62`, `CMjDegree`, `CMPotentialGood`, `CoxProperLattice`) and one is in printed form
-(`FowlerProp27`). Under the kit's rules all five enter "pending review" and count as GLUE until a reviewer rates them, so
-under that counting the fold is **+5** until the leaves are reviewed. For comparison, cm-branch's fold was +3 GLUE +4
-leaves with nothing removed.
+**Count.** `CMInputs3` has 5 fields: the glue `CMFibreSplit` and cm-branch's four leaves `FowlerProp27`, `CMHeight62`,
+`CMjDegree`, `CMPotentialGood`. The fold adds 1 GLUE (`CMFibreSplit`) and removes 1 GLUE (`gonzalezRotgerThm512X6RCF`,
+consequence GLUE/GLUE in kinds.tsv), so the GLUE column is **net 0**. It also adds the 4 leaves: three consequence form
+(`CMHeight62`, `CMjDegree`, `CMPotentialGood`) and one in printed form (`FowlerProp27`). New leaves enter "pending
+review" and count as GLUE until a reviewer rates them, so under that counting the fold is **+4** until the leaves are
+reviewed. For comparison, cm-branch's fold was +3 GLUE +4 leaves with nothing removed.
 
 **X₆ rows.** `x6CoarseModuliIdeal` and `elkiesX6StarEveryIdeal` stay. The clause scan
 (`scratch/cm-branch2/clauseuse.txt`) shows that `X6Props`, `R2X6Props`, `CMExists`, `X6Surj` and `R1recProps` are all
@@ -51,17 +55,19 @@ needs from y3-route-a and beyond. The re-source is not a GLUE gain by itself.
 |---|---|
 | `Contrib/OneProof/CMBranch/HeightAdd.lean` | `heightAdditivityUpper_of_t35`; copies of metrization's `ProductMetrizationGeo` reduction (`HDec.ZInQ.Metrization.CMB2`) |
 | `Contrib/OneProof/CMBranch/ReducedPeriod.lean` | `latticeMultipliers`, `CMPeriodLattice`, `CoxProperLattice`, `im_le_of_quadratic`, `exists_reduced_basis`, `reducedCMPeriod_of` |
+| `Contrib/OneProof/CMBranch/CoxProof.lean` | `CoxCore.discr_pair`, `CoxCore.discr_order`, `mult_iff_dvd`, `coxProperLattice_proof` |
 | `Contrib/OneProof/CMBranch/PeriodLattice.lean` | `end_ringEquiv_mult`, `end_ringEquiv_baseChange`, `cmPeriodLattice_of`, `reducedCMPeriod_of_leaves` |
 | `Contrib/OneProof/CMBranch/Top2.lean` | `CMInputs2`, the chain open72 → open4 with `c` threaded (generated, `gen/mk_top2.py`) |
-| `Contrib/OneProof/CMBranch/R5Prune.lean` | the weak-row bypass (generated, `gen/gen_r5.py`), top `sixContactMin_of_open72_cm2_r5` |
-| `Contrib/OneProof/CMBranch2.lean` | the deliverable alias `sixContactMin_of_open72_cmbranch2` |
+| `Contrib/OneProof/CMBranch/R5Prune1..3.lean`, `R5Prune.lean` | the weak-row bypass (generated, `gen/gen_r5.py`; four files under 141 KB), top `sixContactMin_of_open72_cm2_r5` |
+| `Contrib/OneProof/CMBranch/Open73.lean` | the next generation `OpenResearchLeaves54CM` and `sixContactMin_of_open73_cm` (generated, `gen/gen_open73.py`) |
+| `Contrib/OneProof/CMBranch2.lean` | `CMInputs3` and the deliverable `sixContactMin_of_open72_cmbranch2` |
 
 ## 2. The three glue Props of the CM branch
 
 | glue (cm-branch) | result here | Lean |
 |---|---|---|
 | `HeightAdditivityUpper` (L620-621, "additivity") | **proved** from the chain's textbook field `t35` (`UniformizationExists`) and proved tree results | `CMBranch.heightAdditivityUpper_of_t35` (`CMBranch/HeightAdd.lean`) |
-| `ReducedCMPeriod` (L598-599) | **reduced** to one textbook leaf, `CoxProperLattice`, plus the chain's textbook fields `t35`, `homLatticeCorr`, `t11b`; every other step proved | `CMBranch.reducedCMPeriod_of_leaves` (`CMBranch/PeriodLattice.lean`, `CMBranch/ReducedPeriod.lean`) |
+| `ReducedCMPeriod` (L598-599) | **proved** from the chain's textbook fields `t35`, `homLatticeCorr`, `t11b` (Cox's lemma proved too) | `CMBranch.reducedCMPeriod_of_leaves … coxProperLattice_proof` (`PeriodLattice.lean`, `ReducedPeriod.lean`, `CoxProof.lean`) |
 | `CMFibreSplit` (A8 at a CM fibre + matrix units, L520-562, L582-586) | **open** (GLUE); decomposition in §2.3 | unchanged (`CMBranch.lean`) |
 
 All VERIFIED: compiled with `lake env lean` and `lake build`; `#print axioms` = `propext, Classical.choice, Quot.sound`
@@ -107,13 +113,18 @@ Its Lean form is cm-branch's `ReducedCMPeriod`: every `E/K` with `End(E_{K̄}) �
 * **`exists_reduced_basis`** (proved, pure Mathlib): every full lattice of `ℂ¹` is `c(ℤ + τℤ)` with `τ` in Mathlib's closed
   fundamental domain `ModularGroup.fd` (a ℤ-basis from `ZLattice.rank`, orientation, then `ModularGroup.exists_smul_mem_fd`
   and the `SL₂(ℤ)` change of basis); hence `Im τ ≥ √3/2` (`ModularGroup.three_le_four_mul_im_sq_of_mem_fd`).
-* **`CoxProperLattice`** (new textbook leaf, consequence form): if `c(ℤ + τℤ)`, `Im τ > 0`, has multiplier ring `≅ R`,
-  then `τ` is a root of a primitive form `(a, b, c')`, `a > 0`, with `b² − 4ac' = Δ_R = f²d_k`.
+* **`CoxProperLattice`** (Cox, *Primes of the form x²+ny²*, Lemma 7.5 with Lemma 7.2; **proved**,
+  `coxProperLattice_proof`, `CMBranch/CoxProof.lean`): if `c(ℤ + τℤ)`, `Im τ > 0`, has multiplier ring `≅ R`, then `τ` is
+  a root of a primitive form `(a, b, c')`, `a > 0`, with `b² − 4ac' = Δ_R = f²d_k`. Proof: a multiplier outside `ℤ`
+  (the image of `[𝓞_k:R]·y`, `y ∈ 𝓞_k ∖ ℚ`) gives the quadratic relation, normalized to a primitive form
+  (`exists_prim`); the multiplier ring is `ℤ + ℤaτ` (`mult_iff_dvd`, Cox 7.5's elementary half); so `R = ℤ + ℤθ` with
+  `θ ↦ aτ`, `θ² + bθ + ac' = 0`; finally `b² − 4ac' = [𝓞_k : R]²·d_k` (`CoxCore.discr_order`: trace discriminant of
+  `(1, θ)` from the left-multiplication matrix, `AddSubgroup.relIndex_eq_abs_det` against Mathlib's integral basis,
+  `Algebra.discr_of_matrix_vecMul`, `NumberField.coe_discr`).
 * **`im_le_of_quadratic`** (proved): such a root has `Im τ = √(4ac' − b²)/(2a) ≤ √|b² − 4ac'|/2`.
 
-So `ReducedCMPeriod` costs one new leaf (`CoxProperLattice`) and no glue. The proof is the on-the-spot sketch cm-branch
-gave (lattice homothetic to a proper `R`-ideal, reduced basis, primitive form), now a Lean proof except for Cox's
-lemma.
+So `ReducedCMPeriod` costs nothing: no leaf and no glue beyond the chain's textbook fields. The proof is the on-the-spot
+sketch cm-branch gave (lattice homothetic to a proper `R`-ideal, reduced basis, primitive form), now entirely in Lean.
 
 ### 2.3 `CMFibreSplit` (open)
 
@@ -124,7 +135,14 @@ Statement unchanged (cm-branch). It packs two manuscript steps:
    endomorphism lattice of rank `r ≤ 16F₀²`, `L = EK`, `[L:ℚ] ≤ F₀3^{r²} ≤ D`. The chain formalized A8 as
    `G0ModField.KernelFieldExists`, but its proof goes through `ConjMapsNoCM`, i.e. through NoCM; cm-branch localized it
    to fibres without CM (`KernelFieldExistsNC`). A8 itself does not depend on the case split; what is missing is a proof of
-   the conjugacy maps (`ConjMaps`) without NoCM.
+   the conjugacy maps without NoCM. VERIFIED by reading: `G0ModField.KernelField.ConjMapsNoCM` (TailC L6108) takes
+   `∀ φ ∈ com P.q, φ ∈ ℤ` at the point as a hypothesis. With trivial commutant the conjugacy isomorphisms `A^σ ≅ A` are
+   unique up to sign, so the maps `m σ` on `L`-points form a descent datum. At a CM fibre the commutant contains an
+   order of `k`, the isomorphisms are unique only up to its units, and the cocycle condition needs a choice. The
+   manuscript does not take this route: it reads the field of definition off the Galois action on the endomorphism
+   lattice of `W₀ = Res_{K/ℚ} A` (kernel field `E`, L546-555), and that argument needs no rigidity. So A8 at a CM fibre
+   needs A8 re-formalized along the manuscript's Weil-restriction argument. The chain's `ConjMaps` descent cannot be
+   reused there.
 2. **Matrix units** (L563-586): `End⁰(A_ℚ̄) = M₂(k)` at a CM fibre (Milne, Part I Thms 2.8-2.9 for algebraicity of
    Hodge endomorphisms, cited at L563, plus the centralizer computation L572-577), the idempotent `e₁₁`, `E = image of e₁₁`
    (an abelian subvariety; the tree has image recipes, `Hom.image` + flat base change), the `L`-isogeny
@@ -145,7 +163,8 @@ theorem HDec.HSyn.sixContactMin_of_open72_cm2_r5 (r : OpenResearchLeaves53) (t :
     (l : OpenAddedLeaves27) (c : CMBranch.CMInputs2) : ZInQ.SixContactMin
 ```
 
-(alias `sixContactMin_of_open72_cmbranch2` in `ZInQKernel/Contrib/OneProof/CMBranch2.lean`).
+(`CMInputs2` = `CMInputs3` plus `CoxProperLattice`; `sixContactMin_of_open72_cmbranch2` in `ZInQKernel/Contrib/OneProof/CMBranch2.lean`
+supplies that field by `coxProperLattice_proof`).
 
 **How.** The dirty set is every `ZInQKernel` constant in the closure of the CM-branch top whose type or value mentions
 `R5ptProps` or a dirty constant, with bundle structures marked dirty with their constructors (`scratch/cm-branch2/Dirty.lean`;
@@ -174,7 +193,18 @@ fold): comment-aware context extraction; `open … in` lines are not context; a 
 makes `X` ambiguous in `SGRDirectNV`, so `Polynomial.X` is written out there; local names equal to a dirty member's last
 component (`h5`) must not be renamed.
 
-**Is González–Rotger off the route?** See §3.1 (closure scan).
+### 3.1 Closure scans (VERIFIED)
+
+* `scratch/cm-branch2/GRUse.lean` on `sixContactMin_of_open72_cm2_r5` (`gruse-out.txt`, 130539 constants): `R5ptProps`,
+  `GRDict.r5ptProps_of_thm512`, `GRX6AbPrint.gonzalezRotgerX6Ab_of_print`, `FS5NoCM.R1R2fpFullProps` absent;
+  `OpenResearchLeaves35EBCF.gonzalezRotgerThm512X6` (the last carrier's projection) absent; the top projection
+  `OpenResearchLeaves53.gonzalezRotgerThm512X6RCF` present only through the conversions 53 → 36EBCF → 35EBCF, which
+  carry it.
+* The same scan on `sixContactMin_of_open73_cm` (§7; `gruse73-out.txt`, 130280 constants): no González–Rotger constant at
+  all (`GR512Bridge.GonzalezRotgerThm512X6RCF`, `GR512Bridge.gonzalezRotgerThm512X6_of_rcf`,
+  `GRDict.GonzalezRotgerThm512X6`, `R5ptProps` absent).
+* `scratch/cm-branch2/FieldScan.lean` (`fieldscan-out.txt`): every field of `OpenResearchLeaves54CM` (31) and
+  `OpenAddedLeaves27` (2) occurs in the closure of `sixContactMin_of_open73_cm`; no other field is left syntactically unread.
 
 
 ## 4. The new statements and their rating
@@ -185,21 +215,14 @@ component (`h5`) must not be renamed.
 | `CMHeight62` | leaf (cm-branch) | `CMBranch.CMHeight62` | Barquero-Sanchez et al., Res. Number Theory 3 (2017) art. 13, Eq. (6.2) (manuscript `\cite[Eq. (6.2)]{cmheight}`, L603); AUDIT-READ | consequence (good reduction, `≤` half; the stable height over `L₁` bounds the height of `E`, which is L597-598's "does not change", see §6) |
 | `CMjDegree` | leaf (cm-branch), **ELLIOT-literature** | `CMBranch.CMjDegree` | classical: `[ℚ(j(E)):ℚ] = h(R)` (Cox Thm 11.1, UNVERIFIED); manuscript L586-587 states it without citation | consequence (`#Pic(R) ≤ [L:ℚ]`) |
 | `CMPotentialGood` | leaf (cm-branch), **ELLIOT-literature** | `CMBranch.CMPotentialGood` | classical: CM ⇒ potentially good reduction (Serre–Tate 1968, UNVERIFIED); manuscript L596-597 without citation | consequence |
-| `CoxProperLattice` | **new leaf** (textbook) | `CMBranch.CoxProperLattice` | Cox, *Primes of the form x²+ny²*, Lemma 7.5 with Lemma 7.2 and (7.3) (numbers UNVERIFIED) | consequence: Cox states "the multiplier ring of `[1, τ]` is the order of discriminant `b² − 4ac'`"; here the multiplier ring is given up to ring isomorphism, which needs "the discriminant of an order is an isomorphism invariant" (true; elementary). Not cited by the manuscript: it sources the uncited step L598-599 (on-the-spot, §6) |
+| `CoxProperLattice` | **proved** (was introduced as a textbook leaf, then proved) | `CMBranch.coxProperLattice_proof` | Cox, *Primes of the form x²+ny²*, Lemma 7.5, Lemma 7.2 (numbers UNVERIFIED) | — (a theorem) |
 | `CMFibreSplit` | GLUE (cm-branch, open) | `CMBranch.CMFibreSplit` | manuscript A8 L520-562 + L582-586 | — |
 | `CMPeriodLattice` | glue, **proved** | `CMBranch.cmPeriodLattice_of` | — | — |
 | `HeightAdditivityUpper` | glue, **proved** | `CMBranch.heightAdditivityUpper_of_t35` | — | — |
-| `ReducedCMPeriod` | glue, **proved from `CoxProperLattice`** | `CMBranch.reducedCMPeriod_of_leaves` | — | — |
+| `ReducedCMPeriod` | glue, **proved** (with `coxProperLattice_proof`) | `CMBranch.reducedCMPeriod_of_leaves` | — | — |
 
-Proposed rows for `docs/research/locators.md` (not edited here; it belongs to the locator audit): `CoxProperLattice`
-(Cox Lemma 7.5/7.2, UNVERIFIED, no network on this host); `CMjDegree`, `CMPotentialGood` (classical, uncited in the
-manuscript).
-
-**`CoxProperLattice` is provable in Lean.** The direction of Cox 7.5 that is used here (`α(ℤ + ℤτ) ⊆ ℤ + ℤτ ⇔ α ∈ ℤ + ℤaτ`
-for a primitive `(a, b, c')`) is elementary. What is missing from Mathlib is the discriminant bookkeeping: the trace
-discriminant of an order of conductor `f` in a quadratic field is `f²d_k` (via `AddSubgroup.relIndex_eq_natAbs_det`
-and `Algebra.discr_of_matrix_vecMul`), and it is invariant under ring isomorphism (`Algebra.discr_eq_discr_of_algEquiv`).
-This is a good crowdsourcing target: half a day to a day.
+Proposed rows for `docs/research/locators.md` (not edited here, since that file belongs to the locator audit):
+`CMjDegree` and `CMPotentialGood` (classical, uncited in the manuscript; locators UNVERIFIED, no network on this host).
 
 ## 5. Re-sourcing R2 to `Y₃ → P¹_j` (scope only; not done)
 
@@ -213,6 +236,30 @@ This is a good crowdsourcing target: half a day to a day.
 The consumers read the row through `LeafQM.AV.R1R2fp_Y`: `(Y, Φ, π := π₆ ∘ fY)` with `R1fpProps`, `R1heckeProps`,
 `R2fpProps` (fibres of `π` on `Y₃(ℚ̄)` = `Aut 𝒪`-twist classes, values `0, ∞, −16/27` at the CM points `−4, −3, −24`),
 plus the conjuncts listed by the clause scan (§5.1).
+
+### 5.1 Which conjuncts of the row are read (VERIFIED, `scratch/cm-branch2/ClauseUse.lean`, `clauseuse.txt`)
+
+On the weak-row top, binders whose type is the clause and whose body uses them:
+
+| clause | readers (constants) | main readers |
+|---|---|---|
+| `R5ptProps` | 0 | — (pruned) |
+| `R5fp` (the bundle field `r5`) | 0 | — |
+| `X6ConicModel` (the added field `x6ConicModel`) | 0 | — (NoCM only) |
+| `R1fpProps` | 88 | everywhere (`Y₃` itself) |
+| `R2fpProps` | 50 | `TSHecke.*`, `SGRDirect.*`, period maps, `KernelField.*`, `CMBranch.cmBranchOut_of` |
+| `X6Props` | 41 | `ElkiesPrint.*`, `X6ALIdeal.*`, `x6Props_transport`, `gonzalezRotgerX6Ab_r5_of_coarse` |
+| `R1heckeProps` | 14 | `TSHecke.*`, `PropTSGlue.*`, `PeriodGlue.twistOrbitFinite_of` |
+| `R2X6Props` | 9 | `R2fpProps_of_X6`, `exists_fibre_object_r5`, `residue_unramified_over_branch_r5`, `cm_of_val` |
+| `R2X6PropsIff` | 7 | `babaGranathX6_of`, `hauptmodulOfX6_of`, `cmExists_of_iff` |
+| `X6Surj` | 6 | `exists_fibre_object_r5`, `Pin.cm_objects_of_R1R2fp_r5`, `GapST.cm_pointW_r5`, `pairsLift_of_rep_r5` |
+| `CMExists` | 5 | `residue_unramified_over_branch_r5`, `Pin.cm_objects_of_R1R2fp_r5`, `cm_of_val`, `hauptmodulUniqueX6S_of` |
+| `R1recProps` | 4 | `residue_unramified_over_branch_r5`, `ShimuraSplit.r1rec_of_point` |
+
+So a `Y₃`-only re-source must supply, on `Y₃`: `R2fpProps` (fibre and CM-value clauses for `π : Y₃ → P¹_j`),
+surjectivity of `π` on `ℚ̄`-points, the existence of the three CM points, and reciprocity at them. The readers that are
+stated on `X₆` data (`exists_fibre_object`, `residue_unramified_over_branch`, `cm_objects_of_R1R2fp`, `cm_of_val`) would
+need `Y₃` forms, i.e. a second weak-row bypass like §3 with the row replaced by its `Y₃` form.
 
 **The manuscript's route** (L421-441): the normalizer `N` of `𝒪̂` acts on the level-3 curve `Y₃` (all determinant
 components) through `N/(𝔸_f^× K₃)`, the quotient is `P¹_j` with branch values `0, ∞, −16/27` and indices `4, 6, 2`
@@ -244,8 +291,8 @@ Buzzard Thm 2.1 / Cor. 2.3 applied to `V₁(5)` over `ℤ[1/30]` (L444-470). `X�
      equivalent" (Baba–Granath);
    - (e) **surjectivity of `π` on `ℚ̄`-points** (the first half of `X6Surj`, used to choose a fibre over `J(u)`, A4):
      immediate from (b) (a non-constant map of proper curves);
-   - (f) **the CM existence clause** `CMExists` (three CM points with the given values): the clause scan (§5.1) says
-     which conjuncts of the row are read on the CM-branch route.
+   - (f) **the CM existence clause** `CMExists` (three CM points with the given values), the reciprocity clause
+     `R1recProps` and the second half of `X6Surj` (`Y₃ → X₆` onto), all read on the route (§5.1).
 3. *What would leave the route*: `x6CoarseModuliIdeal` and `elkiesX6StarEveryIdeal` (and `babaGranathRationalAb`'s
    `X₆` form, `rayClassCMAb` if only used for `X₆`), replaced by (b), (c) (Lin–Yang or Baba–Granath on `Y₃/N`) and
    (d). Net: two GLUE fields out, at least two new leaves in ((b) textbook, (c) printed), plus the glue for (d) unless
@@ -262,8 +309,8 @@ Buzzard Thm 2.1 / Cor. 2.3 applied to `V₁(5)` over `ℤ[1/30]` (L444-470). `X�
   `G0StableBC.StableHeightBaseChange`, proved in the tree and already used by the chain (`hBC` in
   `CMBranch/Open4.lean`). In the CM branch it is built into `CMHeight62`, whose conclusion bounds `h_F^st(E)` by a model over
   the extension `L₁`. No hypothesis is missing.
-* **On-the-spot (L598-599, reduced CM period)**. The manuscript gives no source. The Lean proof (§2.2) follows the
-  classical argument. The lattice of `E^σ(ℂ)` is homothetic to a proper fractional ideal of `End(E) ≅ R` (T35, T11a/b as
+* **On-the-spot (L598-599, reduced CM period)**. The manuscript gives no source. The Lean proof (§2.2, complete, no
+  leaf) follows the classical argument. The lattice of `E^σ(ℂ)` is homothetic to a proper fractional ideal of `End(E) ≅ R` (T35, T11a/b as
   `HomLatticeCorr`, `T11b`). A reduced basis gives `|Re τ| ≤ 1/2` and `|τ| ≥ 1`, hence `Im τ ≥ √3/2`. `τ` is a root of a
   primitive form `(a, b, c')` of discriminant `Δ_R` with `a ≥ 1` (Cox), hence `Im τ = √|Δ_R|/(2a) ≤ √|Δ_R|/2`.
 * **On-the-spot (L620-621, "additivity")**. The manuscript writes "additivity". The half used here (`h(A × Z) ≤ h(A) +
@@ -277,20 +324,28 @@ Buzzard Thm 2.1 / Cor. 2.3 applied to `V₁(5)` over `ℤ[1/30]` (L444-470). `X�
 
 ## 7. The fold
 
-* **Hand fold** (`scratch/cm-branch2/autofold.json`): replace `HDec.HSyn.sixContactMin_of_open72 r t l` in
-  `frozenTarget` by `HDec.HSyn.sixContactMin_of_open72_cmbranch2 r t l ⟨…6 new fields…⟩` (import
-  `ZInQKernel.Contrib.OneProof.CMBranch2`), add the 6 statements to a bundle generation, then run PruneScan:
-  `gonzalezRotgerThm512X6RCF` is carried but unread (§1). The fold cannot be mechanical: no top field is discharged by a
-  proof of its own statement.
+* **The next generation is written** (`ZInQKernel/Contrib/OneProof/CMBranch/Open73.lean`, generated by
+  `scratch/cm-branch2/gen/gen_open73.py`; VERIFIED, compiled, standard axioms, `scratch/cm-branch2/axioms3-out.txt`):
+  ```lean
+  structure HDec.HSyn.OpenResearchLeaves54CM : Prop  -- OpenResearchLeaves53 − gonzalezRotgerThm512X6RCF + 5 CM fields
+  theorem HDec.HSyn.sixContactMin_of_open73_cm (r : OpenResearchLeaves54CM) (t : OpenTextbookLeaves18)
+      (l : OpenAddedLeaves27) : ZInQ.SixContactMin
+  ```
+  The two bundles that carried the field (`OpenResearchLeaves36EBCF`, `35EBCF`) are copied without it (`_cm`), with the
+  three conversions verbatim minus that line. A closure scan of `sixContactMin_of_open73_cm` (`gruse73-out.txt`) finds no González–Rotger constant. So the fold is:
+switch `frozenTarget`'s research bundle to
+  `OpenResearchLeaves54CM` and its first argument to `sixContactMin_of_open73_cm r t l`
+  (`scratch/cm-branch2/autofold.json`). It is not the mechanical autofold (no top field is discharged by a proof of its
+  own statement), but it needs no further Lean.
 * **Dry run**: `CMBranch2.lean` itself (VERIFIED: `lake build ZInQKernel.Contrib.OneProof.CMBranch2`, standard axioms,
-  `scratch/cm-branch2/axioms-out.txt`). `#discharges` output: `scratch/cm-branch2/discharges.txt` (§7.1).
-* **Net GLUE change**: GLUE column 0 (+`CMFibreSplit`, −`gonzalezRotgerThm512X6RCF`). New leaves pending review: 5, so
-  the strict count is +5 until they are rated.
+  `scratch/cm-branch2/axioms2-out.txt`). `#discharges` output: `scratch/cm-branch2/discharges.txt` (§7.1).
+* **Net GLUE change**: GLUE column 0 (+`CMFibreSplit`, −`gonzalezRotgerThm512X6RCF`). New leaves pending review: 4
+  (cm-branch's), so the strict count is +4 until they are rated.
 
 ### 7.1 `#discharges` (VERIFIED)
 
 `scratch/cm-branch2/Discharges.lean` (imports Main, Discharges, `CMBranch2`), output `scratch/cm-branch2/discharges.txt`:
-"34 open hypotheses, 17109 theorems checked, 123 discharge one". 19 of them are the pre-existing reductions also
+"34 open hypotheses, 17130 theorems checked, 123 discharge one" (rerun after `CoxProof.lean`). 19 of them are the pre-existing reductions also
 reported on the base (cm-branch reported the same 19). The other 104 are projections of the copied bundle structures
 (`OpenResearchLeavesNGMEB_r5.r9a`, …), which `#discharges` reads as "discharges" because a projection of a structure field
 has the field's type. This is the known noise for copied structures in Contrib modules (raynaud-narrow). No CM-branch
