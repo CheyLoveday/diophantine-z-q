@@ -28,3 +28,4 @@ then ψ has a left inverse and ψ ∘ (χψ)⁻¹ χ = id_N by density. Group ca
     `Smooth.isDomain_and_isIntegrallyClosed_stalk_of_isDiscreteValuationRing`, dim ≤ 1 points in V by
     `mem_of_ringKrullDim_stalk_le_one_of_isDiscreteValuationRing`): v|U'∩V extends to U' → Y.
  F. ψ iso over each U' ; G. iso is local on the target.
+- 16:45 Part1.lean compiles: genMap_ne_closedPoint, ext_of_generic_open, exists_inverse_open (steps A-B: V, v, B1 v≫ψ=ι, B2 (ψ∣V)≫v=ι). VERIFIED (lake env lean, no errors).
