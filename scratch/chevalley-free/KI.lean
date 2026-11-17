@@ -449,9 +449,101 @@ theorem torus_kernel_transfer (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hab]
   rw [lift_unit L (CommRingCat.ofHom rb) _ hx hc1, Category.assoc, ← Over.comp_left, IsMonHom.one_hom]
 
+theorem overMk_inv_mul_left {X S : Scheme.{0}} {f g : X ⟶ S} (hfg : f = g) {V : Over S} [GrpObj V]
+    (a b : X ⟶ V.left) (ha : a ≫ V.hom = f) (hb : b ≫ V.hom = f) :
+    ((Over.homMk a ha : Over.mk f ⟶ V)⁻¹ * Over.homMk b hb).left =
+      ((Over.homMk a (ha.trans hfg) : Over.mk g ⟶ V)⁻¹ * Over.homMk b (hb.trans hfg)).left := by
+  subst hfg; rfl
+
+theorem homEquiv_left {S S' : Scheme.{0}} (g : S' ⟶ S) (X : Over S') (V : Over S)
+    (p : (Over.map g).obj X ⟶ V) :
+    ((Over.mapPullbackAdj g).homEquiv X V p).left =
+      pullback.lift p.left X.hom (by simpa using Over.w p) := by
+  apply pullback.hom_ext
+  · simp [Adjunction.homEquiv_unit]
+  · simp [Adjunction.homEquiv_unit]
+
+theorem homEquiv_inv {K K' : Type} [Field K] [Field K'] (φ : K →+* K')
+    (X : Over (Spec (CommRingCat.of K'))) (V : Over (Spec (CommRingCat.of K))) [GrpObj V]
+    (p : (Over.map (sφ φ)).obj X ⟶ V) :
+    letI : GrpObj ((Over.pullback (sφ φ)).obj V) := Functor.grpObjObj
+    (Over.mapPullbackAdj (sφ φ)).homEquiv X V p⁻¹ = ((Over.mapPullbackAdj (sφ φ)).homEquiv X V p)⁻¹ := by
+  letI : GrpObj ((Over.pullback (sφ φ)).obj V) := Functor.grpObjObj
+  let m : ((Over.map (sφ φ)).obj X ⟶ V) →* (X ⟶ (Over.pullback (sφ φ)).obj V) :=
+    MonoidHom.mk' ((Over.mapPullbackAdj (sφ φ)).homEquiv X V) (homEquiv_mul' φ X V)
+  exact map_inv m p
+
+/-- **Kernel pairs are transport-stable** (`k̄`-level form of `KI`): if two `U`-points `u, v` over a field `L` have
+the same image under `π'` for the `k̄`-structure `ra`, they have the same image for every `rb` with the same
+restriction to `k`. -/
+theorem kbar_KI (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
+    (hπ : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      IsMonHom π') (r : ℕ)
+    (e : letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
+      (Fin r → Rˣ) →* (algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U))
+    (he_ker : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R]
+      (u : algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U),
+      u ≫ π' = 1 ↔ u ∈ (e R).range)
+    (he_nat : ∀ (R S : Type) [CommRing R] [Algebra (AlgebraicClosure k) R] [CommRing S]
+      [Algebra (AlgebraicClosure k) S] (f : R →ₐ[AlgebraicClosure k] S) (t : Fin r → Rˣ),
+      e S (fun i => Units.map (f : R →* S) (t i)) = algPtMap f ≫ e R t)
+    (L : Type) [Field L] (ra rb : AlgebraicClosure k →+* L) (hab : ra.comp (φbar k) = rb.comp (φbar k))
+    (u v : Spec (CommRingCat.of L) ⟶ U.left)
+    (hu : u ≫ U.hom = Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k))
+    (hv : v ≫ U.hom = Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k))
+    (hb : Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) = Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k))
+    (h : pullback.lift u _ hu ≫ π'.left = pullback.lift v _ hv ≫ π'.left) :
+    pullback.lift u _ (hu.trans hb) ≫ π'.left = pullback.lift v _ (hv.trans hb) ≫ π'.left := by
+  letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+  letI := B'.grp
+  haveI := hπ
+  let Φa := (Over.mapPullbackAdj (sφ (φbar k))).homEquiv (Over.mk (Spec.map (CommRingCat.ofHom ra))) U
+  let Φb := (Over.mapPullbackAdj (sφ (φbar k))).homEquiv (Over.mk (Spec.map (CommRingCat.ofHom rb))) U
+  let ua : Over.mk (Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k)) ⟶ U := Over.homMk u hu
+  let va : Over.mk (Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k)) ⟶ U := Over.homMk v hv
+  let ub : Over.mk (Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k)) ⟶ U := Over.homMk u (hu.trans hb)
+  let vb : Over.mk (Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k)) ⟶ U := Over.homMk v (hv.trans hb)
+  -- a-side
+  have ha1 : Φa ua ≫ π' = Φa va ≫ π' := by
+    apply Over.OverMorphism.ext
+    simp only [Over.comp_left, homEquiv_left, Φa]
+    exact h
+  have ha2 : Φa (ua⁻¹ * va) ≫ π' = 1 := by
+    rw [homEquiv_mul', homEquiv_inv, MonObj.mul_comp, GrpObj.inv_comp, ha1, _root_.inv_mul_cancel]
+  letI Ia := ra.toAlgebra
+  obtain ⟨t, ht⟩ := (he_ker L (Φa (ua⁻¹ * va))).mp ha2
+  have hraw : (e L t).left ≫ pullback.fst U.hom (sφ (φbar k)) = (ua⁻¹ * va).left := by
+    rw [ht]
+    change (Φa (ua⁻¹ * va)).left ≫ _ = _
+    rw [homEquiv_left, pullback.lift_fst]
+  -- transfer
+  have htr := torus_kernel_transfer π' hπ r e he_nat L ra rb hab t (by
+    rw [hraw, Over.w (ua⁻¹ * va)]; exact hb)
+  -- b-side
+  have hrawb : (ua⁻¹ * va).left = (ub⁻¹ * vb).left := overMk_inv_mul_left hb u v hu hv
+  have hb2 : Φb (ub⁻¹ * vb) ≫ π' = 1 := by
+    apply Over.OverMorphism.ext
+    rw [Over.comp_left, homEquiv_left]
+    show pullback.lift (ub⁻¹ * vb).left (Spec.map (CommRingCat.ofHom rb)) (Over.w (ub⁻¹ * vb)) ≫ π'.left = _
+    have e1 : pullback.lift (ub⁻¹ * vb).left (Spec.map (CommRingCat.ofHom rb)) (Over.w (ub⁻¹ * vb)) =
+        pullback.lift ((e L t).left ≫ pullback.fst U.hom (sφ (φbar k))) (Spec.map (CommRingCat.ofHom rb))
+          (by rw [hraw, Over.w (ua⁻¹ * va)]; exact hb) := by
+      congr 1; rw [hraw, hrawb]
+    rw [e1, htr, Hom.one_def, Over.comp_left]
+    rfl
+  have hb3 : Φb ub ≫ π' = Φb vb ≫ π' := by
+    rw [homEquiv_mul', homEquiv_inv, MonObj.mul_comp, GrpObj.inv_comp] at hb2
+    exact (inv_mul_eq_one.mp hb2)
+  have := congrArg (fun z => Over.Hom.left z) hb3
+  simp only [Φb, Over.comp_left, homEquiv_left] at this
+  exact this
+
 end KbarKI
 
 end ZInQ.ChevFree
 
 #print axioms ZInQ.ChevFree.rig_raw
 #print axioms ZInQ.ChevFree.torus_kernel_transfer
+#print axioms ZInQ.ChevFree.kbar_KI
