@@ -122,4 +122,137 @@ theorem normSq_tau (h1 : n % 8 = 1) {τ : QNeg n →ₐ[ℚ] ℍ[ℚ]} (hτ : Ad
 
 theorem nrdH_βZ_mod4_one : ∀ t : T8, t.2.2 = 0 → nrdH (βZ t) % 4 = 1 := by decide +kernel
 
+theorem odd_of_coprime_two_mul {m : ℕ} (h : Nat.Coprime m (2 * n)) : m % 2 = 1 := by
+  have h2 : Nat.Coprime m 2 := Nat.Coprime.coprime_dvd_right (dvd_mul_right 2 n) h
+  rcases Nat.mod_two_eq_zero_or_one m with h0 | h0
+  · exact absurd (Nat.Coprime.eq_one_of_dvd (Nat.Coprime.symm h2) (Nat.dvd_of_mod_eq_zero h0))
+      (by norm_num)
+  · exact h0
+
+/-- Valuation parity at an odd place: `A = g c² e`, `e` a unit, gives `v(gA)` even. -/
+theorem even_val_mul {p : ℕ} [Fact p.Prime] {g A : ℚ} (hg : g ≠ 0) (hA : A ≠ 0) {c e : ℚ_[p]} (hc : c ≠ 0)
+    (he : ‖e‖ = 1) (h : (A : ℚ_[p]) = (g : ℚ_[p]) * (c ^ 2 * e)) : Even (padicValRat p (g * A)) := by
+  refine even_padicValRat_of_eq (mul_ne_zero hg hA) (a := (A : ℚ_[p])) (by exact_mod_cast hA) hc he ?_
+  push_cast
+  rw [pow_two]
+  nth_rewrite 1 [h]
+  ring
+
+/-- **`f_n` vanishes on the classes with `Π_{q ∣ n} χ_q = −1`** (`n ≡ 1 (mod 8)`). -/
+theorem tv_zero_of_gchar (hsq : Squarefree n) (h1 : n % 8 = 1) {τ : QNeg n →ₐ[ℚ] ℍ[ℚ]}
+    (hτ : AdmissibleTau n τ) {f : ℍ[AQ] → ℤ} (hf : IsTestVector n τ f) (t : ClassGroup (𝓞 (QNeg n)))
+    (ht : gchar n Finset.univ t = -1) : f ((tauHatU n τ (clLift n t) : ℍ[AQ]ˣ) : ℍ[AQ]) = 0 := by
+  obtain ⟨v, hv, F, hP, hodd, C, hH, hC⟩ := partition_one8 hsq h1 hτ
+  obtain ⟨s, -, hfs⟩ := tv_eq_sign hv hP hf
+  have hF0 := F_zero hv hP hodd C hH hC
+  have hn1 : 1 < 2 * n := by have := NeZero.ne n; omega
+  obtain ⟨I, hIt, hcop⟩ := exists_mk0_coprime_nat hn1 t
+  obtain ⟨α, hα, M, hspan, hM⟩ := exists_alpha I
+  set m := Ideal.absNorm (I : Ideal (𝓞 (QNeg n))) with hmdef
+  have hcl := toClassGroup_aKU hα hspan hM
+  rw [tv_eq_of_toClassGroup_eq hf.1 (x := clLift n t) (y := aKU n m (α : QNeg n) hα)
+    (by rw [toClassGroup_clLift, hcl, hIt])]
+  obtain ⟨t', ht'⟩ := hP.1 (tauHatU n τ (aKU n m (α : QNeg n) hα))
+  rw [hfs _ t' ht']
+  suffices h : t'.2.2 ≠ 0 by rw [hF0 t' h, mul_zero]
+  intro h0
+  have hm2 : m % 2 = 1 := odd_of_coprime_two_mul hcop
+  have hg := gchar_univ_mk0 (by omega) hsq I hcop t hIt
+  rw [ht] at hg
+  have hm3 : m % 4 = 3 := by
+    by_contra hne
+    have h41 : m % 4 = 1 := by omega
+    rw [if_pos h41] at hg
+    norm_num at hg
+  have hβ := nrdH_βZ_mod4_one t' h0
+  obtain ⟨g, hgpos, hoddw, κ, hκ, h2⟩ := dc_norm hv C hH hC ht'
+  have hy : ∀ w, piQ w ((tauHatU n τ (aKU n m (α : QNeg n) hα) : ℍ[AQ]ˣ) : ℍ[AQ]) =
+      if (Pw w : ℕ) ∣ m then qp (Pw w : ℕ) (τ α) else 1 := fun w => piQ_tauHat_aK τ m α w
+  have hNα : Quaternion.normSq (τ (α : QNeg n)) = ((m * Ideal.absNorm M : ℕ) : ℚ) := by
+    have e1 : ((Ideal.absNorm (Ideal.span {α}) : ℕ) : ℤ) = Algebra.norm ℤ α := by
+      rw [Ideal.absNorm_span_singleton, Int.natCast_natAbs, abs_of_nonneg (normZ_nonneg α)]
+    rw [normSq_tau h1 hτ, algNorm_coe, ← e1, hspan, map_mul]
+    push_cast
+    rfl
+  have hNM : Nat.Coprime (Ideal.absNorm M) m := coprime_absNorm_of_sup hM
+  have hm0 : m ≠ 0 := by omega
+  have hNM0 : Ideal.absNorm M ≠ 0 := by
+    intro h; rw [h, Nat.coprime_zero_left] at hNM; omega
+  have hev : ∀ r : ℕ, r.Prime → r ≠ 2 → Even (padicValRat r (g * m)) := by
+    intro r hr hr2
+    have := Fact.mk hr
+    obtain ⟨w, hw⟩ := exists_place_of_prime r hr
+    have hwv : w ≠ v := fun h' => hr2 (by rw [← hw, h']; exact Pw_eq_two hv)
+    obtain ⟨c, e, hc, he, hN⟩ := hoddw w hwv
+    rw [hy w] at hN
+    have hgm : padicValRat r (g * m) = padicValRat r g + padicValRat r (m : ℚ) :=
+      padicValRat.mul hgpos.ne' (by exact_mod_cast hm0)
+    by_cases hrm : r ∣ m
+    · rw [if_pos (hw ▸ hrm), normSq_qp, hNα] at hN
+      have hA : ((m * Ideal.absNorm M : ℕ) : ℚ) ≠ 0 := by exact_mod_cast Nat.mul_ne_zero hm0 hNM0
+      have hE := even_val_mul (p := (Pw w : ℕ)) hgpos.ne' hA hc he (by exact_mod_cast hN)
+      rw [hw] at hE
+      have hrM : ¬ r ∣ Ideal.absNorm M := fun h' =>
+        hr.one_lt.ne' (Nat.eq_one_of_dvd_coprimes hNM h' hrm)
+      rw [Nat.cast_mul, ← mul_assoc, padicValRat.mul (mul_ne_zero hgpos.ne' (by exact_mod_cast hm0))
+        (by exact_mod_cast hNM0), padicValRat.of_nat (n := Ideal.absNorm M),
+        padicValNat.eq_zero_of_not_dvd hrM, Nat.cast_zero, add_zero] at hE
+      exact hE
+    · rw [if_neg (by rw [hw]; exact hrm), map_one] at hN
+      have hE := even_padicValRat_of_eq (p := (Pw w : ℕ)) hgpos.ne' one_ne_zero hc he (by rw [one_pow, hN])
+      rw [hw] at hE
+      rw [hgm, padicValRat.of_nat, padicValNat.eq_zero_of_not_dvd hrm, Nat.cast_zero, add_zero]
+      exact hE
+  have hv2 : ¬ (Pw v : ℕ) ∣ m := by rw [Pw_eq_two hv]; omega
+  rw [hy v, if_neg hv2, map_one] at h2
+  have key : ∀ (p : ℕ) [Fact p.Prime], p = 2 → ∀ (κ : ℚ_[p]) (b : ℤ), Good κ → b % 4 = 1 →
+      (1 : ℚ_[p]) = (g : ℚ_[p]) * ((b : ℤ) : ℚ_[p]) * κ → False := by
+    intro p _ hp
+    subst hp
+    intro κ b hκ hb e2
+    have hgm : Good (((g * m : ℚ)) : ℚ_[2]) := good_rat (mul_pos hgpos (by exact_mod_cast Nat.pos_of_ne_zero hm0)) hev
+    have hgb : Good ((g : ℚ_[2]) * ((b : ℤ) : ℚ_[2])) := by
+      have h1' : Good ((g : ℚ_[2]) * ((b : ℤ) : ℚ_[2]) * κ) := by rw [← e2]; exact Good.one
+      exact h1'.of_mul_right hκ
+    have hg0 : (g : ℚ_[2]) ≠ 0 := by exact_mod_cast hgpos.ne'
+    have hmb : Good ((((m : ℤ) * b : ℤ)) : ℚ_[2]) := by
+      have e3 : ((((m : ℤ) * b : ℤ)) : ℚ_[2]) =
+          ((g * m : ℚ) : ℚ_[2]) * ((g : ℚ_[2]) * ((b : ℤ) : ℚ_[2])) / (g : ℚ_[2]) ^ 2 := by
+        push_cast; field_simp
+      rw [e3]
+      exact (hgm.mul hgb).div (good_sq hg0)
+    have hmod : ((m : ℤ) * b) % 4 = 3 := by
+      rw [Int.mul_emod, hb]
+      have : (m : ℤ) % 4 = 3 := by exact_mod_cast hm3
+      rw [this]; rfl
+    exact not_good_int hmod hmb
+  exact key _ (Pw_eq_two hv) κ _ hκ hβ h2
+
+theorem gchar_eq_one_or (T : Finset n.primeFactors) (c : ClassGroup (𝓞 (QNeg n))) :
+    gchar n T c = 1 ∨ gchar n T c = -1 := by
+  unfold gchar
+  refine Finset.prod_induction _ (fun x => x = 1 ∨ x = -1) ?_ (Or.inl rfl) ?_
+  · rintro a b (rfl | rfl) (rfl | rfl) <;> simp
+  · intro q _; unfold sgn2; split_ifs <;> simp
+
+/-- **TYZ Lemma 2.8** (`TYZLemma28Sym`), proved: `P(d₁, d₂) = P(d₂, d₁)` for `n ≡ 1 (mod 8)`. -/
+theorem tyzLemma28Sym : TYZLemma28Sym := by
+  intro n _ hsq _ h8 τ hτ f hf d₁ d₂ hd _
+  have hd2 : d₂ ∣ n := ⟨d₁, by rw [← hd, mul_comm]⟩
+  have hd2pos : 0 < d₂ := Nat.pos_of_dvd_of_pos hd2 (Nat.pos_of_ne_zero (NeZero.ne n))
+  have hd1 : d₁ = n / d₂ := by rw [← hd, Nat.mul_div_cancel _ hd2pos]
+  unfold quadPeriod
+  rw [hd1, divSet_div hsq hd2]
+  refine Finset.sum_congr rfl fun t _ => ?_
+  have hprod : gchar n Finset.univ t = gchar n (divSet n d₂) t * gchar n (divSet n d₂)ᶜ t := by
+    unfold gchar; rw [Finset.prod_mul_prod_compl]
+  rcases gchar_eq_one_or Finset.univ t with hu | hu
+  · congr 1
+    rcases gchar_eq_one_or (divSet n d₂) t with h | h <;> rw [h] at hprod ⊢ <;> linarith
+  · rw [tv_zero_of_gchar hsq h8 hτ hf t hu, mul_zero, mul_zero]
+
+/-- **`hL29` from TYZ Theorem 2.1 alone.** -/
+theorem tyzLemma29PrintedNe3_of_thm21Pairs (h21 : TYZThm21Pairs) : TYZLemma29PrintedNe3 :=
+  tyzLemma29PrintedNe3_of_genus h21 tyzLemma28Sym
+
 end ZInQ.Contrib.TYZGenusFold
