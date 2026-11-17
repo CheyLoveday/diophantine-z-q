@@ -18,3 +18,14 @@ Base wip/leaf-fold33b c0f3d085c (= origin/main; not moved). Render_open count at
      (h1 : PicRepresentableAbVar) (hK : KleimanPicZeroProper) : HodgeSplit.HodgeTateDecompAbVar`.
    Build oleans copied (reflink) from ~/dzq-wt/lcal-one (byte-identical Main.lean, ZInQKernel differs only by its own
    Contrib files).
+3. `lake build ZInQKernel.Contrib.OneProof.HodgeTatePairingCharZero` (12981 jobs) succeeded (VERIFIED);
+   `hodgeTateDecompAbVar_of_leaves0`, `t09SymmIsogenyExists0_of_open`, `hodgeTateDecompAbVar_of_open` depend on
+   [propext, Classical.choice, Quot.sound].
+4. `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` (14227 jobs) ok; `scratch/fold34-ht/Discharges.lean`
+   (output `Discharges-output.txt`): `DISCHARGES [OpenResearchLeaves31.hodgeTateDecompAbVar] by
+   ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompAbVar_of_open still assumes: [HodgeTateDecompExists,
+   AvSplit.MumfordTorsionAlgClosed, T09Pic.PicRepresentableAbVar, PicFix.KleimanPicZeroProper]`, standard axioms
+   (VERIFIED). `#discharges: 35 open hypotheses, 9864 theorems checked, 35 discharge one`.
+5. Autofold spec `scratch/fold34-ht/autofold.json` (field hodgeTateDecompAbVar; new research leaf hodgeTateDecompExists,
+   kind published, flag "unread: new printed leaf (...); locator UNVERIFIED"). `--dry-run`
+   (`autofold-dryrun.txt`): strict count 11/18 on 29 -> 12/17 on 29; strictest 11/18 -> 12/17 (VERIFIED).
