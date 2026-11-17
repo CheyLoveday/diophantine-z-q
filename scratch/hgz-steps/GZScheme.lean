@@ -411,4 +411,53 @@ theorem exists_cusp {N : ℕ} [NeZero N] (X : Scheme.{0}) [IsIntegral X]
   rw [← hθ s]
   exact (θ s).2
 
+
+/-! ## §7. Model existence and points `τ` (to be proved) -/
+
+theorem exists_model (N : ℕ) [NeZero N] : ∃ (X : Scheme.{0}) (_ : IsIntegral X)
+    (sX : X ⟶ Spec (CommRingCat.of ℚ)), IsProper sX ∧ ZInQ.Contrib.CurvesG.IsNormalScheme X ∧
+      topologicalKrullDim X = 1 ∧ Nonempty (X.functionField ≃+* X0Field N) := by
+  sorry
+
+theorem exists_pointAt {N : ℕ} [NeZero N] (X : Scheme.{0}) [IsIntegral X]
+    (sX : X ⟶ Spec (CommRingCat.of ℚ)) [IsProper sX] (e : X.functionField ≃+* X0Field N) (τ : ℍ) :
+    ∃ x : Spec (CommRingCat.of ℂ) ⟶ X, IsPointAt N e τ x := by
+  sorry
+
+/-! ## §8. The bridge -/
+
+theorem twist_eq (N : ℕ) [NeZero N] (f : Newform N 2) {D : ℤ} (hD : ZInQ.GZDecomp.IsOddImagFundDisc D) :
+    (fun m => ZInQ.GZDecomp.coeff f m * (ZInQ.HGZSteps.epsD D m : ℂ)) = ZInQ.GZDecomp.twistCoeff f D := by
+  funext m
+  simp [ZInQ.GZDecomp.twistCoeff, ZInQ.GZDecomp.chiD, ZInQ.HGZSteps.epsD_eq_jacobiSym hD.1 hD.2.1]
+
+/-- **The bridge: gz-dict2's plane-model leaf from the curve leaf.** -/
+theorem grossZagierPlaneOptCd_of_curve (h : GrossZagierCurveCd) : GZDict2.GrossZagierPlaneOptCd := by
+  intro d hd hsq E' _ hE' hL N _ f hχ hf φ hord Px Qx Py Qy hrx hry _hopt D β hD hD4 hH hβ R _ τ hτ
+    K _ _ _ hK δ hδ ιK hιK n hn y hy F G hF hG
+  obtain ⟨X, hXi, sX, hprop, hN, hdim, ⟨e⟩⟩ := exists_model N
+  haveI : LocallyOfFiniteType sX := inferInstance
+  haveI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian sX
+  have hv := valuationRing_stalk_of_normal X hN hdim
+  obtain ⟨π, hπ⟩ := exists_extension E' X sX hv (uOf φ e)
+  choose x hx using fun r => exists_pointAt X sX e (τ r)
+  obtain ⟨pinf, hpinf⟩ := exists_cusp X sX e
+  refine h d hd hsq E' hE' hL N f hχ hf X sX hprop hN hdim e π (specQ_ext _ _)
+    ⟨genericPoint X, pinf, fun heq => cusp_not_mem_chart φ e π hπ hord pinf hpinf
+      (heq ▸ generic_mem_chart φ e π hπ)⟩
+    (cusp_not_mem_chart φ e π hπ hord) D β hD hD4 ?_ hβ R τ hτ x hx K hK δ hδ ιK hιK n hn y ?_
+    F G hF ?_
+  · intro p hp hpN
+    rw [ZInQ.HGZSteps.epsD_prime_eq_one_iff hD.1 hD.2.1]
+    exact hH p hp hpN
+  · rw [hy]
+    congr 1
+    exact Finset.sum_congr rfl fun r _ =>
+      (ptOf_eq_modPt φ hv e π hπ hrx hry (τ r) (x r) (hx r)).symm
+  · rw [twist_eq N f hD]; exact hG
+
+/-- **What `frozenTarget` reads (`hGZ`), from the curve leaf.** -/
+theorem grossZagierAlgOptCd_of_curve (h : GrossZagierCurveCd) : GZAlg.GrossZagierAlgOptCd :=
+  GZDict2.grossZagierAlgOptCd_of_plane (grossZagierPlaneOptCd_of_curve h)
+
 end ZInQ.GZSch
