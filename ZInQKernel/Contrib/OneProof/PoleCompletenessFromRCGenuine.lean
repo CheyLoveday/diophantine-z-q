@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRC
 import ZInQKernel.Contrib.OneProof.PoleS12.Realization
 import ZInQKernel.Contrib.OneProof.PoleS12.Leaves
+import ZInQKernel.Contrib.OneProof.PoleS12.CountS12
 
 /-!
 # Theorem 5.2 from the printed Theorem 5.3 (fork issue #83, round 2)
@@ -28,13 +29,28 @@ namespace ZInQ.Manuscript.PoleS12
 
 open ZInQ.Manuscript.PoleRC ZInQ.Manuscript.SelmerTwoPower
 
-/-- **Theorem 5.2 from the printed Theorem 5.3** (`diophantine_zq.tex` L1019–1121). -/
-theorem poleCompleteness_of_restrictedConverseGenuine (hRC : RestrictedConverseGenuine)
+/-- **Theorem 5.2 from the printed Theorem 5.3, with round 1's local-image Props** (kept for
+comparison; superseded by `poleCompleteness_of_restrictedConverseGenuine`). -/
+theorem poleCompleteness_of_restrictedConverseGenuine_local (hRC : RestrictedConverseGenuine)
     (h54 : Lemma54) (hKum : KummerSelmerM) (hB : BCDTThmA) (hK : KolyvaginThm1)
     (hMW : MordellWeil) (hTwo : LocalTwo) (hThree : LocalThree) (hBad : LocalBad)
     (hGood : LocalGood) : Manuscript.PoleCompleteness :=
   poleCompleteness_of_restrictedConverse_final SelmerCorankOne hRC
     (lemma54At_of_printed h54 hKum) (kolyvaginRankOne_of_printed hB hK) hMW matrixRealization
     hTwo hThree hBad hGood
+
+/-- **Theorem 5.2 from the printed Theorem 5.3** (`diophantine_zq.tex` L1019–1121): the final
+form. Proved in Lean: the bookkeeping, the rescaling, the complete 2-descent, `MatrixRealization`
+(S12 `par:simultaneous-matrices`), every necessary local condition and the local solubility of
+the eight classes at `2`, `3`, `ℝ` and the primes of `ℓ` (S12 `par:descent`). Remaining:
+Theorem 5.3 (`RestrictedConverseGenuine`), the printed leaves `Lemma54`, `BCDTThmA`,
+`KolyvaginThm1`, `MordellWeil`, and the GLUE statements `KummerSelmerM` (the Kummer
+identification `#Sel₂(E_ℓ/ℚ) = #SelM ℓ`) and `LocalGoodUnram` (unramified classes are local at
+primes of good reduction). -/
+theorem poleCompleteness_of_restrictedConverseGenuine (hRC : RestrictedConverseGenuine)
+    (h54 : Lemma54) (hKum : KummerSelmerM) (hB : BCDTThmA) (hK : KolyvaginThm1)
+    (hMW : MordellWeil) (hG : LocalGoodUnram) : Manuscript.PoleCompleteness :=
+  poleCompleteness_of_restrictedConverse SelmerCorankOne hRC (lemma54At_of_printed h54 hKum)
+    (kolyvaginRankOne_of_printed hB hK) hMW descentGlueM matrixRealization (dimThreeCount_S12 hG)
 
 end ZInQ.Manuscript.PoleS12

@@ -29,3 +29,16 @@
   Tau Ceti's Sha from SelmerTwoPower), Lemma54 (over selmerAt E 1 and SelmerCorankOne),
   KummerSelmerM (#selmerAt (curve l) 1 = #SelM l; textbook GLUE), lemma54At_of_printed,
   kolyvaginRankOne_of_printed, selM_support / selM_finite (support bound (e)). COMPILED.
+
+## Local images following S12 par:descent
+- TwoAdic.lean: `locM_two_even` / `two_adic_odd` (S12 L364-379, incl. the mod-8 step decided over
+  ZMod 8). COMPILED.
+- NecS12.lean: `necAt_S12 : NecAt l` (every necessary local condition PROVED; b = 1 mod 4 derived
+  from the bad-prime equations via 1^T K = 0, S12 L416-418). COMPILED.
+- Suff.lean: `locM_cand` (candidates are torsion classes times squares), `sqClass_at_bad`
+  (c | l with K 1_c = 0 is 1 or l modulo squares at q | l; S12 L444-446), `sqClass_three`,
+  `cand_mem_S12`. `LocalGoodUnram` stated (GLUE). COMPILED.
+- CountS12.lean: `dimThreeCount_S12 : LocalGoodUnram -> DimThreeCount`. COMPILED.
+- Final: `poleCompleteness_of_restrictedConverseGenuine (hRC : RestrictedConverseGenuine) (Lemma54)
+  (KummerSelmerM) (BCDTThmA) (KolyvaginThm1) (MordellWeil) (LocalGoodUnram)`. COMPILED, standard axioms.
+  Round 1's LocalTwo/LocalThree/LocalBad/LocalGood are no longer hypotheses.
