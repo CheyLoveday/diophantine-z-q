@@ -69,6 +69,12 @@
       "exit_code": 0,
       "evidence": "local/odproof.json",
       "note": "No authenticated Lean verification"
+    },
+    {
+      "command": "python3 -B scripts/prepare_issue74.py --output /tmp/issue74-prepared-integrated",
+      "exit_code": 0,
+      "evidence": "local/preparation-integrated.json",
+      "note": "Prepared on the integrated source commit; no Lean execution"
     }
   ],
   "open_gates": {

@@ -1,0 +1,10 @@
+{
+  "source_commit": "849730e1e0a1a9612065547e112fa3369295ed82",
+  "source_index_sha256": "4fe0ba819bac17d547125411259e646650d47853b63d8729bfce67205c3781c8",
+  "input_manifest_sha256": "30ea80360ee98bc4ede6ae36268b2ae166e5b08155d7f9f791d6d325bb62c062",
+  "solution_files": 7574,
+  "reference_files": 7574,
+  "result": "PREPARED_ONLY",
+  "lean_executed": false,
+  "implementation_identity": "Same SOURCE.json in the later evidence-only commit; native execution remains pending"
+}
