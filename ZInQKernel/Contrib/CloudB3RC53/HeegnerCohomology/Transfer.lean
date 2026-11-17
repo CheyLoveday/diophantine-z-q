@@ -281,6 +281,58 @@ theorem kummer_weighted_sum (k : ℤ) (Q Qt : M) (hQ : k • Qt = Q) :
   rw [← h]
   simp [dInh, T, sub_eq_add_neg]
 
+/-! ## Localization: the decomposition-group orbit terms (the local Mackey formula) -/
+
+/-- The partial transfer over a subset `O ⊆ Δ`: `∑_{δ ∈ O} R(r_{g_0⋯g_{n-1}δ}) c(h-tuple)`. -/
+def TO (O : Finset (G ⧸ H)) (n : ℕ) (c : (Fin n → H) → M) (g : Fin n → G) : M :=
+  ∑ δ ∈ O, R H ρ θ (r (((tprod n g : G) : G ⧸ H) * δ)) (c (hTuple H r hr n δ g))
+
+theorem T_eq_TO_univ (n : ℕ) (c : (Fin n → H) → M) :
+    T H r hr ρ θ n c = TO H r hr ρ θ Finset.univ n c := rfl
+
+omit [Fintype (G ⧸ H)] in
+/-- **The orbit terms are cochain maps on the decomposition group** (tex 3251–3256: "localizing
+(H21) separates the cosets into decomposition-group orbits: this is the local Mackey formula, a
+sum of the local corestrictions from the transported places"), `PROVED` in every degree: for a
+subgroup `D ≤ G` (the decomposition group at a place) and a `D`-stable subset `O ⊆ Δ` (a union of
+`D`-orbits), the partial transfer over `O` commutes with the differentials on `D`-cochains. -/
+theorem dTO_eq_TOd (D : Subgroup G) (O : Finset (G ⧸ H))
+    (hO : ∀ d ∈ D, ∀ δ ∈ O, ((d : G) : G ⧸ H) * δ ∈ O)
+    (n : ℕ) (c : (Fin n → H) → M) (g : Fin (n + 1) → D) :
+    dInh (fun x m => R H ρ θ x m) n (TO H r hr ρ θ O n c) (fun i => (g i : G)) =
+      TO H r hr ρ θ O (n + 1) (dInh (fun (x : H) m => ρ (x : G) m) n c) (fun i => (g i : G)) := by
+  simp only [TO, dInh, map_add, map_sum, map_zsmul, sum_add_distrib]
+  congr 1
+  · refine sum_congr rfl fun δ _ => ?_
+    rw [hTuple_tail, hTuple_zero, ← Module.End.mul_apply (R H ρ θ _) (ρ _), tprod_succ,
+      QuotientGroup.mk_mul, mul_assoc, R_r_mul_hc H r hr ρ θ, Module.End.mul_apply]
+  · rw [sum_comm]
+    refine sum_congr rfl fun j _ => ?_
+    rw [← smul_sum]
+    congr 1
+    refine Fin.lastCases ?_ (fun j => ?_) j
+    · simp only [hTuple_contract_last]
+      symm
+      set x : G ⧸ H := ((g (Fin.last n) : G) : G ⧸ H)
+      refine Finset.sum_nbij' (fun δ => x * δ) (fun δ => x⁻¹ * δ)
+        (fun δ hδ => hO _ (g (Fin.last n)).2 δ hδ)
+        (fun δ hδ => by
+          have := hO _ (D.inv_mem (g (Fin.last n)).2) δ hδ
+          simpa [x] using this)
+        (fun δ _ => by simp) (fun δ _ => by simp) (fun δ _ => ?_)
+      rw [tprod_contract_last n, QuotientGroup.mk_mul, mul_assoc]
+    · refine sum_congr rfl fun δ _ => ?_
+      rw [hTuple_contract_castSucc, tprod_contract_castSucc]
+
+/-- The Mackey decomposition: for a partition of `Δ` into finitely many subsets (the
+`D`-orbits), the transfer is the sum of the orbit terms (tex 3251–3253). -/
+theorem T_eq_sum_TO [DecidableEq (G ⧸ H)] {ι : Type*} (s : Finset ι) (O : ι → Finset (G ⧸ H))
+    (hdisj : (s : Set ι).PairwiseDisjoint O) (hcover : s.biUnion O = Finset.univ)
+    (n : ℕ) (c : (Fin n → H) → M) (g : Fin n → G) :
+    T H r hr ρ θ n c g = ∑ i ∈ s, TO H r hr ρ θ (O i) n c g := by
+  rw [T_eq_TO_univ, TO, ← hcover, Finset.sum_biUnion hdisj]
+  rfl
+
 end TwistedTransfer
 
 /-- **Node (H21) in every degree**, tex 3237–3244 (ex:arith-finite-heegner, paragraph 7),
