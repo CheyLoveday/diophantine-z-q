@@ -18,3 +18,5 @@ leaf; autofold dry run (`scratch/derham-direct/autofold.json`): strict 16/15 →
 
 **Remains.** Reviewer confirmation of the reading (leaf flagged "pending review"; autofold counts it LEAF per the
 integrator's ruling); the fold itself. Report: `docs/research/derham-direct.md`.
+
+Commits on wip/derham-direct: d345a7efc .. df14c1c83 (base 2da302cd7); build tree in the worktree is current after the docstring edit.
