@@ -51,7 +51,7 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 
 5. **Count.** `r16CoreY` (GLUE) leaves. `heckeJ1DS`, `afShimura`, `afCharpolyDS965` and `igusaGL2DS` (all
    published, LEAF) enter. **−1 GLUE**: 11/18 on 29 → 15/17 on 32 (LEAF/GLUE), against r16-close's 15/18 on
-   33. Dry run in §3 (DRYRUN_PLACEHOLDER).
+   33. Dry run (§3): `strict count: 11/18 on 29 -> 15/17 on 32; strictest 11/18 -> 15/17`, and the generated `sixContactMin_of_open49` compiles with standard axioms.
 
 ## 1. What each candidate prints
 
@@ -78,7 +78,28 @@ No `sorry`, `axiom` or build-time code.
 
 ## 3. Checks (VERIFIED, one Lean process at a time)
 
-CHECKS_PLACEHOLDER
+| check | command | outcome |
+|---|---|---|
+| contribution | `lake build +ZInQKernel.Contrib.OneProof.R16CoreYDS965` | `Build completed successfully (11359 jobs)` |
+| main chain | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` | exit 0 |
+| target copy | `lake env lean scratch/r16-det/Target.lean` | verbatim copy of `R16Split.R16CoreY` (diff against `R16Split.lean` empty), `copy_iff := Iff.rfl`, `'R16DetTarget.r16CoreY_copy' depends on axioms: [propext, Classical.choice, Quot.sound]` |
+| `#discharges` | `lake env lean scratch/r16-det/Discharges.lean` (`Discharges-output.txt`) | below |
+| fold dry run | `python3 scripts/one_proof/autofold.py scratch/r16-det/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/r16-det/FoldDryRun.lean` | `strict count: 11/18 on 29 -> 15/17 on 32; strictest 11/18 -> 15/17`; `'HDec.HSyn.sixContactMin_of_open49' depends on axioms: [propext, Classical.choice, Quot.sound]` (printed twice: one `#print axioms` line was appended to the generated file, which already has one) |
+
+```
+DISCHARGES [OpenResearchLeaves31.r16CoreY] by AfTateLam.r16CoreY_of_ds965
+  still assumes: [AfTateLam.HeckeJ1DS,
+ AfTateLam.AfShimura,
+ AfTateLam.AfCharpolyDS965,
+ X1Igusa.IgusaGL2DS,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 35 open hypotheses, 10345 theorems checked, 45 discharge one
+'AfTateLam.afDetLambda_of_ds965' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+The spec keeps `{t}.mumfordTorsionAlgClosed` (an open textbook LEAF on main). After fold34-pr has folded PR #54,
+substitute `_root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof`.
 
 ## 4. Leaf ratings
 

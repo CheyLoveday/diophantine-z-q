@@ -10,3 +10,7 @@
 - Exercise 9.6.3 (2005 p. 397; 2016 p. 409): (a) det from charpoly for 9.6.5's rho; (b) converse.
 - Consequence: AfTateLam.AfTateDSLambda (charpoly over K_{f,lambda}) is DS Thm 9.6.5 at k = 2 for the 9.5 realization; AfDetLambda is its constant term (det = constant coeff of a degree-2 charpoly).
 - R16CoreYDS965.lean: lake build +ZInQKernel.Contrib.OneProof.R16CoreYDS965 -> Build completed successfully (11359 jobs) (VERIFIED). Contents: AfCharpolyDS965 (leaf, = AfTateDSLambda verbatim, afCharpolyDS965_iff Iff.rfl), det_finrank_of_charpoly, afDetLambda_of_ds965 (hM, h : AfCharpolyDS965 -> AfDetLambda), r16CoreY_of_ds965.
+- Target.lean: verbatim copy (diff empty), Iff.rfl, r16CoreY_copy standard axioms (VERIFIED).
+- Discharges.lean: DISCHARGES [OpenResearchLeaves31.r16CoreY] by AfTateLam.r16CoreY_of_ds965, still assumes HeckeJ1DS, AfShimura, AfCharpolyDS965, IgusaGL2DS, MumfordTorsionAlgClosed; standard axioms; "#discharges: 35 open hypotheses, 10345 theorems checked, 45 discharge one" (VERIFIED).
+- Fold dry run: strict count 11/18 on 29 -> 15/17 on 32 (-1 GLUE vs r16-close 15/18); sixContactMin_of_open49 standard axioms (VERIFIED).
+- Shimura 1971 Thm 7.14, Ribet 1977: not on host, unread (UNVERIFIED). Weil-pairing route not pursued (print found).
