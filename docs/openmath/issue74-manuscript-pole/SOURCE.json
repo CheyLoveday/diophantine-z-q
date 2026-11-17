@@ -1,5 +1,6 @@
 {
   "base_commit": "bf691da2236b494bb429caabc2f907d4ea428c4d",
+  "integration_base_commit": "74395dcf08150196fb55fe85f6571ad6c6d42be1",
   "scope": "Implementation sources, local/vendor source and trusted verification inputs; no cache or returned evidence",
   "sha256": {
     "ThirdParty/GreenTao/ChallengeDeps.lean": "996bfc179f93078686a6a805adfc072727bbad1b7dbb59a87b2a0adafdb9fafe",
@@ -4413,6 +4414,7 @@
     "ZInQKernel/Contrib/OneProof/CharPolyPort/Vendor/AnthropicFLT/Theorems/Thm_IsLocalRing_flat_of_isScalarTower_of_flat_of_flat_quotient_maximalIdeal_map_univ.lean": "15d0dcb3187684c0c46e64282477dfcf27edac0a3f149cf25cbb17efd526afa8",
     "ZInQKernel/Contrib/OneProof/CharPolyPort/Vendor/AnthropicFLT/Theorems/Thm_Module_flat_of_isLocalHom_of_isNoetherianRing_of_finite_of_tor_one_residueField_isZero_univ.lean": "e29672e75aba6c0db9d08c4df95ef510e0e436c29bfd05f41a6fc5163eb68149",
     "ZInQKernel/Contrib/OneProof/CharPolyPort/Vendor/AnthropicFLT/Theorems/Thm_MvPolynomial_isHomogeneous_of_forall_eval_intCast_mul_eq_pow_mul.lean": "a3ccc01704658888d09f49095b38beedab641d05c56f29f6c2cd09ee71d75b8c",
+    "ZInQKernel/Contrib/OneProof/ChevalleyFree.lean": "5a87308747af01eb9537738ff2dfbdc513a2f4e3522e83c8bd9a2a2cf7d41abf",
     "ZInQKernel/Contrib/OneProof/CoeffRational.lean": "8c19bbd5f920ae2aad0e3dec306d576265c563cbfe3ac71cbb483a0a37ec1d95",
     "ZInQKernel/Contrib/OneProof/ConstantFieldExtensionUnramifiedFinite.lean": "c4843491150c8b6386d7cfab56b4ff41ee24557f0fef7c15704d0d354b7f4d88",
     "ZInQKernel/Contrib/OneProof/CurveModelUnique.lean": "c266592acdb4f2a1b3757ce448eebabfc6a41bdff8b4549824e6278f321f4069",
@@ -7381,7 +7383,7 @@
     "docs/openmath/issue74-manuscript-pole/ARCHIVE.md": "a9f225246e5ee1d44bc4e188d5670d96e5daa85f40fcb1b75f0d26e8fdfe6ba7",
     "docs/openmath/issue74-manuscript-pole/AxiomCheck.lean": "896c33f63a70574474df2011f4a9f3bda96ccfdbd01e105fd49ab795379ca60e",
     "docs/openmath/issue74-manuscript-pole/DischargeCheck.lean": "4cc2b268aeedf3640c1eb5c4afb758f5a3da46efec253c26fbf5cc7a765465e6",
-    "docs/openmath/issue74-manuscript-pole/HANDOFF.md": "f8b170dbbb5c8e2d870d8c16133ca281f7f9d3c2e19d6d71e2acc80e32cba5d1",
+    "docs/openmath/issue74-manuscript-pole/HANDOFF.md": "fcb0dea18135a4dc98c6dc529f76e6f49894910ad14113a7c5ed843635796b2c",
     "docs/openmath/issue74-manuscript-pole/Packet.lean": "c4e02e7e4cbf64504fd9334e151d93d7ca6fb9626b3606734c44e0d518b16630",
     "docs/openmath/issue74-manuscript-pole/SPEC.md": "c87c91e2c4628c6b30e8d385666c8df7e029de5ccb6a96eac278acb793cc156d",
     "docs/openmath/issue74-manuscript-pole/comparator.json": "9a6cd5b83a51eb46310c4ef1989d454ef075db1e07d02e15b84522d4242773fe",

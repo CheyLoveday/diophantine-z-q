@@ -13,9 +13,9 @@ PC is unrefereed and remains assumed. Route AP and CAT₈ remain departures from
 <!-- open-count:begin -->
 **31 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves48`), plus 1 hypotheses outside H listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 4 published / 27 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 5 published / 26 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 **Provisional: fresh Lean extraction is pending for the route transition.**
-* By kind: consequence 22, published 9.
+* By kind: consequence 21, published 10.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 

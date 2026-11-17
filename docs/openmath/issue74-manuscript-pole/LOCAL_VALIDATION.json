@@ -2,7 +2,7 @@
   "date": "2026-11-17",
   "base_commit": "bf691da2236b494bb429caabc2f907d4ea428c4d",
   "scope": "Local source preparation and focused compilation only; release assurance INCOMPLETE",
-  "source_index_sha256": "1d82a864700feb19b39834f4cb4af6379620bbbf0c43c6d9d0168c533958e3ab",
+  "source_index_sha256": "4fe0ba819bac17d547125411259e646650d47853b63d8729bfce67205c3781c8",
   "checks": [
     {
       "command": "lake build +ZInQKernel.Hypotheses.PoleManuscript +ZInQKernel.Multiplication.Certificate.Parity +ZInQKernel.Syntax.Templates.Core +ZInQKernel.Size.Majorants.Templates",
@@ -81,5 +81,7 @@
     "route_k_verified_tag_in_target_fork": "PENDING"
   },
   "remote_execution": "NOT_DISPATCHED; user routes handoff to Open Math OS",
-  "merge_status": "NOT_MERGED"
+  "merge_status": "NOT_MERGED",
+  "integration_base_commit": "74395dcf08150196fb55fe85f6571ad6c6d42be1",
+  "reuse_after_merge": "Focused Lean source, relevant import closures, H sources, accepted helpers and pins remain byte-identical; incoming standalone ChevalleyFree module is not imported by the checked targets."
 }

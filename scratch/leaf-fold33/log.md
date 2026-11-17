@@ -396,3 +396,7 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     H 4/29 on 33 -> 4/27 on 31. Checks (VERIFIED): build +Main +Discharges (16215 jobs); frozenTarget standard axioms;
     check_target.py; only Main.lean modified among existing OneProof modules; OpenStatements 36 (both fields gone);
     DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+42. Reviewer rating (inbox 53, cove-88 q21 rate + verify): igusaGL2DSGalSome LEAF/LEAF, kind published, flag the
+    reading text of inbox 53 (no unread marker; must_be_glue false), rated_by "q21-igusa-rate + q21-igusa-verify".
+    Provenance: DS is not in the manuscript's bibliography (off-route; folded because it was already done). H 4/27 ->
+    5/26 on 31. render_open --check ok, crosswalk --check ok.

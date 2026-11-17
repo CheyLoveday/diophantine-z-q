@@ -7,6 +7,18 @@ The [specification](SPEC.md), [comparison configuration](comparator.json),
 [reference overlay](reference/overlay), [export roots](export-roots.txt) and
 [source index](SOURCE.json) belong to this PR. No separate review pack is needed.
 
+## Coordination update — 17 November 2026
+
+[Jack's 14:26 update](https://github.com/Deicyde/diophantine-z-q/issues/74#issuecomment-6950868382)
+assigns #76–78 builds and automatic landing to the project's build hosts. This
+branch is a candidate contribution for that process; it does not replace the
+project's integration authority. The separately active #83 is outside this PR.
+Open Math OS supplies the additional retained paranoid comparison required by
+Chey's verification boundary. No direct main push or automatic merge is requested.
+The branch incorporates main `74395dcf08150196fb55fe85f6571ad6c6d42be1`;
+that update adds an unconsumed contribution and preserves the H types used here.
+Its new Igusa rating is retained in the generated board.
+
 ## Fetch, review and prepare
 
 Fetch `CheyLoveday/diophantine-z-q`, branch
