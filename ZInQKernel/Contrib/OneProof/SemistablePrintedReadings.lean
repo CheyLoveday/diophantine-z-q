@@ -30,6 +30,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open DictModels.RaynaudOr ZInQ.HeightSplit ZInQ.HeightFix ZInQ.R3Residual
+open ZInQ.DefFaltings ZInQ.HeightGlue ZInQ.HeightDict
 open scoped NumberField
 
 set_option linter.style.haveILetI false

@@ -13,3 +13,12 @@
   IsIntegralHom ⇒ UniversallyClosed) and surjective, so U = p(p⁻¹U) closed. (Uses closedness of p rather
   than openness: simpler, same conclusion.)
 - Build of AnalyticStableHeight + SemiAbelianDescendsPerfect started (not built in worktree).
+
+## 11-17 04:24 compile
+- `lake env lean ZInQKernel/Contrib/OneProof/SemistablePrintedReadings.lean`: VERIFIED compiles, no errors,
+  no warnings (after adding `open ZInQ.DefFaltings ZInQ.HeightGlue ZInQ.HeightDict`).
+- Proved (VERIFIED, compiled): `isClosed_range_openSubgroup_field` (any field), `range_eq_connectedComponent`,
+  `hasSemiAbelianG0_of`, `hasSemiAbelianG0Torus_of`, `isSemistableGeomPrinted_of_res` (reading 1, one lemma),
+  `isSemistableResPrinted_of_res` (reading 2), `isSemistablePrinted_of_res`, `isAnStableHeightSS_of`,
+  `bostLowerBoundAn_of_ss`, `gaudronRemondThm14An_of_ss`.
+- autofold spec scratch/semistab-assembly/autofold.json (count-neutral: GLUE consequence -> GLUE consequence).
