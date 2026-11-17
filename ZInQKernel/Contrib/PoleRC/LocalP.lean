@@ -159,4 +159,74 @@ theorem localGood_nec {ℓ : ℕ} {a b : ℤ} (hp6 : ¬ p ∣ 6 * ℓ) (ha : Squ
 
 end Padic
 
+section Three
+
+/-- A squarefree integer that is a square in `ℚ_p` (`p` odd) is a nonzero square mod `p`. -/
+theorem residue_isSquare_of_padic {p : ℕ} [Fact p.Prime] {b : ℤ} (hb : Squarefree b)
+    (h : IsSquare (b : ℚ_[p])) : ¬ (p : ℤ) ∣ b ∧ IsSquare (b : ZMod p) := by
+  have hB0 : (b : ℚ_[p]) ≠ 0 := Int.cast_ne_zero.mpr hb.ne_zero
+  have hnd : ¬ (p : ℤ) ∣ b :=
+    not_dvd_of_sqEq_unit hb norm_one ((sqEq_iff_isSquare_mul hB0 one_ne_zero).mpr (by simpa))
+  refine ⟨hnd, ?_⟩
+  have hu : ‖(b : ℤ_[p])‖ = 1 := by
+    rw [PadicInt.norm_def, PadicInt.coe_intCast]; exact padic_norm_intCast_eq_one hnd
+  obtain ⟨r, -, hr⟩ := exists_padicInt_sq_of_isSquare hu (by rwa [PadicInt.coe_intCast])
+  refine ⟨PadicInt.toZMod r, ?_⟩
+  have := congrArg PadicInt.toZMod hr
+  rwa [map_intCast, map_mul] at this
+
+/-- **`LocalThree`, "only if"**: for `ℓ ≡ 2 (mod 3)`, a locally soluble pair at `3` has
+`b ≡ 1 (mod 3)`. -/
+theorem localThree_nec {ℓ : ℕ} {a b : ℤ} (h3 : ℓ % 3 = 2) (ha : Squarefree a) (hb : Squarefree b)
+    (h : LocM ℚ_[3] ℓ a b) : b % 3 = 1 := by
+  set L : ℚ_[3] := (ℓ : ℚ_[3])
+  set A : ℚ_[3] := (a : ℚ_[3])
+  set B : ℚ_[3] := (b : ℚ_[3])
+  have hA0 : A ≠ 0 := Int.cast_ne_zero.mpr ha.ne_zero
+  have hB0 : B ≠ 0 := Int.cast_ne_zero.mpr hb.ne_zero
+  have hpl : ¬ ((3 : ℕ) : ℤ) ∣ (ℓ : ℤ) := by intro h'; omega
+  have hL : ‖L‖ = 1 := by
+    have := padic_norm_intCast_eq_one (p := 3) hpl; simpa [L] using this
+  have hL0 : L ≠ 0 := by intro h0; rw [h0, norm_zero] at hL; exact zero_ne_one hL
+  -- `−ℓ` is a `3`-adic square
+  have hnL : SqEq (-L) 1 := by
+    have hc : ¬ ((3 : ℕ) : ℤ) ∣ (-(ℓ : ℤ)) := by rwa [dvd_neg]
+    have hres : IsSquare (((-(ℓ : ℤ)) : ℤ) : ZMod 3) := by
+      refine ⟨1, ?_⟩
+      rw [mul_one, Int.cast_neg, Int.cast_natCast, ← ZMod.natCast_mod ℓ 3, h3]; decide
+    have := isSquare_intCast_of_residue (p := 3) (by norm_num) hc hres
+    refine (sqEq_iff_isSquare_mul (neg_ne_zero.mpr hL0) one_ne_zero).mpr ?_
+    simpa [L] using this
+  have hn3L : ‖3 * L‖ < 1 := by
+    rw [norm_mul, hL, mul_one, show (3 : ℚ_[3]) = ((3 : ℕ) : ℚ_[3]) by norm_num, Padic.norm_p]
+    norm_num
+  suffices hB1 : SqEq B 1 by
+    have hsq : IsSquare B := by
+      obtain ⟨s, -, hs⟩ := hB1; exact ⟨s, by rw [hs]; ring⟩
+    obtain ⟨hnd, hres⟩ := residue_isSquare_of_padic (p := 3) hb hsq
+    have hb0 : (b : ZMod 3) ≠ 0 := by rwa [Ne, ZMod.intCast_zmod_eq_zero_iff_dvd]
+    have key : ∀ z : ZMod 3, z ≠ 0 → IsSquare z → z = 1 := by decide
+    have h1 := key _ hb0 hres
+    have := (ZMod.intCast_eq_intCast_iff' b 1 3).mp (by rw [h1]; simp)
+    simpa using this
+  rcases h with ⟨-, hsb⟩ | ⟨x, h₁, h₂, h₃⟩
+  · exact (sqEq_iff_isSquare_mul hB0 one_ne_zero).mpr (by simpa)
+  rcases locM_torsion hL0 hA0 hB0 h₁ h₂ h₃ with ⟨-, hb', -⟩ | ⟨-, ha', hab'⟩ | ⟨-, -, hb'⟩ |
+    ⟨hx0, hxb, hxa, hxa', hxb', hxab⟩
+  · exact hb'.trans hnL
+  · have hba : SqEq (B * A) L := by rw [mul_comm]; exact hab'
+    exact (sqEq_of_mul_sqEq hba ha' hL0).trans ⟨L, hL0, by ring⟩
+  · exact hb'.trans hnL
+  by_cases hlt : ‖x‖ < 1
+  · have e₂ : SqEq (x - L) (-L) := by
+      rw [show x - L = -L + x by ring]
+      exact sqEq_add_of_norm_lt (by norm_num) (by rwa [norm_neg, hL])
+    exact (hxb'.symm.trans e₂).trans hnL
+  · have e₃ : SqEq (x + 3 * L) x := sqEq_add_of_norm_lt (by norm_num) (by linarith [not_lt.mp hlt])
+    have hAx : SqEq A x := hxa'.symm.trans e₃
+    have hba : SqEq (B * A) x := by rw [mul_comm]; exact hxab.symm
+    exact (sqEq_of_mul_sqEq hba hAx hx0).trans ⟨x, hx0, by ring⟩
+
+end Three
+
 end ZInQ.Manuscript.PoleRC
