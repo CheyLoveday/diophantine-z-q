@@ -27,11 +27,12 @@ run_cmd do
         if let some v := fcValue? ci then todo := todo ++ v.getUsedConstants
     return seen
   let checked : List Name := [`sorryAx,
-    -- fold 4a (y3-route-a): the replacement route (must be true); the old field's Prop stays as the proof's type
-    `Y3RouteA.Y3FullThreeRepZ30, `Y3RouteA.y3FineModuliAbP_of_z30, `Y3Fix.Y3FineModuliAbP,
-    `HDec.HSyn.OpenResearchLeaves56, `HDec.HSyn.sixContactMin_of_open75,
-    -- folds 1-2 still in force: false / true / true
-    `ZInQ.SemistabAssembly.BostLowerBoundAnSS, `ZInQ.BostGR9.GaudronRemondSec9LowerAnSS, `SZRaynaud.SilverbergZarhinThm35]
+    -- fold 4b (carirr-refold): the replacement route (must be true); the old field's Prop stays as the proof's type
+    `CarayolRefold.CarayolThmAFrob, `CarayolRefold.carayolThmAIrr_of_frob, `CarayolRefold.odd_of_frobDet,
+    `CarayolPrinted.CarayolThmAIrr, `HDec.HSyn.OpenResearchLeaves57, `HDec.HSyn.sixContactMin_of_open76,
+    -- folds 1-4a still in force: false / true / true / true
+    `ZInQ.SemistabAssembly.BostLowerBoundAnSS, `ZInQ.BostGR9.GaudronRemondSec9LowerAnSS, `SZRaynaud.SilverbergZarhinThm35,
+    `Y3RouteA.Y3FullThreeRepZ30]
   for root in [`ZInQ.OneProof.frozenTarget] do
     let s := closure root
     IO.println s!"{root}: closure {s.size}"
@@ -43,8 +44,8 @@ run_cmd do
 open Lean Elab Command in
 run_cmd do
   let env ← getEnv
-  let o := `HDec.HSyn.OpenResearchLeaves55
-  let n := `HDec.HSyn.OpenResearchLeaves56
+  let o := `HDec.HSyn.OpenResearchLeaves56
+  let n := `HDec.HSyn.OpenResearchLeaves57
   let fo := getStructureFields env o
   let fn := getStructureFields env n
   logInfo m!"field check: {o} {fo.size} fields, {n} {fn.size} fields; only in old: {fo.filter (!fn.contains ·)}; only in new: {fn.filter (!fo.contains ·)}"

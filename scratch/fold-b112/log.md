@@ -127,3 +127,28 @@ the new structure `OpenResearchLeaves54`'s javanpeykarThm111An field doc (TailZ8
    `y3FullThreeRepZ30`. OpenStatements 30; render_open + `--check` ok; DischargesTest rerun (15 lines); crosswalk ok;
    autoform exit 0; gate.sh GATE=ok.
    **render_open count after fold 4a: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
+
+## Fold 4b: carirr-refold (carayolThmAIrr -> carayolThmAFrob; autofold, count-neutral)
+
+1. Merged origin/wip/carirr-refold a47b51ad (brings carirr-odd 7b1ca2c1 and carayol-herbrand; no conflicts; commit
+   8ade4604). Hygiene: build logs `scratch/carayol-herbrand/build1.txt`, `build2.txt`, `scratch/carirr-odd/build-main.txt`,
+   `scratch/carirr-refold/build-main.txt` left out; the three `AutofoldDryRun.lean` (redeclare HDec.HSyn bundles) renamed
+   `.lean.txt`; no host paths; no vendored code.
+2. `lake build ZInQKernel.Contrib.OneProof.CarayolRefold` ok. `#discharges` on the fold-4a head (`DischargesCar.lean`,
+   output `DischargesCar-output.txt`, VERIFIED): `OpenResearchLeaves56.carayolThmAIrr` DISCHARGED by
+   `CarayolRefold.carayolThmAIrr_of_frob`, still assumes `[CarayolRefold.CarayolThmAFrob]`, standard axioms;
+   `carayolThmAIrr_of_frob`, `frob_of_DDT31`, `odd_of_frobDet` standard axioms.
+3. Spec `scratch/fold-b112/autofold-car.json` = the branch's `autofold.json` unchanged. Dry run on this line: 5/24 on 29 ->
+   5/24 on 29; printed module (`CarDryRun.lean`) compiled, `sixContactMin_of_open76` standard axioms.
+4. autofold -> `TailZ83.lean` (`OpenResearchLeaves57`, `sixContactMin_of_open76`); Main switched; kinds row
+   `carayolThmAIrr` (consequence, GLUE/GLUE) -> `carayolThmAFrob` (published, flag "unread: new printed leaf (packaged
+   form; ...)", GLUE/GLUE, flag_class unread); claims no row.
+5. Build (VERIFIED): Main + Discharges + TailZ83 ok (15987 jobs); `sixContactMin_of_open76`, `frozenTarget` standard axioms.
+6. Checks (`run_checks.sh 4b hashes_fold4a.txt`, VERIFIED): hash guard 18952 -> 18987, only after 35 (all TailZ83), changed
+   only `frozenTarget`. Closure 293169: no sorryAx; `CarayolThmAFrob`, `carayolThmAIrr_of_frob`, `odd_of_frobDet`,
+   `OpenResearchLeaves57`, `sixContactMin_of_open76` present; folds 1-4a still in force. Field check 27 vs 27: only
+   `carayolThmAIrr` <-> `carayolThmAFrob`. OpenStatements 30. render_open reported "reviews.tsv: 'carayolThmAIrr' is not a
+   hypothesis in kinds.tsv": the audit's carayolThmAIrr row moved from reviews.tsv to reviews-retired.tsv (as fold-b105
+   did for panPrintedP); then render_open, `--check` ok, crosswalk `--check` ok, gate.sh GATE=ok (rerun after the move).
+   DischargesTest rerun (15 lines); autoform exit 0.
+   **render_open count after fold 4b: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
