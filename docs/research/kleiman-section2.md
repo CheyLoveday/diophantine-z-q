@@ -123,9 +123,20 @@ The conversion skips TailZ53–55, which is legitimate because they only pass th
 `proof` targets the `OpenAddedLeaves22PZ.picZeroAbVar` route. `autofold.py` itself cannot apply it to the frontier
 field `kleimanPicZeroProper`, so it is documentation, not a runnable autofold.
 
-## 5. Checks
+## 5. Checks (VERIFIED)
 
-See `scratch/kleiman-section2/log.md` for the outcomes (build, `#discharges`, FoldCheck, axioms).
+* `lake build ZInQKernel.Contrib.OneProof.KleimanPicZero954`: build completed, with linter warnings only.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.KleimanPicZero954`:
+  build completed (14228 jobs).
+* `scratch/kleiman-section2/FoldCheck.lean` compiles. It contains the hand fold module text plus `frozenTarget`'s body
+  verbatim, with `l : OpenAddedLeaves26` and `sixContactMin_of_open49`. Both `frozenTarget_kleimanSection2` and
+  `sixContactMin_of_open49` use only `[propext, Classical.choice, Quot.sound]`.
+* `scratch/kleiman-section2/K954.lean`: `picZeroAbVar0_of_954` uses only the standard axioms.
+* `#discharges` (`scratch/kleiman-section2/Discharges.lean`, output in `discharges-output.txt`) prints 33 DISCHARGES
+  lines, **none from `KleimanSection2`**. This is expected. The new leaf is weaker than the frontier field
+  `PicFix.KleimanPicZeroProper`. The conclusion of `picZeroAbVar0_of_954`, `PicZeroChar0.PicZeroAbVar0`, is a field
+  only of the older generation `OpenAddedLeaves22PZ`, not an open hypothesis of `frozenTarget`. This is why the fold
+  is a hand fold.
 
 ## 6. What remains
 
