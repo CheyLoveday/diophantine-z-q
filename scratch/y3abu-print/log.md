@@ -29,3 +29,11 @@ Consumers of the field: TailZ34 L81 shimuraFamilyAb_of_U, L101 rayClassCMAb_of_l
   `#discharges: 45 open hypotheses, 6687 theorems checked, 14 discharge one`. All four theorems: [propext, Classical.choice, Quot.sound].
 - autofold.json --dry-run: strict 16/21 on 37 -> 18/20 on 38; strictest 16/21 -> 18/20 (-1 GLUE).
 - FoldCheck.lean (dry-run minus line 1) compiles: sixContactMin_of_open39 standard axioms (foldcheck.txt).
+
+## combined (VERIFIED)
+- merged origin/wip/grx6ab-print (b047ce25; contains elkies-print and gr-dict). autofold-combined.json: three discharges
+  (shimuraMainThmIDeligneY3AbU, gonzalezRotgerX6Ab, elkiesX6StarFunctionField), {n}.shimuraMainThmIDeligneY3AbU replaced by
+  (Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print {n}.y3FineModuliAb {n}.deligneCanonicalModelY3Every).
+- dry-run: strict 16/21 on 37 -> 21/18 on 39, strictest same (-3 GLUE).
+- lake build GRX6AbPrint, ElkiesX6StarEvery, ShimuraY3Print: success (13023 jobs). FoldCheckCombined.lean compiles,
+  sixContactMin_of_open39 standard axioms.
