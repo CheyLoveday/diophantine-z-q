@@ -380,7 +380,7 @@ theorem locallyOfFiniteType_of_fgFactor {K : Type} [Field K] (X : Over (Spec (Co
   letI : Algebra K Γ(X.left, V.1) := φ.toAlgebra
   have hψ : ψ.hom = φ.comp (Scheme.ΓSpecIso (CommRingCat.of K)).hom.hom := by
     ext r
-    simp [φ, ← CommRingCat.comp_apply]
+    simp [φ]
   have hg : V.2.fromSpec ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap K Γ(X.left, V.1))) := by
     rw [← IsAffineOpen.SpecMap_appLE_fromSpec X.hom (isAffineOpen_top _) V.2 le_top,
       IsAffineOpen.fromSpec_top, Scheme.isoSpec_Spec_inv, ← Spec.map_comp]
