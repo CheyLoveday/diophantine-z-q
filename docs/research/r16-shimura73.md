@@ -143,3 +143,10 @@ steps:
   stays, and this fold should not be applied.
 * Readings: Li 1975 p. 296 (statement, normalization of `W_N` and `\bar f`), Shimura 1973 Thm 1 (the Euler clause's
   premise and exceptional set), a print for `ConjNewform`.
+
+## 8. Proposed locator rows (for `docs/research/locators.md`; not edited here, it is another task's file)
+
+| leaf | source | locator | status |
+| --- | --- | --- | --- |
+| `liFrickePrinted` | W.-C. W. Li, Newforms and functional equations, Math. Ann. 212 (1975), 285-315 | p. 296, before Lemma 6 (manuscript's locator) | UNVERIFIED (not read; no network) |
+| `shimuraThm1Printed` | G. Shimura, On the factors of the jacobian variety of a modular function field, J. Math. Soc. Japan 25 (1973), 523-544 | Theorem 1, pp. 526-527 (locator audit row R16) | page read by the audit; the Euler clause's premise/exceptional set UNVERIFIED |
