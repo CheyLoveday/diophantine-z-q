@@ -174,6 +174,9 @@ DISCHARGES [OpenResearchLeaves38.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
   still assumes: [ZInQ.BFHPrinted.BFHClauseIIKronecker]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [hCM] by ZInQ.Contrib.HCMLattice.shimuraThm54_of_local
+  still assumes: [ZInQ.Contrib.HCMLattice.ShimuraThm54Local]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves38.hodgeTateDecompExists] by ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompExists_of_field
   still assumes: [ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -205,9 +208,11 @@ DISCHARGES [OpenResearchLeaves38.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 11219 theorems checked, 49 discharge one
+#discharges: 39 open hypotheses, 11229 theorems checked, 50 discharge one
 'ZInQ.Contrib.TYZChain.frozenTarget_hCMLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.TYZChain.frozenTarget_hCMLocal'' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.HCMLattice.shimuraMainCM_of_local' depends on axioms: [propext, Classical.choice, Quot.sound]
-real	0m48.999s
-user	0m22.626s
-sys	0m5.001s
+'ZInQ.Contrib.HCMLattice.shimuraThm54_of_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+real	0m33.267s
+user	0m28.899s
+sys	0m4.028s
