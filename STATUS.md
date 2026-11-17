@@ -22,14 +22,18 @@ The open statements of the current proof (generated from docs/one-proof/OPEN.md;
 describe the fork main they name):
 
 <!-- open-count:begin -->
-**34 hypotheses of the H part** (in the bundles `OpenAddedLeaves25`, `OpenResearchLeaves42`, `OpenTextbookLeaves17`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
+**34 hypotheses of the H part** (in the bundles `OpenAddedLeaves26`, `OpenResearchLeaves45`, `OpenTextbookLeaves17`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 11 published / 23 glue** (the strictest flagged reading; 12/22 without the one strictest-reading flag).
-* By kind: consequence 10, published 24.
+* **Strict count: 5 published / 29 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* By kind: consequence 22, published 12.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 
 ## Status in three lines
+
+*Dated text.* The paragraphs below, and the sections after them, were written for fork `main` at `c0f3d085`
+(2026-11-16) and keep that commit's counts and names: 29 hypotheses of H, `sixContactMin_of_open48`. The count
+block above is regenerated from the current proof; where the two differ, the block is current.
 
 - **Proved in Lean, with no gaps:** the manuscript's Theorem 1.1, in exactly the form frozen upstream, follows
   from two inputs: H, a height bound (the manuscript's Theorem 4.1), and a positive-rank statement for certain

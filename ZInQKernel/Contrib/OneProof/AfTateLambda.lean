@@ -616,7 +616,11 @@ the Hecke operators `T_p` (every prime `p`) and the diamond operators `⟨d⟩` 
 `J` over `ℚ`, acting on degree-0 divisor classes of points `x_τ` by Diamond–Shurman's double-coset
 formulas (`IsHeckeT`, `IsDiamond`). Diamond–Shurman, *A First Course in Modular Forms*, GTM 228 (2005),
 §6.3 (`T_p` and `⟨d⟩` on `Div⁰`, `Pic⁰` and `Jac(X₁(N))`) and §7.9 (they are defined over `ℚ`); Shimura
-1971 §7.2 (modular correspondences on the Jacobian, rational over `ℚ`); locators UNVERIFIED. -/
+1971 §7.2 (modular correspondences on the Jacobian, rational over `ℚ`); locators UNVERIFIED.
+
+Dictionary audit (hecke-pin, `ZInQKernel/Contrib/OneProof/HeckePin.lean`): `IsHeckeT`/`IsDiamond` pin the
+operators: `AfTateLam.HeckePin.isHeckeT_unique`, `isDiamond_unique` (two endomorphisms with DS's action on
+the classes of the `x_τ` agree; inputs `X1TauPoints`, the glue `ConstOnTauPoints`). -/
 def HeckeJ1DS : Prop :=
   ∀ (N : ℕ), 2 ≤ N → ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
     IsCurve X → IsX1Gen N X jX tX →
@@ -632,7 +636,14 @@ Shimura, *On the factors of the jacobian variety of a modular function field*, J
 (1973), Thm 1 (pp. 526–527; read by the locator audit, row R16: the `ℚ`-rational quotient, the
 coefficient-field action and `dim A_f = [K_f : ℚ]`); Diamond–Shurman Def. 6.6.3, Prop. 6.6.4 (over `ℂ`).
 The Hecke operators are any with DS's double-coset action (by L1 they exist; they are unique since an
-endomorphism of `J` is determined by its action on `J(ℂ)`). -/
+endomorphism of `J` is determined by its action on `J(ℂ)`).
+
+Dictionary audit (hecke-pin, `ZInQKernel/Contrib/OneProof/HeckePin.lean`): `KillsIf` kills exactly DS's
+`I_f J` (`AfTateLam.HeckePin.killsIf_iff_IfDS_of_leaves`, from `ker(heckeJ) ⊆ ker(evF)`,
+`evF_eq_zero_of_heckeJ_eq_zero_of_leaves`; inputs `X1TauPoints`, `AbelJacobiX1`); `A_f` is unique up to
+unique isomorphism compatible with `π` (`isAfQuotient_unique`, `induced_comm`); `θ` is unique
+(`theta_unique`, via `a_n ∈ ℚ(a_p, χ(d))`, `coeff_mem_genField`); `T_p`, `⟨d⟩` are pinned
+(`isHeckeT_unique`, `isDiamond_unique`). -/
 def AfShimura : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
     ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),

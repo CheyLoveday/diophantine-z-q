@@ -119,10 +119,14 @@ source. The automatic check on a pull request starts from a cached build of `mai
 | the Tau Ceti dependency tree | cold | not recorded | 6,846 Lake jobs in 8 minutes 4 seconds; 3.4 GB |
 | one large file compiled against an already built `ZInQKernel.OneProof.Main` | partial (that file only) | not recorded | about 8 to 9 GB of memory |
 | upstream's kernel job on a GitHub-hosted runner | not recorded | not recorded | needed a 180-minute timeout and 8 GiB of extra swap |
+| `lake build +ZInQKernel.OneProof.Main` on a 12-core, 18 GB machine, `LEAN_NUM_THREADS=8` (AI audit, [#62](https://github.com/Deicyde/diophantine-z-q/issues/62)) | cold, stopped for disk | `e1b31749` | 694 of the 5,225 project modules in 41 minutes, no errors; 0.44 GB of `.olean` and 3.4 GB of per-module `.setup.json` files (median 3.4 MB; they embed absolute paths, so a short checkout path matters) |
+| the discharge check's build step on GitHub-hosted runners, before the build cache | cold | several pull requests | five runs stopped at the 270-minute limit (43981996517, 43968843468, 43920004200, 43839513202, 43751567891) |
 
-A cold measurement of `lake build +ZInQKernel.OneProof.Main` on a GitHub-hosted runner will be added to this
-table. On a laptop a full build is a bigger investment. A measured row from your machine (commit, cold or partial,
-cores, memory cap, peak memory, disk, Lake jobs, wall-clock) is welcome and credited.
+No cold build of `lake build +ZInQKernel.OneProof.Main` has finished on a GitHub-hosted runner yet; the main build
+cache workflow carries its progress from run to run until one does, and its first finished run belongs in this table.
+On a laptop a full build is a bigger investment: allow several hours and roughly 20 GB of disk. A measured row from
+your machine (commit, cold or partial, cores, memory cap, peak memory, disk, Lake jobs, wall-clock) is welcome and
+credited.
 
 ## For the integrator: folding a contribution
 
@@ -143,10 +147,10 @@ hypotheses. Its output (generated from `scratch/contrib-kit/DischargesTest-outpu
 <!-- worked-example:begin -->
 ```
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
-DISCHARGES [OpenResearchLeaves42.carayolThmAIrr] by CarayolPrinted.carayolThmAIrr_of_split
+DISCHARGES [OpenResearchLeaves45.carayolThmAIrr] by CarayolPrinted.carayolThmAIrr_of_split
   still assumes: [CarayolPrinted.CarayolExistence, CarayolPrinted.CarayolConductor]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
+DISCHARGES [OpenResearchLeaves45.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
   still assumes: [∀ (N : ℕ) [inst : NeZero N] (k : ℤ) (χ : DirichletCharacter ℂ N) (f : ZInQ.Contrib.G9.PkgI4.CF N k),
    2 ≤ k →
      DSCoeffExt.IsNormalizedEigenformDS f χ →
@@ -179,20 +183,20 @@ DISCHARGES [OpenResearchLeaves42.dsThm965Printed] by DSCoeffExt.dsThm965Printed_
                                              (↥(DSCoeffExt.coeffField f)) lam))
                                          b)]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.deRhamVpAbVarDirect] by DeRhamPrint.Direct.direct_of_deRhamVpAbVarPrinted
+DISCHARGES [OpenResearchLeaves45.deRhamVpAbVarDirect] by DeRhamPrint.Direct.direct_of_deRhamVpAbVarPrinted
   still assumes: [DeRhamPrint.DeRhamVpAbVarPrinted]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
+DISCHARGES [OpenResearchLeaves45.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
   still assumes: [ReductGlue.RaynaudSemistableSH]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.modularHTPrinted] by EigenformHTPrinted.printed_of_eigenformHTNew
+DISCHARGES [OpenResearchLeaves45.modularHTPrinted] by EigenformHTPrinted.printed_of_eigenformHTNew
   still assumes: [DSCoeffExt.DSThm965Printed,
  DSCoeffExt.EigenformCoeffFieldFinite,
  DSCoeffExt.DSThm966Printed,
  ZInQ.Contrib.HodgeSplit.EigenformHTNew]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.x6CoarseModuli] by GRX6AbPrint.x6CoarseModuli_of_witness
-  still assumes: [GRDict.X6ModuliWitness]
+DISCHARGES [OpenResearchLeaves45.gamma1IntegralBasis] by Gamma1Basis.gamma1IntegralBasis_of_span
+  still assumes: [CoeffFieldFinite.Gamma1IntegralSpan]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves10HF]
@@ -221,47 +225,59 @@ DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenT
 DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.elkiesX6StarEvery] by HDec.QMSplit.Moduli.ElkiesPrint.every_of_functionField
-  still assumes: [HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField, ObjBridge.TorsionStructure]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
+DISCHARGES [OpenResearchLeaves45.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.y3FineModuliAbP] by Y3Fix.y3FineModuliAbP_of_field
+DISCHARGES [OpenResearchLeaves45.elkiesX6StarEveryIdeal] by X6ALIdeal.ideal_of_elkiesX6StarEvery
+  still assumes: [ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed,
+ HDec.QMSplit.Moduli.ElkiesPrint.ElkiesX6StarEvery]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.x6CoarseModuliIdeal] by X6ALIdeal.x6CoarseModuliIdeal_of_twist
+  still assumes: [ZInQ.HomLattice.GAGAMorphism, AvSplit.MumfordTorsionAlgClosed, GRX6AbPrint.X6CoarseModuli]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.y3FineModuliAbP] by Y3Fix.y3FineModuliAbP_of_field
   still assumes: [ObjBridge.TorsionStructure, RayClassCFT.ShimuraMainThmIDeligneY3AbU]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
   still assumes: [ZInQ.BFHPrinted.BFHClauseIIKronecker]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.hodgeTateDecompExists] by ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompExists_of_field
-  still assumes: [ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar]
+DISCHARGES [h21S] by ZInQ.Contrib.H21CSteps.tyzThm21Span_of_pairsC
+  still assumes: [ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
+DISCHARGES [OpenResearchLeaves45.hodgeTateDecompOr] by ZInQ.Contrib.HodgeTateOr.or_of_hom
+  still assumes: [ZInQ.Contrib.HodgeTateOr.HodgeTateDecompHom]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.hodgeTateDecompOr] by ZInQ.Contrib.HodgeTateOr.or_of_tensor
+  still assumes: [ZInQ.Contrib.HodgeTateFromPairing.HodgeTateDecompExists]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [h33c] by ZInQ.H33D1.tyzThm33CurveSome_of_all
+  still assumes: [ZInQ.H33D1.TYZThm33Curve]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
   still assumes: [ZInQ.HeightDict.PazukiCor13UpperPrinted,
  BPAnalytic.Uniformization.UniformizationLeafAll,
  AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.bostLowerBoundPrinted] by ZInQ.HeightFix.bostLowerBoundPrinted_of_kernel
-  still assumes: [ZInQ.HeightSplit.BostLowerBound, ZInQ.LeafPush2.UniformizationExists, AVGlue.GeomConnOfRationalPoint]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.gaudronRemondThm14Printed] by ZInQ.HeightFix.gaudronRemondThm14Printed_of_kernel
-  still assumes: [ZInQ.HeightSplit.GaudronRemondThm14,
- ZInQ.LeafPush2.UniformizationExists,
- AVGlue.GeomConnOfRationalPoint]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.pazukiCor13Upper] by ZInQ.HeightFix.pazukiCor13Upper_of_printed
+DISCHARGES [OpenResearchLeaves45.pazukiCor13Upper] by ZInQ.HeightFix.pazukiCor13Upper_of_printed
   still assumes: [ZInQ.HeightFix.PazukiCor13UpperPrinted,
  BPAnalytic.Uniformization.UniformizationLeafAll,
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.HeightFix.SemiAbelianDescendsPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves42.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiCor13Upper_of_printed_chevalley
+DISCHARGES [OpenResearchLeaves45.bostLowerBoundAn] by ZInQ.R3Residual.bostLowerBoundAn_of_printed
+  still assumes: [ZInQ.HeightFix.BostLowerBoundPrinted, ZInQ.LeafPush2.UniformizationExists]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.gaudronRemondThm14An] by ZInQ.R3Residual.gaudronRemondThm14An_of_printed
+  still assumes: [ZInQ.HeightFix.GaudronRemondThm14Printed, ZInQ.LeafPush2.UniformizationExists]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiCor13Upper_of_printed_chevalley
   still assumes: [ZInQ.HeightFix.PazukiCor13UpperPrinted,
  BPAnalytic.Uniformization.UniformizationLeafAll,
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 13364 theorems checked, 25 discharge one
+#discharges: 39 open hypotheses, 13996 theorems checked, 29 discharge one
 ```
 <!-- worked-example:end -->
 

@@ -301,3 +301,58 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     frozenTarget standard axioms; check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements
     39; DischargesTest rerun, no error; render_open --check ok (34 H, strictest 11/23, 5 others); crosswalk --check ok;
     autoform check ok.
+34. Reviewer verdicts queue11/queue12 and the sga7_IX_3_5 ruling (inbox 18, 19): afCharpolyDS965, afShimura,
+    heckeJ1DS, y3FineModuliAbP, deligneCanonicalModelY3EveryH, sga7_IX_Cor3_3, sga7_IX_3_5_ForwardGeom, hGZ, h33a
+    kind consequence GLUE/GLUE; TYZThm33Alg.lean docstring constant 8. Check of every row folded since c0f3d085: none
+    scores LEAF without a reviewer's LEAF rating. H strictest 11/23 -> 10/24 on 34.
+35. h21c-steps (inbox 20), manual Main fold: h21C -> h21S (ZInQ.Contrib.H21CSteps.TYZThm21Span, Thm 2.1 with pi^U
+    through Thm 2.4(1) as span of the six f_delta; injectivity and the 8-sum equivalence proved), via
+    H21CSteps.tyzThm21PairsC_of_span; kind consequence, pending review. r3-residual (inbox 23, wip/r3-residual
+    73ac1620, build logs left out, scratch R3*.lean renamed .lean.txt): autofold scratch/leaf-fold33/autofold-r3.json
+    -> TailZ68, `sixContactMin_of_open61`: bostLowerBoundPrinted := R3Residual.bostLowerBoundPrinted_of_an from
+    bostLowerBoundAn, gaudronRemondThm14Printed := R3Residual.gaudronRemondThm14Printed_of_an from
+    gaudronRemondThm14An (R3 "uniformization clauses imply biholomorphic" proved), mumfordTorsionAlgClosed by PR #54's
+    proof; both new leaves kind consequence, pending review. Its third retype (javanpeykarPrintedMapHF ->
+    javanpeykarAnMin) not applied: that field was already replaced by javanpeykar-direct's javanpeykarThm111 (step 33).
+    Count unchanged: 39 open; H strictest 10/24 on 34; others h21S, hCM, h33a, hGZ GLUE, hBFH LEAF. Checks (VERIFIED):
+    build +Main +Discharges (16077 jobs); frozenTarget standard axioms; check_target.py; OpenStatements 39;
+    DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+36. fold-kleiman2 (inbox 15b, 21) replayed: merged kleiman-section2 through fold-kleiman2's merge 5bd559d8 (hygiene:
+    scratch bundle files .lean.txt; KleimanPicZeroProperQuot.lean lands with the leaf), scratch/fold-kleiman2/gen/gen.py
+    --write -> copy reroute TailZ69 (OpenAddedLeaves26, `sixContactMin_of_open62`, 15 declarations copied, none
+    changed): kleimanPicZeroProper -> kleimanPicZeroProper954, kind consequence GLUE, flag "LN-site vs big-site fppf
+    sheafification comparison not in Lean (Def. 4.1 accepts Pic_(fppf), read 11-17)"; claims row dropped.
+    gamma1-basis (inbox 24, wip/gamma1-basis f7046ab6): autofold scratch/leaf-fold33/autofold-gamma1.json -> TailZ70,
+    `sixContactMin_of_open63`: gamma1IntegralSpan (LEAF/GLUE strictest) := Gamma1Basis.gamma1IntegralSpan_of_basis from
+    gamma1IntegralBasis (kind consequence, pending review: strict +1 GLUE until rated, then LEAF/LEAF expected).
+    hcm-lattice (wip/hcm-lattice b3d51684; HCMLattice.lean moved from scratch to Contrib/OneProof; scratch copies
+    .lean.txt), manual Main fold: hCM retyped to ZInQ.Contrib.HCMLattice.ShimuraThm54Local through
+    HCMLattice.shimuraMainCM_of_local (IsAnalyticIso, Weierstrass-map step by Liouville, sInvLat p-components and the
+    local-global principle proved); kind consequence, pending review. Count: 39 open; H strict 10/24 (strictest 10/24)
+    on 34; others h21S, hCM, h33a, hGZ GLUE, hBFH LEAF. Checks (VERIFIED): build +Main +Discharges (16082 jobs);
+    frozenTarget standard axioms; check_target.py; only Main.lean modified among existing OneProof modules;
+    OpenStatements 39; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+37. Batch for w99 (inbox 25-27): merged wip/htdecomp-or eba82cb7, wip/hecke-pin d08347d3 (proofs only: the fold's leaf
+    set is unchanged), wip/x6-coarse 0dc0c1fa, wip/h33-d1 4b12a442 with eps-splitting (build logs left out; scratch
+    dry-run files .lean.txt). Autofold scratch/leaf-fold33/autofold-batch-w99.json -> TailZ71, `sixContactMin_of_open64`:
+    hodgeTateDecompExists := HodgeTateOr.hodgeTateDecompExists_of_or from hodgeTateDecompOr (C_p-dualization proved);
+    x6CoarseModuli := X6ALIdeal.x6CoarseModuli_of_ideal from x6CoarseModuliIdeal; elkiesX6StarEvery :=
+    X6ALIdeal.elkiesX6StarEvery_of_ideal' from elkiesX6StarEveryIdeal (shimuraMainThmIDeligneY3AbU through y3-fix's
+    proof, mumfordTorsionAlgClosed by PR #54's). Manual Main fold (h33-d1): h33a -> h33c (H33D1.TYZThm33CurveSome),
+    hGZ -> hGZss (GZSplitUnique.GrossZagierCurveCdSplitSome; model uniqueness and eps_D splitting proved). All new rows
+    consequence, pending review (h33c keeps the G5/G2 strong-approximation flag). Inbox 26: h21S flag (clause 1 on the
+    corrected symmetric reading; variant B Lean-proved), modularHTPrinted locator Gee 2022 Fact 4.20 (4.19, p. 28).
+    Count: 39 open; H 10/24 on 34; others h21S, hCM, h33c, hGZss GLUE, hBFH LEAF. Checks (VERIFIED): build +Main
+    +Discharges (16093 jobs); frozenTarget standard axioms; check_target.py; only Main.lean modified among existing
+    OneProof modules; OpenStatements 39; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok;
+    autoform check ok.
+38. Jack's ruling (inbox 31): a row counts LEAF only after a reader has checked it against the printed page.
+    render_open.py: UNREAD_MARKERS ("unread", "UNVERIFIED", "recalled", "one model review", "pending reading",
+    "pending review") and must_be_glue(flag); kinds_row_problems flags a LEAF row with such a flag; autofold.py scores
+    new leaves with must_be_glue; unit test scripts/one_proof/test_scoring.py (a published row flagged "unread: ..."
+    scores GLUE); OPEN.md Kernel-wide readings line. kinds.tsv: dsThm965Printed, heckePrimeIntegralToRational,
+    neronSchemeExtensionDedekind, picRepresentableAbVar, hBFH LEAF -> GLUE. Counts before: H strict/strictest 9/25 on
+    34, all hypotheses 10/29 on 39; after: H 5/29 on 34, all 5/34 on 39. Inbox 28 re-kinds: h21S, igusaGL2DS,
+    javanpeykarThm111, bostLowerBoundAn, gaudronRemondThm14An consequence; deRhamVpAbVarDirect pending reading;
+    gamma1IntegralBasis published with the reviewer's flag (GLUE under the ruling). Inbox 29c: r3-residual.md count
+    corrected (count-neutral after review).
