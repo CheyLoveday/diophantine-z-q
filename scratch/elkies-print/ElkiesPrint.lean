@@ -1,5 +1,33 @@
 import ZInQKernel.Contrib.OneProof.ElkiesX6StarPrinted
 
+/-! # elkies-print: Elkies' coordinate on `X*(6)` for every witness, without the bundled moduli witness
+
+Task elkies-print (docs/research/elkies-print.md). The research field `elkiesX6StarFunctionField`
+(`HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField`, elkies-coord) was re-rated GLUE on 2026-11-16 because it
+bundles the existence of the moduli witness (a fine `Y₃` with `R1fpPropsAb` and a coarse `X₆` with `X6Props`) with
+Elkies' statement about the coordinate `t`. No print states the witness; this is the shape rated composite for
+`gonzalezRotgerX6Ab`.
+
+This file separates the two, as gt-grcount did for González–Rotger Prop. 5.6 (`GRCountX6.GonzalezRotgerProp56X6`):
+
+1. `ElkiesX6StarEvery` (new LEAF): Elkies' coordinate statement (function-field form `ℚ(X₆)^W = ℚ(t)`, the CM values
+   `t = 0, 1, ∞` at discriminants `−24, −4, −3`, the charts `s² = −t`, `r² = 3(t − 1)`) for **every** witness of the
+   moduli description of `X₀(6,1)`. There is no existence claim.
+2. `X6WitnessAb`: a witness exists. It is not a new leaf. It is supplied by the field `gonzalezRotgerX6Ab`
+   (`x6WitnessAb_of_gonzalezRotgerX6Ab`), or by any other source of the witness (task grx6ab-print's
+   `GRX6AbPrint.x6ModuliWitness_of_coarse` concludes the same Prop, `GRDict.X6ModuliWitness`).
+3. `elkiesX6StarFunctionField_of_every : ElkiesX6StarEvery → X6WitnessAb → ElkiesX6StarFunctionField` (the discharge).
+4. **The new leaf is no stronger than the field it replaces.** `every_of_functionField : ElkiesX6StarFunctionField →
+   ObjBridge.TorsionStructure → ElkiesX6StarEvery` holds because any two witnesses have compatibly isomorphic coarse
+   curves. That comparison comes from the abelian-scheme fine comparison `compare_iso_ab` and the coarse comparison
+   `coarse_compare_ab`. The coarse comparison uses `PairsLift` from T5, plus the kernel's proved `FactorThroughSurj`
+   and `CurveBijIso`. Elkies' clauses are transported along the isomorphism (§3: comorphisms on function fields,
+   conjugation of the Atkin–Lehner group, the charts). So, given a witness and T5, the leaf and the field are
+   equivalent (`every_iff_functionField`).
+
+No `sorry`; standard axioms only.
+-/
+
 set_option linter.style.longLine false
 
 namespace HDec.QMSplit.Moduli.ElkiesPrint
@@ -9,13 +37,39 @@ open _root_.HDec.LeafQM _root_.HDec.LeafQM.AV
 
 /-! ## 1. The leaf and the discharge -/
 
-/-- The witness of the moduli clause lists for `X₀(6,1)` on abelian schemes. -/
+/-- **The witness of the moduli clause lists for `X₀(6,1)` on abelian schemes** (not a leaf). A fine `Y₃` with
+`R1fpPropsAb` and a coarse `X₆` with `X6Props` exist. It follows from the field `gonzalezRotgerX6Ab`
+(`x6WitnessAb_of_gonzalezRotgerX6Ab`). Its body is that of `GRDict.X6ModuliWitness` (task gr-dict / grx6ab-print). -/
 def X6WitnessAb : Prop :=
   ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X),
     LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ ∧ X6Props Y Φ X Ψ fY
 
-/-- LEAF (docstring in the contribution file). -/
+/-- **LEAF (Elkies, *Shimura curve computations*, Algorithmic Number Theory (ANTS-III, Portland 1998), LNCS 1423,
+pp. 1–47, §3 on `X*(6) = X(6)/W`; section number, display and the `0/∞` orientation UNVERIFIED, recalled without
+a source), on every witness of the moduli description of `X₀(6,1)`, without the existence of the model.**
+
+*Printed statement* (as recalled; UNVERIFIED): `t` is a coordinate on the genus-0 curve `X*(6) = X(6)/W`,
+`W = {1, w₂, w₃, w₆}`, with the CM points of discriminants `−24, −4, −3` at `t = 0, 1, ∞`, and
+`X(6)` is the curve `X*(6)(√−t, √(3(t − 1)))` over the `t`-line.
+
+*Lean form*: let `(Y, Φ, X, Ψ, fY)` be any witness of the moduli description on abelian schemes (`R1fpPropsAb`:
+the fine `Y₃`; `X6Props`: `X` proper and smooth of relative dimension one over `ℚ`, `Ψ : X(ℚ̄) ≃` QM pairs over
+`ℚ̄` up to isomorphism, Galois-equivariant, with the twists induced by automorphisms, `fY` the forgetful map). Then
+some `t : X → P¹` satisfies:
+* **`t` is a coordinate on `X₆/W`**, in function fields: whenever `X` is integral and `t` is regular at its
+  generic point (both follow from the charts, `ElkiesCoord.isIntegral_of_charts` and
+  `ElkiesCoord.genericPoint_mem_of_charts`), the functions fixed by `W` (`ElkiesCoord.fixedByW`, with `W` given by
+  its moduli action `ElkiesX6Star.atkinLehnerW`) are `ℚ(t)`;
+* **the CM values** `t = 0, 1, ∞` at the CM points of discriminants `−24, −4, −3`;
+* **the equations**: Elkies' two charts `X6Glue.ElkiesCharts X t`.
+
+*Why the printed form, and not stronger*: the clauses are those of `ElkiesX6StarFunctionField` (elkies-coord's
+function-field reading of the print). The existential over the witness is replaced by a universal, so the leaf
+asserts nothing about the existence of the model. Compared with the old field it adds the transport to every
+witness, and that is proved in Lean (`every_of_functionField`: any two witnesses have compatibly isomorphic coarse
+curves, given T5). What it shares with every `X₆` leaf of the project: `X(6)`, its `W` and its CM points are read
+through the moduli interpretation of the Shimura curve (Shimura 1967; Rotger 2004 for `w_m`; locators UNVERIFIED). -/
 def ElkiesX6StarEvery : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
     (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X),
@@ -68,7 +122,7 @@ theorem ffMap_ext {X Z : Scheme.{0}} [IsIntegral X] [IsIntegral Z] {φ ψ : Z.fu
     (H : ∀ (A : Z.Opens) (hA : genericPoint Z ∈ A) (s : Γ(Z, A)),
       φ (Z.presheaf.germ A _ hA s) = ψ (Z.presheaf.germ A _ hA s)) : φ = ψ := by
   ext a
-  obtain ⟨A, hA, s, rfl⟩ := TopCat.Presheaf.germ_exist Z.presheaf a
+  obtain ⟨A, hA, s, rfl⟩ := TopCat.Presheaf.exists_germ_eq Z.presheaf a
   exact H A hA s
 
 theorem ffMap_comp {X Z W : Scheme.{0}} [IsIntegral X] [IsIntegral Z] [IsIntegral W]
