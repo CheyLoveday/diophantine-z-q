@@ -261,6 +261,43 @@ def dd (hKI : KI q π₁) : Over.DescentDatum q X₁ where
     simp only [Over.homMk_left]
     exact ψ_coassoc hKI p.left f₂ f₃ _ _
 
+/-- **Descent of the quotient**: with `KI`, finite sets of `X₁` in affine opens, and `q` finite flat surjective
+of finite presentation, `X₁` descends to `B₀` over `S` and `π₁` to `π : U → B₀`. -/
+theorem exists_descent (hKI : KI q π₁) [IsFinite q] [Flat q] [LocallyOfFinitePresentation q] [Surjective q]
+    (hfin : ∀ s : Set X₁.left, s.Finite → ∃ V : X₁.left.Opens, IsAffineOpen V ∧ s ⊆ V) :
+    ∃ (B₀ : Over S) (d : X₁.left ⟶ B₀.left) (π : U.left ⟶ B₀.left),
+      IsPullback d X₁.hom B₀.hom q ∧ pullback.fst U.hom q ≫ π = π₁.left ≫ d ∧ π ≫ B₀.hom = U.hom := by
+  obtain ⟨B₀, d, hsq, hinv⟩ := (dd hKI).isEffective_of_isFinite hfin
+  have hψd : ψψ hKI ≫ d = pullback.fst (X₁.hom ≫ q) q ≫ d := by
+    have := hinv (pullback.fst (X₁.hom ≫ q) q ≫ X₁.hom) (pullback.snd _ _)
+      (by rw [Category.assoc]; exact pullback.condition) (Over.homMk (pullback.fst _ _) rfl)
+    change (pullback.lift (pullback.fst (X₁.hom ≫ q) q) (pullback.snd (X₁.hom ≫ q) q) _ ≫ ψψ hKI) ≫ d =
+      pullback.fst (X₁.hom ≫ q) q ≫ d at this
+    rwa [pullback.lift_fst_snd, Category.id_comp] at this
+  have hcoeq : ∀ {Z : Scheme.{0}} (g h : Z ⟶ pullback U.hom q),
+      g ≫ pullback.fst U.hom q = h ≫ pullback.fst U.hom q → g ≫ π₁.left ≫ d = h ≫ π₁.left ≫ d := by
+    intro Z g h hgh
+    have hc : (g ≫ π₁.left) ≫ X₁.hom ≫ q = (h ≫ pullback.snd U.hom q) ≫ q :=
+      calc (g ≫ π₁.left) ≫ X₁.hom ≫ q = g ≫ pullback.snd U.hom q ≫ q := by
+            rw [Category.assoc, ← Category.assoc π₁.left, w_π₁]
+        _ = g ≫ pullback.fst U.hom q ≫ U.hom := by rw [pullback.condition]
+        _ = h ≫ pullback.fst U.hom q ≫ U.hom := by rw [← Category.assoc, hgh, Category.assoc]
+        _ = (h ≫ pullback.snd U.hom q) ≫ q := by rw [pullback.condition, Category.assoc]
+    have e := ψ_π hKI g (h ≫ pullback.snd U.hom q) hc
+    have e' : pullback.lift (g ≫ pullback.fst U.hom q) (h ≫ pullback.snd U.hom q) (by
+        rw [hgh, Category.assoc, Category.assoc, pullback.condition]) = h := by
+      apply pullback.hom_ext
+      · simp [hgh]
+      · simp
+    rw [e'] at e
+    rw [← Category.assoc h, ← e, Category.assoc, hψd, pullback.lift_fst_assoc, Category.assoc]
+  refine ⟨B₀, d, EffectiveEpi.desc (pullback.fst U.hom q) (π₁.left ≫ d) (fun g h hgh => hcoeq g h hgh),
+    hsq, EffectiveEpi.fac _ _ _, ?_⟩
+  rw [← cancel_epi (pullback.fst U.hom q), ← Category.assoc, EffectiveEpi.fac, Category.assoc, hsq.w,
+    ← Category.assoc, w_π₁, pullback.condition]
+
 end Descent
 
 end ZInQ.ChevFree
+
+#print axioms ZInQ.ChevFree.exists_descent
