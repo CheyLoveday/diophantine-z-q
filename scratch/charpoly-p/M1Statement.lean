@@ -20,6 +20,20 @@ def NonIsogPullbackEulerZero : Prop :=
       letI : A.X.left.Over (Spec (CommRingCat.of k)) := ⟨A.X.hom⟩
       Scheme.Modules.eulerChar k ((Scheme.Modules.pullback ψ.hom.left).obj L) = 0
 
+
+/-- **χ(ψ^*L) = deg ψ · χ(L) for every endomorphism (consequence of published theorems).** D. Mumford,
+*Abelian varieties* (1970): for an isogeny `ψ`, `χ(ψ^*L) = deg ψ · χ(L)` (§12, UNVERIFIED locator; proved
+there for finite flat `ψ` from `ψ_*𝒪` locally free of rank `deg ψ`); for a non-isogeny both sides are `0`
+(`NonIsogPullbackEulerZero`, from §16). `deg` is the tree's genuine `CharPolyEll.degEnd` (function-field
+degree, `0` off isogenies). -/
+def EulerPullbackDeg : Prop :=
+  ∀ (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A)
+    (L : A.X.left.Modules), Scheme.Modules.IsInvertible L →
+      letI : A.X.left.Over (Spec (CommRingCat.of k)) := ⟨A.X.hom⟩
+      Scheme.Modules.eulerChar k ((Scheme.Modules.pullback ψ.hom.left).obj L) =
+        (ZInQ.Contrib.OneProof.CharPolyEll.degEnd ψ : ℤ) * Scheme.Modules.eulerChar k L
+
 end CharPolyP.Scratch
 
 #check @CharPolyP.Scratch.NonIsogPullbackEulerZero
+#check @CharPolyP.Scratch.EulerPullbackDeg

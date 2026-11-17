@@ -46,3 +46,11 @@ CharPolyIndepOfEllAlgClosed ⇐ DegHomogPolyNoEmb alone (char 0 with σ : k → 
   (HR : DegPolyC.DegHomogPolyNoEmb) : CharPolyIndepOfEllAlgClosed and `charPolyIndepOfEllAlgClosed_of_degHomogPoly'`
   (hP : DegDet.DegHomogPoly), axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
   Pitfall: `A.V ℓ` instances need `open … MonoidalCategory CartesianMonoidalCategory MonObj`.
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.CharPolyCharP`: EXIT 0.
+- `#discharges` (scratch/charpoly-p/Discharges.lean, output Discharges-output.txt): DISCHARGES
+  [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by `CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb'`,
+  still assumes [DegPolyC.DegHomogPolyNoEmb], standard axioms; same with `…_of_degHomogPoly'` / [DegDet.DegHomogPoly]. VERIFIED.
+- autofold dry run (scratch/charpoly-p/autofold.json): "strict count: 15/16 on 31 -> 15/16 on 31; strictest 15/16 -> 15/16";
+  FoldDryRun.lean (`sixContactMin_of_open59`, TailZ65 base) compiles, standard axioms. VERIFIED.
+- scratch/charpoly-p/M1Statement.lean: `NonIsogPullbackEulerZero` (M1) and `EulerPullbackDeg` stated over CW07
+  `Scheme.Modules.eulerChar`, AnthropicFLT `Scheme.Modules.IsInvertible`, Mathlib pullback, `CharPolyEll.degEnd`; compiles. VERIFIED.
