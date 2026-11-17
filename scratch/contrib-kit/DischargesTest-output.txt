@@ -199,4 +199,4 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 40 open hypotheses, 9154 theorems checked, 48 discharge one
+#discharges: 39 open hypotheses, 9200 theorems checked, 48 discharge one

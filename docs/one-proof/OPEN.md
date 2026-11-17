@@ -11,7 +11,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**33 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves29`, `OpenTextbookLeaves15`), plus 7 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**33 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves29`, `OpenTextbookLeaves15`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
 * **Strict count: 13 published / 20 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -111,7 +111,6 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 
 * [`h11`](#h11) (LEAF; unverified-locator): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
 * [`hL29`](#hl29) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Lemma 2.9 (L1062-1066)
-* [`hP23`](#hp23) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Proposition 2.3 (L580-586)
 * [`hCM`](#hcm) (GLUE; unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
 * [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
@@ -194,7 +193,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-ext)) |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator, note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) |
 | [`hL29`](#hl29) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) |
-| [`hP23`](#hp23) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hCM`](#hcm) | frozenTarget | consequence | GLUE | note, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
 | [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
@@ -770,26 +768,6 @@ ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3
 > is the separate leaf `TYZThm21At31`. Quantifying over every sign choice `ℓ` is harmless: changing the sign
 > of `ℓ(m)` is absorbed by `ε`. Checked (h29-fix, `brandt2.py`) on 18 values `n ≠ 3`, two embeddings each:
 > `Q(n)` is one of the values `Σ ε𝓛𝓛`.
-
-### hP23
-
-* Argument `hP23` of `frozenTarget`; kind **published**, strict **LEAF**; flag: restricted: odd classes n = 1, 3 mod 8, n > 1 (TYZ: n = 1, 2, 3); not vacuous (tyzTestVectorExists gives a nonzero f_n); unread.
-* Source: Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Proposition 2.3 (L580-586)
-* packet [R3](#packet-r3); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed
-```
-
-> **TYZ Proposition 2.3 (L580–586), first assertion, for squarefree `1 < n ≡ 1, 3 (mod 8)`**:
-> `f_n((B̂^×)²) ⊂ 1 + 2ℤ`.
-> 
-> Not vacuous: the test vectors it quantifies over exist and are nonzero (`TYZTestVectorExists`, whose
-> `InPiZ` is TYZ's `π_ℤ^{U_n}` by printed facts only, so it cannot be the zero module); and for `f = 0` the
-> conclusion would be false, so the leaf has content exactly through TYZ's `f_n`. Checked by computation
-> (`brandt.py`, `n = 3, 11, 19`): `f_n` takes only odd values (`±1, ±3`) on the 8 classes.
 
 ### hCM
 

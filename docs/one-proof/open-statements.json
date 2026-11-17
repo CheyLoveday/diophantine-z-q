@@ -210,12 +210,6 @@
    "docstring":
    "**TYZ Lemma 2.9 (L1062–1066) as printed, for squarefree `1 < n ≡ 1, 3 (mod 8)`, `n ≠ 3`.** For every\nadmissible embedding `τ` (L527–534), every test vector `f_n` (a `ℤ`-generator of `π_ℤ^{U_n}`, L550) and every\nsign choice `ℓ` of `𝓛` on the squarefree classes `1, 3 (mod 8)` (`ℓ(m)² = 𝓛(m)²`, `lcalSq`, TYZ L336–353),\nthere are signs `ε = ±1` with `Σ_{n = d₁d₂} ε(d₁, d₂)𝓛(d₁)𝓛(d₂) = Q(n)`, the sum over the non-ordered\ndecompositions `n = d₁d₂`, `d₁, d₂ > 0`, `d₂ ≡ 1 (mod 8)` (`pairIdx n`, the pair indexed by `d = d₂` when\n`n ≡ 3`, by its smaller member when `n ≡ 1`), and `Q(n) = Σ_{t ∈ 2Cl_n} f_n(t)` (L566–568, `genusPeriodTV`).\n\nRestrictions of the print (each a weakening): odd classes `n ≡ 1, 3 (mod 8)` only (TYZ: `n ≡ 1, 2, 3`),\n`n > 1`, and `n ≠ 3`. At `n = 3` the print is false: `Cl_3 = 1`, `Q(3) = f_3(1) = ±3` for each of the 8\nadmissible `τ` (h29-fix, `scratch/h29-fix/brandt.py`, exact; also by hand from Theorem 2.6), while\n`𝓛(3)² = 1` (`lcal_small.py`, PARI), so the print would read `±1 = ±3`. TYZ's proof (L1068–1077, through\nTheorem 2.1) carries a factor `w_K` that the print drops; `w_K = 1` for squarefree `1 < n ≠ 3` (then\n`μ(ℚ(√−n)) = {±1}`, STANDARD), so for `n ≠ 3` the print and the proof agree. The case `n = 3`\nis the separate leaf `TYZThm21At31`. Quantifying over every sign choice `ℓ` is harmless: changing the sign\nof `ℓ(m)` is absorbed by `ε`. Checked (h29-fix, `brandt2.py`) on 18 values `n ≠ 3`, two embeddings each:\n`Q(n)` is one of the values `Σ ε𝓛𝓛`. ",
    "bundle": "frozenTarget"},
-  {"type": "ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed",
-   "statement": "ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed",
-   "field": "hP23",
-   "docstring":
-   "**TYZ Proposition 2.3 (L580–586), first assertion, for squarefree `1 < n ≡ 1, 3 (mod 8)`**:\n`f_n((B̂^×)²) ⊂ 1 + 2ℤ`.\n\nNot vacuous: the test vectors it quantifies over exist and are nonzero (`TYZTestVectorExists`, whose\n`InPiZ` is TYZ's `π_ℤ^{U_n}` by printed facts only, so it cannot be the zero module); and for `f = 0` the\nconclusion would be false, so the leaf has content exactly through TYZ's `f_n`. Checked by computation\n(`brandt.py`, `n = 3, 11, 19`): `f_n` takes only odd values (`±1, ±3`) on the 8 classes. ",
-   "bundle": "frozenTarget"},
   {"type": "T5Glue.ShimuraMainCM",
    "statement": "T5Glue.ShimuraMainCM",
    "field": "hCM",
@@ -240,4 +234,4 @@
    "docstring":
    "**The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model\n`E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.\nA restriction of `GrossZagierAlgOpt`. ",
    "bundle": "frozenTarget"}],
- "count": 40}
+ "count": 39}

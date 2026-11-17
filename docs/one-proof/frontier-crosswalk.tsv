@@ -223,7 +223,7 @@ T-19		ZInQ.Contrib.TYZDecomp.H29Split.JonesPallX2Y2Z16	8342c2eb7	yes
 T-20		ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists	8342c2eb7	yes
 T-21	hL29	ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3	8342c2eb7	yes
 T-22		ZInQ.Contrib.TYZDecomp.H29Split.TYZThm21At31	8342c2eb7	yes
-T-23	hP23	ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed	8342c2eb7	yes
+T-23		ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed	8342c2eb7	yes
 Z-1		ZInQ.GZDecomp.FHNonvanishing	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no
 Z-2		ZInQ.GZDecomp.GrossZagierHeegner	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d	no
 Z-3		ZInQ.GZFH.FriedbergHoffsteinB_FE	8342c2eb7	yes
