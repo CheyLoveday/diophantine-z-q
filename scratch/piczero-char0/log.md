@@ -12,3 +12,25 @@
   * `HDec.HSyn.openTextbookLeaves13_of_OpenTextbookLeaves14_hf` (Contrib HomFreeFiniteAlgClosedReroute, the copy of TailZ46's map
     in use): `poincareComplement := PoincareComplement.poincareComplement_of_open l.picRepresentableAbVar l.picZeroAbVar (...)`
   * the rest are forwarding maps (`picZeroAbVar := n.picZeroAbVar`) and the top wrappers.
+
+## Step 1b: field-level forward taint (FieldTaint.lean -> fieldtaint_out.txt), VERIFIED
+- Fields downstream of `picZeroAbVar` in frozenTarget's closure: mumfordKLFiniteSectionAC, phiAmpleIsogeny,
+  t09SymmIsogenyExists, t9, poincareComplement, t8.
+- Edges (map : field <- projections read):
+  * addedLeaves12_of_open13 : t09SymmIsogenyExists <- OAL13.picZeroAbVar, OAL13.phiAmpleIsogeny
+  * openAddedLeaves18_of_OpenAddedLeaves19 : phiAmpleIsogeny <- OAL19.mumfordKLFiniteSectionAC
+  * openAddedLeaves19_of_OpenAddedLeaves20 : mumfordKLFiniteSectionAC <- OAL20.picZeroAbVar
+  * openTextbookLeaves13_of_OpenTextbookLeaves14_hf : poincareComplement <- OAL19.picZeroAbVar, OAL19.mumfordKLFiniteSectionAC
+  * textbookLeaves4_of_open6_hf : t9 <- OAL6.t09SymmIsogenyExists
+  * textbookLeaves6_of_open7_hf : t8 <- OTL7HF.poincareComplement
+- Terminal readers (non-map constants reading a tainted field):
+  * `G0Galois.g8_g12_of_leaves3_hf` reads `TextbookLeavesHF.t9` -> passed to `g8_g12` -> `g12` -> only as the antecedent of
+    `hD : G12Det`, and `hD := g12Det_of ...`, whose proof discards it (`intro _ _ K ...`, TailA.lean:2449). DEAD.
+  * `gluePieces_of_open4_hf` reads `OAL4.t09SymmIsogenyExists` -> `detTate_of_leaves4` -> `tatePairingZl_of_leaves4`, applied at
+    `K` with `[NumberField K]` (TailK.lean:249-254). CHAR 0.
+  * `glueOutputs_of_leaves3_hf` reads `TextbookLeavesHF.t8`; t8 comes from `poincareComplement : AVB1.PoincareComplement`, whose
+    statement is already `[CharZero k]` (Contrib/AVB1/Poincare.lean:42); `poincareComplement_of_open` applies `PicZeroAbVar` and
+    `PhiAmpleIsogeny` only at that `k` (exists_psi, PoincareComplement.lean:210-258). CHAR 0.
+  * `phiAmpleIsogeny`, `mumfordKLFiniteSectionAC` only feed `t09SymmIsogenyExists` and `poincareComplement`.
+- VERDICT step (1): every use of picZeroAbVar in frozenTarget's closure is at a field of characteristic 0 (number fields,
+  their algebraic closures, char-0 fields), or dead (T9 into G12Det).

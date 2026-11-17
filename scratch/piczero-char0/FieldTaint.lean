@@ -23,6 +23,7 @@ def projField (env : Environment) (n : Name) : Option String :=
 run_cmd do
   let env ← getEnv
   let mut seen : NameSet := {}
+  let mut valUses : Std.HashMap Name (Array Name) := {}
   let mut todo : Array Name := #[`ZInQ.OneProof.frozenTarget]
   while !todo.isEmpty do
     let c := todo.back!
@@ -31,7 +32,11 @@ run_cmd do
     seen := seen.insert c
     if let some ci := env.find? c then
       todo := todo ++ ci.type.getUsedConstants
-      if let some v := ccValue? ci then todo := todo ++ v.getUsedConstants
+      if let some v := ccValue? ci then
+        let us := v.getUsedConstants
+        valUses := valUses.insert c us
+        todo := todo ++ us
+  let consts := valUses.toArray
   IO.println s!"closure size {seen.size}"
   let mut fields : Std.HashSet String := {}
   fields := fields.insert "picZeroAbVar"
@@ -43,14 +48,13 @@ run_cmd do
     changed := false
     iter := iter + 1
     lines := #[]
-    for c in seen.toList do
-      let some ci := env.find? c | continue
-      let some v := ccValue? ci | continue
+    for (c, us) in consts do
       let bad : Name → Bool := fun u =>
         (match projField env u with | some s => fields.contains s | none => false) || taintedC.contains u
-      let us := v.getUsedConstants
       if !(us.any bad) then continue
       if (projField env c).isSome then continue
+      let some ci := env.find? c | continue
+      let some v := ccValue? ci | continue
       let body := stripLam v
       let fn := body.getAppFn
       let mut isMap := false
