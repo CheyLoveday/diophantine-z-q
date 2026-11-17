@@ -29,3 +29,7 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   - `exists_local_lift'` (hcm-dict's lift, for surjective holomorphic ξ);
   - `eq_toPoint_of_holo`: holomorphic ξ : ℂ → E_{L₀}(ℂ) inducing a bijection ℂ/L ≅ E_{L₀}(ℂ) with ξ(0)=O is
     z ↦ ξ_{L₀}(αz) with IsScale L₀ L α. (The Weierstrass-map step: proved, no Silverman leaf needed.)
+- HCMLattice.lean (full: §A–§C, lattice §L–§N, §P printed leaf): COMPILED, 1m20 wall. VERIFIED:
+  - `ShimuraThm54Local` (new leaf def) and `shimuraMainCM_of_local : ShimuraThm54Local → T5Glue.ShimuraMainCM`;
+  - `isAnalyticUnif_of_holo`; axioms of shimuraMainCM_of_local, eq_toPoint_of_holo, locLat_sInvLat,
+    toPoint_isAnalyticIso: [propext, Classical.choice, Quot.sound].
