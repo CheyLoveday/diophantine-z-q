@@ -1315,6 +1315,162 @@ theorem eq_E0_of_principalRiemann (hU : Uniformization.UniformizationLeafAll) {P
   rw [hr1, _root_.one_mul] at h
   exact h
 
+
+/-! ### Lemma P on `H₁`: existence -/
+
+theorem iotaR_injective : Function.Injective LP.iotaR := by
+  have hs : (√2 : ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (by norm_num)
+  intro x y h
+  have h00 := congrFun (congrFun h 0) 0
+  have h01 := congrFun (congrFun h 0) 1
+  have h10 := congrFun (congrFun h 1) 0
+  have h11 := congrFun (congrFun h 1) 1
+  simp [LP.iotaR, BPAnalytic.QM.Mi, BPAnalytic.QM.Mj, Matrix.mul_apply, Fin.sum_univ_two] at h00 h01 h10 h11
+  have hre : x.re = y.re := by nlinarith
+  have hI : x.imI = y.imI := by
+    have : (x.imI - y.imI) * √2 = 0 := by linear_combination (h00 - h11) / 2
+    exact sub_eq_zero.mp ((mul_eq_zero.mp this).resolve_right hs)
+  have hK : x.imK = y.imK := by
+    have : (x.imK - y.imK) * √2 = 0 := by linear_combination -(h01 + 3 * h10) / 6
+    exact sub_eq_zero.mp ((mul_eq_zero.mp this).resolve_right hs)
+  have hJ : x.imJ = y.imJ := by linear_combination h10 + √2 * hK
+  ext <;> assumption
+
+/-- `ι_ℝ : B_ℝ ≅ M₂(ℝ)`. -/
+def iotaRE : RvQMPolar.BR ≃ₗ[ℝ] Matrix (Fin 2) (Fin 2) ℝ :=
+  LinearEquiv.ofBijective iotaRL ⟨iotaR_injective,
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+      (by rw [QuaternionAlgebra.finrank_eq_four, Module.finrank_matrix]; simp)).1 iotaR_injective⟩
+
+theorem iotaRE_apply (x : RvQMPolar.BR) : iotaRE x = LP.iotaR x := rfl
+
+theorem iotaRE_symm_iota (b : B) : iotaRE.symm (BPAnalytic.QM.iota b) = embR b := by
+  apply iotaRE.injective
+  rw [LinearEquiv.apply_symm_apply, iotaRE_apply]
+  exact (LP.iotaR_ofB b).symm
+
+theorem iotaRE_symm_mul_J (τ : UpperHalfPlane) (X : Matrix (Fin 2) (Fin 2) ℝ) :
+    iotaRE.symm (X * Y3Fix.Jmat τ) = iotaRE.symm X * LP.jτ τ := by
+  apply iotaRE.injective
+  rw [LinearEquiv.apply_symm_apply, iotaRE_apply, LP.iotaR_mul, iotaR_jτ_eq, ← iotaRE_apply,
+    LinearEquiv.apply_symm_apply]
+
+/-- `E₀` on `𝒪` is `ℤ`-valued. -/
+theorem E0_intO (b b' : O) : ∃ z : ℤ, RvQMPolar.E0 b b' = z := by
+  obtain ⟨n, hn⟩ := RvQMPolar.mem_O.mp b.2
+  obtain ⟨m, hm⟩ := RvQMPolar.mem_O.mp b'.2
+  rw [hn, hm]; exact RvQMPolar.E0_int n m
+
+/-- `E₀ : 𝒪 × 𝒪 → ℤ`. -/
+def E0Z (b b' : O) : ℤ := Classical.choose (E0_intO b b')
+
+theorem E0Z_spec (b b' : O) : (E0Z b b' : ℚ) = RvQMPolar.E0 b b' := (Classical.choose_spec (E0_intO b b')).symm
+
+theorem E0Z_add_left (a b c : O) : E0Z (a + b) c = E0Z a c + E0Z b c := by
+  have h : (E0Z (a + b) c : ℚ) = E0Z a c + E0Z b c := by
+    rw [E0Z_spec, E0Z_spec, E0Z_spec, Subring.coe_add, ← RvQMPolar.E0bil_apply, map_add,
+      LinearMap.add_apply, RvQMPolar.E0bil_apply, RvQMPolar.E0bil_apply]
+  exact_mod_cast h
+
+theorem E0Z_add_right (a b c : O) : E0Z a (b + c) = E0Z a b + E0Z a c := by
+  have h : (E0Z a (b + c) : ℚ) = E0Z a b + E0Z a c := by
+    rw [E0Z_spec, E0Z_spec, E0Z_spec, Subring.coe_add, ← RvQMPolar.E0bil_apply, map_add,
+      RvQMPolar.E0bil_apply, RvQMPolar.E0bil_apply]
+  exact_mod_cast h
+
+/-- **Lemma P on `H₁`, existence half (GLUE, proved).** `E₀`, transported to the genuine `H₁(A(ℂ), ℤ)` by the
+print's `c`, is a principal Riemann form of type `μ`: its real extension is `E₀ ⊗ ℝ ∘ ι_ℝ⁻¹ ∘ β⁻¹`, `i`-invariant
+by `RvQMPolar.E0R_mul_j` (`j_τ² = −1`) and positive by `RvQMPolar.riemann_sign` (`imJ(j_τ) > 0`). -/
+theorem exists_principalRiemann (hU : Uniformization.UniformizationLeafAll) {P : QML3 ℂ}
+    {τ : UpperHalfPlane} {n : ℕ} {e : (Fin n → ℂ) → CPts P.A (RingHom.id ℂ)}
+    {β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ)} {c : O → Path (1 : P.A.Pt ℂ) 1}
+    (hD : HodgeData P τ n e β c) : ∃ E : H1 P.A → H1 P.A → ℤ, IsPrincipalRiemannMu β c E := by
+  have hbij := hD.2.2.1
+  have hact := hD.2.2.2.1
+  have hJ := hD.2.2.2.2
+  let cl : O → H1 P.A := fun b => loopClass (c b)
+  let ce : O ≃ H1 P.A := Equiv.ofBijective cl hbij
+  have hce : ∀ b, ce b = loopClass (c b) := fun b => rfl
+  have hinv : ∀ b, ce.symm (loopClass (c b)) = b := fun b => ce.symm_apply_apply b
+  have hmul : ∀ x y, ce.symm (x * y) = ce.symm x + ce.symm y := by
+    intro x y
+    apply ce.injective
+    rw [ce.apply_symm_apply, hce, cl_add hU hD, ← hce, ← hce, ce.apply_symm_apply, ce.apply_symm_apply]
+  let E : H1 P.A → H1 P.A → ℤ := fun x y => E0Z (ce.symm x) (ce.symm y)
+  have hEc : ∀ b b', E (loopClass (c b)) (loopClass (c b')) = E0Z b b' := fun b b' => by
+    simp only [E, hinv]
+  have hh1 : ∀ (a b : O), h1Act (P.q.iota a) (loopClass (c b)) = loopClass (c (a * b)) := fun a b => by
+    rw [h1Act_loopClass, hact]
+  -- the real extension
+  let L : (Fin n → ℂ) →ₗ[ℝ] RvQMPolar.BR := iotaRE.symm.toLinearMap ∘ₗ β.symm.toLinearMap
+  have hL : ∀ v, L v = iotaRE.symm (β.symm v) := fun v => rfl
+  have hLI : ∀ v, L (Complex.I • v) = L v * LP.jτ τ := by
+    intro v
+    rw [hL, hL, ← iotaRE_symm_mul_J]
+    congr 1
+    apply β.injective
+    rw [LinearEquiv.apply_symm_apply, hJ, LinearEquiv.apply_symm_apply]
+  refine ⟨E, fun x y z => ?_, fun x y z => ?_, fun x => ?_, fun a x y => ?_, ?_,
+    E0RL.compl₁₂ L L, fun b b' => ?_, fun v w => ?_, fun v hv => ?_⟩
+  · simp only [E, hmul, E0Z_add_left]
+  · simp only [E, hmul, E0Z_add_right]
+  · have h : (E x x : ℚ) = 0 := by simp only [E, E0Z_spec, RvQMPolar.E0_alt]
+    exact_mod_cast h
+  · obtain ⟨b, rfl⟩ := hbij.2 x
+    obtain ⟨b'', rfl⟩ := hbij.2 y
+    simp only [hh1, hEc]
+    have h : (E0Z (a * b) b'' : ℚ) = E0Z b (dagO a * b'') := by
+      rw [E0Z_spec, E0Z_spec, Subring.coe_mul, Subring.coe_mul, RvQMPolar.E0_rosati]; rfl
+    exact_mod_cast h
+  · have hM : (Matrix.of fun r s => (E (loopClass (c (oB r))) (loopClass (c (oB s))) : ℚ)) =
+        RvQMPolar.gram := by
+      ext r s
+      rw [Matrix.of_apply, hEc, E0Z_spec]
+      exact RvQMPolar.E0_gram r s
+    rw [hM, RvQMPolar.gram_det]
+  · simp only [LinearMap.compl₁₂_apply, E0RL_apply, hL, LinearEquiv.symm_apply_apply, iotaRE_symm_iota,
+      E0R_embR, hEc]
+    rw [← E0Z_spec]; push_cast; rfl
+  · simp only [LinearMap.compl₁₂_apply, E0RL_apply, hLI]
+    exact RvQMPolar.E0R_mul_j _ _ _ (LP.jτ_sq τ)
+  · simp only [LinearMap.compl₁₂_apply, E0RL_apply, hLI]
+    have hx : L v ≠ 0 := by
+      rw [hL, Ne, LinearEquiv.map_eq_zero_iff, LinearEquiv.map_eq_zero_iff]; exact hv
+    rcases RvQMPolar.riemann_sign (LP.jτ τ) (LP.jτ_sq τ) with ⟨-, h⟩ | ⟨h, -⟩
+    · exact h _ hx
+    · exact absurd h (not_lt.2 (LP.jτ_imJ_pos τ).le)
+
+/-- **Lemma P in the print's form (GLUE, proved).** For an abelian surface `A/ℂ` with QM by `𝒪` whose
+`(H₁(A, ℤ), ι_*, h_A)` is identified with `(𝒪, left multiplication, h_τ)` (the print's data `HodgeData`), there is
+**exactly one** principal Riemann form of type `μ` on the genuine `H₁(A(ℂ), ℤ)` (`IsPrincipalRiemannMu`), and it is
+`E₀ = trd(μ⁻¹ x ȳ)` under the identification. By Riemann's theorem (polarizations of `A` = Riemann forms on
+`H₁(A, ℤ)`, Mumford, *Abelian varieties*, §§2–3, STANDARD, not in Mathlib) this is the print's polarization `ψ = E₀`
+at `[h_τ, u]`, and it is unique: the forgetful map from the print's polarized moduli points to the leaf's
+polarization-free ones is injective at every complex point with this `H₁` description. -/
+theorem lemmaP_H1 {P : QML3 ℂ} {τ : UpperHalfPlane} {n : ℕ} {e : (Fin n → ℂ) → CPts P.A (RingHom.id ℂ)}
+    {β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ)} {c : O → Path (1 : P.A.Pt ℂ) 1}
+    (hD : HodgeData P τ n e β c) :
+    (∃! E : H1 P.A → H1 P.A → ℤ, IsPrincipalRiemannMu β c E) ∧
+      ∀ E, IsPrincipalRiemannMu β c E →
+        ∀ b b' : O, (E (loopClass (c b)) (loopClass (c b')) : ℚ) = RvQMPolar.E0 b b' := by
+  have hU := uniformizationLeafAll_proof
+  refine ⟨?_, fun E hE => eq_E0_of_principalRiemann hU hD hE⟩
+  obtain ⟨E, hE⟩ := exists_principalRiemann hU hD
+  refine ⟨E, hE, fun E' hE' => ?_⟩
+  funext x y
+  obtain ⟨b, rfl⟩ := hD.2.2.1.2 x
+  obtain ⟨b', rfl⟩ := hD.2.2.1.2 y
+  have h1 := eq_E0_of_principalRiemann hU hD hE b b'
+  have h2 := eq_E0_of_principalRiemann hU hD hE' b b'
+  exact_mod_cast h2.trans h1.symm
+
+/-- Lemma P for every complex point in the print's `H₁` form: the print data exist and carry exactly one principal
+Riemann form of type `μ` (`E₀`). -/
+theorem lemmaP_of_isHodgeH1Print {P : QML3 ℂ} {τ : UpperHalfPlane} (h : IsHodgeH1Print P τ) :
+    ∃ n e β c, HodgeData P τ n e β c ∧ ∃! E : H1 P.A → H1 P.A → ℤ, IsPrincipalRiemannMu β c E := by
+  obtain ⟨n, e, β, c, hD⟩ := h
+  exact ⟨n, e, β, c, hD, (lemmaP_H1 hD).1⟩
+
 end LemmaP
 
 end Y3Hodge
