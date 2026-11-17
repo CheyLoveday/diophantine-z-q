@@ -42,7 +42,7 @@ Issues #74/#76-#79 not readable (gh: connection reset; no network). Worked from 
   frozenTarget axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
 - autoform check blueprint: OK. autoform check blueprint --lean-root .: FAILS, 199 dangling `lean:`
   names in 59 blueprint articles (main 10, rank 38, rank-5b 7, route-k 4)
-  (scratch/lane74/autoform-check-leanroot-after77.txt). blueprint/ is not editable by this task:
+  (scratch/lane74/autoform-check-leanroot-final.txt, per article: blueprint-dangling-articles.txt). blueprint/ is not editable by this task:
   FINDING for #81.
 - FINDING: scratch/contrib-check/Check.lean (the chain's CONTRIB-CHECK step) imports deleted modules
   (MainLiterature, GaussFE.Headline, PSide.*, GZDecomp, GZTheta, GZStatements, TYZChain.*).
@@ -76,3 +76,17 @@ Issues #74/#76-#79 not readable (gh: connection reset; no network). Worked from 
   ZInQ.Manuscript.PoleCompleteness = ZInQ.PoleCompleteness by rfl.
 - No h22: the headline goes through route AP with greenTaoDense and Density.goodPrimeDensity.
 - On-the-spot: none (no new mathematical statement; the new theorems are old variants with PC for CR₃).
+
+## #79 (commit 4)
+
+- kinds.tsv: rows h21S, hCM, h33c, hBFH, hGZss removed; row hPC added (frozenTarget, kind "manuscript
+  hypothesis", GLUE/GLUE, flag "ELLIOT: Theorem 5.3 route in progress (#83)", flag_class note, area_issue
+  Deicyde/diophantine-z-q#83). claims/reviews/credits/fold-queue had no TYZ/GZ rows.
+- render_open.py: count line and the outside-H section ("Manuscript hypotheses outside the H part").
+  autofold.py unchanged: main_state() parses the new Main.lean (binders r t l, sixContactMin_of_open67,
+  TailZ74). VERIFIED (python import).
+- OpenStatements.lean: 32 open hypotheses (31 H + hPC). render_open.py wrote OPEN.md, pages-wanted.md,
+  STATUS.md block; render_open.py --check: ok (note: scratch/contrib-kit/DischargesTest-output.txt was made
+  with 36 hypotheses; its owner should rerun it, the check does not fail on it). VERIFIED.
+- autoform check blueprint: OK. --lean-root .: 199 errors, all "declaration not found" for removed Route K
+  declarations in 59 articles (blueprint-dangling-articles.txt). Unchanged from commit 1; needs #81.

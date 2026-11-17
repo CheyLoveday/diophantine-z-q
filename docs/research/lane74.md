@@ -58,7 +58,7 @@ STATUS of each check is in section 5 and in `scratch/lane74/log.md`.
    `scratch/lane74/contrib-check-Check.lean` (other tasks' scratch is not edited); **lead: replace the chain's
    file with it, or drop the step.**
 4. **blueprint/ references 199 deleted declaration names in 59 articles** (`main` 10, `rank` 38, `rank-5b` 7,
-   `route-k` 4; list in `scratch/lane74/autoform-check-leanroot-after77.txt`). `autoform check blueprint`
+   `route-k` 4; list in `scratch/lane74/autoform-check-leanroot-final.txt, per article: blueprint-dangling-articles.txt`). `autoform check blueprint`
    passes; `autoform check blueprint --lean-root .` and `render --require-declarations` fail until those
    articles are removed or rewritten. blueprint/ is not editable here: **for #81** (Jack's docs session).
 
