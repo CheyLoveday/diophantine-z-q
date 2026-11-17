@@ -5,6 +5,9 @@ dependencies (`ZInQ.GZHeegner.IsRatModFnMero`, `ZInQ.GZAlg.HasQExp`, `ZInQ.GZAlg
 `ZInQ.GZAlg.X0Field`), and `rfl` checks against the originals. -/
 
 open UpperHalfPlane
+open scoped MatrixGroups
+
+noncomputable section
 
 namespace Gamma0QExpCopy
 
