@@ -1,5 +1,5 @@
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
-DISCHARGES [OpenResearchLeaves29.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
+DISCHARGES [OpenResearchLeaves30.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
   still assumes: [∀ (N : ℕ) [inst : NeZero N] (k : ℤ) (χ : DirichletCharacter ℂ N) (f : ZInQ.Contrib.G9.PkgI4.CF N k),
    2 ≤ k →
      DSCoeffExt.IsNormalizedEigenformDS f χ →
@@ -32,17 +32,776 @@ DISCHARGES [OpenResearchLeaves29.dsThm965Printed] by DSCoeffExt.dsThm965Printed_
                                              (↥(DSCoeffExt.coeffField f)) lam))
                                          b)]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves29.mumfordGroupLawConn] by DictModels.MumfordConn.conn_of_field
+DISCHARGES [OpenResearchLeaves30.mumfordGroupLawConn] by DictModels.MumfordConn.conn_of_field
   still assumes: [ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves29.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
+DISCHARGES [OpenResearchLeaves30.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
   still assumes: [ReductGlue.RaynaudSemistableSH]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves29.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of_SH
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of_SH
   still assumes: [SGA7PersistsNF.SGA7_IX_3_3_SH, CToPrinted.SGA3_VIB_3_10, AVGlue.GeomConnOfRationalPoint]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves29.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves14NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves14NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves14NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves14NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves14NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves14NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves14NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves14NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves14NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves14NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves14NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves14NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves14NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves15NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves15NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves15NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves15NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves15NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves15NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves15NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves15NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves15NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves15NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves15NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves15NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves15NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves16NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves16NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves16NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves16NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves16NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves16NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves16NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves16NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves16NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves16NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves16NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves16NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves16NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves17NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves17NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves17NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves17NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves17NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves17NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves17NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves17NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves17NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves17NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves17NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves17NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves17NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves17NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves18NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves18NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves18NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves18NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves18NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves18NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves18NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves18NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves18NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves18NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves18NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves18NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves18NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves18NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves19NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves19NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves19NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves19NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves19NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves19NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves19NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves19NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves19NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves19NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves19NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves19NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves19NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves19NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves20NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves20NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves20NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves20NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves20NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves20NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves20NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves20NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves20NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves20NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves20NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves20NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves20NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves20NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves20NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves21NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves21NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves21NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves21NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves21NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves21NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves21NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves21NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves21NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves21NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves21NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves21NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves21NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves21NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves21NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves21NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves22NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves22NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves22NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves22NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves22NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves22NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves22NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves22NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves22NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves22NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves22NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves22NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves22NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves22NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves22NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves22NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves22NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves23NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves23NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves23NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves23NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves23NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves23NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves23NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves23NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves23NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves23NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves23NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves23NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves23NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves23NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves23NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves23NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves23NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves23NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves24NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves24NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves24NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves24NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves24NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves24NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves24NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves24NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves24NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves24NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves24NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves24NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves24NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves24NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves24NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves24NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves24NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves24NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves25NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves25NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves25NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves25NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves25NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves25NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves25NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves25NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves25NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves25NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves25NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves25NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves25NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves25NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves25NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves25NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves25NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves25NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves26NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves26NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves26NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves26NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves26NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves26NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves26NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves26NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves26NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves26NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves26NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves26NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves26NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves26NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves26NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves26NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves26NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves26NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves27NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves27NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves27NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves27NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves27NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves27NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves27NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves27NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves27NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves27NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves27NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves27NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves27NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves27NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves27NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves27NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves27NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves27NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves28NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves28NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.dsThm965Printed] by HDec.HSyn.OpenResearchLeaves28NS.dsThm965Printed
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.dsThm966Printed] by HDec.HSyn.OpenResearchLeaves28NS.dsThm966Printed
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformCoeffFieldFinite] by HDec.HSyn.OpenResearchLeaves28NS.eigenformCoeffFieldFinite
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves28NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves28NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves28NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves28NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves28NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves28NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves28NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.mumfordGroupLawConn] by HDec.HSyn.OpenResearchLeaves28NS.mumfordGroupLawConn
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.neronOggShafarevichSep] by HDec.HSyn.OpenResearchLeaves28NS.neronOggShafarevichSep
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves28NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves28NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves28NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves28NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves28NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves28NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.raynaudSemistableSHOr] by HDec.HSyn.OpenResearchLeaves28NS.raynaudSemistableSHOr
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_3_SHpre] by HDec.HSyn.OpenResearchLeaves28NS.sga7_IX_3_3_SHpre
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves28NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves28NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves28NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.bostLowerBound] by HDec.HSyn.OpenResearchLeaves29NS.bostLowerBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.deRhamH1AbVarT] by HDec.HSyn.OpenResearchLeaves29NS.deRhamH1AbVarT
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.dsThm965Printed] by HDec.HSyn.OpenResearchLeaves29NS.dsThm965Printed
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.dsThm966Printed] by HDec.HSyn.OpenResearchLeaves29NS.dsThm966Printed
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformCoeffFieldFinite] by HDec.HSyn.OpenResearchLeaves29NS.eigenformCoeffFieldFinite
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.eigenformHTNew] by HDec.HSyn.OpenResearchLeaves29NS.eigenformHTNew
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.elkiesX6StarFunctionField] by HDec.HSyn.OpenResearchLeaves29NS.elkiesX6StarFunctionField
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gaudronRemondThm14] by HDec.HSyn.OpenResearchLeaves29NS.gaudronRemondThm14
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerProp56X6] by HDec.HSyn.OpenResearchLeaves29NS.gonzalezRotgerProp56X6
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.gonzalezRotgerX6Ab] by HDec.HSyn.OpenResearchLeaves29NS.gonzalezRotgerX6Ab
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.hodgeTateDecompAbVar] by HDec.HSyn.OpenResearchLeaves29NS.hodgeTateDecompAbVar
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.javanpeykarBound] by HDec.HSyn.OpenResearchLeaves29NS.javanpeykarBound
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.mumfordGroupLawConn] by HDec.HSyn.OpenResearchLeaves29NS.mumfordGroupLawConn
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.neronOggShafarevichSep] by HDec.HSyn.OpenResearchLeaves29NS.neronOggShafarevichSep
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.pazukiCor13Upper] by HDec.HSyn.OpenResearchLeaves29NS.pazukiCor13Upper
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r11r12] by HDec.HSyn.OpenResearchLeaves29NS.r11r12
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by HDec.HSyn.OpenResearchLeaves29NS.r16CoreY
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r17] by HDec.HSyn.OpenResearchLeaves29NS.r17
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9a] by HDec.HSyn.OpenResearchLeaves29NS.r9a
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.r9b] by HDec.HSyn.OpenResearchLeaves29NS.r9b
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.raynaudSemistableSHOr] by HDec.HSyn.OpenResearchLeaves29NS.raynaudSemistableSHOr
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_3_SHpre] by HDec.HSyn.OpenResearchLeaves29NS.sga7_IX_3_3_SHpre
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by HDec.HSyn.OpenResearchLeaves29NS.sga7_IX_3_5_ForwardGeom
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves30.shimuraMainThmIDeligneY3AbU] by HDec.HSyn.OpenResearchLeaves29NS.shimuraMainThmIDeligneY3AbU
+  still assumes: [HDec.HSyn.OpenResearchLeaves29NS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves15.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves10HF]
@@ -187,10 +946,10 @@ DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilAlt,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves29.r16CoreY] by R16Split.coreY_of_r16
+DISCHARGES [OpenResearchLeaves30.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves29.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
+DISCHARGES [OpenResearchLeaves30.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
@@ -199,4 +958,4 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 41 open hypotheses, 9011 theorems checked, 48 discharge one
+#discharges: 40 open hypotheses, 9530 theorems checked, 301 discharge one
