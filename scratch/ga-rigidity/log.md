@@ -7,3 +7,4 @@
   (TailZ7.lean:196; definition TailY.lean:76): open connected subgroup U, faithfully flat hom U → B (AbVar) with kernel
   𝔾_m^r in the functor of points. VERIFIED (read).
 - queue11-verdict.md is not present on any local branch (searched all refs); its content is taken from the task brief.
+- G1.lean (§0 defs IsGaHom/NoGaSubgroup, algPt calculus, Step (1) unit_additive_eq_one, gaHom_torus_trivial): compiles, no errors. VERIFIED.
