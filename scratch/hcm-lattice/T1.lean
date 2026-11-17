@@ -1,14 +1,13 @@
 import ZInQKernel.Contrib.OneProof.ShimuraMainCM
-open scoped PeriodPair
-example (L : PeriodPair) (z : ℂ) (hP'd : DifferentiableAt ℂ ℘'[L] z) :
-    HasDerivAt (fun w => ℘'[L] w ^ 2) (2 * ℘'[L] z * deriv ℘'[L] z) z := by
-  have := hP'd.hasDerivAt.mul hP'd.hasDerivAt
-  convert this using 1
-  · funext w; ring
-  · ring
-example (L : PeriodPair) (z : ℂ) (hP'd : DifferentiableAt ℂ ℘'[L] z) :
-    HasDerivAt (fun w => ℘'[L] w ^ 2) (2 * ℘'[L] z * deriv ℘'[L] z) z := by
-  have := (hasDerivAt_pow 2 (℘'[L] z)).comp z hP'd.hasDerivAt
-  convert this using 1
-  · rfl
-  · push_cast; ring
+#check @Set.Countable.dense_compl
+#check @Complex.rank_real_complex
+#check @DifferentiableOn.analyticOnNhd
+#check @Continuous.ext_on
+#check @Differentiable.apply_eq_apply_of_bounded
+#check @Polynomial.finite_setOf_isRoot
+#check @Polynomial.monic_X_pow_add
+#check @ContinuousOn.isOpen_inter_preimage
+#check @DifferentiableOn.deriv
+#check @deriv_comp_add_const
+#check @Dense.inter_open_nonempty
+#check @Polynomial.degree_linear_le
