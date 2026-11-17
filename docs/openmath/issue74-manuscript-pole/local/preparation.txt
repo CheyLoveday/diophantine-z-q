@@ -1,0 +1,14 @@
+{
+  "status": "PREPARED_ONLY",
+  "commit": "1604a537ddedfaadce5414a1299045f980ef8ef9",
+  "solution_files": 7573,
+  "reference_files": 7573
+}
+{
+  "status": "PREPARED_ONLY",
+  "commit": "1604a537ddedfaadce5414a1299045f980ef8ef9",
+  "solution_files": 7573,
+  "reference_files": 7573
+}
+usage: prepare_issue74.py [-h] --output OUTPUT
+prepare_issue74.py: error: output already exists; choose a new directory

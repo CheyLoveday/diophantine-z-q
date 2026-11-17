@@ -3,4 +3,3 @@ WARN Ignoring malformed managed Python entry:
 OK: 776 articles, 2305 dependencies
     691 fully proved · 3 ready to prove · 7 ready to state
     2496 declaration name(s) resolved in the Lean sources
-warning: main: line 16: '# The main theorem and its hypotheses' is a later H1, which stays in its section; the first H1 is the title

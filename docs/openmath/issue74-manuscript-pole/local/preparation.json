@@ -1,0 +1,13 @@
+{
+  "prepared_source_commit": "1604a537ddedfaadce5414a1299045f980ef8ef9",
+  "preparation": "PASS",
+  "repeat_preparation": "BYTE_IDENTICAL",
+  "existing_output_rejected": true,
+  "challenge_target_holes": 11,
+  "target_theorems": 11,
+  "fixed_definitions": 8,
+  "export_roots": 52,
+  "input_manifest_sha256": "c1e3c77a0eaff5945f1611d526edc95feb39a8801e45159d3fe02bf3be925469",
+  "lean_executed_by_preparer": false,
+  "reference_semantic_acceptance": "PENDING"
+}
