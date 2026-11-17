@@ -8,3 +8,11 @@
   isPstF_of_basis, localIsPstF_of_basis, bergerSurveyF_of_basis, panPrintedFBasis_of_F, bstFOf_eq_xi; docstrings re-cited to
   Brinon-Conrad). `lake build ZInQKernel.Contrib.OneProof.PanBergerFontaine`: Build completed successfully (build2.txt). VERIFIED.
   panBerger_of_F compiles unchanged (Berger's conclusion IsPstF on the de Rham model is Pan's hypothesis LocalIsPstF verbatim).
+- Item (b): scratch/pb-dimform/PstModelCore.lean §1-§5 compile (`lake env lean`, no errors, no sorry): rank_fin_pi (domain,
+  rank-nullity), phiE (L^n ≅ (E^n)^d), dBEquiv (D_B(L^n) ≅ D_B(E^n)^d over B^H), isAdmissible_iff_of_basis/_of_le,
+  isPstF_iff_of_le, isPstF_model_iff, localIsPstF_iff_of_model, localIsPstF_iff_forall. VERIFIED (compiled).
+  Lean note: AddCommGroup on ↥(dB ..) is not found by TC; finrank lemma stated for a Submodule and applied with
+  `convert h using 2` (direct defeq check times out).
+- Item (c): PstModelCore.lean §6 compiles: BcrisPlusPrinted (survey II.3.1 literal, x_n → 0 p-adically in A_inf[1/p]),
+  bcrisPlusPrinted_eq_set, bcrisPlusOf_eq_printed. VERIFIED (compiled).
+- Copied to ZInQKernel/Contrib/OneProof/PstModel.lean (header added). Building PstModel + OneProof.Main (build3.txt).
