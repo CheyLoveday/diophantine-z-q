@@ -11,3 +11,8 @@
   - `y3FineModuliAbP_of_z30 : Y3FullThreeRepZ30 → Y3Fix.Y3FineModuliAbP`;
   - `shimuraMainThmIDeligneY3AbU_of_z30`.
 - ON THE SPOT (flagged, not built on): polarization-free functor ≅ polarized functor via the canonical principal polarization (relative Lemma P). Not in the tree (Lemma P only over fields / lattices).
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK, 14m34s, no errors (scratch/y3-route-a/build-main.txt) (VERIFIED).
+- autofold dry run (scratch/y3-route-a/autofold.json): sixContactMin_of_open68 over OpenResearchLeaves49; strict 4/27 on 31 -> 4/27 on 31 (VERIFIED).
+- DryRunFold.lean (dry run, line 1 stripped): COMPILED, 0 errors; `HDec.HSyn.sixContactMin_of_open68` axioms [propext, Classical.choice, Quot.sound] (VERIFIED).
+- #discharges (scratch/y3-route-a/discharges.txt): `DISCHARGES [OpenResearchLeaves48.y3FineModuliAbP] by Y3RouteA.y3FineModuliAbP_of_z30; still assumes: [Y3RouteA.Y3FullThreeRepZ30]; axioms: [propext, Classical.choice, Quot.sound]` (VERIFIED).
+- Kinds row: scratch/y3-route-a/kinds-row.tsv (research, consequence, GLUE/GLUE, flag "ELLIOT: ...", flag_class unverified-locator).

@@ -141,6 +141,17 @@ regardless of kind.
   would only add glue, and it needs a reading of Buzzard for the polarization question (§0 item 2).
 * The relative Lemma P (ON THE SPOT item above), if the lead wants the polarized statement.
 
-## 5. Compile record
+## 5. Compile record (VERIFIED)
 
-See `scratch/y3-route-a/log.md` for the outcomes of the module build, the dry-run compile and `#discharges`.
+* `lake build +ZInQKernel.Contrib.OneProof.Y3FullThreeZ30`: OK. `#print axioms` on the three theorems:
+  `[propext, Classical.choice, Quot.sound]`.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK (14 min 34 s, no errors).
+* `DryRunFold.lean` (the fold the spec generates): compiles with 0 errors. `HDec.HSyn.sixContactMin_of_open68`
+  depends on `[propext, Classical.choice, Quot.sound]`.
+* `#discharges` (`scratch/y3-route-a/discharges.txt`):
+
+```
+DISCHARGES [OpenResearchLeaves48.y3FineModuliAbP] by Y3RouteA.y3FineModuliAbP_of_z30
+  still assumes: [Y3RouteA.Y3FullThreeRepZ30]
+  axioms: [propext, Classical.choice, Quot.sound]
+```
