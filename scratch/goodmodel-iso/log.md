@@ -44,3 +44,4 @@ then ψ has a left inverse and ψ ∘ (χψ)⁻¹ χ = id_N by density. Group ca
   TailZ45 research field mumfordGroupLawConn -> neronSchemeExtensionDedekind; new OpenTextbookLeaves14 without
   neronSchemeExtensionExists; sixContactMin_of_open39; Main.lean switched). Overlay compile running
   (compile_overlay.sh /tmp/gmifold/G, 42 modules).
+- 19:20 Fold G overlay: 42/42 modules OK; frozenTarget standard axioms; #discharges on folded tree: 44 open (was 45); MumfordGroupLawConn out of closure; NeronSchemeExtensionExists only a proved intermediate. Contributor #discharges recorded (scratch/goodmodel-iso/discharges.txt). VERIFIED.

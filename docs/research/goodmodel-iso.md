@@ -108,6 +108,74 @@ The integrator should also:
 * regenerate the kinds.tsv and OPEN.md rows. `neronSchemeExtensionDedekind` is the printed leaf; the rows
   `mumfordGroupLawConn` and `neronSchemeExtensionExists` go.
 
-## 5. Fold check (overlay)
+## 5. Fold check (VERIFIED, 11-16 ~18:45–19:15)
 
-PENDING
+No file under `ZInQKernel/` other than the new contribution was edited.
+* Script: scratch/goodmodel-iso/fold/compile_overlay.sh, adapted from group-law-dvr's. It builds a symlink tree of the
+  worktree's build at /tmp/gmifold/G/lib, first on `LEAN_PATH`.
+* The 42 modules of `Main`'s import closure downstream of TailZ23 (fold/downstream-modules.txt) are recompiled with
+  `lean -R … -o` in topological order. `NeronGoodModelIso` is upstream of every patched module (checked with
+  fold/downstream.py), so its built olean is used as is.
+
+Results:
+* **42/42 modules, no errors** (fold/compile-G.txt).
+* `Main`: `frozenTarget` depends on `[propext, Classical.choice, Quot.sound]`. So do `sixContactMin_of_open38` and
+  `sixContactMin_of_open39`.
+* fold/FoldCheck.lean in the overlay (output: fold/foldcheck-G.txt):
+  * `frozenTarget` takes `t : OpenTextbookLeaves14`, which has no field `neronSchemeExtensionExists`.
+  * `OpenResearchLeaves28` has `neronSchemeExtensionDedekind`, and neither `mumfordGroupLawConn` nor a glue field.
+  * **Not in `frozenTarget`'s closure:** `MumfordGroupLawConn`, `mumfordGroupLaw_of_conn`, `MumfordGroupLaw`,
+    `qmFamilyGroupLaw_of_groupLaw`.
+  * **In the closure, as proved theorems:** `MumfordGroupLawDVR`, `qmFamilyGroupLaw_of_dvr`,
+    `mumfordGroupLawDVR_of_dedekind`, `neronGoodModelIso_of_dvr`, `NeronGoodModelIso`,
+    `neronSchemeExtensionExists_of_dedekind`, `NeronSchemeExtensionDedekind`.
+  * `NeronSchemeExtensionExists` is still in the closure, but as a proved intermediate statement: the consumers
+    (`t41_of_extension5`, `GapNeron.neronSchemeModelExistsNF`, …) take it as an argument, and it is now supplied by
+    `neronSchemeExtensionExists_of_dedekind`. It is no longer a hypothesis. Taking it out of the closure altogether
+    would mean rewriting those consumers, which gains nothing.
+  * **`#discharges` on the folded `frozenTarget`: 44 open hypotheses**, against 45 before.
+
+### `#discharges` of the contribution on the unfolded tree (VERIFIED, scratch/goodmodel-iso/discharges.txt)
+
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.NeronGoodModelIso`
+built 14,109 jobs. `#discharges` reports 45 open hypotheses, 6,849 theorems checked, 14 discharges, including:
+
+```
+DISCHARGES [OpenTextbookLeaves13.neronSchemeExtensionExists] by ZInQ.Contrib.GroupLawNeron.neronSchemeExtensionExists_of_dedekind
+  still assumes: [ZInQ.Contrib.GroupLawNeron.NeronSchemeExtensionDedekind]
+  axioms: [propext, Classical.choice, Quot.sound]
+```
+
+No line discharges `mumfordGroupLawConn` directly, as expected. Its type `MumfordGroupLawConn` covers connected,
+possibly non-reduced bases, which is stronger than the DVR form. That is why the fold narrows the field in place
+instead (§4).
+
+## 6. Statements, rated
+
+* **`NeronSchemeExtensionDedekind`** (the one leaf left; introduced by group-law-dvr, unchanged): **printed form.**
+  Bosch–Lütkebohmert–Raynaud, *Néron models*, §1.4 Thm 3 with §1.2 Def. 1 (numbers UNVERIFIED). The Lean form has
+  an affine Dedekind base, takes finite type as smooth plus quasi-compact, and keeps only the existence half of the
+  mapping property; uniqueness is proved. It is over genuine definitions: Mathlib's `IsDedekindDomain`, `Smooth`,
+  `IsSeparated`, `Over.pullback`, and the kernel's `AbVar`. It needs a `docs/research/locators.md` row. Proposed row:
+  *BLR, Néron Models (1990), §1.4 Thm 3 (existence of Néron models of abelian varieties over a Dedekind base) and
+  §1.2 Def. 1*.
+* **`NeronGoodModelIso`**: GLUE, **proved** (from `NeronSchemeExtensionDVR`, the DVR case of the leaf).
+* **`MumfordGroupLawDVR`**: no longer a field; proved from the leaf.
+* No new leaf or glue Prop is introduced.
+
+Vendored inputs, all proved in the tree with standard axioms:
+* FLT port CloudW03NeronSurj (Apache-2.0): the extension lemma, Hartogs, normal stalks, codimension-one membership;
+* FrobChain/Rigidity.lean: rigidity over any field;
+* NeronC: density, and the Néron group law.
+
+## 7. What remains
+
+* The integration itself: apply G (fold/make_patch.py or fold/G.patch) on the integration branch, rebuild, run the
+  hash comparison, and regenerate kinds.tsv and OPEN.md. The rows `mumfordGroupLawConn` and
+  `neronSchemeExtensionExists` go, and `neronSchemeExtensionDedekind` (published, locator UNVERIFIED) comes in.
+* Interaction with neron-ext. Its fold also rewrites `neronSchemeExtensionExists`: it replaces the field by its
+  local leaf `NeronDVRLocal`, count-neutral. G removes the field outright, so G supersedes that fold. If both were
+  applied, `NeronDVRLocal` would remain as an extra leaf. The integrator should apply G and not neron-ext's
+  autofold. neron-ext's `extension_of_dvrLocal` stays a valid alternative.
+* Possible follow-up (SPECULATIVE): `NeronSchemeExtensionDedekind` might itself be reduced to its DVR case plus
+  gluing, as neron-ext did for `𝓞_L`. That would not lower the count.
