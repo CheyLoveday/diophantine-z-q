@@ -4,70 +4,87 @@ Task sz-raynaud (2026-11-17), base wip/ga-rigidity (f9e83fdb), no other branch m
 
 ## 1. Result
 
-**Verdict.** The two rows (`sga7_IX_Cor3_3`, now with leaf `SGA7_IX_Cor3_3_Def34`, and
-`sga7_IX_3_5_ForwardGeom`, with leaf `SGA7_IX_3_5_ForwardGeom_Def34`) **have no counterpart on the manuscript's
-route at L814-818, and neither can be proved from it.** The manuscript's two steps there are:
+**Verdict.**
 
-1. Raynaud's criterion as cited, `\cite[Theorem 3.5]{silverbergzarhin}`, giving semistable reduction over
-   `F = L_v(A[3])` (`A[5]` if `p = 3`) directly. There is no base change and no strict henselization.
-2. The next sentence, with no citation (**ELLIOT**): "Its wild inertia acts trivially on each `V_ℓ(A)` with
-   `ℓ ≠ p`."
+- **Neither row has a counterpart on the manuscript's route at L814-818, and neither can be proved from that route.**
+  The rows are `sga7_IX_Cor3_3` (with ga-rigidity's leaf `SGA7_IX_Cor3_3_Def34`) and `sga7_IX_3_5_ForwardGeom`
+  (with leaf `SGA7_IX_3_5_ForwardGeom_Def34`).
+- **What the route gives in their place is now in Lean.** Its two steps are stated as leaves:
+  1. Raynaud's criterion as Silverberg–Zarhin Theorem 3.5 states it (read from the page image on 11-17). This
+     gives semistable reduction over `F = L_v(A[3])` directly, with no base change.
+  2. The uncited sentence at L817-818, labelled **ELLIOT**: wild inertia acts trivially on `V_ℓ(A)`.
 
-What the rows feed, traced in the tree (§3):
-- **`sga7_IX_Cor3_3`** (SGA 7 IX Cor. 3.3: the identity component commutes with base change) feeds only SS2/SS3,
-  i.e. semistability persists under base change. Those are used to compute Faltings heights on Néron models over a
-  common semistable field (`r20_of_leaves'`, Faltings' Lemma 5 for base changes). That is a different part of the
-  proof, not L814-818. The manuscript gets semistability over `F` from the criterion itself, so the row has no
-  counterpart there.
-- **`sga7_IX_3_5_ForwardGeom`** (SGA 7 IX Prop. 3.5: semistable ⇒ `(σ−1)² = 0` on `T_ℓ` for every inertia
-  element) feeds r6 (`PkgI2.RaynaudCriterionNF`). r6 is used in two places:
-  - D2 (L814-818), in three proofs: `torsFix_of_descent`, `localGlue_of_descent`, and lt-local's
-    `linkedTateLocal`, which reaches D2 through `localGlue_at`. Here the manuscript uses only the weaker ELLIOT
-    sentence (wild inertia acts trivially).
-  - A6 (`qmModelG3_of`: good reduction of a QM surface away from 3, the kernel's Raynaud route; the manuscript
-    instead gets good reduction from the proper model and its universal abelian scheme, L529-530).
+  From these two leaves, L814-818 is proved in Lean, and so is the bundle field `raynaudSemistableSHOr` (SGA 7 IX
+  4.7, statement unchanged).
+- **Fold.** The fold discharges `raynaudSemistableSHOr` from the new leaf `silverbergZarhinThm35`. That trades a
+  LEAF that rests on SGA 7, which the manuscript does not cite, for a LEAF the manuscript cites, read on 11-17. The
+  strict dry run gives **12/22 on 34 → 12/22 on 34**, strictest 11/23 → 11/23: the counts are unchanged and the
+  fold is accepted without `--allow-rise`.
 
-  The ELLIOT sentence follows from the row with on-the-spot glue (proved below, `elliot_of_semistableUnipotent`).
-  The converse fails: wild-inertia triviality says nothing about tame inertia. So the manuscript's route gives
-  D2 but not the row.
+**The manuscript's two steps** (L814-818, read):
 
-**What the route gives in their place, proved in Lean** (`ZInQKernel/Contrib/OneProof/SZRaynaud.lean`, namespace
-`SZRaynaud`; no `sorry`, standard axioms only; compile status in §5):
+1. "Raynaud's criterion `\cite[Theorem 3.5]{silverbergzarhin}` gives semistable reduction there", for
+   `F = L_v(A[3])` (`A[5]` if `p = 3`). Silverberg–Zarhin Thm 3.5 (Ann. Inst. Fourier 45 (1995), p. 406), as read
+   from the page image on 11-17 (scratch/sz-raynaud/sz-thm35-reading.md):
+   - `X` is an abelian variety over a field `F` with a discrete valuation;
+   - `n ≥ 3`, and `n` is not divisible by the residue characteristic;
+   - `X_n` is defined over an unramified extension of `F`;
+   - then `X` has semistable reduction. Their definition (p. 405): the identity component of the special fibre of
+     the Néron model is an extension of an abelian variety by a torus, not necessarily split.
 
-| new statement | kind | what it is |
+   The manuscript's use (`n = 3`, or `n = 5` at `p = 3`; the torsion rational over `F`) is a direct instance.
+2. "Its wild inertia acts trivially on each `V_ℓ(A)` with `ℓ ≠ p`." This sentence has **no citation: ELLIOT.**
+
+**Why each row has no counterpart** (traced in the tree, §3):
+
+- **`sga7_IX_Cor3_3`** (the identity component commutes with base change) feeds only SS2/SS3, that is,
+  semistability persists under base change.
+  - SS2/SS3 are used to compute Faltings heights on Néron models over a common semistable field
+    (`r20_of_leaves'`).
+  - At L814-818 the manuscript gets semistability over `F` from the criterion itself, so there is nothing to
+    persist.
+  - Elsewhere the manuscript uses the stable Faltings height (L598) as a standard notion. It has no
+    semistable-persistence step: `grep -i semistab` finds only L740 (de Rham, potentially semistable), L817, L10980
+    and the bibliography.
+- **`sga7_IX_3_5_ForwardGeom`** (semistable ⇒ `(σ−1)² = 0` on `T_ℓ` for every inertia element) feeds r6
+  (`PkgI2.RaynaudCriterionNF`), which is used in two places:
+  - **D2** (L814-818). Here the manuscript uses only the weaker ELLIOT sentence, which says nothing about tame
+    inertia. So the route gives D2, but not the row.
+  - **A6** (`qmModelG3_of`). This is the kernel's own Raynaud route to good reduction. The manuscript instead gets
+    good reduction from the proper model and its universal abelian scheme (L529-530).
+
+  The ELLIOT sentence does follow from the row, using one on-the-spot glue statement (wild inertia is pro-`p`):
+  `elliot_of_semistableUnipotent`. The converse does not hold.
+
+**Proved in Lean** (`ZInQKernel/Contrib/OneProof/SZRaynaud.lean`, namespace `SZRaynaud`; compile status in §5):
+
+| statement | kind | what it is |
 | --- | --- | --- |
-| `SilverbergZarhinThm35` | LEAF candidate, **GLUE until read** (published, flag "pending reading: …") | Raynaud's criterion as Silverberg–Zarhin Thm 3.5 states it, as the manuscript cites it; over any DVR; `m ≥ 3` invertible; `A[m]` rational; conclusion: semistable reduction under either extension reading |
-| `ElliotWildInertiaTrivial` | ELLIOT (consequence, flag "ELLIOT: uncited manuscript sentence (diophantine_zq.tex:817-818) …") | semistable reduction ⇒ every wild inertia element acts trivially on `T_ℓ(A)`, `ℓ` invertible |
-| `IsWildInertia` | definition | `v_w(σx − x) > v_w(x)` for all `x ≠ 0` (the first ramification group; the valuation-ring form of the kernel's `wildSet`) |
-| `raynaudSemistable_of_sz35` | proved | `SZ35 → ReductSplit.RaynaudSemistable`: the kernel's Raynaud criterion over **every** DVR, with no strict henselization, no `StrictHenselizationPair` and no base change |
-| `raynaudSemistableSHOr_of_sz35` | proved | `SZ35 → DictModels.RaynaudOr.RaynaudSemistableSHOr`, the bundle field (SGA 7 IX 4.7), statement unchanged |
-| `RaynaudWildNF`, `raynaudWildNF_of_leaves` | proved | **L814-818 in Lean**: in r6's objects, `A[m]` Galois-fixed (`m ≥ 3` invertible) ⇒ every wild inertia element fixes `A(K̄)[ℓⁿ]`; from SZ35 + ELLIOT + the Néron field at number fields (as r6's own proof) and proved glue |
-| `elliot_of_semistableUnipotent` | proved | ELLIOT from SGA 7 IX 3.5 (`SemistableUnipotent`, what the ForwardGeom row gives) + the on-the-spot glue `WildPeriodCoprime` (wild inertia is pro-`p`) |
-| `SilverbergZarhinThm35Def34`, `ElliotWildInertiaTrivialDef34`, `raynaudWildNF_of_def34` | variants, proved composite | the reading-robust pair if Silverberg–Zarhin define semistability by "no unipotent part" (`GaRigidity.SGA7.IsSemistableDef34`); the composite uses ga-rigidity's `isSemistableDef34_of_isSemistable` |
-
-**Fold.** Only one bundle field is discharged on the manuscript's route: **`raynaudSemistableSHOr`** (SGA 7 IX 4.7,
-LEAF since the 11-17 reading), by `raynaudSemistableSHOr_of_sz35` from the new leaf `SilverbergZarhinThm35`. That
-trades a LEAF row (SGA 7, not cited by the manuscript) for a GLUE row (Silverberg–Zarhin, cited, but pending
-reading). So the strict count rises by one, and the strict autofold refuses the fold without `--allow-rise`. Per
-the owner's ruling ("re-route to Elliot"), this is the re-route; **the lead decides** whether to fold it now or
-after a reading of Silverberg–Zarhin p. 406 clears the flag (§4). The ELLIOT leaf discharges no current field:
-r6 is still needed by A6.
+| `SilverbergZarhinThm35` | **LEAF** (published; flag "reading 11-17 …") | SZ Thm 3.5 as read. Over any DVR of any field; `m ≥ 3` invertible; `A(K̄)[m]` rational. Conclusion: every Néron model is semistable in SZ's sense (`DictModels.RaynaudOr.IsSemistableResT`: special fibre over `k`, torus not necessarily split) |
+| `ElliotWildInertiaTrivial` | **ELLIOT** (consequence; flag "ELLIOT: uncited manuscript sentence (diophantine_zq.tex:817-818) …") | At a finite place of a number field: semistable reduction in SZ's sense ⇒ every wild inertia element acts trivially on `T_ℓ(A)`, for `ℓ` invertible |
+| `HasSemistableReductionSZ`, `IsWildInertia` | definitions | `HasSemistableReductionSZ`: a Néron model that is `IsSemistableResT`. `IsWildInertia`: `v_w(σx − x) > v_w(x)` for all `x ≠ 0` (the first ramification group; the valuation-ring form of the kernel's `wildSet`) |
+| `isSemistable_of_sz`, `hasSemistableReduction_of_sz` | proved | **The named step from SZ's semistability to the kernel's** (geometric special fibre, split torus): base change `k → k̄`, using Stacks 04KV (`geomConnOfRationalPoint_proof`), via dict-models' `isSemistable_of_resT` |
+| `raynaudSemistable_of_sz35` | proved | `SZ35 → ReductSplit.RaynaudSemistable`: the kernel's Raynaud criterion over **every** DVR, with no strict henselization and no `StrictHenselizationPair` |
+| `raynaudSemistableSHOr_of_sz35` | proved | `SZ35 → DictModels.RaynaudOr.RaynaudSemistableSHOr`, the bundle field, statement unchanged (left disjunct) |
+| `RaynaudWildNF`, `raynaudWildNF_of_leaves` | proved | **L814-818 in Lean**, in r6's objects: if `A[m]` is Galois-fixed (`m ≥ 3` invertible), every wild inertia element fixes `A(K̄)[ℓⁿ]`. Proved from SZ35, ELLIOT, the Néron-model existence field at number fields (as r6's own proof uses), `[m]` étale and Mumford's torsion count |
+| `elliot_of_semistableUnipotent` | proved (sanity) | ELLIOT from SGA 7 IX 3.5 (`SemistableUnipotent`, which the ForwardGeom row gives) and the on-the-spot glue `WildPeriodCoprime` (wild inertia is pro-`p`; not proved) |
+| `isSemistableDef34_of_sz`, `hasSemistableReductionDef34_of_sz`, `def34_of_sz35` | proved | **GaRigidity:** SZ's output gives Déf. 3.4's "no `𝔾_a`" condition, the hypothesis of ga-rigidity's two Déf. 3.4 rows. Proved by `isSemistable_of_sz` followed by `GaRigidity.SGA7.isSemistableDef34_of_isSemistable` (rigidity for `𝔾_a`, `noGaSubgroup_of_semiAbelian`) |
 
 ## 2. The manuscript's text (read)
 
-- L814-818 (read): at `p`, `F = L_v` with `A[3]` adjoined (`A[5]` if `p = 3`), degree `≤ DG₀` over `ℚ_p`;
-  "Raynaud's criterion `\cite[Theorem 3.5]{silverbergzarhin}` gives semistable reduction there"; then the uncited
-  sentence on wild inertia and `V_ℓ(A)`, `ℓ ≠ p`. L819-821 then use the break bound for the upper numbering.
-  VERIFIED (read).
-- Bibliography L11077-11080: Silverberg–Zarhin, Ann. Inst. Fourier 45 (1995), 403-420, Theorem 3.5. VERIFIED.
-- `grep` for `SGA`, `sga7`, `grothendieck` in diophantine_zq.tex: no hit. **SGA 7 is cited nowhere in the
-  manuscript.** Silverberg–Zarhin is cited only at L816. VERIFIED.
-- So SGA 7 IX 3.5 (unipotence) and Cor. 3.3 are not on the manuscript's route; Prop. 4.7 reaches it only through
-  Silverberg–Zarhin's citation of it.
+- **L814-818** (read): at `p`, `F` is `L_v` with `A[3]` adjoined (`A[5]` if `p = 3`), of degree `≤ DG₀` over
+  `ℚ_p`. "Raynaud's criterion `\cite[Theorem 3.5]{silverbergzarhin}` gives semistable reduction there" is followed
+  by the uncited sentence on wild inertia and `V_ℓ(A)`, `ℓ ≠ p`. L819-821 then use the break bound for the upper
+  numbering. VERIFIED (read).
+- **Bibliography**, L11077-11080: Silverberg–Zarhin, Ann. Inst. Fourier 45 (1995), 403-420. VERIFIED.
+- **SGA 7 is cited nowhere in the manuscript**: `grep` for `SGA`, `sga7`, `grothendieck` in diophantine_zq.tex
+  finds nothing. Silverberg–Zarhin is cited only at L816. VERIFIED.
+- So SGA 7 IX 3.5 (unipotence) and Cor. 3.3 are not on the manuscript's route. Prop. 4.7 reaches it only as the
+  proof Silverberg–Zarhin give for Thm 3.5 ("See Proposition 4.7 of [7]").
 
 ## 3. Where the rows feed (traced)
 
-See scratch/sz-raynaud/log.md for the file:line chain. Summary:
+scratch/sz-raynaud/log.md has the file:line chain. Summary:
 
 ```
 sga7_IX_Cor3_3 → sga7_IX_3_3_SHpre → sga7_IX_3_3_SH → semistablePersistsSHcp, sga7_IX_3_3 → SS3 (SemistablePersists)
@@ -77,66 +94,78 @@ sga7_IX_3_5_ForwardGeom → SemistableUnipotent → r6 RaynaudCriterionNF
                       (also lt-local's linkedTateLocal through localGlue_at: D2 again)
                 → A6: qmModelG3_of (QML3 good reduction, the kernel's Raynaud route; manuscript L529-530 differs)
 raynaudSemistableSHOr → raynaudSemistableSH → (with StrictHenselizationPair) RaynaudSemistable → r6, SS1
+   (after the fold: silverbergZarhinThm35 → raynaudSemistableSHOr_of_sz35 → raynaudSemistableSHOr, unchanged)
 ```
 
-In the kernel the ELLIOT sentence is already *proved*: from r6's unipotence, the `p`-power period of wild
-elements (TailH `wildIter`) and the algebraic core `PkgI2.fixed_of_unipSq_of_iterate`. That proof is the
-kernel's, not the manuscript's: the manuscript states the sentence without proof.
+In the kernel the ELLIOT sentence is already *proved*, from three inputs: r6's unipotence, the `p`-power period of
+wild elements (TailH `wildIter`), and the algebraic core `PkgI2.fixed_of_unipSq_of_iterate`. That proof is the
+kernel's own; the manuscript states the sentence without proof.
 
-**Follow-up (not done).** To make D2 rest on the manuscript's route in the bundle, re-prove TailH's
-`raynaudPlace_of_R6` with conclusion "fixes" from `RaynaudWildNF`. That needs a lemma
-`isWildInertia_of_wild_gen`, the analogue of TailH's `isInertia_of_wild_gen` for `IsWildInertia` on
-`normVS f₁`. Then `torsFix_of_descent` loses its unipotence and `wildIter` steps. That removes r6 from D2 and I2,
-but r6 stays needed by A6, so no field leaves the bundle until A6 is rerouted too, to the manuscript's universal
-abelian scheme (L529-530).
+**Follow-up (not done).** D2 could rest on the manuscript's route in the bundle:
+- Re-prove TailH's `raynaudPlace_of_R6`, with conclusion "fixes", from `RaynaudWildNF`.
+- This needs a lemma `isWildInertia_of_wild_gen` (the analogue of TailH's `isInertia_of_wild_gen`, for
+  `IsWildInertia` on `normVS f₁`).
+- `torsFix_of_descent` then loses its unipotence and `wildIter` steps, which removes r6 from D2 and I2.
+- r6 is still needed by A6, so no field leaves the bundle until A6 is also rerouted to the manuscript's universal
+  abelian scheme (L529-530). So the bundle count would not change; this is why it was not done here.
 
 ## 4. Known issues in the sources
 
-1. **Silverberg–Zarhin Thm 3.5 at `n = 3` (known issue, unresolved).** locators.md row R6: Thm 3.5 (p. 406)
-   cites SGA 7 IX Prop. 4.7 and allows the `n`-torsion to be defined over an unramified extension, but the text
-   extraction reads the threshold like `> 3`. Whether the printed threshold includes `n = 3` was not confirmed from
-   the scan, and the page has not been re-read (no network here). The manuscript uses `n = 3` for every `p ≠ 3`.
-   - If the print says `n ≥ 3`, the manuscript's citation is exact.
-   - If it says `n > 3`, the citation does not cover the manuscript's case `n = 3`. The mathematics is still
-     right: SGA 7 IX Prop. 4.7, read 11-17 (kinds.tsv row raynaudSemistableSHOr, p. 366), allows every `n > 1`
-     prime to `p` except `n = 2`. But that is a source the manuscript does not cite.
-   - **Repair within the manuscript's own citation (computed):** use `A[5]` for `p ≠ 5` and `A[4]` for `p = 5`.
-     Both levels are `≥ 4` and prime to `p`, and `|GL₄(𝔽₅)| = 116 064 000 000 = G₀` and
-     `|GL₄(ℤ/4)| = 2¹⁶·|GL₄(𝔽₂)| = 1 321 205 760 ≤ G₀`, so the degree bound `[F:ℚ_p] ≤ DG₀` at L815 is unchanged
-     (VERIFIED, computed in python; `|GL₄(𝔽₃)| = 24 261 120`).
-   - The Lean leaf states `3 ≤ m`, the manuscript's use, and is flagged pending reading.
-2. **Base and definitions of Theorem 3.5 (UNVERIFIED).** Not confirmed:
-   - whether Silverberg–Zarhin state the theorem over any discretely valued field or over a complete/henselian
-     one;
-   - how they define semistable reduction: an extension of an abelian variety by a torus on the special fibre, or
-     no unipotent part.
+1. **Silverberg–Zarhin Thm 3.5: no known issue.** The page was read on 11-17 by the fleet's print reader (host's
+   late note, copied into scratch/sz-raynaud/sz-thm35-reading.md). The hypothesis is `n ≥ 3`. The old worry in
+   locators R6 ("`> 3`") came from numdam's OCR text layer, which misreads the `≥` sign. So Thm 3.5 covers
+   `n = 3`, and the manuscript's use at L814-818 is a direct instance:
+   - the torsion is rational over `F`, the trivial case of "defined over an unramified extension";
+   - `3` and `5` are prime to `p` in the respective cases.
 
-   The leaf is over any DVR (the kernel applies r6 at DVRs of number fields, which are not complete). If the
-   print is over complete fields only, the leaf exceeds it by the compatibility of Néron models with completion
-   (BLR 7.2/1, UNVERIFIED). The conclusion is reading-robust for the two extension readings. If the print reads
-   "no unipotent part", use the Def34 pair (§1), which is literal under that reading.
-3. **The ELLIOT sentence (L817-818) is uncited.** It is true and standard. Semistable reduction gives
-   `(σ−1)² = 0` on `T_ℓ` for inertia (SGA 7 IX 3.5, not cited; Silverberg–Zarhin Thm 3.3, p. 405, per locators R6,
-   not cited by the manuscript either), and wild inertia is pro-`p` with `p ≠ ℓ`, so a unipotent element of
-   `p`-power order is trivial. `elliot_of_semistableUnipotent` is this argument in Lean, with the pro-`p` input as
-   the on-the-spot glue `WildPeriodCoprime`. Suggested manuscript repair: cite Silverberg–Zarhin Thm 3.3 (or SGA 7
-   IX 3.5) and add "since wild inertia is pro-`p`".
-4. No issue found in the manuscript's use of the criterion with `F = L_v(A[3])`: the torsion is rational over `F`,
-   which is the case "defined over an unramified extension" with the trivial extension.
+   The base is any field with a discrete valuation, so the Lean leaf (any DVR) is the print's generality.
+   Silverberg–Zarhin's semistability (p. 405) is the residue-field form with a torus that need not be split; the
+   leaf concludes exactly that form (`IsSemistableResT`). The step to the kernel's form is `isSemistable_of_sz`
+   (Stacks 04KV, proved). The leaf specializes the print in two ways:
+   - the unramified extension is taken trivial;
+   - "the Néron model" is read as "every Néron model", the standard reading, since Néron models are unique up to
+     unique isomorphism.
+2. **The ELLIOT sentence (L817-818) is uncited (documented issue, not an error).** The sentence is true and
+   standard:
+   - Semistable reduction gives `(σ−1)² = 0` on `T_ℓ` for inertia. The sources are SGA 7 IX 3.5 and, per
+     locators R6, Silverberg–Zarhin Thm 3.3 (p. 405); the manuscript cites neither.
+   - Wild inertia is pro-`p` with `p ≠ ℓ`, and a unipotent element of `p`-power order is trivial.
+
+   `elliot_of_semistableUnipotent` is this argument in Lean, with the pro-`p` input as the on-the-spot glue
+   `WildPeriodCoprime`. Suggested repair to the manuscript: cite Silverberg–Zarhin Thm 3.3 (or SGA 7 IX 3.5) and add
+   "since wild inertia is pro-`p`".
+3. **The ELLIOT leaf reads the sentence globally.** The sentence speaks of the local field `F`. The Lean leaf is at
+   a finite place `O` of a number field `K` (the manuscript's setting: `A` over a number field), with "its wild
+   inertia" taken as the wild inertia of `w | O` in `Gal(K̄/K)` and semistable reduction taken at `O`. Two standard
+   identifications make this the sentence's content:
+   - the decomposition group of `w` is the Galois group of the completion;
+   - Néron models commute with completion (BLR 7.2/1, the tree's field `blr_7_2_1`).
+
+   The manuscript itself treats `G_F` inside the global Galois group acting on `V_ℓ(A)`. Both identifications are
+   in neither the manuscript nor Silverberg–Zarhin; they are documented in the leaf's docstring, and the lead
+   decides how the ELLIOT row counts. `T_ℓ` stands in for `V_ℓ`: `T_ℓ ⊆ V_ℓ`, so the leaf is a consequence.
 
 ## 5. Lean
 
-- Contribution: `ZInQKernel/Contrib/OneProof/SZRaynaud.lean` (development copy scratch/sz-raynaud/SZR.lean).
-  Imports GaRigiditySGA7, RaynaudSemistableOr, NeronDVR, GeomConnOfRationalPoint, MumfordTorsionAlgClosed,
-  MulEtale; never `ZInQKernel.OneProof.Main`. GaRigidity.lean and GaRigiditySGA7.lean unchanged.
-- Compile, `#discharges`, axioms, autofold dry run: see the log and §6.
+- **Contribution:** `ZInQKernel/Contrib/OneProof/SZRaynaud.lean`, with development copy scratch/sz-raynaud/SZR.lean
+  (same body).
+  - Imports GaRigiditySGA7, RaynaudSemistableOr, NeronDVR, GeomConnOfRationalPoint, MumfordTorsionAlgClosed and
+    MulEtale; never `ZInQKernel.OneProof.Main`.
+  - GaRigidity.lean and GaRigiditySGA7.lean are unchanged. No other file under ZInQKernel/ was edited.
+- **Compile, `#discharges`, axioms:** see the log (filled in below once the build finishes).
+- **Autofold:**
+  - Spec: scratch/sz-raynaud/autofold.json, which discharges `raynaudSemistableSHOr` with the leaf
+    `silverbergZarhinThm35`.
+  - Strict dry run: leaf-fold33b's `autofold.py` and `render_open.py`, copied from d67ea55f6 (and byte-identical at
+    origin/wip/leaf-fold33b = 74395dcf0). Output in scratch/sz-raynaud/dryrun.txt: "strict count: 12/22 on 34 →
+    12/22 on 34; strictest 11/23 → 11/23"; new generation `OpenResearchLeaves43`, top `sixContactMin_of_open61`.
+  - The ELLIOT leaf discharges no field (r6 is still needed by A6), so it is not in the spec. Its kind and flag
+    for the lead are in §6.
 
 ## 6. Provenance of every new leaf
 
 | leaf | provenance | kind | flag |
 | --- | --- | --- | --- |
-| `SilverbergZarhinThm35` | (b) cited print, in the manuscript's bibliography (L11077), Thm 3.5 p. 406; wording UNVERIFIED | published | `pending reading: …` (GLUE) |
-| `ElliotWildInertiaTrivial` | (a) diophantine_zq.tex:817-818, uncited sentence (ELLIOT) | consequence | `ELLIOT: uncited manuscript sentence (diophantine_zq.tex:817-818) …` |
-| `SilverbergZarhinThm35Def34` (variant, not folded) | (b) as above | published | pending reading |
-| `ElliotWildInertiaTrivialDef34` (variant, not folded) | (a) as above | consequence | ELLIOT |
-| `WildPeriodCoprime` (glue, sanity theorem only) | (c) on-the-spot (in neither the manuscript nor Silverberg–Zarhin) | glue | never LEAF |
+| `SilverbergZarhinThm35` | (b) cited print, in the manuscript's bibliography (L11077): Thm 3.5 p. 406, semistable p. 405; read 11-17 from the page image | published | `reading 11-17 (the fleet's print reader, page image …): the hypothesis line is n >= 3 …` (LEAF) |
+| `ElliotWildInertiaTrivial` | (a) diophantine_zq.tex:817-818, an uncited sentence (ELLIOT) | consequence | `ELLIOT: uncited manuscript sentence (diophantine_zq.tex:817-818); global reading at a finite place of a number field (decomposition group = local Galois group; Néron models commute with completion); T_l for V_l` |
+| `WildPeriodCoprime` (glue, used only in the sanity theorem) | (c) on-the-spot: in neither the manuscript nor Silverberg–Zarhin | glue | never LEAF |

@@ -42,3 +42,13 @@
   Step SZ form -> kernel form (geometric fibre, split torus) = `isSemistable_of_resT` (RaynaudSemistableOr:271)
   from the bundle leaf GeomConnOfRationalPoint (Stacks 04KV; proved `geomConnOfRationalPoint_proof`).
 - Previous run's lake build (started in background by run 1) still running at 06:25 (TailC), left to finish.
+- SZR.lean / SZRaynaud.lean revised: `SilverbergZarhinThm35` concludes `∀ Néron 𝒩, IsSemistableResT 𝒩` (SZ's form,
+  no disjunction, no UNVERIFIED); `HasSemistableReductionSZ`; `isSemistable_of_sz` (named step SZ -> kernel form);
+  ELLIOT leaf over `HasSemistableReductionSZ`, restricted to number fields (the manuscript's setting);
+  Def34 variant leaves dropped, replaced by `def34_of_sz35` (SZ -> no G_a, via GaRigidity rigidity).
+- autofold.json: discharge raynaudSemistableSHOr by `SZRaynaud.raynaudSemistableSHOr_of_sz35 {n}.silverbergZarhinThm35`.
+- Strict dry run (leaf-fold33b autofold.py/render_open.py from d67ea55f6, identical to origin/wip/leaf-fold33b
+  74395dcf0): EXIT 0, "strict count: 12/22 on 34 -> 12/22 on 34; strictest 11/23 -> 11/23"; output
+  scratch/sz-raynaud/dryrun.txt (OpenResearchLeaves43, sixContactMin_of_open61). VERIFIED (run).
+- Run 1's background build killed at TailH (06:29); build2 started: lake build SZRaynaud + OneProof.Main +
+  OneProof.Discharges (scratch/sz-raynaud/build2.txt).

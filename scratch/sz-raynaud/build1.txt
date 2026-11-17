@@ -47186,3 +47186,5 @@ Note: This linter can be disabled with `set_option linter.ambiguousOpen false`
 warning: ZInQKernel/OneProof/H/TailG.lean:11870:68: Ambiguous namespace `PkgI3`: it is interpreted as `_root_.HDec.PkgI3` because this `open` occurs inside `namespace HDec.HeckeRestAll`, while `_root_.PkgI3` is silently not opened. Specify the namespace unambiguously, e.g. `_root_.HDec.PkgI3`. The warning can sometimes also be addressed by moving the `open` outside of the surrounding `namespace`.
 
 Note: This linter can be disabled with `set_option linter.ambiguousOpen false`
+✔ [12761/12823] Built ZInQKernel.Contrib.OneProof.SGRDirectNV (31s)
+EXIT 143
