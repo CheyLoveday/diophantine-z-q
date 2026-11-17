@@ -658,7 +658,7 @@ structure OpenResearchLeaves14GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -744,7 +744,7 @@ structure OpenResearchLeaves15GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -863,7 +863,7 @@ structure OpenResearchLeaves16GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -977,7 +977,7 @@ structure OpenResearchLeaves17GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1092,7 +1092,7 @@ structure OpenResearchLeaves18GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1201,7 +1201,7 @@ structure OpenResearchLeaves19GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1308,7 +1308,7 @@ structure OpenResearchLeaves20GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1321,7 +1321,7 @@ structure OpenResearchLeaves20GMEB : Prop where
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
   /-- gt-elkies: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W, printed form on the canonical witness: t is a coordinate on X6/W (fibres on Qbar-points = orbits of W = {1,w2,w3,w6}, defined by their moduli action), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesEquationsX6Ab (the moduli step orbit_iff_twist is proved). -/
   elkiesX6StarPrinted : _root_.HDec.QMSplit.Moduli.ElkiesX6Star.ElkiesX6StarPrinted
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1377,7 +1377,7 @@ structure OpenResearchLeaves21GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1390,7 +1390,7 @@ structure OpenResearchLeaves21GMEB : Prop where
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
   /-- gt-elkies: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W, printed form on the canonical witness: t is a coordinate on X6/W (fibres on Qbar-points = orbits of W = {1,w2,w3,w6}, defined by their moduli action), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesEquationsX6Ab (the moduli step orbit_iff_twist is proved). -/
   elkiesX6StarPrinted : _root_.HDec.QMSplit.Moduli.ElkiesX6Star.ElkiesX6StarPrinted
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1447,7 +1447,7 @@ structure OpenResearchLeaves22GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1460,7 +1460,7 @@ structure OpenResearchLeaves22GMEB : Prop where
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
   /-- gt-elkies: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W, printed form on the canonical witness: t is a coordinate on X6/W (fibres on Qbar-points = orbits of W = {1,w2,w3,w6}, defined by their moduli action), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesEquationsX6Ab (the moduli step orbit_iff_twist is proved). -/
   elkiesX6StarPrinted : _root_.HDec.QMSplit.Moduli.ElkiesX6Star.ElkiesX6StarPrinted
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1519,7 +1519,7 @@ structure OpenResearchLeaves23GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1530,7 +1530,7 @@ structure OpenResearchLeaves23GMEB : Prop where
   gonzalezRotgerProp56X6 : _root_.GR56.R5fpCountLe
   /-- gt-shpair, printed form: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 2 (Neron models commute with strict henselization), for unramified strictly henselian extensions with separable residue extension, which pin the base to O^sh (locator UNVERIFIED). Replaces strictHenselizationPair; the commutative algebra (GapSHPair.shPair) is proved. -/
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1620,7 +1620,7 @@ structure OpenResearchLeaves24GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1631,7 +1631,7 @@ structure OpenResearchLeaves24GMEB : Prop where
   gonzalezRotgerProp56X6 : _root_.GR56.R5fpCountLe
   /-- gt-shpair, printed form: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 2 (Neron models commute with strict henselization), for unramified strictly henselian extensions with separable residue extension, which pin the base to O^sh (locator UNVERIFIED). Replaces strictHenselizationPair; the commutative algebra (GapSHPair.shPair) is proved. -/
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1686,7 +1686,7 @@ structure OpenResearchLeaves25GMEB : Prop where
   this form is stronger than the print for imperfect residue fields. Replaces, with `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Prop. 3.3, first assertion (number UNVERIFIED), over a
+  /-- reduct-b, printed form, restricted: SGA 7 I Exp. IX Cor. 3.3, first assertion (number UNVERIFIED), over a
   strictly henselian DVR of a field of characteristic `0` with perfect, hence algebraically closed, residue field
   (a specialization of every reading of the print). With `strictHenselizationPair` replaces `semistablePersistsDVR`
   at its two uses, SS1 and SS3, which are over number fields. -/
@@ -1697,7 +1697,7 @@ structure OpenResearchLeaves25GMEB : Prop where
   gonzalezRotgerProp56X6 : _root_.GR56.R5fpCountLe
   /-- gt-shpair, printed form: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 2 (Neron models commute with strict henselization), for unramified strictly henselian extensions with separable residue extension, which pin the base to O^sh (locator UNVERIFIED). Replaces strictHenselizationPair; the commutative algebra (GapSHPair.shPair) is proved. -/
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1793,7 +1793,7 @@ structure OpenResearchLeaves26GMEB : Prop where
   gonzalezRotgerProp56X6 : _root_.GR56.R5fpCountLe
   /-- gt-shpair, printed form: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 2 (Neron models commute with strict henselization), for unramified strictly henselian extensions with separable residue extension, which pin the base to O^sh (locator UNVERIFIED). Replaces strictHenselizationPair; the commutative algebra (GapSHPair.shPair) is proved. -/
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1855,7 +1855,7 @@ structure OpenResearchLeaves27GMEB : Prop where
   gonzalezRotgerProp56X6 : _root_.GR56.R5fpCountLe
   /-- gt-shpair, printed form: Bosch-Lutkebohmert-Raynaud, Neron models, 1.2 Prop. 2 (Neron models commute with strict henselization), for unramified strictly henselian extensions with separable residue extension, which pin the base to O^sh (locator UNVERIFIED). Replaces strictHenselizationPair; the commutative algebra (GapSHPair.shPair) is proved. -/
   neronBaseChangeStrictHenselization : _root_.GapSHPair.NeronBaseChangeStrictHenselization
-  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
+  /-- gt-sga7, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion (N0 x_S S' = N'0 for semistable reduction) over strictly henselian traits (number UNVERIFIED). With neronBaseChangeStrictHenselization, sga3_VIB_3_10 and geomConnOfRationalPoint replaces sga7_IX_3_3 (SGA7PersistsNF.sga7_IX_3_3_of_SH). -/
   sga7_IX_3_3_SH : _root_.SGA7PersistsNF.SGA7_IX_3_3_SH
   /-- gt-unip, printed form, strictly henselian base: SGA 7 I Exp. IX Prop. 3.5, direction semistable => (sigma-1)^2 = 0 on T_l = lim A(K^s)[l^n] for sigma in inertia, one sigma at a time (the print gives (sigma-1)(tau-1) = 0 and the converse); number UNVERIFIED. Semistability read on the geometric special fibre; reading risk: if the print reads it over k(s), this form exceeds the print by UnipotentForward.SemiAbelianDescendsSepClosed for imperfect residue fields only (the reading-robust variant is UnipotentForward.semistableUnipotent_of_forward). Replaces semistableUnipotent; StrictHenselizationInside and the K^s axis are proved. -/
   sga7_IX_3_5_ForwardGeom : _root_.UnipotentForward.SGA7_IX_3_5_ForwardGeom
@@ -1940,7 +1940,7 @@ structure OpenResearchLeaves28GMEB : Prop where
   /-- elkies-coord: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W in his function-field form on the canonical witness: Q(X6)^W = Q(t) whenever X6 is integral and t regular at its generic point (both proved from the charts) (t generates the function field of X6/W; W = {1,w2,w3,w6} by its moduli action, acting by pullback on Mathlib's function field), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesX6StarPrinted (its Qbar-point fibre clause is proved: elkiesX6StarPrinted_of_functionField). -/
   elkiesX6StarFunctionField : _root_.HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField
   -- fold33-copy (sga3-nbhd): field `sga3_VIB_3_10_Nbhd` not copied (its readers no longer need SGA 3 VI_B 3.10)
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -2028,7 +2028,7 @@ structure OpenResearchLeaves29GMEB : Prop where
   /-- elkies-coord: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W in his function-field form on the canonical witness: Q(X6)^W = Q(t) whenever X6 is integral and t regular at its generic point (both proved from the charts) (t generates the function field of X6/W; W = {1,w2,w3,w6} by its moduli action, acting by pullback on Mathlib's function field), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesX6StarPrinted (its Qbar-point fibre clause is proved: elkiesX6StarPrinted_of_functionField). -/
   elkiesX6StarFunctionField : _root_.HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField
   -- fold33-copy (sga3-nbhd): field `sga3_VIB_3_10_Nbhd` not copied (its readers no longer need SGA 3 VI_B 3.10)
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -2339,7 +2339,7 @@ structure OpenResearchLeaves31EB : Prop where
   r16CoreY : _root_.R16Split.R16CoreY
   /-- elkies-coord: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W in his function-field form on the canonical witness: Q(X6)^W = Q(t) whenever X6 is integral and t regular at its generic point (both proved from the charts) (t generates the function field of X6/W; W = {1,w2,w3,w6} by its moduli action, acting by pullback on Mathlib's function field), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesX6StarPrinted (its Qbar-point fibre clause is proved: elkiesX6StarPrinted_of_functionField). -/
   elkiesX6StarFunctionField : _root_.HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3362,7 +3362,7 @@ structure OpenResearchLeaves32EB : Prop where
   r16CoreY : _root_.R16Split.R16CoreY
   /-- elkies-coord: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W in his function-field form on the canonical witness: Q(X6)^W = Q(t) whenever X6 is integral and t regular at its generic point (both proved from the charts) (t generates the function field of X6/W; W = {1,w2,w3,w6} by its moduli action, acting by pullback on Mathlib's function field), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesX6StarPrinted (its Qbar-point fibre clause is proved: elkiesX6StarPrinted_of_functionField). -/
   elkiesX6StarFunctionField : _root_.HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3457,7 +3457,7 @@ structure OpenResearchLeaves33EB : Prop where
   r16CoreY : _root_.R16Split.R16CoreY
   /-- elkies-coord: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W in his function-field form on the canonical witness: Q(X6)^W = Q(t) whenever X6 is integral and t regular at its generic point (both proved from the charts) (t generates the function field of X6/W; W = {1,w2,w3,w6} by its moduli action, acting by pullback on Mathlib's function field), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesX6StarPrinted (its Qbar-point fibre clause is proved: elkiesX6StarPrinted_of_functionField). -/
   elkiesX6StarFunctionField : _root_.HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3554,7 +3554,7 @@ structure OpenResearchLeaves34EB : Prop where
   r16CoreY : _root_.R16Split.R16CoreY
   /-- elkies-coord: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W in his function-field form on the canonical witness: Q(X6)^W = Q(t) whenever X6 is integral and t regular at its generic point (both proved from the charts) (t generates the function field of X6/W; W = {1,w2,w3,w6} by its moduli action, acting by pullback on Mathlib's function field), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). Replaces elkiesX6StarPrinted (its Qbar-point fibre clause is proved: elkiesX6StarPrinted_of_functionField). -/
   elkiesX6StarFunctionField : _root_.HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3650,7 +3650,7 @@ structure OpenResearchLeaves35EB : Prop where
   shimuraMainThmIDeligneY3AbU : _root_.RayClassCFT.ShimuraMainThmIDeligneY3AbU
   /-- r16-split: R16_EichlerShimuraJ1' with its rank-two clause deleted (a consequence of r16; R16Split.coreY_of_r16). For a newform f in S_2(Gamma_1(N)) with nebentypus chi and J = J_1(N): [K_f:Q] < infinity, and one Q-quotient pi : J ->> A with theta : K_f -> End^0(A), dim A = [K_f:Q], and arithmetic Frobenius at p not dividing N*l acting on every iota-component of V_l(A) with trace iota(a_p) and determinant iota(chi(p)) p. The rank-two clause is proved from dim A = [K_f:Q], mumfordTorsionAlgClosed and charPolyIndepOfEllAlgClosed (Mumford 19 Thm 4): R16Split.r16_of_printed. Still a composite of two printed theorems about Shimura's A_f, which has no Lean definition (no Hecke correspondences on X_1(N), no S_2 <-> H^0(X_1(N), Omega^1) comparison). -/
   r16CoreY : _root_.R16Split.R16CoreY
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3752,7 +3752,7 @@ structure OpenResearchLeaves36EB : Prop where
   shimuraMainThmIDeligneY3AbU : _root_.RayClassCFT.ShimuraMainThmIDeligneY3AbU
   /-- r16-split: R16_EichlerShimuraJ1' with its rank-two clause deleted (a consequence of r16; R16Split.coreY_of_r16). For a newform f in S_2(Gamma_1(N)) with nebentypus chi and J = J_1(N): [K_f:Q] < infinity, and one Q-quotient pi : J ->> A with theta : K_f -> End^0(A), dim A = [K_f:Q], and arithmetic Frobenius at p not dividing N*l acting on every iota-component of V_l(A) with trace iota(a_p) and determinant iota(chi(p)) p. The rank-two clause is proved from dim A = [K_f:Q], mumfordTorsionAlgClosed and charPolyIndepOfEllAlgClosed (Mumford 19 Thm 4): R16Split.r16_of_printed. Still a composite of two printed theorems about Shimura's A_f, which has no Lean definition (no Hecke correspondences on X_1(N), no S_2 <-> H^0(X_1(N), Omega^1) comparison). -/
   r16CoreY : _root_.R16Split.R16CoreY
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3853,7 +3853,7 @@ structure OpenResearchLeaves37EB : Prop where
   shimuraMainThmIDeligneY3AbU : _root_.RayClassCFT.ShimuraMainThmIDeligneY3AbU
   /-- r16-split: R16_EichlerShimuraJ1' with its rank-two clause deleted (a consequence of r16; R16Split.coreY_of_r16). For a newform f in S_2(Gamma_1(N)) with nebentypus chi and J = J_1(N): [K_f:Q] < infinity, and one Q-quotient pi : J ->> A with theta : K_f -> End^0(A), dim A = [K_f:Q], and arithmetic Frobenius at p not dividing N*l acting on every iota-component of V_l(A) with trace iota(a_p) and determinant iota(chi(p)) p. The rank-two clause is proved from dim A = [K_f:Q], mumfordTorsionAlgClosed and charPolyIndepOfEllAlgClosed (Mumford 19 Thm 4): R16Split.r16_of_printed. Still a composite of two printed theorems about Shimura's A_f, which has no Lean definition (no Hecke correspondences on X_1(N), no S_2 <-> H^0(X_1(N), Omega^1) comparison). -/
   r16CoreY : _root_.R16Split.R16CoreY
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3883,11 +3883,11 @@ structure OpenResearchLeaves37EB : Prop where
   elkiesX6StarEvery : _root_.HDec.QMSplit.Moduli.ElkiesPrint.ElkiesX6StarEvery
   /-- Fontaine, Invent. Math. 65 (1982), Theoreme principal: C_p (x) V_p(A) = (C_p(1) (x)_F t_A) + (C_p (x)_F t*_{A'}), G_F-equivariant; bases of the two finite-dimensional F-spaces chosen, both dimensions left unnamed (C_p(1)^a + C_p^b for some a, b); locator UNVERIFIED -/
   hodgeTateDecompExists : _root_.ZInQ.Contrib.HodgeTateFromPairing.HodgeTateDecompExists
-  /-- height-fix, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight: Neron model over a field where A has semistable reduction in the sense of SGA 7 IX Def. 2.2/3.2 read over the residue fields k(p) (IsSemistableRes), omega = wedge^g Gamma(S, e*Omega^1), and the archimedean metric (i/2)^g int_{A(C)} eta wedge eta-bar as the total mass of the measure defined chart by chart (density |tau l|^2 in translated algebraic coordinates at every point), which must exist (IsPrintedMetricSq). Replaces bostLowerBound (ZInQ.HeightFix.bostLowerBound_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
+  /-- height-fix, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight: Neron model over a field where A has semistable reduction in the sense of SGA 7 IX Def. 3.4 read over the residue fields k(p) (IsSemistableRes), omega = wedge^g Gamma(S, e*Omega^1), and the archimedean metric (i/2)^g int_{A(C)} eta wedge eta-bar as the total mass of the measure defined chart by chart (density |tau l|^2 in translated algebraic coordinates at every point), which must exist (IsPrintedMetricSq). Replaces bostLowerBound (ZInQ.HeightFix.bostLowerBound_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
   bostLowerBoundPrinted : _root_.ZInQ.HeightFix.BostLowerBoundPrinted
   /-- semiab-descend, printed form: Chevalley's structure theorem over a perfect field (Conrad, J. Ramanujan Math. Soc. 17 (2002) Thm 1.1; Milne, Algebraic Groups (2017) Thm 8.27; numbers UNVERIFIED): a smooth connected group scheme G of finite type over a perfect field k has a unique normal smooth connected affine subgroup H with G/H an abelian variety. Lean form: existence of a faithfully flat homomorphism pi : G -> B onto an abelian variety (PkgI3.AbVar) whose scheme-theoretic kernel G x_B Spec k is smooth, connected and affine, and uniqueness of that kernel on T-points; G/H read as the target of a faithfully flat homomorphism with kernel H (the definition of a quotient, Milne AG section 5.c). Replaces the glue semiAbelianDescendsPerfect (ZInQ.SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley proves it for every perfect field). -/
   chevalleyPerfect : _root_.ZInQ.SemiAbDescend.ChevalleyPerfect
-  /-- height-fix, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight (Faltings' original normalization (i/2)^g; semistability over k(p) as SGA 7 IX 2.2/3.2 print it; the metric defined chart by chart and required to exist). Replaces gaudronRemondThm14 (ZInQ.HeightFix.gaudronRemondThm14_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
+  /-- height-fix, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight (Faltings' original normalization (i/2)^g; semistability over k(p) as SGA 7 IX Def. 3.4 print it; the metric defined chart by chart and required to exist). Replaces gaudronRemondThm14 (ZInQ.HeightFix.gaudronRemondThm14_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
   gaudronRemondThm14Printed : _root_.ZInQ.HeightFix.GaudronRemondThm14Printed
 end HSyn
 end HDec
@@ -3957,7 +3957,7 @@ structure OpenResearchLeaves38EB : Prop where
   shimuraMainThmIDeligneY3AbU : _root_.RayClassCFT.ShimuraMainThmIDeligneY3AbU
   /-- r16-split: R16_EichlerShimuraJ1' with its rank-two clause deleted (a consequence of r16; R16Split.coreY_of_r16). For a newform f in S_2(Gamma_1(N)) with nebentypus chi and J = J_1(N): [K_f:Q] < infinity, and one Q-quotient pi : J ->> A with theta : K_f -> End^0(A), dim A = [K_f:Q], and arithmetic Frobenius at p not dividing N*l acting on every iota-component of V_l(A) with trace iota(a_p) and determinant iota(chi(p)) p. The rank-two clause is proved from dim A = [K_f:Q], mumfordTorsionAlgClosed and charPolyIndepOfEllAlgClosed (Mumford 19 Thm 4): R16Split.r16_of_printed. Still a composite of two printed theorems about Shimura's A_f, which has no Lean definition (no Hecke correspondences on X_1(N), no S_2 <-> H^0(X_1(N), Omega^1) comparison). -/
   r16CoreY : _root_.R16Split.R16CoreY
-  /-- dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
+  /-- dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). -/
   sga7_IX_3_3_SHpre : _root_.DictModels.SGA7Pre.SGA7_IX_3_3_SHpre
   /-- dict-models, printed form under either reading of 'semistable': Raynaud's criterion, SGA 7 I Exp. IX Prop. 4.7 (number UNVERIFIED) over a strictly henselian DVR, with the conclusion the disjunction of semistability over k(s) (general torus) and on the geometric special fibre. With geomConnOfRationalPoint (the k(s) -> kbar ascent is proved) replaces raynaudSemistableSH. -/
   raynaudSemistableSHOr : _root_.DictModels.RaynaudOr.RaynaudSemistableSHOr
@@ -3987,11 +3987,11 @@ structure OpenResearchLeaves38EB : Prop where
   elkiesX6StarEvery : _root_.HDec.QMSplit.Moduli.ElkiesPrint.ElkiesX6StarEvery
   /-- Fontaine, Invent. Math. 65 (1982), Theoreme principal: C_p (x) V_p(A) = (C_p(1) (x)_F t_A) + (C_p (x)_F t*_{A'}), G_F-equivariant; bases of the two finite-dimensional F-spaces chosen, both dimensions left unnamed (C_p(1)^a + C_p^b for some a, b); locator UNVERIFIED -/
   hodgeTateDecompExists : _root_.ZInQ.Contrib.HodgeTateFromPairing.HodgeTateDecompExists
-  /-- height-fix, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight: Neron model over a field where A has semistable reduction in the sense of SGA 7 IX Def. 2.2/3.2 read over the residue fields k(p) (IsSemistableRes), omega = wedge^g Gamma(S, e*Omega^1), and the archimedean metric (i/2)^g int_{A(C)} eta wedge eta-bar as the total mass of the measure defined chart by chart (density |tau l|^2 in translated algebraic coordinates at every point), which must exist (IsPrintedMetricSq). Replaces bostLowerBound (ZInQ.HeightFix.bostLowerBound_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
+  /-- height-fix, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight: Neron model over a field where A has semistable reduction in the sense of SGA 7 IX Def. 3.4 read over the residue fields k(p) (IsSemistableRes), omega = wedge^g Gamma(S, e*Omega^1), and the archimedean metric (i/2)^g int_{A(C)} eta wedge eta-bar as the total mass of the measure defined chart by chart (density |tau l|^2 in translated algebraic coordinates at every point), which must exist (IsPrintedMetricSq). Replaces bostLowerBound (ZInQ.HeightFix.bostLowerBound_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
   bostLowerBoundPrinted : _root_.ZInQ.HeightFix.BostLowerBoundPrinted
   /-- semiab-descend, printed form: Chevalley's structure theorem over a perfect field (Conrad, J. Ramanujan Math. Soc. 17 (2002) Thm 1.1; Milne, Algebraic Groups (2017) Thm 8.27; numbers UNVERIFIED): a smooth connected group scheme G of finite type over a perfect field k has a unique normal smooth connected affine subgroup H with G/H an abelian variety. Lean form: existence of a faithfully flat homomorphism pi : G -> B onto an abelian variety (PkgI3.AbVar) whose scheme-theoretic kernel G x_B Spec k is smooth, connected and affine, and uniqueness of that kernel on T-points; G/H read as the target of a faithfully flat homomorphism with kernel H (the definition of a quotient, Milne AG section 5.c). Replaces the glue semiAbelianDescendsPerfect (ZInQ.SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley proves it for every perfect field). -/
   chevalleyPerfect : _root_.ZInQ.SemiAbDescend.ChevalleyPerfect
-  /-- height-fix, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight (Faltings' original normalization (i/2)^g; semistability over k(p) as SGA 7 IX 2.2/3.2 print it; the metric defined chart by chart and required to exist). Replaces gaudronRemondThm14 (ZInQ.HeightFix.gaudronRemondThm14_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
+  /-- height-fix, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight (Faltings' original normalization (i/2)^g; semistability over k(p) as SGA 7 IX Def. 3.4 print it; the metric defined chart by chart and required to exist). Replaces gaudronRemondThm14 (ZInQ.HeightFix.gaudronRemondThm14_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). -/
   gaudronRemondThm14Printed : _root_.ZInQ.HeightFix.GaudronRemondThm14Printed
   /-- javanpeykar-rebase: Javanpeykar, Algebra Number Theory 8 (2014) Thm 1.1.1 in printed form at X = X0 x_K Qbar (X0 a smooth proper geometrically connected curve over a number field K, Qbar = AlgebraicClosure K): X projective (closed immersion into a projective space over Qbar), Jac(X) = W an abelian variety over Qbar representing Pic^0_{X/Qbar} with the tensor group law, V a model of W over K (V_Qbar = W), g = genusBar X = dim H^1(X, O_X), beta : X -> P^1_Qbar = Proj Qbar[X0,X1] a Belyi map of degree d (IsBelyiMap), h = height-fix's printed stable height ZInQ.HeightFix.IsPrintedStableHeight of V (sound archimedean metric defined chart by chart; Neron model semistable over the residue fields k(p)): h <= 13*10^6 * g * d^5. javanpeykar-fix's JavanpeykarPrintedMap verbatim over height-fix's height (JavanpeykarRebase.javanpeykarPrintedMap_of_fix: implied by it given T35 and Stacks 04KV). Replaces javanpeykarBound (JavanpeykarRebase.javanpeykarBound_of_printed_rebase, with constantFieldExtensionUnramifiedFinite, mumfordTorsionAlgClosed and uniformizationLeafAll_proof for T35, and height-fix's glue semiAbelianDescendsPerfect). -/
   javanpeykarPrintedMapHF : _root_.JavanpeykarRebase.JavanpeykarPrintedMap
