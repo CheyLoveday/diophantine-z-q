@@ -1,0 +1,13 @@
+FibreSplit.cmFibreSplit_of : HDec.QMLattice.YuB6Alg →
+  ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC →
+    FibreSplit.CMHomFieldModel → FibreSplit.CMMatrixUnitSplit → CMFibreSplit
+FibreSplit.cmHomFieldModel_of : G0ModField.FibreCoverExists →
+  ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC →
+    PkgI2.NeronOggShafarevich → HDec.PkgI2.RaynaudCriterionNF → PkgI2.TorsionStructure → FibreSplit.CMHomFieldModel
+'HDec.CMBranch.FibreSplit.cmFibreSplit_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmHomFieldModel_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.endBC_surjective_of_homField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.paste_iso' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.end0Matrix_of_noncentral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open4_hf_pz_eb_cmfs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open73_cmfs' depends on axioms: [propext, Classical.choice, Quot.sound]
