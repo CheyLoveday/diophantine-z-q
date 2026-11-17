@@ -44,3 +44,18 @@ fpqc over `S'` with the transport condition `KI q π₁`, and finite sets of `X�
 gives `B₀` over `S`, `d : X₁ → B₀` with `IsPullback d X₁.hom B₀.hom q`, and `π : U → B₀` with `fst ≫ π = π₁ ≫ d`.
 Descent datum built as `ψ : X₁ ×_S S' → X₁` by effective-epi descent along `π₁ × id` (unit, `ψ ≫ hom = snd`,
 coassociativity by epi cancellation), effectivity from vendored `isEffective_of_isFinite`. Axioms standard.
+
+## 5. Steps K, G (VERIFIED, compiled, all in scratch/chevalley-free/KI.lean, standard axioms)
+
+- `torusR_const`: rigidity for `𝔾_m^r` over any field (from `torus1_const`, coordinate by coordinate).
+- `rig_raw`, `torus_kernel_transfer`: a point `e_{ra}(t)` of the torus kernel for one `k̄`-structure `ra` on a
+  field `L` maps to the unit under `π'` for any other `rb` with `ra|_k = rb|_k` (rigidity over `L`, transported
+  with `Φ rb` of RaynaudSemistableOr).
+- `kbar_KI`: kernel pairs of `π'` are stable under change of `k̄`-structure (group algebra via
+  `Over.mapPullbackAdj.homEquiv`, `homEquiv_mul'`).
+- `algclosed_KI`, `field_KI`, `KI_of`: the transport condition `KI q π₁` of step D for a finite-stage model
+  `(X₁, π₁, c)` of `(B', π')` (extension of embeddings `k₁ → L̄` to `k̄`, field tests of the vendored
+  `over_hom_eq_of_field_tests` on the smooth universal source).
+- `exists_grpObj` (group structure through an fpqc quotient map under a congruence), `cong_of_faithful`
+  (congruence from a faithful monoidal base change), `isMonHom_pullbackComp`, `isMonHom_pullbackEq`.
+- Property descent along field extensions (copies of vendored privates), `finite_affine_of_grp`.
