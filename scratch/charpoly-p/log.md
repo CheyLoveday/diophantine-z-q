@@ -54,3 +54,15 @@ CharPolyIndepOfEllAlgClosed ⇐ DegHomogPolyNoEmb alone (char 0 with σ : k → 
   FoldDryRun.lean (`sixContactMin_of_open59`, TailZ65 base) compiles, standard axioms. VERIFIED.
 - scratch/charpoly-p/M1Statement.lean: `NonIsogPullbackEulerZero` (M1) and `EulerPullbackDeg` stated over CW07
   `Scheme.Modules.eulerChar`, AnthropicFLT `Scheme.Modules.IsInvertible`, Mathlib pullback, `CharPolyEll.degEnd`; compiles. VERIFIED.
+
+## Phase 2: χ-decomposition of DegHomogPoly (scratch/charpoly-p/ChiDecomp.lean, compiles, standard axioms; VERIFIED)
+Statements over CW07 `Scheme.Modules.eulerChar` (χ), AnthropicFLT `Scheme.Modules.IsInvertible`, Mathlib pullback, `degEnd`:
+- `EulerPullbackDegAt A`: χ(ψ^*L) = deg ψ · χ(L) ∀ψ ∈ End A, L invertible (Mumford §12 isogenies + §16 non-isogenies; consequence).
+- `ChiPullbackPolyAt A`: x ↦ χ((Σ xᵢeᵢ)^*L) polynomial (cube + Snapper/RR; composite consequence).
+- `ExistsChiNeZeroAt A`: ∃ L invertible, χ(L) ≠ 0 (projectivity + §16; consequence).
+- `DegMulNDimAt A`: ∃ g, dim A = g ∧ deg[m] = m^{2g} for (m:k) ≠ 0 (Mumford §4; printed).
+- `degPolyAt_of_chi`: DegPolyAt A from the four (homogeneity: N(mx) = m^{2g}N(x) for infinitely many m ⇒ N agrees
+  with its degree-2g homogeneous component at integer points, `eval_eq_homogeneousComponent`).
+- `charPolyIndepOfEllAlgClosed_of_chi`: the field from the four, on fields with no embedding into ℂ.
+Not a fold (4 leaves for 1); a crowdsourcing map: three of the four are in the tree's vendored AnthropicFLT up to
+framework bridges (ExistsChiNeZero, DegMulN, the cube half of ChiPullbackPoly); EulerPullbackDeg's non-isogeny half is M1.
