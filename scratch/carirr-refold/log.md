@@ -12,3 +12,4 @@
 - Manuscript's only Carayol citation: L9778 (appendix, Thm 5.3 trace operators), coefficient place above 2, p odd,
   Pi_f^vee, rho_f = sigma(Pi_f^vee)^vee; normalization L9784-9796: arithmetic Frobenius polynomial X^2 - a_q X + q chi(q).
   Casselman Thm 1 at L9802-9806 used for local conductor one (ramified-character blocks). VERIFIED (read).
+- CarayolRefold.lean §1-§2 (isOpen_ker_cycN, cycN_arithFrob, cycL_arithFrob, nearOne, odd_of_frobDet) compile, no warnings (lake env lean). VERIFIED.
