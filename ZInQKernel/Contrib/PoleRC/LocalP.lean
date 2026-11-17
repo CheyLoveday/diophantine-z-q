@@ -229,4 +229,93 @@ theorem localThree_nec {ℓ : ℕ} {a b : ℤ} (h3 : ℓ % 3 = 2) (ha : Squarefr
 
 end Three
 
+section Bad
+
+variable {q : ℕ} [hq : Fact q.Prime]
+
+theorem residue_isSquare_of_padic' {c : ℤ} (hnd : ¬ (q : ℤ) ∣ c) (h : IsSquare (c : ℚ_[q])) :
+    IsSquare (c : ZMod q) := by
+  have hu : ‖(c : ℤ_[q])‖ = 1 := by
+    rw [PadicInt.norm_def, PadicInt.coe_intCast]; exact padic_norm_intCast_eq_one hnd
+  obtain ⟨r, -, hr⟩ := exists_padicInt_sq_of_isSquare hu (by rwa [PadicInt.coe_intCast])
+  refine ⟨PadicInt.toZMod r, ?_⟩
+  have := congrArg PadicInt.toZMod hr
+  rwa [map_intCast, map_mul] at this
+
+theorem valuation_eq_zero_of_norm_one {u : ℚ_[q]} (hu : ‖u‖ = 1) : u.valuation = 0 := by
+  have hu0 : u ≠ 0 := by intro h0; rw [h0, norm_zero] at hu; exact zero_ne_one hu
+  have hp1 : (1 : ℝ) < q := by exact_mod_cast hq.out.one_lt
+  have e := Padic.norm_eq_zpow_neg_valuation hu0
+  rw [hu] at e
+  have := zpow_right_injective₀ (by linarith) hp1.ne' (e.symm.trans (zpow_zero _).symm)
+  simpa using this
+
+theorem lsym_eq_of_isSquare_mul {u w : ℤ} (hu : ¬ (q : ℤ) ∣ u) (hw : ¬ (q : ℤ) ∣ w)
+    (h : IsSquare ((u * w : ℤ) : ℚ_[q])) : lsym u q = lsym w q := by
+  have hqp : Prime (q : ℤ) := Nat.prime_iff_prime_int.mp hq.out
+  have hnd : ¬ (q : ℤ) ∣ u * w := fun h' => (hqp.dvd_or_dvd h').elim hu hw
+  have hsq := residue_isSquare_of_padic' hnd h
+  have h0 : lsym (u * w) q = 0 := lsym_of_isSquare hsq
+  rw [lsym_mul q (intCast_ne_zero_of_not_dvd hu) (intCast_ne_zero_of_not_dvd hw)] at h0
+  have key : ∀ x y : ZMod 2, x + y = 0 → x = y := by decide
+  exact key _ _ h0
+
+theorem padicValInt_q_mul {m : ℤ} (hm : ¬ (q : ℤ) ∣ m) : padicValInt q (q * m) = 1 := by
+  have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
+  rw [padicValInt.mul (Int.natCast_ne_zero.mpr hq.out.ne_zero) hm0, padicValInt_self,
+    padicValInt.eq_zero_of_not_dvd hm, add_zero]
+
+theorem not_isSquare_q_mul {m : ℤ} (hm : ¬ (q : ℤ) ∣ m) : ¬ IsSquare (((q * m : ℤ)) : ℚ_[q]) := by
+  intro h
+  have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
+  have h0 : (((q * m : ℤ)) : ℚ_[q]) ≠ 0 :=
+    Int.cast_ne_zero.mpr (mul_ne_zero (Int.natCast_ne_zero.mpr hq.out.ne_zero) hm0)
+  have e := even_valuation_of_isSquare h0 h
+  rw [Padic.valuation_intCast, padicValInt_q_mul hm] at e
+  exact absurd e (by decide)
+
+/-- Equal square classes in `ℚ_q` give equal `qcls` (squarefree integers, `q` odd). -/
+theorem qcls_eq_of_sqEq {u w : ℤ} (hu : Squarefree u) (hw : Squarefree w)
+    (h : SqEq (u : ℚ_[q]) (w : ℚ_[q])) : qcls q u = qcls q w := by
+  have hsq : IsSquare (((u * w : ℤ)) : ℚ_[q]) := by push_cast; exact h.isSquare_mul
+  unfold qcls
+  by_cases h1 : (q : ℤ) ∣ u <;> by_cases h2 : (q : ℤ) ∣ w
+  · rw [if_pos h1, if_pos h2]
+    obtain ⟨u', rfl⟩ := h1
+    obtain ⟨w', rfl⟩ := h2
+    have hq0 : (q : ℤ) ≠ 0 := Int.natCast_ne_zero.mpr hq.out.ne_zero
+    have hu' : ¬ (q : ℤ) ∣ u' := by
+      have := not_dvd_div_of_squarefree hq.out hu (dvd_mul_right _ _)
+      rwa [Int.mul_ediv_cancel_left _ hq0] at this
+    have hw' : ¬ (q : ℤ) ∣ w' := by
+      have := not_dvd_div_of_squarefree hq.out hw (dvd_mul_right _ _)
+      rwa [Int.mul_ediv_cancel_left _ hq0] at this
+    rw [Int.mul_ediv_cancel_left _ hq0, Int.mul_ediv_cancel_left _ hq0]
+    refine Prod.ext rfl (lsym_eq_of_isSquare_mul hu' hw' ?_)
+    have hqq : ((q : ℤ) : ℚ_[q]) ≠ 0 := Int.cast_ne_zero.mpr hq0
+    rw [← isSquare_mul_sq_iff hqq]
+    convert hsq using 1; push_cast; ring
+  · exfalso
+    obtain ⟨u', rfl⟩ := h1
+    have hq0 : (q : ℤ) ≠ 0 := Int.natCast_ne_zero.mpr hq.out.ne_zero
+    have hu' : ¬ (q : ℤ) ∣ u' := by
+      have := not_dvd_div_of_squarefree hq.out hu (dvd_mul_right _ _)
+      rwa [Int.mul_ediv_cancel_left _ hq0] at this
+    have hqp : Prime (q : ℤ) := Nat.prime_iff_prime_int.mp hq.out
+    exact not_isSquare_q_mul (m := u' * w) (fun h' => (hqp.dvd_or_dvd h').elim hu' h2)
+      (by rw [show (q : ℤ) * (u' * w) = q * u' * w by ring]; exact hsq)
+  · exfalso
+    obtain ⟨w', rfl⟩ := h2
+    have hq0 : (q : ℤ) ≠ 0 := Int.natCast_ne_zero.mpr hq.out.ne_zero
+    have hw' : ¬ (q : ℤ) ∣ w' := by
+      have := not_dvd_div_of_squarefree hq.out hw (dvd_mul_right _ _)
+      rwa [Int.mul_ediv_cancel_left _ hq0] at this
+    have hqp : Prime (q : ℤ) := Nat.prime_iff_prime_int.mp hq.out
+    exact not_isSquare_q_mul (m := u * w') (fun h' => (hqp.dvd_or_dvd h').elim h1 hw')
+      (by rw [show (q : ℤ) * (u * w') = u * (q * w') by ring]; exact hsq)
+  · rw [if_neg h1, if_neg h2]
+    exact Prod.ext rfl (lsym_eq_of_isSquare_mul h1 h2 hsq)
+
+end Bad
+
 end ZInQ.Manuscript.PoleRC
