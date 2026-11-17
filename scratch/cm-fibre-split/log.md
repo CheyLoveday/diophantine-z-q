@@ -73,3 +73,10 @@ diophantine_zq.tex L581-586. Base: origin/wip/cox-lattice 6298e108 + origin/main
     (torsion-free), image R an order (integral by T6 on E_Omega with an embedding Omega -> C; contains (s n) r).
   - eps != 0 since 1 != 0 in End(E') (dim E' = 1); eps != 1 since else i' finite surjective, dim E' = dim A'.
 - CMCurveOrder statement amended (my own new Prop): added `A.dim = 2` (used for eps != 1).
+
+## 2026-11-17 ~15:20 (host clock) final
+- Contrib: CMFibreSplit.lean (`cmFibreSplit_of_leaves`), CMFibreSplit/{Reduction,Curve,CurveOrder,Fold}.lean; lake build OK.
+- Fold dry run: `sixContactMin_of_open73_cmfs (r : OpenResearchLeaves54CMFS)`, 54CMFS = 54CM without cmFibreSplit.
+- Axioms: 16 declarations standard (axioms-out.txt). Statement.lean: verbatim copy, Iff.rfl, and proof.
+- #discharges: 171 lines (156 projection noise, 15 pre-existing); none by this task (Main top is 57).
+- autofold.json: cmFibreSplit discharged, glue [], net GLUE -1 vs cm-branch2's spec.
