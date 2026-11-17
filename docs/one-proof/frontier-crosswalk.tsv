@@ -61,7 +61,7 @@ H-66		ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii	249195fd0,f6df5fa32,cba8157f7	no
 H-67		ZariskiConn.ZariskiConnectedness	249195fd0,f6df5fa32,cba8157f7	no
 H-69		HomUnify.HomLatticeCorr	249195fd0,f6df5fa32,cba8157f7	no
 H-70		ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
-H-71	charPolyIndepOfEllAlgClosed	ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+H-71		ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-72		ZInQ.Contrib.AVB1.PoincareComplement	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-73		ZInQ.Contrib.AVB1.ImageFactorization	f6df5fa32,cba8157f7	no
 H-74		ZInQ.Contrib.AVB1.SimpleSurjIsogeny	f6df5fa32,cba8157f7	no
@@ -198,11 +198,11 @@ H-204		GRCountX6.GonzalezRotgerProp56X6	f96b7323d,8342c2eb7	yes
 H-205		GapSHPair.NeronBaseChangeStrictHenselization	f96b7323d,8342c2eb7	yes
 H-206		HDec.QMSplit.Moduli.ElkiesX6Star.ElkiesX6StarPrinted	f96b7323d	no
 H-207		SGA7PersistsNF.SGA7_IX_3_3_SH	8342c2eb7	yes
-H-208	sga7_IX_3_5_ForwardGeom	UnipotentForward.SGA7_IX_3_5_ForwardGeom	8342c2eb7	yes
-H-209	shimuraMainThmIDeligneY3AbU	RayClassCFT.ShimuraMainThmIDeligneY3AbU	8342c2eb7	yes
+H-208		UnipotentForward.SGA7_IX_3_5_ForwardGeom	8342c2eb7	yes
+H-209		RayClassCFT.ShimuraMainThmIDeligneY3AbU	8342c2eb7	yes
 H-210		SGRSplit.ShimuraIntegralModelRep	8342c2eb7	yes
 H-211		ZInQ.Contrib.MumfordRigidity.MumfordGroupLaw	8342c2eb7	yes
-H-212	r16CoreY	R16Split.R16CoreY	8342c2eb7	yes
+H-212		R16Split.R16CoreY	8342c2eb7	yes
 H-213		HDec.QMSplit.Moduli.ElkiesCoord.ElkiesX6StarFunctionField	8342c2eb7	yes
 T-1		ZInQ.Contrib.TYZDecomp.TYZThm11Integral	249195fd0,f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-2		ZInQ.Contrib.TYZDecomp.TYZLcalOne	249195fd0	no
@@ -212,7 +212,7 @@ T-5		ZInQ.Contrib.TYZGenus.Shimura.ShimuraReciprocityModFn	249195fd0,f6df5fa32,c
 T-6		ZInQ.Contrib.TYZGenus.Package.Thm35First	249195fd0	no
 T-7		ZInQ.Contrib.TYZGenus.CMBridge.Lemma321Five	249195fd0	no
 T-11		ZInQ.Contrib.TYZGenus.TYZ35.TYZThm33Pinned	f6df5fa32,cba8157f7	no
-T-12	h33	ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+T-12		ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-13		ZInQ.Contrib.TYZGenus.TYZSplitT5.CMModuli	5fd81e870,085a7a53a	no
 T-14		ZInQ.Contrib.TYZGenus.TYZSplitT5.X0RatStructure	5fd81e870,085a7a53a	no
 T-15		T5Glue.ShimuraMainCM	f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes

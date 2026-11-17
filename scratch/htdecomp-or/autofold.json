@@ -1,0 +1,10 @@
+{"name": "htdecomp-or",
+ "imports": ["ZInQKernel.Contrib.OneProof.HodgeTateDecompOr"],
+ "discharges": [
+  {"field": "hodgeTateDecompExists",
+   "proof": "_root_.ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_or {n}.hodgeTateDecompOr",
+   "leaves": [{"name": "hodgeTateDecompOr", "type": "_root_.ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr",
+     "doc": "Hodge-Tate decomposition of V_p(A), tensor form OR Hom form, bases chosen, dimensions unnamed: C_p (x) V_p(A) = C_p(1)^a + C_p^b (Fontaine, Invent. Math. 65 (1982), Theoreme principal, if printed in tensor form) or Hom_{Q_p}(V_p(A), C_p) = C_p^a + C_p(-1)^b (Tate 1967 4, corollary on Hom(T(G), C), good reduction; Fontaine 1982, if printed in Hom form); the Hom form implies the tensor form by C_p-dualization proved in Lean (htdecomp-or); locators UNVERIFIED",
+     "kind": "published",
+     "flag": "unread: or-form leaf (tensor form OR Hom form, each the printed shape with bases chosen, both exponents unnamed; Hom-to-tensor dualization proved, htdecomp-or); locator UNVERIFIED",
+     "source": "C_p (x) V_p(A) = C_p(1)^a + C_p^b OR Hom(V_p(A), C_p) = C_p^a + C_p(-1)^b, G_F-equivariant, some a, b (Fontaine, Invent. Math. 65 (1982), Theoreme principal; Tate 1967 4 corollary, good reduction); a = b = g proved from the Weil pairing and T26 (hodgetate-from-dr); Hom form => tensor form by C_p-dualization (htdecomp-or)"}]}]}

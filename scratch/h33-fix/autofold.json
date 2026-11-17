@@ -1,0 +1,12 @@
+{"name": "h33-fix",
+ "imports": ["ZInQKernel.Contrib.OneProof.TYZThm33Alg"],
+ "discharges": [
+   {"field": "h33",
+    "proof": "_root_.ZInQ.H33Fix.tyzThm33_of_alg (_root_.ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) {n}.tyzThm33Alg",
+    "leaves": [{"name": "tyzThm33Alg", "type": "_root_.ZInQ.H33Fix.TYZThm33Alg",
+                "doc": "Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for TYZ's algebraic identification i0 : (X0(32), oo) = (A, O) over Q given by its pull-back i0^* : Q(A) = Q(X0(32)) = Q(j, j_32) on function fields (arXiv:1411.4728v1 L1296-1311, set-up L1173-1295)",
+                "kind": "published",
+                "flag": "unread: journal version (Asian J. Math. 21 (2017)) not checked; arXiv v1 re-read by h33-fix (L1173-1174, L1296-1311); readings kept from tyz-split/h33-sign: X_U = X0(32)_Q(i) with P_n -> tau_n, sign of [i] (alpha = -i, L1564-1566), model y^2 = x^3 + 4x for 2y^2 = x^3 + x; dictionary D1 (Q-embeddings of function fields = morphisms of curves, Hartshorne I.6.12) as for hGZ",
+                "source": "Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for every algebraic identification i0 (arXiv:1411.4728v1 L1296-1311)"}]}],
+ "note": "h33 is a plain argument of ZInQ.OneProof.frozenTarget (base 222c98bf), not a bundle field, so autofold.py does not apply (it reports 'not a field of the current bundles', as recorded by h33-dict). Manual fold (checked: scratch/h33-fix/FoldCheck.lean, frozenTarget_h33Alg compiles with standard axioms and is rfl-equal to frozenTarget applied to tyzThm33_of_alg): in ZInQKernel/OneProof/Main.lean add `import ZInQKernel.Contrib.OneProof.TYZThm33Alg`, replace the binder `(h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)` by `(h33a : ZInQ.H33Fix.TYZThm33Alg)` and the argument `h33` of `ThetaWP8.tyzThm35ReadingA_noHX` by `(ZInQ.H33Fix.tyzThm33_of_alg (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) h33a)`. No other hypothesis is added (hCM is already an argument). kinds.tsv: replace the row `frozenTarget h33` by the row in scratch/h33-fix/kinds-row.tsv (kind published, strict LEAF, strictest LEAF). GLUE count -1 (the row was GLUE/GLUE), no new field."
+}

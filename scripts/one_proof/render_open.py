@@ -141,6 +141,16 @@ def load():
     )
 
 
+# Ruling 2026-11-17 (Jack): a row counts LEAF only after a reader has checked it against the printed page; a flag
+# carrying any of these markers makes the row count GLUE in both columns.
+UNREAD_MARKERS = ('unread', 'UNVERIFIED', 'recalled', 'one model review', 'pending reading', 'pending review')
+
+
+def must_be_glue(flag):
+    """True if the flag says the row has not been checked against the printed page (ruling 2026-11-17)."""
+    return any(m in flag for m in UNREAD_MARKERS)
+
+
 def kinds_row_problems(r, open_fields, held):
     """Problems of one kinds.tsv row (also used by autofold.py on the rows it adds)."""
     problems, f = [], r['field']
@@ -165,6 +175,8 @@ def kinds_row_problems(r, open_fields, held):
         problems.append(f'kinds.tsv: {f} is not held and has no area_issue')
     if r['strict'] not in ('LEAF', 'GLUE') or r['strictest'] not in ('LEAF', 'GLUE'):
         problems.append(f'kinds.tsv: {f}: strict and strictest must be LEAF or GLUE')
+    if must_be_glue(r['flag']) and 'LEAF' in (r['strict'], r['strictest']):
+        problems.append(f'kinds.tsv: {f}: the flag marks it unread or unverified, so it counts GLUE (ruling 2026-11-17)')
     return problems
 
 
@@ -329,6 +341,8 @@ def render(m):
     w('')
     w('Readings that apply to every statement built on a shared kernel definition.')
     w('')
+    w('* **Published means read.** A hypothesis counts as published only after a reader has checked it against the printed')
+    w('  page; unread and unverified rows count as glue (ruling 2026-11-17).')
     w("* **B_dR.** The kernel's B_dR is Mathlib's `BDeRham O_Cp p`, in four textual copies, each `rfl` to it:")
     w('  `ZInQ.Contrib.G9.PkgI4.BdR` (I4Layer.lean), `BdrKer.BdR` (KerTheta.lean), `HDec.PkgI4.BdR`')
     w('  (OneProof/H/LPrefix.lean) and the KerTheta copy in OneProof/H/TailC.lean. Lean proves (KerTheta) that')

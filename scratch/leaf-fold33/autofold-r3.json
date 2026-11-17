@@ -1,0 +1,36 @@
+{
+ "name": "leaf-fold33-r3-residual",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.AnalyticStableHeight"
+ ],
+ "discharges": [
+  {
+   "field": "bostLowerBoundPrinted",
+   "proof": "_root_.ZInQ.R3Residual.bostLowerBoundPrinted_of_an {n}.bostLowerBoundAn _root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof",
+   "leaves": [
+    {
+     "name": "bostLowerBoundAn",
+     "type": "_root_.ZInQ.R3Residual.BostLowerBoundAn",
+     "doc": "r3-residual, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED; Deligne normalization h_D = h_F + (g/2) log pi), over ZInQ.R3Residual.IsAnStableHeight: height-fix's printed stable height with the archimedean metric (i/2)^g int eta~ wedge eta~-bar integrated over the complex manifold A_tau(C)^an, i.e. with the density of the invariant form read in every holomorphic chart (IsHolChart: biholomorphic to the algebraic coordinates at every point; proved to form a complex atlas, Phi-free). Replaces bostLowerBoundPrinted (ZInQ.R3Residual.bostLowerBoundPrinted_of_an, with mumfordTorsionAlgClosed and uniformizationLeafAll_proof for T35; isAnStableHeight_iff proves the two heights equal, so the step R3 'clauses to biholomorphic' is a proved theorem).",
+     "kind": "consequence",
+     "flag": "pending review (inbox 23: new leaf, GLUE until a reviewer rates it); unread: new printed leaf (Bost 1996 lower bound restated verbatim over IsAnStableHeight, the metric integrated over the complex manifold A_tau(C)^an, r3-residual; display UNVERIFIED); locator UNVERIFIED",
+     "source": "Bost, Sem. Bourbaki 795 (Asterisque 237, 1996): h_D(A) >= -(g/2) log 2pi, Deligne normalization (display UNVERIFIED), over the stable height with the metric on A_tau(C)^an (r3-residual)"
+    }
+   ]
+  },
+  {
+   "field": "gaudronRemondThm14Printed",
+   "proof": "_root_.ZInQ.R3Residual.gaudronRemondThm14Printed_of_an {n}.gaudronRemondThm14An _root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof",
+   "leaves": [
+    {
+     "name": "gaudronRemondThm14An",
+     "type": "_root_.ZInQ.R3Residual.GaudronRemondThm14An",
+     "doc": "r3-residual, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over ZInQ.R3Residual.IsAnStableHeight (Faltings' normalization (i/2)^g; the archimedean metric integrated over the complex manifold A_tau(C)^an, densities in every holomorphic chart). Replaces gaudronRemondThm14Printed (ZInQ.R3Residual.gaudronRemondThm14Printed_of_an, with mumfordTorsionAlgClosed and uniformizationLeafAll_proof for T35).",
+     "kind": "consequence",
+     "flag": "pending review (inbox 23: new leaf, GLUE until a reviewer rates it); unread: new printed leaf (Gaudron-Remond 2014 Thm 1.4 restated verbatim over IsAnStableHeight, r3-residual); locator UNVERIFIED",
+     "source": "Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the audit), over the stable height with the metric on A_tau(C)^an (r3-residual)"
+    }
+   ]
+  }
+ ]
+}

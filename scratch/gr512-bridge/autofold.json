@@ -1,0 +1,22 @@
+{
+ "name": "gr512-bridge",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.GR512Bridge"
+ ],
+ "discharges": [
+  {
+   "field": "gonzalezRotgerThm512X6",
+   "proof": "_root_.GR512Bridge.gonzalezRotgerThm512X6_of_rcf {n}.gonzalezRotgerThm512X6RCF",
+   "leaves": [
+    {
+     "name": "gonzalezRotgerThm512X6RCF",
+     "type": "_root_.GR512Bridge.GonzalezRotgerThm512X6RCF",
+     "doc": "gr512-bridge, printed form: Gonzalez-Rotger, J. Math. Soc. Japan 58 (2006), Thm 5.12, p. 946 (arXiv math/0612732 pp. 18-19; read by the locator audit), at (D,N) = (6,1), over CM points as Gonzalez-Rotger define them (GRDict.IsGRCMPoint), on every witness of the moduli description: for an order O of k (Tau Ceti NumberFieldOrder) of conductor prime to 6, Q(x) is Q-isomorphic to the ring class field H_R (Tau Ceti ringClassField O) if D(R) != 1, and to a subfield of H_R of index two otherwise; D(R) = product of the p | 6 with pR prime in R (Eichler symbol (R/p) = -1, GR512Bridge.grD6), N*(R) = 1 at N = 1. The old degree form is GR512Bridge.gonzalezRotgerThm512X6_of_rcf (ClassGroup = CommRing.Pic bridge, finrank_ringClassField, grD6_ne_one_iff); LeafQM.O maximal is GR512Bridge.N1.O_maximal.",
+     "kind": "published",
+     "flag": "reading risk: GR's D(R) is read as the product of the p | D with Eichler symbol (R/p) = -1, which for any quadratic order is 'pR is a prime ideal of R' (GR section 5 definition not re-read on this host; the match with inertCount6 is a Lean proof); locator read by the audit",
+     "source": "Gonzalez-Rotger, J. Math. Soc. Japan 58 (2006) Thm 5.12, p. 946 (read by the locator audit: Q(P) = H_R if D(R)N*(R) != 1, else the specified index-two subfield) at (D,N) = (6,1), over Tau Ceti's ring class field, GR's CM(R) transported to Qbar-points of every coarse witness of X0(6,1)"
+    }
+   ]
+  }
+ ]
+}

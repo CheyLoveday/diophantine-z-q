@@ -1,0 +1,30 @@
+{
+ "name": "y3abu-print",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.ShimuraY3Print"
+ ],
+ "discharges": [
+  {
+   "field": "shimuraMainThmIDeligneY3AbU",
+   "proof": "_root_.Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print {n}.y3FineModuliAb {n}.deligneCanonicalModelY3Every",
+   "leaves": [
+    {
+     "name": "y3FineModuliAb",
+     "type": "_root_.Y3ABUPrint.Y3FineModuliAb",
+     "doc": "y3abu-print, printed form (representability, one object: the fine moduli scheme Y3 with its universal family): the moduli problem of abelian surfaces with an action of the maximal order O of B = (2,-3|Q) and full level-3 structure is represented over Q by a proper smooth curve (some (Y, Phi) satisfies R1fpPropsAb). Buzzard, Duke Math. J. 87 (1997) section 1; Boutot-Carayol, Asterisque 196-197 (1991) ch. III; Milne 1979 (Corvallis); Mumford GIT Thm 7.9; locators UNVERIFIED. Consequence form: universal property used on proper smooth curve bases and read on field points. With deligneCanonicalModelY3Every replaces shimuraMainThmIDeligneY3AbU (Y3ABUPrint.print_iff_field).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED; reading risk: the kernel's moduli problem has no polarization (Lemma P: the type-mu principal polarization exists and is unique); Buzzard 1997 section 1 is recalled as stating the polarization-free problem, Milne 1979 and Boutot-Carayol include the polarization",
+     "source": "Buzzard, Integral models of certain Shimura curves, Duke Math. J. 87 (1997) section 1 (representability of the QM moduli problem with level structure, projective smooth curve over Z[1/ND]); Boutot-Carayol, Asterisque 196-197 (1991) ch. III; Milne, Points on Shimura varieties mod p (1979); Mumford GIT Thm 7.9; base Q, full level 3; locators UNVERIFIED"
+    },
+    {
+     "name": "deligneCanonicalModelY3Every",
+     "type": "_root_.Y3ABUPrint.DeligneCanonicalModelY3Every",
+     "doc": "y3abu-print, printed form (one object: Y3 = Sh_K3(B^x, H^+-) and its canonical-model property): for every fine witness (Y, Phi) of R1fpPropsAb there is Psi : H x (B tensor A_f)^x -> Y(C), onto with fibres the B^x_+ \\ . / K3 classes, holomorphic in tau, with the moduli interpretation at g in O-hat^x (the QM torus C^2/iota(O)(tau,1)^T) and Shimura's reciprocity law at CM points (conventions existential). Deligne, Sem. Bourbaki 389 (1971) sections 4-5 (the PEL moduli scheme with its complex moduli interpretation is the canonical model; Cor. 5.7 / Ex. 5.8 per locators.md R1); Milne, Introduction to Shimura varieties sections 8 and 14; Shimura, Ann. of Math. 85 (1967) Main Theorem I; locators UNVERIFIED. No existence claim; the every-witness form is equivalent to the field's form given y3FineModuliAb (Y3ABUPrint.deligneCanonicalModelY3Every_of_field, via compare_iso_ab).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED; reading risk (locators.md R1): the print is for the polarized PEL moduli problem with polarization-compatible level structure over the reflex field E(G,X) = Q; the moduli interpretation (Milne 8) and the canonical-model property (Milne 14) are read as one statement about the moduli scheme with its identification Y3(C) = Sh_K3(C)",
+     "source": "Deligne, Travaux de Shimura, Sem. Bourbaki 389 (1971) sections 4-5 (Cor. 5.7, Ex. 5.8: the PEL moduli scheme is the canonical model; moduli interpretation of Sh_K(C)); Milne, Introduction to Shimura varieties (2005) sections 8 and 14; Shimura, Ann. of Math. 85 (1967) Main Theorem I; at B = (2,-3|Q), level K3, as a consequence (bijective and holomorphic in tau, moduli clause at O-hat^x as QM pairs, conventions existential); locators UNVERIFIED"
+    }
+   ]
+  }
+ ]
+}

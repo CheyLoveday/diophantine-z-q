@@ -1,0 +1,11 @@
+{"name": "derham-direct",
+ "imports": ["ZInQKernel.Contrib.OneProof.DeRhamPrintDirect"],
+ "discharges": [
+  {"field": "deRhamVpAbVarPrinted",
+   "proof": "_root_.DeRhamPrint.Direct.deRhamVpAbVarPrinted_of_direct {n}.deRhamVpAbVarDirect",
+   "leaves": [
+    {"name": "deRhamVpAbVarDirect", "type": "_root_.DeRhamPrint.Direct.DeRhamVpAbVarDirect",
+     "doc": "Fontaine, as printed by Berger, An introduction to the theory of p-adic representations (Geometric aspects of Dwork theory, de Gruyter 2004; arXiv math/0210184v1) section II.5.1, p. 19: the Tate modules of abelian varieties are de Rham, i.e. dim_K D_dR(V_p(A)) = dim_{Q_p} V_p(A) with D_dR(V) = (B_dR (x)_{Q_p} V)^{G_K} a K-space through K -> Kbar -> B_dR^+. Lean form: A over a finite F/Q_p, G_F acting through gfToGqp (image G_{F'}, F' the image of F in Qbar_p, so the print's K is F'), D_dR = DeRhamPrint.Direct.ddrF an F'-space through iotaF : F' -> Qbar_p -> B_dR^+ -> B_dR, the unique theta-compatible lift (iotaPlusF_unique), G_F-invariant (bdrAct_iotaF). Equivalent to the old field deRhamVpAbVarPrinted by the tower law (deRhamVpAbVarPrinted_of_direct and its converse, proved). Berger's B_dR = B_dR^+[1/t] matched by DeRhamPrint.TDict.bdREquivAwayT",
+     "kind": "published",
+     "flag": "pending review: direct instance of Berger II.5.1 p. 19 (integrator's ruling: LEAF once a reviewer confirms the reading relayed in readings/derham.md); primary Fontaine numbers UNVERIFIED",
+     "source": "Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct)"}]}]}

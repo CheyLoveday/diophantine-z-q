@@ -1,0 +1,4 @@
+'ISJ1Dict.afTateCharPoly_of_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ISJ1Dict.afTateCharPoly_of_picZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ISJ1Dict.afTateCharPolyPicZero_of_afTate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ISJ1Dict.abVarIso_of_isJ1' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,56 @@
+closure size 259568
+TARGET ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed
+TARGET PkgI3.CharPolyIndepOfEll
+TYPE HDec.HSyn.OpenTextbookLeaves7.charPolyIndepOfEllAlgClosed proj=true
+TYPE HDec.HSyn.G0AssembleMod.linkedTateData_of_local proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves9.mk proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves9.charPolyIndepOfEllAlgClosed proj=true
+TYPE HDec.HSyn.OpenTextbookLeaves2.mk proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves8.mk proj=false
+TYPE R16Split.rank_two_of_dim proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves6.mk proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves3.mk proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves4.mk proj=false
+TYPE GlueC10Link.trace_endE_indep proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves7.mk proj=false
+TYPE GlueC10Link.trace_T_of_frobCompare proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves8.charPolyIndepOfEllAlgClosed proj=true
+TYPE HDec.HSyn.OpenTextbookLeaves11.charPolyIndepOfEllAlgClosed proj=true
+TYPE HDec.HSyn.OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed proj=true
+TYPE HDec.HSyn.OpenTextbookLeaves4.t7 proj=true
+TYPE HDec.HSyn.OpenTextbookLeaves2.t7 proj=true
+TYPE R16Split.trace_endV_rat proj=false
+TYPE ZInQ.Contrib.AVB1.charPolyIndepOfEll_of_algClosed proj=false
+TYPE PkgI3.trace_indep_of_ell proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed proj=true
+TYPE R16Split.r16_of_printed proj=false
+TYPE HDec.HSyn.TextbookLeaves.mk proj=false
+TYPE HDec.HSyn.t7_of_algClosed5 proj=false
+TYPE R16Split.r16_of_coreY proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves10.mk proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves11.mk proj=false
+TYPE HDec.HSyn.OpenTextbookLeaves6.charPolyIndepOfEllAlgClosed proj=true
+TYPE HDec.HSyn.OpenTextbookLeaves3.t7 proj=true
+TYPE HDec.G14Trace.common_trace proj=false
+TYPE HDec.G14Trace.g14TraceCompat_of_link proj=false
+CALLER HDec.HSyn.G0AssembleMod.linkedTateData_of_local USES [HDec.G14Trace.g14TraceCompat_of_link]
+CALLER HDec.HSyn.openTextbookLeaves10_of_OpenTextbookLeaves11 USES [HDec.HSyn.OpenTextbookLeaves10.mk, HDec.HSyn.OpenTextbookLeaves11.charPolyIndepOfEllAlgClosed]
+CALLER HDec.HSyn.textbookLeaves2_of_open3 USES [HDec.HSyn.OpenTextbookLeaves2.mk, HDec.HSyn.OpenTextbookLeaves3.t7]
+CALLER HDec.HSyn.textbookLeaves4_of_open6 USES [HDec.HSyn.OpenTextbookLeaves4.mk, HDec.HSyn.t7_of_algClosed5, HDec.HSyn.OpenTextbookLeaves6.charPolyIndepOfEllAlgClosed]
+CALLER HDec.HSyn.textbookLeaves_of_open2 USES [HDec.HSyn.TextbookLeaves.mk, HDec.HSyn.OpenTextbookLeaves2.t7]
+CALLER R16Split.rank_two_of_dim USES [R16Split.trace_endV_rat]
+CALLER GlueC10Link.trace_endE_indep USES [PkgI3.trace_indep_of_ell]
+CALLER GlueC10Link.trace_T_of_frobCompare USES [GlueC10Link.trace_endE_indep]
+CALLER HDec.HSyn.textbookLeaves6_of_open7 USES [HDec.HSyn.OpenTextbookLeaves6.mk, HDec.HSyn.OpenTextbookLeaves7.charPolyIndepOfEllAlgClosed]
+CALLER HDec.HSyn.textbookLeaves7_of_open8 USES [HDec.HSyn.OpenTextbookLeaves7.mk, HDec.HSyn.OpenTextbookLeaves8.charPolyIndepOfEllAlgClosed]
+CALLER HDec.HSyn.textbookLeaves8_of_open9 USES [HDec.HSyn.OpenTextbookLeaves8.mk, HDec.HSyn.OpenTextbookLeaves9.charPolyIndepOfEllAlgClosed]
+CALLER HDec.HSyn.openResearchLeaves21_of_OpenResearchLeaves22 USES [R16Split.r16_of_printed, HDec.HSyn.OpenTextbookLeaves11.charPolyIndepOfEllAlgClosed]
+CALLER R16Split.r16_of_printed USES [R16Split.r16_of_coreY, ZInQ.Contrib.AVB1.charPolyIndepOfEll_of_algClosed]
+CALLER HDec.HSyn.openTextbookLeaves11_of_OpenTextbookLeaves12 USES [HDec.HSyn.OpenTextbookLeaves11.mk, HDec.HSyn.OpenTextbookLeaves12.charPolyIndepOfEllAlgClosed]
+CALLER HDec.HSyn.t7_of_algClosed5 USES [ZInQ.Contrib.AVB1.charPolyIndepOfEll_of_algClosed]
+CALLER HDec.HSyn.textbookLeaves9_of_open10 USES [HDec.HSyn.OpenTextbookLeaves9.mk, HDec.HSyn.OpenTextbookLeaves10.charPolyIndepOfEllAlgClosed]
+CALLER R16Split.r16_of_coreY USES [R16Split.rank_two_of_dim]
+CALLER HDec.HSyn.gluePieces_of_open4 USES [HDec.HSyn.G0AssembleMod.linkedTateData_of_local, HDec.HSyn.OpenTextbookLeaves4.t7]
+CALLER HDec.HSyn.textbookLeaves3_of_open4 USES [HDec.HSyn.OpenTextbookLeaves3.mk, HDec.HSyn.OpenTextbookLeaves4.t7]
+CALLER HDec.G14Trace.common_trace USES [GlueC10Link.trace_T_of_frobCompare]
+CALLER HDec.G14Trace.g14TraceCompat_of_link USES [HDec.G14Trace.common_trace]
