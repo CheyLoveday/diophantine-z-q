@@ -14,6 +14,7 @@ namespace CMBranch
 namespace FibreSplit
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open scoped TensorProduct
 
 /-- `f` are matrix units scaled by `n`. -/
 def IsScaledMatrixUnits {R : Type*} [Ring R] (n : ℕ) (f : Fin 2 → Fin 2 → R) : Prop :=
@@ -257,8 +258,127 @@ theorem matrixUnit_isogeny (L : Type) [Field L] [NumberField L] (A : PkgI3.AbVar
   refine ⟨E, i, h, P, hF, hih, hci, hE1, by rw [hdimP, hA]; rfl, ⟨p₁, p₂, hp₁, hp₂, hiso⟩, φ.hom,
     ⟨inferInstance, hfinφ, hsurjφ⟩⟩
 
+/-! ## Scaled matrix units from `End⁰ ≅ M₂(k)` (pure algebra) -/
+
+/-- **Multiples of matrix units exist in `M`** when `ℚ ⊗ M ≅ M₂(k)` and `M` is torsion-free
+(`M → ℚ ⊗ M` injective): clear the denominators of `e⁻¹(E_ij)`. -/
+theorem exists_scaledMatrixUnits {M : Type*} [Ring M] {k : Type*} [CommRing k] [Algebra ℚ k]
+    (e : ℚ ⊗[ℤ] M ≃ₐ[ℚ] Matrix (Fin 2) (Fin 2) k)
+    (hinj : ∀ m : M, (1 : ℚ) ⊗ₜ[ℤ] m = 0 → m = 0) :
+    ∃ n : ℕ, 0 < n ∧ ∃ f : Fin 2 → Fin 2 → M, IsScaledMatrixUnits n f := by
+  classical
+  let u : Fin 2 × Fin 2 → ℚ ⊗[ℤ] M := fun p => e.symm (Matrix.single p.1 p.2 1)
+  have hu : ∀ i j k l, u (i, j) * u (k, l) = if j = k then u (i, l) else 0 := by
+    intro i j k l
+    simp only [u]
+    rw [← map_mul]
+    split_ifs with h
+    · subst h; rw [Matrix.single_mul_single_same, _root_.mul_one]
+    · rw [Matrix.single_mul_single_of_ne (h := h), map_zero]
+  have hsum : u (0, 0) + u (1, 1) = 1 := by
+    simp only [u, ← map_add]
+    rw [show (Matrix.single (0 : Fin 2) (0 : Fin 2) (1 : k) + Matrix.single 1 1 1) = 1 from by
+      ext a b; fin_cases a <;> fin_cases b <;> simp [Matrix.single, Matrix.one_apply]]
+    exact map_one _
+  let tm := TensorProduct.mk ℤ ℚ M 1
+  have hloc : IsLocalizedModule (nonZeroDivisors ℤ) tm :=
+    (isLocalizedModule_iff_isBaseChange (nonZeroDivisors ℤ) ℚ tm).mpr
+      (TensorProduct.isBaseChange (R := ℤ) (M := M) (S := ℚ))
+  have hs : ∀ p, ∃ (x : M) (s : ℤ), s ≠ 0 ∧ (1 : ℚ) ⊗ₜ[ℤ] x = s • u p := by
+    intro p
+    obtain ⟨⟨x, s⟩, h⟩ := IsLocalizedModule.surj (nonZeroDivisors ℤ) tm (u p)
+    refine ⟨x, s, nonZeroDivisors.coe_ne_zero s, ?_⟩
+    rw [Submonoid.smul_def] at h; exact h.symm
+  choose x s hs0 hxs using hs
+  let m : ℤ := ∏ p, s p
+  have hm0 : m ≠ 0 := Finset.prod_ne_zero_iff.mpr fun p _ => hs0 p
+  have hc : ∀ p, ∃ c : ℤ, m = s p * c := fun p => Finset.dvd_prod_of_mem s (Finset.mem_univ p)
+  choose c hcm using hc
+  let y : Fin 2 × Fin 2 → M := fun p => c p • x p
+  have hy : ∀ p, (1 : ℚ) ⊗ₜ[ℤ] y p = m • u p := by
+    intro p
+    simp only [y, TensorProduct.tmul_smul, hxs, hcm p, smul_smul, mul_comm]
+  have hmul1 : ∀ a b : M, (1 : ℚ) ⊗ₜ[ℤ] (a * b) = ((1 : ℚ) ⊗ₜ[ℤ] a) * ((1 : ℚ) ⊗ₜ[ℤ] b) := by
+    intro a b; rw [Algebra.TensorProduct.tmul_mul_tmul, _root_.mul_one]
+  have hint : ∀ z : ℤ, (1 : ℚ) ⊗ₜ[ℤ] (z : M) = (z : ℚ ⊗[ℤ] M) := fun z =>
+    map_intCast (Algebra.TensorProduct.includeRight : M →ₐ[ℤ] ℚ ⊗[ℤ] M) z
+  have key : ∀ a b : M, (1 : ℚ) ⊗ₜ[ℤ] a = (1 : ℚ) ⊗ₜ[ℤ] b → a = b := by
+    intro a b h
+    exact sub_eq_zero.mp (hinj _ (by rw [TensorProduct.tmul_sub, h, sub_self]))
+  have hrel : ∀ i j k l, y (i, j) * y (k, l) = if j = k then (m : M) * y (i, l) else 0 := by
+    intro i j k l
+    apply key
+    rw [hmul1, hy, hy, smul_mul_smul_comm, hu]
+    split_ifs with h
+    · rw [hmul1, hint, hy, ← zsmul_eq_mul, smul_smul]
+    · simp
+  have hsum' : y (0, 0) + y (1, 1) = (m : M) := by
+    apply key
+    rw [TensorProduct.tmul_add, hy, hy, ← smul_add, hsum, hint, zsmul_eq_mul, _root_.mul_one]
+  refine ⟨(m * m).natAbs, Int.natAbs_pos.mpr (mul_ne_zero hm0 hm0),
+    fun i j => m • y (i, j), ?_, ?_⟩
+  · intro i j k l
+    have hn : (((m * m).natAbs : ℕ) : M) = ((m * m : ℤ) : M) := by
+      rw [← Int.cast_natCast, Int.natAbs_of_nonneg (mul_self_nonneg m)]
+    rw [hn, smul_mul_smul_comm, hrel]
+    split_ifs
+    · simp only [zsmul_eq_mul, Int.cast_mul, _root_.mul_assoc]
+    · simp
+  · have hn : (((m * m).natAbs : ℕ) : M) = ((m * m : ℤ) : M) := by
+      rw [← Int.cast_natCast, Int.natAbs_of_nonneg (mul_self_nonneg m)]
+    rw [hn, ← smul_add, hsum', zsmul_eq_mul, Int.cast_mul]
+
+
+/-! ## The remaining glue and the reduction of `CMMatrixUnitSplit` -/
+
+/-- **Glue (on-the-spot; manuscript L584-586, "an elliptic curve `E/L` with complex multiplication", "the
+full geometric endomorphism order of `E`").** Let `A/L` be an abelian surface over a number field with
+`End⁰(A_Ω) ≅ M₂(ℚ(√d))`, `d < 0`, and let `E/L` be an elliptic curve with homomorphisms `i : E → A`,
+`h : A → E`, `h ∘ i = [n]`, `n ≥ 1` (an isogeny factor of `A`, e.g. the image of `n e₁₁`). Then the geometric
+endomorphism ring of `E` is an order `R` of an imaginary quadratic field `k`. *Sketch:* `g ↦ i g h` embeds
+`End⁰(E_Ω)` as the corner `e End⁰(A_Ω) e`, `e = (1/n) i h` a nonzero idempotent which is not `1` (`dim E = 1
+< 2`), so of rank one in `M₂(k)`, whose corner is `k`; `End(E)` is a finitely generated subring, an order;
+`End(E_{L̄}) ≅ End(E_Ω)` because both are algebraic closures of `L` (rigidity). -/
+def CMCurveOrder : Prop :=
+  ∀ (L : Type) [Field L] [NumberField L] (A : PkgI3.AbVar L)
+    (Ω : Type) [Field Ω] [IsAlgClosed Ω] [Algebra L Ω] [Algebra.IsAlgebraic L Ω] (d : ℚ), d < 0 →
+    Nonempty (PkgI3.AbVar.End0 (A.baseChange Ω) ≃ₐ[ℚ] Matrix (Fin 2) (Fin 2) (Kd d)) →
+    ∀ (E : ZInQ.DefFaltings.AbVar L), E.dim = 1 →
+    ∀ (i : PkgI3.AbVar.Hom E A) (h : PkgI3.AbVar.Hom A E) (n : ℕ), 0 < n →
+      cmp i h = (n : PkgI3.AbVar.End E) →
+      ∃ (k : Type) (_ : Field k) (_ : NumberField k) (R : Subring k),
+        IsImagQuadOrder k R ∧ IsCMBy E k R
+
+/-- **`CMMatrixUnitSplit` from `CMCurveOrder`.** `End(A) ≅ End(A_Ω)` (`endBC` injective, and onto by
+hypothesis), so `End⁰(A) ≅ M₂(ℚ(√d))`; `End(A)` is torsion-free (`[s]` is surjective, hence an epimorphism),
+so scaled matrix units exist in `End(A)` (`exists_scaledMatrixUnits`); `matrixUnit_isogeny` gives `E`,
+`E²` and the isogeny; `CMCurveOrder` gives the order. -/
+theorem cmMatrixUnitSplit_of (hCO : CMCurveOrder) : CMMatrixUnitSplit := by
+  intro L _ _ A hA Ω _ _ _ _ hsurj d hd ⟨e⟩
+  let β := RingEquiv.ofBijective (G0ModField.KernelField.endBC A Ω)
+    ⟨G0ModField.KernelField.endBC_injective A Ω, hsurj⟩
+  let e' : PkgI3.AbVar.End0 A ≃ₐ[ℚ] Matrix (Fin 2) (Fin 2) (Kd d) :=
+    (Algebra.TensorProduct.congr AlgEquiv.refl β.toIntAlgEquiv).trans e
+  let tm := TensorProduct.mk ℤ ℚ (PkgI3.AbVar.End A) 1
+  have hloc : IsLocalizedModule (nonZeroDivisors ℤ) tm :=
+    (isLocalizedModule_iff_isBaseChange (nonZeroDivisors ℤ) ℚ tm).mpr
+      (TensorProduct.isBaseChange (R := ℤ) (M := PkgI3.AbVar.End A) (S := ℚ))
+  have hinj : ∀ m : PkgI3.AbVar.End A, (1 : ℚ) ⊗ₜ[ℤ] m = 0 → m = 0 := by
+    intro m hm
+    obtain ⟨s, hs⟩ := (IsLocalizedModule.eq_zero_iff (nonZeroDivisors ℤ) tm).mp hm
+    rw [Submonoid.smul_def] at hs
+    have hs0 : (s : ℤ) ≠ 0 := nonZeroDivisors.coe_ne_zero s
+    have hsurjs := (_root_.ZInQ.Contrib.AbVarBC.mulIsogeny L A (s : ℤ) hs0).2
+    apply cancel_surj ((s : ℤ) : PkgI3.AbVar.End A) hsurjs
+    rw [cmp_intCast_left, hs, cmp_zero_right]
+  obtain ⟨n, hn, f, hf⟩ := exists_scaledMatrixUnits e' hinj
+  obtain ⟨E, i, h, Pr, -, hih, -, hE1, hPr, hprod, φ, hφ⟩ := matrixUnit_isogeny L A hA n hn f hf
+  obtain ⟨k, i1, i2, R, hR, hcm⟩ := hCO L A Ω d hd ⟨e⟩ E hE1 i h n hn hih
+  exact ⟨E, Pr, k, i1, i2, R, hE1, hPr, hprod, ⟨φ, hφ⟩, hR, hcm⟩
+
+#print axioms HDec.CMBranch.FibreSplit.cmMatrixUnitSplit_of
+
 end FibreSplit
 end CMBranch
 end HDec
 
-#print axioms HDec.CMBranch.FibreSplit.matrixUnit_isogeny

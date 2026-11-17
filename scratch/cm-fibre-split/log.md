@@ -48,3 +48,14 @@ diophantine_zq.tex L581-586. Base: origin/wip/cox-lattice 6298e108 + origin/main
   structures (54CMFS/54CM/_r5/_cm; noise, as in cm-branch2), 15 pre-existing reductions of OpenResearchLeaves57 fields.
   None by this task's theorems: expected, `cmFibreSplit` is a field of cm-branch2's fold bundle (54CM), not of Main's
   top; the fold onto Main's current top is cm-fold-rebase's job.
+
+## 2026-11-17 15:20 matrix units (VERIFIED, scratch/cm-fibre-split/Geom.lean, standard axioms)
+- `matrixUnit_isogeny`: for n-scaled matrix units f_ij in End_L(A), A abelian surface over a number field: E = image
+  of f00 (AVGlue.imageFactorization_of_cartier + cartierSmooth_proof), i : E -> A closed immersion, h : A -> E,
+  h;i = f00, i;h = [n]; Pr = E x E (G0Product.productExists); phi(x,y) = i x + f10 (i y), psi(a) = (h(n^2 a), h(f01 a)),
+  phi psi = [n^3], psi phi = [n^3]; phi finite (IsFinite.of_comp) and surjective (Surjective.of_comp, mulIsogeny);
+  dim Pr = dim A (Contrib.Dim.topologicalKrullDim_eq_of_finite_surjective) so dim E = 1.
+- `exists_scaledMatrixUnits`: Q (x) M = M2(k), M torsion-free => n-scaled matrix units in M (clear denominators).
+- `cmMatrixUnitSplit_of (hCO : CMCurveOrder) : CMMatrixUnitSplit`: proved. End(A) torsion-free via [s] surjective (epi).
+- New remaining glue `CMCurveOrder` (End(E_Lbar) is an order of an imaginary quadratic field for an isogeny factor E
+  of A with End0(A_Omega) = M2(Q(sqrt d))).
