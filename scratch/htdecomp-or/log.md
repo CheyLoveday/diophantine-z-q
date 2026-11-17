@@ -19,3 +19,12 @@ Build tree: reflink copy of ~/dzq-wt/javanpeykar-steps/.lake/build (TailZ63) + l
 ## Compile outcomes
 * 2026-11-17 ~02:10 `lake env lean ZInQKernel/Contrib/OneProof/HodgeTateDecompOr.lean`: no errors, no warnings.
   Theorems: `hodgeTateDecompExists_of_hom`, `hodgeTateDecompExists_of_or`, `or_of_tensor`, `or_of_hom`.
+* `lake build ZInQKernel.Contrib.OneProof.HodgeTateDecompOr +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`:
+  success, 16070 jobs (VERIFIED).
+* `scratch/htdecomp-or/Discharges.lean` (output `Discharges-output.txt`): `hodgeTateDecompExists_of_or` discharges
+  `OpenResearchLeaves41.hodgeTateDecompExists`, still assumes `[HodgeTateOr.HodgeTateDecompOr]`; `_of_hom` assumes
+  `[HodgeTateOr.HodgeTateDecompHom]`; axioms standard for both (VERIFIED). 40 open, 13275 theorems checked, 27 discharge one.
+* `scratch/htdecomp-or/Statement.lean`: verbatim copy of the field, `Iff.rfl` against the tree; compiles (VERIFIED).
+* `autofold.py scratch/htdecomp-or/autofold.json --dry-run`: `strict count: 12/23 on 35 -> 13/22 on 35; strictest
+  11/24 -> 12/23` (GLUE −1 in both columns). Output minus line 1 = `AutofoldDry.lean`, compiles against TailZ66:
+  `HDec.HSyn.sixContactMin_of_open60` depends on `[propext, Classical.choice, Quot.sound]` (VERIFIED). No tree file written.
