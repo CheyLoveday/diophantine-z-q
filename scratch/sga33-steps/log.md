@@ -15,3 +15,4 @@
   canonical u (generic fibre = bcDVR gen); conclusion: iso e : U ≅ W with e ≫ W.ι = U.ι ≫ u.
 - step 1 `cor33SH_of_cor33` (specialization), step 2 `openImm_range_iff_iso` + `semistableNeronModels_of_has`,
   step 3 `exists_aut_factor` + `image_idCompSet_eq`; field: `shpre_of_cor33`.
+- SGA7IX33Cor.lean: compiles with lake env lean, no errors/warnings (VERIFIED, 00:2x 11-17). Fixes: open ReductGlue; range of iso via e.hom.surjective; calc for unit.

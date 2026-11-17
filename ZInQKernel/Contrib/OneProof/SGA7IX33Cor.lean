@@ -40,7 +40,7 @@ set_option linter.style.longLine false
 noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits Topology
-open MonoidalCategory CartesianMonoidalCategory MonObj CToPrinted ReductSplit
+open MonoidalCategory CartesianMonoidalCategory MonObj CToPrinted ReductSplit ReductGlue
 
 namespace SGA33Steps
 
@@ -110,8 +110,9 @@ theorem openImm_range_iff_iso {X Y : Scheme.{0}} (f : X ⟶ Y) (V : Y.Opens) :
     exact IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _
   · rintro ⟨e, rfl⟩
     refine ⟨inferInstance, ?_⟩
-    rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp,
-      Set.range_eq_univ.mpr (Scheme.homeoOfIso e).surjective, Set.image_univ, Scheme.Opens.range_ι]
+    rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp]
+    rw [show Set.range e.hom = Set.univ from Set.range_eq_univ.mpr e.hom.surjective, Set.image_univ,
+      Scheme.Opens.range_ι]
 
 /-! ## Step 3: an arbitrary comparison map is the canonical one followed by an automorphism -/
 
@@ -192,8 +193,8 @@ theorem exists_aut_factor (𝒩' : GroupModelO B O) (h𝒩' : 𝒩'.IsNeronModel
   show c = u ≫ α
   apply (h𝒩' Y).1
   simp only
-  rw [Functor.map_comp, hα']
-  simp
+  rw [Functor.map_comp, Category.assoc, hα]
+  exact (IsIso.hom_inv_id_assoc (F.map u) _).symm
 
 end Factor
 
@@ -229,14 +230,15 @@ theorem shpre_of_cor33SH (h : SGA7_IX_Cor3_3_SH) : DictModels.SGA7Pre.SGA7_IX_3_
   have hαe : η[𝒩'.G] ≫ α.hom = η[𝒩'.G] := by
     have h1 : η[bcO hO 𝒩.G] ≫ u = η[𝒩'.G] := hum.one_hom
     have h2 : η[bcO hO 𝒩.G] ≫ c = η[𝒩'.G] := hc.one_hom
-    rw [← h1, Category.assoc, ← hα, h2]
+    calc η[𝒩'.G] ≫ α.hom = (η[bcO hO 𝒩.G] ≫ u) ≫ α.hom := by rw [h1]
+      _ = η[bcO hO 𝒩.G] ≫ c := by rw [hα]; exact Category.assoc _ _ _
+      _ = η[𝒩'.G] := h2
   have hcl : U.ι ≫ c.left = (U.ι ≫ u.left) ≫ α.hom.left := by
-    rw [hα, Over.comp_left, Category.assoc]
+    rw [hα]; exact (Category.assoc _ _ _).symm
   haveI : IsIso α.hom.left := Functor.map_isIso (Over.forget _) α.hom
   haveI := ho
   refine ⟨by rw [hcl]; infer_instance, ?_⟩
   rw [hcl, Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp]
-  change α.hom.left '' Set.range (U.ι ≫ u.left) = _
   rw [hr]
   exact image_idCompSet_eq 𝒩'.G 𝒩'.G α hαe
 
