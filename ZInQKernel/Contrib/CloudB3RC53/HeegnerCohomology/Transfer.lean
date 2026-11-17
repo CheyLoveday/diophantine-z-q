@@ -263,6 +263,24 @@ theorem T_cocycle (n : ℕ) (c : (Fin n → H) → M)
   rw [dT_eq_Td, hc]
   simp [T]
 
+/-- **Kummer of the weighted sum is the transfer of the Kummer cocycle** (tex 3232–3234 and
+3258–3262: "in degree zero the formula is the weighted sum `∑_δ θ(r_δ) ρ_T(r_δ) Q`; applying its
+boundary gives (H21) applied to the boundary of `Q`"; "Kummer of this sum equals the cohomological
+transfer"), `PROVED`.  If `k • Q̃ = Q` (a division point of `Q`; `k = 2^m`), the Kummer cocycle
+`h ↦ ρ(h) Q̃ - Q̃` of `Q` has transfer `g ↦ R(g) P̃ - P̃`, where `P̃ = ∑_δ R(r_δ) Q̃` is a division
+point of the weighted sum: `k • P̃ = ∑_δ R(r_δ) Q`. -/
+theorem kummer_weighted_sum (k : ℤ) (Q Qt : M) (hQ : k • Qt = Q) :
+    k • (∑ δ : G ⧸ H, R H ρ θ (r δ) Qt) = ∑ δ : G ⧸ H, R H ρ θ (r δ) Q ∧
+    ∀ g : Fin 1 → G, T H r hr ρ θ 1 (fun x => ρ (x 0 : G) Qt - Qt) g =
+      R H ρ θ (g 0) (∑ δ : G ⧸ H, R H ρ θ (r δ) Qt) - ∑ δ : G ⧸ H, R H ρ θ (r δ) Qt := by
+  refine ⟨by rw [smul_sum]; simp [← hQ, map_zsmul], fun g => ?_⟩
+  have h := dT_eq_Td H r hr ρ θ 0 (fun _ => Qt) g
+  have e1 : dInh (fun (x : H) m => ρ (x : G) m) 0 (fun _ => Qt) = fun x => ρ (x 0 : G) Qt - Qt := by
+    funext x; simp [dInh, sub_eq_add_neg]
+  rw [e1] at h
+  rw [← h]
+  simp [dInh, T, sub_eq_add_neg]
+
 end TwistedTransfer
 
 /-- **Node (H21) in every degree**, tex 3237–3244 (ex:arith-finite-heegner, paragraph 7),
