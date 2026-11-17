@@ -410,3 +410,7 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     consequence, reading-risk R3'); mumfordTorsionAlgClosed by PR #54's proof. Count: 36 -> 35 open; H 5/26 on 31 ->
     5/25 on 30. Checks (VERIFIED): build +Main +Discharges (16223 jobs); frozenTarget standard axioms; OpenStatements
     35; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+44. Reviewer rating (inbox 57, cove-88 q23): deRhamVpAbVarDirect LEAF/LEAF, kind published, flag the AI page read of
+    inbox 57 (no unread marker), rated_by "q23-derham-rate + q23-derham-verify"; provenance (b), outside the
+    manuscript's bibliography. DeRhamRange.lean imported from OneProof/Main.lean so the built target re-checks
+    range_iotaF_eq_bdrFix. H 5/25 -> 6/24 on 30. Build +Main, frozenTarget standard axioms, render/crosswalk --check ok.

@@ -20,6 +20,7 @@ import ZInQKernel.Contrib.OneProof.Gamma0QExpansion
 import ZInQKernel.Contrib.OneProof.TYZProp23Printed
 import ZInQKernel.Contrib.OneProof.ShimuraMainCM
 import ZInQKernel.Contrib.OneProof.HCMLattice
+import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.TYZLcalOne
 import ZInQKernel.Contrib.OneProof.TYZThm33Alg
 import ZInQKernel.Contrib.OneProof.TYZThm33Curve

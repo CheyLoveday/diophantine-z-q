@@ -5,10 +5,6 @@
 Printed statements that a reader with the book or paper can check against the Lean statement in
 [OPEN.md](OPEN.md). How to do it, and what makes a reading count: [STATEMENT-CHECKS.md](STATEMENT-CHECKS.md).
 
-## pending-reading
-
-* [`deRhamVpAbVarDirect`](OPEN.md#derhamvpabvardirect) (packet R7): Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct). Flag: pending reading: Berger's definition of de Rham (section II.2-II.3, pp. 11-13) unread (no download possible in derham-range); a direct instance of Berger II.5.1 p. 19 under either dimension reading: dim_K via the theta-compatible K -> B_dR^+ (derham-direct) and dim over B_dR^{G_K} (admissibility), proved equivalent through iota(F') = B_dR^{G_F} (derham-range: range_iotaF_eq_bdrFix, deRhamVpAbVarDirect_iff_adm); an isomorphism-form definition (B_dR (x) V = B_dR^d) would add a consequence step; primary Fontaine numbers UNVERIFIED
-
 ## reading-risk
 
 * [`neronOggShafarevichSep`](OPEN.md#neronoggshafarevichsep) (packet R1): Serre-Tate 1968 Thm 1 over IsSepClosure K Ks (the print assumes a perfect residue field, the leaf does not); the Kbar form proved in Lean from MulEtaleAbelianScheme (dict-galois). Flag: unread: new printed leaf, no reading recorded; reading risk: stronger than the cited theorem (AI audit 2026-11-17, Deicyde/diophantine-z-q#63): Serre-Tate section 1 assume a perfect residue field (recalled, and so described in Milne's survey arXiv:1210.7459 section 2.7; the paper itself not read), while the leaf quantifies over every discrete valuation ring; BLR 7.4 Thm 5 gives the T_l form over any discrete valuation ring, and the m-torsion clauses over an imperfect residue field need a counting argument; consumers use number fields only; counts GLUE until a reading settles it

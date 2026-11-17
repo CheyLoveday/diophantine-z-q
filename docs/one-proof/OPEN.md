@@ -13,7 +13,7 @@ removes it. See
 
 **30 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves52`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 5 published / 25 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 6 published / 24 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
@@ -125,7 +125,7 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 * [`dsThm965Printed`](#dsthm965printed) (GLUE; unread, unverified-locator): Diamond-Shurman, GTM 228, Thm 9.6.5 (Deligne 1971; Shimura 1971 Thm 7.14 for k = 2), printed form over K_{f,lambda}: rho_{f,lambda}(Frob_p) has characteristic polynomial (or satisfies) x^2 - a_p x + chi(p) p^(k-1)
 * [`dsThm966Printed`](#dsthm966printed) (LEAF): Deligne-Serre 1974 Thm 4.1 (4.1.1), pp. 513-514: f != 0 of type (1, eps), eigenvector of T_p (p not dividing N) with eigenvalues a_p => rho : G_Q -> GL_2(C), unramified outside N, Tr rho(Frob_p) = a_p, det rho(Frob_p) = eps(p)
 * [`panPrintedF`](#panprintedf) (GLUE; pending-review): Pan, The Fontaine-Mazur conjecture in the residually reducible case, J. Amer. Math. Soc. 35 (2022), 1031-1169, Thm 1.0.4 (= arXiv:1901.07166v2 Thm 1.0.4 with Conj. 1.0.1); Fontaine's B_st as BstFOf, pst as LocalIsPstF in Contrib/OneProof/PanBergerFontaine.lean
-* [`deRhamVpAbVarDirect`](#derhamvpabvardirect) (GLUE; pending-reading): Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct)
+* [`deRhamVpAbVarDirect`](#derhamvpabvardirect) (LEAF): Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct)
 * [`hodgeTateDecompOr`](#hodgetatedecompor) (GLUE; pending-review, unverified-locator): C_p (x) V_p(A) = C_p(1)^a + C_p^b OR Hom(V_p(A), C_p) = C_p^a + C_p(-1)^b, G_F-equivariant, some a, b (Fontaine, Invent. Math. 65 (1982), Theoreme principal; Tate 1967 4 corollary, good reduction); a = b = g proved from the Weil pairing and T26 (hodgetate-from-dr); Hom form => tensor form by C_p-dualization (htdecomp-or)
 * [`modularHTCoeff`](#modularhtcoeff) (GLUE; pending-review, unverified-locator): Content: Deligne, Sem. Bourbaki 355 (1969/1971); Faltings, Math. Ann. 278 (1987); Saito, Invent. Math. 129 (1997); Kato, Asterisque 295 (2004) sections 9.2-9.4, (9.2.2), pp. 187-188 (V_{F_lambda}(f) over F_lambda; read by the locator audit, row R13) and 11.3 (UNVERIFIED). Existence form printed in Taylor, Galois representations, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004); Gee, Modularity lifting theorems, Essent. Number Theory 1 (2022) section 2 (numbers UNVERIFIED)
 * [`bergerSurveyF`](#bergersurveyf) (GLUE; pending-review): Berger, An introduction to the theory of p-adic representations (2004), arXiv:math/0210184v1, IV.5.1 and IV.5.3, with II.2.3, II.3.1, II.3.3, II.5.2, I.2.3; = Berger, Invent. Math. 148 (2002), Theoreme 0.6 (= Theoreme 5.19 of arXiv:math/0102179v3); B_st (Fontaine) as BstFOf, admissibility (basis form) as IsAdmissibleT in Contrib/OneProof/PanBergerFontaine.lean and PanBergerPst.lean
@@ -149,7 +149,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`bostLowerBoundAnSS`](#bostlowerboundanss) | research | published | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`carayolThmAIrr`](#carayolthmairr) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`deRhamVpAbVarDirect`](#derhamvpabvardirect) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`dsThm965Printed`](#dsthm965printed) | research | published | GLUE | unread, unverified-locator | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`elkiesX6StarEveryIdeal`](#elkiesx6stareveryideal) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gaudronRemondThm14AnSS`](#gaudronremondthm14anss) | research | published | GLUE | pending-review | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -166,6 +165,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`sga7_IX_Cor3_3_Def34`](#sga7_ix_cor3_3_def34) | research | consequence | GLUE | pending-review | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`x6CoarseModuliIdeal`](#x6coarsemoduliideal) | research | consequence | GLUE | pending-review, unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`y3FineModuliAbP`](#y3finemoduliabp) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`deRhamVpAbVarDirect`](#derhamvpabvardirect) | research | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`igusaGL2DSGalSome`](#igusagl2dsgalsome) | research | published | LEAF | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
@@ -292,20 +292,6 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 ```
 
 > Shimura 1967 Main Theorem I in Deligne's form (Sem. Bourbaki 389, sections 4-5; Milne, Introduction to Shimura varieties, sections 5-8 and 12-14) for Y3 = Sh_K3(B^x, H^pm), B = (2,-3|Q), stated as the print states it, for every witness (Y, Phi) of the printed fine-moduli clause list Y3Fix.R1fpPropsAbP: Psi : H^pm x (B (x) A_f)^x -> Y(C) onto with fibres exactly the print's double cosets B^x \ (H^pm x G(A_f) / K3) (DCRelPM); holomorphic in tau in H for every g; at [tau, u], u in O-hat^x (L_u = O), the abelian surface A with (H_1(A, Z), iota_*, h_A) = (O, left multiplication, h_tau) in genuine form (IsHodgeH1Print: H_1 = pi_1(A(C), 0)^ab for the classical topology, O acting by functoriality, the complex structure of Lie A through a holomorphic homomorphism e = exp_A o L, right multiplication by J_tau); Shimura's reciprocity law at CM points of H (conventions existential). Equivalent to the old field deligneCanonicalModelY3EveryH (Y3Hodge.print_iff_deligneH, both directions proved: restriction to H by exists_upper and dcRelPM_iff, retraction H^pm -> H by mu = 1+i, H_1 dictionary print_iff_hodge). Consequence form: bijective and holomorphic in place of the biholomorphism, moduli clause at O-hat^x without polarization (exists and is unique: Y3Hodge.lemmaP_H1, Lemma P on the genuine H_1) and level structure, reciprocity at CM points of H
-
-### deRhamVpAbVarDirect
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves52.deRhamVpAbVarDirect`; kind **published**, strict **GLUE**; flag: pending reading: Berger's definition of de Rham (section II.2-II.3, pp. 11-13) unread (no download possible in derham-range); a direct instance of Berger II.5.1 p. 19 under either dimension reading: dim_K via the theta-compatible K -> B_dR^+ (derham-direct) and dim over B_dR^{G_K} (admissibility), proved equivalent through iota(F') = B_dR^{G_F} (derham-range: range_iotaF_eq_bdrFix, deRhamVpAbVarDirect_iff_adm); an isomorphism-form definition (B_dR (x) V = B_dR^d) would add a consequence step; primary Fontaine numbers UNVERIFIED.
-* Source: Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct)
-* packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-DeRhamPrint.Direct.DeRhamVpAbVarDirect
-```
-
-> Fontaine, as printed by Berger, An introduction to the theory of p-adic representations (Geometric aspects of Dwork theory, de Gruyter 2004; arXiv math/0210184v1) section II.5.1, p. 19: the Tate modules of abelian varieties are de Rham, i.e. dim_K D_dR(V_p(A)) = dim_{Q_p} V_p(A) with D_dR(V) = (B_dR (x)_{Q_p} V)^{G_K} a K-space through K -> Kbar -> B_dR^+. Lean form: A over a finite F/Q_p, G_F acting through gfToGqp (image G_{F'}, F' the image of F in Qbar_p, so the print's K is F'), D_dR = DeRhamPrint.Direct.ddrF an F'-space through iotaF : F' -> Qbar_p -> B_dR^+ -> B_dR, the unique theta-compatible lift (iotaPlusF_unique), G_F-invariant (bdrAct_iotaF). Equivalent to the old field deRhamVpAbVarPrinted by the tower law (deRhamVpAbVarPrinted_of_direct and its converse, proved). Berger's B_dR = B_dR^+[1/t] matched by DeRhamPrint.TDict.bdREquivAwayT
 
 ### dsThm965Printed
 
@@ -530,6 +516,20 @@ Y3Fix.Y3FineModuliAbP
 ```
 
 > y3-fix, printed form (representability, one object: the fine moduli scheme Y3 with its universal family): the moduli problem of abelian surfaces with an action of the maximal order O of B = (2,-3|Q) and full level-3 structure in Mumford's form (GIT Def. 7.1, O-linear: at every geometric point s the sections eta(a), a in O/3O, are exactly the points of A_s(k)[3]) is represented over Q by a proper smooth curve (some (Y, Phi) satisfies R1fpPropsAbP; no Qbar-point clause). Buzzard, Duke Math. J. 87 (1997) section 1; Boutot-Carayol, Asterisque 196-197 (1991) ch. III; Milne 1979; Mumford GIT Def. 7.1, Thm 7.9; locators UNVERIFIED. Consequence form: universal property used on proper smooth curve bases and read on field points; base Q. Equivalent to the kernel's level form over Q-schemes (Y3Fix.toKer, Y3Fix.ofKer from mumfordTorsionAlgClosed).
+
+### deRhamVpAbVarDirect
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves52.deRhamVpAbVarDirect`; kind **published**, strict **LEAF**; flag: AI page read 11-17 (cove-24, readings/derham.md addendum; arXiv math/0210184v1): Berger defines de Rham by dim_K D_dR(V) = dim_Qp V with K = B_dR^{G_K} (section II.2.3, p. 12; B-admissible by dimension, section I.2.3, p. 6), and section II.5.1, p. 19 prints that the Tate modules Q_p (x) T_pA of all abelian varieties A are de Rham (attributed to Fontaine; A over K by the paragraph's X/K context). Direct instance: the K-structure is the B_dR^{G_K}-structure (derham-range: range_iotaF_eq_bdrFix, deRhamVpAbVarDirect_iff_adm), iotaF is the theta-compatible lift (iotaPlusF_unique), B_dR = B_dR^+[1/t] (bdREquivAwayT). Survey attribution accepted as a source (lead 11-17). Provenance (b), outside the manuscript's bibliography: re-route per Jack 11-17 (q23-derham-rate)..
+* Source: Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct)
+* packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+DeRhamPrint.Direct.DeRhamVpAbVarDirect
+```
+
+> Fontaine, as printed by Berger, An introduction to the theory of p-adic representations (Geometric aspects of Dwork theory, de Gruyter 2004; arXiv math/0210184v1) section II.5.1, p. 19: the Tate modules of abelian varieties are de Rham, i.e. dim_K D_dR(V_p(A)) = dim_{Q_p} V_p(A) with D_dR(V) = (B_dR (x)_{Q_p} V)^{G_K} a K-space through K -> Kbar -> B_dR^+. Lean form: A over a finite F/Q_p, G_F acting through gfToGqp (image G_{F'}, F' the image of F in Qbar_p, so the print's K is F'), D_dR = DeRhamPrint.Direct.ddrF an F'-space through iotaF : F' -> Qbar_p -> B_dR^+ -> B_dR, the unique theta-compatible lift (iotaPlusF_unique), G_F-invariant (bdrAct_iotaF). Equivalent to the old field deRhamVpAbVarPrinted by the tower law (deRhamVpAbVarPrinted_of_direct and its converse, proved). Berger's B_dR = B_dR^+[1/t] matched by DeRhamPrint.TDict.bdREquivAwayT
 
 ### dsThm966Printed
 
