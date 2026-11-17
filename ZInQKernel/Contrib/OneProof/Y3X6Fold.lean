@@ -1,10 +1,11 @@
 import ZInQKernel.Contrib.OneProof.Y3X6.Top
 
-/-! # y3-x6: the fold with the moduli row over `Y₃` (no `X₆` field)
+/-! # y3-x6b: the fold with the moduli row over `Y₃` (no `X₆` field)
 
-Task y3-x6 (2026-11-17). Report: `docs/research/y3-x6.md`; log: `scratch/y3-x6/log.md`.
+Task y3-x6b (2026-11-17), the port of y3-x6 onto cm-fold-rebase's CM fold. Report: `docs/research/y3-x6b.md`; log:
+`scratch/y3-x6b/log.md`.
 
-On cm-branch2's route (`HDec.HSyn.sixContactMin_of_open73_cm`, the manuscript's CM branch in place of NoCM), the
+On cm-fold-rebase's route (`HDec.HSyn.sixContactMin_of_open77_cm`, the manuscript's CM branch in place of NoCM), the
 two `X₆` fields of the research bundle, `x6CoarseModuliIdeal` (the coarse moduli scheme `X₆ = X₀(6,1)` and the
 Atkin–Lehner group) and `elkiesX6StarEveryIdeal` (Elkies' coordinate on `X₆/W`), were read only to build
 
@@ -15,21 +16,21 @@ Atkin–Lehner group) and `elkiesX6StarEveryIdeal` (Elkies' coordinate on `X₆/
   generation of the chain is copied with that row (`Y3X6/Copy*.lean`, generated);
 * the `X₆` conic model (row H-43, read by nothing on the CM-branch route; carried as `True`);
 * sgr-direct's `HeckeSqrtBranchAny` (a square root of `c(27X + 16)` in the Galois closure of `Y₃ → P¹`), which on
-  the `Y₃` route is the open glue field `heckeSqrtBranchAny` (docs/research/y3-x6.md §4: the manuscript's tame
+  the `Y₃` route is the open glue field `heckeSqrtBranchAny` (docs/research/y3-x6b.md §4: the manuscript's tame
   local equation L517-526 is a local statement at `p > 324` and does not give a global square root).
 
-`HDec.HSyn.sixContactMin_of_open74_y3x6 (r : OpenResearchLeaves55Y3) (t : OpenTextbookLeaves18)
+`HDec.HSyn.sixContactMin_of_open78_y3x6 (r : OpenResearchLeaves59Y3) (t : OpenTextbookLeaves18)
 (l : OpenAddedLeaves27) : ZInQ.SixContactMin` (`Y3X6/Top.lean`) is the resulting top theorem;
-`OpenResearchLeaves55Y3` = `OpenResearchLeaves54CM` − `x6CoarseModuliIdeal` − `elkiesX6StarEveryIdeal` + `y3ToP1j` +
+`OpenResearchLeaves59Y3` = `OpenResearchLeaves58CM` − `x6CoarseModuliIdeal` − `elkiesX6StarEveryIdeal` + `y3ToP1j` +
 `heckeSqrtBranchAny`. -/
 
 namespace HDec.HSyn
 
-/-- **`ZInQ.SixContactMin` without `X₆`** (y3-x6): cm-branch2's top (`sixContactMin_of_open73_cm`) with the two `X₆`
-fields of `OpenResearchLeaves54CM` replaced by y3-p1j's leaf `Y3P1j.Y3ToP1j` and the glue
+/-- **`ZInQ.SixContactMin` without `X₆`** (y3-x6b): cm-fold-rebase's top (`sixContactMin_of_open77_cm`) with the two `X₆`
+fields of `OpenResearchLeaves58CM` replaced by y3-p1j's leaf `Y3P1j.Y3ToP1j` and the glue
 `SGRDirect.HeckeSqrtBranchAny`. -/
-theorem sixContactMin_y3x6 (r : OpenResearchLeaves55Y3) (t : OpenTextbookLeaves18)
+theorem sixContactMin_y3x6b (r : OpenResearchLeaves59Y3) (t : OpenTextbookLeaves18)
     (l : OpenAddedLeaves27) : ZInQ.SixContactMin :=
-  sixContactMin_of_open74_y3x6 r t l
+  sixContactMin_of_open78_y3x6 r t l
 
 end HDec.HSyn
