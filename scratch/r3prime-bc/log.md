@@ -23,3 +23,7 @@
 - `bcHolAt_chartAt`, `unitGermChart_bc`: unit-germ chart coordinates are BCHolAt; pushed IsHolChart
   charts are BC Serre charts.
 - Reading note (a) of r3prime-etale is now a theorem; no new leaf, no new hypothesis besides T35.
+
+## 11:10 checks
+- Contrib HolChartBC.lean clean; lake build Main+Discharges+HolChartBC OK (16217 jobs); #discharges: 19 pre-existing
+  lines, none by ZInQ.R3BC; 7 headline axioms standard (VERIFIED). Report docs/research/r3prime-bc.md.
