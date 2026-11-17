@@ -1,0 +1,19 @@
+{"name": "ga-rigidity",
+ "imports": ["ZInQKernel.Contrib.OneProof.GaRigiditySGA7"],
+ "discharges": [
+  {"field": "sga7_IX_Cor3_3",
+   "proof": "_root_.GaRigidity.SGA7.sga7_IX_Cor3_3_of_def34 {n}.sga7_IX_Cor3_3_Def34",
+   "leaves": [
+    {"name": "sga7_IX_Cor3_3_Def34", "type": "_root_.GaRigidity.SGA7.SGA7_IX_Cor3_3_Def34",
+     "doc": "Grothendieck, SGA 7 I, Exp. IX, Cor. 3.3, p. 348, specialized to traits (as sga7_IX_Cor3_3), with semistable reduction in the form of Def. 3.4 (p. 349) read through Def. 2.1.5: the identity component of the geometric special fibre of the Neron model contains no subgroup isomorphic to G_a (GaRigidity.SGA7.IsSemistableDef34, NoGaInIdComp). Replaces sga7_IX_Cor3_3: the dictionary (extension of an abelian variety by a split torus => no G_a) is proved by rigidity for G_a (GaRigidity.noGaSubgroup_of_semiAbelian)",
+     "kind": "published",
+     "flag": "pending review: printed form under the queue11 reviewer reading of Def. 3.4 / 2.1.5 (no G_a in the identity component of the geometric special fibre); reading risk: if Def. 3.4 reads 'extension of an abelian variety by a torus', this form needs the converse dictionary (Chevalley) and the old field is the literal one; locators UNVERIFIED (ga-rigidity, no print read)",
+     "source": "SGA 7 I, Exp. IX, Cor. 3.3, p. 348 (semistable reduction Def. 3.4, p. 349, via Def. 2.1.5: no G_a), specialized to S = Spec O, S' = Spec O' discrete valuation rings with O' meet K = O; ga-rigidity"}]},
+  {"field": "sga7_IX_3_5_ForwardGeom",
+   "proof": "_root_.GaRigidity.SGA7.sga7_IX_3_5_ForwardGeom_of_def34 {n}.sga7_IX_3_5_ForwardGeom_Def34",
+   "leaves": [
+    {"name": "sga7_IX_3_5_ForwardGeom_Def34", "type": "_root_.GaRigidity.SGA7.SGA7_IX_3_5_ForwardGeom_Def34",
+     "doc": "Grothendieck, SGA 7 I, Exp. IX, Prop. 3.5, p. 350, (i) => (iv) at sigma = tau over a strictly henselian DVR with K^s (as sga7_IX_3_5_ForwardGeom), with semistable reduction in the form of Def. 3.4 read through Def. 2.1.5: a Neron model whose geometric special fibre has no G_a in its identity component (GaRigidity.SGA7.HasSemistableReductionDef34). Replaces sga7_IX_3_5_ForwardGeom: the dictionary (extension of an abelian variety by a split torus => no G_a) is proved by rigidity for G_a (GaRigidity.noGaSubgroup_of_semiAbelian)",
+     "kind": "published",
+     "flag": "pending review: printed form under the queue11 reviewer reading of Def. 3.4 / 2.1.5 (no G_a in the identity component of the geometric special fibre) and the 11-17 reading of Prop. 3.5 (direct instance of (i) => (iv)); reading risk: if Def. 3.4 reads 'extension of an abelian variety by a torus', this form needs the converse dictionary (Chevalley) and the old field is the literal one; locators UNVERIFIED (ga-rigidity, no print read)",
+     "source": "SGA 7 I Exp. IX Prop. 3.5, forward direction at sigma = tau, over a strictly henselian DVR with K^s (p. 350), semistable reduction Def. 3.4 via Def. 2.1.5 (no G_a); ga-rigidity"}]}]}
