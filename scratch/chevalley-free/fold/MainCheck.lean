@@ -2213,3 +2213,44 @@ theorem _root_.ZInQ.OneProof.frozenTarget_chevFree
 end ZInQ.Contrib.TYZChain
 
 #print axioms ZInQ.OneProof.frozenTarget_chevFree
+
+/-! chevalley-free: closure checks (types and values). -/
+open Lean in
+def ccValueCF? (ci : ConstantInfo) : Option Expr :=
+  match ci with
+  | .defnInfo v => some v.value | .thmInfo v => some v.value | .opaqueInfo v => some v.value | _ => none
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let closure : Name → NameSet := fun root => Id.run do
+    let mut seen : NameSet := {}
+    let mut todo : Array Name := #[root]
+    while !todo.isEmpty do
+      let c := todo.back!
+      todo := todo.pop
+      if seen.contains c then continue
+      seen := seen.insert c
+      if let some ci := env.find? c then
+        todo := todo ++ ci.type.getUsedConstants
+        if let some v := ccValueCF? ci then todo := todo ++ v.getUsedConstants
+    return seen
+  let chev := `ZInQ.SemiAbDescend.ChevalleyPerfect
+  -- (1) the current top: which constants of its closure mention `ChevalleyPerfect` directly
+  let s57 := closure `HDec.HSyn.sixContactMin_of_open57
+  IO.println s!"sixContactMin_of_open57: closure {s57.size}, contains ChevalleyPerfect: {s57.contains chev}"
+  for c in s57.toList do
+    if let some ci := env.find? c then
+      let us := ci.type.getUsedConstants ++ ((ccValueCF? ci).map (·.getUsedConstants) |>.getD #[])
+      if us.contains chev then IO.println s!"  mentions ChevalleyPerfect: {c}"
+  -- (2) the new top and the new frozen target: no Chevalley at all
+  let checked : List Name := [chev, `ZInQ.SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley,
+    `ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley,
+    `ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley, `sorryAx,
+    `HDec.HSyn.OpenResearchLeaves39, `ZInQ.HeightFix.SemiAbelianDescendsPerfect,
+    `ZInQ.ChevFree.semiAbelianDescendsPerfect_proof]
+  for root in [`HDec.HSyn.sixContactMin_of_open58, `ZInQ.OneProof.frozenTarget_chevFree] do
+    let s := closure root
+    IO.println s!"{root}: closure {s.size}"
+    for b in checked do
+      IO.println s!"  contains {b}: {s.contains b}"

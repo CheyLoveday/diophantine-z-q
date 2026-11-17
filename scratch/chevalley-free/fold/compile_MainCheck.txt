@@ -58,7 +58,34 @@ Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
 'ZInQ.ChevFree.gaudronRemondThm14_of_printed_free' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.HSyn.sixContactMin_of_open58' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.OneProof.frozenTarget_chevFree' depends on axioms: [propext, Classical.choice, Quot.sound]
+sixContactMin_of_open57: closure 270602, contains ChevalleyPerfect: true
+  mentions ChevalleyPerfect: HDec.HSyn.OpenResearchLeaves38EB.chevalleyPerfect
+  mentions ChevalleyPerfect: HDec.HSyn.OpenResearchLeaves39.chevalleyPerfect
+  mentions ChevalleyPerfect: ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley
+  mentions ChevalleyPerfect: ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley
+  mentions ChevalleyPerfect: ZInQ.SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley
+  mentions ChevalleyPerfect: HDec.HSyn.OpenResearchLeaves38EB.mk
+  mentions ChevalleyPerfect: HDec.HSyn.OpenResearchLeaves37EB.mk
+  mentions ChevalleyPerfect: HDec.HSyn.OpenResearchLeaves37EB.chevalleyPerfect
+HDec.HSyn.sixContactMin_of_open58: closure 270704
+  contains ZInQ.SemiAbDescend.ChevalleyPerfect: false
+  contains ZInQ.SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley: false
+  contains ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley: false
+  contains ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley: false
+  contains sorryAx: false
+  contains HDec.HSyn.OpenResearchLeaves39: false
+  contains ZInQ.HeightFix.SemiAbelianDescendsPerfect: true
+  contains ZInQ.ChevFree.semiAbelianDescendsPerfect_proof: true
+ZInQ.OneProof.frozenTarget_chevFree: closure 300062
+  contains ZInQ.SemiAbDescend.ChevalleyPerfect: false
+  contains ZInQ.SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley: false
+  contains ZInQ.SemiAbDescend.bostLowerBound_of_printed_chevalley: false
+  contains ZInQ.SemiAbDescend.gaudronRemondThm14_of_printed_chevalley: false
+  contains sorryAx: false
+  contains HDec.HSyn.OpenResearchLeaves39: false
+  contains ZInQ.HeightFix.SemiAbelianDescendsPerfect: true
+  contains ZInQ.ChevFree.semiAbelianDescendsPerfect_proof: true
 
-real	0m24.353s
-user	0m42.801s
-sys	0m3.446s
+real	6m50.939s
+user	5m55.488s
+sys	0m8.421s
