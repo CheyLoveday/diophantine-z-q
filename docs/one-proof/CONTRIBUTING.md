@@ -143,7 +143,7 @@ hypotheses. Its output (generated from `scratch/contrib-kit/DischargesTest-outpu
 <!-- worked-example:begin -->
 ```
 scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
-DISCHARGES [OpenResearchLeaves32.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
+DISCHARGES [OpenResearchLeaves33.dsThm965Printed] by DSCoeffExt.dsThm965Printed_of_charpoly
   still assumes: [∀ (N : ℕ) [inst : NeZero N] (k : ℤ) (χ : DirichletCharacter ℂ N) (f : ZInQ.Contrib.G9.PkgI4.CF N k),
    2 ≤ k →
      DSCoeffExt.IsNormalizedEigenformDS f χ →
@@ -176,13 +176,13 @@ DISCHARGES [OpenResearchLeaves32.dsThm965Printed] by DSCoeffExt.dsThm965Printed_
                                              (↥(DSCoeffExt.coeffField f)) lam))
                                          b)]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves32.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
+DISCHARGES [OpenResearchLeaves33.raynaudSemistableSHOr] by DictModels.RaynaudOr.or_of_field
   still assumes: [ReductGlue.RaynaudSemistableSH]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves32.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of_SH
+DISCHARGES [OpenResearchLeaves33.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of_SH
   still assumes: [SGA7PersistsNF.SGA7_IX_3_3_SH, CToPrinted.SGA3_VIB_3_10, AVGlue.GeomConnOfRationalPoint]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves32.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+DISCHARGES [OpenResearchLeaves33.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.charPolyIndepOfEllAlgClosed
@@ -260,10 +260,16 @@ DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves9H
 DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.mumfordTorsionAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves32.r16CoreY] by R16Split.coreY_of_r16
+DISCHARGES [OpenResearchLeaves33.eigenformHTNew] by NewformDict.eigenformHTNew_of_newform
+  still assumes: [NewformDict.EigenformHTNewNewform]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves33.r16CoreY] by NewformDict.r16CoreY_of_newform
+  still assumes: [NewformDict.R16CoreYNewform]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves33.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves32.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
+DISCHARGES [OpenResearchLeaves33.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
   still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
@@ -272,7 +278,7 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 36 open hypotheses, 9878 theorems checked, 33 discharge one
+#discharges: 36 open hypotheses, 9953 theorems checked, 35 discharge one
 ```
 <!-- worked-example:end -->
 

@@ -146,3 +146,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     check_target.py; only Main.lean changed among existing OneProof modules (TailZ56 new); OpenStatements 36;
     render_open --check ok (30 H, strictest 13/17, 6 others); crosswalk --check ok; DischargesTest rerun; autoform
     check ok. scratch FoldCheck.lean of coeff-rational and coeff-field renamed .lean.txt (they redeclare bundles).
+19. r17 (consequence, GLUE) replaced by r17-print's printed-form leaf carayolThmA (Carayol 1986 Theoreme (A), F = Q,
+    weight 2, packaged form, over printed newforms; dictionary steps proved): merged wip/r17-print 785e3f29, autofold
+    scratch/leaf-fold33/autofold-r17.json (r17-print's spec with eigenformCoeffFieldFinite, removed in step 18, taken
+    from CoeffRational.eigenformCoeffFieldFinite_of_heckePrime) -> TailZ57, `sixContactMin_of_open50`. Per the
+    integrator's rule for printed-form restatements, carayolThmA is flagged "pending review" and counts GLUE (strict
+    and strictest) until a reviewer rates it: 13/17 on 30 -> 13/17 on 30 (count-neutral; another session's
+    wip/leaf-fold34r folds the same result with the row LEAF, on c0f3d085 without step 18). Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; OpenStatements 36; DischargesTest rerun; render_open --check ok (30 H, strictest 13/17, 6
+    others); crosswalk --check ok; autoform check ok. AutofoldDryRun.lean renamed .lean.txt.
