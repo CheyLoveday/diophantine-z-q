@@ -991,3 +991,36 @@ Hint: The binding can be removed (if unused) or named `_` (if used implicitly). 
   [apply] _hQ1
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [9222/9224] Built ZInQKernel.Contrib.OneProof.HfxProof.Finite1 (90s)
+⚠ [9223/9224] Built ZInQKernel.Contrib.OneProof.HfxProof.Case1 (21s)
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:76:38: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:76:42: Unused tactic linter: `ring` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:76:42: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:80:33: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:80:37: Unused tactic linter: `ring` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:80:37: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/Contrib/OneProof/HfxProof/Case1.lean:164:17: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+✔ [9224/9224] Built ZInQKernel.Contrib.OneProof.TYZTestVectorExists (3.9s)
+Build completed successfully (9224 jobs).
+
+real	3m34.262s
+user	4m14.944s
+sys	0m41.589s
