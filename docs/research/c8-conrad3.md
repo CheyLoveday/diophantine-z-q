@@ -255,8 +255,10 @@ it without `--allow-rise`. **Do not fold alone.** The remaining consumer of the 
 ## 8. Known issues and limitations
 
 * **No issue found in the manuscript's use of a cited source at C8.**
-  * The manuscript's "de Rham subrepresentation of the Hom representation" is true only up to semisimplification
-    (`r` need not be semisimple). The proof here avoids it.
+  * The manuscript's "de Rham subrepresentation of the Hom representation" (L758-759) holds as stated, since `ρ_g`
+    is semisimple. If `r` is reducible, `ψ ⊗ ρ_g ≅ r^{ss}`, and a sub-line `α` of `r` gives
+    `ψ ↪ Hom(ψ⁻¹α, r) ⊆ Hom(ρ_g, r)` (SPECULATIVE, a one-line check, not formalized). The proof here does not
+    need it.
   * The Conrad citation (L761) is an unrefereed author preprint, unread on this host (c8-conrad §6).
 * **Locators unread** (no page reads arrived; flags kept): Tate 1967 §3.3 Thm 2; Milne 1986 Prop. 12.1; Conrad App. B
   pp. 32-33; Brinon–Conrad Thm 2.2.7 (mentioned only as a possible bibliography source, from memory).
