@@ -39,6 +39,8 @@ hypothesis:
 * `log((1+y)(1+z)) = log(1+y) + log(1+z)` in `B_dR^+` for `y, z ∈ ker θ` (`logPlus_add`).
 * `log [ε] ∈ A_max` for `ε^♯ = 1` (`logTeich_mem_amax`), so `t ∈ B_max^+` and `B_max = B_max^+[1/t]` inverts an
   element of `B_max^+`.
+* **`t ≠ 0`.** `log [ε] ≠ 0` for every `ε ≠ 1` with `ε^♯ = 1`, and such `ε` exist, so the inverted `t` is a
+  genuine unit of `B_dR` (`logTeich_ne_zero`, `exists_t_ne_zero`).
 * `A_max` does not depend on the choice of generator of `ker θ` (`amaxOf_eq_amax`).
 * The trivial representation is `B`-admissible for every `B ⊆ B_dR` and every `H` (`isAdmissible_trivial`), so
   potential semistability is non-vacuous.
@@ -113,6 +115,8 @@ input on the same `ρ^∨`. The `_weak` form converts the current bundle's `dsTh
     `(1+Y)(1+Z) Q'` is divisible by `T^{N−1}`. Then `1 + T·V` is invertible modulo `T^{N−1}`, and `j+1` is
     invertible in `A_inf[1/p]`.
   * `Q` lies in Mathlib's Rees algebra `reesAlgebra (ker θ)`, so `Q(1) ∈ (ker θ)^N`.
+* **`logTeich_ne_zero`.** Write `[ε] − 1 = ξ^s w` with `θ(w) ≠ 0` and `s ≥ 1` (pb-sanity's `ξ`-adic
+  separatedness of `A_inf`, copied). Modulo `(ker θ)^{s+1}`, `log [ε] ≡ [ε] − 1`, which is nonzero there.
 * **`logTeich_mem_amax`.** Write `[ε] − 1 = ξc`. Then
   `log [ε] = Σ (−1)^{n+1} (p^n/n) c^n (ξ/p)^n`, and `p^k ∣ p^n/n` in `ℤ_p` once `n ≥ 2k`
   (`exists_logCoeff`, `val_bound`).
@@ -155,9 +159,9 @@ underlying a continuous `ρ`.
      If Berger instead takes coefficients `a_n ∈ B̃^+ = A_inf[1/p]` tending to `0`, the ring is the same:
      finitely many denominators are cleared by a power of `p`.
   2. Admissibility is over `B_st^{G_K}`, not over `F` (see above).
-  3. `t ≠ 0` in `B_dR` is not proved in Lean. It is STANDARD (`t ∈ Fil^1 ∖ Fil^2`). If it failed, `B_max` would
-     be `B_max^+`. That is a statement about the ring, not about the leaf's form.
-  4. The Springer pagination is UNVERIFIED (as in pb-fix2).
+  3. The Springer pagination is UNVERIFIED (as in pb-fix2).
+
+  `t ≠ 0` is proved (`exists_t_ne_zero`), so `B_max ≠ B_max^+` as Berger intends; it is no longer a flag.
 * **Not stronger than the print.** It is the theorem for one representation of `G_{ℚ_p}`. The conclusion keeps
   the same model `E`.
 
@@ -194,23 +198,51 @@ injective. It is not proved here.
 * Neither leaf needs it: `bstEquivPolynomial` shows it is only what identifies the subring `B_st` with the
   abstract polynomial ring.
 
-## 4. Deliverables and checks
+## 4. Deliverables and checks (VERIFIED)
 
-* `ZInQKernel/Contrib/OneProof/BergerBst.lean`. `lake build +ZInQKernel.Contrib.OneProof.BergerBst` succeeds.
-  The file contains no `sorry` and no build-time code (`notation`, `#eval`, `run_cmd`, `macro`, `syntax`,
-  `initialize`; checked with grep).
-* Axioms: `scratch/bst-construct/axioms-output.txt`.
-* `#discharges`: `scratch/bst-construct/discharges-output.txt`.
-* Autofold spec: `scratch/bst-construct/autofold.json`, field `r11r12`. The proof is
-  `panBerger_of_printedB_weak {n}.panPrintedB {n}.bergerPrintedB {n}.dsThm965Weak {n}.dsThm966`. Both leaves
-  have kind `published` and flag `unread: …`.
-* Dry run: `scratch/bst-construct/autofold-dryrun.txt`.
+* `ZInQKernel/Contrib/OneProof/BergerBst.lean` (61 KB). `lake build ZInQKernel.Contrib.OneProof.BergerBst`
+  succeeds. The file contains no `sorry`.
+* `python3 scripts/one_proof/sandbox/scan_contrib.py 0caafe661 HEAD` reports `BergerBst.lean: 0 likely hit(s),
+  0 possible hit(s)`.
+* **Axioms.** `scratch/bst-construct/Axioms.lean` prints 23 declarations, including the glue, the stability
+  theorems, `logPlus_add`, `logTeich_ne_zero` and the bridges. All use only `[propext, Classical.choice,
+  Quot.sound]` (`axioms-output.txt`).
+* **`#discharges`** (`scratch/bst-construct/Discharges.lean` → `discharges-output.txt`):
+  ```
+  DISCHARGES [OpenResearchLeaves26.r11r12] by HDec.PkgI4.BergerBst.panBerger_of_printedB_weak
+    still assumes: [HDec.PkgI4.BergerBst.PanPrintedB,
+   HDec.PkgI4.BergerBst.BergerPrintedB,
+   DS965Weak.DSThm965Weak,
+   ZInQ.Contrib.HodgeSplit.DSThm966]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 56 open hypotheses, 3354 theorems checked, 12 discharge one
+  ```
+  (`panBerger_of_printedB`, with `DSThm965` in place of `DSThm965Weak`, also discharges it.)
+* **Autofold.** The spec is `scratch/bst-construct/autofold.json`, field `r11r12`. The proof is
+  `_root_.HDec.PkgI4.BergerBst.panBerger_of_printedB_weak {n}.panPrintedB {n}.bergerPrintedB {n}.dsThm965Weak
+  {n}.dsThm966`. Both leaves have kind `published` and flag `unread: …` (flags as in §3).
+  * The dry run (`autofold-dryrun.txt`) reports `strict count: 34/11 on 45 -> 36/10 on 46; strictest 34/11 ->
+    36/10`.
+  * Its output, with the first line stripped, is `FoldDryRun.lean`. It compiles, and `sixContactMin_of_open36`
+    uses only the standard axioms (`folddryrun-output.txt`).
+* **Reproduce** from the repository root:
+  ```
+  python3 scratch/bst-construct/mkcontrib.py      # regenerates the contribution from Bst.lean
+  lake build +ZInQKernel.Contrib.OneProof.BergerBst
+  lake env lean scratch/bst-construct/Axioms.lean
+  lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
+  lake env lean scratch/bst-construct/Discharges.lean
+  python3 scripts/one_proof/autofold.py scratch/bst-construct/autofold.json --dry-run
+  ```
+  Build note: the `OneProof` closure oleans were copied from another worktree with identical sources (checked
+  with `cmp` on all 2801 closure files) and then completed by `lake build`.
 
 ## 5. What remains
 
 * Read Berger 2002 §1.2 against `Amax`, `Bmax` and `Bst` (flag 1 of §3.1).
-* `t ≠ 0` in `B_dR`, which needs `[ε] − 1 ∉ (ker θ)^2` for `ε ≠ 1`. A route: pb-sanity's
-  `[ε] − 1 = ξ^s w`, `θ(w) ≠ 0`.
-* The two named inputs of §3.3 (Fontaine), if a later consumer needs them.
-* Locator rows for `bergerPrintedB` and `panPrintedB` in locators.md (they belong to other tasks; proposed:
-  R11/R12 as in pb-fix2, with the predicates in `BergerBst.lean`).
+* The two named inputs of §3.3 (Fontaine), if a later consumer needs them. Neither is needed for `r11r12`.
+* Locator rows for `bergerPrintedB` and `panPrintedB` in locators.md. That file belongs to other tasks. Proposed:
+  R11/R12 as in pb-fix2, with the predicates in `BergerBst.lean`.
+* The fold itself (integrator): `autofold.py scratch/bst-construct/autofold.json` on the integration branch. If
+  pb-fix2's `PanPrintedU`/`BergerPrintedU` spec is folded instead, this spec supersedes it, with the same field
+  and the same proof shape.
