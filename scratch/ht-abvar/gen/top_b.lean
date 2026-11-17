@@ -33,32 +33,29 @@ structure OpenTextbookLeaves19HT : Prop where
   /-- Poincaré complete reducibility, complement form (Milne 1986 Prop. 12.1; manuscript L865, ELLIOT). -/
   poincareComplement : _root_.ZInQ.Contrib.AVB1.PoincareComplement
 
-/-- `OpenAddedLeaves27` without `picRepresentableAbVar` and `kleimanPicZeroProper954SiteQ`, with c8-conrad2's C8
-inputs, derham-scholze's two leaves and the Hodge numbers. -/
+/-- `OpenAddedLeaves27` without `picRepresentableAbVar` and `kleimanPicZeroProper954SiteQ`, with c8-conrad3's two
+printed C8 leaves, derham-scholze's two leaves and the Hodge numbers. -/
 structure OpenAddedLeaves28HT : Prop where
+  /-- CITED (L761): Conrad, author preprint 2011, App. B, pp. 32-33, base field `ℚ_p` (unread; unrefereed). -/
   conradAppBQp : _root_.HDec.G0Galois.C8Conrad.ConradAppBQp
+  /-- DEPARTURE (c8-conrad3; uncited step L763-764): Tate 1967 §3.3 Thm 2 for the completion of `K^{ur}`. -/
   tateTwistInvariantsInertia : _root_.HDec.G0Galois.C8Conrad.TateTwistInvariantsInertia
-  twistCharHTWt0 : _root_.HDec.G0Galois.C8Conrad.TwistCharHTWt0
-  inertiaAtPDecomp : _root_.HDec.G0Galois.C8Conrad.InertiaAtPDecomp
-  minkowskiInertiaQ : _root_.HDec.G0Galois.C8Conrad.MinkowskiInertiaQ
-  /-- Scholze 2013 Cor. 1.8 + Thms 9.1, 9.3, algebraic form (derham-scholze; manuscript L10953-10965). -/
+  /-- CITED (L736-737, L10953-10965): Scholze 2013 Cor. 1.8 + Thms 9.1, 9.3, algebraic form (derham-scholze). -/
   scholzeDeRhamAlg : _root_.DeRhamScholze.ScholzeDeRhamAlg
-  /-- Milne, AV v2.00 Part I Thm 12.1(a) / Milne 1986 Thm 15.1(a) (t10-etale; manuscript L10966-10970). -/
+  /-- CITED (L10966-10970): Milne, AV v2.00 Part I Thm 12.1(a) / Milne 1986 Thm 15.1(a) (t10-etale). -/
   t10TateDuality : _root_.T10Etale.T10_TateDuality
-  /-- The Hodge numbers of `H¹_dR(A/F)` through Scholze's filtered comparison (ht-abvar; manuscript L10993). -/
+  /-- ELLIOT (L10996, uncited) through Scholze's filtered comparison: `dim Fil¹ D_dR(H¹_ét(A)) = [F:ℚ_p] g`
+  (ht-abvar). -/
   hodgeNumberH1AbVar : _root_.DeRhamScholze.HTAbVar.HodgeNumberH1AbVar
 
-theorem c8Inputs_of_OpenAddedLeaves28HT (n : OpenAddedLeaves28HT) : _root_.HDec.G0Galois.C8Conrad.C8Inputs where
+theorem c8Leaves_of_OpenAddedLeaves28HT (n : OpenAddedLeaves28HT) : _root_.HDec.G0Galois.C8Conrad.C8Leaves where
   conradAppBQp := n.conradAppBQp
   tateTwistInvariantsInertia := n.tateTwistInvariantsInertia
-  twistCharHTWt0 := n.twistCharHTWt0
-  inertiaAtPDecomp := n.inertiaAtPDecomp
-  minkowskiInertiaQ := n.minkowskiInertiaQ
 
 /-- **The next top theorem (hand-fold shape)**: `ZInQ.SixContactMin` without the Picard rows. -/
 theorem sixContactMin_of_open73HT (r : OpenResearchLeaves53) (t : OpenTextbookLeaves19HT) (l : OpenAddedLeaves28HT) :
     ZInQ.SixContactMin :=
-  sixContactMin_of_open72_ht r ⟨⟩ t.poincareComplement (c8Inputs_of_OpenAddedLeaves28HT l) l.scholzeDeRhamAlg
+  sixContactMin_of_open72_ht r ⟨⟩ t.poincareComplement (_root_.HDec.G0Galois.C8Conrad.c8Inputs_of_leaves (c8Leaves_of_OpenAddedLeaves28HT l)) l.scholzeDeRhamAlg
     l.t10TateDuality l.hodgeNumberH1AbVar
 
 end HSyn

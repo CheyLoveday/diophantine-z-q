@@ -20,8 +20,8 @@
   H^1 ~ T_p^vee. Neither contains a dimension of a graded piece, so the multiplicities (a, b), a + b = 2g, are not
   determined (derham-scholze's `hodgeTateDecompOr` is exactly what they give: some (a, b)).
 - Smallest reroute: one leaf `DeRhamScholze.HTAbVar.HodgeNumberH1AbVar`:
-  dim_{Q_p} Fil^1 D_dR(H^1_et(A_Fbar, Q_p)) = [F:Q_p] g  (manuscript L10993 Hodge numbers via Scholze's filtered
-  comparison). Kind consequence (H_dR not in Mathlib). ELLIOT (L10993 uncited) + CITED (Scholze Cor. 1.8).
+  dim_{Q_p} Fil^1 D_dR(H^1_et(A_Fbar, Q_p)) = [F:Q_p] g  (manuscript L10996 Hodge numbers via Scholze's filtered
+  comparison). Kind consequence (H_dR not in Mathlib). ELLIOT (L10996 uncited) + CITED (Scholze Cor. 1.8).
 
 ## Lean (VERIFIED, compiled 11-17, standard axioms)
 - `ZInQKernel/Contrib/OneProof/HTAbVarScholzeDims.lean` (imports DeRhamScholzeHT): leaf def; `finrank_fil1_bounds`
@@ -47,3 +47,13 @@
   openResearchLeaves36EBCF_of_OpenResearchLeaves53 : hodgeTateDecompExists <- hodgeTateDecompOr; no TERM.
   So hodgeTateDecompOr also leaves the route.
 - Count (kinds.tsv H rows): 5/24 on 29 -> 5/30 on 35 (remove 3 GLUE; add 9 GLUE at entry). (iii) share: +2.
+
+## Dry run over c8-conrad3 (VERIFIED, compiled 11-17)
+- Merged origin/wip/c8-conrad3 (three C8 glue Props proved; C8 from `C8Leaves` = conradAppBQp +
+  tateTwistInvariantsInertia). HTDryRun.lean rebuilt: same generated body (identical to c8-conrad3's
+  C8FoldDryRun.lean body, diff empty), `OpenAddedLeaves28HT` = {conradAppBQp, tateTwistInvariantsInertia,
+  scholzeDeRhamAlg, t10TateDuality, hodgeNumberH1AbVar}, C8 via `c8Inputs_of_leaves`. Tops: standard axioms.
+- Taint rerun (closure 304201): same result, Picard rows unread, hodgeTateDecompOr only into the ignored
+  hodgeTateDecompExists.
+- Count: 5/24 on 29 -> 5/27 on 32; net GLUE +3 ((iii) share +2); +2 if PR #86's poincareComplement_proof lands.
+- Line numbers corrected: Hodge numbers sentence is L10996, "Consequently" L10997, Faltings remark L11003-11006.

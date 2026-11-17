@@ -1,7 +1,7 @@
 import ZInQKernel.Contrib.OneProof.DeRhamScholzeHT
 
 /-!
-# ht-abvar: the field `hodgeTateDecompAbVar` from the manuscript's route (`lem:de-rham-descent`, L10993-10996)
+# ht-abvar: the field `hodgeTateDecompAbVar` from the manuscript's route (`lem:de-rham-descent`, L10996-10997)
 
 Task ht-abvar (2026-11-17; report `docs/research/ht-abvar.md`).
 
@@ -10,7 +10,7 @@ Hodge–Tate decomposition `ℂ_p ⊗ V_p(A) ≅ ℂ_p(1)^g ⊕ ℂ_p^g` of an a
 `F/ℚ_p`. On the current route the multiplicities `(g, g)` come from the Weil pairing of a symmetric isogeny
 `A → A^∨`, i.e. from the Picard rows (`hodgeTateDecompAbVar_of_open_k954`, TailZ69).
 
-The manuscript reads the multiplicities off the Hodge numbers instead (diophantine_zq.tex L10993-10994: the two
+The manuscript reads the multiplicities off the Hodge numbers instead (diophantine_zq.tex L10996-10997: the two
 Hodge numbers of `H¹_dR(A/F)` are `2, 2`, "consequently" the weights are `0,0,−1,−1`), through Scholze's filtered
 comparison `D_dR(H¹_ét) ≅ H¹_dR(A/F)` (Cor. 1.8, cited at L736-737 and used in the lemma's first paragraph).
 derham-scholze's leaves give de Rham with Hodge jumps in `[0, 1]` but no dimension of a graded piece, so one leaf
@@ -41,7 +41,7 @@ noncomputable section
 /-! ## §1. The leaf -/
 
 /-- **LEAF (consequence; the manuscript's Hodge numbers through Scholze's filtered comparison).**
-diophantine_zq.tex `lem:de-rham-descent`, L10993: "The two Hodge numbers of `H¹_dR(A/F)` are `2,2`" (abelian surface;
+diophantine_zq.tex `lem:de-rham-descent`, L10996: "The two Hodge numbers of `H¹_dR(A/F)` are `2,2`" (abelian surface;
 no citation, ELLIOT), carried to `D_dR(H¹_ét)` by the filtered isomorphism `D_dR(H¹_ét(A_{F̄}, ℚ_p)) ≅ H¹_dR(A/F)` of
 Scholze, Forum Math. Pi 1 (2013), Cor. 1.8 with Thms 9.1, 9.3 (cited at L736-737; applied in the lemma's first
 paragraph, L10953-10965). For an abelian variety of dimension `g` the Hodge filtration of `H¹_dR(A/F)` has
