@@ -200,7 +200,7 @@ injective. It is not proved here.
 
 ## 4. Deliverables and checks (VERIFIED)
 
-* `ZInQKernel/Contrib/OneProof/BergerBst.lean` (61 KB). `lake build ZInQKernel.Contrib.OneProof.BergerBst`
+* `ZInQKernel/Contrib/OneProof/BergerBst.lean` (77 KB, no warnings). `lake build ZInQKernel.Contrib.OneProof.BergerBst`
   succeeds. The file contains no `sorry`.
 * `python3 scripts/one_proof/sandbox/scan_contrib.py 0caafe661 HEAD` reports `BergerBst.lean: 0 likely hit(s),
   0 possible hit(s)`.
