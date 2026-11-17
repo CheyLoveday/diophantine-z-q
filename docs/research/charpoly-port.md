@@ -126,7 +126,8 @@ The FLT theorem is used as a Lean proof, not as a leaf.
   `CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly' DegPolyFLT.degHomogPoly` and no leaves. It
   imports charpoly-p's `CharPolyCharP` (the assembly is that task's). `autofold.py --dry-run`: strict
   15/16 on 31 → 14/16 on 30, strictest 15/16 → 14/16, and `OpenTextbookLeaves18` has no fields. The
-  compile of the dry-run module is recorded in the log.
+  dry-run module compiles: `HDec.HSyn.sixContactMin_of_open59` uses only `[propext, Classical.choice, Quot.sound]`
+  (VERIFIED, `AutofoldDryRun-output.txt`).
 
 ## 7. State
 

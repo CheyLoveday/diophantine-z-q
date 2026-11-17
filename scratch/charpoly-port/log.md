@@ -51,3 +51,4 @@ No statement changed.
   summary line `#discharges: 36 open hypotheses, 13237 theorems checked, 37 discharge one`.
 - autofold.py --dry-run (autofold-dryrun.txt): strict 15/16 on 31 -> 14/16 on 30; strictest 15/16 -> 14/16;
   OpenTextbookLeaves18 has no fields.
+- VERIFIED: autofold dry-run module (AutofoldDryRun.lean = dry-run output minus line 1) compiles; HDec.HSyn.sixContactMin_of_open59 axioms [propext, Classical.choice, Quot.sound] (AutofoldDryRun-output.txt).
