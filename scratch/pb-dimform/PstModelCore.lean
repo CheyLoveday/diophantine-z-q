@@ -302,6 +302,122 @@ theorem localIsPstF_iff_forall (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) :
 
 end Pst
 
+/-! ## §6. `B_cris^+` is the literal printed set of Berger's survey II.3.1
+
+The survey prints `B_cris^+ = {Σ x_n ω^n/n! : x_n ∈ B̃^+, x_n → 0}` with `B̃^+ = A_inf[1/p]` and does not name the
+topology in which `x_n → 0`; Brinon-Conrad p. 129 fixes the `p`-adic one for `A_cris` (`a_n ∈ A_inf`). Here
+`x_n → 0` in `A_inf[1/p]` for its `p`-adic topology, `A_inf` an open lattice: for every `k`, eventually
+`x_n ∈ p^k A_inf` (`PAdicNullLoc`). -/
+
+section Printed
+
+open FontaineSt BmaxOne PowerSeries
+
+variable (p : ℕ) [hp : Fact p.Prime]
+
+/-- `x_n → 0` in `B̃^+ = A_inf[1/p]` `p`-adically: for every `k`, `x_n ∈ p^k A_inf` for all large `n`. -/
+def PAdicNullLoc (c : ℕ → PanBergerSplit.AinfP p) : Prop :=
+  ∀ k : ℕ, ∃ N : ℕ, ∀ n ≥ N, ∃ a : PanBergerSplit.Ainf p,
+    c n = algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p) ((p : PanBergerSplit.Ainf p) ^ k * a)
+
+/-- **The set printed in Berger's survey II.3.1, literally**: `{Σ x_n ω^n/n! : x_n ∈ B̃^+, x_n → 0}`, the
+series evaluated `ker θ`-adically in `B_dR^+` and mapped to `B_dR` (`ω = w`, any generator of `ker θ`). -/
+def BcrisPlusPrinted (w : PanBergerSplit.Ainf p) (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) :
+    Set (BdR p) :=
+  {x | ∃ c : ℕ → PanBergerSplit.AinfP p, PAdicNullLoc p c ∧
+    x = toBdR p (evalB p (algebraMap_mem_ith p hw)
+      (PowerSeries.mk fun n => c n * qpToLoc p (((n.factorial : ℕ) : ℚ_[p]))⁻¹))}
+
+theorem toBdR_evalB_C_mul {x : PanBergerSplit.AinfP p} (hx : x ∈ Ith p) (r : ℚ_[p])
+    (F : (PanBergerSplit.AinfP p)⟦X⟧) :
+    toBdR p (evalB p hx (C (qpToLoc p r) * F)) = r • toBdR p (evalB p hx F) := by
+  rw [map_mul, map_mul, Algebra.smul_def]
+  congr 1
+  change toBdR p (psEval (Ith p) hx (C (qpToLoc p r))) = _
+  rw [psEval_C]
+  rfl
+
+theorem mk_eq_C_mul_dpSeries (r : ℚ_[p]) (f : (PanBergerSplit.Ainf p)⟦X⟧) :
+    (PowerSeries.mk fun n => qpToLoc p r *
+        algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p) (PowerSeries.coeff n f) *
+        qpToLoc p (((n.factorial : ℕ) : ℚ_[p]))⁻¹) = C (qpToLoc p r) * dpSeries p f := by
+  ext n
+  rw [coeff_mk, coeff_C_mul, dpSeries, coeff_mk, mul_assoc]
+
+theorem qpToLoc_inv_mul :
+    qpToLoc p ((p : ℚ_[p])⁻¹) * algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p) (p : PanBergerSplit.Ainf p) = 1 := by
+  have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
+  rw [map_natCast, ← map_natCast (qpToLoc p) p, ← map_mul, inv_mul_cancel₀ hp0, map_one]
+
+/-- **`B_cris^+` is exactly the literal printed set of survey II.3.1** (with `x_n → 0` `p`-adically in
+`A_inf[1/p]`): `BcrisPlusPrinted = p^{−k} A_cris`, so with `bcrisPlusOf_eq_set` it is `BcrisPlusOf`. -/
+theorem bcrisPlusPrinted_eq_set {w : PanBergerSplit.Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) :
+    BcrisPlusPrinted p w hw = BcrisPlusSet p w hw := by
+  have hinj := IsLocalization.injective (PanBergerSplit.AinfP p)
+    (powers_le_nonZeroDivisors_of_noZeroDivisors (ZInQ.Contrib.G9.BdrKer.Cp.witt_p_ne_zero p))
+  have hu1 : qpToLoc p ((p : ℚ_[p])⁻¹) * (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) (p : PanBergerSplit.Ainf p) = 1 := qpToLoc_inv_mul p
+  apply Set.Subset.antisymm
+  · -- printed ⊆ `p^{−K} A_cris`
+    rintro x ⟨c, hc, rfl⟩
+    obtain ⟨N0, hN0⟩ := hc 0
+    have hsurj : ∀ n, ∃ (m : ℕ) (a : PanBergerSplit.Ainf p), (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) (p : PanBergerSplit.Ainf p) ^ m * c n = (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) a := by
+      intro n
+      obtain ⟨⟨a, ⟨_, m, rfl⟩⟩, ha⟩ := IsLocalization.surj (Submonoid.powers (p : PanBergerSplit.Ainf p)) (c n)
+      refine ⟨m, a, ?_⟩
+      rw [← ha, map_pow, mul_comm]
+    choose m a0 hma using hsurj
+    let K : ℕ := ∑ n ∈ Finset.range N0, m n
+    have hK : ∀ n, ∃ a : PanBergerSplit.Ainf p, (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) (p : PanBergerSplit.Ainf p) ^ K * c n = (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) a := by
+      intro n
+      by_cases hn : n < N0
+      · have hle : m n ≤ K := Finset.single_le_sum (fun i _ => Nat.zero_le (m i)) (Finset.mem_range.2 hn)
+        refine ⟨(p : PanBergerSplit.Ainf p) ^ (K - m n) * a0 n, ?_⟩
+        rw [map_mul, ← hma n, map_pow, ← mul_assoc, ← pow_add, Nat.sub_add_cancel hle]
+      · obtain ⟨b, hb⟩ := hN0 n (not_lt.1 hn)
+        refine ⟨(p : PanBergerSplit.Ainf p) ^ K * b, ?_⟩
+        rw [hb, pow_zero, one_mul, map_mul, map_pow]
+    choose a ha using hK
+    have hcn : ∀ n, c n = qpToLoc p ((p : ℚ_[p])⁻¹ ^ K) * (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) (a n) := by
+      intro n
+      rw [map_pow, ← ha n, ← mul_assoc, ← mul_pow, hu1, one_pow, one_mul]
+    refine ⟨K, evalB p (algebraMap_mem_ith p hw) (dpSeries p (PowerSeries.mk a)),
+      ⟨PowerSeries.mk a, ?_, rfl⟩, ?_⟩
+    · intro j
+      obtain ⟨Nj, hNj⟩ := hc j
+      refine ⟨max Nj N0, fun n hn => ?_⟩
+      obtain ⟨b, hb⟩ := hNj n (le_of_max_le_left hn)
+      beta_reduce
+      rw [PowerSeries.coeff_mk]
+      refine ⟨(p : PanBergerSplit.Ainf p) ^ K * b, hinj ?_⟩
+      rw [← ha n, hb]
+      simp only [map_mul, map_pow]
+      ring
+    · rw [← toBdR_evalB_C_mul, ← mk_eq_C_mul_dpSeries]
+      congr 3
+      funext n
+      rw [hcn n, PowerSeries.coeff_mk]
+  · -- `p^{−k} A_cris` ⊆ printed
+    rintro x ⟨k, y, ⟨f, hf, rfl⟩, rfl⟩
+    refine ⟨fun n => qpToLoc p ((p : ℚ_[p])⁻¹ ^ k) * (algebraMap (PanBergerSplit.Ainf p) (PanBergerSplit.AinfP p)) (PowerSeries.coeff n f), ?_, ?_⟩
+    · intro j
+      obtain ⟨N, hN⟩ := hf (j + k)
+      refine ⟨N, fun n hn => ?_⟩
+      obtain ⟨b, hb⟩ := hN n hn
+      refine ⟨b, ?_⟩
+      beta_reduce at hb ⊢
+      rw [hb]
+      simp only [map_mul, map_pow, pow_add]
+      rw [show ∀ (A P B : PanBergerSplit.AinfP p), A ^ k * (P ^ j * P ^ k * B) = (A * P) ^ k * (P ^ j * B) from
+        fun A P B => by ring, hu1, one_pow, one_mul]
+    · rw [← toBdR_evalB_C_mul, ← mk_eq_C_mul_dpSeries]
+
+/-- **`B_cris^+` (`BcrisPlusOf`, the `ℚ_p`-algebra generated by `A_cris`) is the literal printed set.** -/
+theorem bcrisPlusOf_eq_printed {w : PanBergerSplit.Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) :
+    (BcrisPlusOf p w hw : Set (BdR p)) = BcrisPlusPrinted p w hw := by
+  rw [bcrisPlusOf_eq_set, bcrisPlusPrinted_eq_set]
+
+end Printed
+
 end PstModel
 end PkgI4
 end HDec
