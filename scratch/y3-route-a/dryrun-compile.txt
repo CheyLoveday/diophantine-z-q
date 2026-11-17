@@ -1,0 +1,5 @@
+scratch/y3-route-a/DryRunFold.lean:1:0: error: object file '/home/jackmccarthy/dzq-wt/y3-route-a/.lake/build/lib/lean/ZInQKernel/OneProof/H/TailZ74.olean' of module ZInQKernel.OneProof.H.TailZ74 does not exist
+
+real	0m1.406s
+user	0m0.426s
+sys	0m0.952s
