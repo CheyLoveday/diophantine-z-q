@@ -63,3 +63,16 @@ Issues #74/#76-#79 not readable (gh: connection reset; no network). Worked from 
 - scratch/lane74/contrib-check-Check.lean (copy of the chain's scratch/contrib-check/Check.lean without the
   20 deleted imports, contribCheck_headline and 112 #print lines of deleted constants): compiles, 117 decls,
   0 nonstandard. VERIFIED.
+
+## #78 (commit 3)
+
+- The headline and frozenTarget edits had to go into commit 1 (OneProof/Main and Main.lean imported deleted
+  files, so the tree would not build otherwise). This commit records the signatures:
+  scratch/lane74/Signature.lean (output Signature-output.txt), compiled, EXIT 0. VERIFIED:
+  ZInQ.OneProof.frozenTarget : OpenResearchLeaves48 → OpenTextbookLeaves18 → OpenAddedLeaves27 →
+    ZInQ.PoleCompleteness → ZInQ.FrozenTarget, axioms [propext, Classical.choice, Quot.sound];
+  ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness :
+    SixContactMin → PoleCompleteness → FrozenTarget, same axioms;
+  ZInQ.Manuscript.PoleCompleteness = ZInQ.PoleCompleteness by rfl.
+- No h22: the headline goes through route AP with greenTaoDense and Density.goodPrimeDensity.
+- On-the-spot: none (no new mathematical statement; the new theorems are old variants with PC for CR₃).
