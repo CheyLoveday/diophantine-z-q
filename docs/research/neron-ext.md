@@ -154,7 +154,7 @@ Two smaller notes:
   * CloudW03: BLR 1.2/8;
   * CloudW01: spreading out;
   * gt-blr: BLR 1.2/4.
-* **Lead for discharging `NeronDVRLocal`.** The Fermat's Last Theorem development (local copy `~/flt-src`, the
+* **Lead for discharging `NeronDVRLocal`.** The Fermat's Last Theorem development (a local checkout, the
   source CloudW03 ported from) states and proves Néron models of abelian varieties over **henselian** DVRs (read
   in the file, VERIFIED):
   `GoodReductionJacobian.RelativeGroupLaw.exists_neronModelPropertyBundle_genericFibre_iso_of_abelianSchemePropertyBundle_of_henselianLocalRing`.

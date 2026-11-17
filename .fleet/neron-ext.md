@@ -22,7 +22,7 @@
   still assumes `[EGAIV_8_10_5_xii, NeronExt.NeronDVRLocal]`.
 * The autofold spec `scratch/neron-ext/autofold.json` works: its dry-run module compiles.
 
-**What remains.** `NeronDVRLocal` itself (BLR's local existence). The FLT development (`~/flt-src`, Lean 4.33.1)
+**What remains.** `NeronDVRLocal` itself (BLR's local existence). The FLT development (a local checkout, Lean 4.33.1)
 proves Néron existence over *henselian* DVRs (577-file closure). Discharging the leaf would need that port plus
 descent from the henselization. Locators are UNVERIFIED, and a locators.md row is still to add.
 Report: docs/research/neron-ext.md. Log: scratch/neron-ext/log.md.

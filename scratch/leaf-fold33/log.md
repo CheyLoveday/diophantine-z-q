@@ -89,3 +89,15 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     build +Main +Discharges; frozenTarget standard axioms; hash guard against step 10 (only frozenTarget changed);
     OpenStatements 39; render_open --check ok (33 H, strictest 13/20, 6 others); crosswalk --check ok;
     DischargesTest rerun; autoform check blueprint ok.
+12. sga3-nbhd and goodmodel-iso (fold G) by copy reroutes (integration task fold33-copy, fast-forwarded): copies of
+    the 65 declarations of the chain that mention OpenResearchLeaves14-29 (NoSGA3Copy, GoodModelIsoCopy in
+    OneProof/H), new tops TailZ49 (OpenResearchLeaves30) and TailZ50 (OpenResearchLeaves31, OpenTextbookLeaves16,
+    `sixContactMin_of_open43`); no existing declaration changed, so the blueprint's targets still resolve (the earlier
+    in-place attempt fold33-combine did not). sga3_VIB_3_10_Nbhd removed; mumfordGroupLawConn and
+    neronSchemeExtensionExists replaced by the printed leaf neronSchemeExtensionDedekind (BLR 1.4 Thm 3 over a
+    Dedekind scheme). Checks by the lead (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard
+    against step 11 (only frozenTarget changed; 1206 new constants in NoSGA3Copy, GoodModelIsoCopy, TailZ49,
+    TailZ50); closure of frozenTarget (271046 constants) without SGA3_VIB_3_10(_Nbhd), MumfordGroupLawConn,
+    AVB1.HomFreeFiniteAlgClosed, PkgI3.HomFreeFinite, GZDecomp.GrossZagierHeegner or sorryAx; OpenStatements 37;
+    render_open --check ok (31 H, strictest 11/20, 6 others); crosswalk --check ok; DischargesTest rerun; autoform
+    check blueprint ok. Host paths removed from merged notes (neron-ext, fold33-copy log).
