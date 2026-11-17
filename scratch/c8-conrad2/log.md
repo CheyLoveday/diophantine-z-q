@@ -35,3 +35,10 @@ Base: wip/c8-conrad a411466b4, merged origin/main 97247ce1c (merge cff986a75). T
   through `r10` (g8_g12_c8, afterG7_c8, gluePieces_c8 read `ResearchLeaves3EB.r10` / `OpenResearchLeaves2EB.r10`),
   i.e. consumer (iii) only. `phiAmpleIsogeny`, `weilPairingMumford`, `t09SymmIsogenyExists`, `poincareComplement`,
   `t8` are no longer tainted.
+
+## 3. LocAlgExponentEqWeight (VERIFIED, compiled)
+- `scratch/c8-conrad2/C8LocAlg.lean`: `locAlgExponentEqWeight_of_tateInertia : TateTwistInvariantsInertia →
+  LocAlgExponentEqWeight`, standard axioms. New leaf `TateTwistInvariantsInertia` (Tate 1967 §3.3 Thm 2 at
+  L = completion of K^ur, G_L = G_K ∩ I_{Q_p}; locator UNVERIFIED). Helpers proved: `norm_eq_one_of_valuation_eq_one`,
+  `exists_unit_isArtinLift` (Tau Ceti `map_artinMap_unitFiltration_zero`), `cyc_of_isArtinLift` (Tau Ceti
+  `localCyclotomicCharacter_artinMap_padic`; PkgI4.cyc = localCyclotomicCharacter by rfl), `toZModPow_cyc_eq_one`.
