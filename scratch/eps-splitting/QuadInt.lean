@@ -345,6 +345,9 @@ theorem quadratic_eq_mul {A c r₁ r₂ : F} (h1 : r₁ + r₂ = A) (h2 : r₁ *
     X ^ 2 - C A * X + C c = (X - C r₁) * (X - C r₂) := by
   rw [← h1, ← h2, C_add, C_mul]; ring
 
+omit [DecidableEq F] in
+theorem natDegree_quad (A c : F) : (X ^ 2 - C A * X + C c).natDegree = 2 := by compute_degree!
+
 end Poly
 
 /-! ## The three splitting types -/
@@ -422,5 +425,128 @@ theorem splitType_of_eq_mul_self (hp : ¬ p ∣ exponent θ) {a : ZMod p}
     simp
 
 end Types
+
+/-! ## `ε_D(p)` is the splitting character -/
+
+section Main
+
+open RingOfIntegers ZMod
+
+variable [NumberField K]
+
+theorem two_ne_zero_zmod {p : ℕ} [hp : Fact p.Prime] (h2 : p ≠ 2) : (2 : ZMod p) ≠ 0 := by
+  intro h
+  have : ((2 : ℕ) : ZMod p) = 0 := by exact_mod_cast h
+  rw [ZMod.natCast_eq_zero_iff] at this
+  exact h2 ((Nat.prime_dvd_prime_iff_eq hp.out Nat.prime_two).mp this)
+
+theorem zmod2_no_root : ∀ r : ZMod 2, r ^ 2 - 1 * r + 1 ≠ 0 := by decide
+
+theorem intCast_zmod_two (z : ℤ) : (z : ZMod 2) = ((z % 2 : ℤ) : ZMod 2) :=
+  (ZMod.intCast_mod z 2).symm
+
+/-- **`ε_D(p)` is `1`, `-1` or `0` according as `p` splits, is inert or ramifies in
+`K = ℚ(√D)`**, for a negative fundamental discriminant `D` and every prime `p`. -/
+theorem splitType_epsD (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) {p : ℕ} (hpp : p.Prime) :
+    SplitType K p (ZInQ.HGZSteps.epsD D p) := by
+  haveI := Fact.mk hpp
+  have hexp : ¬ p ∣ exponent (thetaO hD hδ) := by
+    rw [exponent_eq_one_iff.mpr (adjoin_thetaO_eq_top hD hneg hK hδ)]
+    exact hpp.not_dvd_one
+  have hg : (minpoly ℤ (thetaO hD hδ)).map (Int.castRingHom (ZMod p)) =
+      X ^ 2 - C (D : ZMod p) * X + C ((cD D : ℤ) : ZMod p) := by
+    rw [minpoly_thetaO hD hneg hδ]; simp [gD]
+  have h4 : (4 : ZMod p) * (cD D : ZMod p) = (D : ZMod p) ^ 2 - D := by
+    have := congrArg (Int.cast : ℤ → ZMod p) (four_mul_cD hD.1); push_cast at this; exact this
+  rw [ZInQ.HGZSteps.epsD_prime D hpp, ZInQ.HGZSteps.kronPrime]
+  by_cases h2 : p = 2
+  · subst h2
+    rw [if_pos rfl, χ₈_int_eq_if_mod_eight]
+    have h4' := four_mul_cD hD.1
+    rcases Int.isFundamentalDiscr_iff_squarefree.mp hD with ⟨h1, _⟩ | ⟨h0, _, hm⟩
+    · have hodd : D % 2 ≠ 0 := by omega
+      rw [if_neg hodd]
+      have hD1 : (D : ZMod 2) = 1 := by rw [intCast_zmod_two, show D % 2 = 1 by omega]; rfl
+      obtain ⟨k, hk⟩ : ∃ k, D = 8 * k + D % 8 := ⟨D / 8, by omega⟩
+      by_cases h8 : D % 8 = 1
+      · rw [if_pos (Or.inl h8)]
+        have hc2 : cD D % 2 = 0 := by
+          generalize cD D = c at h4'
+          rw [h8] at hk; subst hk; ring_nf at h4'; omega
+        have hc : (cD D : ZMod 2) = 0 := by rw [intCast_zmod_two, hc2]; rfl
+        apply splitType_of_eq_mul hexp (a := 0) (b := 1) zero_ne_one
+        rw [hg, hD1, hc]; exact quadratic_eq_mul (by rfl) (by rfl)
+      · have h5 : D % 8 = 5 := by omega
+        rw [if_neg (by omega)]
+        have hc2 : cD D % 2 = 1 := by
+          generalize cD D = c at h4'
+          rw [h5] at hk; subst hk; ring_nf at h4'; omega
+        have hc : (cD D : ZMod 2) = 1 := by rw [intCast_zmod_two, hc2]; rfl
+        apply splitType_of_irreducible hexp
+        rw [hg, hD1, hc]
+        apply irreducible_of_degree_le_three_of_not_isRoot
+        · rw [Finset.mem_Icc, natDegree_quad]; norm_num
+        · intro r hr
+          simp only [IsRoot, eval_add, eval_sub, eval_mul, eval_pow, eval_X, eval_C] at hr
+          exact zmod2_no_root r hr
+    · rw [if_pos (by omega)]
+      obtain ⟨m, rfl⟩ : 4 ∣ D := Int.dvd_of_emod_eq_zero h0
+      rw [Int.mul_ediv_cancel_left m four_ne_zero] at hm
+      have hcm : cD (4 * m) = 4 * m ^ 2 - m := by
+        have : 4 * cD (4 * m) = 4 * (4 * m ^ 2 - m) := by rw [h4']; ring
+        omega
+      have hD0 : ((4 * m : ℤ) : ZMod 2) = 0 := by
+        rw [intCast_zmod_two, show 4 * m % 2 = 0 by omega]; rfl
+      rcases hm with hm | hm
+      · have hc : (cD (4 * m) : ZMod 2) = 0 := by
+          rw [intCast_zmod_two, hcm]
+          obtain ⟨j, hj⟩ : ∃ j, m = 4 * j + 2 := ⟨m / 4, by omega⟩
+          subst hj; rw [show (4 * (4 * j + 2) ^ 2 - (4 * j + 2)) % 2 = 0 by ring_nf; omega]; rfl
+        apply splitType_of_eq_mul_self hexp (a := 0)
+        rw [hg, hD0, hc]; exact quadratic_eq_mul (by rfl) (by rfl)
+      · have hc : (cD (4 * m) : ZMod 2) = 1 := by
+          rw [intCast_zmod_two, hcm]
+          obtain ⟨j, hj⟩ : ∃ j, m = 4 * j + 3 := ⟨m / 4, by omega⟩
+          subst hj; rw [show (4 * (4 * j + 3) ^ 2 - (4 * j + 3)) % 2 = 1 by ring_nf; omega]; rfl
+        apply splitType_of_eq_mul_self hexp (a := 1)
+        rw [hg, hD0, hc]; exact quadratic_eq_mul (by rfl) (by rfl)
+  · rw [if_neg h2, ← jacobiSym.legendreSym.to_jacobiSym]
+    have h2' := two_ne_zero_zmod h2
+    have h4ne : (4 : ZMod p) ≠ 0 := by
+      rw [show (4 : ZMod p) = 2 * 2 by norm_num]; exact mul_ne_zero h2' h2'
+    by_cases hD0 : (D : ZMod p) = 0
+    · rw [(legendreSym.eq_zero_iff p D).mpr hD0]
+      have hc : ((cD D : ℤ) : ZMod p) = 0 := by
+        rw [hD0] at h4
+        simpa [h4ne] using h4
+      apply splitType_of_eq_mul_self hexp (a := 0)
+      rw [hg, hD0, hc]; exact quadratic_eq_mul (by simp) (by simp)
+    · by_cases hsq : IsSquare (D : ZMod p)
+      · rw [(legendreSym.eq_one_iff p hD0).mpr hsq]
+        obtain ⟨s, hs⟩ := hsq
+        apply splitType_of_eq_mul hexp (a := (D + s) / 2) (b := (D - s) / 2)
+        · intro h
+          apply hD0
+          have hs0 : s = 0 := by
+            field_simp at h
+            have : (2 : ZMod p) * s = 0 := by linear_combination h
+            exact (mul_eq_zero.mp this).resolve_left h2'
+          rw [hs, hs0, mul_zero]
+        · rw [hg]
+          apply quadratic_eq_mul
+          · field_simp; ring
+          · field_simp
+            linear_combination hs - h4
+      · rw [(legendreSym.eq_neg_one_iff p).mpr hsq]
+        apply splitType_of_irreducible hexp
+        rw [hg]
+        apply irreducible_of_degree_le_three_of_not_isRoot
+        · rw [Finset.mem_Icc, natDegree_quad]; norm_num
+        · intro r hr
+          simp only [IsRoot, eval_add, eval_sub, eval_mul, eval_pow, eval_X, eval_C] at hr
+          exact hsq ⟨2 * r - D, by linear_combination (-4) * hr + h4⟩
+
+end Main
 
 end ZInQ.EpsSplit
