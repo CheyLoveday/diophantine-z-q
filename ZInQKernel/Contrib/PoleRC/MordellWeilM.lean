@@ -1,5 +1,5 @@
 import ZInQKernel.Contrib.PoleRC.DescentM
-import ZInQKernel.RouteK.RankMW.Image
+import ZInQKernel.Model.Descent.Kummer
 
 /-!
 # Mordell's theorem for `E_ℓ : y² = x(x − ℓ)(x + 3ℓ)`
@@ -22,15 +22,16 @@ theorem with the naive height), on the 2-descent of `E_ℓ` already in `DescentM
 * `even_padicValRat_of_sq_eq`, `kum_range_finite`, `range_deltaM_finite`: the image of `δ` is
   finite. With `B = 6 · |num ℓ| · den ℓ`, at a prime `p ∤ B` the pairwise differences `ℓ`, `3ℓ`,
   `4ℓ` of the three factors of `y² = x(x − ℓ)(x + 3ℓ)` are `p`-adic units, so each factor has even
-  valuation; each coordinate of `δ(P)` is then the square class of a signed divisor of `B` (Route
-  K's `mwSqc_eq_divisor`) or of `f'(e)` at a two-torsion point. This is the inclusion of the image
-  in `K(S, 2) × K(S, 2)`, `S = {∞} ∪ {p ∣ B}` (Silverman X.1.4).
+  valuation; each coordinate of `δ(P)` is then the square class of a signed divisor of `B`
+  (`sqc_eq_divisor_of_even`, a copy of Route K's former `mwSqc_eq_divisor`) or of `f'(e)` at a
+  two-torsion point. This is the inclusion of the image in `K(S, 2) × K(S, 2)`,
+  `S = {∞} ∪ {p ∣ B}` (Silverman X.1.4).
 * `finiteIndex_two_curve`: `[E_ℓ(ℚ) : 2E_ℓ(ℚ)]` is finite (`E/2E ≅ E/ker δ ≅ δ(E)`).
 * `mordellWeil_curve`: Mathlib's descent theorem `AddCommGroup.fg_of_descent'`
   (`GroupTheory/Descent.lean`), with the naive height, the approximate parallelogram law
   `approx_parallelogram_law` and the Northcott property (`NumberTheory/Height/EllipticCurve.lean`).
   These are stated for an arbitrary Weierstrass equation, so `E_ℓ` needs no change of variables;
-  the proof is the one of Route K's `ZInQ.RouteK.Rank.fg_points` for `y² = x³ − d²x`.
+  the proof is the one of Route K's former `fg_points` for `y² = x³ − d²x`.
 
 Fidelity: the manuscript does not cite Mordell's theorem; it is implicit in
 `rank A(ℚ)` (Lemma 5.5, `lem:forward-rank`, `diophantine_zq.tex` lines 1086–1089) and in the
@@ -145,6 +146,45 @@ theorem even_padicValRat_of_sq_eq {p : ℕ} [Fact p.Prime] {t d₂ d₃ y : ℚ}
       e₃] at hy
     exact ⟨padicValRat p y, by push_cast at hy; omega⟩
 
+/-- A nonzero rational with even valuation at every prime not dividing `B` is a signed divisor
+of `B` modulo squares. -/
+theorem sqc_eq_divisor_of_even {q : ℚ} (hq : q ≠ 0) {B : ℕ} (hB : B ≠ 0)
+    (h : ∀ p : ℕ, p.Prime → ¬p ∣ B → Even (padicValRat p q)) :
+    ∃ m : ℤ, m.natAbs ∣ B ∧ sqc q = sqc (m : ℚ) := by
+  set N : ℤ := q.num * q.den with hN
+  have hden : (q.den : ℚ) ≠ 0 := by exact_mod_cast q.den_nz
+  have hNq : (N : ℚ) = q * (q.den : ℚ) ^ 2 := by
+    rw [hN, Int.cast_mul, ← Rat.mul_den_eq_num]; push_cast; ring
+  have hN0 : N ≠ 0 := mul_ne_zero (Rat.num_ne_zero.mpr hq) (by exact_mod_cast q.den_nz)
+  obtain ⟨a, s, ha, hs, hsa, hsq⟩ := Nat.sq_mul_squarefree_of_pos (Int.natAbs_pos.mpr hN0)
+  refine ⟨N.sign * a, ?_, ?_⟩
+  · rw [Int.natAbs_mul, Int.natAbs_sign_of_ne_zero hN0, one_mul, Int.natAbs_natCast]
+    rw [← Nat.prod_primeFactors_of_squarefree hsq, Nat.prod_primeFactors_dvd_iff hB]
+    intro p hp
+    rw [Nat.mem_primeFactors] at hp ⊢
+    refine ⟨hp.1, ?_, hB⟩
+    by_contra hpB
+    have := Fact.mk hp.1
+    obtain ⟨r, hr⟩ := h p hp.1 hpB
+    have hvN : padicValRat p (N : ℚ) = padicValRat p q + 2 * padicValRat p (q.den : ℚ) := by
+      rw [hNq, padicValRat.mul hq (pow_ne_zero 2 hden), padicValRat.pow]; norm_num
+    have hvN' : padicValRat p (N : ℚ) = 2 * padicValNat p s + padicValNat p a := by
+      rw [padicValRat.of_int, padicValInt, ← hsa,
+        padicValNat.mul (pow_ne_zero 2 hs.ne') ha.ne', padicValNat.pow]
+      push_cast; ring
+    have h1 := one_le_padicValNat_of_dvd ha.ne' hp.2.1
+    have h2 : 2 ≤ padicValNat p a := by
+      rw [hvN', hr, padicValRat.of_nat] at hvN
+      omega
+    have : p * p ∣ a := by
+      rw [← pow_two]; exact (pow_dvd_pow p h2).trans pow_padicValNat_dvd
+    exact hp.1.one_lt.ne' (Nat.isUnit_iff.mp (hsq p this))
+  · rw [← (by rw [hNq, sqc_mul_sq _ hden] : sqc (N : ℚ) = sqc q)]
+    conv_lhs => rw [← Int.sign_mul_natAbs N, ← hsa]
+    push_cast
+    rw [show (N.sign : ℚ) * ((s : ℚ) ^ 2 * a) = N.sign * a * (s : ℚ) ^ 2 by ring,
+      sqc_mul_sq _ (by exact_mod_cast hs.ne')]
+
 /-- **The Kummer map of `E_ℓ` at a root `e` has finite image**: its values are the class of
 `f'(e)` and the classes of the signed divisors of `B`, provided the other two roots are `e − d₂`
 and `e − d₃` with `d₂, d₃` units at every prime not dividing `B`. -/
@@ -173,7 +213,7 @@ theorem kum_range_finite {e d₂ d₃ : ℚ} (hd₂ : d₂ ≠ 0) (hd₃ : d₃ 
     have := (curve_equation_iff x y).mp h.1; rw [this]; ring
   rw [hfac] at heq
   have hxe : x - e ≠ 0 := sub_ne_zero.mpr hx
-  obtain ⟨m, hm, hsq⟩ := mwSqc_eq_divisor hxe hB fun p hp hpB => by
+  obtain ⟨m, hm, hsq⟩ := sqc_eq_divisor_of_even hxe hB fun p hp hpB => by
     have := Fact.mk hp
     obtain ⟨h₂, h₃⟩ := hgood p hp hpB
     exact even_padicValRat_of_sq_eq hxe hd₂ hd₃ h₂ h₃ heq
