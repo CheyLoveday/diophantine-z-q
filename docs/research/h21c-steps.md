@@ -103,5 +103,28 @@ Namespace: `ZInQ.Contrib.H21CSteps`. Both files import only `HfxProof.Sg` and `T
   * replace the two uses of `h21C` by `(ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span h21S)`;
   * add the import `ZInQKernel.Contrib.OneProof.TYZThm21Span`.
 * Kinds: remove the `frozenTarget h21C` row and add the `h21S` row (`scratch/h21c-steps/kinds-rows.tsv`).
-* FoldCheck and `#discharges` outcomes: recorded in `scratch/h21c-steps/FoldCheck-output.txt` and
-  `Discharges-output.txt` (see the log for status).
+* FoldCheck (VERIFIED, compiled against `ZInQKernel.OneProof.Main` at base e1b31749):
+  * `frozenTarget_h21S` (the new body) and `frozenTarget_h21S'` (through the current `frozenTarget`) both compile.
+  * Both depend only on `[propext, Classical.choice, Quot.sound]`.
+  * Output: `scratch/h21c-steps/FoldCheck-output.txt`.
+* `#discharges` (VERIFIED; `scratch/h21c-steps/Discharges-output.txt`):
+
+  ```
+  DISCHARGES [h21C] by ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span
+    still assumes: [ZInQ.Contrib.H21CSteps.TYZThm21Span]
+    axioms: [propext, Classical.choice, Quot.sound]
+  ```
+
+  `tyzThm21Span_of_pairsC`, `inPiZ_iff_inPiSpan`, `twoRep_mem_DCU_iff` and `exists_testVectorSpan` also use only
+  the standard axioms.
+* Locator row for `docs/research/locators.md`, to be added by the integrator. It is not edited here, because it is
+  another task's file. Row: TYZ arXiv:1411.4728v1, Theorem 2.1 at L554–559 and Theorem 2.4(1) at L615–623, with
+  `f_δ(1+2x) = (−1)^{tr(δx)}` at L620–622. Read on this host from `~/tyz-src/Period7.tex` (VERIFIED).
+
+## 6. What remains
+
+* A reviewer's rating of `h21S`, in particular the definition-level reading `π^U = ⊕ ℂ f_δ`.
+* Not formalized:
+  * the formula `f_δ(1 + 2x)` for a general `x ∈ O_{B,2}`, beyond the 8 representatives;
+  * the identity `ℚ̂^× U = ℚ̂^× U4`, a one-line fact stated in a docstring. Lean uses `U4` throughout.
+* The integrator applies the Main fold by hand.

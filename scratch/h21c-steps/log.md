@@ -36,3 +36,6 @@ Task: lower the GLUE of frozenTarget's `h21C : ZInQ.Contrib.TYZGenusFold.TYZThm2
     `isTestVector_iff_span`, `exists_testVectorSpan` (non-vacuity), `tyzThm21PairsC_of_span`, `tyzThm21Span_of_pairsC`.
 - Split into two separate Lean Props (Thm 2.1 / Thm 2.4(1)): BLOCKED — pi (JL transfer of f_E) has no Lean definition;
   Thm 2.4(1) enters only as pi^U = span f_delta, substituted into Thm 2.1. Result: one leaf replacing h21C.
+- FoldCheck.lean: COMPILES; frozenTarget_h21S, frozenTarget_h21S' standard axioms only. VERIFIED.
+- Discharges.lean: `DISCHARGES [h21C] by ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span, still assumes
+  [TYZThm21Span], axioms standard`. VERIFIED.
