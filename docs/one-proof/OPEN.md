@@ -110,7 +110,7 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 * [`hCM`](#hcm) (LEAF; unread, unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
 * [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
-* [`hGZ`](#hgz) (LEAF; unread): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
+* [`hGZ`](#hgz) (GLUE; pending-reading, unverified-locator): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
 
 ### Packet R4
 
@@ -190,7 +190,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`hCM`](#hcm) | frozenTarget | published | LEAF | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
 | [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hGZ`](#hgz) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
+| [`hGZ`](#hgz) | frozenTarget | published | GLUE | pending-reading, unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 
 ## The hypotheses
 
@@ -863,7 +863,7 @@ ZInQ.BFHPrinted.BFHClauseIIGamma0
 
 ### hGZ
 
-* Argument `hGZ` of `frozenTarget`; kind **published**, strict **LEAF**; flag: unread: new printed leaf, no reading recorded.
+* Argument `hGZ` of `frozenTarget`; kind **published**, strict **GLUE**; flag: pending reading: fold33-review: three steps between Gross-Zagier's morphism phi : X0(N) -> E and the Lean pull-back phi^* : Q(E) -> Q(X0(N)) are not proved in Lean (D1: Q-embeddings of function fields are morphisms of the curves, Hartshorne I.6.12; D2: phi at Heegner points read through q-expansions; D3: IsOptimalParam is the strong Weil parametrization, which matters if GZ V section 2 is restricted to it); counts GLUE until they are proved or a reading removes them; locator UNVERIFIED.
 * Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
 * packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
 * Human readings recorded: none.

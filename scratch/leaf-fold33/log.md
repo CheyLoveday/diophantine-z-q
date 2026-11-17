@@ -109,3 +109,9 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 12 (only frozenTarget
     changed); OpenStatements 37; render_open --check ok (31 H, strictest 11/20, 6 others); crosswalk --check ok;
     DischargesTest rerun; autoform check blueprint ok. The claims row of hCM (cm-primitive, done) is left as it is.
+14. Review (task fold33-review, docs/research/fold33-review.md on its branch): hCM's ShimuraThm54 and
+    neronSchemeExtensionDedekind are LEAF (every difference a direct instance or a step proved in Lean); the reroutes
+    are clean (37 hypotheses, closure without the removed Props). hGZ: three steps between Gross-Zagier's morphism
+    and the Lean pull-back on function fields are not proved in Lean (D1-D3), so under the strict rule its kinds row
+    is re-flagged "pending reading" and counts GLUE (strict and strictest). With hQ and hW proved, the C_d fold is
+    then count-neutral on GLUE (hL3 GLUE -> hGZ GLUE) and never raises a count. render_open --check ok.
