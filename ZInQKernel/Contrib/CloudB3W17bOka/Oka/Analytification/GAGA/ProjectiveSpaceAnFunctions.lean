@@ -37,6 +37,7 @@ open AnalyticSpace
 
 variable {n : ℕ}
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **On `ℂⁿ` the value of a section over an open `U` is its value as a holomorphic
 function.** -/
 theorem eval_complexAffineSpace_of
@@ -275,6 +276,7 @@ lemma differentiableOn_secFun (s : (projectiveSpaceAn.{u} n).presheaf.obj (op W)
     ((chartPreimage i W).isOpen.mem_nhds hz)
 
 
+set_option backward.isDefEq.respectTransparency false in
 lemma chartSec_toGlobalFun_eq (s : (projectiveSpaceAn.{u} n).presheaf.obj (op W)) (i : Fin (n + 1))
     {z : AnalyticSpace.complexAffineSpace.{u} n} (hz : (chartLRS i).base z ∈ W) :
     (chartSec i s).toGlobalFun _ z = secFun s (homogCoord i z) := by
@@ -284,6 +286,7 @@ lemma chartSec_toGlobalFun_eq (s : (projectiveSpaceAn.{u} n).presheaf.obj (op W)
     OkaRing.toGlobalFun_apply _ hz]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **A section of `𝒪_{ℙⁿ_an}` is determined by its values.** -/
 lemma eq_zero_of_secFun (s : (projectiveSpaceAn.{u} n).presheaf.obj (op W))
     (h : ∀ v ∈ vecCone.{u} W, secFun s v = 0) : s = 0 := by
@@ -325,6 +328,7 @@ lemma chartPreimage_eq (j : Fin (n + 1))
   obtain ⟨z, rfl⟩ := hW y hy
   exact ⟨z, hy, rfl⟩
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Holomorphic degree-`0` functions on the cone over an open inside a chart are sections of
 `𝒪_{ℙⁿ_an}`.** -/
 lemma exists_secFun_eq (j : Fin (n + 1)) (hW : ∀ y ∈ W, y ∈ Set.range (chartLRS.{u} j).base)

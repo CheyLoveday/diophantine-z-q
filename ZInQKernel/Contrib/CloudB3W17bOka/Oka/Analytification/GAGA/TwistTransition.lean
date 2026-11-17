@@ -46,6 +46,7 @@ noncomputable def schemeConst (X : SchemeLFTℂ.{u}) :
     ULift.{u} ℂ →+* X.obj.left.presheaf.obj (op ⊤) :=
   LocallyRingedSpace.comapAlgMap X.obj.hom.toLRSHom (toSpecΓ (CommRingCat.of (ULift.{u} ℂ))).hom
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The comparison morphism `X^an ⟶ X` is `ℂ`-linear**: it pulls the constants of `X` back to
 the constants of `X^an`. -/
 lemma comapAlgMap_analytificationπ_schemeConst (X : SchemeLFTℂ.{u}) :
@@ -57,6 +58,7 @@ lemma comapAlgMap_analytificationπ_schemeConst (X : SchemeLFTℂ.{u}) :
     (analytificationπLRS X ≫ X.obj.hom.toLRSHom)).trans (analytificationπ X).w
 
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Values of pulled back sections**: if `a` differs near `π y` from the constant `c` by a
 non-unit germ, then the value of `π^♯ a` at `y` is `c`. -/
 lemma eval_analytificationπ_eq {X : SchemeLFTℂ.{u}} {V : X.obj.left.Opens}
@@ -115,6 +117,7 @@ lemma π_pointOfVec_mem_U (v : Fin (n + 1) → ℂ) (hv : v ≠ 0) (i : Fin (n +
   rw [← SetLike.mem_coe, ← Set.mem_preimage, ← range_chart, mem_range_chart_pointOfVec_iff]
   exact hi
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Values of the pulled-back sections `awayToSection a` of `𝒪_{ℙⁿ}` over `D₊(Xᵢ)`**: the value
 of `π^♯ a` at `[v]` is `a(v)`. -/
 theorem eval_π_awayToSection (v : Fin (n + 1) → ℂ) (hv : v ≠ 0) (i : Fin (n + 1))
@@ -135,8 +138,10 @@ theorem eval_π_awayToSection (v : Fin (n + 1) → ℂ) (hv : v ≠ 0) (i : Fin 
       (Proj.awayToSection (homogeneousSubmodule (Fin (n + 1)) (ULift.{u} ℂ)) (X i) (a - awayXBase _ i (ULift.up c))) := by
     have := (Scheme.mem_basicOpen (AlgebraicGeometry.CloudB3W17bOkaProjectiveSpace (n) (ULift.{u} ℂ)) _ _ _).2 hu
     rw [hconst] at this
-    rw [map_sub]
-    exact this
+    convert this using 2
+    · rfl
+    · exact map_sub (ConcreteCategory.hom
+        (Proj.awayToSection (homogeneousSubmodule (Fin (n + 1)) (ULift.{u} ℂ)) (X i))) _ _
   rw [π_pointOfVec v hv i hi, awayι_awayPoint_mem_basicOpen_iff, map_sub,
     awayEval_awayXBase] at hmem
   exact hmem (sub_self _)
