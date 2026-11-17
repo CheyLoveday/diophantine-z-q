@@ -190,4 +190,58 @@ question is the locator of the coarse-moduli statement over `ℚ` (Deligne 1971 
 *Introduction to Shimura varieties* §14, UNVERIFIED). That question is the leaf's own locator, not a reading risk
 of the clause.
 
-## 5. Discharges and fold — (filled in below)
+## 5. Discharges and fold
+
+All VERIFIED, run on this host after `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`
+(14273 jobs, success) and `lake build ZInQKernel.Contrib.OneProof.X6AtkinLehnerIdeal`.
+
+`#discharges` (`scratch/x6-coarse/Discharges.lean`, output `scratch/x6-coarse/discharges.txt`):
+
+```
+DISCHARGES [OpenResearchLeaves38.elkiesX6StarEvery] by X6ALIdeal.elkiesX6StarEvery_of_ideal'
+  still assumes: [X6ALIdeal.ElkiesX6StarEveryIdeal,
+ X6ALIdeal.X6CoarseModuliIdeal,
+ RayClassCFT.ShimuraMainThmIDeligneY3AbU,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves38.x6CoarseModuli] by X6ALIdeal.x6CoarseModuli_of_ideal
+  still assumes: [X6ALIdeal.X6CoarseModuliIdeal]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 39 open hypotheses, 11173 theorems checked, 52 discharge one
+```
+
+(`elkiesX6StarEvery_of_ideal`, the same with `ObjBridge.TorsionStructure` instead of `mumfordTorsionAlgClosed`, is
+also listed.) `#print axioms` on every theorem of the file (41) gives the standard three
+(`scratch/x6-coarse/axioms.txt`).
+
+**Autofold spec** `scratch/x6-coarse/autofold.json`: `x6CoarseModuli` → leaf `x6CoarseModuliIdeal` (kind
+published), `elkiesX6StarEvery` → leaf `elkiesX6StarEveryIdeal` (kind consequence), proofs
+`X6ALIdeal.x6CoarseModuli_of_ideal {n}.x6CoarseModuliIdeal` and
+`X6ALIdeal.elkiesX6StarEvery_of_ideal' {n}.elkiesX6StarEveryIdeal {n}.x6CoarseModuliIdeal
+{n}.shimuraMainThmIDeligneY3AbU {t}.mumfordTorsionAlgClosed`. Dry run:
+`strict count: 16/18 on 34 -> 16/18 on 34; strictest 16/18 -> 16/18`. The new rows are flagged so they count GLUE
+until a reviewer rates them (Addendum 1). The generated module (`scratch/x6-coarse/FoldDryRun.lean`:
+`OpenResearchLeaves39`, `sixContactMin_of_open56`) compiles, and `#print axioms HDec.HSyn.sixContactMin_of_open56`
+gives the standard three (`scratch/x6-coarse/foldcheck.txt`).
+
+## 6. Leaf and glue table, with ratings
+
+| statement | kind | rating (printed form or not) | reason |
+|---|---|---|---|
+| `X6CoarseModuliIdeal` | published (replaces `x6CoarseModuli`) | **printed form**, pending review | Each clause is the coarse-moduli theorem's own content: the moduli bijection on `ℚ̄`-points; the naturality square at `Spec σ`, literally (`GaloisNatural`); Rotger's `w_m` in his ideal-quotient form; the classifying map, a specialization of the natural transformation as before. No twist-form reading is left. The remaining flag is the locator (Shimura/Deligne/Buzzard, UNVERIFIED). If the reviewer accepts, strict count −1. |
+| `ElkiesX6StarEveryIdeal` | consequence (replaces `elkiesX6StarEvery`) | **not printed form**: consequence | Its `W` is now Elkies' p. 10 isogeny form, so step (b) is gone. Steps (a) `ℚ(X/W) = ℚ(X)^W` and (c) "every point with that CM" remain (§4.1). |
+| `IsogenyQuotient` | textbook (Mumford §7, §12; Milne Prop. 8.1, UNVERIFIED) | not added to the bundle | Used only for the converse directions (`x6CoarseModuliIdeal_of_twist`, `ideal_of_elkiesX6StarEvery`), which show the new leaves are not stronger. |
+| `idealI`, `InTors`, `IsIdealQuotient`, `IsAtkinLehnerIdeal`, `ALIdealClause`, `GaloisNatural`, `atkinLehnerWIdeal`, `fixedByWIdeal`, `bcAut` | definitions over genuine objects (`LeafQM.O`, `PkgI3.AbVar`, Mathlib schemes) | — | — |
+| everything else in `X6AtkinLehnerIdeal.lean` | glue | proved | — |
+
+## 7. What remains
+
+* Reviewer: rate `X6CoarseModuliIdeal` (Atkin–Lehner and Galois reading risks removed; only the locator is left).
+* Elkies (a) and (c) (§4.1): needs a quotient-curve object (a), and exactness of `HasCM*` together with the closed
+  facts for `ℚ(√−6)` (c).
+* González–Rotger T1 (§4.2): Shimura's moduli interpretation of `Γ∖ℍ` is a genuine extra printed input; the
+  `GRDict.lean` docstring correction is in §4.2.
+* Optional: prove `IsogenyQuotient` (or just `iso_of_quotient`) from the bundle's textbook fields
+  `uniformizationLeafAll`, `gagaMorphism`, `mumfordTorsionAlgClosed`. The lattice route: `HomLatticeCorr`, the
+  lifts of `φ` and `ι(μ)` have the same lattice preimage, then realize `ι(μ) ∘ φ⁻¹` over `ℂ` and descend with
+  GR56's `qmIso_descend`. Not done (see §8 if attempted).
