@@ -33,3 +33,22 @@ Base: wip/c8-conrad at d67ea55f6 (origin/main is an ancestor). Top: `ZInQ.OnePro
 - TailZ74 L381 (current top): `hodgeTateDecompAbVar := hodgeTateDecompAbVar_of_open_k954 ... l.picRepresentableAbVar
   l.kleimanPicZeroProper954` (iii): HT multiplicities a = b from the Weil pairing (hodgetate-from-dr), feeding C3/G9.
 - So the Picard rows have three live consumers; C8 is one of them.
+
+## 3. Conrad App. B source
+
+- WebFetch https://math.stanford.edu/~conrad/papers/locchar.pdf: refused ("Unable to verify if domain math.stanford.edu
+  is safe to fetch"). No copy in the worktree. Statement taken from the theorem-application audit report
+  (docs/theorem-application-audit/evidence/parallel-galois-height-report.md L102, L104): "locally algebraic exactly
+  when its underlying Q_p-representation is Hodge-Tate"; arithmetic Artin normalization; L = Q_5 gives x -> x^n.
+  Flag: unread.
+- Tau Ceti local Artin map available: TauCeti.ClassFieldTheory.artinMap (Local/ArtinMap.lean L115), arithmetic
+  normalization chi_cyc(Art(p^k u)) = u^{-1} (ExplicitCyclotomicSymbol/ArtinMap.lean,
+  abelianizedLocalCyclotomicCharacter_artinMap_padic). Kronecker-Weber proved (Contrib/KroneckerWeber).
+
+## 4. Consumer of C8 in the chain
+
+- `HDec.G0Galois.G12DetPZ` (PicZeroCharZeroCopy L44), used via `g12Det_of_pz m.r14det m.detTate m.finIndex ...` in
+  `g8_g12_of_leaves3_hf_pz_eb` (EichlerBoundCopy L2485). Inputs at that call site: r.r14 EigenformRepExists, r.r13
+  PkgI4.EigenformHT, r.r10 PkgI4.DeRhamComparison, h9 G9GlueNoT23.
+- G12DetPZ's conclusion is existential in (H, dr, eps, chi): it follows from finiteness of psi alone
+  (H = ker psi, dr = psi^2, eps = chi = 1).
