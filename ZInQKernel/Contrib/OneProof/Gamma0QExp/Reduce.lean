@@ -175,4 +175,104 @@ theorem exists_reduce (N : ℕ) [NeZero N] (δ : SL(2, ℤ)) :
         + ((u : ℂ) * d + r' * ((g : ℂ) * w + (u * N * q + v * s))) * hzD
     rw [jN, ← jf_smul σ', key]
 
+/-! ### Growth and separation -/
+
+theorem exp_le_exp_of_coeff_le {x y t : ℝ} (hxy : x ≤ y) (ht : 0 ≤ t) :
+    Real.exp (2 * Real.pi * x * t) ≤ Real.exp (2 * Real.pi * y * t) := by
+  rw [Real.exp_le_exp]
+  have := Real.pi_pos
+  have : 2 * Real.pi * x ≤ 2 * Real.pi * y := by nlinarith
+  exact mul_le_mul_of_nonneg_right this ht
+
+/-- Upper bounds for `j(N δ w)`. -/
+theorem jN_smul_bound (N : ℕ) [NeZero N] : ∃ T : ℝ, 0 < T ∧ ∀ (δ : SL(2, ℤ)) (w : ℍ), T ≤ w.im →
+    ‖jN N (δ • w)‖ ≤ 2 * Real.exp (2 * Real.pi * N * w.im) ∧
+    (δ ∉ CongruenceSubgroup.Gamma0 N →
+      ‖jN N (δ • w)‖ ≤ 2 * Real.exp (2 * Real.pi * ((N : ℝ) / 4) * w.im)) := by
+  obtain ⟨T₁, hT₁⟩ := jf_bounds
+  have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (NeZero.ne N)
+  refine ⟨N * |T₁| + 1, by positivity, fun δ w hw => ?_⟩
+  obtain ⟨a, d, b, ha, hd, had, hlt, hj⟩ := exists_reduce N δ
+  rw [hj]
+  have ha1 : (1 : ℝ) ≤ a := by exact_mod_cast ha
+  have hd1 : (1 : ℝ) ≤ d := by exact_mod_cast hd
+  have hadR : (a : ℝ) * d = N := by exact_mod_cast had
+  have hw0 : 0 ≤ w.im := w.im_pos.le
+  have him := im_affH a d b ha hd w
+  -- `Im ≥ T₁`
+  have hge : T₁ ≤ (affH a d b ha hd w).im := by
+    rw [him]
+    have h1 : w.im / N ≤ (a / d : ℝ) * w.im := by
+      rw [div_mul_eq_mul_div, div_le_div_iff₀ (by linarith) (by linarith)]
+      have hdN : (d : ℝ) ≤ a * N := by rw [← hadR]; nlinarith
+      nlinarith [mul_le_mul_of_nonneg_left hdN hw0]
+    have h2 : |T₁| ≤ w.im / N := by
+      rw [le_div_iff₀ (by linarith)]; nlinarith [abs_nonneg T₁]
+    linarith [le_abs_self T₁]
+  have hb := (hT₁ _ hge).2
+  rw [him, ← mul_assoc] at hb
+  constructor
+  · refine le_trans hb (mul_le_mul_of_nonneg_left (exp_le_exp_of_coeff_le ?_ hw0) (by norm_num))
+    rw [div_le_iff₀ (by linarith)]; nlinarith
+  · intro hδ
+    have haN := hlt hδ
+    have hd2 : (2 : ℝ) ≤ d := by
+      have : 2 ≤ d := by
+        by_contra h; push Not at h
+        interval_cases d; omega
+      exact_mod_cast this
+    refine le_trans hb (mul_le_mul_of_nonneg_left (exp_le_exp_of_coeff_le ?_ hw0) (by norm_num))
+    rw [div_le_div_iff₀ (by linarith) (by norm_num)]
+    nlinarith
+
+/-- Lower bound for `j(N w)`. -/
+theorem jN_lower (N : ℕ) [NeZero N] : ∃ T : ℝ, ∀ w : ℍ, T ≤ w.im →
+    Real.exp (2 * Real.pi * N * w.im) / 2 ≤ ‖jN N w‖ := by
+  obtain ⟨T₁, hT₁⟩ := jf_bounds
+  have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (NeZero.ne N)
+  refine ⟨|T₁|, fun w hw => ?_⟩
+  have him : (scaleN N w).im = N * w.im := by
+    change ((N : ℂ) * w).im = _
+    simp
+  have hge : T₁ ≤ (scaleN N w).im := by
+    rw [him]; nlinarith [le_abs_self T₁, abs_nonneg T₁, w.im_pos]
+  have := (hT₁ _ hge).1
+  rw [him, ← mul_assoc] at this
+  exact this
+
+/-- **Separation**: for `δ ∉ Γ₀(N)` and `Im w ≥ T`, `j(N δ w) ≠ j(N w)`. -/
+theorem jN_separation (N : ℕ) [NeZero N] : ∃ T : ℝ, ∀ (δ : SL(2, ℤ)) (w : ℍ), T ≤ w.im →
+    δ ∉ CongruenceSubgroup.Gamma0 N → jN N (δ • w) ≠ jN N w := by
+  obtain ⟨T, hT0, hT⟩ := jN_smul_bound N
+  obtain ⟨T', hT'⟩ := jN_lower N
+  have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (NeZero.ne N)
+  refine ⟨max (max T T') 1, fun δ w hw hδ heq => ?_⟩
+  have h1 := (hT δ w (le_trans (le_trans (le_max_left _ _) (le_max_left _ _)) hw)).2 hδ
+  have h2 := hT' w (le_trans (le_trans (le_max_right _ _) (le_max_left _ _)) hw)
+  rw [heq] at h1
+  have hy : 1 ≤ w.im := le_trans (le_max_right _ _) hw
+  -- `4 e^{2π(N/4)y} < e^{2πNy}`
+  have hkey : 4 * Real.exp (2 * Real.pi * ((N : ℝ) / 4) * w.im) <
+      Real.exp (2 * Real.pi * N * w.im) := by
+    have hsplit : Real.exp (2 * Real.pi * N * w.im) =
+        Real.exp (2 * Real.pi * ((N : ℝ) / 4) * w.im) * Real.exp (3 * Real.pi * N * w.im / 2) := by
+      rw [← Real.exp_add]; ring_nf
+    rw [hsplit]
+    have hpos := Real.exp_pos (2 * Real.pi * ((N : ℝ) / 4) * w.im)
+    have h4 : (4 : ℝ) < Real.exp (3 * Real.pi * N * w.im / 2) := by
+      have hpi := Real.two_le_pi
+      have hNy : (1 : ℝ) ≤ N * w.im := by nlinarith
+      have hx : 3 * Real.pi * N * w.im / 2 ≠ 0 := by positivity
+      have := Real.add_one_lt_exp hx
+      nlinarith
+    nlinarith
+  linarith
+
+theorem modGrowth_jN_smul (N : ℕ) [NeZero N] (δ : SL(2, ℤ)) :
+    ModGrowth (fun τ => jN N (δ • τ)) := by
+  obtain ⟨T, -, hT⟩ := jN_smul_bound N
+  refine ⟨N, IsBigO.of_bound 2 ((atImInfty_mem _).2 ⟨T, fun τ hτ => ?_⟩)⟩
+  simp only [Set.mem_ofPred_eq, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
+  exact (hT δ τ hτ).1
+
 end ZInQ.Gamma0QExp
