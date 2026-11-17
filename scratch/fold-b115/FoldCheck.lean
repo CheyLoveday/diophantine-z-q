@@ -40,7 +40,7 @@ run_cmd do
     `ZInQ.SemistabAssembly.BostLowerBoundAnSS, `ZInQ.BostGR9.GaudronRemondSec9LowerAnSS, `SZRaynaud.SilverbergZarhinThm35,
     `Y3RouteA.Y3FullThreeRepZ30, `CarayolRefold.CarayolThmAFrob,
     -- fold 3 (pb-dimform + htmult-model): no field change; the dimension form is in the closure after fold 3
-    `BergerBst.IsAdmissible, `HDec.PkgI4.FontaineSt.IsPstF]
+    `HDec.PkgI4.BergerBst.IsAdmissible, `HDec.PkgI4.BmaxOne.IsAdmissibleT, `HDec.PkgI4.FontaineSt.IsPstF]
   for root in [`ZInQ.OneProof.frozenTarget] do
     let s := closure root
     IO.println s!"{root}: closure {s.size}"

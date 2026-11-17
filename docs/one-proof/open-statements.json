@@ -46,7 +46,7 @@
    "statement": "HDec.PkgI4.PanDict.PanPrintedF",
    "field": "panPrintedF",
    "docstring":
-   "R12 (pb-p1, fold-b105). Pan, J. Amer. Math. Soc. 35 (2022), Theorem 1.0.4 (= arXiv:1901.07166v2 Thm 1.0.4 p. 5 with Conj. 1.0.1 p. 2; the manuscript cites this arXiv version), p >= 5, printed form with \"potentially semi-stable in the sense of Fontaine\" over Fontaine's B_st = B_cris[log p~] inside B_dR (Berger, arXiv:math/0210184v1, II.3.1 and II.3.3), basis form, on a model V = E^n; otherwise as pb-fix3's PanPrintedP. Replaces panPrintedP (with bergerSurveyF: r11r12 by HDec.PkgI4.PanDict.panBerger_of_F). ",
+   "R12 (pb-p1, fold-b105). Pan, J. Amer. Math. Soc. 35 (2022), Theorem 1.0.4 (= arXiv:1901.07166v2 Thm 1.0.4 p. 5 with Conj. 1.0.1 p. 2; the manuscript cites this arXiv version), p >= 5, printed form with 'potentially semi-stable in the sense of Fontaine' in Fontaine's dimension form (Brinon-Conrad §5.2 pp. 67-68, Thm 9.3.5 p. 148) over the image in B_dR of Brinon-Conrad's B_st (Def. 9.2.3 p. 138, abstract; embedded pp. 140-142 with log p = 0; injective by Thm 9.2.10 p. 143, not proved in Lean), A_cris p. 128 with its image in B_dR^+ p. 129, on a model V = E^n (model-independent: PstModel.localIsPstF_iff_forall); otherwise as pb-fix3's PanPrintedP. Replaces panPrintedP (with bergerSurveyF: r11r12 by HDec.PkgI4.PanDict.panBerger_of_F). ",
    "bundle": "OpenResearchLeaves58"},
   {"type": "AfTateLam.HeckeJ1DS",
    "statement": "AfTateLam.HeckeJ1DS",
@@ -118,7 +118,7 @@
    "statement": "HDec.PkgI4.PanDict.BergerSurveyF",
    "field": "bergerSurveyF",
    "docstring":
-   "R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme 5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of Berger, An introduction to the theory of p-adic representations (arXiv:math/0210184v1, IV.5.1 p. 30, IV.5.3 p. 31): a de Rham p-adic representation V = E^n of G_Qp is potentially semistable over Fontaine's B_st = B_cris[log p~] (II.3.1, II.3.3), basis form (I.2.3). Replaces bergerPrintedVT. ",
+   "R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme 5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. ",
    "bundle": "OpenResearchLeaves58"},
   {"type": "Y3Hodge.DeligneCanonicalModelY3EveryPrint",
    "statement": "Y3Hodge.DeligneCanonicalModelY3EveryPrint",

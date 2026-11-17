@@ -86,3 +86,46 @@ Build tree `.lake/build` and `lean/.lake/build` copied (reflink) from a sibling 
    closure unchanged (292905, no sorryAx); OpenStatements 30; render_open and `--check` ok; DischargesTest 16 lines;
    crosswalk ok; autoform exit 0; gate.sh GATE=ok. ThirdParty/TauCeti/NOTICE needs no edit (no entry for these lines).
    **render_open count after item 2: 30 open (H 29, strictest 5/24, 1 other); unchanged.**
+
+## Fold 3: pb-dimform + htmult-model (inbox 73, 75; no field change, count-neutral)
+
+1. Merged origin/wip/pb-dimform 3d69c488 (base lane74b, an ancestor of this base; no conflicts; commit 785db9ac).
+   Hygiene: build log `scratch/pb-dimform/build2.txt` (3541 lines) left out; no host paths; no vendored code; no scratch
+   file redeclares an HDec.HSyn bundle (`PstModelCore.lean` is in `HDec.PkgI4.PstModel`, never built).
+2. htmult-model 36bbcafab: its five own commits cherry-picked (`-x`: 883434f3, 5a44c505, 7a69754a, 79deac48, 36bbcafa).
+   Not merged: the branch also merges fork main 06660f4a (PRs #87, #88: blueprint/ and top-level docs, 81 files), and
+   this task may not merge main nor edit blueprint/. Its merge of pb-dimform is the one in 1. No host paths.
+3. Row edits (`scratch/fold-b115/row_edits_q29.py`, idempotent; the integrator's texts verbatim, with inbox 75's two
+   replacements in the panPrintedF flag): panPrintedF kind published -> consequence in the same commit as its flag;
+   both rows flag/strict GLUE/strictest GLUE/source/rated_by `pb-p1 (unreviewed); pb-dimform; queue29 verdict 11-17`/
+   flag_class `note`. Neither flag has a must_be_glue marker; both GLUE through the kind. pages-wanted loses both rows.
+4. Field docstrings (`scratch/fold-b115/field_docs_q29.py`, docstring-only): panPrintedF and bergerSurveyF in
+   TailZ83 (`OpenResearchLeaves57`) and TailZ84 (`OpenResearchLeaves58`, the current bundle) now state the dimension
+   form over the image in B_dR of Brinon-Conrad's B_st (integrator's texts; the bergerSurveyF text is followed by
+   ", for a de Rham p-adic representation V = E^n of G_Qp."). TailZ77-TailZ82 copies not regenerated, so not edited.
+5. FINDING (AllContrib): appending `import ZInQKernel.Contrib.OneProof.HTModel` to `ZInQKernel/Contrib/AllContrib.lean`
+   FAILS on this base: `error: ZInQKernel/Contrib/AllContrib.lean:3:0: import ZInQKernel.HDecomp.Textbook.Different
+   failed, environment already contains 'PkgI6.TraceContainsRamificationIdx' from ZInQKernel.Contrib.Different.Local`
+   (VERIFIED, /tmp build log). HTModel's closure (PstModel -> PanBergerFontaine -> the OneProof chain) reaches
+   `HDecomp.Textbook.Different`, whose def `TraceContainsRamificationIdx` (line 1736) is also a def in
+   `Contrib/Different/Local.lean:1732`, which AllContrib imports. This is the pre-existing clash fixed on
+   wip/contrib-clashes (not in this base nor in main). AllContrib left unchanged (base AllContrib builds, VERIFIED:
+   12447 jobs); HTModel is built by name. For the lead: add the HTModel line after contrib-clashes is folded.
+6. Build (VERIFIED): `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges
+   ZInQKernel.Contrib.OneProof.PstModel ZInQKernel.Contrib.OneProof.HTModel ZInQKernel.Contrib.OneProof.PanBergerFontaine
+   ZInQKernel.OneProof.H.TailZ84` ok (the AllContrib target was the only failure, item 5). `AxiomsFold3.lean`
+   (`AxiomsFold3-output.txt`): `PstModel.localIsPstF_iff_forall`, `HTModel.localDistinctHTP_iff_forall`,
+   `HTModel.htMultE_model_eq`, `PanDict.panBerger_of_F`, `frozenTarget`: [propext, Classical.choice, Quot.sound].
+7. Checks (`run_checks.sh 3 hashes_fold2.txt`, VERIFIED): hash guard 19972 -> 19972, changed 0 (the docstring edits
+   are not hashed; `PanPrintedF`/`BergerSurveyF` keep name and text). Closure 292918 (was 292905), no sorryAx;
+   `BergerBst.IsAdmissible` (dimension form) present, `BmaxOne.IsAdmissibleT` (basis form) absent, `FontaineSt.IsPstF`
+   present. OpenStatements 30; render_open + `--check` ok; DischargesTest 17 lines (new: `bergerSurveyF` by
+   `PanDict.bergerSurveyF_of_basis`, still assumes `BergerSurveyFBasis`: the old basis-form leaf implies the new one,
+   the never-stronger witness); crosswalk ok; autoform exit 0; gate.sh GATE=ok.
+   **render_open count after fold 3: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
+8. Manuscript check (VERIFIED against diophantine_zq.tex): L739-741 (Berger's p-adic monodromy theorem, cited
+   `berger2002` with no theorem number; bibitem L11037-11040 names only "p-adic monodromy theorem") gap filled:
+   locator Brinon-Conrad Thm 9.3.5 p. 148 (bibitem brinon-conrad L11019-11022 is in the bibliography); L736-738 (de Rham,
+   two Hodge-Tate weights 0, -1) gap filled for the model clause: the weights do not depend on the finite coefficient
+   model (HTModel.localDistinctHTP_iff_forall); L755-758 (Pan Thm 1.0.4 at l = 5, no residual proviso) OK;
+   bibitems pan2022 (L11041-11044, arXiv v2, Thm 1.0.4), berger2002, brinon-conrad OK; no errors.

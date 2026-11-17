@@ -41,6 +41,9 @@ DISCHARGES [OpenResearchLeaves58.deRhamVpAbVarDirect] by DeRhamPrint.Direct.dire
 DISCHARGES [OpenResearchLeaves58.deRhamVpAbVarDirect] by DeRhamPrint.Range.deRhamVpAbVarDirect_of_adm
   still assumes: [DeRhamPrint.Range.DeRhamVpAbVarAdm]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves58.bergerSurveyF] by HDec.PkgI4.PanDict.bergerSurveyF_of_basis
+  still assumes: [HDec.PkgI4.PanDict.BergerSurveyFBasis]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves58.javanpeykarThm111An] by JavanpeykarAnRetype.javanpeykarThm111An_of_thm111
   still assumes: [JavanpeykarDirect.JavanpeykarThm111, ZInQ.LeafPush2.UniformizationExists]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -89,4 +92,4 @@ DISCHARGES [OpenResearchLeaves58.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 30 open hypotheses, 11448 theorems checked, 16 discharge one
+#discharges: 30 open hypotheses, 11453 theorems checked, 17 discharge one
