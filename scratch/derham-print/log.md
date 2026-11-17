@@ -45,3 +45,13 @@
   copied from dict-galois (81d1f67f, lines 57-275, unchanged); finiteness lemmas from dict-galois's
   HodgeTateDecompAbVar.lean (needed `open ... MonObj in` for AddCommMonoid (A.T p)); deRhamH1AbVarT_of_leaves,
   isDeRhamOver_of_leaves: compiles.
+
+## 2026-11-16 18:00 checks (VERIFIED)
+- lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DeRhamPrint:
+  14103 jobs, success.
+- #discharges (Discharges-output.txt): DISCHARGES [OpenResearchLeaves28.deRhamH1AbVarT] by
+  DeRhamPrint.deRhamH1AbVarT_of_leaves, still assumes [DeRhamVpAbVarPrinted, BdRInvariantsPrinted,
+  AvSplit.MumfordTorsionAlgClosed], standard axioms.
+- Axioms-output.txt: all main constants standard axioms.
+- autofold --dry-run: strict 16/21 on 37 -> 18/20 on 38 (GLUE -1, both columns); FoldDryRun.lean compiles,
+  sixContactMin_of_open39 standard axioms.

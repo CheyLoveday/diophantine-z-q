@@ -141,8 +141,41 @@ future work.
   out).
 * `scratch/derham-print/Statement.lean`: the verbatim copy of `DeRhamH1AbVarT`, `ddrTensorOver` and
   `IsDeRhamTensorOver`, with `Iff.rfl`/`rfl` against the originals (VERIFIED, compiles).
-* `#discharges` and axioms: see §6 (filled in from the build).
+* Axioms (`scratch/derham-print/Axioms-output.txt`, VERIFIED): `deRhamH1AbVarT_of_leaves`, `isDeRhamOver_of_leaves`,
+  `TDict.bdREquivAwayT`, `TDict.tt_eq_varpi_mul_unit`, `TDict.ker_theta_eq_omega`, `TDict.ext_of_extends`,
+  `TDict.transport_extends`, `TDict.logPlus_unique` and `TDict.rootSystem` all depend only on `[propext,
+  Classical.choice, Quot.sound]`.
+* Autofold dry run (`python3 scripts/one_proof/autofold.py scratch/derham-print/autofold.json --dry-run`, VERIFIED):
+  "strict count: 16/21 on 37 -> 18/20 on 38; strictest 16/21 -> 18/20", so **GLUE goes from 21 to 20** in both
+  columns. The generated module (`scratch/derham-print/FoldDryRun.lean`, with the count line stripped) compiles
+  and gives `HDec.HSyn.sixContactMin_of_open39 (r : OpenResearchLeaves29) (t : OpenTextbookLeaves13)
+  (l : OpenAddedLeaves19)` with only the standard axioms.
 
 ## 6. `#discharges` output
 
-(pending the build of `+ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DeRhamPrint`)
+Built with `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
++ZInQKernel.Contrib.OneProof.DeRhamPrint` (14103 jobs, success), then `lake env lean
+scratch/derham-print/Discharges.lean` (full output: `scratch/derham-print/Discharges-output.txt`; VERIFIED):
+
+```
+DISCHARGES [OpenResearchLeaves28.deRhamH1AbVarT] by DeRhamPrint.deRhamH1AbVarT_of_leaves
+  still assumes: [DeRhamPrint.DeRhamVpAbVarPrinted, DeRhamPrint.BdRInvariantsPrinted, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves28.deRhamH1AbVarT] by DeRhamPrint.deRhamH1AbVarT_of_printed
+  still assumes: [DeRhamPrint.DeRhamVpAbVarPrinted, DeRhamPrint.BdRInvariantsPrinted,
+    ∀ p F A, FiniteDimensional ℚ_[p] (A.V p)]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 45 open hypotheses, 6813 theorems checked, 15 discharge one
+```
+
+(`AvSplit.MumfordTorsionAlgClosed` is the textbook field `mumfordTorsionAlgClosed`. The autofold proof passes
+`{t}.mumfordTorsionAlgClosed`.)
+
+## 7. What remains
+
+* Statement checks of the two new leaves against the prints. They are flagged unread, and every locator is
+  UNVERIFIED: no source on this host.
+* Optional: remove `bdRInvariantsPrinted` by proving `σ(t) = χ(σ) t` (see §4); `V^∨ ≅ V(-1)` would then come from the
+  Weil pairing.
+* OPEN.md's kernel-wide B_dR paragraph can be updated at the next regeneration: the `[1/t]` case is now
+  definition-level (`DeRhamPrint.TDict.bdREquivAwayT`).
