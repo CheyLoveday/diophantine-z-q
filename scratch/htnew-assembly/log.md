@@ -26,3 +26,6 @@ EigenformHTPrinted.ModularHTPrinted` (verbatim copy: `ModularHTPrinted-copy.lean
 - `python3 scripts/one_proof/autofold.py scratch/htnew-assembly/autofold.json --dry-run` → `autofold-dryrun.txt`: `strict count:
   12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22`. Line 1 stripped → `FoldDryRun.lean` (renamed `.lean.txt` after the check):
   `lake env lean` success, `HDec.HSyn.sixContactMin_of_open61` depends on [propext, Classical.choice, Quot.sound]. VERIFIED.
+- The three helper instances made `local instance` (no global instance added by the contribution); recompiled: module build
+  success, axioms unchanged (standard), `#discharges` unchanged, FoldDryRun recompiled: standard axioms. VERIFIED.
+- Scan of ModularHTCoeff.lean for #eval/run_cmd/initialize/syntax/notation/macro/elab/axiom/sorry: none (only the word in comments: none). VERIFIED.

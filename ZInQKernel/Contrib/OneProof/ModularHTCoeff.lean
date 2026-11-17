@@ -51,12 +51,12 @@ section PrintSide
 
 variable (p : ℕ) [Fact p.Prime] {n : ℕ} (E : IntermediateField ℚ_[p] (PadicAlgCl p))
 
-instance smulCommClassE : SMulCommClass ℚ_[p] E (Fin n → E) := inferInstance
+local instance smulCommClassE : SMulCommClass ℚ_[p] E (Fin n → E) := inferInstance
 
 /-- `E` acts on `V ⊗_{ℚ_p} ℂ_p` through `V = Eⁿ`. -/
-instance moduleE : Module E ((Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) := TensorProduct.leftModule
+local instance moduleE : Module E ((Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) := TensorProduct.leftModule
 
-instance isScalarTowerE : IsScalarTower ℚ_[p] E ((Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) :=
+local instance isScalarTowerE : IsScalarTower ℚ_[p] E ((Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) :=
   TensorProduct.isScalarTower_left
 
 theorem cpAct_smul' (σ : GQp p) (c : ℚ_[p]) (x : ℂ_[p]) : cpAct p σ (c • x) = c • cpAct p σ x := by
