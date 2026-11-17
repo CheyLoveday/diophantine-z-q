@@ -48,3 +48,35 @@ Steps: (1) tr r = ψ tr ρ_g on G_ℚ (eq_of_eq_on_arithFrob); det r = ψ² det 
 y = d_r/d_g has σ(y) = ψ(σ)² y; (4) c = √y in ℂ_p (IsAlgClosed): σ(c) = ±ψ(σ)c; sign continuous (orbit map
 continuity proved), so σ(c) = ψ(σ)c on G_{E'}; (5) htMult_eq_finrank_Ysp + Tate–Sen: weights of ψ_{E'} are {0}.
 No semisimplicity of r needed (determinant route).
+
+## Contrib files (VERIFIED: lake build ZInQKernel.Contrib.OneProof.C8Printed, 13413 jobs, OK)
+- C8Ladic.lean (G15 copy), C8Dicts.lean (minkowskiInertiaQ_proof, inertiaAtPDecomp_proof), C8Twist.lean
+  (twistCharHTWt0_proof), C8Printed.lean (C8Leaves {conradAppBQp, tateTwistInvariantsInertia}, c8Inputs_of_leaves,
+  c8TwistFinite_of_printed, g12DetPZ_of_printed). None imports OneProof.Main.
+
+## Dry run (VERIFIED: scratch/c8-conrad3/C8FoldDryRun.lean, dryrun_out.txt)
+c8-conrad2's generated copy (unchanged) + sixContactMin_of_open72_c8 (copy of igusa-drop's top) + frozenTarget_c8
+(hP, hC, hTT in place of c8 : C8Inputs) + fold shape sixContactMin_of_open73C8 (OpenTextbookLeaves19C8 = {poincareComplement},
+OpenAddedLeaves28C8 = OpenAddedLeaves27 + {conradAppBQp, tateTwistInvariantsInertia}). All #print axioms standard.
+
+## #discharges (VERIFIED: scratch/c8-conrad3/discharges_out.txt)
+34 open hypotheses, 16233 theorems checked, 19 discharge one; none from the C8 files (expected: G12DetPZ, DetTate,
+poincareComplement, t8 are not open hypotheses of frozenTarget).
+
+## PR #86 (VERIFIED by git show, not merged, not compiled)
+origin/proof/poincare-complement-native-20261117 6984d6078: ZInQKernel/Contrib/CloudR2Poincare/FinalUnconditional.lean:24
+`theorem poincareComplement_proof : ZInQ.Contrib.AVB1.PoincareComplement`; AVB1/Poincare.lean unchanged on that branch
+(git diff HEAD...branch -- ZInQKernel/Contrib/AVB1/ empty); t8_of_poincareComplement takes
+`hP : _root_.ZInQ.Contrib.AVB1.PoincareComplement`: same constant, matches.
+
+## Provenance (VERIFIED by reading diophantine_zq.tex)
+- conradAppBQp: CITED. L760-762 "Local algebraicity \cite[Appendix B, pp.~32--33]{conrad-local-characters}";
+  bibitem L11046-11049 (author preprint Dec 11 2011).
+- tateTwistInvariantsInertia: DEPARTURE. No Tate (p-divisible groups / Driebergen) in the bibliography (grep: none);
+  the step it proves, L763-764 "removing its integral local Hodge--Tate weight", cites nothing.
+- poincareComplement: ELLIOT. L864-865 "Absolute simplicity and Poincar\'e reducibility give an $L'$-isogeny" names the
+  theorem, cites nothing. milne-av (v2.00, "Part I, Theorem 12.1(a)", bibitem L11024-11026) is cited only at L10968 for
+  V_ℓ(A) ≅ H^1_et(A,Q_ℓ)^∨, and at L564 (Part I, Thms 2.8-2.9) — not for Poincaré reducibility. The leaf's source
+  "Milne 1986 Prop. 12.1" (Cornell–Silverman) is not in the bibliography.
+- Brinon–Conrad (bibitem L11019-11023) is cited at L10975, L10994 (de Rham closure under duals/subquotients) — the
+  natural cited input for the manuscript's L758-759 sentence; not used (TwistCharHTWt0 proved without it).
