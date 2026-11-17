@@ -1,7 +1,6 @@
 import Mathlib
 import ZInQKernel.Contrib.CloudR2Poincare.L3.VendorAlias
 import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.CategoryTheory.Sites.AbelianSheafificationExistence
-import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.CategoryTheory.Sites.SmallSiteSheafification
 import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.Algebra.Category.ModuleCat.Sheaf.ToposPushforwardModules.HasSheafComposeForget
 import ZInQKernel.Contrib.CloudR2Poincare.L3.InstanceScope
 

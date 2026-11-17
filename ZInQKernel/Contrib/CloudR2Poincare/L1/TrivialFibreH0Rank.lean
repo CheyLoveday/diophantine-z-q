@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.CloudR2Poincare.L1.GrauertModelDimension
+import ZInQKernel.Contrib.CloudR2Poincare.L1.ReducedKernelSplit
 import ZInQKernel.Contrib.CloudR2Poincare.L1.NativeTrivialityLocus
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Modules.PushforwardUnit
 

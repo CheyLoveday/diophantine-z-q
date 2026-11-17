@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.CloudR2Poincare.L3.VendorAlias
 import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.Topology.Sheaves.Skyscraper.Modules
 import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.CategoryTheory.Abelian.Projective.Horseshoe
 import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.CategoryTheory.Abelian.Projective.Horseshoe
-import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.Topology.Sheaves.Cohomology.KFlat.FlatModuleSheavesAndStalks.StalkTensor
+import ZInQKernel.Contrib.CloudR2Poincare.L3.Vendor.StacksFrontier.Topology.Sheaves.Cohomology.KFlat.FlatModuleSheavesAndStalks.Basic
 import ZInQKernel.Contrib.CloudR2Poincare.L3.InstanceScope
 
 #cloudR2LocalInstances
