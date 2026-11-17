@@ -1,8 +1,9 @@
-import ZInQKernel.Contrib.OneProof.CMBranch.Open4
+import ZInQKernel.Contrib.OneProof.CMBranch.Top
 open Lean Meta in
 #eval show MetaM Unit from do
   let env ← getEnv
-  let roots := #[`HDec.HSyn.sixContactMin_of_open4_cm, `HDec.HSyn.sixContactMin_of_open4_hf_pz_eb]
+  let roots := #[`HDec.HSyn.sixContactMin_of_open67_cm, `HDec.HSyn.sixContactMin_of_open67]
+  let mut res : Array (Array Name) := #[]
   for root in roots do
     let mut seen : Std.HashSet Name := {}
     let mut stack : Array Name := #[root]
@@ -25,4 +26,10 @@ open Lean Meta in
         for c in v.getUsedConstants ++ ci.type.getUsedConstants do
           if !seen.contains c then stack := stack.push c
       | none => pure ()
-    IO.println s!"{root}: closure {seen.size}, hits ({hits.size}): {hits.toList.take 40}"
+    IO.println s!"{root}: closure {seen.size}, hits {hits.size}"
+    res := res.push hits
+  let a := res[0]!
+  let b := res[1]!
+  IO.println s!"only in old (removed by cm-branch): {(b.filter (fun n => !a.contains n)).toList}"
+  IO.println s!"only in new: {(a.filter (fun n => !b.contains n)).toList}"
+#print axioms HDec.HSyn.sixContactMin_of_open67_cm
