@@ -27,7 +27,7 @@ set_option linter.style.longLine false
 
 noncomputable section
 
-namespace ZInQ.Contrib.TYZThm21Span
+namespace ZInQ.Contrib.H21CSteps
 
 open ZInQ.Contrib.TYZDecomp.H29Split ZInQ.Contrib.T21Proof ZInQ.Contrib.HfxProof IsDedekindDomain NumberField
 open scoped Quaternion
@@ -356,4 +356,4 @@ theorem fDelta_twoRep (δ : Fin 6) {v : HeightOneSpectrum (𝓞 ℚ)} (hv : IsPl
   rw [twoRepU_coe] at e
   rw [place_two_unique hv, e, clsIdx_eq (x := twoRepU v2 t) (mem_DCU_self _)]
 
-end ZInQ.Contrib.TYZThm21Span
+end ZInQ.Contrib.H21CSteps

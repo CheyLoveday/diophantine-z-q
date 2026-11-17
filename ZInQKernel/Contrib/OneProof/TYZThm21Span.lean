@@ -29,7 +29,7 @@ set_option linter.style.longLine false
 
 noncomputable section
 
-namespace ZInQ.Contrib.TYZThm21Span
+namespace ZInQ.Contrib.H21CSteps
 
 open ZInQ.Literature ZInQ.PropN ZInQ.RouteK.Rank5b ZInQ.Contrib.TYZDecomp
 open ZInQ.Contrib.TYZDecomp.H29Split ZInQ.Contrib.TYZDecomp.H29Genus NumberField
@@ -86,7 +86,7 @@ theorem fourier8 (F : T8 → ℂ) (h1 : ∑ s, F s = 0) (h2 : ∑ s, (chi0Rep s 
     refine Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun δ _ => by ring
   rw [key]
   simp only [horth, mul_sub, Finset.sum_sub_distrib, mul_ite, mul_zero, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, mul_one]
+    Finset.mem_univ, ite_true, mul_one]
   have e3 : ∑ s, F s * ((chi0Rep s : ℂ) * (chi0Rep t : ℂ)) = (∑ s, (chi0Rep s : ℂ) * F s) * (chi0Rep t : ℂ) := by
     rw [Finset.sum_mul]; exact Finset.sum_congr rfl fun s _ => by ring
   rw [e3, h1, h2]
@@ -175,4 +175,4 @@ theorem tyzThm21Span_of_pairsC (h : TYZThm21PairsC) : TYZThm21Span := by
   intro n _ hsq h1 hcl τ hτ f hf ℓ hℓ d₁ d₂ hd
   exact h n hsq h1 hcl τ hτ f (isTestVector_iff_span.mpr hf) ℓ hℓ d₁ d₂ hd
 
-end ZInQ.Contrib.TYZThm21Span
+end ZInQ.Contrib.H21CSteps
