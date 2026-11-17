@@ -48,3 +48,10 @@ sixContactMin_of_open48 in TailZ55): merge 09ec5c5b, no conflicts (VERIFIED, git
 * ScenarioF.lean: verbatim copy of ModularSplit.R17.CarayolRealization (diff identical to scratch/modular-split/R17.lean);
   `carayolRealization_of_printed : CarayolThmA → EigenformCoeffFieldFinite → CarayolRealization` and the Irr variant,
   standard axioms (scenarioF.txt). So the printed leaf supersedes modular-split's split as well.
+
+## Step 4/5: rating and counts (report docs/research/r17-rebase.md §4, §6)
+* Burnside clause: a step beyond Ribet's printed "irreducible"; PROVED in Lean from irreducible + odd (CarayolPrintedIrr §1).
+* Conductor clause: a step beyond Théorème (A) as printed (Carayol (A) + Casselman 1973; locators.md row R17 read: CONSEQUENCE);
+  not provable (π_p not definable in Mathlib 4.35); SPLIT off as CarayolConductor (composite) with CarayolExistence; the leaf keeps
+  the packaged clause (DDT 1997 Thm 3.1 / Carayol §0.8, UNVERIFIED), flag unread + risk.
+* Count on main kinds.tsv: strictest 11/18 on 29 -> 12/17 on 29 (autofold.json); unchanged if pending reading.
