@@ -1,0 +1,242 @@
+import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
+import Mathlib.NumberTheory.FundamentalDiscriminant
+import Mathlib.Algebra.Polynomial.SpecificDegree
+import Mathlib.Tactic.ComputeDegree
+
+open Polynomial NumberField
+
+namespace ZInQ.EpsSplit
+
+/-- `(D² − D)/4`, the constant term of the minimal polynomial of `(D + √D)/2`. -/
+def cD (D : ℤ) : ℤ := (D ^ 2 - D) / 4
+
+theorem four_mul_cD {D : ℤ} (h : D % 4 = 0 ∨ D % 4 = 1) : 4 * cD D = D ^ 2 - D := by
+  unfold cD
+  apply Int.mul_ediv_cancel'
+  obtain ⟨k, hk⟩ : ∃ k, D = 4 * k + D % 4 := ⟨D / 4, by omega⟩
+  rcases h with h | h <;> rw [h] at hk <;> subst hk
+  · exact ⟨4 * k ^ 2 - k, by ring⟩
+  · exact ⟨4 * k ^ 2 + k, by ring⟩
+
+/-- The minimal polynomial `X² − D X + (D² − D)/4` of `(D + √D)/2`. -/
+noncomputable def gD (D : ℤ) : ℤ[X] := X ^ 2 - C D * X + C (cD D)
+
+theorem gD_monic (D : ℤ) : (gD D).Monic := by unfold gD; monicity!
+
+theorem gD_natDegree (D : ℤ) : (gD D).natDegree = 2 := by unfold gD; compute_degree!
+
+variable {K : Type*} [Field K] [CharZero K]
+
+/-- `θ = (D + δ)/2`. -/
+noncomputable def thetaK (D : ℤ) (δ : K) : K := ((D : K) + δ) / 2
+
+variable {D : ℤ} {δ : K}
+
+theorem aeval_thetaK (h4 : D % 4 = 0 ∨ D % 4 = 1) (hδ : δ ^ 2 = (D : K)) :
+    aeval (thetaK D δ) (gD D) = 0 := by
+  have h' := congrArg (Int.cast : ℤ → K) (four_mul_cD h4)
+  push_cast at h'
+  simp only [gD, thetaK, map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C,
+    algebraMap_int_eq, Int.coe_castRingHom]
+  linear_combination (1 / 4 : K) * hδ + (1 / 4 : K) * h'
+
+theorem isIntegral_thetaK (h4 : D % 4 = 0 ∨ D % 4 = 1) (hδ : δ ^ 2 = (D : K)) :
+    IsIntegral ℤ (thetaK D δ) :=
+  ⟨gD D, gD_monic D, by rw [← aeval_def]; exact aeval_thetaK h4 hδ⟩
+
+theorem thetaK_ne (hneg : D < 0) (hδ : δ ^ 2 = (D : K)) (q : ℚ) : thetaK D δ ≠ (q : K) := by
+  intro h
+  have h1 : δ = ((2 * q - D : ℚ) : K) := by
+    simp only [thetaK] at h
+    push_cast
+    linear_combination 2 * h
+  have h2 : (((2 * q - D) ^ 2 : ℚ) : K) = ((D : ℚ) : K) := by
+    push_cast at h1 ⊢; rw [← h1, hδ]
+  have h3 : ((2 * q - D) ^ 2 : ℚ) = D := Rat.cast_injective h2
+  have : (0 : ℚ) ≤ (2 * q - D) ^ 2 := sq_nonneg _
+  have : (D : ℚ) < 0 := by exact_mod_cast hneg
+  linarith
+
+/-- Every element of `K` is `s + t θ` with `s, t ∈ ℚ`. -/
+theorem exists_repr (hK : Module.finrank ℚ K = 2) (hneg : D < 0)
+    (hδ : δ ^ 2 = (D : K)) (x : K) : ∃ s t : ℚ, x = (s : K) + (t : K) * thetaK D δ := by
+  have hli : LinearIndependent ℚ ![(1 : K), thetaK D δ] := by
+    rw [LinearIndependent.pair_iff]
+    intro s t hst
+    rw [Rat.smul_def, Rat.smul_def, mul_one] at hst
+    by_cases ht : t = 0
+    · subst ht
+      simp only [Rat.cast_zero, zero_mul, add_zero, Rat.cast_eq_zero] at hst
+      exact ⟨hst, rfl⟩
+    · exfalso
+      apply thetaK_ne hneg hδ (-s / t)
+      have ht' : (t : K) ≠ 0 := by exact_mod_cast ht
+      push_cast
+      field_simp
+      linear_combination hst
+  let b := basisOfLinearIndependentOfCardEqFinrank hli (by simp [hK])
+  refine ⟨b.repr x 0, b.repr x 1, ?_⟩
+  have := b.sum_repr x
+  rw [Fin.sum_univ_two] at this
+  simp only [b, coe_basisOfLinearIndependentOfCardEqFinrank, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Rat.smul_def, mul_one] at this
+  exact this.symm
+
+
+/-! ## The ring of integers is `ℤ[θ]` -/
+
+theorem coeff_minpoly_int {x : K} (hx : IsIntegral ℤ x) (i : ℕ) :
+    ∃ n : ℤ, (minpoly ℚ x).coeff i = n := by
+  rw [minpoly.isIntegrallyClosed_eq_field_fractions' ℚ hx, coeff_map]
+  exact ⟨(minpoly ℤ x).coeff i, by simp⟩
+
+theorem rat_int_of_sq_mul {q : ℚ} {m k : ℤ} (hm : Squarefree m) (h : q ^ 2 * m = k) :
+    ∃ n : ℤ, q = n := by
+  refine ⟨q.num, ?_⟩
+  have hden : q.den = 1 := by
+    have h1 : (q.num : ℚ) ^ 2 * m = k * (q.den : ℚ) ^ 2 := by
+      rw [← h]; nth_rw 2 [← Rat.num_div_den q]; field_simp
+    have h2 : q.num ^ 2 * m = k * (q.den : ℤ) ^ 2 := by exact_mod_cast h1
+    have hcop : IsCoprime ((q.den : ℤ) ^ 2) (q.num ^ 2) := by
+      apply IsCoprime.pow
+      rw [Int.isCoprime_iff_gcd_eq_one, Int.gcd_comm]
+      exact q.reduced
+    have h3 : (q.den : ℤ) ^ 2 ∣ m := hcop.dvd_of_dvd_mul_left ⟨k, by rw [h2]; ring⟩
+    have h4 : IsUnit (q.den : ℤ) := hm _ (by rw [← sq]; exact h3)
+    have := Int.isUnit_iff.mp h4
+    omega
+  exact (Rat.coe_int_num_of_den_eq_one hden).symm
+
+theorem int_of_coeffs (hD : Int.IsFundamentalDiscr D) {s t : ℚ} {A B : ℤ}
+    (hA : 2 * s + t * D = A) (hB : s ^ 2 + s * D * t + t ^ 2 * cD D = B) :
+    ∃ a b : ℤ, s = a ∧ t = b := by
+  have h4 := four_mul_cD hD.1
+  have hc : (4 : ℚ) * (cD D : ℚ) = (D : ℚ) ^ 2 - D := by exact_mod_cast h4
+  have hk : t ^ 2 * D = ((A ^ 2 - 4 * B : ℤ) : ℚ) := by
+    push_cast; rw [← hA, ← hB]; linear_combination t ^ 2 * hc
+  obtain ⟨n, hn⟩ : ∃ n : ℤ, t = n := by
+    rcases Int.isFundamentalDiscr_iff_squarefree.mp hD with ⟨_, hsq⟩ | ⟨h0, hsq, hm⟩
+    · exact rat_int_of_sq_mul hsq hk
+    · obtain ⟨m, rfl⟩ : 4 ∣ D := Int.dvd_of_emod_eq_zero h0
+      rw [Int.mul_ediv_cancel_left m four_ne_zero] at hsq hm
+      obtain ⟨T, hT⟩ := rat_int_of_sq_mul (q := 2 * t) (k := A ^ 2 - 4 * B) hsq
+        (by push_cast at hk ⊢; linear_combination hk)
+      have h5 : A ^ 2 - T ^ 2 * m = 4 * B := by
+        have : ((A ^ 2 - T ^ 2 * m : ℤ) : ℚ) = ((4 * B : ℤ) : ℚ) := by
+          push_cast at hk ⊢; rw [← hT]; linear_combination -hk
+        exact_mod_cast this
+      have hTe : Even T := by
+        by_contra hodd
+        rw [Int.not_even_iff_odd] at hodd
+        obtain ⟨u, rfl⟩ := hodd
+        rcases Int.even_or_odd A with ⟨v, rfl⟩ | ⟨v, rfl⟩ <;> ring_nf at h5 <;> omega
+      obtain ⟨u, rfl⟩ := hTe
+      exact ⟨u, by push_cast at hT; linarith⟩
+  subst hn
+  have h6 : 4 * B = (A - n * D) ^ 2 + 2 * (A - n * D) * n * D + n ^ 2 * (D ^ 2 - D) := by
+    have : ((4 * B : ℤ) : ℚ) = (((A - n * D) ^ 2 + 2 * (A - n * D) * n * D +
+        n ^ 2 * (D ^ 2 - D) : ℤ) : ℚ) := by
+      push_cast; rw [← hA, ← hB]; linear_combination (n : ℚ) ^ 2 * hc
+    exact_mod_cast this
+  have hSe : Even (A - n * D) := by
+    by_contra hodd
+    rw [Int.not_even_iff_odd] at hodd
+    obtain ⟨u, hu⟩ := hodd
+    obtain ⟨w, hw⟩ : Even (D ^ 2 - D) := by
+      have : D ^ 2 - D = D * (D - 1) := by ring
+      rw [this]; exact Int.even_mul_pred_self D
+    rw [hu, hw] at h6
+    ring_nf at h6
+    omega
+  obtain ⟨a, ha⟩ := hSe
+  refine ⟨a, n, ?_, rfl⟩
+  have : ((A - n * D : ℤ) : ℚ) = ((a + a : ℤ) : ℚ) := by rw [ha]
+  push_cast at this
+  linarith
+
+/-- **Every algebraic integer of `K = ℚ(√D)` is `a + b θ`, `θ = (D + √D)/2`**, for a negative
+fundamental discriminant `D`. -/
+theorem exists_int_repr (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) {x : K} (hx : IsIntegral ℤ x) :
+    ∃ a b : ℤ, x = (a : K) + (b : K) * thetaK D δ := by
+  have : FiniteDimensional ℚ K := Module.finite_of_finrank_pos (by rw [hK]; norm_num)
+  obtain ⟨s, t, rfl⟩ := exists_repr hK hneg hδ x
+  have hxQ : IsIntegral ℚ ((s : K) + t * thetaK D δ) := Algebra.IsIntegral.isIntegral _
+  by_cases ht : t = 0
+  · subst ht
+    simp only [Rat.cast_zero, zero_mul, add_zero] at hx ⊢
+    obtain ⟨n, hn⟩ := coeff_minpoly_int hx 0
+    rw [← eq_ratCast (algebraMap ℚ K), minpoly.eq_X_sub_C] at hn
+    simp only [coeff_sub, coeff_X_zero, coeff_C_zero, zero_sub] at hn
+    refine ⟨-n, 0, ?_⟩
+    have hs : s = ((-n : ℤ) : ℚ) := by push_cast; linarith
+    rw [hs]; push_cast; ring
+  · have hθ : thetaK D δ ^ 2 - (D : K) * thetaK D δ + (cD D : K) = 0 := by
+      have := aeval_thetaK hD.1 hδ
+      simpa [gD] using this
+    set x := (s : K) + t * thetaK D δ with hxdef
+    set P : ℚ[X] := X ^ 2 - C (2 * s + t * D) * X + C (s ^ 2 + s * D * t + t ^ 2 * cD D)
+      with hPdef
+    have hP : aeval x P = 0 := by
+      simp only [hPdef, map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, eq_ratCast]
+      push_cast
+      linear_combination (t : K) ^ 2 * hθ
+    have hPm : P.Monic := by rw [hPdef]; monicity!
+    have hPd : P.natDegree = 2 := by rw [hPdef]; compute_degree!
+    have hnr : x ∉ (algebraMap ℚ K).range := by
+      rintro ⟨q, hq⟩
+      apply thetaK_ne hneg hδ ((q - s) / t)
+      rw [eq_ratCast] at hq
+      have ht' : (t : K) ≠ 0 := by exact_mod_cast ht
+      push_cast
+      field_simp
+      linear_combination -hq
+    have heq : P = minpoly ℚ x := eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic hxQ) hPm
+      (minpoly.dvd ℚ x hP) (by rw [hPd]; exact (minpoly.two_le_natDegree_iff hxQ).mpr hnr)
+    obtain ⟨A, hA⟩ := coeff_minpoly_int hx 1
+    obtain ⟨B, hB⟩ := coeff_minpoly_int hx 0
+    rw [← heq, hPdef] at hA hB
+    simp only [coeff_add, coeff_sub, coeff_X_pow, coeff_C_mul, coeff_X, coeff_C] at hA hB
+    norm_num at hA hB
+    obtain ⟨a, b, rfl, rfl⟩ := int_of_coeffs hD (A := -A) (B := B) (by push_cast; linarith) hB
+    exact ⟨a, b, by rw [hxdef]; push_cast; ring⟩
+
+/-- `θ` as an element of `𝓞 K`. -/
+noncomputable def thetaO (hD : Int.IsFundamentalDiscr D) (hδ : δ ^ 2 = (D : K)) : 𝓞 K :=
+  ⟨thetaK D δ, isIntegral_thetaK hD.1 hδ⟩
+
+theorem coe_thetaO (hD : Int.IsFundamentalDiscr D) (hδ : δ ^ 2 = (D : K)) :
+    ((thetaO hD hδ : 𝓞 K) : K) = thetaK D δ := rfl
+
+/-- **`𝓞_K = ℤ[θ]`.** -/
+theorem adjoin_thetaO_eq_top (hD : Int.IsFundamentalDiscr D) (hneg : D < 0)
+    (hK : Module.finrank ℚ K = 2) (hδ : δ ^ 2 = (D : K)) :
+    Algebra.adjoin ℤ {thetaO hD hδ} = ⊤ := by
+  rw [eq_top_iff]
+  rintro x -
+  obtain ⟨a, b, hab⟩ := exists_int_repr hD hneg hK hδ (RingOfIntegers.isIntegral_coe x)
+  have : x = (a : 𝓞 K) + (b : 𝓞 K) * thetaO hD hδ := by
+    ext; push_cast; exact hab
+  rw [this]
+  exact add_mem (Subalgebra.intCast_mem _ _)
+    (mul_mem (Subalgebra.intCast_mem _ _) (Algebra.self_mem_adjoin_singleton ℤ _))
+
+theorem minpoly_thetaO (hD : Int.IsFundamentalDiscr D) (hneg : D < 0) (hδ : δ ^ 2 = (D : K)) :
+    minpoly ℤ (thetaO hD hδ) = gD D := by
+  have hint := RingOfIntegers.isIntegral (thetaO hD hδ)
+  refine (eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic hint) (gD_monic D)
+    (minpoly.isIntegrallyClosed_dvd hint ?_) ?_).symm
+  · apply RingOfIntegers.ext
+    show (algebraMap (𝓞 K) K) (aeval (thetaO hD hδ) (gD D)) = algebraMap (𝓞 K) K 0
+    rw [← Polynomial.aeval_algebraMap_apply, map_zero]
+    exact aeval_thetaK hD.1 hδ
+  · rw [gD_natDegree]
+    refine (minpoly.two_le_natDegree_iff hint).mpr ?_
+    rintro ⟨n, hn⟩
+    apply thetaK_ne hneg hδ n
+    have := congrArg (fun y : 𝓞 K => (y : K)) hn
+    simp only [algebraMap_int_eq, eq_intCast] at this
+    rw [← coe_thetaO hD hδ, ← this]
+    push_cast; rfl
+
+end ZInQ.EpsSplit
