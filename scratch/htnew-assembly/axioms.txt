@@ -1,0 +1,6 @@
+'HTNewAssembly.modularHTPrinted_of_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HTNewAssembly.eigenformHTNew_of_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HTNewAssembly.printHTMult_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HTNewAssembly.kernel_of_print' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HTNewAssembly.reading_arith' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HTNewAssembly.reading_geom' depends on axioms: [propext, Classical.choice, Quot.sound]

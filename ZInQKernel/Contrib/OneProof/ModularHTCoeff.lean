@@ -36,6 +36,7 @@ No `sorry`, no `axiom`, no code that runs at build time.
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
 set_option linter.style.longLine false
+set_option synthInstance.maxHeartbeats 400000
 
 namespace HTNewAssembly
 
@@ -49,6 +50,14 @@ noncomputable section
 section PrintSide
 
 variable (p : ℕ) [Fact p.Prime] {n : ℕ} (E : IntermediateField ℚ_[p] (PadicAlgCl p))
+
+instance smulCommClassE : SMulCommClass ℚ_[p] E (Fin n → E) := inferInstance
+
+/-- `E` acts on `V ⊗_{ℚ_p} ℂ_p` through `V = Eⁿ`. -/
+instance moduleE : Module E ((Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) := TensorProduct.leftModule
+
+instance isScalarTowerE : IsScalarTower ℚ_[p] E ((Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) :=
+  TensorProduct.isScalarTower_left
 
 theorem cpAct_smul' (σ : GQp p) (c : ℚ_[p]) (x : ℂ_[p]) : cpAct p σ (c • x) = c • cpAct p σ x := by
   rw [Algebra.smul_def, map_mul, cpAct_algebraMap, ← Algebra.smul_def]
@@ -154,9 +163,9 @@ variable (p : ℕ) [Fact p.Prime] {n : ℕ} (E : IntermediateField ℚ_[p] (Padi
 /-- The contragredient `σ ↦ ρ(σ⁻¹)ᵀ` of a matrix representation. -/
 def dualE {G : Type*} [Group G] {R : Type*} [CommRing R] (ρ : G →* GL (Fin n) R) : G →* GL (Fin n) R where
   toFun σ := ⟨(ρ σ⁻¹ : Matrix (Fin n) (Fin n) R).transpose, (ρ σ : Matrix (Fin n) (Fin n) R).transpose,
-    by rw [← Matrix.transpose_mul, ← Units.val_mul, ← map_mul, inv_mul_cancel, map_one, Units.val_one,
-      Matrix.transpose_one],
     by rw [← Matrix.transpose_mul, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one,
+      Matrix.transpose_one],
+    by rw [← Matrix.transpose_mul, ← Units.val_mul, ← map_mul, inv_mul_cancel, map_one, Units.val_one,
       Matrix.transpose_one]⟩
   map_one' := Units.ext (by simp)
   map_mul' σ τ := Units.ext (by simp [Matrix.transpose_mul])
@@ -180,6 +189,7 @@ theorem trPair_injective : Function.Injective (trPair p E (n := n)) := by
   intro v hv
   funext k
   by_contra hk
+  rw [Pi.zero_apply] at hk
   have h := LinearMap.congr_fun hv (Pi.single k (v k)⁻¹)
   rw [trPair_apply, single_dotProduct, inv_mul_cancel₀ hk, LinearMap.zero_apply] at h
   have h1 : Algebra.trace ℚ_[p] E 1 = (finrank ℚ_[p] E : ℚ_[p]) := by
@@ -213,8 +223,7 @@ theorem psi_twistAct (ρ : GQp p →* GL (Fin n) E) (w : ℤ) (σ : GQp p)
     rw [twistAct_tmul, psi_tmul, psi_tmul, cTw_apply, cpAct_smul', smul_comm,
       Matrix.mulVec_transpose, ← Matrix.dotProduct_mulVec]
   | add x y hx hy =>
-    rw [map_add, LinearEquiv.map_add, LinearMap.add_apply, hx, hy, LinearEquiv.map_add,
-      LinearMap.add_apply, map_add, smul_add]
+    simp only [map_add, LinearMap.add_apply, hx, hy, smul_add]
 
 /-- `psi` carries `(V ⊗ ℂ_p(w))^{G}` onto the kernel's `htSpace` of the contragredient at `w`. -/
 theorem psi_mem_iff (ρ : GQp p →* GL (Fin n) E) (w : ℤ) (t : (Fin n → E) ⊗[ℚ_[p]] ℂ_[p]) :
@@ -222,17 +231,14 @@ theorem psi_mem_iff (ρ : GQp p →* GL (Fin n) E) (w : ℤ) (t : (Fin n → E) 
   constructor
   · intro h σ
     apply (psi p E).injective
-    ext u
-    have h1 := h σ⁻¹ ((ρ σ : Matrix (Fin n) (Fin n) E).transpose.mulVec u)
+    refine LinearMap.ext fun u => ?_
+    have h1 := h σ⁻¹ u
     rw [dualE_val, inv_inv] at h1
-    rw [psi_twistAct]
-    change psi p E t _ = _ at h1
-    rw [h1, cpAct_smul', smul_smul, ← cpAct_mul', mul_inv_cancel, cpAct_one', ← cycPow_mul',
+    rw [psi_twistAct, h1, cpAct_smul', smul_smul, ← cpAct_mul', mul_inv_cancel, cpAct_one', ← cycPow_mul',
       mul_inv_cancel, cycPow_one', one_smul]
   · intro h σ u
-    have h1 := congrArg (fun φ => φ ((ρ σ⁻¹ : Matrix (Fin n) (Fin n) E).transpose.mulVec u))
-      (congrArg (psi p E) (h σ))
-    simp only at h1
+    have h1 := LinearMap.congr_fun (congrArg (psi p E) (h σ))
+      ((ρ σ⁻¹ : Matrix (Fin n) (Fin n) E).transpose.mulVec u)
     rw [psi_twistAct, Matrix.mulVec_mulVec, ← Matrix.transpose_mul, ← Units.val_mul, ← map_mul,
       inv_mul_cancel, map_one, Units.val_one, Matrix.transpose_one, Matrix.one_mulVec] at h1
     change psi p E t ((dualE ρ σ : Matrix (Fin n) (Fin n) E).mulVec u) = _
@@ -242,7 +248,7 @@ theorem psi_mem_iff (ρ : GQp p →* GL (Fin n) E) (w : ℤ) (t : (Fin n → E) 
 contragredient: `dim_E (V ⊗_{ℚ_p} ℂ_p(w))^{G} = htMult(ρ^∨, −w)`. -/
 theorem printHTMult_eq (ρ : GQp p →* GL (Fin n) E) (w : ℤ) :
     PrintHTMult p E ρ w = htMult p (dualE ρ) (-w) := by
-  have hmap : ((PrintHTSpace p E ρ w).restrictScalars ℚ_[p]).map (psi p E : _ →ₗ[ℚ_[p]] _) =
+  have hmap : ((PrintHTSpace p E ρ w).restrictScalars ℚ_[p]).map (psi p E (n := n)).toLinearMap =
       htSpace p (dualE ρ) w := by
     ext φ
     constructor
@@ -250,14 +256,15 @@ theorem printHTMult_eq (ρ : GQp p →* GL (Fin n) E) (w : ℤ) :
       exact (psi_mem_iff p E ρ w t).2 ht
     · intro hφ
       refine ⟨(psi p E).symm φ, ?_, by simp⟩
-      rw [Submodule.restrictScalars_mem, ← psi_mem_iff, LinearEquiv.apply_symm_apply]
+      show (psi p E).symm φ ∈ PrintHTSpace p E ρ w
+      rw [← psi_mem_iff, LinearEquiv.apply_symm_apply]
       exact hφ
   have h1 : finrank ℚ_[p] ((PrintHTSpace p E ρ w).restrictScalars ℚ_[p]) =
       finrank ℚ_[p] (htSpace p (dualE ρ) w) := by
     rw [← hmap, LinearEquiv.finrank_map_eq]
   have h2 : finrank ℚ_[p] E * finrank E (PrintHTSpace p E ρ w) =
       finrank ℚ_[p] ((PrintHTSpace p E ρ w).restrictScalars ℚ_[p]) := by
-    haveI : Module.Free E (PrintHTSpace p E ρ w) := Module.Free.of_divisionRing _ _
+    have : Module.Free E (PrintHTSpace p E ρ w) := Module.Free.of_divisionRing E (PrintHTSpace p E ρ w)
     exact Module.finrank_mul_finrank ℚ_[p] E (PrintHTSpace p E ρ w)
   rw [htMult, neg_neg, ← h1, ← h2, PrintHTMult, Nat.mul_div_cancel_left _ Module.finrank_pos]
 
@@ -299,7 +306,7 @@ theorem kernel_of_print (E : IntermediateField ℚ_[ℓ] (PadicAlgCl ℓ)) [Fini
       ext i j
       change (algebraMap E (PadicAlgCl ℓ)) ((ρ (decomp ℓ σ⁻¹) : Matrix (Fin n) (Fin n) E) j i) =
         ((toGR E ρ hρ).mat (decomp ℓ σ)⁻¹) j i
-      rw [toGR_mat, map_inv, Matrix.map_apply]
+      rw [toGR_mat, Matrix.map_apply, map_inv (decomp ℓ) σ]
     · have := printHTMult_eq ℓ E (ρ.comp (decomp ℓ)) (-w)
       rw [neg_neg] at this
       rw [← this, h, count_neg_map]

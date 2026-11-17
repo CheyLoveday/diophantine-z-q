@@ -14,3 +14,9 @@ EigenformHTPrinted.ModularHTPrinted` (verbatim copy: `ModularHTPrinted-copy.lean
 - Discharge `modularHTPrinted_of_coeff : ModularHTCoeff → EigenformHTPrinted.ModularHTPrinted`.
 
 ## Compile outcomes
+- 2026-11-17 02:09-03:03: `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.EigenformHTPrinted`: success, 16073 jobs, 54 min (load 40-57). VERIFIED.
+- 03:03-03:10: `lake env lean ZInQKernel/Contrib/OneProof/ModularHTCoeff.lean`: 3 iterations (instance timeouts for the
+  E-module on V ⊗_{Q_p} C_p fixed by explicit instances + synthInstance.maxHeartbeats 400000; `ext` on Pi domain;
+  coercion). Final: success, ~21 s, warnings only. VERIFIED.
+- `lake build +ZInQKernel.Contrib.OneProof.ModularHTCoeff`: success. `Axioms.lean` → `axioms.txt`: modularHTPrinted_of_coeff,
+  eigenformHTNew_of_coeff, printHTMult_eq, kernel_of_print, reading_arith, reading_geom: [propext, Classical.choice, Quot.sound]. VERIFIED.
