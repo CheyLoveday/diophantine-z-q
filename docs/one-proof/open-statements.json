@@ -167,13 +167,25 @@
    "field": "picRepresentableAbVar",
    "docstring":
    "t09-pic, L1, printed form: the relative Picard fppf sheaf of an abelian variety over a field is representable\n(Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, *The Picard scheme*, Thm 9.4.8 with 9.2.5; locators\nUNVERIFIED). With the next three replaces `t09SymmIsogenyExists`. ",
-   "bundle": "OpenAddedLeaves22"},
-  {"type": "T09Pic.PicZeroAbVar",
-   "statement": "T09Pic.PicZeroAbVar",
-   "field": "picZeroAbVar",
+   "bundle": "OpenAddedLeaves23"},
+  {"type": "PicDict.PicLocFinType",
+   "statement": "PicDict.PicLocFinType",
+   "field": "picLocFinType",
    "docstring":
-   "t09-pic, L2, printed form: for every representation of `Pic_{A/K}`, its identity component with the induced\ngroup law is an abelian variety (`IsPicZero`; Mumford §13, Kleiman 9.5.1 and 9.5.3, SGA 3 VI_A 2.4; locators\nUNVERIFIED). ",
-   "bundle": "OpenAddedLeaves22"},
+   "pic-dict: a scheme representing `Pic_{A/K}` of an abelian variety `A` over a field `K` is locally of finite type\n(Murre 1964 / Oort 1962; BLR, *Néron models*, 8.2 Thm 3; Kleiman, *The Picard scheme*, Thm 9.4.8; any representing\nobject by Yoneda; locators UNVERIFIED). With the next two and Cartier's theorem replaces `picZeroAbVar`, which is\nread only in characteristic `0` (piczero-char0). ",
+   "bundle": "OpenAddedLeaves23"},
+  {"type": "PicDict.IdentityComponentLFT",
+   "statement": "PicDict.IdentityComponentLFT",
+   "field": "identityComponentLFT",
+   "docstring":
+   "pic-dict: the identity component of a group scheme locally of finite type over a field is an open,\ngeometrically irreducible subgroup (SGA 3 VI_A 2.4; Stacks 0B7R; locators UNVERIFIED). ",
+   "bundle": "OpenAddedLeaves23"},
+  {"type": "PicFix.KleimanPicZeroProper",
+   "statement": "PicFix.KleimanPicZeroProper",
+   "field": "kleimanPicZeroProper",
+   "docstring":
+   "pic-fix: for `X` proper and geometrically normal over a field `K`, the identity component of `Pic_{X/K}` is\nproper (Kleiman, *The Picard scheme*, Thm 9.5.4; locator UNVERIFIED); stated for every representing scheme. ",
+   "bundle": "OpenAddedLeaves23"},
   {"type": "ZInQ.Contrib.TYZDecomp.TYZThm11Integral",
    "statement": "ZInQ.Contrib.TYZDecomp.TYZThm11Integral",
    "field": "h11",
@@ -210,4 +222,4 @@
    "docstring":
    "**The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model\n`E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.\nA restriction of `GrossZagierAlgOpt`. ",
    "bundle": "frozenTarget"}],
- "count": 35}
+ "count": 37}

@@ -25,7 +25,12 @@ run_cmd do
     `ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed, `PkgI3.HomFreeFinite, `sorryAx,
     -- bundles: the old added generations are bypassed
     `HDec.HSyn.OpenAddedLeaves19, `HDec.HSyn.OpenAddedLeaves20, `HDec.HSyn.OpenAddedLeaves18,
-    `HDec.HSyn.sixContactMin_of_open43, `HDec.HSyn.sixContactMin_of_open37_hf_gm]
+    `HDec.HSyn.sixContactMin_of_open43, `HDec.HSyn.sixContactMin_of_open37_hf_gm,
+    -- step 2: the general forms must be absent, the characteristic-0 forms present
+    `PicZeroChar0.PicZeroAbVar0, `T09Pic.WeilPairingMumford0, `PicZeroChar0.PhiAmpleIsogeny0,
+    `T09Pic.PhiAmpleIsogeny, `HDec.WeilPairing.T09_SymmIsogenyExists, `HDec.LeafPush.T09_WeilPairing, `LeafPush.T09_WeilPairing, `PicZeroChar0.T09_SymmIsogenyExists0,
+    `HDec.G0Galois.G12Det, `HDec.HSyn.OpenAddedLeaves22, `HDec.HSyn.sixContactMin_of_open45,
+    `HDec.HSyn.sixContactMin_of_open45_pz]
   let mut seen : NameSet := {}
   let mut todo : Array Name := #[`ZInQ.OneProof.frozenTarget]
   while !todo.isEmpty do

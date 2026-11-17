@@ -260,9 +260,6 @@ DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves9H
 DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.mumfordTorsionAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves22.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
-  still assumes: [PicDict.PicLocFinType, PicDict.IdentityComponentLFT, PicDict.PicZeroSmooth, PicDict.PicZeroProper]
-  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves31.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
   axioms: [propext, Classical.choice, Quot.sound]
@@ -275,7 +272,7 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 35 open hypotheses, 9695 theorems checked, 34 discharge one
+#discharges: 37 open hypotheses, 9757 theorems checked, 33 discharge one
 ```
 <!-- worked-example:end -->
 
