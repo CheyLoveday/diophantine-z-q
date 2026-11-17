@@ -38,3 +38,9 @@ then ψ has a left inverse and ψ ∘ (χψ)⁻¹ χ = id_N by density. Group ca
   `#print axioms` both: [propext, Classical.choice, Quot.sound]. VERIFIED (lake env lean).
   Note: the glue is proved from the leaf that F2 already carries (NeronSchemeExtensionDVR, the DVR case of the
   Dedekind leaf), not from Mathlib alone: the general-N statement is reduced to the Néron-model case.
+- 18:40 Contribution file ZInQKernel/Contrib/OneProof/NeronGoodModelIso.lean (global `instance` replaced by a theorem +
+  local haveI); `lake build ZInQKernel.Contrib.OneProof.NeronGoodModelIso` OK (12803 jobs), axioms standard. VERIFIED.
+- Fold G: scratch/goodmodel-iso/fold/make_patch.py (16 files: narrowing of group-law-dvr in TailZ23..44, TailZ34;
+  TailZ45 research field mumfordGroupLawConn -> neronSchemeExtensionDedekind; new OpenTextbookLeaves14 without
+  neronSchemeExtensionExists; sixContactMin_of_open39; Main.lean switched). Overlay compile running
+  (compile_overlay.sh /tmp/gmifold/G, 42 modules).
