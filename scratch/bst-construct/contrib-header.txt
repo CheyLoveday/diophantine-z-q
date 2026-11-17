@@ -20,7 +20,9 @@ them (Berger 2002 §1.2; wording UNVERIFIED here), as subrings of Mathlib's `B_d
 Proved (standard axioms): `B_max^+`, `B_max` and `B_st` are `G_{ℚ_p}`-stable (`bmaxPlus_stable`,
 `bmax_stable`, `bst_stable`), with `σ(log [p̃]) = log [p̃] + log [u_σ]` (`bdrAct_logPTilde`), from the
 additivity of `log` on `1 + ker θ` (`logPlus_add`) and `log [ε] ∈ A_max` (`logTeich_mem_amax`); the trivial
-representation is admissible for every `B` (`isAdmissible_trivial`); `B_dR^+ → B_dR` is injective; given
+representation is admissible for every `B` (`isAdmissible_trivial`); `B_dR^+ → B_dR` is injective;
+`log [ε] ≠ 0` for every `ε ≠ 1` with `ε^♯ = 1`, and such `ε` exist, so `t ≠ 0` (`logTeich_ne_zero`,
+`exists_t_ne_zero`); given
 Fontaine's transcendence of `log [p̃]` (`LogPTildeTranscendental`), `B_st ≅ B_max[X]`
 (`bstEquivPolynomial`); given Fontaine's `B_st^{G_K} = K_0` in dimension form (`FontaineBstInvariants`),
 admissibility is pb-fix2's normalization `dim_{ℚ_p} D_st,K = [K_0 : ℚ_p] · dim V` (`isSemistableB_iff_K0`).

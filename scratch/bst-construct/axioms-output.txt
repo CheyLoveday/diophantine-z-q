@@ -19,3 +19,5 @@
 'HDec.PkgI4.BergerBst.isSemistableB_iff_finrank' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.BergerBst.isSemistableB_iff_K0' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.BergerBst.amaxOf_eq_amax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BergerBst.logTeich_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BergerBst.exists_t_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
