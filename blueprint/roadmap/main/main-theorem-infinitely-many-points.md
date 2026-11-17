@@ -2,10 +2,10 @@
 article_id: af_755b80700166574c1184f60d
 declaration: theorem
 origin: bridged
-statement: formalized
-proof: formalized
-lean: ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankInf, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankTYZInf, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankTYZClInf, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankDLInf
 ---
+
+**Historical Route K variant, retired from the active build by issue #74.**
+
 
 # The main theorem from the infinitely-many-points forms of the rank hypothesis
 

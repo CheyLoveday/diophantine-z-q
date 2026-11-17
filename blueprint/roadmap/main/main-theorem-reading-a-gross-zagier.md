@@ -2,10 +2,10 @@
 article_id: af_63558bbd8fcce7c291b80c9c
 declaration: theorem
 origin: bridged
-statement: formalized
-proof: formalized
-lean: ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier, ZInQ.Contrib.GaussFE.certifiedRankTYZClRk_of_readingA_grossZagier
 ---
+
+**Historical Route K variant, retired from the active build by issue #74.**
+
 
 # The main theorem from the minimal height hypothesis, reading A and Gross–Zagier
 

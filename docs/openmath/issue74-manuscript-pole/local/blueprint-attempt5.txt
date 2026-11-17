@@ -1,0 +1,5 @@
+WARN Ignoring malformed managed Python entry:
+    Failed to parse Python installation key `.temp`: not enough `-`-separated values
+OK: 776 articles, 2305 dependencies
+    691 fully proved · 3 ready to prove · 7 ready to state
+error: main/main-theorem: declaration defined more than once in .: ZInQ.OneProof.frozenTarget (ZInQKernel/OneProof/Main.lean:15, scratch/h29-ne3/MainEdit.lean:62, scratch/hcm-dict/MainFolded.lean:94)

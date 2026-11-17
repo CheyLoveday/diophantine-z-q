@@ -2,7 +2,18 @@
 article_id: af_bd6481b675c042d993b6365d
 ---
 
-# The main theorem and its hypotheses
+# Manuscript assembly
+
+The current headline takes H and manuscript pole completeness (Theorem 5.2).
+Its `+3ℓ` polynomial matches Section 5. Route K is retired from active builds;
+the archived discussions below describe the previous route. PC remains unproved
+here. The changed assembly awaits its full Open Math OS build and retained checks.
+Route AP and CAT₈ remain departures from the manuscript.
+
+## Historical Route K chapter
+
+
+### Historical main theorem and its hypotheses
 
 Throughout, $K_0=\mathbb Q(s)$ with $s^2=2$, $d=75-53s$, and $E:y^2=x^3-d^2x$ over $K_0$.
 For a reduced fraction $a/b$ with $b>0$, $h(a/b)=\log\max(|a|,b)$. In the rank hypotheses and the

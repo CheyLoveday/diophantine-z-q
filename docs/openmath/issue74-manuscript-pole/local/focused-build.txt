@@ -1,0 +1,51 @@
+⚠ [9048/9084] Built ZInQ.PoleValuation (4.8s)
+warning: ZInQ/PoleValuation.lean:234:30: Variable name `hp2` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hp2
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [9049/9084] Built ZInQ.RationalPositiveGuard (4.9s)
+⚠ [9050/9084] Built ZInQKernel.Hypotheses.MordellWeil (77s)
+warning: ZInQKernel/Hypotheses/MordellWeil.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9051/9084] Built ZInQKernel.Hypotheses.Pole (77s)
+warning: ZInQKernel/Hypotheses/Pole.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9052/9084] Built ZInQKernel.Syntax.Language.Basic (78s)
+warning: ZInQKernel/Syntax/Language/Basic.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9053/9084] Built ZInQKernel.Model.Field.ShortWeierstrass (78s)
+warning: ZInQKernel/Model/Field/ShortWeierstrass.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9054/9084] Built ZInQKernel.Hypotheses.PoleManuscript (85s)
+warning: ZInQKernel/Hypotheses/PoleManuscript.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9055/9084] Built ZInQKernel.Syntax.Language.Gadgets (85s)
+warning: ZInQKernel/Syntax/Language/Gadgets.lean: imports `ZInQ.RationalPositiveGuard` from package `z_in_q`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9056/9084] Built ZInQKernel.Multiplication.Certificate.Parity (85s)
+warning: ZInQKernel/Multiplication/Certificate/Parity.lean: imports `ZInQ.PoleValuation` from package `z_in_q`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [9057/9084] Built ZInQKernel.Model.Field.Basic (86s)
+✔ [9058/9084] Built ZInQKernel.Syntax.Language.PointRef (85s)
+✔ [9059/9084] Built ZInQKernel.Syntax.Language.Formula (85s)
+✔ [9060/9084] Built ZInQKernel.Syntax.Language.Nodes (55s)
+✔ [9061/9084] Built ZInQKernel.Syntax.Language.Size (55s)
+✔ [9062/9084] Built ZInQKernel.Model.Field.Curve (55s)
+✔ [9063/9084] Built ZInQKernel.Syntax.Language.Lifting (55s)
+✔ [9064/9084] Built ZInQKernel.Size.Norms.Defs (43s)
+✔ [9065/9084] Built ZInQKernel.Model.Field.Codes (43s)
+✔ [9066/9084] Built ZInQKernel.Syntax.Language.Build (42s)
+✔ [9067/9084] Built ZInQKernel.Size.Norms.Estimates (25s)
+✔ [9068/9084] Built ZInQKernel.Syntax.Language.Pairs (26s)
+✔ [9069/9084] Built ZInQKernel.Syntax.Language (13s)
+✔ [9070/9084] Built ZInQKernel.Size.Norms.Substitution (14s)
+✔ [9071/9084] Built ZInQKernel.Size.Majorants.Basic (25s)
+✔ [9072/9084] Built ZInQKernel.Syntax.Templates.Scope (28s)
+✔ [9073/9084] Built ZInQKernel.Size.Majorants.Height (42s)
+✔ [9074/9084] Built ZInQKernel.Size.Majorants.Rules (42s)
+✔ [9075/9084] Built ZInQKernel.Syntax.Templates.Member (39s)
+✔ [9076/9084] Built ZInQKernel.Size.Majorants.NodeMajorant (23s)
+✔ [9077/9084] Built ZInQKernel.Syntax.Templates.Core (23s)
+✔ [9078/9084] Built ZInQKernel.Syntax.Templates.Certificate (10s)
+✔ [9079/9084] Built ZInQKernel.Syntax.Templates.Multiply (6.7s)
+✔ [9080/9084] Built ZInQKernel.Syntax.Templates.Value (8.7s)
+✔ [9081/9084] Built ZInQKernel.Syntax.Templates.Library (5.7s)
+✔ [9082/9084] Built ZInQKernel.Size.Majorants.Calculus (6.1s)
+✔ [9083/9084] Built ZInQKernel.Size.Majorants.Tactic (6.1s)
+✔ [9084/9084] Built ZInQKernel.Size.Majorants.Templates (11s)
+Build completed successfully (9084 jobs).

@@ -132,6 +132,7 @@ def load():
         issues.update(json.load(open(ISSUES)))
     return dict(
         hyps=data['hypotheses'],
+        extraction_status=data.get('extraction_status', 'LEAN_EXTRACTED'),
         kinds={r['field']: r for r in kinds_rows},
         kinds_rows=kinds_rows,
         claims_rows=read_tsv(D + 'claims.tsv'),
@@ -173,6 +174,8 @@ def kinds_row_problems(r, open_fields, held):
         problems.append(f'kinds.tsv: {f}: area_issue must look like owner/repo#123')
     if not r['area_issue'] and f in open_fields and f not in held:
         problems.append(f'kinds.tsv: {f} is not held and has no area_issue')
+    if r['kind'] == 'manuscript' and (r['strict'] != 'GLUE' or r['strictest'] != 'GLUE'):
+        problems.append(f'kinds.tsv: {f}: an unrefereed manuscript claim must count GLUE')
     if r['strict'] not in ('LEAF', 'GLUE') or r['strictest'] not in ('LEAF', 'GLUE'):
         problems.append(f'kinds.tsv: {f}: strict and strictest must be LEAF or GLUE')
     if must_be_glue(r['flag']) and 'LEAF' in (r['strict'], r['strictest']):
@@ -302,7 +305,7 @@ def render(m):
     count_lines = [
         f'**{n} hypotheses of the H part** (in the bundles '
         f'`{"`, `".join(sorted({h["bundle"] for h in hyps if h["bundle"] != "frozenTarget"}))}`), '
-        f'plus {len(tops)} hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.',
+        f'plus {len(tops)} hypotheses outside H listed at the end.',
         '',
         f'* **Strict count: {strictest["LEAF"]} published / {strictest["GLUE"]} glue** (the strictest flagged reading; '
         + (f'{strict["LEAF"]}/{strict["GLUE"]} without the {words(n_flags)} strictest-reading '
@@ -317,9 +320,14 @@ def render(m):
     w('claims.tsv, reviews.tsv, credits.tsv and issues.json. Do not edit by hand: edit those, or regenerate the JSON')
     w('after a fold. -->')
     w('')
-    w('`ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) is a Lean theorem, checked by the kernel with no')
-    w('`sorry` and only the standard axioms, that proves the frozen target `ZInQ.FrozenTarget`, the theorem that Z is')
-    w('Diophantine in Q (the 11/5 manuscript, Theorem 1.1), from the hypotheses below. Everything else is proved.')
+    if m['extraction_status'] == 'PENDING_BUILD':
+        w('**Draft transition: compilation and fresh Lean hypothesis extraction are pending.**')
+        w('The H entries below are preserved from the recorded baseline; PC is transcribed from the new source.')
+        w('Do not treat the rendered board as proof or as a completed extraction. See')
+        w('[the issue #74 handoff](../openmath/issue74-manuscript-pole/HANDOFF.md).')
+    else:
+        w('`ZInQ.OneProof.frozenTarget` derives the frozen `ZInQ.FrozenTarget` from the hypotheses below.')
+        w('Axiom and external-check evidence is recorded separately; this generated list alone does not establish it.')
     w('Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to statements printed in the literature,')
     w('removes it. See')
     w('[CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.')
@@ -478,7 +486,7 @@ def render(m):
     w('')
     for f in order:
         section(f)
-    w('## Tian–Yuan–Zhang and Gross–Zagier hypotheses')
+    w('## Hypotheses outside H')
     w('')
     w("These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.")
     w('')
@@ -512,6 +520,8 @@ def render(m):
         pw.append('')
     pages = '\n'.join(pw)
 
+    if m['extraction_status'] == 'PENDING_BUILD':
+        count_lines.append('**Provisional: fresh Lean extraction is pending for the route transition.**')
     status_lines = [count_lines[0].replace('listed at the end.', 'listed at the end of docs/one-proof/OPEN.md.')] \
         + count_lines[1:]
     status_block = '\n'.join([ST_BEGIN] + status_lines +

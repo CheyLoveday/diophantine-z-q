@@ -1,0 +1,11 @@
+{
+  "source_guards": "PASS",
+  "protected_sources": "PASS",
+  "negative_controls": "PASS",
+  "import_counts": {
+    "ZInQKernel": 613,
+    "ZInQKernel.OneProof.Main": 4853,
+    "ZInQKernel.Contrib.AllContrib": 3270
+  },
+  "lean_compilation": "NOT_ESTABLISHED_BY_THIS_CHECK"
+}

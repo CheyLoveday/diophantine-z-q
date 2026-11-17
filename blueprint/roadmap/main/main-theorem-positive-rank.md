@@ -2,10 +2,10 @@
 article_id: af_7cbf516087c0f7cc27ab10aa
 declaration: theorem
 origin: bridged
-statement: formalized
-proof: formalized
-lean: ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankRk, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankTYZRk, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankTYZClRk
 ---
+
+**Historical Route K variant, retired from the active build by issue #74.**
+
 
 # The main theorem from the positive-rank forms of the rank hypothesis
 

@@ -1,0 +1,933 @@
+WARN Ignoring malformed managed Python entry:
+    Failed to parse Python installation key `.temp`: not enough `-`-separated values
+WARN Skipping file for html5lib: html5lib-1.0-reupload.tar.gz
+WARN Skipping file for markdown: Markdown-2.0.1.win32.exe
+WARN Skipping file for markdown: Markdown-2.0.2.win32.exe
+WARN Skipping file for markdown: Markdown-2.0.3.win32.exe
+WARN Skipping file for markdown: Markdown-2.0.win32.exe
+WARN Skipping file for markdown: Markdown-2.1.0.win32.exe
+WARN Skipping file for markdown: Markdown-2.4.win-amd64.exe
+WARN Skipping file for markdown: markdown-1.7.win32.exe
+WARN Skipping file for psutil: psutil-0.2.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.2.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.2.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.2.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.2.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.2.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.2.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.2.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.2.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.2.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.2.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.2.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.2.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.2.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.2.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.2.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.3.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.3.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.3.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.3.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.3.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.3.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.3.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.3.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.4.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.4.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.4.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.4.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.4.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.4.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.4.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.4.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.4.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.4.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.4.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.4.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.4.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.4.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.4.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.4.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.5.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.5.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.5.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.5.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.5.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.5.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.5.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.5.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.5.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.5.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.5.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.5.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.5.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.5.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.5.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.5.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.6.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.6.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.6.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.6.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.6.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.6.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.6.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.6.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.6.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.6.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.6.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.6.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.6.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.6.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.6.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.6.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.7.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.7.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.7.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.7.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.7.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.7.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.7.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.7.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-0.7.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-0.7.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-0.7.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-0.7.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-0.7.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-0.7.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-0.7.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-0.7.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-1.0.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.0.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-1.0.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-1.0.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.0.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.0.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.0.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.0.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-1.0.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.0.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-1.0.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-1.0.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.0.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.0.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.0.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.0.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-1.1.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.0.win-amd64-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.0.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-1.1.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.1.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.1.0.win32-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.1.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.1.win-amd64-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.1.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-1.1.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.1.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.1.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.1.win32-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.1.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.2.win-amd64-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.2.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-1.1.2.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.1.2.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.1.2.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.2.win32-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.1.3.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.3.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-1.1.3.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.1.3.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.1.3.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.1.3.win32-py3.2.exe
+WARN Skipping file for psutil: psutil-1.1.3.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.2.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.2.0.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-1.2.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.2.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.2.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.2.0.win32-py3.2.exe
+WARN Skipping file for psutil: psutil-1.2.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-1.2.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-1.2.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-1.2.1.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-1.2.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-1.2.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-1.2.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-1.2.1.win32-py3.2.exe
+WARN Skipping file for psutil: psutil-1.2.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.0.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.0.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.0.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.0.0.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-2.0.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-2.0.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.0.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.0.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.0.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.0.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-2.1.0.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-2.1.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.1.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.1.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-2.1.1.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-2.1.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.1.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.2.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.2.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.2.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-2.1.2.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-2.1.2.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.1.2.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.2.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.3.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.3.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.3.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.1.3.win32-py2.4.exe
+WARN Skipping file for psutil: psutil-2.1.3.win32-py2.5.exe
+WARN Skipping file for psutil: psutil-2.1.3.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.1.3.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.1.3.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.1.3.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-2.2.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.2.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.2.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.2.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.2.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.2.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.2.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-2.2.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-2.2.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-2.2.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-2.2.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-2.2.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-2.2.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-2.2.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.0.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.0.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.0.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.0.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.0.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.0.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.0.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.0.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.0.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.0.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.0.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.0.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.0.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.0.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.1.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.1.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.1.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.1.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.1.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.1.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.1.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.1.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.1.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.1.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.1.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.1.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.1.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.1.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.2.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.2.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.2.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.2.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.2.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.2.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.2.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.2.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.2.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.2.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.2.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.2.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.2.2.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.2.2.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-3.2.2.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.2.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.2.2.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.2.2.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-3.3.0.win-amd64-py2.6.exe
+WARN Skipping file for psutil: psutil-3.3.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.3.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.3.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.3.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-3.3.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.3.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.3.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.3.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.3.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-3.4.1.win-amd64-py2.6.exe
+WARN Skipping file for psutil: psutil-3.4.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.4.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.4.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.4.1.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-3.4.1.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.4.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.4.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.4.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.4.1.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-3.4.2.win-amd64-py2.6.exe
+WARN Skipping file for psutil: psutil-3.4.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-3.4.2.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-3.4.2.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-3.4.2.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-3.4.2.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-3.4.2.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-3.4.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-3.4.2.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-3.4.2.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.0.0.win-amd64-py2.6.exe
+WARN Skipping file for psutil: psutil-4.0.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.0.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.0.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.0.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.0.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-4.0.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.0.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.0.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.0.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.1.0.win-amd64-py2.6.exe
+WARN Skipping file for psutil: psutil-4.1.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.1.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.1.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.1.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.1.0.win32-py2.6.exe
+WARN Skipping file for psutil: psutil-4.1.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.1.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.1.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.1.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.2.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.2.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.2.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.2.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.2.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.2.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.2.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.2.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.3.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.3.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.3.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.3.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.3.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.3.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.3.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.3.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.3.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.3.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.3.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.3.1.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.3.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.3.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.3.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.3.1.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.4.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.4.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.4.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.4.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.4.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.4.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.4.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.4.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.4.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.4.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.4.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.4.1.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.4.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.4.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.4.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.4.1.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-4.4.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-4.4.2.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-4.4.2.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-4.4.2.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-4.4.2.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-4.4.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-4.4.2.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-4.4.2.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.0.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.0.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.0.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.0.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.0.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.0.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.0.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.0.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.0.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.0.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.0.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.0.1.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.0.1.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.0.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.0.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.0.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.0.1.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.0.1.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.0.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.0.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.1.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.1.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.1.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.1.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.2.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.2.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.2.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.2.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.2.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.2.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.2.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.2.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.3.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.3.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.3.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.3.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.3.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.1.3.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.1.3.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.1.3.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.1.3.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.1.3.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.2.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.2.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.2.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.2.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.2.0.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.2.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.2.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.2.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.2.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.2.0.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.2.1.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.2.1.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.2.1.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.2.1.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.2.1.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.2.1.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.2.1.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.2.1.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.2.1.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.2.1.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.2.2.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.2.2.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.2.2.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.2.2.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.2.2.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.2.2.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.2.2.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.2.2.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.2.2.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.2.2.win32-py3.6.exe
+WARN Skipping file for psutil: psutil-5.3.0.win-amd64-py2.7.exe
+WARN Skipping file for psutil: psutil-5.3.0.win-amd64-py3.3.exe
+WARN Skipping file for psutil: psutil-5.3.0.win-amd64-py3.4.exe
+WARN Skipping file for psutil: psutil-5.3.0.win-amd64-py3.5.exe
+WARN Skipping file for psutil: psutil-5.3.0.win-amd64-py3.6.exe
+WARN Skipping file for psutil: psutil-5.3.0.win32-py2.7.exe
+WARN Skipping file for psutil: psutil-5.3.0.win32-py3.3.exe
+WARN Skipping file for psutil: psutil-5.3.0.win32-py3.4.exe
+WARN Skipping file for psutil: psutil-5.3.0.win32-py3.5.exe
+WARN Skipping file for psutil: psutil-5.3.0.win32-py3.6.exe
+WARN Skipping file for pyyaml: PyYAML-3.10.win32-py2.5.exe
+WARN Skipping file for pyyaml: PyYAML-3.10.win32-py2.6.exe
+WARN Skipping file for pyyaml: PyYAML-3.10.win32-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-3.10.win32-py3.0.exe
+WARN Skipping file for pyyaml: PyYAML-3.10.win32-py3.1.exe
+WARN Skipping file for pyyaml: PyYAML-3.10.win32-py3.2.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win-amd64-py2.6.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win-amd64-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win-amd64-py3.1.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win-amd64-py3.2.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win-amd64-py3.3.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win-amd64-py3.4.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win32-py2.6.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win32-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win32-py3.1.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win32-py3.2.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win32-py3.3.exe
+WARN Skipping file for pyyaml: PyYAML-3.11.win32-py3.4.exe
+WARN Skipping file for pyyaml: PyYAML-3.12.win-amd64-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-3.12.win-amd64-py3.4.exe
+WARN Skipping file for pyyaml: PyYAML-3.12.win-amd64-py3.5.exe
+WARN Skipping file for pyyaml: PyYAML-3.12.win32-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-3.12.win32-py3.4.exe
+WARN Skipping file for pyyaml: PyYAML-3.12.win32-py3.5.exe
+WARN Skipping file for pyyaml: PyYAML-4.2b4.win-amd64-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-4.2b4.win-amd64-py3.4.exe
+WARN Skipping file for pyyaml: PyYAML-4.2b4.win32-py2.7.exe
+WARN Skipping file for pyyaml: PyYAML-4.2b4.win32-py3.4.exe
+WARN Skipping file for pyjwt: PyJWT-0.1.1-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.1-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.1-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.2-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.2-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.2-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.3-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.3-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.3-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.4-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.4-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.4-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.5-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.5-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.5-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.6-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.6-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.6-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.7-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.7-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.7-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.7-py3.3.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.8-py2.5.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.8-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.8-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.8-py3.3.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.9-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.9-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.1.9-py3.3.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.0-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.0-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.0-py3.3.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.1-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.1-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.1-py3.3.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.3-py2.6.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.3-py2.7.egg
+WARN Skipping file for pyjwt: PyJWT-0.2.3-py3.3.egg
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>3.4.*, <4`; after: `>3.4, <4`)
+WARN Skipping file for pygments: Pygments-0.10-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.10-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.10-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.11-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.11-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.11-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.11.1-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.11.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.11.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.5-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.5-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.5-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.5.1-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.5.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.5.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.6-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.6-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.6-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.7-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.7-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.7-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.7.1-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.7.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.7.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.8-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.8-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.8-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.8.1-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.8.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.8.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-0.9-py2.3.egg
+WARN Skipping file for pygments: Pygments-0.9-py2.4.egg
+WARN Skipping file for pygments: Pygments-0.9-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.0-py2.3.egg
+WARN Skipping file for pygments: Pygments-1.0-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.0-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.0-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.1-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.1.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.1.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.1.1-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.2-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.2-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.2-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.2.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.2.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.2.1-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.2.2-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.2.2-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.2.2-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.3-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.3-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.3-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.3.1-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.3.1-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.3.1-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.4-py2.4.egg
+WARN Skipping file for pygments: Pygments-1.4-py2.5.egg
+WARN Skipping file for pygments: Pygments-1.4-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.4-py2.7.egg
+WARN Skipping file for pygments: Pygments-1.5-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.5-py2.7.egg
+WARN Skipping file for pygments: Pygments-1.6-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.6-py2.7.egg
+WARN Skipping file for pygments: Pygments-1.6rc1-py2.6.egg
+WARN Skipping file for pygments: Pygments-1.6rc1-py2.7.egg
+WARN Skipping file for keyring: keyring-0.1.win32-py2.6.exe
+WARN Skipping file for keyring: keyring-0.2.win32-py2.6.exe
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+WARN Fixing invalid version specifier by removing star after comparison operator other than equal and not equal (before: `>=3.5.*, <4`; after: `>=3.5, <4`)
+Installed 75 packages in 70ms
+error: main/main-theorem-infinitely-many-points:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-infinitely-many-points: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem-literature:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-literature: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem-positive-rank:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-positive-rank: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem-reading-a-gross-zagier:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-reading-a-gross-zagier: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem-selmer:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-selmer: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem-three-hypotheses:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-two-curves:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-two-curves: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem-two-hypotheses:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-tyz:6: 'proof' accepts only 'formalized'; omit the key otherwise
+error: main/main-theorem-tyz: statement: formalized needs the lean: declaration that formalizes it
+error: main/main-theorem:6: 'proof' accepts only 'formalized'; omit the key otherwise

@@ -1,0 +1,3 @@
+WARN Ignoring malformed managed Python entry:
+    Failed to parse Python installation key `.temp`: not enough `-`-separated values
+error: failed to create file `/Users/chey/.local/share/uv/tools/.lock`: Operation not permitted (os error 1)

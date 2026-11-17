@@ -1,0 +1,17 @@
+regenerate-polynomial: passed
+syntactic-size-bounds: passed
+verify-integer-compiler.js: passed
+verify-division-polynomials.js: passed
+verify-finite-polynomial-expressions.js: passed
+verify-six-contact.js: passed
+{
+  "passed": true,
+  "node": "v24.2.0",
+  "python": "3.13.12",
+  "seconds": 6.065,
+  "source_files_verified": 25,
+  "historical_provenance_normalization_checked": false,
+  "polynomial_sha256": "4d639d4c44e69ea360d36d4591b8fdc82269d68b9363af0157d1e5c1174c7af6",
+  "arithmetic_theorem_proved": false,
+  "scope": "Exact regeneration, structural audit, syntactic bounds, and finite arithmetic cases. See construction/README.md for exclusions."
+}

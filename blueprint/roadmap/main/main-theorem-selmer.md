@@ -2,10 +2,10 @@
 article_id: af_9ce1e3b54e131b088182fed5
 declaration: theorem
 origin: bridged
-statement: formalized
-proof: formalized
-lean: ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankSel, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRank5b, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_certifiedRankSel_goodPrimeDensity, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_certifiedRankSel_greenTaoDense, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_certifiedRankSel, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_certifiedRank5b
 ---
+
+**Historical Route K variant, retired from the active build by issue #74.**
+
 
 # The main theorem from the Selmer form of the rank hypothesis
 

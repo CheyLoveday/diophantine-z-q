@@ -2,10 +2,10 @@
 article_id: af_bd602c5d214aff8b7e221f0d
 declaration: theorem
 origin: bridged
-statement: formalized
-proof: formalized
-lean: ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankDLRk, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankDLAdmRk
 ---
+
+**Historical Route K variant, retired from the active build by issue #74.**
+
 
 # The main theorem from positive rank on the two curves of a slot choice
 

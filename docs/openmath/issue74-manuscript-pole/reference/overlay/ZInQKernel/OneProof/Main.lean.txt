@@ -1,0 +1,22 @@
+import ZInQKernel.OneProof.H.TailZ74
+import ZInQKernel.MainGreenTao
+
+/-!
+# The manuscript construction from exactly the remaining hypotheses
+
+The unchanged H reduction `sixContactMin_of_open67` supplies `SixContactMin`.
+The headline additionally assumes manuscript pole completeness (Theorem 5.2).
+The restricted converse and Route K are not inputs to this assembly.
+-/
+
+namespace ZInQ.OneProof
+
+/-- The frozen target from the open H bundles and manuscript PC. -/
+theorem frozenTarget
+    (r : HDec.HSyn.OpenResearchLeaves48) (t : HDec.HSyn.OpenTextbookLeaves18)
+    (l : HDec.HSyn.OpenAddedLeaves27) (hPC : PoleCompleteness) : FrozenTarget := by
+  sorry
+
+end ZInQ.OneProof
+
+#print axioms ZInQ.OneProof.frozenTarget

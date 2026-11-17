@@ -1,0 +1,15 @@
+import ZInQKernel.OneProof.Main
+import ZInQKernel.Size.Majorants.Templates
+import ZInQKernel.Hypotheses.PoleManuscript
+
+#print axioms ZInQ.Mult.pole_obstruction
+#print axioms ZInQ.Assembly.poleSoluble_no_negative_odd
+#print axioms ZInQ.Syntax.ev_polePolyX
+#print axioms ZInQ.Syntax.poleTemplate_rel_iff
+#print axioms ZInQ.Syntax.poleTemplate_witnesses
+#print axioms ZInQ.Syntax.poleTemplate_poly
+#print axioms ZInQ.Size.poleTemplate_maj
+#print axioms ZInQ.exists_bounded_integer_polynomial_defining_integers_of_poleCompleteness
+#print axioms ZInQ.exists_bounded_integer_polynomial_defining_integers_of_poleCompleteness_goodPrimeAP
+#print axioms ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
+#print axioms ZInQ.OneProof.frozenTarget

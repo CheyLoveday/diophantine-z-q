@@ -1,0 +1,12 @@
+{
+  "scope": "SYNTHETIC_OFFLINE_CONTRACT_AND_ROOT_INVENTORY_ONLY",
+  "odproof_commit": "9b433266045b593fbff65e72d5d88ad26584a287",
+  "contract_valid": "PASS",
+  "removed_premises_rejected": true,
+  "synthetic_inventory_positive": true,
+  "missing_headline_detected": true,
+  "native_lean_verification": "NOT_RUN",
+  "producer_authentication": "NOT_ESTABLISHED",
+  "resource_fields": "schema exercise only; not a job budget",
+  "root_references": "synthetic empty edges; not a Lean dependency-closure inventory"
+}

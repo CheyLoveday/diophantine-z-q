@@ -2,10 +2,10 @@
 article_id: af_f74996c1558c73365e2fa419
 declaration: theorem
 origin: bridged
-statement: formalized
-proof: formalized
-lean: ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankTYZ, ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_certifiedRankTYZCl
 ---
+
+**Historical Route K variant, retired from the active build by issue #74.**
+
 
 # The main theorem from the Tian–Yuan–Zhang forms of the rank hypothesis
 

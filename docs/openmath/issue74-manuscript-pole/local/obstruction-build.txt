@@ -1,0 +1,14 @@
+⚠ [9047/9051] Replayed ZInQ.PoleValuation
+warning: ZInQ/PoleValuation.lean:234:30: Variable name `hp2` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hp2
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9049/9051] Replayed ZInQKernel.Hypotheses.Pole
+warning: ZInQKernel/Hypotheses/Pole.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9050/9051] Replayed ZInQKernel.Multiplication.Certificate.Parity
+warning: ZInQKernel/Multiplication/Certificate/Parity.lean: imports `ZInQ.PoleValuation` from package `z_in_q`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9051/9051] Built ZInQKernel.Assembly.Local.PoleObstruction (33s)
+warning: ZInQKernel/Assembly/Local/PoleObstruction.lean: imports `ZInQ.PoleValuation` from package `z_in_q`, which is designed for use with the module system; consider adding `module` to the start of this file
+Build completed successfully (9051 jobs).

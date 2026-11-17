@@ -1,5 +1,5 @@
--- Task stab-clash: imports every module of ZInQKernel/Contrib/ (list generated with
--- git ls-files 'ZInQKernel/Contrib/*.lean'), to check that they all coexist in one environment.
+-- Active contribution coexistence check. Retired Route K assemblies are excluded.
+-- Original sources remain in Git; see docs/openmath/issue74-manuscript-pole/RETIREMENT.json.
 import ZInQKernel.Contrib.AVB1.AlgClosed
 import ZInQKernel.Contrib.AVB1.BaseChange
 import ZInQKernel.Contrib.AVB1.Poincare
@@ -87,38 +87,15 @@ import ZInQKernel.Contrib.G9.Partial
 import ZInQKernel.Contrib.G9.Reduction
 import ZInQKernel.Contrib.G9.Speiser
 import ZInQKernel.Contrib.G9.Statement
-import ZInQKernel.Contrib.GZDecomp.Decomp
-import ZInQKernel.Contrib.GZDecomp.Scope
-import ZInQKernel.Contrib.GZStatements.Compat
-import ZInQKernel.Contrib.GZStatements.Hensel
-import ZInQKernel.Contrib.GZStatements.Level
-import ZInQKernel.Contrib.GZStatements.Weak
-import ZInQKernel.Contrib.GZTheta.ALArith
-import ZInQKernel.Contrib.GZTheta.ALBasic
-import ZInQKernel.Contrib.GZTheta.ALFinal
-import ZInQKernel.Contrib.GZTheta.ALFricke
-import ZInQKernel.Contrib.GZTheta.ALMain
-import ZInQKernel.Contrib.GZTheta.ALRep
-import ZInQKernel.Contrib.GZTheta.BadCoeff
-import ZInQKernel.Contrib.GZTheta.Basic
 import ZInQKernel.Contrib.GZTheta.Eta
 import ZInQKernel.Contrib.GZTheta.Eta32
 import ZInQKernel.Contrib.GZTheta.EtaForm32
-import ZInQKernel.Contrib.GZTheta.EtaTheta
-import ZInQKernel.Contrib.GZTheta.Final
 import ZInQKernel.Contrib.GZTheta.HeckeComb
 import ZInQKernel.Contrib.GZTheta.JacobiGauss
-import ZInQKernel.Contrib.GZTheta.Main
-import ZInQKernel.Contrib.GZTheta.New32
-import ZInQKernel.Contrib.GZTheta.NewCMFinal
-import ZInQKernel.Contrib.GZTheta.NewCMProof
-import ZInQKernel.Contrib.GZTheta.Split
 import ZInQKernel.Contrib.GZTheta.ThetaUnique
 import ZInQKernel.Contrib.GZTheta.TripleProduct
-import ZInQKernel.Contrib.GZTheta.TwistFricke
 import ZInQKernel.Contrib.GaussFE.FunctionalEquation5
 import ZInQKernel.Contrib.GaussFE.Gauss
-import ZInQKernel.Contrib.GaussFE.Headline
 import ZInQKernel.Contrib.HeckeAll.Continuation
 import ZInQKernel.Contrib.HeckeAll.Iso
 import ZInQKernel.Contrib.HeckeAll.LocalCd
@@ -2067,7 +2044,6 @@ import ZInQKernel.Contrib.ZariskiConn.Basic
 import ZInQKernel.Contrib.SmoothFibre.Basic
 import ZInQKernel.Contrib.SmoothFibre.Statement
 import ZInQKernel.Contrib.TYZChain.Bridge
-import ZInQKernel.Contrib.TYZChain.Headline
 import ZInQKernel.Contrib.TYZChain.L321
 import ZInQKernel.Contrib.TYZChain.Lcal
 import ZInQKernel.Contrib.TYZChain.Lemma318

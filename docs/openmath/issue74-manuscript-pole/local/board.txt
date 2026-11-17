@@ -1,0 +1,2 @@
+note: scratch/contrib-kit/DischargesTest-output.txt was made with 36 open hypotheses, the Lean data has 32: rerun scratch/contrib-kit/DischargesTest.lean after the fold
+ok: 32 open hypotheses, all classified; 4 generated files up to date

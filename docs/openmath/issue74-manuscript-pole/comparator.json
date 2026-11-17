@@ -1,0 +1,32 @@
+{
+  "challenge_module": "Issue74Packet",
+  "solution_module": "Issue74Packet",
+  "theorem_names": [
+    "ZInQ.Mult.pole_obstruction",
+    "ZInQ.Assembly.poleSoluble_no_negative_odd",
+    "ZInQ.Syntax.ev_polePolyX",
+    "ZInQ.Syntax.poleTemplate_rel_iff",
+    "ZInQ.Syntax.poleTemplate_witnesses",
+    "ZInQ.Syntax.poleTemplate_poly",
+    "ZInQ.Size.poleTemplate_maj",
+    "ZInQ.exists_bounded_integer_polynomial_defining_integers_of_poleCompleteness",
+    "ZInQ.exists_bounded_integer_polynomial_defining_integers_of_poleCompleteness_goodPrimeAP",
+    "ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness",
+    "ZInQ.OneProof.frozenTarget"
+  ],
+  "definition_names": [
+    "ZInQ.polePoly",
+    "ZInQ.PoleSoluble",
+    "ZInQ.PoleCompleteness",
+    "ZInQ.poleS0",
+    "ZInQ.FrozenTarget",
+    "ZInQ.Syntax.poleT1",
+    "ZInQ.Syntax.poleT2",
+    "ZInQ.Syntax.poleTemplate"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

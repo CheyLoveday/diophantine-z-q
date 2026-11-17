@@ -1,33 +1,27 @@
-# Z is Diophantine in Q: status of the Lean formalization (2026-11-16)
+# Lean formalization status — 17 November 2026
 
-The manuscript *Z is Diophantine in Q* (November 5, 2026; `diophantine_zq.pdf` in
-https://github.com/elliotglazer/diophantine-z-q) constructs one polynomial P with integer coefficients such that a rational number q is an integer exactly when
-P(q, w) = 0 for some tuple w of rational numbers. This project checks that proof in the Lean 4 proof assistant,
-with the Mathlib library.
+The issue #74 branch restores the manuscript pole polynomial and changes the conditional
+headline to H plus manuscript pole completeness. The H reduction is retained from baseline
+`bf691da2236b494bb429caabc2f907d4ea428c4d`. Complete build, axiom reports, fresh hypothesis
+extraction and retained six-checker comparison are pending Open Math OS.
 
-- Upstream: since 2026-11-13 the Lean kernel is on the main branch of https://github.com/elliotglazer/diophantine-z-q
-  (pull request #36 merged #24's kernel, with CI checks for contributions)
-- Development fork: https://github.com/Deicyde/diophantine-z-q (Lean state of fork main c0f3d085, which adds proofs of
-  two of the headline's five hypotheses, a reduction of Gross–Zagier to two narrower statements from the literature
-  and a theorem of Shimura, a reduction of reading A (the reading of a theorem of Tian, Yuan and Zhang that the proof
-  uses; item 4 below) to four statements drawn from published results, among them the same theorem of Shimura, and a
-  proof of H from 29 theorems from the literature, with no glue statement left; a single Lean theorem,
-  `ZInQ.OneProof.frozenTarget`, states the whole proof with exactly the open statements as its hypotheses)
-- Start here to help: https://github.com/Deicyde/diophantine-z-q/issues/14 explains how to pick an open statement,
-  claim it and prove it; docs/one-proof/OPEN.md lists every open hypothesis with its Lean statement, its kind, its
-  source and who is working on it
-- Blueprint, with every statement, its dependencies and its Lean declaration: https://deicyde.github.io/diophantine-z-q/
-
-The open statements of the current proof (generated from docs/one-proof/OPEN.md; counts elsewhere in this file
-describe the fork main they name):
+Route K is retired from active aggregation; shared helpers used by H or density remain.
+See the [handoff](docs/openmath/issue74-manuscript-pole/HANDOFF.md) and
+[archive gate](docs/openmath/issue74-manuscript-pole/ARCHIVE.md).
+PC is unrefereed and remains assumed. Route AP and CAT₈ remain departures from the manuscript.
 
 <!-- open-count:begin -->
-**31 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves48`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
+**31 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves48`), plus 1 hypotheses outside H listed at the end of docs/one-proof/OPEN.md.
 
 * **Strict count: 4 published / 27 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+**Provisional: fresh Lean extraction is pending for the route transition.**
 * By kind: consequence 22, published 9.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
+
+## Historical status before the transition
+
+The text below is retained as a dated Route K record, not the current route.
 
 ## Status in three lines
 

@@ -12,3 +12,7 @@ hypotheses and its finite computations checked by the Lean kernel.
 <!-- Reference material goes in sources/. It is vault material rather than a
      chapter, so the site does not publish it: a statement's "## Sources" list
      links to the file in the repository instead. -->
+
+The issue #74 transition uses manuscript pole completeness as an explicit hypothesis.
+Route K headline pages are historical. The complete changed assembly and retained
+comparison await Open Math OS; the graph alone does not certify those checks.
