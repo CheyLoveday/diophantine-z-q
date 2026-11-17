@@ -45,15 +45,21 @@ for l in open("scratch/homfree-noemb/taint_out.txt"):
     if mod == "ZInQKernel.OneProof.Main": continue
     if short == "mk" or (len(parts) > 1 and re.match(r"^(Open)?TextbookLeaves\d*$", parts[-2])): continue
     items.append((mod2file(mod), short, None, []))
-carriers = [("LPrefix", "TextbookLeaves"), ("TailE", "OpenTextbookLeaves2"), ("TailI", "OpenTextbookLeaves3"),
-            ("TailK", "OpenTextbookLeaves4"), ("TailO", "OpenTextbookLeaves6"), ("TailX", "OpenTextbookLeaves7"),
-            ("TailZ4", "OpenTextbookLeaves8"), ("TailZ9", "OpenTextbookLeaves9"), ("TailZ11", "OpenTextbookLeaves10"),
-            ("TailZ32", "OpenTextbookLeaves11"), ("TailZ42", "OpenTextbookLeaves12"), ("TailZ44", "OpenTextbookLeaves13")]
-for fm, s in carriers:
-    ed = []
-    if s == "OpenTextbookLeaves13":
-        ed = [("  homFreeFiniteAlgClosed : " + HFC + "\n", "")]
-    items.append((H + fm + ".lean", s, ("structure",), ed))
+# carriers: read from Taint.lean's output; file found by its `structure` line
+import glob
+cl = [l for l in open("scratch/homfree-noemb/taint_out.txt") if l.startswith("carriers ")][0]
+cnames = sorted({c.split(".")[-1] for c in re.findall(r"[\w.]+", cl[len("carriers "):])},
+                key=lambda c: int(re.sub(r"\D", "", c) or 0))
+def cfile(c):
+    for f in sorted(glob.glob(H + "*.lean")):
+        if re.search(r"^structure " + c + r" ", open(f).read(), re.M):
+            return f
+    raise SystemExit("no file for " + c)
+TOPN = max(int(re.sub(r"\D", "", c) or 0) for c in cnames)
+TOP = "OpenTextbookLeaves%d" % TOPN
+for c in cnames:
+    ed = [("  homFreeFiniteAlgClosed : " + HFC + "\n", "")] if c == TOP else []
+    items.append((cfile(c), c, ("structure",), ed))
 
 # ---- part B: the consumers of T6 ----
 B = [
@@ -147,7 +153,7 @@ for s_ in ["belyiX1", "frobeniusDense", "leafSqrtCrit", "x1ModelExists"]:
 # part-A edits
 extra = {
  "textbookLeaves4_of_open6": [("t6 := t6_of_algClosed5 t.homFreeFiniteAlgClosed", "t6 := t.homFreeFiniteAlgClosed")],
- "openTextbookLeaves12_of_OpenTextbookLeaves13": [("homFreeFiniteAlgClosed := n.homFreeFiniteAlgClosed",
+ "openTextbookLeaves%d_of_OpenTextbookLeaves%d" % (TOPN - 1, TOPN): [("homFreeFiniteAlgClosed := n.homFreeFiniteAlgClosed",
     "homFreeFiniteAlgClosed := _root_.ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteC _root_.uniformizationLeafAll_proof n.mumfordTorsionAlgClosed")],
 }
 

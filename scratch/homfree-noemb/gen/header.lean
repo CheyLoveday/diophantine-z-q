@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.HomFreeFiniteAlgClosedReroute.Consumers
+
 /-! # homfree-noemb, part 2: the T6 branch rerouted to fields that embed into `ℂ`
 
 The open field `OpenTextbookLeaves13.homFreeFiniteAlgClosed` (Mumford §19 Thm 3 over every algebraically closed
