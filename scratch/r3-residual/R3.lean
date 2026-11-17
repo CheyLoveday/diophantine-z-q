@@ -491,4 +491,117 @@ theorem isAnStableHeight_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (A : P
 
 end Equiv
 
+/-! ## §7. The three leaves over the print's height, and their consumers -/
+
+section Leaves
+
+/-- **Leaf R21-Bost over the print's stable height** (J.-B. Bost, Sém. Bourbaki 795 (1994/95),
+Astérisque 237 (1996); display UNVERIFIED): `ZInQ.HeightFix.BostLowerBoundPrinted` verbatim with
+`IsPrintedStableHeight` replaced by `IsAnStableHeight` (the archimedean metric is the integral of
+`(i/2)^g η̃ ∧ η̄̃` over the complex manifold `A_τ(ℂ)^an`, read in all its holomorphic charts; Deligne's
+normalization `h_D = h_F + (g/2) log π`). -/
+def BostLowerBoundAn : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A : PkgI3.AbVar K) (g : ℕ), A.dim = (g : WithBot ℕ∞) →
+    ∀ x : ℝ, IsAnStableHeight A x →
+      -((g : ℝ) / 2 * Real.log (2 * Real.pi)) ≤ x + (g : ℝ) / 2 * Real.log Real.pi
+
+/-- **Leaf R19-GR over the print's stable height** (Gaudron–Rémond, Duke Math. J. 163 (2014),
+Thm 1.4, p. 2060; `κ` p. 2058; read by the locator audit): `ZInQ.HeightFix.GaudronRemondThm14Printed`
+verbatim with `IsPrintedStableHeight` replaced by `IsAnStableHeight`. -/
+def GaudronRemondThm14An : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (g : ℕ) (x : ℝ),
+    A.dim = (g : WithBot ℕ∞) → IsAnStableHeight A x →
+    (∃ φ : A.X ⟶ B.X, IsIsogeny φ) →
+    (∃ φ : A.X ⟶ B.X, IsIsogeny φ ∧ (isogDeg φ : ℝ) ≤ grKappa g (Module.finrank ℚ K) x) ∧
+    (∃ ψ : B.X ⟶ A.X, IsIsogeny ψ ∧ (isogDeg ψ : ℝ) ≤ grKappa g (Module.finrank ℚ K) x)
+
+/-- **The field `bostLowerBoundPrinted`** from the leaf over the print's height and T35
+(`uniformizationLeafAll`, `mumfordTorsionAlgClosed`). -/
+theorem bostLowerBoundPrinted_of_an' (hB : BostLowerBoundAn)
+    (hUL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : ZInQ.HeightFix.BostLowerBoundPrinted :=
+  fun K _ _ A g hg x hx =>
+    hB K A g hg x ((isAnStableHeight_iff (AvSplit.Final.h38 hUL hMT) A x).mpr hx)
+
+/-- **The field `bostLowerBoundPrinted`**, with `uniformizationLeafAll` filled by its proof. -/
+theorem bostLowerBoundPrinted_of_an (hB : BostLowerBoundAn)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : ZInQ.HeightFix.BostLowerBoundPrinted :=
+  bostLowerBoundPrinted_of_an' hB uniformizationLeafAll_proof hMT
+
+theorem gaudronRemondThm14Printed_of_an' (hGR : GaudronRemondThm14An)
+    (hUL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : ZInQ.HeightFix.GaudronRemondThm14Printed :=
+  fun K _ _ A B g x hg hx hiso =>
+    hGR K A B g x hg ((isAnStableHeight_iff (AvSplit.Final.h38 hUL hMT) A x).mpr hx) hiso
+
+/-- **The field `gaudronRemondThm14Printed`** from the leaf over the print's height and
+`mumfordTorsionAlgClosed` (`uniformizationLeafAll` filled by its proof). -/
+theorem gaudronRemondThm14Printed_of_an (hGR : GaudronRemondThm14An)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : ZInQ.HeightFix.GaudronRemondThm14Printed :=
+  gaudronRemondThm14Printed_of_an' hGR uniformizationLeafAll_proof hMT
+
+/-- The new leaf is never stronger than height-fix's (given T35). -/
+theorem bostLowerBoundAn_of_printed (h : ZInQ.HeightFix.BostLowerBoundPrinted)
+    (hT35 : ZInQ.LeafPush2.UniformizationExists) : BostLowerBoundAn :=
+  fun K _ _ A g hg x hx => h K A g hg x ((isAnStableHeight_iff hT35 A x).mp hx)
+
+/-- The new leaf is never stronger than height-fix's (given T35). -/
+theorem gaudronRemondThm14An_of_printed (h : ZInQ.HeightFix.GaudronRemondThm14Printed)
+    (hT35 : ZInQ.LeafPush2.UniformizationExists) : GaudronRemondThm14An :=
+  fun K _ _ A B g x hg hx hiso => h K A B g x hg ((isAnStableHeight_iff hT35 A x).mp hx) hiso
+
+end Leaves
+
+section Javanpeykar
+
+open CategoryTheory AlgebraicGeometry Limits
+open JavanpeykarDict JavanpeykarFix
+open LeafModCurves (IsCurve IsBelyiFunction)
+open ZInQ.LeafPush2 (ffAlgebra javanpeykarBound)
+
+/-- **Leaf R18-Javanpeykar over the print's stable height** (A. Javanpeykar, *Polynomial bounds for
+Arakelov invariants of Belyi curves*, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90; height
+identification p. 98 (arXiv:1403.6404v1 §2.3); locators recorded by the locator audit,
+docs/research/locators.md row R18; no statement check recorded). `JavanpeykarRebase.JavanpeykarPrintedMap`
+verbatim with `ZInQ.HeightFix.IsPrintedStableHeight` replaced by `IsAnStableHeight` (archimedean metric
+integrated over the complex manifold `A_τ(ℂ)^an`). -/
+def JavanpeykarAnMap : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (X : Over (Spec (CommRingCat.of K))) [IsCurve X]
+    [IsIntegral (baseChangeCurve X (AlgebraicClosure K)).left],
+    (∃ (n : Type) (_ : Finite n)
+      (i : (baseChangeCurve X (AlgebraicClosure K)).left ⟶
+        ℙ(n; Spec (CommRingCat.of (AlgebraicClosure K)))),
+      IsClosedImmersion i ∧ i ≫ ℙ(n; Spec (CommRingCat.of (AlgebraicClosure K))) ↘
+        Spec (CommRingCat.of (AlgebraicClosure K)) = (baseChangeCurve X (AlgebraicClosure K)).hom) →
+    ∀ (W : AbelianVariety (AlgebraicClosure K))
+      (repW : (picardFunctorDegree (baseChangeCurve X (AlgebraicClosure K)).hom 0).obj.RepresentableBy
+        W.group.X),
+      PicardTensorCompatible (baseChangeCurve X (AlgebraicClosure K)).hom W.group repW →
+    ∀ V : AbelianVariety K, Nonempty ((AbelianVariety.baseChange K (AlgebraicClosure K)).obj V ≅ W) →
+    1 ≤ genusBar X →
+    ∀ (β : (baseChangeCurve X (AlgebraicClosure K)).left ⟶ P1 (AlgebraicClosure K)) (d : ℕ),
+      IsBelyiMap (baseChangeCurve X (AlgebraicClosure K)) β d → 0 < d →
+    ∀ x : ℝ, IsAnStableHeight (ofVendored V) x → x ≤ javanpeykarBound (genusBar X) d
+
+theorem javanpeykarPrintedMap_of_an' (hJ : JavanpeykarAnMap)
+    (hUL : BPAnalytic.Uniformization.UniformizationLeafAll)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : JavanpeykarRebase.JavanpeykarPrintedMap := by
+  intro K _ _ X _ _ hproj W repW htcW V hVW hg1 β d hβ hd0 x hx
+  exact hJ K X hproj W repW htcW V hVW hg1 β d hβ hd0 x
+    ((isAnStableHeight_iff (AvSplit.Final.h38 hUL hMT) _ x).mpr hx)
+
+/-- **The field `javanpeykarPrintedMapHF`** from the leaf over the print's height and
+`mumfordTorsionAlgClosed` (`uniformizationLeafAll` filled by its proof). -/
+theorem javanpeykarPrintedMap_of_an (hJ : JavanpeykarAnMap)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : JavanpeykarRebase.JavanpeykarPrintedMap :=
+  javanpeykarPrintedMap_of_an' hJ uniformizationLeafAll_proof hMT
+
+/-- The new leaf is never stronger than javanpeykar-rebase's (given T35). -/
+theorem javanpeykarAnMap_of_printed (h : JavanpeykarRebase.JavanpeykarPrintedMap)
+    (hT35 : ZInQ.LeafPush2.UniformizationExists) : JavanpeykarAnMap := by
+  intro K _ _ X _ _ hproj W repW htcW V hVW hg1 β d hβ hd0 x hx
+  exact h K X hproj W repW htcW V hVW hg1 β d hβ hd0 x ((isAnStableHeight_iff hT35 _ x).mp hx)
+
+end Javanpeykar
+
 end ZInQ.R3Residual
