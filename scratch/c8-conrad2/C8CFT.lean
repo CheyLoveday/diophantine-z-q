@@ -273,6 +273,161 @@ theorem cftFiniteQ_of_minkowski (hM : MinkowskiInertiaQ) : CFTFiniteQ := by
   rw [mem_rootsOfUnity, ← hφ]
   exact htriv g
 
+
+/-! ## `InertiaFiniteAwayFromP` from the inertia dictionary and Tau Ceti's local class field theory at `q` -/
+
+/-- `x ↦ x^n` is an isometry near `1` when `p ∤ n`. -/
+theorem norm_pow_sub_one_eq_of_coprime (p : ℕ) [Fact p.Prime] {x : PadicAlgCl p} (h : ‖x - 1‖ < 1) {n : ℕ}
+    (hn : p.Coprime n) : ‖x ^ n - 1‖ = ‖x - 1‖ := by
+  set S := ∑ j ∈ Finset.range n, x ^ j
+  have hS : ‖S - n‖ < 1 := by
+    have : S - n = ∑ j ∈ Finset.range n, (x ^ j - 1) := by
+      simp [S, Finset.sum_sub_distrib]
+    rw [this]
+    exact lt_of_le_of_lt (IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _)
+      fun j _ => norm_pow_sub_one_le p h j) h
+  have hn1 : ‖(n : PadicAlgCl p)‖ = 1 := by
+    rw [norm_natCast_K]; exact Padic.norm_natCast_eq_one_iff.2 hn
+  have hS1 : ‖S‖ = 1 := by
+    have h2 : ‖S - n‖ ≠ ‖(n : PadicAlgCl p)‖ := by rw [hn1]; exact hS.ne
+    have := IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm h2
+    rw [sub_add_cancel, hn1] at this
+    rw [this]; exact max_eq_right hS.le
+  rw [← geom_sum_mul, norm_mul, hS1, one_mul]
+
+/-- Some power `ψ^m`, `m > 0`, takes values in `V = smallUnits p`. -/
+theorem exists_pow_mem_smallUnits (p : ℕ) [Fact p.Prime] (ψ : GaloisChar p) :
+    ∃ m : ℕ, 0 < m ∧ ∀ g, ψ.toHom g ^ m ∈ smallUnits p := by
+  let H : Subgroup PkgI4.GQ := (smallUnits p).comap ψ.toHom
+  have hHopen : IsOpen (H : Set PkgI4.GQ) := (isOpen_smallUnits p).preimage ψ.continuous_toHom
+  haveI hHnormal : H.Normal := ⟨fun n hn g => by
+    change ψ.toHom (g * n * g⁻¹) ∈ smallUnits p
+    rw [map_mul, map_mul, mul_comm (ψ.toHom g), mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one]
+    exact hn⟩
+  haveI : Finite (PkgI4.GQ ⧸ H) := finite_quot_open ⟨H, hHopen⟩
+  haveI : H.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
+  refine ⟨H.index, Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero, fun g => ?_⟩
+  have := Subgroup.pow_index_mem H g
+  change ψ.toHom (g ^ H.index) ∈ smallUnits p at this
+  rwa [map_pow] at this
+
+/-- For a unit `u` of `ℤ_q`, `u^{(q-1) q^n} → 1`. -/
+theorem tendsto_pow_units (q : ℕ) [Fact q.Prime] (u : ℤ_[q]ˣ) :
+    Filter.Tendsto (fun n : ℕ => unitsQp q ((u ^ (q - 1)) ^ q ^ n)) Filter.atTop (nhds 1) := by
+  rw [Units.isEmbedding_val₀.tendsto_nhds_iff]
+  set w : ℤ_[q] := ((u ^ (q - 1) : ℤ_[q]ˣ) : ℤ_[q])
+  have hw : (q : ℤ_[q]) ∣ w - 1 := by
+    have h0 : PadicInt.toZMod (w - 1) = 0 := by
+      have hu : PadicInt.toZMod (u : ℤ_[q]) ≠ 0 := by
+        intro h0
+        have := congrArg PadicInt.toZMod (u.mul_inv)
+        rw [map_mul, h0, zero_mul, map_one] at this
+        exact zero_ne_one this
+      simp only [w, Units.val_pow_eq_pow_val, map_sub, map_pow, map_one]
+      rw [ZMod.pow_card_sub_one_eq_one hu, sub_self]
+    have : w - 1 ∈ IsLocalRing.maximalIdeal ℤ_[q] := by
+      rw [← PadicInt.ker_toZMod]; exact h0
+    rw [PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton] at this
+    exact this
+  have hbound : ∀ n : ℕ, ‖((((u ^ (q - 1)) ^ q ^ n : ℤ_[q]ˣ) : ℤ_[q]) : ℚ_[q]) - 1‖ ≤ ((q : ℝ)⁻¹) ^ (n + 1) := by
+    intro n
+    have hd := dvd_sub_pow_of_dvd_sub hw n
+    rw [one_pow] at hd
+    have hmem : w ^ q ^ n - 1 ∈ (Ideal.span {(q : ℤ_[q]) ^ (n + 1)} : Ideal ℤ_[q]) :=
+      Ideal.mem_span_singleton.2 hd
+    have := (PadicInt.norm_le_pow_iff_mem_span_pow (w ^ q ^ n - 1) (n + 1)).2 hmem
+    have e : ((((u ^ (q - 1)) ^ q ^ n : ℤ_[q]ˣ) : ℤ_[q]) : ℚ_[q]) - 1 = ((w ^ q ^ n - 1 : ℤ_[q]) : ℚ_[q]) := by
+      simp [w, Units.val_pow_eq_pow_val]
+    rw [e, PadicInt.norm_coe]
+    refine this.trans (le_of_eq ?_)
+    rw [zpow_neg, zpow_natCast, inv_pow]
+  have hlim : Filter.Tendsto (fun n : ℕ => ((q : ℝ)⁻¹) ^ (n + 1)) Filter.atTop (nhds 0) := by
+    have h1 : (q : ℝ)⁻¹ < 1 := inv_lt_one_of_one_lt₀ (by exact_mod_cast (Fact.out : q.Prime).one_lt)
+    exact (tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity) h1).comp (Filter.tendsto_add_atTop_nat 1)
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  exact squeeze_zero (fun n => norm_nonneg _) hbound hlim
+
+/-- **`InertiaFiniteAwayFromP` proved** from the inertia dictionary `InertiaAtPDecomp` (at the prime `q`) and Tau
+Ceti's local class field theory of `ℚ_q`: on `I_{ℚ_q}`, `ψ^m` (values in `V`) factors through the Artin symbols of
+`ℤ_q^×`; `u^{(q-1)q^n} → 1`, while `x ↦ x^{q^n}` is an isometry on `V` (`q ≠ p`), so `ψ^{m(q-1)} = 1` on inertia, and
+`ψ^m = 1` there since `V` has no torsion. -/
+theorem inertiaFiniteAwayFromP_of_decomp (hB : InertiaAtPDecomp) : InertiaFiniteAwayFromP := by
+  intro p _ ψ q hq hqp v hv
+  haveI : Fact q.Prime := ⟨hq⟩
+  obtain ⟨m, hm, hV⟩ := exists_pow_mem_smallUnits p ψ
+  have key : ∀ τ : v.inertiaSubgroup ℚ, ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) ^ m = 1 := by
+    intro τ
+    obtain ⟨σ, g, hσ, hτ⟩ := hB q v hv τ
+    rw [hτ, map_mul, map_mul, mul_comm (ψ.toHom g), mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one]
+    obtain ⟨u, hu⟩ := exists_unit_isArtinLift q σ hσ
+    set y := ψ.toHom (PkgI4.decomp q σ) ^ m with hy_def
+    let f : Field.absoluteGaloisGroup ℚ_[q] →ₜ* (PadicAlgCl p)ˣ :=
+      { toMonoidHom := (ψ.toHom ^ m).comp (PkgI4.decomp q)
+        continuous_toFun := by
+          have hd : Continuous (PkgI4.decomp q) :=
+            (Field.absoluteGaloisGroup.map (algebraMap ℚ ℚ_[q])).continuous
+          exact (ψ.continuous_toHom.comp hd).pow m }
+    let Φ := TopologicalAbelianization.lift f
+    have hΦ : ∀ n : ℕ, Φ (TauCeti.ClassFieldTheory.artinMap ℚ_[q] (unitsQp q ((u ^ (q - 1)) ^ q ^ n))) =
+        y ^ ((q - 1) * q ^ n) := by
+      intro n
+      have hl : IsArtinLift q (σ ^ ((q - 1) * q ^ n)) (unitsQp q ((u ^ (q - 1)) ^ q ^ n)) := by
+        unfold IsArtinLift at hu ⊢
+        have e1 : unitsQp q ((u ^ (q - 1)) ^ q ^ n) = unitsQp q u ^ ((q - 1) * q ^ n) := by
+          simp only [unitsQp, map_pow, ← pow_mul]
+        rw [e1, map_pow, ← hu]
+        rfl
+      unfold IsArtinLift at hl
+      rw [← hl]
+      change f (σ ^ ((q - 1) * q ^ n)) = _
+      change (ψ.toHom ^ m) (PkgI4.decomp q (σ ^ ((q - 1) * q ^ n))) = _
+      rw [map_pow, MonoidHom.pow_apply, map_pow, hy_def, ← pow_mul, ← pow_mul, Nat.mul_comm]
+    have htend : Filter.Tendsto (fun n : ℕ => y ^ ((q - 1) * q ^ n)) Filter.atTop (nhds 1) := by
+      have hc : Continuous (fun x : ℚ_[q]ˣ => Φ (TauCeti.ClassFieldTheory.artinMap ℚ_[q] x)) :=
+        Φ.continuous.comp (TauCeti.ClassFieldTheory.continuous_artinMap (K := ℚ_[q]))
+      have := (hc.tendsto 1).comp (tendsto_pow_units q u)
+      simp only [map_one] at this
+      refine this.congr fun n => ?_
+      exact hΦ n
+    -- `z = y^{q-1} ∈ V`, and `‖z^{q^n} - 1‖ = ‖z - 1‖` is constant and tends to `0`
+    have hz : (y ^ (q - 1) : (PadicAlgCl p)ˣ) ∈ smallUnits p := (smallUnits p).pow_mem (hV _) _
+    have hz1 : ‖((y ^ (q - 1) : (PadicAlgCl p)ˣ) : PadicAlgCl p) - 1‖ < 1 := hz.trans (norm_p_K_lt_one p)
+    have hcop : ∀ n : ℕ, p.Coprime (q ^ n) := fun n =>
+      Nat.Coprime.pow_right n ((Nat.coprime_primes Fact.out hq).2 (Ne.symm hqp))
+    have hconst : ∀ n : ℕ, ‖((y ^ ((q - 1) * q ^ n) : (PadicAlgCl p)ˣ) : PadicAlgCl p) - 1‖ =
+        ‖((y ^ (q - 1) : (PadicAlgCl p)ˣ) : PadicAlgCl p) - 1‖ := by
+      intro n
+      rw [pow_mul, Units.val_pow_eq_pow_val]
+      exact norm_pow_sub_one_eq_of_coprime p hz1 (hcop n)
+    have hval : Filter.Tendsto (fun n : ℕ => ((y ^ ((q - 1) * q ^ n) : (PadicAlgCl p)ˣ) : PadicAlgCl p))
+        Filter.atTop (nhds 1) := by
+      have := (Units.continuous_val.tendsto 1).comp htend
+      rwa [Units.val_one] at this
+    have h0 : ‖((y ^ (q - 1) : (PadicAlgCl p)ˣ) : PadicAlgCl p) - 1‖ = 0 := by
+      have h2 := (tendsto_iff_norm_sub_tendsto_zero.1 hval)
+      simp only [hconst] at h2
+      exact tendsto_nhds_unique tendsto_const_nhds h2
+    have hzq : y ^ (q - 1) = 1 := Units.ext (sub_eq_zero.1 (norm_eq_zero.1 h0))
+    have hq1 : 0 < q - 1 := Nat.sub_pos_of_lt hq.one_lt
+    exact Units.ext (eq_one_of_pow_eq_one_small p (hV _) hq1
+      (by rw [← Units.val_pow_eq_pow_val, hzq, Units.val_one]))
+  have hfinR : (rootsOfUnity m (PadicAlgCl p) : Set (PadicAlgCl p)ˣ).Finite := by
+    haveI : NeZero m := ⟨hm.ne'⟩
+    exact Set.finite_coe_iff.mp (inferInstance : Finite (rootsOfUnity m (PadicAlgCl p)))
+  refine hfinR.subset ?_
+  rintro _ ⟨τ, rfl⟩
+  change _ ∈ rootsOfUnity m (PadicAlgCl p)
+  rw [mem_rootsOfUnity]
+  exact key τ
+
+/-- **`FiniteOfLocAlgTrivialQ` from two dictionary statements**: the inertia dictionary `InertiaAtPDecomp` and
+`MinkowskiInertiaQ` (Mathlib's Minkowski theorem read on inertia groups of places of `ℚ̄`). -/
+theorem finiteOfLocAlgTrivialQ_of_dicts (hB : InertiaAtPDecomp) (hM : MinkowskiInertiaQ) :
+    FiniteOfLocAlgTrivialQ :=
+  finiteOfLocAlgTrivialQ_of_pieces (inertiaFiniteAwayFromP_of_decomp hB) hB (cftFiniteQ_of_minkowski hM)
+
 #print axioms cftFiniteQ_of_minkowski
+#print axioms inertiaFiniteAwayFromP_of_decomp
+#print axioms finiteOfLocAlgTrivialQ_of_dicts
 
 end HDec.G0Galois.C8Conrad

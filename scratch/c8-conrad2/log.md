@@ -52,3 +52,15 @@ Base: wip/c8-conrad a411466b4, merged origin/main 97247ce1c (merge cff986a75). T
 - Dry run recompiled against the new C8Inputs: frozenTarget_c8 standard axioms.
 - `#discharges` (`Discharges.lean`, `discharges_out.txt`): 35 open hypotheses, 16073 theorems checked, 19 discharge
   one, none from C8Conrad/C8LocAlg/C8Poincare (expected: no bundle field is discharged).
+
+## 5. FiniteOfLocAlgTrivialQ from two dictionary statements (VERIFIED, compiled)
+- `scratch/c8-conrad2/C8CFT.lean` = `ZInQKernel/Contrib/OneProof/C8CFT.lean`, standard axioms:
+  - torsion: `eq_one_of_pow_eq_one_coprime`, `eq_one_of_pow_p_eq_one`, `eq_one_of_pow_eq_one_small` (no torsion in
+    `V = {‖u-1‖ < ‖p‖}` of Qbar_p^x), `smallUnits` (open subgroup), `exists_pow_mem_smallUnits`;
+  - `eq_one_of_inertia_trivial` (Krull: `InfiniteGalois.fixingSubgroup_fixedField` + MinkowskiInertiaQ);
+  - `cftFiniteQ_of_minkowski : MinkowskiInertiaQ → CFTFiniteQ` (does not use "unramified outside T");
+  - `inertiaFiniteAwayFromP_of_decomp : InertiaAtPDecomp → InertiaFiniteAwayFromP` (Tau Ceti LCFT at q,
+    `tendsto_pow_units`, isometry `norm_pow_sub_one_eq_of_coprime`);
+  - `finiteOfLocAlgTrivialQ_of_dicts : InertiaAtPDecomp → MinkowskiInertiaQ → FiniteOfLocAlgTrivialQ`.
+- C8Inputs now: conradAppBQp, tateTwistInvariantsInertia, twistCharHT0, inertiaAtPDecomp, minkowskiInertiaQ.
+  lake build C8Poincare ok; dry run recompiled, frozenTarget_c8 standard axioms.

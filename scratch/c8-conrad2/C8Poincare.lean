@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.C8LocAlg
+import ZInQKernel.Contrib.OneProof.C8CFT
 import ZInQKernel.Contrib.OneProof.CartierSmooth
 import ZInQKernel.Contrib.OneProof.GeomConnOfRationalPoint
 import ZInQKernel.Contrib.OneProof.GroupSchemeEquidim
@@ -26,23 +26,22 @@ noncomputable section
 namespace HDec.G0Galois.C8Conrad
 
 /-- The inputs of the C8 reroute that are not in the chain: the leaves `conradAppBQp` (Conrad App. B, the manuscript's
-citation) and `tateTwistInvariantsInertia` (Tate 1967 §3.3 Thm 2 over the completion of `K^{ur}`), and the glue still
-open (`twistCharHT0`; `inertiaFiniteAwayFromP`, `inertiaAtPDecomp`, `cftFiniteQ`, the pieces of
-`FiniteOfLocAlgTrivialQ`). `LocAlgExponentEqWeight` is proved (`C8LocAlg`). -/
+citation) and `tateTwistInvariantsInertia` (Tate 1967 §3.3 Thm 2 over the completion of `K^{ur}`), the two
+dictionary statements `inertiaAtPDecomp` and `minkowskiInertiaQ` (GLUE), and the glue `twistCharHT0` (open).
+`LocAlgExponentEqWeight` (`C8LocAlg`) and `FiniteOfLocAlgTrivialQ` (`C8CFT`) are proved from these. -/
 structure C8Inputs : Prop where
   conradAppBQp : ConradAppBQp
   tateTwistInvariantsInertia : TateTwistInvariantsInertia
   twistCharHT0 : TwistCharHT0
-  inertiaFiniteAwayFromP : InertiaFiniteAwayFromP
   inertiaAtPDecomp : InertiaAtPDecomp
-  cftFiniteQ : CFTFiniteQ
+  minkowskiInertiaQ : MinkowskiInertiaQ
 
 /-- **C8's consumer from the C8 inputs** (the replacement term at `g8_g12_of_leaves3_hf_pz_eb`). -/
 theorem g12DetPZ_of_inputs (hR : HSyn.EigenformRepExists) (hHT : PkgI4.EigenformHT) (c : C8Inputs)
     (h9 : G9GlueNoT23) (hdR : PkgI4.DeRhamComparison) : G12DetPZ :=
   g12DetPZ_of_conrad hR hHT c.conradAppBQp c.twistCharHT0
     (locAlgExponentEqWeight_of_tateInertia c.tateTwistInvariantsInertia)
-    (finiteOfLocAlgTrivialQ_of_pieces c.inertiaFiniteAwayFromP c.inertiaAtPDecomp c.cftFiniteQ) h9 hdR
+    (finiteOfLocAlgTrivialQ_of_dicts c.inertiaAtPDecomp c.minkowskiInertiaQ) h9 hdR
 
 end HDec.G0Galois.C8Conrad
 
