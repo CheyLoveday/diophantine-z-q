@@ -1,104 +1,36 @@
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Shapiro
+import ZInQKernel.Contrib.OneProof.RC.HeegnerAlgebra.InterfacesTransfer
 
 /-!
 # HeegnerCohomology, part 8: RC10's `ShapiroTransferInput` from the explicit Shapiro map
 
 Manuscript `diophantine_zq.tex`, proof of Proposition `ex:arith-finite-heegner`, paragraph 7,
 tex 3202–3249.  RC10 records as a `PRINT` input (Nekovář, *Selmer complexes*, 8.1.1–8.1.6) the
-interface `ShapiroTransferInput` (file
-`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/InterfacesTransfer.lean`, snapshot commit
-79c2699a5): on classes, the explicit degree-one transfer (H21) computes Shapiro's isomorphism
-followed by the coefficient map (H20).  It is copied verbatim below (namespace `RC10`, together
-with the RC10 definitions it mentions: `Rtw`, `hc`, `hc_mem`, `hH`, `T1`).
+interface `ZInQ.Manuscript.RC.HeegnerAlgebra.ShapiroTransferInput` (file
+`ZInQKernel/Contrib/OneProof/RC/HeegnerAlgebra/InterfacesTransfer.lean`): on classes, the explicit
+degree-one transfer (H21) computes Shapiro's isomorphism followed by the coefficient map (H20).
 
-`shapiroTransferInputGenuine` (`PROVED`) constructs it, so the printed input is not needed:
+`shapiroTransferInputGenuine` (`PROVED`) constructs it with genuine `H¹ = Z¹/B¹` on both sides, so
+the printed input is not needed:
 
-* `shapiro` is the map on classes induced by the explicit Shapiro cochain map into the induced
-  module (`TwistedTransfer.Sh`, a section of Shapiro's restriction-and-evaluation map by
+* `shapiro` is the map on `H¹` induced by the explicit Shapiro cochain map into the induced module
+  (`TwistedTransfer.Sh`, a section of Shapiro's restriction-and-evaluation map by
   `TwistedTransfer.shapiro_section`, hence inducing the inverse of Shapiro's isomorphism) followed
   by the coefficient map (H20) (`TwistedTransfer.coeff`, equivariant by
   `TwistedTransfer.coeff_equivariant`);
 * `computes` is `TwistedTransfer.coeff_shapiro_eq_transfer` in degree one.
 
-Classes.  The interface asks for `clsG : (G → M) → H1G` additive on *all* cochains and killing
-coboundaries.  We take `H1G = C¹(G, M(θ)) / B¹(G, M(θ))` (cochains modulo coboundaries) and
-`clsG` the quotient map; `H¹(G, M(θ)) = Z¹/B¹` is the subgroup of classes of cocycles, and two
-cocycles have the same class in `H¹` exactly when they have the same image in `C¹/B¹`.  Likewise
-`H1H = C¹(H, M)/B¹(H, M)`.  (A genuine `H¹` cannot receive an additive map defined on all
-cochains that restricts to the class map on cocycles unless `Z¹` is a direct summand of `C¹`; the
-interface would read more naturally with `clsG` defined on cocycles.  This is recorded in the lane
-notes for RC10.)  Cochains here are arbitrary functions, as in RC10's interface; no continuity
-is involved.
+Cochains are arbitrary functions, as in RC10's interface; no continuity is involved.
 -/
 
 namespace ZInQ.Contrib.CloudB3RC53.HeegnerCohomology
 
-namespace RC10
-
-open Finset
-
-section H21
-
-variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] [Fintype (G ⧸ H)]
-variable {A M : Type*} [CommRing A] [AddCommGroup M] [Module A M]
-
-/-- Verbatim copy of RC10's `Rtw` (snapshot 79c2699a5): `R(g) = θ(g) ρ_T(g)`. -/
-def Rtw (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) (g : G) : Module.End A M :=
-  (θ (QuotientGroup.mk g) : A) • ρ g
-
-/-- Verbatim copy of RC10's `hc`: `h(g,δ) = r_{gδ}⁻¹ g r_δ`. -/
-def hc (r : G ⧸ H → G) (g : G) (δ : G ⧸ H) : G := (r (QuotientGroup.mk g * δ))⁻¹ * g * r δ
-
-omit [Fintype (G ⧸ H)] in
-/-- Verbatim copy of RC10's `hc_mem`. -/
-theorem hc_mem (r : G ⧸ H → G) (hr : ∀ δ, (QuotientGroup.mk (r δ) : G ⧸ H) = δ) (g : G)
-    (δ : G ⧸ H) : hc H r g δ ∈ H := by
-  unfold hc
-  rw [← QuotientGroup.eq_one_iff, QuotientGroup.mk_mul, QuotientGroup.mk_mul,
-    QuotientGroup.mk_inv, hr, hr]
-  group
-
-/-- Verbatim copy of RC10's `hH`. -/
-def hH (r : G ⧸ H → G) (hr : ∀ δ, (QuotientGroup.mk (r δ) : G ⧸ H) = δ) (g : G) (δ : G ⧸ H) :
-    H :=
-  ⟨hc H r g δ, hc_mem H r hr g δ⟩
-
-variable (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) (r : G ⧸ H → G)
-  (hr : ∀ δ, (QuotientGroup.mk (r δ) : G ⧸ H) = δ)
-
-/-- Verbatim copy of RC10's `T1`: `(𝒯_θ b)(g) = ∑_δ θ(r_{gδ}) ρ_T(r_{gδ}) b(h(g,δ))`. -/
-def T1 (b : H → M) : G → M :=
-  fun g => ∑ δ, Rtw H ρ θ (r (QuotientGroup.mk g * δ)) (b (hH H r hr g δ))
-
-end H21
-
-section Shapiro
-
-variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] [Fintype (G ⧸ H)]
-variable {A M : Type*} [CommRing A] [AddCommGroup M] [Module A M]
-
-/-- Verbatim copy of RC10's `ShapiroTransferInput` (snapshot 79c2699a5).  `PRINT` there
-(Nekovář, Selmer complexes, 8.1.1–8.1.6): for one chosen section `r₀`, the explicit transfer
-(H21) of a cocycle represents `shapiro` of its class. -/
-structure ShapiroTransferInput (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) (H1H H1G : Type*)
-    [AddCommGroup H1H] [AddCommGroup H1G] where
-  clsH : (H → M) → H1H
-  clsG : (G → M) → H1G
-  shapiro : H1H →+ H1G
-  clsG_add : ∀ c c' : G → M, clsG (c + c') = clsG c + clsG c'
-  clsG_cob : ∀ w : M, clsG (fun g => Rtw H ρ θ g w - w) = 0
-  r₀ : G ⧸ H → G
-  hr₀ : ∀ δ, (QuotientGroup.mk (r₀ δ) : G ⧸ H) = δ
-  computes : ∀ b : H → M, (∀ x y : H, b (x * y) = b x + ρ x (b y)) →
-    clsG (T1 H ρ θ r₀ hr₀ b) = shapiro (clsH b)
-
-end Shapiro
-
-end RC10
 
 namespace TwistedTransfer
 
 open Finset
+open ZInQ.Manuscript.RC.HeegnerAlgebra (ShapiroTransferInput cocyclesH cocyclesG T1 Rtw
+  coboundary_mem_cocyclesG T1_mem_cocyclesG)
 
 variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] [Fintype (G ⧸ H)]
   {A M : Type*} [CommRing A] [AddCommGroup M] [Module A M]
@@ -107,7 +39,7 @@ variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] [Fintype (G ⧸ H)]
 
 /-- RC10's degree-one transfer is the degree-one case of `T`. -/
 theorem rc10_T1_eq (b : H → M) (g : G) :
-    RC10.T1 H ρ θ r hr b g = T H r hr ρ θ 1 (fun x => b (x 0)) (fun _ => g) := by
+    T1 H ρ θ r hr b g = T H r hr ρ θ 1 (fun x => b (x 0)) (fun _ => g) := by
   rw [T_one]
   rfl
 
@@ -129,7 +61,7 @@ noncomputable def shapiroCoeff1 : (H → M) →+ (G → M) where
     simp only [coeff_shapiro_eq_transfer, T, Pi.add_apply, map_add, sum_add_distrib]
 
 theorem shapiroCoeff1_apply (c : H → M) (g : G) :
-    shapiroCoeff1 H ρ θ r hr c g = RC10.T1 H ρ θ r hr c g := by
+    shapiroCoeff1 H ρ θ r hr c g = T1 H ρ θ r hr c g := by
   show coeff H θ _ = _
   rw [coeff_shapiro_eq_transfer, rc10_T1_eq]
 
@@ -145,24 +77,44 @@ theorem shapiroCoeff1_B1 :
   simp only [AddMonoidHom.coe_mk, ZeroHom.coe_mk] at h ⊢
   rw [shapiroCoeff1_apply, rc10_T1_eq, ← h]
 
-/-- **RC10's `ShapiroTransferInput`, constructed** (tex 3202–3249), `PROVED`: with
-`H1H = C¹(H, M)/B¹`, `H1G = C¹(G, M(θ))/B¹` (see the module docstring), the classes the
-quotient maps, `shapiro` induced by "Shapiro, then (H20)", and any section `r₀`. -/
+/-- "Shapiro, then (H20)" on cocycles. -/
+noncomputable def shapiroCoeffZ : cocyclesH H ρ →+ cocyclesG H ρ θ :=
+  AddMonoidHom.codRestrict ((shapiroCoeff1 H ρ θ r hr).comp (cocyclesH H ρ).subtype)
+    (cocyclesG H ρ θ) (fun b => by
+      have : shapiroCoeff1 H ρ θ r hr b = T1 H ρ θ r hr b := funext (shapiroCoeff1_apply H ρ θ r hr b)
+      show shapiroCoeff1 H ρ θ r hr b ∈ cocyclesG H ρ θ
+      rw [this]
+      exact T1_mem_cocyclesG H ρ θ r hr b b.2)
+
+/-- `H¹(H, M) = Z¹/B¹`. -/
+abbrev H1H := cocyclesH H ρ ⧸ (B1 (A := A) (M := M) (fun x : H => ρ (x : G))).addSubgroupOf
+  (cocyclesH H ρ)
+
+/-- `H¹(G, M(θ)) = Z¹/B¹`. -/
+abbrev H1G := cocyclesG H ρ θ ⧸ (B1 (fun g : G => R H ρ θ g)).addSubgroupOf (cocyclesG H ρ θ)
+
+/-- **RC10's `ShapiroTransferInput`, constructed** (tex 3202–3249), `PROVED`, with genuine
+`H¹ = Z¹/B¹` on both sides, the classes the quotient maps, `shapiro` induced by "Shapiro, then
+(H20)", and any section `r₀ = r`. -/
 noncomputable def shapiroTransferInputGenuine :
-    RC10.ShapiroTransferInput H ρ θ ((H → M) ⧸ B1 (A := A) (M := M) (fun x : H => ρ (x : G)))
-      ((G → M) ⧸ B1 (fun g : G => R H ρ θ g)) where
+    ShapiroTransferInput H ρ θ (H1H H ρ) (H1G H ρ θ) where
   clsH := QuotientAddGroup.mk
-  clsG := QuotientAddGroup.mk
-  shapiro := QuotientAddGroup.map _ _ (shapiroCoeff1 H ρ θ r hr) (shapiroCoeff1_B1 H ρ θ r hr)
-  clsG_add c c' := QuotientAddGroup.mk_add _ _ _
-  clsG_cob w := (QuotientAddGroup.eq_zero_iff _).mpr ⟨w, rfl⟩
+  clsG := QuotientAddGroup.mk' _
+  shapiro := QuotientAddGroup.map _ _ (shapiroCoeffZ H ρ θ r hr) (fun x hx => by
+    rw [AddSubgroup.mem_comap, AddSubgroup.mem_addSubgroupOf]
+    rw [AddSubgroup.mem_addSubgroupOf] at hx
+    exact shapiroCoeff1_B1 H ρ θ r hr hx)
+  clsG_cob w := by
+    rw [QuotientAddGroup.mk'_apply, QuotientAddGroup.eq_zero_iff, AddSubgroup.mem_addSubgroupOf]
+    exact ⟨w, rfl⟩
   r₀ := r
   hr₀ := hr
-  computes b _ := by
-    rw [QuotientAddGroup.map_mk]
+  computes b := by
+    rw [QuotientAddGroup.mk'_apply, QuotientAddGroup.map_mk]
     congr 1
+    apply Subtype.ext
     funext g
-    rw [shapiroCoeff1_apply]
+    exact (shapiroCoeff1_apply H ρ θ r hr b g).symm
 
 end TwistedTransfer
 
