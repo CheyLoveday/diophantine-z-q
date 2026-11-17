@@ -141,8 +141,6 @@ def main():
         cs = parent(c)
         short = c.split(".")[-1] if cs is None else cs.split(".")[-1] + "." + c.split(".")[-1]
         items.append((mod2file(mod), short, None, c))
-    for s in sorted(carriers):
-        items.append((cfile[s], s.split(".")[-1], ("structure",), s))
     # module order
     order, seen = [], set()
 
@@ -162,6 +160,11 @@ def main():
     sys.setrecursionlimit(100000)
     visit("ZInQKernel.OneProof.H.TailZ80")
     rank = {f: i for i, f in enumerate(order)}
+    for s in sorted(carriers):
+        if cfile[s] not in rank:
+            # d2a6b: bundles above the chain top (TailZ81-83's OpenResearchLeaves55-57) are not copied
+            continue
+        items.append((cfile[s], s.split(".")[-1], ("structure",), s))
     ren = {}
     for f, s, k, full in items:
         if "." not in s:

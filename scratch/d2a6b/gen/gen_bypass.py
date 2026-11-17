@@ -219,7 +219,8 @@ def main():
         *conv,
         '',
         '/-- **G0 with only the open leaves and the open glue** (d2a6b: D2 through L814-818, A6 and the kernel field',
-        'through the manuscript\'s model of `Y₃` over ℤ[1/30], L443-477; SGA 7 IX 3.5 and 4.7 removed). -/',
+        'through the manuscript\'s model of `Y₃` over ℤ[1/30], L443-477; SGA 7 IX 3.5 removed' +
+        ('; IX 4.7 was removed by sz-raynaud\'s fold). -/' if has_sz else ' and 4.7 removed). -/'),
         f'theorem {NEWTOP} (r : {NEWR}) (t : {T0}) (l : {A0}) :',
         '    ZInQ.SixContactMin :=',
         f'  {CHAIN_TOP}_u ({CHAIN_R[0].lower() + CHAIN_R[1:]}U_of_{NEWR} r) t l',

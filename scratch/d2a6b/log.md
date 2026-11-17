@@ -38,3 +38,19 @@ Base: fork main d435851d; merged origin/wip/d2a6-reroute (698c8c9e) and origin/w
 - gen_bypass.py: CHAIN_R = OpenResearchLeaves54, conversion of `carayolThmAIrr` added; `--mode post` (both
   `silverbergZarhinThm35` and `y3FullThreeRepZ30` mapped).
 - build-a6z30.txt trimmed to its A6Z30/axioms/"Build completed" lines.
+
+## Step 2 on f3402e89: taint, chain, bypass (VERIFIED)
+
+- `lake build TailZ83 D2A6Wrap`: success (15395 jobs); `sixContactMin_of_open76` standard axioms.
+- TaintD (closure of open76: 274529 constants): IX35 tainted 101, COR33 tainted 96 (taintD-out.txt).
+  TaintD2: 31 carriers, now the `HDec.HSyn.GR9.*` copies 8EB…36EBCF plus OpenResearchLeaves54/55/56, 2EB, 5EB, 7EB,
+  ResearchLeaves3EB (taintD2-out.txt).
+- gen_chain.py → ZInQKernel/Contrib/OneProof/D2A6Chain.lean: 103 declarations (91 from TailZ80's GR9 chain, 25
+  EichlerBoundCopy, 9 TailH, 7 HomFree Consumers ... see gen/copied.txt) + 29 structures; edits r14 1, qml3 1.
+  `lake build ZInQKernel.Contrib.OneProof.D2A6Chain`: success (15390 jobs), `sixContactMin_of_open73_u`:
+  [propext, Classical.choice, Quot.sound] (build-chain.txt).
+- gen_bypass.py --mode post → BypassFold.lean: OpenResearchLeaves57 (27) → OpenResearchLeaves58 (27), top
+  `sixContactMin_of_open77`; removed sga7_IX_3_5_ForwardGeom_Def34, added elliotWildInertiaTrivial, mapped
+  silverbergZarhinThm35 (raynaudSemistableSHOr := raynaudSemistableSHOr_of_sz35) and y3FullThreeRepZ30.
+  Count (kinds.tsv of f3402e89): strict 5/24 on 29 → 5/24 on 29; strictest 5/24 → 5/24. Count-neutral.
+  `lake env lean scratch/d2a6b/BypassFold.lean`: 0 errors; `sixContactMin_of_open77`: standard axioms (bypass-out.txt).
