@@ -27,7 +27,7 @@ every field `K`, so no reroute of the characteristic-`0` chain is needed.
 | --- | --- | --- |
 | connected components of a locally noetherian scheme are open | copied from gt-rigidity (`MumfordRigidity.lean`) | proved |
 | a connected scheme with a rational section is geometrically connected (Stacks 04KV, rational-section form) | vendored `AlgebraicGeometry.geometricallyConnected_of_connectedSpace_of_section` (`Contrib/CloudB3W16Connected/.../ConnectedPoint.lean`) | proved; no finiteness hypotheses |
-| `X` geometrically connected, `Y` connected over a field ⇒ `X ×_K Y` connected | instance in the vendored CloudB3W16 files (as in gt-sga3's `mul_mem`) | proved |
+| `X` geometrically connected, `Y` connected over a field ⇒ `X ×_K Y` connected | Mathlib instance (`Geometrically/Connected.lean`, needs `UniversallyOpen`, automatic over a field; as in gt-sga3's `mul_mem`) | Mathlib |
 | closed points of a scheme locally of finite type over an algebraically closed field are rational | Mathlib `pointOfClosedPoint` | Mathlib |
 | schemes locally of finite type over a field are Jacobson | Mathlib `LocallyOfFiniteType.jacobsonSpace`, `nonempty_inter_closedPoints` | Mathlib |
 | a noetherian space has an open nonempty subset of each irreducible component | Mathlib `NoetherianSpace.exists_isOpen_nonempty_subset_irreducibleComponent` | Mathlib |
