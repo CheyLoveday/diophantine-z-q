@@ -156,9 +156,35 @@ Deligne 1971, Faltings 1987, Saito 1997, Kato 2004 (9.2.2) pp. 187-188 | — | (
 there is a continuous rho attached to a newform (either Frobenius normalization) with HT weights {0, k-1} at l,
 every level; check one survey's statement covers l | N`.
 
-## 4. Compile log, `#discharges`, dry-run fold
+## 4. Compile log, `#discharges`, dry-run fold (VERIFIED, 2026-11-16, Lean 4.35.0 / Mathlib v4.35.0)
 
-(see §4 below, filled in from the runs)
+One Lean process at a time; load ≤ 20 throughout.
+
+| what | command | outcome |
+|---|---|---|
+| contribution (scratch copy) | `lake env lean scratch/htnew-print/EigenformHTPrinted.lean` | success, about 80 s, warnings only (deprecations, unused simp args) |
+| axioms | `lake env lean scratch/htnew-print/Axioms.lean` | `eigenformHTNew_of_printed`, `printed_of_eigenformHTNew`, `exists_ss`, `trace_of_charpoly`: `[propext, Classical.choice, Quot.sound]` (`axioms.txt`) |
+| discharge build | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.EigenformHTPrinted` | success, 14229 jobs, 15 min; `frozenTarget` standard axioms |
+| `#discharges` | `lake env lean scratch/htnew-print/Discharges.lean` | output `Discharges-output.txt` (below) |
+| fold | `python3 scripts/one_proof/autofold.py scratch/htnew-print/autofold.json --dry-run`, line 1 stripped → `FoldDryRun.lean`, `lake env lean` | `strict count: 11/18 on 29 -> 12/17 on 29; strictest 11/18 -> 12/17`; `sixContactMin_of_open49` compiles, standard axioms |
+
+```
+DISCHARGES [OpenResearchLeaves31.eigenformHTNew] by EigenformHTPrinted.eigenformHTNew_of_printed
+  still assumes: [EigenformHTPrinted.ModularHTPrinted, DSCoeffExt.EigenformCoeffFieldFinite]
+  axioms: [propext, Classical.choice, Quot.sound]
+...
+#discharges: 35 open hypotheses, 9933 theorems checked, 37 discharge one
+```
+
+`DSCoeffExt.EigenformCoeffFieldFinite` is an open LEAF field of `OpenResearchLeaves31` that stays in the new
+bundle (the fold passes `{n}.eigenformCoeffFieldFinite`). The other 36 entries come from contributions already
+in the tree.
+
+**Autofold spec** (`scratch/htnew-print/autofold.json`): discharges `eigenformHTNew` with proof
+`_root_.EigenformHTPrinted.eigenformHTNew_of_printed {n}.modularHTPrinted {n}.eigenformCoeffFieldFinite`; the new
+leaf is `modularHTPrinted : _root_.EigenformHTPrinted.ModularHTPrinted`, kind `published`, with flag `unread: new
+printed leaf (...); locator UNVERIFIED` and the source as in §3. The fold itself (integrator: autofold without
+`--dry-run`, the build, the hash guard, OpenStatements, render_open) is not done here.
 
 ## 5. The single consumer
 
