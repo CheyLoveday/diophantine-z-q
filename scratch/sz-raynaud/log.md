@@ -29,3 +29,16 @@
   p-power period of wild elements (TailH wildIter) + PkgI2.fixed_of_unipSq_of_iterate. VERIFIED (read).
 - The manuscript's good reduction away from S comes from the proper model / universal abelian scheme (L529-530),
   not from Raynaud; the kernel's A6 Raynaud route (rv-a6-route) is not the manuscript's route. VERIFIED (read).
+
+## Run 2 (after the host's late note, 11-17 06:24)
+
+- Host's late note copied to scratch/sz-raynaud/sz-thm35-reading.md: SZ Thm 3.5 read from the page image (p. 406):
+  any field with a discrete valuation, n not divisible by the residue char, X_n over an unramified extension,
+  n >= 3 => semistable; SZ's semistable (p. 405) = identity component of the special fibre (over k) an extension
+  of an abelian variety by a torus, not necessarily split. VERIFIED (read, fleet print reader, relayed).
+  Known issue R6 (n = 3) is resolved: OCR artefact. No known issue recorded for SZ 3.5.
+- SZ's semistability = `DictModels.RaynaudOr.IsSemistableResT` (RaynaudSemistableOr.lean:256:
+  `HasSemiAbelianIdCompTorus` of the special fibre over k(s), torus split only over k̄). VERIFIED (read).
+  Step SZ form -> kernel form (geometric fibre, split torus) = `isSemistable_of_resT` (RaynaudSemistableOr:271)
+  from the bundle leaf GeomConnOfRationalPoint (Stacks 04KV; proved `geomConnOfRationalPoint_proof`).
+- Previous run's lake build (started in background by run 1) still running at 06:25 (TailC), left to finish.
