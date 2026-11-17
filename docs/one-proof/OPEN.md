@@ -11,14 +11,14 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**30 hypotheses of the H part** (in the bundles `OpenAddedLeaves24`, `OpenResearchLeaves31`, `OpenTextbookLeaves16`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**29 hypotheses of the H part** (in the bundles `OpenAddedLeaves25`, `OpenResearchLeaves31`, `OpenTextbookLeaves16`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 12 published / 18 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 11 published / 18 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: composite 5, consequence 11, published 14.
+* By kind: composite 5, consequence 11, published 13.
 
 ## Kernel-wide readings
 
@@ -145,7 +145,6 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
 * [`picRepresentableAbVar`](#picrepresentableabvar) (LEAF; pending-review): Murre 1964, Oort 1962 (BLR Neron Models 8.2 Thm 3, number UNVERIFIED: Pic_{X/k} representable for X proper over a field, Pic as the fppf sheafification); dictionary pass 11-16: Murre-Oort is the print; the Kleiman 9.4.8 route would need projectivity and 9.2.5 (a consequence), so Murre-Oort is cited first. Earlier source text: Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
-* [`picLocFinType`](#piclocfintype) (LEAF; unread, unverified-locator): BLR, Neron models, 8.2 Thm 3 (Murre 1964, Oort 1962); Kleiman, The Picard scheme, 9.4.8
 * [`kleimanPicZeroProper`](#kleimanpiczeroproper) (LEAF; unread, unverified-locator): Kleiman, The Picard scheme, 9.5.4
 
 ## Index
@@ -171,7 +170,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`shimuraMainThmIDeligneY3AbU`](#shimuramainthmideligney3abu) | research | composite | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gagaMorphism`](#gagamorphism) | textbook | consequence | GLUE | note, unverified-locator |  | T3-T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
 | [`kleimanPicZeroProper`](#kleimanpiczeroproper) | added | published | LEAF | unread, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
-| [`picLocFinType`](#piclocfintype) | added | published | LEAF | unread, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`picRepresentableAbVar`](#picrepresentableabvar) | added | published | LEAF | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr)) |
 | [`dsThm965Printed`](#dsthm965printed) | research | published | LEAF | unread, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | reading-hold | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | not offered: waits on a ruling about a reading |
@@ -477,7 +475,7 @@ ZInQ.HomLattice.GAGAMorphism
 
 ### kleimanPicZeroProper
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves24.kleimanPicZeroProper`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Kleiman 9.5.4, X proper and geometrically normal over a field, every representing object); locator UNVERIFIED.
+* Bundle field `HDec.HSyn.OpenAddedLeaves25.kleimanPicZeroProper`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Kleiman 9.5.4, X proper and geometrically normal over a field, every representing object); locator UNVERIFIED.
 * Source: Kleiman, The Picard scheme, 9.5.4
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -490,26 +488,9 @@ PicFix.KleimanPicZeroProper
 > pic-fix: for `X` proper and geometrically normal over a field `K`, the identity component of `Pic_{X/K}` is
 > proper (Kleiman, *The Picard scheme*, Thm 9.5.4; locator UNVERIFIED); stated for every representing scheme.
 
-### picLocFinType
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves24.picLocFinType`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (BLR 8.2 Thm 3 / Murre-Oort for proper X over a field; Kleiman 9.4.8 for projective X, A projective by the vendored lemma; any representing object by Yoneda uniqueness); locator UNVERIFIED.
-* Source: BLR, Neron models, 8.2 Thm 3 (Murre 1964, Oort 1962); Kleiman, The Picard scheme, 9.4.8
-* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-PicDict.PicLocFinType
-```
-
-> pic-dict: a scheme representing `Pic_{A/K}` of an abelian variety `A` over a field `K` is locally of finite type
-> (Murre 1964 / Oort 1962; BLR, *Néron models*, 8.2 Thm 3; Kleiman, *The Picard scheme*, Thm 9.4.8; any representing
-> object by Yoneda; locators UNVERIFIED). With the next two and Cartier's theorem replaces `picZeroAbVar`, which is
-> read only in characteristic `0` (piczero-char0).
-
 ### picRepresentableAbVar
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves24.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
+* Bundle field `HDec.HSyn.OpenAddedLeaves25.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
 * Source: Murre 1964, Oort 1962 (BLR Neron Models 8.2 Thm 3, number UNVERIFIED: Pic_{X/k} representable for X proper over a field, Pic as the fppf sheafification); dictionary pass 11-16: Murre-Oort is the print; the Kleiman 9.4.8 route would need projectivity and 9.2.5 (a consequence), so Murre-Oort is cited first. Earlier source text: Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.

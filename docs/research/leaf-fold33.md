@@ -1,10 +1,10 @@
 # leaf-fold33 (staged on wip/leaf-fold33b, not landed)
 
 **Result.** From fork main 5e235a40 (the w82 landing: 45 open hypotheses, 37 H with strict 16 LEAF / 21 GLUE, and 8
-TYZ/GZ hypotheses of which hCM, h33 and hL3 were GLUE), this fold reaches **36 open hypotheses: 30 H (strict and
-strictest 12/18) and 6 TYZ/GZ hypotheses (h11, hL29, hCM, h33, hBFH, hGZ; GLUE: h33 and hGZ)**. Over all hypotheses
-the strict GLUE count goes from 24 to 20, and no fold step raises a count. Every step was checked the same way
-(scratch/leaf-fold33/log.md, steps 1-16): `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`,
+TYZ/GZ hypotheses of which hCM, h33 and hL3 were GLUE), this fold reaches **35 open hypotheses: 29 H (strict and
+strictest 11/18) and 6 TYZ/GZ hypotheses (h11, hL29, hCM, h33, hBFH, hGZ; GLUE: h33 and hGZ)**. Over all hypotheses
+the strict GLUE count goes from 24 to 20 (the strict LEAF count of H from 16 to 11), and no fold step raises a count. Every step was checked the same way
+(scratch/leaf-fold33/log.md, steps 1-17): `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`,
 `#print axioms ZInQ.OneProof.frozenTarget` standard, the DumpCompact hash guard (no existing constant of
 `ZInQKernel.OneProof` changed except `frozenTarget`), a closure check of the removed Props, `OpenStatements.lean`,
 `render_open.py --check`, `frontier_crosswalk.py --check`, the DischargesTest rerun and `autoform check blueprint`.
@@ -30,6 +30,7 @@ states 25415c1c, 3091ccc7, 0e3c3125, 30674d98, 4da8d4f3, 49ce87a7, 667e0aed, 059
 | 15 | weilPairingMumford, mumfordPhiSurjectiveAC | proved / rerouted from open fields (TailZ51, TailZ52) | phisurj, integrated by fold33-pic |
 | 15 | picZeroAbVar | replaced by its characteristic-0 form from three printed leaves (TailZ53); GLUE -1, fields +2 | piczero-char0, integrated by fold33-pic |
 | 16 | identityComponentLFT | proved outright (autofold, TailZ54) | idcomp-lft |
+| 17 | picLocFinType | proved outright (autofold, TailZ55) | piclft |
 
 Folds that remove a hypothesis by rerouting its readers are copies: the original declarations stay (the blueprint
 names some of them as Lean targets, and an in-place prune made `autoform check` fail; see fold33-combine), and new

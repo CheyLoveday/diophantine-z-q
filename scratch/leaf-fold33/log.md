@@ -132,3 +132,8 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     frozenTarget changed, 11 new constants in TailZ54); OpenStatements 36; render_open --check ok (30 H, strictest
     12/18, 6 others); crosswalk --check ok; DischargesTest rerun; autoform check ok. scratch/idcomp-lft/FoldDryRun.lean
     renamed .lean.txt; host path removed from its log.
+17. picLocFinType (piclft, proved outright in every characteristic, no new leaf): merged wip/piclft, autofold
+    scratch/piclft/autofold.json -> TailZ55, `sixContactMin_of_open48`; strict 12/18 on 30 -> 11/18 on 29. Checks
+    (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 16 (only frozenTarget
+    changed, 10 new constants in TailZ55); OpenStatements 35; render_open --check ok (29 H, strictest 11/18, 6
+    others); crosswalk --check ok; DischargesTest rerun; autoform check ok.
