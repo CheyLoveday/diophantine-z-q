@@ -288,6 +288,100 @@ theorem hasHTWeights_zero_of_twist (E' : IntermediateField ℚ_[p] (PadicAlgCl p
     rw [Fintype.card_fin, Module.finrank_fin_fun] at this
     omega
 
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **A finite Galois field of values.** If `ψ(σ)` lies in a finite `E₀` wherever a continuous `t` (here `tr ρ_g`) is
+nonzero, and `t(1) ≠ 0`, then all values of `ψ` lie in a finite Galois `E ⊇ E₀` (an open normal subgroup `G_M` on which
+`t ≠ 0`, and the finitely many values of `ψ` at coset representatives of `G_M`). -/
+theorem exists_galois_values (E₀ : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E₀]
+    (ψL : ZInQ.Contrib.G9.PkgI4.GQp p →* (PadicAlgCl p)ˣ) (t : ZInQ.Contrib.G9.PkgI4.GQp p → PadicAlgCl p)
+    (ht : Continuous t) (ht1 : t 1 ≠ 0) (hval : ∀ σ, t σ ≠ 0 → (ψL σ : PadicAlgCl p) ∈ E₀) :
+    ∃ E : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] E ∧ IsGalois ℚ_[p] E ∧ E₀ ≤ E ∧
+      ∀ σ, (ψL σ : PadicAlgCl p) ∈ E := by
+  classical
+  have hU : IsOpen {σ : ZInQ.Contrib.G9.PkgI4.GQp p | t σ ≠ 0} := isOpen_ne_fun ht continuous_const
+  obtain ⟨M, hMfd, hMn, hMsub⟩ :=
+    (krullTopology_mem_nhds_one_iff_of_normal ℚ_[p] (PadicAlgCl p) _).mp (hU.mem_nhds ht1)
+  haveI := hMfd
+  let H : Subgroup (ZInQ.Contrib.G9.PkgI4.GQp p) := M.fixingSubgroup
+  haveI : Finite (ZInQ.Contrib.G9.PkgI4.GQp p ⧸ H) :=
+    Subgroup.quotient_finite_of_isOpen H (IntermediateField.fixingSubgroup_isOpen M)
+  let R : Set (PadicAlgCl p) :=
+    Set.range fun q : ZInQ.Contrib.G9.PkgI4.GQp p ⧸ H =>
+      (ψL q.out : PadicAlgCl p)
+  haveI : Finite R := Set.finite_range _ |>.to_subtype
+  haveI : FiniteDimensional ℚ_[p] (IntermediateField.adjoin ℚ_[p] R) :=
+    IntermediateField.finiteDimensional_adjoin (fun x _ => Algebra.IsIntegral.isIntegral x)
+  let E₃ : IntermediateField ℚ_[p] (PadicAlgCl p) := E₀ ⊔ IntermediateField.adjoin ℚ_[p] R
+  let E : IntermediateField ℚ_[p] (PadicAlgCl p) := IntermediateField.normalClosure ℚ_[p] E₃ (PadicAlgCl p)
+  have hle : E₃ ≤ E := IntermediateField.le_normalClosure E₃
+  refine ⟨E, normalClosure.is_finiteDimensional ℚ_[p] E₃ (PadicAlgCl p),
+    IsGalois.normalClosure ℚ_[p] E₃ (PadicAlgCl p), le_sup_left.trans hle, fun σ => ?_⟩
+  obtain ⟨h, hh⟩ := QuotientGroup.mk_out_eq_mul H σ
+  have hσ : σ = (QuotientGroup.mk σ : ZInQ.Contrib.G9.PkgI4.GQp p ⧸ H).out * (h : _)⁻¹ := by
+    rw [hh]; simp
+  have hhinv : ((h : _)⁻¹ : ZInQ.Contrib.G9.PkgI4.GQp p) ∈ M.fixingSubgroup :=
+    M.fixingSubgroup.inv_mem h.2
+  have h1 : (ψL ((h : _)⁻¹) : PadicAlgCl p) ∈ E₃ :=
+    (le_sup_left : E₀ ≤ E₃) (hval _ (hMsub hhinv))
+  have h2 : (ψL (QuotientGroup.mk σ : ZInQ.Contrib.G9.PkgI4.GQp p ⧸ H).out : PadicAlgCl p) ∈ E₃ :=
+    (le_sup_right : IntermediateField.adjoin ℚ_[p] R ≤ E₃)
+      (IntermediateField.subset_adjoin ℚ_[p] R ⟨_, rfl⟩)
+  apply hle
+  rw [hσ, map_mul, Units.val_mul]
+  exact E₃.mul_mem h2 h1
+
+/-- **The determinant vector.** If `ρ_E` has Hodge–Tate weights `{0, −1}` over a finite Galois `E`, nonzero
+`y₀ ∈ Y_0`, `y₁ ∈ Y_1` are `ℂ_p`-independent (Tate–Sen), and `d = det(y₀, y₁) ≠ 0` satisfies
+`d · det ρ(σ) = χ(σ) σ(d)` on `G_E`. -/
+theorem exists_det_vector (E : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E]
+    [IsGalois ℚ_[p] E] (ρE : ZInQ.Contrib.G9.PkgI4.GQp p →* GL (Fin 2) E)
+    (hHT : ∀ w, ZInQ.Contrib.G9.PkgI4.htMult p ρE w = ({0, -1} : Multiset ℤ).count w) :
+    ∃ d : ℂ_[p], d ≠ 0 ∧ ∀ σ ∈ E.fixingSubgroup,
+      d * algebraMap E ℂ_[p] ((ρE σ : Matrix (Fin 2) (Fin 2) E).det) =
+        algebraMap ℚ_[p] ℂ_[p] (ZInQ.Contrib.G9.PkgI4.cycPow p σ 1) * ZInQ.Contrib.G9.PkgI4.cpAct p σ d := by
+  have hdim : ∀ i : ℤ, i = 0 ∨ i = 1 → Module.finrank E (Ysp p ρE i E) = 1 := by
+    intro i hi
+    have h := htMult_eq_finrank_Ysp p ZInQ.Contrib.CloudB3W11.tateTwistInvariants_proof
+      ZInQ.Contrib.CloudB3W11.axSenTate_proof E ρE (-i)
+    rw [neg_neg, hHT] at h
+    rw [← h]
+    rcases hi with rfl | rfl <;> decide
+  have hne : ∀ i : ℤ, i = 0 ∨ i = 1 → ∃ y ∈ Ysp p ρE i E, y ≠ 0 := by
+    intro i hi
+    apply Submodule.exists_mem_ne_zero_of_ne_bot
+    intro h
+    have := hdim i hi
+    rw [h, finrank_bot] at this
+    exact zero_ne_one this
+  obtain ⟨y₀, hy₀, hy₀0⟩ := hne 0 (Or.inl rfl)
+  obtain ⟨y₁, hy₁, hy₁0⟩ := hne 1 (Or.inr rfl)
+  have hli := linIndep_two p E ρE 0 1 (by norm_num) y₀ y₁ hy₀ hy₁ hy₀0 hy₁0
+  let A : Matrix (Fin 2) (Fin 2) ℂ_[p] := Matrix.of ![y₀, y₁]
+  have hA : LinearIndependent ℂ_[p] A.row := by
+    have e : A.row = ![y₀, y₁] := by
+      funext i; fin_cases i <;> rfl
+    rw [e]; exact hli
+  have hdetA : A.det ≠ 0 :=
+    (Matrix.isUnit_iff_isUnit_det A |>.mp (Matrix.linearIndependent_row_iff_isUnit.mp hA)).ne_zero
+  refine ⟨y₀ 0 * y₁ 1 - y₀ 1 * y₁ 0, ?_, fun σ hσ => ?_⟩
+  · rw [Matrix.det_fin_two] at hdetA
+    exact hdetA
+  · set M := matC p (ρE σ : Matrix (Fin 2) (Fin 2) E) with hM
+    have hdetM : algebraMap E ℂ_[p] ((ρE σ : Matrix (Fin 2) (Fin 2) E).det) = M.det := by
+      rw [hM, matC, RingHom.map_det]; rfl
+    have e0 := hy₀ σ hσ
+    have e1 := hy₁ σ hσ
+    have e00 := congrFun e0 0
+    have e01 := congrFun e0 1
+    have e10 := congrFun e1 0
+    have e11 := congrFun e1 1
+    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.transpose_apply, Pi.smul_apply, vAct,
+      cycPow_zero, Algebra.smul_def, map_one, one_mul] at e00 e01 e10 e11
+    rw [hdetM, Matrix.det_fin_two, map_sub, map_mul, map_mul]
+    linear_combination (ZInQ.Contrib.G9.PkgI4.cpAct p σ (y₀ 0)) * e11 -
+      (ZInQ.Contrib.G9.PkgI4.cpAct p σ (y₀ 1)) * e10 + (M 0 1 * y₁ 0 + M 1 1 * y₁ 1) * e00 -
+      (M 0 0 * y₁ 0 + M 1 0 * y₁ 1) * e01
+
 end Local
 
 end TwistHT
