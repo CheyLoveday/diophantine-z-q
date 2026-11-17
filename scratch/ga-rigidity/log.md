@@ -18,3 +18,8 @@
 - autofold.json written; `autofold.py --dry-run` succeeds: strict count 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22
   (-1 GLUE in this base: sga7_IX_3_5_ForwardGeom is LEAF in this base's kinds.tsv; -2 if queue11 re-rated it GLUE). VERIFIED (ran).
 - queue11 verdict file absent locally; SGA 7 not read (no network): reading of Déf. 3.4 as "no 𝔾_a" taken from the brief. UNVERIFIED.
+- lake build GaRigidity + GaRigiditySGA7: success (12822 jobs). VERIFIED.
+- lake build +Main +Discharges +GaRigiditySGA7: success (16075 jobs). #discharges: sga7_IX_3_5_ForwardGeom by
+  sga7_IX_3_5_ForwardGeom_of_def34 (assumes SGA7_IX_3_5_ForwardGeom_Def34), sga7_IX_Cor3_3 by sga7_IX_Cor3_3_of_def34
+  (assumes SGA7_IX_Cor3_3_Def34); axioms standard. Output in Discharges-output.txt. VERIFIED.
+- AutofoldDryRun.lean (dry-run module, first line stripped) compiles; sixContactMin_of_open61 standard axioms. VERIFIED.

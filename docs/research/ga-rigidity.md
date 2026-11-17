@@ -29,7 +29,8 @@ Each new leaf is its old statement character for character with only the semista
 with image in the identity component `idCompSet`). The glue between the two (the shared reason both rows were GLUE) is
 now a Lean proof: `GaRigidity.SGA7.isSemistableDef34_of_isSemistable`.
 
-COMPILE STATUS: see §5.
+All of this compiles (§5): `lake build` of both new files, `#discharges` shows both fields discharged with only
+the new leaves assumed, axioms `propext, Classical.choice, Quot.sound`, and the autofold dry-run fold compiles.
 
 ## 2. Files
 
@@ -96,4 +97,36 @@ not proved here. The fold should then keep the old fields. Under either reading 
 
 ## 5. Checks
 
-(filled in below as they run)
+All VERIFIED (run on this host, 11-17):
+
+* `lake build ZInQKernel.Contrib.OneProof.GaRigidity ZInQKernel.Contrib.OneProof.GaRigiditySGA7`: builds (12822 jobs),
+  no errors, no `sorry`.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.GaRigiditySGA7`:
+  16075 jobs, success. `scratch/ga-rigidity/Discharges.lean` (output `Discharges-output.txt`):
+
+  ```
+  DISCHARGES [OpenResearchLeaves42.sga7_IX_3_5_ForwardGeom] by GaRigidity.SGA7.sga7_IX_3_5_ForwardGeom_of_def34
+    still assumes: [GaRigidity.SGA7.SGA7_IX_3_5_ForwardGeom_Def34]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [OpenResearchLeaves42.sga7_IX_Cor3_3] by GaRigidity.SGA7.sga7_IX_Cor3_3_of_def34
+    still assumes: [GaRigidity.SGA7.SGA7_IX_Cor3_3_Def34]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 39 open hypotheses, 13459 theorems checked, 27 discharge one
+  ```
+  `#print axioms` of `noGaSubgroup_of_semiAbelian`, `gaHom_abVar_trivial`, `gaHom_torus_trivial` and both
+  discharges: `[propext, Classical.choice, Quot.sound]`.
+* Autofold: `scratch/ga-rigidity/autofold.json`; `python3 scripts/one_proof/autofold.py scratch/ga-rigidity/autofold.json
+  --dry-run` succeeds with `strict count: 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22`. Its module (first line
+  stripped, `scratch/ga-rigidity/AutofoldDryRun.lean`) compiles; `HDec.HSyn.sixContactMin_of_open61` has standard axioms.
+  The GLUE count drops by one, not two, *in this base*: here kinds.tsv rates `sga7_IX_3_5_ForwardGeom` LEAF (11-17
+  reading). If the queue11 verdict re-rated it GLUE in a later base, the fold gives −2 GLUE. The new leaves carry the
+  flag "pending review: ..." (autofold counts them LEAF in strict). The integrator may want a different flag class.
+
+## 6. What remains
+
+* Read SGA 7 I Exp. IX Déf. 2.1.5 / 3.4 to settle the reading risk in §4 (pages-wanted). The queue11 verdict file was
+  not on any local branch; its content is taken from the task brief.
+* Not done (out of scope): the converse dictionary ("no `𝔾_a` ⇒ semi-abelian"), which needs Chevalley's theorem.
+* Step (1) was proved in Yoneda form against the kernel's `e : (Fin r → Rˣ) →* (Spec R ⟶ U)` and not for a separately
+  constructed group scheme `𝔾_m`. Neither Mathlib nor the tree constructs `𝔾_a` or `𝔾_m` as a `GrpObj`, and the rows
+  only need this form.
