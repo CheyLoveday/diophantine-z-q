@@ -100,4 +100,127 @@ theorem HasQExp.eq_zero {X : ℍ → ℂ} (h : HasQExp X 0) : ∃ T : ℝ, ∀ �
   obtain ⟨T, hT⟩ := h
   exact ⟨T, fun τ hτ => ((hT τ hτ).unique (by simp only [HahnSeries.coeff_zero, Rat.cast_zero, zero_mul]; exact hasSum_zero))⟩
 
+
+/-! ## §2. Nonvanishing high up -/
+
+open FormalMultilinearSeries in
+/-- **A function with a nonzero `q`-expansion has no zeros high up.** -/
+theorem HasQExp.exists_ne_zero {X : ℍ → ℂ} {x : LaurentSeries ℚ} (h : HasQExp X x) (hx : x ≠ 0) :
+    ∃ T : ℝ, ∀ τ : ℍ, T < τ.im → X τ ≠ 0 := by
+  obtain ⟨T1, hT1⟩ := h
+  set k : ℤ := x.order
+  set T0 : ℝ := max T1 0
+  set c : ℕ → ℂ := fun n => (x.coeff ((n : ℤ) + k) : ℂ)
+  have hsum : ∀ τ : ℍ, T0 < τ.im →
+      HasSum (fun n : ℕ => c n * qPar τ ^ n) (qPar τ ^ (-k) * X τ) := by
+    intro τ hτ
+    have hq := qPar_ne_zero τ
+    have h0 := hT1 τ (lt_of_le_of_lt (le_max_left _ _) hτ)
+    set g : ℕ → ℤ := fun n => (n : ℤ) + k
+    have hg : Function.Injective g := fun a b e => by simp only [g] at e; omega
+    have h1 := (hg.hasSum_iff (f := fun m : ℤ => (x.coeff m : ℂ) * qPar τ ^ m) (fun m hm => by
+      have : m < k := by
+        by_contra hk
+        exact hm ⟨(m - k).toNat, by simp only [g]; omega⟩
+      simp [HahnSeries.coeff_eq_zero_of_lt_order this])).2 h0
+    convert h1.mul_left (qPar τ ^ (-k)) using 1
+    funext n
+    simp only [Function.comp_apply, g, c]
+    rw [zpow_add₀ hq, zpow_natCast, zpow_neg]
+    field_simp
+  have hrad := le_radius (le_max_right T1 0) hsum
+  have han := analyticAt_sum hrad (w := 0) (by simpa using R0_pos T0)
+  have hc0 : (ofScalars ℂ c).sum 0 ≠ 0 := by
+    rw [← ofScalarsSum, ofScalarsSum_zero]
+    simp only [c, CharP.cast_eq_zero, zero_add, smul_eq_mul, mul_one, k]
+    exact_mod_cast (mt HahnSeries.coeff_order_eq_zero.1 hx)
+  obtain ⟨δ, hδ, hδne⟩ := Metric.eventually_nhds_iff.1 (han.continuousAt.eventually_ne hc0)
+  -- choose `T ≥ T0` with `R0 T ≤ δ`
+  obtain ⟨T, hTT0, hTδ⟩ : ∃ T : ℝ, T0 ≤ T ∧ R0 T ≤ δ := by
+    refine ⟨max T0 (-Real.log δ / (2 * Real.pi)), le_max_left _ _, ?_⟩
+    rw [R0]
+    calc Real.exp (-(2 * Real.pi * max T0 (-Real.log δ / (2 * Real.pi))))
+        ≤ Real.exp (-(2 * Real.pi * (-Real.log δ / (2 * Real.pi)))) := by
+          apply Real.exp_le_exp.2
+          have := Real.pi_pos
+          nlinarith [le_max_right T0 (-Real.log δ / (2 * Real.pi))]
+      _ = δ := by
+          rw [show -(2 * Real.pi * (-Real.log δ / (2 * Real.pi))) = Real.log δ by
+            field_simp]
+          exact Real.exp_log hδ
+  refine ⟨T, fun τ hτ hX => ?_⟩
+  have hτ0 : T0 < τ.im := lt_of_le_of_lt hTT0 hτ
+  have hq : ‖qPar τ‖ < δ := lt_of_lt_of_le (norm_qPar_lt hτ) hTδ
+  apply hδne (y := qPar τ) (by simpa using hq)
+  rw [sum_eq hsum τ hτ0, hX, mul_zero]
+
+/-! ## §3. The functions `j(τ)`, `j(Nτ)` and the plane model -/
+
+/-- `j(τ) = E₄(τ)³/Δ(τ)`. -/
+def jFun (τ : ℍ) : ℂ := ModularForm.E₄ τ ^ 3 / ModularForm.discriminant τ
+
+/-- The point `(j(τ), j(Nτ))` of the plane model `Φ_N(X, Y) = 0` of `X₀(N)`. -/
+def pt2 (N : ℕ) [NeZero N] (τ : ℍ) : Fin 2 → ℂ := ![jFun τ, jFun (scaleN N τ)]
+
+/-- The generators `(jq, jq(q^N))` of `ℚ(X₀(N)) = X0Field N`. -/
+def ptQ (N : ℕ) [NeZero N] : Fin 2 → LaurentSeries ℚ :=
+  ![ModularCurve.jq, ModularCurve.qExpand ℚ N ModularCurve.jq]
+
+/-- `P(j(τ), j(Nτ))`. -/
+def polyFn (N : ℕ) [NeZero N] (P : MvPolynomial (Fin 2) ℚ) (τ : ℍ) : ℂ :=
+  MvPolynomial.aeval (pt2 N τ) P
+
+/-- `P(jq, jq(q^N)) ∈ ℚ((q))`. -/
+def polyQ (N : ℕ) [NeZero N] (P : MvPolynomial (Fin 2) ℚ) : LaurentSeries ℚ :=
+  MvPolynomial.aeval (ptQ N) P
+
+/-- **The value at `τ` of the rational function `P/Q` on the plane model**: `P(j(τ), j(Nτ)) / Q(j(τ), j(Nτ))`. -/
+def ratFn (N : ℕ) [NeZero N] (P Q : MvPolynomial (Fin 2) ℚ) (τ : ℍ) : ℂ :=
+  polyFn N P τ / polyFn N Q τ
+
+/-- **`x = P(j, j_N)/Q(j, j_N)` in `ℚ((q))`**, with `Q(j, j_N) ≠ 0`: `P/Q` represents `x ∈ ℚ(j, j_N)`. -/
+def IsRatRep (N : ℕ) [NeZero N] (x : LaurentSeries ℚ) (P Q : MvPolynomial (Fin 2) ℚ) : Prop :=
+  polyQ N Q ≠ 0 ∧ x = polyQ N P / polyQ N Q
+
+theorem hasQExp_coord (N : ℕ) [NeZero N] (i : Fin 2) :
+    HasQExp (fun τ => pt2 N τ i) (ptQ N i) := by
+  fin_cases i
+  · exact hasQExp_j
+  · exact hasQExp_jN N
+
+theorem hasQExp_polyFn (N : ℕ) [NeZero N] (P : MvPolynomial (Fin 2) ℚ) :
+    HasQExp (polyFn N P) (polyQ N P) := by
+  induction P using MvPolynomial.induction_on with
+  | C a =>
+    refine hasQExp_congr (by simpa [polyQ] using hasQExp_const a) fun τ => ?_
+    simp [polyFn]
+  | add p q hp hq =>
+    refine hasQExp_congr (by simpa [polyQ] using hasQExp_add hp hq) fun τ => ?_
+    simp [polyFn]
+  | mul_X p i hp =>
+    refine hasQExp_congr (by simpa [polyQ] using hasQExp_mul hp (hasQExp_coord N i)) fun τ => ?_
+    simp [polyFn]
+
+/-- Every element of `ℚ(j, j_N)` has a representation `P/Q`. -/
+theorem exists_isRatRep (N : ℕ) [NeZero N] (x : X0Field N) :
+    ∃ P Q : MvPolynomial (Fin 2) ℚ, IsRatRep N (x : LaurentSeries ℚ) P Q := by
+  have hx : (x : LaurentSeries ℚ) ∈ IntermediateField.adjoin ℚ
+      ({ModularCurve.jq, ModularCurve.qExpand ℚ N ModularCurve.jq} : Set (LaurentSeries ℚ)) := x.2
+  obtain ⟨r, hr, s, hs, he⟩ := IntermediateField.mem_adjoin_iff_div.1 hx
+  have hset : ({ModularCurve.jq, ModularCurve.qExpand ℚ N ModularCurve.jq} : Set (LaurentSeries ℚ)) =
+      Set.range (ptQ N) := by
+    ext z
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_range, Fin.exists_fin_two, ptQ,
+      Matrix.cons_val_zero, Matrix.cons_val_one]
+    tauto
+  rw [hset, Algebra.adjoin_range_eq_range_aeval] at hr hs
+  obtain ⟨P, rfl⟩ := hr
+  obtain ⟨Q, rfl⟩ := hs
+  by_cases hQ : MvPolynomial.aeval (ptQ N) Q = 0
+  · refine ⟨0, 1, by simp [polyQ], ?_⟩
+    simp only [polyQ, map_zero, map_one, div_one]
+    rw [he]
+    simp [hQ]
+  · exact ⟨P, Q, hQ, he⟩
+
 end ZInQ.GZDict2
