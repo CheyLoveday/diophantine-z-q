@@ -1,0 +1,1 @@
+'X1Igusa.Weber.adjoin_wOf' depends on axioms: [propext, Classical.choice, Quot.sound]

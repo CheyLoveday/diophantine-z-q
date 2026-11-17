@@ -1,0 +1,3 @@
+'R16Used.r16CoreY_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R16Used.r16_of_afTate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'R16Used.r16Trace_of_coreY' depends on axioms: [propext, Classical.choice, Quot.sound]

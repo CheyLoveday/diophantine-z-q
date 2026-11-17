@@ -1,0 +1,166 @@
+
+/-! ## E. The comparison -/
+
+/-- `F(J, T) ∈ ℚ[J][T]` at `(J, T) = (j(τ), f₁(τ))`, `f₁(τ) = weber(⟨1, τ⟩, 1/N)`. -/
+def evAn (N : ℕ) (F : Polynomial (Polynomial ℚ)) (τ : UpperHalfPlane) : ℂ :=
+  (F.map (Polynomial.eval₂RingHom (Rat.castHom ℂ) (jL (pp τ)))).eval (weber (pp τ) (1 / (N : ℂ)))
+
+/-- **GLUE (the `K_N = ℚ(j, f₁)` comparison; Diamond–Shurman §7.5–7.7, Shimura 1971 Ch. 6).** For `N ≥ 2` some
+point `P` of exact order `N` of `E_j` has: a polynomial `F ∈ ℚ[J][T]` vanishes at `(j(τ), f₁(τ))` for every `τ ∈ ℍ`
+with `g₂(τ)g₃(τ) ≠ 0` iff it vanishes at `(j, w(P))`. -/
+def WeberFieldComparison : Prop :=
+  ∀ N : ℕ, 2 ≤ N → ∃ P : EjBar.toAffine.Point, addOrderOf P = N ∧
+    ∀ F : Polynomial (Polynomial ℚ),
+      (∀ τ : UpperHalfPlane, (pp τ).g₂ ≠ 0 → (pp τ).g₃ ≠ 0 → evAn N F τ = 0) ↔ evAlg F P = 0
+
+/-- Evaluation `ℚ[J][T] → ℂ` at `(j(z), f₁(z))`. -/
+def ez (N : ℕ) (z : ℂ) : Polynomial (Polynomial ℚ) →+* ℂ :=
+  Polynomial.eval₂RingHom (Polynomial.eval₂RingHom (Rat.castHom ℂ) (Jf z)) (Wf N z)
+
+theorem diffOn_ez {N : ℕ} (hN : 2 ≤ N) (F : Polynomial (Polynomial ℚ)) :
+    DifferentiableOn ℂ (fun z => ez N z F) Hs := by
+  have h : (fun z => ez N z F) = fun z => ∑ i ∈ Finset.range (F.natDegree + 1),
+      ((F.coeff i).map (Rat.castHom ℂ)).eval (Jf z) * Wf N z ^ i := by
+    funext z
+    simp only [ez, Polynomial.coe_eval₂RingHom, Polynomial.eval_map]
+    rw [Polynomial.eval₂_eq_sum_range]
+    rfl
+  rw [h]
+  exact DifferentiableOn.fun_sum fun i _ =>
+    ((Polynomial.differentiable _).comp_differentiableOn diffOn_Jf).mul ((diffOn_Wf hN).pow i)
+
+theorem ez_C (N : ℕ) (z : ℂ) (c : Polynomial ℚ) :
+    ez N z (Polynomial.C c) = c.eval₂ (Rat.castHom ℂ) (Jf z) := by
+  simp [ez]
+
+theorem Jf_sub {z : ℂ} : Jf z - 1728 = 46656 * G3f z ^ 2 / Dlf z := by
+  have h := Dlf_ne z
+  rw [Jf_eq]
+  rw [Dlf_eq] at h ⊢
+  field_simp
+  ring
+
+theorem ez_DJ (N : ℕ) (z : ℂ) : ez N z DJ = Jf z - 1728 := by
+  simp [ez, DJ]
+
+/-- On the complex side a clearing of `ΨSqₙ(WG)` is `(j − 1728)^k · ΨSqₙ(y² = x³ − (g/4)x − g/4)((g₂/g₃)℘(1/N))`. -/
+theorem ez_clears {n : ℤ} {Φ : Polynomial (Polynomial ℚ)} {k : ℕ} (h : Clears (WG.ΨSq n) Φ k)
+    (N : ℕ) {z : ℂ} (h2 : G2f z ≠ 0) (h3 : G3f z ≠ 0) :
+    ez N z Φ = (Jf z - 1728) ^ k *
+      ((curveG (G2f z ^ 3 / G3f z ^ 2)).ΨSq n).eval (G2f z / G3f z * Pf N z) := by
+  have hD := Dlf_ne z
+  have hne : ez N z DJ ≠ 0 := by
+    rw [ez_DJ, Jf_sub]; exact div_ne_zero (mul_ne_zero (by norm_num) (pow_ne_zero 2 h3)) hD
+  have e1 : 27 * ez N z (Polynomial.C Polynomial.X) / ez N z DJ = G2f z ^ 3 / G3f z ^ 2 := by
+    rw [ez_DJ, Jf_sub, show ez N z (Polynomial.C Polynomial.X) = Jf z by simp [ez], Jf_eq]
+    field_simp
+    ring
+  have e2 : 46656 * ez N z Polynomial.X / ez N z DJ = G2f z / G3f z * Pf N z := by
+    rw [ez_DJ, Jf_sub, show ez N z Polynomial.X = Wf N z by simp [ez], Wf]
+    field_simp
+  rw [h ℂ (ez N z) hne, ev2_ΨSq, e1, e2, ez_DJ]
+
+theorem evAn_eq {N : ℕ} (F : Polynomial (Polynomial ℚ)) (τ : UpperHalfPlane) (h2 : (pp τ).g₂ ≠ 0)
+    (h3 : (pp τ).g₃ ≠ 0) : evAn N F τ = ez N τ F := by
+  rw [evAn, weber_eq_Wf τ h2 h3, Polynomial.eval_map]
+  simp only [ez, Polynomial.coe_eval₂RingHom, Jf, ofComplex_apply]
+
+/-- **The comparison `K_N = ℚ(j, f₁)`.** -/
+theorem weberFieldComparison : WeberFieldComparison := by
+  intro N hN
+  obtain ⟨ΦN, kN, hΦN⟩ := exists_clears (WG.ΨSq N)
+  let I : Ideal (Polynomial (Polynomial ℚ)) := RingHom.ker (RingHom.pi fun z : Hs => ez N z)
+  have hmemI : ∀ F, F ∈ I ↔ ∀ z ∈ Hs, ez N z F = 0 := by
+    intro F
+    simp only [I, RingHom.mem_ker]
+    constructor
+    · intro h z hz; exact congrFun h ⟨z, hz⟩
+    · intro h; funext z; exact h z z.2
+  obtain ⟨z₀, hz₀, h2₀, h3₀⟩ := exists_good_point
+  set V : Set ℂ := {z | z ∈ Hs ∧ G2f z ≠ 0 ∧ G3f z ≠ 0} with hV
+  have hVo : V ∈ nhds z₀ := by
+    have h2c : ContinuousAt G2f z₀ :=
+      (diffOn_G2f.differentiableAt (isOpen_Hs.mem_nhds hz₀)).continuousAt
+    have h3c : ContinuousAt G3f z₀ :=
+      (diffOn_G3f.differentiableAt (isOpen_Hs.mem_nhds hz₀)).continuousAt
+    exact Filter.Eventually.and (isOpen_Hs.mem_nhds hz₀) ((h2c.eventually_ne h2₀).and (h3c.eventually_ne h3₀))
+  have hext : ∀ F, (∀ z ∈ V, ez N z F = 0) → ∀ z ∈ Hs, ez N z F = 0 := fun F h =>
+    eq_zero_of_eventually (diffOn_ez hN F) hz₀ (Filter.eventually_of_mem hVo fun z hz => h z hz)
+  have hprime : I.IsPrime := by
+    refine Ideal.isPrime_iff.mpr ⟨?_, ?_⟩
+    · intro htop
+      have h1 : (1 : Polynomial (Polynomial ℚ)) ∈ I := htop ▸ Submodule.mem_top
+      have := (hmemI 1).1 h1 z₀ hz₀
+      rw [map_one] at this
+      exact one_ne_zero this
+    · intro F G hFG
+      have h := (hmemI _).1 hFG
+      simp only [map_mul] at h
+      rcases eq_zero_or_eq_zero (diffOn_ez hN F) (diffOn_ez hN G) h with h1 | h1
+      · exact Or.inl ((hmemI F).2 h1)
+      · exact Or.inr ((hmemI G).2 h1)
+  have hdisj : ∀ c : Polynomial ℚ, Polynomial.C c ∈ I → c = 0 := by
+    intro c hc
+    by_contra hc0
+    obtain ⟨z, hz, hne⟩ := exists_eval_Jf_ne hc0
+    exact hne (by rw [← ez_C N]; exact (hmemI _).1 hc z hz)
+  have hNmem : ((N : ℕ) : ℂ) * (1 / (N : ℂ)) = 1 := by
+    have : (N : ℂ) ≠ 0 := by exact_mod_cast (show N ≠ 0 by omega)
+    field_simp
+  have hΦNI : ΦN ∈ I := by
+    rw [hmemI]
+    apply hext
+    rintro z ⟨hz, h2, h3⟩
+    rw [ez_clears hΦN N h2 h3]
+    have hpt := (eval_ΨSq_weber_eq_zero_iff (ofComplex z) h2 h3 hN N).mpr
+      (by rw [hNmem]; exact PeriodPair.ω₁_mem_lattice _)
+    have hcast : ((N : ℕ) : ℤ) = (N : ℤ) := rfl
+    simp only [G2f, G3f, Pf] at hpt ⊢
+    rw [hpt, mul_zero]
+  have hΔ : EDSBar.Δ ≠ 0 := EDSBar.isUnit_Δ.ne_zero
+  have hΦN0 : ΦN ≠ 0 := by
+    intro h0
+    apply ΨSq_ne_zero_of_Δ_ne_zero EDSBar hΔ (n := (N : ℤ)) (by exact_mod_cast (show N ≠ 0 by omega))
+    apply Polynomial.funext
+    intro x
+    have hg : algebraMap Qj Kbar (gDS - 27) ≠ 0 := by
+      rw [ne_eq, map_eq_zero_iff _ (algebraMap Qj Kbar).injective, gDS_sub]
+      exact div_ne_zero (by norm_num) X_sub_1728_ne_zero
+    have := evK_clears hΦN (x / algebraMap Qj Kbar (gDS - 27))
+    rw [h0, map_zero, mul_div_cancel₀ _ hg] at this
+    rw [Polynomial.eval_zero]
+    exact (mul_eq_zero.1 this.symm).resolve_left (pow_ne_zero _ (evK_DJ_ne _))
+  obtain ⟨θ, hθ⟩ := exists_root_of_isPrime hprime hdisj hΦNI hΦN0
+  have hroot : (EDSBar.ΨSq (N : ℕ)).eval (algebraMap Qj Kbar (gDS - 27) * θ) = 0 := by
+    have := (hθ ΦN).1 hΦNI
+    rw [evK_clears hΦN] at this
+    exact (mul_eq_zero.1 this).resolve_left (pow_ne_zero _ (evK_DJ_ne θ))
+  obtain ⟨P, hP0, hPN, hwP, hPd⟩ := exists_point_of_root θ hroot
+  refine ⟨P, ?_, fun F => ?_⟩
+  · have hd := addOrderOf_dvd_of_nsmul_eq_zero hPN
+    have hdpos : 0 < addOrderOf P := Nat.pos_of_dvd_of_pos hd (by omega)
+    by_contra hne
+    have hdlt : addOrderOf P < N := lt_of_le_of_ne (Nat.le_of_dvd (by omega) hd) hne
+    have hev := hPd (addOrderOf P) (addOrderOf_nsmul_eq_zero P)
+    obtain ⟨Φd, kd, hΦd⟩ := exists_clears (WG.ΨSq (addOrderOf P : ℕ))
+    have hΦdI : Φd ∈ I := by rw [hθ, evK_clears hΦd, hev, mul_zero]
+    have h1 := (hmemI Φd).1 hΦdI z₀ hz₀
+    rw [ez_clears hΦd N h2₀ h3₀] at h1
+    have hD0 : Jf z₀ - 1728 ≠ 0 := by
+      rw [Jf_sub]; exact div_ne_zero (mul_ne_zero (by norm_num) (pow_ne_zero 2 h3₀)) (Dlf_ne z₀)
+    have h1' := (mul_eq_zero.1 h1).resolve_left (pow_ne_zero _ hD0)
+    simp only [G2f, G3f, Pf] at h1'
+    rw [eval_ΨSq_weber_eq_zero_iff (ofComplex z₀) h2₀ h3₀ hN] at h1'
+    apply div_nat_not_mem (ofComplex z₀) hdpos hdlt
+    rw [div_eq_mul_one_div]; exact h1'
+  · rw [evAlg_eq, hwP, ← hθ, hmemI]
+    constructor
+    · intro h
+      apply hext
+      rintro z ⟨hz, h2, h3⟩
+      have := h (ofComplex z) h2 h3
+      rw [evAn_eq F _ h2 h3, ofComplex_coe hz] at this
+      exact this
+    · intro h τ h2 h3
+      rw [evAn_eq F τ h2 h3]
+      exact h τ τ.coe_im_pos
