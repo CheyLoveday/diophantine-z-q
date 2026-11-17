@@ -19,3 +19,13 @@ Page numbers: printed page = PDF page - 11 (2005) / - 13 (2016), checked against
 - ZInQKernel/Contrib/OneProof/IgusaGL2DSGal.lean: coordsDS, LDS (= Q(j,E_j[N]) in Kbar), IgusaGL2DSGal (1 < N),
   exists_LDS_point, galPtDS_liftNormal_inc, igusaGL2DS_of_igusaGL2DSGal : IgusaGL2DSGal -> IgusaGL2DS.
   `lake env lean` on it: no errors, no warnings (VERIFIED, 11-17 03:44).
+- `lake build +ZInQKernel.Contrib.OneProof.IgusaGL2DSGal`: success (10403 jobs, only this module compiled) (VERIFIED).
+- Consumers of IgusaGL2DS (x1PointsConjugate_of_igusaGL2DS, r16CoreY_of_picZero_igusaDS / AfTateLambda.lean:858,
+  r16CoreY_of_dsOr_igusaDS, R16CoreYSatDet, R16CoreYDS965, TailZ66-71 bundle field) all take IgusaGL2DS as a
+  hypothesis; IgusaGL2DSGal -> IgusaGL2DS is unconditional, so none loses anything (VERIFIED by grep of uses).
+
+## Autofold
+- scratch/igusa-gal/autofold.json: discharge igusaGL2DS by X1Igusa.igusaGL2DS_of_igusaGL2DSGal {n}.igusaGL2DSGal,
+  new leaf igusaGL2DSGal (published, flag "unread: ... AI page check ...").
+- `autofold.py --dry-run`: exit 0, "strict count: 9/25 on 34 -> 10/24 on 34; strictest 9/25 -> 10/24" (VERIFIED);
+  output in autofold-dryrun.txt. Exact kinds row: scratch/igusa-gal/kinds-row.tsv.
