@@ -118,7 +118,7 @@ Prop. 6.3.3, which the manuscript cites at L10975 for a different step). The pro
 
 ## 3. `InertiaAtPDecomp` (task part 2; dictionary glue, STANDARD)
 
-The statement (C8LocAlg L178): every element of an inertia group of a place `v` of `ℚ̄` over `p` is conjugate in `G_ℚ`
+The statement (C8LocAlg L173): every element of an inertia group of a place `v` of `ℚ̄` over `p` is conjugate in `G_ℚ`
 to `decomp(σ)` with `σ` in Tau Ceti's inertia subgroup of `G_{ℚ_p}` (the fixing group of `ℚ_p^{ur}`).
 
 **Proof (VERIFIED, compiled).**

@@ -4,7 +4,7 @@ Base: wip/c8-conrad3 = origin/wip/c8-conrad2 5938de123 (origin/main is an ancest
 Build: copied c8-conrad2's .lake/build and lean/.lake/build (cp -a); `lake build ZInQKernel.Contrib.OneProof.C8CFT` no-op.
 
 ## Targets (verbatim, ZInQKernel/Contrib/OneProof/C8LocAlg.lean, C8CFT.lean)
-- InertiaAtPDecomp (C8LocAlg L178), MinkowskiInertiaQ (C8CFT L192), TwistCharHTWt0 (C8CFT L488).
+- InertiaAtPDecomp (C8LocAlg L173), MinkowskiInertiaQ (C8CFT L192), TwistCharHTWt0 (C8CFT L488).
 
 ## Plan (tree inputs found, VERIFIED by reading)
 - B3b (HDecomp/B3Unram/B3b.lean, namespace GlueB3Unram): places of Qbar vs primes of B = integralClosure ℤ Qbar;
