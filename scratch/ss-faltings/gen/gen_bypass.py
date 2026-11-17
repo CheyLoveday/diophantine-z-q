@@ -49,7 +49,7 @@ F_DOC = ("  /-- Faltings, Endlichkeitssaetze fuer abelsche Varietaeten ueber Zah
 
 KINDS_ROW = dict(
     field=NEWF, kind='published',
-    flag="pending reading: Faltings 1983 section 1 not read on this host (no network): the statement 'the height of a "
+    flag="pending reading: Faltings 1983 section 1 not read by this task (no network access): the statement 'the height of a "
          "semistable abelian variety is invariant under finite extension' is recalled, with the locator (section 1, "
          "page) UNVERIFIED; the print gives it with SGA 7 IX 3.3 as the reason; stated over the kernel's GroupModel.height "
          "and height-split's IsSemistable",

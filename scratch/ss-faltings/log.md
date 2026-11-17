@@ -54,3 +54,14 @@ Base: fork main d435851d (branch wip/ss-faltings). Task: reroute SS2/SS3 off SGA
   SemistableNeronBaseChange, SemistablePersists all absent; FaltingsSemistableHeightBC, SemistableReductionThmIF,
   SilverbergZarhinThm35 present; SGA7_IX_3_5_ForwardGeom_Def34 present (d2a6b's row); no sorryAx. Control open76: all
   Cor. 3.3 names present. All 18 new SSFaltings theorems and open76_sf: standard axioms only.
+
+## 7. #discharges and dead-field probe (VERIFIED)
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges` EXIT 0; `lake env lean
+  scratch/ss-faltings/Discharges.lean` (discharges-out.txt) EXIT 0, 217 DISCHARGES lines. No field of the top bundles is
+  discharged outright by this task's modules (a bypass); the only matches from SSFChain are the projections of the
+  copied `OpenResearchLeaves5xSF` onto their own field `sga7_IX_3_5_ForwardGeom_Def34` (self-matches, they still
+  assume the copied bundle). So no autofold spec.
+- Dead-field probe (BypassCheck.lean, bypass-check-out.txt): every field of OpenResearchLeaves58SF,
+  OpenTextbookLeaves18, OpenAddedLeaves27 is read by the new top except none; only difference: 58SF's
+  `faltingsSemistableHeightBC` is read by the new top (new) and not by the old. No field becomes dead.
+- Build logs truncated to their axiom/error lines (the full logs were 9 MB).

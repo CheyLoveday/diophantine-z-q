@@ -150,6 +150,26 @@ run_cmd do
     for p in probes do
       let hit := cl.toList.filter (fun n => n == p || n.toString.endsWith ("." ++ p.toString))
       IO.println s!"  {p}: {if hit.isEmpty then "absent" else s!"PRESENT {hit.take 3}"}"
+
+/-! ss-faltings dead-field probe (appended by gen/make_check.sh --dead): for each field of the top bundles, whether any
+projection with that field name occurs in the closure of the new top / the old top. Absent = the field is never read. -/
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let cNew := ssfClosureOf env `HDec.HSyn.sixContactMin_of_open77sf
+  let cOld := ssfClosureOf env `HDec.HSyn.sixContactMin_of_open76
+  let projNames (cl : NameSet) : NameSet := cl.toList.foldl (fun s n =>
+    if (env.getProjectionFnInfo? n).isSome then
+      match n with | .str _ f => s.insert (.mkSimple f) | _ => s
+    else s) {}
+  let pNew := projNames cNew
+  let pOld := projNames cOld
+  for b in [`HDec.HSyn.OpenResearchLeaves58SF, `HDec.HSyn.OpenTextbookLeaves18, `HDec.HSyn.OpenAddedLeaves27] do
+    for f in getStructureFields env b do
+      let a := pNew.contains f
+      let o := pOld.contains f
+      if !(a && o) then IO.println s!"{b}.{f}: new {a} old {o}"
+  IO.println "dead-field probe done"
 #print axioms ZInQ.SSFaltings.faltingsSemistableHeightBC_of_ss2
 #print axioms ZInQ.SSFaltings.semistableReductionThm_of_IF
 #print axioms ZInQ.SSFaltings.exists_three_or_five_isUnit

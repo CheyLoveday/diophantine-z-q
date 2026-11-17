@@ -27,6 +27,8 @@
   ZInQ.SSFaltings.SemistableReductionThmIF: absent
   SZRaynaud.SilverbergZarhinThm35: PRESENT [SZRaynaud.SilverbergZarhinThm35]
   sorryAx: absent
+HDec.HSyn.OpenResearchLeaves58SF.faltingsSemistableHeightBC: new true old false
+dead-field probe done
 'ZInQ.SSFaltings.faltingsSemistableHeightBC_of_ss2' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.SSFaltings.semistableReductionThm_of_IF' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.SSFaltings.exists_three_or_five_isUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
