@@ -102,9 +102,16 @@ It differs from the print in three ways, none of them a strengthening:
 * (b) it states the result in every basis instead of `(P_τ, Q_τ)`, which follows by conjugation and transpose;
 * (c) it is stated on the normalized model, the same curve as the print's.
 
-Point (b) is the one step a strict rater could call "consequence". A one-basis form `IgusaGL2DSGalSome`
-(`∃ e, ∀ g, ∃ σ₀, …`) is drafted in `scratch/igusa-gal/SomeBasis.lean` together with a proof
-`IgusaGL2DSGalSome → IgusaGL2DSGal` by conjugation in `GL₂(ℤ/N)`; its status is in section 5. The print's
+Point (b) is the one step a strict rater could call "consequence", so it is now proved in Lean. The helper file
+`ZInQKernel/Contrib/OneProof/IgusaGL2DSGalSome.lean` states the one-basis form `IgusaGL2DSGalSome`
+(`∀ N > 1, ∃ e, ∀ g, ∃ σ₀, …`). It proves `igusaGL2DSGal_of_some : IgusaGL2DSGalSome → IgusaGL2DSGal` by
+conjugation in `GL₂(ℤ/N)`: `glOf` turns an additive automorphism of `(ℤ/N)²` into a matrix, using `matAct_matOf`
+and `matAct_mul`. It also proves `igusaGL2DS_of_igusaGL2DSGalSome` (VERIFIED: compiled, standard axioms).
+`IgusaGL2DSGalSome` is the print with nothing added except dropping injectivity. The row convention becomes the
+column convention through `g = ρ(σ)ᵀ`, which the `∀ g` absorbs. The alternative spec
+`scratch/igusa-gal/autofold-some.json` folds it instead; its dry run gives the same counts, 9/25 → 10/24.
+**Recommendation: fold the `Some` spec**, since it removes reading note (1). The primary spec, folding
+`IgusaGL2DSGal`, is the one the task asked for. The print's
 `(P_τ, Q_τ)` is defined analytically by (7.11), with `℘_τ`, so the print's exact basis cannot be named in Lean
 over `RatFunc ℚ`. The `∃ e` form is the closest algebraic statement.
 
@@ -131,9 +138,33 @@ Dry run: `python3 scripts/one_proof/autofold.py scratch/igusa-gal/autofold.json 
 
 No page answer was unfavourable, so the kind stays published and the leaf counts LEAF/LEAF. If a reviewer
 nevertheless treats the every-basis step as a reading step, the kind becomes consequence (GLUE/GLUE) with the
-flag "consequence step: one basis → every basis (conjugation in GL₂(ℤ/N))". The fix in that case is to fold
-`IgusaGL2DSGalSome` instead, if its proof compiles (section 5).
+flag "consequence step: one basis → every basis (conjugation in GL₂(ℤ/N))". In that case, fold
+`IgusaGL2DSGalSome` instead (its proof compiles; see above).
 
-## 5. Checks
+## 5. Checks (all VERIFIED on this host, 11-17)
 
-See `scratch/igusa-gal/log.md` for the compile records; section 5 is completed there.
+* `lake env lean ZInQKernel/Contrib/OneProof/IgusaGL2DSGal.lean` gives no errors and no warnings.
+  `lake build +ZInQKernel.Contrib.OneProof.IgusaGL2DSGal` and `+…IgusaGL2DSGalSome` succeed.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` succeeds (16093 jobs), with
+  `frozenTarget` on the standard axioms. The first attempt failed with a missing `.olean` in two
+  CloudB3W16Torsion vendor modules, left by an interrupted earlier build; the rebuild was clean.
+* `#discharges` (`scratch/igusa-gal/Discharges.lean`; output in `Discharges-output.txt`):
+  ```
+  DISCHARGES [OpenResearchLeaves45.igusaGL2DS] by X1Igusa.igusaGL2DS_of_igusaGL2DSGal
+    still assumes: [X1Igusa.IgusaGL2DSGal]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [OpenResearchLeaves45.igusaGL2DS] by X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome
+    still assumes: [X1Igusa.IgusaGL2DSGalSome]
+    axioms: [propext, Classical.choice, Quot.sound]
+  ```
+* The autofold dry run for `autofold.json` gives strict 9/25 → 10/24 and strictest 9/25 → 10/24. The generated
+  module, with its first line removed (`scratch/igusa-gal/DryRunFold.lean`), compiles:
+  `HDec.HSyn.sixContactMin_of_open65` uses only the standard axioms.
+* The dry run for `autofold-some.json` gives the same counts.
+
+## 6. Leaves rated
+
+| leaf | kind | printed form? | reason |
+| --- | --- | --- | --- |
+| `X1Igusa.IgusaGL2DSGalSome` | published | yes | DS Thm 7.6.3 (surjectivity of ρ) for one basis, on `Gal(ℚ(j, E_j[N])/ℚ(j))` with `ℚ(j, E_j[N])` as DS define it, `N > 1`; only injectivity is dropped |
+| `X1Igusa.IgusaGL2DSGal` | published | yes, up to the every-basis step | as above, for every basis; the step from one basis is elementary and proved in Lean (`igusaGL2DSGal_of_some`) |

@@ -29,3 +29,10 @@ Page numbers: printed page = PDF page - 11 (2005) / - 13 (2016), checked against
   new leaf igusaGL2DSGal (published, flag "unread: ... AI page check ...").
 - `autofold.py --dry-run`: exit 0, "strict count: 9/25 on 34 -> 10/24 on 34; strictest 9/25 -> 10/24" (VERIFIED);
   output in autofold-dryrun.txt. Exact kinds row: scratch/igusa-gal/kinds-row.tsv.
+- Main + Discharges rebuild: success (16093 jobs; first try failed on a missing vendor .olean from an interrupted build).
+- #discharges: igusaGL2DS discharged by igusaGL2DS_of_igusaGL2DSGal (assumes IgusaGL2DSGal) and by
+  igusaGL2DS_of_igusaGL2DSGalSome (assumes IgusaGL2DSGalSome), standard axioms (VERIFIED).
+- ZInQKernel/Contrib/OneProof/IgusaGL2DSGalSome.lean: IgusaGL2DSGalSome (one basis), glOf/matOf,
+  igusaGL2DSGal_of_some, igusaGL2DS_of_igusaGL2DSGalSome: builds, standard axioms (VERIFIED).
+- autofold-some.json dry run: 9/25 -> 10/24 (VERIFIED). DryRunFold.lean (dry-run module of autofold.json minus line 1)
+  compiles, sixContactMin_of_open65 standard axioms (VERIFIED).

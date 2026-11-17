@@ -82,6 +82,9 @@ DISCHARGES [OpenResearchLeaves45.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [OpenResearchLeaves45.igusaGL2DS] by X1Igusa.igusaGL2DS_of_igusaGL2DSGal
   still assumes: [X1Igusa.IgusaGL2DSGal]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves45.igusaGL2DS] by X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome
+  still assumes: [X1Igusa.IgusaGL2DSGalSome]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves45.elkiesX6StarEveryIdeal] by X6ALIdeal.ideal_of_elkiesX6StarEvery
   still assumes: [ZInQ.HomLattice.GAGAMorphism,
  AvSplit.MumfordTorsionAlgClosed,
@@ -131,5 +134,6 @@ DISCHARGES [OpenResearchLeaves45.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 14006 theorems checked, 30 discharge one
+#discharges: 39 open hypotheses, 14022 theorems checked, 31 discharge one
 'X1Igusa.igusaGL2DS_of_igusaGL2DSGal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome' depends on axioms: [propext, Classical.choice, Quot.sound]

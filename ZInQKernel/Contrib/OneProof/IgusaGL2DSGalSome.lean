@@ -1,5 +1,12 @@
 import ZInQKernel.Contrib.OneProof.IgusaGL2DSGal
 
+/-! # igusa-gal: the one-basis form of Diamond–Shurman Thm 7.6.3 implies `IgusaGL2DSGal`
+
+Task igusa-gal (2026-11-17), report `docs/research/igusa-gal.md`. Diamond–Shurman define `ρ` in one ordered basis
+`(P_τ, Q_τ)` of `E_j[N]` ((7.11), analytic). `IgusaGL2DSGalSome` states the theorem for some basis; every basis
+follows by conjugation in `GL₂(ℤ/N)` (`igusaGL2DSGal_of_some`; additive automorphisms of `(ℤ/N)²` are matrices,
+`glOf`). An alternative leaf, closer to the print, for the field `igusaGL2DS`
+(`igusaGL2DS_of_igusaGL2DSGalSome`). No `sorry`, no `axiom`, no build-time code. -/
 noncomputable section
 
 namespace X1Igusa
@@ -54,8 +61,12 @@ theorem matAct_glOf_inv {N : ℕ} (A : ZMod N × ZMod N ≃+ ZMod N × ZMod N) (
     matAct (((glOf A)⁻¹ : GL (Fin 2) (ZMod N)) : Matrix (Fin 2) (Fin 2) (ZMod N)) v = A.symm v :=
   matAct_matOf _ v
 
-/-- **LEAF (Diamond–Shurman Thm 7.6.3, in the print's one-basis form).** As `IgusaGL2DSGal`, for one basis
-`e` of `E_j[N]` (the print's `(P_τ, Q_τ)` of (7.11)) instead of every basis. -/
+/-- **LEAF (Diamond–Shurman, GTM 228, Theorem 7.6.3, first part, in the print's one-basis form; printed form).**
+As `IgusaGL2DSGal`, for one basis `e` of `E_j[N]` instead of every basis: for `N > 1` there is a basis
+`e : (ℤ/N)² ≃ E_j[N]` such that every `g ∈ GL₂(ℤ/N)` is the action of some `σ₀ ∈ Gal(ℚ(j, E_j[N])/ℚ(j))` in the
+basis `e`. The print's basis is `(P_τ, Q_τ)` of (7.11) (analytic, p. 282 (2005) / p. 286 (2016)); its `ρ`, defined
+by `(P^σ, Q^σ)ᵀ = ρ(σ)(P, Q)ᵀ` (p. 287 / p. 291), is onto `GL₂(ℤ/N)` (Thm 7.6.3, p. 290 / p. 294), so in the column
+convention `σ(e v) = e(ρ(σ)ᵀ v)` used here every `g = ρ(σ)ᵀ` occurs. `N > 1` is the standing assumption of §7.5. -/
 def IgusaGL2DSGalSome : Prop :=
   ∀ N : ℕ, 1 < N → ∃ e : (ZMod N × ZMod N) ≃+ nTors EDSBar N, ∀ g : GL (Fin 2) (ZMod N),
     ∃ σ₀ : LDS N ≃ₐ[Qj] LDS N, ∀ (v : ZMod N × ZMod N) (P : (EDS.baseChange (LDS N)).toAffine.Point),
@@ -75,5 +86,10 @@ theorem igusaGL2DSGal_of_some (h : IgusaGL2DSGalSome) : IgusaGL2DSGal := by
   congr 3
   rw [Units.val_mul, Units.val_mul, matAct_mul, matAct_mul, matAct_glOf_inv, matAct_glOf]
   simp [A]
+
+
+/-- `IgusaGL2DSGalSome → IgusaGL2DS`. -/
+theorem igusaGL2DS_of_igusaGL2DSGalSome (h : IgusaGL2DSGalSome) : IgusaGL2DS :=
+  igusaGL2DS_of_igusaGL2DSGal (igusaGL2DSGal_of_some h)
 
 end X1Igusa
