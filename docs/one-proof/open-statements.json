@@ -178,6 +178,6 @@
    "statement": "ZInQ.PoleCompleteness",
    "field": "hPC",
    "docstring":
-   "**PC** (Theorem 5.2, pole completeness, `diophantine_zq.tex` lines 1001–1004). Every rational\n`B` with square reduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies\n`Φ(B)`. ",
+   "**Hypothesis PC** (Theorem 5.2, pole completeness). Every rational `B` with square\nreduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies `Φ(B)`. ",
    "bundle": "frozenTarget"}],
  "count": 30}

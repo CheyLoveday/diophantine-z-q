@@ -593,9 +593,8 @@ polynomial; the manuscript derives it from its restricted converse, Theorem 5.3.
 ZInQ.PoleCompleteness
 ```
 
-> **PC** (Theorem 5.2, pole completeness, `diophantine_zq.tex` lines 1001–1004). Every rational
-> `B` with square reduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies
-> `Φ(B)`.
+> **Hypothesis PC** (Theorem 5.2, pole completeness). Every rational `B` with square
+> reduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies `Φ(B)`.
 
 ## Credits
 
