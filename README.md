@@ -24,6 +24,12 @@ integer coefficients such that a rational number `q` is an integer exactly when 
 The Lean result is conditional: it proves the theorem from the open hypotheses counted below, and those are not
 proved in Lean.
 
+**Reference text.** The Lean follows Elliot Glazer's original manuscript, the November 5, 2026 text kept here as
+[`diophantine_zq.tex`](diophantine_zq.tex), and deviates from it only when it has to, for example when a step
+cannot be formalized as written. Each deviation is recorded with its reason in
+[`KERNEL_PLAN.md`](KERNEL_PLAN.md#reference-text-and-deviations)
+([#95](https://github.com/Deicyde/diophantine-z-q/issues/95)).
+
 The proof follows the manuscript's route. Its hypotheses are pole completeness (Theorem 5.2) for the manuscript's
 own pole polynomial, and the statements from which Lean derives the instance of the six-contact height estimate (the
 manuscript's Theorem 4.1) that the proof uses. The manuscript derives pole completeness from its restricted converse
