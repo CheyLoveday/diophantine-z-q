@@ -115,3 +115,14 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     and the Lean pull-back on function fields are not proved in Lean (D1-D3), so under the strict rule its kinds row
     is re-flagged "pending reading" and counts GLUE (strict and strictest). With hQ and hW proved, the C_d fold is
     then count-neutral on GLUE (hL3 GLUE -> hGZ GLUE) and never raises a count. render_open --check ok.
+15. phisurj and piczero-char0 (integration task fold33-pic, fast-forwarded): step 1 weilPairingMumford (GLUE) proved
+    (autofold, TailZ51) and mumfordPhiSurjectiveAC rerouted (TailZ52 enters sixContactMin_of_open37_hf_gm with
+    phiAmpleIsogeny := PhiSurj.phiAmpleIsogeny_of_open from picRepresentableAbVar, picZeroAbVar,
+    mumfordTorsionAlgClosed): 29 H, strictest 10/19, 35 open. Step 2 picZeroAbVar (GLUE, read only in characteristic
+    0) replaced by its characteristic-0 form from picLocFinType, identityComponentLFT, kleimanPicZeroProper
+    (published, unread; PicZeroCharZeroCopy, TailZ53, PhiSurjCharZero): 31 H, strictest 13/18, 37 open. Checks by the
+    lead (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 14 (only
+    frozenTarget changed; 417 new constants); closure (271480 constants) without PicZeroAbVar, PicZeroSmooth,
+    MumfordPhiSurjectiveAC, WeilPairingMumford, the earlier removed Props or sorryAx; OpenStatements 37;
+    render_open --check ok; crosswalk --check ok; DischargesTest rerun; autoform check ok. Host paths removed from
+    merged logs (phisurj, piczero-char0).

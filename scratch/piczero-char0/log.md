@@ -2,7 +2,7 @@
 
 ## Setup
 - Base wip/leaf-fold33b 0e3c31258; origin/main (c1e4ed1b8) already an ancestor (merge not needed). VERIFIED.
-- Build: reflink copy of ~/dzq-wt/leaf-fold33b/.lake/build and lean/.lake/build (same commit). VERIFIED.
+- Build: reflink copy of the leaf-fold33b worktree's .lake/build and lean/.lake/build (same commit). VERIFIED.
 
 ## Step 1: taint of the bundle field `picZeroAbVar` (scratch/piczero-char0/Taint.lean -> taint_out.txt), VERIFIED
 - Closure of `ZInQ.OneProof.frozenTarget`: 270,264 constants. Carriers: OpenAddedLeaves13..20.

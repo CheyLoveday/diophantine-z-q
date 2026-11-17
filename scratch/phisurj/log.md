@@ -16,7 +16,7 @@ Base wip/leaf-fold33b 0e3c31258; `git merge origin/main`: already up to date (20
   (`ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof`, not merged here). VERIFIED (git show).
 
 ## Lean results (all VERIFIED: compiled on this host, `lake env lean`, LEAN_NUM_THREADS=8)
-- Build tree copied from ~/dzq-wt/leaf-fold33b (same commit 0e3c31258), `.lake/build` and `lean/.lake/build`.
+- Build tree copied from the leaf-fold33b worktree (same commit 0e3c31258), `.lake/build` and `lean/.lake/build`.
 - `scratch/phisurj/DimSurj.lean`: `PhiSurj.surjective_of_dim_le` — a locally quasi-finite closed morphism
   `f : X → Y`, `Y` irreducible, `dim X = a`, `dim Y ≤ a`, is surjective. Compiles.
 - `scratch/phisurj/PhiSurj.lean`: `exists_torsAddEquiv` (A[n] ≃+ (ZMod n)^{2 dim A} for A over any field, from
