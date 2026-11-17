@@ -141,4 +141,62 @@ lemma eta_repKleiman (f : X ⟶ S) {P : Over S} (rep : (picardFunctor f).obj.Rep
   exact ConcreteCategory.congr_hom (congr_app (toSheafify_naturality (fppfTopology.over S) (quot f))
     (op (𝟙_ (Over S)))) (1 : (pullback f (𝟙_ (Over S)).hom).Pic)
 
+
+/-! ## The leaves and the derivations -/
+
+open T09Pic PkgI3 PkgI3.AbVar PicDict PicFix
+
+lemma identityComponent_repKleiman {K : Type} [Field K] {X : Over (Spec (CommRingCat.of K))}
+    {P : Over (Spec (CommRingCat.of K))} (rep : (picardFunctor X.hom).obj.RepresentableBy P) :
+    (letI := kleimanPicardGrpObj X.hom (repKleiman X.hom rep); identityComponent P) =
+      (letI := picardFunctorCommGrpObj X.hom rep; identityComponent P) := by
+  unfold identityComponent
+  rw [eta_repKleiman]
+
+/-- **LEAF (Kleiman 9.5.4 over Kleiman's own functor; same hypotheses as `PicFix.KleimanPicZeroProper`).** -/
+def KleimanPicZeroProperQ : Prop :=
+  ∀ (K : Type) [Field K] (X : Over (Spec (CommRingCat.of K))), IsProper X.hom →
+    geometrically IsNormalScheme X.hom →
+    ∀ (P : Over (Spec (CommRingCat.of K))) (rep : (kleimanPicardSheaf X.hom).obj.RepresentableBy P)
+      (V : P.left.Opens),
+      letI := kleimanPicardGrpObj X.hom rep
+      (V : Set P.left) = identityComponent P → IsProper (V.ι ≫ P.hom)
+
+theorem kleimanPicZeroProper_of_Q (h : KleimanPicZeroProperQ) : PicFix.KleimanPicZeroProper := by
+  intro K _ X hX hN P rep V hV
+  refine h K X hX hN P (repKleiman X.hom rep) V ?_
+  rw [identityComponent_repKleiman]
+  exact hV
+
+/-- **LEAF (printed form, weakest reading).** -/
+def KleimanPicZeroProperPrinted : Prop :=
+  ∀ (K : Type) [Field K] (X : Over (Spec (CommRingCat.of K))), IsProper X.hom →
+    GeometricallyIntegral X.hom → geometrically IsNormalScheme X.hom →
+    (∃ (N : Type) (_ : Finite N) (i : X.left ⟶ ℙ(N; Spec (CommRingCat.of K))),
+      IsImmersion i ∧ i ≫ ℙ(N; Spec (CommRingCat.of K)) ↘ Spec (CommRingCat.of K) = X.hom) →
+    (∃ σ : Spec (CommRingCat.of K) ⟶ X.left, σ ≫ X.hom = 𝟙 _) →
+    ∀ (P : Over (Spec (CommRingCat.of K))) (rep : (kleimanPicardSheaf X.hom).obj.RepresentableBy P)
+      (V : P.left.Opens),
+      letI := kleimanPicardGrpObj X.hom rep
+      (V : Set P.left) = identityComponent P → IsProper (V.ι ≫ P.hom)
+
+theorem kleimanPicZeroProperPrinted_of_Q (h : KleimanPicZeroProperQ) : KleimanPicZeroProperPrinted :=
+  fun K _ X hX _ hN _ _ => h K X hX hN
+
+open scoped MonObj in
+theorem picZeroProperAt_of_printed (h : KleimanPicZeroProperPrinted) (K : Type) [Field K] :
+    PicZeroChar0.PicZeroProperAt K := by
+  intro A P rep V hV
+  obtain ⟨L, N, hN, i, hi, hover, -⟩ := exists_isVeryAmple A
+  refine h K A.X inferInstance inferInstance (geometricallyNormal_of_smooth A.X.hom) ⟨N, hN, i, hi, hover⟩
+    ⟨η[A.X].left, Over.w η[A.X]⟩ P (repKleiman A.X.hom rep) V ?_
+  rw [identityComponent_repKleiman]
+  exact hV
+
+theorem picZeroAbVar0_of_printed (h1 : PicLocFinType) (h2 : IdentityComponentLFT)
+    (h3 : KleimanPicZeroProperPrinted) : PicZeroChar0.PicZeroAbVar0 := fun K _ _ =>
+  PicZeroChar0.picZeroAbVarAt_of h1 h2 K
+    (PicZeroChar0.picZeroSmoothAt_charZero ZInQ.Contrib.OneProof.CartierSmooth.cartierSmooth_proof h1 K)
+    (picZeroProperAt_of_printed h3 K)
+
 end KleimanSection
