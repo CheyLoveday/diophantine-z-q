@@ -15,9 +15,9 @@ for k in ['heckeJ1DS','afShimura','igusaGL2DS']:
   L[k]['doc']=L[k]['doc'].replace('aftate-fix2:','aftate-fix2 (r16-close fold):',1)
 L['heckeJ1DS']['flag']="unread: new printed leaf (Diamond-Shurman 6.3 Hecke operators on Div/Pic^0 of X_1(N) by double cosets, pp. 226-227, coset representatives Prop. 5.2.1 p. 171, 7.9 T_p and <d> defined over Q p. 300; AI-read by r16-close, no human reading)"
 L['heckeJ1DS']['source']="Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), 6.3 (pp. 226-227), Prop. 5.2.1 (p. 171), 7.9 (p. 300); Shimura 1971 7.2 (unread)"
-L['igusaGL2DS']['flag']="unread: new printed leaf (Diamond-Shurman Thm 7.6.3, Gal(Q(j,E_j[N])/Q(j)) = GL_2(Z/N), p. 289, with E_j of (7.12) p. 281; AI-read by r16-close, no human reading)"
-L['igusaGL2DS']['source']="Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Theorem 7.6.3 (p. 289), universal curve (7.12) (p. 281); Igusa, Amer. J. Math. 81 (1959) (unread)"
-L['afShimura']['source']="Shimura, On the factors of the jacobian variety of a modular function field, J. Math. Soc. Japan 25 (1973), Thm 1, pp. 526-527 (read by the locator audit, row R16); Diamond-Shurman GTM 228 (2005), Def. 6.6.3 (p. 241), Prop. 6.6.4 (pp. 241-242) (AI-read by r16-close)"
+L['igusaGL2DS']['flag']="unread: new printed leaf (Diamond-Shurman Thm 7.6.3, Gal(Q(j,E_j[N])/Q(j)) = GL_2(Z/N), p. 290, with E_j of (7.12) p. 282; AI-read by r16-close, no human reading)"
+L['igusaGL2DS']['source']="Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Theorem 7.6.3 (p. 290), universal curve (7.12) (p. 282); Igusa, Amer. J. Math. 81 (1959) (unread)"
+L['afShimura']['source']="Shimura, On the factors of the jacobian variety of a modular function field, J. Math. Soc. Japan 25 (1973), Thm 1, pp. 526-527 (read by the locator audit, row R16); Diamond-Shurman GTM 228 (2005), Def. 6.6.3 (p. 241), Prop. 6.6.4 (p. 242) (AI-read by r16-close)"
 spec={"name":"r16-close","imports":["ZInQKernel.Contrib.OneProof.R16CoreYSatDet"],
  "discharges":[{"field":"r16CoreY",
   "proof":"_root_.AfTateLam.r16CoreY_of_sat_det {n}.heckeJ1DS {n}.afShimura {n}.afTateDSLambdaSat {n}.afDetLambda {n}.igusaGL2DS {t}.mumfordTorsionAlgClosed",
