@@ -22,3 +22,9 @@ Base: fork main d435851d (branch wip/ss-faltings). Task: reroute SS2/SS3 off SGA
 - Finding: the readers never need semistability of a base change of a *given* semistable model except in r20Lower,
   where a common semistable field for A and B suffices. SS2 is used only for invariance of the height of a semistable
   Neron model under finite extension -- Faltings 1983's statement.
+
+## 2. Merge of main f3402e89 (fold-b112; top TailZ83, `sixContactMin_of_open76`) -- done, clean merge
+
+## 3. SSFaltings.lean compile (VERIFIED)
+- `lake env lean ZInQKernel/Contrib/OneProof/SSFaltings.lean`: no errors (after fixing `pazukiC2_nonneg` namespace
+  `ZInQ.HeightSplit` and the compositum `L := KA ⊔ KB` as a `let` with `IntermediateField.finiteDimensional_sup`).

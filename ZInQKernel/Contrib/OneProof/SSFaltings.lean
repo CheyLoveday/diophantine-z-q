@@ -258,7 +258,7 @@ theorem r22_of_upperF (hP : PazukiCor13Upper) (hN1 : NeronModelExists)
   have h := hP K A hA x ((isStableFaltingsHeight_iffF hN1 hF hSS1 A x).mpr hx) σ Λ Φ hΦ Ω hΩ hPer
     F emb z c hc hz
   exact (absLogHeight_le_absLogHeightL2 z).trans
-    (pazuki_upper_of_upper LeafPush2.pazukiC2_nonneg hX h)
+    (pazuki_upper_of_upper ZInQ.HeightSplit.pazukiC2_nonneg hX h)
 
 /-- **H-15: R19** (TailY's `r19_of_leaves`, `hF` for SS2). -/
 theorem r19_of_leavesF (hGR : GaudronRemondThm14) (hN1 : NeronModelExists)
@@ -281,14 +281,16 @@ theorem r20Lower_of_leavesF (hF5 : FaltingsLemma5BCLower) (hN1 : NeronModelExist
   obtain ⟨KB, hB1, hKB⟩ := hSS K B
   haveI := hA1
   haveI := hB1
-  haveI : NumberField ↥(KA ⊔ KB) := NumberField.of_module_finite K ↥(KA ⊔ KB)
-  obtain ⟨𝒩A, hA⟩ := hN1 K A ↥(KA ⊔ KB)
-  obtain ⟨𝒩B, hB⟩ := hN1 K B ↥(KA ⊔ KB)
-  have sA : IsSemistable 𝒩A := hKA (KA ⊔ KB) le_sup_left 𝒩A hA
-  have sB : IsSemistable 𝒩B := hKB (KA ⊔ KB) le_sup_right 𝒩B hB
+  let L : IntermediateField K (AlgebraicClosure K) := KA ⊔ KB
+  haveI : FiniteDimensional K L := IntermediateField.finiteDimensional_sup KA KB
+  haveI : NumberField L := NumberField.of_module_finite K L
+  obtain ⟨𝒩A, hA⟩ := hN1 K A L
+  obtain ⟨𝒩B, hB⟩ := hN1 K B L
+  have sA : IsSemistable 𝒩A := hKA L le_sup_left 𝒩A hA
+  have sB : IsSemistable 𝒩B := hKB L le_sup_right 𝒩B hB
   have hxA : 𝒩A.height = x := (stableFaltingsHeight_eq_of_semistableF hN1 hF A 𝒩A hA sA).symm.trans hx
   have hyB : 𝒩B.height = y := (stableFaltingsHeight_eq_of_semistableF hN1 hF B 𝒩B hB sB).symm.trans hy
-  exact hF5 K A B φ hφ (KA ⊔ KB) 𝒩A 𝒩B hA hB sA sB x y hxA hyB
+  exact hF5 K A B φ hφ L 𝒩A 𝒩B hA hB sA sB x y hxA hyB
 
 end Rows
 
