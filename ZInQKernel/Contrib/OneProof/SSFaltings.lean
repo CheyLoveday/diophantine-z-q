@@ -16,7 +16,7 @@ proof `GapNeron.ss1_ss3_of_cpNF` uses persistence twice). Their readers are the 
   (`faltingsSemistableHeightBC_of_ss2`);
 * SS1 and SS3 only to find, for two abelian varieties, one field over which both are semistable (`r20Lower`), or one
   semistable field (identification). Raynaud's criterion (the bundle's Raynaud leaf, Silverberg–Zarhin Thm 3.5 as
-  cited at L816) gives more: `A` is semistable over **every** number field containing `K(A[12])`
+  cited at L816) gives more: `A` is semistable over **every** number field containing `K(A[15])`
   (`semistableReductionThmIF_of_raynaud`, §2), with no persistence statement.
 
 §3 re-proves the six rows from these. No `sorry`, no `axiom`. -/
@@ -55,7 +55,7 @@ theorem faltingsSemistableHeightBC_of_ss2 (hSS2 : SemistableNeronBaseChange) :
     _ = 𝒱.height := Contrib.HeightBC.openSubgroupHeight K A L' 𝒰 𝒱 h𝒰𝒱
     _ = 𝒩.height := Contrib.HeightBC.modelHeightBaseChange K A L L' 𝒩 𝒱 h𝒱
 
-/-! ## §2. Semistability over every field containing `K(A[12])`, from Raynaud's criterion -/
+/-! ## §2. Semistability over every field containing `K(A[15])`, from Raynaud's criterion -/
 
 /-- **Semistable reduction over every large field** (glue, proved below from Raynaud's criterion): for `A` over a
 number field `K` there is a finite `K₀ ⊆ K̄` such that over every number field `K₀ ⊆ L ⊆ K̄` every Néron model of
@@ -73,47 +73,47 @@ theorem semistableReductionThm_of_IF (h : SemistableReductionThmIF) : Semistable
   haveI : NumberField K₀ := NumberField.of_module_finite K K₀
   exact ⟨K₀, inferInstance, inferInstance, inferInstance, hK₀ K₀ le_rfl⟩
 
-/-- `3` or `4` is a unit in a local ring (`4 - 3 = 1`); the proof of `ReductB.exists_three_le_isUnit`, recording
-`m ∈ {3, 4}`. -/
-theorem exists_three_or_four_isUnit {R : Type} [CommRing R] [IsLocalRing R] :
-    ∃ m : ℕ, (m = 3 ∨ m = 4) ∧ IsUnit (m : R) := by
+/-- `3` or `5` is a unit in a local ring (`3 · 2 - 5 = 1`): the manuscript's choice `A[3]`, or `A[5]` when the
+residue characteristic is `3` (diophantine_zq.tex L814). -/
+theorem exists_three_or_five_isUnit {R : Type} [CommRing R] [IsLocalRing R] :
+    ∃ m : ℕ, (m = 3 ∨ m = 5) ∧ IsUnit (m : R) := by
   by_cases h3 : IsUnit ((3 : ℕ) : R)
   · exact ⟨3, Or.inl rfl, h3⟩
-  · refine ⟨4, Or.inr rfl, ?_⟩
-    have h1 : IsUnit (((4 : ℕ) : R) + -((3 : ℕ) : R)) := by
-      rw [show ((4 : ℕ) : R) + -((3 : ℕ) : R) = 1 by push_cast; ring]
+  · refine ⟨5, Or.inr rfl, ?_⟩
+    have h1 : IsUnit (((3 : ℕ) : R) * 2 + -((5 : ℕ) : R)) := by
+      rw [show ((3 : ℕ) : R) * 2 + -((5 : ℕ) : R) = 1 by push_cast; ring]
       exact isUnit_one
     rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add h1 with h | h
-    · exact h
-    · exact absurd (IsUnit.neg_iff _ |>.mp h) h3
+    · exact absurd (isUnit_of_mul_isUnit_left h) h3
+    · exact IsUnit.neg_iff _ |>.mp h
 
 open ReductSplit ReductGlue ReductB ZInQ.Contrib.AbVarBC GapNeron in
 /-- **`SemistableReductionThmIF` from Raynaud's criterion** (`ReductSplit.RaynaudSemistable`, the bundle's Raynaud
 leaf through `ReductB.raynaudSemistable_of_SH_pair`), Mumford's torsion count and `[m]` étale (textbook fields),
 Néron models over the DVRs of a number field (from N1) and the proved local-global glue. `K₀` is a finite field of
-definition of `A(K̄)[12]`. Over `K₀ ⊆ L`, at a DVR `O` of `L` take `m ∈ {3, 4}` invertible in `O`; the points of
-order `m ∣ 12` of `A_L` are `L`-rational (`torsion_descends_etale`, `fixedTorsionRational_inter`), so Raynaud's
+definition of `A(K̄)[15]`. Over `K₀ ⊆ L`, at a DVR `O` of `L` take `m ∈ {3, 5}` invertible in `O` (L814's choice); the points of
+order `m ∣ 15` of `A_L` are `L`-rational (`torsion_descends_etale`, `fixedTorsionRational_inter`), so Raynaud's
 criterion gives semistable reduction at `O`. The proof of `ReductB.semistableReductionDVRnf_of_raynaudCP` with one
 `K₀` for all places and all `L ⊇ K₀`. -/
 theorem semistableReductionThmIF_of_raynaud (hR : RaynaudSemistable)
     (hM : AvSplit.MumfordTorsionAlgClosed) (hE : AvSplit.T4.MulEtaleAbelianScheme)
     (hN : NeronSchemeModelExistsDVRNF) (hLG : SemistableLocalGlobal) : SemistableReductionThmIF := by
   intro K _ _ A
-  have h12 : ((12 : ℕ) : K) ≠ 0 := Nat.cast_ne_zero.mpr (by norm_num)
+  have h12 : ((15 : ℕ) : K) ≠ 0 := Nat.cast_ne_zero.mpr (by norm_num)
   obtain ⟨K₀, hfin, hfix⟩ :=
-    torsionFieldOfDefinition_of (AvSplit.torsionStructure_of_mumford hM) K A 12 h12
+    torsionFieldOfDefinition_of (AvSplit.torsionStructure_of_mumford hM) K A 15 h12
   refine ⟨K₀, hfin, fun L _ hle 𝒩 h𝒩 => ?_⟩
   rw [hLG K A L 𝒩 h𝒩]
   intro O hO
   haveI := hO
-  obtain ⟨m, hm34, hmu⟩ := exists_three_or_four_isUnit (R := O)
+  obtain ⟨m, hm34, hmu⟩ := exists_three_or_five_isUnit (R := O)
   have hm3 : 3 ≤ m := by rcases hm34 with rfl | rfl <;> norm_num
   have hmK : (m : K) ≠ 0 := Nat.cast_ne_zero.mpr (by rcases hm34 with rfl | rfl <;> norm_num)
-  have hm12 : ∀ p : A.Pt (AlgebraicClosure K), p ^ m = 1 → p ^ 12 = 1 := by
+  have hm12 : ∀ p : A.Pt (AlgebraicClosure K), p ^ m = 1 → p ^ 15 = 1 := by
     intro p hp
     rcases hm34 with rfl | rfl
-    · rw [show (12 : ℕ) = 3 * 4 by norm_num, pow_mul, hp, one_pow]
-    · rw [show (12 : ℕ) = 4 * 3 by norm_num, pow_mul, hp, one_pow]
+    · rw [show (15 : ℕ) = 3 * 5 by norm_num, pow_mul, hp, one_pow]
+    · rw [show (15 : ℕ) = 5 * 3 by norm_num, pow_mul, hp, one_pow]
   refine hasSemistableReduction_ofNF hN O _ (hR L O (A.baseChange L) m hm3 hmu ?_)
   intro x hx
   haveI : Algebra.IsAlgebraic L (AlgebraicClosure K) := Algebra.IsAlgebraic.tower_top (K := K) L

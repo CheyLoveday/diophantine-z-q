@@ -9,7 +9,7 @@ The research field `sga7_IX_Cor3_3_Def34` (SGA 7 IX Cor. 3.3) and its descendant
 (`SemistablePersists`), whose readers are the height rows R18, R19, R21, R22, `StableHeightFinite` and the lower half
 of R20. On Faltings' route these need only `ZInQ.SSFaltings.FaltingsSemistableHeightBC` (Faltings 1983: the height of
 a semistable abelian variety does not change under finite extension; used uncited at diophantine_zq.tex L596-598) and
-`ZInQ.SSFaltings.SemistableReductionThmIF` (semistable over every field containing `K(A[12])`, proved from Raynaud's
+`ZInQ.SSFaltings.SemistableReductionThmIF` (semistable over every field containing `K(A[15])`, proved from Raynaud's
 criterion; `Contrib/OneProof/SSFaltings.lean`).
 
 This module copies, verbatim up to the renaming `X ↦ X_sf` / `XSF`, every declaration of `@TOP@`'s proof that takes a

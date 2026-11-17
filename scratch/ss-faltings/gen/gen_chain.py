@@ -113,7 +113,7 @@ def edit_structure(txt, name):
             n_ss += 1
             f = m.group(1)
             if f == "semistableReductionThm":
-                out.append("  /-- ss-faltings: semistable reduction over every number field containing `K(A[12])`, from "
+                out.append("  /-- ss-faltings: semistable reduction over every number field containing `K(A[15])`, from "
                            "Raynaud's criterion (`ZInQ.SSFaltings.semistableReductionThmIF_of_raynaud`); replaces SS1 and "
                            "SS3. -/")
                 out.append(f"  {NEWIF} : {IF}")
