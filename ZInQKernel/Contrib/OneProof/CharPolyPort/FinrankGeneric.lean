@@ -5,7 +5,15 @@ commutative-algebra core (`rankAtStalk_bot_eq_finrank`). Report `docs/research/c
 -/
 import Mathlib
 
-/-! charpoly-port scratch: the commutative-algebra core of `FinrankGenericPoint`. -/
+/-!
+# Rank at the generic point of a finite flat morphism
+
+* `rankAtStalk_bot_eq_finrank`: for `R ⊆ S` domains with `S` finite flat over `R`, the rank of `S` at
+  the zero prime of `R` is `[Frac S : Frac R]` (`Frac S` is the localization of `S` at `R ∖ 0`, hence the
+  base change `Frac R ⊗_R S`).
+* `finrank_genericPoint`: for `f : X ⟶ Y` finite, flat and surjective between integral schemes,
+  `Scheme.Hom.finrank f` at the generic point is `[K(X) : K(Y)]`, `K(Y) → K(X)` the stalk map.
+-/
 
 open Polynomial
 
