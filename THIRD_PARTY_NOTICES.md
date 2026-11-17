@@ -57,7 +57,7 @@ checked against the upstream repositories. Paths are relative to `ZInQKernel/Con
 | Upstream, as the local notices state it | Licence | Directories |
 | --- | --- | --- |
 | anthropics/fermats-last-theorem (commit `6e837e75355538c7f80bab5b956861e86c4eacc2` where a notice names one), Copyright 2026 Anthropic, PBC; it includes material from ImperialCollegeLondon/FLT and leanprover-community/flt-regular | Apache-2.0 | `CloudB2X0Transitive/Vendor/AnthropicFLT`, `CloudW02Connectedness/Vendor/AnthropicFLT`, `CloudB3W16Torsion/Vendor/AnthropicFLT`, `CloudW03NeronSurj`, `CloudB3W11AxCompletion`, `CloudB3W11AxEstimate`, `CloudB3W11Cyclotomic`, `CloudB3W11TateTrace`, `CloudB3W11TwistDescent` |
-| AxiomMath/Stacks, commit `c496df0d9beea9deaeabcea8492605f9a0a2313b` | Apache-2.0 | `CloudW01Spread`, `CloudB3W16Cartier`, `CloudB3W16Connected`, `CloudB3W16Dimension`, `CloudB3W17bReduced`, `MulEtale`, `OneProof/EGAProperLimit`, and `CloudW06PoincareRigidity/AdjoinFinset.lean` |
+| AxiomMath/Stacks, commit `c496df0d9beea9deaeabcea8492605f9a0a2313b` | Apache-2.0 | `CloudW01Spread`, `CloudB3W16Cartier`, `CloudB3W16Connected`, `CloudB3W16Dimension`, `CloudB3W16FiniteGroup`, `CloudB3W17bReduced`, `MulEtale`, `OneProof/EGAProperLimit`, and `CloudW06PoincareRigidity/AdjoinFinset.lean` |
 | AxiomMath/Mordell, commit `82a30cb7857f6e3cfdb1be91f5533c0ccb57d493` | Apache-2.0 | `CloudW06PoincareRigidity/Rigidity.lean` (adapted) |
 | frenzymath/Jacobian-Challenge, Copyright 2026 Axel Delaval, Jie Xu and Shitan Xu | Apache-2.0 | `CloudW07JacobiansCurves` |
 | Paul-Lez/HodgeConjecture, commit `2ead713179628a3c738197d5996f51c8a9c886ac`, Copyright 2026 The Formal Conjectures Authors | Apache-2.0 | `CloudB3W17Hodge` |
@@ -65,12 +65,14 @@ checked against the upstream repositories. Paths are relative to `ZInQKernel/Con
 | facebookresearch/atlas-lean, commit `8860f7b55276b96e51df600021845dd5eb48f5ab` | see the local notices | `OneProof/LegendreThreeSquares`, `OneProof/JonesPall` |
 | openai/math, revision `4eaee87548250b2682affda7d05d947c05554bae` | Apache-2.0 | `OneProof/MilneQuasiInverse` |
 
-Local notices that are incomplete at the time of the index:
+Notes on the local files, at the time of the index:
 
-- a `NOTICE` but no `LICENSE` copy beside it: `CloudB3W16Torsion`, `CloudW02Connectedness` (the licence text is
-  only inside `Vendor/AnthropicFLT`), `OneProof/JonesPall`;
-- a `LICENSE` but no `NOTICE`: `CloudB3W16FiniteGroup`, `CloudB3W17ProperCompact`,
-  `CloudB3W17bGraphScoutReverseIdeal`, `CloudB3W17bOkaComparison`.
+- `CloudB3W16Torsion` and `CloudW02Connectedness` keep the licence text inside `Vendor/AnthropicFLT/`, not beside
+  their own `NOTICE.md`.
+- `OneProof/JonesPall` keeps the licence of its dependency as `Mathlib.LICENSE`.
+- `CloudB3W16FiniteGroup`, `CloudB3W17ProperCompact`, `CloudB3W17bGraphScoutReverseIdeal` and
+  `CloudB3W17bOkaComparison` have a `LICENSE` and no notice file. Where they use outside code (AxiomMath/Stacks in
+  the first, chrisflav/oka in the third), the file headers or `VERIFICATION.md` name the source and revision.
 
 This repository has no licence of its own yet: "project licensing" above refers to a licence that the owner still
 has to choose and add at the repository root.
