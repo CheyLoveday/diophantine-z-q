@@ -11,7 +11,7 @@ numbers from memory; no network on this host), SPECULATIVE.
 hypothesis.** VERIFIED (compiled; `#print axioms` = `propext, Classical.choice, Quot.sound`):
 
 ```lean
-theorem HDec.CMBranch.coxProperLattice_proof : HDec.CMBranch.CoxProperLattice
+theorem HDec.CMBranch.CoxLattice.coxProperLattice_proof : HDec.CMBranch.CoxProperLattice
 theorem HDec.CMBranch.reducedCMPeriod_of_leaves_cox (hT35 : ZInQ.LeafPush2.UniformizationExists)
     (hcorr : HomUnify.HomLatticeCorr) (h11b : ZInQ.LeafPush2.T11b_Rigidity) : ReducedCMPeriod
 ```
@@ -21,13 +21,21 @@ declares the statement, `CMBranch.ReducedPeriod`). So the manuscript's uncited s
 rests only on the chain's textbook fields `t35`, `homLatticeCorr`, `t11b`, and the CM branch no longer uses Cox (which
 is not in the manuscript's bibliography): the DEPARTURE is removed.
 
+**Overlap with cm-branch2.** While this task ran, cm-branch2 proved the same leaf independently
+(`HDec.CMBranch.coxProperLattice_proof`, `CMBranch/CoxProof.lean`, pushed at 295488eb, after this task's scratch proof
+compiled at 12:05) and moved its fold to `CMInputs3` and the next generation `Open73`. Merged here
+(origin/wip/cm-branch2 75e3c1d8, clean). To avoid a duplicate name this task's theorem lives in the sub-namespace
+`CoxLattice`; the two proofs are independent (same outline: Cox 7.5's computation + cm-branch2's `discr_order`).
+The integrator may use either.
+
 **Fold.** The CM-branch inputs shrink from cm-branch2's `CMInputs2` (6 statements) to `CMInputs3` (5: the glue
-`CMFibreSplit`, the leaves `FowlerProp27`, `CMjDegree`, `CMPotentialGood`, `CMHeight62`). Dry-run top
-`HDec.HSyn.sixContactMin_of_open72_cmbranch3 (r : OpenResearchLeaves53) (t : OpenTextbookLeaves18)
-(l : OpenAddedLeaves27) (c : CMBranch.CMInputs3) : ZInQ.SixContactMin`
-(`ZInQKernel/Contrib/OneProof/CoxProperLattice/Fold.lean`). Spec `scratch/cox-lattice/autofold.json`.
-**Net change against cm-branch2's fold: GLUE column 0** (CoxProperLattice was a leaf, not GLUE); **strict count −1**
-(under the kit's rule a new leaf pending review counts as GLUE: cm-branch2's +5 becomes +4); leaves −1.
+`CMFibreSplit`, the leaves `FowlerProp27`, `CMjDegree`, `CMPotentialGood`, `CMHeight62`; the structure is cm-branch2's).
+Dry run with this task's proof: `HDec.HSyn.sixContactMin_of_open72_coxlattice (r : OpenResearchLeaves53)
+(t : OpenTextbookLeaves18) (l : OpenAddedLeaves27) (c : CMBranch.CMInputs3) : ZInQ.SixContactMin`
+(`ZInQKernel/Contrib/OneProof/CoxProperLattice/Fold.lean`). Spec `scratch/cox-lattice/autofold.json` (= cm-branch2's
+updated spec, with this proof as alternative provider). **Net change against cm-branch2's fold at this task's start
+(120fa22b): GLUE column 0** (CoxProperLattice was a leaf, not GLUE); **strict count −1** (under the kit's rule a new leaf
+pending review counts as GLUE: +5 becomes +4); leaves −1. Against cm-branch2's updated spec (75e3c1d8): 0 (identical).
 
 **Manuscript check (L598-600).** Correct as written; no missing hypothesis (§4).
 
@@ -66,8 +74,8 @@ The hypothesis `IsTotallyComplex k` of `IsImagQuadOrder` is not used (it follows
 
 | file | content |
 |---|---|
-| `ZInQKernel/Contrib/OneProof/CoxProperLattice.lean` | `CoxLattice.*` (the lemmas above), `coxProperLattice_proof`, `reducedCMPeriod_of_leaves_cox` |
-| `ZInQKernel/Contrib/OneProof/CoxProperLattice/Fold.lean` | `CMInputs3`, `CMInputs3.toCMInputs2`, `sixContactMin_of_open72_cmbranch3` (fold dry run) |
+| `ZInQKernel/Contrib/OneProof/CoxProperLattice.lean` | `CoxLattice.*` (the lemmas above, `CoxLattice.coxProperLattice_proof`), `reducedCMPeriod_of_leaves_cox` |
+| `ZInQKernel/Contrib/OneProof/CoxProperLattice/Fold.lean` | `sixContactMin_of_open72_coxlattice` (fold dry run over cm-branch2's `CMInputs3`) |
 | `scratch/cox-lattice/Cox.lean` | the same proof over `import Mathlib`, with verbatim copies of the statement and its definitions |
 | `scratch/cox-lattice/autofold.json` | cm-branch2's hand-fold spec with the leaf removed |
 | `scratch/cox-lattice/Discharges.lean`, `discharges.txt` | `#discharges` |
@@ -107,20 +115,20 @@ Every reduced period satisfies both bounds (not only some), so the manuscript's 
 ## 6. The fold and `#discharges`
 
 See §1 and `scratch/cox-lattice/autofold.json`: replace `HDec.HSyn.sixContactMin_of_open72 r t l` in `frozenTarget` by
-`HDec.HSyn.sixContactMin_of_open72_cmbranch2 r t l ⟨{n}.cmFibreSplit, {n}.fowlerProp27, {n}.cmjDegree,
-{n}.cmPotentialGood, {n}.cmHeight62, HDec.CMBranch.coxProperLattice_proof⟩` (equivalently
-`sixContactMin_of_open72_cmbranch3 r t l ⟨…5 fields…⟩`), add the 5 statements (not 6) to a bundle generation, then
-PruneScan as in cm-branch2 (`gonzalezRotgerThm512X6RCF`).
+cm-branch2's `sixContactMin_of_open73_cm r t l` (next generation `OpenResearchLeaves54CM`, already without
+`gonzalezRotgerThm512X6RCF` and with the 5 CM statements, not 6), or equivalently
+`sixContactMin_of_open72_coxlattice r t l ⟨…5 fields…⟩` on the current generation.
 
 ### 6.1 Compile record and `#discharges` (VERIFIED)
 
-* `lake build ZInQKernel.Contrib.OneProof.CoxProperLattice` EXIT 0 (11763 jobs); `lake build
-  ZInQKernel.Contrib.OneProof.CoxProperLattice.Fold` EXIT 0 (15392 jobs); `scratch/cox-lattice/Axioms.lean`
-  (`axioms-out.txt`): `coxProperLattice_proof`, `reducedCMPeriod_of_leaves_cox`, `sixContactMin_of_open72_cmbranch3`
-  depend on `[propext, Classical.choice, Quot.sound]`; `example : CoxProperLattice := coxProperLattice_proof` checks
+* `lake build ZInQKernel.Contrib.OneProof.CoxProperLattice` EXIT 0 (11763 jobs); after merging cm-branch2 75e3c1d8,
+  `lake build ZInQKernel.Contrib.OneProof.CoxProperLattice.Fold` EXIT 0 (15396 jobs); `scratch/cox-lattice/Axioms.lean`
+  (`axioms-out.txt`): `CoxLattice.coxProperLattice_proof`, `reducedCMPeriod_of_leaves_cox`,
+  `sixContactMin_of_open72_coxlattice` depend on `[propext, Classical.choice, Quot.sound]`;
+  `example : CoxProperLattice := CoxLattice.coxProperLattice_proof` checks
   (the registered form: exactly the statement, no extra hypotheses).
 * `scratch/cox-lattice/Discharges.lean` (imports `OneProof.Main`, `OneProof.Discharges`, `CoxProperLattice`,
-  `CoxProperLattice.Fold`), output `scratch/cox-lattice/discharges.txt`: "30 open hypotheses, 12364 theorems checked,
+  `CoxProperLattice.Fold`), output `scratch/cox-lattice/discharges.txt` (re-run after the merge): "30 open hypotheses, 12378 theorems checked,
   120 discharge one" = 16 pre-existing reductions on main (carayol, ds965, deRham, raynaud, javanpeykar, the two `X₆`
   rows, y3, deligne, pazuki, hodgeTate) + 104 projections of cm-branch2's copied `_r5` structures (the known noise
   for copied structures, as cm-branch2 §7.1). No theorem of this task discharges a top field, as expected:

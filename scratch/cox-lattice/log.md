@@ -24,3 +24,9 @@
   leaves -1. (Hand fold: autofold.py --dry-run does not apply; Fold.lean is the dry run.)
 - Manuscript check L598-600: correct as written, no missing hypothesis (report §4). Label ELLIOT (uncited step);
   steps of the Lean proof on-the-spot (report §2).
+- 13:05 origin/wip/cm-branch2 had pushed 8 commits (295488eb: cm-branch2 proved CoxProperLattice independently,
+  CMBranch/CoxProof.lean, `HDec.CMBranch.coxProperLattice_proof`; CMBranch2.lean now defines CMInputs3; Open73).
+  Merged (clean). Clash resolution: this task's theorem kept only as HDec.CMBranch.CoxLattice.coxProperLattice_proof
+  (alias removed); Fold.lean rewritten over cm-branch2's CMInputs3: sixContactMin_of_open72_coxlattice.
+  lake build Fold EXIT 0 (15396 jobs); axioms-out.txt standard; #discharges re-run: 30 open, 12378 checked,
+  120 discharge one (16 pre-existing + 104 _r5 noise). autofold.json = cm-branch2's updated spec + alternative provider.

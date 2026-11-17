@@ -4,7 +4,9 @@ import ZInQKernel.Contrib.OneProof.CMBranch.PeriodLattice
 
 `HDec.CMBranch.CoxProperLattice` (`CMBranch/ReducedPeriod.lean`, cm-branch2's leaf for the manuscript's uncited step
 "For a reduced CM period `τ = x + iy` we have `√3/2 ≤ y ≤ √|Δ|/2`", diophantine_zq.tex L598-599) is proved here from
-Mathlib alone (`coxProperLattice_proof`), so `ReducedCMPeriod` follows from the chain's textbook fields `t35`,
+Mathlib alone (`CoxLattice.coxProperLattice_proof`; cm-branch2 later proved it independently as
+`CMBranch.coxProperLattice_proof` in `CMBranch/CoxProof.lean`, so this file keeps its theorem in the sub-namespace
+`CoxLattice` to avoid a duplicate name), so `ReducedCMPeriod` follows from the chain's textbook fields `t35`,
 `homLatticeCorr`, `t11b` only (`reducedCMPeriod_of_leaves_cox`). The statement is unchanged.
 
 Proof (Cox, *Primes of the form x² + ny²*, the argument of Lemma 7.5 and the discriminant of Lemma 7.2; locators
@@ -412,14 +414,11 @@ theorem coxProperLattice_proof : CoxProperLattice := by
 
 end CoxLattice
 
-/-- **`CMBranch.CoxProperLattice`, proved** (the registered form: exactly the leaf's statement). -/
-theorem coxProperLattice_proof : CoxProperLattice := CoxLattice.coxProperLattice_proof
-
 /-- **`ReducedCMPeriod` without `CoxProperLattice`** (manuscript L598-599): from the chain's textbook fields
 `t35`, `homLatticeCorr`, `t11b` only. -/
 theorem reducedCMPeriod_of_leaves_cox (hT35 : ZInQ.LeafPush2.UniformizationExists)
     (hcorr : HomUnify.HomLatticeCorr) (h11b : ZInQ.LeafPush2.T11b_Rigidity) : ReducedCMPeriod :=
-  reducedCMPeriod_of_leaves hT35 hcorr h11b coxProperLattice_proof
+  reducedCMPeriod_of_leaves hT35 hcorr h11b CoxLattice.coxProperLattice_proof
 
 end CMBranch
 end HDec
