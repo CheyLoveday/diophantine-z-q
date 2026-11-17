@@ -35,3 +35,33 @@ Hash dumps (`DumpCompact.lean`, ~1.7 MB each) are kept out of the commit; the co
    `#discharges` does not list chevalleyPerfect: bypass (no proof of `ChevalleyPerfect`), the field is no longer a
    hypothesis. New statements: none (the new bundle is the old one minus the field).
    **render_open count after fold 1: 35 open (H 30, strictest 4/26).**
+
+## Fold 2: semistab-assembly (bostLowerBoundAn, gaudronRemondThm14An -> printed-semistability leaves; count-neutral)
+
+7. Merged origin/wip/semistab-assembly 41830478 (no conflicts). Hygiene: no scratch .lean redeclares HDec.HSyn bundles
+   (`scratch/semistab-assembly/Discharges.lean` only imports and runs `#discharges`); no host paths; no vendored code.
+   The contribution `ZInQKernel/Contrib/OneProof/SemistablePrintedReadings.lean` is kept separate from the fold.
+8. `lake build ZInQKernel.Contrib.OneProof.SemistablePrintedReadings` ok; `#discharges` on the fold-1 head
+   (`DischargesSemistab.lean`, output `DischargesSemistab-output.txt`, VERIFIED): `OpenResearchLeaves49.bostLowerBoundAn`
+   DISCHARGED by `ZInQ.SemistabAssembly.bostLowerBoundAn_of_ss` (still assumes `BostLowerBoundAnSS`),
+   `OpenResearchLeaves49.gaudronRemondThm14An` DISCHARGED by `gaudronRemondThm14An_of_ss` (still assumes
+   `GaudronRemondThm14AnSS`); standard axioms; the five `#print axioms` of the module standard.
+9. Spec `scratch/fold-b105/autofold-semistab.json` = semistab-assembly's `autofold.json` with both leaves kind
+   `published` (lead's ruling; the branch had `consequence`) and flags unchanged (both begin "pending review", so GLUE
+   by `render_open.must_be_glue`); Gaudron-Remond's flag_class set to `pending-review` (its flag has no UNVERIFIED
+   locator; Bost keeps `pending-review,unverified-locator`, display UNVERIFIED). Dry run: 4/26 on 30 -> 4/26 on 30.
+10. `python3 scripts/one_proof/autofold.py scratch/fold-b105/autofold-semistab.json` -> `TailZ76.lean` (copy
+    `TailZ76.lean.txt`): `OpenResearchLeaves50`, `openResearchLeaves49_of_OpenResearchLeaves50`, `sixContactMin_of_open69`;
+    Main switched; kinds rows bostLowerBoundAn, gaudronRemondThm14An -> bostLowerBoundAnSS, gaudronRemondThm14AnSS
+    (published, pending review, GLUE/GLUE); no claims rows.
+11. Build (VERIFIED): `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.OneProof.H.TailZ76`
+    ok (16219 jobs); `sixContactMin_of_open69`, `frozenTarget`: standard axioms.
+12. Checks (`run_checks.sh 2`, VERIFIED): hash guard 18020 -> 18056, only after 36 (all TailZ76), changed only
+    `frozenTarget` (`cmp_fold2.txt`); closure 304765, no sorryAx; open-statements.json has bostLowerBoundAnSS and
+    gaudronRemondThm14AnSS, not the old fields; OpenStatements 35; render_open 30 H, strictest 4/26, `--check` ok;
+    DischargesTest rerun (18 DISCHARGES lines, no error); crosswalk `--check` ok; autoform check exit 0 (776 articles).
+    New statements: `BostLowerBoundAnSS` (Bost, Sem. Bourbaki 795, Asterisque 237 (1996), cited print; display
+    UNVERIFIED) and `GaudronRemondThm14AnSS` (Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4, cited print), each the
+    old row with semistability as printed; neither is on-the-spot; neither is in diophantine_zq.tex as a Lean-level
+    statement (the manuscript cites both results).
+    **render_open count after fold 2: 35 open (H 30, strictest 4/26), count-neutral.**
