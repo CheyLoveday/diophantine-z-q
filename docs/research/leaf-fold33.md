@@ -1,4 +1,4 @@
-# leaf-fold33 (staged on wip/leaf-fold33b, not landed)
+# leaf-fold33 (landed on fork main as c0f3d085; later fold steps on wip/leaf-fold33b are in scratch/leaf-fold33/log.md)
 
 **Result.** From fork main 5e235a40 (the w82 landing: 45 open hypotheses, 37 H with strict 16 LEAF / 21 GLUE, and 8
 TYZ/GZ hypotheses of which hCM, h33 and hL3 were GLUE), this fold reaches **35 open hypotheses: 29 H (strict and
