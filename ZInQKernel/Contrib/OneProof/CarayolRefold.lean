@@ -209,4 +209,137 @@ theorem odd_of_frobDet {ℓ : ℕ} [Fact ℓ.Prime] (hℓ : ‖(ℓ : E)‖ < 1)
 
 end Odd
 
+/-! ## §3. The leaf in the manuscript's normalization of Carayol's Théorème (A) -/
+
+section Leaf
+
+open HeckeRing.GL2 NumberField IsDedekindDomain
+
+/-- **LEAF (published; consequence of Darmon–Diamond–Taylor 1997 Thm 3.1, proved below from carirr-odd's
+transcription `CarayolDDT.CarayolDDT31`): the `λ`-adic representation of a weight-2 newform, with its
+Frobenius polynomial in the normalization the manuscript reads off Carayol 1986, Théorème (A).**
+
+For a newform `f ∈ S₂(Γ₁(N), ψ)` (Tau Ceti's `Newform N 2`, `ψ = f.χ`) whose coefficient field
+`K_f = ℚ(a_n) ⊆ ℂ` is a number field, a prime `ℓ` and a place `λ ∣ ℓ` of `K_f`, there is a continuous
+`ρ = ρ_{f,λ} : G_ℚ → GL₂(K_{f,λ})` (Mathlib's `adicCompletion`) such that
+
+* **irreducible**: no `ρ(G_ℚ)`-stable `K_{f,λ}`-subspace of `K_{f,λ}²` other than `0` and `K_{f,λ}²`
+  (Ribet, LNM 601 (1977) Thm 2.3; DDT 1997 Thm 3.1(c) prints the stronger "absolutely irreducible";
+  locators UNVERIFIED);
+* **unramified at every `p ∤ Nℓ`, and arithmetic Frobenius has polynomial `X² − a_p X + p ψ(p)`**: trace
+  `a_p(f)` and determinant `p ψ(p)` (the value `p ψ(p) ∈ ℂ` read in `K_f ⊆ ℂ`, quantified as every `b ∈ K_f`
+  equal to it, and `ψ(p) = ψ(u)` for the unit `u = p mod N`). This is the manuscript's reading of Carayol's
+  normalization (diophantine_zq.tex L9784-9796: reciprocity sends geometric Frobenius to a uniformizer,
+  `ρ_f = σ(Π_f^∨)^∨`, "its good polynomial is `X² − a_q X + q χ(q)`" on arithmetic Frobenius); also
+  Shimura 1971 Thm 7.14 / Deligne 1971 (Diamond–Shurman Thm 9.6.5) and DDT 3.1 (trace `a_p`, `det = ψ χ_ℓ`);
+* **conductor** (DDT's form, as in `CarayolDDT.CarayolDDT31`): for every prime `p ≠ ℓ`,
+  `codim V^{I_p} + ∫₀^∞ codim V^{G_p^u} du = v_p(N)`. Source: Carayol 1986, Théorème (A) (local–global
+  compatibility at every `p ≠ ℓ`) with the conductor compatibility of the local Langlands correspondence and
+  Casselman, Math. Ann. 201 (1973), Thm 1 (`a(π_{f,p}) = v_p(N)` for a newform); packaged as "the conductor
+  of `ρ_{f,λ}` is the prime-to-`ℓ` part of `N`" in DDT 1997 Thm 3.1. Carayol's own statement (`σ_λ(π)|_{G_{ℚ_p}}`
+  corresponds to `π_p` under local Langlands) has no Lean form: no local components `π_{f,p}`, no
+  Weil–Deligne representations and no local Langlands correspondence exist in Lean (report §2).
+
+Oddness is not a clause: it is proved from the Frobenius determinant (`odd_of_frobDet`). The leaf asserts one
+representation and only listed properties of it, each implied by DDT 3.1 (`frob_of_DDT31`). -/
+def CarayolThmAFrob : Prop :=
+  ∀ (N : ℕ) [NeZero N] (f : Newform N 2)
+    [NumberField (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))]
+    (ℓ : ℕ) [Fact ℓ.Prime] (lam : HeightOneSpectrum (𝓞 (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))),
+    (ℓ : 𝓞 (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) ∈ lam.asIdeal →
+    ∃ ρ : GQ →* GL (Fin 2) (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))),
+      Continuous ρ ∧
+      (∀ W : Submodule (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))
+          (Fin 2 → lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))),
+        (∀ σ : GQ, ∀ v ∈ W, (ρ σ : Matrix (Fin 2) (Fin 2)
+          (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))).mulVec v ∈ W) →
+        W = ⊥ ∨ W = ⊤) ∧
+      (∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ →
+        (∀ v : ValuationSubring Qbar, LiesOver v p →
+          ∀ σ ∈ v.inertiaSubgroup ℚ, ρ ((σ : v.decompositionSubgroup ℚ) : GQ) = 1) ∧
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          (ρ σ : Matrix (Fin 2) (Fin 2)
+            (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))).trace =
+            algebraMap (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))
+              (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))
+              ⟨coeff (f.toCuspForm : CF N 2) p, DSCoeffExt.coeff_mem_coeffField _ p⟩ ∧
+          ∀ (u : (ZMod N)ˣ) (b : DSCoeffExt.coeffField (f.toCuspForm : CF N 2)),
+            (u : ZMod N) = (p : ZMod N) → (b : ℂ) = (p : ℂ) * ((f.χ u : ℂˣ) : ℂ) →
+            (ρ σ : Matrix (Fin 2) (Fin 2)
+              (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))).det =
+              algebraMap (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))
+                (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) b) ∧
+      ∀ (p : ℕ) [Fact p.Prime], p ≠ ℓ →
+        (codimInv (ρ.comp (decomp p)) inertiaSet : ℝ) +
+          ∫ u in Set.Ioi (0 : ℝ), (codimInv (ρ.comp (decomp p)) (upperAbs p u) : ℝ) =
+          (N.factorization p : ℝ)
+
+theorem two_ne_zero_adic {F : Type*} [Field F] [NumberField F] (lam : HeightOneSpectrum (𝓞 F)) :
+    (2 : lam.adicCompletion F) ≠ 0 := by
+  have : (2 : lam.adicCompletion F) = algebraMap F (lam.adicCompletion F) 2 := by rw [map_ofNat]
+  rw [this]
+  exact (map_ne_zero_iff _ (algebraMap F (lam.adicCompletion F)).injective).mpr two_ne_zero
+
+/-- **GLUE (proved): the leaf gives carayol-herbrand's `CarayolThmAIrrDDT`** (odd from the Frobenius
+determinant, `odd_of_frobDet`, with `ψ(-1) = 1` in weight 2). -/
+theorem carayolThmAIrrDDT_of_frob (h : CarayolThmAFrob) : CarayolHerbrand.CarayolThmAIrrDDT := by
+  intro N _ f _ ℓ _ lam hlam
+  obtain ⟨ρ, hc, hirr, hatt, hcond⟩ := h N f ℓ lam hlam
+  refine ⟨ρ, hc, hirr, ?_, fun p hp hpN => ⟨(hatt p hp hpN).1, fun v σ hv hσ =>
+    ((hatt p hp hpN).2 v σ hv hσ).1⟩, hcond⟩
+  refine odd_of_frobDet (N := N) (CarayolHerbrand.norm_natCast_lt_one lam hlam) (two_ne_zero_adic lam)
+    ρ hc ?_
+  intro p hp hpNl v σ hv hσ hσN
+  have hpN : ¬ p ∣ N := fun h => hpNl (dvd_mul_of_dvd_left h _)
+  have hu : ((-1 : (ZMod N)ˣ) : ZMod N) = (p : ZMod N) := by
+    rw [← cycN_arithFrob hp hpN hv hσ, hσN]
+  have hb : (((p : DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) : ℂ) =
+      (p : ℂ) * ((f.χ (-1) : ℂˣ) : ℂ) := by
+    rw [CarayolDDT.chi_neg_one_eq_one f, mul_one]; rfl
+  rw [((hatt p hp hpNl).2 v σ hv hσ).2 (-1) _ hu hb, map_natCast]
+
+/-- **The open field `carayolThmAIrr` from the leaf** (Herbrand's theorem for the conductor's form,
+carayol-herbrand). -/
+theorem carayolThmAIrr_of_frob (h : CarayolThmAFrob) : CarayolPrinted.CarayolThmAIrr :=
+  CarayolHerbrand.carayolThmAIrr_of_DDT (carayolThmAIrrDDT_of_frob h)
+
+/-- **The leaf is implied by carirr-odd's transcription of DDT 1997 Thm 3.1** (absolutely irreducible ⇒
+irreducible; `det ρ = ψ χ_ℓ` at an arithmetic Frobenius is `ψ(p)·p`, since `Frob_p mod N = p`,
+`χ_ℓ(Frob_p) = p`). So `CarayolThmAFrob` is not stronger than `CarayolDDT31`. -/
+theorem frob_of_DDT31 (h : CarayolDDT.CarayolDDT31) : CarayolThmAFrob := by
+  intro N _ f _ ℓ _ lam hlam
+  obtain ⟨ρ, hc, habs, ⟨ι, -, hdet⟩, hatt, hcond⟩ := h N f ℓ lam hlam
+  refine ⟨ρ, hc, CarayolDDT.irreducible_of_absIrreducible _ habs,
+    fun p hp hpNl => ⟨(hatt p hp hpNl).1, fun v σ hv hσ => ⟨(hatt p hp hpNl).2 v σ hv hσ, ?_⟩⟩, hcond⟩
+  intro u b hu hb
+  have hpN : ¬ p ∣ N := fun h => hpNl (dvd_mul_of_dvd_left h _)
+  have hpl : p ≠ ℓ := fun h => hpNl (h ▸ dvd_mul_left p N)
+  have hσu : CarayolDDT.cycN N σ = u := Units.ext ((cycN_arithFrob hp hpN hv hσ).trans hu.symm)
+  have hp0 : (p : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hp.ne_zero
+  have hχ : ((f.χ (CarayolDDT.cycN N σ) : ℂˣ) : ℂ) = (b : ℂ) / (p : ℂ) := by
+    rw [hσu, hb]; field_simp
+  have hmem : ((f.χ (CarayolDDT.cycN N σ) : ℂˣ) : ℂ) ∈
+      DSCoeffExt.coeffField (f.toCuspForm : CF N 2) := by
+    rw [hχ]
+    exact div_mem b.2 (natCast_mem _ p)
+  rw [hdet σ hmem, cycL_arithFrob hp hpl hv hσ, map_natCast, ← map_natCast (algebraMap
+    (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))
+    (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))) p, ← map_mul]
+  congr 1
+  apply Subtype.ext
+  have hpc : (((p : DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) : ℂ) = (p : ℂ) := by simp
+  simp only [MulMemClass.coe_mul, hpc]
+  rw [hχ]; field_simp
+
+/-- **The open field from carirr-odd's DDT 3.1 form** (through the new leaf). -/
+theorem carayolThmAIrr_of_DDT31 (h : CarayolDDT.CarayolDDT31) : CarayolPrinted.CarayolThmAIrr :=
+  carayolThmAIrr_of_frob (frob_of_DDT31 h)
+
+/-- `r17` (`LadicCond.CarayolR17'`) from the leaf and the bundle leaf `EigenformCoeffFieldFinite`. -/
+theorem carayolR17'_of_frob (h : CarayolThmAFrob) (hK : DSCoeffExt.EigenformCoeffFieldFinite) :
+    LadicCond.CarayolR17' :=
+  CarayolPrinted.carayolR17'_of_printedIrr (carayolThmAIrr_of_frob h) hK
+
+end Leaf
+
 end CarayolRefold
