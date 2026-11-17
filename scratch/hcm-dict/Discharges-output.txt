@@ -201,5 +201,5 @@ DISCHARGES [hCM] by ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 9237 theorems checked, 49 discharge one
+#discharges: 39 open hypotheses, 9240 theorems checked, 49 discharge one
 'ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
