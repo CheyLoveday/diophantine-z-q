@@ -143,7 +143,25 @@ Gone compared with javanpeykar-rebase's list of readings:
 
 ## 4. What compiles (VERIFIED on this host, 2026-11-17)
 
-COMPILE-SECTION
+| check | outcome |
+| --- | --- |
+| `lake env lean scratch/javanpeykar-direct/JavanpeykarDirect.lean` | compiles in 12 s; `javanpeykarPrintedMap_of_thm111` has axioms `[propext, Classical.choice, Quot.sound]` |
+| `lake build +ZInQKernel.Contrib.OneProof.JavanpeykarDirect`, with the file temporarily placed there and removed afterwards | success, 12860 jobs, the new module 61 s |
+| `autofold.py scratch/javanpeykar-direct/autofold.json --dry-run` (output `FoldDryRun.lean.txt`, line 1 stripped) | exit 0 without `--allow-rise`; strict 16/15 on 31 → 17/14 on 31 (raw; neutral under Addendum 1, §1); generates `OpenResearchLeaves40` (39 without `javanpeykarPrintedMapHF`, with `javanpeykarThm111`) and `sixContactMin_of_open58` |
+| `lake build +ZInQKernel.OneProof.H.TailZ64` (this tree's sources; `build-tailz64.txt`) | success, 15211 jobs |
+| the dry-run module, `lake env lean` (`FoldDryRun-compile.txt`) | compiles in 18 s; `HDec.HSyn.sixContactMin_of_open58` has axioms `[propext, Classical.choice, Quot.sound]` |
+| `lake env lean scratch/javanpeykar-direct/WellPosed.lean` (`WellPosed-output.txt`) | compiles; `isStableHeightBar_of_iso` and `isPrintedStableHeight_unique` (given N1 and SS2) have the standard axioms |
+
+The contribution file has no `sorry`, no `axiom`, and no code that runs at build time. Its only import is
+`ZInQKernel.Contrib.OneProof.JavanpeykarRebase`.
+
+Supporting results, not used by the fold (`WellPosed.lean`):
+* `isStableHeightBar_of_iso`: `IsStableHeightBar` is invariant under isomorphism of `W`.
+* `isPrintedStableHeight_unique (hN1 : NeronModelExists) (hSS2 : SemistableNeronBaseChange)`: the printed
+  stable height of a fixed model is single-valued.
+  * T35 comes from `uniformizationLeafAll_proof` and `mumfordTorsionAlgClosed_proof`, and Stacks 04KV from
+    `geomConnOfRationalPoint_proof`; all three are proved.
+  * This is reading 1 of §3 for a fixed model.
 
 ## 5. Notes for the integrator
 
