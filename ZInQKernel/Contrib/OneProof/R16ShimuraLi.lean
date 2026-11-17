@@ -42,7 +42,6 @@ open LeafModCurves
 open WeierstrassCurve AlgebraicGeometry
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open PkgI3 PkgI3.AbVar
-open Polynomial
 
 /-! ## 1. Definitions: conjugates, Fricke-stability, the Euler-factor identity -/
 
@@ -73,8 +72,8 @@ def EulerIdentity (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (A : Ab
       ∀ c : coeffField f, (c : ℂ) = χ (p : ZMod N) →
         ∃ Q : Polynomial ℚ,
           Q.map (algebraMap ℚ ℂ) =
-            (∏ᶠ ι : coeffField f →+* ℂ,
-              (X ^ 2 - C (ι ⟨coeff f p, coeff_mem_coeffField f p⟩) * X + C (ι c * (p : ℂ)))) ∧
+            (∏ᶠ io : coeffField f →+* ℂ,
+              (Polynomial.X ^ 2 - Polynomial.C (io ⟨coeff f p, coeff_mem_coeffField f p⟩) * Polynomial.X + Polynomial.C (io c * (p : ℂ)))) ∧
           LinearMap.charpoly (A.galRep ℓ σ) = Q.map (algebraMap ℚ ℚ_[ℓ])
 
 /-! ## 2. The two cited theorems (printed-form leaves) -/
