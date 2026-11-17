@@ -80,3 +80,8 @@ origin/proof/poincare-complement-native-20261117 6984d6078: ZInQKernel/Contrib/C
   "Milne 1986 Prop. 12.1" (Cornell–Silverman) is not in the bibliography.
 - Brinon–Conrad (bibitem L11019-11023) is cited at L10975, L10994 (de Rham closure under duals/subquotients) — the
   natural cited input for the manuscript's L758-759 sentence; not used (TwistCharHTWt0 proved without it).
+
+## Field taint (VERIFIED: scratch/c8-conrad3/C8DryRunTaint.lean, dryrun_taint_out.txt)
+From frozenTarget_c8: closure 304467, 18 iterations; tainted fields [hodgeTateDecompAbVar, kleimanPicZeroProper954SiteQ,
+kleimanPicZeroProper954, r10, picZeroAbVar, picRepresentableAbVar] — same as c8-conrad2; terminal readers via r10 only
+(consumer (iii)).

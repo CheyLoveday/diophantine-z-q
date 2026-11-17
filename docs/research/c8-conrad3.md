@@ -210,7 +210,13 @@ Two remarks on the leaves:
    of `ZInQ.OneProof.frozenTarget` (origin/main `b1615c9b1`), with `hP`, `hC`, `hTT` added.
 6. **`#discharges`** (`discharges_out.txt`): 34 open hypotheses, 16233 theorems checked, 19 discharge one, none
    from the C8 files (expected).
-7. **Field taint** from `frozenTarget_c8` (`dryrun_taint_out.txt`): see the log for the result.
+7. **Field taint** from `frozenTarget_c8` (`dryrun_taint_out.txt`; VERIFIED): closure 304467, 18 iterations.
+   * Tainted fields: `picRepresentableAbVar`, `kleimanPicZeroProper954SiteQ`, `kleimanPicZeroProper954`,
+     `picZeroAbVar`, `hodgeTateDecompAbVar`, `r10`. These are exactly c8-conrad2's.
+   * Terminal readers: `g8_g12_of_leaves3_hf_pz_eb_c8`, `afterG7_of3_hf_pz_eb_c8`, `gluePieces_of_open4_hf_pz_eb_c8`,
+     each through `r10`.
+   * So the Picard rows reach only consumer (iii) over the merged top. `t09SymmIsogenyExists`, `phiAmpleIsogeny`,
+     `weilPairingMumford`, `poincareComplement` and `t8` are not tainted.
 
 **Net row and GLUE change of the C8 part** (kinds.tsv convention: a new printed leaf counts GLUE/GLUE until a reviewer
 rates it; both Picard rows are GLUE/GLUE):
@@ -226,7 +232,7 @@ rates it; both Picard rows are GLUE/GLUE):
 Alone, before consumer (iii) is rerouted, the fold would add 2 rows and 2 pending GLUE, so `autofold.py` would refuse
 it without `--allow-rise`. **Do not fold alone.** The remaining consumer of the Picard rows is (iii) only:
 `openResearchLeaves35_of_OpenResearchLeaves36_eb_k954_cf … l26`, `hodgeTateDecompAbVar → r10`
-(c8-conrad2 §2; taint rerun in §1).
+(c8-conrad2 §2; rerun over the merged top, item 7 above).
 
 ## 7. On-the-spot steps (neither in the manuscript nor in a cited print)
 
