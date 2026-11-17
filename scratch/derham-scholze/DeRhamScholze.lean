@@ -1,6 +1,7 @@
 import ZInQKernel.HDecomp.Textbook.T10Etale
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.HodgeTateDecompOrH1
+import ZInQKernel.Contrib.OneProof.MumfordTorsionAlgClosed
 
 /-!
 # derham-scholze: `V_p(A)` is de Rham by Scholze's comparison (manuscript `lem:de-rham-descent`)
@@ -137,6 +138,239 @@ def HodgeRange (ρ : Field.absoluteGaloisGroup F → W →ₗ[ℚ_[p]] W) (i : �
   filD p ρ 0 = ddrFam p ρ ∧ filD p ρ (i + 1) = ⊥
 
 end DR
+
+/-! ## §3. The leaf: Scholze's comparison, algebraic form (as the manuscript applies it) -/
+
+/-- **LEAF (consequence of Scholze, Forum Math. Pi 1 (2013), Cor. 1.8, with Thms 9.1 and 9.3 and the corrigendum
+Forum Math. Pi 4 (2016) e6; applied as in diophantine_zq.tex `lem:de-rham-descent`, L10953-10965).** For a finite
+extension `F` of `ℚ_p` and a proper smooth `F`-scheme `X`, and every `i`, the `G_F`-representation
+`Hⁱ_ét(X_{F̄}, ℚ_p)` is de Rham, and the Hodge filtration of `D_dR(Hⁱ_ét)` has its jumps in `[0, i]`.
+
+Print (Cor. 1.8, wording quoted by h-leaves §3.1 from arXiv:1205.3463): for a proper smooth rigid-analytic
+variety `X` over a complete discretely valued extension `k` of `ℚ_p` with perfect residue field, `Hⁱ(X_ét, ℚ_p)` is
+de Rham, with associated filtered `k`-vector space `Hⁱ_dR(X)`. The manuscript applies it to the analytification
+of `A/F` and transfers to algebraic cohomology by Thm 9.1 (coherent / filtered de Rham cohomology) and Thm 9.3
+(`ℤ/ℓⁿ`-cohomology), then inverse limits. The jump clause is the filtered identification
+`D_dR(Hⁱ_ét) ≅ Hⁱ_dR(X)` together with `Fil⁰ Hⁱ_dR = Hⁱ_dR`, `Fil^{i+1} Hⁱ_dR = 0` (Hodge filtration by
+`Hⁱ(Ω^{≥j})`).
+
+Lean form: `Hⁱ_ét(X_{F̄}, ℚ_p) = ℚ_p ⊗_{ℤ_p} Hⁱ(X_{F̄}, ℤ_p)` with Mathlib's pro-étale `ℓ`-adic cohomology
+(`Scheme.EllAdicCohomology`, Bhatt–Scholze 2015 Def. 6.8.1) and `σ` acting by transport along `1 × Spec(σ⁻¹)`
+(`galHX`, t10-etale's `galH`); `D_dR = (B_dR ⊗ W)^{G_F}` (`ddrFam`, the carrier of `ddrTensorOver`),
+`Fil^j D_dR = D_dR ∩ (t^j B_dR^+ ⊗ W)` (`filD`). Dictionary steps between the print and this form (report §3):
+analytification (Cor. 1.8 is for rigid spaces), Thms 9.1/9.3, `F̄` versus `ℂ_p` (invariance of étale cohomology of
+proper varieties under extension of algebraically closed fields), and pro-étale versus classical `ℓ`-adic
+cohomology (Bhatt–Scholze 2015 §5.6). -/
+def ScholzeDeRhamAlg : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+    (X : Over (Spec (CommRingCat.of F))) [IsProper X.hom] [Smooth X.hom] (i : ℕ),
+    IsDeRhamFam p (F := F) (rhoH X p i) ∧ HodgeRange p (F := F) (rhoH X p i) i
+
+/-! ## §4. Transport along equivariant isomorphisms -/
+
+section Transport
+
+attribute [local instance] algPlus
+
+variable (p : ℕ) [Fact p.Prime] {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+variable {W W' : Type*} [AddCommGroup W] [Module ℚ_[p] W] [AddCommGroup W'] [Module ℚ_[p] W']
+variable {ρ : Field.absoluteGaloisGroup F → W →ₗ[ℚ_[p]] W} {ρ' : Field.absoluteGaloisGroup F → W' →ₗ[ℚ_[p]] W'}
+
+/-- `id ⊗ e : B_dR ⊗ W ≃ B_dR ⊗ W'`. -/
+abbrev tEquiv (e : W ≃ₗ[ℚ_[p]] W') : (BdR p ⊗[ℚ_[p]] W) ≃ₗ[ℚ_[p]] (BdR p ⊗[ℚ_[p]] W') :=
+  TensorProduct.congr (LinearEquiv.refl ℚ_[p] (BdR p)) e
+
+theorem tEquiv_comm (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' σ (e w)) (σ : Field.absoluteGaloisGroup F)
+    (y : BdR p ⊗[ℚ_[p]] W) :
+    TensorProduct.map (drAct p (gfToGqp p F σ)) (ρ' σ) (tEquiv p e y) =
+      tEquiv p e (TensorProduct.map (drAct p (gfToGqp p F σ)) (ρ σ) y) := by
+  induction y using TensorProduct.induction_on with
+  | zero => simp
+  | tmul b w => simp [he]
+  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+
+theorem map_ddrFam (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' σ (e w)) :
+    (ddrFam p ρ).map (tEquiv p e).toLinearMap = ddrFam p ρ' := by
+  ext z
+  constructor
+  · rintro ⟨y, hy, rfl⟩ σ
+    change TensorProduct.map _ _ (tEquiv p e y) = tEquiv p e y
+    rw [tEquiv_comm p e he, hy σ]
+  · intro hz
+    refine ⟨(tEquiv p e).symm z, fun σ => ?_, by simp⟩
+    apply (tEquiv p e).injective
+    rw [← tEquiv_comm p e he, LinearEquiv.apply_symm_apply]
+    exact hz σ
+
+theorem map_filRange (e : W ≃ₗ[ℚ_[p]] W') (j : ℕ) :
+    (LinearMap.range (TensorProduct.map (filB p j).subtype (LinearMap.id : W →ₗ[ℚ_[p]] W))).map
+        (tEquiv p e).toLinearMap =
+      LinearMap.range (TensorProduct.map (filB p j).subtype (LinearMap.id : W' →ₗ[ℚ_[p]] W')) := by
+  have hcomp : (tEquiv p e).toLinearMap ∘ₗ TensorProduct.map (filB p j).subtype (LinearMap.id : W →ₗ[ℚ_[p]] W) =
+      TensorProduct.map (filB p j).subtype (LinearMap.id : W' →ₗ[ℚ_[p]] W') ∘ₗ
+        (TensorProduct.congr (LinearEquiv.refl ℚ_[p] (filB p j)) e).toLinearMap := by
+    apply TensorProduct.ext'
+    intro x w
+    simp
+  rw [← LinearMap.range_comp, hcomp, LinearMap.range_comp]
+  erw [LinearEquiv.range, Submodule.map_top]
+
+theorem map_filD (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' σ (e w)) (j : ℕ) :
+    (filD p ρ j).map (tEquiv p e).toLinearMap = filD p ρ' j := by
+  rw [filD, filD, Submodule.map_inf _ (tEquiv p e).injective, map_ddrFam p e he, map_filRange p e j]
+
+theorem isDeRhamFam_of_equiv (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' σ (e w))
+    (h : IsDeRhamFam p ρ) : IsDeRhamFam p ρ' := by
+  obtain ⟨hfd, hr⟩ := h
+  haveI := hfd
+  refine ⟨LinearEquiv.finiteDimensional e, ?_⟩
+  rw [← map_ddrFam p e he, ← e.finrank_eq, ← hr]
+  exact ((tEquiv p e).submoduleMap (ddrFam p ρ)).finrank_eq.symm
+
+theorem hodgeRange_of_equiv (e : W ≃ₗ[ℚ_[p]] W') (he : ∀ σ w, e (ρ σ w) = ρ' σ (e w)) (i : ℕ)
+    (h : HodgeRange p ρ i) : HodgeRange p ρ' i := by
+  obtain ⟨h0, h1⟩ := h
+  refine ⟨?_, ?_⟩
+  · rw [← map_filD p e he, ← map_ddrFam p e he, h0]
+  · rw [← map_filD p e he, h1, Submodule.map_bot]
+
+end Transport
+
+/-! ## §5. Milne's identification `H¹_ét(A_{F̄}, ℚ_p) ≅ V_p(A)^∨` (t10-etale's leaf `T10_TateDuality`) -/
+
+section Milne
+
+variable (p : ℕ) [Fact p.Prime]
+
+/-- `ℚ_p ⊗_{ℤ_p} Hom_{ℤ_p}(T, ℤ_p) ≅ Hom_{ℚ_p}(ℚ_p ⊗ T, ℚ_p)` for `T` finite free (Mathlib's
+`IsBaseChange.toDualBaseChange`). -/
+def dualBC (T : Type*) [AddCommGroup T] [Module ℤ_[p] T] [Module.Free ℤ_[p] T] [Module.Finite ℤ_[p] T] :
+    ℚ_[p] ⊗[ℤ_[p]] Module.Dual ℤ_[p] T ≃ₗ[ℚ_[p]] Module.Dual ℚ_[p] (ℚ_[p] ⊗[ℤ_[p]] T) :=
+  (TensorProduct.isBaseChange ℤ_[p] T ℚ_[p]).toDualBaseChange
+
+theorem dualBC_comm {T : Type*} [AddCommGroup T] [Module ℤ_[p] T] [Module.Free ℤ_[p] T] [Module.Finite ℤ_[p] T]
+    (f : T →ₗ[ℤ_[p]] T) (y : ℚ_[p] ⊗[ℤ_[p]] Module.Dual ℤ_[p] T) :
+    dualBC p T ((f.dualMap).baseChange ℚ_[p] y) = (f.baseChange ℚ_[p]).dualMap (dualBC p T y) := by
+  induction y using TensorProduct.induction_on with
+  | zero => simp
+  | tmul a g =>
+    apply (TensorProduct.isBaseChange ℤ_[p] T ℚ_[p]).algHom_ext
+    intro t
+    rw [LinearMap.baseChange_tmul, LinearMap.dualMap_apply]
+    erw [IsBaseChange.toDualBaseChange_tmul]
+    change _ = (dualBC p T (a ⊗ₜ g)) (f.baseChange ℚ_[p] (1 ⊗ₜ t))
+    rw [LinearMap.baseChange_tmul]
+    erw [IsBaseChange.toDualBaseChange_tmul (TensorProduct.isBaseChange ℤ_[p] T ℚ_[p]) a g (f t)]
+    rfl
+  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+
+end Milne
+
+/-! ## §6. The manuscript's lemma for `V_p(A)`, and the two research fields -/
+
+section Main
+
+variable (p : ℕ) [Fact p.Prime]
+
+/-- `D_dR(Hom(V, ℚ_p))` and `D_dR(V)`: the contragredient of the contragredient is `V` (`Module.evalEquiv`). -/
+theorem evalEquiv_comm {F : Type*} [Field F] {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDimensional ℚ_[p] V]
+    (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V) (σ : Field.absoluteGaloisGroup F) (v : V) :
+    Module.evalEquiv ℚ_[p] V (ρ σ v) = ρ.dual.dual σ (Module.evalEquiv ℚ_[p] V v) := by
+  ext f
+  simp [Representation.dual_apply, Module.Dual.transpose_apply]
+
+/-- **Step C3, first paragraph and Milne's identification** (manuscript L10953-10972): for an abelian variety
+`A` over a finite `F/ℚ_p`, `V_p(A)^∨ ≅ H¹_ét(A_{F̄}, ℚ_p)` is de Rham, and its `D_dR` has Hodge jumps in `[0, 1]`. -/
+theorem dual_deRham_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) :
+    IsDeRhamFam p (fun σ => (A.galRep p).dual σ) ∧ HodgeRange p (fun σ => (A.galRep p).dual σ) 1 := by
+  have hp : (p : F) ≠ 0 := DeRhamPrint.natCast_p_ne_zero p F
+  obtain ⟨hfree, hfin, -⟩ := DeRhamPrint.tateModuleFree_of_mumford ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof F
+    (DeRhamPrint.toKer A) p hp
+  obtain ⟨φ, hφ⟩ := hT F (DeRhamPrint.toKer A) p hp
+  let e : HQ A.X p 1 ≃ₗ[ℚ_[p]] Module.Dual ℚ_[p] (A.V p) :=
+    (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ).trans (dualBC p ((DeRhamPrint.toKer A).T p))
+  have he : ∀ σ w, e (rhoH A.X p 1 σ w) = (A.galRep p).dual σ (e w) := by
+    intro σ w
+    have h1 : LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ (rhoH A.X p 1 σ w) =
+        ((((DeRhamPrint.toKer A).galT (ℓ := p) σ⁻¹).dualMap).baseChange ℚ_[p])
+          (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ w) := by
+      induction w using TensorProduct.induction_on with
+      | zero => simp
+      | tmul a h =>
+        change a ⊗ₜ φ (T10Etale.galH (DeRhamPrint.toKer A) p σ h) = _
+        rw [hφ σ h]
+        rfl
+      | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+    change dualBC p _ (LinearEquiv.baseChange ℤ_[p] ℚ_[p] _ _ φ (rhoH A.X p 1 σ w)) = _
+    rw [h1, dualBC_comm]
+    rfl
+  haveI : IsProper A.X.hom := A.proper
+  haveI : Smooth A.X.hom := A.smooth
+  obtain ⟨h1, h2⟩ := hS p F A.X 1
+  exact ⟨isDeRhamFam_of_equiv p e he h1, hodgeRange_of_equiv p e he 1 h2⟩
+
+/-- **`V_p(A)` is de Rham** (manuscript L10966-10974: Milne's identification, then closure under duals,
+Brinon–Conrad 5.2.1 and 6.3.3; here the duality is `DeRhamPrint.isDeRhamTensorOver_dual`, proved from `B_dR` a
+field and `B_dR^{G_F} = F`, `bdRInvariantsPrinted_proof`). -/
+theorem isDeRhamTensorOver_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) :
+    IsDeRhamTensorOver p (A.galRep p) := by
+  obtain ⟨⟨-, hD⟩, -⟩ := dual_deRham_of_scholze p hS hT F A
+  obtain ⟨g, hg⟩ := dim_finite_I4 A
+  haveI := (DeRhamPrint.finrank_V_of_tateModuleFree p (DeRhamPrint.tateModuleFree_of_mumford
+    ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof) (DeRhamPrint.natCast_p_ne_zero p F) A g hg).1
+  have hDD : IsDeRhamTensorOver p (A.galRep p).dual.dual :=
+    DeRhamPrint.isDeRhamTensorOver_dual p (BdRInv.bdRInvariantsPrinted_proof p F) _ hD
+  have hfam : IsDeRhamFam p (fun σ => (A.galRep p).dual.dual σ) := ⟨inferInstance, hDD⟩
+  have he : ∀ σ x, (Module.evalEquiv ℚ_[p] (A.V p)).symm ((A.galRep p).dual.dual σ x) =
+      A.galRep p σ ((Module.evalEquiv ℚ_[p] (A.V p)).symm x) := by
+    intro σ x
+    obtain ⟨v, rfl⟩ := (Module.evalEquiv ℚ_[p] (A.V p)).surjective x
+    rw [← evalEquiv_comm, LinearEquiv.symm_apply_apply, LinearEquiv.symm_apply_apply]
+  exact (isDeRhamFam_of_equiv p (Module.evalEquiv ℚ_[p] (A.V p)).symm he hfam).2
+
+end Main
+
+/-- **The research field `deRhamVpAbVarDirect`** (Berger's form, `DeRhamPrintDirect.lean`) from the manuscript's
+route: Scholze's comparison (`ScholzeDeRhamAlg`) and Milne's identification (`T10_TateDuality`). -/
+theorem deRhamVpAbVarDirect_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) :
+    DeRhamPrint.Direct.DeRhamVpAbVarDirect :=
+  fun p _ F _ _ _ A => (DeRhamPrint.Direct.isDeRhamTensorOver_iff p (A.galRep p)).mp
+    (isDeRhamTensorOver_of_scholze p hS hT F A)
+
+/-! ## §7. The Hodge–Tate row: weights read off the filtered de Rham comparison -/
+
+/-- **GLUE (on-the-spot: the manuscript's "Consequently the Tate module has weights 0,0,−1,−1", L10995-10996;
+Fontaine's theorem that a de Rham representation is Hodge–Tate with `gr D_dR ≅ D_HT`).** A finite-dimensional
+de Rham representation `W` of `G_F` whose Hodge filtration has its jumps in `[0, 1]` (`HodgeRange … 1`) is
+Hodge–Tate with weights in `{0, 1}` (cohomological convention): `ℂ_p ⊗ W ≅ ℂ_p^a ⊕ ℂ_p(−1)^b`, `G_F`-equivariantly.
+Proof sketch (report §4): `gr^j D_dR(W) ↪ (ℂ_p(j) ⊗ W)^{G_F}` (`gr^j B_dR ≅ ℂ_p(j)`), so `Σ_j dim_F (ℂ_p(j) ⊗ W)^{G_F}
+≥ dim_F D_dR = dim W`; Tate's theorem gives `≤` and the injectivity of `⊕_j ℂ_p(−j) ⊗_F (ℂ_p(j) ⊗ W)^{G_F} → ℂ_p ⊗ W`,
+hence an isomorphism, with only `j ∈ {0, 1}` occurring. -/
+def DeRhamHodgeTate01 : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+    (W : Type) [AddCommGroup W] [Module ℚ_[p] W] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) W),
+    IsDeRhamFam p (fun σ => ρ σ) → HodgeRange p (fun σ => ρ σ) 1 →
+    ∃ (a b : ℕ) (e : ℂ_[p] ⊗[ℚ_[p]] W ≃ₗ[ℂ_[p]] (Fin a → ℂ_[p]) × (Fin b → ℂ_[p])),
+      ∀ (σ : Field.absoluteGaloisGroup F) (x : ℂ_[p] ⊗[ℚ_[p]] W),
+        e (TensorProduct.map (cpLin p (gfToGqp p F σ)) (ρ σ) x) =
+          ((fun k => cpAct p (gfToGqp p F σ) ((e x).1 k)),
+            (fun k => cycPow p (gfToGqp p F σ) (-1) • cpAct p (gfToGqp p F σ) ((e x).2 k)))
+
+/-- **The Hodge–Tate decomposition of `H¹_ét(A_{F̄}, ℚ_p) = V_p(A)^∨`** (htdecomp-or's `HodgeTateDecompH1`) from
+Scholze's comparison, Milne's identification and `DeRhamHodgeTate01`. -/
+theorem hodgeTateDecompH1_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompH1 := by
+  intro p _ F _ _ _ A
+  obtain ⟨h1, h2⟩ := dual_deRham_of_scholze p hS hT F A
+  obtain ⟨a, b, e, he⟩ := hW p F (Module.Dual ℚ_[p] (A.V p)) (A.galRep p).dual h1 h2
+  exact ⟨a, b, e, fun σ x => he σ x⟩
+
+/-- **The research field `hodgeTateDecompOr`** from the manuscript's route. -/
+theorem hodgeTateDecompOr_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr :=
+  ZInQ.Contrib.HodgeTateOr.or_of_h1 (hodgeTateDecompH1_of_scholze hS hT hW)
 
 end
 
