@@ -10,7 +10,7 @@ open CategoryTheory AlgebraicGeometry Limits Opposite MonoidalCategory
 
 namespace KleimanSite
 
-open Scheme KleimanSection2
+open Scheme KleimanSection2 T09Pic PkgI3 PkgI3.AbVar PicDict PicFix
 
 variable {S : Scheme.{u}}
 
@@ -32,7 +32,7 @@ lemma locNoeth_pullback_of_right {X Y Z : (LocNoeth S).FullSubcategory} (g : Z �
   have h : IsPullback (pullback.fst g.hom f.hom).left (pullback.snd g.hom f.hom).left
       g.hom.left f.hom.left := (IsPullback.of_hasPullback g.hom f.hom).map (Over.forget S)
   have : LocallyOfFiniteType (pullback.fst g.hom f.hom).left :=
-    MorphismProperty.of_isPullback h ‹_›
+    MorphismProperty.of_isPullback h.flip ‹_›
   have : IsLocallyNoetherian Z.obj.left := Z.property
   exact LocallyOfFiniteType.isLocallyNoetherian (pullback.fst g.hom f.hom).left
 
@@ -41,7 +41,7 @@ lemma locNoeth_pullback_of_left {X Y Z : (LocNoeth S).FullSubcategory} (g : Z �
   have h : IsPullback (pullback.fst g.hom f.hom).left (pullback.snd g.hom f.hom).left
       g.hom.left f.hom.left := (IsPullback.of_hasPullback g.hom f.hom).map (Over.forget S)
   have : LocallyOfFiniteType (pullback.snd g.hom f.hom).left :=
-    MorphismProperty.of_isPullback h.flip ‹_›
+    MorphismProperty.of_isPullback h ‹_›
   have : IsLocallyNoetherian Y.obj.left := Y.property
   exact LocallyOfFiniteType.isLocallyNoetherian (pullback.snd g.hom f.hom).left
 
@@ -77,15 +77,23 @@ instance : (fppfPrecoverageLN S).IsStableUnderBaseChange where
   mem_coverings_of_isPullback {ι} X Y f hf Z g P p₁ p₂ h := by
     have hf' := hf
     simp only [fppfPrecoverageLN, Precoverage.mem_comap_iff, Presieve.map_ofArrows] at hf' ⊢
-    refine Precoverage.mem_coverings_of_isPullback _ hf' _ _ _ fun i ↦ ?_
+    refine Precoverage.mem_coverings_of_isPullback _ hf' (((LocNoeth S).ι ⋙ Over.forget S).map g)
+      (fun i ↦ ((LocNoeth S).ι ⋙ Over.forget S).map (p₁ i))
+      (fun i ↦ ((LocNoeth S).ι ⋙ Over.forget S).map (p₂ i)) fun i ↦ ?_
     have := (prop_of_mem hf (Presieve.ofArrows.mk i)).2
     have := preservesLimit_cospan g (f i) (locNoeth_pullback_of_right g (f i))
     exact ((h i).map (LocNoeth S).ι).map (Over.forget S)
 
 instance : (LocNoeth S).ι.IsContinuous (fppfTopologyLN S) (fppfTopology.over S) := by
   rw [over_toGrothendieck_eq_toGrothendieck_comap_forget]
-  exact Functor.isContinuous_toGrothendieck_of_pullbacksPreservedBy _ _
-    (le_of_eq (Precoverage.comap_comp _ _ _))
+  exact Functor.isContinuous_toGrothendieck_of_pullbacksPreservedBy (F := (LocNoeth S).ι)
+    (J := fppfPrecoverageLN S) (K := fppfPrecoverage.comap (Over.forget S))
+    (h := le_of_eq (Precoverage.comap_comp _ _ _))
+
+instance : (fppfPrecoverage.{u}).HasIsos where
+  mem_coverings_of_isIso f _ := by
+    rw [fppfPrecoverage, singleton_mem_precoverage_iff]
+    exact ⟨(inferInstance : Surjective f).surj, inferInstance, inferInstance⟩
 
 instance : (LocNoeth S).ι.IsCocontinuous (fppfTopologyLN S) (fppfTopology.over S) where
   cover_lift {T R} hR := by
@@ -96,7 +104,7 @@ instance : (LocNoeth S).ι.IsCocontinuous (fppfTopologyLN S) (fppfTopology.over 
     have hR0' := hR0
     rw [fppfPrecoverage, ofArrows_mem_precoverage_iff] at hR0'
     have hLN : ∀ i, LocNoeth S (Over.mk (f i ≫ T.obj.hom)) := fun i ↦ by
-      have : IsLocallyNoetherian T.obj.left := T.property
+      have : IsLocallyNoetherian ((LocNoeth S).ι.obj T).left := T.property
       have : LocallyOfFinitePresentation (f i) := (hR0'.2 i).2
       exact LocallyOfFiniteType.isLocallyNoetherian (f i)
     let V : ι → (LocNoeth S).FullSubcategory := fun i ↦ ⟨Over.mk (f i ≫ T.obj.hom), hLN i⟩
@@ -107,7 +115,7 @@ instance : (LocNoeth S).ι.IsCocontinuous (fppfTopologyLN S) (fppfTopology.over 
       rintro _ _ ⟨i⟩
       change R (Over.homMk (f i) : Over.mk (f i ≫ T.obj.hom) ⟶ T.obj)
       rw [← Sieve.overEquiv_iff]
-      exact hle _ (Presieve.ofArrows.mk i)
+      exact hle _ (f i) (Presieve.ofArrows.mk i)
     · simp only [fppfPrecoverageLN, Precoverage.mem_comap_iff, Presieve.map_ofArrows]
       exact hR0
 
@@ -189,12 +197,17 @@ def repSite {X : Scheme.{u}} {f : X ⟶ S} {P : (LocNoeth S).FullSubcategory}
 lemma unitPtSite_repSite {K : Type} [Field K] {X : Over (Spec (CommRingCat.of K))}
     {P : Over (Spec (CommRingCat.of K))} {hP : LocNoeth _ P}
     (rep : (picardFunctorLN X.hom).RepresentableBy ⟨P, hP⟩) : unitPtSite (repSite rep) = unitPt rep := by
+  have key : (kleimanIso X.hom).hom.app (op (unitLN K))
+      ((toSheafify (fppfTopologyLN _) ((LocNoeth _).ι.op ⋙ picardPresheaf X.hom)).app (op (unitLN K))
+        (1 : (pullback X.hom (𝟙_ (Over (Spec (CommRingCat.of K)))).hom).Pic)) =
+      (restrictToSheafify X.hom).app (op (unitLN K))
+        (1 : (pullback X.hom (𝟙_ (Over (Spec (CommRingCat.of K)))).hom).Pic) :=
+    ConcreteCategory.congr_hom (congr_app (toSheafify_kleimanIso X.hom) (op (unitLN K)))
+      (1 : (pullback X.hom (𝟙_ (Over (Spec (CommRingCat.of K)))).hom).Pic)
   unfold unitPtSite unitPt
-  congr 2
-  change rep.homEquiv.symm ((kleimanIso X.hom).hom.app _ _) = _
-  congr 1
-  exact ConcreteCategory.congr_hom (congr_app (toSheafify_kleimanIso X.hom) (op (unitLN K)))
-    (1 : (pullback X.hom (𝟙_ (Over (Spec (CommRingCat.of K)))).hom).Pic)
+  change (rep.homEquiv.symm ((kleimanIso X.hom).hom.app (op (unitLN K)) _)).hom = _
+  rw [key]
+  rfl
 
 /-- **The derivation**: the tree-site form of the leaf from the Kleiman-site form. -/
 theorem kleimanPicZeroProper954_of_site (h : KleimanPicZeroProper954Site) : KleimanPicZeroProper954 := by
