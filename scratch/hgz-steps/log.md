@@ -8,3 +8,4 @@ Targets: hGZ = ZInQ.GZAlg.GrossZagierAlgOptCd (binder of ZInQ.OneProof.frozenTar
 - jacobiSym(n, |D|) = epsilon_D (Kronecker symbol) for D < 0, D = 1 mod 4.
 
 ## Entries
+- EpsD.lean: epsD (Kronecker symbol) and epsD_eq_jacobiSym (D<0, D%4=1) compiled, axioms standard. VERIFIED
