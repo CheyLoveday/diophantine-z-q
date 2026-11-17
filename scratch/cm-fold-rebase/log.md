@@ -25,3 +25,17 @@
 - 14:40 lake build CMFoldRebase.R5GR9, CMFoldRebase.Open77, CMFoldRebase (deliverable) EXIT 0, first try.
   #print axioms sixContactMin_of_open77_cm, sixContactMin_of_open76_cmfold: [propext, Classical.choice, Quot.sound].
   VERIFIED (build2.log).
+- 14:31 GRUse77.lean (closure of sixContactMin_of_open77_cm, 130504 constants): R5ptProps, GRDict.r5ptProps_of_thm512,
+  GRX6AbPrint.gonzalezRotgerX6Ab_of_print, GRDict.GonzalezRotgerThm512X6, GR512Bridge.* (Thm512X6RCF, _of_rcf),
+  GR9.OpenResearchLeaves35/36EBCF.gonzalezRotgerThm512X6, OpenResearchLeaves53/54/57, sixContactMin_of_open4_hf_pz_eb,
+  FS5NoCM.R1R2fpFullProps: all ABSENT. CoxProperLattice + coxProperLattice_proof, HeightAdditivityUpper,
+  ReducedCMPeriod, the 5 CM statements, GaudronRemondSec9LowerAnSS: present. All 31 fields of OpenResearchLeaves58CM
+  are read (projection occurs). VERIFIED (gruse77-out.txt).
+- 14:35 lake build ZInQKernel.MainGreenTao (worktree's lean/ ZInQ package was not built), then OneProof.Main +
+  Discharges EXIT 0. MainDryRun.lean (Main.lean with r : OpenResearchLeaves58CM and sixContactMin_of_open77_cm r t l):
+  EXIT 0, 'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]. VERIFIED.
+- 14:40 #discharges (Discharges.lean: Main, Discharges, CMFoldRebase): "30 open hypotheses, 13341 theorems checked,
+  315 discharge one" = 15 pre-existing reductions (carayol, ds965, deRham x2, javanpeykar, the two X6 rows, deligne,
+  gaudronRemond sec9 from Bost, pazuki x4, hodgeTate x2) + 300 projections X_r5.<field> / X_cm.<field> of copied
+  bundle structures (known noise). No field discharged by this task (expected: the removed field is unread, not proved).
+- No existing ZInQKernel file modified (git diff --diff-filter=MD origin/main -- ZInQKernel empty).
