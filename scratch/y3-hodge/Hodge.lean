@@ -1098,6 +1098,223 @@ theorem cl_add (hU : Uniformization.UniformizationLeafAll) {P : QML3 ℂ} {τ : 
   refine loopClass_add hU he (c b) (c b') (c (b + b')) (hc b) (hc b') fun t => ?_
   rw [hc, Subring.coe_add, iota_add, map_add]
 
+
+/-! ### The data of the polarization -/
+
+/-- N5's `ℤ`-basis `1, i, (1+j)/2, (i+k)/2` of `𝒪` (`RvQMPolar.oBasis`), as elements of `𝒪`. -/
+def oB (r : Fin 4) : O :=
+  ⟨RvQMPolar.oBasis r, RvQMPolar.mem_O.mpr ⟨Pi.single r 1, by
+    fin_cases r <;> ext <;> simp [RvQMPolar.oBasis, LeafQM.ofInt, Pi.single_apply] <;> norm_num⟩⟩
+
+/-- `i, j, k ∈ 𝒪`. -/
+def iO : O := ⟨⟨0, 1, 0, 0⟩, RvQMPolar.mem_O.mpr ⟨![0, 1, 0, 0], by ext <;> simp [LeafQM.ofInt]⟩⟩
+def jO : O := ⟨⟨0, 0, 1, 0⟩, RvQMPolar.mem_O.mpr ⟨![-1, 0, 2, 0], by ext <;> simp [LeafQM.ofInt]⟩⟩
+def kO : O := ⟨⟨0, 0, 0, 1⟩, RvQMPolar.mem_O.mpr ⟨![0, -1, 0, 2], by ext <;> simp [LeafQM.ofInt]⟩⟩
+
+/-- `†` on `𝒪` (`RvQMPolar.dag_mem`). -/
+def dagO (a : O) : O := ⟨RvQMPolar.dag (a : B), RvQMPolar.dag_mem a.2⟩
+
+/-- **A principal polarization of type `μ` on `H₁(A(ℂ), ℤ)`, as a Riemann form** (Mumford, *Abelian varieties*,
+§1 and §21: a Riemann form `E` on `H₁` is alternating, `E(ix, iy) = E(x, y)` and `E(ix, x) > 0`; principal: Gram
+determinant `1` on a `ℤ`-basis; type `μ`: its Rosati involution restricts to `x ↦ x† = μ⁻¹ x̄ μ` on `𝒪`): `E` is a
+biadditive alternating `ℤ`-valued form on the genuine `H₁(A(ℂ), ℤ)`; `ι_A(a)_*` (`h1Act`) has adjoint `ι_A(a†)_*`;
+the Gram determinant on the `ℤ`-basis `c(1), c(i), c((1+j)/2), c((i+k)/2)` is `1`; and its real extension `F` to
+`H₁(A, ℝ) = Lie A = ℂⁿ` (through the data `e`, `β`, `c` of the print's identification) is `i`-invariant and positive
+(`F(iv, v) > 0`). -/
+def IsPrincipalRiemannMu {P : QML3 ℂ} {n : ℕ} (β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ))
+    (c : O → Path (1 : P.A.Pt ℂ) 1) (E : H1 P.A → H1 P.A → ℤ) : Prop :=
+  (∀ x y z, E (x * y) z = E x z + E y z) ∧ (∀ x y z, E x (y * z) = E x y + E x z) ∧
+  (∀ x, E x x = 0) ∧
+  (∀ a : O, ∀ x y, E (h1Act (P.q.iota a) x) y = E x (h1Act (P.q.iota (dagO a)) y)) ∧
+  (Matrix.of fun r s => (E (loopClass (c (oB r))) (loopClass (c (oB s))) : ℚ)).det = 1 ∧
+  ∃ F : (Fin n → ℂ) →ₗ[ℝ] (Fin n → ℂ) →ₗ[ℝ] ℝ,
+    (∀ b b' : O, F (β (BPAnalytic.QM.iota (b : B))) (β (BPAnalytic.QM.iota (b' : B))) =
+      E (loopClass (c b)) (loopClass (c b'))) ∧
+    (∀ v w, F (Complex.I • v) (Complex.I • w) = F v w) ∧ ∀ v, v ≠ 0 → 0 < F (Complex.I • v) v
+
+/-! ### Real-linear algebra on `B_ℝ` -/
+
+/-- `B → B_ℝ`. -/
+def embR (x : B) : RvQMPolar.BR := ⟨(x.re : ℝ), (x.imI : ℝ), (x.imJ : ℝ), (x.imK : ℝ)⟩
+
+theorem E0R_embR (x y : B) : RvQMPolar.E0R (embR x) (embR y) = (RvQMPolar.E0 x y : ℝ) := by
+  simp [RvQMPolar.E0R, RvQMPolar.E0, RvQMPolar.trd, RvQMPolar.muInvR, RvQMPolar.muInv, embR]
+
+/-- `E0R` as an `ℝ`-bilinear form. -/
+def E0RL : LinearMap.BilinForm ℝ RvQMPolar.BR :=
+  LinearMap.mk₂ ℝ RvQMPolar.E0R
+    (fun x x' y => by simp [RvQMPolar.E0R, RvQMPolar.muInvR]; ring)
+    (fun c x y => by simp [RvQMPolar.E0R, RvQMPolar.muInvR]; ring)
+    (fun x y y' => by simp [RvQMPolar.E0R, RvQMPolar.muInvR]; ring)
+    (fun c x y => by simp [RvQMPolar.E0R, RvQMPolar.muInvR]; ring)
+
+theorem E0RL_apply (x y : RvQMPolar.BR) : E0RL x y = RvQMPolar.E0R x y := rfl
+
+/-- `ι_ℝ` as an `ℝ`-linear map. -/
+def iotaRL : RvQMPolar.BR →ₗ[ℝ] Matrix (Fin 2) (Fin 2) ℝ where
+  toFun := LP.iotaR
+  map_add' x y := by
+    simp only [LP.iotaR, QuaternionAlgebra.re_add, QuaternionAlgebra.imI_add, QuaternionAlgebra.imJ_add,
+      QuaternionAlgebra.imK_add, add_smul]
+    abel
+  map_smul' c x := by
+    simp only [LP.iotaR, QuaternionAlgebra.re_smul, QuaternionAlgebra.imI_smul, QuaternionAlgebra.imJ_smul,
+      QuaternionAlgebra.imK_smul, smul_eq_mul, mul_smul, RingHom.id_apply, smul_add]
+
+theorem iotaR_jτ_eq (τ : UpperHalfPlane) : LP.iotaR (LP.jτ τ) = Y3Fix.Jmat τ := by
+  rw [LP.iotaR_jτ]; rfl
+
+theorem iotaR_one : LP.iotaR 1 = 1 := by
+  simp [LP.iotaR]
+
+/-- The standard basis vectors `1, i, j, k` of `B_ℝ` come from `𝒪`. -/
+def stdO : Fin 4 → O := ![1, iO, jO, kO]
+
+theorem basisOneIJK_eq (r : Fin 4) :
+    QuaternionAlgebra.basisOneIJK (2 : ℝ) 0 (-3) r = embR (stdO r : B) := by
+  fin_cases r <;> ext <;> simp [QuaternionAlgebra.basisOneIJK, embR, stdO, iO, jO, kO]
+
+
+/-! ### Lemma P on `H₁`: uniqueness -/
+
+theorem O_two_smul_decomp (z : O) : ∃ m : Fin 4 → ℤ,
+    (2 : ℤ) • z = (2 * m 0 + m 2) • (1 : O) + (2 * m 1 + m 3) • iO + m 2 • jO + m 3 • kO ∧
+    (z : B).imJ = (m 2 : ℚ) / 2 ∧ (z : B).imK = (m 3 : ℚ) / 2 := by
+  obtain ⟨m, hm⟩ := RvQMPolar.mem_O.mp z.2
+  refine ⟨m, Subtype.ext ?_, by rw [hm]; simp [LeafQM.ofInt], by rw [hm]; simp [LeafQM.ofInt]⟩
+  simp only [AddSubgroupClass.coe_zsmul, Subring.coe_add, OneMemClass.coe_one, ← Int.cast_smul_eq_zsmul ℚ]
+  rw [hm]
+  ext <;> simp [LeafQM.ofInt, iO, jO, kO] <;> ring
+
+/-- **Lemma P on `H₁`, uniqueness half (GLUE, proved).** A principal Riemann form of type `μ` on the genuine
+`H₁(A(ℂ), ℤ)` is `E₀ = trd(μ⁻¹ x ȳ)` under the print's identification `c : 𝒪 ≅ H₁(A, ℤ)`. The argument of
+`RvQMPolar.eq_smul_E0` run on `𝒪` (Rosati: `E(x, y) = f(x† y)`, alternation at `1, 1+i, 1+j` gives
+`E = r E₀`), principal gives `r = ±1` (`det(r · gram) = r⁴`), and the real extension `F` restricted along
+`β ∘ ι_ℝ` is `r · E₀ ⊗ ℝ` (equal on the basis `1, i, j, k ∈ 𝒪`); positivity at `x = 1` with
+`F(i v, v) = r E₀(j_τ, 1)` and `RvQMPolar.riemann_sign` (`imJ(j_τ) > 0`) gives `r = 1`. -/
+theorem eq_E0_of_principalRiemann (hU : Uniformization.UniformizationLeafAll) {P : QML3 ℂ}
+    {τ : UpperHalfPlane} {n : ℕ} {e : (Fin n → ℂ) → CPts P.A (RingHom.id ℂ)}
+    {β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ)} {c : O → Path (1 : P.A.Pt ℂ) 1}
+    (hD : HodgeData P τ n e β c) {E : H1 P.A → H1 P.A → ℤ} (hE : IsPrincipalRiemannMu β c E) :
+    ∀ b b' : O, (E (loopClass (c b)) (loopClass (c b')) : ℚ) = RvQMPolar.E0 b b' := by
+  obtain ⟨hbl, hbr, halt, hros, hdet, F, hF1, hF2, hF3⟩ := hE
+  have hact := hD.2.2.2.1
+  have hJ := hD.2.2.2.2
+  set EO : O → O → ℚ := fun b b' => (E (loopClass (c b)) (loopClass (c b')) : ℚ) with hEO
+  have hadd2 : ∀ b b' b'', EO b (b' + b'') = EO b b' + EO b b'' := by
+    intro b b' b''; simp only [hEO, cl_add hU hD, hbr]; push_cast; ring
+  have hrosO : ∀ a b b'' : O, EO (a * b) b'' = EO b (dagO a * b'') := by
+    intro a b b''
+    simp only [hEO]
+    rw [← hact a b, ← h1Act_loopClass, hros a, h1Act_loopClass, hact]
+  let fO : O →+ ℚ :=
+    { toFun := EO 1
+      map_zero' := by
+        have h := hadd2 1 0 0
+        simp only [add_zero] at h
+        linarith
+      map_add' := hadd2 1 }
+  have hfO : ∀ x, fO x = EO 1 x := fun x => rfl
+  have hE1 : ∀ x y : O, EO x y = fO (dagO x * y) := by
+    intro x y; rw [hfO, ← hrosO x 1 y, _root_.mul_one]
+  have hf0 : ∀ x : O, fO (dagO x * x) = 0 := by
+    intro x; rw [← hE1]; simp only [hEO, halt, Int.cast_zero]
+  have e1 : dagO 1 * 1 = (1 : O) := Subtype.ext (by simp [dagO, RvQMPolar.dag_one])
+  have r1 : fO 1 = 0 := by have h := hf0 1; rwa [e1] at h
+  have e2 : dagO (1 + iO) * (1 + iO) = (3 : ℤ) • (1 : O) + (2 : ℤ) • iO := by
+    apply Subtype.ext
+    simp only [dagO, Subring.coe_mul, Subring.coe_add, OneMemClass.coe_one, AddSubgroupClass.coe_zsmul,
+      ← Int.cast_smul_eq_zsmul ℚ]
+    ext <;> simp [RvQMPolar.dag, RvQMPolar.muInv, RvQMPolar.mu, iO] <;> norm_num
+  have r2 : fO iO = 0 := by
+    have h := hf0 (1 + iO)
+    rw [e2, map_add, map_zsmul, map_zsmul, r1] at h
+    simp at h
+    linarith
+  have e3 : dagO (1 + jO) * (1 + jO) = (10 : ℤ) • (1 : O) + (6 : ℤ) • iO + (-2 : ℤ) • (jO + kO) := by
+    apply Subtype.ext
+    simp only [dagO, Subring.coe_mul, Subring.coe_add, OneMemClass.coe_one, AddSubgroupClass.coe_zsmul,
+      ← Int.cast_smul_eq_zsmul ℚ]
+    ext <;> simp [RvQMPolar.dag, RvQMPolar.muInv, RvQMPolar.mu, iO, jO, kO] <;> norm_num
+  have r3 : fO kO = - fO jO := by
+    have h := hf0 (1 + jO)
+    rw [e3, map_add, map_add, map_zsmul, map_zsmul, map_zsmul, map_add, r1, r2] at h
+    simp at h
+    linarith
+  have hfz : ∀ z : O, fO z = ((z : B).imJ - (z : B).imK) * fO jO := by
+    intro z
+    obtain ⟨m, hm, hJ', hK'⟩ := O_two_smul_decomp z
+    have h := congrArg fO hm
+    rw [map_zsmul, map_add, map_add, map_add, map_zsmul, map_zsmul, map_zsmul, map_zsmul, r1, r2, r3] at h
+    rw [hJ', hK']
+    simp only [smul_eq_mul, zsmul_eq_mul] at h
+    push_cast at h
+    linarith
+  set r : ℚ := -(fO jO) / 2 with hr
+  have hEr : ∀ x y : O, EO x y = r * RvQMPolar.E0 x y := by
+    intro x y
+    rw [hE1, hfz]
+    simp only [dagO, Subring.coe_mul, hr]
+    simp only [RvQMPolar.E0, RvQMPolar.trd, RvQMPolar.dag, RvQMPolar.muInv, RvQMPolar.mu]
+    simp
+    ring
+  -- principal: `r = ±1`
+  have hM : (Matrix.of fun r' s => (E (loopClass (c (oB r'))) (loopClass (c (oB s))) : ℚ)) =
+      r • RvQMPolar.gram := by
+    ext a b
+    simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
+    rw [show ((E (loopClass (c (oB a))) (loopClass (c (oB b))) : ℚ)) = EO (oB a) (oB b) from rfl, hEr]
+    rw [show ((oB a : O) : B) = RvQMPolar.oBasis a from rfl, show ((oB b : O) : B) = RvQMPolar.oBasis b from rfl,
+      RvQMPolar.E0_gram]
+  rw [hM, Matrix.det_smul, RvQMPolar.gram_det, Fintype.card_fin, _root_.mul_one] at hdet
+  have hr4 : (r ^ 2 - 1) * (r ^ 2 + 1) = 0 := by linear_combination hdet
+  have hr2 : r ^ 2 = 1 := by
+    rcases mul_eq_zero.1 hr4 with h | h
+    · linarith
+    · nlinarith [sq_nonneg r]
+  -- the real extension: `F ∘ (β ∘ ι_ℝ) = r · E₀ ⊗ ℝ`
+  let Lβ : RvQMPolar.BR →ₗ[ℝ] (Fin n → ℂ) := β.toLinearMap ∘ₗ iotaRL
+  have hG : F.compl₁₂ Lβ Lβ = (r : ℝ) • E0RL := by
+    refine LinearMap.BilinForm.ext_basis (QuaternionAlgebra.basisOneIJK (2 : ℝ) 0 (-3)) fun i j => ?_
+    rw [basisOneIJK_eq, basisOneIJK_eq]
+    simp only [LinearMap.compl₁₂_apply, LinearMap.smul_apply, smul_eq_mul, E0RL_apply, E0R_embR]
+    show F (β (LP.iotaR (embR _))) (β (LP.iotaR (embR _))) = _
+    simp only [show ∀ x : B, LP.iotaR (embR x) = BPAnalytic.QM.iota x from LP.iotaR_ofB]
+    rw [hF1]
+    have h := hEr (stdO i) (stdO j)
+    simp only [hEO] at h
+    rw [show ((E (loopClass (c (stdO i))) (loopClass (c (stdO j))) : ℤ) : ℝ) =
+      (((E (loopClass (c (stdO i))) (loopClass (c (stdO j))) : ℤ) : ℚ) : ℝ) by push_cast; rfl, h]
+    push_cast; ring
+  -- positivity fixes the sign
+  have hv : Lβ 1 ≠ 0 := by
+    show β (LP.iotaR 1) ≠ 0
+    rw [iotaR_one, Ne, LinearEquiv.map_eq_zero_iff]; exact one_ne_zero
+  have hpos := hF3 _ hv
+  have hIv : Complex.I • Lβ 1 = Lβ (1 * LP.jτ τ) := by
+    show Complex.I • β (LP.iotaR 1) = β (LP.iotaR (1 * LP.jτ τ))
+    rw [LP.iotaR_mul, iotaR_jτ_eq, hJ]
+  rw [hIv] at hpos
+  have hpos' : 0 < (r : ℝ) * RvQMPolar.E0R (1 * LP.jτ τ) 1 := by
+    have h := congrArg (fun B => B (1 * LP.jτ τ) 1) hG
+    simp only [LinearMap.compl₁₂_apply, LinearMap.smul_apply, smul_eq_mul, E0RL_apply] at h
+    rw [← h]; exact hpos
+  have hE0pos : 0 < RvQMPolar.E0R (1 * LP.jτ τ) 1 := by
+    rcases RvQMPolar.riemann_sign (LP.jτ τ) (LP.jτ_sq τ) with ⟨-, h⟩ | ⟨h, -⟩
+    · exact h 1 one_ne_zero
+    · exact absurd h (not_lt.2 (LP.jτ_imJ_pos τ).le)
+  have hrpos : (0 : ℝ) < r := pos_of_mul_pos_left hpos' hE0pos.le
+  have hr1 : r = 1 := by
+    have : (r - 1) * (r + 1) = 0 := by linear_combination hr2
+    rcases mul_eq_zero.1 this with h | h
+    · linarith
+    · have : (r : ℝ) = -1 := by exact_mod_cast (by linarith : r = -1)
+      linarith
+  intro b b'
+  have h := hEr b b'
+  rw [hr1, _root_.one_mul] at h
+  exact h
+
 end LemmaP
 
 end Y3Hodge

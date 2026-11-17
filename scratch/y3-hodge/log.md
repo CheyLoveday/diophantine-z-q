@@ -42,3 +42,4 @@ unrelated TYZThm21Span files).
   Discharges.lean: DISCHARGES [OpenResearchLeaves42.deligneCanonicalModelY3EveryH] by Y3Hodge.deligneH_of_print,
   still assumes [Y3Hodge.DeligneCanonicalModelY3EveryPrint]; 39 open, 13439 theorems checked; all Y3Hodge
   #print axioms standard (discharges.txt).
+- Hodge.lean stage 6: Lemma P on H₁, uniqueness half `eq_E0_of_principalRiemann` (any principal Riemann form of type μ on the genuine H₁(A(ℂ),ℤ) equals E₀ under the print's c : 𝒪 ≅ H₁): compiles, 0 errors.
