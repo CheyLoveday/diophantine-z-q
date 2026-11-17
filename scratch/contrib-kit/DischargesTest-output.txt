@@ -44,10 +44,10 @@ DISCHARGES [OpenResearchLeaves29.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of
 DISCHARGES [OpenResearchLeaves29.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
   still assumes: [LeafQM.AV.R5fpCount]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves19.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
+DISCHARGES [OpenAddedLeaves20.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
   still assumes: [PicDict.PicLocFinType, PicDict.IdentityComponentLFT, PicDict.PicZeroSmooth, PicDict.PicZeroProper]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_final
+DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_final
   still assumes: [PicDict.MumfordSquareAC,
  PicDict.MumfordMulNPicZeroAC,
  PicDict.MumfordPhiSurjectiveAC,
@@ -56,7 +56,7 @@ DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilAltAC,
  PicDict.MumfordKLFiniteAC]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_of_ac
+DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_of_ac
   still assumes: [PicDict.MumfordSquareAC,
  PicDict.MumfordMulNPicZeroAC,
  PicDict.MumfordPhiSurjectiveAC,
@@ -66,7 +66,7 @@ DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilAltAC,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_of_mumford
+DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_of_mumford
   still assumes: [PicDict.MumfordSquareAC,
  PicDict.MumfordMulNPicZeroAC,
  PicDict.MumfordPhiSurjectiveAC,
@@ -75,7 +75,7 @@ DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_
  PicDict.MumfordWeilAltAC,
  T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves19.weilPairingMumford] by PicDict.weilPairingMumford_of_printed
+DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_of_printed
   still assumes: [PicDict.MumfordSquare,
  PicDict.MumfordMulNPicZero,
  PicDict.MumfordPhiSurjective,
@@ -97,4 +97,4 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 45 open hypotheses, 8227 theorems checked, 14 discharge one
+#discharges: 44 open hypotheses, 8254 theorems checked, 14 discharge one

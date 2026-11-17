@@ -11,14 +11,14 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**35 hypotheses of the H part** (in the bundles `OpenAddedLeaves19`, `OpenResearchLeaves29`, `OpenTextbookLeaves14`), plus 10 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**34 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves29`, `OpenTextbookLeaves14`), plus 10 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 15 published / 20 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 14 published / 20 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: composite 5, consequence 13, published 17.
+* By kind: composite 5, consequence 13, published 16.
 
 ## Kernel-wide readings
 
@@ -158,7 +158,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 * [`picRepresentableAbVar`](#picrepresentableabvar) (LEAF; pending-review): Murre 1964, Oort 1962 (BLR Neron Models 8.2 Thm 3, number UNVERIFIED: Pic_{X/k} representable for X proper over a field, Pic as the fppf sheafification); dictionary pass 11-16: Murre-Oort is the print; the Kleiman 9.4.8 route would need projectivity and 9.2.5 (a consequence), so Murre-Oort is cited first. Earlier source text: Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
 * [`picZeroAbVar`](#piczeroabvar) (GLUE; unverified-locator): Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
 * [`weilPairingMumford`](#weilpairingmumford) (GLUE; unverified-locator): Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED)
-* [`mumfordKLFiniteSectionAC`](#mumfordklfinitesectionac) (LEAF; unread, unverified-locator): Mumford, Abelian varieties, 6 Application 1: for D effective and L = O(D) ample, K(L) is finite
 * [`mumfordPhiSurjectiveAC`](#mumfordphisurjectiveac) (LEAF; unread, unverified-locator): Mumford, Abelian varieties, 8 Thm 1
 
 ## Index
@@ -185,7 +184,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`sga7_IX_3_5_ForwardGeom`](#sga7_ix_3_5_forwardgeom) | research | published | GLUE | pending-reading, unverified-locator |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/sga7-35-proof)) |
 | [`shimuraMainThmIDeligneY3AbU`](#shimuramainthmideligney3abu) | research | composite | GLUE |  |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gagaMorphism`](#gagamorphism) | textbook | consequence | GLUE | note, unverified-locator |  | T3-T4 | [elliotglazer #82](https://github.com/elliotglazer/diophantine-z-q/issues/82) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/82#issuecomment-6887799149)) |
-| [`mumfordKLFiniteSectionAC`](#mumfordklfinitesectionac) | added | published | LEAF | unread, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`mumfordPhiSurjectiveAC`](#mumfordphisurjectiveac) | added | published | LEAF | unread, unverified-locator |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`picRepresentableAbVar`](#picrepresentableabvar) | added | published | LEAF | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr)) |
 | [`dsThm965Printed`](#dsthm965printed) | research | published | LEAF | unread, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
@@ -215,7 +213,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 
 ### picZeroAbVar
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves19.picZeroAbVar`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): Mumford 13 builds the dual over Kbar; identifying it with the identity component of the Lean's fppf Pic_{A/K} (IsPicZero) and descending to K (Kleiman 9.5.1, SGA 3 VI_A 2.4) are theorem steps; also a composite of three sources; would clear with one print over an arbitrary field in identity-component form (BLR 8.4, FGA Explained 9.5, Milne 1986 10); locators UNVERIFIED.
+* Bundle field `HDec.HSyn.OpenAddedLeaves20.picZeroAbVar`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): Mumford 13 builds the dual over Kbar; identifying it with the identity component of the Lean's fppf Pic_{A/K} (IsPicZero) and descending to K (Kleiman 9.5.1, SGA 3 VI_A 2.4) are theorem steps; also a composite of three sources; would clear with one print over an arbitrary field in identity-component form (BLR 8.4, FGA Explained 9.5, Milne 1986 10); locators UNVERIFIED.
 * Source: Mumford, Abelian varieties, 13; Kleiman, The Picard scheme, Prop. 9.5.1 and 9.5.3; Milne 1986, 9-10: the identity component of Pic_{A/K} is an abelian variety (locators UNVERIFIED)
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -231,7 +229,7 @@ T09Pic.PicZeroAbVar
 
 ### weilPairingMumford
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves19.weilPairingMumford`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): the weilScalar pin reads Mumford's e_n on the Lean Pic0 only through Kleiman 9.2.5, Mumford 8 (iv) and 8 Thm 1 / 13, with base change to Kbar; also a composite (Mumford 20 and 23, Milne 1986 16); sign convention immaterial; locators UNVERIFIED.
+* Bundle field `HDec.HSyn.OpenAddedLeaves20.weilPairingMumford`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (Pic dictionary): the weilScalar pin reads Mumford's e_n on the Lean Pic0 only through Kleiman 9.2.5, Mumford 8 (iv) and 8 Thm 1 / 13, with base change to Kbar; also a composite (Mumford 20 and 23, Milne 1986 16); sign convention immaterial; locators UNVERIFIED.
 * Source: Mumford, Abelian varieties, 20 and 23; Milne 1986, Lemma 16.2(c) and 16: Mumford's pairing e_n : A[n] x Pic0[n] -> mu_n (locators UNVERIFIED)
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -530,23 +528,9 @@ ZInQ.HomLattice.GAGAMorphism
 > `ψ : ℂ^g → B(ℂ)` an analytic homomorphism killing `Λ` (= a holomorphic homomorphism
 > `A^an → B^an`). Then `ψ` comes from an algebraic morphism `f : A → B`.
 
-### mumfordKLFiniteSectionAC
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves19.mumfordKLFiniteSectionAC`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Mumford 6 Application 1 for L = O(D), D effective, stated as L with a nonzero global section s, D = Z(s)); locator UNVERIFIED.
-* Source: Mumford, Abelian varieties, 6 Application 1: for D effective and L = O(D) ample, K(L) is finite
-* packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-PicFix.MumfordKLFiniteSectionAC
-```
-
-> pic-fix: K(L) finite for L ample with a nonzero global section s (L = O(D), D = Z(s) effective) on an abelian variety over an algebraically closed field (Mumford, Abelian varieties, section 6 Application 1, (iv) => (ii), printed for L = O(D) with D effective; locator UNVERIFIED).
-
 ### mumfordPhiSurjectiveAC
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves19.mumfordPhiSurjectiveAC`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED.
+* Bundle field `HDec.HSyn.OpenAddedLeaves20.mumfordPhiSurjectiveAC`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED.
 * Source: Mumford, Abelian varieties, 8 Thm 1
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
@@ -560,7 +544,7 @@ PicDict.MumfordPhiSurjectiveAC
 
 ### picRepresentableAbVar
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves19.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
+* Bundle field `HDec.HSyn.OpenAddedLeaves20.picRepresentableAbVar`; kind **published**, strict **LEAF**; flag: pending review (one model review, no errors).
 * Source: Murre 1964, Oort 1962 (BLR Neron Models 8.2 Thm 3, number UNVERIFIED: Pic_{X/k} representable for X proper over a field, Pic as the fppf sheafification); dictionary pass 11-16: Murre-Oort is the print; the Kleiman 9.4.8 route would need projectivity and 9.2.5 (a consequence), so Murre-Oort is cited first. Earlier source text: Murre 1964, Oort 1962; FGA Exp. 232 Thm 3.1; Kleiman, The Picard scheme, Thm 9.4.8 with 9.2.5 (section 0): the relative Picard fppf sheaf of an abelian variety over a field is representable (locators UNVERIFIED)
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
