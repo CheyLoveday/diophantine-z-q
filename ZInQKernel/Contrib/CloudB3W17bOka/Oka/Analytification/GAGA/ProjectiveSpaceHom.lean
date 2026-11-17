@@ -39,6 +39,7 @@ noncomputable section
 
 namespace ComplexAnalytic
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Analytification of morphisms out of `𝒪_X`** is bijective onto morphisms out of `𝒪_X^an`
 whenever the comparison map on global sections is bijective. -/
 lemma bijective_analytificationModules_map_unit (X : SchemeLFTℂ.{u})

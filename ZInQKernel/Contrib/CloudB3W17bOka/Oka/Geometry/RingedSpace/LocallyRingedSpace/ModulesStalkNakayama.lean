@@ -100,6 +100,7 @@ lemma exists_germMod_eq_of_le {M : SheafOfModules.{u} Y.ringSheaf} {y : Y} (hy :
   exact ⟨V ⊓ O, inf_le_right, ⟨hyV, hy⟩, M.val.presheaf.map (homOfLE inf_le_left).op t,
     TopCat.Presheaf.germ_res_apply M.val.presheaf _ y _ t⟩
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The germ of `r • s` is the product of the germs. -/
 lemma germMod_smul {M : SheafOfModules.{u} Y.ringSheaf} {W : Opens Y.toPresheafedSpace} {y : Y}
     (hy : y ∈ W) (r : Y.presheaf.obj (op W)) (s : M.val.obj (op W)) :
@@ -123,6 +124,7 @@ lemma germ_restrictOpen {W : Opens Y.toPresheafedSpace} (hW : W ≤ O) {y : Y} (
       Y.presheaf.germ O y (hW hy) x :=
   TopCat.Presheaf.germ_res_apply Y.presheaf (homOfLE hW) y hy x
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Image condition on stalks**: if `ψ(P(W)) ⊆ x · Q(W)` for all `W ≤ O`, then
 `ψ_y(P_y) ⊆ x_y Q_y` for `y ∈ O`. -/
 lemma exists_stalk_map_eq_germ_smul
@@ -135,6 +137,7 @@ lemma exists_stalk_map_eq_germ_smul
   refine ⟨germMod Q hyW q, ?_⟩
   rw [stalkFunctor_map_germMod, hq, germMod_smul, germ_restrictOpen]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Kernel condition on stalks**: if `ψ(s) = 0` implies `x · s = 0` over opens `W ≤ O`, then
 `x_y` kills `(ker ψ)_y` for `y ∈ O`. -/
 lemma germ_smul_stalk_kernel_eq_zero
@@ -149,6 +152,7 @@ lemma germ_smul_stalk_kernel_eq_zero
   rw [map_smul, map_zero, stalkFunctor_map_germMod, ← germ_restrictOpen x hW hyW,
     ← germMod_smul, hψ W hW _ h0, germMod_zero]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Cokernel condition on stalks**: if `x · Q(W) ⊆ ψ(P(W))` for all `W ≤ O`, then `x_y` kills
 `(coker ψ)_y` for `y ∈ O`. -/
 lemma germ_smul_stalk_cokernel_eq_zero
@@ -163,6 +167,7 @@ lemma germ_smul_stalk_cokernel_eq_zero
     ← stalkFunctor_map_germMod]
   exact stalkFunctor_map_map_eq_zero _ _ (cokernel.condition ψ) y _
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Nakayama's lemma for sheaves of modules**: let `Q` be of finite type, let `ψ : P ⟶ Q`
 satisfy `ψ(P(W)) ⊆ x · Q(W)` for `W ≤ O`, and let `y ∈ O` with `x_y` in the maximal ideal. If
 `σ : F ⟶ Q` composed with `Q ⟶ coker ψ` is surjective on the stalk at `y`, then `σ` is surjective
@@ -230,6 +235,7 @@ lemma surjective_stalk_iff_forall (f : P ⟶ Q) (y : Y) :
     rw [stalkFunctor_map_germMod, ht]
     exact TopCat.Presheaf.germ_res_apply Q.val.presheaf (homOfLE hW') y hy' s
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Pushforward along a homeomorphism preserves stalk surjectivity**: for `a : X ⟶ Y` whose
 underlying map has an inverse `b`, if `f` is surjective on the stalk at `x`, then `a_* f` is
 surjective on the stalk at `a x`. -/
@@ -379,16 +385,19 @@ section Predicates
 
 variable {Q' : SheafOfModules.{u} Y.ringSheaf}
 
+set_option backward.isDefEq.respectTransparency false in
 /-- `ψ(P(W)) ⊆ x · Q(W)` for all `W ≤ O`. -/
 def RangeLESMul : Prop :=
   ∀ (W : Opens Y.toPresheafedSpace) (hW : W ≤ O) (s : P.val.obj (op W)),
     ∃ q : Q.val.obj (op W), ψ.val.app (op W) s = TopCat.Presheaf.restrictOpen x W hW • q
 
+set_option backward.isDefEq.respectTransparency false in
 /-- `ψ(s) = 0` implies `x · s = 0`, for `s ∈ P(W)`, `W ≤ O`. -/
 def SMulKerEqZero : Prop :=
   ∀ (W : Opens Y.toPresheafedSpace) (hW : W ≤ O) (s : P.val.obj (op W)),
     ψ.val.app (op W) s = 0 → TopCat.Presheaf.restrictOpen x W hW • s = 0
 
+set_option backward.isDefEq.respectTransparency false in
 /-- `x · Q(W) ⊆ ψ(P(W))` for all `W ≤ O`. -/
 def SMulLERange : Prop :=
   ∀ (W : Opens Y.toPresheafedSpace) (hW : W ≤ O) (q : Q.val.obj (op W)),
@@ -396,6 +405,7 @@ def SMulLERange : Prop :=
 
 variable {ψ x}
 
+set_option backward.isDefEq.respectTransparency false in
 lemma RangeLESMul.comp_iso (h : RangeLESMul ψ x) (e : Q ≅ Q') : RangeLESMul (ψ ≫ e.hom) x := by
   intro W hW s
   obtain ⟨q, hq⟩ := h W hW s
@@ -403,6 +413,7 @@ lemma RangeLESMul.comp_iso (h : RangeLESMul ψ x) (e : Q ≅ Q') : RangeLESMul (
     rw [SheafOfModules.comp_val, PresheafOfModules.comp_app, ModuleCat.comp_apply, hq,
       modHom_smul]⟩
 
+set_option backward.isDefEq.respectTransparency false in
 lemma SMulKerEqZero.comp_iso (h : SMulKerEqZero ψ x) (e : Q ≅ Q') :
     SMulKerEqZero (ψ ≫ e.hom) x := by
   intro W hW s hs
@@ -413,6 +424,7 @@ lemma SMulKerEqZero.comp_iso (h : SMulKerEqZero ψ x) (e : Q ≅ Q') :
     e.hom_inv_id] at this
   exact this
 
+set_option backward.isDefEq.respectTransparency false in
 lemma SMulLERange.comp_iso (h : SMulLERange ψ x) (e : Q ≅ Q') : SMulLERange (ψ ≫ e.hom) x := by
   intro W hW q
   obtain ⟨s, hs⟩ := h W hW (e.inv.val.app (op W) q)
@@ -431,6 +443,7 @@ lemma modTwistSectionsEquiv_modTwistMap {ι : Type} {V : ι → Opens Y.toPreshe
   rw [modTwistSectionsEquiv_apply, modTwistSectionsEquiv_apply, modTwistComp_modTwistMap_app,
     modHom_modRes]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The condition `ψ(P(W)) ⊆ x · Q(W)` passes to twists, over an open inside a member of the
 cover. -/
 lemma RangeLESMul.modTwistMap (h : RangeLESMul ψ x) {ι : Type}

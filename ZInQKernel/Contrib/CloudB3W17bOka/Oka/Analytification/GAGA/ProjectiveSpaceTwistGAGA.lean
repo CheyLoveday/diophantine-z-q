@@ -77,6 +77,7 @@ instance (n : ℕ)
 
 /-! ### Degree zero -/
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **`π^♯ : Γ(ℙⁿ, 𝒪) → Γ(ℙⁿ_an, 𝒪)` is bijective.** Surjectivity: analytic global functions on
 `ℙⁿ_an` are constant. Injectivity: a section killed by `π^♯` has zero germ at a point `π y`
 lying in every chart (faithful flatness of the stalk maps of `π`), hence vanishes on every chart,
@@ -115,6 +116,7 @@ theorem bijective_analytificationπLRS_c_app_top_projectiveSpace (n : ℕ) :
   · obtain ⟨c, rfl⟩ := projectiveSpaceAn.bijective_algebraMap.{u} (n := n).2 t
     exact ⟨_, hconst c⟩
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **GAGA for `𝒪` on `ℙⁿ` in degree `0`**: `H⁰(ℙⁿ, 𝒪) → H⁰(ℙⁿ_an, 𝒪^an)` is bijective. -/
 theorem bijective_gagaMap_unit_zero (n : ℕ) :
     Function.Bijective (gagaMap (projectiveSpace.{u} n) (SheafOfModules.unit _) 0) := by
@@ -170,6 +172,7 @@ theorem bijective_gagaMap_unit (n q : ℕ) :
     exact ⟨fun a b _ ↦ (h0 a).trans (h0 b).symm,
       fun y ↦ ⟨0, (map_zero _).trans (H_analytificationModules_unit_eq_zero n q y).symm⟩⟩
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **GAGA for `O(k)` on `ℙⁿ⁺¹` from GAGA for all `O(k)` on `ℙⁿ`**, by the hyperplane sequence
 `0 → O(k) → O(k + 1) → ι_* O(k + 1) → 0` and the five lemma, inductively from `k = 0`. -/
 theorem bijective_gagaMap_twistingSheaf_succ (n : ℕ)

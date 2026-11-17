@@ -204,6 +204,7 @@ variable (φ) in
 def twistHOneMap : H (twistMod (twistMod M (-1)) m) 1 →ₗ[ℂ] H (twistMod M m) 1 :=
   AnalyticSpace.hMapₗ ((twistModFunctor N m).map φ) 1
 
+set_option backward.isDefEq.respectTransparency false in
 lemma twistHOneMap_apply (z : H (twistMod (twistMod M (-1)) m) 1) :
     twistHOneMap φ m z = H.map ((twistModFunctor N m).map (Abelian.image.ι φ)) 1
       (H.map ((twistModFunctor N m).map (Abelian.factorThruImage φ)) 1 z) := by
@@ -351,6 +352,7 @@ theorem exists_epi_free_twistMod_of_iso
 lemma exists_mem_stdOpenAn (y : projectiveSpaceAn.{u} N) : ∃ k, y ∈ stdOpenAn.{u} N k :=
   Opens.mem_iSup.1 (by rw [iSup_stdOpenAn]; trivial)
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Untwisting**: a morphism `𝒪^I ⟶ M(m)` surjective on the stalk at `y` makes `M`
 algebraically generated at `y`, through `(𝒪^I(-m))^an ≅ 𝒪^I(-m) ⟶ M`. -/
 theorem isAlgGeneratedAt_of_surjective_stalk
@@ -381,6 +383,7 @@ theorem isAlgGeneratedAt_of_surjective_stalk
 
 end Generation
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Analytic Theorem A at the points of the hyperplane** (Serre): assume GAGA-3 on `ℙⁿ` and
 finite-dimensionality of `H¹` of coherent sheaves on `ℙⁿ⁺¹_an`. Then every coherent sheaf `M` on
 `ℙⁿ⁺¹_an` is algebraically generated at every point of the hyperplane `ℙⁿ_an ⊆ ℙⁿ⁺¹_an`: for

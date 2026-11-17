@@ -29,6 +29,7 @@ noncomputable section
 
 namespace ComplexAnalytic
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **GAGA for coherent sheaves on `ℙⁿ`**: for coherent `F` on `ℙⁿ_ℂ`, the comparison map
 `Hᵠ(ℙⁿ, F) → Hᵠ(ℙⁿ_an, F^an)` is bijective for all `q`. -/
 theorem gaga_projectiveSpace (n : ℕ)

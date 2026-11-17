@@ -96,6 +96,7 @@ noncomputable def affineProdSnd :
   (homComplexAffineSpaceEquivGeneral.{u} (AnalyticSpace.complexAffineSpace.{u} (n + m)) m).symm
     fun j ↦ coord (ULift.up (Fin.natAdd n j.down))
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The first projection pulls the `j`-th coordinate of `ℂ^n` back to the `Fin.castAdd`-th
 coordinate of `ℂ^(n+m)`.** -/
 @[simp]
@@ -105,6 +106,7 @@ theorem coordPullback_affineProdFst (j : ULift.{u} (Fin n)) :
   unfold affineProdFst
   rw [coordPullback_symm_homComplexAffineSpaceEquivGeneral]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The second projection pulls the `j`-th coordinate of `ℂ^m` back to the `Fin.natAdd`-th
 coordinate of `ℂ^(n+m)`.** -/
 @[simp]
