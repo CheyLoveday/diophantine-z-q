@@ -12,3 +12,18 @@ Target: `JavanpeykarRebase.ConstantFieldExtensionUnramifiedFinite`
   hypothesis; {π} transcendence basis since trdeg F/K = 1 from t; lowest coefficient of an algebraic relation
   of d over K[π]).
 - iterate: x = ι(c)φ(a)/φ(s); if c ∈ m_O done; else a ∈ p, replace (c, a, s) by (cπ, b, s s').
+
+## Results
+- Step1 (`unram_step`): compiled (import Mathlib), VERIFIED. Mathlib inputs: `Algebra.FormallyUnramified.comp`,
+  `EssFiniteType.comp`, `Algebra.FormallyUnramified.map_maximalIdeal` (Stacks 00UW(1)),
+  `Localization.AtPrime.map_eq_maximalIdeal`, `IsLocalization.eq_iff_exists`.
+- Step2 (`isAlgebraic_adjoin_of_transcendental`, `exists_pow_eq_mul`): compiled, VERIFIED. Inputs:
+  `AlgebraicIndependent.isTranscendenceBasis_iff_isAlgebraic`, `IsTranscendenceBasis.cardinalMk_eq_trdeg`,
+  `AlgebraicIndependent.isTranscendenceBasis_of_trdeg_le_of_finite`, `IntermediateField.isAlgebraic_adjoin_iff_top`,
+  `Polynomial.exists_eq_pow_rootMultiplicity_mul_and_not_dvd`, `Polynomial.X_dvd_sub_C`, valuation lemmas.
+- scratch/cfext-proof/CFExt.lean: verbatim copy of the def + `constantFieldExtensionUnramifiedFinite_proof`;
+  `lake env lean` 7.7 s, no errors, `#print axioms`: [propext, Classical.choice, Quot.sound]. VERIFIED.
+  (Step1/Step2 files merged into CFExt.lean.)
+- Hypotheses actually used: CharZero only for `Algebra.IsSeparable K L` (hence `FormallyUnramified K L`); the
+  function-field clause only for trdeg F/K = 1; full constant field only for "π transcendental"; of the
+  bijectivity only surjectivity. Statement is TRUE as stated; no correction needed.
