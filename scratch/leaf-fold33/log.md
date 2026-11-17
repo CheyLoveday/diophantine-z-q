@@ -101,3 +101,11 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     AVB1.HomFreeFiniteAlgClosed, PkgI3.HomFreeFinite, GZDecomp.GrossZagierHeegner or sorryAx; OpenStatements 37;
     render_open --check ok (31 H, strictest 11/20, 6 others); crosswalk --check ok; DischargesTest rerun; autoform
     check blueprint ok. Host paths removed from merged notes (neron-ext, fold33-copy log).
+13. hCM (frozenTarget binder, consequence/GLUE) replaced by hcm-dict's printed leaf ZInQ.Contrib.HCMDict.ShimuraThm54
+    (Shimura 1971 Thm 5.4 as printed over Mathlib's Weierstrass curves, short models, uniqueness dropped; "analytic
+    isomorphism" is IsAnalyticUnif, characterized in Lean by isAnalyticUnif_iff): merged wip/hcm-dict, binder type
+    changed (name kept), both uses take `shimuraMainCM_of_printed hCM`, kinds row from scratch/hcm-dict/kinds-row.tsv
+    (published, unread, LEAF/LEAF). Strict GLUE over all hypotheses -1 (the TYZ/GZ GLUE left is h33). Checks
+    (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 12 (only frozenTarget
+    changed); OpenStatements 37; render_open --check ok (31 H, strictest 11/20, 6 others); crosswalk --check ok;
+    DischargesTest rerun; autoform check blueprint ok. The claims row of hCM (cm-primitive, done) is left as it is.

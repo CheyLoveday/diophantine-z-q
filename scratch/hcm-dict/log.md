@@ -1,7 +1,7 @@
 # hcm-dict results log
 
 Base: wip/leaf-fold33b 4da8d4f32 (origin/main merged: already up to date).
-Build tree: reflink copy of ~/dzq-wt/leaf-fold33b/.lake/build and lean/.lake/build (same commit, Main.lean identical).
+Build tree: reflink copy of the leaf-fold33b worktree's .lake/build and lean/.lake/build (same commit, Main.lean identical).
 
 ## Target
 `T5Glue.ShimuraMainCM` (ZInQKernel/Contrib/OneProof/RingClassLattice.lean:912), frozenTarget binder `hCM`;

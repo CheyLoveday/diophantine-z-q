@@ -107,7 +107,7 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 
 * [`h11`](#h11) (LEAF; unverified-locator): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
 * [`hL29`](#hl29) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Lemma 2.9 (L1062-1066)
-* [`hCM`](#hcm) (GLUE; unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
+* [`hCM`](#hcm) (LEAF; unread, unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
 * [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
 * [`hGZ`](#hgz) (LEAF; unread): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
@@ -187,7 +187,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator, note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) |
 | [`hL29`](#hl29) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) |
-| [`hCM`](#hcm) | frozenTarget | consequence | GLUE | note, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
+| [`hCM`](#hcm) | frozenTarget | published | LEAF | unread, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
 | [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 | [`hGZ`](#hgz) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
@@ -732,40 +732,35 @@ ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3
 
 ### hCM
 
-* Argument `hCM` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: re-rated 11-15 under the dictionary ruling: the Weierstrass-coordinate form is a consequence of Shimura 1971 Thm 5.4 through the analytic uniformization (statement review); locator UNVERIFIED (numbers).
-* Source: Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
+* Argument `hCM` of `frozenTarget`; kind **published**, strict **LEAF**; flag: unread: new printed leaf (Shimura 1971 Thm 5.4 as printed: analytic isomorphism xi : C/a -> E(C) gives xi' : C/s^-1 a -> E^sigma(C) with xi(u)^sigma = xi'(s^-1 u); E restricted to short Weierstrass models, uniqueness dropped; "analytic isomorphism" = IsAnalyticUnif, dictionary proved in Lean (isAnalyticUnif_iff)); locator UNVERIFIED (numbers).
+* Source: Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
 * packet [R3](#packet-r3); tier T2 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
 * Human readings recorded: none.
 * Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)).
 
 ```lean
-T5Glue.ShimuraMainCM
+ZInQ.Contrib.HCMDict.ShimuraThm54
 ```
 
-> **LEAF SHIMURA-5.4 (the main theorem of complex multiplication, with torsion; printed form in
-> Weierstrass coordinates).** Let `K = ℚ(√−m) ⊂ ℂ` (through `κ`, `√−m ↦ i√m`), `e : Kˢ → ℚ̄`
-> normalized (`ιC ∘ e = κ` on `K`), `σ ∈ Aut(ℂ)` and `s ∈ 𝔸_K^×` with `σ = [s, K]` on `K^ab`
-> (`ArtinCond`). Let `𝔞 ⊂ K` be a lattice, `P` a period pair with lattice `κ(𝔞)` and `P'` one with
-> lattice `κ(s⁻¹𝔞)`. Then there is `μ ∈ ℂˣ` such that `(x, y) ↦ (μ⁻²x, μ⁻³y)` is an isomorphism
-> `E_P^σ ≅ E_{P'}` (`σ(g₂(P)) = μ⁴g₂(P')`, `σ(g₃(P)) = μ⁶g₃(P')`) and, for `u ∈ K \ 𝔞` and any
-> `v ∈ K` representing `s⁻¹u ∈ K/s⁻¹𝔞` (`s_f v − u ∈ 𝔞̂`),
-> `σ(℘_P(u)) = μ²℘_{P'}(v)` and `σ(℘'_P(u)) = μ³℘'_{P'}(v)`.
+> **LEAF SHIMURA-5.4-PRINTED (the main theorem of complex multiplication, Shimura 1971 Thm 5.4, in its
+> printed form).** Let `K = ℚ(√−m) ⊂ ℂ` (through `κ`, `√−m ↦ i√m`), `e : Kˢ → ℚ̄` normalized
+> (`ιC ∘ e = κ` on `K`), `σ ∈ Aut(ℂ)` and `s ∈ 𝔸_K^×` with `σ = [s, K]` on `K^ab` (`ArtinCond`; it forces `σ` to fix
+> `κ(K)`). Let `𝔞` be a lattice in `K` (`κ(𝔞)` is the lattice of a period pair), `E` an elliptic curve over `ℂ`
+> given by a short Weierstrass model `y² = x³ + a₄x + a₆` (`E(ℂ) = E.toAffine.Point`) and `ξ : ℂ/𝔞 → E(ℂ)` an
+> analytic isomorphism (`IsAnalyticUnif`, on `ℂ` with kernel `κ(𝔞)`). Then there is an analytic isomorphism
+> `ξ' : ℂ/s⁻¹𝔞 → E^σ(ℂ)` (`E^σ = E.map σ`) with `ξ(u)^σ = ξ'(s⁻¹u)` for all `u ∈ K/𝔞`; here `v ∈ K` represents
+> `s⁻¹u ∈ K/s⁻¹𝔞` when `s_f v − u ∈ 𝔞̂` (`s⁻¹𝔞 = sInvLat m s 𝔞 = K ∩ s_f⁻¹𝔞̂`), and `P ↦ P^σ` is `conjPt σ`.
 > 
-> Source: Shimura 1971, *Introduction to the arithmetic theory of automorphic functions*, Thm. 5.4:
-> for an analytic isomorphism `ξ : ℂ/𝔞 → E(ℂ)` there is a unique `ξ' : ℂ/s⁻¹𝔞 → E^σ(ℂ)` with
-> `ξ(u)^σ = ξ'(s⁻¹u)` for all `u ∈ K/𝔞`; Lang, *Elliptic functions*, Ch. 10, Thm. 3; Silverman,
-> *Advanced topics*, GTM 151, Thm. II.8.2 (for `𝒪_K`) (theorem numbers UNVERIFIED, from memory).
-> Here `E = E_P : y² = 4x³ − g₂(P)x − g₃(P)` with `ξ = (℘_P, ℘'_P)`; every analytic isomorphism
-> `ℂ/s⁻¹𝔞 → E^σ(ℂ)` is `z ↦ (μ²℘_{P'}(z), μ³℘'_{P'}(z))` for some `μ ∈ ℂˣ` (`ξ'(0) = ξ(0)^σ = O`,
-> a holomorphic map of complex tori fixing `0` is `z ↦ αz`, and isomorphisms of short Weierstrass
-> models are `(x, y) ↦ (μ²x, μ³y)`), so this is the printed statement, restricted to `u ∉ 𝔞` (then
-> `v ∉ s⁻¹𝔞`, since `K ∩ 𝔞̂ = 𝔞`, so `℘_{P'}(v)` is a value, not the junk value at a pole); the
-> conclusion holds for every representative `v` because two of them differ by an element of `s⁻¹𝔞`. Normalization:
-> Shimura's `[s, K]` sends a uniformizer at `𝔭` to the arithmetic Frobenius, as Tau Ceti's Artin map
-> does; then `E^{Frob_𝔭} ≅ ℂ/𝔭⁻¹𝔞`, consistent with `j(𝔞)^{Art 𝔭} = j(𝔭⁻¹𝔞)` used by the kernel's
-> `MainTheoremCMj` (Tau Ceti: `globalArtinMap_isArithFrobAt`, `isArithFrobAt_of_globalArtinMap_ofAdicCompletion_eq`;
-> re-check this direction if the Artin map is ever replaced). The Weierstrass-coordinate form is a standard consequence
-> of Thm. 5.4; Silverman's II.8.2 covers only `𝒪_K`, while this leaf quantifies over lattices of every order.
+> Source: G. Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971), Thm. 5.4;
+> S. Lang, *Elliptic functions*, Ch. 10, Thm. 3 (numbers UNVERIFIED, from memory; not read here). Differences
+> from the print, each making this statement weaker or equal: the uniqueness of `ξ'` is dropped; `E` ranges over
+> short Weierstrass models only (every elliptic curve over `ℂ` has one); `𝔞` comes with a period pair. The
+> notion `IsAnalyticUnif` (a group homomorphism onto `E(ℂ)` with kernel `κ(𝔞)`, holomorphic in the affine
+> coordinates away from `κ(𝔞)`) is checked in Lean: by `exists_lattice_eq` and `isAnalyticUnif_iff` the maps
+> satisfying it are exactly `z ↦ (℘_{L₀}(αz), ℘'_{L₀}(αz)/2)` with `E = E_{L₀}` and `L₀ = α·κ(𝔞)`, i.e. the
+> analytic group isomorphisms `ℂ/𝔞 → E(ℂ)`. If the print's "analytic isomorphism" is read without the group
+> law, the printed `ξ'` still satisfies `ξ'(0) = ξ(0)^σ = O` (take `u = 0`), and a biholomorphism of complex tori
+> fixing `0` is a group isomorphism, so the conclusion here follows in either reading.
 
 ### h33
 

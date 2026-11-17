@@ -215,7 +215,7 @@ T-11		ZInQ.Contrib.TYZGenus.TYZ35.TYZThm33Pinned	f6df5fa32,cba8157f7	no
 T-12	h33	ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-13		ZInQ.Contrib.TYZGenus.TYZSplitT5.CMModuli	5fd81e870,085a7a53a	no
 T-14		ZInQ.Contrib.TYZGenus.TYZSplitT5.X0RatStructure	5fd81e870,085a7a53a	no
-T-15	hCM	T5Glue.ShimuraMainCM	f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+T-15		T5Glue.ShimuraMainCM	f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-16		T5Glue.X0ModuliGalois	f18bcb904,3691994d4,f96b7323d	no
 T-17		T5Glue.RingClassLattice	f18bcb904,3691994d4	no
 T-18		ZInQ.Contrib.TYZDecomp.H29Split.LegendreThreeSquares	8342c2eb7	yes
