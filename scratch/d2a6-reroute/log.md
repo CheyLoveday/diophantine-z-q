@@ -48,3 +48,12 @@
   `X -> X_u`/`XU`; R6 -> R6U, IX 3.5 fields -> `r6u : R6U`, readers -> wrappers): `lake env lean` 0 errors,
   `#print axioms HDec.HSyn.sixContactMin_of_open72_u`: [propext, Classical.choice, Quot.sound]. VERIFIED
   (chain-out1.txt).
+- gen/gen_bypass.py -> BypassFold.lean (the next TailZ: `OpenResearchLeaves54`, 28 fields = 53's 27 with
+  `sga7_IX_3_5_ForwardGeom_Def34` -> `elliotWildInertiaTrivial` + `shimuraIntegralModelRep`, `raynaudSemistableSHOr` ->
+  `silverbergZarhinThm35`; `openResearchLeaves53U_of_OpenResearchLeaves54`; `sixContactMin_of_open73`):
+  `lake env lean` OK, `#print axioms HDec.HSyn.sixContactMin_of_open73`: standard. VERIFIED (bypass-out.txt).
+  Strict count (this base's kinds.tsv, H rows): 5/24 on 29 -> 5/25 on 30; strictest 5/24 -> 5/25 (GLUE +1:
+  ELLIOT and the integral model count GLUE; the IX 3.5 row was GLUE, the 4.7 row LEAF -> SZ35 LEAF).
+- Cor. 3.3 (`sga7_IX_Cor3_3_Def34`) stays: COR33 taint shows its live readers are `ss1_ss3_of14NF_hf_gm_pz_eb`
+  (SS3, semistable persistence, `semistablePersistsSHcp`) and `researchLeaves9_of_open14_hf_gm_pz_eb`'s
+  `semistableNeronBaseChange` (`sga7_IX_3_3`); neither is D2 or A6. VERIFIED (taintD-out.txt, EichlerBoundCopy).
