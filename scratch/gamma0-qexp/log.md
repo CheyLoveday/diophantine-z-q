@@ -5,7 +5,7 @@ binder `hQ` of `ZInQ.OneProof.frozenTarget` (ZInQKernel/OneProof/Main.lean:94).
 
 ## 2026-11-16 17:30 setup
 - origin/main merge: "Already up to date" (VERIFIED).
-- Build tree copied (reflink) from ~/dzq-wt/leaf-fold33b (same commit 0e3c3125, Main.lean identical).
+- Build tree copied (reflink) from the leaf-fold33b worktree (same commit 0e3c3125, Main.lean identical).
 - Statement.lean: verbatim copies + rfl checks.
 
 ## Findings (reading)

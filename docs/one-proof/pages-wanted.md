@@ -44,7 +44,6 @@ Printed statements that a reader with the book or paper can check against the Le
 * [`mumfordPhiSurjectiveAC`](OPEN.md#mumfordphisurjectiveac) (packet R10): Mumford, Abelian varieties, 8 Thm 1. Flag: unread: new printed leaf (Mumford's statement over an algebraically closed field, Pic0 = translation-invariant classes); locator UNVERIFIED
 * [`h11`](OPEN.md#h11) (packet R3): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED). Flag: locator UNVERIFIED (see the source); reading note: TYZ's printed proof of integrality and of Theorem 1.1 (L1081-1088) goes through the misprinted Lemma 2.9 display at n = 3; the statement stays true (script-L(3) = +-1)
 * [`hCM`](OPEN.md#hcm) (packet R3): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED). Flag: re-rated 11-15 under the dictionary ruling: the Weierstrass-coordinate form is a consequence of Shimura 1971 Thm 5.4 through the analytic uniformization (statement review); locator UNVERIFIED (numbers)
-* [`hQ`](OPEN.md#hq) (packet R3): G. Shimura, Introduction to the arithmetic theory of automorphic functions (1971), Prop. 6.9 and Thm 6.6; F. Diamond, J. Shurman, A first course in modular forms (GTM 228), sections 7.5-7.6 (all UNVERIFIED locators). Flag: locator UNVERIFIED: Shimura 1971 Prop. 6.9 with Thm 6.6; Diamond-Shurman 7.5-7.6
 
 ## pending-review
 

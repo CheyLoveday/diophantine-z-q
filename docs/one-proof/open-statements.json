@@ -239,11 +239,5 @@
    "field": "hGZ",
    "docstring":
    "**The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model\n`E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.\nA restriction of `GrossZagierAlgOpt`. ",
-   "bundle": "frozenTarget"},
-  {"type": "ZInQ.GZAlg.Gamma0QExpansion",
-   "statement": "ZInQ.GZAlg.Gamma0QExpansion",
-   "field": "hQ",
-   "docstring":
-   "**Leaf Q-EXP (the `q`-expansion principle for `Γ₀(N)` with rational coefficients).** Let `g` be\na meromorphic modular function for `Γ₀(N)` (invariant, meromorphic on `ℍ` and at every cusp:\n`GZHeegner.IsRatModFnMero`) whose `q`-expansion `x` at `∞` has rational coefficients. Then `x` lies\nin `ℚ(j, j_N)`, i.e. `g ∈ ℚ(j(τ), j(Nτ))`.\n\nSource: Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971),\nProp. 6.9 (the field of `Γ₀(N)`-functions with rational Fourier coefficients is `ℚ(j, j∘N)`) with\nThm. 6.6; Diamond–Shurman, *A first course in modular forms*, §7.5 (`ℂ(X₀(N)) = ℂ(j, j_N)`) and\n§7.6–7.7 (the rational structure via `q`-expansions); locators UNVERIFIED (no copy on this host).\nThe print states the result for `ℚ(X₀(N))` as a subfield of `ℂ(X₀(N))`; the `q`-expansion map is\ninjective on it, so this is the printed statement read through `q`-expansions. ",
    "bundle": "frozenTarget"}],
- "count": 41}
+ "count": 40}
