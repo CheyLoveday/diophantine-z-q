@@ -1,7 +1,7 @@
 import ZInQKernel.OneProof.H.TailZ83
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
-import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineMW
+import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
 
 /-!
 # The whole proof in one theorem
@@ -10,15 +10,12 @@ import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineMW
 the development fork, and from nothing else: the open bundles of the H chain, the manuscript's Theorem 5.3 (the restricted
 converse, `ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine`, `diophantine_zq.tex` lines 1005–1011, over the genuine
 `Sel_{2^∞}(E_ℓ/ℚ)`), the printed leaves Lemma 5.4 (`ZInQ.Manuscript.PoleS12.Lemma54`), BCDT Theorem A
-(`ZInQ.Manuscript.PoleS12.BCDTThmA`) and Kolyvagin's Theorem 1 (`ZInQ.Manuscript.PoleS12.KolyvaginThm1`), and the
-Kummer identification `ZInQ.Manuscript.PoleS12.KummerSelmerM` (`#Sel₂(E_ℓ/ℚ) = #SelM ℓ`, Silverman X.1.4).
+(`ZInQ.Manuscript.PoleS12.BCDTThmA`) and Kolyvagin's Theorem 1 (`ZInQ.Manuscript.PoleS12.KolyvaginThm1`).
 Pole completeness PC (`ZInQ.PoleCompleteness`, Theorem 5.2, lines 1001–1004, for the manuscript's pole polynomial) is
 proved from these by the manuscript's descent (lines 1019–1121):
-`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_mw`
-(`Contrib/OneProof/PoleCompletenessFromRCGenuineMW.lean`; fork issue #83). `KummerSelmerM` is proved
-(`ZInQ.Manuscript.PoleS12.kummerSelmerM`, `Contrib/OneProof/PoleCompletenessFromRCGenuineFinal.lean`), but that proof
-imports Tau Ceti's Weil pairing, whose `WeierstrassCurve.Affine.divisorSum` clashes with the vendored AnthropicFLT
-definition in the H chain's import closure; it stays a hypothesis here until a proof without that import lands.
+`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_final`
+(`Contrib/OneProof/PoleCompletenessFromRCGenuineFinal.lean`; fork issue #83), with the matrix construction, the local
+images, the 2-descent, Mordell–Weil for `E_ℓ` and the Kummer identification `#Sel₂(E_ℓ/ℚ) = #SelM ℓ` proved.
 It composes the compiled H chain with the headline
 `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
 (`ZInQKernel/MainGreenTao.lean`: the assembly with route AP, Green–Tao in its dense form and Proposition D proved).
@@ -137,18 +134,18 @@ hypothesis by its proof; the theorem's statement then loses that hypothesis.
 namespace ZInQ.OneProof
 
 /-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 (the restricted
-converse), the printed leaves Lemma 5.4, BCDT Theorem A and Kolyvagin's Theorem 1, and the Kummer identification.
-Pole completeness PC (the manuscript's Theorem 5.2) is proved from the last five
-(`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_mw`). -/
+converse) and the printed leaves Lemma 5.4, BCDT Theorem A and Kolyvagin's Theorem 1. Pole completeness PC (the
+manuscript's Theorem 5.2) is proved from the last four
+(`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_final`). -/
 theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves57) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves27)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
-    (h54 : ZInQ.Manuscript.PoleS12.Lemma54) (hKum : ZInQ.Manuscript.PoleS12.KummerSelmerM)
-    (hB : ZInQ.Manuscript.PoleS12.BCDTThmA) (hK : ZInQ.Manuscript.PoleS12.KolyvaginThm1) :
+    (h54 : ZInQ.Manuscript.PoleS12.Lemma54) (hB : ZInQ.Manuscript.PoleS12.BCDTThmA)
+    (hK : ZInQ.Manuscript.PoleS12.KolyvaginThm1) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
     (HDec.HSyn.sixContactMin_of_open76 r t l)
-    (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_mw hRC h54 hKum hB hK)
+    (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_final hRC h54 hB hK)
 
 end ZInQ.OneProof
 
