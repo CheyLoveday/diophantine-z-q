@@ -398,4 +398,132 @@ theorem gaHom_abVar_trivial [IsAlgClosed k] (A : PkgI3.AbVar k) (g : algPt k (Po
     (h : IsGaHom A.X g) : g = 1 :=
   gaHom_proper_trivial A.X g h
 
+
+/-! ## §7. A homomorphism `𝔾_a → G` lands in every open subgroup `U ⊆ G` (`k` algebraically closed)
+
+`V = g⁻¹(U)` is open and contains `0`, so it contains every `k`-point `c` off the finite zero set of some `h ≠ 0`. The
+`c` with `g(c) ∈ U` form a subgroup of `k` (`U` is a subgroup); a cofinite subgroup of the infinite `k` is `k`. So `V`
+contains every closed point, hence (Jacobson) is everything. -/
+
+section OpenSubgroup
+
+/-- Factorization through an open immersion of `k`-schemes, from containment of the image. -/
+theorem factor_openImm {W G U : Over (Spec (CommRingCat.of k))} (inc : U ⟶ G) [IsOpenImmersion inc.left]
+    (y : W ⟶ G) (hy : Set.range y.left ⊆ Set.range inc.left) : ∃ y' : W ⟶ U, y' ≫ inc = y := by
+  refine ⟨Over.homMk (IsOpenImmersion.lift inc.left y.left hy) ?_, ?_⟩
+  · rw [← Over.w inc, ← Category.assoc, IsOpenImmersion.lift_fac, Over.w y]
+  · ext1
+    exact IsOpenImmersion.lift_fac _ _ _
+
+theorem subsingleton_specField (a b : (algPt k k).left) : a = b := by
+  change PrimeSpectrum k at a b
+  exact Subsingleton.elim a b
+
+theorem ev_mem_basicOpen (c : k) (a : (algPt k k).left) (h : Polynomial k) :
+    (algPtMap (Polynomial.aeval c)).left a ∈ (PrimeSpectrum.basicOpen h : Set (PrimeSpectrum (Polynomial k))) ↔
+      h.eval c ≠ 0 := by
+  let a' : PrimeSpectrum k := a
+  change PrimeSpectrum.comap ((Polynomial.aeval c : Polynomial k →ₐ[k] k) : Polynomial k →+* k) a' ∈
+    PrimeSpectrum.basicOpen h ↔ _
+  rw [PrimeSpectrum.mem_basicOpen, PrimeSpectrum.comap_asIdeal, Ideal.eq_bot_of_prime a'.asIdeal,
+    Ideal.mem_comap, Ideal.mem_bot]
+  simp [Polynomial.aeval_def, Polynomial.eval₂_eq_eval_map]
+
+variable [IsAlgClosed k]
+
+omit [IsAlgClosed k] in
+/-- `g(a + b) = g(a) g(b)` on `k`-points. -/
+theorem gaHom_add {G : Over (Spec (CommRingCat.of k))} [GrpObj G] (g : algPt k (Polynomial k) ⟶ G)
+    (h : IsGaHom G g) (a b : k) :
+    algPtMap (Polynomial.aeval (a + b)) ≫ g =
+      (algPtMap (Polynomial.aeval a) ≫ g) * (algPtMap (Polynomial.aeval b) ≫ g) := by
+  let φ : MvPolynomial (Fin 2) k →ₐ[k] k := MvPolynomial.aeval ![a, b]
+  have hadd : φ.comp (addMap k) = Polynomial.aeval (a + b) := by
+    apply Polynomial.algHom_ext; simp [addMap, φ]
+  have hp1 : φ.comp (pr1 k) = Polynomial.aeval a := by
+    apply Polynomial.algHom_ext; simp [pr1, φ]
+  have hp2 : φ.comp (pr2 k) = Polynomial.aeval b := by
+    apply Polynomial.algHom_ext; simp [pr2, φ]
+  have := congrArg (algPtMap φ ≫ ·) h
+  simpa only [comp_mul, ← Category.assoc, ← algPtMap_comp, hadd, hp1, hp2] using this
+
+/-- **A homomorphism `𝔾_a → G` factors through every open subgroup `U ⊆ G`.** -/
+theorem gaHom_factors_open {G U : Over (Spec (CommRingCat.of k))} [GrpObj G] [GrpObj U] (inc : U ⟶ G)
+    [IsOpenImmersion inc.left] [IsMonHom inc] (g : algPt k (Polynomial k) ⟶ G) (h : IsGaHom G g) :
+    ∃ g' : algPt k (Polynomial k) ⟶ U, g' ≫ inc = g := by
+  -- `k`-points in `U`
+  let InU : k → Prop := fun c => ∃ y : algPt k k ⟶ U, y ≫ inc = algPtMap (Polynomial.aeval c) ≫ g
+  have hsub : ∀ c b, InU b → InU (b - c) → InU c := by
+    rintro c b ⟨y1, hy1⟩ ⟨y2, hy2⟩
+    refine ⟨y1 * y2⁻¹, ?_⟩
+    have hb := gaHom_add g h c (b - c)
+    rw [add_sub_cancel] at hb
+    rw [mul_comp, GrpObj.inv_comp, hy1, hy2, hb, mul_inv_cancel_right]
+  let V : Set (algPt k (Polynomial k)).left := g.left ⁻¹' Set.range inc.left
+  have hVopen : IsOpen V := inc.left.isOpenEmbedding.isOpen_range.preimage g.left.continuous
+  have hInU : ∀ c, (∃ a, (algPtMap (Polynomial.aeval c)).left a ∈ V) → InU c := by
+    rintro c ⟨a, ha⟩
+    refine factor_openImm inc _ ?_
+    rintro _ ⟨b, rfl⟩
+    rw [subsingleton_specField b a]
+    exact ha
+  have hV : ∀ c, InU c → ∀ a, (algPtMap (Polynomial.aeval c)).left a ∈ V := by
+    rintro c ⟨y, hy⟩ a
+    refine ⟨y.left a, ?_⟩
+    change (y ≫ inc).left a = (algPtMap (Polynomial.aeval c) ≫ g).left a
+    rw [hy]
+  -- `0 ∈ U`
+  have h0 : InU 0 := by
+    have h00 := gaHom_add g h 0 0
+    rw [add_zero] at h00
+    have h1 : algPtMap (Polynomial.aeval (0 : k)) ≫ g = 1 := left_eq_mul.mp h00
+    exact ⟨1, by rw [one_comp, h1]⟩
+  obtain ⟨a0⟩ : Nonempty (algPt k k).left := by
+    change Nonempty (PrimeSpectrum k); infer_instance
+  -- a basic open around `0` inside `V`
+  obtain ⟨_, ⟨f, rfl⟩, hf0, hfV⟩ := PrimeSpectrum.isTopologicalBasis_basic_opens.exists_subset_of_mem_open
+    (hV 0 h0 a0) hVopen
+  have hf0' : f.eval 0 ≠ 0 := (ev_mem_basicOpen 0 a0 f).mp hf0
+  have hfne : f ≠ 0 := by rintro rfl; simp at hf0'
+  have hgood : ∀ c, f.eval c ≠ 0 → InU c := fun c hc =>
+    hInU c ⟨a0, hfV ((ev_mem_basicOpen c a0 f).mpr hc)⟩
+  -- every `k`-point lies in `U`
+  have hall : ∀ c, InU c := by
+    intro c
+    have hfin : ({b | f.IsRoot b} ∪ {b | f.IsRoot (b - c)}).Finite := by
+      refine (Polynomial.finite_setOf_isRoot hfne).union ?_
+      have : {b | f.IsRoot (b - c)} = (fun x => x + c) '' {b | f.IsRoot b} := by
+        ext b
+        simp only [Set.mem_image, Set.mem_setOf_eq]
+        constructor
+        · intro hb; exact ⟨b - c, hb, sub_add_cancel b c⟩
+        · rintro ⟨x, hx, rfl⟩; simpa using hx
+      rw [this]; exact (Polynomial.finite_setOf_isRoot hfne).image _
+    obtain ⟨b, hb⟩ := hfin.exists_notMem
+    simp only [Set.mem_union, Set.mem_setOf_eq, Polynomial.IsRoot.def, not_or] at hb
+    exact hsub c b (hgood b hb.1) (hgood (b - c) hb.2)
+  -- hence `V` is everything
+  have hJ : JacobsonSpace (algPt k (Polynomial k)).left :=
+    LocallyOfFiniteType.jacobsonSpace (algPt k (Polynomial k)).hom
+  have hVc : Vᶜ = ∅ := by
+    have hcl : IsClosed Vᶜ := hVopen.isClosed_compl
+    have hemp : Vᶜ ∩ closedPoints _ = ∅ := by
+      ext x
+      simp only [Set.mem_inter_iff, Set.mem_compl_iff, Set.mem_empty_iff_false, iff_false, not_and, not_not]
+      intro hx hxc
+      obtain ⟨c, hc⟩ := closedPoint_eq_ev x hxc
+      exact hx (hc a0 ▸ hV c (hall c) a0)
+    rw [← hcl.closure_eq, ← JacobsonSpace.closure_inter_closedPoints_eq_closure hcl.isLocallyClosed, hemp,
+      closure_empty]
+  refine factor_openImm inc g ?_
+  rintro _ ⟨x, rfl⟩
+  have : x ∈ V := by
+    by_contra hx
+    have : x ∈ Vᶜ := hx
+    rw [hVc] at this
+    exact this
+  exact this
+
+end OpenSubgroup
+
 end GaRigidity

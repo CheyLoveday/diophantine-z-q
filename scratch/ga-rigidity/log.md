@@ -10,3 +10,4 @@
 - G1.lean (§0 defs IsGaHom/NoGaSubgroup, algPt calculus, Step (1) unit_additive_eq_one, gaHom_torus_trivial): compiles, no errors. VERIFIED.
 - GaR.lean §4 (valuative argument; gaHom_proper_point: a hom 𝔾_a → B, B proper group scheme over any field k, kills every k-point): compiles. VERIFIED.
 - GaR.lean §5-§6 (closedPoint_eq_ev, ext_of_points; gaHom_proper_trivial and gaHom_abVar_trivial = Step (2)): compiles. VERIFIED.
+- GaR.lean §7 (factor_openImm, gaHom_add, gaHom_factors_open: a hom 𝔾_a → G factors through every open subgroup U ⊆ G, k alg. closed): compiles. VERIFIED.
