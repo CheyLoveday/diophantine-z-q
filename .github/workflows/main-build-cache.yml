@@ -16,6 +16,8 @@ on:
       - 'lean-toolchain'
       - 'lean/lakefile.toml'
       - '.github/workflows/main-build-cache.yml'
+      # scratch/ is outside every build target.
+      - '!scratch/**'
   workflow_dispatch:
 
 permissions:
@@ -31,7 +33,7 @@ jobs:
     name: build and save
     runs-on: ubuntu-latest
     # Inside the 360-minute hosted limit. The build step stops at 320 minutes so the save step still runs, and
-    # a cold first build that does not finish saves its progress for the next run.
+    # a cold first build that does not finish saves its progress for the next run (or a re-run).
     timeout-minutes: 355
     steps:
       - name: Check out main
@@ -93,14 +95,16 @@ jobs:
         continue-on-error: true
         run: lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
 
+      # One entry per run, so a re-run of an unfinished build also saves its progress. The discharge check's
+      # restore matches by prefix and takes the newest.
       - name: Save the build of this commit
-        if: ${{ !cancelled() && steps.restore.outputs.cache-hit != 'true' }}
+        if: ${{ !cancelled() }}
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             .lake/build
             lean/.lake/build
-          key: zinq-build-v1-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lean/lakefile.toml') }}-${{ github.sha }}
+          key: zinq-build-v1-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lean/lakefile.toml') }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       # Saved even when the build stopped, so the next run continues from here; the job still reports the stop.
       - name: Report an unfinished build
