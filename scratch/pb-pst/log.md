@@ -29,3 +29,10 @@ Base: wip/pb-pst = origin/wip/leaf-fold33b 4dfb7e58 (75d94fe7 + main merge).
   `bergerPrintedV_of_T : BergerPrintedVT → BergerPrintedV`. Pitfalls: `Fintype.linearIndependent_iff` on the
   submodule `dB` and on `B ⊗ V` times out (instance paths); used `Basis.repr_sum_self`,
   `LinearIndependent.restrict_scalars` + `.of_comp dB.subtype`, and span via `Submodule.map_span`.
+- VERIFIED: `lake build +ZInQKernel.Contrib.OneProof.PanBergerPst +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`
+  succeeded (16074 jobs; build4.txt). `scratch/pb-pst/Axioms.lean` → axioms-output.txt: 15 declarations, all
+  [propext, Classical.choice, Quot.sound]. `#discharges` (discharges-output.txt): bergerPrintedV discharged by
+  bergerPrintedV_of_T (still assumes BergerPrintedVT) and by bergerPrintedV_of_t (BergerPrintedVt); panPrintedP by
+  panPrintedP_of_t (PanPrintedPt); "39 open hypotheses, 13438 theorems checked, 28 discharge one".
+  autofold dry run (autofold-dryrun.txt): strict 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22.
+  FoldDryRun (first line stripped; FoldDryRun.lean.txt) compiles; sixContactMin_of_open61 standard axioms.
