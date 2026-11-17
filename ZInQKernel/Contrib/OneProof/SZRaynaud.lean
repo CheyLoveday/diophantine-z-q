@@ -165,7 +165,7 @@ Galois-fixed `m`-torsion is rational (`[m]` étale, `mulEtaleAbelianScheme_proof
 theorem raynaudWildNF_of_leaves (hSZ : SilverbergZarhinThm35) (hE : ElliotWildInertiaTrivial)
     (hN : GapNeron.NeronSchemeModelExistsDVRNF) : RaynaudWildNF := by
   intro K _ _ O _ w hw A _ m hm hmO hrat σ hσ hwild ℓ hℓ hℓO n x hx
-  haveI : Fact ℓ.Prime := ⟨hℓ⟩
+  have : Fact ℓ.Prime := ⟨hℓ⟩
   let B := ObjBridge.ofGrp A
   have hF := ReductGlue.fixedTorsionRational_of_mulEtale
     ZInQ.Contrib.OneProof.MulEtale.mulEtaleAbelianScheme_proof

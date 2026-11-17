@@ -52,3 +52,4 @@
   scratch/sz-raynaud/dryrun.txt (OpenResearchLeaves43, sixContactMin_of_open61). VERIFIED (run).
 - Run 1's background build killed at TailH (06:29); build2 started: lake build SZRaynaud + OneProof.Main +
   OneProof.Discharges (scratch/sz-raynaud/build2.txt).
+- build2: ZInQKernel.Contrib.OneProof.SZRaynaud compiled (6.3s), only warning: haveI -> have style hint at :168 (fixed after). VERIFIED (compiled).
