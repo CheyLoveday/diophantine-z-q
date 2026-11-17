@@ -505,7 +505,7 @@ theorem kwFF8_specRbridge_of_kmfNat (hNat : KwFF8KmfEquivNaturality.{u}) :
           (kwFF8_asFiberOf f h hcomm x)).hom).comp e_hx.symm.toRingHom := by
     conv_lhs => rw [← RingHom.comp_id (algebraMap _ _),
       ← RingEquiv.toRingHom_comp_symm_toRingHom e_hx, ← RingHom.comp_assoc, hsq]
-    rfl
+    try rfl
   rw [hfact]
   exact (RingHom.Flat.of_bijective e_hx.symm.bijective).comp
     (hφ.comp (RingHom.Flat.of_bijective e_p.bijective))
