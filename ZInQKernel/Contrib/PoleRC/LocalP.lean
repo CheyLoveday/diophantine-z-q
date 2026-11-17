@@ -316,6 +316,109 @@ theorem qcls_eq_of_sqEq {u w : ℤ} (hu : Squarefree u) (hw : Squarefree w)
   · rw [if_neg h1, if_neg h2]
     exact Prod.ext rfl (lsym_eq_of_isSquare_mul h1 h2 hsq)
 
+theorem sqEq_one_add {t : ℚ_[q]} (hq2 : q ≠ 2) (h : ‖t‖ < 1) : SqEq (1 + t) 1 :=
+  sqEq_add_of_norm_lt hq2 (by rwa [norm_one])
+
+/-- **The local image at `q ∣ ℓ` in square classes**: `(a, b)` is one of the torsion classes
+`(1, 1)`, `(ℓ, 1)`, `(3, −ℓ)`, `(3ℓ, −ℓ)`. -/
+theorem locM_bad_classes (hq2 : q ≠ 2) (hq3 : q ≠ 3) {L A B : ℚ_[q]} (hL : ‖L‖ < 1)
+    (hL0 : L ≠ 0) (hvL : L.valuation = 1) (hA0 : A ≠ 0) (hB0 : B ≠ 0) (h : LocM ℚ_[q] L A B) :
+    (SqEq A 1 ∧ SqEq B 1) ∨ (SqEq A L ∧ SqEq B 1) ∨ (SqEq A 3 ∧ SqEq B (-L)) ∨
+      (SqEq A (3 * L) ∧ SqEq B (-L)) := by
+  have hn3 := padic_norm_three (p := q) hq3
+  have hn2 := padic_norm_two (p := q) hq2
+  have hn4 : ‖(4 : ℚ_[q])‖ = 1 := by
+    rw [show (4 : ℚ_[q]) = 2 * 2 by norm_num, norm_mul, hn2, one_mul]
+  have hn3L : ‖3 * L‖ = ‖L‖ := by rw [norm_mul, hn3, one_mul]
+  have h3 : (3 : ℚ_[q]) ≠ 0 := by norm_num
+  have hsqLL : ∀ {X : ℚ_[q]}, SqEq X (L * L) → SqEq X 1 := fun hX =>
+    hX.trans ⟨L, hL0, by ring⟩
+  rcases h with ⟨hsa, hsb⟩ | ⟨x, h₁, h₂, h₃⟩
+  · exact Or.inl ⟨(sqEq_iff_isSquare_mul hA0 one_ne_zero).mpr (by simpa),
+      (sqEq_iff_isSquare_mul hB0 one_ne_zero).mpr (by simpa)⟩
+  rcases locM_torsion hL0 hA0 hB0 h₁ h₂ h₃ with ⟨-, hb', hab'⟩ | ⟨-, ha', hab'⟩ | ⟨-, ha', hb'⟩ |
+    ⟨hx0, hxb, hxa, hxa', hxb', hxab⟩
+  · have ha' : SqEq A (-3 * L * -L) := sqEq_of_mul_sqEq hab' hb' (neg_ne_zero.mpr hL0)
+    exact Or.inr (Or.inr (Or.inl ⟨ha'.trans ⟨L, hL0, by ring⟩, hb'⟩))
+  · have hba : SqEq (B * A) L := by rw [mul_comm]; exact hab'
+    exact Or.inr (Or.inl ⟨ha', hsqLL (sqEq_of_mul_sqEq hba ha' hL0)⟩)
+  · exact Or.inr (Or.inr (Or.inr ⟨ha', hb'⟩))
+  rcases lt_trichotomy ‖x‖ ‖L‖ with hlt | heq | hgt
+  · have e₂ : SqEq (x - L) (-L) := by
+      rw [show x - L = -L + x by ring]; exact sqEq_add_of_norm_lt hq2 (by rwa [norm_neg])
+    have e₃ : SqEq (x + 3 * L) (3 * L) := by
+      rw [add_comm]; exact sqEq_add_of_norm_lt hq2 (by rwa [hn3L])
+    exact Or.inr (Or.inr (Or.inr ⟨hxa'.symm.trans e₃, hxb'.symm.trans e₂⟩))
+  · set t := x / L with ht
+    have hxt : x = L * t := by rw [ht]; field_simp
+    have hnt : ‖t‖ = 1 := by rw [ht, norm_div, heq, div_self (norm_ne_zero_iff.mpr hL0)]
+    have ht0 : t ≠ 0 := by intro h0; rw [h0, norm_zero] at hnt; exact zero_ne_one hnt
+    by_cases hm1 : ‖t - 1‖ < 1
+    · -- `x ≡ ℓ`
+      have et : SqEq t 1 := by
+        have := sqEq_one_add hq2 hm1; rwa [show 1 + (t - 1) = t by ring] at this
+      have et3 : SqEq (t + 3) 1 := by
+        have := sqEq_add_of_norm_lt hq2 (x := (4 : ℚ_[q])) (y := t - 1) (by rwa [hn4])
+        rw [show (4 : ℚ_[q]) + (t - 1) = t + 3 by ring] at this
+        exact this.trans ⟨2, two_ne_zero, by ring⟩
+      have hxL : SqEq x L := by
+        rw [hxt]; have := (SqEq.refl L).mul et; rwa [mul_one] at this
+      have hx3L : SqEq (x + 3 * L) L := by
+        rw [hxt, show L * t + 3 * L = L * (t + 3) by ring]
+        have := (SqEq.refl L).mul et3; rwa [mul_one] at this
+      have ha' : SqEq A L := hxa'.symm.trans hx3L
+      have hba : SqEq (B * A) L := by rw [mul_comm]; exact hxab.symm.trans hxL
+      exact Or.inr (Or.inl ⟨ha', hsqLL (sqEq_of_mul_sqEq hba ha' hL0)⟩)
+    by_cases hm3 : ‖t + 3‖ < 1
+    · -- `x ≡ −3ℓ`
+      have et : SqEq t (-3) := by
+        have := sqEq_add_of_norm_lt hq2 (x := (-3 : ℚ_[q])) (y := t + 3)
+          (by rwa [norm_neg, hn3])
+        rwa [show (-3 : ℚ_[q]) + (t + 3) = t by ring] at this
+      have et1 : SqEq (t - 1) (-1) := by
+        have := sqEq_add_of_norm_lt hq2 (x := (-4 : ℚ_[q])) (y := t + 3)
+          (by rwa [norm_neg, hn4])
+        rw [show (-4 : ℚ_[q]) + (t + 3) = t - 1 by ring] at this
+        exact this.trans ⟨2, two_ne_zero, by ring⟩
+      have hx3 : SqEq x (-3 * L) := by
+        rw [hxt]; have := (SqEq.refl L).mul et; rwa [show L * -3 = -3 * L by ring] at this
+      have hxmL : SqEq (x - L) (-L) := by
+        rw [hxt, show L * t - L = L * (t - 1) by ring]
+        have := (SqEq.refl L).mul et1; rwa [show L * -1 = -L by ring] at this
+      have hb' : SqEq B (-L) := hxb'.symm.trans hxmL
+      have ha' : SqEq A (-3 * L * -L) :=
+        sqEq_of_mul_sqEq (hxab.symm.trans hx3) hb' (neg_ne_zero.mpr hL0)
+      exact Or.inr (Or.inr (Or.inl ⟨ha'.trans ⟨L, hL0, by ring⟩, hb'⟩))
+    · -- both units: `x(x − ℓ)(x + 3ℓ) = ℓ³ · unit` is not a square
+      exfalso
+      have hle : ∀ c : ℚ_[q], ‖c‖ ≤ 1 → ‖t + c‖ ≤ 1 := fun c hc =>
+        (Padic.nonarchimedean _ _).trans (max_le hnt.le hc)
+      have hu1 : ‖t - 1‖ = 1 := le_antisymm (by
+        rw [sub_eq_add_neg]; exact hle _ (by rw [norm_neg, norm_one])) (not_lt.mp hm1)
+      have hu3 : ‖t + 3‖ = 1 := le_antisymm (hle _ hn3.le) (not_lt.mp hm3)
+      set u := t * (t - 1) * (t + 3)
+      have hnu : ‖u‖ = 1 := by simp only [u, norm_mul, hnt, hu1, hu3, mul_one]
+      have hu0 : u ≠ 0 := by intro h0; rw [h0, norm_zero] at hnu; exact zero_ne_one hnu
+      -- `x(x − ℓ)(x + 3ℓ) ≡ (ab)² ≡ 1`
+      have hprod : SqEq (x * (x - L) * (x + 3 * L)) 1 := by
+        have := (hxab.mul hxb').mul hxa'
+        refine this.trans ⟨A * B, mul_ne_zero hA0 hB0, by ring⟩
+      have hsq : IsSquare (L * u) := by
+        have hL2 : L * u * L ^ 2 = x * (x - L) * (x + 3 * L) := by rw [hxt]; simp only [u]; ring
+        rw [← isSquare_mul_sq_iff hL0, hL2]
+        obtain ⟨s, -, hs⟩ := hprod; exact ⟨s, by rw [hs]; ring⟩
+      have e := even_valuation_of_isSquare (mul_ne_zero hL0 hu0) hsq
+      rw [Padic.valuation_mul hL0 hu0, hvL, valuation_eq_zero_of_norm_one hnu] at e
+      exact absurd e (by decide)
+  · have e₂ : SqEq (x - L) x := by
+      rw [sub_eq_add_neg]; exact sqEq_add_of_norm_lt hq2 (by rwa [norm_neg])
+    have e₃ : SqEq (x + 3 * L) x := sqEq_add_of_norm_lt hq2 (by rwa [hn3L])
+    have hb' : SqEq B x := hxb'.symm.trans e₂
+    have hAx : SqEq A x := hxa'.symm.trans e₃
+    have hba : SqEq (B * A) x := by rw [mul_comm]; exact hxab.symm
+    have hb1 : SqEq B 1 := (sqEq_of_mul_sqEq hba hAx hx0).trans ⟨x, hx0, by ring⟩
+    exact Or.inl ⟨hAx.trans (hb'.symm.trans hb1), hb1⟩
+
 end Bad
 
 end ZInQ.Manuscript.PoleRC
