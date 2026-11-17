@@ -432,4 +432,79 @@ lemma fibre_injective {F N : Over (Spec (CommRingCat.of R))} [IsSeparated N.hom]
   rw [Scheme.fromSpecResidueField_apply, hz1, hz2] at this
   exact this.symm
 
+/-- **The group case.** `F` as in `NeronGoodModelIso`, `N` smooth, separated, quasi-compact with a group law
+whose identity is `e ≫ ψ`; if `ψ` is an isomorphism on generic fibres, it is an isomorphism. -/
+theorem isIso_of_grp (F N : Over (Spec (CommRingCat.of R))) (e : Spec (CommRingCat.of R) ⟶ F.left)
+    [IsProper F.hom] [Smooth F.hom] (he : e ≫ F.hom = 𝟙 _)
+    (hfib : ∀ (K : Type) [Field K] (s : Spec (CommRingCat.of K) ⟶ Spec (CommRingCat.of R)),
+      ∃ (A : PkgI3.AbVar K) (g : A.X.left ⟶ F.left), LeafQM.AV.R1UnivRigid.IsAbVarFibre F e s A g)
+    [Smooth N.hom] [IsSeparated N.hom] [QuasiCompact N.hom] [GrpObj N] (ψ : F ⟶ N)
+    (hη : e ≫ ψ.left = η[N].left)
+    (hK : IsIso ((Over.pullback (genMap R (FractionRing R))).map ψ)) : IsIso ψ := by
+  obtain ⟨V, v, hv, hVη, hVs, hB1, hB2⟩ := exists_inverse_open F N ψ hK
+  have hψN : ψ.left ≫ N.hom = F.hom := Over.w ψ
+  have hB1pt : ∀ r, ψ.left.base (v.base r) = V.ι.base r := fun r => by
+    rw [← Scheme.Hom.comp_apply, hB1]
+  have hψpt : ∀ x, N.hom.base (ψ.left.base x) = F.hom.base x := fun x => by
+    rw [← Scheme.Hom.comp_apply, hψN]
+  haveI : IsProper ψ.left := by
+    haveI : IsProper (ψ.left ≫ N.hom) := by rw [hψN]; infer_instance
+    exact IsProper.of_comp ψ.left N.hom
+  refine isIso_of_injective F N ψ V v hv hVη hVs hB1 hB2 ?_
+  -- the special fibre
+  let k := IsLocalRing.ResidueField R
+  obtain ⟨A, g, hpb, hone⟩ := hfib k (resMap R)
+  have hs : Function.Injective (pullback.fst N.hom (resMap R)).base := by
+    haveI : IsClosedImmersion (resMap R) :=
+      IsClosedImmersion.spec_of_surjective _ (IsLocalRing.residue_surjective)
+    exact (pullback.fst N.hom (resMap R)).isEmbedding.injective
+  have hlift : ∀ x : F.left, F.hom.base x = IsLocalRing.closedPoint R → ∃ a, g.base a = x := by
+    intro x hx
+    obtain ⟨z, hz1, -⟩ := Scheme.Pullback.exists_preimage_pullback (f := F.hom) (g := resMap R) x
+      (IsLocalRing.closedPoint _) (by rw [hx]; exact (resMap_apply _).symm)
+    exact ⟨hpb.isoPullback.inv.base z, by rw [← Scheme.Hom.comp_apply, hpb.isoPullback_inv_fst, hz1]⟩
+  -- a point of the special fibre mapping into `V`
+  have hW : ∃ a0 : A.X.left, ψ.left.base (g.base a0) ∈ V := by
+    let n0 : {x : N.left // N.hom.base x = IsLocalRing.closedPoint R} :=
+      ⟨η[N].left.base (IsLocalRing.closedPoint R), by
+        have := congrArg (fun f => f.base (IsLocalRing.closedPoint R)) (Over.w η[N])
+        exact this.trans rfl⟩
+    obtain ⟨Z, hZ, hnZ⟩ := exists_mem_irreducibleComponents_subset_of_isIrreducible {n0}
+      isIrreducible_singleton
+    obtain ⟨n, -, hnV⟩ := hVs Z hZ
+    -- `n` is in the closure of the generic fibre, hence in the closed image of `ψ`
+    have hcl : n.1 ∈ closure (Set.range ψ.left.base) := by
+      rw [mem_closure_iff]
+      intro o ho hno
+      have hopen : IsOpen (N.hom.base '' o) := N.hom.isOpenMap _ ho
+      let t0 : Spec (CommRingCat.of (FractionRing R)) := IsLocalRing.closedPoint _
+      have hgen : (genMap R (FractionRing R)).base t0 ∈ N.hom.base '' o :=
+        (IsLocalRing.specializes_closedPoint _).mem_open hopen ⟨n.1, hno, n.2⟩
+      obtain ⟨n', hn'o, hn'⟩ := hgen
+      have hn'V : n' ∈ V := hVη n' (by rw [hn']; exact genMap_ne_closedPoint _ _)
+      exact ⟨n', hn'o, ⟨v.base ⟨n', hn'V⟩, (hB1pt ⟨n', hn'V⟩).trans rfl⟩⟩
+    rw [ψ.left.isClosedMap.isClosed_range.closure_eq] at hcl
+    obtain ⟨x, hx⟩ := hcl
+    obtain ⟨a0, ha0⟩ := hlift x (by rw [← hψpt, hx]; exact n.2)
+    exact ⟨a0, by rw [ha0, hx]; exact hnV⟩
+  intro x1 x2 h12
+  by_cases hc : F.hom.base x1 = IsLocalRing.closedPoint R
+  · have hc2 : F.hom.base x2 = IsLocalRing.closedPoint R := by rw [← hψpt, ← h12, hψpt, hc]
+    obtain ⟨a1, rfl⟩ := hlift x1 hc
+    obtain ⟨a2, rfl⟩ := hlift x2 hc2
+    rw [fibre_injective ψ e hη A g hpb hone hs V v hB2 hW a1 a2 h12]
+  · -- the generic fibre: `v` inverts `ψ`
+    have hc2 : F.hom.base x2 ≠ IsLocalRing.closedPoint R := by rwa [← hψpt, ← h12, hψpt]
+    have m1 : x1 ∈ ψ.left ⁻¹ᵁ V := hVη _ (by rwa [hψpt])
+    have m2 : x2 ∈ ψ.left ⁻¹ᵁ V := hVη _ (by rwa [hψpt])
+    obtain ⟨y1, hy1⟩ : x1 ∈ Set.range (ψ.left ⁻¹ᵁ V).ι.base := by rw [Scheme.Opens.range_ι]; exact m1
+    obtain ⟨y2, hy2⟩ : x2 ∈ Set.range (ψ.left ⁻¹ᵁ V).ι.base := by rw [Scheme.Opens.range_ι]; exact m2
+    have key : ∀ y, v.base ((ψ.left ∣_ V).base y) = (ψ.left ⁻¹ᵁ V).ι.base y :=
+      fun y => by rw [← Scheme.Hom.comp_apply, hB2]
+    have hpt : ∀ y, V.ι.base ((ψ.left ∣_ V).base y) = ψ.left.base ((ψ.left ⁻¹ᵁ V).ι.base y) := fun y => by
+      rw [← Scheme.Hom.comp_apply, morphismRestrict_ι, Scheme.Hom.comp_apply]
+    have hr : (ψ.left ∣_ V).base y1 = (ψ.left ∣_ V).base y2 :=
+      V.ι.injective (by rw [hpt, hpt, hy1, hy2, h12])
+    rw [← hy1, ← hy2, ← key, ← key, hr]
+
 end ZInQ.Contrib.GoodModelIso
