@@ -1,6 +1,6 @@
 -- Task r17-rebase: name-clash check. Every top-level module under ZInQKernel/Contrib/ (one not imported by another
--- Contrib module; list scratch/r17-rebase/contrib-tops.txt from tops.py) on main c0f3d085 plus the new CarayolPrinted
--- (which imports NewformDict and CarayolLevel), imported together.
+-- Contrib module; list scratch/r17-rebase/contrib-tops.txt from tops.py) on main c0f3d085 plus the new CarayolPrintedIrr
+-- (which imports CarayolPrinted, NewformDict and CarayolLevel), imported together.
 import ZInQKernel.Contrib.AllContrib
 import ZInQKernel.Contrib.CloudB3W11AxCompletion.ProvedAxAdapter
 import ZInQKernel.Contrib.CloudB3W11TateTrace.CyclotomicBounds
@@ -133,7 +133,7 @@ import ZInQKernel.Contrib.OneProof.Abhyankar
 import ZInQKernel.Contrib.OneProof.AxSenTate
 import ZInQKernel.Contrib.OneProof.BFHGamma0
 import ZInQKernel.Contrib.OneProof.BabaGranathRationalAb
-import ZInQKernel.Contrib.OneProof.CarayolPrinted
+import ZInQKernel.Contrib.OneProof.CarayolPrintedIrr
 import ZInQKernel.Contrib.OneProof.DSThm966EV
 import ZInQKernel.Contrib.OneProof.DeligneComponentsY3Used
 import ZInQKernel.Contrib.OneProof.EGAIV_8_10_5_xii
@@ -246,4 +246,4 @@ import ZInQKernel.Contrib.OneProof.TateTwistInvariants
 import ZInQKernel.Contrib.OneProof.ThetaDirect
 import ZInQKernel.Contrib.OneProof.UniformizationLeafAll
 
-#print axioms CarayolPrinted.carayolR17'_of_printed
+#print axioms CarayolPrinted.carayolR17'_of_printedIrr

@@ -108,7 +108,8 @@ theorem adjoin_eq_top_of_irreducible_odd {ι : Type*} (M : ι → Matrix (Fin 2)
     simp
   have hfe : f * e = 0 := by
     rw [hedef, hfdef, smul_mul_smul_comm, sub_mul, one_mul, mul_add, mul_one, hCC]
-    simp
+    have h0 : (1 + C - (C + 1) : Matrix (Fin 2) (Fin 2) K) = 0 := by abel
+    rw [h0, smul_zero]
   have hdet1 : (1 : Matrix (Fin 2) (Fin 2) K).det ≠ -1 := by
     rw [Matrix.det_one]
     intro h
@@ -154,9 +155,8 @@ theorem adjoin_eq_top_of_irreducible_odd {ι : Type*} (M : ι → Matrix (Fin 2)
   have hli : LinearIndependent K v := by
     rw [Fintype.linearIndependent_iff]
     intro g hg
-    rw [Fin.sum_univ_four] at hg
-    simp only [v, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
-      Matrix.cons_val_three, Matrix.head_cons] at hg
+    have hg : g 0 • e + g 1 • f + g 2 • x + g 3 • y = 0 := by
+      simpa [Fin.sum_univ_four, v] using hg
     have k1 := congrArg (fun X => e * X * e) hg
     have k2 := congrArg (fun X => f * X * f) hg
     have k3 := congrArg (fun X => e * X * f) hg
@@ -167,10 +167,10 @@ theorem adjoin_eq_top_of_irreducible_odd {ι : Type*} (M : ι → Matrix (Fin 2)
     have hy' : f * (b * e) ≠ 0 := by rw [← mul_assoc]; exact hb
     intro i
     fin_cases i
-    · exact (smul_eq_zero.mp k1).resolve_right he0
-    · exact (smul_eq_zero.mp k2).resolve_right hf0
-    · exact (smul_eq_zero.mp k3).resolve_right hx'
-    · exact (smul_eq_zero.mp k4).resolve_right hy'
+    · simpa using (smul_eq_zero.mp k1).resolve_right he0
+    · simpa using (smul_eq_zero.mp k2).resolve_right hf0
+    · simpa using (smul_eq_zero.mp k3).resolve_right hx'
+    · simpa using (smul_eq_zero.mp k4).resolve_right hy'
   have hspan : Submodule.span K (Set.range v) ≤ Subalgebra.toSubmodule A := by
     rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
@@ -182,8 +182,8 @@ theorem adjoin_eq_top_of_irreducible_odd {ι : Type*} (M : ι → Matrix (Fin 2)
   have h4 : Module.finrank K (Submodule.span K (Set.range v)) = 4 := by
     rw [finrank_span_eq_card hli, Fintype.card_fin]
   have hM : Module.finrank K (Matrix (Fin 2) (Fin 2) K) = 4 := by
-    rw [Module.finrank_matrix, Fintype.card_fin]
-  rw [← Subalgebra.toSubmodule_eq_top]
+    rw [Module.finrank_matrix, Fintype.card_fin, Module.finrank_self]
+  rw [← Algebra.toSubmodule_eq_top]
   apply Submodule.eq_top_of_finrank_eq
   apply le_antisymm (Submodule.finrank_le _)
   rw [hM, ← h4]
@@ -251,15 +251,15 @@ theorem carayolThmA_of_irr (h : CarayolThmAIrr) : CarayolThmA := by
   intro N _ f _ ℓ _ lam hlam
   obtain ⟨ρ, hc, hirr, ⟨c, hcc, hdet⟩, hatt, hcond⟩ := h N f ℓ lam hlam
   refine ⟨ρ, hc, ?_, hatt, hcond⟩
-  set K := DSCoeffExt.coeffField (f.toCuspForm : CF N 2)
-  have h2 : (2 : lam.adicCompletion K) ≠ 0 := by
-    have : (2 : lam.adicCompletion K) = algebraMap K (lam.adicCompletion K) 2 := by
+  have h2 : (2 : lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) ≠ 0 := by
+    have : (2 : lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) =
+        algebraMap (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))
+          (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))) 2 := by
       rw [map_ofNat]
     rw [this]
-    exact (map_ne_zero_iff _ (algebraMap K (lam.adicCompletion K)).injective).mpr two_ne_zero
-  refine adjoin_eq_top_of_irreducible_odd
-    (fun σ => (ρ σ : Matrix (Fin 2) (Fin 2) (lam.adicCompletion K))) h2 hirr
-    (ρ c : Matrix (Fin 2) (Fin 2) (lam.adicCompletion K)) (Algebra.subset_adjoin ⟨c, rfl⟩) ?_ hdet
+    exact (map_ne_zero_iff _ (algebraMap (DSCoeffExt.coeffField (f.toCuspForm : CF N 2))
+      (lam.adicCompletion (DSCoeffExt.coeffField (f.toCuspForm : CF N 2)))).injective).mpr two_ne_zero
+  refine adjoin_eq_top_of_irreducible_odd _ h2 hirr _ (Algebra.subset_adjoin ⟨c, rfl⟩) ?_ hdet
   rw [← Units.val_mul, ← map_mul, hcc, map_one, Units.val_one]
 
 /-- **`r17` from Carayol's Théorème (A) with Ribet's irreducibility and oddness (printed form) and the

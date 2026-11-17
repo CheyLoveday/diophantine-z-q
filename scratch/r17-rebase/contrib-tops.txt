@@ -130,7 +130,7 @@ ZInQKernel.Contrib.OneProof.Abhyankar
 ZInQKernel.Contrib.OneProof.AxSenTate
 ZInQKernel.Contrib.OneProof.BFHGamma0
 ZInQKernel.Contrib.OneProof.BabaGranathRationalAb
-ZInQKernel.Contrib.OneProof.CarayolPrinted
+ZInQKernel.Contrib.OneProof.CarayolPrintedIrr
 ZInQKernel.Contrib.OneProof.DSThm966EV
 ZInQKernel.Contrib.OneProof.DeligneComponentsY3Used
 ZInQKernel.Contrib.OneProof.EGAIV_8_10_5_xii
