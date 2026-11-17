@@ -1,0 +1,26 @@
+scratch/pb-p1/FontaineSt.lean:222:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+scratch/pb-p1/FontaineSt.lean:223:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+scratch/pb-p1/FontaineSt.lean:636:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+'HDec.PkgI4.PanDict.bergerPrintedV_of_survey' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.PanDict.panBerger_of_F' depends on axioms: [propext, Classical.choice, Quot.sound]

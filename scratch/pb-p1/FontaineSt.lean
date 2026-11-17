@@ -219,8 +219,8 @@ image in `B_dR ⊗ V`. -/
 theorem isAdmissibleT_mono {B B' : Subalgebra ℚ_[p] (BdR p)} (hBB' : B ≤ B') (H : Subgroup (GQp p))
     (ρ : GQp p →* GL (Fin n) E) (h : IsAdmissibleT p B H ρ) : IsAdmissibleT p B' H ρ := by
   obtain ⟨ι, b, hb⟩ := h
-  letI : Algebra B B' := (Subalgebra.inclusion hBB').toRingHom.toAlgebra
-  haveI : IsScalarTower ℚ_[p] B B' := IsScalarTower.of_algebraMap_eq fun c => by
+  let _ : Algebra B B' := (Subalgebra.inclusion hBB').toRingHom.toAlgebra
+  have : IsScalarTower ℚ_[p] B B' := IsScalarTower.of_algebraMap_eq fun c => by
     apply Subtype.ext
     rfl
   let e := TensorProduct.AlgebraTensorModule.cancelBaseChange ℚ_[p] B B' B' (Fin n → E)
@@ -229,14 +229,13 @@ theorem isAdmissibleT_mono {B B' : Subalgebra ℚ_[p] (BdR p)} (hBB' : B ≤ B')
       inclT p B' (e ((1 : B') ⊗ₜ[B] x)) = inclT p B x := by
     intro x
     induction x using TensorProduct.inductionOn with
-    | zero => rw [TensorProduct.tmul_zero, map_zero, map_zero, map_zero]
     | tmul c v =>
       rw [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul, inclT_tmul, inclT_tmul]
       congr 1
       change ((c • (1 : B') : B') : BdR p) = (c : BdR p)
       rw [Algebra.smul_def, mul_one]
       rfl
-    | add x y hx hy => rw [TensorProduct.tmul_add, map_add, map_add, hx, hy, map_add]
+    | add x y hx hy => rw [TensorProduct.tmul_add, LinearEquiv.map_add, map_add, hx, hy, map_add]
   rw [Basis.map_apply, Basis.baseChange_apply, key]
   exact hb i
 
@@ -292,6 +291,191 @@ theorem eps0_spec : IsGenEps p (eps0 p) := Classical.choose_spec (exists_isGenEp
 abbrev LocalIsPstF0 (n : ℕ) (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) : Prop :=
   LocalIsPstF p (eps0_spec p) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p) n ρ
 
+/-! ## §7. Fontaine's `B_st` is `G_{ℚ_p}`-stable (at the generator `ξ`) -/
+
+section Stable
+
+open PanBergerSplit (locAct flatAct)
+
+theorem pow_dvd_factorial_mul (k : ℕ) : p ^ k ∣ (p * k).factorial := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    have h1 : (p * (k + 1)).factorial = (p * k + p) * (p * k + p - 1).factorial := by
+      have : p * (k + 1) = (p * k + p - 1) + 1 := by have := hp.out.pos; rw [mul_add, mul_one]; omega
+      rw [this, Nat.factorial_succ, ← this, mul_add, mul_one]
+    have h2 : (p * k).factorial ∣ (p * k + p - 1).factorial :=
+      Nat.factorial_dvd_factorial (by have := hp.out.pos; omega)
+    rw [h1, pow_succ, mul_comm (p ^ k) p]
+    exact Nat.mul_dvd_mul ⟨k + 1, by ring⟩ (dvd_trans ih h2)
+
+/-- **`log [ε] ∈ A_cris`** for `ε^♯ = 1`: `[ε] − 1 = ξ c` and `([ε] − 1)^n/n = (n − 1)! c^n ξ^n/n!`. -/
+theorem logTeich_mem_acris {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε = 1) :
+    logTeich p h ∈ AcrisOf p (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p) := by
+  have hk : WittVector.teichmuller p ε - 1 ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) :=
+    PanBergerSplit.theta_teich_sub_one p h
+  rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp, Ideal.mem_span_singleton'] at hk
+  obtain ⟨c, hc⟩ := hk
+  let f : (Ainf p)⟦X⟧ := PowerSeries.mk fun n =>
+    if n = 0 then 0 else (-1) ^ (n + 1) * ((n - 1).factorial : Ainf p) * c ^ n
+  have hf : f ∈ restricted p := fun k => ⟨p * k + 1, fun n hn => by
+    change (p : Ainf p) ^ k ∣ PowerSeries.coeff n f
+    rw [PowerSeries.coeff_mk, ite_eq_right (by omega)]
+    have hd : p ^ k ∣ (n - 1).factorial :=
+      dvd_trans (pow_dvd_factorial_mul p k) (Nat.factorial_dvd_factorial (by omega))
+    obtain ⟨d, hd⟩ := hd
+    refine Dvd.dvd.mul_right (Dvd.dvd.mul_left ⟨(d : Ainf p), ?_⟩ _) _
+    rw [hd, Nat.cast_mul, Nat.cast_pow]⟩
+  refine ⟨f, hf, ?_⟩
+  rw [logTeich, logPlus]
+  apply psEval_eq_of_terms
+  intro n
+  simp only [dpSeries, logSeries, f, PowerSeries.coeff_mk]
+  by_cases hn : n = 0
+  · simp [hn]
+  · rw [ite_eq_right hn, ite_eq_right hn, ← hc]
+    have key : qpToLoc p ((n : ℚ_[p]))⁻¹ =
+        qpToLoc p (((n - 1).factorial : ℕ) : ℚ_[p]) * qpToLoc p ((n.factorial : ℕ) : ℚ_[p])⁻¹ := by
+      rw [← map_mul]
+      congr 1
+      have hn1 : n = (n - 1) + 1 := by omega
+      have hf0 : ((n - 1).factorial : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)
+      have hn0 : (n : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hn
+      conv_rhs => rw [hn1, Nat.factorial_succ, ← hn1]
+      push_cast
+      field_simp
+    rw [key]
+    simp only [map_mul, map_pow, map_neg, map_one, map_natCast]
+    ring
+
+/-- `1/log [ε] ∈ B` for every `ℚ_p`-subalgebra `B ⊆ B_dR` containing `1/t` (`log [ε] = a t`, `a ∈ ℤ_p ∖ 0`). -/
+theorem tInv_mem_of {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (B : Subalgebra ℚ_[p] (BdR p))
+    (hB : Ring.inverse (tOf p h) ∈ B) {z : BdR p} (hz : z ∈ tInvSet p) : z ∈ B := by
+  obtain ⟨ε, hε, hne, rfl⟩ := hz
+  obtain ⟨a, ha⟩ := logTeich_eq_mul p h hε
+  set q : ℚ_[p] := algebraMap ℤ_[p] ℚ_[p] a with hqdef
+  have hq : q ≠ 0 := by
+    intro hq0
+    have ha0 : a = 0 := by
+      rw [hqdef] at hq0
+      exact PadicInt.coe_eq_zero.mp hq0
+    apply logTeich_ne_zero p hε hne
+    rw [ha, ha0, map_zero, zero_mul]
+  have e : toBdR p (logTeich p hε) = algebraMap ℚ_[p] (BdR p) q * tOf p h := by
+    rw [ha, map_mul, toBdR_zpB]
+    rfl
+  rw [e, Ring.mul_inverse_rev' (Commute.all _ _)]
+  have hu : IsUnit (algebraMap ℚ_[p] (BdR p) q) := (IsUnit.mk0 q hq).map _
+  have h1 : algebraMap ℚ_[p] (BdR p) q * algebraMap ℚ_[p] (BdR p) q⁻¹ = 1 := by
+    rw [← map_mul, mul_inv_cancel₀ hq, map_one]
+  have hinv : Ring.inverse (algebraMap ℚ_[p] (BdR p) q) = algebraMap ℚ_[p] (BdR p) q⁻¹ :=
+    calc Ring.inverse (algebraMap ℚ_[p] (BdR p) q)
+        = Ring.inverse (algebraMap ℚ_[p] (BdR p) q) *
+            (algebraMap ℚ_[p] (BdR p) q * algebraMap ℚ_[p] (BdR p) q⁻¹) := by rw [h1, mul_one]
+      _ = _ := by rw [← mul_assoc, Ring.inverse_mul_cancel _ hu, one_mul]
+  rw [hinv]
+  exact Subalgebra.mul_mem _ hB (Subalgebra.algebraMap_mem _ _)
+
+/-- **`A_cris` is `G_{ℚ_p}`-stable**: `σ(Σ a_n ξ^n/n!) = Σ σ(a_n) c^n ξ^n/n!`, `σ(ξ) = ξ c`. -/
+theorem bdrAct_acris (σ : GQp p) {y : BDeRhamPlus 𝓞_ℂ_[p] p}
+    (hy : y ∈ AcrisOf p (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p)) :
+    ∃ y' ∈ AcrisOf p (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p),
+      bdrAct p σ (toBdR p y) = toBdR p y' := by
+  obtain ⟨f, hf, rfl⟩ := hy
+  obtain ⟨c, hc⟩ := wittMap_xi_mem p σ
+  refine ⟨_, ⟨PowerSeries.rescale c (PowerSeries.map (WittVector.map (flatAct p σ)) f),
+    restricted_rescale p c (restricted_map p _ hf), rfl⟩, ?_⟩
+  rw [bdrAct_evalB]
+  congr 1
+  apply psEval_eq_of_terms
+  intro k
+  simp only [dpSeries, PowerSeries.coeff_map, PowerSeries.coeff_mk, PowerSeries.coeff_rescale]
+  rw [map_mul, PanBergerSplit.locAct_algebraMap, PanBergerSplit.locAct_qpToLoc,
+    PanBergerSplit.locAct_algebraMap, hc, map_mul, map_mul, map_pow]
+  ring
+
+/-- **Fontaine's `B_st` is `G_{ℚ_p}`-stable** (at `ξ`; `A_cris` does not depend on the generator). -/
+theorem bstF_stable {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (σ : GQp p) (x : BdR p)
+    (hx : x ∈ BstFOf p h (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p)) :
+    bdrAct p σ x ∈ BstFOf p h (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p) := by
+  have hle : BstFOf p h (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p) ≤
+      (BstFOf p h (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p)).comap (bdrAlg p σ) := by
+    rw [BstFOf, Algebra.adjoin_le_iff]
+    intro z hz
+    rw [SetLike.mem_coe, Subalgebra.mem_comap, bdrAlg_apply]
+    rcases hz with (⟨y, hy, rfl⟩ | hz) | hz
+    · obtain ⟨y', hy', he⟩ := bdrAct_acris p σ hy
+      rw [he]
+      exact Algebra.subset_adjoin (Or.inl (Or.inl ⟨y', hy', rfl⟩))
+    · rw [Set.mem_singleton_iff] at hz
+      rw [hz]
+      refine tInv_mem_of p h _ (Algebra.subset_adjoin (Or.inl (Or.inr rfl))) ?_
+      exact tInvSet_stable p σ ⟨ε₀, h.1, ne_one_of_isGenEps p h, rfl⟩
+    · rw [Set.mem_singleton_iff] at hz
+      rw [hz]
+      obtain ⟨u, hu, hu1⟩ := exists_uSigma p σ
+      rw [bdrAct_logPTilde p σ hu hu1]
+      exact Subalgebra.add_mem _ (Algebra.subset_adjoin (Or.inl (Or.inl
+        ⟨_, logTeich_mem_acris p hu1, rfl⟩))) (Algebra.subset_adjoin (Or.inr rfl))
+  exact hle hx
+
+/-- In Pan's leaf the basis form is asked: it implies Fontaine's dimension form `dim_{B_st^{G_K}} D_st = dim V`
+(`isAdmissible_of_T`, `B_st` being `G_{ℚ_p}`-stable), so the hypothesis is at least as strong as the print's. -/
+theorem isAdmissible_of_pstF {E' : Type*} [Field E'] [Algebra ℚ_[p] E'] [FiniteDimensional ℚ_[p] E'] {n : ℕ}
+    {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E')
+    (hT : IsAdmissibleT p (BstFOf p h (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p)) H ρ) :
+    IsAdmissible p (BstFOf p h (ZInQ.Contrib.G9.BdrKer.Cp.xi p) (theta_xi' p)) H ρ :=
+  isAdmissible_of_T p _ (bstF_stable p h) H ρ hT
+
+end Stable
+
+/-! ## §8. B1, algebraic half: `B_max[ℓ] = B_max[log [p̃]]` once `(p−1)ℓ − p(c + log [p̃]) ∈ B_max^+`
+
+Berger's `log [π̄]` (arXiv:math/0102179v3 §1.2 p. 11) would satisfy `(p − 1) log [π̄] = p (log p + log [p̃]) + log [u]`
+with `u = π̄^{p−1}/p̃^p ∈ (𝓞_ℂ_p♭)^×` and `log [u] ∈ B_max^+` (Prop. 2.23's proof). The analytic half (a Lean
+definition of `log [π̄]`, which needs a `p`-adic logarithm on `A_max`) is not formalized; this is the algebra. -/
+
+theorem bmax_adjoin_eq_bst (ℓ : BdR p) (c : ℚ_[p])
+    (hℓ : ((p : ℚ_[p]) - 1) • ℓ - (p : ℚ_[p]) • (algebraMap ℚ_[p] (BdR p) c + toBdR p (logPTilde p)) ∈
+      BmaxPlus p) :
+    Algebra.adjoin ℚ_[p] ((Bmax p : Set (BdR p)) ∪ {ℓ}) = Bst p := by
+  have hp1 : ((p : ℚ_[p]) - 1) ≠ 0 := by
+    have e1 : ((p : ℚ_[p]) - 1) = ((p - 1 : ℕ) : ℚ_[p]) := by
+      rw [Nat.cast_sub hp.out.one_le, Nat.cast_one]
+    rw [e1]
+    exact Nat.cast_ne_zero.mpr (by have := hp.out.two_le; omega)
+  have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
+  set m := ((p : ℚ_[p]) - 1) • ℓ - (p : ℚ_[p]) • (algebraMap ℚ_[p] (BdR p) c + toBdR p (logPTilde p))
+    with hm
+  apply le_antisymm
+  · rw [Algebra.adjoin_le_iff]
+    rintro x (hx | hx)
+    · exact bmax_le_bst p hx
+    · rw [Set.mem_singleton_iff.mp hx]
+      have hℓeq : ℓ = ((p : ℚ_[p]) - 1)⁻¹ •
+          (m + (p : ℚ_[p]) • (algebraMap ℚ_[p] (BdR p) c + toBdR p (logPTilde p))) := by
+        rw [hm, sub_add_cancel, smul_smul, inv_mul_cancel₀ hp1, one_smul]
+      rw [hℓeq]
+      refine Subalgebra.smul_mem _ (Subalgebra.add_mem _ (bmax_le_bst p (bmaxPlus_le_bmax p hℓ))
+        (Subalgebra.smul_mem _ (Subalgebra.add_mem _ (Subalgebra.algebraMap_mem _ c)
+          (logPTilde_mem_bst p)) _)) _
+  · rw [Bst, Algebra.adjoin_le_iff]
+    have hB : ((Bmax p : Set (BdR p))) ⊆ Algebra.adjoin ℚ_[p] ((Bmax p : Set (BdR p)) ∪ {ℓ}) :=
+      fun x hx => Algebra.subset_adjoin (Or.inl hx)
+    rintro x ((hx | hx) | hx)
+    · exact hB (Algebra.subset_adjoin (Or.inl hx))
+    · exact hB (Algebra.subset_adjoin (Or.inr hx))
+    · rw [Set.mem_singleton_iff.mp hx]
+      have hL : toBdR p (logPTilde p) = (p : ℚ_[p])⁻¹ • (((p : ℚ_[p]) - 1) • ℓ - m) -
+          algebraMap ℚ_[p] (BdR p) c := by
+        rw [hm, sub_sub_cancel, smul_smul, inv_mul_cancel₀ hp0, one_smul, add_sub_cancel_left]
+      rw [hL]
+      have hℓmem : ℓ ∈ Algebra.adjoin ℚ_[p] ((Bmax p : Set (BdR p)) ∪ {ℓ}) :=
+        Algebra.subset_adjoin (Set.mem_union_right _ (Set.mem_singleton ℓ))
+      refine Subalgebra.sub_mem _ (Subalgebra.smul_mem _ (Subalgebra.sub_mem _
+        (Subalgebra.smul_mem _ hℓmem _)
+        (hB (bmaxPlus_le_bmax p hℓ))) _) (Subalgebra.algebraMap_mem _ c)
+
 end FontaineSt
 
 namespace PanDict
@@ -327,8 +511,8 @@ def BergerSurveyF : Prop :=
 (`B_st^{Fontaine} ⊆ B_st^{tree}`, `isPstT_of_F`; `ξ` generates `ker θ`). -/
 theorem bergerPrintedVT_of_survey (hB : BergerSurveyF) : BergerPrintedVT := by
   intro p _ ε₀ h n E _ ρE hc hdr
-  exact isPstT_of_F p h (theta_xi' p) ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp ρE
-    (hB p ε₀ h _ (theta_xi' p) ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp n E ρE hc hdr)
+  exact isPstT_of_F p h (theta_xi' p) (ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp p) ρE
+    (hB p ε₀ h _ (theta_xi' p) (ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp p) n E ρE hc hdr)
 
 /-- **The current field `bergerPrintedV` from Berger's theorem over Fontaine's `B_st`.** -/
 theorem bergerPrintedV_of_survey (hB : BergerSurveyF) : BergerPrintedV :=
@@ -366,7 +550,7 @@ theorem panPrintedB_F_of_printedF (hP : PanPrintedF) :
           (ρ.mat σ⁻¹).trace = (ψ.toHom σ⁻¹ : PadicAlgCl p) * ιp.symm (coeff g q) := by
   intro p _ hp ιp ρ hirr hfr hpst hodd hht
   obtain ⟨N, _, k, g, ρg, ψ, ⟨S, hatt⟩, htw⟩ := hP p hp (eps0 p) (eps0_spec p) _ (theta_xi' p)
-    ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp ιp ρ (isIrreducibleP_of ρ hirr) hfr hpst hodd
+    (ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp p) ιp ρ (isIrreducibleP_of ρ hirr) hfr hpst hodd
     ((localDistinctHTP_iff p _).mpr hht)
   obtain ⟨M, χ, g', hM, hk, hg', hcoef⟩ := exists_normalized_of_eigenform g
   refine ⟨M, k, χ, g', hM, hk, hg', ψ, S ∪ Finset.range (N + 1), fun q hq hqS v σ hv hσ => ?_⟩
@@ -384,7 +568,7 @@ theorem bergerB_F_of_survey (hB : BergerSurveyF) :
   intro p _ n ρ hρ hdr
   obtain ⟨E, hE, ρE, hmod, hdrE⟩ := hdr
   exact ⟨E, hE, ρE, hmod, hB p (eps0 p) (eps0_spec p) _ (theta_xi' p)
-    ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp n E ρE (continuous_model hmod hρ) hdrE⟩
+    (ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp p) n E ρE (continuous_model hmod hρ) hdrE⟩
 
 /-- **`r11r12 : PanBerger` from Pan's and Berger's theorems, both over Fontaine's `B_st`**, and the current
 bundle's Diamond–Shurman 9.6.5 / Deligne–Serre fields: bst-construct's `panBerger_of_printedB` verbatim with
@@ -449,10 +633,10 @@ def BmaxStToFontaine : Prop :=
 theorem panPrintedP_of_F (hP : PanPrintedF) (hC : BmaxStToFontaine) : PanPrintedP := by
   intro p _ hp ιp ρ hirr hfr hpst hodd hht
   obtain ⟨E, hE, ρE, hmod, hpstE⟩ := hpst
-  haveI := hE
-  exact hP p hp (eps0 p) (eps0_spec p) _ (theta_xi' p) ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp ιp ρ
+  have := hE
+  exact hP p hp (eps0 p) (eps0_spec p) _ (theta_xi' p) (ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp p) ιp ρ
     hirr hfr ⟨E, hE, ρE, hmod, hC p (eps0 p) (eps0_spec p) _ (theta_xi' p)
-      ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp 2 E ρE hpstE⟩ hodd hht
+      (ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp p) 2 E ρE hpstE⟩ hodd hht
 
 end PanDict
 end PkgI4
