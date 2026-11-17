@@ -1,0 +1,64 @@
+scratch/chevalley-free/fold/MainCheck.lean:616:10: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+scratch/chevalley-free/fold/MainCheck.lean:617:10: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+scratch/chevalley-free/fold/MainCheck.lean:642:21: warning: This simp argument is unused:
+  Function.update_of_ne hij
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+scratch/chevalley-free/fold/MainCheck.lean:806:37: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+scratch/chevalley-free/fold/MainCheck.lean:1757:31: warning: This simp argument is unused:
+  Category.id_comp
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [NatTrans.comp_app, Functor.const_map_app, t, Cb, a,
+    JacobianChallenge.baseChangeDiagramStructure_app, JacobianChallenge.baseChangeCone_π_app, pullback.lift_fst_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+scratch/chevalley-free/fold/MainCheck.lean:1779:26: warning: This simp argument is unused:
+  hD
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [jU, stageMap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+scratch/chevalley-free/fold/MainCheck.lean:1802:12: warning: This simp argument is unused:
+  rr
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'ZInQ.ChevFree.rig_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.torus_kernel_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.kbar_KI' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.algclosed_KI' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.KI_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.cong_of_faithful' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.finite_affine_of_grp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.Ecomp_left_rr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.isMonHom_Ecomp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.isPullback_π'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.fsd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.semiAbelianDescendsPerfect_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.bostLowerBound_of_printed_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.ChevFree.gaudronRemondThm14_of_printed_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open58' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.OneProof.frozenTarget_chevFree' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+real	0m24.353s
+user	0m42.801s
+sys	0m3.446s

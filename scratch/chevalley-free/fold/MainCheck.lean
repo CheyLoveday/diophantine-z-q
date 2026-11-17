@@ -37,7 +37,35 @@ import ZInQKernel.Contrib.OneProof.TYZProp23Printed
 import ZInQKernel.Contrib.OneProof.ShimuraMainCM
 import ZInQKernel.Contrib.OneProof.TYZLcalOne
 
-/-! # chevalley-free, step R: morphisms from `𝔾_m` to an abelian variety are constant -/
+/-! # chevalley-free: `SemiAbelianDescendsPerfect` without Chevalley's theorem
+
+The research field `chevalleyPerfect` (`ZInQ.SemiAbDescend.ChevalleyPerfect`, Chevalley's structure theorem over a
+perfect field, semiab-descend) was used only through `semiAbelianDescendsPerfect_of_chevalley`, and there only for
+the descent of a semi-abelian presentation `π' : (G⁰)_{k̄} → B'` (kernel a split torus) to `k`. This file proves
+that descent outright, so `ZInQ.HeightFix.SemiAbelianDescendsPerfect` becomes a theorem
+(`semiAbelianDescendsPerfect_proof`, standard axioms) and the field can be removed with no new leaf.
+
+* **Descent** (`exists_descent`): for `q : S' → S` finite, flat, surjective, of finite presentation, an fpqc
+  `π₁ : U_{S'} → X₁` whose fibres are stable under the transport of points of `U_{S'}` (`KI`), and finite sets of
+  `X₁` in affine opens, `X₁` descends to `B₀` and `π₁` to `π : U → B₀`. The descent datum is
+  `ψ : X₁ ×_S S' → X₁`, `(π₁(u, a), b) ↦ π₁(u, b)`, built by effective-epi descent; effectivity is the vendored
+  `isEffective_of_isFinite` (CloudW07).
+* **Rigidity** (`torus1_const`, `torusR_const`): a morphism from a split torus over any field `K` to an abelian
+  variety over `K` is constant on `K`-points (the overlap `𝔾_m` of the vendored relative `ℙ¹`, the vendored
+  valuative extension and `RationalCurves.eq_zero_comp`).
+* **Transport condition** (`kbar_KI`, `algclosed_KI`, `field_KI`, `KI_of`): from rigidity, for a finite-stage model
+  `(X₁, π₁, c)` of `(B', π')` over a finite subextension `k₁ ⊆ k̄` (field tests on a smooth universal source).
+* **Group laws** (`exists_grpObj`, `cong_of_faithful`): a group structure through an fpqc quotient map, the
+  congruence condition from a faithful monoidal base change.
+* **Finite stage** (`spread`): `(B', π')` is defined over a finite subextension (vendored
+  `exists_finiteSubext_isPullback`, Mathlib `exists_π_app_comp_eq_of_locallyOfFinitePresentation`).
+* **Assembly** (`fsd`, `quotientDescendsPerfect_proof`, `semiAbelianDescendsPerfect_of_qd`): the last is
+  semiab-descend's `semiAbelianDescendsPerfect_of_chevalley` with its step (e) replaced.
+
+The lemmas `fieldMap_fpqc'`, `exists_commonField'`, `geometricallyIrreducible_of_field_pullback'`,
+`isProper_of_field_pullback'`, `smooth_of_field_pullback'` are copies of private lemmas of the vendored
+`ZInQKernel/Contrib/CloudW07JacobiansCurves/Jacobian/AlgebraicGeometry/Picard/FieldDescent.lean` (frenzymath/Jacobian-
+Challenge, Apache-2.0, Axel Delaval, Jie Xu and Shitan Xu; see the LICENSE and NOTICE in that directory). -/
 
 noncomputable section
 
