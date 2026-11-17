@@ -27,14 +27,11 @@ run_cmd do
         if let some v := fcValue? ci then todo := todo ++ v.getUsedConstants
     return seen
   let checked : List Name := [`sorryAx,
-    -- removed (must be false)
-    `ZInQ.SemistabAssembly.BostLowerBoundAnSS, `ZInQ.R3Residual.BostLowerBoundAn, `ZInQ.HeightFix.BostLowerBoundPrinted,
-    `ZInQ.HeightSplit.BostLowerBound, `ZInQ.SemistabAssembly.bostLowerBoundAn_of_ss,
-    `ZInQ.ChevFree.bostLowerBound_of_printed_free, `HDec.HSyn.OpenResearchLeaves53, `HDec.HSyn.sixContactMin_of_open72,
-    -- the replacement route (must be true)
-    `ZInQ.BostGR9.GaudronRemondSec9LowerAnSS, `ZInQ.BostGR9.gaudronRemondSec9LowerAn_of_ss,
-    `ZInQ.BostGR9.sec9Printed_of_an, `ZInQ.BostGR9.grBostBound_of_sec9Printed, `ZInQ.BostGR9.r21_of_grBost',
-    `ZInQ.HeightSplit.GRBostBound, `HDec.HSyn.OpenResearchLeaves54, `HDec.HSyn.sixContactMin_of_open73]
+    -- fold 2 (sz-raynaud): the replacement route (must be true); the old field's Prop stays as the proof's type
+    `SZRaynaud.SilverbergZarhinThm35, `SZRaynaud.raynaudSemistableSHOr_of_sz35, `DictModels.RaynaudOr.RaynaudSemistableSHOr,
+    `HDec.HSyn.OpenResearchLeaves55, `HDec.HSyn.sixContactMin_of_open74,
+    -- fold 1 still in force: must be false / true
+    `ZInQ.SemistabAssembly.BostLowerBoundAnSS, `ZInQ.HeightSplit.BostLowerBound, `ZInQ.BostGR9.GaudronRemondSec9LowerAnSS]
   for root in [`ZInQ.OneProof.frozenTarget] do
     let s := closure root
     IO.println s!"{root}: closure {s.size}"
@@ -46,8 +43,8 @@ run_cmd do
 open Lean Elab Command in
 run_cmd do
   let env ← getEnv
-  let o := `HDec.HSyn.OpenResearchLeaves53
-  let n := `HDec.HSyn.OpenResearchLeaves54
+  let o := `HDec.HSyn.OpenResearchLeaves54
+  let n := `HDec.HSyn.OpenResearchLeaves55
   let fo := getStructureFields env o
   let fn := getStructureFields env n
   logInfo m!"field check: {o} {fo.size} fields, {n} {fn.size} fields; only in old: {fo.filter (!fn.contains ·)}; only in new: {fn.filter (!fo.contains ·)}"

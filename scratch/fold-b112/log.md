@@ -68,3 +68,31 @@ Base wip/leaf-fold33b d435851d (fork main after lane74; H top `HDec.HSyn.sixCont
    `scratch/lane74/gate.sh`: GATE=ok. `#discharges` cannot show the field (bypass; the new leaf is weaker); the closure
    check shows it gone.
    **render_open count after fold 1: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
+
+## Fold 2: sz-raynaud (raynaudSemistableSHOr -> silverbergZarhinThm35; autofold, count-neutral)
+
+1. Merged origin/wip/sz-raynaud 34a0b3cb (no conflicts; commit b67c46ff). Hygiene: build logs `scratch/sz-raynaud/build1.txt`,
+   `build2.txt` (163k lines) left out; `scratch/sz-raynaud/DryRunFold.lean` (redeclares an HDec.HSyn bundle) renamed
+   `.lean.txt`; no host paths (the `/home/` hit in `strict/render_open.py` is render_open's own host-path regex); no
+   vendored code.
+2. `lake build ZInQKernel.Contrib.OneProof.SZRaynaud` ok. `#discharges` on the fold-1 head (`DischargesSZ.lean`, output
+   `DischargesSZ-output.txt`, VERIFIED): `OpenResearchLeaves54.raynaudSemistableSHOr` DISCHARGED by
+   `SZRaynaud.raynaudSemistableSHOr_of_sz35`, still assumes `[SZRaynaud.SilverbergZarhinThm35]`, axioms standard; all 11
+   `#print axioms` of the module standard (pow_smul_tate: [propext, Quot.sound]); no sorry, no error.
+3. Spec `scratch/fold-b112/autofold-sz.json` = sz-raynaud's `autofold.json` unchanged (one leaf; `ElliotWildInertiaTrivial`
+   is not in the spec, so no row with nothing discharged is added, as inbox 64a asks). Dry run regenerated on this line:
+   strict 5/24 on 29 -> 5/24 on 29; the printed module (`SZDryRun.lean`) compiled, `sixContactMin_of_open74` standard axioms.
+4. `python3 scripts/one_proof/autofold.py scratch/fold-b112/autofold-sz.json` -> `TailZ81.lean` (`OpenResearchLeaves55`,
+   `openResearchLeaves54_of_OpenResearchLeaves55`, `sixContactMin_of_open74`); Main switched; kinds row
+   `raynaudSemistableSHOr` (published, LEAF/LEAF) -> `silverbergZarhinThm35` (published, flag "reading 11-17 (...)",
+   LEAF/LEAF, flag_class note); claims.tsv no row.
+5. Build (VERIFIED): `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.OneProof.H.TailZ81` ok
+   (15980 jobs); `sixContactMin_of_open74`, `frozenTarget`: [propext, Classical.choice, Quot.sound].
+6. Checks (`run_checks.sh 2 hashes_fold1.txt`, VERIFIED): hash guard 18882 -> 18917, only after 35 (all TailZ81), changed
+   only `frozenTarget` (`cmp_fold2.txt`). Closure (closure 292974): no sorryAx;
+   `SilverbergZarhinThm35`, `raynaudSemistableSHOr_of_sz35`, `OpenResearchLeaves55`, `sixContactMin_of_open74` present
+   (`RaynaudSemistableSHOr` stays as the proof's type); fold 1 still in force (`BostLowerBoundAnSS`,
+   `HeightSplit.BostLowerBound` absent). Field check 27 vs 27: only `raynaudSemistableSHOr` <-> `silverbergZarhinThm35`.
+   OpenStatements 30; render_open + `--check` ok; DischargesTest rerun (16 DISCHARGES lines: the raynaudSemistableSHOr
+   discharges are gone with the field); crosswalk ok; autoform exit 0 (776 articles); gate.sh GATE=ok.
+   **render_open count after fold 2: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral; LEAF for LEAF).**
