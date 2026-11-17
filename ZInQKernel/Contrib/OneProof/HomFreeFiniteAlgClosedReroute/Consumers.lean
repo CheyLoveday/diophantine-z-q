@@ -164,7 +164,7 @@ open GlueI3 AbVar
 semisimple (a quotient of `V_ℓ(A) ⊗ E`, semisimple by `FaltingsSemisimple` and
 `SemisimpleBaseChange`; derived here). Then `r` is absolutely irreducible: `r ⊗ F` is irreducible
 for every field `F ⊇ E`. -/
-theorem C2_absolutelyIrreducibleHF (hS : FaltingsSemisimple) (hF : FaltingsTate) (hT : TateModuleFree)
+theorem C2_absolutelyIrreducible_hf (hS : FaltingsSemisimple) (hF : FaltingsTate) (hT : TateModuleFree)
     (hH : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC)
     (hSS : SemisimpleBaseChange)
     {K : Type} [Field K] [NumberField K] (A : AbVar K) (ℓ : ℕ) [Fact ℓ.Prime]
@@ -477,7 +477,7 @@ open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalC
 and the linear-algebra remainder `G8Matrix`).** The descended operators `ρ = β⁻¹ a Tm` form a
 representation of `G_ℚ` (`GlueDescent.rho_map_mul`), commute with the matrix units
 (`rho_commute`), are the Tate action on `G_{L'}` (`rho_eq_act`); C2
-(`PkgI3.C2_absolutelyIrreducibleHF`) applied to `splitEquiv` makes `ρ|_W` absolutely irreducible on
+(`PkgI3.C2_absolutelyIrreducible_hf`) applied to `splitEquiv` makes `ρ|_W` absolutely irreducible on
 `G_{L'}`. -/
 theorem g8_hf (hS : PkgI3.FaltingsSemisimple) (hF : PkgI3.FaltingsTate) (hT : PkgI3.TateModuleFree)
     (hH : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC) (hSS : GlueI3.SemisimpleBaseChange) (hM : G8Matrix)
@@ -531,7 +531,7 @@ theorem g8_hf (hS : PkgI3.FaltingsSemisimple) (hF : PkgI3.FaltingsTate) (hT : Pk
     rw [← hρres σ, u.splitEquiv_intertwines ρ hc]
     rfl
   have hirr := fun (F : Type) [Field F] [Algebra (PadicAlgCl ℓ) F] =>
-    PkgI3.C2_absolutelyIrreducibleHF hS hF hT hH hSS A ℓ hrank (PadicAlgCl ℓ) rW u.splitEquiv he F
+    PkgI3.C2_absolutelyIrreducible_hf hS hF hT hH hSS A ℓ hrank (PadicAlgCl ℓ) rW u.splitEquiv he F
   obtain ⟨r, e, hint, hadj⟩ := hM K A ℓ ρ u hc h4 (fun f v => by simpa [hρ] using hcont f v)
     hirr
   exact ⟨r, hρres, e, hint, hadj⟩

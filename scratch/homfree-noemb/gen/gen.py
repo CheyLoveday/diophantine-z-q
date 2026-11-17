@@ -11,7 +11,7 @@ SQ = "_root_.HFReroute.sigmaQbar"
 def newname(n):
     m = re.match(r"^(.*?)('*)$", n)
     base, pr = m.groups()
-    if base[0].isupper():
+    if base[0].isupper() and "_" not in base:
         return base + "HF" + pr
     return base + "_hf" + pr
 
