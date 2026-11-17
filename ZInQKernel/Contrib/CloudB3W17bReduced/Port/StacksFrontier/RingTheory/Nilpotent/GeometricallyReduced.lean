@@ -10,7 +10,7 @@ module
 public import Mathlib.LinearAlgebra.TensorProduct.Pi
 public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.RingTheory.Nilpotent.GeometricallyReduced
-public import ZInQKernel.Contrib.CloudB3W17bReduced.Port.StacksFrontier.RingTheory.MinimalPrimes.Reduced
+public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.MinimalPrimes.Reduced
 
 /-!
 # Geometric reducedness is detected at the minimal primes

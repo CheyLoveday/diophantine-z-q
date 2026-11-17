@@ -13,7 +13,7 @@ public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.RingTheory.Ideal.MinimalPrime.Noetherian
 public import Mathlib.RingTheory.TensorProduct.Pi
 public import Mathlib.RingTheory.Unramified.Field
-public import ZInQKernel.Contrib.CloudB3W17bReduced.Port.StacksFrontier.RingTheory.MinimalPrimes.Reduced
+public import ZInQKernel.Contrib.CloudB3W16Dimension.StacksFrontier.RingTheory.MinimalPrimes.Reduced
 
 @[expose] public section
 
