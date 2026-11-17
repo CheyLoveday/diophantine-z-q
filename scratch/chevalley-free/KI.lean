@@ -307,6 +307,144 @@ theorem torusR_const (B : PkgI3.AbVar K) {r : ℕ} (g : algPt K (TorusRing K r) 
 
 end TorusR
 
+section KbarKI
+
+variable {k : Type} [Field k] {U : Over (Spec (CommRingCat.of k))} [GrpObj U]
+  {B' : PkgI3.AbVar (AlgebraicClosure k)}
+
+/-- The base change of an abelian variety along a field extension `ρ : K → L`. -/
+def abVarBC {K L : Type} [Field K] [Field L] (ρ : K →+* L) (B : PkgI3.AbVar K) : PkgI3.AbVar L :=
+  letI := B.grp
+  haveI := B.proper
+  haveI := B.smooth
+  haveI := B.geomInt
+  { X := (Over.pullback (sφ ρ)).obj B.X
+    grp := Functor.grpObjObj
+    proper := by change IsProper (pullback.snd B.X.hom (sφ ρ)); infer_instance
+    smooth := by change Smooth (pullback.snd B.X.hom (sφ ρ)); infer_instance
+    geomInt := by change GeometricallyIntegral (pullback.snd B.X.hom (sφ ρ)); infer_instance }
+
+/-- **Rigidity, raw form**: for a field `L` with `ρ : k̄ → L` and a `U`-point `W` of the torus
+`Spec L[x^{±1}]` (structure through `ρ`), `π'(W, ρ)` takes the same value at all `L`-points of the torus. -/
+theorem rig_raw (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X) (L : Type) [Field L]
+    (ρ : AlgebraicClosure k →+* L) (r : ℕ) (W : Spec (CommRingCat.of (TorusRing L r)) ⟶ U.left)
+    (hW : W ≫ U.hom = Spec.map (CommRingCat.ofHom ((algebraMap L (TorusRing L r)).comp ρ)) ≫ sφ (φbar k))
+    (t : Fin r → Lˣ) :
+    Spec.map (CommRingCat.ofHom (torusLift (K := L) (R := L) t).toRingHom) ≫
+        (pullback.lift W _ hW ≫ π'.left) =
+      Spec.map (CommRingCat.ofHom (torusLift (K := L) (R := L) (fun _ => (1 : Lˣ))).toRingHom) ≫
+        (pullback.lift W _ hW ≫ π'.left) := by
+  letI := B'.grp
+  letI Ib0 : Algebra (AlgebraicClosure k) (TorusRing L r) := algK ρ (TorusRing L r)
+  letI : GrpObj ((Over.pullback (sφ ρ)).obj B'.X) := Functor.grpObjObj
+  let g : algPt (AlgebraicClosure k) (TorusRing L r) ⟶ B'.X :=
+    Over.homMk (pullback.lift W _ hW ≫ π'.left) (by
+      change (pullback.lift W _ hW ≫ π'.left) ≫ B'.X.hom = _
+      rw [Category.assoc, Over.w π']
+      exact pullback.lift_snd _ _ _)
+  let g' := (Φ ρ B'.X (TorusRing L r)).symm g
+  have hc := torusR_const (abVarBC ρ B') g' t
+  have h2 := congrArg (Φ ρ B'.X L) hc
+  rw [Φ_natural, Φ_natural, MulEquiv.apply_symm_apply] at h2
+  exact congrArg (fun z => Over.Hom.left z) h2
+
+/-- The group structure on `U_{k̄}` (base change). -/
+@[reducible] def grpFU (U : Over (Spec (CommRingCat.of k))) [GrpObj U] :
+    GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+
+attribute [local instance] grpFU
+
+/-- The unit of `U_{k̄}` at a `k̄`-algebra `L`, on `U`. -/
+theorem one_left_fst (L : Type) [CommRing L] [Algebra (AlgebraicClosure k) L] :
+    (1 : algPt (AlgebraicClosure k) L ⟶ (Over.pullback (sφ (φbar k))).obj U).left ≫
+        pullback.fst U.hom (sφ (φbar k)) =
+      (algPt (AlgebraicClosure k) L).hom ≫ sφ (φbar k) ≫ (η[U] : 𝟙_ _ ⟶ U).left := by
+  rw [Hom.one_def, Over.comp_left, Category.assoc, CToPrinted.unit_bc_fst]
+  rfl
+
+/-- `η` of `U_{k̄}` composed with a point `ρ`, as a lift. -/
+theorem lift_unit (L : Type) [CommRing L] (ρ : CommRingCat.of (AlgebraicClosure k) ⟶ CommRingCat.of L)
+    (x : Spec (CommRingCat.of L) ⟶ U.left) (hx : x = Spec.map ρ ≫ sφ (φbar k) ≫ (η[U] : 𝟙_ _ ⟶ U).left)
+    (h : x ≫ U.hom = Spec.map ρ ≫ sφ (φbar k)) :
+    pullback.lift x (Spec.map ρ) h =
+      Spec.map ρ ≫ (η[(Over.pullback (sφ (φbar k))).obj U] : 𝟙_ _ ⟶ _).left := by
+  apply pullback.hom_ext
+  · rw [pullback.lift_fst, Category.assoc, CToPrinted.unit_bc_fst, hx]
+  · rw [pullback.lift_snd, Category.assoc]
+    have := Over.w (η[(Over.pullback (sφ (φbar k))).obj U] : 𝟙_ _ ⟶ _)
+    change _ ≫ pullback.snd U.hom (sφ (φbar k)) = 𝟙 _ at this
+    rw [this, Category.comp_id]
+
+/-- **Torus kernels are transport-stable**: a point of the torus `ker π'` for the `k̄`-structure `ra` on `L` maps to
+the unit under `π'` for any other `k̄`-structure `rb` with the same restriction to `k` (rigidity). -/
+theorem torus_kernel_transfer (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
+    (hπ : letI := B'.grp; IsMonHom π') (r : ℕ)
+    (e : ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
+      (Fin r → Rˣ) →* (algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U))
+    (he_nat : ∀ (R S : Type) [CommRing R] [Algebra (AlgebraicClosure k) R] [CommRing S]
+      [Algebra (AlgebraicClosure k) S] (f : R →ₐ[AlgebraicClosure k] S) (t : Fin r → Rˣ),
+      e S (fun i => Units.map (f : R →* S) (t i)) = algPtMap f ≫ e R t)
+    (L : Type) [Field L] (ra rb : AlgebraicClosure k →+* L) (hab : ra.comp (φbar k) = rb.comp (φbar k))
+    (t : Fin r → Lˣ) :
+    letI := ra.toAlgebra
+    ∀ (hcond : ((e L t).left ≫ pullback.fst U.hom (sφ (φbar k))) ≫ U.hom =
+        Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k)),
+    pullback.lift ((e L t).left ≫ pullback.fst U.hom (sφ (φbar k))) _ hcond ≫ π'.left =
+      Spec.map (CommRingCat.ofHom rb) ≫ (η[B'.X] : 𝟙_ _ ⟶ B'.X).left := by
+  letI Ia := ra.toAlgebra
+  intro hcond
+  letI := B'.grp
+  haveI := hπ
+  letI Ia0 : Algebra (AlgebraicClosure k) (TorusRing L r) := algK ra (TorusRing L r)
+  let fl : (Fin r → Lˣ) → (TorusRing L r →ₐ[AlgebraicClosure k] L) := fun t' =>
+    { (torusLift (K := L) (R := L) t').toRingHom with
+      commutes' := fun x => (torusLift (K := L) (R := L) t').commutes (ra x) }
+  have hnat : ∀ t' : Fin r → Lˣ, e L t' = algPtMap (fl t') ≫ e (TorusRing L r) (tUniv r) := by
+    intro t'
+    have := he_nat (TorusRing L r) L (fl t') (tUniv r)
+    have hmap : (fun i => Units.map ((fl t' : TorusRing L r →ₐ[AlgebraicClosure k] L) :
+        TorusRing L r →* L) (tUniv r i)) = t' := by
+      funext i; ext; exact torusLift_tUniv t' i
+    rwa [hmap] at this
+  let W := (e (TorusRing L r) (tUniv r)).left ≫ pullback.fst U.hom (sφ (φbar k))
+  have hW : W ≫ U.hom =
+      Spec.map (CommRingCat.ofHom ((algebraMap L (TorusRing L r)).comp rb)) ≫ sφ (φbar k) := by
+    simp only [W, Category.assoc]
+    rw [pullback.condition, ← Category.assoc, Over.w (e (TorusRing L r) (tUniv r))]
+    change Spec.map (CommRingCat.ofHom ((algebraMap L (TorusRing L r)).comp ra)) ≫ sφ (φbar k) = _
+    rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp,
+      RingHom.comp_assoc, RingHom.comp_assoc, hab]
+  have hlift : ∀ (t' : Fin r → Lˣ) (h' : ((e L t').left ≫ pullback.fst U.hom (sφ (φbar k))) ≫ U.hom =
+      Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k)),
+      pullback.lift ((e L t').left ≫ pullback.fst U.hom (sφ (φbar k))) _ h' =
+        Spec.map (CommRingCat.ofHom (torusLift (K := L) (R := L) t').toRingHom) ≫ pullback.lift W _ hW := by
+    intro t' h'
+    apply pullback.hom_ext
+    · rw [pullback.lift_fst, Category.assoc, pullback.lift_fst, hnat t']
+      rfl
+    · rw [pullback.lift_snd, Category.assoc, pullback.lift_snd, ← Spec.map_comp,
+        ← CommRingCat.ofHom_comp]
+      congr 2
+      ext x
+      exact ((torusLift (K := L) (R := L) t').commutes (rb x)).symm
+  have h1 : e L (fun _ => (1 : Lˣ)) = 1 := map_one (e L)
+  have hc1 : ((e L (fun _ => (1 : Lˣ))).left ≫ pullback.fst U.hom (sφ (φbar k))) ≫ U.hom =
+      Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k) := by
+    rw [Category.assoc, pullback.condition, ← Category.assoc, Over.w (e L _)]
+    change Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) = _
+    rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hab]
+  rw [hlift t hcond, Category.assoc, rig_raw π' L rb r W hW t, ← Category.assoc, ← hlift _ hc1]
+  have hx : (e L (fun _ => (1 : Lˣ))).left ≫ pullback.fst U.hom (sφ (φbar k)) =
+      Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k) ≫ (η[U] : 𝟙_ _ ⟶ U).left := by
+    rw [h1, one_left_fst, ← Category.assoc, ← Category.assoc]
+    congr 1
+    change Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) = _
+    rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hab]
+  rw [lift_unit L (CommRingCat.ofHom rb) _ hx hc1, Category.assoc, ← Over.comp_left, IsMonHom.one_hom]
+
+end KbarKI
+
 end ZInQ.ChevFree
 
-#print axioms ZInQ.ChevFree.torusR_const
+#print axioms ZInQ.ChevFree.rig_raw
+#print axioms ZInQ.ChevFree.torus_kernel_transfer
