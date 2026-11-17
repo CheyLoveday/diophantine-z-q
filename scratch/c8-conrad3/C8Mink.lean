@@ -256,6 +256,91 @@ theorem exists_inertia_lift (p : ℕ) (hp : p.Prime) (P : Ideal (𝓞 F)) [P.IsP
 
 end Lift
 
+section Mink
+
+/-- If `x` is fixed by every inertia group of every place of `ℚ̄` over a prime, so is every conjugate `g x`
+(`I_{g⁻¹ w} = g⁻¹ I_w g`, `GlueB3Unram.inertia_conj`). -/
+theorem fixed_conj (x : Qbar) (hx : ∀ q : ℕ, q.Prime → ∀ w : ValuationSubring Qbar, LiesOver w q →
+      ∀ s : Gal, s ∈ (w.inertiaSubgroup ℚ).map (w.decompositionSubgroup ℚ).subtype → s x = x)
+    (g : Gal) (q : ℕ) (hq : q.Prime) (w : ValuationSubring Qbar) (hw : LiesOver w q) (s : Gal)
+    (hs : s ∈ (w.inertiaSubgroup ℚ).map (w.decompositionSubgroup ℚ).subtype) : s (g x) = g x := by
+  have h1 := inertia_conj (g⁻¹ • w) w g (by rw [smul_inv_smul]) s hs
+  have h2 := hx q hq (g⁻¹ • w) (liesOver_smul hw g⁻¹) _ h1
+  have h3 : g ((g⁻¹ * s * g) x) = g x := by rw [h2]
+  rw [AlgEquiv.mul_apply, AlgEquiv.mul_apply] at h3
+  have e : g (g⁻¹ (s (g x))) = s (g x) := by
+    show (g * g⁻¹) (s (g x)) = s (g x)
+    rw [mul_inv_cancel]; rfl
+  rwa [e] at h3
+
+/-- **`MinkowskiInertiaQ` proved** (Minkowski's theorem in Mathlib, `NumberField.exists_not_isUnramifiedAt_int_of_isGalois`,
+read on inertia groups of places of `ℚ̄`). -/
+theorem minkowskiInertiaQ_proof : MinkowskiInertiaQ := by
+  intro x hx0
+  have hx : ∀ q : ℕ, q.Prime → ∀ w : ValuationSubring Qbar, LiesOver w q →
+      ∀ s : Gal, s ∈ (w.inertiaSubgroup ℚ).map (w.decompositionSubgroup ℚ).subtype → s x = x := by
+    intro q hq w hw s hs
+    obtain ⟨t, ht, rfl⟩ := Subgroup.mem_map.mp hs
+    exact hx0 q hq w ((liesOver_iff w q).mpr hw) ⟨t, ht⟩
+  let K₀ : IntermediateField ℚ Qbar := IntermediateField.adjoin ℚ {x}
+  haveI : FiniteDimensional ℚ K₀ :=
+    IntermediateField.adjoin.finiteDimensional (Algebra.IsIntegral.isIntegral (R := ℚ) x)
+  let F : IntermediateField ℚ Qbar := IntermediateField.normalClosure ℚ K₀ Qbar
+  haveI : FiniteDimensional ℚ F := normalClosure.is_finiteDimensional ℚ K₀ Qbar
+  haveI : IsGalois ℚ F := IsGalois.normalClosure ℚ K₀ Qbar
+  haveI : NumberField F := { to_charZero := inferInstance, to_finiteDimensional := inferInstance }
+  have hxF : x ∈ F := IntermediateField.le_normalClosure K₀ (IntermediateField.mem_adjoin_simple_self ℚ x)
+  -- every inertia group fixes `F`
+  have hF : ∀ q : ℕ, q.Prime → ∀ w : ValuationSubring Qbar, LiesOver w q → ∀ s : Gal,
+      s ∈ (w.inertiaSubgroup ℚ).map (w.decompositionSubgroup ℚ).subtype → ∀ y ∈ F, s y = y := by
+    intro q hq w hw s hs
+    let S : Subgroup Gal := (w.inertiaSubgroup ℚ).map (w.decompositionSubgroup ℚ).subtype
+    have hle : F ≤ IntermediateField.fixedField S := by
+      show IntermediateField.normalClosure ℚ K₀ Qbar ≤ _
+      rw [IntermediateField.normalClosure_def'']
+      refine iSup_le fun f => ?_
+      rw [IntermediateField.adjoin_map, Set.image_singleton, IntermediateField.adjoin_simple_le_iff]
+      rintro ⟨s', hs'⟩
+      exact fixed_conj x hx f q hq w hw s' hs'
+    intro y hy
+    exact (hle hy) ⟨s, hs⟩
+  by_cases h1 : Module.finrank ℚ F = 1
+  · have hbot : F = ⊥ := IntermediateField.finrank_eq_one_iff.mp h1
+    have : x ∈ (⊥ : IntermediateField ℚ Qbar) := hbot ▸ hxF
+    obtain ⟨r, hr⟩ := IntermediateField.mem_bot.mp this
+    exact ⟨r, hr⟩
+  · exfalso
+    have hgt : 1 < Module.finrank ℚ F := lt_of_le_of_ne Module.finrank_pos (Ne.symm h1)
+    obtain ⟨p, hp, hram⟩ := NumberField.exists_not_isUnramifiedAt_int_of_isGalois (K := F) (𝒪 := 𝓞 F) hgt
+    obtain ⟨w₀, hw₀⟩ := exists_place_over p hp
+    let P : Ideal (𝓞 F) := (centerIdeal w₀).comap (iotaB F)
+    haveI : P.IsPrime := Ideal.comap_isPrime _ _
+    have hpP : (p : 𝓞 F) ∈ P := by
+      show iotaB F (p : 𝓞 F) ∈ centerIdeal w₀
+      rw [mem_centerIdeal]
+      have e : ((iotaB F (p : 𝓞 F) : B) : Qbar) = (p : Qbar) := by simp
+      rw [e]; exact hw₀
+    apply hram P inferInstance hpP
+    let G := F ≃ₐ[ℚ] F
+    have hinert : ∀ σ ∈ P.inertia G, σ = 1 := by
+      intro σ hσ
+      obtain ⟨w, hw, s, hs, hsσ⟩ := exists_inertia_lift F p hp P hpP σ hσ
+      refine AlgEquiv.ext fun y => ?_
+      have h2 := hsσ y
+      rw [hF p hp w hw s hs (algebraMap F Qbar y) y.2] at h2
+      exact ((algebraMap F Qbar).injective h2).symm
+    have hcard : Nat.card (P.inertia G) = 1 := by
+      rw [Nat.card_eq_one_iff_unique]
+      exact ⟨⟨fun a b => Subtype.ext ((hinert a a.2).trans (hinert b b.2).symm)⟩, ⟨1⟩⟩
+    have he : P.ramificationIdx ℤ = 1 := by
+      rw [← Ideal.ramificationIdxIn_eq_ramificationIdx (P.under ℤ) P G,
+        ← Ideal.card_inertia_eq_ramificationIdxIn (G := G) (P.under ℤ) P, hcard]
+    exact Ideal.ramificationIdx_eq_one_iff.mp he
+
+end Mink
+
 end MinkDict
 
 end HDec.G0Galois.C8Conrad
+
+#print axioms HDec.G0Galois.C8Conrad.MinkDict.minkowskiInertiaQ_proof
