@@ -642,4 +642,129 @@ theorem evF_eq_zero_of_heckeJ_eq_zero (hP : X1TauPoints) (hAJ : AbelJacobiX1) (h
   exact not_const_of_isPrimitive hf hF
     (const_of_countable (continuous_of_isPrimitive hF) ((hΛc.image _).mono hrange))
 
+/-! ## DS's `I_f` (gap 1, consequence) -/
+
+/-- **DS's `I_f = {T ∈ 𝕋_ℤ : Tf = 0}`** inside `End(J)`: the elements `T` of the Hecke algebra
+`𝕋_ℤ = heckeJ(free algebra)` every representative of which has eigenvalue `0` on `f` (once `T ↦` eigenvalue
+is well defined, `evF_wellDefined`, this is DS Def. 6.6.3's `I_f`). -/
+def IfDS (χ : DirichletCharacter ℂ N) (f : CF N 2) (tp : Nat.Primes → AbVar.End J)
+    (δ : (ZMod N)ˣ → AbVar.End J) : Set (AbVar.End J) :=
+  {T | (∃ h, heckeJ tp δ h = T) ∧ ∀ h, heckeJ tp δ h = T → evF χ f h = 0}
+
+section IfDS
+
+variable (hP : X1TauPoints) (hAJ : AbelJacobiX1) (hEP : EichlerPrimitive) (hH : EichlerHecke)
+  (hN : 2 ≤ N) {χ : DirichletCharacter ℂ N} {f : CF N 2}
+  (hf : PkgI4.IsNormalizedEigenform f χ) {jX tX : X.left.functionField} (hC : IsCurve X)
+  (hG : IsX1Gen N X jX tX) {P₀ : RatPt X} {aj : X ⟶ J.X} (hJ : IsJacobian X P₀ J aj)
+  {tp : Nat.Primes → AbVar.End J} {δ : (ZMod N)ˣ → AbVar.End J}
+  (htp : ∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p))
+  (hδ : ∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d))
+include hP hAJ hEP hH hN hf hC hG hJ htp hδ
+
+/-- **The eigenvalue of `T ∈ 𝕋_ℤ` on `f` is well defined.** -/
+theorem evF_wellDefined (h h' : HeckeFree N) (e : heckeJ tp δ h = heckeJ tp δ h') :
+    evF χ f h = evF χ f h' := by
+  have := evF_eq_zero_of_heckeJ_eq_zero hP hAJ hEP hH hN hf hC hG hJ htp hδ (h - h')
+    (by rw [map_sub, e, sub_self])
+  rwa [map_sub, sub_eq_zero] at this
+
+/-- **`KillsIf`'s ideal is DS's `I_f`:** the image of `ker(evF)` is exactly `IfDS`. -/
+theorem image_ker_evF_eq_IfDS :
+    (heckeJ tp δ) '' {h | evF χ f h = 0} = IfDS χ f tp δ := by
+  ext T
+  constructor
+  · rintro ⟨h, hh, rfl⟩
+    exact ⟨⟨h, rfl⟩, fun h' e => (evF_wellDefined hP hAJ hEP hH hN hf hC hG hJ htp hδ h' h e).trans hh⟩
+  · rintro ⟨⟨h, rfl⟩, hT⟩
+    exact ⟨h, hT h rfl, rfl⟩
+
+/-- **`KillsIf φ` iff `φ` kills `I_f J` in DS's sense.** -/
+theorem killsIf_iff_IfDS {B : AbVar ℚ} (φ : AbVar.Hom J B) :
+    KillsIf χ f tp δ φ ↔ ∀ T ∈ IfDS χ f tp δ, T.hom ≫ φ.hom = (0 : AbVar.Hom J B).hom := by
+  rw [← image_ker_evF_eq_IfDS hP hAJ hEP hH hN hf hC hG hJ htp hδ]
+  constructor
+  · rintro hK _ ⟨h, hh, rfl⟩; exact hK h hh
+  · intro hK h hh; exact hK _ ⟨h, hh, rfl⟩
+
+end IfDS
+
+/-! ## Pinning the Hecke operators (gap 2) -/
+
+/-- Two endomorphisms with `IsHeckeT` for the same `p` act identically on the classes `[x_τ] − [x_{τ'}]`. -/
+theorem isHeckeT_agree {jX tX : X.left.functionField} (hx : TauPts N jX tX) {aj : X ⟶ J.X}
+    (p : Nat.Primes) {t t' : AbVar.End J} (ht : IsHeckeT N jX tX aj (p : ℕ) t)
+    (ht' : IsHeckeT N jX tX aj (p : ℕ) t') (τ τ' : UpperHalfPlane) (x x' : CPt X)
+    (hxτ : AtTau N jX tX x τ) (hxτ' : AtTau N jX tX x' τ') :
+    endC t (ajC aj x / ajC aj x') = endC t' (ajC aj x / ajC aj x') := by
+  choose y hy using hx
+  obtain ⟨a1, a2⟩ := ht τ τ' x x' (fun i => y _) (fun i => y _) hxτ hxτ' (fun i => hy _) (fun i => hy _)
+  obtain ⟨b1, b2⟩ := ht' τ τ' x x' (fun i => y _) (fun i => y _) hxτ hxτ' (fun i => hy _) (fun i => hy _)
+  by_cases hpN : (p : ℕ) ∣ N
+  · rw [a1 hpN, b1 hpN]
+  · obtain ⟨g, hg1, hg2⟩ := exists_gamma_prime N p hpN
+    rw [a2 hpN g hg1 hg2 _ _ (hy _) (hy _), b2 hpN g hg1 hg2 _ _ (hy _) (hy _)]
+
+/-- Two endomorphisms with `IsDiamond` for the same `d` act identically on the classes. -/
+theorem isDiamond_agree [NeZero N] {jX tX : X.left.functionField} (hx : TauPts N jX tX)
+    {aj : X ⟶ J.X} (d : (ZMod N)ˣ) {t t' : AbVar.End J} (ht : IsDiamond N jX tX aj d t)
+    (ht' : IsDiamond N jX tX aj d t') (τ τ' : UpperHalfPlane) (x x' : CPt X)
+    (hxτ : AtTau N jX tX x τ) (hxτ' : AtTau N jX tX x' τ') :
+    endC t (ajC aj x / ajC aj x') = endC t' (ajC aj x / ajC aj x') := by
+  choose y hy using hx
+  obtain ⟨g, hg1, hg2⟩ := exists_gamma_unit N d
+  rw [ht g hg1 hg2 τ τ' x x' _ _ hxτ hxτ' (hy _) (hy _), ht' g hg1 hg2 τ τ' x x' _ _ hxτ hxτ' (hy _) (hy _)]
+
+/-- **GLUE (a morphism from `X₁(N)` constant on the points `x_τ` is constant).** For `X`, `(j_X, t_X)` as in
+`X1TauPoints` and an abelian variety `J`: a `ℚ`-morphism `g : X → J` that takes the same value at all points
+`x_τ` (`τ ∈ ℍ`) and sends the rational point `P₀` to `0` is `0`. Proof sketch (standard; not in the tree):
+the `x_τ` with distinct `j(τ)` are distinct `ℂ`-points (`j_X` is regular at `x_τ` with value `j(τ)`), so
+they are infinitely many closed points of the irreducible curve `X_ℂ`; `g_ℂ⁻¹(c)` is closed (`J` separated)
+and contains them, hence is `X_ℂ`; so `g` is constant, with value `g(P₀) = 0`. -/
+def ConstOnTauPoints : Prop :=
+  ∀ (N : ℕ), 2 ≤ N → ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX → ∀ (P₀ : RatPt X) (J : AbVar ℚ) (g : X ⟶ J.X), P₀ ≫ g = 1 →
+      (∀ (τ τ' : UpperHalfPlane) (x x' : CPt X), AtTau N jX tX x τ → AtTau N jX tX x' τ' → x ≫ g = x' ≫ g) →
+      g = 1
+
+/-- **The classes of the `x_τ` determine endomorphisms of `J`.** -/
+theorem end_eq_of_classes (hK : ConstOnTauPoints) (hN : 2 ≤ N) {jX tX : X.left.functionField}
+    (hC : IsCurve X) (hG : IsX1Gen N X jX tX) {P₀ : RatPt X} {aj : X ⟶ J.X}
+    (hJ : IsJacobian X P₀ J aj) (t t' : AbVar.End J)
+    (h : ∀ (τ τ' : UpperHalfPlane) (x x' : CPt X), AtTau N jX tX x τ → AtTau N jX tX x' τ' →
+      endC t (ajC aj x / ajC aj x') = endC t' (ajC aj x / ajC aj x')) : t = t' := by
+  let g : X ⟶ J.X := (aj ≫ t.hom) / (aj ≫ t'.hom)
+  have hP : P₀ ≫ g = 1 := by
+    simp only [g, GrpObj.comp_div, ← Category.assoc, hJ.base, IsMonHom.one_hom, div_self']
+  have hc : ∀ (τ τ' : UpperHalfPlane) (x x' : CPt X), AtTau N jX tX x τ → AtTau N jX tX x' τ' →
+      x ≫ g = x' ≫ g := by
+    intro τ τ' x x' hx hx'
+    have := h τ τ' x x' hx hx'
+    simp only [endC, ajC, GrpObj.div_comp] at this
+    simp only [g, GrpObj.comp_div, ← Category.assoc]
+    rw [div_eq_div_iff_div_eq_div] at this
+    exact this
+  have hg := hK N hN X jX tX hC hG P₀ J g hP hc
+  have heq : aj ≫ t.hom = aj ≫ t'.hom := div_eq_one.1 hg
+  have hf : P₀ ≫ (aj ≫ t'.hom) = η[J.X] := by rw [← Category.assoc, hJ.base, IsMonHom.one_hom]
+  obtain ⟨φ, -, hφ⟩ := hJ.univ J (aj ≫ t'.hom) hf
+  exact Hom.ext' ((hφ t.hom ⟨inferInstance, heq⟩).trans (hφ t'.hom ⟨inferInstance, rfl⟩).symm)
+
+/-- **`IsHeckeT` pins `T_p`** (given the points `x_τ` and `ConstOnTauPoints`). -/
+theorem isHeckeT_unique (hP : X1TauPoints) (hK : ConstOnTauPoints) (hN : 2 ≤ N)
+    {jX tX : X.left.functionField} (hC : IsCurve X) (hG : IsX1Gen N X jX tX) {P₀ : RatPt X}
+    {aj : X ⟶ J.X} (hJ : IsJacobian X P₀ J aj) (p : Nat.Primes) {t t' : AbVar.End J}
+    (ht : IsHeckeT N jX tX aj (p : ℕ) t) (ht' : IsHeckeT N jX tX aj (p : ℕ) t') : t = t' :=
+  end_eq_of_classes hK hN hC hG hJ t t' fun τ τ' x x' hx hx' =>
+    isHeckeT_agree (hP N hN X jX tX hC hG) p ht ht' τ τ' x x' hx hx'
+
+/-- **`IsDiamond` pins `⟨d⟩`.** -/
+theorem isDiamond_unique (hP : X1TauPoints) (hK : ConstOnTauPoints) (hN : 2 ≤ N)
+    {jX tX : X.left.functionField} (hC : IsCurve X) (hG : IsX1Gen N X jX tX) {P₀ : RatPt X}
+    {aj : X ⟶ J.X} (hJ : IsJacobian X P₀ J aj) (d : (ZMod N)ˣ) {t t' : AbVar.End J}
+    (ht : IsDiamond N jX tX aj d t) (ht' : IsDiamond N jX tX aj d t') : t = t' :=
+  have : NeZero N := ⟨by omega⟩
+  end_eq_of_classes hK hN hC hG hJ t t' fun τ τ' x x' hx hx' =>
+    isDiamond_agree (hP N hN X jX tX hC hG) d ht ht' τ τ' x x' hx hx'
+
 end AfTateLam.HeckePin
