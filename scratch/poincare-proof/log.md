@@ -29,4 +29,4 @@ m' ; m = [d]_A (surjective), m ; m' = [d]_B x [d]_C (finite) so m finite (IsFini
   still assumes [T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar, T09Pic.PhiAmpleIsogeny, AvSplit.MilneIsogenyQuasiInverse,
   AVGlue.CartierSmooth] (all five are fields of the current bundles); axioms [propext, Classical.choice, Quot.sound].
 - 13:09 autofold --dry-run (autofold.json): strict 34/11 on 45 -> 33/11 on 44; strictest 34/11 -> 33/11. The generated
-  module (FoldDryRun.lean, line 1 stripped) compiles; `sixContactMin_of_open36` standard axioms. VERIFIED.
+  module (FoldDryRun.lean, line 1 stripped; renamed FoldDryRun.lean.txt by leaf-fold33) compiles; `sixContactMin_of_open36` standard axioms. VERIFIED.

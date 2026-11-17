@@ -81,4 +81,4 @@ proved.
   (the statement), `ZInQKernel.OneProof.H.TailZ24` (T09Pic, AvSplit, AVGlue) and `ZInQKernel.Contrib.AbVarBC.Main`.
   It does not import `ZInQKernel.OneProof.Main`.
 * `scratch/poincare-proof/`: `PoincareComplement.lean` (the same file), `Discharges.lean` and
-  `discharges-output.txt`, `autofold.json`, `autofold-dryrun.txt`, `FoldDryRun.lean`, `log.md`.
+  `discharges-output.txt`, `autofold.json`, `autofold-dryrun.txt`, `FoldDryRun.lean.txt`, `log.md`.

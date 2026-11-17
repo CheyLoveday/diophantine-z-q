@@ -41,3 +41,8 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
    against step 3 (14083 constants, only frozenTarget changed); OpenStatements 45; render_open --check ok (35 H,
    strictest 15/20, 10 others); crosswalk regenerated, --check ok; DischargesTest rerun. Host paths in merged logs
    replaced by worktree names.
+6. Merged fork main c1e4ed1b (the blueprint's height-decomposition chapter). chain-w84 then failed CHECKLR and RENDER:
+   the chapter's Lean targets `HDec.HSyn.OpenTextbookLeaves13.*` were also declared by poincare-proof's dry-run
+   output `scratch/poincare-proof/FoldDryRun.lean` (written on 0caafe66, where autofold's next generation had the
+   same name), so autoform found them twice. The file is renamed `FoldDryRun.lean.txt` (content unchanged).
+   `autoform check blueprint --lean-root .` and `autoform render ... --require-declarations` then pass (VERIFIED).
