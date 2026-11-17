@@ -142,4 +142,118 @@ theorem tensor_sum_repr {R A B : Type*} [CommRing R] [CommRing A] [CommRing B] [
     rw [Fin.sum_univ_add]
     simp
 
+theorem top_le_of_mem {Y : Scheme} (y : Spec (CommRingCat.of ℂ) ⟶ Y) (V : Y.Opens)
+    (h : y (IsLocalRing.closedPoint ℂ) ∈ V) : ⊤ ≤ y ⁻¹ᵁ V := by
+  intro z _
+  have : z = IsLocalRing.closedPoint ℂ := Subsingleton.elim _ _
+  subst this; exact h
+
+/-- **Sections of a fibre product, read at `(a, b)` as functions of `b`.** For `X, Y` over an affine
+`Spec R₀`, a section `σ` of `X ×_{R₀} Y` over `W` and complex points `a, b₀` with `(a, b₀) ∈ W(ℂ)`,
+there are an open `V ∋ b₀` of `Y`, sections `c_j ∈ Γ(Y, V)` and constants `u_j, v_j` with
+`σ(a, b) · (Σ v_j c_j(b))^N = Σ u_j c_j(b)` whenever `b ∈ V(ℂ)` and `Σ v_j c_j(b) ≠ 0` (which holds at
+`b₀`). (Tensor decomposition on `V₁ ×_{R₀} V₂ = Spec(Γ(V₁) ⊗ Γ(V₂))` and a fraction on a basic open.) -/
+theorem exists_tensor_formula {R₀ : CommRingCat} {X Y : Scheme} (f : X ⟶ Spec R₀) (g : Y ⟶ Spec R₀)
+    (W : (pullback f g).Opens) (σ : Γ(pullback f g, W)) (a : Spec (CommRingCat.of ℂ) ⟶ X)
+    (b₀ : Spec (CommRingCat.of ℂ) ⟶ Y) (hab₀ : a ≫ f = b₀ ≫ g)
+    (hW : ⊤ ≤ (pullback.lift a b₀ hab₀) ⁻¹ᵁ W) :
+    ∃ (V : Y.Opens) (m : ℕ) (c : Fin m → Γ(Y, V)) (u v : Fin m → ℂ) (N : ℕ),
+      ⊤ ≤ b₀ ⁻¹ᵁ V ∧ ∑ j, v j * evS b₀ V (c j) ≠ 0 ∧
+      ∀ (b : Spec (CommRingCat.of ℂ) ⟶ Y) (hab : a ≫ f = b ≫ g), ⊤ ≤ b ⁻¹ᵁ V →
+        ∑ j, v j * evS b V (c j) ≠ 0 →
+        ⊤ ≤ (pullback.lift a b hab) ⁻¹ᵁ W ∧
+        evS (pullback.lift a b hab) W σ * (∑ j, v j * evS b V (c j)) ^ N =
+          ∑ j, u j * evS b V (c j) := by
+  classical
+  obtain ⟨V₁, hV₁, ha1, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.mp X.isBasis_affineOpens
+    (show a (IsLocalRing.closedPoint ℂ) ∈ (⊤ : X.Opens) from trivial)
+  obtain ⟨V₂, hV₂, hb1, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.mp Y.isBasis_affineOpens
+    (show b₀ (IsLocalRing.closedPoint ℂ) ∈ (⊤ : Y.Opens) from trivial)
+  have hV₁' : IsAffineOpen V₁ := hV₁
+  have hV₂' : IsAffineOpen V₂ := hV₂
+  have hb₀V : ⊤ ≤ b₀ ⁻¹ᵁ V₂ := top_le_of_mem _ _ hb1
+  set R₁ := Γ(X, V₁)
+  set R₂ := Γ(Y, V₂)
+  set j₁ := hV₁'.fromSpec
+  set j₂ := hV₂'.fromSpec
+  obtain ⟨α, rfl⟩ := exists_spec_factor hV₁' a (top_le_of_mem _ _ ha1)
+  let φ₁ : R₀ ⟶ R₁ := Spec.preimage (j₁ ≫ f)
+  let φ₂ : R₀ ⟶ R₂ := Spec.preimage (j₂ ≫ g)
+  letI : Algebra R₀ R₁ := φ₁.hom.toAlgebra
+  letI : Algebra R₀ R₂ := φ₂.hom.toAlgebra
+  have e₁ : Spec.map (CommRingCat.ofHom (algebraMap R₀ R₁)) ≫ 𝟙 _ = j₁ ≫ f := by
+    rw [Category.comp_id]; exact Spec.map_preimage _
+  have e₂ : Spec.map (CommRingCat.ofHom (algebraMap R₀ R₂)) ≫ 𝟙 _ = j₂ ≫ g := by
+    rw [Category.comp_id]; exact Spec.map_preimage _
+  let κ : Spec (CommRingCat.of (TensorProduct R₀ R₁ R₂)) ⟶ pullback f g :=
+    (pullbackSpecIso R₀ R₁ R₂).inv ≫ pullback.map _ _ f g j₁ j₂ (𝟙 _) e₁ e₂
+  -- the ring map of `(a, b)` for `b = Spec β ≫ j₂`
+  have key : ∀ (β : R₂ ⟶ CommRingCat.of ℂ)
+      (h : (Spec.map α ≫ j₁) ≫ f = (Spec.map β ≫ j₂) ≫ g),
+      ∃ γ : CommRingCat.of (TensorProduct R₀ R₁ R₂) ⟶ CommRingCat.of ℂ,
+        (∀ x y, γ (x ⊗ₜ[R₀] y) = α x * β y) ∧
+        pullback.lift (Spec.map α ≫ j₁) (Spec.map β ≫ j₂) h = Spec.map γ ≫ κ := by
+    intro β h
+    have hc : φ₂ ≫ β = φ₁ ≫ α := by
+      apply Spec.map_injective
+      rw [Spec.map_comp, Spec.map_comp, Spec.map_preimage, Spec.map_preimage]
+      simpa only [Category.assoc] using h.symm
+    letI : Algebra R₀ ℂ := (φ₁ ≫ α).hom.toAlgebra
+    let αA : R₁ →ₐ[R₀] ℂ := { α.hom with commutes' := fun r => rfl }
+    have hβc : ∀ r, β.hom (algebraMap R₀ R₂ r) = algebraMap R₀ ℂ r := fun r => by
+      have := congrArg (fun φ => φ.hom r) hc
+      exact this
+    let βA : R₂ →ₐ[R₀] ℂ := { β.hom with commutes' := hβc }
+    let γ := CommRingCat.ofHom (Algebra.TensorProduct.lift αA βA (fun _ _ => Commute.all _ _)).toRingHom
+    have hγ : ∀ x y, γ (x ⊗ₜ[R₀] y) = α x * β y := fun x y => by
+      simp [γ, αA, βA]
+    refine ⟨γ, hγ, ?_⟩
+    apply pullback.hom_ext
+    · simp only [κ, pullback.lift_fst, Category.assoc, pullback.lift_fst, pullback.map]
+      rw [← Category.assoc (pullbackSpecIso R₀ R₁ R₂).inv, pullbackSpecIso_inv_fst,
+        ← Category.assoc, ← Spec.map_comp]
+      congr 2
+      ext x
+      simp [hγ]
+    · simp only [κ, pullback.lift_snd, Category.assoc, pullback.map]
+      rw [← Category.assoc (pullbackSpecIso R₀ R₁ R₂).inv, pullbackSpecIso_inv_snd,
+        ← Category.assoc, ← Spec.map_comp]
+      congr 2
+      ext y
+      simp [hγ]
+  obtain ⟨β₀, rfl⟩ : ∃ β₀, b₀ = Spec.map β₀ ≫ j₂ := exists_spec_factor hV₂' b₀ hb₀V
+  obtain ⟨γ₀, hγ₀, hl₀⟩ := key β₀ hab₀
+  have hW' : ⊤ ≤ (Spec.map γ₀) ⁻¹ᵁ (κ ⁻¹ᵁ W) := by rw [hl₀] at hW; exact hW
+  obtain ⟨t, r, N, hr0, hfr⟩ := exists_fraction γ₀ (κ ⁻¹ᵁ W) (κ.app W σ) hW'
+  obtain ⟨m₁, x, y, rfl⟩ := tensor_sum_repr t
+  obtain ⟨m₂, x', y', rfl⟩ := tensor_sum_repr r
+  have hsum : ∀ (β : R₂ ⟶ CommRingCat.of ℂ)
+      (γ : CommRingCat.of (TensorProduct R₀ R₁ R₂) ⟶ CommRingCat.of ℂ)
+      (_ : ∀ x y, γ (x ⊗ₜ[R₀] y) = α x * β y) (m : ℕ) (x : Fin m → R₁) (y : Fin m → R₂),
+      γ (∑ k, x k ⊗ₜ[R₀] y k) = ∑ k, α (x k) * evS (Spec.map β ≫ j₂) V₂ (y k) := by
+    intro β γ hγ m x y
+    rw [map_sum]
+    simp only [hγ]
+    exact Finset.sum_congr rfl fun k _ => by rw [show j₂ = hV₂'.fromSpec from rfl, evS_fromSpec]
+  have happ : ∀ b, (∑ j, Fin.append (0 : Fin m₁ → ℂ) (fun k => α (x' k)) j *
+      evS b V₂ (Fin.append y y' j)) = ∑ k, α (x' k) * evS b V₂ (y' k) := by
+    intro b; rw [Fin.sum_univ_add]; simp
+  have happ' : ∀ b, (∑ j, Fin.append (fun k => α (x k)) (0 : Fin m₂ → ℂ) j *
+      evS b V₂ (Fin.append y y' j)) = ∑ k, α (x k) * evS b V₂ (y k) := by
+    intro b; rw [Fin.sum_univ_add]; simp
+  refine ⟨V₂, m₁ + m₂, Fin.append y y', Fin.append (fun k => α (x k)) 0,
+    Fin.append 0 (fun k => α (x' k)), N, hb₀V, ?_, ?_⟩
+  · rw [happ, ← hsum β₀ γ₀ hγ₀]; exact hr0
+  · intro b hab hbV hden
+    obtain ⟨β, rfl⟩ := exists_spec_factor hV₂' b hbV
+    obtain ⟨γ, hγ, hl⟩ := key β hab
+    rw [happ, ← hsum β γ hγ] at hden
+    obtain ⟨h1, h2⟩ := hfr γ hden
+    have hlW : ⊤ ≤ (pullback.lift _ _ hab) ⁻¹ᵁ W := by rw [hl]; exact h1
+    refine ⟨hlW, ?_⟩
+    have hlW' : ⊤ ≤ (Spec.map γ ≫ κ) ⁻¹ᵁ W := by rw [← hl]; exact hlW
+    rw [happ, happ', ← hsum β γ hγ, ← hsum β γ hγ, hl, evS_comp _ _ _ _ hlW']
+    exact h2
+
 end ZInQ.R3Etale
+#print axioms ZInQ.R3Etale.exists_tensor_formula

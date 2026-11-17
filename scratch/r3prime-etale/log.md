@@ -23,3 +23,9 @@
 - Remaining glue: `TranslationAnHol` (x ↦ s(p x) Serre-holomorphic). Next: prove it (tensor decomposition on
   an affine open of 𝒢 ×_{𝓞_L} 𝒢).
 - Note: worktree lacked lean/.lake (z_in_q package); copied from ~/dzq-wt/carirr-refold (lean/ sources identical, diff -rq).
+
+## 08:05 THGeneric.lean compiles (VERIFIED, axioms propext/choice/Quot.sound)
+- `exists_tensor_formula`: for X, Y over Spec R₀, σ ∈ Γ(X ×_{R₀} Y, W), ℂ-points a, b₀ with (a,b₀) ∈ W(ℂ):
+  ∃ V ∋ b₀, c_j ∈ Γ(Y,V), u_j, v_j ∈ ℂ, N with σ(a,b)·(Σ v_j c_j(b))^N = Σ u_j c_j(b) for b ∈ V(ℂ), Σ v_j c_j(b) ≠ 0
+  (nonzero at b₀). Proof: affine V₁ ∋ a, V₂ ∋ b₀, V₁×V₂ = Spec(Γ(V₁)⊗Γ(V₂)) via Mathlib `pullbackSpecIso`,
+  basic-open fraction (`exists_fraction`, Mathlib `isLocalization_basicOpen`), tensor decomposition.
