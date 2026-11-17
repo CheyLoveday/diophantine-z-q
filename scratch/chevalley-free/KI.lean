@@ -12,6 +12,9 @@ import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Pro
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.CategoryTheory.Comma.Over.Pullback
 import ZInQKernel.Contrib.OneProof.MilneQuasiInverse.Descent
 import Mathlib.AlgebraicGeometry.Morphisms.LocalFlatDescent
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Limits.FieldExtension
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Limits.BaseChange
+import Mathlib.AlgebraicGeometry.AffineTransitionLimit
 
 /-! # chevalley-free, step R: morphisms from `𝔾_m` to an abelian variety are constant -/
 
@@ -1640,6 +1643,117 @@ theorem fsd [PerfectField k] [FiniteDimensional k k₁] [Algebra.IsAlgebraic k�
 
 end FSD
 
+section Spread
+
+set_option synthInstance.maxHeartbeats 400000
+
+variable {k : Type} [Field k]
+
+theorem qq_comp_tower (k₀ k₁ : IntermediateField k (AlgebraicClosure k)) (h : k₀ ≤ k₁) :
+    Spec.map (CommRingCat.ofHom (IntermediateField.inclusion h).toRingHom) ≫ qq k k₀ = qq k k₁ := by
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  rfl
+
+theorem q₂_comp_tower (k₀ k₁ : IntermediateField k (AlgebraicClosure k)) (h : k₀ ≤ k₁) :
+    q₂ k k₁ ≫ Spec.map (CommRingCat.ofHom (IntermediateField.inclusion h).toRingHom) = q₂ k k₀ := by
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  rfl
+
+/-- **Step S: spreading out** `(B', π')` to a finite subextension `k₁ ⊆ k̄`. -/
+theorem spread (U : Over (Spec (CommRingCat.of k))) [LocallyOfFiniteType U.hom] [QuasiCompact U.hom]
+    (B' : PkgI3.AbVar (AlgebraicClosure k)) (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X) :
+    ∃ (k₁ : IntermediateField k (AlgebraicClosure k)) (_ : FiniteDimensional k k₁)
+      (X₁ : Over (Spec (CommRingCat.of k₁))) (π₁ : (Over.pullback (qq k k₁)).obj U ⟶ X₁)
+      (c : B'.X.left ⟶ X₁.left),
+      IsPullback c B'.X.hom X₁.hom (q₂ k k₁) ∧ π'.left ≫ c = rr U k₁ ≫ π₁.left := by
+  haveI := B'.proper
+  haveI := B'.smooth
+  -- (1) spread `B'`
+  obtain ⟨k₀, X₀, X₀m, h₁, h₂, h₃, c₀, hc₀⟩ := exists_finiteSubext_isPullback (baseField := k) B'.X.hom
+  -- (2) the inverse system `U ×_k k_i`, `k_i ⊇ k₀`
+  let D₀ := (IntermediateField.subextDiagram k (AlgebraicClosure k)).op ⋙ Scheme.Spec
+  let C₀ := subextSpecCone k (AlgebraicClosure k)
+  have hC₀ := isLimitSubextSpecCone k (AlgebraicClosure k)
+  let U₀ := pullback U.hom (qq k k₀.1)
+  let stageMap : U₀ ⟶ D₀.obj (Opposite.op k₀) := pullback.snd U.hom (qq k k₀.1)
+  haveI : IsLocallyNoetherian U.left := LocallyOfFiniteType.isLocallyNoetherian U.hom
+  haveI : CompactSpace U.left := QuasiCompact.compactSpace_of_compactSpace U.hom
+  haveI : QuasiSeparatedSpace U.left := inferInstance
+  haveI : CompactSpace U₀ := QuasiCompact.compactSpace_of_compactSpace (pullback.fst U.hom (qq k k₀.1))
+  haveI : QuasiSeparatedSpace U₀ := quasiSeparatedSpace_of_quasiSeparated (pullback.fst U.hom (qq k k₀.1))
+  haveI hD₀aff : ∀ {i j : (IntermediateField.FiniteSubext k (AlgebraicClosure k))ᵒᵖ} (f : i ⟶ j),
+      IsAffineHom (D₀.map f) := fun f => isAffineHom_of_isAffine (X := Spec _) (Y := Spec _) _
+  let D := JacobianChallenge.baseChangeDiagram D₀ stageMap
+  haveI : ∀ {i j : Over (Opposite.op k₀)} (f : i ⟶ j), IsAffineHom (D.map f) := fun f => inferInstance
+  let Cb := JacobianChallenge.baseChangeCone D₀ C₀ stageMap
+  have hCb := isLimitBaseChangeCone D₀ C₀ stageMap hC₀
+  let t := JacobianChallenge.baseChangeDiagramStructure D₀ stageMap
+  have hq₀ : C₀.π.app (Opposite.op k₀) ≫ qq k k₀.1 = sφ (φbar k) := q₂_qq (k₁ := k₀.1)
+  -- (3) `Cb.pt ≅ U_{k̄}`
+  let ι' : Cb.pt ⟶ pullback U.hom (sφ (φbar k)) :=
+    pullback.lift (pullback.fst _ _ ≫ pullback.fst U.hom (qq k k₀.1)) (pullback.snd _ _) (by
+      rw [Category.assoc, pullback.condition, ← Category.assoc]
+      change (pullback.fst stageMap (C₀.π.app (Opposite.op k₀)) ≫ stageMap) ≫ _ = _
+      rw [pullback.condition, Category.assoc, hq₀])
+  let κ : pullback U.hom (sφ (φbar k)) ⟶ Cb.pt :=
+    pullback.lift (pullback.lift (pullback.fst _ _) (pullback.snd _ _ ≫ C₀.π.app (Opposite.op k₀)) (by
+      rw [pullback.condition, Category.assoc, hq₀])) (pullback.snd _ _) (by simp [stageMap])
+  have hκι : κ ≫ ι' = 𝟙 _ := by
+    apply pullback.hom_ext <;> simp [κ, ι']
+  let a : Cb.pt ⟶ X₀ := ι' ≫ π'.left ≫ c₀
+  have ha : Cb.π ≫ t = (Functor.const _).map (a ≫ X₀m) := by
+    ext i
+    simp only [NatTrans.comp_app, Functor.const_map_app, t, Cb, a,
+      JacobianChallenge.baseChangeDiagramStructure_app, JacobianChallenge.baseChangeCone_π_app,
+      pullback.lift_fst_assoc, Category.id_comp]
+    rw [Category.comp_id, Category.assoc, Category.assoc, hc₀.w, ← Category.assoc π'.left, Over.w π']
+    change _ = ι' ≫ pullback.snd U.hom (sφ (φbar k)) ≫ _
+    rw [pullback.lift_snd_assoc]
+    exact pullback.condition
+  obtain ⟨i, g, hg1, hg2⟩ := Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation D t X₀m Cb hCb a ha
+  -- (4) the finite stage `k₁`
+  let k₁ := i.left.unop.1
+  have hle : k₀.1 ≤ k₁ := leOfHom i.hom.unop
+  let s₀₁ : Spec (CommRingCat.of k₁) ⟶ Spec (CommRingCat.of k₀.1) :=
+    Spec.map (CommRingCat.ofHom (IntermediateField.inclusion hle).toRingHom)
+  have hD : D₀.map i.hom = s₀₁ := rfl
+  have hCi : C₀.π.app i.left = q₂ k k₁ := rfl
+  let X₁ : Over (Spec (CommRingCat.of k₁)) := Over.mk (pullback.snd X₀m s₀₁)
+  let jU : pullback U.hom (qq k k₁) ⟶ D.obj i :=
+    pullback.lift (pullback.lift (pullback.fst _ _) (pullback.snd _ _ ≫ s₀₁) (by
+      rw [pullback.condition, Category.assoc, qq_comp_tower _ _ hle]))
+      (pullback.snd _ _) (by simp [stageMap, hD])
+  have hg2' : g ≫ X₀m = pullback.fst stageMap (D₀.map i.hom) ≫ stageMap := hg2
+  let π₁ : (Over.pullback (qq k k₁)).obj U ⟶ X₁ :=
+    Over.homMk (pullback.lift (jU ≫ g) (pullback.snd U.hom (qq k k₁)) (by
+      rw [Category.assoc, hg2', ← Category.assoc]
+      simp [jU, stageMap, hD])) (by simp [X₁])
+  let c : B'.X.left ⟶ X₁.left := pullback.lift c₀ (B'.X.hom ≫ q₂ k k₁) (by
+    rw [hc₀.w, Category.assoc, q₂_comp_tower _ _ hle])
+  refine ⟨k₁, i.left.unop.2, X₁, π₁, c, ?_, ?_⟩
+  · refine IsPullback.of_right (h₁₂ := pullback.fst X₀m s₀₁) (h₂₂ := s₀₁) (v₁₃ := X₀m) ?_ ?_
+      (IsPullback.of_hasPullback X₀m s₀₁)
+    · rw [pullback.lift_fst, q₂_comp_tower _ _ hle]; exact hc₀
+    · exact pullback.lift_snd _ _ _
+  · apply pullback.hom_ext
+    · have e1 : rr U k₁ ≫ jU = κ ≫ Cb.π.app i := by
+        apply pullback.hom_ext
+        · apply pullback.hom_ext
+          · simp [jU, κ, Cb, rr]
+          · simp only [jU, κ, Cb, rr, Category.assoc, pullback.lift_fst_assoc, pullback.lift_snd,
+              pullback.lift_fst, JacobianChallenge.baseChangeCone_π_app, pullback.lift_snd_assoc]
+            rw [Category.id_comp, pullback.lift_snd, q₂_comp_tower _ _ hle]
+            rfl
+        · simp [jU, κ, Cb, rr, hCi]
+      simp only [Category.assoc, c, pullback.lift_fst, π₁, Over.homMk_left]
+      rw [← Category.assoc (rr U k₁), e1, Category.assoc, hg1]
+      simp only [a, ← Category.assoc, hκι, Category.id_comp]
+    · simp only [Category.assoc, c, pullback.lift_snd, π₁, Over.homMk_left, X₁]
+      rw [← Category.assoc, Over.w π']
+      simp [rr]
+
+end Spread
+
 end ZInQ.ChevFree
 
 #print axioms ZInQ.ChevFree.rig_raw
@@ -1653,3 +1767,4 @@ end ZInQ.ChevFree
 #print axioms ZInQ.ChevFree.isMonHom_Ecomp
 #print axioms ZInQ.ChevFree.isPullback_π'
 #print axioms ZInQ.ChevFree.fsd
+#print axioms ZInQ.ChevFree.spread
