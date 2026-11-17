@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.C8CFT
+import ZInQKernel.Contrib.OneProof.C8ConradB
 import ZInQKernel.Contrib.OneProof.CartierSmooth
 import ZInQKernel.Contrib.OneProof.GeomConnOfRationalPoint
 import ZInQKernel.Contrib.OneProof.GroupSchemeEquidim
@@ -25,14 +25,14 @@ noncomputable section
 
 namespace HDec.G0Galois.C8Conrad
 
-/-- The inputs of the C8 reroute that are not in the chain: the leaves `conradAppBQp` (Conrad App. B, the manuscript's
-citation) and `tateTwistInvariantsInertia` (Tate 1967 §3.3 Thm 2 over the completion of `K^{ur}`), the two
-dictionary statements `inertiaAtPDecomp` and `minkowskiInertiaQ` (GLUE), and the glue `twistCharHTWt0` (open; the
-Hodge–Tate half of c8-conrad's `TwistCharHT0`). `LocAlgExponentEqWeight` (`C8LocAlg`) and `FiniteOfLocAlgTrivialQ`
+/-- The inputs of the C8 reroute that are not in the chain: the leaf `conradAppB` (Conrad App. B, pp. 32-33, base field
+`ℚ_p`, the manuscript's citation: p. 32 and Prop. B.3; conrad-b3 replaced c8-conrad2's two leaves `conradAppBQp` and
+`tateTwistInvariantsInertia` (Tate 1967 §3.3 Thm 2 over the completion of `K^{ur}`, a departure) by this one), the two
+dictionary statements `inertiaAtPDecomp` and `minkowskiInertiaQ` (GLUE, proved in `C8Dicts`), and the glue
+`twistCharHTWt0` (proved in `C8Twist`). `LocAlgExponentEqWeight` (`C8ConradB`) and `FiniteOfLocAlgTrivialQ`
 (`C8CFT`) are proved from these. -/
 structure C8Inputs : Prop where
-  conradAppBQp : ConradAppBQp
-  tateTwistInvariantsInertia : TateTwistInvariantsInertia
+  conradAppB : ConradAppB
   twistCharHTWt0 : TwistCharHTWt0
   inertiaAtPDecomp : InertiaAtPDecomp
   minkowskiInertiaQ : MinkowskiInertiaQ
@@ -40,8 +40,8 @@ structure C8Inputs : Prop where
 /-- **C8's consumer from the C8 inputs** (the replacement term at `g8_g12_of_leaves3_hf_pz_eb`). -/
 theorem g12DetPZ_of_inputs (hR : HSyn.EigenformRepExists) (hHT : PkgI4.EigenformHT) (c : C8Inputs)
     (h9 : G9GlueNoT23) (hdR : PkgI4.DeRhamComparison) : G12DetPZ :=
-  g12DetPZ_of_twistFinite (c8TwistFinite_of_leaves hR hHT c.conradAppBQp c.tateTwistInvariantsInertia
-    c.twistCharHTWt0 c.inertiaAtPDecomp c.minkowskiInertiaQ) h9 hdR
+  g12DetPZ_of_twistFinite (c8TwistFinite_of_conradB hR hHT c.conradAppB c.twistCharHTWt0 c.inertiaAtPDecomp
+    c.minkowskiInertiaQ) h9 hdR
 
 end HDec.G0Galois.C8Conrad
 
