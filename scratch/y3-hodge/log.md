@@ -44,3 +44,4 @@ unrelated TYZThm21Span files).
   #print axioms standard (discharges.txt).
 - Hodge.lean stage 6: Lemma P on H₁, uniqueness half `eq_E0_of_principalRiemann` (any principal Riemann form of type μ on the genuine H₁(A(ℂ),ℤ) equals E₀ under the print's c : 𝒪 ≅ H₁): compiles, 0 errors.
 - Hodge.lean stage 7: Lemma P on H₁ complete: `exists_principalRiemann`, `lemmaP_H1` (∃! principal Riemann form of type μ on genuine H₁(A(ℂ),ℤ), = E₀ under c), `lemmaP_of_isHodgeH1Print`: compiles, standard axioms (#print axioms run).
+- Hodge.lean stage 8 (§9 converse): mobPM_mul, dcRelPM_left/right, retraction rPM, rel_rPM, `print_of_deligneH`, `print_iff_deligneH` (new leaf ↔ old leaf), `printPM_iff_field`: compiles, 0 errors.

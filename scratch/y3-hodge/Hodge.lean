@@ -1473,4 +1473,171 @@ theorem lemmaP_of_isHodgeH1Print {P : QML3 ℂ} {τ : UpperHalfPlane} (h : IsHod
 
 end LemmaP
 
+/-! ## 9. The converse: the old leaf gives the print-form leaf (so the new leaf is not stronger) -/
+
+section Converse
+
+open LeafQM.AV.R1UnivRigid ShimuraCFT RayClassCFT UpperHalfPlane
+
+theorem mobPM_mul (g h : GL (Fin 2) ℝ) (z : HPM) : mobPM (g * h) z = mobPM g (mobPM h z) := by
+  apply Subtype.ext
+  show num (g * h) z.1 / denom (g * h) z.1 = num g (num h z.1 / denom h z.1) / denom g (num h z.1 / denom h z.1)
+  have h1 : denom h z.1 ≠ 0 := denom_ne_zero_of_im h z.2
+  set N := num h z.1 with hN
+  set D := denom h z.1 with hD
+  have hn : num (g * h) z.1 = (g 0 0 : ℂ) * N + (g 0 1 : ℂ) * D := by
+    simp only [hN, hD, num, denom, Matrix.GeneralLinearGroup.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
+    push_cast; ring
+  have hd : denom (g * h) z.1 = (g 1 0 : ℂ) * N + (g 1 1 : ℂ) * D := by
+    simp only [hN, hD, num, denom, Matrix.GeneralLinearGroup.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
+    push_cast; ring
+  have hn' : num g (N / D) = ((g 0 0 : ℂ) * N + (g 0 1 : ℂ) * D) / D := by
+    simp only [num]; field_simp
+  have hd' : denom g (N / D) = ((g 1 0 : ℂ) * N + (g 1 1 : ℂ) * D) / D := by
+    simp only [denom]; field_simp
+  rw [hn, hd, hn', hd', div_div_div_cancel_right₀ h1]
+
+theorem mobPM_one (z : HPM) : mobPM 1 z = z := by
+  apply Subtype.ext
+  show num 1 z.1 / denom 1 z.1 = z.1
+  simp [num, denom]
+
+theorem iotaGL_mul (x y : LeafQM.B) (hx : ShimuraGlue.nrdQ ℚ x ≠ 0) (hy : ShimuraGlue.nrdQ ℚ y ≠ 0)
+    (hxy : ShimuraGlue.nrdQ ℚ (x * y) ≠ 0) :
+    RayClassCFT.iotaGL (x * y) hxy = RayClassCFT.iotaGL x hx * RayClassCFT.iotaGL y hy :=
+  Matrix.GeneralLinearGroup.ext fun i j => by
+    rw [Matrix.GeneralLinearGroup.coe_mul, RayClassCFT.iotaGL_coe, RayClassCFT.iotaGL_coe,
+      RayClassCFT.iotaGL_coe, RayClassCFT.iota_mul]
+
+theorem nrd_mul_ne (x y : LeafQM.B) (hx : ShimuraGlue.nrdQ ℚ x ≠ 0) (hy : ShimuraGlue.nrdQ ℚ y ≠ 0) :
+    ShimuraGlue.nrdQ ℚ (x * y) ≠ 0 := by
+  rw [map_mul]; exact mul_ne_zero hx hy
+
+/-- Moving the left point by `a` (with inverse `a'`, `ua = a` in `G(𝔸_f)`) does not change the relation. -/
+theorem dcRelPM_left {a a' : LeafQM.B} (haa : a * a' = 1) (haa' : a' * a = 1)
+    (ha : ShimuraGlue.nrdQ ℚ a ≠ 0) {ua : BAQˣ} (hua : (ua : BAQ) = bEmb a)
+    (z : HPM) (g : BAQˣ) (z' : HPM) (g' : BAQˣ) :
+    DCRelPM z g z' g' ↔ DCRelPM (mobPM (RayClassCFT.iotaGL a ha) z) (ua * g) z' g' := by
+  have ha' : ShimuraGlue.nrdQ ℚ a' ≠ 0 := by
+    intro h; have := congrArg (ShimuraGlue.nrdQ ℚ) haa; rw [map_mul, h, mul_zero, map_one] at this
+    exact zero_ne_one this
+  constructor
+  · rintro ⟨gm, hγ, hmob, k, hk, hg⟩
+    have hn := nrd_mul_ne gm a' hγ ha'
+    refine ⟨gm * a', hn, ?_, k, hk, ?_⟩
+    · have hn2 := nrd_mul_ne (gm * a') a hn ha
+      rw [← mobPM_mul, ← iotaGL_mul (gm * a') a hn ha hn2]
+      have hga : gm * a' * a = gm := by rw [_root_.mul_assoc, haa', _root_.mul_one]
+      rw [show RayClassCFT.iotaGL (gm * a' * a) hn2 = RayClassCFT.iotaGL gm hγ from
+        Matrix.GeneralLinearGroup.ext fun i j => by rw [RayClassCFT.iotaGL_coe, RayClassCFT.iotaGL_coe, hga]]
+      exact hmob
+    · rw [hg, Units.val_mul, hua, map_mul]
+      simp only [_root_.mul_assoc]
+      rw [← _root_.mul_assoc (bEmb a') (bEmb a), ← map_mul, haa', map_one, _root_.one_mul]
+  · rintro ⟨dl, hδ, hmob, k, hk, hg⟩
+    have hn := nrd_mul_ne dl a hδ ha
+    refine ⟨dl * a, hn, ?_, k, hk, ?_⟩
+    · rw [iotaGL_mul dl a hδ ha hn, mobPM_mul, hmob]
+    · rw [hg, Units.val_mul, hua, map_mul]
+      simp only [_root_.mul_assoc]
+
+theorem iotaGL_eq_one {x : LeafQM.B} (hx : ShimuraGlue.nrdQ ℚ x ≠ 0) (h1 : x = 1) :
+    RayClassCFT.iotaGL x hx = 1 :=
+  Matrix.GeneralLinearGroup.ext fun i j => by
+    rw [RayClassCFT.iotaGL_coe, h1]
+    simp [BPAnalytic.QM.iota]
+
+/-- Moving the right point by `a` does not change the relation. -/
+theorem dcRelPM_right {a a' : LeafQM.B} (haa : a * a' = 1) (haa' : a' * a = 1)
+    (ha : ShimuraGlue.nrdQ ℚ a ≠ 0) {ua : BAQˣ} (hua : (ua : BAQ) = bEmb a)
+    (z : HPM) (g : BAQˣ) (z' : HPM) (g' : BAQˣ) :
+    DCRelPM z g z' g' ↔ DCRelPM z g (mobPM (RayClassCFT.iotaGL a ha) z') (ua * g') := by
+  have ha' : ShimuraGlue.nrdQ ℚ a' ≠ 0 := by
+    intro h; have := congrArg (ShimuraGlue.nrdQ ℚ) haa; rw [map_mul, h, mul_zero, map_one] at this
+    exact zero_ne_one this
+  constructor
+  · rintro ⟨gm, hγ, hmob, k, hk, hg⟩
+    have hn := nrd_mul_ne a gm ha hγ
+    refine ⟨a * gm, hn, ?_, k, hk, ?_⟩
+    · rw [iotaGL_mul a gm ha hγ hn, mobPM_mul, hmob]
+    · rw [Units.val_mul, hg, hua, map_mul]
+      simp only [_root_.mul_assoc]
+  · rintro ⟨dl, hδ, hmob, k, hk, hg⟩
+    have hn := nrd_mul_ne a' dl ha' hδ
+    refine ⟨a' * dl, hn, ?_, k, hk, ?_⟩
+    · rw [iotaGL_mul a' dl ha' hδ hn, mobPM_mul, hmob, ← mobPM_mul, ← iotaGL_mul a' a ha' ha (nrd_mul_ne _ _ ha' ha),
+        iotaGL_eq_one _ haa', mobPM_one]
+    · have h2 : (g' : BAQ) = bEmb a' * ((ua : BAQ) * g') := by
+        rw [hua, ← _root_.mul_assoc, ← map_mul, haa', map_one, _root_.one_mul]
+      rw [h2, ← Units.val_mul, hg, map_mul]
+      simp only [_root_.mul_assoc]
+
+theorem nrd_mu_ne : ShimuraGlue.nrdQ ℚ RayClassCFT.mu ≠ 0 := by rw [RayClassCFT.nrd_mu]; norm_num
+
+/-- `μ = 1 + i` as an element of `G(𝔸_f)`. -/
+def uMu : BAQˣ := ⟨bEmb RayClassCFT.mu, bEmb RayClassCFT.muInv,
+  by rw [← map_mul, RayClassCFT.mu_mul, map_one], by rw [← map_mul, RayClassCFT.mul_mu, map_one]⟩
+
+theorem mob_mu_pos (z : HPM) (h : ¬ 0 < z.1.im) :
+    0 < (mobPM (RayClassCFT.iotaGL RayClassCFT.mu nrd_mu_ne) z).1.im := by
+  have hneg : z.1.im < 0 := lt_of_le_of_ne (not_lt.mp h) z.2
+  simp only [mobPM]
+  rw [im_num_div_denom, det_iotaGL, RayClassCFT.nrd_mu]
+  have h3 := normSq_denom_pos (RayClassCFT.iotaGL RayClassCFT.mu nrd_mu_ne) z.2
+  push_cast
+  exact div_pos (by nlinarith) h3
+
+/-- The retraction `ℍ^± × G(𝔸_f) → ℍ × G(𝔸_f)`: the identity on `ℍ`, `(z, g) ↦ (μz, μg)` on `ℍ⁻`. -/
+def rPM (z : HPM) (g : BAQˣ) : UpperHalfPlane × BAQˣ :=
+  if h : 0 < z.1.im then (⟨z.1, h⟩, g)
+  else (⟨(mobPM (RayClassCFT.iotaGL RayClassCFT.mu nrd_mu_ne) z).1, mob_mu_pos z h⟩, uMu * g)
+
+theorem rPM_toPM (τ : UpperHalfPlane) (g : BAQˣ) : rPM (toPM τ) g = (τ, g) := by
+  unfold rPM toPM
+  rw [dif_pos (show 0 < (τ : ℂ).im from τ.im_pos)]
+
+theorem rel_rPM (z : HPM) (g : BAQˣ) (z' : HPM) (g' : BAQˣ) :
+    DCRelPM z g z' g' ↔
+      DCRelPM (toPM (rPM z g).1) (rPM z g).2 (toPM (rPM z' g').1) (rPM z' g').2 := by
+  have hL := dcRelPM_left RayClassCFT.mu_mul RayClassCFT.mul_mu nrd_mu_ne (ua := uMu) rfl
+  have hR := dcRelPM_right RayClassCFT.mu_mul RayClassCFT.mul_mu nrd_mu_ne (ua := uMu) rfl
+  unfold rPM
+  split_ifs with h h'
+  · exact Iff.rfl
+  · exact hR z g z' g'
+  · exact hL z g z' g'
+  · exact (hL z g z' g').trans (hR _ _ z' g')
+
+/-- **The print-form leaf from the old leaf** (GLUE, proved): `Ψ±(z, g) = Ψ(r(z, g))` with the retraction `r`;
+fibres by `rel_rPM` and `dcRelPM_iff`, moduli by `print_iff_hodge`. -/
+theorem print_of_deligneH (h : Y3Fix.DeligneCanonicalModelY3EveryH) : DeligneCanonicalModelY3EveryPrint := by
+  intro Y Φ hY
+  obtain ⟨Ψ, ⟨h1, h2, h3, ⟨hm, hh⟩, h5⟩, hU⟩ := h Y Φ hY
+  refine ⟨fun z g => Ψ (rPM z g).1 (rPM z g).2, ⟨fun y => ?_, fun z g z' g' => ?_, fun g => ?_,
+    ⟨fun τ => ?_, ?_⟩, ?_⟩, fun u hu τ => ?_⟩
+  · obtain ⟨τ, g, rfl⟩ := h1 y
+    exact ⟨toPM τ, g, by simp only [rPM_toPM]⟩
+  · rw [h2, ← dcRelPM_iff, ← rel_rPM]
+  · simpa only [rPM_toPM] using h3 g
+  · obtain ⟨P, hP, hH⟩ := hm τ
+    exact ⟨P, by simpa only [rPM_toPM] using hP, (print_iff_hodge P τ).2 hH⟩
+  · simpa only [rPM_toPM] using hh
+  · obtain ⟨ε, δ, hr⟩ := h5
+    refine ⟨ε, δ, fun K _ _ _ hK κ q z hz σ s hs g => ?_⟩
+    simpa only [rPM_toPM] using hr K hK κ q z hz σ s hs g
+  · obtain ⟨P, hP, hH⟩ := hU u hu τ
+    exact ⟨P, by simpa only [rPM_toPM] using hP, (print_iff_hodge P τ).2 hH⟩
+
+/-- **The print-form leaf is equivalent to the old leaf** (both directions proved): the restatement adds no
+strength. -/
+theorem print_iff_deligneH : DeligneCanonicalModelY3EveryPrint ↔ Y3Fix.DeligneCanonicalModelY3EveryH :=
+  ⟨deligneH_of_print, print_of_deligneH⟩
+
+/-- With y3-fix's `print_iff_field`: the two printed leaves together are equivalent to the research field. -/
+theorem printPM_iff_field (hM : AvSplit.MumfordTorsionAlgClosed) :
+    (Y3Fix.Y3FineModuliAbP ∧ DeligneCanonicalModelY3EveryPrint) ↔ ShimuraMainThmIDeligneY3AbU := by
+  rw [print_iff_deligneH]; exact Y3Fix.print_iff_field hM
+
+end Converse
+
 end Y3Hodge
