@@ -113,10 +113,20 @@ The FLT theorem is used as a Lean proof, not as a leaf.
 - Axioms (VERIFIED, `Axioms-output.txt`): `degHomogPoly`, `degEndEqEndDegree`, `finiteEndSurjective`,
   `finrankGenericPoint`, `CharPolyPort.finrank_genericPoint`, `degHomogPolyEndDegree` and the conditional
   forms all use only `[propext, Classical.choice, Quot.sound]`.
-- `#discharges`: see `scratch/charpoly-port/Discharges-output.txt` and the log (§7).
+- `#discharges` (VERIFIED, `scratch/charpoly-port/Discharges-output.txt`, after
+  `lake build +Main +Discharges +DegHomogPolyFLT +CharPolyCharP`, 16,118 jobs):
+
+  ```
+  DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by charPolyIndepOfEllAlgClosed_proof
+    still assumes: []
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 36 open hypotheses, 13237 theorems checked, 37 discharge one
+  ```
 - Autofold: `scratch/charpoly-port/autofold.json` discharges `charPolyIndepOfEllAlgClosed` with proof
   `CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly' DegPolyFLT.degHomogPoly` and no leaves. It
-  imports charpoly-p's `CharPolyCharP` (the assembly is that task's). Dry run: see the log.
+  imports charpoly-p's `CharPolyCharP` (the assembly is that task's). `autofold.py --dry-run`: strict
+  15/16 on 31 → 14/16 on 30, strictest 15/16 → 14/16, and `OpenTextbookLeaves18` has no fields. The
+  compile of the dry-run module is recorded in the log.
 
 ## 7. State
 

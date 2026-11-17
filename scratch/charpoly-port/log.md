@@ -44,3 +44,10 @@ No statement changed.
 - VERIFIED (build6): flat_of_isFinite (finite endomorphism of PkgI3.AbVar is flat; miracle flatness, FLT's [n] argument generalized) and finiteEndSurjective : FiniteEndSurjective proved; degHomogPoly_of_finrankGeneric (h1 : FinrankGenericEqDegEnd) : DegDet.DegHomogPoly.
 - VERIFIED: scratch/charpoly-port/FinrankAlg.lean compiles: CharPolyPortFinrank.finrank_genericPoint (FinrankGenericPoint in universe u; rank of finite flat surjective map of integral schemes at the generic point = function-field degree), axioms [propext, Classical.choice, Quot.sound].
 - VERIFIED (build8, Axioms-output.txt): FinrankGeneric.lean moved to ZInQKernel/Contrib/OneProof/CharPolyPort/FinrankGeneric.lean; DegPolyFLT.degHomogPoly : DegDet.DegHomogPoly proved with no hypothesis; all standard axioms.
+- VERIFIED: lake build +Main +Discharges +DegHomogPolyFLT +CharPolyCharP OK (16118 jobs, build9.log).
+- VERIFIED #discharges (Discharges-output.txt): `DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by
+  charPolyIndepOfEllAlgClosed_proof, still assumes: [], axioms: [propext, Classical.choice, Quot.sound]`
+  (scratch composition `CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly' DegPolyFLT.degHomogPoly`);
+  summary line `#discharges: 36 open hypotheses, 13237 theorems checked, 37 discharge one`.
+- autofold.py --dry-run (autofold-dryrun.txt): strict 15/16 on 31 -> 14/16 on 30; strictest 15/16 -> 14/16;
+  OpenTextbookLeaves18 has no fields.
