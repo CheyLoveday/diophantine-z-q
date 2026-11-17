@@ -146,13 +146,13 @@ attribute [local instance] isIntegral_left
 
 /-- **GLUE (open): the rank of an isogeny at the generic point is its function-field degree.** For an
 isogeny `ψ` of an abelian variety (finite, surjective, hence flat), Mathlib's rank
-`Scheme.Hom.finrank ψ η` of the finite flat morphism at the generic point `η` equals
+`Scheme.Hom.finrank ψ (ψ η)` of the finite flat morphism at the generic point `ψ η = η` equals
 `degEnd ψ = [K(A) : ψ^*K(A)]`. Locally: for `Spec S → Spec R` finite flat with `R ⊆ S` domains,
 `rank_{R_(0)} S_(0) = [Frac S : Frac R]` (EGA IV 2.? / Stacks 02KA; standard commutative algebra). -/
 def FinrankGenericEqDegEnd : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A),
     PkgI3.AbVar.IsIsogenyMor ψ.hom →
-      Scheme.Hom.finrank ψ.hom.left (genericPoint A.X.left) = degEnd ψ
+      Scheme.Hom.finrank ψ.hom.left (ψ.hom.left (genericPoint A.X.left)) = degEnd ψ
 
 /-- **GLUE (open): a finite endomorphism of an abelian variety is surjective.** A finite morphism
 preserves dimension, and a proper closed subset of the irreducible `A` has smaller dimension
@@ -201,6 +201,32 @@ theorem finiteEndSurjective : FiniteEndSurjective := by
   exact ⟨(RelativeGroupLaw.surjective_and_endDegree_eq_finrank_of_isFinite_of_flat k A.X.hom (law A)
     (toPt ψ)).1⟩
 
+/-- **GLUE (open), general form: the rank of a finite flat surjective morphism of integral schemes at
+the generic point is the degree of the function-field extension.** For `f : X ⟶ Y` finite, flat and
+surjective with `X`, `Y` integral, Mathlib's `Scheme.Hom.finrank f` at `f(η_X) = η_Y` equals
+`[K(X) : K(Y)]`, `K(Y) → K(X)` being the stalk map at the generic point. On an affine chart
+`Spec S → Spec R` (`R ⊆ S` domains, `S` finite flat over `R`) it says
+`rank_{R_(0)} S_(0) = [Frac S : Frac R]`, because `S ⊗_R Frac R` is a domain finite over the field
+`Frac R`, hence equal to `Frac S` (standard commutative algebra; Stacks 02KA for the rank). No
+abelian-variety input. -/
+def FinrankGenericPoint : Prop :=
+  ∀ {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] (f : X ⟶ Y) [IsFinite f] [Flat f],
+    Function.Surjective f →
+      letI := (f.stalkMap (genericPoint X)).hom.toAlgebra
+      Scheme.Hom.finrank f (f (genericPoint X)) =
+        Module.finrank (Y.presheaf.stalk (f (genericPoint X))) (X.presheaf.stalk (genericPoint X))
+
+/-- `FinrankGenericEqDegEnd` from the general `FinrankGenericPoint` (proved). -/
+theorem finrankGenericEqDegEnd_of_finrankGenericPoint (h : FinrankGenericPoint) :
+    FinrankGenericEqDegEnd := by
+  intro k _ _ A ψ hiso
+  classical
+  haveI : IsFinite ψ.hom.left := hiso.1
+  haveI : Flat ψ.hom.left := flat_of_isFinite A ψ
+  unfold degEnd
+  rw [if_pos hiso]
+  exact h ψ.hom.left hiso.2.surj
+
 /-- **`degEnd = endDegree`** (proved from the two glue statements). -/
 theorem degEnd_eq_endDegree (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurjective)
     (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A) :
@@ -213,7 +239,7 @@ theorem degEnd_eq_endDegree (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurject
     haveI : Flat (toPt ψ).1 := ZInQ.Contrib.MilneQuasiInverse.finite_surjective_abVarHom_flat ψ hiso
     obtain ⟨-, -, h⟩ :=
       RelativeGroupLaw.surjective_and_endDegree_eq_finrank_of_isFinite_of_flat k A.X.hom (law A) (toPt ψ)
-    rw [h (genericPoint A.X.left)]
+    rw [h (ψ.hom.left (genericPoint A.X.left))]
     exact (h1 k A ψ hiso).symm
   · have h0 : degEnd ψ = 0 := by
       unfold degEnd
@@ -258,5 +284,9 @@ theorem degHomogPoly_of_glue (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurjec
 /-- **deg-det's `DegHomogPoly`, every characteristic, from `FinrankGenericEqDegEnd` alone (proved).** -/
 theorem degHomogPoly_of_finrankGeneric (h1 : FinrankGenericEqDegEnd) : DegDet.DegHomogPoly :=
   degHomogPoly_of_glue h1 finiteEndSurjective
+
+/-- **deg-det's `DegHomogPoly`, every characteristic, from the general `FinrankGenericPoint` (proved).** -/
+theorem degHomogPoly_of_finrankGenericPoint (h : FinrankGenericPoint) : DegDet.DegHomogPoly :=
+  degHomogPoly_of_finrankGeneric (finrankGenericEqDegEnd_of_finrankGenericPoint h)
 
 end ZInQ.Contrib.OneProof.DegPolyFLT
