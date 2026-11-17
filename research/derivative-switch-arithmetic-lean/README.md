@@ -2,6 +2,8 @@
 
 The finite-place Selmer and compact-support cones are built from continuous cochains of the arithmetic Galois groups. Lean constructs a normalized trace and a cochain adjoint on finite models from supplied local invariant maps, reciprocity and an orthogonal cup product. The trace-extension step applies to both of V20's finite coefficient rings.
 
+The [first local trace comparison](../derivative-switch-first-trace/README.md) supplies the local invariant for the sign line at precision two and maps this work to Jack's `RestrictedConverseGenuine` statement.
+
 ## What Lean checks
 
 | Construction | Checked content |
@@ -17,7 +19,7 @@ The source is [V20 at `54a4e576`](https://github.com/elliotglazer/diophantine-z-
 
 ## Next arithmetic steps
 
-1. **Construct local invariants and prove the global relation.** Prove that the finite cyclotomic extension is supported when the places over two lie in the support. At one positive precision, identify local $H^2(K_v,\mu_{2^i})$ with the $2^i$-torsion of the Brauer group, construct the normalized invariant and extend scalars to the paper's ring. Prove reciprocity for the supported global cochains and global degree-three exactness. This supplies the inputs to `exists_normalized_trace` and its uniqueness theorem. The pinned Mathlib has the cochain and localization machinery, while the local Brauer invariant and Poitou–Tate comparison need formalization.
+1. **Extend the local invariants and prove the global relation.** Prove that the finite cyclotomic extension is supported when the places over two lie in the support. Extend the mod-two local invariant to $H^2(K_v,\mu_{2^i})$ at higher precision and compare the coefficient and transition maps. Prove reciprocity for the supported global cochains and global degree-three exactness. This supplies the remaining inputs to `exists_normalized_trace` and its uniqueness theorem.
 2. **Construct the paired finite Selmer diagrams.** Instantiate the Tate lattice, Weil pairing and actual anticyclotomic characters. Construct the derived Kummer condition including its degree-zero torsion, the unramified conditions, and the tame derivative planes with their isotropy homotopies. Prove the cone cup and its Leibniz identity and identify its traced adjoint with Poitou–Tate duality, including compatibility with localization. The current adjoint has a checked chain-map equation. Its perfectness on cohomology remains open in Lean.
 3. **Connect the finite models to the determinant calculation.** Construct the H20–H22 classes with their multiplier and the bounded free contractions on the actual arithmetic cochains. Identify the compatible scalar ring with $\mathbf Z_2[[t]]$, then connect the retained involution, orthogonal inverse and traced adjoint to the single functional $\lambda_z$. Verify its evaluations in the retained integral determinant bases. That identification is needed before the checked rank-reduction and cofactor lemmas apply to the arithmetic outer bound.
 
