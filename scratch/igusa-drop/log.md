@@ -18,3 +18,14 @@ Base wip/leaf-fold33b 97247ce1 (top `sixContactMin_of_open71`, TailZ78). Build t
    * `AfTateLam.r16CoreY_of_ds965_x0 (h1) (h2) (h3 : AfCharpolyDS965) (hM) : R16Split.R16CoreY`
    `lake build ZInQKernel.Contrib.OneProof.IgusaDrop`: Build completed successfully (12092 jobs); all three
    `#print axioms`: [propext, Classical.choice, Quot.sound] (VERIFIED). Import acyclic (new leaf module; nothing imports it).
+3. Generator scratch/igusa-drop/gen_igusa_drop.py (fold-b105's gen_chev_bypass.py with FIELD = igusaGL2DSGalSome and
+   the reader rule `r16CoreY_of_ds965 a b c (igusaGL2DS_of_igusaGL2DSGalSome X.igusaGL2DSGalSome) d` ->
+   `r16CoreY_of_ds965_x0 a b c d`). Walk (VERIFIED, generator output): sixContactMin_of_open71:
+   openResearchLeaves51_of_OpenResearchLeaves52 -> sixContactMin_of_open70 -> openResearchLeaves36EBCF_of_OpenResearchLeaves51;
+   stop at OpenResearchLeaves36EBCF; readers ['r16CoreY']. OpenResearchLeaves52 (28 fields) -> OpenResearchLeaves53 (27).
+   Wrote ZInQKernel/OneProof/H/TailZ79.lean (OpenResearchLeaves53, openResearchLeaves36EBCF_of_OpenResearchLeaves53,
+   sixContactMin_of_open72); Main.lean switched; kinds.tsv row igusaGL2DSGalSome dropped (no claims row, no reviews row).
+   render count: strict 6/24 on 30 -> 5/24 on 29 (the field was LEAF/LEAF; GLUE unchanged; -1 field).
+   `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.IgusaDrop`:
+   Build completed successfully (16226 jobs); 'HDec.HSyn.sixContactMin_of_open72' and 'ZInQ.OneProof.frozenTarget'
+   depend on axioms: [propext, Classical.choice, Quot.sound] (VERIFIED; build log left out of the commit).
