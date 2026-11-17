@@ -145,6 +145,8 @@ variable {X Y Z : AnalyticSpace.{u}}
 
 /-! ### The base case, and the two covers that widen it -/
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **A cospan of local models has a fibre product** — Mathlib's
 `AlgebraicGeometry.Scheme.Pullback.affine_hasPullback`, over `ComplexAnalytic.AnalyticSpace`.
 

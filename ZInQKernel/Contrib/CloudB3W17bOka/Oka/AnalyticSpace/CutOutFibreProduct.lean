@@ -435,6 +435,7 @@ theorem pullbackΓ_eqCutFamily_fibreProdCutOutι (j : Fin p) :
         (fibreProdCutOutι hX hY hS a b).toLRSHom.op).hom _ _).symm.trans
       ((prodCutOut.{u} f g).pullbackΓ_zeroLocusSubspaceι_eq_zero (eqCutFamily hX hY hS a b) j))
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The square commutes**: the two projections of the fibre product followed by the two legs of
 the cospan agree.
 
@@ -453,6 +454,7 @@ theorem fibreProdCutOut_condition :
   simp only [Category.assoc] at key ⊢
   exact key
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **A cone over the cospan kills the `p` differences.**
 
 The cone's pair into the product is `ComplexAnalytic.AnalyticSpace.prodCutOutLift`, and
