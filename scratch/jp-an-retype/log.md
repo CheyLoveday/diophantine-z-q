@@ -23,3 +23,13 @@
   - `JavanpeykarThm111An` (def, the leaf): JavanpeykarThm111 verbatim with IsStableHeightBar -> IsStableHeightBarAn.
   - `javanpeykarThm111_of_an' (h) (hUL) (hMT)`, `javanpeykarThm111_of_an (h) (hMT) : JavanpeykarThm111`.
   - `javanpeykarThm111An_of_thm111 (h) (hT35) : JavanpeykarThm111An` (converse: not stronger).
+
+## 11-17 06:20 checks
+- `lake build +Main +Discharges +JavanpeykarAnRetype`: VERIFIED "Build completed successfully (16217 jobs)".
+- `#discharges` (discharges-output.txt): VERIFIED `DISCHARGES [OpenResearchLeaves48.javanpeykarThm111] by
+  JavanpeykarAnRetype.javanpeykarThm111_of_an`, still assumes [JavanpeykarThm111An, AvSplit.MumfordTorsionAlgClosed];
+  axioms standard. All five #print axioms standard.
+- `autofold.py scratch/jp-an-retype/autofold.json --dry-run` (autofold-dryrun.txt): VERIFIED exit 0,
+  "strict count: 4/27 on 31 -> 4/27 on 31; strictest 4/27 -> 4/27" (count effect 0).
+- Rating: javanpeykarThm111An consequence/GLUE; not printed form: R3' inside the height, and the §2.3 composite
+  (lead's ruling wanted). No ON THE SPOT arguments.
