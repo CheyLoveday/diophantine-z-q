@@ -122,12 +122,37 @@ copies the field verbatim and checks it `Iff.rfl` against TailS.
 
 ## 6. `#discharges` and the fold
 
-`#discharges` output: see §7 (recorded from `scratch/hodgetate-from-dr/Discharges.lean`).
+`#discharges` output: §7 (from `scratch/hodgetate-from-dr/Discharges.lean`, full output in
+`Discharges-output.txt`; built with `lake build ZInQKernel.Contrib.OneProof.HodgeTatePairing +ZInQKernel.OneProof.Main
++ZInQKernel.OneProof.Discharges`, 14105 jobs, success).
 
 Autofold spec: `scratch/hodgetate-from-dr/autofold.json` (field `hodgeTateDecompAbVar`, research bundle; proof uses
 `{t}.mumfordTorsionAlgClosed` and five `{l}` fields; new leaf `hodgeTateDecompExists`, kind published, flag empty, so
-autofold flags it "unread"). Expected count change: strict and strictest GLUE −1 (the field), new leaf LEAF.
+autofold flags it "unread"). `autofold.py --dry-run` (VERIFIED): `strict count: 16/21 on 37 -> 17/20 on 37; strictest
+16/21 -> 17/20`, i.e. GLUE 21 → 20 and LEAF 16 → 17 in both columns. The dry-run module
+(`scratch/hodgetate-from-dr/AutofoldDry.lean`, the output without its first line) compiles against TailZ45:
+`sixContactMin_of_open39` depends on `[propext, Classical.choice, Quot.sound]` (VERIFIED). Nothing in the tree was
+written by the dry run.
 
 ## 7. `#discharges` output
 
-(pending, filled in below by the run)
+```
+DISCHARGES [OpenResearchLeaves28.hodgeTateDecompAbVar] by ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompAbVar_of_leaves
+  still assumes: [ZInQ.Contrib.HodgeTateFromPairing.HodgeTateDecompExists,
+ ZInQ.Contrib.HodgeSplit.TateTwistInvariants,
+ ZInQ.Contrib.HodgeSplit.AxSenTate,
+ HDec.WeilPairing.T09_SymmIsogenyExists,
+ HDec.WeilPairing.IsogenyQuasiInverse,
+ PkgI2.TorsionStructure]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves28.hodgeTateDecompAbVar] by ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompAbVar_of_printed
+  still assumes: [ZInQ.Contrib.HodgeTateFromPairing.HodgeTateDecompExists,
+ AvSplit.MumfordTorsionAlgClosed,
+ T09Pic.PicRepresentableAbVar,
+ T09Pic.PicZeroAbVar,
+ PicFix.MumfordKLFiniteSectionAC,
+ PicDict.MumfordPhiSurjectiveAC,
+ T09Pic.WeilPairingMumford]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 45 open hypotheses, 6739 theorems checked, 15 discharge one
+```

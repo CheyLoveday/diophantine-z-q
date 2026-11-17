@@ -38,3 +38,11 @@
 - New leaf: `HodgeTateDecompExists` = the field with `∃ a b` in place of the dimension g (no dims). Proved
   `hodgeTateDecompExists_of_field : HodgeTateDecompAbVar → HodgeTateDecompExists` (leaf not stronger than the field).
 - `cyc_gfToGqp`: pkg-I4's χ(gfToGqp σ) = Mathlib's cyclotomicCharacter (AlgebraicClosure F) p σ (naturality, VERIFIED compiled).
+
+## 18:10 final file, #discharges, dry-run fold (all VERIFIED)
+- Files renamed to Contrib/OneProof/HodgeTatePairing{,Decomp,Weil,Core}.lean (dict-galois, origin/wip/dict-galois,
+  already uses HodgeTateDecompAbVar.lean for its own leaf C_p(1)^g + C_p^b, which still needs dim t_A = g).
+- `hodgeTateDecompAbVar_of_printed` (leaf + mumfordTorsionAlgClosed + 5 added Pic/Weil fields) compiles, standard axioms.
+- lake build HodgeTatePairing +Main +Discharges: 14105 jobs, success.
+- #discharges: both theorems discharge OpenResearchLeaves28.hodgeTateDecompAbVar; standard axioms; 45 open, 6739 checked, 15 discharge one.
+- autofold --dry-run: strict 16/21 -> 17/20, strictest 16/21 -> 17/20 (GLUE -1). Dry-run module compiles; sixContactMin_of_open39 standard axioms.
