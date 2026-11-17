@@ -19,3 +19,5 @@ open HDec.PkgI4
 #print axioms FontaineSt.isAdmissible_of_pstF
 #print axioms FontaineSt.bmax_adjoin_eq_bst
 #print axioms FontaineSt.exists_dpCoeff
+#print axioms FontaineSt.bcrisPlusOf_eq_set
+#print axioms FontaineSt.acrisOf_mul

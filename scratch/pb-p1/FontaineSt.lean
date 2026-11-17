@@ -12,7 +12,8 @@ Fontaine's rings, as Berger prints them in *An introduction to the theory of p-a
 * `B_st = B_cris[log [p̃]]` with `log [p̃] = log_p(p) − Σ (1 − [p̃]/p)^n/n`, `log_p(p) = 0` (`BstFOf`), which is
   bst-construct's `logPTilde`.
 
-Proved: `A_cris ⊆ A_max` (`acrisOf_le_amaxOf`, from `p^n/n! ∈ ℤ_p`), `A_cris` does not depend on the generator
+Proved: `A_cris` is a ring and `B_cris^+` is exactly the printed set `{Σ x_n ω^n/n! : x_n ∈ B̃^+, x_n → 0}`
+(`acrisOf_mul`, `bcrisPlusOf_eq_set`), `B_st` is `G_{ℚ_p}`-stable (`bstF_stable`), `A_cris ⊆ A_max` (`acrisOf_le_amaxOf`, from `p^n/n! ∈ ℤ_p`), `A_cris` does not depend on the generator
 (`acrisOf_le`, `acrisOf_eq`), `B_st^{Fontaine} ⊆ B_st^{tree}` (`bstFOf_le`), and the basis form of admissibility
 passes from a subring to a larger one (`isAdmissibleT_mono`). Hence Berger's theorem over Fontaine's ring gives the
 current field `bergerPrintedV` (`bergerPrintedV_of_survey`), and Pan's theorem and Berger's theorem over Fontaine's
@@ -131,6 +132,145 @@ theorem bcrisPlusOf_le_bcrisOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p 
 theorem bcrisOf_le_bstFOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (w : Ainf p)
     (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) : BcrisOf p h w hw ≤ BstFOf p h w hw :=
   Algebra.adjoin_mono Set.subset_union_left
+
+/-! ## §2b. `A_cris` is a ring, and `B_cris^+` is the printed set `{Σ x_n ω^n/n! : x_n ∈ B̃^+, x_n → 0}` -/
+
+/-- Coefficients of the product of two divided-power series: `c_k = Σ_{i+j=k} C(k,i) a_i b_j`. -/
+def dpMul (f g : (Ainf p)⟦X⟧) : (Ainf p)⟦X⟧ :=
+  PowerSeries.mk fun k => ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal k,
+    (k.choose ij.1 : Ainf p) * PowerSeries.coeff ij.1 f * PowerSeries.coeff ij.2 g
+
+theorem dpSeries_mul (f g : (Ainf p)⟦X⟧) : dpSeries p f * dpSeries p g = dpSeries p (dpMul p f g) := by
+  ext k
+  rw [PowerSeries.coeff_mul]
+  simp only [dpSeries, dpMul, PowerSeries.coeff_mk]
+  rw [map_sum, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro ij hij
+  rw [Finset.HasAntidiagonal.mem_antidiagonal] at hij
+  have key : qpToLoc p (((ij.1.factorial : ℕ) : ℚ_[p]))⁻¹ * qpToLoc p (((ij.2.factorial : ℕ) : ℚ_[p]))⁻¹ =
+      qpToLoc p ((k.choose ij.1 : ℕ) : ℚ_[p]) * qpToLoc p (((k.factorial : ℕ) : ℚ_[p]))⁻¹ := by
+    rw [← map_mul, ← map_mul]
+    congr 1
+    have h := Nat.choose_mul_factorial_mul_factorial (show ij.1 ≤ k by omega)
+    have h2 : k - ij.1 = ij.2 := by omega
+    rw [h2] at h
+    have h1 : (ij.1.factorial : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)
+    have h2' : (ij.2.factorial : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)
+    have hk : (k.factorial : ℚ_[p]) = (k.choose ij.1 : ℚ_[p]) * ij.1.factorial * ij.2.factorial := by
+      exact_mod_cast h.symm
+    have hC : (k.choose ij.1 : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.choose_pos (by omega)).ne'
+    rw [hk]
+    field_simp
+  have hc : ((k.choose ij.1 : ℕ) : AinfP p) = qpToLoc p ((k.choose ij.1 : ℕ) : ℚ_[p]) := (map_natCast _ _).symm
+  simp only [map_mul, map_natCast]
+  rw [hc]
+  linear_combination (algebraMap (Ainf p) (AinfP p) (PowerSeries.coeff ij.1 f) *
+    algebraMap (Ainf p) (AinfP p) (PowerSeries.coeff ij.2 g)) * key
+
+theorem dpMul_mem {f g : (Ainf p)⟦X⟧} (hf : f ∈ restricted p) (hg : g ∈ restricted p) :
+    dpMul p f g ∈ restricted p := fun k => by
+  obtain ⟨N, hN⟩ := hf k
+  obtain ⟨M, hM⟩ := hg k
+  refine ⟨N + M, fun n hn => ?_⟩
+  change (p : Ainf p) ^ k ∣ PowerSeries.coeff n (dpMul p f g)
+  rw [dpMul, PowerSeries.coeff_mk]
+  refine Finset.dvd_sum fun ij hij => ?_
+  rw [Finset.HasAntidiagonal.mem_antidiagonal] at hij
+  by_cases hi : N ≤ ij.1
+  · exact Dvd.dvd.mul_right (Dvd.dvd.mul_left (hN _ hi) _) _
+  · exact Dvd.dvd.mul_left (hM _ (by omega)) _
+
+theorem dpSeries_add (f g : (Ainf p)⟦X⟧) : dpSeries p (f + g) = dpSeries p f + dpSeries p g := by
+  ext n
+  simp only [dpSeries, PowerSeries.coeff_mk, map_add, add_mul]
+
+theorem dpSeries_C (a : Ainf p) :
+    dpSeries p (PowerSeries.C a) = PowerSeries.C (algebraMap (Ainf p) (AinfP p) a) := by
+  ext n
+  simp only [dpSeries, PowerSeries.coeff_mk, PowerSeries.coeff_C]
+  split_ifs with hn
+  · subst hn
+    simp
+  · simp
+
+theorem C_mem_restricted (a : Ainf p) : PowerSeries.C a ∈ restricted p := fun k => ⟨1, fun n hn => by
+  change (p : Ainf p) ^ k ∣ PowerSeries.coeff n (PowerSeries.C a)
+  rw [PowerSeries.coeff_C, if_neg (by omega)]
+  exact dvd_zero _⟩
+
+theorem acrisOf_mul {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) {x y : BDeRhamPlus 𝓞_ℂ_[p] p}
+    (hx : x ∈ AcrisOf p w hw) (hy : y ∈ AcrisOf p w hw) : x * y ∈ AcrisOf p w hw := by
+  obtain ⟨f, hf, rfl⟩ := hx
+  obtain ⟨g, hg, rfl⟩ := hy
+  exact ⟨dpMul p f g, dpMul_mem p hf hg, by rw [← map_mul, dpSeries_mul]⟩
+
+theorem acrisOf_add {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) {x y : BDeRhamPlus 𝓞_ℂ_[p] p}
+    (hx : x ∈ AcrisOf p w hw) (hy : y ∈ AcrisOf p w hw) : x + y ∈ AcrisOf p w hw := by
+  obtain ⟨f, hf, rfl⟩ := hx
+  obtain ⟨g, hg, rfl⟩ := hy
+  exact ⟨f + g, Subring.add_mem _ hf hg, by rw [dpSeries_add, map_add]⟩
+
+theorem acrisOf_zpB {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) (z : ℤ_[p]) :
+    zpB p z ∈ AcrisOf p w hw :=
+  ⟨PowerSeries.C (zpToW p z), C_mem_restricted p _, by
+    rw [dpSeries_C]
+    exact (psEval_C (Ith p) (algebraMap_mem_ith p hw) _).symm⟩
+
+/-- The set printed in Berger 2004 II.3.1: `{Σ x_n ω^n/n! : x_n ∈ B̃^+ = A_inf[1/p], x_n → 0}`, i.e. `p^{−k} A_cris`. -/
+def BcrisPlusSet (w : Ainf p) (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) : Set (BdR p) :=
+  {x | ∃ (k : ℕ) (y : BDeRhamPlus 𝓞_ℂ_[p] p), y ∈ AcrisOf p w hw ∧ x = ((p : ℚ_[p])⁻¹ ^ k) • toBdR p y}
+
+theorem exists_pow_mul_mem (c : ℚ_[p]) : ∃ k : ℕ, ‖(p : ℚ_[p]) ^ k * c‖ ≤ 1 := by
+  obtain ⟨k, hk⟩ := pow_unbounded_of_one_lt ‖c‖ (show (1 : ℝ) < p by exact_mod_cast hp.out.one_lt)
+  refine ⟨k, ?_⟩
+  rw [norm_mul, Padic.norm_p_pow, zpow_neg, zpow_natCast]
+  have hpk : (0 : ℝ) < (p : ℝ) ^ k := pow_pos (by exact_mod_cast hp.out.pos) k
+  rw [inv_mul_le_iff₀ hpk, mul_one]
+  exact hk.le
+
+/-- **`B_cris^+` (the `ℚ_p`-algebra generated by `A_cris`) is exactly the printed set `p^{−k} A_cris`.** -/
+theorem bcrisPlusOf_eq_set {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] p w = 0) :
+    (BcrisPlusOf p w hw : Set (BdR p)) = BcrisPlusSet p w hw := by
+  have hpB : ∀ k : ℕ, ∀ y ∈ AcrisOf p w hw, (p : ℚ_[p]) ^ k • toBdR p y ∈ toBdR p '' AcrisOf p w hw := by
+    intro k y hy
+    refine ⟨zpB p ((p : ℤ_[p]) ^ k) * y, acrisOf_mul p hw (acrisOf_zpB p hw _) hy, ?_⟩
+    rw [map_mul, toBdR_zpB, Algebra.smul_def]
+    congr 2
+  apply Set.Subset.antisymm
+  · intro x hx
+    induction hx using Algebra.adjoin_induction with
+    | mem x hx =>
+      obtain ⟨y, hy, rfl⟩ := hx
+      exact ⟨0, y, hy, by rw [pow_zero, one_smul]⟩
+    | algebraMap c =>
+      obtain ⟨k, hk⟩ := exists_pow_mul_mem p c
+      let z : ℤ_[p] := ⟨_, (PadicInt.mem_subring_iff p).mpr hk⟩
+      refine ⟨k, zpB p z, acrisOf_zpB p hw z, ?_⟩
+      rw [toBdR_zpB, Algebra.smul_def, ← map_mul]
+      congr 1
+      change c = (p : ℚ_[p])⁻¹ ^ k * ((p : ℚ_[p]) ^ k * c)
+      have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
+      rw [← mul_assoc, ← mul_pow, inv_mul_cancel₀ hp0, one_pow, one_mul]
+    | add x y _ _ hx hy =>
+      obtain ⟨k, a, ha, rfl⟩ := hx
+      obtain ⟨l, b, hb, rfl⟩ := hy
+      obtain ⟨a', ha', ea⟩ := hpB l a ha
+      obtain ⟨b', hb', eb⟩ := hpB k b hb
+      refine ⟨k + l, a' + b', acrisOf_add p hw ha' hb', ?_⟩
+      rw [map_add, ea, eb, smul_add, smul_smul, smul_smul, pow_add]
+      have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
+      congr 1
+      · rw [mul_assoc, ← mul_pow, inv_mul_cancel₀ hp0, one_pow, mul_one]
+      · rw [mul_comm ((p : ℚ_[p])⁻¹ ^ k), mul_assoc, ← mul_pow, inv_mul_cancel₀ hp0, one_pow, mul_one]
+    | mul x y _ _ hx hy =>
+      obtain ⟨k, a, ha, rfl⟩ := hx
+      obtain ⟨l, b, hb, rfl⟩ := hy
+      refine ⟨k + l, a * b, acrisOf_mul p hw ha hb, ?_⟩
+      rw [map_mul, smul_mul_smul_comm, pow_add]
+  · rintro x ⟨k, y, hy, rfl⟩
+    have hmem : toBdR p y ∈ BcrisPlusOf p w hw := Algebra.subset_adjoin ⟨y, hy, rfl⟩
+    exact (BcrisPlusOf p w hw).smul_mem hmem _
 
 /-! ## §3. `A_cris` does not depend on the generator; `A_cris ⊆ A_max` -/
 

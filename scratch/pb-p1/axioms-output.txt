@@ -15,3 +15,5 @@
 'HDec.PkgI4.FontaineSt.isAdmissible_of_pstF' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.FontaineSt.bmax_adjoin_eq_bst' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.PkgI4.FontaineSt.exists_dpCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.FontaineSt.bcrisPlusOf_eq_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.FontaineSt.acrisOf_mul' depends on axioms: [propext, Classical.choice, Quot.sound]

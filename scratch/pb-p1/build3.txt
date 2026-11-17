@@ -1,13 +1,13 @@
-⚠ [9821/9973] Replayed ZInQKernel.Contrib.LocalKW.Basic
+⚠ [9821/10226] Replayed ZInQKernel.Contrib.LocalKW.Basic
 warning: ZInQKernel/Contrib/LocalKW/Basic.lean: imports `Mathlib.NumberTheory.Padics.Hensel` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/Contrib/LocalKW/Basic.lean: imports `Mathlib.FieldTheory.Galois.Infinite` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/Contrib/LocalKW/Basic.lean: imports `Mathlib.NumberTheory.Cyclotomic.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
-⚠ [9924/9973] Replayed ZInQKernel.Contrib.TauCeti.Backport.Mathlib.Polynomial
+⚠ [9924/10226] Replayed ZInQKernel.Contrib.TauCeti.Backport.Mathlib.Polynomial
 warning: ZInQKernel/Contrib/TauCeti/Backport/Mathlib/Polynomial.lean:22:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
 
 Hint: Replace the deprecated name:
   i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
-⚠ [10212/10394] Replayed ZInQKernel.HDecomp.Objects
+⚠ [10213/10669] Replayed ZInQKernel.HDecomp.Objects
 warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Geometrically.Connected` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Group.Abelian` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.Proper` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
@@ -94,7 +94,7 @@ Hint: The binding can be removed (if unused) or named `_` (if used implicitly). 
   [apply] _f
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [10213/10394] Replayed ZInQKernel.HDecomp.I3Linalg.C2
+⚠ [10214/10669] Replayed ZInQKernel.HDecomp.I3Linalg.C2
 warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RepresentationTheory.Irreducible` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.Projection` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.FiniteDimensional.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
@@ -194,7 +194,7 @@ instead of
     motive 0 →
       (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
         (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
-⚠ [10214/10394] Replayed ZInQKernel.HDecomp.I3Linalg.RhoCont
+⚠ [10215/10669] Replayed ZInQKernel.HDecomp.I3Linalg.RhoCont
 warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.AlgebraicGeometry.Group.Abelian` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.NumberTheory.Padics.RingHoms` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
 warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.RepresentationTheory.Semisimple` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
@@ -3522,10 +3522,14 @@ Hint: Omit it from the simp argument list.
     Matrix.cons_val_fin_one, Matrix.head_cons, mul_zero, sub_zero]
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [10665/10669] Replayed ZInQKernel.Contrib.CloudB3W11AxCompletion.CompletionBridge
+⚠ [10663/10669] Replayed ZInQKernel.Contrib.CloudB3W11AxCompletion.CompletionBridge
 warning: ZInQKernel/Contrib/CloudB3W11AxCompletion/CompletionBridge.lean:82:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
 
 Hint: Replace the deprecated name:
   S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
-✔ [10669/10669] Built ZInQKernel.Contrib.OneProof.PanBergerFontaine (11s)
+⚠ [10669/10669] Built ZInQKernel.Contrib.OneProof.PanBergerFontaine (12s)
+warning: ZInQKernel/Contrib/OneProof/PanBergerFontaine.lean:202:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
 Build completed successfully (10669 jobs).
