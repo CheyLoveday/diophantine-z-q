@@ -34,3 +34,6 @@
 - autofold.json = r16-det spec + audit docs + audit_props; dry run 11/18 on 29 -> 15/17 on 32 (unchanged);
   FoldDryRun.lean sixContactMin_of_open49 standard axioms. VERIFIED.
 - Leaf docstrings (HeckeJ1DS, AfShimura, AfCharpolyDS965) now point at HeckePin.lean (text only); build OK.
+- ConstOnTauPoints: search (Mathlib + tree) found equalizer-closed, ext_of_apply_eq (alg. closed base),
+  ext_of_fromSpecResidueField_eq, fieldBaseChange_faithful; missing: closed subset of integral curve with
+  infinitely many closed points = all, and geometric irreducibility of X_ℂ from IsCurve. Left as GLUE (not attempted).

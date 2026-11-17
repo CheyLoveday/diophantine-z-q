@@ -103,6 +103,23 @@ Consequences, proved from it:
   * The fibre of `g_ℂ` over the common value is closed and contains them, so it is all of `X_ℂ`.
   * Evaluating at `P₀` gives the value `0`.
 
+  **Why it is not proved here.** A search of Mathlib and the tree found the ingredients but not the result:
+  * Equalizers into separated schemes are closed immersions (`isClosedImmersion_equalizer_ι_left`).
+  * `ext_of_apply_eq` works over an algebraically closed base. `ext_of_fromSpecResidueField_eq` works for a
+    dense set of points.
+  * Field base change is faithful (`fieldBaseChange_faithful`, CloudW07), which allows descending from `X_ℂ`.
+  * The `ℂ`-points of `X_ℂ` are its closed points (`pointEquivClosedPoint`).
+
+  Two pieces are missing:
+  * the dimension-one fact that a closed subset of an integral curve containing infinitely many closed points is
+    the whole curve;
+  * geometric irreducibility of `X_ℂ`. `IsCurve` gives only geometric connectedness, and smooth plus geometrically
+    connected implies geometrically irreducible, but that implication is not in the tree.
+
+  A `ℂ`-point over `ℚ` can lie over the generic point of `X`, so the argument has to run on `X_ℂ`. The route is:
+  base-change to `ℂ`, take the closed equalizer of `g_ℂ` and the constant map, apply the dimension-one fact,
+  apply `ext_of_apply_eq`, and descend. This is a project-size AG formalization, so it is left as named GLUE.
+
 ## 4. Gap 3: `θ` is pinned
 
 * `coeff_mem_genField` (no input): for a normalized eigenform, `a_n(f) ∈ ℚ(a_p(f) : p prime; χ(d) : d ∈ (ℤ/N)^×)`.
