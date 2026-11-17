@@ -333,6 +333,175 @@ theorem compare_iso_np {Y Y' : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y
     (Φ' K).injective (by rw [← Category.assoc, ← hg' K (y ≫ g), ← hg K y])
   exact ⟨⟨g, g', e2, e1⟩, hg⟩
 
+/-! ## 6. The moduli clause in the print's `H₁` / Hodge form, and the uniformization dictionary -/
+
+section Hodge
+
+open Complex
+open HDec.HSyn.G0Split.FibreQM (qmMat IotaCompatible)
+open MonoidalCategory CartesianMonoidalCategory MonObj PkgI3
+open scoped CategoryTheory.Obj
+
+/-- `h_τ(i)`: the complex structure `J_τ ∈ M₂(ℝ)` with `J_τ (τ, 1)ᵀ = i (τ, 1)ᵀ`, i.e.
+`J_τ = (1/y) [[x, -(x² + y²)], [1, -x]]` for `τ = x + iy`. -/
+def Jmat (τ : UpperHalfPlane) : Matrix (Fin 2) (Fin 2) ℝ :=
+  !![(τ : ℂ).re / (τ : ℂ).im, -((τ : ℂ).re ^ 2 + (τ : ℂ).im ^ 2) / (τ : ℂ).im;
+     1 / (τ : ℂ).im, -(τ : ℂ).re / (τ : ℂ).im]
+
+/-- **The moduli clause in the print's `H₁` (Hodge) form**: `A(ℂ) ≅ Lie(A)/H₁(A, ℤ)` (`(Λ, φ)` an analytic
+uniformization in bp-analytic's sense: `Lie A = ℂ^g`, `H₁(A, ℤ) = Λ`), and an `ℝ`-linear isomorphism
+`β : B_ℝ = M₂(ℝ) ≅ H₁(A, ℝ) = ℂ^g` (`B` embedded by N5's `ι`) carrying `𝒪` onto `H₁(A, ℤ)`, left
+multiplication by `a ∈ 𝒪` to the action of `ι_A(a)`, and right multiplication by `h_τ(i) = J_τ` to the complex
+structure of `Lie A`: the pair `(H₁(A, ℤ), h_A)` is `(𝒪, h_τ)` as an `𝒪`-module with Hodge structure. -/
+def IsHodgeH1 (P : QML3 ℂ) (τ : UpperHalfPlane) : Prop :=
+  ∃ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)) (_ : DiscreteTopology Λ)
+    (φ : BPAnalytic.Torus Λ ≃+ Additive (P.A.Pt ℂ)),
+    BPAnalytic.Uniformization.IsUniformization P.A Λ φ ∧
+    ∃ β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin g → ℂ),
+      (∀ v, v ∈ Λ ↔ ∃ b : B, b ∈ O ∧ v = β (BPAnalytic.QM.iota b)) ∧
+      (∀ M, β (M * Jmat τ) = Complex.I • β M) ∧
+      (∀ (a : O) (M : Matrix (Fin 2) (Fin 2) ℝ),
+        Additive.toMul (φ (BPAnalytic.proj Λ (β (BPAnalytic.QM.iota (a : B) * M)))) =
+          Additive.toMul (φ (BPAnalytic.proj Λ (β M))) ≫ (P.q.iota a).hom)
+
+/-- `M ↦ M (τ, 1)ᵀ`. -/
+def ellF (τ : UpperHalfPlane) (M : Matrix (Fin 2) (Fin 2) ℝ) : Fin 2 → ℂ :=
+  fun i => (M i 0 : ℂ) * (τ : ℂ) + (M i 1 : ℂ)
+
+def ellL (τ : UpperHalfPlane) : Matrix (Fin 2) (Fin 2) ℝ →ₗ[ℝ] (Fin 2 → ℂ) where
+  toFun := ellF τ
+  map_add' M N := by funext i; simp [ellF]; ring
+  map_smul' c M := by funext i; simp [ellF, Complex.real_smul]; ring
+
+theorem ellL_injective (τ : UpperHalfPlane) : Function.Injective (ellL τ) := by
+  rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+  intro M hM
+  have hy : (τ : ℂ).im ≠ 0 := τ.im_pos.ne'
+  funext i j
+  have h := congrFun hM i
+  change (M i 0 : ℂ) * (τ : ℂ) + (M i 1 : ℂ) = 0 at h
+  have hi := congrArg Complex.im h
+  have hr := congrArg Complex.re h
+  simp at hi hr
+  have h0 : M i 0 = 0 := hi.resolve_right τ.im_pos.ne'
+  have h1 : M i 1 = 0 := by rw [h0] at hr; simpa using hr
+  fin_cases j
+  · exact h0
+  · exact h1
+
+theorem finrank_mat : Module.finrank ℝ (Matrix (Fin 2) (Fin 2) ℝ) = Module.finrank ℝ (Fin 2 → ℂ) := by
+  rw [Module.finrank_matrix, Module.finrank_pi_fintype]
+  simp [Complex.finrank_real_complex]
+
+/-- `ℓ_τ : M₂(ℝ) ≅ ℂ²`, `M ↦ M (τ, 1)ᵀ`. -/
+def ellE (τ : UpperHalfPlane) : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin 2 → ℂ) :=
+  LinearEquiv.ofBijective (ellL τ) ⟨ellL_injective τ,
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank finrank_mat).1 (ellL_injective τ)⟩
+
+theorem ellE_apply (τ : UpperHalfPlane) (M : Matrix (Fin 2) (Fin 2) ℝ) : ellE τ M = ellF τ M := rfl
+
+theorem latVec_eq (τ : UpperHalfPlane) (b : B) :
+    BPAnalytic.QM.latVec b (τ : ℂ) = ellE τ (BPAnalytic.QM.iota b) := by
+  funext i
+  rw [ellE_apply]
+  fin_cases i <;> simp [BPAnalytic.QM.latVec, ellF, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+
+theorem ellE_J (τ : UpperHalfPlane) (M : Matrix (Fin 2) (Fin 2) ℝ) :
+    ellE τ (M * Jmat τ) = Complex.I • ellE τ M := by
+  have hy : (τ : ℂ).im ≠ 0 := τ.im_pos.ne'
+  have hyc : (((τ : ℂ).im : ℝ) : ℂ) * (((τ : ℂ).im : ℝ) : ℂ)⁻¹ = 1 :=
+    mul_inv_cancel₀ (by exact_mod_cast hy)
+  have hτ : (τ : ℂ) = (((τ : ℂ).re : ℝ) : ℂ) + (((τ : ℂ).im : ℝ) : ℂ) * Complex.I :=
+    (Complex.re_add_im _).symm
+  funext i
+  simp only [ellE_apply, ellF, Pi.smul_apply, smul_eq_mul, Matrix.mul_apply, Fin.sum_univ_two, Jmat,
+    Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  generalize (τ : ℂ).re = x at hτ ⊢
+  generalize (τ : ℂ).im = y at hτ hyc ⊢
+  rw [hτ]
+  push_cast
+  linear_combination ((M i 0 : ℂ) * (x : ℂ) * Complex.I + (M i 1 : ℂ) * Complex.I - (M i 0 : ℂ) * (y : ℂ)) * hyc
+    + (-(M i 0 : ℂ) * (y : ℂ)) * Complex.I_sq
+
+theorem ellE_iota (τ : UpperHalfPlane) (a : O) (M : Matrix (Fin 2) (Fin 2) ℝ) :
+    ellE τ (BPAnalytic.QM.iota (a : B) * M) = (qmMat a).mulVec (ellE τ M) := by
+  funext i
+  simp only [ellE_apply, ellF, qmMat, Matrix.mul_apply, Fin.sum_univ_two, Matrix.mulVec, dotProduct,
+    Matrix.map_apply]
+  push_cast
+  ring
+
+/-- `T = β ∘ ℓ_τ⁻¹ : ℂ² → ℂ^g` is `ℂ`-linear. -/
+def Tlin {g : ℕ} (τ : UpperHalfPlane) (β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin g → ℂ))
+    (hJ : ∀ M, β (M * Jmat τ) = Complex.I • β M) : (Fin 2 → ℂ) →ₗ[ℂ] (Fin g → ℂ) where
+  toFun v := β ((ellE τ).symm v)
+  map_add' v w := by simp
+  map_smul' c v := by
+    have hI : ∀ w, β ((ellE τ).symm (Complex.I • w)) = Complex.I • β ((ellE τ).symm w) := fun w => by
+      obtain ⟨M, rfl⟩ := (ellE τ).surjective w
+      rw [← ellE_J, LinearEquiv.symm_apply_apply, LinearEquiv.symm_apply_apply, hJ]
+    have hc : c • v = (c.re : ℝ) • v + (c.im : ℝ) • (Complex.I • v) := by
+      rw [← Complex.coe_smul, ← Complex.coe_smul, smul_smul, ← add_smul]
+      congr 1
+      exact (Complex.re_add_im c).symm
+    have hc' : c • β ((ellE τ).symm v) = (c.re : ℝ) • β ((ellE τ).symm v) +
+        (c.im : ℝ) • (Complex.I • β ((ellE τ).symm v)) := by
+      rw [← Complex.coe_smul, ← Complex.coe_smul, smul_smul, ← add_smul]
+      congr 1
+      exact (Complex.re_add_im c).symm
+    rw [RingHom.id_apply, hc', hc, map_add, map_add, map_smul, map_smul, map_smul, map_smul, hI]
+
+theorem Tlin_ellE {g : ℕ} (τ : UpperHalfPlane) (β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin g → ℂ))
+    (hJ : ∀ M, β (M * Jmat τ) = Complex.I • β M) (M : Matrix (Fin 2) (Fin 2) ℝ) :
+    Tlin τ β hJ (ellE τ M) = β M := by
+  change β ((ellE τ).symm (ellE τ M)) = β M
+  rw [LinearEquiv.symm_apply_apply]
+
+/-- **The uniformization dictionary** (compiled): the print's `H₁`/Hodge form of the moduli clause gives the
+lattice form `IsUniformization (Λ_τ)` with `ι`-compatibility (the kernel's clause in `IsShimuraHolFamily` and
+`ModuliAtUnits`): `Φ = φ ∘ proj ∘ β ∘ ℓ_τ⁻¹`. -/
+theorem lattice_of_hodge {P : QML3 ℂ} {τ : UpperHalfPlane} (h : IsHodgeH1 P τ) :
+    ∃ Φu : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts P.A (RingHom.id ℂ),
+      ZInQ.LeafPush2.IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice τ.im_pos.ne') Φu ∧
+      IotaCompatible P Φu := by
+  obtain ⟨g, Λ, hD, φ, hφ, β, hΛ, hJ, hio⟩ := h
+  obtain ⟨h1, h2, h3, h4, h5⟩ := ZInQ.LeafPush2.isUniformization_of_bp P.A hφ
+  set Φ0 : (Fin g → ℂ) → ZInQ.LeafPush2.CPts P.A (RingHom.id ℂ) :=
+    fun z => Additive.toMul (φ (BPAnalytic.proj Λ z)) with hΦ0
+  let T := Tlin τ β hJ
+  have hTc : Continuous T := LinearMap.continuous_of_finiteDimensional T
+  have hTd : Differentiable ℂ T := (LinearMap.toContinuousLinearMap T).differentiable
+  have hTs : Function.Surjective T := fun w => ⟨ellE τ (β.symm w), by
+    rw [Tlin_ellE, LinearEquiv.apply_symm_apply]⟩
+  refine ⟨fun z => Φ0 (T z), ⟨fun z w => ?_, fun z => ?_, fun p => ?_, fun U => ?_, fun U s => ?_⟩,
+    fun a z => ?_⟩
+  · change Φ0 (T (z + w)) = Φ0 (T z) * Φ0 (T w)
+    rw [map_add]; exact h1 _ _
+  · change Φ0 (T z) = 1 ↔ _
+    rw [h2, hΛ]
+    refine Iff.trans ?_ (HDec.HSyn.G0Split.FibreQM.PeriodGlue.mem_qmLattice_iff _ z).symm
+    obtain ⟨M, rfl⟩ := (ellE τ).surjective z
+    rw [Tlin_ellE]
+    constructor
+    · rintro ⟨b, hb, he⟩
+      exact ⟨b, hb, by rw [latVec_eq, β.injective he]⟩
+    · rintro ⟨b, hb, he⟩
+      refine ⟨b, hb, ?_⟩
+      rw [latVec_eq] at he
+      rw [(ellE τ).injective he]
+  · obtain ⟨w, hw⟩ := h3 p
+    obtain ⟨z, rfl⟩ := hTs w
+    exact ⟨z, hw⟩
+  · exact (h4 U).preimage hTc
+  · exact (h5 U s).comp hTd.differentiableOn (fun z hz => hz)
+  · obtain ⟨M, rfl⟩ := (ellE τ).surjective z
+    change Φ0 (T ((qmMat a).mulVec (ellE τ M))) = Φ0 (T (ellE τ M)) ≫ (P.q.iota a).hom
+    rw [← ellE_iota, Tlin_ellE, Tlin_ellE]
+    exact hio a M
+
+end Hodge
+
 /-! ## 5. The leaves (lattice form) and the discharge -/
 
 /-- **LEAF `Y3FineModuliAbP`** (printed form; see the module docstring). -/
