@@ -1,0 +1,23 @@
+{
+ "name": "kleiman-section2",
+ "note": "NOT runnable by autofold.py: the new leaf is weaker than the field PicFix.KleimanPicZeroProper, so no proof of the field exists from it. Use the hand fold scratch/kleiman-section2/TailZ56.lean (checked by FoldCheck.lean); this spec records the leaf row (kind, flag, source, doc) and the route (OpenAddedLeaves22PZ.picZeroAbVar).",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.KleimanPicZero954"
+ ],
+ "discharges": [
+  {
+   "field": "kleimanPicZeroProper",
+   "hand_fold_via": "HDec.HSyn.OpenAddedLeaves22PZ.picZeroAbVar := _root_.KleimanSection2.picZeroAbVar0_of_954 {n}.kleimanPicZeroProper954",
+   "leaves": [
+    {
+     "name": "kleimanPicZeroProper954",
+     "type": "_root_.KleimanSection2.KleimanPicZeroProper954",
+     "doc": "kleiman-section2: for `X` projective, geometrically integral and geometrically normal over a field `K` with a `K`-point, the identity component of any scheme locally of finite type over `K` representing `Pic_{(X/K)(fppf)}` on locally Noetherian `K`-schemes is proper (Kleiman, *The Picard scheme*, Thm 9.5.4; locator UNVERIFIED on host).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED: printed form of Kleiman 9.5.4 (projective, geometrically integral, geometrically normal, plus a K-point), over locally Noetherian test schemes as in Kleiman; restriction from all schemes proved (repLN); no copy of the text on the host",
+     "source": "Kleiman, The Picard scheme (arXiv math/0504020), Thm 9.5.4"
+    }
+   ]
+  }
+ ]
+}
