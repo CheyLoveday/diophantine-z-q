@@ -192,6 +192,55 @@ potentially semistable.
 
 **Not stronger than the print**: one representation of `G_{ℚ_p}`, conclusion over the same `V`.
 
-## 4. Deliverables and checks
+## 4. Deliverables and checks (VERIFIED)
 
-* `ZInQKernel/Contrib/OneProof/PanBergerDict.lean`: see §4 below for the build and `#discharges` outcome.
+* `ZInQKernel/Contrib/OneProof/PanBergerDict.lean` (23 KB). `lake build +ZInQKernel.Contrib.OneProof.PanBergerDict
+  +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` succeeds (13062 jobs, 15.5 min wall-clock; the file
+  itself 7.5 s, no warnings). The file has no `sorry`.
+* `python3 scripts/one_proof/sandbox/scan_contrib.py c0f3d085c HEAD`: `PanBergerDict.lean: 0 likely hit(s), 0
+  possible hit(s)`.
+* **Axioms.** `scratch/pb-fix3/Axioms.lean` prints 11 declarations (the glue, both dictionaries, `one_le_weight`,
+  `isIrreducibleP_of`, `continuous_model`, `trace_of_twist`); all use only `[propext, Classical.choice,
+  Quot.sound]` (`axioms-output.txt`).
+* **`#discharges`** (`scratch/pb-fix3/Discharges.lean` → `discharges-output.txt`):
+  ```
+  DISCHARGES [OpenResearchLeaves31.r11r12] by HDec.PkgI4.PanDict.panBerger_of_printedPV
+    still assumes: [HDec.PkgI4.PanDict.PanPrintedP,
+   HDec.PkgI4.PanDict.BergerPrintedV,
+   DSCoeffExt.DSThm965Printed,
+   DSCoeffExt.EigenformCoeffFieldFinite,
+   DSThm966EV.DSThm966Printed]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 35 open hypotheses, 10328 theorems checked, 39 discharge one
+  ```
+  The last three are existing fields of `OpenResearchLeaves31`.
+* **Autofold.** Spec `scratch/pb-fix3/autofold.json`, field `r11r12`, proof
+  `_root_.HDec.PkgI4.PanDict.panBerger_of_printedPV {n}.panPrintedP {n}.bergerPrintedV {n}.dsThm965Printed
+  {n}.eigenformCoeffFieldFinite {n}.dsThm966Printed`; both leaves kind `published`, flag `unread: …` (flags of
+  §3).
+  * Dry run (`autofold-dryrun.txt`): `strict count: 11/18 on 29 -> 13/17 on 30; strictest 11/18 -> 13/17`
+    (GLUE 18 → 17).
+  * Its output with the first line stripped is `scratch/pb-fix3/FoldDryRun.lean`; it compiles, and
+    `sixContactMin_of_open49` uses only the standard axioms (`folddryrun-output.txt`).
+  * The fold needs `ZInQKernel/Contrib/OneProof/BergerBst.lean` (bst-construct, on this branch, not yet on main).
+    bst-construct's own spec (`scratch/bst-construct/autofold.json`) is superseded: it names the fields
+    `dsThm965Weak`, `dsThm966`, which main no longer has.
+* **Reproduce** from the repository root:
+  ```
+  python3 scratch/pb-fix3/mkcontrib.py
+  lake build +ZInQKernel.Contrib.OneProof.PanBergerDict +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges
+  lake env lean scratch/pb-fix3/Axioms.lean
+  lake env lean scratch/pb-fix3/Discharges.lean
+  python3 scripts/one_proof/autofold.py scratch/pb-fix3/autofold.json --dry-run
+  ```
+
+## 5. What remains
+
+* Read Pan's FM.tex L253 for the exact formula attaching `ρ_g` (flag 2 of §3.1) and the JAMS numbering.
+* Read Berger 2002 §1.2 against `Amax`, `Bmax`, `Bst` (bst-construct's flag, unchanged).
+* Locator rows for `panPrintedP` and `bergerPrintedV` in locators.md (that file belongs to other tasks).
+  Proposed: R12 → `panPrintedP` (pb-fix3; predicates in `PanBergerDict.lean`), R11 → `bergerPrintedV`.
+* Not done (not needed): a model-free form of the Hodge–Tate multiplicity with `ℚ̄_p` coefficients,
+  `dim_{ℚ̄_p} (ℚ̄_p² ⊗_{ℚ_p} ℂ_p(w))^G`. It equals the model form by base change of invariants along `ℚ̄_p/E`
+  (STANDARD), not proved here. Pst is computed on a model as well (bst-construct), so the leaf reads both
+  conditions through "some model", which is how they are defined for `ℚ̄_p`-valued representations.

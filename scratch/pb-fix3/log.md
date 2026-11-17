@@ -41,3 +41,15 @@ Base: wip/bst-construct fe8b30667, merged origin/main c0f3d085c (merge commit 28
      continuous ρE : G_Qp → GL_n(E)); glue `panPrintedB_of_printedP`, `continuous_model`, `bergerPrintedB_of_V`,
      `panBerger_of_printedPV (PanPrintedP) (BergerPrintedV) (DSThm965Printed) (EigenformCoeffFieldFinite)
      (DSThm966EV.DSThm966Printed) : PanBerger`.
+3. Contribution `ZInQKernel/Contrib/OneProof/PanBergerDict.lean` (mkcontrib.py). `lake build
+   +…PanBergerDict +…OneProof.Main +…OneProof.Discharges`: success, 13062 jobs, 15.5 min; PanBergerDict built in
+   7.5 s, no warnings. VERIFIED. (build2.txt in the repo is a mid-build snapshot; the end lines were checked.)
+4. Axioms (Axioms.lean, 11 decls): standard only. VERIFIED.
+5. #discharges: `DISCHARGES [OpenResearchLeaves31.r11r12] by HDec.PkgI4.PanDict.panBerger_of_printedPV`, still
+   assumes PanPrintedP, BergerPrintedV, DSThm965Printed, EigenformCoeffFieldFinite, DSThm966EV.DSThm966Printed;
+   standard axioms; "35 open hypotheses, 10328 theorems checked, 39 discharge one". VERIFIED.
+6. Autofold dry run: "strict count: 11/18 on 29 -> 13/17 on 30; strictest 11/18 -> 13/17"; FoldDryRun.lean
+   compiles, sixContactMin_of_open49 standard axioms. VERIFIED. scan_contrib: 0 hits.
+7. Ratings: panPrintedP printed form (hypotheses and conclusion transcribed; dictionaries proved); bergerPrintedV
+   printed form (one p-adic representation V = E^n, continuous). Flags: Pan L253 attachment formula recalled,
+   JAMS numbering UNVERIFIED; Berger §1.2 wording UNVERIFIED.
