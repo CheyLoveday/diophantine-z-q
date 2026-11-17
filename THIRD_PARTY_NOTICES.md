@@ -1,6 +1,6 @@
 # Third-party sources and dependencies
 
-Project licensing applies only to original project material. It does not relicense the upstream software, papers, source excerpts, or theory files referenced or preserved by this project. Keep any notices supplied with those materials.
+The original material of this fork is licensed under the Apache License, Version 2.0 ([LICENSE](LICENSE), [NOTICE](NOTICE)). That licence applies only to original project material. It does not relicense the upstream software, papers, source excerpts, or theory files referenced or preserved by this project, and it does not cover material whose history begins in the upstream repository, which states no licence. Keep any notices supplied with those materials.
 
 ## Mathematical sources
 
@@ -73,9 +73,6 @@ Notes on the local files, at the time of the index:
 - `CloudB3W16FiniteGroup`, `CloudB3W17ProperCompact`, `CloudB3W17bGraphScoutReverseIdeal` and
   `CloudB3W17bOkaComparison` have a `LICENSE` and no notice file. Where they use outside code (AxiomMath/Stacks in
   the first, chrisflav/oka in the third), the file headers or `VERIFICATION.md` name the source and revision.
-
-This repository has no licence of its own yet: "project licensing" above refers to a licence that the owner still
-has to choose and add at the repository root.
 
 ## NOTICE: vendored Selberg sieve (PrimeNumberTheoremAnd)
 
