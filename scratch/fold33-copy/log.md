@@ -57,3 +57,19 @@ Base wip/leaf-fold33b 30674d98 (origin/main c1e4ed1b is an ancestor: not merged)
   - `scratch/contrib-kit/DischargesTest.lean` rerun into `DischargesTest-output.txt`.
   - `uvx --offline … autoform check blueprint --lean-root .`: runs on this host; "OK: 781 articles, 2343
     dependencies, 705 fully proved, 2531 declaration name(s) resolved" (`autoform_1_sga3.txt`).
+
+## Step 1b: the copy module moved to `ZInQKernel/OneProof/H/NoSGA3Copy.lean`
+- Reason (VERIFIED, DischargesTest output): `#discharges` checks every theorem of `ZInQKernel.Contrib.OneProof.*`, and
+  the projections of the copied Prop structures are theorems whose conclusion is an open field
+  (`OpenResearchLeaves14NS.bostLowerBound : OpenResearchLeaves14NS → BostLowerBound`). With the copies under
+  Contrib/OneProof the output grew from 48 to 301 `DISCHARGES` lines (542 with field 2's copy), almost all of them
+  misleading entries in CONTRIBUTING.md's worked example. Under `ZInQKernel/OneProof/H/` (allowed for new modules by the
+  task) they are not scanned, like the TailZ modules. The module's content is unchanged (`git mv`); TailZ49's import
+  line, its docstring, Main's docstring and top.py changed (no declaration changed).
+- Checks (VERIFIED): `lake build +Main +Discharges +…H.NoSGA3Copy +…H.TailZ49`: OK, 14186 jobs (`build_1b_move-tail.txt`);
+  frozenTarget and `sixContactMin_of_open42` standard axioms; closure output identical to step 1 apart from the size
+  line (`closure_1b_move.txt`); hash guard `hashes_0_base.txt` → `hashes_1b_move.txt`: before 14107, after 14705, only
+  before 0, only after 598 (566 in NoSGA3Copy, now inside the dump's scope, and TailZ49's 32), changed 1
+  (`ZInQ.OneProof.frozenTarget`); OpenStatements 40; DischargesTest rerun: 48 `DISCHARGES` lines as on the base, only
+  the bundle name 29 → 30 changes; render_open then `--check`: ok, **32 H, strictest 12/20, 8 others**;
+  frontier_crosswalk `--check` ok; autoform check OK (`autoform_1b_move.txt`).
