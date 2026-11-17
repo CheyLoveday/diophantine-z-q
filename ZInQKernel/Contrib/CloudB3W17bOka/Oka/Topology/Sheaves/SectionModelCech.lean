@@ -175,6 +175,9 @@ lemma isCompactOperator_refineL
     rw [Opens.coe_iInf, mem_iInter]
     exact fun a ↦ hVcl (σ a) (closure_mono (iInf_le (fun a ↦ V (σ a)) a) hx)
 
+set_option maxHeartbeats 1000000 in
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **Cartan–Serre finiteness, abstract form.** Let `U`, `V` be finite families of opens with
 `V i` of compact closure inside `U i`, such that every Čech `1`-cocycle of `V` is the refinement
 of a `1`-cocycle of `U` up to a coboundary, and assume that restriction between suitable small
@@ -200,6 +203,14 @@ theorem finiteDimensional_of_cech
   have := Fintype.ofFinite ι
   let Zu := M.Z1 U
   let Zv := M.Z1 V
+  letI : Neg (Zu × M.Cochain V 0 →L[ℂ] M.Cochain V 1) :=
+    ContinuousLinearMap.neg (R := ℂ) (R₂ := ℂ) (M := Zu × M.Cochain V 0)
+      (M₂ := M.Cochain V 1) (σ₁₂ := RingHom.id ℂ)
+  letI : ContinuousAdd Zv :=
+    (inferInstance : IsTopologicalAddGroup (M.Z1 V)).toContinuousAdd
+  letI : Add (Zu × M.Cochain V 0 →L[ℂ] Zv) :=
+    ContinuousLinearMap.add (R₁ := ℂ) (R₂ := ℂ) (M₁ := Zu × M.Cochain V 0)
+      (M₂ := Zv) (σ₁₂ := RingHom.id ℂ)
   let R : Zu × M.Cochain V 0 →L[ℂ] M.Cochain V 1 :=
     (M.refineL U hVU 1).comp (Zu.subtypeL.comp (ContinuousLinearMap.fst ℂ _ _))
   have hR : ∀ e, R e ∈ Zv := fun e ↦ by
@@ -232,7 +243,7 @@ theorem finiteDimensional_of_cech
     exact ((M.isCompactOperator_refineL hK U hVU hVc hVcl 1).comp_clm
       (Zu.subtypeL.comp (ContinuousLinearMap.fst ℂ _ _))).neg
   have hfin := IsCompactOperator.finiteDimensional_quotient_range_add_of_locallyConvex
-    hu_surj hw
+    (𝕜 := ℂ) (E := Zu × M.Cochain V 0) (F := Zv) (u := u) (v := w) hu_surj hw
   -- the map to `T`
   let ψ₀ : Zv → (cechD V F.obj 1).ker := fun y ↦ ⟨(M.cochainEquiv V 1).symm y, by
     rw [AddMonoidHom.mem_ker]
@@ -271,9 +282,13 @@ theorem finiteDimensional_of_cech
     · change κ (ψ₀ _) = κ z
       congr 1
       exact Subtype.ext ((M.cochainEquiv V 1).symm_apply_apply z.1)
-  exact Module.Finite.of_surjective ((LinearMap.range (u + w).toLinearMap).liftQ ψ hψ)
-    (by rw [← LinearMap.range_eq_top, Submodule.range_liftQ, LinearMap.range_eq_top]
-        exact hψs)
+  let ψQ : _ →ₗ[ℂ] T :=
+    Submodule.liftQ (R := ℂ) (M := Zv) (R₂ := ℂ) (M₂ := T) (τ₁₂ := RingHom.id ℂ)
+      (LinearMap.range (u + w).toLinearMap) ψ hψ
+  exact Module.Finite.of_surjective (R := ℂ) (S := ℂ) (P := T) (σ := RingHom.id ℂ) ψQ (by
+    intro t
+    obtain ⟨z, hz⟩ := hψs t
+    exact ⟨Submodule.Quotient.mk z, hz⟩)
 
 end Frechet
 
