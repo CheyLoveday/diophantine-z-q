@@ -16,3 +16,9 @@ Base: wip/pb-pst = origin/wip/leaf-fold33b 4dfb7e58 (75d94fe7 + main merge).
   BstOf) and `PanDict.PanPrintedPt` (pst hypothesis over BstOf for a given generator); proofs of the old leaves
   `bergerPrintedV_of_t : BergerPrintedVt → BergerPrintedV`, `panPrintedP_of_t : PanPrintedPt → PanPrintedP`.
   V1 cleared (no extra hypothesis).
+- 03:2x VERIFIED (compiled, `lake env lean scratch/pb-pst/HTFinite.lean`): P2. `exists_rat_relation` /
+  `linearIndependent_of_invariant` (Galois descent for ℂ_p-semilinear actions, minimal-relation argument,
+  ℂ_p^{G_Qp} = Q_p from `ZInQ.Contrib.CloudB3W11.axSenTate_proof` at K = ⊥), `finrank_invariants_le`,
+  `finiteDimensional_htU` (dim_Qp (C_p(w) ⊗ V)^G ≤ dim_Qp V), `finiteDimensional_htSpaceE :
+  FiniteDimensional E (htSpaceE ρ w)`, `htMultE_le : htMultE ρ w ≤ n`. Probe: HDec.PkgI4.cpAct and
+  ZInQ.Contrib.G9.PkgI4.cpAct agree by `rfl` (VERIFIED).

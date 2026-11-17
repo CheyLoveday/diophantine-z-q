@@ -1,0 +1,716 @@
+⚠ [9045/9136] Replayed ZInQKernel.HDecomp.Objects
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Geometrically.Connected` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Group.Abelian` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.Proper` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.Smooth` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.AlgebraicGeometry.Pullbacks` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.Algebra.Quaternion` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.CategoryTheory.Monoidal.Cartesian.Grp` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.CategoryTheory.Monoidal.Cartesian.Over` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.Data.ZMod.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.FieldTheory.AbsoluteGaloisGroup` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.FieldTheory.IntermediateField.Adjoin.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.LinearAlgebra.Matrix.Charpoly.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.NumberTheory.NumberField.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.NumberTheory.Padics.RingHoms` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RepresentationTheory.Semisimple` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.AdjoinRoot` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.DiscreteValuationRing.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.Etale.Locus` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.Ideal.Height` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.IntegralClosure.IntegralRestrict` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.QuasiFinite.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.RamificationInertia.Ramification` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.RegularLocalRing.Defs` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.Unramified.Locus` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.RingTheory.Valuation.RamificationGroup` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean: imports `Mathlib.Topology.KrullDimension` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Objects.lean:539:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/Objects.lean:599:8: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/HDecomp/Objects.lean:602:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/Objects.lean:623:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/HDecomp/Objects.lean:628:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/HDecomp/Objects.lean:669:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/Objects.lean:701:8: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/HDecomp/Objects.lean:1299:58: Variable name `f` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _f
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9046/9136] Replayed ZInQKernel.HDecomp.I3Linalg.C2
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RepresentationTheory.Irreducible` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.Projection` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.FiniteDimensional.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.AlgebraicGeometry.Group.Abelian` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.NumberTheory.Padics.RingHoms` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RepresentationTheory.Semisimple` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.FieldTheory.AbsoluteGaloisGroup` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.NumberTheory.NumberField.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.Algebra.Quaternion` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.Matrix.Charpoly.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RingTheory.AdjoinRoot` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RingTheory.SimpleModule.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RingTheory.Artinian.Ring` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RingTheory.Artinian.Module` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RingTheory.Jacobson.Semiprimary` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.Trace` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.RingTheory.TensorProduct.Free` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean: imports `Mathlib.LinearAlgebra.Dual.Lemmas` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean:227:0: automatically included section variable(s) unused in theorem `GlueI3.finrank_commOf_le_of_equiv`:
+  [Monoid G]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Monoid G] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean:519:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean:546:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean:578:24: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean:617:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/HDecomp/I3Linalg/C2.lean:656:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+⚠ [9047/9136] Replayed ZInQKernel.HDecomp.I3Linalg.RhoCont
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.AlgebraicGeometry.Group.Abelian` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.NumberTheory.Padics.RingHoms` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.RepresentationTheory.Semisimple` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.FieldTheory.AbsoluteGaloisGroup` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.NumberTheory.NumberField.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.Algebra.Quaternion` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.LinearAlgebra.Matrix.Charpoly.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.RingTheory.AdjoinRoot` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.Topology.Algebra.Module.ModuleTopology` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.FieldTheory.KrullTopology` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.AlgebraicGeometry.ResidueField` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.Proper` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.LinearAlgebra.TensorProduct.Basis` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/I3Linalg/RhoCont.lean: imports `Mathlib.Topology.Instances.Matrix` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9342/9381] Replayed ZInQKernel.Contrib.G9.I3Layer
+warning: ZInQKernel/Contrib/G9/I3Layer.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:218:0: automatically included section variable(s) unused in theorem `ZInQ.Contrib.G9.GlueI3.finrank_commOf_le_of_equiv`:
+  [Monoid G]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Monoid G] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:324:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:351:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:383:24: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:422:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:461:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+      (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : TensorProduct R M N → Prop}
+    (z : TensorProduct R M N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) →
+        (∀ (x y : TensorProduct R M N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:996:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1056:8: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1059:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1080:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1085:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1126:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1158:8: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ZInQKernel/Contrib/G9/I3Layer.lean:1298:48: Variable name `b` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _b
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9343/9381] Replayed ZInQKernel.Contrib.G9.I4Layer
+warning: ZInQKernel/Contrib/G9/I4Layer.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9344/9381] Replayed ZInQKernel.Contrib.G9.Statement
+warning: ZInQKernel/Contrib/G9/Statement.lean:51:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/G9/Statement.lean:52:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9345/9381] Replayed ZInQKernel.Contrib.G9.Speiser
+warning: ZInQKernel/Contrib/G9/Speiser.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9350/9381] Replayed ZInQKernel.Contrib.G9.LocalCore
+warning: ZInQKernel/Contrib/G9/LocalCore.lean:194:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9351/9381] Replayed ZInQKernel.Contrib.G9.CoefDescent
+warning: ZInQKernel/Contrib/G9/CoefDescent.lean:205:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/Contrib/G9/CoefDescent.lean:232:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+⚠ [9352/9381] Replayed ZInQKernel.Contrib.G9.Reduction
+warning: ZInQKernel/Contrib/G9/Reduction.lean:106:2: `LinearEquiv.ofLinear` has been deprecated: Use `LinearEquiv.ofLinearMap` instead
+
+Hint: Replace the deprecated name:
+  LinearEquiv.ofLinearM̲a̲p̲
+warning: ZInQKernel/Contrib/G9/Reduction.lean:140:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+info: ZInQKernel/Contrib/G9/Reduction.lean:175:0: 'ZInQ.Contrib.G9.g9Glue_of_bridges' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/G9/Reduction.lean:176:0: 'ZInQ.Contrib.G9.g9Glue_of_fieldEmb' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/G9/Reduction.lean:177:0: 'ZInQ.Contrib.G9.core_ht' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/G9/Reduction.lean:178:0: 'ZInQ.Contrib.G9.core_dR' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/G9/Reduction.lean:179:0: 'ZInQ.Contrib.G9.coef_descent' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [9354/9381] Replayed ZInQKernel.Contrib.G9.HenselEmb
+warning: ZInQKernel/Contrib/G9/HenselEmb.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+ℹ [9359/9381] Replayed ZInQKernel.Contrib.R10.Amend
+info: ZInQKernel/Contrib/R10/Amend.lean:88:0: 'ZInQ.Contrib.R10.deRhamComparison_of_HT' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/R10/Amend.lean:89:0: 'ZInQ.Contrib.R10.r10Weights_of_HT' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/R10/Amend.lean:90:0: 'ZInQ.Contrib.R10.deRhamComparisonWeights_of_HT' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/R10/Amend.lean:91:0: 'ZInQ.Contrib.R10.deRhamComparisonHT_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ZInQKernel/Contrib/R10/Amend.lean:92:0: 'ZInQ.Contrib.R10.htMultOver_eq_of_HT' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [9360/9381] Replayed ZInQKernel.Contrib.AbVarBC.Dim
+warning: ZInQKernel/Contrib/AbVarBC/Dim.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9361/9381] Replayed ZInQKernel.HDecomp.C10.C10
+warning: ZInQKernel/HDecomp/C10/C10.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/C10/C10.lean:210:40: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/HDecomp/C10/C10.lean:344:52: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9362/9381] Replayed ZInQKernel.HDecomp.Assembly.E2Index
+warning: ZInQKernel/HDecomp/Assembly/E2Index.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9363/9381] Replayed ZInQKernel.HDecomp.ModCurves.Genus
+warning: ZInQKernel/HDecomp/ModCurves/Genus.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9364/9381] Replayed ZInQKernel.HDecomp.Conductor.LadicCond
+warning: ZInQKernel/HDecomp/Conductor/LadicCond.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Conductor/LadicCond.lean:421:29: `dite_cond_eq_true` has been deprecated: Use `dite_eq_left_of_eq_true` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵t̵e̵_̵c̵o̵n̵d̵_̵e̵q̵_̵t̵r̵u̵e̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲_̲o̲f̲_̲e̲q̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/HDecomp/Conductor/LadicCond.lean:640:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9369/9381] Replayed ZInQKernel.HDecomp.Conductor.Dyadic
+warning: ZInQKernel/HDecomp/Conductor/Dyadic.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9370/9381] Replayed ZInQKernel.HDecomp.Conductor.I6Base
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:138:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:142:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:239:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:243:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:506:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:532:8: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:532:8: Unused tactic linter: `exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/HDecomp/Conductor/I6Base.lean:568:49: Variable name `he1` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _he1
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9371/9381] Replayed ZInQKernel.HDecomp.Textbook.BrauerNesbitt
+warning: ZInQKernel/HDecomp/Textbook/BrauerNesbitt.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [9374/9381] Replayed ZInQKernel.Contrib.Chebotarev.FrobeniusDenseOfExists
+warning: ZInQKernel/Contrib/Chebotarev/FrobeniusDenseOfExists.lean: imports `Mathlib` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/Chebotarev/FrobeniusDenseOfExists.lean:345:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9376/9381] Replayed ZInQKernel.OneProof.H.TailS
+warning: ZInQKernel/OneProof/H/TailS.lean:493:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/OneProof/H/TailS.lean:532:12: Variable name `k` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _k
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/OneProof/H/TailS.lean:535:14: Variable name `c` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _c
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/OneProof/H/TailS.lean:573:22: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+warning: ZInQKernel/OneProof/H/TailS.lean:596:16: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:615:16: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1176:30: This simp argument is unused:
+  coeff_X
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [coeff_X_pow, coeff_C]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1457:63: `Finsupp.coe_finset_sum` has been deprecated: Use `Finsupp.coe_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  Finsupp.coe_finset_̵s̵S̲um
+warning: ZInQKernel/OneProof/H/TailS.lean:1646:4: This simp argument is unused:
+  RingHom.mapMatrix_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.charmatrix_apply, Matrix.diagonal_apply_eq,
+    Matrix.diagonal_apply_ne _ (show (0 : Fin 2) ≠ 1 by decide),
+    Matrix.diagonal_apply_ne _ (show (1 : Fin 2) ≠ 0 by decide), Matrix.map_apply, Matrix.of_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1646:29: This simp argument is unused:
+  Matrix.map_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.charmatrix_apply, Matrix.diagonal_apply_eq,
+    Matrix.diagonal_apply_ne _ (show (0 : Fin 2) ≠ 1 by decide),
+    Matrix.diagonal_apply_ne _ (show (1 : Fin 2) ≠ 0 by decide), RingHom.mapMatrix_apply, Matrix.of_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1646:47: This simp argument is unused:
+  Matrix.of_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.charmatrix_apply, Matrix.diagonal_apply_eq,
+    Matrix.diagonal_apply_ne _ (show (0 : Fin 2) ≠ 1 by decide),
+    Matrix.diagonal_apply_ne _ (show (1 : Fin 2) ≠ 0 by decide), RingHom.mapMatrix_apply, Matrix.map_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1656:38: This simp argument is unused:
+  Matrix.mul_fin_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1716:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/OneProof/H/TailS.lean:1726:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/OneProof/H/TailS.lean:1778:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/OneProof/H/TailS.lean:1792:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/OneProof/H/TailS.lean:1739:20: This simp argument is unused:
+  Matrix.vecHead
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1740:20: This simp argument is unused:
+  Matrix.vecHead
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e0, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1740:36: This simp argument is unused:
+  Matrix.vecTail
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e0, Matrix.vecHead]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1753:20: This simp argument is unused:
+  Matrix.vecHead
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1754:20: This simp argument is unused:
+  Matrix.vecHead
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e1, Matrix.vecTail]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:1754:36: This simp argument is unused:
+  Matrix.vecTail
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e1, Matrix.vecHead]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/OneProof/H/TailS.lean:2013:20: `TensorProduct.induction_on` has been deprecated: Use `TensorProduct.inductionOn` instead
+
+Note: The updated constant has a different type:
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+instead of
+  ∀ {R : Type u_1} [inst : CommSemiring R] {M : Type u_5} {N : Type u_6} [inst_1 : AddCommMonoid M]
+    [inst_2 : AddCommMonoid N] [inst_3 : Module R M] [inst_4 : Module R N] {motive : M ⊗[R] N → Prop} (z : M ⊗[R] N),
+    motive 0 →
+      (∀ (x : M) (y : N), motive (x ⊗ₜ[R] y)) → (∀ (x y : M ⊗[R] N), motive x → motive y → motive (x + y)) → motive z
+⚠ [9377/9381] Built ZInQKernel.Contrib.CloudB3W11AxEstimate.AxApprox (4.4s)
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.NumberTheory.Padics.Complex` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Analysis.Normed.Unbundled.SpectralNorm` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Algebra.Polynomial.HasseDeriv` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Algebra.Polynomial.Taylor` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.RingTheory.Polynomial.Vieta` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.FieldTheory.Galois.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.FieldTheory.Normal.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.FieldTheory.Minpoly.Field` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Data.Nat.Choose.Lucas` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Data.Nat.Multiplicity` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Analysis.SpecificLimits.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean: imports `Mathlib.Analysis.SpecialFunctions.Pow.Real` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean:162:63: This simp argument is unused:
+  C_sub
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Function.comp_apply, map_sub, taylor_X, taylor_C]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/CloudB3W11AxEstimate/AxApprox.lean:577:32: Variable name `hδ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hδ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [9378/9381] Built ZInQKernel.Contrib.CloudB3W11AxCompletion.AlgebraicDescent (4.8s)
+⚠ [9379/9381] Built ZInQKernel.Contrib.CloudB3W11AxCompletion.CompletionBridge (4.7s)
+warning: ZInQKernel/Contrib/CloudB3W11AxCompletion/CompletionBridge.lean:82:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+✔ [9380/9381] Built ZInQKernel.Contrib.CloudB3W11AxCompletion.AxSenTateBridge (4.2s)
+✔ [9381/9381] Built ZInQKernel.Contrib.OneProof.AxSenTate (4.4s)
+Build completed successfully (9381 jobs).
+EXIT 0
