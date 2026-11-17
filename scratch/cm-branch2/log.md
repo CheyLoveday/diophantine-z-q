@@ -54,3 +54,9 @@
   AddSubgroup.relIndex_eq_abs_det, Basis.toMatrix_map_vecMul, Algebra.discr_of_matrix_vecMul, NumberField.coe_discr),
   mult_iff_dvd (Cox 7.5 elementary half), exists_prim, disc_neg_of_root. => the leaf CoxProperLattice is a THEOREM;
   ReducedCMPeriod is proved from the textbook fields t35, homLatticeCorr, t11b alone.
+- 12:40 COMPILED CMBranch/Open73.lean (gen/gen_open73.py, first try): OpenResearchLeaves54CM (53 − gonzalezRotgerThm512X6RCF
+  + cmFibreSplit, fowlerProp27, cmjDegree, cmPotentialGood, cmHeight62), OpenResearchLeaves36EBCF_cm/35EBCF_cm (no GR field),
+  sixContactMin_of_open73_cm; standard axioms (axioms3-out.txt).
+- Closure scan of sixContactMin_of_open73_cm (gruse73-out.txt, 130280 constants): GR512Bridge.GonzalezRotgerThm512X6RCF,
+  GRDict.GonzalezRotgerThm512X6, R5ptProps, every GR projection: ABSENT. VERIFIED: González–Rotger Thm 5.12 is off the route.
+- #discharges rerun with CoxProof (discharges.txt): 34 open, 17130 checked, 123 = 19 pre-existing + 104 _r5 projection noise.

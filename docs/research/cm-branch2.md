@@ -7,8 +7,12 @@ numbers from memory; this host has no network), SPECULATIVE.
 
 ## 1. Result
 
-**The CM-branch fold reaches net zero in the GLUE column, and González–Rotger leaves the route.** VERIFIED, compiled with
-only `propext`, `Classical.choice`, `Quot.sound`:
+**The CM-branch fold reaches net zero in the GLUE column, and González–Rotger leaves the route.** The fold's next
+generation is written and compiled (§7): `sixContactMin_of_open73_cm (r : OpenResearchLeaves54CM) t l : SixContactMin`,
+where `OpenResearchLeaves54CM` is the current research bundle without `gonzalezRotgerThm512X6RCF` and with the 5 CM-branch
+inputs. A closure scan of it (`scratch/cm-branch2/gruse73-out.txt`) finds neither `GR512Bridge.GonzalezRotgerThm512X6RCF`
+nor `GRDict.GonzalezRotgerThm512X6` nor `R5ptProps`. VERIFIED, compiled with only `propext`, `Classical.choice`,
+`Quot.sound`. The same route with the CM inputs as a separate argument:
 
 ```lean
 theorem HDec.HSyn.sixContactMin_of_open72_cmbranch2 (r : OpenResearchLeaves53) (t : OpenTextbookLeaves18)
@@ -285,7 +289,8 @@ Buzzard Thm 2.1 / Cor. 2.3 applied to `V₁(5)` over `ℤ[1/30]` (L444-470). `X�
       (l : OpenAddedLeaves27) : ZInQ.SixContactMin
   ```
   The two bundles that carried the field (`OpenResearchLeaves36EBCF`, `35EBCF`) are copied without it (`_cm`), with the
-  three conversions verbatim minus that line. So the fold is: switch `frozenTarget`'s research bundle to
+  three conversions verbatim minus that line. A closure scan of `sixContactMin_of_open73_cm` (`gruse73-out.txt`) finds no González–Rotger constant. So the fold is:
+switch `frozenTarget`'s research bundle to
   `OpenResearchLeaves54CM` and its first argument to `sixContactMin_of_open73_cm r t l`
   (`scratch/cm-branch2/autofold.json`). It is not the mechanical autofold (no top field is discharged by a proof of its
   own statement), but it needs no further Lean.
