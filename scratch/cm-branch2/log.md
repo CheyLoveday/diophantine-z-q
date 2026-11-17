@@ -43,3 +43,9 @@
   OpenResearchLeaves35EBCF.gonzalezRotgerThm512X6 (the last carrier's projection) NOT read; 53.gonzalezRotgerThm512X6RCF and
   36EBCF.gonzalezRotgerThm512X6 occur only to fill the carried field of 36/35 (bundle conversions). => GR carried, unread:
   PruneScan target. x6CoarseModuliIdeal, elkiesX6StarEveryIdeal stay (read).
+- 12:00 clause scan (clauseuse.txt): on the weak-row top, R5ptProps used in 0 constants, LeafQM.AV.R5fp 0, X6ConicModel 0;
+  X6Props 41, R2X6Props 9, CMExists 5, X6Surj 6, R1recProps 4 consumers (exists_fibre_object_r5, residue_unramified_over_branch_r5,
+  Pin.cm_objects_of_R1R2fp_r5, GapST.cm_pointW_r5, conicOfWitness_of_elkies_r5, …).
+- 12:20 #discharges (discharges.txt): 34 open hypotheses, 17109 theorems checked, 123 discharge one = 19 pre-existing + 104
+  projections of the copied _r5 structures (noise). No CMBranch theorem discharges a top field (re-route).
+- report docs/research/cm-branch2.md written (sections 1-7).
