@@ -263,6 +263,229 @@ theorem bdrPlus_T_approx (σ : GQp p) (m : ℕ) : ∃ w, DR.bdrPlusMap p (oAct p
     rw [this, norm_pow]
     exact mul_le_mul_of_nonneg_right hrb (pow_nonneg (norm_nonneg _) m)
 
+/-- `ℤ_p → ℂ_p`. -/
+def iZ : ℤ_[p] →+* ℂ_[p] := (algebraMap ℚ_[p] ℂ_[p]).comp PadicInt.Coe.ringHom
+
+theorem norm_algebraMap_qp' (c : ℚ_[p]) : ‖algebraMap ℚ_[p] ℂ_[p] c‖ = ‖c‖ := by
+  rw [IsScalarTower.algebraMap_apply ℚ_[p] (PadicAlgCl p) ℂ_[p], ← PadicComplex.coe_eq,
+    PadicComplex.norm_extends, PadicAlgCl.norm_extends]
+
+theorem norm_iZ_le (y : ℤ_[p]) : ‖iZ p y‖ ≤ 1 := by
+  change ‖algebraMap ℚ_[p] ℂ_[p] (y : ℚ_[p])‖ ≤ 1
+  rw [norm_algebraMap_qp']
+  exact PadicInt.norm_le_one y
+
+theorem aexp_approx (σ : GQp p) (m : ℕ) :
+    ‖(aexp p σ m : ℂ_[p]) - iZ p (cyc p σ : ℤ_[p])‖ ≤ ‖(p : ℂ_[p])‖ ^ m := by
+  have hk : ((aexp p σ m : ℕ) : ℤ_[p]) - (cyc p σ : ℤ_[p]) ∈ RingHom.ker (PadicInt.toZModPow (p := p) m) := by
+    rw [RingHom.mem_ker, map_sub, map_natCast, aexp, ZMod.natCast_zmod_val, sub_self]
+  rw [PadicInt.ker_toZModPow] at hk
+  obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.mp hk
+  have : (aexp p σ m : ℂ_[p]) - iZ p (cyc p σ : ℤ_[p]) = iZ p y * (p : ℂ_[p]) ^ m := by
+    rw [← map_natCast (iZ p), ← map_sub, ← hy, map_mul, map_pow, map_natCast]
+  rw [this, norm_mul, norm_pow]
+  exact mul_le_of_le_one_left (pow_nonneg (norm_nonneg _) _) (norm_iZ_le p y)
+
+theorem eq_zero_of_norm_le_pow {D : ℂ_[p]} {K : ℝ} (h : ∀ m : ℕ, ‖D‖ ≤ K * ‖(p : ℂ_[p])‖ ^ m) : D = 0 := by
+  by_contra hD
+  have hpos : 0 < ‖D‖ := norm_pos_iff.mpr hD
+  have hK : 0 < K := by
+    have := h 0
+    rw [pow_zero, mul_one] at this
+    linarith
+  obtain ⟨m, hm⟩ := exists_pow_lt_of_lt_one (div_pos hpos hK) (norm_p_lt_one p)
+  rw [lt_div_iff₀ hK] at hm
+  linarith [h m, mul_comm K (‖(p : ℂ_[p])‖ ^ m)]
+
+/-- **`σ(T) = T · w` with `θ(w) = χ(σ)`.** -/
+theorem bdrPlus_T (σ : GQp p) : ∃ w, DR.bdrPlusMap p (oAct p σ) (T p) = T p * w ∧
+    thetaPlusCp p w = iZ p (cyc p σ : ℤ_[p]) := by
+  obtain ⟨w, hw, -⟩ := bdrPlus_T_approx p σ 0
+  refine ⟨w, hw, ?_⟩
+  rw [← sub_eq_zero]
+  apply eq_zero_of_norm_le_pow p (K := CT p + 1)
+  intro m
+  obtain ⟨w', hw', hb⟩ := bdrPlus_T_approx p σ m
+  have hww : w' = w := mul_left_cancel₀ (T_ne_zero p) (hw'.symm.trans hw)
+  rw [hww] at hb
+  calc ‖thetaPlusCp p w - iZ p (cyc p σ : ℤ_[p])‖
+      = ‖(thetaPlusCp p w - (aexp p σ m : ℂ_[p])) + ((aexp p σ m : ℂ_[p]) - iZ p (cyc p σ : ℤ_[p]))‖ := by
+        rw [sub_add_sub_cancel]
+    _ ≤ ‖thetaPlusCp p w - (aexp p σ m : ℂ_[p])‖ + ‖(aexp p σ m : ℂ_[p]) - iZ p (cyc p σ : ℤ_[p])‖ :=
+        norm_add_le _ _
+    _ ≤ CT p * ‖(p : ℂ_[p])‖ ^ m + ‖(p : ℂ_[p])‖ ^ m := add_le_add hb (aexp_approx p σ m)
+    _ = (CT p + 1) * ‖(p : ℂ_[p])‖ ^ m := by ring
+
+/-! ## 5. Invariants of `B_dR` lie in `(B_dR^+)^×` (Tate's theorem) -/
+
+theorem bdrAct_algebraMap (σ : GQp p) (z : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) :
+    bdrAct p σ (algebraMap _ (BdR p) z) = algebraMap _ (BdR p) (DR.bdrPlusMap p (oAct p σ) z) := by
+  rw [bdrAct, DR.bdrMap, IsLocalization.map_eq]
+
+theorem isFR : IsFractionRing (BDeRhamPlus (𝓞_ℂ_[p] : Type) p) (BdR p) := isFractionRing_BDeRham p
+
+theorem alg_injective : Function.Injective (algebraMap (BDeRhamPlus (𝓞_ℂ_[p] : Type) p) (BdR p)) := by
+  haveI := isFR p
+  exact IsFractionRing.injective _ _
+
+theorem iZ_cyc_ne_zero (σ : GQp p) (k : ℕ) : iZ p (cyc p σ : ℤ_[p]) ^ k ≠ 0 :=
+  pow_ne_zero _ (((cyc p σ).isUnit.map (iZ p)).ne_zero)
+
+theorem tate_step (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K]
+    (u : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ) (j k : ℕ)
+    (h : ∀ σ ∈ K.fixingSubgroup, thetaPlusCp p u * iZ p (cyc p σ : ℤ_[p]) ^ k =
+      cpAct p σ (thetaPlusCp p u) * iZ p (cyc p σ : ℤ_[p]) ^ j) : j = k := by
+  by_contra hjk
+  have hθ : thetaPlusCp p (u : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) ≠ 0 := (u.isUnit.map (thetaPlusCp p)).ne_zero
+  apply hθ
+  refine ZInQ.Contrib.CloudB3W11.tateTwistInvariants_proof p K ((j : ℤ) - k)
+    (sub_ne_zero.mpr (by exact_mod_cast hjk)) _ fun σ hσ => ?_
+  have hc : iZ p (((cyc p σ ^ ((j : ℤ) - k) : ℤ_[p]ˣ) : ℤ_[p])) * iZ p (cyc p σ : ℤ_[p]) ^ k =
+      iZ p (cyc p σ : ℤ_[p]) ^ j := by
+    rw [← map_pow, ← map_pow, ← map_mul, ← Units.val_pow_eq_pow_val, ← Units.val_pow_eq_pow_val, ← Units.val_mul,
+      zpow_sub, zpow_natCast, zpow_natCast, inv_mul_cancel_right]
+  rw [Algebra.smul_def]
+  change iZ p (((cyc p σ ^ ((j : ℤ) - k) : ℤ_[p]ˣ) : ℤ_[p])) * _ = _
+  apply mul_right_cancel₀ (iZ_cyc_ne_zero p σ k)
+  rw [mul_right_comm, hc, mul_comm, h σ hσ]
+
+/-- **Every nonzero `G_K`-invariant of `B_dR` is a unit of `B_dR^+`** (Tate's theorem). -/
+theorem key (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K] (x : BdR p) (hx0 : x ≠ 0)
+    (hx : ∀ σ ∈ K.fixingSubgroup, bdrAct p σ x = x) :
+    ∃ u : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ, x = algebraMap (BDeRhamPlus (𝓞_ℂ_[p] : Type) p) (BdR p) u := by
+  haveI := isFR p
+  haveI := isDiscreteValuationRing_BDeRhamPlus p
+  obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.mk'_surjective (nonZeroDivisors (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)) x
+  dsimp only at hab
+  have hb0 : (b : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) ≠ 0 := nonZeroDivisors.ne_zero b.2
+  have ha0 : a ≠ 0 := by
+    rintro rfl
+    apply hx0
+    rw [← hab, IsLocalization.mk'_zero]
+  obtain ⟨j, ua, ha⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha0 (irreducible_T p)
+  obtain ⟨k, ub, hb⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hb0 (irreducible_T p)
+  set u := ua * ub⁻¹ with hu
+  have hspec := IsLocalization.mk'_spec (BdR p) a b
+  rw [hab, hb, ha] at hspec
+  have hx1 : x * algebraMap _ (BdR p) (T p ^ k) = algebraMap _ (BdR p) ((u : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) * T p ^ j) := by
+    have e1 : x * algebraMap _ (BdR p) (T p ^ k) = x * algebraMap _ (BdR p) ((ub : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) * T p ^ k) *
+        algebraMap _ (BdR p) ((ub⁻¹ : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ) : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) := by
+      rw [mul_assoc, ← map_mul, mul_right_comm, Units.mul_inv, one_mul]
+    rw [e1, hspec, ← map_mul, hu, Units.val_mul]
+    congr 1
+    ring
+  have hjk : j = k := by
+    apply tate_step p K u j k
+    intro σ hσ
+    obtain ⟨w, hw, hθw⟩ := bdrPlus_T p σ
+    have h2 := congrArg (bdrAct p σ) hx1
+    have e1 : DR.bdrPlusMap p (oAct p σ) (T p ^ k) = (T p * w) ^ k := by rw [map_pow, hw]
+    have e2 : DR.bdrPlusMap p (oAct p σ) ((u : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) * T p ^ j) =
+        DR.bdrPlusMap p (oAct p σ) u * (T p * w) ^ j := by rw [map_mul, map_pow, hw]
+    rw [map_mul, hx σ hσ, bdrAct_algebraMap, bdrAct_algebraMap, e1, e2] at h2
+    have h3 : algebraMap _ (BdR p) ((u : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) * T p ^ j * w ^ k) =
+        algebraMap _ (BdR p) (DR.bdrPlusMap p (oAct p σ) u * (T p * w) ^ j) := by
+      rw [← h2, mul_pow, map_mul (algebraMap _ (BdR p)) (T p ^ k), ← mul_assoc, hx1, ← map_mul]
+    have h4 := alg_injective p h3
+    have h5 : (u : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) * w ^ k = DR.bdrPlusMap p (oAct p σ) u * w ^ j := by
+      apply mul_left_cancel₀ (pow_ne_zero j (T_ne_zero p))
+      linear_combination h4
+    have h6 := congrArg (thetaPlusCp p) h5
+    rw [map_mul, map_mul, map_pow, map_pow, thetaPlusCp_bdrPlusMap, hθw] at h6
+    exact h6
+  subst hjk
+  refine ⟨u, ?_⟩
+  have hunit : IsUnit (algebraMap _ (BdR p) (T p ^ j)) :=
+    IsLocalization.map_units (BdR p)
+      (⟨T p ^ j, mem_nonZeroDivisors_of_ne_zero (pow_ne_zero _ (T_ne_zero p))⟩ :
+        nonZeroDivisors (BDeRhamPlus (𝓞_ℂ_[p] : Type) p))
+  apply hunit.mul_right_cancel
+  rw [hx1, map_mul]
+
+/-! ## 6. `B_dR^{G_F} ≅ F` -/
+
+/-- **`DeRhamPrint.BdRInvariantsPrinted`, proved**: `dim_{ℚ_p} B_dR^{G_F} = [F : ℚ_p]`. -/
+theorem bdRInvariantsPrinted_proof : DeRhamPrint.BdRInvariantsPrinted := by
+  intro p _ F _ _ _
+  letI := algPlus p
+  have hrange := range_gfToGqp_eq p F
+  have hS : ∀ σ : Field.absoluteGaloisGroup F, gfToGqp p F σ ∈ (fieldF p F).fixingSubgroup := fun σ => by
+    have h : gfToGqp p F σ ∈ Set.range (gfToGqp p F) := ⟨σ, rfl⟩
+    rw [hrange] at h
+    exact h
+  have hS' : ∀ τ ∈ (fieldF p F).fixingSubgroup, ∃ σ, gfToGqp p F σ = τ := fun τ hτ => by
+    have h : τ ∈ ((fieldF p F).fixingSubgroup : Set (GQp p)) := hτ
+    rw [← hrange] at h
+    exact h
+  have hfix : ∀ x ∈ DeRhamPrint.bdrFix p F, ∀ τ ∈ (fieldF p F).fixingSubgroup, bdrAct p τ x = x := by
+    intro x hx τ hτ
+    obtain ⟨σ, rfl⟩ := hS' τ hτ
+    exact hx σ
+  let ιΩ : F →ₐ[ℚ_[p]] ℂ_[p] := (IsScalarTower.toAlgHom ℚ_[p] (PadicAlgCl p) ℂ_[p]).comp (phiF p F)
+  have hιΩ : ∀ y, ιΩ y = ((phiF p F y : PadicAlgCl p) : ℂ_[p]) := fun y => rfl
+  obtain ⟨ι₀, hι₀⟩ := exists_hensel_lift (thetaAlg p) (thetaPlusCp_surjective p)
+    (isUnit_of_thetaAlg_ne_zero p) ιΩ
+  have hfixΩ : ∀ τ ∈ (fieldF p F).fixingSubgroup, ∀ y, cpAct p τ (ιΩ y) = ιΩ y := by
+    intro τ hτ y
+    have h := (IntermediateField.mem_fixingSubgroup_iff _ _).mp hτ (phiF p F y) (AlgHom.mem_fieldRange.mpr ⟨y, rfl⟩)
+    rw [hιΩ, cpAct_coe, h]
+  have hinv : ∀ τ ∈ (fieldF p F).fixingSubgroup, ∀ y, DR.bdrPlusMap p (oAct p τ) (ι₀ y) = ι₀ y := by
+    intro τ hτ y
+    exact hensel_lift_natural (thetaAlg p) ιΩ ι₀ hι₀ (sPlus p τ) (AlgHom.id _ _) (fun x => by
+      change thetaPlusCp p (DR.bdrPlusMap p (oAct p τ) (ι₀ x)) = ιΩ x
+      rw [thetaPlusCp_bdrPlusMap, ← thetaAlg_apply, hι₀, hfixΩ τ hτ]) y
+  let Φ : F →ₗ[ℚ_[p]] DeRhamPrint.bdrFix p F :=
+    { toFun := fun y => ⟨algebraMap _ (BdR p) (ι₀ y), fun σ => by rw [bdrAct_algebraMap, hinv _ (hS σ)]⟩
+      map_add' := fun y z => Subtype.ext (by
+        change algebraMap _ (BdR p) (ι₀ (y + z)) = algebraMap _ (BdR p) (ι₀ y) + algebraMap _ (BdR p) (ι₀ z)
+        rw [map_add, map_add])
+      map_smul' := fun c y => by
+        apply Subtype.ext
+        rw [RingHom.id_apply, Submodule.coe_smul]
+        dsimp only
+        rw [map_smul, Algebra.smul_def c (ι₀ y), map_mul, Algebra.smul_def]
+        rfl }
+  have hΦ : ∀ y, ((Φ y : DeRhamPrint.bdrFix p F) : BdR p) = algebraMap _ (BdR p) (ι₀ y) := fun y => rfl
+  have hinj : Function.Injective Φ := by
+    intro y z h
+    have h1 := congrArg Subtype.val h
+    rw [hΦ, hΦ] at h1
+    exact ι₀.toRingHom.injective (alg_injective p h1)
+  have hsurj : Function.Surjective Φ := by
+    rintro ⟨x, hx⟩
+    by_cases hx0 : x = 0
+    · subst hx0
+      exact ⟨0, by rw [map_zero]; rfl⟩
+    obtain ⟨u, rfl⟩ := key p (fieldF p F) x hx0 (hfix x hx)
+    have hθ : ∀ τ ∈ (fieldF p F).fixingSubgroup, cpAct p τ (thetaPlusCp p u) = thetaPlusCp p u := by
+      intro τ hτ
+      have h1 := hfix _ hx τ hτ
+      rw [bdrAct_algebraMap] at h1
+      rw [← thetaPlusCp_bdrPlusMap, alg_injective p h1]
+    obtain ⟨y', hy'⟩ := ZInQ.Contrib.CloudB3W11.axSenTate_proof p (fieldF p F) _ hθ
+    obtain ⟨y, hy⟩ := (AlgHom.mem_fieldRange (f := phiF p F)).mp y'.2
+    refine ⟨y, Subtype.ext ?_⟩
+    rw [hΦ]
+    by_contra hne
+    set z := algebraMap _ (BdR p) (u : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) - algebraMap _ (BdR p) (ι₀ y) with hz
+    have hz0 : z ≠ 0 := fun h0 => hne (sub_eq_zero.mp h0).symm
+    have hzfix : ∀ τ ∈ (fieldF p F).fixingSubgroup, bdrAct p τ z = z := by
+      intro τ hτ
+      rw [hz, map_sub, bdrAct_algebraMap, bdrAct_algebraMap, hinv τ hτ]
+      congr 1
+      have h1 := hfix _ hx τ hτ
+      rwa [bdrAct_algebraMap] at h1
+    obtain ⟨u₂, hu₂⟩ := key p (fieldF p F) z hz0 hzfix
+    rw [hz, ← map_sub] at hu₂
+    have h2 := alg_injective p hu₂
+    have h3 : thetaPlusCp p (u₂ : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) = 0 := by
+      rw [← h2, map_sub, hy', ← thetaAlg_apply, hι₀, hιΩ, hy, sub_self]
+    exact (u₂.isUnit.map (thetaPlusCp p)).ne_zero h3
+  exact (LinearEquiv.ofBijective Φ ⟨hinj, hsurj⟩).finrank_eq.symm
+
 end
 
 end BdRInv
+
+#print axioms BdRInv.bdRInvariantsPrinted_proof
+
