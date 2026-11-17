@@ -44,3 +44,9 @@
 - VERIFIED (compiled): §9 residueImage_comp_iso, GR512At, gr512At_of_iso, gonzalezRotgerThm512X6_of_one (GR's
   Thm 5.12 statement on one witness => on every witness, given T5), gr512At_of_thm512. 56 theorems, standard
   axioms; #discharges unchanged (11194 theorems checked); FoldDryRun.lean recompiled, standard axioms.
+- Not done (analysis in docs/research/x6-coarse.md §4): Elkies (a) Q(X/W) = Q(X)^W (no quotient curve in Lean);
+  Elkies (c) every-CM-point from the-CM-point (needs exactness HasCM* => com = R, Q(sqrt(-6)) closed facts, Galois
+  invariance of com and orbit count; class number not needed); GR T1 (Shimura's moduli interpretation of the
+  complex uniformization; not provable as glue).
+- Final state 02:40: contribution X6AtkinLehnerIdeal.lean (56 theorems, standard axioms), autofold.json and
+  autofold-x6only.json dry-runs 16/18 -> 16/18, FoldDryRun.lean compiles.
