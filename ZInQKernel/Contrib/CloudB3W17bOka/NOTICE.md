@@ -20,20 +20,24 @@ mathematics has 282 compilation units. Original source selections,
 per-member provenance, transformations and raw compiler logs are preserved in
 private source/evidence capsules; their historical grades are not rewritten.
 
-This is not yet a completed or independently reviewed GAGA contribution.
-At the current project pin (Lean v4.35.0 and Mathlib
-`56a005855ea17e0b0958f73ec801ae140b0a1679`), the narrow 84-module Scheme/UP cone
-has genuinely compiled from source, with exact source and dependency-output
-bindings. Its two-module RET point-comparison extension has also source-compiled
-as an 86-module cone; the original finite-type presentation, closed-point range
-and point-injectivity statements have separate allowed-axiom controls. The RET
-proofs construct the original open-subscheme object and inclusion directly where
-those definitions otherwise arrived through heavier sheaf/closed-immersion
-imports. No new global carrier, witness or assumption is introduced.
-Light projectivity and selected Main/consumer checks are separate
-component evidence. Full H278/H282 source, complete Main/PR35/37 coexistence,
-exact-type/axiom census and independent-review gates remain open. No H-105
-closure or full GAGA certification is asserted here.
+The complete 294-unit selected source inventory now compiles with ordinary Lean
+at the current project pin (Lean v4.35.0 and Mathlib
+`56a005855ea17e0b0958f73ec801ae140b0a1679`). The owner replay verifies current
+source and compiled outputs, including 679 dependency-facet bindings with zero
+mismatches. This includes the full H282 cone and its genuine projective GAGA-3
+and Hom roots, the original 292-unit selection, and the two optional RET modules.
+Earlier UP84 and UP84+RET2 source receipts remain historical component evidence;
+their grades and published proof history are not rewritten. The RET proofs
+construct the original open-subscheme object and inclusion directly where those
+definitions otherwise arrived through heavier sheaf/closed-immersion imports.
+No new global carrier, witness or assumption is introduced.
+
+A successful source replay is not an H-105 discharge or an independent review.
+Original full GAGA-2, GAGA-3 and bundled GAGA theorem telescopes have ordinary
+elaboration controls and headline allowed-axiom checks. Complete Main/PR35/37
+coexistence, the all-constant type/axiom census and independent-review gates are
+separate evidence, not implied by source compilation. No H-105 closure or final
+full-GAGA certification is asserted by this notice.
 
 ## Mechanical parser expansion
 
