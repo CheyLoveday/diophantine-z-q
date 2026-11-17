@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """fold-b115 fold 3: the panPrintedF / bergerSurveyF field docstrings ("basis form" -> Fontaine's dimension form over
 the image in B_dR of Brinon-Conrad's B_st; the integrator's replacement texts) in the current bundle copy and in the
-copy the fold before it generated (TailZ83, TailZ84), and HTModel.lean appended to AllContrib. Docstring-only for the
+copy the fold before it generated (TailZ83, TailZ84); with --allcontrib also HTModel.lean appended to AllContrib
+(fails to import on a head without wip/contrib-clashes: the Different clash). Docstring-only for the
 H modules. Idempotent. Run from the repository root; pass other TailZ files as arguments if the bundle moved."""
 import sys
-FILES = sys.argv[1:] or ['ZInQKernel/OneProof/H/TailZ83.lean', 'ZInQKernel/OneProof/H/TailZ84.lean']
+ALLC = '--allcontrib' in sys.argv
+FILES = [a for a in sys.argv[1:] if a != '--allcontrib'] or ['ZInQKernel/OneProof/H/TailZ83.lean', 'ZInQKernel/OneProof/H/TailZ84.lean']
 PAN_OLD = ("printed form with \"potentially semi-stable in the sense of Fontaine\" over Fontaine's B_st = B_cris[log p~] inside B_dR "
            "(Berger, arXiv:math/0210184v1, II.3.1 and II.3.3), basis form, on a model V = E^n")
 PAN_NEW = ("printed form with 'potentially semi-stable in the sense of Fontaine' in Fontaine's dimension form (Brinon-Conrad §5.2 pp. 67-68, "
@@ -25,6 +27,8 @@ for f in FILES:
         elif b not in s:
             sys.exit(f'field_docs_q29: {f}: neither old nor new text found')
     open(f, 'w').write(s)
+if not ALLC:
+    print('ok'); sys.exit(0)
 A = 'ZInQKernel/Contrib/AllContrib.lean'
 imp = 'import ZInQKernel.Contrib.OneProof.HTModel\n'
 s = open(A).read()
