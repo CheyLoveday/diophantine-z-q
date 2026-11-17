@@ -5,7 +5,6 @@ charPolyIndepOfEllAlgClosed	deg-det	host task deg-det running	2026-11-16	elliotg
 h11	h11-reduce	host task h11-reduce running	2026-11-16	elliotglazer/diophantine-z-q#74	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce	held
 picRepresentableAbVar	pic-repr	host task pic-repr running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr	held
 picZeroAbVar	cloud batch 3	briefed 2026-11-15, not yet claimed on the issue	2026-11-15	elliotglazer/diophantine-z-q#81	project	project		interest
-weilPairingMumford	weil-proof	host task weil-proof running	2026-11-16	elliotglazer/diophantine-z-q#81	project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/weil-proof	held
 r17	r17-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/r17-bypass	held
 eigenformHTNew	ht-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/ht-bypass	held
 r11r12	pb-bypass	host task running	2026-11-15		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/pb-bypass	held

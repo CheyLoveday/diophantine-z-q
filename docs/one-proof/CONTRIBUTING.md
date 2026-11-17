@@ -260,46 +260,8 @@ DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves9H
 DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.mumfordTorsionAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves20.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
+DISCHARGES [OpenAddedLeaves22.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
   still assumes: [PicDict.PicLocFinType, PicDict.IdentityComponentLFT, PicDict.PicZeroSmooth, PicDict.PicZeroProper]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_final
-  still assumes: [PicDict.MumfordSquareAC,
- PicDict.MumfordMulNPicZeroAC,
- PicDict.MumfordPhiSurjectiveAC,
- PicDict.MumfordWeilPairingAC,
- PicDict.MumfordWeilNondegAC,
- PicDict.MumfordWeilAltAC,
- PicDict.MumfordKLFiniteAC]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_of_ac
-  still assumes: [PicDict.MumfordSquareAC,
- PicDict.MumfordMulNPicZeroAC,
- PicDict.MumfordPhiSurjectiveAC,
- PicDict.AmpleBaseChangeAlgClosure,
- PicDict.MumfordWeilPairingAC,
- PicDict.MumfordWeilNondegAC,
- PicDict.MumfordWeilAltAC,
- T09Pic.PhiAmpleIsogeny]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_of_mumford
-  still assumes: [PicDict.MumfordSquareAC,
- PicDict.MumfordMulNPicZeroAC,
- PicDict.MumfordPhiSurjectiveAC,
- PicDict.MumfordWeilPairingAC,
- PicDict.MumfordWeilNondegAC,
- PicDict.MumfordWeilAltAC,
- T09Pic.PhiAmpleIsogeny]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PicDict.weilPairingMumford_of_printed
-  still assumes: [PicDict.MumfordSquare,
- PicDict.MumfordMulNPicZero,
- PicDict.MumfordPhiSurjective,
- PicDict.AmpleBaseChangeAlgClosure,
- PicDict.MumfordWeilPairing,
- PicDict.MumfordWeilNondeg,
- PicDict.MumfordWeilAlt,
- T09Pic.PhiAmpleIsogeny]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves31.r16CoreY] by R16Split.coreY_of_r16
   still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
@@ -313,7 +275,7 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 37 open hypotheses, 9464 theorems checked, 38 discharge one
+#discharges: 35 open hypotheses, 9695 theorems checked, 34 discharge one
 ```
 <!-- worked-example:end -->
 
