@@ -1776,7 +1776,10 @@ elab "#nolcheck" : command => do
   let cl := nolClosure env ``ZInQ.OneProof.frozenTargetNOL
   IO.println s!"closure size {cl.size}"
   for t in [``CToPrinted.SGA3_VIB_3_10, ``SGA3IdComp.SGA3_VIB_3_10_Nbhd, ``SGA3IdComp.sga3_VIB_3_10_of_nbhd,
-      ``SGA3Nbhd.SGA3_VIB_3_10_NeronOL] do
+      ``CToPrinted.idComp_baseChange, ``CToPrinted.semistableNeronBaseChange_of_printed_full] do
     IO.println s!"{t} in closure: {cl.contains t}"
+  let old := getStructureFields env ``HDec.HSyn.OpenResearchLeaves28
+  let new := getStructureFields env ``HDec.HSyn.NOL.OpenResearchLeaves28
+  IO.println s!"fields old {old.size}, new {new.size}; removed {old.filter (fun f => !new.contains f)}; added {new.filter (fun f => !old.contains f)}"
 
 #nolcheck

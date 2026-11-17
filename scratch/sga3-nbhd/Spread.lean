@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.SGA3NbhdOL
+import ZInQKernel.Contrib.OneProof.SGA3NbhdDVR
 import ZInQKernel.Contrib.OneProof.EGAOpenImm
 import ZInQKernel.Contrib.SpreadOut.NumberField
 

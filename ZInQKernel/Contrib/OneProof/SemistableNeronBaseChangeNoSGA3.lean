@@ -1,6 +1,26 @@
-import ZInQKernel.Contrib.OneProof.SGA3NbhdOL
+import ZInQKernel.Contrib.OneProof.SGA3NbhdDVR
 import ZInQKernel.Contrib.OneProof.EGAOpenImm
 import ZInQKernel.Contrib.SpreadOut.NumberField
+
+/-!
+# sga3-nbhd: `semistableNeronBaseChange` (SS2) with no SGA 3 VI_B 3.10
+
+The research field `sga3_VIB_3_10_Nbhd` (`SGA3IdComp.SGA3_VIB_3_10_Nbhd`) reaches the chain only through
+`CToPrinted.SGA3_VIB_3_10`, applied (i) to group models over DVRs (`SGA3NbhdOL.lean` proves `G⁰` open there and
+gives leaf-free versions of those readers) and (ii) to the Néron model `𝒩` over `𝓞_L` in
+`CToPrinted.semistableNeronBaseChange_of_printed_full`. This file removes (ii):
+
+* `spread_openImm`: EGA IV₃ 8.10.5 (open immersions; proved in the tree, `egaIV_8_10_5_openImm_proof`) for
+  `Spec L = lim Spec 𝓞_L[1/n!]`: a morphism of smooth separated quasi-compact `𝓞_L`-schemes that is an
+  isomorphism on generic fibres is an open immersion over every DVR in which `n!` is a unit, for some `n`;
+* `mem_idCompSet_bc` / `mem_idCompSet_of_bc`: SGA 3 VI_B 3.3 at one point, without openness of `G⁰` (over a
+  closed point of the base, through the open `G \ (G_s \ G_s⁰)` and Stacks 04KV);
+* `openSubgroupModel_at`: an open subgroup of a group model over `𝓞_L` containing the generic fibre is a group
+  model;
+* `semistableNeronBaseChange_noSGA3 : BLR_1_2_4 → SGA7_IX_3_3 → GeomConnOfRationalPoint →
+  SemistableNeronBaseChange`, the field SS2 with `𝒩⁰` replaced by `W₀ = {x | 𝒩.hom x ∈ T → x ∈ 𝒩⁰}` (`T`
+  the finitely many primes containing `n!`).
+-/
 
 set_option linter.style.haveILetI false
 set_option linter.unusedVariables false
