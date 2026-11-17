@@ -331,4 +331,78 @@ theorem eq_scaled_of_isAnalyticUnif (W : WeierstrassCurve ℂ) [W.IsElliptic] (h
     obtain ⟨h', e⟩ := exists_some_eq _ e1 e2
     exact ⟨h', by rw [hα z, L₀.toPoint_of_notMem _ hz', e]⟩
 
+/-! ## §7. The printed main theorem of complex multiplication and `ShimuraMainCM` -/
+
+section Printed
+
+open ZInQ.Contrib.TYZDecomp.CurveA ZInQ.Contrib.TYZGenus.CM ZInQ.Contrib.TYZGenus.RingClass
+  ZInQ.RouteK.Rank5b NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory Complex
+  ZInQ.Contrib.TYZGenus.Shimura IsDedekindDomain Pointwise T5Glue
+
+/-- **LEAF SHIMURA-5.4-PRINTED (the main theorem of complex multiplication, Shimura 1971 Thm 5.4, in its
+printed form).** Let `K = ℚ(√−m) ⊂ ℂ` (through `κ`, `√−m ↦ i√m`), `e : Kˢ → ℚ̄` normalized
+(`ιC ∘ e = κ` on `K`), `σ ∈ Aut(ℂ)` and `s ∈ 𝔸_K^×` with `σ = [s, K]` on `K^ab` (`ArtinCond`). Let `𝔞` be a
+lattice in `K` (`κ(𝔞)` is the lattice of a period pair), `E` an elliptic curve over `ℂ` (a Weierstrass model,
+`E(ℂ) = E.toAffine.Point`) and `ξ : ℂ/𝔞 → E(ℂ)` an analytic isomorphism (`IsAnalyticUnif`, on `ℂ` with
+kernel `κ(𝔞)`). Then there is an analytic isomorphism `ξ' : ℂ/s⁻¹𝔞 → E^σ(ℂ)` (`E^σ = E.map σ`) with
+`ξ(u)^σ = ξ'(s⁻¹u)` for all `u ∈ K/𝔞`; here `v ∈ K` represents `s⁻¹u ∈ K/s⁻¹𝔞` when `s_f v − u ∈ 𝔞̂`, and
+`P ↦ P^σ` is `conjPt σ`.
+
+Source: G. Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971), Thm. 5.4;
+S. Lang, *Elliptic functions*, Ch. 10, Thm. 3 (numbers UNVERIFIED, from memory; not read here). Uniqueness
+of `ξ'`, also printed, is dropped. `IsAnalyticUnif` asks for a group homomorphism onto `E(ℂ)` with kernel
+`κ(𝔞)`, holomorphic in the affine coordinates away from `κ(𝔞)`: every analytic group isomorphism
+`ℂ/𝔞 → E(ℂ)` is one, and conversely (`eq_scaled_of_isAnalyticUnif`) every such map is `z ↦ ξ_L(αz)` for the
+Weierstrass map `ξ_L`, hence an analytic isomorphism; if the print's "analytic isomorphism" is read without
+the group law, the printed `ξ'` still satisfies `ξ'(0) = ξ(0)^σ = O` (take `u = 0`), and a biholomorphism of
+complex tori fixing `0` is a group isomorphism. -/
+def ShimuraThm54 : Prop :=
+  ∀ (m : ℕ) [NeZero m], Squarefree m →
+  ∀ (e : SeparableClosure (QNeg m) →ₐ[ℚ] Qbar),
+    ιC (e (algebraMap (QNeg m) (SeparableClosure (QNeg m)) QuadraticAlgebra.omega)) =
+      I * (Real.sqrt m : ℂ) →
+  ∀ (σ : ℂ ≃+* ℂ) (s : IdeleGroup (𝓞 (QNeg m)) (QNeg m)), ArtinCond m e σ s →
+  ∀ (𝔞 : Set (QNeg m)), (∃ L : PeriodPair, (L.lattice : Set ℂ) = kappa m '' 𝔞) →
+  ∀ (E : WeierstrassCurve ℂ) [E.IsElliptic] (ξ : ℂ → E.toAffine.Point),
+    IsAnalyticUnif E (kappa m '' 𝔞) ξ →
+    ∃ ξ' : ℂ → (E.map (σ : ℂ →+* ℂ)).toAffine.Point,
+      IsAnalyticUnif (E.map (σ : ℂ →+* ℂ)) (kappa m '' sInvLat m s 𝔞) ξ' ∧
+      ∀ u v : QNeg m,
+        finPart s * algebraMap (QNeg m) (AfK m) v - algebraMap (QNeg m) (AfK m) u ∈ latHat m 𝔞 →
+        conjPt (σ : ℂ →+* ℂ) (ξ (kappa m u)) = ξ' (kappa m v)
+
+/-- **`ShimuraMainCM` from the printed theorem.** -/
+theorem shimuraMainCM_of_printed (h : ShimuraThm54) : ShimuraMainCM := by
+  intro m _ hm e he σ s hs 𝔞 P P' hP hP'
+  haveI : P.weierstrassCurve.IsElliptic :=
+    ⟨isUnit_iff_ne_zero.mpr P.discriminant_ne_zero.weierstrassCurve_Δ_ne_zero⟩
+  have hξ := toPoint_isAnalyticUnif P
+  rw [hP] at hξ
+  obtain ⟨ξ', hξ', hcomm⟩ := h m hm e he σ s hs 𝔞 ⟨P, hP⟩ P.weierstrassCurve _ hξ
+  rw [← hP'] at hξ'
+  obtain ⟨μ, hμ, ha4, ha6, hcoord⟩ :=
+    eq_scaled_of_isAnalyticUnif (P.weierstrassCurve.map (σ : ℂ →+* ℂ)) (by simp) (by simp)
+      (by simp) P' ξ' hξ'
+  simp only [WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, PeriodPair.weierstrassCurve_a₄,
+    PeriodPair.weierstrassCurve_a₆, map_div₀, map_neg, map_ofNat] at ha4 ha6
+  refine ⟨μ, ⟨hμ, ?_, ?_⟩, fun u v hu huv => ?_⟩
+  · linear_combination (-4 : ℂ) * ha4
+  · linear_combination (-4 : ℂ) * ha6
+  · have hc := hcomm u v huv
+    rw [P.toPoint_of_notMem _ hu] at hc
+    have hv : kappa m v ∉ P'.lattice := by
+      intro hv
+      rw [← SetLike.mem_coe, ← hξ'.2.2.1] at hv
+      rw [hv] at hc
+      exact Point.some_ne_zero _ hc
+    obtain ⟨h', e'⟩ := hcoord _ hv
+    rw [e'] at hc
+    simp only [conjPt, Point.some.injEq, RingEquiv.coe_toRingHom, map_div₀, map_ofNat] at hc
+    refine ⟨hc.1, ?_⟩
+    linear_combination 2 * hc.2
+
+end Printed
+
 end ZInQ.Contrib.HCMDict
+
+#print axioms ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed
