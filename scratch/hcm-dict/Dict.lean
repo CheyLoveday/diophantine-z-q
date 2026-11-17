@@ -374,7 +374,7 @@ def ShimuraThm54 : Prop :=
 /-- **`ShimuraMainCM` from the printed theorem.** -/
 theorem shimuraMainCM_of_printed (h : ShimuraThm54) : ShimuraMainCM := by
   intro m _ hm e he σ s hs 𝔞 P P' hP hP'
-  haveI : P.weierstrassCurve.IsElliptic :=
+  have : P.weierstrassCurve.IsElliptic :=
     ⟨isUnit_iff_ne_zero.mpr P.discriminant_ne_zero.weierstrassCurve_Δ_ne_zero⟩
   have hξ := toPoint_isAnalyticUnif P
   rw [hP] at hξ
