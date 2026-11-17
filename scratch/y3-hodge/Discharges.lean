@@ -17,3 +17,10 @@ import ZInQKernel.Contrib.OneProof.Y3HodgePrint
 #print axioms Y3Hodge.Jmat_sq
 #print axioms Y3Hodge.h1Form_iff
 #check @Y3Hodge.deligneH_of_print
+#print axioms Y3Hodge.lemmaP_H1
+#print axioms Y3Hodge.lemmaP_of_isHodgeH1Print
+#print axioms Y3Hodge.print_of_deligneH
+#print axioms Y3Hodge.print_iff_deligneH
+#print axioms Y3Hodge.printPM_iff_field
+#check @Y3Hodge.print_iff_deligneH
+#check @Y3Hodge.lemmaP_H1

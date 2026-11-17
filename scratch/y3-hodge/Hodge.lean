@@ -3,12 +3,31 @@ import ZInQKernel.Contrib.CloudB3W17Hodge.Bridge
 
 /-! # y3-hodge: `deligneCanonicalModelY3EveryH` as a direct instance of its print
 
-Task y3-hodge (2026-11-17). Report `docs/research/y3-hodge.md`; log `scratch/y3-hodge/log.md`.
+Task y3-hodge (2026-11-17). Report `docs/research/y3-hodge.md`; log `scratch/y3-hodge/log.md`. No `sorry`; every
+theorem uses only `propext`, `Classical.choice`, `Quot.sound`.
 
-Part A (§1–§2) ports pel-hodge's identification of `H₁(A(ℂ), ℤ) = π₁(A(ℂ), 0)ᵃᵇ` with the period lattice
-(`ZInQKernel/Contrib/OneProof/PELHodge.lean` on `wip/pel-hodge`, not on this base), rebased on the base's copy of
-unif-printed's classical topology `CloudB3W17Hodge.classicalTopology` (which `CloudB3W17Hodge.classicalTopology_eq`
-identifies with the ported analytic topology of the complex manifold `X(ℂ)`).
+The research leaf `Y3Fix.DeligneCanonicalModelY3EveryH` (y3-fix) was rated consequence, GLUE by the review (queue11)
+for three gaps; each is closed here in Lean, and the leaf is restated as its print:
+
+* §0–§4, **the print's `H₁(A, ℤ)` reaches `IsHodgeH1`.** `H1 A = π₁(A(ℂ), 0)ᵃᵇ` (Mathlib's fundamental group and
+  abelianization, Hurewicz) for the classical topology `CloudB3W17Hodge.classicalTopology` (identified with the ported
+  manifold topology by `CloudB3W17Hodge.classicalTopology_eq`). pel-hodge's `h1Form_iff` (on `wip/pel-hodge`, not on
+  this base) is ported: straight loops `t ↦ e(tv)` give `Λ ≅ H₁` exactly for uniformizations (monodromy of the
+  covering `ℂ^g → A(ℂ)`). `IsHodgeH1Print P τ`: a holomorphic homomorphism `e = exp_A ∘ L : ℂⁿ → A(ℂ)`, an
+  `ℝ`-isomorphism `β : B_ℝ ≅ ℂⁿ` with `β(M J_τ) = i β(M)`, and loops `c(b) = [t ↦ e(t β(b))]` giving a bijection
+  `𝒪 ≅ H₁(A(ℂ), ℤ)` which is `𝒪`-linear for the action of `ι_A(a)` on `H₁` by functoriality. `print_iff_hodge`:
+  `IsHodgeH1Print P τ ↔ Y3Fix.IsHodgeH1 P τ`.
+* §5, **`ℍ^±` with `B^×` versus `ℍ` with `B^×_+`.** `DCRelPM` (the print's double cosets on `ℍ^± × G(𝔸_f)`),
+  `dcRelPM_iff` (restricted to `ℍ` it is `DCRel`), `exists_upper` (`μ = 1 + i`, `nrd μ = −1`, moves `ℍ⁻` to `ℍ`).
+* §6, **the sign of `h` and `B` versus `B^op`.** `F0_iff`: `F⁰ = {M : M J_τ = −i M} = {M : M (τ, 1)ᵀ = 0}`
+  (holomorphic in `τ`, Deligne's convention `h(z)|V^{p,q} = z^{-p} z̄^{-q}`), `iota_mul_Jmat` (`B^×_+`-equivariance),
+  `adjugate_Jmat` (`J̄_τ = −J_τ`), `Jmat_sq`. The leaf's sign is the right one; no statement change.
+* §7, **the leaf as the print.** `DeligneCanonicalModelY3EveryPrint` (`Ψ` on `ℍ^± × G(𝔸_f)`, fibres `DCRelPM`, the
+  moduli clause `IsHodgeH1Print`); `deligneH_of_print` (old leaf from the new one).
+* §8, **Lemma P on the genuine `H₁`.** `lemmaP_H1`: for the print's data, exactly one principal Riemann form of type
+  `μ` on `H₁(A(ℂ), ℤ)` (biadditive, alternating, `ι_A(a)_*` adjoint to `ι_A(a†)_*`, unimodular, positive real
+  extension), and it is `E₀` under `c` (y3abu-strict's `lemmaP_lattice_unique` argument, run on `𝒪` and transported).
+* §9, **the converse.** `print_iff_deligneH`, `printPM_iff_field`: the new leaf is equivalent to the old one.
 -/
 
 set_option linter.all false

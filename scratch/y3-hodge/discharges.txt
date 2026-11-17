@@ -119,7 +119,7 @@ DISCHARGES [OpenResearchLeaves42.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 13439 theorems checked, 26 discharge one
+#discharges: 39 open hypotheses, 13528 theorems checked, 26 discharge one
 'Y3Hodge.deligneH_of_print' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Y3Hodge.shimuraMainThmIDeligneY3AbU_of_printPM' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Y3Hodge.print_iff_hodge' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -133,3 +133,17 @@ DISCHARGES [OpenResearchLeaves42.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
 'Y3Hodge.Jmat_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Y3Hodge.h1Form_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 Y3Hodge.deligneH_of_print : Y3Hodge.DeligneCanonicalModelY3EveryPrint → Y3Fix.DeligneCanonicalModelY3EveryH
+'Y3Hodge.lemmaP_H1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3Hodge.lemmaP_of_isHodgeH1Print' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3Hodge.print_of_deligneH' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3Hodge.print_iff_deligneH' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3Hodge.printPM_iff_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+Y3Hodge.print_iff_deligneH : Y3Hodge.DeligneCanonicalModelY3EveryPrint ↔ Y3Fix.DeligneCanonicalModelY3EveryH
+@Y3Hodge.lemmaP_H1 : ∀ {P : LeafQM.AV.QML3 ℂ} {τ : UpperHalfPlane} {n : ℕ}
+  {e : (Fin n → ℂ) → ZInQ.LeafPush2.CPts P.A (RingHom.id ℂ)} {β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] Fin n → ℂ}
+  {c : ↥LeafQM.O → Path 1 1},
+  Y3Hodge.HodgeData P τ n e β c →
+    (∃! E, Y3Hodge.IsPrincipalRiemannMu β c E) ∧
+      ∀ (E : Y3Hodge.H1 P.A → Y3Hodge.H1 P.A → ℤ),
+        Y3Hodge.IsPrincipalRiemannMu β c E →
+          ∀ (b b' : ↥LeafQM.O), ↑(E (Y3Hodge.loopClass (c b)) (Y3Hodge.loopClass (c b'))) = RvQMPolar.E0 ↑b ↑b'
