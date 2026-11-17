@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ69
+import ZInQKernel.OneProof.H.TailZ70
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
@@ -147,7 +147,7 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 
 /-- **Theorem 1.1, from every statement still open.** -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves43) (t : HDec.HSyn.OpenTextbookLeaves17) (l : HDec.HSyn.OpenAddedLeaves26)
+    (r : HDec.HSyn.OpenResearchLeaves44) (t : HDec.HSyn.OpenTextbookLeaves17) (l : HDec.HSyn.OpenAddedLeaves26)
     (h21S : ZInQ.Contrib.H21CSteps.TYZThm21Span)
     (hCM : ZInQ.Contrib.HCMDict.ShimuraThm54)
     (h33a : ZInQ.H33Fix.TYZThm33Alg)
@@ -155,7 +155,7 @@ theorem _root_.ZInQ.OneProof.frozenTarget
     (hGZ : ZInQ.GZSch.GrossZagierCurveCd) :
     ZInQ.FrozenTarget :=
   ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
-    (HDec.HSyn.sixContactMin_of_open62 r t l)
+    (HDec.HSyn.sixContactMin_of_open63 r t l)
     (ThetaWP8.tyzThm35ReadingA_noHX (ZInQ.Contrib.LcalOne.tyzThm11Integral_of_thm21C_only (ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span h21S)) (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
       ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof ZInQ.Contrib.HfxProof.tyzTestVectorExists (ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21C (ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span h21S)) ZInQ.Contrib.T21Proof.tyzThm21At31
       ZInQ.Contrib.HP23Proof.tyzProp23Printed) (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) (ZInQ.H33Fix.tyzThm33_of_alg (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) h33a))
