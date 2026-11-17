@@ -117,8 +117,7 @@ theorem map_smulF (ρW : Representation ℚ_[p] (Field.absoluteGaloisGroup F) W)
     (σ : Field.absoluteGaloisGroup F) (c : fieldF p F) (x : BdR p ⊗[ℚ_[p]] W) :
     TensorProduct.map (drAct p (gfToGqp p F σ)) (ρW σ) (c • x) =
       c • TensorProduct.map (drAct p (gfToGqp p F σ)) (ρW σ) x := by
-  induction x using TensorProduct.induction_on with
-  | zero => rw [smul_zero, map_zero, smul_zero]
+  induction x using TensorProduct.inductionOn with
   | tmul b w =>
     rw [TensorProduct.smul_tmul', TensorProduct.map_tmul, TensorProduct.map_tmul,
       TensorProduct.smul_tmul', drAct_apply, drAct_apply, Algebra.smul_def, Algebra.smul_def, map_mul,
@@ -144,6 +143,8 @@ theorem finrank_ddrTensorOver (ρW : Representation ℚ_[p] (Field.absoluteGaloi
     finrank ℚ_[p] (ddrTensorOver p ρW) = finrank ℚ_[p] F * finrank (fieldF p F) (ddrF p ρW) := by
   rw [← restrictScalars_ddrF, ← finrank_fieldF p F,
     ((ddrF p ρW).restrictScalarsEquiv ℚ_[p] (fieldF p F)).restrictScalars ℚ_[p] |>.finrank_eq]
+  have : Module.Free (fieldF p F) (ddrF p ρW) := by
+    exact Module.Free.of_divisionRing (fieldF p F) (ddrF p ρW)
   exact (Module.finrank_mul_finrank ℚ_[p] (fieldF p F) (ddrF p ρW)).symm
 
 /-- `IsDeRhamTensorOver` is the print's `dim_{F'} D_dR(W) = dim_{ℚ_p} W`. -/

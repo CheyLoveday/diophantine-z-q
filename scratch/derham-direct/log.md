@@ -15,3 +15,17 @@ files vs base); `lake build ZInQKernel.Contrib.OneProof.DeRhamPrint` replayed in
 - `Module.finrank_mul_finrank` (Mathlib 4.35, Dimension/Free.lean:68) has no finiteness hypotheses.
 
 ## Compile log
+- 01:00 `lake env lean scratch/derham-direct/DeRhamDirect.lean`: no errors, no warnings; axioms of
+  `deRhamVpAbVarPrinted_of_direct`, `direct_of_deRhamVpAbVarPrinted`, `iotaPlusF_unique`: [propext,
+  Classical.choice, Quot.sound] (VERIFIED, output in DeRhamDirect-output.txt). Earlier attempts: `Module.Free`
+  of `ddrF` not found by instance search (IntermediateField semiring path mismatch), fixed by `exact
+  Module.Free.of_divisionRing ...`.
+
+## Statements proved (VERIFIED, compiled)
+- `iotaPlusF p F : fieldF p F →ₐ[ℚ_p] B_dR^+` for any finite `F/ℚ_p` (no Galois hypothesis), `θ⁺ ∘ ι = F' ⊆ ℂ_p`;
+  `iotaPlusF_unique` (canonical); `bdrAct_iotaF`: `G_F` (through gfToGqp) fixes `iotaF x` in `B_dR`.
+- `ddrF p ρW : Submodule F' (B_dR ⊗ W)`, `restrictScalars_ddrF : ... = ddrTensorOver p ρW` (Iff.rfl).
+- `finrank_ddrTensorOver`: `finrank ℚ_p (ddrTensorOver p ρW) = finrank ℚ_p F * finrank F' (ddrF p ρW)`.
+- `isDeRhamTensorOver_iff`: `IsDeRhamTensorOver p ρW ↔ finrank F' (ddrF p ρW) = finrank ℚ_p W`.
+- New leaf `DeRhamVpAbVarDirect` (∀ p F A, `finrank F' (ddrF p (A.galRep p)) = finrank ℚ_p (A.V p)`);
+  `deRhamVpAbVarPrinted_of_direct` and the converse (equivalent Props).
