@@ -62,3 +62,13 @@
 - openAddedLeaves20PZ_of_20 checks OAL20PZ = OAL20 with only picZeroAbVar weakened.
 - Counts (kinds.tsv H rows, autofold.py's `counts`): now 33 fields, strict 13 LEAF / 20 GLUE, strictest 13/20.
   After: 35 fields, strict 16/19, strictest 16/19 (picZeroAbVar GLUE removed; three LEAF rows flagged unread).
+
+## Step 2d: checks, VERIFIED
+- ClosureCheck.lean (closurecheck_out.txt): closure of sixContactMin_of_open41_pz (241,677) contains none of
+  T09Pic.PicZeroAbVar, PicDict.PicZeroSmooth, PicFix.MumfordKLFiniteSectionAC, T09Pic.PhiAmpleIsogeny,
+  HDec.WeilPairing.T09_SymmIsogenyExists, HDec.LeafPush.T09_WeilPairing, HDec.G0Galois.G12Det, sorryAx; contains the
+  four PicZeroChar0 forms. The original sixContactMin_of_open41 contains the old ones (control).
+- Discharges.lean (discharges.txt): "43 open hypotheses, 8898 theorems checked, 67 discharge one"; 18 lines are
+  projections of the copied PZ bundles (spurious); no line for the reroute (#discharges cannot express one).
+
+## Step 3 (char p): not needed; PicZeroSmoothPosChar not proved (Mumford 13; pic-smooth's assessment unchanged).
