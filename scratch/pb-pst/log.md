@@ -22,3 +22,10 @@ Base: wip/pb-pst = origin/wip/leaf-fold33b 4dfb7e58 (75d94fe7 + main merge).
   `finiteDimensional_htU` (dim_Qp (C_p(w) ⊗ V)^G ≤ dim_Qp V), `finiteDimensional_htSpaceE :
   FiniteDimensional E (htSpaceE ρ w)`, `htMultE_le : htMultE ρ w ≤ n`. Probe: HDec.PkgI4.cpAct and
   ZInQ.Contrib.G9.PkgI4.cpAct agree by `rfl` (VERIFIED).
+- 05:xx VERIFIED (compiled): V2. BmaxOne.lean §8: `IsAdmissibleT` (Fontaine's admissibility, basis form:
+  B ⊗ V has a B-basis of H-invariant vectors), `inclT_injective`, `isAdmissible_of_T` (basis form ⇒ bst-construct's
+  dimension form `dim_{B^H} D_B(V) = dim V` for any G-stable B ⊆ B_dR; no B^H = K_0 used), `IsPstT`,
+  `isPstBOf_of_T`; new leaf `PanDict.BergerPrintedVT` (one t + basis-form admissibility),
+  `bergerPrintedV_of_T : BergerPrintedVT → BergerPrintedV`. Pitfalls: `Fintype.linearIndependent_iff` on the
+  submodule `dB` and on `B ⊗ V` times out (instance paths); used `Basis.repr_sum_self`,
+  `LinearIndependent.restrict_scalars` + `.of_comp dB.subtype`, and span via `Submodule.map_span`.

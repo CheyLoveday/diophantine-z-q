@@ -498,6 +498,120 @@ theorem localIsPstBOf_iff {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀
 
 end Pst
 
+/-! ## §8. Fontaine's admissibility as printed: `B ⊗_{ℚ_p} V ≅ B^d` with trivial action on the basis -/
+
+section AdmT
+
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] {n : ℕ}
+
+/-- **`V` is `B`-admissible as a representation of `H`** (Fontaine's definition, Astérisque 223, Exp. III
+§1.4-1.5, UNVERIFIED numbering): `B ⊗_{ℚ_p} V` is a free `B`-module with a basis of `H`-invariant vectors, i.e.
+`B ⊗_{ℚ_p} V ≅ B^d` as `B`-modules with semilinear `H`-action (trivial on the standard basis of `B^d`). -/
+def IsAdmissibleT (B : Subalgebra ℚ_[p] (BdR p)) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E) :
+    Prop :=
+  ∃ (ι : Type) (b : Basis ι B (B ⊗[ℚ_[p]] (Fin n → E))),
+    ∀ i, inclT p B (b i) ∈ PanBergerSplit.tensorInv p (PanBergerSplit.bdrLin p) H ρ
+
+theorem inclT_injective (B : Subalgebra ℚ_[p] (BdR p)) :
+    Function.Injective (inclT p B (E := E) (n := n)) :=
+  have : Module.Free ℚ_[p] (Fin n → E) := Module.Free.of_divisionRing _ _
+  have : Module.Flat ℚ_[p] (Fin n → E) := Module.Flat.of_free
+  Module.Flat.rTensor_preserves_injective_linearMap (M := Fin n → E) B.val.toLinearMap
+    Subtype.val_injective
+
+set_option maxHeartbeats 300000 in
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **Admissible (basis form) ⇒ admissible (dimension form)** for a `G_{ℚ_p}`-stable `B ⊆ B_dR`: an invariant
+`B`-basis of `B ⊗ V` is a `B^H`-basis of `D_B(V) = (B ⊗ V)^H`, so `dim_{B^H} D_B(V) = rk_B (B ⊗ V) = dim_{ℚ_p} V`. -/
+theorem isAdmissible_of_T [FiniteDimensional ℚ_[p] E] (B : Subalgebra ℚ_[p] (BdR p))
+    (hB : ∀ σ : GQp p, ∀ x ∈ B, bdrAct p σ x ∈ B) (H : Subgroup (GQp p)) (ρ : GQp p →* GL (Fin n) E)
+    (h : IsAdmissibleT p B H ρ) : IsAdmissible p B H ρ := by
+  obtain ⟨ι, b, hb⟩ := h
+  have : Nontrivial (BdR p) := by
+    have : IsDomain (BdR p) := (ZInQ.Contrib.G9.BdrKer.Cp.isField_BDeRham p).isDomain
+    infer_instance
+  have : Module.Free ℚ_[p] (Fin n → E) := Module.Free.of_divisionRing _ _
+  have : Module.Finite ℚ_[p] (Fin n → E) := Module.Finite.pi
+  have hfinι : Finite ι := Module.Finite.finite_basis b
+  have := Fintype.ofFinite ι
+  -- `σ` on `B`
+  let sB : GQp p → B → B := fun σ c => ⟨bdrAct p σ c, hB σ c c.2⟩
+  have hact : ∀ σ ∈ H, ∀ (c : ι → B),
+      TensorProduct.map (PanBergerSplit.bdrLin p σ) (PanBergerSplit.vAct p ρ σ)
+        (inclT p B (∑ i, c i • b i)) = inclT p B (∑ i, sB σ (c i) • b i) := by
+    intro σ hσ c
+    rw [map_sum, map_sum, map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [inclT_smul, inclT_smul, tensorAct_smul, hb i σ hσ]
+  have hrepr : ∀ x : B ⊗[ℚ_[p]] (Fin n → E), x = ∑ i, b.repr x i • b i :=
+    fun x => (b.sum_repr x).symm
+  have hkey : ∀ c : ι → B, ∑ i, c i • b i = 0 → ∀ i, c i = 0 := by
+    intro c hc i
+    have := congrArg (fun y => b.repr y i) hc
+    simpa only [b.repr_sum_self, map_zero, Finsupp.zero_apply] using this
+  have hcoef : ∀ x ∈ dB p B H ρ, ∀ σ ∈ H, ∀ i, sB σ (b.repr x i) = b.repr x i := by
+    intro x hx σ hσ
+    have hx' : inclT p B x ∈ PanBergerSplit.tensorInv p (PanBergerSplit.bdrLin p) H ρ := hx
+    have h1 : inclT p B (∑ i, sB σ (b.repr x i) • b i) = inclT p B (∑ i, b.repr x i • b i) := by
+      rw [← hact σ hσ, ← hrepr x]
+      exact hx' σ hσ
+    have h2 := inclT_injective p B h1
+    intro i
+    have h3 := congrArg (fun y => b.repr y i) h2
+    simpa only [b.repr_sum_self] using h3
+  let v : ι → dB p B H ρ := fun i => ⟨b i, hb i⟩
+  have hliB : LinearIndependent (fixedSub p B H) (fun i => b i) :=
+    b.linearIndependent.restrict_scalars (fun r s h => Subtype.ext (by
+      have h' : (r : B) * 1 = (s : B) * 1 := h
+      rwa [mul_one, mul_one] at h'))
+  have hli : LinearIndependent (fixedSub p B H) v :=
+    LinearIndependent.of_comp (dB p B H ρ).subtype hliB
+  have hsp : ⊤ ≤ Submodule.span (fixedSub p B H) (Set.range v) := by
+    rintro ⟨x, hx⟩ -
+    have hmem : ∀ i, b.repr x i ∈ fixedSub p B H := fun i σ hσ =>
+      congrArg (fun z : B => (z : BdR p)) (hcoef x hx σ hσ i)
+    have hx2 : x ∈ Submodule.span (fixedSub p B H) (Set.range b) := by
+      rw [hrepr x]
+      refine Submodule.sum_mem _ fun i _ => ?_
+      have := Submodule.smul_mem (Submodule.span (fixedSub p B H) (Set.range b))
+        (⟨b.repr x i, hmem i⟩ : fixedSub p B H) (Submodule.subset_span ⟨i, rfl⟩)
+      rwa [Subalgebra.smul_def] at this
+    have hspan : Submodule.span (fixedSub p B H) (Set.range b) =
+        (Submodule.span (fixedSub p B H) (Set.range v)).map (dB p B H ρ).subtype := by
+      rw [Submodule.map_span, ← Set.range_comp]
+      rfl
+    rw [hspan] at hx2
+    obtain ⟨y, hy, hyx⟩ := Submodule.mem_map.mp hx2
+    have hyx' : y = ⟨x, hx⟩ := Subtype.ext hyx
+    rw [← hyx']
+    exact hy
+  let bD : Basis ι (fixedSub p B H) (dB p B H ρ) := Basis.mk hli hsp
+  have : Nontrivial (fixedSub p B H) :=
+    ⟨⟨0, 1, fun h => zero_ne_one (congrArg (fun z : fixedSub p B H => ((z : B) : BdR p)) h)⟩⟩
+  have : Nontrivial B := ⟨⟨0, 1, fun h => zero_ne_one (congrArg (fun z : B => (z : BdR p)) h)⟩⟩
+  rw [IsAdmissible, Module.finrank_eq_card_basis bD,
+    ← Module.finrank_baseChange (R := B) (S := ℚ_[p]) (M' := Fin n → E),
+    Module.finrank_eq_card_basis b]
+
+/-- **`V` is potentially semistable**, Fontaine's admissibility as printed: for some finite `K/ℚ_p` inside `ℚ̄_p`,
+`B_st ⊗_{ℚ_p} V` has a `B_st`-basis of `G_K`-invariant vectors (`B_st = B_max^+[1/t][log [p̃]]`, `t = log [ε₀]`). -/
+def IsPstT {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (ρ : GQp p →* GL (Fin n) E) : Prop :=
+  ∃ K : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] K ∧
+    IsAdmissibleT p (BstOf p h) K.fixingSubgroup ρ
+
+theorem bstOf_stable {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (σ : GQp p) (x : BdR p)
+    (hx : x ∈ BstOf p h) : bdrAct p σ x ∈ BstOf p h := by
+  rw [bstOf_eq] at hx ⊢
+  exact bst_stable p σ hx
+
+/-- **Basis form ⇒ dimension form** of potential semistability. -/
+theorem isPstBOf_of_T [FiniteDimensional ℚ_[p] E] {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀)
+    (ρ : GQp p →* GL (Fin n) E) (hT : IsPstT p h ρ) : IsPstBOf p h ρ := by
+  obtain ⟨K, hK, hadm⟩ := hT
+  exact ⟨K, hK, isAdmissible_of_T p (BstOf p h) (bstOf_stable p h) _ ρ hadm⟩
+
+end AdmT
+
 end BmaxOne
 
 namespace PanDict
@@ -528,6 +642,33 @@ theorem bergerPrintedV_of_t (hB : BergerPrintedVt) : BergerPrintedV := by
   intro p _ n E _ ρE hc hdr
   obtain ⟨ε₀, h⟩ := exists_isGenEps p
   exact (isPstBOf_iff p h ρE).mp (hB p ε₀ h n E ρE hc hdr)
+
+/-- **Berger, Théorème 0.7, printed form: one `t`, and Fontaine's admissibility in its basis form** (L. Berger,
+*Représentations p-adiques et équations différentielles*, Invent. Math. 148 (2002), 219-284; Théorème 0.7 =
+Corollaire 5.22 of the published version (locator audit row R11) = Théorème 0.6 = Théorème 5.19 of
+arXiv:math/0102179v3), at `K = ℚ_p`: a de Rham `p`-adic representation of `G_{ℚ_p}` is potentially semistable.
+For every generator `ε₀ = (1, ζ_p, ζ_{p²}, …)` of `ℤ_p(1)` (`IsGenEps`), `t = log [ε₀]`,
+`B_st = B_max[log [p̃]]`, `B_max = B_max^+[1/t]`, `B_max^+ = A_max[1/p]`,
+`A_max = {Σ a_n (ω/p)^n : a_n ∈ A_inf, a_n → 0}` inside Mathlib's `B_dR` (`BstOf`). `V = E^n`, `E/ℚ_p` finite inside
+`ℚ̄_p`, `ρ : G_{ℚ_p} → GL_n(E)` continuous:
+
+* de Rham: `dim_{ℚ_p} (B_dR ⊗_{ℚ_p} V)^{G_{ℚ_p}} = dim_{ℚ_p} V` (`IsDeRhamU`);
+* potentially semistable (Fontaine, Astérisque 223, Exp. III §1.4-1.5 (numbering UNVERIFIED): `V|_{G_K}` is
+  `B_st`-admissible, i.e. `B_st ⊗_{ℚ_p} V ≅ B_st^d` with `G_K` acting trivially on the basis): for some finite
+  `K/ℚ_p`, `B_st ⊗_{ℚ_p} V` has a `B_st`-basis of `G_K`-invariant vectors (`IsPstT`). -/
+def BergerPrintedVT : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (ε₀ : PreTilt 𝓞_ℂ_[p] p) (h : IsGenEps p ε₀) (n : ℕ)
+    (E : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E]
+    (ρE : GQp p →* GL (Fin n) E),
+    Continuous ρE → IsDeRhamU p ρE → IsPstT p h ρE
+
+/-- `BergerPrintedVt` (dimension form) from the basis form (`isPstBOf_of_T`). -/
+theorem bergerPrintedVt_of_T (hB : BergerPrintedVT) : BergerPrintedVt := fun p _ ε₀ h n E _ ρE hc hdr =>
+  isPstBOf_of_T p h ρE (hB p ε₀ h n E ρE hc hdr)
+
+/-- **pb-fix3's `BergerPrintedV` from the one-`t`, basis-form leaf.** -/
+theorem bergerPrintedV_of_T (hB : BergerPrintedVT) : BergerPrintedV :=
+  bergerPrintedV_of_t (bergerPrintedVt_of_T hB)
 
 /-- **Pan, Theorem 1.0.4, printed form, with `B_max = B_max^+[1/t]` for one `t`**: `PanPrintedP` with
 potential semistability over `B_st = B_max^+[1/t][log [p̃]]`, `t = log [ε₀]`, for every generator `ε₀`
