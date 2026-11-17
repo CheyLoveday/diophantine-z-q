@@ -1,0 +1,22 @@
+{
+ "name": "kleiman-section",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.KleimanPicZeroProperQuot"
+ ],
+ "discharges": [
+  {
+   "field": "kleimanPicZeroProper",
+   "proof": "_root_.KleimanSection.kleimanPicZeroProper_of_Q {n}.kleimanPicZeroProperQ",
+   "leaves": [
+    {
+     "name": "kleimanPicZeroProperQ",
+     "type": "_root_.KleimanSection.KleimanPicZeroProperQ",
+     "doc": "kleiman-section: for `X` proper and geometrically normal over a field `K`, the identity component of any scheme representing Kleiman's `Pic_{(X/K)(fppf)}` (the fppf sheafification of `T ↦ Pic(X_T)/Pic(T)`, Def. 9.2.2) is proper (Kleiman, *The Picard scheme*, Thm 9.5.4; locator UNVERIFIED). `picardFunctorIsoKleiman` (proved, no section) identifies Kleiman's sheaf with the tree's `picardFunctor`.",
+     "kind": "published",
+     "flag": "unread: Kleiman 9.5.4 over Kleiman's quotient functor T ↦ Pic(X_T)/Pic(T) (comparison with picardFunctor proved, no section); reading risks proper vs projective and étale vs fppf (the hand fold's KleimanPicZeroProperPrinted avoids both); locator UNVERIFIED",
+     "source": "Kleiman, The Picard scheme, 9.5.4"
+    }
+   ]
+  }
+ ]
+}
