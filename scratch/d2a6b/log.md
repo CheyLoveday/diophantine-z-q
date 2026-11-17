@@ -22,3 +22,6 @@ Base: fork main d435851d; merged origin/wip/d2a6-reroute (698c8c9e) and origin/w
   hasGoodReduction_of_z30, qmModelG3U_of_z30, modelG3G6_of_leavesU_z30.
 - D2A6Wrap.lean edited: R6U := RaynaudWildNF ∧ Y3FullThreeRepZ30; modelG3G6_of_leaves3U and good_of_QML3U use the z30
   theorems.
+- `lake build ZInQKernel.Contrib.OneProof.A6Z30`: success (14376 jobs, 0 errors; build-a6z30.txt). VERIFIED axioms
+  [propext, Classical.choice, Quot.sound] for spec_to_Z30_ext, z30ToLocal, hasGoodReduction_of_z30, qmModelG3U_of_z30,
+  modelG3G6_of_leavesU_z30.
