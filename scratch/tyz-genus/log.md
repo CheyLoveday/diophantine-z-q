@@ -35,3 +35,16 @@ with N I prime to 2n and α ∈ I with (α) = I M, M + (N I) = O; the idele aK (
 τ̂(aK) ∈ B^× twoRep(t') H, reduced norms give: v_r(g · N I) even at odd r (g = nrd γ), and g·nrd(twoRep t') ∈
 2^ℤ(1+4ℤ₂) at 2; so N I · nrd(twoRep t') ≢ 3 (mod 4). With χ_U(t) = χ₄(N I): χ_U(t) = −1 ⇒ t'.2.2 ≠ 0 ⇒ F(t') = 0
 ⇒ f_n(τ̂ t) = 0. Hence χ_{T^c} f_n = χ_T f_n termwise.
+
+## Step 2: contribution file, #discharges, manual fold — VERIFIED (compiled)
+
+* Helpers moved to ZInQKernel/Contrib/OneProof/TYZGenusFold/{Jacobi,Local,Ideles,Class}.lean (scratch copies
+  removed); final file ZInQKernel/Contrib/OneProof/TYZLemma28Sym.lean (imports TYZLemma29Genus, which defines
+  TYZThm21Pairs / TYZLemma28Sym, and TYZGenusFold.Class); `lake build ZInQKernel.Contrib.OneProof.TYZLemma28Sym` OK.
+* scratch/tyz-genus/Discharges.lean → Discharges-output.txt:
+  `DISCHARGES [hL29] by ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21Pairs`
+  `still assumes: [ZInQ.Contrib.TYZDecomp.H29Genus.TYZThm21Pairs]`, axioms [propext, Classical.choice, Quot.sound]
+  (39 open hypotheses, 9305 theorems checked).
+* scratch/tyz-genus/FoldCheck.lean → FoldCheck-output.txt: `frozenTarget_thm21` (frozenTarget with hL29 replaced by
+  h21 : TYZThm21Pairs) and `frozenTarget_thm21'` (as an instance of the current frozenTarget): standard axioms.
+  Count: TYZ hypotheses h11, hL29 → h11, h21 (2 → 2, neutral).

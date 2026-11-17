@@ -122,6 +122,7 @@ theorem normSq_tau (h1 : n % 8 = 1) {τ : QNeg n →ₐ[ℚ] ℍ[ℚ]} (hτ : Ad
 
 theorem nrdH_βZ_mod4_one : ∀ t : T8, t.2.2 = 0 → nrdH (βZ t) % 4 = 1 := by decide +kernel
 
+omit [NeZero n] in
 theorem odd_of_coprime_two_mul {m : ℕ} (h : Nat.Coprime m (2 * n)) : m % 2 = 1 := by
   have h2 : Nat.Coprime m 2 := Nat.Coprime.coprime_dvd_right (dvd_mul_right 2 n) h
   rcases Nat.mod_two_eq_zero_or_one m with h0 | h0
@@ -235,24 +236,5 @@ theorem gchar_eq_one_or (T : Finset n.primeFactors) (c : ClassGroup (𝓞 (QNeg 
   · rintro a b (rfl | rfl) (rfl | rfl) <;> simp
   · intro q _; unfold sgn2; split_ifs <;> simp
 
-/-- **TYZ Lemma 2.8** (`TYZLemma28Sym`), proved: `P(d₁, d₂) = P(d₂, d₁)` for `n ≡ 1 (mod 8)`. -/
-theorem tyzLemma28Sym : TYZLemma28Sym := by
-  intro n _ hsq _ h8 τ hτ f hf d₁ d₂ hd _
-  have hd2 : d₂ ∣ n := ⟨d₁, by rw [← hd, mul_comm]⟩
-  have hd2pos : 0 < d₂ := Nat.pos_of_dvd_of_pos hd2 (Nat.pos_of_ne_zero (NeZero.ne n))
-  have hd1 : d₁ = n / d₂ := by rw [← hd, Nat.mul_div_cancel _ hd2pos]
-  unfold quadPeriod
-  rw [hd1, divSet_div hsq hd2]
-  refine Finset.sum_congr rfl fun t _ => ?_
-  have hprod : gchar n Finset.univ t = gchar n (divSet n d₂) t * gchar n (divSet n d₂)ᶜ t := by
-    unfold gchar; rw [Finset.prod_mul_prod_compl]
-  rcases gchar_eq_one_or Finset.univ t with hu | hu
-  · congr 1
-    rcases gchar_eq_one_or (divSet n d₂) t with h | h <;> rw [h] at hprod ⊢ <;> linarith
-  · rw [tv_zero_of_gchar hsq h8 hτ hf t hu, mul_zero, mul_zero]
-
-/-- **`hL29` from TYZ Theorem 2.1 alone.** -/
-theorem tyzLemma29PrintedNe3_of_thm21Pairs (h21 : TYZThm21Pairs) : TYZLemma29PrintedNe3 :=
-  tyzLemma29PrintedNe3_of_genus h21 tyzLemma28Sym
 
 end ZInQ.Contrib.TYZGenusFold
