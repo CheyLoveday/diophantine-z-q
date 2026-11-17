@@ -58,7 +58,7 @@ theorem PhiSurj.tiClassesInPicZeroAC_of_phiSurjective (h8 : MumfordPhiSurjective
 (the first lifts `y` along the surjective `λ` to a `k`-point `x`, `exists_lift_kpt`, and compares classes with
 Kleiman 9.2.5 at `Spec k̄`, `kClass_injective`, as pic-dict's L5; the second uses the proved
 `exists_isAmple_of_isAlgClosed`). (a) itself: it says that the Néron–Severi class of a translation-invariant bundle is
-zero, i.e. `NS(A) → Hom(A, Â)` is injective on the classes with `φ_c = 0`. Every argument I know goes through
+zero (translation-invariant means `φ_c = 0`), i.e. `NS(A) → Hom(A, Â)` is injective. The published proofs go through
 Mumford's proof of §8 Thm 1 (vanishing of `H^*(A, M)` for nontrivial `M ∈ Pic⁰` and the Künneth/Leray
 comparison of the two projections of `m^*L ⊗ p₁^*L⁻¹ ⊗ p₂^*(L ⊗ M)⁻¹`), or through Weil's theory of algebraic
 equivalence (Lang, *Abelian varieties*, Ch. IV); none of it is in the tree (STANDARD; locators UNVERIFIED).
@@ -170,7 +170,9 @@ count on this base (`weilPairingMumford` is a single field).
 ## 7. Files
 
 * `ZInQKernel/Contrib/OneProof/PhiAmpleIsogenyWeil.lean` (the contribution).
-* `scratch/phisurj/`: `DimSurj.lean`, `PhiSurj.lean`, `TIReduction.lean` (development copies),
+* `ZInQKernel/Contrib/OneProof/MumfordSquareMulN.lean` (by-products, §6b).
+* `scratch/phisurj/`: `DimSurj.lean`, `PhiSurj.lean`, `TIReduction.lean`, `SquareAC.lean`, `MulNAC.lean`
+  (development copies), `AxiomsByproducts.lean`, `axioms-byproducts.txt`,
   `PhiAmpleIsogenyWeil.lean.txt` (copy of the contribution), `FoldTailZ49.lean`, `FrozenTargetDryRun.lean`,
   `Discharges.lean`, `discharges.txt`, `Axioms.lean`, `axioms.txt`, `autofold.json`, `autofold-ti.json`,
   `autofold-ti-dryrun.txt`, `log.md`.
@@ -181,7 +183,8 @@ count on this base (`weilPairingMumford` is a single field).
   printed Mumford §8 Thm 1. No cohomology-free route found (§2).
 * The right-kernel clause of `weilPairingMumford` could itself be proved by fpqc descent along `ℓ_A` (the vendored
   `bijective_toDescentData_map_of_mem_fpqcTopology` / `nonempty_iso_of_toDescentData_iso` give the descent step;
-  missing: `ℓ_A^*M_y ≅ 𝒪` for `y ∈ B[ℓ]` (pic-dict's L6), the decomposition of `A ×_{ℓ,A,ℓ} A` along the étale
+  `ℓ_A^*M ≅ M^ℓ = 𝒪` for translation-invariant `M` of order `ℓ` is now `mumfordMulNPicZeroAC_of_open` (§6b); missing:
+  the decomposition of `A ×_{ℓ,A,ℓ} A` along the étale
   `A[ℓ]`, and the bridge from pic-dict's `formula` to the pseudofunctor's `mapComp'`). Not attempted here; it would
   make the reroute independent of `weilPairingMumford`.
 * `mumfordTorsionAlgClosed` disappears as a textbook field once origin/proof/picard-fibres-20261116 lands.
