@@ -331,4 +331,71 @@ theorem gaHom_proper_point (g : algPt k (Polynomial k) ⟶ B) (h : IsGaHom B g) 
 
 end Valuative
 
+
+/-! ## §5. Morphisms out of `𝔸¹` are determined by their values at `k`-points (`k` algebraically closed) -/
+
+section Ext
+
+variable [IsAlgClosed k]
+
+/-- Every closed point of `𝔸¹ = Spec k[X]` is the image of a `k`-point `X ↦ c`. -/
+theorem closedPoint_eq_ev (x : (algPt k (Polynomial k)).left) (hx : IsClosed {x}) :
+    ∃ c : k, ∀ a, (algPtMap (Polynomial.aeval c)).left a = x := by
+  let p := pointOfClosedPoint (algPt k (Polynomial k)).hom x hx
+  have hp : p ≫ (algPt k (Polynomial k)).hom = 𝟙 _ := pointOfClosedPoint_comp _ x hx
+  let φ := Spec.preimage p
+  have hφ : Spec.map φ = p := Spec.map_preimage p
+  have hφ1 : CommRingCat.ofHom (algebraMap k (Polynomial k)) ≫ φ = 𝟙 _ := by
+    apply Spec.map_injective
+    rw [Spec.map_comp, hφ, Spec.map_id]
+    exact hp
+  refine ⟨φ.hom Polynomial.X, fun a => ?_⟩
+  have hφe : φ = CommRingCat.ofHom ((Polynomial.aeval (φ.hom Polynomial.X) : Polynomial k →ₐ[k] k) :
+      Polynomial k →+* k) := by
+    ext1
+    apply Polynomial.ringHom_ext
+    · intro r
+      have := congrArg (fun f => f.hom r) hφ1
+      simp only [CommRingCat.hom_comp, CommRingCat.hom_id, RingHom.comp_apply, CommRingCat.hom_ofHom,
+        RingHom.id_apply] at this
+      change φ.hom (Polynomial.C r) = Polynomial.aeval _ (Polynomial.C r)
+      rw [Polynomial.aeval_C, Algebra.algebraMap_self, RingHom.id_apply, ← Polynomial.algebraMap_eq]
+      exact this
+    · simp
+  rw [algPtMap_left, ← hφe, hφ]
+  exact pointOfClosedPoint_apply _ x hx a
+
+/-- **Extensionality from `k`-points**: two morphisms `𝔸¹ → Y` to a separated `k`-scheme of finite type that agree at
+every `k`-point are equal. -/
+theorem ext_of_points {Y : Over (Spec (CommRingCat.of k))} [IsSeparated Y.hom] [LocallyOfFiniteType Y.hom]
+    (f f' : algPt k (Polynomial k) ⟶ Y)
+    (h : ∀ c : k, algPtMap (Polynomial.aeval c) ≫ f = algPtMap (Polynomial.aeval c) ≫ f') : f = f' := by
+  have : LocallyOfFiniteType (f.left ≫ Y.hom) := by rw [Over.w f]; infer_instance
+  have : IsReduced (algPt k (Polynomial k)).left := by
+    change IsReduced (Spec (CommRingCat.of (Polynomial k))); infer_instance
+  ext1
+  refine ext_of_apply_eq Y.hom Set.univ isOpen_univ.isLocallyClosed dense_univ (fun x _ hx => ?_)
+    ((Over.w f).trans (Over.w f').symm)
+  obtain ⟨c, hc⟩ := closedPoint_eq_ev x hx
+  let a : (algPt k k).left := (algPt k (Polynomial k)).hom x
+  rw [← hc a]
+  change (algPtMap (Polynomial.aeval c) ≫ f).left a = (algPtMap (Polynomial.aeval c) ≫ f').left a
+  rw [h c]
+
+end Ext
+
+/-! ## §6. Step (2): every homomorphism `𝔾_a → B` to a proper group scheme (an abelian variety) is trivial -/
+
+/-- **Step (2)**: over an algebraically closed field, every homomorphism of group schemes from `𝔾_a` to a proper group
+scheme is trivial. -/
+theorem gaHom_proper_trivial [IsAlgClosed k] (B : Over (Spec (CommRingCat.of k))) [IsProper B.hom] [GrpObj B]
+    (g : algPt k (Polynomial k) ⟶ B) (h : IsGaHom B g) : g = 1 :=
+  ext_of_points g 1 fun c => by rw [gaHom_proper_point B g h c, comp_one]
+
+/-- **Step (2) for abelian varieties**: every homomorphism `𝔾_a → A` to an abelian variety over an algebraically closed
+field is trivial. -/
+theorem gaHom_abVar_trivial [IsAlgClosed k] (A : PkgI3.AbVar k) (g : algPt k (Polynomial k) ⟶ A.X)
+    (h : IsGaHom A.X g) : g = 1 :=
+  gaHom_proper_trivial A.X g h
+
 end GaRigidity
