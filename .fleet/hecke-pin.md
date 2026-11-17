@@ -36,5 +36,6 @@ It gives no proof, and it is not the sentence right after the theorem (that one 
 - The three leaves' docstrings now point at `HeckePin.lean`.
 
 **Remains.** `X1TauPoints` and `AbelJacobiX1` are open leaf candidates (not printed form), and
-`ConstOnTauPoints` is open glue. A human reading of DS p. 393 is still needed. Report:
+`ConstOnTauPoints` is open glue. A proof route for it is in the report §3; it needs two pieces the tree lacks:
+the dimension-one finiteness fact for curves, and geometric irreducibility of `X_ℂ`. A human reading of DS p. 393 is still needed. Report:
 `docs/research/hecke-pin.md`.
