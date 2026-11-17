@@ -122,3 +122,19 @@ Base wip/leaf-fold33b 30674d98 (origin/main c1e4ed1b is an ancestor: not merged)
 
 Counts (render_open): base 33 H, strictest 13/20 → step 1: 32, 12/20 → step 2: 31, 11/20 (8 others throughout;
 open hypotheses 41 → 40 → 39).
+
+## Step 3: merge origin/wip/leaf-fold33b (4da8d4f3: hQ and hP23 proved outright, hand folds of Main)
+- The base branch moved during the task; merged so that wip/leaf-fold33b fast-forwards to wip/fold33-copy. Main.lean
+  auto-merged (binders `OpenResearchLeaves31`, `OpenTextbookLeaves16`, `sixContactMin_of_open43 r t l`; hQ, hP23
+  gone, supplied by `Gamma0QExp.gamma0QExpansion_proof`, `HP23Proof.tyzProp23Printed`); the generated files
+  (STATUS.md, OPEN.md, CONTRIBUTING.md, DischargesTest-output.txt) conflicted and were regenerated.
+- Checks (VERIFIED): `lake build +Main +Discharges +…H.NoSGA3Copy +…H.TailZ49 +…H.GoodModelIsoCopy +…H.TailZ50`: OK,
+  14208 jobs (`build_3_merge-tail.txt`); frozenTarget standard axioms; closure output identical to step 2 apart from the
+  size line; hash guard `hashes_2_gm.txt` → `hashes_3_merge.txt`: 15313 → 15313, only before 0, only after 0, changed 1
+  (`ZInQ.OneProof.frozenTarget`); OpenStatements 37; render_open then `--check`: ok, **31 H hypotheses, strictest
+  11/20, 6 others** (37 open); frontier_crosswalk `--check` ok (29 matched); DischargesTest rerun (37 open, 38
+  discharge one); autoform check OK.
+- autofold dry-run on the step-2 tree (spec discharging `gagaMorphism` and `neronSchemeExtensionDedekind` by `sorry`, not
+  written): parses Main/TailZ50, prints "strict count: 11/20 on 31 -> 10/19 on 29" and a TailZ51 with
+  `OpenResearchLeaves32`, `OpenTextbookLeaves17`, `sixContactMin_of_open44`, which compiles (`lake env lean`, only the
+  two sorry warnings) (VERIFIED).

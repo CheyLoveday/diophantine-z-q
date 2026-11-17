@@ -11,7 +11,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**31 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves31`, `OpenTextbookLeaves16`), plus 8 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**31 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves31`, `OpenTextbookLeaves16`), plus 6 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
 * **Strict count: 11 published / 20 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -107,12 +107,10 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 
 * [`h11`](#h11) (LEAF; unverified-locator): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
 * [`hL29`](#hl29) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Lemma 2.9 (L1062-1066)
-* [`hP23`](#hp23) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Proposition 2.3 (L580-586)
 * [`hCM`](#hcm) (GLUE; unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
 * [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
 * [`hGZ`](#hgz) (LEAF; unread): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
-* [`hQ`](#hq) (LEAF; unverified-locator): G. Shimura, Introduction to the arithmetic theory of automorphic functions (1971), Prop. 6.9 and Thm 6.6; F. Diamond, J. Shurman, A first course in modular forms (GTM 228), sections 7.5-7.6 (all UNVERIFIED locators)
 
 ### Packet R4
 
@@ -189,12 +187,10 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator, note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) |
 | [`hL29`](#hl29) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) |
-| [`hP23`](#hp23) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hCM`](#hcm) | frozenTarget | consequence | GLUE | note, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
 | [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 | [`hGZ`](#hgz) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hQ`](#hq) | frozenTarget | published | LEAF | unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 
 ## The hypotheses
 
@@ -734,26 +730,6 @@ ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3
 > of `ℓ(m)` is absorbed by `ε`. Checked (h29-fix, `brandt2.py`) on 18 values `n ≠ 3`, two embeddings each:
 > `Q(n)` is one of the values `Σ ε𝓛𝓛`.
 
-### hP23
-
-* Argument `hP23` of `frozenTarget`; kind **published**, strict **LEAF**; flag: restricted: odd classes n = 1, 3 mod 8, n > 1 (TYZ: n = 1, 2, 3); not vacuous (tyzTestVectorExists gives a nonzero f_n); unread.
-* Source: Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Proposition 2.3 (L580-586)
-* packet [R3](#packet-r3); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed
-```
-
-> **TYZ Proposition 2.3 (L580–586), first assertion, for squarefree `1 < n ≡ 1, 3 (mod 8)`**:
-> `f_n((B̂^×)²) ⊂ 1 + 2ℤ`.
-> 
-> Not vacuous: the test vectors it quantifies over exist and are nonzero (`TYZTestVectorExists`, whose
-> `InPiZ` is TYZ's `π_ℤ^{U_n}` by printed facts only, so it cannot be the zero module); and for `f = 0` the
-> conclusion would be false, so the leaf has content exactly through TYZ's `f_n`. Checked by computation
-> (`brandt.py`, `n = 3, 11, 19`): `f_n` takes only odd values (`±1, ±3`) on the 8 classes.
-
 ### hCM
 
 * Argument `hCM` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: re-rated 11-15 under the dictionary ruling: the Weierstrass-coordinate form is a consequence of Shimura 1971 Thm 5.4 through the analytic uniformization (statement review); locator UNVERIFIED (numbers).
@@ -905,30 +881,6 @@ ZInQ.GZAlg.GrossZagierAlgOptCd
 > **The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model
 > `E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.
 > A restriction of `GrossZagierAlgOpt`.
-
-### hQ
-
-* Argument `hQ` of `frozenTarget`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED: Shimura 1971 Prop. 6.9 with Thm 6.6; Diamond-Shurman 7.5-7.6.
-* Source: G. Shimura, Introduction to the arithmetic theory of automorphic functions (1971), Prop. 6.9 and Thm 6.6; F. Diamond, J. Shurman, A first course in modular forms (GTM 228), sections 7.5-7.6 (all UNVERIFIED locators)
-* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.GZAlg.Gamma0QExpansion
-```
-
-> **Leaf Q-EXP (the `q`-expansion principle for `Γ₀(N)` with rational coefficients).** Let `g` be
-> a meromorphic modular function for `Γ₀(N)` (invariant, meromorphic on `ℍ` and at every cusp:
-> `GZHeegner.IsRatModFnMero`) whose `q`-expansion `x` at `∞` has rational coefficients. Then `x` lies
-> in `ℚ(j, j_N)`, i.e. `g ∈ ℚ(j(τ), j(Nτ))`.
-> 
-> Source: Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971),
-> Prop. 6.9 (the field of `Γ₀(N)`-functions with rational Fourier coefficients is `ℚ(j, j∘N)`) with
-> Thm. 6.6; Diamond–Shurman, *A first course in modular forms*, §7.5 (`ℂ(X₀(N)) = ℂ(j, j_N)`) and
-> §7.6–7.7 (the rational structure via `q`-expansions); locators UNVERIFIED (no copy on this host).
-> The print states the result for `ℚ(X₀(N))` as a subfield of `ℂ(X₀(N))`; the `q`-expansion map is
-> injective on it, so this is the printed statement read through `q`-expansions.
 
 ## Credits
 

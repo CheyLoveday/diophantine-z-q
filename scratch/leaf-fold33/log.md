@@ -78,3 +78,14 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
    Not folded (log of the lead): fold33-combine's in-place prunes of sga3_VIB_3_10_Nbhd and of mumfordGroupLawConn /
    neronSchemeExtensionExists delete Lean targets named by the blueprint chapter (OpenResearchLeaves28 fields), so
    they fail autoform check; charpoly-charp needs T6 in characteristic p and conflicts with the homfree reroute.
+10. hQ (frozenTarget binder, the q-expansion principle for Gamma0(N), proved outright with no new leaf): merged
+    wip/gamma0-qexp (`Gamma0QExp.gamma0QExpansion_proof`), hand fold of Main.lean, kinds row dropped. Checks
+    (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 9 (only frozenTarget
+    changed); OpenStatements 40; render_open --check ok (33 H, strictest 13/20, 7 others); crosswalk --check ok;
+    DischargesTest rerun; autoform check blueprint ok. Route A's C_d chain now rests on hGZ (Gross-Zagier over the
+    algebraic X0(N)) and hCM only.
+11. hP23 (frozenTarget binder, TYZ Proposition 2.3 first assertion, proved outright with no new leaf): merged
+    wip/hp23-proof (`HP23Proof.tyzProp23Printed`), hand fold of Main.lean, kinds row dropped. Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; hash guard against step 10 (only frozenTarget changed);
+    OpenStatements 39; render_open --check ok (33 H, strictest 13/20, 6 others); crosswalk --check ok;
+    DischargesTest rerun; autoform check blueprint ok.
