@@ -95,6 +95,84 @@ theorem cpAct_zq (σ : GQp p) (m : ℕ) :
   rw [show σ (zq p m) = σ.toRingEquiv (zq p m) from rfl, h, PadicComplex.coe_eq, PadicComplex.coe_eq, map_pow]
   rfl
 
+
+/-- The components of `ρ = (σ(ε) ε^{-a})^{1/p^m}`, in `ℂ_p`. -/
+def rhoC (σ : GQp p) (m n : ℕ) : ℂ_[p] :=
+  cpAct p σ ((zq p (n + m) : PadicAlgCl p) : ℂ_[p]) *
+    (((zq p (n + m) : PadicAlgCl p) : ℂ_[p])⁻¹) ^ aexp p σ m
+
+theorem norm_rhoC (σ : GQp p) (m n : ℕ) : ‖rhoC p σ m n‖ = 1 := by
+  rw [rhoC, norm_mul, norm_pow, norm_inv, norm_cpAct, norm_zq]; simp
+
+/-- `ρ`'s components in `𝓞_ℂ_p`. -/
+def rhoO (σ : GQp p) (m n : ℕ) : (𝓞_ℂ_[p] : Type) :=
+  ⟨rhoC p σ m n, (mem_O_iff p _).mpr (norm_rhoC p σ m n).le⟩
+
+theorem coe_pow_zq (k N : ℕ) : (((zq p k : PadicAlgCl p) : ℂ_[p])) ^ N = (((zq p k ^ N : PadicAlgCl p)) : ℂ_[p]) := by
+  rw [PadicComplex.coe_eq, PadicComplex.coe_eq, map_pow]
+
+theorem inv_pow_pow (c : ℂ_[p]) (a N : ℕ) : ((c⁻¹) ^ a) ^ N = ((c ^ N)⁻¹) ^ a := by
+  rw [← pow_mul, mul_comm, pow_mul, inv_pow]
+
+theorem rhoC_pow (σ : GQp p) (m n N : ℕ) (k : ℕ) (hk : zq p (n + m) ^ N = zq p k) :
+    rhoC p σ m n ^ N = cpAct p σ ((zq p k : PadicAlgCl p) : ℂ_[p]) *
+      (((zq p k : PadicAlgCl p) : ℂ_[p])⁻¹) ^ aexp p σ m := by
+  rw [rhoC, mul_pow, inv_pow_pow, ← map_pow, coe_pow_zq, hk]
+
+theorem rhoO_succ (σ : GQp p) (m n : ℕ) : rhoO p σ m (n + 1) ^ p = rhoO p σ m n := by
+  apply Subtype.ext
+  simp only [rhoO, SubmonoidClass.coe_pow]
+  rw [rhoC_pow p σ m (n + 1) p (n + m) (by rw [Nat.add_right_comm]; exact zq_succ_pow p (n + m))]
+  rfl
+
+/-- `ρ ∈ O♭`. -/
+def rho (σ : GQp p) (m : ℕ) : PreTilt (𝓞_ℂ_[p] : Type) p := mkSeq p (rhoO p σ m) (rhoO_succ p σ m)
+
+theorem untilt_rho (σ : GQp p) (m : ℕ) : (rho p σ m).untilt = 1 := by
+  rw [rho, untilt_mkSeq]
+  apply Subtype.ext
+  simp only [rhoO, rhoC, OneMemClass.coe_one, zero_add]
+  rw [cpAct_zq, inv_pow, mul_inv_cancel₀ (pow_ne_zero _ (zq_ne_zero p m))]
+
+theorem oAct_coe (σ : GQp p) (x : (𝓞_ℂ_[p] : Type)) : ((oAct p σ x : (𝓞_ℂ_[p] : Type)) : ℂ_[p]) = cpAct p σ (x : ℂ_[p]) := rfl
+
+/-- **`σ(ε) = ε^a · ρ^{p^m}`** in the tilt. -/
+theorem preTiltMap_eps (σ : GQp p) (m : ℕ) :
+    DR.preTiltMap p (oAct p σ) (eps (Zq p)) = eps (Zq p) ^ aexp p σ m * rho p σ m ^ p ^ m := by
+  apply Perfection.ext
+  intro n
+  change PreTilt.coeff n (DR.preTiltMap p (oAct p σ) (eps (Zq p))) =
+    PreTilt.coeff n (eps (Zq p) ^ aexp p σ m * rho p σ m ^ p ^ m)
+  rw [map_mul, map_pow, map_pow, eps, rho, coeff_mkSeq, coeff_mkSeq, ← map_pow, ← map_pow, ← map_mul]
+  change Ideal.Quotient.mk _ (oAct p σ ((Zq p).z n)) = _
+  congr 1
+  apply Subtype.ext
+  simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, oAct_coe, Zq_z, rhoO]
+  rw [rhoC_pow p σ m n (p ^ m) n (zq_pow_add p n m), inv_pow]
+  have h0 := pow_ne_zero (aexp p σ m) (zq_ne_zero p n)
+  field_simp
+
+/-! ## 3. `B_dR^+`: `θ⁺` and `σ` on Teichmüller lifts -/
+
+theorem thetaPlusCp_plus (w : WittVector p (PreTilt (𝓞_ℂ_[p] : Type) p)) :
+    thetaPlusCp p (plus p w) = ((fontaineTheta (𝓞_ℂ_[p] : Type) p w : (𝓞_ℂ_[p] : Type)) : ℂ_[p]) := by
+  change awayEquivCp p (thetaPlus p (plus p w)) = _
+  rw [thetaPlus_plus, AlgEquiv.commutes]
+  rfl
+
+theorem thetaPlusCp_teich (x : PreTilt (𝓞_ℂ_[p] : Type) p) :
+    thetaPlusCp p (plus p (teichmuller p x)) = ((x.untilt : (𝓞_ℂ_[p] : Type)) : ℂ_[p]) := by
+  rw [thetaPlusCp_plus, fontaineTheta_teichmuller]
+
+theorem bdrPlusMap_plus (σ : GQp p) (w : WittVector p (PreTilt (𝓞_ℂ_[p] : Type) p)) :
+    DR.bdrPlusMap p (oAct p σ) (plus p w) = plus p (WittVector.map (DR.preTiltMap p (oAct p σ)) w) := by
+  change DR.bdrPlusMap p (oAct p σ) (ofLoc p (algebraMap _ _ w)) = ofLoc p (algebraMap _ _ _)
+  rw [bdrPlusMap_ofLoc, locMap_algebraMap]
+
+theorem bdrPlusMap_teich (σ : GQp p) (x : PreTilt (𝓞_ℂ_[p] : Type) p) :
+    DR.bdrPlusMap p (oAct p σ) (plus p (teichmuller p x)) = plus p (teichmuller p (DR.preTiltMap p (oAct p σ) x)) := by
+  rw [bdrPlusMap_plus, map_teichmuller]
+
 end
 
 end BdRInv
