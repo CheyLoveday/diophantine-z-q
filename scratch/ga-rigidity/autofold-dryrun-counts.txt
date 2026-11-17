@@ -1,0 +1,1 @@
+strict count: 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22
