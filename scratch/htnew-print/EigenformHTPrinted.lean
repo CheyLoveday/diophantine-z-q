@@ -595,3 +595,230 @@ end Global
 end
 
 end EigenformHTPrinted
+
+/-! ## §6b. The Tate–Sen spaces of a triangular representation and of its diagonal -/
+
+namespace EigenformHTPrinted
+
+open ZInQ.Contrib.HodgeSplit ZInQ.Contrib.G9 ZInQ.Contrib.G9.PkgI4 Module
+
+noncomputable section
+
+section LocalSS
+
+variable (p : ℕ) [Fact p.Prime]
+
+/-- **The Tate–Sen bound** `Σ_{j ∈ J} dim_K Y_j(ρ) ≤ n` (from (T) `Ysp_linearIndependent`). -/
+theorem sum_finrank_Ysp_le (hT : TateTwistInvariants) (hA : AxSenTate) {n : ℕ}
+    (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K]
+    {E : IntermediateField ℚ_[p] (PadicAlgCl p)} (ρ : GQp p →* GL (Fin n) E) (J : Finset ℤ) :
+    ∑ j ∈ J, finrank K (Ysp p ρ j K) ≤ n := by
+  classical
+  haveI : ∀ j : ℤ, FiniteDimensional K (Ysp p ρ j K) := fun j => Ysp_finiteDimensional p hT hA K ρ j
+  haveI : ∀ j : ℤ, Module.Free K (Ysp p ρ j K) := fun j => Module.Free.of_divisionRing _ _
+  let d : J → ℕ := fun jj => finrank K (Ysp p ρ jj K)
+  let bv : (Σ jj : J, Fin (d jj)) → (Fin n → ℂ_[p]) := fun k =>
+    ((Module.finBasis K (Ysp p ρ k.1 K) k.2 : Ysp p ρ k.1 K) : Fin n → ℂ_[p])
+  let jf : (Σ jj : J, Fin (d jj)) → ℤ := fun k => k.1
+  have hli : LinearIndependent ℂ_[p] bv := by
+    refine Ysp_linearIndependent p hT hA K ρ jf bv (fun k => (Module.finBasis K _ k.2).2) ?_
+    intro j₀ a ha hs
+    by_cases hj₀ : j₀ ∈ J
+    · let jj₀ : J := ⟨j₀, hj₀⟩
+      have h1 : ∑ m : Fin (d jj₀), a ⟨jj₀, m⟩ • (Module.finBasis K (Ysp p ρ jj₀ K) m) = 0 := by
+        apply Subtype.ext
+        rw [Submodule.coe_sum, Submodule.coe_zero]
+        simp only [Submodule.coe_smul]
+        rw [← hs, Fintype.sum_sigma, Finset.sum_eq_single jj₀]
+        · intro jj _ hjj
+          refine Finset.sum_eq_zero fun m _ => ?_
+          rw [ha ⟨jj, m⟩ (fun h => hjj (Subtype.ext h)), zero_smul]
+        · intro h; exact absurd (Finset.mem_univ _) h
+      have h2 := Fintype.linearIndependent_iff.mp (Module.finBasis K (Ysp p ρ jj₀ K)).linearIndependent _ h1
+      intro k
+      by_cases hk : (k.1 : ℤ) = j₀
+      · obtain ⟨jj, m⟩ := k
+        have : jj = jj₀ := Subtype.ext hk
+        subst this
+        exact h2 m
+      · exact ha k hk
+    · intro k
+      exact ha k (fun h => hj₀ (h ▸ k.1.2))
+  have hcard := hli.fintype_card_le_finrank
+  rw [Fintype.card_sigma, Module.finrank_fin_fun] at hcard
+  simp only [Fintype.card_fin, d] at hcard
+  rwa [Finset.sum_coe_sort J (fun j => finrank K (Ysp p ρ j K))] at hcard
+
+theorem transpose_mulVec_zero (M : Matrix (Fin 2) (Fin 2) ℂ_[p]) (y : Fin 2 → ℂ_[p]) :
+    (M.transpose.mulVec y) 0 = M 0 0 * y 0 + M 1 0 * y 1 := by
+  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.transpose_apply]
+
+theorem transpose_mulVec_one (M : Matrix (Fin 2) (Fin 2) ℂ_[p]) (y : Fin 2 → ℂ_[p]) :
+    (M.transpose.mulVec y) 1 = M 0 1 * y 0 + M 1 1 * y 1 := by
+  simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.transpose_apply]
+
+variable {E : IntermediateField ℚ_[p] (PadicAlgCl p)}
+
+/-- Membership in `Y_i` in coordinates (dimension `2`). -/
+theorem mem_Ysp_two (ρ : GQp p →* GL (Fin 2) E) (i : ℤ) (K : IntermediateField ℚ_[p] (PadicAlgCl p))
+    (y : Fin 2 → ℂ_[p]) :
+    y ∈ Ysp p ρ i K ↔ ∀ σ ∈ K.fixingSubgroup,
+      matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 0 * y 0 + matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 0 * y 1 =
+          cycPow p σ i • cpAct p σ (y 0) ∧
+        matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 1 * y 0 + matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 1 * y 1 =
+          cycPow p σ i • cpAct p σ (y 1) := by
+  constructor
+  · intro hy σ hσ
+    have h := hy σ hσ
+    exact ⟨by rw [← transpose_mulVec_zero, h]; rfl, by rw [← transpose_mulVec_one, h]; rfl⟩
+  · intro hy σ hσ
+    refine funext (Fin.forall_fin_two.2 ⟨?_, ?_⟩)
+    · rw [transpose_mulVec_zero]; exact (hy σ hσ).1
+    · rw [transpose_mulVec_one]; exact (hy σ hσ).2
+
+theorem matC_apply (M : Matrix (Fin 2) (Fin 2) E) (a b : Fin 2) :
+    matC p M a b = algebraMap E ℂ_[p] (M a b) := rfl
+
+/-- The `E`-linear coordinate projection `y ↦ y_m e_m`. -/
+def prj (m : Fin 2) : (Fin 2 → ℂ_[p]) →ₗ[E] (Fin 2 → ℂ_[p]) :=
+  (LinearMap.single E (fun _ : Fin 2 => ℂ_[p]) m).comp (LinearMap.proj m)
+
+theorem prj_apply (m : Fin 2) (y : Fin 2 → ℂ_[p]) : prj p (E := E) m y = Pi.single m (y m) := rfl
+
+theorem prj_self (m : Fin 2) (y : Fin 2 → ℂ_[p]) : prj p (E := E) m y m = y m := by
+  simp [prj_apply]
+
+theorem prj_ne {m m' : Fin 2} (h : m' ≠ m) (y : Fin 2 → ℂ_[p]) : prj p (E := E) m y m' = 0 := by
+  simp [prj_apply, Pi.single_apply, h]
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **`dim Y_i(ρ) ≤ dim Y_i(ρ^{ss})`** for `ρ` upper triangular with diagonal part `d`. -/
+theorem finrank_Ysp_le_diag (hT : TateTwistInvariants) (hA : AxSenTate) [FiniteDimensional ℚ_[p] E]
+    (ρ d : GQp p →* GL (Fin 2) E)
+    (h10 : ∀ σ, (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 0 = 0)
+    (hd00 : ∀ σ, (d σ : Matrix (Fin 2) (Fin 2) E) 0 0 = (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 0)
+    (hd11 : ∀ σ, (d σ : Matrix (Fin 2) (Fin 2) E) 1 1 = (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 1)
+    (hd01 : ∀ σ, (d σ : Matrix (Fin 2) (Fin 2) E) 0 1 = 0)
+    (hd10 : ∀ σ, (d σ : Matrix (Fin 2) (Fin 2) E) 1 0 = 0) (i : ℤ) :
+    finrank E (Ysp p ρ i E) ≤ finrank E (Ysp p d i E) := by
+  classical
+  haveI : FiniteDimensional E (Ysp p ρ i E) := Ysp_finiteDimensional p hT hA E ρ i
+  haveI : FiniteDimensional E (Ysp p d i E) := Ysp_finiteDimensional p hT hA E d i
+  set Yr := Ysp p ρ i E
+  set Yd := Ysp p d i E
+  have c0 : ∀ σ, matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 0 = 0 := fun σ => by
+    rw [matC_apply, h10, map_zero]
+  have e00 : ∀ σ, matC p (d σ : Matrix (Fin 2) (Fin 2) E) 0 0 = matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 0 :=
+    fun σ => by rw [matC_apply, matC_apply, hd00]
+  have e11 : ∀ σ, matC p (d σ : Matrix (Fin 2) (Fin 2) E) 1 1 = matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 1 :=
+    fun σ => by rw [matC_apply, matC_apply, hd11]
+  have z01 : ∀ σ, matC p (d σ : Matrix (Fin 2) (Fin 2) E) 0 1 = 0 := fun σ => by
+    rw [matC_apply, hd01, map_zero]
+  have z10 : ∀ σ, matC p (d σ : Matrix (Fin 2) (Fin 2) E) 1 0 = 0 := fun σ => by
+    rw [matC_apply, hd10, map_zero]
+  -- membership in `Y_i(d)` splits into the two coordinates
+  have memd : ∀ y : Fin 2 → ℂ_[p], y ∈ Yd ↔ ∀ σ ∈ E.fixingSubgroup,
+      matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 0 * y 0 = cycPow p σ i • cpAct p σ (y 0) ∧
+      matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 1 * y 1 = cycPow p σ i • cpAct p σ (y 1) := by
+    intro y
+    rw [mem_Ysp_two]
+    refine forall₂_congr fun σ _ => ?_
+    rw [e00, e11, z01, z10, zero_mul, zero_mul, add_zero, zero_add]
+  have memr : ∀ y : Fin 2 → ℂ_[p], y ∈ Yr ↔ ∀ σ ∈ E.fixingSubgroup,
+      matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 0 * y 0 = cycPow p σ i • cpAct p σ (y 0) ∧
+      matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 0 1 * y 0 + matC p (ρ σ : Matrix (Fin 2) (Fin 2) E) 1 1 * y 1 =
+        cycPow p σ i • cpAct p σ (y 1) := by
+    intro y
+    rw [mem_Ysp_two]
+    refine forall₂_congr fun σ _ => ?_
+    rw [c0, zero_mul, add_zero]
+  -- (a) `y ∈ Y(ρ) ⇒ y₀ e₀ ∈ Y(d)`
+  have ha : ∀ y ∈ Yr, prj p (E := E) 0 y ∈ Yd := by
+    intro y hy
+    rw [memd]
+    intro σ hσ
+    obtain ⟨h1, -⟩ := (memr y).1 hy σ hσ
+    rw [prj_self, prj_ne p (by decide), map_zero, smul_zero, mul_zero]
+    exact ⟨h1, rfl⟩
+  -- (b) `y ∈ Y(ρ)`, `y₀ = 0` ⇒ `y ∈ Y(d)`
+  have hb : ∀ y ∈ Yr, y 0 = 0 → y ∈ Yd := by
+    intro y hy h0
+    rw [memd]
+    intro σ hσ
+    obtain ⟨-, h2⟩ := (memr y).1 hy σ hσ
+    rw [h0, mul_zero, zero_add] at h2
+    rw [h0, mul_zero, map_zero, smul_zero]
+    exact ⟨rfl, h2⟩
+  -- (c) `Y(d)` is stable under both projections
+  have hc : ∀ m : Fin 2, ∀ y ∈ Yd, prj p (E := E) m y ∈ Yd := by
+    intro m y hy
+    rw [memd] at hy ⊢
+    intro σ hσ
+    obtain ⟨h1, h2⟩ := hy σ hσ
+    fin_cases m
+    · simp only [Fin.zero_eta, Fin.isValue]
+      rw [prj_self, prj_ne p (by decide), map_zero, smul_zero, mul_zero]
+      exact ⟨h1, rfl⟩
+    · simp only [Fin.mk_one, Fin.isValue]
+      rw [prj_self, prj_ne p (by decide), map_zero, smul_zero, mul_zero]
+      exact ⟨rfl, h2⟩
+  have hsplit : ∀ y : Fin 2 → ℂ_[p], prj p (E := E) 0 y + prj p (E := E) 1 y = y := by
+    intro y; funext m; fin_cases m <;> simp [prj_apply]
+  -- `A = Y(d) ∩ ker pr₁`, `B = Y(d) ∩ ker pr₀`, `A ⊕ B = Y(d)`
+  set A : Submodule E (Fin 2 → ℂ_[p]) := Yd ⊓ LinearMap.ker (prj p (E := E) 1)
+  set B : Submodule E (Fin 2 → ℂ_[p]) := Yd ⊓ LinearMap.ker (prj p (E := E) 0)
+  haveI : FiniteDimensional E A :=
+    Module.Finite.of_injective (Submodule.inclusion inf_le_left) (Submodule.inclusion_injective _)
+  haveI : FiniteDimensional E B :=
+    Module.Finite.of_injective (Submodule.inclusion inf_le_left) (Submodule.inclusion_injective _)
+  have hAB : finrank E A + finrank E B = finrank E Yd := by
+    have hsup : A ⊔ B = Yd := by
+      apply le_antisymm (sup_le inf_le_left inf_le_left)
+      intro y hy
+      rw [← hsplit y]
+      refine Submodule.add_mem_sup ⟨hc 0 y hy, ?_⟩ ⟨hc 1 y hy, ?_⟩
+      · rw [SetLike.mem_coe, LinearMap.mem_ker]; funext m; fin_cases m <;> simp [prj_apply]
+      · rw [SetLike.mem_coe, LinearMap.mem_ker]; funext m; fin_cases m <;> simp [prj_apply]
+    have hinf : A ⊓ B = ⊥ := by
+      rw [eq_bot_iff]
+      rintro y ⟨⟨-, h1⟩, ⟨-, h0⟩⟩
+      rw [SetLike.mem_coe, LinearMap.mem_ker] at h1 h0
+      rw [Submodule.mem_bot, ← hsplit y, h0, h1, add_zero]
+    have := Submodule.finrank_sup_add_finrank_inf_eq A B
+    rw [hsup, hinf, finrank_bot, add_zero] at this
+    exact this.symm
+  -- rank–nullity for `pr₀` on `Y(ρ)`
+  set f := (prj p (E := E) 0).domRestrict Yr
+  have hrn := LinearMap.finrank_range_add_finrank_ker f
+  have hrange : finrank E (LinearMap.range f) ≤ finrank E A := by
+    have hle : LinearMap.range f ≤ A := by
+      rintro _ ⟨y, rfl⟩
+      refine ⟨ha y.1 y.2, ?_⟩
+      rw [SetLike.mem_coe, LinearMap.mem_ker]
+      funext m; fin_cases m <;> simp [f, prj_apply]
+    exact LinearMap.finrank_le_finrank_of_injective (f := Submodule.inclusion hle)
+      (Submodule.inclusion_injective hle)
+  have hker : finrank E (LinearMap.ker f) ≤ finrank E B := by
+    let g : LinearMap.ker f →ₗ[E] B :=
+      LinearMap.codRestrict B (Yr.subtype.comp (LinearMap.ker f).subtype) (fun x => by
+        have hx := x.2
+        rw [LinearMap.mem_ker] at hx
+        have hx' : prj p (E := E) 0 (x.1.1) = 0 := hx
+        have h0 : (x.1.1 : Fin 2 → ℂ_[p]) 0 = 0 := by
+          have := congrFun hx' 0
+          rwa [prj_self] at this
+        refine ⟨hb x.1.1 x.1.2 h0, ?_⟩
+        rw [SetLike.mem_coe, LinearMap.mem_ker]
+        exact hx')
+    refine LinearMap.finrank_le_finrank_of_injective (f := g) ?_
+    intro x x' hxx'
+    have := congrArg (fun z : B => (z : Fin 2 → ℂ_[p])) hxx'
+    exact Subtype.ext (Subtype.ext this)
+  omega
+
+end LocalSS
+
+end
+
+end EigenformHTPrinted
