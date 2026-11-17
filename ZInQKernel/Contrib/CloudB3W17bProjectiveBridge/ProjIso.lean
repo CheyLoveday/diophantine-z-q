@@ -99,10 +99,5 @@ theorem coefficientStructureMap_eq (I : Type u) (R : Type u) [CommRing R] :
   unfold Proj.projectiveSpaceOverAffineToSpec
   congr 2
 
-#print axioms renameGraded
-#print axioms irrelevant_le_rename
-#print axioms renameProjIso
-#print axioms renameProjIso_over
-#print axioms coefficientStructureMap_eq
 
 end ZInQ.Contrib.CloudB3W17bProjectiveBridge

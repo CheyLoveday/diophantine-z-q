@@ -49,9 +49,5 @@ theorem lifted_complex_base_map :
     complexULiftBaseIso.hom = Spec.map (CommRingCat.ofHom (ULift.ringEquiv (R := ℂ)).toRingHom) :=
   rfl
 
-#print axioms abVar_overULift_polynomial_embedding
-#print axioms prodAbVar_overULift_polynomial_embedding
-#print axioms lifted_embedding_point_underlying
-#print axioms lifted_complex_base_map
 
 end ZInQ.Contrib.CloudB3W17bProjectiveBridge

@@ -92,13 +92,5 @@ theorem prodAbVar_polynomial_embedding (A B : PkgI3.AbVar ℂ)
         (A.X ⊗ B.X).hom ≫ b.hom :=
   abVar_polynomial_embedding (AVGlue.prodAbVar A B) b
 
-#print axioms relativeBaseIso
-#print axioms relativePolynomialIso
-#print axioms relativePolynomialIso_over
-#print axioms abVar_native_embedding
-#print axioms coordinate_nonempty
-#print axioms exists_coordinate_equiv
-#print axioms abVar_polynomial_embedding
-#print axioms prodAbVar_polynomial_embedding
 
 end ZInQ.Contrib.CloudB3W17bProjectiveBridge

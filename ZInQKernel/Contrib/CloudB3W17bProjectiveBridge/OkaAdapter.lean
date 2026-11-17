@@ -56,14 +56,5 @@ theorem prodAbVarLiftedLFT_isProjective (A B : PkgI3.AbVar ℂ) :
     ComplexAnalytic.IsProjectiveℂ (prodAbVarLiftedLFT A B) :=
   abVarLiftedLFT_isProjective (AVGlue.prodAbVar A B)
 
-#print axioms abVarLiftedLFT
-#print axioms abVarLiftedLFT_left
-#print axioms abVarLiftedLFT_hom
-#print axioms prodAbVarLiftedLFT
-#print axioms prodAbVarLiftedLFT_left
-#print axioms polynomialToSpec_eq_oka
-#print axioms abVarLiftedLFT_exists_closed_embedding
-#print axioms abVarLiftedLFT_isProjective
-#print axioms prodAbVarLiftedLFT_isProjective
 
 end ZInQ.Contrib.CloudB3W17bProjectiveBridge

@@ -38,8 +38,5 @@ theorem prodAbVar_exists_oka_over_closed_embedding (A B : PkgI3.AbVar ℂ) :
       IsClosedImmersion i.left :=
   abVar_exists_oka_over_closed_embedding (AVGlue.prodAbVar A B)
 
-#print axioms polynomialToSpec_eq_oka
-#print axioms abVar_exists_oka_over_closed_embedding
-#print axioms prodAbVar_exists_oka_over_closed_embedding
 
 end ZInQ.Contrib.CloudB3W17bProjectiveBridge
