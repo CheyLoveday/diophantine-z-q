@@ -508,4 +508,67 @@ theorem sel_injOn (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (hg : 
     · exact ⟨fun h => absurd h h1, fun h => absurd h h2⟩
   rw [e1, e2]
 
+/-! ### Sufficiency: a solution of the local equations is a Selmer class -/
+
+theorem localBad_of_eqs (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) {a b : ℤ}
+    (ha : Squarefree a) (hb : Squarefree b) (ha0 : 0 < a)
+    (hsa : a.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors)
+    (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors)
+    (E1 : Kmat ℓ *ᵥ ind ℓ a + lam ℓ * ind ℓ b = dlt a • lam ℓ)
+    (E2 : Kmat ℓ *ᵥ ind ℓ b + sgn ℓ * ind ℓ b = sg b • sgn ℓ) (i : Supp ℓ) :
+    ∃ e₁ e₂ : ZMod 2, qcls i a = e₁ • qcls i ℓ + e₂ • qcls i 3 ∧
+      qcls i b = e₂ • qcls i (-(ℓ : ℤ)) := by
+  have h3b : 3 ∉ b.natAbs.primeFactors := fun h => three_not_mem h12 (hsb h)
+  have e1 := congrFun E1 i
+  have e2 := congrFun E2 i
+  simp only [Pi.add_apply, Pi.mul_apply, Pi.smul_apply, smul_eq_mul] at e1 e2
+  refine ⟨ind ℓ a i, ind ℓ b i, ?_, ?_⟩
+  · rw [qcls_formula h12 ha hsa i, qcls_ell i hsf h12, qcls_three i h12]
+    refine Prod.ext ?_ ?_
+    · simp
+    · simp only [Prod.snd_add, Prod.smul_snd, smul_eq_mul]
+      have := alg_a' (ind ℓ a i) _ (Kmat ℓ i i) _ _ _ e1
+      rw [← this, if_neg (not_lt.mpr ha0.le), dlt]
+      split_ifs <;> simp
+  · rw [qcls_formula h12 hb (hsb.trans (Finset.subset_insert _ _)) i, qcls_negell i hsf h12]
+    refine Prod.ext ?_ ?_
+    · simp
+    · simp only [Prod.smul_snd, smul_eq_mul]
+      have := alg_b' _ _ (Kmat ℓ i i) _ _ e2
+      rw [← this, if_neg h3b, sg]
+      split_ifs <;> simp
+
+theorem sel_sufficient (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (hg : LocalGood)
+    (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) {a b : ℤ}
+    (ha : Squarefree a) (hb : Squarefree b) (ha0 : 0 < a) (ha2 : a % 2 = 1) (hb4 : b % 4 = 1)
+    (hb3 : b % 3 = 1) (hsa : a.natAbs.primeFactors ⊆ insert 3 ℓ.primeFactors)
+    (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors)
+    (E1 : Kmat ℓ *ᵥ ind ℓ a + lam ℓ * ind ℓ b = dlt a • lam ℓ)
+    (E2 : Kmat ℓ *ᵥ ind ℓ b + sgn ℓ * ind ℓ b = sg b • sgn ℓ) : (a, b) ∈ SelM ℓ := by
+  have hℓ : 0 < ℓ := by omega
+  refine ⟨ha, hb, (localReal ℓ a b hℓ ha.ne_zero hb.ne_zero).mpr ha0, ?_⟩
+  intro p hp
+  by_cases hp2 : p = 2
+  · subst hp2; exact (hTwo ℓ a b hsf (by omega) ha hb).mpr ⟨ha2, hb4⟩
+  by_cases hp3 : p = 3
+  · subst hp3; exact (hThree ℓ a b hsf (by omega) ha hb).mpr hb3
+  by_cases hpl : p ∣ ℓ
+  · let i : Supp ℓ := ⟨p, Nat.mem_primeFactors.mpr ⟨hp.out, hpl, by omega⟩⟩
+    exact (hq ℓ p a b hsf hpl hp2 hp3 ha hb).mpr
+      (localBad_of_eqs hsf h12 ha hb ha0 hsa hsb E1 E2 i)
+  · have hnd : ¬ p ∣ 6 * ℓ := fun h => by
+      rcases prime_dvd_six_mul hp.out h with h | h | h
+      · exact hp2 h
+      · exact hp3 h
+      · exact hpl h
+    refine (hg ℓ p a b hsf hnd ha hb).mpr ⟨fun hpa => ?_, fun hpb => ?_⟩
+    · have hmem : p ∈ a.natAbs.primeFactors := Nat.mem_primeFactors.mpr
+        ⟨hp.out, Int.natCast_dvd.mp hpa, by have := ha.ne_zero; omega⟩
+      rcases Finset.mem_insert.mp (hsa hmem) with h | h
+      · exact hp3 h
+      · exact hpl (Nat.mem_primeFactors.mp h).2.1
+    · have hmem : p ∈ b.natAbs.primeFactors := Nat.mem_primeFactors.mpr
+        ⟨hp.out, Int.natCast_dvd.mp hpb, by have := hb.ne_zero; omega⟩
+      exact hpl (Nat.mem_primeFactors.mp (hsb hmem)).2.1
+
 end ZInQ.Manuscript.PoleRC
