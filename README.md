@@ -21,8 +21,8 @@ integer coefficients such that a rational number `q` is an integer exactly when 
 ## Upstream
 
 Elliot Glazer's repository, [elliotglazer/diophantine-z-q](https://github.com/elliotglazer/diophantine-z-q), is
-taking this work in as staged pull requests, starting from
-[#139](https://github.com/elliotglazer/diophantine-z-q/pull/139) (this fork at `c1e4ed1b`). Its topic issues
+taking this work in as staged pull requests; [#139](https://github.com/elliotglazer/diophantine-z-q/pull/139)
+holds this fork as of `c1e4ed1b`. Its topic issues
 ([#74](https://github.com/elliotglazer/diophantine-z-q/issues/74),
 [#76](https://github.com/elliotglazer/diophantine-z-q/issues/76),
 [#81](https://github.com/elliotglazer/diophantine-z-q/issues/81) to
