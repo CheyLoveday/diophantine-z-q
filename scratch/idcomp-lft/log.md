@@ -1,7 +1,7 @@
 # idcomp-lft results log
 
 Base wip/leaf-fold33b 0595e253c; `git merge origin/main`: already up to date. Build tree: reflink copy of
-~/dzq-wt/leaf-fold33b/.lake/build and lean/.lake/build (same commit, Main.lean byte-identical).
+the leaf-fold33b worktree's .lake/build and lean/.lake/build (same commit, Main.lean byte-identical).
 
 ## Target
 `PicDict.IdentityComponentLFT` (ZInQKernel/Contrib/OneProof/PicDictionary.lean:2208), field

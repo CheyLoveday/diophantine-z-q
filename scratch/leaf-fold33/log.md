@@ -126,3 +126,9 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     MumfordPhiSurjectiveAC, WeilPairingMumford, the earlier removed Props or sorryAx; OpenStatements 37;
     render_open --check ok; crosswalk --check ok; DischargesTest rerun; autoform check ok. Host paths removed from
     merged logs (phisurj, piczero-char0).
+16. identityComponentLFT (idcomp-lft, proved outright in every characteristic, no new leaf): merged wip/idcomp-lft,
+    autofold scratch/idcomp-lft/autofold.json -> TailZ54, `sixContactMin_of_open47`; strict 13/18 on 31 -> 12/18 on
+    30. Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; hash guard against step 15 (only
+    frozenTarget changed, 11 new constants in TailZ54); OpenStatements 36; render_open --check ok (30 H, strictest
+    12/18, 6 others); crosswalk --check ok; DischargesTest rerun; autoform check ok. scratch/idcomp-lft/FoldDryRun.lean
+    renamed .lean.txt; host path removed from its log.
