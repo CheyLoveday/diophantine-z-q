@@ -119,7 +119,7 @@ lemma tensorPowSection_smul' {L : X.Modules} {U : X.Opens} (g : Γ(X, U)) (s : �
   | succ n ih =>
     rw [tensorPowSection_succFLT, tensorPowSection_succFLT, ih, tensorSections_smul_left,
       tensorSections_smul_right, smul_smul, pow_succ]
-    rfl
+    try rfl
 
 lemma tensorSections_sub_left {L N' : X.Modules} {U : X.Opens} (s s' : Γ(L, U)) (t : Γ(N', U)) :
     tensorSections (s - s') t = tensorSections s t - tensorSections s' t := by
