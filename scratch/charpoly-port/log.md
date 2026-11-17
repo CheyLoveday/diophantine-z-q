@@ -39,3 +39,4 @@ Base: main bf737bfe7; merged origin/wip/degpoly-proof (0a9e6698) for `DegDet.Deg
   `respectTransparency false` makes `Module ℚ≥0 (MvPolynomial ι R)` synthesis time out; restored
   W13's `respectTransparency.types false` + `.instanceSearchTypes false`.
 No statement changed.
+- VERIFIED: lake build of Thm_..._exists_isHomogeneous_eval_eq_endDegree_of_abelianSchemePropertyBundle (new vendor) OK, 10647 jobs (build3.log).
