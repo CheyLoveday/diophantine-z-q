@@ -15,3 +15,7 @@ Targets: hGZ = ZInQ.GZAlg.GrossZagierAlgOptCd (binder of ZInQ.OneProof.frozenTar
 - Model.lean: ratFuncHom (T↦jq), isIntegral_jqNF (vendored Phi_N), adjoin_jqNF_eq_top, finiteDimensional_X0Field, exists_model (NormalModelOfFunctionFieldQ_proof): compiled, no sorry. VERIFIED
 - PointTau.lean: ratFn_rep_congr, Otau (valuation subring), evTau (ring hom, local), tendsto_evTau: compiled. VERIFIED
 - exists_pointAt (S6) proved; GZScheme.lean has no sorry; #print axioms grossZagierAlgOptCd_of_curve = [propext, Classical.choice, Quot.sound]. VERIFIED Tue Nov 17 12:38:29 AM PST 2026
+- isPointAt_unique (two C-points with IsPointAt agree; valuative uniqueness) compiled, standard axioms. VERIFIED
+- Contrib/OneProof/GrossZagierScheme.lean built (lake build, no errors). #discharges: DISCHARGES [hGZ] by ZInQ.GZSch.grossZagierAlgOptCd_of_curve, still assumes [ZInQ.GZSch.GrossZagierCurveCd], axioms standard; 39 open, 11394 checked, 51 discharge one. VERIFIED
+- FoldCheck.lean (frozenTarget with hGZ : GZSch.GrossZagierCurveCd) standard axioms. VERIFIED
+- Note: first full lake build was stopped by the 10-min background limit; rerun with a longer limit completed (14281 jobs).

@@ -21,7 +21,7 @@ points are `ℂ`-points of `X` (the points `τ_r`), the twist is by `ε_D` (the 
   extension over a normal curve: Jacobian-Challenge's `exists_hom_of_valuationRing_stalk`), on the
   normal model of `ℚ(X₀(N))/ℚ(j)` (`exists_model`, cloud-w07's `NormalModelOfFunctionFieldQ_proof`).
 * D2: the value of `π` at the `ℂ`-point `τ` is gz-dict2's `modPt` of the plane-model functions
-  (`ptOf_eq_modPt`); the points `τ` exist (`exists_pointAt`, the center of the place `ord_τ`).
+  (`ptOf_eq_modPt`); the points `τ` exist (`exists_pointAt`, the center of the place `ord_τ`), and are unique (`isPointAt_unique`).
 * `π(∞) = O` and `π` nonconstant (`exists_cusp`, `cusp_not_mem_chart`, `generic_mem_chart`).
 * `ε_D(n) = (n / |D|)` (`ZInQ.HGZSteps.epsD_eq_jacobiSym`).
 
@@ -506,6 +506,66 @@ theorem grossZagierPlaneOptCd_of_curve (h : GrossZagierCurveCd) : GZDict2.GrossZ
 /-- **What `frozenTarget` reads (`hGZ`), from the curve leaf.** -/
 theorem grossZagierAlgOptCd_of_curve (h : GrossZagierCurveCd) : GZAlg.GrossZagierAlgOptCd :=
   GZDict2.grossZagierAlgOptCd_of_plane (grossZagierPlaneOptCd_of_curve h)
+
+/-! ## §9. The point `τ` is unique (the leaf quantifies over one point) -/
+
+/-- `ev_τ` on the comap of `O_τ` to `K(X)`. -/
+def evComap {N : ℕ} [NeZero N] {X : Scheme.{0}} [IsIntegral X] (e : X.functionField ≃+* X0Field N)
+    (τ : ℍ) : (Otau (N := N) τ).comap (e : X.functionField →+* X0Field N) →+* ℂ :=
+  (evTau τ).comp (RingEquiv.restrict e ((Otau (N := N) τ).comap (e : X.functionField →+* X0Field N))
+    (Otau τ) (fun _ => Iff.rfl)).toRingHom
+
+theorem exists_lift_of_isPointAt {N : ℕ} [NeZero N] {X : Scheme.{0}} [IsIntegral X]
+    (e : X.functionField ≃+* X0Field N) (τ : ℍ) (x : Spec (CommRingCat.of ℂ) ⟶ X)
+    (hx : IsPointAt N e τ x) :
+    ∃ ℓ : Spec (CommRingCat.of ((Otau (N := N) τ).comap (e : X.functionField →+* X0Field N))) ⟶ X,
+      Spec.map (CommRingCat.ofHom (algebraMap ((Otau (N := N) τ).comap
+        (e : X.functionField →+* X0Field N)) X.functionField)) ≫ ℓ = X.fromSpecFunctionField ∧
+      x = Spec.map (CommRingCat.ofHom (evComap e τ)) ≫ ℓ := by
+  set O' := (Otau (N := N) τ).comap (e : X.functionField →+* X0Field N)
+  set p := x (IsLocalRing.closedPoint (CommRingCat.of ℂ))
+  have hmem : ∀ s : X.presheaf.stalk p, algebraMap _ X.functionField s ∈ O' := by
+    intro s
+    show e (algebraMap _ X.functionField s) ∈ Otau τ
+    rw [mem_Otau, ← tendsto_nhds_iff_meromorphicOrderAt_nonneg (mfun_mero _ τ)]
+    exact ⟨_, hx s _ _ (repOf_spec _)⟩
+  let θ : X.presheaf.stalk p →+* O' := (algebraMap _ X.functionField).codRestrict O' hmem
+  have hev : ∀ s, evComap e τ (θ s) = (Scheme.stalkClosedPointTo x).hom s := by
+    intro s
+    refine tendsto_nhds_unique (tendsto_evTau τ _ (repOf_spec _)) (hx s _ _ (repOf_spec _))
+  haveI : IsLocalHom θ := ⟨fun s hs => by
+    have h1 : evComap e τ (θ s) ≠ 0 := (hs.map (evComap e τ)).ne_zero
+    rw [hev] at h1
+    exact (Scheme.isLocalHom_stalkClosedPointTo x).map_nonunit _ (Ne.isUnit h1)⟩
+  refine ⟨Spec.map (CommRingCat.ofHom θ) ≫ X.fromSpecStalk p, ?_, ?_⟩
+  · have h3 : Spec.map (X.presheaf.stalkSpecializes (genericPoint_specializes p)) ≫
+        X.fromSpecStalk p = X.fromSpecFunctionField := Scheme.SpecMap_stalkSpecializes_fromSpecStalk _
+    rw [← h3, ← Category.assoc, ← Spec.map_comp]
+    rfl
+  · conv_lhs => rw [← Scheme.Spec_stalkClosedPointTo_fromSpecStalk x]
+    rw [← Category.assoc, ← Spec.map_comp]
+    congr 2
+    ext s
+    exact (hev s).symm
+
+/-- **The point `τ` of a model is unique**: two `ℂ`-points with `IsPointAt` agree (both are the
+center of `ord_τ` with the evaluation at `τ`; uniqueness in the valuative criterion, `X` separated). -/
+theorem isPointAt_unique {N : ℕ} [NeZero N] (X : Scheme.{0}) [IsIntegral X]
+    (sX : X ⟶ Spec (CommRingCat.of ℚ)) [IsSeparated sX] (e : X.functionField ≃+* X0Field N) (τ : ℍ)
+    (x x' : Spec (CommRingCat.of ℂ) ⟶ X) (hx : IsPointAt N e τ x) (hx' : IsPointAt N e τ x') :
+    x = x' := by
+  obtain ⟨ℓ, hl, rfl⟩ := exists_lift_of_isPointAt e τ x hx
+  obtain ⟨ℓ', hl', rfl⟩ := exists_lift_of_isPointAt e τ x' hx'
+  have hsep : ValuativeCriterion.Uniqueness sX := IsSeparated.valuativeCriterion _
+  let S : ValuativeCommSq sX :=
+    { R := (Otau (N := N) τ).comap (e : X.functionField →+* X0Field N), K := X.functionField,
+      i₁ := X.fromSpecFunctionField, i₂ := ℓ ≫ sX, commSq := ⟨specQ_ext _ _⟩ }
+  have hs := hsep S
+  let l₁ : S.commSq.LiftStruct := { l := ℓ, fac_left := hl, fac_right := rfl }
+  let l₂ : S.commSq.LiftStruct := { l := ℓ', fac_left := hl', fac_right := specQ_ext _ _ }
+  have := congrArg CommSq.LiftStruct.l (Subsingleton.elim l₁ l₂)
+  change ℓ = ℓ' at this
+  rw [this]
 
 end ZInQ.GZSch
 

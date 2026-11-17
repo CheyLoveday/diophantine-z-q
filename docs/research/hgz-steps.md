@@ -181,7 +181,29 @@ discriminant.
 
 ## 5. Checks
 
-DISCHARGES_PLACEHOLDER
+`#discharges` (`scratch/hgz-steps/Discharges.lean`, output `Discharges-output.txt`, VERIFIED), after `lake build
++ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.GrossZagierScheme`
+(14,281 jobs, no errors):
+
+```
+DISCHARGES [hGZ] by ZInQ.GZSch.grossZagierAlgOptCd_of_curve
+  still assumes: [ZInQ.GZSch.GrossZagierCurveCd]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 39 open hypotheses, 11394 theorems checked, 51 discharge one
+```
+
+| file | content | check |
+| --- | --- | --- |
+| `Contrib/OneProof/GrossZagierScheme/EpsD.lean` | `epsD`, `epsD_eq_jacobiSym`, splitting-side lemmas | `lake build`, no errors; standard axioms (VERIFIED) |
+| `Contrib/OneProof/GrossZagierScheme/Core.lean` | `ESch`, `chartZ`, `chartHom`, D1 `exists_extension`, both key-lemma directions, `ptOf` | `lake build`, no errors (VERIFIED) |
+| `Contrib/OneProof/GrossZagierScheme/Model.lean` | `exists_model` | `lake build`; standard axioms (VERIFIED) |
+| `Contrib/OneProof/GrossZagierScheme/PointTau.lean` | `Otau`, `evTau`, `ratFn_rep_congr` | `lake build`, no errors (VERIFIED) |
+| `Contrib/OneProof/GrossZagierScheme.lean` | leaf, D2 `ptOf_eq_modPt`, `exists_center`, `exists_pointAt`, `exists_cusp`, `isPointAt_unique`, bridge | `lake build`; `#print axioms` standard for `grossZagierAlgOptCd_of_curve`, `exists_pointAt`, `exists_model`, `isPointAt_unique` (VERIFIED) |
+| `scratch/hgz-steps/FoldCheck.lean` | `frozenTarget` with `hGZ` retyped | standard axioms (VERIFIED) |
+
+No `sorry`, no `axiom`, and no build-time code (`#eval`, `run_cmd`, syntax, notation, macros) in the new files.
+`scratch/hgz-steps/` holds copies (`SchCore.lean` = `Core.lean`, `EpsD.lean`, `Model.lean`, `PointTau.lean`,
+`GZScheme.lean` = development copy with `#print axioms`, `GrossZagierScheme.lean`).
 
 ## 6. What remains
 
