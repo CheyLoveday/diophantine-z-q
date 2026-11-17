@@ -193,4 +193,70 @@ theorem card_le_of_perfect {A B : AbVar K} {n : ℕ} [NeZero n] (e : Pairing A B
 
 end Torsion
 
+section Main
+
+open T09Pic PkgI3 PkgI3.AbVar PicDict HDec.WeilPairing
+
+variable {K : Type} [Field K]
+
+lemma exists_prime_ne_zero : ∃ ℓ : ℕ, 2 ≤ ℓ ∧ (ℓ : K) ≠ 0 := by
+  by_cases h2 : (2 : K) = 0
+  · refine ⟨3, by norm_num, ?_⟩
+    have : ((3 : ℕ) : K) = 2 + 1 := by push_cast; ring
+    rw [this, h2, zero_add]
+    exact one_ne_zero
+  · exact ⟨2, le_rfl, by exact_mod_cast h2⟩
+
+/-- **`dim Pic⁰ ≤ dim A`**: from the perfect pairing `A[ℓ] × Pic⁰[ℓ] → μ_ℓ` of `WeilPairingMumford` and the
+torsion counts `#X[ℓ] = ℓ^{2 dim X}`. -/
+theorem dim_le_of_weil (h4 : WeilPairingMumford) (hT : AvSplit.MumfordTorsionAlgClosed) {A : AbVar K}
+    {P : Over (Spec (CommRingCat.of K))} (rep : (picardFunctor A.X.hom).obj.RepresentableBy P)
+    {B : AbVar K} {j : B.X ⟶ P} (hj : IsPicZero rep B j) (a b : ℕ)
+    (ha : topologicalKrullDim A.X.left = a) (hb : topologicalKrullDim B.X.left = b) : b ≤ a := by
+  obtain ⟨ℓ, hℓ2, hℓK⟩ := exists_prime_ne_zero (K := K)
+  have hℓ0 : 0 < ℓ := by omega
+  have : NeZero ℓ := ⟨by omega⟩
+  obtain ⟨e, hperf, -⟩ := h4 K A P rep B j hj
+  obtain ⟨EA⟩ := exists_torsAddEquiv hT A a ℓ ha hℓ0 hℓK
+  obtain ⟨EB⟩ := exists_torsAddEquiv hT B b ℓ hb hℓ0 hℓK
+  have h1 := card_le_of_perfect (e ℓ) (hperf ℓ hℓ0 hℓK) EA
+  have h2 : Nat.card (tors B ℓ) = ℓ ^ (2 * b) := by
+    rw [Nat.card_congr EB.toEquiv, Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card,
+      Fintype.card_fin]
+  rw [h2] at h1
+  have := (Nat.pow_le_pow_iff_right (by omega : 1 < ℓ)).mp h1
+  omega
+
+/-- **Main result.** `λ_L` is an isogeny for every ample `L` (`T09Pic.PhiAmpleIsogeny`), from the bundle's
+`WeilPairingMumford` and the textbook leaf `AvSplit.MumfordTorsionAlgClosed`: finiteness is phi-ample's
+`finite_ker_pts`; surjectivity is the dimension count `surjective_of_dim_le` with `dim B ≤ dim A`. -/
+theorem phiAmpleIsogeny_of_weil (h4 : WeilPairingMumford) (hT : AvSplit.MumfordTorsionAlgClosed) :
+    PhiAmpleIsogeny := by
+  intro K _ A P rep B j hj L hL lam hlam
+  obtain ⟨lam', hlam'⟩ := exists_hom_comp_eq_phiL rep hj L
+  have hjm : Mono j := by
+    have : IsOpenImmersion j.left := hj.1
+    exact (Over.forget _).mono_of_mono_map (inferInstanceAs (Mono j.left))
+  have he : lam = lam'.hom := by rw [← cancel_mono j, hlam, hlam']
+  subst he
+  have hfin := finiteOfFiniteKerPts K A B lam' (PhiAmple.finite_ker_pts rep hj hL hlam)
+  refine ⟨hfin, ⟨?_⟩⟩
+  have := hfin
+  have : IsProper (lam'.hom.left ≫ B.X.hom) := by rw [Over.w lam'.hom]; infer_instance
+  have : IsProper lam'.hom.left := IsProper.of_comp lam'.hom.left B.X.hom
+  have : IrreducibleSpace B.X.left :=
+    GeometricallyIrreducible.irreducibleSpace_of_subsingleton (f := B.X.hom)
+  have : Nonempty A.X.left := ⟨η[A.X].left (IsLocalRing.closedPoint K)⟩
+  obtain ⟨a, ha⟩ := PkgI3.AbVar.dim_finite A
+  obtain ⟨b, hb⟩ := PkgI3.AbVar.dim_finite B
+  have hba := dim_le_of_weil h4 hT rep hj a b ha hb
+  refine surjective_of_dim_le lam'.hom.left lam'.hom.left.isClosedMap a ha ?_
+  have hb' : topologicalKrullDim B.X.left = b := hb
+  rw [hb']
+  exact_mod_cast hba
+
+end Main
+
 end PhiSurj
+
+#print axioms PhiSurj.phiAmpleIsogeny_of_weil
