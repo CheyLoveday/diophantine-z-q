@@ -23,3 +23,11 @@
 - first build: C8ConradB L107 `Module.finrank_pos` failed (IsTorsionFree ℚ_[p] ↥E synthesis timeout); fixed with `finrank_pos_intermediateField` via `finrank_pos_iff_of_free` + `Module.Free.of_divisionRing`.
 - `lake env lean ZInQKernel/Contrib/OneProof/C8ConradB.lean`: no output (no errors, no warnings). VERIFIED.
 - `lake build ZInQKernel.Contrib.OneProof.C8Printed`: Build completed successfully (13414 jobs); C8ConradB, C8Poincare, C8Printed built. VERIFIED.
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.ScholzeH1AbVar`: Build completed successfully (15983 jobs).
+- `scratch/conrad-b3/Discharges.lean` (output discharges_out.txt): `#discharges: 30 open hypotheses, 11466 theorems checked, 16 discharge one`, none from the C8 files (expected: no bundle field is discharged by the C8 reroute); all nine #print axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
+- `scratch/conrad-b3/CBDryRun.lean` (output dryrun_out.txt): no errors; frozenTarget_cb, sixContactMin_of_open73CB, sixContactMin_of_open72_hm, locAlgExponentEqWeight_of_conradPropB3, c8TwistFinite_of_conradB, g12DetPZ_of_printed, c8Inputs_of_leaves: [propext, Classical.choice, Quot.sound]. The dry-run source mentions TateTwistInvariantsInertia nowhere (grep). VERIFIED.
+
+## Step 4. Count (scratch/conrad-b3/count.py, count_out.txt; VERIFIED, computed)
+- before (main 5f1fac790 kinds.tsv, H rows): 5/24 on 29.
+- joint fold, ht-merge spec: 5/26 on 31 (5/25 on 30 with PR #86).
+- joint fold, conrad-b3: 5/25 on 30 (5/24 on 29 with PR #86). Same numbers with the merged tree's kinds.tsv.
