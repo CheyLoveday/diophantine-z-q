@@ -23,3 +23,7 @@ Base: wip/leaf-fold33b 75d94fe7 (origin/main is an ancestor: checked 11-17 01:56
   no x ∈ O^# \ O has nrd(x) ∈ ℤ (2304 dual points scanned); 576-residue congruence checked in Lean by decide.
 * 11-17 03:20 contributor file `ZInQKernel/Contrib/OneProof/GR512Bridge.lean` (bridge + N1):
   `lake build +ZInQKernel.Contrib.OneProof.GR512Bridge` ok (12941 jobs).
+* 11-17 03:40 Main+Discharges build ok (16073 jobs). `#discharges` (discharges.txt): gonzalezRotgerThm512X6 by
+  `gonzalezRotgerThm512X6_of_rcf`, still assumes only `GonzalezRotgerThm512X6RCF`, standard axioms. 39 open.
+* autofold --dry-run (autofold-dryrun.txt): strict 12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22.
+  FoldCheck.lean (dry-run minus line 1) compiles; `sixContactMin_of_open61` standard axioms (foldcheck.txt).

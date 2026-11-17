@@ -123,7 +123,39 @@ GR512Bridge.N1.O_maximal (O' : Subring B) (hle : LeafQM.O ≤ O') (hint : ∀ x 
 
 ## 6. `#discharges` and the autofold dry-run
 
-(filled in below)
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` (16073 jobs) and
+`+ZInQKernel.Contrib.OneProof.GR512Bridge`: ok. `scratch/gr512-bridge/Discharges.lean`, output `discharges.txt`
+(VERIFIED):
+
+```
+DISCHARGES [OpenResearchLeaves42.gonzalezRotgerThm512X6] by GR512Bridge.gonzalezRotgerThm512X6_of_rcf
+  still assumes: [GR512Bridge.GonzalezRotgerThm512X6RCF]
+  axioms: [propext, Classical.choice, Quot.sound]
+'GR512Bridge.gonzalezRotgerThm512X6_of_rcf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GR512Bridge.N1.O_maximal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GR512Bridge.picEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GR512Bridge.grD6_ne_one_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 39 open hypotheses, 13439 theorems checked, 26 discharge one
+```
+
+The proof uses only the new leaf: no textbook field, no other research field.
+
+**Autofold** (`scratch/gr512-bridge/autofold.json`): discharges `gonzalezRotgerThm512X6` by
+`_root_.GR512Bridge.gonzalezRotgerThm512X6_of_rcf {n}.gonzalezRotgerThm512X6RCF`; new leaf
+`gonzalezRotgerThm512X6RCF : _root_.GR512Bridge.GonzalezRotgerThm512X6RCF`, kind `published`, flag
+"reading risk: GR's D(R) is read as the product of the p | D with Eichler symbol (R/p) = -1, which for any
+quadratic order is 'pR is a prime ideal of R' (GR section 5 definition not re-read on this host; the match with
+inertCount6 is a Lean proof); locator read by the audit". `--dry-run` on TailZ67 (VERIFIED,
+`autofold-dryrun.txt`):
+
+**strict 12/22 on 34 → 13/21 on 34; strictest 11/23 → 12/22 (GLUE −1, no new glue).**
+
+The generated module (dry-run output minus line 1, `FoldCheck.lean`: `OpenResearchLeaves43`, top
+`sixContactMin_of_open61`) compiles; `#print axioms HDec.HSyn.sixContactMin_of_open61`:
+`[propext, Classical.choice, Quot.sound]` (VERIFIED, `foldcheck.txt`).
+
+If the integrator prefers the reading point to count as GLUE until a statement check, change the flag prefix to
+"pending reading: …"; the fold is then GLUE-neutral (the field is GLUE now), still with S2 and N1 closed.
 
 ## 7. What remains
 
