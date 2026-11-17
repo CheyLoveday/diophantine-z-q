@@ -434,3 +434,4 @@ end ZInQ.CdOpt.EtaW32Proof
 `v(γτ) = (2/d) v(τ)` for `γ ∈ Γ₀(32)`, `v = η(8τ)η(32τ)²/η(16τ)³`. -/
 theorem ZInQ.CdOpt.etaW32Character : ZInQ.CdOpt.EtaW32Character :=
   fun γ hγ τ => ZInQ.CdOpt.EtaW32Proof.P_of_mem γ hγ τ
+#print axioms ZInQ.CdOpt.etaW32Character
