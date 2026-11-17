@@ -106,8 +106,8 @@ def chartHom (a b : K) (h : (E.map (algebraMap ℚ K)).toAffine.Equation a b) : 
 theorem chartHom_mk (a b : K) (h) (n : ℕ) (F : E.toProjective.CoordinateRing)
     (hF : F ∈ gr E (n • 1)) :
     chartHom E a b h (Away.mk (gr E) (zC_mem E) n F hF) = evAB E a b h F := by
-  simp only [chartHom, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, Away.val_mk,
-    Localization.awayLift_mk, evAB_zC]
+  change Localization.awayLift (evAB E a b h) (zC E) (isUnit_evAB_zC E a b h) (Localization.mk F ⟨zC E ^ n, n, rfl⟩) = _
+  rw [Localization.awayLift_mk (evAB E a b h) (zC E) F 1 (by rw [evAB_zC, one_mul])]
   simp
 
 /-- `x = X/Z ∈ A_(Z)`. -/
@@ -145,6 +145,8 @@ end Chart
 
 instance : (ESch E).Over (Spec (CommRingCat.of ℚ)) := ⟨toSpecQ E⟩
 
+instance : IsProper (ESch E ↘ Spec (CommRingCat.of ℚ)) := (inferInstance : IsProper (toSpecQ E))
+
 /-- **D1 (Hartshorne I.6.8, II.4.7; Silverman AEC II.2.1).** Let `X` be an integral scheme over
 `ℚ` whose local rings are valuation rings (a normal curve), and `u : A_(Z) →+* K(X)` a `K(X)`-point
 of the chart `D₊(Z)` of `E`. Then the rational map `X ⇢ E` it defines extends to a morphism
@@ -155,7 +157,7 @@ theorem exists_extension (X : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Spec (CommR
     (u : AZ E →+* X.functionField) :
     ∃ π : X ⟶ ESch E,
       X.fromSpecFunctionField ≫ π = Spec.map (CommRingCat.ofHom u) ≫ chartZ E := by
-  letI : X.Over (Spec (CommRingCat.of ℚ)) := ⟨sX⟩
+  let _ : X.Over (Spec (CommRingCat.of ℚ)) := ⟨sX⟩
   obtain ⟨π, -, hπ⟩ := Scheme.exists_hom_of_valuationRing_stalk (base := Spec (CommRingCat.of ℚ))
     (target := ESch E) hv (Spec.map (CommRingCat.ofHom u) ≫ chartZ E) (specQ_ext _ _)
   exact ⟨π, hπ⟩
