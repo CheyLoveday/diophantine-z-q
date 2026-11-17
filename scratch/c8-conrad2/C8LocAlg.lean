@@ -10,6 +10,7 @@ noncomputable section
 namespace HDec.G0Galois.C8Conrad
 
 open Module
+open _root_.PkgI4 (GaloisRep GaloisChar)
 
 section Units
 
@@ -137,6 +138,97 @@ theorem locAlgExponentEqWeight_of_tateInertia (hT : TateTwistInvariantsInertia) 
     _ = a ^ (-n) • (a ^ n • φ v) := by rw [← hφσ]
     _ = φ v := by rw [smul_smul, ← zpow_add₀ ha]; simp
 
+
+/-! ## `FiniteOfLocAlgTrivialQ` reduced: local part proved, three smaller Props -/
+
+/-- `ψ` has finite image on the inertia group of the place `v` of `ℚ̄`. -/
+def CharInertiaFinite {ℓ : ℕ} [Fact ℓ.Prime] (ψ : GaloisChar ℓ) (v : ValuationSubring PkgI4.Qbar) : Prop :=
+  (Set.range fun σ : v.inertiaSubgroup ℚ => ψ.toHom ((σ : v.decompositionSubgroup ℚ) : PkgI4.GQ)).Finite
+
+/-- **GLUE, on-the-spot (C8, N5 L763-765 "finite inertia … at every other prime"; rv-h-c8 §4 item 3: N5 states it
+without argument).** A continuous character `ψ : G_ℚ → ℚ̄_p^×` has finite image on every inertia group at a prime
+`q ≠ p`. Sketch: `ψ` takes values in `O_E^×` for a finite `E/ℚ_p` (Baire); `ψ|_{D_v}` factors through `D_v^{ab}`,
+where inertia is the image of `ℤ_q^×` (local class field theory at `q`); on the pro-`q` group `1 + q²ℤ_q` the image
+lies in `1 + 𝔪_E` after shrinking (continuity), where `x ↦ x^q` is an isometry, so `ψ(x) = lim ψ(x^{q^m}) ⇒` trivial;
+hence `ψ(I_v)` is a quotient of a finite group. -/
+def InertiaFiniteAwayFromP : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (ψ : GaloisChar p) (q : ℕ), q.Prime → q ≠ p →
+    ∀ v : ValuationSubring PkgI4.Qbar, PkgI4.LiesOver v q → CharInertiaFinite ψ v
+
+/-- **GLUE (dictionary, STANDARD).** Every element of an inertia group of `ℚ̄` above `p` is conjugate in `G_ℚ` to the
+image under `PkgI4.decomp` of an element of the inertia group of `ℚ_p` (Tau Ceti's `inertiaSubgroup ℚ_[p]`): the
+places above `p` are conjugate, and for the place cut out by the embedding `ℚ̄ → ℚ̄_p` defining `decomp`, the
+decomposition group is `decomp(G_{ℚ_p})` and its inertia group is `decomp(I_{ℚ_p})` (Neukirch, *Algebraic Number
+Theory*, II §9, UNVERIFIED locator). -/
+def InertiaAtPDecomp : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (v : ValuationSubring PkgI4.Qbar), PkgI4.LiesOver v p →
+    ∀ τ : v.inertiaSubgroup ℚ, ∃ (σ : PkgI4.GQp p) (g : PkgI4.GQ),
+      (show Field.absoluteGaloisGroup ℚ_[p] from σ) ∈ TauCeti.inertiaSubgroup ℚ_[p] ∧
+        ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ) = g * PkgI4.decomp p σ * g⁻¹
+
+/-- **Class field theory over `ℚ` (C8, N5 L761-765: "class field theory over ℚ … hence a finite ray-class
+character"; the manuscript cites nothing for it: ELLIOT-class).** A continuous character `ψ : G_ℚ → ℚ̄_p^×` with
+finite image on every inertia group and unramified outside a finite set has finite image. A consequence of the
+Kronecker–Weber theorem with conductors (Tau Ceti: `kroneckerWeber`,
+`nonempty_algHom_iff_absNorm_abelianConductor_finitePart_dvd`): every finite subextension of the abelian field cut out
+by `ψ` has conductor dividing a fixed `M`, so lies in `ℚ(ζ_M)`. Not a printed statement in this form (GLUE by the
+strict reading). -/
+def CFTFiniteQ : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (ψ : GaloisChar p),
+    (∀ q : ℕ, q.Prime → ∀ v : ValuationSubring PkgI4.Qbar, PkgI4.LiesOver v q → CharInertiaFinite ψ v) →
+    (∃ T : Finset ℕ, ∀ q : ℕ, q.Prime → q ∉ T → CharUnramifiedAt ψ q) →
+    (Set.range ψ.toHom).Finite
+
+/-- **The local part, proved:** if `ψ ∘ decomp` is trivial on the Artin lifts of `1 + p^kℤ_p`, then on the inertia
+group of `ℚ_p` it takes values in the `N`-th roots of unity, `N = #(ℤ/p^k)^×` (Tau Ceti's local class field theory:
+every inertia element is an Artin lift of a unit). -/
+theorem pow_card_eq_one_of_mem_inertia (p : ℕ) [Fact p.Prime] (ψ : GaloisChar p) (k : ℕ)
+    (hk : ∀ u : ℤ_[p]ˣ, PadicInt.toZModPow k (u : ℤ_[p]) = 1 → ∀ σ : PkgI4.GQp p,
+      IsArtinLift p σ (unitsQp p u) → ψ.toHom (PkgI4.decomp p σ) = 1)
+    (σ : PkgI4.GQp p) (hσ : (show Field.absoluteGaloisGroup ℚ_[p] from σ) ∈ TauCeti.inertiaSubgroup ℚ_[p]) :
+    haveI : NeZero (p ^ k) := ⟨pow_ne_zero k (Fact.out : p.Prime).ne_zero⟩
+    ψ.toHom (PkgI4.decomp p σ) ^ (p ^ k).totient = 1 := by
+  haveI : NeZero (p ^ k) := ⟨pow_ne_zero k (Fact.out : p.Prime).ne_zero⟩
+  obtain ⟨u, hu⟩ := exists_unit_isArtinLift p σ hσ
+  set N := (p ^ k).totient
+  have hN : PadicInt.toZModPow k ((u ^ N : ℤ_[p]ˣ) : ℤ_[p]) = 1 := by
+    have := pow_card_eq_one (G := (ZMod (p ^ k))ˣ) (x := Units.map (PadicInt.toZModPow k).toMonoidHom u)
+    have h2 := congrArg (fun x : (ZMod (p ^ k))ˣ => (x : ZMod (p ^ k))) this
+    simpa [← map_pow] using h2
+  have hl : IsArtinLift p (σ ^ N) (unitsQp p (u ^ N)) := by
+    unfold IsArtinLift at hu ⊢
+    have e1 : unitsQp p (u ^ N) = unitsQp p u ^ N := by
+      simp only [unitsQp, map_pow]
+    rw [e1, map_pow, ← hu]
+    rfl
+  have := hk (u ^ N) hN (σ ^ N) hl
+  rwa [map_pow, map_pow] at this
+
+/-- **`FiniteOfLocAlgTrivialQ` from the three smaller Props** (the local part at `p` proved above). -/
+theorem finiteOfLocAlgTrivialQ_of_pieces (hA : InertiaFiniteAwayFromP) (hB : InertiaAtPDecomp)
+    (hC : CFTFiniteQ) : FiniteOfLocAlgTrivialQ := by
+  intro p _ ψ hram ⟨k, hk⟩
+  refine hC p ψ (fun q hq v hv => ?_) hram
+  by_cases hqp : q = p
+  · subst hqp
+    haveI : NeZero (q ^ k) := ⟨pow_ne_zero k hq.ne_zero⟩
+    set N := (q ^ k).totient
+    have hNpos : 0 < N := Nat.totient_pos.2 (pow_pos hq.pos k)
+    haveI : NeZero N := ⟨hNpos.ne'⟩
+    have hfin : (rootsOfUnity N (PadicAlgCl q) : Set (PadicAlgCl q)ˣ).Finite :=
+      Set.finite_coe_iff.mp (inferInstance : Finite (rootsOfUnity N (PadicAlgCl q)))
+    refine (hfin.image (fun x : (PadicAlgCl q)ˣ => x)).subset ?_
+    rintro _ ⟨τ, rfl⟩
+    obtain ⟨σ, g, hσ, hτ⟩ := hB q v hv τ
+    refine ⟨ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ), ?_, rfl⟩
+    rw [hτ, map_mul, map_mul, mul_comm (ψ.toHom g), mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one]
+    show _ ∈ rootsOfUnity N (PadicAlgCl q)
+    rw [mem_rootsOfUnity]
+    exact pow_card_eq_one_of_mem_inertia q ψ k hk σ hσ
+  · exact hA p ψ q hq hqp v hv
+
 end HDec.G0Galois.C8Conrad
 
+
 #print axioms HDec.G0Galois.C8Conrad.locAlgExponentEqWeight_of_tateInertia
+#print axioms HDec.G0Galois.C8Conrad.finiteOfLocAlgTrivialQ_of_pieces
