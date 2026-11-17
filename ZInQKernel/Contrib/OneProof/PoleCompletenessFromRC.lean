@@ -2,6 +2,7 @@ import ZInQKernel.Contrib.PoleRC.Reduction
 import ZInQKernel.Contrib.PoleRC.CRM
 import ZInQKernel.Contrib.PoleRC.Matrix
 import ZInQKernel.Contrib.PoleRC.Count
+import ZInQKernel.Contrib.PoleRC.DescentM
 
 /-!
 # Theorem 5.2 (`Manuscript.PoleCompleteness`) from Theorem 5.3 (`Manuscript.RestrictedConverse`)
@@ -50,5 +51,17 @@ theorem poleCompleteness_of_restrictedConverse_local (SelmerCorankOne : Weierstr
     (hGood : LocalGood) : Manuscript.PoleCompleteness :=
   poleCompleteness_of_restrictedConverse SelmerCorankOne hRC h54 hK hMW hDesc hR
     (dimThreeCount_of_local hTwo hThree hBad hGood)
+
+/-- **Theorem 5.2 from Theorem 5.3: the final form.** The complete 2-descent (`descentGlueM`) and
+the dimension-three count (`dimThreeCount_of_local`) are proved; what remains is Theorem 5.3,
+Lemma 5.4 at `E_ℓ` (interface for the abstract Selmer predicate), the printed leaves of Lemma 5.5
+(`KolyvaginRankOne`) and Mordell's theorem, the realization of the matrix conditions
+(`MatrixRealization`, ELLIOT: S11–S12), and the four textbook local images. -/
+theorem poleCompleteness_of_restrictedConverse_final (SelmerCorankOne : WeierstrassCurve ℚ → Prop)
+    (hRC : RestrictedConverse SelmerCorankOne) (h54 : Lemma54At SelmerCorankOne)
+    (hK : KolyvaginRankOne) (hMW : MordellWeil) (hR : MatrixRealization) (hTwo : LocalTwo)
+    (hThree : LocalThree) (hBad : LocalBad) (hGood : LocalGood) : Manuscript.PoleCompleteness :=
+  poleCompleteness_of_restrictedConverse_local SelmerCorankOne hRC h54 hK hMW descentGlueM hR
+    hTwo hThree hBad hGood
 
 end ZInQ.Manuscript.PoleRC

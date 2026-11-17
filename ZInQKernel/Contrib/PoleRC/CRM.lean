@@ -61,7 +61,8 @@ curves (`ZInQ.RouteK.Rank.fg_points`). -/
 def MordellWeil : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → AddGroup.FG E.toAffine.Point
 
-/-- **The complete 2-descent of `E_ℓ` with the count (GLUE).** For positive squarefree `ℓ`, if
+/-- **The complete 2-descent of `E_ℓ` with the count (GLUE; proved in `DescentM.lean`).** For positive
+squarefree `ℓ ≡ 11 (mod 12)`, if
 `E_ℓ(ℚ)` is finitely generated and has a point of infinite order, and `#SelM ℓ = 8`, then every
 class of `SelM ℓ` is the Kummer class of a rational point.
 
@@ -69,9 +70,10 @@ Proof (textbook): the Kummer map `P ↦ (x + 3ℓ, x − ℓ)` is a homomorphism
 `E_ℓ(ℚ) → (ℚ*/ℚ*²)²` with kernel `2E_ℓ(ℚ)` (Silverman X.1.4), landing in `SelM ℓ`; since
 `E_ℓ(ℚ)[2]` has order 4, a point of infinite order gives `#E_ℓ(ℚ)/2E_ℓ(ℚ) ≥ 8 = #SelM ℓ`, so the
 Kummer map is onto. Route K proves the same statement in Lean for the congruent number curves
-(`ZInQ.RouteK.Rank.loc_of_mem_sel2_of_infinite_order`); for `E_ℓ` it is not in Lean. -/
+(`ZInQ.RouteK.Rank.loc_of_mem_sel2_of_infinite_order`); for `E_ℓ` it is proved in
+`ZInQKernel/Contrib/PoleRC/DescentM.lean` (`descentGlueM`). -/
 def DescentGlueM : Prop :=
-  ∀ ℓ : ℕ, 0 < ℓ → Squarefree ℓ → AddGroup.FG (curve (ℓ : ℚ)).toAffine.Point →
+  ∀ ℓ : ℕ, 0 < ℓ → Squarefree ℓ → ℓ % 12 = 11 → AddGroup.FG (curve (ℓ : ℚ)).toAffine.Point →
     (∃ P : (curve (ℓ : ℚ)).toAffine.Point, ¬ IsOfFinAddOrder P) → (SelM ℓ).ncard = 8 →
     ∀ ab ∈ SelM ℓ, LocM ℚ ℓ ab.1 ab.2
 
@@ -98,6 +100,6 @@ theorem crm_of_restrictedConverse (SelmerCorankOne : WeierstrassCurve ℚ → Pr
   have hP := h54 ℓ hℓ hsf h12 h8
   have hA := hRC ℓ hℓ hsf h12 hP
   have hr := hK _ hE hA
-  exact hD ℓ hℓ hsf (hMW _ hE) (exists_not_isOfFinAddOrder_of_rank hr) h8 (β, 1) hβ
+  exact hD ℓ hℓ hsf h12 (hMW _ hE) (exists_not_isOfFinAddOrder_of_rank hr) h8 (β, 1) hβ
 
 end ZInQ.Manuscript.PoleRC

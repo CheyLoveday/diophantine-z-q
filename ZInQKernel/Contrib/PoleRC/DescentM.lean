@@ -279,4 +279,110 @@ theorem selRepM_mem_selM {ℓ : ℕ} (hℓ : ℓ ≠ 0) (P : (curve (ℓ : ℚ))
   exact ⟨sqfRep_squarefree _, sqfRep_squarefree _, locM_cast_of_rat h,
     fun p _ => locM_cast_of_rat h⟩
 
+/-! ### `#E_ℓ(ℚ)[2] = 4` -/
+
+theorem ker_two_nsmul_eq_M (hℓ : ℓ ≠ 0) :
+    (((nsmulAddMonoidHom 2 : (curve ℓ).toAffine.Point →+ _).ker :
+        AddSubgroup _) : Set (curve ℓ).toAffine.Point) =
+      {0, tPt hℓ (isRootM_zero ℓ), tPt hℓ (isRootM_ell ℓ), tPt hℓ (isRootM_neg3 ℓ)} := by
+  ext P
+  simp only [SetLike.mem_coe, AddMonoidHom.mem_ker, nsmulAddMonoidHom_apply, Set.mem_insert_iff,
+    Set.mem_singleton_iff]
+  rcases P with _ | ⟨x, y, h⟩
+  · exact iff_of_true (nsmul_zero 2) (Or.inl rfl)
+  rw [two_nsmul_some_eq_zero_iff]
+  constructor
+  · intro hy
+    have e := (curve_equation_iff x y).mp h.1
+    rw [hy] at e
+    have : x * (x - ℓ) * (x + 3 * ℓ) = 0 := by linear_combination -e
+    right
+    rcases mul_eq_zero.mp this with h' | h'
+    · rcases mul_eq_zero.mp h' with h'' | h''
+      · left; exact some_eq_tPt hℓ (isRootM_zero ℓ) h h''
+      · right; left; exact some_eq_tPt hℓ (isRootM_ell ℓ) h (sub_eq_zero.mp h'')
+    · right; right
+      exact some_eq_tPt hℓ (isRootM_neg3 ℓ) h (by linear_combination h')
+  · rintro (h0 | h0 | h0 | h0)
+    · exact absurd h0 (by simp)
+    all_goals
+      unfold tPt at h0
+      simp only [Point.some.injEq] at h0
+      exact h0.2
+
+theorem card_ker_two_nsmul_eq_four_M (hℓ : ℓ ≠ 0) :
+    Nat.card (nsmulAddMonoidHom 2 : (curve ℓ).toAffine.Point →+ _).ker = 4 := by
+  have hx : ∀ {e e' : ℚ} (he : IsRootM ℓ e) (he' : IsRootM ℓ e'),
+      tPt hℓ he = tPt hℓ he' → e = e' := by
+    intro e e' he he' h
+    unfold tPt at h
+    simp only [Point.some.injEq] at h
+    exact h.1
+  have hz : ∀ {e : ℚ} (he : IsRootM ℓ e), (0 : (curve ℓ).toAffine.Point) ≠ tPt hℓ he := by
+    intro e he h
+    unfold tPt at h
+    exact Point.some_ne_zero _ h.symm
+  rw [← SetLike.coe_sort_coe, ker_two_nsmul_eq_M hℓ, Nat.card_coe_set_eq]
+  rw [Set.ncard_insert_of_notMem, Set.ncard_insert_of_notMem, Set.ncard_pair]
+  · intro h; have := hx _ _ h; apply hℓ; linarith
+  · simp only [Set.mem_insert_iff, Set.mem_singleton_iff, not_or]
+    exact ⟨fun h => hℓ (hx _ _ h).symm, fun h => hℓ (by linarith [hx _ _ h])⟩
+  · simp only [Set.mem_insert_iff, Set.mem_singleton_iff, not_or]
+    exact ⟨hz _, hz _, hz _⟩
+
+/-! ### The count: `DescentGlueM` -/
+
+theorem deltaHomM_ker_eq (hℓ : 0 < ℓ) (hns : ¬ IsSquare ℓ) :
+    (deltaHomM hℓ.ne').ker =
+      (nsmulAddMonoidHom 2 : (curve ℓ).toAffine.Point →+ _).range := by
+  ext P
+  rw [AddMonoidHom.mem_ker, AddMonoidHom.mem_range]
+  simp only [nsmulAddMonoidHom_apply]
+  rw [← deltaM_eq_one_iff hℓ hns P]
+  constructor
+  · intro h; exact congrArg Additive.toMul h
+  · intro h; exact congrArg Additive.ofMul h
+
+theorem not_isSquare_of_mod_four {ℓ : ℕ} (h : ℓ % 4 = 3) : ¬ IsSquare (ℓ : ℚ) := by
+  rw [Rat.isSquare_natCast_iff]
+  rintro ⟨r, rfl⟩
+  have : r % 4 = 0 ∨ r % 4 = 1 ∨ r % 4 = 2 ∨ r % 4 = 3 := by omega
+  rw [Nat.mul_mod] at h
+  rcases this with h' | h' | h' | h' <;> rw [h'] at h <;> norm_num at h
+
+theorem card_quotient_two_eq_ncard_range_selRepM {ℓ : ℕ} (hℓ : 0 < ℓ) (h4 : ℓ % 4 = 3) :
+    Nat.card ((curve (ℓ : ℚ)).toAffine.Point ⧸
+        (nsmulAddMonoidHom 2 : (curve (ℓ : ℚ)).toAffine.Point →+ _).range) =
+      (Set.range (selRepM ℓ)).ncard := by
+  have hℓ' : (0 : ℚ) < ℓ := by exact_mod_cast hℓ
+  set δ := deltaHomM hℓ'.ne'
+  rw [← deltaHomM_ker_eq hℓ' (not_isSquare_of_mod_four h4),
+    Nat.card_congr (QuotientAddGroup.quotientKerEquivRange δ).toEquiv]
+  have hsel : Set.range (selRepM ℓ) = repPair '' Set.range δ := by
+    rw [← Set.range_comp]; rfl
+  rw [hsel, Set.ncard_image_of_injective _ repPair_injective, ← Nat.card_coe_set_eq,
+    ← AddMonoidHom.coe_range, SetLike.coe_sort_coe]
+
+/-- **`DescentGlueM` holds.** -/
+theorem descentGlueM : DescentGlueM := by
+  intro ℓ hℓ _hsf h12 hfg hinf h8
+  have hℓ0 : ℓ ≠ 0 := hℓ.ne'
+  have hℓq : (ℓ : ℚ) ≠ 0 := by exact_mod_cast hℓ0
+  set S := Set.range (selRepM ℓ)
+  have hS : S ⊆ SelM ℓ := by rintro _ ⟨P, rfl⟩; exact selRepM_mem_selM hℓ0 P
+  have hfin : (SelM ℓ).Finite := Set.finite_of_ncard_ne_zero (by rw [h8]; norm_num)
+  have hSfin : S.Finite := hfin.subset hS
+  have hSpos : S.ncard ≠ 0 := (Set.ncard_pos hSfin).mpr ⟨_, 0, rfl⟩ |>.ne'
+  have hcard := card_quotient_two_eq_ncard_range_selRepM hℓ (by omega)
+  have : Finite ((curve (ℓ : ℚ)).toAffine.Point ⧸
+      (nsmulAddMonoidHom 2 : (curve (ℓ : ℚ)).toAffine.Point →+ _).range) :=
+    Nat.finite_of_card_ne_zero (by rw [hcard]; exact hSpos)
+  have h8le := eight_le_card_quotient_two (card_ker_two_nsmul_eq_four_M hℓq) hinf
+  rw [hcard] at h8le
+  have hSeq : S = SelM ℓ := Set.eq_of_subset_of_ncard_le hS (by rw [h8]; exact h8le) hfin
+  intro ab hab
+  rw [← hSeq] at hab
+  obtain ⟨P, rfl⟩ := hab
+  exact locM_selRepM hℓ0 P
+
 end ZInQ.Manuscript.PoleRC

@@ -63,3 +63,17 @@
   c in {1, l, beta, l/beta}, are in SelM (sufficiency), image = {0,1,1_beta,1+1_beta} x F_2.
 - `Contrib/OneProof/PoleCompletenessFromRC.lean`: `poleCompleteness_of_restrictedConverse_local`
   (DimThreeCount replaced by the four local Props). COMPILED, axioms [propext, Classical.choice, Quot.sound].
+
+## Lean: the complete 2-descent of E_l (DescentGlueM proved)
+- `KummerM.lean`: Kummer map `kum l e` at a root e of x^3+2lx^2-3l^2x is a homomorphism (`kum_add`;
+  chord identity from Mathlib's `addPolynomial_slope` at X = e). COMPILED.
+- `DescentM.lean`: `deltaM` (coords (x+3l, x-l)), halving lemma `exists_two_nsmul_eq_M`
+  (x' = x + r1r2 + r1r3 + r2r3, slope r1+r2+r3; identities by hand, no CAS), `deltaM_eq_one_iff`
+  (l > 0 not a square), `selRepM_mem_selM`, `card_ker_two_nsmul_eq_four_M`, and
+  `descentGlueM : DescentGlueM` PROVED (standard axioms). DescentGlueM now carries l = 11 mod 12
+  (needed so that l is not a square; CRM supplies it).
+- `poleCompleteness_of_restrictedConverse_final (P) : RestrictedConverse P -> Lemma54At P ->
+  KolyvaginRankOne -> MordellWeil -> MatrixRealization -> LocalTwo -> LocalThree -> LocalBad ->
+  LocalGood -> Manuscript.PoleCompleteness`. COMPILED, axioms [propext, Classical.choice, Quot.sound].
+- localprops.py (per-prop brute-force check, 12 l) did not finish within 3500 s: NOT RUN to completion.
+  (The combined check compare.py, 55 l, did pass.)
