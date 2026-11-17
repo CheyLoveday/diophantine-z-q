@@ -61,7 +61,7 @@ H-66		ZInQ.Contrib.SpreadOut.EGAIV_17_7_8_ii	249195fd0,f6df5fa32,cba8157f7	no
 H-67		ZariskiConn.ZariskiConnectedness	249195fd0,f6df5fa32,cba8157f7	no
 H-69		HomUnify.HomLatticeCorr	249195fd0,f6df5fa32,cba8157f7	no
 H-70		ZInQ.Contrib.AVB1.HomFreeFiniteAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
-H-71	charPolyIndepOfEllAlgClosed	ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+H-71		ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-72		ZInQ.Contrib.AVB1.PoincareComplement	f6df5fa32,cba8157f7,5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-73		ZInQ.Contrib.AVB1.ImageFactorization	f6df5fa32,cba8157f7	no
 H-74		ZInQ.Contrib.AVB1.SimpleSurjIsogeny	f6df5fa32,cba8157f7	no

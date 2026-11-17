@@ -372,3 +372,15 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     the reviewer rates the new rows). Checks (VERIFIED): build +Main +Discharges (16102 jobs); frozenTarget standard
     axioms; check_target.py; only Main.lean modified among existing OneProof modules; OpenStatements 39;
     DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok; test_scoring ok.
+40. Batch for w104 (inbox 43, 44), one autofold scratch/leaf-fold33/autofold-batch-w104.json -> TailZ73,
+    `sixContactMin_of_open66`: merged wip/charpoly-p 9df59d44, wip/charpoly-port 67aaa436 (59 vendored Anthropic FLT
+    modules under CharPolyPort/Vendor/, Apache-2.0 notices kept), wip/igusa-gal 48b5c4e5, wip/derham-range f3832ec7
+    (dry-run scratch files .lean.txt). charPolyIndepOfEllAlgClosed := CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly'
+    DegPolyFLT.degHomogPoly (Mumford 19 Thm 4 proved outright in every characteristic, no new leaf: -1 field);
+    igusaGL2DS := X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome from igusaGL2DSGalSome (DS Thm 7.6.3 printed form; cited
+    print, not in diophantine_zq.tex; consequence, pending review until cove-88 rates it). derham-range: Lean only
+    (DeRhamRange.lean: range_iotaF_eq_bdrFix, deRhamVpAbVarDirect_iff_adm); the deRhamVpAbVarDirect row keeps the
+    leaf with derham-range's pending-reading flag (GLUE). None on-the-spot. Count: 39 -> 38 open; H strict 5/29 on 34
+    -> 4/29 on 33. Checks (VERIFIED): build +Main +Discharges (16177 jobs); frozenTarget standard axioms;
+    check_target.py; only Main.lean modified among existing OneProof modules; OpenStatements 38; DischargesTest rerun,
+    no error; render_open --check ok; crosswalk --check ok; autoform check ok.
