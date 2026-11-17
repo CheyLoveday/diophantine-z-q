@@ -20,6 +20,7 @@ set_option maxHeartbeats 1000000
 noncomputable section
 
 namespace CMBranch
+open CategoryTheory AlgebraicGeometry
 /-- The fibre context at a fibre without CM. -/
 def FibreCtxNC (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : LeafQM.AV.PtEquiv Y) (π : LeafQM.AV.ToP1 Y.left)
     (u : ℚ) (P : LeafQM.AV.QML3 LeafQM.AV.Qbar) : Prop :=
@@ -171,6 +172,10 @@ theorem linkedTateLocalDNC_of_tateBridge35 (hR6 : PkgI2.RaynaudCriterionNF.{{0}}
         h3 hCl3)
 end LTLocal
 
+end LT
+
+section LT2
+noncomputable section
 namespace HSyn.G0AssembleMod
 open CategoryTheory AlgebraicGeometry
 open G0ModField
@@ -196,10 +201,25 @@ theorem linkedTateDataNC_of_local (hM : PkgI3.CharPolyIndepOfEll) (h : LinkedTat
       Tm₅ Tm₃ h8₅ h8₃ hF,
     G15Ram.g15RamWild_of_localData _ hl5 hl3⟩
 
-/-- `AfterG7` at fibres without CM. -/
-{D['AfterG7']}
 end HSyn.G0AssembleMod
 
+end
+end LT2
+
+section AGdef
+{OPEN_KF}
+namespace HSyn.G0AssembleMod
+open G0ModField
+/-- `AfterG7` at fibres without CM. -/
+{D['AfterG7']}
+
+end HSyn.G0AssembleMod
+end AGdef
+
+section LT3
+open CategoryTheory.MonObj
+open GlueDescent GlueC10 PkgI3
+open scoped TensorProduct
 namespace LTLocal
 open CategoryTheory AlgebraicGeometry
 open G0ModField
@@ -227,7 +247,7 @@ theorem linkedTateLocalNC_of_leaves3_hf (hR6 : PkgI2.RaynaudCriterionNF.{{0}}) (
       (LTLocal.modelEndRank4NC_of_qmEndRank hFS (qmEndRank_of_leaves3_hf h6 hYu)))
     LTLocal.g7DegreeBound_gp4
 end HSyn
-end LT
+end LT3
 
 /-! ## 4. G8-G16 (`AfterG7`) -/
 
