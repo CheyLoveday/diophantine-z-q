@@ -111,3 +111,24 @@ See §1 and `scratch/cox-lattice/autofold.json`: replace `HDec.HSyn.sixContactMi
 {n}.cmPotentialGood, {n}.cmHeight62, HDec.CMBranch.coxProperLattice_proof⟩` (equivalently
 `sixContactMin_of_open72_cmbranch3 r t l ⟨…5 fields…⟩`), add the 5 statements (not 6) to a bundle generation, then
 PruneScan as in cm-branch2 (`gonzalezRotgerThm512X6RCF`).
+
+### 6.1 Compile record and `#discharges` (VERIFIED)
+
+* `lake build ZInQKernel.Contrib.OneProof.CoxProperLattice` EXIT 0 (11763 jobs); `lake build
+  ZInQKernel.Contrib.OneProof.CoxProperLattice.Fold` EXIT 0 (15392 jobs); `scratch/cox-lattice/Axioms.lean`
+  (`axioms-out.txt`): `coxProperLattice_proof`, `reducedCMPeriod_of_leaves_cox`, `sixContactMin_of_open72_cmbranch3`
+  depend on `[propext, Classical.choice, Quot.sound]`; `example : CoxProperLattice := coxProperLattice_proof` checks
+  (the registered form: exactly the statement, no extra hypotheses).
+* `scratch/cox-lattice/Discharges.lean` (imports `OneProof.Main`, `OneProof.Discharges`, `CoxProperLattice`,
+  `CoxProperLattice.Fold`), output `scratch/cox-lattice/discharges.txt`: "30 open hypotheses, 12364 theorems checked,
+  120 discharge one" = 16 pre-existing reductions on main (carayol, ds965, deRham, raynaud, javanpeykar, the two `X₆`
+  rows, y3, deligne, pazuki, hodgeTate) + 104 projections of cm-branch2's copied `_r5` structures (the known noise
+  for copied structures, as cm-branch2 §7.1). No theorem of this task discharges a top field, as expected:
+  `CoxProperLattice` is not a top field of `frozenTarget` on main; it is a field of cm-branch2's not-yet-folded
+  `CMInputs2`, so the gain shows in the hand fold (§1), not in `#discharges`.
+* The autofold spec is a hand fold (cm-branch2's format, `replaces`), so `autofold.py --dry-run` does not apply;
+  `Fold.lean` is the dry run.
+
+## 7. Rating of new leaves
+
+No new leaf: the task removes one (`CoxProperLattice`, consequence form, pending review) and adds none.
