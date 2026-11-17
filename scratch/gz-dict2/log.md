@@ -11,3 +11,4 @@ from ~/dzq-wt/leaf-fold33b (.lake/build, lean/.lake).
 - ZInQKernel/Contrib/OneProof/GrossZagierPlane.lean (= D2a.lean + module doc): `lake build ZInQKernel.Contrib.OneProof.GrossZagierPlane` succeeded (11397 jobs, file 8.0 s) (VERIFIED).
 - scratch/gz-dict2/FoldCheck.lean (frozenTarget_gzdict2: Main's frozenTarget with hGZ : GZDict2.GrossZagierPlaneOptCd): compiles; axioms [propext, Classical.choice, Quot.sound] for frozenTarget_gzdict2, grossZagierAlgOptCd_of_plane, grossZagierFormulaCd_of_plane, modPt_eq_ratFn (FoldCheck-output.txt) (VERIFIED).
 - scratch/gz-dict2/Discharges.lean: "DISCHARGES [hGZ] by ZInQ.GZDict2.grossZagierAlgOptCd_of_plane, still assumes [ZInQ.GZDict2.GrossZagierPlaneOptCd], axioms standard"; 37 open hypotheses, 9524 theorems checked, 39 discharge one (Discharges-output.txt) (VERIFIED).
+- D1a.lean (WEqK, center_of_wEq: valuative criterion for E ⊂ P² in valuation form; center_of_wEq_subring for ValuationSubring ⊇ ℚ): compiles (VERIFIED).
