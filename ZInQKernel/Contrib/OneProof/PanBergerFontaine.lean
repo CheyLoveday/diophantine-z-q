@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.PanBergerPst
 
 /-!
 Copyright: this file is part of the fork Deicyde/diophantine-z-q (task pb-p1, 2026-11-17). Report
-`docs/research/pb-p1.md`; generated from `scratch/pb-p1/FontaineSt.lean` by `scratch/pb-p1/mkcontrib.py`.
+`docs/research/pb-p1.md`; generated from `scratch/pb-p1/FontaineSt.lean.txt` by `scratch/pb-p1/mkcontrib.py`.
 
 # pb-p1: Fontaine's `B_st = B_cris[log [p̃]]` as printed in Berger's survey, and the two leaves of `r11r12` over it
 
@@ -629,8 +629,9 @@ open BmaxOne BergerBst PanBergerSplit FontaineSt
 semistable, with Fontaine's `B_st` (L. Berger, *An introduction to the theory of p-adic representations*, in
 *Geometric aspects of Dwork theory* (de Gruyter 2004; volume data UNVERIFIED), arXiv:math/0210184v1, IV.5.1 p. 30
 (statement: "every de Rham representation is potentially semi-stable. We shall now give a proof of that
-statement") and IV.5.3 p. 31 (proof), citing Berger, Invent. Math. 148 (2002), whose Théorème 0.7 is the same
-theorem: §1.2 p. 11 of arXiv:math/0102179v3 prints that Berger's `B_st` gives Fontaine's functor `D_st`, and §1
+statement") and IV.5.3 p. 31 (proof), citing Berger, Invent. Math. 148 (2002), whose Théorème 0.6
+(= Théorème 5.19 of arXiv:math/0102179v3) is the same theorem (Théorème 0.7 there is Sen's theorem): §1.2 p. 11 of
+arXiv:math/0102179v3 prints that Berger's `B_st` gives Fontaine's functor `D_st`, and §1
 p. 8 defines `B`-admissible as `B ⊗_{ℚ_p} V ≃ B^d` as `G`-modules, the basis form used here), at
 `K = ℚ_p`, for a `p`-adic representation `V = E^n` (`E/ℚ_p` finite inside `ℚ̄_p`, `ρ_E : G_{ℚ_p} → GL_n(E)`
 continuous):
