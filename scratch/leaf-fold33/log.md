@@ -356,3 +356,19 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     javanpeykarThm111, bostLowerBoundAn, gaudronRemondThm14An consequence; deRhamVpAbVarDirect pending reading;
     gamma1IntegralBasis published with the reviewer's flag (GLUE under the ruling). Inbox 29c: r3-residual.md count
     corrected (count-neutral after review).
+39. After Jack's ruling of 11-17 (inbox 42: no more Gross-Zagier or TYZ work; nothing under frozenTarget's TYZ/GZ
+    arguments is folded from here on), H rows only, one autofold scratch/leaf-fold33/autofold-batch-w103.json ->
+    TailZ72, `sixContactMin_of_open65`: merged wip/gr512-bridge e055e0fa, wip/htnew-assembly b7696d21,
+    wip/kleiman-site 7e35ad6c, wip/ga-rigidity f9e83fdb, wip/pb-pst cad410ec, wip/y3-hodge 90731d3d (build logs left
+    out; dry-run scratch files .lean.txt). gonzalezRotgerThm512X6 <- gonzalezRotgerThm512X6RCF (GR 2006 Thm 5.12 over
+    the ring class field; cited print); modularHTPrinted <- modularHTCoeff (cited print, Gee 2022 Fact 4.20);
+    kleimanPicZeroProper954 <- kleimanPicZeroProper954SiteQ (Kleiman 9.5.4, LN-site vs big-site fppf comparison
+    proved; cited print); sga7_IX_Cor3_3 and sga7_IX_3_5_ForwardGeom <- their Def34 forms (G_a rigidity proved; SGA 7
+    IX read 11-17; cited print); bergerPrintedV <- bergerPrintedVT (Berger 2002 Thm 0.7, V1/V2/P2 cleared; cited
+    print); deligneCanonicalModelY3EveryH <- deligneCanonicalModelY3EveryPrint (Deligne / Shimura as printed; cited
+    print). Every new row kind consequence, pending review (GLUE until rated). None is on-the-spot. Reviews rows of
+    the replaced fields moved to reviews-retired.tsv. gr-isogdeg not folded: its target gaudronRemondThm14Printed was
+    replaced by gaudronRemondThm14An (r3-residual, step 35). Count: 39 open; H 5/29 on 34 (unchanged; up to -7 GLUE as
+    the reviewer rates the new rows). Checks (VERIFIED): build +Main +Discharges (16102 jobs); frozenTarget standard
+    axioms; check_target.py; only Main.lean modified among existing OneProof modules; OpenStatements 39;
+    DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok; test_scoring ok.
