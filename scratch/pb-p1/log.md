@@ -49,3 +49,29 @@
   comparison between rings at all.
 - B1 (Berger's `B_max[log[π̄]] = B_max[log[p̃]]`) is then not needed for either leaf; it is not formalized (see
   FINDING above; it needs a `p`-adic logarithm on `A_max`, which the tree lacks).
+
+## Lean (all VERIFIED: compiled with `lake env lean` / `lake build`, standard axioms)
+
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: 16093 jobs, success (build2.txt).
+- scratch/pb-p1/FontaineSt.lean (→ ZInQKernel/Contrib/OneProof/PanBergerFontaine.lean via mkcontrib.py): compiles
+  (13 s); `lake build +ZInQKernel.Contrib.OneProof.PanBergerFontaine` success (build3.txt).
+  - Fontaine's rings per Berger 2004: AcrisOf, BcrisPlusOf, BcrisOf, BstFOf; bcrisPlusOf_eq_set (B_cris^+ = printed
+    set p^-k A_cris; acrisOf_mul via dpSeries_mul), acrisOf_eq (generator independence), acrisOf_le_amax
+    (p^n/n! ∈ Z_p), bstFOf_le (B_st^F ⊆ tree's B_st), logTeich_mem_acris, bstF_stable, isAdmissibleT_mono,
+    isAdmissible_of_pstF, bmax_adjoin_eq_bst (B1 algebraic half).
+  - Leaves BergerSurveyF, PanPrintedF; bergerPrintedV_of_survey : BergerSurveyF → BergerPrintedV;
+    panBerger_of_F : PanPrintedF → BergerSurveyF → DS fields → PanBerger; panPrintedP_of_F (needs the non-leaf
+    BmaxStToFontaine; not in any fold).
+- Axioms.lean: 19 declarations, all [propext, Classical.choice, Quot.sound] (axioms-output.txt).
+- Discharges.lean: bergerPrintedV by bergerPrintedV_of_survey (assumes BergerSurveyF); panPrintedP by
+  panPrintedP_of_F (assumes PanPrintedF, BmaxStToFontaine); 39 open, 14150 theorems, 34 discharge one.
+- autofold.json (bergerPrintedV -> bergerSurveyF) dry run: strict 5/29 on 34 -> 5/29 on 34; output compiles
+  (folddryrun-output.txt).
+- BypassFold.lean (gen_bypass.py; PBP1 copies of research generations 40..45, r11r12 := panBerger_of_F):
+  PBP1.sixContactMin_of_open65 compiles, standard axioms (bypass-out.txt).
+- scan_contrib.py 56b6353d5 HEAD: PanBergerFontaine.lean 0 likely, 0 possible hits.
+
+## Open
+
+- B1 analytic half (Lean definition of Berger's log[π̄]): not formalized; on-the-spot sketch in the report §4.
+- BmaxStToFontaine (tree-ring pst ⇒ Fontaine pst): not a leaf, not proved; avoided by the bypass fold.
