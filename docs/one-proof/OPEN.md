@@ -11,7 +11,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**33 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves29`, `OpenTextbookLeaves15`), plus 10 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**33 hypotheses of the H part** (in the bundles `OpenAddedLeaves20`, `OpenResearchLeaves29`, `OpenTextbookLeaves15`), plus 8 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
 * **Strict count: 13 published / 20 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -82,7 +82,6 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`picRepresentableAbVar`](#picrepresentableabvar) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pic-repr)) | 2026-11-16 |
 | [`weilPairingMumford`](#weilpairingmumford) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/weil-proof)) | 2026-11-16 |
 | [`h11`](#h11) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) | 2026-11-16 |
-| [`hfx`](#hfx) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/hfx-proof)) | 2026-11-16 |
 | [`hL29`](#hl29) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) | 2026-11-16 |
 | [`hCM`](#hcm) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) | 2026-11-16 |
 
@@ -111,7 +110,6 @@ Unread locators: SGA 3, EGA IV, Faltings 1983 Lemma 5, GIT, BLR 1.4, 7.2, 7.3. C
 Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
 * [`h11`](#h11) (LEAF; unverified-locator): Tian-Yuan-Zhang, Thm 1.1, first assertion, for odd m (arXiv:1411.4728v1 L371-380; journal number UNVERIFIED)
-* [`hfx`](#hfx) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 section 2.1 (L542-550), Lemma 2.5, Theorem 2.4(1), Theorem 2.6 at chi = 1 (L809-840)
 * [`hL29`](#hl29) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Lemma 2.9 (L1062-1066)
 * [`hP23`](#hp23) (LEAF; restricted, unread): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Proposition 2.3 (L580-586)
 * [`hCM`](#hcm) (GLUE; unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
@@ -119,7 +117,6 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
 * [`hGZ`](#hgz) (LEAF; unread): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
 * [`hQ`](#hq) (LEAF; unverified-locator): G. Shimura, Introduction to the arithmetic theory of automorphic functions (1971), Prop. 6.9 and Thm 6.6; F. Diamond, J. Shurman, A first course in modular forms (GTM 228), sections 7.5-7.6 (all UNVERIFIED locators)
-* [`hW`](#hw) (LEAF; unread): M. Newman, Construction and application of a class of modular functions (I, II), Proc. LMS 1957/1959; B. Gordon, K. Hughes, Multiplicative properties of eta-products II (1981); K. Ono, The web of modularity (CBMS 102, 2004), Thm 1.64 (all UNVERIFIED locators)
 
 ### Packet R4
 
@@ -197,7 +194,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`mumfordTorsionAlgClosed`](#mumfordtorsionalgclosed) | textbook | published | LEAF |  |  | T2-T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/elliotglazer/diophantine-z-q/issues/81#issuecomment-6887798791)) |
 | [`neronSchemeExtensionExists`](#neronschemeextensionexists) | textbook | published | LEAF |  |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/neron-ext)) |
 | [`h11`](#h11) | frozenTarget | published | LEAF | unverified-locator, note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h11-reduce)) |
-| [`hfx`](#hfx) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/hfx-proof)) |
 | [`hL29`](#hl29) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) |
 | [`hP23`](#hp23) | frozenTarget | published | LEAF | restricted, unread |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hCM`](#hcm) | frozenTarget | consequence | GLUE | note, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
@@ -205,7 +201,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 | [`hGZ`](#hgz) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 | [`hQ`](#hq) | frozenTarget | published | LEAF | unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hW`](#hw) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 
 ## The hypotheses
 
@@ -749,30 +744,6 @@ ZInQ.Contrib.TYZDecomp.TYZThm11Integral
 > `m ≡ 1, 3 (mod 8)`, `𝓛(m)` is an integer. TYZ Theorem 1.1 (L371–380, for `n ≡ 1, 2, 3`);
 > refereed (journal number of Theorem 1.1 UNVERIFIED: §1 was renumbered).
 
-### hfx
-
-* Argument `hfx` of `frozenTarget`; kind **published**, strict **LEAF**; flag: restricted: existence of a nonzero generator (the print: free of rank one, L545-547), squarefree 1 < n = 1, 3 mod 8; pi_Z (L542) with pi^U = A_0^U as printed (Theorem 2.4(1) L615-623, L715-727, L760; Lemma 2.5 L645-661, uniform measure printed L654-661, proved L694-705); unread.
-* Source: Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 section 2.1 (L542-550), Lemma 2.5, Theorem 2.4(1), Theorem 2.6 at chi = 1 (L809-840)
-* packet [R3](#packet-r3); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
-* Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/hfx-proof)).
-
-```lean
-ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists
-```
-
-> **TYZ §2.1, L545–550, with Theorem 2.6 at `χ = 1` (L809–840), for squarefree `1 < n ≡ 1, 3 (mod 8)`**:
-> `π_ℤ^{U_n}` is free of rank one over `ℤ` (L545–547: "free of rank 1 … the special case of `χ = 1`");
-> stated as: it has a generator `f_n`, and `f_n` is not zero. (The generator TYZ construct is
-> `π(g) f₀`, L834–839, with `f₀` a sum of the `f_δ`, nonzero; "`π_ℤ^{U,χ₂} = ℤ f`".)
-> 
-> Everything in the definition of `π_ℤ^{U_n}` (`InPiZ`) is printed: the double coset space and its
-> measure (Lemma 2.5, L645–661; measure printed L654–661, proved L694–705), `π^U = 𝒜₀^U` (Theorem 2.4(1),
-> L615–623; L715–720, L760), the orthogonality to `1` and
-> `χ₀ ∘ nrd` (L722–727); `U_n = U · K_{n,2}^×` (L924). The case `n = 1` (`K = ℚ(i)`) is not needed and
-> is omitted (a weakening). Checked by computation (`brandt.py`): for `n = 3` (8 embeddings), `11`, `19`,
-> `π^{U_n}` is one-dimensional with a primitive integer generator taking the values `{1, −3}` up to sign.
-
 ### hL29
 
 * Argument `hL29` of `frozenTarget`; kind **published**, strict **LEAF**; flag: restricted: printed Lemma 2.9 for squarefree 1 < n = 1, 3 mod 8, n != 3 (TYZ: n = 1, 2, 3; the print is false at n = 3, Q(3) = +-3 while L(3) = +-1, h29-fix brandt.py, lcal_small.py; for n != 3, w_K = 1 and the print agrees with its proof L1068-1077); unread.
@@ -997,31 +968,6 @@ ZInQ.GZAlg.Gamma0QExpansion
 > §7.6–7.7 (the rational structure via `q`-expansions); locators UNVERIFIED (no copy on this host).
 > The print states the result for `ℚ(X₀(N))` as a subfield of `ℂ(X₀(N))`; the `q`-expansion map is
 > injective on it, so this is the printed statement read through `q`-expansions.
-
-### hW
-
-* Argument `hW` of `frozenTarget`; kind **published**, strict **LEAF**; flag: unread: new printed leaf, no reading recorded.
-* Source: M. Newman, Construction and application of a class of modular functions (I, II), Proc. LMS 1957/1959; B. Gordon, K. Hughes, Multiplicative properties of eta-products II (1981); K. Ono, The web of modularity (CBMS 102, 2004), Thm 1.64 (all UNVERIFIED locators)
-* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.CdOpt.EtaW32Character
-```
-
-> **The transformation law of the eta quotient `v = η(8τ)η(32τ)²/η(16τ)³` on `Γ₀(32)`**
-> (printed leaf; Newman, Gordon–Hughes): `v(γτ) = (2/d) v(τ)` for `γ = [a, b; c, d] ∈ Γ₀(32)`.
-> 
-> The theorem of Newman (1957, 1959) and Gordon–Hughes (1981), as stated in K. Ono, *The web of
-> modularity* (CBMS 102, 2004), Thm 1.64 (UNVERIFIED locator): if `f = ∏_{δ ∣ N} η(δτ)^{r_δ}` with
-> `k = ½ Σ r_δ ∈ ℤ`, `Σ δ r_δ ≡ 0 (mod 24)` and `Σ (N/δ) r_δ ≡ 0 (mod 24)`, then
-> `f(γτ) = χ(d) (cτ + d)^k f(τ)` for every `γ ∈ Γ₀(N)`, with `χ(d) = ((−1)^k s / d)`,
-> `s = ∏ δ^{r_δ}`. Here `N = 32`, `r₈ = 1`, `r₁₆ = −3`, `r₃₂ = 2`: `k = 0`, `Σ δ r_δ = 24`,
-> `Σ (32/δ) r_δ = 0`, `s = 8 · 32² / 16³ = 2`, so `χ(d) = (2/d)`. Stated with Mathlib's `χ₈ = (2/·)`
-> on `ℤ/8` (the Kronecker symbol `(2/d)` for odd `d`, even in `d`, so `−γ` and `γ` agree). A
-> consequence of the print (one instance). Checked numerically for 602 matrices
-> (`scratch/cd-optimal/py/wchar.gp`, for `w = 1/v`).
 
 ## Credits
 

@@ -204,12 +204,6 @@
    "docstring":
    "**Leaf TYZ-1.1a (TYZ Theorem 1.1, first assertion, odd case)**: for odd squarefree\n`m ≡ 1, 3 (mod 8)`, `𝓛(m)` is an integer. TYZ Theorem 1.1 (L371–380, for `n ≡ 1, 2, 3`);\nrefereed (journal number of Theorem 1.1 UNVERIFIED: §1 was renumbered). ",
    "bundle": "frozenTarget"},
-  {"type": "ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists",
-   "statement": "ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists",
-   "field": "hfx",
-   "docstring":
-   "**TYZ §2.1, L545–550, with Theorem 2.6 at `χ = 1` (L809–840), for squarefree `1 < n ≡ 1, 3 (mod 8)`**:\n`π_ℤ^{U_n}` is free of rank one over `ℤ` (L545–547: \"free of rank 1 … the special case of `χ = 1`\");\nstated as: it has a generator `f_n`, and `f_n` is not zero. (The generator TYZ construct is\n`π(g) f₀`, L834–839, with `f₀` a sum of the `f_δ`, nonzero; \"`π_ℤ^{U,χ₂} = ℤ f`\".)\n\nEverything in the definition of `π_ℤ^{U_n}` (`InPiZ`) is printed: the double coset space and its\nmeasure (Lemma 2.5, L645–661; measure printed L654–661, proved L694–705), `π^U = 𝒜₀^U` (Theorem 2.4(1),\nL615–623; L715–720, L760), the orthogonality to `1` and\n`χ₀ ∘ nrd` (L722–727); `U_n = U · K_{n,2}^×` (L924). The case `n = 1` (`K = ℚ(i)`) is not needed and\nis omitted (a weakening). Checked by computation (`brandt.py`): for `n = 3` (8 embeddings), `11`, `19`,\n`π^{U_n}` is one-dimensional with a primitive integer generator taking the values `{1, −3}` up to sign. ",
-   "bundle": "frozenTarget"},
   {"type": "ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3",
    "statement": "ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3",
    "field": "hL29",
@@ -251,11 +245,5 @@
    "field": "hQ",
    "docstring":
    "**Leaf Q-EXP (the `q`-expansion principle for `Γ₀(N)` with rational coefficients).** Let `g` be\na meromorphic modular function for `Γ₀(N)` (invariant, meromorphic on `ℍ` and at every cusp:\n`GZHeegner.IsRatModFnMero`) whose `q`-expansion `x` at `∞` has rational coefficients. Then `x` lies\nin `ℚ(j, j_N)`, i.e. `g ∈ ℚ(j(τ), j(Nτ))`.\n\nSource: Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971),\nProp. 6.9 (the field of `Γ₀(N)`-functions with rational Fourier coefficients is `ℚ(j, j∘N)`) with\nThm. 6.6; Diamond–Shurman, *A first course in modular forms*, §7.5 (`ℂ(X₀(N)) = ℂ(j, j_N)`) and\n§7.6–7.7 (the rational structure via `q`-expansions); locators UNVERIFIED (no copy on this host).\nThe print states the result for `ℚ(X₀(N))` as a subfield of `ℂ(X₀(N))`; the `q`-expansion map is\ninjective on it, so this is the printed statement read through `q`-expansions. ",
-   "bundle": "frozenTarget"},
-  {"type": "ZInQ.CdOpt.EtaW32Character",
-   "statement": "ZInQ.CdOpt.EtaW32Character",
-   "field": "hW",
-   "docstring":
-   "**The transformation law of the eta quotient `v = η(8τ)η(32τ)²/η(16τ)³` on `Γ₀(32)`**\n(printed leaf; Newman, Gordon–Hughes): `v(γτ) = (2/d) v(τ)` for `γ = [a, b; c, d] ∈ Γ₀(32)`.\n\nThe theorem of Newman (1957, 1959) and Gordon–Hughes (1981), as stated in K. Ono, *The web of\nmodularity* (CBMS 102, 2004), Thm 1.64 (UNVERIFIED locator): if `f = ∏_{δ ∣ N} η(δτ)^{r_δ}` with\n`k = ½ Σ r_δ ∈ ℤ`, `Σ δ r_δ ≡ 0 (mod 24)` and `Σ (N/δ) r_δ ≡ 0 (mod 24)`, then\n`f(γτ) = χ(d) (cτ + d)^k f(τ)` for every `γ ∈ Γ₀(N)`, with `χ(d) = ((−1)^k s / d)`,\n`s = ∏ δ^{r_δ}`. Here `N = 32`, `r₈ = 1`, `r₁₆ = −3`, `r₃₂ = 2`: `k = 0`, `Σ δ r_δ = 24`,\n`Σ (32/δ) r_δ = 0`, `s = 8 · 32² / 16³ = 2`, so `χ(d) = (2/d)`. Stated with Mathlib's `χ₈ = (2/·)`\non `ℤ/8` (the Kronecker symbol `(2/d)` for odd `d`, even in `d`, so `−γ` and `γ` agree). A\nconsequence of the print (one instance). Checked numerically for 602 matrices\n(`scratch/cd-optimal/py/wchar.gp`, for `w = 1/v`). ",
    "bundle": "frozenTarget"}],
- "count": 43}
+ "count": 41}

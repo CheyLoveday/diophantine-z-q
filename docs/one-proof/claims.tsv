@@ -18,7 +18,6 @@ r16CoreY	r16-used	r16-used done (AfTateCharPoly, rated consequence); parked	2026
 hCM	cm-primitive	host task cm-primitive running (reading risk of mtcm-polar MainTheoremCMPol)	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive	held
 mumfordGroupLawConn	group-law	host task group-law running: proves mumfordGroupLaw, which this leaf replaces	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/group-law	held
 neronOggShafarevichSep	nos-proof	host task nos-proof running: proves r7a, which this leaf replaces	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/nos-proof	held
-hfx	hfx-proof	host task hfx-proof running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/hfx-proof	held
 sga7_IX_3_5_ForwardGeom	sga7-35-proof	host task sga7-35-proof running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/sga7-35-proof	held
 raynaudSemistableSHOr	raynaud-proof	host task raynaud-proof running: proves raynaudSemistableSH, which this leaf replaces	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/raynaud-proof	held
 hL29	h29-proof	host task h29-proof running	2026-11-16		project	project	https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof	held

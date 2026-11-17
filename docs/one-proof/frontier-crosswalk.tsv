@@ -220,7 +220,7 @@ T-16		T5Glue.X0ModuliGalois	f18bcb904,3691994d4,f96b7323d	no
 T-17		T5Glue.RingClassLattice	f18bcb904,3691994d4	no
 T-18		ZInQ.Contrib.TYZDecomp.H29Split.LegendreThreeSquares	8342c2eb7	yes
 T-19		ZInQ.Contrib.TYZDecomp.H29Split.JonesPallX2Y2Z16	8342c2eb7	yes
-T-20	hfx	ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists	8342c2eb7	yes
+T-20		ZInQ.Contrib.TYZDecomp.H29Split.TYZTestVectorExists	8342c2eb7	yes
 T-21	hL29	ZInQ.Contrib.TYZDecomp.H29Split.TYZLemma29PrintedNe3	8342c2eb7	yes
 T-22		ZInQ.Contrib.TYZDecomp.H29Split.TYZThm21At31	8342c2eb7	yes
 T-23	hP23	ZInQ.Contrib.TYZDecomp.H29Split.TYZProp23Printed	8342c2eb7	yes

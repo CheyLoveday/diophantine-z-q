@@ -68,3 +68,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
    renaming scratch/homfree-proof/FoldDryRun.lean to .lean.txt (it redeclared OpenTextbookLeaves13).
    Note for later folds: deg-det's DegEqDetTate route reads homFreeFiniteAlgClosed in characteristic p and no longer
    fits; degpoly-proof's recommended spec does not read it.
+9. hW and hfx (frozenTarget binders, both proved outright with no new leaf): merged wip/etaw32-proof
+   (`EtaW32Character.etaW32Character_proof`, from Mathlib's eta S/T laws) and wip/hfx-proof
+   (`HfxProof.tyzTestVectorExists`; brings fork PR #39's Hurwitz approximation), hand fold of Main.lean (binders
+   removed, proofs passed), kinds rows of hW and hfx and the claims row of hfx dropped. Checks (VERIFIED): build
+   +Main +Discharges; frozenTarget standard axioms; hash guard against step 8 (only frozenTarget changed);
+   OpenStatements 41; render_open --check ok (33 H, strictest 13/20, 8 others); crosswalk --check ok; DischargesTest
+   rerun; autoform check blueprint ok.
+   Not folded (log of the lead): fold33-combine's in-place prunes of sga3_VIB_3_10_Nbhd and of mumfordGroupLawConn /
+   neronSchemeExtensionExists delete Lean targets named by the blueprint chapter (OpenResearchLeaves28 fields), so
+   they fail autoform check; charpoly-charp needs T6 in characteristic p and conflicts with the homfree reroute.
