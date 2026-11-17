@@ -200,4 +200,49 @@ theorem grossZagierCurveCd_of_some (h : GrossZagierCurveCdSome) : GrossZagierCur
 theorem grossZagierAlgOptCd_of_some (h : GrossZagierCurveCdSome) : GZAlg.GrossZagierAlgOptCd :=
   grossZagierAlgOptCd_of_curve (grossZagierCurveCd_of_some h)
 
+/-! ## §5. Transfer data between two models (for any statement over a model) -/
+
+/-- **Model transfer data**: between two normal proper models `(X, ι)`, `(X', ι')` of `X₀(N)` there
+are mutually inverse morphisms `F : X' ⟶ X`, `G : X ⟶ X'` carrying cusps to cusps and the point `τ`
+to the point `τ`, in both directions. -/
+theorem model_transfer {N : ℕ} [NeZero N] {X X' : Scheme.{0}} [IsIntegral X] [IsIntegral X']
+    (sX : X ⟶ Spec (CommRingCat.of ℚ)) (sX' : X' ⟶ Spec (CommRingCat.of ℚ)) [IsProper sX]
+    [IsProper sX'] (hv : ∀ p : X, ValuationRing (X.presheaf.stalk p))
+    (hv' : ∀ p : X', ValuationRing (X'.presheaf.stalk p))
+    (ι : X.functionField ≃+* X0Field N) (ι' : X'.functionField ≃+* X0Field N) :
+    ∃ (F : X' ⟶ X) (G : X ⟶ X'), F ≫ G = 𝟙 X' ∧ G ≫ F = 𝟙 X ∧
+      (∀ p : X, IsCuspInfty N ι p → IsCuspInfty N ι' (G p)) ∧
+      (∀ p : X', IsCuspInfty N ι' p → IsCuspInfty N ι (F p)) ∧
+      (∀ (τ : ℍ) (x : Spec (CommRingCat.of ℂ) ⟶ X'), IsPointAt N ι' τ x → IsPointAt N ι τ (x ≫ F)) ∧
+      (∀ (τ : ℍ) (x : Spec (CommRingCat.of ℂ) ⟶ X), IsPointAt N ι τ x → IsPointAt N ι' τ (x ≫ G)) := by
+  set e : X'.functionField ≃+* X.functionField := ι'.trans ι.symm with he
+  obtain ⟨F, hFi, hF⟩ := exists_iso_of_functionField sX' sX hv' hv e
+  set G := inv F
+  have hFG : F ≫ G = 𝟙 X' := IsIso.hom_inv_id F
+  have hGF : G ≫ F = 𝟙 X := IsIso.inv_hom_id F
+  have hee : Spec.map (CommRingCat.ofHom (e : X'.functionField →+* X.functionField)) ≫
+      Spec.map (CommRingCat.ofHom (e.symm : X.functionField →+* X'.functionField)) = 𝟙 _ := by
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+    have : (e : X'.functionField →+* X.functionField).comp
+        (e.symm : X.functionField →+* X'.functionField) = RingHom.id _ := by
+      ext a; simp
+    rw [this]
+    exact Spec.map_id _
+  have hG : X.fromSpecFunctionField ≫ G =
+      Spec.map (CommRingCat.ofHom (e : X'.functionField →+* X.functionField)) ≫
+        X'.fromSpecFunctionField := by
+    have h1 : X'.fromSpecFunctionField = Spec.map (CommRingCat.ofHom
+        (e.symm : X.functionField →+* X'.functionField)) ≫ X.fromSpecFunctionField ≫ G := by
+      rw [← Category.assoc, ← hF, Category.assoc, hFG, Category.comp_id]
+    rw [h1, ← Category.assoc, ← Category.assoc, hee]
+    exact (Category.id_comp _).symm
+  have hιF : ∀ a, ι' ((CommRingCat.ofHom (e.symm : X.functionField →+* X'.functionField)).hom a) =
+      ι a := fun a => by simp [he]
+  have hιG : ∀ a, ι ((CommRingCat.ofHom (e : X'.functionField →+* X.functionField)).hom a) =
+      ι' a := fun a => by simp [he]
+  exact ⟨F, G, hFG, hGF, fun p hp => isCuspInfty_map G _ hG ι ι' hιG p hp,
+    fun p hp => isCuspInfty_map F _ hF ι' ι hιF p hp,
+    fun τ x hx => isPointAt_comp F _ hF ι' ι hιF τ x hx,
+    fun τ x hx => isPointAt_comp G _ hG ι ι' hιG τ x hx⟩
+
 end ZInQ.GZUnique

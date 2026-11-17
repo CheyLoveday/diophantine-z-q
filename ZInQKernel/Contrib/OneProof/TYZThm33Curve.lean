@@ -208,4 +208,57 @@ theorem tyzThm33_of_curveSome (hCM : T5Glue.ShimuraMainCM)
     (h : TYZThm33CurveSome) : TYZThm33 :=
   ZInQ.H33Fix.tyzThm33_of_alg hCM (tyzThm33Alg_of_curveSome h)
 
+/-! ## §5. The one-model leaf gives every model, and its hypotheses are satisfiable -/
+
+/-- **The one-model leaf implies the all-models form** (model uniqueness: transfer along the
+isomorphism of models, `GZUnique.model_transfer`). With `tyzThm33CurveSome_of_all`, the two forms
+are equivalent. -/
+theorem tyzThm33Curve_of_some (h : TYZThm33CurveSome) : TYZThm33Curve := by
+  intro X' _ sX' hprop' hN' hdim' ι' i₀' hiso' _ hcusp' w h5 h7
+  obtain ⟨X, hXi, sX, hprop, hN, hdim, ι, hbody⟩ := h
+  haveI := hprop
+  haveI := hprop'
+  obtain ⟨F, G, hFG, hGF, hcG, -, -, hpG⟩ := ZInQ.GZUnique.model_transfer sX sX'
+    (ZInQ.GZUnique.valuationRing_of_model sX hprop hN hdim)
+    (ZInQ.GZUnique.valuationRing_of_model sX' hprop' hN' hdim') ι ι'
+  haveI : IsIso G := ⟨⟨F, hGF, hFG⟩⟩
+  refine hbody (G ≫ i₀') inferInstance (specQ_ext _ _) ?_ w ?_ ?_
+  · intro p hp
+    simpa only [Scheme.Hom.comp_apply] using hcusp' (G p) (hcG p hp)
+  · intro n hn hsq x hx
+    rw [← Category.assoc]
+    exact h5 n hn hsq (x ≫ G) (hpG _ x hx)
+  · intro n hn hsq x hx
+    rw [← Category.assoc]
+    exact h7 n hn hsq (x ≫ G) (hpG _ x hx)
+
+/-- **The hypotheses of the leaf are satisfiable** (given `hCM`) on every normal proper model of
+`X₀(32)`: there is an isomorphism `i₀ : X ≅ A` over `ℚ` with `i₀(∞) = O` (from the eta model), and a
+family `w` of algebraic points with `w n = i₀(P_n)`; so `TYZ33Body` is not vacuous. -/
+theorem tyzThm33Curve_hyps_satisfiable (hCM : T5Glue.ShimuraMainCM) {X : Scheme.{0}} [IsIntegral X]
+    (sX : X ⟶ Spec (CommRingCat.of ℚ)) [IsProper sX]
+    (hv : ∀ p : X, ValuationRing (X.presheaf.stalk p)) (ι : X.functionField ≃+* X0Field 32) :
+    ∃ i₀ : X ⟶ ESch curveA, IsIso i₀ ∧ i₀ ≫ toSpecQ curveA = sX ∧
+      (∀ p : X, IsCuspInfty 32 ι p → i₀ p ∉ (chartZ curveA).opensRange) ∧
+      ∃ w : ℕ → PtA,
+        (∀ n : ℕ, ∀ hn : n % 8 = 5, Squarefree n → ∀ x : Spec (CommRingCat.of ℂ) ⟶ X,
+          IsPointAt 32 ι (tyzForm n hn).tauH x → toC (w n) = ZInQ.GZSch.ptOf curveA (x ≫ i₀)) ∧
+        (∀ n : ℕ, ∀ hn : n % 8 = 7, Squarefree n → ∀ x : Spec (CommRingCat.of ℂ) ⟶ X,
+          IsPointAt 32 ι (tyzForm7 n hn).tauH x → toC (w n) = ZInQ.GZSch.ptOf curveA (x ≫ i₀)) := by
+  obtain ⟨φ, hφ, Xf, Yf, hXf, hYf, hqX, hqY, w, h5, h7⟩ :=
+    ZInQ.H33Fix.tyzThm33Alg_hyps_satisfiable hCM
+  obtain ⟨i₀, hiso, hπ⟩ := exists_iso_of_phi sX hv ι φ hφ.1
+  have hrx := repOf_spec (φ (genX curveA))
+  have hry := repOf_spec (φ (genY curveA))
+  have hval : ∀ (τ : ℍ) (x : Spec (CommRingCat.of ℂ) ⟶ X), IsPointAt 32 ι τ x →
+      ZInQ.GZSch.ptOf curveA (x ≫ i₀) = ZInQ.Contrib.TYZGenus.H33Dict.ptOf Xf Yf τ := by
+    intro τ x hx
+    rw [ptOf_eq_modPt φ hv ι i₀ hπ hrx hry τ x hx]
+    exact modPt_eq_h33 φ hXf hYf hqX hqY τ hrx hry
+  refine ⟨i₀, hiso, specQ_ext _ _, cusp_not_mem_chart φ ι i₀ hπ hφ.2, w, ?_, ?_⟩
+  · intro n hn hsq x hx
+    rw [h5 n hn hsq, hval _ x hx]
+  · intro n hn hsq x hx
+    rw [h7 n hn hsq, hval _ x hx]
+
 end ZInQ.H33D1
