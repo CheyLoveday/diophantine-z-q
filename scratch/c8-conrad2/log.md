@@ -17,3 +17,21 @@ Base: wip/c8-conrad a411466b4, merged origin/main 97247ce1c (merge cff986a75). T
   `GaloisPieces.detTate` by `detTate_of_leaves4_pz l.t09SymmIsogenyExists ...`; read by `g12Det_of_pz` in
   `g8_g12_of_leaves3_hf_pz_eb` (L2473) = consumer (i).
 - open70 also passes l26 to `openResearchLeaves35_of_OpenResearchLeaves36_eb_k954_cf` = consumer (iii) (r10 path).
+
+## 2. Build and dry run (VERIFIED, compiled)
+- `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.C8Conrad` on the
+  merged base: ok, 16225 jobs; `frozenTarget` standard axioms (`build_main.txt`).
+- `scratch/c8-conrad2/Taint.lean` (seeds t09SymmIsogenyExists, phiAmpleIsogeny, weilPairingMumford, detTate):
+  closure 304616, 70 tainted, 13 carriers (OpenAddedLeaves4PZ..18PZ, GaloisPieces) (`taint_out.txt`).
+- `ZInQKernel/Contrib/OneProof/C8Poincare.lean`: `C8Inputs`, `g12DetPZ_of_inputs`, `t8_of_poincareComplement`,
+  `openTextbookLeaves13HF_of_open16_P`. lake build ok.
+- `gen/gen.py` -> `C8DryRunGen.lean` (70 blocks, 13 structures, both readers replaced, row fields stripped from
+  copied structures) + `gen/top.lean` (handwritten open45/48/70/71 copies and `frozenTarget_c8`) = `C8DryRun.lean`.
+  `lake env lean`: no errors; `frozenTarget_c8` and `sixContactMin_of_open71_c8`: [propext, Classical.choice,
+  Quot.sound] (`dryrun_out.txt`).
+- Field taint from `frozenTarget_c8` with seeds picRepresentableAbVar, kleimanPicZeroProper954SiteQ
+  (`C8DryRunTaint.lean`, `dryrun_taint_out.txt`): tainted fields {kleimanPicZeroProper954SiteQ,
+  kleimanPicZeroProper954, picRepresentableAbVar, picZeroAbVar, hodgeTateDecompAbVar, r10}; terminal consumers only
+  through `r10` (g8_g12_c8, afterG7_c8, gluePieces_c8 read `ResearchLeaves3EB.r10` / `OpenResearchLeaves2EB.r10`),
+  i.e. consumer (iii) only. `phiAmpleIsogeny`, `weilPairingMumford`, `t09SymmIsogenyExists`, `poincareComplement`,
+  `t8` are no longer tainted.
