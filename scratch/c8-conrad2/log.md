@@ -64,3 +64,11 @@ Base: wip/c8-conrad a411466b4, merged origin/main 97247ce1c (merge cff986a75). T
   - `finiteOfLocAlgTrivialQ_of_dicts : InertiaAtPDecomp → MinkowskiInertiaQ → FiniteOfLocAlgTrivialQ`.
 - C8Inputs now: conradAppBQp, tateTwistInvariantsInertia, twistCharHT0, inertiaAtPDecomp, minkowskiInertiaQ.
   lake build C8Poincare ok; dry run recompiled, frozenTarget_c8 standard axioms.
+
+## 6. C8 without the unramified half (VERIFIED, compiled)
+- C8CFT: `cftFiniteQNoRam_of_minkowski`, `FiniteOfLocAlgTrivialQNoRam` + `finiteOfLocAlgTrivialQNoRam_of_dicts`,
+  `TwistCharHTWt0` (HT half of TwistCharHT0) + `twistCharHTWt0_of_twistCharHT0`, and
+  `c8TwistFinite_of_leaves : EigenformRepExists → EigenformHT → ConradAppBQp → TateTwistInvariantsInertia →
+  TwistCharHTWt0 → InertiaAtPDecomp → MinkowskiInertiaQ → C8TwistFinite`.
+- C8Inputs: conradAppBQp, tateTwistInvariantsInertia, twistCharHTWt0, inertiaAtPDecomp, minkowskiInertiaQ.
+  lake build ok; dry run ok (standard axioms); #discharges 35 open / 16111 checked / 19 discharge one, none ours.

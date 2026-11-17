@@ -224,8 +224,9 @@ theorem eq_one_of_inertia_trivial (hM : MinkowskiInertiaQ) {G' : Type*} [Group G
 values in the torsion-free open subgroup `V = {‖u - 1‖ < ‖p‖}` of `ℚ̄_p^×`, so it kills every inertia group (finite
 images), hence is trivial, so `ψ` takes values in the `m`-th roots of unity. The hypothesis "unramified outside a
 finite set" is not needed. -/
-theorem cftFiniteQ_of_minkowski (hM : MinkowskiInertiaQ) : CFTFiniteQ := by
-  intro p _ ψ hfin _hram
+theorem cftFiniteQNoRam_of_minkowski (hM : MinkowskiInertiaQ) (p : ℕ) [Fact p.Prime] (ψ : GaloisChar p)
+    (hfin : ∀ q : ℕ, q.Prime → ∀ v : ValuationSubring PkgI4.Qbar, PkgI4.LiesOver v q → CharInertiaFinite ψ v) :
+    (Set.range ψ.toHom).Finite := by
   let H : Subgroup PkgI4.GQ := (smallUnits p).comap ψ.toHom
   have hHopen : IsOpen (H : Set PkgI4.GQ) := (isOpen_smallUnits p).preimage ψ.continuous_toHom
   haveI hHnormal : H.Normal := ⟨fun n hn g => by
@@ -285,6 +286,10 @@ theorem cftFiniteQ_of_minkowski (hM : MinkowskiInertiaQ) : CFTFiniteQ := by
   rw [mem_rootsOfUnity, ← hφ]
   exact htriv g
 
+
+/-- `CFTFiniteQ` (with its unused hypothesis "unramified outside a finite set"). -/
+theorem cftFiniteQ_of_minkowski (hM : MinkowskiInertiaQ) : CFTFiniteQ :=
+  fun p _ ψ hfin _ => cftFiniteQNoRam_of_minkowski hM p ψ hfin
 
 /-! ## `InertiaFiniteAwayFromP` from the inertia dictionary and Tau Ceti's local class field theory at `q` -/
 
@@ -438,5 +443,83 @@ theorem finiteOfLocAlgTrivialQ_of_dicts (hB : InertiaAtPDecomp) (hM : MinkowskiI
     FiniteOfLocAlgTrivialQ :=
   finiteOfLocAlgTrivialQ_of_pieces (inertiaFiniteAwayFromP_of_decomp hB) hB (cftFiniteQ_of_minkowski hM)
 
+
+/-! ## Step C8 without the "unramified almost everywhere" half of `TwistCharHT0` -/
+
+/-- **`FiniteOfLocAlgTrivialQ` without its hypothesis "unramified outside a finite set"** (which the proof from the
+dictionaries does not use). -/
+def FiniteOfLocAlgTrivialQNoRam : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (ψ : GaloisChar p),
+    (∃ k : ℕ, ∀ u : ℤ_[p]ˣ, PadicInt.toZModPow k (u : ℤ_[p]) = 1 → ∀ σ : PkgI4.GQp p,
+      IsArtinLift p σ (unitsQp p u) → ψ.toHom (PkgI4.decomp p σ) = 1) →
+    (Set.range ψ.toHom).Finite
+
+theorem finiteOfLocAlgTrivialQNoRam_of_dicts (hB : InertiaAtPDecomp) (hM : MinkowskiInertiaQ) :
+    FiniteOfLocAlgTrivialQNoRam := by
+  intro p _ ψ ⟨k, hk⟩
+  refine cftFiniteQNoRam_of_minkowski hM p ψ fun q hq v hv => ?_
+  by_cases hqp : q = p
+  · subst hqp
+    haveI : NeZero (q ^ k) := ⟨pow_ne_zero k hq.ne_zero⟩
+    set N := (q ^ k).totient
+    have hNpos : 0 < N := Nat.totient_pos.2 (pow_pos hq.pos k)
+    haveI : NeZero N := ⟨hNpos.ne'⟩
+    have hfin : (rootsOfUnity N (PadicAlgCl q) : Set (PadicAlgCl q)ˣ).Finite :=
+      Set.finite_coe_iff.mp (inferInstance : Finite (rootsOfUnity N (PadicAlgCl q)))
+    refine (hfin.image (fun x : (PadicAlgCl q)ˣ => x)).subset ?_
+    rintro _ ⟨τ, rfl⟩
+    obtain ⟨σ, g, hσ, hτ⟩ := hB q v hv τ
+    refine ⟨ψ.toHom ((τ : v.decompositionSubgroup ℚ) : PkgI4.GQ), ?_, rfl⟩
+    rw [hτ, map_mul, map_mul, mul_comm (ψ.toHom g), mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one]
+    show _ ∈ rootsOfUnity N (PadicAlgCl q)
+    rw [mem_rootsOfUnity]
+    exact pow_card_eq_one_of_mem_inertia q ψ k hk σ hσ
+  · exact inertiaFiniteAwayFromP_of_decomp hB p ψ q hq hqp v hv
+
+/-- **GLUE (C8, N5 L758-760 and the weight comparison L765-766): the twisting character is Hodge–Tate of weight `0`
+at 5.** The Hodge–Tate half of `TwistCharHT0` (whose other half, "unramified outside a finite set", the proof of C8
+no longer needs). On-the-spot sketch, following N5: with `ρ_g` from R14 (`EigenformRepExists`), Chebotarev density
+and continuity give `tr r = ψ · tr ρ_g` on `G_ℚ`, so `r^{ss} ≅ ψ ⊗ ρ_g` (Brauer–Nesbitt), i.e. `ψ` is a
+subrepresentation of `Hom(ρ_g, r^{ss})` (N5: "a de Rham subrepresentation of the Hom representation"); Hodge–Tate
+representations are stable under `Hom`, subquotients and semisimplification (Fontaine; Brinon–Conrad, CMI notes
+§2.4, UNVERIFIED locators), so `ψ|_{G_{ℚ_5}}` is Hodge–Tate of some weight `s`, with values in a finite `E/ℚ_5`
+(Baire); R13 (`EigenformHT`) gives `ρ_g` the weights `{0, -1}` at `k = 2`, so `{s, s - 1} = {0, -1}` and `s = 0`
+(the tree's `SenTwist` machinery, `senTwist_of_tate`, proves the weight shift once `ψ` is Hodge–Tate). -/
+def TwistCharHTWt0 : Prop :=
+  HSyn.EigenformRepExists → PkgI4.EigenformHT →
+  ∀ (r : GaloisRep 5 2) (N : ℕ) (χ : DirichletCharacter ℂ N) (g : PkgI4.CF N 2) (ψ : GaloisChar 5)
+    (ιC : PkgI4.Qbar →ₐ[ℚ] ℂ) (ιL : PkgI4.Qbar →ₐ[ℚ] PadicAlgCl 5) (S : Finset ℕ),
+    0 < N → PkgI4.IsNormalizedEigenform g χ →
+    PkgI4.GaloisRep.HasHTWeightsAtSelf (ρ := r) 5 {0, -1} → r.AttachedUpToTwist ψ ιC ιL g S →
+    ∃ (E : IntermediateField ℚ_[5] (PadicAlgCl 5)) (_ : FiniteDimensional ℚ_[5] E) (ψE : PkgI4.GQp 5 →* Eˣ),
+      (∀ σ, (((ψE σ : Eˣ) : E) : PadicAlgCl 5) = ((ψ.toHom (PkgI4.decomp 5 σ) : (PadicAlgCl 5)ˣ) : PadicAlgCl 5)) ∧
+      PkgI4.HasHTWeights 5 (charRep ψE) {0}
+
+/-- `TwistCharHTWt0` is weaker than `TwistCharHT0`. -/
+theorem twistCharHTWt0_of_twistCharHT0 (h : TwistCharHT0) : TwistCharHTWt0 :=
+  fun hR hHT r N χ g ψ ιC ιL S hN hg hr hatt => (h hR hHT r N χ g ψ ιC ιL S hN hg hr hatt).2
+
+/-- **C8 from Conrad's App. B, Tate's theorem over `\hat{K^{ur}}`, the two inertia dictionaries and
+`TwistCharHTWt0`** (`c8TwistFinite_of_conrad` with `LocAlgExponentEqWeight` and `FiniteOfLocAlgTrivialQ` proved and the
+unramified half dropped). -/
+theorem c8TwistFinite_of_leaves (hR : HSyn.EigenformRepExists) (hHT : PkgI4.EigenformHT)
+    (hC : ConradAppBQp) (hTT : TateTwistInvariantsInertia) (hT : TwistCharHTWt0)
+    (hB : InertiaAtPDecomp) (hM : MinkowskiInertiaQ) : C8TwistFinite := by
+  intro r N χ g ψ ιC ιL S hN hg hr hatt
+  obtain ⟨E, hE, ψE, hlift, hwt⟩ := hT hR hHT r N χ g ψ ιC ιL S hN hg hr hatt
+  have hcont : Continuous (fun σ => (((ψE σ : Eˣ) : E) : PadicAlgCl 5)) := by
+    have h1 : Continuous (fun σ : PkgI4.GQp 5 => ((ψ.toHom (PkgI4.decomp 5 σ) : (PadicAlgCl 5)ˣ) : PadicAlgCl 5)) :=
+      Units.continuous_val.comp (ψ.continuous_toHom.comp (Field.absoluteGaloisGroup.map (algebraMap ℚ ℚ_[5])).continuous)
+    exact (funext hlift : _) ▸ h1
+  obtain ⟨n, hn⟩ := hC 5 E ψE hcont ⟨0, hwt⟩
+  have hn0 : n = 0 := locAlgExponentEqWeight_of_tateInertia hTT 5 E ψE 0 n hcont hwt hn
+  subst hn0
+  obtain ⟨k, hk⟩ := hn
+  refine finiteOfLocAlgTrivialQNoRam_of_dicts hB hM 5 ψ ⟨k, fun u hu σ hσ => ?_⟩
+  have h := hk u hu σ hσ
+  rw [zpow_zero] at h
+  apply Units.ext
+  rw [← hlift σ, h]
+  simp
 
 end HDec.G0Galois.C8Conrad

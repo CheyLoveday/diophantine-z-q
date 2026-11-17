@@ -97,7 +97,7 @@ DISCHARGES [OpenResearchLeaves52.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 35 open hypotheses, 16073 theorems checked, 19 discharge one
+#discharges: 35 open hypotheses, 16111 theorems checked, 19 discharge one
 'HDec.G0Galois.C8Conrad.locAlgExponentEqWeight_of_tateInertia' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
