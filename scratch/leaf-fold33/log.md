@@ -189,3 +189,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements 38; DischargesTest rerun;
     render_open --check ok (32 H, strictest 14/18, 6 others); crosswalk --check ok; autoform check ok.
     AutofoldDry.lean renamed .lean.txt.
+23. bostLowerBound and gaudronRemondThm14 (consequence, GLUE) replaced by height-fix's printed-form leaves
+    bostLowerBoundPrinted and gaudronRemondThm14Printed over the printed stable height, with height-fix's glue
+    SemiAbelianDescendsPerfect proved by semiab-descend from the new leaf chevalleyPerfect (Chevalley over perfect
+    fields), integrated by fold34-semiab: merged wip/fold34-semiab up to its Contrib and spec commit (0eca20f0, which
+    merges wip/height-fix 49e6d97d and wip/semiab-descend 6a6de248, hygiene included), autofold
+    scratch/fold34-semiab/autofold.json -> TailZ61, `sixContactMin_of_open54`; H 14/18 on 32 -> 17/16 on 33 (GLUE -2,
+    +1 field; the three leaves rated as the tasks report them, "unread: new printed leaf", LEAF). Checks (VERIFIED):
+    build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; OpenStatements 39; DischargesTest rerun; render_open --check ok (33 H, strictest 17/16, 6
+    others); crosswalk --check ok; autoform check ok.
