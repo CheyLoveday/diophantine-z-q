@@ -31,3 +31,8 @@
   NormedField on adicCompletion is defeq to the one used in CarayolThmAIrr (the proof typechecks with `exact`).
 - autofold dry run (scratch/carayol-herbrand/autofold.json, field r17, leaf carayolThmAIrrDDT published, unread):
   `strict count: 11/18 on 29 -> 12/17 on 29; strictest 11/18 -> 12/17` (autofold-dryrun.txt).
+- COMPILED: lake build +OneProof.Main +OneProof.Discharges +CarayolHerbrand: 14232 jobs OK (build2.txt).
+- #discharges (discharges.txt): `DISCHARGES [OpenResearchLeaves31.r17] by CarayolHerbrand.carayolR17'_of_DDT`,
+  still assumes [CarayolHerbrand.CarayolThmAIrrDDT, DSCoeffExt.EigenformCoeffFieldFinite], standard axioms.
+- COMPILED: AutofoldDryRun.lean (dry-run output minus line 1): sixContactMin_of_open49 standard axioms.
+- Report docs/research/carayol-herbrand.md written.
