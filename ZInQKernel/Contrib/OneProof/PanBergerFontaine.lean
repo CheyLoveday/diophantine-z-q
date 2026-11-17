@@ -630,7 +630,8 @@ semistable, with Fontaine's `B_st` (L. Berger, *An introduction to the theory of
 *Geometric aspects of Dwork theory* (de Gruyter 2004; volume data UNVERIFIED), arXiv:math/0210184v1, IV.5.1 p. 30
 (statement: "every de Rham representation is potentially semi-stable. We shall now give a proof of that
 statement") and IV.5.3 p. 31 (proof), citing Berger, Invent. Math. 148 (2002), whose Théorème 0.7 is the same
-theorem: §1.2 p. 11 of arXiv:math/0102179v3 prints that Berger's `B_st` gives Fontaine's functor `D_st`), at
+theorem: §1.2 p. 11 of arXiv:math/0102179v3 prints that Berger's `B_st` gives Fontaine's functor `D_st`, and §1
+p. 8 defines `B`-admissible as `B ⊗_{ℚ_p} V ≃ B^d` as `G`-modules, the basis form used here), at
 `K = ℚ_p`, for a `p`-adic representation `V = E^n` (`E/ℚ_p` finite inside `ℚ̄_p`, `ρ_E : G_{ℚ_p} → GL_n(E)`
 continuous):
 
@@ -666,8 +667,8 @@ Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. So
 1.0.4 = arXiv:1901.07166v2 Theorem 1.0.4 p. 5 with Conjecture 1.0.1 p. 2: "the restriction of ρ at the
 decomposition group at p is potentially semi-stable in the sense of Fontaine"; JAMS numbering UNVERIFIED), `p ≥ 5`:
 as pb-fix3's `PanPrintedP`, with "potentially semistable" over Fontaine's `B_st = B_cris[log [p̃]]` (Berger 2004
-II.3.3, `BstFOf`) on a model `V = E^n`, in the basis form (`B_st ⊗ V ≃ B_st^d` equivariantly, which implies the
-dimension form for every `G_{ℚ_p}`-stable `B`, `isAdmissible_of_T`), for every generator `ε₀` of `ℤ_p(1)` and every
+II.3.3, `BstFOf`) on a model `V = E^n`, in the basis form (`B_st ⊗ V ≃ B_st^d` equivariantly, which implies Fontaine's
+dimension form `dim_{B_st^{G_K}} D_st = dim V`, `isAdmissible_of_pstF`, `B_st` being `G_{ℚ_p}`-stable, `bstF_stable`), for every generator `ε₀` of `ℤ_p(1)` and every
 generator `w` of `ker θ`. -/
 def PanPrintedF : Prop :=
   ∀ (p : ℕ) [Fact p.Prime], 5 ≤ p → ∀ (ε₀ : PreTilt 𝓞_ℂ_[p] p) (h : IsGenEps p ε₀) (w : Ainf p)
