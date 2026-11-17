@@ -4,7 +4,7 @@
 * the base open4: cm-branch2's base with `cmFibreSplit` supplied by `cmFibreSplit_of` from the open4 bundles
   and the remaining glue `CMMatrixUnitSplit`;
 * the next generation `OpenResearchLeaves54CMFS` = cm-branch2's `OpenResearchLeaves54CM` (CMBranch/Open73.lean) with the
-  field `cmFibreSplit` replaced by `cmMatrixUnitSplit`, the conversion `openResearchLeaves36EBCF_cm_of_54fs`
+  field `cmFibreSplit` replaced by `cmCurveOrder`, the conversion `openResearchLeaves36EBCF_cm_of_54fs`
   (verbatim copy of `openResearchLeaves36EBCF_cm_of_54`, type changed), and the top `sixContactMin_of_open73_cmfs`."""
 import re, subprocess
 chain = subprocess.run(['python3', 'scratch/cm-fibre-split/gen/gen_chain.py'], capture_output=True, text=True).stdout
@@ -20,9 +20,10 @@ s54 = '\n'.join(s54).replace('structure OpenResearchLeaves54CM ', 'structure Ope
 old = ('  /-- cm-branch (glue, open): A8 at a CM fibre and the matrix units (diophantine_zq.tex L520-562, L582-586). -/\n'
        '  cmFibreSplit : CMBranch.CMFibreSplit')
 assert old in s54
-s54 = s54.replace(old, '  /-- cm-fibre-split (glue, open): the matrix units of End^0(A_Qbar) = M_2(k) over L (diophantine_zq.tex L582-586);\n'
-    '  A8\'s Hom field is proved (CMBranch.FibreSplit.cmHomFieldModel_of). -/\n'
-    '  cmMatrixUnitSplit : CMBranch.FibreSplit.CMMatrixUnitSplit')
+s54 = s54.replace(old, '  /-- cm-fibre-split (glue, open, on-the-spot): the elliptic curve E (image of a multiple of e11) has geometric\n'
+    '  endomorphism ring an order of an imaginary quadratic field (diophantine_zq.tex L584-586); the rest of CMFibreSplit\n'
+    '  is proved (CMBranch.FibreSplit.cmFibreSplit_of_curveOrder). -/\n'
+    '  cmCurveOrder : CMBranch.FibreSplit.CMCurveOrder')
 conv = '\n'.join(block('theorem openResearchLeaves36EBCF_cm_of_54 '))
 conv = conv.replace('theorem openResearchLeaves36EBCF_cm_of_54 (n : OpenResearchLeaves54CM)',
                     'theorem openResearchLeaves36EBCF_cm_of_54fs (n : OpenResearchLeaves54CMFS)')

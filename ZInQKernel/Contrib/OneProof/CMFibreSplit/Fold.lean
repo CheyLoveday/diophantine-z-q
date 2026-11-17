@@ -7,20 +7,20 @@ import ZInQKernel.Contrib.OneProof.CMFibreSplit
 cm-branch2's route (`CMBranch/R5Prune.lean`, `CMBranch/Open73.lean`) with its CM input `CMFibreSplit` supplied by
 `CMBranch.FibreSplit.cmFibreSplit_of` at the generation of `sixContactMin_of_open4_hf_pz_eb`: A8's Hom field
 (`cmHomFieldModel_of`, from G2 = `fibreCoverExists_of_propTSAll'` on the open4 bundles and the leaves `t.t6`, `r.r7a`,
-`r.r6`, `t.t5`), Yu's dichotomy (the open4 argument `hYu`) and the remaining glue `CMMatrixUnitSplit`
-(manuscript L582-586). The chain open6 .. open48 is cm-branch2's, with `c : CMBranch.CMInputs2` replaced by
+`r.r6`, `t.t5`), Yu's dichotomy (the open4 argument `hYu`), the matrix units, the curve and the isogeny (proved,
+`cmMatrixUnitSplit_of`) and the remaining glue `CMCurveOrder` (manuscript L584-586). The chain open6 .. open48 is cm-branch2's, with `c : CMBranch.CMInputs2` replaced by
 `c : CMBranch.FibreSplit.CMInputsFS`; the next generation `OpenResearchLeaves54CMFS` is cm-branch2's
-`OpenResearchLeaves54CM` with `cmFibreSplit` replaced by `cmMatrixUnitSplit`. -/
+`OpenResearchLeaves54CM` with `cmFibreSplit` replaced by `cmCurveOrder`. -/
 
 set_option maxHeartbeats 1000000
 
 namespace HDec
 namespace CMBranch
 namespace FibreSplit
-/-- **The CM-branch inputs after cm-fibre-split**: the glue `CMMatrixUnitSplit` (in place of `CMFibreSplit`) and
+/-- **The CM-branch inputs after cm-fibre-split**: the glue `CMCurveOrder` (in place of `CMFibreSplit`) and
 cm-branch's four leaves. -/
 structure CMInputsFS : Prop where
-  cmMatrixUnitSplit : CMMatrixUnitSplit
+  cmCurveOrder : CMCurveOrder
   fowlerProp27 : FowlerProp27
   cmjDegree : CMjDegree
   cmPotentialGood : CMPotentialGood
@@ -34,18 +34,17 @@ namespace HDec.HSyn
 set_option maxHeartbeats 1000000
 open CategoryTheory AlgebraicGeometry G0Split
 /-- The base: cm-branch2's `sixContactMin_of_open4_hf_pz_eb_cm2_r5` with `CMFibreSplit` proved from the open4 bundles,
-Yu's dichotomy and `CMMatrixUnitSplit` (`CMBranch.FibreSplit.cmFibreSplit_of`). -/
+Yu's dichotomy and `CMCurveOrder` (`CMBranch.FibreSplit.cmFibreSplit_of_curveOrder`). -/
 theorem _root_.HDec.HSyn.sixContactMin_of_open4_hf_pz_eb_cmfs (r : _root_.HDec.HSyn.OpenResearchLeaves2EB_r5)
     (t : OpenTextbookLeaves4HFPZ) (l : _root_.HDec.HSyn.OpenAddedLeaves4PZ_r5) (g : OpenGlue4) (h20 : G0Split.R20Lower)
     (hYu : QMLattice.YuB6Alg) (hθ : PkgI1.QMHauptmodul → G0Split.ThetaPt.ThetaSplit.ThetaRatiosAtQM)
     (c : CMBranch.FibreSplit.CMInputsFS) : ZInQ.SixContactMin :=
   _root_.HDec.HSyn.sixContactMin_of_open4_hf_pz_eb_cm2_r5 r t l g h20 hYu hθ
-    ⟨CMBranch.FibreSplit.cmFibreSplit_of hYu t.t6
-      (CMBranch.FibreSplit.cmHomFieldModel_of
-        (G0ModField.fibreCoverExists_of_propTSAll' t.t5
-          (_root_.HDec.HSyn.propTSAll_of_pieces3_r5 r.r1r2 t.t5 l.y3Connected l.qmAutCard l.serreRigidity3
-            l.alFixedPoints chartProper_proved4 chartQuasiFinite_proved4 g.heckeVertWitness)
-          unramifiedConjugates_proved) t.t6 r.r7a r.r6 t.t5) c.cmMatrixUnitSplit,
+    ⟨CMBranch.FibreSplit.cmFibreSplit_of_curveOrder hYu t.t6
+      (G0ModField.fibreCoverExists_of_propTSAll' t.t5
+        (_root_.HDec.HSyn.propTSAll_of_pieces3_r5 r.r1r2 t.t5 l.y3Connected l.qmAutCard l.serreRigidity3
+          l.alFixedPoints chartProper_proved4 chartQuasiFinite_proved4 g.heckeVertWitness)
+        unramifiedConjugates_proved) r.r7a r.r6 t.t5 c.cmCurveOrder,
      c.fowlerProp27, c.cmjDegree, c.cmPotentialGood, c.cmHeight62, CMBranch.coxProperLattice_proof⟩
 end HDec.HSyn
 end
@@ -475,9 +474,10 @@ structure OpenResearchLeaves54CMFS : Prop where
   gaudronRemondThm14AnSS : _root_.ZInQ.SemistabAssembly.GaudronRemondThm14AnSS
   /-- jp-an-retype: Javanpeykar, Algebra Number Theory 8 (2014), Thm 1.1.1 (h_Fal(X) <= 13*10^6 * g * deg_B(X)^5 for a smooth projective connected curve X/Qbar of genus g >= 1) composed with Section 2.3 (h_Fal(X) = stable Faltings height of Jac X), as the manuscript cites it at diophantine_zq.tex L870 (applied to J = J_1(N)). JavanpeykarDirect.JavanpeykarThm111 verbatim with IsStableHeightBar replaced by IsStableHeightBarAn: the stable height of a model over a number field L of the Jacobian W, read as IsAnStableHeightSS (archimedean metric (i/2)^g int eta~ wedge eta~-bar on the complex manifold A_tau(C)^an, densities in every holomorphic chart, r3-residual; semistable reduction as printed, semistab-assembly). Replaces javanpeykarThm111 (JavanpeykarAnRetype.javanpeykarThm111_of_an, with mumfordTorsionAlgClosed and uniformizationLeafAll_proof for T35); the converse javanpeykarThm111An_of_thm111 holds given T35, so the leaf is not stronger than the row it replaces. -/
   javanpeykarThm111An : _root_.JavanpeykarAnRetype.JavanpeykarThm111An
-  /-- cm-fibre-split (glue, open): the matrix units of End^0(A_Qbar) = M_2(k) over L (diophantine_zq.tex L582-586);
-  A8's Hom field is proved (CMBranch.FibreSplit.cmHomFieldModel_of). -/
-  cmMatrixUnitSplit : CMBranch.FibreSplit.CMMatrixUnitSplit
+  /-- cm-fibre-split (glue, open, on-the-spot): the elliptic curve E (image of a multiple of e11) has geometric
+  endomorphism ring an order of an imaginary quadratic field (diophantine_zq.tex L584-586); the rest of CMFibreSplit
+  is proved (CMBranch.FibreSplit.cmFibreSplit_of_curveOrder). -/
+  cmCurveOrder : CMBranch.FibreSplit.CMCurveOrder
   /-- cm-branch (leaf, printed form): Fowler, Math. Proc. Cambridge Philos. Soc. 180 (2026), Prop. 2.7 (L588-593). -/
   fowlerProp27 : CMBranch.FowlerProp27
   /-- cm-branch (leaf, ELLIOT-literature): the degree of a singular modulus, #Pic(R) <= [L:Q] (L586-587). -/
@@ -514,13 +514,14 @@ theorem openResearchLeaves36EBCF_cm_of_54fs (n : OpenResearchLeaves54CMFS) (t : 
   hodgeTateDecompExists := (_root_.ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_or n.hodgeTateDecompOr)
 
 /-- **G0 with only the open statements** (cm-fibre-split fold): cm-branch2's `sixContactMin_of_open73_cm` with the glue
-`CMFibreSplit` replaced by the smaller glue `CMMatrixUnitSplit` (A8's Hom field at a CM fibre proved). -/
+`CMFibreSplit` replaced by the smaller glue `CMCurveOrder` (A8's Hom field at a CM fibre, the matrix units, the curve and
+the isogeny proved). -/
 theorem sixContactMin_of_open73_cmfs (r : OpenResearchLeaves54CMFS) (t : OpenTextbookLeaves18)
     (l : OpenAddedLeaves27) : ZInQ.SixContactMin :=
   let t16 := openTextbookLeaves16_of_OpenTextbookLeaves17 (openTextbookLeaves17_of_OpenTextbookLeaves18 t)
   let l26 := openAddedLeaves26_of_OpenAddedLeaves27 l
   _root_.HDec.HSyn.sixContactMin_of_open48_eb_k954_cmfs
-    (c := ⟨r.cmMatrixUnitSplit, r.fowlerProp27, r.cmjDegree, r.cmPotentialGood, r.cmHeight62⟩)
+    (c := ⟨r.cmCurveOrder, r.fowlerProp27, r.cmjDegree, r.cmPotentialGood, r.cmHeight62⟩)
     (_root_.HDec.HSyn.openResearchLeaves31_of_OpenResearchLeaves32_eb_cf_r5
       (_root_.HDec.HSyn.openResearchLeaves32_of_OpenResearchLeaves33_eb_cf_r5
         (_root_.HDec.HSyn.openResearchLeaves33_of_OpenResearchLeaves34_eb_cf_r5
