@@ -38,9 +38,9 @@ each one discharges its field and still assumes exactly `[DeRhamScholze.ScholzeD
   proofs, with no new hypotheses.
 * **Fold:** the autofold spec discharges both fields with the two leaves above. The dry run gives
   `strict count: 4/27 on 31 -> 4/27 on 31` (two GLUE fields become two GLUE leaves). The fold module compiles with
-  standard axioms (VERIFIED, §6). The count drops by up to 2 when the leaves are rated LEAF after reading:
-  `ScholzeDeRhamAlg` if the integrator accepts the manuscript's own algebraic application of Cor. 1.8, and
-  `T10_TateDuality` after a reading of Milne.
+  standard axioms (VERIFIED, §6). The count drops by 1 when `T10_TateDuality` is rated LEAF after a reading of
+  Milne. `ScholzeDeRhamAlg` stays GLUE/GLUE (consequence) under the strict leaf review (queue25, 2026-11-17; §3.2):
+  the print states de Rham only for rigid-analytic varieties.
 * **Coordination with derham-range:** the new route does not need `range_iotaF_eq_bdrFix`. It reaches derham-direct's
   print form through `isDeRhamTensorOver_iff` (the tower law), so derham-range's lemma is neither duplicated nor
   required.
@@ -107,10 +107,8 @@ cohomology, so the print cannot be stated. The leaf is the algebraic statement t
 1. the analytification of a proper smooth `F`-scheme is a proper smooth rigid space (manuscript L10953-10954);
 2. Thm 9.1 (coherent, hence filtered de Rham cohomology) and Thm 9.3 (`ℤ/pⁿ`-cohomology, `p` invertible since
    `char F = 0`), compatibly in `n` and with `G_F` (manuscript L10955-10964);
-3. *on-the-spot (dictionary)*: Scholze's `Hⁱ(X_ét, ℚ_p)` for `X/k` is the cohomology over the completed algebraic
-   closure; the leaf uses `F̄`. Sketch: for `X` proper, étale cohomology with torsion coefficients is invariant
-   under extension of algebraically closed fields (proper base change, SGA 4 XII 5.4; UNVERIFIED number), and
-   Thm 9.3 compares over any complete algebraically closed field; take limits over `n`;
+3. (part of step 2, not a separate step) the journal's Cor. 1.8 is stated over `k̄`, so the passage to `F̄` is part
+   of the cited comparison: provenance (b), not on-the-spot (strict leaf review queue25, 2026-11-17, folding its G3 into G2);
 4. *on-the-spot (dictionary)*: Mathlib's `ℓ`-adic cohomology is pro-étale; the manuscript's (and Scholze's)
    `H¹_ét(·, ℤ_p)` is `lim_n H¹_ét(·, ℤ/pⁿ)`. Sketch: Bhatt–Scholze 2015 §5.6 (continuous cohomology equals
    pro-étale cohomology of `ℤ̂_p`; UNVERIFIED number); for `X_{F̄}` proper the groups `Hⁱ_ét(X_{F̄}, ℤ/pⁿ)` are finite,
@@ -118,7 +116,22 @@ cohomology, so the print cannot be stated. The leaf is the algebraic statement t
 5. the jump clause: the filtered isomorphism `D_dR(Hⁱ) ≅ Hⁱ_dR(X)` (part of Cor. 1.8) carries `Fil^j D_dR` to the
    Hodge filtration `Fil^j Hⁱ_dR = im Hⁱ(Ω^{≥j})`, which is everything for `j ≤ 0` and zero for `j ≥ i + 1`
    (`Ω^{≥j}` sits in degrees `≥ j`). This is the standard description of `Fil` on `D_dR` (`(Fil^j B_dR ⊗ V)^{G_F}`,
-   `V` trivially filtered).
+   `V` trivially filtered). A definition-level reading of Cor. 1.8: provenance (b), not on-the-spot (queue25).
+
+### 3.2 Strict leaf review (queue25, 2026-11-17)
+
+Verdict on `ScholzeDeRhamAlg`: GLUE/GLUE, kind consequence (crowd-kit leaf review, queue25). Scholze's journal Cor. 1.8
+covers rigid-analytic varieties only; the algebraic case is only pointed to ("by suitable GAGA results") or credited to
+Faltings in the journal's Overview, which does not state it. The jump range `[0, i]` and the coefficients are correct.
+Deciding step: the algebraic-to-rigid comparison (analytification plus Thms 9.1/9.3). A second step: Mathlib's pro-étale
+`Hⁱ` against classical étale cohomology (Bhatt–Scholze 2015 §5.6; not cited by the manuscript; on-the-spot, step 4).
+
+Provenance: (a) manuscript, diophantine_zq.tex L10953-10964 (lem:de-rham-descent); (b) Scholze 2013 Cor. 1.8 and
+Thms 9.1/9.3 with the corrigendum (steps 1-3 and 5); (c) on-the-spot: the pro-étale comparison (step 4).
+
+Manuscript check: lem:de-rham-descent is correct at the level of its citations, through the GAGA route the print names.
+On our side, not the manuscript's: Mathlib's `EllAdicCohomology` is pro-étale, and its comparison with
+`lim_n Hⁱ_ét(·, ℤ/pⁿ)` is not proved in Mathlib (an unstated dictionary step of the Lean statement).
 
 The leaf asserts nothing beyond the print plus these dictionary steps, and it does not mention the Hodge numbers
 (not statable without `H_dR`).
@@ -295,9 +308,9 @@ Both new rows count GLUE (a consequence; an unread print), so the count is uncha
 leaves). **Recommendation:** fold. The content gains: (i) the H rows now follow the manuscript's C3 exactly as
 cited (Scholze + Milne), with no Fontaine 1982/Tate 1967/Berger/Faltings HT-comparison input, as
 L11001-11004 require; (ii) both leaves are stated over Mathlib's genuine étale (pro-étale) cohomology, a target the
-community can formalize; (iii) one leaf feeds both rows. Two readings could turn the rows into LEAF: Milne's
-Thm 12.1(a) (or Milne 1986 Thm 15.1(a)) for `t10TateDuality`, and the integrator's ruling on whether the manuscript's
-own algebraic application of Cor. 1.8 counts as the print for `scholzeDeRhamAlg`.
+community can formalize; (iii) one leaf feeds both rows. One reading could turn a row into LEAF: Milne's
+Thm 12.1(a) (or Milne 1986 Thm 15.1(a)) for `t10TateDuality`. `scholzeDeRhamAlg` stays a consequence (strict leaf
+review queue25, §3.2).
 
 Proposed `locators.md` rows (not added, since `locators.md` is not this task's file):
 
