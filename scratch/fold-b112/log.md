@@ -152,3 +152,26 @@ the new structure `OpenResearchLeaves54`'s javanpeykarThm111An field doc (TailZ8
    did for panPrintedP); then render_open, `--check` ok, crosswalk `--check` ok, gate.sh GATE=ok (rerun after the move).
    DischargesTest rerun (15 lines); autoform exit 0.
    **render_open count after fold 4b: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
+
+## Fold 5: r3prime-etale + r3prime-bc (R3' proved; flag updates; no field change)
+
+1. Merged origin/wip/r3prime-etale fe330e57 (contains r3prime-bc; no conflicts; commit 2c7bf9c7). Hygiene: no scratch
+   .lean redeclares HDec.HSyn bundles (`R3Etale.lean`, `R3BC.lean`, `THGeneric.lean` are development copies in
+   ZInQ.R3Etale/R3BC); no host paths; no build logs; no vendored code.
+2. `lake build ZInQKernel.Contrib.OneProof.HolChartSerre ZInQKernel.Contrib.OneProof.HolChartBC` ok. `#discharges`
+   (`DischargesR3.lean`, output `DischargesR3-output.txt`, VERIFIED): 15 discharges, none by ZInQ.R3Etale / ZInQ.R3BC
+   (expected: R3' is a step inside IsAnMetricSq, not a field); `translationAnHol`, `isHolChart_iff_isSerreChart'`,
+   `isSerreMetricSq_iff`, `isHolChart_iff_isBCSerreChart`, `ptsHomeomorph`: standard axioms.
+3. `python3 scratch/fold-b112/r3prime_flags.py`: R3' caveat replaced by "R3' closed by r3prime-etale + r3prime-bc
+   (ZInQ.R3Etale.isHolChart_iff_isSerreChart', ZInQ.R3BC.isHolChart_iff_isBCSerreChart, isSerreMetricSq_iff ...)" in
+   the flags of `gaudronRemondSec9LowerAnSS` (what bost-gr9 leaves of bostLowerBoundAnSS), `gaudronRemondThm14AnSS`,
+   `javanpeykarThm111An`. Ratings unchanged: each keeps an unread/pending/UNVERIFIED marker (GLUE/GLUE).
+4. On-the-spot item (inbox 68): `ZInQ.R3Etale.translationAnHol` (left translation by a complex point is holomorphic for
+   Serre's sheaf; proved; GAGA section 2 / SGA 1 XII not in the manuscript's bibliography). No other on-the-spot
+   statement added by this fold.
+5. Checks (`run_checks.sh 5 hashes_fold4b.txt`, VERIFIED): hash guard 18987 -> 18987, changed 0 (no Lean module in Main's
+   closure changed); closure 293169, no sorryAx; OpenStatements 30; render_open + `--check` ok; DischargesTest rerun (15);
+   crosswalk ok; autoform exit 0; gate.sh GATE=ok.
+   **render_open count after fold 5: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
+   The task's rule (a fold lowers the GLUE count or removes a field) is not met by this or any fold here; each was
+   folded because the integrator's instructions (inbox 59, 64a, 67, 68) name it as a count-neutral fold.
