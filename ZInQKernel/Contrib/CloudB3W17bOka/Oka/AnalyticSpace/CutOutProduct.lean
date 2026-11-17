@@ -313,6 +313,7 @@ variable {f g}
 
 /-! ### The two projections -/
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The `f j` pull back to zero along the immersion of the product followed by the first leg.**
 
 Two rewrites: `ComplexAnalytic.AnalyticSpace.Hom.pullbackΓ_comp` splits the composite, and
@@ -325,6 +326,7 @@ theorem pullbackΓ_prodCutOutι_fst (j : Fin k) :
   rw [Hom.pullbackΓ_comp, ← prodCutFamily_castAdd.{u} f g j]
   exact pullbackΓ_ofCutOutHom_eq_zero _ _
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The `g j` pull back to zero along the immersion of the product followed by the second
 leg**, by the argument `ComplexAnalytic.AnalyticSpace.pullbackΓ_prodCutOutι_fst` gives at
 `ComplexAnalytic.AnalyticSpace.prodCutFamily_natAdd`. -/
@@ -368,6 +370,7 @@ theorem prodCutOutSnd_fac (hY : IsCutOutBy iY g) :
 
 variable {Z : AnalyticSpace.{u}}
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **The pair of two morphisms into the two local models kills the whole cutting family.**
 
 `Fin.addCases` splits the family; on each half
