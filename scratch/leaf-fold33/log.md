@@ -247,3 +247,18 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     Main.lean changed among existing OneProof modules; closure (no sorryAx, the two fields gone from the bundles);
     OpenStatements 36; DischargesTest rerun, no error; render_open --check ok (31 H, strictest 16/15, 5 others);
     crosswalk --check ok; autoform check ok.
+29. Batch for w96 (inbox 6, 7, 9 and cfext-proof), one autofold scratch/leaf-fold33/autofold-batch-w96.json -> TailZ65,
+    `sixContactMin_of_open58`: merged wip/cfext-proof 3849bd80, wip/r17-rebase 4095ce12, wip/htnew-print 8f700a64,
+    wip/pb-fix3 6a2187dd (hygiene: 10 scratch dry-run files renamed .lean.txt). Spec: constantFieldExtensionUnramifiedFinite
+    := CFExtProof.constantFieldExtensionUnramifiedFinite_proof (outright, cfext-proof); carayolThmA (r17-print's leaf)
+    := CarayolPrinted.carayolThmA_of_irr from r17-rebase's leaf carayolThmAIrr (Burnside clause proved), flagged
+    "pending reading: conductor clause (DDT 1997 Thm 3.1 / Carayol 1986 0.8)" (inbox 6); eigenformHTNew := htnew-print's
+    eigenformHTNew_of_printed from modularHTPrinted; r11r12 := pb-fix3's panBerger_of_printedPV from panPrintedP and
+    bergerPrintedV; eigenformCoeffFieldFinite in both proof terms replaced by coeff-rational's
+    eigenformCoeffFieldFinite_of_heckePrime {n}.gamma1IntegralSpan {n}.heckePrimeIntegralToRational. New printed leaves
+    "pending review" (inbox 7), all four new rows GLUE/GLUE. Inbox 9: dsThm966Printed locator pp. 513-514 in kinds.tsv
+    and both docstrings (DSCoeffExt.lean, DSThm966EV.lean). Count: 36 open -> 36 open; H 16/15 on 31 -> 16/15 on 31
+    (cfext -1 field -1 GLUE; r11r12 one GLUE -> two GLUE; the other two GLUE for GLUE). Checks (VERIFIED): build
+    +Main +Discharges (16047 jobs); frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
+    OneProof modules; closure (no sorryAx); OpenStatements 36; DischargesTest rerun, no error; render_open --check ok
+    (31 H, strictest 16/15, 5 others); crosswalk --check ok; autoform check ok.
