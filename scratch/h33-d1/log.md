@@ -10,3 +10,8 @@
   ESch (the valuative-extension route needs ESch curveA normal over ℚ to invert π; Dedekind property of
   ℚ[x,y]/(W) is vendored only over algebraically closed fields). Needs: ESch integral, K(ESch) ≅ ℚ(E) via
   chart D₊(Z), values at ℂ-points via charts D₊(Z), D₊(Y) (Z/Y = 1/y vanishes at O).
+- 11-17 01:55 RETARGET adopted. Charts.lean draft (from the interrupted run) does NOT compile (≈15 errors); to be fixed.
+- 11-17 02:00 VERIFIED (compiled, `lake env lean`): `ZInQKernel/Contrib/OneProof/CurveModelUnique.lean`:
+  `ZInQ.CurveModel.exists_iso_of_functionField` (X, Y integral, proper over ℚ, stalks valuation rings,
+  e : K(X) ≃ K(Y) ⇒ ∃ f : X ⟶ Y iso with Spec K(X) → X → Y = Spec(e⁻¹) ≫ Spec K(Y) → Y),
+  `ext_of_fromSpecFunctionField` (uniqueness), `algebraMap_stalkMap` (stalk maps induce c on K).
