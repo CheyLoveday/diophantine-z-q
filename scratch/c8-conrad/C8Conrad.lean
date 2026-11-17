@@ -93,11 +93,16 @@ def CharUnramifiedAt {ℓ : ℕ} [Fact ℓ.Prime] (ψ : GaloisChar ℓ) (q : ℕ
 comparison, and unramified outside finitely many primes).** If `r : G_ℚ → GL₂(ℚ̄₅)` has Hodge–Tate weights `{0, −1}`
 at 5 and is attached up to the twist `ψ` (outside `S`) to a normalized eigenform `g` of weight 2, then `ψ` is
 unramified outside a finite set, and `ψ|G_{ℚ₅}` takes values in a finite `E/ℚ₅` and is Hodge–Tate of weight `0` as
-an `E`-character. Proof plan: R14 gives a semisimple `ρ_g` (`EigenformRepExists`), Chebotarev and Brauer–Nesbitt
-(`AttachedConj`, proved in TailS §13) give `r ≅ ψ ⊗ ρ_g`, so `ψ` is unramified wherever `r` and `ρ_g` are; R13
-(`EigenformHT`) gives `ρ_g` the weights `{0, −1}`; `HTCharOfTwist` (TailS, GLUE S1) makes `ψ` Hodge–Tate of some weight
-`s`, and `HTTwistShift` with `HTWeightsUnique` (proved) give `{0, −1} = {s, s − 1}`, so `s = 0`; a continuous character
-of the compact `G_{ℚ₅}` has values in a finite extension (Baire). -/
+an `E`-character. Proof plan (A), for semisimple `r` (the consumer's `r` is irreducible): R14 gives a semisimple
+`ρ_g` (`EigenformRepExists`), Chebotarev and Brauer–Nesbitt (`AttachedConj`, proved in TailS §13) give `r ≅ ψ ⊗ ρ_g`, so
+`ψ` is unramified wherever `r` and `ρ_g` are; R13 (`EigenformHT`) gives `ρ_g` the weights `{0, −1}`; `HTCharOfTwist`
+(TailS, GLUE S1) makes `ψ` Hodge–Tate of some weight `s`, and `HTTwistShift` with `HTWeightsUnique` (proved) give
+`{0, −1} = {s, s − 1}`, so `s = 0`. Plan (B), with no semisimplicity: `det r = ε_g χ_cyc ψ²` (R14's determinant clause and
+Chebotarev, as in `g12Det_of`), `det r` is Hodge–Tate of weight `−1` (the sum of the weights of `r`), so `ψ²` has Sen
+weight `0`, hence `ψ` too, and a character with Sen operator `0` is Hodge–Tate of weight `0` (Sen 1980); `ψ²` is
+unramified outside a finite set and `ψ` composed with `O_E^× → O_E^×/U` (`U` open, pro-5, torsion-free) has open kernel,
+so `ψ` is unramified outside a finite set. In both plans a continuous character of the compact `G_{ℚ₅}` has values in a
+finite extension (Baire). -/
 def TwistCharHT0 : Prop :=
   HSyn.EigenformRepExists → PkgI4.EigenformHT →
   ∀ (r : GaloisRep 5 2) (N : ℕ) (χ : DirichletCharacter ℂ N) (g : PkgI4.CF N 2) (ψ : GaloisChar 5)

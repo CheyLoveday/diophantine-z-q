@@ -152,7 +152,7 @@ New definitions:
 
 | name | content | step / source | status |
 |---|---|---|---|
-| `TwistCharHT0` | if `r` has weights `{0, −1}` at 5 and is attached up to `ψ` to a weight-2 normalized eigenform, then `ψ` is unramified outside a finite set, and `ψ|G_{ℚ₅}` takes values in a finite `E/ℚ₅` and has `HasHTWeights {0}` (inputs R14 `EigenformRepExists` and R13 `EigenformHT` as hypotheses) | N5 L758-760 and the weight comparison L765-766. Plan: `AttachedConj` (proved, TailS §13) gives `r ≅ ψ ⊗ ρ_g`; `HTCharOfTwist` (TailS GLUE S1, unproved); `HTTwistShift`; `HTWeightsUnique` (proved); Baire for the finite coefficient field | GLUE, unproved |
+| `TwistCharHT0` | if `r` has weights `{0, −1}` at 5 and is attached up to `ψ` to a weight-2 normalized eigenform, then `ψ` is unramified outside a finite set, and `ψ|G_{ℚ₅}` takes values in a finite `E/ℚ₅` and has `HasHTWeights {0}` (inputs R14 `EigenformRepExists` and R13 `EigenformHT` as hypotheses) | N5 L758-760 and the weight comparison L765-766. Plan (A), for semisimple `r`: `AttachedConj` (proved, TailS §13) gives `r ≅ ψ ⊗ ρ_g`; then `HTCharOfTwist` (TailS GLUE S1, unproved), `HTTwistShift`, `HTWeightsUnique` (proved). Plan (B), with no semisimplicity, so true as stated: `det r = ε_g χ ψ²` (R14's determinant clause and Chebotarev, as in `g12Det_of`), so `ψ²` and hence `ψ` have Sen weight 0, and a character with Sen operator 0 is Hodge–Tate of weight 0 (Sen 1980). Both plans use Baire for the finite coefficient field. | GLUE, unproved. Plan (B)'s unramifiedness step is **on-the-spot**: `ψ²` is unramified almost everywhere, and `ψ` modulo an open torsion-free pro-5 `U ⊂ O_E^×` has open kernel, so `ψ(I_q) ⊂ {±1}` is trivial for almost all `q`. |
 | `LocAlgExponentEqWeight` | the exponent of a locally algebraic character of `G_{ℚ_p}` is its Hodge–Tate weight | N5 L763-764 ("removing its integral local Hodge–Tate weight"); STANDARD (Serre 1968 Ch. III App.; Tate 1967 §3.3) | GLUE, unproved. **On-the-spot sketch:** if `ψ(Art u) = uⁿ` on `1 + pᵏℤ_p`, then `φ = ψ·χ_cycⁿ` is trivial on an open subgroup of the inertia of `G_{ℚ_p}^{ab}` (the closure of `Art(ℤ_p^×)`, local class field theory), so `φ` is a finite character times an unramified one, and both have Hodge–Tate weight `0` (Ax–Sen–Tate with Hilbert 90). So `ψ = φ·χ^{−n}` has weight `n`, and a Hodge–Tate character has one weight. |
 | `FiniteOfLocAlgTrivialQ` | a continuous `ψ : G_ℚ → ℚ̄_p^×`, unramified outside a finite set and trivial on the Artin lifts (through `decomp`) of the units `1 + pᵏℤ_p`, has finite image | N5 L761-765 ("class field theory over ℚ … finite inertia at five and at every other prime, hence a finite ray-class character") | GLUE, unproved. Plan: Kronecker–Weber (proved, `ZInQKernel/Contrib/KroneckerWeber`) gives `G_ℚ^{ab} ≅ ℤ̂^×`; Tau Ceti's `localArtinMap_cyclotomic_padic_primePow` handles `q = p`; at `q ≠ p`, the image of the virtually pro-`q` group `ℤ_q^×` in the virtually pro-`p` group `O_E^×` is finite (rv-h-c8 §4 item 3; **on-the-spot**, elementary, not stated in N5). |
 | `C8TwistFinite` | C8's conclusion: the twist `ψ` has finite image | N5 L758-766 | proved from the above (§4) |
@@ -209,3 +209,31 @@ checked, 19 discharge one. **None of them is in `C8Conrad`**: as expected, no op
   Only if all three are rerouted do `picRepresentableAbVar` and `kleimanPicZeroProper954SiteQ` leave the route:
   −2 GLUE, +1 to +3 leaves, +3 glue from C8. Even then the net strict count does not improve unless the C8 glue is
   proved. This is why the task's target is not met.
+
+## 6. Known issues and limitations
+
+* **Known issues: none about Conrad App. B or about the manuscript's use of it** (§1.1). The task's stop condition
+  ("a defect recorded in h-trust C8 or a review") does not hold.
+* **The task's target is not reachable through C8** (§2). This is the main result. Both rows have two further live
+  consumers outside C8: Poincaré reducibility (E1-E2) and R10/`hodgeTateDecompAbVar` (C3/G9). The manuscript does not
+  use the Picard scheme at either step. Retargeting them would leave step C8 and needs separate tasks (§5
+  recommendations 2-3), so this task stops there.
+* **Source unread.** Conrad's App. B was not read on this host (fetch refused). The leaf's wording follows the
+  theorem-application audit's report and carries the flag unread. A reader should check the paragraph after
+  Def. B.1, pp. 32-33, against `ConradAppBQp` and `IsLocallyAlgebraic`:
+  * the form of the definition (open subgroup of `O_L^×`, algebraic character `∏_τ τ(x)^{n_τ}`);
+  * the coefficient field;
+  * the Artin normalization;
+  * whether the weights are tied to the exponents, which would let `LocAlgExponentEqWeight` be read off the print.
+* **Unrefereed source.** The project's LEAF definition requires a published, refereed theorem. Conrad's paper is an
+  author preprint (h-leaves L581; h-v14 L567), so `ConradAppBQp` counts as GLUE in the strict reading, even once read.
+  The refereed statements the project's notes name for the same content are Serre 1968 Ch. III App. and Tate 1967 §3.3.
+  Switching to them would leave the manuscript's citation. The rules allow that only for a known defect, so it is
+  recorded here as an option, not taken.
+* **On-the-spot steps** (not in the manuscript or a cited print; sketches in the docstrings and in §3.3):
+  * the finiteness of `ψ` on inertia at `q ≠ 5` (inside `FiniteOfLocAlgTrivialQ`; rv-h-c8 §4 item 3, elementary);
+  * the weight–exponent dictionary `LocAlgExponentEqWeight`, unless Conrad's paragraph prints it;
+  * plan (B)'s unramifiedness step in `TwistCharHT0`;
+  * the observation that `G12DetPZ` reduces to the finiteness of `ψ` (proved in Lean, so not a gap).
+* **Unchanged.** No consumer's statement changed. No file under `ZInQKernel/` other than the new
+  `Contrib/OneProof/C8Conrad.lean` was edited. No fold was run (§5).
