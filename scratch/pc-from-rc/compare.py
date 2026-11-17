@@ -28,11 +28,12 @@ def formula(l):
                 if (ca,cb) not in span: ok=False;break
             if ok: out.append((a,b))
     return sorted(out)
-bad=0;cnt=0
-for l in range(11,int(sys.argv[1])):
-    if l%12!=11: continue
-    fs=factor(l)
-    if len(set(fs))!=len(fs): continue
-    S=sorted(selmer(l)); Fm=formula(l); cnt+=1
-    if S!=Fm: bad+=1; print("MISMATCH",l,S,Fm)
-print("checked",cnt,"mismatches",bad)
+if __name__=='__main__':
+  bad=0;cnt=0
+  for l in range(11,int(sys.argv[1])):
+      if l%12!=11: continue
+      fs=factor(l)
+      if len(set(fs))!=len(fs): continue
+      S=sorted(selmer(l)); Fm=formula(l); cnt+=1
+      if S!=Fm: bad+=1; print("MISMATCH",l,S,Fm)
+  print("checked",cnt,"mismatches",bad)
