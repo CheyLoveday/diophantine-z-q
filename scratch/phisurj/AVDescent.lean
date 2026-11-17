@@ -241,6 +241,103 @@ lemma const_injective [IsAlgClosed k] (X : AbVar k) : Function.Injective (AC.con
   have : Nonempty (⊤ : X.X.left.Opens) := ⟨⟨Nonempty.some inferInstance, trivial⟩⟩
   exact (X.X.hom.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom).injective
 
+lemma const_mul (X : AbVar k) (a b : k) : AC.const X (a * b) = AC.const X a * AC.const X b := by
+  simp only [AC.const, map_mul]
+
+lemma formula_eq_of_eq {X : AbVar k} {n : ℕ} {x : AC.Kpt X} {hx : x ^ n = 1} {c₁ c₂ : X.X.left.Pic}
+    (h : c₁ = c₂) (ψ₁ : AC.Triv X n c₁) (ψ₂ : AC.Triv X n c₂)
+    (hind : ∀ ψ ψ' : AC.Triv X n c₂, AC.formula x hx c₂ ψ = AC.formula x hx c₂ ψ') :
+    AC.formula x hx c₁ ψ₁ = AC.formula x hx c₂ ψ₂ := by
+  subst h; exact hind ψ₁ ψ₂
+
+lemma isDT_mul {X : AbVar k} {n : ℕ} {c c' : X.X.left.Pic} (hc : AC.IsDT n c) (hc' : AC.IsDT n c') :
+    AC.IsDT n (c * c') :=
+  ⟨fun x => by rw [Scheme.Pic.map_mul, hc.1 x, hc'.1 x], by rw [mul_pow, hc.2, hc'.2, mul_one]⟩
+
+lemma isDT_inv {X : AbVar k} {n : ℕ} {c : X.X.left.Pic} (hc : AC.IsDT n c) : AC.IsDT n c⁻¹ :=
+  ⟨fun x => by rw [← Scheme.Pic.mapHom_apply, map_inv, Scheme.Pic.mapHom_apply, hc.1 x],
+    by rw [inv_pow, hc.2, inv_one]⟩
+
+/-- **`#X̂[n] ≤ n^{2g}`** over `k = k̄`, `n` invertible: `c ↦ ē_n(·, c)` embeds the translation-invariant classes
+of order dividing `n` into `Hom(X[n], μ_n)` (Mumford §20: the formula is a well-defined bilinear `μ_n`-valued
+pairing, weil-proof's `mumfordWeilPairingAC_proof`; its right kernel is trivial, `formula_nondeg_right`), and
+`X[n] ≅ (ℤ/n)^{2g}`. -/
+theorem card_isDT_le [IsAlgClosed k] (h1 : T09Pic.PicRepresentableAbVar) (h2 : T09Pic.PicZeroAbVar)
+    (hT : AvSplit.MumfordTorsionAlgClosed) (X : AbVar k) (g n : ℕ)
+    (hg : topologicalKrullDim X.X.left = g) (hn : 0 < n) (hnk : (n : k) ≠ 0) :
+    Nat.card {c : X.X.left.Pic // AC.IsDT n c} ≤ n ^ (2 * g) := by
+  have : NeZero n := ⟨by omega⟩
+  obtain ⟨E⟩ := exists_torsK_addEquiv hT X g n hg hn hnk
+  have hW := WeilProof.mumfordWeilPairingAC_proof
+  have htriv : ∀ c, AC.IsDT n c → Nonempty (AC.Triv X n c) := fun c hc =>
+    nonempty_triv_ac (by rw [PhiSurj.mumfordMulNPicZeroAC_of_open h1 h2 k X c hc.1 n, hc.2])
+  have hval : ∀ (c : X.X.left.Pic) (hc : AC.IsDT n c) (x : torsK X n), ∃ u : rootsOfUnity n k,
+      AC.const X ((u : kˣ) : k) = AC.formula x.1 (mem_torsK.1 x.2) c (htriv c hc).some := by
+    intro c hc x
+    obtain ⟨-, h2', -, -⟩ := hW k X n hn hnk x.1 x.1 (mem_torsK.1 x.2) (mem_torsK.1 x.2) c c hc hc
+    obtain ⟨u, hu, hu'⟩ := h2' (htriv c hc).some
+    exact ⟨⟨u, (mem_rootsOfUnity n u).2 hu⟩, hu'⟩
+  choose χ hχ using hval
+  have hmul : ∀ c (hc : AC.IsDT n c) (x y : torsK X n), χ c hc (x * y) = χ c hc x * χ c hc y := by
+    intro c hc x y
+    obtain ⟨-, -, h3, -⟩ := hW k X n hn hnk x.1 y.1 (mem_torsK.1 x.2) (mem_torsK.1 y.2) c c hc hc
+    apply Subtype.ext; apply Units.ext
+    apply const_injective X
+    have e1 := hχ c hc (x * y)
+    have e2 := hχ c hc x
+    have e3 := hχ c hc y
+    have e4 : AC.formula (x * y).1 (mem_torsK.1 (x * y).2) c (htriv c hc).some =
+        AC.formula x.1 (mem_torsK.1 x.2) c (htriv c hc).some *
+          AC.formula y.1 (mem_torsK.1 y.2) c (htriv c hc).some := h3 _
+    rw [e1, e4, ← e2, ← e3, ← const_mul]
+    rfl
+  let Φ : {c : X.X.left.Pic // AC.IsDT n c} → (Additive (torsK X n) →+ Additive (rootsOfUnity n k)) :=
+    fun c => AddMonoidHom.mk' (fun x => Additive.ofMul (χ c.1 c.2 (Additive.toMul x)))
+      (fun x y => by
+        change Additive.ofMul (χ c.1 c.2 (Additive.toMul x * Additive.toMul y)) = _
+        rw [hmul]; rfl)
+  have hΦ : Function.Injective Φ := by
+    rintro ⟨c, hc⟩ ⟨c', hc'⟩ h
+    have hχeq : ∀ x : torsK X n, χ c hc x = χ c' hc' x := fun x =>
+      Additive.ofMul.injective (DFunLike.congr_fun h (Additive.ofMul x))
+    let d := c * c'⁻¹
+    have hd : AC.IsDT n d := isDT_mul hc (isDT_inv hc')
+    have hdc : c = d * c' := by simp [d]
+    have hone : ∀ (x : AC.Kpt X) (hx : x ^ n = 1), AC.formula x hx d (htriv d hd).some = 1 := by
+      intro x hx
+      let xt : torsK X n := ⟨x, mem_torsK.2 hx⟩
+      obtain ⟨h1', h2', -, h4'⟩ := hW k X n hn hnk x x hx hx d c' hd hc'
+      obtain ⟨-, -, -, -⟩ := hW k X n hn hnk x x hx hx c c hc hc
+      obtain ⟨hi, -, -, -⟩ := hW k X n hn hnk x x hx hx (d * c') (d * c') (isDT_mul hd hc')
+        (isDT_mul hd hc')
+      have e1 : AC.formula x hx c (htriv c hc).some =
+          AC.formula x hx (d * c') (htriv (d * c') (isDT_mul hd hc')).some :=
+        formula_eq_of_eq hdc _ _ hi
+      have e2 := h4' (htriv d hd).some (htriv c' hc').some (htriv (d * c') (isDT_mul hd hc')).some
+      have e3 : AC.formula x hx c (htriv c hc).some = AC.formula x hx c' (htriv c' hc').some := by
+        rw [← hχ c hc xt, ← hχ c' hc' xt, hχeq]
+      have hunit : IsUnit (AC.formula x hx c' (htriv c' hc').some) := by
+        rw [← hχ c' hc' xt]
+        exact ((χ c' hc' xt : kˣ).isUnit).map
+          (X.X.hom.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom)
+      rw [e1, e2] at e3
+      exact (IsUnit.mul_left_inj hunit).1 (e3.trans (one_mul _).symm)
+    have hd1 := formula_nondeg_right X n hnk d (htriv d hd).some hone
+    apply Subtype.ext
+    show c = c'
+    rw [hdc, hd1, one_mul]
+  have : Finite (Additive (torsK X n)) := Finite.of_equiv _ E.symm.toEquiv
+  have : Finite (Additive (torsK X n) →+ Additive (rootsOfUnity n k)) := DFunLike.finite _
+  calc Nat.card {c : X.X.left.Pic // AC.IsDT n c}
+      ≤ Nat.card (Additive (torsK X n) →+ Additive (rootsOfUnity n k)) :=
+        Nat.card_le_card_of_injective Φ hΦ
+    _ ≤ Nat.card (Additive (rootsOfUnity n k)) ^ (2 * g) := card_hom_le E
+    _ ≤ n ^ (2 * g) := by
+        apply Nat.pow_le_pow_left
+        rw [Nat.card_congr (Additive.toMul : Additive (rootsOfUnity n k) ≃ _)]
+        exact card_rootsOfUnity _ _
+
 end PhiSurj.AVDesc
 
 #print axioms PhiSurj.AVDesc.formula_nondeg_right
+#print axioms PhiSurj.AVDesc.card_isDT_le
