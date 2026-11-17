@@ -24,8 +24,8 @@ describe the fork main they name):
 <!-- open-count:begin -->
 **34 hypotheses of the H part** (in the bundles `OpenAddedLeaves25`, `OpenResearchLeaves42`, `OpenTextbookLeaves17`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 11 published / 23 glue** (the strictest flagged reading; 12/22 without the one strictest-reading flag).
-* By kind: consequence 10, published 24.
+* **Strict count: 10 published / 24 glue** (the strictest flagged reading; 11/23 without the one strictest-reading flag).
+* By kind: consequence 17, published 17.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 
