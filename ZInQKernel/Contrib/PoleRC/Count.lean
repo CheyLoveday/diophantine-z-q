@@ -571,4 +571,74 @@ theorem sel_sufficient (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (
         ⟨hp.out, Int.natCast_dvd.mp hpb, by have := hb.ne_zero; omega⟩
       exact hpl (Nat.mem_primeFactors.mp (hsb hmem)).2.1
 
+/-! ### The eight classes -/
+
+theorem ind_one : ind ℓ 1 = 0 := by funext i; simp [ind]
+
+theorem sg_one : sg 1 = 0 := by simp [sg]
+
+theorem sg_negell (hℓ : 0 < ℓ) : sg (-(ℓ : ℤ)) = 1 := by
+  simp only [sg]; rw [if_pos (by omega)]
+
+theorem natAbs_three_mul (c : ℤ) : (3 * c).natAbs = 3 * c.natAbs := by
+  rw [Int.natAbs_mul]; rfl
+
+theorem primeFactors_three_mul {c : ℤ} (hc : c ≠ 0) :
+    (3 * c).natAbs.primeFactors = insert 3 c.natAbs.primeFactors := by
+  rw [natAbs_three_mul, Nat.primeFactors_mul (by norm_num) (by omega),
+    Nat.Prime.primeFactors Nat.prime_three]
+  rfl
+
+theorem ind_three_mul (h12 : ℓ % 12 = 11) {c : ℤ} (hc : c ≠ 0) : ind ℓ (3 * c) = ind ℓ c := by
+  funext i
+  simp only [ind, primeFactors_three_mul hc, Finset.mem_insert,
+    supp_ne_three (ℓ := ℓ) (by omega) i, false_or]
+
+theorem dlt_three_mul {c : ℤ} (hc : c ≠ 0) : dlt (3 * c) = 1 := by
+  simp [dlt, primeFactors_three_mul hc]
+
+theorem squarefree_three_mul (h12 : ℓ % 12 = 11) {c : ℤ} (hc : Squarefree c)
+    (hcl : c.natAbs.primeFactors ⊆ ℓ.primeFactors) : Squarefree (3 * c) := by
+  rw [← Int.squarefree_natAbs, natAbs_three_mul, Nat.squarefree_mul_iff]
+  refine ⟨?_, Nat.prime_three.squarefree, Int.squarefree_natAbs.mpr hc⟩
+  rw [Nat.Prime.coprime_iff_not_dvd Nat.prime_three]
+  intro h
+  exact three_not_mem h12 (hcl (Nat.mem_primeFactors.mpr ⟨Nat.prime_three, h,
+    by have := hc.ne_zero; omega⟩))
+
+theorem odd_of_subset (h12 : ℓ % 12 = 11) {c : ℤ} (hc : c ≠ 0)
+    (hcl : c.natAbs.primeFactors ⊆ ℓ.primeFactors) : c % 2 = 1 := by
+  by_contra h
+  have h2 : (2 : ℤ) ∣ c := by omega
+  have : 2 ∈ ℓ.primeFactors := hcl (Nat.mem_primeFactors.mpr ⟨Nat.prime_two,
+    Int.natCast_dvd.mp (by exact_mod_cast h2), by omega⟩)
+  have := (Nat.mem_primeFactors.mp this).2.1
+  omega
+
+/-- **A class `(3^σ c, (−ℓ)^σ)`** with `c ∣ ℓ` positive and `K ind(c) = 0` lies in `SelM ℓ`. -/
+theorem cand_mem (hTwo : LocalTwo) (hThree : LocalThree) (hq : LocalBad) (hg : LocalGood)
+    (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) {c : ℤ} (hc : Squarefree c) (hc0 : 0 < c)
+    (hcl : c.natAbs.primeFactors ⊆ ℓ.primeFactors) (hK : Kmat ℓ *ᵥ ind ℓ c = 0) (σ : Bool) :
+    ((if σ then 3 else 1) * c, if σ then -(ℓ : ℤ) else 1) ∈ SelM ℓ := by
+  have hℓ : 0 < ℓ := by omega
+  have hc2 := odd_of_subset h12 hc.ne_zero hcl
+  cases σ with
+  | false =>
+    simp only [Bool.false_eq_true, if_false, one_mul]
+    refine sel_sufficient hTwo hThree hq hg hsf h12 hc squarefree_one hc0 hc2 rfl rfl
+      (hcl.trans (Finset.subset_insert _ _)) (by simp) ?_ ?_
+    · rw [ind_one, dlt_of_subset h12 hcl, hK, mul_zero, add_zero, zero_smul]
+    · rw [ind_one, sg_one, mulVec_zero, mul_zero, add_zero, zero_smul]
+  | true =>
+    simp only [if_true]
+    have hsq := squarefree_three_mul h12 hc hcl
+    have hnl : Squarefree (-(ℓ : ℤ)) := by rw [← Int.squarefree_natAbs]; simpa using hsf
+    refine sel_sufficient hTwo hThree hq hg hsf h12 hsq hnl (by omega) (by omega) (by omega)
+      (by omega) ?_ (by rw [natAbs_primeFactors_negell]) ?_ ?_
+    · rw [primeFactors_three_mul hc.ne_zero]
+      exact Finset.insert_subset_insert _ hcl
+    · rw [ind_three_mul h12 hc.ne_zero, hK, ind_negell, dlt_three_mul hc.ne_zero, zero_add,
+        mul_one, one_smul]
+    · rw [ind_negell, sg_negell hℓ, kmat_mulVec_one, mul_one, zero_add, one_smul]
+
 end ZInQ.Manuscript.PoleRC
