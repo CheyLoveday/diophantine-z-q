@@ -257,6 +257,9 @@ lemma Scheme.Hom.pushforwardStalkIdeal_eq_bot [IsReduced Y] {y : Y} {V : Y.Opens
   change Y.presheaf.germ _ y _ s' = 0
   rw [hbot, map_zero]
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- The reduced induced closed subscheme structure on a closed subset is reduced. -/
 instance Scheme.IdealSheafData.isReduced_subscheme_vanishingIdeal
     (Z : TopologicalSpace.Closeds Y) : IsReduced (IdealSheafData.vanishingIdeal Z).subscheme := by

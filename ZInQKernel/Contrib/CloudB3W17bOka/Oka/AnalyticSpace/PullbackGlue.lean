@@ -293,6 +293,9 @@ noncomputable def gluing : LocallyRingedSpace.GlueData.{u} where
   t_fac i j k := t'Map_fac U f g i j k
   cocycle i j k := t'Map_cocycle U f g i j k
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The transitions of the datum are `ℂ`-linear.**
 
 `ComplexAnalytic.glueDataCLinear_of_isCLinearHom` asks for linearity of the legs and of the
@@ -306,6 +309,9 @@ theorem glueDataCLinear_gluing :
   glueDataCLinear_of_isCLinearHom _ _ (fun p ↦ (v U f g p.1 p.2).algebraMap)
     (fun i j ↦ (fV U f g i j).isCLinear) (fun i j ↦ (Pullback.t U f g i j).isCLinear)
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The gluing, as a complex analytic space.**
 
 `ComplexAnalytic.AnalyticSpace.ofGlueDataCLinear` at the datum, with the `HasLocalModels`
@@ -341,6 +347,9 @@ theorem fV_comp_snd (i j : I) :
       t U f g i j ≫ fV U f g j i ≫ pullback.snd (X.ofRestrict (U j) ≫ f) g := by
   simp [t_fst_snd]
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The first projection**, `glued ⟶ X`, glued out of
 `ComplexAnalytic.AnalyticSpace.Pullback.toBase`.
 
@@ -357,6 +366,9 @@ noncomputable def p1 : glued U f g ⟶ X :=
       exact h)
     (fun j ↦ (toBase U f g j).isCLinear)
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The second projection**, `glued ⟶ Y`, glued out of the second projections of the ambient
 pullbacks. -/
 noncomputable def p2 : glued U f g ⟶ Y :=
@@ -394,6 +406,9 @@ theorem ι_p1 (j : I) :
   ι_glueMorphismsOfGlueData (gluing U f g) _ (glueDataCLinear_gluing U f g) _
     (fun j ↦ forgetToLocallyRingedSpace.map (toBase U f g j)) _ _ j
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The second projection restricts to the ambient second projection on the `j`-th member.** -/
 theorem ι_p2 (j : I) :
     (gluing U f g).toGlueData.ι j ≫ (p2 U f g).toLRSHom =
@@ -401,6 +416,9 @@ theorem ι_p2 (j : I) :
   ι_glueMorphismsOfGlueData (gluing U f g) _ (glueDataCLinear_gluing U f g) _
     (fun j ↦ forgetToLocallyRingedSpace.map (pullback.snd (X.ofRestrict (U j) ≫ f) g)) _ _ j
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The square commutes.**
 
 Checked member by member: `ComplexAnalytic.AnalyticSpace.forgetToLocallyRingedSpace` is faithful,
@@ -420,6 +438,9 @@ theorem p_comm : p1 U f g ≫ f = p2 U f g ≫ g := by
 
 /-! ### The members of the gluing, as analytic morphisms -/
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **The `i`-th ambient pullback includes into the gluing, as a morphism of analytic spaces.**
 
 `ComplexAnalytic.AnalyticSpace.ιCLinear` at this datum. The member of the datum at `i` is
