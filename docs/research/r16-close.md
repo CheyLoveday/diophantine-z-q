@@ -13,9 +13,8 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 ## 0. Result
 
 1. **Statement check: Diamond–Shurman Thm 9.5.4 prints "satisfies", not "characteristic polynomial"**
-   (VERIFIED: read in both printings on this host, `~/cloud-b4/w24/diamond-shurman-2005-original.pdf`, printed
-   pp. 390–391, and `…-2016-fourth-printing.pdf`, pp. 401–402; the independent W24 check
-   `~/cloud-b4/w24/reports/report-ds954.md` reads the same). The print says that `ρ_{f,λ}(Frob_𝔭)` "satisfies the
+   (VERIFIED: read in a local copy of the 2005 printing, printed pp. 390–391, and in a local copy of the
+   2016 fourth printing, pp. 401–402; the independent W24 statement check reads the same). The print says that `ρ_{f,λ}(Frob_𝔭)` "satisfies the
    polynomial equation" `x² − a_p(f)x + χ(p)p = 0`. DS print "the characteristic equation" only in Thm 9.6.5,
    the general-weight theorem, whose `ρ_{f,λ}` is an abstract representation, not the realization on `A_f`.
    DS derive the determinant `det ρ_{f,λ} = χχ_ℓ^{k−1}` only for 9.6.5's `ρ` (Exercise 9.6.3(a)).
