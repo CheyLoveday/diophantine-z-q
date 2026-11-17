@@ -9,3 +9,4 @@ Targets: hGZ = ZInQ.GZAlg.GrossZagierAlgOptCd (binder of ZInQ.OneProof.frozenTar
 
 ## Entries
 - EpsD.lean: epsD (Kronecker symbol) and epsD_eq_jacobiSym (D<0, D%4=1) compiled, axioms standard. VERIFIED
+- SchCore.lean: ESch E = Proj (Tau Ceti grading), toSpecQ proper, chartZ, chartHom (+naturality), exists_extension (D1), mem_range_of_mem_chart, fromSpecStalk_comp_eq (separatedness), mem_chart_of_factor, comp_eq_of_factor, ptOf + ptOf_chart/ptOf_eq_zero: compiled, no sorry. VERIFIED. Copied to Contrib/OneProof/GrossZagierScheme/Core.lean

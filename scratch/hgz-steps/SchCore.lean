@@ -2,6 +2,8 @@ import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Projective.Coo
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Birational.ValuativeExtension
 import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
 import Mathlib.AlgebraicGeometry.ValuativeCriterion
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 
 /-!
 # hgz-steps: the elliptic curve as a projective `ℚ`-scheme, its affine chart, and D1
@@ -161,5 +163,138 @@ theorem exists_extension (X : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Spec (CommR
   obtain ⟨π, -, hπ⟩ := Scheme.exists_hom_of_valuationRing_stalk (base := Spec (CommRingCat.of ℚ))
     (target := ESch E) hv (Spec.map (CommRingCat.ofHom u) ≫ chartZ E) (specQ_ext _ _)
   exact ⟨π, hπ⟩
+
+
+/-! ## The morphism near a point: the two directions of the key lemma -/
+
+section Points
+
+variable {E}
+variable {X : Scheme.{0}} [IsIntegral X] (π : X ⟶ ESch E) (u : AZ E →+* X.functionField)
+  (hπ : X.fromSpecFunctionField ≫ π = Spec.map (CommRingCat.ofHom u) ≫ chartZ E)
+include hπ
+
+/-- **If `π(p) ∈ D₊(Z)`, the coordinates `u(a)` are regular at `p`.** -/
+theorem mem_range_of_mem_chart (p : X) (hp : π p ∈ (chartZ E).opensRange) (a : AZ E) :
+    u a ∈ Set.range (algebraMap (X.presheaf.stalk p) X.functionField) := by
+  have hr : Set.range (X.fromSpecStalk p ≫ π) ⊆ Set.range (chartZ E) := by
+    rintro _ ⟨z, rfl⟩
+    have hz : X.fromSpecStalk p z ⤳ p := by
+      have h0 : X.fromSpecStalk p z ∈ Set.range (X.fromSpecStalk p) := Set.mem_range_self z
+      rw [Scheme.range_fromSpecStalk] at h0
+      exact h0
+    have := (hz.map π.continuous).mem_open (chartZ E).opensRange.isOpen hp
+    simpa using this
+  set ℓ := IsOpenImmersion.lift (chartZ E) (X.fromSpecStalk p ≫ π) hr
+  have hℓ : ℓ ≫ chartZ E = X.fromSpecStalk p ≫ π := IsOpenImmersion.lift_fac _ _ _
+  set θ := Spec.preimage ℓ
+  have h1 : Spec.map (X.presheaf.stalkSpecializes (genericPoint_specializes p)) ≫
+      X.fromSpecStalk p = X.fromSpecFunctionField := Scheme.SpecMap_stalkSpecializes_fromSpecStalk _
+  have h2 : Spec.map (θ ≫ X.presheaf.stalkSpecializes (genericPoint_specializes p)) =
+      Spec.map (CommRingCat.ofHom u) := by
+    rw [← cancel_mono (chartZ E), Spec.map_comp, Category.assoc, Spec.map_preimage, hℓ,
+      ← Category.assoc, h1, hπ]
+  have h3 := Spec.map_injective h2
+  refine ⟨θ a, ?_⟩
+  have := congrArg (fun f => f.hom a) h3
+  simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply,
+    CommRingCat.hom_ofHom] at this
+  exact this
+
+variable (hv : ∀ p : X, ValuationRing (X.presheaf.stalk p))
+include hv
+
+/-- **If the coordinates are regular at `p` (through `θ`), then `π` near `p` is the chart map**
+(uniqueness in the valuative criterion: `E` is separated). -/
+theorem fromSpecStalk_comp_eq (p : X) (θ : AZ E →+* X.presheaf.stalk p)
+    (hθ : (algebraMap (X.presheaf.stalk p) X.functionField).comp θ = u) :
+    X.fromSpecStalk p ≫ π = Spec.map (CommRingCat.ofHom θ) ≫ chartZ E := by
+  haveI := hv p
+  have hsep : ValuativeCriterion.Uniqueness (toSpecQ E) := IsSeparated.valuativeCriterion _
+  let S : ValuativeCommSq (toSpecQ E) :=
+    { R := X.presheaf.stalk p, K := X.functionField, i₁ := X.fromSpecFunctionField ≫ π,
+      i₂ := X.fromSpecStalk p ≫ π ≫ toSpecQ E, commSq := ⟨specQ_ext _ _⟩ }
+  have hs := hsep S
+  have hA : Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.stalk p) X.functionField)) =
+      Spec.map (X.presheaf.stalkSpecializes (genericPoint_specializes p)) := rfl
+  let l₁ : S.commSq.LiftStruct :=
+    { l := X.fromSpecStalk p ≫ π
+      fac_left := by
+        change Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.stalk p) X.functionField)) ≫
+          X.fromSpecStalk p ≫ π = X.fromSpecFunctionField ≫ π
+        rw [hA, ← Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk]
+      fac_right := specQ_ext _ _ }
+  let l₂ : S.commSq.LiftStruct :=
+    { l := Spec.map (CommRingCat.ofHom θ) ≫ chartZ E
+      fac_left := by
+        change Spec.map (CommRingCat.ofHom (algebraMap (X.presheaf.stalk p) X.functionField)) ≫
+          Spec.map (CommRingCat.ofHom θ) ≫ chartZ E = X.fromSpecFunctionField ≫ π
+        rw [← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hθ, hπ]
+      fac_right := specQ_ext _ _ }
+  exact congrArg CommSq.LiftStruct.l (Subsingleton.elim l₁ l₂)
+
+theorem mem_chart_of_factor (p : X) (θ : AZ E →+* X.presheaf.stalk p)
+    (hθ : (algebraMap (X.presheaf.stalk p) X.functionField).comp θ = u) :
+    π p ∈ (chartZ E).opensRange := by
+  have h := congrArg (fun f => f (IsLocalRing.closedPoint (X.presheaf.stalk p)))
+    (fromSpecStalk_comp_eq π u hπ hv p θ hθ)
+  simp only [Scheme.Hom.comp_apply, Scheme.fromSpecStalk_closedPoint] at h
+  rw [h]
+  exact ⟨_, rfl⟩
+
+/-- **The value at a `ℂ`-point, when the coordinates are regular there.** -/
+theorem comp_eq_of_factor (x : Spec (CommRingCat.of ℂ) ⟶ X)
+    (θ : AZ E →+* X.presheaf.stalk (x (IsLocalRing.closedPoint (CommRingCat.of ℂ))))
+    (hθ : (algebraMap _ X.functionField).comp θ = u) :
+    x ≫ π = Spec.map (CommRingCat.ofHom ((Scheme.stalkClosedPointTo x).hom.comp θ)) ≫
+      chartZ E := by
+  conv_lhs => rw [← Scheme.Spec_stalkClosedPointTo_fromSpecStalk x]
+  rw [Category.assoc, fromSpecStalk_comp_eq π u hπ hv _ θ hθ, ← Category.assoc, ← Spec.map_comp]
+  rfl
+
+end Points
+
+/-! ## Points of `E(ℂ)` from `ℂ`-points of the scheme -/
+
+open scoped WeierstrassCurve.Affine
+
+open Classical in
+/-- **The point of `E(ℂ)` of a `ℂ`-point `s : Spec ℂ ⟶ ESch E`**: `(a, b)` if `s` is the point
+`(a, b)` of the chart `D₊(Z)`, and `O` otherwise (the complement of `D₊(Z)` in `E` is
+`V₊(Z, X³) = {[0 : 1 : 0]}`). -/
+def ptOf (s : Spec (CommRingCat.of ℂ) ⟶ ESch E) : (E⁄ℂ).Point :=
+  if h : ∃ q : ℂ × ℂ, ∃ hq : (E⁄ℂ).Nonsingular q.1 q.2,
+      s = Spec.map (CommRingCat.ofHom (chartHom E q.1 q.2 hq.1)) ≫ chartZ E
+  then .some _ _ h.choose_spec.choose else 0
+
+theorem point_some_congr {x y x' y' : ℂ} (h : (E⁄ℂ).Nonsingular x y)
+    (h' : (E⁄ℂ).Nonsingular x' y') (hx : x = x') (hy : y = y') :
+    (WeierstrassCurve.Affine.Point.some x y h : (E⁄ℂ).Point) = .some x' y' h' := by
+  subst hx hy; rfl
+
+theorem chartHom_inj {a b a' b' : ℂ} (h h')
+    (he : Spec.map (CommRingCat.ofHom (chartHom E a b h)) ≫ chartZ E =
+      Spec.map (CommRingCat.ofHom (chartHom E a' b' h')) ≫ chartZ E) : a = a' ∧ b = b' := by
+  rw [cancel_mono] at he
+  have := Spec.map_injective he
+  have h2 : chartHom E a b h = chartHom E a' b' h' := congrArg CommRingCat.Hom.hom this
+  refine ⟨?_, ?_⟩
+  · have := congrArg (fun g => g (xz E)) h2; simpa [chartHom_xz] using this
+  · have := congrArg (fun g => g (yz E)) h2; simpa [chartHom_yz] using this
+
+theorem ptOf_chart {a b : ℂ} (hns : (E⁄ℂ).Nonsingular a b) :
+    ptOf E (Spec.map (CommRingCat.ofHom (chartHom E a b hns.1)) ≫ chartZ E) = .some a b hns := by
+  have hex : ∃ q : ℂ × ℂ, ∃ hq : (E⁄ℂ).Nonsingular q.1 q.2,
+      Spec.map (CommRingCat.ofHom (chartHom E a b hns.1)) ≫ chartZ E =
+        Spec.map (CommRingCat.ofHom (chartHom E q.1 q.2 hq.1)) ≫ chartZ E := ⟨(a, b), hns, rfl⟩
+  rw [ptOf, dif_pos hex]
+  obtain ⟨h1, h2⟩ := chartHom_inj E _ _ hex.choose_spec.choose_spec.symm
+  exact point_some_congr E _ _ h1 h2
+
+theorem ptOf_eq_zero (s : Spec (CommRingCat.of ℂ) ⟶ ESch E)
+    (hs : s (IsLocalRing.closedPoint (CommRingCat.of ℂ)) ∉ (chartZ E).opensRange) : ptOf E s = 0 := by
+  rw [ptOf, dif_neg]
+  rintro ⟨q, hq, rfl⟩
+  exact hs ⟨_, rfl⟩
 
 end ZInQ.GZSch
