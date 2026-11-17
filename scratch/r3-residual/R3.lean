@@ -481,6 +481,98 @@ theorem unif_holChart [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExist
 
 end Atlas
 
+section Generic3
+
+variable {g : ℕ} {X : Type*} [TopologicalSpace X] {F : Type*} [NormedAddCommGroup F]
+  [NormedSpace ℂ F]
+
+/-- **Functions holomorphic along a local biholomorphism are holomorphic in the chart.** If
+`Φ : ℂ^g → X` is continuous, `φ ∘ Φ` is holomorphic near `z` with invertible derivative at `z`
+(`Φ z ∈ φ.source`), and `h ∘ Φ` is holomorphic near `z`, then `h ∘ φ⁻¹` is holomorphic near `φ (Φ z)`. -/
+theorem holo_in_chart_of_lift (φ : OpenPartialHomeomorph X (Fin g → ℂ)) (Φ : (Fin g → ℂ) → X)
+    (hΦc : Continuous Φ) {z : Fin g → ℂ} (hz : Φ z ∈ φ.source) {O : Set (Fin g → ℂ)} (hO : IsOpen O)
+    (hzO : z ∈ O) (hd : DifferentiableOn ℂ (φ ∘ Φ) O) (hdet : (fderiv ℂ (φ ∘ Φ) z).det ≠ 0)
+    (h : X → F) {O₂ : Set (Fin g → ℂ)} (hO₂ : IsOpen O₂) (hzO₂ : z ∈ O₂)
+    (hh : DifferentiableOn ℂ (h ∘ Φ) O₂) :
+    ∃ V : Set (Fin g → ℂ), IsOpen V ∧ φ (Φ z) ∈ V ∧ DifferentiableOn ℂ (h ∘ φ.symm) V := by
+  set ψ := φ ∘ Φ with hψdef
+  have hstrict : HasStrictFDerivAt ψ
+      ((equivOfDet _ hdet : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) z := by
+    rw [equivOfDet_coe]; exact Holomorphic.hasStrictFDerivAt hO hd hzO
+  let P := hstrict.toOpenPartialHomeomorph ψ
+  have hPcoe : (P : (Fin g → ℂ) → (Fin g → ℂ)) = ψ := hstrict.toOpenPartialHomeomorph_coe
+  have hcont : ContinuousOn (fun w => (fderiv ℂ ψ w).det) O := fun w hw =>
+    (ContinuousLinearMap.continuous_det.continuousAt.comp
+      (Holomorphic.continuousAt_fderiv hO hd hw)).continuousWithinAt
+  set N := ((O ∩ (fun w => (fderiv ℂ ψ w).det) ⁻¹' {0}ᶜ) ∩ O₂) ∩ Φ ⁻¹' φ.source
+  have hNo : IsOpen N := (((hcont.isOpen_inter_preimage hO isOpen_compl_singleton).inter hO₂).inter
+    (φ.open_source.preimage hΦc))
+  let P' := P.restrOpen N hNo
+  have hP'coe : (P' : (Fin g → ℂ) → (Fin g → ℂ)) = ψ := hPcoe
+  have hP'src : P'.source = P.source ∩ N := P.restrOpen_source N hNo
+  have hzP : z ∈ P'.source := by
+    rw [hP'src]; exact ⟨hstrict.mem_toOpenPartialHomeomorph_source, ⟨⟨⟨hzO, hdet⟩, hzO₂⟩, hz⟩⟩
+  refine ⟨P'.target, P'.open_target, ?_, ?_⟩
+  · have := P'.map_source hzP
+    rwa [hP'coe] at this
+  · have hfun : EqOn (h ∘ φ.symm) ((h ∘ Φ) ∘ P'.symm) P'.target := by
+      intro x hx
+      have hw : P'.symm x ∈ P'.source := P'.map_target hx
+      rw [hP'src] at hw
+      have h1 : φ (Φ (P'.symm x)) = x := by
+        have := P'.right_inv hx
+        rwa [hP'coe] at this
+      simp only [Function.comp_apply]
+      conv_lhs => rw [← h1]
+      rw [φ.left_inv hw.2.2]
+    refine DifferentiableOn.congr (fun x hx => ?_) hfun
+    have hw : P'.symm x ∈ P'.source := P'.map_target hx
+    rw [hP'src] at hw
+    have hwN := hw.2
+    have hfd : HasFDerivAt (P' : (Fin g → ℂ) → (Fin g → ℂ))
+        ((equivOfDet _ hwN.1.1.2 : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ)) : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ))
+        (P'.symm x) := by
+      rw [hP'coe]
+      convert (hd.differentiableAt (hO.mem_nhds hwN.1.1.1)).hasFDerivAt using 1
+      exact equivOfDet_coe _ _
+    have hsd := P'.hasFDerivAt_symm hx hfd
+    exact ((hh.differentiableAt (hO₂.mem_nhds hwN.1.2)).comp x
+      (HasFDerivAt.differentiableAt (𝕜 := ℂ) hsd)).differentiableWithinAt
+
+end Generic3
+
+section Regular
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- **Regular functions are holomorphic in every holomorphic chart** (Φ-free statement, through T35):
+for a regular function `f ∈ Γ(V, 𝒪_𝒢)` and a holomorphic chart `φ`, `f ∘ φ⁻¹` is holomorphic near
+`φ q` for every `q ∈ φ.source ∩ V(ℂ)`. So `IsHolChart` gives the complex-analytic structure of
+`A_τ(ℂ)^an` in which the regular functions are holomorphic. -/
+theorem regular_holo_in_holChart [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExists)
+    (𝒢 : GroupModel A L) (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (V : 𝒢.G.left.Opens) (f : Γ(𝒢.G.left, V)) :
+    letI := anTop 𝒢 τ
+    ∀ (φ : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ)), IsHolChart 𝒢 τ φ →
+    ∀ q ∈ φ.source, ⊤ ≤ q.left ⁻¹ᵁ V →
+    ∃ O : Set (Fin g → ℂ), IsOpen O ∧ φ q ∈ O ∧
+      DifferentiableOn ℂ (fun x => 𝒢.evalAt (φ.symm x) V f) O := by
+  letI := anTop 𝒢 τ
+  intro φ hφ q hq hqV
+  obtain ⟨M, rfl⟩ := exists_metrized hT35 𝒢 g hg
+  obtain ⟨Φ₀, hΦ₀, -⟩ := M.arch τ
+  haveI : T2Space (M.model.Pts τ) := analyticPointsT2 K A L M.model τ
+  haveI := M.hodge.periods_discrete τ
+  haveI := M.hodge.periods_isZLattice τ
+  have hUnif : TorusVolume.IsUnif (M.hodge.periods τ) Φ₀ :=
+    ⟨continuous_of_isAnalyticUniformization M.model τ hΦ₀, hΦ₀.1, hΦ₀.2.1, hΦ₀.2.2.1⟩
+  obtain ⟨z, rfl⟩ := hUnif.surj q
+  obtain ⟨O, hOo, hzO, hdO, hdetO⟩ := unif_holChart hT35 M.model g hg τ hΦ₀ φ hφ z hq
+  exact holo_in_chart_of_lift φ Φ₀ hUnif.cont hq hOo hzO hdO hdetO
+    (fun p => M.model.evalAt p V f) (hΦ₀.2.2.2.1 V) hqV (hΦ₀.2.2.2.2 V f)
+
+end Regular
+
 /-! ## §4. Change of variables for densities (Mathlib's Jacobian estimates) -/
 
 section Jacobian
@@ -827,6 +919,64 @@ theorem javanpeykarAnMap_of_printed (h : JavanpeykarRebase.JavanpeykarPrintedMap
     (hT35 : ZInQ.LeafPush2.UniformizationExists) : JavanpeykarAnMap := by
   intro K _ _ X _ _ hproj W repW htcW V hVW hg1 β d hβ hd0 x hx
   exact h K X hproj W repW htcW V hVW hg1 β d hβ hd0 x ((isAnStableHeight_iff hT35 _ x).mp hx)
+
+/-- `deg_B(X)`: the least degree of a Belyi map `X → ℙ¹` (Javanpeykar 2014 §1: the least degree of a
+finite morphism `X → ℙ¹_ℚ̄` unramified over `ℙ¹ ∖ {0, 1, ∞}`; `IsBelyiMap`). -/
+noncomputable def belyiDegree {k : Type} [Field k] (C : Over (Spec (CommRingCat.of k)))
+    [IsIntegral C.left] : ℕ :=
+  sInf {d : ℕ | 0 < d ∧ ∃ β : C.left ⟶ P1 k, IsBelyiMap C β d}
+
+theorem belyiDegree_le {k : Type} [Field k] (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+    (β : C.left ⟶ P1 k) (d : ℕ) (hβ : IsBelyiMap C β d) (hd : 0 < d) : belyiDegree C ≤ d :=
+  Nat.sInf_le ⟨hd, β, hβ⟩
+
+/-- **Leaf R18-Javanpeykar over the print's stable height, with `deg_B`** (A. Javanpeykar, *Polynomial
+bounds for Arakelov invariants of Belyi curves*, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90; height
+identification p. 98 (arXiv:1403.6404v1 §2.3); locators recorded by the locator audit,
+docs/research/locators.md row R18). Printed: for a smooth projective connected curve `X/ℚ̄` of genus
+`g ≥ 1`, `h_Fal(X) ≤ 13·10⁶ · g · deg_B(X)⁵`. Stated at `X = X₀ ×_K ℚ̄` as `JavanpeykarAnMap`, but with
+the printed `deg_B(X)` (`belyiDegree`, the least degree of a Belyi map) instead of the degree of a given
+Belyi map; the hypothesis that a Belyi map exists is Belyi's theorem (it only weakens the statement). -/
+def JavanpeykarAnMin : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (X : Over (Spec (CommRingCat.of K))) [IsCurve X]
+    [IsIntegral (baseChangeCurve X (AlgebraicClosure K)).left],
+    (∃ (n : Type) (_ : Finite n)
+      (i : (baseChangeCurve X (AlgebraicClosure K)).left ⟶
+        ℙ(n; Spec (CommRingCat.of (AlgebraicClosure K)))),
+      IsClosedImmersion i ∧ i ≫ ℙ(n; Spec (CommRingCat.of (AlgebraicClosure K))) ↘
+        Spec (CommRingCat.of (AlgebraicClosure K)) = (baseChangeCurve X (AlgebraicClosure K)).hom) →
+    ∀ (W : AbelianVariety (AlgebraicClosure K))
+      (repW : (picardFunctorDegree (baseChangeCurve X (AlgebraicClosure K)).hom 0).obj.RepresentableBy
+        W.group.X),
+      PicardTensorCompatible (baseChangeCurve X (AlgebraicClosure K)).hom W.group repW →
+    ∀ V : AbelianVariety K, Nonempty ((AbelianVariety.baseChange K (AlgebraicClosure K)).obj V ≅ W) →
+    1 ≤ genusBar X →
+    (∃ (β : (baseChangeCurve X (AlgebraicClosure K)).left ⟶ P1 (AlgebraicClosure K)) (d : ℕ),
+      IsBelyiMap (baseChangeCurve X (AlgebraicClosure K)) β d ∧ 0 < d) →
+    ∀ x : ℝ, IsAnStableHeight (ofVendored V) x →
+      x ≤ javanpeykarBound (genusBar X) (belyiDegree (baseChangeCurve X (AlgebraicClosure K)))
+
+/-- **The given-degree form from the `deg_B` form** (`deg_B ≤ d` and the bound is increasing in `d`). -/
+theorem javanpeykarAnMap_of_min (h : JavanpeykarAnMin) : JavanpeykarAnMap := by
+  intro K _ _ X _ _ hproj W repW htcW V hVW hg1 β d hβ hd0 x hx
+  exact (h K X hproj W repW htcW V hVW hg1 ⟨β, d, hβ, hd0⟩ x hx).trans
+    (ZInQ.LeafPush2.javanpeykarBound_mono (belyiDegree_le _ β d hβ hd0))
+
+/-- **The field `javanpeykarPrintedMapHF`** from the `deg_B` leaf over the print's height and
+`mumfordTorsionAlgClosed` (`uniformizationLeafAll` filled by its proof). -/
+theorem javanpeykarPrintedMap_of_an_min (h : JavanpeykarAnMin)
+    (hMT : AvSplit.MumfordTorsionAlgClosed) : JavanpeykarRebase.JavanpeykarPrintedMap :=
+  javanpeykarPrintedMap_of_an (javanpeykarAnMap_of_min h) hMT
+
+/-- The `deg_B` leaf is never stronger than the given-degree leaf: `deg_B` is attained (`Nat.sInf_mem`). -/
+theorem javanpeykarAnMin_of_map (h : JavanpeykarAnMap) : JavanpeykarAnMin := by
+  intro K _ _ X _ _ hproj W repW htcW V hVW hg1 hex x hx
+  obtain ⟨β, d, hβ, hd0⟩ := hex
+  have hne : ({d : ℕ | 0 < d ∧ ∃ β : (baseChangeCurve X (AlgebraicClosure K)).left ⟶
+      P1 (AlgebraicClosure K), IsBelyiMap (baseChangeCurve X (AlgebraicClosure K)) β d}).Nonempty :=
+    ⟨d, hd0, β, hβ⟩
+  obtain ⟨hpos, β₀, hβ₀⟩ := Nat.sInf_mem hne
+  exact h K X hproj W repW htcW V hVW hg1 β₀ _ hβ₀ hpos x hx
 
 end Javanpeykar
 
