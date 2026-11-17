@@ -541,4 +541,344 @@ theorem eq_of_norm_RsZ_le_bdd {P Q : ℚ_[ℓ][X]} (hP : P.Monic) (hQ : Q.Monic)
 
 end Compare
 
+/-! ## 4. Integrality from integer values of `∏ (a^m − q)` -/
+
+section Ultra
+
+variable {W : Type*} [NormedField W] [IsUltrametricDist W]
+
+theorem norm_multiset_sum_le_one {s : Multiset W} (h : ∀ x ∈ s, ‖x‖ ≤ 1) : ‖s.sum‖ ≤ 1 := by
+  induction s using Multiset.induction_on with
+  | empty => simp
+  | cons a s ih =>
+    rw [Multiset.sum_cons]
+    exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h a (Multiset.mem_cons_self a s))
+      (ih fun x hx => h x (Multiset.mem_cons_of_mem hx)))
+
+theorem norm_multiset_prod_le_one {s : Multiset W} (h : ∀ x ∈ s, ‖x‖ ≤ 1) : ‖s.prod‖ ≤ 1 := by
+  induction s using Multiset.induction_on with
+  | empty => simp
+  | cons a s ih =>
+    rw [Multiset.prod_cons, norm_mul]
+    exact mul_le_one₀ (h a (Multiset.mem_cons_self a s)) (norm_nonneg _)
+      (ih fun x hx => h x (Multiset.mem_cons_of_mem hx))
+
+theorem norm_esymm_le_one {s : Multiset W} (h : ∀ x ∈ s, ‖x‖ ≤ 1) (k : ℕ) : ‖s.esymm k‖ ≤ 1 := by
+  unfold Multiset.esymm
+  refine norm_multiset_sum_le_one fun x hx => ?_
+  obtain ⟨t, ht, rfl⟩ := Multiset.mem_map.mp hx
+  exact norm_multiset_prod_le_one fun y hy =>
+    h y (Multiset.mem_of_le (Multiset.mem_powersetCard.mp ht).1 hy)
+
+end Ultra
+
+theorem pow_card_le_prod_map {ι : Type*} (s : Multiset ι) (f : ι → ℝ) (c : ℝ) (hc : 0 ≤ c)
+    (h : ∀ i ∈ s, c ≤ f i) : c ^ Multiset.card s ≤ (s.map f).prod := by
+  induction s using Multiset.induction_on with
+  | empty => simp
+  | cons a s ih =>
+    have ha := h a (Multiset.mem_cons_self a s)
+    have ih' := ih fun i hi => h i (Multiset.mem_cons_of_mem hi)
+    rw [Multiset.card_cons, Multiset.map_cons, Multiset.prod_cons]
+    calc c ^ (Multiset.card s + 1) = c * c ^ Multiset.card s := by ring
+      _ ≤ f a * (s.map f).prod := mul_le_mul ha ih' (pow_nonneg hc _) (hc.trans ha)
+
+/-- A rational number of `q`-adic absolute value `≤ 1` for every prime `q` is an integer. -/
+theorem exists_int_of_norm_le_one (r : ℚ) (h : ∀ (q : ℕ) [Fact q.Prime], ‖(r : ℚ_[q])‖ ≤ 1) :
+    ∃ z : ℤ, (z : ℚ) = r := by
+  refine ⟨r.num, Rat.coe_int_num_of_den_eq_one ?_⟩
+  by_contra hne
+  obtain ⟨q, hq, hqd⟩ := Nat.exists_prime_and_dvd hne
+  haveI : Fact q.Prime := ⟨hq⟩
+  have hu := PadicInt.isUnit_den r (h q)
+  rw [PadicInt.isUnit_iff] at hu
+  have hlt : ‖((r.den : ℤ) : ℤ_[q])‖ < 1 :=
+    (PadicInt.norm_int_lt_one_iff_dvd _).mpr (by exact_mod_cast hqd)
+  rw [Int.cast_natCast] at hlt
+  linarith
+
+section QAdic
+
+variable (q : ℕ) [hq : Fact q.Prime]
+
+/-- **The roots are `q`-adically integral.** If `∏_{P(a)=0} (a^m − q)` is an integer for every `m`, every
+root of the monic `P ∈ ℚ[X]` in `ℚ̄_q` has absolute value `≤ 1`: a root `a₀` with `|a₀| > 1` contributes
+`|a₀|^m` and every other factor is `≥ |q|` for `m` large. -/
+theorem norm_roots_le_one (P : ℚ[X])
+    (h : ∀ m : ℕ, ∃ z : ℤ,
+      Rs (P.map (algebraMap ℚ (PadicAlgCl q))) (X ^ m - C (q : PadicAlgCl q)) = z) :
+    ∀ a ∈ (P.map (algebraMap ℚ (PadicAlgCl q))).roots, ‖a‖ ≤ 1 := by
+  classical
+  set W := PadicAlgCl q
+  set PW := P.map (algebraMap ℚ W)
+  intro a0 ha0
+  by_contra hlt
+  push Not at hlt
+  set c : ℝ := ((q : ℝ))⁻¹ with hc_def
+  have hq1 : (1 : ℝ) < q := by exact_mod_cast hq.out.one_lt
+  have hc0 : 0 < c := inv_pos.mpr (zero_lt_one.trans hq1)
+  have hc1 : c < 1 := inv_lt_one_of_one_lt₀ hq1
+  have hqn : ‖(q : W)‖ = c := by simpa using norm_natCast_prime_pow (ℓ := q) 1
+  have hev : ∀ᶠ m in atTop, ∀ a ∈ PW.roots.toFinset, ‖a‖ < 1 → ‖a‖ ^ m < c := by
+    rw [eventually_all_finset]
+    intro a _
+    by_cases ha : ‖a‖ < 1
+    · have := tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg a) ha
+      filter_upwards [this.eventually (gt_mem_nhds hc0)] with m hm _ using hm
+    · exact Eventually.of_forall fun m h => absurd h ha
+  obtain ⟨s', hs'⟩ := Multiset.exists_cons_of_mem ha0
+  set K := Multiset.card s'
+  have hgrow : Tendsto (fun m : ℕ => ‖a0‖ ^ m * c ^ K) atTop atTop :=
+    (tendsto_pow_atTop_atTop_of_one_lt hlt).atTop_mul_const (pow_pos hc0 K)
+  obtain ⟨m, hm1, hm2⟩ := (hev.and (hgrow.eventually_gt_atTop 1)).exists
+  obtain ⟨z, hz⟩ := h m
+  have hzle : ‖(z : W)‖ ≤ 1 := by
+    have : (z : W) = algebraMap ℚ_[q] W (z : ℚ_[q]) := by simp
+    rw [this, PadicAlgCl.norm_extends]
+    exact Padic.norm_int_le_one z
+  have hbigf : ∀ a : W, 1 ≤ ‖a‖ → ‖a ^ m - (q : W)‖ = ‖a‖ ^ m := by
+    intro a ha
+    have hbig : ‖(q : W)‖ < ‖a ^ m‖ := by rw [hqn, norm_pow]; exact hc1.trans_le (one_le_pow₀ ha)
+    rw [sub_eq_add_neg, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm
+      (by rw [norm_neg]; exact hbig.ne'), norm_neg, max_eq_left hbig.le, norm_pow]
+  have hfac : ∀ a ∈ PW.roots, c ≤ ‖a ^ m - (q : W)‖ := by
+    intro a ha
+    by_cases h1 : 1 ≤ ‖a‖
+    · rw [hbigf a h1]
+      exact hc1.le.trans (one_le_pow₀ h1)
+    · push Not at h1
+      have hsm : ‖a ^ m‖ < ‖(q : W)‖ := by
+        rw [hqn, norm_pow]; exact hm1 a (Multiset.mem_toFinset.mpr ha) h1
+      rw [sub_eq_add_neg, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm
+        (by rw [norm_neg]; exact hsm.ne), norm_neg]
+      exact le_max_of_le_right hqn.ge
+  have hRs : ‖Rs PW (X ^ m - C (q : W))‖ =
+      ‖a0 ^ m - (q : W)‖ * (s'.map (fun a => ‖a ^ m - (q : W)‖)).prod := by
+    unfold Rs
+    rw [hs', Multiset.map_cons, Multiset.prod_cons, norm_mul, norm_multiset_prod_map]
+    simp only [eval_sub, eval_pow, eval_X, eval_C]
+  have hlow : ‖a0‖ ^ m * c ^ K ≤ ‖Rs PW (X ^ m - C (q : W))‖ := by
+    rw [hRs, hbigf a0 hlt.le]
+    refine mul_le_mul_of_nonneg_left (pow_card_le_prod_map s' _ c hc0.le fun a ha => ?_)
+      (by positivity)
+    exact hfac a (by rw [hs']; exact Multiset.mem_cons_of_mem ha)
+  rw [hz] at hlow
+  linarith
+
+theorem norm_coeff_le_one (P : ℚ[X]) (hP : P.Monic)
+    (h : ∀ m : ℕ, ∃ z : ℤ,
+      Rs (P.map (algebraMap ℚ (PadicAlgCl q))) (X ^ m - C (q : PadicAlgCl q)) = z) (k : ℕ) :
+    ‖((P.coeff k : ℚ) : ℚ_[q])‖ ≤ 1 := by
+  set W := PadicAlgCl q
+  set PW := P.map (algebraMap ℚ W)
+  have hroots := norm_roots_le_one q P h
+  have hcard : Multiset.card PW.roots = PW.natDegree :=
+    ((IsAlgClosed.splits PW).natDegree_eq_card_roots).symm
+  have hcoeffW : ‖PW.coeff k‖ ≤ 1 := by
+    by_cases hk : k ≤ PW.natDegree
+    · rw [coeff_eq_esymm_roots_of_card hcard hk, (hP.map _).leadingCoeff, one_mul, norm_mul,
+        norm_pow, norm_neg, norm_one, one_pow, one_mul]
+      exact norm_esymm_le_one hroots _
+    · rw [coeff_eq_zero_of_natDegree_lt (not_le.mp hk), norm_zero]; exact zero_le_one
+  rw [coeff_map, ← algebraMap_rat_comp (ℓ := q) W, RingHom.comp_apply,
+    PadicAlgCl.norm_extends] at hcoeffW
+  simpa using hcoeffW
+
+end QAdic
+
+/-- **Integrality.** A monic `P ∈ ℚ[X]` such that `∏_{P(a)=0} (a^m − q)` (roots in `ℚ̄_q`) is an integer
+for every prime `q` and every `m` is the image of a monic integer polynomial. -/
+theorem exists_int_poly_of_Rs (P : ℚ[X]) (hP : P.Monic)
+    (h : ∀ (q : ℕ) [Fact q.Prime] (m : ℕ), ∃ z : ℤ,
+      Rs (P.map (algebraMap ℚ (PadicAlgCl q))) (X ^ m - C (q : PadicAlgCl q)) = z) :
+    ∃ Z : ℤ[X], Z.Monic ∧ Z.map (Int.castRingHom ℚ) = P := by
+  have hlifts : P ∈ Polynomial.lifts (Int.castRingHom ℚ) := by
+    rw [Polynomial.lifts_iff_coeff_lifts]
+    intro k
+    obtain ⟨z, hz⟩ := exists_int_of_norm_le_one (P.coeff k) fun q _ =>
+      norm_coeff_le_one q P hP (h q) k
+    exact ⟨z, by rw [eq_intCast]; exact hz⟩
+  obtain ⟨Z, hZ, -, hZm⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hlifts hP
+  exact ⟨Z, hZm, hZ⟩
+
+/-! ## 5. Mumford's theorem without a relation for `φ` -/
+
+section Main
+
+variable {E : Type*} [Ring E] (φ : E) (deg : E → ℕ)
+
+theorem deg_eq_NtDZ {D : ℕ} (N : MvPolynomial (Fin (D + 1)) ℚ)
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (F : ℤ[X]) (hF : F.natDegree ≤ D) : (deg (aeval φ F) : ℚ) = NtDZ N F := by
+  have h1 : aeval φ F = ∑ i : Fin (D + 1), (F.coeff i) • φ ^ (i : ℕ) := by
+    conv_lhs => rw [eq_sum_fin F D hF]
+    rw [map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [map_mul, aeval_C, map_pow, aeval_X, Algebra.algebraMap_eq_smul_one, smul_mul_assoc,
+      one_mul]
+  rw [h1, hpoly, NtDZ, NtD, ← MvPolynomial.coe_aeval_eq_eval]
+  simp_rw [coeff_map]
+  rfl
+
+variable {φ deg}
+
+theorem NtD_one {D : ℕ} {N : MvPolynomial (Fin (D + 1)) ℚ}
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (hdeg1 : deg 1 = 1) : NtDZ N 1 = 1 := by
+  rw [← deg_eq_NtDZ φ deg N hpoly 1 (by rw [natDegree_one]; exact Nat.zero_le _)]
+  simp [hdeg1]
+
+/-- **`N(F) = ∏_{P₀(a)=0} F(a)` for `deg F ≤ D`**, over any algebraically closed field of
+characteristic `0`. -/
+theorem NtD_eq_Rs {D n : ℕ} {N : MvPolynomial (Fin (D + 1)) ℚ} (hN : N.IsHomogeneous n)
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (hdeg1 : deg 1 = 1)
+    (hmul : ∀ ψ χ : E, deg ψ ≠ 0 → deg χ ≠ 0 → deg (ψ * χ) = deg ψ * deg χ)
+    (W : Type*) [Field W] [IsAlgClosed W] [CharZero W] (F : W[X]) (hF : F.natDegree ≤ D) :
+    NtD N W F = Rs ((P0D N).map (algebraMap ℚ W)) F := by
+  have hDN := deg_eq_NtDZ φ deg N hpoly
+  have h1 : NtDZ N 1 = 1 := NtD_one hpoly hdeg1
+  have hmulZ : ∀ a b, a + b ≤ D → ∀ F G : ℤ[X], F.natDegree ≤ a → G.natDegree ≤ b →
+      NtDZ N F ≠ 0 → NtDZ N G ≠ 0 → NtDZ N (F * G) = NtDZ N F * NtDZ N G := by
+    intro a b hab F G hFa hGb hF hG
+    have hFG : (F * G).natDegree ≤ D := natDegree_mul_le.trans (by omega)
+    rw [← hDN F (by omega)] at hF ⊢
+    rw [← hDN G (by omega)] at hG ⊢
+    rw [← hDN _ hFG, map_mul, hmul _ _ (by exact_mod_cast hF) (by exact_mod_cast hG),
+      Nat.cast_mul]
+  have hNt1Q : NtD N ℚ (1 : ℚ[X]) = 1 := by
+    have := h1
+    rwa [NtDZ, Polynomial.map_one] at this
+  have hNt1 : NtD N W 1 = 1 := by
+    have := NtD_map N (Algebra.ofId ℚ W) (1 : ℚ[X])
+    rw [Polynomial.map_one, hNt1Q, map_one] at this
+    exact this
+  obtain ⟨hP0m, hP0d⟩ := P0D_monic N hN h1
+  refine eq_Rs_of_mul_trunc (NtD N W) D n _ (hP0m.map _) (by rw [natDegree_map, hP0d])
+    (fun F G h => NtD_mul N F.natDegree G.natDegree h h1 (hmulZ _ _ h) W F G le_rfl le_rfl)
+    (fun c => ?_) (fun r => ?_) F hF
+  · rw [← mul_one (C c), NtD_C_mul N hN, hNt1, mul_one]
+  · rw [show (X - C r : W[X]) = C (-1) * (C r - X) by rw [C_neg, C_1]; ring, NtD_C_mul N hN,
+      NtD_C_sub_X]
+
+theorem NtD_intPoly {D : ℕ} {N : MvPolynomial (Fin (D + 1)) ℚ}
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (W : Type*) [Field W] [CharZero W] (F : ℤ[X]) (hF : F.natDegree ≤ D) :
+    NtD N W (F.map (Int.castRingHom W)) = (deg (aeval φ F) : W) := by
+  have := NtD_map N (Algebra.ofId ℚ W) (F.map (Int.castRingHom ℚ))
+  rw [Polynomial.map_map] at this
+  rw [show (Int.castRingHom W) = ((Algebra.ofId ℚ W : ℚ →ₐ[ℚ] W) : ℚ →+* W).comp
+    (Int.castRingHom ℚ) from RingHom.ext_int _ _, this]
+  change algebraMap ℚ W (NtDZ N F) = _
+  rw [← deg_eq_NtDZ φ deg N hpoly F hF, map_natCast]
+
+/-- **Mumford's `charpoly T_ℓ(φ) = P_φ`, abstract form, with no relation for `φ`.** Let `E` be a ring,
+`deg : E → ℕ`, `φ ∈ E`. Assume `deg` is a homogeneous polynomial function of degree `n` on the polynomials
+of degree `≤ D` in `φ` (`D ≥ n`), `deg 1 = 1`, `deg(ψχ) = deg ψ · deg χ` when both are nonzero, and
+`ρ : E → M_I(ℚ_ℓ)` a ring homomorphism with `#I = n` and `|deg ψ|_ℓ ≤ |det ρ(ψ)|_ℓ` when `deg ψ ≠ 0`.
+Then `charpoly ρ(φ) = P₀ = N(t − X)`. -/
+theorem charpoly_eq_P0D {ℓ : ℕ} [Fact ℓ.Prime] {D n : ℕ} (hnD : n ≤ D)
+    {N : MvPolynomial (Fin (D + 1)) ℚ} (hN : N.IsHomogeneous n)
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (hdeg1 : deg 1 = 1)
+    (hmul : ∀ ψ χ : E, deg ψ ≠ 0 → deg χ ≠ 0 → deg (ψ * χ) = deg ψ * deg χ)
+    {I : Type*} [Fintype I] [DecidableEq I] (ρ : E →+* Matrix I I ℚ_[ℓ])
+    (hI : Fintype.card I = n)
+    (hlink : ∀ ψ : E, deg ψ ≠ 0 → ‖(deg ψ : ℚ_[ℓ])‖ ≤ ‖(ρ ψ).det‖) :
+    (P0D N).map (algebraMap ℚ ℚ_[ℓ]) = (ρ φ).charpoly := by
+  classical
+  set W := PadicAlgCl ℓ
+  set ι := algebraMap ℚ_[ℓ] W with hι
+  have h1 : NtDZ N 1 = 1 := NtD_one hpoly hdeg1
+  obtain ⟨hP0m, hP0d⟩ := P0D_monic N hN h1
+  set Pℓ := (P0D N).map (algebraMap ℚ ℚ_[ℓ]) with hPℓ
+  have hPPℓ : Pℓ.map ι = (P0D N).map (algebraMap ℚ W) := by
+    rw [hPℓ, Polynomial.map_map, hι, algebraMap_rat_comp]
+  set M := ρ φ with hM
+  set Q := M.charpoly with hQ
+  have hRsP : ∀ F : ℤ[X], F.natDegree ≤ D → RsZ Pℓ F = (deg (aeval φ F) : W) := by
+    intro F hF
+    unfold RsZ
+    rw [← hι, hPPℓ, ← NtD_eq_Rs hN hpoly hdeg1 hmul W _ ((natDegree_map_le).trans hF),
+      NtD_intPoly hpoly W F hF]
+  have hRsQ : ∀ F : ℤ[X], RsZ Q F = ι ((ρ (aeval φ F)).det) := by
+    intro F
+    unfold RsZ
+    rw [← hι, hQ, ← Matrix.charpoly_map, ← det_aeval_eq_Rs]
+    rw [← algebraMap_int_eq, aeval_map_algebraMap]
+    have e1 : aeval (M.map ι) F = (ι.mapMatrix (aeval M F)) := by
+      have := Polynomial.aeval_algHom_apply (ι.mapMatrix.toIntAlgHom : Matrix I I ℚ_[ℓ] →ₐ[ℤ] _) M F
+      exact this
+    have e2 : aeval M F = ρ (aeval φ F) := by
+      rw [hM]
+      exact Polynomial.aeval_algHom_apply (ρ.toIntAlgHom) φ F
+    rw [e1, e2, RingHom.map_det]
+  refine eq_of_norm_RsZ_le_bdd (hP0m.map _) (Matrix.charpoly_monic M)
+    (by rw [hPℓ, natDegree_map, hP0d, hQ, Matrix.charpoly_natDegree_eq_dim, hI]) fun F hFd hF => ?_
+  have hFD : F.natDegree ≤ D := by
+    rw [hQ, Matrix.charpoly_natDegree_eq_dim, hI] at hFd; omega
+  rw [hRsP F hFD] at hF ⊢
+  rw [hRsQ]
+  have hDF : deg (aeval φ F) ≠ 0 := by
+    intro h0; apply hF; rw [h0, Nat.cast_zero]
+  have := hlink (aeval φ F) hDF
+  rw [hι, PadicAlgCl.norm_extends ℓ, ← map_natCast ι, hι, PadicAlgCl.norm_extends ℓ]
+  exact this
+
+theorem P0D_eval_int {D : ℕ} (hD1 : 1 ≤ D) {N : MvPolynomial (Fin (D + 1)) ℚ}
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N) (t : ℤ) :
+    (P0D N).eval (t : ℚ) = (deg ((t : E) - φ) : ℚ) := by
+  have h := NtD_C_sub_X N ℚ (t : ℚ)
+  rw [show algebraMap ℚ ℚ = RingHom.id ℚ from rfl, Polynomial.map_id] at h
+  rw [← h]
+  have hF : (C t - X : ℤ[X]).natDegree ≤ D :=
+    (natDegree_sub_le _ _).trans (max_le (by rw [natDegree_C]; exact Nat.zero_le _)
+      (natDegree_X_le.trans hD1))
+  have := deg_eq_NtDZ φ deg N hpoly (C t - X) hF
+  rw [map_sub, aeval_C, aeval_X, algebraMap_int_eq, eq_intCast] at this
+  rw [this, NtDZ, Polynomial.map_sub, map_C, map_X, eq_intCast]
+
+/-- **`P₀ ∈ ℤ[X]`**, from the polynomial function on polynomials of every degree in `φ`. -/
+theorem P0D_int {D n : ℕ} (hD1 : 1 ≤ D) {N : MvPolynomial (Fin (D + 1)) ℚ}
+    (hN : N.IsHomogeneous n)
+    (hpoly : ∀ x : Fin (D + 1) → ℤ,
+      (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N)
+    (hdeg1 : deg 1 = 1)
+    (hmul : ∀ ψ χ : E, deg ψ ≠ 0 → deg χ ≠ 0 → deg (ψ * χ) = deg ψ * deg χ)
+    (hall : ∀ D' : ℕ, ∃ N' : MvPolynomial (Fin (D' + 1)) ℚ, N'.IsHomogeneous n ∧
+      ∀ x : Fin (D' + 1) → ℤ,
+        (deg (∑ i, x i • φ ^ (i : ℕ)) : ℚ) = MvPolynomial.eval (fun i => (x i : ℚ)) N') :
+    ∃ Z : ℤ[X], Z.Monic ∧ Z.map (Int.castRingHom ℚ) = P0D N := by
+  obtain ⟨hP0m, -⟩ := P0D_monic N hN (NtD_one hpoly hdeg1)
+  refine exists_int_poly_of_Rs _ hP0m fun q _ m => ?_
+  set D' := max m D
+  obtain ⟨N', hN', hpoly'⟩ := hall D'
+  have hD'1 : 1 ≤ D' := hD1.trans (le_max_right _ _)
+  have heq : P0D N' = P0D N := by
+    refine Polynomial.eq_of_infinite_eval_eq _ _ ?_
+    refine Set.infinite_of_injective_forall_mem (f := fun t : ℤ => (t : ℚ))
+      Int.cast_injective fun t => ?_
+    change (P0D N').eval (t : ℚ) = (P0D N).eval (t : ℚ)
+    rw [P0D_eval_int hD'1 hpoly' t, P0D_eval_int hD1 hpoly t]
+  have hFd : (X ^ m - C (q : ℤ) : ℤ[X]).natDegree ≤ D' :=
+    (natDegree_sub_le _ _).trans (max_le (natDegree_X_pow_le m |>.trans (le_max_left _ _))
+      (by rw [natDegree_C]; exact Nat.zero_le _))
+  refine ⟨(deg (aeval φ (X ^ m - C (q : ℤ) : ℤ[X])) : ℤ), ?_⟩
+  rw [← heq, ← NtD_eq_Rs hN' hpoly' hdeg1 hmul (PadicAlgCl q) _
+      ((natDegree_sub_le _ _).trans (max_le (natDegree_X_pow_le m |>.trans (le_max_left _ _))
+        (by rw [natDegree_C]; exact Nat.zero_le _)))]
+  have := NtD_intPoly hpoly' (PadicAlgCl q) (X ^ m - C (q : ℤ)) hFd
+  rw [Polynomial.map_sub, Polynomial.map_pow, map_X, map_C, eq_intCast, Int.cast_natCast] at this
+  rw [this]
+  push_cast
+  rfl
+
+end Main
+
 end ZInQ.Contrib.OneProof.CharPolyCharP
