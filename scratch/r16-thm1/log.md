@@ -22,3 +22,12 @@
   connected kernel (rendered KerConnected). Even then IsAfQuotient needs ker nu = I_f J, i.e.
   dim J/I_f J <= [K_f : Q] (multiplicity one). Named as glue ShimuraQuotientIsAf. SPECULATIVE whether the
   printed uniqueness clause states A = J/I_f J (not in the read note).
+
+## Fold (VERIFIED, 11:10)
+- scratch/r16-thm1/autofold.json: discharges heckeJ1DS (heckeJ1DS_of_bSh; leaf bShStandardModel) and afShimura
+  (afShimura_of_shimura73; leaves shimuraThm1Printed, shimuraQuotientIsAf). No generation step (both are top fields).
+- Dry run (in the worktree; --dry-run writes nothing, git status clean outside scratch):
+  `strict count: 4/27 on 31 -> 4/28 on 32; strictest 4/27 -> 4/28` (needs --allow-rise; +1 GLUE).
+- FoldCheck.lean (dry-run module, line 1 stripped): compiles; sixContactMin_of_open68 standard axioms.
+- #discharges (DischargesCheck-output.txt): afShimura by R16Thm1.afShimura_of_shimura73 (still assumes
+  ShimuraThm1Printed, ShimuraQuotientIsAf); heckeJ1DS by R16Thm1.heckeJ1DS_of_bSh (still assumes BShStandardModel).
