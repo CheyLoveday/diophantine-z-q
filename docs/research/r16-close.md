@@ -39,7 +39,7 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 3. **Count.** `r16CoreY` (GLUE) leaves. Five fields enter: `heckeJ1DS`, `afShimura`, `afTateDSLambdaSat`,
    `igusaGL2DS` (published, LEAF) and `afDetLambda` (consequence, GLUE). **GLUE is unchanged; the target −1 GLUE is
    not reached.** The obstacle is exactly the determinant of `ρ_{f,λ}` on `A_f`. The composite glue `r16CoreY` is
-   replaced by the single statement `det ρ_{f,λ}(Frob_p) = χ(p)p`. Fold dry-run numbers are in §3.
+   replaced by the single statement `det ρ_{f,λ}(Frob_p) = χ(p)p`. Fold dry run: `strict count: 11/18 on 29 -> 15/18 on 33; strictest 11/18 -> 15/18` (LEAF/GLUE), and the generated `sixContactMin_of_open49` has standard axioms (§3).
 
 4. **Fields of main (VERIFIED, grep of `docs/one-proof/kinds.tsv` and `ZInQKernel/OneProof/H/`):**
    - `mumfordTorsionAlgClosed` is an open textbook LEAF field of main's bundles (kinds.tsv row 28). It is proved
@@ -93,9 +93,37 @@ The docstrings of `AfTateDSLambda` and `AfTateDSLambdaSat` in `AfTateLambda.lean
 undecided. That file is aftate-fix2's and was not edited. The corrected wording is in the new file's header and
 in the autofold leaf docs.
 
-## 3. Checks
+## 3. Checks (VERIFIED, 2026-11-16, one Lean process at a time)
 
-PENDING (filled in from scratch/r16-close/log.md when run).
+| check | command | outcome |
+|---|---|---|
+| aftate-fix2 chain on main | `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.AfTateLambda` | `Build completed successfully (14233 jobs)`; no term needed adapting |
+| contribution | `lake build +ZInQKernel.Contrib.OneProof.R16CoreYSatDet` | OK |
+| target copy | `lake env lean scratch/r16-close/Target.lean` | verbatim copy of `R16Split.R16CoreY`, `copy_iff … := Iff.rfl`, discharge at the copy, standard axioms |
+| `#discharges` | `lake env lean scratch/r16-close/Discharges.lean` (`Discharges-output.txt`) | below |
+| fold dry run | `python3 scripts/one_proof/autofold.py scratch/r16-close/autofold.json --dry-run`, line 1 stripped, `lake env lean scratch/r16-close/FoldDryRun.lean` | `strict count: 11/18 on 29 -> 15/18 on 33; strictest 11/18 -> 15/18` (LEAF/GLUE); `'HDec.HSyn.sixContactMin_of_open49' depends on axioms: [propext, Classical.choice, Quot.sound]` |
+| build-time code | grep for `#eval`, `run_cmd`, `initialize`, `syntax`, `notation`, `macro`, `elab`, `sorry`, `axiom` | only the docstring line "No `sorry`, no `axiom`, no build-time code" |
+
+```
+DISCHARGES [OpenResearchLeaves31.r16CoreY] by AfTateLam.r16CoreY_of_sat_det
+  still assumes: [AfTateLam.HeckeJ1DS,
+ AfTateLam.AfShimura,
+ AfTateLam.AfTateDSLambdaSat,
+ AfTateLam.AfDetLambda,
+ X1Igusa.IgusaGL2DS,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 35 open hypotheses, 10326 theorems checked, 45 discharge one
+```
+
+The fold adds four LEAF (`heckeJ1DS`, `afShimura`, `afTateDSLambdaSat`, `igusaGL2DS`) and one GLUE (`afDetLambda`)
+and removes one GLUE (`r16CoreY`): 11/18 → 15/18. The spec keeps `{t}.mumfordTorsionAlgClosed`; once fold34-pr has
+folded PR #54, substitute `_root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof`.
+
+A further route for `afDetLambda` (SPECULATIVE, not attempted): the tree has a Weil-pairing leaf on abelian
+varieties and their `Pic⁰` duals (`HDec.HSyn.WeilPairingMumford`, `ZInQKernel/OneProof/H/TailZ24.lean`). Deriving
+`det ρ_{f,λ} = χχ_ℓ` from it would also need the canonical polarization of `J₁(N)`, the adjointness
+`T_p* = ⟨p⟩⁻¹T_p` (another leaf), and glue transporting the pairing to `V_λ(A_f)`.
 
 ## 4. Leaf ratings and printed forms
 
