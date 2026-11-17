@@ -32,13 +32,13 @@ theorem eval_sub_trunc_mem (hx : x ∈ I) (n : ℕ) (P : Polynomial A) :
     P.eval x - (trunc n (P : A⟦X⟧)).eval x ∈ I ^ n := by
   rw [← Polynomial.eval_sub]
   refine eval_mem_pow_of_coeff I hx n _ fun k hk => ?_
-  rw [Polynomial.coeff_sub, coeff_trunc, if_pos hk, Polynomial.coeff_coe, sub_self]
+  rw [Polynomial.coeff_sub, coeff_trunc, ite_eq_left hk, Polynomial.coeff_coe, sub_self]
 
 theorem trunc_cauchy (hx : x ∈ I) (f : A⟦X⟧) (n : ℕ) :
     (trunc n f).eval x ≡ (trunc (n + 1) f).eval x [SMOD (I ^ n • ⊤ : Submodule A A)] := by
   rw [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top, ← Polynomial.eval_sub]
   refine eval_mem_pow_of_coeff I hx n _ fun k hk => ?_
-  rw [Polynomial.coeff_sub, coeff_trunc, coeff_trunc, if_pos hk, if_pos (by omega), sub_self]
+  rw [Polynomial.coeff_sub, coeff_trunc, coeff_trunc, ite_eq_left hk, ite_eq_left (by omega), sub_self]
 
 /-- The `I`-adic limit of the truncations `Σ_{k<n} a_k x^k`. -/
 def psEvalFun (hx : x ∈ I) (f : A⟦X⟧) : AdicCompletion I A :=
@@ -133,7 +133,7 @@ def restricted : Subring (Ainf p)⟦X⟧ where
   carrier := {f | PAdicNull p fun n => PowerSeries.coeff n f}
   one_mem' k := ⟨1, fun n hn => by
     beta_reduce
-    rw [PowerSeries.coeff_one, if_neg (by omega)]
+    rw [PowerSeries.coeff_one, ite_eq_right (by omega)]
     exact dvd_zero _⟩
   zero_mem' k := ⟨0, fun n _ => by beta_reduce; rw [map_zero]; exact dvd_zero _⟩
   add_mem' {f g} hf hg k := by
@@ -717,7 +717,7 @@ def logCoeff (n : ℕ) : ℤ_[p] :=
 theorem logCoeff_spec {n : ℕ} (hn : n ≠ 0) :
     (logCoeff p n : ℚ_[p]) * n = (p : ℚ_[p]) ^ n ∧ ∀ k, 2 * k ≤ n → (p : ℤ_[p]) ^ k ∣ logCoeff p n := by
   obtain ⟨v, h1, h2, h3⟩ := Classical.choose_spec (exists_logCoeff p n hn)
-  rw [logCoeff, dif_neg hn]
+  rw [logCoeff, dite_eq_right hn]
   refine ⟨h1, fun k hk => dvd_trans (pow_dvd_pow _ ?_) h3⟩
   have := val_bound p k n v hk h2
   omega
@@ -734,7 +734,7 @@ theorem logTeich_mem_amax {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε =
     if n = 0 then 0 else (-1) ^ (n + 1) * zpToW p (logCoeff p n) * c ^ n
   have hf : f ∈ restricted p := fun k => ⟨2 * k + 1, fun n hn => by
     change (p : Ainf p) ^ k ∣ PowerSeries.coeff n f
-    rw [PowerSeries.coeff_mk, if_neg (by omega)]
+    rw [PowerSeries.coeff_mk, ite_eq_right (by omega)]
     obtain ⟨d, hd⟩ := (logCoeff_spec p (show n ≠ 0 by omega)).2 k (by omega)
     refine Dvd.dvd.mul_right (Dvd.dvd.mul_left ⟨zpToW p d, ?_⟩ _) _
     rw [hd, map_mul, map_pow, map_natCast]⟩
@@ -745,7 +745,7 @@ theorem logTeich_mem_amax {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε =
   rw [PowerSeries.coeff_map, PowerSeries.coeff_mk, logSeries, PowerSeries.coeff_mk]
   by_cases hn : n = 0
   · simp [hn]
-  · rw [if_neg hn, if_neg hn, ← hc]
+  · rw [ite_eq_right hn, ite_eq_right hn, ← hc]
     have key : ((n : ℚ_[p]))⁻¹ = (logCoeff p n : ℚ_[p]) * ((p : ℚ_[p])⁻¹) ^ n := by
       have h1 := (logCoeff_spec p hn).1
       have hn' : (n : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hn
@@ -786,12 +786,12 @@ theorem derivative_logPoly (M : ℕ) :
   simp only [Polynomial.coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq (Finset.range M) m]
   by_cases hm : m < M
-  · rw [if_pos (by omega), if_pos (Finset.mem_range.mpr hm), logSeries, PowerSeries.coeff_mk,
-      if_neg (by omega)]
+  · rw [ite_eq_left (by omega), ite_eq_left (Finset.mem_range.mpr hm), logSeries, PowerSeries.coeff_mk,
+      ite_eq_right (by omega)]
     have h := natCast_mul_qp p (m + 1) (by omega)
     rw [← Nat.cast_succ]
     linear_combination (-1 : AinfP p) ^ m * h
-  · rw [if_neg (by omega), if_neg (by simpa using hm), zero_mul]
+  · rw [ite_eq_right (by omega), ite_eq_right (by simpa using hm), zero_mul]
 
 theorem one_add_X_mul_derivative_logPoly (M : ℕ) :
     (1 + Polynomial.X) * Polynomial.derivative (logPoly p (M + 1)) = 1 - (-Polynomial.X) ^ M := by
@@ -815,7 +815,7 @@ theorem dvd_of_one_add_X_mul {R : Type*} [CommRing R] (M : ℕ) (V F : Polynomia
 theorem coeff_zero_logPoly (N : ℕ) : (logPoly p N).coeff 0 = 0 := by
   rw [coeff_trunc]
   split_ifs
-  · rw [logSeries, PowerSeries.coeff_mk, if_pos rfl]
+  · rw [logSeries, PowerSeries.coeff_mk, ite_eq_left rfl]
   · rfl
 
 /-- **The key polynomial identity**: with `Y = yT`, `Z = zT`, `W = Y + Z + YZ` in `A[T]`,
@@ -1419,13 +1419,11 @@ theorem trunc_logSeries_sub_X (N : ℕ) :
   show (Polynomial.X : Polynomial (AinfP p)) ^ 2 ∣ (trunc (N + 2)) (logSeries p) - Polynomial.X
   rw [Polynomial.X_pow_dvd_iff]
   intro d hd
-  rw [Polynomial.coeff_sub, coeff_trunc, if_pos (by omega), logSeries, PowerSeries.coeff_mk,
+  rw [Polynomial.coeff_sub, coeff_trunc, ite_eq_left (by omega), logSeries, PowerSeries.coeff_mk,
     Polynomial.coeff_X]
   rcases d with _ | _ | d
   · simp
-  · have h := natCast_mul_qp p 1 one_ne_zero
-    simp only [Nat.cast_one, one_mul] at h
-    simp [h]
+  · simp
   · omega
 
 /-- **`log [ε] ≠ 0` for `ε^♯ = 1`, `ε ≠ 1`.** Write `[ε] − 1 = ξ^s w` with `θ(w) ≠ 0` (`s ≥ 1`);
