@@ -52,10 +52,78 @@ lemma tr_left_comp_mul {X : AbVar k} {n : ℕ} (x : AC.Kpt X) (hx : x ^ n = 1) :
   rw [← Over.comp_left, AC.tr_comp_mul x hx]
 
 /-- The sections `y ↦ (y, y + x)`, `x ∈ X[n]`, are open immersions. -/
-instance sec_isOpenImmersion [IsAlgClosed k] {X : AbVar k} {n : ℕ} [Fact ((n : k) ≠ 0)] (x : AC.Kpt X) (hx : x ^ n = 1) :
+theorem sec_isOpenImmersion [IsAlgClosed k] {X : AbVar k} {n : ℕ} [hF : Fact ((n : k) ≠ 0)] (x : AC.Kpt X) (hx : x ^ n = 1) :
     IsOpenImmersion (Desc.sec (AC.mul X n).left (tr_left_comp_mul x hx)) := by
   obtain ⟨hE, -, -⟩ := mul_props X n (Fact.out)
   exact ZInQ.Contrib.AbVarBC.MulRigidity.isOpenImmersion_of_section _
     (pullback.fst (AC.mul X n).left (AC.mul X n).left) (pullback.lift_fst _ _ _)
+
+lemma kpt_comp_tr {X : AbVar k} (y x : AC.Kpt X) : y ≫ AC.tr x = y * x := by
+  simp only [AC.tr, ← CategoryTheory.Hom.mul_def]
+  rw [MonObj.comp_mul, Category.comp_id, ← Category.assoc,
+    CartesianMonoidalCategory.toUnit_unique (y ≫ CartesianMonoidalCategory.toUnit X.X) (𝟙 _),
+    Category.id_comp]
+
+lemma kpt_comp_mul {X : AbVar k} (y : AC.Kpt X) (n : ℕ) : y ≫ AC.mul X n = y ^ n := by
+  simp only [AC.mul]
+  rw [MonObj.comp_pow, Category.comp_id]
+
+/-- The sections `y ↦ (y, y + x)`, `x ∈ X[n](k)`, cover `X ×_{[n],X,[n]} X` (on points). -/
+theorem sec_cover [IsAlgClosed k] (X : AbVar k) (n : ℕ) (hnk : (n : k) ≠ 0)
+    (y : (pullback (AC.mul X n).left (AC.mul X n).left : Scheme)) :
+    ∃ i : {x : AC.Kpt X // x ^ n = 1},
+      y ∈ Set.range (Desc.sec (AC.mul X n).left (tr_left_comp_mul i.1 i.2)).base := by
+  obtain ⟨hE, -, -⟩ := mul_props X n hnk
+  let m := (AC.mul X n).left
+  have hmw : m ≫ X.X.hom = X.X.hom := Over.w (AC.mul X n)
+  let str : pullback m m ⟶ Spec (CommRingCat.of k) := pullback.fst m m ≫ X.X.hom
+  have : LocallyOfFiniteType str := by dsimp [str]; infer_instance
+  have : JacobsonSpace (pullback m m : Scheme) := LocallyOfFiniteType.jacobsonSpace str
+  by_contra hy
+  push_neg at hy
+  let V : Set (pullback m m : Scheme) :=
+    ⋃ i : {x : AC.Kpt X // x ^ n = 1}, Set.range (Desc.sec m (tr_left_comp_mul i.1 i.2)).base
+  have hVo : IsOpen V := by
+    refine isOpen_iUnion fun i => ?_
+    have := sec_isOpenImmersion (n := n) (hF := ⟨hnk⟩) i.1 i.2
+    exact (Desc.sec m (tr_left_comp_mul i.1 i.2)).isOpenEmbedding.isOpen_range
+  have hZ : (Vᶜ).Nonempty := ⟨y, by simpa [V] using hy⟩
+  obtain ⟨z, hzZ, hzc⟩ := nonempty_inter_closedPoints hZ hVo.isClosed_compl.isLocallyClosed
+  let σ := pointOfClosedPoint str z hzc
+  have hσ : σ ≫ str = 𝟙 _ := pointOfClosedPoint_comp str z hzc
+  let x1 : AC.Kpt X := Over.homMk (σ ≫ pullback.fst m m) (by
+    change (σ ≫ pullback.fst m m) ≫ X.X.hom = 𝟙 _
+    rw [Category.assoc]; exact hσ)
+  let x2 : AC.Kpt X := Over.homMk (σ ≫ pullback.snd m m) (by
+    change (σ ≫ pullback.snd m m) ≫ X.X.hom = 𝟙 _
+    rw [Category.assoc, ← hmw, ← Category.assoc (pullback.snd m m), ← pullback.condition, Category.assoc,
+      hmw]
+    exact hσ)
+  have hx12 : x1 ≫ AC.mul X n = x2 ≫ AC.mul X n := by
+    apply Over.OverMorphism.ext
+    change (σ ≫ pullback.fst m m) ≫ m = (σ ≫ pullback.snd m m) ≫ m
+    rw [Category.assoc, Category.assoc, pullback.condition]
+  rw [kpt_comp_mul, kpt_comp_mul] at hx12
+  let x := x1⁻¹ * x2
+  have hx : x ^ n = 1 := by
+    simp only [x, mul_pow, inv_pow, hx12, inv_mul_cancel]
+  apply hzZ
+  refine Set.mem_iUnion.2 ⟨⟨x, hx⟩, ?_⟩
+  have hsec : x1.left ≫ Desc.sec m (tr_left_comp_mul x hx) = σ := by
+    apply pullback.hom_ext
+    · simp [x1]
+    · have h2 : (x1 ≫ AC.tr x).left = x2.left := by
+        rw [kpt_comp_tr]
+        congr 1
+        simp only [x, mul_inv_cancel_left]
+      simp only [Category.assoc, pullback.lift_snd]
+      exact h2
+  refine ⟨x1.left (IsLocalRing.closedPoint k), ?_⟩
+  have e := congrArg (fun f : Spec (CommRingCat.of k) ⟶ (pullback m m : Scheme) =>
+    f.base (IsLocalRing.closedPoint k)) hsec
+  simp only [Scheme.Hom.comp_base] at e
+  have hσz : σ.base (IsLocalRing.closedPoint k) = z := pointOfClosedPoint_apply str z hzc _
+  rw [hσz] at e
+  exact e
 
 end PhiSurj.AVDesc
