@@ -29,3 +29,4 @@ then ψ has a left inverse and ψ ∘ (χψ)⁻¹ χ = id_N by density. Group ca
     `mem_of_ringKrullDim_stalk_le_one_of_isDiscreteValuationRing`): v|U'∩V extends to U' → Y.
  F. ψ iso over each U' ; G. iso is local on the target.
 - 16:45 Part1.lean compiles: genMap_ne_closedPoint, ext_of_generic_open, exists_inverse_open (steps A-B: V, v, B1 v≫ψ=ι, B2 (ψ∣V)≫v=ι). VERIFIED (lake env lean, no errors).
+- 17:10 Part1.lean: eq_of_comp_eq and isIso_of_injective (steps D-G: injective ψ ⇒ iso via Hartogs) compile, no sorry. VERIFIED.
