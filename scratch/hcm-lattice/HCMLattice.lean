@@ -1,5 +1,27 @@
 import ZInQKernel.Contrib.OneProof.ShimuraMainCM
 
+/-!
+# hcm-lattice: `hCM` as a direct instance of Shimura 1971 Thm 5.4
+
+Task hcm-lattice (2026-11-17). Report: `docs/research/hcm-lattice.md`; log: `scratch/hcm-lattice/log.md`.
+Proposed path: `ZInQKernel/Contrib/OneProof/HCMLattice.lean` (imports only `ShimuraMainCM`, not `Main`).
+
+hcm-dict's leaf `HCMDict.ShimuraThm54` differs from the print in two steps: its hypothesis on `ξ` is the surrogate
+`IsAnalyticUnif`, and its `s⁻¹𝔞` is `K ∩ s_f⁻¹𝔞̂` rather than Shimura's lattice with `p`-components `s_p⁻¹𝔞_p`. This file
+
+* §A–§B: defines analytic isomorphisms `ℂ/Λ → E(ℂ) ⊂ ℙ²(ℂ)` over homogeneous coordinates (`IsAnalyticIso`) and
+  proves that the Weierstrass map `z ↦ [℘(z) : ℘'(z)/2 : 1]` is one (`toPoint_isAnalyticIso`);
+* §C: proves the Weierstrass-map step: a holomorphic map `ℂ → E_{L₀}(ℂ)` inducing a bijection `ℂ/L → E_{L₀}(ℂ)` with
+  `0 ↦ O` is `z ↦ ξ_{L₀}(αz)`, `L₀ = αL` (`eq_toPoint_of_holo`; Liouville applied to `x'/(2y)`);
+* §L–§O: proves Shimura's localization form `(s⁻¹𝔞)_p = s_p⁻¹𝔞_p` of hcm-dict's `sInvLat` for every lattice `𝔞`
+  (`locLat_sInvLat`; `K_p = ∏_{v ∣ p} K_v`), and that `sInvLat s 𝔞` is a lattice (`exists_periodPair_sInvLat`);
+* §P: states `ShimuraThm54Local` (the print's hypotheses, the print's `s⁻¹𝔞` and `s⁻¹u`) and proves
+  `shimuraMainCM_of_local : ShimuraThm54Local → T5Glue.ShimuraMainCM` and
+  `shimuraThm54_of_local : ShimuraThm54Local → HCMDict.ShimuraThm54`.
+
+No `sorry`, no `axiom`; only `propext`, `Classical.choice`, `Quot.sound`.
+-/
+
 noncomputable section
 
 open Complex Topology Filter
