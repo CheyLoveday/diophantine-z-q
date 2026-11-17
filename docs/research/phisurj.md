@@ -140,7 +140,32 @@ Recommended:
 
 ## 6. New leaves and their rating
 
-None.
+None (recommended reroute). The alternative of §5 would add (a) `tiClassesInPicZeroAC`, rated printed form: no,
+pending reading (reason in §5).
+
+## 6b. By-products (not on the fold's route)
+
+`ZInQKernel/Contrib/OneProof/MumfordSquareMulN.lean` (imports the contribution; `lake build` ok; axioms standard,
+`scratch/phisurj/axioms-byproducts.txt`) proves two of pic-dict's Mumford displays from L1 and L2 alone:
+
+```lean
+theorem PhiSurj.mumfordSquareAC_of_open (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar) : PicDict.MumfordSquareAC
+theorem PhiSurj.mumfordMulNPicZeroAC_of_open (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar) :
+    PicDict.MumfordMulNPicZeroAC
+```
+
+* Theorem of the square (Mumford §6 Cor. 4): `φ_c = λ_c ≫ j` with `λ_c` a homomorphism
+  (`T09Pic.exists_hom_comp_eq_phiL`, for every class `c`), so `φ_c(x + y) = φ_c(x) φ_c(y)` on `k`-points, read off
+  in `Pic` through `kClass` (injective by Kleiman 9.2.5 at `Spec k̄`, multiplicative by the vendored
+  `homEquiv_symm_toPicardFunctor_mul`).
+* `n^*c = cⁿ` for translation-invariant `c` (Mumford §8 (iv)): `λ_c` vanishes on `k`-points (`φ_c(x) = 1`), so
+  `λ_c = 0` (`hom_ext_kpt`, from the tree's `AVGlue.hom_ext_of_points` since `k ≅ k̄`); then `Λ(c)` is classified by
+  the constant map and is normalized along `0`, so `Λ(c) = 1` (`Θ_inj`, as phi-ample's step 3), i.e.
+  `m^*c = p₁^*c ⊗ p₂^*c`; induct on `n`.
+
+These were two of the four Mumford displays that weil-proof's reduction of `weilPairingMumford` still assumed
+(`MumfordSquareAC`, `MumfordMulNPicZeroAC`, `MumfordPhiSurjectiveAC`, `MumfordWeilNondegAC`). They do not change any
+count on this base (`weilPairingMumford` is a single field).
 
 ## 7. Files
 
