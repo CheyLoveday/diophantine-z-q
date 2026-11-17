@@ -23,7 +23,11 @@ This file
    that an isogeny is the quotient by its kernel (`IsogenyQuotient`; `iso_of_quotient`, `alIdeal_of_alTwist`);
 5. states `X6CoarseModuliIdeal`, the leaf with its Atkin–Lehner clause in printed form, and proves
    `X6CoarseModuliIdeal → X6CoarseModuli` (no hypothesis) and the converse from `IsogenyQuotient`;
-6. compares the two Atkin–Lehner groups on a witness (`atkinLehnerWIdeal_subset`, `atkinLehnerW_eq_of_clause`).
+6. compares the two Atkin–Lehner groups on a witness (`atkinLehnerWIdeal_subset`, `atkinLehnerW_eq_of_clause`);
+7. proves that the Galois clause of `X6CoarseModuli` is exactly the naturality square of the coarse map at
+   `Spec σ` (`galoisClause_iff_natural`, with the base change `bcAut` of a pair along `σ`);
+8. restates Elkies' leaf with Elkies' isogeny-form `W` (`ElkiesX6StarEveryIdeal`) and proves
+   `ElkiesPrint.ElkiesX6StarEvery` from it (`elkiesX6StarEvery_of_ideal'`).
 
 No `sorry`; standard axioms only.
 -/
@@ -34,7 +38,7 @@ noncomputable section
 
 namespace X6ALIdeal
 
-open CategoryTheory AlgebraicGeometry Limits MonObj
+open CategoryTheory AlgebraicGeometry Limits MonObj MonoidalCategory
 open LeafQM LeafQM.AV
 open LeafQM.AV.Pin.NormO (ei ej ui uj nrdZ two_dvd_mulCoord_ei three_dvd_mulCoord_ej)
 open HDec.LeafQM.AV.Pin.Exact (nrd nrd_mul nrd_ofInt tt rep N nrd_tt conjO_apply rep_cover)
@@ -424,21 +428,98 @@ theorem atkinLehnerW_eq_of_clause {X : Over (Spec (CommRingCat.of ℚ))}
   have : g = g' := Iso.ext heq
   exact ⟨k, this ▸ hg'⟩
 
-/-! ## 6. The leaf with its Atkin–Lehner clause in printed form -/
+/-! ## 6. The Galois clause is the naturality square of the coarse map at `Spec σ` -/
+
+section Galois
+
+variable {X : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)}
+
+/-- **The Galois clause of `X6CoarseModuli`, verbatim** (existence form). -/
+def GaloisClause (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) :
+    Prop :=
+  ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P : QMPair Qbar),
+    Ψ x = Quotient.mk _ P → ∃ Q : QMPair Qbar,
+      Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q ∧ IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q
+
+/-- **Naturality of the coarse map at the morphism `Spec σ : Spec ℚ̄ → Spec ℚ̄` over `ℚ`** (Mumford, GIT Def. 5.6:
+the coarse map is a natural transformation from the moduli functor to `Hom(−, X)`; for `σ` it says: if `Q` is the
+base change of `P` along `σ`, the point classifying `Q` is the point classifying `P` composed with `Spec σ`). -/
+def GaloisNatural (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) :
+    Prop :=
+  ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+    Ψ x = Quotient.mk _ P → IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q →
+      Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q
+
+/-- The Lean clause gives the naturality square for every base change (base changes are unique up to isomorphism,
+`ShimuraSplit.bc_uniquePair`). -/
+theorem galoisNatural_of_clause (h : GaloisClause X Ψ) : GaloisNatural X Ψ := by
+  intro σ x P Q hP hQ
+  obtain ⟨Q', hQ', hbc⟩ := h σ x P hP
+  rw [hQ']
+  exact Quotient.sound (ShimuraSplit.bc_uniquePair hbc hQ)
+
+/-- The base change of a QM pair along `σ : ℚ̄ → ℚ̄` (`AbVar.baseChange` along `σ`, with `ι_σ = endBC ∘ ι`). -/
+def bcAut (σ : Qbar →+* Qbar) (P : QMPair Qbar) : QMPair Qbar :=
+  letI : Algebra Qbar Qbar := σ.toAlgebra
+  ⟨P.A.baseChange Qbar, by rw [PkgI3.AbVar.dim_baseChange]; exact P.surface,
+   ⟨(HDec.G0ModField.KernelField.endBC P.A Qbar).comp P.q.iota,
+    (HDec.G0ModField.KernelField.endBC_injective P.A Qbar).comp P.q.injective⟩⟩
+
+theorem isBaseChange_bcAut (σ : Qbar →+* Qbar) (P : QMPair Qbar) :
+    IsBaseChangeOfPair σ P (bcAut σ P) := by
+  refine ⟨pullback.fst P.A.X.hom (Spec.map (CommRingCat.ofHom σ)), IsPullback.of_hasPullback _ _,
+    fun a => ?_, ?_⟩
+  · change ((Over.pullback (Spec.map (CommRingCat.ofHom σ))).map (P.q.iota a).hom).left ≫ pullback.fst _ _ =
+      pullback.fst _ _ ≫ (P.q.iota a).hom.left
+    simp
+  · rw [ShimuraSplit.pt_one_left, ShimuraSplit.pt_one_left]
+    change (Functor.LaxMonoidal.ε (Over.pullback (Spec.map (CommRingCat.ofHom σ))) ≫
+        (Over.pullback (Spec.map (CommRingCat.ofHom σ))).map η[P.A.X]).left ≫ pullback.fst _ _ = _
+    rw [Over.comp_left, Category.assoc]
+    simp only [Over.pullback_map_left, pullback.lift_fst]
+    rw [← Category.assoc]
+    congr 1
+    have hw : (Functor.LaxMonoidal.ε (Over.pullback (Spec.map (CommRingCat.ofHom σ)))).left ≫
+        pullback.snd (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom (Spec.map (CommRingCat.ofHom σ)) = 𝟙 _ :=
+      Over.w (Functor.LaxMonoidal.ε (Over.pullback (Spec.map (CommRingCat.ofHom σ))))
+    have key : pullback.fst (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom (Spec.map (CommRingCat.ofHom σ)) ≫ 𝟙 _ =
+        pullback.snd (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom (Spec.map (CommRingCat.ofHom σ)) ≫
+          Spec.map (CommRingCat.ofHom σ) := pullback.condition
+    rw [Category.comp_id] at key
+    rw [key, ← Category.assoc, hw, Category.id_comp]
+
+theorem exists_bc_aut (σ : Qbar ≃ₐ[ℚ] Qbar) (P : QMPair Qbar) :
+    ∃ Q : QMPair Qbar, IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q :=
+  ⟨bcAut σ P, isBaseChange_bcAut σ P⟩
+
+/-- Conversely the naturality square and the existence of a base change give the Lean clause. -/
+theorem clause_of_galoisNatural (h : GaloisNatural X Ψ)
+    (hE : ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (P : QMPair Qbar), ∃ Q : QMPair Qbar, IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q) :
+    GaloisClause X Ψ := by
+  intro σ x P hP
+  obtain ⟨Q, hQ⟩ := hE σ P
+  exact ⟨Q, h σ x P Q hP hQ, hQ⟩
+
+/-- **The Galois clause is exactly the naturality square at `Spec σ`** (no hypothesis). -/
+theorem galoisClause_iff_natural : GaloisClause X Ψ ↔ GaloisNatural X Ψ :=
+  ⟨galoisNatural_of_clause, fun h => clause_of_galoisNatural h exists_bc_aut⟩
+
+end Galois
+
+/-! ## 7. The leaf with its Atkin–Lehner clause in printed form -/
 
 /-- **LEAF `X6CoarseModuliIdeal` (printed form of `GRX6AbPrint.X6CoarseModuli`).** The clauses of
-`X6CoarseModuli` (Shimura 1967; Deligne 1971; Buzzard 1997; Mumford GIT Def. 5.6; see its docstring), with the
-Atkin–Lehner clause in the printed ideal-quotient form: for each `m ∣ 6` some automorphism `w_m` of `X` over `ℚ`
-sends the class of `(A, ι)` to the class of `(A/A[I_m], ι_m)` (`ALIdealClause`; Rotger, Trans. AMS 356 (2004);
-locators UNVERIFIED). Implies `X6CoarseModuli` with no hypothesis (`x6CoarseModuli_of_ideal`) and follows from it
+`X6CoarseModuli` (Shimura 1967; Deligne 1971; Buzzard 1997; Mumford GIT Def. 5.6; see its docstring), with
+* the Atkin–Lehner clause in the printed ideal-quotient form: for each `m ∣ 6` some automorphism `w_m` of `X` over
+  `ℚ` sends the class of `(A, ι)` to the class of `(A/A[I_m], ι_m)` (`ALIdealClause`; Rotger, Trans. AMS 356
+  (2004); locators UNVERIFIED);
+* the Galois clause in the literal form of the coarse map's naturality square at `Spec σ` (`GaloisNatural`;
+  equivalent to the clause of `X6CoarseModuli` with no hypothesis, `galoisClause_iff_natural`). Implies `X6CoarseModuli` with no hypothesis (`x6CoarseModuli_of_ideal`) and follows from it
 given `IsogenyQuotient` (`x6CoarseModuliIdeal_of_twist`). -/
 def X6CoarseModuliIdeal : Prop :=
   ∃ (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)),
     IsProper X.hom ∧ SmoothOfRelativeDimension 1 X.hom ∧ Nonempty (fieldPt Qbar ⟶ X) ∧
-    (∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P : QMPair Qbar),
-      Ψ x = Quotient.mk _ P → ∃ Q : QMPair Qbar,
-        Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q ∧
-        IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q) ∧
+    GaloisNatural X Ψ ∧
     ALIdealClause X Ψ ∧
     (∀ (S : Over (Spec (CommRingCat.of ℚ))), IsProper S.hom → SmoothOfRelativeDimension 1 S.hom →
       ∀ 𝒜' : LeafQM.AV.R1UnivRigid.QMAbScheme S.left,
@@ -450,18 +531,18 @@ def X6CoarseModuliIdeal : Prop :=
 /-- **The leaf in printed form gives the leaf in twist form (no hypothesis).** -/
 theorem x6CoarseModuli_of_ideal (h : X6CoarseModuliIdeal) : GRX6AbPrint.X6CoarseModuli := by
   obtain ⟨X, Ψ, hp, hs, hn, hgal, hal, huniv⟩ := h
-  exact ⟨X, Ψ, hp, hs, hn, hgal, alTwist_of_alIdeal hal, huniv⟩
+  exact ⟨X, Ψ, hp, hs, hn, galoisClause_iff_natural.2 hgal, alTwist_of_alIdeal hal, huniv⟩
 
 /-- **The leaf in twist form gives the printed form**, from `IsogenyQuotient`: the printed form is not stronger. -/
 theorem x6CoarseModuliIdeal_of_twist (hF : IsogenyQuotient) (h : GRX6AbPrint.X6CoarseModuli) :
     X6CoarseModuliIdeal := by
   obtain ⟨X, Ψ, hp, hs, hn, hgal, hal, huniv⟩ := h
-  exact ⟨X, Ψ, hp, hs, hn, hgal, alIdeal_of_alTwist hF hal, huniv⟩
+  exact ⟨X, Ψ, hp, hs, hn, galoisNatural_of_clause hgal, alIdeal_of_alTwist hF hal, huniv⟩
 
 theorem x6CoarseModuliIdeal_iff (hF : IsogenyQuotient) : X6CoarseModuliIdeal ↔ GRX6AbPrint.X6CoarseModuli :=
   ⟨x6CoarseModuli_of_ideal, x6CoarseModuliIdeal_of_twist hF⟩
 
-/-! ## 7. Elkies' statement with Elkies' (isogeny-form) Atkin–Lehner group -/
+/-! ## 8. Elkies' statement with Elkies' (isogeny-form) Atkin–Lehner group -/
 
 section Elkies
 
@@ -528,7 +609,7 @@ theorem elkiesX6StarEvery_of_ideal (h : ElkiesX6StarEveryIdeal) (hX : X6CoarseMo
     exact ⟨P, h𝒜 K s P hP.symm⟩
   obtain ⟨g, hg⟩ := huniv Y hpY hsY 𝒜 hfib
   have h6 : X6Props Y Φ X Ψ g :=
-    ⟨hp, hs, hn, hgal, alTwist_of_alIdeal hal, fun y P hP => hg y P (h𝒜 Qbar y P hP)⟩
+    ⟨hp, hs, hn, galoisClause_iff_natural.2 hgal, alTwist_of_alIdeal hal, fun y P hP => hg y P (h𝒜 Qbar y P hP)⟩
   exact ElkiesPrint.every_of_functionField (every_at_of_ideal h h1 h6 hal) hT
 
 /-- The same with T5 from the textbook field `mumfordTorsionAlgClosed` (the form used by the fold). -/
@@ -550,44 +631,5 @@ theorem ideal_of_elkiesX6StarEvery (hF : IsogenyQuotient) (h : ElkiesPrint.Elkie
 
 end Elkies
 
-/-! ## 8. The Galois clause is the naturality square of the coarse map at `Spec σ` -/
-
-section Galois
-
-variable {X : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)}
-
-/-- **The Galois clause of `X6CoarseModuli`, verbatim** (existence form). -/
-def GaloisClause (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) :
-    Prop :=
-  ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P : QMPair Qbar),
-    Ψ x = Quotient.mk _ P → ∃ Q : QMPair Qbar,
-      Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q ∧ IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q
-
-/-- **Naturality of the coarse map at the morphism `Spec σ : Spec ℚ̄ → Spec ℚ̄` over `ℚ`** (Mumford, GIT Def. 5.6:
-the coarse map is a natural transformation from the moduli functor to `Hom(−, X)`; for `σ` it says: if `Q` is the
-base change of `P` along `σ`, the point classifying `Q` is the point classifying `P` composed with `Spec σ`). -/
-def GaloisNatural (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) :
-    Prop :=
-  ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
-    Ψ x = Quotient.mk _ P → IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q →
-      Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q
-
-/-- The Lean clause gives the naturality square for every base change (base changes are unique up to isomorphism,
-`ShimuraSplit.bc_uniquePair`). -/
-theorem galoisNatural_of_clause (h : GaloisClause X Ψ) : GaloisNatural X Ψ := by
-  intro σ x P Q hP hQ
-  obtain ⟨Q', hQ', hbc⟩ := h σ x P hP
-  rw [hQ']
-  exact Quotient.sound (ShimuraSplit.bc_uniquePair hbc hQ)
-
-/-- Conversely the naturality square and the existence of a base change give the Lean clause. -/
-theorem clause_of_galoisNatural (h : GaloisNatural X Ψ)
-    (hE : ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (P : QMPair Qbar), ∃ Q : QMPair Qbar, IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q) :
-    GaloisClause X Ψ := by
-  intro σ x P hP
-  obtain ⟨Q, hQ⟩ := hE σ P
-  exact ⟨Q, h σ x P Q hP hQ, hQ⟩
-
-end Galois
 
 end X6ALIdeal

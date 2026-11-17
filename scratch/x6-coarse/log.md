@@ -28,3 +28,8 @@
   flagged GLUE until review: x6CoarseModuliIdeal 'pending reading (Addendum 1 ...)', elkiesX6StarEveryIdeal kind
   consequence). Fold module FoldDryRun.lean (OpenResearchLeaves39, sixContactMin_of_open56) compiles;
   `#print axioms HDec.HSyn.sixContactMin_of_open56` standard (foldcheck.txt).
+- VERIFIED (compiled): bcAut (base change of a QM pair along sigma: AbVar.baseChange along sigma.toAlgebra, endBC),
+  isBaseChange_bcAut, exists_bc_aut, galoisClause_iff_natural (Galois clause <-> naturality square at Spec sigma,
+  no hypothesis). X6CoarseModuliIdeal now states the Galois clause as GaloisNatural. Rebuilt; axioms of all 41
+  theorems standard; #discharges unchanged (x6CoarseModuli, elkiesX6StarEvery discharged); autofold dry-run
+  16/18 -> 16/18; FoldDryRun.lean compiles, sixContactMin_of_open56 standard axioms.

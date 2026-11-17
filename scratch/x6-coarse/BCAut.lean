@@ -8,7 +8,7 @@ noncomputable section
 
 namespace X6ALIdeal
 
-open CategoryTheory AlgebraicGeometry Limits MonObj
+open CategoryTheory AlgebraicGeometry Limits MonObj MonoidalCategory
 open LeafQM LeafQM.AV
 
 /-- The base change of a QM pair along `σ : ℚ̄ → ℚ̄` (`AbVar.baseChange` along `σ`, with `ι_σ = endBC ∘ ι`). -/
@@ -32,10 +32,14 @@ theorem isBaseChange_bcAut (σ : Qbar →+* Qbar) (P : QMPair Qbar) :
     simp only [Over.pullback_map_left, pullback.lift_fst]
     rw [← Category.assoc]
     congr 1
-    have hw := Over.w (Functor.LaxMonoidal.ε (Over.pullback (Spec.map (CommRingCat.ofHom σ))))
-    have hc := pullback.condition (f := (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom)
-      (g := Spec.map (CommRingCat.ofHom σ))
-    sorry
+    have hw : (Functor.LaxMonoidal.ε (Over.pullback (Spec.map (CommRingCat.ofHom σ)))).left ≫
+        pullback.snd (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom (Spec.map (CommRingCat.ofHom σ)) = 𝟙 _ :=
+      Over.w (Functor.LaxMonoidal.ε (Over.pullback (Spec.map (CommRingCat.ofHom σ))))
+    have key : pullback.fst (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom (Spec.map (CommRingCat.ofHom σ)) ≫ 𝟙 _ =
+        pullback.snd (𝟙_ (Over (Spec (CommRingCat.of Qbar)))).hom (Spec.map (CommRingCat.ofHom σ)) ≫
+          Spec.map (CommRingCat.ofHom σ) := pullback.condition
+    rw [Category.comp_id] at key
+    rw [key, ← Category.assoc, hw, Category.id_comp]
 
 theorem exists_bc_aut (σ : Qbar ≃ₐ[ℚ] Qbar) (P : QMPair Qbar) :
     ∃ Q : QMPair Qbar, IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q :=

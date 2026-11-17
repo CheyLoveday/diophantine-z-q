@@ -27,6 +27,11 @@ import ZInQKernel.Contrib.OneProof.X6AtkinLehnerIdeal
 #print axioms X6ALIdeal.atkinLehnerW_eq_of_isogenyQuotient
 #print axioms X6ALIdeal.hom_ext_qbar
 #print axioms X6ALIdeal.atkinLehnerW_eq_of_clause
+#print axioms X6ALIdeal.galoisNatural_of_clause
+#print axioms X6ALIdeal.isBaseChange_bcAut
+#print axioms X6ALIdeal.exists_bc_aut
+#print axioms X6ALIdeal.clause_of_galoisNatural
+#print axioms X6ALIdeal.galoisClause_iff_natural
 #print axioms X6ALIdeal.x6CoarseModuli_of_ideal
 #print axioms X6ALIdeal.x6CoarseModuliIdeal_of_twist
 #print axioms X6ALIdeal.x6CoarseModuliIdeal_iff
@@ -35,5 +40,3 @@ import ZInQKernel.Contrib.OneProof.X6AtkinLehnerIdeal
 #print axioms X6ALIdeal.elkiesX6StarEvery_of_ideal
 #print axioms X6ALIdeal.elkiesX6StarEvery_of_ideal'
 #print axioms X6ALIdeal.ideal_of_elkiesX6StarEvery
-#print axioms X6ALIdeal.galoisNatural_of_clause
-#print axioms X6ALIdeal.clause_of_galoisNatural
