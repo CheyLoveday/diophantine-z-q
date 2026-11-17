@@ -1,0 +1,51 @@
+{
+ "name": "leaf-fold33-batch-w99",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.HodgeTateDecompOr",
+  "ZInQKernel.Contrib.OneProof.X6AtkinLehnerIdeal"
+ ],
+ "discharges": [
+  {
+   "field": "hodgeTateDecompExists",
+   "proof": "_root_.ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_or {n}.hodgeTateDecompOr",
+   "leaves": [
+    {
+     "name": "hodgeTateDecompOr",
+     "type": "_root_.ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr",
+     "doc": "Hodge-Tate decomposition of V_p(A), tensor form OR Hom form, bases chosen, dimensions unnamed: C_p (x) V_p(A) = C_p(1)^a + C_p^b (Fontaine, Invent. Math. 65 (1982), Theoreme principal, if printed in tensor form) or Hom_{Q_p}(V_p(A), C_p) = C_p^a + C_p(-1)^b (Tate 1967 4, corollary on Hom(T(G), C), good reduction; Fontaine 1982, if printed in Hom form); the Hom form implies the tensor form by C_p-dualization proved in Lean (htdecomp-or); locators UNVERIFIED",
+     "kind": "consequence",
+     "flag": "pending review (inbox 25: new leaf, GLUE until a reviewer rates it); unread: or-form leaf (tensor form OR Hom form, each the printed shape with bases chosen, both exponents unnamed; Hom-to-tensor dualization proved, htdecomp-or); locator UNVERIFIED",
+     "source": "C_p (x) V_p(A) = C_p(1)^a + C_p^b OR Hom(V_p(A), C_p) = C_p^a + C_p(-1)^b, G_F-equivariant, some a, b (Fontaine, Invent. Math. 65 (1982), Theoreme principal; Tate 1967 4 corollary, good reduction); a = b = g proved from the Weil pairing and T26 (hodgetate-from-dr); Hom form => tensor form by C_p-dualization (htdecomp-or)"
+    }
+   ]
+  },
+  {
+   "field": "x6CoarseModuli",
+   "proof": "_root_.X6ALIdeal.x6CoarseModuli_of_ideal {n}.x6CoarseModuliIdeal",
+   "leaves": [
+    {
+     "name": "x6CoarseModuliIdeal",
+     "type": "_root_.X6ALIdeal.X6CoarseModuliIdeal",
+     "doc": "x6-coarse, printed form of x6CoarseModuli: the canonical model X6 = X0(6,1) over Q is a proper smooth curve and a coarse moduli scheme for abelian surfaces with QM by O: a bijection Psi on Qbar-points with QM pairs up to isomorphism, natural for Spec sigma, sigma in Aut(Qbar/Q) (X6ALIdeal.GaloisNatural: if Q is a base change of P along sigma, Psi(Spec sigma . x) = [Q]; Mumford GIT Def. 5.6), the Atkin-Lehner clause in the printed ideal-quotient form (for each m | 6 an automorphism w_m of X over Q sends [(A, iota)] to [(A/A[I_m], iota_m)], I_m = {a in O : m | nrd a} the two-sided ideal of reduced norm m, read as every O-equivariant isogeny with scheme-theoretic kernel A[I_m]; X6ALIdeal.ALIdealClause; Rotger, Trans. AMS 356 (2004)), and the classifying map of a level-3 QM abelian scheme over a proper smooth curve. Implies x6CoarseModuli with no hypothesis (X6ALIdeal.x6CoarseModuli_of_ideal: I_m = O mu_m and iota(mu_m) is such an isogeny onto (A, iota o Ad mu_m); the Galois clause is galoisClause_iff_natural); equivalent to it given the textbook fields gagaMorphism and mumfordTorsionAlgClosed (X6ALIdeal.x6CoarseModuliIdeal_iff; the quotient of A by A[I_m] is (A, iota o Ad mu_m) by X6ALIdeal.iso_of_quotient_lat, through the lattice model). Locators UNVERIFIED (Shimura 1967; Deligne, Sem. Bourbaki 389; Buzzard, Duke 87 (1997) section 1).",
+     "kind": "consequence",
+     "flag": "pending review (inbox 27c: new leaf, GLUE until a reviewer rates it); pending reading (Addendum 1: new printed leaf, GLUE until a reviewer rates it); locator UNVERIFIED; no reading risk left in the Atkin-Lehner clause (printed ideal-quotient form) or the Galois clause (literal naturality square at Spec sigma)",
+     "source": "Shimura, Ann. of Math. 85 (1967) sections 2-3, Main Theorem I (canonical model of X0(D,N)); Deligne, Sem. Bourbaki 389 (1971) sections 4-5 (moduli interpretation); Buzzard, Duke Math. J. 87 (1997) section 1 (X0(D,N) as a coarse moduli space of QM abelian surfaces); Rotger, Trans. AMS 356 (2004) (w_m(A, iota) = (A/A[I_m], iota_m)); Mumford GIT Def. 5.6 (coarse moduli scheme); locators UNVERIFIED"
+    }
+   ]
+  },
+  {
+   "field": "elkiesX6StarEvery",
+   "proof": "_root_.X6ALIdeal.elkiesX6StarEvery_of_ideal' {n}.elkiesX6StarEveryIdeal {n}.x6CoarseModuliIdeal (_root_.Y3Fix.shimuraMainThmIDeligneY3AbU_of_print _root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof {n}.y3FineModuliAbP {n}.deligneCanonicalModelY3EveryH) _root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof",
+   "leaves": [
+    {
+     "name": "elkiesX6StarEveryIdeal",
+     "type": "_root_.X6ALIdeal.ElkiesX6StarEveryIdeal",
+     "doc": "x6-coarse: Elkies, Shimura curve computations (ANTS-III 1998, arXiv math/0005160) section 3 with Sigma = {2,3}: X*(1) = X(1)/W (p. 10, w_p : A -> A/ker I_p), X*(1) = P^1_t (p. 17), CM values t = 0, 1, infinity at discriminants -24, -4, -3 (Table 1 p. 26, pp. 22-23), Q(X(1)) = Q(t)(sqrt(-t), sqrt(3(t-1))) (p. 17); for every witness of the moduli description of X0(6,1) (R1fpPropsAb, X6Props) whose X carries the printed Atkin-Lehner automorphisms (X6ALIdeal.ALIdealClause), with no existence claim: some t : X6 -> P1 with Q(X6)^W = Q(t) for Elkies' isogeny-form W (X6ALIdeal.atkinLehnerWIdeal), the CM values, and the charts s^2 = -t, r^2 = 3(t-1). Replaces elkiesX6StarEvery (X6ALIdeal.elkiesX6StarEvery_of_ideal', with x6CoarseModuliIdeal, shimuraMainThmIDeligneY3AbU and T5); equivalent to it given the textbook fields gagaMorphism and mumfordTorsionAlgClosed (X6ALIdeal.ideal_of_elkiesX6StarEvery).",
+     "kind": "consequence",
+     "flag": "pending review (inbox 27c: new leaf, GLUE until a reviewer rates it); pending review (Addendum 1); consequence steps: Q(X/W) = Q(X)^W (no quotient curve in Lean) and 'every point with that CM' from 'the CM point of X*(1)' (needs exactness of HasCM24/HasCM4/HasCM3 and the closed facts for Q(sqrt(-6)); docs/research/x6-coarse.md section 4.1); Atkin-Lehner group now in Elkies' isogeny form",
+     "source": "Elkies 1998 (ANTS-III, LNCS 1423; arXiv math/0005160) section 3, Sigma = {2,3}: X*(1) = X(1)/W with w_p : A -> A/ker I_p (p. 10), X*(1) = P^1_t (p. 17), CM values (Table 1 p. 26, pp. 22-23), equations of X(1) over the t-line (p. 17); on every witness of the moduli description of X0(6,1) carrying the printed Atkin-Lehner automorphisms, no existence claim (locators verified by the lead from arXiv math/0005160)"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+/-- **LEAF (Shimura's rational basis of `S_k(Γ₁(N))`).** For `k ≥ 2`, `S_k(Γ₁(N))` is spanned over `ℂ` by cusp
+forms whose `q`-expansion coefficients at `∞` (period `1`) are all rational integers. Source: Shimura,
+*Introduction to the arithmetic theory of automorphic functions* (1971), Thm 3.52: `S_k(Γ₁(N))` has a basis
+consisting of forms whose Fourier coefficients are rational integers (number from memory, UNVERIFIED; also
+Diamond–Im 1995 §12.3, and Diamond–Shurman §6.5 for `k = 2`, UNVERIFIED). Consequence taken: a basis spans;
+only `k ≥ 2` is used. -/
+def Gamma1IntegralSpan : Prop :=
+  ∀ (N : ℕ) [NeZero N] (k : ℤ), 2 ≤ k →
+    Submodule.span ℂ {g : CuspForm ((Gamma1 N).map (mapGL ℝ)) k |
+      ∀ n : ℕ, ∃ z : ℤ, (qExpansion 1 g).coeff n = z} = ⊤
+

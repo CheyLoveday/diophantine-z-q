@@ -55,7 +55,13 @@ page that for `k = 2` the representation is the one constructed in Section 9.5 (
 2016 fourth printing p. 404); `ρ_{f,λ}` and `V_ℓ(A_f)` as in Lemma 9.5.3, Theorem 9.5.4 and
 Exercise 9.5.2(a) (2005 pp. 389–391). Weakening: newforms only, `N ≥ 2`; irreducibility and
 unramifiedness dropped. `K_f` a number field and finiteness of `V_λ` are the print's presuppositions
-(instance arguments). The statement is `AfTateDSLambda` verbatim. -/
+(instance arguments). The statement is `AfTateDSLambda` verbatim.
+
+Dictionary audit (hecke-pin, `ZInQKernel/Contrib/OneProof/HeckePin.lean`): the hypotheses are about DS's
+objects: `IsHeckeT`/`IsDiamond` pin `T_p`, `⟨d⟩` (`AfTateLam.HeckePin.isHeckeT_unique`,
+`isDiamond_unique`), `KillsIf` is DS's `I_f` (`killsIf_iff_IfDS_of_leaves`), `(A, π)` is unique up to
+unique isomorphism (`isAfQuotient_unique`) and `θ` is unique (`theta_unique`). Inputs: `X1TauPoints`,
+`AbelJacobiX1` (leaf candidates) and the glue `ConstOnTauPoints`. -/
 def AfCharpolyDS965 : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
     ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),

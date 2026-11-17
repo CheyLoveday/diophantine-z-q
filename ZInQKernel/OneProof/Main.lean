@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ67
+import ZInQKernel.OneProof.H.TailZ71
 import ZInQKernel.OneProof.TYZSplit
 import ZInQKernel.OneProof.TopChain
 import ZInQKernel.Contrib.TYZChain.Main
@@ -19,8 +19,12 @@ import ZInQKernel.Contrib.OneProof.TYZTestVectorExists
 import ZInQKernel.Contrib.OneProof.Gamma0QExpansion
 import ZInQKernel.Contrib.OneProof.TYZProp23Printed
 import ZInQKernel.Contrib.OneProof.ShimuraMainCM
+import ZInQKernel.Contrib.OneProof.HCMLattice
 import ZInQKernel.Contrib.OneProof.TYZLcalOne
 import ZInQKernel.Contrib.OneProof.TYZThm33Alg
+import ZInQKernel.Contrib.OneProof.TYZThm33Curve
+import ZInQKernel.Contrib.OneProof.GrossZagierSplitUnique
+import ZInQKernel.Contrib.OneProof.TYZThm21Span
 
 /-!
 # The whole proof in one theorem
@@ -130,6 +134,16 @@ and `HDec.HSyn.sixContactMin_of_open56` goes through `sixContactMin_of_open55_eb
 `scratch/fold34-eichler/gen/gen.py`), a copy of every declaration that reads a count field or takes a bundle carrying
 one, with the count fields typed `GR56.R5fpCountLe`. The originals are unchanged.
 
+h33-d1 replaced `h33a` by `h33c` (`ZInQ.H33D1.TYZThm33CurveSome`: D1 both ways, `ESch` normal at `O`, G4(b) proved;
+`H33D1.tyzThm33_of_curveSome`) and `hGZ` by `hGZss` (`ZInQ.GZSplitUnique.GrossZagierCurveCdSplitSome`: model uniqueness
+`CurveModel.exists_iso_of_functionField` and the `ε_D` splitting proved; `GZSplitUnique.grossZagierAlgOptCd_of_splitSome`).
+
+hcm-lattice replaced `hCM` (`HCMDict.ShimuraThm54`) by `ZInQ.Contrib.HCMLattice.ShimuraThm54Local` (Shimura 1971 Thm 5.4 with the
+print's analytic isomorphism and `p`-component lattices; `HCMLattice.shimuraMainCM_of_local`).
+
+h21c-steps replaced `h21C` by `h21S` (`ZInQ.Contrib.H21CSteps.TYZThm21Span`, TYZ Thm 2.1 with `π_ℤ^{U_n}` read through
+Thm 2.4(1) as the span of the six `f_δ`; `H21CSteps.tyzThm21PairsC_of_span`).
+
 h33-fix replaced `h33` (`TYZSplit.TYZThm33`) by `h33a` (`ZInQ.H33Fix.TYZThm33Alg`, TYZ Thm 3.3 for TYZ's algebraic
 identification `i₀` given by its pull-back on function fields; `H33Fix.tyzThm33_of_alg`, with `isX0IsoAlg_eta` proved).
 
@@ -143,20 +157,20 @@ open ZInQ.Contrib.TYZDecomp ZInQ.Contrib.TYZGenus
 
 /-- **Theorem 1.1, from every statement still open.** -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves42) (t : HDec.HSyn.OpenTextbookLeaves17) (l : HDec.HSyn.OpenAddedLeaves25)
-    (h21C : ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC)
-    (hCM : ZInQ.Contrib.HCMDict.ShimuraThm54)
-    (h33a : ZInQ.H33Fix.TYZThm33Alg)
+    (r : HDec.HSyn.OpenResearchLeaves45) (t : HDec.HSyn.OpenTextbookLeaves17) (l : HDec.HSyn.OpenAddedLeaves26)
+    (h21S : ZInQ.Contrib.H21CSteps.TYZThm21Span)
+    (hCM : ZInQ.Contrib.HCMLattice.ShimuraThm54Local)
+    (h33c : ZInQ.H33D1.TYZThm33CurveSome)
     (hBFH : ZInQ.BFHPrinted.BFHClauseIIGamma0)
-    (hGZ : ZInQ.GZSch.GrossZagierCurveCd) :
+    (hGZss : ZInQ.GZSplitUnique.GrossZagierCurveCdSplitSome) :
     ZInQ.FrozenTarget :=
   ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
-    (HDec.HSyn.sixContactMin_of_open60 r t l)
-    (ThetaWP8.tyzThm35ReadingA_noHX (ZInQ.Contrib.LcalOne.tyzThm11Integral_of_thm21C_only h21C) (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
-      ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof ZInQ.Contrib.HfxProof.tyzTestVectorExists (ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21C h21C) ZInQ.Contrib.T21Proof.tyzThm21At31
-      ZInQ.Contrib.HP23Proof.tyzProp23Printed) (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) (ZInQ.H33Fix.tyzThm33_of_alg (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) h33a))
+    (HDec.HSyn.sixContactMin_of_open64 r t l)
+    (ThetaWP8.tyzThm35ReadingA_noHX (ZInQ.Contrib.LcalOne.tyzThm11Integral_of_thm21C_only (ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span h21S)) (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
+      ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof ZInQ.Contrib.HfxProof.tyzTestVectorExists (ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21C (ZInQ.Contrib.H21CSteps.tyzThm21PairsC_of_span h21S)) ZInQ.Contrib.T21Proof.tyzThm21At31
+      ZInQ.Contrib.HP23Proof.tyzProp23Printed) (ZInQ.Contrib.HCMLattice.shimuraMainCM_of_local hCM) (ZInQ.H33D1.tyzThm33_of_curveSome (ZInQ.Contrib.HCMLattice.shimuraMainCM_of_local hCM) h33c))
     (ZInQ.GZStatements.fhNonvanishingCd_of_fhNonvanishing (ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0 hBFH))
-    (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) (ZInQ.GZAlg.grossZagierFormulaCd_of_alg (ZInQ.GZSch.grossZagierAlgOptCd_of_curve hGZ) ZInQ.Contrib.Gamma0QExp.gamma0QExpansion_proof
+    (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed (ZInQ.Contrib.HCMLattice.shimuraMainCM_of_local hCM) (ZInQ.GZAlg.grossZagierFormulaCd_of_alg (ZInQ.GZSplitUnique.grossZagierAlgOptCd_of_splitSome hGZss) ZInQ.Contrib.Gamma0QExp.gamma0QExpansion_proof
       ZInQ.Contrib.OneProof.EtaW32Character.etaW32Character_proof)
       ZInQ.GZConj.grossConjugationCd)
 
