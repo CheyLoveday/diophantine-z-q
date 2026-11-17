@@ -82,8 +82,8 @@ clauses, `HodgeNumberH1AbVar` the third. -/
 theorem scholzeH1AbVar_of_old (hS : ScholzeDeRhamAlg) (hH : DeRhamScholze.HTAbVar.HodgeNumberH1AbVar) :
     ScholzeH1AbVar := by
   intro p _ F _ _ _ A g hg
-  haveI : IsProper A.X.hom := A.proper
-  haveI : Smooth A.X.hom := A.smooth
+  have : IsProper A.X.hom := A.proper
+  have : Smooth A.X.hom := A.smooth
   obtain ⟨h1, h2⟩ := hS p F A.X 1
   exact ⟨h1, h2, hH p F A g hg⟩
 
@@ -116,12 +116,12 @@ theorem dual_of_H1 (hT : T10Etale.T10_TateDuality) (hM : AvSplit.MumfordTorsionA
 
 /-- **`V_p(A)` is de Rham** for one abelian variety, from the first clause (derham-scholze's
 `isDeRhamTensorOver_of_scholze`, with the leaf at `A` in place of `ScholzeDeRhamAlg`). -/
-theorem isDeRhamTensorOver_of_H1 (hT : T10Etale.T10_TateDuality) (hM : AvSplit.MumfordTorsionAlgClosed)
+theorem isDeRhamTensorOver_of_H1 (hM : AvSplit.MumfordTorsionAlgClosed)
     (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (h1 : IsDeRhamFam p (fun σ => (A.galRep p).dual σ)) :
     IsDeRhamTensorOver p (A.galRep p) := by
   obtain ⟨-, hD⟩ := h1
   obtain ⟨g, hg⟩ := dim_finite_I4 A
-  haveI := (DeRhamPrint.finrank_V_of_tateModuleFree p (DeRhamPrint.tateModuleFree_of_mumford
+  have := (DeRhamPrint.finrank_V_of_tateModuleFree p (DeRhamPrint.tateModuleFree_of_mumford
     hM) (DeRhamPrint.natCast_p_ne_zero p F) A g hg).1
   have hDD : IsDeRhamTensorOver p (A.galRep p).dual.dual :=
     DeRhamPrint.isDeRhamTensorOver_dual p (BdRInv.bdRInvariantsPrinted_proof p F) _ hD
@@ -149,7 +149,7 @@ theorem htDecomp_of_H1 (hT : T10Etale.T10_TateDuality) (A : ZInQ.Contrib.G9.PkgI
   obtain ⟨hfdV, hdimV⟩ := DeRhamPrint.finrank_V_of_tateModuleFree p (DeRhamPrint.tateModuleFree_of_mumford hM) hp A g hg
   obtain ⟨h1, h2, h3⟩ := dual_of_H1 p hT hM A _ h
   obtain ⟨a, b, e, he, hab, hb⟩ :=
-    hodgeTate01_dims (A.galRep p) DeRhamScholze.TT.fontaineTwistT h1 h2 g h3
+    DeRhamScholze.HTAbVar.hodgeTate01_dims (A.galRep p) DeRhamScholze.TT.fontaineTwistT h1 h2 g h3
   rw [hdimV] at hab
   obtain rfl : a = g := by omega
   subst hb
@@ -173,7 +173,7 @@ leaf and Milne's identification. -/
 theorem deRhamVpAbVarDirect_of_scholzeH1 (hN : ScholzeH1AbVar) (hT : T10Etale.T10_TateDuality)
     (hM : AvSplit.MumfordTorsionAlgClosed) : DeRhamPrint.Direct.DeRhamVpAbVarDirect :=
   fun p _ F _ _ _ A => (DeRhamPrint.Direct.isDeRhamTensorOver_iff p (A.galRep p)).mp
-    (isDeRhamTensorOver_of_H1 p hT hM A (dual_deRham_of_scholzeH1 hN hT hM p F A).1)
+    (isDeRhamTensorOver_of_H1 p hM A (dual_deRham_of_scholzeH1 hN hT hM p F A).1)
 
 /-- `deRhamVpAbVarDirect` with Mumford's torsion theorem discharged (derham-scholze's `deRhamVpAbVarDirect_of_leaves`). -/
 theorem deRhamVpAbVarDirect_of_scholzeH1Milne (hN : ScholzeH1AbVar) (hT : T10Etale.T10_TateDuality) :
