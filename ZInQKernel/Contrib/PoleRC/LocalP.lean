@@ -419,6 +419,58 @@ theorem locM_bad_classes (hq2 : q ≠ 2) (hq3 : q ≠ 3) {L A B : ℚ_[q]} (hL :
     have hb1 : SqEq B 1 := (sqEq_of_mul_sqEq hba hAx hx0).trans ⟨x, hx0, by ring⟩
     exact Or.inl ⟨hAx.trans (hb'.symm.trans hb1), hb1⟩
 
+/-- **`LocalBad`, "only if"** (`q ∣ ℓ`, `q ≠ 2, 3`, `ℓ ≡ 11 (mod 12)` squarefree). -/
+theorem localBad_nec {ℓ : ℕ} {a b : ℤ} (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) (hql : q ∣ ℓ)
+    (hq2 : q ≠ 2) (hq3 : q ≠ 3) (ha : Squarefree a) (hb : Squarefree b)
+    (h : LocM ℚ_[q] ℓ a b) : ∃ e₁ e₂ : ZMod 2,
+      qcls q a = e₁ • qcls q ℓ + e₂ • qcls q 3 ∧ qcls q b = e₂ • qcls q (-(ℓ : ℤ)) := by
+  have hsfZ : Squarefree (ℓ : ℤ) := Int.squarefree_natCast.mpr hsf
+  have hsf3 : Squarefree (3 : ℤ) := Int.prime_three.squarefree
+  have hsfn : Squarefree (-(ℓ : ℤ)) := by rw [← Int.squarefree_natAbs]; simpa using hsf
+  have hsf3l : Squarefree (3 * (ℓ : ℤ)) := by
+    rw [← Int.squarefree_natAbs, Int.natAbs_mul, Nat.squarefree_mul_iff]
+    refine ⟨?_, Nat.prime_three.squarefree, by simpa using hsf⟩
+    rw [show (3 : ℤ).natAbs = 3 from rfl, Nat.Prime.coprime_iff_not_dvd Nat.prime_three]
+    simp only [Int.natAbs_natCast]; omega
+  have hsf1 : Squarefree (1 : ℤ) := squarefree_one
+  have hqZ : (q : ℤ) ∣ (ℓ : ℤ) := by exact_mod_cast hql
+  have hL : ‖((ℓ : ℤ) : ℚ_[q])‖ < 1 := Padic.norm_intCast_lt_one_iff.mpr hqZ
+  have hL0 : ((ℓ : ℤ) : ℚ_[q]) ≠ 0 := Int.cast_ne_zero.mpr (by omega)
+  have hvL : (((ℓ : ℤ)) : ℚ_[q]).valuation = 1 := by
+    rw [Padic.valuation_intCast]
+    obtain ⟨m, hm⟩ := hqZ
+    have hm' : ¬ (q : ℤ) ∣ m := by
+      have := not_dvd_div_of_squarefree hq.out hsfZ ⟨m, hm⟩
+      rwa [hm, Int.mul_ediv_cancel_left _ (Int.natCast_ne_zero.mpr hq.out.ne_zero)] at this
+    rw [hm, padicValInt_q_mul hm']; rfl
+  have hA0 : (a : ℚ_[q]) ≠ 0 := Int.cast_ne_zero.mpr ha.ne_zero
+  have hB0 : (b : ℚ_[q]) ≠ 0 := Int.cast_ne_zero.mpr hb.ne_zero
+  have h' : LocM ℚ_[q] ((ℓ : ℤ) : ℚ_[q]) a b := by simpa using h
+  have c1 : (1 : ℚ_[q]) = ((1 : ℤ) : ℚ_[q]) := by simp
+  have c3 : (3 : ℚ_[q]) = ((3 : ℤ) : ℚ_[q]) := by simp
+  have c3l : 3 * ((ℓ : ℤ) : ℚ_[q]) = ((3 * (ℓ : ℤ) : ℤ) : ℚ_[q]) := by push_cast; ring
+  have cnl : -((ℓ : ℤ) : ℚ_[q]) = ((-(ℓ : ℤ) : ℤ) : ℚ_[q]) := by push_cast; ring
+  have q1 : qcls q 1 = 0 := qcls_one q
+  have q3l : qcls q (3 * (ℓ : ℤ)) = qcls q 3 + qcls q ℓ := qcls_mul q hsf3l
+  rcases locM_bad_classes hq2 hq3 hL hL0 hvL hA0 hB0 h' with ⟨ha', hb'⟩ | ⟨ha', hb'⟩ |
+    ⟨ha', hb'⟩ | ⟨ha', hb'⟩
+  · rw [c1] at ha' hb'
+    refine ⟨0, 0, ?_, ?_⟩
+    · rw [qcls_eq_of_sqEq ha hsf1 ha', q1]; simp
+    · rw [qcls_eq_of_sqEq hb hsf1 hb', q1]; simp
+  · rw [c1] at hb'
+    refine ⟨1, 0, ?_, ?_⟩
+    · rw [qcls_eq_of_sqEq ha hsfZ ha']; simp
+    · rw [qcls_eq_of_sqEq hb hsf1 hb', q1]; simp
+  · rw [c3] at ha'; rw [cnl] at hb'
+    refine ⟨0, 1, ?_, ?_⟩
+    · rw [qcls_eq_of_sqEq ha hsf3 ha']; simp
+    · rw [qcls_eq_of_sqEq hb hsfn hb']; simp
+  · rw [c3l] at ha'; rw [cnl] at hb'
+    refine ⟨1, 1, ?_, ?_⟩
+    · rw [qcls_eq_of_sqEq ha hsf3l ha', q3l]; simp [add_comm]
+    · rw [qcls_eq_of_sqEq hb hsfn hb']; simp
+
 end Bad
 
 end ZInQ.Manuscript.PoleRC
