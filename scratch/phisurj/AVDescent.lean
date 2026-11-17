@@ -265,7 +265,7 @@ pairing, weil-proof's `mumfordWeilPairingAC_proof`; its right kernel is trivial,
 theorem card_isDT_le [IsAlgClosed k] (h1 : T09Pic.PicRepresentableAbVar) (h2 : T09Pic.PicZeroAbVar)
     (hT : AvSplit.MumfordTorsionAlgClosed) (X : AbVar k) (g n : ℕ)
     (hg : topologicalKrullDim X.X.left = g) (hn : 0 < n) (hnk : (n : k) ≠ 0) :
-    Nat.card {c : X.X.left.Pic // AC.IsDT n c} ≤ n ^ (2 * g) := by
+    Finite {c : X.X.left.Pic // AC.IsDT n c} ∧ Nat.card {c : X.X.left.Pic // AC.IsDT n c} ≤ n ^ (2 * g) := by
   have : NeZero n := ⟨by omega⟩
   obtain ⟨E⟩ := exists_torsK_addEquiv hT X g n hg hn hnk
   have hW := WeilProof.mumfordWeilPairingAC_proof
@@ -328,6 +328,7 @@ theorem card_isDT_le [IsAlgClosed k] (h1 : T09Pic.PicRepresentableAbVar) (h2 : T
     rw [hdc, hd1, one_mul]
   have : Finite (Additive (torsK X n)) := Finite.of_equiv _ E.symm.toEquiv
   have : Finite (Additive (torsK X n) →+ Additive (rootsOfUnity n k)) := DFunLike.finite _
+  refine ⟨Finite.of_injective Φ hΦ, ?_⟩
   calc Nat.card {c : X.X.left.Pic // AC.IsDT n c}
       ≤ Nat.card (Additive (torsK X n) →+ Additive (rootsOfUnity n k)) :=
         Nat.card_le_card_of_injective Φ hΦ
@@ -339,5 +340,78 @@ theorem card_isDT_le [IsAlgClosed k] (h1 : T09Pic.PicRepresentableAbVar) (h2 : T
 
 end PhiSurj.AVDesc
 
+namespace PhiSurj
+
+open T09Pic PkgI3 PkgI3.AbVar PicDict HDec.WeilPairing
+
+variable {K : Type} [Field K]
+
+/-- **`dim Pic⁰ ≤ dim A`** from L1, L2 and the torsion leaf only: `B[ℓ] ↪ Â[ℓ](A_K̄)` (`y ↦ M_y`, injective,
+translation-invariant) and `#Â[ℓ] ≤ ℓ^{2 dim A}` (`AVDesc.card_isDT_le`), while `#B[ℓ] = ℓ^{2 dim B}`. -/
+theorem dim_le_of_open (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar)
+    (hT : AvSplit.MumfordTorsionAlgClosed) {A : AbVar K}
+    {P : Over (Spec (CommRingCat.of K))} (rep : (picardFunctor A.X.hom).obj.RepresentableBy P)
+    {B : AbVar K} {j : B.X ⟶ P} (hj : IsPicZero rep B j) (a b : ℕ)
+    (ha : topologicalKrullDim A.X.left = a) (hb : topologicalKrullDim B.X.left = b) : b ≤ a := by
+  obtain ⟨ℓ, hℓ2, hℓK⟩ := exists_two_le_natCast_ne_zero (K := K)
+  have hℓ0 : 0 < ℓ := by omega
+  have : NeZero ℓ := ⟨by omega⟩
+  have hℓK' : (ℓ : AlgebraicClosure K) ≠ 0 := by
+    rw [← map_natCast (algebraMap K (AlgebraicClosure K))]
+    exact (map_ne_zero _).mpr hℓK
+  have ha' : topologicalKrullDim (AKbar A).X.left = a :=
+    (ZInQ.Contrib.AbVarBC.dim_baseChange_scheme (AlgebraicClosure K) A.X.left A.X.hom).trans ha
+  obtain ⟨EB⟩ := exists_torsAddEquiv hT B b ℓ hb hℓ0 hℓK
+  have hsub := picZeroPtsTranslInv_of_leaves pushforwardUnitUniversal geomIntegralProd
+  let emb : tors B ℓ → {c : (AKbar A).X.left.Pic // AC.IsDT ℓ c} := fun y =>
+    ⟨picClass rep j (Additive.toMul (y : HDec.WeilPairing.P B)), (isTI_iff _).2 (hsub K A P rep B j hj _), by
+      have hy : (Additive.toMul (y : HDec.WeilPairing.P B)) ^ ℓ = 1 := by
+        have := congrArg Additive.toMul (show ℓ • (y : HDec.WeilPairing.P B) = 0 from y.2)
+        simpa using this
+      change picHom rep hj _ ^ ℓ = 1
+      rw [← map_pow, hy, map_one]⟩
+  have hemb : Function.Injective emb := by
+    intro y y' h
+    have h' : picClass rep j (Additive.toMul (y : HDec.WeilPairing.P B)) =
+        picClass rep j (Additive.toMul (y' : HDec.WeilPairing.P B)) := congrArg Subtype.val h
+    exact Subtype.ext (Additive.toMul.injective (picClass_injective rep hj h'))
+  obtain ⟨hfin, hcount⟩ := AVDesc.card_isDT_le h1 h2 hT (AKbar A) a ℓ ha' hℓ0 hℓK'
+  have hle := Nat.card_le_card_of_injective emb hemb
+  have hB : Nat.card (tors B ℓ) = ℓ ^ (2 * b) := by
+    rw [Nat.card_congr EB.toEquiv, Nat.card_fun, Nat.card_zmod, Nat.card_eq_fintype_card,
+      Fintype.card_fin]
+  rw [hB] at hle
+  have := (Nat.pow_le_pow_iff_right (by omega : 1 < ℓ)).mp (hle.trans hcount)
+  omega
+
+/-- **`λ_L` is an isogeny for every ample `L`, from L1, L2 and the torsion leaf** (no Weil-pairing leaf). -/
+theorem phiAmpleIsogeny_of_open (h1 : PicRepresentableAbVar) (h2 : PicZeroAbVar)
+    (hT : AvSplit.MumfordTorsionAlgClosed) : PhiAmpleIsogeny := by
+  intro K _ A P rep B j hj L hL lam hlam
+  obtain ⟨lam', hlam'⟩ := exists_hom_comp_eq_phiL rep hj L
+  have hjm : Mono j := by
+    have : IsOpenImmersion j.left := hj.1
+    exact (Over.forget _).mono_of_mono_map (inferInstanceAs (Mono j.left))
+  have he : lam = lam'.hom := by rw [← cancel_mono j, hlam, hlam']
+  subst he
+  have hfin := finiteOfFiniteKerPts K A B lam' (PhiAmple.finite_ker_pts rep hj hL hlam)
+  refine ⟨hfin, ⟨?_⟩⟩
+  have := hfin
+  have : IsProper (lam'.hom.left ≫ B.X.hom) := by rw [Over.w lam'.hom]; infer_instance
+  have : IsProper lam'.hom.left := IsProper.of_comp lam'.hom.left B.X.hom
+  have : IrreducibleSpace B.X.left :=
+    GeometricallyIrreducible.irreducibleSpace_of_subsingleton (f := B.X.hom)
+  have : Nonempty A.X.left := ⟨η[A.X].left (IsLocalRing.closedPoint K)⟩
+  obtain ⟨a, ha⟩ := PkgI3.AbVar.dim_finite A
+  obtain ⟨b, hb⟩ := PkgI3.AbVar.dim_finite B
+  have hba := dim_le_of_open h1 h2 hT rep hj a b ha hb
+  refine surjective_of_dim_le lam'.hom.left lam'.hom.left.isClosedMap a ha ?_
+  have hb' : topologicalKrullDim B.X.left = b := hb
+  rw [hb']
+  exact_mod_cast hba
+
+end PhiSurj
+
 #print axioms PhiSurj.AVDesc.formula_nondeg_right
 #print axioms PhiSurj.AVDesc.card_isDT_le
+#print axioms PhiSurj.phiAmpleIsogeny_of_open
