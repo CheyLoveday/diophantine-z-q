@@ -337,4 +337,99 @@ lemma fibreMap_isMonHom {F N : Over (Spec (CommRingCat.of R))} [IsSeparated N.ho
     erw [Over.w (Functor.LaxMonoidal.ε (Over.pullback s))]
     exact Over.w η[A.X]
 
+/-- **Step C (special fibre).** On a field fibre that is an abelian variety, `ψ` is injective on points, given one
+point of the fibre mapping into `V` (translation by field-valued points and rigidity). -/
+lemma fibre_injective {F N : Over (Spec (CommRingCat.of R))} [IsSeparated N.hom] [LocallyOfFiniteType N.hom]
+    [GrpObj N] (ψ : F ⟶ N) (e : Spec (CommRingCat.of R) ⟶ F.left) (hη : e ≫ ψ.left = η[N].left)
+    {k : Type} [Field k] {s : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R)} (A : PkgI3.AbVar k)
+    (g : A.X.left ⟶ F.left) (hpb : IsPullback g A.X.hom F.hom s) (hone : (1 : A.Pt k).left ≫ g = s ≫ e)
+    (hs : Function.Injective (pullback.fst N.hom s).base)
+    (V : N.left.Opens) (v : (V : Scheme) ⟶ F.left) (hB2 : (ψ.left ∣_ V) ≫ v = (ψ.left ⁻¹ᵁ V).ι)
+    (hW : ∃ a0 : A.X.left, ψ.left.base (g.base a0) ∈ V) (a1 a2 : A.X.left)
+    (h12 : ψ.left.base (g.base a1) = ψ.left.base (g.base a2)) : a1 = a2 := by
+  letI : GrpObj ((Over.pullback s).obj N) := Functor.grpObjObj
+  let ψk := fibreMap ψ A g hpb.w
+  haveI : IsMonHom ψk := fibreMap_isMonHom ψ e hη A g hpb.w hone
+  have hk : ψk.left.base a1 = ψk.left.base a2 := by
+    apply hs
+    rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, fibreMap_fst, Scheme.Hom.comp_apply,
+      Scheme.Hom.comp_apply, h12]
+  obtain ⟨z, hz1, hz2⟩ := Scheme.Pullback.exists_preimage_pullback a1 a2 hk
+  let q0 := (pullback ψk.left ψk.left).fromSpecResidueField z
+  let xb := q0 ≫ pullback.fst ψk.left ψk.left
+  let yb := q0 ≫ pullback.snd ψk.left ψk.left
+  have hxy : xb ≫ ψk.left = yb ≫ ψk.left := by
+    simp only [xb, yb, Category.assoc, pullback.condition]
+  have hyx : yb ≫ A.X.hom = xb ≫ A.X.hom := by
+    rw [← fibreMap_hom ψ A g hpb.w, ← Category.assoc, ← hxy, Category.assoc, fibreMap_hom]
+  let T : Over (Spec (CommRingCat.of k)) := Over.mk (xb ≫ A.X.hom)
+  let x' : T ⟶ A.X := Over.homMk xb rfl
+  let y' : T ⟶ A.X := Over.homMk yb hyx
+  have hxy' : x' ≫ ψk = y' ≫ ψk := by ext1; exact hxy
+  let c : T ⟶ A.X := y' * x'⁻¹
+  have hc : c ≫ ψk = 1 := by
+    rw [MonObj.mul_comp, GrpObj.inv_comp, ← hxy', mul_inv_cancel]
+  let σ : T ⊗ A.X ⟶ A.X := (fst T A.X ≫ c) * snd T A.X
+  have hσψ : σ ≫ ψk = snd T A.X ≫ ψk := by
+    rw [MonObj.mul_comp, Category.assoc, hc, MonObj.comp_one, _root_.one_mul]
+  let j : T ⊗ A.X ⟶ T ⊗ A.X := lift (fst T A.X) ((fst T A.X ≫ c⁻¹) * snd T A.X)
+  have hjσ : j ≫ σ = snd T A.X := by
+    simp only [σ, j, MonObj.comp_mul, lift_fst_assoc, lift_snd, GrpObj.comp_inv]
+    exact mul_inv_cancel_left _ _
+  -- surjectivity of the translations
+  haveI : Subsingleton (Spec (CommRingCat.of k)) := inferInstanceAs (Subsingleton (PrimeSpectrum k))
+  haveI : Surjective T.hom := ⟨fun y => ⟨IsLocalRing.closedPoint _, Subsingleton.elim _ _⟩⟩
+  have hsnd : Function.Surjective (snd T A.X).left.base := by
+    rw [Over.snd_left]; exact (pullback.snd T.hom A.X.hom).surjective
+  have hσs : Function.Surjective σ.left.base := by
+    have : (j ≫ σ).left.base = σ.left.base ∘ j.left.base := by
+      rw [Over.comp_left, Scheme.Hom.comp_base]; rfl
+    refine Function.Surjective.of_comp (g := j.left.base) ?_
+    rw [← this, hjσ]; exact hsnd
+  obtain ⟨a0, ha0⟩ := hW
+  obtain ⟨y1, hy1⟩ := hσs a0
+  obtain ⟨y2, hy2⟩ := hsnd a0
+  let W : A.X.left.Opens := g ⁻¹ᵁ (ψ.left ⁻¹ᵁ V)
+  haveI : GeometricallyIrreducible A.X.hom := inferInstance
+  haveI : UniversallyOpen A.X.hom := inferInstance
+  haveI : IrreducibleSpace T.left := by
+    change IrreducibleSpace (PrimeSpectrum ((pullback ψk.left ψk.left).residueField z)); infer_instance
+  haveI : IrreducibleSpace (T ⊗ A.X).left := by
+    change IrreducibleSpace ((pullback T.hom A.X.hom : Scheme) : Type); infer_instance
+  obtain ⟨q, hq1, hq2⟩ := nonempty_preirreducible_inter (σ.left ⁻¹ᵁ W).isOpen ((snd T A.X).left ⁻¹ᵁ W).isOpen
+    ⟨y1, by show ψ.left.base (g.base (σ.left.base y1)) ∈ V; rw [hy1]; exact ha0⟩
+    ⟨y2, by show ψ.left.base (g.base ((snd T A.X).left.base y2)) ∈ V; rw [hy2]; exact ha0⟩
+  have hq1' : ψ.left.base (g.base (σ.left.base q)) ∈ V := hq1
+  have hq2' : ψ.left.base (g.base ((snd T A.X).left.base q)) ∈ V := hq2
+  let qb := (T ⊗ A.X).left.fromSpecResidueField q
+  let a := qb ≫ σ.left
+  let b := qb ≫ (snd T A.X).left
+  have hab : a ≫ g = b ≫ g := by
+    refine eq_of_comp_eq ψ V v hB2 _ _ ?_ ?_ ?_
+    · intro x; simp only [a, qb, Scheme.Hom.comp_apply, Scheme.fromSpecResidueField_apply]; exact hq1'
+    · intro x; simp only [b, qb, Scheme.Hom.comp_apply, Scheme.fromSpecResidueField_apply]; exact hq2'
+    · have h3 : σ.left ≫ ψk.left = (snd T A.X).left ≫ ψk.left := by
+        rw [← Over.comp_left, hσψ, Over.comp_left]
+      simp only [a, b, Category.assoc]
+      rw [← fibreMap_fst ψ A g hpb.w, reassoc_of% h3]
+  have hab' : a = b := by
+    refine hpb.hom_ext hab ?_
+    simp only [a, b, Category.assoc, Over.w]
+  let Q : Over (Spec (CommRingCat.of k)) := Over.mk (qb ≫ (T ⊗ A.X).hom)
+  let q' : Q ⟶ T ⊗ A.X := Over.homMk qb rfl
+  have hq' : q' ≫ σ = q' ≫ snd T A.X := by ext1; exact hab'
+  have hc1 : (q' ≫ fst T A.X) ≫ c = 1 := by
+    have := hq'
+    rw [MonObj.comp_mul, ← Category.assoc] at this
+    exact mul_eq_right.mp this
+  have hc2 : (q' ≫ fst T A.X) ≫ y' = (q' ≫ fst T A.X) ≫ x' := by
+    rw [MonObj.comp_mul, GrpObj.comp_inv] at hc1
+    exact mul_inv_eq_one.mp hc1
+  have := congrArg (fun f => f.base (IsLocalRing.closedPoint _)) (congrArg Over.Hom.left hc2)
+  simp only [Over.comp_left, x', y', Over.homMk_left, xb, yb, q0, Scheme.Hom.comp_base, TopCat.coe_comp,
+    Scheme.fromSpecResidueField_apply] at this
+  dsimp only [Function.comp] at this
+  rw [Scheme.fromSpecResidueField_apply, hz1, hz2] at this
+  exact this.symm
+
 end ZInQ.Contrib.GoodModelIso
