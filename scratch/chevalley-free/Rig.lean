@@ -9,6 +9,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open AlgebraicGeometry.ProjectiveLine AlgebraicGeometry.ProjectiveSpace ZInQ.SemiAbDescend
+open DictModels.RaynaudOr ZInQ.HeightSplit
 
 set_option linter.style.haveILetI false
 set_option linter.unusedSectionVars false
@@ -169,6 +170,73 @@ theorem overlap_const (B : PkgI3.AbVar K) (h : Ov K ⟶ B.X.left) (hh : h ≫ B.
   rw [← hagree, ← Category.assoc, ← Category.assoc]
   simpa only [Category.assoc] using this
 
+/-- The `K`-algebra structure of `Γ(𝔾_m)`. -/
+@[reducible] def ovAlg : Algebra K Γ(Ov K, ⊤) :=
+  ((overlapToBase K).appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom).toAlgebra
+
+/-- The coordinate `u = X₀/X₁` of `𝔾_m`, a unit. -/
+def uOv : Γ(Ov K, ⊤)ˣ :=
+  ⟨scalingCoordinate K ⟨1⟩, scalingCoordinate K ⟨0⟩, scalingCoordinate_mul K ⟨1⟩ ⟨0⟩ (by decide),
+    scalingCoordinate_mul K ⟨0⟩ ⟨1⟩ (by decide)⟩
+
+/-- `𝔾_m ⊆ ℙ¹ → Spec K[x^{±1}]`, `x ↦ u`. -/
+def mOv : Ov K ⟶ Spec (CommRingCat.of (TorusRing K 1)) :=
+  letI := ovAlg (K := K)
+  (Ov K).toSpecΓ ≫ Spec.map (CommRingCat.ofHom (torusLift (K := K) (fun _ => uOv (K := K))).toRingHom)
+
+theorem ovPt_mOv (s : Kˣ) :
+    ovPt K s ≫ mOv = Spec.map (CommRingCat.ofHom (torusLift (K := K) (R := K) (fun _ => s)).toRingHom) := by
+  letI := ovAlg (K := K)
+  rw [mOv, Scheme.toSpecΓ_naturality_assoc, ← SpecMap_ΓSpecIso_hom, ← Spec.map_comp, ← Spec.map_comp]
+  congr 1
+  ext1
+  apply IsLocalization.ringHom_ext (Submonoid.powers (∏ i : Fin 1, MvPolynomial.X i :
+    MvPolynomial (Fin 1) K))
+  apply MvPolynomial.ringHom_ext
+  · intro a
+    have h1 : (ovPt K s).appTop ((overlapToBase K).appTop ((Scheme.ΓSpecIso (CommRingCat.of K)).inv a)) =
+        (Scheme.ΓSpecIso (CommRingCat.of K)).inv a := by
+      rw [← CommRingCat.comp_apply, ← Scheme.Hom.comp_appTop, ovPt_over]; rfl
+    simp only [RingHom.comp_apply, CommRingCat.hom_comp, CommRingCat.hom_ofHom, AlgHom.toRingHom_eq_coe,
+      RingHom.coe_coe]
+    rw [show (algebraMap (MvPolynomial (Fin 1) K) (TorusRing K 1)) (MvPolynomial.C a) =
+      algebraMap K (TorusRing K 1) a from rfl, AlgHom.commutes, AlgHom.commutes]
+    change (Scheme.ΓSpecIso (CommRingCat.of K)).hom ((ovPt K s).appTop
+      ((overlapToBase K).appTop ((Scheme.ΓSpecIso (CommRingCat.of K)).inv a))) = a
+    rw [h1, ← CommRingCat.comp_apply, Iso.inv_hom_id]; rfl
+  · intro i
+    have hi : (algebraMap (MvPolynomial (Fin 1) K) (TorusRing K 1)) (MvPolynomial.X i) =
+        ((tUniv 1 i : (TorusRing K 1)ˣ) : TorusRing K 1) := by simp [tUniv]
+    simp only [RingHom.comp_apply, CommRingCat.hom_comp, CommRingCat.hom_ofHom, AlgHom.toRingHom_eq_coe,
+      RingHom.coe_coe]
+    rw [hi, torusLift_tUniv, torusLift_tUniv]
+    change (Scheme.ΓSpecIso (CommRingCat.of K)).hom ((ovPt K s).appTop (scalingCoordinate K ⟨1⟩)) = s
+    rw [ovPt_coordinate, secK, ← CommRingCat.comp_apply, Iso.inv_hom_id]; rfl
+
+theorem mOv_over : mOv (K := K) ≫ (algPt K (TorusRing K 1)).hom = overlapToBase K := by
+  letI := ovAlg (K := K)
+  change ((Ov K).toSpecΓ ≫ Spec.map _) ≫ Spec.map (CommRingCat.ofHom (algebraMap K (TorusRing K 1))) = _
+  rw [Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  rw [show ((torusLift (K := K) (fun _ => uOv (K := K))).toRingHom.comp (algebraMap K (TorusRing K 1))) =
+    algebraMap K Γ(Ov K, ⊤) from (torusLift (K := K) (fun _ => uOv (K := K))).comp_algebraMap]
+  change (Ov K).toSpecΓ ≫ Spec.map ((Scheme.ΓSpecIso (CommRingCat.of K)).inv ≫ (overlapToBase K).appTop) = _
+  rw [Spec.map_comp, ← Scheme.toSpecΓ_naturality_assoc, toSpecΓ_SpecMap_ΓSpecIso_inv, Category.comp_id]
+
+/-- **Rigidity for `𝔾_m`, torus form**: a morphism `Spec K[x^{±1}] → B` to an abelian variety over a field `K`
+takes the same value at all `K`-points `x ↦ s`. -/
+theorem torus1_const (B : PkgI3.AbVar K) (g : algPt K (TorusRing K 1) ⟶ B.X) (s : Kˣ) :
+    algPtMap (torusLift (K := K) (R := K) (fun _ => s)) ≫ g =
+      algPtMap (torusLift (K := K) (R := K) (fun _ => (1 : Kˣ))) ≫ g := by
+  have hh : (mOv (K := K) ≫ g.left) ≫ B.X.hom = overlapToBase K := by
+    rw [Category.assoc, Over.w g, mOv_over]
+  have := overlap_const B (mOv ≫ g.left) hh s 1
+  apply Over.OverMorphism.ext
+  simp only [Over.comp_left]
+  rw [← Category.assoc, ovPt_mOv, ← Category.assoc, ovPt_mOv] at this
+  exact this
+
 end Rig
 
 end ZInQ.ChevFree
+
+#print axioms ZInQ.ChevFree.torus1_const
