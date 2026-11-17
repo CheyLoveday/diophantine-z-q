@@ -2,6 +2,7 @@ import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRC
 import ZInQKernel.Contrib.OneProof.PoleS12.Realization
 import ZInQKernel.Contrib.OneProof.PoleS12.Leaves
 import ZInQKernel.Contrib.OneProof.PoleS12.CountS12
+import ZInQKernel.Contrib.OneProof.PoleS12.GoodUnram
 
 /-!
 # Theorem 5.2 from the printed Theorem 5.3 (fork issue #83, round 2)
@@ -39,18 +40,35 @@ theorem poleCompleteness_of_restrictedConverseGenuine_local (hRC : RestrictedCon
     (lemma54At_of_printed h54 hKum) (kolyvaginRankOne_of_printed hB hK) hMW matrixRealization
     hTwo hThree hBad hGood
 
+/-- **The dimension-three count** (tex L1061–1074), proved: S12's `par:descent` with every local
+condition in Lean. -/
+theorem dimThreeCount : DimThreeCount := dimThreeCount_S12 localGoodUnram
+
+/-- **The simultaneous construction** (tex L1033–1074), proved (S12's `par:simultaneous-matrices`
+and `par:descent`). -/
+theorem simultaneousConstruction : SimultaneousConstruction :=
+  simultaneousConstruction_of matrixRealization dimThreeCount
+
 /-- **Theorem 5.2 from the printed Theorem 5.3** (`diophantine_zq.tex` L1019–1121): the final
 form. Proved in Lean: the bookkeeping, the rescaling, the complete 2-descent, `MatrixRealization`
-(S12 `par:simultaneous-matrices`), every necessary local condition and the local solubility of
-the eight classes at `2`, `3`, `ℝ` and the primes of `ℓ` (S12 `par:descent`). Remaining:
-Theorem 5.3 (`RestrictedConverseGenuine`), the printed leaves `Lemma54`, `BCDTThmA`,
-`KolyvaginThm1`, `MordellWeil`, and the GLUE statements `KummerSelmerM` (the Kummer
-identification `#Sel₂(E_ℓ/ℚ) = #SelM ℓ`) and `LocalGoodUnram` (unramified classes are local at
-primes of good reduction). -/
+(S12 `par:simultaneous-matrices`), every local condition of the dimension-three count
+(S12 `par:descent`). Remaining: Theorem 5.3 (`RestrictedConverseGenuine`), the printed leaves
+`Lemma54`, `BCDTThmA`, `KolyvaginThm1`, `MordellWeil`, and the GLUE statement `KummerSelmerM`
+(the Kummer identification `#Sel₂(E_ℓ/ℚ) = #SelM ℓ`, Silverman X.1.4). -/
 theorem poleCompleteness_of_restrictedConverseGenuine (hRC : RestrictedConverseGenuine)
     (h54 : Lemma54) (hKum : KummerSelmerM) (hB : BCDTThmA) (hK : KolyvaginThm1)
-    (hMW : MordellWeil) (hG : LocalGoodUnram) : Manuscript.PoleCompleteness :=
-  poleCompleteness_of_restrictedConverse SelmerCorankOne hRC (lemma54At_of_printed h54 hKum)
-    (kolyvaginRankOne_of_printed hB hK) hMW descentGlueM matrixRealization (dimThreeCount_S12 hG)
+    (hMW : MordellWeil) : Manuscript.PoleCompleteness :=
+  poleCompleteness_of_crm
+    (crm_of_restrictedConverse SelmerCorankOne hRC (lemma54At_of_printed h54 hKum)
+      (kolyvaginRankOne_of_printed hB hK) hMW descentGlueM)
+    simultaneousConstruction
+
+/-- **Theorem 5.2 from Theorem 5.3 over the abstract predicate** (round 1's form, with every GLUE
+statement except `Lemma54At P` now proved). -/
+theorem poleCompleteness_of_restrictedConverse_abstract (P : WeierstrassCurve ℚ → Prop)
+    (hRC : RestrictedConverse P) (h54 : Lemma54At P) (hK : KolyvaginRankOne)
+    (hMW : MordellWeil) : Manuscript.PoleCompleteness :=
+  poleCompleteness_of_crm (crm_of_restrictedConverse P hRC h54 hK hMW descentGlueM)
+    simultaneousConstruction
 
 end ZInQ.Manuscript.PoleS12

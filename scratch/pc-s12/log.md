@@ -42,3 +42,15 @@
 - Final: `poleCompleteness_of_restrictedConverseGenuine (hRC : RestrictedConverseGenuine) (Lemma54)
   (KummerSelmerM) (BCDTThmA) (KolyvaginThm1) (MordellWeil) (LocalGoodUnram)`. COMPILED, standard axioms.
   Round 1's LocalTwo/LocalThree/LocalBad/LocalGood are no longer hypotheses.
+
+## LocalGoodUnram PROVED; SimultaneousConstruction PROVED
+- GoodF/KummerF.lean, GoodF/DescentF.lean: Kummer maps and 2-descent of y^2 = x(x-l)(x+3l) over any
+  field with 2, 3 != 0 (generalized copy of round-1 KummerM/DescentM); `deltaM_eq_one_imp`
+  (ker delta in 2E, no hypothesis on l); `locM_finite`: over a finite field (char != 2,3) every pair
+  of nonzero elements is a local Kummer class (Kummer map onto: #image = #E[2] = 4 >= #target).
+- GoodUnram.lean: `localGoodUnram` by reduction mod p + Hensel on the x-coordinate only (ON THE SPOT
+  route; S12 uses a formal subgroup). COMPILED.
+- `simultaneousConstruction : SimultaneousConstruction` (round 1's GLUE Prop) PROVED.
+- Final: `poleCompleteness_of_restrictedConverseGenuine (RestrictedConverseGenuine) (Lemma54)
+  (KummerSelmerM) (BCDTThmA) (KolyvaginThm1) (MordellWeil) : Manuscript.PoleCompleteness`.
+  Axioms [propext, Classical.choice, Quot.sound] (scratch/pc-s12/axioms-output.txt). VERIFIED.
