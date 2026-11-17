@@ -1,0 +1,62 @@
+DISCHARGES [OpenResearchLeaves23.dsThm965] by DS965Weak.dsThm965_of_weak
+  still assumes: [DS965Weak.DSThm965Weak]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.gonzalezRotgerProp56X6] by GRCountX6.prop56X6_of_r5fpCount
+  still assumes: [LeafQM.AV.R5fpCount]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.neronBaseChangeStrictHenselization] by GapSHPair.neronBaseChangeStrictHenselization_of_unramified
+  still assumes: [ReductGlue.NeronBaseChangeUnramifiedDVR]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_dict
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero,
+ R16IsJ1Dict.X1PointsConjugate,
+ R16IsJ1Dict.CurveIsoOfFunctionFieldIso,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero,
+ R16IsJ1Dict.X1PointsConjugate,
+ R16IsJ1Dict.CurveIsoOfFunctionFieldIso,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_picZero_igusa
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, R16IsJ1Dict.X1PointsConjugate, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakOdd
+  still assumes: [R16IsJ1Dict.AfTateWeakOdd, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, R16IsJ1Dict.X1PointsConjugate, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16Split.coreY_of_r16
+  still assumes: [LeafModCurves.R16_EichlerShimuraJ1']
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by R16Used.r16CoreY_of_printed
+  still assumes: [R16Used.AfTateCharPoly, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.sga7_IX_3_3_SH] by SGA7PersistsNF.sga7_IX_3_3_SH_of_field
+  still assumes: [CToPrinted.SGA7_IX_3_3]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.sga7_IX_3_5_ForwardGeom] by UnipotentForward.forwardGeom_of_forward
+  still assumes: [UnipotentForward.SGA7_IX_3_5_Forward, UnipotentForward.SemiAbelianDescendsSepClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by X1Igusa.r16CoreY_of_picZero_igusaDS
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by X1Igusa.r16CoreY_of_picZero_igusaDSX
+  still assumes: [R16IsJ1Dict.AfTateCharPolyPicZero, X1Igusa.IgusaGL2DSX, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.r16CoreY] by X1Igusa.r16CoreY_of_weakPicZero_igusaDS
+  still assumes: [R16IsJ1Dict.AfTateWeakOddPicZero, X1Igusa.IgusaGL2DS, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves23.mumfordGroupLaw] by ZInQ.Contrib.MumfordRigidity.mumfordGroupLaw_of_core
+  still assumes: [LeafQM.AV.R1UnivRigid.MumfordRigidityCore]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 61 open hypotheses, 2609 theorems checked, 16 discharge one
+'X1Igusa.Weber.weberFieldComparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X1Igusa.Weber.exists_root_of_isPrime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X1Igusa.Weber.diffOn_Pf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X1Igusa.Weber.eval_ΨSq_weber_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X1Igusa.Weber.exists_point_of_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+'X1Igusa.Weber.adjoin_wOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+X1Igusa.Weber.weberFieldComparison : X1Igusa.Weber.WeberFieldComparison

@@ -1,0 +1,31 @@
+{
+ "name": "isj1-dict-weak",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.R16IsJ1Dict"
+ ],
+ "discharges": [
+  {
+   "field": "r16CoreY",
+   "proof": "_root_.R16IsJ1Dict.r16CoreY_of_weakPicZero_igusa {n}.afTateWeakOddPicZero {n}.x1PointsConjugate {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "afTateWeakOddPicZero",
+     "type": "_root_.R16IsJ1Dict.AfTateWeakOddPicZero",
+     "doc": "isj1-dict: Eichler-Shimura for A_f over J_1(N) = Pic^0(X_1(N)) in the weakest reading of Diamond-Shurman Thm 9.5.4, with oddness. For N >= 1 and a newform f in S_2(Gamma_1(N)) with nebentypus chi there is a model X of X_1(N) over Q such that for Pic^0_{X/Q} (any tensor-compatible representative V) there are a Q-quotient pi : V ->> A and theta : K_f -> End^0(A) with, for every l: V_l(A) free of rank 2 over Q_l (x) K_f (DS Lemma 9.5.3); complex conjugation of determinant -1 on every iota-component (rho_{A_f,l} odd); every arithmetic Frobenius at p not dividing N*l satisfying X^2 - a_p X + chi(p) p over Q_l (x) K_f. The characteristic polynomial on each iota-component is recovered by Chebotarev (T18) with the scalar case excluded by complex conjugation (R16IsJ1Dict.component_charpoly). A consequence of AfTateCharPolyPicZero / r16-used's AfTateCharPoly (weakOdd_of_afTate: Cayley-Hamilton, and oddness from the characteristic polynomials, chi(-1) = 1).",
+     "kind": "published",
+     "flag": "pending reading: weak reading of DS 9.5.4 plus oddness of rho_{A_f,l} (det rho(c) = -1), which DS may not print separately (it follows from det rho = chi chi_l, Shimura 1971 Thm 7.14 / Ribet 1977); consequence of the characteristic-polynomial reading (proved in Lean); dictionary step K_N = Q(j)(x(P)) vs DS's Q(j, f_1) as for afTateCharPolyPicZero; locators UNVERIFIED",
+     "source": "Diamond-Shurman, GTM 228 (2005): 7.7 (X_1(N)_alg, J_1(N)), Lemma 9.5.3, Thm 9.5.4 (weakest reading); oddness: det rho_{A_f,l} = chi chi_l (Shimura 1971 Thm 7.14, Ribet 1977); numbers UNVERIFIED"
+    },
+    {
+     "name": "x1PointsConjugate",
+     "type": "_root_.R16IsJ1Dict.X1PointsConjugate",
+     "doc": "isj1-dict: Igusa. For N >= 1 and points P, P' of exact order N of E_j over an algebraic closure of Q(j), some sigma in Aut(Q(j)bar/Q(j)) maps x(P) to x(P'). Consequence of the printed Gal(Q(j)(E[N])/Q(j)) = GL_2(Z/N) (Gal(F_N/Q(j)) = GL_2(Z/N)/{+-1} on Weber functions) and the transitivity of SL_2(Z/N) on vectors of order N; any two Weierstrass models over Q(j) with invariant j differ by a twist and x -> u^2 x + r over Q(j). False for N = 0 (hence 0 < N).",
+     "kind": "consequence",
+     "flag": "consequence of the printed theorem (Galois group GL_2(Z/N), resp. GL_2(Z/N)/{+-1} on x-coordinates); locator UNVERIFIED",
+     "source": "Igusa, Amer. J. Math. 81 (1959); Shimura 1971, Thm 6.6; Lang, Elliptic Functions, Ch. 6 section 3; Diamond-Shurman section 7.5; numbers UNVERIFIED"
+    }
+   ]
+  }
+ ],
+ "note": "isj1-dict: weak-reading alternative to scratch/isj1-dict/autofold.json."
+}

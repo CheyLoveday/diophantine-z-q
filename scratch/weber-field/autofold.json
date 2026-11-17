@@ -1,0 +1,31 @@
+{
+ "name": "weber-field",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.WeberField"
+ ],
+ "discharges": [
+  {
+   "field": "r16CoreY",
+   "proof": "_root_.X1Igusa.r16CoreY_of_picZero_igusaDS {n}.afTateCharPolyPicZero {n}.igusaGL2DS {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "afTateCharPolyPicZero",
+     "type": "_root_.R16IsJ1Dict.AfTateCharPolyPicZero",
+     "doc": "isj1-dict: Eichler-Shimura for A_f over J_1(N) = Pic^0(X_1(N)), existence form of Diamond-Shurman Lemma 9.5.3 and Thm 9.5.4 at one model. For N >= 1 and a newform f in S_2(Gamma_1(N)) with nebentypus chi there is a model X of X_1(N) over Q (IsX1Model) such that for the degree-zero Picard scheme Pic^0_{X/Q} (any representing abelian variety V with the tensor group law, vendored Jacobian-Challenge library) there are a Q-quotient pi : V ->> A and theta : K_f -> End^0(A) with V_l(A) free of rank 2 over Q_l (x) K_f and the characteristic polynomial of arithmetic Frobenius at p not dividing N*l equal to X^2 - a_p X + chi(p) p. Replaces r16CoreY together with igusaGL2DS (x1-igusa: isj1-dict's x1PointsConjugate is proved from it, X1Igusa.x1PointsConjugate_of_igusaGL2DS) (the curve/function-field step is proved: R16IsJ1Dict.curveIsoOfFunctionFieldIso_proof): Pic^0 = Albanese (every IsJ1 Jacobian is Pic^0), base-point independence and the transfer to every IsJ1 Jacobian are proved (R16IsJ1Dict.afTateCharPoly_of_picZero); conversely it follows from r16-used's AfTateCharPoly and X1ModelExists (afTateCharPolyPicZero_of_afTate). If DS 9.5.4 prints only that Frobenius satisfies the equation, R16IsJ1Dict.AfTateWeakOddPicZero (weak relation + oddness on each iota-component) discharges the field too (r16CoreY_of_dict). The function-field dictionary between DS's Q(j, f_1) and the kernel's K_N = Q(j)(x(P)) is proved (weber-field, X1Igusa.Weber.weberFieldComparison).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (DS 9.5.3 + 9.5.4 at Pic^0 of one model); dictionary step K_N = Q(j, f_1) PROVED (weber-field: X1Igusa.Weber.weberFieldComparison, ZInQKernel/Contrib/OneProof/WeberField.lean: the ideal of relations of (j, f_1) over Q, f_1 = T5Glue.weber <1,tau> (1/N), equals that of (j, w(P)) for a point P of exact order N of E_j, and Q(j)(w(P)) = fieldX1 P by adjoin_wOf; so DS's X_1(N)_alg, function field Q(j, f_1), is a model in the kernel's sense once DS's construction gives IsCurve (smooth projective, Q algebraically closed in Q(j, f_1)), which is part of the print); DS 9.5.4 wording (characteristic polynomial vs equation) unread, fallback AfTateWeakOddPicZero; locators UNVERIFIED",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005): 6.6 (A_f), 7.7 (X_1(N)_alg, J_1(N) = Pic^0), Lemma 9.5.3, Thm 9.5.4; Shimura 1971 Thms 7.9-7.14; numbers UNVERIFIED (unread)"
+    },
+    {
+     "name": "igusaGL2DS",
+     "type": "_root_.X1Igusa.IgusaGL2DS",
+     "doc": "x1-igusa: Igusa's theorem in its printed form, Gal(Q(j, E_j[N])/Q(j)) = GL_2(Z/N) for Diamond-Shurman's E_j : y^2 = 4x^3 - g x - g, g = 27j/(j-1728), j transcendental. For N >= 1, every basis e : (Z/N)^2 = E_j[N] over an algebraic closure of Q(j) and every g in GL_2(Z/N), some sigma in Aut(Q(j)bar/Q(j)) acts on E_j[N] as g in the basis e (the Galois representation on E_j[N] is onto GL_2(Z/N)). E_j is written in Mathlib's normal form y'^2 = x^3 - (g/4)x - g/4 (y = 2y', a Q(j)-isomorphism of plane cubics fixing infinity). Replaces isj1-dict's consequence-rated x1PointsConjugate: X1Igusa.x1PointsConjugate_of_igusaGL2DS proves it, with E[N] = (Z/N)^2 (t36_torsionStructure, Tau Ceti), SL_2(Z/N) transitive on vectors of order N (exists_SL2_first_column) and an explicit change of variables over Q(j)bar from Diamond-Shurman's model to the kernel's E_j with x_DS = u^2 x - 3/2, u^2 = -18/(j-1728)^2 in Q(j) (cDS_smul). Fallback if the print is read on x-coordinates only (Shimura 1971 Thm 6.6, GL_2(Z/N)/{+-1}): X1Igusa.IgusaGL2DSX (r16CoreY_of_picZero_igusaDSX).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman section 7.5, Galois group of Q(j, E_j[N])/Q(j) = GL_2(Z/N)); locator UNVERIFIED (theorem number and model y^2 = 4x^3 - g_j x - g_j recalled, not read)",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), section 7.5; Igusa, Fibre systems of Jacobian varieties III, Amer. J. Math. 81 (1959); Lang, Elliptic Functions, Ch. 6 section 3; Shimura 1971 Thm 6.6 (GL_2(Z/N)/{+-1}); numbers UNVERIFIED (unread)"
+    }
+   ]
+  }
+ ],
+ "note": "weber-field: report docs/research/weber-field.md. Same discharge and leaves as x1-igusa's autofold.json (scratch/x1-igusa/autofold.json); only afTateCharPolyPicZero's flag changes (its K_N dictionary step is proved by X1Igusa.Weber.weberFieldComparison, imported through ZInQKernel.Contrib.OneProof.WeberField). Weak-reading alternative: _root_.X1Igusa.r16CoreY_of_weakPicZero_igusaDS {n}.afTateWeakOddPicZero {n}.igusaGL2DS {t}.mumfordTorsionAlgClosed."
+}

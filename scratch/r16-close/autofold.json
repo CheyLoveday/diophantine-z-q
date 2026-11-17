@@ -1,0 +1,55 @@
+{
+ "name": "r16-close",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.R16CoreYSatDet"
+ ],
+ "discharges": [
+  {
+   "field": "r16CoreY",
+   "proof": "_root_.AfTateLam.r16CoreY_of_sat_det {n}.heckeJ1DS {n}.afShimura {n}.afTateDSLambdaSat {n}.afDetLambda {n}.igusaGL2DS {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "heckeJ1DS",
+     "type": "_root_.AfTateLam.HeckeJ1DS",
+     "doc": "aftate-fix2 (r16-close fold): the Hecke operators on J_1(N) over Q. For N >= 2, every model X of Diamond-Shurman's X_1(N)_alg with chosen generators (j_X, t_X) of K(X) = Q(j, f_1) (IsX1Gen: the integer relations of (j_X, t_X) are those of (j(tau), f_1(tau)), f_1 = T5Glue.weber <1,tau> (1/N)), every rational point P0 and every Jacobian (J, aj) (Albanese property): there are endomorphisms T_p (every prime p) and <d> (d in (Z/N)^*) of J over Q acting on degree-0 divisor classes of the points x_tau (AtTau: the complex point where every g in K(X) whose meromorphic function on H has a limit c at tau is regular with value c) by DS's double-coset formulas: T_p[x_tau] = sum_{j<p} [x_{(tau+j)/p}] + [x_{g(p tau)}] (last term for p not dividing N; g in SL_2(Z), N | c, d = p mod N), <d>[x_tau] = [x_{g tau}].",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman 6.3 Hecke operators on Div/Pic^0 of X_1(N) by double cosets, pp. 226-227, coset representatives Prop. 5.2.1 p. 171, 7.9 T_p and <d> defined over Q p. 300; AI-read by r16-close, no human reading)",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), 6.3 (pp. 226-227), Prop. 5.2.1 (p. 171), 7.9 (p. 300); Shimura 1971 7.2 (unread)"
+    },
+    {
+     "name": "afShimura",
+     "type": "_root_.AfTateLam.AfShimura",
+     "doc": "aftate-fix2 (r16-close fold): Shimura's A_f over Q. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, N >= 2, X, (j_X, t_X), P0, (J, aj) as in heckeJ1DS and any T_p, <d> with DS's divisor action: K_f is a number field, and there are A, pi : J -> A and theta : K_f -> End^0(A) with IsAfQuotient (pi surjective, kills I_f J, universal among homomorphisms to abelian varieties killing I_f J; I_f = image of the kernel of T_p -> a_p(f), <d> -> chi(d) on the free algebra) and IsAfAction (theta(a_p) is the endomorphism induced by T_p, theta(chi(d)) the one induced by <d>).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Shimura 1973 Thm 1: the Q-rational quotient A_f = J/I_f J with the coefficient-field action; read by the locator audit, row R16, pp. 526-527; DS Def. 6.6.3, Prop. 6.6.4 over C)",
+     "source": "Shimura, On the factors of the jacobian variety of a modular function field, J. Math. Soc. Japan 25 (1973), Thm 1, pp. 526-527 (read by the locator audit, row R16); Diamond-Shurman GTM 228 (2005), Def. 6.6.3 (p. 241), Prop. 6.6.4 (p. 242) (AI-read by r16-close)"
+    },
+    {
+     "name": "afTateDSLambdaSat",
+     "type": "_root_.AfTateLam.AfTateDSLambdaSat",
+     "doc": "r16-close: Diamond-Shurman Lemma 9.5.3 + Thm 9.5.4 as printed, over K_{f,lambda}, universal over A_f. For every (A, pi, theta) that is DS's A_f (afShimura's characterization, for any X, generators, P0, Jacobian and Hecke operators as in heckeJ1DS), every prime l and every place lambda | l of K_f: V_lambda = K_lambda (x)_{Q_l (x) K_f} V_l(A) has dimension 2 over K_lambda (Lemma 9.5.3), and for p not dividing N l every arithmetic Frobenius sigma at p satisfies X^2 - a_p X + chi(p) p on V_lambda (rho_{f,lambda}(sigma) is a root; Thm 9.5.4 says 'satisfies the polynomial equation', not 'characteristic polynomial').",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman Lemma 9.5.3 + Thm 9.5.4, the 'satisfies' wording; AI-read in the 2005 and 2016 printings by r16-close and by the W24 check report-ds954, no human reading)",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Lemma 9.5.3 and Theorem 9.5.4, pp. 390-391 (2016 fourth printing pp. 401-402); A_f as in Def. 6.6.3"
+    },
+    {
+     "name": "afDetLambda",
+     "type": "_root_.AfTateLam.AfDetLambda",
+     "doc": "r16-close: the determinant of rho_{f,lambda} at Frobenius. For (A, pi, theta) = DS's A_f as in afTateDSLambdaSat, l, lambda | l and p not dividing N l: every arithmetic Frobenius sigma at p has det rho_{f,lambda}(sigma) = chi(p) p on V_lambda = K_lambda (x)_{Q_l (x) K_f} V_l(A) (i.e. det rho_{f,lambda} = chi chi_l at Frobenius). With afTateDSLambdaSat it gives the characteristic polynomial (AfTateLam.dsLambda_of_sat_det).",
+     "kind": "consequence",
+     "flag": "",
+     "source": "det rho_{f,lambda} = chi chi_l for the realization on V_l(A_f): not printed in Diamond-Shurman for Thm 9.5.4 (only for Thm 9.6.5's rho, Exercise 9.6.3(a), read); candidates Shimura 1971 Thm 7.14, Ribet LNM 601 (1977) section 2 (UNVERIFIED, unread); derivable from the Weil pairing on J_1(N) with T_p* = <p>^{-1} T_p (not in the tree)"
+    },
+    {
+     "name": "igusaGL2DS",
+     "type": "_root_.X1Igusa.IgusaGL2DS",
+     "doc": "x1-igusa: Igusa's theorem in its printed form, Gal(Q(j, E_j[N])/Q(j)) = GL_2(Z/N) for Diamond-Shurman's E_j : y^2 = 4x^3 - g x - g, g = 27j/(j-1728), j transcendental. For N >= 1, every basis e : (Z/N)^2 = E_j[N] over an algebraic closure of Q(j) and every g in GL_2(Z/N), some sigma in Aut(Q(j)bar/Q(j)) acts on E_j[N] as g in the basis e. Used through X1Igusa.x1PointsConjugate_of_igusaGL2DS (the dictionary IsX1Model -> IsX1AlgDS, aftate-or).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman Thm 7.6.3, Gal(Q(j,E_j[N])/Q(j)) = GL_2(Z/N), p. 290, with E_j of (7.12) p. 282; AI-read by r16-close, no human reading)",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Theorem 7.6.3 (p. 290), universal curve (7.12) (p. 282); Igusa, Amer. J. Math. 81 (1959) (unread)"
+    }
+   ]
+  }
+ ],
+ "note": "r16-close: report docs/research/r16-close.md. aftate-fix2's leaves (HeckeJ1DS, AfShimura, IgusaGL2DS) with AfTateDSLambda replaced by the pair AfTateDSLambdaSat (DS 9.5.3 + 9.5.4 as printed: 'satisfies', read) + AfDetLambda (GLUE: determinant, no print found), because DS 9.5.4 does not print the characteristic polynomial (both printings). After fold34-pr (mumfordTorsionAlgClosed proved by PR #54) replace {t}.mumfordTorsionAlgClosed by _root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof."
+}
