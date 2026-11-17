@@ -20,3 +20,5 @@ mumfordKLFiniteSectionAC/phiAmpleIsogeny (feeding only those), and via poincareC
 **Remains:** integration (manual fold, scratch/piczero-char0/fold-spec.md; autofold cannot express a reroute;
 regenerate with Taint2.lean + gen.py if carriers move). #discharges cannot show a reroute (18 projection-noise lines).
 PicZeroSmoothPosChar (Mumford §13, char p) is unproved and no longer needed. Locators of the three leaves UNVERIFIED.
+
+Last update: 11-16 18:10 PST; all checks above re-run on this branch.
