@@ -91,8 +91,13 @@ theorem raynaudSemistableSHOr_of_sz35 (h : SilverbergZarhinThm35) :
 
 /-- **LEAF `ElliotWildInertiaTrivial`** (ELLIOT: uncited manuscript sentence, diophantine_zq.tex:817-818: wild inertia
 of `F` acts trivially on each `V_ℓ(A)` with `ℓ ≠ p`, said of `F = L_v(A[3])` right after "Raynaud's criterion gives
-semistable reduction there"). Provenance (a): in diophantine_zq.tex, no citation. *Lean form*: `O ⊆ K` a discrete
-valuation ring, `Ω` an algebraic closure of `K`, `w` a valuation ring of `Ω` over `O`, `ℓ` a prime invertible in `O`;
+semistable reduction there"). Provenance (a): in diophantine_zq.tex, no citation. *Lean form*, in the manuscript's
+setting (an abelian variety over a number field, at a finite place): `K` a number field, `O ⊆ K` a discrete valuation
+ring, `Ω` an algebraic closure of `K`, `w` a valuation ring of `Ω` over `O`, `ℓ` a prime invertible in `O`; "its wild
+inertia" is the wild inertia subgroup of `w` in `Gal(Ω/K)`, which is that of the completion `F = K_O` (the
+decomposition group of `w` is the Galois group of the completion; the manuscript likewise treats `G_F` inside the
+global Galois group acting on `V_ℓ(A)`), and semistable reduction at `O` is semistable reduction over `F` (Néron
+models commute with completion, BLR 7.2/1, the tree's field `blr_7_2_1`);
 if `A` has semistable reduction at `O` in the sense the manuscript takes from Silverberg–Zarhin
 (`HasSemistableReductionSZ`), every wild inertia element `σ` of `w` (`IsInertia`, `IsWildInertia`) acts trivially on
 `T_ℓ(A) = lim A(Ω)[ℓⁿ]` (`galTΩ`). `T_ℓ` for `V_ℓ = T_ℓ ⊗ ℚ_ℓ`: `T_ℓ` is torsion-free and embeds in `V_ℓ`, so
@@ -100,7 +105,7 @@ trivial on `V_ℓ` gives trivial on `T_ℓ` (a consequence of the sentence). Tru
 unipotence with wild inertia pro-`p`; `elliot_of_semistableUnipotent` proves it from those), but the manuscript cites
 nothing for it. -/
 def ElliotWildInertiaTrivial : Prop :=
-  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+  ∀ (K : Type) [Field K] [NumberField K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
     (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] (w : ValuationSubring Ω),
     w.comap (algebraMap K Ω) = O → ∀ A : PkgI3.AbVar K, HasSemistableReductionSZ A O →
     ∀ (ℓ : ℕ) [Fact ℓ.Prime], IsUnit (ℓ : O) → ∀ σ : Ω ≃ₐ[K] Ω, IsInertia w σ → IsWildInertia w σ →
@@ -177,7 +182,7 @@ the glue `WildPeriodCoprime` give `ElliotWildInertiaTrivial`. The converse fails
 about tame inertia), so the manuscript's route does not give `SemistableUnipotent`. -/
 theorem elliot_of_semistableUnipotent (hU : SemistableUnipotent) (hP : WildPeriodCoprime) :
     ElliotWildInertiaTrivial := by
-  intro K _ O _ Ω _ _ _ w hw A hA ℓ _ hℓO σ hσ hwild t
+  intro K _ _ O _ Ω _ _ _ w hw A hA ℓ _ hℓO σ hσ hwild t
   have hA' := hasSemistableReduction_of_sz hA
   apply Subtype.ext
   funext n
