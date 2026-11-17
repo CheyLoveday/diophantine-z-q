@@ -99,7 +99,7 @@ H-105	gagaMorphism	ZInQ.HomLattice.GAGAMorphism	5fd81e870,085a7a53a,f18bcb904,36
 H-106		ZInQ.HeightSplit.SemistableReductionThm	5fd81e870	no
 H-107		ZInQ.HeightSplit.SemistableNeronBaseChange	5fd81e870	no
 H-108		ZInQ.HeightSplit.SemistablePersists	5fd81e870	no
-H-109	javanpeykarBound	ZInQ.HeightSplit.JavanpeykarBound	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+H-109		ZInQ.HeightSplit.JavanpeykarBound	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-110		ZInQ.HeightSplit.GaudronRemondThm14	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 H-111		ZInQ.HeightSplit.FaltingsLemma5BC	5fd81e870	no
 H-112		ZInQ.HeightSplit.BostLowerBound	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes

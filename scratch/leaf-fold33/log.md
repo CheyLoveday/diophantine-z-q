@@ -199,3 +199,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
     OneProof modules; OpenStatements 39; DischargesTest rerun; render_open --check ok (33 H, strictest 17/16, 6
     others); crosswalk --check ok; autoform check ok.
+24. javanpeykarBound (consequence, GLUE) replaced by javanpeykar-rebase's leaves over height-fix's printed stable
+    height: javanpeykarPrintedMapHF (Javanpeykar 2014 Thm 1.1.1 at X0 x_K Qbar; kind consequence, pending reading) and
+    constantFieldExtensionUnramifiedFinite (Stichtenoth 3.6.3(a), finite K'/K), with mumfordTorsionAlgClosed and
+    height-fix's glue, now proved (step 23): merged wip/javanpeykar-rebase 4cb6a008, autofold
+    scratch/leaf-fold33/autofold-javanpeykar.json (the task's spec with semiAbelianDescendsPerfect taken from
+    SemiAbDescend.semiAbelianDescendsPerfect_of_chevalley {n}.chevalleyPerfect; flags "pending review") -> TailZ62,
+    `sixContactMin_of_open55`. Both rows count GLUE until reviewed: H 17/16 on 33 -> 17/17 on 34 (GLUE +1 until the
+    review). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms; check_target.py; only Main.lean
+    changed among existing OneProof modules; OpenStatements 40; DischargesTest rerun; render_open --check ok (34 H,
+    strictest 17/17, 6 others); crosswalk --check ok; autoform check ok. FoldDryRun{,HF}.lean renamed .lean.txt.
