@@ -362,6 +362,192 @@ theorem logTeich_eq_mul {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) 
   rw [hlog, hac, map_add, map_mul, map_pow, map_natCast, map_natCast]
   ring
 
+/-! ## §6. `B_max = B_max^+[1/t]` and `B_st = B_max[log [p̃]]` for one `t = log [ε₀]` -/
+
+/-- **`t = log [ε₀] ∈ B_dR`** for a generator `ε₀` of `ℤ_p(1)`. -/
+def tOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) : BdR p := toBdR p (logTeich p h.1)
+
+/-- **`B_max = B_max^+[1/t]`** with `t = log [ε₀]` (one `t`), inside `B_dR`. -/
+def BmaxOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) : Subalgebra ℚ_[p] (BdR p) :=
+  Algebra.adjoin ℚ_[p] (toBdR p '' Amax p ∪ {Ring.inverse (tOf p h)})
+
+/-- **`B_st = B_max[log [p̃]] = B_max^+[1/t][log [p̃]]`** with `t = log [ε₀]`, inside `B_dR`. -/
+def BstOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) : Subalgebra ℚ_[p] (BdR p) :=
+  Algebra.adjoin ℚ_[p] (toBdR p '' Amax p ∪ {Ring.inverse (tOf p h)} ∪ {toBdR p (logPTilde p)})
+
+theorem ne_one_of_isGenEps {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) : ε₀ ≠ 1 := by
+  rintro rfl
+  exact h.2 (root_one p 1)
+
+theorem toBdR_zpB (a : ℤ_[p]) :
+    toBdR p (zpB p a) = algebraMap ℚ_[p] (BdR p) (algebraMap ℤ_[p] ℚ_[p] a) := by
+  change _ = qpToBdR p _
+  rw [qpToBdR, RingHom.comp_apply, RingHom.comp_apply, qpToLoc_algebraMap]
+  rfl
+
+/-- **Every inverted `log [ε]` is in `B_max^+[1/t]`**: `log [ε] = a t` with `a ∈ ℤ_p ∖ 0`. -/
+theorem tInv_mem {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) {z : BdR p} (hz : z ∈ tInvSet p) :
+    z ∈ BmaxOf p h := by
+  obtain ⟨ε, hε, hne, rfl⟩ := hz
+  obtain ⟨a, ha⟩ := logTeich_eq_mul p h hε
+  set q : ℚ_[p] := algebraMap ℤ_[p] ℚ_[p] a with hqdef
+  have hq : q ≠ 0 := by
+    intro hq0
+    have ha0 : a = 0 := by
+      rw [hqdef] at hq0
+      exact PadicInt.coe_eq_zero.mp hq0
+    apply logTeich_ne_zero p hε hne
+    rw [ha, ha0, map_zero, zero_mul]
+  have e : toBdR p (logTeich p hε) = algebraMap ℚ_[p] (BdR p) q * tOf p h := by
+    rw [ha, map_mul, toBdR_zpB]
+    rfl
+  rw [e, Ring.mul_inverse_rev' (Commute.all _ _)]
+  have hu : IsUnit (algebraMap ℚ_[p] (BdR p) q) := (IsUnit.mk0 q hq).map _
+  have h1 : algebraMap ℚ_[p] (BdR p) q * algebraMap ℚ_[p] (BdR p) q⁻¹ = 1 := by
+    rw [← map_mul, mul_inv_cancel₀ hq, map_one]
+  have hinv : Ring.inverse (algebraMap ℚ_[p] (BdR p) q) = algebraMap ℚ_[p] (BdR p) q⁻¹ :=
+    calc Ring.inverse (algebraMap ℚ_[p] (BdR p) q)
+        = Ring.inverse (algebraMap ℚ_[p] (BdR p) q) *
+            (algebraMap ℚ_[p] (BdR p) q * algebraMap ℚ_[p] (BdR p) q⁻¹) := by rw [h1, mul_one]
+      _ = _ := by rw [← mul_assoc, Ring.inverse_mul_cancel _ hu, one_mul]
+  rw [hinv]
+  exact Subalgebra.mul_mem _ (Algebra.subset_adjoin (Or.inr rfl)) (Subalgebra.algebraMap_mem _ _)
+
+/-- **bst-construct's `B_max` (every `log [ε]` inverted) is `B_max^+[1/t]` for one `t = log [ε₀]`.** -/
+theorem bmaxOf_eq {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) : BmaxOf p h = Bmax p := by
+  apply le_antisymm
+  · apply Algebra.adjoin_le
+    rintro z (hz | rfl)
+    · exact Algebra.subset_adjoin (Or.inl hz)
+    · exact Algebra.subset_adjoin (Or.inr ⟨ε₀, h.1, ne_one_of_isGenEps p h, rfl⟩)
+  · apply Algebra.adjoin_le
+    rintro z (hz | hz)
+    · exact Algebra.subset_adjoin (Or.inl hz)
+    · exact tInv_mem p h hz
+
+/-- **bst-construct's `B_st` is `B_max^+[1/t][log [p̃]]` for one `t = log [ε₀]`.** -/
+theorem bstOf_eq {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) : BstOf p h = Bst p := by
+  apply le_antisymm
+  · apply Algebra.adjoin_le
+    rintro z ((hz | rfl) | rfl)
+    · exact Algebra.subset_adjoin (Or.inl (Or.inl hz))
+    · exact Algebra.subset_adjoin (Or.inl (Or.inr ⟨ε₀, h.1, ne_one_of_isGenEps p h, rfl⟩))
+    · exact Algebra.subset_adjoin (Or.inr rfl)
+  · apply Algebra.adjoin_le
+    rintro z ((hz | hz) | rfl)
+    · exact Algebra.subset_adjoin (Or.inl (Or.inl hz))
+    · exact (Algebra.adjoin_mono Set.subset_union_left : BmaxOf p h ≤ BstOf p h) (tInv_mem p h hz)
+    · exact Algebra.subset_adjoin (Or.inr rfl)
+
+/-- **A generator exists**: `ε₀ = (1, ζ_p, ζ_{p²}, …)` with `ζ_p` a primitive `p`-th root of unity. -/
+theorem exists_isGenEps : ∃ ε₀ : PreTilt 𝓞_ℂ_[p] p, IsGenEps p ε₀ := by
+  have hdeg : (Polynomial.cyclotomic p ℂ_[p]).degree ≠ 0 := by
+    rw [Polynomial.degree_cyclotomic, Nat.totient_prime (Fact.out : p.Prime)]
+    have := (Fact.out : p.Prime).two_le
+    exact_mod_cast (show p - 1 ≠ 0 by omega)
+  obtain ⟨ζ, hroot⟩ := IsAlgClosed.exists_root _ hdeg
+  have hprim : IsPrimitiveRoot ζ p :=
+    (Polynomial.isRoot_cyclotomic_iff_charZero (Fact.out : p.Prime).pos).mp hroot
+  have hζ : ζ ^ p = 1 := hprim.pow_eq_one
+  have hζ1 : ζ ≠ 1 := hprim.ne_one (Fact.out : p.Prime).one_lt
+  let c : ℕ → 𝓞_ℂ_[p] := fun n => ⟨zetaSeq p ζ n,
+    (ZInQ.Contrib.G9.PkgI4.Cp.mem_O_iff p _).mpr (norm_zetaSeq_le p ζ hζ n)⟩
+  have hc : ∀ m, c (m + 1) ^ p = c m := fun m =>
+    Subtype.ext (by simpa [c] using zetaSeq_succ_pow p ζ hζ m)
+  let ε : PreTilt 𝓞_ℂ_[p] p := ⟨fun n => Ideal.Quotient.mk _ (c n), fun n => by
+    rw [← map_pow, hc]⟩
+  have hx : ∀ m, PreTilt.coeff m ε = Ideal.Quotient.mk _ (c m) := fun m => rfl
+  refine ⟨ε, ?_, ?_⟩
+  · rw [untilt_eq_of_coeff p c hc ε hx]
+    exact Subtype.ext (by simp [c, zetaSeq])
+  · rw [root_eq_of_coeff p c hc ε hx 1]
+    intro h1
+    apply hζ1
+    have := congrArg Subtype.val h1
+    simpa [c, zetaSeq] using this
+
+/-! ## §7. Potential semistability over `B_max^+[1/t][log [p̃]]`; the restated leaves -/
+
+section Pst
+
+variable {E : Type*} [Field E] [Algebra ℚ_[p] E] {n : ℕ}
+
+/-- **`V` is potentially semistable**, over `B_st = B_max^+[1/t][log [p̃]]` with `t = log [ε₀]`:
+`dim_{B_st^{G_K}} (B_st ⊗_{ℚ_p} V)^{G_K} = dim_{ℚ_p} V` for some finite `K/ℚ_p` inside `ℚ̄_p`. -/
+def IsPstBOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (ρ : GQp p →* GL (Fin n) E) : Prop :=
+  ∃ K : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] K ∧
+    IsAdmissible p (BstOf p h) K.fixingSubgroup ρ
+
+theorem isPstBOf_iff {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (ρ : GQp p →* GL (Fin n) E) :
+    IsPstBOf p h ρ ↔ IsPstB p ρ := by
+  unfold IsPstBOf IsPstB IsSemistableB
+  rw [bstOf_eq]
+
+/-- A `ℚ̄_p`-valued `ρ` is potentially semistable over `B_max^+[1/t][log [p̃]]` (on a model `E^n`). -/
+def LocalIsPstBOf {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (n : ℕ)
+    (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) : Prop :=
+  ∃ (E : IntermediateField ℚ_[p] (PadicAlgCl p)) (_ : FiniteDimensional ℚ_[p] E)
+    (ρE : GQp p →* GL (Fin n) E),
+    (∀ σ, Matrix.GeneralLinearGroup.map (algebraMap E (PadicAlgCl p)) (ρE σ) = ρ σ) ∧
+    IsPstBOf p h ρE
+
+theorem localIsPstBOf_iff {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (n : ℕ)
+    (ρ : GQp p →* GL (Fin n) (PadicAlgCl p)) : LocalIsPstBOf p h n ρ ↔ LocalIsPstB p n ρ := by
+  unfold LocalIsPstBOf LocalIsPstB
+  simp only [isPstBOf_iff]
+
+end Pst
+
 end BmaxOne
+
+namespace PanDict
+
+open BmaxOne BergerBst PanBergerSplit
+
+/-- **Berger, Théorème 0.7, printed form, with `B_max = B_max^+[1/t]` for one `t`** (L. Berger,
+*Représentations p-adiques et équations différentielles*, Invent. Math. 148 (2002), 219-284;
+Théorème 0.7 = Corollaire 5.22 of the published version (locator audit row R11) = Théorème 0.6 =
+Théorème 5.19 of arXiv:math/0102179v3), at `K = ℚ_p`: a de Rham `p`-adic representation of `G_{ℚ_p}`
+is potentially semistable. Stated for every generator `ε₀ = (1, ζ_p, ζ_{p²}, …)` of `ℤ_p(1)` in
+`𝓞_ℂ_p♭` (`IsGenEps`), with `t = log [ε₀]` and
+`B_st = B_max[log [p̃]]`, `B_max = B_max^+[1/t]`, `B_max^+ = A_max[1/p]`,
+`A_max = {Σ a_n (ω/p)^n : a_n ∈ A_inf, a_n → 0}` inside Mathlib's `B_dR` (`BstOf`). `V = E^n` for a finite
+`E/ℚ_p` inside `ℚ̄_p` with a continuous `ρ : G_{ℚ_p} → GL_n(E)`:
+
+* de Rham: `dim_{ℚ_p} (B_dR ⊗_{ℚ_p} V)^{G_{ℚ_p}} = dim_{ℚ_p} V` (`IsDeRhamU`);
+* potentially semistable: `dim_{B_st^{G_K}} (B_st ⊗_{ℚ_p} V)^{G_K} = dim_{ℚ_p} V` for some finite
+  `K/ℚ_p` (`IsPstBOf`). -/
+def BergerPrintedVt : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (ε₀ : PreTilt 𝓞_ℂ_[p] p) (h : IsGenEps p ε₀) (n : ℕ)
+    (E : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E]
+    (ρE : GQp p →* GL (Fin n) E),
+    Continuous ρE → IsDeRhamU p ρE → IsPstBOf p h ρE
+
+/-- **pb-fix3's `BergerPrintedV` from the one-`t` form** (`bstOf_eq`; a generator exists). -/
+theorem bergerPrintedV_of_t (hB : BergerPrintedVt) : BergerPrintedV := by
+  intro p _ n E _ ρE hc hdr
+  obtain ⟨ε₀, h⟩ := exists_isGenEps p
+  exact (isPstBOf_iff p h ρE).mp (hB p ε₀ h n E ρE hc hdr)
+
+/-- **Pan, Theorem 1.0.4, printed form, with `B_max = B_max^+[1/t]` for one `t`**: `PanPrintedP` with
+potential semistability over `B_st = B_max^+[1/t][log [p̃]]`, `t = log [ε₀]`, for every generator `ε₀`
+(`LocalIsPstBOf`); everything else as `PanPrintedP` (L. Pan, J. Amer. Math. Soc. 35 (2022), 1031-1169,
+Theorem 1.0.4 = arXiv:1901.07166v2 Theorem 1.0.4 with Conjecture 1.0.1; JAMS numbering UNVERIFIED). -/
+def PanPrintedPt : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime], 5 ≤ p → ∀ (ε₀ : PreTilt 𝓞_ℂ_[p] p) (h : IsGenEps p ε₀)
+    (ιp : PadicAlgCl p ≃+* ℂ) (ρ : GaloisRep p 2),
+    IsIrreducibleP ρ → ρ.FinitelyRamified → LocalIsPstBOf p h 2 (ρ.restrictLocal p) → ρ.IsOdd →
+    LocalDistinctHTP p (ρ.restrictLocal p) →
+    ∃ (N : ℕ) (_ : NeZero N) (k : ℤ) (g : HeckeRing.GL2.EigenformAwayFromLevel N k)
+      (ρg : GaloisRep p 2) (ψ : GaloisChar p),
+      IsAttachedVia p ιp g ρg ∧ IsTwistOf p ρ ρg ψ
+
+/-- **pb-fix3's `PanPrintedP` from the one-`t` form** (`localIsPstBOf_iff`; a generator exists). -/
+theorem panPrintedP_of_t (hP : PanPrintedPt) : PanPrintedP := by
+  intro p _ hp ιp ρ hirr hfr hpst hodd hht
+  obtain ⟨ε₀, h⟩ := exists_isGenEps p
+  exact hP p hp ε₀ h ιp ρ hirr hfr ((localIsPstBOf_iff p h 2 _).mpr hpst) hodd hht
+
+end PanDict
 end PkgI4
 end HDec
