@@ -18,3 +18,14 @@
   (L622-629), CRT + Dirichlet (L668-679; Mathlib's `Nat.forall_exists_prime_gt_and_modEq`).
 - Correction (d) used: toggles d supported on J; the smaller support's matrix does not see them.
 - No error found in S12's par:simultaneous-matrices.
+
+## Genuine-P final theorem (Done-when of #83 modulo the local images)
+- `ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine`
+  (ZInQKernel/Contrib/OneProof/PoleCompletenessFromRCGenuine.lean): PoleCompleteness from
+  RestrictedConverseGenuine, Lemma54, KummerSelmerM, BCDTThmA, KolyvaginThm1, MordellWeil,
+  LocalTwo/Three/Bad/Good. COMPILED, standard axioms. VERIFIED.
+- PoleS12/Leaves.lean: IsModular (fresh: weight-2 cusp form on Gamma0(N) with q-expansion
+  coefficients = E.LFunction coefficients), BCDTThmA, KolyvaginThm1 (rank 1 AND Finite (sha E),
+  Tau Ceti's Sha from SelmerTwoPower), Lemma54 (over selmerAt E 1 and SelmerCorankOne),
+  KummerSelmerM (#selmerAt (curve l) 1 = #SelM l; textbook GLUE), lemma54At_of_printed,
+  kolyvaginRankOne_of_printed, selM_support / selM_finite (support bound (e)). COMPILED.
