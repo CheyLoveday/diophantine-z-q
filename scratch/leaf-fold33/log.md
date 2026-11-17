@@ -384,3 +384,15 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     -> 4/29 on 33. Checks (VERIFIED): build +Main +Discharges (16177 jobs); frozenTarget standard axioms;
     check_target.py; only Main.lean modified among existing OneProof modules; OpenStatements 38; DischargesTest rerun,
     no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+41. Main 19fdd483 carries the integrator's coeff-field-tc fold, written as main's TailZ66 (on main's TailZ65), which
+    clashes with this branch's TailZ66..73. Merged origin/main (merge commit): this branch's TailZ66 and Main kept,
+    main's TailZ66 superseded, generated docs ours + regenerated, STATUS.md theirs + render; the coeff-field-tc proof
+    files (EigenformCoeffFieldFiniteProof.lean, vendored Tau Ceti files, ThirdParty/TauCeti/NOTICE) come in with the
+    merge. Then the fold redone on this top: fold-b100's generator scratch/fold-b100/gen_coeff_fold.py extended by the
+    generations 46, 47 (TailZ72, TailZ73) and the textbook/added conversions 18 -> 17 -> 16, 27 -> 26 ->
+    ZInQKernel/OneProof/H/TailZ74.lean (`sixContactMin_of_open67`, OpenResearchLeaves48: the live research path copied
+    with suffix CF, heckePrimeIntegralToRational and gamma1IntegralBasis deleted, the 4 readings replaced by
+    `eigenformCoeffFieldFinite_proof`; originals unchanged); kinds rows dropped. No new leaf. Count: 38 -> 36 open;
+    H 4/29 on 33 -> 4/27 on 31. Checks (VERIFIED): build +Main +Discharges (16215 jobs); frozenTarget standard axioms;
+    check_target.py; only Main.lean modified among existing OneProof modules; OpenStatements 36 (both fields gone);
+    DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
