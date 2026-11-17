@@ -103,11 +103,52 @@ def X6CoarseModuli : Prop :=
 
 ## 5. Lean (VERIFIED unless marked)
 
-PLACEHOLDER-COMPILE
+* `lake build +ZInQKernel.Contrib.OneProof.GRX6AbPrint` succeeds on c1e4ed1b + gr-dict (VERIFIED,
+  `scratch/grx6ab-print/build2.txt`). gr-dict's `GR56Lattice.lean` and `GRDict.lean` compile on the current main
+  unchanged.
+* The file (VERIFIED, all `[propext, Classical.choice, Quot.sound]`):
+  * `X6CoarseModuli : Prop` (the new leaf);
+  * `x6ModuliWitness_of_coarse : ShimuraMainThmIDeligneY3AbU → X6CoarseModuli → GRDict.X6ModuliWitness`;
+  * `x6CoarseModuli_of_witness : GRDict.X6ModuliWitness → X6CoarseModuli` (never stronger);
+  * `gonzalezRotgerX6Ab_of_coarse` (with `uniformizationLeafAll` as a hypothesis) and
+    `gonzalezRotgerX6Ab_of_print` (with `uniformizationLeafAll_proof`).
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: 0 errors (`build3.txt`).
 
 ## 6. `#discharges` and the autofold dry-run
 
-PLACEHOLDER-DISCHARGES
+`scratch/grx6ab-print/Discharges.lean`, output `discharges.txt` (VERIFIED):
+
+```
+DISCHARGES [OpenResearchLeaves28.gonzalezRotgerX6Ab] by GRX6AbPrint.gonzalezRotgerX6Ab_of_print
+  still assumes: [GRDict.GonzalezRotgerThm512X6,
+ RayClassCFT.ShimuraMainThmIDeligneY3AbU,
+ GRX6AbPrint.X6CoarseModuli,
+ ZInQ.HomLattice.GAGAMorphism,
+ AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 45 open hypotheses, 6871 theorems checked, 21 discharge one
+```
+
+(`gonzalezRotgerX6Ab_of_coarse`, gr-dict's `_of_printed` and `_of_witness` are listed too.)
+
+**Autofold.** `scratch/grx6ab-print/autofold.json` discharges `gonzalezRotgerX6Ab` by `gonzalezRotgerX6Ab_of_print`.
+It adds the leaves `gonzalezRotgerThm512X6` and `x6CoarseModuli` (kind `published`). The flag of
+`gonzalezRotgerThm512X6` is empty, so autofold sets it to "unread". The flag of `x6CoarseModuli` is "locator
+UNVERIFIED; reading risk: …". `--dry-run` (VERIFIED, `autofold-dryrun.txt`):
+**strict 16/21 on 37 → 18/20 on 38; strictest 16/21 → 18/20 (−1 GLUE).** The generated module
+(`FoldCheck.lean`, the dry-run output minus line 1) compiles: `sixContactMin_of_open39` uses the standard axioms only.
+
+**Combined with elkies-print** (its branch, 168bbb39, is merged here). `autofold-combined.json` discharges both
+`gonzalezRotgerX6Ab` and `elkiesX6StarFunctionField`. The Elkies witness comes from
+`x6ModuliWitness_of_coarse {n}.shimuraMainThmIDeligneY3AbU {n}.x6CoarseModuli` instead of from
+`{n}.gonzalezRotgerX6Ab`. Results (VERIFIED):
+* **strict 16/21 on 37 → 19/19 on 38 (−2 GLUE)**;
+* `FoldCheckCombined.lean` compiles with standard axioms;
+* elkies-print's `X6WitnessAb` and `GRDict.X6ModuliWitness` unify.
+
+**For the integrator**: land this fold first, or use the combined spec. elkies-print's own spec reads
+`{n}.gonzalezRotgerX6Ab`, which this fold removes. gr-dict's spec (witness from the Elkies field) is superseded by
+this one; folding both would add `gonzalezRotgerThm512X6` twice.
 
 ## 7. Proposed locators.md row (for the integrator)
 
