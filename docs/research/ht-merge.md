@@ -60,8 +60,8 @@ No consumer uses another `X` or another degree, so the merge goes ahead.
   on ht-abvar's dry-run route, so in the joint fold the new leaf feeds only `hodgeTateDecompAbVar`.
   `deRhamVpAbVarDirect_of_scholzeH1` is re-proved anyway (part 3), as an alternative supplier.
 * **`hodgeTateDecompAbVar`** (`TailS.lean` L347, every `g`) goes into `deRhamComparisonHT_of_leavesT` (`TailS.lean` L2059).
-  That gives `r10 : ZInQ.Contrib.R10.DeRhamComparisonHT` (every `A`), at `HTMergeDryRun.lean` L626, the same line as
-  ht-abvar's dry run. `r.r10` is read at:
+  That gives `r10 : ZInQ.Contrib.R10.DeRhamComparisonHT` (every `A`), at `scratch/ht-abvar/HTDryRun.lean` L626
+  (`HTMergeDryRun.lean` L627; the line numbers in this list are HTDryRun's, one more in HTMergeDryRun). `r.r10` is read at:
   * L686, `g8_g12_hf_pz` (`PicZeroCharZeroCopy.lean` L815), which passes it to `g8_g11_hf`;
   * L720, `g8_g11_hf` (`HomFreeFiniteAlgClosedReroute/Consumers.lean` L553), which uses it only as `h9g hR10 K A ℓ r e hdim …`;
   * L688, `C8Conrad.g12DetPZ_of_inputs`, which leads to `g12DetPZ_of_twistFinite` (`C8Conrad.lean` L179); that uses it only as

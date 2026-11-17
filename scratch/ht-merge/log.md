@@ -11,7 +11,7 @@
 * (2) Consumers (VERIFIED by reading):
   - deRhamVpAbVarDirect: a LEAF row (Berger, kinds.tsv L8); derham-scholze's discharge is not on ht-abvar's dry-run route.
   - hodgeTateDecompAbVar (TailS L347, for every g) -> deRhamComparisonHT_of_leavesT (TailS L2059) -> r10 : R10 amended
-    (ZInQ.Contrib.R10.DeRhamComparisonHT, every A) at HTDryRun.lean L626 -> uses of r.r10: L686 g8_g12_hf_pz, L688
+    (ZInQ.Contrib.R10.DeRhamComparisonHT, every A) at scratch/ht-abvar/HTDryRun.lean L626 (HTMergeDryRun L627, all +1) -> uses of r.r10: L686 g8_g12_hf_pz, L688
     g12DetPZ_of_inputs, L720 g8_g11_hf, L784 g9Glue_of_deRhamComparisonHT, L791 g9GlueNoT23_of_deRhamComparisonHT.
     g8_g11_hf (Consumers.lean L553), g8_g12_hf_pz (PicZeroCharZeroCopy L815), g12DetPZ_of_twistFinite (C8Conrad L179) pass
     R10 only to h9g : G9GlueNoT23 (TailA L2017, hypothesis `A.dim = 2`); G9Glue (TailA L2007) also has `A.dim = 2`.
