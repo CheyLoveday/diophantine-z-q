@@ -35,9 +35,11 @@ there); I did not read the preprint myself.
 5. **Manuscript check** (§6): L763-764, "removing its integral local Hodge–Tate weight", is supported by the cited
    source: Prop. B.3 says the Hodge–Tate weight of a locally algebraic character is its exponent. No known issue (§8).
 
-## 1. What compiles
+## 1. What compiles (summary; details §9)
 
-FILLED IN BELOW (§9).
+`lake build ZInQKernel.Contrib.OneProof.C8Printed` succeeds on the merged tree (13414 jobs), the joint dry run
+`scratch/conrad-b3/CBDryRun.lean` compiles with standard axioms for its tops, and `#discharges` runs (30 open
+hypotheses, 16 discharge one, none from the C8 files, as expected for a copy reroute).
 
 ## 2. Part (1): consumers of `TateTwistInvariantsInertia` (VERIFIED by grep)
 
@@ -198,6 +200,40 @@ dimension statement (§3.4) is a dictionary step using Ax–Sen–Tate, proved i
   its queue28 flag (two unproved bridges, GLUE/GLUE).
 * The page read is an AI read forwarded in the task text; I did not see the preprint.
 
-## 9. What compiles
+## 9. What compiles (VERIFIED, 11-17, Lean 4.35.0, Mathlib v4.35.0, merged tree `0558eeb57` + conrad-b3)
 
-FILLED IN AFTER THE RUNS.
+| check | outcome |
+|---|---|
+| `lake env lean ZInQKernel/Contrib/OneProof/C8ConradB.lean` | no errors, no warnings |
+| `lake build ZInQKernel.Contrib.OneProof.C8Printed` | Build completed successfully (13414 jobs): C8ConradB, C8Poincare, C8Printed built |
+| `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.ScholzeH1AbVar` | Build completed successfully (15983 jobs) |
+| `scratch/conrad-b3/Discharges.lean` (output `discharges_out.txt`) | `#discharges: 30 open hypotheses, 11466 theorems checked, 16 discharge one`; none from the C8 files (no bundle field is discharged by this reroute); `#print axioms` `[propext, Classical.choice, Quot.sound]` for `isLocallyAlgebraic_iff_conrad`, `htMult_eq_conradHTMult_neg`, `locAlgExponentEqWeight_of_conradPropB3`, `locAlgExponentEqWeight_of_conradAppB`, `c8TwistFinite_of_conradB`, `g12DetPZ_of_inputs`, `c8Inputs_of_leaves`, `c8TwistFinite_of_printed`, `g12DetPZ_of_printed` |
+| `scratch/conrad-b3/CBDryRun.lean` (output `dryrun_out.txt`) | no errors; `ZInQ.OneProof.frozenTarget_cb`, `HDec.HSyn.sixContactMin_of_open73CB`, `sixContactMin_of_open72_hm` and the C8 theorems: `[propext, Classical.choice, Quot.sound]`; `TateTwistInvariantsInertia` is not a hypothesis of any top (the source names it only in comments) |
+| `scratch/conrad-b3/count.py` (output `count_out.txt`) | §5 table |
+
+One compile fix: `Module.finrank_pos` for `↥E` (an `IntermediateField`) timed out on `IsTorsionFree ℚ_[p] ↥E`;
+`finrank_pos_intermediateField` uses `finrank_pos_iff_of_free` with `Module.Free.of_divisionRing` instead.
+
+Build note: the merged tree's `.lake/build` was reflink-copied from `~/dzq-wt/ht-merge` (same ZInQKernel sources as
+`origin/wip/ht-merge`); the base build is kept as `.lake/build-old-base` (not deleted; no `rm -rf`).
+
+## 10. Files
+
+* New: `ZInQKernel/Contrib/OneProof/C8ConradB.lean` (`IsLocallyAlgebraicConrad`, `conradHTMult`,
+  `isLocallyAlgebraic_iff_conrad`, `htMult_eq_conradHTMult_neg`, `finrank_pos_intermediateField`, leaf
+  `ConradPropB3Qp`, merged leaf `ConradAppB`, `locAlgExponentEqWeight_of_conradPropB3`,
+  `locAlgExponentEqWeight_of_conradAppB`, `c8TwistFinite_of_conradB`).
+* Changed (named in §5): `ZInQKernel/Contrib/OneProof/C8Poincare.lean` (`C8Inputs`, `g12DetPZ_of_inputs`'s proof),
+  `ZInQKernel/Contrib/OneProof/C8Printed.lean` (`C8Leaves`, `c8Inputs_of_leaves`, `c8TwistFinite_of_printed`,
+  `g12DetPZ_of_printed`).
+* `scratch/conrad-b3/`: `log.md`, `autofold.json`, `count.py`, `count_out.txt`, `kinds_origin_main_5f1fac790.tsv`,
+  `CBDryRun.lean` + `dryrun_out.txt`, `Discharges.lean` + `discharges_out.txt`.
+
+## 11. What remains
+
+* Review of the new merged row `conradAppB` (a human read of Conrad p. 33 Prop. B.3 would clear the AI-read flag of
+  that half; the p. 32 half keeps queue28's two bridges).
+* The fold itself (integrator): jointly with ht-merge's consumer-(iii) swap and PR #86, re-based onto main's current top
+  (main moved from `sixContactMin_of_open72` to `open76` through count-neutral folds since ht-merge's base).
+* Optional cleanup after the fold: `C8LocAlg.TateTwistInvariantsInertia`, `locAlgExponentEqWeight_of_tateInertia` and
+  `C8CFT.c8TwistFinite_of_leaves` are off the route and could be deleted.
