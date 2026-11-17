@@ -52,3 +52,10 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   standard axioms.
 - MainFolded.lean (Main.lean with the fold applied, HCMLattice inlined): COMPILED, 0 errors;
   `ZInQ.OneProof.frozenTarget` depends on [propext, Classical.choice, Quot.sound].
+- §Q local–global principle: COMPILED, no sorry, standard axioms. VERIFIED:
+  - `mem_of_mem_latHat`: K ∩ 𝔟̂ = 𝔟 for every lattice (via the tree's `latHat_inter_of_sandwich`, n𝓞 ⊆ 𝔟, D𝔟 ⊆ 𝓞);
+  - `mem_of_prime_mul_mem`: p y ∈ 𝔟 and y ∈ 𝔟_p ⇒ y ∈ 𝔟 (b ∈ 𝔟 close to y at the finitely many v ∣ p, then one
+    Bézout step t p + s M = 1 with nD = p^j M: z = y − b − t(py − pb) ∈ n𝒪̂);
+  - `mem_of_forall_locLat`: (∀ p prime, x ∈ 𝔟_p) ⇒ x ∈ 𝔟 (minimal r with r x ∈ 𝔟, induction on minFac);
+  - `lattice_eq_of_locLat_eq` (a lattice is determined by its p-components) and `rep_sub_mem` (s⁻¹u well defined).
+  These close the last informal point of the "direct instance" argument (item 5 of the report).
