@@ -11,7 +11,7 @@ lake env lean $D/DumpCompact.lean > /tmp/fb112/dump$K.txt 2>&1; tail -1 /tmp/fb1
 mv $D/compact_hashes.txt /tmp/fb112/hashes_fold$K.txt
 cp /tmp/fb112/$PREV $D/_a.txt; cp /tmp/fb112/hashes_fold$K.txt $D/_b.txt
 python3 $D/cmp_hashes.py _a.txt _b.txt > $D/cmp_fold$K.txt; rm $D/_a.txt $D/_b.txt; head -20 $D/cmp_fold$K.txt
-lake env lean $D/FoldCheck.lean > $D/FoldCheck-fold$K.txt 2>&1; grep "axioms\|closure\|contains\|error" $D/FoldCheck-fold$K.txt
+lake env lean $D/FoldCheck.lean > $D/FoldCheck-fold$K.txt 2>&1; grep "axioms\|closure\|contains\|error\|field check\|type differs" $D/FoldCheck-fold$K.txt
 lake env lean scripts/one_proof/OpenStatements.lean > $D/OpenStatements-fold$K.txt 2>&1; tail -3 $D/OpenStatements-fold$K.txt
 python3 scripts/one_proof/render_open.py | tail -1
 lake env lean scratch/contrib-kit/DischargesTest.lean > scratch/contrib-kit/DischargesTest-output.txt 2>&1; grep -c DISCHARGES scratch/contrib-kit/DischargesTest-output.txt; grep -n "error" scratch/contrib-kit/DischargesTest-output.txt | head -3
