@@ -1,0 +1,12 @@
+{"name": "charpoly-port",
+ "imports": ["ZInQKernel.Contrib.OneProof.DegHomogPolyFLT", "ZInQKernel.Contrib.OneProof.CharPolyCharP"],
+ "discharges": [
+   {"field": "charPolyIndepOfEllAlgClosed",
+    "proof": "_root_.ZInQ.Contrib.OneProof.CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly' (_root_.ZInQ.Contrib.OneProof.DegPolyFLT.degHomogPoly_of_finrankGeneric {n}.finrankGenericEqDegEnd)",
+    "leaves": [{"name": "finrankGenericEqDegEnd",
+                "type": "_root_.ZInQ.Contrib.OneProof.DegPolyFLT.FinrankGenericEqDegEnd",
+                "doc": "GLUE (commutative algebra): for an isogeny psi of an abelian variety over an algebraically closed field, Mathlib's rank Scheme.Hom.finrank of the finite flat morphism psi at the generic point equals degEnd psi = [K(A) : psi^* K(A)]. On an affine chart Spec S -> Spec R (R, S domains, S finite flat over R): rank of S at the prime (0) of R = [Frac S : Frac R]. No abelian-variety input. charpoly-port.",
+                "kind": "glue",
+                "flag": "",
+                "source": "standard commutative algebra (localization of a finite flat module at the generic point); not a literature leaf"}]}],
+ "note": "charpoly-port: charPolyIndepOfEllAlgClosed (Mumford 19 Thm 4, published LEAF) reduced to one GLUE statement of commutative algebra, in every characteristic: Anthropic FLT's degree polynomial (exists_isHomogeneous_eval_eq_endDegree_of_abelianSchemePropertyBundle, 59 newly vendored modules, standard axioms) gives DegHomogPoly for the kernel-rank degree endDegree; FiniteEndSurjective is proved (finite endomorphism flat by miracle flatness); the remaining comparison endDegree = degEnd at isogenies is finrankGenericEqDegEnd; charpoly-p's charPolyIndepOfEllAlgClosed_of_degHomogPoly' then gives the field. Needs --allow-rise (one LEAF row becomes one GLUE row). Report docs/research/charpoly-port.md."}
