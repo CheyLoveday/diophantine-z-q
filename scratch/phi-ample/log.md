@@ -22,3 +22,6 @@ Target theorem: PhiAmpleIsogeny from MumfordPhiSurjectiveAC alone (removes mumfo
 ## Compile log
 - KL1.lean (zero-locus lemmas; isAffine_of_ample_mul_eq_one; subsingleton_of_isAffine_of_isField): COMPILED, no errors (11 s warm; first cold run 3.5 min).
 - KL2.lean: core lemma subsingleton_of_lam_const (integral closed Z ⊆ A with λ_L|Z = 0 is a point) COMPILED, no errors, no sorry.
+- KL3.lean: finite_ker_pts (ker λ_L has finitely many K̄-points, any field, any ample L) and
+  phiAmpleIsogeny_of_phiSurjective (h8 : MumfordPhiSurjectiveAC) : PhiAmpleIsogeny COMPILED, no sorry.
+  #print axioms: [propext, Classical.choice, Quot.sound] for both (axioms.txt). VERIFIED.
