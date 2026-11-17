@@ -346,3 +346,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     +Discharges (16093 jobs); frozenTarget standard axioms; check_target.py; only Main.lean modified among existing
     OneProof modules; OpenStatements 39; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok;
     autoform check ok.
+38. Jack's ruling (inbox 31): a row counts LEAF only after a reader has checked it against the printed page.
+    render_open.py: UNREAD_MARKERS ("unread", "UNVERIFIED", "recalled", "one model review", "pending reading",
+    "pending review") and must_be_glue(flag); kinds_row_problems flags a LEAF row with such a flag; autofold.py scores
+    new leaves with must_be_glue; unit test scripts/one_proof/test_scoring.py (a published row flagged "unread: ..."
+    scores GLUE); OPEN.md Kernel-wide readings line. kinds.tsv: dsThm965Printed, heckePrimeIntegralToRational,
+    neronSchemeExtensionDedekind, picRepresentableAbVar, hBFH LEAF -> GLUE. Counts before: H strict/strictest 9/25 on
+    34, all hypotheses 10/29 on 39; after: H 5/29 on 34, all 5/34 on 39. Inbox 28 re-kinds: h21S, igusaGL2DS,
+    javanpeykarThm111, bostLowerBoundAn, gaudronRemondThm14An consequence; deRhamVpAbVarDirect pending reading;
+    gamma1IntegralBasis published with the reviewer's flag (GLUE under the ruling). Inbox 29c: r3-residual.md count
+    corrected (count-neutral after review).

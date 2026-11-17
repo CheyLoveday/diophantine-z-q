@@ -27,7 +27,7 @@ DISCHARGES [OpenResearchLeaves38.javanpeykarPrintedMapHF] by ZInQ.R3Residual.jav
   axioms (each): [propext, Classical.choice, Quot.sound]
 ```
 
-**Count.** Against the 11-17 review (all three rows GLUE, with R3 as the deciding step): **−3 GLUE**.
+**Count.** Count-neutral after review (queue15): R3' ("étale coordinates are analytic coordinates", inside IsHolChart) remains a step, so the three new rows are GLUE like the rows they replace. (The earlier claim here of −3 GLUE is withdrawn; correction recorded on wip/leaf-fold33b, inbox 29c.)
 - Bost and Gaudron–Rémond: R3 was the only deciding step. Each is now a direct instance.
 - Javanpeykar had a second step, the given-degree reading (`deg_B` replaced by the degree of a given Belyi map).
   It is also removed here: `JavanpeykarAnMin` states the printed `deg_B(X)`, and `javanpeykarAnMap_of_min`
