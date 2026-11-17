@@ -1,0 +1,12 @@
+import ZInQKernel.Contrib.OneProof.JavanpeykarRebase
+#check @ZInQ.HeightFix.exists_chart
+#check @ZInQ.DefFaltings.MetrizedModel.arch
+#check @ZInQ.HeightDict.TorusVolume.IsUnif.isOpenMap
+#check @OpenPartialHomeomorph.hasFDerivAt_symm
+#check @HasStrictFDerivAt.toOpenPartialHomeomorph
+#check @OpenPartialHomeomorph.restrOpen
+#check @ZInQ.HeightGlue.metrizationOfUniformization
+#check @ZInQ.HeightGlue.analyticUniformizationUnique_of_t35
+#check @ZInQ.Metrization2.analyticUniformizationOfDim_of_uniformizationExists
+#check @ZInQ.DefFaltings.HodgeData.coeff_apply_ne_zero
+#check @ZInQ.Metrization.zero_mem_dom
