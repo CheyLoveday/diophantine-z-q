@@ -96,3 +96,34 @@ Base wip/leaf-fold33b d435851d (fork main after lane74; H top `HDec.HSyn.sixCont
    OpenStatements 30; render_open + `--check` ok; DischargesTest rerun (16 DISCHARGES lines: the raynaudSemistableSHOr
    discharges are gone with the field); crosswalk ok; autoform exit 0 (776 articles); gate.sh GATE=ok.
    **render_open count after fold 2: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral; LEAF for LEAF).**
+
+## Fold 3: row edits 62 and 64b
+
+Done in fold 1, the first fold that regenerated the docs (log fold 1 item 6): 62 was already applied on the base
+(verified); 64b applied by `row_edits_64b.py`. The JavanpeykarAnRetype.lean / TailZ78 / TailZ79 docstrings are not
+rebuilt by any fold here, so they are not edited (inbox 62: no build for docstrings alone); the corrected phrase is in
+the new structure `OpenResearchLeaves54`'s javanpeykarThm111An field doc (TailZ80), carried by autofold into 55-58.
+
+## Fold 4a: y3-route-a (y3FineModuliAbP -> y3FullThreeRepZ30; autofold, count-neutral)
+
+1. Merged origin/wip/y3-route-a 6558e2ff (brings y3-audit 8dc5f87d; no conflicts; commit d6fcc591). Hygiene: build logs
+   `scratch/y3-audit/build1.txt`, `build2.txt`, `build_y3fix.txt`, `scratch/y3-route-a/build-main.txt` left out;
+   `scratch/y3-route-a/DryRunFold.lean` renamed `.lean.txt`; no host paths; no vendored code.
+2. `lake build ZInQKernel.Contrib.OneProof.Y3FullThreeZ30` ok. `#discharges` on the fold-2 head (`DischargesY3.lean`,
+   output `DischargesY3-output.txt`, VERIFIED): `OpenResearchLeaves55.y3FineModuliAbP` DISCHARGED by
+   `Y3RouteA.y3FineModuliAbP_of_z30`, still assumes `[Y3RouteA.Y3FullThreeRepZ30]`, standard axioms;
+   `y3FineModuliAbP_of_z30`, `y3RepresentableQ_of_z30` standard axioms.
+3. Spec `scratch/fold-b112/autofold-y3.json` = the branch's `autofold.json` unchanged. Dry run on this line: 5/24 on 29 ->
+   5/24 on 29; printed module (`Y3DryRun.lean`) compiled, `sixContactMin_of_open75` standard axioms.
+4. autofold -> `TailZ82.lean` (`OpenResearchLeaves56`, `sixContactMin_of_open75`); Main switched; kinds row
+   `y3FineModuliAbP` (consequence, GLUE/GLUE) -> `y3FullThreeRepZ30` (consequence, flag "ELLIOT: ...", GLUE/GLUE,
+   flag_class unverified-locator; columns 1-7 identical to the branch's `kinds-row.tsv`, VERIFIED by diff); claims no row.
+   On-the-spot item recorded by the branch (relative Lemma P, polarization-free = polarized functor): documented in the
+   flag; nothing is built on it.
+5. Build (VERIFIED): Main + Discharges + TailZ82 ok (15983 jobs); `sixContactMin_of_open75`, `frozenTarget` standard axioms.
+6. Checks (`run_checks.sh 4a hashes_fold2.txt`, VERIFIED): hash guard 18917 -> 18952, only after 35 (all TailZ82), changed
+   only `frozenTarget`. Closure 293085: no sorryAx; `Y3FullThreeRepZ30`, `y3FineModuliAbP_of_z30`, `OpenResearchLeaves56`,
+   `sixContactMin_of_open75` present; folds 1-2 still in force. Field check 27 vs 27: only `y3FineModuliAbP` <->
+   `y3FullThreeRepZ30`. OpenStatements 30; render_open + `--check` ok; DischargesTest rerun (15 lines); crosswalk ok;
+   autoform exit 0; gate.sh GATE=ok.
+   **render_open count after fold 4a: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
