@@ -29,3 +29,8 @@
   ht-merge spec 5/26 on 31. New row passes render_open.kinds_row_problems (flag_class pending-review,unverified-locator).
 * Build: copied ht-abvar's .lake/build (ZInQKernel oleans, ir) into this worktree; `lake build
   ZInQKernel.Contrib.OneProof.HTAbVarScholze` rebuilds the closure changed by main (LPrefix etc.).
+* Compile (VERIFIED, 11-17): lake build ScholzeH1AbVar ok (12341 jobs; no warnings); Axioms.lean: Iff.rfl copy, old/new
+  conclusion examples, 10 theorems standard axioms; Discharges.lean: `#discharges: 30 open hypotheses, 11762 theorems
+  checked, 25 discharge one`, new: deRhamVpAbVarDirect and hodgeTateDecompOr each by HTMerge.* still assuming exactly
+  [ScholzeH1AbVar, T10_TateDuality]; HTMergeDryRun.lean compiles, frozenTarget_hm / sixContactMin_of_open73HM /
+  sixContactMin_of_open72_hm standard axioms.

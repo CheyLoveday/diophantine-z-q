@@ -178,7 +178,48 @@ verbatim and checked `Iff.rfl` against `TailS.lean` L347.
 
 ## 5. Part (4): compile log, `#discharges`, dry run, count
 
-COMPILE-TABLE
+All on 11-17, with Lean 4.35.0 and Mathlib v4.35.0, over the merged base (main d435851d).
+
+| check | outcome |
+|---|---|
+| `lake build ZInQKernel.Contrib.OneProof.ScholzeH1AbVar` | built (12341 jobs); `lake env lean` on the scratch copy reports no errors and no warnings |
+| `scratch/ht-merge/Axioms.lean` (output `axioms-output.txt`) | the verbatim copy of `HodgeTateDecompAbVar` is `Iff.rfl` with TailS's; each old/new theorem pair has the same conclusion type (`example`s); all ten new theorems use `[propext, Classical.choice, Quot.sound]` |
+| `scratch/ht-merge/Discharges.lean` (output `discharges_out.txt`) | `#discharges: 30 open hypotheses, 11762 theorems checked, 25 discharge one`; the new lines are below |
+| `scratch/ht-merge/HTMergeDryRun.lean` (output `dryrun_out.txt`) | compiles with no errors; `ZInQ.OneProof.frozenTarget_hm`, `HDec.HSyn.sixContactMin_of_open73HM` and `sixContactMin_of_open72_hm` use `[propext, Classical.choice, Quot.sound]` |
+| `scratch/ht-merge/count.py` | H rows: current 5/24 on 29; ht-abvar spec 5/27 on 32; **ht-merge spec 5/26 on 31** |
+| `render_open.kinds_row_problems` on the new row | no problems (flag_class `pending-review,unverified-locator`) |
+
+```
+DISCHARGES [OpenResearchLeaves53.deRhamVpAbVarDirect] by DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne
+  still assumes: [DeRhamScholze.HTMerge.ScholzeH1AbVar, T10Etale.T10_TateDuality]
+DISCHARGES [OpenResearchLeaves53.hodgeTateDecompOr] by DeRhamScholze.HTMerge.hodgeTateDecompOr_of_scholzeH1Milne
+  still assumes: [DeRhamScholze.HTMerge.ScholzeH1AbVar, T10Etale.T10_TateDuality]
+```
+
+The 30 open hypotheses are the 29 H rows and main's `hPC`. `hodgeTateDecompAbVar` is not an open field, so its
+theorem does not appear in `#discharges`. It is used at the hand-fold swap point instead.
+
+**Dry run.** The body is ht-abvar's: c8-conrad2's generated copy, verbatim. The handwritten top is ht-abvar's with
+three changes:
+* the swap `hodgeTateDecompAbVar := DeRhamScholze.HTMerge.hodgeTateDecompAbVar_of_scholzeH1 hN hT`;
+* the added bundle `OpenAddedLeaves28HM = {conradAppBQp, tateTwistInvariantsInertia, scholzeH1AbVar, t10TateDuality}`,
+  which has four fields where ht-abvar's `OpenAddedLeaves28HT` had five;
+* `frozenTarget_hm`, rewritten for main's new `Main.lean` (`(r t l) (hPC)` →
+  `exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`).
+
+The field taint is unchanged from ht-abvar (`scratch/ht-abvar/dryrun_taint_out.txt`), because the swap points and the
+removed rows are the same.
+
+**Hand-fold spec.** `scratch/ht-merge/autofold.json` supersedes ht-abvar's spec. It has the same `handfold` swap,
+`new_leaves` with `scholzeH1AbVar` (kind `consequence`, class CITED + ELLIOT, flag "pending review: … generalization
+(on-the-spot) in g …") in place of `scholzeDeRhamAlg` and `hodgeNumberH1AbVar`, and the count noted above.
+
+| | rows | LEAF/GLUE |
+|---|---|---|
+| current top (H rows) | 29 | 5/24 |
+| ht-abvar's joint fold | 32 | 5/27 |
+| **ht-merge's joint fold** | **31** | **5/26** |
+| change against ht-abvar | −1 | −0/−1 |
 
 ## 6. On-the-spot steps
 
