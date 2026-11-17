@@ -148,8 +148,8 @@ theorem fixedFieldPackage_of_steps {ℓ : ℕ} (hℓ : 0 < ℓ) (P : Prints) (hK
   -- `K` fixes `c_det, d_K` (5.9).
   obtain ⟨cdet, dK, hclr⟩ := S.clearing
   -- The package: `k`, `L(E^{(k)},1) ≠ 0`, `B`, `c_det`, `L_T(M) = 16(d_K + 5)M`, and the data.
-  refine ⟨⟨(D.kfin : ℚ), hkL, Bz.toNat, cdet, fun M => 16 * (dK + 5) * M, ?_⟩⟩
-  intro M b _ _ _
+  refine ⟨⟨(D.kfin : ℚ), hkL, Bz.toNat, cdet, fun M => 16 * (dK + 5) * M, b₀, ?_⟩⟩
+  intro M b _ _ _ _
   -- The family (3.9) of dimension `max(b, b₀)` and its coefficient data (5.9) at precision `M`.
   obtain ⟨F, hFb, hF⟩ := hfam (max b b₀) (le_max_right _ _)
   have hbF : b ≤ F.b := hFb ▸ le_max_left _ _
