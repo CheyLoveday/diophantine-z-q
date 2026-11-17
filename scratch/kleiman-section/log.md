@@ -13,3 +13,13 @@
 - scratch/kleiman-section/Quot.lean: compiles; `#print axioms` of kleimanPicZeroProper_of_Q, picZeroAbVar0_of_printed, picardFunctorIsoKleiman: [propext, Classical.choice, Quot.sound].
 - ZInQKernel/Contrib/OneProof/KleimanPicZeroProperQuot.lean: `lake build ZInQKernel.Contrib.OneProof.KleimanPicZeroProperQuot` succeeded (linter warnings only), no sorry.
 - Proved: picardFunctorIsoKleiman (fppf sheafification of T ↦ Pic(X_T) ≅ that of T ↦ Pic(X_T)/Pic(T), any f, no section); eta_repKleiman / identityComponent_repKleiman; kleimanPicZeroProper_of_Q; kleimanPicZeroProperPrinted_of_Q; picZeroProperAt_of_printed; picZeroAbVar0_of_printed.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.KleimanPicZeroProperQuot`: Build completed successfully (14228 jobs).
+- `#discharges` (scratch/kleiman-section/Discharges.lean; full output discharges-output.txt):
+  `DISCHARGES [OpenAddedLeaves25.kleimanPicZeroProper] by KleimanSection.kleimanPicZeroProper_of_Q`
+  `still assumes: [KleimanSection.KleimanPicZeroProperQ]`, `axioms: [propext, Classical.choice, Quot.sound]`.
+- autofold.py --dry-run on autofold.json: "strict count: 11/18 on 29 -> 11/18 on 29; strictest 11/18 -> 11/18"; dry-run module (AutofoldDry.lean, line 1 stripped) compiles, sixContactMin_of_open49 standard axioms.
+- Hand fold scratch/kleiman-section/TailZ56.lean compiles; sixContactMin_of_open49 standard axioms.
+- FrozenCheck.lean: frozenTarget body verbatim with `l : OpenAddedLeaves26` and `sixContactMin_of_open49` compiles; standard axioms.
+
+## Unverified
+- Kleiman 9.5.4 / 9.2.2 / 9.2.5 numbering and exact hypotheses (no copy on host): UNVERIFIED.

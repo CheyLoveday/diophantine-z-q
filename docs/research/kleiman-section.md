@@ -110,6 +110,26 @@ Proposed kinds.tsv row (tab-separated, same bundle/packet/label/tier as the old 
 **Autofold (fallback).** `scratch/kleiman-section/autofold.json`: field `kleimanPicZeroProper` filled by
 `KleimanSection.kleimanPicZeroProper_of_Q {n}.kleimanPicZeroProperQ`, new leaf `kleimanPicZeroProperQ`.
 
-## 5. Checks
+## 5. Checks (VERIFIED)
 
-See `scratch/kleiman-section/log.md` for compile outcomes and the `#discharges` output.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.KleimanPicZeroProperQuot`:
+  build completed (14228 jobs).
+* `#discharges` (`scratch/kleiman-section/Discharges.lean`, output in `discharges-output.txt`):
+
+  ```
+  DISCHARGES [OpenAddedLeaves25.kleimanPicZeroProper] by KleimanSection.kleimanPicZeroProper_of_Q
+    still assumes: [KleimanSection.KleimanPicZeroProperQ]
+    axioms: [propext, Classical.choice, Quot.sound]
+  ```
+* `autofold.py scratch/kleiman-section/autofold.json --dry-run`: "strict count: 11/18 on 29 -> 11/18 on 29; strictest
+  11/18 -> 11/18"; the dry-run module (`AutofoldDry.lean`) compiles, standard axioms.
+* Hand fold: `TailZ56.lean` compiles; `FrozenCheck.lean` compiles `frozenTarget`'s body verbatim with
+  `l : OpenAddedLeaves26` and `sixContactMin_of_open49`, standard axioms.
+* `picZeroAbVar0_of_printed`, `kleimanPicZeroProper_of_Q`, `picardFunctorIsoKleiman`: standard axioms.
+
+## 6. What remains
+
+* Kleiman's text was not available: the numbering of 9.2.2, 9.2.5 and 9.5.4, and whether 9.5.4 says proper or
+  projective, are UNVERIFIED. `KleimanPicZeroProperPrinted` was chosen so that either answer is covered. A
+  `docs/research/locators.md` row is needed (no edits were made outside this task's files).
+* No étale-topology statement is proved in Lean. The étale-vs-fppf point rests on Kleiman 9.2.5 (printed; §2).
