@@ -193,6 +193,12 @@ DISCHARGES [hGZ] by ZInQ.GZDict2.grossZagierAlgOptCd_of_plane
 DISCHARGES [hGZ] by ZInQ.GZSch.grossZagierAlgOptCd_of_curve
   still assumes: [ZInQ.GZSch.GrossZagierCurveCd]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [hGZ] by ZInQ.GZSplit.grossZagierAlgOptCd_of_split
+  still assumes: [ZInQ.GZSplit.GrossZagierCurveCdSplit]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [hGZ] by ZInQ.GZSplitUnique.grossZagierAlgOptCd_of_splitSome
+  still assumes: [ZInQ.GZSplitUnique.GrossZagierCurveCdSplitSome]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [hGZ] by ZInQ.GZUnique.grossZagierAlgOptCd_of_some
   still assumes: [ZInQ.GZUnique.GrossZagierCurveCdSome]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -227,4 +233,4 @@ DISCHARGES [OpenResearchLeaves38.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 11775 theorems checked, 56 discharge one
+#discharges: 39 open hypotheses, 11886 theorems checked, 58 discharge one
