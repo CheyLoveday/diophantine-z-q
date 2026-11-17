@@ -41,79 +41,31 @@ DISCHARGES [OpenResearchLeaves39.sga7_IX_3_3_SHpre] by DictModels.SGA7Pre.pre_of
 DISCHARGES [OpenResearchLeaves39.x6CoarseModuli] by GRX6AbPrint.x6CoarseModuli_of_witness
   still assumes: [GRDict.X6ModuliWitness]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves10HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves10HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves10HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves10HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves10HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves11HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves11HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves11HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves11HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves11HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves11HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves11HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves12HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves12HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves12HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves12HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves12HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves12HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves12HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves13HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves13HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves13HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves13HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves13HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves13HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves13HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves14HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves14HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves14HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves14HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves14HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves14HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves14HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves6HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves6HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves6HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves7HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves7HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves7HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves7HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves7HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves7HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves7HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves8HF.charPolyIndepOfEllAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves8HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves8HF]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves8HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves8HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves8HF.mumfordTorsionAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves8HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.charPolyIndepOfEllAlgClosed
-  still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.gagaMorphism] by HDec.HSyn.OpenTextbookLeaves9HF.gagaMorphism
-  still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenTextbookLeaves16.mumfordTorsionAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.mumfordTorsionAlgClosed
+DISCHARGES [OpenTextbookLeaves17.charPolyIndepOfEllAlgClosed] by HDec.HSyn.OpenTextbookLeaves9HF.charPolyIndepOfEllAlgClosed
   still assumes: [HDec.HSyn.OpenTextbookLeaves9HF]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves39.elkiesX6StarEvery] by HDec.QMSplit.Moduli.ElkiesPrint.every_of_functionField
@@ -173,4 +125,4 @@ DISCHARGES [OpenResearchLeaves39.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 38 open hypotheses, 11406 theorems checked, 44 discharge one
+#discharges: 36 open hypotheses, 11417 theorems checked, 28 discharge one

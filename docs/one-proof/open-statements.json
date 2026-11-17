@@ -52,7 +52,7 @@
    "statement": "DictModels.SGA7Pre.SGA7_IX_3_3_SHpre",
    "field": "sga7_IX_3_3_SHpre",
    "docstring":
-   "dict-models, printed form: SGA 7 I, Exp. IX, Prop. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). ",
+   "dict-models, printed form: SGA 7 I, Exp. IX, Cor. 3.3, second assertion, over strictly henselian traits, with U the print's N0 x_S S' (the preimage of N0 under the projection N x_O O' -> N), not the identity component of N x_O O' (number UNVERIFIED). With geomConnOfRationalPoint replaces sga7_IX_3_3_SH (fold33-copy: by sga3-nbhd's SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre', a pointwise SGA 3 VI_B 3.3 without SGA 3 VI_B 3.10). ",
    "bundle": "OpenResearchLeaves39"},
   {"type": "DictModels.RaynaudOr.RaynaudSemistableSHOr",
    "statement": "DictModels.RaynaudOr.RaynaudSemistableSHOr",
@@ -142,7 +142,7 @@
    "statement": "ZInQ.HeightFix.BostLowerBoundPrinted",
    "field": "bostLowerBoundPrinted",
    "docstring":
-   "height-fix, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight: Neron model over a field where A has semistable reduction in the sense of SGA 7 IX Def. 2.2/3.2 read over the residue fields k(p) (IsSemistableRes), omega = wedge^g Gamma(S, e*Omega^1), and the archimedean metric (i/2)^g int_{A(C)} eta wedge eta-bar as the total mass of the measure defined chart by chart (density |tau l|^2 in translated algebraic coordinates at every point), which must exist (IsPrintedMetricSq). Replaces bostLowerBound (ZInQ.HeightFix.bostLowerBound_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). ",
+   "height-fix, printed form: Bost, Sem. Bourbaki 795 (Asterisque 237, 1996), h_D(A) >= -(g/2) log 2pi (display UNVERIFIED), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight: Neron model over a field where A has semistable reduction in the sense of SGA 7 IX Def. 3.4 read over the residue fields k(p) (IsSemistableRes), omega = wedge^g Gamma(S, e*Omega^1), and the archimedean metric (i/2)^g int_{A(C)} eta wedge eta-bar as the total mass of the measure defined chart by chart (density |tau l|^2 in translated algebraic coordinates at every point), which must exist (IsPrintedMetricSq). Replaces bostLowerBound (ZInQ.HeightFix.bostLowerBound_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). ",
    "bundle": "OpenResearchLeaves39"},
   {"type": "ZInQ.SemiAbDescend.ChevalleyPerfect",
    "statement": "ZInQ.SemiAbDescend.ChevalleyPerfect",
@@ -154,7 +154,7 @@
    "statement": "ZInQ.HeightFix.GaudronRemondThm14Printed",
    "field": "gaudronRemondThm14Printed",
    "docstring":
-   "height-fix, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight (Faltings' original normalization (i/2)^g; semistability over k(p) as SGA 7 IX 2.2/3.2 print it; the metric defined chart by chart and required to exist). Replaces gaudronRemondThm14 (ZInQ.HeightFix.gaudronRemondThm14_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). ",
+   "height-fix, printed form: Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (read by the locator audit), over the printed stable height ZInQ.HeightFix.IsPrintedStableHeight (Faltings' original normalization (i/2)^g; semistability over k(p) as SGA 7 IX Def. 3.4 print it; the metric defined chart by chart and required to exist). Replaces gaudronRemondThm14 (ZInQ.HeightFix.gaudronRemondThm14_of_printed, with uniformizationLeafAll and mumfordTorsionAlgClosed for T35 and the leaf chevalleyPerfect (semiab-descend)). ",
    "bundle": "OpenResearchLeaves39"},
   {"type": "JavanpeykarRebase.JavanpeykarPrintedMap",
    "statement": "JavanpeykarRebase.JavanpeykarPrintedMap",
@@ -168,24 +168,12 @@
    "docstring":
    "javanpeykar-rebase: Stichtenoth, Algebraic Function Fields and Codes (2nd ed., GTM 254), Thm 3.6.3(a), for a FINITE constant field extension, with Stichtenoth's standing hypothesis that K is the full constant field of F: for F/K an algebraic function field (char 0) and L/K finite with F (x)_K L = FL (bijective productMap), every place of FL/L (valuation subring w containing L) is unramified over its restriction to F: a generator of the maximal ideal of w cap F generates that of w. The algebraic case used by the consumer (L = Kbar) is proved from it (JavanpeykarRebase.full_of_finite); finite_of_full gives the converse. ",
    "bundle": "OpenResearchLeaves39"},
-  {"type": "AvSplit.MumfordTorsionAlgClosed",
-   "statement": "AvSplit.MumfordTorsionAlgClosed",
-   "field": "mumfordTorsionAlgClosed",
-   "docstring":
-   "**LEAF (H-25; published form).** Mumford, *Abelian varieties* (1970; 2nd ed. 1974), §4,\nApplication 2, (iv) (UNVERIFIED locator): for an abelian variety `X` of dimension `g` over an\nalgebraically closed field `k` and an integer `n` with `char k ∤ n`, the group\n`X_n = {x ∈ X : nx = 0}` of `n`-torsion points is isomorphic to `(ℤ/nℤ)^{2g}`. Mumford's points\nare the closed points, i.e. the `k`-points (`Pts A k`); `dim` is the topological Krull dimension\nof the underlying space; \"`char k ∤ n`\" with `n ≥ 1` is `(n : k) ≠ 0`; the group isomorphism is a\nbijection `e` with `e(x + y) = e x + e y` (written multiplicatively on points). ",
-   "bundle": "OpenTextbookLeaves16"},
   {"type": "ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed",
    "statement": "ZInQ.Contrib.AVB1.CharPolyIndepOfEllAlgClosed",
    "field": "charPolyIndepOfEllAlgClosed",
    "docstring":
    "**T7 in Mumford's setting** (consequence of a published theorem). D. Mumford, *Abelian\nvarieties* (1970), §19, Theorem 4 (UNVERIFIED locator; `k` algebraically closed): for\n`φ ∈ End(X)` the polynomial `P_φ(n) = deg(n - φ)` lies in `ℤ[X]`, is monic of degree `2g`, and is\nthe characteristic polynomial of `T_ℓ(φ)` for every `ℓ ≠ char k`. This is\n`PkgI3.CharPolyIndepOfEll` with `[IsAlgClosed k]` added (it drops `deg P = 2g` and\n`P(n) = deg(n - φ)`). ",
-   "bundle": "OpenTextbookLeaves16"},
-  {"type": "ZInQ.HomLattice.GAGAMorphism",
-   "statement": "ZInQ.HomLattice.GAGAMorphism",
-   "field": "gagaMorphism",
-   "docstring":
-   "**GAGA for maps of complex abelian varieties (textbook leaf candidate; Serre, GAGA (1956);\nSGA 1 XII 4.4: `Hom(X, Y) → Hom(X^an, Y^an)` is bijective for `X` proper over `ℂ`; locators\nUNVERIFIED).** Let `φ : ℂ^g ⧸ Λ ≃ A(ℂ)` be a strong uniformization (so `φ` presents `A^an`), and\n`ψ : ℂ^g → B(ℂ)` an analytic homomorphism killing `Λ` (= a holomorphic homomorphism\n`A^an → B^an`). Then `ψ` comes from an algebraic morphism `f : A → B`. ",
-   "bundle": "OpenTextbookLeaves16"},
+   "bundle": "OpenTextbookLeaves17"},
   {"type": "T09Pic.PicRepresentableAbVar",
    "statement": "T09Pic.PicRepresentableAbVar",
    "field": "picRepresentableAbVar",
@@ -228,4 +216,4 @@
    "docstring":
    "**The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model\n`E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.\nA restriction of `GrossZagierAlgOpt`. ",
    "bundle": "frozenTarget"}],
- "count": 38}
+ "count": 36}

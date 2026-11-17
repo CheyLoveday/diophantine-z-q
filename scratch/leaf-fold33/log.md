@@ -235,3 +235,15 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     changed; closure check (bundle without the field, count Props supplied by EichlerBound.r5fpCountLe_of_two);
     OpenStatements 38; DischargesTest rerun (the 5 gonzalezRotgerProp56X6 lines gone); render_open --check ok (33 H,
     strictest 16/17, 5 others); crosswalk --check ok; autoform check ok.
+27. Inbox 3 readings (kinds.tsv: sga7_IX_3_5_ForwardGeom LEAF/LEAF; raynaudSemistableSHOr reading flags cleared;
+    sga7_IX_3_3_SHpre consequence GLUE with the three-step flag; hGZ flag names D1, D2, jacobiSym = epsilon_D) and the
+    SGA 7 IX locators in docstrings (144 comment-only edits: Prop. 3.3 -> Cor. 3.3, semistable reduction Def. 3.4).
+    H 16/17 on 33 -> 17/16 on 33.
+28. Fork PRs #54 (mumfordTorsionAlgClosed_proof, 9f54c2cc) and #55 (gagaMorphism_proof, d81efece), both verified by
+    fold34-pr and by the reviewer's second compile (inbox 2, 4): merged, one autofold
+    scratch/leaf-fold33/autofold-pr54-55.json (fold34-pr's two specs combined) -> TailZ64, `sixContactMin_of_open57`;
+    vendored LICENSE/NOTICE kept; no new leaf. 38 open -> 36 open; H 17/16 on 33 -> 16/15 on 31. Checks (VERIFIED):
+    build +Main +Discharges (16038 jobs, PR libraries included); frozenTarget standard axioms; check_target.py; only
+    Main.lean changed among existing OneProof modules; closure (no sorryAx, the two fields gone from the bundles);
+    OpenStatements 36; DischargesTest rerun, no error; render_open --check ok (31 H, strictest 16/15, 5 others);
+    crosswalk --check ok; autoform check ok.
