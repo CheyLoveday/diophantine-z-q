@@ -162,6 +162,85 @@ theorem formula_nondeg_right [IsAlgClosed k] (X : AbVar k) (n : ℕ) (hnk : (n :
     (fun i => sec_isOpenImmersion i.1 i.2) hsurj (AC.modX c) hM ψ hinv
   exact Scheme.Pic.eq_iff_nonempty_iso.2 ⟨e.symm ≪≫ (Scheme.Pic.oneIso).symm⟩
 
+/-! ## Counting `X̂[n]` -/
+
+/-- `X(k)[n]`. -/
+def torsK (X : AbVar k) (n : ℕ) : Subgroup (AC.Kpt X) := (powMonoidHom n : AC.Kpt X →* AC.Kpt X).ker
+
+lemma mem_torsK {X : AbVar k} {n : ℕ} {x : AC.Kpt X} : x ∈ torsK X n ↔ x ^ n = 1 := by
+  simp [torsK]
+
+/-- `Spec L` over itself, as the unit object. -/
+def unitIsoL (L : Type) [Field L] : PkgI2.specOver L L ≅ 𝟙_ (Over (Spec (CommRingCat.of L))) :=
+  Over.isoMk (Iso.refl _) (by simp [PkgI2.specOver])
+
+/-- `X(k)[n] ≅ (ℤ/n)^{2g}` from Mumford's theorem (the textbook leaf), transported to `k`-points. -/
+theorem exists_torsK_addEquiv [IsAlgClosed k] (hT : AvSplit.MumfordTorsionAlgClosed) (X : AbVar k)
+    (g n : ℕ) (hg : topologicalKrullDim X.X.left = g) (hn : 0 < n) (hnk : (n : k) ≠ 0) :
+    Nonempty (Additive (torsK X n) ≃+ (Fin (2 * g) → ZMod n)) := by
+  have := isAV X
+  obtain ⟨e, he⟩ := hT k (grpOf X) g n hg hn hnk
+  let φ : AC.Kpt X ≃ PkgI2.Pts (grpOf X) k :=
+    { toFun := fun x => (unitIsoL k).hom ≫ x
+      invFun := fun z => (unitIsoL k).inv ≫ z
+      left_inv := fun x => by simp
+      right_inv := fun z => by simp }
+  have hφmul : ∀ x y, φ (x * y) = φ x * φ y := fun x y => by
+    change (unitIsoL k).hom ≫ (x * y) = ((unitIsoL k).hom ≫ x) * ((unitIsoL k).hom ≫ y)
+    exact MonObj.comp_mul _ _ _
+  have hφpow : ∀ x (m : ℕ), φ (x ^ m) = φ x ^ m := fun x m => by
+    change (unitIsoL k).hom ≫ (x ^ m) = ((unitIsoL k).hom ≫ x) ^ m
+    exact MonObj.comp_pow _ _ _
+  have hφone : φ 1 = 1 := by simpa using hφpow 1 0
+  let ψ : torsK X n ≃ PkgI2.torsion (grpOf X) k n :=
+    Equiv.subtypeEquiv φ (by
+      intro x
+      change x ∈ torsK X n ↔ φ x ^ n = 1
+      rw [mem_torsK, ← hφpow, ← hφone, φ.injective.eq_iff])
+  refine ⟨AddEquiv.mk' (Additive.toMul.trans (ψ.trans e)) ?_⟩
+  intro x y
+  have hmem : (ψ (Additive.toMul x)).1 * (ψ (Additive.toMul y)).1 ∈ PkgI2.torsion (grpOf X) k n := by
+    have h := (ψ (Additive.toMul (x + y))).2
+    have e1 : (ψ (Additive.toMul (x + y))).1 = (ψ (Additive.toMul x)).1 * (ψ (Additive.toMul y)).1 :=
+      hφmul _ _
+    rwa [e1] at h
+  have e2 : ψ (Additive.toMul (x + y)) = ⟨_, hmem⟩ := Subtype.ext (hφmul _ _)
+  simp only [Equiv.trans_apply]
+  rw [e2, he]
+
+/-- Homomorphisms out of `(ℤ/n)^m` into a finite group: at most `#M^m`. -/
+theorem card_hom_le {G : Type*} [AddCommGroup G] {M : Type*} [AddCommGroup M] [Finite M] {n m : ℕ}
+    [NeZero n] (E : G ≃+ (Fin m → ZMod n)) : Nat.card (G →+ M) ≤ Nat.card M ^ m := by
+  classical
+  let basis : Fin m → G := fun i => E.symm (Pi.single i 1)
+  have hspan : ∀ x : G, x = ∑ i, (E x i).val • basis i := by
+    intro x
+    apply E.injective
+    rw [map_sum]
+    simp only [map_nsmul, basis, AddEquiv.apply_symm_apply]
+    ext j
+    rw [Finset.sum_apply, Finset.sum_eq_single j]
+    · rw [Pi.smul_apply, Pi.single_eq_same, nsmul_eq_mul, mul_one, ZMod.natCast_zmod_val]
+    · intro i _ hij
+      rw [Pi.smul_apply, Pi.single_eq_of_ne hij.symm, smul_zero]
+    · intro h; exact absurd (Finset.mem_univ j) h
+  have hinj : Function.Injective (fun f : G →+ M => fun i => f (basis i)) := by
+    intro f f' h
+    ext x
+    rw [hspan x, map_sum, map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [map_nsmul, map_nsmul]
+    exact congrArg _ (congrFun h i)
+  calc Nat.card (G →+ M) ≤ Nat.card (Fin m → M) := Nat.card_le_card_of_injective _ hinj
+    _ = Nat.card M ^ m := by simp [Nat.card_fun]
+
+lemma const_injective [IsAlgClosed k] (X : AbVar k) : Function.Injective (AC.const X) := by
+  have : Nonempty (𝟙_ (Over (Spec (CommRingCat.of k)))).left :=
+    inferInstanceAs (Nonempty (Spec (CommRingCat.of k)))
+  have : Nonempty X.X.left := ⟨η[X.X].left (Nonempty.some inferInstance)⟩
+  have : Nonempty (⊤ : X.X.left.Opens) := ⟨⟨Nonempty.some inferInstance, trivial⟩⟩
+  exact (X.X.hom.appTop.hom.comp (Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom).injective
+
 end PhiSurj.AVDesc
 
 #print axioms PhiSurj.AVDesc.formula_nondeg_right
