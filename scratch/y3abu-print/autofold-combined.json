@@ -1,0 +1,68 @@
+{
+ "name": "y3abu-print-combined",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.GRX6AbPrint",
+  "ZInQKernel.Contrib.OneProof.ElkiesX6StarEvery",
+  "ZInQKernel.Contrib.OneProof.ShimuraY3Print"
+ ],
+ "discharges": [
+  {
+   "field": "shimuraMainThmIDeligneY3AbU",
+   "proof": "_root_.Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print {n}.y3FineModuliAb {n}.deligneCanonicalModelY3Every",
+   "leaves": [
+    {
+     "name": "y3FineModuliAb",
+     "type": "_root_.Y3ABUPrint.Y3FineModuliAb",
+     "doc": "y3abu-print, printed form (representability, one object: the fine moduli scheme Y3 with its universal family): the moduli problem of abelian surfaces with an action of the maximal order O of B = (2,-3|Q) and full level-3 structure is represented over Q by a proper smooth curve (some (Y, Phi) satisfies R1fpPropsAb). Buzzard, Duke Math. J. 87 (1997) section 1; Boutot-Carayol, Asterisque 196-197 (1991) ch. III; Milne 1979 (Corvallis); Mumford GIT Thm 7.9; locators UNVERIFIED. Consequence form: universal property used on proper smooth curve bases and read on field points. With deligneCanonicalModelY3Every replaces shimuraMainThmIDeligneY3AbU (Y3ABUPrint.print_iff_field).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED; reading risk: the kernel's moduli problem has no polarization (Lemma P: the type-mu principal polarization exists and is unique); Buzzard 1997 section 1 is recalled as stating the polarization-free problem, Milne 1979 and Boutot-Carayol include the polarization",
+     "source": "Buzzard, Integral models of certain Shimura curves, Duke Math. J. 87 (1997) section 1 (representability of the QM moduli problem with level structure, projective smooth curve over Z[1/ND]); Boutot-Carayol, Asterisque 196-197 (1991) ch. III; Milne, Points on Shimura varieties mod p (1979); Mumford GIT Thm 7.9; base Q, full level 3; locators UNVERIFIED"
+    },
+    {
+     "name": "deligneCanonicalModelY3Every",
+     "type": "_root_.Y3ABUPrint.DeligneCanonicalModelY3Every",
+     "doc": "y3abu-print, printed form (one object: Y3 = Sh_K3(B^x, H^+-) and its canonical-model property): for every fine witness (Y, Phi) of R1fpPropsAb there is Psi : H x (B tensor A_f)^x -> Y(C), onto with fibres the B^x_+ \\ . / K3 classes, holomorphic in tau, with the moduli interpretation at g in O-hat^x (the QM torus C^2/iota(O)(tau,1)^T) and Shimura's reciprocity law at CM points (conventions existential). Deligne, Sem. Bourbaki 389 (1971) sections 4-5 (the PEL moduli scheme with its complex moduli interpretation is the canonical model; Cor. 5.7 / Ex. 5.8 per locators.md R1); Milne, Introduction to Shimura varieties sections 8 and 14; Shimura, Ann. of Math. 85 (1967) Main Theorem I; locators UNVERIFIED. No existence claim; the every-witness form is equivalent to the field's form given y3FineModuliAb (Y3ABUPrint.deligneCanonicalModelY3Every_of_field, via compare_iso_ab).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED; reading risk (locators.md R1): the print is for the polarized PEL moduli problem with polarization-compatible level structure over the reflex field E(G,X) = Q; the moduli interpretation (Milne 8) and the canonical-model property (Milne 14) are read as one statement about the moduli scheme with its identification Y3(C) = Sh_K3(C)",
+     "source": "Deligne, Travaux de Shimura, Sem. Bourbaki 389 (1971) sections 4-5 (Cor. 5.7, Ex. 5.8: the PEL moduli scheme is the canonical model; moduli interpretation of Sh_K(C)); Milne, Introduction to Shimura varieties (2005) sections 8 and 14; Shimura, Ann. of Math. 85 (1967) Main Theorem I; at B = (2,-3|Q), level K3, as a consequence (bijective and holomorphic in tau, moduli clause at O-hat^x as QM pairs, conventions existential); locators UNVERIFIED"
+    }
+   ]
+  },
+  {
+   "field": "gonzalezRotgerX6Ab",
+   "proof": "_root_.GRX6AbPrint.gonzalezRotgerX6Ab_of_print {n}.gonzalezRotgerThm512X6 (_root_.Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print {n}.y3FineModuliAb {n}.deligneCanonicalModelY3Every) {n}.x6CoarseModuli {t}.gagaMorphism {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "gonzalezRotgerThm512X6",
+     "type": "_root_.GRDict.GonzalezRotgerThm512X6",
+     "doc": "gr-dict / grx6ab-print, printed form (degree-and-embedding consequence): Gonzalez-Rotger, J. Math. Soc. Japan 58 (2006), Thm 5.12, p. 946 (arXiv math/0612732 v1/v2 pp. 18-19; read by the locator audit), at (D,N) = (6,1), over CM points as Gonzalez-Rotger define them (GRDict.IsGRCMPoint), on every witness of the moduli description (no existence claim): [Q(x):Q] = 2h(R) with k in Q(x) if some p | 6 is inert in k, h(R) otherwise. With x6CoarseModuli replaces gonzalezRotgerX6Ab.",
+     "kind": "published",
+     "flag": "",
+     "source": "Gonzalez-Rotger, J. Math. Soc. Japan 58 (2006) Thm 5.12, p. 946 (read by the locator audit: Q(P) = H_R if D(R)N*(R) != 1, else the specified index-two subfield) at (D,N) = (6,1); degree and k-embedding clauses, over GR's CM(R) transported to Qbar-points of every coarse witness of X0(6,1)"
+    },
+    {
+     "name": "x6CoarseModuli",
+     "type": "_root_.GRX6AbPrint.X6CoarseModuli",
+     "doc": "grx6ab-print, printed form (the coarse-moduli theorem for X0(6,1), one object): the canonical model X6 = X0(6,1) over Q is a proper smooth curve and a coarse moduli scheme for abelian surfaces with QM by O: a Galois-equivariant bijection on Qbar-points with QM pairs up to isomorphism, Aut(O)-twists induced by automorphisms of X (the Atkin-Lehner group), and the classifying map of a level-3 QM abelian scheme over a proper smooth curve (a specialization of the natural transformation). Locators UNVERIFIED (Shimura 1967; Deligne, Sem. Bourbaki 389; Buzzard, Duke 87 (1997) section 1). With y3FineModuliAb and deligneCanonicalModelY3Every (through Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print) it gives the moduli witness (the forgetful map Y3 -> X6 is proved: GRX6AbPrint.x6ModuliWitness_of_coarse).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED; reading risk: the Atkin-Lehner clause is read in twist form (w_m acts by (A, iota) -> (A, iota o Ad mu_m), principal I_m at D = 6), and Galois equivariance as naturality of the coarse map on Spec of fields",
+     "source": "Shimura, Ann. of Math. 85 (1967) sections 2-3, Main Theorem I (canonical model of X0(D,N)); Deligne, Sem. Bourbaki 389 (1971) sections 4-5 (moduli interpretation); Buzzard, Duke Math. J. 87 (1997) section 1 (X0(D,N) as a coarse moduli space of QM abelian surfaces); Mumford GIT Def. 5.6 (coarse moduli scheme); locators UNVERIFIED"
+    }
+   ]
+  },
+  {
+   "field": "elkiesX6StarFunctionField",
+   "proof": "_root_.HDec.QMSplit.Moduli.ElkiesPrint.elkiesX6StarFunctionField_of_every {n}.elkiesX6StarEvery (_root_.GRX6AbPrint.x6ModuliWitness_of_coarse (_root_.Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print {n}.y3FineModuliAb {n}.deligneCanonicalModelY3Every) {n}.x6CoarseModuli)",
+   "leaves": [
+    {
+     "name": "elkiesX6StarEvery",
+     "type": "_root_.HDec.QMSplit.Moduli.ElkiesPrint.ElkiesX6StarEvery",
+     "doc": "elkies-print: Elkies, Shimura curve computations (ANTS-III 1998) section 3 on X*(6) = X6/W, for every witness of the moduli description of X0(6,1) (R1fpPropsAb, X6Props), with no existence claim: some t : X6 -> P1 with Q(X6)^W = Q(t) (whenever X6 is integral and t regular at its generic point, both proved from the charts), t = 0, 1, infinity at the CM points of discriminant -24, -4, -3, and the charts s^2 = -t, r^2 = 3(t-1) (section, display and 0/infinity orientation UNVERIFIED). The witness comes from shimuraMainThmIDeligneY3AbU and x6CoarseModuli (GRX6AbPrint.x6ModuliWitness_of_coarse). Replaces elkiesX6StarFunctionField; equivalent to it given a witness and T5 (every_iff_functionField).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED (section, display, 0/infinity orientation)",
+     "source": "Elkies 1998 (ANTS-III, LNCS 1423) section 3, X*(6) = X6/W with coordinate t (function-field form Q(X6)^W = Q(t)), CM values and equations of X6 over the t-line, on every witness of the moduli description of X0(6,1), no existence claim (section, display and 0/infinity orientation UNVERIFIED)"
+    }
+   ]
+  }
+ ]
+}

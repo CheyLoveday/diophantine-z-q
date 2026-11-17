@@ -1,0 +1,8 @@
+{
+ "name": "chevalley-free",
+ "imports": ["ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect"],
+ "discharges": [
+  {"field": "chevalleyPerfect",
+   "proof": "sorry"}
+ ]
+}

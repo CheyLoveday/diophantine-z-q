@@ -1,0 +1,6 @@
+{"name": "charpoly-port",
+ "imports": ["ZInQKernel.Contrib.OneProof.DegHomogPolyFLT", "ZInQKernel.Contrib.OneProof.CharPolyCharP"],
+ "discharges": [
+   {"field": "charPolyIndepOfEllAlgClosed",
+    "proof": "_root_.ZInQ.Contrib.OneProof.CharPolyCharP.charPolyIndepOfEllAlgClosed_of_degHomogPoly' _root_.ZInQ.Contrib.OneProof.DegPolyFLT.degHomogPoly"}],
+ "note": "charpoly-port: charPolyIndepOfEllAlgClosed (Mumford 19 Thm 4) proved outright, every characteristic, no new leaf. deg-det's DegHomogPoly is proved (DegPolyFLT.degHomogPoly) from Anthropic FLT's degree polynomial exists_isHomogeneous_eval_eq_endDegree_of_abelianSchemePropertyBundle (59 newly vendored modules under Contrib/OneProof/CharPolyPort/Vendor/AnthropicFLT, Apache-2.0) and the comparison degEnd = endDegree (finite endomorphisms flat by miracle flatness, hence surjective; rank at the generic point = function-field degree, CharPolyPort/FinrankGeneric.lean); charpoly-p's charPolyIndepOfEllAlgClosed_of_degHomogPoly' gives the field. Report docs/research/charpoly-port.md."}

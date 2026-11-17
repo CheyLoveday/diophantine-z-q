@@ -1,0 +1,1 @@
+(no output: Target.lean compiles, heckePin_copy_iff by Iff.rfl)

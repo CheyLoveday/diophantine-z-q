@@ -74,9 +74,10 @@ def BdRInvariantsPrinted : Prop :=
 /-- **LEAF (printed form; Fontaine: the Tate module of an abelian variety is de Rham).** For an abelian variety
 `A` over a finite extension `K` of `ℚ_p`, `V_p(A)` is a de Rham representation of `G_K`, i.e. `D_dR(V) =
 (B_dR ⊗_{ℚ_p} V)^{G_K}` has `K`-dimension `dim_{ℚ_p} V`. Printed: Berger, *An introduction to the theory of p-adic
-representations*, in *Geometric aspects of Dwork theory* (de Gruyter, 2004), §I.3 ("the Tate modules … of all
-abelian varieties `A` are de Rham", attributed to Fontaine; wording read by h-leaves §3.2, VERIFIED as recorded
-there); primary: Fontaine, Ann. of Math. 115 (1982) and LNM 1016 (1983) (statement numbers UNVERIFIED); for
+representations*, in *Geometric aspects of Dwork theory* (de Gruyter, 2004; arXiv math/0210184v1), §II.5.1, p. 19
+("the Tate modules … of all abelian varieties `A` are de Rham", attributed to Fontaine; locator per the
+integrator's reading, derham-direct; h-leaves §3.2 recorded the same wording under "§I.3"). The print's
+`K`-dimension form is `DeRhamPrint.Direct.DeRhamVpAbVarDirect` (equivalent, `DeRhamPrintDirect.lean`); primary: Fontaine, Ann. of Math. 115 (1982) and LNM 1016 (1983) (statement numbers UNVERIFIED); for
 `H^i_ét` of any proper smooth variety, Faltings 1989 and Tsuji 1999, which give it through Milne's
 `H¹_ét = V_p(A)^∨`. Lean form: `dim_{ℚ_p} (B_dR ⊗ V_p(A))^{G_F} = [F:ℚ_p] · dim V_p(A)` (`IsDeRhamTensorOver`;
 the only translation is `dim_{ℚ_p} = [F:ℚ_p] · dim_F` on the `F`-space `D_dR`), with pkg-I4's `V_p(A) = ℚ_p ⊗ T_p A`

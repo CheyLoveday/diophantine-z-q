@@ -1,0 +1,22 @@
+{
+ "name": "derham-range",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.DeRhamRange"
+ ],
+ "discharges": [
+  {
+   "field": "deRhamVpAbVarDirect",
+   "proof": "_root_.DeRhamPrint.Range.deRhamVpAbVarDirect_of_adm {n}.deRhamVpAbVarAdm",
+   "leaves": [
+    {
+     "name": "deRhamVpAbVarAdm",
+     "type": "_root_.DeRhamPrint.Range.DeRhamVpAbVarAdm",
+     "doc": "Fontaine, as printed by Berger, An introduction to the theory of p-adic representations (Geometric aspects of Dwork theory, de Gruyter 2004; arXiv math/0210184v1) section II.5.1, p. 19 (locator per the integrator's reading; Berger's definition of de Rham, section II.2-II.3, unread): the Tate modules of abelian varieties are de Rham, read with Fontaine's admissibility definition: dim over B_dR^{G_K} of D_dR(V) = (B_dR (x)_{Q_p} V)^{G_K} equals dim_{Q_p} V. Lean form: A over a finite F/Q_p, G_F acting through gfToGqp, D_dR = DeRhamPrint.Range.ddrFix a module over bdrFixAlg = B_dR^{G_F} (no embedding of F used). Equivalent to deRhamVpAbVarDirect (dim_{F'} form) by deRhamVpAbVarDirect_iff_adm, through the proved iota(F') = B_dR^{G_F} (range_iotaF_eq_bdrFix, from bdRInvariantsPrinted_proof). Berger's B_dR = B_dR^+[1/t] matched by DeRhamPrint.TDict.bdREquivAwayT",
+     "kind": "published",
+     "flag": "pending reading: Berger's definition of de Rham (section II.2-II.3, pp. 11-13) unread (no download possible in derham-range); a direct instance of Berger II.5.1 p. 19 under the admissibility reading (dim over B_dR^{G_K}), and the dim_K reading is proved equivalent (derham-range, deRhamVpAbVarDirect_iff_adm); an isomorphism-form definition (B_dR (x) V = B_dR^d) would add a consequence step; primary Fontaine numbers UNVERIFIED",
+     "source": "Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim over B_dR^{G_K} of D_dR(V) = dim V); iota(F') = B_dR^{G_F} and the equivalence with the dim_{F'} form proved (derham-range)"
+    }
+   ]
+  }
+ ]
+}

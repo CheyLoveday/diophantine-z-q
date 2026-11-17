@@ -1,0 +1,12 @@
+{
+ "name": "bdr-inv",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.BdRInvariants"
+ ],
+ "discharges": [
+  {
+   "field": "bdRInvariantsPrinted",
+   "proof": "_root_.BdRInv.bdRInvariantsPrinted_proof"
+  }
+ ]
+}

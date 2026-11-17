@@ -1,0 +1,12 @@
+{"name": "degpoly-proof-after-degdet",
+ "imports": ["ZInQKernel.Contrib.OneProof.DegHomogPolyC"],
+ "discharges": [
+   {"field": "degHomogPoly",
+    "proof": "_root_.ZInQ.Contrib.OneProof.DegPolyC.degHomogPoly_of_noEmb {n}.uniformizationLeafAll {n}.mumfordTorsionAlgClosed {n}.degHomogPolyNoEmb",
+    "leaves": [{"name": "degHomogPolyNoEmb",
+                "type": "_root_.ZInQ.Contrib.OneProof.DegPolyC.DegHomogPolyNoEmb",
+                "doc": "Mumford, Abelian varieties (1970), section 19 (locator UNVERIFIED): deg is a homogeneous polynomial function of degree 2g on End(X), restricted to algebraically closed fields with no ring homomorphism to C. Over fields that embed into C it is proved (degpoly-proof).",
+                "kind": "published",
+                "flag": "unread: specialization (forall-instance) of the leaf DegHomogPoly to fields with no embedding into C; locator UNVERIFIED",
+                "source": "Mumford, Abelian varieties, section 19, fields with no embedding into C"}]}],
+ "note": "UNCHECKED (the field degHomogPoly exists only after deg-det's fold): replaces deg-det's leaf degHomogPoly by the weaker degHomogPolyNoEmb. Count-neutral."}

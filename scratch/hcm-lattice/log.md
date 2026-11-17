@@ -1,0 +1,61 @@
+# hcm-lattice results log
+
+Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD) by reflink copy.
+
+## Plan (statements)
+- (3) `locLat_sInvLat`: for every lattice 𝔞 ⊂ K (κ𝔞 = period lattice), every idele s and every p:
+  `(s⁻¹𝔞)_p = s_p⁻¹ 𝔞_p` in `K_p = ∏_{v|p} K_v`, where `𝔞_p` = closure of 𝔞 in `K_p`.
+- (1) `IsAnalyticIso` over ℙ²-coordinates (holomorphic lift to ℂ³∖0, nonvanishing differential, bijection ℂ/Λ ≅ E(ℂ));
+  Weierstrass map satisfies it.
+- (2) a holomorphic bijection ℂ/Λ → E_{L₀}(ℂ) with 0 ↦ O is z ↦ ξ_{L₀}(αz) (Liouville argument).
+
+## Compile log
+- T0.lean (#check probes): OK, 2m14 (mostly import).
+- Lattice.lean: COMPILED (no errors, 7 s). VERIFIED:
+  - `isOpen_latHat` : 𝔞̂ open in 𝔸_{K,f} for every lattice 𝔞 (κ𝔞 a period lattice), via `N·𝓞_K ⊆ 𝔞`
+    (`exists_nat_mul_integers_mem`, from `two_coords`).
+  - `locLat_sInvLat` : `(sInvLat s 𝔞)_p = s_p⁻¹ • 𝔞_p` for every lattice 𝔞, idele s, p (K_p = ∏_{v∣p} K_v,
+    𝔞_p = closure of 𝔞 in K_p, s_p = p-component of s). Proof: U = s_f⁻¹𝔞̂ open, K dense in 𝔸_{K,f}.
+  - `rep_local_of_global` : `s_f v − u ∈ 𝔞̂ → ∀ p, v − s_p⁻¹u ∈ (s⁻¹𝔞)_p`.
+- Analytic.lean: COMPILED. VERIFIED: defs `IsProjCoord`, `IsHoloLift`, `IsHolomorphicMap`, `wedge`, `IsImmersion`,
+  `InducesBij`, `IsAnalyticIso`; `deriv_derivWeierstrassP_ne` (℘'(z₀)=0 ⇒ ℘''(z₀)≠0, via disc ≠ 0 and isolated zeros);
+  `toPoint_isImmersion`, `toPoint_isAnalyticIso` (Weierstrass map z ↦ [℘ : ℘'/2 : 1] is an analytic isomorphism
+  ℂ/L → E_L(ℂ); at lattice points the lift [w + w³h : (−2 + w³k)/2 : w³] from Mathlib's ℘[L - l₀]).
+- HCMLattice.lean (Analytic + §C): COMPILED, no sorry. VERIFIED:
+  - projective-coordinate lemmas `IsProjCoord.{ne_zero_iff,coords,of_zero,homog,cross_eq_zero,eq_of_cross}`;
+  - `exists_local_ext`: x'/(2y) has local holomorphic extensions everywhere (y'/(3x²−g₂/4) near y=0 using disc≠0;
+    −u'+uq'/(2q) near O with u=X/Y, w=Z/Y, q=1−a₄uw−a₆w², wq=u³);
+  - `exists_entire_of_local` (gluing across a dense set), `eq_const_of_periodic` (Liouville);
+  - `exists_local_lift'` (hcm-dict's lift, for surjective holomorphic ξ);
+  - `eq_toPoint_of_holo`: holomorphic ξ : ℂ → E_{L₀}(ℂ) inducing a bijection ℂ/L ≅ E_{L₀}(ℂ) with ξ(0)=O is
+    z ↦ ξ_{L₀}(αz) with IsScale L₀ L α. (The Weierstrass-map step: proved, no Silverman leaf needed.)
+- HCMLattice.lean (full: §A–§C, lattice §L–§N, §P printed leaf): COMPILED, 1m20 wall. VERIFIED:
+  - `ShimuraThm54Local` (new leaf def) and `shimuraMainCM_of_local : ShimuraThm54Local → T5Glue.ShimuraMainCM`;
+  - `isAnalyticUnif_of_holo`; axioms of shimuraMainCM_of_local, eq_toPoint_of_holo, locLat_sInvLat,
+    toPoint_isAnalyticIso: [propext, Classical.choice, Quot.sound].
+- FoldCheck.lean (imports OneProof.Main + Discharges, inlines HCMLattice.lean, folded Main body
+  `frozenTarget_hCMLocal` with `hCM : ShimuraThm54Local` and `shimuraMainCM_of_local hCM` at both uses): COMPILED, 49 s.
+  `frozenTarget_hCMLocal` axioms: [propext, Classical.choice, Quot.sound]. `#discharges` lists no hCM row
+  (the binder type is now `HCMDict.ShimuraThm54`, and shimuraMainCM_of_local concludes `ShimuraMainCM`) — next:
+  prove `HCMDict.ShimuraThm54` from `ShimuraThm54Local` (needs: sInvLat is a period lattice).
+- HCMLattice.lean + §O and old-from-new: COMPILED, 0 errors, no sorry. VERIFIED:
+  - `exists_periodPair_sInvLat`: for every lattice 𝔞 and idele s, κ(sInvLat s 𝔞) is the lattice of a period pair
+    (c₀𝓞 ⊆ s⁻¹𝔞 ⊆ c₁⁻¹𝓞 from Tau Ceti's `mul_nonZeroDivisor_mem_integralAdeles`, then a ℤ-basis of a discrete
+    full-rank ℤ-submodule of ℂ by `ZLattice.rank` / `ofZLatticeBasis_span`);
+  - `IsImmersion.comp_mul`, `isAnalyticIso_of_unif` (IsAnalyticUnif on a short model ⇒ IsAnalyticIso);
+  - `shimuraThm54_of_local : ShimuraThm54Local → HCMDict.ShimuraThm54` (the old leaf from the new one);
+    axioms [propext, Classical.choice, Quot.sound].
+- FoldCheck.lean regenerated: COMPILED (0 errors, 33 s). `#discharges`:
+  `DISCHARGES [hCM] by ZInQ.Contrib.HCMLattice.shimuraThm54_of_local / still assumes: [ShimuraThm54Local] /
+  axioms: [propext, Classical.choice, Quot.sound]`. `frozenTarget_hCMLocal` (frozenTarget with hCM filled by
+  shimuraThm54_of_local) and `frozenTarget_hCMLocal'` (folded Main body, shimuraMainCM_of_local at both uses):
+  standard axioms.
+- MainFolded.lean (Main.lean with the fold applied, HCMLattice inlined): COMPILED, 0 errors;
+  `ZInQ.OneProof.frozenTarget` depends on [propext, Classical.choice, Quot.sound].
+- §Q local–global principle: COMPILED, no sorry, standard axioms. VERIFIED:
+  - `mem_of_mem_latHat`: K ∩ 𝔟̂ = 𝔟 for every lattice (via the tree's `latHat_inter_of_sandwich`, n𝓞 ⊆ 𝔟, D𝔟 ⊆ 𝓞);
+  - `mem_of_prime_mul_mem`: p y ∈ 𝔟 and y ∈ 𝔟_p ⇒ y ∈ 𝔟 (b ∈ 𝔟 close to y at the finitely many v ∣ p, then one
+    Bézout step t p + s M = 1 with nD = p^j M: z = y − b − t(py − pb) ∈ n𝒪̂);
+  - `mem_of_forall_locLat`: (∀ p prime, x ∈ 𝔟_p) ⇒ x ∈ 𝔟 (minimal r with r x ∈ 𝔟, induction on minFac);
+  - `lattice_eq_of_locLat_eq` (a lattice is determined by its p-components) and `rep_sub_mem` (s⁻¹u well defined).
+  These close the last informal point of the "direct instance" argument (item 5 of the report).

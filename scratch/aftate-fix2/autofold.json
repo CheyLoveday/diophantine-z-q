@@ -1,0 +1,47 @@
+{
+ "name": "aftate-fix2",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.AfTateLambda"
+ ],
+ "discharges": [
+  {
+   "field": "r16CoreY",
+   "proof": "_root_.AfTateLam.r16CoreY_of_printed {n}.heckeJ1DS {n}.afShimura {n}.afTateDSLambda {n}.igusaGL2DS {t}.mumfordTorsionAlgClosed",
+   "leaves": [
+    {
+     "name": "heckeJ1DS",
+     "type": "_root_.AfTateLam.HeckeJ1DS",
+     "doc": "aftate-fix2: the Hecke operators on J_1(N) over Q. For N >= 2, every model X of Diamond-Shurman's X_1(N)_alg with chosen generators (j_X, t_X) of K(X) = Q(j, f_1) (IsX1Gen: the integer relations of (j_X, t_X) are those of (j(tau), f_1(tau)), f_1 = T5Glue.weber <1,tau> (1/N)), every rational point P0 and every Jacobian (J, aj) (Albanese property): there are endomorphisms T_p (every prime p) and <d> (d in (Z/N)^*) of J over Q acting on degree-0 divisor classes of the points x_tau (AtTau: the complex point where every g in K(X) whose meromorphic function on H has a limit c at tau is regular with value c) by DS's double-coset formulas: T_p[x_tau] = sum_{j<p} [x_{(tau+j)/p}] + [x_{g(p tau)}] (last term for p not dividing N; g in SL_2(Z), N | c, d = p mod N), <d>[x_tau] = [x_{g tau}].",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman 6.3 Hecke operators on Div^0/Pic^0 of X_1(N) by double cosets, 7.9 defined over Q; existence of the endomorphisms with the printed divisor action); locators UNVERIFIED",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), 6.3, 7.9 (with the coset representatives of Prop. 5.2.1); Shimura 1971 7.2; numbers UNVERIFIED (unread)"
+    },
+    {
+     "name": "afShimura",
+     "type": "_root_.AfTateLam.AfShimura",
+     "doc": "aftate-fix2: Shimura's A_f over Q. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, N >= 2, X, (j_X, t_X), P0, (J, aj) as in heckeJ1DS and any T_p, <d> with DS's divisor action: K_f is a number field, and there are A, pi : J -> A and theta : K_f -> End^0(A) with IsAfQuotient (pi surjective, kills I_f J, universal among homomorphisms to abelian varieties killing I_f J; I_f = image of the kernel of T_p -> a_p(f), <d> -> chi(d) on the free algebra) and IsAfAction (theta(a_p) is the endomorphism induced by T_p, theta(chi(d)) the one induced by <d>).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Shimura 1973 Thm 1: the Q-rational quotient A_f = J/I_f J with the coefficient-field action; read by the locator audit, row R16, pp. 526-527; DS Def. 6.6.3, Prop. 6.6.4 over C)",
+     "source": "Shimura, On the factors of the jacobian variety of a modular function field, J. Math. Soc. Japan 25 (1973), Thm 1, pp. 526-527; Diamond-Shurman GTM 228, Def. 6.6.3, Prop. 6.6.4 (UNVERIFIED numbers)"
+    },
+    {
+     "name": "afTateDSLambda",
+     "type": "_root_.AfTateLam.AfTateDSLambda",
+     "doc": "aftate-fix2: Eichler-Shimura for A_f over K_{f,lambda}, universal over A_f. For every (A, pi, theta) that is DS's A_f (afShimura's characterization, for any X, generators, P0, Jacobian and Hecke operators as in heckeJ1DS), every prime l and every place lambda | l of K_f (lambda.adicCompletion K_f, Q_l -> K_lambda by Mathlib's Q_l = Q_{v_l} and Tau Ceti's completion map): sigma in G_Q acting on V_lambda = K_lambda (x)_{Q_l (x) K_f} V_l(A) (rho_{f,lambda}) has, for every arithmetic Frobenius at p not dividing N l, characteristic polynomial X^2 - a_p X + chi(p) p over K_lambda.",
+     "kind": "published",
+     "flag": "reading risk (aftate-fix2 report section 4): new printed leaf, unread (DS Lemma 9.5.3 + Thm 9.5.4 at DS's A_f, over K_{f,lambda}, universal over every A_f); if DS 9.5.4 prints only that Frobenius satisfies X^2 - a_p X + chi(p) p, the characteristic polynomial needs det rho_{f,lambda} = chi chi_l (DS Exercise 9.6.3(b)?; printed in Shimura 1971 Thm 7.14 / Ribet 1977, UNVERIFIED); no Weil pairing on abelian varieties in the tree to derive it; locators UNVERIFIED",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Lemma 9.5.3, Thm 9.5.4; Shimura 1971 Thms 7.9-7.14; Ribet, LNM 601 (1977); numbers UNVERIFIED (unread)"
+    },
+    {
+     "name": "igusaGL2DS",
+     "type": "_root_.X1Igusa.IgusaGL2DS",
+     "doc": "x1-igusa: Igusa's theorem in its printed form, Gal(Q(j, E_j[N])/Q(j)) = GL_2(Z/N) for Diamond-Shurman's E_j : y^2 = 4x^3 - g x - g, g = 27j/(j-1728), j transcendental. For N >= 1, every basis e : (Z/N)^2 = E_j[N] over an algebraic closure of Q(j) and every g in GL_2(Z/N), some sigma in Aut(Q(j)bar/Q(j)) acts on E_j[N] as g in the basis e. Used through X1Igusa.x1PointsConjugate_of_igusaGL2DS (the dictionary IsX1Model -> IsX1AlgDS, aftate-or).",
+     "kind": "published",
+     "flag": "unread: new printed leaf (Diamond-Shurman section 7.5, Galois group of Q(j, E_j[N])/Q(j) = GL_2(Z/N)); locator UNVERIFIED (theorem number and model y^2 = 4x^3 - g_j x - g_j recalled, not read)",
+     "source": "Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), section 7.5; Igusa, Fibre systems of Jacobian varieties III, Amer. J. Math. 81 (1959); Shimura 1971 Thm 6.6 (GL_2(Z/N)/{+-1}); numbers UNVERIFIED (unread)"
+    }
+   ]
+  }
+ ],
+ "note": "aftate-fix2: report docs/research/aftate-fix2.md. Replaces aftate-or's afTateDSOr (review: GLUE for the existential A_f, the DS 9.5.4 wording and Q_l (x) K_f in place of K_{f,lambda}) by heckeJ1DS + afShimura + afTateDSLambda: A_f universal (Hecke operators by DS's double-coset action on divisors of x_tau, A_f the universal quotient killing I_f J), the leaf over K_{f,lambda}, glue to the iota-components proved (AfTateLam.component)."
+}

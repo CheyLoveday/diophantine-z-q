@@ -1,0 +1,2 @@
+'JavanpeykarDirectWP.isStableHeightBar_of_iso' depends on axioms: [propext, Classical.choice, Quot.sound]
+'JavanpeykarDirectWP.isPrintedStableHeight_unique' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,23 @@
+{
+ "name": "kleiman-site",
+ "note": "Discharges the field `kleimanPicZeroProper954` (type `KleimanSection2.KleimanPicZeroProper954`) introduced by kleiman-section2's hand fold (scratch/kleiman-section2/TailZ56.lean, bundle `OpenAddedLeaves26`). Runnable by autofold.py only after that hand fold (or its rebase onto the current top) is integrated; at bbbcabce the frontier field is still `OpenAddedLeaves25.kleimanPicZeroProper : PicFix.KleimanPicZeroProper`, which is stronger than this leaf, so #discharges matches nothing there (see discharges-output.txt). Alternative for the integrator: in the kleiman-section2 hand fold, use the leaf below directly in place of `kleimanPicZeroProper954`, with `picZeroAbVar := _root_.KleimanSite.picZeroAbVar0_of_siteQ n.kleimanPicZeroProper954SiteQ`.",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.KleimanPicZeroSite"
+ ],
+ "discharges": [
+  {
+   "field": "kleimanPicZeroProper954",
+   "proof": "_root_.KleimanSite.kleimanPicZeroProper954_of_siteQ {n}.kleimanPicZeroProper954SiteQ",
+   "leaves": [
+    {
+     "name": "kleimanPicZeroProper954SiteQ",
+     "type": "_root_.KleimanSite.KleimanPicZeroProper954SiteQ",
+     "doc": "kleiman-site: Kleiman, *The Picard scheme* (arXiv math/0504020), Thm 9.5.4 with Def. 9.2.2 as printed: for `X` projective, geometrically integral and geometrically normal over a field `K` with a `K`-point, the identity component of any scheme locally of finite type over `K` representing the sheafification of `T ↦ Pic(X_T)/Pic(T)` on the site of locally Noetherian `K`-schemes with the fppf topology is proper (locator UNVERIFIED on host).",
+     "kind": "published",
+     "flag": "locator UNVERIFIED: printed form of Kleiman 9.5.4 over Kleiman's own site (locally Noetherian K-schemes, fppf) and Def. 9.2.2's quotient functor; extra hypotheses (a K-point, geometric normality after every field) only weaken it; no copy of the text on the host",
+     "source": "Kleiman, The Picard scheme (arXiv math/0504020), Thm 9.5.4 with Def. 9.2.2"
+    }
+   ]
+  }
+ ]
+}
