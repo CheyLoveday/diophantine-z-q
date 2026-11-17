@@ -102,7 +102,11 @@ DISCHARGES [OpenResearchLeaves52.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  Classical.choice,
  Quot.sound]
 'HDec.G0Galois.C8Conrad.finiteOfLocAlgTrivialQ_of_pieces' depends on axioms: [propext, Classical.choice, Quot.sound]
-'HDec.G0Galois.C8Conrad.pow_card_eq_one_of_mem_inertia' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0Galois.C8Conrad.finiteOfLocAlgTrivialQ_of_dicts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0Galois.C8Conrad.finiteOfLocAlgTrivialQNoRam_of_dicts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0Galois.C8Conrad.cftFiniteQ_of_minkowski' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0Galois.C8Conrad.inertiaFiniteAwayFromP_of_decomp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0Galois.C8Conrad.c8TwistFinite_of_leaves' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.G0Galois.C8Conrad.g12DetPZ_of_inputs' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.HSyn.t8_of_poincareComplement' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.HSyn.openTextbookLeaves13HF_of_open16_P' depends on axioms: [propext, Classical.choice, Quot.sound]
