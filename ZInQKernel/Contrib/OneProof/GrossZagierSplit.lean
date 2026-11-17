@@ -27,7 +27,7 @@ noncomputable section
 
 set_option backward.isDefEq.respectTransparency false
 
-open AlgebraicGeometry CategoryTheory UpperHalfPlane
+open AlgebraicGeometry CategoryTheory UpperHalfPlane Filter Topology HeckeRing.GL2
 open scoped WeierstrassCurve.Affine
 
 namespace ZInQ.GZSplit

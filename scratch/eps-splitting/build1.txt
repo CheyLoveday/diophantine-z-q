@@ -7500,3 +7500,1290 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [11523/11595] Built ZInQKernel.Assembly.Top.Assembly (4.2s)
+✔ [11524/11595] Built ZInQKernel.Assembly.Top (4.0s)
+✔ [11525/11595] Built ZInQKernel.Multiplication.Completeness.AP.Completeness (5.1s)
+✔ [11526/11595] Built ZInQKernel.Multiplication.Completeness.AP.PropAP (5.5s)
+✔ [11527/11595] Built ZInQKernel.Multiplication.Completeness.AP (3.0s)
+✔ [11528/11595] Built ZInQKernel.Main (4.1s)
+✔ [11529/11595] Built ZInQKernel.RouteK.Rank5b (4.2s)
+✔ [11530/11595] Built ZInQKernel.MainGreenTao (5.2s)
+✔ [11531/11595] Built ZInQKernel.RouteK.Rank5bSec3 (4.4s)
+⚠ [11532/11595] Built ZInQKernel.Contrib.TYZGenus.RingClassGenus (35s)
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:199:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:200:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:201:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:211:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:215:38: This simp argument is unused:
+  Int.cast_natCast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Int.cast_one, one_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:279:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:316:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:322:24: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:324:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:334:66: `Subgroup.normal_of_comm` has been deprecated: Use `Subgroup.normal_of_isMulCommutative` instead
+
+Hint: Replace the deprecated name:
+  S̵u̵b̵g̵r̵o̵u̵p̵.̵n̵o̵r̵m̵a̵l̵_̵o̵f̵_̵c̵o̵m̵m̵S̲u̲b̲g̲r̲o̲u̲p̲.̲n̲o̲r̲m̲a̲l̲_̲o̲f̲_̲i̲s̲M̲u̲l̲C̲o̲m̲m̲u̲t̲a̲t̲i̲v̲e̲
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:352:43: This simp argument is unused:
+  AlgEquiv.autCongr_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [artinPrime, MulEquiv.trans_apply, QuotientGroup.congr_mk, IsGalois.normalAutEquivQuotient_apply,
+    AlgEquiv.trans_apply, AlgEquiv.restrictNormalHom_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:352:68: This simp argument is unused:
+  AlgEquiv.trans_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [artinPrime, MulEquiv.trans_apply, QuotientGroup.congr_mk, IsGalois.normalAutEquivQuotient_apply,
+    AlgEquiv.autCongr_apply, AlgEquiv.restrictNormalHom_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:353:4: This simp argument is unused:
+  AlgEquiv.restrictNormalHom_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [artinPrime, MulEquiv.trans_apply, QuotientGroup.congr_mk, IsGalois.normalAutEquivQuotient_apply,
+    AlgEquiv.autCongr_apply, AlgEquiv.trans_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:408:11: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:409:12: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:410:11: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:410:13: Variable name `y` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _y
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:411:11: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:411:13: Variable name `y` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _y
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:450:53: This simp argument is unused:
+  RingOfIntegers.map_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [RingOfIntegers.mapRingEquiv_symm_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:465:47: This simp argument is unused:
+  RingHom.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Ideal.under_def, Ideal.mem_comap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/RingClassGenus.lean:485:64: This simp argument is unused:
+  RingHom.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [MulSemiringAction.toAlgHom_apply, Ideal.mem_comap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [11533/11595] Built ZInQKernel.RouteK.RankVariants (4.1s)
+✔ [11534/11595] Built ZInQKernel.Contrib.TYZGenus.RingClassBridge (6.9s)
+✔ [11535/11595] Built ZInQKernel.MainLiterature (4.3s)
+✔ [11536/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraRecip (4.9s)
+✔ [11537/11595] Built ZInQKernel.Contrib.GaussFE.Headline (4.2s)
+✔ [11538/11595] Built ZInQKernel.Contrib.GZDecomp.Scope (4.2s)
+✔ [11539/11595] Built ZInQKernel.Contrib.GZDecomp.Decomp (6.4s)
+⚠ [11540/11595] Built ZInQKernel.Contrib.GZStatements.Compat (4.5s)
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:78:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:83:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:85:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:161:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:163:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:163:29: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:164:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZStatements/Compat.lean:164:29: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [11541/11595] Built ZInQKernel.Contrib.GZTheta.Basic (4.9s)
+✔ [11542/11595] Built ZInQKernel.Contrib.GZStatements.Hensel (4.7s)
+✔ [11543/11595] Built ZInQKernel.Contrib.GZTheta.BadCoeff (4.6s)
+✔ [11544/11595] Built ZInQKernel.Contrib.GZTheta.Main (4.3s)
+⚠ [11545/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner (6.9s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner.lean: imports `Mathlib.NumberTheory.Height.NumberField` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner.lean: imports `Mathlib.NumberTheory.Modular` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [11546/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraZn (29s)
+⚠ [11547/11595] Built ZInQKernel.Contrib.GZTheta.EtaTheta (5.6s)
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:46:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [mem_Fib] at hp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:47:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Soe, Finset.mem_filter, mem_normFiber]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:50:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Soe, Finset.mem_filter, mem_normFiber] at hp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:51:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [mem_Fib]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:59:15: This simp argument is unused:
+  Finset.mem_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Soe, Finset.mem_filter] at hp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:57:17: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:66:4: Unused tactic linter: `push_cast` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/GZTheta/EtaTheta.lean:57:17: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [11548/11595] Built ZInQKernel.Contrib.GZTheta.Final (4.2s)
+⚠ [11549/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraField (6.7s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:173:34: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:215:34: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:233:52: Unused tactic linter: `push_cast` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraField.lean:361:81: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [11550/11595] Built ZInQKernel.Contrib.GZTheta.Split (4.4s)
+✔ [11551/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraModFn (5.9s)
+⚠ [11552/11595] Built ZInQKernel.Contrib.GZTheta.New32 (5.4s)
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:62:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:73:28: `CuspForm.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵u̵s̵p̵F̵o̵r̵m̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:139:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:142:67: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/New32.lean:166:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [11553/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraQExp (5.2s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraQExp.lean:187:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraQExp.lean:187:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [11554/11595] Built ZInQKernel.Contrib.GZTheta.TwistFricke (5.2s)
+⚠ [11555/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraCusp (7.1s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:107:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:135:19: This simp argument is unused:
+  Matrix.SpecialLinearGroup.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [γ', Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.empty_val', Matrix.cons_val_fin_one, algebraMap_int_eq, eq_intCast, Int.cast_id]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:137:37: This simp argument is unused:
+  Int.cast_id
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [γ', Matrix.SpecialLinearGroup.coe_mk, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, algebraMap_int_eq, eq_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:200:8: This simp argument is unused:
+  Complex.div_re
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Complex.mul_re, Complex.mul_im]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:230:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraCusp.lean:301:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [11556/11595] Built ZInQKernel.Contrib.GZTheta.NewCMProof (7.5s)
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:42:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:113:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.bAr_mult`:
+  [NeZero d]
+  hMN
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero d] hMN in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:129:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:129:66: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:118:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.coeff_good_pow`:
+  [NeZero d]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero d] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:161:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:165:19: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hpM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:166:19: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hpM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:177:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.two_le_factorization_level`:
+  hd4
+  hsq
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hd4 hsq in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:213:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:215:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:218:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:230:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:236:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:264:51: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:265:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:260:13: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [qParam_mul_nat, ← pow_mul] at hG
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:277:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.pos_of_mem_divisors'`:
+  [NeZero d]
+  hd4
+  hsq
+  hMN
+  hχ
+  hgood
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero d] hd4 hsq hMN hχ hgood in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:331:15: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:339:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.level_pos_div`:
+  hd4
+  hsq
+  hχ
+  hgood
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hd4 hsq hχ hgood in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:372:13: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:372:31: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:379:17: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:400:0: automatically included section variable(s) unused in theorem `ZInQ.GZTheta.kappa_ne_zero`:
+  hsq
+  hMN
+  hχ
+  hgood
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hsq hMN hχ hgood in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:439:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:542:37: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:581:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:581:29: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:583:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:588:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:616:34: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:631:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:650:36: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:651:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:651:31: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:654:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:683:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/NewCMProof.lean:542:82: This simp argument is unused:
+  one_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [pow_zero, heckeCoeff_one, mul_one, zero_add, Finset.range_one, Finset.sum_singleton, one_dvd,
+    if_true, Nat.div_one, Nat.cast_one, one_pow, Nat.div_self Nat.one_pos, hb1] at this
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [11557/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraMain (7.2s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraMain.lean:152:81: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [11558/11595] Built ZInQKernel.Contrib.GZTheta.NewCMFinal (4.7s)
+✔ [11559/11595] Built ZInQKernel.Contrib.GZStatements.Weak (4.9s)
+⚠ [11560/11595] Built ZInQKernel.Contrib.GZTheta.ALFricke (5.6s)
+warning: ZInQKernel/Contrib/GZTheta/ALFricke.lean:32:76: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALFricke.lean:196:15: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [11561/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraEtaInv (7.9s)
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraEtaInv.lean:126:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraEtaInv.lean:147:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/TYZGenus/ShimuraEtaInv.lean:166:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+✔ [11562/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Cd (4.3s)
+⚠ [11563/11595] Built ZInQKernel.Contrib.GZTheta.ALBasic (4.9s)
+warning: ZInQKernel/Contrib/GZTheta/ALBasic.lean:65:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALBasic.lean:76:28: `CuspForm.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵u̵s̵p̵F̵o̵r̵m̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: ZInQKernel/Contrib/GZTheta/ALBasic.lean:150:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [11564/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraTheta (5.5s)
+⚠ [11565/11595] Built ZInQKernel.Contrib.GZTheta.ALRep (4.7s)
+warning: ZInQKernel/Contrib/GZTheta/ALRep.lean:140:15: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+ℹ [11566/11595] Built ZInQKernel.Contrib.TYZGenus.ShimuraThetaDup (5.3s)
+info: ZInQKernel/Contrib/TYZGenus/ShimuraThetaDup.lean:176:2: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+⚠ [11567/11595] Built ZInQKernel.Contrib.GZTheta.ALArith (5.9s)
+warning: ZInQKernel/Contrib/GZTheta/ALArith.lean:41:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALArith.lean:67:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALArith.lean:119:62: Variable name `hP` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hP
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/GZTheta/ALArith.lean:142:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALArith.lean:155:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALArith.lean:169:65: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [11568/11595] Built ZInQKernel.Contrib.GZTheta.ALMain (6.2s)
+warning: ZInQKernel/Contrib/GZTheta/ALMain.lean:43:11: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALMain.lean:43:29: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALMain.lean:49:15: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/GZTheta/ALMain.lean:81:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/GZTheta/ALMain.lean:247:43: This simp argument is unused:
+  UpperHalfPlane.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [11569/11595] Built ZInQKernel.Contrib.GZTheta.ALFinal (4.4s)
+⚠ [11570/11595] Built ZInQKernel.Contrib.GZStatements.Level (4.6s)
+warning: ZInQKernel/Contrib/GZStatements/Level.lean:72:35: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [11571/11595] Built ZInQKernel.Contrib.OneProof.RingClassLattice (42s)
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.Analysis.Complex.Polynomial.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.NumberField.AdeleRing` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.RingTheory.Polynomial.Vieta` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.FieldTheory.IsAlgClosed.Classification` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.RingTheory.AlgebraicIndependent.Transcendental` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.FieldTheory.Minpoly.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.ModularForms.LevelOne.GradedRing` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.LSeries.HurwitzZetaValues` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean: imports `Mathlib.NumberTheory.Bernoulli` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1016:0: automatically included section variable(s) unused in theorem `T5Glue.exists_kappa_tau`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1044:46: Variable name `hD` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hD
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1325:0: automatically included section variable(s) unused in theorem `T5Glue.coe_kappaComap`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1329:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_sub`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1537:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1654:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_tK`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1663:0: automatically included section variable(s) unused in theorem `T5Glue.cz_pos`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1671:0: automatically included section variable(s) unused in theorem `T5Glue.zsmul_mk`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1675:72: Variable name `hD` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hD
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1784:19: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1784:19: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:1844:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2195:17: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2195:17: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2323:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_image_smul`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2400:66: This simp argument is unused:
+  QuadraticAlgebra.im_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2401:8: This simp argument is unused:
+  QuadraticAlgebra.im_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add, QuadraticAlgebra.im_mul, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2401:33: This simp argument is unused:
+  QuadraticAlgebra.im_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2401:58: This simp argument is unused:
+  QuadraticAlgebra.im_intCast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul,
+    QuadraticAlgebra.re_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2407:66: This simp argument is unused:
+  QuadraticAlgebra.re_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul, QuadraticAlgebra.re_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2408:8: This simp argument is unused:
+  QuadraticAlgebra.re_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add, QuadraticAlgebra.re_mul, QuadraticAlgebra.re_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2408:33: This simp argument is unused:
+  QuadraticAlgebra.re_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2408:58: This simp argument is unused:
+  QuadraticAlgebra.re_intCast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [QuadraticAlgebra.im_add, QuadraticAlgebra.im_neg, QuadraticAlgebra.im_mul,
+    QuadraticAlgebra.im_intCast, QuadraticAlgebra.re_natCast, QuadraticAlgebra.im_natCast, QuadraticAlgebra.re_omega,
+    QuadraticAlgebra.im_omega, tK, QuadraticAlgebra.re_add, QuadraticAlgebra.re_neg, QuadraticAlgebra.re_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:2482:0: automatically included section variable(s) unused in theorem `T5Glue.kappa_mul_eq`:
+  [NeZero m]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero m] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/RingClassLattice.lean:3285:67: This simp argument is unused:
+  map_inv₀
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Units.val_mul, Units.val_inv_eq_inv_val, map_mul, βu, Units.val_mk0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [11572/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Weil (6.4s)
+✔ [11573/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilParam (7.7s)
+⚠ [11574/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner.Heegner (13s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:457:15: This simp argument is unused:
+  Matrix.SpecialLinearGroup.coe_mk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
+    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:459:6: This simp argument is unused:
+  Matrix.head_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.SpecialLinearGroup.coe_mk, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_fin_const]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:459:24: This simp argument is unused:
+  Matrix.head_fin_const
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.SpecialLinearGroup.coe_mk, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:735:13: This simp argument is unused:
+  RingOfIntegers.coe_eq_algebraMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_mul, map_sub, map_one, map_intCast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:825:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:867:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:889:6: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:895:6: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:908:15: This simp argument is unused:
+  Affine.Point.some.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [h1, h2, and_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:908:48: This simp argument is unused:
+  and_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Affine.Point.some.injEq, h1, h2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:940:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:940:42: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:941:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:941:57: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1328:26: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1338:19: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1417:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1542:23: This simp argument is unused:
+  norm_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1595:25: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1618:0: automatically included section variable(s) unused in theorem `ZInQ.GZHeegner.conj_T_mem_Gamma1`:
+  [NeZero N]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero N] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1725:0: automatically included section variable(s) unused in theorem `ZInQ.GZHeegner.hasDerivAt_qParamN`:
+  [NeZero N]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero N] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1753:24: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1844:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:1983:31: Variable name `hf` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hf
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2064:44: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2044:81: This simp argument is unused:
+  sub_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hBdef, map_sub, map_add, map_mul, map_pow, hX0, PowerSeries.constantCoeff_C, map_ofNat, zero_mul,
+    mul_zero, zero_pow (two_ne_zero), zero_add, add_zero, map_zero] at hc
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2125:17: This simp argument is unused:
+  FormalMultilinearSeries.ofScalars_norm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [vSeries, norm_mul, norm_pow]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2125:57: This simp argument is unused:
+  norm_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [vSeries, FormalMultilinearSeries.ofScalars_norm, norm_pow]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2157:34: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2235:64: This simp argument is unused:
+  inv_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sub_zero, div_zero, one_div, zero_pow two_ne_zero] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/Heegner.lean:2606:35: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [11575/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilTheta (10s)
+✔ [11576/11595] Built ZInQKernel.Contrib.OneProof.CdOptimal.Unif (10s)
+⚠ [11577/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierModuli (8.5s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:362:41: Variable name `hN` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hN
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:489:38: Unused tactic linter: `push_cast` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:649:0: automatically included section variable(s) unused in theorem `ZInQ.GZModuli.frequently_zPar_notMem`:
+  [E.IsElliptic]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [E.IsElliptic] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:696:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:712:8: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:727:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:734:0: automatically included section variable(s) unused in theorem `ZInQ.GZModuli.tendsto_norm_xPar`:
+  [E.IsElliptic]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [E.IsElliptic] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [11578/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi (10s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilJacobi.lean: imports `Mathlib.NumberTheory.ModularForms.LevelOne.DimensionFormula` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilJacobi.lean:435:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilJacobi.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierHeegner/WeilJacobi.lean:459:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [11579/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierOptimal (8.5s)
+✔ [11580/11595] Built ZInQKernel.Contrib.OneProof.PeriodOdd.NeZero (5.2s)
+✔ [11581/11595] Built ZInQKernel.Contrib.OneProof.CdOptimal.Structure (6.8s)
+✔ [11582/11595] Built ZInQKernel.Contrib.OneProof.CdOptimal.Level32 (6.8s)
+✔ [11583/11595] Built ZInQKernel.Contrib.OneProof.CdOptimal (5.0s)
+✔ [11584/11595] Built ZInQKernel.Contrib.OneProof.EtaW32Character (6.9s)
+✔ [11585/11595] Built ZInQKernel.Contrib.OneProof.PeriodOdd.Isogeny (6.5s)
+✔ [11586/11595] Built ZInQKernel.Contrib.OneProof.PeriodOdd (6.4s)
+✔ [11587/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic (40s)
+✔ [11588/11595] Built ZInQKernel.Contrib.OneProof.Gamma0QExpansion (20s)
+✔ [11589/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic.X0Model (22s)
+⚠ [11590/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierScheme.Model (6.7s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/Model.lean:44:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/Model.lean:67:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/Model.lean:95:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/Model.lean:96:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/Model.lean:106:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/Model.lean:107:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [11591/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierPlane (9.0s)
+✔ [11592/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierPlane.Extension (7.1s)
+⚠ [11593/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierScheme.PointTau (7.9s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/PointTau.lean: imports `Mathlib.Analysis.Meromorphic.Order` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/PointTau.lean:162:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/PointTau.lean:167:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/PointTau.lean:173:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/PointTau.lean:177:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme/PointTau.lean:183:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [11594/11595] Built ZInQKernel.Contrib.OneProof.GrossZagierScheme (18s)
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:187:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:188:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:253:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:332:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:334:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:379:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:383:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:387:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:398:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:446:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:450:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:485:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:486:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:487:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/GrossZagierScheme.lean:536:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✖ [11595/11595] Building ZInQKernel.Contrib.OneProof.GrossZagierSplit (5.2s)
+trace: .> LEAN_PATH=/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/Cli/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/batteries/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/Qq/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/aesop/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/importGraph/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/plausible/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/packages/mathlib/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/lean/.lake/build/lib/lean:/home/jackmccarthy/dzq-wt/eps-splitting/.lake/build/lib/lean /home/jackmccarthy/.elan/toolchains/leanprover--lean4---v4.35.0/bin/lean /home/jackmccarthy/dzq-wt/eps-splitting/ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean -o /home/jackmccarthy/dzq-wt/eps-splitting/.lake/build/lib/lean/ZInQKernel/Contrib/OneProof/GrossZagierSplit.olean -i /home/jackmccarthy/dzq-wt/eps-splitting/.lake/build/lib/lean/ZInQKernel/Contrib/OneProof/GrossZagierSplit.ilean -c /home/jackmccarthy/dzq-wt/eps-splitting/.lake/build/ir/ZInQKernel/Contrib/OneProof/GrossZagierSplit.c --setup /home/jackmccarthy/dzq-wt/eps-splitting/.lake/build/ir/ZInQKernel/Contrib/OneProof/GrossZagierSplit.setup.json --json
+error: ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean:55:28: Unknown identifier `Newform`
+error: ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean:92:50: Function expected at
+  Newform
+but this term has type
+  ?m.1
+
+Note: Expected a function because this term is being applied to the argument
+  N
+
+Hint: The identifier `Newform` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.
+error: ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean:105:9: Function expected at
+  h
+but this term has type
+  GrossZagierCurveAtSplit E
+
+Note: Expected a function because this term is being applied to the argument
+  N
+error: ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean:107:2: No goals to be solved
+error: ZInQKernel/Contrib/OneProof/GrossZagierSplit.lean:115:8: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce
+
+E : WeierstrassCurve ℚ
+h : GrossZagierCurveAt E
+⊢ GrossZagierCurveAtSplit E
+Some required targets logged failures:
+- ZInQKernel.Contrib.OneProof.GrossZagierSplit
+error: build failed
+EXIT 1
