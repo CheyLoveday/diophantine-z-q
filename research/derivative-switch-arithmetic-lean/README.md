@@ -1,0 +1,34 @@
+# Derivative-switch Selmer complexes in Lean
+
+The finite-place Selmer and compact-support cones are built from continuous cochains of the arithmetic Galois groups. Lean constructs a normalized trace and a cochain adjoint on finite models from supplied local invariant maps, reciprocity and an orthogonal cup product. The trace-extension step applies to both of V20's finite coefficient rings.
+
+## What Lean checks
+
+| Construction | Checked content |
+| --- | --- |
+| [Arithmetic Selmer cones](../../lean/Research/DerivativeSwitch/ArithmeticSelmer.lean) | The supported global quotient uses finite Galois extensions unramified outside the specified finite places. Localization uses the completions and embeddings of the algebraic closures. [Continuous cochains and localization](../../lean/Research/DerivativeSwitch/ContinuousSelmer.lean) identify the two directions of the H22 cycle calculation. The cone coordinate is $-q_v$ for the paper's boundary witness $q_v$. |
+| [Finite coefficients](../../lean/Research/DerivativeSwitch/FiniteSelmerCoefficients.lean) | The rings $(\mathbf Z/2^i)[t]/(t^i)$ and their finite group algebras have the specified scalar maps. The scalar transitions reduce both precisions and compose. [Self-injectivity](../../lean/Research/DerivativeSwitch/FiniteSelmerInjective.lean) over each positive-precision ring follows by Baer's criterion, the top polynomial coefficient and the identity group coefficient. |
+| [Finite Tate twist](../../lean/Research/DerivativeSwitch/FiniteTateTwist.lean) | Primitive roots exist in the algebraic closure at every positive two-power precision. Their Galois action gives the continuous finite cyclotomic character. Given a supported extension containing the root, the character descends to the supported global group and agrees with the action on the transported root at each completion. The conjugate degree-$(1,1)$ cup lands in the resulting coefficient line. |
+| [Conjugate pairing](../../lean/Research/DerivativeSwitch/ConjugateWeilPairing.lean) and [continuous cup](../../lean/Research/DerivativeSwitch/ContinuousCup.lean) | The two scalar characters cancel under conjugation. The Weil pairing uses the Tate involution on the second argument and has cyclotomic equivariance. The degree-$(1,1)$ cup is the Alexander–Whitney formula on continuous cochains. It commutes with restriction and takes two cocycles to a cocycle. |
+| [Normalized trace](../../lean/Research/DerivativeSwitch/ContinuousSelmerTrace.lean) and [Selmer adjoint](../../lean/Research/DerivativeSwitch/ArithmeticSelmerAdjoint.lean) | Reciprocity on global $H^2$ yields a trace whose value on local cycles is the sum of their $H^2$ invariants. Global degree-three exactness gives uniqueness on compact-support cycles. The pre-trace Leibniz identity makes the traced cup an actual chain map to the shifted dual, including after pullback along both finite model inclusions. |
+| [Retained scalars](../../lean/Research/DerivativeSwitch/RetainedCoefficients.lean) and [retained models](../../lean/Research/DerivativeSwitch/RetainedSelmerModels.lean) | One cofinal ultrafilter selects compatible residues of the entries of the given based complexes, maps and homotopies. The resulting complexes have square-zero differentials and retain chain maps, compositions and homotopy equivalences. |
+
+The source is [V20 at `54a4e576`](https://github.com/elliotglazer/diophantine-z-q/blob/54a4e576f1c8c577f33b0b97a2cedb5ca96af642/manuscripts/quartic_v20.tex), TeX SHA-256 `95044840af8c3872c6298ea7c5eb4055fbbcd9d91be338ee33b97ba20c503c32`. Lines 20050–20162 specify the coefficient systems and conjugate pairing. Lines 20792–20830 specify the finite Selmer witnesses. Lines 21127–21297 use the orthogonal comparison and duality to form the paired functional. Lines 21862–21922 pass the finite free diagrams to the inner limit. The support here is the finite-place support used for the imaginary quadratic base; application to real places would require modified local cochains. The native cone index `n` is ordinary Selmer degree `n+1`, so the adjoint evaluates in complementary index `1-n`.
+
+## Next arithmetic steps
+
+1. **Construct local invariants and prove the global relation.** Prove that the finite cyclotomic extension is supported when the places over two lie in the support. At one positive precision, identify local $H^2(K_v,\mu_{2^i})$ with the $2^i$-torsion of the Brauer group, construct the normalized invariant and extend scalars to the paper's ring. Prove reciprocity for the supported global cochains and global degree-three exactness. This supplies the inputs to `exists_normalized_trace` and its uniqueness theorem. The pinned Mathlib has the cochain and localization machinery, while the local Brauer invariant and Poitou–Tate comparison need formalization.
+2. **Construct the paired finite Selmer diagrams.** Instantiate the Tate lattice, Weil pairing and actual anticyclotomic characters. Construct the derived Kummer condition including its degree-zero torsion, the unramified conditions, and the tame derivative planes with their isotropy homotopies. Prove the cone cup and its Leibniz identity and identify its traced adjoint with Poitou–Tate duality, including compatibility with localization. The current adjoint has a checked chain-map equation. Its perfectness on cohomology remains open in Lean.
+3. **Connect the finite models to the determinant calculation.** Construct the H20–H22 classes with their multiplier and the bounded free contractions on the actual arithmetic cochains. Identify the compatible scalar ring with $\mathbf Z_2[[t]]$, then connect the retained involution, orthogonal inverse and traced adjoint to the single functional $\lambda_z$. Verify its evaluations in the retained integral determinant bases. That identification is needed before the checked rank-reduction and cofactor lemmas apply to the arithmetic outer bound.
+
+## Reproduce the check
+
+Run the verifier from the checkout with the pinned Lean toolchain and an existing Mathlib build cache. Use a fresh output directory. `--dependency-cache` can point to another checkout's `.lake/packages` at the manifest revisions.
+
+```sh
+python3 -B research/derivative-switch-arithmetic-lean/verify.py /tmp/derivative-switch-arithmetic-check
+```
+
+The verifier compiles the selected research modules from source with kernel checking and `autoImplicit=false`. It treats warnings as errors except for three enumerated pre-existing warnings in `Coordinate.lean`. [Declaration scope](roots.txt) · [Source hashes and axiom audit](RESULT.json)
+
+This is a development build and transitive axiom audit. A statement comparator, standalone export replay and independent mathematical review of the full arithmetic application are pending.
