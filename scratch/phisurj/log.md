@@ -71,3 +71,21 @@ Base wip/leaf-fold33b 0e3c31258; `git merge origin/main`: already up to date (20
   l.picZeroAbVar t.mumfordTorsionAlgClosed`; both compile, standard axioms.
 - `#discharges` rerun: "43 open hypotheses, 8799 theorems checked, 56 discharge one"; `mumfordPhiSurjectiveAC_of_ti_open`
   still assumes [TIClassesInPicZeroAC, PicRepresentableAbVar, PicZeroAbVar, MumfordTorsionAlgClosed].
+
+## Phase 3: `weilPairingMumford` discharged too (VERIFIED, compiled)
+- `ZInQKernel/Contrib/OneProof/WeilPairingMumfordOpen.lean` (lake build ok, 12862 jobs):
+  `dim_le_of_lqf`, `dim_ge_of_open`, `exists_zmod_mu_injective`, `exists_char_ne_zero`, `left_kernel_of_open`
+  (left kernel of a pairing A[n] × B[n] → μ_n with trivial right kernel is trivial, by counting),
+  `weilNondegRight_of_open` (pic-dict coordinates), `weilPairingMumford_of_open : PicRepresentableAbVar →
+  PicZeroAbVar → MumfordTorsionAlgClosed → WeilPairingMumford` (copy of pic-dict's `weilPairingMumford_of_printed`
+  with the leaves replaced by theorems and the perfectness clause reproved; the only use of
+  `MumfordPhiSurjective` there was for the left kernel).
+- `#discharges`: "43 open hypotheses, 8809 theorems checked, 57 discharge one";
+  `DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PhiSurj.weilPairingMumford_of_open still assumes:
+  [T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar, AvSplit.MumfordTorsionAlgClosed]`.
+- `autofold-weil.json` --dry-run: "strict count: 13/20 on 33 -> 13/19 on 32; strictest 13/20 -> 13/19"; printed module
+  (`FoldDryRunWeil.lean`) compiles to `sixContactMin_of_open42`, standard axioms.
+- Combined hand fold (`FoldTailZ49.lean`: OpenAddedLeaves21 = {picRepresentableAbVar, picZeroAbVar}) and
+  `FrozenTargetDryRun.lean` compile, standard axioms. Count (kinds.tsv rows LEAF/LEAF + GLUE/GLUE removed):
+  13/20 on 33 -> 12/19 on 31.
+- `lake build +Main +Discharges +WeilPairingMumfordOpen +PhiAmpleIsogenyWeil +MumfordSquareMulN`: Build completed.

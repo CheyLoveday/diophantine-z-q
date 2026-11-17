@@ -158,6 +158,9 @@ DISCHARGES [OpenAddedLeaves20.mumfordPhiSurjectiveAC] by PhiSurj.mumfordPhiSurje
  T09Pic.PicZeroAbVar,
  AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves20.weilPairingMumford] by PhiSurj.weilPairingMumford_of_open
+  still assumes: [T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar, AvSplit.MumfordTorsionAlgClosed]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves20.picZeroAbVar] by PicDict.picZeroAbVar_of_leaves
   still assumes: [PicDict.PicLocFinType, PicDict.IdentityComponentLFT, PicDict.PicZeroSmooth, PicDict.PicZeroProper]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -260,4 +263,4 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
   still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 43 open hypotheses, 8799 theorems checked, 56 discharge one
+#discharges: 43 open hypotheses, 8809 theorems checked, 57 discharge one

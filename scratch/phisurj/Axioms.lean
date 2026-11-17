@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.PhiAmpleIsogenyOpen
+import ZInQKernel.Contrib.OneProof.WeilPairingMumfordOpen
 
 #print axioms PhiSurj.surjective_of_dim_le
 #print axioms PhiSurj.exists_torsAddEquiv
@@ -13,3 +13,6 @@ import ZInQKernel.Contrib.OneProof.PhiAmpleIsogenyOpen
 #print axioms PhiSurj.tiClassesInPicZeroAC_of_phiSurjective
 #print axioms PhiSurj.mumfordSquareAC_of_open
 #print axioms PhiSurj.mumfordMulNPicZeroAC_of_open
+#print axioms PhiSurj.weilNondegRight_of_open
+#print axioms PhiSurj.left_kernel_of_open
+#print axioms PhiSurj.weilPairingMumford_of_open
