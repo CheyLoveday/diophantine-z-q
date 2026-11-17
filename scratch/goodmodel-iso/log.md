@@ -32,3 +32,9 @@ then ψ has a left inverse and ψ ∘ (χψ)⁻¹ χ = id_N by density. Group ca
 - 17:10 Part1.lean: eq_of_comp_eq and isIso_of_injective (steps D-G: injective ψ ⇒ iso via Hartogs) compile, no sorry. VERIFIED.
 - 17:45 fibreMap_isMonHom (rigidity on a field fibre via MulRigidity.isMonHom_of_geometricallyIntegral) and fibre_injective (translation by field-valued points) compile. VERIFIED.
 - 18:05 isIso_of_grp (group case: N smooth sep qc with GrpObj, e≫ψ=η) compiles, no sorry. VERIFIED.
+- 18:15 **NeronGoodModelIso PROVED from NeronSchemeExtensionDVR** (scratch/goodmodel-iso/GoodModel.lean, was Part1.lean):
+  `neronGoodModelIso_of_dvr : NeronSchemeExtensionDVR → NeronGoodModelIso`,
+  `neronGoodModelIso_of_dedekind`, `mumfordGroupLawDVR_of_dedekind : NeronSchemeExtensionDedekind → MumfordGroupLawDVR`.
+  `#print axioms` both: [propext, Classical.choice, Quot.sound]. VERIFIED (lake env lean).
+  Note: the glue is proved from the leaf that F2 already carries (NeronSchemeExtensionDVR, the DVR case of the
+  Dedekind leaf), not from Mathlib alone: the general-N statement is reduced to the Néron-model case.

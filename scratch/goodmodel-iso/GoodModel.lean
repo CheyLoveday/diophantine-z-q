@@ -507,4 +507,82 @@ theorem isIso_of_grp (F N : Over (Spec (CommRingCat.of R))) (e : Spec (CommRingC
       V.ι.injective (by rw [hpt, hpt, hy1, hy2, h12])
     rw [← hy1, ← hy2, ← key, ← key, hr]
 
+/-- **`NeronGoodModelIso` from BLR 1.4 Thm 3 over a DVR.** Compose `ψ` with the extension `χ : N → N'` of the
+generic identification into the Néron model `N'` of the generic fibre; `ψ ≫ χ` is an isomorphism by the group case
+(`isIso_of_grp`), so `ψ` has a left inverse, which is also a right inverse by density of the generic fibre. -/
+theorem neronGoodModelIso_of_dvr (hN : NeronSchemeExtensionDVR) : NeronGoodModelIso := by
+  intro R _ _ _ F N e hP hS hGC he hfib hNS hNsep ψ hK
+  haveI := hP; haveI := hS; haveI := hNS; haveI := hNsep
+  let K := FractionRing R
+  let s0 := genMap R K
+  obtain ⟨A, g, hpb, hone⟩ := hfib K s0
+  obtain ⟨N', hN'S, hN'sep, hN'qc, ε, hext⟩ := hN R K A
+  haveI := hN'S; haveI := hN'sep; haveI := hN'qc
+  have hinj : ∀ (Y : Over (Spec (CommRingCat.of R))) [Flat Y.hom],
+      Function.Injective fun f : Y ⟶ N' => (Over.pullback s0).map f ≫ ε.hom := by
+    intro Y _ f f' h
+    exact NeronC.pullback_map_injective s0 Y N' ((cancel_mono ε.hom).mp h)
+  let φ := fibreIso F s0 A g hpb
+  letI : GrpObj N' := NeronC.grpObjOfNeron (Over.pullback s0) (fun Y => Smooth Y.hom)
+    (NeronC.smooth_tensorUnit _) (fun X Y hX hY => NeronC.smooth_tensor X Y hX hY) N' hN'S A.X ε
+    (fun Y hY => ⟨@hinj Y inferInstance, @hext Y hY⟩)
+  haveI : IsIso ((Over.pullback s0).map ψ) := hK
+  obtain ⟨χ, hχ⟩ := hext N (inv ((Over.pullback s0).map ψ) ≫ φ.hom)
+  have hχ' : (Over.pullback s0).map χ ≫ ε.hom = inv ((Over.pullback s0).map ψ) ≫ φ.hom := hχ
+  let ψ' := ψ ≫ χ
+  have hψ' : (Over.pullback s0).map ψ' = φ.hom ≫ ε.inv := by
+    rw [← cancel_mono ε.hom, Category.assoc, Iso.inv_hom_id, Category.comp_id, Functor.map_comp,
+      Category.assoc, hχ', IsIso.hom_inv_id_assoc]
+  have hiso : IsIso ((Over.pullback s0).map ψ') := by rw [hψ']; infer_instance
+  have he' : e ≫ F.hom = (𝟙_ (Over (Spec (CommRingCat.of R)))).hom := he
+  let eO : 𝟙_ (Over (Spec (CommRingCat.of R))) ⟶ F := Over.homMk e he'
+  have hη : η[N'] = eO ≫ ψ' := by
+    apply @hinj (𝟙_ _) (by haveI := NeronC.smooth_tensorUnit (Spec (CommRingCat.of R)); infer_instance)
+    have h1 : (Over.pullback s0).map η[N'] ≫ ε.hom = 1 :=
+      NeronC.nPhi_nPsi (Over.pullback s0) (fun Y => Smooth Y.hom) N' A.X ε
+        (fun Y hY => ⟨@hinj Y inferInstance, @hext Y hY⟩) (NeronC.smooth_tensorUnit _) 1
+    simp only
+    rw [h1, Functor.map_comp, Category.assoc, hψ', Category.assoc, Iso.inv_hom_id, Category.comp_id,
+      Hom.one_def]
+    ext1
+    rw [Over.comp_left, Over.comp_left, Over.toUnit_left]
+    apply hpb.hom_ext
+    · rw [Category.assoc, Category.assoc, fibreIso_hom_left_g]
+      have h2 : (1 : A.Pt K).left ≫ g = s0 ≫ e := hone
+      rw [Hom.one_def, Over.comp_left, Over.toUnit_left] at h2
+      simp only [PkgI3.AbVar.ptObj, Over.mk_hom, spec_algebraMap_self] at h2
+      have h4 : Over.Hom.left η[A.X] ≫ g = s0 ≫ e := by
+        rw [← h2, Category.assoc]; exact (Category.id_comp _).symm
+      rw [h4]
+      simp only [eO, Over.pullback_map_left, Over.homMk_left, pullback.lift_fst]
+      rw [← Category.assoc]
+      congr 1
+      exact (pullback.condition (f := (𝟙_ (Over (Spec (CommRingCat.of R)))).hom) (g := s0)).symm
+    · simp
+  have hηl : e ≫ ψ'.left = η[N'].left := by rw [hη]; rfl
+  haveI : IsIso ψ' := isIso_of_grp F N' e he hfib ψ' hηl hiso
+  let r := χ ≫ inv ψ'
+  have h1 : ψ ≫ r = 𝟙 F := by
+    simp only [r, ← Category.assoc]; exact IsIso.hom_inv_id ψ'
+  have h2 : r ≫ ψ = 𝟙 N := by
+    apply NeronC.pullback_map_injective s0 N N
+    have h3 : (Over.pullback s0).map ψ ≫ (Over.pullback s0).map r = 𝟙 _ := by
+      rw [← CategoryTheory.Functor.map_comp, h1, CategoryTheory.Functor.map_id]
+    have h4 : (Over.pullback s0).map r = inv ((Over.pullback s0).map ψ) := IsIso.eq_inv_of_hom_inv_id h3
+    show (Over.pullback s0).map (r ≫ ψ) = (Over.pullback s0).map (𝟙 N)
+    rw [CategoryTheory.Functor.map_comp, h4, IsIso.inv_hom_id, CategoryTheory.Functor.map_id]
+  exact ⟨⟨r, h1, h2⟩⟩
+
+/-- **`NeronGoodModelIso` from the Dedekind form of BLR 1.4 Thm 3.** -/
+theorem neronGoodModelIso_of_dedekind (hN : NeronSchemeExtensionDedekind) : NeronGoodModelIso :=
+  neronGoodModelIso_of_dvr (dvr_of_dedekind hN)
+
+/-- **GIT Thm 6.14 over a DVR from BLR 1.4 Thm 3 alone.** -/
+theorem mumfordGroupLawDVR_of_dedekind (hN : NeronSchemeExtensionDedekind) :
+    ZInQ.Contrib.GroupLaw.MumfordGroupLawDVR :=
+  mumfordGroupLawDVR_of_neron (dvr_of_dedekind hN) (neronGoodModelIso_of_dedekind hN)
+
 end ZInQ.Contrib.GoodModelIso
+
+#print axioms ZInQ.Contrib.GoodModelIso.neronGoodModelIso_of_dvr
+#print axioms ZInQ.Contrib.GoodModelIso.mumfordGroupLawDVR_of_dedekind
