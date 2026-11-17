@@ -21,3 +21,5 @@ open HDec.PkgI4.BergerBst
 #print axioms isSemistableB_iff_finrank
 #print axioms isSemistableB_iff_K0
 #print axioms amaxOf_eq_amax
+#print axioms logTeich_ne_zero
+#print axioms exists_t_ne_zero

@@ -1181,6 +1181,330 @@ theorem amaxOf_eq_amax {w : Ainf p} (hw : WittVector.fontaineTheta 𝓞_ℂ_[p] 
 
 end Generator
 
+/-! ## §13. `t ≠ 0`: `log [ε] ≠ 0` in `B_dR` for every `ε ≠ 1`, and such `ε` exist
+
+The separatedness lemmas and the construction of `ε = (1, ζ_p, ζ_{p²}, …)` below are copied from
+pb-sanity (`ZInQKernel/Contrib/OneProof/PanBergerSanity.lean`, which cannot be imported next to
+`PanBergerPrinted`: both chains define the bdr-kertheta constants). -/
+
+section TNonzero
+
+variable (p : ℕ) [Fact p.Prime]
+
+open Ideal
+open PanBergerSplit (Ainf AinfP theta)
+
+/-- `ε ∈ 𝓞_ℂ_p♭` with `ε^♯ = 1`, `ε ≠ 1` (pb-sanity's `TEps`). -/
+abbrev TEps := {ε : PreTilt 𝓞_ℂ_[p] p // PreTilt.untilt ε = 1 ∧ ε ≠ 1}
+
+/-- An element of `𝓞_ℂ_p♭` divisible by every power of `p♭` is zero. -/
+theorem tilt_eq_zero_of_dvd (ϖ : PreTilt 𝓞_ℂ_[p] p) (hϖ : ϖ.untilt = p) (c : PreTilt 𝓞_ℂ_[p] p)
+    (h : ∀ n, ϖ ^ n ∣ c) : c = 0 := by
+  have h0 : c.untilt = 0 := by
+    apply IsHausdorff.haus' (I := span {(p : 𝓞_ℂ_[p])})
+    intro n
+    obtain ⟨d, rfl⟩ := h n
+    rw [SModEq.sub_mem, sub_zero, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow,
+      Ideal.mem_span_singleton, map_mul, map_pow, hϖ]
+    exact dvd_mul_right _ _
+  apply Perfection.ext
+  intro n
+  change PreTilt.coeff n c = PreTilt.coeff n 0
+  rw [← ZInQ.Contrib.G9.BdrKer.Cp.mk_root, map_zero]
+  have : ZInQ.Contrib.G9.BdrKer.Cp.root c n ^ p ^ n = 0 := by
+    rw [ZInQ.Contrib.G9.BdrKer.Cp.root_pow, h0]
+  rw [pow_eq_zero_iff (pow_ne_zero _ (Fact.out : p.Prime).ne_zero)] at this
+  rw [this, map_zero]
+
+/-- `p` is regular modulo `ξ^n` in `A_inf`. -/
+theorem mem_xi_pow_of_p_mul (n : ℕ) : ∀ a : Ainf p,
+    (p : Ainf p) * a ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n} → a ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n} := by
+  induction n with
+  | zero => intro a _; rw [pow_zero, Ideal.span_singleton_one]; trivial
+  | succ n ih =>
+    intro a ha
+    obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp ha
+    have hθ : theta p a = 0 := by
+      apply ZInQ.Contrib.G9.BdrKer.Cp.p_regular p
+      have := congrArg (theta p) hc
+      rw [map_mul, map_mul, map_pow, map_natCast] at this
+      rw [← this]
+      have hx : theta p (ZInQ.Contrib.G9.BdrKer.Cp.xi p) = 0 := by
+        rw [← RingHom.mem_ker]
+        change (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p)
+        rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]
+        exact Ideal.mem_span_singleton_self _
+      rw [hx, zero_pow (Nat.succ_ne_zero n), mul_zero]
+    have ha' : a ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p)} := by
+      rw [← ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]
+      exact hθ
+    obtain ⟨a', rfl⟩ := Ideal.mem_span_singleton'.mp ha'
+    have hξ : (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ≠ 0 := ZInQ.Contrib.G9.BdrKer.Cp.xi_ne_zero p
+    have h2 : (p : Ainf p) * a' = c * (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n := by
+      apply mul_left_cancel₀ hξ
+      linear_combination hc.symm
+    obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.mp (ih a' (Ideal.mem_span_singleton'.mpr ⟨c, h2.symm⟩))
+    exact Ideal.mem_span_singleton'.mpr ⟨d, by rw [← hd, pow_succ]; ring⟩
+
+theorem mem_xi_pow_of_p_pow_mul (n e : ℕ) (a : Ainf p)
+    (h : (p : Ainf p) ^ e * a ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n}) : a ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n} := by
+  induction e generalizing a with
+  | zero => simpa using h
+  | succ e ih =>
+    apply ih
+    apply mem_xi_pow_of_p_mul
+    rw [pow_succ] at h
+    simpa [mul_assoc, mul_comm, mul_left_comm] using h
+
+/-- `A_inf` is `ξ`-adically separated on non-zero elements. -/
+theorem exists_not_mem_xi_pow (x : Ainf p) (hx : x ≠ 0) : ∃ n, x ∉ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n} := by
+  obtain ⟨m, b, hb, rfl⟩ := WittVector.exists_eq_pow_p_mul x hx
+  by_contra hcon
+  push Not at hcon
+  apply hb
+  have hb' : ∀ n, b ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ n} := fun n => mem_xi_pow_of_p_pow_mul p n m b (hcon n)
+  have h0 : WittVector.constantCoeff (ZInQ.Contrib.G9.BdrKer.Cp.xi p) = -(ZInQ.Contrib.G9.BdrKer.Cp.pFlat p) := by
+    rw [ZInQ.Contrib.G9.BdrKer.Cp.xi, map_sub, map_natCast, CharP.cast_eq_zero, zero_sub]
+    simp
+  apply tilt_eq_zero_of_dvd p (ZInQ.Contrib.G9.BdrKer.Cp.pFlat p)
+    (ZInQ.Contrib.G9.BdrKer.Cp.untilt_pFlat p)
+  intro n
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp (hb' n)
+  have := congrArg WittVector.constantCoeff hc
+  rw [map_mul, map_pow, h0] at this
+  refine ⟨(-1) ^ n * WittVector.constantCoeff c, ?_⟩
+  change b.coeff 0 = _
+  rw [← WittVector.constantCoeff_apply, ← this, neg_pow]
+  ring
+
+/-- Every non-zero `x ∈ A_inf` is `ξ^s · w` with `θ(w) ≠ 0`. -/
+theorem eq_xi_pow_mul (x : Ainf p) (hx : x ≠ 0) :
+    ∃ (s : ℕ) (w : Ainf p), x = (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ s * w ∧ theta p w ≠ 0 := by
+  classical
+  have hex := exists_not_mem_xi_pow p x hx
+  let N := Nat.find hex
+  have hN : x ∉ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ N} := Nat.find_spec hex
+  have hN0 : N ≠ 0 := by
+    intro h0; apply hN; rw [h0, pow_zero, Ideal.span_singleton_one]; trivial
+  obtain ⟨M, hM⟩ := Nat.exists_eq_succ_of_ne_zero hN0
+  have hxM : x ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ M} := by
+    have := Nat.find_min hex (show M < N by omega)
+    push Not at this
+    exact this
+  obtain ⟨w, hw⟩ := Ideal.mem_span_singleton'.mp hxM
+  refine ⟨M, w, by rw [← hw, mul_comm], fun hθ => hN ?_⟩
+  have : w ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p)} := by
+    rw [← ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]; exact hθ
+  obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp this
+  rw [hM, ← hw]
+  exact Ideal.mem_span_singleton'.mpr ⟨c, by rw [Nat.succ_eq_add_one, pow_succ]; ring⟩
+
+theorem teich_sub_one_ne_zero {ε : PreTilt 𝓞_ℂ_[p] p} (hne : ε ≠ 1) :
+    WittVector.teichmuller p ε - 1 ≠ 0 := by
+  intro h
+  apply hne
+  have h1 : WittVector.teichmuller p ε = 1 := sub_eq_zero.mp h
+  have := congrArg (fun w => WittVector.coeff w 0) h1
+  simpa [WittVector.teichmuller_coeff_zero] using this
+
+/-- `ι(a) ∈ ξ^k A_inf[1/p]` implies `a ∈ ξ^k A_inf`. -/
+theorem mem_xi_pow_of_algebraMap (k : ℕ) (a : Ainf p)
+    (h : algebraMap (Ainf p) (AinfP p) a ∈ span {algebraMap (Ainf p) (AinfP p) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ k}) :
+    a ∈ span {(ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ k} := by
+  obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.mp h
+  obtain ⟨⟨b, s⟩, rfl⟩ := IsLocalization.mk'_surjective (Submonoid.powers (p : Ainf p)) y
+  obtain ⟨e, he⟩ := s.2
+  apply mem_xi_pow_of_p_pow_mul p k e
+  have hinj := IsLocalization.injective (AinfP p)
+    (powers_le_nonZeroDivisors_of_noZeroDivisors (ZInQ.Contrib.G9.BdrKer.Cp.witt_p_ne_zero p))
+  have : (p : Ainf p) ^ e * a = b * (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ k := by
+    apply hinj
+    have hs := IsLocalization.mk'_spec (AinfP p) b s
+    simp only at he
+    dsimp only at hy
+    rw [map_mul, map_mul, map_pow, ← hy, ← hs, ← he]
+    simp only [map_pow]
+    ring
+  exact Ideal.mem_span_singleton'.mpr ⟨b, this.symm⟩
+
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+/-- If the components of `x ∈ 𝓞_ℂ_p♭` are the classes of a compatible system `c` of `p`-th
+power roots, then `x^♯ = c 0`. -/
+theorem untilt_eq_of_coeff (c : ℕ → 𝓞_ℂ_[p]) (hc : ∀ m, c (m + 1) ^ p = c m) (x : PreTilt 𝓞_ℂ_[p] p)
+    (hx : ∀ m, PreTilt.coeff m x = Ideal.Quotient.mk _ (c m)) : x.untilt = c 0 := by
+  have hpow : ∀ k, c k ^ p ^ k = c 0 := by
+    intro k
+    induction k with
+    | zero => simp
+    | succ k ih => rw [pow_succ', pow_mul, hc, ih]
+  rw [IsHausdorff.eq_iff_smodEq (I := span {(p : 𝓞_ℂ_[p])})]
+  intro n
+  rw [SModEq.sub_mem, ZInQ.Contrib.G9.BdrKer.mem_span_pow_iff']
+  have h1 : root x n - c n ∈ span {(p : 𝓞_ℂ_[p])} := by
+    rw [← Ideal.Quotient.eq, mk_root, hx]
+  have h2 := dvd_sub_pow_of_dvd_sub (Ideal.mem_span_singleton.mp h1) n
+  rw [root_pow, hpow] at h2
+  obtain ⟨d, hd⟩ := h2
+  exact ⟨p * d, by rw [hd]; ring⟩
+
+open ZInQ.Contrib.G9.BdrKer.Cp in
+theorem root_eq_of_coeff (c : ℕ → 𝓞_ℂ_[p]) (hc : ∀ m, c (m + 1) ^ p = c m) (x : PreTilt 𝓞_ℂ_[p] p)
+    (hx : ∀ m, PreTilt.coeff m x = Ideal.Quotient.mk _ (c m)) (n : ℕ) : root x n = c n := by
+  have := untilt_eq_of_coeff p (fun m => c (m + n)) (fun m => by
+    simpa [Nat.add_right_comm] using hc (m + n)) (((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm^[n]) x)
+    (fun m => by rw [PreTilt.coeff_iterate_frobeniusEquiv_symm, hx])
+  simpa [ZInQ.Contrib.G9.BdrKer.Cp.root] using this
+
+/-- A compatible system `1, ζ_p, ζ_{p²}, …` of `p`-power roots of unity in `ℂ_p`. -/
+noncomputable def zetaSeq (ζ : ℂ_[p]) : ℕ → ℂ_[p]
+  | 0 => 1
+  | 1 => ζ
+  | n + 2 => Classical.choose (IsAlgClosed.exists_pow_nat_eq (zetaSeq ζ (n + 1))
+      (Fact.out : p.Prime).pos)
+
+theorem zetaSeq_succ_pow (ζ : ℂ_[p]) (hζ : ζ ^ p = 1) (n : ℕ) :
+    zetaSeq p ζ (n + 1) ^ p = zetaSeq p ζ n := by
+  rcases n with _ | n
+  · simpa [zetaSeq] using hζ
+  · exact Classical.choose_spec (IsAlgClosed.exists_pow_nat_eq (zetaSeq p ζ (n + 1))
+      (Fact.out : p.Prime).pos)
+
+theorem zetaSeq_pow (ζ : ℂ_[p]) (hζ : ζ ^ p = 1) (n : ℕ) : zetaSeq p ζ n ^ p ^ n = 1 := by
+  induction n with
+  | zero => simp [zetaSeq]
+  | succ n ih => rw [pow_succ', pow_mul, zetaSeq_succ_pow p ζ hζ, ih]
+
+theorem norm_zetaSeq_le (ζ : ℂ_[p]) (hζ : ζ ^ p = 1) (n : ℕ) : ‖zetaSeq p ζ n‖ ≤ 1 := by
+  have h := congrArg norm (zetaSeq_pow p ζ hζ n)
+  rw [norm_pow, norm_one] at h
+  exact ((pow_eq_one_iff_of_nonneg (norm_nonneg _) (pow_ne_zero _
+    (Fact.out : p.Prime).ne_zero)).mp h).le
+
+/-- **There is `ε ∈ 𝓞_ℂ_p♭` with `ε^♯ = 1` and `ε ≠ 1`**: `ε = (1, ζ_p, ζ_{p²}, …)`. -/
+theorem nonempty_tEps : Nonempty (TEps p) := by
+  have hdeg : (Polynomial.cyclotomic p ℂ_[p]).degree ≠ 0 := by
+    rw [Polynomial.degree_cyclotomic, Nat.totient_prime (Fact.out : p.Prime)]
+    have := (Fact.out : p.Prime).two_le
+    exact_mod_cast (show p - 1 ≠ 0 by omega)
+  obtain ⟨ζ, hroot⟩ := IsAlgClosed.exists_root _ hdeg
+  have hprim : IsPrimitiveRoot ζ p :=
+    (Polynomial.isRoot_cyclotomic_iff_charZero (Fact.out : p.Prime).pos).mp hroot
+  have hζ : ζ ^ p = 1 := hprim.pow_eq_one
+  have hζ1 : ζ ≠ 1 := hprim.ne_one (Fact.out : p.Prime).one_lt
+  let c : ℕ → 𝓞_ℂ_[p] := fun n => ⟨zetaSeq p ζ n,
+    (ZInQ.Contrib.G9.PkgI4.Cp.mem_O_iff p _).mpr (norm_zetaSeq_le p ζ hζ n)⟩
+  have hc : ∀ m, c (m + 1) ^ p = c m := fun m =>
+    Subtype.ext (by simpa [c] using zetaSeq_succ_pow p ζ hζ m)
+  let ε : PreTilt 𝓞_ℂ_[p] p := ⟨fun n => Ideal.Quotient.mk _ (c n), fun n => by
+    rw [← map_pow, hc]⟩
+  have hx : ∀ m, PreTilt.coeff m ε = Ideal.Quotient.mk _ (c m) := fun m => rfl
+  refine ⟨⟨ε, ?_, ?_⟩⟩
+  · rw [untilt_eq_of_coeff p c hc ε hx]
+    exact Subtype.ext (by simp [c, zetaSeq])
+  · intro h1
+    have h2 := root_eq_of_coeff p c hc ε hx 1
+    rw [h1] at h2
+    apply hζ1
+    have h3 : ZInQ.Contrib.G9.BdrKer.Cp.root (1 : PreTilt 𝓞_ℂ_[p] p) 1 = 1 := by
+      simp [ZInQ.Contrib.G9.BdrKer.Cp.root]
+    rw [h3] at h2
+    have := congrArg Subtype.val h2
+    simpa [c, zetaSeq] using this.symm
+
+
+theorem trunc_logSeries_sub_X (N : ℕ) :
+    ∃ R : Polynomial (AinfP p), (trunc (N + 2) (logSeries p)) - Polynomial.X =
+      Polynomial.X ^ 2 * R := by
+  show (Polynomial.X : Polynomial (AinfP p)) ^ 2 ∣ (trunc (N + 2)) (logSeries p) - Polynomial.X
+  rw [Polynomial.X_pow_dvd_iff]
+  intro d hd
+  rw [Polynomial.coeff_sub, coeff_trunc, if_pos (by omega), logSeries, PowerSeries.coeff_mk,
+    Polynomial.coeff_X]
+  rcases d with _ | _ | d
+  · simp
+  · have h := natCast_mul_qp p 1 one_ne_zero
+    simp only [Nat.cast_one, one_mul] at h
+    simp [h]
+  · omega
+
+/-- **`log [ε] ≠ 0` for `ε^♯ = 1`, `ε ≠ 1`.** Write `[ε] − 1 = ξ^s w` with `θ(w) ≠ 0` (`s ≥ 1`);
+modulo `(ker θ)^{s+1}`, `log [ε] ≡ [ε] − 1 ≢ 0`. -/
+theorem logTeich_ne_zero {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.untilt ε = 1) (hne : ε ≠ 1) :
+    logTeich p h ≠ 0 := by
+  intro h0
+  obtain ⟨s, w, hx, hw⟩ := eq_xi_pow_mul p _ (teich_sub_one_ne_zero p hne)
+  have hs : s ≠ 0 := by
+    rintro rfl
+    apply hw
+    rw [pow_zero, one_mul] at hx
+    rw [← hx]
+    exact PanBergerSplit.theta_teich_sub_one p h
+  obtain ⟨R, hR⟩ := trunc_logSeries_sub_X p (s - 1)
+  have hs2 : s - 1 + 2 = s + 1 := by omega
+  rw [hs2] at hR
+  have h0' : psEval (Ith p) (teich_sub_one_mem p h) (logSeries p) =
+      (0 : AdicCompletion (Ith p) (AinfP p)) := h0
+  have hev := congrArg (AdicCompletion.evalₐ (Ith p) (s + 1)) h0'
+  rw [evalₐ_psEval, map_zero, Ideal.Quotient.eq_zero_iff_mem] at hev
+  have hI : Ith p ^ (s + 1) =
+      span {algebraMap (Ainf p) (AinfP p) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ (s + 1)} := by
+    rw [Ith, ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineThetaInvertP_Cp, Ideal.span_singleton_pow]
+    rfl
+  set y := algebraMap (Ainf p) (AinfP p) (WittVector.teichmuller p ε - 1)
+  have hy : y = algebraMap (Ainf p) (AinfP p) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ s *
+      algebraMap (Ainf p) (AinfP p) w := by
+    simp only [y, hx, map_mul, map_pow]
+  have hsq : y ^ 2 * R.eval y ∈ Ith p ^ (s + 1) := by
+    rw [hI, Ideal.mem_span_singleton]
+    refine ⟨algebraMap (Ainf p) (AinfP p) (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ (s - 1) *
+      algebraMap (Ainf p) (AinfP p) w ^ 2 * R.eval y, ?_⟩
+    rw [hy]
+    have : 2 * s = (s + 1) + (s - 1) := by omega
+    rw [mul_pow, ← pow_mul, mul_comm s 2, this, pow_add]
+    ring
+  have hyI : y ∈ Ith p ^ (s + 1) := by
+    have he : y = (trunc (s + 1) (logSeries p)).eval y - y ^ 2 * R.eval y := by
+      have := congrArg (Polynomial.eval y) hR
+      rw [Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_mul, Polynomial.eval_pow,
+        Polynomial.eval_X] at this
+      linear_combination -this
+    rw [he]
+    exact Ideal.sub_mem _ hev hsq
+  rw [hI] at hyI
+  have hmem := mem_xi_pow_of_algebraMap p (s + 1) _ hyI
+  rw [hx] at hmem
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp hmem
+  have hw' : w = ZInQ.Contrib.G9.BdrKer.Cp.xi p * c := by
+    have hξ : (ZInQ.Contrib.G9.BdrKer.Cp.xi p) ^ s ≠ 0 :=
+      pow_ne_zero _ (ZInQ.Contrib.G9.BdrKer.Cp.xi_ne_zero p)
+    apply mul_left_cancel₀ hξ
+    rw [← hc]
+    ring
+  apply hw
+  rw [hw', map_mul]
+  have hxi : theta p (ZInQ.Contrib.G9.BdrKer.Cp.xi p) = 0 := by
+    change ZInQ.Contrib.G9.BdrKer.Cp.xi p ∈ RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p)
+    rw [ZInQ.Contrib.G9.BdrKer.Cp.ker_fontaineTheta_Cp]
+    exact Ideal.mem_span_singleton_self _
+  rw [hxi, zero_mul]
+
+/-- **`t ≠ 0` in `B_dR`**: every inverted `log [ε]` is a nonzero element of the field `B_dR`, so
+`Ring.inverse` is its inverse, and there is such an `ε`. Hence `B_max` contains `t` and `1/t`. -/
+theorem exists_t_ne_zero : ∃ (ε : PreTilt 𝓞_ℂ_[p] p) (h : PreTilt.untilt ε = 1), ε ≠ 1 ∧
+    toBdR p (logTeich p h) ≠ 0 ∧
+    toBdR p (logTeich p h) * Ring.inverse (toBdR p (logTeich p h)) = 1 := by
+  obtain ⟨⟨ε, h, hne⟩⟩ := nonempty_tEps p
+  have hne0 : toBdR p (logTeich p h) ≠ 0 := fun h0 =>
+    logTeich_ne_zero p h hne ((toBdR_injective p) (h0.trans (map_zero _).symm))
+  refine ⟨ε, h, hne, hne0, ?_⟩
+  obtain ⟨y, hy⟩ : ∃ y : BdR p, toBdR p (logTeich p h) * y = 1 :=
+    (ZInQ.Contrib.G9.BdrKer.Cp.isField_BDeRham p).mul_inv_cancel hne0
+  have hu : IsUnit (toBdR p (logTeich p h)) := ⟨⟨_, y, hy, by rw [mul_comm]; exact hy⟩, rfl⟩
+  exact Ring.mul_inverse_cancel _ hu
+
+end TNonzero
+
 end BergerBst
 end PkgI4
 end HDec
