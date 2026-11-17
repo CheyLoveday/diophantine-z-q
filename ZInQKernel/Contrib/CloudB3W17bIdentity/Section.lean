@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.CloudB3W17bProjectiveBridge.OkaAdapter
+import ZInQKernel.Contrib.CloudB3W17bOkaComparison.AbVarNativeAnalytification
 import ZInQKernel.HDecomp.LeafPush2.R22
 
 /-!
@@ -6,9 +6,9 @@ import ZInQKernel.HDecomp.LeafPush2.R22
 
 For the ORIGINAL `B : PkgI3.AbVar ℂ`, the unit `η[B.X] : 𝟙_ ⟶ B.X` of its group object over
 `Spec ℂ` is transported, without changing any underlying scheme or scheme morphism, into Oka's
-category `ComplexAnalytic.SchemeLFTℂ` of schemes locally of finite type over
-`Spec (ULift ℂ)`. Only the structure morphisms are re-spelled along the genuine base isomorphism
-`complexULiftBaseIso` (literally `Spec.map` of `ULift.ringEquiv`).
+category `ComplexAnalytic.SchemeLFTℂ`. Source and target are the comparison objects
+`nativeSchemeLFT (𝟙_ _)` and `abVarAnalytificationScheme B`: the same schemes, with only their
+structure morphisms re-spelled along the genuine base isomorphism `complexULiftBaseIso`.
 
 The resulting morphism `identitySection B` is a closed immersion because it is a section of the
 separated structure morphism of the proper scheme `B.X` (Mathlib's
@@ -18,7 +18,7 @@ the point underlying the identity element `1` of the kernel's group of complex p
 -/
 
 open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
-open ZInQ.Contrib.CloudB3W17bOkaComparison ZInQ.Contrib.CloudB3W17bProjectiveBridge
+open ZInQ.Contrib.CloudB3W17bOkaComparison
 
 set_option autoImplicit false
 
@@ -36,9 +36,8 @@ theorem nativeUnit_left : nativeUnit.left = Spec (CommRingCat.of ℂ) := rfl
 instance nativeUnit_locallyOfFiniteType : LocallyOfFiniteType nativeUnit.hom :=
   (inferInstance : LocallyOfFiniteType (𝟙 (Spec (CommRingCat.of ℂ))))
 
-/-- The native unit, with only its base spelled over Oka's lifted complex base. -/
-def unitLiftedLFT : ComplexAnalytic.SchemeLFTℂ.{0} :=
-  ⟨overULift nativeUnit, show LocallyOfFiniteType (overULift nativeUnit).hom from inferInstance⟩
+/-- The native unit as a comparison object over Oka's lifted complex base. -/
+def unitLiftedLFT : ComplexAnalytic.SchemeLFTℂ.{0} := nativeSchemeLFT nativeUnit
 
 @[simp]
 theorem unitLiftedLFT_left : unitLiftedLFT.obj.left = Spec (CommRingCat.of ℂ) := rfl
@@ -50,8 +49,9 @@ theorem unitLiftedLFT_hom : unitLiftedLFT.obj.hom = nativeUnit.hom ≫ complexUL
 theorem unitLiftedLFT_hom_eq_baseIso : unitLiftedLFT.obj.hom = complexULiftBaseIso.hom :=
   Category.id_comp _
 
-/-- **The actual identity section of the original `B`** in Oka's scheme category. -/
-def identitySection (B : PkgI3.AbVar ℂ) : unitLiftedLFT ⟶ abVarLiftedLFT B :=
+/-- **The actual identity section of the original `B`**, into the comparison object
+`abVarAnalytificationScheme B` that the global analytic map targets. -/
+def identitySection (B : PkgI3.AbVar ℂ) : unitLiftedLFT ⟶ abVarAnalytificationScheme B :=
   ObjectProperty.homMk (overULiftMap η[B.X])
 
 /-- The underlying scheme morphism is literally the original unit `η[B.X].left`. -/
@@ -66,7 +66,8 @@ theorem eta_left_comp_hom (B : PkgI3.AbVar ℂ) :
 
 /-- The section is over Oka's actual base, with the genuine base isomorphism. -/
 theorem identitySection_over (B : PkgI3.AbVar ℂ) :
-    (identitySection B).hom.left ≫ (abVarLiftedLFT B).obj.hom = complexULiftBaseIso.hom := by
+    (identitySection B).hom.left ≫ (abVarAnalytificationScheme B).obj.hom =
+      complexULiftBaseIso.hom := by
   change η[B.X].left ≫ (B.X.hom ≫ complexULiftBaseIso.hom) = complexULiftBaseIso.hom
   rw [← Category.assoc, eta_left_comp_hom]
   exact Category.id_comp _
