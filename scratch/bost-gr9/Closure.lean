@@ -47,7 +47,7 @@ run_cmd do
     visited := visited.insert c
     stack := stack.push (c, true)
     let some ci := env.find? c | continue
-    let deps := (ci.type.getUsedConstants ++ (ci.value?.map (·.getUsedConstants) |>.getD #[]))
+    let deps := (ci.type.getUsedConstants ++ (ci.value? (allowOpaque := true) |>.map (·.getUsedConstants) |>.getD #[]))
     for d in deps do
       if !visited.contains d && mentions d then
         -- structures: also need their field types' deps (none mention aff except themselves)
