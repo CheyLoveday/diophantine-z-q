@@ -220,4 +220,121 @@ theorem theta_unique {χ : DirichletCharacter ℂ N} {f : CF N 2} (hf : IsNewfor
   obtain ⟨h, e⟩ := hle x.2
   exact congrArg (fun g => g) e
 
+/-! ## Matrices `γ ∈ Γ₀(N)` with prescribed lower-right entry -/
+
+open scoped MatrixGroups
+
+theorem exists_gamma (N : ℕ) (d : ℤ) (h : IsCoprime d (N : ℤ)) :
+    ∃ g : SL(2, ℤ), (N : ℤ) ∣ g 1 0 ∧ ((g 1 1 : ℤ) : ZMod N) = (d : ZMod N) := by
+  obtain ⟨a, b, hab⟩ := h
+  refine ⟨⟨!![a, -b; (N : ℤ), d], ?_⟩, ?_, ?_⟩
+  · rw [Matrix.det_fin_two_of]; linear_combination hab
+  · simp
+  · simp
+
+theorem exists_gamma_prime (N : ℕ) (p : Nat.Primes) (hp : ¬ (p : ℕ) ∣ N) :
+    ∃ g : SL(2, ℤ), (N : ℤ) ∣ g 1 0 ∧ ((g 1 1 : ℤ) : ZMod N) = ((p : ℕ) : ZMod N) := by
+  have hc : Nat.Coprime p N := (Nat.Prime.coprime_iff_not_dvd p.2).2 hp
+  obtain ⟨g, h1, h2⟩ := exists_gamma N (p : ℕ) (Int.isCoprime_iff_gcd_eq_one.2 (by simpa using hc))
+  exact ⟨g, h1, by simpa using h2⟩
+
+theorem exists_gamma_unit (N : ℕ) [NeZero N] (d : (ZMod N)ˣ) :
+    ∃ g : SL(2, ℤ), (N : ℤ) ∣ g 1 0 ∧ ((g 1 1 : ℤ) : ZMod N) = (d : ZMod N) := by
+  have hc : Nat.Coprime (d : ZMod N).val N := ZMod.val_coe_unit_coprime d
+  obtain ⟨g, h1, h2⟩ := exists_gamma N ((d : ZMod N).val : ℤ)
+    (Int.isCoprime_iff_gcd_eq_one.2 (by rw [Int.gcd_natCast_natCast]; exact hc))
+  exact ⟨g, h1, by rw [h2, Int.cast_natCast, ZMod.natCast_zmod_val]⟩
+
+/-! ## Formal divisors on `ℍ` and the double-coset operators on them -/
+
+/-- Formal `ℤ`-combinations of points of `ℍ`. -/
+abbrev Dv : Type := UpperHalfPlane →₀ ℤ
+
+/-- `[τ]`. -/
+abbrev pt (τ : UpperHalfPlane) : Dv := Finsupp.single τ 1
+
+/-- The degree. -/
+def deg : Dv →ₗ[ℤ] ℤ := Finsupp.linearCombination ℤ (fun _ => 1)
+
+@[simp] theorem deg_pt (τ : UpperHalfPlane) : deg (pt τ) = 1 := by simp [deg]
+
+/-- Degree-`0` divisors. -/
+def D0 : Submodule ℤ Dv := LinearMap.ker deg
+
+/-- `[τ] − [τ₀]` span the degree-`0` divisors. -/
+theorem D0_le_span (τ₀ : UpperHalfPlane) :
+    D0 ≤ Submodule.span ℤ (Set.range fun τ => pt τ - pt τ₀) := by
+  intro D hD
+  have hdeg : deg D = 0 := hD
+  have hsum : D = D.sum (fun τ n => n • (pt τ - pt τ₀)) + (deg D) • pt τ₀ := by
+    have e1 : D.sum (fun τ n => n • (pt τ - pt τ₀)) = D.sum (fun τ n => n • pt τ) - (D.sum fun _ n => n) • pt τ₀ := by
+      simp only [Finsupp.sum, smul_sub, Finset.sum_sub_distrib, Finset.sum_smul]
+    have e2 : deg D = D.sum fun _ n => n := by simp [deg, Finsupp.linearCombination_apply]
+    rw [e1, e2, sub_add_cancel]
+    conv_lhs => rw [← Finsupp.sum_single D]
+    simp [Finsupp.smul_single]
+  rw [hsum, hdeg, zero_smul, add_zero]
+  exact Submodule.sum_mem _ fun τ _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨τ, rfl⟩)
+
+theorem eqOn_D0 {M : Type*} [AddCommGroup M] (τ₀ : UpperHalfPlane) (u v : Dv →ₗ[ℤ] M)
+    (h : ∀ τ, u (pt τ - pt τ₀) = v (pt τ - pt τ₀)) : ∀ D ∈ D0, u D = v D := by
+  intro D hD
+  exact LinearMap.eqOn_span' (s := Set.range fun τ => pt τ - pt τ₀) (by rintro _ ⟨τ, rfl⟩; exact h τ)
+    (D0_le_span τ₀ hD)
+
+/-- `T̃_p[τ] = Σ_{j<p} [(τ+j)/p] + [g(pτ)]` (the last term only for `p ∤ N`). -/
+def tDiv (N : ℕ) (p : ℕ) (g : SL(2, ℤ)) (τ : UpperHalfPlane) : Dv :=
+  (∑ j : Fin p, pt (shiftDiv p j τ)) + if p ∣ N then 0 else pt (g • mulNat p τ)
+
+/-- `⟨d⟩~[τ] = [gτ]`. -/
+def dDiv (g : SL(2, ℤ)) (τ : UpperHalfPlane) : Dv := pt (g • τ)
+
+/-- The lifted operators on formal divisors. -/
+def tOp (N p : ℕ) (g : SL(2, ℤ)) : Module.End ℤ Dv := Finsupp.linearCombination ℤ (tDiv N p g)
+
+def dOp (g : SL(2, ℤ)) : Module.End ℤ Dv := Finsupp.linearCombination ℤ (dDiv g)
+
+theorem deg_tDiv (N p : ℕ) (g : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    deg (tDiv N p g τ) = (p + if p ∣ N then 0 else 1 : ℤ) := by
+  unfold tDiv; split_ifs <;> simp [map_sum]
+
+theorem tOp_D0 (N p : ℕ) (g : SL(2, ℤ)) {D : Dv} (hD : D ∈ D0) : tOp N p g D ∈ D0 := by
+  have : deg ∘ₗ tOp N p g = (p + if p ∣ N then 0 else 1 : ℤ) • deg := by
+    apply Finsupp.lhom_ext; intro τ n
+    simp only [LinearMap.comp_apply, LinearMap.smul_apply, tOp, Finsupp.linearCombination_single,
+      map_zsmul, deg_tDiv]
+    simp [deg]; ring
+  change deg (tOp N p g D) = 0
+  have h2 := LinearMap.congr_fun this D
+  simp only [LinearMap.comp_apply, LinearMap.smul_apply] at h2
+  rw [h2, show deg D = 0 from hD, smul_zero]
+
+theorem dOp_D0 (g : SL(2, ℤ)) {D : Dv} (hD : D ∈ D0) : dOp g D ∈ D0 := by
+  have : deg ∘ₗ dOp g = deg := by
+    apply Finsupp.lhom_ext; intro τ n
+    simp [dOp, dDiv, deg]
+  change deg (dOp g D) = 0
+  rw [← LinearMap.comp_apply, this]; exact hD
+
+/-- Chosen matrices: `gT p` with `N ∣ c`, `d ≡ p` (`p ∤ N`), `gD d` with `N ∣ c`, `d' ≡ d`. -/
+def gT (N : ℕ) (p : Nat.Primes) : SL(2, ℤ) :=
+  if h : (p : ℕ) ∣ N then 1 else (exists_gamma_prime N p h).choose
+
+def gD (N : ℕ) [NeZero N] (d : (ZMod N)ˣ) : SL(2, ℤ) := (exists_gamma_unit N d).choose
+
+/-- The free algebra acting on formal divisors through `T̃_p`, `⟨d⟩~`. -/
+def heckeD (N : ℕ) [NeZero N] : HeckeFree N →ₐ[ℤ] Module.End ℤ Dv :=
+  FreeAlgebra.lift ℤ (Sum.elim (fun p => tOp N p (gT N p)) (fun d => dOp (gD N d)))
+
+theorem heckeD_D0 (N : ℕ) [NeZero N] (h : HeckeFree N) {D : Dv} (hD : D ∈ D0) : heckeD N h D ∈ D0 := by
+  induction h using FreeAlgebra.induction generalizing D with
+  | grade0 r =>
+    rw [AlgHom.commutes, Module.algebraMap_end_apply]; exact Submodule.smul_mem _ _ hD
+  | grade1 x =>
+    rcases x with p | d
+    · simp only [heckeD, FreeAlgebra.lift_ι_apply, Sum.elim_inl]; exact tOp_D0 _ _ _ hD
+    · simp only [heckeD, FreeAlgebra.lift_ι_apply, Sum.elim_inr]; exact dOp_D0 _ hD
+  | mul a b ha hb => rw [map_mul, Module.End.mul_apply]; exact ha (hb hD)
+  | add a b ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem (ha hD) (hb hD)
+
 end AfTateLam.HeckePin
