@@ -822,3 +822,121 @@ end LocalSS
 end
 
 end EigenformHTPrinted
+
+/-! ## §6c. The semisimplification of a `2`-dimensional Hodge–Tate representation -/
+
+namespace EigenformHTPrinted
+
+open ZInQ.Contrib.HodgeSplit ZInQ.Contrib.G9 ZInQ.Contrib.G9.PkgI4 Module
+
+noncomputable section
+
+section GlobalHT
+
+variable {ℓ : ℕ} [Fact ℓ.Prime]
+
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **The diagonal part of an upper triangular Hodge–Tate representation is Hodge–Tate with the same
+weights** (`finrank_Ysp_le_diag` with the Tate–Sen bound `sum_finrank_Ysp_le`). -/
+theorem ht_diag (ρ d : GaloisRep ℓ 2) (h10 : ∀ σ, ρ.mat σ 1 0 = 0)
+    (hd00 : ∀ σ, d.mat σ 0 0 = ρ.mat σ 0 0) (hd11 : ∀ σ, d.mat σ 1 1 = ρ.mat σ 1 1)
+    (hd01 : ∀ σ, d.mat σ 0 1 = 0) (hd10 : ∀ σ, d.mat σ 1 0 = 0)
+    (S : Multiset ℤ) (hS : S.card = 2) (hρ : ρ.HasHTWeightsAtSelf ℓ S) : d.HasHTWeightsAtSelf ℓ S := by
+  classical
+  obtain ⟨E₁, hE₁, ρ₁, h₁, hw₁⟩ := hρ
+  let E := IntermediateField.normalClosure ℚ_[ℓ] E₁ (PadicAlgCl ℓ)
+  haveI : FiniteDimensional ℚ_[ℓ] E := inferInstance
+  haveI : IsGalois ℚ_[ℓ] E := IsGalois.mk
+  have hE₁E : E₁ ≤ E := IntermediateField.le_normalClosure E₁
+  let ρL := ρ.restrictLocal ℓ
+  let dL := d.restrictLocal ℓ
+  have hent₁ : ∀ σ i j, (((ρ₁ σ : Matrix (Fin 2) (Fin 2) E₁) i j : E₁) : PadicAlgCl ℓ) =
+      (ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)) i j := by
+    intro σ i j; rw [← h₁ σ]; rfl
+  have hmem : ∀ σ i j, (ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)) i j ∈ E := by
+    intro σ i j; rw [← hent₁]
+    exact hE₁E ((ρ₁ σ : Matrix (Fin 2) (Fin 2) E₁) i j).2
+  have hmem' : ∀ σ i j, (dL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl ℓ)) i j ∈ E := by
+    intro σ
+    change ∀ i j, d.mat (decomp ℓ σ) i j ∈ E
+    rw [Fin.forall_fin_two]
+    refine ⟨Fin.forall_fin_two.2 ⟨?_, ?_⟩, Fin.forall_fin_two.2 ⟨?_, ?_⟩⟩
+    · rw [hd00]; exact hmem σ 0 0
+    · rw [hd01]; exact zero_mem E
+    · rw [hd10]; exact zero_mem E
+    · rw [hd11]; exact hmem σ 1 1
+  let ρE := liftGL E ρL hmem
+  let dE := liftGL E dL hmem'
+  have hwE : ∀ w, htMult ℓ ρE w = S.count w := fun w =>
+    (htMult_eq_of_lifts ℓ ρL ρE ρ₁ (liftGL_map E ρL hmem) h₁ w).trans (hw₁ w)
+  have hdY : ∀ i, finrank E (Ysp ℓ ρE i E) = S.count (-i) := by
+    intro i; rw [← hwE, htMult_eq_finrank_Ysp ℓ tate axSen E ρE (-i), neg_neg]
+  have hle : ∀ i, finrank E (Ysp ℓ ρE i E) ≤ finrank E (Ysp ℓ dE i E) := by
+    refine finrank_Ysp_le_diag ℓ tate axSen ρE dE (fun σ => ?_) (fun σ => ?_) (fun σ => ?_)
+      (fun σ => ?_) (fun σ => ?_)
+    · apply Subtype.ext; rw [liftGL_coe]; exact h10 _
+    · apply Subtype.ext; rw [liftGL_coe, liftGL_coe]; exact hd00 _
+    · apply Subtype.ext; rw [liftGL_coe, liftGL_coe]; exact hd11 _
+    · apply Subtype.ext; rw [liftGL_coe]; exact hd01 _
+    · apply Subtype.ext; rw [liftGL_coe]; exact hd10 _
+  refine ⟨E, inferInstance, dE, liftGL_map E dL hmem', fun w => ?_⟩
+  rw [htMult_eq_finrank_Ysp ℓ tate axSen E dE w]
+  have hcnt : ∀ j : ℤ, S.count (-j) = (S.map fun x : ℤ => -x).count j := by
+    intro j
+    have := Multiset.count_map_eq_count' (fun x : ℤ => -x) S neg_injective (-j)
+    simp only [neg_neg] at this
+    exact this.symm
+  let J : Finset ℤ := insert (-w) (S.map fun x : ℤ => -x).toFinset
+  have hsumR : ∑ j ∈ J, finrank E (Ysp ℓ ρE j E) = 2 := by
+    simp only [hdY, hcnt]
+    rw [← Finset.sum_subset (Finset.subset_insert _ _) (fun j _ hj => Multiset.count_eq_zero.2
+      (fun h => hj (Multiset.mem_toFinset.2 h))), Multiset.toFinset_sum_count_eq, Multiset.card_map, hS]
+  have hsumD := sum_finrank_Ysp_le ℓ tate axSen E dE J
+  have heq := (Finset.sum_eq_sum_iff_of_le (fun j _ => hle j)).1
+    (le_antisymm (Finset.sum_le_sum fun j _ => hle j) (hsumD.trans hsumR.ge))
+  rw [← heq (-w) (Finset.mem_insert_self _ _), hdY, neg_neg]
+
+/-- **Semisimplification (dimension `2`).** Every `2`-dimensional `ρ` with Hodge–Tate weights `S` has a
+semisimple `ρ'` with the same traces, unramified wherever `ρ` is, and with Hodge–Tate weights `S`. -/
+theorem exists_ss (ρ : GaloisRep ℓ 2) (S : Multiset ℤ) (hS : S.card = 2) (hρ : ρ.HasHTWeightsAtSelf ℓ S) :
+    ∃ ρ' : GaloisRep ℓ 2, ρ'.IsSemisimple ∧ ρ'.HasHTWeightsAtSelf ℓ S ∧
+      (∀ σ, (ρ'.mat σ).trace = (ρ.mat σ).trace) ∧ (∀ τ, ρ.toHom τ = 1 → ρ'.toHom τ = 1) := by
+  by_cases hss : ρ.IsSemisimple
+  · exact ⟨ρ, hss, hρ, fun _ => rfl, fun _ h => h⟩
+  obtain ⟨w, hw0, hw⟩ := exists_invariant_line ρ hss
+  obtain ⟨P, hP⟩ := exists_gl_col w hw0
+  have hc10 : ∀ σ, (conjGR ρ P).mat σ 1 0 = 0 := by
+    intro σ
+    obtain ⟨c, hc⟩ := hw σ
+    have key : ((conjGR ρ P).mat σ).mulVec (Pi.single 0 1) = c • Pi.single 0 1 := by
+      rw [conjGR_mat, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hP, hc, Matrix.mulVec_smul, ← hP,
+        Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
+    have := congrFun key 1
+    rw [Matrix.mulVec_single_one] at this
+    simpa using this
+  have hHTc := htConj_proof ℓ 2 ρ (conjGR ρ P) S (isConj_conjGR ρ P) hρ
+  refine ⟨diagGR (conjGR ρ P) hc10,
+    isSemisimple_of_diag _ (fun σ => by simp [diagGR_mat]) (fun σ => by simp [diagGR_mat]),
+    ht_diag (conjGR ρ P) (diagGR (conjGR ρ P) hc10) hc10 (fun σ => by simp [diagGR_mat])
+      (fun σ => by simp [diagGR_mat]) (fun σ => by simp [diagGR_mat]) (fun σ => by simp [diagGR_mat])
+      S hS hHTc, fun σ => ?_, fun τ hτ => ?_⟩
+  · have e : ((conjGR ρ P).mat σ).trace = (ρ.mat σ).trace := by
+      rw [conjGR_mat, Matrix.trace_mul_comm, ← mul_assoc, ← Units.val_mul, mul_inv_cancel,
+        Units.val_one, one_mul]
+    rw [← e, diagGR_mat, Matrix.trace_fin_two, Matrix.trace_fin_two]
+    simp
+  · have hc1 : (conjGR ρ P).mat τ = 1 := by
+      rw [conjGR_mat, GaloisRep.mat, hτ, Units.val_one, mul_one, ← Units.val_mul, inv_mul_cancel,
+        Units.val_one]
+    apply Units.ext
+    change (diagGR (conjGR ρ P) hc10).mat τ = 1
+    rw [diagGR_mat, hc1]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp
+
+end GlobalHT
+
+end
+
+end EigenformHTPrinted
