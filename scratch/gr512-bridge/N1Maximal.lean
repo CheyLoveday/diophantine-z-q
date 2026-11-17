@@ -16,7 +16,7 @@ noncomputable section
 
 namespace GR512Bridge.N1
 
-open LeafQM EichlerBound Polynomial
+open EichlerBound Polynomial
 open scoped QuaternionAlgebra
 
 /-! ## 1. Integral elements have integral reduced trace and norm -/
@@ -39,8 +39,7 @@ theorem charpolyQ_natDegree (x : B) : (charpolyQ x).natDegree = 2 := by
 theorem aeval_charpolyQ (x : B) : aeval x (charpolyQ x) = 0 := by
   unfold charpolyQ
   simp only [map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C]
-  rw [sq, sq_eq_trd]
-  simp only [QuaternionAlgebra.algebraMap_eq]
+  rw [sq, sq_eq_trd, QuaternionAlgebra.coe_algebraMap]
   abel
 
 /-- **An element of `B` integral over `ℤ` has `trd, nrd ∈ ℤ`.** -/
@@ -76,11 +75,17 @@ theorem int_of_isIntegral {x : B} (hx : IsIntegral ℤ x) :
 /-! ## 2. The congruence -/
 
 /-- The residue check (`2·4·6·12 = 576` cases). -/
-theorem residues : ∀ a < 2, ∀ b < 4, ∀ c < 6, ∀ d < 12,
+theorem residues : ∀ (a : Fin 2) (b : Fin 4) (c : Fin 6) (d : Fin 12),
     (36 * ((a : ℕ) : ℤ) ^ 2 - 18 * ((b : ℕ) : ℤ) ^ 2 + 12 * ((c : ℕ) : ℤ) ^ 2 - 6 * ((d : ℕ) : ℤ) ^ 2) % 144 = 0 →
       (((d : ℕ) : ℤ) - (b : ℕ)) % 2 = 0 →
         ((c : ℕ) : ℤ) % 3 = 0 ∧ ((d : ℕ) : ℤ) % 6 = 0 ∧ (3 * ((b : ℕ) : ℤ) - (d : ℕ)) % 12 = 0 := by
   decide
+
+theorem residues' (a b c d : ℕ) (ha : a < 2) (hb : b < 4) (hc : c < 6) (hd : d < 12) :
+    (36 * (a : ℤ) ^ 2 - 18 * (b : ℤ) ^ 2 + 12 * (c : ℤ) ^ 2 - 6 * (d : ℤ) ^ 2) % 144 = 0 →
+      ((d : ℤ) - b) % 2 = 0 →
+        (c : ℤ) % 3 = 0 ∧ (d : ℤ) % 6 = 0 ∧ (3 * (b : ℤ) - d) % 12 = 0 :=
+  residues ⟨a, ha⟩ ⟨b, hb⟩ ⟨c, hc⟩ ⟨d, hd⟩
 
 theorem int_core (A B y z N : ℤ) (hzB : (z - B) % 2 = 0)
     (h : 36 * A ^ 2 - 18 * B ^ 2 + 12 * y ^ 2 - 6 * z ^ 2 = 144 * N) :
@@ -101,7 +106,7 @@ theorem int_core (A B y z N : ℤ) (hzB : (z - B) % 2 = 0)
   lift b to ℕ using hb0
   lift c to ℕ using hc0
   lift d to ℕ using hd0
-  have := residues a (by omega) b (by omega) c (by omega) d (by omega)
+  have := residues' a b c d (by omega) (by omega) (by omega) (by omega)
     (by rw [e]; simp) (by omega)
   omega
 
@@ -110,12 +115,12 @@ theorem int_core (A B y z N : ℤ) (hzB : (z - B) % 2 = 0)
 /-- `x` with `trd(x 𝒪) ⊆ ℤ` and `nrd(x) ∈ ℤ` lies in `𝒪`. -/
 theorem mem_O_of_int {x : B} (htr : ∀ e ∈ LeafQM.O, ∃ z : ℤ, trd (x * e) = z)
     (hn : ∃ z : ℤ, nrd x = z) : x ∈ LeafQM.O := by
-  obtain ⟨A, hA⟩ := htr (ofInt ![1, 0, 0, 0]) (ofInt_mem _)
-  obtain ⟨Bi, hB⟩ := htr (ofInt ![0, 1, 0, 0]) (ofInt_mem _)
-  obtain ⟨C, hC⟩ := htr (ofInt ![0, 0, 1, 0]) (ofInt_mem _)
-  obtain ⟨D, hD⟩ := htr (ofInt ![0, 0, 0, 1]) (ofInt_mem _)
+  obtain ⟨A, hA⟩ := htr (LeafQM.ofInt ![1, 0, 0, 0]) (ofInt_mem _)
+  obtain ⟨Bi, hB⟩ := htr (LeafQM.ofInt ![0, 1, 0, 0]) (ofInt_mem _)
+  obtain ⟨C, hC⟩ := htr (LeafQM.ofInt ![0, 0, 1, 0]) (ofInt_mem _)
+  obtain ⟨D, hD⟩ := htr (LeafQM.ofInt ![0, 0, 0, 1]) (ofInt_mem _)
   obtain ⟨N, hN⟩ := hn
-  simp [trd, ofInt] at hA hB hC hD
+  simp [trd, LeafQM.ofInt] at hA hB hC hD
   have hA' : (A : ℚ) = 2 * x.re := by linarith
   have hB' : (Bi : ℚ) = 4 * x.imI := by linarith
   have hC' : (C : ℚ) = x.re - 3 * x.imJ := by linarith
@@ -139,7 +144,7 @@ theorem mem_O_of_int {x : B} (htr : ∀ e ∈ LeafQM.O, ∃ z : ℤ, trd (x * e)
   have e0 : ((A + C : ℤ) : ℚ) = ((3 * n0 : ℤ) : ℚ) := by rw [hn0]
   push_cast at e2 e3 e1 e0
   refine ⟨![n0, n1, n2, n3], ?_⟩
-  ext <;> simp [ofInt] <;> linarith
+  ext <;> simp [LeafQM.ofInt] <;> linarith
 
 /-- **N1: `𝒪 = LeafQM.O` is a maximal order of `B = (2, −3 | ℚ)`**: a subring of `B` containing `𝒪`
 all of whose elements are integral over `ℤ` (in particular any order containing `𝒪`) is `𝒪`. -/
@@ -152,3 +157,5 @@ theorem O_maximal (O' : Subring B) (hle : LeafQM.O ≤ O') (hint : ∀ x ∈ O',
   · exact (int_of_isIntegral (hint x hx)).2
 
 end GR512Bridge.N1
+
+#print axioms GR512Bridge.N1.O_maximal

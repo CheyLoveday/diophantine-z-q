@@ -18,3 +18,8 @@ Base: wip/leaf-fold33b 75d94fe7 (origin/main is an ancestor: checked 11-17 01:56
   (Mathlib `ClassGroup.equivPic` + functoriality), `isPrime_span_iff` (pR prime in R ↔ p𝓞_k prime, p ∤ f),
   `grD6` (GR's D(R) at D=6 from R), `grD6_ne_one_iff`, new leaf `GonzalezRotgerThm512X6RCF`
   (ℚ(x) ≃ₐ[ℚ] ringClassField O if D(R) ≠ 1; else ≃ an index-2 ℚ-subfield of H_R), `gonzalezRotgerThm512X6_of_rcf`.
+* 11-17 03:10 `scratch/gr512-bridge/N1Maximal.lean`: 0 errors; `N1.O_maximal` VERIFIED standard axioms
+  (any subring O' ⊇ LeafQM.O of B with all elements integral over ℤ equals LeafQM.O). Python check (no sympy):
+  no x ∈ O^# \ O has nrd(x) ∈ ℤ (2304 dual points scanned); 576-residue congruence checked in Lean by decide.
+* 11-17 03:20 contributor file `ZInQKernel/Contrib/OneProof/GR512Bridge.lean` (bridge + N1):
+  `lake build +ZInQKernel.Contrib.OneProof.GR512Bridge` ok (12941 jobs).
