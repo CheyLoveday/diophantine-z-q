@@ -18,7 +18,7 @@ reference given. **SPECULATIVE** means not checked. Theorem numbers given from m
    * (i) C8: `DetTate` (`det V₅(A) = χ²`, from the Weil pairing) in `G12DetPZ`;
    * (ii) step E1-E2: Poincaré reducibility, field `t8`/`poincareComplement`, at manuscript L865;
    * (iii) step C3/G9: the field `hodgeTateDecompAbVar`, where the Hodge–Tate multiplicities `a = b` come from the
-     Weil pairing (hodgetate-from-dr).
+     Weil pairing (hodgetate-from-dr). It feeds R10 (`r10`), which G9 and G11 read.
 
    Rerouting C8 to Conrad removes consumer (i) only. Both rows stay hypotheses of `frozenTarget`, and the reroute
    would add a leaf and three glue Props without removing a field. So **no fold is proposed** (§5).
@@ -29,6 +29,9 @@ reference given. **SPECULATIVE** means not checked. Theorem numbers given from m
    * three named glue Props;
    * a proof of C8's consumer `HDec.G0Galois.G12DetPZ` from these, with neither `DetTate` nor the Weil pairing
      (`g12DetPZ_of_conrad`).
+
+   `G12DetPZ` turns out to be equivalent to "the twist has finite image" (§4). `#discharges`: no open hypothesis is
+   discharged, as expected.
 
    This is ready for the day consumers (ii) and (iii) are rerouted too. At the call site
    (`g8_g12_of_leaves3_hf_pz_eb`) it is a one-term replacement (§5).
