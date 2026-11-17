@@ -915,6 +915,252 @@ theorem eichler_diamond {χ : DirichletCharacter ℂ N} {f : CF N 2} (hf : PkgI4
   linear_combination hconst
 
 
+/-- `Σ_{j<p} e^{2πi n (τ+j)/p} = p e^{2πi (n/p) τ}` if `p ∣ n`, else `0`. -/
+theorem sum_exp_shift (p : ℕ) (hp : 0 < p) (n : ℕ) (τ : ℂ) :
+    ∑ j ∈ Finset.range p, Complex.exp (2 * π * Iℂ * n * ((τ + j) / p)) =
+      if p ∣ n then (p : ℂ) * Complex.exp (2 * π * Iℂ * (n / p : ℕ) * τ) else 0 := by
+  have hp' : (p : ℂ) ≠ 0 := by exact_mod_cast hp.ne'
+  have hsplit : ∀ j : ℕ, Complex.exp (2 * π * Iℂ * n * ((τ + j) / p)) =
+      Complex.exp (2 * π * Iℂ * n * τ / p) * Complex.exp (2 * π * Iℂ * n / p) ^ j := by
+    intro j
+    rw [← Complex.exp_nat_mul, ← Complex.exp_add]
+    congr 1; field_simp
+  simp_rw [hsplit, ← Finset.mul_sum]
+  split_ifs with hdvd
+  · obtain ⟨m, rfl⟩ := hdvd
+    have h1 : Complex.exp (2 * π * Iℂ * ((p * m : ℕ) : ℂ) / p) = 1 := by
+      rw [Complex.exp_eq_one_iff]; exact ⟨m, by push_cast; field_simp⟩
+    rw [h1]
+    simp only [one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one]
+    rw [Nat.mul_div_cancel_left _ hp]
+    rw [mul_comm]; congr 2; push_cast; field_simp
+  · have hne : Complex.exp (2 * π * Iℂ * n / p) ≠ 1 := by
+      rw [Ne, Complex.exp_eq_one_iff]
+      rintro ⟨k, hk⟩
+      apply hdvd
+      have hk' : (n : ℂ) = k * p := by
+        have h2 : (2 * π * Iℂ : ℂ) ≠ 0 := by simp [Real.pi_ne_zero, Complex.I_ne_zero]
+        field_simp at hk
+        linear_combination hk
+      have : (n : ℤ) = k * p := by exact_mod_cast hk'
+      have : (p : ℤ) ∣ n := ⟨k, by rw [this]; ring⟩
+      exact_mod_cast this
+    rw [geom_sum_eq hne, ← Complex.exp_nat_mul]
+    have : Complex.exp (p * (2 * π * Iℂ * n / p)) = 1 := by
+      rw [Complex.exp_eq_one_iff]; exact ⟨n, by push_cast; field_simp⟩
+    rw [this]; simp
+
+/-- The Hecke recurrence at a prime: `a_p a_m = a_{pm} + [p ∣ m] χ(p) p a_{m/p}`. -/
+theorem coeff_rec_prime {χ : DirichletCharacter ℂ N} {f : CF N 2}
+    (hf : PkgI4.IsNormalizedEigenform f χ) (p : ℕ) (hp : p.Prime) (m : ℕ) :
+    coeff f p * coeff f m =
+      coeff f (p * m) + if p ∣ m then χ (p : ZMod N) * p * coeff f (m / p) else 0 := by
+  rcases Nat.eq_zero_or_pos m with rfl | hm
+  · simp [coeff_zero_eq]
+  have key := hf.2.2 p m hp.pos hm
+  by_cases hpm : p ∣ m
+  · have hg : Nat.gcd p m = p := Nat.gcd_eq_left hpm
+    rw [hg, hp.divisors, Finset.sum_pair (by have := hp.one_lt; omega)] at key
+    rw [key, if_pos hpm]
+    obtain ⟨k, rfl⟩ := hpm
+    have e2 : p * (p * k) / p ^ 2 = k := by
+      rw [show p * (p * k) = k * p ^ 2 by ring]; exact Nat.mul_div_cancel _ (pow_pos hp.pos _)
+    rw [e2, Nat.mul_div_cancel_left _ hp.pos]
+    simp
+  · have hg : Nat.gcd p m = 1 := (Nat.Prime.coprime_iff_not_dvd hp).2 hpm
+    rw [hg, Nat.divisors_one, Finset.sum_singleton] at key
+    rw [key, if_neg hpm]
+    simp
+
+theorem coe_shiftDiv (p j : ℕ) (hp : 0 < p) (τ : UpperHalfPlane) :
+    ((shiftDiv p j τ : UpperHalfPlane) : ℂ) = ((τ : ℂ) + j) / p := by
+  simp [shiftDiv, hp]
+
+theorem coe_mulNat (p : ℕ) (hp : 0 < p) (τ : UpperHalfPlane) :
+    ((mulNat p τ : UpperHalfPlane) : ℂ) = p * (τ : ℂ) := by
+  simp [mulNat, hp]
+
+theorem qParam_pow (z : ℂ) (n : ℕ) : 𝕢 1 z ^ n = Complex.exp (2 * π * Iℂ * n * z) := by
+  rw [Function.Periodic.qParam, ← Complex.exp_nat_mul]; congr 1; push_cast; ring
+
+theorem hasSum_coeff {f : CF N 2} (w : UpperHalfPlane) :
+    HasSum (fun n => coeff f n * 𝕢 1 (w : ℂ) ^ n) (f w) := by
+  have hΓ : (1 : ℝ) ∈ (CongruenceSubgroup.Gamma1 N : Subgroup (GL (Fin 2) ℝ)).strictPeriods := by
+    simp [CongruenceSubgroup.strictPeriods_Gamma1]
+  have : Fact (IsCusp OnePoint.infty (CongruenceSubgroup.Gamma1 N : Subgroup (GL (Fin 2) ℝ))) :=
+    ⟨Subgroup.isCusp_of_mem_strictPeriods one_pos hΓ⟩
+  exact ModularForm.hasSum_qExpansion f one_pos hΓ w
+
+/-- **`T_p f = a_p f` as functions on `ℍ`** (weight 2, DS's normalization): from the `q`-expansion and the
+coefficient relations. -/
+theorem hecke_eigen_fun {χ : DirichletCharacter ℂ N} {f : CF N 2}
+    (hf : PkgI4.IsNormalizedEigenform f χ) (p : ℕ) (hp : p.Prime) (τ : UpperHalfPlane) :
+    (∑ j ∈ Finset.range p, f (shiftDiv p j τ)) / p + p * χ (p : ZMod N) * f (mulNat p τ) =
+      coeff f p * f τ := by
+  have hp0 : 0 < p := hp.pos
+  have hpC : (p : ℂ) ≠ 0 := by exact_mod_cast hp0.ne'
+  set q := 𝕢 1 (τ : ℂ) with hq
+  -- the shifted sum
+  have h1 : HasSum (fun n => coeff f n * ∑ j ∈ Finset.range p,
+      Complex.exp (2 * π * Iℂ * n * (((τ : ℂ) + j) / p))) (∑ j ∈ Finset.range p, f (shiftDiv p j τ)) := by
+    have := hasSum_sum (s := Finset.range p) (fun j _ => hasSum_coeff (f := f) (shiftDiv p j τ))
+    convert this using 1
+    funext n
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    rw [qParam_pow, coe_shiftDiv p j hp0]
+  simp_rw [sum_exp_shift p hp0] at h1
+  have h1' : HasSum (fun n => if p ∣ n then coeff f n * q ^ (n / p) else 0)
+      ((∑ j ∈ Finset.range p, f (shiftDiv p j τ)) / p) := by
+    convert h1.div_const (p : ℂ) using 1
+    funext n
+    split_ifs
+    · rw [hq, qParam_pow]; field_simp
+    · simp
+  have hinj : Function.Injective (fun m : ℕ => p * m) := fun a b h => by simpa [hp0.ne'] using h
+  have hA : HasSum (fun m => coeff f (p * m) * q ^ m)
+      ((∑ j ∈ Finset.range p, f (shiftDiv p j τ)) / p) := by
+    rw [← hinj.hasSum_iff (fun n hn => by
+      rw [if_neg]; rintro ⟨k, rfl⟩; exact hn ⟨k, rfl⟩)] at h1'
+    convert h1' using 1
+    funext m
+    simp [Nat.mul_div_cancel_left _ hp0]
+  -- the `f(pτ)` term
+  have h2 : HasSum (fun n => if p ∣ n then coeff f (n / p) * q ^ n else 0) (f (mulNat p τ)) := by
+    rw [← hinj.hasSum_iff (fun n hn => by
+      rw [if_neg]; rintro ⟨k, rfl⟩; exact hn ⟨k, rfl⟩)]
+    convert hasSum_coeff (f := f) (mulNat p τ) using 1
+    funext m
+    simp only [comp_apply, dvd_mul_right, ite_true, Nat.mul_div_cancel_left _ hp0]
+    rw [hq, qParam_pow, qParam_pow, coe_mulNat p hp0]
+    congr 2; push_cast; ring
+  have h3 := hA.add (h2.mul_left (p * χ (p : ZMod N)))
+  have h4 := (hasSum_coeff (f := f) τ).mul_left (coeff f p)
+  refine h3.unique ?_
+  convert h4 using 1
+  funext m
+  rw [← _root_.mul_assoc, coeff_rec_prime hf p hp m]
+  split_ifs <;> ring
+
+theorem hasDerivAt_shift {f : CF N 2} {F : UpperHalfPlane → ℂ} (hF : IsPrimitive f F) (p j : ℕ)
+    (hp : 0 < p) (τ : UpperHalfPlane) :
+    HasDerivAt (fun z : ℂ => F (shiftDiv p j (UpperHalfPlane.ofComplex z)))
+      (f (shiftDiv p j τ) * (1 / p)) (τ : ℂ) := by
+  have hpC : (p : ℂ) ≠ 0 := by exact_mod_cast hp.ne'
+  have hm : HasDerivAt (fun z : ℂ => (z + j) / p) (1 / p) (τ : ℂ) := by
+    simpa using ((hasDerivAt_id (τ : ℂ)).add_const (j : ℂ)).div_const (p : ℂ)
+  have hF' := hF (shiftDiv p j τ)
+  rw [coe_shiftDiv p j hp] at hF'
+  have hc := hF'.comp (τ : ℂ) hm
+  apply hc.congr_of_eventuallyEq
+  filter_upwards [(UpperHalfPlane.isOpen_upperHalfPlaneSet).mem_nhds τ.im_pos] with z hz
+  simp only [Function.comp]
+  congr 1
+  rw [UpperHalfPlane.ofComplex_apply_of_im_pos hz]
+  rw [show (z + j) / p = ((shiftDiv p j ⟨z, hz⟩ : UpperHalfPlane) : ℂ) by
+    rw [coe_shiftDiv p j hp], UpperHalfPlane.ofComplex_apply]
+
+theorem hasDerivAt_gmul {f : CF N 2} {F : UpperHalfPlane → ℂ} (hF : IsPrimitive f F) (p : ℕ)
+    (hp : 0 < p) (g : SL(2, ℤ)) (τ : UpperHalfPlane) :
+    HasDerivAt (fun z : ℂ => F (g • mulNat p (UpperHalfPlane.ofComplex z)))
+      (f (g • mulNat p τ) * denom g (mulNat p τ) ^ (-2 : ℤ) * p) (τ : ℂ) := by
+  have hm : HasDerivAt (fun z : ℂ => (p : ℂ) * z) (p : ℂ) (τ : ℂ) := by
+    simpa using (hasDerivAt_id (τ : ℂ)).const_mul (p : ℂ)
+  have hF' := hasDerivAt_comp_smul hF g (mulNat p τ)
+  rw [coe_mulNat p hp] at hF'
+  have hc := hF'.comp (τ : ℂ) hm
+  rw [coe_mulNat p hp]
+  apply hc.congr_of_eventuallyEq
+  filter_upwards [(UpperHalfPlane.isOpen_upperHalfPlaneSet).mem_nhds τ.im_pos] with z hz
+  simp only [Function.comp]
+  congr 2
+  rw [UpperHalfPlane.ofComplex_apply_of_im_pos hz]
+  rw [show (p : ℂ) * z = ((mulNat p ⟨z, hz⟩ : UpperHalfPlane) : ℂ) by
+    rw [coe_mulNat p hp], UpperHalfPlane.ofComplex_apply]
+
+/-- **The `T_p` identity for primitives.** -/
+theorem eichler_heckeT {χ : DirichletCharacter ℂ N} {f : CF N 2}
+    (hf : PkgI4.IsNormalizedEigenform f χ) {F : UpperHalfPlane → ℂ} (hF : IsPrimitive f F)
+    (p : Nat.Primes) (g : SL(2, ℤ))
+    (hg : (p : ℕ) ∣ N ∨ ((N : ℤ) ∣ g 1 0 ∧ ((g 1 1 : ℤ) : ZMod N) = ((p : ℕ) : ZMod N)))
+    (τ τ' : UpperHalfPlane) :
+    (∑ j : Fin p, (F (shiftDiv p j τ) - F (shiftDiv p j τ'))) +
+        (if (p : ℕ) ∣ N then 0 else F (g • mulNat p τ) - F (g • mulNat p τ')) =
+      coeff f p * (F τ - F τ') := by
+  have hp0 : 0 < (p : ℕ) := p.2.pos
+  have hpC : ((p : ℕ) : ℂ) ≠ 0 := by exact_mod_cast hp0.ne'
+  let e : ℂ → ℂ := fun z => if (p : ℕ) ∣ N then 0 else F (g • mulNat p (UpperHalfPlane.ofComplex z))
+  let Φ : ℂ → ℂ := fun z => (∑ j ∈ Finset.range p, F (shiftDiv p j (UpperHalfPlane.ofComplex z))) +
+      e z - coeff f p * F (UpperHalfPlane.ofComplex z)
+  have hΦ : ∀ z ∈ {z : ℂ | 0 < z.im}, HasDerivAt Φ 0 z := by
+    intro z hz
+    set w : UpperHalfPlane := ⟨z, hz⟩
+    have hS := HasDerivAt.fun_sum (u := Finset.range p) (fun j _ => hasDerivAt_shift hF p j hp0 w)
+    have hE : HasDerivAt e (if (p : ℕ) ∣ N then 0 else
+        f (g • mulNat p w) * denom g (mulNat p w) ^ (-2 : ℤ) * p) z := by
+      by_cases hpN : (p : ℕ) ∣ N
+      · simp only [e, hpN, ite_true]; exact hasDerivAt_const _ _
+      · simp only [e, hpN, ite_false]; exact hasDerivAt_gmul hF p hp0 g w
+    have hT := (hS.add hE).sub ((hF w).const_mul (coeff f p))
+    convert hT using 1
+    have heig := hecke_eigen_fun hf p p.2 w
+    rw [← Finset.sum_mul]
+    by_cases hpN : (p : ℕ) ∣ N
+    · have hχ : χ ((p : ℕ) : ZMod N) = 0 := by
+        apply χ.map_nonunit
+        rw [ZMod.isUnit_iff_coprime]
+        exact fun h => (Nat.Prime.coprime_iff_not_dvd p.2).1 h hpN
+      rw [hχ] at heig
+      simp only [hpN, ite_true]
+      rw [← heig]; ring
+    · obtain ⟨hg1, hg2⟩ := hg.resolve_left hpN
+      have hmem : g ∈ CongruenceSubgroup.Gamma0 N := by
+        rw [CongruenceSubgroup.Gamma0_mem]; exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).2 hg1
+      have hneb := congrFun (hf.1 g hmem) (mulNat p w)
+      rw [ModularForm.SL_slash_apply, hg2] at hneb
+      simp only [hpN, ite_false]
+      rw [hneb, Pi.smul_apply, smul_eq_mul, ← heig]; field_simp; ring
+  have hconst := (UpperHalfPlane.isOpen_upperHalfPlaneSet).is_const_of_deriv_eq_zero
+    (convex_halfSpace_im_gt 0).isPreconnected
+    (fun z hz => (hΦ z hz).differentiableAt.differentiableWithinAt)
+    (fun z hz => (hΦ z hz).deriv) (x := (τ : ℂ)) (y := (τ' : ℂ)) τ.im_pos τ'.im_pos
+  simp only [Φ, e, UpperHalfPlane.ofComplex_apply] at hconst
+  rw [Fin.sum_univ_eq_sum_range (fun j => F (shiftDiv p j τ) - F (shiftDiv p j τ')),
+    Finset.sum_sub_distrib]
+  split_ifs at hconst ⊢ <;> linear_combination hconst
+
+/-- **`EichlerHecke` holds.** -/
+theorem eichlerHecke : EichlerHecke := by
+  intro N χ f _ hf F hF
+  exact ⟨fun p g hg τ τ' => eichler_heckeT hf hF p g hg τ τ',
+    fun d g hg1 hg2 τ τ' => eichler_diamond hf.1 hF d g hg1 hg2 τ τ'⟩
+
+
 end EichlerProofs
+
+/-! ## Gap 1 with the glue discharged -/
+
+/-- **`ker(heckeJ) ⊆ ker(evF)` from the two analytic leaf candidates alone.** -/
+theorem evF_eq_zero_of_heckeJ_eq_zero_of_leaves (hP : X1TauPoints) (hAJ : AbelJacobiX1) (hN : 2 ≤ N)
+    {χ : DirichletCharacter ℂ N} {f : CF N 2} (hf : PkgI4.IsNormalizedEigenform f χ)
+    {X : Over SpecQ} [IsIntegral X.left] {J : AbVar ℚ} {jX tX : X.left.functionField} (hC : IsCurve X)
+    (hG : IsX1Gen N X jX tX) {P₀ : RatPt X} {aj : X ⟶ J.X} (hJ : IsJacobian X P₀ J aj)
+    {tp : Nat.Primes → AbVar.End J} {δ : (ZMod N)ˣ → AbVar.End J}
+    (htp : ∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p))
+    (hδ : ∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) (h : HeckeFree N)
+    (h0 : heckeJ tp δ h = 0) : evF χ f h = 0 :=
+  evF_eq_zero_of_heckeJ_eq_zero hP hAJ eichlerPrimitive eichlerHecke hN hf hC hG hJ htp hδ h h0
+
+/-- **`KillsIf φ` iff `φ` kills DS's `I_f J`, from the two analytic leaf candidates alone.** -/
+theorem killsIf_iff_IfDS_of_leaves (hP : X1TauPoints) (hAJ : AbelJacobiX1) (hN : 2 ≤ N)
+    {χ : DirichletCharacter ℂ N} {f : CF N 2} (hf : PkgI4.IsNormalizedEigenform f χ)
+    {X : Over SpecQ} [IsIntegral X.left] {J : AbVar ℚ} {jX tX : X.left.functionField} (hC : IsCurve X)
+    (hG : IsX1Gen N X jX tX) {P₀ : RatPt X} {aj : X ⟶ J.X} (hJ : IsJacobian X P₀ J aj)
+    {tp : Nat.Primes → AbVar.End J} {δ : (ZMod N)ˣ → AbVar.End J}
+    (htp : ∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p))
+    (hδ : ∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) {B : AbVar ℚ} (φ : AbVar.Hom J B) :
+    KillsIf χ f tp δ φ ↔ ∀ T ∈ IfDS χ f tp δ, T.hom ≫ φ.hom = (0 : AbVar.Hom J B).hom :=
+  killsIf_iff_IfDS hP hAJ eichlerPrimitive eichlerHecke hN hf hC hG hJ htp hδ φ
+
 
 end AfTateLam.HeckePin
