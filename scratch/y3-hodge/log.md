@@ -16,3 +16,4 @@ unrelated TYZThm21Span files).
 ## Compile log
 - Hodge.lean stage 1 (§0 UP lemmas + pel-hodge H1/H1Form/Unif/Main/h1Form_iff, rebased on CloudB3W17Hodge):
   compiles, 0 errors (2m33).
+- Hodge.lean stage 2 (continuous_postcomp, pushLoop = f_* on H1, continuous_of_isAnalyticHom, IsHodgeH1Print, bOf bijective 𝒪 ≃ Λ_τ): compiles, 0 errors.

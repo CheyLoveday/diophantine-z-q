@@ -396,4 +396,105 @@ theorem h1Form_iff (hU : Uniformization.UniformizationLeafAll) {A : AbVar ℂ} {
     exact exists_H1_of_isUniformization hU e hu
 
 
+/-! ## 2. Functoriality of `H₁`, continuity of analytic homomorphisms -/
+
+/-- A morphism of `ℂ`-schemes is continuous on `ℂ`-points for the classical topology. -/
+theorem continuous_postcomp {X Y : Over (Spec (CommRingCat.of ℂ))} (f : X ⟶ Y) :
+    Continuous (fun P : CPt X => P ≫ f) := by
+  refine (continuous_generateFrom_iff (b := CloudB3W17Hodge.basicSets Y)).mpr ?_
+  rintro S ⟨U, s, z, ε, rfl⟩
+  have hiff : ∀ P : CPt X, XPtIn Y (P ≫ f) U ↔ XPtIn X P (f.left ⁻¹ᵁ U) := fun P => Iff.rfl
+  have hev : ∀ P : CPt X,
+      XevalAt Y U s (P ≫ f) = XevalAt X (f.left ⁻¹ᵁ U) (f.left.app U s) P := by
+    intro P
+    unfold XevalAt
+    by_cases h : XPtIn X P (f.left ⁻¹ᵁ U)
+    · rw [dif_pos h, dif_pos ((hiff P).mpr h)]
+      simp only [Over.comp_left, Scheme.Hom.comp_appLE, CommRingCat.hom_comp, RingHom.comp_apply]
+      rfl
+    · rw [dif_neg h, dif_neg (fun h' => h ((hiff P).mp h'))]
+  have : (fun P : CPt X => P ≫ f) ⁻¹' {Q | XPtIn Y Q U ∧ ‖XevalAt Y U s Q - z‖ < ε} =
+      {P | XPtIn X P (f.left ⁻¹ᵁ U) ∧ ‖XevalAt X (f.left ⁻¹ᵁ U) (f.left.app U s) P - z‖ < ε} := by
+    ext P
+    simp only [mem_preimage, mem_setOf_eq, hev P]
+    exact and_congr_left' (hiff P)
+  rw [this]
+  exact UP.isOpen_basic _ _ _
+
+/-- **`f_*` on loops** for an endomorphism `f` of `A` (a homomorphism, so `f(0) = 0`): `t ↦ f(ℓ(t))`.
+The class `loopClass (pushLoop f ℓ)` is `f_* [ℓ]`, the functoriality of `H₁(A(ℂ), ℤ) = π₁(A(ℂ), 0)ᵃᵇ`. -/
+def pushLoop {A : AbVar ℂ} (f : AbVar.End A) (lp : Path (1 : A.Pt ℂ) 1) : Path (1 : A.Pt ℂ) 1 where
+  toFun t := lp t ≫ f.hom
+  continuous_toFun := (continuous_postcomp (X := A.X) (Y := A.X) f.hom).comp lp.continuous
+  source' := by
+    rw [Path.source]; exact map_one (AbVar.ptMap (L := ℂ) f)
+  target' := by
+    rw [Path.target]; exact map_one (AbVar.ptMap (L := ℂ) f)
+
+theorem pushLoop_apply {A : AbVar ℂ} (f : AbVar.End A) (lp : Path (1 : A.Pt ℂ) 1) (t : unitInterval) :
+    pushLoop f lp t = lp t ≫ f.hom := rfl
+
+/-- An analytic homomorphism `ℂⁿ → A(ℂ)` is continuous for the classical topology (it factors through a
+uniformization by a `ℂ`-linear map). -/
+theorem continuous_of_isAnalyticHom (hU : Uniformization.UniformizationLeafAll) {A : AbVar ℂ} {n : ℕ}
+    {e : (Fin n → ℂ) → CPts A (RingHom.id ℂ)} (he : IsAnalyticHom (RingHom.id ℂ) e) :
+    Continuous (show (Fin n → ℂ) → A.Pt ℂ from e) := by
+  obtain ⟨g, Λ', hd, hz, φ, hφ⟩ := hU A
+  obtain ⟨D, hD⟩ := ZInQ.HomLattice.exists_complexLinear_of_analytic_strong
+    (ZInQ.HomLattice.isStrongUnif_of_bp hφ) he
+  have : (show (Fin n → ℂ) → A.Pt ℂ from e) = pmap φ ∘ D := funext fun v => (hD v).symm
+  rw [this]; exact (continuous_pmap hφ).comp D.continuous
+
+/-! ## 3. The print's moduli clause: `(H₁(A, ℤ), 𝒪, h_A) ≅ (𝒪, left multiplication, h_τ)` -/
+
+section Print
+
+open HDec.HSyn.G0Split.FibreQM (qmMat IotaCompatible)
+
+/-- **The moduli clause in the print's form** (Deligne, Sém. Bourbaki 389, §4; Milne, ISV, §§6–8: the point
+`[h_τ, u]`, `u ∈ 𝒪̂^×` so that `L_u = 𝒪`, is the abelian variety `A` with `(H₁(A, ℤ), ι_*, h_A) ≅ (𝒪, left mult.,
+h_τ)`), over genuine definitions:
+* `H₁(A, ℤ) = H1 P.A = π₁(A(ℂ), 0)ᵃᵇ` (Mathlib's fundamental group and abelianization; `A(ℂ)` with its classical
+  topology; Hurewicz);
+* `e : ℂⁿ → A(ℂ)` is a holomorphic homomorphism (`IsAnalyticHom`), i.e. `e = exp_A ∘ L` with `L : ℂⁿ → Lie A`
+  `ℂ`-linear: `ℂⁿ` with `e` stands for `Lie A` with `exp_A`, whose kernel is `H₁(A, ℤ)`;
+* `c b = [t ↦ e(t β(b))]`, `b ∈ 𝒪`: the iso `𝒪 ≅ H₁(A, ℤ)` (bijective) is `b ↦ L β(b) ∈ ker exp_A`, extended
+  `ℝ`-linearly by `L ∘ β : B_ℝ → H₁(A, ℝ) = Lie A`;
+* `𝒪`-linearity on `H₁`: `ι_A(a)_* c(b) = c(ab)` (the action of `ι_A(a)` on `H₁` by functoriality, `pushLoop`);
+* the Hodge structure: the complex structure of `H₁(A, ℝ) = Lie A` corresponds to right multiplication by
+  `J_τ = Jmat τ` (`β(M J_τ) = i β(M)`), the complex structure of `(B_ℝ, h_τ)`. -/
+def IsHodgeH1Print (P : QML3 ℂ) (τ : UpperHalfPlane) : Prop :=
+  ∃ (n : ℕ) (e : (Fin n → ℂ) → CPts P.A (RingHom.id ℂ))
+    (β : Matrix (Fin 2) (Fin 2) ℝ ≃ₗ[ℝ] (Fin n → ℂ)) (c : O → Path (1 : P.A.Pt ℂ) 1),
+    IsAnalyticHom (RingHom.id ℂ) e ∧
+    (∀ (b : O) (t : unitInterval), c b t = e (((t : ℝ) : ℂ) • β (BPAnalytic.QM.iota (b : B)))) ∧
+    Function.Bijective (fun b => loopClass (c b)) ∧
+    (∀ a b : O, loopClass (pushLoop (P.q.iota a) (c b)) = loopClass (c (a * b))) ∧
+    (∀ M, β (M * Y3Fix.Jmat τ) = Complex.I • β M)
+
+/-- `b ↦ ℓ_τ(ι b) = ι(b)(τ, 1)ᵀ`, `𝒪 → Λ_τ`. -/
+def bOf (τ : UpperHalfPlane) (b : O) : BPAnalytic.QM.qmLattice τ.im_pos.ne' :=
+  ⟨Y3Fix.ellE τ (BPAnalytic.QM.iota (b : B)),
+    (HDec.HSyn.G0Split.FibreQM.PeriodGlue.mem_qmLattice_iff _ _).2 ⟨b, b.2, (Y3Fix.latVec_eq τ b).symm⟩⟩
+
+theorem bOf_val (τ : UpperHalfPlane) (b : O) :
+    (bOf τ b : Fin 2 → ℂ) = Y3Fix.ellE τ (BPAnalytic.QM.iota (b : B)) := rfl
+
+theorem bOf_bijective (τ : UpperHalfPlane) : Function.Bijective (bOf τ) := by
+  refine ⟨fun b b' h => ?_, fun v => ?_⟩
+  · have h1 := congrArg (fun v : BPAnalytic.QM.qmLattice τ.im_pos.ne' => (v : Fin 2 → ℂ)) h
+    simp only [bOf_val] at h1
+    rw [← Y3Fix.latVec_eq, ← Y3Fix.latVec_eq] at h1
+    exact Subtype.ext (RayClassCFT.iota_eig_inj τ.im_pos.ne' h1)
+  · obtain ⟨b, hb, hv⟩ := (HDec.HSyn.G0Split.FibreQM.PeriodGlue.mem_qmLattice_iff _ _).mp v.2
+    refine ⟨⟨b, hb⟩, Subtype.ext ?_⟩
+    rw [bOf_val, ← Y3Fix.latVec_eq]; exact hv.symm
+
+theorem ellE_iota_mul (τ : UpperHalfPlane) (a b : O) :
+    Y3Fix.ellE τ (BPAnalytic.QM.iota ((a * b : O) : B)) =
+      (qmMat a).mulVec (Y3Fix.ellE τ (BPAnalytic.QM.iota (b : B))) := by
+  rw [Subring.coe_mul, RayClassCFT.iota_mul, Y3Fix.ellE_iota]
+
+end Print
+
 end Y3Hodge
