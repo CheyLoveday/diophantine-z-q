@@ -7,6 +7,19 @@ integer coefficients such that a rational number `q` is an integer exactly when 
 The Lean result is conditional: it proves the theorem from the open hypotheses counted below, and those are not
 proved in Lean.
 
+The proof follows the manuscript's route. Its hypotheses are pole completeness (Theorem 5.2) for the manuscript's
+own pole polynomial, and the statements from which Lean derives the instance of the six-contact height estimate (the
+manuscript's Theorem 4.1) that the proof uses. The manuscript derives pole completeness from its restricted converse
+theorem (Theorem 5.3); formalizing that derivation is [#83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+Given those two hypotheses, the main theorem departs from the manuscript in two smaller steps, both proved: route AP
+replaces Proposition 6.2 by Szemerédi's theorem in the primes together with a density theorem for the good primes
+(Proposition D), and the catalogue bound is proved in the weaker form CAT₈. Deriving the height estimate from the
+literature also re-sources some steps of the manuscript's Section 4 and replaces its last step. An earlier proof,
+Route K, replaced pole completeness by an argument through Tian–Yuan–Zhang and Gross–Zagier for a different pole
+polynomial. It is retired and kept at the tag
+[`route-k-final`](https://github.com/Deicyde/diophantine-z-q/tree/route-k-final);
+[`docs/research/rs-pole.md`](docs/research/rs-pole.md) explains why it existed.
+
 ## Status (fork `main` at `da9f973f`, 2026-11-17)
 
 - **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from
@@ -40,12 +53,13 @@ proved in Lean.
 
 Elliot Glazer's repository, [elliotglazer/diophantine-z-q](https://github.com/elliotglazer/diophantine-z-q), plans
 to take this work in as staged pull requests once its Lean CI is fixed; [#139](https://github.com/elliotglazer/diophantine-z-q/pull/139)
-holds this fork as of `c1e4ed1b`. Its topic issues
-([#74](https://github.com/elliotglazer/diophantine-z-q/issues/74),
-[#76](https://github.com/elliotglazer/diophantine-z-q/issues/76),
+holds this fork as of `c1e4ed1b`, which predates the switch away from Route K. Its topic issues
 [#81](https://github.com/elliotglazer/diophantine-z-q/issues/81) to
 [#86](https://github.com/elliotglazer/diophantine-z-q/issues/86), indexed in
-[#37](https://github.com/elliotglazer/diophantine-z-q/issues/37)) list the open statements by area.
+[#37](https://github.com/elliotglazer/diophantine-z-q/issues/37), list the open statements of the height estimate by
+area. Its issues [#74](https://github.com/elliotglazer/diophantine-z-q/issues/74) and
+[#76](https://github.com/elliotglazer/diophantine-z-q/issues/76) concern Route K's inputs from Tian–Yuan–Zhang and
+Gross–Zagier, which the theorem no longer uses.
 
 ## Contribute
 
@@ -54,8 +68,9 @@ Start at [issue #14](https://github.com/Deicyde/diophantine-z-q/issues/14); a co
 - **Prove a hypothesis in Lean:** pick an `open` row on [OPEN.md](docs/one-proof/OPEN.md), claim it on #14, follow
   [CONTRIBUTING.md](docs/one-proof/CONTRIBUTING.md), and open a pull request against this fork's `main`.
 - **Check a statement against its printed source** (no Lean needed): follow
-  [STATEMENT-CHECKS.md](docs/one-proof/STATEMENT-CHECKS.md); [pages-wanted.md](docs/one-proof/pages-wanted.md)
-  lists the pages to read. A person's reading counts for more than an AI's: it is what clears a statement's flags.
+  [STATEMENT-CHECKS.md](docs/one-proof/STATEMENT-CHECKS.md); [pages-wanted.md](docs/one-proof/pages-wanted.md) lists
+  the pages to read. A person's reading counts for more than an AI's: apart from `unread`, only a person's reading
+  clears a statement's flags.
 
 ## Check it yourself
 
