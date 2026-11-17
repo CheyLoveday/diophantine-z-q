@@ -33,12 +33,12 @@ field `L ⊆ ℚ̄` with `[L:ℚ] ≤ D` and a model `A/L` of `P.A` (an isomorph
 `L = EK`, `E` the kernel field of `G_ℚ` on the endomorphism lattice of `W₀ = Res_{K/ℚ} A`. -/
 def CMHomFieldModel : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (π : ToP1 Y.left) (u : ℚ)
-    (P : QML3 Qbar), G0ModField.FibreCtx Y Φ π u P →
+    (P : QML3 LeafQM.AV.Qbar), G0ModField.FibreCtx Y Φ π u P →
     ∃ (L : G0ModField.IF) (_ : FiniteDimensional ℚ L), Module.finrank ℚ L ≤ heightD ∧
-      ∃ (A : PkgI3.AbVar L) (θ : PkgI3.AbVar.Hom (A.baseChange Qbar) P.A)
-        (θ' : PkgI3.AbVar.Hom P.A (A.baseChange Qbar)),
+      ∃ (A : PkgI3.AbVar L) (θ : PkgI3.AbVar.Hom (A.baseChange LeafQM.AV.Qbar) P.A)
+        (θ' : PkgI3.AbVar.Hom P.A (A.baseChange LeafQM.AV.Qbar)),
         θ.hom ≫ θ'.hom = 𝟙 _ ∧ θ'.hom ≫ θ.hom = 𝟙 _ ∧
-        Function.Surjective (G0ModField.KernelField.endBC A Qbar)
+        Function.Surjective (G0ModField.KernelField.endBC A LeafQM.AV.Qbar)
 
 /-- **Glue (manuscript L582-586: matrix units).** An abelian surface `A` over a number field `L`
 all of whose geometric endomorphisms are defined over `L` (`End(A) → End(A_Ω)` onto, `Ω` an
@@ -65,7 +65,7 @@ def CMMatrixUnitSplit : Prop :=
 after its case analysis copied verbatim: `B → End⁰` is onto by dimension, `End` is an order of
 `ι(B)` containing the maximal order `ι(𝒪)`). -/
 theorem end_eq_iota_of_B (hHF : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC)
-    (P : QML3 Qbar) (hB : Nonempty (PkgI3.AbVar.End0 P.A ≃ₐ[ℚ] ℍ[ℚ, 2, -3]))
+    (P : QML3 LeafQM.AV.Qbar) (hB : Nonempty (PkgI3.AbVar.End0 P.A ≃ₐ[ℚ] ℍ[ℚ, 2, -3]))
     (f : PkgI3.AbVar.End P.A) : ∃ a : LeafQM.O, f = P.q.iota a := by
   have hmax := G0ModField.KernelField.oMaximal
   obtain ⟨e⟩ := hB
@@ -79,8 +79,8 @@ theorem end_eq_iota_of_B (hHF : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFin
   have hsurj : Function.Surjective φ :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hrank (f := φ.toLinearMap)).mp hinj
   let j : PkgI3.AbVar.End P.A →ₐ[ℤ] PkgI3.AbVar.End0 P.A := Algebra.TensorProduct.includeRight
-  have hfree : Module.Free ℤ (PkgI3.AbVar.End P.A) := (hHF Qbar _root_.HFReroute.sigmaQbar P.A P.A).1
-  haveI : Module.Finite ℤ (PkgI3.AbVar.End P.A) := (hHF Qbar _root_.HFReroute.sigmaQbar P.A P.A).2.1
+  have hfree : Module.Free ℤ (PkgI3.AbVar.End P.A) := (hHF LeafQM.AV.Qbar _root_.HFReroute.sigmaQbar P.A P.A).1
+  haveI : Module.Finite ℤ (PkgI3.AbVar.End P.A) := (hHF LeafQM.AV.Qbar _root_.HFReroute.sigmaQbar P.A P.A).2.1
   let tm := TensorProduct.mk ℤ ℚ (PkgI3.AbVar.End P.A) 1
   have hloc : IsLocalizedModule (nonZeroDivisors ℤ) tm :=
     (isLocalizedModule_iff_isBaseChange (nonZeroDivisors ℤ) ℚ tm).mpr
@@ -169,10 +169,10 @@ theorem central_O (a : LeafQM.O) (hi : a * G0FibreSimple.oi = G0FibreSimple.oi *
 /-- **The CM case (manuscript L572-581, through Yu's dichotomy).** If the `𝒪`-centralizer of a QM
 surface over `ℚ̄` contains a non-integer, then `End⁰ ≅ M₂(ℚ(√d))` with `d < 0`. -/
 theorem end0Matrix_of_noncentral (hYu : QMLattice.YuB6Alg)
-    (hHF : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC) (P : QML3 Qbar)
+    (hHF : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC) (P : QML3 LeafQM.AV.Qbar)
     (φ : PkgI3.AbVar.End P.A) (hφ : φ ∈ com P.q) (hne : ∀ n : ℤ, φ ≠ (n : PkgI3.AbVar.End P.A)) :
     ∃ d : ℚ, d < 0 ∧ Nonempty (PkgI3.AbVar.End0 P.A ≃ₐ[ℚ] Matrix (Fin 2) (Fin 2) (Kd d)) := by
-  rcases hYu Qbar P.A P.surface P.q with hB | h
+  rcases hYu LeafQM.AV.Qbar P.A P.surface P.q with hB | h
   · exfalso
     obtain ⟨a, ha⟩ := end_eq_iota_of_B hHF P hB φ
     have hc : ∀ b : LeafQM.O, a * b = b * a := by
@@ -195,11 +195,11 @@ def endEquivOfIso {K : Type} [Field K] {A B : PkgI3.AbVar K} (θ : PkgI3.AbVar.H
   toFun f := PkgI3.AbVar.Hom.mk' (θ'.hom ≫ f.hom ≫ θ.hom)
   invFun g := PkgI3.AbVar.Hom.mk' (θ.hom ≫ g.hom ≫ θ'.hom)
   left_inv f := PkgI3.AbVar.Hom.ext' (by
-    simp only [PkgI3.AbVar.Hom.hom_mk']
-    rw [reassoc_of% h1, Category.assoc, h1, Category.comp_id])
+    simp only [PkgI3.AbVar.Hom.hom_mk', Category.assoc]
+    rw [reassoc_of% h1, h1, Category.comp_id])
   right_inv g := PkgI3.AbVar.Hom.ext' (by
-    simp only [PkgI3.AbVar.Hom.hom_mk']
-    rw [reassoc_of% h2, Category.assoc, h2, Category.comp_id])
+    simp only [PkgI3.AbVar.Hom.hom_mk', Category.assoc]
+    rw [reassoc_of% h2, h2, Category.comp_id])
   map_mul' f g := PkgI3.AbVar.Hom.ext' (by
     change θ'.hom ≫ (g.hom ≫ f.hom) ≫ θ.hom =
       (θ'.hom ≫ g.hom ≫ θ.hom) ≫ θ'.hom ≫ f.hom ≫ θ.hom
@@ -208,13 +208,168 @@ def endEquivOfIso {K : Type} [Field K] {A B : PkgI3.AbVar K} (θ : PkgI3.AbVar.H
   map_add' f g := PkgI3.AbVar.Hom.ext' (by
     change θ'.hom ≫ (f.hom * g.hom) ≫ θ.hom =
       (θ'.hom ≫ f.hom ≫ θ.hom) * (θ'.hom ≫ g.hom ≫ θ.hom)
-    rw [MonObj.mul_comp, MonObj.comp_mul, Category.assoc, Category.assoc])
+    simp only [MonObj.mul_comp, MonObj.comp_mul, Category.assoc])
 
 /-- `End⁰ A ≅ End⁰ B` as `ℚ`-algebras, for inverse homomorphisms. -/
 def end0EquivOfIso {K : Type} [Field K] {A B : PkgI3.AbVar K} (θ : PkgI3.AbVar.Hom A B)
     (θ' : PkgI3.AbVar.Hom B A) (h1 : θ.hom ≫ θ'.hom = 𝟙 _) (h2 : θ'.hom ≫ θ.hom = 𝟙 _) :
     PkgI3.AbVar.End0 A ≃ₐ[ℚ] PkgI3.AbVar.End0 B :=
   Algebra.TensorProduct.congr AlgEquiv.refl (endEquivOfIso θ θ' h1 h2).toIntAlgEquiv
+
+/-! ## 4. A8's Hom field without NoCM: `CMHomFieldModel` from the chain's proved pieces -/
+
+section HomField
+
+open TwistDescentXC TwistDescentHFD G0ModField G0ModField.KernelField
+
+/-- **The pasting isomorphism** `(B_L)_ℚ̄ ≅ B ×_{K} ℚ̄` (the conjugate of `B` at `K ⊆ ℚ̄`), as
+inverse homomorphisms (rigidity), compatible with the comparison `B_ℚ̄ → B_L`. -/
+theorem paste_iso {K : IF} (B : PkgI3.AbVar K) {L : IF} (hKL : K ≤ L) :
+    letI : Algebra K L := incAlg hKL
+    ∃ (h₁ : sp ((K.val : K →ₐ[ℚ] LeafQM.AV.Qbar) : K →+* LeafQM.AV.Qbar) = sp (algebraMap L LeafQM.AV.Qbar) ≫ sp (algebraMap K L))
+      (θ : PkgI3.AbVar.Hom ((B.baseChange L).baseChange LeafQM.AV.Qbar) ((G4WeilRes.conjData K B).A K.val))
+      (θ' : PkgI3.AbVar.Hom ((G4WeilRes.conjData K B).A K.val) ((B.baseChange L).baseChange LeafQM.AV.Qbar)),
+      θ.hom ≫ θ'.hom = 𝟙 _ ∧ θ'.hom ≫ θ.hom = 𝟙 _ ∧
+      θ.hom.left ≫ xc B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁ =
+        pullback.fst (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar)) := by
+  letI : Algebra K L := incAlg hKL
+  have h₁ : sp ((K.val : K →ₐ[ℚ] LeafQM.AV.Qbar) : K →+* LeafQM.AV.Qbar) = sp (algebraMap L LeafQM.AV.Qbar) ≫ sp (algebraMap K L) :=
+    sp_eq _ _ _ fun x => rfl
+  let C : PkgI3.AbVar LeafQM.AV.Qbar := (G4WeilRes.conjData K B).A K.val
+  let A' : PkgI3.AbVar LeafQM.AV.Qbar := (B.baseChange L).baseChange LeafQM.AV.Qbar
+  have hP := xc_isPullback B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁
+  have hP0 : IsPullback (pullback.fst (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar)))
+      (pullback.snd (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar)))
+      (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar)) :=
+    IsPullback.of_hasPullback _ _
+  let ιso := hP0.isoIsPullback _ _ hP
+  have hιfst : ιso.hom ≫ xc B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁ = pullback.fst _ _ :=
+    hP0.isoIsPullback_hom_fst _ _ hP
+  have hιsnd : ιso.hom ≫ pullback.snd B.X.hom (sp ((K.val : K →ₐ[ℚ] LeafQM.AV.Qbar) : K →+* LeafQM.AV.Qbar)) =
+      pullback.snd _ _ := hP0.isoIsPullback_hom_snd _ _ hP
+  let t : A'.X ⟶ C.X := Over.homMk ιso.hom hιsnd
+  let t' : C.X ⟶ A'.X := Over.homMk ιso.inv ((Iso.inv_comp_eq ιso).mpr hιsnd.symm)
+  have htt : t ≫ t' = 𝟙 _ := by apply Over.OverMorphism.ext; exact ιso.hom_inv_id
+  have ht't : t' ≫ t = 𝟙 _ := by apply Over.OverMorphism.ext; exact ιso.inv_hom_id
+  let ηA : Spec (CommRingCat.of LeafQM.AV.Qbar) ⟶
+      pullback (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar)) :=
+    η[A'.X].left
+  let ηC : Spec (CommRingCat.of LeafQM.AV.Qbar) ⟶
+      pullback B.X.hom (sp ((K.val : K →ₐ[ℚ] LeafQM.AV.Qbar) : K →+* LeafQM.AV.Qbar)) := η[C.X].left
+  have hηl : ηA ≫ ιso.hom = ηC := by
+    apply hP.hom_ext
+    · rw [Category.assoc, hιfst]
+      exact (G4Conj.one_left_fst (sp (algebraMap L LeafQM.AV.Qbar)) (B.baseChange L).X).trans
+        (xc_one B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁).symm
+    · rw [Category.assoc, hιsnd]
+      exact (Over.w η[A'.X]).trans (Over.w η[C.X]).symm
+  have hη : η[A'.X] ≫ t = η[C.X] := Over.OverMorphism.ext hηl
+  have hη' : η[C.X] ≫ t' = η[A'.X] := by rw [← hη, Category.assoc, htt, Category.comp_id]
+  haveI : IsMonHom t := G0FibreSimple.rigidityHom LeafQM.AV.Qbar A' C t hη
+  haveI : IsMonHom t' := G0FibreSimple.rigidityHom LeafQM.AV.Qbar C A' t' hη'
+  exact ⟨h₁, PkgI3.AbVar.Hom.mk' t, PkgI3.AbVar.Hom.mk' t', htt, ht't, hιfst⟩
+
+/-- **Every endomorphism of `(B_L)_ℚ̄` is defined over `L`** when `L ⊇ K` is a Hom field of `B`
+(`G_L` acts trivially on the Hom lattice of the conjugates; manuscript L560-561 "It defines every
+geometric endomorphism"): `td_hom_inv` (`G_L`-invariance), `hfd` (descent), rigidity. -/
+theorem endBC_surjective_of_homField {K : IF} [FiniteDimensional ℚ K] [IsGalois ℚ K]
+    (B : PkgI3.AbVar K) {L : IF} [FiniteDimensional ℚ L] [IsGalois ℚ L] (hKL : K ≤ L)
+    (hHF : ∀ σ ∈ L.fixingSubgroup, G4WeilRes.conjAction K B σ = 1) :
+    Function.Surjective (@endBC L _ (@PkgI3.AbVar.baseChange K _ B L _ (incAlg hKL)) LeafQM.AV.Qbar _ _) := by
+  letI : Algebra K L := incAlg hKL
+  obtain ⟨h₁, θ, θ', hθθ', hθ'θ, hθx⟩ := paste_iso B hKL
+  intro f
+  let f₀ : PkgI3.AbVar.End ((G4WeilRes.conjData K B).A K.val) :=
+    PkgI3.AbVar.Hom.mk' (θ'.hom ≫ f.hom ≫ θ.hom)
+  let e₀ : K →ₐ[ℚ] LeafQM.AV.Qbar := K.val
+  let e₁L : K →+* L := algebraMap K L
+  have he₁ : ∀ x, (e₁L x : LeafQM.AV.Qbar) = (e₀ : K →+* LeafQM.AV.Qbar) x := fun x => rfl
+  let φ₀ : pullback B.X.hom (sp (e₀ : K →+* LeafQM.AV.Qbar)) ⟶
+      pullback B.X.hom (sp (e₀ : K →+* LeafQM.AV.Qbar)) := f₀.hom.left
+  have hφs : φ₀ ≫ pullback.snd B.X.hom (sp (e₀ : K →+* LeafQM.AV.Qbar)) =
+      pullback.snd B.X.hom (sp (e₀ : K →+* LeafQM.AV.Qbar)) := Over.w f₀.hom
+  obtain ⟨φL, hφL⟩ := hfd B.X B.X e₁L e₁L _ _ h₁ h₁ he₁ he₁ φ₀ hφs
+    (fun k hk k₁ k₂ => td_hom_inv B hKL hHF e₀ e₀ f₀ k hk k₁ k₂)
+  have ep₁ := xc_epi B.X e₁L _ h₁
+  have hφLs : φL ≫ pullback.snd B.X.hom (sp e₁L) = pullback.snd B.X.hom (sp e₁L) := by
+    rw [← cancel_epi (xc B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁), ← Category.assoc, hφL,
+      Category.assoc, xc_snd, ← Category.assoc, hφs]
+  haveI := specQbar_epi L
+  have o1 := xc_one B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁
+  have o3 : η[((G4WeilRes.conjData K B).A e₀).X].left ≫ f₀.hom.left =
+      η[((G4WeilRes.conjData K B).A e₀).X].left := by
+    show (η[((G4WeilRes.conjData K B).A e₀).X] ≫ f₀.hom).left = _
+    rw [IsMonHom.one_hom]
+  let ηL : Spec (CommRingCat.of L) ⟶ pullback B.X.hom (sp e₁L) := η[(B.baseChange L).X].left
+  let ηQ : Spec (CommRingCat.of LeafQM.AV.Qbar) ⟶ pullback B.X.hom (sp (e₀ : K →+* LeafQM.AV.Qbar)) :=
+    η[((G4WeilRes.conjData K B).A e₀).X].left
+  have o1' : ηQ ≫ xc B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁ = sp (algebraMap L LeafQM.AV.Qbar) ≫ ηL := o1
+  have o3' : ηQ ≫ φ₀ = ηQ := o3
+  have hηL : ηL ≫ φL = ηL := by
+    apply (cancel_epi (sp (algebraMap L LeafQM.AV.Qbar))).mp
+    rw [← Category.assoc, ← o1', Category.assoc, hφL, ← Category.assoc, o3']
+  let g' : (B.baseChange L).X ⟶ (B.baseChange L).X := Over.homMk φL hφLs
+  have hη : η[(B.baseChange L).X] ≫ g' = η[(B.baseChange L).X] := Over.OverMorphism.ext hηL
+  haveI : IsMonHom g' := G0FibreSimple.rigidityHom L _ _ g' hη
+  have hf : f.hom.left ≫ θ.hom.left = θ.hom.left ≫ f₀.hom.left := by
+    have h : θ.hom.left ≫ θ'.hom.left = 𝟙 _ := by rw [← Over.comp_left, hθθ', Over.id_left]
+    show _ = θ.hom.left ≫ (θ'.hom.left ≫ f.hom.left ≫ θ.hom.left)
+    rw [reassoc_of% h]
+  refine ⟨PkgI3.AbVar.Hom.mk' g', PkgI3.AbVar.Hom.ext' (Over.OverMorphism.ext ?_)⟩
+  apply pullback.hom_ext
+  · change ((Over.pullback (sp (algebraMap L LeafQM.AV.Qbar))).map g').left ≫ _ = _
+    simp only [Over.pullback_map_left, pullback.lift_fst]
+    let P2 := pullback (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar))
+    let fL : P2 ⟶ P2 := f.hom.left
+    let θL : P2 ⟶ pullback B.X.hom (sp (e₀ : K →+* LeafQM.AV.Qbar)) := θ.hom.left
+    have hθx' : θL ≫ xc B.X (sp (algebraMap L LeafQM.AV.Qbar)) h₁ = pullback.fst _ _ := hθx
+    have hf' : fL ≫ θL = θL ≫ φ₀ := hf
+    show pullback.fst (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar)) ≫ φL =
+      fL ≫ pullback.fst (pullback.snd B.X.hom (sp (algebraMap K L))) (sp (algebraMap L LeafQM.AV.Qbar))
+    rw [← hθx', Category.assoc, hφL, reassoc_of% hf']
+  · change ((Over.pullback (sp (algebraMap L LeafQM.AV.Qbar))).map g').left ≫ _ = _
+    simp only [Over.pullback_map_left, pullback.lift_snd]
+    exact (Over.w f.hom).symm
+
+/-- **`CMHomFieldModel` proved** from G2 (`FibreCoverExists`, the chain's
+`fibreCoverExists_of_propTSAll'`) and the leaves of the chain's A8 (T6 `HomFreeFiniteC`,
+Néron–Ogg–Shafarevich, Raynaud, torsion structure): the rational fibre `PK/K` (G2), the kernel field
+`E` of `G_ℚ` on the Hom lattice of the conjugates of `PK.A` (`kernelField_of_model_hf`: the
+manuscript's `W₀ = Res_{K/ℚ} A`, L544-555), `L = E ⊔ K` with `[L:ℚ] ≤ F₀·3^{r²} ≤ D`
+(`a8_field`, L551-555), `A = (PK.A)_L`; `A_ℚ̄ ≅ P.A` (R1's naturality, `bc_transport`, the pasting
+isomorphism); every endomorphism of `A_ℚ̄` is defined over `L` (`endBC_surjective_of_homField`,
+L560-561). No NoCM and no conjugacy maps. -/
+theorem cmHomFieldModel_of (hCover : G0ModField.FibreCoverExists)
+    (hHFF : _root_.ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC)
+    (hNOS : PkgI2.NeronOggShafarevich.{0}) (hRay : PkgI2.RaynaudCriterionNF.{0})
+    (hTors : PkgI2.TorsionStructure.{0}) : CMHomFieldModel := by
+  intro Y Φ π u P hctx
+  obtain ⟨K, hfK, hgK, hKF, hramK, PK, hPK⟩ := g2Out_of_cover Y Φ u P (hCover Y Φ π u P hctx)
+  have hK : GlueB3Unram.GalUnramifiedOutside K (T u) :=
+    (G4WeilRes.galUnramifiedOutside_iff K (T u)).mpr hramK
+  obtain ⟨r, hr, G, hG, E, hfE, hgE, hEG, hramE, hfix⟩ :=
+    kernelField_of_model_hf hHFF hNOS K hKF PK.A (conj_dim K PK.A PK.surface) (T u) hK
+      (good_of_QML3 hNOS hRay hTors K PK (T u) (three_mem_T u))
+  haveI : IsGalois ℚ ↥(E ⊔ K) := IsGalois.mk
+  have hE : Module.finrank ℚ E ≤ 3 ^ (r ^ 2) := hEG ▸ GlueRepo.TorsionFree.card_le_three_pow G
+  have hdeg : Module.finrank ℚ ↥(E ⊔ K) ≤ heightD :=
+    GlueRepo.Numerics.a8_field E K Compiler.Precision.heightD_eq hKF hE hr
+  obtain ⟨⟨yK, hyK, hyKP⟩, -⟩ := hPK
+  obtain ⟨hR1, -, -, -⟩ := hctx
+  obtain ⟨Q, hQ, hbc⟩ := hR1.2.2.2.1 K LeafQM.AV.Qbar K.val yK PK hyK
+  have hQP : M3.mk Q = M3.mk P := hQ.symm.trans hyKP
+  obtain ⟨e⟩ := Quotient.exact hQP
+  obtain ⟨θ₁, θ₁', h11, h12, -⟩ := bc_transport G0FibreSimple.rigidityHom PK K.val Q hbc
+  obtain ⟨-, θ₀, θ₀', h01, h02, -⟩ := paste_iso PK.A (le_sup_right : K ≤ E ⊔ K)
+  refine ⟨E ⊔ K, inferInstance, hdeg, @PkgI3.AbVar.baseChange K _ PK.A ↥(E ⊔ K) _ (incAlg le_sup_right),
+    PkgI3.AbVar.Hom.mk' (θ₀.hom ≫ θ₁.hom ≫ e.φ.hom), PkgI3.AbVar.Hom.mk' (e.ψ.hom ≫ θ₁'.hom ≫ θ₀'.hom),
+    ?_, ?_, endBC_surjective_of_homField PK.A le_sup_right hfix⟩
+  · simp only [PkgI3.AbVar.Hom.hom_mk', Category.assoc]
+    rw [reassoc_of% e.left, reassoc_of% h11, h01]
+  · simp only [PkgI3.AbVar.Hom.hom_mk', Category.assoc]
+    rw [reassoc_of% h02, reassoc_of% h12, e.right]
+
+end HomField
 
 /-! ## 3. The reduction of `CMFibreSplit` -/
 
@@ -232,17 +387,17 @@ theorem cmFibreSplit_of (hYu : QMLattice.YuB6Alg)
   obtain ⟨L, hfin, hdeg, A, θ, θ', h1, h2, hsurj⟩ := hA8 Y Φ π u P ⟨hR1, hR2, hu, y, hP, hπ⟩
   obtain ⟨d, hd, ⟨e⟩⟩ := end0Matrix_of_noncentral hYu hHF P φ hφ hne
   letI : NumberField L := G0ModField.numberField_of_fd L
-  have hiso : letI : Algebra L Qbar := (algebraMap L Qbar).toAlgebra;
-      Nonempty ((((LeafAdopt.abVarEquiv L).symm A).baseChange Qbar).X ≅ P.A.X) :=
+  have hiso : letI : Algebra L LeafQM.AV.Qbar := (algebraMap L LeafQM.AV.Qbar).toAlgebra;
+      Nonempty ((((LeafAdopt.abVarEquiv L).symm A).baseChange LeafQM.AV.Qbar).X ≅ P.A.X) :=
     ⟨⟨θ.hom, θ'.hom, h1, h2⟩⟩
   have hA2 : A.dim = 2 :=
-    G0Split.model_dim G0Split.dimBaseChange (algebraMap L Qbar) ((LeafAdopt.abVarEquiv L).symm A)
+    G0Split.model_dim G0Split.dimBaseChange (algebraMap L LeafQM.AV.Qbar) ((LeafAdopt.abVarEquiv L).symm A)
       P.A hiso P.surface
-  haveI : Algebra.IsAlgebraic L Qbar := Algebra.IsAlgebraic.tower_top (K := ℚ) L
+  haveI : Algebra.IsAlgebraic L LeafQM.AV.Qbar := Algebra.IsAlgebraic.tower_top (K := ℚ) L
   obtain ⟨E, Pr, k, i1, i2, R, hE, hPr, hprod, hisog, hR, hcm⟩ :=
-    hMU L A hA2 Qbar hsurj d hd ⟨(end0EquivOfIso θ θ' h1 h2).trans e⟩
+    hMU L A hA2 LeafQM.AV.Qbar hsurj d hd ⟨(end0EquivOfIso θ θ' h1 h2).trans e⟩
   exact ⟨⟨L⟩, (LeafAdopt.abVarEquiv L).symm A, E, Pr, k, i1, i2, R,
-    ⟨algebraMap L Qbar, y, P, hP, hπ, hiso⟩, hdeg, hE, hPr, hprod, hisog, hR, hcm⟩
+    ⟨algebraMap L LeafQM.AV.Qbar, y, P, hP, hπ, hiso⟩, hdeg, hE, hPr, hprod, hisog, hR, hcm⟩
 
 end FibreSplit
 end CMBranch

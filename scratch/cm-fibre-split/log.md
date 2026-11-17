@@ -25,3 +25,15 @@ diophantine_zq.tex L581-586. Base: origin/wip/cox-lattice 6298e108 + origin/main
 - `CMMatrixUnitSplit` (glue, L582-586): A/L dim 2, End(A) -> End(A_Omega) onto, End0(A_Omega) = M2(Q(sqrt d)) =>
   E, E^2, isogeny, order.
 - `cmFibreSplit_of (hYu) (hHF) (hA8) (hMU) : CMFibreSplit`.
+
+## 2026-11-17 14:40 compile (VERIFIED)
+- build of CMBranch2 + Open73: done (15395 jobs, exit 0).
+- `scratch/cm-fibre-split/Split.lean` compiles (lake env lean), no sorry. `#print axioms` (SplitAx.lean):
+  `cmFibreSplit_of` and `cmHomFieldModel_of`: [propext, Classical.choice, Quot.sound].
+- So `CMHomFieldModel` (A8's Hom field at any fibre, no NoCM) is PROVED from FibreCoverExists + T6 (HomFreeFiniteC)
+  + NOS + Raynaud + TorsionStructure (all available at open4), via `paste_iso` (pasting iso + rigidity) and
+  `endBC_surjective_of_homField` (td_hom_inv + hfd + rigidity).
+- `end0Matrix_of_noncentral` (Yu + B-case exclusion via End = iota(O) and centre of O = Z): proved.
+- Remaining glue for CMFibreSplit: `CMMatrixUnitSplit` only.
+- Pitfalls: `ι` is GrpObj-inverse notation (rename); HSyn.Qbar vs LeafQM.AV.Qbar ambiguity; rewrite motive
+  failures between `X.left` and `pullback ...` forms — fix with typed `let`s and `show`.
