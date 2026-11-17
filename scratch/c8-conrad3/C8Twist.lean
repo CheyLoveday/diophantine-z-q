@@ -384,6 +384,136 @@ theorem exists_det_vector (E : IntermediateField ℚ_[p] (PadicAlgCl p)) [Finite
 
 end Local
 
+/-! ## §3. `TwistCharHTWt0` -/
+
+open ZInQ.Contrib.HodgeSplit in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 2000000 in
+/-- **`TwistCharHTWt0` proved** (on-the-spot step, N5 L758-760: "the twisting character is a de Rham subrepresentation
+of the Hom representation"). R14 gives `ρ_g`, R13 its weights `{0, −1}`; Chebotarev gives `tr r = ψ tr ρ_g` and
+`det r = ψ² det ρ_g` on `G_ℚ`; in Tate–Sen coordinates the determinants of `Y`-bases give `y ≠ 0` with
+`σ(y) = ψ(σ)² y` on `G_E`; a square root of `y` in `ℂ_p` gives `σ(c) = ψ(σ) c` on an open subgroup, i.e. `ψ` is
+Hodge–Tate of weight `0`. -/
+theorem twistCharHTWt0_proof : TwistCharHTWt0 := by
+  intro hR hHT r N χ g ψ ιC ιL S hN hg hr hatt
+  obtain ⟨ρ₀, hss₀, hρatt₀⟩ := hR 5 ιC ιL N 2 χ g hN (by norm_num) hg
+  let ρ : GaloisRep 5 2 := ⟨ρ₀.toHom, ρ₀.continuous_toHom⟩
+  have hss : ρ.IsSemisimple := hss₀
+  have hρatt : ρ.AttachedTo ιC ιL g := hρatt₀
+  have hρHT : PkgI4.GaloisRep.HasHTWeightsAtSelf (ρ := ρ) 5 {0, -1} := by
+    have h := hHT 5 ιC ιL N 2 χ g ρ hN le_rfl hg hss hρatt
+    have e : (1 : ℤ) - 2 = -1 := by norm_num
+    rw [e] at h
+    exact h
+  have htr := trace_eq_of_attached r ρ N g ψ ιC ιL S hatt hρatt hN
+  have hdet := det_eq_of_trace_eq r ρ ψ htr
+  obtain ⟨E₁, hE₁, r₁, hr₁, hrw⟩ := hr
+  obtain ⟨E₂, hE₂, ρ₂, hρ₂, hρw⟩ := hρHT
+  haveI := hE₁
+  haveI := hE₂
+  let rL := r.restrictLocal 5
+  let ρL := ρ.restrictLocal 5
+  let ψL : ZInQ.Contrib.G9.PkgI4.GQp 5 →* (PadicAlgCl 5)ˣ := ψ.toHom.comp (PkgI4.decomp 5)
+  let E₀ : IntermediateField ℚ_[5] (PadicAlgCl 5) := E₁ ⊔ E₂
+  have hdc : Continuous (PkgI4.decomp 5) :=
+    (Field.absoluteGaloisGroup.map (algebraMap ℚ ℚ_[5])).continuous
+  have hentr : ∀ σ i j, (rL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j ∈ E₀ := by
+    intro σ i j
+    have e : (((r₁ σ : Matrix (Fin 2) (Fin 2) E₁) i j : E₁) : PadicAlgCl 5) =
+        (rL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j := by rw [← hr₁ σ]; rfl
+    rw [← e]
+    exact (le_sup_left : E₁ ≤ E₀) ((r₁ σ : Matrix (Fin 2) (Fin 2) E₁) i j).2
+  have hentρ : ∀ σ i j, (ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j ∈ E₀ := by
+    intro σ i j
+    have e : (((ρ₂ σ : Matrix (Fin 2) (Fin 2) E₂) i j : E₂) : PadicAlgCl 5) =
+        (ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j := by rw [← hρ₂ σ]; rfl
+    rw [← e]
+    exact (le_sup_right : E₂ ≤ E₀) ((ρ₂ σ : Matrix (Fin 2) (Fin 2) E₂) i j).2
+  have htrmem : ∀ (f : ZInQ.Contrib.G9.PkgI4.GQp 5 →* GL (Fin 2) (PadicAlgCl 5)),
+      (∀ σ i j, (f σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j ∈ E₀) →
+      ∀ σ, (f σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).trace ∈ E₀ := by
+    intro f hf σ
+    rw [Matrix.trace_fin_two]
+    exact E₀.add_mem (hf σ 0 0) (hf σ 1 1)
+  let t : ZInQ.Contrib.G9.PkgI4.GQp 5 → PadicAlgCl 5 := fun σ => (ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).trace
+  have ht : Continuous t := (continuous_trace_mat ρ).comp hdc
+  have ht1 : t 1 ≠ 0 := by
+    show (ρL 1 : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).trace ≠ 0
+    rw [map_one, Units.val_one, Matrix.trace_one, Fintype.card_fin]
+    norm_num
+  have hval : ∀ σ, t σ ≠ 0 → (ψL σ : PadicAlgCl 5) ∈ E₀ := by
+    intro σ hσ
+    have e := htr (PkgI4.decomp 5 σ)
+    have e' : (ψL σ : PadicAlgCl 5) = (rL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).trace / t σ := by
+      rw [eq_div_iff hσ]
+      exact e.symm
+    rw [e']
+    exact E₀.div_mem (htrmem rL hentr σ) (htrmem ρL hentρ σ)
+  obtain ⟨E, hEfd, hEgal, hE₀E, hψE⟩ := exists_galois_values 5 E₀ ψL t ht ht1 hval
+  haveI := hEfd
+  haveI := hEgal
+  have hmemr : ∀ σ i j, (rL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j ∈ E := fun σ i j => hE₀E (hentr σ i j)
+  have hmemρ : ∀ σ i j, (ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j ∈ E := fun σ i j => hE₀E (hentρ σ i j)
+  let rE := ZInQ.Contrib.G9.liftGL E rL hmemr
+  let ρE := ZInQ.Contrib.G9.liftGL E ρL hmemρ
+  have hrEw : ∀ w, ZInQ.Contrib.G9.PkgI4.htMult 5 rE w = ({0, -1} : Multiset ℤ).count w := fun w =>
+    (htMult_eq_of_lifts 5 rL rE r₁ (ZInQ.Contrib.G9.liftGL_map E rL hmemr) hr₁ w).trans (hrw w)
+  have hρEw : ∀ w, ZInQ.Contrib.G9.PkgI4.htMult 5 ρE w = ({0, -1} : Multiset ℤ).count w := fun w =>
+    (htMult_eq_of_lifts 5 ρL ρE ρ₂ (ZInQ.Contrib.G9.liftGL_map E ρL hmemρ) hρ₂ w).trans (hρw w)
+  obtain ⟨dr, hdr0, hdr⟩ := exists_det_vector 5 E rE hrEw
+  obtain ⟨dg, hdg0, hdg⟩ := exists_det_vector 5 E ρE hρEw
+  have hdetE : ∀ (f : ZInQ.Contrib.G9.PkgI4.GQp 5 →* GL (Fin 2) (PadicAlgCl 5))
+      (hf : ∀ σ i j, (f σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)) i j ∈ E) (σ : ZInQ.Contrib.G9.PkgI4.GQp 5),
+      algebraMap E ℂ_[5] ((ZInQ.Contrib.G9.liftGL E f hf σ : Matrix (Fin 2) (Fin 2) E).det) =
+        (((f σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).det : PadicAlgCl 5) : ℂ_[5]) := by
+    intro f hf σ
+    rw [IsScalarTower.algebraMap_apply E (PadicAlgCl 5) ℂ_[5], RingHom.map_det, PadicComplex.coe_eq]
+    congr 2
+  let y : ℂ_[5] := dr / dg
+  have hy0 : y ≠ 0 := div_ne_zero hdr0 hdg0
+  have hy : ∀ σ ∈ E.fixingSubgroup,
+      ZInQ.Contrib.G9.PkgI4.cpAct 5 σ y = ((ψL σ : PadicAlgCl 5) : ℂ_[5]) ^ 2 * y := by
+    intro σ hσ
+    have h1 := hdr σ hσ
+    have h2 := hdg σ hσ
+    rw [hdetE rL hmemr σ] at h1
+    rw [hdetE ρL hmemρ σ] at h2
+    have hd : (((rL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).det : PadicAlgCl 5) : ℂ_[5]) =
+        ((ψL σ : PadicAlgCl 5) : ℂ_[5]) ^ 2 *
+          (((ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).det : PadicAlgCl 5) : ℂ_[5]) := by
+      have := hdet (PkgI4.decomp 5 σ)
+      rw [PadicComplex.coe_eq, PadicComplex.coe_eq, PadicComplex.coe_eq, ← map_pow, ← map_mul]
+      exact congrArg _ this
+    rw [hd] at h1
+    set Dg := (((ρL σ : Matrix (Fin 2) (Fin 2) (PadicAlgCl 5)).det : PadicAlgCl 5) : ℂ_[5]) with hDg
+    set χσ := algebraMap ℚ_[5] ℂ_[5] (ZInQ.Contrib.G9.PkgI4.cycPow 5 σ 1) with hχσ
+    set ψC := ((ψL σ : PadicAlgCl 5) : ℂ_[5]) with hψC
+    have hχ0 : χσ ≠ 0 := by
+      rw [hχσ, Ne, map_eq_zero_iff _ (algebraMap ℚ_[5] ℂ_[5]).injective]
+      intro h0
+      have := cycPow_neg_mul 5 σ 1
+      rw [h0, mul_zero] at this
+      exact zero_ne_one this
+    have hDg0 : Dg ≠ 0 := by
+      rw [hDg, PadicComplex.coe_eq, Ne, map_eq_zero_iff _ (algebraMap (PadicAlgCl 5) ℂ_[5]).injective]
+      exact Matrix.GeneralLinearGroup.det_ne_zero _
+    have ha : ZInQ.Contrib.G9.PkgI4.cpAct 5 σ dr = dr * (ψC ^ 2 * Dg) * χσ⁻¹ := by
+      rw [h1]; field_simp
+    have hb : ZInQ.Contrib.G9.PkgI4.cpAct 5 σ dg = dg * Dg * χσ⁻¹ := by
+      rw [h2]; field_simp
+    show ZInQ.Contrib.G9.PkgI4.cpAct 5 σ (dr / dg) = ψC ^ 2 * (dr / dg)
+    rw [map_div₀, ha, hb]
+    field_simp
+  have hψc : Continuous fun σ => (ψL σ : PadicAlgCl 5) := (continuous_char ψ).comp hdc
+  obtain ⟨E', hE'fd, hE'gal, hEE', c, hc0, hc⟩ := exists_sqrt_twist 5 E ψL hψc y hy0 hy
+  haveI := hE'fd
+  haveI := hE'gal
+  obtain ⟨ψE, hψElift, hψEHT⟩ :=
+    hasHTWeights_zero_of_twist 5 E' ψL (fun σ => hEE' (hψE σ)) c hc0 hc
+  exact ⟨E', hE'fd, ψE, hψElift, hψEHT⟩
+
 end TwistHT
 
 end HDec.G0Galois.C8Conrad
+
+#print axioms HDec.G0Galois.C8Conrad.TwistHT.twistCharHTWt0_proof

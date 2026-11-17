@@ -37,3 +37,14 @@ finite Galois K: τ'|_K stabilizes primeOf(jQ|K), lifts to G_{Q_p} (G15 exists_l
 exists_algEquiv_apply_eq_of_norm_apply_eq); compactness of G_{Q_p} (IsCompact.inter_iInter_nonempty) gives σ with
 decomp σ = τ'; σ ∈ I_{Q_p} via Tau Ceti mem_inertiaSubgroup_iff_pow_natCard_pow_eq_self + Padic.natCard_residueField:
 roots of X^{p^f}-X are jQ(ζ), ζ^{p^f-1}=1, fixed by τ' (inertia_fix_root, core of B3b cycUnram).
+
+## TwistCharHTWt0 — PROVED (VERIFIED, compiled: scratch/c8-conrad3/C8Twist.lean, ~12:30)
+`TwistHT.twistCharHTWt0_proof : TwistCharHTWt0`, #print axioms = [propext, Classical.choice, Quot.sound].
+No new cited input. Inputs: R14 (hyp EigenformRepExists), R13 (hyp EigenformHT), Chebotarev (ZInQ.Contrib.frobeniusDense,
+proved), Tate's two theorems (tateTwistInvariants_proof, axSenTate_proof, proved), hodge-split's Ysp machinery (proved).
+Steps: (1) tr r = ψ tr ρ_g on G_ℚ (eq_of_eq_on_arithFrob); det r = ψ² det ρ_g (2 det M = tr² M − tr M²);
+(2) values of ψ|G_Q5 in a finite Galois E (open G_M where tr ρ_g ≠ 0 + coset representatives; no Baire);
+(3) Y_0, Y_1 vectors of r and ρ_g over G_E: d = det(y0,y1) ≠ 0 (Tate–Sen independence), d·det ρ(σ) = χ(σ)σ(d);
+y = d_r/d_g has σ(y) = ψ(σ)² y; (4) c = √y in ℂ_p (IsAlgClosed): σ(c) = ±ψ(σ)c; sign continuous (orbit map
+continuity proved), so σ(c) = ψ(σ)c on G_{E'}; (5) htMult_eq_finrank_Ysp + Tate–Sen: weights of ψ_{E'} are {0}.
+No semisimplicity of r needed (determinant route).
