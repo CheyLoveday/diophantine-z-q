@@ -149,9 +149,7 @@ open Classical in
 def chiSign (χ : Pic (conductorOrder K c) →* ℂˣ) (t : Pic (conductorOrder K c)) : ℤ :=
   if ((χ t : ℂˣ) : ℂ) = 1 then 1 else -1
 
-variable (E : WeierstrassCurve ℚ)
-
-open Classical
+variable (E : WeierstrassCurve ℚ) [DecidableEq (ringClassField (conductorOrder K c))]
 
 /-- The Galois action of `σ ∈ Gal(H_c/K)` on `E(H_c)`. -/
 abbrev galPt (σ : ringClassField (conductorOrder K c) ≃ₐ[K] ringClassField (conductorOrder K c)) :
