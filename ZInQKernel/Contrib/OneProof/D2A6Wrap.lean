@@ -1,5 +1,5 @@
 import ZInQKernel.Contrib.OneProof.D2WildNF
-import ZInQKernel.Contrib.OneProof.A6IntModel
+import ZInQKernel.Contrib.OneProof.A6Z30
 
 /-!
 # d2a6-reroute: the replacement `R6U` for R6 on the manuscript's route, and its readers
@@ -10,16 +10,18 @@ through the bundle field `sga7_IX_3_5_ForwardGeom_Def34`) has three readers on t
 model, TailI's `modelG3G6_of_leaves3`) and the kernel field (TailC's `good_of_QML3`, good reduction of the model
 outside `T(u)`). On the manuscript's route these use two statements, bundled here as
 
-* `R6U := SZRaynaud.RaynaudWildNF ∧ SGRSplit.ShimuraIntegralModelRep`:
+* `R6U := SZRaynaud.RaynaudWildNF ∧ Y3RouteA.Y3FullThreeRepZ30`:
   - `RaynaudWildNF` is diophantine_zq.tex L814-818 (sz-raynaud, from Silverberg–Zarhin Thm 3.5 and the ELLIOT
     sentence at L817-818); D2 needs only it;
-  - `ShimuraIntegralModelRep` is the proper model of L443-477 with its universal abelian scheme (sgr-split's
-    statement, `p > 324`); A6 and the kernel field need only it (L529-530).
+  - `Y3FullThreeRepZ30` is the proper model of L443-477 over `ℤ[1/30]` with its universal abelian scheme
+    (y3-route-a's statement of the manuscript's L473-477 conclusion); A6 and the kernel field need only it
+    (L529-530; `D2A6.hasGoodReduction_of_z30`, `Contrib/OneProof/A6Z30.lean`, d2a6b). d2a6-reroute used sgr-split's
+    `SGRSplit.ShimuraIntegralModelRep` here; d2a6b replaced it, so that leaf stays out of the bundle.
 
 The wrappers below have the signatures of the originals with `hR6 : R6U` in place of
 `hR6 : PkgI2.RaynaudCriterionNF.{0}` (and, for `good_of_QML3U`, `T324 ⊆ T` in place of `3 ∈ T`), so the generated
 chain (`D2A6Chain.lean`) calls them where the originals were called. No `sorry`; never imports
-`ZInQKernel.OneProof.Main`. Report: docs/research/d2a6-reroute.md.
+`ZInQKernel.OneProof.Main`. Reports: docs/research/d2a6-reroute.md, docs/research/d2a6b.md.
 -/
 
 set_option linter.style.longLine false
@@ -27,8 +29,9 @@ set_option linter.style.longLine false
 namespace HDec
 
 /-- **R6 on the manuscript's route**: L814-818 (wild inertia of `F` acts trivially on `V_ℓ(A)`) and the proper model
-of `Y₃` with its universal abelian scheme (L443-477, used at L529-530). -/
-def D2A6.R6U : Prop := _root_.SZRaynaud.RaynaudWildNF ∧ _root_.SGRSplit.ShimuraIntegralModelRep
+of `Y₃` over `ℤ[1/30]` with its universal abelian scheme (L443-477, used at L529-530; y3-route-a's
+`Y3FullThreeRepZ30`). -/
+def D2A6.R6U : Prop := _root_.SZRaynaud.RaynaudWildNF ∧ _root_.Y3RouteA.Y3FullThreeRepZ30
 
 noncomputable section
 
@@ -81,11 +84,12 @@ namespace HSyn
 
 open CategoryTheory AlgebraicGeometry G0Split
 
-/-- `modelG3G6_of_leaves3` on `R6U` (A6, L529-530; `D2A6.modelG3G6_of_leavesU` from the integral model; T5 unused). -/
+/-- `modelG3G6_of_leaves3` on `R6U` (A6, L529-530; `D2A6.modelG3G6_of_leavesU_z30` from the manuscript's model of
+`Y₃` over `ℤ[1/30]`; T5 unused). -/
 theorem modelG3G6_of_leaves3U (hFS : G0Split.FibreSimple) (hNOS : PkgI2.NeronOggShafarevich.{0})
     (hRay : D2A6.R6U) (hTors : PkgI2.TorsionStructure.{0}) :
     G0AssembleMod.ModelG3G6 :=
-  D2A6.modelG3G6_of_leavesU hFS hNOS hRay.2
+  D2A6.modelG3G6_of_leavesU_z30 hFS hNOS hRay.2
 
 end HSyn
 
@@ -101,7 +105,7 @@ open _root_.ZInQ ZInQ LeafQM.AV GlueDescent GlueDescent.B2 GlueDescent.B2Q GlueD
 namespace G0ModField.KernelField
 
 /-- `good_of_QML3` on `R6U` (the kernel field's `hgood`; L529-530): good reduction of a `QML3` object at every place
-over every `p ∉ T` when `T` contains the primes `≤ 324` (`D2A6.hasGoodReduction_of_intModel`). -/
+over every `p ∉ T` when `T` contains the primes `≤ 324` (`D2A6.hasGoodReduction_of_z30`; `p > 324` so `p ∤ 30`). -/
 theorem good_of_QML3U (hNOS : PkgI2.NeronOggShafarevich.{0}) (hRay : D2A6.R6U)
     (hTors : PkgI2.TorsionStructure.{0}) (K : IF) [FiniteDimensional ℚ K] (PK : QML3 K)
     (T : Finset ℕ) (hT : D2A6.T324 ⊆ T) :
@@ -110,8 +114,8 @@ theorem good_of_QML3U (hNOS : PkgI2.NeronOggShafarevich.{0}) (hRay : D2A6.R6U)
         PkgI2.HasGoodReduction (ObjBridge.toGrp PK.A) (w.comap (e : K →+* Qbar)) := by
   intro p hp hpT w hw e
   haveI : Fact p.Prime := ⟨hp⟩
-  refine _root_.D2A6.hasGoodReduction_of_intModel hRay.2 PK _ p
-    (D2A6.lt_of_notMem_T324 hp (fun h => hpT (hT h))) ?_
+  refine _root_.D2A6.hasGoodReduction_of_z30 hRay.2 PK _ p
+    (_root_.D2A6.not_dvd_thirty_of_lt (D2A6.lt_of_notMem_T324 hp (fun h => hpT (hT h)))) ?_
   intro hu
   obtain ⟨c, hc⟩ := isUnit_iff_exists_inv.mp hu
   have hc' : (p : Qbar) * e (c : K) = 1 := by
