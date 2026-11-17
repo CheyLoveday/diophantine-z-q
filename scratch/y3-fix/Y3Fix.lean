@@ -1,6 +1,41 @@
 import ZInQKernel.Contrib.OneProof.ShimuraY3Print
 import ZInQKernel.Contrib.OneProof.ShimuraGoodReductionNoGuard
 
+/-! # y3-fix: `shimuraMainThmIDeligneY3AbU` from two printed-form leaves
+
+Task y3-fix (2026-11-17). Report: `docs/research/y3-fix.md`; log: `scratch/y3-fix/log.md`.
+
+y3abu-print (`ShimuraY3Print.lean`) proved the research field `RayClassCFT.ShimuraMainThmIDeligneY3AbU` from two
+leaves, `Y3FineModuliAb` and `DeligneCanonicalModelY3Every`, which the review rated GLUE for three reasons:
+(1) `Y3FineModuliAb` asserts `Nonempty (fieldPt Qbar ⟶ Y)`, which no representability theorem states;
+(2) its level structure is the kernel's pointwise form (`η : 𝒪 → A(S)` with kernel `3𝒪` on field fibres), not the
+printed one; (3) the moduli clause of `DeligneCanonicalModelY3Every` is in lattice form (`IsUniformization` of
+`Λ_τ = ι(𝒪)(τ,1)ᵀ`), while the print describes `[τ, g]` by `(H₁(A, ℤ), h_A) ≅ (L_g, h_τ)`.
+
+This file replaces both leaves:
+
+1. `Y3FineModuliAbP := ∃ Y Φ, R1fpPropsAbP Y Φ`: representability with the **printed level structure**
+   (`LevelPrint`, Mumford *GIT* Def. 7.1 in `𝒪`-linear form: at every geometric point `s`,
+   `η_s : 𝒪/3𝒪 → A_s(k)[3]` is bijective, `A_s` the pulled-back fibre with its group law) and **without** the
+   `ℚ̄`-point clause.
+2. `DeligneCanonicalModelY3EveryH`: the canonical-model leaf on every witness, with the moduli clause in the
+   **`H₁`/Hodge form** `IsHodgeH1` (an analytic uniformization `A(ℂ) = Lie A / H₁(A, ℤ)` and an `𝒪`-linear
+   `β : B_ℝ ≅ H₁(A, ℝ)` carrying `𝒪` onto `H₁(A, ℤ)` and `h_τ(i)` to the complex structure of `Lie A`).
+
+Proved here (standard axioms, no `sorry`):
+* `nonempty_qbar_of_cpt`: a proper `ℚ`-scheme with a `ℂ`-point has a `ℚ̄`-point. The `ℚ̄`-point of the field's
+  `R1fpPropsAb` is obtained from `Ψ(i, 1)`, given by the canonical-model leaf.
+* `toKer`, `ofKer`: the printed level structure and the kernel's are equivalent over `ℚ`-schemes (`ofKer`
+  uses `TorsionStructure`, i.e. the textbook field `mumfordTorsionAlgClosed`, through `Level3.onto` on the
+  fibre object of SGRSplit).
+* `lattice_of_hodge`: **the uniformization dictionary**, `IsHodgeH1 P τ →` the lattice-form clause
+  (`Φ = φ ∘ proj ∘ β ∘ ℓ_τ⁻¹`, `ℓ_τ(M) = M (τ,1)ᵀ`, `ℂ`-linear because `ℓ_τ(M J_τ) = i ℓ_τ(M)`).
+* `shimuraMainThmIDeligneY3AbU_of_print : MumfordTorsionAlgClosed → Y3FineModuliAbP →
+  DeligneCanonicalModelY3EveryH → ShimuraMainThmIDeligneY3AbU` (the discharge).
+* `y3FineModuliAbP_of_field`, `deligneP_of_field`: the new fine-moduli leaf and the lattice-form canonical-model
+  leaf over the printed clause list follow from the field (given `TorsionStructure`).
+-/
+
 set_option linter.all false
 
 noncomputable section
@@ -504,7 +539,27 @@ end Hodge
 
 /-! ## 5. The leaves (lattice form) and the discharge -/
 
-/-- **LEAF `Y3FineModuliAbP`** (printed form; see the module docstring). -/
+/-- **LEAF `Y3FineModuliAbP`: the fine moduli scheme `Y₃` of QM abelian surfaces with full level-3 structure
+over `ℚ`, in printed form** (one object: `Y₃` with its universal family).
+
+*Published statement* (locators recalled, UNVERIFIED; no network): the moduli functor of abelian schemes `A/S`
+of relative dimension 2 with an action `ι : 𝒪 → End_S(A)` of the maximal order `𝒪` of `B = (2, −3 | ℚ)`
+(discriminant 6) and an `𝒪`-linear full level-3 structure, on `ℤ[1/6]`-schemes, is represented by a scheme
+projective and smooth of relative dimension 1 over `ℤ[1/6]` (proper because `B` is a division algebra):
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1; J.-F. Boutot,
+H. Carayol, Astérisque 196-197 (1991), Ch. III; J. S. Milne, Proc. Sympos. Pure Math. 33 (1979), Part 2;
+D. Mumford, *GIT*, Def. 7.1 (level-`n` structure: sections forming a basis of `A_s[n]` at every geometric
+point `s`, `n` invertible) and Thm. 7.9.
+
+*Lean form*: some `(Y, Φ)` satisfies `R1fpPropsAbP`: `Y` proper and smooth of relative dimension 1 over `ℚ`;
+`Φ` the moduli bijections on field points, natural in the field; the universal object `QMAbSchemeP` over `Y`;
+the classifying map of every `QMAbSchemeP` over a proper smooth curve `S/ℚ` whose field fibres are objects.
+The level structure is `LevelPrint` (Mumford's Def. 7.1, `𝒪`-linear: `η(a)`, `a ∈ 𝒪/3𝒪`, are sections with
+`η(3b) = 0`, and at each geometric point they are exactly the 81 points of `A_s(k)[3]`). No `ℚ̄`-point clause.
+
+*Form*: a consequence of representability (universal property only on proper smooth curves over `ℚ`, read on
+field points; base `ℚ`). Reading risk: no polarization in the moduli problem (Lemma P), as for every
+`R1fpPropsAb` in the chain; Milne 1979 and Boutot–Carayol state the polarized problem. -/
 def Y3FineModuliAbP : Prop :=
   ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), R1fpPropsAbP Y Φ
 
@@ -563,7 +618,28 @@ def ModuliAtUnitsH (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
     (Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)) : Prop :=
   ∀ u ∈ OhatU, ∀ τ : UpperHalfPlane, ∃ P : QML3 ℂ, Φ ℂ (Ψ τ u) = M3.mk P ∧ IsHodgeH1 P τ
 
-/-- **LEAF `DeligneCanonicalModelY3EveryH`** (printed form; see the module docstring). -/
+/-- **LEAF `DeligneCanonicalModelY3EveryH`: the fine moduli scheme `Y₃`, with its complex moduli interpretation
+in the `H₁`/Hodge form, is the canonical model of `Sh_{K₃}(B^×, ℍ^±)`**, for every witness `(Y, Φ)` of the
+printed clause list (one object: `Y₃ = Sh_{K₃}`; no existence claim).
+
+*Published statement* (locators recalled, UNVERIFIED; no network): P. Deligne, *Travaux de Shimura*,
+Sém. Bourbaki 389 (1971), §4 (the moduli interpretation: `[h, g]` is the abelian variety `A` with
+`(H₁(A, ℚ), h_A) ≅ (B, h)` and `H₁(A, ℤ) ↦ L_g = B ∩ 𝒪̂g⁻¹`, with level structure from `g`) and §5
+(Cor. 5.7 / Ex. 5.8: the PEL moduli scheme is the canonical model over the reflex field, with Shimura's
+reciprocity law at CM points); J. S. Milne, *Introduction to Shimura varieties*, §§8, 14. Here `G = B^×`,
+`E(G, X) = ℚ`, `K = K₃`.
+
+*Lean form*: `DeligneBodyAt` and `ModuliAtUnits` verbatim except that the moduli clause (at `g = 1` and at every
+`u ∈ 𝒪̂^×`, where `L_u = 𝒪`) is `IsHodgeH1 P τ`: `H₁(A, ℤ) = Λ` and `Lie A = ℂ^g` for an analytic uniformization
+`φ : ℂ^g/Λ ≅ A(ℂ)` (bp-analytic's `IsUniformization`; Mumford, *Abelian varieties*, §1: `H₁(V/Λ, ℤ) = Λ`), and
+an `𝒪`-linear `β : B_ℝ ≅ H₁(A, ℝ)` with `β(𝒪) = H₁(A, ℤ)` and `β(M J_τ) = i β(M)`, `J_τ = h_τ(i)`.
+
+*Form*: a consequence of the print (as for y3abu-print's leaf: the biholomorphism weakened to "bijective,
+holomorphic in `τ`"; the moduli clause kept only at `𝒪̂^×` and only for the QM pair; conventions `ε, δ`
+existential; `ℍ` with `B^×_+` for `ℍ^±` with `B^×`). Its moduli clause is the print's description of
+`[τ, u]`; the passage to the kernel's lattice form is proved (`lattice_of_hodge`). Reading risks: the polarized
+PEL problem (locators.md R1); the sign convention `h_τ(i) = J_τ` versus `−J_τ` (Deligne's normalization of
+`h`, UNVERIFIED). -/
 def DeligneCanonicalModelY3EveryH : Prop :=
   ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), R1fpPropsAbP Y Φ →
     ∃ Ψ, DeligneBodyAtH Y Φ Ψ ∧ ModuliAtUnitsH Y Φ Ψ
