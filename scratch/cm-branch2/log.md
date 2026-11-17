@@ -49,3 +49,8 @@
 - 12:20 #discharges (discharges.txt): 34 open hypotheses, 17109 theorems checked, 123 discharge one = 19 pre-existing + 104
   projections of the copied _r5 structures (noise). No CMBranch theorem discharges a top field (re-route).
 - report docs/research/cm-branch2.md written (sections 1-7).
+- 12:30-13:30 COMPILED: CMBranch/CoxProof.lean: HDec.CMBranch.coxProperLattice_proof : CoxProperLattice (standard axioms).
+  Pieces: CoxCore.discr_pair (trace disc of (1,θ) = b²−4N via leftMulMatrix), CoxCore.discr_order (b²−4N = [𝓞_k:R]²·d_k via
+  AddSubgroup.relIndex_eq_abs_det, Basis.toMatrix_map_vecMul, Algebra.discr_of_matrix_vecMul, NumberField.coe_discr),
+  mult_iff_dvd (Cox 7.5 elementary half), exists_prim, disc_neg_of_root. => the leaf CoxProperLattice is a THEOREM;
+  ReducedCMPeriod is proved from the textbook fields t35, homLatticeCorr, t11b alone.
