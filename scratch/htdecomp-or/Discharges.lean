@@ -9,3 +9,5 @@ import ZInQKernel.Contrib.OneProof.HodgeTateDecompOrH1
 #print axioms ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_hom
 #print axioms ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_h1
 #print axioms ZInQ.Contrib.HodgeTateOr.or_of_h1
+#print axioms ZInQ.Contrib.HodgeTateOr.hom_iff_tensor
+#print axioms ZInQ.Contrib.HodgeTateOr.or_iff_field

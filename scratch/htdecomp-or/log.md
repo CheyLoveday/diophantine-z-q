@@ -28,3 +28,8 @@ Build tree: reflink copy of ~/dzq-wt/javanpeykar-steps/.lake/build (TailZ63) + l
 * `autofold.py scratch/htdecomp-or/autofold.json --dry-run`: `strict count: 12/23 on 35 -> 13/22 on 35; strictest
   11/24 -> 12/23` (GLUE −1 in both columns). Output minus line 1 = `AutofoldDry.lean`, compiles against TailZ66:
   `HDec.HSyn.sixContactMin_of_open60` depends on `[propext, Classical.choice, Quot.sound]` (VERIFIED). No tree file written.
+* `ZInQKernel/Contrib/OneProof/HodgeTateDecompOrH1.lean` (helper, imports HodgeTateDecompOr): `HodgeTateDecompH1`
+  (`ℂ_p ⊗ V^∨` shape, Faltings 1988), `hom_of_h1`, `or_of_h1`, `hodgeTateDecompExists_of_h1`; converse
+  `hom_of_tensor`, `hom_iff_tensor`, `or_iff_field`. `lake build` success; all axioms standard (VERIFIED,
+  `Discharges-output.txt`: 40 open, 13321 theorems checked, 28 discharge one).
+* No `#eval`/`run_cmd`/notation/macros/`sorry` in either new file (grep, VERIFIED).

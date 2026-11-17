@@ -127,8 +127,10 @@ DISCHARGES [OpenResearchLeaves41.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 40 open hypotheses, 13303 theorems checked, 28 discharge one
+#discharges: 40 open hypotheses, 13321 theorems checked, 28 discharge one
 'ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_or' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_hom' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.HodgeTateOr.hodgeTateDecompExists_of_h1' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Contrib.HodgeTateOr.or_of_h1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.HodgeTateOr.hom_iff_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.HodgeTateOr.or_iff_field' depends on axioms: [propext, Classical.choice, Quot.sound]
