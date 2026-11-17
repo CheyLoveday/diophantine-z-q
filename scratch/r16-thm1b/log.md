@@ -21,3 +21,14 @@
 - `lake build ZInQKernel.Contrib.OneProof.R16Thm1b`: success, no warnings in R16Thm1b.
 - Axioms (Axioms-output.txt): afShimura_of_thm1Af, r16CoreY_of_thm1Af, heckeJ1DS_of_bSh, afShimura_of_shimura73,
   euler_of_shimura73_li, r16CoreY_of_shimura_li: [propext, Classical.choice, Quot.sound].
+
+## Fold (VERIFIED, 13:30)
+- Dry run (worktree; --dry-run writes nothing): `strict count: 5/24 on 29 -> 5/24 on 29; strictest 5/24 -> 5/24`.
+  Count-neutral (round 2's two-row version was +1). No --allow-rise. Output FoldDryRun.lean.txt (stdout: count
+  line + module; Main.lean after the fold in autofold-dryrun-err.txt). New top: sixContactMin_of_open77,
+  OpenResearchLeaves58, TailZ84.
+- Real autofold on a git-archive copy (/tmp/r16b-fold.neMk; worktree untouched): kinds-diff.txt = -afShimura,
+  -heckeJ1DS (both consequence GLUE/GLUE), +bShStandardModel, +shimuraThm1Af (both consequence GLUE/GLUE,
+  flag_class pending-review, rated_by "r16-thm1b; pending review", area elliotglazer/diophantine-z-q#37).
+  render_open --check there: only "kinds.tsv does not classify afShimura, heckeJ1DS / rows no longer open"
+  (OpenStatements not regenerated; needs the Lean build).
