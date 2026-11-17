@@ -25,3 +25,15 @@ if [F:ℚ] > 1, Mathlib exists_not_isUnramifiedAt_int_of_isGalois gives p; P = c
 every σ ∈ I(P) lifts to an inertia element of a place of ℚ̄ (exists_inertia_lift: profinite transitivity +
 stabilizerHom_surjective_of_profinite for G_F on B = algebraic integers, as in B3b.exists_inertia_neg),
 which fixes F, so I(P)=1, e(P)=1 (card_inertia_eq_ramificationIdxIn), IsUnramifiedAt (ramificationIdx_eq_one_iff): contradiction.
+
+## InertiaAtPDecomp — PROVED (VERIFIED, compiled: scratch/c8-conrad3/C8Dec.lean, ~11:15)
+`DecDict.inertiaAtPDecomp_proof : InertiaAtPDecomp`, #print axioms = [propext, Classical.choice, Quot.sound].
+Helper: ZInQKernel/Contrib/OneProof/C8Ladic.lean = verbatim copy of G15 LadicBridge §1, §2, jField, §5, decomp_spec
+(namespace HDec.G0Galois.C8Conrad.Ladic). Reason: importing ZInQKernel.Contrib.G15.LadicBridge next to C8CFT fails:
+"import ZInQKernel.Contrib.Different.Local failed, environment already contains 'PkgI6.TraceContainsRamificationIdx'
+from ZInQKernel.HDecomp.Textbook.Different" (VERIFIED).
+Proof: v₀ = {‖jQ ·‖ ≤ 1}; v = g•v₀ (B3b center lemma + profinite transitivity); τ' = g⁻¹τg ∈ I_{v₀};
+finite Galois K: τ'|_K stabilizes primeOf(jQ|K), lifts to G_{Q_p} (G15 exists_lift = Tau Ceti
+exists_algEquiv_apply_eq_of_norm_apply_eq); compactness of G_{Q_p} (IsCompact.inter_iInter_nonempty) gives σ with
+decomp σ = τ'; σ ∈ I_{Q_p} via Tau Ceti mem_inertiaSubgroup_iff_pow_natCard_pow_eq_self + Padic.natCard_residueField:
+roots of X^{p^f}-X are jQ(ζ), ζ^{p^f-1}=1, fixed by τ' (inertia_fix_root, core of B3b cycUnram).
