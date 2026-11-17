@@ -68,7 +68,8 @@ def unitOf (N : ℕ) {p : ℕ} (hp : p.Prime) (hpN : ¬ p ∣ N) : (ZMod N)ˣ :=
   ZMod.unitOfCoprime p ((Nat.Prime.coprime_iff_not_dvd hp).2 hpN)
 
 /-- Shimura's `ξ_{p²}` for `p ∤ N` in terms of `T_p` and `⟨p⟩`: `T_p² − p ⟨p⟩` (the Hecke relation
-`T(p)² = T(p²) + p T(p, p)`; part of the dictionary B-Sh). -/
+`T(p)² = T(p²) + p T(p, p)`: a theorem step, not a definition; flagged on the round-3 row
+`R16Thm1b.ShimuraThm1Af`). -/
 def xiSq {N : ℕ} {J : AbVar ℚ} (tp : Nat.Primes → AbVar.End J) (δ : (ZMod N)ˣ → AbVar.End J)
     (p : Nat.Primes) (hpN : ¬ (p : ℕ) ∣ N) : AbVar.End J :=
   tp p * tp p - ((p : ℕ) : AbVar.End J) * δ (unitOf N p.2 hpN)
@@ -103,8 +104,10 @@ space spanned by the `f_σ`) dropped: the kernel has no cotangent/q-expansion di
 consumer reads it; the uniqueness clause dropped (its exact wording is not in the read note); the proviso's
 `Γ = Γ₀(N)` branch dropped (this instance is `Γ = Γ₁(N)`); the exceptional set of the Euler clause unspecified.
 Reading-dependent: "quotient" rendered as `ker ν` connected (`KerConnected`), the reading under which the
-printed uniqueness can hold (clauses (ii)–(iv) are invariant under composing `ν` with an isogeny). Misprint in
-the Euler clause ("`a_n^σ f`" for "`a_n^σ f_σ`"): Known issues in the report. -/
+printed uniqueness can hold (clauses (ii)–(iv) are invariant under composing `ν` with an isogeny). Misprint
+(corrected in round 3, r16-thm1b): in the sentence on `f_σ` before (iv) on p. 526, "`f_σ | T_n = a_n^σ f`" for
+"`f_σ | T_n = a_n^σ f_σ`" (not in the Euler clause); Known issues 1 of `docs/research/r16-thm1b.md`. Round 3
+supersedes this row in the fold by `R16Thm1b.ShimuraThm1Af` (one row with `C = I_f J` and uniqueness). -/
 def ShimuraThm1Printed : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2) (h2 : 2 ≤ N), IsNewform f χ →
     ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
@@ -143,7 +146,8 @@ uses Shimura's `A` directly). Proof sketch, ON THE SPOT, not formalized: (a) `ν
 `isAfAction_of`), so `ν ∘ h = 0` if `evF h = 0` (`Hom(J, A)` torsion-free); (b) `I_f J ⊆ ker ν` are abelian
 subvarieties (by (i)) of the same dimension: `dim J/I_f J ≤ [K_f : ℚ] = dim A` by multiplicity one (the
 pulled-back cotangent space of `J/I_f J` lies in `S₂(Γ₁(N))[I_f] = span{f_σ}`, of dimension `[K_f : ℚ]`;
-Shimura 1971 Thm 7.14, DS Prop. 6.6.4, numbers UNVERIFIED), so `ker ν = I_f J`; (c) `J → J/B` is universal among
+printed in Shimura 1973 itself, `m = 1` from `q`-expansions, p. 527, per the round-3 AI page read), so
+`ker ν = I_f J`; (c) `J → J/B` is universal among
 homomorphisms killing `B` (Mumford §7, Milne AV §8). -/
 def ShimuraQuotientIsAf : Prop :=
   ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
