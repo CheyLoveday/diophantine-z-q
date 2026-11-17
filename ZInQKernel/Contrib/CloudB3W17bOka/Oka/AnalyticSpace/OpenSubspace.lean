@@ -165,15 +165,9 @@ modules only"*, widened to this repository:
 **Five against 940 is the comparison, and it is what decided the direction.**
 
 **Read the closures off Lean's own environment rather than off a parser over the header lines.**
-The figures above are `lake env lean` on a scratch file whose imports are the list being measured,
-with
-
-```
-open Lean in
-#eval show CoreM Unit from do
-  let ms := (← getEnv).header.moduleNames
-  IO.println (ms.filter fun m => (`Oka).isPrefixOf m || (`Mathlib).isPrefixOf m).size
-```
+The figures above come from loading the measured import list in an ordinary Lean scratch audit,
+reading the environment's `header.moduleNames`, filtering module names by the `Oka` and `Mathlib`
+prefixes, and counting the resulting list.
 
 That is not fussiness. An earlier draft of this section gave 3075 and 2141 from a parser of its
 own, and three hand-written parsers — that one and two reviewers' — disagreed with each other and
