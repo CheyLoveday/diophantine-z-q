@@ -1,5 +1,5 @@
-import ZInQKernel.Contrib.OneProof.HodgeTateDecompAbVarDecomp
-import ZInQKernel.Contrib.OneProof.HodgeTateDecompAbVarWeil
+import ZInQKernel.Contrib.OneProof.HodgeTatePairingDecomp
+import ZInQKernel.Contrib.OneProof.HodgeTatePairingWeil
 
 /-!
 # The Hodge–Tate decomposition of `V_p(A)`, part 3: the multiplicities are `g` and `g`
