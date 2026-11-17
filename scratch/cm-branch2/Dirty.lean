@@ -27,7 +27,7 @@ open Lean Meta
         if !seen.contains c then stack := stack.push c
     | none => pure ()
   -- fixpoint on dirtiness
-  let seeds : List Name := [`LeafQM.AV.R5ptProps, `HDec.HSyn.OpenResearchLeaves53.gonzalezRotgerThm512X6RCF]
+  let seeds : List Name := [`LeafQM.AV.R5ptProps]
   let mut dirty : Std.HashSet Name := {}
   for s in seeds do dirty := dirty.insert s
   let mut changed := true
@@ -47,12 +47,12 @@ open Lean Meta
     cnt := cnt + 1
     let ci := env.find? n |>.get!
     let tyDirty := ci.type.getUsedConstants.any (dirty.contains ·)
-    let mod := match env.getModuleIdxFor? n with
-      | some i => env.header.moduleNames[i.toNat]!.toString
-      | none => "?"
+    let (mod, idx) := match env.getModuleIdxFor? n with
+      | some i => (env.header.moduleNames[i.toNat]!.toString, i.toNat)
+      | none => ("?", 0)
     let rng ← findDeclarationRanges? n
     let r := match rng with
       | some r => s!"{r.range.pos.line}-{r.range.endPos.line}"
       | none => "-"
-    IO.println s!"{n}\t{mod}\t{r}\t{if tyDirty then "TYPE" else "value"}"
+    IO.println s!"{n}\t{mod}\t{idx}\t{r}\t{if tyDirty then "TYPE" else "value"}"
   IO.println s!"dirty: {cnt} of {order.size}"

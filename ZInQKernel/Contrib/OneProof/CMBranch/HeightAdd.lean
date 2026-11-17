@@ -21,7 +21,7 @@ field `t35`). So `HeightAdditivityUpper` is proved from T35 alone.
 
 set_option maxHeartbeats 1000000
 
-namespace ZInQ.Metrization.CMB2
+namespace HDec.ZInQ.Metrization.CMB2
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open NumberField DefFaltings MeasureTheory
@@ -125,14 +125,14 @@ theorem measurePreserving_blockLinearEquiv (g₁ g₂ : ℕ) :
 the covolume. -/
 theorem exists_fd {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     [MeasurableSpace E] [BorelSpace E] (Λ : Submodule ℤ E) [DiscreteTopology Λ] [IsZLattice ℝ Λ]
-    (μ : Measure E) [μ.IsAddHaarMeasure] :
+    (ν : Measure E) [ν.IsAddHaarMeasure] :
     ∃ F : Set E, MeasurableSet F ∧ (∀ x, ∃! g : Λ, (g : E) + x ∈ F) ∧
-      ZLattice.covolume Λ μ = μ.real F := by
+      ZLattice.covolume Λ ν = ν.real F := by
   let b := Module.Free.chooseBasis ℤ Λ
   let b' := b.ofZLatticeBasis ℝ Λ
   have hspan : Submodule.span ℤ (Set.range b') = Λ := b.ofZLatticeBasis_span ℝ Λ
   refine ⟨ZSpan.fundamentalDomain b', ZSpan.fundamentalDomain_measurableSet b', fun x => ?_,
-    ZLattice.covolume_eq_measure_fundamentalDomain Λ μ (ZLattice.isAddFundamentalDomain b μ)⟩
+    ZLattice.covolume_eq_measure_fundamentalDomain Λ ν (ZLattice.isAddFundamentalDomain b ν)⟩
   obtain ⟨⟨v, hv⟩, h1, h2⟩ := ZSpan.exist_unique_vadd_mem_fundamentalDomain b' x
   refine ⟨⟨v, hspan ▸ hv⟩, h1, fun w hw => ?_⟩
   have h3 := h2 ⟨w, hspan.symm ▸ w.2⟩ hw
@@ -307,7 +307,7 @@ theorem productMetrizationGeo_of (hJ : JacDetDescends) (hPU : ProductUniformizat
   exact ⟨MP, s, s₁, s₂, rfl, hs, hs0, hs₁, hs₁0, hs₂, hs₂0, hidx, hcs, hcov⟩
 
 
-end ZInQ.Metrization.CMB2
+end HDec.ZInQ.Metrization.CMB2
 
 namespace HDec.CMBranch
 
@@ -316,20 +316,20 @@ open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalC
 /-- **`ProductMetrization` (P2a) from T35** (task metrization's reduction; every other input is proved
 in the tree). -/
 theorem productMetrization_of_t35 (hT35 : _root_.ZInQ.LeafPush2.UniformizationExists) :
-    _root_.ZInQ.G0HeightAdd.ProductMetrization :=
-  _root_.ZInQ.G0HeightAdd.productMetrization_of_geo
-    (_root_.ZInQ.Metrization.CMB2.productMetrizationGeo_of _root_.ZInQ.Metrization.jacDetDescends
-      (_root_.ZInQ.Metrization.CMB2.productUniformization_of
-        (_root_.ZInQ.Metrization.productUniformizationAnalytic_of
-          _root_.ZInQ.Metrization2.productLocalStructure))
-      _root_.ZInQ.Metrization.CMB2.productLatticeFacts
-      (_root_.ZInQ.Metrization.CMB2.productHodgeCompat_of
-        (_root_.ZInQ.Metrization.CMB2.productUniformization_of
-          (_root_.ZInQ.Metrization.productUniformizationAnalytic_of
-            _root_.ZInQ.Metrization2.productLocalStructure))
-        (_root_.ZInQ.UnifDims.productHodgeLattice_of_cotangent _root_.ZInQ.UnifDims.productCotangent
+    ZInQ.G0HeightAdd.ProductMetrization :=
+  ZInQ.G0HeightAdd.productMetrization_of_geo
+    (ZInQ.Metrization.CMB2.productMetrizationGeo_of ZInQ.Metrization.jacDetDescends
+      (ZInQ.Metrization.CMB2.productUniformization_of
+        (ZInQ.Metrization.productUniformizationAnalytic_of
+          ZInQ.Metrization2.productLocalStructure))
+      ZInQ.Metrization.CMB2.productLatticeFacts
+      (ZInQ.Metrization.CMB2.productHodgeCompat_of
+        (ZInQ.Metrization.CMB2.productUniformization_of
+          (ZInQ.Metrization.productUniformizationAnalytic_of
+            ZInQ.Metrization2.productLocalStructure))
+        (ZInQ.UnifDims.productHodgeLattice_of_cotangent ZInQ.UnifDims.productCotangent
           HSyn.tangentDimAtOrigin_proved3 hT35)
-        _root_.ZInQ.Metrization.productJacobian))
+        ZInQ.Metrization.productJacobian))
 
 /-- **`MetrizationBaseChange`, proved** (the chain's `HodgeLineBaseChange`, as in `CMBranch/Open4.lean`). -/
 theorem metrizationBaseChange_proved : G0StableBC.MetrizationBaseChange :=
@@ -343,7 +343,7 @@ open _root_.ZInQ.DefFaltings in
 metrized models `M₁` of `A` (over `E₁`) and `M₂` of `Z` (over `E₂`) with heights `< a + ε/2`, `< z + ε/2`;
 base-change both to a compositum `L'` (same heights); the product group model of `P ≅ A × Z` over `L'`
 (`H5Neron.productGroupModelExists`) carries a metrization of height `h(M₁) + h(M₂)`, so `p < a + z + ε`. -/
-theorem heightAdditivityUpper_of (hPM : _root_.ZInQ.G0HeightAdd.ProductMetrization)
+theorem heightAdditivityUpper_of (hPM : ZInQ.G0HeightAdd.ProductMetrization)
     (hMBC : G0StableBC.MetrizationBaseChange) : HeightAdditivityUpper := by
   intro L _ _ P A Z hprod a z p ha hz hp
   obtain ⟨p₁, p₂, h₁, h₂, hiso⟩ := hprod

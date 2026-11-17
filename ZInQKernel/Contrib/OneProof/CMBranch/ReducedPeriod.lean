@@ -93,8 +93,8 @@ theorem im_le_of_quadratic {a b c : ℤ} {τ : ℂ} (ha : 0 < a) (hτ : 0 < τ.i
   -- `4 a² y² = 4ac − b²`
   have hy : 4 * (a : ℝ) ^ 2 * y ^ 2 = -((b : ℝ) ^ 2 - 4 * a * c) := by
     have hx' : (b : ℝ) = -(2 * a * x) := by linarith
-    rw [hx']
-    nlinarith
+    rw [hx'] at hre ⊢
+    linear_combination (-4 * (a : ℝ)) * hre
   have hD : ((b ^ 2 - 4 * a * c : ℤ) : ℝ) = (b : ℝ) ^ 2 - 4 * a * c := by push_cast; ring
   rw [hD]
   have hneg : (b : ℝ) ^ 2 - 4 * a * c < 0 := by
@@ -138,12 +138,14 @@ theorem exists_basis_upper (Λ : Submodule ℤ (Fin 1 → ℂ)) [DiscreteTopolog
       simp only [Submodule.coe_add, Submodule.coe_smul, Pi.add_apply, Pi.smul_apply,
         zsmul_eq_mul] at this
       rw [← this]
+      simp [hw₀, hw₁]
     · rintro ⟨m, n, h⟩
       have hv : z = m • (b 0 : Fin 1 → ℂ) + n • (b 1 : Fin 1 → ℂ) := by
         rw [hfun z, hfun (m • (b 0 : Fin 1 → ℂ) + n • (b 1 : Fin 1 → ℂ))]
         funext _
         simp only [Pi.add_apply, Pi.smul_apply, zsmul_eq_mul]
         rw [h]
+        simp [hw₀, hw₁]
       rw [hv]
       exact Λ.add_mem (Λ.smul_mem m (b 0).2) (Λ.smul_mem n (b 1).2)
   -- linear independence over `ℝ`
@@ -165,7 +167,7 @@ theorem exists_basis_upper (Λ : Submodule ℤ (Fin 1 → ℂ)) [DiscreteTopolog
     have hr : w₁ = (r : ℂ) * w₀ := by
       have : w₁ / w₀ = (r : ℂ) := Complex.ext (by simp [r]) (by simp [h0])
       field_simp at this
-      rw [this]
+      rw [this, mul_comm]
     have := hli r (-1) (by
       rw [hfun (r • (b 0 : Fin 1 → ℂ) + (-1 : ℝ) • (b 1 : Fin 1 → ℂ))]
       funext _
@@ -227,9 +229,14 @@ theorem exists_reduced_of_upper (Λ : Submodule ℤ (Fin 1 → ℂ)) (c₀ τ₀
   · rintro ⟨m, n, h⟩
     refine ⟨a * m - b * n, -c * m + d * n, ?_⟩
     rw [h]
-    field_simp
+    have hDD : D * ((a * τ₀ + b) / D) = a * τ₀ + b := mul_div_cancel₀ _ hD
+    have e : c₀ * D * (((a * m - b * n : ℤ) : ℂ) + ((-c * m + d * n : ℤ) : ℂ) * ((a * τ₀ + b) / D)) =
+        c₀ * (((a * m - b * n : ℤ) : ℂ) * D + ((-c * m + d * n : ℤ) : ℂ) * (a * τ₀ + b)) := by
+      field_simp
+    rw [e]
+    simp only [D]
     push_cast
-    linear_combination (c₀ * (m + n * τ₀)) * hdetC
+    linear_combination (-(c₀ * (m + n * τ₀))) * hdetC
   · rintro ⟨m, n, h⟩
     refine ⟨m * d + n * b, m * c + n * a, ?_⟩
     rw [h]

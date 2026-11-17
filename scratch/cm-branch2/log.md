@@ -16,3 +16,19 @@
 - FINDING (VERIFIED, TailZ21 L1569-1573): r1r2fpRep_of_printedW uses GonzalezRotgerX6 twice: for the BASE WITNESS
   (geomConnX6W_of_gr) and for R5fp. So pruning R5ptProps alone does not take GR off the route; the witness must come from
   GRX6AbPrint.x6ModuliWitness_of_coarse (x6CoarseModuli + shimuraMainThmIDeligneY3AbU), which does not use GR.
+- 09:00 build Main+Discharges+CMBranch.Top: EXIT 0 (16232 jobs; build1.log).
+- 09:10-09:40 COMPILED (lake env lean, then lake build Top2: 15388 jobs, EXIT 0); #print axioms standard for all
+  (scratch/cm-branch2/axioms-out.txt):
+  * CMBranch/HeightAdd.lean: HDec.CMBranch.heightAdditivityUpper_of_t35 : UniformizationExists → HeightAdditivityUpper
+    (glue HeightAdditivityUpper PROVED from the chain's textbook field t35).
+  * CMBranch/ReducedPeriod.lean: reducedCMPeriod_of : CMPeriodLattice → CoxProperLattice → ReducedCMPeriod;
+    exists_reduced_basis (every full lattice of C^1 is c(Z+Z tau), tau in Mathlib's fd), im_le_of_quadratic.
+  * CMBranch/PeriodLattice.lean: cmPeriodLattice_of : UniformizationExists → HomUnify.HomLatticeCorr → T11b_Rigidity →
+    CMPeriodLattice (glue PROVED); end_ringEquiv_mult (End A ≅ multipliers), end_ringEquiv_baseChange (T11b);
+    reducedCMPeriod_of_leaves.
+  * CMBranch/Top2.lean: HDec.HSyn.sixContactMin_of_open72_cm2 (r : OpenResearchLeaves53) (t : OpenTextbookLeaves18)
+    (l : OpenAddedLeaves27) (c : CMInputs2) : SixContactMin. CMInputs2 = {cmFibreSplit (GLUE), fowlerProp27, cmjDegree,
+    cmPotentialGood, cmHeight62, coxProperLattice (leaves)}.
+- Pitfalls: chain namespaces are HDec.ZInQ.Metrization/G0HeightAdd/UnifDims (not _root_); μ, γ tokens under open MonObj;
+  IsMonHom (Over.pullback.map f) needs `Functor.map.instIsMonHom (F := F) (f := f)` + `open scoped CategoryTheory.Obj`
+  (instance search fails against AbVar.baseChange's grp field).

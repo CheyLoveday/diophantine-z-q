@@ -21,6 +21,7 @@ namespace HDec
 namespace CMBranch
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open scoped CategoryTheory.Obj
 open _root_.ZInQ.LeafPush2 (CPts IsUniformization cDom cEvalAt)
 
 /-! ## 1. Endomorphisms of a uniformized elliptic curve over `ℂ` and lattice multipliers -/
@@ -34,14 +35,14 @@ theorem fin1_eq_smul (z : Fin 1 → ℂ) : z = z 0 • (fun _ => (1 : ℂ)) := b
   funext i; rw [Subsingleton.elim i 0]; simp
 
 /-- In a discrete `Λ ⊂ ℂ¹`, `(α − β)ℂ ⊆ Λ` forces `α = β`. -/
-theorem eq_of_smul_mem [DiscreteTopology Λ] {γ : ℂ} (h : ∀ z : Fin 1 → ℂ, γ • z ∈ Λ) : γ = 0 := by
-  by_contra hγ
+theorem eq_of_smul_mem [DiscreteTopology Λ] {t : ℂ} (h : ∀ z : Fin 1 → ℂ, t • z ∈ Λ) : t = 0 := by
+  by_contra ht
   have hopen : IsOpen ({0} : Set Λ) := isOpen_discrete _
   obtain ⟨ε, hε, hball⟩ := Metric.isOpen_singleton_iff.mp hopen
   let w : Fin 1 → ℂ := fun _ => ((ε / 2 : ℝ) : ℂ)
   have hw : w ∈ Λ := by
-    have := h (γ⁻¹ • w)
-    rwa [smul_smul, mul_inv_cancel₀ hγ, one_smul] at this
+    have := h (t⁻¹ • w)
+    rwa [smul_smul, mul_inv_cancel₀ ht, one_smul] at this
   have hlt : dist (⟨w, hw⟩ : Λ) 0 < ε := by
     rw [Subtype.dist_eq]
     simp only [ZeroMemClass.coe_zero, dist_zero_right, w]
@@ -90,9 +91,8 @@ theorem mult_mem (hcorr : HomUnify.HomLatticeCorr) (hdim : A.dim = ((1 : ℕ) : 
     (hU : IsUniformization (RingHom.id ℂ) Λ Φ) (f : PkgI3.AbVar.End A) :
     mult hcorr hdim hU f ∈ latticeMultipliers Λ := by
   intro z hz
-  rw [← hU.2.1, mult_spec, (hU.2.1 z).mpr hz]
-  exact IsMonHom.one_hom f.hom |> fun h => by
-    rw [MonObj.Hom.one_def, Category.assoc, h]; rfl
+  rw [← hU.2.1, mult_spec hcorr hdim hU f z, (hU.2.1 z).mpr hz, CategoryTheory.Hom.one_def,
+    Category.assoc, IsMonHom.one_hom]
 
 /-- **`End(A) ≅ {α | αΛ ⊆ Λ}` as rings** (`HomLatticeCorr`). -/
 theorem end_ringEquiv_mult (hcorr : HomUnify.HomLatticeCorr) (hdim : A.dim = ((1 : ℕ) : WithBot ℕ∞))
@@ -100,22 +100,23 @@ theorem end_ringEquiv_mult (hcorr : HomUnify.HomLatticeCorr) (hdim : A.dim = ((1
     Nonempty (PkgI3.AbVar.End A ≃+* latticeMultipliers Λ) := by
   have key : ∀ (f : PkgI3.AbVar.End A) (α : ℂ), (∀ z, Φ (α • z) = Φ z ≫ f.hom) →
       mult hcorr hdim hU f = α := fun f α h =>
-    mult_unique hU (fun z => by rw [mult_spec, h])
+    mult_unique hU (fun z => by rw [mult_spec hcorr hdim hU f z, h])
   let θ : PkgI3.AbVar.End A →+* latticeMultipliers Λ :=
     { toFun := fun f => ⟨mult hcorr hdim hU f, mult_mem hcorr hdim hU f⟩
       map_one' := Subtype.ext (key 1 1 (fun z => by
         rw [one_smul]; exact (Category.comp_id _).symm))
       map_mul' := fun f g => Subtype.ext (key (f * g) _ (fun z => by
         show Φ ((mult hcorr hdim hU f * mult hcorr hdim hU g) • z) = Φ z ≫ (g.hom ≫ f.hom)
-        rw [mul_smul, mult_spec, mult_spec, Category.assoc]))
+        rw [mul_smul, mult_spec hcorr hdim hU f, mult_spec hcorr hdim hU g, Category.assoc]))
       map_zero' := Subtype.ext (key 0 0 (fun z => by
         rw [zero_smul, (hU.2.1 0).mpr (Submodule.zero_mem _)]
         show (1 : CPts A (RingHom.id ℂ)) = Φ z ≫ (1 : A.X ⟶ A.X)
-        rw [MonObj.Hom.one_def, MonObj.Hom.one_def, ← Category.assoc,
+        rw [CategoryTheory.Hom.one_def, CategoryTheory.Hom.one_def, ← Category.assoc,
           toUnit_unique (Φ z ≫ toUnit A.X) (toUnit _)]))
       map_add' := fun f g => Subtype.ext (key (f + g) _ (fun z => by
         show Φ ((mult hcorr hdim hU f + mult hcorr hdim hU g) • z) = Φ z ≫ (f.hom * g.hom)
-        rw [add_smul, hU.1, mult_spec, mult_spec, MonObj.comp_mul])) }
+        rw [add_smul, hU.1, mult_spec hcorr hdim hU f, mult_spec hcorr hdim hU g,
+          MonObj.comp_mul])) }
   refine ⟨RingEquiv.ofBijective θ ⟨fun f g hfg => ?_, fun ⟨α, hα⟩ => ?_⟩⟩
   · have hfg' : mult hcorr hdim hU f = mult hcorr hdim hU g := congrArg Subtype.val hfg
     let M : (Fin 1 → ℂ) →ₗ[ℂ] (Fin 1 → ℂ) := mult hcorr hdim hU f • LinearMap.id
@@ -140,9 +141,11 @@ theorem end_ringEquiv_baseChange (h11b : ZInQ.LeafPush2.T11b_Rigidity) (k : Type
     [IsAlgClosed k] [CharZero k] (L : Type) [Field L] [Algebra k L] (B : PkgI3.AbVar k) :
     Nonempty (PkgI3.AbVar.End B ≃+* PkgI3.AbVar.End (B.baseChange L)) := by
   let F := Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap k L)))
+  have hm : ∀ f : PkgI3.AbVar.End B, IsMonHom (F.map f.hom) := fun f => by
+    exact Functor.map.instIsMonHom (F := F) (f := f.hom)
   let β : PkgI3.AbVar.End B →+* PkgI3.AbVar.End (B.baseChange L) :=
     { toFun := fun f => @PkgI3.AbVar.Hom.mk' L _ (B.baseChange L) (B.baseChange L) (F.map f.hom)
-        (Functor.map.instIsMonHom F f.hom)
+        (hm f)
       map_one' := PkgI3.AbVar.Hom.ext' (by
         show F.map (𝟙 _) = 𝟙 _
         exact F.map_id _)
@@ -157,7 +160,7 @@ theorem end_ringEquiv_baseChange (h11b : ZInQ.LeafPush2.T11b_Rigidity) (k : Type
         exact Functor.map_mul F _ _) }
   refine ⟨RingEquiv.ofBijective β ⟨fun f g hfg => ?_, fun h => ?_⟩⟩
   · have e : F.map f.hom = F.map g.hom := congrArg PkgI3.AbVar.Hom.hom hfg
-    obtain ⟨φ, -, huniq⟩ := h11b k L B B (F.map f.hom) inferInstance
+    obtain ⟨φ, -, huniq⟩ := h11b k L B B (F.map f.hom) (hm f)
     have e1 := huniq f.hom ⟨inferInstance, rfl⟩
     have e2 := huniq g.hom ⟨inferInstance, e.symm⟩
     exact PkgI3.AbVar.Hom.ext' (e1.trans e2.symm)
@@ -179,13 +182,10 @@ theorem cmPeriodLattice_of (hT35 : ZInQ.LeafPush2.UniformizationExists)
   let Q : PkgI3.AbVar ℂ := Ab.baseChange ℂ
   -- dimensions
   have hdA : A.dim = 1 := by rw [LeafAdopt.abVarEquiv_dim]; exact hE1
+  have h1 : Q.dim = Ab.dim := G0Dim.dim_baseChange ℂ Ab.X.left Ab.X.hom
+  have h2 : Ab.dim = A.dim := G0Dim.dim_baseChange Kb A.X.left A.X.hom
   have hdQ : Q.dim = ((1 : ℕ) : WithBot ℕ∞) := by
-    show topologicalKrullDim Q.X.left = _
-    rw [show Q.X.left = pullback Ab.X.hom (Spec.map (CommRingCat.ofHom (algebraMap Kb ℂ))) from rfl,
-      G0Dim.dim_baseChange ℂ Ab.X.left Ab.X.hom]
-    show topologicalKrullDim (pullback A.X.hom (Spec.map (CommRingCat.ofHom (algebraMap K Kb)))) = _
-    rw [G0Dim.dim_baseChange Kb A.X.left A.X.hom]
-    exact hdA.trans (by simp)
+    rw [h1, h2, hdA]; simp
   -- the uniformization of `Q` (T35)
   obtain ⟨Λ, ΦQ, hdisc, hZ, hU⟩ := hT35 ℂ Q (RingHom.id ℂ) 1 hdQ
   -- the pullback square `Q → A` over `σ`
