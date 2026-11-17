@@ -1,0 +1,11 @@
+{"name": "h33-dict",
+ "imports": ["ZInQKernel.Contrib.OneProof.TYZThm33"],
+ "discharges": [
+   {"field": "h33",
+    "proof": "_root_.ZInQ.Contrib.TYZGenus.H33Dict.tyzThm33_of_printed hCM {n}.tyzThm33Printed",
+    "leaves": [{"name": "tyzThm33Printed", "type": "_root_.ZInQ.Contrib.TYZGenus.H33Dict.TYZThm33Printed",
+                "doc": "Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), over TYZ's identification i0 : (X0(32), oo) = (A, O), epsilon chosen after Phi (arXiv:1411.4728v1 L1299-1311, set-up L1173-1284)",
+                "kind": "published",
+                "flag": "unread: journal version (Asian J. Math. 21 (2017)) not checked; arXiv v1 read by tyz-split and h33-sign (sign of [i] verified, alpha = -i, L1564-1566), not re-read by h33-dict",
+                "source": "Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for every identification i0 (arXiv:1411.4728v1 L1299-1311)"}]}],
+ "note": "h33 is a plain argument of ZInQ.OneProof.frozenTarget (base 2880fef1), not a bundle field, so autofold.py does not apply (it reports 'not a field of the current bundles'). Manual fold (checked: scratch/h33-dict/FoldCheck.lean, frozenTarget_h33Printed compiles with standard axioms and is rfl-equal to frozenTarget applied to tyzThm33_of_printed): in ZInQKernel/OneProof/Main.lean add `import ZInQKernel.Contrib.OneProof.TYZThm33`, replace the binder `(h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)` by `(h33p : ZInQ.Contrib.TYZGenus.H33Dict.TYZThm33Printed)` and the argument `h33` of `ThetaWP8.tyzThm35ReadingA_noHX` by `(ZInQ.Contrib.TYZGenus.H33Dict.tyzThm33_of_printed hCM h33p)`. No other hypothesis is added: hCM (T5Glue.ShimuraMainCM) is already an argument. kinds.tsv: replace the row `frozenTarget h33` by a row `frozenTarget h33p` (kind published, strict LEAF, strictest LEAF, flag and source as in the leaf entry above, packet/label/tier/area_issue of the old row). GLUE counts unchanged (LEAF -> LEAF); the row's content changes from 'TYZ 3.3 carried along the eta model, epsilon before Phi' to the printed statement."}
