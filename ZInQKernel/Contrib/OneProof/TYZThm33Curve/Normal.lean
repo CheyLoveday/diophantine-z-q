@@ -162,25 +162,25 @@ instance algQAY : Algebra ℚ (AY E) :=
   ((algebraMap (gr E 0) (AY E)).comp (algebraMap ℚ (gr E 0))).toAlgebra
 
 /-- `X_i / Y ∈ A_(Y)`: `u = X/Y`, `1`, `v = Z/Y`. -/
-def genY (i : Fin 3) : AY E :=
+def gY (i : Fin 3) : AY E :=
   Away.mk (gr E) (yC_mem E) 1 (E.toProjective.coord i)
     (by simpa using E.toProjective.coord_mem_grading i)
 
 /-- **`F/Yⁿ = F(u, 1, v)` for `F` homogeneous of degree `n`.** -/
 theorem away_mk_eq_aeval_Y (n : ℕ) (p : MvPolynomial (Fin 3) ℚ) (hp : p.IsHomogeneous n)
     (h : Ideal.Quotient.mk (Ideal.span {E.toProjective.polynomial}) p ∈ gr E (n • 1)) :
-    Away.mk (gr E) (yC_mem E) n (Ideal.Quotient.mk _ p) h = MvPolynomial.aeval (genY E) p := by
+    Away.mk (gr E) (yC_mem E) n (Ideal.Quotient.mk _ p) h = MvPolynomial.aeval (gY E) p := by
   apply val_injective
   set L := Localization.Away (yC E)
   set ψ := algebraMap E.toProjective.CoordinateRing L
   have hval : ∀ a : AY E, a.val = algebraMap (AY E) L a := fun a => rfl
   rw [hval (MvPolynomial.aeval _ p), MvPolynomial.aeval_def, MvPolynomial.eval₂_comp_left]
   rw [Away.val_mk]
-  have hzx : ∀ i, ψ (E.toProjective.coord i) = ψ (yC E) * (algebraMap (AY E) L ∘ genY E) i := by
+  have hzx : ∀ i, ψ (E.toProjective.coord i) = ψ (yC E) * (algebraMap (AY E) L ∘ gY E) i := by
     intro i
     have key := IsLocalization.mk'_spec' L (E.toProjective.coord i)
       (⟨yC E ^ 1, 1, rfl⟩ : Submonoid.powers (yC E))
-    simp only [Function.comp_apply, genY]
+    simp only [Function.comp_apply, gY]
     rw [← hval, Away.val_mk, Localization.mk_eq_mk']
     convert key.symm using 2
     simp [ψ]
@@ -191,27 +191,27 @@ theorem away_mk_eq_aeval_Y (n : ℕ) (p : MvPolynomial (Fin 3) ℚ) (hp : p.IsHo
     rfl
   have hmain : ψ (Ideal.Quotient.mk _ p) = ψ (yC E) ^ n *
       MvPolynomial.eval₂ ((algebraMap (AY E) L).comp (algebraMap ℚ (AY E)))
-        (algebraMap (AY E) L ∘ genY E) p := by
+        (algebraMap (AY E) L ∘ gY E) p := by
     rw [hmk]
     have hfun : (fun i => ψ (E.toProjective.coord i)) =
-        fun i => ψ (yC E) * (algebraMap (AY E) L ∘ genY E) i := funext hzx
+        fun i => ψ (yC E) * (algebraMap (AY E) L ∘ gY E) i := funext hzx
     rw [hfun, eval₂_mul_homog _ _ _ hp,
       RingHom.ext_rat (ψ.comp (algebraMap ℚ _)) ((algebraMap (AY E) L).comp (algebraMap ℚ (AY E)))]
   rw [Localization.mk_eq_mk', IsLocalization.mk'_eq_iff_eq_mul, hmain]
   simp only [map_pow]
   ring
 
-theorem genY_one : genY E 1 = 1 := by
+theorem genY_one : gY E 1 = 1 := by
   apply val_injective
-  rw [genY, Away.val_mk, val_one, Localization.mk_eq_mk', IsLocalization.mk'_eq_iff_eq_mul,
+  rw [gY, Away.val_mk, val_one, Localization.mk_eq_mk', IsLocalization.mk'_eq_iff_eq_mul,
     one_mul]
   simp
 
 /-- `v · w = u³` in `A_(Y)`, `w = 1 + a₁u + a₃v − a₂u² − a₄uv − a₆v²`. -/
 theorem genY_equation :
-    genY E 2 * (1 + algebraMap ℚ (AY E) E.a₁ * genY E 0 + algebraMap ℚ (AY E) E.a₃ * genY E 2 -
-      algebraMap ℚ (AY E) E.a₂ * genY E 0 ^ 2 - algebraMap ℚ (AY E) E.a₄ * genY E 0 * genY E 2 -
-      algebraMap ℚ (AY E) E.a₆ * genY E 2 ^ 2) = genY E 0 ^ 3 := by
+    gY E 2 * (1 + algebraMap ℚ (AY E) E.a₁ * gY E 0 + algebraMap ℚ (AY E) E.a₃ * gY E 2 -
+      algebraMap ℚ (AY E) E.a₂ * gY E 0 ^ 2 - algebraMap ℚ (AY E) E.a₄ * gY E 0 * gY E 2 -
+      algebraMap ℚ (AY E) E.a₆ * gY E 2 ^ 2) = gY E 0 ^ 3 := by
   have hp := E.toProjective.isHomogeneous_polynomial
   have h0 : (Ideal.Quotient.mk (Ideal.span {E.toProjective.polynomial}) E.toProjective.polynomial) = 0 :=
     Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span rfl)
@@ -232,28 +232,28 @@ theorem mem_gr_iff' {n : ℕ} {F : E.toProjective.CoordinateRing} (hF : F ∈ gr
   exact E.toProjective.mem_grading_iff.mp this
 
 /-- **A prime of `A_(Y)` containing `u` and `v` is contained in `(u, v)`.** -/
-theorem le_span_uv (q : Ideal (AY E)) [q.IsPrime] (hu : genY E 0 ∈ q) (hv : genY E 2 ∈ q) :
-    q ≤ Ideal.span {genY E 0, genY E 2} := by
-  set I := Ideal.span {genY E 0, genY E 2}
+theorem le_span_uv (q : Ideal (AY E)) [q.IsPrime] (hu : gY E 0 ∈ q) (hv : gY E 2 ∈ q) :
+    q ≤ Ideal.span {gY E 0, gY E 2} := by
+  set I := Ideal.span {gY E 0, gY E 2}
   intro a ha
   obtain ⟨n, F, hF, rfl⟩ := Away.mk_surjective (gr E) (yC_mem E) a
   obtain ⟨p, hp, rfl⟩ := mem_gr_iff' E hF
   rw [away_mk_eq_aeval_Y E n p hp] at ha ⊢
   set π := Ideal.Quotient.mk I
   set k := π.comp (algebraMap ℚ (AY E))
-  have hu' : π (genY E 0) = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span (by simp))
-  have hv' : π (genY E 2) = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span (by simp))
-  have hfun : (fun i => π (genY E i)) = k ∘ ![0, 1, 0] := by
+  have hu' : π (gY E 0) = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span (by simp))
+  have hv' : π (gY E 2) = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span (by simp))
+  have hfun : (fun i => π (gY E i)) = k ∘ ![0, 1, 0] := by
     funext i
     fin_cases i
     · simp [hu']
     · simp [genY_one]
     · simp [hv']
-  have hπ : π (MvPolynomial.aeval (genY E) p) = k (MvPolynomial.eval ![0, 1, 0] p) := by
+  have hπ : π (MvPolynomial.aeval (gY E) p) = k (MvPolynomial.eval ![0, 1, 0] p) := by
     rw [MvPolynomial.map_aeval, MvPolynomial.coe_eval₂Hom, hfun, MvPolynomial.eval,
       MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_comp_left, RingHom.comp_id]
   set c := MvPolynomial.eval ![0, 1, 0] p
-  have hdiff : MvPolynomial.aeval (genY E) p - algebraMap ℚ (AY E) c ∈ I := by
+  have hdiff : MvPolynomial.aeval (gY E) p - algebraMap ℚ (AY E) c ∈ I := by
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, hπ]
     simp [k]
   by_cases hc : c = 0
@@ -273,23 +273,23 @@ theorem le_span_uv (q : Ideal (AY E)) [q.IsPrime] (hu : genY E 0 ∈ q) (hv : ge
     exact (Ideal.IsPrime.ne_top ‹_›) (Ideal.eq_top_of_isUnit_mem _ hcq hunit)
 
 /-- **The local ring at `O` is a valuation ring**: its maximal ideal is generated by `u`. -/
-theorem valuationRing_loc_O (q : Ideal (AY E)) [q.IsPrime] (hv : genY E 2 ∈ q)
+theorem valuationRing_loc_O (q : Ideal (AY E)) [q.IsPrime] (hv : gY E 2 ∈ q)
     [IsDomain (Localization.AtPrime q)] [IsNoetherianRing (Localization.AtPrime q)] :
     ValuationRing (Localization.AtPrime q) := by
   set T := Localization.AtPrime q
-  set w : AY E := 1 + algebraMap ℚ (AY E) E.a₁ * genY E 0 + algebraMap ℚ (AY E) E.a₃ * genY E 2 -
-      algebraMap ℚ (AY E) E.a₂ * genY E 0 ^ 2 - algebraMap ℚ (AY E) E.a₄ * genY E 0 * genY E 2 -
-      algebraMap ℚ (AY E) E.a₆ * genY E 2 ^ 2 with hw
+  set w : AY E := 1 + algebraMap ℚ (AY E) E.a₁ * gY E 0 + algebraMap ℚ (AY E) E.a₃ * gY E 2 -
+      algebraMap ℚ (AY E) E.a₂ * gY E 0 ^ 2 - algebraMap ℚ (AY E) E.a₄ * gY E 0 * gY E 2 -
+      algebraMap ℚ (AY E) E.a₆ * gY E 2 ^ 2 with hw
   have heq := genY_equation E
   rw [← hw] at heq
-  have hu : genY E 0 ∈ q := by
-    have : genY E 0 ^ 3 ∈ q := heq ▸ q.mul_mem_right _ hv
+  have hu : gY E 0 ∈ q := by
+    have : gY E 0 ^ 3 ∈ q := heq ▸ q.mul_mem_right _ hv
     exact ‹q.IsPrime›.mem_of_pow_mem 3 this
   have hle := le_span_uv E q hu hv
   have hw1 : w - 1 ∈ q := by
-    have : w - 1 = genY E 0 * (algebraMap ℚ (AY E) E.a₁ - algebraMap ℚ (AY E) E.a₂ * genY E 0 -
-        algebraMap ℚ (AY E) E.a₄ * genY E 2) +
-        genY E 2 * (algebraMap ℚ (AY E) E.a₃ - algebraMap ℚ (AY E) E.a₆ * genY E 2) := by
+    have : w - 1 = gY E 0 * (algebraMap ℚ (AY E) E.a₁ - algebraMap ℚ (AY E) E.a₂ * gY E 0 -
+        algebraMap ℚ (AY E) E.a₄ * gY E 2) +
+        gY E 2 * (algebraMap ℚ (AY E) E.a₃ - algebraMap ℚ (AY E) E.a₆ * gY E 2) := by
       rw [hw]; ring
     rw [this]
     exact q.add_mem (q.mul_mem_right _ hu) (q.mul_mem_right _ hv)
@@ -299,8 +299,8 @@ theorem valuationRing_loc_O (q : Ideal (AY E)) [q.IsPrime] (hv : genY E 2 ∈ q)
     exact (Ideal.IsPrime.ne_top ‹_›) ((Ideal.eq_top_iff_one q).mpr this)
   have hwu : IsUnit (algebraMap (AY E) T w) :=
     IsLocalization.map_units T (⟨w, hwq⟩ : q.primeCompl)
-  set uT := algebraMap (AY E) T (genY E 0)
-  set vT := algebraMap (AY E) T (genY E 2)
+  set uT := algebraMap (AY E) T (gY E 0)
+  set vT := algebraMap (AY E) T (gY E 2)
   have hvT : vT ∈ Ideal.span {uT} := by
     have h1 : vT * algebraMap (AY E) T w = uT ^ 3 := by
       simp only [vT, uT, ← map_mul, ← map_pow, heq]
@@ -324,9 +324,9 @@ theorem valuationRing_loc_O (q : Ideal (AY E)) [q.IsPrime] (hv : genY E 2 ∈ q)
   exact valuationRing_of_maximalIdeal_principal ⟨uT, hm⟩
 
 /-- The chart `D₊(Y)` covers the complement of `D₊(Z)`, where `v = Z/Y` vanishes. -/
-theorem genY_two_eq : Away.isLocalizationElem (yC_mem E) (zC_mem E) = genY E 2 := by
+theorem genY_two_eq : Away.isLocalizationElem (yC_mem E) (zC_mem E) = gY E 2 := by
   apply val_injective
-  simp [genY, Away.val_mk]
+  simp [gY, Away.val_mk]
 
 instance isLocallyNoetherian_ESch : IsLocallyNoetherian (ESch E) := by
   haveI : LocallyOfFiniteType (toSpecQ E) := inferInstance
@@ -343,7 +343,7 @@ theorem valuationRing_stalk_ESch [E.IsElliptic] (p : ESch E) :
     have hrY : (chartY E).opensRange = Proj.basicOpen (gr E) (yC E) := Proj.opensRange_awayι _ _ _ _
     rw [← hrY] at hY
     obtain ⟨q, rfl⟩ := hY
-    have hv : genY E 2 ∈ q.asIdeal := by
+    have hv : gY E 2 ∈ q.asIdeal := by
       have hpre := Proj.awayι_preimage_basicOpen (gr E) (yC_mem E) one_pos (zC_mem E) one_pos
       by_contra hne
       apply hp'

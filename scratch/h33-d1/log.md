@@ -19,8 +19,13 @@
   `isCuspInfty_map`, `isPointAt_comp`; `gzModelBody_transfer`; new leaf `ZInQ.GZUnique.GrossZagierCurveCdSome`
   (GZ on SOME normal proper model of X₀(N)); `grossZagierCurveCd_of_some`, `grossZagierAlgOptCd_of_some`.
   S1 discharged: the ∀-model leaf follows from the ∃-model leaf in Lean.
-- 11-17 03:05 VERIFIED (compiled, axioms standard): `TYZThm33Curve/Charts.lean` (ESch E integral,
+- 11-17 02:00 VERIFIED (compiled, axioms standard): `TYZThm33Curve/Charts.lean` (ESch E integral,
   `ffEquiv : K(ESch E) ≃ ℚ(E)`, `azEquiv : A_(Z) ≃ ℚ[x,y]/(W)`, G4(b) `mem_basicOpen_Y_of_not_mem_Z`) and
   `TYZThm33Curve/Normal.lean`: `valuationRing_stalk_ESch [E.IsElliptic] : ∀ p, ValuationRing 𝒪_{ESch E,p}`
   (D₊(Z): localization of the Dedekind domain ℚ[x,y]/(W); off D₊(Z): chart D₊(Y), prime ⊇ (u,v) = it,
   v·w = u³ with w ≡ 1, maximal ideal (u), noetherian local domain ⇒ valuation ring).
+- 11-17 02:15 VERIFIED (compiled): `ZInQKernel/Contrib/OneProof/TYZThm33Curve.lean`: leaf
+  `ZInQ.H33D1.TYZThm33CurveSome` (∃ normal proper model (X, ι) of X₀(32) s.t. for every iso i₀ : X ⟶ ESch curveA
+  over ℚ with i₀(∞) ∉ D₊(Z), w n = ptOf(x ≫ i₀) at the points τ_n ⇒ TYZThm33EpsAfter), `TYZThm33Curve` (∀ models),
+  `tyzThm33CurveSome_of_all`, `exists_iso_of_phi` (D1 both directions via model uniqueness + ESch normal),
+  `tyzThm33Alg_of_curveSome`, `tyzThm33_of_curveSome`.
