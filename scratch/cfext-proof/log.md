@@ -27,3 +27,14 @@ Target: `JavanpeykarRebase.ConstantFieldExtensionUnramifiedFinite`
 - Hypotheses actually used: CharZero only for `Algebra.IsSeparable K L` (hence `FormallyUnramified K L`); the
   function-field clause only for trdeg F/K = 1; full constant field only for "π transcendental"; of the
   bijectivity only surjectivity. Statement is TRUE as stated; no correction needed.
+- Build (prebuilt tree copied from ~/dzq-check2 at d879bb73, Main.lean byte-identical):
+  `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.ConstantFieldExtensionUnramifiedFinite`
+  succeeded (14274 jobs, module 38 s; only "designed for the module system" import warnings); frozenTarget axioms
+  standard. VERIFIED.
+- `#discharges` (scratch/cfext-proof/Discharges.lean, output discharges-output.txt):
+  `DISCHARGES [OpenResearchLeaves38.constantFieldExtensionUnramifiedFinite] by
+  CFExtProof.constantFieldExtensionUnramifiedFinite_proof`, `still assumes: []`, axioms standard. VERIFIED.
+- `autofold.py scratch/cfext-proof/autofold.json --dry-run` (FoldDryRun.lean.txt): "strict count: 16/18 on 34 ->
+  16/17 on 33; strictest 16/18 -> 16/17"; generates OpenResearchLeaves39 (= 38 without the field, no new leaf)
+  and `sixContactMin_of_open56`; the output with line 1 stripped compiles (6.5 s), `sixContactMin_of_open56`
+  axioms [propext, Classical.choice, Quot.sound]. VERIFIED. Nothing written to the tree by the dry run.

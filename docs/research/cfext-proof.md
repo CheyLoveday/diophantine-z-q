@@ -18,10 +18,11 @@ theorem CFExtProof.constantFieldExtensionUnramifiedFinite_proof :
 * scratch copy: `scratch/cfext-proof/CFExt.lean` (`import Mathlib`, the definition copied verbatim, the proof,
   `#print axioms` = [propext, Classical.choice, Quot.sound]) — VERIFIED (`lake env lean`, 7.7 s).
 * contributor-kit file: `ZInQKernel/Contrib/OneProof/ConstantFieldExtensionUnramifiedFinite.lean` (new file;
-  imports `JavanpeykarRebase` and seven targeted Mathlib modules, not all of Mathlib). Build and `#discharges`
-  status: §3.
+  imports `JavanpeykarRebase` and seven targeted Mathlib modules, not all of Mathlib); builds, and
+  `#discharges` reports it discharges the field with `still assumes: []` — VERIFIED (§3).
 * fold spec: `scratch/cfext-proof/autofold.json` (field `constantFieldExtensionUnramifiedFinite :=
-  _root_.CFExtProof.constantFieldExtensionUnramifiedFinite_proof`). Dry run: §3.
+  _root_.CFExtProof.constantFieldExtensionUnramifiedFinite_proof`). Dry run: strict **16/18 on 34 → 16/17 on
+  33** (strictest 16/18 → 16/17): one field and one strict GLUE removed, no new leaf — VERIFIED (§3).
 
 The statement is true as written (in particular the uniformizer clause is fine), so no corrected statement or
 reroute is needed.
@@ -57,4 +58,16 @@ surjectivity. (Injectivity, i.e. `F ⊗_K L` a field, is not needed.)
 
 ## 3. Build, `#discharges`, dry-run fold
 
-See the table below (filled after the build).
+Prebuilt tree copied from `~/dzq-check2` (at d879bb73, `ZInQKernel/OneProof/Main.lean` byte-identical).
+
+| check | outcome |
+| --- | --- |
+| `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.ConstantFieldExtensionUnramifiedFinite` | success, 14274 jobs, the new module 38 s; only the "designed for the module system" import warnings — VERIFIED |
+| `#discharges` (`scratch/cfext-proof/Discharges.lean`, output `discharges-output.txt`) | `DISCHARGES [OpenResearchLeaves38.constantFieldExtensionUnramifiedFinite] by CFExtProof.constantFieldExtensionUnramifiedFinite_proof`, `still assumes: []`, axioms [propext, Classical.choice, Quot.sound] — VERIFIED |
+| `autofold.py scratch/cfext-proof/autofold.json --dry-run` (`FoldDryRun.lean.txt`) | strict count 16/18 on 34 → 16/17 on 33, strictest 16/18 → 16/17; generates `OpenResearchLeaves39` (38 minus the field) and `sixContactMin_of_open56` — VERIFIED |
+| dry-run module, line 1 stripped, `lake env lean` | compiles (6.5 s); `sixContactMin_of_open56` axioms standard — VERIFIED |
+
+For the lead: fold with `python3 scripts/one_proof/autofold.py scratch/cfext-proof/autofold.json` (no
+`--allow-rise` needed), then the usual post-fold checks. `kinds.tsv` loses the row
+`research constantFieldExtensionUnramifiedFinite`. Since `full_of_finite` already derives javanpeykar-fix's
+`ConstantFieldExtensionUnramifiedFull` from the finite case, Stichtenoth 3.6.3(a) in both forms is now a theorem.
