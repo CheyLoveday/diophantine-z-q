@@ -332,3 +332,17 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     on 34; others h21S, hCM, h33a, hGZ GLUE, hBFH LEAF. Checks (VERIFIED): build +Main +Discharges (16082 jobs);
     frozenTarget standard axioms; check_target.py; only Main.lean modified among existing OneProof modules;
     OpenStatements 39; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+37. Batch for w99 (inbox 25-27): merged wip/htdecomp-or eba82cb7, wip/hecke-pin d08347d3 (proofs only: the fold's leaf
+    set is unchanged), wip/x6-coarse 0dc0c1fa, wip/h33-d1 4b12a442 with eps-splitting (build logs left out; scratch
+    dry-run files .lean.txt). Autofold scratch/leaf-fold33/autofold-batch-w99.json -> TailZ71, `sixContactMin_of_open64`:
+    hodgeTateDecompExists := HodgeTateOr.hodgeTateDecompExists_of_or from hodgeTateDecompOr (C_p-dualization proved);
+    x6CoarseModuli := X6ALIdeal.x6CoarseModuli_of_ideal from x6CoarseModuliIdeal; elkiesX6StarEvery :=
+    X6ALIdeal.elkiesX6StarEvery_of_ideal' from elkiesX6StarEveryIdeal (shimuraMainThmIDeligneY3AbU through y3-fix's
+    proof, mumfordTorsionAlgClosed by PR #54's). Manual Main fold (h33-d1): h33a -> h33c (H33D1.TYZThm33CurveSome),
+    hGZ -> hGZss (GZSplitUnique.GrossZagierCurveCdSplitSome; model uniqueness and eps_D splitting proved). All new rows
+    consequence, pending review (h33c keeps the G5/G2 strong-approximation flag). Inbox 26: h21S flag (clause 1 on the
+    corrected symmetric reading; variant B Lean-proved), modularHTPrinted locator Gee 2022 Fact 4.20 (4.19, p. 28).
+    Count: 39 open; H 10/24 on 34; others h21S, hCM, h33c, hGZss GLUE, hBFH LEAF. Checks (VERIFIED): build +Main
+    +Discharges (16093 jobs); frozenTarget standard axioms; check_target.py; only Main.lean modified among existing
+    OneProof modules; OpenStatements 39; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok;
+    autoform check ok.
