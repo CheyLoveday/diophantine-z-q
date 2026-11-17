@@ -10,7 +10,7 @@ without a source read on this host (no network).
 **The field `HDec.HSyn.OpenResearchLeaves38.sga7_IX_3_3_SHpre` (`DictModels.SGA7Pre.SGA7_IX_3_3_SHpre`) is proved,
 with its exact type and no other hypothesis, from one new leaf `SGA33Steps.SGA7_IX_Cor3_3`, SGA 7 I Exp. IX Cor. 3.3
 in its printed form specialized to traits** (`ZInQKernel/Contrib/OneProof/SGA7IX33Cor.lean`,
-`SGA33Steps.shpre_of_cor33`). STATUS: see §5 (compile).
+`SGA33Steps.shpre_of_cor33`). VERIFIED: compiled, standard axioms only, `#discharges` matches the field (§5).
 
 The three steps the reading named are each a Lean theorem:
 
@@ -92,10 +92,37 @@ the defining module `SGA7IX33SHPre`):
 * `shpre_of_cor33SH : SGA7_IX_Cor3_3_SH → DictModels.SGA7Pre.SGA7_IX_3_3_SHpre`;
 * `shpre_of_cor33 : SGA7_IX_Cor3_3 → DictModels.SGA7Pre.SGA7_IX_3_3_SHpre` (the discharge).
 
-## 5. Checks
+## 5. Checks (all VERIFIED)
 
-PENDING.
+* `lake env lean ZInQKernel/Contrib/OneProof/SGA7IX33Cor.lean`: no errors, no warnings.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.SGA7IX33Cor`:
+  Build completed successfully (14274 jobs, 15 min 25 s; `scratch/sga33-steps/build2-summary.txt`).
+* `scratch/sga33-steps/Statement.lean`: the verbatim copy of the field's statement is `rfl`-equal to
+  `DictModels.SGA7Pre.SGA7_IX_3_3_SHpre`.
+* `#discharges` (`scratch/sga33-steps/Discharges.lean`, output `discharges.txt`):
+
+  ```
+  DISCHARGES [OpenResearchLeaves38.sga7_IX_3_3_SHpre] by SGA33Steps.shpre_of_cor33
+    still assumes: [SGA33Steps.SGA7_IX_Cor3_3]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [OpenResearchLeaves38.sga7_IX_3_3_SHpre] by SGA33Steps.shpre_of_cor33SH
+    still assumes: [SGA33Steps.SGA7_IX_Cor3_3_SH]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 39 open hypotheses, 11122 theorems checked, 51 discharge one
+  ```
+* Autofold spec `scratch/sga33-steps/autofold.json` (field `sga7_IX_3_3_SHpre`, proof
+  `_root_.SGA33Steps.shpre_of_cor33 {n}.sga7_IX_Cor3_3`, leaf `sga7_IX_Cor3_3`, kind published, flag "unread: ...").
+  `autofold.py --dry-run`: "strict count: 16/18 on 34 -> 17/17 on 34; strictest 16/18 -> 17/17". Its output (minus
+  the count line) is `scratch/sga33-steps/FoldCheck.lean` (`OpenResearchLeaves39`, `sixContactMin_of_open56` on top of
+  TailZ62); it compiles, and `HDec.HSyn.sixContactMin_of_open56` depends on `[propext, Classical.choice, Quot.sound]`.
+  The fold itself (writing TailZ63, Main, kinds.tsv) is left to the integrator.
 
 ## 6. What remains
 
-PENDING.
+* A human reading of SGA 7 I Exp. IX Cor. 3.3 (p. 348) and Déf. 3.4 (p. 349) to confirm the locator and the base
+  hypotheses (the leaf enters flagged "unread"). If the print turns out to assume a henselian base, a finite
+  extension or an algebraically closed residue field, the fallback is in place for the first two
+  (`SGA7_IX_Cor3_3_SH`, `shpre_of_cor33SH`); for the third, sga33-shpre's AC-restricted route
+  (origin/wip/sga33-shpre) applies.
+* The k(s)-versus-κ̄ reading of "semistable" (carried over from the field; §3, last item).
+* Ledger rows (kinds.tsv through autofold; locators.md row proposed in `scratch/sga33-steps/rows-proposed.md`).
