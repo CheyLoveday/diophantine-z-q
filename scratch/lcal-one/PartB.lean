@@ -1,0 +1,281 @@
+import ZInQKernel.Contrib.TYZChain.Lcal
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.JacobiLambdaDeriv
+import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi
+import ZInQKernel.Contrib.GZTheta.EtaTheta
+
+noncomputable section
+
+open Complex Set Filter Topology MeasureTheory
+open scoped Real
+
+namespace ZInQ.Contrib.LcalOne
+
+open ZInQ.Contrib.TYZGenus
+
+/-! ## The eta model on the imaginary axis -/
+
+/-- The point `i t` of `ℍ`. -/
+def iT (t : ℝ) (ht : 0 < t) : UpperHalfPlane := ⟨I * t, by simpa using ht⟩
+
+theorem coe_iT (t : ℝ) (ht : 0 < t) : ((iT t ht : UpperHalfPlane) : ℂ) = I * t := rfl
+
+theorem neg_conj_I_mul (t : ℝ) : -(starRingEnd ℂ) (I * (t : ℂ)) = I * t := by
+  simp [map_mul, Complex.conj_I, Complex.conj_ofReal]
+
+theorem re_eq_of_neg_conj {f : ℂ → ℂ} (hf : ∀ z, f (-(starRingEnd ℂ) z) = (starRingEnd ℂ) (f z))
+    (t : ℝ) : ((f (I * t)).re : ℂ) = f (I * t) := by
+  rw [← Complex.conj_eq_iff_re, ← hf, neg_conj_I_mul]
+
+/-- `x(it)`, `y(it)`, `f(it)`, `η(d · it)` as real numbers. -/
+def Xr (t : ℝ) : ℝ := (X0.xC (I * t)).re
+def Yr (t : ℝ) : ℝ := (X0.yC (I * t)).re
+def Fr (t : ℝ) : ℝ := (X0.fC (I * t)).re
+def Er (d : ℕ) (t : ℝ) : ℝ := (X0.etaD d (I * t)).re
+
+theorem Xr_eq (t : ℝ) : (Xr t : ℂ) = X0.xC (I * t) := re_eq_of_neg_conj X0.xC_neg_conj t
+theorem Yr_eq (t : ℝ) : (Yr t : ℂ) = X0.yC (I * t) := re_eq_of_neg_conj X0.yC_neg_conj t
+theorem Fr_eq (t : ℝ) : (Fr t : ℂ) = X0.fC (I * t) := re_eq_of_neg_conj X0.fC_neg_conj t
+theorem Er_eq (d : ℕ) (t : ℝ) : (Er d t : ℂ) = X0.etaD d (I * t) :=
+  re_eq_of_neg_conj (X0.etaD_neg_conj d) t
+
+theorem Er_ne_zero {d : ℕ} (hd : 0 < d) {t : ℝ} (ht : 0 < t) : Er d t ≠ 0 := by
+  intro h
+  have := X0.etaD_ne_zero hd (iT t ht)
+  rw [coe_iT, ← Er_eq, h, ofReal_zero] at this
+  exact this rfl
+
+theorem Fr_pos {t : ℝ} (ht : 0 < t) : 0 < Fr t := by
+  have e : (Fr t : ℂ) = ((Er 4 t ^ 2 * Er 8 t ^ 2 : ℝ) : ℂ) := by
+    rw [Fr_eq, X0.fC]; push_cast; rw [Er_eq, Er_eq]
+  have := ofReal_injective e
+  rw [this]
+  have h4 := Er_ne_zero (by norm_num : 0 < 4) ht
+  have h8 := Er_ne_zero (by norm_num : 0 < 8) ht
+  positivity
+
+theorem Yr_neg {t : ℝ} (ht : 0 < t) : Yr t < 0 := by
+  have e : (Yr t : ℂ) = ((-(Er 8 t ^ 4 * Er 16 t ^ 2 / (Er 4 t ^ 2 * Er 32 t ^ 4)) : ℝ) : ℂ) := by
+    rw [Yr_eq, X0.yC]; push_cast; rw [Er_eq, Er_eq, Er_eq, Er_eq]
+  have := ofReal_injective e
+  rw [this]
+  have h4 := Er_ne_zero (by norm_num : 0 < 4) ht
+  have h8 := Er_ne_zero (by norm_num : 0 < 8) ht
+  have h16 := Er_ne_zero (by norm_num : 0 < 16) ht
+  have h32 := Er_ne_zero (by norm_num : 0 < 32) ht
+  have : 0 < Er 8 t ^ 4 * Er 16 t ^ 2 / (Er 4 t ^ 2 * Er 32 t ^ 4) := by positivity
+  linarith
+
+theorem Yr_sq {t : ℝ} (ht : 0 < t) : Yr t ^ 2 = Xr t ^ 3 + 4 * Xr t := by
+  have h := Shimura.etaModelEquation (iT t ht)
+  rw [coe_iT, ← Xr_eq, ← Yr_eq] at h
+  exact_mod_cast h
+
+theorem Xr_pos {t : ℝ} (ht : 0 < t) : 0 < Xr t := by
+  have h1 := Yr_sq ht
+  have h2 := Yr_neg ht
+  have h3 : 0 < Yr t ^ 2 := by nlinarith
+  nlinarith [sq_nonneg (Xr t)]
+
+/-- **`x(it)' = −4π f(it) y(it)`** (x0-32's differential, proved by gz-weil). -/
+theorem hasDerivAt_Xr {t : ℝ} (ht : 0 < t) :
+    HasDerivAt Xr (-4 * π * Fr t * Yr t) t := by
+  have h := ZInQ.GZWeil.etaModelDifferential (iT t ht)
+  rw [coe_iT] at h
+  have h2 : HasDerivAt (fun z : ℂ => X0.xC (I * z)) (4 * π * I * X0.fC (I * t) * X0.yC (I * t) * I)
+      (t : ℂ) := by
+    have hl : HasDerivAt (fun z : ℂ => I * z) I (t : ℂ) := by
+      simpa using (hasDerivAt_id (t : ℂ)).const_mul I
+    exact h.comp (t : ℂ) hl
+  have h3 := h2.real_of_complex
+  have key : (4 * π * I * X0.fC (I * t) * X0.yC (I * t) * I).re = -4 * π * Fr t * Yr t := by
+    rw [← Fr_eq, ← Yr_eq]
+    have : (4 * π * I * (Fr t : ℂ) * (Yr t : ℂ) * I) = ((-4 * π * Fr t * Yr t : ℝ) : ℂ) := by
+      push_cast
+      ring_nf
+      rw [I_sq]
+      ring
+    rw [this, ofReal_re]
+  exact h3.congr_deriv key
+
+theorem Xr_deriv_pos {t : ℝ} (ht : 0 < t) : 0 < -4 * π * Fr t * Yr t := by
+  have h1 := Fr_pos ht
+  have h2 := Yr_neg ht
+  have hp := Real.pi_pos
+  have : 0 < Fr t * (-Yr t) := mul_pos h1 (neg_pos.mpr h2)
+  nlinarith
+
+theorem continuousOn_Xr : ContinuousOn Xr (Ioi 0) := fun t ht =>
+  (hasDerivAt_Xr ht).continuousAt.continuousWithinAt
+
+theorem strictMonoOn_Xr : StrictMonoOn Xr (Ioi 0) := by
+  refine strictMonoOn_of_deriv_pos (convex_Ioi 0) continuousOn_Xr fun t ht => ?_
+  rw [interior_Ioi] at ht
+  rw [(hasDerivAt_Xr ht).deriv]
+  exact Xr_deriv_pos ht
+
+/-! ## Limits of `x(it)` at `0⁺` and at `∞` -/
+
+open ZInQ.GZWeil (thetaTwo thetaThree thetaFour)
+
+theorem xC_eq_ratio (τ : UpperHalfPlane) :
+    X0.xC τ = 2 * thetaThree (16 * τ) / thetaTwo (16 * τ) := by
+  rw [Shimura.xC_theta, ZInQ.GZWeil.thetaTwo_sixteen]
+  rfl
+
+theorem tendsto_exp_neg_pi_mul : Tendsto (fun y : ℝ => 3 * Real.exp (-π * y)) atTop (𝓝 0) := by
+  have h1 : Tendsto (fun y : ℝ => π * y) atTop atTop := tendsto_id.const_mul_atTop Real.pi_pos
+  have h2 := Real.tendsto_exp_neg_atTop_nhds_zero.comp h1
+  have h3 := h2.const_mul 3
+  rw [mul_zero] at h3
+  refine h3.congr fun y => ?_
+  simp [Function.comp, neg_mul]
+
+theorem im_I_mul (y : ℝ) : (I * (y : ℂ)).im = y := by simp
+
+theorem tendsto_thetaThree_atTop : Tendsto (fun y : ℝ => thetaThree (I * y)) atTop (𝓝 1) := by
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_ tendsto_exp_neg_pi_mul
+  filter_upwards [eventually_ge_atTop 1] with y hy
+  have := ZInQ.JacobiLambda.norm_thetaThree_sub_one_le (s := I * y) (by rw [im_I_mul]; exact hy)
+  rwa [im_I_mul] at this
+
+theorem tendsto_thetaFour_atTop : Tendsto (fun y : ℝ => thetaFour (I * y)) atTop (𝓝 1) := by
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_ tendsto_exp_neg_pi_mul
+  filter_upwards [eventually_ge_atTop 1] with y hy
+  have := ZInQ.JacobiLambda.norm_thetaFour_sub_one_le (s := I * y) (by rw [im_I_mul]; exact hy)
+  rwa [im_I_mul] at this
+
+theorem tendsto_thT_atTop :
+    Tendsto (fun y : ℝ => ZInQ.JacobiLambda.thT (I * y)) atTop (𝓝 2) := by
+  rw [tendsto_iff_norm_sub_tendsto_zero]
+  refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_ tendsto_exp_neg_pi_mul
+  filter_upwards [eventually_ge_atTop 1] with y hy
+  have := ZInQ.JacobiLambda.norm_thT_sub_two_le (s := I * y) (by rw [im_I_mul]; exact hy)
+  rwa [im_I_mul] at this
+
+theorem tendsto_inv_sixteen : Tendsto (fun t : ℝ => 1 / (16 * t)) (𝓝[>] 0) atTop := by
+  have h : Tendsto (fun t : ℝ => 16 * t) (𝓝[>] 0) (𝓝[>] 0) := by
+    rw [tendsto_nhdsWithin_iff]
+    refine ⟨?_, ?_⟩
+    · have : Tendsto (fun t : ℝ => 16 * t) (𝓝 0) (𝓝 (16 * 0)) :=
+        (continuous_const.mul continuous_id).tendsto 0
+      rw [mul_zero] at this
+      exact this.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with t ht
+      exact mul_pos (by norm_num : (0:ℝ) < 16) ht
+  exact h.inv_tendsto_nhdsGT_zero.congr fun t => by simp [one_div]
+
+/-- `x(it)² = 4 θ₃(τ)²/θ₄(τ)²` with `τ = i/(16t)` (the `S`-law). -/
+theorem Xr_sq_eq {t : ℝ} (ht : 0 < t) :
+    ((Xr t ^ 2 : ℝ) : ℂ) = 4 * thetaThree (I * ((1 / (16 * t) : ℝ) : ℂ)) ^ 2 /
+      thetaFour (I * ((1 / (16 * t) : ℝ) : ℂ)) ^ 2 := by
+  set τ : ℂ := I * ((1 / (16 * t) : ℝ) : ℂ) with hτ
+  have hτ0 : τ ≠ 0 := by
+    rw [hτ]; refine mul_ne_zero I_ne_zero ?_
+    exact_mod_cast (by positivity : (1 / (16 * t) : ℝ) ≠ 0)
+  have hS : (16 : ℂ) * (I * t) = -1 / τ := by
+    rw [eq_div_iff hτ0, hτ]
+    have : (t : ℂ) ≠ 0 := by exact_mod_cast ht.ne'
+    have e : (16 : ℂ) * (I * t) * (I * ((1 / (16 * t) : ℝ) : ℂ)) = I ^ 2 := by
+      push_cast; field_simp
+    rw [e, I_sq]
+  have h := xC_eq_ratio (iT t ht)
+  rw [coe_iT, ← Xr_eq, hS] at h
+  have h3 := ZInQ.GZWeil.thetaThree_S_sq hτ0
+  have h2 := ZInQ.GZWeil.thetaTwo_S_sq hτ0
+  have hτi : 0 < τ.im := by rw [hτ, im_I_mul]; positivity
+  have h4 := ZInQ.GZWeil.thetaFour_ne_zero hτi
+  have hT2 : thetaTwo (-1 / τ) ≠ 0 :=
+    ZInQ.GZWeil.thetaTwo_ne_zero (ZInQ.GZWeil.im_neg_inv_pos hτi)
+  push_cast
+  rw [h, div_pow, mul_pow, h3, h2]
+  field_simp
+  ring
+
+theorem tendsto_Xr_sq : Tendsto (fun t => Xr t ^ 2) (𝓝[>] 0) (𝓝 4) := by
+  have h3 := tendsto_thetaThree_atTop.comp tendsto_inv_sixteen
+  have h4 := tendsto_thetaFour_atTop.comp tendsto_inv_sixteen
+  have hG : Tendsto (fun t : ℝ => 4 * thetaThree (I * ((1 / (16 * t) : ℝ) : ℂ)) ^ 2 /
+      thetaFour (I * ((1 / (16 * t) : ℝ) : ℂ)) ^ 2) (𝓝[>] 0) (𝓝 4) := by
+    have := ((h3.pow 2).const_mul 4).div (h4.pow 2) (by norm_num)
+    convert this using 2
+    all_goals norm_num
+  have hC : Tendsto (fun t => ((Xr t ^ 2 : ℝ) : ℂ)) (𝓝[>] 0) (𝓝 4) := by
+    refine hG.congr' ?_
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    exact (Xr_sq_eq ht).symm
+  have hR := (Complex.continuous_re.tendsto _).comp hC
+  exact hR.congr fun t => Complex.ofReal_re _
+
+/-- **`x(it) → 2` as `t → 0⁺`** (the cusp `0` goes to the point `(2, −4)`). -/
+theorem tendsto_Xr_zero : Tendsto Xr (𝓝[>] 0) (𝓝 2) := by
+  have h := (Real.continuous_sqrt.tendsto _).comp tendsto_Xr_sq
+  have h4 : Real.sqrt 4 = 2 := by
+    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  rw [h4] at h
+  refine h.congr' ?_
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  exact Real.sqrt_sq (Xr_pos ht).le
+
+/-- `1/x(it) = e^{−4πt} T(16it) / (2 θ₃(16it))`. -/
+theorem Xr_inv_eq {t : ℝ} (ht : 0 < t) :
+    (((Xr t)⁻¹ : ℝ) : ℂ) = ((Real.exp (-(4 * π * t)) : ℝ) : ℂ) *
+      ZInQ.JacobiLambda.thT (I * ((16 * t : ℝ) : ℂ)) / (2 * thetaThree (I * ((16 * t : ℝ) : ℂ))) := by
+  have h := xC_eq_ratio (iT t ht)
+  rw [coe_iT, ← Xr_eq] at h
+  have e16 : (16 : ℂ) * (I * t) = I * ((16 * t : ℝ) : ℂ) := by push_cast; ring
+  rw [e16] at h
+  have hi : 0 < (I * ((16 * t : ℝ) : ℂ)).im := by rw [im_I_mul]; positivity
+  have h3 := ZInQ.GZWeil.thetaThree_ne_zero hi
+  have h2 := ZInQ.GZWeil.thetaTwo_ne_zero hi
+  have he : cexp (π * I * (I * ((16 * t : ℝ) : ℂ)) / 4) = ((Real.exp (-(4 * π * t)) : ℝ) : ℂ) := by
+    rw [ofReal_exp]; congr 1; push_cast; ring_nf; rw [I_sq]; ring
+  rw [ZInQ.JacobiLambda.thetaTwo_eq, he] at h2
+  rw [ofReal_inv, h, ZInQ.JacobiLambda.thetaTwo_eq, he]
+  field_simp
+
+/-- **`x(it) → ∞` as `t → ∞`** (the cusp `∞` goes to `O`). -/
+theorem tendsto_Xr_atTop : Tendsto Xr atTop atTop := by
+  have h16 : Tendsto (fun t : ℝ => 16 * t) atTop atTop := tendsto_id.const_mul_atTop (by norm_num)
+  have hT := tendsto_thT_atTop.comp h16
+  have h3 := tendsto_thetaThree_atTop.comp h16
+  have hE : Tendsto (fun t : ℝ => ((Real.exp (-(4 * π * t)) : ℝ) : ℂ)) atTop (𝓝 0) := by
+    have h1 : Tendsto (fun t : ℝ => 4 * π * t) atTop atTop :=
+      tendsto_id.const_mul_atTop (by positivity)
+    have := (Complex.continuous_ofReal.tendsto 0).comp (Real.tendsto_exp_neg_atTop_nhds_zero.comp h1)
+    rw [ofReal_zero] at this
+    exact this
+  have hC : Tendsto (fun t : ℝ => ((Real.exp (-(4 * π * t)) : ℝ) : ℂ) *
+      ZInQ.JacobiLambda.thT (I * ((16 * t : ℝ) : ℂ)) / (2 * thetaThree (I * ((16 * t : ℝ) : ℂ))))
+      atTop (𝓝 0) := by
+    have := (hE.mul hT).div (h3.const_mul 2) (by norm_num)
+    convert this using 2
+    all_goals norm_num
+  have hC' : Tendsto (fun t => (((Xr t)⁻¹ : ℝ) : ℂ)) atTop (𝓝 0) := by
+    refine hC.congr' ?_
+    filter_upwards [eventually_gt_atTop 0] with t ht
+    exact (Xr_inv_eq ht).symm
+  have hR : Tendsto (fun t => (Xr t)⁻¹) atTop (𝓝 0) := by
+    have := (Complex.continuous_re.tendsto _).comp hC'
+    exact this.congr fun t => Complex.ofReal_re _
+  have hR' : Tendsto (fun t => (Xr t)⁻¹) atTop (𝓝[>] 0) := by
+    rw [tendsto_nhdsWithin_iff]
+    refine ⟨hR, ?_⟩
+    filter_upwards [eventually_gt_atTop 0] with t ht
+    exact inv_pos.mpr (Xr_pos ht)
+  exact hR'.inv_tendsto_nhdsGT_zero.congr fun t => by simp
+
+/-- **`x(it) > 2`** for `t > 0` (strictly increasing, limit `2` at `0⁺`). -/
+theorem two_lt_Xr {t : ℝ} (ht : 0 < t) : 2 < Xr t := by
+  by_contra hle'
+  have hle := not_lt.mp hle'
+  have ht1 : 0 < t / 2 := by positivity
+  have hlt : Xr (t / 2) < Xr t := strictMonoOn_Xr ht1 ht (by linarith)
+  have hev : ∀ᶠ s in 𝓝[>] (0 : ℝ), Xr s ≤ Xr (t / 2) := by
+    filter_upwards [Ioo_mem_nhdsGT ht1] with s hs
+    exact (strictMonoOn_Xr hs.1 ht1 hs.2).le
+  have := le_of_tendsto tendsto_Xr_zero hev
+  linarith
+
+end ZInQ.Contrib.LcalOne
