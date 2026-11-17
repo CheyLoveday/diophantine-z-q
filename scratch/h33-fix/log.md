@@ -5,3 +5,7 @@
   vendored FLT, as gzopt-dict's GrossZagierAlgOptCd), i₀(∞)=O as ord_q i₀^*(x) < 0, X,Y holomorphic on ℍ with
   q-expansions i₀^*(x), i₀^*(y). Dictionary in Lean: eta model gives such an i₀ (needs surjectivity:
   jq, jq(q^32) ∈ ℚ(x_eta, y_eta)), via E4/E6 in thetas (Mathlib rank one) + Landen (jacobi-lambda).
+- Numerics (VERIFIED, scratch/h33-fix/py/theta_j_check.py, double precision, 3 points): E4 = ½(θ2⁸+θ3⁸+θ4⁸),
+  E6 = ½(θ3⁴+θ4⁴)(θ2⁴+θ3⁴)(θ4⁴−θ2⁴), j(τ) and j(32τ) as rational functions of the eta model (x,y), rel. err ≤ 5e-7.
+- ThetaE.lean COMPILES (VERIFIED): e4T_eq, e6T_eq (rank one, Mathlib), j_theta, j_eta (j(τ)·jDen(x,y) = jNum(x,y),
+  jDen ≠ 0), j32_eta (j(32τ)·j32Den(x) = j32Num(x)). Needed `lake build ...JacobiLambdaDeriv` first (11342 jobs).
