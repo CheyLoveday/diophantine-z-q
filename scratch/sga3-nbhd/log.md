@@ -63,3 +63,20 @@ SS2 only needs SOME open subgroup 𝒰 ⊆ 𝒱 = 𝒩 ×_{𝓞_L} 𝓞_L' with 
 property) is an iso on generic fibres, so (EGA IV 8.10.5 open-immersion item, PROVED in tree:
 egaIV_8_10_5_openImm_proof) an open immersion over some D(s); take 𝒰 = 𝒱 minus (𝒱_q \ 𝒱_q⁰) for the finitely many
 q | s (open by isClosed_fibre_diff); at q | s use SGA 7 IX 3.3 on (𝒩 ×O)⁰ (open: DVR lemma).
+
+## RESULT: field removed, no new leaf (VERIFIED compiled, 11-16 ~17:10 PST)
+- scratch/sga3-nbhd/Spread.lean = ZInQKernel/Contrib/OneProof/SemistableNeronBaseChangeNoSGA3.lean:
+  `spread_openImm` (EGA IV 8.10.5 open-imm item via egaIV_8_10_5_openImm_proof + SpreadOut.NF.specConeIsLimit),
+  `preconnected_P`, `connected_fibre_V`, `mem_idCompSet_bc` (SGA3 VI_B 3.3 at a point over a closed point, no G⁰
+  openness), `mem_idCompSet_of_bc`, `isPreconnected_fibre_dvr`, `mem_idCompSet_groupModelO_generic`,
+  `openSubgroupModel_at`, `semistableNeronBaseChange_noSGA3 : BLR_1_2_4 → SGA7_IX_3_3 → GeomConnOfRationalPoint →
+  SemistableNeronBaseChange` — axioms [propext, Classical.choice, Quot.sound].
+- SGA3NbhdOL.lean renamed SGA3NbhdDVR.lean; narrowed-leaf parts (SGA3_VIB_3_10_NeronOL etc.) moved to
+  scratch/sga3-nbhd/NarrowedOL-removed.lean.txt (superseded; compiled earlier at commit "leaf-free DVR readers,
+  narrowed OL leaf").
+- fold/gen_fold.py remove mode → fold/FoldCheck.lean: frozenTargetNOL standard axioms; closure has no
+  CToPrinted.SGA3_VIB_3_10, SGA3_VIB_3_10_Nbhd, sga3_VIB_3_10_of_nbhd, idComp_baseChange,
+  semistableNeronBaseChange_of_printed_full; fields old 26 new 25 removed #[sga3_VIB_3_10_Nbhd] added #[].
+- module mode → fold/TailZ46.lean (imports TailZ45 + contribution): sixContactMin_of_open39 standard axioms.
+- #discharges (Discharges.out): 45 open hypotheses, 6726 theorems checked, 13 discharge one (none from new files;
+  expected, the field is removed by reroute).
