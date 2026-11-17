@@ -1,0 +1,15 @@
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+warning: ZInQKernel/Contrib/OneProof/TYZThm11Genus.lean:79:19: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+✔ [16037/16048] Built ZInQKernel.Contrib.OneProof.DeRhamPrint (79s)
+✔ [16038/16048] Built ZInQKernel.Contrib.OneProof.DeRhamPrintDirect (19s)
+✔ [16044/16048] Built ZInQKernel.OneProof.H.EichlerBoundCopy (8.7s)
+Build completed successfully (16048 jobs).
+
+real	3m48.535s
+user	1m26.469s
+sys	0m56.899s

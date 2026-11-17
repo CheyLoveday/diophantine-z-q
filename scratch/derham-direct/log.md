@@ -36,3 +36,8 @@ files vs base); `lake build ZInQKernel.Contrib.OneProof.DeRhamPrint` replayed in
   with "pending reading"; the flag says "pending review", the integrator's ruling is LEAF). Output (line 1 stripped)
   in FoldDryRun.lean.txt (renamed from .lean: it redeclares HDec.HSyn bundles); `lake env lean` on it:
   `HDec.HSyn.sixContactMin_of_open59` depends on [propext, Classical.choice, Quot.sound] (VERIFIED).
+- 01:08 Docstring of `DeRhamVpAbVarPrinted` (DeRhamPrint.lean): locator "§I.3" → "§II.5.1, p. 19" (relayed reading;
+  Berger not readable here, UNVERIFIED by this task; h-leaves §3.2 had "§I.3"). Docstring only.
+- 01:12 `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.DeRhamPrintDirect`:
+  Build completed successfully (16048 jobs, 3 min 49 s). Dry run regenerated: same strict count, output identical to
+  FoldDryRun.lean.txt; `lake env lean` on it: `sixContactMin_of_open59` standard axioms (VERIFIED).
