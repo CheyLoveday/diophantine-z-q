@@ -1,5 +1,5 @@
-"""d2a6-reroute generator: writes the chain of `sixContactMin_of_open72` rerouted from R6 (SGA 7 IX 3.5 through
-`sga7_IX_3_5_ForwardGeom_Def34`) to `D2A6.R6U` (RaynaudWildNF, diophantine_zq.tex L814-818, and the integral model of
+"""d2a6-reroute generator (copied and rerun by d2a6b; R6U now carries Y3RouteA.Y3FullThreeRepZ30): writes the chain of `sixContactMin_of_open72` rerouted from R6 (SGA 7 IX 3.5 through
+`sga7_IX_3_5_ForwardGeom_Def34`) to `D2A6.R6U` (RaynaudWildNF, diophantine_zq.tex L814-818, and the model of
 Y3, L443-477/L529-530), as one Lean module.
 
 It copies, verbatim up to the renaming `X -> X_u` (structures `X -> XU`), every declaration reachable from
