@@ -10,7 +10,7 @@ the worktree had no project build).
   MumfordSquareMulN, WeilPairingMumfordOpen, WeilFormula, WeilFormulaTheta}.lean, docs, scratch.
 - hygiene: scratch files redeclaring HDec.HSyn bundles renamed .lean.txt: scratch/phisurj/{FoldDryRunWeil,
   FoldTailZ49, FrozenTargetDryRun}.lean, scratch/weil-proof/{FoldDryRun, FoldDryRunLF32, FoldDryRunUnread}.lean.
-- host paths: none in the merged files (grep /home/, jackmccarthy).
+- host paths: none in the merged files (grep for home-directory paths and the user name).
 
 ## Step 1b: fold (commit after this entry)
 - autofold `scratch/fold33-pic/autofold-weil.json` (phisurj's autofold-weil.json, name changed): dry run
