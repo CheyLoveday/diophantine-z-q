@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.R16CoreYDS965
+import Mathlib.Analysis.Real.Cardinality
 
 noncomputable section
 
@@ -425,5 +426,220 @@ theorem cls_heckeD [NeZero N] {jX tX : X.left.functionField} (aj : X ⟶ J.X)
   | add a b ha hb =>
     intro D hD
     rw [map_add, LinearMap.add_apply, map_add, ha D hD, hb D hD, map_add, endA_add]
+
+/-! ## The Eichler integral side -/
+
+/-- **`F` is a holomorphic primitive of `f` on `ℍ`** (an Eichler integral of `f`, up to the factor
+`2πi` and an additive constant): `d/dτ F(τ) = f(τ)`. -/
+def IsPrimitive (f : CF N 2) (F : UpperHalfPlane → ℂ) : Prop :=
+  ∀ τ : UpperHalfPlane, HasDerivAt (fun z : ℂ => F (UpperHalfPlane.ofComplex z)) (f τ) (τ : ℂ)
+
+/-- `Σ n_τ [τ] ↦ Σ n_τ F(τ)`. -/
+def psi (F : UpperHalfPlane → ℂ) : Dv →ₗ[ℤ] ℂ := Finsupp.linearCombination ℤ F
+
+theorem psi_pt (F : UpperHalfPlane → ℂ) (τ : UpperHalfPlane) : psi F (pt τ) = F τ := by
+  simp [psi]
+
+/-- **GLUE (Eichler integral, existence).** Every weight-2 cusp form on `Γ₁(N)` has a holomorphic primitive
+on `ℍ` (Diamond–Shurman §6.1–6.3 integrate `f(τ) dτ` along paths in `ℍ`; `ℍ` is simply connected). Provable
+in Lean: e.g. `G(q) = ∫ (cuspFunction f)(q)/q` on the unit disc (Mathlib's primitives on discs) and
+`F(τ) = G(e^{2πiτ})/(2πi)`. -/
+def EichlerPrimitive : Prop := ∀ (N : ℕ) (f : CF N 2), ∃ F, IsPrimitive f F
+
+/-- **GLUE (Hecke and diamond operators on the Eichler integral).** For a normalized eigenform `f` of weight
+2 with nebentypus `χ` and any primitive `F` of `f`, differences of `F` transform under DS's double cosets:
+`Σ_{j<p} F((τ+j)/p) + [p ∤ N] F(γ(pτ))` and `a_p F(τ)` differ by a constant (`γ ∈ Γ₀(N)`, lower-right
+entry `≡ p`), and `F(γτ) − χ(d)F(τ)` is constant (`γ ∈ Γ₀(N)`, lower-right entry `≡ d`). Proof sketch
+(glue, provable in Lean): differentiate; the derivative of the left side is `T_p f` in DS's weight-2
+normalization (Prop. 5.2.1: `(1/p)Σ f((τ+j)/p) + p (f|γ)(pτ)`), which is `a_p f` by the coefficient
+relations of `IsNormalizedEigenform` and the `q`-expansion; `(f|₂γ) = χ(d) f` is `HasNebentypus`;
+`ℍ` is connected. -/
+def EichlerHecke : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → PkgI4.IsNormalizedEigenform f χ →
+    ∀ F, IsPrimitive f F →
+      (∀ (p : Nat.Primes) (g : SL(2, ℤ)),
+        ((p : ℕ) ∣ N ∨ ((N : ℤ) ∣ g 1 0 ∧ ((g 1 1 : ℤ) : ZMod N) = ((p : ℕ) : ZMod N))) →
+        ∀ τ τ' : UpperHalfPlane,
+          (∑ j : Fin p, (F (shiftDiv p j τ) - F (shiftDiv p j τ'))) +
+            (if (p : ℕ) ∣ N then 0 else F (g • mulNat p τ) - F (g • mulNat p τ')) =
+          coeff f p * (F τ - F τ')) ∧
+      (∀ (d : (ZMod N)ˣ) (g : SL(2, ℤ)), (N : ℤ) ∣ g 1 0 → ((g 1 1 : ℤ) : ZMod N) = (d : ZMod N) →
+        ∀ τ τ' : UpperHalfPlane, F (g • τ) - F (g • τ') = χ (d : ZMod N) * (F τ - F τ'))
+
+/-- **Claim B.** On degree-0 divisors, `Ψ ∘ h̃ = evF(h) · Ψ`. -/
+theorem psi_heckeD [NeZero N] (hN : 2 ≤ N) (hH : EichlerHecke) {χ : DirichletCharacter ℂ N}
+    {f : CF N 2} (hf : PkgI4.IsNormalizedEigenform f χ) {F : UpperHalfPlane → ℂ} (hF : IsPrimitive f F)
+    (h : HeckeFree N) : ∀ D ∈ D0, psi F (heckeD N h D) = evF χ f h * psi F D := by
+  have τ₀ : UpperHalfPlane := UpperHalfPlane.I
+  obtain ⟨hT, hDm⟩ := hH N χ f hN hf F hF
+  induction h using FreeAlgebra.induction with
+  | grade0 r =>
+    intro D _
+    rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply, map_zsmul, zsmul_eq_mul]
+    rfl
+  | grade1 g =>
+    rcases g with p | d
+    · simp only [heckeD, evF, FreeAlgebra.lift_ι_apply, Sum.elim_inl]
+      refine eqOn_D0 τ₀ (psi F ∘ₗ tOp N p (gT N p)) (LinearMap.mulLeft ℤ (coeff f p) ∘ₗ psi F) ?_
+      intro τ
+      simp only [LinearMap.comp_apply, LinearMap.mulLeft_apply, map_sub, tOp,
+        Finsupp.linearCombination_single, one_smul, psi_pt]
+      have hg : (p : ℕ) ∣ N ∨ ((N : ℤ) ∣ (gT N p) 1 0 ∧
+          (((gT N p) 1 1 : ℤ) : ZMod N) = ((p : ℕ) : ZMod N)) := by
+        by_cases hpN : (p : ℕ) ∣ N
+        · exact Or.inl hpN
+        · right; simp only [gT, hpN, dite_false]; exact (exists_gamma_prime N p hpN).choose_spec
+      have key := hT p (gT N p) hg τ τ₀
+      rw [← mul_sub, ← key]
+      simp only [tDiv, map_add, map_sum, psi_pt, Finset.sum_sub_distrib]
+      split_ifs
+      · simp [psi_pt]
+      · simp [psi_pt]; ring
+    · simp only [heckeD, evF, FreeAlgebra.lift_ι_apply, Sum.elim_inr]
+      refine eqOn_D0 τ₀ (psi F ∘ₗ dOp (gD N d)) (LinearMap.mulLeft ℤ (χ (d : ZMod N)) ∘ₗ psi F) ?_
+      intro τ
+      simp only [LinearMap.comp_apply, LinearMap.mulLeft_apply, map_sub, dOp,
+        Finsupp.linearCombination_single, one_smul, psi_pt, dDiv]
+      have hg := (exists_gamma_unit N d).choose_spec
+      rw [← mul_sub]; exact hDm d (gD N d) hg.1 hg.2 τ τ₀
+  | mul a b ha hb =>
+    intro D hD
+    rw [map_mul, Module.End.mul_apply, ha _ (heckeD_D0 N b hD), hb D hD, map_mul, _root_.mul_assoc]
+  | add a b ha hb =>
+    intro D hD
+    rw [map_add, LinearMap.add_apply, map_add, ha D hD, hb D hD, map_add, add_mul]
+
+/-! ## The two analytic leaves and the kernel inclusion (gap 1) -/
+
+/-- **LEAF candidate (the points `x_τ` exist).** For every model `X` of DS's `X₁(N)_alg` with generators
+`(j_X, t_X)` (`IsX1Gen`), every `τ ∈ ℍ` has a complex point `x_τ ∈ X(ℂ)` in the sense of `AtTau` (every
+rational function whose meromorphic function `P(j, f₁)/Q(j, f₁)` on `ℍ` has a limit `c` at `τ` is regular at
+`x_τ` with value `c`). Consequence of Diamond–Shurman §7.7 (2005 printing pp. 290–291): `X₁(N) =
+X₁(N)_alg,ℂ` up to isomorphism over `ℂ`, with function field `ℂ(j, f₁)` (via Thm 7.7.1 and Thm 7.2.5),
+`x_τ` the image of `Γ₁(N)τ` under that isomorphism. Not printed form: the passage from points of the Riemann
+surface to `ℂ`-points of the `ℚ`-scheme and the limit form of regularity are dictionary steps. -/
+def X1TauPoints : Prop :=
+  ∀ (N : ℕ), 2 ≤ N → ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX → ∀ τ : UpperHalfPlane, ∃ x : CPt X, AtTau N jX tX x τ
+
+/-- **LEAF candidate (Abel's theorem for `f(τ)dτ` on `X₁(N)`).** For `X`, `(j_X, t_X)` as in `X1TauPoints`,
+a rational point `P₀`, a Jacobian `(J, aj)` (Albanese property), a weight-2 cusp form `f` on `Γ₁(N)` and a
+primitive `F` of `f` on `ℍ`, there is a countable set `Λ ⊂ ℂ` (the periods `∫_γ f(τ)dτ`, `γ ∈ H₁(X₁(N), ℤ)`)
+such that every degree-0 divisor `Σ n_τ [x_τ]` whose class `Σ n_τ aj(x_τ)` in `J(ℂ)` is trivial has
+`Σ n_τ F(τ) ∈ Λ`. Consequence of Abel's theorem, Diamond–Shurman Thm 6.1.2 (2005 printing p. 214): principal
+divisors map to `0` in `Jac(X) = Ω¹_hol(X)^∧/H₁(X, ℤ)` under `Σ n_x ∫_{x₀}^{x}`, applied to the holomorphic
+differential `f(τ)dτ` (DS §3.3, weight-2 cusp forms are holomorphic differentials on `X₁(N)`), with
+`∫_{x_{τ'}}^{x_τ} f(τ)dτ ≡ F(τ) − F(τ')` mod periods, and the algebraic Jacobian theory (a degree-0 divisor
+on `X_ℂ` has trivial class in `J(ℂ)` iff it is principal: Milne, *Jacobian varieties*, 1986, Thm 1.1 and
+Prop. 6.1, UNVERIFIED numbers; algebraic = meromorphic functions on the compact Riemann surface, DS §7.2).
+Not printed form (a composite of printed theorems through the analytic/algebraic dictionary). -/
+def AbelJacobiX1 : Prop :=
+  ∀ (N : ℕ), 2 ≤ N → ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ (f : CF N 2) (F : UpperHalfPlane → ℂ), IsPrimitive f F →
+      ∃ Λ : Set ℂ, Λ.Countable ∧
+        ∀ (E : UpperHalfPlane →₀ ℤ) (x : UpperHalfPlane → CPt X), (∀ τ, AtTau N jX tX (x τ) τ) →
+          (E.sum fun _ n => n) = 0 → (E.prod fun τ n => ajC aj (x τ) ^ n) = 1 →
+          (E.sum fun τ n => (n : ℂ) * F τ) ∈ Λ
+
+theorem real_const_of_countable {u : UpperHalfPlane → ℝ} (hu : Continuous u)
+    (hc : (Set.range u).Countable) (a b : UpperHalfPlane) : u a = u b := by
+  by_contra hne
+  rcases lt_or_gt_of_ne hne with hlt | hlt
+  · have := hc.mono ((isPreconnected_range hu).Icc_subset ⟨a, rfl⟩ ⟨b, rfl⟩)
+    rw [Cardinal.Real.Icc_countable_iff] at this; linarith
+  · have := hc.mono ((isPreconnected_range hu).Icc_subset ⟨b, rfl⟩ ⟨a, rfl⟩)
+    rw [Cardinal.Real.Icc_countable_iff] at this; linarith
+
+theorem const_of_countable {g : UpperHalfPlane → ℂ} (hg : Continuous g)
+    (hc : (Set.range g).Countable) (a b : UpperHalfPlane) : g a = g b := by
+  apply Complex.ext
+  · exact real_const_of_countable (u := fun τ => (g τ).re) (Complex.continuous_re.comp hg)
+      (by rw [show Set.range (fun τ => (g τ).re) = Complex.re '' Set.range g by ext; simp]
+          exact hc.image _) a b
+  · exact real_const_of_countable (u := fun τ => (g τ).im) (Complex.continuous_im.comp hg)
+      (by rw [show Set.range (fun τ => (g τ).im) = Complex.im '' Set.range g by ext; simp]
+          exact hc.image _) a b
+
+theorem continuous_of_isPrimitive {f : CF N 2} {F : UpperHalfPlane → ℂ} (hF : IsPrimitive f F) :
+    Continuous F := by
+  have : F = (fun z : ℂ => F (UpperHalfPlane.ofComplex z)) ∘ (fun τ : UpperHalfPlane => (τ : ℂ)) := by
+    funext τ; simp [UpperHalfPlane.ofComplex_apply]
+  rw [continuous_iff_continuousAt]
+  intro τ
+  rw [this]
+  exact (hF τ).continuousAt.comp UpperHalfPlane.continuous_coe.continuousAt
+
+theorem not_const_of_isPrimitive {χ : DirichletCharacter ℂ N} {f : CF N 2}
+    (hf : PkgI4.IsNormalizedEigenform f χ) {F : UpperHalfPlane → ℂ} (hF : IsPrimitive f F)
+    (hc : ∀ a b, F a = F b) : False := by
+  have hz : ∀ τ : UpperHalfPlane, f τ = 0 := by
+    intro τ
+    have h1 : (fun z : ℂ => F (UpperHalfPlane.ofComplex z)) = fun _ => F τ := by
+      funext z; exact hc _ _
+    have := hF τ
+    rw [h1] at this
+    exact this.unique (hasDerivAt_const _ _)
+  have h0 : (⇑f : UpperHalfPlane → ℂ) = 0 := funext hz
+  have : coeff f 1 = 0 := by
+    unfold coeff; rw [h0, UpperHalfPlane.qExpansion_zero]; simp
+  rw [hf.2.1] at this
+  exact one_ne_zero this
+
+theorem cls_eq_ofMul_prod (aj : X ⟶ J.X) (x : UpperHalfPlane → CPt X) (E : Dv) :
+    cls aj x E = Additive.ofMul (E.prod fun τ n => ajC aj (x τ) ^ n) := by
+  simp only [cls, Finsupp.linearCombination_apply, Finsupp.sum, Finsupp.prod, ofMul_prod, ofMul_zpow]
+
+theorem deg_eq_sum (E : Dv) : deg E = E.sum fun _ n => n := by
+  simp [deg, Finsupp.linearCombination_apply]
+
+theorem psi_eq_sum (F : UpperHalfPlane → ℂ) (E : Dv) :
+    psi F E = E.sum fun τ n => (n : ℂ) * F τ := by
+  simp [psi, Finsupp.linearCombination_apply, zsmul_eq_mul]
+
+theorem endA_zero (y : Additive (J.Pt ℂ)) : endA (0 : AbVar.End J) y = 0 := by
+  rw [show (0 : AbVar.End J) = ((0 : ℤ) : AbVar.End J) by simp, endA_intCast, zero_smul]
+
+/-- **Gap 1 closed modulo the two analytic leaves and the Eichler glue: `ker(heckeJ) ⊆ ker(evF)`.** If an
+element `h` of the free algebra on `T_p`, `⟨d⟩` acts as `0` on `J₁(N)` (through any `T_p`, `⟨d⟩` with DS's
+double-coset action on the classes of the points `x_τ`), then its eigenvalue `evF(h)` on the newform `f` is
+`0`. Proof: by Claims A and B, for `D = [τ] − [τ₀]` the divisor `h̃ D` has trivial class, so by Abel's
+theorem `evF(h)(F(τ) − F(τ₀)) = Ψ(h̃ D)` lies in a countable set for every `τ`; a primitive `F` of `f ≠ 0`
+is continuous and non-constant on the connected `ℍ`, so its values are uncountable. -/
+theorem evF_eq_zero_of_heckeJ_eq_zero (hP : X1TauPoints) (hAJ : AbelJacobiX1) (hEP : EichlerPrimitive)
+    (hH : EichlerHecke) (hN : 2 ≤ N) {χ : DirichletCharacter ℂ N} {f : CF N 2}
+    (hf : PkgI4.IsNormalizedEigenform f χ) {jX tX : X.left.functionField} (hC : IsCurve X)
+    (hG : IsX1Gen N X jX tX) {P₀ : RatPt X} {aj : X ⟶ J.X} (hJ : IsJacobian X P₀ J aj)
+    {tp : Nat.Primes → AbVar.End J} {δ : (ZMod N)ˣ → AbVar.End J}
+    (htp : ∀ p : Nat.Primes, IsHeckeT N jX tX aj (p : ℕ) (tp p))
+    (hδ : ∀ d : (ZMod N)ˣ, IsDiamond N jX tX aj d (δ d)) (h : HeckeFree N)
+    (h0 : heckeJ tp δ h = 0) : evF χ f h = 0 := by
+  have : NeZero N := ⟨by omega⟩
+  choose x hx using hP N hN X jX tX hC hG
+  obtain ⟨F, hF⟩ := hEP N f
+  obtain ⟨Λ, hΛc, hΛ⟩ := hAJ N hN X jX tX hC hG P₀ J aj hJ f F hF
+  by_contra hc
+  let τ₀ : UpperHalfPlane := UpperHalfPlane.I
+  have hmem : ∀ τ, evF χ f h * (F τ - F τ₀) ∈ Λ := by
+    intro τ
+    have hD : pt τ - pt τ₀ ∈ D0 := by
+      change deg (pt τ - pt τ₀) = 0; simp
+    have hE0 : heckeD N h (pt τ - pt τ₀) ∈ D0 := heckeD_D0 N h hD
+    have hcls : cls aj x (heckeD N h (pt τ - pt τ₀)) = 0 := by
+      rw [cls_heckeD aj x hx htp hδ h _ hD, h0, endA_zero]
+    have hdeg : deg (heckeD N h (pt τ - pt τ₀)) = 0 := hE0
+    rw [cls_eq_ofMul_prod] at hcls
+    rw [deg_eq_sum] at hdeg
+    have := hΛ _ x hx hdeg (by simpa using congrArg Additive.toMul hcls)
+    rw [← psi_eq_sum, psi_heckeD hN hH hf hF h _ hD] at this
+    simpa [psi_pt] using this
+  have hrange : Set.range F ⊆ (fun z => (evF χ f h)⁻¹ * z + F τ₀) '' Λ := by
+    rintro _ ⟨τ, rfl⟩
+    refine ⟨_, hmem τ, ?_⟩
+    field_simp
+    ring
+  exact not_const_of_isPrimitive hf hF
+    (const_of_countable (continuous_of_isPrimitive hF) ((hΛc.image _).mono hrange))
 
 end AfTateLam.HeckePin
