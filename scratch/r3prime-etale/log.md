@@ -15,3 +15,11 @@
 - Target: `IsHolChart φ ↔ IsSerreChart φ` (with T35, as all consumers already use).
 - Core glue identified: left translation by a complex point is holomorphic for Serre's sheaf (TranslationAnHol);
   IsHolChart's translated coordinates F(q⁻¹·) need it in both directions.
+
+## 07:00 R3Etale.lean compiles (VERIFIED, `lake env lean`, axioms propext/choice/Quot.sound)
+- `isHolChart_iff_isSerreChart (hT35) (hTH : TranslationAnHol) 𝒢 g hg τ φ : IsHolChart 𝒢 τ φ ↔ IsSerreChart 𝒢 τ φ`.
+- Helpers: `anHolAt_pi`, `holo_of_anHolAt` (Serre-hol ⇒ hol along Φ), `anHolAt_of_holo` (converse, uses TH),
+  `exists_localInverse`, `chartAt_anHolAt`.
+- Remaining glue: `TranslationAnHol` (x ↦ s(p x) Serre-holomorphic). Next: prove it (tensor decomposition on
+  an affine open of 𝒢 ×_{𝓞_L} 𝒢).
+- Note: worktree lacked lean/.lake (z_in_q package); copied from ~/dzq-wt/carirr-refold (lean/ sources identical, diff -rq).
