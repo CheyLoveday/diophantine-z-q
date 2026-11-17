@@ -114,15 +114,34 @@ of that remark.
 * `lake env lean ZInQKernel/Contrib/OneProof/KleimanPicZeroSite.lean`: no output, so no errors and no warnings
   (VERIFIED).
 * `scratch/kleiman-site/Site.lean`: the first version, non-quotient only (VERIFIED compiled).
-* Build and `#discharges` (`scratch/kleiman-site/Discharges.lean`, output in
-  `scratch/kleiman-site/discharges-output.txt`): see §5.
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.KleimanPicZeroSite`:
+  build completed successfully (16076 jobs, no errors) (VERIFIED).
+* `#print axioms` (VERIFIED, in `discharges-output.txt`) of each of `kleimanPicZeroProper954_of_siteQ`,
+  `kleimanPicZeroProper954_of_site`, `picZeroAbVar0_of_siteQ` and `sheafifyRestrictIso`:
+  `[propext, Classical.choice, Quot.sound]`.
 * Proposed `docs/research/locators.md` row (not edited here; a shared file): `KleimanSite.KleimanPicZeroProper954SiteQ` |
   Kleiman, *The Picard scheme* (FGA Explained Ch. 9, arXiv math/0504020), Thm 9.5.4 with Def. 9.2.2 | locator
   UNVERIFIED on host.
 
 ## 5. `#discharges` and the fold
 
-PENDING (filled in below once the build finishes).
+`scratch/kleiman-site/Discharges.lean` (Main + Discharges + this file), output in
+`scratch/kleiman-site/discharges-output.txt` (VERIFIED): 26 DISCHARGES lines, **none by `KleimanSite`**. This is
+expected and matches kleiman-section2 §5. The frontier field is still
+`OpenAddedLeaves25.kleimanPicZeroProper : PicFix.KleimanPicZeroProper`, which assumes only "proper" and is stronger
+than 9.5.4. Neither `KleimanPicZeroProper954` nor the site leaf can prove it.
+
+The single Kleiman line, `DISCHARGES [OpenAddedLeaves25.kleimanPicZeroProper] by
+KleimanSection.kleimanPicZeroProper_of_Q`, still assuming `KleimanSection.KleimanPicZeroProperQ`, comes from the
+newly imported `KleimanPicZeroProperQuot.lean`. That is kleiman-section's proper-reading leaf. It is not the
+recommended route: kleiman-section2 rates it stronger than the print, because of "proper" instead of "projective"
+and the étale/fppf question.
+
+Autofold spec: `scratch/kleiman-site/autofold.json`. It discharges field `kleimanPicZeroProper954` (from
+kleiman-section2's hand fold) by `KleimanSite.kleimanPicZeroProper954_of_siteQ {n}.kleimanPicZeroProper954SiteQ`. The
+new leaf is `kleimanPicZeroProper954SiteQ : KleimanSite.KleimanPicZeroProper954SiteQ`, kind `published`, flag
+`locator UNVERIFIED: printed form of Kleiman 9.5.4 over Kleiman's own site …`. It can run only after that hand fold
+is integrated (§6).
 
 ## 6. What remains
 
