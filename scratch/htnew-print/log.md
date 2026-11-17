@@ -18,7 +18,7 @@ Base: c0f3d085 (main; `git merge origin/main`: already up to date, 2026-11-16 22
 New leaf robust to every ht-exists reading point: (i) normalization disjunction (arith Frob & HT {0,1-k}) or
 (geom Frob & HT {0,k-1}); (ii) no semisimplicity (semisimplification preserves HT weights: proved in Lean);
 (iii) trace-only Frobenius clause; (iv) printed newform (Tau Ceti Newform, via newform-dict).
-- 23:35 EigenformHTPrinted.lean §1-§6a (HTDual copy; diagonal reps semisimple, invariant line, conjGR, diagGR) compiles (lake env lean, 17 s). VERIFIED.
-- 00:05 §6b sum_finrank_Ysp_le, finrank_Ysp_le_diag (dim Y_i(rho) <= dim Y_i(diag) for upper triangular rho) compile. VERIFIED.
-- 00:20 §6c ht_diag, exists_ss (semisimplification of a 2-dim HT rep is HT with the same weights, same traces, unramified where rho is) compile. VERIFIED.
-- 00:45 §7 ModularHTPrinted (leaf), eigenformHTNew_of_printed (discharge, with LEAF field eigenformCoeffFieldFinite), printed_of_eigenformHTNew (converse over dsThm965Printed, eigenformCoeffFieldFinite, dsThm966Printed), printed_iff compile; axioms standard (scratch/htnew-print/axioms.txt). VERIFIED.
+- EigenformHTPrinted.lean §1-§6a (HTDual copy; diagonal reps semisimple, invariant line, conjGR, diagGR) compiles (lake env lean, 17 s). VERIFIED.
+- §6b sum_finrank_Ysp_le, finrank_Ysp_le_diag (dim Y_i(rho) <= dim Y_i(diag) for upper triangular rho) compile. VERIFIED.
+- §6c ht_diag, exists_ss (semisimplification of a 2-dim HT rep is HT with the same weights, same traces, unramified where rho is) compile. VERIFIED.
+- §7 ModularHTPrinted (leaf), eigenformHTNew_of_printed (discharge, with LEAF field eigenformCoeffFieldFinite), printed_of_eigenformHTNew (converse over dsThm965Printed, eigenformCoeffFieldFinite, dsThm966Printed), printed_iff compile; axioms standard (scratch/htnew-print/axioms.txt). VERIFIED.
