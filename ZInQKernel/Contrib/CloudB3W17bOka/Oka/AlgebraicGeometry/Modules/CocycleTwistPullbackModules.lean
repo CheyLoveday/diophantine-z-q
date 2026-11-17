@@ -30,7 +30,12 @@ universe u
 
 namespace AlgebraicGeometry.LocallyRingedSpace
 
-set_option hygiene false in
+/-- The scalar action is the actual evaluated module-sheaf action, not a new section model. -/
+noncomputable local instance cloudB3W17bOka_pullbackTwistSectionsModule
+    (Y : LocallyRingedSpace.{u}) (N : SheafOfModules.{u} Y.ringSheaf) (W : Opens Y) :
+    Module (Y.presheaf.obj (op W)) (N.val.obj (op W)) :=
+  (N.val.obj (op W)).isModule
+
 /- Sections of the structure sheaf of `Y` over `W`. -/
 
 

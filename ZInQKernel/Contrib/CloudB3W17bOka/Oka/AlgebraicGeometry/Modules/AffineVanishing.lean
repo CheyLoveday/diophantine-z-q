@@ -235,6 +235,8 @@ noncomputable def basicOpenLocalizationEquiv (a : R) :
   haveI := isLocalizedModule_away_sectionsToBasicOpen M a
   (IsLocalizedModule.iso (powers a) (sectionsToBasicOpen M a).hom).toAddEquiv
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- The identifications `Γ(M, D(a)) ≅ Γ(M)_a` are compatible with restriction. -/
 lemma map_basicOpenLocalizationEquiv (a b : R) (hd : ∃ n, a ∣ b ^ n)
     (hab : PrimeSpectrum.basicOpen b ≤ PrimeSpectrum.basicOpen a)
@@ -316,6 +318,8 @@ def basicOpenInAffine (a : Γ(X, U)) :
   ⟨hU.primeSpectrumHomeomorph '' PrimeSpectrum.basicOpen a,
     hU.primeSpectrumHomeomorph.isOpenMap _ (PrimeSpectrum.basicOpen a).2⟩
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 lemma functor_obj_basicOpenInAffine (a : Γ(X, U)) :
     U.isOpenEmbedding.isOpenMap.functor.obj (basicOpenInAffine hU a) =
       hU.fromSpec ''ᵁ PrimeSpectrum.basicOpen a := by

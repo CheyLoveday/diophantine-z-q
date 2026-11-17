@@ -340,7 +340,7 @@ theorem exists_summable_bound_mcoeff {f : (Fin n → ℂ) → ℂ}
           (norm_nonneg _) _)
     _ = M * ∏ i, (σ i ^ (-k i) * ‖z i‖ ^ k i) := by rw [Finset.prod_mul_distrib, mul_assoc]
     _ ≤ M * ∏ i, β i (k i) := by
-      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun i _ ↦ ?_) fun i _ ↦ ?_) hM0
+      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun i _ ↦ ?_) fun i _ ↦ ?_) hM0
       · exact mul_nonneg (zpow_nonneg (hσ i).pos.le _) (zpow_nonneg (norm_nonneg _) _)
       · obtain ⟨hz2, hz1⟩ := hz i
         rcases le_or_gt 0 (k i) with hk | hk
@@ -561,7 +561,7 @@ theorem differentiableOn_tsum_monomial {b : (Fin n → ℤ) → ℂ}
       refine le_trans ?_ (Finset.single_le_sum (f := fun s ↦ ‖b k‖ * ∏ i, τ s i ^ k i)
         (fun s _ ↦ mul_nonneg (norm_nonneg _)
           (Finset.prod_nonneg fun i _ ↦ zpow_nonneg (hτ s i).pos.le _)) (Finset.mem_univ s₀))
-      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod
+      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀
         (fun i _ ↦ zpow_nonneg (norm_nonneg _) _) fun i _ ↦ ?_) (norm_nonneg _)
       obtain ⟨hz2, hz1⟩ := hz i
       rcases le_or_gt 0 (k i) with hki | hki
@@ -604,7 +604,7 @@ theorem differentiableOn_tsum_indicator_mcoeff {f : (Fin n → ℂ) → ℂ}
       (Finset.prod_nonneg fun i _ ↦ zpow_nonneg (norm_nonneg _) _)) fun k ↦ ?_
     by_cases hkS : k ∈ S
     · rw [Set.indicator_of_mem hkS, norm_mul, norm_monomial]
-      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod
+      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀
         (fun i _ ↦ zpow_nonneg (norm_nonneg _) _) fun i _ ↦ ?_) (norm_nonneg _)
       by_cases h : r' i = r i
       · rw [hw'eq i h]
