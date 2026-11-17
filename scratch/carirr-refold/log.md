@@ -18,3 +18,8 @@
 - Leaf CarayolThmAFrob: per-Frobenius det p*psi(p) (manuscript L9794 normalization) instead of global det; irreducible over K_lambda; DDT conductor.
 - carayolThmAIrr_of_frob, frob_of_DDT31, carayolThmAIrr_of_DDT31, carayolR17'_of_frob compile (lake env lean, no warnings). VERIFIED.
 - autofold dry run: strict count 4/27 on 31 -> 4/27 on 31 (count-neutral; unread leaf counts GLUE). VERIFIED.
+- lake build +Main +Discharges +CarayolRefold: 16218 jobs, success; frozenTarget standard axioms. VERIFIED.
+- #discharges: carayolThmAIrr by CarayolRefold.carayolThmAIrr_of_frob (assumes CarayolThmAFrob) and by carayolThmAIrr_of_DDT31; standard axioms. VERIFIED.
+- Axioms of all 9 CarayolRefold declarations: standard. VERIFIED.
+- Dry-run TailZ75 compiles; sixContactMin_of_open68 standard axioms. VERIFIED.
+- Kinds rows from a real autofold run (reverted): -carayolThmAIrr consequence GLUE/GLUE; +carayolThmAFrob published GLUE/GLUE flag_class unread. VERIFIED.
