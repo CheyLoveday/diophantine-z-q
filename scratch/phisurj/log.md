@@ -48,3 +48,9 @@ Base wip/leaf-fold33b 0e3c31258; `git merge origin/main`: already up to date (20
   strictest 13/20 -> 12/21" and refuses (GLUE rise; (a) flagged pending reading). Not recommended.
 - Reroute fold count (computed from kinds.tsv: the row `mumfordPhiSurjectiveAC` is LEAF/LEAF): H 13/20 on 33 ->
   12/20 on 32.
+- By-products (VERIFIED: compiled; `ZInQKernel/Contrib/OneProof/MumfordSquareMulN.lean`, lake build ok,
+  axioms standard, `scratch/phisurj/axioms-byproducts.txt`): `PhiSurj.mumfordSquareAC_of_open :
+  PicRepresentableAbVar → PicZeroAbVar → PicDict.MumfordSquareAC` (Mumford §6 Cor. 4) and
+  `PhiSurj.mumfordMulNPicZeroAC_of_open : … → PicDict.MumfordMulNPicZeroAC` (Mumford §8 (iv)), via
+  `mumfordBundle_eq_one_of_isTI` (Λ(c) = 1 for translation-invariant c) and `hom_ext_kpt`. Not on the fold's
+  route; they are two of the four Mumford displays weil-proof's reduction of `weilPairingMumford` still assumed.
