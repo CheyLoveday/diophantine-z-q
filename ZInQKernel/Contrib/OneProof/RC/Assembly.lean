@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.Skeleton.Skeleton
 import ZInQKernel.Contrib.OneProof.RC.Boolean.Node
+import ZInQKernel.Contrib.CloudB3RC53.KummerCorankZero.Basic
 
 /-!
 # Theorem 5.3 from Elliot's steps, with the missing-address argument proved
@@ -22,5 +23,13 @@ theorem restrictedConverseGenuine_of_steps' (P : Prints) (hKum : KummerCorankZer
     (D : ∀ ℓ : ℕ, RCData ℓ) (hS : ∀ ℓ : ℕ, Adm ℓ → RCSteps (D ℓ)) :
     ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine :=
   restrictedConverseGenuine_of_steps P hKum D hS ZInQ.Manuscript.RC.Boolean.missingAddressNode
+
+/-- **Theorem 5.3 from the printed leaves and Elliot's steps alone**: `restrictedConverseGenuine_of_steps'` with the
+Kummer sequence in rank zero proved (`CloudB3RC53.KummerCorankZero.kummerCorankZero_proof`). -/
+theorem restrictedConverseGenuine_of_prints_steps (P : Prints)
+    (D : ∀ ℓ : ℕ, RCData ℓ) (hS : ∀ ℓ : ℕ, Adm ℓ → RCSteps (D ℓ)) :
+    ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine :=
+  restrictedConverseGenuine_of_steps' P
+    ZInQ.Contrib.CloudB3RC53.KummerCorankZero.kummerCorankZero_proof D hS
 
 end ZInQ.Manuscript.RC
