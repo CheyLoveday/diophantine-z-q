@@ -262,3 +262,16 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     +Main +Discharges (16047 jobs); frozenTarget standard axioms; check_target.py; only Main.lean changed among existing
     OneProof modules; closure (no sorryAx); OpenStatements 36; DischargesTest rerun, no error; render_open --check ok
     (31 H, strictest 16/15, 5 others); crosswalk --check ok; autoform check ok.
+30. Batch for w97 (inbox 10, 11), one autofold scratch/leaf-fold33/autofold-batch-w97.json (--allow-rise: the
+    integrator asked for these restatements with their new leaves pending review) -> TailZ66,
+    `sixContactMin_of_open59`: merged wip/r16-det 595ac5d5 (with r16-close), wip/y3-fix 9b4af21f, wip/sga33-steps
+    92449928 (hygiene: 12 scratch fold files renamed .lean.txt). r16CoreY := AfTateLam.r16CoreY_of_ds965 from heckeJ1DS,
+    afShimura, afCharpolyDS965, igusaGL2DS; shimuraMainThmIDeligneY3AbU := Y3Fix.shimuraMainThmIDeligneY3AbU_of_print
+    from y3FineModuliAbP, deligneCanonicalModelY3EveryH (supersedes y3abu-print; grx6ab/elkies read the old field
+    through the generated conversion); sga7_IX_3_3_SHpre := SGA33Steps.shpre_of_cor33 from sga7_IX_Cor3_3 (three
+    reading steps proved); {t}.mumfordTorsionAlgClosed replaced by PR #54's proof. All seven new rows pending review,
+    GLUE. Count: 36 open -> 40 open; H 16/15 on 31 -> 16/19 on 35 (3 GLUE fields out, 7 pending-review leaves in; -3
+    GLUE once the leaves are rated LEAF). Checks (VERIFIED): build +Main +Discharges (16058 jobs); frozenTarget standard
+    axioms; check_target.py; only Main.lean changed among existing OneProof modules; closure (no sorryAx); OpenStatements
+    40; DischargesTest rerun, no error; render_open --check ok (35 H, strictest 16/19, 5 others); crosswalk --check ok;
+    autoform check ok.
