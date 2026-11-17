@@ -121,4 +121,124 @@ theorem ptOf_eq_of_tendsto [E.IsElliptic] (τ : ℍ) (x : Spec (CommRingCat.of �
       field_simp
     exact zero_ne_one (tendsto_nhds_unique (hprod.congr' hone) tendsto_const_nhds)
 
+/-! ## §3. The cusp `∞` maps to `O` -/
+
+theorem not_mem_chartZ_of_cusp (hord : ((φ (genX E) : X0Field N) : LaurentSeries ℚ).order < 0)
+    (p : ESch E) (hp : IsCuspInfty N (iotaOf E φ hφ) p) : p ∉ (chartZ E).opensRange := by
+  intro hmem
+  obtain ⟨θ, hθ, -⟩ := exists_stalk_lift (chartZ E) (kappaZ_spec E) p hmem
+  have h := hp (θ (xz E))
+  rw [show algebraMap _ (ESch E).functionField (θ (xz E)) = kappaZ E (xz E) from
+    RingHom.congr_fun hθ _, iotaOf_xz] at h
+  have hne : ((φ (genX E) : X0Field N) : LaurentSeries ℚ) ≠ 0 := by
+    intro h0; rw [h0] at hord; simp at hord
+  rw [HahnSeries.addVal_apply_of_ne hne] at h
+  have : (0 : ℤ) ≤ ((φ (genX E) : X0Field N) : LaurentSeries ℚ).order := by exact_mod_cast h
+  omega
+
+/-! ## §4. The leaf -/
+
+instance curveA_isElliptic : curveA.IsElliptic := by
+  unfold curveA
+  exact ZInQ.shortCurve_isElliptic (by norm_num)
+
+/-- **Leaf TYZ-3.3 (curve form): Tian–Yuan–Zhang Theorem 3.3 for TYZ's isomorphism of curves
+`i₀ : (X₀(32), ∞) ≅ (A, O)` over `ℚ`, for `n ≡ 5, 7 (mod 8)`.**
+
+Source: Tian–Yuan–Zhang, *Genus periods, genus points and congruent number problem*,
+arXiv:1411.4728v1, Theorem 3.3 (Period7.tex L1296–1311), with §3.1: `A` "is isomorphic to
+`(X₀(32), ∞)`. Fix an identification `i₀`" (L1173–1174), `f_n = f₀ − f₀∘[i]` for `n ≡ 5` and
+`f_n = i₀` for `n ≡ 7` (L1195–1198), the CM points `P_n` (L1203–1295). Journal version: Asian J.
+Math. 21 (2017), NOT checked.
+
+The objects:
+* `X₀(32)` is an integral `ℚ`-scheme `X`, proper over `ℚ`, with function field
+  `ι : K(X) ≅ ℚ(X₀(32)) = ℚ(j, j₃₂) ⊂ ℚ((q))` (FLT's `modularFunctionField 32`, the function field of
+  the canonical model embedded by `q`-expansion at `∞`; Shimura 1971 §6.7, UNVERIFIED locator). Any
+  such `X` admitting an isomorphism to `A` is a smooth projective curve with function field
+  `ℚ(X₀(32))`, hence the canonical model, compatibly with `ι`.
+* `A` is the projective scheme `ESch curveA = Proj ℚ[X, Y, Z]/(Y²Z − X³ − 4XZ²)` (`y² = x³ + 4x`,
+  `ℚ`-isomorphic to TYZ's `2y² = x³ + x` by `(x, y) ↦ (2x, 4y)`).
+* `i₀ : X ⟶ ESch curveA` is an isomorphism of `ℚ`-schemes with `i₀(∞) = O`: the cusp `∞`
+  (`IsCuspInfty`, the center of `ord_q`) maps outside the chart `D₊(Z)`, whose complement is `O`.
+* `P_n` is the CM point `τ_n` of `tyzForm n` (`n ≡ 5`) resp. `tyzForm7 n` (`n ≡ 7`): the `ℂ`-points
+  `x` of `X` at `τ_n` (`IsPointAt`, unique by `GZSch.isPointAt_unique`), and `i₀(P_n) ∈ A(ℂ)` is
+  `ptOf curveA (x ≫ i₀)`.
+* `w n ∈ A(ℚ̄)` with `w n = i₀(P_n)` in `A(ℂ)`; then `TYZThm33EpsAfter (zOfLift w)` (h33-dict's display:
+  `P_χ` torsion unless `χ = χ_{d₀,d₁}`, and then `P_χ = ε(d₀, d₁) 2^{h₂(n)} 𝓛(d₁) 𝒫(d₀)` in
+  `A(ℚ̄) ⊗ ℚ`, `ε` chosen after `Φ`, `χ`), with `z_n = w n − [i](w n)` for `n ≡ 5` (`f₀∘[i] = [i]∘f₀`
+  on the component of `P_n`, sign of `[i]` fixed by `α = −i`, h33-sign) and `z_n = w n` for `n ≡ 7`.
+
+Readings (not Lean): `X_U ≅ X₀(32)_{ℚ(i)}` with `P_n ↦ τ_n` (L1191–1193) and the sign of `[i]`
+(h33-sign), unchanged from h33-fix; the weakenings of h33-dict. -/
+def TYZThm33Curve : Prop :=
+  ∀ (X : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Spec (CommRingCat.of ℚ)), IsProper sX →
+  ∀ ι : X.functionField ≃+* X0Field 32,
+  ∀ i₀ : X ⟶ ESch curveA, IsIso i₀ → i₀ ≫ toSpecQ curveA = sX →
+  (∀ p : X, IsCuspInfty 32 ι p → i₀ p ∉ (chartZ curveA).opensRange) →
+  ∀ w : ℕ → PtA,
+    (∀ n : ℕ, ∀ hn : n % 8 = 5, Squarefree n → ∀ x : Spec (CommRingCat.of ℂ) ⟶ X,
+      IsPointAt 32 ι (tyzForm n hn).tauH x → toC (w n) = ZInQ.GZSch.ptOf curveA (x ≫ i₀)) →
+    (∀ n : ℕ, ∀ hn : n % 8 = 7, Squarefree n → ∀ x : Spec (CommRingCat.of ℂ) ⟶ X,
+      IsPointAt 32 ι (tyzForm7 n hn).tauH x → toC (w n) = ZInQ.GZSch.ptOf curveA (x ≫ i₀)) →
+    TYZThm33EpsAfter (zOfLift w)
+
+/-! ## §5. The value of `i₀` at `τ` is `(X(τ), Y(τ))` -/
+
+theorem tendsto_of_mdiff {Xf : ℍ → ℂ} (hXf : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) Xf) (τ : ℍ) :
+    Tendsto (Xf ∘ ofComplex) (𝓝[≠] (τ : ℂ)) (𝓝 (Xf τ)) := by
+  have h := ((ZInQ.H33Fix.analyticOnNhd_of_mdiff hXf) τ τ.im_pos).continuousAt.tendsto
+  have e : (Xf ∘ ofComplex) (τ : ℂ) = Xf τ := by simp [Function.comp_apply, ofComplex_apply]
+  rw [e] at h
+  exact h.mono_left nhdsWithin_le_nhds
+
+/-- **D2 for the curve leaf**: at the point `τ` of the model `(ESch curveA, ι_φ)`, `ptOf` is
+h33-dict's `ptOf X Y τ` of the holomorphic `X, Y` with `q`-expansions `φ(x), φ(y)`. -/
+theorem ptOf_eq_h33 (φ : curveA.toAffine.FunctionField →ₐ[ℚ] X0Field 32) (hφ : ZInQ.H33Fix.IsX0IsoAlg φ)
+    {Xf Yf : ℍ → ℂ} (hXf : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) Xf) (hYf : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) Yf)
+    (hqX : HasQExp Xf (φ (genX curveA))) (hqY : HasQExp Yf (φ (genY curveA))) (τ : ℍ)
+    (x : Spec (CommRingCat.of ℂ) ⟶ ESch curveA) (hx : IsPointAt 32 (iotaOf curveA φ hφ.1) τ x) :
+    ZInQ.GZSch.ptOf curveA x = ZInQ.Contrib.TYZGenus.H33Dict.ptOf Xf Yf τ := by
+  have hrx := repOf_spec (φ (genX curveA))
+  have hry := repOf_spec (φ (genY curveA))
+  have hmX : ∀ τ : ℍ, MeromorphicAt (Xf ∘ ofComplex) (τ : ℂ) := fun τ =>
+    ((ZInQ.H33Fix.analyticOnNhd_of_mdiff hXf) τ τ.im_pos).meromorphicAt
+  have hmY : ∀ τ : ℍ, MeromorphicAt (Yf ∘ ofComplex) (τ : ℂ) := fun τ =>
+    ((ZInQ.H33Fix.analyticOnNhd_of_mdiff hYf) τ τ.im_pos).meromorphicAt
+  have hlx := (tendsto_of_mdiff hXf τ).congr' (eventuallyEq_ratFn hmX hqX hrx τ)
+  have hly := (tendsto_of_mdiff hYf τ).congr' (eventuallyEq_ratFn hmY hqY hry τ)
+  rcases modPt_plane_cases curveA φ hrx hry τ with ⟨x₀, y₀, hns, hl1, hl2, -⟩ | ⟨hpole, -⟩
+  · have e1 : Xf τ = x₀ := tendsto_nhds_unique hlx hl1
+    have e2 : Yf τ = y₀ := tendsto_nhds_unique hly hl2
+    rw [ptOf_eq_of_tendsto φ hφ.1 τ x hx hrx hry hns hl1 hl2]
+    have hns' : ZInQ.Contrib.TYZGenus.X0.curveAC.toAffine.Nonsingular (Xf τ) (Yf τ) := by
+      rw [e1, e2]; exact hns
+    unfold ZInQ.Contrib.TYZGenus.H33Dict.ptOf
+    rw [dif_pos hns']
+    exact point_some_congr curveA _ _ e1.symm e2.symm
+  · exact absurd hpole (not_tendsto_atTop_of_tendsto_nhds hlx.norm)
+
+/-! ## §6. The bridge -/
+
+/-- **D1 in Lean: the function-field leaf from the curve leaf.** For `φ = i₀^*` bijective with
+`ord_q φ(x) < 0`, the curve `ESch curveA` with `ι = φ ∘ (K(ESch curveA) ≅ ℚ(A))` is a model of
+`X₀(32)`, and `i₀ = 𝟙` is an isomorphism with `i₀(∞) = O`; its value at `P_n` is `(X(τ_n), Y(τ_n))`. -/
+theorem tyzThm33Alg_of_curve (h : TYZThm33Curve) : ZInQ.H33Fix.TYZThm33Alg := by
+  intro φ hφ Xf Yf hXf hYf hqX hqY w h5 h7
+  refine h (ESch curveA) (toSpecQ curveA) inferInstance (iotaOf curveA φ hφ.1) (𝟙 _)
+    inferInstance (Category.id_comp _) (fun p hp => not_mem_chartZ_of_cusp φ hφ.1 hφ.2 p hp) w
+    ?_ ?_
+  · intro n hn hsq x hx
+    rw [Category.comp_id, h5 n hn hsq]
+    exact (ptOf_eq_h33 φ hφ hXf hYf hqX hqY _ x hx).symm
+  · intro n hn hsq x hx
+    rw [Category.comp_id, h7 n hn hsq]
+    exact (ptOf_eq_h33 φ hφ hXf hYf hqX hqY _ x hx).symm
+
+/-- **`TYZSplit.TYZThm33` (the binder `h33` of `frozenTarget`) from the curve leaf** and the printed
+main theorem of CM `hCM`. -/
+theorem tyzThm33_of_curve (hCM : ZInQ.Contrib.TYZGenus.T5Glue.ShimuraMainCM) (h : TYZThm33Curve) :
+    TYZThm33 :=
+  ZInQ.H33Fix.tyzThm33_of_alg hCM (tyzThm33Alg_of_curve h)
+
 end ZInQ.H33D1
