@@ -2,6 +2,33 @@ import ZInQKernel.Contrib.TYZChain.Lcal
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.JacobiLambdaDeriv
 import ZInQKernel.Contrib.OneProof.GrossZagierHeegner.WeilJacobi
 import ZInQKernel.Contrib.GZTheta.EtaTheta
+import ZInQKernel.Contrib.OneProof.TYZThm11Genus
+
+/-!
+# lcal-one: `TYZLcalOne` proved (`L(y² = x³ − x, 1) = ¼ ∫₁^∞ dx/√(x³ − x)`)
+
+Task lcal-one (2026-11-16). Report: `docs/research/lcal-one.md`; development file and log: `scratch/lcal-one/`.
+
+`ZInQ.Contrib.TYZDecomp.TYZLcalOne` (`lcalSq 1 = 1`, TYZ's `𝓛(1) = 1`, asserted at L1082 of arXiv:1411.4728v1) is
+the exact evaluation `L(C₁, 1) = Ω/4`, `Ω = ∫₁^∞ dx/√(x³ − x)` (the real period of `C₁ : y² = x³ − x` is `2Ω`, so
+`L(C₁, 1)/Ω_{C₁} = 1/8`). It is proved here from theorems already in the tree, with no new hypothesis:
+
+* **Part A** (`lValOne_one_eq_integral`): `L(C₁, 1) = 2π ∫₀^∞ f(it) dt`, `f = η(4τ)²η(8τ)²`. The tree's
+  continuation (`TYZLcal.lValOne_one_eq`) writes `L(C₁, 1)` through the Mellin transforms at `s = 1` of the shifted
+  lattice theta kernels `Θ_{j/4}`; the block decomposition of `ℤ[i]` modulo `4` and the grouping by the norm turn
+  `Σ_j cU(j) Θ_{j/4}(x)` into `¼ Σ_n a_n e^{−πnx/16}`, which is `¼ f(ix/32)` by gz-theta's `etaThetaIdentity`.
+* **Part B** (`integral_Fr`): `∫₀^∞ f(it) dt = Ω/(8π)`. On the imaginary axis x0-32's eta quotients `x, y`
+  (`y² = x³ + 4x`, tyz-cm) are real, `y < 0 < f`, and `x' = −4π f y` (`X0.EtaModelDifferential`, proved by
+  gz-weil from Jacobi's derivative formula). By the theta `S`-law `x(it) → 2` as `t → 0⁺` (the cusp `0` goes to
+  `(2, −4)`) and `x(it) → ∞` as `t → ∞`. The substitution `u = x/4 + 1/x` (the `2`-isogeny
+  `y² = x³ + 4x → Y² = X³ − 16X`, `X = x + 4/x = 4u`) maps `(0, ∞)` onto `(1, ∞)` with
+  `u'/√(u³ − u) = 8π f(it)`, and the fundamental theorem of calculus on `(0, ∞)` for `K(u(t))`,
+  `K(u) = ¼ ∫_u^∞ dv/√(v³ − v)`, gives the value.
+
+Main results: `tyzLcalOne_proof : TYZLcalOne`, `lValOne_one : lValOne 1 = Ω/4`, and
+`tyzThm11Integral_of_thm21C_only : TYZThm21PairsC → TYZThm11Integral` (tyz-genus's
+`tyzThm11Integral_of_thm21C` with `TYZLcalOne` discharged). No `sorry`, no `axiom`, no code run at build time.
+-/
 
 noncomputable section
 
@@ -591,10 +618,16 @@ theorem lValOne_one : ZInQ.Contrib.TYZDecomp.lValOne 1 = (omegaInt : ℂ) / 4 :=
   ring
 
 /-- **`𝓛(1) = 1`**: `L(y² = x³ − x, 1) = ¼ ∫₁^∞ dx/√(x³ − x)`. -/
-theorem tyzLcalOne : ZInQ.Contrib.TYZDecomp.TYZLcalOne := by
+theorem tyzLcalOne_proof : ZInQ.Contrib.TYZDecomp.TYZLcalOne := by
   unfold ZInQ.Contrib.TYZDecomp.TYZLcalOne
   rw [ZInQ.Contrib.TYZLcal.lcalSq_one, lValOne_one]
   have h : (omegaInt : ℂ) ≠ 0 := ofReal_ne_zero.mpr ZInQ.Contrib.TYZDecomp.omegaInt_pos.ne'
   field_simp
+
+/-- **TYZ Theorem 1.1 (integrality) from TYZ Theorem 2.1 alone** (complex sign choices; tyz-genus's
+`tyzThm11Integral_of_thm21C` with `TYZLcalOne` proved). -/
+theorem tyzThm11Integral_of_thm21C_only (h21C : ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC) :
+    ZInQ.Contrib.TYZDecomp.TYZThm11Integral :=
+  ZInQ.Contrib.TYZGenusFold.tyzThm11Integral_of_thm21C h21C tyzLcalOne_proof
 
 end ZInQ.Contrib.LcalOne
